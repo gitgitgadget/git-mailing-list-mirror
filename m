@@ -1,148 +1,285 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4DB1E0B86
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 18:25:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BB4346770
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 18:26:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771439125; cv=none; b=huwaO58U198EfJkUJcOe+RNbhYIclN+s6p9YC3it4bRhCjHmOEIz2Zym/r61HnvECtDDB1/j8Yc1p2+XACjJGVoO1pguRlkQrsYy74DuJRSpHoMaB4B3xJ5Hd9QU6d+8FOoV/ctg+AMP3eqRdtmYLHjaxGQE+YznUl69B0RMFMw=
+	t=1771439187; cv=none; b=IaE21Z9GjbAUAwaaGPwsmGgeK3rBMBqtuci7awZagYpHCLvuSLXkxA3rHCQMcb2RnMcE18o8hRKxeCjzhjS2q9VH6keUbtHwQtktYIGqav/gWSpo9q0TqMcrurRma8vuVTeEXLZOtRJw8CbDyJo4+yq36dasPxK/hQmjHsWRZaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771439125; c=relaxed/simple;
-	bh=2BdPSVYEyU5vJENSeOKTGGtHkfbLJbz5FPjL/60g2dE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qYgS/Dk77hNevGV9Izwd7SYulL0/C0BCSSJBEXXOhdOuadBme0lyNO16xzs4EunOv6eIvQfv2CJSa+2sZoWbFMpKcX+8cNZLuf4V441AcJ/8MLUVqjArtiozPYSRQ3cqspWDN2URt/ESUPUuAJYDF71QOoaaRdXdkaSdDk//F7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R1/JU6fx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hFDUPi2B; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771439187; c=relaxed/simple;
+	bh=PWbO/NLZ/Kf6ul85Nlob1poHachTelVMZVDdqgDgyZc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rlkb5oXAo8hkHC4sBPPU0sR/YJBZKBoXuZwKBZX5fDTPBnZJ7VczUMIjPzaSuskrqm5iw7QKGo/dn9hkZAI2ubW5MBOKwdlnANFsnft+U8dKs8GVLdgyh/9lrd73rAueh0u4lcZEzgGwnkjTyBmrONALk6sDayBqoYPa32Nmwqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fLJBYt8k; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R1/JU6fx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hFDUPi2B"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 919FF1D00031;
-	Wed, 18 Feb 2026 13:25:23 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 18 Feb 2026 13:25:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771439123; x=1771525523; bh=PjjDALFGLk
-	58psn7UrCj/8lEuSknP6UfNoZCs0C1csM=; b=R1/JU6fxw+gv0JznOQ2zlwwLOY
-	Zvi/1Vb8CdsVjg8BAUE3P9A1FFcSUwhWp7OfjO22XgdcAvgyu3T8Uj75HVT3SQ2h
-	/V2wiLx0gIRHAjOJUCANH/ouXxVCXLEOD/cYqT6T2PtTz1FYUb70JpxUJyzesVn6
-	qSyh3yaRT76+vuYCaqanDBEMppfFB/WG8gwSP1iRMHkeUzLYZY+sK4nRoRe+TUlk
-	0A/jt27N9C/YqvjdtGDHcaLjp7pWuA/bHdEtkSYpjuDl6WVFFJb6VDG7O6ALeTK+
-	v/2EDcZuZ1PMZN2tOaNUQF7oYXQnocIWtCnrJeR47YUsnW1z2R79qNQJIqRQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771439123; x=1771525523; bh=PjjDALFGLk58psn7UrCj/8lEuSknP6UfNoZ
-	Cs0C1csM=; b=hFDUPi2BZ8b35FSk7LS0QpNspkYP0wcysspIWONdVAjW2u41av4
-	DIwbD9uu6iWrhjRjEMuBspbjyNNP+90m5LOcM6o/9JtGtigOGAvXr8JI7SKcmHwN
-	N2PGu9L6BNexPQkjf3G3aymg3BbHujMVmXFAzkBkf5YuTey1x9JhhpiG4UyZKq8d
-	Q2VsFz4KFlIkPM76nJJU16I1UT7N2Ro/mv8dbo8uFUQqWe8pROOhF+jOlNZcpjMR
-	UclPC0HHD8MMF9+Gv8o+9EMIjazlHDKNrkBjRIhb2RqV1ZHIhz+NCKnqtpS+xRnb
-	Jq5cFgTiF0g5gzXZKhJzH32bPydw1SYxZCw==
-X-ME-Sender: <xms:EwSWaf_2_5B-wcN5e7ZnFn8Pz5gLepRrr2suB9P24j4X9tBbwJ3q6A>
-    <xme:EwSWaSsFKO34xpb_VNcW5DQgoPBJN8bVJD1_QlyoQklXMbwFfm7ZHbpFfp9e_e9-c
-    xunm1AbueqSGRsqGgOull5x7KNisy-9lbm4ce_rs3p_2q_F4DtU>
-X-ME-Received: <xmr:EwSWaSDjPGp4GQupSHzlMvNr6yOEHZV8-F72yTju69heI0vITtHKPEk2CjVpOySnBww5nDoJ-4mW2Santg2UM3_q5ow83lmL_Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeffeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
-    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:EwSWaaWCm-qpHo5UOxprpg_F3HryLNPyAELqKVbYrVo3FYsX0uR1xg>
-    <xmx:EwSWaQAU9M6YDeAn1OdJ9s-LBzenM3erxTNHkdAwNBslpjDzKNghnw>
-    <xmx:EwSWad_ReiagolKZ7O_LjEwD0O4d4YP6_4rQg1NLAyvQMsgAy2dUvg>
-    <xmx:EwSWaXHJWB4nezLVp3uaDs0ZbJVRdSctpmjLcwrkIV4-sAgij8Jltg>
-    <xmx:EwSWaVgxjwWz_vE9MBLu3_c1kOrofYxBV0muU7wC2ga2zgZKqF9ctEZe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Feb 2026 13:25:22 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [PATCH v5 2/2] setup: allow cwd/.git to be a symlink to a
- directory
-In-Reply-To: <20260218051850.164972-3-a3205153416@gmail.com> (Tian Yuchen's
-	message of "Wed, 18 Feb 2026 13:18:50 +0800")
-References: <20260217084124.150366-1-a3205153416@gmail.com>
-	<20260218051850.164972-1-a3205153416@gmail.com>
-	<20260218051850.164972-3-a3205153416@gmail.com>
-Date: Wed, 18 Feb 2026 10:25:21 -0800
-Message-ID: <xmqqtsvd7vu6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fLJBYt8k"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-463d81452abso82453b6e.0
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 10:26:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771439185; x=1772043985; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=VoQkEtoZz8aAWbJg8NQwa0/SCFXSriNbkJ9H4VsFtGg=;
+        b=fLJBYt8k75A6YsxDuFj6Ah7bKNhpSsdo/94JFJpr6O0F5VpLVlVvqgyTz1+d3NR8PH
+         XIJdd9HG2oyCZdS1NNZOq6J1Bfl44K6LL8BFtqir6pV07L3X/hSbbfS+FfbsuLcpmQrJ
+         rEJqTqdNKlIKsJnUtlfsY+T0Mvr0JgdwWsmJToGFJkHeq3xMcEgk+LPbUtMAKq/kJZEQ
+         8k1aIzDsdTXXo1VTl9R9NEjR86X8HzKhUaFhf94BlbXgXEVgdcI2YAkcuxRwfoD36h8y
+         uSRfNVnY2hICX+BlOVa4HI3fsz0akqhqD8jS1w8qSUo/R6s9cb2j3aDIFAenT0GljMY+
+         pUxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771439185; x=1772043985;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VoQkEtoZz8aAWbJg8NQwa0/SCFXSriNbkJ9H4VsFtGg=;
+        b=rrlRRIPanRV0JtN37TfUtESrrznQ+pZStU7I+FEVVh8HrRvuVUXynP1Q70/At1HHWf
+         dHslOzbiUy5sHjBhoTgQzkGFgZTgu3thDI1yPSLxx5ca5TL7aGLYdKAbSTqM/v0J4vmd
+         R5X25OE9CB2Kdn03CqCFu2PhCZUz8X+Khu3R7ZwLRQImWbN/ED73XrxynDaGLTMDnThJ
+         35t3gEXHEhCRqghMkPK/gY73opyHCXzrJ4muFkIOGJFqJ79xi6GfkhpJBvFL3zzL0RqV
+         xcuW4Q028ou2yxf78ZoNDL58+2eiOR1QId8LNSiyzT/thDHH+DzXo2c0LD9+WPipAdZm
+         fOdQ==
+X-Gm-Message-State: AOJu0Yzd8ykyhaqwUCggJlE79c2TYzKRyS8v3bl20jiyJrQpih55n2dQ
+	w8ZTz72Ybv4AkeVerhbNeCsxj+/oYrwmpfkYJkyHhz398swShj8UK8eU
+X-Gm-Gg: AZuq6aLyFk0JYTIj0XWBnzgFSj+cNwatr3k/bKSYAVUjb5IhYRZBnz0K1mmeeNpnq8h
+	znu8535zpT97AE2oWEYBtUmsuFNslE46kCVQnKplcknXCNcVAJtOUjMw+bLi6b8brgSep/gt0k1
+	2Ra3ymwy5WsOKPy9gsAHOVi1smmlTZNbAkq8utwgBtI5vTQdTJyBIP36ayjGy2sHLbx+q4rxHNC
+	HRXZNIN5AsqWD4OjXwBetZpDTTkrwYQFnYcDMnw8KaOQgNFhjj5E8EpvspTWkQASMvQITaEGumB
+	Ya5wBs2fk87Nndp249IOoNlfJgVsIYTG0qe2z32B6523UlSxRs7IbG0VQ9DvvBGfXLzbIL8Zp9O
+	kIUei75y0vvco/a0vuoLstbDB3tD8yq5iJW/8u6EiOmTfBr5SI41zx270LBWJfqSUL0yiFB6y2a
+	0mWSOFMyLMzvX3WE+v
+X-Received: by 2002:a05:6820:1793:b0:674:2a5:61a8 with SMTP id 006d021491bc7-679a74724d5mr1349723eaf.74.1771439184715;
+        Wed, 18 Feb 2026 10:26:24 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-678c9eec065sm9034033eaf.10.2026.02.18.10.26.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Feb 2026 10:26:24 -0800 (PST)
+Date: Wed, 18 Feb 2026 12:26:21 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>
+Subject: Re: [PATCH 1/3] commit: avoid parsing non-commits in
+ `lookup_commit_reference_gently()`
+Message-ID: <aZX4w8C5In9gEF33@denethor>
+References: <20260216-b4-pks-receive-pack-optimize-shallow-v1-0-e98886daff2b@pks.im>
+ <20260216-b4-pks-receive-pack-optimize-shallow-v1-1-e98886daff2b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260216-b4-pks-receive-pack-optimize-shallow-v1-1-e98886daff2b@pks.im>
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+On 26/02/16 04:38PM, Patrick Steinhardt wrote:
+> The function `lookup_commit_reference_gently()` can be used to look up a
+> committish by object ID. As such, the function knows to peel for example
+> tag objects so that we eventually end up with the commit.
+> 
+> The function is used quite a lot throughout our tree. One such user is
+> "shallow.c" via `assign_shallow_commits_to_refs()`. The intent of this
+> function is to figure out whether a shallow push is missing any objects
+> that are required to satisfy the ref updates, and if so, which of the
+> ref updates is missing objects.
+> 
+> This is done by painting the tree with `UNINTERESTING`. We start
+> painting by calling `refs_for_each_ref()` so that we can mark all
+> existing referenced objects as the boundary of objects that we already
+> have, and which are supposed to be fully connected. The reference tips
+> are then parsed via `lookup_commit_reference_gently()`, and the commit
+> commit is then marked as uninteresting.
 
-> Strictly enforcing 'lstat()' prevents valid '.git' symlinks.
+s/commit commit/commit/
 
-But nobody sane would propose running one more lstat() anyway, so
-how is that relevant?
+> But references may not necessarily point to a committish, and if a lot
+> of them aren't then this step takes a lot of time. This is mostly due to
+> the way that `lookup_commit_reference_gently()` is implemented: before
+> we learn about the type of the object we already call `parse_object()`
+> on the object ID. This has two consequences:
+> 
+>   - We parse all objects, including trees and blobs, even though we
+>     don't even need the contents of them.
+> 
+>   - More importantly though, `parse_object()` will cause us to check
+>     whether the object ID matches its contents.
+> 
+> Combined this means that we deflate and hash every non-committish
+> object, and that of course ends up being both CPU- and memory-intensive.
 
->  		if (!gitdirenv) {
-> -			if (die_on_error ||
-> -			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
-> -				/* NEEDSWORK: fail if .git is not file nor dir */
-> -				if (is_git_directory(dir->buf)) {
-> -					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
-> -					gitdir_path = xstrdup(dir->buf);
-> -				}
-> -			} else if (error_code != READ_GITFILE_ERR_STAT_FAILED)
-> -				return GIT_DIR_INVALID_GITFILE;
+IIUC, the `mark_uninteresting()` callback used by `refs_for_each_ref()`
+is resulting in resolved/peeled object being parsed regardless of its
+type. This is wasteful though because we should only care about commits.
+This makes sense.
 
-The _intent_ of the original code was to
+> Improve the logic so that we first use `peel_object()`. This function
+> won't parse the object for us, and thus it allows us to learn about the
+> object's type before we parse and return it.
+> 
+> The following benchmark pushes a single object from a shallow clone into
+> a repository that has 100,000 refs. These refs were created by listing
+> all objects via `git rev-list(1) --objects --all` and creating refs for
+> a subset of them, so lots of those refs will cover non-commit objects.
+> 
+>   Benchmark 1: git-receive-pack (rev = HEAD~)
+>     Time (mean ± σ):     62.571 s ±  0.413 s    [User: 58.331 s, System: 4.053 s]
+>     Range (min … max):   62.191 s … 63.010 s    3 runs
+> 
+>   Benchmark 2: git-receive-pack (rev = HEAD)
+>     Time (mean ± σ):     38.339 s ±  0.192 s    [User: 36.220 s, System: 1.992 s]
+>     Range (min … max):   38.176 s … 38.551 s    3 runs
+> 
+>   Summary
+>     git-receive-pack . </tmp/input (rev = HEAD) ran
+>       1.63 ± 0.01 times faster than git-receive-pack . </tmp/input (rev = HEAD~)
+> 
+> This leads to a sizeable speedup as we now skip reading and parsing
+> non-commit objects. Before this change we spent around 40% of the time
+> in `assign_shallow_commits_to_refs()`, after the change we only spend
+> around 1.2% of the time in there. Almost the entire remainder of the
+> time is spent in git-rev-list(1) to perform the connectivity checks.
 
-    * do is_git_directory() thing to deal with a plain vanilla
-      ".git" directory when read_gitfile_gently thing said "we found
-      a directory" (NOT_A_FILE is overly coarse, which is what we
-      are correcting in this topic, but the _intent_ was to do the
-      is_git_directory() thing when we know it is a directory).
+Nice!
 
-    * return INVALID_GITFILE on any error, but do not return when
-      the reason why read_gitfile_gently thing failed was because
-      there is no ".git" there (again, STAT_FAILED is overly coarse,
-      which is what we are correcting in this topic, but the
-      _intent_ was to return INVALID thing when we not the failure
-      is not due to ENOENT).  Note that returning INVALID_GITFILE is
-      done when die_on_error is not set.
+> Despite the speedup though, this also leads to a massive reduction in
+> allocations. Before:
+> 
+>   HEAP SUMMARY:
+>       in use at exit: 352,480,441 bytes in 97,185 blocks
+>     total heap usage: 2,793,820 allocs, 2,696,635 frees, 67,271,456,983 bytes allocated
+> 
+> And after:
+> 
+>   HEAP SUMMARY:
+>       in use at exit: 17,524,978 bytes in 22,393 blocks
+>     total heap usage: 33,313 allocs, 10,920 frees, 407,774,251 bytes allocated
+> 
+> Note that when all references refer to commits performance stays roughly
+> the same, as expected. The following benchmark was executed with 600k
+> commits:
+> 
+>   Benchmark 1: git-receive-pack (rev = HEAD~)
+>     Time (mean ± σ):      9.101 s ±  0.006 s    [User: 8.800 s, System: 0.520 s]
+>     Range (min … max):    9.095 s …  9.106 s    3 runs
+> 
+>   Benchmark 2: git-receive-pack (rev = HEAD)
+>     Time (mean ± σ):      9.128 s ±  0.094 s    [User: 8.820 s, System: 0.522 s]
+>     Range (min … max):    9.019 s …  9.188 s    3 runs
+> 
+>   Summary
+>     git-receive-pack (rev = HEAD~) ran
+>       1.00 ± 0.01 times faster than git-receive-pack (rev = HEAD)
+> 
+> This will be improved in the next commit.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  commit.c | 32 +++++++++++++++++++++++++++-----
+>  object.c | 23 ++++++++++++++++++-----
+>  object.h |  5 +++++
+>  3 files changed, 50 insertions(+), 10 deletions(-)
+> 
+> diff --git a/commit.c b/commit.c
+> index 9bb471d217..b7c4ec2eb5 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -43,13 +43,35 @@ const char *commit_type = "commit";
+>  struct commit *lookup_commit_reference_gently(struct repository *r,
+>  		const struct object_id *oid, int quiet)
+>  {
+> -	struct object *obj = deref_tag(r,
+> -				       parse_object(r, oid),
+> -				       NULL, 0);
 
-> -		} else
-> +			if (error_code)
-> +				read_gitfile_error_die(error_code, dir->buf, NULL);
+Here we drop the use of `deref_tag()` which required us to
+unconfitionally parse the object.
 
-Should this be unconditional?  If our caller did not ask us to die
-upon an error with die_on_error, what happens?  The original I think
-returned INVALID_GITFILE for the caller to deal with.
+> +	const struct object_id *maybe_peeled;
+> +	struct object_id peeled_oid;
+> +	struct object *object;
+> +	enum object_type type;
+>  
+> -	if (!obj)
+> +	switch (peel_object_ext(r, oid, &peeled_oid, 0, &type)) {
 
-> +			if (is_git_directory(dir->buf)) {
+Here we peel the object and also get its type.
 
-Should this be unconditional?  If the thing is a directory, the
-original would have given us NOT_A_FILE but now it would give us
-IS_A_DIR.  And that is the only case original wanted to call
-is_git_directory() no?
+> +	case PEEL_NON_TAG:
+> +		maybe_peeled = oid;
+> +		break;
+> +	case PEEL_PEELED:
+> +		maybe_peeled = &peeled_oid;
+> +		break;
+> +	default:
+>  		return NULL;
+> -	return object_as_type(obj, OBJ_COMMIT, quiet);
+> +	}
+> +
+> +	if (type != OBJ_COMMIT) {
+> +		if (!quiet)
+> +			error(_("object %s is a %s, not a %s"),
+> +			      oid_to_hex(oid), type_name(type),
+> +			      type_name(OBJ_COMMIT));
+> +		return NULL;
+> +	}
+> +
+> +	object = parse_object(r, maybe_peeled);
+> +	if (!object)
+> +		return NULL;
 
-> +				gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
-> +				gitdir_path = xstrdup(dir->buf);
-> +			}
-> +		} else {
->  			gitfile = xstrdup(dir->buf);
-> +		}
->  		/*
->  		 * Earlier, we tentatively added DEFAULT_GIT_DIR_ENVIRONMENT
->  		 * to check that directory for a repository.
+Now we only parse the object if it is a commit.
+
+> +
+> +	return object_as_type(object, OBJ_COMMIT, quiet);
+>  }
+>  
+>  struct commit *lookup_commit_reference(struct repository *r, const struct object_id *oid)
+> diff --git a/object.c b/object.c
+> index 4669b8d65e..99b6df3780 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -207,10 +207,11 @@ struct object *lookup_object_by_type(struct repository *r,
+>  	}
+>  }
+>  
+> -enum peel_status peel_object(struct repository *r,
+> -			     const struct object_id *name,
+> -			     struct object_id *oid,
+> -			     unsigned flags)
+> +enum peel_status peel_object_ext(struct repository *r,
+> +				 const struct object_id *name,
+> +				 struct object_id *oid,
+> +				 unsigned flags,
+> +				 enum object_type *typep)
+>  {
+>  	struct object *o = lookup_unknown_object(r, name);
+>  
+> @@ -220,8 +221,10 @@ enum peel_status peel_object(struct repository *r,
+>  			return PEEL_INVALID;
+>  	}
+>  
+> -	if (o->type != OBJ_TAG)
+> +	if (o->type != OBJ_TAG) {
+> +		*typep = o->type;
+>  		return PEEL_NON_TAG;
+> +	}
+>  
+>  	while (o && o->type == OBJ_TAG) {
+>  		o = parse_object(r, &o->oid);
+> @@ -241,9 +244,19 @@ enum peel_status peel_object(struct repository *r,
+>  		return PEEL_INVALID;
+>  
+>  	oidcpy(oid, &o->oid);
+> +	*typep = o->type;
+
+Here we are modifying the existing `peel_object()` to also provide
+object type info back to the caller. With this, we can avoid the
+unconditional object parsing in `lookup_commit_reference_gently()`.
+Looks good.
+
+-Justin
