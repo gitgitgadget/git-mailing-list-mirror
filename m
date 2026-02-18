@@ -1,121 +1,109 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C763199920
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 20:01:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DB33446BE
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 20:06:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771444869; cv=none; b=e9YzViSN1cO+bgeLxn3QP2LhhK94FamVEZRq6K3kxN/pfF2BNoqvhTa9vbJjDdj0a4usNsvnCWx4qtD0lTRImhvA6K3rtV3PAhxtNo99YXZcyrSWoOGseOLk/eDUGqo7bCsgWPemLa2gJYU7GkuK2eSI7PPAmBgOZ7L+MYRkmWY=
+	t=1771445208; cv=none; b=gNfMsidJvcJpBbr2CNMiqh+ccUMSWOEJORnpq2rkkXSWupTJg6pLOsa8ieTL8CKE1zOxckyvy6N2dknhqnTqXmW/JF7m5qFMUaJE8GEO2ttMvo7E5mGUGYuoV/Ue/G2s5Nk/FmZMHlJAl8dC0jSzU6ReTrYGcmCaW1ipzOaNjAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771444869; c=relaxed/simple;
-	bh=DsR8nVmIGWTHM9v4ZPuR6Z2roXFK6OBAw8i8K+aRP3o=;
+	s=arc-20240116; t=1771445208; c=relaxed/simple;
+	bh=BNAHnvUzk8lZnXgMAzJMVhTJDGywsUwkS0w8fQkU1rY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p0YvZHEPh6dTBWhpMi1sKQna+RPpZRz2Zhz5xXzcpDKgeJFIz7A3YWqY+/uM0YEqpef7YZ1hb6iMf0EkkuqDGchSUlvJovk7b4Dg7h2PCY0kQyAQ8Y1PTye5wI41AjsuFBn0EPYn2ZiP0Ts8fFkl23XE6Ec6j6891IDHvGtCwys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LHuKOr4N; arc=none smtp.client-ip=209.85.210.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=hv7TzNeLkExhxLdggDaoy5CcFKW7LiBTEhLcTgjleOGdRSdaHU9awRaE57OGMjnzKmk71/SuZtvRZMsuu7rboFktgge/bx4kWbZcoPevFmulZPtBbDf71qWEGlG+fyw9ndyKXWUPMp/LAY7tpky1vY35j2ax/v/2ItQgZfDd50M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jsG+6QSI; arc=none smtp.client-ip=209.85.167.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LHuKOr4N"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7d19d3c7208so192147a34.0
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 12:01:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jsG+6QSI"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-463ba60966aso69231b6e.1
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 12:06:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771444867; x=1772049667; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ju56bbsuNKxldruL7wuVqQPxE1je4ADeELa3jfDDIh0=;
-        b=LHuKOr4NFhHFBJ01704tMIv9BZRm7bg5BYm1qFrIGMGfkhu64JWTZMke0Z1nq3EKQS
-         2QdPVrtS+bjTRYCFix73ND0G5mapuyvYFyAPWAEHLiMt0DDeiStkBQIm/Rp9HII7V4X5
-         Gp9ZMBe7tpr5b5JYJ7GcpqYkAqLnlIjT+D+XFeLjfyGrS0TzsUuxjAXPOUz81PvlfCV+
-         oIzE5TLCyKjpray9IoSGqKKhvhnwexdtqt6X+bEM3O+KMmUUTtXsLrzuHUb9g8mb5HoS
-         HsP6P+pddlKAMd+Gtrp2H3r93mz22+ZedInf5toIVRE+aPs+xb2JVAa17Ueis2kd+KS4
-         oe4w==
+        d=gmail.com; s=20230601; t=1771445206; x=1772050006; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Eh+gv7QbydUYfhqR6Miej8+XhtZ2T+RDofIsXfJr6zs=;
+        b=jsG+6QSIfz4Y7gGYSQwqExgtIgw6CCZC2kh/HNMt1XOO/VfaOU23slKwynTHlpdqpg
+         ddSYRjQnCQGjzDi8MDQhW6AY2IP5zmRJtT6BhsLF9bcPFvxN170On/Le2EXYNv0s6lOK
+         kjYE20r4rsV9ob3dDb/hnHjtL9AYjzagPfqc770/BdD0+7cdB8n6Yjhs6+0idI6kxHJ8
+         pEjqLzv6QIO4nIze7tDTE8aw/C1ndxljBygbUyO/FBsldk+55pAo4OKa96HezMFKc1CK
+         dcz2ztw2BMKLWm8NFAdgDLmSC5B8IubpFjYRi+JB4blt3ZmyM9B2pQ6m7BkqjrkmO/tT
+         yUWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771444867; x=1772049667;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ju56bbsuNKxldruL7wuVqQPxE1je4ADeELa3jfDDIh0=;
-        b=Bl5WEkvQO1Y/fsHHOJvjXdYkXX9Y18QY5AmYUiCL7tgtrkSHid0qHpp5ofyy215VHf
-         BTI9EnqxrcMAoXkViDZ7iFogavENsE5JQ42IZe0xIY3xfKdXFZBPiZ/gqyOgJuHwLLur
-         9FzY0KsXXT8QuK/GSfHAyiV7cNu69OESvzNIyCV6wzow5H39u32j5xZZstxmR4/RtN1Y
-         ENySB6hYpYiS8I3K94eERLxCdC0yc1CqlpembtDbljq0yNYTlMi5Bwr2Pqk6GnFjtnpt
-         r+sq827MeDL1cDg1ecpHgN277O5WUpUQWXBgtQsjuOp5e+ba2OzaStPuoZmgSPh8F5Zf
-         GYPw==
-X-Gm-Message-State: AOJu0YyDEtWuCLJKBkoM04FqdIVIHWoVRnfPFmx/tj2or9pWkn7CDp7K
-	e0ASBb5NiPaovfDFQPymb2AUeo/pBMZKjFRz9pqgbnhHL69BApdinIVaU/XyMg==
-X-Gm-Gg: AZuq6aKh7HS3LHidMBrnySwBGdUrrXoCgl5h1fvpTyEpXl8Q5Vyo5qT8vpjekim2O3y
-	Ml8tThiJpB0e0fP5UQN7b3Swnu9Q96WIKNStKl/5M8qyq8Uao532msaQz7a/fTrDkF9xkYJJx4E
-	MJRL4f1ahKT6qSMzANROsFqAC3exFswRiJHS/PxRrajaLi5XXAPmYWR8CMM3WZa1gsx+GsZwIkh
-	yL2ayTd4uwUAAp2NJm+NmXRdOkQkHZReajO5aY/+oGrXt/JnHYYGiQaomf5Ge+373Pt4TwyzF7V
-	IlwniqQxEqXCqmzXcbpzTskZD57OQcjcpiqGfnuv0N79U1138TPYDhnKwCTpV8G3zVlI/4ElqXA
-	CqBU9Gc7/e93VvD1vUnZZ2mm2VjyAThR1my3He6xBA+wdUWh+ClasmCkXwHIwUP9Fs11CMhbTvr
-	AqsY4KBAdba3n4oIsk
-X-Received: by 2002:a05:6820:160e:b0:662:b892:40c1 with SMTP id 006d021491bc7-679a742b704mr1598855eaf.52.1771444867202;
-        Wed, 18 Feb 2026 12:01:07 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771445206; x=1772050006;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Eh+gv7QbydUYfhqR6Miej8+XhtZ2T+RDofIsXfJr6zs=;
+        b=mm0yyy/9SNXVTcx2bMv+yZUVlGmZHpWUQQnEj7nzsSY8GsSX+SMrrl5nozQPd2R+wc
+         UL68uMqnbNDot50PWG5MgMbQXnUiOkYnLD3KfgMXvu5jhtwwmYAuWeHroc8xuoNhuOGt
+         kwv5mpuFaYTX3wwIDTgNRDwSwTVejDEv+AfzLRZEVqzar2+Fk6ja9hhqZEQ6dm7JD/Mw
+         MJbx3aYJdJ/2XNaekUfSxRCoWXea6KvVoELnYr/zB9NRDyUUVOg19wI5Sz70X02zKKKY
+         cggmqqhmjihhjR0GiWOfUre1I4Vm04XQa3O1YmexByaov7BwTxORvFI4skmAHdtL15Zr
+         JLKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUl19e2dGlabCHhyEAkCCQC2Kbm3p+ZdtC1wtrn0YiSve2J89aDqgimcgj//qecmvj1DRI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YztdG/vfSAk1IJ4TpXGljQ88I4NmuvV1zJ1ujOO8HLnTwczd6ub
+	VSrViWfvF48aIHHAsE9ldxot0cqK1I4RcOUpHDyFHp3ekLXiZsX7hIQX
+X-Gm-Gg: AZuq6aLcvKYNL1d+B4/b0SfchsmyGQmchW7Z6e8TITG4DnkiZVRPNxkndK+Z0iN0bNy
+	T7QjKa7vX6a6259TVVubQqdT10BA/rLjB61Z1GaSMMF5ahWTjKaF4f+dp6KwKIR5iK1pNmPDON3
+	TzYQ71u72u55+hnsoh4brO/Rs2jLFKCd92RviNlFdQPKu4amHgiRt7arsTm0TiVuZMjELnneyAt
+	qITKZ1ZWmGQ61nwygpcy+TatUt3zUjQbdMM+UkWQaKttEeIDb1Gu9ENXmNn945lTFEdTfs56Zmg
+	/79tUCZNFq/bOREOuMs0TtAr2jfqOqaZeuSg9oLL4UplbA2D9o/VczdUYi/qaHt2tFKi8ajquUZ
+	jOkS2Ns6f4ougvlEdPOKDNW4cd2vFH7JBpOsK9PHndPga2UIvZV5E4XCPJQVOnozv7EroykTJRM
+	6rR6oBgN741A/DxVwa
+X-Received: by 2002:a05:6808:1491:b0:45c:7306:505e with SMTP id 5614622812f47-463b40e3869mr8588620b6e.63.1771445206478;
+        Wed, 18 Feb 2026 12:06:46 -0800 (PST)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679aebf54f1sm256491eaf.5.2026.02.18.12.01.06
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-463b83bb884sm10271361b6e.11.2026.02.18.12.06.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Feb 2026 12:01:06 -0800 (PST)
-Date: Wed, 18 Feb 2026 14:01:04 -0600
+        Wed, 18 Feb 2026 12:06:46 -0800 (PST)
+Date: Wed, 18 Feb 2026 14:06:45 -0600
 From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/5] builtin/repo: collect largest inflated objects
-Message-ID: <aZYV0o9Xp-v5IPL1@denethor>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 4/5] builtin/repo: find commit with most parents
+Message-ID: <aZYa8U1hQ1oaeCKn@denethor>
 References: <20260203221758.1164434-1-jltobler@gmail.com>
- <20260203221758.1164434-3-jltobler@gmail.com>
- <xmqqv7gdqwei.fsf@gitster.g>
+ <20260203221758.1164434-5-jltobler@gmail.com>
+ <xmqqpl6lqw86.fsf@gitster.g>
+ <e48578d5-ec48-4369-901a-597de3be9455@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqv7gdqwei.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e48578d5-ec48-4369-901a-597de3be9455@app.fastmail.com>
 
-On 26/02/03 02:45PM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
+On 26/02/04 12:14AM, Kristoffer Haugsbakk wrote:
+> On Tue, Feb 3, 2026, at 23:48, Junio C Hamano wrote:
+> > Justin Tobler <jltobler@gmail.com> writes:
+> >
+> >> Complex merge events may produce an octopus merge where the resulting
+> >> merge commit has more than two parents. While iterating through objects
+> >> in the repository for git-repo-structure, identify the commit with the
+> >> most parents and display it in the output.
+> >
+> > Does the size of octopus have anything more than a curiosity value?
 > 
-> > The "structure" output for git-repo(1) shows the total inflated and disk
-> > sizes of reachable objects in the repository, but doesn't show the size
-> > of the largest individual objects. Since an individual object may be a
-> > large contributor to the overall repository size, it is useful for users
-> > to know the maximum size of individual objects.
+> I’m guessing this stat is inspired by git-sizer.[1][2] This is all that
+> the project says about “octopus”:
 > 
-> Hmph.  It is true that a byte is worth the same amount of money no
-> matter what object it is used to represent, but comparing the size
-> of a commit object and the size of a blob object feels inherently
-> meaningless to me.
+>     * Are there other bizarre and questionable things in your repository?
+> 
+>         * Annotated tags pointing at one another in long chains?
+>         * Octopus merges with dozens of parents?
+>         * Commits with gigantic log messages?
+> 
+> It marks the max of 10 in this repo as a “one star” (*) concern
+> (lowest). The 66 parent commit in the Linux Kernel gets six stars.
 
-I certainly agree that comparing max size values between the types
-themselves is not particularly meaningfull. I do think though the max
-size values by themselves provide insight into the extremes of the
-repository.
-
-> It all depends on what you are trying to learn out of the stats, but
-> having many small blob objects that add up to 1GB and having medium
-> number of medium sized tree objects that adds up to the same 1GB
-> would give the same number in object_stats.inflated_sizes for both
-> types, indicating that they are costing you about the same.  But the
-> members in largest_objects for these types would be different,
-> hinting (incorrectly) that one type may be costing more than the
-> other.  Would that really tell us something useful, I have to
-> wonder?
-
-Ya the largest objects and inflated sizes you can not really gain any
-insight regarding the distribution, but I think it still a good idea to
-showcase the extremes. If I see the max size values are "normal", that
-at least gives me some insight into the repository usage patterns.
-
-> One thing that is related to "largest" that might be useful is how
-> spiky size distribution is.  Among many medium sized blobs, if there
-> is only a handful of super huge blobs, that is quite a notable thing
-> to know (as opposed to the case where these super huge blobs are
-> not so unusual).
-
-I agree that showing a distribution here would be quite useful. This is
-something I plan to explore in a followup series. :)
+Yup, this is taken from git-sizer. From my perspective the max parents
+value largely just provides additional insight into how the repository
+may have been used/structured.
 
 -Justin
