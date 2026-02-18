@@ -1,154 +1,109 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48A42F5A36
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 12:05:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771416328; cv=pass; b=Yoo1oj+3q2HndjVu0NQ8WV3mit5nZpvHZm3BL+1YdHZ+pMu2U5SskYTgpMYuPpEj69/AZP9JzrvLJca2E0lJFevYrKypHN9orrR9P4O8hUuv/+8F7u15QQtixdO9IZdyN7wCUAzyRIfAh54CQUGwyi54d7TtdGd6UwjTSDibgcA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771416328; c=relaxed/simple;
-	bh=pwNrXbDyvBm3ZhyJCz+4W7IYtcPdduvdWvTFxoi4qT4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=jh/BAhlMCpWNWIeFTeK/WhQxppkk4dCm4fRofF8Ep2XAHwwKRcIvzEvrGaFsYEpWS+w/LvR/Be20ARFNNEGtWGEVo87IZBpPnRj3OXT5MH+dt73Eh6/q1LsG1Dnt8m6tQTPzXx4UD57NkomL59UPNz94MsF2sO3MIs4d04WEzLA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ktw7xbQf; arc=pass smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FD731960D
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 12:46:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771418810; cv=none; b=iuFyIzgpjqsvHSbHkdyOqp8KkSo8pwlvRluUQfyitOGm6jxtqMWOn+oMZAGqE9nwvytd7n1KS4ZyRsr1o/P+2EGcFJYCV7fAbN6dX3QSnnYmj98iCSoogcb4px+UhRLmeXMn2xQ6d/Gl7AGDg5ytGeeLrgq1DmFXExEY+Mm5bbM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771418810; c=relaxed/simple;
+	bh=i8GidXIzTz83HqZGBfT9DARJutyaRtKGGncBJ7QRvq0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OyV836JgeR7DNf30tzGeUaOpjpXrIof5fiQms800ipCJzTfMi7qNkVP+XjtWRBxg2Q86z7Pehp1tdn2VW7BBMYQaMnq8WCF4EWUke/ItYX9TJi9bGNYJUo0LHfIarPZYun5y9yv6TIYV6huTmeT8jEFMI4HL2GsZn17UdHqv4WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TuuiAjHz; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ktw7xbQf"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-5fc456c3742so1149713137.1
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 04:05:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771416325; cv=none;
-        d=google.com; s=arc-20240605;
-        b=J4Tz/n902gYcX8w3tdkgpXHbYFp3N32ZFduDEnesX9H7g5opsy1oA9A/2vzGXC3iAh
-         eZ9Mf1D+e7DCDqPz9g/eLEPvtAnRYTrSW4mlUn2H7G4ZEVZ34IH1Ij+NGtsGHWv0Izbb
-         kim3e9c5NEC2iS/b1fnAG9G3bt0BUIpJt73Pm0aPxJoDA3W1HXADFZdqYiTLAyiXibWJ
-         pDJvhQBWQrBpmC4e7sGBn2Zqg8bhYg22zeF+hHJX7cOdVt9zD0oGlFvMtK93rjuNtN/C
-         osD3dqbV2cgCQ/q1j6prrksKg+3txOh8pKGjuWKSkwnYONRWesHXMDNXDD1Vcx6PFaTJ
-         joXg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=Sp2MLe8iOVggzjUzAaUuMdd5/76aM+kwxv/zZB/10ls=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=b86/un+9gm0bT+4UJjVqb5g50GKxZJ9YUkpOk8hJYVJxQ0hSlEEHPd2Nru9rkqQEgf
-         8Ka+N70K+9MoEzZVGaTfLw5uTiekQ3SAlKQm0W1t4uum/Z+iTRSgDW3XhGJPmGdHOomz
-         N1lQIFE4vN5zUIXMHxDVOfjUX2I9N8I3up5mQtCsdaGE6e/tHrNAEa/xG4LYW8rGmCg7
-         1f6g/p9q5T3+yiywBkgYeS8H9r1tBODvyPj8JR4aV1EuGm10AeORfCIJKmp0FI+gOrZt
-         oDFMHF84R8NUw0FELQRNbpTRReqRdsWcSfEgvCQO9c2bKsEMnoWOI4e+R1tA/Mw1il1w
-         uOrQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TuuiAjHz"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-824bcb2011bso183339b3a.3
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 04:46:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771416325; x=1772021125; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Sp2MLe8iOVggzjUzAaUuMdd5/76aM+kwxv/zZB/10ls=;
-        b=ktw7xbQf4Qi4snFbONAqhhvallXvYaK97B1KTMsesOhI1e/a8EI9L5os0F9gWB3j5F
-         gTTbwtRSbhfJRgvZbriAN/Q52cq7gRdcgz4dJgmejKfjdgSiGT7EZ0BBWld0jpxoexjw
-         EPClZbPwaWTRaaXNT8FAPjSpflM36qqpM6Y+TfIaEtc3iEQaUNojaN1VOUZ3mTPD0Fxn
-         hw/jTXfN4DnPkMYxCQfYXFU+AdPzPj+pFlWicveM3Leja5dgZ0RziEHql920QmLrN3EV
-         ThdK+5gHo3+H5Al36UadN5ECuam3bmiP3gvrznpxiSRfM3iSI+FUkXOqpG9wZHMVAIGx
-         ClQQ==
+        d=gmail.com; s=20230601; t=1771418808; x=1772023608; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bEiH78K6WPoYFPdXvLLdeOX6l7SPFpR99o69e7rrQlU=;
+        b=TuuiAjHzCEnbLBvjELKYBXLoa66Sn4kb4BQ1jUg6vTo8tadepWTLa+j/xzYP4bfvpw
+         UfpjYVBwuGzG0rN1J0ryF0b0v4YzTfrzl31bGTpnEtqT8zA9UVKUhUU7MF4izrAesWI9
+         o2CO7AqtVSlqD4e0Tx1G/5KsyMF/zCYFs7lugdHMXUsstMMxkOBcN6SrhLVZRS++9BM1
+         hd3N4OPVqLGmyyybe2w3Y26kYx4T7oD61G7fVDpcuM4mm1WAdeP6nNdFni/aJ52dIksX
+         0G0hJ5WFXoCBm9uwmQLF+m/jo389+941LT4TePGgkHLN1MskQ6u7vorgnJBBs3aiX3O4
+         4ccA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771416325; x=1772021125;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sp2MLe8iOVggzjUzAaUuMdd5/76aM+kwxv/zZB/10ls=;
-        b=ims1nq8mzlvpD9MxQnlUEV3xUimQnUWCSQQm1cNdsQOlJ3WW7HE51ozj0EbQTg+io9
-         7WnSQPGX4Zj/zK4IqKLgtGFfbDvGQ/lJv5p4dDEF9HpqN51ex63QvuEtm0YwQThItPkM
-         ylqQV9LvZWND7+3kNq6qHunNi8ImVTziBrvHj1whQFby8S7X4nupxxYAfPaD9EFOs+Ao
-         vqNz9UCP40r/FClvD6iNw6Vc7SuoE8beWxXxSy5OrIvuiYVYlMsRLBvcCkYUVBhlOB0x
-         HHJGuwYEozMiU3L6wG8bySCS6iMpW9DpGQGdxC2fOueKjoT2jAwkaY9y4Uy2xmJczwr2
-         51Cg==
-X-Gm-Message-State: AOJu0Yxp6WN8NuOnyM6D0dn4SCt2LyzzsydTraUjkdeOLZkMOcbCIVCa
-	310SCnnO9k28cv0I8DYBQf1x5C3SqqQBMMP0NdY/7S1bd4BIFIOl9FftsWizn39PzQ5ZyLrSC1M
-	6Hr/1223auZrn9EBSAeNV0RqO0HfpDLVNvQG9
-X-Gm-Gg: AZuq6aKN5oVaKidFrFKBJCadDsUbDBZrXikdC49oqPDa2KkCl1l+GCkDqcITfRRubir
-	imxe37M2t90EaYy0aVJt5ouUktfLJXrfTp+Iy/Mb7bNrFqMpbGJZHqSYocje9jIm5NBXdOCbDzo
-	0IlM6HY3Y26aWvBb9FAxAbfqEBThwkG8uMVshUZtRvH6EbNorVHcA5/DYK9vIcDkwAYZRm/5HJR
-	cuoif5grKSrze2oeWXnuoNDNQrqATscaHoRy1AybLOtgHdwyiX2Niiju3sgJATLSDG8Jxm+tHvy
-	F5LaDrNrthZbW78CweEEWs3L85UcCff/3GoxCWMFCvliNzD3X9bCNwrVWSNXW4Mrpvm6bFT+Og=
-	=
-X-Received: by 2002:a05:6102:38c8:b0:5dd:f9c2:551c with SMTP id
- ada2fe7eead31-5fe7fcab2f6mr432328137.27.1771416325259; Wed, 18 Feb 2026
- 04:05:25 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771418808; x=1772023608;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bEiH78K6WPoYFPdXvLLdeOX6l7SPFpR99o69e7rrQlU=;
+        b=Mnlc46Z3GjYlArNol3yHCkWfHkEbENe541yUzzO6T4IGL1dGmvToj0UPookcAYzRLA
+         EUXjDWwkD4WB2FomPZni0XinOmXuiXLy5gTtCa0RUMffFQSb8nmYSWVRj3h19wjcWby+
+         q7TN2GvAHJ90TJaUXcFp8y7tpKJunMs3YuqkvD04XQiKXZWe5TwFWjmJlwaoxekEDMfM
+         SwYE2n1B+tUCzF7mQeuQwhieNA699AxIRd3EMJpudui/lS7EH0foGVu3LGh5SXFqI5G1
+         V67TUFt4NHZmaB1fS9f/Zj+eVffj0PaJr4cSMYxqBXy+siAbDC4TFI1nN4TRgw/xAYdE
+         TtOQ==
+X-Gm-Message-State: AOJu0YxbzfIWFcwG9RkiKNrIl6cHqPNyNuKMpRiMVItY+ZJEpYR1exQj
+	c5VX+ujZ7ihWdUQriJPHI+Bn6tNFdmAFx34JCMe0SZEOjUNYmYOQyYnE
+X-Gm-Gg: AZuq6aI14v/VwZPWk3P8fAXt8PNO7NRwGMiSn6COPN+Tgo/DjqLWjbeD0dpm5DmS5Or
+	Nl2NLtIWnVaxVu1FjZBt9Ovw7nDCQXqhnnjgMH5RXzFevz3+5IcJRtTvlRDRFO+ztqEGarolF5c
+	eadSjjtfpL8z3PltkI3G7nB+NCET1LZfXke1M3nVy3YuTF+6jhqEA6zdJ4Gwn29wZZEO6NuzJpN
+	p/+Fs/2pCy3lghe/JB+EbQkEk8ibIrKUtqL9S03Z3OhsA73709e8nU6MTCsu3pUuPYmBA9UI39x
+	I7LcZxJc20ki/FMNr9mu3XBWEcMfmOjzZJzv4YpMKWaQYHY199N+aJADtnLSQmK9SK51SX4CKeA
+	DZtTouxLw3Xd6DoaEl8PbhUAgmF8U4hUaUiDpHvN20u8DrOjUSBBwFgaCjSDstdPUgLxRHOgJ7/
+	awFdETSYCLQx7LjpJoJnFhp7bczzlGuIUPPc0IEVI=
+X-Received: by 2002:a05:6a00:3e05:b0:808:434f:ba80 with SMTP id d2e1a72fcca58-824c60e99demr12990275b3a.3.1771418808166;
+        Wed, 18 Feb 2026 04:46:48 -0800 (PST)
+Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-824c6b69ee6sm16639485b3a.32.2026.02.18.04.46.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Feb 2026 04:46:47 -0800 (PST)
+From: Tian Yuchen <a3205153416@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	karthik.188@gmail.com
+Subject: [PATCH v6 0/2] setup: allow cwd/.git to be a symlink to a directory
+Date: Wed, 18 Feb 2026 20:46:36 +0800
+Message-ID: <20260218124638.176936-1-a3205153416@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Cary Reams <cary.reams@gmail.com>
-Date: Wed, 18 Feb 2026 07:05:13 -0500
-X-Gm-Features: AaiRm52Orxt4uIt2gCGzgTeQo3y-OnsvS_XI8yH9hAEvw__pNwIkPmJqBHVlHLg
-Message-ID: <CALT4vkh_t35eJ8oWkSokVzt4mj+cZYxPQCr=gtU5hEuA0v1baA@mail.gmail.com>
-Subject: rebase --abort had issues
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-wont be a lot to go on, but here goes. Apologies, I don't have a
-precise timeline for you,
-as its all running together mixed with a nontrivial amount of adrenaline.
+Hi Junio, Karthik,
 
-while attempting a rebase, made it to commit 7 of 18, when received message
-about segmentation fault and inability to parse the file experiencing
-the merge conflict
+Here is the v6 reroll.
 
-fixed the file as per normal
-added the file
-rebase --continue failed
-rebase --abort failed
-repo seemed to be stuck in the middle of the commit
-would permit checkout of other branches, but still displayed the
-interim rebase status report
+Changes since v5 (and previous discussions):
 
-At more than one juncture I received this message:
+1. Fixed potential regression in gentle setup:
+   In Patch 2/2, I fixed a logic bug where `setup_git_directory_gently()`
+   could crash on generic errors (like `INVALID_FORMAT`) when `die_on_error`
+   was false.
+   The new logic only delegates to the die-handler for:
+   - Benign cases we want to ignore (`ENOENT`, `IS_A_DIR`).
+   - Security risks we MUST reject (`NOT_A_FILE`).
+   - When `die_on_error` is explicitly true.
 
-fatal: Unable to create '...MERGE_RR.lock': File exists.
+2. Refinements:
+   - Used `break` instead of `return` in `read_gitfile_error_die()` (Patch 1/2).
+   - Updated the error message for `NOT_A_FILE` to be more precise.
 
-Another git process seems to be running in this repository, e.g.
-an editor opened by 'git commit'. Please make sure all processes
-are terminated then try again. If it still fails, a git process
-may have crashed in this repository earlier:
-
-However, after removing MERGE_RR.lock and attempting rebase --continue
-or --abort (I don't recall which), I received the simple segmentation fault
-response with no other messaging.
+Thanks for the guidance! 
 
 
-w/r/t to state of the compromised repo, I have been able to checkout
-multiple branches
-I have under development and move them to a fresh repo clone (init
-from backup). However, every
-status command responds as if the rebase is still in play, regardless of branch:
+Tian Yuchen (2):
+  setup: distinguish ENOENT from other stat errors
+  setup: allow cwd/.git to be a symlink to a directory
 
-On branch <any>
-Last commands done (7 commands done):
-   pick 6c706e0f5 refactors endpoints to include element-delimiting comma
-   pick 0373d1796 #1680 interim save to do research
-  (see more in file .git/rebase-merge/done)
-Next commands to do (11 remaining commands):
-   drop 5e3a99f46 fixes 0-day enabling facilitator to edit their org data
-   drop 428947142 #1680 creates facGroupInvoiceCreate template
-  (use "git rebase --edit-todo" to view and edit)
-You are currently editing a commit while rebasing branch
-'wip_i1680_pass1' on '85bcb9270'.
-  (use "git commit --amend" to amend the current commit)
-  (use "git rebase --continue" once you are satisfied with your changes)
+ setup.c                       | 38 ++++++++++++------
+ setup.h                       |  2 +
+ t/meson.build                 |  1 +
+ t/t0009-git-dir-validation.sh | 72 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 101 insertions(+), 12 deletions(-)
+ create mode 100755 t/t0009-git-dir-validation.sh
 
-nothing to commit, working tree clean
+-- 
+2.43.0
 
-Began rebuilding a new copy of my repo. Once I finished getting my
-files transferred,
-I attempted to get precise error messages and detail for this report.
-
-the status message is as above
-checked out the branch I was attempting to rebase
-rebase --continue failed,
-rebase --abort did not fail
-and status no longer displays the interim rebase update messages
-
-not sure what to think, now.
-
-self-healing ??
-
-Thanks for reading, apologies its not more precise.
