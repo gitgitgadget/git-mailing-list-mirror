@@ -1,83 +1,83 @@
-Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A4B346774
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 19:11:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000601C3C1F
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 19:14:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771441914; cv=pass; b=CyNYc7tjGB5VsXoCB1ZXAoJxeqVWzqDEHpvaEcxV/Sj1z0WHJ4SYaJvVxSxrqvRRqYx5VTFGMDSmMbnHgutUgwwZ7oFzNJfrV/BA9vGeVNel8PHOwJFb/+tqvhBWoOxP/KvbuHmJMF9BUUl8K7kVYRcZopzQu/xqgp8+n1QMNAo=
+	t=1771442080; cv=pass; b=Ok1WjgX/olzJA8Jb77jkEAPYhyDg/Pl2BBLOW2jPuNv3RAEZPjFn3MundLSnJ573p95WHYqLcfzPdT8aksXZxbV+oKC2UWrNZM7P7R9058h1tL+ygSSPZjJXq4XiLGJe14tldt9F3q+ERSJLadYN2OKPLqHAhY/9LERYvAXE/Mo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771441914; c=relaxed/simple;
-	bh=rku4vAAKy1zJzgdMmMJDE+tQs9lwybrGVbQVYRpcI1Y=;
+	s=arc-20240116; t=1771442080; c=relaxed/simple;
+	bh=Tsd0Xm2SI+8NzhkL4bIAKlVKsWY/hGLkagvEO9o3Yp4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sYIX+NZCbN6IK/ML4bHNpxvUDB1zKjje6ZHiN8AuJ6zwEc1EPIF6seANQm9RSQ+jGvcZ+eNP2DcGUankE/Y/n8goay1uZV7bymd2e/QA5Ox6xsaaqhq1R4LYmNzpENO2duJ8j9ohKSmX7vPXYE09j1c2fncawYyV84OOcDvaVUg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=ufOwj6J+; arc=pass smtp.client-ip=74.125.82.44
+	 To:Cc:Content-Type; b=hZXZtaPNbSgsoIAAm2mYURhnIiehfiK5kT/qrdMqewsUTbtlY5j41z9XSo03Ax30PllSJBiSQ6XfWxgTZQsYlDjchiUnLLF/dn25MLMOP0lpMYFf0DKxkJtNlHqyUtGL+7JMrfwisaMyLHUvnzvjxmdRuj1HrDKTt1IK2jH3Ggk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=M3Tmldhl; arc=pass smtp.client-ip=74.125.82.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="ufOwj6J+"
-Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-126ea4e9694so228874c88.1
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:11:52 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771441912; cv=none;
+	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="M3Tmldhl"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2b740872a01so331784eec.1
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:14:38 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771442078; cv=none;
         d=google.com; s=arc-20240605;
-        b=bFxEE5VpgVihdAJRH2OVkw00TNJ3Cg/swLpNgYJITIZ/muGO5Xf5j399kRhW4GtXQw
-         hy2fbWlPk03HJCSVS1zAFHdDeiOCj0RbIfUXkzO/CDpYXPDmCqHxPL/RO6qFTUPsx7IC
-         YoQ8xjy675eO6YInvdTC9MaL6kc9Wu6cR/EzIIbsHVKoBYvj9C+vsdgnM4HzfgahS5j5
-         hkcAOagOnRRQydVW/PoZwD15JYLVEig/uhMyayvMPGSiosumh0luO/E1TK5h/0VPp8Jl
-         6lDbKzo7lfEeHDfZPS5m0vH0EXGFnSXxZpIl0ukmHKKrwKNKijX/OF45gJ7ligGjk6yk
-         j4YA==
+        b=bsDqVo9xLoZd7H1xK9JdkBsM0AlF8Y6+M7jJ28tsSHk9YS8AvVeKQpgTP0QLG4Dpg9
+         FuQK2KwdKzoxzk43yKT3tE2F23F4yBcMG2OIPs8w97P0Ckd0xzfjyz/CRBPTBR+IrC03
+         yOrEYyhFeUJJdNYtMApzdt49XI2CluQlr2YlIc0KOJc3l8+uJ5GdyqWgx5AcI2BEstTb
+         LQz+mVYsPFSxkSeTc9ZS8PZIWhIyxPAIeHbJf54hPQvnNw3uS8hXVfhwAKdwucblDbU2
+         5qvmMmuauC7eKNWci5x3x0CHhD0eALH9wmohbINXMRhzuNZ+nL8FtRhiLPNiAC8bYjLW
+         ukEw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=DhummzunepqBKxkSOMuPvhvFEZgK6RYOC5P5i1aXNds=;
-        fh=Fijgd4WVKvFM4OjrSehwjrj60XszmU8tP9G4VU5nYH8=;
-        b=MxQHN9FK7jLsJBzACNJPk5RC2az7cNa/SL4z/K/Qn13+OBOZjCx8YkG5nOyS5oMCz0
-         I6Y2k98nrwxKM+Wk60t5bfvgrlmj2WXTVv9kz0Vx18L9spa1Qq7YCk+CSl0jxnOBuDs4
-         iL+G4ORjfGFV5o95OoKbnh4rujiYhhSpB35uThGqeGC6W9WSOVnp2A+IkZ6DT6loMPXg
-         fLE1caXE7oCKUrSBSYheloh9iXhNr1rYhbeW7u4kd2XDAwfovV/zqNxyBeJl3Y3k4SD2
-         C6TE7PofehbIAHDyb4XyTb56q00yBnY7Zoi8qrmH7MDPB5amHM8VZolAwYYgxa08FBPX
-         sVYA==;
+        bh=JiO5jPv0qMoKyPVeu56Xym021W96xwYn40loSAc6FhA=;
+        fh=Uks93GOZlVbSY9FCUOriV0scWSEUgOsxLwbQ0kmvji4=;
+        b=NXHZkwV7KDUn+O10SON5Kptr/0d1WZ2UWkapgjcIpbDVqGWWfVWzvOq5NTUgnpyhjp
+         ncpUs/nScYh5P7Q4dFG52IlmfYqeGOUEiz5KcRso8jhhlRV714zYMiDHhLUsElseW23M
+         QTIRvGNtXV5XWgNdEo29PNBcWcpuWiuLHjn/t1xCrV9/oFuEqWBASae4zOiosCOvlqp4
+         MMQ/hqBLz07F3rl368JqXkhQ3ZMNETQZNS9FWhGrbHTYADfAZ6nAkMWoVV8yboVPfmUu
+         CHe7mmNvkg3Y0CP/Jf20I8TcvG1cUZ+WjeCINdj/WzYXfTt2aFViP7AG9o4LjNkxrJzr
+         0x5Q==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gree.net; s=google; t=1771441912; x=1772046712; darn=vger.kernel.org;
+        d=gree.net; s=google; t=1771442078; x=1772046878; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DhummzunepqBKxkSOMuPvhvFEZgK6RYOC5P5i1aXNds=;
-        b=ufOwj6J+VGSpXXTNo/4OkkinSiAp3XK+TOqKp0Ega7WThe7Ox8nUJi1XHGKC8Jsz6D
-         yatpXP4hvH3GVkFAfZacQHTKH4W1sVHaaF4mIiQ0l3PoAWg714E9GEg2T+SAyivjQ7HL
-         9V6WHYWzDY6HP3VbR1VwntVxCFvYiNktWmaYRTg6lDVYShznavv/QAiTN+njluFWRd8C
-         ca1lFOSB5LZ15hSZ4ylWJMWUbeRrXvV1xyT/jcssE2WeyZk7N4UWw7TVeAWnu+xOTXpR
-         nzqQ/7QXLA9wqraiR6hCc4zkbEyxS88QsYfzELZp2UrSGOg6LVi8f3jtasP4X+sUgQSx
-         KikA==
+        bh=JiO5jPv0qMoKyPVeu56Xym021W96xwYn40loSAc6FhA=;
+        b=M3Tmldhl/MbfSRgUP9heyDu4mbUW6LOW+rLvmEf9ZlmsYs6biiyj+6KE6AWWGZSTe8
+         sAnHkF3CSkB14QqfLEp6uOg988zvIrj8cGzeFLXpXNqMDbsCi6350jlAuDDSz0fnM0gN
+         RKJieFJu64Ja3Z2vsRz0miG70cANIVdI93B50S+CFp9IiSsbAZd6Mq0DgjR/s8/41Q8K
+         opy33gx8EW/7puCDODynWV5o2kfEfYQ4aatEQKx3VqvCy8lXGM/3Y/9pSbcb0TnE9Zhu
+         Q/N6qJiaTuVEaCPTg8Y9L0KibwiQLVXU+ss/laNWSeLQfkxQ/gmqCw/mcWgIVrK3/Tbr
+         xw8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771441912; x=1772046712;
+        d=1e100.net; s=20230601; t=1771442078; x=1772046878;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=DhummzunepqBKxkSOMuPvhvFEZgK6RYOC5P5i1aXNds=;
-        b=fbOGrFvUaFOq0FNjb9Vt92LfkCglDUqgFvSqtOqfst2E86hFax6oKW9uE5dbUSh2jq
-         uYIT9HTfOdtAGFiOzdHCRFPZATzBgzxAZs+0XxWJUnA2rIMXkjPC+O4BLkSzwJ+Qv97e
-         DOhbjpnN3Suffh4VFOXa4SHY5vHMJBzAHdy1w2TduMPi5iMlUtLfw59T3nOa2OMZCqbj
-         66s9MvyuSkRDvB6OP7T84XIJERM0rQGEZFKKgogddUbQg5/qN//jtqrtKf1/KU0fBump
-         5osK6Kwb60Cct9mA7vbQO11IxLJlOkdJHGI5ngjE8BT/CcSFoVjPxdigHFoVFTNJ+W9T
-         J9fg==
-X-Forwarded-Encrypted: i=1; AJvYcCVjtLeyKxM4dh1amsFZe4889LqpvGTnbYDWdyGJcxsIPkKgYG2IuoxqB1kfsIqJbP9CUf0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQNQjnVBtPuWFVarEvkiczYLbYLvrs06gtCtiPoXoKe0zPVGVr
-	fvpcHkPi4f7A/sC8FPCax8IdkDbra2OX3aLJLpgr36LbvVMHjHqyC+boJJ+hD0mOvt3/f3x5PR2
-	ka5jv9v2i/RrLGnnbpUcjC7Brf7xBmb0f3MgeijQZQ3BxXvs5/YVbBkjAQ9vCrBhEsOQ6vJ/tw1
-	3N4sxZXXnkylflR/auUZIEc+wD9L39rrvnV+u1S9nsDiE9EaMz3XX9ef1h1FEoXgVMg5OzppE0Q
-	Xyou+2OPuhQ5Hy2vrmlEcUFHiIHZbBWsDfM4WHJRD2bhAvadnX4HybhDVHuh6Zy+Op9zkX95lWt
-	M8BvvCiBkcL6GDE=
-X-Gm-Gg: AZuq6aJl6IGxWrRtd8cX0PqI+vHmik2wcHMSssY9OOOR/FUGaBVV20x8jOzdQjsq4Dw
-	ODOkghHSBWUx260FAwP/ThokpSOH6X95crk9QODFgrMiXur5EWgfFJLHsikjrXNMEnIQ3wH6ogK
-	h3FI1PBA1i7rPCPnOrYI0/KUBhD/+BaK5pfvOubmmL1Qcu8nXBhchPvquPKjqfujOQhVsuVWX6k
-	Dk+iQoxCxJDuZwKfSnxfGa9/bpA7IWvUqazwgYb1xMB/CeJnN8Uhb5aaOUKC7a4ZmX/m8WsbrF1
-	JRR1b+TTHsewk5aGUgY=
-X-Received: by 2002:a05:7022:458f:b0:11b:9b9f:426b with SMTP id
- a92af1059eb24-1273addfcaamr8365343c88.20.1771441911681; Wed, 18 Feb 2026
- 11:11:51 -0800 (PST)
+        bh=JiO5jPv0qMoKyPVeu56Xym021W96xwYn40loSAc6FhA=;
+        b=DYt/qLYVwtm0SVzmX9BujY0iNqLows7qbEdNXolQFuyyF8R3bDlgB3pRrItU1B/o5A
+         HL3gdlKhjtYZ4WpurIGszA6yLp46dMOTAjAvpjbXBF297ezDlcPowGSlaph30cnZq7Zu
+         U/E5m3MwFGaAC5h+zGSM3fWLn59+ZhaGAgKKJBQ6LQX7tJAp3EnVmAc5GP3h7Y4FnaVj
+         8SphK59ZK5JkF9qaFSk3hJ9J8p8yT12mbjwYKkgVn1hTtvpKtthHriFO6ziEzV8oYV9Z
+         Ufb+DDgtA2rMTmPZUBt2dQrdGr7oDumNvv4xGCpWvu7fYQRbzltds0uoN9LEGAiMUtw4
+         QWew==
+X-Forwarded-Encrypted: i=1; AJvYcCVGOZya2/iYsVvpTvr5V1t3mQwDA/Yr23W0LHav1I3/VeRJNkrHEWMhRF8sn/PjAAE1tU4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTKq8YZ2b9XiUiopOCn3/gQ5m7YC3HMhCgxdarDGTfqmEICmb3
+	9JsYwJAfd5vGhBtYZvug/Q8xJhthDDKP5hG0+96+YJVsuFRPbS13TnheOjSY/E6O1aukCmcZHuG
+	DJNzi2czLW8oC7IWjIjh+aUQ088V1y5c5fr7qhu7AkTeZFdjftZpKFvUZ2I7cBrxYqxh8qA0fQo
+	opL//0n0n0lqlD5oHjz2ODJ+Kr+DXHkQMqwUhE03+LWJ3qhOPFMZu/muhm3rsfDXIV9P83tu9PY
+	od+kxW88qx+dVr129VefORWfT0HykB4zwDMo3JlYRXlLS8Bb0ddsj9eQTzIj8FF6P/KEyMzOFEC
+	x1Rm9FdJYs72wPU=
+X-Gm-Gg: AZuq6aI7PQbTUNpqWUjBPARLhtGLTpkFb2t1dtm1kyXs14tG2nxly5NB3z4a+8gsGT8
+	dilABsPtd1bUe07SSXL9VGyr0bVqCGEm6wqoe8PqpsOFrNk/ZG2qb8EKs5ut2nUgqNp1sDMJtpw
+	6JW/v7Y62RI+fHheOUxalBLnwxnyXN2D2mQCGkn+2eo3ijKy7OoF1MYS9a7gFOyM9kqEwG4MBJe
+	moQ9pO2ZwkjUnMyn75wX0zgbfakVKrQOzHcEvDTXg7kSDCC5Hs2WcckayY6rC4volDBkz6fcCYJ
+	tE3u+4Jt
+X-Received: by 2002:a05:7300:3254:b0:2ba:a15b:5f40 with SMTP id
+ 5a478bee46e88-2bd5015ed65mr1383909eec.26.1771442077865; Wed, 18 Feb 2026
+ 11:14:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,49 +85,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2046.v2.git.1770775169908.gitgitgadget@gmail.com>
- <pull.2046.v3.git.1771391650713.gitgitgadget@gmail.com> <11a91368-7dc8-4081-bd13-d208126beb7b@app.fastmail.com>
-In-Reply-To: <11a91368-7dc8-4081-bd13-d208126beb7b@app.fastmail.com>
+ <pull.2046.v3.git.1771391650713.gitgitgadget@gmail.com> <xmqq7bsa7x78.fsf@gitster.g>
+In-Reply-To: <xmqq7bsa7x78.fsf@gitster.g>
 From: Koji Nakamaru <koji.nakamaru@gree.net>
-Date: Thu, 19 Feb 2026 04:11:40 +0900
-X-Gm-Features: AaiRm52R7tyw9sd8g6d-aiSfNrLAhg9L4QrUqw_Kr_Ws-7uJ3bpEhYZ9I1xGAj4
-Message-ID: <CAOTNsDyVqooYkSXv3U-SwAqiSqTnwDCOXpRr9AZjgbv5P=dbqw@mail.gmail.com>
+Date: Thu, 19 Feb 2026 04:14:26 +0900
+X-Gm-Features: AaiRm53w0CtunUr3A3xeMfIwBSExJb-95Z0Xx2p6JQaNfpGdh6v-z6ODd5w-0w0
+Message-ID: <CAOTNsDzwb_k+FDBbfzf7z=X=zGhnhXb902Dx9JFGv_eLjza2tQ@mail.gmail.com>
 Subject: Re: [PATCH v3] osxkeychain: define build targets in the top-level Makefile.
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+	"D. Ben Knoble" <ben.knoble@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 19, 2026 at 1:10=E2=80=AFAM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
+On Thu, Feb 19, 2026 at 2:55=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> On Wed, Feb 18, 2026, at 06:14, Koji Nakamaru via GitGitGadget wrote:
-> > From: Koji Nakamaru <koji.nakamaru@gree.net>
-> >
-> > The fix for git-credential-osxkeychain in 4580bcd235 (osxkeychain: avoi=
-d
-> > incorrectly skipping store operation) introduced linkage with libgit.a,
+> "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Nitpick: Commit references should have the date:
+> > +contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/c=
+redential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
+> > +     @mkdir -p contrib/credential/osxkeychain/.depend
+> > +     $(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLA=
+GS) $(EXTRA_CPPFLAGS) $<
 >
->     4580bcd235 (osxkeychain: avoid incorrectly skipping store operation, =
-2025-11-14)
+> I notice that many other places in the Makefile we seem to use
+> $(call mkdir_p_parent_template).  Do we want to do so here, too?
 >
-> Like the rest of the commits you reference here.
->
-> > and its Makefile was adjusted accordingly. However, the build fails as
-> > of 864f55e190 because several macOS-specific refinements were applied t=
-o
-> > the top-level Makefile and config.mak.uname, such as:
-> >
-> >   - 363837afe7 (macOS: make Homebrew use configurable, 2025-12-24)
-> >   - cee341e9dd (macOS: use iconv from Homebrew if needed and present,
-> >     2025-12-24)
-> >   - d281241518 (utf8.c: enable workaround for iconv under macOS 14/15,
-> >     2026-01-12)
-> >[snip]
+> Other than that, looking good.  Thanks for updating.
 
-I see. I'll fix the commit message in the next reroll.
+$(call mkdir_p_parent_tempate) seems to be used for creating the
+target's parent directory (e.g., creating
+po/build/locale/bg/LC_MESSAGES/ for
+po/build/locale/bg/LC_MESSAGES/git.mo).
+
+Since .depend directories are handled via dep_dirs in this Makefile,
+how about the following change for consistency?
+
+  diff --git a/Makefile b/Makefile
+  index 1c2019a4cb..47485004d8 100644
+  --- a/Makefile
+  +++ b/Makefile
+  @@ -2876,6 +2876,10 @@ objects: $(OBJECTS)
+   dep_files :=3D $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
+   dep_dirs :=3D $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
+
+  +ifeq ($(uname_S),Darwin)
+  + dep_dirs +=3D $(addsuffix .depend,$(sort $(dir
+contrib/credential/osxkeychain/git-credential-osxkeychain.o)))
+  +endif
+  +
+   ifeq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
+   $(dep_dirs):
+    @mkdir -p $@
+  @@ -4066,7 +4070,6 @@
+contrib/credential/osxkeychain/git-credential-osxkeychain:
+contrib/credential/os
+    $(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security
+-framework CoreFoundation
+
+   contrib/credential/osxkeychain/git-credential-osxkeychain.o:
+contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
+  - @mkdir -p contrib/credential/osxkeychain/.depend
+    $(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args)
+$(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+
+   install-git-credential-osxkeychain:
+contrib/credential/osxkeychain/git-credential-osxkeychain
 
 --
 Koji Nakamaru
