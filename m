@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDF0335540
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 22:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9B73358B6
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 22:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771453478; cv=pass; b=dYHHIOUWeOCoGNGo9XG1HPfil1H3311DHJ2Gb7BZ1/hqsmisZYei0uzLcl1xi5W0x19LZp8G9FJ4flmP8INsBOwhw21IVnA2qiyu9J4r2ocvmKc8Yj919GwZM2+TOo5jCtUX1T/PmvRIcGFAe54nSQS+h0SyPVhFlp4xl2yTHbo=
+	t=1771453480; cv=pass; b=nvmjA8yXf03Tg2nhtW2yoUPGUx3cy5CtrbpvF+Nuqz8a4IMU8YBfcxyXTuLVS/aP2+ipVuaRQr5gZGMbHknF8OxXPlL3O3xxqq9Z6Tpa5KJuNvgLzdDVLKGNPf13Xd7ctq2ZDRFmNnpqYwOExI6yKzmcYuk3ezXu+LFSUuSGIIo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771453478; c=relaxed/simple;
-	bh=hIog7y5gJ63TTibymINv43QAXbeZqbNK2d0bzTuFSaY=;
+	s=arc-20240116; t=1771453480; c=relaxed/simple;
+	bh=ai18Zofr5WqEIKTS5le2q/WPX3AU10OpLgwMZ09cXoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dPdh23v33tlexHEeSLQSJL2hqEIh94CRv0K+NLB/J3CDbohjVrFKVcTtPBEc4LeUZg1YSB4Ke+mex0uZfAZJYyb8cwJAt40jwz98gukywLI3YifZtzFkdQjbe71/aAsK66/KSYpPQGOj2Zqci14tWT7Lxs4jGY4B9g1o88A/XhU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=ip6xfRcF; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=DVBzZs+OlRXtOY3eS88W2S7M8i7ux8jHUkcxoh6d0wpEFGQBhhLjhanYIlkUloo++m4/CXqJI9pfvaCN+HLuqZWRG7aDnLtJJGF083/EU1uIADejUJWX331ufQs10OfjY9v/iig6FpcDIZhUecbHvN2oe2kRlj75/VXiO1qypGM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=KZUYNkuv; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="ip6xfRcF"
-ARC-Seal: i=1; a=rsa-sha256; t=1771453465; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="KZUYNkuv"
+ARC-Seal: i=1; a=rsa-sha256; t=1771453467; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=XkUQLOCndMV8gDZumClu8Stz16Oio4i+ACi4WsunhESJjqjAgo2gwKlN0YvVytZQONsH6yPkoE/hulnlJfH4Q3CU0OX8ChcWDJ+nB7eMiWQpSpkLqkVsrfwCUUvaHHffJFyt/abjGaGR3tSAm/VIzccXtvEuE4hx7c42xeJ3rIk=
+	b=oH2SEcjg5owODA0ENTIDlLwUbX1CgHr6zILF5SWk0iuB4raQAOWyf/fmwmV0IxTkELYWoBUhCMcpGcDKSg+ff909XP01AeMFYaxN0EDw3/ZAmCQmzhj+Ahvif2Y5z+9V13Gqc63P3Z24OXeV4v0J/QWDzMkN9p2CTZTARCMR8/g=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1771453465; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=vRXCdlK2LWNDQnY1N1DnBkAEhR/CswvsmFGAIR6lpAs=; 
-	b=BT6MJjm37foQZjnIA6BIEOtFGTdXMFC2imUJm6qSPFa7zO4olvBePSoFEgVpSwHvIX49/QClciRjYSFZ9aFwfdUsLgF4CrV5BMjFJ7jWh2KXaGjkTb1WTbAUwF9AI9gLuDcylyjvUypyd1BIoN6FU+ek5a4hAGEXGKosFQvd674=
+	t=1771453467; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=xtb9lPKIsotLZkHKqY49caQUGNsJf18gn2uG0ot5D/U=; 
+	b=lPdaxxR1PPuVF5H9Ii3pp6n2SB1NdlubrAWPZZvgNGtS2dqjtYixy8YNgmfRNlTFBorayc6AuJVEI97T/7SOZ0f0xxYTiFVOngykQWc4hoPIx5u5cGEXdCzjQinJHQN8scB3qe2S1HGiQ3bspngLdAHtj4amVPcbgYnlk/sHBJQ=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771453465;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771453467;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=vRXCdlK2LWNDQnY1N1DnBkAEhR/CswvsmFGAIR6lpAs=;
-	b=ip6xfRcFa6jCoMG1ho3Darp3ubgsTJAnfstZz7ilZJFhau2qJGYntMYIXTfQGScz
-	lsG3EdcnCZ4w+a1PYPGsdxyQGCdJ2U6Zi4iTOgrZqcniBU6/xd+/B/rhu5psKDQYmxK
-	GyNt4sXpkJkb2sFOW6nSJ3Qa91QrAfOEeHD7i3Wo=
-Received: by mx.zohomail.com with SMTPS id 1771453462162248.13190237979336;
-	Wed, 18 Feb 2026 14:24:22 -0800 (PST)
+	bh=xtb9lPKIsotLZkHKqY49caQUGNsJf18gn2uG0ot5D/U=;
+	b=KZUYNkuv4+StfkbZ8KnhOXgs8rj7wbj/rqde1K5smr5w3A72uNC+/3I8b5JlRniK
+	VgEVHzTnxBkYWRFXt2bDjU9PFzEeAjMYICUUX77g5atnYIV9whBa6NZ9GoqUAD8iY1b
+	HA55RTPyq2GKe3CVLvkhteE2RJjLdHFyLRgIKE3U=
+Received: by mx.zohomail.com with SMTPS id 177145346430080.13158237699349;
+	Wed, 18 Feb 2026 14:24:24 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -45,9 +45,9 @@ Cc: Jeff King <peff@peff.net>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v2 7/8] hook: allow out-of-repo 'git hook' invocations
-Date: Thu, 19 Feb 2026 00:23:51 +0200
-Message-ID: <20260218222352.55393-8-adrian.ratiu@collabora.com>
+Subject: [PATCH v2 8/8] hook: add -z option to "git hook list"
+Date: Thu, 19 Feb 2026 00:23:52 +0200
+Message-ID: <20260218222352.55393-9-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260218222352.55393-1-adrian.ratiu@collabora.com>
 References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
@@ -61,132 +61,115 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-From: Emily Shaffer <emilyshaffer@google.com>
+Add a NUL-terminate mode to git hook list, just in case hooks are
+configured with weird characters like newlines in their names.
 
-Since hooks can now be supplied via the config, and a config can be
-present without a gitdir via the global and system configs, we can start
-to allow 'git hook run' to occur without a gitdir. This enables us to do
-things like run sendemail-validate hooks when running 'git send-email'
-from a nongit directory.
-
-It still doesn't make sense to look for hooks in the hookdir in nongit
-repos, though, as there is no hookdir.
-
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- git.c           |  2 +-
- hook.c          | 30 ++++++++++++++++++++++++++++--
- t/t1800-hook.sh | 16 +++++++++++-----
- 3 files changed, 40 insertions(+), 8 deletions(-)
+ Documentation/git-hook.adoc |  8 ++++++--
+ builtin/hook.c              |  9 ++++++---
+ t/t1800-hook.sh             | 13 +++++++++++++
+ 3 files changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/git.c b/git.c
-index 744cb6527e..6480ff8373 100644
---- a/git.c
-+++ b/git.c
-@@ -587,7 +587,7 @@ static struct cmd_struct commands[] = {
- 	{ "hash-object", cmd_hash_object },
- 	{ "help", cmd_help },
- 	{ "history", cmd_history, RUN_SETUP },
--	{ "hook", cmd_hook, RUN_SETUP },
-+	{ "hook", cmd_hook, RUN_SETUP_GENTLY },
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "init", cmd_init_db },
- 	{ "init-db", cmd_init_db },
-diff --git a/hook.c b/hook.c
-index fee0a7ab4f..2c8252b2c4 100644
---- a/hook.c
-+++ b/hook.c
-@@ -18,6 +18,9 @@ const char *find_hook(struct repository *r, const char *name)
+diff --git a/Documentation/git-hook.adoc b/Documentation/git-hook.adoc
+index 7e4259e4f0..12d2701b52 100644
+--- a/Documentation/git-hook.adoc
++++ b/Documentation/git-hook.adoc
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git hook' run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]
+-'git hook' list <hook-name>
++'git hook' list [-z] <hook-name>
  
- 	int found_hook;
+ DESCRIPTION
+ -----------
+@@ -113,9 +113,10 @@ Any positional arguments to the hook should be passed after a
+ mandatory `--` (or `--end-of-options`, see linkgit:gitcli[7]). See
+ linkgit:githooks[5] for arguments hooks might expect (if any).
  
-+	if (!r || !r->gitdir)
-+		return NULL;
+-list::
++list [-z]::
+ 	Print a list of hooks which will be run on `<hook-name>` event. If no
+ 	hooks are configured for that event, print a warning and return 1.
++	Use `-z` to terminate output lines with NUL instead of newlines.
+ 
+ OPTIONS
+ -------
+@@ -130,6 +131,9 @@ OPTIONS
+ 	tools that want to do a blind one-shot run of a hook that may
+ 	or may not be present.
+ 
++-z::
++	Terminate "list" output lines with NUL instead of newlines.
 +
- 	repo_git_path_replace(r, &path, "hooks/%s", name);
- 	found_hook = access(path.buf, X_OK) >= 0;
- #ifdef STRIP_EXTENSION
-@@ -268,12 +271,18 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
- 	strmap_clear(&cb_data.event_hooks, 0);
- }
+ WRAPPERS
+ --------
  
--/* Return the hook config map for `r`, populating it first if needed. */
-+/*
-+ * Return the hook config map for `r`, populating it first if needed.
-+ *
-+ * Out-of-repo calls (r->gitdir == NULL) allocate and return a temporary
-+ * cache map; the caller is responsible for freeing it with
-+ * hook_cache_clear() + free().
-+ */
- static struct strmap *get_hook_config_cache(struct repository *r)
- {
- 	struct strmap *cache = NULL;
+diff --git a/builtin/hook.c b/builtin/hook.c
+index e151bb2cd1..83020dfb4f 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -11,7 +11,7 @@
+ #define BUILTIN_HOOK_RUN_USAGE \
+ 	N_("git hook run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]")
+ #define BUILTIN_HOOK_LIST_USAGE \
+-	N_("git hook list <hook-name>")
++	N_("git hook list [-z] <hook-name>")
  
--	if (r) {
-+	if (r && r->gitdir) {
- 		/*
- 		 * For in-repo calls, the map is stored in r->hook_config_cache,
- 		 * so repeated invocations don't parse the configs, so allocate
-@@ -285,6 +294,14 @@ static struct strmap *get_hook_config_cache(struct repository *r)
- 			build_hook_config_map(r, r->hook_config_cache);
- 		}
- 		cache = r->hook_config_cache;
-+	} else {
-+		/*
-+		 * Out-of-repo calls (no gitdir) allocate and return a temporary
-+		 * map cache which gets free'd immediately by the caller.
-+		 */
-+		cache = xcalloc(1, sizeof(*cache));
-+		strmap_init(cache);
-+		build_hook_config_map(r, cache);
- 	}
+ static const char * const builtin_hook_usage[] = {
+ 	BUILTIN_HOOK_RUN_USAGE,
+@@ -34,9 +34,12 @@ static int list(int argc, const char **argv, const char *prefix,
+ 	struct string_list *head;
+ 	struct string_list_item *item;
+ 	const char *hookname = NULL;
++	int line_terminator = '\n';
+ 	int ret = 0;
  
- 	return cache;
-@@ -315,6 +332,15 @@ static void list_hooks_add_configured(struct repository *r,
+ 	struct option list_options[] = {
++		OPT_SET_INT('z', NULL, &line_terminator,
++			    N_("use NUL as line terminator"), '\0'),
+ 		OPT_END(),
+ 	};
  
- 		string_list_append(list, friendly_name)->util = hook;
- 	}
-+
-+	/*
-+	 * Cleanup temporary cache for out-of-repo calls since they can't be
-+	 * stored persistently. Next out-of-repo calls will have to re-parse.
-+	 */
-+	if (!r || !r->gitdir) {
-+		hook_cache_clear(cache);
-+		free(cache);
-+	}
- }
+@@ -66,10 +69,10 @@ static int list(int argc, const char **argv, const char *prefix,
  
- struct string_list *list_hooks(struct repository *r, const char *hookname,
+ 		switch (h->kind) {
+ 		case HOOK_TRADITIONAL:
+-			printf("%s\n", _("hook from hookdir"));
++			printf("%s%c", _("hook from hookdir"), line_terminator);
+ 			break;
+ 		case HOOK_CONFIGURED:
+-			printf("%s\n", h->u.configured.friendly_name);
++			printf("%s%c", h->u.configured.friendly_name, line_terminator);
+ 			break;
+ 		default:
+ 			BUG("unknown hook kind");
 diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index fb6bc554b9..e58151e8f8 100755
+index e58151e8f8..b1583e9ef9 100755
 --- a/t/t1800-hook.sh
 +++ b/t/t1800-hook.sh
-@@ -131,12 +131,18 @@ test_expect_success 'git hook run -- pass arguments' '
+@@ -61,6 +61,19 @@ test_expect_success 'git hook list: configured hook' '
  	test_cmp expect actual
  '
  
--test_expect_success 'git hook run -- out-of-repo runs excluded' '
--	test_hook test-hook <<-EOF &&
--	echo Test hook
--	EOF
-+test_expect_success 'git hook run: out-of-repo runs execute global hooks' '
-+	test_config_global hook.global-hook.event test-hook --add &&
-+	test_config_global hook.global-hook.command "echo no repo no problems" --add &&
- 
--	nongit test_must_fail git hook run test-hook
-+	echo "global-hook" >expect &&
-+	nongit git hook list test-hook >actual &&
-+	test_cmp expect actual &&
++test_expect_success 'git hook list: -z shows NUL-terminated output' '
++	test_hook test-hook <<-EOF &&
++	echo Test hook
++	EOF
++	test_config hook.myhook.command "echo Hello" &&
++	test_config hook.myhook.event test-hook --add &&
 +
-+	echo "no repo no problems" >expect &&
-+
-+	nongit git hook run test-hook 2>actual &&
++	printf "myhookQhook from hookdirQ" >expect &&
++	git hook list -z test-hook >actual.raw &&
++	nul_to_q <actual.raw >actual &&
 +	test_cmp expect actual
- '
- 
- test_expect_success 'git -c core.hooksPath=<PATH> hook run' '
++'
++
+ test_expect_success 'git hook run: nonexistent hook' '
+ 	cat >stderr.expect <<-\EOF &&
+ 	error: cannot find a hook named test-hook
 -- 
 2.52.0.732.gb351b5166d.dirty
 
