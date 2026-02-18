@@ -1,132 +1,169 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C261C3C1F
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 20:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9022EA169
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 21:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771446437; cv=none; b=oYvkVWSDG9JOMsoZwKl2PbCWEbUBuMbC0ETic1swwNRKjIgUXckHm1nqmDJVNGiZ8KqPSp+ocZqqwUTNL2zgr237ugVTDkxbvz5NmXaChO+IQOwiiYfbW9ZPJMRHbzIyFtjNUvMqFbTpP95OzLgjoW2PTmEm3eBkbV+/M8K0PFI=
+	t=1771448493; cv=none; b=K85I1iLQU3UT3nMJ7uNTi2tienPeMK9aWeg2x6ZP47PonQ9yzXAbzqXAwr/Rlh1zswzKc07YXPeW4nSSgcZ5WTKZx1xJVwDVMgsPCN2nz/4c8FI2ulDvg4kCPZyTddB383uZB1cKYwwGU5NbFz9eEHhgAenyBcNqiYZJVkX4TY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771446437; c=relaxed/simple;
-	bh=lDoS2UngAyAhoJ59zmjSlI9PxCa9bOhGXXWp/8TF4TI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dd5UzyGTgeL96LkPQcbya1XRI8RT12elj7KvPfqFRYQeGj0EyVVRsYDJIVUGn1Bao491qfPsGKoUYwE4sF95TVBUor+R/mvNfjbGgRnuEW0nFJaV1X0bBT1hR3ZNAtBPpULIu5ncXxnPsYpHMXLahytzgbQkvYEFvw0xo4hi1NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=OjUqDwRP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kcnqgz2M; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1771448493; c=relaxed/simple;
+	bh=H8yYWwAFoOAUSDavfTEfqxznacreNf9cih3qLEbxTpA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JnmtDnDSLzIc5Gn5VEqYFhKZM8GRsJA0TKMq1zvRQ238wJ6WewRQJX8p8u0gdzc32wSeNUMgjHltp/UTipV/5OM/+KNcflGYjCMs6s8W29+jG1corzh+FTa8YEbEccMv2S7P9m9qKAPbFYv2/l3CoK818E1gF1ElPLTCl7L/zpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ba2XYCa2; arc=none smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="OjUqDwRP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kcnqgz2M"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 963141400098;
-	Wed, 18 Feb 2026 15:27:15 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 18 Feb 2026 15:27:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771446435;
-	 x=1771532835; bh=eAj4KA4/exZ+w+ei21Pu9KqQN9BzJCSZ+SjCA5YgHKw=; b=
-	OjUqDwRPavnz5pRYNvAl34CxgVueQi5K9fUjVv+QNLNJn7EbARwN9LXp5/fzDL6i
-	TlE42vIDvys3r+DEkNrfhmM+X2wU/0aCGJK6aghSBngT4StMpNef+nmrLbQKUSK1
-	soBcqs9jumZrbmkyem7QBmLp7ccmTevbwJjUgkuUBpjWgLdmboxaEqxJ7MfJavEN
-	1vlIBgkNkaTa8bpAedG8aDVlRmXoVD8Si+l8sTOkkgKwSqH5DLGeKhhLhSQExneC
-	Rx8xRoFHyNMkuTExQiu5HdGB9ncU+L7PV+KRcdzZpuOL7BUqB0RJPF7qXLEHbApG
-	bCU+ll/0L8+yHYKdXX7/DA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771446435; x=
-	1771532835; bh=eAj4KA4/exZ+w+ei21Pu9KqQN9BzJCSZ+SjCA5YgHKw=; b=K
-	cnqgz2M8bz/io8i08a+AEC7D3JNNNkFgn2220Kc43lHB57eQi6rGFVsefy0ywZlr
-	kQr0GYXahzAQeR33UinTQdvYY0g4aGBwh+lKnyiuZoubm6JsE0JuA5OMbQK9fNLu
-	uo2ZBNjb4ue+U0CILQZrY3F1JzG2sdHtOtrhgWba3fQZRmbZmwI6lHR4Uk7kKxwj
-	Kn9Qd91q1ol8svmh1jzQr93hdI/8zg8xoR+oCcbe4sYh4zzqavBvWjIAITcbbOhr
-	/n0Lx5B73uAR6Kd01falrKKiT1YFVy1e62O5E3mih+ZcZMCbne7nF4qhCluC5zhg
-	nQu3FQPSfBqaoWIV+t6qQ==
-X-ME-Sender: <xms:oyCWaT-58n1FP5On6P8lAdngTJtxXTSigLZF_6_1I2pV9nYo3dwxmKo>
-    <xme:oyCWaXJxrcx7805lM3kzTQJgcdy9CnG7Z_DwzyttSSLrPN_yuk_eR2XQ6Eew_raWQ
-    Xt-FFcElAzB0sw87CWBlteJVVz-F3txn6ukulTst88yng9GbnHK2Gw>
-X-ME-Received: <xmr:oyCWaebBW5_dHNaHxt1p5Zb7P-x1l_oFI1vTmw3BWVS4GicktXHMMMOHnbACnY7_YHo1rA17oLGvwixEe54OKUZcj6mD3PCjps2EJ70tVBvYBWRLMh25jQbNKA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdefiedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpefhvfevuf
-    ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephffgge
-    elhfejkefgteelteejhfetieehgeeftdduudffgeejhfektedugefghfeknecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeef
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhr
-    tghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:oyCWaZK2GGcnW2S8V9elDJTDUt_9t5DAyz84NVy_2yiRNtWV2THYRA>
-    <xmx:oyCWacBjhm6E5dKYFF4m8-P0d3dGyAkzec5NGcSGi8-Ty56XN9IZYg>
-    <xmx:oyCWaep5aEw9fk0QPFladPmlApBGSYZdCMnptemibn2LpDGmrZ7S6g>
-    <xmx:oyCWaXgujyP1bOhT8qo-vgWhqB0zjBXT-J7mzlZgEFq4hb5_AY2upg>
-    <xmx:oyCWaf7uVDsC3CkCG1Xp33GevvuGR0mEV66AuFJH1vH38JZnTsYDNZlE>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Feb 2026 15:27:14 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ba2XYCa2"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7d1872504cbso278076a34.0
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 13:01:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771448491; x=1772053291; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EeJf0gNOsgoifGURJTObpcmjvDU3KFODrruFa5Rtv9I=;
+        b=ba2XYCa2kuC/5Xel21gLXKz4zThkluoqF/mHcwQDN93uctV7iPlpnF2CQevoImfjrY
+         ECxqKBTba5L+XDol7EOZT5xcnW+UUfgUtmhMXoVSSO+Ai7Xm9m3n52xMew16xBZ+DkZl
+         Cmi3x5O1l6oGVy0zEWZUwEu9omuSPc9YkJCRzpDNQWYdQOUsX+qRyuJlO9JQpbZ4JRco
+         1AyY0wMzJSyVUzIpTDRjeXpVL+XHgwclHL8S3zw9ZsHgly0j8V6KQBFp3UzMOl11WOKP
+         Du4OYbNYVYTFEa8kRVT30kljyyUUpO3reB8yqcwpav2EstUh3kfHQErRHk4SIRIF8rYr
+         slBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771448491; x=1772053291;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EeJf0gNOsgoifGURJTObpcmjvDU3KFODrruFa5Rtv9I=;
+        b=pXNPBWj0tvdGHNiClz5XvcTQHUsofBEZ9YmcNacYRkGoQnQPudEg4N3RCmcYHEdDqR
+         l3p8dBAdCz+CWpe2J4H9hxAdvvgS4Mmx+RLbrp9Ijm/f7k3CU1BqGaRTf/8ehENIv2im
+         YE8ltJTBFK0EozvhbRm0gliRchupGCoRjNJq7x8NzL8CGpjqsetJJ1LGLM+F7UqtJ9v5
+         f3/ifzbzkRJC9bvF1Fzh5phav7duzGQP5x7v6TkuthC0vh8cAhMTe/jONRrbUZ1ZNyFb
+         Od1Q/qnRN7JNGccJybCd8R7pvrF6zPKjTaSJGNmN8aNgU/AhVi+SEYtZZGeFJ9eisez4
+         4LlA==
+X-Gm-Message-State: AOJu0Yz1slMx9AjjSJjJRn8xvCVaD4m2MxQkZ5Vs3wg69qX4HIJ4K+TH
+	C2hqSwdgdcqogkFDODTkYYbjCjmWmyX4zSk8b0Ak6r2TlfT9AFTr2729kARckA==
+X-Gm-Gg: AZuq6aIpVIRt3devAzaYORANBNDoZSoabN9VF/qQyTWNzmVujKzQDTBoMd3RguJ/FH5
+	urSIPAQFsUOqYpdcfW5NXckYA33qcx857vzZoWp1n1imWtR1HgXpS1nK8VZvvlXyb1T6bxYnsDd
+	DAGU/FaZeG6KW0jAZt93PkdI+R+YuU6YuMVDxkEk8XUyD73elrJRhPACzGabaCIOOeaBkirX5/t
+	DunjzgdEpk6GSIT1ko52vsRgH/BVcWlhFMNfgCmDojdeH7K0BKDSqgOJA61P6BDPKVb/dQNHWHt
+	zqsLysKxu1WgNEFK7vcLK6uHiAStSFcKgd0oWCZe48GecptdyeFX3ESrREXE0ZxCIBm/JAzexbf
+	nhc9C8qi261ngFtLC/gg3Fdq7Bxn8BRmU3ZFkS/52BM688zTp5Rs+TFlKxG5QV0tQRg6nHGrd8F
+	AcKIRfLb8XKGpQIi7eAlCAJY5POnnTEJk=
+X-Received: by 2002:a05:6830:6187:b0:7cf:d784:5d6 with SMTP id 46e09a7af769-7d5061f9288mr2423163a34.5.1771448490719;
+        Wed, 18 Feb 2026 13:01:30 -0800 (PST)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d4a7530a8bsm19987447a34.4.2026.02.18.13.01.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Feb 2026 13:01:30 -0800 (PST)
+From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	peff@peff.net
-Subject: [PATCH 2/2] doc: diff-options.adoc: show format.noprefix for format-patch
-Date: Wed, 18 Feb 2026 21:26:18 +0100
-Message-ID: <format.noprefix_and_--default-prefix.39e@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
-In-Reply-To: <CV_format.noprefix_boolean.39c@msgid.xyz>
-References: <CV_format.noprefix_boolean.39c@msgid.xyz>
+Cc: Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH] object-file: use `container_of()` to convert from base types
+Date: Wed, 18 Feb 2026 15:01:20 -0600
+Message-ID: <20260218210120.1146078-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+To improve code hygiene, replace direct casts from `struct
+odb_transaction` and `struct odb_read_stream` to their concrete
+implementations with `container_of()`.
 
-git-format-patch(1) uses `format.noprefix` and ignores `diff.noprefix`.
-
-The configuration variable `format.prefix` was added as an “escape
-hatch” because “it’s unlikely that anybody really wants format.
-noprefix=true in the first place.”[1] Based on that there doesn’t
-seem to be a need to widely advertise this configuration variable.
-
-But in any case: the documentation for this option should not claim
-that it overrides a config that is always ignored.
-
-† 1: 8d5213de (format-patch: add format.noprefix option, 2023-03-09)
-
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
 
-Notes (series):
-    `--default-prefix` does override `format.noprefix`. See test `format-patch
-    --default-prefix overrides format.noprefix`.
+Greeting,
 
- Documentation/diff-options.adoc | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+This patch is a small cleanup following discussion in [1].
 
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index 9cdad6f72a0..8f632d5fe1a 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -860,7 +860,9 @@ endif::git-format-patch[]
+Thanks,
+-Justin
+
+[1]: <87o6m5rff8.fsf@iotcl.com>
+
+---
+ object-file.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
+
+diff --git a/object-file.c b/object-file.c
+index 1b62996ef0..1a24f08978 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -719,7 +719,8 @@ struct odb_transaction_files {
  
- `--default-prefix`::
- 	Use the default source and destination prefixes ("a/" and "b/").
--	This overrides configuration variables such as `diff.noprefix`,
-+	This overrides configuration variables such as
-+ifndef::git-format-patch[`diff.noprefix`,]
-+ifdef::git-format-patch[`format.noprefix`,]
- 	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
- 	(see linkgit:git-config[1]).
+ static void prepare_loose_object_transaction(struct odb_transaction *base)
+ {
+-	struct odb_transaction_files *transaction = (struct odb_transaction_files *)base;
++	struct odb_transaction_files *transaction =
++		container_of(base, struct odb_transaction_files, base);
  
+ 	/*
+ 	 * We lazily create the temporary object directory
+@@ -738,7 +739,8 @@ static void prepare_loose_object_transaction(struct odb_transaction *base)
+ static void fsync_loose_object_transaction(struct odb_transaction *base,
+ 					   int fd, const char *filename)
+ {
+-	struct odb_transaction_files *transaction = (struct odb_transaction_files *)base;
++	struct odb_transaction_files *transaction =
++		container_of(base, struct odb_transaction_files, base);
+ 
+ 	/*
+ 	 * If we have an active ODB transaction, we issue a call that
+@@ -1634,11 +1636,14 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+ 				 type, path, flags);
+ 	} else {
+ 		struct object_database *odb = the_repository->objects;
++		struct odb_transaction_files *files_transaction;
+ 		struct odb_transaction *transaction;
+ 
+ 		transaction = odb_transaction_begin(odb);
+-		ret = index_blob_packfile_transaction((struct odb_transaction_files *)odb->transaction,
+-						      oid, fd,
++		files_transaction = container_of(odb->transaction,
++						 struct odb_transaction_files,
++						 base);
++		ret = index_blob_packfile_transaction(files_transaction, oid, fd,
+ 						      xsize_t(st->st_size),
+ 						      path, flags);
+ 		odb_transaction_commit(transaction);
+@@ -1992,7 +1997,8 @@ int read_loose_object(struct repository *repo,
+ 
+ static void odb_transaction_files_commit(struct odb_transaction *base)
+ {
+-	struct odb_transaction_files *transaction = (struct odb_transaction_files *)base;
++	struct odb_transaction_files *transaction =
++		container_of(base, struct odb_transaction_files, base);
+ 
+ 	flush_loose_object_transaction(transaction);
+ 	flush_packfile_transaction(transaction);
+@@ -2047,7 +2053,8 @@ struct odb_loose_read_stream {
+ 
+ static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t sz)
+ {
+-	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
++	struct odb_loose_read_stream *st =
++		container_of(_st, struct odb_loose_read_stream, base);
+ 	size_t total_read = 0;
+ 
+ 	switch (st->z_state) {
+@@ -2093,7 +2100,9 @@ static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t
+ 
+ static int close_istream_loose(struct odb_read_stream *_st)
+ {
+-	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
++	struct odb_loose_read_stream *st =
++		container_of(_st, struct odb_loose_read_stream, base);
++
+ 	if (st->z_state == ODB_LOOSE_READ_STREAM_INUSE)
+ 		git_inflate_end(&st->z);
+ 	munmap(st->mapped, st->mapsize);
+
+base-commit: 73fd77805fc6406f31c36212846d9e2541d19321
 -- 
-2.53.0.26.g2afa8602a26
+2.53.0
 
