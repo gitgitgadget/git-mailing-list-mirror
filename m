@@ -1,123 +1,193 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D19623ABBE
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:20:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771413609; cv=none; b=ruO7Eu5hmuCw589mhMBCqXQO+gX+EorL83ORz5FBrVHpGWg5UlWo9ZF7+xhg5orF7yxr0CwgYlqEwGLaXvLIcpkJhjVPJb5hSaI5AWcrnULM9u6sUF5TrEYHlXm/yQovVPeEMpw+V+F9pku2tWncH2tTKCxWL5lHYKfK7PH/JWU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771413609; c=relaxed/simple;
-	bh=y9dvhLSUhvaOwdGaF3u279Ue1JdxtXJf+tmraO2IWgk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s/4t/dpEwz+ar6+L/b70A4S9gbtZ1oIfVxP4feuMfiBYXT9RSyYpsleV/hg/NBYzpsWVak1FSPL0KClr8H7/Qy4gcB93O2uB7SNOTE6ovZYVE4AidLhlxtByERt5VS/QViGOwFVypjk76M1mHbNeuT1iXpeutcZ5dvQokcCc/V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HPSXYvV8; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316272F3C37
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:22:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771413771; cv=pass; b=SU4Xr+wz0qvoc3EuAXwJqhxvMuRd99yuxcpmB9b1jj9/EWmzANjB2/FcP5uZjjVlYCOKNmyVvminRjoKL34NbpxrTac7l+tMC+shdhGdEdmWo4dDjDs6aBvgrFUVXDag1CYsNRHRTQJVg+8yEyNuQD6TJKv35H6GJ3NlzWSZQ9M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771413771; c=relaxed/simple;
+	bh=OGXPasttwJ4yVdGODygXaXuS+hw17bOy8FT2J2tK5Ro=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NPr7YuAJdtAQBBb7nunanXSKD4fyPbwcNr59X0bHMZ7s1ZLMIvShMw7GsRYUqJWSXqa/tExTMiBeL68HWfabckWEf//EhAYo3Zh94fdEKdzJYCp+8u2reD8+nX0ELo7bl+vyf5Y+an7K4GdqcBtzmfW+5bsQ20Jqtfyes8jRZXg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DUx9N1qm; arc=pass smtp.client-ip=74.125.82.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HPSXYvV8"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c5ee7aeac24so342674a12.3
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 03:20:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DUx9N1qm"
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1270adc5121so7007735c88.0
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 03:22:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771413769; cv=none;
+        d=google.com; s=arc-20240605;
+        b=W5V0zvKRBzojTCT1ctJQniz9vO8cd4Z1Ma1797ZFyammQ2Bf5zlCamkf2YCKT/rIlq
+         Gf7aTDIKev7CyUmH62L4vGJSa/EH1OYHtYF0QcJlclbE6iYZEAjHTkV9RpfdBOLLQEX6
+         Alanxq5OJ0taUMdKSvd+YTQqlZyc1fL1aVFz1aRD49O8Bc4Wug+mxtL+L+cfBAjGvJIh
+         gN1heAktNkVPGsX7r2R1qq6JrO8jgVONLmprKsf8fMsi22IMglEG+V9kznHEyCi+R8D6
+         dLt2zq73fZQFAM5PdVcplK9zZPVwfxMB1oy1m5UucmQs9yXTorUyTGSNwAn0EUu04dti
+         aE6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=98LicJbl+l8HKJH5yNcHQjCetiV1Ks8JQr222j1x7yw=;
+        fh=3kDaN1RzHVHXX1/4YCNikCm05ppKjk69f2Ezz9v8v9U=;
+        b=huekQ3HawSll6wpciJ40vqphzTEgnG+pZyeXdDkA9DUhqPkhTaJmVehlpE1L5gHZco
+         3fNqdRf736nFY/MKxuwjB470YAUL13ExlMcxhNM32lyZnMj6TiUlRk+ln8rW0halUsF0
+         qkArdsjhWo7EbGYy6rFdoKMQ+8LzMjybIKocPXQBPPQx3qx6N6CvQL3/hiiWgq6Ol7Gn
+         QKclSXJQ+BOWVtUAoQGSQ4EhoVtx4HwRmlq7egNEzSCfJrrJxTzF0WC6CvwqPlYLhkQH
+         DPiklr/B9qFOxPE5kOPSl5c4CCeT8524/UgxItpHakGzHg3ZydfEyMt+QsqfCiCosned
+         uLfQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771413607; x=1772018407; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mlQUanRvkc5x5ETTbHAGFTunqmTVYrEy1gOqLtnfPyI=;
-        b=HPSXYvV8ZtUAFXQ+ui0ld7kksDlcaJ5DfglE5n8CSdg2WMTNv4BCXxgrcZD6NDbdFM
-         NDDX2F1Zju1R2sHoNaUTe1FrjZ0NF5KBA5t18QvAKe3iINv5UpPmbbJ5/K6hbEbCCYaR
-         0d/eFFpmQjBebuO1YBt3BKvq7Vojv7TMB0MzpgE++14imwERP4vgp0HCWyg3dwH1rks/
-         Dv2ds91XjHTuM8MNHa9F7FHgR90kCu09HUS86ROqRu6vE3S8upviCFUNuf5QGWCg6yqw
-         4OBpWlOlsFvq99Mf2ds3R/PvG76zswSYSpdc3sLYvNiW/st1UkvG1JobYLoRfwPsf8dg
-         ofSg==
+        d=gmail.com; s=20230601; t=1771413769; x=1772018569; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=98LicJbl+l8HKJH5yNcHQjCetiV1Ks8JQr222j1x7yw=;
+        b=DUx9N1qmo20650MgPeXc3xym75TRBFS4vW6Nbwu3ZXing7/ORplgbZ1nietqJK4MMS
+         eBszX2dkV2BNT7Asu6xqP8kaQyqwrSpF/oRWpvS9vztgAlgQnrxf5lsSzLHJrbBTXqCQ
+         IhGg+4xNbhPCV7K7kmQOzwIM1eBTJXhbPjjo1+Obd1WbpKLmBy9Tb5txXK0+AyKhHPZy
+         8JHSJi2yZCjIzIHG33YMFIxs3GPF+pkfE4Dmk5A5IBC38kkCRS64NHpUMFxEanNEG52v
+         HOBN1r9kXBK700nDo6dNoagNwGcNLVFewIJFwTTCy/thn6uVa9ZxhyPKWok3hAzrXo05
+         SZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771413607; x=1772018407;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mlQUanRvkc5x5ETTbHAGFTunqmTVYrEy1gOqLtnfPyI=;
-        b=M5DEZVkqmz41B1Z0rRmauSyUs/9vypAxg+ueCI8Qxaa+oH6TkqwgQi/W7rQW1AH4si
-         zgnd1G+RS7DnjuSCQw6SIrnCi6/qBULTjO3m1S9L4AMNYhFl8k8i+MFr5OEvC3awmUdb
-         D7DroL8oAS2m2ciVf1RM83uPOY13jY4TulfTWOEGKXJyMnF1bNc45YclN1VTUP3S+v/a
-         bCNe+Ox3Gr9kQmTLYQkIn83naMXxbbXySH2LJEubCLcNVcYhtPTe3AnFTeJM3XoqKif5
-         IhsSrw1VfV0BNRlDW3g6PJ4HYXXkAYu/j+LRHI3N2pBCI/+19knVfMd4acDoEZbP1lHw
-         3Jng==
-X-Forwarded-Encrypted: i=1; AJvYcCWIqDsRZoJJlL+83URlDqTzRM5cfOzMLFV4f0ZHjNLacOwd4pucuCp3pi48JEsPxpMQf/w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfB/kmqJji/+ZjPkiZWeJGkHcinBCENcTkHzOewPF/7dJc9ejU
-	cAKRh4uVwAIHymRw7syuuNnp4jOWTElURZNQt5ygE251agE/WxCsv7oa
-X-Gm-Gg: AZuq6aJdh6k4VGnDqYLkptW7eWzkaLraC3PJH9qToWiSIQuaDMW9mWynifK1X1Zck/T
-	WGfJPMKFD8M9xLmc05mnHa5lNJN+4niPYT/0yjZd86hJBef7/j7EW+sQ5zdQkAWDdclVdgVpfFG
-	4hlBIc2qdRviys9nfBSz3X/9LfPrRkbrQP2f9r428/zEDYfCadQ4sxtJWa56BorYxFn3INb5aE2
-	JL6clEFsNtGPpo+sHKDzAaiPn96QrzhydCTS/HxyMEiV5n6fhl4PShnO128gTRZEP9GEer8h+zB
-	TDi7eXeJuutzbHUwJlGqqb+FrUCAJ1CAwgKaVSMDHsZyV68LNHHW08PEZ1Vh6SzSVzHx+eVBzOm
-	0Z9+RKY/WA/fGKO+Ymx9dmI4gJVPSczwTCDlalDJA9tD331UOAPhnSwuEVr1AclrMvWht70U/V1
-	PkXPbH2QBd2vp84GHfEf3Fbk0j/eY=
-X-Received: by 2002:a17:90b:2789:b0:34a:4434:cf87 with SMTP id 98e67ed59e1d1-356a763e9e7mr11347268a91.1.1771413607539;
-        Wed, 18 Feb 2026 03:20:07 -0800 (PST)
-Received: from [192.168.0.106] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35662e537desm24856729a91.4.2026.02.18.03.20.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Feb 2026 03:20:07 -0800 (PST)
-Message-ID: <5db39190-da1b-4807-bc2e-2ce631d7815b@gmail.com>
-Date: Wed, 18 Feb 2026 19:20:05 +0800
+        d=1e100.net; s=20230601; t=1771413769; x=1772018569;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=98LicJbl+l8HKJH5yNcHQjCetiV1Ks8JQr222j1x7yw=;
+        b=ed/0roTABb+yLKUG+dtWp5BCdHUP++3ZIkzQp2YyGI9iby4a8tf3ooLwl8OOIz+WYq
+         kCViPcwFiaphHJoGsL3oQvEI6BJZ/h4DynbxKYhT3VlXgJYC3R4nelA6zyRcxY1CeOzD
+         rHIBqy0GWk8QeBHHRsM9cd60ERuK5VuRKr3iJdlSQeLBO7aCV1P9LT2AiF+ysYsq0Hhk
+         CixmgqQp6YQQRD5AsqFGv26d3GG2IiIyrXXFQ5C6APzCP29kxLmS9UCaKoAGZiuebNev
+         w5sZg/W/xFBfg73PxXXRw2IpK9mJkpeDXmjnnvX9u3ycEgnAC90RH0MjeV91w5btAW+Z
+         MPbA==
+X-Forwarded-Encrypted: i=1; AJvYcCUMe3DB6r29v/qb3czSxChfvGsjUs+heHaJ3MRnkCV2enwIwnhp42Vi78bMOOFcjRLv0dM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YySKTtLLlzLU73EExbN0xLCABQLnYgVgh3tod0+aF7S1EmSwotJ
+	U8uxZKM9VjWUcdB9F9OJhAGq+xKtzLsKOezx1IusXj7Szk5+qODCB7E1IdCviA5lStRJBgWcfhp
+	myCm2x6nGKBDCgJJodUyajv9u4Gdax/A=
+X-Gm-Gg: AZuq6aI63NXu3e3yLIrqQJ0WDNROOENFhJOcpYsSJmsIPk609j+nqmzkVGQW43sQUzD
+	zqvCSDbcrsAO3lVGR0SHjNW9ngnD5vDL8RgQNfp1rMHAt2DSzhVogf6ncZMXAofvTKW3L2mUnsU
+	nEB83F8ImpNB2uo6EYtgofYqrBSRavRYzC2E8+ZM2Yo6r3Na7ZtODxlylfI207q3DqIrvkOkFbO
+	8oIb6BKnDyABd6O8UZcj76BvQJu5xSTID6U/iByqf+Np6o4GNaqoCdwq2bAx7ffe4FVOaoRb2jw
+	ZTVN2q48mEHLMhP16rydyA==
+X-Received: by 2002:a05:701a:c94e:b0:119:e56b:98be with SMTP id
+ a92af1059eb24-12759a6a559mr552278c88.37.1771413769101; Wed, 18 Feb 2026
+ 03:22:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/2] setup: allow cwd/.git to be a symlink to a
- directory
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com
-References: <20260217084124.150366-1-a3205153416@gmail.com>
- <20260218051850.164972-1-a3205153416@gmail.com>
- <20260218051850.164972-3-a3205153416@gmail.com>
- <CAOLa=ZSAjDbC5bM+XvNwXW_WLWDiPfzAgaB+gHR6+DwhMW3uEw@mail.gmail.com>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <CAOLa=ZSAjDbC5bM+XvNwXW_WLWDiPfzAgaB+gHR6+DwhMW3uEw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260215112331.22-1-kumarayushjha123@gmail.com>
+ <xmqqpl63b2tm.fsf@gitster.g> <CAFNBzOdqOLKFbDFCp99GvXYWs_Af3PdeXQMjE92y+s92j78GYA@mail.gmail.com>
+In-Reply-To: <CAFNBzOdqOLKFbDFCp99GvXYWs_Af3PdeXQMjE92y+s92j78GYA@mail.gmail.com>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Wed, 18 Feb 2026 12:22:50 +0100
+X-Gm-Features: AaiRm51zKAz97l7ogzgZjTgRUcPUq1LBmnuTI3vM3G1B_vNSAgJXFtlOcs-Zy8Q
+Message-ID: <CAD=f0L-nUS1N-P2cWM9AwOFv+G7dOBgGjWwEZYP3qSDMxyhGgA@mail.gmail.com>
+Subject: Re: [RFC GSoC PATCH] environment: move core.trustctime to repo_settings
+To: Ayush Jha <kumarayushjha123@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>, Christian Couder <christian.couder@gmail.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Ayush Chandekar <ayu.chandekar@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Karthik,
+On Wed, 18 Feb 2026 at 12:04, Ayush Jha <kumarayushjha123@gmail.com> wrote:
+>
+> Hi Junio,
+>
+> Thank you for the feedback. You are absolutely right that the
+> lazy-loading approach regresses the user experience by delaying
+> detection of configuration errors.
+>
+> To address this, I propose parsing core.trustctime in
+> prepare_repo_settings() in repo-settings.c. This would ensure the
+> configuration is read eagerly during repository initialization,
+> preserving the historical =E2=80=9Cfail fast=E2=80=9D behavior where inva=
+lid boolean
+> values cause an immediate fatal error.
+>
+> The repo_settings_get_trust_ctime() accessor would then simply return
+> the pre-parsed value from r->settings.trust_ctime.
+>
+> Does this approach sound reasonable?
+>
+> Thanks,
+> Ayush
+>
+> On Wed, Feb 18, 2026 at 12:44=E2=80=AFAM Junio C Hamano <gitster@pobox.co=
+m> wrote:
+> >
+> > Ayush Jha <kumarayushjha123@gmail.com> writes:
+> >
+> > > The core.trustctime configuration variable is currently stored as a g=
+lobal in environment.c. This prevents it from being repository-specific, wh=
+ich is problematic when multiple repository instances are used within the s=
+ame process.
+> > >
+> > > This change continues the effort to move global configuration into st=
+ruct repo_settings, as discussed in
+> > > <20260208062949.596-1-kumarayushjha123@gmail.com>.
+> > >
+> > > Move trust_ctime into struct repo_settings so that it is associated w=
+ith a repository instance.
+> > >
+> > > Add repo_settings_get_trust_ctime() to lazily read the
+> > > core.trustctime configuration value, defaulting to true.
+> > >
+> > > Update statinfo.c to use the new accessor instead of the global varia=
+ble.
+> > >
+> > > Signed-off-by: Ayush Jha <kumarayushjha123@gmail.com>
+> > > ---
+> > >  environment.c   | 5 -----
+> > >  environment.h   | 1 -
+> > >  repo-settings.c | 7 +++++++
+> > >  repo-settings.h | 8 ++++++++
+> > >  statinfo.c      | 4 ++--
+> > >  5 files changed, 17 insertions(+), 8 deletions(-)
+> >
+> > Doesn't this regress end-user experience when the configuration
+> > variable is misspelled, e.g. "[core] trustctime =3D bad"?  We used to
+> > run git_config_bool() from git_config(git_default_condfig) fairly
+> > early in the program, and would have died before doing anythihng to
+> > give the user a chance to fix the configuration files before going
+> > forward.
+> >
+> > Now we will run deep into codepath and would not notice the
+> > misconfigured core.trustctime until the code happens to ask to
+> > compare the filesystem stat data and in-core index stat data.
+> >
+> > I think this is a recurring theme, e.g.
+> >
+> > https://lore.kernel.org/git/32fceddc-c867-4a47-bde8-c873279edbc1@gmail.=
+com/
+> > https://lore.kernel.org/git/a881499d-e236-4f8e-a217-b6bce69e3e3c@gmail.=
+com/
+> >
+> > That other topic Olamide has been working on seems to have settled
+> > *not* to lazily load into repo_settings to avoid the problem.
+> > Instead it reads and parses at the same places in the code path as
+> > before, but into a repo_config_values structure that is associated
+> > with the repository in question (which typically is the_repository).
+> >
 
-> But we don't really do this no? We were calling `read_gitfile_gently()`
-> before and continue to do so, so there was no change regards to calling
-> `stat()` here. Or am I missing something?
+Hello Ayush
+Thank you for your interest in this topic.
 
-Oops, It seems I mixed up the changes in previous patches. I did make a 
-mistake.
+As Junio pointed out in his response to you, I have submitted patches that
+settle not to lazily load into repo_settings. but instead to read and parse=
+ into
+the struct repo_config_values structure associated with the repository.
 
-> But now we'd die. Correct? Doesn't that change the expected flow?
+I will continue working to move other repo specific configuration variables
+in environment.c into this struct once these patches have been accepted.
+Thanks
 
-Yes, this is a regression I missed. If 'die_on_error' is false, 
-encountering an error like 'READ_GITFILE_ERR_INVALID_FORMAT' should 
-return 'GIT_DIR_INVALID_GITFILE' rather than dying.
-
-So in v6 I will ensure that we only delegate to 
-'read_gitfile_error_die()' when:
-
-1. It is a happy case we want to ignore
-2. It is a security case we MUST die on;
-3. 'die_on_error' is tru
-
-Otherwise, we should fall back to returning the error code as before.
-
-Thank you for your time,
-
-Regards,
-
-Yuchen
-
->> +		} else {
->>   			gitfile = xstrdup(dir->buf);
->> +		}
->>   		/*
->>   		 * Earlier, we tentatively added DEFAULT_GIT_DIR_ENVIRONMENT
->>   		 * to check that directory for a repository.
-> 
-> [snip]
-
+Olamide
