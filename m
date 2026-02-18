@@ -1,45 +1,46 @@
 Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9841D5151
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 02:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276A22D46A9
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 02:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771381926; cv=none; b=u6gyfe3RcTi3B37UMOP+Y6GgfU8t/YsxWqcbFBVk6kQHrh7xDLUuvXGWsIUL+iHJmiVEpVaq1TLn5EKI11auv5OODUTs8FTEVNY9zPoJ6i+bGme3SA/TNnaYX6ulb1f/rEa9ygrFFLjRf5SUma3HCR8/eBDcdb3Hs6tKcvGBKMo=
+	t=1771381929; cv=none; b=rf7YL3Qn0YH+nHzT4SFy12Kd6nVtWB+njeRZaHFFb5vqVrOlbGhwV6GtZtEqvzEu7S6HaNxVTDYHqtObJ0WjEuf8oeoA0lXWr6R1U4hKGq32pgKfrAk/8g/apXxDPdMNi6AWDsKyE7dy7udHvpgoZNCsA734n8UFCUNvp4H3u/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771381926; c=relaxed/simple;
-	bh=0RZzYQy1ll795HWGDEjf1IMa5mJ7E3YgqahIwSqIRlI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jEqtXAQgO6YaHSPNNu/W96jXWG0STg6ve0OWyjXnh4eL1YfSiaFAFYprYu2lCqbVT9iE132qjwP7A+esbcefjd8G4AUYj/jDHTNiUDcIxLAMzfL/AJKKfpAqleej+jUCGavKn66UnLLWHU63jbPkIDjMI139bY1NsA21j94SLoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=Og8N6V6E; arc=none smtp.client-ip=185.226.149.37
+	s=arc-20240116; t=1771381929; c=relaxed/simple;
+	bh=hjTJkh8a91S6lU++GCA+V6uyVin9tJZXJyxLJ9YnuUI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=I8j9rRYRr2B0LMfc3pFgQ2ztWQ4/3FNIArYqBSHlyNka3+ekSdvsPFAeGnOMMz4GcSBwclY2vR2YxQFEfPeloWZ7c5XjNgUkwAUSAv1PmK5sPdI4PgDs87vPFcy9/SKjGlciqANReJCt0YhHkHf2Up/aVf68Emb0PApAzapaUXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=KH1yJQJs; arc=none smtp.client-ip=185.226.149.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="Og8N6V6E"
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="KH1yJQJs"
 Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
 	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 	(Exim 4.93)
 	(envelope-from <ask+git@howdoi.land>)
-	id 1vsXM5-00GV6m-U0; Wed, 18 Feb 2026 03:31:57 +0100
+	id 1vsXMD-00GV7N-2P; Wed, 18 Feb 2026 03:32:05 +0100
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector2; h=Cc:To:In-Reply-To:References:Message-Id:
-	Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From;
-	bh=Bllo5sYINQFKH2clxgkW9W76WcGGjQETAfCp4pKj5Tg=; b=Og8N6V6EW76ZtZ5dQc7hTIq1kC
-	Rjm5G/dHp8oS92v8IRUdJMcxTBbc0lZq9JNQuQm066PZgiLoCVXHS1RFstQUE+k779hWhtxk0pD69
-	VyYIew/KCQgHyg9Q8MUnXQmnwQefV5JZlCGnYYnO7pEbHDt4eaLnedi1jSFhAB1uCIsJGqv7skzLq
-	lyMnerH9y2z4PoFo077JbEit8fdP9fqZlv9fv9g6yGPoy0SRvyoz1BIOGftGLHlW+S4sBtfFBqhzT
-	gPUysfFvEVfBgHqBS2C0GFifFEd1Jff8sKe9AGDREwg/imVaA7xwMYMuxH2qj2OLv8boN06+et3gK
-	1BxOnYDg==;
+	; s=selector2; h=Cc:To:References:In-Reply-To:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:Message-Id:Date:Subject:From;
+	bh=g6/cGFozlGaqfZa06rxNnH5wSNW8fbaNw/dG0XjI/1g=; b=KH1yJQJsmtroviiDsB6+wylLj3
+	8RYVQKogDTswznTd7w40fcQApqHPe2mdOzGEHJDWf5P5ppGYKws23GRYdKk/2+YEaQHU5Ox5mBEUB
+	EDFpJlT/kHG4GVyTspgX4PHnybeKm94bX/mC4ZavA5TGOTclJ1j6cth6dJtC4G1xDCa3XcjSf40Fn
+	LmxKme8njsZm0rKh11KMZRgIjqGA0C+LYGe/ozFc3KbD60VBvGjvkcpK3dq1Lqn1tknIwfilPCYOM
+	wAwHJzuSJMoz9PSKl4+pYKUwhyAjuAeYksb7c4Cy4RriIpZg/wYi5EBAURLo301VxbQ42nS4DSuUm
+	3aIRqxJQ==;
 Received: from [10.9.9.74] (helo=submission03.runbox)
 	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
 	(envelope-from <ask+git@howdoi.land>)
-	id 1vsXM5-0007kv-L2; Wed, 18 Feb 2026 03:31:57 +0100
+	id 1vsXMC-0007lC-PZ; Wed, 18 Feb 2026 03:32:04 +0100
 Received: by submission03.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
 	(Exim 4.93)
-	id 1vsXLw-005i9g-LN; Wed, 18 Feb 2026 03:31:48 +0100
+	id 1vsXLs-005i9g-1g; Wed, 18 Feb 2026 03:31:44 +0100
 From: Colin Stagner <ask+git@howdoi.land>
-Date: Tue, 17 Feb 2026 20:31:31 -0600
-Subject: [PATCH v2 2/3] contrib/subtree: test history depth
+Subject: [PATCH v2 0/3] contrib/subtree: process out-of-prefix subtrees
+Date: Tue, 17 Feb 2026 20:31:29 -0600
+Message-Id: <20260217-cs-subtree-remove-optimization-v2-0-4299e71a30c6@howdoi.land>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,9 +49,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260217-cs-subtree-remove-optimization-v2-2-4299e71a30c6@howdoi.land>
-References: <20260217-cs-subtree-remove-optimization-v2-0-4299e71a30c6@howdoi.land>
-In-Reply-To: <20260217-cs-subtree-remove-optimization-v2-0-4299e71a30c6@howdoi.land>
+X-B4-Tracking: v=1; b=H4sIAIEklWkC/zWOzQ6CMBCEX8X0qmtoAwqefA/DYVtW2SiUdCv+E
+ N7dQuLxS2a+mUkJBSZRp82kAo0s7PsEZrdRrsX+RsBNYmUyc8iMPoITkKeNgQgCdX4k8EPkjr8
+ YUxXQYZ6b6zEvyaokGQJd+b0OXOrEFoXABuxdu2g7lEhhCbYs0YfPemTUS/y/WZhMV9lhX5ZVV
+ WjQgHLf3jieW/9qPO8f2Deqnuf5B0UZxuXNAAAA
+X-Change-ID: 20260217-cs-subtree-remove-optimization-aca442f748eb
+In-Reply-To: <20260215201906.889951-1-ask+git@howdoi.land>
+References: <20260215201906.889951-1-ask+git@howdoi.land>
 To: "D. Ben Knoble" <ben.knoble@gmail.com>, 
  Zach FettersMoore <zach.fetters@apollographql.com>, 
  Christian Heusel <christian@heusel.eu>, george@mail.dietrich.pub, 
@@ -59,80 +64,42 @@ To: "D. Ben Knoble" <ben.knoble@gmail.com>,
 Cc: Junio C Hamano <gitster@pobox.com>, Colin Stagner <ask+git@howdoi.land>
 X-Mailer: b4 0.15-dev
 
-Add history depth checks to some of the subtree unit tests.
+* cs/subtree-remove-optimization:
+  Remove an optimization that can exclude too much
+  history during a "subtree split."
 
-These checks were previously introduced as part of 28a7e27cff
-(contrib/subtree: detect rewritten subtree commits, 2026-01-09),
-which has since been reverted.
+Remove an optimization introduced in 98ba49ccc2 (subtree: fix split
+processing with multiple subtrees present, 2023-12-01). The
+optimization incorrectly excludes commits from the split history
+that must be included.
+
+The above commit, and my later attempt to fix it in 83f9dad7d6
+(contrib/subtree: fix split with squashed subtrees, 2025-09-09),
+both introduce known regressions.
+
+Improve test coverage for `copy_or_skip`, which will help detect
+future regressions.
 
 Signed-off-by: Colin Stagner <ask+git@howdoi.land>
 ---
- contrib/subtree/t/t7900-subtree.sh | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+Changes in v2:
+- remove incorrect newlines from commit message trailers
+- patch diffs are unchanged
 
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 3ee2f95d86..dad8dea63a 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -411,8 +411,9 @@ test_expect_success 'split sub dir/ with --rejoin' '
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
- 		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
--		git subtree split --prefix="sub dir" --annotate="*" --rejoin &&
--		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
-+		git subtree split --prefix="sub dir" --annotate="*" -b spl --rejoin &&
-+		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''" &&
-+		test "$(git rev-list --count spl)" -eq 5
- 	)
- '
- 
-@@ -442,18 +443,25 @@ test_expect_success 'split with multiple subtrees' '
- 	git -C "$test_count" subtree add --prefix=subADir FETCH_HEAD &&
- 	git -C "$test_count" fetch ./subB HEAD &&
- 	git -C "$test_count" subtree add --prefix=subBDir FETCH_HEAD &&
-+	test "$(git -C "$test_count" rev-list --count main)" -eq 7 &&
- 	test_create_commit "$test_count" subADir/main-subA1 &&
- 	test_create_commit "$test_count" subBDir/main-subB1 &&
- 	git -C "$test_count" subtree split --prefix=subADir \
--		--squash --rejoin -m "Sub A Split 1" &&
-+		--squash --rejoin -m "Sub A Split 1" -b a1 &&
-+	test "$(git -C "$test_count" rev-list --count main..a1)" -eq 1 &&
- 	git -C "$test_count" subtree split --prefix=subBDir \
--		--squash --rejoin -m "Sub B Split 1" &&
-+		--squash --rejoin -m "Sub B Split 1" -b b1 &&
-+	test "$(git -C "$test_count" rev-list --count main..b1)" -eq 1 &&
- 	test_create_commit "$test_count" subADir/main-subA2 &&
- 	test_create_commit "$test_count" subBDir/main-subB2 &&
- 	git -C "$test_count" subtree split --prefix=subADir \
--		--squash --rejoin -m "Sub A Split 2" &&
-+		--squash --rejoin -m "Sub A Split 2" -b a2 &&
-+	test "$(git -C "$test_count" rev-list --count main..a2)" -eq 2 &&
-+	test "$(git -C "$test_count" rev-list --count a1..a2)" -eq 1 &&
- 	test "$(git -C "$test_count" subtree split --prefix=subBDir \
--		--squash --rejoin -d -m "Sub B Split 1" 2>&1 | grep -w "\[1\]")" = ""
-+		--squash --rejoin -d -m "Sub B Split 1" -b b2 2>&1 | grep -w "\[1\]")" = "" &&
-+	test "$(git -C "$test_count" rev-list --count main..b2)" -eq 2 &&
-+	test "$(git -C "$test_count" rev-list --count b1..b2)" -eq 1
- '
- 
- # When subtree split-ing a directory that has other subtree
-@@ -477,6 +485,7 @@ do
- 			test_path_is_file subA/file1.t &&
- 			test_path_is_file subA/subB/file2.t &&
- 			git subtree split --prefix=subA --branch=bsplit &&
-+			test "$(git rev-list --count bsplit)" -eq 2 &&
- 			git checkout bsplit &&
- 			test_path_is_file file1.t &&
- 			test_path_is_file subB/file2.t &&
-@@ -489,6 +498,7 @@ do
- 				--prefix=subA/subB mksubtree &&
- 			test_path_is_file subA/subB/file3.t &&
- 			git subtree split --prefix=subA --branch=bsplit &&
-+			test "$(git rev-list --count bsplit)" -eq 3 &&
- 			git checkout bsplit &&
- 			test_path_is_file file1.t &&
- 			test_path_is_file subB/file2.t &&
+---
+Colin Stagner (3):
+      contrib/subtree: capture additional test-cases
+      contrib/subtree: test history depth
+      contrib/subtree: process out-of-prefix subtrees
 
--- 
-2.43.0
+ contrib/subtree/git-subtree.sh     |  50 +---------
+ contrib/subtree/t/t7900-subtree.sh | 198 +++++++++++++++++++++++++++++++++++--
+ 2 files changed, 190 insertions(+), 58 deletions(-)
+---
+base-commit: 852829b3dd2fe4e7c7fc4d8badde644cf1b66c74
+change-id: 20260217-cs-subtree-remove-optimization-aca442f748eb
+
+Best regards,
+--  
+Colin Stagner <ask+git@howdoi.land>
 
