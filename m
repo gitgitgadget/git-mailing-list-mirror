@@ -1,63 +1,62 @@
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB262EA468
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 21:20:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FC2326D4B
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 21:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771449606; cv=none; b=Yhpjzpu4OEBaHXXfHWmpqjzNQATiq13ZHOsue0akzRC2eBSyyawLBcJLDdAVDXxyd9zjL/q6c1F/11gVihDv0EaZqeP77P/O+POsWkfPqOF0/94i+VFmsX3YSetc3vNuAEFrEuqnxugnaZki4ma9nOQ5SJM2Sy/sHmoatnbDnsk=
+	t=1771449610; cv=none; b=KrTAqHkfa9ybwG/jALIdtSQQwY+Li80qrk+3wMFoLgdbBeQS0yMz5Wy3XJ3qER5Vpfu0rWOHDXg4Rkne3lUZIsIaDPaCISr8Xc3C8Uxx6TwCIs1H4eCSPifRk8+2qMJZCEQ0YgK9iQ5/WMUzrJiis/S7bfnuColEl/sYX7U/5s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771449606; c=relaxed/simple;
-	bh=x8rTtbszX+y5SnctRaF05aY+ccEbHPmS3djNtBbz9xw=;
+	s=arc-20240116; t=1771449610; c=relaxed/simple;
+	bh=JRVW++US6Zqa6qS7E480fBbbdvRhAD4ap6/QRhLJNPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAiDtftmkrHHnK03bV89yt+3RCc4N770gG/gf8nFXOoZk2bELGumj1tYe7a0kP98aPj9kzpV9rCFSI4grBEfpvEbZVlGW0rcpnjSJrMV1rIynsC3dCv8CW76i1YKwnS4H0/p43bsi9kc/WAqLEkor0PFL6PTcclTdoJPzLU1wrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KDblrc3j; arc=none smtp.client-ip=209.85.222.53
+	 MIME-Version; b=nr/Jm9EwiRb1jnNo7JQEKkNB7tu2O5H+UF42v8DPEdNUGvyAj87InHaSWmOUCrPAkbnBYp5ZhwY5PFxVEwf8SOzuWsrfNSzt59dJZE/9ebhU3zu4SZoUghp5hCbGLsKujYXRLejHWIzcnPWmoq1Pjt5DuF4uVjEYkvsZvxOTSQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QXSrKQ7q; arc=none smtp.client-ip=209.85.222.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KDblrc3j"
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-94abd52b274so93754241.3
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 13:20:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QXSrKQ7q"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-948a378b9deso89229241.2
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 13:20:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771449603; x=1772054403; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771449608; x=1772054408; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5Z9f0UvDhCeLLG2Ae6MEDVoFJdawK3rnfl7ggCMhQi0=;
-        b=KDblrc3jYmUcGyLM84Wsoi9jVAouTkB7+FmkCIc4ROL4Ch+aozOI1RAuGMwR9ysbfS
-         bRGQFY+ET4AE0pYtVNPDGTBq2MA5vo7fkRcV8tww90WxKBDrcS1zs/OvlS6dDgGT9l33
-         +ZZb+BX5z6uZmOaqSWZeZrakmCVBAtbIczMX3FLsLQQDugpf3yDhlk4a1OLym9M/luNa
-         qvqTt9Q/MFqonyi+hekW4G+CTq4SL8/wZD1aBIuLQ6Q2KkgAm+uyjQSICUubY320P5PI
-         xu6BoZIpwTI8sVmgpCP3ubpyAeYm95mKC6OpRd9o5Zc85MLDJ+8+UXrefxIdNSyg3sS1
-         zDrw==
+        bh=U3fU83k38rJclLv/J8c2PISsbnW4QUY0fEjvDzB0Q6U=;
+        b=QXSrKQ7qqHSQCmQ2j4f0FXRazhd+VgacW4PESBv+EesKMVXVey+3RgV253fG3R/gPN
+         hXxEfBPdlXChiCnTzxcOh73gYGANIANgK/yF5PTA7dTrgzdEKbZmIVcGhoT1BpSlU5V5
+         zeTQk5qK9WmxgSlcU0Vt+TGygxaHAm7tcWw3Hn7X8TpOe0wIvuQ/OuAbYEL/xFSa+CL3
+         qSzYTRjKpIkEaxC5Vw5ENdxo6SbBqVFqB62tMTntn4aFlwnW+K8Gv8X5AdqKRQbvatIA
+         7HzVOL9kd/LVpPPYleoO2VX0HdpR11lHCUZFkK6ihxtiawTYTMdDpSmS2TNAgjtvW1V6
+         5mng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771449603; x=1772054403;
+        d=1e100.net; s=20230601; t=1771449608; x=1772054408;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=5Z9f0UvDhCeLLG2Ae6MEDVoFJdawK3rnfl7ggCMhQi0=;
-        b=EtwIzkDcDw0mHS1a/5LJuQPYbmsMoc6yhmGUH6BqODJw3mIc125ThE9CtclvZ4U8mh
-         Og1IDjUrFZT3vRvDdmUkehYUpNUFEyuflduN8JLP+SCuat/upNebpq8tVL5Fc750b8Ea
-         /ArHBoWdxhWWTS1DbRD5AYN62/DvxgHB8H79qoFJ3UdR3d/2O8ULgFCaHpF/p4vGroCM
-         kJQRPUjc9W1cePSryiqJmzoRBD0HdW3mhd7mSUGC/tyyACKVCQQQbJNMzldWkSfie92v
-         fXjayoL2XpziCT2hoDvvqed2yFI79u04qsinJvaSWeb1ruIvEgdUMNkx3vpoDYilmlHv
-         bWWA==
-X-Gm-Message-State: AOJu0Yy2Wvg+02J7MIVddhcqLzaEAb3RxwmBfgYXUYmqfI3R2lcc4e+E
-	n+kM6PURRtFf5Tx2tEN+K4pOCblg3Eoxt2vkf6ivxrnSQQghPShL5uHm3J/FVA==
-X-Gm-Gg: AZuq6aJtEnfEgMxJK0z9uYPclxJhzFecXg6O/MQvrhRpVTZXFCnkZrC11NueLTlZdr2
-	5JFEKnnTEt5QGjE/3kSLQCb8Z1B96/hepU4wKlxhQBpJoJs5XfEMF9b/4hD4J8VhikDbQFs7fuX
-	M51YI8MJGUj42HRTogPI04yUspLB7FdM5q3fqf/TdYf0BspMisiXB1oKZLfl3zhg6LGhrkeMz1K
-	QbDeXUabHtTxNI2mklwLdYcJbnVzpSoYH9t7ThNm+PbR7yHTrlzq/Svzml2dzDiCr3d4oRcHRBa
-	GhR+X5wSfbAwZRMgNgzYK1Uys1bVNOs3iucXrRkMSD+aNjOD4dW4uoxLaKpATrKc5dMRRceVHgU
-	69/XSYDoykKi8AWoaPE+8HMd0QB0qECo3E0k4Ha99Q/ZN6bWoF9G7C7beI7645i61tON4BWDtiX
-	1KA/meo3pCqMNmZkgdkJRTT+QHIwv0/pmDKPvnUKjPnG0mn2Ar4FGJUkrizJ1ExOwNTxcCxKujZ
-	235
-X-Received: by 2002:a05:6102:956:b0:5f5:487c:83cd with SMTP id ada2fe7eead31-5fe7fdcfe83mr1010130137.40.1771449603459;
-        Wed, 18 Feb 2026 13:20:03 -0800 (PST)
+        bh=U3fU83k38rJclLv/J8c2PISsbnW4QUY0fEjvDzB0Q6U=;
+        b=KRfkHC0ZXMKa6wN0FD9aO8fE6FQ1th0TjStMMj+MWezDzw27FL7AfIyyV+KTr3yfKq
+         P1iqOcVWzT7sW37J9rsPsCXrcxi+d4JhlaNiz3myBDrE26WRmJVezazn7wIaNEaQk3wj
+         TMaY/7/NMFXnrr2kmbyLzHaVzREibcWzUJuwMHioUgBb+dIrYUsn7Y4z0mQo0HCu+WnS
+         /AryN+5ufPjqUeskoQn36njNscTg4ha9voURC8npROMGgAHC5CEvStyPSvzG8porJqpc
+         2le3emj/2CaWn0KR4B5TJfxWUfexNjdgKm4numOAyPAhimjCKdrZ69+i+6cO2EjC1Ap8
+         S69w==
+X-Gm-Message-State: AOJu0YyXCTKVJNg3cZGYXBHH+Q7Y7rnmvENNVdMTJpoH3T+l02mZtcRU
+	pQDzh7jtf+itRRlJle89oc/TahSGT7l5qYr4v5kGQe661/7EETx1zSMMZgOxrQ==
+X-Gm-Gg: AZuq6aInQeVReYu8nxofCjioxo6zR/TmHFSww4qT3DwTadzGIledFBO1HSDh5KPdBPI
+	/c0smScyM1uV+cZxHhkIz+cefNjhhBzabsCy+Pv7/SR614VlhCf9tsownziLioC0zpOO0AxHFwx
+	sdmSgEEAqs7riAy7jUAro8kfp7rqeVM9KetjtGW2rng4WD4PxsjhnKCDBpQ7yDiyHglOiknBQph
+	VTrPbsCZ81gNNhF38dW5ijQ6Xqz6AmXZk3wZVYk/wzga6adCihdc2zGSA0MKiDu1RidTm9zFiiT
+	kYAIcv35xyerdAG4BZp/gaozOOdPp+uxt7IPk1Uj1g7YtKrPO6btPOhyPv+U7Q+ybSLOch8UleC
+	C3RDJiecjCh5aFDpsfEcs+zTtkdr/IVsDz94HBv7sp6F2mDPKAmng/schNUeP865QNEGAKoDz5w
+	A+ceb44upgn7rx8RQePV79QtdY4NXErugAKQwDM6QJiJaYWPe40GR4dwzBfD4dyZOLPg==
+X-Received: by 2002:a05:6102:2ac1:b0:5f8:e2d0:4b24 with SMTP id ada2fe7eead31-5fe2acf4679mr5115319137.3.1771449608050;
+        Wed, 18 Feb 2026 13:20:08 -0800 (PST)
 Received: from localhost.localdomain ([2804:14c:c4:89c7:a068:d017:8d32:248])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94afcdc345asm12326301241.0.2026.02.18.13.20.00
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94afcdc345asm12326301241.0.2026.02.18.13.20.03
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 18 Feb 2026 13:20:03 -0800 (PST)
+        Wed, 18 Feb 2026 13:20:07 -0800 (PST)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -65,9 +64,9 @@ Cc: ps@pks.im,
 	jltobler@gmail.com,
 	avila.jn@gmail.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [PATCH 3/8] repo: replace get_value_fn_for_key by get_repo_info_field
-Date: Wed, 18 Feb 2026 18:08:39 -0300
-Message-ID: <20260218211845.96009-4-lucasseikioshiro@gmail.com>
+Subject: [PATCH 4/8] repo: rename struct field to repo_info_field
+Date: Wed, 18 Feb 2026 18:08:40 -0300
+Message-ID: <20260218211845.96009-5-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260218211845.96009-1-lucasseikioshiro@gmail.com>
 References: <20260218211845.96009-1-lucasseikioshiro@gmail.com>
@@ -79,60 +78,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Remove the function `get_value_fn_for_key`, which returns a function that
-retrieves a value for a certain repo info key. Introduce `get_repo_info_field`
-instead, which returns a struct field.
-
-This refactor makes the structure of the function print_fields more consistent
-to the function print_all_fields, improving its readability.
+Change the name of the struct field to repo_info_field, making it
+explicit that it is an internal data type of git-repo-info.
 
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- builtin/repo.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ builtin/repo.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/repo.c b/builtin/repo.c
-index aa9a154cd2..c60a41ba7b 100644
+index c60a41ba7b..f943be7451 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -78,14 +78,15 @@ static int repo_info_field_cmp(const void *va, const void *vb)
+@@ -31,7 +31,7 @@ enum output_format {
+ 	FORMAT_NUL_TERMINATED,
+ };
+ 
+-struct field {
++struct repo_info_field {
+ 	const char *key;
+ 	get_value_fn *get_value;
+ };
+@@ -63,7 +63,7 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
+ }
+ 
+ /* repo_info_field keys must be in lexicographical order */
+-static const struct field repo_info_field[] = {
++static const struct repo_info_field repo_info_field[] = {
+ 	{ "layout.bare", get_layout_bare },
+ 	{ "layout.shallow", get_layout_shallow },
+ 	{ "object.format", get_object_format },
+@@ -72,19 +72,20 @@ static const struct field repo_info_field[] = {
+ 
+ static int repo_info_field_cmp(const void *va, const void *vb)
+ {
+-	const struct field *a = va;
+-	const struct field *b = vb;
++	const struct repo_info_field *a = va;
++	const struct repo_info_field *b = vb;
+ 
  	return strcmp(a->key, b->key);
  }
  
--static get_value_fn *get_value_fn_for_key(const char *key)
-+static const struct field *get_repo_info_field(const char *key)
+-static const struct field *get_repo_info_field(const char *key)
++static const struct repo_info_field *get_repo_info_field(const char *key)
  {
- 	const struct field search_key = { key, NULL };
- 	const struct field *found = bsearch(&search_key, repo_info_field,
- 					    ARRAY_SIZE(repo_info_field),
- 					    sizeof(*found),
- 					    repo_info_field_cmp);
--	return found ? found->get_value : NULL;
-+
-+	return found;
- }
+-	const struct field search_key = { key, NULL };
+-	const struct field *found = bsearch(&search_key, repo_info_field,
+-					    ARRAY_SIZE(repo_info_field),
+-					    sizeof(*found),
+-					    repo_info_field_cmp);
++	const struct repo_info_field search_key = { key, NULL };
++	const struct repo_info_field *found = bsearch(&search_key,
++						      repo_info_field,
++						      ARRAY_SIZE(repo_info_field),
++						      sizeof(*found),
++						      repo_info_field_cmp);
  
- static void print_field(enum output_format format, const char *key,
-@@ -113,18 +114,16 @@ static int print_fields(int argc, const char **argv,
- 	struct strbuf valbuf = STRBUF_INIT;
+ 	return found;
+ }
+@@ -115,7 +116,7 @@ static int print_fields(int argc, const char **argv,
  
  	for (int i = 0; i < argc; i++) {
--		get_value_fn *get_value;
  		const char *key = argv[i];
-+		const struct field *field = get_repo_info_field(key);
+-		const struct field *field = get_repo_info_field(key);
++		const struct repo_info_field *field = get_repo_info_field(key);
  
--		get_value = get_value_fn_for_key(key);
--
--		if (!get_value) {
-+		if (!field) {
+ 		if (!field) {
  			ret = error(_("key '%s' not found"), key);
- 			continue;
- 		}
+@@ -137,7 +138,7 @@ static int print_all_fields(struct repository *repo,
+ 	struct strbuf valbuf = STRBUF_INIT;
+ 
+ 	for (size_t i = 0; i < ARRAY_SIZE(repo_info_field); i++) {
+-		const struct field *field = &repo_info_field[i];
++		const struct repo_info_field *field = &repo_info_field[i];
  
  		strbuf_reset(&valbuf);
--		get_value(repo, &valbuf);
-+		field->get_value(repo, &valbuf);
- 		print_field(format, key, valbuf.buf);
+ 		field->get_value(repo, &valbuf);
+@@ -164,7 +165,7 @@ static int print_keys(enum output_format format)
+ 	}
+ 
+ 	for (size_t i = 0; i < ARRAY_SIZE(repo_info_field); i++) {
+-		const struct field *field = &repo_info_field[i];
++		const struct repo_info_field *field = &repo_info_field[i];
+ 		printf("%s%c", field->key, sep);
  	}
  
 -- 
