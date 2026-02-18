@@ -1,168 +1,152 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AADD34405F
-	for <git@vger.kernel.org>; Wed, 18 Feb 2026 19:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2DC34405F
+	for <git@vger.kernel.org>; Wed, 18 Feb 2026 19:40:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771443246; cv=none; b=uaRs5SZODauMlQedgU9wPo47mKzp6LQUKW1uI3SK4KF4qFFXgMht4cTQBann81vBzmhiIE8O+/ecpp+sJKKs0/1OJbil6aAtpCZI+hdw+rpwAlpQQ0yEirXF8DZhwJaPqbvqr3xQjgDBRA28dtmbPM8dLw5wa1zs+T1en6nPvWQ=
+	t=1771443625; cv=none; b=BY8Km0QUHv0bRwIQN7pHAWXOzZ9EQ8dppWIIZnK+sk+OVc03R+eucK4YP9nCL5PbmPideZuHXFIyjRDj9BdSIqzjPd1Iyx7SWC1vAAUpomvYDJ7S3u+xJzx9cKOIe/EMA8peRgxcWT3S4Yf77TBGeKDjwYixahvIxj3jC6nPSEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771443246; c=relaxed/simple;
-	bh=qnpMx3rU3USlZNSSs69/qvVD1I/PagiXiGFKlg+Ub7w=;
+	s=arc-20240116; t=1771443625; c=relaxed/simple;
+	bh=p79E6VpEeOiUcYx/s7o4AtipsaHhGnSvzRR+nFSCszM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R9sgDg7QZ4esFW6OWPnyLYQ9A629CPd94/lAMwPEx+/k/lLesrfZCATZQOown9HyafGx/9T4AnAus0zU7nNfYBswjTLhyT+h0GcnUajtJT6t3kU9ygVt4W78jMxLsxqqB/2OvJ9qbud5Jw5P74foXVqT5Rc5qYJ5LwE7FkMSNA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MZfXAuB/; arc=none smtp.client-ip=209.85.161.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=pluwy+V3BYumIMj5y25HmizIZXLAyvhIBKnzM6ZDzLtRpxKQvU2e2T7AyyEwo9TOPU6g2uuIESylj2TNxTKp7M3DIoMma1/hUTkbtWJ5rpmRhtLspg6Iy4vZr02UCjH9YdWwT71wbHtYo5GjdebMjz9Of6PbHQqkPld1n6rWOQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j/vVgw96; arc=none smtp.client-ip=209.85.167.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MZfXAuB/"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-6799774d0fcso124454eaf.3
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:34:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j/vVgw96"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-45efd53148eso71588b6e.0
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 11:40:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771443244; x=1772048044; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9ibBUEgI+re+mEXEs0ZY7vvkDvgW1Q+QV/jW8MBLaSA=;
-        b=MZfXAuB/Snrw7dQVJMImIOdifFBoPJ5eyGqjaYzEzgQBU0iYUtGaQ/Mbr7zqQMbiRz
-         FLEZJ0X9jKqdOM0+e1qa2H6xZdEtyU+AocykM5Th9jNY7dixCewzqpOWNjwCttd/+54N
-         HJAFL88CBlfhLLKQ9AaZSR/EEoaMHseOLBfq1Qg7fbLzl+nWA0RWVBcwUCiKZ20Kz+N3
-         EQ7bH8PKINs/s1PMzQAdw5tkF4A+cn46gV2ZPy8JrZIfW4KvPpF8kWbb3ckkZwRihoOV
-         9V4Z08Y6HB/OXOeD/FCxDQNsjSChVz1+TVAUF2A8R16Y4C3taA5hRc31xuxLqYvR87zK
-         FzIg==
+        d=gmail.com; s=20230601; t=1771443622; x=1772048422; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tZq/FtgQfWBDghNXIV6jpfhgMIHiEJpuI1pTy1/RgqI=;
+        b=j/vVgw96xghKl8mtvjyf6rO4hNk2MkBOKmpA861GjBQQKaxc5WUjI+JWah6aNFWS/I
+         YUsdffsNakwgK1ifS1Os6fHngHzwMekUdkm8yapUx7by44aOMaBbQ21OeshX6gxg0GtR
+         r6aHor8wgsnXn3w4fNjVTcEJPIe2dE7uSDaDSZC+X4sPzmeQqyhMrvuZ8KHggbpfDYUI
+         E7UcYEsQGfJwRQ+uWdUSlJt5iFQJh1wYwprCf/0L21PK8+NDxcWZqPyrw0HNVHG5/JWk
+         trLBjRxdueIaPviyqSodD8CsNubC9+qRWv1s1hg9mDIdSFWWx3H32DiUKQAxjUm1xNj1
+         Qdaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771443244; x=1772048044;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9ibBUEgI+re+mEXEs0ZY7vvkDvgW1Q+QV/jW8MBLaSA=;
-        b=J10N5Ac9/jSfLs91Yy2U7LQnuXYos2hWPbQKuwtPNCQD9FEXs9tqlnh4WxtFCRCSXZ
-         fnrZjzdgRfpUjrlNQPd3ny5SRVFf39LUDSnhNTVa7M2hgl7/lSdO5deXiFYJ+rm8jxCu
-         rrfi9+rd7Lo1Lwh8obwpgxkHP1ofc5nxWO40QXxU4JFPKeqGiqQeHPgLW4P+CGHfYAdO
-         rH8RnTiQ8JYFG6RMe4AENVfSdnymvZ0D2HaPJerKrllENgRHeEHVGo3GIk0WW6obRv1X
-         Fyd4NRnvyjPm3UN0ekMvOcQu0ehxjjASp0ZLcPY2PxkbxcV8J1aA1d0LZ4teuL00ayb7
-         dyig==
-X-Gm-Message-State: AOJu0YyK6Q9QngkMWbFZ1dbjKWbmZy7qyJnIpg7jGcxry+PrqRweWF9d
-	f84PW4uy+hGqmrW6WDhAYN8kiJuVNE0plDVDj+ChtGYgZUB2aD4TS1Fx
-X-Gm-Gg: AZuq6aIRtcyWCrLqwvsfGvDVH98lAaeYdbrjyE0KIm1e/8SfbxmrsQYqdhKC+NDqtF+
-	HOHnXyMAgnPYv6brFPYwtVGxv3+L9h9Q5H2xCV10cNnoz/ZG7a+xIUlNuShN2HEwKGbFy/rL3qo
-	LNDYOg+9p0NafOmeT1mktUVSQh6Ym0wt2Yl4j6CRzTfN5th7p5WMG4Dpf5yglJ72qSh4TJs1pN/
-	TDMvkec7HG5X8ak5XIOaR0/aOZuxn4V3uFRa5NuaS+LposnMiuP9JR4rpemqsHpioGZwf+uhTKw
-	qvmZWhpUSTePbh1KcTiVzg7KblQKxTC6xGzWaQKEQlmD7AcIfA2TxbVyNFfwFD9cvG6pfH1IuS2
-	XMKYM4+9NFqajMLZzGjfJey+v8PhfCTZclhDKIRRR0nhhDT5UF/mRMuOjETRvehCsVzyDIXh2eD
-	dZOUlj25spkEH/JURM
-X-Received: by 2002:a05:6820:2106:b0:65e:f7e6:438c with SMTP id 006d021491bc7-679a71eb1b8mr1817545eaf.36.1771443244050;
-        Wed, 18 Feb 2026 11:34:04 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771443622; x=1772048422;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tZq/FtgQfWBDghNXIV6jpfhgMIHiEJpuI1pTy1/RgqI=;
+        b=gRI8aCyoDBeYyjAXAoKH0uqnOKLJOkI9aSUa1cd1APngY2qXC2pssqc6f6v00nuB1F
+         lMko2wyS21q6A5sS4ymaZD+YlyNHlLdGRY62YrwOqU9Qx2oz3eEWd/QphFt62rTAdTcr
+         S7g4UeJ/AA7CXyGmz0ZXPe/5lRi8qyx1YFuR94hQh8/D7jCZ6OSyHzIX6cG1+z6RBn5D
+         izB/cI1T7oAgyFDRoshsRo+llX10tCOQUHLxdxSEHQCuaQCcVG7Ipy0ZH5XkEJQXOCjW
+         3bSYv8VK1LGKayeJDQtMh9kc/wzgrJ6F0hzmxxvGSCCEvLsQ+F1vj1wjWw6KC54IAEsG
+         bhwQ==
+X-Gm-Message-State: AOJu0YysoNXtQxWreL2hsJ44/4WcOm+ebRHLspKthtLDRzSE1GI4x+9s
+	rbtwgFv0YCVfvjpxdIvpO57Rrox+jxOdGETWF1Hs3e0hnZiwE112Ch/c
+X-Gm-Gg: AZuq6aIKyNdgFIg/RwjZugD7DZQsy8Hgb3waC2tKL+L9HRJTahyzR6m0fT1lYreBvJO
+	ZuM1EAacAPNvXR9jL/oO+yXHHfHTNiLOPXiM0remf8sasejAOm2BIu9PyxhKE9mm1FZWMVUcF/L
+	erkXvlfvdMXV7aOp4b5ndhQABXdoyLM7ner/LvxQcej85x6ytrHgsbmHeUVMB3J4IkzNS1L62AN
+	fPLqXdZ5gwUfB9eNxclpzhLikhD4oFtx7vyBCk+V0J+ZYvAPHTb/PO8pOV4/7Tuk39Qt5O1rZ0G
+	yf8thdBC7oiCndMeA/gj02FBQBiS6bV5ny06UXVkqP/pA/8uqtpZ7I1R+zAUdeOSDhk5x1XUVLl
+	R5Scw0XmmNd9wMdsMpoXgF5hDHP6JA4NxACtCsw3F1+VCfVdVSpUJHbIZjCL3dvNGCmWUVQzPHu
+	OSjIP5R6zOSPyU1+X1
+X-Received: by 2002:a05:6820:2009:b0:66a:9d34:6cc0 with SMTP id 006d021491bc7-6785989b327mr7748704eaf.27.1771443622553;
+        Wed, 18 Feb 2026 11:40:22 -0800 (PST)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-674758eb709sm13315154eaf.12.2026.02.18.11.34.03
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-40eaef220cesm20696205fac.9.2026.02.18.11.40.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Feb 2026 11:34:03 -0800 (PST)
-Date: Wed, 18 Feb 2026 13:34:01 -0600
+        Wed, 18 Feb 2026 11:40:22 -0800 (PST)
+Date: Wed, 18 Feb 2026 13:40:21 -0600
 From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>
-Subject: Re: [PATCH 3/3] commit: use commit graph in
- `lookup_commit_reference_gently()`
-Message-ID: <aZYS73lGbt7Gt8uS@denethor>
-References: <20260216-b4-pks-receive-pack-optimize-shallow-v1-0-e98886daff2b@pks.im>
- <20260216-b4-pks-receive-pack-optimize-shallow-v1-3-e98886daff2b@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/5] builtin/repo: update stats for each object
+Message-ID: <aZYUwjSEAcGRSXNa@denethor>
+References: <20260203221758.1164434-1-jltobler@gmail.com>
+ <20260203221758.1164434-2-jltobler@gmail.com>
+ <xmqqzf5pqwtm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260216-b4-pks-receive-pack-optimize-shallow-v1-3-e98886daff2b@pks.im>
+In-Reply-To: <xmqqzf5pqwtm.fsf@gitster.g>
 
-On 26/02/16 04:38PM, Patrick Steinhardt wrote:
-> In the preceding commit we refactored `lookup_commit_reference_gently()`
-> so that it doesn't parse non-commit objects anymore. This has led to a
-> speedup when git-receive-pack(1) accepts a shallow push into a repo
-> with lots of refs that point to blobs or trees.
+On 26/02/03 02:36PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 > 
-> But while this case is now faster, we still have the issue that
-> accepting pushes with lots of "normal" refs that point to commits are
-> still slow. This is mostly because we look up the commits via the object
-> database, and that is rather costly.
+> > +		switch (type) {
+> > +		case OBJ_TAG:
+> > +			stats->type_counts.tags++;
+> > +			stats->inflated_sizes.tags += inflated;
+> > +			stats->disk_sizes.tags += disk;
+> > +			break;
+> > +		case OBJ_COMMIT:
+> > +			stats->type_counts.commits++;
+> > +			stats->inflated_sizes.commits += inflated;
+> > +			stats->disk_sizes.commits += disk;
+> > +			break;
+> > +		case OBJ_TREE:
+> > +			stats->type_counts.trees++;
+> > +			stats->inflated_sizes.trees += inflated;
+> > +			stats->disk_sizes.trees += disk;
+> > +			break;
+> > +		case OBJ_BLOB:
+> > +			stats->type_counts.blobs++;
+> > +			stats->inflated_sizes.blobs += inflated;
+> > +			stats->disk_sizes.blobs += disk;
+> > +			break;
+> > +		default:
+> > +			BUG("invalid object type");
+> > +		}
+> >  	}
 > 
-> Adapt the code to use `repo_parse_commit_gently()` instead of
-> `parse_object()` to parse the resulting commit object. This function
-> knows to use the commit-graph to fill in the object, which is way more
-> cost efficient.
+> The repetition above makes me wonder if it might be a better
+> organization to have
+> 
+>     struct object_stat {       
+>         struct type_stat {
+>             size_t count;
+>             size_t inflated_size;
+>             size_t disk_size;
+> 	} tag, commit, tree, blob;
+> 	... possibly other members ...
+>     } *stats;
+> 
+> or even
+> 
+>     struct object_stat {       
+>         struct type_stat {
+>             size_t count;
+>             size_t inflated_size;
+>             size_t disk_size;
+> 	} t[4];
+> 	... possibly other members ...
+>     };
+> 
+> and have this part of the code be
+> 
+> 	struct type_stat *t;
+> 
+> 	if (OBJ_COMMIT <= type && type <= OBJ_TAG)
+> 		t = stats->t[type - 1];
+> 	else
+> 		BUG("invalid object type");
+> 
+> 	t->count++;
+> 	t->inflated_size += inflated;
+> 	t->disk_size += disk;
+> 
+> but that is probably only because I am looking at this part of the
+> code.  Other parts of the code may have good reasons to have the
+> structure nested the other way around like you have.
 
-Makes sense.
-
-> This leads to another significant speedup when accepting shallow pushes.
-> The following benchmark pushes a single objects from a shallow clone
-> into a repository with 600,000 references that all point to commits:
-> 
->   Benchmark 1: git-receive-pack (rev = HEAD~)
->     Time (mean ± σ):      9.179 s ±  0.031 s    [User: 8.858 s, System: 0.528 s]
->     Range (min … max):    9.154 s …  9.213 s    3 runs
-> 
->   Benchmark 2: git-receive-pack (rev = HEAD)
->     Time (mean ± σ):      2.337 s ±  0.032 s    [User: 2.331 s, System: 0.234 s]
->     Range (min … max):    2.308 s …  2.371 s    3 runs
-> 
->   Summary
->     git-receive-pack . </tmp/input (rev = HEAD) ran
->       3.93 ± 0.05 times faster than git-receive-pack (rev = HEAD~)
-> 
-> Also, this again leads to a significant reduction in memory allocations.
-> Before this change:
-> 
->   HEAP SUMMARY:
->       in use at exit: 17,524,978 bytes in 22,393 blocks
->     total heap usage: 33,313 allocs, 10,920 frees, 407,774,251 bytes allocated
-> 
-> And after this change:
-> 
->   HEAP SUMMARY:
->       in use at exit: 11,534,036 bytes in 12,406 blocks
->     total heap usage: 13,284 allocs, 878 frees, 15,521,451 bytes allocated
-
-Very nice :)
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  commit.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/commit.c b/commit.c
-> index b7c4ec2eb5..014f74822c 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -45,7 +45,7 @@ struct commit *lookup_commit_reference_gently(struct repository *r,
->  {
->  	const struct object_id *maybe_peeled;
->  	struct object_id peeled_oid;
-> -	struct object *object;
-> +	struct commit *commit;
->  	enum object_type type;
->  
->  	switch (peel_object_ext(r, oid, &peeled_oid, 0, &type)) {
-> @@ -67,11 +67,11 @@ struct commit *lookup_commit_reference_gently(struct repository *r,
->  		return NULL;
->  	}
->  
-> -	object = parse_object(r, maybe_peeled);
-> -	if (!object)
-> +	commit = lookup_commit(r, maybe_peeled);
-> +	if (!commit || repo_parse_commit_gently(r, commit, quiet) < 0)
->  		return NULL;
-
-Now it is possible to use the commit-graph to parse the commit.
-
->  
-> -	return object_as_type(object, OBJ_COMMIT, quiet);
-> +	return commit;
->  }
->  
->  struct commit *lookup_commit_reference(struct repository *r, const struct object_id *oid)
-
-Thanks Patrick. This looks good to me.
+Good suggestion. Some of the info added in the following commits is
+object specific and will need to be handled accordinly, but we could
+probably still benefit by structuring the data a bit better. Will
+explore in the next version.
 
 -Justin
