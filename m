@@ -1,151 +1,127 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D892C235B
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 06:18:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769E92F1FFE
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 06:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771481917; cv=none; b=G34hnbaKpE0HLxiDnH2gJzj2SWMyqZD9jyPXIy06uCXHsmB94dmb8SanHooZ00+kHaY9GusRq81lcBtyCusk3QGC5onCelgqYIRas70Pu7lQCV7JXHfJ7jEoR15tJBfcepyoLZfY6JCkgO2ktRI26kgWR6kuOJlK1+ntiRw5kkM=
+	t=1771482337; cv=none; b=kbyTNzIiEdoH5qpCGfctNkUXk/6U+IMJpxv/Vt9PbQFvTriRvF//4tWCxzk6XnRO2l3PeJ6UXboXrTBH5VxF9s7GKY0tFs/ts6bwpH2oPE4mc6SNYoqAL415zS9pFNZoQxfsLW4DmV4Wj662okxI3VmAlnydJe9j2I0FCIhZMvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771481917; c=relaxed/simple;
-	bh=zLQj1Jbh28i7dv9OZXLGA0n2VPnaNY6GtX4HQDWgpRw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dLNzSICQRiinCNL6J7klrxjPg50yUSD+ZIRD6nuipEkwVDgijrDx4h/RtmBJ0NGRuyDfjzZ+WW4vFtBEmoz8Hv+4U9qaYl91liuwIv8MMK4oTO2x/tkAY849rlNBcqnkRfCpCND2JjfNGjuQBvQR6eXhlKpIdRhO5jheCpty87I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sUJwDIYM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ex/4jYvs; arc=none smtp.client-ip=103.168.172.148
+	s=arc-20240116; t=1771482337; c=relaxed/simple;
+	bh=1XWA8oKtnXweGqe+P91lfLTYQtIZAcGILC8JqFuPa50=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=NekVALIwGgT/I1HyyEWAZX3WqasHRh9tpeQmkmCxRyjgPGKod/tWejh4n5Ss8dDpNgSZ/8QrU6W1VHGddjnw/xdsHFfs4gHApsa0oFajsj/DkvV5k6f0c7U75s+bs8zj3y6qJ+7+A8CM6HorvoIb1kQG8qm4UY+yIZZjtzzh7kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ck8UOyol; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ATmYYVpm; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sUJwDIYM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ex/4jYvs"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 83C27EC058F;
-	Thu, 19 Feb 2026 01:18:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ck8UOyol";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ATmYYVpm"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9165214001CA;
+	Thu, 19 Feb 2026 01:25:35 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 19 Feb 2026 01:18:34 -0500
+  by phl-compute-12.internal (MEProxy); Thu, 19 Feb 2026 01:25:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771481914; x=1771568314; bh=0kwLvhHqlI
-	DfQbYYyuVciQUeiloTJnW8eRczW0GLOGk=; b=sUJwDIYMXnJlFITIzkpmXDuHA6
-	1gUAK79z5FZnfpHb3Getzm0fL/m1OT4ARurP8Wri/YnncUojkMzSnSOlEqhFr5gS
-	ycAgKbzJ3D+zSPq1kM1Fx85Pt4TMvSxaFvIOSB2eCypC4Tj8uP1gEjQOS6/gGGcs
-	GnnPl+vEayT/fLqiWqv3lyb5Le68Cj5SYZ286ZDr51ahBpn+ku1CJofGfnZAMd4G
-	BTjHJUgPXF+22svPK9zbP/B2Agx36aV8QHMbpDChy2vNa5hjtosTni0PsYdF1/lp
-	IysO2PeGdkvtntAK8JZ7Bn4W0dWZQ/fA57zUdSC5QpcGBaisrcDpJSIKPHWw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771482335;
+	 x=1771568735; bh=eGBqi+P8RvC8CnlTGoDo5rayMxj3MdS6I6wdH/PkTBY=; b=
+	Ck8UOyol6bFfNWEoCFYYP5APn9qHDgOazZfaBXVTne8/NHJxpLwOwYU/JU772Osb
+	TVOSXdNM+CCLga2yIrtEinKj+/aWU2ApVVfFipGEqKmnxjEJ+Zi/kR8zPzRiNbE6
+	3EizWCAzN2ONJF3YSmYQ+CsvaIAcwtoMPnjCxJLZIbelKKWQ6d1psLn7rMLUqkS8
+	g3NumGO/8xH+ZzL3cCgMZOERsP6fxyMOZbISuUPu1HPOKXkCgPLpWf0T2XVw+SSN
+	G3QdP1PgxCS2SjBe8KGQ0r/7slqsMlDjzL3LFezJ9UjYRRuWHuNE49EQpRt7/wK7
+	0UOS4xnWrWuXNQk6mcFmTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771481914; x=1771568314; bh=0kwLvhHqlIDfQbYYyuVciQUeiloTJnW8eRc
-	zW0GLOGk=; b=ex/4jYvs9Ze5O98U7j77yC7/7aAx6o/6czFRDNaJO1k4Xj2svFA
-	CDln1ipe2geyhQNXULbMDgrw5uP6jve2aNI2/CcFPsjaZO8qeQZTBJYQtgy1DvVN
-	ItmTNV2K9NVWl40b7hR2foncJXu8ttft6Wdf7lY24FW9pXmne5OGQ60qcwg+dfdR
-	MJoBMl40IVQNje1drIIeStvKqgkK/cvw5h1Os4ZEAypQr435HfYLKw5HzuIiA2sT
-	Rkd+oza2EwQwWSCkwXc7R6rgXS0TGoW97D+fy4qMSTQ4enhXxVE3IywTaiZL6llP
-	cC1/r8admfIdrYGKN/ea1L9LR9IxjLxcVsg==
-X-ME-Sender: <xms:OquWaYH692SmGcg-taIz9_YDGcLldQ1Q30KYafHZgoRrE1xzY4hYPA>
-    <xme:OquWaYN1vrCGJLPwH9GYIJdxexVrRbrAaWcdQXSMZs1Wdoklo5Z-DTY1Owh8zP61k
-    lR8ccSTlzkZm1RI8Wm0y6L0DIwtEuq-y2kjjRjJ45nrVh6FODMn>
-X-ME-Received: <xmr:OquWaadNgvB2WbgdzaNMN7MNzxs1mM5zRO1TVVW3s8ryucYzVCgs_U37bdui3jHjHm_YfwVl_xu16RWzy_agjsVWJ5Fnmp7cEBJIyTNqkA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdegjeekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771482335; x=
+	1771568735; bh=eGBqi+P8RvC8CnlTGoDo5rayMxj3MdS6I6wdH/PkTBY=; b=A
+	TmYYVpmuApmqHbQvxIxceOjfFy+0oi1aO3w+Ya7OiIluNTWbpA/8Nuv2StM7LxSC
+	lOSePGxrf63Q+M0pSU1KVQOPyPvkvskME0cvKLZ9FBrPuc98x6n7R608HXfRByBJ
+	9XI2ofyw+hQ+S/3PjhAa4NYszSJyTOUpMXRZkLE7u+6JV1YNXWmneaBEdExEq3VW
+	wvpPQp8dvSb40wlXe0WTM9MPA6rI0jF/iRgJHN71M/vHQoj9VNbzTRJxkcGQ8SCm
+	GWdBQdreQxwVcugtvSEkNybmd3VjwD9/aF7FG1ZSznLq8HuHFQeBQJw5k3EVHRzD
+	a+Q6CrGi9iZXGJB3nl/SA==
+X-ME-Sender: <xms:36yWaVaGs5QEOEjuPJTRww5X24A94TVtHOD714g8drijEZ5tDwJl-Q>
+    <xme:36yWaTRdliFHrh1YBTXWZOaeg8vxNNcSnwFjAFvM6taZ15kXOsBmYk78B-swQTC_-
+    4_uNZdIz504ZGyaUMT2-019NnV3iLAn1BPawZPwiLLNG9xemr9Y6g>
+X-ME-Received: <xmr:36yWaQT6xAseERlNvPnV19-l4XgO_uZ9maZRFJPnHCrk0flAPh2iIfGDbV4kDXp0An-X65SkDDaZU3KI1UIEh18QTZzGFJ55IiQxCiKTXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdegkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    ephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfehtefgveelhfeuueevuedvnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
-    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhes
-    ghhmgidruggv
-X-ME-Proxy: <xmx:OquWaVtE1GbUJcO_sgkZRaPtWpA9Ew7HkMH0YJDh7QXUrnquv8IadQ>
-    <xmx:OquWabmZxKDmK_D96T8trhm0ztOcB2T5Dv6XT30WkGEYcSdz_d584Q>
-    <xmx:OquWaXwDWj4byg18JZrrU8sQw3iw5rWYJmdHJXani1em7KZirLes1w>
-    <xmx:OquWadMr_n8-9Q8gD27KNQ_AmTwSjl-OMKWCDNkmEFIjiOilv12E7g>
-    <xmx:OquWafLdm748tz4rJlKzH84sXJMHf9u4tXVweTlwonZWI2nhDvirat7k>
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:36yWafQ1z3TU3YPm-SWvinZYq-ggljOKhy9NSpllMEz_QjoyLLfq-Q>
+    <xmx:36yWad7tuHCxxdfQU1jMcYGwsF-Fm24AmnKBKcvUfJhUvdItEdhKbQ>
+    <xmx:36yWaT0VF_WBxjSzoAa0MEbZ_AGxS3_nmqTb0kiy4iZvh0Y6ko1dow>
+    <xmx:36yWaQAhXui4WI3TVNgybsyuYksN0Kd57Qgs6x0X2WwAO2NAzrX86w>
+    <xmx:36yWaSu75leUuzXoDW66QkmeX5kcyBpUcDKBMxwST18cQz-m6y0GqQh1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 01:18:32 -0500 (EST)
+ 19 Feb 2026 01:25:34 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c59ace73 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Feb 2026 06:18:30 +0000 (UTC)
-Date: Thu, 19 Feb 2026 07:18:27 +0100
+	by mail (OpenSMTPD) with ESMTPSA id dfc43193 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Feb 2026 06:25:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/7] ci: make test slicing consistent across Meson/Make
-Message-ID: <aZarM9CeGjBqC3S3@pks.im>
-References: <20260211-b4-pks-ci-meson-improvements-v1-0-cb167cc80b86@pks.im>
- <20260211-b4-pks-ci-meson-improvements-v1-5-cb167cc80b86@pks.im>
- <83168201-9c26-4ece-51e1-1931d4b38443@gmx.de>
+Date: Thu, 19 Feb 2026 07:25:27 +0100
+Subject: [PATCH v2 1/7] ci: handle failures of test-slice helper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <83168201-9c26-4ece-51e1-1931d4b38443@gmx.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260219-b4-pks-ci-meson-improvements-v2-1-6047b8307ab2@pks.im>
+References: <20260219-b4-pks-ci-meson-improvements-v2-0-6047b8307ab2@pks.im>
+In-Reply-To: <20260219-b4-pks-ci-meson-improvements-v2-0-6047b8307ab2@pks.im>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+ Jeff King <peff@peff.net>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Mailer: b4 0.14.3
 
-On Wed, Feb 18, 2026 at 10:32:20PM +0100, Johannes Schindelin wrote:
-> Hi Patrick,
-> 
-> On Wed, 11 Feb 2026, Patrick Steinhardt wrote:
-> 
-> > In the preceding commit we have adjusted test slicing to be one-based
-> > when using the "ci/run-test-slice.sh" script. But we also have an
-> > equivalent script for Meson that is still zero-based, which is of course
-> > inconsistent.
-> > 
-> > Adapt the script to be one-based, as well, and adapt the GitHub workflow
-> > accordingly. Note that GitLab doesn't yet use the script, so it does not
-> > need to be adapted. This will change in the next commit though.
-> 
-> This seems to require the following to be squashed in:
-> 
-> -- snip --
-> From 677370c8cd3b73358713a0efac6bb573b347d53f Mon Sep 17 00:00:00 2001
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Date: Wed, 18 Feb 2026 22:12:27 +0100
-> Subject: [PATCH] fixup??? ci: make test slicing consistent across Meson/Make
-> 
-> This seems to be needed to let the first "win+VS test" job pass. See
-> https://github.com/git-for-windows/git/actions/runs/22153194896/job/64053953314#step:5:70
-> ("fatal: slice must be in the range 1 <= slice <= 10, got '0'").
+The "run-test-slice.sh" script executes the test helper to slice up
+tests passed to it. As the execution is part of a pipe though, we end up
+ignoring any potential error code returned by the helper.
 
-Huh, weird, why didn't I spot this myself? Oh, these tests don't execute
-by default, right? That's why.
+Make the code more robust by storing the tests in a variable first so
+that we can split up the pipeline.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  .github/workflows/main.yml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index 412842eb3e2..42585fff779 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -240,7 +240,7 @@ jobs:
->        shell: bash
->        env:
->          NO_SVN_TESTS: 1
-> -      run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
-> +      run: . /etc/profile && ci/run-test-slice.sh $((${{matrix.nr}}+1)) 10
->      - name: print test failures
->        if: failure() && env.FAILED_TEST_ARTIFACTS != ''
->        shell: bash
-> -- snap --
-> 
-> This here run proves that this change fixes the CI failure:
-> https://github.com/git-for-windows/git/actions/runs/22157880378/job/64067214717#step:5:70
-> 
-> Patrick, would you mind adopting this amendment into your patch?
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ ci/run-test-slice.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Yup, looks obviously correct. Will squash in, thanks!
+diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
+index 0444c79c02..ff948e397f 100755
+--- a/ci/run-test-slice.sh
++++ b/ci/run-test-slice.sh
+@@ -5,9 +5,9 @@
+ 
+ . ${0%/*}/lib.sh
+ 
+-group "Run tests" make --quiet -C t T="$(cd t &&
+-	./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh |
+-	tr '\n' ' ')" ||
++TESTS=$(cd t && ./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh)
++
++group "Run tests" make --quiet -C t T="$(echo "$TESTS" | tr '\n' ' ')" ||
+ handle_failed_tests
+ 
+ # We only have one unit test at the moment, so run it in the first slice
 
-Patrick
+-- 
+2.53.0.414.gf7e9f6c205.dirty
+
