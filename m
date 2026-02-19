@@ -1,167 +1,120 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA512FD689
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 19:50:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD202C0F8E
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 20:23:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771530614; cv=none; b=OjFDruectQsYB1kwqhAyLxIjsdfgLmXgC4Hwr8Jgv4cucT3vMgVtXkUJIIfQeJ6xpe6Ry9Scy5h1woyS9tBHajI0gyshWJUVXNMUO18YFg9r6TBaP6LbqJbN8jW+hhojInLUvaNkR/qn6Vab70J1RNii26fm7BzkR6ludfbCWtw=
+	t=1771532640; cv=none; b=DeC3GwjwEgt04+VqYtpmPBtR3d3ydm7i8+s8rUx3XhlPreUS9lqKZEPxyqBu4RCGq+fZmryDlf/GB1uOenHK6vKkqYQST4hIOL9MO8vsH3xi6otnxi5IrQvOuR7P6VUTEwWIDJq2hqltNxsAiCyDjSk+dbh2fq6ohZSYfhF9U44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771530614; c=relaxed/simple;
-	bh=kUU4FePNMgftl6tAmgR6Yp+91sukHIgvY2CpXAcq9js=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p9svjaYxvpzE+npDBvuhDZEii2Kyc+I2qmMEhj0QG8DPFhtiZzCytif/JtE8xBKeik1aWbsfGsdHXzmW6PMyqpx20xEcX0ASSOP2wT2oqtWgIJ1RcgEBFMJoAKAT1IMsD3900OG5waFQyGBXR3JIFo/RUsolE6FzlNL3wXwrSF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AUko+rEA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kZO2cYNp; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771532640; c=relaxed/simple;
+	bh=/7kYjO5wnt9K4X8Fx3+Yj9w6XCWP78GoKt1a+JD5j9o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DdINq4WULxiLcVlOfydHMwa5TW+/Yh78zrog9xW/C+mdI/jzVTHlvH/14jCUgZOTyIqisji5iYlppTsZ1K0+BcVG+L+kwPna1ZQfSNdE2HL95MqnSVOvPt3Ep2xoSDn5e5CgK3KXDvOI3hhj1o0cc+X5jIxOHJTuElCJqrBC8Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=VFHj+Kvh; arc=none smtp.client-ip=74.125.82.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AUko+rEA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kZO2cYNp"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 618C91400166;
-	Thu, 19 Feb 2026 14:50:12 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 19 Feb 2026 14:50:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771530612; x=1771617012; bh=6pgB/BaIEz
-	/uuTxo1dh98UamcgJQPILlQFjFh/Pmwd8=; b=AUko+rEA7ld+eofdh3ytwT6qA1
-	KozebNqVqnF7/jtKGtweJvlFcvVtGEATJko2gtLlX1IuqJde9mKjrWi4HOgEqmGJ
-	Q6P9D9AASB21KaUPml/UnJCey1/ZKzSp0e+WHMeFG+yEuhwg1XLiLTdGNLE8rZP/
-	u21ImT/2zZ+GXS4p/6lLhcm2HJVYegEegORFqm07StHcRYqmte5y0xZ6j+nDLd+3
-	7995NvmlNJv3KqWrZW0CEQ31f/1Zt2nicKKA1k3cIgp178ArOLJV3N0JJijGbuUq
-	2Qe2FrgPyIwXTAEAwPW1BvYdbpLl+l+5FZ2Bvei91VjXGKFJX5cEfM92tumg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771530612; x=1771617012; bh=6pgB/BaIEz/uuTxo1dh98UamcgJQPILlQFj
-	Fh/Pmwd8=; b=kZO2cYNpJYZt6N5ffk5xG/My1OgPqpbNDhfeyJWkdpR+OZ/Pi+W
-	kv2u06g3ShoKJ39RX4Kz8WCcPS128C9Jlm6+0us3Ea7xDDh1LZ+hROgPXvVh/vJ6
-	H5PLSyPEhCJpNyAUbDmth40W/UpsZfNXXAScPdRHmPqgkq3eNczh65xVJZ9fjbHi
-	QCgTSjN667F69qWCoVmCCqiSyhl6mU2cHAMTBUNuLftLQdKkcWzwqkrTYzdzwNhg
-	i5Hq8pNezeUF6Axxf7JQwEUIJcX963Ppken67EacCoJEAdTnIVP9Pd/iL+LnPg/a
-	yDEhPPrqLB9e4OLRg0HO3VZUrBhDgEUE34Q==
-X-ME-Sender: <xms:dGmXaemDK2XDp4gMYaAXgpg2pJ-dfJlVGGaL5sE6EnbLdig62Lnmaw>
-    <xme:dGmXac1ABTgfR9ulO7zLrp8dTbUVpDcwIRElJFr3DC0adl_9YpOzN3WZWzShVg84U
-    nVHjj19LeeYlRtfsY91dNeM_JvVBZCoXcF4mg9-L_vbWedZdgMcIog>
-X-ME-Received: <xmr:dGmXaRrTWoP8CXYe6VO0HgVxWgQk3yhcU0fB7GjtXLsMApQmVOxeg4iQl-8bURcj5zgG7kuJhJeR7FR__4tuBkl_7NnVgfblrw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeigeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepuggvvhgvshhhihhguhhrghgrohhnsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehvugihvgesghhithhhuhgsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:dGmXaRdMbYhh9MDtOWUF4tzmMfzfN5ASZeyh6NJwRUwgih2SkVx_2w>
-    <xmx:dGmXaYpFWw1yEJhBfypeMk7UZOEk9ZNmAZN61I1-4Bf5U-7rieFQTg>
-    <xmx:dGmXaaHlJMafdEEdFvYq0BW5zRRGM7cv6Qg4SXoY4rXEEvqOF6HQ3A>
-    <xmx:dGmXaQt_W1oScIp6Hm-okOoJzsaazU71hKUQcAD5xj-OzgUnUoCFjg>
-    <xmx:dGmXacIp8pzkQbX-j5SsINhoie3t2b5r7i6Tv6d-tjfTsQdvs-FK1Gf1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 14:50:11 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Deveshi Dwivedi <deveshigurgaon@gmail.com>
-Cc: git@vger.kernel.org, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH] t1006: fix %(rest) test for object names with whitespace
-In-Reply-To: <20260219152407.12160-1-deveshigurgaon@gmail.com> (Deveshi
-	Dwivedi's message of "Thu, 19 Feb 2026 15:24:07 +0000")
-References: <20260219152407.12160-1-deveshigurgaon@gmail.com>
-Date: Thu, 19 Feb 2026 11:50:10 -0800
-Message-ID: <xmqqikbs4iod.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="VFHj+Kvh"
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2ba90683995so663344eec.1
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 12:23:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1771532639; x=1772137439; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UhvEBpuFLSzJ9h93Z7iAr9DIrtra0xETX7uGudBqdGc=;
+        b=VFHj+Kvhn9x4fKHzW81deiEkruct8z2KCLCeGLdF2zYU/2jJxGzAhRGYofx4E5E79S
+         qM8bx9dly9WnoYh/AC19Blwa5NdqFANukZI7kfjxYcOnY/5lxlCEZLa5pmmURXfh71Sl
+         LSHtS7AvrZZ3URqjB/S5ISPT58qnpnfeZ7+DbvLC4xk2bYBUqqVGEIgkdnwRFC62Gc72
+         iCyRvIS6zIIqgh6Hl06Z3VKVOsveJx/pna4s6nSDp0ntbajAxstmF2dA5YIQmHL103Gv
+         IcpI1LDX3JafyvpheFxpxCog7WTibl+mIstLqrAQ0GXeZ8zTwtEm8+rf5xAd4ntSB0E1
+         P40w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771532639; x=1772137439;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UhvEBpuFLSzJ9h93Z7iAr9DIrtra0xETX7uGudBqdGc=;
+        b=M2NCPd7YPB5E6dmqy3pvg0qYAgwDSVTlJQxrVZpYBlJkqPdOy9U9Hk+a7qEqwvoW+c
+         ZtGBnwKb5TPY6F7/BniH72cSrRZRImN7T9YDGYiEZr5tlUSXL5goGR6ndsYKtzOQFXDW
+         N2AwYpElaiX/AW/h73ueC8uTbhj9ofVQ4w+Pgo9TfKnh0MOxHNRHo1TJrN7nhXEtrxj0
+         GMFtrgFbKtSmSrIa1qD62QAokJJpLBKMBaXyaMZJGImlUd9QsoedkuZi6xukcRxpzLaS
+         SzRKcV4oWWVhtwb829cl5jtTFB/mlc4FWvhNjlUIvw5tJ6h4njhMyN+ZGeQWMtRdyurx
+         Qw8w==
+X-Gm-Message-State: AOJu0YzkIC8BiMqQNPzOpfLmJQIDDsDNDrLSpeqG9mucC1JoXmkZb4Gi
+	0kUtZayI4r8I+fPes9fgGYtVin+iGZefeShDYTwZYaiy1KSwm5kam0skbsFegZdA
+X-Gm-Gg: AZuq6aLcujtegXctM25/zZKUNOj2X0TGn5wwHQb8Me/XZbcoJjFEmzup8sXA1QNt1dE
+	ynxTi9haBOS2sXG/3JE0ACBHR3X9tmRV/Wy49PFcecp/ktygd0FknO79wg0tfAI/FPQJJ20JTcf
+	ANSHxm0W5ZUPJlAybTz5XUXcM419fyJ5w6GXzUIAWLiq1Rypa9PTZaEZqKQPolseI5dYHhirQI/
+	FDnHovHt95J9361rLUTDafifbNDisfZlsnqLxDdiizuhDwo5J2s7RR2lB+PiQYIqOjJe9hykyEI
+	+ohvAOMJv4ESe7R8Hl8tRakom7AA05Sd5uwhfPIfAM3duHsojOSjK6e3ZDNOs4X/YxGfsBMS3bY
+	MAt+XUFZcgJjA25NhBCdDuZnia09ep2quh3sX3omjsE2rSewLtZhIUxQHveNMC+/t6jS+Cf5cVK
+	42zjlv7chqJtXbMxPDociV1ETnHC02TA9qk/jdxsTeaq502i86
+X-Received: by 2002:a05:7301:1f15:b0:2a6:a306:efdb with SMTP id 5a478bee46e88-2bd60770487mr1222465eec.3.1771532638527;
+        Thu, 19 Feb 2026 12:23:58 -0800 (PST)
+Received: from [192.168.50.155] ([172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bacb415dddsm25183414eec.0.2026.02.19.12.23.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Feb 2026 12:23:58 -0800 (PST)
+Message-ID: <d2bf79b3-4407-4fa0-ae2b-fcb3178f36f7@github.com>
+Date: Thu, 19 Feb 2026 12:23:57 -0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] t1006: fix %(rest) test for object names with whitespace
+To: Junio C Hamano <gitster@pobox.com>,
+ Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Cc: git@vger.kernel.org
+References: <20260219152407.12160-1-deveshigurgaon@gmail.com>
+ <xmqqikbs4iod.fsf@gitster.g>
+Content-Language: en-US
+From: Victoria Dye <vdye@github.com>
+In-Reply-To: <xmqqikbs4iod.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Deveshi Dwivedi <deveshigurgaon@gmail.com> writes:
+On 2/19/26 11:50 AM, Junio C Hamano wrote:
+> I am not sure if this particular FIXME has much value, but ...
+> 
+>> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+>> index 0eee3bb878..cac88acf65 100755
+>> --- a/t/t1006-cat-file.sh
+>> +++ b/t/t1006-cat-file.sh
+>> @@ -194,18 +194,11 @@ $content"
+>>   	test_cmp expect actual
+>>       '
+>>   
+>> -    # FIXME: %(rest) is incompatible with object names that include whitespace,
+>> -    # e.g. HEAD:path/to/a/file with spaces. Use the resolved OID as input to
+>> -    # test this instead of the raw object name.
+>> -    if echo "$object_name" | grep -q " "; then
+>> -	test_rest=test_expect_failure
+>> -    else
+>> -	test_rest=test_expect_success
+>> -    fi
+>> -
+>> -    $test_rest '--batch-check with %(rest)' '
+>> +    # Use the resolved OID so %(rest) parsing is independent of whitespace
+>> +    # in object names (e.g. HEAD:path with spaces).
+>> +    test_expect_success '--batch-check with %(rest)' '
+>>   	echo "$type this is some extra content" >expect &&
+>> -	echo "$object_name    this is some extra content" |
+>> +	echo "$oid    this is some extra content" |
+> 
+> ... I somehow doubt that this is what 9fd38038 (t1006: update
+> 'run_tests' to test generic object specifiers, 2025-06-02) meant by
+> that comment.
 
-> The '--batch-check with %(rest)' test in run_tests() used
-> $object_name directly as input to git cat-file. When the
-> object name contained whitespace (e.g., "HEAD:path with spaces"),
-> this led to ambiguity between the object name and the %(rest)
-> placeholder.
->
-> As a result, git cat-file could not reliably determine where
-> the object name ended and %(rest) began.
->
-> Fix this by using the resolved object ID (OID) instead of the
-> raw object name as input. OIDs are hexadecimal strings and
-> never contain whitespace, making the split unambiguous. This
-> also removes the need for the existing FIXME comment and the
-> test_expect_failure workaround.
->
-> Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
-> ---
->  t/t1006-cat-file.sh | 15 ++++-----------
->  1 file changed, 4 insertions(+), 11 deletions(-)
+That FIXME was intended to call out the behavior of %(rest) in cat-file
+itself as something that we may eventually want to fix. The comment is
+only here because this test happens to demonstrate that behavior. For
+that reason, I'm also not sure I see the value of this patch; it's
+removing some visibility to a quirk of cat-file without fixing the
+underlying issue.
 
-I am not sure if this particular FIXME has much value, but ...
-
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index 0eee3bb878..cac88acf65 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -194,18 +194,11 @@ $content"
->  	test_cmp expect actual
->      '
->  
-> -    # FIXME: %(rest) is incompatible with object names that include whitespace,
-> -    # e.g. HEAD:path/to/a/file with spaces. Use the resolved OID as input to
-> -    # test this instead of the raw object name.
-> -    if echo "$object_name" | grep -q " "; then
-> -	test_rest=test_expect_failure
-> -    else
-> -	test_rest=test_expect_success
-> -    fi
-> -
-> -    $test_rest '--batch-check with %(rest)' '
-> +    # Use the resolved OID so %(rest) parsing is independent of whitespace
-> +    # in object names (e.g. HEAD:path with spaces).
-> +    test_expect_success '--batch-check with %(rest)' '
->  	echo "$type this is some extra content" >expect &&
-> -	echo "$object_name    this is some extra content" |
-> +	echo "$oid    this is some extra content" |
-
-... I somehow doubt that this is what 9fd38038 (t1006: update
-'run_tests' to test generic object specifiers, 2025-06-02) meant by
-that comment.
-
-I would have understood if the fix were more like
-
-	test_expect_success '--batch-check with %(rest)' '
-                case "$object_name" in
-                ?*" "?* | ?*"       "?*) # has space or tab
-                        token_to_test=$oid
-                        ;;
-                *)
-                        token_to_test=$object_name
-                        ;;
-                esac &&
-                echo "$type this is some extra content" >expect &&
-		echo "$token_to_test this is some extra content" |
-		git cat-file --batch-check="%(objecttype) %(rest) >actual &&
-		test_cmp expect actual
-	'
-
-i.e., when testing the object with non-problemtic name, use that
-name, but otherwise, use the resolved name to avoid breakage.  That
-is because the whole point of 9fd38038, as I understand it from the
-earlier part of the change (see "git show 9fd38038") was to test the
-use of name as much as possible.
-
->  		git cat-file --batch-check="%(objecttype) %(rest)" >actual &&
->  	test_cmp expect actual
->      '
