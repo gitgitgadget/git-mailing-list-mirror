@@ -1,163 +1,124 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE144199920
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 15:35:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771515361; cv=none; b=C7gR2J+opn+qT6OlVB7nTxZgeEiXJswEtWrr/FKPrvA1W4vNNDtcwScwjGciKWSYly+YaOoLbZohgTvu/F0Rg9A7WWwuEAACeLpBGmmU4sCX5s7XJW7bxHIh8drAAN7Mbinj17PrN0QbXZpkEagkGOxfSKsu1Y+TBbCafilPeyk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771515361; c=relaxed/simple;
-	bh=PuwfDdu0bFIr+3RMPGmJ4mtAvtX0Jy3lN7QtL7Ee5NI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UOmfZexPYvEsRX9vXFpyarTsLHeiTSbbYORkE5T35Zi4ktG2Zl/c+jh+/knW6bS67wn7bVBSjSHXNu+zFIhZizy0StA/m0AjHgAfPsBoWqzQetwE6XiuhjFoWpUb5Pk8Dd6lrieswkhzOIc8y83iMp57yr+HAEGUHekTYMOGH3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ocXKa4XQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jeh5xwDh; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4AC345753
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 16:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771516841; cv=pass; b=S5HmvfajekU6ZYxO6jvu7GI9rkO6Om69/wErF3ybJZo3HAtfItKwfgGfYgW8FpkGIVS/i26E/tR0nSfYKGHMsVNGFOTYb4OTQFPibptEEH5yd6khncSETmj/D7aOeXUyu86dASpfmoisThQ9Ie1tWG3lpPOURIRqTUxj53bxIGc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771516841; c=relaxed/simple;
+	bh=KKy1WG2G6YWcX8i6OjqWt/iCUyvtntSsTDOKRgXeiPQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c4hQ1Boyhp0IDIM4augliaocK88vPqMDPUbnOWYzyrHSASc4pa6Bo/kLww2zSaxQ0YKsvOwF+c1HkJfpPIA5TN44nK4S4oqvDI2wu5DMIQVtPru6EVEvYog5C8B/tjgus9YbOVrpRk6sJc2JZDqlWzW38GDLXOLaqjlU77cCklU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SbMNRy32; arc=pass smtp.client-ip=209.85.167.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ocXKa4XQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jeh5xwDh"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 314A3EC0578;
-	Thu, 19 Feb 2026 10:35:59 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 19 Feb 2026 10:35:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771515359; x=1771601759; bh=x3HuHxGJ0j
-	11EzsgXd2NXYENyvJrtAqr2kx9p6QMT3Q=; b=ocXKa4XQjuIk5NcZBNlaNKTvc1
-	A6RGHmao8e4F0b9x1U4cWHIgEEmTDwmnujsv0kcHmegZHxW8FdAFlun54+OV0ohZ
-	CPwM4ol//01K0kRiBAUGToYWfYoT+wRo4G9ewbylWcjfSx/68wHqm5JUaYML2N4A
-	zjFY7OGRlHTHKO47LutruUWlH6mBCNHofPB/cCIBWkECnf1ysj0+H3kv3DwllvNJ
-	P5Nt9vwWdXwaMWNcwl+atuX5RqxtueerMGJAdE/dYddm5gEyZV7PiHfvnrWV7YIO
-	dZVPfHFcwmeH+LBIkUZU7bHk0xq6feVuLCcx0RERK4/UTbsLe/2w7g7g1e/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771515359; x=1771601759; bh=x3HuHxGJ0j11EzsgXd2NXYENyvJrtAqr2kx
-	9p6QMT3Q=; b=jeh5xwDhK81rNTgtG60D7DsOyHfcBciwabL9K0FVCiaVPuAB1l0
-	6uAhbEDMq4ddOZ081FCL0cvNYGEJkFith/E6MXXLbV9y9BMzRFRwR2UgQQQOJCha
-	ZtoNxV6FqLRD7NlC5zgyMS675OuxBQW5gGUaqq2tVjCF5+g9FThBuDNXqsamK7yx
-	BtUdHAgvzNm19z5UlYCdaajnzLsyd1lGMVEMYvSVkyz7jXQv2qLGw8ZF662T/m/k
-	BMRo4dV7lHRgTC6BFViPWnjvYWe+an5UxtaZYdJY2eIG2n2+dgb+awoeGlMDhxZg
-	rqnEyn6ryRHYPxZ2pwJ8KtVVY4pH759Knzg==
-X-ME-Sender: <xms:3i2XaTpUQ3T6bMCeDKTmahIw7WqcSAPdeV1vyeyFYmi_laUmmjv1mQ>
-    <xme:3i2XaUjf-woGkY_BNin18i4KUwwzoBxxDN3fzpzAKjct1K-r8B5mVB4UtnxtUX2lO
-    un4xjNjuUs5Bi5fxlpp99PqD3FtXChi9McwdUlV0p6Um30sV6XO>
-X-ME-Received: <xmr:3i2XaYhUS-HyEivNqjsEDXWmdZoU7u22XWzFv5ArCKaso9fNTowkhYfmFIuDtrgNtMSDUPJhTVpfHLqWmds6rr-0_b8W6AUVYKssaRkOeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdehledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepthhoohhnsehiohhttg
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:3i2XaShYBv5AoB_kp3YWR0JTE7hxdCsZgLckXQO4BCNg6JcoxoS-mw>
-    <xmx:3i2XaQI23QUor1hILpDlJY0OgRZ3PBU_fQ-P-4n4EqHNlHTpXtny4g>
-    <xmx:3i2XaZEkisdBXzCsP1T4qbou0r1uXcV4bjS6Km3avbqSeUB5tyCbmA>
-    <xmx:3i2XacQfkdwv_nueZ83bhHk4n3Gdmn-17YKC9HqcSTGH3O3BkrZcmw>
-    <xmx:3y2Xad-tkLpQVpe8YqIcBY-jwUAS6GJjkTKPb-AyMIoVc4DPj9b8w6vs>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 10:35:57 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dcb76e14 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Feb 2026 15:35:55 +0000 (UTC)
-Date: Thu, 19 Feb 2026 16:35:52 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, toon@iotcl.com,
-	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH v7 6/6] refs: add GIT_REFERENCE_BACKEND to specify
- reference backend
-Message-ID: <aZct2M3sbQSduK2q@pks.im>
-References: <20260219-kn-alternate-ref-dir-v7-0-16f27860dbdf@gmail.com>
- <20260219-kn-alternate-ref-dir-v7-6-16f27860dbdf@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SbMNRy32"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-46390d4ac7bso635179b6e.0
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 08:00:40 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771516839; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Q+9rqCh3k8MzXLoKSwDCJSd6Z8qYpgfVfuYRHw7NKtXyJTHpicDwJVwjUrd+6Xp131
+         UCw17n7IL1vpLTCWsPREV+Ce4cUhrBIhWnIdAzpMVeN5XZbYSze/G1BzxSQEepDkeUW1
+         +Udd5hkIfzbzKaxAq5fp/Yl3XygjY+kLOZB5aB+P7ruOCG+Df0JM7hkznzaCikzlhnJU
+         qM+7Mylvdy6XgzYzQkOtuwrkIE57a4PZjaMoiMmSaMLJCx4tfIkxWMqZP4cIsTaP8NQj
+         EOEo+0LxxjTJtzSgz8U+5NkFKC4zVL03kuZymR4ZhYlYSH1Jvp3ODcfBYGlM5B88nTU7
+         mAsA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Y3XbjxZB/o8+m7DqOM7Ge3w5BxRc6kavBbXmqFyhXfg=;
+        fh=jEOs5fJkdQOPr9N3biEOJbz+II7XvDRJU/sAwlRmGqU=;
+        b=Fpe4OvFa5BTBDcX/JDem72/V1spkbcSVHJs2FTPhkiAwRzLlplUin4EBLmRpnrSz+3
+         gwBDMA4QC8TgMIIVUig84ZroV09IiJ2SVqreDdXQl7+CupdyeGa98p4Anx6YREPMG4T5
+         vehlBu+EbVst0rHYDSOjcsd334ttQlEgZDofu03A+lxL+Bq4tEKUmnddA/lkup3gw8VW
+         GvAizWL+qfd3MHijqOvGLN1gA3r96Cu5jWof0jfHClqqunHCr3EHkTVNS+3X7JoI32Bl
+         xeenQ+wmMTfccJdQBD+uuoKJHZvDho/kYvbIWGgF0PCtsmkAC6k8EBVh3B8QMQUTgwMb
+         YhHw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771516839; x=1772121639; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Y3XbjxZB/o8+m7DqOM7Ge3w5BxRc6kavBbXmqFyhXfg=;
+        b=SbMNRy32lVfykp/XrbC8pWGH6VI+qD2EDRCCWAe5gqvaG0YuhGq+61JA04ej7EOE7d
+         ZrYmD83tJnQgzXgUm6U9+U7DeQAyGQDxb2uO9rDpRv0E0tDGxK/0wB/UKQRvJytKrXod
+         fvkugZDxjtzgGILW5pDcpX8rVwB2p8RWCDBbqB3NOWqJwYDKNlrMwnKHyo++yyL1610F
+         hz0/wI6Ish92sZs2wn+oBrpzMy/lO8dbwOEHQD2K2NOQtx9SvWIgWZ7ek768maD+WxgV
+         y+ODIuug9pxy25yyPQ0kTLXUBS+hc8syGnEE1zOZvEs7jrLmKF8n7bC8WKhfqj04lQ4K
+         c6UA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771516839; x=1772121639;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Y3XbjxZB/o8+m7DqOM7Ge3w5BxRc6kavBbXmqFyhXfg=;
+        b=thEM4cYQCS2s8TPFFbgBSbt4shSSdRlwIMRVMtaHat9sgK0gyPi+BKWJ1qK9XNXeGq
+         SUBCEPbWThrdaWoJQAP2QPpKnhlSHdVTtPhxGRSyMYrMQQK3QNQ8IkSpZg9cf6Ym5Sju
+         sVFcsIuBVdrnZ9Ng7YFlmsBFsAr9DH/Wqiofdk3stTydxQUcyaXAzjR5jsqeXIe+IHRF
+         NnOtUZIvZtaWNli6i/aDTzkzA0HCXA381Z/Dbjqw6h2Qkn+08W3Mj38yS1ZGTeD/aEJV
+         JsJj1xiI9CWlaS9/H579UnsREIko/V4S0zFoU8RZatWLhr7DwDZTqp3bGPCclHCq+cvk
+         3KMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXjcIsbG2k4zfwNlYb8D//10omnLQGqtrXjjLdWZpNwbHvcUhYgfkLsmTx2MAqN4372RwA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwaUP7I3SS31peyWom9YdCy/QGmcrNZkqWsHCtR+mFtbygrZn6o
+	uvicUqOxT8/tS/NCwMFq9qmoCkB7gRmpJaTR5HhsJUrhCcT2cd8/Oz58bncQRAcru9X96GY35l3
+	p75bWjDGBOdEb0JbTQXzzYy6md0ttsoE=
+X-Gm-Gg: AZuq6aJ+Vome8LrBkyvHUD8gQTgw/gJnddajJuKQEqBX/ek6+eBPp6pOZAX8DDkH2Gt
+	qQJH0mbuX02lOSNSoP7+3FyyQztkop6ysOw3NBr5E/4famUW8NNZ6CinrDie4QDeJbrWUCaO7U1
+	jcCg5HBGtawhMgAQFWzovrxgILFzoSS7xvMS6Cr4Vbk9iuQykVwMWGX1IH1c4ydv6rDbUZbgMe3
+	GkmrxKaG0xEMjVuwdIAS6phUh8SKbH2Qo/AaarA7Q9UmZYZpR1ykdvCc8Jl+EedAo5ADF1m8ai4
+	3WFiK15P4WJjgvaV340F37FZkZz0ums1fXNYxGB2
+X-Received: by 2002:a05:6808:3028:b0:463:bbca:4f15 with SMTP id
+ 5614622812f47-46410b25e64mr2503942b6e.11.1771516839033; Thu, 19 Feb 2026
+ 08:00:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260219-kn-alternate-ref-dir-v7-6-16f27860dbdf@gmail.com>
+References: <pull.2048.git.1771406115.gitgitgadget@gmail.com>
+ <46c24e0d05a91f830e400914a7e446afab320859.1771406115.git.gitgitgadget@gmail.com>
+ <8ac118b7-2d39-4a0c-9a61-d0c7b045b231@app.fastmail.com>
+In-Reply-To: <8ac118b7-2d39-4a0c-9a61-d0c7b045b231@app.fastmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 19 Feb 2026 08:00:00 -0800
+X-Gm-Features: AaiRm51pbhSwgnkpXhic5iJA1O9Pht-SVRbbM4YSQMYxnuCKxSwHjKvp6YdZK8k
+Message-ID: <CABPp-BHiLxeH1Aw0Ag9voQfYghSW5B80R21TZURAX5eP+mj2AQ@mail.gmail.com>
+Subject: Re: [PATCH 4/5] merge-ort: prevent the_repository from coming back
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Koji Nakamaru <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 19, 2026 at 10:38:25AM +0100, Karthik Nayak wrote:
-> diff --git a/t/t1423-ref-backend.sh b/t/t1423-ref-backend.sh
-> index 9912433b8c..d69aea3f7f 100755
-> --- a/t/t1423-ref-backend.sh
-> +++ b/t/t1423-ref-backend.sh
-> @@ -30,44 +39,86 @@ run_with_uri() {
->  #   <repo> is the relative path to the repo to run the command in.
->  #   <backend> is the original ref storage of the repo.
->  #   <uri> is the new URI to be set for the ref storage.
-> +#   <via> if 'config', set the backend via the 'extensions.refStorage' config.
-> +#         if 'env', set the backend via the 'GIT_REFERENCE_BACKEND' env.
->  #   <err_msg> (optional) if set, check if 'git-refs(1)' failed with the provided msg.
->  test_refs_backend() {
->  	repo=$1 &&
->  	backend=$2 &&
->  	uri=$3 &&
-> -	err_msg=$4 &&
-> +	via=$4 &&
-> +	err_msg=$5 &&
-> +
->  
-> -	git -C "$repo" config set core.repositoryformatversion 1 &&
->  	if test -n "$err_msg";
->  	then
-> -		git -C "$repo" config set extensions.refStorage "$uri" &&
-> -		test_must_fail git -C "$repo" refs list 2>err &&
-> -		test_grep "$err_msg" err
-> +		if test "$via" = "env"
-> +		then
-> +			test_env GIT_REFERENCE_BACKEND="$uri" test_must_fail git -C "$repo" refs list 2>err
-> +		elif test "$via" = "config"
-> +		then
-> +			git -C "$repo" config set extensions.refStorage "$uri" &&
-> +			test_must_fail git -C "$repo" refs list 2>err &&
-> +			test_grep "$err_msg" err
-> +		fi
->  	else
->  		git -C "$repo" refs list >expect &&
-> -		run_with_uri "$repo" "$backend" "$uri" "refs list" >actual &&
-> +		run_with_uri "$repo" "$backend" "$uri" "refs list" "$via">actual &&
->  		test_cmp expect actual
->  	fi
->  }
->  
-> -test_expect_success 'URI is invalid' '
-> +# Verify that the expected files are present in the gitdir and the refsdir.
-> +# Usage: verify_files_exist <gitdir> <refdir>
-> +#   <gitdir> is the path for the gitdir.
-> +#   <refdir> is the path for the refdir.
-> +verify_files_exist() {
-> +	gitdir=$1 &&
-> +	refdir=$2 &&
-> +
-> +	# verify that the stubs were added to the $GITDIR.
-> +	cat $gitdir/refs/heads >actual &&
-> +	echo "repository uses alternate refs storage" >expect &&
-> +	test_cmp expect actual &&
+On Thu, Feb 19, 2026 at 1:48=E2=80=AFAM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
+>
+> On Wed, Feb 18, 2026, at 10:15, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > There are two things preventing us from removing our usage of
+> > USE_THE_REPOSITORY_VARIABLE: one necessary use of the_repository in
+> > prefetch_for_content_merges(), and the use of DEFAULT_ABBREV.  We have
+> > removed all other uses of the_repository in merge-ort before (multiple
+> > times), but without removing that definition, they keep coming back.
+> >
+> > Define the_repository to make it a compilation error so that they don't
+> > come back any more, with a special carve-out for
+> > prefetch_for_content_merges().
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >[snip]
+> > +#define the_repository DO_NOT_USE_THE_REPOSITORY
+> > +
+> >[snip]
+> > +#define the_repository DO_NOT_USE_the_repository
+>
+> Here the casing is different?
 
-Tiny nit, not worth addressing on its own: we could simply `test_cmp
-expect "$gitdir/refs/heads", without the need to copy that file first.
-
-> +	cat $gitdir/HEAD >actual &&
-> +	echo "ref: refs/heads/.invalid" >expect &&
-> +	test_cmp expect actual
-
-Same here, no need to copy the file around.
-
-Other than that I'm happy with this patch series now, thanks!
-
-Patrick
+Oops.  Will fix; thanks for taking a look.
