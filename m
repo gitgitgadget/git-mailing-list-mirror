@@ -1,136 +1,108 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D00E34FF73
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:38:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771522701; cv=none; b=XGtfkT/ey7ACtUnu/GIZ5UaD5VPAbOtrj7VASEBvepdFDkFzCUShxGNyWdMut6LvPRcKtjqPJhXFkefhD4bcUchVnkpARHPx5ZGU1TJTxeX+z3xsRNU48sZiEMjfr5BhEikulEejaY1TfXJg5KxWQ5fuStbr/GUa10PiNwhIXt0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771522701; c=relaxed/simple;
-	bh=8OLYJneQKTLEfqdvAQsTvIDeQd6JTRsQImoiW7665+E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mImLMoE5ezT+TlBlAQDuSzaiuSlrFZLBoc08+xNTcLCm6g7cK4UkRgBNvBU/YHR+06kTxSzzl8olfrAE2GJdq9uhx0SCPrwSVw2MQuDHsD1Ph+oDsbW3F1Xrojsw0Z1H1ewtZc3dzqQZNl+/LE2z0LCA3O2P/SBMqbcDxR5HRXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RFcDRa3c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ka21ULEQ; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5522B283FC5
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771523706; cv=pass; b=TheNiAk/Z7YQ7snVWgnA0U8gnDiHBAkaQyGWxLlXqtgL+XzA2G2YMn0/cdNz99iE1tVDn0Dm3H9GN0pAWjzeNS5V/jO/xpmW1wO1T78ViM9IConga3jnel+VNj6yal+VwczZAoto5R3cMUcAmkhPkLWHgH6aieL4MUb1RJrkwd0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771523706; c=relaxed/simple;
+	bh=SsfZEFPusHAD7JDC1CzEdPOJMp8ViulKgekJ4hCtkvE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ALftlGfqTCCCpCr2uXIqPRHY1vbTHCjbQXXxfz5LrPKuhbTR4HTGb5FZZfRzBhbkZWsGie1cLR6thDlR9K/wGhzxW9QE/HV+xyHL4+kwDkLUVVYpisJLZnvk5hXYYuiH8Il1BdkPhN2NcjOHv2zgRik3HqdbNUCvKMpfuXRi3BU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zb2zzBWM; arc=pass smtp.client-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RFcDRa3c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ka21ULEQ"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 586861400187;
-	Thu, 19 Feb 2026 12:38:19 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 19 Feb 2026 12:38:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771522699; x=1771609099; bh=vTtl6/+j3b
-	yZ3l5wFEu9IHTGi3Yd0XH5E5mg6HFYgT4=; b=RFcDRa3cZEIgLzN3jG8oGmImkQ
-	OCLUu82Qna7Hs1ntQQA7nQbujfT7LYpysMs7BB3Cl/jiCo+LPgYmIwl1u+lmJ7Xl
-	5TDfOLk/bitqmB/ZPtUk+VXp6qmVGO7ZshwAQZfbpJYmko22+dBIjO+fwRb6yS0S
-	wyU65slbkiIVsH41JYjCho2pjteb7MoGi9eWTZHkLv9X/y6lwqJVbstrwlexY43/
-	N5Dv9jqoGLjVO5K7RCY3VNKzl1s/tiHEb1kQsPydwHNMp+Kl+Cd0kZjFa1RbjG3f
-	lrypPISx9l9ZemjIJNhBiyX5L88XNuX/YBn1syHDkFOyZZXfWaewLQ4H8H8g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771522699; x=1771609099; bh=vTtl6/+j3byZ3l5wFEu9IHTGi3Yd0XH5E5m
-	g6HFYgT4=; b=Ka21ULEQCpdhQrWfn+ljyrUg9Q/IKdaqG2eNzESaZKwRyNiA2+q
-	Wiy+eTJSIN9PqYc6eL8uGAJVpkyf7AuYiv5rw5BUA01i5x8BP5UXFHbDKHP5nnIA
-	g6yykjYI1UXPvtlxzCG2T/Gbm/VTbc5R3BRD+T6oV8iNM3qnf/4c7GrQGlSMV+Qv
-	N1yzpV0K7/linQNZg5CcFrNwxu5B8EDWA7KU25tP6MGcXd8vwvWc/b/9wiiC7cwg
-	t/POpC9PHv2nXgNXFHVZjdyq5E5hTuQCz7HryS9lL4Wot7XEY4WsxyOKDNSySujY
-	sI1i5pKFgT+E2qKSjxHTHhdu5kw0oyV7KCg==
-X-ME-Sender: <xms:i0qXafqroOhTGtmlSBWqSUy-alAsBLdlDUEyTypG49cUCnVw5vUNcg>
-    <xme:i0qXaQi8kNjLltGAcqUs6NCGx43UExVVQorvFxccZYtrzagLkDk7YpmIqlnJxPSFC
-    pAZT2nivafzfa9TXFnWBqmQc01I1ON1w14RbovzQnKr6SbMONQM7Vo>
-X-ME-Received: <xmr:i0qXaUjSASngCyf4YWBIq_fUZ9-g8UnnXu69xnNF2gbF7HSOcbvmcmKP9ky4HE7YqZVvIlEFO_CUIfprlBZ2SIehy64SCQ92og>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeiudehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfh
-    hrpdhrtghpthhtohepuggrnhhivghlseguuggsvggtkhdrtghomhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:i0qXaehitOja9TRkBd7yjUxo408iF4fgYaAfEj9lgzmEiE3A7fV5Ag>
-    <xmx:i0qXacJJoLjfHbMnbr8SdGOsBhP0pwHSirur96vssGtoAubU1Usc4A>
-    <xmx:i0qXaVENWN1z_qPrD3V7Ewqv0b5kdB_cSpZvCiSjFxEIjCc6dzAgLw>
-    <xmx:i0qXaYS5WTW6__XjuTGbVX_3vEhho2r55_KnexdrXqX5IsvnPhW0vg>
-    <xmx:i0qXaWRLm5gwVhrjliL2rhI7QmWP_LXxm3AGH1V10T4PQC-Es7OPzQpr>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 12:38:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Daniel D. Beck via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <jn.avila@free.fr>,  "Daniel D.
- Beck" <daniel@ddbeck.com>
-Subject: Re: [PATCH] doc: fetch: document `--jobs=0` behavior
-In-Reply-To: <pull.2047.git.1771443159369.gitgitgadget@gmail.com> (Daniel
-	D. Beck via GitGitGadget's message of "Wed, 18 Feb 2026 19:32:39
-	+0000")
-References: <pull.2047.git.1771443159369.gitgitgadget@gmail.com>
-Date: Thu, 19 Feb 2026 09:38:17 -0800
-Message-ID: <xmqq342w7hx2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zb2zzBWM"
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-4638e6bb8a5so405081b6e.0
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 09:55:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771523704; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Ii0fHnQ7rMp55CPOkDn9+OzX5LStVlaqW5HinXJenZwAzTo9DC+JesVxm48hQdp3Ou
+         ZRzM+9o2S9hjYl2l6WmYJi+8+ksZPSnIdrNvmf4cAk62UtQRHBojYrcb/vyMgyAWjYr/
+         qzUe9hqZKPJ3esrhNfozRTpNbKvFLvYekji1pFraqDVaRLk7imZ5XVWtQ2t5s81oAVmS
+         S/lcG1vcqj7VWLPXZ4KZj5BRw8MQ52itg7nrZbQtWSlXAZWiluRcCXhNjEvP2XUhIQ32
+         4R2MyXQX8vzRf/0TtFc845aEE5Xpu0QyVy736nSNPHv8YVT8D9zcgieGl3/ZRTDXW1NA
+         Et1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=SsfZEFPusHAD7JDC1CzEdPOJMp8ViulKgekJ4hCtkvE=;
+        fh=69R1gKkii/hyzTyAaSkTD3WYY+LF0i5vS1N358Xbtbc=;
+        b=fZM9biZ11G69I77ccd6N0jWrQKi6GCLX32W3Mw3xoSr6WxKc+wH5RuzYygubohFNSX
+         K/9WfMcwk5okveOl1yajLbGfsaAgAgj61fyhbJTQNvmZXDKEaWZ/Ui5NSLPrcK2HDcwF
+         EuSBrqFioSEVv748EvReDOy02DJrcc3V2o93bzU230UtQIFm7ix7R1QrjeHjyvxyLlMu
+         ydRwAaZ8WrOG66ZsyvNf6ZojKnM0Dq0POVqAwtb5gKqHZwKoqUmr5aG0YBnzw0KZYVYG
+         DoMBfCJPejQQaZhizrWZBCOu/hAmP1VKaFfg+4NqyYBF8CpLi6ayR5SAlnVHYSjVdafw
+         FFFQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771523704; x=1772128504; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SsfZEFPusHAD7JDC1CzEdPOJMp8ViulKgekJ4hCtkvE=;
+        b=Zb2zzBWMilv4iA7YRLecrqTIPVSeeYK6sVKWfkyA51uRztYYrulOg8sf+wlPjpQX/w
+         gKSemk0SeHkhwdae+zjVqaMu+WPthD0tWAWc/Q657ZFqxzvOO7wM27uhldBYz/tV2qSi
+         5zF59p2XXXb4HvCtuJT5ukfian2ABggLYH2CA63jut9lHOC5VAO4RitqZL5x59ndNxOS
+         W4nBIXkADsav5AYxaOcwvnv9+ldkhMK+wj7PKghaNfsQKUyYXnuLWw40n8RdrmTH0840
+         EUXBBfK0HzyhI1UQKNkYWBVRJMCeQ2gr+1AmwfVfiQB2P8owc+O+TA0stQNsXp/SNzA2
+         ED9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771523704; x=1772128504;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SsfZEFPusHAD7JDC1CzEdPOJMp8ViulKgekJ4hCtkvE=;
+        b=Eohn8AiWm1sUXtNbehQ4CnGnZRiMag8/zP8dRwYV4I3n30Xg6TLwm/+5pYHZPCPVrC
+         gwQ1wj9BSqcd6vOKJTouDYbkPSfe1FlTEvu5aTGkoi523tIS7g4n/N9mCV2kQ6gAnitu
+         KHmMokdGfgojEkg+rm/0CHf6KxFOaAcDXERSydcjTInKwcgtOGw1BSIGrpRQEtIzC39o
+         CeHanZV/HQEcAk1SPtWm7BAxdZU6AolKcBqAE3dENglWf+CSbvQgRb1V9Qu9wYCfn3q8
+         aG0tFMS7GrVcBzUl4CevfZG1U1iNE4QjJLTuI75iUXC2tKZzDzbMEIfRLmyHgnSN/mQm
+         5yqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUlgDwrKCgCaZ2dBeGwcJ+9VHNwxL4nZTnwFpwSCuwnJ16uPZhgFaybzZ/+mtbLzFxOTjA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwwK108sbJMoAt5BNMKrZI8uXMe48TOmipbsOXLgU9b4PiWiSFi
+	MAxhtvmAcpEjESn98KODdkgQs4nItysnBZAS2wI6VB8gCUYZcgLKDAVJ5Kws6mBzeblMRX//W4V
+	1zQCNGUkz/6H5mau4Q8Qd7kTFcngMC/qxGA==
+X-Gm-Gg: AZuq6aKXyr4rpSwHtZPd65ISQYjcrJFsuVONrrXpynoKsR1b6/+Hv7Bzm1JO+yAfQ/V
+	gO5cMLOcrooOJwgCCFgbo8XBxScRg916Gz7X86erW16WOaoNPi+C51fEmnjra0H9B7jpMNMZaRY
+	8/b85w4Dd25Ws71iC/BpB0nlDxWu34gCBARNp6aEQb5r5w6K1Q2NKu4Yu5346zJW2+m0mx6klUq
+	OG0zECR5A7Tr4hhoCfgtH+9gwKEyM5FRLl4D33Dta+KO1xL5qd118QprND6+QoRbijY1Ad+MGL9
+	Y/nmFpRYfAGotrXKGjyhdE/1b2fCl7daoRWUci32mMrZRjKu84A=
+X-Received: by 2002:a05:6820:627:b0:65c:f14f:91ca with SMTP id
+ 006d021491bc7-6785b1c1d59mr9499679eaf.49.1771523704199; Thu, 19 Feb 2026
+ 09:55:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2048.git.1771406115.gitgitgadget@gmail.com>
+ <36c2713ceb305f17295c4e8b38dbf252dc641128.1771406115.git.gitgitgadget@gmail.com>
+ <aZcr58Dd5JPngow9@pks.im>
+In-Reply-To: <aZcr58Dd5JPngow9@pks.im>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 19 Feb 2026 09:54:52 -0800
+X-Gm-Features: AaiRm52Jp-ns1sOzq21k2DgA3i4F__rLnY-OgBW7rIXNKBJpfsTixyMlvBvA7rE
+Message-ID: <CABPp-BFto4512vNeVs=OWpaqV4AH4NQ+_TAdSF3vDiuWMSGqQg@mail.gmail.com>
+Subject: Re: [PATCH 3/5] merge-ort: replace the_hash_algo with opt->repo->hash_algo
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Daniel D. Beck via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Feb 19, 2026 at 7:27=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Wed, Feb 18, 2026 at 09:15:13AM +0000, Elijah Newren via GitGitGadget =
+wrote:
+> > From: Elijah Newren <newren@gmail.com>
+>
+> Nit: might make sense to have at least a oneliner here to explain what
+> we're doing, even if the subject already says it all.
 
-> From: "Daniel D. Beck" <daniel@ddbeck.com>
->
-> In c39952b92 (fetch: choose a sensible default with --jobs=0 again,
-> 2023-02-20), the `--jobs=0` behavior was (re)introduced, but it went
-> undocumented. Since this is the same behavior as `git -c fetch.parallel=0
-> fetch`, which is documented, this change creates symmetry between the two
-> documentation sections.
-
-Makes sense.  In hindsight, we might have been better off if we also
-called this "--jobs=auto", but documenting the behaviour is a good
-first step.
-
-Will queue.  Thanks.
-
-
->
-> Signed-off-by: Daniel D. Beck <daniel@ddbeck.com>
-> ---
->     doc: fetch: document --jobs=0 behavior
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2047%2Fddbeck%2Fdoc-git-fetch-jobs-0-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2047/ddbeck/doc-git-fetch-jobs-0-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2047
->
->  Documentation/fetch-options.adoc | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
-> index fcba46ee9e..e15cbc51f2 100644
-> --- a/Documentation/fetch-options.adoc
-> +++ b/Documentation/fetch-options.adoc
-> @@ -234,6 +234,8 @@ endif::git-pull[]
->  `--jobs=<n>`::
->  	Parallelize all forms of fetching up to _<n>_ jobs at a time.
->  +
-> +A value of 0 will use some reasonable default.
-> ++
->  If the `--multiple` option was specified, the different remotes will be fetched
->  in parallel. If multiple submodules are fetched, they will be fetched in
->  parallel. To control them independently, use the config settings
->
-> base-commit: 852829b3dd2fe4e7c7fc4d8badde644cf1b66c74
+Fair enough; will do.
