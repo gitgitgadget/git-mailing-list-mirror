@@ -1,55 +1,55 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A3C2FC011
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 06:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37B12F3C0A
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 06:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771482348; cv=none; b=BwmRTzjy/vlnuRXTCP3kuDKCtFASfEiiUnzMVW5zmUQCe/xg50TiG7TJgvEZW0Qj5g7fKbJ3kLOCtwOejOPVUzEaMuNd7roRLB2yO8VKZnWOwwczZQDiGzxQjN7hxuDHEPERSfcuY2pPJQcsSJmlhzMYBTnrb8v8lswv75RaVZg=
+	t=1771482350; cv=none; b=lhi2pCmyJehSad6i0bSS2Yf9QIWvwIakwjUCcBx0UOBAly1triILO6iNMbptpYQ4jFSPO8SnWY9hNW+ntttomO+l53G2QOb3WqvxN43nxU8Vmaux3cB0c7+mONoyqJklvltV0KoHtOgZGLJNy9EJ5t3VfRVVibnwMQyarO0Pfxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771482348; c=relaxed/simple;
-	bh=of9YFbZQqy9WucAjrkx25+uSXPgRgiiuGEUtkda6/Ro=;
+	s=arc-20240116; t=1771482350; c=relaxed/simple;
+	bh=4eE5rTNTpzqK9o4QIWohj4fgrLEPjM7aW0mvOVOqZ5g=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uj8QXyaoBiWlb1TcHTga9lW+JuwU9nyDMM4fjE/dGQT5omM3zt9qSpFOeI69EJZgqkeS7u0uwhx0EfaN8MoDvzn+GwT8Cn0gjO2ls4FWH+wGQLb1qVYlaCwaVgzRXRajGhyqvj03Ru+BiCgTP2CKOWMnFP9ZJmXDfcDE8Kie0vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RrN8Y2AO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jfOR47Vm; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=UdxotXqeUsaVrVmWWmTWkanlmDAjhUOTg+f6aBri8rLr1dd7CzhJPvExsleE37G7UxgolLCP1NCLD0N6ZLn4c82rxnoP3255zHu5fK5028QLWkDy8CpKZzn0vcp0KGJUC23i0GuSzCV+FdLNE1UpKCDBOBpTjA9w3lqz/WAsixw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RSyGkmrO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X3NQU9kK; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RrN8Y2AO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jfOR47Vm"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RSyGkmrO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X3NQU9kK"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 36670EC007B;
-	Thu, 19 Feb 2026 01:25:46 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id D8FBAEC0108;
+	Thu, 19 Feb 2026 01:25:48 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 19 Feb 2026 01:25:46 -0500
+  by phl-compute-06.internal (MEProxy); Thu, 19 Feb 2026 01:25:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771482346;
-	 x=1771568746; bh=CnOEr+ic5w+BDYaSJhBvZjBt97l1jf6VnzW8MRMAloA=; b=
-	RrN8Y2AOHP8V+iqKMB22tgY8qlpzK5eSHMfCIKcM2BavnMrle77F8gVHT+haQH+a
-	BTkOrhox5GUbKN2hNjugULQ6i4SyqIfX9yXfIViX00AbJDgQFCM33ZyTQnm9Hrrk
-	xP/B5DxA/UdJpKPO0C5dQAXwkJZN1975O4HtmgUElbO0jTbY/yfmzKqMJ6ODDvgf
-	gRNhJ6a+Yb+EB6NRq0+PgI2TxebQxpzd8JZvJf9lIQva93TxzggoqScEGA+njdkP
-	WsJaB/FDzzkmLEYam+6n66JH+o3eQ2M+02UDVCaPiTm1k09SA8K0sbhhvqzEoebZ
-	P2+DxSo2h6EbKaeY6n7+AQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771482348;
+	 x=1771568748; bh=hVMUtf1XT4fbDxkK/kvNNqVWal5ubyudowX5MR2XKgg=; b=
+	RSyGkmrO5uFlGU1q+3g2930w8uz6VKMTTYmFjizGkOAfhTrp0/GDn3l6n3sOE483
+	fOSqKJOnHrnBqMvyEwzcc0X5ZQchIrX5rDNpS1bO9+2esQ4RA5CPi6P3eqFEkFuu
+	oVwP4gvBGCHp0Z2+uyDm0zNUPo6rqdM6Z1RlVVLE2farMq/n1mf32pCDD6ChDNDd
+	8hOtCKkIuzD5VusiJO5Bf+zNtCdjiyirw8yvIXVW7juccBj3g5EhCfBH7RDw79H9
+	YsOk3PWiYxAupROoJN49i978jUFRWmoETcw/f1+7MpLd9pkORxf8g5z1mhrd5kB9
+	p5MP94In7F4u1+AfoCRBhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771482346; x=
-	1771568746; bh=CnOEr+ic5w+BDYaSJhBvZjBt97l1jf6VnzW8MRMAloA=; b=j
-	fOR47VmRhuhVi6VVlLdR1RszoQb2zV/Yo9Yo5hBy+QUV5qKdDFbGa7MM2WIU7LOy
-	o6Nvq4YmhxmXVJATYfjLAaU6W13bto8eg/08UzgIAncanrXLA67kVV86bMyD/4I2
-	NyKR4+81vUYRD+NvifVAC/sCmdG90y3eGP7+xgARkXP936fcI4biClDbt6H83Ko1
-	nLcGVy57hyCR+NziQwyjxze2eBl9oPhsWDawCfvhP5AIJzL5erQ52FxiBeOLGuYq
-	W8mIGQku2DO1vaxdT/1IdsiEpvr+rgXS2UzG1oanu5GIMYv3h5AaB0LxmnRkt/AQ
-	bvBTLeGuQGbr/C0wT8+Fw==
-X-ME-Sender: <xms:6qyWaQcWp9Sx1g1B-9gBGPqEvuL1EqibydwlVpK0GZi3a4ZuETSJig>
-    <xme:6qyWaZGRjyT0lKi7WbKtculZSG82PKkDt3Z7NViy6f2qcFTbu-lQBcy6vPmkDkiGm
-    eRnA1ForgTkVuXehSuAyBeFLqz7aj3w-Wtco9cPr_nka_Y2IAQOAQ>
-X-ME-Received: <xmr:6qyWaZ3TpyAbQpPFZjWHA74mMceMc3uy1EgFwTDfZDv5aiQ9vZrNV_tjAAxSDlG0tMrOYjjMSyNm92_icbPs6SMDgn8Ex_tbbIGqCrDNcA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771482348; x=
+	1771568748; bh=hVMUtf1XT4fbDxkK/kvNNqVWal5ubyudowX5MR2XKgg=; b=X
+	3NQU9kK1JPWn0gQu5agiVSu+LjznMplAvJz/U1kFeGiYNk6jJ1UVpLOT84kSmiAw
+	dPgdytIO0zXrIq+RjdTlKGWBLh0vPjQe6bUSmSsIpZKktqfZrTYaK11Nvo2S4BOT
+	JMAMV7QpkKwlD5+Y1wSbKyb8O3VxlOO5zqcK6V8dJIUGZTuykrQZIrjxcjS3UjJe
+	4Xe3SPvBxcDZfdSWPWpMhdbUm/+2hUh50SIq/iT4QgdVRHusQnjfJTuVMR/JG+le
+	s7ErFu/W+AqSVL3TDL7Ouf280T8crGyCOlMWk3/FOYFfrE5HuS4B80IT7lMXiOKz
+	pjtrAfIsM6+oix46Ef1CQ==
+X-ME-Sender: <xms:7KyWaQ4oYtTydiS0CrEihUXY8Np1VA4mEIYVkggdAvNG0gRA___cVw>
+    <xme:7KyWaYyI3MnxiShBx3pisfbveqazsBxlRUhjaNfKLBAcT4JR1I7YXgjP9aDNw79ut
+    rRApS96QcGOw6CK9T5QkU9kXP_9WIiQA_V2-y3zbpC-11UFxYYG>
+X-ME-Received: <xmr:7KyWaXx-tgHEPRO6vzCjGZ8ZwXmTTnnJi8uCKyDIpG74TQEP1vhj6UeudGLiJUYSk9IbPDeeHrw9C3sxjiaLk0o-YTFtc5DwQ0kVtubIHw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdegjeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdegjeelucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohh
-    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:6qyWaRlS8W-kNRBhLEdhZQ03nDmg3Pd4KM29G4w0Uvfa9LsXpTPcFA>
-    <xmx:6qyWaZ8npAsYzrtyO5OkHaSVDMDUhWSzvl1LHAkjQUIRywDwJwhjVQ>
-    <xmx:6qyWaWoSDt1_baP-Ls6g0fNgpxOaA2rLCqm0oYGCMohEIZ3bowVQ8g>
-    <xmx:6qyWaSlbev_FIWI9BZC_jZG4Mo8liu3dmqwaEU5iYwcGCLzvx906sA>
-    <xmx:6qyWaXDqPnn7Tcri37eHlzVIoU3LvRlIR-J_LND1R6UBQ8_v3HoctMqq>
+    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstg
+    hhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:7KyWaQxtSFjFwQBH8Dq5LmnD8vKcVJ7xm6SYLC43wGkr_fxKiAxo9A>
+    <xmx:7KyWaRbz9MxyuBdoXT0oowI5Cqa7H638TfU4JKPCPJy5ynn-4fQZCw>
+    <xmx:7KyWaRWe9YYmNPZ8vAuRShZID-HoA39jgyvc3-ALTSCr4OBSt51YiQ>
+    <xmx:7KyWafh0MGpxY_vY0V8hEWrr0m14FBo8bQGKf7fS7ws4-bFc1hk5qg>
+    <xmx:7KyWaUOBEc7Uxai49AZUcjwtI1q8opagxRgXPDTCDq9Re67v6VSyO9rn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 01:25:44 -0500 (EST)
+ 19 Feb 2026 01:25:47 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4a4c35b5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Feb 2026 06:25:44 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9a9b4386 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Feb 2026 06:25:46 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 19 Feb 2026 07:25:31 +0100
-Subject: [PATCH v2 5/7] ci: make test slicing consistent across Meson/Make
+Date: Thu, 19 Feb 2026 07:25:32 +0100
+Subject: [PATCH v2 6/7] gitlab-ci: use "run-test-slice-meson.sh"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260219-b4-pks-ci-meson-improvements-v2-5-6047b8307ab2@pks.im>
+Message-Id: <20260219-b4-pks-ci-meson-improvements-v2-6-6047b8307ab2@pks.im>
 References: <20260219-b4-pks-ci-meson-improvements-v2-0-6047b8307ab2@pks.im>
 In-Reply-To: <20260219-b4-pks-ci-meson-improvements-v2-0-6047b8307ab2@pks.im>
 To: git@vger.kernel.org
@@ -92,45 +92,30 @@ Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Jeff King <peff@peff.net>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.3
 
-In the preceding commit we have adjusted test slicing to be one-based
-when using the "ci/run-test-slice.sh" script. But we also have an
-equivalent script for Meson that is still zero-based, which is of course
-inconsistent.
-
-Adapt the script to be one-based, as well, and adapt the GitHub workflow
-accordingly. Note that GitLab doesn't yet use the script, so it does not
-need to be adapted. This will change in the next commit though.
+While our GitHub workflow already uses "ci/run-test-slice-meson.sh",
+GitLab CI open-codes the parameters. Adapt the latter to also use the
+same script so that we always use the same Meson options across both CI
+systems.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .github/workflows/main.yml | 2 +-
- ci/run-test-slice-meson.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ .gitlab-ci.yml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index a011d8d0f9..826f2f5d3a 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -298,7 +298,7 @@ jobs:
-         path: build
-     - name: Test
-       shell: bash
--      run: ci/run-test-slice-meson.sh build ${{matrix.nr}} 10
-+      run: ci/run-test-slice-meson.sh build $((${{matrix.nr}} + 1)) 10
-     - name: print test failures
-       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
-       shell: bash
-diff --git a/ci/run-test-slice-meson.sh b/ci/run-test-slice-meson.sh
-index 961c94fba0..a6df927ba5 100755
---- a/ci/run-test-slice-meson.sh
-+++ b/ci/run-test-slice-meson.sh
-@@ -9,5 +9,5 @@
- 
- group "Run tests" \
- 	meson test -C "$1" --no-rebuild --print-errorlogs \
--		--test-args="$GIT_TEST_OPTS" --slice "$((1+$2))/$3" ||
-+		--test-args="$GIT_TEST_OPTS" --slice "$(($2))/$3" ||
- handle_failed_tests
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index b419a84e2c..04857b479d 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -183,7 +183,8 @@ test:msvc-meson:
+     - job: "build:msvc-meson"
+       artifacts: true
+   script:
+-    - meson test -C build --no-rebuild --print-errorlogs --slice $Env:CI_NODE_INDEX/$Env:CI_NODE_TOTAL
++    - |
++      & "C:/Program Files/Git/usr/bin/bash.exe" -l -c 'ci/run-test-slice-meson.sh build $CI_NODE_INDEX $CI_NODE_TOTAL'
+   parallel: 10
+   artifacts:
+     reports:
 
 -- 
 2.53.0.414.gf7e9f6c205.dirty
