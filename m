@@ -1,108 +1,171 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5522B283FC5
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:55:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771523706; cv=pass; b=TheNiAk/Z7YQ7snVWgnA0U8gnDiHBAkaQyGWxLlXqtgL+XzA2G2YMn0/cdNz99iE1tVDn0Dm3H9GN0pAWjzeNS5V/jO/xpmW1wO1T78ViM9IConga3jnel+VNj6yal+VwczZAoto5R3cMUcAmkhPkLWHgH6aieL4MUb1RJrkwd0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771523706; c=relaxed/simple;
-	bh=SsfZEFPusHAD7JDC1CzEdPOJMp8ViulKgekJ4hCtkvE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ALftlGfqTCCCpCr2uXIqPRHY1vbTHCjbQXXxfz5LrPKuhbTR4HTGb5FZZfRzBhbkZWsGie1cLR6thDlR9K/wGhzxW9QE/HV+xyHL4+kwDkLUVVYpisJLZnvk5hXYYuiH8Il1BdkPhN2NcjOHv2zgRik3HqdbNUCvKMpfuXRi3BU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zb2zzBWM; arc=pass smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AAE2EA468
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 18:03:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771524219; cv=none; b=ISpJiXhBo7yBUNE8woEI3sUnyy5M9Oa+SdtRB7Y9P+MRb5JtwNxVO+bH5dXcjcCGuhXKxqVQikapG6Eko1Hy7N74RVrzhniA1tWm81G5xRPLeNAhLsfmV30vZLRcBMVqU2HlAp45joxWRGBo8/Uqtyq9nlkmtPn2afA23NCfVJ0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771524219; c=relaxed/simple;
+	bh=RBztmY7FL+rgWxlD3vc00g6yCSQUv7X0EKtlV1nIZT8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=O34KzP0WpC9k1lwR2FZIF/avZVHMpn9Dj/DLCzCl9ac+XVdjNdPcaA+9bCB3NQUiWwFSMrduHqoJzhfazb8/TxhGLH14U1jA3gqgFPIY+ZQsGvwS1gHfGJzvarZXBSay1d4oeQm79D9fHovzkrTCezy9a6U9kgXFXWJ13VXjjMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tpjvOaXm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qbWkI+X0; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zb2zzBWM"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-4638e6bb8a5so405081b6e.0
-        for <git@vger.kernel.org>; Thu, 19 Feb 2026 09:55:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771523704; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Ii0fHnQ7rMp55CPOkDn9+OzX5LStVlaqW5HinXJenZwAzTo9DC+JesVxm48hQdp3Ou
-         ZRzM+9o2S9hjYl2l6WmYJi+8+ksZPSnIdrNvmf4cAk62UtQRHBojYrcb/vyMgyAWjYr/
-         qzUe9hqZKPJ3esrhNfozRTpNbKvFLvYekji1pFraqDVaRLk7imZ5XVWtQ2t5s81oAVmS
-         S/lcG1vcqj7VWLPXZ4KZj5BRw8MQ52itg7nrZbQtWSlXAZWiluRcCXhNjEvP2XUhIQ32
-         4R2MyXQX8vzRf/0TtFc845aEE5Xpu0QyVy736nSNPHv8YVT8D9zcgieGl3/ZRTDXW1NA
-         Et1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=SsfZEFPusHAD7JDC1CzEdPOJMp8ViulKgekJ4hCtkvE=;
-        fh=69R1gKkii/hyzTyAaSkTD3WYY+LF0i5vS1N358Xbtbc=;
-        b=fZM9biZ11G69I77ccd6N0jWrQKi6GCLX32W3Mw3xoSr6WxKc+wH5RuzYygubohFNSX
-         K/9WfMcwk5okveOl1yajLbGfsaAgAgj61fyhbJTQNvmZXDKEaWZ/Ui5NSLPrcK2HDcwF
-         EuSBrqFioSEVv748EvReDOy02DJrcc3V2o93bzU230UtQIFm7ix7R1QrjeHjyvxyLlMu
-         ydRwAaZ8WrOG66ZsyvNf6ZojKnM0Dq0POVqAwtb5gKqHZwKoqUmr5aG0YBnzw0KZYVYG
-         DoMBfCJPejQQaZhizrWZBCOu/hAmP1VKaFfg+4NqyYBF8CpLi6ayR5SAlnVHYSjVdafw
-         FFFQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771523704; x=1772128504; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SsfZEFPusHAD7JDC1CzEdPOJMp8ViulKgekJ4hCtkvE=;
-        b=Zb2zzBWMilv4iA7YRLecrqTIPVSeeYK6sVKWfkyA51uRztYYrulOg8sf+wlPjpQX/w
-         gKSemk0SeHkhwdae+zjVqaMu+WPthD0tWAWc/Q657ZFqxzvOO7wM27uhldBYz/tV2qSi
-         5zF59p2XXXb4HvCtuJT5ukfian2ABggLYH2CA63jut9lHOC5VAO4RitqZL5x59ndNxOS
-         W4nBIXkADsav5AYxaOcwvnv9+ldkhMK+wj7PKghaNfsQKUyYXnuLWw40n8RdrmTH0840
-         EUXBBfK0HzyhI1UQKNkYWBVRJMCeQ2gr+1AmwfVfiQB2P8owc+O+TA0stQNsXp/SNzA2
-         ED9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771523704; x=1772128504;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=SsfZEFPusHAD7JDC1CzEdPOJMp8ViulKgekJ4hCtkvE=;
-        b=Eohn8AiWm1sUXtNbehQ4CnGnZRiMag8/zP8dRwYV4I3n30Xg6TLwm/+5pYHZPCPVrC
-         gwQ1wj9BSqcd6vOKJTouDYbkPSfe1FlTEvu5aTGkoi523tIS7g4n/N9mCV2kQ6gAnitu
-         KHmMokdGfgojEkg+rm/0CHf6KxFOaAcDXERSydcjTInKwcgtOGw1BSIGrpRQEtIzC39o
-         CeHanZV/HQEcAk1SPtWm7BAxdZU6AolKcBqAE3dENglWf+CSbvQgRb1V9Qu9wYCfn3q8
-         aG0tFMS7GrVcBzUl4CevfZG1U1iNE4QjJLTuI75iUXC2tKZzDzbMEIfRLmyHgnSN/mQm
-         5yqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUlgDwrKCgCaZ2dBeGwcJ+9VHNwxL4nZTnwFpwSCuwnJ16uPZhgFaybzZ/+mtbLzFxOTjA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwK108sbJMoAt5BNMKrZI8uXMe48TOmipbsOXLgU9b4PiWiSFi
-	MAxhtvmAcpEjESn98KODdkgQs4nItysnBZAS2wI6VB8gCUYZcgLKDAVJ5Kws6mBzeblMRX//W4V
-	1zQCNGUkz/6H5mau4Q8Qd7kTFcngMC/qxGA==
-X-Gm-Gg: AZuq6aKXyr4rpSwHtZPd65ISQYjcrJFsuVONrrXpynoKsR1b6/+Hv7Bzm1JO+yAfQ/V
-	gO5cMLOcrooOJwgCCFgbo8XBxScRg916Gz7X86erW16WOaoNPi+C51fEmnjra0H9B7jpMNMZaRY
-	8/b85w4Dd25Ws71iC/BpB0nlDxWu34gCBARNp6aEQb5r5w6K1Q2NKu4Yu5346zJW2+m0mx6klUq
-	OG0zECR5A7Tr4hhoCfgtH+9gwKEyM5FRLl4D33Dta+KO1xL5qd118QprND6+QoRbijY1Ad+MGL9
-	Y/nmFpRYfAGotrXKGjyhdE/1b2fCl7daoRWUci32mMrZRjKu84A=
-X-Received: by 2002:a05:6820:627:b0:65c:f14f:91ca with SMTP id
- 006d021491bc7-6785b1c1d59mr9499679eaf.49.1771523704199; Thu, 19 Feb 2026
- 09:55:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tpjvOaXm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qbWkI+X0"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7490914000F5;
+	Thu, 19 Feb 2026 13:03:37 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 19 Feb 2026 13:03:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1771524217;
+	 x=1771610617; bh=KWS2lKiuNPM8KseyvI4cb7UqMfaNMZ2nl3/+ekIyknY=; b=
+	tpjvOaXm8gKIO3dPNLPGJvGiCSPQ4lzjSgOBtfFiT/WcOUL93yj2PjdjmD3VWF5p
+	IR3VS23hzaMasuSPQDPGfsw2VBO2viDadTR/xjL69d3BKCqMivnYBs6NECVoQNXa
+	8wN/MtwGkkFlL103gF3GV6AC3rEcOq8GIRZtMLJSA0ud1PmENK5+Oo/vdXf2zt9d
+	Xm1MUHQhdEURIAT0tCdYeaNlpDP9Mf9aEfec7FtrJWkHBhfh+xhxzLA+nEshj3FA
+	5gYu/hFDJwZnwy1zNyN9NrXptS7XCVJPny8X7Ha2CfR5kL8EbduF/JN6bOHwT7w5
+	mZ3vCZu352O2WIIQ7HOnSA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771524217; x=
+	1771610617; bh=KWS2lKiuNPM8KseyvI4cb7UqMfaNMZ2nl3/+ekIyknY=; b=q
+	bWkI+X0im76zOhYaoruUMWm8QL/PBplVgPbW+LjT68uOh2TKHpmCseoxL8arJmOR
+	neY1WJebIYVH7toRRuP+Basv5lgDADGEgLCfjeHu492INhjFJS19AYS/htBSgxcH
+	fedZZjhbAuQ3uhIDVkCFXrLTDZUeAnGC5YUTqAvrWI3FEbpXz9/JHRhodTKoctKU
+	Unx2Bh87LVJCS2zZG1q0v50vBYDSjVxrydUffRNDwhFVcQ1J0SBRJPSOIqqDNJC7
+	lU/rdTKoapOb8iok32V+u5WXYewctagBib0zJ3h2yBHqMAmEZtjNZLqcoHYE5es2
+	Z5nB4THoVT3sgBmhJDKaQ==
+X-ME-Sender: <xms:eVCXaWy11UJG9JMJCt5BhI_TKgXrgL-Tl8g920YmCcT04eyuTrOQkg>
+    <xme:eVCXaZItungbwr-3P0BqUFjzwB-IMMk3mfXxjVyqfWawgRqZRAEfZIYtYhbNxgsyg
+    7d7nXwB8FwbghM9KhyevhJh-0S_MbGJ0mLhUPRARbjCNXHRb29IBQ>
+X-ME-Received: <xmr:eVCXaQom4e1Q_BhncCen_rLflq3T9Zg6i7xBUeWYCHo0boK84uWnugblPHsyz1N8tmcxLr09dFsNkTU3bY2LLL2XbnjJr1O1AA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeivddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnhephfetvdejheduheegleehfeeive
+    dtgeelfedvffdtvedtudffieekieeijedvlefhnecuffhomhgrihhnpehkvghrnhgvlhdr
+    ohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtg
+    hpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:eVCXaYJY49OyY68hCq54vaZiBAQoGSag3lU-0TKc-IsuXjp7f5V1MQ>
+    <xmx:eVCXaVQ4PwJjqYwjO7QWMevaF7vIvBCWm1qdJ1tbyW9h9n-pTohWnQ>
+    <xmx:eVCXaXvN8orKVqy_IU4ryRtnq0y3-0Evr7EaqpjYtJ5asd8aKWyk-w>
+    <xmx:eVCXaWZHm7sKtZrWFfpje0EQm2BClRW9z7aZkmXafvOI8vyONQyikA>
+    <xmx:eVCXaQwBPnQIj-ZQVlfkoquJzWByMQ0F9SYy7oEsPLJKoVd1fG5eagmU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Feb 2026 13:03:36 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  peff@peff.net
+Subject: Re: [PATCH 1/2] format-patch: make format.noprefix a boolean
+In-Reply-To: <format.noprefix_boolean.39d@msgid.xyz>
+	(kristofferhaugsbakk@fastmail.com's message of "Wed, 18 Feb 2026
+	21:26:17 +0100")
+References: <CV_format.noprefix_boolean.39c@msgid.xyz>
+	<format.noprefix_boolean.39d@msgid.xyz>
+Date: Thu, 19 Feb 2026 10:03:35 -0800
+Message-ID: <xmqqy0ko626g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2048.git.1771406115.gitgitgadget@gmail.com>
- <36c2713ceb305f17295c4e8b38dbf252dc641128.1771406115.git.gitgitgadget@gmail.com>
- <aZcr58Dd5JPngow9@pks.im>
-In-Reply-To: <aZcr58Dd5JPngow9@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 19 Feb 2026 09:54:52 -0800
-X-Gm-Features: AaiRm52Jp-ns1sOzq21k2DgA3i4F__rLnY-OgBW7rIXNKBJpfsTixyMlvBvA7rE
-Message-ID: <CABPp-BFto4512vNeVs=OWpaqV4AH4NQ+_TAdSF3vDiuWMSGqQg@mail.gmail.com>
-Subject: Re: [PATCH 3/5] merge-ort: replace the_hash_algo with opt->repo->hash_algo
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Feb 19, 2026 at 7:27=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Wed, Feb 18, 2026 at 09:15:13AM +0000, Elijah Newren via GitGitGadget =
-wrote:
-> > From: Elijah Newren <newren@gmail.com>
->
-> Nit: might make sense to have at least a oneliner here to explain what
-> we're doing, even if the subject already says it all.
+kristofferhaugsbakk@fastmail.com writes:
 
-Fair enough; will do.
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> The config `format.noprefix` was added in 8d5213de (format-patch: add
+> format.noprefix option, 2023-03-09) to support no-prefix on paths.
+> That was immediately after making git-format-patch(1) not respect
+> `diff.noprefix`.[1]
+>
+> The intent was to mirror `diff.noprefix`. But this config was
+> unintentionally[2] implemented by enabling no-prefix if any kind of
+> value is set.
+>
+> † 1: c169af8f (format-patch: do not respect diff.noprefix, 2023-03-09)
+> † 2: https://lore.kernel.org/all/20260211073553.GA1867915@coredump.intra.peff.net/
+>
+> Let’s indeed mirror `diff.noprefix` by treating it as a boolean.
+>
+> This is a breaking change. And as far as breaking changes go it is
+> pretty benign:
+>
+> • The documentation claims that this config is equivalent to
+>   `diff.noprefix`; this is just a bug fix if the documentation is
+>   what defines the application interface
+> • Only users with non-boolean values will run into problems when we
+>   try to parse it as a boolean. But what would (1) make them suspect
+>   they could do that in the first place, and (2) have motivated them to
+>   do it?
+> • Users who have set this to `false` and expect that to mean *enable
+>   format.noprefix* (current behavior) will now have the opposite
+>   experience. Which is not a reasonable setup.
+>
+> Let’s only offer a breaking change fig leaf by hinting about the
+> previous behavior before dying.
+
+One case that is often problematic is what happens to those who use
+the same set of configuration variables with different versions of
+Git, before and after such behaviour change.  But I do not think
+this is such a bad thing.  The only reason why they had this
+variable set (to any value, or to a value-less true) with existing
+versions of Git is because they wanted to omit the prefixes, so when
+a new version of Git dies with "Heh, 'nothanks' is not a valid
+boolean value", they can edit the configuration variable to "1".
+
+And from that point of view, I think the hint given together with
+the "bad boolean" error can and should be phrased a bit more
+strongly, i.e.,
+
+> +		format_no_prefix = git_parse_maybe_bool(value);
+> +		if (format_no_prefix < 0) {
+> +			int status = die_message(
+> +				_("bad boolean config value '%s' for '%s'"),
+> +				value, var);
+> +			fprintf(stderr,
+> +				_("hint: '%s' used to accept any value but "
+> +				  "now only\n"
+> +				  "hint: accepts boolean values, like '%s'\n"),
+> +				var, "diff.noprefix");
+
+The target audience of this (hint) is those who have set this
+variable to a non-boolean strring from the existing version of Git,
+and the only thing they meant to express was "I do not want any
+prefix", so "we used to accept any value as true, but now accepts
+only valid boolean values", perhaps?  That would nudge those who
+wrote "[format] noprefix = NoThanks" to rewrite it correctly to
+"true" or "1", and not "no".
+
+This is a related tangent, but shouldn't this use advise() without
+configuration?  There is no need to allocate an advice_type and use
+advise_if_enabled(), because correcting a malformed configuration is
+an action enough to squelch the message.
+
+> +			exit(status);
+> +		}
+>  		return 0;
+>  	}
