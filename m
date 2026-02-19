@@ -1,119 +1,107 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB32247280
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 22:50:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771541418; cv=none; b=jxCFi1JEGI3rZAfffxRHnSShEtGO6107qVF+hPoz5DyWQ5aFU7CDPtHeaVQjluMVzeR1MuVeUPXhpDOTe70B7DAMJWFNhnju9wnfNXBVUMvMhjs86wU9ofeLhI+E3oso9RU1ryoHcqUbGKzM3VMwSB/dZdzEhiKN9QDbyO3rRag=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771541418; c=relaxed/simple;
-	bh=SJPj//sOPQxVTCclsN7W6d0DpAudfYGKGjNGjtSRGV0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SKBe5UPyOUhqpmAHdrdrMgjtPpMuWq+sA2PJ64enJQSeye4R0kF/8EEeMWmbmvilBPOuPhD+uW84ZQx+85NRgT+RISYSEKFH+s500x8grCBde2WYT5M5OQJHzdRk1jiqW/Zgr3GmSroAx3LVO/MyRY46kdKDLf9ga9q8uWh9Sjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=2m+JBiXN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ScZ9QBUR; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="2m+JBiXN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ScZ9QBUR"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id BB60AEC00AF;
-	Thu, 19 Feb 2026 17:50:15 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 19 Feb 2026 17:50:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1771541415;
-	 x=1771627815; bh=qJ6Arxc72iCOhqxvQTg4tMcQ4EN6X6aKh54pUpQ08kc=; b=
-	2m+JBiXN6rZtwFJTyMs+qtjBtnCEuHq5lgsUTg2IgolN1opLwDLyRs55P8/K6owj
-	Y1g8qjl8n8duYQ7l4PA9mdKAuSTkclKDRX4UvEAcXDGdTYADjuh8j3dX0vpt3f/j
-	mqNbjmnHJDy8dfZRjF/bsyk27JKMm4pkRM+lG2VzD4601w6opNm96lWX+Tu6xcQA
-	5vDnDJb8pC0RCe3u4cHxllfvEhJOVsNZEP+Ygw1p6K1r4r4UQ8BjKtPltJSrkJ2L
-	b1ni2pgj+deuyyaLYlcSUhxMTOrKsEeoRYeS3h9nEVdc0nCfxgtz2kCB97OcipwA
-	Ze3YqjXQQSi1qvsR/JOwNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771541415; x=
-	1771627815; bh=qJ6Arxc72iCOhqxvQTg4tMcQ4EN6X6aKh54pUpQ08kc=; b=S
-	cZ9QBURTq2L6AlaN0Rm5PRSkLKS/UyklMDvbMiKm7SUKymlfF8qac4fUMws3s9TY
-	vuotwvVU0CejSiZzT69enpqKDzEFG79AODasUvib34TXIGvcsIUnGB4vv9zZWeRW
-	Qrc1WIMYXcTlncNxEnERk05EH/+5KXBbeb8BYMEJNkalKbT6ZkFLcQFD2w8L7Y/N
-	paTm14KqyS2Rl21EQ/WzFTKrMdP4B0f84PccT5iNJ08KsYqxX1TjAK2VvVNdTPHx
-	MWKIP/nE6PEYemRcoUy8E+agtDCKYyJqu7P4ToBPC3r0SPQUbs9orNu69xC3NPL+
-	CH6uZdRWcMIFwDLkyQ7PA==
-X-ME-Sender: <xms:p5OXaUNwtNd3-hln39gkDdTbZ6o1hniK21NE1wmBuD7VhtZkgRQZLw>
-    <xme:p5OXaR3loKemRP4hlg9gF-JiaFK_I43HD-JmcNX2odLlBrUVjfR_tD8raci9XVsoY
-    vMSxpXbnaVguHJfLHGnIf_b_bad82iG9B1xakq1LHNsqqWa4Fd3_6g>
-X-ME-Received: <xmr:p5OXaTkuKO3tWe-DNWngiAENkzKQfvnnoXJ4gDqPh8-OUd21epxyDmzhCAEU6rE3lt6-l7T-zdaQKSfQkNBj6CnHBz40KA-nhQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeijeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegskhhkrghrrggtrgihsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegt
-    hhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpsh
-    esphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:p5OXaYUO0KPrENrDj0iE1LkvmXHPVdL3JuEGRJ6JiVla21MwCYapMQ>
-    <xmx:p5OXaZtpU5q150-kysrz_qzVBePxCe2fzOQvBF6F0qXIhCS-1604gA>
-    <xmx:p5OXabaSRW-LpkL5m1DD_5qogVVEg-dgTaQ57BXqAZDg56LizRA5rA>
-    <xmx:p5OXaYVDcEwp4bjaCuLbXxeCKvMEZLZdB18Q0NqYY-VWByzderq7bA>
-    <xmx:p5OXafnoejJv5uV01Bci4r1KLRGXsveWa4wMQqzEnAwnZTWRuZxvhA8x>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 17:50:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Burak Kaan =?utf-8?Q?Kara=C3=A7ay?= <bkkaracay@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im
-Subject: Re: [GSOC PATCH 0/2] mailmap: reduce global state
-In-Reply-To: <xmqqh5rc2zuq.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	19 Feb 2026 13:22:05 -0800")
-References: <20260219125954.3539324-1-bkkaracay@gmail.com>
-	<xmqqh5rc2zuq.fsf@gitster.g>
-Date: Thu, 19 Feb 2026 14:50:13 -0800
-Message-ID: <xmqqpl601h7e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B382FD7DA
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 23:49:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771544969; cv=pass; b=hMRKyz4lu/5kdar+rJjGjr7WaMpnDvVxCbOfohIB/LTnfgvdQsrBMKVo8/LLJAWHTfMp6f+V4L2hVum53ifBqKN1Tvno8kvVrO8293qY0XMItzf2CH4ntkRnaAj3mUp4XpZtkY5+7dSmTAPWMLIyPiosQTj+bIkwqUZS/flkOro=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771544969; c=relaxed/simple;
+	bh=pY3/8LDvRugkd6M9/u0v7KjG9MAtiaSsdJRoLKUl6z8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OqL/NRhmU+cNoyKQhspzXwyHFA9V3Eno9Lt67+mr2fVrq+lrwHgpOhb7NWstLF5EBAgxF8S1Btpn6Hbuhj0EWejkENUwo/ehO35JrDr2vFVecsE/qTTmmCWzfHgYp+F+xQxw0i8g6nsQO/4kSM8E4sQvIWRJFhGLa9PpZY5Ycm4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2b86a9613d8so62613eec.2
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 15:49:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771544967; cv=none;
+        d=google.com; s=arc-20240605;
+        b=RzG5lfFFv+14LIA1eaVBoDwZmcxe/CMINF0AOtWjb8/Wt1IK+ZyGl9gJ/MUkHpi2n1
+         kBh8NZzOTX3mt4e6zacSxL11YElrbZgnO/D6N10TkXBGXuMbpn8uslOfm4JNWQoJUQex
+         5HhIVt3Pe0zpTonoFo+M2C8yFoVtop+UhU6QL4xf4h8Ci71JNWXUS1nW+epZW6Zr3ikv
+         wuW7H5cbLYCyF6CAogcVa33PgtrC2gNIIXMUOz+uOSBGEHw6q+WlkBpSdFGyxNGc8oe+
+         zYORPxK8sNqutR+TS8F9rH/Ne9vOUSvfv6mKtp3NZBgyP/OJkofvtUTg7HoVYDwLPwF4
+         rZjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=lHNx4XyfMZX+drKnrieRjNgj+50CKfev8QNNbaGGbk0=;
+        fh=ixUb2l2hrASaZJ+AYipvdfT+QE47GqYCY6tByYLgH5k=;
+        b=Xx5w/Af7/oc5gO1+9s+c6GSNa9ls8YR/iKCXYgRM/ncYx9cx8qlVBvxHo6JXcQMrqE
+         2RXx9EJUO8lTxquIZn+ClOtRDYEbJeuwxaf7iZP3FjL+A2KlklOgAZPcCRIv/TI4lNOu
+         Fv4dSFoJHObO2VOawLv05cs/VIC5glcQ0oNUCrCYoywoTZUnrQ/iUOp3ujVmS3H58buJ
+         Ips5xrM3U5SulcmF3LNASaJWbcVIe+KQJXNfEtSJSpG3kRhMkKpjTM5ckSSAiuGDjKHe
+         DU3g9RpTmiLIV/W1uPmM0M2bpYiJ2Bzf8RY04MXJ9ogfk6K6aMVN7gKl4rmsn2DK5WFz
+         V6WA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771544967; x=1772149767;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=lHNx4XyfMZX+drKnrieRjNgj+50CKfev8QNNbaGGbk0=;
+        b=enf7NFO1BXG6XXU8T/HB2rXUbilYz7muCyymqfmYFGtrPKuLzarv14H5AE32kYK32c
+         FAdG7cG4zRtV4d0QP8JCqJeQ47O5fx1TrSz0z/0qp5f9zbRUWSZYBwKgp+jntShtQdKs
+         03JKzEy3qfXcqaveFJzGQmRnFVtatwvR8dJ8c3rxnP+pcvElwtT4+fzpUY7RFDusm86m
+         I/H76zp9gfCwo8n8nFKSmEMT2R0xH3bKavu4IdlEYDJAYkPrvVH7nOdvFkjn8rTll0yr
+         1LNOW6mP6HrUU+PaAGoRGGlMRO35c/PO9iMiTmB6Uw+SOnYtp78KXwADnupM8s6ycJeA
+         8mTA==
+X-Gm-Message-State: AOJu0YxBi++ucQROksfDx2jQynZl7ouvUBbcHIb7sBI7FGe++Gl9Yp6v
+	TQpKQIXZ6kWVxj8EvSo1PfasnjDBsdtMhXWl7YdoNhBzlVCBsydUGKIrfvTxIPLnUdK+nc2mvD5
+	obE1hsXOgEF/L+aunhHNmDbP39vSFlyAyNLCUBnM=
+X-Gm-Gg: AZuq6aIfiX3I2+FFoK2mmPrCrFE15dBkcOtyRzrFJC8PWuqY5nSHy+kFEKBYc/q2Bf9
+	vxV5xYl2ghUAgUSu1LwdGD2zQzS+sU8wZp+W4TADwgOdsMFA1KL3AeF+WDMuT5/V+cQgiRWUFFl
+	YD3VzMgNH6AqDh3jJrOB+YijxrxolUh+7oHdmaVQIqAYsgWLNMVP+gQmFcf5wdY0bGVwOIhN2El
+	hGwaowNiVbGR7cr2bZksjwDsjkUDw9bHbLFG28zeHeLl85YYcGBYSlJomGRoqP1sKOM56sH0bUg
+	jCRz3hxjOS3tiFQq0h6Ya0STlHyiDrZT7OQyAK9fUw==
+X-Received: by 2002:a05:7300:e10f:b0:2ba:7526:f74d with SMTP id
+ 5a478bee46e88-2bab9eea972mr5034110eec.0.1771544966709; Thu, 19 Feb 2026
+ 15:49:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20260218-b4-pks-ci-msvc-iconv-fixes-v3-0-08c1ff3ffc9a@pks.im> <20260218-b4-pks-ci-msvc-iconv-fixes-v3-4-08c1ff3ffc9a@pks.im>
+In-Reply-To: <20260218-b4-pks-ci-msvc-iconv-fixes-v3-4-08c1ff3ffc9a@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 19 Feb 2026 18:49:14 -0500
+X-Gm-Features: AaiRm52EQj2AoEsLlepH6jZdDuoBTKfQerL06831qmMNAny_Vmm15xw4UzzDgO8
+Message-ID: <CAPig+cTk_j3qiib1E5McMUPTVY5f36Pq=_8giR_2SKfthY10+g@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] t5550: add ICONV prereq to tests that use "$HTTPD_URL/error"
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Feb 18, 2026 at 4:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> We've got a bunch of tests in t5550 that connect to "$HTTPD_URL/error"
+> to ensure that error messages are proprely forwarded. This URL executes
 
-> Burak Kaan Karaçay <bkkaracay@gmail.com> writes:
+s/proprely/properly/
+
+> the "t/lib-httpd/error.sh" script, which in turn depends on the iconv(1)
+> executable to reencode the message.
 >
->> This patch series aims to reduce the global variable dependency of the
->> mailmap subsystem:
->>
->>   - Patch 1 eliminates the implicit 'the_repository' dependency in the
->>     'read_mailmap' and 'read_mailmap_blob' functions by adding a
->>     'struct repository' parameter.
->>
->>   - Patch 2 removes the 'git_mailmap_file' and 'git_mailmap_blob' global
->>     variables, shifting to on-demand configuration reading via the config
->>     set helpers and using local variables.
+> This executable may not exist on platforms, which will make the tests
+> fail. Guard them with the ICONV prereq to fix such failures.
 >
-> These are surprisingly simple and straight-forward, as the final
-> destination has nothing to do with any global, and not even part of
-> a long-lived structure like "repo", but just a simple string_list
-> mailmap.  Nicely done.
->
-> Will queue.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+> @@ -339,32 +339,32 @@ test_expect_success 'fetch can handle previously-fe=
+tched .idx files' '
+>  test_expect_success 'did not use upload-pack service' '
+> -       ! grep "/git-upload-pack" "$HTTPD_ROOT_PATH/access.log"
+> +       ! test_grep "/git-upload-pack" "$HTTPD_ROOT_PATH/access.log"
+>  '
 
-Oops, not so fast.  "make hdr-check" catches a problem in this topic.
+You want to be using `test_grep !` here rather than `! test_grep`, don't yo=
+u?
 
-    mailmap.h:11:30: error: 'struct repository' declared inside parameter list will not be visible outside of this definition or
-    declaration [-Werror]
-
+Same comment applies to several other tests touched by this patch.
