@@ -1,129 +1,143 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFEBF13957E
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 20:48:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771534118; cv=none; b=kph9p299u/i1K59GC8B1nfM+7UtymJVjNZTFtJbz05zRWlcqJc0948gqnhPxOLcgn1JaB13VGTojS8rscUUssG+AVKves8IUH6Sn/Yduf8RkACcGK+bBs7ROn0bc74/jiE9qZMvX+dBN8Vmpd3tU+Q1JQMT2W2cRHstrVIengBw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771534118; c=relaxed/simple;
-	bh=vbX3GkBXIGMIe+2Dz5vRZtSNm6PbrxNkTBXGaj//OuE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZWEaJfqGZ5kbHY5LYl8aryD8Gj1DT2uxTpfNookUF8iy7Bk87OIpkJPtic9DweZ+ISpYdw301UG/ZlZBY3ix5Av1X26rds8NpMRWdGF9qS3o5U9r0TzKboq2Hy+IpWdyta+zIx/Jzlf3UcAmTVeHdszChN0LvvlOBAE1AUKBxE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xrP9FSTx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u+hCGTSE; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC072F39BE
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 20:53:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771534423; cv=pass; b=XQ6P6R4RbhlNx/j5KUEuQrHEfGRSyMorhae2sT20nxEDGXxyy7YyF/VgP4lHdKPCssu+ACzM2SOC0O8NqpYWIAlZz/DhvvVSGD2HXAfKtWxP0+8CGcUQGUSP0g0d7aBU2IL5cwIULbsbZG8lGTq4vEJSkxRT0K4AHtlZaFSUeB0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771534423; c=relaxed/simple;
+	bh=nx+ZN9sXnh8hGxvx0UUGs4C8qYQYbiqwelDRcLh2MY0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mHz1dA+kuVY+Dj1v7Fq4Al/unRK5JbwurQ5LwSi4hM3R/vZr7AFCWg6hLrmr1ImZcHudszznGBgyhQgHdBohYFc+K09tDvLPRZrC9STeTF+GHMEhKzx7Zh3ucU+pzN1kysBE9a4V9mT/B1I7MgVgOCzIwzoqR0FT145dIlZV2Iw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S5BnHVTa; arc=pass smtp.client-ip=209.85.210.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xrP9FSTx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u+hCGTSE"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id EC78AEC00E1;
-	Thu, 19 Feb 2026 15:48:36 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 19 Feb 2026 15:48:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771534116; x=1771620516; bh=woQ3dZNsjr
-	ebscZ6dboVeGn6M8IRiTPi5DfEIorBXd4=; b=xrP9FSTx4hcPrx7SVW/WyF4GBX
-	r6Y6xa5K5EpLbV9f80fVbAsR/8LDOvdT5LCU1QoaGNHFkvlpGHq1TSbEmqpD9VK4
-	nq4OqyuoE9sHDznHQMmCnmTh2gX/d7NbYejKi7AR7T4TMSsAaUQAJlXcSLq1HFU6
-	NOvlgRslTU51CyrK66IHn3gE58jkQDelBPdAI+xCN4+TVA7BpCSoYyQTU9vALqam
-	QAFXdUlDe5kuOvr/henB0FuPLYo8i7plDxDbCzZb+hHDJUAKheXIIdd/9/KrvXLX
-	aKxOrsFFoyKsSXSGO5jn/WpypKevbGjoZvTQ5TC0qIOFTijRd4Hzm8Wv7IfA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771534116; x=1771620516; bh=woQ3dZNsjrebscZ6dboVeGn6M8IRiTPi5Df
-	EIorBXd4=; b=u+hCGTSENhDtDDEaashPqmihzfrptGBFOQ4JHHH7qRlEMFrxi7Z
-	3sUfJBYwOuEG2k1rkZLL20vQitvA+Gewb0oouVnygnxMvx01vyf0cLC9sZuxOfQI
-	kT4s8+n+Tg/JFAN4lyMxAEtauxW8Qpt1Wjoz+DLISNAw+xbryxHFBvDc4E+x4ugR
-	FssT7TnFy7ocr1L+LE/drz1npL+mp1ZnhpqpHLE46F2STdjLtUJHcYW13JfFVcgz
-	iy0Ys2vGt95PY+rIihPU4VLJeg8i2L3RCNeg3/o2VlSaUriuwNOoNSQc/BoUJvFM
-	QyWQnxjsMbrlpZzyniRYBaCez8UmSLJh5tA==
-X-ME-Sender: <xms:JHeXafF7E7DUMd_Fa1mco_kaifyCdWFEux16bZDg2V-oBYxttsEYDQ>
-    <xme:JHeXaTUMAR0xSKMi6IEfba-t9lZOCzfmuP1fMkaoLokHxC0aSDi5VjN0hIcQlwKMZ
-    ogF82jXcO5qI1P0GgHvZiMqUBN9hXJIiG7B3OpUzswr1B6r4YiJpg>
-X-ME-Received: <xmr:JHeXaWLeL-_Ybvy_kRditKthhIA8l3znMm0Dhn-gp-zAuFqacbD7mju_xcow9u2RyRWSi6nBvTzWs2HOUhO3DYz8vXuDJzXoRg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeiheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvhguhigvsehgihhthhhusgdrtghomhdprhgtphhtth
-    hopeguvghvvghshhhighhurhhgrghonhesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:JHeXab_JpbAzCFZQVONqp9VqVddWIptAGaHaKQFZZy3gTKa_hYIGYQ>
-    <xmx:JHeXaRK2LXVo9HWOu9xo_uHoSFIEhjGdtt3NKI_-ladQY4w3KNFbBQ>
-    <xmx:JHeXaYn_OLmLjZEvCp3RXpRCxIsvaF6ckdTWWXt-_LYrrSuQq5b4Zw>
-    <xmx:JHeXadP2EPvn-reqemQLW0sMVmR2NpOfM8GYyNE68UHSChz3KyG_Wg>
-    <xmx:JHeXaQpFsF5FraFg_AXnhfoDn8quWXTMpGgxVYwY3YOp6BlTJmTSL8MR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 15:48:36 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Victoria Dye <vdye@github.com>
-Cc: Deveshi Dwivedi <deveshigurgaon@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] t1006: fix %(rest) test for object names with whitespace
-In-Reply-To: <d2bf79b3-4407-4fa0-ae2b-fcb3178f36f7@github.com> (Victoria Dye's
-	message of "Thu, 19 Feb 2026 12:23:57 -0800")
-References: <20260219152407.12160-1-deveshigurgaon@gmail.com>
-	<xmqqikbs4iod.fsf@gitster.g>
-	<d2bf79b3-4407-4fa0-ae2b-fcb3178f36f7@github.com>
-Date: Thu, 19 Feb 2026 12:48:35 -0800
-Message-ID: <xmqqzf5431ek.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S5BnHVTa"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7d4c65d744cso812973a34.3
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 12:53:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771534421; cv=none;
+        d=google.com; s=arc-20240605;
+        b=krLQX9MgPUNmO8OTcNi1B9ZgQ9UBbr1Jd7VyVrvmhMJTcCAkF+WI2qOGwmlxAnkNtS
+         ZkAf2iTRWos23ZH2/LE2tZphbElfd+eTRArbwbH13ccjB9zhMFwYZsDipCE1fd9P0pVB
+         N4fBNPKVslnLUePlM0wtpDyFHWt+kU4M53Mg35p1kCEsAzIPL2IK1HfsRJnBmmg3c/Jn
+         8RRfo/FCFplnRHF5Tr01mIy/RMjsRldQtTdRmGSBiqHEX+Ofu1MG0OFb1GBHDVujCBOK
+         cYs5HKUU4fAQs0MVTkCUiet9OkmDdFYIVoyhGunSziW0wCBkjTJMCtbkq0PHygyKo4WE
+         rZ/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=BQNy7+WWfKPorPxZ5puKMOaTqQjaVM9RjoBVJnw/eqw=;
+        fh=ck1Uqu8rBAurbFi1qdQmTI8y8SCiafV/bwVULDcJXnk=;
+        b=DVFo0QkLYJMIFWBDHIHeNXEmVwH23M1cZp1VR7NtTPIWO9Q34BeYtHLid0SmtjW46s
+         p+3qgBuWOyN/q9GNk49KOk9xbswlrsbSYdvsp8sV0bw72tnUXC9VocYAnkU3xqRfKCY2
+         ZhfraufFREZFxgnjx1hYXlBBxnHCEYUSEyGb2Xp3f/F8TSCaVKFpp4I+eFOZGl7ok581
+         AekgUhlI9iMRCTIlrAdNkLPZAbl8orZPpg7x+soOzsjgxOpRr4GnMgmC8jes0d0FVlu7
+         jvkj6s8V5AvDYk6+7+M2iNSVfUkV+3ppPEst+8fAxfX2qeAuTdWU3BrPZuyvrz/CokDV
+         cUaw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771534421; x=1772139221; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BQNy7+WWfKPorPxZ5puKMOaTqQjaVM9RjoBVJnw/eqw=;
+        b=S5BnHVTaoRXWlhwQxC6wyVqlzu5EAeFVkO3tj7xZJkLWlVBebYIB2RRz9X3i1+b7sA
+         xtt/qcGBxSVu37p2Aux7n2p1s4lg9QzNNgKaGN4AsoOMZJ8z295FhCXF1n1YOIutD26r
+         pyLplX1jSKI9rSPAFitPEcpOdgHlIQ9aZzuABRYjmMjUGG6MQvTXcyEzclXV6BzfBzHr
+         96PbnhbXNR0KBHXEnIXPr8NF0s9ledCPmEtPy10J0TOGzCB6TqhhSJRoZF07Pwv6c+My
+         7dAz3513IAgPQObMnNTVIFzua2ztgsWZPs+JaNt1hMB4J807lRXhIxS8+M4lBbSAcKhP
+         0PQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771534421; x=1772139221;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=BQNy7+WWfKPorPxZ5puKMOaTqQjaVM9RjoBVJnw/eqw=;
+        b=eHn+/sM79aZ28KvbHlV3MTFDSK6X71fBpdiHw3q1LtB7HjXgl5P5l/XGiWFGLWEVRm
+         csXSQUQmkc9Hyeez/Xwl4Kmx4+M60wOxpwJ2afzHNarlq6z9md/cjeNZUlEIYa2Nfuc+
+         wNgOtQ1XfQViwek/OR85f5oU3/ESK7eLsfVRzhU5qWdqHLpIDVG4wCF4c1JEiY68veIl
+         4IItDlSZSECPMt3+h5Epqg6ep27WksXQZdnpSpJymzJmbJv5E9raOq0W8hSrBU3Kg+yi
+         /Bkb1hyUugiLrwc6G0Wz+PhDysHuHUOG8miLoU5ekQGrH/VO9XVYeZMtKSvLpyqplV5z
+         sxWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU2kk+HBW/qZu163FnY74D9EGzhNDGr5sCovIGuo1YLzeORVJ2prVpJKuy3CdZcvU2ZF5s=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyp5+2KMLRcvYKfLdl1qmxReDT/6jVhYa/O+KLRGznW2N7KZSHD
+	noXsV/4dph3HPQ1ufOaEiK9Wmlbk9TlcNS80sNed798rCS7n8rsJ6+r0fMqB4fmRrfBFlVbKuLA
+	r5fbgrUlXYpbLiBzpSRezGfOURucMGhuWeT60
+X-Gm-Gg: AZuq6aL5tMFBg9PAOws3glZCkyhgtZgnMeyLy1rNVQXlQtecCsXUQhsGMo1cQNOn1SZ
+	W1Eso9QdWgr1y2z5WSU5rGk/VJzY3sg63SFPcAutdnRVLD4zrgK4lmE4O2q99+UvEXB4TBe3qjC
+	2MR8b63+b+5nB+35wd6ocbBUC19knmZu2O6mMhCD+VL5ZyEyGc7mla7zEdjWvUFgJe28amq8f6L
+	e1SI0gTwjIzc0MtqD2qSdjXUJcv2liIfH9nOUrrckoFPp+Gr1Pn4WxtqlqRIyxCERA/zVm91RjK
+	tKwGo30UPGbxR7UF9xgu8Mk8HGI6voO2bF7oXgQC
+X-Received: by 2002:a05:6820:4df0:b0:676:c2a1:ef12 with SMTP id
+ 006d021491bc7-679a742e84cmr3756012eaf.42.1771534421167; Thu, 19 Feb 2026
+ 12:53:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2048.git.1771406115.gitgitgadget@gmail.com>
+ <46c24e0d05a91f830e400914a7e446afab320859.1771406115.git.gitgitgadget@gmail.com>
+ <aZcr7DiIteTS9udR@pks.im> <CABPp-BF5jLfsndbinaPO_18fxvdUuVOYC8j31==jMXwK6iP0QA@mail.gmail.com>
+ <xmqq8qco4gsv.fsf@gitster.g>
+In-Reply-To: <xmqq8qco4gsv.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 19 Feb 2026 12:53:29 -0800
+X-Gm-Features: AaiRm50YxAKYnWwye5yqXc5Q3hAiYQtIlVpBmOlRRF5nxqpwa2pthkA10Tz-TX0
+Message-ID: <CABPp-BG94fTEhQbUy==OYiGrbQH+Tqt+GPiP6TynUCNPMP2y6g@mail.gmail.com>
+Subject: Re: [PATCH 4/5] merge-ort: prevent the_repository from coming back
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Victoria Dye <vdye@github.com> writes:
-
->>> -    # FIXME: %(rest) is incompatible with object names that include whitespace,
->>> -    # e.g. HEAD:path/to/a/file with spaces. Use the resolved OID as input to
->>> -    # test this instead of the raw object name.
->>> -    if echo "$object_name" | grep -q " "; then
->>> -	test_rest=test_expect_failure
->>> -    else
->>> -	test_rest=test_expect_success
->>> -    fi
->>> -
->>> -    $test_rest '--batch-check with %(rest)' '
->>> +    # Use the resolved OID so %(rest) parsing is independent of whitespace
->>> +    # in object names (e.g. HEAD:path with spaces).
->>> +    test_expect_success '--batch-check with %(rest)' '
->>>   	echo "$type this is some extra content" >expect &&
->>> -	echo "$object_name    this is some extra content" |
->>> +	echo "$oid    this is some extra content" |
->> 
->> ... I somehow doubt that this is what 9fd38038 (t1006: update
->> 'run_tests' to test generic object specifiers, 2025-06-02) meant by
->> that comment.
+On Thu, Feb 19, 2026 at 12:30=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> That FIXME was intended to call out the behavior of %(rest) in cat-file
-> itself as something that we may eventually want to fix. The comment is
-> only here because this test happens to demonstrate that behavior. For
-> that reason, I'm also not sure I see the value of this patch; it's
-> removing some visibility to a quirk of cat-file without fixing the
-> underlying issue.
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > Yeah, also full disclosure: I do not know why
+> > prefetch_for_content_merges() needs to use the_repository.  When I
+> > introduced it back in 2bff554b23e8 (merge-ort: add prefetching for
+> > content merges, 2021-06-22), I was just looking at diffcore_std() and
+> > trying to mimic how it did the prefetch.  I don't actually understand
+> > why the comparison against the_repository is there for either of these
+> > functions.  Maybe someone else knows and could shed some light?  (cc:
+> > Jonathan Tan for the diffcore_std() case I was copying from...)
+>
+> I did a bit of digging for you ;-)
 
-I agree that fixing underlying issue would be a much more valuable
-outcome of resolving that FIXME comment, but isn't the approach to
-give $object_name fundamentally incompatible with %(rest), making
-the issue something %(rest) implementation cannot "fix", is it?
+Thanks!
 
-That is a part of the reason why I said I am dubious about the FIXME
-comment in my comment.
+> The comparison with the_repository is from 7fbbcb21 (diff: batch
+> fetching of missing blobs, 2019-04-05), whose original version did
+> not have it, but was later amended with
+>
+>   https://lore.kernel.org/git/20190405170934.20441-1-jonathantanmy@google=
+.com/
 
-Thanks.
+Ah, the explanation in that email doesn't exist inside the commit
+history, since the diff was squashed in and the relevant part of the
+explanation wasn't added to the commit message.  I should have thought
+to check the mail archives too.  Anyway, the important bit is:
+
+> Also, prefetch only if the repository being diffed
+> is the_repository (because we do not support lazy fetching for any other
+> repository anyway).
+
+This comment came from mid-2019.  I then copied the logic from
+diffcore_std() in 2020 (though didn't get the relevant patch upstream
+until 2021), and as of 2021 we have ef830cc43412 (promisor-remote:
+teach lazy-fetch in any repo, 2021-06-17), which means that this check
+has been obsoleted by events.  And it looks like the check in
+diffcore_std() was left in place as an oversight as well.
+
+So, we don't need that check anymore.  I'll add a commit that simply
+removes these checks from both merge-ort.c and diff.c and reduces two
+more uses of the_repository.
