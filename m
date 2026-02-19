@@ -1,145 +1,157 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5445B2DF128
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 13:43:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771508635; cv=pass; b=fzoBs+veJ95tisvzrPPTCom8Cq6PYFSP1IDZFPcUscdE3Djo9/0X3I1YFWrI7k9ZwiiaIsZgIiGBfez04hsYLZYOs/QMN6lVpmYWF8v+LwRA/WhWZmNKuJXc7b4xmy3ylwglbSy9IhK6wQAxJU6GD3LT/BLsu+acRd9BM3XAexs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771508635; c=relaxed/simple;
-	bh=qWI57nZUPEWzI5ypuKWRc2X+yfwKWGvuf07KTGgwkvM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T1tqbxD1P4nebdTLZSntdW4RTfxlWpoX6dXb9FYaUQ1IE2r2Vrxca0ILmfiFk50VS6T69p9EX+Mq+1uPWu2lkmEw/V9P+m/7rkoCQRDM5XBwBAs9kQx1qnwF2o33ufzRA2qR0Kg9MErk4DfvcB5ZpK3VhoESq/Zc1heniS3Ppsk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Raat40Dd; arc=pass smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0E831AA96
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 13:57:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771509428; cv=none; b=EEeoc699R2ECFsi8W12PStESNQ/BQYK2AzDpucP21jegd5K7fQ1hQojvlsrVcZ3OsP0hqNNIMP8dUU/hDvbWMx3LvirndZECUk/F0TTUSZf03z4KFMwXVytlFvfB/2+DjTOIMfd4fB6GppTHZ5UdITQK1/qTQ/AImgbmq0Uug7w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771509428; c=relaxed/simple;
+	bh=GxLkStmcr9A7XeQGr1KzdcNJK18wdIOcMxYZvyNWBrQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tZKWOu/btBCfdh9mevVPM/LL+jTnk9OzDW7K2xsKjiEv3qKuvdd/EK27zyNOYcLqXeeBPzKDfXHYk80wvMl0UzBKyy5pQUCQdEAe2D4/jWp2GNGwuO5DSYlz9BDq8njVf+clgPx5y8sAzuaraPQYywpnEZJdMz9+X7ZbLuQXUCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HVZGHOGo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HL+mG2jw; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Raat40Dd"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c6dcdc955a1so334715a12.2
-        for <git@vger.kernel.org>; Thu, 19 Feb 2026 05:43:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771508634; cv=none;
-        d=google.com; s=arc-20240605;
-        b=N+5F4XW9QQgajvOw5NuzblvZ9v1BSgNFV3ZmQDUSOUw6Ns2XE3UJRTmEC8gAW+eEXY
-         uzXEU8/S+kGTVGMOGsUi7UwupbrkFE6dPJRE9+qbC0IcHCBTFnBpRL7A6ejmaWof+p3O
-         EsujStZ1etDalS9DgZJTKA1xmtlMUj9/tdwHI5ny7vaQwLQdrtcOl918cifkLiMkzMe+
-         ouTvCmMejJGMFC9ExRfw070dTfRvC5x7bTmjQpnC6HqReGRhXdyOsYM2X9sWu8tWdN2O
-         /bZwLHnPY5XJ7RFOMi6vgtk63Kc7KLtqBB404TFKpPoA6wFt0133BlIYjU/0rrgJRc9d
-         fDUA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=lV0t+FQb2ToQgTzg+v5EGmCVeqWTxkipHQM3I2LykGs=;
-        fh=H4pakTtv8qOzKIZOV7fagyl+3G3RXHNGpHk8w47Sabs=;
-        b=T0m+GnA+PQeVzHEfMSI6Ye4RAZlSpDj3bYk31FPiSgGD3vrIWmwYOoMSAW+ufu/emr
-         B6zMm8AGZTN990CPsSuaoChqqHuYDuAmghAFz3kGqZ0kL2tT3x0oajZ0SXZUPQ55oEO8
-         aF1qlnjeAAybSYpAG9JRovYLeDnkvkBw4VGowaWowBhObt0lSpw9yTOAhJNmpnX2KyPR
-         HGZC/PgHHz+yIbl3OlYTSQh6O2xAlf0IF973TVQb0Jqswe/YBVui6FiaOoKD0XRAoZdX
-         3LItxwgubtgiTvPdNE4X861Z8jlBpQ+W1ecsM1YXN0ZIG6Y+qCT2wGWIsMb64CYwI8N3
-         MXXQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771508634; x=1772113434; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lV0t+FQb2ToQgTzg+v5EGmCVeqWTxkipHQM3I2LykGs=;
-        b=Raat40Dd+xFhySMfNy9g+smjqzWAnQO1Kjome+1IgHEK/ytelGwyI0XOb1ZitXF/+T
-         edDh5rmgK0Tu6EAmEictTxKbMIP3CLvXMROaev0NENu7xPw8AFSRv9w6xnXj2nNh8TwE
-         O4OYXoz7xuT9HkGyA8xEKGiEotxPxwwL9nlMdlU7nJUn4C17Ex7pR+qyM7/Siwwv7gwT
-         m8FI1VLm6nOi5rfGR2oOONA+14b1iC+LhVfzsCIgk9UPGKGBIKkNkbol6jBp0VPxUcC6
-         vrKN2mGbBVrX6XY7qP/+ioG0h0b5G+dmhPSl71QIiHYv7YUtrrJXcxOcu9mnAKpoov1k
-         4E0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771508634; x=1772113434;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=lV0t+FQb2ToQgTzg+v5EGmCVeqWTxkipHQM3I2LykGs=;
-        b=n39LqEXzhYIaoddWO1zO2NKwDbbp+viHFtccg+F9Wy3xZz3CZqJuRJWlbW0bsbqoiL
-         0oTc0WYKtGXcuq03GVTLI4Ok/BYJa3RaI9sEDoTgPTFbPreaPtBMCI32qq2r3aAExBQE
-         jaQnLejkoJScVFeByq2U58VSLXHlbc6o2EBfEWqEz18YmgrBXKDHFvu6U3mL7c6aWOX0
-         ZoKJfrBAZFmM+tFjA4Bxwz3PrzEPAJbcW1mrU+9BQmQU7uldoFf86j5mx5xse+fr8irL
-         mYBWpVLfZewB7Fp9dlslR4M6qPNPHQ28GPuw41vYARkpBaL+eSYxN3Ws77JZCtoCj9Rw
-         5g/w==
-X-Forwarded-Encrypted: i=1; AJvYcCXS9zXVWy+s8i9qga0y2AnOXWFToB9pohjbFREK8wqMnRs6wpb2nylWHDsCRoDEUoHC7JQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzS8ZrAS921FgpLRW5ZpCSR7kMDKMvYmG5zE6KAOZadDAWdRrOZ
-	Hm/KObQebNkhCkhAbacjMkXhxcjHg6U+wIwIpCsRQ6dFRZCMub41SRN3rH2LKNVL3B/j4v3x8ob
-	3EplWb4B9Uh0ftCfH3i8vlLGefqiD6dY=
-X-Gm-Gg: AZuq6aLTioq8AOLM2EPDVOuIl1BvS91kKuzj3LYS09J315e4j6k4n18yxwxO64vR4vP
-	ucm7tgKxtcfFXim1WLZPZXxNW6wTLhrZHOCcoQG4hx4KmH/wz7mHSWpSQbLSdSfzBiNM6/ndJi/
-	yDSXdq+hsA1bz/Engtpm3kNyJnUatlQJ1rDml0wF6hkTjdF2dGptcNMJlPo1S9atxcM1FXeM2zm
-	NCAnxZDA86Yaksy9UTjwPPEeqSUm6cvNQOy8J8msubu+AwGHfgahz6LmrtKChG5G1pixgUq9qqX
-	aQWxHGCpMnZwESMwyyVxxJqoDRbCBimyhOAlASBwSem+x9PfWttgXKvGGnd9sUjZdkwrIZQQjpN
-	ZTbPq
-X-Received: by 2002:a17:90b:1d0c:b0:354:a57c:65dd with SMTP id
- 98e67ed59e1d1-358937a4bdcmr2857115a91.24.1771508633704; Thu, 19 Feb 2026
- 05:43:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HVZGHOGo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HL+mG2jw"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 92E8814001BE;
+	Thu, 19 Feb 2026 08:57:05 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Thu, 19 Feb 2026 08:57:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771509425;
+	 x=1771595825; bh=kH26J7d1rFdJc1tpfy9/IYt2kOlnR/xaySb43rz3VXs=; b=
+	HVZGHOGo+3jvjcBgRAqIP+kMKX8Tm1yUxUB+Lpi5xkQKjdNVl7uHe9p+IlYz2SQP
+	T2phGVTmh5OqFtFIieFwYrRhy8vvh/th/IWkSK8kew88dYXq/UxHA6P8YMkaTi7x
+	kCW1WrmOg3Jzs5mgds9wii6MQn813Ew65dglf4s/g/nFQ0xnhwD2rlYQVTo06ltb
+	CQEkVtbIAdzoFHuYLH5Tm8w3J/0DVsTu5BuMSosBPGLTASh8flEqsqwCYuQF+LG+
+	CxyMMSHD5I6aCSEPL22KQWnwS8ieReEWV7KJKvYoRA5rTgtwpf+BJu7tpsQyHcpc
+	vT2WibaYOH2QkVPMrPTOPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771509425; x=
+	1771595825; bh=kH26J7d1rFdJc1tpfy9/IYt2kOlnR/xaySb43rz3VXs=; b=H
+	L+mG2jwcKAUcnpOqECwSwp5GQ8F7DV7Lcwsw0LRWyJ6sgg0bwP5CBg7Z18084K3K
+	UiyB4GgoxwX4UaHS5mpuM8PywekK/2HSoOwcwXBPym719GYjZ6G663PgNDgURn3G
+	NxebTK9KKvERO0MLUmT/50XNiLuwwlhx1jmUwPGU1wB2e24ow/9ajwlUHueq2aDd
+	zQ1oDr9/M6X0uEMe36+2kpsAUJ1DPnuTgQPPBY/ltBp8F9SRfT9jNx7bdVK2LMAb
+	1L04lL4DtGrCZHGr/ewmzqeDeAgpgH0QL2vtt04j9qlvd79/O+P+gbnrJaOoIKE5
+	xhsBpJbHKCCTCwVl0cuoA==
+X-ME-Sender: <xms:sRaXafyJFyOViRKcLgE_SR974fRAT7g14qZerz1hvKG5RjZOz7HPMw>
+    <xme:sRaXaQmYO7fQvBa6dk0HxwqFy0lUMYnk19RFt3pe8kZw9Hn8AZxuBwA4w76VrnIze
+    GgQPYiLyMrMP_Ndi1kQ4D4poi2zvLj2c52ESSP5syljlE-ivLec>
+X-ME-Received: <xmr:sRaXaQmhueuyMllCLW7Ia-NG2Lw22jvcN2Sp-9ze_aRapYlVwHoUAC_7LepOKPm8HIlRM1SstDLePxeoM9GQEOeeFLc35mD3WsBCLFMPDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdehjedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghvrghnrdhmrg
+    hrthhinhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhi
+    thhhuhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguse
+    guuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvth
+X-ME-Proxy: <xmx:sRaXaazFM_ZMb9DEukGHHNc5ZfG3BUZkDxHejA-SpAGcZvYH39SWvw>
+    <xmx:sRaXadooPMiACIzTxjeVhxxgRGB0kEh7WlzrifjJPYs9PuGQqHz6Tw>
+    <xmx:sRaXaR5FFwIT8GNw7px8AIoRT71talf5gAwJ8z-dybWOeWpBKk9iyg>
+    <xmx:sRaXacc97XI7hsPT51Pt5Phm79uNOTiTxl6CePbaCIr067ZxEOvzWQ>
+    <xmx:sRaXacv1lvs8R4AfEZ7WADnNXMEOaS48s9Hk9IeJVq73_1UGHaNrz3KL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Feb 2026 08:57:03 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 94061c5c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Feb 2026 13:57:02 +0000 (UTC)
+Date: Thu, 19 Feb 2026 14:56:59 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Evan Martin <evan.martin@gmail.com>
+Subject: Re: [PATCH v5] build: regenerate config-list.h when Documentation
+ changes
+Message-ID: <aZcWq9SapNnRAXti@pks.im>
+References: <9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>
+ <611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aZAMr6XOwKkTa55q@exploit> <20260216152730.37478-1-mroik@delayed.space>
- <aZQJEDyUyMv4_c1l@pks.im> <20260217063400.GA101988@coredump.intra.peff.net>
- <CALnO6CD6c36ur4cxqNAB=Jy=m6yxVfoSzAAekewQZr2vjjKn2w@mail.gmail.com> <20260219112918.GB3529@coredump.intra.peff.net>
-In-Reply-To: <20260219112918.GB3529@coredump.intra.peff.net>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 19 Feb 2026 08:43:42 -0500
-X-Gm-Features: AaiRm53XyKmHIy0fYlstQxNXX41l31Lmwds_jvlep5rXxv47tMu2hGIeiwexj5Y
-Message-ID: <CALnO6CAszmGM7uA5zJXaUkK4PMnyQGeWWBk+OwDU=AfDh4GbPA@mail.gmail.com>
-Subject: Re: [PATCH v2] format-patch: fix From header in cover letter
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>, Mirko Faina <mroik@delayed.space>, Junio C Hamano <gitster@pobox.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>
 
-On Thu, Feb 19, 2026 at 6:29=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Feb 17, 2026 at 08:21:32AM -0500, D. Ben Knoble wrote:
->
-> > > I think that wording comes from me back in 2013, and I just never gav=
-e
-> > > any thought to cover-letter generation by format-patch itself. I neve=
-r
-> > > use it (and I probably forgot it even existed, given that most people
-> > > would use send-email's cover letter generation, and I do my own thing
-> > > with mutt).
-> >
-> > Funny: the send-email manual's main mention of cover letters apart
-> > from setting Cc/To fields is in an example=E2=80=A6
-> >
-> >            $ git format-patch --cover-letter -M origin/master -o outgoi=
-ng/
-> >            $ edit outgoing/0000-*
-> >            $ git send-email outgoing/*
-> >
-> > =E2=80=A6using format-patch! (Which is how I generate cover letters, an=
-d
-> > probably part of why.)
->
-> I think I may be showing my clueless-ness about send-email here. I
-> thought it had its own cover-letter code, but looking at it briefly, I
-> may just be wrong. I don't see any code, so I guess people generate the
-> cover-letter independently with format-patch.
+On Wed, Feb 18, 2026 at 09:37:59AM -0500, D. Ben Knoble wrote:
+> diff --git a/generate-configlist.sh b/generate-configlist.sh
+> index 75c39ade20..39ac8845ab 100755
+> --- a/generate-configlist.sh
+> +++ b/generate-configlist.sh
+> @@ -36,3 +37,11 @@ print_config_list () {
+>  	echo
+>  	print_config_list
+>  } >"$OUTPUT"
+> +
+> +if test -n "$DEPFILE"
 
-Yeah, maybe=E2=80=94send-email takes format-patch options, so send-email
---cover--letter should also work?
+We could arguably drop conditional now that both the Makefile and Meson
+pass that argument, but I don't mind it much.
 
-> Maybe nobody noticed because most people do not use "--from=3D<foo>" with
-> a <foo> that does not match the committer ident in the first place. I'm
-> not really sure why you'd want the two to differ. Which makes me wonder
-> why I added that feature in the first place (as opposed to just "--from"
-> with no options).
->
-> Mysteries of the cosmos, I guess.
->
-> -Peff
+> +then
+> +	QUOTED_OUTPUT="$(printf '%s\n' "$OUTPUT" | sed 's,[&/\],\\&,g')"
+> +	printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
+> +		"$SOURCE_DIR"/Documentation/config/*.adoc |
+> +		sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /" >"$DEPFILE"
+> +fi
 
-:shrug: :)
+Okay, so we first quote the target output file once, and then we quote
+the sources with a single call to sed(1), too. To not perform quoting
+of the target output file twice we don't include it in the printf call,
+but instead prepend it to each line.
 
---=20
-D. Ben Knoble
+Looks reasonable to me, and we spawn at most two sed(1) processes. Nice.
+
+> diff --git a/meson.build b/meson.build
+> index 762e2d0fc0..74b459b004 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -720,11 +720,14 @@ endif
+>  
+>  builtin_sources += custom_target(
+>    output: 'config-list.h',
+> +  depfile: 'config-list.h.d',
+> +  depend_files: [ 'generate-configlist.sh' ],
+>    command: [
+>      shell,
+> -    meson.current_source_dir() + '/generate-configlist.sh',
+> +    meson.current_source_dir() / 'generate-configlist.sh',
+>      meson.current_source_dir(),
+>      '@OUTPUT@',
+> +    '@DEPFILE@',
+>    ],
+>    env: script_environment,
+>  )
+> 
+> Diff-intervalle contre v4 :
+> 1:  e2f4e1f9ba < -:  ---------- completion: add stash import, export
+
+The range-diff is a bit broken, but that doesn't really matter much.
+Overall this patch looks good to me, thanks!
+
+Patrick
