@@ -1,158 +1,305 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FC02F1FFE
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 06:25:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A3B26E6FB
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 07:17:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771482353; cv=none; b=OR2MQ3eCREHR4yjtD1674Unk4rW+Uh+Rkjl6mDy2frTXTK5JS7dBKqyFInftyFFuVqyRc2bxPHxT9UQwQb4MK29o2DUUAALq/693SlRx1n/IKRnhreaiZddflMY0ouM6L6FxpMO1lDve5sw42BVWelAAG/VBBL9dTsAMEAIbOwI=
+	t=1771485423; cv=none; b=mzUQdrAWdS5ZOD9HV0dWkwiX6MF5pYm1oHyaq28Yb40G6UHniAoJIWxkrvOMAww9oXQWg2+Q/I+vtqLTHnsUwsmm6MPQgZwBeMWv0e+ee1gbMvTpNZ5IQsmvD0ee32/oAAB5OOGF1JXemH7zRDT22uvY0jvfD893DXMLNl71Q/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771482353; c=relaxed/simple;
-	bh=ptz/OvTYYsn3f9Av1i8GJJxNFD7JYcOiKgHK5TdWfGk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UXGACwB0K3ud0TP0GazKJU1Qe9Ia4B56KJWlE5v0RmDEtOGB6l3C5n4xa3Wn9dCx7Pmgg1Ur0wvJAHFNpt067wIfkBLiq6mW20izYZgiJMQCzwv95sywq4RTLL9FNQx94nvGyu7CWd68VuXZxIP6REYq19bkVH4YTJZduAw8ygI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CJnwi4wv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X7vBqLb8; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1771485423; c=relaxed/simple;
+	bh=YUnoLPCZ/WqW/sy1d6WIo4SgAFVu7dpVKwqYNFsFwZ8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XLHMfgsznyFrgY1istUwYdqSMdHbvm/D21Ttji2cAkpUnsBvRMBPVIYbrTl359bMAaoQtTu9RHipbrgsWOxMEjNQ0jxk9/3kymhsWE+WVrXR5d5Wzwxa62l6d8sY30bCO6GRHjcSdcV115kxnaP/gyMXzh7J+3aP6DPCQiYo2Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jeZB8QA1; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CJnwi4wv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X7vBqLb8"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id BB65EEC0040;
-	Thu, 19 Feb 2026 01:25:51 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 19 Feb 2026 01:25:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771482351;
-	 x=1771568751; bh=9EYKjDKdZ1DiwLjUkYTUjDo5FUwLovej6TkgdpznHUI=; b=
-	CJnwi4wvla/sgcLb3TFlW0WlND9r3a0EcL4+DV75FxU/QN2eaOeCcFaBDBbVGwZG
-	C0g6Zh5WxE5Wtj5DC1gtvd49ihq6vXwE7V9/oBffxJTJtZlYE70gD3kAqg/uI0lE
-	gd4l169901hmzaUfQHJ01WsmitkHJPuW2z9q3Fj+lpG+L2eKgZ7S7X4c2awtdYKy
-	5icJRlmSxqkV9aurwNbZv0NaUfrq99hqMHel+C5qVi69feV92K1ASSUXV39BoHWK
-	4FxRzihPoAK14wwDzLjxXGW1W36PLUdPATRi94JDyGzdKmEFQBDE5ihLK6eIXEIh
-	MReGIwknhUNWuCib9QLcIw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771482351; x=
-	1771568751; bh=9EYKjDKdZ1DiwLjUkYTUjDo5FUwLovej6TkgdpznHUI=; b=X
-	7vBqLb832NY6iPy+LqS0z1yNFauatvsta10y3xGcp6ZSlLh8hpQmRcad5A/sJQBw
-	HbMOhH6k7i7IfM+e3ShhaorHiqSPLWTP1LAr+Z5RFzkLyD8+FRrWHpZSrJd39lAX
-	hkjHA2Mgzm96B65WukABNDn1RufQycwar1wbCAt7q3nRh1PcY6IIpEB3KQMEb/Xg
-	tVEr/KCCfmfnFEiMQSP66wKyjliGMWril5gVzUbYjqmiekzsOSGyM2ZPM03ePEgG
-	ATDiH9ZKKZ9xqAiO7EFM9Qv9dXg6H79cTftGZz1QiB34WNkD1KowW1o3R7nfbmGk
-	hJqilVZ2n4ztbXnyqQnAw==
-X-ME-Sender: <xms:76yWafjtm8uXipMpr5IYxoIvyf9hy15uQqM-ErbkkXa2SymKyuFr0A>
-    <xme:76yWaS4J_lTDVG3UNjYH6MlJ5H55S7ZAyxyuH-_SeUdz9rVIoabarSBSsA41NSRWf
-    ZvATj1luy-21CZqXRK7-UrB-PpNa-sFG-QTFNgumoDF0i1_8c9TYQ>
-X-ME-Received: <xmr:76yWaXbP42mDhGLSZWl1zb5qbA1JLsvhvXkCU6UaIvvOegrn9UFqoZEkY6tbgDxdunVqfjv9XFpsIRAv__1oheT4rXaGKycJ0wgDlHxB_w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdegjeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpeeinecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhohh
-    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:76yWaX6DzNxI0bmJci4_YGFvJr6YT7l1be3BjhttZtVa1fKaUuBKbw>
-    <xmx:76yWaaDtdHKXTx77jgI-bDBmZmkzgUf1bXn5W7opQwXeIelS1kBfjA>
-    <xmx:76yWaddGw5wj-qUit7sRNddx0fgBiWFJ7v7_UpSKh_Y7V2qKm_YYQg>
-    <xmx:76yWaZKbN0dScjWwlZghiaOQGrnqTbrBGBoic3jX6Nx0ghGE6jKj0Q>
-    <xmx:76yWafV2rD5uiUxSEOBgHIIcASi2obeoSoSEEqvYTmNlSBtO8NgrpwRI>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 01:25:50 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 70b3d07a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Feb 2026 06:25:49 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 19 Feb 2026 07:25:33 +0100
-Subject: [PATCH v2 7/7] gitlab-ci: handle failed tests on MSVC+Meson job
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jeZB8QA1"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2aae38670daso873115ad.3
+        for <git@vger.kernel.org>; Wed, 18 Feb 2026 23:17:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771485421; x=1772090221; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GgIILteiycvEH07T9+iK5G/wl1C6PLHxE+752M9Muoo=;
+        b=jeZB8QA1xaBI3/a7PlSvgTS+zJGCSbElMcRoTSjT6PS2pdF9eExl1H60Ku4IzZReZ6
+         07DWjile2pt0KFPq1loc9DOArSDXdhggsOniZ5T5EdMiuUMGNi0QHKRAojhfoLXfKPjq
+         CD+fjLVJ/XAfqN4pNBruXa2OFvOlegumlYeLpdUi70g6E1uTdPUp8r4VFRyW4TFOw99O
+         3DPzqEQVHXiWUfls81dlV217CtX+hl5wh3UElaOvlyhg4Iru7Sp+6XN7tBFrFsVjS25n
+         oaw3icLbwWONOv69r2I+AWyQd5RyRDL//XpAPNuzh6LHsVKccKfOM5LrGXDuBm57TO9p
+         +6+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771485421; x=1772090221;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GgIILteiycvEH07T9+iK5G/wl1C6PLHxE+752M9Muoo=;
+        b=rfkfVfAg2Du5UmUVWrLG04Q0O90P3Ug/Z9c9fSzWemBT/rBwSbF79pgVLK7UTHf0iy
+         p2tnDHuyyeqDS2IE/r3FYY5QvFEVTijjb3ssmwKIXflCTEODK8Iskd/KegTxjAchgh2u
+         qcVcV8kK5ZbVHTae1oM9SnJ50/Mdc24hdr90FsbIvY35unoVKhnOCW6mVY+0zfMeda4a
+         KUusN7lC1hG1Y5AY6U/18JZXYPevDYJJlb4gOGXdRfK4/mAehUAiSqL/UxRcIa82nkZP
+         BHwatagF/CkPcGoM6u1oqjRieXM+BhVuOD5QqsWmC7jsd8O/BkKymiQj0GgDpsvqd7qe
+         ViGA==
+X-Gm-Message-State: AOJu0Yx8pMPouuFmULy8u2VnnKw5hM+MmoUZCq255OPxA1v7maJ/Wleq
+	aFZaMP4qkD/ETDPxlFGdFuuaYnPsiaEroqEuSIXBivOHCw2nJ+D+cxpHKGMtjA==
+X-Gm-Gg: AZuq6aLTXSA/3VswYBQy5hejWuolA+gObsB+tU0s9jb2v7As3kWZNaDd/xWLL9J+c+f
+	jaOKCtnvbD6y3aqEADRvEzWGgGbOcEChC8BzTyb/pXHnfZnrSzEnZUtiNwIRAUBIvoDUMlsDoa2
+	olLzMFNppQ6tYUANLVYCRmjGnB1SWC+tJ16i/BduQDte1xF3TpnHaj6kdjwNxYqyhP41GKU0YBs
+	mxR2E/X2rRQuMiiiNl3qQyAq6NZlvlRYEhXkxII5xVaCUD4k4M80yoRucv7UecRA1XYmU05XqUh
+	fAb3FGpvCFKLoh/oWMgAxdNnmXM/prNZJq5TiOc1FMHe6ITD2dC4KyDnVviQB408EugScmZCWGI
+	14S9t8l2SLj8lFFjwhm3C6HLMxLbYhHO5fvHm1T+beoMCXC4IN+YiPfyedMZQyaFOtVFkfJr2Gj
+	gswOADkdmbCoLS/mFTd9PSqT5lK99Q75SoAunWoTLJHAL3mfBxVA==
+X-Received: by 2002:a17:903:2446:b0:2aa:de29:65c with SMTP id d9443c01a7336-2ab4cfd0a8bmr132477115ad.6.1771485420817;
+        Wed, 18 Feb 2026 23:17:00 -0800 (PST)
+Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ad1a73053dsm160507685ad.35.2026.02.18.23.16.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Feb 2026 23:17:00 -0800 (PST)
+From: Tian Yuchen <a3205153416@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	karthik.188@gmail.com
+Subject: [PATCH v7] setup: allow cwd/.git to be a symlink to a directory
+Date: Thu, 19 Feb 2026 15:16:50 +0800
+Message-ID: <20260219071650.208074-1-a3205153416@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260218124638.176936-1-a3205153416@gmail.com>
+References: <20260218124638.176936-1-a3205153416@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260219-b4-pks-ci-meson-improvements-v2-7-6047b8307ab2@pks.im>
-References: <20260219-b4-pks-ci-meson-improvements-v2-0-6047b8307ab2@pks.im>
-In-Reply-To: <20260219-b4-pks-ci-meson-improvements-v2-0-6047b8307ab2@pks.im>
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
- Jeff King <peff@peff.net>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: b4 0.14.3
+Content-Transfer-Encoding: 8bit
 
-The MSVC+Meson job does not currently have any logic to print failing
-tests, nor does it upload the failed test artifacts. Backfill this logic
-to make help debugging efforts in case any of its jobs has failed.
+Currently, `setup_git_directory_gently_1()` fails to recognize a `.git`
+symlink pointing to a directory because `read_gitfile_gently()` strictly
+expects a regular file and returns `READ_GITFILE_ERR_NOT_A_FILE` for
+anything else, including valid directories.
 
-GitHub already knows to do this, so we don't need an equivalent change
-over there.
+Fix this by distinguishing directories from regular files and other
+non-regular file types (like FIFOs or sockets) via newly introduced
+error_code.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+To preserve the original intent of the setup process:
+1. Update `read_gitfile_error_die()` to treat `IS_A_DIR` as a no-op
+   (like `ENOENT`), while still calling `die()` on true `NOT_A_FILE`
+   errors.
+2. Unconditionally pass `&error_code` to `read_gitfile_gently()`. This
+   eliminates an uninitialized variable hazard that occurred when
+   `die_on_error` was true and `NULL` was passed.
+3. Only invoke `is_git_directory()` when we explicitly receive
+   `READ_GITFILE_ERR_IS_A_DIR`, avoiding redundant filesystem checks.
+4. Correctly return `GIT_DIR_INVALID_GITFILE` on unrecognized errors
+   when `die_on_error` is false.
+
+Signed-off-by: Tian Yuchen <a3205153416@gmail.com>
 ---
- .gitlab-ci.yml | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+Changes since v6:
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 04857b479d..71b8a6e642 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -157,6 +157,8 @@ test:mingw64:
-   parallel: 10
- 
- .msvc-meson:
-+  variables:
-+    TEST_OUTPUT_DIRECTORY: "C:/Git-Test"
-   tags:
-     - saas-windows-medium-amd64
-   before_script:
-@@ -164,12 +166,13 @@ test:mingw64:
-     - choco install -y git meson ninja rust-ms
-     - Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
-     - refreshenv
-+    - New-Item -Path $env:TEST_OUTPUT_DIRECTORY -ItemType Directory
- 
- build:msvc-meson:
-   extends: .msvc-meson
-   stage: build
-   script:
--    - meson setup build --vsenv -Dperl=disabled -Dbackend_max_links=1 -Dcredential_helpers=wincred
-+    - meson setup build --vsenv -Dperl=disabled -Dbackend_max_links=1 -Dcredential_helpers=wincred -Dtest_output_directory="$TEST_OUTPUT_DIRECTORY"
-     - meson compile -C build
-   artifacts:
-     paths:
-@@ -185,10 +188,19 @@ test:msvc-meson:
-   script:
-     - |
-       & "C:/Program Files/Git/usr/bin/bash.exe" -l -c 'ci/run-test-slice-meson.sh build $CI_NODE_INDEX $CI_NODE_TOTAL'
-+  after_script:
-+    - |
-+      if ($env:CI_JOB_STATUS -ne "success") {
-+        & "C:/Program Files/Git/usr/bin/bash.exe" -l -c 'ci/print-test-failures.sh'
-+        Move-Item -Path "$env:TEST_OUTPUT_DIRECTORY/failed-test-artifacts" -Destination t/
-+      }
-   parallel: 10
-   artifacts:
-+    paths:
-+      - t/failed-test-artifacts
-     reports:
-       junit: build/meson-logs/testlog.junit.xml
-+    when: on_failure
- 
- test:fuzz-smoke-tests:
-   image: ubuntu:latest
+ - Squashed into a single commit.
+ - Fixed a hidden uninitialized variable trap. In v6:
+   'setup_git_directory_gently_1()' passed 'die_on_error ? NULL : &error_code'
+ to 'read_gitfile_gently()'. When 'NULL' was passed, the local 'error_code'
+ remained uninitialized. The old code survived this because of short-circuit
+ evaluation ('if (die_on_error || error_code == ...)'). 
+   In this v7, I now unconditionally pass '&error_code'. This gives the caller
+ explicit control over error routing.
+   (Actually, I seem to have made the same modification back in v3 or v4, but I didn't
+ realize at the time that the part I changed was originally a bug. So it was a 
+ happy accident. :P
+ - We now only invoke 'is_git_directory()' explicitly when 'error_code ==
+ READ_GITFILE_ERR_IS_A_DIR'.
 
+Thanks for your patience.
+
+ setup.c                       | 44 +++++++++++++--------
+ setup.h                       |  2 +
+ t/meson.build                 |  1 +
+ t/t0009-git-dir-validation.sh | 72 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 104 insertions(+), 15 deletions(-)
+ create mode 100755 t/t0009-git-dir-validation.sh
+
+diff --git a/setup.c b/setup.c
+index c8336eb20e..5a573e5865 100644
+--- a/setup.c
++++ b/setup.c
+@@ -897,10 +897,13 @@ int verify_repository_format(const struct repository_format *format,
+ void read_gitfile_error_die(int error_code, const char *path, const char *dir)
+ {
+ 	switch (error_code) {
++	case READ_GITFILE_ERR_STAT_ENOENT:
++	case READ_GITFILE_ERR_IS_A_DIR:
++		break;
+ 	case READ_GITFILE_ERR_STAT_FAILED:
++		die(_("error reading %s"), path);
+ 	case READ_GITFILE_ERR_NOT_A_FILE:
+-		/* non-fatal; follow return path */
+-		break;
++		die(_("not a regular file: %s"), path);
+ 	case READ_GITFILE_ERR_OPEN_FAILED:
+ 		die_errno(_("error opening '%s'"), path);
+ 	case READ_GITFILE_ERR_TOO_LARGE:
+@@ -941,8 +944,14 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
+ 	static struct strbuf realpath = STRBUF_INIT;
+ 
+ 	if (stat(path, &st)) {
+-		/* NEEDSWORK: discern between ENOENT vs other errors */
+-		error_code = READ_GITFILE_ERR_STAT_FAILED;
++		if (errno == ENOENT)
++			error_code = READ_GITFILE_ERR_STAT_ENOENT;
++		else
++			error_code = READ_GITFILE_ERR_STAT_FAILED;
++		goto cleanup_return;
++	}
++	if (S_ISDIR(st.st_mode)) {
++		error_code = READ_GITFILE_ERR_IS_A_DIR;
+ 		goto cleanup_return;
+ 	}
+ 	if (!S_ISREG(st.st_mode)) {
+@@ -1578,20 +1587,25 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 		if (offset > min_offset)
+ 			strbuf_addch(dir, '/');
+ 		strbuf_addstr(dir, DEFAULT_GIT_DIR_ENVIRONMENT);
+-		gitdirenv = read_gitfile_gently(dir->buf, die_on_error ?
+-						NULL : &error_code);
++		gitdirenv = read_gitfile_gently(dir->buf, &error_code);
+ 		if (!gitdirenv) {
+-			if (die_on_error ||
+-			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
+-				/* NEEDSWORK: fail if .git is not file nor dir */
+-				if (is_git_directory(dir->buf)) {
+-					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
+-					gitdir_path = xstrdup(dir->buf);
++			if (error_code == READ_GITFILE_ERR_IS_A_DIR &&
++			is_git_directory(dir->buf)) {
++				gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
++				gitdir_path = xstrdup(dir->buf);
++			} else {
++				if (error_code == READ_GITFILE_ERR_STAT_ENOENT ||
++				error_code == READ_GITFILE_ERR_IS_A_DIR ||
++				error_code == READ_GITFILE_ERR_NOT_A_FILE ||
++				die_on_error) {
++					read_gitfile_error_die(error_code, dir->buf, NULL);
++				} else {
++					return GIT_DIR_INVALID_GITFILE;
+ 				}
+-			} else if (error_code != READ_GITFILE_ERR_STAT_FAILED)
+-				return GIT_DIR_INVALID_GITFILE;
+-		} else
++			}
++		} else {
+ 			gitfile = xstrdup(dir->buf);
++		}
+ 		/*
+ 		 * Earlier, we tentatively added DEFAULT_GIT_DIR_ENVIRONMENT
+ 		 * to check that directory for a repository.
+diff --git a/setup.h b/setup.h
+index 0738dec244..ed4b13f061 100644
+--- a/setup.h
++++ b/setup.h
+@@ -36,6 +36,8 @@ int is_nonbare_repository_dir(struct strbuf *path);
+ #define READ_GITFILE_ERR_NO_PATH 6
+ #define READ_GITFILE_ERR_NOT_A_REPO 7
+ #define READ_GITFILE_ERR_TOO_LARGE 8
++#define READ_GITFILE_ERR_STAT_ENOENT 9
++#define READ_GITFILE_ERR_IS_A_DIR 10
+ void read_gitfile_error_die(int error_code, const char *path, const char *dir);
+ const char *read_gitfile_gently(const char *path, int *return_error_code);
+ #define read_gitfile(path) read_gitfile_gently((path), NULL)
+diff --git a/t/meson.build b/t/meson.build
+index f80e366cff..c4afaacee5 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -80,6 +80,7 @@ integration_tests = [
+   't0006-date.sh',
+   't0007-git-var.sh',
+   't0008-ignores.sh',
++  't0009-git-dir-validation.sh',
+   't0010-racy-git.sh',
+   't0012-help.sh',
+   't0013-sha1dc.sh',
+diff --git a/t/t0009-git-dir-validation.sh b/t/t0009-git-dir-validation.sh
+new file mode 100755
+index 0000000000..9b3925c85f
+--- /dev/null
++++ b/t/t0009-git-dir-validation.sh
+@@ -0,0 +1,72 @@
++#!/bin/sh
++
++test_description='setup: validation of .git file/directory types
++
++Verify that setup_git_directory() correctly handles:
++1. Valid .git directories (including symlinks to them).
++2. Invalid .git files (FIFOs, sockets) by erroring out.
++3. Invalid .git files (garbage) by erroring out.
++'
++
++. ./test-lib.sh
++
++test_expect_success 'setup: create parent git repository' '
++	git init parent &&
++	test_commit -C parent "root-commit"
++'
++
++test_expect_success SYMLINKS 'setup: .git as a symlink to a directory is valid' '
++	mkdir -p parent/link-to-dir &&
++	(
++		cd parent/link-to-dir &&
++		git init real-repo &&
++		ln -s real-repo/.git .git &&
++		git rev-parse --git-dir >actual &&
++		echo .git >expect &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success PIPE 'setup: .git as a FIFO (named pipe) is rejected' '
++	mkdir -p parent/fifo-trap &&
++	(
++		cd parent/fifo-trap &&
++		mkfifo .git &&
++		test_must_fail git rev-parse --git-dir 2>stderr &&
++		grep "not a regular file" stderr
++	)
++'
++
++test_expect_success SYMLINKS,PIPE 'setup: .git as a symlink to a FIFO is rejected' '
++	mkdir -p parent/symlink-fifo-trap &&
++	(
++		cd parent/symlink-fifo-trap &&
++		mkfifo target-fifo &&
++		ln -s target-fifo .git &&
++		test_must_fail git rev-parse --git-dir 2>stderr &&
++		grep "not a regular file" stderr
++	)
++'
++
++test_expect_success 'setup: .git with garbage content is rejected' '
++	mkdir -p parent/garbage-trap &&
++	(
++		cd parent/garbage-trap &&
++		echo "garbage" >.git &&
++		test_must_fail git rev-parse --git-dir 2>stderr &&
++		grep "invalid gitfile format" stderr
++	)
++'
++
++test_expect_success 'setup: .git as an empty directory is ignored' '
++	mkdir -p parent/empty-dir &&
++	(
++		cd parent/empty-dir &&
++		mkdir .git &&
++		git rev-parse --git-dir >actual &&
++		echo "$TRASH_DIRECTORY/parent/.git" >expect &&
++		test_cmp expect actual
++	)
++'
++
++test_done
 -- 
-2.53.0.414.gf7e9f6c205.dirty
+2.43.0
 
