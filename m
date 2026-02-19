@@ -1,171 +1,151 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8AA15C14F
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 05:12:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D892C235B
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 06:18:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771477921; cv=none; b=B1Yjy2BOdrgGZERePGSW11zu7lcHQDjjNT3b2ApmMMokMU4MBZprmFyA/MhO7MZB0+RKdLUyLPUq/dHD+1DeFR/Zyk+fWHZIne8d4AvSpEgcX1yrlAvPF0ro4Px2Aqga6LRRMf53w4KU4ACnbIBTzj+gNFMDYrg5PCfQ2bYwhfY=
+	t=1771481917; cv=none; b=G34hnbaKpE0HLxiDnH2gJzj2SWMyqZD9jyPXIy06uCXHsmB94dmb8SanHooZ00+kHaY9GusRq81lcBtyCusk3QGC5onCelgqYIRas70Pu7lQCV7JXHfJ7jEoR15tJBfcepyoLZfY6JCkgO2ktRI26kgWR6kuOJlK1+ntiRw5kkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771477921; c=relaxed/simple;
-	bh=JjrX8tJc3cJGJgmQUDu0gA2ZxqSpsKJD+iq0hDZOrmQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gasQuBvABoaX0IfSXTXtG8jSaJ9dl7l8/oVNpnnVTuZWc3BYJTMi9pmMr4W8dZdIQe6VT9FkCvgYND9kyBuYWHN3+C+xj369QM8C94zQe1BThXFh8URTcB7GhSyeAJF39YheuLdY2HuahC/KDP/8bardKYrYTI0ynLlMD0a9Sbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LL5ab3qV; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771481917; c=relaxed/simple;
+	bh=zLQj1Jbh28i7dv9OZXLGA0n2VPnaNY6GtX4HQDWgpRw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dLNzSICQRiinCNL6J7klrxjPg50yUSD+ZIRD6nuipEkwVDgijrDx4h/RtmBJ0NGRuyDfjzZ+WW4vFtBEmoz8Hv+4U9qaYl91liuwIv8MMK4oTO2x/tkAY849rlNBcqnkRfCpCND2JjfNGjuQBvQR6eXhlKpIdRhO5jheCpty87I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sUJwDIYM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ex/4jYvs; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LL5ab3qV"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c6e18da0f82so45341a12.2
-        for <git@vger.kernel.org>; Wed, 18 Feb 2026 21:12:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771477919; x=1772082719; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=81r1kLegmNT0HfgT0QtMxG8ylRZlNb1I39MxmtCjU60=;
-        b=LL5ab3qViCgYx/k3ToTLhoFvsC307bs9NC3fmwymahOSHBJU3lPqq0oQTyV6a9cwCt
-         9ysw/GKVAFSzM56jCo2R+EbtL8BJUDihrvaxBtHcxnutTv3PvfMGdz/BUOJa5EwU0+0F
-         DWNt5GKuUpG1Mvd9zc5oOAz+vYJTloL0uxHjEpuVfEZpGR50VYcX8NIuqJmWEpD7U+tF
-         bhekgjM1+IHyiW8y8Dh7jko3gEuNlXTre4WZby31VNUz9jjTussDUPu674q1xisdhlDM
-         wqtS9LA8rgcqrbwxDjPLTQRvY1am0LX3R1qG6v46B8COVNEIPiDm05HYuZlQ74yGz5gr
-         8GUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771477919; x=1772082719;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=81r1kLegmNT0HfgT0QtMxG8ylRZlNb1I39MxmtCjU60=;
-        b=kPOnvmq9ZTcKfcCcQnj/buv/I0mkcIpI3fimrsgdMCSlQK+zPtqAFpY2PyltP9hXjh
-         kjXNWzDhIqWZRlGOp49KawzanwTdorMEbreh4y0SSye39D/NsDT7TR68QfCxSnGH9pT3
-         OWFaNlB5CcyBshlzC/P23slJ3ZUTAB3O50bJbl9zxzv7E2zxwX5MXtUvP/0Rkq1NjLYS
-         BHAG01w+xES1wcF69owN9Ces4D9r6qVwAwn38gGbwWAc6wMdfn0TPnrrgJfAKVz/cucS
-         xDTek3YI4O/1BQtDFXSpuhL0DrjSIwWu8spz1Fo/rxp2vWFIor7RADPaT3O5lZK0FjHB
-         6f8Q==
-X-Gm-Message-State: AOJu0YzFaBVzdefm+1NcZrEXLPqbVfAkK8tuiGPf9EgwLEZcpK04sTQE
-	CM9sCzhhRIvRb3CyLzcluFvI98ywCoQNS+2oLtuhwC+fGBoo23Yx30Ma
-X-Gm-Gg: AZuq6aIuL/mQv2tZGvXNlb7zGIJoJDGskFyh7I/fF7xGUJ/KjqGpM1Uruzt2ws+Es5Z
-	54rkD7nY6UtJbh4Bzu8T7zUA9YaOtSqHuTpS+KLrJ99JxnlgpwcC7tTYzWKbQyotA0OxZQWIgkW
-	MAxKRm6qKBtcdwzA7siPsA2KIQykQUDIH/ufTs3Niml+wz1DscWFCx9K3RsZh5fQCuhIJBAT6UW
-	J9bVscbddoXmYqCq7Kc1prgkjVt82k439LGVmcPE3UzASqqUVA2epzAFd4X+ji4j+unRfIEkHBj
-	InRk8U5Rj0ClA6DLSG6KDQgv9F+62xetaPT+NcUMzgaTIhVgBYssFMFmu8gb4UiNwm+3IMgvJ3y
-	MjMDJ4GyRMuqAZjxanswZYwhxnvK52YRqsOEkVya/NPyvpys/FTX1D6EXu017M0zaAC8wgLkWzi
-	+x2MheWxlTqZXjJ0XAQOQ/48hT6wXCHEMmHyi+KQ==
-X-Received: by 2002:a17:90a:c883:b0:356:22ef:57aa with SMTP id 98e67ed59e1d1-356a788a5c8mr15152385a91.2.1771477919304;
-        Wed, 18 Feb 2026 21:11:59 -0800 (PST)
-Received: from [192.168.0.106] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35662f8cc57sm27723688a91.13.2026.02.18.21.11.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Feb 2026 21:11:58 -0800 (PST)
-Message-ID: <e370cace-1a43-444a-a3d1-5ea35dd22e60@gmail.com>
-Date: Thu, 19 Feb 2026 13:11:55 +0800
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sUJwDIYM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ex/4jYvs"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 83C27EC058F;
+	Thu, 19 Feb 2026 01:18:34 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Thu, 19 Feb 2026 01:18:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1771481914; x=1771568314; bh=0kwLvhHqlI
+	DfQbYYyuVciQUeiloTJnW8eRczW0GLOGk=; b=sUJwDIYMXnJlFITIzkpmXDuHA6
+	1gUAK79z5FZnfpHb3Getzm0fL/m1OT4ARurP8Wri/YnncUojkMzSnSOlEqhFr5gS
+	ycAgKbzJ3D+zSPq1kM1Fx85Pt4TMvSxaFvIOSB2eCypC4Tj8uP1gEjQOS6/gGGcs
+	GnnPl+vEayT/fLqiWqv3lyb5Le68Cj5SYZ286ZDr51ahBpn+ku1CJofGfnZAMd4G
+	BTjHJUgPXF+22svPK9zbP/B2Agx36aV8QHMbpDChy2vNa5hjtosTni0PsYdF1/lp
+	IysO2PeGdkvtntAK8JZ7Bn4W0dWZQ/fA57zUdSC5QpcGBaisrcDpJSIKPHWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771481914; x=1771568314; bh=0kwLvhHqlIDfQbYYyuVciQUeiloTJnW8eRc
+	zW0GLOGk=; b=ex/4jYvs9Ze5O98U7j77yC7/7aAx6o/6czFRDNaJO1k4Xj2svFA
+	CDln1ipe2geyhQNXULbMDgrw5uP6jve2aNI2/CcFPsjaZO8qeQZTBJYQtgy1DvVN
+	ItmTNV2K9NVWl40b7hR2foncJXu8ttft6Wdf7lY24FW9pXmne5OGQ60qcwg+dfdR
+	MJoBMl40IVQNje1drIIeStvKqgkK/cvw5h1Os4ZEAypQr435HfYLKw5HzuIiA2sT
+	Rkd+oza2EwQwWSCkwXc7R6rgXS0TGoW97D+fy4qMSTQ4enhXxVE3IywTaiZL6llP
+	cC1/r8admfIdrYGKN/ea1L9LR9IxjLxcVsg==
+X-ME-Sender: <xms:OquWaYH692SmGcg-taIz9_YDGcLldQ1Q30KYafHZgoRrE1xzY4hYPA>
+    <xme:OquWaYN1vrCGJLPwH9GYIJdxexVrRbrAaWcdQXSMZs1Wdoklo5Z-DTY1Owh8zP61k
+    lR8ccSTlzkZm1RI8Wm0y6L0DIwtEuq-y2kjjRjJ45nrVh6FODMn>
+X-ME-Received: <xmr:OquWaadNgvB2WbgdzaNMN7MNzxs1mM5zRO1TVVW3s8ryucYzVCgs_U37bdui3jHjHm_YfwVl_xu16RWzy_agjsVWJ5Fnmp7cEBJIyTNqkA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdegjeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    ephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfehtefgveelhfeuueevuedvnecu
+    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeh
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
+    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhes
+    ghhmgidruggv
+X-ME-Proxy: <xmx:OquWaVtE1GbUJcO_sgkZRaPtWpA9Ew7HkMH0YJDh7QXUrnquv8IadQ>
+    <xmx:OquWabmZxKDmK_D96T8trhm0ztOcB2T5Dv6XT30WkGEYcSdz_d584Q>
+    <xmx:OquWaXwDWj4byg18JZrrU8sQw3iw5rWYJmdHJXani1em7KZirLes1w>
+    <xmx:OquWadMr_n8-9Q8gD27KNQ_AmTwSjl-OMKWCDNkmEFIjiOilv12E7g>
+    <xmx:OquWafLdm748tz4rJlKzH84sXJMHf9u4tXVweTlwonZWI2nhDvirat7k>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Feb 2026 01:18:32 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c59ace73 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Feb 2026 06:18:30 +0000 (UTC)
+Date: Thu, 19 Feb 2026 07:18:27 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/7] ci: make test slicing consistent across Meson/Make
+Message-ID: <aZarM9CeGjBqC3S3@pks.im>
+References: <20260211-b4-pks-ci-meson-improvements-v1-0-cb167cc80b86@pks.im>
+ <20260211-b4-pks-ci-meson-improvements-v1-5-cb167cc80b86@pks.im>
+ <83168201-9c26-4ece-51e1-1931d4b38443@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/2] setup: allow cwd/.git to be a symlink to a
- directory
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com
-References: <20260217084124.150366-1-a3205153416@gmail.com>
- <20260218051850.164972-1-a3205153416@gmail.com>
- <20260218051850.164972-3-a3205153416@gmail.com> <xmqqtsvd7vu6.fsf@gitster.g>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <xmqqtsvd7vu6.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <83168201-9c26-4ece-51e1-1931d4b38443@gmx.de>
 
-On 2/19/26 02:25, Junio C Hamano wrote:
-> Tian Yuchen <a3205153416@gmail.com> writes:
+On Wed, Feb 18, 2026 at 10:32:20PM +0100, Johannes Schindelin wrote:
+> Hi Patrick,
 > 
->> Strictly enforcing 'lstat()' prevents valid '.git' symlinks.
+> On Wed, 11 Feb 2026, Patrick Steinhardt wrote:
 > 
-> But nobody sane would propose running one more lstat() anyway, so
-> how is that relevant?
+> > In the preceding commit we have adjusted test slicing to be one-based
+> > when using the "ci/run-test-slice.sh" script. But we also have an
+> > equivalent script for Meson that is still zero-based, which is of course
+> > inconsistent.
+> > 
+> > Adapt the script to be one-based, as well, and adapt the GitHub workflow
+> > accordingly. Note that GitLab doesn't yet use the script, so it does not
+> > need to be adapted. This will change in the next commit though.
 > 
->>   		if (!gitdirenv) {
->> -			if (die_on_error ||
->> -			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
->> -				/* NEEDSWORK: fail if .git is not file nor dir */
->> -				if (is_git_directory(dir->buf)) {
->> -					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
->> -					gitdir_path = xstrdup(dir->buf);
->> -				}
->> -			} else if (error_code != READ_GITFILE_ERR_STAT_FAILED)
->> -				return GIT_DIR_INVALID_GITFILE;
+> This seems to require the following to be squashed in:
 > 
-> The _intent_ of the original code was to
+> -- snip --
+> From 677370c8cd3b73358713a0efac6bb573b347d53f Mon Sep 17 00:00:00 2001
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Wed, 18 Feb 2026 22:12:27 +0100
+> Subject: [PATCH] fixup??? ci: make test slicing consistent across Meson/Make
 > 
->      * do is_git_directory() thing to deal with a plain vanilla
->        ".git" directory when read_gitfile_gently thing said "we found
->        a directory" (NOT_A_FILE is overly coarse, which is what we
->        are correcting in this topic, but the _intent_ was to do the
->        is_git_directory() thing when we know it is a directory).
+> This seems to be needed to let the first "win+VS test" job pass. See
+> https://github.com/git-for-windows/git/actions/runs/22153194896/job/64053953314#step:5:70
+> ("fatal: slice must be in the range 1 <= slice <= 10, got '0'").
+
+Huh, weird, why didn't I spot this myself? Oh, these tests don't execute
+by default, right? That's why.
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  .github/workflows/main.yml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->      * return INVALID_GITFILE on any error, but do not return when
->        the reason why read_gitfile_gently thing failed was because
->        there is no ".git" there (again, STAT_FAILED is overly coarse,
->        which is what we are correcting in this topic, but the
->        _intent_ was to return INVALID thing when we not the failure
->        is not due to ENOENT).  Note that returning INVALID_GITFILE is
->        done when die_on_error is not set.
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 412842eb3e2..42585fff779 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -240,7 +240,7 @@ jobs:
+>        shell: bash
+>        env:
+>          NO_SVN_TESTS: 1
+> -      run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
+> +      run: . /etc/profile && ci/run-test-slice.sh $((${{matrix.nr}}+1)) 10
+>      - name: print test failures
+>        if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+>        shell: bash
+> -- snap --
 > 
->> -		} else
->> +			if (error_code)
->> +				read_gitfile_error_die(error_code, dir->buf, NULL);
+> This here run proves that this change fixes the CI failure:
+> https://github.com/git-for-windows/git/actions/runs/22157880378/job/64067214717#step:5:70
 > 
-> Should this be unconditional?  If our caller did not ask us to die
-> upon an error with die_on_error, what happens?  The original I think
-> returned INVALID_GITFILE for the caller to deal with.
-> 
->> +			if (is_git_directory(dir->buf)) {
-> 
-> Should this be unconditional?  If the thing is a directory, the
-> original would have given us NOT_A_FILE but now it would give us
-> IS_A_DIR.  And that is the only case original wanted to call
-> is_git_directory() no?
-> 
->> +				gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
->> +				gitdir_path = xstrdup(dir->buf);
->> +			}
->> +		} else {
->>   			gitfile = xstrdup(dir->buf);
->> +		}
->>   		/*
->>   		 * Earlier, we tentatively added DEFAULT_GIT_DIR_ENVIRONMENT
->>   		 * to check that directory for a repository.
+> Patrick, would you mind adopting this amendment into your patch?
 
+Yup, looks obviously correct. Will squash in, thanks!
 
-Thanks for the review.
-
-I have already sent out v6 yesterday. Here is the link:
-
-https://lore.kernel.org/git/20260218124638.176936-1-a3205153416@gmail.com/
-
-Based on your feedback and the changes that have been made on v6, it 
-seems that the tasks that need to be completed are as follows:
-
-  - Conditional 'is_git_directory' check: restrict the 
-'is_git_directory()' check to only run when we explicitly get 
-'READ_GITFILE_ERR_IS_A_DIR'. It makes no sense to check it for other 
-error types.
-
-  - Squash two patches into one single commit, as you suggested. 
-(Actually, I'm a bit confused—are you saying to “make both patches 
-standalone executable” or to “merge the two patches directly”? Either 
-way, I'll go ahead and send the v7 patches first.)
-
-  - Rephrase the commit message to describe the lstat() limitation, 
-rather than saying 'we switch to stat()'
-
-The holiday is over, and my efficiency in sending patches and replying 
-to emails may be somewhat reduced. Please bear with me.
-
-Regards,
-
-Yuchen
+Patrick
