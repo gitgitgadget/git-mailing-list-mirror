@@ -1,54 +1,54 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB85A2E6116
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 18:59:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696B230C35F
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 19:30:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771527555; cv=none; b=Fr/1zFxXmeJ9LutEw0e2jYKgZd2jqJHis4pAy0le95HcqnShtqHVHV3FZG8bWq71F59btgc5IwUpYJ92cGduBZ2cXIHWt8/wSMDqHloUOoIWpr6YLnAd6WT5CGYuXSrn836RfmjWUTxHLIiwQ2d+afhhbEWZA11ruOU/za9vW9A=
+	t=1771529416; cv=none; b=YGpl1UmDtbwLTdiVYfAC9DKHG/klJpYGOKvvptbouuB95xKLxZEjXpwROTcqR2o+/49lTxgwnffyZLOJXpdesBpY03BeZecwnFbK9ybGPFuvgYm6DzpyD7bbZkI76sAegnVMAaKKqL+2rmsNMxJTDs64RfZT1Q3evfEMUtfUk1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771527555; c=relaxed/simple;
-	bh=LOZC7YgL2LLvRga+wNvWPtiXHexng0bebvcebsJYbGs=;
+	s=arc-20240116; t=1771529416; c=relaxed/simple;
+	bh=2Vvm5Xl+hiU0IQBSC7BgioF0NfNABvbVzHxIpZbRYWE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Uv/159pZAw0vSqM+x2JdHwWLzfOirzcCHPskB3+fg3QvZrfXpftOH8QI2D+4/n3aC4rCWfyvDIZ5rhmnNixu5GVNmB91RjGlW7kriTodYBW9GRItci0/TW0YWWe1KKhxU7ZXJduS8QU9RKGo20sCpWkk+RNMFNSrsMuFnvCgebE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PNiuyMTD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=txmVTj3k; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=QNH3paHj5wEk3gjyBphJmrTPzThreUT41WbrYrHSTYLmA8Amk2/SwdrL8+LUurRbrrVgB1VwiurbTtUhOdXlj73typsaqR5GbG54iNUXTCqZdtEiT9HgbBXy1t6J8GCyq3q7eDlbrQh+EhBJaUPrf1ssnTY5JbNoKj+Z+J/k7CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dH+//hFI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ekn2rw5i; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PNiuyMTD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="txmVTj3k"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DADBA1400167;
-	Thu, 19 Feb 2026 13:59:12 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dH+//hFI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ekn2rw5i"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5F8CFEC05A5;
+	Thu, 19 Feb 2026 14:30:12 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 19 Feb 2026 13:59:12 -0500
+  by phl-compute-05.internal (MEProxy); Thu, 19 Feb 2026 14:30:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771527552; x=1771613952; bh=6w9aF3mA0D
-	IAiAEfq+ZaXksLdKOq6HnVACDDowkuKiU=; b=PNiuyMTD5H9tYBRearaY+L5Z5H
-	PDmceZOPYtTJBLpg9MLFXQWL8qgsFL1H7ZZRfzKOHP+lw8NkGAh4NU2bqTB/KhJX
-	52dJYAbajfqGx1rjw2zl7OS+JUBipOyJpZfmT1E8JKELgIv8hzOjY5pSTeaxHHO6
-	534zyQTV2wzLBL71MKGcqo+jLWjg9lCqGNpb9T13b/r2QjmLuXwZEDBXBnZ1deoW
-	RLe0TdI4fWmRTD2gs2uG0x2G3VZExlDmm1hOqalBDattvpmJx84fLVkxInn6f2bT
-	kbipdS3/eXcy6JvrZH3aMiP+2P2dWFPfiLfSVgk/wQfxAYm25bm4zl4AxPnA==
+	:subject:to:to; s=fm2; t=1771529412; x=1771615812; bh=6kt8l0VFwu
+	mvq7jW8503Ha1ShdFmAK+iemhadRDElvs=; b=dH+//hFI7uNXT5LQa52PP2/2N5
+	/JIcQsLVw3ljaAFrNzU4zhrsXNklShG2dWQHk/MsYI+Z6XSeejwtXrZVSGKnTtA+
+	hI0eqQAkG42M44J+VDv4H+3Ys4tTHICcxfJjhNwrMU0ksAyHcyRtrmmLJFh2cseG
+	203qgaQZPuhhDCtcxLm+ri4sFjpt1WMqAcei9M78O5d7FvZ8PHnhqfoEhT/v8YO6
+	bic1wh6GvelJxSFT+OQ5k4jC9Ar3V1bmY/11cT0XsCBlekv5N4wS29gaa3s+vE/+
+	AW3k2n+hdodVDY826Jo2ZISMBFbDTG3QzbeyXKZY9x08eZalZzGHiPDBAgCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771527552; x=1771613952; bh=6w9aF3mA0DIAiAEfq+ZaXksLdKOq6HnVACD
-	DowkuKiU=; b=txmVTj3kmf74wDmR0u+C0irYGPSjfVn+judxjymQ05amYQjG5Kz
-	QwjBnm2n/z1oiNQvcFbOuqf6kbzr2GM26hKkiRenK3pA3DiZZUgxU+iJq/rx5K4Z
-	jgVqsG2XtmXmv604sd+P5LiSI9QWOEFAljVII9K5FHtU3dAVsIzw2Kd2w4zShXK6
-	7fzzzq7MPVl0MBUl7KCHuWcrFKGqZ68B/i8UusuJdiObHkrP0GIUitICOJNwCD+v
-	eNr7CPmTIKZhzuWknQEQcrhnNrPVLqwIGs2jENmwiUSDTQWdLCM8T7l0/mOwXdxN
-	G/iVUCwTG7av29sK5R4twkvJXkJxrKo5rTg==
-X-ME-Sender: <xms:gF2XaZ73J0t2DnD4H0PoQbwe56Rutf-YZtCFZiZZZndbHq6tywQ5KQ>
-    <xme:gF2XaamjlSktIqRdv5PlKDhHkOQJu7IufW699J76tYHrxPxRelVBBmuoAv9tITyYp
-    HngCCvBy06LI0u4woSMaCH3_IUQz-KHL9s1ddGuHGRs7xrEoaS5jA>
-X-ME-Received: <xmr:gF2XaaTfT9zNYQijukR7AB5PRT9e2j9KOvqO1Wl__nZvpCQp_n6TCzziWB_1EDdpk2UMhcmXBd-NXVXMuaaVnIePF3sFtltxZg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeifeduucetufdoteggodetrf
+	1771529412; x=1771615812; bh=6kt8l0VFwumvq7jW8503Ha1ShdFmAK+iemh
+	adRDElvs=; b=ekn2rw5iq4Yhn8inw/fgqdFkWNOCulg8LgODHM0PUwHMitWx0mk
+	lnuicGzOgTgZn2TU38P3aapITZNNRmo83ezXdokfikKC3FzvaVMyi22opUI2cMpI
+	jDFqVji8OHEk2HBMI/tmJXNhfNxo8usVcDdP89DTiorCn46sZQmA2pgIFfCl8Qlu
+	RCPxsw7moOdvid47mboqTNvdpjnAjyaqa02G3AFEfUho3uBX4Z3pNhU5avIWCmLh
+	3GoaV0nX0ORdueMKAyNc5NWhXB/6e1zDbnYy4/MSh8/9MEVjfQFlndooknxrKujp
+	ZHk2Z9rAF6w4wWO7owmGbp20I3b8GkOIDrg==
+X-ME-Sender: <xms:xGSXaWGRH1a2xXIiwvL3n4yuQc9SyC3_kfp6BCSu-5N0PLKpvUN-Vw>
+    <xme:xGSXabBN6yJ5oC_g7EgosCYod7Q-i0HzNWOEgUqDou5QvghRoSO76cX6MnT62aCM4
+    nJG6-68t_1bmAcToccScbwEDoAxXw3fV2ADDnEr5GBtoy9s4-AtCQ>
+X-ME-Received: <xmr:xGSXaZ-O_8yPFG9HYbCoICHyQGFc_P_-_gdvRLyAguv6qgomHlMyO1wao9dfSBISxsA6XGN4WXdOXtVA9cTIPqjP-KL-FmsyoQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeifeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -56,32 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeifeduucetufdote
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
-    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpd
-    hrtghpthhtohepuggrnhhivghlseguuggsvggtkhdrtghomhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:gF2XaZEADdghnAWs5nL1_0PsZIurjERGbseQH2Hxr7ufpm_Xt1mN5g>
-    <xmx:gF2XafFSLVbo6GZduRyEBD35yDFsCphXrcPIYm3EyfPuEhnODFbkvg>
-    <xmx:gF2XaXT1LG3_xO5N5JguqRLkk2hgoP81XtnDSLIybs4IEIFdqd5kog>
-    <xmx:gF2XaQIxo81D3TZ4cZ8xcx0yJwzO-Hk6ykihfezzJ-8fGSY-LTYH4Q>
-    <xmx:gF2XaSulGI26u0sNXpTQECRoYS4uXkmfMAkyZqbk4Gty3AOit6L8GzSG>
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepshhhrhgvhigrnhhshhhprghlihifrghltghmshhmnhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghp
+    thhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:xGSXaXADdCOJwMhXSjukAzNFOduz6hvwJ8Ym3cpRWyVbrI15-KYNKA>
+    <xmx:xGSXaeTlMQUdMiZHBN7rEXgnc4Rj9Cf_NAkFVQuX3DiTjANRKD7EsA>
+    <xmx:xGSXaevYKUCNVMn3NncS17fh0NMHzciUFpQmjD9VsS5r1UW30K8q0g>
+    <xmx:xGSXaa30YLtHILiTRltGt95_zrB-5Fe3lbyZ-eVAeLsxiHgoWnGh_A>
+    <xmx:xGSXaXz6MHV-FuBr_f8zwkSNr7S5rmUev4MAT2Q03otyZOBK2qJ3jjnl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 13:59:12 -0500 (EST)
+ 19 Feb 2026 14:30:11 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "Daniel D. Beck via GitGitGadget" <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-  "Daniel D.
- Beck" <daniel@ddbeck.com>
-Subject: Re: [PATCH] doc: fetch: document `--jobs=0` behavior
-In-Reply-To: <aZb2acEvAtNmt-4j@pks.im> (Patrick Steinhardt's message of "Thu,
-	19 Feb 2026 12:39:27 +0100")
-References: <pull.2047.git.1771443159369.gitgitgadget@gmail.com>
-	<aZb2acEvAtNmt-4j@pks.im>
-Date: Thu, 19 Feb 2026 10:59:10 -0800
-Message-ID: <xmqq4inc5zlt.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Shreyansh Paliwal
+ <shreyanshpaliwalcmsmn@gmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 1/2] wt-status: avoid passing NULL worktree
+In-Reply-To: <902295b87146e5cb5358cebab51f8d66701290a8.1771511192.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Thu, 19 Feb 2026 14:26:32 +0000")
+References: <cover.1771258688.git.phillip.wood@dunelm.org.uk>
+	<cover.1771511192.git.phillip.wood@dunelm.org.uk>
+	<902295b87146e5cb5358cebab51f8d66701290a8.1771511192.git.phillip.wood@dunelm.org.uk>
+Date: Thu, 19 Feb 2026 11:30:10 -0800
+Message-ID: <xmqqv7fs4jlp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,31 +92,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On Wed, Feb 18, 2026 at 07:32:39PM +0000, Daniel D. Beck via GitGitGadget wrote:
->> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
->> index fcba46ee9e..e15cbc51f2 100644
->> --- a/Documentation/fetch-options.adoc
->> +++ b/Documentation/fetch-options.adoc
->> @@ -234,6 +234,8 @@ endif::git-pull[]
->>  `--jobs=<n>`::
->>  	Parallelize all forms of fetching up to _<n>_ jobs at a time.
->>  +
->> +A value of 0 will use some reasonable default.
->
-> Can't we do better though than saying "some reasonable default"? As a
-> user I would wonder what this is even supposed to mean. True, we don't
-> do so either in the documentation of "fetch.parallel". But arguably, we
-> should update both sites to reflect the status quo.
->
-> Going into the code we seem to fall back to `online_cpus()`. So should
-> we document this accordingly?
+> In general the "struct worktree" returned may not correspond to
+> the "current" worktree defined by is_current_worktree() as that
+> function uses "the_repository" rather than "wt->repo" when
+> deciding which worktree is "current".  In practice the "struct
+> repository" we pass corresponds to "the_repository" as we only
+> ever operate on a single repository at the moment.
 
-I do not have time to dig this out myself from ancient discussion
-threads, but we probably had the same discussion when "git config
---help" described the fetch.parallel with exactly the same phrasing
-and decided to leave the exact implementation detail out of the
-end-user facing documentation.
+This may technically be a correct description, but feels very
+unsatisfactory, as it fails to answer this very simple question:
 
-Thanks.
+    what does it mean when is_current_worktree() says "no" to the
+    worktree instance returned by this function?  In other words,
+    what are the sample sequences that can lead to such a worktree?
+
+We start a Git process in a directory which is part of a set of
+worktrees governed by a single repository.  That repository becomes
+the_repository and the worktree instance that represents our
+directory would satisfy is_current_worktree().  Then we visit
+another directory that is one of a set of worktrees goverend by a
+separate and different repository.  We now have a repository
+instance that is different from our the_repository.  Perhaps our
+in-core submodule code may do that, and that different repository is
+the submodule in question.  Running this function will yield the
+worktree instance, whose path is a subdirectory of our current
+directory where the submodule is checked out?  It may be the current
+worktree if we asked is_current_worktree() about that worktree in
+the context of the submodule, but it is not in the context of our
+superproject repository.  In fact, none of the worktrees governed by
+the submodule repository can be "current", as they are not our
+checkout, from the viewpoint of our superproject repository.
+
+Is that what is going on here?  
+
+A related question that is much more relevant is this:
+
+    What is the significance of the worktree, relative to our
+    process, returned by this function for a given repo?  What is so
+    special about this worktree, among others that are also linked
+    to the same repository?
+
+    What does it mean for a worktree to "corresponds to"
+    repo->{gitdir,worktree}?  Why does the currently running Git
+    process want to grab such a worktree?
+
+If the answer were "it is the current worktree", then we would have
+a nice and very understandable name "get-current-worktree-for-repo"
+for the function, but because I do not think of a good answer to the
+question (and you already explained why it is not the "current"
+worktree), I cannot improve on "get _A_ worktree from repository",
+the name given by the patch, which leaves the "which one of the
+worktrees are we talking about?  Why did we pick that particular one
+instead of other ones" unanswered.
+
+Or perhaps "the current worktree" is not a per-Git-process concept,
+but is a per-process-per-repo concept?
+
+In other words, the function is_current_worktree(wt) may not take a
+repository and always compute things relative to the_repository, but
+once we wean ourselves off of the_repository, we would/should have
+repo_is_current_worktree(repo, wt), making is_current_worktree(wt) a
+thin wrapper for repo_is_current_worktree(the_repository, wt)?
+
+> diff --git a/worktree.h b/worktree.h
+> index e4bcccdc0ae..06efe26b835 100644
+> --- a/worktree.h
+> +++ b/worktree.h
+> @@ -38,6 +38,12 @@ struct worktree **get_worktrees(void);
+>   */
+>  struct worktree **get_worktrees_without_reading_head(void);
+>  
+> +/*
+> + * Construct a struct worktree corresponding to repo->gitdir and
+> + * repo->worktree.
+> + */
+> +struct worktree *get_worktree_from_repository(struct repository *repo);
+> +
