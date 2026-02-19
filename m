@@ -1,88 +1,88 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AAE2EA468
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 18:03:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2003352F90
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 18:11:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771524219; cv=none; b=ISpJiXhBo7yBUNE8woEI3sUnyy5M9Oa+SdtRB7Y9P+MRb5JtwNxVO+bH5dXcjcCGuhXKxqVQikapG6Eko1Hy7N74RVrzhniA1tWm81G5xRPLeNAhLsfmV30vZLRcBMVqU2HlAp45joxWRGBo8/Uqtyq9nlkmtPn2afA23NCfVJ0=
+	t=1771524662; cv=none; b=GY2ft04+uBEkfdKUyZ4lCy6turLvu+CMHSp96KV9baYnUF6Hu5b7TJCZUxZ45r6HmHoHnTFIXTb5FZpCFwG34D+3fP+KhfQokXXS+WXOaiOsyssXuw8+LXRnpfNiCyFoETxoNHPCNHri218fBa3KbAdKGjwF9KA27iUhmsoqkEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771524219; c=relaxed/simple;
-	bh=RBztmY7FL+rgWxlD3vc00g6yCSQUv7X0EKtlV1nIZT8=;
+	s=arc-20240116; t=1771524662; c=relaxed/simple;
+	bh=asajYWu2HVdqwaoIbkIla5ZVwPUkLAGGojZPwvi0Wx0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O34KzP0WpC9k1lwR2FZIF/avZVHMpn9Dj/DLCzCl9ac+XVdjNdPcaA+9bCB3NQUiWwFSMrduHqoJzhfazb8/TxhGLH14U1jA3gqgFPIY+ZQsGvwS1gHfGJzvarZXBSay1d4oeQm79D9fHovzkrTCezy9a6U9kgXFXWJ13VXjjMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tpjvOaXm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qbWkI+X0; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=KEh/x3gYQg5V1kUrVxCFRgRAjHKXjTCv4YTGRjkeG1uVWembW3ZorvKBZllK9wo2pMnqAkSgnfx9AWTjjIHuapbzOlT8/j7ibqZTXwJ+HxWqswVUwDdXIF+dqsprw7jRI0B7CE/7ZmyITp483zzfBsQhtGlj7LhMP7aTecKbjas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TYMi9T4U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SCeyEfUX; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tpjvOaXm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qbWkI+X0"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7490914000F5;
-	Thu, 19 Feb 2026 13:03:37 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 19 Feb 2026 13:03:37 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TYMi9T4U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SCeyEfUX"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 06DD6EC054C;
+	Thu, 19 Feb 2026 13:11:00 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 19 Feb 2026 13:11:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1771524217;
-	 x=1771610617; bh=KWS2lKiuNPM8KseyvI4cb7UqMfaNMZ2nl3/+ekIyknY=; b=
-	tpjvOaXm8gKIO3dPNLPGJvGiCSPQ4lzjSgOBtfFiT/WcOUL93yj2PjdjmD3VWF5p
-	IR3VS23hzaMasuSPQDPGfsw2VBO2viDadTR/xjL69d3BKCqMivnYBs6NECVoQNXa
-	8wN/MtwGkkFlL103gF3GV6AC3rEcOq8GIRZtMLJSA0ud1PmENK5+Oo/vdXf2zt9d
-	Xm1MUHQhdEURIAT0tCdYeaNlpDP9Mf9aEfec7FtrJWkHBhfh+xhxzLA+nEshj3FA
-	5gYu/hFDJwZnwy1zNyN9NrXptS7XCVJPny8X7Ha2CfR5kL8EbduF/JN6bOHwT7w5
-	mZ3vCZu352O2WIIQ7HOnSA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1771524660;
+	 x=1771611060; bh=UPKPsg6hyNJmUdAixK3NvvF9UyjLBpg0Re+efjmRASU=; b=
+	TYMi9T4UiuGMYTqw9WlnWMBn9WesIqmuchBGiqOaiH6AYmIsMO+otUE0NJCNZ2PB
+	8FbtuKN+hK1p1cWmtnQQ/FKmZ3Xa25ZBL1xBLqFCHcnBJnP54IoWWmEYjmUryEsb
+	l7oxKU8cbKjG6ybc9u8WsWuzXj/NkDc9XZM0TEvghoam3YwkLpLt2OOxcqHDeYru
+	gErtzUAdwTx51z7RCXHeANZ2kCC0h/8gTB7VASAlpJyOmP69QIzd5hVQgxM4fwvm
+	2v8IJend2TXE1B5BoZcroq018z9EF9NZMHCN0V8GUHDzb9IJ4kcP8I7CP9mLIxts
+	xQoCMLJseRMRd/xePlAMng==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771524217; x=
-	1771610617; bh=KWS2lKiuNPM8KseyvI4cb7UqMfaNMZ2nl3/+ekIyknY=; b=q
-	bWkI+X0im76zOhYaoruUMWm8QL/PBplVgPbW+LjT68uOh2TKHpmCseoxL8arJmOR
-	neY1WJebIYVH7toRRuP+Basv5lgDADGEgLCfjeHu492INhjFJS19AYS/htBSgxcH
-	fedZZjhbAuQ3uhIDVkCFXrLTDZUeAnGC5YUTqAvrWI3FEbpXz9/JHRhodTKoctKU
-	Unx2Bh87LVJCS2zZG1q0v50vBYDSjVxrydUffRNDwhFVcQ1J0SBRJPSOIqqDNJC7
-	lU/rdTKoapOb8iok32V+u5WXYewctagBib0zJ3h2yBHqMAmEZtjNZLqcoHYE5es2
-	Z5nB4THoVT3sgBmhJDKaQ==
-X-ME-Sender: <xms:eVCXaWy11UJG9JMJCt5BhI_TKgXrgL-Tl8g920YmCcT04eyuTrOQkg>
-    <xme:eVCXaZItungbwr-3P0BqUFjzwB-IMMk3mfXxjVyqfWawgRqZRAEfZIYtYhbNxgsyg
-    7d7nXwB8FwbghM9KhyevhJh-0S_MbGJ0mLhUPRARbjCNXHRb29IBQ>
-X-ME-Received: <xmr:eVCXaQom4e1Q_BhncCen_rLflq3T9Zg6i7xBUeWYCHo0boK84uWnugblPHsyz1N8tmcxLr09dFsNkTU3bY2LLL2XbnjJr1O1AA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeivddtucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771524660; x=
+	1771611060; bh=UPKPsg6hyNJmUdAixK3NvvF9UyjLBpg0Re+efjmRASU=; b=S
+	CeyEfUXa+f/LJGL66OBbW0lhANVQunhOvWCfh/JJVTNtq+grbQ99Vxr9F+pjYrDx
+	roJYMjuk8cStXuoiMaLqQibIrt5fUU2zcfwEbROHm8s0wNeY961/FOY2P9ch81PB
+	5g9BcjS3U0hrRVcbF8UsOagVAIhcpzjBZImlgtvhoHTvm48MDzp+O4R3ViUNj2el
+	bqRSs+0v/qftOxi+02EDwO2X1U7xeNxeJQxtWcz6MiSChAjx8D0fxPs7Oqlwgsry
+	PmRL49fIKbYGIRGwc1ncgfMw9U4pj7ml0ickScRjlPtEnWh+eHo36eJ0mJFstDsL
+	Yw2f/XRoAZnkHFbv/WVFg==
+X-ME-Sender: <xms:M1KXaYwEfnTKn7YD98KNw0In1n3HoWvK40tx8LS6s2O4B48N9OgOKQ>
+    <xme:M1KXaTKe-oXpEZWPETLAH3TLSEi0xsjf_nRIYNVedCOAJRWpHBjtL-pMziktee2pM
+    tHmt1EEIlvt6_xxKdEzli2ITbpoTo1MRkBzps2zNaMNtnGQsaMMhQ>
+X-ME-Received: <xmr:M1KXaSraAAtM_JByqI_iloggSafYcU2Nk9Q4AojkETEXtK9WeOAPteaIcoAwoBV9FNbXFmHkQZuOZxkmw6CLA8gm_DNzMh38Sg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeivddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
     dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnhephfetvdejheduheegleehfeeive
-    dtgeelfedvffdtvedtudffieekieeijedvlefhnecuffhomhgrihhnpehkvghrnhgvlhdr
-    ohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
-    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtg
-    hpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:eVCXaYJY49OyY68hCq54vaZiBAQoGSag3lU-0TKc-IsuXjp7f5V1MQ>
-    <xmx:eVCXaVQ4PwJjqYwjO7QWMevaF7vIvBCWm1qdJ1tbyW9h9n-pTohWnQ>
-    <xmx:eVCXaXvN8orKVqy_IU4ryRtnq0y3-0Evr7EaqpjYtJ5asd8aKWyk-w>
-    <xmx:eVCXaWZHm7sKtZrWFfpje0EQm2BClRW9z7aZkmXafvOI8vyONQyikA>
-    <xmx:eVCXaQwBPnQIj-ZQVlfkoquJzWByMQ0F9SYy7oEsPLJKoVd1fG5eagmU>
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhs
+    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhh
+    rghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:M1KXaSLKt4MX_rHvJobVu40U3gmKk6dwcS-L2xR38qKEydUWJAJ_JA>
+    <xmx:M1KXaXRZST2CqckyR75usGHrUIBUuFrf8_PJdwEeSH9hVFfG-ebsrA>
+    <xmx:M1KXaRuohRF1LpNH1FsTM8WHkQo-3LI_VFLppP32aug134W8EFqTpQ>
+    <xmx:M1KXaYYdDkQef6adMVbuYrngHNmrOfNNmWj8aQrW6v5o7nf7rWmrFQ>
+    <xmx:NFKXaaxWZoFwpUHdD5x_r7WFIJ-MBkSED0C5Xt_lF6A_Z5eHK6AcLJuz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 13:03:36 -0500 (EST)
+ 19 Feb 2026 13:10:59 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: kristofferhaugsbakk@fastmail.com
 Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
   peff@peff.net
-Subject: Re: [PATCH 1/2] format-patch: make format.noprefix a boolean
-In-Reply-To: <format.noprefix_boolean.39d@msgid.xyz>
+Subject: Re: [PATCH 2/2] doc: diff-options.adoc: show format.noprefix for
+ format-patch
+In-Reply-To: <format.noprefix_and_--default-prefix.39e@msgid.xyz>
 	(kristofferhaugsbakk@fastmail.com's message of "Wed, 18 Feb 2026
-	21:26:17 +0100")
+	21:26:18 +0100")
 References: <CV_format.noprefix_boolean.39c@msgid.xyz>
-	<format.noprefix_boolean.39d@msgid.xyz>
-Date: Thu, 19 Feb 2026 10:03:35 -0800
-Message-ID: <xmqqy0ko626g.fsf@gitster.g>
+	<format.noprefix_and_--default-prefix.39e@msgid.xyz>
+Date: Thu, 19 Feb 2026 10:10:57 -0800
+Message-ID: <xmqqtsvc61u6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,75 +97,45 @@ kristofferhaugsbakk@fastmail.com writes:
 
 > From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> The config `format.noprefix` was added in 8d5213de (format-patch: add
-> format.noprefix option, 2023-03-09) to support no-prefix on paths.
-> That was immediately after making git-format-patch(1) not respect
-> `diff.noprefix`.[1]
+> git-format-patch(1) uses `format.noprefix` and ignores `diff.noprefix`.
 >
-> The intent was to mirror `diff.noprefix`. But this config was
-> unintentionally[2] implemented by enabling no-prefix if any kind of
-> value is set.
+> The configuration variable `format.prefix` was added as an “escape
+> hatch” because “it’s unlikely that anybody really wants format.
+> noprefix=true in the first place.”[1] Based on that there doesn’t
+> seem to be a need to widely advertise this configuration variable.
 >
-> † 1: c169af8f (format-patch: do not respect diff.noprefix, 2023-03-09)
-> † 2: https://lore.kernel.org/all/20260211073553.GA1867915@coredump.intra.peff.net/
+> But in any case: the documentation for this option should not claim
+> that it overrides a config that is always ignored.
 >
-> Let’s indeed mirror `diff.noprefix` by treating it as a boolean.
+> † 1: 8d5213de (format-patch: add format.noprefix option, 2023-03-09)
 >
-> This is a breaking change. And as far as breaking changes go it is
-> pretty benign:
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
 >
-> • The documentation claims that this config is equivalent to
->   `diff.noprefix`; this is just a bug fix if the documentation is
->   what defines the application interface
-> • Only users with non-boolean values will run into problems when we
->   try to parse it as a boolean. But what would (1) make them suspect
->   they could do that in the first place, and (2) have motivated them to
->   do it?
-> • Users who have set this to `false` and expect that to mean *enable
->   format.noprefix* (current behavior) will now have the opposite
->   experience. Which is not a reasonable setup.
+> Notes (series):
+>     `--default-prefix` does override `format.noprefix`. See test `format-patch
+>     --default-prefix overrides format.noprefix`.
 >
-> Let’s only offer a breaking change fig leaf by hinting about the
-> previous behavior before dying.
+>  Documentation/diff-options.adoc | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
+> index 9cdad6f72a0..8f632d5fe1a 100644
+> --- a/Documentation/diff-options.adoc
+> +++ b/Documentation/diff-options.adoc
+> @@ -860,7 +860,9 @@ endif::git-format-patch[]
+>  
+>  `--default-prefix`::
+>  	Use the default source and destination prefixes ("a/" and "b/").
+> -	This overrides configuration variables such as `diff.noprefix`,
+> +	This overrides configuration variables such as
+> +ifndef::git-format-patch[`diff.noprefix`,]
+> +ifdef::git-format-patch[`format.noprefix`,]
+>  	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
+>  	(see linkgit:git-config[1]).
 
-One case that is often problematic is what happens to those who use
-the same set of configuration variables with different versions of
-Git, before and after such behaviour change.  But I do not think
-this is such a bad thing.  The only reason why they had this
-variable set (to any value, or to a value-less true) with existing
-versions of Git is because they wanted to omit the prefixes, so when
-a new version of Git dies with "Heh, 'nothanks' is not a valid
-boolean value", they can edit the configuration variable to "1".
+The reasoning makes sense.  The ifn?def::*[<something>] syntax is
+new to our documentation set, but we'll see soon enough how AsciiDoc
+and Asciidoctor renders them.
 
-And from that point of view, I think the hint given together with
-the "bad boolean" error can and should be phrased a bit more
-strongly, i.e.,
-
-> +		format_no_prefix = git_parse_maybe_bool(value);
-> +		if (format_no_prefix < 0) {
-> +			int status = die_message(
-> +				_("bad boolean config value '%s' for '%s'"),
-> +				value, var);
-> +			fprintf(stderr,
-> +				_("hint: '%s' used to accept any value but "
-> +				  "now only\n"
-> +				  "hint: accepts boolean values, like '%s'\n"),
-> +				var, "diff.noprefix");
-
-The target audience of this (hint) is those who have set this
-variable to a non-boolean strring from the existing version of Git,
-and the only thing they meant to express was "I do not want any
-prefix", so "we used to accept any value as true, but now accepts
-only valid boolean values", perhaps?  That would nudge those who
-wrote "[format] noprefix = NoThanks" to rewrite it correctly to
-"true" or "1", and not "no".
-
-This is a related tangent, but shouldn't this use advise() without
-configuration?  There is no need to allocate an advice_type and use
-advise_if_enabled(), because correcting a malformed configuration is
-an action enough to squelch the message.
-
-> +			exit(status);
-> +		}
->  		return 0;
->  	}
+Queued.  Thanks.
