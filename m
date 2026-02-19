@@ -1,110 +1,122 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A181F2EB860
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 15:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F3D226CF6
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 15:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771514566; cv=none; b=DT0ojZOXxX8O6XHnqgEe6oBFF72svVkJiqkEGd7deXBeE7BYQHcspAIQoNW9toz6gCbQlCcyORsAIb35IkWQyhaYVfj0vs4y8zWwWWhAxdkhIgW62PRI/I2vO/fFjngN56S9Q7IpjTKASKwfiUv8PhuT8w01vHDk7ppf39Tddz8=
+	t=1771514659; cv=none; b=Oi9/tJ2fkFGmCvdSuQYE3kkJq0iwAha2Gs0XyUIUc2BUJGu0XR9ml3GkbE9hUOgUErZXrmtP2zpNI/3cd7dZkTm2i2m9nZEfTVmGLsSWQJQVBCzT0/aek2GXAlLSvkm6n7eOzI7nEQALs61TF+O5DzuXDL/HCEP1MSveEnPeR/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771514566; c=relaxed/simple;
-	bh=KVT8AXqRbL+2rj7fGU6DWKKEWmG7d0URo+Nur6aHNMk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vrb8BR/PDw6NTYmFFeantBxDdzLmMeEBXiwuh47oES30K3PmW4SVM537sS2iMBYHH7guVcHjyDQDGt9iEALjUGBwickisFmDNALtRIQ/C4RjjOjdKerwEy99zPD31mHDSNeoRkOK6QHoSvRKyY3ntqbNsFJo0LlAuhn4/heMT1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uxOCeL3t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TTaBePLo; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771514659; c=relaxed/simple;
+	bh=X1dpDMpZDBni3BeuWs0BTQyK/sp+AcQm7l/u2LuYxO4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VqOtH0BmqNTEf0Oy3EyN8V0GyynhUpho1elpycHEnKZ2xE0jDoRkMEngjDmO6S/9STlJV+oFeAD6iCeoGMq+8bxBGrbmEIfevIaA68R1s8mc6xDR8TjXenKgO0oFOypQBw2s7J1EwDwPS7+Fl+IxWtPFtO7GZhslrKEYoXvSQoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qc9exbk4; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uxOCeL3t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TTaBePLo"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id C9F29EC0301;
-	Thu, 19 Feb 2026 10:22:43 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 19 Feb 2026 10:22:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771514563; x=1771600963; bh=tsB7byiB1S
-	oHm/RBbUXMZnrQZIRE2hK+Hao5R1xqgB0=; b=uxOCeL3tRTm2/Q+2zL8V8r91DY
-	PMqvQZT7pcSlIb5giW4h0Hyi+q+0h48S1sDg04Ur5YltijGzyp4ZFt8dFV4LnDSV
-	Kce5Ln3qDPuidR+bXAgSR8PXuiOIp+IVLQP70cUWO/9N7gtxxEMBQvDkcYTzBNCV
-	3j4FAe4nllkyBPdux6kU19eu3qy6zJQDDasG/Rs0azHSlzDm9i1zsWIHLQ/K+oeD
-	4Dj3toWtswnmvf1rHHbuT1iYxfISp12fyh/2s4mlbFf3cll88Ain8FuNIhIe2PiB
-	i8SN1/wUmp9B0j8z4ueejlVTBHox1Nvoa/m4XJV/zzK5woTIyoknMeRhmjpQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771514563; x=1771600963; bh=tsB7byiB1SoHm/RBbUXMZnrQZIRE2hK+Hao
-	5R1xqgB0=; b=TTaBePLoLGM7eRShSvmEeA2Kk+jaInvchiBeP92GW0BWmka9n8D
-	jccJj6PMPTESLt4cc835NOaG1rwyKVIi0hPt+RJg7L1JiNK9Tu+B+/edsTvNeD8l
-	b4S9a+2EqmaDxtgSgZX7RLqLSUpvCQQhFtAzAdok0WWJvUJCOJqJDQ4tow2d2Ms7
-	O4/Ns3C/onWi9TtXrpa3Tsu/b2dYaUXOLgLKZB4+Z1o0uRXCr+V+vmwGSKdoMeeS
-	gbIN9sZo0Fne/LVyc+eevOtm5o0v+JrRfypDaNJpBxKLOoc+Vf7ajU1ySH/sw8Ow
-	4H17AXaFaIY0j3J8nk+Q43NXTmfWaot2brw==
-X-ME-Sender: <xms:wyqXaTix0PvkEVhCESGpESMwoEvHFejQhWNSAQ-GPVrjniRQaRmMEA>
-    <xme:wyqXaW6r4MFWP19xh-H9zqPSp18IE3Lb5PNZsuIbkoESY9i4Fsvy7PewtfJqUsfkl
-    JjwGKuc066WSFSvznqMeDIXARcC7wQC2WJvXvmXvQprnAo50o_C>
-X-ME-Received: <xmr:wyqXabZkKHe2FjRc5o9pXcK_3lKeeAJqd34sDEgoXTy5nd3lweKk-RkzkmyYzzdwnYQbKHL79MI1WaIosr9oXhc7pu_glBvl4w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdehkeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:wyqXab6PFzhyuQdJU5fl0JEcYA6UIqkENcu-S7bJBJO3vCfLSTzgaw>
-    <xmx:wyqXaeCkaonE-uf8VySgU0QTNGD54npxAU7heS4W-qeY56OoeAWvtg>
-    <xmx:wyqXaRfNBZUOdP5u9G16r8rxNPRW3VSnzYED5IF05F6WfM9jKG5ZRw>
-    <xmx:wyqXadJEKAMbL5tnPK7jMl1uhXD5_unm46jqh6LFiPQiUad0GJDPpg>
-    <xmx:wyqXaXLL4QPjgE1YwqK0h0RMNcvZWlGOIpekR4And_3aWqY2WRPA-rZ8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 10:22:42 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v3 0/4] Fix misuse of `refs_for_each_ref_in()`
-In-Reply-To: <aZYGrmktI6vwp8Ow@nand.local> (Taylor Blau's message of "Wed, 18
-	Feb 2026 13:36:30 -0500")
-References: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
-	<20260206-b4-pks-fix-for-each-ref-in-misuse-v3-0-1e050c3d6a50@pks.im>
-	<aZYGrmktI6vwp8Ow@nand.local>
-Date: Thu, 19 Feb 2026 07:22:41 -0800
-Message-ID: <xmqqldgo7o72.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qc9exbk4"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c636487ccaeso396673a12.1
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 07:24:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771514657; x=1772119457; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F9UDpz9jeLbN/ITkvag3/OjSgtI7frapHtc+8m5nVWg=;
+        b=Qc9exbk4d1mJZ4QKcCn4QgcYbaV+7qylgEp/uEwUSaKrgel+yHWigo0nZvOcnk67dj
+         CT5q/Io0JViHFP3KhSHvD6bE6DyvnjlATlIipzYNzYFp+5FadH88BzlLLtc19gqkN5qM
+         9JWOQHHqu8gMglRXTMVG7TRo4/tMK0YR9RVOW35JRynZLzqDAq0MX+CSLcfwRc/OiNwR
+         nzce59/0kGAjWhQNBqHy8A9OxNmDI+p69Otmk6lH64WE6d93SVc+eYYbSMyHFMppQ84S
+         zxsNcrMZJzAijsDPT3anbdFKvxRF04vGmYB6OJtchUNv/mjckskYs1pWj4FcOaTQgcxf
+         54oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771514657; x=1772119457;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F9UDpz9jeLbN/ITkvag3/OjSgtI7frapHtc+8m5nVWg=;
+        b=dGG1CyLspItbtOXir2fzU8g4H4UzmUv2Sj8P130dUjHrBcuvXCu9taGc6Mg0o3qXxi
+         gzJQzEQEoeeTbZ9sJDjlG0NcQMvI4jqRfUHMCPWeMDwJHqhTeGvD10teqgrO8kYe20Fa
+         MjBOQqIHQ6ldBtNVU482vuOmGTNcZoX3WEUPkN8oLwN/Sd2ik4zyaiCiAmQqFaPuCz9k
+         i/jL5y3gvM4zYfHOEdDNBJkw23wNrhsUI+zRmdoovg4OID2xeK+UbEpRX0nbBl5OGpbm
+         Bj+H9Niuux9cCaRk2edDpad6f9mfU4PzJH7jGrLddlTdDkj81KKi9Ytu1rdUayeS0fga
+         OSpQ==
+X-Gm-Message-State: AOJu0YxksPuUdv4zNuYarZGz2w6GShP0DdFqWIzZEJ4AqXLXquhB7xMN
+	vpgZE7iLpJhadssDDCKDhemQH+Pd5u0QL8VP4dBzcnTWAt15Mk98PWKKQDbmfQ==
+X-Gm-Gg: AZuq6aJpgfdK8Zs3JxjzI11/FS5tusTWL2dX1mZ7PHEU3HiYTWb6Pr18kPFoiFYlvCW
+	3Mr30vFHlGFjHxyoCIlDOCsrlckRo/Iemp1J7aOINdHSSzk4SGR13cRf3PYk0B4RZ6+AyCzOGT4
+	dE33EHR1l8PfEZrQD43caglEDx6JWKe+YNgQVU8h3l7kid4pO0RbbfGURxNHCp78k9pyizASp/d
+	CWaHklaUQEu76w9DtrM7P8gZwpEVdbbO7cbjSCjMuDArR3giF2cd+slKqlrsRTY9yYIFI5zSqto
+	YS3ydzYeIgLdPPR+bh/XRRfd/J/mQBeRTQ4jRcd3i2OlNRENahACupk0d8o08Is/T1+wx1h6Ump
+	hv0u3HJo3vYnWqrmHGsNIVVkJkYsufcZJY50xKaMs2sR0A2OAmz74AMuvHcxYuYp3JFou/f7/q8
+	b6Ckga3xTzsjFST1WmFUPiIBFyMCPcEz9lLyfiqbFO0WW6Kq8vNx3ocmSR+RYCYHkm3Q==
+X-Received: by 2002:a17:90b:3a86:b0:356:2fee:92c8 with SMTP id 98e67ed59e1d1-358937a4c23mr3179054a91.17.1771514657244;
+        Thu, 19 Feb 2026 07:24:17 -0800 (PST)
+Received: from d.iiitdmj.ac.in ([14.139.241.214])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3589d7f1b9dsm694377a91.4.2026.02.19.07.24.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Feb 2026 07:24:16 -0800 (PST)
+From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+To: git@vger.kernel.org
+Cc: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Subject: [PATCH] t1006: fix %(rest) test for object names with whitespace
+Date: Thu, 19 Feb 2026 15:24:07 +0000
+Message-ID: <20260219152407.12160-1-deveshigurgaon@gmail.com>
+X-Mailer: git-send-email 2.52.0.230.gd8af7cadaa
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Taylor Blau <me@ttaylorr.com> writes:
+The '--batch-check with %(rest)' test in run_tests() used
+$object_name directly as input to git cat-file. When the
+object name contained whitespace (e.g., "HEAD:path with spaces"),
+this led to ambiguity between the object name and the %(rest)
+placeholder.
 
-> Hi Patrick,
->
-> On Fri, Feb 06, 2026 at 08:49:55AM +0100, Patrick Steinhardt wrote:
->> Jeff King (1):
->>       bisect: simplify string_list memory handling
->>
->> Patrick Steinhardt (3):
->>       pack-bitmap: deduplicate logic to iterate over preferred bitmap tips
->>       pack-bitmap: fix bug with exact ref match in "pack.preferBitmapTips"
->>       bisect: fix misuse of `refs_for_each_ref_in()`
->
-> Thanks, this version looks good to me.
->
-> Thanks,
-> Taylor
+As a result, git cat-file could not reliably determine where
+the object name ended and %(rest) began.
 
-Thanks, let's mark the topic for 'next' then.
+Fix this by using the resolved object ID (OID) instead of the
+raw object name as input. OIDs are hexadecimal strings and
+never contain whitespace, making the split unambiguous. This
+also removes the need for the existing FIXME comment and the
+test_expect_failure workaround.
+
+Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+---
+ t/t1006-cat-file.sh | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
+
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 0eee3bb878..cac88acf65 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -194,18 +194,11 @@ $content"
+ 	test_cmp expect actual
+     '
+ 
+-    # FIXME: %(rest) is incompatible with object names that include whitespace,
+-    # e.g. HEAD:path/to/a/file with spaces. Use the resolved OID as input to
+-    # test this instead of the raw object name.
+-    if echo "$object_name" | grep -q " "; then
+-	test_rest=test_expect_failure
+-    else
+-	test_rest=test_expect_success
+-    fi
+-
+-    $test_rest '--batch-check with %(rest)' '
++    # Use the resolved OID so %(rest) parsing is independent of whitespace
++    # in object names (e.g. HEAD:path with spaces).
++    test_expect_success '--batch-check with %(rest)' '
+ 	echo "$type this is some extra content" >expect &&
+-	echo "$object_name    this is some extra content" |
++	echo "$oid    this is some extra content" |
+ 		git cat-file --batch-check="%(objecttype) %(rest)" >actual &&
+ 	test_cmp expect actual
+     '
+-- 
+2.52.0.230.gd8af7cadaa
+
