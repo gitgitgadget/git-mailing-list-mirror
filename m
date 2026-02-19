@@ -1,83 +1,81 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E909F2F3C0A
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 06:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A3C2FC011
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 06:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771482346; cv=none; b=sOPSzaG/RCBVuSg8Kntq2GxV7v+Q+7F5FSExjgFycJuEDvUXr+6zOlwQfPOLQKhrsi2okUvyk9sawlVM4newdueqJ82fDmLUSwyWjXxMPeWOhfO/pdqJbDZGrL2Mc2g3XFvpDlS8p77oEOFVV6xh1L1QoVpb6B4pCVWz3ODTkp0=
+	t=1771482348; cv=none; b=BwmRTzjy/vlnuRXTCP3kuDKCtFASfEiiUnzMVW5zmUQCe/xg50TiG7TJgvEZW0Qj5g7fKbJ3kLOCtwOejOPVUzEaMuNd7roRLB2yO8VKZnWOwwczZQDiGzxQjN7hxuDHEPERSfcuY2pPJQcsSJmlhzMYBTnrb8v8lswv75RaVZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771482346; c=relaxed/simple;
-	bh=n5ZlO8yX19zeVt6fXkwn9SkEuxaBRcK/SZl01v63vwI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=HQoeWt9eDkS5p7k7oHg3W+rSw21M25clN+57ZHQSdSJIoyloYoU3y3Yb5trpjVN5rtbLVBQXftA2W5nm0HQKhdvcuabhOdTF92J5qz6onxIZ+iEozm+9mMN7H4WLxCk1GydUqAmOQg6m/doISuiMXp+b0VOigIJy2bnCqi+SEqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T+Yczxbj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BUj+f227; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1771482348; c=relaxed/simple;
+	bh=of9YFbZQqy9WucAjrkx25+uSXPgRgiiuGEUtkda6/Ro=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=uj8QXyaoBiWlb1TcHTga9lW+JuwU9nyDMM4fjE/dGQT5omM3zt9qSpFOeI69EJZgqkeS7u0uwhx0EfaN8MoDvzn+GwT8Cn0gjO2ls4FWH+wGQLb1qVYlaCwaVgzRXRajGhyqvj03Ru+BiCgTP2CKOWMnFP9ZJmXDfcDE8Kie0vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RrN8Y2AO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jfOR47Vm; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T+Yczxbj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BUj+f227"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id CF7F5EC064B;
-	Thu, 19 Feb 2026 01:25:33 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RrN8Y2AO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jfOR47Vm"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 36670EC007B;
+	Thu, 19 Feb 2026 01:25:46 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 19 Feb 2026 01:25:33 -0500
+  by phl-compute-06.internal (MEProxy); Thu, 19 Feb 2026 01:25:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771482333;
-	 x=1771568733; bh=phsbQrZuKJixFXfuES5afNv8V4bT5pq5dyPwm+cu9ag=; b=
-	T+YczxbjIaZabydRVZ3B/japiyEVq6s6b0RMAVaolFXpgBR+zx7p9D5IbESxCeNv
-	f4EPtTIzkB6ubALNfxBHnpo4xpGnXMyg/0fTxBRgDIjj8tAqDv5I6hFTrsF+LG5L
-	2cOACJZVc55xaVkqMW+oQ6fSZwm0qyur/x07UGCbaw/YTqBB5LmKxjKHjxfAptew
-	dCulCITc32wuGAxndPhFZCNYFW3ibxd5KfhZnaof0WAkLpCdfvhhJIO6puM/NFJ9
-	lNSpENVY0jai7q8TzyQ3nrWWRghllrfY8IobIXwxehbquq0r2YNAOfEaK5VRI3I/
-	RBu5stwfmPy82FuOTuG5MQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771482346;
+	 x=1771568746; bh=CnOEr+ic5w+BDYaSJhBvZjBt97l1jf6VnzW8MRMAloA=; b=
+	RrN8Y2AOHP8V+iqKMB22tgY8qlpzK5eSHMfCIKcM2BavnMrle77F8gVHT+haQH+a
+	BTkOrhox5GUbKN2hNjugULQ6i4SyqIfX9yXfIViX00AbJDgQFCM33ZyTQnm9Hrrk
+	xP/B5DxA/UdJpKPO0C5dQAXwkJZN1975O4HtmgUElbO0jTbY/yfmzKqMJ6ODDvgf
+	gRNhJ6a+Yb+EB6NRq0+PgI2TxebQxpzd8JZvJf9lIQva93TxzggoqScEGA+njdkP
+	WsJaB/FDzzkmLEYam+6n66JH+o3eQ2M+02UDVCaPiTm1k09SA8K0sbhhvqzEoebZ
+	P2+DxSo2h6EbKaeY6n7+AQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771482333; x=
-	1771568733; bh=phsbQrZuKJixFXfuES5afNv8V4bT5pq5dyPwm+cu9ag=; b=B
-	Uj+f227GgB7wp/jiO9RMFaBvcUYxHkG2zEIdH9KFGkqKNu20p7UNKIkfBD5nKcT9
-	jGgRumjY2pqq59ujPuHUk8cxiXDwk6rEskTph5tkjPpv6+wPjYDY8BEDq7yRedZy
-	KDT9cNyg3iUuvnsKd3gel0dl7qUSarSTElQqLNikS891UkX5ZDS57DAxix3Tvcw5
-	7Lb5TDFLGUmczV57aL8Dxbv0OTA7hhS/pNvzEho7h/+AQqVO1eha961ZsYZOodXw
-	xgnEmZoFvrbc0Kwsxv0FjUGFBVoRxL33AirIBnP8doHtKX2JhblyUf+85pxHNuw+
-	l5IhO0+pyqoaSBZRr5haA==
-X-ME-Sender: <xms:3ayWaVqTqV7F18yxoMC0JjdVge_wqJJ7jPJU83qpUV1NwL3eLchOHg>
-    <xme:3ayWaeh_u6Y1PV_nzY5kW1pbLMAiVv67ENrDAf2tJwm75PcUF5mBMBaaSAxfnjCo2
-    Tf1lgwd4_wDUogc63cYqrdJmcHD4ZrwzT3nvq8ut-AuoVjhfu8lmw>
-X-ME-Received: <xmr:3ayWaah4si-2ek3wBXN9Q2U_X6FwpnMpDWtRzq0bQUVTckMBF18Gzk0AUFORL1ImI6-czGey_n3MfLXXkidjWjNSiytuBoVH-mEdPFU_uA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771482346; x=
+	1771568746; bh=CnOEr+ic5w+BDYaSJhBvZjBt97l1jf6VnzW8MRMAloA=; b=j
+	fOR47VmRhuhVi6VVlLdR1RszoQb2zV/Yo9Yo5hBy+QUV5qKdDFbGa7MM2WIU7LOy
+	o6Nvq4YmhxmXVJATYfjLAaU6W13bto8eg/08UzgIAncanrXLA67kVV86bMyD/4I2
+	NyKR4+81vUYRD+NvifVAC/sCmdG90y3eGP7+xgARkXP936fcI4biClDbt6H83Ko1
+	nLcGVy57hyCR+NziQwyjxze2eBl9oPhsWDawCfvhP5AIJzL5erQ52FxiBeOLGuYq
+	W8mIGQku2DO1vaxdT/1IdsiEpvr+rgXS2UzG1oanu5GIMYv3h5AaB0LxmnRkt/AQ
+	bvBTLeGuQGbr/C0wT8+Fw==
+X-ME-Sender: <xms:6qyWaQcWp9Sx1g1B-9gBGPqEvuL1EqibydwlVpK0GZi3a4ZuETSJig>
+    <xme:6qyWaZGRjyT0lKi7WbKtculZSG82PKkDt3Z7NViy6f2qcFTbu-lQBcy6vPmkDkiGm
+    eRnA1ForgTkVuXehSuAyBeFLqz7aj3w-Wtco9cPr_nka_Y2IAQOAQ>
+X-ME-Received: <xmr:6qyWaZ3TpyAbQpPFZjWHA74mMceMc3uy1EgFwTDfZDv5aiQ9vZrNV_tjAAxSDlG0tMrOYjjMSyNm92_icbPs6SMDgn8Ex_tbbIGqCrDNcA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdegjeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeevjeefheeggeeljeduffetveehgfeiueehgffgudffffffgeeifeetveejleeuvden
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhtlhgrsgdrtghomhdpghhithhhuh
-    gsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:3ayWach55ReC_F5qQWEAvUU0O1EMGOqjFz1iOqrHSTBK1uefV4NUHg>
-    <xmx:3ayWaSJHlEFUTvdgtTQTKPxTNzh9Tj8a489UgU9CwXtHo3du4XrkZA>
-    <xmx:3ayWaTEvXzcQkU1FoCOu05GtCZwQDjX2dTzgEQqub3L14-KvdMsg9A>
-    <xmx:3ayWaeRlUm2mo8266bW1mXKWCnjfZvCkBkycP5c_eaqi3FnPaxX3lA>
-    <xmx:3ayWaX9TkLwkbo3gRUckY7awm70ExQFYIhc1WfY9AQTlCvZl7DRrufFQ>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohh
+    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:6qyWaRlS8W-kNRBhLEdhZQ03nDmg3Pd4KM29G4w0Uvfa9LsXpTPcFA>
+    <xmx:6qyWaZ8npAsYzrtyO5OkHaSVDMDUhWSzvl1LHAkjQUIRywDwJwhjVQ>
+    <xmx:6qyWaWoSDt1_baP-Ls6g0fNgpxOaA2rLCqm0oYGCMohEIZ3bowVQ8g>
+    <xmx:6qyWaSlbev_FIWI9BZC_jZG4Mo8liu3dmqwaEU5iYwcGCLzvx906sA>
+    <xmx:6qyWaXDqPnn7Tcri37eHlzVIoU3LvRlIR-J_LND1R6UBQ8_v3HoctMqq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 01:25:32 -0500 (EST)
+ 19 Feb 2026 01:25:44 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 630143f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Feb 2026 06:25:30 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4a4c35b5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Feb 2026 06:25:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/7] Some assorted fixes for GitLab CI
-Date: Thu, 19 Feb 2026 07:25:26 +0100
-Message-Id: <20260219-b4-pks-ci-meson-improvements-v2-0-6047b8307ab2@pks.im>
+Date: Thu, 19 Feb 2026 07:25:31 +0100
+Subject: [PATCH v2 5/7] ci: make test slicing consistent across Meson/Make
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,116 +84,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANaslmkC/33NTQrCMBCG4avIrB1JovTHlfeQLtpkagdJUjIlK
- KV3NxbXLt+P4ZkVhBKTwPWwQqLMwjGUMMcD2KkPD0J2pcEoUymjWhwuOD8FLaMniQHZzylm8hQ
- Wwfbsml6Po3OmhkLMiUZ+7fy9Kz2xLDG9929Zf9cfrPV/OGtUaAdd1dY2amiqW7k9sYdu27YPL
- x880sUAAAA=
-X-Change-ID: 20260209-b4-pks-ci-meson-improvements-93d8a1ffdd27
-In-Reply-To: <20260211-b4-pks-ci-meson-improvements-v1-0-cb167cc80b86@pks.im>
-References: <20260211-b4-pks-ci-meson-improvements-v1-0-cb167cc80b86@pks.im>
+Message-Id: <20260219-b4-pks-ci-meson-improvements-v2-5-6047b8307ab2@pks.im>
+References: <20260219-b4-pks-ci-meson-improvements-v2-0-6047b8307ab2@pks.im>
+In-Reply-To: <20260219-b4-pks-ci-meson-improvements-v2-0-6047b8307ab2@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
  Jeff King <peff@peff.net>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.3
 
-Hi,
+In the preceding commit we have adjusted test slicing to be one-based
+when using the "ci/run-test-slice.sh" script. But we also have an
+equivalent script for Meson that is still zero-based, which is of course
+inconsistent.
 
-I recently had the pleasure of debugging a couple of failing
-MSVC+Windows jobs in GitLab CI, which hasn't been quite fun because we
-didn't know to print error logs, and neither did we upload the failed
-test artifacts. This patch series is the result of this frustration and
-fixes a couple of smaller issues in the context of our CI:
+Adapt the script to be one-based, as well, and adapt the GitHub workflow
+accordingly. Note that GitLab doesn't yet use the script, so it does not
+need to be adapted. This will change in the next commit though.
 
-  - I noticed that test slicing is slightly wrong because of a
-    difference between zero- and one-based indices, which causes us to
-    skip the first test on GitLab.
-
-  - I deduplicated how we run Meson tests so that both GitLab and GitHub
-    use the same "run-test-slice-meson.sh" script.
-
-  - I add logic to handle failing tests via "print-test-failures.sh".
-
-The result can be found at [1]. Note that tests are failing, but those
-failures are fixed in a separate patch series via [2]. In any case, I
-guess those test failures also serve as a good demonstration how the
-failing tests show up now.
-
-Changes in v3:
-  - Correct a second invocation of "ci/run-test-slice.sh". I missed this
-    invocation, and because this job doesn't run by default I didn't
-    spot that it broke.
-  - Link to v1: https://lore.kernel.org/r/20260211-b4-pks-ci-meson-improvements-v1-0-cb167cc80b86@pks.im
-
-Changes in v2:
-  - Fix syntax in GitHub workflow.
-  - Add another patch on top that fixes win+Meson tests in GitHub. Those
-    tests didn't execute at all, even before this patch series.
-  - This uncovers another bug in how we set up MERGE_TOOLS_DIR, so this
-    results in another commit.
-  - I've now tested also tested the changes on GitHub [3].
-  - Link to v1: https://lore.kernel.org/r/20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/497
-[2]: <20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im>
-[3]: https://github.com/git/git/pull/2195
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (7):
-      ci: handle failures of test-slice helper
-      ci: don't skip smallest test slice in GitLab
-      meson: fix MERGE_TOOL_DIR with "--no-bin-wrappers"
-      github: fix Meson tests not executing at all
-      ci: make test slicing consistent across Meson/Make
-      gitlab-ci: use "run-test-slice-meson.sh"
-      gitlab-ci: handle failed tests on MSVC+Meson job
+ .github/workflows/main.yml | 2 +-
+ ci/run-test-slice-meson.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
- .github/workflows/main.yml |  8 ++++----
- .gitlab-ci.yml             | 17 +++++++++++++++--
- ci/run-test-slice-meson.sh |  2 +-
- ci/run-test-slice.sh       |  6 +++---
- t/helper/test-path-utils.c | 18 ++++++++++++------
- t/meson.build              |  1 +
- 6 files changed, 36 insertions(+), 16 deletions(-)
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index a011d8d0f9..826f2f5d3a 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -298,7 +298,7 @@ jobs:
+         path: build
+     - name: Test
+       shell: bash
+-      run: ci/run-test-slice-meson.sh build ${{matrix.nr}} 10
++      run: ci/run-test-slice-meson.sh build $((${{matrix.nr}} + 1)) 10
+     - name: print test failures
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       shell: bash
+diff --git a/ci/run-test-slice-meson.sh b/ci/run-test-slice-meson.sh
+index 961c94fba0..a6df927ba5 100755
+--- a/ci/run-test-slice-meson.sh
++++ b/ci/run-test-slice-meson.sh
+@@ -9,5 +9,5 @@
+ 
+ group "Run tests" \
+ 	meson test -C "$1" --no-rebuild --print-errorlogs \
+-		--test-args="$GIT_TEST_OPTS" --slice "$((1+$2))/$3" ||
++		--test-args="$GIT_TEST_OPTS" --slice "$(($2))/$3" ||
+ handle_failed_tests
 
-Range-diff versus v1:
-
-1:  b5ad91e1bc = 1:  b55e0b145f ci: handle failures of test-slice helper
-2:  5bed073cfc ! 2:  fbdd1df05d ci: don't skip smallest test slice in GitLab
-    @@ Commit message
-         As the indices are now one-based it means that GitLab's CI is fixed.
-         The GitHub workflow is updated accordingly.
-     
-    +    Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## .github/workflows/main.yml ##
-    @@ .github/workflows/main.yml: jobs:
-          - name: test
-            shell: bash
-     -      run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
-    ++      run: . /etc/profile && ci/run-test-slice.sh $((${{matrix.nr}} + 1)) 10
-    +     - name: print test failures
-    +       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
-    +       shell: bash
-    +@@ .github/workflows/main.yml: jobs:
-    +       shell: bash
-    +       env:
-    +         NO_SVN_TESTS: 1
-    +-      run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
-     +      run: . /etc/profile && ci/run-test-slice.sh $((${{matrix.nr}} + 1)) 10
-          - name: print test failures
-            if: failure() && env.FAILED_TEST_ARTIFACTS != ''
-3:  6b061b829d = 3:  a5e411aade meson: fix MERGE_TOOL_DIR with "--no-bin-wrappers"
-4:  828147d641 = 4:  b7d868fc53 github: fix Meson tests not executing at all
-5:  05458adc6f = 5:  c9690b10a8 ci: make test slicing consistent across Meson/Make
-6:  49df181d3d = 6:  bee3a9d944 gitlab-ci: use "run-test-slice-meson.sh"
-7:  e7e9504c16 = 7:  ea1e1a4d87 gitlab-ci: handle failed tests on MSVC+Meson job
-
----
-base-commit: 3e0db84c88c57e70ac8be8c196dfa92c5d656fbc
-change-id: 20260209-b4-pks-ci-meson-improvements-93d8a1ffdd27
+-- 
+2.53.0.414.gf7e9f6c205.dirty
 
