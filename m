@@ -1,120 +1,100 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512E5338596
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 13:40:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771508451; cv=pass; b=ksaYq5XA+nV6aYq283+HEFbKf3IbPV6lP/4HKc5yKnRXgsWVd/dFBfMRenFqq11IhZKCJmjqQq5P/V3YbZeeDzeuaxt2EDeOPylnRygaD/m4CzKRqIdLPQwPdSiWRU9Fm3HtAZcw8UIRzGcpeW3C7VIvqlrdekqzzdcqybCj9tk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771508451; c=relaxed/simple;
-	bh=FSKstJwoFAoSyIo8l3r5QtM+NLWJDKNme3SchpBBV5g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U3rdmaJB+5TyZeEcyDMgDUrjF7++q9o0MY9AxPktiTLye/Emq7s77ZIeQaTdF5W6yYY2I3U+EFOO1dPUOMFgr+HqhKIhAcAXzlt6Jr/t7QzrMqIO3UpahXJVWJiyyf7j9NPRDcpT/3RPSkJLR7Ww3dK1vB7XftIW2AihQ4WqWQg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ataPvozx; arc=pass smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271FC3EBF16
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 13:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771508607; cv=none; b=MgY/p88+zdvYw16JLt04bsoHKMJeKoJyEK49PdJrGTgwjw4kLHAK+s23IR0bql+sdgrhTu35/OP0/JB0jUyfhLb+KBp7Nv4elgKkDcM3ZNxjDDlzrUMxRsjxheyWSfuzdo9ssB/Tw1yU+AysNpIcH1i8js+6VP5JkEvpWTYnFVU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771508607; c=relaxed/simple;
+	bh=0ir0qFbJuCfUJU/7n/sCerhfhjzzba5426SyQ8E5f6I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DNWwSCZXdk/MuPnAkDJnOJLzsla4pLnBef1Xe1I+NKGWCued94CEtq9JFwU0E/Xlm7kgzTjZm2ZaSOqj5VKJtNyFnxuIGHvgwAD8Ph5tOlpiXKgoepoLAW1iTKjy9dhfg7SYaYt+xZuoyLfYZJiANUJkwGQylkCTABEqPZ57njQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ju/1w7Gm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pr1Sy0LC; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ataPvozx"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3530715386cso665991a91.2
-        for <git@vger.kernel.org>; Thu, 19 Feb 2026 05:40:50 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771508450; cv=none;
-        d=google.com; s=arc-20240605;
-        b=HGPWdtuNoXqKQVRH8XKwhgjkOF7mQQMevumtwzvA2sdNVAAHHYI5/bipWrZ8OEeUvf
-         uhjD1az/i4RZb51MQAPqHDtsvHr8ZoVl8Cvk93vxfDJiidZ5xM6hCatoNscd/1oKiVv9
-         630MgpAIgBm0JwFPaVOhaHejt24H2alotQCfzDitJp43e218LI5wtMtJsb4Pskh8kLLW
-         ZcvluvfM8d6G2RPeOTCF6vNaVqqULBFnyVh3BnWpYeBiclIp+ZUQEwBXVBfE7bX4KVWr
-         ON+AMxDKCtCLxtmTEMQrhRabqahfj2XToxAC9FjtOI1IJrJRopiJw29fV6opuDEQOED4
-         V63Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=FSKstJwoFAoSyIo8l3r5QtM+NLWJDKNme3SchpBBV5g=;
-        fh=nJm7XZV75Ii0x85FzWr8klunF9UYB+86n+Ya67oxfAg=;
-        b=kao3q+sS53E2aXD7O3VhHxZk9rSCDeZtskmUwRbky2oS8xqusV7xQtSnqLykwhSP+C
-         xXmcyeJT4MQySMzcUgKHIuH0MvsM1JjTGeXitvuKITP0WbU30icYal6SGkz4C343l11+
-         rhecZTewJvBx2MjcasEUykFSy3jmUNFJmDqWjDQ5v8QRJNJv87KvzpD5Lmp5T1mCJyOz
-         XLejCfVuc0QZ6WNYFaZ+VcdDJCRmmqNCDSS9nx9vCS9pzJL1sUSXqSsJrrdE+4PhjFkn
-         NYfyt06oRw6pPux0raOjwZgj4B6zBrDLiEz11SO5nxttirBNskIs8+stnxPBAECOlRhr
-         B5qw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771508450; x=1772113250; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FSKstJwoFAoSyIo8l3r5QtM+NLWJDKNme3SchpBBV5g=;
-        b=ataPvozx950Ts1rysDIocJSIdkKGH/WoHonfuQRJuWS9BX+p90SKJUJDke0L22bDwS
-         /vuOjhtnQkpamq0ur5mhbBG7R9zUBEIRsnrRKH5ST6SFfc2KlPpH8pkg/6jXh1E6+qut
-         qt2FOAmLmtxHN/HK7CsbsBLQifeQPl7atUEL8ci61+x0hV765yVcjuiFMT0fE6PY9Ml7
-         NMg/ppC88UUsJ7pouTFFkWB24mxwtyzUe6ba5xTtyWhlXT1F5WEvUOvH8hQnmMCzzwUZ
-         3+/ehdVLPOHYyWQmqAnai5IpXSyHdKFXFcakhMk747DVB96qdK5kE7vBnBZNSd9fqo1I
-         Yhqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771508450; x=1772113250;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=FSKstJwoFAoSyIo8l3r5QtM+NLWJDKNme3SchpBBV5g=;
-        b=UoO92f5fp/3yoSwW+jR/xhxR4Rd09P+vJKZX59YDIY7rr0xv0FJ5B5ul3jfTtlYpau
-         RMKEJBznwff0XkcCSTx9pLlnEWzgNKsxaywkGB4BK8+4mt9WUznAi0OJmzAlAVyl3RqY
-         5yKo55NLY9HFi+q6IOCy522tTQWcZUfzz4HXTc7/uhGoDvxTpEQdh8dre/OIKd7Ucci4
-         pH/agudXEVVEV9Dw4elrCxqes4K7aTZMWJpbqGJS5GRs2aYHAmTgs9pCgRvwsViVcAgu
-         j53fK0UDICEtDROHE6CiBRxJlzCOlnGboxmvubKmZFbasM8ElJoY0e6BL7rKNe5yZt0f
-         dh7Q==
-X-Gm-Message-State: AOJu0YzLsHAEVPyFKPgx9RnOaonRskb1C5FdEiObQSvpnPVvE6eanCy1
-	adobe7KpgrzaLMthbxTE/zqIU9PsTZoiJdK8oCMJEXZuJnPqbhHVemaeD15ysEMr1bX9o5tAWT0
-	uS/ijYC+jJsoHLFBS11rOLL6EG8U/dSs=
-X-Gm-Gg: AZuq6aLiGPDvUS71ufcGaS0u03qkYmL9xX2F9Ht4rJ6pVBDhbz0Z5eKROGLKDzHP+oU
-	Rc5vRVm0TUwTXX34iW0J4TnvmWXYOvEUVVdJrQZOYWUyp6i/6ypcQv4EHrV9lj4c6zgD82jiEvf
-	erralHjrBn8OBexooiorCrl9O9/u87wAMKRxHWk0hGkAedNkK0hhQlY2jZLXkbEmcjxdMRAokN6
-	M72GXupLT6LcbBYtw6Sg5q9CunuJew3+YgePL8FCH0S27ZsVuh8pI2CfBAuc5eCc2Nibumqd0e8
-	vG78NitdVcL4BcOY4UNK5z1A5sUqJtUdKMWJQoWbFymKyW1x9dpUtM1P45cUx2CzspmNnS71ukv
-	rMm5N
-X-Received: by 2002:a17:90b:1647:b0:356:3ba2:122c with SMTP id
- 98e67ed59e1d1-3584492cc1bmr14553868a91.9.1771508449589; Thu, 19 Feb 2026
- 05:40:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ju/1w7Gm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pr1Sy0LC"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4BAABEC0325;
+	Thu, 19 Feb 2026 08:43:25 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 19 Feb 2026 08:43:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1771508605; x=1771595005; bh=0ir0qFbJuC
+	fUJU/7n/sCerhfhjzzba5426SyQ8E5f6I=; b=ju/1w7GmOy5QJibL9C0MvruWmk
+	w95LOSIjG7EJ28eSKKPcUjbCWDyfV3KXiEQp0KI3FwGNs1iuvIlxr5uuvAhc0u6b
+	datiJzPm0QzavoH+3LVVKVKn9DmgKWD3V3KzUM3RxBwvbXDFfEdSLVVycQ/EKGBw
+	71D+DW4IV7XbOe+oBA23w29D/Yo6XZLK1Uozbp2ttDHTYvrjPVF6ZEFLx3HqwOSY
+	kV9B3YNjFFgaPU2hvkU69ldsY1mtxxeD4G+/u2HvKqdt8dRv8kRfl6W6Vzfw6ST1
+	bilN/fo15MVOezGJbAqimfqD3PhD8nXal4qFg2QQ/AHQWKBuqIPZpx2ZtvlQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771508605; x=1771595005; bh=0ir0qFbJuCfUJU/7n/sCerhfhjzzba5426S
+	yQ8E5f6I=; b=Pr1Sy0LCPlNKquTbSvA3TLM2NFDQTLQDqPzYgds+KyBN9TpE07B
+	/CMZilL/kX2gl5SsaJ+bcBmmJ9GZgGLQBCW2qfVhu1FoP/0yP9Dm+rqax17uDTmW
+	IpjTEvM5X7AU2xWi9yAkF4syU3Z18qmJQ981J0yBnmdXrT9cKXClGYfj0htCcvet
+	X1hKLtZ2UeGr3NVvqNpYmS+ki+eRIPUbwMteURJ6ixlUWM402Y8rBCbQ0PI6WA2c
+	m+VvKyajT0mJskjVx+Qlw7daIBF+emdwBLKzpXlE4cTIAWLarAKd5EAAluhd0Vjn
+	sDYOCCaawn+XehhILA92rDqu1upZDVGLDcw==
+X-ME-Sender: <xms:fROXaRPZhGr24GGMM4bj3Bak3MC0QUzP6CWbhwfZWm12Zg7UUSOY3g>
+    <xme:fROXaZ8eryUYP5kC7iPGlOMwXEWU_R8Bke6HhM6iw-giXtyTwbERpw_uR8VCJiW1X
+    oBXdQ9Jq-Kd-bNJKcbbLAD184IR_eOuVjJv1t3F9KvaDmgWab1eGg>
+X-ME-Received: <xmr:fROXad7Z77E4f1wHjlucmJX1bXex3FvpzEBgDNCFZ5-poLv-IQR9lLQobRju-M5W9hfe5rvIMsUEoKz_5G6P0-ITfMJYGKZMLxVsOon7bA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdehieekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:fROXaY2AX8WVkW5-v5qRWARX_wm4nAuDNuSjS6DKqBv9NpGSEx7aeQ>
+    <xmx:fROXacDn6oiMeq9dG0Uw__My67RPUoEIZpYmUE_7JpqO3Xu8tntsHg>
+    <xmx:fROXaS0Y0xopHf4xJuJDZHvtEjSAHfwJhwW9euS0CbXCU8mhZmR14Q>
+    <xmx:fROXaetrqj6-_ESm41TFl8OyNoIi66GneIO5gcO2f4m_3xBg2V-kVA>
+    <xmx:fROXaT_tn1otwgKtW3zK6OTLQFsIrJr5fLVvlw8Sa3saT17V9HqggYQe>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Feb 2026 08:43:24 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4fcd8f2d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Feb 2026 13:43:22 +0000 (UTC)
+Date: Thu, 19 Feb 2026 14:43:14 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] object-file: use `container_of()` to convert from base
+ types
+Message-ID: <aZcTcgKDg6N4QW3j@pks.im>
+References: <20260218210120.1146078-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>
- <611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>
- <fe5bb243-6205-41d1-9dad-7a1e2e42fbec@gmail.com>
-In-Reply-To: <fe5bb243-6205-41d1-9dad-7a1e2e42fbec@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Thu, 19 Feb 2026 08:40:38 -0500
-X-Gm-Features: AaiRm50u8S5LVsM3495twhb47Yx91GLZkHZZRw9H0GAlzG0uNHlbx5-iZYjbRvI
-Message-ID: <CALnO6CD7xGzVSKRWFJw-igz49PrYfyGyd6_pDP1QN8dTETMJVQ@mail.gmail.com>
-Subject: Re: [PATCH v5] build: regenerate config-list.h when Documentation changes
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Evan Martin <evan.martin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260218210120.1146078-1-jltobler@gmail.com>
 
-On Thu, Feb 19, 2026 at 5:19=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> Hi Ben
->
-> I tested the meson changes by setting up source and build directories
-> with daft names to test the quoting.
->
-> $ git worktree add --detach '/dev/shm/s#r#c dir'
-> $ cd '/dev/shm/s#r#c dir'
-> $ meson setup '/dev/shm/b#u&i ld'
->
-> If I build git and then remove Documentation/config/add.adoc
-> config-list.h is regenerated, it is not regenerated if I do not change
-> any of the config documentation files so it looks to be working
-> correctly. I've not tested the Makefile changes.
->
-> Thanks for working on it
->
-> Phillip
+On Wed, Feb 18, 2026 at 03:01:20PM -0600, Justin Tobler wrote:
+> To improve code hygiene, replace direct casts from `struct
+> odb_transaction` and `struct odb_read_stream` to their concrete
+> implementations with `container_of()`.
 
-Great, thanks!
+Right. The reason we want to do this is so that we become independent of
+the order in which members in `struct odb_read_stream` are declared.
+
+The changes all look good to me, thanks!
+
+Patrick
