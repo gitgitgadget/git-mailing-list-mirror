@@ -1,53 +1,53 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EBD2D2481
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 18:56:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB85A2E6116
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 18:59:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771527417; cv=none; b=SKTTwu+KE5gxj2coYWgtCALKG1+e6Rwb5k1QgIYXNhYQOOUcHT4uU3/DnsZerDyrRjbv8X31k4GlvM4GvxlUOWTv1XAHOCA/pbEwPLjtWgBk356SPPApmnNahlw4ODtN1LTo0B62xkt39MC90oDrhdOI3EgnPG/DxDEOcKQBUGs=
+	t=1771527555; cv=none; b=Fr/1zFxXmeJ9LutEw0e2jYKgZd2jqJHis4pAy0le95HcqnShtqHVHV3FZG8bWq71F59btgc5IwUpYJ92cGduBZ2cXIHWt8/wSMDqHloUOoIWpr6YLnAd6WT5CGYuXSrn836RfmjWUTxHLIiwQ2d+afhhbEWZA11ruOU/za9vW9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771527417; c=relaxed/simple;
-	bh=PDO66D11GYqLT8TXZh4U9UuC3h3eX2G0CcGDxuhIreM=;
+	s=arc-20240116; t=1771527555; c=relaxed/simple;
+	bh=LOZC7YgL2LLvRga+wNvWPtiXHexng0bebvcebsJYbGs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O1fEwi+FzvUEWzAjLs018QWwSWHXpgAgXCiJg6ihcAPbaHpgk4Ns8FeOs1YponvxANSiE07iyKEfB5LG/aX0I3AtOSt5akqRubLYUoix4/ofgYVjnqbdfw+/Am8NxSbVJdPzeU2N5HUVI00IdYlzYbpIRB6LglSZuG4gQ+cmET0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AfRqjQN3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ms3D3swQ; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=Uv/159pZAw0vSqM+x2JdHwWLzfOirzcCHPskB3+fg3QvZrfXpftOH8QI2D+4/n3aC4rCWfyvDIZ5rhmnNixu5GVNmB91RjGlW7kriTodYBW9GRItci0/TW0YWWe1KKhxU7ZXJduS8QU9RKGo20sCpWkk+RNMFNSrsMuFnvCgebE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PNiuyMTD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=txmVTj3k; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AfRqjQN3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ms3D3swQ"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 626C9EC0553;
-	Thu, 19 Feb 2026 13:56:55 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PNiuyMTD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="txmVTj3k"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DADBA1400167;
+	Thu, 19 Feb 2026 13:59:12 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 19 Feb 2026 13:56:55 -0500
+  by phl-compute-01.internal (MEProxy); Thu, 19 Feb 2026 13:59:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771527415; x=1771613815; bh=BCOlh6lvHa
-	XCGnVhHFpEVqTBp5U+KrNHrJcbaAFPmhQ=; b=AfRqjQN3annPMSMMVi+sgb1MMC
-	0qL8zcI97k9JDU4prfhEF/Vv73JaOmBHYJ2w4rbfFDICEJWHpwQNYEA7IobimT/k
-	NjXU6MZMHQZicRT9IhUqFw7k9on4bwoLzFdk+BRC4BaicmDTKc9OarCeIEggNLtr
-	3xQLjVfem/K6wejPvTvaf0yRJ5DE0XhYiX+fF4upwllNHPmP9DCi8jS6KlFLgVyj
-	LszwdXECPGyrUbp2c45VDqe2XbOxZui+gF9RSJB2PR2QLWkHll8eIIlXmbw487wW
-	2PvfV5vVE2CrKk2b6sSIebxx09iSAaxeRYvELLwDaiyx2iih3JuVOHS+HWlg==
+	:subject:to:to; s=fm2; t=1771527552; x=1771613952; bh=6w9aF3mA0D
+	IAiAEfq+ZaXksLdKOq6HnVACDDowkuKiU=; b=PNiuyMTD5H9tYBRearaY+L5Z5H
+	PDmceZOPYtTJBLpg9MLFXQWL8qgsFL1H7ZZRfzKOHP+lw8NkGAh4NU2bqTB/KhJX
+	52dJYAbajfqGx1rjw2zl7OS+JUBipOyJpZfmT1E8JKELgIv8hzOjY5pSTeaxHHO6
+	534zyQTV2wzLBL71MKGcqo+jLWjg9lCqGNpb9T13b/r2QjmLuXwZEDBXBnZ1deoW
+	RLe0TdI4fWmRTD2gs2uG0x2G3VZExlDmm1hOqalBDattvpmJx84fLVkxInn6f2bT
+	kbipdS3/eXcy6JvrZH3aMiP+2P2dWFPfiLfSVgk/wQfxAYm25bm4zl4AxPnA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771527415; x=1771613815; bh=BCOlh6lvHaXCGnVhHFpEVqTBp5U+KrNHrJc
-	baAFPmhQ=; b=Ms3D3swQUBlhQZcm0R4oi0+G5PkRDCL18SdE4X8lErZQFAxrnXh
-	WQQAi/tb8LV+GbdGODRteLhoK68FES3RXpc58Tt1XRom2w95eCuewMKTqA0j+kmK
-	KjGSB6ytiKJUcophuzyjdoioAWZr+7ODfd9BFRsc0FnvcxhL1Ng4CC65h1wOutY2
-	RWJVQ5xiWnuKRoTwczqyM65HbCQr9sNKhpHlCHLJqzBulhjLiWE14haGZVZiJ3Za
-	Gi0Ft+5C1z72r8OpqqH9dC4K1kwEVQnAz6WpvVpcPKV9XKrNXWECOG7Rmjw8bPRK
-	WyrNQarGS7HPd0xHxPNlfXFDgyZfrOQe7lA==
-X-ME-Sender: <xms:91yXadGiM07SuK-dpsfTMpCAfAXJjpRHVBqjeQaBoh_WIQe-lZLAhA>
-    <xme:91yXaZP_HCIue4-vjpgtIGDnmpOkjnEevzrH8WSTdQb3z0vhne8rWTM2GlxX_NRz3
-    ob1J8YwV3WFC8dmFr7jHa4bHwc8dhF9MWkvlpyW50gPcLPUw_zctA>
-X-ME-Received: <xmr:91yXaXd2jUw_ydPW_cNznfxvHNExhfP3Q-um5J7D_D6cd-0nAjpWCnGekAKwcXINfn_XisVm7yWlEmowGNxp1sppU9lU7J-kMw>
+	1771527552; x=1771613952; bh=6w9aF3mA0DIAiAEfq+ZaXksLdKOq6HnVACD
+	DowkuKiU=; b=txmVTj3kmf74wDmR0u+C0irYGPSjfVn+judxjymQ05amYQjG5Kz
+	QwjBnm2n/z1oiNQvcFbOuqf6kbzr2GM26hKkiRenK3pA3DiZZUgxU+iJq/rx5K4Z
+	jgVqsG2XtmXmv604sd+P5LiSI9QWOEFAljVII9K5FHtU3dAVsIzw2Kd2w4zShXK6
+	7fzzzq7MPVl0MBUl7KCHuWcrFKGqZ68B/i8UusuJdiObHkrP0GIUitICOJNwCD+v
+	eNr7CPmTIKZhzuWknQEQcrhnNrPVLqwIGs2jENmwiUSDTQWdLCM8T7l0/mOwXdxN
+	G/iVUCwTG7av29sK5R4twkvJXkJxrKo5rTg==
+X-ME-Sender: <xms:gF2XaZ73J0t2DnD4H0PoQbwe56Rutf-YZtCFZiZZZndbHq6tywQ5KQ>
+    <xme:gF2XaamjlSktIqRdv5PlKDhHkOQJu7IufW699J76tYHrxPxRelVBBmuoAv9tITyYp
+    HngCCvBy06LI0u4woSMaCH3_IUQz-KHL9s1ddGuHGRs7xrEoaS5jA>
+X-ME-Received: <xmr:gF2XaaTfT9zNYQijukR7AB5PRT9e2j9KOvqO1Wl__nZvpCQp_n6TCzziWB_1EDdpk2UMhcmXBd-NXVXMuaaVnIePF3sFtltxZg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeifeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -55,32 +55,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeifeduucetufdote
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptgholhhlihhn
-    rdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:91yXaeuE_51cAhJN30QvtJG5QnNkZcdCnwhCQRg0xkOY3Ep0OrMe4Q>
-    <xmx:91yXaQl38F4h3sNMUfxlfAAh-AyNOKLY_wDTs5Mixm5ZJwb4mOewag>
-    <xmx:91yXaYwenQWzSjOsqjcAuRKeHBAB-MkRkocDMbCOx9XSgJMh1u9SKw>
-    <xmx:91yXaaMRoXSjnFxYQuqvvxPzqAeBxd380LsvEJX3oBGDvOKTvDjqqA>
-    <xmx:91yXaVZlWJZtJdcHS9oDoDHij-LuYosMhU5qqe6cfVKySLEO9uNZKCpz>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpd
+    hrtghpthhtohepuggrnhhivghlseguuggsvggtkhdrtghomhdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gF2XaZEADdghnAWs5nL1_0PsZIurjERGbseQH2Hxr7ufpm_Xt1mN5g>
+    <xmx:gF2XafFSLVbo6GZduRyEBD35yDFsCphXrcPIYm3EyfPuEhnODFbkvg>
+    <xmx:gF2XaXT1LG3_xO5N5JguqRLkk2hgoP81XtnDSLIybs4IEIFdqd5kog>
+    <xmx:gF2XaQIxo81D3TZ4cZ8xcx0yJwzO-Hk6ykihfezzJ-8fGSY-LTYH4Q>
+    <xmx:gF2XaSulGI26u0sNXpTQECRoYS4uXkmfMAkyZqbk4Gty3AOit6L8GzSG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 13:56:54 -0500 (EST)
+ 19 Feb 2026 13:59:12 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  Collin Funk
- <collin.funk1@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/4] ref-filter: factor out refname component counting
-In-Reply-To: <20260219112149.GA3529@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 19 Feb 2026 06:21:49 -0500")
-References: <20260215085755.GA86262@coredump.intra.peff.net>
-	<20260215090052.GA695631@coredump.intra.peff.net>
-	<xmqqqzqjckgu.fsf@gitster.g>
-	<20260219112149.GA3529@coredump.intra.peff.net>
-Date: Thu, 19 Feb 2026 10:56:53 -0800
-Message-ID: <xmqq8qco5zpm.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "Daniel D. Beck via GitGitGadget" <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+  "Daniel D.
+ Beck" <daniel@ddbeck.com>
+Subject: Re: [PATCH] doc: fetch: document `--jobs=0` behavior
+In-Reply-To: <aZb2acEvAtNmt-4j@pks.im> (Patrick Steinhardt's message of "Thu,
+	19 Feb 2026 12:39:27 +0100")
+References: <pull.2047.git.1771443159369.gitgitgadget@gmail.com>
+	<aZb2acEvAtNmt-4j@pks.im>
+Date: Thu, 19 Feb 2026 10:59:10 -0800
+Message-ID: <xmqq4inc5zlt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,31 +91,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> And then p moves to the right until p[i] points at the end of the
->> string.  It does count the number of slashes in 'i', but there is no
->> satisfying simple answer to this question: "what does p mean while
->> this loop runs?".
->> ...
-> Which made me wonder if I am missing some corner case, and it is not
-> just counting slashes. But it must be, because "i" is never incremented
-> except when we see a slash.
+> On Wed, Feb 18, 2026 at 07:32:39PM +0000, Daniel D. Beck via GitGitGadget wrote:
+>> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
+>> index fcba46ee9e..e15cbc51f2 100644
+>> --- a/Documentation/fetch-options.adoc
+>> +++ b/Documentation/fetch-options.adoc
+>> @@ -234,6 +234,8 @@ endif::git-pull[]
+>>  `--jobs=<n>`::
+>>  	Parallelize all forms of fetching up to _<n>_ jobs at a time.
+>>  +
+>> +A value of 0 will use some reasonable default.
 >
-> +cc Karthik, the original author, for any wisdom, but the commit is now
-> almost 10 years old.
+> Can't we do better though than saying "some reasonable default"? As a
+> user I would wonder what this is even supposed to mean. True, we don't
+> do so either in the documentation of "fetch.parallel". But arguably, we
+> should update both sites to reflect the status quo.
 >
-> Is it worth rewriting to the "slashes" form above for clarity? I was
-> afraid to touch it just to shut up Coverity, but now we have two
-> confused people.
+> Going into the code we seem to fall back to `online_cpus()`. So should
+> we document this accordingly?
 
-Yup, I think the answer to my "what does p mean?" question is "by
-itself p has *no* meaning, but (p-refname) is maintained to be the
-number of non-slash bytes we scanned so far, while i is the number
-of slashes."
-
-And from that point of view, your "count slashes in the most stupid
-way that even 5 year old understands" certainly does make the result
-far easier to read.
+I do not have time to dig this out myself from ancient discussion
+threads, but we probably had the same discussion when "git config
+--help" described the fetch.parallel with exactly the same phrasing
+and decided to leave the exact implementation detail out of the
+end-user facing documentation.
 
 Thanks.
