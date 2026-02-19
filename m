@@ -1,90 +1,87 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C78272816
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 22:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59836253340
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 22:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771539397; cv=none; b=TAPOAgVQqVxFNk2AcqrrgjFnWuYf5pDA5/906KtX5A/IEBGPWq3AA/pRYqsy8rOHZXEp7TW0eFbGnezxhHHyGFMii8+TvJWx3kw6vByAM3oyIQIUF+xzqonTgzq7C4uO163/aBWWlLY0eO26LWyybHP/398PRTMUDONRQsFI+pk=
+	t=1771539720; cv=none; b=BWJDHg9BVPnJFoSfVbLHl3Osodum7Lb77uLeQU5pxeIEG9oqXSWu+6ljJ+q8Cco0H2vuxalFpt/7VTm+j3mLnsjFi8lgfqdQdmaGv64lyk+LrqzBz46MiTxpFuuCzF+x8bcKlGAF05wMY/GogfeJwqw9q6/8GgeSUMv922zrjkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771539397; c=relaxed/simple;
-	bh=fzhzHgcKvtBUk0Orijm+zAhyNOfNBV+2x51aGIg4BBc=;
+	s=arc-20240116; t=1771539720; c=relaxed/simple;
+	bh=elp9RaranDQ8tYGSJ/R2LC77YeqqifwMvYr4/WsfMB8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h9FN1UycywRqIUVnLi8EAmCN9C3e9BXWyww3RkqxRlsIYkqNFG1u+S0bG9cxXMzSOV5ju6ULsn7isemwyU3ZGAFmlkc4Eq9kGAvrVkpW13Rb1Gfxm/w+9EBtXC9lSpqmMSLpwtCzA6IdhQ7V/yqKIrZWEsL9FuJz2ppM9NoIduQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=t2nuPnqW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Axr3UsRR; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=AEMvkzdxCWttqedL3xFwNCndavT3aOjGJsB+Q8c2BD6d83zPqbilrVvAb41ZS3WAEfw9IE0HMUE2mnWQfcO1kwc8mh4Cn6XW1koFHE86chMc+SQgM1Es1iggC6TxdNSS4yEYyqyOKDCj0bBjqJRQ1g/1q/kpwF8k+RZuqk0zWT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AtAppbMg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iNxPvFVb; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="t2nuPnqW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Axr3UsRR"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 86119EC02FF;
-	Thu, 19 Feb 2026 17:16:35 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AtAppbMg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iNxPvFVb"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 771A2EC0259;
+	Thu, 19 Feb 2026 17:21:58 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Thu, 19 Feb 2026 17:16:35 -0500
+  by phl-compute-05.internal (MEProxy); Thu, 19 Feb 2026 17:21:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771539395; x=1771625795; bh=HqBd0aNzMh
-	/kIdP8mHVlzMjXmkE3Faon/NcY5lhRUQQ=; b=t2nuPnqWUOZxtUxelKN+P68K2s
-	WhITnDRqDozXBVlXr4i/8hA3DaZI98elwXOIvZr/BszQmMC1KQBr1irr0jtD3aDx
-	1Nos+H6VjOtE9jTU0us+PZKah+fbvzlVhFoecwwK/0XVh5eqhzJKAjDTHW2VlLzY
-	YTtDl+Gd/5+6HXzovZnnZAzOROcXv5Bu6ICXGYh/cK6EMBDuk5T9IFgvhtYBMR/x
-	l74tNRApzJjSkNJSZMM7skZpfPySzn3ZRHZDDYeOUgKKXV12gii3F7Qvz4ZNWfTC
-	siZHiaEaPLS/4/oFh0mN9i2VuVTM6QThl7Va9TtwD+edsFWWkDafUzlMw3wg==
+	:subject:to:to; s=fm2; t=1771539718; x=1771626118; bh=ytK4nGC7gV
+	5e3mjkxrhlK1Q2NfGXiyg6VMsmCccbm+0=; b=AtAppbMgiN+Uc9zFYyf0gN+IpI
+	VrWYVVMClsssUhdTMrKQsMkpvNzFmhAuXD1izJMlvL0vf8iBRxUIjnbqqJX4+wnf
+	0ljJnOVYl0f1coV7brnftamK/vEXpDpjk8iVzZKahfWepJgvgCna1gW69GlwzUut
+	Jc68wbjatqky0SN87Ovs3HHSLSyg0oy7B8wF1fCrgbb1ReWTuxC9Uk34H339x4br
+	gAUVGV0uHKtIXtlYBaH11cEPxTAfvG4Mp2F+11A+8ni6b9q1e8H1kV3K2BOFjGsQ
+	ZmRp+zYlA5M2jivkiQmRBUdWBipys4B8+4NLOJTCuam4qpJsZ0Ct+TzN0gJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771539395; x=1771625795; bh=HqBd0aNzMh/kIdP8mHVlzMjXmkE3Faon/Nc
-	Y5lhRUQQ=; b=Axr3UsRRrtw6plCf3TFNqfx1Qe2Eb9A/eTfSpqX0Vbs2KELknBf
-	8Sap1pN/u03VGClUUg3HzxXrbH1XJTvYfONlC4KdNpQEjF+hTAFbauMjO433BXv1
-	mBl+SjSoSamxM7x7Bw2b8N/vzWi1nXR9BxD6GmBZSFBnVKwkoc2P6iO56K5LnvSF
-	7WlC9jK5ITTi2qIp3OJcaOjnvfGVeHFumpzfybzPmZu9ZGhvyB3eMxtjFNnGV4nO
-	xEgiZgbdpas12CU4x+HB5m6EifJKez15K+kIyMN68Zg+DJ0j8EI1kIzKO5Y0eYl7
-	nJ85S/8G8OiUBBxuZruAtpzPeEuXEYoLJYw==
-X-ME-Sender: <xms:w4uXaV9uHtW-t5M6sGa9D3pDHRdmXm3lMMYcupbfRXEpQA9vpcxKuA>
-    <xme:w4uXaYxTG8VcbxsWA9vWzxu1zRMIuT_ivNFxHBKZc3Fop2MKBbB4dPLhvVaerNi64
-    QosNb285O72DSYlUArftutc7iwuW1izx5suZXjQVChThWIVAOXeoW8>
-X-ME-Received: <xmr:w4uXaZMYT3o5WNSn2mlgYGbHKeDqjvI6NP3HiEudCBLdLZYEeBy_wZYsEGAcDq0JlYnlgL_6pPE14RnHpy-Hit3hIAjE8UF9qw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeijedvucetufdoteggodetrf
+	1771539718; x=1771626118; bh=ytK4nGC7gV5e3mjkxrhlK1Q2NfGXiyg6VMs
+	mCccbm+0=; b=iNxPvFVbkIIkrCI8xnF49r/7McVspABr0OOx5C95A7CRQfBAgXO
+	J3zEL9+oy+60j6kxrCZriNUnneOpAq9wcpzZiBJ+bWdId5KccT0+NQofNQlO1JQo
+	0K8dVf98C2oODgX5PNOnzSFpOa/S6KfTqEmaI1hGFp1TqegYi7gBLy7Njuu2AeyL
+	P1r+C/5+Il+glz9DyOrQzrbqiNVwN7iAe5uxUnjzOH79ugDOYxyEHA83GEYH7sLX
+	j9ARtsRk2ks9dWe49JnLVaQhVe2sMiRD9FRbgZiNGxfayM2HX1fYTbe+xo5XcVvk
+	JuMFwSoyXC6K/X+apahD/DVg8S2B4AVjRNQ==
+X-ME-Sender: <xms:Bo2XaQWUu_GUVxF7xWcLWWDIpLd6N8L3xBhsrDKBViA0l3J8zfl2ww>
+    <xme:Bo2Xabdqo1nqS9Mcjgixbr9kzG2r6SuJbkqa1vI96udTij-4kNzkkBPhuuArkHoUU
+    VcTuZsbekY4dvlb8R_X2u6LDySOG5_UqAxRrD4aGDVa_2paPf8l8ls>
+X-ME-Received: <xmr:Bo2XactsO7IVO2Y5ZBtoSAlq2aj6JgLBkcNHtFPEhF36tdi37xFOr3HiTQ1F9icJdlxTSvyEkYuEg7Lrio8N9KVhcJUCrsgkew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeijeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
-    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepvghmihhlhihshhgrfh
-    hfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
-    thhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:w4uXaV-mLro3VJ3q5gjjT-r-PR95n_Gb3f-2wpW9XMr2FIJjii1kbQ>
-    <xmx:w4uXae6-KBmJxxYHf4h4aU35QqEmhtt53kI6segqzi5693M1bHjhuw>
-    <xmx:w4uXaT4dA5pgW1Fqulm8_zoP6RhwqlNCwMX0fm0r_GOc896RVLt35w>
-    <xmx:w4uXafp3hJuv_Q6hS_MFGDAAwvzMK7RRPzDnwXcg198dh5nPUsy8mQ>
-    <xmx:w4uXaRia4QLvh94jZg-ZYUTmVloaVFEe3PyyftJDl8Shd_p0XkOfGFop>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgihqhhsihhmohhnsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:Bo2Xaa_e0CGLPzVRgr5u6ffZ_2K9IwIYnMBcSFItKkFl6ibtp33DLg>
+    <xmx:Bo2XaX3HaU6a0wNLfAMnxQNNmRyFOfNdpuwqQxRUkg0u_ZtvEHk4iw>
+    <xmx:Bo2XafCXfL25QsfpAXQzzKZCNq4RQhudk2pEOHgkLnqmXZgsEsHCyQ>
+    <xmx:Bo2XaTeZBybbb-2xXheVm0_xhBztfWeuAqRqhoSntqZdAGLbUXHQrQ>
+    <xmx:Bo2XaaPRJ-3SqeOqtEpk_QMHV5dnVz61OVWxr2hPxx3eTzPMfxpfCCPP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 17:16:34 -0500 (EST)
+ 19 Feb 2026 17:21:57 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Emily Shaffer
- <emilyshaffer@google.com>,  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon
- <steadmon@google.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 4/8] hook: include hooks from the config
-In-Reply-To: <20260218222352.55393-5-adrian.ratiu@collabora.com> (Adrian
-	Ratiu's message of "Thu, 19 Feb 2026 00:23:48 +0200")
-References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
-	<20260218222352.55393-1-adrian.ratiu@collabora.com>
-	<20260218222352.55393-5-adrian.ratiu@collabora.com>
-Date: Thu, 19 Feb 2026 14:16:33 -0800
-Message-ID: <xmqqy0ko1iri.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Simon Cheng <cyqsimon@gmail.com>,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2 1/2] checkout: pass program-readable token to unified
+ "main"
+In-Reply-To: <aYYROwDxrHU-H3n_@pks.im> (Patrick Steinhardt's message of "Fri,
+	6 Feb 2026 17:05:15 +0100")
+References: <20260127192936.904719-1-gitster@pobox.com>
+	<20260129190616.645471-1-gitster@pobox.com>
+	<20260129190616.645471-2-gitster@pobox.com> <aYYROwDxrHU-H3n_@pks.im>
+Date: Thu, 19 Feb 2026 14:21:56 -0800
+Message-ID: <xmqqtsvc1iij.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,59 +91,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Examples:
+> On Thu, Jan 29, 2026 at 11:06:15AM -0800, Junio C Hamano wrote:
+>> diff --git a/builtin/checkout.c b/builtin/checkout.c
+>> index f9453473fe..4f189fde48 100644
+>> --- a/builtin/checkout.c
+>> +++ b/builtin/checkout.c
+> [snip]
+>> +	switch (which_command) {
+>> +	case CHECKOUT_CHECKOUT:
+>> +		usagestr = checkout_usage;
+>> +		break;
+>> +	case CHECKOUT_SWITCH:
+>> +		usagestr = switch_branch_usage;
+>> +		break;
+>> +	case CHECKOUT_RESTORE:
+>> +		usagestr = restore_usage;
+>> +		break;
+>> +	default:
+>> +		BUG("No such checkout variant %d", which_command);
+>> +	}
 >
->   $ git config --get-regexp "^hook\."
->   hook.bar.command=~/bar.sh
->   hook.bar.event=pre-commit
+> Tiniest nit, really not worth addressing on its own: BUG messages
+> typically start with a lower-case letter.
+>
+> Other than that I like that we have less global constants with this
+> change.
 
-This is all good when you know where you defined your pre-commit
-hook, but you would want to know in which scope the configuration is
-made, wouldn't you, especially when you are trying to diagnose why
-some command that you do not necessarily recognise when you run a
-Git command?
+Thanks.
 
-> @@ -10,17 +11,22 @@ struct repository;
->   * Represents a hook command to be run.
->   * Hooks can be:
->   * 1. "traditional" (found in the hooks directory)
-> - * 2. "configured" (defined in Git's configuration, not yet implemented).
-> + * 2. "configured" (defined in Git's configuration via hook.<name>.event).
-
-Wouldn't it be easier to understand if we do "<name>" -> "<friendly-name>"
-to match the member name used in the struct below?
-
->   * The 'kind' field determines which part of the union 'u' is valid.
->   */
->  struct hook {
->  	enum {
->  		HOOK_TRADITIONAL,
-> +		HOOK_CONFIGURED,
->  	} kind;
->  	union {
->  		struct {
->  			const char *path;
->  		} traditional;
-> +		struct {
-> +			const char *friendly_name;
-> +			const char *command;
-
-If we wanted to report which config scope defined a particular hook
-we need to record where the configured hook came from in this
-struct, right?
-
-> +		} configured;
->  	} u;
-
-> +	if (repo->hook_config_cache) {
-> +		hook_cache_clear(repo->hook_config_cache);
-> +		FREE_AND_NULL(repo->hook_config_cache);
-> +	}
-
-It is a minor point, but after applying the hole series, there are
-only two calls to hook_cachje_clear(X) and they both are followed by
-free(X) or FREE_AND_NULL(X).  I wonder if we simply want
-hook_cache_free() instead of _clear()?
+As I locally amended the nit away while queuing, I guess I should
+merge this down to 'next'.
 
