@@ -1,126 +1,121 @@
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BC933507E
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 10:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E41333436
+	for <git@vger.kernel.org>; Thu, 19 Feb 2026 11:21:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771497749; cv=none; b=qdcX66EkkB9mb11E3yivMLpU2dkf7hYEYcxn0JLCloHeeyfrlo+mn69EHUVofIKuxT3JKVIc7mXDRg7ifQU5xCJXfqfWgKnTX4FDM4Xp7p9Xu9HcAzsM7fRfplIyJ6+uhHGp4eoagRhL9qomaJbzP7HVODDA3hBacjFSLlzRv5I=
+	t=1771500121; cv=none; b=hiSpq9glhMcX5TyFUM7emsltl6p6GO4oFXn3G+X3Neir8MdTr1/ep5ewQ4quyL0KxogGvWCxzPQhtFfr18eSYRR+DjaevYNUP/q/3IN1OP5VxcDeUA7Y9jiwN+fifx+Ro7Rhe8F6egSXEAUx81xUPi0cpYdWjrsYrojVZffk7TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771497749; c=relaxed/simple;
-	bh=+srzJCHGGvkEDvidZLEUNGJPcZukYDOMzo88Kb4gN0w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sgM4YkyGN7aTuVC057LKnETFjZ0SCv/5SOFx0wt9kKgMUKA7vjUOvPeffZ0Ge7ZRB7zJdf/CidTt4ow6zNR9bsQgw5Ika0vsTzffwxJo9J4sEB02Ai+CPGjSB6S8vz5Aj8TyvscKPGTIGSXHLMff2VOwqNHs5HrYRCprJIDtBt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eAQzuM2N; arc=none smtp.client-ip=209.85.128.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771500121; c=relaxed/simple;
+	bh=ulG98num/TYHj21IdEi0e5DfjaZnEtBA7VIE81ReTaQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ctIO/D8VJ3b0NbqoB0/BQOLHHA9/h36l8EnZC7H7Xp9sdUQXNtVENbrYge8igJAvVk4FV9gXxesdWPzYazITeTDO75Ket76sONCkerJfuE1XvrZvvzk01A4+4apm2RsAyE3A323iRHkCwvKyx8YajBtDxhYD6Z06huXOE1VILNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LzGHVngp; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eAQzuM2N"
-Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-4807068eacbso6986365e9.2
-        for <git@vger.kernel.org>; Thu, 19 Feb 2026 02:42:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771497746; x=1772102546; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DW2DC9RNLk9NoABQT05WnAUWQx0G/5GdpHVeVHnvAbw=;
-        b=eAQzuM2NOGRZA7gdWx2si0UuOUrA70a2nVje7uIDEmT/JcXigQ3XR1fTGeGvOWupbW
-         mjeL8DEoiJOe5BR63dGOW7By0hRDNk22EMbb/kN73e5wVnY2WZT4nlhu4x+wPlJiMZc5
-         0Jpr9OzutevU+tfaXjtrfXSJZz/XvxpJ09dEHAPkOEwbpSprEUIxP+2hrzsRm5GcJuW6
-         d4rgmEKgovWp2oUYCgRF152wlkfdcsI+8Yud4uDuxfhyWUs0+wVvbwclc/Lf67HtEJ6h
-         9/sqr+47ymNcTZZhpmGkfKi7v3pn8UUqJvdveTu+7qNXITm4Dmqh3oRrucZB+tXCn2bz
-         GEYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771497746; x=1772102546;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DW2DC9RNLk9NoABQT05WnAUWQx0G/5GdpHVeVHnvAbw=;
-        b=mWqbJe/LoKDcCNxuGNKD8BawjxlVY0FRdhxjqGn0PtaHOR2kyZp9rBCSxQKY2zIGIj
-         qKArMKY8ft7aRifsBbu7abFt2TI8nvEzW4JFI1cbnNIeAinPre3OwPJxg5U3/qqSMBVU
-         zwpPvGMkgnSTUsfMjUB/sg7+BaeooBeueqiVSdhcvPMFJnjLSj3ZamPUFJftz1H2c60i
-         Digk0sqR227ohJ5q5RrcqQPqNov+mxouetQlM7rGR7JHLqH2SlzQFe2id0Onc44wunez
-         vig0KE6AuuLPO66xDfvIesfloIJm+ccYODXGOtmXR65Wup0vhaxll3ASgPThkW7nCHER
-         Wpmw==
-X-Forwarded-Encrypted: i=1; AJvYcCVvWTGnmp99GCh80VD256DNDWaBfY3JHIxLrrI6GZ3SKjAzaUmKKLs4xuXL2V0FutYtxBo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFDQ55xesnHL3i0FoeXxXlGJ+kqtz9H7ejOAN/IHU3ADc7dZzH
-	nLP72A2U0tz46f0/+nchnDpIfl0MscjVPTthnGlYNlhGayS/RtV7CyX3
-X-Gm-Gg: AZuq6aIADhcYN7tim/Ws5N5V7v1QLxrzCjRUrDSNC2FiJigyWqU8+NmgGYiY/lPZQWf
-	4tidAvB/k6ixdIi5xAGLLKgm7kqyWWyUcDwfcuXJ1DSmRTg0mov3rYaB45hIZluyUNnWAxKzKo5
-	lYMV+vueQlkGFUz/wL3pBATFCadGZF67gfRllSDzlqAKw8vvK4dfwnOK/k/5IhEJh4Adqnd0tm0
-	BxOt8WOd/f6lWIM136We+rZojBGAd+VDxGidVFrgOba13bKfolCsrNVA1oolWe7mWZvLsQB8ynn
-	MJ7qRvRgBtCM0r1SWOTJNtQanYFBYcs8Q/BdMwiVHKOWCmJS4nFf7J+UfgPLGDr2yZqrWKcaUWL
-	8EQ6kUMz5wW7JpImBMwBTw8fHOsruj4DEikcotypCZMQIT5lmqfjD5em5WABAWfbJ9ZK//HV96a
-	zy0/Ym1+FQ+KEXhSF5c/LZKt6x+draM4OdoPNK1PH3Fv3gIN9azi/OTJ9GqmJV+Gm2AQHrhhAWu
-	5vgfQ==
-X-Received: by 2002:a05:600c:46cd:b0:480:4a90:1b00 with SMTP id 5b1f17b1804b1-48398ad71a0mr85147135e9.20.1771497746255;
-        Thu, 19 Feb 2026 02:42:26 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:68d:f601:6840:9d65:3109:8533? ([2a0a:ef40:68d:f601:6840:9d65:3109:8533])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4839ea37b6bsm15555865e9.7.2026.02.19.02.42.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Feb 2026 02:42:25 -0800 (PST)
-Message-ID: <0d6c5b14-1c53-4372-8395-7c7cba9fbf0b@gmail.com>
-Date: Thu, 19 Feb 2026 10:42:24 +0000
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LzGHVngp"
+Received: (qmail 2210 invoked by uid 109); 19 Feb 2026 11:21:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ulG98num/TYHj21IdEi0e5DfjaZnEtBA7VIE81ReTaQ=; b=LzGHVngp6t0+ced4ZWOwsRslj2Fy9gOlIPMvWIiMSNkuvLmZSSSWb4I6lrkT23LMcL+BKmvmBnlXD69jWhcvok6Lcx2dx2Zpolmxy6GudC4JvTPC9cUhfV4o089gtfCHWxJ4ngdmhdcj064XAEJvM7ZNrgJ+O7k2YjQbwH3vEFy+eUZX5wLDx8/4o4xHHaKqIf/VaaDX4juUCqF1VM7fiNZ3eBcA/7Ri2xE+8el2chXH/W7ZNYQ+Xw8tvdLxfMu0gS9VokyTJtjqYej4NgeHmPcJAGYyj1ynUTxxELHE1SjvftTUYC6pLf9yTHsWUF5gvQQb/U0eLmgtywMSgTRK1A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 Feb 2026 11:21:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4513 invoked by uid 111); 19 Feb 2026 11:21:55 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Feb 2026 06:21:55 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 19 Feb 2026 06:21:49 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Collin Funk <collin.funk1@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/4] ref-filter: factor out refname component counting
+Message-ID: <20260219112149.GA3529@coredump.intra.peff.net>
+References: <20260215085755.GA86262@coredump.intra.peff.net>
+ <20260215090052.GA695631@coredump.intra.peff.net>
+ <xmqqqzqjckgu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC GSoC PATCH v3 0/2] Make read_attr() repository-aware by
- introducing a lazy bare state
-To: Ayush Jha <kumarayushjha123@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
- Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>,
- Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-References: <20260208062949.596-1-kumarayushjha123@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260208062949.596-1-kumarayushjha123@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqqzqjckgu.fsf@gitster.g>
 
-Hi Ayush
+On Tue, Feb 17, 2026 at 10:07:29AM -0800, Junio C Hamano wrote:
 
-On 08/02/2026 06:29, Ayush Jha wrote:
-> This patch series is v3 of an earlier RFC that aimed to remove the
-> dependency on the global `the_repository` from read_attr().
+> Jeff King <peff@peff.net> writes:
 > 
-> Based on feedback from Lucas Seiki Oshiro and Junio C Hamano, this
-> iteration introduces a repository-scoped, lazily initialized "bare"
-> state in struct repo_settings, exposed via repo_settings_get_is_bare().
-> The read_attr() function is then updated to use this helper instead of
-> is_bare_repository().
-
-Doesn't the lazy initialization here suffer from the same problems that 
-Junio explained in https://lore.kernel.org/xmqqpl63b2tm.fsf@gitster.g ? 
-Changing config settings that are currently parsed eagerly to being 
-parsed lazily opens up a whole can of worms and is best avoided. As 
-Junio said Bello Olamide is exploring a different approach that avoids 
-the lazy parsing.
-
-Thanks
-
-Phillip
-
-> The series is split as follows:
->    1/2 repo-settings: add repo_settings_get_is_bare
->    2/2 attr: use local repository state in read_attr
+> > +	if (len < 0) {
+> > +		int i;
+> > +		const char *p = refname;
+> > +
+> > +		/* Find total no of '/' separated path-components */
+> > +		for (i = 0; p[i]; p[i] == '/' ? i++ : *p++)
+> > +			;
 > 
-> Comments and suggestions are welcome.
+> Sorry, but I have no idea what this loop (copied verbatim from the
+> original) is trying to do.
 > 
-> Ayush Jha (2):
->    repo-settings: add repo_settings_get_is_bare
->    attr: use local repository state in read_attr
+> We start at the beginning of the refname string, and while we are in
+> the leading run of '/' we increment i to find the end of that
+> run. E.g., we start with refname="///foo", p points at the leftmost
+> '/', i runs from 0 to 3 at which point p[i] points at the first
+> non-'/' character, at which point we do *p++, to make p point at the
+> second slash?  Is the dereferencing of the pointer in *p++ a no-op
+> that is there only to confuse readers?
 > 
->   attr.c          |  3 ++-
->   repo-settings.c | 12 ++++++++++++
->   repo-settings.h |  5 +++++
->   3 files changed, 19 insertions(+), 1 deletion(-)
+> And then p moves to the right until p[i] points at the end of the
+> string.  It does count the number of slashes in 'i', but there is no
+> satisfying simple answer to this question: "what does p mean while
+> this loop runs?".
 > 
+> Anyway, the conversion looks very faithful to the original.
 
+Heh, I missed your message initially but was independently staring at
+this because Coverity complained that the dereference in "*p++" is
+useless. Which is...kind of right. It is a void context, so the
+dereferenced char goes nowhere and it is a noop. But if you don't do it,
+then gcc complains that the two sides of the ternary have mis-matched
+types (an int and a pointer). Which is true, but since nobody looks at
+the result, it does not matter.
+
+Writing it like:
+
+  int i = 0;
+  while (p[i]) {
+	if (p[i] == '/')
+		i++;
+	else
+		p++;
+  }
+
+perhaps resolves the syntactic confusion. Leaving only the semantic
+confusion. ;)
+
+I guess the thinking was that "p+i" represents the traversal, with "i"
+encoding the counted slashes (so we must increment _one_ of them each
+time). But I cannot fathom how that is easier than counting the slashes
+like:
+
+  int slashes = 0;
+  for (p = refname; *p; p++) {
+	if (*p == '/')
+		slashes++;
+  }
+
+Which made me wonder if I am missing some corner case, and it is not
+just counting slashes. But it must be, because "i" is never incremented
+except when we see a slash.
+
++cc Karthik, the original author, for any wisdom, but the commit is now
+almost 10 years old.
+
+Is it worth rewriting to the "slashes" form above for clarity? I was
+afraid to touch it just to shut up Coverity, but now we have two
+confused people.
+
+-Peff
