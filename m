@@ -1,69 +1,69 @@
 Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D45255F5E
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 01:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FF423EA8A
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 01:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771552798; cv=none; b=ufXVjplpQW8FcKcvY62Qwv7XyewW0o/xy6bQ73CZkqW9Gik5odchA81BeXF/zKpMdvWldnx8N9vqDuUVQYRyc/1LabqzIZeMISn9wvTkL/lYh/v5oKOKkCBm+g6tCyNY+eNNWLMLh6YC018Lk2wXv6cyIr1FjZw5ejRU+DWRKGk=
+	t=1771552800; cv=none; b=NjYIsn5/wdph7i81jaAso3KVsP4K3TY1cppACFeHSCzVVEy0ZzvHsdhb2l9VftGlun1BafSYcXN62JgeXAZbR+WERSV5xc9svBYMj45Sys4xv2A0MBiMWxdbRS4ZYHP7Iac3jjldWGs8sBkbfarPdznr0w/UQjrAMYbxL+JSTRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771552798; c=relaxed/simple;
-	bh=HcyjotHM01uDT5QWFcQejox5PJZAKmwDpPPq9k7rU2w=;
+	s=arc-20240116; t=1771552800; c=relaxed/simple;
+	bh=qL1p6rxC9dScmhcuc0UQ10M61cdlhcCZTJYkVnpo4AA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=c7oACrvy3MtC2GmLY2tPYe2tKnlSObhNo/lVCyBk5Gd1V/AIo8SvdbBEa8xbWvY6jE3KZWboBUvUQVp1OAa9enBzL9g14Y83k5QlywsOUU0YG3MnfNwIHtcFrxjAPYFFmEzhxo8XFanSgpI1+mDzjS1/yCO8V3MbHj8VMEoRezI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nMgIazCi; arc=none smtp.client-ip=74.125.82.174
+	 MIME-Version:To:Cc; b=bC3yXQTDuxYIBOJKoUFp8XEOgQO8ecTtGwzl4MSW7WEfGhlMKLW4H7th3qOsMVCWfF/SglefAPJSOV5iRoQtL2tN/N8/P9FGvviXj5FF1hDbQAlyjABlneYDIb4is5dVEgtf5d/BjVj38Ukw7pGUuVP3y8Oi7U/EehC7E+MHMrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lnrSZO92; arc=none smtp.client-ip=74.125.82.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nMgIazCi"
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2bd62e10a72so2889579eec.0
-        for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:59:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lnrSZO92"
+Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2ba9c484e5eso1687038eec.1
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:59:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771552796; x=1772157596; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771552798; x=1772157598; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vM3vCqKYzvIlj5sr9Vc7buwqW45ez77hKog+NPxKRfw=;
-        b=nMgIazCid+BlYoDjuzPQVOUN840v8uu3eP35IMdSqhwuQZMjUWVVGAfn1vLVVBiPQ+
-         slOKxWy0B3R5UmQ2JOLG6/d1YiZtp1ggyRd07b2e9VGoeLpmQg9XSGwdBgFFO7SpYB28
-         d5aek+hTEMc/GjYXI+7RAG6LM+UlaWMNecbrZ3vYDGuazuY2M9Z+5rx+RUvuWntQ8DM7
-         utEc+yol7LKZhkJaL8IgNsKztSCGauYLUqzhl3XkidIjLMHQxWoAudipvsg1mccrReaS
-         s2OsvjkjpW/al0hRdyxr0D9HP+JUxwB+VvlxofS2bg5P0SQSc5nFpUlvPglEt42HPoPQ
-         4hkg==
+        bh=p16zkebo68ws0atw+u7gG5ayMinuKV1Dx3PRtHjZ/dE=;
+        b=lnrSZO92HX/z+ijpC/ei6ZA4rGiAxNQ6u3sztlczCIpTFQSjZ9NwZ8fsG8fWJLsj/t
+         D2dG7vBasyNBGI96FZBfePCRIB253xEvZSUuvWUtBToAwh93WZuPAVQqLFgDB9eakkIV
+         IzuH1cNjjNXN2mdP//WB3rH/MTeBBXzZG+nvwqVSVDE5p0r1/Wp4VqAcPF5UrO5jTdvg
+         YYsF87cs8/RciO5np/Bfdu31L/GeWE5GDT2I/Drg9WgmbPj6DawBLdkJ+RBZZbhT8S2t
+         pvHm+2Emr+bEtTjPuZ7Bu2CB1cNP6c/m7icktYJH050TtJiC1DkWssJxxvaRVrzfUD+h
+         2dag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771552796; x=1772157596;
+        d=1e100.net; s=20230601; t=1771552798; x=1772157598;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=vM3vCqKYzvIlj5sr9Vc7buwqW45ez77hKog+NPxKRfw=;
-        b=tsy9ajMSYn7htsyZxHKMNOxktyW9qRuxt3E2GGPal3gntZtJGJZM8vZGuddWSta+Jv
-         DB+Fcj7QGD1KMozsA9cblJUHecTAIvJ1FdnYNNCRCOTTaQuuRJgKUn4mePZ6j1j91HcX
-         eaAo3kAB9onxNbJPr6KiEC3gm3b3fWyb629WdWdgqE6ZR8XPzLRgfhZMw6Ar2sXhiu2K
-         qQkAVYiCruIKe2x9epAXbmD1lJztEwc3YspPuR2zf6nGCuCNDdrU6A9GWj/85r6w1kb/
-         dag2nou5Okp62w83J2Ciauj4Bv+1qpPkg8SvAhPyiZQ3l75phq2yk2l+ihs/DFwGRgMJ
-         pCnw==
-X-Gm-Message-State: AOJu0YxHy40TDtNvo4QrxzleveniXcY1Fks7yTHM6QWr50/pXiqtWugl
-	JUqPGiX3sTfXf/tNarjsBxLj4P/jso3TOJPzv51312jxwKQSWdBZPH4qFZTqFg==
-X-Gm-Gg: AZuq6aJIcvzIfpjhfMZJ/PZjkaNivXWDINlab42Y86Tc6v9Z01sunxWO82EqeS2WYQE
-	fKC2VypVMS9lhMtt2vuiAgASTfysM5w6cw8I0QBQC5Z26dO3bCrx9tagNu1g5LnMjTJtGMDXKJn
-	mkWJCyKQehWn7F2w3XOMj4BoDz0DqGZ9vElO1WSV7FrpSJOm9OPsBWW+GXoj9xfKyANF/6szlMI
-	OWidBqRSj7ZHI35j12G9bAHBR/cqtujf5VRsbVMsLG0LzzWZFzjbMY/bb8fu6H3gsD0ABKrJSIR
-	iWLNk4+TtmpV52K9D1PivLtXyHj1QvV6uyQauxOBnMKAz4JLBmRYz/CLnF2Vsrl5vymmQyF6Oj8
-	gxyXM3XuEisQ3oeasSXdGsCIejUtAZUeZJQYMX5OtlDTp+0VYhegavEcvMBBKW7v3FnIG2DVz4a
-	8PfeEPHbOGiGHyNOYU3Cydg/837w==
-X-Received: by 2002:a05:7301:678a:b0:2b7:2bbd:95ae with SMTP id 5a478bee46e88-2bac97d5160mr8298538eec.37.1771552796358;
-        Thu, 19 Feb 2026 17:59:56 -0800 (PST)
+        bh=p16zkebo68ws0atw+u7gG5ayMinuKV1Dx3PRtHjZ/dE=;
+        b=HWW8RaHh/amBozxI7PnkyhO0xjBgOMIyPqPLZjGWA1AkPfdMXIbm1V4U74bOEQMLzY
+         0SYaT0QN9Td9B6yZ8sj9crz9OHSa9eV0+odATPmJgUO3OtEKM7ebNTDiL+y3+ikSJtsq
+         AWAijOkAMeBWOflkiLrIyXPnNUTawLBIAdBone87gF/kjFi10p5jcY9Kn9o6An3GBl63
+         8Vz9YRik2wxBTBulXlm6FloCmLAsHIiutHsP0fjkY0I8Z6Z9DiSiZGbFkxVH+BsuLeXe
+         Ma+yX1DjZxOwJu1rllVldT5G01T1gYFUdqRFB8m1ElFRkt22tMsFIsCtnN6k2U0Ni7H7
+         xb3Q==
+X-Gm-Message-State: AOJu0YyY5uEhuV8LohQZ/qQJ+M39TnL+vSVlBRcKS/KtHyJeH8n7cx5v
+	drlQokXk8NaYNqgPK1kUiJ2DvnX09WvbjdHOvdElFq3dDcn/QB0KgzbMDDbklw==
+X-Gm-Gg: AZuq6aK+FTJmN42S6Rew4FVeRnUDNdsUhRuGoCJO5DbdZ5lqV3qTRSvmhb7/jpE89Fu
+	PVjHDLYI2XgSfyKVm1hiXgK9w4NnYcq+lcCAblzKh3FiLib9LDib0S2VcHHCAdQeM9pH7PrhVRM
+	Zq8nyw7k1ObLkDroi5BclaEWIHYHZl7ymDBhp7NyhutMFzhNK5GCXNwt8j1DT65Wz6P/VYpqZVA
+	L2YnvewdK2jB/2qFEirxUTxFKhj94ikHFz+RTKxzjXfOgY6L6nS0Qfv0tn55uL4h+b9rQfOYvUt
+	4OJdaeQ6D75LRlgwzh5Df8mlsLNVnSG1sHM3HQdR+1OqnFxi5VyAqJE7DS//rtC42hyofmFPJVY
+	5NoXsbXI8oXcMRqIZXqyaVOiKw6b+cx965coE7hKmuBuBHsMJnIAQz5mexNEpu1IWOLybMAgWWt
+	o5CWVwhE+744KD3ggUg9rKQuTZjQ==
+X-Received: by 2002:a05:693c:2b06:b0:2ba:69d1:7622 with SMTP id 5a478bee46e88-2bac9811a66mr8031673eec.40.1771552797661;
+        Thu, 19 Feb 2026 17:59:57 -0800 (PST)
 Received: from [127.0.0.1] ([172.215.211.50])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bacb658fb9sm22202278eec.20.2026.02.19.17.59.55
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bacb658531sm25348623eec.18.2026.02.19.17.59.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Feb 2026 17:59:55 -0800 (PST)
-Message-Id: <932d945c9bd15ae570198fb489173b4461034622.1771552788.git.gitgitgadget@gmail.com>
+        Thu, 19 Feb 2026 17:59:57 -0800 (PST)
+Message-Id: <67db46f34f5a0a4a791479899b9dd954aaf5e9d9.1771552788.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2048.v2.git.1771552788.gitgitgadget@gmail.com>
 References: <pull.2048.git.1771406115.gitgitgadget@gmail.com>
 	<pull.2048.v2.git.1771552788.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Feb 2026 01:59:47 +0000
-Subject: [PATCH v2 5/6] merge-ort: prevent the_repository from coming back
+Date: Fri, 20 Feb 2026 01:59:48 +0000
+Subject: [PATCH v2 6/6] replay: prevent the_repository from coming back
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,36 +83,34 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 From: Elijah Newren <newren@gmail.com>
 
 Due to the use of DEFAULT_ABBREV, we cannot get rid of our usage of
-USE_THE_REPOSITORY_VARIABLE.  However, we have removed all other uses of
-the_repository in merge-ort a few times.  But they keep coming back.
+USE_THE_REPOSITORY_VARIABLE.  We have removed all other uses of
+the_repository before, but without removing that definition, they keep
+coming back.
 
 Define the_repository to make it a compilation error so that they don't
 come back any more.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ replay.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 60b4675f39..00923ce3cd 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -53,6 +53,14 @@
- #include "unpack-trees.h"
- #include "xdiff-interface.h"
+diff --git a/replay.c b/replay.c
+index f97d652f33..a63f6714c4 100644
+--- a/replay.c
++++ b/replay.c
+@@ -11,6 +11,12 @@
+ #include "strmap.h"
+ #include "tree.h"
  
 +/*
-+ * We technically need USE_THE_REPOSITORY_VARIABLE above for DEFAULT_ABBREV,
-+ * but do not want more uses of the_repository.  Prevent them.
-+ *
-+ * opt->repo is available; use it instead.
++ * We technically need USE_THE_REPOSITORY_VARIABLE for DEFAULT_ABBREV, but
++ * do not want to use the_repository.
 + */
 +#define the_repository DO_NOT_USE_THE_REPOSITORY
 +
- /*
-  * We have many arrays of size 3.  Whenever we have such an array, the
-  * indices refer to one of the sides of the three-way merge.  This is so
+ static const char *short_commit_name(struct repository *repo,
+ 				     struct commit *commit)
+ {
 -- 
 gitgitgadget
-
