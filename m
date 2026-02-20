@@ -1,159 +1,116 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022041B0F19
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 23:07:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39AC30C356
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 23:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771628822; cv=none; b=IKX6ihd3FEb+Z+xFNahYrANeDlLmZWxumjrbZbUvS4moYIinK14N5+K3Z4eTxfRpHyAIXmVjyy2bremYu/uAJc1DlswI7/rF6trFg/hB7BswgmbxptYF+3hBgrtW+oMPQS1wBos3od+0E20q8DATmXIEVL34UF33RfiWd491N1A=
+	t=1771628825; cv=none; b=JoK42zUuB+OLcK+XWq4CCrZf9d8n/x+tXVckUA5+UUepUmtE8LNZvZvUgMAGEAYHY17SNL+fkRdZy6EfhlxK7lehFgsZz5KZrDxLpXBkRilQ2EvAI85DH3C/TqzvzHob6ZhdyrMWeah/38tJT2JYkTW7z2eGnCKS4oRH6sqAXZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771628822; c=relaxed/simple;
-	bh=rkBKVJMT5DmUDsFTkuwyt0LKAw/o/MIAQ/GBt9YJJkQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Zls4GHggBdtSgZUBdz3eT/Ru76b6UytgU87Q907r31Xo90A36LMQEmjDWwew5UoN0yIFkM51aA88+JsBLQpCIlUTfn/zQwZYA+wQd2NOZDvipOJON9pqvf5M8HgREGXG9CEZPIckV2na4qle7Wjqu2oYE0i55a6zb1CtS2tq/qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=AYy7PLDv; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1771628825; c=relaxed/simple;
+	bh=RpXt12NcF8W4U9hMiMOKIDP3wl9nYg66bGE1bO9AIew=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=h6esMl5GHKt53XnHDhdDNDCqQbf3P4mtvYXaeugQujz3/e/RXpM1NwZo5LmUJJpfHvFRoQtgMwphUiRNVVK+dvRe4k03SUZeuGRpIwrtT/8wj4SU1P4fMj3RZh/dsdo50nk/GVJ0puNRwPjROBNFjLkVe9Ph4XkMr3xxad+gMOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yd5yQC7W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LDBx0dKH; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="AYy7PLDv"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1771628811;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=EEvwqdhwKATzT/Z+Y119pHJ7w7sHVBP4thw0PF7I6sI=;
-	b=AYy7PLDv7HxVHv+bHFC/3SeUz5s3jTHunL1gLgEAZd62cpVLeRM/pwHIRNJZp8fXEAL3Ln
-	tlKxX+3G+5aWm0rXa40JdidpR5MwOoDBDa5WeQsOZhLpOMsBFprFuugcEwp/+L/8h5ZUJE
-	g1w8ENP36F03g+0hhuZQbTKH9G5lOM+NoZOEq1vxjuOWEb25bfoPUN62rsZtcbNiCS2Udp
-	5tKKh44TxczqpepMBIxALg7XpTHFHEtLoGfsldLcnSvCUTnFGfGFGOjm+VXQbgYYVRG9OL
-	EmIdaZb4ez5rO5uN8h50L0CGZH1+tm0EcqiqoomXntok9nE/K21rQz9m7/mGSg==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>
-Subject: [RFC PATCH] format-patch: better commit list for cover letter
-Date: Sat, 21 Feb 2026 00:06:31 +0100
-Message-ID: <20260220230633.132213-1-mroik@delayed.space>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yd5yQC7W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LDBx0dKH"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 35CCD7A00D5;
+	Fri, 20 Feb 2026 18:07:04 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Fri, 20 Feb 2026 18:07:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771628824; x=1771715224; bh=kjn2EZJNz4
+	L4EWbaEIoctttM0ZbHXGuJfqadsa0BVBY=; b=Yd5yQC7Wdohn7xtPxt0JCkWEyt
+	yTr++RCqwJD00xoIeO9RQ0zgaAeQruV5V7kE+DxhwqGt2n1EINEzqPlxYo586bbz
+	/qumeEHu9928euBRo5QFv3T8RY98FX2eALQRrs8mHlQeQ/d7bcLf6NTB/1PyJHq+
+	MuZwucptD5BaNQ1qztebAU48D6FUFt8VQaKBH1VyP8l72S1IkrwBmDhoAldi8NX2
+	qNmdqtdZlfvHZvLtnI/fXj+6QSpePL1304ZoeV5wnHKB5PthlNkjU+arlFjyLwt/
+	O85tQAJcWqTvAmzYCoTIE5ZX1Zprs0v7LEez0+USaLLOlbSx9Fwf0XhCNX9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771628824; x=1771715224; bh=kjn2EZJNz4L4EWbaEIoctttM0ZbHXGuJfqa
+	dsa0BVBY=; b=LDBx0dKHckAwY+WM6K8tahNnRvaev4qSM1vT5H7dBpbbvZBWzQK
+	eD9w1/WQiPQ7ZIdUeI0criiAMZ4wJnjIWR6Rfi8X2VawHVfWV6BChjSpYcI809pX
+	d/TQUOngqwFzD5vcsT2JTfTuzBWzhsbECNYXC5c2g0HnP9HAEB+cv8DLODMmOluC
+	NVgRRkre8G3wspNeYW/Dc08trITMotxydBBbJ9PtpSEBS8Nw6HqKBS1wpTOJOHF1
+	jdZWXpWOzQU6tv0wojyqi3Br5I6tCPP0Sd/rmvsgVLtqvHU93AGp8igU4JjWIIlC
+	ezplZvu1KLmznPtuQxu4zB9WRtfxsit/eGg==
+X-ME-Sender: <xms:F-mYaRMxoLgnnjHAXbNhlfBlOE5iVdmbB9OxUcZ6BkM3SQIop_JreQ>
+    <xme:F-mYaa3d_FoceOFTxMtql-XvUS0f1BvHfYsT7BavZnmkrtCC2Bj5kqw_smfb3hVWU
+    fIK5Yt2fHGpZPFz4X8bW2tHuWib4TPsrIeYkRAdwpeswPJR7-tmF0A>
+X-ME-Received: <xmr:F-mYaYljYvER3B4r3qEDWCq0SX6zq1V1wRIupOAJRr9ABo-g-Q7jX0RBVkz2Tk72HCewPGSDq-4Ma-rf1S7RzMMVCkUl_S4cGw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeljeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohephigthhhinhdrghhithesghhmrghilhdrtghomhdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:F-mYaZWhPkJLd1RwhVpc1cR03IARWm730aIu2jP2TIzFjulNEhXFkQ>
+    <xmx:F-mYaWtnSNp8SRQG_5Ce5GqtOnp3GVLMjfkjLLOHknrEqW6EgjcxVA>
+    <xmx:F-mYaUaEXiLJmew2L9BMhHoEfXQKbUgDIlD2mnxoJvhFuR_VED8K6Q>
+    <xmx:F-mYadV91od1JorvEqPvTM3e1Ww0RatgfBuB6oKKSbLtEQj88xbbFQ>
+    <xmx:GOmYaQnwqRhNfOno-gqHNHAaxsgF_q5McefBPj3Ldx-MQlPiL_zQO4mM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Feb 2026 18:07:03 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Yee Cheng Chin <ychin.git@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Yee Cheng Chin via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] xdiff: re-diff shifted change groups when using
+ histogram algorithm
+In-Reply-To: <CAHTeOx-TLwqbcdGcb2drD4vE6D3M93EPMjcAeTNR+XNTbmTVZg@mail.gmail.com>
+	(Yee Cheng Chin's message of "Thu, 29 Jan 2026 17:58:18 -0800")
+References: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
+	<xmqqikcusn8p.fsf@gitster.g>
+	<4fa413ae-f2a4-4de2-a2fb-0b1db379750b@gmail.com>
+	<xmqqy0llk33y.fsf@gitster.g>
+	<3aeb49dd-8618-42e0-b9f9-6a4fb8065793@gmail.com>
+	<xmqq343sjn4x.fsf@gitster.g>
+	<CAHTeOx8SOZmqvi0pkcheSjFpbEALmOwaUiX0tKLmNP7fqvjMXA@mail.gmail.com>
+	<xmqqsebo9lv6.fsf@gitster.g>
+	<CAHTeOx-TLwqbcdGcb2drD4vE6D3M93EPMjcAeTNR+XNTbmTVZg@mail.gmail.com>
+Date: Fri, 20 Feb 2026 15:07:02 -0800
+Message-ID: <xmqq7bs7ui95.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3820; i=mroik@delayed.space; h=from:subject; bh=rkBKVJMT5DmUDsFTkuwyt0LKAw/o/MIAQ/GBt9YJJkQ=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpmOjrkfxcPmkwXx+uBkUbQzJklAsBk5qePRhr5 G1eBkSLsMCJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaZjo6wAKCRBIeX6hnBm+ 0aX2D/40c9Khqu3X7MNTrlwj3BHvH1sEPZGrIz2wt48ohLwn+/2UEprI8L+XfeOb+1piUgBNnBs 74/Xhd5P/L/JTo/EexEgDWH66m0Fvtm6zOyNCl98tJxL0l6VQFcp3EEJOT11RnhB3sQU6u37WcS g78cp02THVvUUtVyeak5hNzM8pF9wro99iZcNmkEnFzcHjxPTG3FNf+yapNAJQn8xG706/GKM3S RTkmOL7u226kMpTocM7pUvwWbpOIDmNYsxLLsIV0pVuYtFsW4smpUyWYBAey6fkGuEDCnsvJAOG ooMTEfAFoUVqwXrADNALStRfiZL7OG6/UC1BK5O+1FTA7VC7ulXWaYmNeBovye1toH79FwfE0Ug Gl3bQoGYA10DnScUKSXMPRw6qyYpdskJE3599kVA1nRRts7x5UbA+3HNb6mTmvWBjK11M81gXbi +v8NjbBBwFX3qwYf6kk3GyPfzn/veTRClRD/fw+I5YKXUiqd1ZI+MltF8nTZMHF1zc87wO4RkCw UuW9v8Q0+1st+Ak7J3XkgXfrkcd0pcfZshVDlqYmSQ2vEhTn6V3Ewa7d5polkVCIih8TMW+ZyRn FfPzPHuE2K79IB5f1irZzYvwDX8ZPhtd7y2coOP/IugDtsF07+rA6Hstg7P5+/RttKkRU9B2A2P KOPOtmFJHt0ME1w==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: -
+Content-Type: text/plain
 
-Often when sending patch series there's a need to clarify to the
-reviewer what's the purpose of said series, since it might be difficult
-to understand it from reading the commits messages one by one.
+Yee Cheng Chin <ychin.git@gmail.com> writes:
 
-"git format-patch" provides the useful "--cover-letter" flag to declare
-if we want it to generate a template for us to use. By default it will
-generate a "git shortlog" of the changes, which developers find less
-useful than they'd like, mainly because the shortlog groups commits by
-author, and gives no obvious chronological order.
+> ...
+> {-AXB-}[+CD*XE+]*
+>
+> Because of that, I'm leaning on keeping the current code structure,
+> because it *is* indeed a cleanup step to be run after the previous
+> one. I could still refactor it into a separate function and put it
+> into the the case #1/#2 if blocks if you think that's cleaner.
+>
+> I will also add the above to the test case in v2.
 
-Teach the make_cover_letter() a better cover letter format to replace
-the current. The format can be seen from the following example:
+OK, it has been a few weeks since we had this message.  Will we see
+an update sometime soon?  No rush, but just pinging.
 
-    [1/3] abcc234s: this is a summary
-    [2/3] 73s84ns2: this is another summary
-
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
-This patch comes after a small off-topic[1] that discussed the
-usefulness (or the lack thereof) of the current cover letter template.
-This patch hopes to make a better format so that developers won't have
-to make their own custom script to generate better info.
-
-[1] https://lore.kernel.org/git/xmqqbjhjxp2d.fsf@gitster.g/
-
- builtin/log.c | 40 ++++++++++++++++++++++++++--------------
- 1 file changed, 26 insertions(+), 14 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index c1cd3999a7..4fea895527 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -30,7 +30,6 @@
- #include "reflog-walk.h"
- #include "patch-ids.h"
- #include "path.h"
--#include "shortlog.h"
- #include "remote.h"
- #include "string-list.h"
- #include "parse-options.h"
-@@ -40,6 +39,8 @@
- #include "mailmap.h"
- #include "progress.h"
- #include "commit-slab.h"
-+#include "pretty.h"
-+#include "strbuf.h"
- 
- #include "commit-reach.h"
- #include "range-diff.h"
-@@ -1324,6 +1325,29 @@ static void get_notes_args(struct strvec *arg, struct rev_info *rev)
- 	}
- }
- 
-+static void generate_cover_commit_list(FILE *cover_file, struct commit** list, int nr)
-+{
-+	char* commit_hash_buf = malloc(GIT_MAX_HEXSZ + 1);
-+	struct strbuf *sb_loglines = malloc(sizeof(struct strbuf));
-+	int temp;
-+
-+	for (int i = 0; i < nr; i++) {
-+		strbuf_init(sb_loglines, 0);
-+		strbuf_addf(sb_loglines, "[%0*d/%d] ", decimal_width(nr), i + 1, nr);
-+		temp = sb_loglines->len;
-+		strbuf_addstr(sb_loglines, oid_to_hex_r(commit_hash_buf, &list[i]->object.oid));
-+		strbuf_addch(sb_loglines, ':');
-+		strbuf_remove(sb_loglines, temp, sb_loglines->len - temp - 8);
-+		strbuf_addch(sb_loglines, ' ');
-+		pp_commit_easy(CMIT_FMT_ONELINE, list[i], sb_loglines);
-+		fprintf(cover_file, "%s\n", sb_loglines->buf);
-+	}
-+
-+	fprintf(cover_file, "\n");
-+	strbuf_release(sb_loglines);
-+	free(commit_hash_buf);
-+}
-+
- static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 			      struct commit *origin,
- 			      int nr, struct commit **list,
-@@ -1333,7 +1357,6 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 			      const struct format_config *cfg)
- {
- 	const char *from;
--	struct shortlog log;
- 	struct strbuf sb = STRBUF_INIT;
- 	int i;
- 	const char *encoding = "UTF-8";
-@@ -1377,18 +1400,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 	free(pp.after_subject);
- 	strbuf_release(&sb);
- 
--	shortlog_init(&log);
--	log.wrap_lines = 1;
--	log.wrap = MAIL_DEFAULT_WRAP;
--	log.in1 = 2;
--	log.in2 = 4;
--	log.file = rev->diffopt.file;
--	log.groups = SHORTLOG_GROUP_AUTHOR;
--	shortlog_finish_setup(&log);
--	for (i = 0; i < nr; i++)
--		shortlog_add_commit(&log, list[i]);
--
--	shortlog_output(&log);
-+	generate_cover_commit_list(rev->diffopt.file, list, nr);
- 
- 	/* We can only do diffstat with a unique reference point */
- 	if (origin)
-
-base-commit: a8e89346a7731cb3104010f322c65e2a0c922618
--- 
-2.53.0
+Thanks.
 
