@@ -1,162 +1,132 @@
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6380131B824
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 09:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771578912; cv=pass; b=dTBnDCQvMVeNDRGs3hBeYfwuLexRDUIMcFC6ycV8f3D6jo/4ml0QFdyO5ytAFo0qMhgcdkSrNn9MJ4kd7+Jeopfmxyp0WnhuntHPYeu4o1VEJIAUZe8XnFPIG9mF32SFbp/gB737VGVk/v1XoFNLVdCFSrHHF4BqFo4Pb/dXhjU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771578912; c=relaxed/simple;
-	bh=rKjdLHqAYHHPJLoeh5RtSaRUBJIkRnQ6mNwvgpDh+as=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NXOccQXPC5kKnA9Y1i0902oBK4YCc2ge7br3LQxJwjeyKSS9oBL+JVoctA0RarxmicopLnC58T9svdI1BQNhv1Vl/BqW+mK7inLIqBxK1TmTVfR7b7cbgvtvuF5n8EsxdG3cm3z+857R+YJWrbjkKA0WzRxiBvIYV2n6NSCTB70=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VPHoUgAO; arc=pass smtp.client-ip=209.85.217.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E60023373D
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 10:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771582372; cv=none; b=j1VByWFha3WmN0a9HUCYuNhUU4x1qYb6IyZbLo0MMp7BhDdxJm2FkpmTnOUl5YMsx0swREDkdWGVb7SZPNkz15IrqEfxK8zgVur1TbHIKbeJimKgtOU/ULiIUsT74xtrB1fVuG4qvqagcQLMah+23ZKLXopOyCxFT0NWvlRA8F8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771582372; c=relaxed/simple;
+	bh=hXkSs287XgYbJEvkJ//9FyERx2p1efpjFbEbYZYIBJU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tBTU63kE1uqwdhgmU7rVXTXk/AShaN4Uf2vMzN/lz8Fu1Y8qyl2tNs/KktS+ojf2RWclL0FrrCqZPlibJzLb4VRMCwICoIFW8Kl7Et4+iuEcRnXRYdaL39stYk3xuJN3M1rbwPE+TyXtXjTaceDeNK+3WDBc8Wdig5LFmMSda2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=s0f/Mo33; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TJ3BjFvn; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VPHoUgAO"
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-5fdf6ad2517so1238427137.2
-        for <git@vger.kernel.org>; Fri, 20 Feb 2026 01:15:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771578910; cv=none;
-        d=google.com; s=arc-20240605;
-        b=CrxlQBtJPYwWrstFn86MlscZOooj49fxiii2q0UzlgvCkM0P3F+1FncXkh+AhIV2ul
-         AoWdAKQIDuZhgrzDFdm1GndZXtO7SqjE9/W2NuuE6Xu3enK1wUy+xAE3hjJ+oMwQXUi2
-         m95DMzqzhcXO8klksu5MxsREzeY3/hMUO+8Slw1D6Ad8Q1i1pAb6APwhv1RcnKGEcotT
-         w23I5TFZO+Yy67EcdJkXm+2Ice4PXu1u80F50HPNnARhJXIsAw+SoQgKJ6j3KMOGvNWc
-         80X1Efj7MIDHYZbYS6SlmVsJ3LgCUtEhUYgOCPjg4+2OejhW58Uw6otMpIWkqKMnaq+9
-         Y40A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=Z9/J8w9sgjsVhoL/9AlCYCyIP8Ka2c9u5fdI/CNrChk=;
-        fh=CKannokU/QIGCzmRFZw2adWb+7uKitSIzDQ9xD/uq9c=;
-        b=ZZbdOE7GNV6hVcdJAVpBnb6kdULysWLae3NF07Yk3DEmRV+kftdZVb7u1KHxf2Z6Kk
-         V3MfmP3nohaVnOOV9+0r1NNTQXAbHn6RggQKgguGMoX/FPib472aCnW03iB7JjyD5kKJ
-         lxmqQAM18eD9TUt+UO+an0sjBZ/H1F6R9MrDNFjM+wHXO1uvOYjLABW2r3sSppB78IAH
-         Pm3FAZ1PjUht6G9tcjOaeiGAITYwm0NC1iUQXUZChC5DXyEIEBPchnEL8wXvSbpaIezm
-         xs5CpvJK9gPJdji08vr+op8vrmV5Lf2egsqOkHIe7cV7CbZAYb+u5PNOTcDS/ch+s4GH
-         dD/A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771578910; x=1772183710; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z9/J8w9sgjsVhoL/9AlCYCyIP8Ka2c9u5fdI/CNrChk=;
-        b=VPHoUgAOKqU+LEwrdc5gVA3hByrx6GVomNDWv78P2NRDmGHjusu/gv0plfnjJdylhB
-         e16RViTJt/ICroGI9xNtsIrcGyqKCq2q3h+f6+w6pALwuGwXzHMFZALpgd7dUJ5OUU2N
-         EjnvjZm4P4js4hQkutforrKdGLwNyIROwWSf6aNmf2isw1OGT6/fwBcODrRY9u3//9lA
-         0S/eXG88Ulz/Numy9RXN/3FxSLSdOuabWoaSv7CcGWLRE6peKvfgW3nrkEJp0fmrhqlm
-         Bp7scyiY5QtPCLwjpfQk4Cf2GuXsAPcTcq1ZqbvgVd+Ty3arKNJMBUMKVPpUExL3ecaW
-         gwRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771578910; x=1772183710;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z9/J8w9sgjsVhoL/9AlCYCyIP8Ka2c9u5fdI/CNrChk=;
-        b=UEsYzQkCLtMOgmVzFMDjNcd0zCCqHelx1hX4ZYEzYXIyhGJse/gsYRNplyuZFBArZx
-         8/bLp6z/tu8eJX5ejAFXmugC+q3jMTkTy7viSebWgcc4sezEwNUPXVM5uoBQvQChxMSP
-         4yVwuhUfjXTf61rztFAhWRoUfUWACmT1YatPbEXRoFdeII4jyB9XgcebXIc6N1/8Ime7
-         WnGaoOAw4CLHO2y+TBPWZb3VogEZcfxtYQw8l2Z1IoJtEp3gERo6wb7aJpABnQ83kJW5
-         htojlunovHicJCD26e9TA5GADEhtKZXInMXLs5JzZgJuq8qDs5LKheYUsewDGMccXHFM
-         B7Hg==
-X-Gm-Message-State: AOJu0YwHD75AIwawwQHoC60YjlFz/iHGAzk1Azr4u3MzTavc5fbdR0d9
-	nuzMgQb0dEi8paR5do7+w5xQnkzvC7o1Tf9bD+T9IGaTC5fO7GsQ41psjzgBKwgtNYFxC+WTwZN
-	TDFlVyi6yGD5gND39gOFPKLHwqwqhBimDijsx
-X-Gm-Gg: AZuq6aIkPxlBsA8GhjYG/MfK9Q1kH+GzDkDvdHXasbanxCjzcEqa4qI58xGzMWzxLOy
-	me2vGgPCDLdJmrcHyQd5Sq4OLkYy4i+xmHKjvKkdp5UtithLu6CoQzeIQAd6TkpjXI9r6zG57MQ
-	kK5i9d6HQjg168MD9ZPA2gLrgRob6tsy/Xja469TYIK+2vjZlaA5/tNzB3rGYssPr21mV+5NzJa
-	9s0rNH+AUN474w69de8Ma27WP2mlrdfrC3pd04aPzejEtAG1oXTkLukdyyGWmytRo36svEfTrMN
-	K/4Bw27HNcEilAdkobGBEYts4SwJGQeq9lohPV0Mqg==
-X-Received: by 2002:a05:6102:32cd:b0:5db:efcb:72 with SMTP id
- ada2fe7eead31-5fe2ad39b83mr8700200137.6.1771578910042; Fri, 20 Feb 2026
- 01:15:10 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 20 Feb 2026 01:15:08 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 20 Feb 2026 01:15:08 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aZct2M3sbQSduK2q@pks.im>
-References: <20260219-kn-alternate-ref-dir-v7-0-16f27860dbdf@gmail.com>
- <20260219-kn-alternate-ref-dir-v7-6-16f27860dbdf@gmail.com> <aZct2M3sbQSduK2q@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="s0f/Mo33";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TJ3BjFvn"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 186DE1D00101;
+	Fri, 20 Feb 2026 05:12:50 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 20 Feb 2026 05:12:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1771582369; x=1771668769; bh=yD3s80Iq+w
+	LFs4DEpxlVYGM8YfTmslieXpNUEGn0LGQ=; b=s0f/Mo33sse54ZcZJL1pT+JO/9
+	6hHwD2q5Gdm+A3HKTjGtykg3wd1m1V+WQcs1UFyvtsWIAVw1MEW0zWL3/YdP7pPn
+	vfaxWmedWYe7k11qMDmB7uxkEK00DXEL41Ip/5HkQp/p1DNxsnhMPeoOsZ4UwShA
+	TrSrDa0088soN6UyAWlL+sSE/vO9rCHG8QMRBsQpIN5lLIa0CJ1OyL46FF5h4ax7
+	UcyUhPQqQoDVJO58kafUZPU1+NZN+jwmL2gLvjZc2C5RjXaMRvxI99+AwqKmTFGp
+	WZXYq8nWRb1EoF3wdW3eVyB8N3FvaDXSSZTmiX0ESAdERs3dxoF+xQcsEGTQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771582369; x=1771668769; bh=yD3s80Iq+wLFs4DEpxlVYGM8YfTmslieXpN
+	UEGn0LGQ=; b=TJ3BjFvnSybNflv34YNOon/u2wJTkN95fxpKBl1YioRJFmrcpiN
+	mlReVY8PPC3euoUkCu6hnLVCuuibIYjGIdt4WBAGmnkESNZ0YaA4K+elz4ZRFXIO
+	3fsNOrticqkO1D6rcJ7hZ6nyOJIaAqu5swDVk47nM4vxDDtja6/v3EC/wlPDWZGH
+	vba7Di2PzSyJZXS06VCyCFiR0QOiFZwx+nMWa72tJUzdt6DYXLpu4Uyk4ArxlbsF
+	n3IH8TkfTczy0STmRCAr4J807mxA2PhlFbk0/HN9LfItXCdtLU0RNEXqgsjnBH4R
+	rjcMvF98pym3LHqpLQMxrAoa79F8yqrBabQ==
+X-ME-Sender: <xms:oTOYaUw09BI9W9lUbBVOzjnwyU-E09LMvHZPV_v02eDXC-yvZOywTQ>
+    <xme:oTOYafJyM7JfcoY3k922P62mRnI-QITsBLsIAskeOC-RBP9XWFLtqnPiAyB2UkkUr
+    EPCHeaIBOe3frau4J9Zwcfn1yWkQjZ0YSJDU4NDE3vRgeURyq-uBDY>
+X-ME-Received: <xmr:oTOYaervV48d78pPkK2K_gDQpCKqNbUBjLTvJo1qIHFQBCSFzQqD7IQO16bseFBpRMFnq8m8nyE5ZPOPOpKo_sMieKoJOVESnrMxmyKZ0ZrP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekudeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrvhhilhgrrdhjnhesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
+    eplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:oTOYaeKMVqdW2wQp4Q0QNTwA8sB6Wjk8_rqtsF8Gjxkzm8SCWn0aog>
+    <xmx:oTOYaTTF2hPcUgwBD8h8SmjQowwMVucQOZZvc9jmas0XWm7LsvOkwQ>
+    <xmx:oTOYadsIP-kG330QWGfs8TZ8DQYIMPGGVZhPKLNhN6e7FV4ciNpsdg>
+    <xmx:oTOYaUbP6FstY9ajuOBGX_FCO78LNU2TCFThoiJ16B7VkDkZHz8FZQ>
+    <xmx:oTOYaZYdL10WQspuDYmUZlwJRHvVnxHuaBrbjfLYw9nMkcN0YNMge9jT>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Feb 2026 05:12:48 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b573f1c1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Feb 2026 10:12:45 +0000 (UTC)
+Date: Fri, 20 Feb 2026 11:12:42 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com,
+	avila.jn@gmail.com
+Subject: Re: [PATCH 6/8] t1901: use tr in git repo structure output instead
+ of expected value
+Message-ID: <aZgzmlVfuXgI2UJ9@pks.im>
+References: <20260218211845.96009-1-lucasseikioshiro@gmail.com>
+ <20260218211845.96009-7-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 20 Feb 2026 01:15:08 -0800
-X-Gm-Features: AaiRm51KZOe8enOENgtgHEr_48c4OW8iKIdLPQEpluYOawSsLa1_abqiFcqhr7Y
-Message-ID: <CAOLa=ZTKa6uvpPG7S+kkLpzey36J9zBjzV2sneFxcmzMmPyzHw@mail.gmail.com>
-Subject: Re: [PATCH v7 6/6] refs: add GIT_REFERENCE_BACKEND to specify
- reference backend
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com, toon@iotcl.com, 
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: multipart/mixed; boundary="000000000000a01370064b3ddb51"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260218211845.96009-7-lucasseikioshiro@gmail.com>
 
---000000000000a01370064b3ddb51
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Feb 18, 2026 at 06:08:42PM -0300, Lucas Seiki Oshiro wrote:
+> The test 'keyvalue and nul format', as it description says, test both
+> keyvalue and nul format. These formats are similar, differing only in
+> their field separator (= in the former, LF in the latter) and their
+> record separator (LF in the former, NUL in the latter). This way, both
+> formats can be tested using the same expected output and only replacing
+> the separators in one of the output formats.
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hm, okay. I have to admit I don't quite understand what we gain here. We
+have to use tr(1) regardless of how we do it, and I cannot see that
+either of these alternatives is clearly superior compared to the other.
 
-[snip]
+> diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
+> index a6f2591d9a..4de795181f 100755
+> --- a/t/t1901-repo-structure.sh
+> +++ b/t/t1901-repo-structure.sh
+> @@ -145,18 +145,18 @@ test_expect_success SHA1 'lines and nul format' '
+>  		test_cmp expect out &&
+>  		test_line_count = 0 err &&
+>  
+> -		# Replace key and value delimiters for nul format.
+> -		tr "\n=" "\0\n" <expect >expect_nul &&
+>  		git repo structure --format=nul >out 2>err &&
+> +		tr "\012" "=" <out | tr "\000" "\012" >actual &&
 
->> -test_expect_success 'URI is invalid' '
->> +# Verify that the expected files are present in the gitdir and the refsdir.
->> +# Usage: verify_files_exist <gitdir> <refdir>
->> +#   <gitdir> is the path for the gitdir.
->> +#   <refdir> is the path for the refdir.
->> +verify_files_exist() {
->> +	gitdir=$1 &&
->> +	refdir=$2 &&
->> +
->> +	# verify that the stubs were added to the $GITDIR.
->> +	cat $gitdir/refs/heads >actual &&
->> +	echo "repository uses alternate refs storage" >expect &&
->> +	test_cmp expect actual &&
->
-> Tiny nit, not worth addressing on its own: we could simply `test_cmp
-> expect "$gitdir/refs/heads", without the need to copy that file first.
->
+We can combine the two calls to tr(1) to a single one.
 
-Indeed. I'll make this change locally, but hold off on re-rolling for
-now.
+> -		test_cmp expect_nul out &&
+> +		test_cmp expect actual &&
+>  		test_line_count = 0 err &&
+>  
+>  		# "-z", as a synonym to "--format=nul", participates in the
+>  		# usual "last one wins" rule.
+>  		git repo structure --format=table -z >out 2>err &&
+> +		tr "\012" "=" <out | tr "\000" "\012" >actual &&
 
->> +	cat $gitdir/HEAD >actual &&
->> +	echo "ref: refs/heads/.invalid" >expect &&
->> +	test_cmp expect actual
->
-> Same here, no need to copy the file around.
->
-> Other than that I'm happy with this patch series now, thanks!
->
-> Patrick
+Same here.
 
-I'm also quite happy with how its turned out. Thanks for the continuous
-reviews.
-
-Karthik
-
---000000000000a01370064b3ddb51
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: e4829a120729dce5_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tWUpoc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL2cvQy80N0ZQUWxROXgvV0V5Vzd3VnBTZzdDUjZFTgpKZFE0cVBlcDgx
-clN6RE41TW5nWmhRdXVIOGhqbFhYR05GNFRlanZET0ttcHRScFFOL0NIRTlDVU13R0J6bEViCkxO
-L1psMDJjM1JUZDlOa3ZNbDNySEc5amN5UWxDSGcxSnA5U2UzOGRDUDZ4YlpGNkVxTFVKTDNXKzU4
-MW9oMGkKcTIzTWtCOFl3eDhCVS8rc2cyeU9UQ3paWFRlUjhPN1hkRXk1NVMrbTlGNWJIbTA4aFZP
-aG1NOEhoWWJobHdMaApnQUltTlREYXRGQXY0VncxN1RrV1JpTWRPSEREcDdiL2VLTzNDditVZlcy
-dzB1YTJCN3Z3UE1YNDg4eFZ2SWxCCmppRGtXdk5MeThnOEhqaWpUSWJ5NHJIcUUwSmtEMjEyZUlz
-YlhHTHdQYndIaHV5YlNCeTVOaHRqTFdqZGZMbFUKNDFnb09mRTNQRTV4dHVNaGx2OGFCUHV6c21C
-QXhSMWJZV0xKZVB2QlR3WDE2YlcyYWszOHFER2k0SWpuU0dIYQpRVHQxeWphbVEwNmpFMTJ4N1lD
-RVE0RGJXZUlmN2hNZjhacEtDSmJaZmZidWVTMmRYN1lxQjlndERDWElEd3pGCkhMc3R1QUhtWklz
-V0svS0dtYmhQMG42bjl4SUxPVXR2MDdpbWUzQT0KPUdhY2YKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000a01370064b3ddb51--
+Patrick
