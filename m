@@ -1,129 +1,107 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0CD2F6192
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 16:53:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771606414; cv=none; b=UAMH7tiCBeFW63bQnykg6oTyGBSdiRHBLNZ2P5UXKpFwpMeMNGyIdRvLNx66DCbr/yg71ei18meOE34X8r0vyT+bT6WSMiE+9mDZbx8kUIK7h6t3HS4zXIJQ4ISjeWbW0F3cteeDlU879sTG6E0ofjikdvq0+eH5dBBZexm7i7k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771606414; c=relaxed/simple;
-	bh=YrjOL6E9i/oYIdot0nKX+UrTCk57bryYKvJe4DhidY4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ejm+ZlieXAfUPaA/Wm5ssQiWVQEMXVv496PeEWV1TQB2N87+6IiOLPQTUrHohV4mfiifFHBEXSXbWc/YgSu8t3fYdSM+O0P+PKNvOxZB0bUOzS2XHpHzcQ7h+R/rYE83KJH71mRSZOoydJsUXicvbJrxvnwRHUxaEikao8//oaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=2pgqPNT9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KpgHdwDW; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549683EBF10
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 16:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771606791; cv=pass; b=Z8t5Nbb7VYrx/vRr73vFDzMHp1lyRVn4kNqS/TUMH1ybbSHXX4rGViSaZMZJ3iWMCl/EK40VZABrqQpgxSKtCf5U2cz0ViXwk9cebEsWwsJG5wyHETiVukfpv4o2m2NwjHcAntsWB/2TMhMenrB2L2khoGI8xXg116dUy3ReEFw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771606791; c=relaxed/simple;
+	bh=TrQSvGs5jcAXPnduOtQmkU5QzbOKWRi220hTX3L2coM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L/LVBuwyADR7koS77ckvYhRD2ZrJxvSCy+82IPeN0kfNX/PFmhzvgbNrHTb+jV5AjfPeFJLjL/BkCz5Qs890dPjKmpooLL2PxrM+Zg5LFFFtXdXySM4/O1UReVhhPF8gP7D8HonNIg0e5GTSU+329ATGRGJfuIYOWrKKLmq9AzU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IvHfGk0U; arc=pass smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="2pgqPNT9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KpgHdwDW"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 36841EC05A8;
-	Fri, 20 Feb 2026 11:53:31 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 20 Feb 2026 11:53:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771606410; x=1771692810; bh=vZWecQlMBW
-	gvyr+HPWYTler/SKrDKRWWry3JNiDoQCs=; b=2pgqPNT9AW95RwYQswtcP+E2Qm
-	SSt5WtsPVdEb0g9EZYlms3R6PN/gmIiJCFbt06fz9pXF3bwnznKSC6mHD/4KL+z0
-	vJUdshS7xG/1bb8fDkrUzX705ESaqMBa4zeYiArJySyd/76j9ivWvDqxfh1F8jdw
-	w5f5we+443b1CT9qZNG6OsQGlpW5+LeRHcqEnBX4BBrjMMUAp5kXcTID7cf5aAFC
-	zDHdnD+ZUtPbBYGFMdLBvmD7VNvrdoKE3H2stt05i/HRGDkcIS434Em3IV8zmhgo
-	QsCiwRm8hvSBi1lSYzJTTq/Mgp8i78nTPqt5iVHibUFmhtqF76RgwWmuuDxw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771606410; x=1771692810; bh=vZWecQlMBWgvyr+HPWYTler/SKrDKRWWry3
-	JNiDoQCs=; b=KpgHdwDWGJXcAbieZ2uvBZf5iaHNO3nx3qvR1qv6c8PaxLGq7kj
-	tlstL+1I65g8KJE24LyS6GcWWb9I0ZfVupcSSgujag9Zw6NZIlUIf8ve7J5Vnd6c
-	W1TJToK8Fbj/yUkT+gObsoQxuV+AAIVJc7oq3kj/3IDHvXqcDanfJrd6B59FlpYm
-	Z7qMULNlq9VlVlVOvVbbRKbLrKGWTCH+qc4lMxa3nREzWq9oGoNK0zVUvcwzZCfb
-	meh4HcW5rIv3Ra4DAmkcnrZTB0tqRArsaugFj9KdEnoLHa/trm69/AtZibwmaa0i
-	TkfTYcVVH6pgtmgmzwst5UeHQjtd4g5U0VQ==
-X-ME-Sender: <xms:ipGYaeu9a5ePY7wZyclprGDjZK9cC3rc5B0layzvDu_Oj7ORkb1oFw>
-    <xme:ipGYaaXlUT-3DdYo_NNa9nf71s-evyWtnwia9J3tFhzTSUV7SNrTN-a1WzMVisbHr
-    VPZ-VbMyeoWISmKrQ7xL38nY8HCRGpOlEww38sdN9MzUs_XAqmwyA>
-X-ME-Received: <xmr:ipGYaSGYX_f7eIfJDBZEoMRW049ryeLRZolIwH9ZGjuaIxroQDfUyZqcW9noTtBZx8ptHPbKM78V_-YT_7oDN2XzopXWYvA2kA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ipGYaU2Wbpg6MfSuyBXzgJ7Ek6W2jP-8I0dTGDBR8gkqtFjvrDpjYQ>
-    <xmx:ipGYacPpMMxz5dRNmx7iozw8BbtJmwW1UB1GviVzLQ5KHXuIUAIlzg>
-    <xmx:ipGYab4TmYBoBXVp_cS62SP7uMt_RoAmJUge7E--cfFLEf81U6sZUg>
-    <xmx:ipGYae1jS5bzKzCiTAkmX3kuNo_AGwos2cBN2xmEYfvn6CAdUdNbPg>
-    <xmx:ipGYafSemmDwMj-uSaS3i80V78N96gcl4TBvYiA8TC0-fKEjoDL87ssl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 11:53:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v7 5/6] refs: allow reference location in refstorage config
-In-Reply-To: <87342vfmud.fsf@iotcl.com> (Toon Claes's message of "Fri, 20 Feb
-	2026 16:36:58 +0100")
-References: <20260219-kn-alternate-ref-dir-v7-0-16f27860dbdf@gmail.com>
-	<20260219-kn-alternate-ref-dir-v7-5-16f27860dbdf@gmail.com>
-	<87342vfmud.fsf@iotcl.com>
-Date: Fri, 20 Feb 2026 08:53:28 -0800
-Message-ID: <xmqqbjhjz793.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IvHfGk0U"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-2ba6aa57d5fso2378491eec.1
+        for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:59:50 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771606789; cv=none;
+        d=google.com; s=arc-20240605;
+        b=HQSwcDPPQRSl9aSNc4Qk1xJdONDbSfT8/eiPZGa0snzynIwO1IFRLhANe9B5CtdWHc
+         Kuw7AiKCbbVnoveSnF20TfwWE2+ARbhaFL2XeF4EJI9YO761lvhOx+HZp0smDrQmKfmm
+         fxH2qXfwBLCKXk8iKr27k6sSI2Mc72mgNmM9l3AEXnF2h6iTOng1GCg6lWBaCPJS0/Ho
+         jKVLJJl5MXxfZFfsdu7dZHcLGVGZT2hRMIQt6eKEk43KjhN+f8JIKnGDROiqC75Q2sZ9
+         u803fKfLhxL0Q3dYc7rXyKaCvd5MWDOnO9symvR2DElpWHccj6a8TQV50Jq49gMLfITA
+         5tAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Mo1QPuXC+AvYeNZLFUXRD/FmckzfnjqfdMc3PQ2VWqc=;
+        fh=8xBWsRwhFyTcbAbk7jhxmTpHuLIjAWAyNoNJh705VGM=;
+        b=Ars4NfobEa592FFaI/AjyE7XsELGZTWjWlqgfKpxTlotBylfmc57rn1Utot6I3SvYC
+         jy+5NBghIkUuEHBmqjuUjmBJq8xzucG2nyyQ59/ve1GXiqhHolPTD9ce6k1ixP0Plob+
+         n+J1sqiZ8eU6V5bCrCj4Iu+SZqbipm3rt2RJp5OGEurS6YiFYmSdtl5oGKxyb60+pCxZ
+         2KKw/BGWQ3ODb7++rbqYce1Bs4UJEzoQVrA89tnKsjVQn7K1Up7p2VclNVHl+lKPTlH3
+         wKqwwkhgwj0jE28tau6DE3NsyeqzHDj4hBq3hfiENDnutGdtStx8keFY5SVazs28nVI6
+         wZsg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771606789; x=1772211589; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mo1QPuXC+AvYeNZLFUXRD/FmckzfnjqfdMc3PQ2VWqc=;
+        b=IvHfGk0UCULgvAVejHi3bZqJYVA9/n51iU4QpOwywORYV5YqjIctzcFW9R3d27yfTe
+         ulEZjhFFhZbWSCenpyZQbFJRQG69lqNu5hdZWqY36S3TrMLCd8aTyoEGwaL5TK2y1BPu
+         pzhUF1gTrVNpEQFKm55gm0f78DR7ULsXJlFJM5lKjFPenWN67OBUMuYWJ+HxFCatOSq9
+         2W8op3zuQmuNZCj3EcuhzskTNo7QITEy059K85hNcl+LuHVXRzhBIJeO1FdOW6ZcT72f
+         GSFA2hoAIUzXRG4ZZph5qlhe19c3i19YBnt7J67IWajBB7MLXsT12sBW4/H7LxzcBzrp
+         xJiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771606789; x=1772211589;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mo1QPuXC+AvYeNZLFUXRD/FmckzfnjqfdMc3PQ2VWqc=;
+        b=FzfuuztGT5AurwtCwzmenbBsNjBSLuIssUWRu9gDq89zyVneEUXaNYPbHJu67y4BZw
+         hRlyBTVpznV2eUCpy0yf1/7F3kvo/hOE9srCRJpBEozxITWpot1kpeaLxfrFH56NfTir
+         zdyR/ZK7+BRIHZi30to+qR8OHUn7+HhcdM+NpXnKCowAngfFcM5aJKn4DyKrjgzyfD+j
+         pOhXpKf4VoqG1Ce6CuWKnxusf7gmVDvIbZDeqyuPEwxNs79IRvrKKTtgr+BL3o+rjD/L
+         YdsCMiEo0zL+nK1sO5A0vQa/OVO9YW8uvqqU6gR2ArkHhaV64q4b65JMml55xfykCQHV
+         chkA==
+X-Forwarded-Encrypted: i=1; AJvYcCUIDTini3vHwnltHfS4EVkraxbUaBJUkC3ERtZ2ul6u4zhN3jZ9vN58dzqxlFsWn/Y6JzU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmmS9ebX7AC5pUJue+853OGrucIot15Uf4DKVOwtr3OYQBcIup
+	IvGYrni5O0hoIBfq9CO9gqlvk59dgUjICQzlUGhgZjkP5Mg+XKptN6hTXzwjL8SvTrjDbVcGDCq
+	xe3pIGrRg7iUozv8ohkyUtGCrbjkiPQQ=
+X-Gm-Gg: AZuq6aIAwOlqDBGowzk+jurxQyo32XESLsOYmsE/b9OBgoeNoQ+y6inkB2fvo2MI8nV
+	4i1t9ogRWrS5wwBpu+Q+IualKaXn/qYGvq7DtGbqIVfoACSCrrbSMieHXIemL/8AIYYgBe0i6Rm
+	Hli28+l2Zg9U7PlO4elslOucHiNEyyCTOPcs2y14PUGN8xE6pfTB/EWjJ17jGPxVX67NipSzE5v
+	DHCXFpg92+mmYhQSStucYpTFTSf5zzanu4ML3aj8N4kxfWDger7rQZQrj4trJf/UBVXVG+YOCxK
+	igT2Qt3BO9Isc4BRogj1IxC/1CDoaWbccnJDFjoEng==
+X-Received: by 2002:a05:7300:640d:b0:2b8:26b8:3426 with SMTP id
+ 5a478bee46e88-2bd7bc64893mr159138eec.13.1771606789176; Fri, 20 Feb 2026
+ 08:59:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260219152407.12160-1-deveshigurgaon@gmail.com>
+ <xmqqikbs4iod.fsf@gitster.g> <d2bf79b3-4407-4fa0-ae2b-fcb3178f36f7@github.com>
+ <xmqqzf5431ek.fsf@gitster.g> <xmqqldgo148k.fsf@gitster.g>
+In-Reply-To: <xmqqldgo148k.fsf@gitster.g>
+From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Date: Fri, 20 Feb 2026 22:29:35 +0530
+X-Gm-Features: AaiRm5201iAu6dsCb86eUcj4EHyy-R9Nx1T4THmiNencveZTRBEPw7qQllP1jiQ
+Message-ID: <CAG7UgETZFiB_J3wO+OD+R76GtOR5eNNNv7XAT_HPBksM9FHGsw@mail.gmail.com>
+Subject: Re: [PATCH] t1006: fix %(rest) test for object names with whitespace
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Victoria Dye <vdye@github.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Toon Claes <toon@iotcl.com> writes:
+> We already _promise_ to chop the input line at the first whitespace
+> boundary in our documentation when we use %(rest), so there is
+> nothing we can do to "fix" on the implementation side.  What your
+> original tested, i.e., if the early part of the input up to the
+> first whitespace does *not* name an object, then the test cannot
+> succeed (not just that, the test should fail, unless it happens to
+> name another valid object), is the advertised behaviour of this
+> feature.
 
->> +static void parse_reference_uri(const char *value, char **format,
->> +				char **payload)
->> +{
->> +	const char *schema_end;
->> +
->> +	schema_end = strstr(value, "://");
->> +	if (!schema_end) {
->> +		*format = xstrdup(value);
->> +		*payload = NULL;
->> +	} else {
->> +		*format = xstrndup(value, schema_end - value);
->> +		*payload = xstrdup_or_null(schema_end + 3);
->
-> Also here, why did you put the negated condition in the if clause?
-
-Hmph, would it make it easier to follow if you swap them?
-
-	if (schema_end) {
-		*format = xstrndup(value, schema_end - value);
-		*payload = xstrdup_or_null(schema_end + 3);
-	} else {
-		*format = xstrdup(value);
-		*payload = NULL;
-	}
-
-Maybe it is just me, but I often find it easier to follow if the
-case that require shorter and/or simpler body, or the case that is
-narrower (e.g., error condition), comes first before the main logic.
-It is in line with preferring an early return on a more specific
-condition.  It frees readers from having to worry about these cases
-early and let them concentrate on what is expected to usually happen
-in the code.
-
-In this particular case, I do not know which one I would prefer,
-though.
-
-Thanks.
+Thank you for the clarification. I understand that the whitespace
+split is the documented behavior of %(rest), so there is nothing to
+fix on the implementation side.
