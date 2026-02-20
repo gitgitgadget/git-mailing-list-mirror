@@ -1,85 +1,82 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0012E17BCA
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 03:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770191BCA1C
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 03:40:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771558224; cv=none; b=uyopum0YeXDrhbXRc8bgBsdKiWYrvoLpI3vv6Iv942Py6MPv2BYR3Jic1qn8Udi0EBHiYdmlB1LrKWecyI2jQgcyt5tLd6g1WwsAzz8C5AdtfLEd9eHTpx/vMZKEGH63xAmg8D9jwHKBK4XG+4f400Tu2CWYJfS35IZopVvVzu4=
+	t=1771558823; cv=none; b=i3NRGXiZzBZnjfLx8PgGTk37whzyxiFz7P4BT2utQdTjnmR2tDrszv2Rts+sTYkU5fL3qkIlfKZuSd9vg6r7Lil1D6kbpQnKbXFQNfBGRKPpZoeG3Gj/51RTlfBmSwOfuhzjizmsgPuvSpsVrI4w8UrIVdCvEuyzgz68OoMqIJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771558224; c=relaxed/simple;
-	bh=OH0qWprSL/+LDQ4fBEyBAaoT7+iqSkwcrHQ+KRZVtIE=;
+	s=arc-20240116; t=1771558823; c=relaxed/simple;
+	bh=obaVtlAb2sHTHevQfYVOfCXtmH05foBau06U9glHR4c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O5Sdm0zZLESRc+5A0XAZucJf5ve4IyytgZlmsExG2qEEW2o1B2pXqp3z2ER55s6xaVnw9xje1F5QgdjoYH30WH/y5lXRZICmSADn8kwPtvyMEwAAODFsBbOXEIKPi6lqeLunec+TdRKS7LLyG2n5/MjyRBGcllkHgYOzGp76tMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Kf4IFlaZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Obi129kx; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=dxS7Lt8k3MYgukMuyKGYUAlyxmyBKPrkqtlEFUOl3q5qSfEHPmQqOlMmkNOufNCAzwUaIbADR1bd5F9ata+Fg+JqDbYANorTVdGekgS4RZCESAT7cSq2Y4tuMzumBTY8RKztPj1sgvC/ypisGfnD3DnKuo4CnAatwRO4YZkP9QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gnx0R1u1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e3lY462H; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Kf4IFlaZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Obi129kx"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gnx0R1u1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e3lY462H"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id CAD2CEC05BD;
-	Thu, 19 Feb 2026 22:30:21 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8C6F114001BF;
+	Thu, 19 Feb 2026 22:40:21 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 19 Feb 2026 22:30:21 -0500
+  by phl-compute-02.internal (MEProxy); Thu, 19 Feb 2026 22:40:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771558221; x=1771644621; bh=+clQWqo6cr
-	PIk9ZdkdbRxz9MM4xyduTmmR0fGcrZWMs=; b=Kf4IFlaZqB/y+/iYbhTidCtRuE
-	UtMmbB7/G0ExwMyJbD7ndQEy+dHm3oNkdaYY/LwYqf8PPIVgHsq9cj6kOhF/R/TX
-	qVUxtyV61GzxaO+Iyu844NOaIE+NJrlUkVvXy4rvL9kNDJtd8rl5QK4BO33b1Tjc
-	DQ5t893ytd4wS9XK+HQv845ykQJNMPTtmd1Y4I2FEMNkMmB/hDnKB8hKx2jjUCRw
-	LJ6WMCa6CHfmXPIbZvqZK88eGIx+tUu6Vzhx0kbeWTtmphG3J3zI4Qey1Noc8PnE
-	ENnCJ7ANxuyBQnNJkneUuEWoNKFapiexqSe14icYve9zuaPrRvUZ+FtHp7+A==
+	:subject:to:to; s=fm2; t=1771558821; x=1771645221; bh=svXQ7S+wvj
+	08JZKbFSN5I6BPgAQY89OXAaf9xaSzNio=; b=gnx0R1u1Yoqie2zRfsmui9HRFx
+	tnfk7Yt/2IyjBE5fqSlpDZ8l59HLiCU9YjHQ6QSVsZbVcKSBg+pAdVCaH4QzIWkZ
+	jcj2BkmTzeah1Q55aiuo/1LS54sOKjEVD0fgMRM57V5hStX4Rn+Cnz8pAMxROtYN
+	WoIYUY45fsJzI3nNjNXVSjM/CpcNOgF9x0etV/8WNARTeOzC/8XsMRZQUl8xs0ii
+	9ZABzjkoHgzK21nSywiRj/cZGL6Jd5oduKZCy9GJqunTaICklaDr734Sq1AVvllI
+	wHR57va0CI7s99wtSg5sIhmpCpHNyBfJAy1/H1iflJd2WaL5V3HHHkOI0aZg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771558221; x=1771644621; bh=+clQWqo6crPIk9ZdkdbRxz9MM4xyduTmmR0
-	fGcrZWMs=; b=Obi129kxZQo+2rxxonSlu59FQOFPwB6yOcZA27Ecjy62AYemT5n
-	+FTLk1kki3I1KBRInWVw7+g/Y+oKwMVEjSC9ICtKbRVgnysCyLoiMD+YkqitUGyj
-	oJqcWWcGvtekSBoSCgzLIWWVz0jrNYnglymrkhSILTLy+lFsB4ioQ3zVJtvf+eX6
-	7zQDQ+y/lQ8Kzj546x9ADYsDtmxf5f5590seZjDmLTY6IFAOPWphN7J9y/q7iJGK
-	iIYa+stnJDKlBaYUN9bkYb4gjsar4b808S2GyDJz1U2cUyT8QG9f5XEWlBEr7xrQ
-	cSHiWB1CtWaQiT1yRXoJN3ju3edy8lgM4/g==
-X-ME-Sender: <xms:TdWXaR8f12knQyB1uHytmAmtcSoHFM5Ed6BRXIQXFm2MIhCbHyiD-A>
-    <xme:TdWXacvaUEy00GQ07QcgXdXyHabISCx0WiGrpFs0q243q5ziLhatVEGBLDD-zniD9
-    5vx9CuNkAx9zM1Vzl8rKqKSrVAj63PTtvYtfu-kO7V2q-Mh7Cubeqc>
-X-ME-Received: <xmr:TdWXaUCYDU7UA5K2XqbRMqrndGVBJfbyNSbYQibK9JyfAUYl86kLgQJGMLY6wMUMfwVaIKj0RqbNjoUV1xYCUqw64ho5CA74nQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdejfeegucetufdoteggodetrf
+	1771558821; x=1771645221; bh=svXQ7S+wvj08JZKbFSN5I6BPgAQY89OXAaf
+	9xaSzNio=; b=e3lY462HW4k5+8T0e0zpVjumurugN3cTWm1L57WJ4GV5zk9L031
+	vO8T+H8pdOxpMAKW98H1CLUvzJj5qXeCE7V/tlCiZn9k56W/PhU/w+HjhzK0qT19
+	TDaMevE799rt2xzDctDaROuYlrr70xONWYfvn2zCB4BZe+p+BJFr9tbJ+uDzGFxS
+	dNrZgqzgAdzrzXQd6pk9HE32FDQFEsgcaLt0b7Shcfnq1BlSAVFRhd/CEFyfuN+F
+	xFhiomX8DlkYZnJkDkEAsVq5pHrX/rkmx3UJgQi8mdF6HWvoCbnO+2iKlkjztbvf
+	J4kVoNAgEa8BPIqn7MGIG1EMcowES8gbiXg==
+X-ME-Sender: <xms:pdeXaRd2QZTxMzTm2LEYzfhKOJFadf4J5peoZRyUgL09pu6-KRJAaw>
+    <xme:pdeXaWOyWiLR9BUKB_-bu2jdoy_mDaPeAReGfLQPXKVWUgxQHjtRtWKLC0Bros_yg
+    of9YR5JRqRG6KSBkiywApoUSvWB2OXWG2jcQ5SHrLNZCvJawUUg7g>
+X-ME-Received: <xmr:pdeXafjzENi7a7F9obTJ5NApwyY5-M6PBIJ9MVKwxvUFsHXmS-Mjhym4lRI_0D4xXP69hV283D0EHyPpZpexnVNM4fiOuHcg2g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdejfeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepuggvvhgvshhhihhguhhrghgrohhnsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepvhguhigvsehgihhthhhusgdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:TdWXaUVhsyZAR2qB6vYWdQyI8XUQT-MgbfW2X0SJDc0pT_rdGcu7KA>
-    <xmx:TdWXaSCeodKN3flAZmTd9FMauU3SGou9_mr5hjQrJ_2Y4fk80GE4zA>
-    <xmx:TdWXaX9h97Ykb_la7IzrtKJokOOfcanYYzotvW_oTR-8GbuaYOZKkw>
-    <xmx:TdWXaZGw67PtSqnuBb0tsxOSCSBfPz9Rnaa_MIriHWLpRF30RWCX1Q>
-    <xmx:TdWXaegaTND21FVo2_22aNLA4hHsMP4PZohvA0-bO-j0YJoX1SYWUxZb>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
+    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:pdeXaZ2-KAyTJ2Hzu2v-DOC0VSqiSZVmHHefbTiz9diZnTQmN39byQ>
+    <xmx:pdeXaZhsl1SOEMl0ubnw16vBrs21KeO0fjlE7fEywWNkk-kN4Jq-iQ>
+    <xmx:pdeXaZcawEorSG2HYOqpAAF3KZYCavR-4MjdVYEAwL5ZMBZJmmdlCQ>
+    <xmx:pdeXackPzmg2Nl4b0OS3Oyv1FkHtHHiZXiErBeb-Hso4cHt34A_m2g>
+    <xmx:pdeXaTDA9zYEn2rTW9IiT7j_hHSxdZTv4do5m6HZiI6HVelp67-3G1SF>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 22:30:21 -0500 (EST)
+ 19 Feb 2026 22:40:21 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Deveshi Dwivedi <deveshigurgaon@gmail.com>,  Victoria Dye <vdye@github.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] t1006: fix %(rest) test for object names with whitespace
-In-Reply-To: <xmqqzf5431ek.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	19 Feb 2026 12:48:35 -0800")
-References: <20260219152407.12160-1-deveshigurgaon@gmail.com>
-	<xmqqikbs4iod.fsf@gitster.g>
-	<d2bf79b3-4407-4fa0-ae2b-fcb3178f36f7@github.com>
-	<xmqqzf5431ek.fsf@gitster.g>
-Date: Thu, 19 Feb 2026 19:30:19 -0800
-Message-ID: <xmqqldgo148k.fsf@gitster.g>
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com
+Subject: Re: [PATCH v7] setup: allow cwd/.git to be a symlink to a directory
+In-Reply-To: <20260219071650.208074-1-a3205153416@gmail.com> (Tian Yuchen's
+	message of "Thu, 19 Feb 2026 15:16:50 +0800")
+References: <20260218124638.176936-1-a3205153416@gmail.com>
+	<20260219071650.208074-1-a3205153416@gmail.com>
+Date: Thu, 19 Feb 2026 19:40:19 -0800
+Message-ID: <xmqqh5rc13rw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,25 +86,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Tian Yuchen <a3205153416@gmail.com> writes:
 
-> I agree that fixing underlying issue would be a much more valuable
-> outcome of resolving that FIXME comment, but isn't the approach to
-> give $object_name fundamentally incompatible with %(rest), making
-> the issue something %(rest) implementation cannot "fix", is it?
->
-> That is a part of the reason why I said I am dubious about the FIXME
-> comment in my comment.
+> diff --git a/setup.c b/setup.c
+> index c8336eb20e..5a573e5865 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -897,10 +897,13 @@ int verify_repository_format(const struct repository_format *format,
+>  void read_gitfile_error_die(int error_code, const char *path, const char *dir)
+>  {
+>  	switch (error_code) {
+> +	case READ_GITFILE_ERR_STAT_ENOENT:
+> +	case READ_GITFILE_ERR_IS_A_DIR:
+> +		break;
+>  	case READ_GITFILE_ERR_STAT_FAILED:
+> +		die(_("error reading %s"), path);
+>  	case READ_GITFILE_ERR_NOT_A_FILE:
+> -		/* non-fatal; follow return path */
+> -		break;
 
-Actually, it is worse than that.
+This comment is now lost.  Shouldn't (at least /* non-fatal */ part of)
+it be moved to those two new non-error codes we see above?
 
-We already _promise_ to chop the input line at the first whitespace
-boundary in our documentation when we use %(rest), so there is
-nothing we can do to "fix" on the implementation side.  What your
-original tested, i.e., if the early part of the input up to the
-first whitespace does *not* name an object, then the test cannot
-succeed (not just that, the test should fail, unless it happens to
-name another valid object), is the advertised behaviour of this
-feature.
+>  	if (stat(path, &st)) {
+> -		/* NEEDSWORK: discern between ENOENT vs other errors */
+> -		error_code = READ_GITFILE_ERR_STAT_FAILED;
+> +		if (errno == ENOENT)
+> +			error_code = READ_GITFILE_ERR_STAT_ENOENT;
+> +		else
+> +			error_code = READ_GITFILE_ERR_STAT_FAILED;
+> +		goto cleanup_return;
+> +	}
+> +	if (S_ISDIR(st.st_mode)) {
+> +		error_code = READ_GITFILE_ERR_IS_A_DIR;
+>  		goto cleanup_return;
+>  	}
 
-Thanks.
+OK.
+
+> @@ -1578,20 +1587,25 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+>  		if (offset > min_offset)
+>  			strbuf_addch(dir, '/');
+>  		strbuf_addstr(dir, DEFAULT_GIT_DIR_ENVIRONMENT);
+> +		gitdirenv = read_gitfile_gently(dir->buf, &error_code);
+>  		if (!gitdirenv) {
+> +			if (error_code == READ_GITFILE_ERR_IS_A_DIR &&
+> +			is_git_directory(dir->buf)) {
+> +				gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
+> +				gitdir_path = xstrdup(dir->buf);
+> +			} else {
+> +				if (error_code == READ_GITFILE_ERR_STAT_ENOENT ||
+> +				error_code == READ_GITFILE_ERR_IS_A_DIR ||
+> +				error_code == READ_GITFILE_ERR_NOT_A_FILE ||
+> +				die_on_error) {
+> +					read_gitfile_error_die(error_code, dir->buf, NULL);
+> +				} else {
+> +					return GIT_DIR_INVALID_GITFILE;
+>  				}
+> +			}
+
+Is it just me who finds the above harder to follow than necessary?
+I would have expected something like
+
+	if (!gitdirenv) {
+		switch (error_code) {
+		case READ_GITFILE_ERR_IS_A_DIR:
+			if (is_git_directory(dir->buf)) {
+				...
+			} else if (die_on_error) {
+				die("'%s' is an invalid .git directory", dir->buf);
+			} else {
+				return GIT_DIR_INVALID_GITFILE;
+			}
+			break;
+		case READ_GITFILE_ERR_STAT_NOENT:
+			/* no .git in this directory, move on */
+			break;
+		default:
+			if (die_on_error)
+				read_gitfile_err_stat_noent(error_code, ...);
+			else
+				return GIT_DIR_INVALID_GITFILE;
+		}
+	}
+
+or its equivalent, with the top-level switch rewritten into
+an if/elseif cascade.
