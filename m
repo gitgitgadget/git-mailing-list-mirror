@@ -1,114 +1,130 @@
-Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F3D199EAD
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 17:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1C433D512
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 17:53:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771608938; cv=none; b=Xf8YngWOWN8ntQKXaAa7C7YaLKZkYDBKmK7U3BBDOUYe2c3+RJYW4ldwfH1JVvDkKH4YnrerV/l+cHd1s77Yom1Y5zjtLmszwwj4wPtMt8dtlB70a6Q8wxIMyklKAQiJGq4HjALa6zD4p+TfMyBmLKnrKp2sZi5B56X7SuilcOI=
+	t=1771610032; cv=none; b=WftfZ/YIL3+Ki73cTqdhOUQHiMSIHs7JkytDM2kWOoXUL7o8Lj6Ii1IkQZm4QTV6jy1DzpvT8dohuJt6rN/NS/tvqUQDC00TE/RVPZvlNZoMqTuhLn1kH+2mWAJDQKVgMGh29utsBYRPDGDgXAooSzrfgegzweyUvbs56giMcFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771608938; c=relaxed/simple;
-	bh=6esR4aacEiWSpZAr6YoF0fhz0pEydllV5qD54qHVFaU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I5STTaZiMVkYmbwGcFIhJQLsQbmWos1a387MNq7c3XGYTkDev1v/+h2JOFcgB/MmRbjn2CDDKfQ8Yai63KsfpQwFby+H2lB3JrnyxJ2fyWs30wZ2bb5RIXkg2UmcfPWsYJx5xteoit3mJvctH+75rLDo5nK2qUKM+4q1ih25dI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=13bHhDHE; arc=none smtp.client-ip=95.215.58.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1771610032; c=relaxed/simple;
+	bh=D+/BQhp8Q4FCZwQ2Uu+QjugVxWN6lYLgsNbA9A/D2XE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hJ/Rcgo7CoLfmvedDNtYyPj6UEdbLhv+dGwsuJeU5zIoxGcqlbt7vE0HWtB1OxbrCPc2/3w6yLVovDdpSPJjCKC0RqLCkS0cGMeGuITU5d/RqC36xKd2LtqL2ydV6NPcMucZmcD2pKS2VkfOwVt4pMgFUYSwEuU+3d0XLLgO6JQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jF9QwdVq; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="13bHhDHE"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1771608932;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zyXZQ/FPWgtWDOifHlW8MozHeZ1o4T1TDcj22FX4K1M=;
-	b=13bHhDHEJWwSOyiHi0Ub1In74duBGvGeIwcCq2JwiHv92VaEJ9ZiN/+3M9kkaqyfyQe3W1
-	w4rzNab5UxOb3GzFh4XR+WpfRLctEDUnlp7JwwGicv8KlrhuypGw1GQjDOMJ9bqz79PzVy
-	yrjV+jNCf9Te9xfn+n+DT+HVL6DCW7I=
-From: Toon Claes <toon@iotcl.com>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk,
- karthik.188@gmail.com, johannes.schindelin@gmx.de, Siddharth Asthana
- <siddharthasthana31@gmail.com>, Johannes Schindelin
- <Johannes.Schindelin@gmx.de>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 2/2] replay: add --revert mode to reverse commit changes
-In-Reply-To: <20260218234215.89326-3-siddharthasthana31@gmail.com>
-References: <20251202201611.22137-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-3-siddharthasthana31@gmail.com>
-Date: Fri, 20 Feb 2026 18:35:21 +0100
-Message-ID: <87tsvbe2sm.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jF9QwdVq"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8230f2140beso1901794b3a.1
+        for <git@vger.kernel.org>; Fri, 20 Feb 2026 09:53:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771610031; x=1772214831; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FZ9SJHpEvrWPWp2JqxZLUMaHHPIKmzJrNpLsx7QWKDo=;
+        b=jF9QwdVqte3aPPtAD6pT876sKZZ9giEmpT8o4+Fxj3nJfGR01iv+odwxiP8pAx4UmD
+         mGdDc/4ojLbbcxWeD8ti+1hQucJKaq9Ld/OeRD5jEk79QBkX1SpeynKgO5/FGELJ7/42
+         5hiYdIxCvYdavKkns9hN9YT08QokZbCELG6KnG2jCytE3zg2VfGXvoLvJ2c7elbD5a1f
+         fptkRthNgbck//123fQ0ohYStm4NAXolENPM2GUsHBZFMki2m6ykHnTVZMMT1RaQmHVU
+         XN/znyKKXglJ1X0K7oUjjzSO/zosdU6g04+q7V1Y5/J1wsUV4d78TMsyGd0t/0OwUS16
+         DzPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771610031; x=1772214831;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FZ9SJHpEvrWPWp2JqxZLUMaHHPIKmzJrNpLsx7QWKDo=;
+        b=dZ550PCO++8Ocy0aBJwTfkqLgBZH6Hg53fYXs/diVlCQMDSHY5yBS95nWLKdFItPgJ
+         /hD/BbQEvInHO1ZJuIpKCZWBRnvjsn+nKrqvUFB2dBkGuwkDeLXXokBxWbXv8T53lM30
+         Um+ITRU3wfuDqwddkFXXLXRFMRnGWybiJgQNnxw85D0X7c95yT/O54fBpF5iS8Btfrcj
+         Qx1sP5PqzaMvrJd8BgpRLgM4PswrcZsHWuZsNyovN9zn7nBco7sgpw14dtcJNsFyMpob
+         4tYlAeHPzVWEVJvBqJsPeaFCpRgU25bRo0yxZ3FajCXGU1OrOJktBZ6dz+rvq2DQsmIp
+         ZTlA==
+X-Gm-Message-State: AOJu0Yy1AWzKmNymxJni4Q9NDKm9oqfFmIs/WtKaB6iMgVeMnlqY7Rog
+	QnvTZeFtbeosUzk1lBCXC9NkF/+c8vs76GNxhEuEy8ppZtYBIyo1cIW0SH26Dw==
+X-Gm-Gg: AZuq6aKbYqUgv2mYGzked9OMkHcSGLOXca2bH7lKpYP7cJsf+hrjH/+Q8diECK7Rc5d
+	P9x+FYrrOeu8/k03lx1nTry95IBSYXjHXtkjeXCpPqy9870WFv8KYd1khpXno+mViVidUnUPTCw
+	cos6jydtOoLHMPvjUHTnwwyzdJm8iOMpKW4nWFwTzU5SVd5jzCOqGfn0E8I10V2KDGLL6E7Se6R
+	W66a+EUP9hSw2bURZcNLSoAoEVjG0RGp0lYqZYaSwKvrxUuxGsjDZyfYneIjBLajBjgVJRMijLa
+	PWLRSVyP3gzlnqa5ez4ZcSGNDiGWROJdIerQA1rCiaNVPyEuYJsepJcRQXsp5w+TTeKYeE5ZwdI
+	zPSyh8JvVA0cr5PD3+FVeMp5bz42Kb254ZuvC06dZ7awRxqz8nSlcT2/7Own4HmKy+i2naDEoMm
+	Ksn57h1Qh5g30AmnaMp2U64TKDRN7tGUQViJgwh3aQQmSv4nrgr+Ia5EXywg==
+X-Received: by 2002:a05:6300:624b:b0:394:65e8:8726 with SMTP id adf61e73a8af0-39517b337ccmr5699318637.6.1771610030732;
+        Fri, 20 Feb 2026 09:53:50 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:ceee:9366:5d6:fd9d])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70b71a7ba7sm74767a12.9.2026.02.20.09.53.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Feb 2026 09:53:50 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH] tree-diff: remove the usage of the_hash_algo global
+Date: Fri, 20 Feb 2026 23:21:26 +0530
+Message-ID: <20260220175331.1250726-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+emit_path() uses the global the_hash_algo even though a local repository is
+already available via struct diff_options *opt.
 
-> Add a `--revert <branch>` mode to git replay that undoes the changes
-> introduced by the specified commits. Like --onto and --advance, --revert
-> is a standalone mode: it takes a branch argument and updates that branch
-> with the newly created revert commits.
->
-> At GitLab, we need this in Gitaly for reverting commits directly on bare
-> repositories without requiring a working tree checkout.
->
-> The approach is the same as sequencer.c's do_pick_commit() -- cherry-pick
-> and revert are just the same three-way merge with swapped arguments:
->
->   - Cherry-pick: merge(ancestor=parent, ours=current, theirs=commit)
->   - Revert: merge(ancestor=commit, ours=current, theirs=parent)
->
-> We swap the base and pickme trees passed to merge_incore_nonrecursive()
-> to reverse the diff direction.
->
-> Revert commit messages follow the usual git revert conventions: prefixed
-> with "Revert" (or "Reapply" when reverting a revert), and including
-> "This reverts commit <hash>.". The author is set to the current user
-> rather than preserving the original author, matching git revert behavior.
->
-> Helped-by: Christian Couder <christian.couder@gmail.com>
-> Helped-by: Patrick Steinhardt <ps@pks.im>
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
-> ---
->  Documentation/git-replay.adoc |  37 +++++++-
->  builtin/replay.c              |  25 ++++--
->  replay.c                      | 162 ++++++++++++++++++++++++----------
->  replay.h                      |  11 ++-
->  t/t3650-replay-basics.sh      | 107 ++++++++++++++++++++--
->  5 files changed, 277 insertions(+), 65 deletions(-)
->
-> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
-> index 8d696ce3ab..ffdf790278 100644
-> --- a/Documentation/git-replay.adoc
-> +++ b/Documentation/git-replay.adoc
-> @@ -9,7 +9,7 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
->  SYNOPSIS
->  --------
->  [verse]
-> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) [--ref-action[=<mode>]] <revision-range>
-> +(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch> | --revert <branch>) [--ref-action[=<mode>]] <revision-range>...
+Replace these uses with opt->repo->hash_algo. With no remaining reliance on
+global states in this file, drop the dependency on 'environment.h' and remove
+'#define USE_THE_REPOSITORY_VARIABLE'.
 
-The modes `--onto`, `--advance` and `--revert` seem to be extremely
-different from each other. So I'm starting to wonder whether it won't
-make more sense to instead create subcommands instead of options for
-these. Maybe something like:
+This follows earlier cleanups to introduce opt->repo in tree-diff.c [1][2].
 
-    git replay revert --base=<branch> <revision-range>
-    git replay pick --base=<branch> <revision-range>
-    git replay replay --base=<branch> <revision-range>
+[1]- https://lore.kernel.org/git/20180921155739.14407-21-pclouds@gmail.com/
+[2]- https://lore.kernel.org/git/20260109213021.2546-2-l.s.r@web.de/
 
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+---
+ tree-diff.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
+diff --git a/tree-diff.c b/tree-diff.c
+index 631ea86812..2f5c956d02 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -2,7 +2,6 @@
+  * Helper functions for tree diff generation
+  */
+ 
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+@@ -11,7 +10,6 @@
+ #include "hash.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+-#include "environment.h"
+ #include "repository.h"
+ #include "dir.h"
+ 
+@@ -253,7 +251,7 @@ static void emit_path(struct combine_diff_path ***tail,
+ 
+ 		strbuf_add(base, path, pathlen);
+ 		p = combine_diff_path_new(base->buf, base->len, mode,
+-					  oid ? oid : null_oid(the_hash_algo),
++					  oid ? oid : null_oid(opt->repo->hash_algo),
+ 					  nparent);
+ 		strbuf_setlen(base, old_baselen);
+ 
+@@ -278,7 +276,7 @@ static void emit_path(struct combine_diff_path ***tail,
+ 				mode_i = tp[i].entry.mode;
+ 			}
+ 			else {
+-				oid_i = null_oid(the_hash_algo);
++				oid_i = null_oid(opt->repo->hash_algo);
+ 				mode_i = 0;
+ 			}
+ 
 -- 
-Cheers,
-Toon
+2.53.0
+
