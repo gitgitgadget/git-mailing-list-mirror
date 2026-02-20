@@ -1,77 +1,79 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB5D336ED2
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB573358B0
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771575867; cv=none; b=oXbMZ7kHIADdWh4P8hqZL2kuDQgygZ6ENE7qPDtoh6D1T+oeEzKAzOmDRXeOOJNUQOZFrmcC9vVLZYn+1eWfa3KboRl/v6Pw0KjwJcnL48ljrT+SZdKKec71qVgsonKiOUwKBzsn9YK4eGzDLWZkYQGLK6fikEh65XacLlVyjtw=
+	t=1771575869; cv=none; b=jlcTTR4gD6jAjPmuLlqAMbXCBUf3EHtZUfBeEZ0KnZ5NOB/gJmUc3VQx39PPSDjsrO4SEAVLKUk7NJ86oGWnrp9j+UnY1TPIuFObKC/dxwXwNREk7D+u4kYBikKqpunrTIAie2/gTWwmhRstJvoKDna6nHaKrcC//eHceIvwKE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771575867; c=relaxed/simple;
-	bh=/Zdapa9oX8eIT3gVTAUytyUtmVDg9epT+UVdEJdkEEQ=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sRX7PmFLCejIbiGYYhTvvGsPH4FpOPMUpg1ADJUYBsixOHaOtBTqpF0SvcENZaUQrNvhc+Y0thwdIlTw67TGe6D3vQrQocfIKxnIafzewp0r6flpI3O5+jGzfEwOYz9VQqpVvO1x0Ssr8BTFMdgXnjunWXHDu5hTf6+AnnVzm74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I3Zc7SSf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gStL6/Px; arc=none smtp.client-ip=202.12.124.147
+	s=arc-20240116; t=1771575869; c=relaxed/simple;
+	bh=sRBNDcAr9ek2fId1fxxuXpuOW2zSkIIz8kYnidY6pXY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=uSdqpdRUhO+BAyo+iei6fw3rLTmfU4326iMru7jH95pTqTvvGit7fggAnGy7OY2LwzWsTA44ZyJsgICqtbJ3GCssbRzGfD+8O1ZRrtiQylQ+4aY1y6byOHkiOnirA4NXUno9HbnHU9eQ0allr72vQu++8mxnY7S0E3T1kQp24wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d0xXpk0m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iVW6F2+W; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I3Zc7SSf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gStL6/Px"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 07D641D0009D;
-	Fri, 20 Feb 2026 03:24:25 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d0xXpk0m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iVW6F2+W"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 738131D00091;
+	Fri, 20 Feb 2026 03:24:27 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 20 Feb 2026 03:24:25 -0500
+  by phl-compute-07.internal (MEProxy); Fri, 20 Feb 2026 03:24:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1771575864; x=1771662264; bh=JwHbdaqbxX
-	d5+D/jZFvhvsM1Gi8T8/HNpNylVdU+d28=; b=I3Zc7SSfoRVN6VI7Y3O2ybswzV
-	t6ojuaYFLZFCKv6nRKUXk7sYrxwmf0YIOiFKptYl1D3772ak/WeR/u2CtlRgoEAJ
-	iVF9+GGiorjavbiNDdUfJGoPt42TcmRMFqb7yqEG6SzHoyWd/yJ1EQZ+u6cWgsAi
-	UwsSpPGkkIoDE1gf+tL3XP4UHSe2qsiNY1w29ZwgUoxIHb1gUKXUZvFQUMPjSqIX
-	FpsO6+c70MscgtyDde8mIcbQGXKGJpkt41p05JY3AbGgKV03d5iA4+ogDwS0AuM4
-	jn4rgAa5SzcEkZ6G3OFTb0IwiREjp+ZbwDhPs/H+xoocQ+bOtKrRrj/AaHSw==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771575867;
+	 x=1771662267; bh=4D9E2O48fbOMWxAJcF0+mKduWC06Jv/Ohm3DrOQ2+5I=; b=
+	d0xXpk0mcQASZA9zZdBd9oS1pWMDKG3y7vNdQkIBRbULlndF0iuJ8Lnn3AGv+CMk
+	/QDT98OC5sRtnP74vMW/ChivpnEH1v6sUWf/SBWf33+yJ5I6qn+ZJRwjYW0t5u14
+	TT+bi5SiVZFjnNXVcpoGlaKFn4GUyLkI4aB1t3CCfCQDEvfDKAAdz9oBA0XnQ2/E
+	gRFub1Fses7Nrf0/vdgjQIABXrDyt1bh7HGLJreC1HTRb9Q1QbohVwtERYzbl4oF
+	NQz6cofk230NHfrtwpEjE1rq47/5wATvN9PpkiifABjlm1knMAA0ZkBFuZebfDVU
+	h6u2oswXd+puVl9G3t6Mgg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1771575864; x=1771662264; bh=JwHbdaqbxXd5+D/jZFvhvsM1Gi8T
-	8/HNpNylVdU+d28=; b=gStL6/PxINaJerfYl+DdenK70cLP4f0j3JefbiAp4Icj
-	Pr7tEruxxU7hUkurC6i6sWoEvzr4dc7oVzXi3rx4R6MlrAjG5eqDbFqm6aqAX1NL
-	6ls4wF3imnP4tGBenvltXXgqlJZbP+OQinqlHDRmpMa+9TOBVdA/9VJZ0bnuD4pb
-	oxMwunYrFLulJLQzT/ubMOi7cti+gGqKh8gqWiMHiUrIV922Q2Q54oC6fAEzdp30
-	K4GbbzqaObr5eNqwSaN8MbQ9UpfNiSc1bLd2GSH5eMQgGueB0Lr9RrtsUHumXor3
-	UGEQeJu9KYYj4TcnJQilIsK65j2YsWomVJWq4/jgAw==
-X-ME-Sender: <xms:OBqYaXEWtwjmapy_bQCuyQCkzm9cRb3ovE6_IEWUr4IHUVMxi3WPtA>
-    <xme:OBqYaaWz3breE580gUa0GQ0p_AV_gP1tWUj9zhsQvA_2ZWpu_oESu4PqlFGRGtDNn
-    fr3fBVbscSv2jr6mSeO-6hKlNqNrJ6Lpoi4xnlVryRzde8ThhxrGA>
-X-ME-Received: <xmr:OBqYaWyxMKYeP9EowarC08Rl0lDjRl5OSRTLFt1quql3hKIo6QPQVuJpsyMSUkyDIs4elrKYnUcb5feCxRrD2lJBYSGmRNddUXy5vMYynbH7>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771575867; x=
+	1771662267; bh=4D9E2O48fbOMWxAJcF0+mKduWC06Jv/Ohm3DrOQ2+5I=; b=i
+	VW6F2+W2fT2xR7QJJD3HapM5kGLl/3YJ6bakPyjxPBPMVtGThlRbRNu9EGBBIpG7
+	xwsjngiGiT9uoGdUoofIiAB/dj7gy6XOR2QBJ1wmOLUEO1tDmRpWjSfwR+dW9z+l
+	R2YmfifTt45bqDzAhy2UXYQ6cjpuJGxHJ2sFdcdL/Tf55qOsaX9CiPW9STqEaYYW
+	I7kOfz4h4BWLxBG0ZgHR2lH+tFNb1cPVCjwLhht3a8c8vI+nlL8xK+Qq88zgj58f
+	SiaLJHtPg1Ckx3S1qnhO00mUmYyjaTFxbVZCd3Eu2PfEzX7+L0RpLdAJe/HaFhfA
+	1udOwkFHa/WozEjFpW+Bg==
+X-ME-Sender: <xms:OxqYaVwds9UT_L44TfAopweuO0SdX9u071KECt1XWuPFODpedHGH_w>
+    <xme:OxqYabTHB5sbCZ18xJZkTI6Q_gdDvE4xBVMv8iEbjkdcJnpIG2VcNPUjiVmX7qS-s
+    r1AHNDs-Taq3riDmGZqm5MzVc4kE3NbnEov2Ptn9Xhl2m3lXrg4>
+X-ME-Received: <xmr:OxqYac-19GWqt_n59N1mOhVFOSze3bGLTpFetWd9y1YZqEeKflhiYwJtBXwRSwB9DnwbfbHpGg4DkJJvc2yhlo9TAjgqWkhcnZac-YMgtLqi>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdejleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evueegkedtteeigeejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:OBqYaQPcjOEPfbtRt9slrXGZfgoqZ106Hcoj6gCfojJnjcHtB9L-pw>
-    <xmx:OBqYaf7cLu1yIuAqInWX6x_MMx9cgvbQfWoPLeq2QRnSZ6ea0ZQ93Q>
-    <xmx:OBqYaZM3QLOezcp6NvEaWIpl_kHrs7Jh-_6B2hi_PKatb02GZbfyKQ>
-    <xmx:OBqYaVluXpVs0u-j2vzXzSKPfj3A-KOJyzuSAs2BK63RzAKov5qszA>
-    <xmx:OBqYaX1Q_joVua2goFKnK-JVNlUDs-KkT-mFm5NnJGfL_txZ1P58xBlm>
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthh
+    hikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:OxqYaSqsN4nhFM6wlx7Xzj2V2NzMhT-kA7lw5tigICbrK9Ra5l98OQ>
+    <xmx:OxqYaZmH4H1JD9wq-gkPRwZDbiVbCFdXwZ3RmTrrJ05ANsb8mtznjw>
+    <xmx:OxqYaZIdEZ_0LGUQU6kV2bsrwZW_hcZ2PpEwUeoSzALvpAh2lZvy8g>
+    <xmx:OxqYaex1B9WEJL8q7SNXr0HHyWrNSyTgpAjYX3eDS7sY8ERPSAvWjw>
+    <xmx:OxqYaRiO82aIzcoWhvv362w7WQvjDCAw8sOJSaZgSIN1yTcQwh_sQrh3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 03:24:23 -0500 (EST)
+ 20 Feb 2026 03:24:26 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 60ae6c87 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Feb 2026 08:24:22 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 5e6ee94a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Feb 2026 08:24:25 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 00/17] refs: unify `refs_for_each_*()` functions
-Date: Fri, 20 Feb 2026 09:24:04 +0100
-Message-Id: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
+Date: Fri, 20 Feb 2026 09:24:05 +0100
+Subject: [PATCH 01/17] refs: move `refs_head_ref_namespaced()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,104 +82,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACUamGkC/x2MQQqDQAwAvyI5G1hDVepXioclzWoorLJRKcj+v
- aHHgZm5waSoGEzNDUUuNd2yQ9c2wGvMi6C+nYECDYEo4P4xLJIM01ZQIq94Zk3K8fASx34kHp4
- PThzAH7ur+v3/X3OtP9HDdMZvAAAA
-X-Change-ID: 20260220-pks-refs-for-each-unification-7572c694cfc0
+Message-Id: <20260220-pks-refs-for-each-unification-v1-1-17170bd99de1@pks.im>
+References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
+In-Reply-To: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+The function `refs_head_ref_namespaced()` is somewhat special when
+compared to most of the other functions that take a callback function:
+while `refs_for_each_*()` functions yield multiple refs, we only yield
+at most the HEAD ref of the current function. As such, the function is
+related to `refs_head_ref()` and not to the for-each functions.
 
-we currently have 14 different `refs_for_each_*()` functions, with each
-of them doing slightly different things. This makes for a confusing API
-surface, and because the API is not built for extension we have to add a
-new function every now and then to handle another esoteric edge case
-that will ultimately only have at most a handful of callers.
+Move the function to be located next to `refs_head_ref()` to clarify.
 
-This design isn't really sensible in my opinion, and this patch series
-aims to fix that. Instead of having a dozen different functions, it
-introduces a new `refs_for_each_ref_ext()` function that simply takes an
-options structure as input. From thereon, callers can mix and match the
-parameters that they care about.
-
-The patch series is structured like this:
-
-  - Patches 1 to 5 introduce some preliminary cleanups.
-
-  - Patches 6 to 9 introduce `refs_for_each_ref_ext()` and move
-    more functionality into it. This also fixes a performance bug that
-    we have in one of the implementations.
-
-  - Patch 10 adds some more verification for options that would have
-    caught the bugs in ps/for-each-ref-in-fixes.
-
-  - The remaining patches drop 7 out of 14 functions and replace them
-    with `refs_for_each_ref_ext()`. It results in a bit of churn, so
-    while I think this churn is worth it, I consider these patches to be
-    optional.
-
-The patch series is built on top of 73fd77805f (The 5th batch,
-2026-02-17) with ps/for-each-ref-in-fixes at 6375a00ef1 (bisect:
-simplify string_list memory handling, 2026-02-19) merged into it.
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (17):
-      refs: move `refs_head_ref_namespaced()`
-      refs: move `do_for_each_ref_flags` further up
-      refs: rename `do_for_each_ref_flags`
-      refs: rename `each_ref_fn`
-      refs: remove unused `refs_for_each_include_root_ref()`
-      refs: introduce `refs_for_each_ref_ext`
-      refs: speed up `refs_for_each_glob_ref_in()`
-      refs: generalize `refs_for_each_namespaced_ref()`
-      refs: generalize `refs_for_each_fullref_in_prefixes()`
-      refs: improve verification for-each-ref options
-      refs: replace `refs_for_each_ref_in()`
-      refs: replace `refs_for_each_rawref()`
-      refs: replace `refs_for_each_rawref_in()`
-      refs: replace `refs_for_each_glob_ref_in()`
-      refs: replace `refs_for_each_glob_ref()`
-      refs: replace `refs_for_each_namespaced_ref()`
-      refs: replace `refs_for_each_fullref_in()`
+ refs.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
- bisect.c                  |  16 ++-
- builtin/bisect.c          |  34 ++++--
- builtin/describe.c        |   7 +-
- builtin/fetch.c           |   7 +-
- builtin/fsck.c            |   7 +-
- builtin/receive-pack.c    |   8 +-
- builtin/remote.c          |   8 +-
- builtin/rev-parse.c       |  37 ++++---
- builtin/show-ref.c        |  21 ++--
- fetch-pack.c              |  15 ++-
- http-backend.c            |   8 +-
- ls-refs.c                 |  11 +-
- notes.c                   |   7 +-
- pack-bitmap.c             |  15 +--
- pack-bitmap.h             |   2 +-
- ref-filter.c              |  19 ++--
- refs.c                    | 256 ++++++++++++++++++++++------------------------
- refs.h                    | 198 +++++++++++++++++------------------
- refs/files-backend.c      |  19 ++--
- refs/iterator.c           |   2 +-
- refs/packed-backend.c     |   8 +-
- refs/reftable-backend.c   |  10 +-
- revision.c                |  46 ++++++---
- submodule.c               |   2 +-
- t/helper/test-ref-store.c |  15 ++-
- upload-pack.c             |  13 ++-
- worktree.c                |   2 +-
- worktree.h                |   2 +-
- 28 files changed, 437 insertions(+), 358 deletions(-)
+diff --git a/refs.h b/refs.h
+index f16b1b697b..62e8ef61e7 100644
+--- a/refs.h
++++ b/refs.h
+@@ -413,6 +413,9 @@ typedef int each_ref_fn(const struct reference *ref, void *cb_data);
+  */
+ int refs_head_ref(struct ref_store *refs,
+ 		  each_ref_fn fn, void *cb_data);
++int refs_head_ref_namespaced(struct ref_store *refs,
++			     each_ref_fn fn, void *cb_data);
++
+ int refs_for_each_ref(struct ref_store *refs,
+ 		      each_ref_fn fn, void *cb_data);
+ int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
+@@ -456,8 +459,6 @@ int refs_for_each_glob_ref(struct ref_store *refs, each_ref_fn fn,
+ int refs_for_each_glob_ref_in(struct ref_store *refs, each_ref_fn fn,
+ 			      const char *pattern, const char *prefix, void *cb_data);
+ 
+-int refs_head_ref_namespaced(struct ref_store *refs, each_ref_fn fn, void *cb_data);
+-
+ /*
+  * references matching any pattern in "exclude_patterns" are omitted from the
+  * result set on a best-effort basis.
 
-
----
-base-commit: dbbe43524e0814c1f93325795ed6aa26eb6e587e
-change-id: 20260220-pks-refs-for-each-unification-7572c694cfc0
+-- 
+2.53.0.414.gf7e9f6c205.dirty
 
