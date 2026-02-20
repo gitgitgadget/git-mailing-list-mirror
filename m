@@ -1,69 +1,68 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B223EBF3E
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 01:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AF4148850
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 01:59:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771551546; cv=none; b=POvlJ0Ghj8aChBv1hiDIogNiwoWU2QZcXAyaS9G7vt7T0ghTOCAZJPu7pbRj8Egxdk3dASngGWqD/CjJWNmdyi91mB4vK6SRyCWoV+7DihnUmygVwUvaTnW+UBUIUea6ZqoSnA/yiimaqiXUhT6dJh9CeKRGaOScbcsCE3PGasM=
+	t=1771552792; cv=none; b=thH1EwXF/5zrL6Y8eBFS0rLw/bzC/SAxGYTOfRH/C84sB1D8DG35XOo+uq18a/yoY4cmbXf1KmPDoISWO4EGQzhRz1nDf+WjcpAbutx8u8ZUVzFdoIlFK4AXIyI5vTF2rPn3sMZ6fIBQc2wuNqqRW2DNIXr08B7ws76kvo5s6Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771551546; c=relaxed/simple;
-	bh=I7t0wwlw6teJIWo0j1T0/SW3tpdZ7bRjkJ7+3a5NJjY=;
+	s=arc-20240116; t=1771552792; c=relaxed/simple;
+	bh=bE6hnaHj/MpzcLFrly0Ir7+E0vngVd/Yt8iDu9wxmsc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Yagfh28CWcdC26bmrB+XF6CKVVbZvV3Doc3Gf7tcHRFgVLgJRt2em9j0P/VFjGvRbnyOy4h9rGV6633xvh0E9rQSIVkJf9IurQwJgo8G/G43tjrLeS/f1uvYvx4GT25UAJc+EooJfp26FRJAfFerwGxP9w9QtJJKDa4tup1mHhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dyxiXxNI; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version:To:Cc; b=ROwhJuaDYHFVtu1LWHt4zrpJDC2fxjAMWd+stduzTpljPVvgb7PRgLwsAFzc5IcOD0py7CoYvnyJHZdzJdQCquCD5ANu+wzDD0VKCk6acHelYi1hYi0MKL7LLwJtAtK9HFZNNsOizCkLBuz+vk5ZczZTHi/KYEgwsgt3X1TOGO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dRz8JV0P; arc=none smtp.client-ip=74.125.82.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dyxiXxNI"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cb3825b0fbso155273485a.0
-        for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:39:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dRz8JV0P"
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2ba64b5a53aso1540349eec.0
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:59:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771551543; x=1772156343; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771552790; x=1772157590; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GqE5CERWMrnWvDzkyogp9auMfeeN6XnpJ26TDwlsObc=;
-        b=dyxiXxNIm6VIQ1L7Z4DBPpNWZjy/54fGD6/QTaxalOGDjW4FEmSBU1C2mpOF55zTv/
-         FSNrB3QSmK4lPjgj8Hx/VQ1I6qyOJ7zLLryhDrcK3k22xVhbItePlTb9pAqpgJH08Mk2
-         98lgfax1QD8A0MIsgPSvT/SzPEOuAkuoHYQVDEcvqxZyaBaojTxDkpopyYsMth3R0DXS
-         UuaLKtd6EAvCj65pqqAZoeqGEFGuDJWbDhPFMIPPSOOGhl6frWdc1RU/e1M6KTasOK7B
-         4J/Ics4DQotBny9lwQnHWd5EGr1XIbtvDPsxqV+MJw2jVl37bQN3EUEFItZli2XJIaRM
-         wttA==
+        bh=NRCDTQWuZI7j+zJWVahkmn2BWn/6XSPiUTwVYPMCqlY=;
+        b=dRz8JV0P+leUjj9X8hnlBmlRtcQQvCiOE8tsWTGKBRk3lmIEMdLj9/HUY09VDe05K7
+         0RK+TLNCuNpTsi5urEwPPB4SX29azC5N0w8JbvTMOSfRSRm7JoMxfwSo7BzJsH19nxlH
+         AZYvZKzmI732WsAdxyOiQX/GtBgUldhBCy0AAoEovS9rkcACeswtX7ruRMybpL0y9DPp
+         Iewok2ly5jVSXDEND9jolHPSkb/5ev7Qx1f1Ny8e3u2uZ465J2OsTAmqcmg1cIAqP+Ou
+         GPG/xGB42NY/BfBLD1cKeLPP3CtO4PLfPZwjQGepNNL+t0rG0jGLAmfLt3ZmfRHh+1hw
+         EVwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771551543; x=1772156343;
+        d=1e100.net; s=20230601; t=1771552790; x=1772157590;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=GqE5CERWMrnWvDzkyogp9auMfeeN6XnpJ26TDwlsObc=;
-        b=VlZJIDthm/U8eVVK8R8r0PRcNr+AhHk/43bJt9BhSU8SEjavK09k6dRAiwHfkemo7S
-         cocI7dY8wFVa2gQT+MPBGIAwY+SK8a9vejYKKHzAnCz7XSs9BMhRTGh4ldUxAWYwFsKk
-         W1J/9EFRtoxyVJ4msk/7LuGYdkRpICx9TLcq9hdDcY4oXCVkLgaG8qXble7ZDOc0DuFf
-         oGSzUjzIzNx8GACpJfzdkpYvSytdVAo6YGSD8vxiFKcelt5X23TGw72gfdKyV+GTIW05
-         8aTO1DpKePap5Ml4VHC6gXpSjOxWHUtMFYMStvSHwlzX5Opl0POMbnyEX/VpztAUDta+
-         iu1A==
-X-Gm-Message-State: AOJu0Yy4Lz5RDZKrrLSKLHUDD8lMh1xKvAj98cbYbBzPNFXNtz1NEHl0
-	gLWVj3OulK3dgV6lNOPZXhy9XLBBe/c3mr2SVBx1qzVuFIS2in4Xd+W9N2ehtw==
-X-Gm-Gg: AZuq6aJu0HpFLWT0dIQaDIlRXv0d/rADRYUd+Cm8gyUcS0hlEtA29KFPg4W83/tr/If
-	y8HIlvQw1LKL+AjqhFTC0IFRx0F0+9eCsqlySCnVIppPQZPYiQ8IOMdO3Zrg81HvWZCgL8CWIpX
-	r8ckU9qpI+3H9+nMLWUUu4rrSwt1w6OzSGbEuOT/cYHj2Bdbx8ZUSjPaY5tDnuJOCxJBUWPE0+3
-	R5hIwY9nhiREtIE8a5tVEfHHE9o0pRN902WLX/XgBiEYVfZ/Fq1tseKu5ACkNaWaufKyCSyAy+3
-	EmEJADw2OpZ6AKfsFJI123tU57noSLlcR29zoiY9Bbj/iP1sK7/RikVaxLYTS1BnD0sVApqmkRQ
-	NYA73lJytiMk8X1CRcc35JpqzUxoKKvrBgSAB1q0UsxBH4R5HJPRW8Vo8K+Ph38+hhBMr+urRjr
-	hbubjMuHu+6iWcpVS/uuRR6AmA7D8=
-X-Received: by 2002:a05:620a:19aa:b0:8c6:a5bc:8a80 with SMTP id af79cd13be357-8cb79eabb7bmr585014385a.29.1771551543145;
-        Thu, 19 Feb 2026 17:39:03 -0800 (PST)
-Received: from [127.0.0.1] ([135.232.200.194])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb2b0be6besm2186426185a.5.2026.02.19.17.39.01
+        bh=NRCDTQWuZI7j+zJWVahkmn2BWn/6XSPiUTwVYPMCqlY=;
+        b=I56nmPDKRZc64gcenJZvLC7RospTE4C8wVV+0129PfqDhpu9OCle7/U4k+w6ixvgZe
+         ThKWNjlbfTG30vH/t7uoxFbRQCRAicCDWxdhYFd8IGB+75LKeJoWCvZOGx163ND0IJ7S
+         gjJv/pIipl5RDx/rv8HtQnF7aKRel77qb0LUIzp22PofKRwT4Ibn3VkJid2SQyvNQfUi
+         eyiQyCnBUtFRTd0dDw+QN4yfFfFI0Zeaz0dLZZnpLMDmnkRHTPRxXqEwj0FhwRYvlvU4
+         QezYKFQCxKmbbIQfHCJcX4drKld99auYfvUM2ZB2WIkOajlTaz/ewaD8P9SikNxSJPCa
+         dWVA==
+X-Gm-Message-State: AOJu0YwlbffRmThDE0EkFisCJwUDCSa95lLzcn76dIf9zm3nriMT0Qxf
+	1yLT/H1kY5gVRHMAytfH8jM8Ha1aJ/OQT5lC44nkqPx1CmKE7ljZrk0VAA+xLA==
+X-Gm-Gg: AZuq6aISoVP8CszScb8B5RSIHMheb3f602HuTUzpXEHuCEklEeaxY9B19M/DTKFXOkn
+	MLWVkrAB466ZR6h67LrfrB4Ehkzwrr0jY367GLbN6q9Eb/H3NPcj8O4808o0cMf2ERQb/QAj7Yp
+	oI/xgxFkmUoPhCBuHsRvKp50KjNYc0VqeMPzPJuPZ86sfIl5grteqCTvw9IypG+LP27Ab6hYVt9
+	Xz6EJc2mzhpDF3FyiyJkpc3G2ps0mcob8v7bygWEm67xCuT5IPXkz3rPOY3jolXDfBnV8dfmJMx
+	4J0NpKZR/34MBuzUHWKa4+9CVQXw6US7E8/Tfj/44YsHiWQIZqDuY769FMAEAen9yMaO5G++Wgs
+	rGGB/PdC1tOvKM1tE3/1fnZv03ASeYEZ1EIkcpJtgaVK/2SNpVYLsJj2BROjsyhpdId2VbPUkq+
+	ebh/ScMbnc4OC1DMd66o8ZliO1mbJ0i7juwd2c
+X-Received: by 2002:a05:7300:fd14:b0:2ae:5d3b:e1c6 with SMTP id 5a478bee46e88-2bac97a074fmr8743038eec.21.1771552789600;
+        Thu, 19 Feb 2026 17:59:49 -0800 (PST)
+Received: from [127.0.0.1] ([172.215.211.50])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bacb66c24esm21698829eec.27.2026.02.19.17.59.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Feb 2026 17:39:01 -0800 (PST)
-Message-Id: <pull.2046.v4.git.1771551540816.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2046.v3.git.1771391650713.gitgitgadget@gmail.com>
-References: <pull.2046.v3.git.1771391650713.gitgitgadget@gmail.com>
-From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Feb 2026 01:39:00 +0000
-Subject: [PATCH v4] osxkeychain: define build targets in the top-level
- Makefile.
+        Thu, 19 Feb 2026 17:59:49 -0800 (PST)
+Message-Id: <pull.2048.v2.git.1771552788.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2048.git.1771406115.gitgitgadget@gmail.com>
+References: <pull.2048.git.1771406115.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 20 Feb 2026 01:59:42 +0000
+Subject: [PATCH v2 0/6] Avoid the_repository in merge-ort and replay
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,219 +73,155 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Koji Nakamaru <koji.nakamaru@gree.net>,
-    Koji Nakamaru <koji.nakamaru@gree.net>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-From: Koji Nakamaru <koji.nakamaru@gree.net>
+Changes since v1:
 
-The fix for git-credential-osxkeychain in 4580bcd235 (osxkeychain: avoid
-incorrectly skipping store operation, 2025-11-14) introduced linkage
-with libgit.a, and its Makefile was adjusted accordingly. However, the
-build fails as of 864f55e190 because several macOS-specific refinements
-were applied to the top-level Makefile and config.mak.uname, such as:
+ * Add a preparatory patch removing the_repository check from blob
+   prefetching in both merge-ort and diff*; it's no longer necessary
+ * Fix casing mismatch
+ * Simplify the hammer a bit based on the new first patch, but add some
+   simple comments explaining it
 
-  - 363837afe7 (macOS: make Homebrew use configurable, 2025-12-24)
-  - cee341e9dd (macOS: use iconv from Homebrew if needed and present,
-    2025-12-24)
-  - d281241518 (utf8.c: enable workaround for iconv under macOS 14/15,
-    2026-01-12)
+Remove explicit uses of the_repository and the_hash_algo from merge-ort, and
+since this has now been done multiple times for both merge-ort and replay,
+implement a small measure to prevent them from returning to either merge-ort
+or replay.
 
-Since libgit.a and its corresponding header files depend on many flags
-defined in the top-level Makefile, these flags must be consistently
-defined when building git-credential-osxkeychain. Continuing to manually
-adjust the git-credential-osxkeychain Makefile is cumbersome and
-fragile.
+See
+https://lore.kernel.org/git/CABPp-BH7E1Bh2g0vR3T4NEsv34DvFQPzMuJSsqtOAaWY-fFCxg@mail.gmail.com/
+and
+https://lore.kernel.org/git/CABPp-BFuwvqiCTCCpoyT6em9_1-qrgPWHWhrufQ3UuZ+Kfkb6A@mail.gmail.com/
+for recent discussions on these.
 
-Define the build targets for git-credential-osxkeychain in the top-level
-Makefile and modify its local Makefile to simply rely on those targets.
+As noted in the comments on v1, I actually do not know why
+prefetch_for_content_merges() needs to use the_repository. When I introduced
+it back in 2bff554b23e8 (merge-ort: add prefetching for content merges,
+2021-06-22), I was just looking at diffcore_std() and trying to mimic how it
+did the prefetch, and it has such a comparison. If anyone knows why
+diffcore_std() needs to compare against the_repository, I'd love to hear...
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Reported-by: D. Ben Knoble <ben.knoble@gmail.com>
-Helped-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
----
-    osxkeychain: define build targets in the top-level Makefile.
-    
-    Changes since v3:
-    
-     * Add missing commit reference date.
-     * Use dep_dirs to create contrib/credential/osxkeychain/.depend.
+Series overview: Patches 1-3: Mostly mechanical removal of existing uses
+Patches 4-5: Simple hammer to prevent the problem from returning
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2046%2FKojiNakamaru%2Ffix%2Fosxkeychain-makefile-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2046/KojiNakamaru/fix/osxkeychain-makefile-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2046
+Elijah Newren (6):
+  merge,diff: remove the_repository check before prefetching blobs
+  merge-ort: pass repository to write_tree()
+  merge-ort: replace the_repository with opt->repo
+  merge-ort: replace the_hash_algo with opt->repo->hash_algo
+  merge-ort: prevent the_repository from coming back
+  replay: prevent the_repository from coming back
 
-Range-diff vs v3:
+ diff.c            |  2 +-
+ diffcore-break.c  |  2 +-
+ diffcore-rename.c |  4 +-
+ merge-ort.c       | 94 +++++++++++++++++++++++++----------------------
+ replay.c          |  6 +++
+ 5 files changed, 61 insertions(+), 47 deletions(-)
 
- 1:  25a66e1b7d ! 1:  3c36804348 osxkeychain: define build targets in the top-level Makefile.
-     @@ Commit message
-          osxkeychain: define build targets in the top-level Makefile.
-      
-          The fix for git-credential-osxkeychain in 4580bcd235 (osxkeychain: avoid
-     -    incorrectly skipping store operation) introduced linkage with libgit.a,
-     -    and its Makefile was adjusted accordingly. However, the build fails as
-     -    of 864f55e190 because several macOS-specific refinements were applied to
-     -    the top-level Makefile and config.mak.uname, such as:
-     +    incorrectly skipping store operation, 2025-11-14) introduced linkage
-     +    with libgit.a, and its Makefile was adjusted accordingly. However, the
-     +    build fails as of 864f55e190 because several macOS-specific refinements
-     +    were applied to the top-level Makefile and config.mak.uname, such as:
-      
-            - 363837afe7 (macOS: make Homebrew use configurable, 2025-12-24)
-            - cee341e9dd (macOS: use iconv from Homebrew if needed and present,
-     @@ Commit message
-      
-          Helped-by: Junio C Hamano <gitster@pobox.com>
-          Reported-by: D. Ben Knoble <ben.knoble@gmail.com>
-     +    Helped-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-          Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
-      
-       ## Makefile ##
-     +@@ Makefile: objects: $(OBJECTS)
-     + dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
-     + dep_dirs := $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
-     + 
-     ++ifeq ($(uname_S),Darwin)
-     ++	dep_dirs += $(addsuffix .depend,$(sort $(dir contrib/credential/osxkeychain/git-credential-osxkeychain.o)))
-     ++endif
-     ++
-     + ifeq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
-     + $(dep_dirs):
-     + 	@mkdir -p $@
-      @@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+
+base-commit: 73fd77805fc6406f31c36212846d9e2541d19321
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2048%2Fnewren%2Favoid_the_repository-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2048/newren/avoid_the_repository-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2048
+
+Range-diff vs v1:
+
+ -:  ---------- > 1:  7155a0da6f merge,diff: remove the_repository check before prefetching blobs
+ 1:  620c4ea38b = 2:  911cba991b merge-ort: pass repository to write_tree()
+ 2:  abba4bd762 ! 3:  68af47ed18 merge-ort: replace the_repository with opt->repo
+     @@ merge-ort.c: static void prefetch_for_content_merges(struct merge_options *opt,
+       	struct string_list_item *e;
+       	struct oid_array to_fetch = OID_ARRAY_INIT;
        
-       contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
-     @@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
-      +		$(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security -framework CoreFoundation
+     --	if (opt->repo != the_repository || !repo_has_promisor_remote(the_repository))
+     -+	if (opt->repo != the_repository || !repo_has_promisor_remote(opt->repo))
+     +-	if (!repo_has_promisor_remote(the_repository))
+     ++	if (!repo_has_promisor_remote(opt->repo))
+       		return;
+       
+       	for (e = &plist->items[plist->nr-1]; e >= plist->items; --e) {
+ 3:  36c2713ceb ! 4:  bfa68716af merge-ort: replace the_hash_algo with opt->repo->hash_algo
+     @@ Metadata
+       ## Commit message ##
+          merge-ort: replace the_hash_algo with opt->repo->hash_algo
+      
+     +    We have a perfectly valid repository available and do not need to use
+     +    the_hash_algo (a shorthand for the_repository->hash_algo), so use the
+     +    known repository instead.
+     +
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## merge-ort.c ##
+ 4:  46c24e0d05 ! 5:  932d945c9b merge-ort: prevent the_repository from coming back
+     @@ Metadata
+       ## Commit message ##
+          merge-ort: prevent the_repository from coming back
+      
+     -    There are two things preventing us from removing our usage of
+     -    USE_THE_REPOSITORY_VARIABLE: one necessary use of the_repository in
+     -    prefetch_for_content_merges(), and the use of DEFAULT_ABBREV.  We have
+     -    removed all other uses of the_repository in merge-ort before (multiple
+     -    times), but without removing that definition, they keep coming back.
+     +    Due to the use of DEFAULT_ABBREV, we cannot get rid of our usage of
+     +    USE_THE_REPOSITORY_VARIABLE.  However, we have removed all other uses of
+     +    the_repository in merge-ort a few times.  But they keep coming back.
+      
+          Define the_repository to make it a compilation error so that they don't
+     -    come back any more, with a special carve-out for
+     -    prefetch_for_content_merges().
+     +    come back any more.
+      
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+     @@ merge-ort.c
+       #include "unpack-trees.h"
+       #include "xdiff-interface.h"
+       
+     ++/*
+     ++ * We technically need USE_THE_REPOSITORY_VARIABLE above for DEFAULT_ABBREV,
+     ++ * but do not want more uses of the_repository.  Prevent them.
+     ++ *
+     ++ * opt->repo is available; use it instead.
+     ++ */
+      +#define the_repository DO_NOT_USE_THE_REPOSITORY
       +
-      +contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
-     -+	@mkdir -p contrib/credential/osxkeychain/.depend
-      +	$(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+       /*
+        * We have many arrays of size 3.  Whenever we have such an array, the
+        * indices refer to one of the sides of the three-way merge.  This is so
+     -@@ merge-ort.c: static int process_entry(struct merge_options *opt,
+     - 	return 0;
+     - }
+     - 
+     -+#undef the_repository
+     -+
+     - static void prefetch_for_content_merges(struct merge_options *opt,
+     - 					struct string_list *plist)
+     - {
+     -@@ merge-ort.c: static void prefetch_for_content_merges(struct merge_options *opt,
+     - 	oid_array_clear(&to_fetch);
+     - }
+     - 
+     -+#define the_repository DO_NOT_USE_the_repository
+     -+
+     - static int process_entries(struct merge_options *opt,
+     - 			   struct object_id *result_oid)
+     - {
+ 5:  d75a71aef9 ! 6:  67db46f34f replay: prevent the_repository from coming back
+     @@ replay.c
+       #include "strmap.h"
+       #include "tree.h"
+       
+     ++/*
+     ++ * We technically need USE_THE_REPOSITORY_VARIABLE for DEFAULT_ABBREV, but
+     ++ * do not want to use the_repository.
+     ++ */
+      +#define the_repository DO_NOT_USE_THE_REPOSITORY
       +
-      +install-git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain
+       static const char *short_commit_name(struct repository *repo,
 
-
- Makefile                                | 21 ++++++++
- contrib/credential/osxkeychain/Makefile | 65 +++----------------------
- 2 files changed, 27 insertions(+), 59 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 4ac44331ea..47485004d8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2876,6 +2876,10 @@ objects: $(OBJECTS)
- dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
- dep_dirs := $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
- 
-+ifeq ($(uname_S),Darwin)
-+	dep_dirs += $(addsuffix .depend,$(sort $(dir contrib/credential/osxkeychain/git-credential-osxkeychain.o)))
-+endif
-+
- ifeq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
- $(dep_dirs):
- 	@mkdir -p $@
-@@ -4060,3 +4064,20 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
- 
- contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
- 	$(AR) $(ARFLAGS) $@ $^
-+
-+contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
-+		$(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security -framework CoreFoundation
-+
-+contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
-+	$(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-+
-+install-git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain
-+	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-+	$(INSTALL) $(INSTALL_STRIP) $< '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-+
-+.PHONY: clean-git-credential-osxkeychain
-+clean-git-credential-osxkeychain:
-+	$(RM) \
-+		contrib/credential/osxkeychain/git-credential-osxkeychain \
-+		contrib/credential/osxkeychain/git-credential-osxkeychain.o
-diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
-index c68445b82d..219b0d7f49 100644
---- a/contrib/credential/osxkeychain/Makefile
-+++ b/contrib/credential/osxkeychain/Makefile
-@@ -1,66 +1,13 @@
- # The default target of this Makefile is...
- all:: git-credential-osxkeychain
- 
--include ../../../config.mak.uname
---include ../../../config.mak.autogen
---include ../../../config.mak
-+git-credential-osxkeychain:
-+	$(MAKE) -C ../../.. contrib/credential/osxkeychain/git-credential-osxkeychain
- 
--ifdef ZLIB_NG
--	BASIC_CFLAGS += -DHAVE_ZLIB_NG
--        ifdef ZLIB_NG_PATH
--		BASIC_CFLAGS += -I$(ZLIB_NG_PATH)/include
--		EXTLIBS += $(call libpath_template,$(ZLIB_NG_PATH)/$(lib))
--        endif
--	EXTLIBS += -lz-ng
--else
--        ifdef ZLIB_PATH
--		BASIC_CFLAGS += -I$(ZLIB_PATH)/include
--		EXTLIBS += $(call libpath_template,$(ZLIB_PATH)/$(lib))
--        endif
--	EXTLIBS += -lz
--endif
--ifndef NO_ICONV
--        ifdef NEEDS_LIBICONV
--                ifdef ICONVDIR
--			BASIC_CFLAGS += -I$(ICONVDIR)/include
--			ICONV_LINK = $(call libpath_template,$(ICONVDIR)/$(lib))
--                else
--			ICONV_LINK =
--                endif
--                ifdef NEEDS_LIBINTL_BEFORE_LIBICONV
--			ICONV_LINK += -lintl
--                endif
--		EXTLIBS += $(ICONV_LINK) -liconv
--        endif
--endif
--ifndef LIBC_CONTAINS_LIBINTL
--	EXTLIBS += -lintl
--endif
--
--prefix ?= /usr/local
--gitexecdir ?= $(prefix)/libexec/git-core
--
--CC ?= gcc
--CFLAGS ?= -g -O2 -Wall -I../../.. $(BASIC_CFLAGS)
--LDFLAGS ?= $(BASIC_LDFLAGS) $(EXTLIBS)
--INSTALL ?= install
--RM ?= rm -f
--
--%.o: %.c
--	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
--
--git-credential-osxkeychain: git-credential-osxkeychain.o ../../../libgit.a
--	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) \
--		-framework Security -framework CoreFoundation
--
--install: git-credential-osxkeychain
--	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
--	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
--
--../../../libgit.a:
--	cd ../../..; make libgit.a
-+install:
-+	$(MAKE) -C ../../.. install-git-credential-osxkeychain
- 
- clean:
--	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
-+	$(MAKE) -C ../../.. clean-git-credential-osxkeychain
- 
--.PHONY: all install clean
-+.PHONY: all git-credential-osxkeychain install clean
-
-base-commit: 864f55e1906897b630333675a52874c0fec2a45c
 -- 
 gitgitgadget
