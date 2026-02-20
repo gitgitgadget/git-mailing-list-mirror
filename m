@@ -1,93 +1,87 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39AC30C356
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 23:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA77189B84
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 23:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771628825; cv=none; b=JoK42zUuB+OLcK+XWq4CCrZf9d8n/x+tXVckUA5+UUepUmtE8LNZvZvUgMAGEAYHY17SNL+fkRdZy6EfhlxK7lehFgsZz5KZrDxLpXBkRilQ2EvAI85DH3C/TqzvzHob6ZhdyrMWeah/38tJT2JYkTW7z2eGnCKS4oRH6sqAXZE=
+	t=1771629153; cv=none; b=ZGQM7K9xHEotMqh/7/0yTflDVtY4Diu5edLCuJj+2PofR5RfgtBFjGsyr890ydMzef0TEiQ0ormjpRoSR8cG1uER80NLZUirJABkOdj0M1y2LmRKQMkkWvIiQD5B+rTKP7msCKxNQnUST3CuBGk2eACREd/fc/kXAEQZOvz9G+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771628825; c=relaxed/simple;
-	bh=RpXt12NcF8W4U9hMiMOKIDP3wl9nYg66bGE1bO9AIew=;
+	s=arc-20240116; t=1771629153; c=relaxed/simple;
+	bh=XWAyULsx0XRnuXekvJD+vgRWvkTSlkQKhwIQegxj8Fw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h6esMl5GHKt53XnHDhdDNDCqQbf3P4mtvYXaeugQujz3/e/RXpM1NwZo5LmUJJpfHvFRoQtgMwphUiRNVVK+dvRe4k03SUZeuGRpIwrtT/8wj4SU1P4fMj3RZh/dsdo50nk/GVJ0puNRwPjROBNFjLkVe9Ph4XkMr3xxad+gMOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yd5yQC7W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LDBx0dKH; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=Ce8RcRYe5QPqP9ed3Gd14yZXmLpRAixTBJOsurSg3JJehy6YLSqjU/5FtDOICdJyjR+ysKJxaw/hM6pWEhWSQeP4LmQDLI0QZyWhXolxAAXZi4GOkgHS348BjRrVgSHBLq6qUQadTpUSAPfIOD2FnnFNa/j0udJ+UvUsUHyMvSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fd/7n7lK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qqCJVDi1; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yd5yQC7W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LDBx0dKH"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 35CCD7A00D5;
-	Fri, 20 Feb 2026 18:07:04 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Fri, 20 Feb 2026 18:07:04 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fd/7n7lK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qqCJVDi1"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 430A37A000E;
+	Fri, 20 Feb 2026 18:12:31 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Fri, 20 Feb 2026 18:12:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771628824; x=1771715224; bh=kjn2EZJNz4
-	L4EWbaEIoctttM0ZbHXGuJfqadsa0BVBY=; b=Yd5yQC7Wdohn7xtPxt0JCkWEyt
-	yTr++RCqwJD00xoIeO9RQ0zgaAeQruV5V7kE+DxhwqGt2n1EINEzqPlxYo586bbz
-	/qumeEHu9928euBRo5QFv3T8RY98FX2eALQRrs8mHlQeQ/d7bcLf6NTB/1PyJHq+
-	MuZwucptD5BaNQ1qztebAU48D6FUFt8VQaKBH1VyP8l72S1IkrwBmDhoAldi8NX2
-	qNmdqtdZlfvHZvLtnI/fXj+6QSpePL1304ZoeV5wnHKB5PthlNkjU+arlFjyLwt/
-	O85tQAJcWqTvAmzYCoTIE5ZX1Zprs0v7LEez0+USaLLOlbSx9Fwf0XhCNX9A==
+	:subject:to:to; s=fm2; t=1771629151; x=1771715551; bh=KobvEMcKcB
+	OoEzS4Tlu6j78bl6arKk2g4tbc8JcJ79k=; b=Fd/7n7lKHlrQh7dQ0OWuahrz5x
+	lbg79SuVBxfwCURPS+Weso5YrCTsK7iUejC/WiXk6fZuAEIzDSkDu4rGOebkCfK3
+	AqU0EeJbVbRiap6VVunPXyGUWUyqr5oqfNBzid3JGNpoGCGaWQCXPx0tkM7xzDJr
+	g1MNNtpvQ6SUE826fPN6drztXWy6iyZiXEEuVTpxWhewN2T8zrf16NmkZWAjbjro
+	VN48pYS87DrzwAdcSrWlG3DRIQPYgU3/dVtDvitMQ0M5itOf0Fu8G9s/PHz6HfcT
+	lEA/R5cJ8TArwGhUqXrhL3toR1q4i9s5xZ03H2hGZGEy6yvEFVsFyD3RYO+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771628824; x=1771715224; bh=kjn2EZJNz4L4EWbaEIoctttM0ZbHXGuJfqa
-	dsa0BVBY=; b=LDBx0dKHckAwY+WM6K8tahNnRvaev4qSM1vT5H7dBpbbvZBWzQK
-	eD9w1/WQiPQ7ZIdUeI0criiAMZ4wJnjIWR6Rfi8X2VawHVfWV6BChjSpYcI809pX
-	d/TQUOngqwFzD5vcsT2JTfTuzBWzhsbECNYXC5c2g0HnP9HAEB+cv8DLODMmOluC
-	NVgRRkre8G3wspNeYW/Dc08trITMotxydBBbJ9PtpSEBS8Nw6HqKBS1wpTOJOHF1
-	jdZWXpWOzQU6tv0wojyqi3Br5I6tCPP0Sd/rmvsgVLtqvHU93AGp8igU4JjWIIlC
-	ezplZvu1KLmznPtuQxu4zB9WRtfxsit/eGg==
-X-ME-Sender: <xms:F-mYaRMxoLgnnjHAXbNhlfBlOE5iVdmbB9OxUcZ6BkM3SQIop_JreQ>
-    <xme:F-mYaa3d_FoceOFTxMtql-XvUS0f1BvHfYsT7BavZnmkrtCC2Bj5kqw_smfb3hVWU
-    fIK5Yt2fHGpZPFz4X8bW2tHuWib4TPsrIeYkRAdwpeswPJR7-tmF0A>
-X-ME-Received: <xmr:F-mYaYljYvER3B4r3qEDWCq0SX6zq1V1wRIupOAJRr9ABo-g-Q7jX0RBVkz2Tk72HCewPGSDq-4Ma-rf1S7RzMMVCkUl_S4cGw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeljeefucetufdoteggodetrf
+	1771629151; x=1771715551; bh=KobvEMcKcBOoEzS4Tlu6j78bl6arKk2g4tb
+	c8JcJ79k=; b=qqCJVDi133UFY90h0esdEZcoG3xYyfFupxQ6g6cHgDF9pVHNOeh
+	wSJ9/QbSx7OGeTuuMLm8/QArPQidhebw9YwbGWsbjEfX14fGA3PLVTm2QJqsyxEp
+	jbB9+I5Q9Ho0QvlCyY94xmuOhA9FFVxTS+zskZWxZ1J+bg4sbq8s8TL3RML5CCx3
+	bjCuBPUxbxqDa9cj4f57gNP1sWeETnpdPeLzces7u2lyoHnTXE3GHk2jxnPFx6rl
+	9cdtq28RWfSpfURXQ+z1+1TeWQxO1ojh8GoOdVQtfS0r9gyc7oi4LDYekKBpP6Ci
+	7VcL/FHcPaz4fQEIVwrTMoM9wNw4tasBdCQ==
+X-ME-Sender: <xms:XuqYaTorc4x0hQy49QJc6O9neCYdlpspw-JCYzFZG4NYUD4G6laYUw>
+    <xme:XuqYaW_zRE925HaSV_mOCFQvCLkUxpXev86zJE9__n6dxpWpKzdUTu2HeR9qL77RY
+    T-H6wEhkaotPfmj8H3ynDIroQwa1E9TY7vfTDnra8TMxo4IOu0>
+X-ME-Received: <xmr:XuqYaXcv28WqbY1f2JPIxCe-5I-WlRgEpzXWcE0fGrV5N9Vwnwg1vjrFbA-CpugtkoqD-i4HpT4hQcxRw6kAaYBR3TS0sayiNA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeljeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohephigthhhinhdrghhithesghhmrghilhdrtghomhdprh
-    gtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:F-mYaZWhPkJLd1RwhVpc1cR03IARWm730aIu2jP2TIzFjulNEhXFkQ>
-    <xmx:F-mYaWtnSNp8SRQG_5Ce5GqtOnp3GVLMjfkjLLOHknrEqW6EgjcxVA>
-    <xmx:F-mYaUaEXiLJmew2L9BMhHoEfXQKbUgDIlD2mnxoJvhFuR_VED8K6Q>
-    <xmx:F-mYadV91od1JorvEqPvTM3e1Ww0RatgfBuB6oKKSbLtEQj88xbbFQ>
-    <xmx:GOmYaQnwqRhNfOno-gqHNHAaxsgF_q5McefBPj3Ldx-MQlPiL_zQO4mM>
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnrg
+    hsshgvrhdrghhrrghinhgrfihisehoshhsrdhquhgrlhgtohhmmhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkh
+    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgt
+    phhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:XuqYaYI-3K3JziiP7SyvzohkGnxPEdC0NEpm0q3aerokDI-mR4nDUg>
+    <xmx:XuqYafjfz1CFF1Gxmjsb4KD1I2VPbUIfFWijWrFT6F46J-7TifFzbQ>
+    <xmx:XuqYaeQwKbMH9PeEAphGyZyvuMNIswaCZADhbCVGcTOuY907SJgR3A>
+    <xmx:XuqYaRWF6v-Kq1MQa7QV-DITFBf4zg5RSNnCJhzJf7byG-4Xkjaggw>
+    <xmx:X-qYaWvXy3BpldBwEVQ-fypsbetHJs52v_RBiikZQyz4au1KDLnU2pAX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 18:07:03 -0500 (EST)
+ 20 Feb 2026 18:12:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Yee Cheng Chin <ychin.git@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  Yee Cheng Chin via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] xdiff: re-diff shifted change groups when using
- histogram algorithm
-In-Reply-To: <CAHTeOx-TLwqbcdGcb2drD4vE6D3M93EPMjcAeTNR+XNTbmTVZg@mail.gmail.com>
-	(Yee Cheng Chin's message of "Thu, 29 Jan 2026 17:58:18 -0800")
-References: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
-	<xmqqikcusn8p.fsf@gitster.g>
-	<4fa413ae-f2a4-4de2-a2fb-0b1db379750b@gmail.com>
-	<xmqqy0llk33y.fsf@gitster.g>
-	<3aeb49dd-8618-42e0-b9f9-6a4fb8065793@gmail.com>
-	<xmqq343sjn4x.fsf@gitster.g>
-	<CAHTeOx8SOZmqvi0pkcheSjFpbEALmOwaUiX0tKLmNP7fqvjMXA@mail.gmail.com>
-	<xmqqsebo9lv6.fsf@gitster.g>
-	<CAHTeOx-TLwqbcdGcb2drD4vE6D3M93EPMjcAeTNR+XNTbmTVZg@mail.gmail.com>
-Date: Fri, 20 Feb 2026 15:07:02 -0800
-Message-ID: <xmqq7bs7ui95.fsf@gitster.g>
+To: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3] submodule: fetch missing objects from default remote
+In-Reply-To: <xmqqms23lpn2.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	23 Jan 2026 18:18:25 -0800")
+References: <20260114194815.1049888-1-nasser.grainawi@oss.qualcomm.com>
+	<20260122152722.866341-1-nasser.grainawi@oss.qualcomm.com>
+	<xmqq4iobhpvg.fsf@gitster.g> <xmqqms23lpn2.fsf@gitster.g>
+Date: Fri, 20 Feb 2026 15:12:29 -0800
+Message-ID: <xmqqzf53t3fm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,20 +91,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Yee Cheng Chin <ychin.git@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> ...
-> {-AXB-}[+CD*XE+]*
+>> ...
+>> This test assumes that the first branch created by default is
+>> 'master', which will break in one of the CI jobs:
+>>
+>>   https://github.com/git/git/actions/runs/21304166518/job/61328461844#step:9:1942
 >
-> Because of that, I'm leaning on keeping the current code structure,
-> because it *is* indeed a cleanup step to be run after the previous
-> one. I could still refactor it into a separate function and put it
-> into the the case #1/#2 if blocks if you think that's cleaner.
+> For now, I've queued two fix-up patches on top of the posted patch
+> to avoid CI breakages when the topic is merged to 'seen'.  One is to
+> rename t7425-submodule-get-default-remote.sh to t7426-submodule-get-default-remote.sh
+> (both filename and the reference to it in t/meson.build), and the
+> other one is the following.
 >
-> I will also add the above to the test case in v2.
+> ----- >8 -----
+> Subject: [PATCH] SQUASH??? fixup
+>
+> The test as posted breaks when run with
+>
+>     $ make WITH_BREAKING_CHANGES=YesPlease test
+>
+> as the added part assumes that the default branch name is "master".
+>
+> This band-aid is sufficient for the purpose of the maintainer to get
+> the CI passing, but the real solution should probably be done better
+> in such a way that the latter step does not have to rely on the
+> creation of "anchorpoint" in the previous step.  I'll leave it to
+> the contributor of the topic.
+> ---
 
-OK, it has been a few weeks since we had this message.  Will we see
-an update sometime soon?  No rush, but just pinging.
+This was from about a month ago, and we haven't heard from you.
+Will we see a hopefully small and final update [PATCH v4] of this
+topic sometime soon?
 
 Thanks.
-
