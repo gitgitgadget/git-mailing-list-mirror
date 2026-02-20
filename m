@@ -1,53 +1,53 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B55D342CB6
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 12:46:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FD63112C0
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 12:46:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771591584; cv=none; b=B5OEPwq2WnDHxc/OM0tQAihOsO5IWYEPTURYyEl2fbZyIi28Q4Z9hesuYoLL/OAVOEJaSDFeUhCQomWJj1TIDNiw5c2us3lIigGAEUMyL/ImOyyvfr4McPEspPkyhwRjza2GQmSlhzYm4w/AtS6jdO2tk+X3SP/yvdNJtb1yzLc=
+	t=1771591587; cv=none; b=Su7jAGum7E8ZPav7ZnACbrK+Ze2OR/sijgaAtEE/v5j9TpNzE9GVsY3XmXkSCwJUlswc9mj3EyqOubHR4Bg1FryxHclH15d+uoRiAntliTMXYAEwrD+LX6ettAmBDYQ9cgJDYql299B9aeEwOYfQze6aJlpbiFPk+wGVsqnjuLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771591584; c=relaxed/simple;
-	bh=BzgK1CnJaah0ghHuy2WXzKGZBkrSimqr1SAuUwGE/D0=;
+	s=arc-20240116; t=1771591587; c=relaxed/simple;
+	bh=pM+8fjKkS1+YKrDVoDhgz/Qj0XYmz2KhQQGSEpX1QKU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jPiUHVcqf/Vb0yM0EYPAXtTn9IbUNZd3XdgVenKFh1lU57itloyEwYeOzyHcPRb8o40kmlqMQHymRTVOGClqYetzDNZCQ+UfjScdXniH7KCfCZKKmFo64+PsJ1ouCzCqGtreoQoN2C1ZUWpwHeCKi/t+b/EiXCIUFMtjlzSecos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ib9pZJvs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gAVFdXk5; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=acY6COmRjqk7166US4h6/yN/D5deSFoEirrE+Ji+N30bSM00wqd1kFj2dHTOWNU8BRryzzcnGfSs9y4rDaqn3g2yB/TaQc81GCuSx01Ugmo80/PoIvjfP4ZKrqmeZW4OyCkf2fb3Gm43xk12NLnq0s6/GWNeuatPaDRUC/4wJrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LHZCcRT5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CVq7Y7N2; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ib9pZJvs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gAVFdXk5"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7C4BF1D001E4;
-	Fri, 20 Feb 2026 07:46:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LHZCcRT5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CVq7Y7N2"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DB0A97A01EE;
+	Fri, 20 Feb 2026 07:46:24 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Fri, 20 Feb 2026 07:46:20 -0500
+  by phl-compute-03.internal (MEProxy); Fri, 20 Feb 2026 07:46:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771591580; x=1771677980; bh=J546sEKwKp
-	HQDh2IagNnjNfRfgCHc04EvULDlTkXpkQ=; b=Ib9pZJvsFxukxINe0fSaqfYk0m
-	PMcTuVxginngRF6aX+b/nMcYzSGvOAtQqa+m2G+EmMeEnszAtdC5DfVjE3W7P0jU
-	gzhoJctItJCRdtrAwVn5meyuBKrOfqUbri0xj0JezQtHGusgoUnBA+ozSnPZii7R
-	VJW6r5LfAkVATpQ05JIL3pn5ErLzM5tzUQXSoKf7G3sfAOND7NGx5T3nna6uzIj4
-	/SbCNzyiEChc51/WrtDFtKIJ8NdVeSP9ZAD+xY3FKHPRoyE5ncIaVCxLcFl8vy67
-	kLoyDUA0NoglP6BBFtmUKW/J3sVEKvijEav4eO4oOTjyKHC7sGIFj1vOXMVg==
+	:subject:to:to; s=fm3; t=1771591584; x=1771677984; bh=+02OCSVxA9
+	lJFPnZ2AXAbIy95TytoYaIq4hajQ8E7bg=; b=LHZCcRT5MBks3iI6mrCNa9HAeo
+	ESC5xFW50MAkVwK86n3ViUc9PKRaUQVE36RAfgyZ/xHIpvxK9wDcbH1AHH/2BuMy
+	E/WNYinIHcNNlmFBbQGaTfYngD1XlYHvfPFeyOnEn80fuWMESKwMfeomIgFIPNYr
+	uX5xZW1BD/2CkiIsdw4SVYEHw9e7KEC2m6ctWHu3Vf7dBoqNeNQO8fMkhRxGB/9i
+	zUi6BD4/ctme+yvpUS0QY076CEasVX2JeKsZFwXlcKXSbawKf1yxFSlJNe539vE7
+	l5sKoHicx8SZ2KZhLtIPhZWQdI0Xxd8cfFoj0QEg4ha6pCnAA2EzSTwnHKow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771591580; x=1771677980; bh=J546sEKwKpHQDh2IagNnjNfRfgCHc04EvUL
-	DlTkXpkQ=; b=gAVFdXk5bjax7vn8yagNacls9RJzpR55XH9x0MngjXzD9JstxiS
-	ttvesIStUrMW8cNYPSOGY+Iyt1YHStMfFp+n22OdDkA1EI0kmVgeumlMdWtHOiiz
-	JyDQPUieD3b40cFPQf68ogEAB2OAh1reHEglFui7KGCGxwNiwAHZq4ZMl6zyECGy
-	izwK8/gvRrMJ5s6x0YlOWHGcpeqEPSGyGh9nbgoNfTVT90GVSbL8dGdWctzSlugm
-	31YODpDtS9fWQH+qTZQtfriOUF4HmN73A8NW5NwtP8zUyKCFZkZPBVF4eLjTtVoZ
-	pRMEjZCRid6ISAqxunYkiYmdvkyS9PXBOng==
-X-ME-Sender: <xms:nFeYacogWoVylgwXQevUlMYNVvp2bEXISpRWu7b5SQ5d5H8iIUGgAg>
-    <xme:nFeYaU522yVScsu5QzpPqgYHMUBLWevLJRCB_Hki9WpFPplVJX9SqruH7C1Sr2xjH
-    n4FHbVGFmvCLSMNMojqaM2tBUMl8MT3fCUl1I-qbl_fvVXkNkzY6w>
-X-ME-Received: <xmr:nFeYaTdP5-nJlN_1PbMi9WzNR7wGL5jrtdYEsPwoBnpvkBJNDpauSkLZGbtC_wKPnLegzJLQq_B-R9PoG4WSMPFJOAt4HpZTyCTOiTZHPMBW>
+	1771591584; x=1771677984; bh=+02OCSVxA9lJFPnZ2AXAbIy95TytoYaIq4h
+	ajQ8E7bg=; b=CVq7Y7N2+Y40h1Ug+2/P8QhrdFCejLrCjBH96Ft/eYhTbymgxdS
+	IfCMta+ua2PGsV63f+M+iNdE0QA0Ezrr3qkIydT/LY6sF2PIxRcwYhhek1PvErve
+	vX3wTlb/meNbRJh16iJinMUuMwiFfPxW/ACruTsIObAwJng6WfCs826dpJ7+KcgE
+	5s4X3mPFcx5dsbZbPys0isKQ9Mj72o5zrFM6EC4nMhGFKhHqSZhvSDLK4Pc234kQ
+	j1WFUGT8h57rKhY02RKjn+/PF8nLrm2O6lkYSQUgJWWKQcYHK9IFuFNKAorTXZkk
+	DW5EGtm0loIBahzzG86lL9ZVkcteFZ8kCwg==
+X-ME-Sender: <xms:oFeYadUGr3v-oXOg46XJ3IY-Sk5Wg0T1HwI-MVv8bLtrtwPqb_1Z9w>
+    <xme:oFeYaf1K0-pQTHOcvnBFpRtc6kpbrcFboBaoJ-ty72piZvazmSjm7cqMoxLNLl73l
+    ah9to5iBb5ifS6-7OvGIYX73rm1usEKM63Kbu0OxEIE-ARtl0cE_GA>
+X-ME-Received: <xmr:oFeYaboX1kNHoQj1Cg5tskwHjSjHtt664iQwII_F2bzUzZBG57TJXAXJXLUKt0UPP91TbADURUMOgPzmGjrvtaxHHy5U7ZBRk7yYXPwFblwA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekgeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,24 +56,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekgeejucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpvghffhesph
-    gvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggurh
-    hirghnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtohepvghmihhl
-    hihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhishhtohhffh
-    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:nFeYaZ6SC7DfJZswvK1qn7bjcvmYItcYl19Wme6lCMGVzHbI2cdFTQ>
-    <xmx:nFeYaas1BNDJHEqlGBo8bGArz_3RJzEgnTKNDWPQ04WHyBp8j9hRow>
-    <xmx:nFeYaZjb828-gJSfgpexVI8UQjlOrNyM8fef2N0ZhzR9cDDCdRf4qg>
-    <xmx:nFeYaVprGXY86y8okefXVlfAv8_aa84jAdym3VVzTgjqPQDRZcHSLA>
-    <xmx:nFeYaeuKTkJjmj9pN0w_uQwQPbNZ6eGk2QdKX0hoH_BMN3MKOODp1abE>
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegvmhhilhihshhhrg
+    hffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhr
+    tghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:oFeYaWWkoPUIjpyGD3X99MdfyDJ4SgNkplrNMGTEiyrO1e-V311QsQ>
+    <xmx:oFeYaWaR6VPx8YqQazgv6UFAvarHcuX8Z77vrtdh79TGdYXM8gcm6g>
+    <xmx:oFeYaTfsaWOgXakg9CWcqumYVzsM89Jxh7Ll89EQEWoSEk7dO-u-tA>
+    <xmx:oFeYaQ1Z4WZwdy0haFcYa295JXTooiVt-PWnLdq36kh6DGWbhOthiw>
+    <xmx:oFeYaYrS18QJpkGL0KXma-aKwJeuZuoq0IqlTIz1tzBX1LOoAU392kDF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 07:46:18 -0500 (EST)
+ 20 Feb 2026 07:46:22 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4ae0906e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Feb 2026 12:46:17 +0000 (UTC)
-Date: Fri, 20 Feb 2026 13:46:14 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 26b33708 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Feb 2026 12:46:22 +0000 (UTC)
+Date: Fri, 20 Feb 2026 13:46:19 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -81,11 +81,11 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 3/8] hook: add "git hook list" command
-Message-ID: <aZhXlrWRGDS_Bhvm@pks.im>
+Subject: Re: [PATCH v2 4/8] hook: include hooks from the config
+Message-ID: <aZhXm1-jw_Mi8-vL@pks.im>
 References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
  <20260218222352.55393-1-adrian.ratiu@collabora.com>
- <20260218222352.55393-4-adrian.ratiu@collabora.com>
+ <20260218222352.55393-5-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,70 +94,140 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260218222352.55393-4-adrian.ratiu@collabora.com>
+In-Reply-To: <20260218222352.55393-5-adrian.ratiu@collabora.com>
 
-On Thu, Feb 19, 2026 at 12:23:47AM +0200, Adrian Ratiu wrote:
+On Thu, Feb 19, 2026 at 12:23:48AM +0200, Adrian Ratiu wrote:
 > diff --git a/builtin/hook.c b/builtin/hook.c
-> index 7afec380d2..51660c4941 100644
+> index 51660c4941..e151bb2cd1 100644
 > --- a/builtin/hook.c
 > +++ b/builtin/hook.c
-> @@ -20,6 +24,61 @@ static const char * const builtin_hook_run_usage[] = {
->  	NULL
->  };
+> @@ -54,6 +56,10 @@ static void hook_clear(struct hook *h, cb_data_free_fn cb_data_free)
 >  
-> +static int list(int argc, const char **argv, const char *prefix,
-> +		 struct repository *repo)
+>  	if (h->kind == HOOK_TRADITIONAL)
+>  		free((void *)h->u.traditional.path);
+> +	else if (h->kind == HOOK_CONFIGURED) {
+> +		free((void *)h->u.configured.friendly_name);
+> +		free((void *)h->u.configured.command);
+> +	}
+
+The `if` branch also needs curly braces now.
+
+> @@ -101,6 +107,187 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
+>  	string_list_append(hook_list, hook_path)->util = h;
+>  }
+>  
+> +static void unsorted_string_list_remove(struct string_list *list,
+> +					const char *str)
 > +{
-> +	static const char *const builtin_hook_list_usage[] = {
-> +		BUILTIN_HOOK_LIST_USAGE,
-> +		NULL
-> +	};
-> +	struct string_list *head;
-> +	struct string_list_item *item;
-> +	const char *hookname = NULL;
-> +	int ret = 0;
-> +
-> +	struct option list_options[] = {
-> +		OPT_END(),
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, list_options,
-> +			     builtin_hook_list_usage, 0);
-> +
-> +	/*
-> +	 * The only unnamed argument provided should be the hook-name; if we add
-> +	 * arguments later they probably should be caught by parse_options.
-> +	 */
-> +	if (argc != 1)
-> +		usage_msg_opt(_("You must specify a hook event name to list."),
-> +			      builtin_hook_list_usage, list_options);
+> +	struct string_list_item *item = unsorted_string_list_lookup(list, str);
+> +	if (item)
+> +		unsorted_string_list_delete_item(list, item - list->items, 0);
+> +}
 
-Error messages typically start with a lower-case letter.
+This looks like a function that could reasonably be added to
+"string-list.{c,h}".
 
-> +	hookname = argv[0];
+> +/*
+> + * Callback struct to collect all hook.* keys in a single config pass.
+> + * commands: friendly-name to command map.
+> + * event_hooks: event-name to list of friendly-names map.
+> + * disabled_hooks: set of friendly-names with hook.name.enabled = false.
+> + */
+> +struct hook_all_config_cb {
+> +	struct strmap commands;
+> +	struct strmap event_hooks;
+
+Hm, curious that we've got two maps. I'd have expected to have a single
+map from "friendly name" or "hook name" to `struct hook`. But maybe
+we'll assemble these structs for those maps later on.
+
+> +	struct string_list disabled_hooks;
+> +};
+
+We don't have support for disabled hooks yet. I assume this'll be added
+by a later commit, only.
+
+[snip]
+> +/* Populate `cache` with the complete hook configuration */
+> +static void build_hook_config_map(struct repository *r, struct strmap *cache)
+> +{
+> +	struct hook_all_config_cb cb_data;
+> +	struct hashmap_iter iter;
+> +	struct strmap_entry *e;
 > +
-> +	head = list_hooks(repo, hookname, NULL);
+> +	strmap_init(&cb_data.commands);
+> +	strmap_init(&cb_data.event_hooks);
+> +	string_list_init_dup(&cb_data.disabled_hooks);
 > +
-> +	if (!head->nr) {
-> +		warning(_("No hooks found for event '%s'"), hookname);
-
-Warnings, too.
-
-> +		ret = 1; /* no hooks found */
-> +		goto cleanup;
+> +	/* Parse all configs in one run. */
+> +	repo_config(r, hook_config_lookup_all, &cb_data);
+> +
+> +	/* Construct the cache from parsed configs. */
+> +	strmap_for_each_entry(&cb_data.event_hooks, &iter, e) {
+> +		struct string_list *hook_names = e->value;
+> +		struct string_list *hooks = xcalloc(1, sizeof(*hooks));
+> +
+> +		string_list_init_dup(hooks);
+> +
+> +		for (size_t i = 0; i < hook_names->nr; i++) {
+> +			const char *hname = hook_names->items[i].string;
+> +			char *command;
+> +
+> +			command = strmap_get(&cb_data.commands, hname);
+> +			if (!command)
+> +				die(_("'hook.%s.command' must be configured or "
+> +				      "'hook.%s.event' must be removed;"
+> +				      " aborting."), hname, hname);
+> +
+> +			/* util stores the command; owned by the cache. */
+> +			string_list_append(hooks, hname)->util =
+> +				xstrdup(command);
+> +		}
+> +
+> +		strmap_put(cache, e->key, hooks);
 > +	}
 > +
-> +	for_each_string_list_item(item, head) {
-> +		struct hook *h = item->util;
-> +
-> +		switch (h->kind) {
-> +		case HOOK_TRADITIONAL:
-> +			printf("%s\n", _("hook from hookdir"));
-> +			break;
-> +		default:
-> +			BUG("unknown hook kind");
-> +		}
+> +	strmap_clear(&cb_data.commands, 1);
+> +	string_list_clear(&cb_data.disabled_hooks, 0);
+> +	strmap_for_each_entry(&cb_data.event_hooks, &iter, e) {
+> +		string_list_clear(e->value, 0);
+> +		free(e->value);
+> +	}
+> +	strmap_clear(&cb_data.event_hooks, 0);
+> +}
 
-Good that we're being defensive here.
+Okay, this is where we assemble the hooks. Still curious that the result
+isn't a `struct hook` for each configured hook.
+
+[snip]
+> +static void list_hooks_add_configured(struct repository *r,
+> +				      const char *hookname,
+> +				      struct string_list *list,
+> +				      struct run_hooks_opt *options)
+> +{
+> +	struct strmap *cache = get_hook_config_cache(r);
+> +	struct string_list *configured_hooks = strmap_get(cache, hookname);
+> +
+> +	/* Iterate through configured hooks and initialize internal states */
+> +	for (size_t i = 0; configured_hooks && i < configured_hooks->nr; i++) {
+> +		const char *friendly_name = configured_hooks->items[i].string;
+> +		const char *command = configured_hooks->items[i].util;
+> +		struct hook *hook = xcalloc(1, sizeof(struct hook));
+> +
+> +		if (options && options->feed_pipe_cb_data_alloc)
+> +			hook->feed_pipe_cb_data =
+> +				options->feed_pipe_cb_data_alloc(
+> +					options->feed_pipe_ctx);
+> +
+> +		hook->kind = HOOK_CONFIGURED;
+> +		hook->u.configured.friendly_name = xstrdup(friendly_name);
+> +		hook->u.configured.command = xstrdup(command);
+> +
+> +		string_list_append(list, friendly_name)->util = hook;
+> +	}
+> +}
+
+Okay, here we finally create the hook structures. Is there any specific
+reason why we don't cache these structures directly?
 
 Patrick
