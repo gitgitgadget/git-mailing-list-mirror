@@ -1,103 +1,145 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F07232860B
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 12:05:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771589122; cv=none; b=A83voiMYAwMXeQXmJCP+p8VkG+uP4xlB5tqa9E7GGMEYyE+T4TT0RvusI51NQWTcN1xifmU+zpKv0xQF0C5SZNrjEoXr7VSFzjUXiLAtaIHWgp6VpLGMfoFEzEjOIXlhZWmBfJSAW/j+hRh5BdXbYf0W9knxFk39yT7gz7vA94w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771589122; c=relaxed/simple;
-	bh=niO59gvLgQtmpZpJxqllcHOQDty12uUxr33SVPorXiw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X4XjxWmpDRcZ4YbzEkheJOafS5viDzXPA+ygqspybh+wi5xXXxwVncPMEZ9/4YrGcxeGS9ZAPuKXk+qk8PMVlJPd/hMhQdh+rezZD3zLEeuqhCK/rdv6gYwCMJ7PYwNvBV1oogYL5neOCpkv04hN9DN/ZUfvN3ihqiJ/wGtVdHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Gvj5V17t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bStLsvil; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D932C296BA5
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 12:28:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771590501; cv=pass; b=hil77j5Xlb/8OTSQLrgJohlA7rsrcB0OlxuvzJIep/gKv0eW1T9WKHiz5DBOQQfk4tDouyKR8STd/vOdHigX67wrZWQ1FXn6ymJpUWpD4nsrJH3qjTk8NgxvzELHIkRqxxYnIMRpni/zD6HXhBt4VcYOjJErj0G4RZcsugku2B8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771590501; c=relaxed/simple;
+	bh=fJDE7BVybr4GgdtvlE3rvQdgJZfAocSVXEqtfLkyRpc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MC8JLXXPpEI2FKoie//BiKIyBynsOPGlfWd6yVId6tvFPz73eOcu9CjoHlAqQuMImRjncsRA6OsKaQTSN49FGjjslME+fN7GP1+Npgkrglj7rMUqcouNfmidWuEOW7GCY6BxgwAGCJ9GXlE8+y1yD/JKpNSUqS/4cgwx59iepF8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=jsGrsuSi; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Gvj5V17t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bStLsvil"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 35F4E1D001C6;
-	Fri, 20 Feb 2026 07:05:18 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 20 Feb 2026 07:05:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771589117; x=1771675517; bh=P6fqm9VZSF
-	hm3trPM89rPz+lBRx/Ge3IMeEaXLMAyrE=; b=Gvj5V17t3sJAdrfQ2B+75B43/l
-	HQiAKIrKWpKXWaIPvftrN+hsBddYqo8/BhoPbEIJnDYatfvDpxVQu6mzcRMHhCsb
-	cD9xd34iizyXyw7ZUMPr/pRt8iDdzoy0YzDjrc3/NQ/s0cGQ3nULlAPU5ceCbhjR
-	QYhR4cfTRbMdhThfybOWIbNWWZfpmSS3wV6qvYJf11szVThXJ6FnPrZdib7Zkm3I
-	Rqr8woVXeDKTcskMPPaLONWEv3XJh2bG3FsoNg8VzpbjNy6omtLPv8paikaCkQcN
-	jQEV+acwWjQG6hhszbYZvTMzLIHwK/NZR3uQaEMEjckWGFcP9xJCAGCmfovw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771589117; x=1771675517; bh=P6fqm9VZSFhm3trPM89rPz+lBRx/Ge3IMeE
-	aXLMAyrE=; b=bStLsvilO9VJ+D2ojMUeL99YrrYw6EJZyVfVpTo+e8OLcQtZEXW
-	NBUCoPSFq8AUP98GcQZ0fFD76sFe6KUro/q4KI8jXihkwjKKwjAGcAd7oJlxhi7v
-	XtEI5pJF2lkUU/dUdyJ1DM/NLD1D23yCErWi2tko0pLFYnIKkwitIJmu9YISQrRQ
-	0leBbHrTV6lTUUKNfnr+fzhS3B7uvLA9oheJ9qSwJoZy/3lTbUcedntzsoz30Q4y
-	ljweVizNG2kcKoDWV5mpU9UA65I3XmjlDJtZn5Ifne2HJtWwwcGEtAFvDvozh1w7
-	mZoROmWCbWsAvRxbTMenvNodRM6p7qEuQtg==
-X-ME-Sender: <xms:_U2YaVuP8xsQSXfv4LaGeLxIqSewXy7YSPmAYVo2VCXK1kKZJzjOyw>
-    <xme:_U2YaRvU4f-fIoSVu4gg3RzQLHRoHAPv2ZMzG3vFGqCoxqpoUFIDdjB4xdh83oOfd
-    HRJ5wRgeXy645zIaoVQGIinEVNaUIfip-mk0UxWmhiD1pVccSl7Zlc>
-X-ME-Received: <xmr:_U2YaSMVZrOuuCloIKjKnFVIH3cWfGXJY7pq1tkC4Hq_CUSEc_Bh-n_HMNuYj-pERDidLmkTFVBmHeD9Q6kOIMoJ8lCEGnl7qp-rbaG6iv4D>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekfeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepohhsfigrlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtphhtthhope
-    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:_U2YaX3tGVplZt-59acQvdeSN-IO1rMYjPBkaYS8OT326icMsFV4zA>
-    <xmx:_U2YaWPtNQiqycqmrDT6tEPeVW9M-G12BAcngE6uQIhdx4j4XSH1LA>
-    <xmx:_U2Yaf0OVBGmux2SgtSP5nB_HhZ4GRnAgcPLpPUHPQQtD-gZHvMt9Q>
-    <xmx:_U2YaVFwrIC31Z0nHELi_1eE6zhOm6-a8KfzohrZ1j-gGhFMZ95wXw>
-    <xmx:_U2YaX07RG0-Q791nm23kZ54Tkezkvl8YoPn1c7B-mW3Sc3SUleVS93O>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 07:05:16 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 340bbd11 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Feb 2026 12:05:14 +0000 (UTC)
-Date: Fri, 20 Feb 2026 13:05:11 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 05/17] refs: remove unused
- `refs_for_each_include_root_ref()`
-Message-ID: <aZhN934uXU_eGydk@pks.im>
-References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
- <20260220-pks-refs-for-each-unification-v1-5-17170bd99de1@pks.im>
- <aZg3krJEqj3Vs76p@ugly.lan>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="jsGrsuSi"
+ARC-Seal: i=1; a=rsa-sha256; t=1771590485; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=SUISpBFg+t1q+wqBLhPZV646KxFp55IICgFILcWWJjujLQ43YlBju4oeAAxNfYx6HJvpoqImpAd77pJPP0fawxBaXFJxukC3Q957j9R4WoGhapIgG7lQZduoNa/0dlpLzMbgn4C1wjltgZrcX479Ye4S0Adam2ZXnVlf2KiG9wI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1771590485; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=T2s8Xo4PI8yiNFYDOQ50eo7/cWi1CBpwWa9NTmQ8ppA=; 
+	b=O6DQGzKYXE/toFJkFDy2kZGPPD8+SbU4t6CI7YQuGs2kB1dWZ3sMrvWF/A0AnhNIDk7w5m0Huhk1vpo40/HXCMKQghOcmZwjWy05Xwm9QodEV5zSvoYVLbFDwk/j+dHihK+sJHrI/4RAcTprZcdRBMNc5uD3zROztMeu+w9+W7g=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771590485;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=T2s8Xo4PI8yiNFYDOQ50eo7/cWi1CBpwWa9NTmQ8ppA=;
+	b=jsGrsuSiVs4dW+4cmvTsCVwtytNdD3Ch35d4304Z9jLICdHIivf+POgbHiHa24ZZ
+	jWFzr2/rm34CKZlhrKybIjGQ6fovLwJHILiKjyBcFJenAxxpQRyXQTT97umcttXL3xp
+	fmFJKDhTNudKWLR/GWUake6fVYYC84gz/R7CJw9k=
+Received: by mx.zohomail.com with SMTPS id 1771590482677172.25669338434716;
+	Fri, 20 Feb 2026 04:28:02 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
+ <emilyshaffer@google.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
+ <steadmon@google.com>, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2 4/8] hook: include hooks from the config
+In-Reply-To: <xmqqy0ko1iri.fsf@gitster.g>
+References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
+ <20260218222352.55393-1-adrian.ratiu@collabora.com>
+ <20260218222352.55393-5-adrian.ratiu@collabora.com>
+ <xmqqy0ko1iri.fsf@gitster.g>
+Date: Fri, 20 Feb 2026 14:27:58 +0200
+Message-ID: <87o6ljy4z5.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aZg3krJEqj3Vs76p@ugly.lan>
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-On Fri, Feb 20, 2026 at 11:29:38AM +0100, Oswald Buddenhagen wrote:
-> On Fri, Feb 20, 2026 at 09:24:09AM +0100, Patrick Steinhardt wrote:
-> > Remove the unused `refs_for_each_include_root_ref()` function.
-> > 
-> at first sight it would seem sensible to move this to the start of the
-> series to reduce churn.
+On Thu, 19 Feb 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+>
+>> Examples:
+>>
+>>   $ git config --get-regexp "^hook\."
+>>   hook.bar.command=~/bar.sh
+>>   hook.bar.event=pre-commit
+>
+> This is all good when you know where you defined your pre-commit
+> hook, but you would want to know in which scope the configuration is
+> made, wouldn't you, especially when you are trying to diagnose why
+> some command that you do not necessarily recognise when you run a
+> Git command?
 
-Right, that makes sense indeed. I've queued that change locally and will
-send it out with the next version, thanks!
+Yes, I assumed the user knows where his hooks are defined. :)
+Obviously this is not the case.
 
-Patrick
+This also applies to the "git hook list" command added later in this
+series, we might want to tell users where the hooks come from there as
+well.
+
+>> @@ -10,17 +11,22 @@ struct repository;
+>>   * Represents a hook command to be run.
+>>   * Hooks can be:
+>>   * 1. "traditional" (found in the hooks directory)
+>> - * 2. "configured" (defined in Git's configuration, not yet implemented).
+>> + * 2. "configured" (defined in Git's configuration via hook.<name>.event).
+>
+> Wouldn't it be easier to understand if we do "<name>" -> "<friendly-name>"
+> to match the member name used in the struct below?
+
+Yes, name here referes to "friendly-name" :)
+
+I'll make this consestent in v3 across the patch series, to use
+friendly-name.
+
+>>   * The 'kind' field determines which part of the union 'u' is valid.
+>>   */
+>>  struct hook {
+>>  	enum {
+>>  		HOOK_TRADITIONAL,
+>> +		HOOK_CONFIGURED,
+>>  	} kind;
+>>  	union {
+>>  		struct {
+>>  			const char *path;
+>>  		} traditional;
+>> +		struct {
+>> +			const char *friendly_name;
+>> +			const char *command;
+>
+> If we wanted to report which config scope defined a particular hook
+> we need to record where the configured hook came from in this
+> struct, right?
+
+Yes, this is the place.
+
+We can do it when parsing the configs (in v2, at Patrick's suggestion we
+just parse once then cache & reuse if possible). 
+
+>
+>> +		} configured;
+>>  	} u;
+>
+>> +	if (repo->hook_config_cache) {
+>> +		hook_cache_clear(repo->hook_config_cache);
+>> +		FREE_AND_NULL(repo->hook_config_cache);
+>> +	}
+>
+> It is a minor point, but after applying the hole series, there are
+> only two calls to hook_cachje_clear(X) and they both are followed by
+> free(X) or FREE_AND_NULL(X).  I wonder if we simply want
+> hook_cache_free() instead of _clear()?
+
+Yes, we can do this.
+
+I think I have another place where I can apply this pattern in addition
+to this, to avoid calling both clear() + free() afterwards.
+
+Will make all these uses consistent on a single _free() in v3.
+
+Thanks,
+Adrian
