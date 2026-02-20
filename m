@@ -1,55 +1,55 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7E933BBD7
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 10:15:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A1633B6C5
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 10:15:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771582533; cv=none; b=egA2zkoo+mpX7JzZe2H4CotqXaLKgMHm29WFjvpjPIW49YUxZYWrTxYtbdQCrpg+WLvX21fhIqFs2NRpoc1vokpzqAk5fB+6UuVJtHX/k3OImAMYVGYDPIRmRfOjcjxbbWsk35zUvqSGs+41k1wIJAOPnBQaXQq3AXCrV5vcSpM=
+	t=1771582535; cv=none; b=FOarDvkVLvMHTATrmTQJzWEmFDDhraIgUHgUnqik/MPibgsOfDjEPl0aRLw4SylHvjVN2yoplPcS7ytZ40sDTfvj5WrvQajjxXmBK3MCo+2CQLQksb5wiUUhAswxugZ4/OUi+Axbbh0kRZvRS6orCjWBnNae7T20p2YJhp69qbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771582533; c=relaxed/simple;
-	bh=out1K4l8GX47SxR369shvOlAPwR/xNhIHDIdFKIuxdM=;
+	s=arc-20240116; t=1771582535; c=relaxed/simple;
+	bh=HdocN2Aw5T4VjmTQ7N4Ell2+n0trMgwOnLfMauLWGj4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uHFJ5etm618tjA0Ms7NphsJR9kZz4itNmuf/F0gy4oJWy+MKhWRTqptZcXcpcjvIy0jGUIxuxPdJFpAlM7y1ulUhMTSoB8Ornq7mgqFDelVDiphwvI1yJ1FWvZwR3L/dMt1pOy6i/bczWSQta+7nf8hyyDZAVeeolk/h36yKnNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SIWomQ+s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lfEwBe5T; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=dqPe14C0LQnah1YyJz0nlHpvY3mUAwt+/PtL64R3qcxh6yeSKRZolk/KHrolYET3Z8Pbx0mpqxmWsy/TugoaFQ7jLCRqpmlQEOgT3fTXgGdGVcWVBibmUeyt5QUg8mBOv3tLcngKgJ6V5gwsgee+9qonlL6pDtjBHxQh2uQ2UFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iC09dXAl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pQcsWoG+; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SIWomQ+s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lfEwBe5T"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iC09dXAl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pQcsWoG+"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4D51F1D001BE;
-	Fri, 20 Feb 2026 05:15:30 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D67027A01A0;
+	Fri, 20 Feb 2026 05:15:32 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 20 Feb 2026 05:15:30 -0500
+  by phl-compute-06.internal (MEProxy); Fri, 20 Feb 2026 05:15:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771582530;
-	 x=1771668930; bh=xy/Bt6oBsJs9OKRTmZvns4tuAY2w0tmQZ4l00cwSwbM=; b=
-	SIWomQ+s3Cta3T3azsCYdbIveE80SLGzqA0R1mlxJ+gFZ4cFgKHj6lOdk4HjT8jW
-	1eDgV2CkB2vT8f9TQ2pb5OCN9MlduT2g0QB3vKAlKDLb48mUGf6A+yIrBGSkT+RL
-	vGtJgkRd8gt6EQBIJpHXoiS9nNnZsSEAfhAvm/0USYMKvhRW48Nbi2+E0LqlO/CK
-	Z3m+L1WQR0rjaXglITOfG72fsUv3HB1PuYamGTjysaC/gAJcXJqyHAL1p6D10+Q2
-	m0lwB0ImcE3+3KVFSDf31mlNzKIqLGRmukoxJCXsZcHBRlvWQiMm0OfEA09kaEJH
-	CRE4BJHk658iGcL6VBb2cg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771582532;
+	 x=1771668932; bh=pIuDghb7OW7UrURXYSGLjDK6BDgMu3k7Ewx47H/HC6k=; b=
+	iC09dXAlDTdSArZskLZfwHbtScHZk0ylT4vBHINA4RFbc5uqKXvvclCMVdb8FzJT
+	lddbwESNMag18aQLYV6iVUNBM6uzDWB+bSR5ZLVuOcpWtFaGdC1/LmzmzntJ5wU2
+	Y1KGr/iJDnnAlyqIQEn1vCMdEWJZrwNFLHX32/itXAoDo+kksc/W/qaZbhoc/Rel
+	rh2M4qX2QG7qNPB3nDcp1qJPmX7GmWvWDrnSif92G4RgsP2hBAKkDE+qhZ5i+9dW
+	KCJYzwXXuNs6T707GCTw2Q2/mGRNVFmSgSHpTOUAX9lkYlaCH999Szv6Ya6cgkoe
+	7lFhmRQqhi4M9AWCcAmN2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771582530; x=
-	1771668930; bh=xy/Bt6oBsJs9OKRTmZvns4tuAY2w0tmQZ4l00cwSwbM=; b=l
-	fEwBe5T8SFBWZKaG6dFK+hMagAJnY+ssn3u/EXmoAr/sJH+FiXpJr6cHZbq1P07j
-	GRKRPcGT+Bjj1/vlzErCmMRcHpzC453km7IzM0I8AAwgPtUmkM7//XcxPuk1gE2z
-	1c3fYEdSkb3uGHqFNsfuhQdYj20aySqURkYm4yPcrmAz5uXLR89Pw9ijW+Pxnr4c
-	+jhWeZOQ5CmEnVQD0C/1zLe6pa/BLRXSGilvRfLHDW8r7z2OHb8I0F8XuiawTrOt
-	NZk7MWO3PoKkATzOdlJOkRy91nX4UVAgwVTiq92nvtnUAFQ+tiPQhGR8doJcy2h4
-	BQSTniPTRxC8cRV/t7BWQ==
-X-ME-Sender: <xms:QjSYaVk_JUwsN55a8PukYk-oVcBMW6SMwWDnXnHYIIGzMlaBlhxgrw>
-    <xme:QjSYaYTmoyguzzYJja7YjOI61E_sgn8ur6JQqPavftENGWuhtoNBIH5KYcB8gwttN
-    M-h3xyjVSaTMT5rwF9n-vp_REdzBoz0NBf6taKcsVqhEytumfMiMb8>
-X-ME-Received: <xmr:QjSYaZDGEb3RV3MAszBI20mz0rCZPkstux_vwOwcoyrnvFu1V8kucc_xPK2wH1WF6Ca1sPGWRsFVw3Ngp5FZFgJIkZ6bOpodZx9jx07xKT-M>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771582532; x=
+	1771668932; bh=pIuDghb7OW7UrURXYSGLjDK6BDgMu3k7Ewx47H/HC6k=; b=p
+	QcsWoG+1MN6+NUqvfUO0eIX46x60xpZnDbdTMe7lG6zJ/aMskJ7jy79jRJ50jvuD
+	yochaoB1sOIttbQBTRp1O4tJ0xYOJ1CNwg/YIn4bynbAPan81V3qQTI2RX9VaxLn
+	xMkkZXZQ2ScrafxlOLDaTcoAM0ix+Fxwf+f8Zp/RfKp0iSQDYExngWguZnWG3shz
+	cLnXTbfpn2oe6tZio+1iVfX61aNatScFsdNZKE7PKrFpDTYwEYsxtBSqiDVZLrbN
+	qxIGuhZNKpCfJSDP1auDIIDGluIpxKXKeusSuxP29lVQnSiOv+EjUDE1jo+/VD02
+	7ZsCY4dEh8YFOi9HAyRJw==
+X-ME-Sender: <xms:RDSYaYG1Aq2m-Sp6sK7VK_GvfPYlZGHKKZLUD8ge-mu14E5WQX9Plw>
+    <xme:RDSYaYwl9_ssERFkxs2Y7ZDIJgAFesaWLr323-iItgHkYrsqugOUMi9jp-oR-QGhQ
+    XGXX6hg7k9b3IOqKxCkr54tvpQGXHB67OstBsHdzJPsegFba78nH60>
+X-ME-Received: <xmr:RDSYafjMhI1KHGO3jEFe6rLKHT8wuisI6FJ83OBjfW0pzWaMpxj07l2fA3Ebn2j5PUk-Bot05EWCyuW4Dd1lgc7ooE_2E4exon7j7s1u2OBi>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekudeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,22 +58,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekudeiucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:QjSYafRugU4NTBl2x7Z-2iqU5nakbz2L7CXLlju-DmtoHdyYVERd2w>
-    <xmx:QjSYaXrxHAJGiOCB0u-4uAX95cXbUDzasXsvsCIqnIQSs7jWltAVJA>
-    <xmx:QjSYaRzuT1rUtVhx8eroozxUHvmSSxR1VTTj5HfTNnvBpy0ja4SOoA>
-    <xmx:QjSYacKTmHtXIoQfPc2zyrWKHR25HWpLwBIRi3jByz3hvhyQGJQffw>
-    <xmx:QjSYaYulm4VFxByymTd80GniNlIRopAATRXZV-5nsqbjVeCgiF_M_eZA>
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvg
+    gvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:RDSYaTyZHH-2VrTk1akjOAC2N-nMTsPva68UfNSSp90tc1up4rxz1w>
+    <xmx:RDSYaSKiioZe-NVF2c2vxqoF3oI9XixlG7EbLbgZplU_30FNx7f8Ng>
+    <xmx:RDSYaaQVm9Q_KTIAY1lTR4x3Qgf2Qt4L4rkKeA98vXufaiI0UK1O0w>
+    <xmx:RDSYaaqYfHR63uzVvJvNwwc3lKH4r59bNTGOTj4LLPrHLIQN-HeFCA>
+    <xmx:RDSYaRPiN_BURBZi3a2NQiE-tvjcmnuPlWfVJPqZ5yrcZlWj3M4H0J8I>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 05:15:28 -0500 (EST)
+ 20 Feb 2026 05:15:31 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7711fa9f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Feb 2026 10:15:28 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 491e6e33 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Feb 2026 10:15:31 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 20 Feb 2026 11:15:07 +0100
-Subject: [PATCH 3/8] t34xx: don't expire reflogs where it matters
+Date: Fri, 20 Feb 2026 11:15:08 +0100
+Subject: [PATCH 4/8] t5400: explicitly use "gc" strategy
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,103 +82,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-3-faeb321ad13b@pks.im>
+Message-Id: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-4-faeb321ad13b@pks.im>
 References: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
 In-Reply-To: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.14.3
 
-We have a couple of tests in the t34xx range that rely on reflogs. This
-never really used to be a problem, but in a subsequent commit we will
-change the default maintenance strategy from "gc" to "geometric", and
-this will cause us to drop all reflogs in these tests.
+In t5400 we verify that git-receive-pack(1) runs automated repository
+maintenance in the remote repository. The check is performed indirectly
+by observing an effect that git-gc(1) would have, namely to prune a
+temporary object from the object database. In a subsequent commit we're
+about to switch to the "geometric" strategy by default though, and here
+we stop observing that effect.
 
-This may seem surprising and like a bug at first, but it's actually not.
-The main difference between these two strategies is that the "gc"
-strategy will skip all maintenance in case the object database is in a
-well-optimized state. The "geometric" strategy has separate subtasks
-though, and the conditions for each of these tasks is evaluated on a
-case by case basis. This means that even if the object database is in
-good shape, we may still decide to expire reflogs.
-
-So why is that a problem? The issue is that Git's test suite hardcodes
-the committer and author dates to a date in 2005. Interestingly though,
-these hardcoded dates not only impact the commits, but also the reflog
-entries. The consequence is that all newly written reflog entries are
-immediately considered stale as our reflog expiration threshold is in
-the range of weeks, only. It follows that executing `git reflog expire`
-will thus immediately purge all reflog entries.
-
-This hasn't been a problem in our test suite by pure chance, as the
-repository shapes simply didn't cause us to perform actual garbage
-collection. But with the upcoming "geometric" strategy we _will_ start
-to execute `git reflog expire`, thus surfacing this issue.
-
-Prepare for this by explicitly disabling reflog expiration in tests
-impacted by this upcoming change.
+Adapt the test to explicitly use the "gc" strategy to prepare for that
+upcoming change.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t3404-rebase-interactive.sh  | 2 ++
- t/t3406-rebase-message.sh      | 3 +++
- t/t3431-rebase-fork-point.sh   | 2 ++
- t/t3432-rebase-fast-forward.sh | 2 ++
- 4 files changed, 9 insertions(+)
+ t/t5400-send-pack.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index e778dd8ae4..5e4623f7f1 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -31,6 +31,8 @@ Initial setup:
- . "$TEST_DIRECTORY"/lib-rebase.sh
- 
- test_expect_success 'setup' '
-+	git config set gc.reflogExpire never &&
-+	git config set gc.reflogExpireUnreachable never &&
- 	git switch -C primary &&
- 	test_commit A file1 &&
- 	test_commit B file1 &&
-diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-index a1d7fa7f7c..f89209c8d9 100755
---- a/t/t3406-rebase-message.sh
-+++ b/t/t3406-rebase-message.sh
-@@ -8,6 +8,9 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-+	git config set gc.reflogExpire never &&
-+	git config set gc.reflogExpireUnreachable never &&
-+
- 	test_commit O fileO &&
- 	test_commit X fileX &&
- 	git branch fast-forward &&
-diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
-index be09fc78c1..3a3c3a70a5 100755
---- a/t/t3431-rebase-fork-point.sh
-+++ b/t/t3431-rebase-fork-point.sh
-@@ -17,6 +17,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- # C was formerly part of main but main was rewound to remove C
- #
- test_expect_success setup '
-+	git config set gc.reflogExpire never &&
-+	git config set gc.reflogExpireUnreachable never &&
- 	test_commit A &&
- 	test_commit B &&
- 	test_commit C &&
-diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-index 5086e14c02..6e8de6c7aa 100755
---- a/t/t3432-rebase-fast-forward.sh
-+++ b/t/t3432-rebase-fast-forward.sh
-@@ -11,6 +11,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
- 
- test_expect_success setup '
-+	git config set gc.reflogExpire never &&
-+	git config set gc.reflogExpireUnreachable never &&
- 	test_commit A &&
- 	test_commit B &&
- 	test_commit C &&
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 83b42ff073..b32a0a6aa7 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -187,6 +187,7 @@ test_expect_success 'receive-pack runs auto-gc in remote repo' '
+ 		cd child &&
+ 		git config gc.autopacklimit 1 &&
+ 		git config gc.autodetach false &&
++		git config maintenance.strategy gc &&
+ 		git branch test_auto_gc &&
+ 		# And create a file that follows the temporary object naming
+ 		# convention for the auto-gc to remove
 
 -- 
 2.53.0.414.gf7e9f6c205.dirty
