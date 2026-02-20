@@ -1,154 +1,178 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBA9260565
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 16:27:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAA52E0938
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 16:35:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771604867; cv=none; b=ctxbVWebiFXHPWIZtb+uEO4ltF2JjOvTU18bLWgLyJq4NY4hYGhjaY75NNuJJN9/VgqeJMdMQxTMfCuzmH/zxaedpTl4talkAfNWvYFNIdiZIqf6qxvVBpJPbxdc1+Hj1HCNJYRuiq6K3nciwoFzEG94piRp/k7pmU4JrKpYq6A=
+	t=1771605324; cv=none; b=Ksvwkl8XWjhrYI9TRyaYPb8RHquOE0WQM8XQ3Tber5bfaOQ2H2+3egZ6Wk3NOVvKzlZ27zdhfeLCE0C7N8iOr3+9ke1tz+xlWEy03WPGFHJrB2+u/P0KdYQ1pgwXANv7lKxmISXmPBxBMs4RlSdh3WALo9b/QtXXWEf5Qu6WHFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771604867; c=relaxed/simple;
-	bh=TE9Z2/qHDB5bO2cURft+D4Pk7usHHN7YUc/cg8lEg7I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MBqgkcrM4nKkVqasU7whu7LU/eEsXjBAPSPTqVfEAkQdW3VqyqQM91eWUk9KmiosfQlAlktJxRA+Cic5XkS+5xrhIGMgppSPoVSLTLfSfQRjp+F1sYyytoozpv1onwvZP8PFZgX0l88gHIpo/Obmaj8njSvBQsigBSLYxw3FwM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SkkTR1Ct; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771605324; c=relaxed/simple;
+	bh=DJit5LTgU1sCpNnln/K/2M0o6NovYB+LmplafT+Tzfc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JgJTg1Lk9L4w9vi3XFLKsf2r+Me7f69T5Gj0TzHr1OZ2S7IhFiY+6XlPzGiFYrkDCvTAe5kYTKo1XXDjQilVlBySsv+F4As8vAKYyu+cGHn5MUlk9wSwNW0ONk5QXBNXvXyk2P4tclquMwgV1lf2UD8Jgio1icfRyf8RWUC77eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PPvi436y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XQm+iVez; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SkkTR1Ct"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-35519fd4d59so112897a91.0
-        for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:27:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771604866; x=1772209666; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kER/J53zbOC00/8O36WVNbbYQOULZRq2aqnJstFinvU=;
-        b=SkkTR1Ct0XOaIfYieUYyXadaUuItgBHV2FEX7ioujq84Y3IgkuNSRLuMRmAJbfyEGA
-         uawm3D39VHeQYXR8mv8Vz1Tf2Ktf651SUYmqOEPbaBbuDH4+ctr3lCmWjxhsqPK/aX4T
-         VPYxU4bV4vKcmVjQZnqeUM9/of2giyi7S50Yf1NfRKNqoysZsJF1sK77/jTP7l2IL+c8
-         5FL8aUQhrLJPFjMZPTPHfUSkF86HV84oDK3/hhuPjIAE464wYl+04WAepmKM4FkLBNaI
-         ksNicchGZJWA27RW1H8PLTHd7mGkRhJdZnNsEb1JiyymPwJQJ0MN3A0qu1aMkZzRzw9U
-         AsAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771604866; x=1772209666;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kER/J53zbOC00/8O36WVNbbYQOULZRq2aqnJstFinvU=;
-        b=Bcis+rS4YddCekp44++i8w6PynVbdRbsUEWVujrRAaAWfRB10sqFSe0tGQtuqActu+
-         6IvluZmQeYeaB0fZp94BeH7WH1Yd+TydtcPCZHeGJZbxWMGGB47SY8r/9T98slHAIclg
-         n9GoLD3eGgqjYl55riKFnSD716EOQVCawk9wp38oEg2YHGqdRDVWFEK3Z+OAZWV9i3kH
-         Meb2iK3AzpyYubLCr81jA6PL+CPE/Awkv4WNz6SDb1NnapQbabsHvL+HMFK0iQdwJMlz
-         RBCNFdaStI9NL4UfdK1bcMGhTLWSApH1dqZZGH6BWQKKfT/5NU3DSKor4TgXyVL9wIHC
-         ZdVw==
-X-Gm-Message-State: AOJu0YwRwQaIQ4/ItpdgybT74eU1NvjtTkgJ0t3ebJ1O1FTk+pkDWyl2
-	Ttqcb1DE1+Vsyf7lPsU3Hzq2bp/kwVdKWTKZ8FALmMZvWRcowHO1C9v1VbdqmQ==
-X-Gm-Gg: AZuq6aKajHvglbheyIdKefDLkoNtGD5lQ5xHn6IVbHjJgIGpCNyb+BG7qoZIh1nqR4C
-	pswsmrtI0+wX1TR25AibNZkl/lqrmp7OG6Blnap7Ts3Q/b5+Tmls918h36a8jwHDV9ov3q5rOgm
-	LcY0fQR7/TKg4qC4DNsFwf54vUh6TxNoL5hERTK29BXrU5G+DaU/RCnHAInjvr1iCp1aat8ztH8
-	Fm6f46czKSorzr82rWU2zEO0AMqRSlM7XKvh461C4kbY4Do63W/HpIvZNHscrXHpTsRu2D4y/OI
-	xIxhGJM9n/lBDv48WmUSV7O9wtqMZjAAwjFeUDgjd/gJgttWFmxeb6KCRs6Hlg4c7kXLGm+2tnk
-	b/F/yu1UqMU+dzQKAyoqrVwc60/+33MYUE5LuvgX511m+MS6fdszT7Fq/eYljM9TmvIzdfp2mn+
-	caD7weTxMPKtSuTlkqhLmrfY6xcw0=
-X-Received: by 2002:a17:90b:3842:b0:356:2c88:1e77 with SMTP id 98e67ed59e1d1-358ae7c0e88mr199290a91.1.1771604865931;
-        Fri, 20 Feb 2026 08:27:45 -0800 (PST)
-Received: from [192.168.0.103] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-358a1a2cb62sm1886441a91.0.2026.02.20.08.27.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Feb 2026 08:27:45 -0800 (PST)
-Message-ID: <12cb054d-71f7-4df3-b052-764b62d32f54@gmail.com>
-Date: Sat, 21 Feb 2026 00:27:42 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PPvi436y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XQm+iVez"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 38279EC03A2;
+	Fri, 20 Feb 2026 11:35:22 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 20 Feb 2026 11:35:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771605322; x=1771691722; bh=4Ba/1STJ+l
+	ctD1cul2786t2IxldfKWDMfAJuwso34tc=; b=PPvi436yccRUf+XB/a8YRYLaiX
+	viz4m5p3BLWIRGUA2gMkV1W5sdELz7t7mfGPxMhCmKCFZ/OW6Lvc8s3KkDsQGWmI
+	N7I1u8BmKVlC6YoL4updHxf/o8yRYYKYZjKgKIKi3Fin6O5at//T2GFkhGy4rnQr
+	UiTEXULzl8MoVn9l8Rcaw1K7gzFKYpevAjRBmBf61UAw6Q8fBGeRC4pSxdsTjRPw
+	S9xkBFglydXqW28T9nCE3058v2eH7pjeZu5rn1+64yO7MVjJ+NeMqqvmCXD4mfYX
+	XyEe3DDRaoqGKkD0ii2O5lFmzC9A6NHC4NqVk8QACs7+j5rIduXSnwyV4TRQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771605322; x=1771691722; bh=4Ba/1STJ+lctD1cul2786t2IxldfKWDMfAJ
+	uwso34tc=; b=XQm+iVezqE3NbeQ07pJXdNuaW4enw7HjJItJPVF376xn94BDvz6
+	LX/YLL8E304PYkQldZxbcMSmXfiQibSt5kmNHqQxDRijGZ6NeePd3rwvjI9GItHV
+	q7dG2F8u2WFr5qARNIfBvoIy79q94/ZiF6KT0KStdo2r99O9IHd1vfiJrTPbphAZ
+	WIeCNgYIPu5VeW6QmbZ0X4DuOA3B+9EmT1LYEL0DpdZ1wxLhtbMfKghVPWRGVXjK
+	3vBMlVmnvWnkvEnurIbrj5EPD7tgaBCKduOF6rPadI+NzNaeZETFkzuN0myUiIJD
+	oI95WjBtuJ4ZhrOuF3z3LTyk31POVPi1lrQ==
+X-ME-Sender: <xms:So2YacDe2r60hLOmyWK5kUCvyhUXLadS6E6nsYF51AKhyoVc6oTCVA>
+    <xme:So2YaWTbG6m4b9QDSPczfRxiwZVPF-1qSFJdkZUVHuAM1B4hDI6OW0TIrB4pHUhKi
+    TQEhQOzyY608kfyFaiGhgWOuOZMmtYXDrR6DeDxE1w_I5Xi19bvTA>
+X-ME-Received: <xmr:So2YaSq9iWpWxg-u6yB5fHsI5gXhIERVo1OSZ1wz1ZosrdXPbVPVo6m0KZCNTYoi_J7C1a9mpT-bBdBbWOTJFajKvCGuThGT4A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekvdeuffehuddtjeeuudejieelve
+    egvdejieegveekueduieevgfduvdegjeehgeenucffohhmrghinhepmhgvthgrtghprghn
+    rdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepugigughtseguvghvrdhsnhgrrhhtrdhmvgdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:So2YaQzI4vWHYbXkI5BoA6LoUycRrHXcvtmknzGoD3hFstVY7j4H9w>
+    <xmx:So2YafL-LLIaJCCPtG-V3rMUZRFqxgPF8v1YqVYwSJafIaYtHf38rg>
+    <xmx:So2YaaK5fJBHLeoU13pFBdF6pCTD4fO4NDz8LcT-a6ltHtwxvCb1Sg>
+    <xmx:So2YacujJJ_P1P8sq6qPfgkrMhfH7es07OfUQczQBgH1IY8ggCzdRg>
+    <xmx:So2Yad7EpRZzHYXX35Brr9hKUHbfzsTJ-c2f_EXV9KPpGZpKrMf-NWXb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Feb 2026 11:35:21 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: David Timber <dxdt@dev.snart.me>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v1 1/1] send-mail: add client certificate options
+In-Reply-To: <20260220081717.555185-2-dxdt@dev.snart.me> (David Timber's
+	message of "Fri, 20 Feb 2026 17:17:13 +0900")
+References: <20260220081717.555185-1-dxdt@dev.snart.me>
+	<20260220081717.555185-2-dxdt@dev.snart.me>
+Date: Fri, 20 Feb 2026 08:35:20 -0800
+Message-ID: <xmqqh5rbz83b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7] setup: allow cwd/.git to be a symlink to a directory
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com
-References: <20260218124638.176936-1-a3205153416@gmail.com>
- <20260219071650.208074-1-a3205153416@gmail.com> <xmqqh5rc13rw.fsf@gitster.g>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <xmqqh5rc13rw.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 2/20/26 11:40, Junio C Hamano wrote:
+David Timber <dxdt@dev.snart.me> writes:
 
-Thanks for the review!
+> +sendemail.smtpSSLClientCert::
+> +	Path to a client certificate file to present to the SMTP server.
+> +
+> +sendemail.smtpSSLClientKey::
+> +	Path to the client private key file.
 
->>   	case READ_GITFILE_ERR_NOT_A_FILE:
->> -		/* non-fatal; follow return path */
->> -		break;
-> 
-> This comment is now lost.  Shouldn't (at least /* non-fatal */ part of)
-> it be moved to those two new non-error codes we see above?
+Do we want to add "that corresponds to the smtpSSLClientCert" at the
+end, perhaps?
 
-Indeed. I made a mistake here.
+> diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
+> index ebe8853e9f..51177508c1 100644
+> --- a/Documentation/git-send-email.adoc
+> +++ b/Documentation/git-send-email.adoc
+> @@ -290,6 +290,23 @@ must be used for each option.
+>  	variable, if set, or the backing SSL library's compiled-in default
+>  	otherwise (which should be the best choice on most platforms).
+>  
+> +--smtp-ssl-client-cert <path>::
+> +	Path to a client certificate file to present to the SMTP server. This option
+> +	can be used when the server verifies the certificate from the client. The
 
->> @@ -1578,20 +1587,25 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
->>   		if (offset > min_offset)
->>   			strbuf_addch(dir, '/');
->>   		strbuf_addstr(dir, DEFAULT_GIT_DIR_ENVIRONMENT);
->> +		gitdirenv = read_gitfile_gently(dir->buf, &error_code);
->>   		if (!gitdirenv) {
->> +			if (error_code == READ_GITFILE_ERR_IS_A_DIR &&
->> +			is_git_directory(dir->buf)) {
->> +				gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
->> +				gitdir_path = xstrdup(dir->buf);
->> +			} else {
->> +				if (error_code == READ_GITFILE_ERR_STAT_ENOENT ||
->> +				error_code == READ_GITFILE_ERR_IS_A_DIR ||
->> +				error_code == READ_GITFILE_ERR_NOT_A_FILE ||
->> +				die_on_error) {
->> +					read_gitfile_error_die(error_code, dir->buf, NULL);
->> +				} else {
->> +					return GIT_DIR_INVALID_GITFILE;
->>   				}
->> +			}
-> 
-> Is it just me who finds the above harder to follow than necessary?
-> I would have expected something like
+Shouldn't there be a word "require" somewhere in the above to
+clarify why a user may want to use this option?  A server may
+optionally verify a certificate only when it is given one, but if it
+lets us do what we want without such verification, we do not have
+much incentive to give them a certificate.
 
-To be honest I can't find any reason why the above statement is 
-difficult to understand. However, replacing it with a switch statement 
-does make it much clearer. On this point, I completely agree with you. 
-Will change soon.
+> +	format could be in either PKCS12 or PEM. In the latter case, the private key
+> +	can be specified using `--smtp-ssl-client-key` option. More more
 
+Is that "can be specified" or "should be specified"?
+"More more" -> "For more".
 
-> 	if (!gitdirenv) {
-> 		switch (error_code) {
-> 		case READ_GITFILE_ERR_IS_A_DIR:
-> 			if (is_git_directory(dir->buf)) {
-> 				...
-> 			} else if (die_on_error) {
-> 				die("'%s' is an invalid .git directory", dir->buf);
-> 			} else {
-> 				return GIT_DIR_INVALID_GITFILE;
-> 			}
-> 			break;
-> 		case READ_GITFILE_ERR_STAT_NOENT:
-> 			/* no .git in this directory, move on */
-> 			break;
-> 		default:
-> 			if (die_on_error)
-> 				read_gitfile_err_stat_noent(error_code, ...);
-> 			else
-> 				return GIT_DIR_INVALID_GITFILE;
-> 		}
-> 	}
-> 
-> or its equivalent, with the top-level switch rewritten into
-> an if/elseif cascade.
+> +	detail, see
+> +	https://metacpan.org/pod/IO::Socket::SSL#SSL_cert_file-|-SSL_cert-|-SSL_key_file-|-SSL_key
+> +	Defaults to the value of the `sendemail.smtpSSLClientCert` configuration
+> +	variable, if set.
+> +
+> +--smtp-ssl-client-key <path>::
+> +	Optional path to the client private key file. If this is not given and a
+> +	PKCS12 certificate file is used, the private key from the PKCS12 certificate
+> +	will be used(see `--smtp-ssl-client-cert`). Defaults to the value of the
+> +	`sendemail.smtpSSLClientKey` configuration variable, if set.
+> +
 
-Point taken.
+"will be used(see" -> "will be used (see".
 
-Regards,
+This makes me wonder what the use case is for giving separate key
+file with a certificate file with its own private key in it.  The
+documentation above clearly describes what happens (i.e., the
+separate key file makes the key embedded in the certificate file
+ignored), but I cannot quite think of a reason why anybody would
+want to do so.  The key in the separate file is still something that
+corresponds to the public part in the certificate, no?  The certificate
+can say "The subject of the certificate may use a private key that
+corresponds to any of these three public keys", and the certificate
+file may only have one or two but not all of these three public
+keys, or something?
 
-Yuchen
+> +	if (defined $smtp_ssl_client_cert) {
+> +		# The cert could be in PKCS12 format, which can store both cert and key
 
+The comment confused me initially.  Yes, the cert could be PKCS12
+with key.  But the mention of the fact supports what design
+decision?  Not requiring $smtp_ssl_client_key here (unlike the next
+if block that requires cert when key is used)?  If so, perhaps we
+would want to spell that out?
+
+		# We do not check and die when client_key is not
+                # given, as a separate key file is unneeded for
+                # PKCS12 certs.
+
+or something?
+
+> +		$ret{SSL_cert_file} = $smtp_ssl_client_cert;
+> +		$ret{SSL_use_cert} = 1;
+>  	}
+> +	if (defined $smtp_ssl_client_key) {
+> +		if (!defined $smtp_ssl_client_cert) {
+> +			# doesn't make sense to use a client key only
+> +			die sprintf(__("Only client key \"%s\" specified"), $smtp_ssl_client_key);
+
+Can you wrap this overly long line?
+
+			die sprintf(__("Only client key \"%s\" specified"),
+					$smtp_ssl_client_key);
+
+Thanks.
