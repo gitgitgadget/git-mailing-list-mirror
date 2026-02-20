@@ -1,70 +1,69 @@
-Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+Received: from mail-dy1-f196.google.com (mail-dy1-f196.google.com [74.125.82.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B10B1B4138
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 01:59:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE08924E4A1
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 01:59:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771552793; cv=none; b=Y5EKYMN1H7sY3txJ4D8x1mToOv98j7mRzEfydfNsizJWYhaOPwRQpCEPLfhb0tSTRW62y1LPZ1ya0juMDXSzxiPdsOi1mPZ//VEtsqDkHwAI4gFkCJkttg1IiPwLYd2nY5j28+/2YpMByAEYMiRpxH8DuQP1XpsSiSoatcHSnAY=
+	t=1771552794; cv=none; b=HMqZmc9JYqBdi9wo9GPvD1uCIBxxQujwzlM6Q0mULRQY+dH21PPFHsRxhneT3hcUKZb3hTz9r390/2FKBDEqy9QiS1o7lksEOnyR2aQZeJ2XtSDJnlNbCHrtdCE9KidxPdAtCJWHe5iz9cLKNtklTKGV3YGhIIgKyaXKxzWjdqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771552793; c=relaxed/simple;
-	bh=gKIPGPO09K6ybgyxHbxFiDuXlEDwVlFQilnsDUpjzTE=;
+	s=arc-20240116; t=1771552794; c=relaxed/simple;
+	bh=puhXSK2xsIDey+7bIk60FxGksi4zKJf7+pj2+NhFCKc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=or9BaS0+/T6qnOEviedBGi4Ad4Odz+/km7bOAFPMs/G9H/imjUZk6L2FPuox+qpoP+eBCVaI7NuK7r04RRpYPUfdvQbID3CNprbVbyKXJQnmsa46XJRlAODfbwDqQpfxpy6eoRRqKRvsPj6hqVChzMDIaST5vjJyb6AMfhR1/To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LQvrx/V0; arc=none smtp.client-ip=74.125.82.181
+	 MIME-Version:To:Cc; b=WlsmiUqImLkBFq6i+eEa3I1bsEbqwU/nHZ+ADRKHs1YtbDNMzrfY7lBql6mrojZBFYVx5iWJ4+ELFT+n45XkEUEZMQoQ2FS6K22KkbD6FVAqidVeFJ3d0zV0/1SwpntmR+cXhMUYza08egLtXZBGfSd+qKTwzoXlR8RDOQOovDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UU0MU4v1; arc=none smtp.client-ip=74.125.82.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LQvrx/V0"
-Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2ba94dbf739so1774190eec.1
-        for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:59:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UU0MU4v1"
+Received: by mail-dy1-f196.google.com with SMTP id 5a478bee46e88-2bd3b0bc201so3694800eec.1
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:59:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771552791; x=1772157591; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771552792; x=1772157592; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kJFByzjeaFUmMq6Br1FaD0oRpgn+ZiF0mVTGqvq7v2c=;
-        b=LQvrx/V0aE3UOoRFRkzuNvACooWVYzd+9DXgeUdI9SHbFkILWSlEFkgBmHM+XnXPjD
-         AB1yNiXEB+6swsfnQtqUTkMazXmQGQ+WkWRTKXaOtQRwiekgM157yCraMzVbvPm1Vf9R
-         iFPQtrF/rNsdCYLTsC5d45eX4fF9ix+zxDYs2RSSYXovqCtjv03Q9QsGSyq3IWvDrG5a
-         pDs0KdJaGNWWFoFe/ukbI6mcit5BAiVsc8uP3Efit0LV6/HplQVE91+2zEiloeAwgF2E
-         YblLXvEbXmKFp2FA1UYlHyIY0bbn0OXb3YecjVcy3pQ+gjvlUt28q8diFjczpy8ifDw0
-         MNHA==
+        bh=dzJwPBLdf9HwlWUObNI7tyitFeYoJJcHs63N13mm46Y=;
+        b=UU0MU4v1Cv97CW2nE9ErjTJnLWDr/oPChjwM0IZsqdKPYn855AukXG81rbCphJColb
+         YFhykyc+n8ksb+AURLP+L6IjVh+tzoJWPGW/m2CTiQq9HexK0y97sEuep8hYORt25Q4y
+         pM1xVKELN9gjG3PL+ocWnOoN0Fv4mn0U6Ua7dWsTbNVK+MTX5GxiNQnpGWP+IFigd1xT
+         wBU8GBFGb9SfPBh4X0cdGXNEecNTmuEF9dVyhBcDJK/SLEyLWZZjbu+d9ZTW8UtXbX5N
+         CkY0r4T8vybgudkzA7js85C06Icyb0FAhVx2sLCZaFifBpM9Bz5nRlMUy8dwwyL4GjpS
+         ALRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771552791; x=1772157591;
+        d=1e100.net; s=20230601; t=1771552792; x=1772157592;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=kJFByzjeaFUmMq6Br1FaD0oRpgn+ZiF0mVTGqvq7v2c=;
-        b=xIyTnECdJI3CCnDU4iqFHTmYtjyXQnfAAaJfN4BGjcC7nhWJRN7DaKDLqqpu4UMfQU
-         anTrRXlf7GvxRQntu0Q9q7ciT2UzU74OnWazV01vuTbPHcpy3eG4D4HW3x09Aa85hk2S
-         TiM8emwUcwapaxbgJOpT/67Aw+ISvmMc4yZdE0pC9Pc6P6/UPpGC72n9G9kUGUpBfnYm
-         MHo25H/utFAstrUQJYdVDrPvrM3Kb0x+J4ECuR5yG1+MwbRYDvatbUUJ/C/cqWR0El5x
-         tC6CNYyxvIhwE5+QVoAxFUBKbURN81upVln4p+q+z2N/MkC+v+G1czl6jVhuuOmscSmv
-         SaIg==
-X-Gm-Message-State: AOJu0YxwdbfyoJf0aHfjhIeWklSDZuR44vhMBEHv0P3FZiRMlQ/vqZIY
-	g/i5jKoS24ji2Qx+edha0xpSYfRsVfrO9+RcFShA3TPuECE5Nnjh8F+d38thDQ==
-X-Gm-Gg: AZuq6aKQhe+dHe+KqVwnNYhPN+w2zhuqpYFjs4A0dfYhLfN4UquiH03hZjlTMOJyslg
-	CgeG6OVKQciUTXob5+uS9n3SV4aDfyUnLmPIjDf7PhOnv6EihucbqCxvWhX195CoYCn057dmM4o
-	lFHcQAkYZCOO20Ua4q7ojjZ3IyLGNqA3xlOAehwlYsvENYr8jQz50+KmdtbpWYIwjYsE60FgPZK
-	M3N4YE8fq/teVASDW2v1jF7pC636bRhl29eZvnwrA2DUBFU5sqxI20BCI+N9O4BeY7d6RW7oRHb
-	DBrev8JR1W117ed1vHFSfr22MEpnsNHx3dSxh8nf2ku7EmrgMs6I1FyKE0zMdm/qW+FFljiPB1m
-	WJ82jtuy7NIYsZgBD2M2FbrFfMQ6yizwZputBSv4WGdA1xtYCWE+J3avHYrYvrJDfhCCrmSIU/Z
-	9kEdo1NFidLd8dfaC9JpzOFzOijA==
-X-Received: by 2002:a05:7300:bc99:b0:2ac:1e68:2342 with SMTP id 5a478bee46e88-2bd501948c0mr3658650eec.39.1771552790995;
-        Thu, 19 Feb 2026 17:59:50 -0800 (PST)
+        bh=dzJwPBLdf9HwlWUObNI7tyitFeYoJJcHs63N13mm46Y=;
+        b=IxblrRlSi9Zugy6ui9Krmv95HG2r6KVAaKJjer6aTFqjhGhN11ITE9nok336D1Y0ju
+         0rnoXRdPvTO+jTaAo4KtSzu+u0E+vEne5EZJSH98fYGGzGNzY8HERK+iSHtBD1RUrm3s
+         lXvBtaJsOEwezKLWyPT/ZiWMB+DVH16DO9PKjeXJETageTHo8qiDZGj+KeMfAkDoVTPo
+         nkNKopiaduVJ4rRJc5DL/gdDRdR+cAaxIEsooiPwh9QNVbQuxdQ9en5xwix8aABcHY1p
+         UAeubpE59Z36SjIEdL1mcClQSUb4zjlwSh6xeORoVw7bopIO0QurNLZXf3/kn1Y4gajJ
+         lXPw==
+X-Gm-Message-State: AOJu0YzkEQr46ouvKswAWtvI8dv8xikRsip/qPjB0qHLTgPa0qHxwo1u
+	DOW5toVbA7cjGEfn6disAiCT7xkr/a1nDvQff5wfHveeGnkNVXXwS0sbckyjUOa8/f4=
+X-Gm-Gg: AZuq6aId/Rc6IgXU5R02laWnNn5N6pZBUvvFSKjtF5nrfj2bO75ItJbFQHKU+EketgJ
+	Zzi+18IY4HUeI/eyI7T5xnFKNgPlDmcaqbeOO2zNQfDuZKAL0oSQmMo2oxydCmDcT45t+bATL6k
+	KIpqXpKU7uJqyyXPiWYO545Dz2rrEFlr1d6QFN6ouzexdPkpf6QCVi4/IhMklYULYn4ldi3qUc4
+	lseVdQIlH5m4Im9q4UO3LyAL/lCkLnsHjyGeAUIr1ZIn3cqEwFUWOtNmpVfaRfwql3j1OzmFXdz
+	md1V4ViX2HmY8JMHMnS+Tzd8fHGrMuD6q3TH71tsnuJrqv/Oi9dFrOD8sV3hhkfEd8btO7WCV2A
+	1l4PU80h1TNPnY4zJw/N9wj0vmqplAKl5NS2JrOihxhZguCWhInk24sGdhAvrw0BhkMJKJbTfio
+	PLISNThbwspHmzSajdnXMKQx8JPQ==
+X-Received: by 2002:a05:7300:e80c:b0:2b9:1375:b546 with SMTP id 5a478bee46e88-2bd5b2b226emr2430026eec.16.1771552792375;
+        Thu, 19 Feb 2026 17:59:52 -0800 (PST)
 Received: from [127.0.0.1] ([172.215.211.50])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bacb577c1csm25620811eec.13.2026.02.19.17.59.50
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bacb66b746sm26891781eec.25.2026.02.19.17.59.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Feb 2026 17:59:50 -0800 (PST)
-Message-Id: <7155a0da6f8bcdac90cf1ed085622f2c8b68675e.1771552788.git.gitgitgadget@gmail.com>
+        Thu, 19 Feb 2026 17:59:51 -0800 (PST)
+Message-Id: <911cba991b0017aa3723961c7db73fafd6031b15.1771552788.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2048.v2.git.1771552788.gitgitgadget@gmail.com>
 References: <pull.2048.git.1771406115.gitgitgadget@gmail.com>
 	<pull.2048.v2.git.1771552788.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Feb 2026 01:59:43 +0000
-Subject: [PATCH v2 1/6] merge,diff: remove the_repository check before
- prefetching blobs
+Date: Fri, 20 Feb 2026 01:59:44 +0000
+Subject: [PATCH v2 2/6] merge-ort: pass repository to write_tree()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,106 +82,71 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-Prefetching of blobs from promisor remotes was added to diff in
-7fbbcb21b162 (diff: batch fetching of missing blobs, 2019-04-05).  In
-that commit,
-
-  https://lore.kernel.org/git/20190405170934.20441-1-jonathantanmy@google.com/
-
-was squashed into
-
-  https://lore.kernel.org/git/44de02e584f449481e6fb00cf35d74adf0192e9d.1553895166.git.jonathantanmy@google.com/
-
-without the extra explanation about the squashed changes being added to
-the commit message; in particular, this explanation from that first link
-is absent:
-
-> Also, prefetch only if the repository being diffed is the_repository
-> (because we do not support lazy fetching for any other repository
->  anyway).
-
-Then, later, this checking was spread from diff.c to diffcore-rename.c
-and diffcore-break.c by 95acf11a3dc3 (diff: restrict when prefetching
-occurs, 2020-04-07) and then further split in d331dd3b0c82
-(diffcore-rename: allow different missing_object_cb functions,
-2021-06-22).  I also copied the logic from prefetching blobs from
-diff.c to merge-ort.c in 2bff554b23e8 (merge-ort: add prefetching for
-content merges, 2021-06-22).
-
-The reason for all these checks was noted above -- we only supported
-lazy fetching for the_repository.  However, that changed with
-ef830cc43412 (promisor-remote: teach lazy-fetch in any repo,
-2021-06-17), so these checks are now unnecessary.  Remove them.
+In order to get rid of a usage of the_repository, we need to know the
+value of opt->repo; pass it along to write_tree().  Once we have the
+repository, though, we no longer need to pass
+opt->repo->hash_algo->rawsz, we can have write_tree() look up that value
+itself.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diff.c            | 2 +-
- diffcore-break.c  | 2 +-
- diffcore-rename.c | 4 ++--
- merge-ort.c       | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ merge-ort.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 35b903a9a0..91d81f66ad 100644
---- a/diff.c
-+++ b/diff.c
-@@ -7176,7 +7176,7 @@ void diffcore_std(struct diff_options *options)
- 	 * If no prefetching occurs, diffcore_rename() will prefetch if it
- 	 * decides that it needs inexact rename detection.
- 	 */
--	if (options->repo == the_repository && repo_has_promisor_remote(the_repository) &&
-+	if (repo_has_promisor_remote(the_repository) &&
- 	    (options->output_format & output_formats_to_prefetch ||
- 	     options->pickaxe_opts & DIFF_PICKAXE_KINDS_MASK))
- 		diff_queued_diff_prefetch(options->repo);
-diff --git a/diffcore-break.c b/diffcore-break.c
-index c4c2173f30..5ce227ba22 100644
---- a/diffcore-break.c
-+++ b/diffcore-break.c
-@@ -69,7 +69,7 @@ static int should_break(struct repository *r,
- 	    oideq(&src->oid, &dst->oid))
- 		return 0; /* they are the same */
- 
--	if (r == the_repository && repo_has_promisor_remote(the_repository)) {
-+	if (repo_has_promisor_remote(the_repository)) {
- 		options.missing_object_cb = diff_queued_diff_prefetch;
- 		options.missing_object_data = r;
- 	}
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index d9476db35a..072752954e 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -987,7 +987,7 @@ static int find_basename_matches(struct diff_options *options,
- 			strintmap_set(&dests, base, i);
- 	}
- 
--	if (options->repo == the_repository && repo_has_promisor_remote(the_repository)) {
-+	if (repo_has_promisor_remote(the_repository)) {
- 		dpf_options.missing_object_cb = basename_prefetch;
- 		dpf_options.missing_object_data = &prefetch_options;
- 	}
-@@ -1574,7 +1574,7 @@ void diffcore_rename_extended(struct diff_options *options,
- 
- 	/* Finish setting up dpf_options */
- 	prefetch_options.skip_unmodified = skip_unmodified;
--	if (options->repo == the_repository && repo_has_promisor_remote(the_repository)) {
-+	if (repo_has_promisor_remote(the_repository)) {
- 		dpf_options.missing_object_cb = inexact_prefetch;
- 		dpf_options.missing_object_data = &prefetch_options;
- 	}
 diff --git a/merge-ort.c b/merge-ort.c
-index 0a59d1e596..593e3a2087 100644
+index 593e3a2087..3535fc676f 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -4438,7 +4438,7 @@ static void prefetch_for_content_merges(struct merge_options *opt,
- 	struct string_list_item *e;
- 	struct oid_array to_fetch = OID_ARRAY_INIT;
+@@ -3822,15 +3822,16 @@ static int tree_entry_order(const void *a_, const void *b_)
+ 				 b->string, strlen(b->string), bmi->result.mode);
+ }
  
--	if (opt->repo != the_repository || !repo_has_promisor_remote(the_repository))
-+	if (!repo_has_promisor_remote(the_repository))
- 		return;
+-static int write_tree(struct object_id *result_oid,
++static int write_tree(struct repository *repo,
++		      struct object_id *result_oid,
+ 		      struct string_list *versions,
+-		      unsigned int offset,
+-		      size_t hash_size)
++		      unsigned int offset)
+ {
+ 	size_t maxlen = 0, extra;
+ 	unsigned int nr;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int i, ret = 0;
++	size_t hash_size = repo->hash_algo->rawsz;
  
- 	for (e = &plist->items[plist->nr-1]; e >= plist->items; --e) {
+ 	assert(offset <= versions->nr);
+ 	nr = versions->nr - offset;
+@@ -3856,7 +3857,7 @@ static int write_tree(struct object_id *result_oid,
+ 	}
+ 
+ 	/* Write this object file out, and record in result_oid */
+-	if (odb_write_object(the_repository->objects, buf.buf,
++	if (odb_write_object(repo->objects, buf.buf,
+ 			     buf.len, OBJ_TREE, result_oid))
+ 		ret = -1;
+ 	strbuf_release(&buf);
+@@ -4026,8 +4027,8 @@ static int write_completed_directory(struct merge_options *opt,
+ 		dir_info->is_null = 0;
+ 		dir_info->result.mode = S_IFDIR;
+ 		if (record_tree &&
+-		    write_tree(&dir_info->result.oid, &info->versions, offset,
+-			       opt->repo->hash_algo->rawsz) < 0)
++		    write_tree(opt->repo, &dir_info->result.oid, &info->versions,
++			       offset) < 0)
+ 			ret = -1;
+ 	}
+ 
+@@ -4573,8 +4574,7 @@ static int process_entries(struct merge_options *opt,
+ 		BUG("dir_metadata accounting completely off; shouldn't happen");
+ 	}
+ 	if (record_tree &&
+-	    write_tree(result_oid, &dir_metadata.versions, 0,
+-		       opt->repo->hash_algo->rawsz) < 0)
++	    write_tree(opt->repo, result_oid, &dir_metadata.versions, 0) < 0)
+ 		ret = -1;
+ cleanup:
+ 	string_list_clear(&plist, 0);
 -- 
 gitgitgadget
 
