@@ -1,199 +1,184 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from embla.dev.snart.me (embla.dev.snart.me [54.252.183.203])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65737237707
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 06:04:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436A826ED35
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 07:53:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.252.183.203
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771567496; cv=none; b=VcwNXezh1q8ooaj7UZxCNdhCiBGFEx2KUyDrqpT0UlHTOWDQdOPfKm1mFCveglLCdbpiFnvL96CUQm6Cl9WfrWT6njE+4jiik+tVeEwpmM1MyqJYmtvdI8oXfyO3jHJoxXu9FYMuTKraYNWd6QJ7jsKZB7Sny8dG0cjcU43tyaA=
+	t=1771573994; cv=none; b=IR/hZKws8rTtcukVtXiG+h6CmGaGSG4Ll7olpSTU0iUpY+tVcH0AbPA851hbVrPp6XMsIr8OkWE2iSM/w92SaxyuF5R0lyBOhUqpi8bkWK+cZgjDi4HpEKBT5/5s7z8B+qtF3WBAVUuEDH/Rrq10q1aqmXdLpgzvbXqgberWIYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771567496; c=relaxed/simple;
-	bh=KOX99Fu6qPslRs6o95/x9yItcoAiv7hxk65IB2ppHo4=;
+	s=arc-20240116; t=1771573994; c=relaxed/simple;
+	bh=TDYt74ASRscDH88M8+2RSXAZUU8gxgRZ0MwFCVox9D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DPedCG8DfuFScNiUUQwC3ITBOClgtnwspck3nyiRXefWMcF9GnM5JQObKKx02mHNQTXqQ18OFZCaLOdwZYhJp8e7xuykLliwC53euIViupy19teD1gKGO0zUdnPTG7P/tIVNENNPeF82XHDgdDyMxkbpPY1c2RI+HVXtEmtJYlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MUylYgWq; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version; b=IkRwuXL13QamL9/+U+zv9i1wxi+2dD/CR0fdoU5unoLJKI9jkMk1SAN/leXtW2RCVk6LtwJ5qTEGG9PxGOjIri/AvvoOgE1g6hhCOkAnhcoeQH7sb2vjeAEViHRvorDmm5AHMG/pL1CzOVhej8sNX79KIaNKqw4s06E/dav+NU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dev.snart.me; spf=pass smtp.mailfrom=dev.snart.me; dkim=pass (1024-bit key) header.d=dev.snart.me header.i=@dev.snart.me header.b=TpdbZw4d; arc=none smtp.client-ip=54.252.183.203
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dev.snart.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dev.snart.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MUylYgWq"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-48371bb515eso21789475e9.1
-        for <git@vger.kernel.org>; Thu, 19 Feb 2026 22:04:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771567493; x=1772172293; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MDiqhpwZpZtMvnekmH6SRMu+AY4tzYZsVxLUFyyQ0/8=;
-        b=MUylYgWqDhTCGQAoyhFfx7n2VCmmJyccI7JW2FPl9du9UqpJpg6GWiQpTrkZqamY1a
-         h3LplHaOwRwMbcvS3IWcjVfbvYhHNvrkXluSToNpK9nhCBmkaWTXdKic2pOGJpAXh1MX
-         d1NshMYO04taTQYvTiXYHrnhcZ3ENjIvVx6e1zXBwsrv8TkwVNo7S5uhtr8C65PuGx8B
-         99cKTKfIretwv9L0UD5WzwZmUQDms3PKGNjMleATlohZcngPFRQt/lEEjNzGfJ1yAVLj
-         11I0Ceoa6HLswxxzD88J7uc/B6VFyNanMDIHrFCBpgWgoU0c0qGoI7s9OAsOhmJ16VGx
-         qiSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771567493; x=1772172293;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=MDiqhpwZpZtMvnekmH6SRMu+AY4tzYZsVxLUFyyQ0/8=;
-        b=czphUHiWDkcTdHhoUTudXa/k06Zo9QYteBejAVM2meRgKe+A+ZXxzSKk5jeD+7vdHA
-         B2jw7pxJTD542D9WsYbt1/drHpYWe7OLQy1gGWvyUM73OW9Qr0meXBJf8WQR6JseiB5M
-         qz9y3bGvszmjdNhtyvsQ3qihhrxZ9hkB5ftpyj76QmTXc8rkDP4mPzCiu9BvWfmrm+oz
-         eFsAM9bpvz3JanbL/IUKymng3ITSHrlHo7a0j/4LNfLv9Z5o4ibePKJvX6mhw8e0VGE8
-         nThEILbqQ77oCl9KFlgfCuPdwzhYUvVqDmHlfQetdFWWSXHGH6WFUvp/WXj2amZKcxyG
-         oZJA==
-X-Gm-Message-State: AOJu0YxjP1VYx9AhYpLxAs+pG5x7J7+s+opr0TS+krqwNey9KCVbQ6l9
-	bvkSluumcm884CAbN3ox6t0HnUFJcFxxfhgNLlNnuAlUNSqExhIP2CSNvTsYwA==
-X-Gm-Gg: AZuq6aL20UVXDSSuqiCwiNEKp+WUfeTkcamhqadlvIO3+h86j72fIHSmOjYZMYRQiAU
-	UdyNCisNi0NsvHWqGWXTqGVUVdArPHdONtPaHjBOmy86K3skeIkawgz1weMD/rTl5y7c1ML0Skm
-	qsNoQlH13CQiGPSd7rtqEz/liFlCLEr5DNrZ5YVeRtK8ynkEYGNg9BOQelyIL2XqN71goMIQ3vy
-	m+oD9uDraOVjnBaHAgfHWC+T/k1CAa47Gi3aSFLl3EqUaJaRA/f6O0AyYEOdGrkKO05IpQMZwP+
-	zQ9uma4oeCdi8qakvSThbjrQI+0oj3RjYx/WMhF+9UzWK5TJfUNxbep6o3tpyrZHZRrUcqELlzU
-	XHuwAJl9aFYwkkhFfWNJOGatkFhPWHFIHLiVFTgpIaZMTArrF2wOilKuDMtsPFOrylVJrB0e7u+
-	ukqBKPvKpIxicHPfM6aNyacgV5H9iuX7GEew==
-X-Received: by 2002:a05:600c:3110:b0:480:f27c:6335 with SMTP id 5b1f17b1804b1-48398b6dba0mr127764715e9.25.1771567493203;
-        Thu, 19 Feb 2026 22:04:53 -0800 (PST)
-Received: from fedora.marun.edu.tr ([193.255.169.14])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483a31bc0e3sm43477255e9.5.2026.02.19.22.04.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Feb 2026 22:04:52 -0800 (PST)
-From: =?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
+	dkim=pass (1024-bit key) header.d=dev.snart.me header.i=@dev.snart.me header.b="TpdbZw4d"
+Received: from embla.dev.snart.me (localhost [IPv6:::1])
+	by embla.dev.snart.me (Postfix) with ESMTP id 50BB11D49A;
+	Fri, 20 Feb 2026 07:53:11 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 embla.dev.snart.me 50BB11D49A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dev.snart.me; s=00;
+	t=1771573991; bh=TDYt74ASRscDH88M8+2RSXAZUU8gxgRZ0MwFCVox9D4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=TpdbZw4dHuz0uR9v6FfdowijZ7Yq56aHcDwkLpYVJm7JjZZxZJ9NNLlOqlTy9ZZKI
+	 YgPYwVjSUAjGbAn3VQvhbsgPcmIIAeQWPKrRKa6FxM6eR+eVrksEIgdeeHkOgTz3lm
+	 oDAaGk5h+TU7ko4BFceVPZUvUhFsm/unvGohpaxk=
+Received: from maya.d.snart.me ([182.226.25.243])
+	by embla.dev.snart.me with ESMTPSA
+	id Lqj/AOcSmGnSngIA8KYfjw
+	(envelope-from <dxdt@dev.snart.me>); Fri, 20 Feb 2026 07:53:11 +0000
+From: David Timber <dxdt@dev.snart.me>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	christian.couder@gmail.com,
-	=?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
-Subject: [GSOC PATCH v2 2/2] mailmap: drop global config variables
-Date: Fri, 20 Feb 2026 09:04:42 +0300
-Message-ID: <20260220060442.29469-3-bkkaracay@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260220060442.29469-1-bkkaracay@gmail.com>
-References: <20260219125954.3539324-1-bkkaracay@gmail.com>
- <20260220060442.29469-1-bkkaracay@gmail.com>
+Cc: David Timber <dxdt@dev.snart.me>
+Subject: [PATCH] send-mail: add client certificate options
+Date: Fri, 20 Feb 2026 16:52:53 +0900
+Message-ID: <20260220075304.536514-1-dxdt@dev.snart.me>
+X-Mailer: git-send-email 2.53.0.1.g242c94b05d.dirty
+In-Reply-To: <20260219-kavaliersdelikt-ansatz-9bdd1aa77326@brauner>
+References: <20260219-kavaliersdelikt-ansatz-9bdd1aa77326@brauner>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The 'mailmap.file' and 'mailmap.blob' configurations are currently
-parsed and stored in the global variables 'git_mailmap_file' and
-'git_mailmap_blob'. Since these values are typically only needed once
-when initializing a mailmap, there is no need to keep them as global
-state throughout the lifetime of the Git process.
+For SMTP servers that do "mutual certificate verification", the mail
+client is required to present its own TLS certificate as well. This
+patch adds --smtp-ssl-client-cert and --smtp-ssl-client-key for such
+servers.
 
-To reduce global state, remove these global variables and instead use
-'repo_config_get_*' functions to read the configuration on demand.
-
-Signed-off-by: Burak Kaan Karaçay <bkkaracay@gmail.com>
+Signed-off-by: David Timber <dxdt@dev.snart.me>
 ---
- environment.c | 19 -------------------
- mailmap.c     | 21 ++++++++++++++-------
- mailmap.h     |  3 ---
- 3 files changed, 14 insertions(+), 29 deletions(-)
+ Documentation/git-send-email.adoc | 13 +++++++++
+ git-send-email.perl               | 48 ++++++++++++++++++++++++-------
+ 2 files changed, 50 insertions(+), 11 deletions(-)
 
-diff --git a/environment.c b/environment.c
-index 0026eb2274..2764d8f481 100644
---- a/environment.c
-+++ b/environment.c
-@@ -647,22 +647,6 @@ static int git_default_push_config(const char *var, const char *value)
- 	return 0;
+diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
+index ebe8853e9f..9c782a4d9a 100644
+--- a/Documentation/git-send-email.adoc
++++ b/Documentation/git-send-email.adoc
+@@ -290,6 +290,19 @@ must be used for each option.
+ 	variable, if set, or the backing SSL library's compiled-in default
+ 	otherwise (which should be the best choice on most platforms).
+ 
++--smtp-ssl-client-cert <path>::
++	Path to a client certificate file to present to the SMTP server. This option
++	can be used when the server verifies the certificate from the client. The
++	format could be in either PKCS12 or PEM. In the latter case, the private key
++	can be specified using `--smtp-ssl-client-key` option. More more
++	detail, see
++	https://metacpan.org/pod/IO::Socket::SSL#SSL_cert_file-|-SSL_cert-|-SSL_key_file-|-SSL_key
++
++--smtp-ssl-client-key <path>::
++	Optional path to the private key file. If this is not given and a PKCS12
++	certificate file is used, the private key from the PKCS12 certificate will
++	be used(see `--smtp-ssl-client-cert`).
++
+ --smtp-user=<user>::
+ 	Username for SMTP-AUTH. Default is the value of `sendemail.smtpUser`;
+ 	if a username is not specified (with `--smtp-user` or `sendemail.smtpUser`),
+diff --git a/git-send-email.perl b/git-send-email.perl
+index cd4b316ddc..49601a91d8 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -66,6 +66,9 @@ sub usage {
+     --smtp-ssl-cert-path    <str>  * Path to ca-certificates (either directory or file).
+                                      Pass an empty string to disable certificate
+                                      verification.
++    --smtp-ssl-client-cert  <str>  * Path to client certificate file to present to SMTP server
++    --smtp-ssl-client-key   <str>  * Path to the private key file for the client certificate
++                                     (optional if a PKCS12 client certificate is used)
+     --smtp-domain           <str>  * The domain name sent to HELO/EHLO handshake
+     --smtp-auth             <str>  * Space-separated list of allowed AUTH mechanisms, or
+                                      "none" to disable authentication.
+@@ -279,6 +282,7 @@ sub do_edit {
+ my ($to_cmd, $cc_cmd, $header_cmd);
+ my ($smtp_server, $smtp_server_port, @smtp_server_options);
+ my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
++my ($smtp_ssl_client_cert, $smtp_ssl_client_key);
+ my ($batch_size, $relogin_delay);
+ my ($identity, $aliasfiletype, @alias_files, $smtp_domain, $smtp_auth);
+ my ($imap_sent_folder);
+@@ -350,6 +354,8 @@ sub do_edit {
+ my %config_path_settings = (
+     "aliasesfile" => \@alias_files,
+     "smtpsslcertpath" => \$smtp_ssl_cert_path,
++    "smtpsslclientcert" => \$smtp_ssl_client_cert,
++    "smtpsslclientkey" => \$smtp_ssl_client_key,
+     "mailmap.file" => \$mailmap_file,
+     "mailmap.blob" => \$mailmap_blob,
+ );
+@@ -531,6 +537,8 @@ sub config_regexp {
+ 		    "smtp-ssl" => sub { $smtp_encryption = 'ssl' },
+ 		    "smtp-encryption=s" => \$smtp_encryption,
+ 		    "smtp-ssl-cert-path=s" => \$smtp_ssl_cert_path,
++		    "smtp-ssl-client-cert=s" => \$smtp_ssl_client_cert,
++		    "smtp-ssl-client-key=s" => \$smtp_ssl_client_key,
+ 		    "smtp-debug:i" => \$debug_net_smtp,
+ 		    "smtp-domain:s" => \$smtp_domain,
+ 		    "smtp-auth=s" => \$smtp_auth,
+@@ -1520,6 +1528,8 @@ sub handle_smtp_error {
  }
  
--static int git_default_mailmap_config(const char *var, const char *value)
--{
--	if (!strcmp(var, "mailmap.file")) {
--		FREE_AND_NULL(git_mailmap_file);
--		return git_config_pathname(&git_mailmap_file, var, value);
--	}
--
--	if (!strcmp(var, "mailmap.blob")) {
--		FREE_AND_NULL(git_mailmap_blob);
--		return git_config_string(&git_mailmap_blob, var, value);
--	}
--
--	/* Add other config variables here and to Documentation/config.adoc. */
--	return 0;
--}
--
- static int git_default_attr_config(const char *var, const char *value)
- {
- 	if (!strcmp(var, "attr.tree")) {
-@@ -697,9 +681,6 @@ int git_default_config(const char *var, const char *value,
- 	if (starts_with(var, "push."))
- 		return git_default_push_config(var, value);
- 
--	if (starts_with(var, "mailmap."))
--		return git_default_mailmap_config(var, value);
--
- 	if (starts_with(var, "attr."))
- 		return git_default_attr_config(var, value);
- 
-diff --git a/mailmap.c b/mailmap.c
-index cf70956675..3b2691781d 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -7,9 +7,7 @@
- #include "object-name.h"
- #include "odb.h"
- #include "setup.h"
--
--char *git_mailmap_file;
--char *git_mailmap_blob;
-+#include "config.h"
- 
- struct mailmap_info {
- 	char *name;
-@@ -213,20 +211,29 @@ int read_mailmap_blob(struct repository *repo, struct string_list *map,
- int read_mailmap(struct repository *repo, struct string_list *map)
- {
- 	int err = 0;
-+	char *mailmap_file = NULL, *mailmap_blob = NULL;
+ sub ssl_verify_params {
++	my %ret = ();
 +
-+	repo_config_get_pathname(repo, "mailmap.file", &mailmap_file);
-+	repo_config_get_string(repo, "mailmap.blob", &mailmap_blob);
+ 	eval {
+ 		require IO::Socket::SSL;
+ 		IO::Socket::SSL->import(qw/SSL_VERIFY_PEER SSL_VERIFY_NONE/);
+@@ -1531,20 +1541,36 @@ sub ssl_verify_params {
  
- 	map->strdup_strings = 1;
- 	map->cmp = namemap_cmp;
+ 	if (!defined $smtp_ssl_cert_path) {
+ 		# use the OpenSSL defaults
+-		return (SSL_verify_mode => SSL_VERIFY_PEER());
++		$ret{SSL_verify_mode} = SSL_VERIFY_PEER();
++	}
++	else {
++		if ($smtp_ssl_cert_path eq "") {
++			$ret{SSL_verify_mode} = SSL_VERIFY_NONE();
++		} elsif (-d $smtp_ssl_cert_path) {
++			$ret{SSL_verify_mode} = SSL_VERIFY_PEER();
++			$ret{SSL_ca_path} = $smtp_ssl_cert_path;
++		} elsif (-f $smtp_ssl_cert_path) {
++			$ret{SSL_verify_mode} = SSL_VERIFY_PEER();
++			$ret{SSL_ca_file} = $smtp_ssl_cert_path;
++		} else {
++			die sprintf(__("CA path \"%s\" does not exist"), $smtp_ssl_cert_path);
++		}
+ 	}
  
--	if (!git_mailmap_blob && is_bare_repository())
--		git_mailmap_blob = xstrdup("HEAD:.mailmap");
-+	if (!mailmap_blob && is_bare_repository())
-+		mailmap_blob = xstrdup("HEAD:.mailmap");
- 
- 	if (!startup_info->have_repository || !is_bare_repository())
- 		err |= read_mailmap_file(map, ".mailmap",
- 					 startup_info->have_repository ?
- 					 MAILMAP_NOFOLLOW : 0);
- 	if (startup_info->have_repository)
--		err |= read_mailmap_blob(repo, map, git_mailmap_blob);
--	err |= read_mailmap_file(map, git_mailmap_file, 0);
-+		err |= read_mailmap_blob(repo, map, mailmap_blob);
+-	if ($smtp_ssl_cert_path eq "") {
+-		return (SSL_verify_mode => SSL_VERIFY_NONE());
+-	} elsif (-d $smtp_ssl_cert_path) {
+-		return (SSL_verify_mode => SSL_VERIFY_PEER(),
+-			SSL_ca_path => $smtp_ssl_cert_path);
+-	} elsif (-f $smtp_ssl_cert_path) {
+-		return (SSL_verify_mode => SSL_VERIFY_PEER(),
+-			SSL_ca_file => $smtp_ssl_cert_path);
+-	} else {
+-		die sprintf(__("CA path \"%s\" does not exist"), $smtp_ssl_cert_path);
++	if (defined $smtp_ssl_client_cert) {
++		# The cert could be in PKCS12 format, which can store both cert and key
++		$ret{SSL_cert_file} = $smtp_ssl_client_cert;
++		$ret{SSL_use_cert} = 1;
+ 	}
++	if (defined $smtp_ssl_client_key) {
++		if (!defined $smtp_ssl_client_cert) {
++			# doesn't make sense to use a client key only
++			die sprintf(__("Only client key \"%s\" specified"), $smtp_ssl_client_key);
++		}
++		$ret{SSL_key_file} = $smtp_ssl_client_key;
++	}
 +
-+	err |= read_mailmap_file(map, mailmap_file, 0);
-+
-+	free(mailmap_file);
-+	free(mailmap_blob);
-+
- 	return err;
++	return %ret;
  }
  
-diff --git a/mailmap.h b/mailmap.h
-index fda329d715..6866cb6f1d 100644
---- a/mailmap.h
-+++ b/mailmap.h
-@@ -4,9 +4,6 @@
- struct repository;
- struct string_list;
- 
--extern char *git_mailmap_file;
--extern char *git_mailmap_blob;
--
- /* Flags for read_mailmap_file() */
- #define MAILMAP_NOFOLLOW (1<<0)
- 
+ sub file_name_is_absolute {
 -- 
-2.52.0
+2.53.0
 
