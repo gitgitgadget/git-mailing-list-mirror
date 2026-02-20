@@ -1,174 +1,87 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from embla.dev.snart.me (embla.dev.snart.me [54.252.183.203])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770191BCA1C
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 03:40:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC44F5733E;
+	Fri, 20 Feb 2026 05:44:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.252.183.203
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771558823; cv=none; b=i3NRGXiZzBZnjfLx8PgGTk37whzyxiFz7P4BT2utQdTjnmR2tDrszv2Rts+sTYkU5fL3qkIlfKZuSd9vg6r7Lil1D6kbpQnKbXFQNfBGRKPpZoeG3Gj/51RTlfBmSwOfuhzjizmsgPuvSpsVrI4w8UrIVdCvEuyzgz68OoMqIJk=
+	t=1771566243; cv=none; b=bPFTimacKzRgcucM83w3Cdm9qQG+mqWBaZdVXzcbBaJ8sbDzk8qaF9SzGfLOef2BACf9mMC7c7C1g3xW96RiokmOgD/mPUvpe2oMbGa03UrLaPGw+K5F9rRU8FzlfCePfzIunGi6QQeyp0cBchCmzzr/Urcwq6TeGjf8Xw4kv8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771558823; c=relaxed/simple;
-	bh=obaVtlAb2sHTHevQfYVOfCXtmH05foBau06U9glHR4c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dxS7Lt8k3MYgukMuyKGYUAlyxmyBKPrkqtlEFUOl3q5qSfEHPmQqOlMmkNOufNCAzwUaIbADR1bd5F9ata+Fg+JqDbYANorTVdGekgS4RZCESAT7cSq2Y4tuMzumBTY8RKztPj1sgvC/ypisGfnD3DnKuo4CnAatwRO4YZkP9QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gnx0R1u1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e3lY462H; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771566243; c=relaxed/simple;
+	bh=nAwASGi5c/XcXYGVV67cIULqGiwOoqBepR7MHcsA1Ms=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VN/bLtzMO403ae1dIOFY4BigDKg9PzaApNGMZkqPuGoEU4tMQJt9mCBtJGyjJrWpM8350/6LIZQzYwwVoUTWPhTas/hVsQFFGux7VzUN6UqnD+OsZvz3IgLNabaPpW0gzE99lcoLDwEOww+IWJ905UwyfQLUlaA6gJXuUejfw1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dev.snart.me; spf=pass smtp.mailfrom=dev.snart.me; dkim=pass (1024-bit key) header.d=dev.snart.me header.i=@dev.snart.me header.b=DAnpc4w7; arc=none smtp.client-ip=54.252.183.203
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dev.snart.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dev.snart.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gnx0R1u1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e3lY462H"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8C6F114001BF;
-	Thu, 19 Feb 2026 22:40:21 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 19 Feb 2026 22:40:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771558821; x=1771645221; bh=svXQ7S+wvj
-	08JZKbFSN5I6BPgAQY89OXAaf9xaSzNio=; b=gnx0R1u1Yoqie2zRfsmui9HRFx
-	tnfk7Yt/2IyjBE5fqSlpDZ8l59HLiCU9YjHQ6QSVsZbVcKSBg+pAdVCaH4QzIWkZ
-	jcj2BkmTzeah1Q55aiuo/1LS54sOKjEVD0fgMRM57V5hStX4Rn+Cnz8pAMxROtYN
-	WoIYUY45fsJzI3nNjNXVSjM/CpcNOgF9x0etV/8WNARTeOzC/8XsMRZQUl8xs0ii
-	9ZABzjkoHgzK21nSywiRj/cZGL6Jd5oduKZCy9GJqunTaICklaDr734Sq1AVvllI
-	wHR57va0CI7s99wtSg5sIhmpCpHNyBfJAy1/H1iflJd2WaL5V3HHHkOI0aZg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771558821; x=1771645221; bh=svXQ7S+wvj08JZKbFSN5I6BPgAQY89OXAaf
-	9xaSzNio=; b=e3lY462HW4k5+8T0e0zpVjumurugN3cTWm1L57WJ4GV5zk9L031
-	vO8T+H8pdOxpMAKW98H1CLUvzJj5qXeCE7V/tlCiZn9k56W/PhU/w+HjhzK0qT19
-	TDaMevE799rt2xzDctDaROuYlrr70xONWYfvn2zCB4BZe+p+BJFr9tbJ+uDzGFxS
-	dNrZgqzgAdzrzXQd6pk9HE32FDQFEsgcaLt0b7Shcfnq1BlSAVFRhd/CEFyfuN+F
-	xFhiomX8DlkYZnJkDkEAsVq5pHrX/rkmx3UJgQi8mdF6HWvoCbnO+2iKlkjztbvf
-	J4kVoNAgEa8BPIqn7MGIG1EMcowES8gbiXg==
-X-ME-Sender: <xms:pdeXaRd2QZTxMzTm2LEYzfhKOJFadf4J5peoZRyUgL09pu6-KRJAaw>
-    <xme:pdeXaWOyWiLR9BUKB_-bu2jdoy_mDaPeAReGfLQPXKVWUgxQHjtRtWKLC0Bros_yg
-    of9YR5JRqRG6KSBkiywApoUSvWB2OXWG2jcQ5SHrLNZCvJawUUg7g>
-X-ME-Received: <xmr:pdeXafjzENi7a7F9obTJ5NApwyY5-M6PBIJ9MVKwxvUFsHXmS-Mjhym4lRI_0D4xXP69hV283D0EHyPpZpexnVNM4fiOuHcg2g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdejfeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
-    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:pdeXaZ2-KAyTJ2Hzu2v-DOC0VSqiSZVmHHefbTiz9diZnTQmN39byQ>
-    <xmx:pdeXaZhsl1SOEMl0ubnw16vBrs21KeO0fjlE7fEywWNkk-kN4Jq-iQ>
-    <xmx:pdeXaZcawEorSG2HYOqpAAF3KZYCavR-4MjdVYEAwL5ZMBZJmmdlCQ>
-    <xmx:pdeXackPzmg2Nl4b0OS3Oyv1FkHtHHiZXiErBeb-Hso4cHt34A_m2g>
-    <xmx:pdeXaTDA9zYEn2rTW9IiT7j_hHSxdZTv4do5m6HZiI6HVelp67-3G1SF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Feb 2026 22:40:21 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [PATCH v7] setup: allow cwd/.git to be a symlink to a directory
-In-Reply-To: <20260219071650.208074-1-a3205153416@gmail.com> (Tian Yuchen's
-	message of "Thu, 19 Feb 2026 15:16:50 +0800")
-References: <20260218124638.176936-1-a3205153416@gmail.com>
-	<20260219071650.208074-1-a3205153416@gmail.com>
-Date: Thu, 19 Feb 2026 19:40:19 -0800
-Message-ID: <xmqqh5rc13rw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=dev.snart.me header.i=@dev.snart.me header.b="DAnpc4w7"
+Received: from embla.dev.snart.me (localhost [IPv6:::1])
+	by embla.dev.snart.me (Postfix) with ESMTP id CAEE51D49A;
+	Fri, 20 Feb 2026 05:43:59 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 embla.dev.snart.me CAEE51D49A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dev.snart.me; s=00;
+	t=1771566240; bh=nAwASGi5c/XcXYGVV67cIULqGiwOoqBepR7MHcsA1Ms=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=DAnpc4w7DPMpux3k8n9028GXe5YHPsOE/VINiFMy2Y4vpZa1/EMts/Grxcwvzc7Ik
+	 IcisP9RWXKR4XGPh0/OdyVr/HBmcH9TDQiWjxGUmqg6F8vesbHmQ7qpAF7O/Yzr0u8
+	 w8bAM5ex9R8wUmfp8MNU/hK1sxX5/10d5mbogfQ8=
+Received: from [192.168.1.18] ([182.226.25.243])
+	by embla.dev.snart.me with ESMTPSA
+	id RdSmHJ/0l2kVlgIA8KYfjw
+	(envelope-from <dxdt@dev.snart.me>); Fri, 20 Feb 2026 05:43:59 +0000
+Message-ID: <a676fa73-bb73-485b-9ace-36a841be2b15@dev.snart.me>
+Date: Fri, 20 Feb 2026 14:43:58 +0900
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] Introduce filesystem type tracking
+To: Christian Brauner <brauner@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ git@vger.kernel.org
+References: <1211196126-7442-1-git-send-email-tspink@gmail.com>
+ <7b9198260805200606u6ebc2681o8af7a8eebc1cb96@mail.gmail.com>
+ <20080520134306.GA28946@ZenIV.linux.org.uk>
+ <20080520135732.GA30349@infradead.org>
+ <20260218-goldrausch-hochmoderne-2b96018fbe5b@brauner>
+ <aZakzr_QAY6a-dlB@infradead.org>
+ <20260219-galaxie-sensibel-b6d27e60d524@brauner>
+ <20260219-kavaliersdelikt-ansatz-9bdd1aa77326@brauner>
+From: David Timber <dxdt@dev.snart.me>
+Content-Language: en-US, ko
+Autocrypt: addr=dxdt@dev.snart.me; keydata=
+ xjMEYmJg1hYJKwYBBAHaRw8BAQdAf5E+ri1XLtjqYbZdHOyc8oS+1/XJ5bSlbx5WHXmVBZzN
+ IERhdmlkIFRpbWJlciA8ZHhkdEBkZXYuc25hcnQubWU+wpQEExYKADwWIQQn/Jn96EMUaIoF
+ X+T/ldyyrZpWaAUCYmJg1gIbAwULCQgHAgMiAgEGFQoJCAsCBBYCAwECHgcCF4AACgkQ/5Xc
+ sq2aVmjJZwD8COjPlUwccrlRvbNQ6f87DWchtYO0o8W2DNRM3RLps0EA/jEhIbRV6AsyC8jr
+ 30Ut3aJ3/mO/6G4sLj7OvkEEBH0MzjgEYmJg1hIKKwYBBAGXVQEFAQEHQFpgtIgaByv9lIEY
+ EmpavMO0pYjtu7TMJynwdnGYkN9LAwEIB8J4BBgWCgAgFiEEJ/yZ/ehDFGiKBV/k/5Xcsq2a
+ VmgFAmJiYNYCGwwACgkQ/5Xcsq2aVmhFCwEA0kM9VyYB4bLCM7+SuXUUH+5Ec99Nj4RXxFad
+ Key9GuwA/2BZK6bNyrLSfEk2JDRoskqf7OIL0wa6JOD5SrBnMe8E
+In-Reply-To: <20260219-kavaliersdelikt-ansatz-9bdd1aa77326@brauner>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+> All these mails have a broken header and set In-Reply-To: to <>:
+>
+>   In-Reply-To: <>
+>
+> So all of these messages share a single bogus parent with the empty
+> message ID <> and then Neomutt groups them together which makes it look
+> like a really old thread got new replies...
+Sorry for off-topic
 
-> diff --git a/setup.c b/setup.c
-> index c8336eb20e..5a573e5865 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -897,10 +897,13 @@ int verify_repository_format(const struct repository_format *format,
->  void read_gitfile_error_die(int error_code, const char *path, const char *dir)
->  {
->  	switch (error_code) {
-> +	case READ_GITFILE_ERR_STAT_ENOENT:
-> +	case READ_GITFILE_ERR_IS_A_DIR:
-> +		break;
->  	case READ_GITFILE_ERR_STAT_FAILED:
-> +		die(_("error reading %s"), path);
->  	case READ_GITFILE_ERR_NOT_A_FILE:
-> -		/* non-fatal; follow return path */
-> -		break;
+I run my own Postfix+Dovecot stack and for an added layer of security, I
+enabled client cert verification for all MUA ports(submission and imap)
+so that bots don't even have a chance at establishing a TLS session.
 
-This comment is now lost.  Shouldn't (at least /* non-fatal */ part of)
-it be moved to those two new non-error codes we see above?
-
->  	if (stat(path, &st)) {
-> -		/* NEEDSWORK: discern between ENOENT vs other errors */
-> -		error_code = READ_GITFILE_ERR_STAT_FAILED;
-> +		if (errno == ENOENT)
-> +			error_code = READ_GITFILE_ERR_STAT_ENOENT;
-> +		else
-> +			error_code = READ_GITFILE_ERR_STAT_FAILED;
-> +		goto cleanup_return;
-> +	}
-> +	if (S_ISDIR(st.st_mode)) {
-> +		error_code = READ_GITFILE_ERR_IS_A_DIR;
->  		goto cleanup_return;
->  	}
-
-OK.
-
-> @@ -1578,20 +1587,25 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
->  		if (offset > min_offset)
->  			strbuf_addch(dir, '/');
->  		strbuf_addstr(dir, DEFAULT_GIT_DIR_ENVIRONMENT);
-> +		gitdirenv = read_gitfile_gently(dir->buf, &error_code);
->  		if (!gitdirenv) {
-> +			if (error_code == READ_GITFILE_ERR_IS_A_DIR &&
-> +			is_git_directory(dir->buf)) {
-> +				gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
-> +				gitdir_path = xstrdup(dir->buf);
-> +			} else {
-> +				if (error_code == READ_GITFILE_ERR_STAT_ENOENT ||
-> +				error_code == READ_GITFILE_ERR_IS_A_DIR ||
-> +				error_code == READ_GITFILE_ERR_NOT_A_FILE ||
-> +				die_on_error) {
-> +					read_gitfile_error_die(error_code, dir->buf, NULL);
-> +				} else {
-> +					return GIT_DIR_INVALID_GITFILE;
->  				}
-> +			}
-
-Is it just me who finds the above harder to follow than necessary?
-I would have expected something like
-
-	if (!gitdirenv) {
-		switch (error_code) {
-		case READ_GITFILE_ERR_IS_A_DIR:
-			if (is_git_directory(dir->buf)) {
-				...
-			} else if (die_on_error) {
-				die("'%s' is an invalid .git directory", dir->buf);
-			} else {
-				return GIT_DIR_INVALID_GITFILE;
-			}
-			break;
-		case READ_GITFILE_ERR_STAT_NOENT:
-			/* no .git in this directory, move on */
-			break;
-		default:
-			if (die_on_error)
-				read_gitfile_err_stat_noent(error_code, ...);
-			else
-				return GIT_DIR_INVALID_GITFILE;
-		}
-	}
-
-or its equivalent, with the top-level switch rewritten into
-an if/elseif cascade.
+The downside of this would be lack of client support. I'd love to use
+but unfortunately git-send-email cannot be configured to present a
+client cert to the server. I just learned that git-send-email is only a
+single 2k-line perl script, so I could submit the patch if anyone's
+interested. Just a few lines for the script to pass the PEM paths to the
+openssl lib.
