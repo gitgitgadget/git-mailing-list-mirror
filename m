@@ -1,206 +1,113 @@
-Received: from embla.dev.snart.me (embla.dev.snart.me [54.252.183.203])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1E73358D8
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:17:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.252.183.203
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7564E450FE
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:19:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771575470; cv=none; b=jUmULGCzKjUykMODePouZfFsINqThmzQ2P35LlAmI89oczyS0UKK67vXMLL2R/6q0Pt5k0uoEYKvWbKfU/xonuIx1HjlZREyaEVrNUOyxeMx2wo+B1mC+TBklulcn2VxTGtOehHCyBSlc8wJSPQFadu1LbS4MLxL6Aoelkg8nEY=
+	t=1771575563; cv=none; b=g23nyv0KgRBMYTECo6ucIcmcpKTlfV7R4nmctFt0jR02OHYdytioI6zN0VfjBJv24km8pugGlnjds+YQ3v1oVqL13Enmk0v7oUJEIEodyev9I7bwx+PxP+bXpUGWWfEnDt2VPbN7EP/Uyc22kQORrlxOIoVeTUV+O774TAI66Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771575470; c=relaxed/simple;
-	bh=HZDCNbZp2QMPdFrnfI/N07ogHDLUltjUDPBCnCZpsAA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQX01XiC1qImj7CQxJb8jE4FPueLL/7HwBRkV7exjXaldsYCVXRDPoztkwQLIWwrFOsGJDYh58YA17LYGcrSIEukGCWLZkStX1VgYsZXyjv4weza1dz5W1AoGIjpFXnDvPUwSqEdBPlavd6a4jJlVkjDaoi3TZV4adFcneN0DJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dev.snart.me; spf=pass smtp.mailfrom=dev.snart.me; dkim=pass (1024-bit key) header.d=dev.snart.me header.i=@dev.snart.me header.b=IEyv5Ewd; arc=none smtp.client-ip=54.252.183.203
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dev.snart.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dev.snart.me
+	s=arc-20240116; t=1771575563; c=relaxed/simple;
+	bh=NWS176EJDq2ef4r4n577zbUNYH8llxLLHITZO7FZ1Cc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TgiF5YXHqTvz8PjMNtdywoekBx0DtEkA22E09Z3eXjQgT4BqL23i+4JrqSRRqB1G5x3KMnyisj83kE+9sjkbsXQgKKW7UgZCM9MfHDk0R5AdTkozS756KHDtnkzivr9gZH7Adtni4V4Ol4Biocb/1YZa2a0mPBNWs4sWyrsRhLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f6pfpTD3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H64AEzGj; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=dev.snart.me header.i=@dev.snart.me header.b="IEyv5Ewd"
-Received: from embla.dev.snart.me (localhost [IPv6:::1])
-	by embla.dev.snart.me (Postfix) with ESMTP id 4EE381CBDA;
-	Fri, 20 Feb 2026 08:17:47 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 embla.dev.snart.me 4EE381CBDA
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dev.snart.me; s=00;
-	t=1771575467; bh=HZDCNbZp2QMPdFrnfI/N07ogHDLUltjUDPBCnCZpsAA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEyv5EwdAbVua464AEb2VCIvyACcb7DHRBSdMLhIJRmjiQd3EUGM4HZILdvTqAG3v
-	 XUL/TnSHUWket0l/wIJJzbUR1IdEz21JSNPygu/OaNltTpiUpV6jz5Vw1/v5X9cCo1
-	 JO87pzuXMTuLugrnzj+KaRSYqzgffP1eyeVtxryM=
-Received: from maya.d.snart.me ([182.226.25.243])
-	by embla.dev.snart.me with ESMTPSA
-	id 5H+NHagYmGmxoAIA8KYfjw:T2
-	(envelope-from <dxdt@dev.snart.me>); Fri, 20 Feb 2026 08:17:47 +0000
-From: David Timber <dxdt@dev.snart.me>
-To: git@vger.kernel.org
-Cc: David Timber <dxdt@dev.snart.me>
-Subject: [PATCH v1 1/1] send-mail: add client certificate options
-Date: Fri, 20 Feb 2026 17:17:13 +0900
-Message-ID: <20260220081717.555185-2-dxdt@dev.snart.me>
-X-Mailer: git-send-email 2.53.0.1.g242c94b05d.dirty
-In-Reply-To: <20260220081717.555185-1-dxdt@dev.snart.me>
-References: <20260220081717.555185-1-dxdt@dev.snart.me>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f6pfpTD3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H64AEzGj"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6E7B91D0007F;
+	Fri, 20 Feb 2026 03:19:21 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Fri, 20 Feb 2026 03:19:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1771575561; x=1771661961; bh=AverTw8fnU
+	2L7p24wIvBDTpYAJWrApOIlEARPwj8kRw=; b=f6pfpTD3ZKeOdvL5pf2DFdCP9o
+	p2hechyy1uR/iLsxtw9B51VlUrR1dfXKziwDYmoq47U9bjxzvc8IITfOB+urbVYx
+	jXHktbj5vTnrVea07NqWKTsy25BbGuk82H+1oQxCKXH0Gn9u8pVeFxjgYHA1Ud4u
+	0mgxUa7NUY2WMIZzedEPdCp/aaT6qQQbXjN+GNKo1lbSZoHlI/LOXKWPwZqCnERW
+	ajqAkMWOg3chfblcUuw/pwgc4utNavy279DciH1q1HUdMPBLy7xwuuuJcBt99fSo
+	yVf2n42LA2af8Sl64tX8NFaQc7dP8e3LPlqIk1CjDfofj4BIWcJ80FFWNE5g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771575561; x=1771661961; bh=AverTw8fnU2L7p24wIvBDTpYAJWrApOIlEA
+	RPwj8kRw=; b=H64AEzGjSQHyj4Dw3Ej3cxaCjS4xvpYJlg5cyOpYIDSu04D1cX8
+	P9UzD81jCGBxnoEg2y9RdnyOBqFFKbyM+m14GxoLtysaRlNoJNGM9SEEbPslMao9
+	bHIh3iV0EcyRo5P/PHfUf2nZ4hBqcIKwJXLOwzrwuFSy3rMRVcApwZ5v7RBqZQbW
+	agxIfwZyOzs+De7Gw3QXdu0bdWwm1QVNDOIrIHm7317PF7MvszYqdnYeua2Rl6r6
+	jgWVQXQ2a7QzEJOUb4OgpH2rznp7IvPo1ppF9f9kRO5ckmvJLB49A9c4SNgXcpEY
+	RwEArT02POJ28FPHKF4Puu4ShjnY47ZJQsg==
+X-ME-Sender: <xms:CRmYaRFZsM4nGWTe6boyHFLK3PIxTOdT9St2v6oP2MZOKCGKJLwbqA>
+    <xme:CRmYadXy9a056oII7WZb7DxDoBOadvWZzNXvJIyCb_qzxJTUS6cGWPH8j8kgXcwB_
+    wtzqqFbtL621u_YVEKOQ_Sho5Gj8GOqoXpS7wpqtXcQ7pZB75xt3wQ>
+X-ME-Received: <xmr:CRmYaYLQKQrGFsyXEZiRwIbtImK899g8fcWAAFgLBZPYkfZQL4_Y0sMRvUqddNqQGr4N4qBBdihT6bAJqyoF9N8DjPs6O36KDnTSEF1kkpoH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdejleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhg
+    ihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:CRmYaV-hGrK3IOrC1A2fN8MLtsPu4uLImq8nR1mt5ROnJgakKGfSpg>
+    <xmx:CRmYaTJFJ5VOGNukeFVwqfWaIry920A4v28IXasYUQiY0k2pza5ZGQ>
+    <xmx:CRmYaSmwkT667Zgpt8oZER9SMzqZjJt0w1foZ46fu-NEguUd1K_DBg>
+    <xmx:CRmYafPqAwRMUSqVQ-JRwjUQWXX5Oiy8k7FR1Um4uM9RgkF8F15ZiA>
+    <xmx:CRmYaTrtQyf5BDYrQBUv0N1Gi1rSUWeFiyT9TMOSxXe5m75OHLCLlXzw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Feb 2026 03:19:19 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d41cdcf3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Feb 2026 08:19:17 +0000 (UTC)
+Date: Fri, 20 Feb 2026 09:19:14 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/6] merge,diff: remove the_repository check before
+ prefetching blobs
+Message-ID: <aZgZAuIlCujcoEIt@pks.im>
+References: <pull.2048.git.1771406115.gitgitgadget@gmail.com>
+ <pull.2048.v2.git.1771552788.gitgitgadget@gmail.com>
+ <7155a0da6f8bcdac90cf1ed085622f2c8b68675e.1771552788.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7155a0da6f8bcdac90cf1ed085622f2c8b68675e.1771552788.git.gitgitgadget@gmail.com>
 
-For SMTP servers that do "mutual certificate verification", the mail
-client is required to present its own TLS certificate as well. This
-patch adds --smtp-ssl-client-cert and --smtp-ssl-client-key for such
-servers.
+On Fri, Feb 20, 2026 at 01:59:43AM +0000, Elijah Newren via GitGitGadget wrote:
+> diff --git a/diff.c b/diff.c
+> index 35b903a9a0..91d81f66ad 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -7176,7 +7176,7 @@ void diffcore_std(struct diff_options *options)
+>  	 * If no prefetching occurs, diffcore_rename() will prefetch if it
+>  	 * decides that it needs inexact rename detection.
+>  	 */
+> -	if (options->repo == the_repository && repo_has_promisor_remote(the_repository) &&
+> +	if (repo_has_promisor_remote(the_repository) &&
 
-Signed-off-by: David Timber <dxdt@dev.snart.me>
----
- Documentation/config/sendemail.adoc |  6 ++++
- Documentation/git-send-email.adoc   | 17 ++++++++++
- git-send-email.perl                 | 48 ++++++++++++++++++++++-------
- 3 files changed, 60 insertions(+), 11 deletions(-)
+I wonder though -- shouldn't we also pass `options->repo` to
+`repo_has_promisor_remote()` now? Otherwise we may support backfill
+fetches from arbitrary repositories, but we'll only do them in case the
+main repository has a promisor remote.
 
-diff --git a/Documentation/config/sendemail.adoc b/Documentation/config/sendemail.adoc
-index 90164c734d..3d9925c1e0 100644
---- a/Documentation/config/sendemail.adoc
-+++ b/Documentation/config/sendemail.adoc
-@@ -12,6 +12,12 @@ sendemail.smtpSSLCertPath::
- 	Path to ca-certificates (either a directory or a single file).
- 	Set it to an empty string to disable certificate verification.
- 
-+sendemail.smtpSSLClientCert::
-+	Path to a client certificate file to present to the SMTP server.
-+
-+sendemail.smtpSSLClientKey::
-+	Path to the client private key file.
-+
- sendemail.<identity>.*::
- 	Identity-specific versions of the `sendemail.*` parameters
- 	found below, taking precedence over those when this
-diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
-index ebe8853e9f..51177508c1 100644
---- a/Documentation/git-send-email.adoc
-+++ b/Documentation/git-send-email.adoc
-@@ -290,6 +290,23 @@ must be used for each option.
- 	variable, if set, or the backing SSL library's compiled-in default
- 	otherwise (which should be the best choice on most platforms).
- 
-+--smtp-ssl-client-cert <path>::
-+	Path to a client certificate file to present to the SMTP server. This option
-+	can be used when the server verifies the certificate from the client. The
-+	format could be in either PKCS12 or PEM. In the latter case, the private key
-+	can be specified using `--smtp-ssl-client-key` option. More more
-+	detail, see
-+	https://metacpan.org/pod/IO::Socket::SSL#SSL_cert_file-|-SSL_cert-|-SSL_key_file-|-SSL_key
-+	Defaults to the value of the `sendemail.smtpSSLClientCert` configuration
-+	variable, if set.
-+
-+--smtp-ssl-client-key <path>::
-+	Optional path to the client private key file. If this is not given and a
-+	PKCS12 certificate file is used, the private key from the PKCS12 certificate
-+	will be used(see `--smtp-ssl-client-cert`). Defaults to the value of the
-+	`sendemail.smtpSSLClientKey` configuration variable, if set.
-+
-+
- --smtp-user=<user>::
- 	Username for SMTP-AUTH. Default is the value of `sendemail.smtpUser`;
- 	if a username is not specified (with `--smtp-user` or `sendemail.smtpUser`),
-diff --git a/git-send-email.perl b/git-send-email.perl
-index cd4b316ddc..49601a91d8 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -66,6 +66,9 @@ sub usage {
-     --smtp-ssl-cert-path    <str>  * Path to ca-certificates (either directory or file).
-                                      Pass an empty string to disable certificate
-                                      verification.
-+    --smtp-ssl-client-cert  <str>  * Path to client certificate file to present to SMTP server
-+    --smtp-ssl-client-key   <str>  * Path to the private key file for the client certificate
-+                                     (optional if a PKCS12 client certificate is used)
-     --smtp-domain           <str>  * The domain name sent to HELO/EHLO handshake
-     --smtp-auth             <str>  * Space-separated list of allowed AUTH mechanisms, or
-                                      "none" to disable authentication.
-@@ -279,6 +282,7 @@ sub do_edit {
- my ($to_cmd, $cc_cmd, $header_cmd);
- my ($smtp_server, $smtp_server_port, @smtp_server_options);
- my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
-+my ($smtp_ssl_client_cert, $smtp_ssl_client_key);
- my ($batch_size, $relogin_delay);
- my ($identity, $aliasfiletype, @alias_files, $smtp_domain, $smtp_auth);
- my ($imap_sent_folder);
-@@ -350,6 +354,8 @@ sub do_edit {
- my %config_path_settings = (
-     "aliasesfile" => \@alias_files,
-     "smtpsslcertpath" => \$smtp_ssl_cert_path,
-+    "smtpsslclientcert" => \$smtp_ssl_client_cert,
-+    "smtpsslclientkey" => \$smtp_ssl_client_key,
-     "mailmap.file" => \$mailmap_file,
-     "mailmap.blob" => \$mailmap_blob,
- );
-@@ -531,6 +537,8 @@ sub config_regexp {
- 		    "smtp-ssl" => sub { $smtp_encryption = 'ssl' },
- 		    "smtp-encryption=s" => \$smtp_encryption,
- 		    "smtp-ssl-cert-path=s" => \$smtp_ssl_cert_path,
-+		    "smtp-ssl-client-cert=s" => \$smtp_ssl_client_cert,
-+		    "smtp-ssl-client-key=s" => \$smtp_ssl_client_key,
- 		    "smtp-debug:i" => \$debug_net_smtp,
- 		    "smtp-domain:s" => \$smtp_domain,
- 		    "smtp-auth=s" => \$smtp_auth,
-@@ -1520,6 +1528,8 @@ sub handle_smtp_error {
- }
- 
- sub ssl_verify_params {
-+	my %ret = ();
-+
- 	eval {
- 		require IO::Socket::SSL;
- 		IO::Socket::SSL->import(qw/SSL_VERIFY_PEER SSL_VERIFY_NONE/);
-@@ -1531,20 +1541,36 @@ sub ssl_verify_params {
- 
- 	if (!defined $smtp_ssl_cert_path) {
- 		# use the OpenSSL defaults
--		return (SSL_verify_mode => SSL_VERIFY_PEER());
-+		$ret{SSL_verify_mode} = SSL_VERIFY_PEER();
-+	}
-+	else {
-+		if ($smtp_ssl_cert_path eq "") {
-+			$ret{SSL_verify_mode} = SSL_VERIFY_NONE();
-+		} elsif (-d $smtp_ssl_cert_path) {
-+			$ret{SSL_verify_mode} = SSL_VERIFY_PEER();
-+			$ret{SSL_ca_path} = $smtp_ssl_cert_path;
-+		} elsif (-f $smtp_ssl_cert_path) {
-+			$ret{SSL_verify_mode} = SSL_VERIFY_PEER();
-+			$ret{SSL_ca_file} = $smtp_ssl_cert_path;
-+		} else {
-+			die sprintf(__("CA path \"%s\" does not exist"), $smtp_ssl_cert_path);
-+		}
- 	}
- 
--	if ($smtp_ssl_cert_path eq "") {
--		return (SSL_verify_mode => SSL_VERIFY_NONE());
--	} elsif (-d $smtp_ssl_cert_path) {
--		return (SSL_verify_mode => SSL_VERIFY_PEER(),
--			SSL_ca_path => $smtp_ssl_cert_path);
--	} elsif (-f $smtp_ssl_cert_path) {
--		return (SSL_verify_mode => SSL_VERIFY_PEER(),
--			SSL_ca_file => $smtp_ssl_cert_path);
--	} else {
--		die sprintf(__("CA path \"%s\" does not exist"), $smtp_ssl_cert_path);
-+	if (defined $smtp_ssl_client_cert) {
-+		# The cert could be in PKCS12 format, which can store both cert and key
-+		$ret{SSL_cert_file} = $smtp_ssl_client_cert;
-+		$ret{SSL_use_cert} = 1;
- 	}
-+	if (defined $smtp_ssl_client_key) {
-+		if (!defined $smtp_ssl_client_cert) {
-+			# doesn't make sense to use a client key only
-+			die sprintf(__("Only client key \"%s\" specified"), $smtp_ssl_client_key);
-+		}
-+		$ret{SSL_key_file} = $smtp_ssl_client_key;
-+	}
-+
-+	return %ret;
- }
- 
- sub file_name_is_absolute {
--- 
-2.53.0
-
+Patrick
