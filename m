@@ -1,107 +1,292 @@
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B382FD7DA
-	for <git@vger.kernel.org>; Thu, 19 Feb 2026 23:49:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771544969; cv=pass; b=hMRKyz4lu/5kdar+rJjGjr7WaMpnDvVxCbOfohIB/LTnfgvdQsrBMKVo8/LLJAWHTfMp6f+V4L2hVum53ifBqKN1Tvno8kvVrO8293qY0XMItzf2CH4ntkRnaAj3mUp4XpZtkY5+7dSmTAPWMLIyPiosQTj+bIkwqUZS/flkOro=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771544969; c=relaxed/simple;
-	bh=pY3/8LDvRugkd6M9/u0v7KjG9MAtiaSsdJRoLKUl6z8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OqL/NRhmU+cNoyKQhspzXwyHFA9V3Eno9Lt67+mr2fVrq+lrwHgpOhb7NWstLF5EBAgxF8S1Btpn6Hbuhj0EWejkENUwo/ehO35JrDr2vFVecsE/qTTmmCWzfHgYp+F+xQxw0i8g6nsQO/4kSM8E4sQvIWRJFhGLa9PpZY5Ycm4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B223EBF3E
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 01:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771551546; cv=none; b=POvlJ0Ghj8aChBv1hiDIogNiwoWU2QZcXAyaS9G7vt7T0ghTOCAZJPu7pbRj8Egxdk3dASngGWqD/CjJWNmdyi91mB4vK6SRyCWoV+7DihnUmygVwUvaTnW+UBUIUea6ZqoSnA/yiimaqiXUhT6dJh9CeKRGaOScbcsCE3PGasM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771551546; c=relaxed/simple;
+	bh=I7t0wwlw6teJIWo0j1T0/SW3tpdZ7bRjkJ7+3a5NJjY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Yagfh28CWcdC26bmrB+XF6CKVVbZvV3Doc3Gf7tcHRFgVLgJRt2em9j0P/VFjGvRbnyOy4h9rGV6633xvh0E9rQSIVkJf9IurQwJgo8G/G43tjrLeS/f1uvYvx4GT25UAJc+EooJfp26FRJAfFerwGxP9w9QtJJKDa4tup1mHhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dyxiXxNI; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2b86a9613d8so62613eec.2
-        for <git@vger.kernel.org>; Thu, 19 Feb 2026 15:49:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771544967; cv=none;
-        d=google.com; s=arc-20240605;
-        b=RzG5lfFFv+14LIA1eaVBoDwZmcxe/CMINF0AOtWjb8/Wt1IK+ZyGl9gJ/MUkHpi2n1
-         kBh8NZzOTX3mt4e6zacSxL11YElrbZgnO/D6N10TkXBGXuMbpn8uslOfm4JNWQoJUQex
-         5HhIVt3Pe0zpTonoFo+M2C8yFoVtop+UhU6QL4xf4h8Ci71JNWXUS1nW+epZW6Zr3ikv
-         wuW7H5cbLYCyF6CAogcVa33PgtrC2gNIIXMUOz+uOSBGEHw6q+WlkBpSdFGyxNGc8oe+
-         zYORPxK8sNqutR+TS8F9rH/Ne9vOUSvfv6mKtp3NZBgyP/OJkofvtUTg7HoVYDwLPwF4
-         rZjg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=lHNx4XyfMZX+drKnrieRjNgj+50CKfev8QNNbaGGbk0=;
-        fh=ixUb2l2hrASaZJ+AYipvdfT+QE47GqYCY6tByYLgH5k=;
-        b=Xx5w/Af7/oc5gO1+9s+c6GSNa9ls8YR/iKCXYgRM/ncYx9cx8qlVBvxHo6JXcQMrqE
-         2RXx9EJUO8lTxquIZn+ClOtRDYEbJeuwxaf7iZP3FjL+A2KlklOgAZPcCRIv/TI4lNOu
-         Fv4dSFoJHObO2VOawLv05cs/VIC5glcQ0oNUCrCYoywoTZUnrQ/iUOp3ujVmS3H58buJ
-         Ips5xrM3U5SulcmF3LNASaJWbcVIe+KQJXNfEtSJSpG3kRhMkKpjTM5ckSSAiuGDjKHe
-         DU3g9RpTmiLIV/W1uPmM0M2bpYiJ2Bzf8RY04MXJ9ogfk6K6aMVN7gKl4rmsn2DK5WFz
-         V6WA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dyxiXxNI"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cb3825b0fbso155273485a.0
+        for <git@vger.kernel.org>; Thu, 19 Feb 2026 17:39:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771551543; x=1772156343; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GqE5CERWMrnWvDzkyogp9auMfeeN6XnpJ26TDwlsObc=;
+        b=dyxiXxNIm6VIQ1L7Z4DBPpNWZjy/54fGD6/QTaxalOGDjW4FEmSBU1C2mpOF55zTv/
+         FSNrB3QSmK4lPjgj8Hx/VQ1I6qyOJ7zLLryhDrcK3k22xVhbItePlTb9pAqpgJH08Mk2
+         98lgfax1QD8A0MIsgPSvT/SzPEOuAkuoHYQVDEcvqxZyaBaojTxDkpopyYsMth3R0DXS
+         UuaLKtd6EAvCj65pqqAZoeqGEFGuDJWbDhPFMIPPSOOGhl6frWdc1RU/e1M6KTasOK7B
+         4J/Ics4DQotBny9lwQnHWd5EGr1XIbtvDPsxqV+MJw2jVl37bQN3EUEFItZli2XJIaRM
+         wttA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771544967; x=1772149767;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1771551543; x=1772156343;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=lHNx4XyfMZX+drKnrieRjNgj+50CKfev8QNNbaGGbk0=;
-        b=enf7NFO1BXG6XXU8T/HB2rXUbilYz7muCyymqfmYFGtrPKuLzarv14H5AE32kYK32c
-         FAdG7cG4zRtV4d0QP8JCqJeQ47O5fx1TrSz0z/0qp5f9zbRUWSZYBwKgp+jntShtQdKs
-         03JKzEy3qfXcqaveFJzGQmRnFVtatwvR8dJ8c3rxnP+pcvElwtT4+fzpUY7RFDusm86m
-         I/H76zp9gfCwo8n8nFKSmEMT2R0xH3bKavu4IdlEYDJAYkPrvVH7nOdvFkjn8rTll0yr
-         1LNOW6mP6HrUU+PaAGoRGGlMRO35c/PO9iMiTmB6Uw+SOnYtp78KXwADnupM8s6ycJeA
-         8mTA==
-X-Gm-Message-State: AOJu0YxBi++ucQROksfDx2jQynZl7ouvUBbcHIb7sBI7FGe++Gl9Yp6v
-	TQpKQIXZ6kWVxj8EvSo1PfasnjDBsdtMhXWl7YdoNhBzlVCBsydUGKIrfvTxIPLnUdK+nc2mvD5
-	obE1hsXOgEF/L+aunhHNmDbP39vSFlyAyNLCUBnM=
-X-Gm-Gg: AZuq6aIfiX3I2+FFoK2mmPrCrFE15dBkcOtyRzrFJC8PWuqY5nSHy+kFEKBYc/q2Bf9
-	vxV5xYl2ghUAgUSu1LwdGD2zQzS+sU8wZp+W4TADwgOdsMFA1KL3AeF+WDMuT5/V+cQgiRWUFFl
-	YD3VzMgNH6AqDh3jJrOB+YijxrxolUh+7oHdmaVQIqAYsgWLNMVP+gQmFcf5wdY0bGVwOIhN2El
-	hGwaowNiVbGR7cr2bZksjwDsjkUDw9bHbLFG28zeHeLl85YYcGBYSlJomGRoqP1sKOM56sH0bUg
-	jCRz3hxjOS3tiFQq0h6Ya0STlHyiDrZT7OQyAK9fUw==
-X-Received: by 2002:a05:7300:e10f:b0:2ba:7526:f74d with SMTP id
- 5a478bee46e88-2bab9eea972mr5034110eec.0.1771544966709; Thu, 19 Feb 2026
- 15:49:26 -0800 (PST)
+        bh=GqE5CERWMrnWvDzkyogp9auMfeeN6XnpJ26TDwlsObc=;
+        b=VlZJIDthm/U8eVVK8R8r0PRcNr+AhHk/43bJt9BhSU8SEjavK09k6dRAiwHfkemo7S
+         cocI7dY8wFVa2gQT+MPBGIAwY+SK8a9vejYKKHzAnCz7XSs9BMhRTGh4ldUxAWYwFsKk
+         W1J/9EFRtoxyVJ4msk/7LuGYdkRpICx9TLcq9hdDcY4oXCVkLgaG8qXble7ZDOc0DuFf
+         oGSzUjzIzNx8GACpJfzdkpYvSytdVAo6YGSD8vxiFKcelt5X23TGw72gfdKyV+GTIW05
+         8aTO1DpKePap5Ml4VHC6gXpSjOxWHUtMFYMStvSHwlzX5Opl0POMbnyEX/VpztAUDta+
+         iu1A==
+X-Gm-Message-State: AOJu0Yy4Lz5RDZKrrLSKLHUDD8lMh1xKvAj98cbYbBzPNFXNtz1NEHl0
+	gLWVj3OulK3dgV6lNOPZXhy9XLBBe/c3mr2SVBx1qzVuFIS2in4Xd+W9N2ehtw==
+X-Gm-Gg: AZuq6aJu0HpFLWT0dIQaDIlRXv0d/rADRYUd+Cm8gyUcS0hlEtA29KFPg4W83/tr/If
+	y8HIlvQw1LKL+AjqhFTC0IFRx0F0+9eCsqlySCnVIppPQZPYiQ8IOMdO3Zrg81HvWZCgL8CWIpX
+	r8ckU9qpI+3H9+nMLWUUu4rrSwt1w6OzSGbEuOT/cYHj2Bdbx8ZUSjPaY5tDnuJOCxJBUWPE0+3
+	R5hIwY9nhiREtIE8a5tVEfHHE9o0pRN902WLX/XgBiEYVfZ/Fq1tseKu5ACkNaWaufKyCSyAy+3
+	EmEJADw2OpZ6AKfsFJI123tU57noSLlcR29zoiY9Bbj/iP1sK7/RikVaxLYTS1BnD0sVApqmkRQ
+	NYA73lJytiMk8X1CRcc35JpqzUxoKKvrBgSAB1q0UsxBH4R5HJPRW8Vo8K+Ph38+hhBMr+urRjr
+	hbubjMuHu+6iWcpVS/uuRR6AmA7D8=
+X-Received: by 2002:a05:620a:19aa:b0:8c6:a5bc:8a80 with SMTP id af79cd13be357-8cb79eabb7bmr585014385a.29.1771551543145;
+        Thu, 19 Feb 2026 17:39:03 -0800 (PST)
+Received: from [127.0.0.1] ([135.232.200.194])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb2b0be6besm2186426185a.5.2026.02.19.17.39.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Feb 2026 17:39:01 -0800 (PST)
+Message-Id: <pull.2046.v4.git.1771551540816.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2046.v3.git.1771391650713.gitgitgadget@gmail.com>
+References: <pull.2046.v3.git.1771391650713.gitgitgadget@gmail.com>
+From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 20 Feb 2026 01:39:00 +0000
+Subject: [PATCH v4] osxkeychain: define build targets in the top-level
+ Makefile.
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260218-b4-pks-ci-msvc-iconv-fixes-v3-0-08c1ff3ffc9a@pks.im> <20260218-b4-pks-ci-msvc-iconv-fixes-v3-4-08c1ff3ffc9a@pks.im>
-In-Reply-To: <20260218-b4-pks-ci-msvc-iconv-fixes-v3-4-08c1ff3ffc9a@pks.im>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 19 Feb 2026 18:49:14 -0500
-X-Gm-Features: AaiRm52EQj2AoEsLlepH6jZdDuoBTKfQerL06831qmMNAny_Vmm15xw4UzzDgO8
-Message-ID: <CAPig+cTk_j3qiib1E5McMUPTVY5f36Pq=_8giR_2SKfthY10+g@mail.gmail.com>
-Subject: Re: [PATCH v3 4/5] t5550: add ICONV prereq to tests that use "$HTTPD_URL/error"
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Koji Nakamaru <koji.nakamaru@gree.net>,
+    Koji Nakamaru <koji.nakamaru@gree.net>
 
-On Wed, Feb 18, 2026 at 4:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
-> We've got a bunch of tests in t5550 that connect to "$HTTPD_URL/error"
-> to ensure that error messages are proprely forwarded. This URL executes
+From: Koji Nakamaru <koji.nakamaru@gree.net>
 
-s/proprely/properly/
+The fix for git-credential-osxkeychain in 4580bcd235 (osxkeychain: avoid
+incorrectly skipping store operation, 2025-11-14) introduced linkage
+with libgit.a, and its Makefile was adjusted accordingly. However, the
+build fails as of 864f55e190 because several macOS-specific refinements
+were applied to the top-level Makefile and config.mak.uname, such as:
 
-> the "t/lib-httpd/error.sh" script, which in turn depends on the iconv(1)
-> executable to reencode the message.
->
-> This executable may not exist on platforms, which will make the tests
-> fail. Guard them with the ICONV prereq to fix such failures.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-> diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-> @@ -339,32 +339,32 @@ test_expect_success 'fetch can handle previously-fe=
-tched .idx files' '
->  test_expect_success 'did not use upload-pack service' '
-> -       ! grep "/git-upload-pack" "$HTTPD_ROOT_PATH/access.log"
-> +       ! test_grep "/git-upload-pack" "$HTTPD_ROOT_PATH/access.log"
->  '
+  - 363837afe7 (macOS: make Homebrew use configurable, 2025-12-24)
+  - cee341e9dd (macOS: use iconv from Homebrew if needed and present,
+    2025-12-24)
+  - d281241518 (utf8.c: enable workaround for iconv under macOS 14/15,
+    2026-01-12)
 
-You want to be using `test_grep !` here rather than `! test_grep`, don't yo=
-u?
+Since libgit.a and its corresponding header files depend on many flags
+defined in the top-level Makefile, these flags must be consistently
+defined when building git-credential-osxkeychain. Continuing to manually
+adjust the git-credential-osxkeychain Makefile is cumbersome and
+fragile.
 
-Same comment applies to several other tests touched by this patch.
+Define the build targets for git-credential-osxkeychain in the top-level
+Makefile and modify its local Makefile to simply rely on those targets.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Reported-by: D. Ben Knoble <ben.knoble@gmail.com>
+Helped-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+---
+    osxkeychain: define build targets in the top-level Makefile.
+    
+    Changes since v3:
+    
+     * Add missing commit reference date.
+     * Use dep_dirs to create contrib/credential/osxkeychain/.depend.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2046%2FKojiNakamaru%2Ffix%2Fosxkeychain-makefile-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2046/KojiNakamaru/fix/osxkeychain-makefile-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/2046
+
+Range-diff vs v3:
+
+ 1:  25a66e1b7d ! 1:  3c36804348 osxkeychain: define build targets in the top-level Makefile.
+     @@ Commit message
+          osxkeychain: define build targets in the top-level Makefile.
+      
+          The fix for git-credential-osxkeychain in 4580bcd235 (osxkeychain: avoid
+     -    incorrectly skipping store operation) introduced linkage with libgit.a,
+     -    and its Makefile was adjusted accordingly. However, the build fails as
+     -    of 864f55e190 because several macOS-specific refinements were applied to
+     -    the top-level Makefile and config.mak.uname, such as:
+     +    incorrectly skipping store operation, 2025-11-14) introduced linkage
+     +    with libgit.a, and its Makefile was adjusted accordingly. However, the
+     +    build fails as of 864f55e190 because several macOS-specific refinements
+     +    were applied to the top-level Makefile and config.mak.uname, such as:
+      
+            - 363837afe7 (macOS: make Homebrew use configurable, 2025-12-24)
+            - cee341e9dd (macOS: use iconv from Homebrew if needed and present,
+     @@ Commit message
+      
+          Helped-by: Junio C Hamano <gitster@pobox.com>
+          Reported-by: D. Ben Knoble <ben.knoble@gmail.com>
+     +    Helped-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+          Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+      
+       ## Makefile ##
+     +@@ Makefile: objects: $(OBJECTS)
+     + dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
+     + dep_dirs := $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
+     + 
+     ++ifeq ($(uname_S),Darwin)
+     ++	dep_dirs += $(addsuffix .depend,$(sort $(dir contrib/credential/osxkeychain/git-credential-osxkeychain.o)))
+     ++endif
+     ++
+     + ifeq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
+     + $(dep_dirs):
+     + 	@mkdir -p $@
+      @@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+       
+       contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+     @@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+      +		$(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security -framework CoreFoundation
+      +
+      +contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
+     -+	@mkdir -p contrib/credential/osxkeychain/.depend
+      +	$(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+      +
+      +install-git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain
+
+
+ Makefile                                | 21 ++++++++
+ contrib/credential/osxkeychain/Makefile | 65 +++----------------------
+ 2 files changed, 27 insertions(+), 59 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 4ac44331ea..47485004d8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2876,6 +2876,10 @@ objects: $(OBJECTS)
+ dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
+ dep_dirs := $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
+ 
++ifeq ($(uname_S),Darwin)
++	dep_dirs += $(addsuffix .depend,$(sort $(dir contrib/credential/osxkeychain/git-credential-osxkeychain.o)))
++endif
++
+ ifeq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
+ $(dep_dirs):
+ 	@mkdir -p $@
+@@ -4060,3 +4064,20 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+ 
+ contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+ 	$(AR) $(ARFLAGS) $@ $^
++
++contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
++		$(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security -framework CoreFoundation
++
++contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
++	$(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
++
++install-git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++	$(INSTALL) $(INSTALL_STRIP) $< '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++
++.PHONY: clean-git-credential-osxkeychain
++clean-git-credential-osxkeychain:
++	$(RM) \
++		contrib/credential/osxkeychain/git-credential-osxkeychain \
++		contrib/credential/osxkeychain/git-credential-osxkeychain.o
+diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
+index c68445b82d..219b0d7f49 100644
+--- a/contrib/credential/osxkeychain/Makefile
++++ b/contrib/credential/osxkeychain/Makefile
+@@ -1,66 +1,13 @@
+ # The default target of this Makefile is...
+ all:: git-credential-osxkeychain
+ 
+-include ../../../config.mak.uname
+--include ../../../config.mak.autogen
+--include ../../../config.mak
++git-credential-osxkeychain:
++	$(MAKE) -C ../../.. contrib/credential/osxkeychain/git-credential-osxkeychain
+ 
+-ifdef ZLIB_NG
+-	BASIC_CFLAGS += -DHAVE_ZLIB_NG
+-        ifdef ZLIB_NG_PATH
+-		BASIC_CFLAGS += -I$(ZLIB_NG_PATH)/include
+-		EXTLIBS += $(call libpath_template,$(ZLIB_NG_PATH)/$(lib))
+-        endif
+-	EXTLIBS += -lz-ng
+-else
+-        ifdef ZLIB_PATH
+-		BASIC_CFLAGS += -I$(ZLIB_PATH)/include
+-		EXTLIBS += $(call libpath_template,$(ZLIB_PATH)/$(lib))
+-        endif
+-	EXTLIBS += -lz
+-endif
+-ifndef NO_ICONV
+-        ifdef NEEDS_LIBICONV
+-                ifdef ICONVDIR
+-			BASIC_CFLAGS += -I$(ICONVDIR)/include
+-			ICONV_LINK = $(call libpath_template,$(ICONVDIR)/$(lib))
+-                else
+-			ICONV_LINK =
+-                endif
+-                ifdef NEEDS_LIBINTL_BEFORE_LIBICONV
+-			ICONV_LINK += -lintl
+-                endif
+-		EXTLIBS += $(ICONV_LINK) -liconv
+-        endif
+-endif
+-ifndef LIBC_CONTAINS_LIBINTL
+-	EXTLIBS += -lintl
+-endif
+-
+-prefix ?= /usr/local
+-gitexecdir ?= $(prefix)/libexec/git-core
+-
+-CC ?= gcc
+-CFLAGS ?= -g -O2 -Wall -I../../.. $(BASIC_CFLAGS)
+-LDFLAGS ?= $(BASIC_LDFLAGS) $(EXTLIBS)
+-INSTALL ?= install
+-RM ?= rm -f
+-
+-%.o: %.c
+-	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+-
+-git-credential-osxkeychain: git-credential-osxkeychain.o ../../../libgit.a
+-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) \
+-		-framework Security -framework CoreFoundation
+-
+-install: git-credential-osxkeychain
+-	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
+-	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
+-
+-../../../libgit.a:
+-	cd ../../..; make libgit.a
++install:
++	$(MAKE) -C ../../.. install-git-credential-osxkeychain
+ 
+ clean:
+-	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
++	$(MAKE) -C ../../.. clean-git-credential-osxkeychain
+ 
+-.PHONY: all install clean
++.PHONY: all git-credential-osxkeychain install clean
+
+base-commit: 864f55e1906897b630333675a52874c0fec2a45c
+-- 
+gitgitgadget
