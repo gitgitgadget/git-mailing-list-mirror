@@ -1,54 +1,55 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8137930DD3B
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 12:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF4F33987
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 13:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771591929; cv=pass; b=uBm4CvBgxNtgCIAS8H/YujDv2gg+r094gbfzPAl2IIHfSf5hclFSjVmkdFv28JfbBSDJRdNWGlnJM34jFkZ2ZvCmoqfXgUH/lIVtZK5cI6VILbaLgJJBAuR5i+1I660Yfa2s7yXzDRdYAV5wPXHj4ArGiatsF0HL9dhwe9Ofsi8=
+	t=1771594853; cv=pass; b=R0KYl7qRzwSDt9J6y4ajjBp87ojmnW+HI/Ix8GQDTvGD2Zpy4eBV9bFu3QHLVBYZCvuFEpkgpniG1Mm8rdoNZCqkHn9t9/6T4FhB6RcqrT6BoyfvCOA7tpaBQDP34a/bqFLJ9rCE//DqTPj9PAGwFsTgNY8fvhJHSRy12/HJGGc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771591929; c=relaxed/simple;
-	bh=/FdcYNFoClJ1D2h7tuo3di1VTSIHeXMkDWdNJdozCqI=;
+	s=arc-20240116; t=1771594853; c=relaxed/simple;
+	bh=Iu5kjr5aU0Yp8ogednuBVf8hbEqKusoi/HH6h398yaw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=surxuNlyHbCFoSxDT9vBmKV9ciSqd61+6zTVzuxBhdbQNbtnY7DZhvdwVXS3iBFOIZ6Mx+WFhXFcMG9qR+y5cjhwC//W1bWjX3Gm2yOzU99f+sIXw27KNN1JWfljeGU8JUek7iJjUJjsweiXIvSq2dISLqI+1lHRT1zsz02TQcE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=SBF6njNx; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version:Content-Type; b=lTk4Fax9ZGivAa4ftUvaArr3mI3EUdKZaLTluiu3GJImivINzQN0oCc3zSiTpwShCTwjlwbAgRe37kFKOGCSeSFsZT9f59IEEB97cbEmLOd1B2yJL/LoqhEPHA/XWiHV33l4SoGiDiZ7bN4DjmBodhMVkDlHS7ypb1g3sfq97Vw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=NouG+kJS; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="SBF6njNx"
-ARC-Seal: i=1; a=rsa-sha256; t=1771591915; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="NouG+kJS"
+ARC-Seal: i=1; a=rsa-sha256; t=1771594837; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=RaMETBKuLUT30Htw5cTLFWeiIcokm0SSFen/8nk0qdi236/drWPIVGbmKtaWm8elYo2D73yGu3YT3suBqdaYPlEkEZzw2RUWj1ltLkzNEUJ/RzD3xBIiPBXlugZGEryj6ewCqZ7PFysqN0yYa5aqQYg4nyU8qKrrcgYBwvhSRhE=
+	b=draLrHNZuKgs2yMqkYsjiHhuXCIk/wPNNm+7HBLW20n6nza6Xt4lr/t9UghIwiN4kF4yQoGzPDFTS23msIRr5AFFB6oYxbA+7ls5qM7a87u6i+V+jpAlbPLMmrLt2H+O0hsmlEXTq+AWpNvF0A6jwOBekvLS38sxhE+JASJtqXw=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1771591915; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=7fPnU45PYf0sedT9W/yXrv08uKXUHVZ7uLdHtgFlM78=; 
-	b=XobxpZFkCLa0FDyVBUTNFqx0XhpmL/5F+TGVwv2R/OLSHFgdat4o0AARA+EfsgIjYpwd3vibi95HtHYnnHS7lBgbG9GLACYUXgC5BfpJ+SQH+nmRoBufj1tMeuWzkRncuCFnPHSedCAnWDI265mjOntAfeM2E6Mh8DDjtDdWg8s=
+	t=1771594837; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=gAL6tX6YoxW7X9lVuy07hrXwoEExY0cQEQSyWnTrPkY=; 
+	b=GxGJbD6JJXUI7DcRQhIHfwP7LnBBAdhHKBaLCzC/GgH0ypesVr50CYe0yfzQKzHWDIHt8JLLrnJMH4fhx/aUYMwpJnvBonyYcqIzFFCtvOPJfbPtoIVSWG64RTZlenRWnpbnj5JCecZn/52p/yL6POcWIwRQqe1bI0Ylqb+HcbM=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771591915;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771594837;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=7fPnU45PYf0sedT9W/yXrv08uKXUHVZ7uLdHtgFlM78=;
-	b=SBF6njNxoJPzsIUGfvY1T/ubBg29OuLM0cgEbKkPxYTaw8b7HnKgDxgLA4PGCo84
-	0tiGy0PC7315G7pBGJizEvRfT2Kvn1L5WUF18+j/ITabBYETw2d7GjI9Ghll96l/rt/
-	qRiYoI+5P4dSubhAAg0uCZtrDtak7p0GChDdvNiA=
-Received: by mx.zohomail.com with SMTPS id 1771591914225234.99978640239317;
-	Fri, 20 Feb 2026 04:51:54 -0800 (PST)
+	bh=gAL6tX6YoxW7X9lVuy07hrXwoEExY0cQEQSyWnTrPkY=;
+	b=NouG+kJSSV3W552PLtHjyQlxbbPoA6SAaWXAK33JPNCfnVRlDG8j8SJff5H5kmOe
+	shpSxCBYIXEM6OGT9WKv07LThQzDOxvHuxdPDOAKAiNAtpKLkna2nilq79P5Rhu9xBJ
+	dtiRlxdrkKPKsoizsTu5TTz0qpql4TEzn4wqRoyA=
+Received: by mx.zohomail.com with SMTPS id 1771594834530535.1791127662793;
+	Fri, 20 Feb 2026 05:40:34 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
- <emilyshaffer@google.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
- <steadmon@google.com>, Kristoffer Haugsbakk
+ <emilyshaffer@google.com>, Junio C Hamano <gitster@pobox.com>, Josh
+ Steadmon <steadmon@google.com>, Kristoffer Haugsbakk
  <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 0/8] Specify hooks via configs
-In-Reply-To: <xmqqcy202z9p.fsf@gitster.g>
+Subject: Re: [PATCH v2 1/8] hook: add internal state alloc/free callbacks
+In-Reply-To: <aZhXh6aqlY0VMgEG@pks.im>
 References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
  <20260218222352.55393-1-adrian.ratiu@collabora.com>
- <xmqqcy202z9p.fsf@gitster.g>
-Date: Fri, 20 Feb 2026 14:51:51 +0200
-Message-ID: <87fr6vy3vc.fsf@collabora.com>
+ <20260218222352.55393-2-adrian.ratiu@collabora.com>
+ <aZhXh6aqlY0VMgEG@pks.im>
+Date: Fri, 20 Feb 2026 15:40:30 +0200
+Message-ID: <87342vy1m9.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,43 +59,131 @@ MIME-Version: 1.0
 Content-Type: text/plain
 X-ZohoMailClient: External
 
-On Thu, 19 Feb 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+On Fri, 20 Feb 2026, Patrick Steinhardt <ps@pks.im> wrote:
+> On Thu, Feb 19, 2026 at 12:23:45AM +0200, Adrian Ratiu wrote:
+>> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+>> index 2d2b33d73d..f23772bc56 100644
+>> --- a/builtin/receive-pack.c
+>> +++ b/builtin/receive-pack.c
+>> @@ -901,6 +901,26 @@ static int feed_receive_hook_cb(int hook_stdin_fd, void *pp_cb UNUSED, void *pp_
+>>  	return state->cmd ? 0 : 1;  /* 0 = more to come, 1 = EOF */
+>>  }
+>>  
+>> +static void *receive_hook_feed_state_alloc(void *feed_pipe_ctx)
+>> +{
+>> +	struct receive_hook_feed_state *init_state = feed_pipe_ctx;
+>> +	struct receive_hook_feed_state *data = xcalloc(1, sizeof(*data));
 >
->> v2 addresses all feedback received in v1.
->>
->> This series adds a new feature: the ability to specify commands to run
->> for hook events via config entries (including shell commands).
->>
->> So instead of dropping a shell script or a custom program in .git/hooks
->> you can now tell git via config files to run a program or shell script
->> (can be specified directly in the config) when you run hook "foo".
->>
->> This also means you can setup global hooks to run in multiple repos via
->> global configs and there's an option to disable them if necessary.
->>
->> For simplicity, because this series is becoming rather big, hooks are
->> still executed sequentially (.jobs == 1). Parallel execution is added
->> in another patch series.
->>
->> This is based on the latest v8 hooks-conversion series [1] which has
->> not yet landed in next or master.
+> Tiny nit, not worth addressing: we often use `CALLOC_ARRAY(data, 1)`
+> nowadays.
+
+I'll fix this since I'm planning to do a v3 anyway. Thanks for the
+pointer.
+
 >
-> Thanks for a reroll.  I was a bit concerned to allow configuration
-> files to speicify hooks as it would reduce discoverability (i.e.,
-> today, we can "ls .git/hooks/" to see everything that potentially
-> will be triggered, but now we need to be aware of what your sysadmin
-> dropped in /etc/gitconfig to get the whole picture.  "git hook list"
-> would solve that issue nicely.
+>> +	data->report = init_state->report;
+>> +	data->cmd = init_state->cmd;
+>> +	data->skip_broken = init_state->skip_broken;
+>> +	strbuf_init(&data->buf, 0);
+>> +	return data;
+>> +}
 >
-> By the way, the discussion thread for the base topic hasn't seen
-> any activity in the latest round after it updated for the comments
-> received in the previous round.  It appears that it is ready to move
-> forward?  Let's mark it for 'next' in that case.
+> Okay, this basically creates the new instance by creating a deep copy of
+> the "template" structure.
+>
+> One could split this up so that we have a "configuration" struct and a
+> "data" struct, where we then provide a pointer to the configuration into
+> the data structure, as only the buffer needs to change between the
+> individual hook invocations. That would avoid some copying around, but
+> it feels a bit unnecessary.
 
-Yes, thank you, landing that series will make testing this one easier.
+Yes, I also thought about this and reached the same conclusion.
 
-I'm also working on v2 of the parallel series, will send it very soon.
+>
+>> +static void receive_hook_feed_state_free(void *data)
+>> +{
+>> +	struct receive_hook_feed_state *d = data;
+>> +	if (!d)
+>> +		return;
+>> +	strbuf_release(&d->buf);
+>> +	free(d);
+>> +}
+>
+> I would expect that the hook interfaces know to not call `free()` in
+> case `alloc()` wasn't called, but I guess it doesn't hurt to be
+> defensive here anyway.
 
-Both will benefit from landing the base preparatory "hook conversion"
-series.
+Agreed.
+
+>> @@ -908,7 +928,7 @@ static int run_receive_hook(struct command *commands,
+>>  {
+>>  	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+>>  	struct command *iter = commands;
+>> -	struct receive_hook_feed_state feed_state;
+>> +	struct receive_hook_feed_state feed_init_state = { 0 };
+>>  	struct async sideband_async;
+>>  	int sideband_async_started = 0;
+>>  	int saved_stderr = -1;
+>> @@ -938,16 +958,15 @@ static int run_receive_hook(struct command *commands,
+>>  	prepare_sideband_async(&sideband_async, &saved_stderr, &sideband_async_started);
+>>  
+>>  	/* set up stdin callback */
+>> -	feed_state.cmd = commands;
+>> -	feed_state.skip_broken = skip_broken;
+>> -	feed_state.report = NULL;
+>> -	strbuf_init(&feed_state.buf, 0);
+>> -	opt.feed_pipe_cb_data = &feed_state;
+>> +	feed_init_state.cmd = commands;
+>> +	feed_init_state.skip_broken = skip_broken;
+>
+> As far as I can see all of the data that we pass to the state struct is
+> static, so we might just as well initialize it right away, right?
+>
+>     struct receive_hook_feed_state feed_init_state = {
+>         .cmd = commands,
+>         .skip_broken = skip_broken,
+>         .buf = STRBUF_INIT,
+>     };
+
+I missed this. Thanks. Will do in v3.
+
+>> diff --git a/hook.c b/hook.c
+>> index cde7198412..83ff658866 100644
+>> --- a/hook.c
+>> +++ b/hook.c
+>> @@ -133,6 +133,8 @@ static int notify_hook_finished(int result,
+>>  
+>>  static void run_hooks_opt_clear(struct run_hooks_opt *options)
+>>  {
+>> +	if (options->feed_pipe_cb_data_free)
+>> +		options->feed_pipe_cb_data_free(options->feed_pipe_cb_data);
+>>  	strvec_clear(&options->env);
+>>  	strvec_clear(&options->args);
+>>  }
+>
+> I guess this here would be where we could skip `free` in case the data
+> wasn't even allocated. But as I said further up, I don't care all that
+> much.
+
+That is correct. I think I'll just drop that pointer check anyway in v3.
+
+>> diff --git a/hook.h b/hook.h
+>> index 20eb56fd63..a6bdc6f90f 100644
+>> --- a/hook.h
+>> +++ b/hook.h
+>> @@ -5,6 +5,9 @@
+>>  
+>>  struct repository;
+>>  
+>> +typedef void (*cb_data_free_fn)(void *data);
+>> +typedef void *(*cb_data_alloc_fn)(void *init_ctx);
+>> +
+>>  struct run_hooks_opt
+>>  {
+>>  	/* Environment vars to be set for each hook */
+>
+> Do we maybe want to scope these function typedefs to the hooks subsystem
+> by calling the `hook_data_free_fn` and `hook_data_alloc_fn`, or
+> something like that?
+
+Good idea. I'll rename them in v3.
