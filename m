@@ -1,79 +1,79 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391071E9B12
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858171E9B12
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771575884; cv=none; b=a9z1ERymDHSMhaStmPMlCTvelW7ebvcMHCUkbiogmCCDBya5CWFasy0dDsv9Oue1m/T0e9DK43pYPy460Foo+TdRD5qPeeVywgoGX289SapL4tng79aZ7p+QMme1IwVt1f0gAlGWghWSPM17Q3fETfTjON2AlWHWCluBsUSJ23o=
+	t=1771575887; cv=none; b=NrwFoixKPohsFenjux3yfk4m7SpSqY5D+Ez/0hYocwMO/jLGr8sBjggY7lhR5dHUMf6g007y9qoyVBcspiqLeHrw37HmFguXQloilZbiuw5TRBVLuk7VafwXu9N0J3HXbpxn3cgjgN/bNXT/neeI4TRXdhk/DnwScCTE8oNBtP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771575884; c=relaxed/simple;
-	bh=+NOp0aXoU3j0MoYtOI6/NbXcVuCpehOBbqGQ03kvmOA=;
+	s=arc-20240116; t=1771575887; c=relaxed/simple;
+	bh=i+iv6fUiHP5WdvCK8qzlsg8sZOezwIDBGHsCwRcz7jo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=i46YW8NBqWtFKTsrsECekIctRjgYHk21B04yKNhfIMuHFfC+L74pQQKRmc3lbed/hbXOrufexpmZaiEDRoWfy55rcxZkhq7W6igYan9h+w4ZyD8o4RYMD8ULk2Zi88lVbtjJF14sUbD6emEJOPHKDcerQp2AkmAKb1Yye9TLNLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jbmPP4RT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LvZs7T4K; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=dPAgmxmfwjbPAwnk+TvsGyCLl7BmpiYi08+UO0wD+9X/gwwkeGrDxrcEJPYcj2eWgtpFWlZaO7t1vjnyItzuPqLHdj6GsUvbk32msznfgqnzYksk3jIiFNYivBvKjBShrPsAg/ziDr69GmC2ObKBeZ19DTEyoqK9GtCeIeY9HzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZUFasRMf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ug6IoZRm; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jbmPP4RT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LvZs7T4K"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3E1D11D00045;
-	Fri, 20 Feb 2026 03:24:42 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZUFasRMf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ug6IoZRm"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 959087A0011;
+	Fri, 20 Feb 2026 03:24:45 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 20 Feb 2026 03:24:42 -0500
+  by phl-compute-03.internal (MEProxy); Fri, 20 Feb 2026 03:24:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771575882;
-	 x=1771662282; bh=w7DEvT971dpasBtGaf/2sjoqQeY/xKiCyEMpTAcWeMo=; b=
-	jbmPP4RTdrB7uWAcclPzVVqdf2uGe0umNjADzMw3bLAsNVUanfRhwCvlaHduRXRy
-	0DmZb1bvBdSCDUqro+8TvBzYDEE1fa166CDRTYMMpKXY7p+TzMAPGgaA6oz2QqVe
-	FxQpFZwL5kDuGgsZPO13j0nnJ1yET+knetaVlzhAV4vcjg2wexTEMNtaDttFhf9S
-	d/nB4vVi7h4NneJijiFYVt88EstEBoe3zx9vLyWj9MMtfsWYS0Ou7whIVlxkR/2L
-	NNWPSA0g8jHTLk5uXbAYylH1uOdBvVhpLowu9PSfDtRV5NAN7YsppjfgXYccOGl4
-	q35au1s1CAmL8Z5xq8GJ0w==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771575885;
+	 x=1771662285; bh=G7qmaM95mSOmo3G0QkdKyYRgPZ5Gl6YU3qhw3US42OQ=; b=
+	ZUFasRMfZBY3sDzcb/hcucZ7Kuqguw5e6JNGYNDeonxixhqKBKWUXI7oVCQchxf4
+	OQmc6MtinrTadPA/s93BN2dOaH2nT8Er/Wtv6xmMjk1v2HLIedzhE8UUDZD1Tng8
+	9Ttszh6DLLP9Gpyf3aXJvnZS7j3BYLe2qsPIud+XNHibKYqHYF8VjLOKsVzY5nKH
+	8HAoNEYyHwbZJn0cb4fH1HtE8vIA+NKD7Jdyn4mmw/MILqORUQAmeXwHq3JD5fKI
+	pmXRNKQF/G3VxAxFghHuX2KD7daeJGoamoSsDthDfpVNFq0elI8rx+/lHj9v3qKu
+	MFmBvdPoQQm+549KWkWclQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771575882; x=
-	1771662282; bh=w7DEvT971dpasBtGaf/2sjoqQeY/xKiCyEMpTAcWeMo=; b=L
-	vZs7T4KhZY/S9nE7Clwjvlf4Qf7wH3/Cta/TxQj59kOPxRdT5QUL8Db9nXtwAapp
-	+cDPEZKAq3DBzKf0Sc9YECjR7qFuAGW9yLqoYMetheH1ulSsLc0PnJ9kHroDM+H6
-	t+Gs4rr6Rgx/IO5ApefHJF7vJsxHmJsscsnuYtReRX2iWkQ0eMcq7HFHREcyi8eW
-	P3cxWioihzbZ2QZaIx1I6yn3HFWhlTI8yvwuUedlV9muqy6eGdsOjlaIb4M4F1Vd
-	k/KBycTO+50TYUImSBtMVcKYSQPVe/1BF0Q9drvjhAlHsnIkzYuulSGKfeiQ0qls
-	bVS8NUt9VdcAtt+IUTPsg==
-X-ME-Sender: <xms:ShqYaQoVUQHXB1GSkYvQP6VOiFaYgIebVwYiHs_3NJsANFd10G7D-A>
-    <xme:ShqYacqQOFJm7MUfPE8IeoRDK6udUkT0muK-CiwW_q6nw8ZBk4uqyN9jt5hIEdkJK
-    6TgEEmCbj9bfL9GamJF25NRzFI98JMi7KsJLjLjNP29hYqcHrgkrw>
-X-ME-Received: <xmr:ShqYaS0YrK425-W4L5PjHsyt78J1z98YNH2AIV8jHAKpKFGraLJ6kgD0Z3Uoss0cL7uzzatznP4I7ovOsGasZcmcS9vt5q2iMcDCmiJGMD4P>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771575885; x=
+	1771662285; bh=G7qmaM95mSOmo3G0QkdKyYRgPZ5Gl6YU3qhw3US42OQ=; b=u
+	g6IoZRmDPoX59QZKAUHm28yT2EfnpYpME350Drs9c9/GlBtITu/u9vDp+d/gk4+w
+	w656lNTpD6Lx7uyyhjjY3LzVnGvibY4r7AYQNND1G18xx7UWU4x4cnhFD01c0+kX
+	4f0vx2fsfk6b2EJOr0M1U3SwQxJdm5Xvh71s57Vf593dP2+MAtmYreIQlCv+xB54
+	qbryYWgObv/4KR9tIBXBArSXtuUrY8LQEiba5rR+JekT+XGxafbEzqW6+avPUo0P
+	xAsAo5BOaSB8FNZC4PoplMoWhlMCGCxMs2trC7ypBkfXVyde7b0r24CLLdjb7UKp
+	SIVX2dZrO+7ojKBkWLP+g==
+X-ME-Sender: <xms:TRqYaTfmo59Q4ikA8GFu0CHekJTPtWL9BwHAjNlcnPW1RSL5VSZaKw>
+    <xme:TRqYafMO5v7Q_gimFhTZ9WfHz2INTtMZh8HJig6D-d3suOsbU76ejGdx6evBYPn30
+    _sJNq7h0u1z-PyfWOz43GWoMruvBDbCRuOsPUpXWAxQR86Mutmu_g>
+X-ME-Received: <xmr:TRqYaaKlr--rZGw1R830IA8Gwi5tDPNt6hnFvA7J0ohIcLf_W_ZAPHO7BS75S_A8hEaIksi_cGNyC-dHP7AMUCAcv79VaASS1AIpFoYFZ6oG>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdejleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hnpeefhfeugeelheefjeektdffhedvhfdvteefgfdtudffudevveetgeeuuedtkefhgeen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
     thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthh
     hikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:ShqYaTACVXStXcwwJjAkcAOa0PE1smkik3uIOfrgHCq6Xev6CwmJLQ>
-    <xmx:ShqYaSeML3agXFQsu5F_gzxaq6xdmya2yYBCLuomSgcgLWfXzhXhvA>
-    <xmx:ShqYaQiita2vHfLOR0DXklWCzJhn-i1t2q2QtQ3ekm9PUYyzcc7H3g>
-    <xmx:ShqYaSrg3VC2quLgaKoD_O8iZHXFe5ReAwen3LC_1PUKgo8uXdBABQ>
-    <xmx:ShqYaabQBK7ULMS53rA5ezGnrgd-LGIZKzcT_Z5mwPPZJJz5hoRMEy3w>
+X-ME-Proxy: <xmx:TRqYaQFbyzHZx9vKNQJ31UKj4iqzP0mu3Pa2Dw_F1wDMyAd5Q66ftw>
+    <xmx:TRqYaSQjC5QIUzS5OMid0toRYteC9BlkEGAMVgSE-EL0YpWJmj3PVg>
+    <xmx:TRqYacE5GEWgL6dK-U4m9gONK8g-9ab0tjrNGUJvd4izlKLA2Kt_7Q>
+    <xmx:TRqYae-vtKb00ZBHThY7sGi6jcIurTFY5u7mJ5BqgMfCzcVRn9dZSQ>
+    <xmx:TRqYaaMsVIlEgn0g1syH8zglfXXnc4HrNwIxQ2H_qAj4_OCn6D7g7iKM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 03:24:41 -0500 (EST)
+ 20 Feb 2026 03:24:44 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 16fed361 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Feb 2026 08:24:40 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id fe0148d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Feb 2026 08:24:43 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 20 Feb 2026 09:24:10 +0100
-Subject: [PATCH 06/17] refs: introduce `refs_for_each_ref_ext`
+Date: Fri, 20 Feb 2026 09:24:11 +0100
+Subject: [PATCH 07/17] refs: speed up `refs_for_each_glob_ref_in()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,232 +81,178 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260220-pks-refs-for-each-unification-v1-6-17170bd99de1@pks.im>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260220-pks-refs-for-each-unification-v1-7-17170bd99de1@pks.im>
 References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
 In-Reply-To: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-In the refs subsystem we have a proliferation of functions that all
-iterate through references. (Almost) all of these functions internally
-call `do_for_each_ref()` and provide slightly different arguments so
-that one can control different aspects of its behaviour. This approach
-doesn't really scale: every time there is a slightly different use case
-for iterating through refs we create another new function.
+The function `refs_for_each_glob_ref_in()` can be used to iterate
+through all refs in a specific prefix with globbing. The logic to handle
+this is currently hosted by `refs_for_each_glob_ref_in()`, which sets up
+a callback function that knows to filter out refs that _don't_ match the
+given globbing pattern.
 
-This combinatorial explosion doesn't make a lot of sense: it leads to
-confusing interfaces and heightens the maintenance burden.
+The way we do this is somewhat inefficient though: even though the
+function is expected to only yield refs in the given prefix, we still
+end up iterating through _all_ references, regardless of whether or not
+their name matches the given prefix.
 
-Refactor the code to become more composable by:
+Extend `refs_for_each_ref_ext()` so that it can handle patterns and
+adapt `refs_for_each_glob_ref_in()` to use it. This means we continue to
+use the same callback-based infrastructure to filter individual refs via
+the globbing pattern, but we can now also use the other functionality of
+the `_ext()` variant.
 
-  - Exposing `do_for_each_ref()` as `refs_for_each_ref_ext()`.
+Most importantly, this means that we now properly handle the prefix.
+This results in a performance improvement when using a prefix where a
+significant majority of refs exists outside of the prefix. The following
+benchmark is an extreme case, with 1 million refs that exist outside the
+prefix and a single ref that exists inside it:
 
-  - Introducing an options structure that lets the caller control
-    individual options.
+    Benchmark 1: git rev-parse --branches=refs/heads/* (rev = HEAD~)
+      Time (mean ± σ):     115.9 ms ±   0.7 ms    [User: 113.0 ms, System: 2.4 ms]
+      Range (min … max):   114.9 ms … 117.8 ms    25 runs
 
-This gives us a much better foundation to build on going forward.
+    Benchmark 2: git rev-parse --branches=refs/heads/* (rev = HEAD)
+      Time (mean ± σ):       1.1 ms ±   0.1 ms    [User: 0.3 ms, System: 0.7 ms]
+      Range (min … max):     1.0 ms …   2.3 ms    2092 runs
+
+    Summary
+      git rev-parse --branches=refs/heads/* (rev = HEAD) ran
+      107.01 ± 6.49 times faster than git rev-parse --branches=refs/heads/* (rev = HEAD~)
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c | 78 ++++++++++++++++++++++++++++++++++++++++--------------------------
- refs.h | 29 +++++++++++++++++++++++++
- 2 files changed, 77 insertions(+), 30 deletions(-)
+ refs.c | 69 ++++++++++++++++++++++++++++++++++++++----------------------------
+ refs.h | 10 ++++++++++
+ 2 files changed, 50 insertions(+), 29 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index a45cc61211..ec9e466381 100644
+index ec9e466381..ac34bbe6c1 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1858,62 +1858,76 @@ struct ref_iterator *refs_ref_iterator_begin(
- 	return iter;
+@@ -590,40 +590,23 @@ void normalize_glob_ref(struct string_list_item *item, const char *prefix,
+ 	strbuf_release(&normalized_pattern);
  }
  
--static int do_for_each_ref(struct ref_store *refs, const char *prefix,
--			   const char **exclude_patterns,
--			   refs_for_each_cb fn, int trim,
--			   enum refs_for_each_flag flags, void *cb_data)
-+int refs_for_each_ref_ext(struct ref_store *refs,
-+			  refs_for_each_cb cb, void *cb_data,
-+			  const struct refs_for_each_ref_options *opts)
+-int refs_for_each_glob_ref_in(struct ref_store *refs, refs_for_each_cb fn,
++int refs_for_each_glob_ref_in(struct ref_store *refs, refs_for_each_cb cb,
+ 			      const char *pattern, const char *prefix, void *cb_data)
  {
+-	struct strbuf real_pattern = STRBUF_INIT;
+-	struct for_each_ref_filter filter;
+-	int ret;
+-
+-	if (!prefix && !starts_with(pattern, "refs/"))
+-		strbuf_addstr(&real_pattern, "refs/");
+-	else if (prefix)
+-		strbuf_addstr(&real_pattern, prefix);
+-	strbuf_addstr(&real_pattern, pattern);
+-
+-	if (!has_glob_specials(pattern)) {
+-		/* Append implied '/' '*' if not present. */
+-		strbuf_complete(&real_pattern, '/');
+-		/* No need to check for '*', there is none. */
+-		strbuf_addch(&real_pattern, '*');
+-	}
+-
+-	filter.pattern = real_pattern.buf;
+-	filter.prefix = prefix;
+-	filter.fn = fn;
+-	filter.cb_data = cb_data;
+-	ret = refs_for_each_ref(refs, for_each_filter_refs, &filter);
+-
+-	strbuf_release(&real_pattern);
+-	return ret;
++	struct refs_for_each_ref_options opts = {
++		.pattern = pattern,
++		.prefix = prefix,
++	};
++	return refs_for_each_ref_ext(refs, cb, cb_data, &opts);
+ }
+ 
+-int refs_for_each_glob_ref(struct ref_store *refs, refs_for_each_cb fn,
++int refs_for_each_glob_ref(struct ref_store *refs, refs_for_each_cb cb,
+ 			   const char *pattern, void *cb_data)
+ {
+-	return refs_for_each_glob_ref_in(refs, fn, pattern, NULL, cb_data);
++	struct refs_for_each_ref_options opts = {
++		.pattern = pattern,
++	};
++	return refs_for_each_ref_ext(refs, cb, cb_data, &opts);
+ }
+ 
+ const char *prettify_refname(const char *name)
+@@ -1862,16 +1845,44 @@ int refs_for_each_ref_ext(struct ref_store *refs,
+ 			  refs_for_each_cb cb, void *cb_data,
+ 			  const struct refs_for_each_ref_options *opts)
+ {
++	struct strbuf real_pattern = STRBUF_INIT;
++	struct for_each_ref_filter filter;
  	struct ref_iterator *iter;
++	int ret;
  
  	if (!refs)
  		return 0;
  
--	iter = refs_ref_iterator_begin(refs, prefix, exclude_patterns, trim,
--				       flags);
-+	iter = refs_ref_iterator_begin(refs, opts->prefix ? opts->prefix : "",
-+				       opts->exclude_patterns,
-+				       opts->trim_prefix, opts->flags);
- 
--	return do_for_each_ref_iterator(iter, fn, cb_data);
-+	return do_for_each_ref_iterator(iter, cb, cb_data);
- }
- 
--int refs_for_each_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
-+int refs_for_each_ref(struct ref_store *refs, refs_for_each_cb cb, void *cb_data)
- {
--	return do_for_each_ref(refs, "", NULL, fn, 0, 0, cb_data);
-+	struct refs_for_each_ref_options opts = { 0 };
-+	return refs_for_each_ref_ext(refs, cb, cb_data, &opts);
- }
- 
- int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
--			 refs_for_each_cb fn, void *cb_data)
-+			 refs_for_each_cb cb, void *cb_data)
- {
--	return do_for_each_ref(refs, prefix, NULL, fn, strlen(prefix), 0, cb_data);
-+	struct refs_for_each_ref_options opts = {
-+		.prefix = prefix,
-+		.trim_prefix = strlen(prefix),
-+	};
-+	return refs_for_each_ref_ext(refs, cb, cb_data, &opts);
- }
- 
- int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
- 			     const char **exclude_patterns,
--			     refs_for_each_cb fn, void *cb_data)
-+			     refs_for_each_cb cb, void *cb_data)
- {
--	return do_for_each_ref(refs, prefix, exclude_patterns, fn, 0, 0, cb_data);
-+	struct refs_for_each_ref_options opts = {
-+		.prefix = prefix,
-+		.exclude_patterns = exclude_patterns,
-+	};
-+	return refs_for_each_ref_ext(refs, cb, cb_data, &opts);
- }
- 
--int refs_for_each_replace_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
-+int refs_for_each_replace_ref(struct ref_store *refs, refs_for_each_cb cb, void *cb_data)
- {
- 	const char *git_replace_ref_base = ref_namespace[NAMESPACE_REPLACE].ref;
--	return do_for_each_ref(refs, git_replace_ref_base, NULL, fn,
--			       strlen(git_replace_ref_base),
--			       REFS_FOR_EACH_INCLUDE_BROKEN, cb_data);
-+	struct refs_for_each_ref_options opts = {
-+		.prefix = git_replace_ref_base,
-+		.trim_prefix = strlen(git_replace_ref_base),
-+		.flags = REFS_FOR_EACH_INCLUDE_BROKEN,
-+	};
-+	return refs_for_each_ref_ext(refs, cb, cb_data, &opts);
- }
- 
- int refs_for_each_namespaced_ref(struct ref_store *refs,
- 				 const char **exclude_patterns,
--				 refs_for_each_cb fn, void *cb_data)
-+				 refs_for_each_cb cb, void *cb_data)
- {
-+	struct refs_for_each_ref_options opts = { 0 };
- 	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
- 	struct strbuf prefix = STRBUF_INIT;
- 	int ret;
- 
--	exclude_patterns = get_namespaced_exclude_patterns(exclude_patterns,
--							   get_git_namespace(),
--							   &namespaced_exclude_patterns);
--
-+	opts.exclude_patterns = get_namespaced_exclude_patterns(exclude_patterns,
-+								get_git_namespace(),
-+								&namespaced_exclude_patterns);
- 	strbuf_addf(&prefix, "%srefs/", get_git_namespace());
--	ret = do_for_each_ref(refs, prefix.buf, exclude_patterns, fn, 0, 0, cb_data);
-+	opts.prefix = prefix.buf;
++	if (opts->pattern) {
++		if (!opts->prefix && !starts_with(opts->pattern, "refs/"))
++			strbuf_addstr(&real_pattern, "refs/");
++		else if (opts->prefix)
++			strbuf_addstr(&real_pattern, opts->prefix);
++		strbuf_addstr(&real_pattern, opts->pattern);
 +
-+	ret = refs_for_each_ref_ext(refs, cb, cb_data, &opts);
++		if (!has_glob_specials(opts->pattern)) {
++			/* Append implied '/' '*' if not present. */
++			strbuf_complete(&real_pattern, '/');
++			/* No need to check for '*', there is none. */
++			strbuf_addch(&real_pattern, '*');
++		}
++
++		filter.pattern = real_pattern.buf;
++		filter.prefix = opts->prefix;
++		filter.fn = cb;
++		filter.cb_data = cb_data;
++
++		cb = for_each_filter_refs;
++		cb_data = &filter;
++	}
++
+ 	iter = refs_ref_iterator_begin(refs, opts->prefix ? opts->prefix : "",
+ 				       opts->exclude_patterns,
+ 				       opts->trim_prefix, opts->flags);
  
- 	strvec_clear(&namespaced_exclude_patterns);
- 	strbuf_release(&prefix);
-@@ -1926,10 +1940,13 @@ int refs_for_each_rawref(struct ref_store *refs, refs_for_each_cb fn, void *cb_d
+-	return do_for_each_ref_iterator(iter, cb, cb_data);
++	ret = do_for_each_ref_iterator(iter, cb, cb_data);
++	strbuf_release(&real_pattern);
++	return ret;
  }
  
- int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
--			    refs_for_each_cb fn, void *cb_data)
-+			    refs_for_each_cb cb, void *cb_data)
- {
--	return do_for_each_ref(refs, prefix, NULL, fn, 0,
--			       REFS_FOR_EACH_INCLUDE_BROKEN, cb_data);
-+	struct refs_for_each_ref_options opts = {
-+		.prefix = prefix,
-+		.flags = REFS_FOR_EACH_INCLUDE_BROKEN,
-+	};
-+	return refs_for_each_ref_ext(refs, cb, cb_data, &opts);
- }
- 
- static int qsort_strcmp(const void *va, const void *vb)
-@@ -3187,6 +3204,9 @@ int repo_migrate_ref_storage_format(struct repository *repo,
- 				    struct strbuf *errbuf)
- {
- 	struct ref_store *old_refs = NULL, *new_refs = NULL;
-+	struct refs_for_each_ref_options for_each_ref_opts = {
-+		.flags = REFS_FOR_EACH_INCLUDE_ROOT_REFS | REFS_FOR_EACH_INCLUDE_BROKEN,
-+	};
- 	struct ref_transaction *transaction = NULL;
- 	struct strbuf new_gitdir = STRBUF_INIT;
- 	struct migration_data data = {
-@@ -3270,7 +3290,7 @@ int repo_migrate_ref_storage_format(struct repository *repo,
- 	data.errbuf = errbuf;
- 
- 	/*
--	 * We need to use the internal `do_for_each_ref()` here so that we can
-+	 * We need to use `refs_for_each_ref_ext()` here so that we can
- 	 * also include broken refs and symrefs. These would otherwise be
- 	 * skipped silently.
- 	 *
-@@ -3280,9 +3300,7 @@ int repo_migrate_ref_storage_format(struct repository *repo,
- 	 * allow for a central lock due to its design. It's thus on the user to
- 	 * ensure that there are no concurrent writes.
- 	 */
--	ret = do_for_each_ref(old_refs, "", NULL, migrate_one_ref, 0,
--			      REFS_FOR_EACH_INCLUDE_ROOT_REFS | REFS_FOR_EACH_INCLUDE_BROKEN,
--			      &data);
-+	ret = refs_for_each_ref_ext(old_refs, migrate_one_ref, &data, &for_each_ref_opts);
- 	if (ret < 0)
- 		goto done;
- 
+ int refs_for_each_ref(struct ref_store *refs, refs_for_each_cb cb, void *cb_data)
 diff --git a/refs.h b/refs.h
-index 5190e98b2c..bb9c64a51c 100644
+index bb9c64a51c..a66dbf3865 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -453,8 +453,37 @@ int refs_head_ref(struct ref_store *refs,
- int refs_head_ref_namespaced(struct ref_store *refs,
- 			     refs_for_each_cb fn, void *cb_data);
+@@ -458,6 +458,16 @@ struct refs_for_each_ref_options {
+ 	/* Only iterate over references that have this given prefix. */
+ 	const char *prefix;
  
-+
-+struct refs_for_each_ref_options {
-+	/* Only iterate over references that have this given prefix. */
-+	const char *prefix;
-+
 +	/*
-+	 * Exclude any references that match any of these patterns on a
-+	 * best-effort basis. The caller needs to be prepared for the exclude
-+	 * patterns to be ignored.
++	 * A globbing pattern that can be used to only yield refs that match.
++	 * If given, refs will be matched against the pattern with
++	 * `wildmatch()`.
 +	 *
-+	 * The array must be terminated with a NULL sentinel value.
++	 * If the pattern doesn't contain any globbing characters then it is
++	 * treated as if it was ending with "/" and "*".
 +	 */
-+	const char **exclude_patterns;
++	const char *pattern;
 +
-+	/*
-+	 * The number of bytes to trim from the refname. Note that the trimmed
-+	 * bytes must not cause the reference to become empty. As such, this
-+	 * field should typically only be set when one uses a `prefix` ending
-+	 * in a slash.
-+	 */
-+	size_t trim_prefix;
-+
-+	/* Flags that change which refs will be included. */
-+	enum refs_for_each_flag flags;
-+};
-+
- int refs_for_each_ref(struct ref_store *refs,
- 		      refs_for_each_cb fn, void *cb_data);
-+int refs_for_each_ref_ext(struct ref_store *refs,
-+			  refs_for_each_cb cb, void *cb_data,
-+			  const struct refs_for_each_ref_options *opts);
- int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
- 			 refs_for_each_cb fn, void *cb_data);
- int refs_for_each_tag_ref(struct ref_store *refs,
+ 	/*
+ 	 * Exclude any references that match any of these patterns on a
+ 	 * best-effort basis. The caller needs to be prepared for the exclude
 
 -- 
 2.53.0.414.gf7e9f6c205.dirty
