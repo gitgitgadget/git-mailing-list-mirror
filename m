@@ -1,83 +1,81 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B132E6CCB
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2753358AE
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 08:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771575968; cv=none; b=VXInBJcsuoZWX5/kbMw/LjtEgdb6iSgTTNSc3jRpEoUztiafbv+FnIdtGPdXMcCbzANvVGDX1KqAEOsS50dg6squXehrqN5QtIIkJncY4rC1NLraZJoEAkA6i6KB+9cYQ6ZpTsVr2wB8eGpvcdklvW+BG3yDEWjZMhVxi0X5Shw=
+	t=1771575970; cv=none; b=X/wOuMK7UKMVFj6TtAMaY8G+cxo4n9+rpMgUfIIPIesnn7rKm5sbtEJ/kHqEAfU1RXGiSMbPGvzPu0RUgxQWAFbxi47JOenB+FBAgUG8XfHd7VeHsTBvnvXnDZVEg0jSFWYtK/ZtuzLgMbe/Xf5KXYzqAjLT6tYfr67bcxRWOrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771575968; c=relaxed/simple;
-	bh=EKWn7aF5HJtt6YuTfTxb7hzDyvYKfpprmNVqYZdWFHE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=StNs6CCNYA5nMFEzB00+S7roEtg82C3KNJclnwdYqOONr/sETkCf0r+UldYfBFaJ0+IcJ+PUwuvlqVv0II4b9+BNACvpKQz672LtXkOkuVEXEH/Q2YllXxBaXQYx5m3V4rhrtynsura95TAQZ77g+oKy4L5TXkdwTjN4IVJRvSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K7uTM1FY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nsowz1+e; arc=none smtp.client-ip=202.12.124.147
+	s=arc-20240116; t=1771575970; c=relaxed/simple;
+	bh=vRgywpQjlmACeAsxEA/1rEzi+XP4mgmwUfgsRwqIygg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=P7fGi/QgWvS4aJV/dl3kChVOrKN1UahWhz7XT2MWiOHj/kCIdRBJ7aiWtZMNtbFvI1dy4PCnBgz5+ooxnmb6NMEl/VfvT5EFEGLAny784zFzLIL7cZMlzgAAMvDVdawIwvzMRpabCrXX2c8imGWkaxszTCl/4zfabG1pu4r+zcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p2aqTJHX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=esaxj3Zy; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K7uTM1FY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nsowz1+e"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id E025B1D00011;
-	Fri, 20 Feb 2026 03:26:05 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p2aqTJHX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="esaxj3Zy"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id CFDC21D000B5;
+	Fri, 20 Feb 2026 03:26:07 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 20 Feb 2026 03:26:06 -0500
+  by phl-compute-10.internal (MEProxy); Fri, 20 Feb 2026 03:26:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771575965;
-	 x=1771662365; bh=u035ZO+UjpFLc7e7WmiyFgSJ1AwJzbSJRVnj3kSoBhY=; b=
-	K7uTM1FYWtrHA/qibbXV9lgq0mxv+XmlUTMig73l3B+IPfZun0zpNB/4YzGLuvj+
-	2vE8YRflS7xD+A+BppoxzmMZuUZn8HPFInONx16TcWgw9bSp2Nt0wYuy9EDFMHU5
-	sizUDMGULJk4NzW9zV+fKgDcrdCl0zkHo7bvpa36nX5G7pCznOVhVhdZl9Y3YqoT
-	MhD5AayU7j1NL+Nq7tkR8mLbu4/LYjyDV3aZwcHQsc2bSo2g50tc/Ez86XFtP6R2
-	MKgq3n2dGNb+jNs3JKlgTFu09wcs4xETBsiVWqYXfBQ/Y85Z5T+DfF7TrVxuqXpc
-	hwu9sJSZbxzNUVBhZEMnXA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771575967;
+	 x=1771662367; bh=KItjTiFhigK9AY4Z8Do+YUySD6GYDmeEgQRuNRDKTOQ=; b=
+	p2aqTJHXVyuI6N1rRbQyT88zkzX9smTs/p70nKQLNUyQz8YImIyiUODWnxUwX5M2
+	KgmAPAU/2rgraN0qTGVHxU/5umj6nBlXt81Fw/lo368gIc6tayyrFU9+Go7km4/a
+	o0Dd67RNBnC5UNmZvyxzHNSyUlrG/BU9gzIYFmbyDbFNLTMl85xJH7YSQiOk3E0t
+	WGhJhejhFwEQeGAuEZ8hm7VI/od2WHAPR5YjmoqnrP/Mn91frdrIHttgSK7Lup9+
+	ePf2CiRhpcYv2dCCP2xJ5zBLy2NPJmsDUjsQZ8Q4/oztiIbuWUASAum2dQH/TrKr
+	LdO+nPcYCI3c9Ixrp56wFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771575965; x=
-	1771662365; bh=u035ZO+UjpFLc7e7WmiyFgSJ1AwJzbSJRVnj3kSoBhY=; b=n
-	sowz1+ep9vMdDnX/RDZu4hCS+rGVfHTR4x51bEqHtCwrQ3FwpAql6k2FlNvqOZXu
-	MVLnqyW/NKoNel76JD5YyLU4AB4Umn9FnKKyLna/Xo7ZBAdmxih5iX6Y8a54FziV
-	+r7JDl4xK2prDHBlwgYgAOxPnQGHhbxKHB7+z1pUy9Tso+l1DX6LHns7b6XE5JM3
-	N75tXzfcz0WS+tXmQJMtEcuUEi79v0UcepvDJwRS8o8eCGiWtLb7+Mfh/xW7nPoh
-	UYMJAzGOPsT1IYU1S1DUDhi9m2cmSolhlozm6iZwWrs4E/9WBb6F7zSsQH2R4mY0
-	QbHuvjLhpbEpZz+9YTxpQ==
-X-ME-Sender: <xms:nRqYaaVh8wKsjaPj5nkXoWuP2gnycueAghhrDGiLEzozPM1b7P6eTw>
-    <xme:nRqYadmRpWjy8zwC8Dr5DlURI0YUqEF6UDbUXx1O92VCahNOH74A1IXPmkhKgc7zT
-    RW1Rv66VSdlJiNY0rtoi6FnGFKLBoFA8n8ZIiorvWeNCUg-ouTdU88>
-X-ME-Received: <xmr:nRqYaTYdfl9rQ7dLZj0e2llszgCLcaqEnK1GY8jstVd970XbulccAo_6wbFfSnHmEq_TuokF3jThj15BGhERevsUcNf_ZwuMCRbBE1zoHvtS>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771575967; x=
+	1771662367; bh=KItjTiFhigK9AY4Z8Do+YUySD6GYDmeEgQRuNRDKTOQ=; b=e
+	saxj3ZyE4jMeBquE99eMDn4jiqZUrVuu4JoScBB8776iJPZ+Jf1ZAojtvOba8yld
+	XkF+smNyqYMTMdZjYn2Izm4bqYp74AK8SFmsD7FW0ZGdmkCWRliuVD9p/LTH5oUr
+	AMYJlTLPAdR5GCr10QyDYP6sxm3F2ZEG5AouEr7SnSf20nK6/tp1LH0PUPOajM3d
+	kBOjvTRqJjCo2Lh5fdM3dPZ0dSu5PRoy6VnThgHJ6GdY3HmOHo8YUy3lsvnmqhak
+	olV4Zdjm+TZjRPbRYSl0JIW9NB4APATneyMoGbANM5DMbDBg0rnKcxG1fHnCd4wa
+	C6B9xkzQaoB+Ocl10JAAA==
+X-ME-Sender: <xms:nxqYaaUdFYiSx50Mca1byUPgX15o4Rp6OoAIf-3KjdqV4F3JrvyXxg>
+    <xme:nxqYadmd6rbJBQKfU1HOkI-lWcTc_pjL4g9TT4bNrWVV2J5PlFUi9fkpBSbn60Lu-
+    kUvEczEnoTuY8IngSztNXh2TO5SZbSWSVDFUsgvXo39Kx1aT3XvO7c>
+X-ME-Received: <xmr:nxqYaTY5rMs7mYCfzMVE1mSG1v_tnwQmSP-79wnKY04fzwr1Ik9IbRopXcdOsqpXkQvUbbud2BWOX-vpu4Wmd318Qn8M_2jOW-Mdf27PEUdH>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdejleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpefgjefhudduffeuvddtieefkeegtdffgfehgfevveffueetudehfedvvefhvddvhfen
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhhthhtphdqfhgvthgthhdqughumhgsrd
-    hshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
-    shesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhunhhs
-    hhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghm
-    ihhlhidrohhrgh
-X-ME-Proxy: <xmx:nRqYaQMC2ZGIWJJqUybFSAK6evrNFiw6G8t7bRxhocLBcJn_qIel7A>
-    <xmx:nRqYaQbDOTNjf5L5VYAPsT4YsgxL2Sk3Q7ctJN8Hfqo9HBbvmsHZKg>
-    <xmx:nRqYaW277QAq_mrdJrPKqImrwqFMD4IJZ12_m-MJzbNqT52bbUKWqA>
-    <xmx:nRqYaefOA9KzqC2xnhe6alK1pbNYW8PIsLguxd8gQpgoMjAvk_q9tA>
-    <xmx:nRqYaUqN4f328_E8vtFYdLwHGNQu60WL8ZQes_uvnPM-hcdDkqgA_4_Z>
+    hnpeefgfevtdevudefudetudfghfejgfelgeehhefflefggeffheeigedvgfefheeugfen
+    ucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    gedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
+    thhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhope
+    gthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
+X-ME-Proxy: <xmx:nxqYaQPuot6ef4CK5p3oOMhcrwAwPTkierusgbhWlaklTbCH6qIlhg>
+    <xmx:nxqYaQY_O99FpxV6KMKkbzNeaw3ndMHB1zDo4a6J4T6GSwRcN7OciA>
+    <xmx:nxqYaW2H9-K14v4M-euANvmZVnwuRIMWnldDDgRBENKuudxjN3kW0Q>
+    <xmx:nxqYaeeqd-3E3t4_Qb6P4VveNWvkqlBi8qG1zWv8H0eKw-ZqQMOPDg>
+    <xmx:nxqYaUoJKD_8XU0KJVlssI8N0NcsYkQGvXr6BQ4lT2vgoXgxBMA9rEG7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 03:26:04 -0500 (EST)
+ 20 Feb 2026 03:26:06 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c6b44775 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Feb 2026 08:26:03 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 1eb88cdc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Feb 2026 08:26:06 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 0/5] Fix tests with missing iconv(1) executable
-Date: Fri, 20 Feb 2026 09:25:58 +0100
-Message-Id: <20260220-b4-pks-ci-msvc-iconv-fixes-v4-0-e0e6bbcaeb5b@pks.im>
+Date: Fri, 20 Feb 2026 09:25:59 +0100
+Subject: [PATCH v4 1/5] t: don't set ICONV prereq when iconv(1) is missing
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,121 +84,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJYamGkC/43NTQ6CMBAF4KuQrh3TaSsUV97DuIDSysTwk9Y0G
- sLdLSwMbojLN/Pmm4kF68kGds4m5m2kQEOfgjpkzLRVf7dATcpMcJFzwUuoFYyPAIagC9EAmaG
- P4OhlA6BsrNIccyUdS8Do7bpI99dbyi2F5+Df66+Iy/QvNiJwQCsxL0yjtdCX1DxSxxYzio2Dx
- a4jkiNOqsTa6KZ2v47cOnrXkcnh2qBz0jlTVl9nnucPOrtxUVEBAAA=
-X-Change-ID: 20260209-b4-pks-ci-msvc-iconv-fixes-13de4801643f
-In-Reply-To: <20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im>
-References: <20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im>
+Message-Id: <20260220-b4-pks-ci-msvc-iconv-fixes-v4-1-e0e6bbcaeb5b@pks.im>
+References: <20260220-b4-pks-ci-msvc-iconv-fixes-v4-0-e0e6bbcaeb5b@pks.im>
+In-Reply-To: <20260220-b4-pks-ci-msvc-iconv-fixes-v4-0-e0e6bbcaeb5b@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>, 
  Junio C Hamano <gitster@pobox.com>, 
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.3
 
-Hi,
+We've got a couple of tests that exercise Git with different encodings,
+typically around commit messages. All of these tests depend on the ICONV
+prerequisite, which is set when Git was built with support for iconv.
 
-I recently noticed that the MSVC-based tests in GitLab CI started to
-fail. The root cause is that the iconv(1) executable cannot be found on
-this platform anymore. This isn't entirely surprising: we depend on the
-Git for Windows environment to provide necessary shell tools, and that
-environment of course is not a fully fledged MSYS2 installation.
+Many of those tests also end up using the iconv(1) executable to
+reencode text. But while tests can rely on the fact that Git does have
+support for iconv, they cannot assume that the iconv(1) executable
+exists. The consequence is thus that tests will break in case Git is
+built with iconv, but the executable doesn't exist. In fact, some of the
+tests even use the iconv(1) executable unconditionally, regardless of
+whether or not the ICONV prerequisite is set.
 
-In any case, this patch series fixes those issues by building on top of
-the ICONV prerequisite. If the prereq isn't found, then we also don't
-assume that the iconv(1) executable exists.
+Git for Windows has recently (unintentionally) shipped a change where
+the iconv(1) binary is not getting installed anymore [1]. And as we use
+Git for Windows directly in MSVC+Meson jobs in GitLab CI this has caused
+such tests to break. The missing iconv(1) binary is considered a bug
+that will be fixed in Git for Windows. But regardless of that it makes
+sense to not assume the binary to always exist so that our test suite
+passes on platforms that don't have iconv at all.
 
-An alternative strategy would be to introduce a new ICONV_EXECUTABLE
-prereq. But given that Git doesn't perform any kind of reencoding itself
-in case the ICONV support isn't built into it I found it to not be worth
-the additional hassle.
+Extend the ICONV prerequisite so that we know to skip tests in case the
+iconv(1) binary doesn't exist. We'll adapt tests that are currently
+broken in subsequent commits.
 
-In any case, this patch series causes the MSVC jobs to pass again on
-GitLab CI.
+[1]: https://github.com/git-for-windows/git/issues/6083
 
-Changes in v4:
-  - Use `test_grep !` instead of `! test_grep`.
-  - Another commit message typo fix.
-  - Link to v3: https://lore.kernel.org/r/20260218-b4-pks-ci-msvc-iconv-fixes-v3-0-08c1ff3ffc9a@pks.im
-
-Changes in v3:
-  - Split out the changes for the ICONV prerequisite into a standalone
-    commit.
-  - Link to v2: https://lore.kernel.org/r/20260217-b4-pks-ci-msvc-iconv-fixes-v2-0-25491bc8dbf8@pks.im
-
-Changes in v2:
-  - Extend the ICONV prerequisite to cover the new semantics and add a
-    NEEDSWORK comment.
-  - Mention the upstream issue in Git for Windows.
-  - Link to v1: https://lore.kernel.org/r/20260209-b4-pks-ci-msvc-iconv-fixes-v1-0-1e3167cd8828@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (5):
-      t: don't set ICONV prereq when iconv(1) is missing
-      t40xx: don't use iconv(1) without ICONV prereq
-      t4205: improve handling of ICONV prerequisite
-      t5550: add ICONV prereq to tests that use "$HTTPD_URL/error"
-      t6006: don't use iconv(1) without ICONV prereq
+ t/test-lib.sh | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
- t/t4041-diff-submodule-option.sh             |  8 +++--
- t/t4059-diff-submodule-not-initialized.sh    |  8 +++--
- t/t4060-diff-submodule-option-diff-format.sh |  8 +++--
- t/t4205-log-pretty-formats.sh                | 50 ++++++++++++++++------------
- t/t5550-http-fetch-dumb.sh                   | 20 +++++------
- t/t6006-rev-list-format.sh                   | 29 +++++++++++-----
- t/test-lib.sh                                | 12 ++++++-
- 7 files changed, 88 insertions(+), 47 deletions(-)
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 0fb76f7d11..67d15ae079 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1720,7 +1720,6 @@ esac
+ ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
+ test -z "$NO_CURL" && test_set_prereq LIBCURL
+ test -z "$NO_GITWEB" && test_set_prereq GITWEB
+-test -z "$NO_ICONV" && test_set_prereq ICONV
+ test -z "$NO_PERL" && test_set_prereq PERL
+ test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
+ test -z "$NO_PYTHON" && test_set_prereq PYTHON
+@@ -1731,6 +1730,17 @@ test -n "$SANITIZE_LEAK" && test_set_prereq SANITIZE_LEAK
+ test -n "$GIT_VALGRIND_ENABLED" && test_set_prereq VALGRIND
+ test -n "$PERL_PATH" && test_set_prereq PERL_TEST_HELPERS
+ 
++test_lazy_prereq ICONV '
++	# We require Git to be built with iconv support, and we require the
++	# iconv binary to exist.
++	#
++	# NEEDSWORK: We might eventually want to split this up into two
++	# prerequisites: one for NO_ICONV, and one for the iconv(1) binary, as
++	# some tests only depend on either of these.
++	test -z "$NO_ICONV" &&
++	iconv -f utf8 -t utf8 </dev/null
++'
++
+ if test -z "$GIT_TEST_CHECK_CACHE_TREE"
+ then
+ 	GIT_TEST_CHECK_CACHE_TREE=true
 
-Range-diff versus v3:
-
-1:  3cfc78f873 = 1:  ac36dae86b t: don't set ICONV prereq when iconv(1) is missing
-2:  768d0c8de1 = 2:  4b461caa9b t40xx: don't use iconv(1) without ICONV prereq
-3:  b552d77cf4 = 3:  ad9278cab4 t4205: improve handling of ICONV prerequisite
-4:  7f35641968 ! 4:  863488c534 t5550: add ICONV prereq to tests that use "$HTTPD_URL/error"
-    @@ Commit message
-         t5550: add ICONV prereq to tests that use "$HTTPD_URL/error"
-     
-         We've got a bunch of tests in t5550 that connect to "$HTTPD_URL/error"
-    -    to ensure that error messages are proprely forwarded. This URL executes
-    +    to ensure that error messages are properly forwarded. This URL executes
-         the "t/lib-httpd/error.sh" script, which in turn depends on the iconv(1)
-         executable to reencode the message.
-     
-    @@ t/t5550-http-fetch-dumb.sh: test_expect_success 'fetch can handle previously-fet
-      
-      test_expect_success 'did not use upload-pack service' '
-     -	! grep "/git-upload-pack" "$HTTPD_ROOT_PATH/access.log"
-    -+	! test_grep "/git-upload-pack" "$HTTPD_ROOT_PATH/access.log"
-    ++	test_grep ! "/git-upload-pack" "$HTTPD_ROOT_PATH/access.log"
-      '
-      
-     -test_expect_success 'git client shows text/plain errors' '
-    @@ t/t5550-http-fetch-dumb.sh: test_expect_success 'fetch can handle previously-fet
-     +test_expect_success ICONV 'git client does not show html errors' '
-      	test_must_fail git clone "$HTTPD_URL/error/html" 2>stderr &&
-     -	! grep "this is the error message" stderr
-    -+	! test_grep "this is the error message" stderr
-    ++	test_grep ! "this is the error message" stderr
-      '
-      
-     -test_expect_success 'git client shows text/plain with a charset' '
-    @@ t/t5550-http-fetch-dumb.sh: ja;q=0.95, zh;q=0.94, sv;q=0.93, pt;q=0.92, nb;q=0.9
-      test_expect_success 'git client send an empty Accept-Language' '
-      	GIT_TRACE_CURL=true LANGUAGE= git ls-remote "$HTTPD_URL/dumb/repo.git" 2>stderr &&
-     -	! grep "^=> Send header: Accept-Language:" stderr
-    -+	! test_grep "^=> Send header: Accept-Language:" stderr
-    ++	test_grep ! "^=> Send header: Accept-Language:" stderr
-      '
-      
-      test_expect_success 'remote-http complains cleanly about malformed urls' '
-5:  c8e69ff135 = 5:  58533d4b58 t6006: don't use iconv(1) without ICONV prereq
-
----
-base-commit: 3e0db84c88c57e70ac8be8c196dfa92c5d656fbc
-change-id: 20260209-b4-pks-ci-msvc-iconv-fixes-13de4801643f
+-- 
+2.53.0.414.gf7e9f6c205.dirty
 
