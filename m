@@ -1,145 +1,70 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D932C296BA5
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 12:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771590501; cv=pass; b=hil77j5Xlb/8OTSQLrgJohlA7rsrcB0OlxuvzJIep/gKv0eW1T9WKHiz5DBOQQfk4tDouyKR8STd/vOdHigX67wrZWQ1FXn6ymJpUWpD4nsrJH3qjTk8NgxvzELHIkRqxxYnIMRpni/zD6HXhBt4VcYOjJErj0G4RZcsugku2B8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771590501; c=relaxed/simple;
-	bh=fJDE7BVybr4GgdtvlE3rvQdgJZfAocSVXEqtfLkyRpc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MC8JLXXPpEI2FKoie//BiKIyBynsOPGlfWd6yVId6tvFPz73eOcu9CjoHlAqQuMImRjncsRA6OsKaQTSN49FGjjslME+fN7GP1+Npgkrglj7rMUqcouNfmidWuEOW7GCY6BxgwAGCJ9GXlE8+y1yD/JKpNSUqS/4cgwx59iepF8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=jsGrsuSi; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1475B30DD3B
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 12:29:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771590548; cv=none; b=A8ogjOKGwdWzYQ9BiI9UUvQQeMwCMhDwnBc9roEVRfsfsPvpgUIpkop5QnnY9MU10kLEWf0zf3gwfLTo1mCROrkdFxPL1AqhQtf2Jiak308M3KGIcHTqRzuZzCKuGqR5qRAX+6P3s6RL2CzJ6lBhelvD9cIWAglV3DFy9nB4BI0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771590548; c=relaxed/simple;
+	bh=zkg1079HHxTxp4Jdo5l+2HjZb3xqjV2yLgHSnqu6e+A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XCcdkvKEXqBDiW8zT15cxQ1k4Sbzkf2sYCXcExUBFn86CN0z2Oecyxssj15u1CvP6MHSWNzd9ZAwURnQUyTKPwgaCed1HPqtfx2rXgNrCCiPaAn15Shcv/OdTKuSiIvS7Eclc6NYyqoI9gkWdlmwbtfagVhf1NWC4YpsboWXqcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=BUk4Only; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="jsGrsuSi"
-ARC-Seal: i=1; a=rsa-sha256; t=1771590485; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=SUISpBFg+t1q+wqBLhPZV646KxFp55IICgFILcWWJjujLQ43YlBju4oeAAxNfYx6HJvpoqImpAd77pJPP0fawxBaXFJxukC3Q957j9R4WoGhapIgG7lQZduoNa/0dlpLzMbgn4C1wjltgZrcX479Ye4S0Adam2ZXnVlf2KiG9wI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1771590485; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=T2s8Xo4PI8yiNFYDOQ50eo7/cWi1CBpwWa9NTmQ8ppA=; 
-	b=O6DQGzKYXE/toFJkFDy2kZGPPD8+SbU4t6CI7YQuGs2kB1dWZ3sMrvWF/A0AnhNIDk7w5m0Huhk1vpo40/HXCMKQghOcmZwjWy05Xwm9QodEV5zSvoYVLbFDwk/j+dHihK+sJHrI/4RAcTprZcdRBMNc5uD3zROztMeu+w9+W7g=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771590485;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=T2s8Xo4PI8yiNFYDOQ50eo7/cWi1CBpwWa9NTmQ8ppA=;
-	b=jsGrsuSiVs4dW+4cmvTsCVwtytNdD3Ch35d4304Z9jLICdHIivf+POgbHiHa24ZZ
-	jWFzr2/rm34CKZlhrKybIjGQ6fovLwJHILiKjyBcFJenAxxpQRyXQTT97umcttXL3xp
-	fmFJKDhTNudKWLR/GWUake6fVYYC84gz/R7CJw9k=
-Received: by mx.zohomail.com with SMTPS id 1771590482677172.25669338434716;
-	Fri, 20 Feb 2026 04:28:02 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
- <emilyshaffer@google.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
- <steadmon@google.com>, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 4/8] hook: include hooks from the config
-In-Reply-To: <xmqqy0ko1iri.fsf@gitster.g>
-References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
- <20260218222352.55393-1-adrian.ratiu@collabora.com>
- <20260218222352.55393-5-adrian.ratiu@collabora.com>
- <xmqqy0ko1iri.fsf@gitster.g>
-Date: Fri, 20 Feb 2026 14:27:58 +0200
-Message-ID: <87o6ljy4z5.fsf@gentoo.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="BUk4Only"
+Received: (qmail 16645 invoked by uid 109); 20 Feb 2026 12:29:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=zkg1079HHxTxp4Jdo5l+2HjZb3xqjV2yLgHSnqu6e+A=; b=BUk4Onlyo87iPx8y7IHe8R3zlp8jIKIm7RdvwdLm9R1DgjQD5Tly+sIN/Ar+CyBFbLN4g0RJFJNVDFzCAZg/2DBoXaDPNU1YnZ3MuQtggAlWsCZ5EI0tgNosLIh/m/lJ/ETICQoIxj5yul/ggp/N49dE7suMMD7urCbbx3WpuWBNhQtrH0R4yqjBkpJ/oXqiFUunxrob6Rnku6RV16n+k0LyjvvWsqdV0js29h1wE7x6RaW6ThvKW2CNK/rWwq3QLr3aEWyrKYQ4H4Migxg+lEKc+yvNL8V1JNAldSbX2CSwdGiQnJvdAVNM2tK6iPQm0lz1pfMYBDSqC++JjRtPzw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Feb 2026 12:29:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25508 invoked by uid 111); 20 Feb 2026 12:29:00 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Feb 2026 07:29:00 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 20 Feb 2026 07:28:59 -0500
+From: Jeff King <peff@peff.net>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH 1/2] format-patch: make format.noprefix a boolean
+Message-ID: <20260220122859.GA612853@coredump.intra.peff.net>
+References: <CV_format.noprefix_boolean.39c@msgid.xyz>
+ <format.noprefix_boolean.39d@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <format.noprefix_boolean.39d@msgid.xyz>
 
-On Thu, 19 Feb 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
->
->> Examples:
->>
->>   $ git config --get-regexp "^hook\."
->>   hook.bar.command=~/bar.sh
->>   hook.bar.event=pre-commit
->
-> This is all good when you know where you defined your pre-commit
-> hook, but you would want to know in which scope the configuration is
-> made, wouldn't you, especially when you are trying to diagnose why
-> some command that you do not necessarily recognise when you run a
-> Git command?
+On Wed, Feb 18, 2026 at 09:26:17PM +0100, kristofferhaugsbakk@fastmail.com wrote:
 
-Yes, I assumed the user knows where his hooks are defined. :)
-Obviously this is not the case.
+> This is a breaking change. And as far as breaking changes go it is
+> pretty benign:
+> 
+> • The documentation claims that this config is equivalent to
+>   `diff.noprefix`; this is just a bug fix if the documentation is
+>   what defines the application interface
+> • Only users with non-boolean values will run into problems when we
+>   try to parse it as a boolean. But what would (1) make them suspect
+>   they could do that in the first place, and (2) have motivated them to
+>   do it?
+> • Users who have set this to `false` and expect that to mean *enable
+>   format.noprefix* (current behavior) will now have the opposite
+>   experience. Which is not a reasonable setup.
+> 
+> Let’s only offer a breaking change fig leaf by hinting about the
+> previous behavior before dying.
 
-This also applies to the "git hook list" command added later in this
-series, we might want to tell users where the hooks come from there as
-well.
+Thanks for following through with this. I probably would not have
+bothered with even the fig leaf, and just considered it a bug fix. But
+since you bothered to write it, I don't object.
 
->> @@ -10,17 +11,22 @@ struct repository;
->>   * Represents a hook command to be run.
->>   * Hooks can be:
->>   * 1. "traditional" (found in the hooks directory)
->> - * 2. "configured" (defined in Git's configuration, not yet implemented).
->> + * 2. "configured" (defined in Git's configuration via hook.<name>.event).
->
-> Wouldn't it be easier to understand if we do "<name>" -> "<friendly-name>"
-> to match the member name used in the struct below?
-
-Yes, name here referes to "friendly-name" :)
-
-I'll make this consestent in v3 across the patch series, to use
-friendly-name.
-
->>   * The 'kind' field determines which part of the union 'u' is valid.
->>   */
->>  struct hook {
->>  	enum {
->>  		HOOK_TRADITIONAL,
->> +		HOOK_CONFIGURED,
->>  	} kind;
->>  	union {
->>  		struct {
->>  			const char *path;
->>  		} traditional;
->> +		struct {
->> +			const char *friendly_name;
->> +			const char *command;
->
-> If we wanted to report which config scope defined a particular hook
-> we need to record where the configured hook came from in this
-> struct, right?
-
-Yes, this is the place.
-
-We can do it when parsing the configs (in v2, at Patrick's suggestion we
-just parse once then cache & reuse if possible). 
-
->
->> +		} configured;
->>  	} u;
->
->> +	if (repo->hook_config_cache) {
->> +		hook_cache_clear(repo->hook_config_cache);
->> +		FREE_AND_NULL(repo->hook_config_cache);
->> +	}
->
-> It is a minor point, but after applying the hole series, there are
-> only two calls to hook_cachje_clear(X) and they both are followed by
-> free(X) or FREE_AND_NULL(X).  I wonder if we simply want
-> hook_cache_free() instead of _clear()?
-
-Yes, we can do this.
-
-I think I have another place where I can apply this pattern in addition
-to this, to avoid calling both clear() + free() afterwards.
-
-Will make all these uses consistent on a single _free() in v3.
-
-Thanks,
-Adrian
+-Peff
