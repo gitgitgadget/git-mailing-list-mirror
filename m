@@ -1,80 +1,80 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5D833BBD7
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 10:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB8833C1BD
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 10:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771582543; cv=none; b=RgDCQ+vo1aUxza5n992nAuCCFygxPVWSlOgtTw6t63n9uGYIjnQXwrpcOdlNO7wGGfsQmQXJEitERuakS1IHHiJyVYkIFF907CJ6n/uU41Wp+ttbT9p9ziyzuF0dUU2R7p6yVw46ejg2GWnTxjOMOqjOXXZtjG8kslOdPZgPBAs=
+	t=1771582546; cv=none; b=phhFUQLhRXBTwOhZE7+5J6yjrgsZccnveWjAlHa/VgVlkRwjEGYAjfS6WdoyZkpCFQ59F7tEg06QzNoqb67Oi9WfdtBi1/ESIcY6C70ttWeWQe97IxEYHxeR7hBfGiRoQkBFuT7hxLSpgUnAPCq5zV1e7OY6MCBzNR8M0JJJJ9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771582543; c=relaxed/simple;
-	bh=P7M9NO3pE2RcQHIWol0f7dIi/sZBvHeOg+hQiD9h7xw=;
+	s=arc-20240116; t=1771582546; c=relaxed/simple;
+	bh=zgIfXPk1lEjEVuA/O1qtRpru7O53TuJbxFAJKysRYVE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=D01WfBZpU5DCkvWpYBr/dWuf7gJgXr9BN/E3IDmRsbx6XzhiYbIy1HCNRjDWEPW9XsHB8qhs65HpXeWfJz7JaBYkA1cF7pKK3IbmjzEaCBOrgH1tfAvt2UL3KBfq1aNk8om/WV+Y6egVZ4EdOT1UXjfJ4Rzl+AHMtyab6qEbWqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UWYCq5tZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=elQ9ufeN; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=igOT38PKpG80LSGgEmYe2JMNzgJEI3B8GaBvRXf2k6fCH7JQILFuPesO7aJpZKE9yRC3a1nwXoSBaKTtqohWVgolAfZtiYx92C9GmSTDMgHYWFjY2KRMrqbR8SHsXCuGI91VU01rtIcDkRtKmhN4/csj/OoMHc7Lt2HMFiFyLKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KglLnGz1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j6FJQFiJ; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UWYCq5tZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="elQ9ufeN"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id A3A0A1D001C0;
-	Fri, 20 Feb 2026 05:15:41 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KglLnGz1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j6FJQFiJ"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4C06A1D001C7;
+	Fri, 20 Feb 2026 05:15:44 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 20 Feb 2026 05:15:41 -0500
+  by phl-compute-10.internal (MEProxy); Fri, 20 Feb 2026 05:15:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771582541;
-	 x=1771668941; bh=VnrHo4AFQT8Ww2L9r1FO1GIipRukh2Zzi2fBPkmfrZU=; b=
-	UWYCq5tZCWQjoonTpG0/c8FYCFGt99NNVVOWmp0oC3qWmitkVnqEiLwP8hzqsQ+D
-	LjfoOClXVyAtrjaJax3W2sNrUHrOJ67ee+T+hKxBioiuJy55TH6IdJBZWbTvmYqi
-	SOfz1Iby/jHy8CKC3xt0JFc//pcnnI+XkR6Hg4v8MEIqElcr3Ks8w8rCinm2tqVj
-	9nMd3xCINSsHwQL+vfUttb/v2E0u3lX9loIggggbhdvlFsbTXmqg+EF8uHWO8BN6
-	UEMckYMuyoNgcjL0fA0a0urnYY2gI7HGnsxDq0YPeOYWcTSrtEtGNn800LwiygPs
-	MiMP72OvVdcxoJQxaiVujQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771582544;
+	 x=1771668944; bh=E30e6EaQVG0ElGOqUjx4PiPxljZdsJZoOoLos8CgGxo=; b=
+	KglLnGz1NVqB4kkPdxeF8EMQjxfNtHSRZkqO28jVvuHK4pgVVq5s4T1xqL5ixVXt
+	rKsb8kDjuMiIeHo5t2ABl+R27d+KBOFQW72vI3zpxDpFUSQzh7nxSApLe2PaFDXQ
+	CscB7Vov8hDnVzQfVNSMulFKu+BLkGG+rJDYiej7dV8U1IrFMxDUJoeCbNAKwqF3
+	z2sVAZbcS2riReIlMk5jhhxPlrmnuNuqWiXi8tgS1AMGz6+84GxjWsWSKCMSYXfF
+	kPaKbF/l00zLoiOOTPy8Llk9XjiTNcjopeWaV5RayMpbSxJwnimd2HnuJAZceBNJ
+	YvgQuBw4cJtRV/WkRzlQaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771582541; x=
-	1771668941; bh=VnrHo4AFQT8Ww2L9r1FO1GIipRukh2Zzi2fBPkmfrZU=; b=e
-	lQ9ufeNgmJ8o5SbL76WXYHe2J/MRJ9EdSoZ5i+EmJAF/EeW0u2G1GDWWIWA5So91
-	Anz9ILQ40E464CttW7XGa/y6R9QSvIe8OaPsgjYn+8kIpAAwRrOEADsUJ+fKo4BT
-	adhBA9EGgxXGD0aDnsIE7KkzVjBnukDuQOAvtbgyi1GOYk3TE9vC9y1GFHhlDPhU
-	iINWJeqsSfqGRCN+/2BYoMjv30tMLsHrjitQtSy+XzHSnKsDtg+b8jxFXx/qnoUA
-	9Ii9y0iO43epYqlq8p1Dqjs7+oA6Aylkcn+N0sl6QjM2i020+eIYwfQCHGVmPoGH
-	4eSYx0gG7jf4UxWpzAQxg==
-X-ME-Sender: <xms:TTSYaUV8RnY_atqFeWVgroo6sh-kkOz0TbtOV6jBOczM6FJ7NHQ3qw>
-    <xme:TTSYaQDfFseboxZSQBsd71fm0Wob05Oq5AlvQXgpP3bTNqCP-H9SQlhPkYrYpuDv6
-    aorIabyrKZEw49txMCeLJl6oeKUcf_e-KeJhwzGQOM9Hv_d-Ol73w>
-X-ME-Received: <xmr:TTSYaVz7lBlfFwLcdtw3ImDKuIgla91uZRqSbvrmVMSBcHbZtcnS1eaxJSUW_ubxN_UVrDXyN9SXI3LwRUw19zqxC-6ej6UoAppw9mPZOk-N>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771582544; x=
+	1771668944; bh=E30e6EaQVG0ElGOqUjx4PiPxljZdsJZoOoLos8CgGxo=; b=j
+	6FJQFiJf8S8+7z42oh3z33Z+cdfQ6Tsl1uvh2+zQPHQHPWma9Pj7/DIIUerGTHha
+	iVr4qtOZIvKH3o1i4HzsERBQDdW7Q/SkBztRgIAmZmWGRnRmnkhVYzh6+VXDIcp5
+	lPSG4o6HBF3/38yJP6HLfwsEd1vZWUjdIWiLvA8RHJR/bfnd0RMP60+TNb5hIHHj
+	e7i0S9eGrEJpds1teOGbqzNGCfQZqq80OWm283GC7tO8/UVUX33Bexep3cJ/43Ah
+	3/CS8Ku460UkZk8ec09AkgAekyuYsbtlsVd4hJ9vxA2YYTycu5rj+DtKB9lv8xD5
+	dDVAYu5xz9wl66fgITksw==
+X-ME-Sender: <xms:UDSYaZJOxe1kCp948h-TUcjmM9Vyea8V8_c7iwvJXzXg0l3bqeob2A>
+    <xme:UDSYacmXAz5xE9He3EqtpoWjMVKkBmEiz3jQ26lto8X3Se3n4pMyHBKTckytqtAQe
+    fw_Ta6dI6DUoa8oZW8qGnVk7LEqPYG3q0Z0a7p3lttFQxWfIc8_mq0>
+X-ME-Received: <xmr:UDSYafE-sBHGV3uBgYnfM1XMtByclegdBmM9jn2jCRjihLMLlZHoCY8287E_KNj-gVByxWDihMUNBtO7I_On7sbdtjmxBVrGJYsK2qWLGdJi>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekudeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeigfeggeethedvffeifeekudfgueelkeefhfduvdeigeektdekhfdtheeuledtieen
-    ucffohhmrghinhepihhntghrvghmvghnthgrlhdqrhgvphgrtghkrdgruhhtohenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:TTSYadAx3icHbR0oEL33sonN_Y174Uqe8b4oKyuA39ZX5vlS6U_sLw>
-    <xmx:TTSYaSaRfVAtFdFi4eGpSsYPri0ShltdmU69Aw-IoS66oJUyKgTbnQ>
-    <xmx:TTSYaVhyeOPJ6sSy0dQ6VN4fbTNbAYqkWKE7hsxGbUzBMlNrH_dZhw>
-    <xmx:TTSYaU7J9jfv5rI_EBKrJbOBDnNEHbrCtNYSZ3WvLJIKLeGoDIXwFw>
-    <xmx:TTSYaUefisq026Z7o0aBRycAW7O-DwtLAVSjyBzeyRd1mSacJkBkZGR3>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtth
+    grhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:UDSYaUHWjc3ezaxETeWoxfFszadfO75jKSpGA5Zd6CQuSO1W7GZMlg>
+    <xmx:UDSYaUMbMEAhLq2xyUZoT-EA40fCVkp7rppUvoR56ziEnkTppRgjOA>
+    <xmx:UDSYabFOT9MPERHoYOktyoYJhdKbCEhM2VvR48BLxSLoBdoreZeAxQ>
+    <xmx:UDSYaTORdrCCAlSytX5hic2ODb6xRSriygiopSl_4mjnxJuF5T-Rrw>
+    <xmx:UDSYaUAfdQzmhWoRdXYV1cP2IsWp-YRrlSQuHAljFs9lTHroJi39I-3v>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 05:15:40 -0500 (EST)
+ 20 Feb 2026 05:15:42 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 414d3f09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Feb 2026 10:15:39 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4601653f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Feb 2026 10:15:42 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 20 Feb 2026 11:15:11 +0100
-Subject: [PATCH 7/8] t7900: prepare for switch of the default strategy
+Date: Fri, 20 Feb 2026 11:15:12 +0100
+Subject: [PATCH 8/8] builtin/maintenance: use "geometric" strategy by
+ default
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,72 +83,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-7-faeb321ad13b@pks.im>
+Message-Id: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-8-faeb321ad13b@pks.im>
 References: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
 In-Reply-To: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.14.3
 
-The t7900 test suite is exercising git-maintenance(1) and is thus of
-course heavily reliant on the exact maintenance strategy. This reliance
-comes in two flavors:
+The git-gc(1) command has been introduced in the early days of Git in
+30f610b7b0 (Create 'git gc' to perform common maintenance operations.,
+2006-12-27) as the main repository maintenance utility. And while the
+tool has of course evolved since then to cover new parts, the basic
+strategy it uses has never really changed much.
 
-  - One test explicitly wants to verify that git-gc(1) is run as part of
-    `git maintenance run`. This test is adapted by explicitly picking the
-    "gc" strategy.
+It is safe to say that since 2006 the Git ecosystem has changed quite a
+bit. Repositories tend to be much larger nowadays than they have been
+almost 20 years ago, and large parts of the industry went crazy for
+monorepos (for various wildly different definitions of "monorepo"). So
+the maintenance strategy we used back then may not be the best fit
+nowadays anymore.
 
-  - The other tests assume a specific shape of the object database,
-    which is dependent on whether or not we run auto-maintenance before
-    we come to the actual subject under test. These tests are adapted by
-    disabling auto-maintenance.
+Arguably, most of the maintenance tasks that git-gc(1) does are still
+perfectly fine today: repacking references, expiring various data
+structures and things like tend to not cause huge problems. But the big
+exception is the way we repack objects.
 
-With these changes t7900 passes with both "gc" and "geometric" default
-strategies.
+git-gc(1) by default uses a split strategy: it performs incremental
+repacks by default, and then whenever we have too many packs we perform
+a large all-into-one repack. This all-into-one repack is what is causing
+problems nowadays, as it is an operation that is quite expensive. While
+it is wasteful in small- and medium-sized repositories, in large repos
+it may even be prohibitively expensive.
+
+We have eventually introduced git-maintenance(1) that was slated as a
+replacement for git-gc(1). In contrast to git-gc(1), it was much more
+flexible as it is structured around configurable tasks and strategies.
+And while it knows about the "incremental" strategy that we may use for
+scheduled maintenance when configured via Scalar, its default still is
+to use git-gc(1) in the background.
+
+The "incremental" strategy isn't really a full replacement for git-gc(1)
+though, as it doesn't know to expire unused data structures. In Git 2.52
+we have thus introduced a new "geometric" strategy that is a proper
+replacement for the old git-gc(1).
+
+In contrast to the incremental/all-into-one split used by git-gc(1), the
+new "geometric" strategy maintains a geometric progression of packfiles,
+which significantly reduces the number of all-into-one repacks that we
+have to perform in large repositories. It is thus a much better fit for
+large repositories than git-gc(1).
+
+Note that the "geometric" strategy isn't perfect though: while we
+perform way less all-into-one repacks compared to git-gc(1), we still
+have to perform them eventually. But for the largest repositories out
+there this may not be an option, as client machines might not be
+powerful enough to perform such a repack in the first place. These cases
+would thus still be covered by Scalar's "incremental" strategy.
+
+Switch the default strategy away from "gc" to "geometric", but retain
+the "incremental" strategy configured by Scalar.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t7900-maintenance.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ builtin/gc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index d11d6f8f15..63276dcc5f 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -43,7 +43,8 @@ test_expect_success 'help text' '
- 	test_grep "usage: git maintenance" err
- '
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 4390eee6ec..fb329c2cff 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1980,7 +1980,7 @@ static void initialize_task_config(struct maintenance_run_opts *opts,
+ 		strategy = none_strategy;
+ 		type = MAINTENANCE_TYPE_SCHEDULED;
+ 	} else {
+-		strategy = gc_strategy;
++		strategy = geometric_strategy;
+ 		type = MAINTENANCE_TYPE_MANUAL;
+ 	}
  
--test_expect_success 'run [--auto|--quiet]' '
-+test_expect_success 'run [--auto|--quiet] with gc strategy' '
-+	test_config maintenance.strategy gc &&
- 	GIT_TRACE2_EVENT="$(pwd)/run-no-auto.txt" \
- 		git maintenance run 2>/dev/null &&
- 	GIT_TRACE2_EVENT="$(pwd)/run-auto.txt" \
-@@ -497,6 +498,7 @@ test_expect_success 'maintenance.incremental-repack.auto' '
- 	(
- 		cd incremental-repack-true &&
- 		git config core.multiPackIndex true &&
-+		git config maintenance.auto false &&
- 		run_incremental_repack_and_verify
- 	)
- '
-@@ -507,6 +509,7 @@ test_expect_success 'maintenance.incremental-repack.auto (when config is unset)'
- 	(
- 		cd incremental-repack-unset &&
- 		test_unconfig core.multiPackIndex &&
-+		git config maintenance.auto false &&
- 		run_incremental_repack_and_verify
- 	)
- '
-@@ -617,6 +620,7 @@ test_expect_success 'geometric repacking with --auto' '
- 	git init repo &&
- 	(
- 		cd repo &&
-+		git config set maintenance.auto false &&
- 
- 		# An empty repository does not need repacking, except when
- 		# explicitly told to do it.
 
 -- 
 2.53.0.414.gf7e9f6c205.dirty
