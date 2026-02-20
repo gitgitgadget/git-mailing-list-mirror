@@ -1,54 +1,54 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A3441C62
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 15:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCE5241695
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 16:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771603182; cv=none; b=fV0g4rMJHoveFex0FIaVUMXQxyNpnwBgsICp+6lOs2jjexx3tFaluXDe2CNlbRhhkGatN5/DdNBtYurA8j17L24EBdHXGznlI2aFAFp/bn0pCu3DkfbRo8zkKIfdgkm0IkyE5sFTNKtssxMYmi30F0nxKj5Dpbab/Za/N+Ct+eQ=
+	t=1771603686; cv=none; b=hDF8YRn7eHcDpuxjNhYQxoF4c8YMaJkkImM4UKv6NvrUdGXOsGFQmNj3DWeZlpPp2LSrVcCzra14VIAPPYYPlus3O077veMpCXAgJvmI8aG68lRwdr06bMpbI69XaGeQQ/SEOUw/5KX5uExJw09WDsyKIDsyKvz/9t770emlyYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771603182; c=relaxed/simple;
-	bh=vCpfcFw7SCeY/iBGTi/MgUf3YCIulyq5OzP2dEkfs6U=;
+	s=arc-20240116; t=1771603686; c=relaxed/simple;
+	bh=IzNAFWGjWna7VZnDxUAMVzRHSdnedVy5V6W6GBGu+Hk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IWllj5zxvATeTqhTm9/3daucZyfpngI29cTqDokRkS4lLruh0u2pMnKrLngVj2dBpwrpH4cD45Xgf1CwkKkPFLXoyUml5nXM7yGjVRUoEaB6v2KX4goo0KFQmjQNEU8SvA3jXYq65LShPOHS3WsMBe26ofA2HMwb65HzGwms2CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tGJKagz/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jpf+0R3k; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=aCaIFYHW6gzjp0W17ol1+4DHEhYYT+MDpwxZV+jVgEslzoY7//wNLMbAZXfrwVM7LmZJQEAY6ZdHNLEHgSbgCoZ0K/uflWxUtmxmsWUiVEJFddJZxFLExFpO1/itpB5UtkXR9bqYtc9bAOfpPtmCOOyLscjMlTK2z7hsil0PTKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zwQLoPFG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uBMMyYfv; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tGJKagz/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jpf+0R3k"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8627D14001B2;
-	Fri, 20 Feb 2026 10:59:40 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 20 Feb 2026 10:59:40 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zwQLoPFG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uBMMyYfv"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A9C414001DA;
+	Fri, 20 Feb 2026 11:08:04 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Fri, 20 Feb 2026 11:08:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771603180; x=1771689580; bh=3Zjsg7kxo5
-	ZTUqRrB++7qklDHxfILWRUvyI0r8ogGos=; b=tGJKagz/cAkudQnqstP63mAPf0
-	pYwAW4lgh+ghiUOAB0XTtyvTtVP8K2CK4YxwXhg7CA005txRxZSngkz0MP2B4kHI
-	/XyNtGhGJwnO21FBLXqW4xfHIrJRlkXRCWQ2fMl81gNMS98ATVG7c72caOyepUPB
-	lfhkCood6NsQCMREy4J4ZNV9XgECg0D0JdFLcYLc87fXxZrw4pYfLTjBY8TfnDuv
-	uw31QElinz6rHl+zZVkYj8tljdGy7X3HuyZwyTcXzd/mFRKVgU8woBXUjQiEV4q9
-	+Mr25+HX3W8bwEY7DuO4DVSop5nsYX5XaO1YLajXf1kYgk+56MbSWbAGHBcA==
+	:subject:to:to; s=fm2; t=1771603684; x=1771690084; bh=KYt6Inn2O3
+	BPd7kdXcM8IiyGorF2lXAsyC9c3V4rw8k=; b=zwQLoPFG3Li0QiRsxxbQbIDK5N
+	4VfntlU5xl3tI/TqwTNnl7JbEG4P/IJJbDIqilhnTLr4sCUpR1SIIPzOuJ4KkTd3
+	S/5dIb3oVpp9KM0bk6YZH9slroWS7rsgNSgJzvFqfZTMqRaILDAWafbsJ6L6u8Y6
+	975YHwlPB3r/Hp1oaNGpIo3J+dtNw3SpdRMViiPl3wqECIlj484O/B3dt3a80sLi
+	Idx9Vzrf+SyQvlc42c3v7OhhL1ZgokFNVKvzQ9rpf7iBC1XP1y2CSFJ24RQVqIXP
+	zY+DSHdVfVsH9Tug+mKgk3g4uffZoA85YTY5bSzJTBD8ExZfa/Fh0AMN5/Jg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771603180; x=1771689580; bh=3Zjsg7kxo5ZTUqRrB++7qklDHxfILWRUvyI
-	0r8ogGos=; b=Jpf+0R3kx/igKGt27rYOgUbLwXVlEGiAOtkPTEaCJ72K9q2ZVhJ
-	OGenjSTYsP0FoiF2vJ+jETJzpY6fHNEJpkMQxbcErisyFU0BjHgYoTUV4lciA4hX
-	M5WosRFZyJLaVeA0mXnxVJ4r9LoGTl0zSo4Xjwuew3BLASkBgi612BLMpSiuKj/+
-	RCJVSu6vxIsmeTDMxjUVyCaL6npW4vVnM89z99NSR96oj5YsLpvxs9yZutzoE7wt
-	uKb3nd6ofv3nnHMs88nQjAzfrM/0xNnQN4XBitA9Xp5MAmYUpIMJmS5SNSbSYF19
-	2hHsRbGYa/dRgj5NJwtmGq5860325dDxvxw==
-X-ME-Sender: <xms:7ISYaexaM03p9oPz8Ee63XCrAFJcYpLFDDgDiuyql8VLl1jGW4UgRg>
-    <xme:7ISYaRKlSpckGuVDO01uPiUo2v5ptR7NSE22XJ6YeomuS2LcvcNgv0Fo-zis1SXx3
-    sJwJvXxNfTwnWfklr58BBw6ViyFAw0E2hYmjt3pDzrrTu4CrJeIGA>
-X-ME-Received: <xmr:7ISYaYoHweZ5YJmlnF0snSoUd0Jjdfjr1IOuHcnt7I8v1Ln0tGH6DQ5vJUTMCLJwmuB36qgq2FlGgF1YZyT_qBQnKy1Eey8TAw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekkeeiucetufdoteggodetrf
+	1771603684; x=1771690084; bh=KYt6Inn2O3BPd7kdXcM8IiyGorF2lXAsyC9
+	c3V4rw8k=; b=uBMMyYfvNm8jh0kX5HyPKdvN605oDc0/pEmFWycMDOZKBzm/Wy2
+	l7hIRDHtEllk5IsdyuWFND/8lyrBYdC+tSjfs4tR6qR6lJZGyW8Nb2IcVt7xKi3b
+	Ur/zLZ6MEMsf66JyGa212mW4Nfdz0vIVGbTnEHl8TaOGWbKCuo5h0h9FhtLefXK2
+	9C6Z992OLAyuEa0l+bATblscB7cuaKmr5PWLJvvhAddct/oQJ1HfsRj6J8PoBOhU
+	uCPBiTWISXQ7QaAZh7lZBaoT9vXQTia7etQDikrsWNG0FGaJraFVdjTo8ZDa0lkO
+	ZSZ2/Qa9vDasp4rFvXy0pL3pIGSPUtutdCg==
+X-ME-Sender: <xms:5IaYaV-0T40CFTnLKYPGo7Glw0jpLBZ51ECR1xijaGZISrpTwYjKoA>
+    <xme:5IaYaQkNvot0x-e9jHhsZuwTGk3Tx2XH7sQB1eYl14-BqepAq2CQUKDeJxBQJEm2z
+    FF8JlL9XTiZOLEsYKlTP0976RkC14ce5M6Ee1ZSLbEQKdJMJOYs4g>
+X-ME-Received: <xmr:5IaYabU1ALX28HWh5dIfyVv0cMvQLgWZt_uauI7UyESgN1ET1oq-qr8xzITcdt8gEhlzc8p8CcYarpk9YhH3Rky_1Yo7bJC-HQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekkeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -60,25 +60,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdekkeeiucetufdote
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
     pehpshesphhkshdrihhmpdhrtghpthhtohephihorghnnhdrvhgrlhgvrhhisegtvggrrd
     hfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7ISYaQJcz9HprDRB76HWvzb_OgjMq0Dr_Z_HnN3kgfI1Zlpyy02WrA>
-    <xmx:7ISYadS14WQZ_LdEJASHy3MIHXTgMHILT90n0NCtSgN2klYqnerhUg>
-    <xmx:7ISYafs84zhgBH6XKFZcpP47Ki2KW37iwJXpes5SmXDhERN8sJ3Crg>
-    <xmx:7ISYaebAJ5lycAaR1S1umzmNknwfALitBBoCkrosGf7mLPjKWTBYKw>
-    <xmx:7ISYafnRK-WWmczEOFVfSnXhTK8W7qziIEjmWC4EyrB6U9Q59VIxDtqH>
+X-ME-Proxy: <xmx:5IaYaVGm1D_s3fVRi_n6Rh_McxGQ02p0ZIZiILbBLT8BbMSwj3rH6A>
+    <xmx:5IaYaXdTuQBaMX3jLu0OcNa4IeDMInDzCQaQd0VE-N5zIcHRWNXiQw>
+    <xmx:5IaYaWLNlfdBoQdEdv5GX9Y0-jPK10CHgM1ic-I6QoigXrPs1DnuZA>
+    <xmx:5IaYacHG36ngIWgRZ-tZM3w_5f3rvX0Vre7I7JJestTWAzh9zvg7xw>
+    <xmx:5IaYaaiBu7mWNfsaeCoKKFBHMG3Jbw7LJ7rpy5ZS-Jhym1G2J_T_sHK9>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 10:59:39 -0500 (EST)
+ 20 Feb 2026 11:08:03 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Yoann Valeri via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Yoann Valeri
- <yoann.valeri@cea.fr>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,
+  Yoann Valeri <yoann.valeri@cea.fr>
 Subject: Re: [PATCH] branch: add 'branch.addCurrentBranchAsPrefix' config param
 In-Reply-To: <pull.2202.git.git.1771574833967.gitgitgadget@gmail.com> (Yoann
 	Valeri via GitGitGadget's message of "Fri, 20 Feb 2026 08:07:13
 	+0000")
 References: <pull.2202.git.git.1771574833967.gitgitgadget@gmail.com>
-Date: Fri, 20 Feb 2026 07:59:38 -0800
-Message-ID: <xmqq5x7r1k45.fsf@gitster.g>
+Date: Fri, 20 Feb 2026 08:08:02 -0800
+Message-ID: <xmqqy0knz9ct.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,21 +88,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Yoann Valeri via GitGitGadget" <gitgitgadget@gmail.com> writes:
+By the way, the address at @cea.fr used as the author ident and for
+sign-off seems to be bouncing, due to "550 mailbox unavailable".
 
-> From: VALERI Yoann <yoann.valeri@cea.fr>
->
-> This patch adds a new configuration parameter for the branch creation
-> feature: 'branch.addCurrentBranchAsPrefix'. When set to true, if one
+Two requests:
 
-We generally do not add a configuration variable before the concept
-proves useful by being available as a command line option for some
-time.  Have we had a command line option that corresponds to this
-feature for a year or two?  Such a command line option will be
-necessary even after we decide to add a configuration variable to
-allow users to override the configured value per-invocation basis,
-e.g., "git branch --no-current-branch-prefix maint-2.54 v2.54.0",
-when you want to use the feature for most of your branches but want
-to deviate from that convention in selected cases.
+ * To the author of the patch.  Could you make sure to sign-off with
+   reachable e-mail address?  It cannot be helped that years after a
+   patch is written, the author may become unreachable, but we do
+   not want to see it happen even before we accept the patch.
 
-Thanks.
+ * To GitGitGadget maintainers.  Could you think about ways to catch
+   an incident like this, perhaps by sending a ping e-mail to first
+   time contributors to request response before allowing /submit or
+   something?
+
+
+
