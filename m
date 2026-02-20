@@ -1,45 +1,92 @@
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED5A2877E5
-	for <git@vger.kernel.org>; Fri, 20 Feb 2026 17:02:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F20619C546
+	for <git@vger.kernel.org>; Fri, 20 Feb 2026 17:21:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771606933; cv=none; b=IXWq7X+EIV4WsZlINsze/c/W3WktrCmLlmgPzcWkbq6suJOHSq8aW0B5FHzeNRmQnMj3Dcgw8ODR9yFzrglA4z45CskJHtS7yjn3M0FciwR7hlC0+jE6T6Geid/WgZseuNnrK9TBeaNh4oBmC/AXTrdymMCugTMGNwPwqRbMB8g=
+	t=1771608093; cv=none; b=imJq5yql7eJPPW33IgnkMkRDRHRAdOuHsGtQpU1vcYBwoWuZysrUdJ/YTDiJ4GlERrt2kSqC+N08imm5OcxhElBNthkZOVP9tYKa4Hu8B7ebnWycwi46QhEoRppnVlk83qrsaj/4dMna7rUyxdLYax3jKbaq7XtTo5j9qBMr50M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771606933; c=relaxed/simple;
-	bh=5PRhd0M3XtU6Oe0RRGFVF8lomw3ekzYbwLy9sQ35P44=;
+	s=arc-20240116; t=1771608093; c=relaxed/simple;
+	bh=RTygEb3TMBBEoa9H9re03kW8hTirf70w+kPVd7RiVyE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s2RWAx/XxK22sg7c8UGrwPWYxH7EH+H3FLFzKc+5bn2mLcRr4h3sZ+JkvDO7/1aT6VMMHxhOwZQhB53q0LnX6BUc0AKFYmKcbXObTywBEE1Z5pTlnNsbdPdl6aeZWCgDyFCx9oy0+BoUCxveiOR6JKWVMGRKM79PKdScaMf8WWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=g6PmHsKA; arc=none smtp.client-ip=95.215.58.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=m5jEczlWmxWw4xK+veqcGQgZaT79+INqm4Hh0csHHgGDPZRJubGMiNCFWFuFKjiUMduk/SpQCEACkLZJ/zv1IsqwrZJw4KVDRXdEMIR9dV8jP6/KNbuzZndxCeg90wTd/z9eioruDlSoaA9rrkQ4rI5bdSGWD9wQgSRDiU4xxcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AzCfTeXR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M7ptLWql; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="g6PmHsKA"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1771606928;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eyvIt8rEY3FEQuuw2ZW/IbPZIXF9AeT9vLZJiull2F4=;
-	b=g6PmHsKA0PODNP9AJ7H9DEQaCQ5TEdpcDc6DkAZ6kPIo0/gyiNwFaX69mTkhX5bzug0i8w
-	nwHOzCMe9QOZ/Mn3+drGlo3zVLzkckNUKuwXLImqwwBKw8X8tNb6l1dtznPpiT7J1PvqGZ
-	LFOMODq4JC8e++BJp/KYmK9aoy4OCvg=
-From: Toon Claes <toon@iotcl.com>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk,
- karthik.188@gmail.com, johannes.schindelin@gmx.de, Siddharth Asthana
- <siddharthasthana31@gmail.com>
-Subject: Re: [PATCH v3 1/2] sequencer: extract revert message formatting
- into shared function
-In-Reply-To: <20260218234215.89326-2-siddharthasthana31@gmail.com>
-References: <20251202201611.22137-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-2-siddharthasthana31@gmail.com>
-Date: Fri, 20 Feb 2026 18:01:47 +0100
-Message-ID: <87wm07e4ck.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AzCfTeXR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M7ptLWql"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 966581400036;
+	Fri, 20 Feb 2026 12:21:31 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 20 Feb 2026 12:21:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771608091; x=1771694491; bh=D32x+Jucnd
+	JosmBVED8QErikWMxVasLVn7lTsj6S5Ec=; b=AzCfTeXRiRRBNbiBT+kier2mUG
+	98DTOSJqFsrUj6u2atd4peLAheL6wHteWsB1WLIL7dpdGkIsLo2/CuxM1xVj6HOH
+	UsJscahri4RfaDd/WII+R/z0R2zTZ5R61iJxtYl/7/8pG187uuaiCQeApxKpcILq
+	7lJgAnYVCIojUOUuXPIsgU4KJgTqi3ETDK/FfwWL87V7END+PRzDngat90jiYG+Z
+	zi/gcgg+Ij9zBnl6L/Om1SrqbPZX59yQUy2+w/WWhEMaJh/E8xNBMVMiQUUjPi97
+	b+KDMjuqE9Y4pQjPXWrGTFOZaD+KP0RpHHphG/WHSLccrn1rbI+OrVL4HyTg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771608091; x=1771694491; bh=D32x+JucndJosmBVED8QErikWMxVasLVn7l
+	Tsj6S5Ec=; b=M7ptLWqlXTWpisn1IqdCS2WqZlrAil2qEM+wTNjagN1n9u2pp18
+	X8jc/CovwOw2GnJWZk3Le3bsbjcB3J6+dY+Enh6eUrz08G0jbHiigjxvIAh6ZNmg
+	lKH4Wd+BQgeRWTMfxcOnS67XF2v5VjjKBBKeCHTPzCP4YoMzgc88p4uA6xjkLZwo
+	aBW3Bc0NOwdiHSsl/PMFLeknLHWHPy9Eud16biimRU1PBxhizbE5mHoMON6IhwP+
+	gGNvgDPmAR/eVm4RNweVLu5kQJnnrP7ejAl7fASnXjHDcqFyCDcqWEyl5MVG24u4
+	N55LihTxaLRVihHGAjRaByf87VQ87/5m21w==
+X-ME-Sender: <xms:G5iYaXy4pxkhvNJvXzMb9-Y6XicOTovLfuu3Oxdere-_tR2HJejuNw>
+    <xme:G5iYaeXv4cR10QtQyqWZmcrx-Tu-YfmJHvI_ur7-WzjtMYUzsdmDf9eDmEAO7oOn8
+    QzUuw98tMTUYwwlWhT4GT6dsV8oicKH0ijxMomLJWun2s7-EzJbXA>
+X-ME-Received: <xmr:G5iYaXigYyIxX0W034JC9VSe4tb-cikrysBXgT7jyQS07PxmquBGK3DUNjWBr2bQTn8SxrPnaD7RIhrjn07cn5rlMy6cyH3hqQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeltddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
+    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepvghmihhlhihshhgrfh
+    hfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:G5iYaeBAIJprcbN7NAW9zs3zdhxysCP_ToboRKLRBrDMNmTwsJi4Fg>
+    <xmx:G5iYadttw9Dto6t60NMholbWB4QHXTneT5tsFd63Eac2m1Q3vRSJSA>
+    <xmx:G5iYaSeGhIhUuSXvQbNopeuzdhmvmyZBWaO4swDfjfKLzjUQq3gGJg>
+    <xmx:G5iYaS95qzFfjbaWsB3ozsPIxZ0rtVich0WIcPndi0BRgzazSmiBGw>
+    <xmx:G5iYaU1YnSy8IYrANAhMRqdH7Eok-h9b4_nzQsC7XaOnS2vQp9mAaKJ5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Feb 2026 12:21:30 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Emily Shaffer
+ <emilyshaffer@google.com>,  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon
+ <steadmon@google.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2 1/8] hook: add internal state alloc/free callbacks
+In-Reply-To: <87ldgny4mm.fsf@collabora.com> (Adrian Ratiu's message of "Fri,
+	20 Feb 2026 14:35:29 +0200")
+References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
+	<20260218222352.55393-1-adrian.ratiu@collabora.com>
+	<20260218222352.55393-2-adrian.ratiu@collabora.com>
+	<xmqq4inc2yom.fsf@gitster.g> <87ldgny4mm.fsf@collabora.com>
+Date: Fri, 20 Feb 2026 09:21:29 -0800
+Message-ID: <xmqq4inbz5ye.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,77 +94,32 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
-Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-> The logic for formatting revert commit messages (handling "Revert" and
-> "Reapply" cases) is currently duplicated between sequencer.c and will be
-> needed by builtin/replay.c.
+> On Thu, 19 Feb 2026, Junio C Hamano <gitster@pobox.com> wrote:
+>> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+>>
+>>> +	/*
+>>> +	 * Ensure cb_data copy and free functions are either provided together,
+>>> +	 * or neither one is provided.
+>>> +	 */
+>>> +	if ((options->feed_pipe_cb_data_alloc && !options->feed_pipe_cb_data_free) ||
+>>> +	    (!options->feed_pipe_cb_data_alloc && options->feed_pipe_cb_data_free))
+>>> +		BUG("feed_pipe_cb_data_alloc and feed_pipe_cb_data_free must be set together");
+>>
+>> A way to avoid being repetitious may be to say
+>>
+>> 	if (!!options->feed_pipe_cb_data_alloc != !!options->feed_pipe_cb_data_free)
+>>
+>> or
+>>
+>> 	if (!!options->feed_pipe_cb_data_alloc ^ !!options->feed_pipe_cb_data_free)
+>>
+>> but it (especially the latter) might be a bit too cute for some
+>> people's taste.
 >
-> Extract this logic into a new sequencer_format_revert_header() function
-> that can be shared. The function handles both regular reverts ("Revert
-> "<subject>"") and revert-of-revert cases ("Reapply "<subject>"").
-> When an oid is provided, the function appends the full commit hash and
-> period; otherwise the caller should append the commit reference.
->
-> Update do_pick_commit() to use the new helper, eliminating code
-> duplication while preserving the special handling for commit_use_reference.
->
-> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
-> ---
->  sequencer.c | 47 +++++++++++++++++++++++++++++++----------------
->  sequencer.h | 11 +++++++++++
->  2 files changed, 42 insertions(+), 16 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 1f492f8460..b32347c853 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2356,8 +2356,6 @@ static int do_pick_commit(struct repository *r,
->  	 */
->  
->  	if (command == TODO_REVERT) {
-> -		const char *orig_subject;
-> -
->  		base = commit;
->  		base_label = msg.label;
->  		next = parent;
-> @@ -2365,22 +2363,10 @@ static int do_pick_commit(struct repository *r,
->  		if (opts->commit_use_reference) {
->  			strbuf_commented_addf(&ctx->message, comment_line_str,
->  				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-> -		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
-> -			   /*
-> -			    * We don't touch pre-existing repeated reverts, because
-> -			    * theoretically these can be nested arbitrarily deeply,
-> -			    * thus requiring excessive complexity to deal with.
-> -			    */
-> -			   !starts_with(orig_subject, "Revert \"")) {
-> -			strbuf_addstr(&ctx->message, "Reapply \"");
-> -			strbuf_addstr(&ctx->message, orig_subject);
-> -			strbuf_addstr(&ctx->message, "\n");
-> +			strbuf_addstr(&ctx->message, "\nThis reverts commit ");
->  		} else {
-> -			strbuf_addstr(&ctx->message, "Revert \"");
-> -			strbuf_addstr(&ctx->message, msg.subject);
-> -			strbuf_addstr(&ctx->message, "\"\n");
-> +			sequencer_format_revert_header(&ctx->message, msg.subject, NULL);
->  		}
-> -		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
->  		refer_to_commit(opts, &ctx->message, commit);
+> Thanks for suggesting this. I was actually thinking of ways to simplify
+> this and the double negation didn't occur to me. Will do in v3.
 
-I still find it somewhat confusing we have some the code that deals with
-`opts->commit_use_reference` partly in here and partly in
-sequencer_format_revert_header().
-
-Part of the confusion comes from sequencer_format_revert_header() being
-called with NULL for the commit OID.
-
-Was is not possible to incorporate Patrick's suggestion[1]?
-
-[1]: https://lore.kernel.org/git/aTZ5RrjnwJ2ZnT7A@pks.im/
-
--- 
-Cheers,
-Toon
+Embarrassed.   You do not need !!; (!A != !B) would suffice.
