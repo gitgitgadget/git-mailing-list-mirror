@@ -1,235 +1,116 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0875F2877CF
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:28:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB5A2FD69D
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771694897; cv=none; b=h/5e/Pdhhe1KhO7LLgDlHnVE/O7ANBXDpjxGBK7QdHxLJMrRFZP6OVgEB6+CmyXOoIgR37sE+wgzuM/54UtShjot8ER5xY0nA70lLYkzGTZPyDIfSa7nDfV9qzzdFMhFGmcNGMcBprOOvyrNYbEZpj3MCI836p57o3PhXqdAWt4=
+	t=1771695010; cv=none; b=SxSMWFRhDrEUqlZxNZOGP4VMD+V6p3sm70p8FWbGER0emqcmVrrQlC/ZsiJARTbR+bxFxyFZ5wbVM/1m73PZO0F0K40CwQxAFgs8q+ImanHp7pyg9T4yhIwezffIS9HsZARqjbX03G+K0GO/x+EtcPRVc5JieDPcHH5CHk7UZpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771694897; c=relaxed/simple;
-	bh=wyixuyjnVPrRaGc71S+BAKFa+ktHhkuBTBSWpqVbWSE=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Dfbl6DOoL/JPtlwipe6nAGj7fSCRZ1k7oGi8IE94CaOruOALtQdjH0GpMIukKmFj5SWc3oz/kA5TLmFB94XE5zknxXhiPOxnj5q7IEjEPHYvY7DEFCfUMril8x96RjBFsNWtCPE0W4akdRUWqmYS2g3jrEHJlTVGeqiJ8kDNd2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k/G8XgdK; arc=none smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771695010; c=relaxed/simple;
+	bh=TeFcoxRNDc4JJx1lskZ2PKnGcrEB7bkHJZGKv5vEbYg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CuVlJKuuwhH6H13STjcmeagg3MXk3cJbZF2+NmY/C4O0CDtw99cdEDR9ysIxWisEQo9EXqzzAvLiYS6pL5iXRv3CU8ku/4jX5Pk9fPK4stBoVrELQwMXvJHycjq33CddliOKMTVLfN9RRcGO5d/cq+oB2aFGzcllKYxV0zVcxtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZoeyT4L2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VZpH/DSt; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k/G8XgdK"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8972a14e27bso40712036d6.2
-        for <git@vger.kernel.org>; Sat, 21 Feb 2026 09:28:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771694894; x=1772299694; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1BvGCZ5IVbje1ftONX0Imn7nYWvNLy+FsCqQANCjOgM=;
-        b=k/G8XgdKgGds85tk0dtlnF7BZ8GfrXA1IKH+Yuab4BTPqrLDQdG4sE+VEUlnlkWydi
-         8/9uxJpmhV92aTzHfQb1lDopDenwvDKM2507tCnyqbsH+H2o+RV2FcaMy8EXvoyJgxFN
-         YBKwzxRT/f/Eyn3iAzvR0KrVom9gX3O84hYFd3iiU778SMpZu+xRN+l0jlxiF1QDs3e5
-         UfF1vTaKxhdDkrPbBHyMPb/hJq7nHl5HTFv+8G5sUKlijrd7eemSmLrYtugcYRtfdWPB
-         MW6CepcBXwdskjHf5tXuF4yWCtsLYBe/HOkHBydVm43dFOpDTDhPzqOxFdCwpjm1LBLn
-         vm7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771694894; x=1772299694;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1BvGCZ5IVbje1ftONX0Imn7nYWvNLy+FsCqQANCjOgM=;
-        b=GoRneax1P1VcCOJIiG/sCHD8HlcsuFoaXWbaDI4VFWmP2sq1tzzrf/D4fRMLnPkzVX
-         6GKlzvGRwpEE+o71i8wruNEySWc1F6AJNsDVbTWYQ5wseNxMXa2dVtaxNe79Hnp+5EYm
-         QNkJS0WHoNEUshvcJ0iSvqd8ahf5gKs5XFir6NpavoTR20109I/YieHkpuVBlV+6MSH5
-         /ylLq2r0NIeHEFnxt3SU+QOQue04QADpPV+eOqc006b8a+Tl1uwGwS57gaNkNVpZuDvX
-         6w2TtELxEbLuqwTAOjXXPKqzFg2wa81aCQgwYoSHUIy6z3qMwjRisWcsDlqpSEbGaKV9
-         XgFw==
-X-Gm-Message-State: AOJu0Yz8C5k3B3dpBZeaKEKjxoLCiZw9hNExK0DTOqF2U1oACD9yJJrF
-	Yv7HoFQ6xZGVd+Lji9R4mxTyolgdFWgY04LJnJJd7zRTu0bx4Di+wSb1OtQkGQ==
-X-Gm-Gg: AZuq6aJKrjl43030essJ6KN00ZfUEJbvQrJkGZLi13Vgq3wytviXPh9OKS7GzVnOrX0
-	WpS4MSBFATYmPkRPRlGcwtbAvlt6Opasr5hsiA4dPm86tJtDDwnR80JuooCq6xzFPCwzt+aitcn
-	tPK5gKIu8m/ncuNiHYXNvuXu1Of6ZjqWiNDRvE4Vjt33QgipNJvUvaFczlQNSJm4IKHdqpIN44P
-	cutnKfjW/1awoDoMvlTR0gO/kCMZFwbqLvxEGMsqmuXKMcLpY5GhXyKSc8I2ZkWeuTpECORrs4a
-	0wJToBqB0klbvzXOalv7X3eHwRwkfaVHHNGGyRuvbGf028GTVFQULP0DMv3WNDiDoIGR6elaUuG
-	e9nVK6JNkvCcbeVTTZD4RmjcOensoQDqbxvRMKUsW5C7R9EIM4UktL/1a/m9S+BLQeEZqaFaSH5
-	qI+PUeGN+VAsaAtHQMWDAVc1uF
-X-Received: by 2002:a05:6214:21ae:b0:894:835d:b112 with SMTP id 6a1803df08f44-89979ecbd6fmr66307646d6.40.1771694894604;
-        Sat, 21 Feb 2026 09:28:14 -0800 (PST)
-Received: from [127.0.0.1] ([64.236.161.19])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8997c697469sm21614196d6.9.2026.02.21.09.28.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Feb 2026 09:28:14 -0800 (PST)
-Message-Id: <pull.2049.git.1771694893208.gitgitgadget@gmail.com>
-From: "Lambert Duclos via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 21 Feb 2026 17:28:13 +0000
-Subject: [PATCH] t2004: use test_path_is_file instead of test -f
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZoeyT4L2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VZpH/DSt"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 638BC1D00179;
+	Sat, 21 Feb 2026 12:30:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sat, 21 Feb 2026 12:30:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1771695008;
+	 x=1771781408; bh=cLNh+iB3xAAkGthA/OamDUg4cdryxtJV6Ckiwej9LQU=; b=
+	ZoeyT4L2kM4KGWWlW+RmNLrjcJGmaViTEmOtf3XMS1IjprmCfJJtf941PgCobA9m
+	zBJRCCGPro1Dj8E+0ZBih6Ufd3RZvWHvfm8DeovVs9TxEpjgfYIK0K2pxer+ipN/
+	OWmrgqUc34Lq2bJGTo/K5v+TwSSoAAB0J49V6TvRmX5SmhJbDXYFtOVE6ifTnYne
+	gWyxlHjfK009QbhRNddOVmadFsy2FaRuatpF9IuUACcT3JeUeHfho+it6lKey2OO
+	0sgiLny6o5IIHfGvosVdJoqiKAKgXqsXyS/aSs2h3QQoujJGiAFE2+wIoWL7Gjhh
+	Q0u3XiUZTlPFKHOY4kNZWQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771695008; x=
+	1771781408; bh=cLNh+iB3xAAkGthA/OamDUg4cdryxtJV6Ckiwej9LQU=; b=V
+	ZpH/DStoN5zTGRxWrVRe/f5q+Hk1raYfnPyw+x729Y6QwXhovl3A6kw/aFCr6A0m
+	tCt4rkl8S46dWhNY3ZynFhHqzGz3/aVU4SKWfI7o+tAAt1/pBFvkHQTPVOawVX8F
+	eQAHcSFDcuxt+zCrhflz/50Ay+U99LHzjlswG+rwZ5Zv+DbByRa12RI3ziyPIbpZ
+	I1yAjTzveELIOPMQb5VzpM+7AUAhwcrXy0AZH8Z00hWkaKDFolZPuiW2+08AXgDN
+	ermxjZZ+ywxIUtd6vjagDotiRCaEh56h14EG3SVzD03Dd7SqyWRnpcUxQEp+GkuF
+	5c8jg+vl91R7pqAmf4vyA==
+X-ME-Sender: <xms:oOuZafbd5Y5LgG3fz14dt_VLEf9JV7jP4VrEdwH3q8tuBtpDvWKexA>
+    <xme:oOuZaY-T_L1bMMRWzEFBO_Mdf8rIlN7r-dgurdIGA-B0Yhg7veaIPPlOulzcQ-mS_
+    WX2ZsYMbwGGzYsxbSd_RkMEMHNUXUJkd6hWObDOuYbddpMCJ0DNxQ>
+X-ME-Received: <xmr:oOuZaehbEbQ4Nn-tAhJOsYao39YifBeOfbCH3zyCanTAA9Rtgck65uW2fi9J98a4bsDau7NTbgX4biQ9xOGmhJQwYUQy4ATOjA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduleelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhrhgv
+    higrnhhshhhprghlihifrghltghmshhmnhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgs
+    lhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:oOuZaYfHF9uEiPQUqOBAhyJv_WRJzelow1Wt7OLYkM_tkuYXAkxXjw>
+    <xmx:oOuZaVqMbfd_UOzFilz4HR0MTEmKLcHlsBXv9KM4AfM0midKQCzTlQ>
+    <xmx:oOuZadCxoLyOMoJ8ksHmYDp33AhqmkPrcdvDRl8aUyrxuQo-pTAxtg>
+    <xmx:oOuZaSZ8GRfaGdFM4L7tLI3udEpGGC-47sXdGHwZJIOTSQDlCSKs9g>
+    <xmx:oOuZabJ7S8pHlUrX-cLZeYn6Vo9ijFlYnzBczpCXZgaBt4HLiTzPLdY8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 21 Feb 2026 12:30:07 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org,  ben.knoble@gmail.com
+Subject: Re: [RFC] send-email: UTF-8 encoding in subject line
+In-Reply-To: <20260221140049.579922-1-shreyanshpaliwalcmsmn@gmail.com>
+	(Shreyansh Paliwal's message of "Sat, 21 Feb 2026 19:08:39 +0530")
+References: <5EDD26EE-51B6-4BE2-A7C7-E1E0991537E4@gmail.com>
+	<20260221140049.579922-1-shreyanshpaliwalcmsmn@gmail.com>
+Date: Sat, 21 Feb 2026 09:30:06 -0800
+Message-ID: <xmqqldgmrom9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Lambert Duclos <lambertddg@gmail.com>,
-    Lambert Duclos-de Guise <lambertddg@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-From: Lambert Duclos-de Guise <lambertddg@gmail.com>
+Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 
-Replace 'test -f' with the helper function 'test_path_is_file'
-to provide better error messages upon failure.
+>> Yeah, that was a bit confusing for me until I got used to it. Maybe
+>> saying “[default: UTF-8]” would be a small and definite improvement?
 
-Signed-off-by: Lambert Duclos-de Guise <lambertddg@gmail.com>
----
-    [GSoC] t2004: use test_path_is_file instead of test -f
-    
-    Replace 'test -f' with the helper function 'test_path_is_file' to
-    provide better error messages upon failure.
+The current message can be mistaken, if the reader does not READ, if
+it is asking a yes/no question, but with the "default" label, you
+cannot imagine answering "yes", which is clearly not one of the
+things in the same class as "UTF-8" that is given as the default,
+which also serves as an example.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2049%2FLambertDuclos%2Ft2004-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2049/LambertDuclos/t2004-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2049
+This is indeed a clever hack (not hack on computer code but hack on
+the mind of human who is reading the message).  
 
- t/t2004-checkout-cache-temp.sh | 42 +++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+> That makes sense, I tried it below.
+> I also wondered whether, in addition to this, it might be helpful to warn on
+> an invalid charset, and/or possibly fall back to UTF-8.
 
-diff --git a/t/t2004-checkout-cache-temp.sh b/t/t2004-checkout-cache-temp.sh
-index b92d96fdc4..0afe0ff7ca 100755
---- a/t/t2004-checkout-cache-temp.sh
-+++ b/t/t2004-checkout-cache-temp.sh
-@@ -42,7 +42,7 @@ test_expect_success 'checkout one stage 0 to temporary file' '
- 	test_line_count = 1 actual &&
- 	test $(cut "-d	" -f2 actual) = path1 &&
- 	p=$(cut "-d	" -f1 actual) &&
--	test -f $p &&
-+	test_path_is_file $p &&
- 	test $(cat $p) = tree1path1
- '
- 
-@@ -55,7 +55,7 @@ test_expect_success 'checkout all stage 0 to temporary files' '
- 	do
- 		test $(grep $f actual | cut "-d	" -f2) = $f &&
- 		p=$(grep $f actual | cut "-d	" -f1) &&
--		test -f $p &&
-+		test_path_is_file $p &&
- 		test $(cat $p) = tree1$f || return 1
- 	done
- '
-@@ -71,7 +71,7 @@ test_expect_success 'checkout one stage 2 to temporary file' '
- 	test_line_count = 1 actual &&
- 	test $(cut "-d	" -f2 actual) = path1 &&
- 	p=$(cut "-d	" -f1 actual) &&
--	test -f $p &&
-+	test_path_is_file $p &&
- 	test $(cat $p) = tree2path1
- '
- 
-@@ -83,7 +83,7 @@ test_expect_success 'checkout all stage 2 to temporary files' '
- 	do
- 		test $(grep $f actual | cut "-d	" -f2) = $f &&
- 		p=$(grep $f actual | cut "-d	" -f1) &&
--		test -f $p &&
-+		test_path_is_file $p &&
- 		test $(cat $p) = tree2$f || return 1
- 	done
- '
-@@ -108,9 +108,9 @@ test_expect_success 'checkout all stages/one file to temporary files' '
- 	test_line_count = 1 actual &&
- 	test $(cut "-d	" -f2 actual) = path1 &&
- 	cut "-d	" -f1 actual | (read s1 s2 s3 &&
--	test -f $s1 &&
--	test -f $s2 &&
--	test -f $s3 &&
-+	test_path_is_file $s1 &&
-+	test_path_is_file $s2 &&
-+	test_path_is_file $s3 &&
- 	test $(cat $s1) = tree1path1 &&
- 	test $(cat $s2) = tree2path1 &&
- 	test $(cat $s3) = tree3path1)
-@@ -143,8 +143,8 @@ test_expect_success 'checkout some stages/one file to temporary files' '
- 	test $(cut "-d	" -f2 actual) = path2 &&
- 	cut "-d	" -f1 actual | (read s1 s2 s3 &&
- 	test $s1 = . &&
--	test -f $s2 &&
--	test -f $s3 &&
-+	test_path_is_file $s2 &&
-+	test_path_is_file $s3 &&
- 	test $(cat $s2) = tree2path2 &&
- 	test $(cat $s3) = tree3path2)
- '
-@@ -162,9 +162,9 @@ test_expect_success '-- path0: no entry' '
- test_expect_success '-- path1: all 3 stages' '
- 	test $(grep path1 actual | cut "-d	" -f2) = path1 &&
- 	grep path1 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
--	test -f $s1 &&
--	test -f $s2 &&
--	test -f $s3 &&
-+	test_path_is_file $s1 &&
-+	test_path_is_file $s2 &&
-+	test_path_is_file $s3 &&
- 	test $(cat $s1) = tree1path1 &&
- 	test $(cat $s2) = tree2path1 &&
- 	test $(cat $s3) = tree3path1)
-@@ -174,8 +174,8 @@ test_expect_success '-- path2: no stage 1, have stage 2 and 3' '
- 	test $(grep path2 actual | cut "-d	" -f2) = path2 &&
- 	grep path2 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
- 	test $s1 = . &&
--	test -f $s2 &&
--	test -f $s3 &&
-+	test_path_is_file $s2 &&
-+	test_path_is_file $s3 &&
- 	test $(cat $s2) = tree2path2 &&
- 	test $(cat $s3) = tree3path2)
- '
-@@ -183,9 +183,9 @@ test_expect_success '-- path2: no stage 1, have stage 2 and 3' '
- test_expect_success '-- path3: no stage 2, have stage 1 and 3' '
- 	test $(grep path3 actual | cut "-d	" -f2) = path3 &&
- 	grep path3 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
--	test -f $s1 &&
-+	test_path_is_file $s1 &&
- 	test $s2 = . &&
--	test -f $s3 &&
-+	test_path_is_file $s3 &&
- 	test $(cat $s1) = tree1path3 &&
- 	test $(cat $s3) = tree3path3)
- '
-@@ -193,8 +193,8 @@ test_expect_success '-- path3: no stage 2, have stage 1 and 3' '
- test_expect_success '-- path4: no stage 3, have stage 1 and 3' '
- 	test $(grep path4 actual | cut "-d	" -f2) = path4 &&
- 	grep path4 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
--	test -f $s1 &&
--	test -f $s2 &&
-+	test_path_is_file $s1 &&
-+	test_path_is_file $s2 &&
- 	test $s3 = . &&
- 	test $(cat $s1) = tree1path4 &&
- 	test $(cat $s2) = tree2path4)
-@@ -203,7 +203,7 @@ test_expect_success '-- path4: no stage 3, have stage 1 and 3' '
- test_expect_success '-- asubdir/path5: no stage 2 and 3 have stage 1' '
- 	test $(grep asubdir/path5 actual | cut "-d	" -f2) = asubdir/path5 &&
- 	grep asubdir/path5 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
--	test -f $s1 &&
-+	test_path_is_file $s1 &&
- 	test $s2 = . &&
- 	test $s3 = . &&
- 	test $(cat $s1) = tree1asubdir/path5)
-@@ -216,7 +216,7 @@ test_expect_success 'checkout --temp within subdir' '
- 		test_line_count = 1 actual &&
- 		test $(grep path5 actual | cut "-d	" -f2) = path5 &&
- 		grep path5 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
--		test -f ../$s1 &&
-+		test_path_is_file ../$s1 &&
- 		test $s2 = . &&
- 		test $s3 = . &&
- 		test $(cat ../$s1) = tree1asubdir/path5)
-@@ -230,7 +230,7 @@ test_expect_success 'checkout --temp symlink' '
- 	test_line_count = 1 actual &&
- 	test $(cut "-d	" -f2 actual) = path6 &&
- 	p=$(cut "-d	" -f1 actual) &&
--	test -f $p &&
-+	test_path_is_file $p &&
- 	test $(cat $p) = path7
- '
- 
+Agreed on the first half of the statement, if we have an easy and
+portable way to tell if a given random string names a valid charset.
+I do not recommend to "fall back" to anything, if we are asking an
+input from the user.
 
-base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
--- 
-gitgitgadget
+Thanks.
