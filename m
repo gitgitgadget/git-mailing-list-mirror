@@ -1,91 +1,127 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27691A9F90
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 08:02:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EA2257825
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 08:10:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771660925; cv=none; b=BfMXw22Eu8UuOzqd3zuGy6CynURD4D6LXHocx17sLsbP5j3yXPoIDZWuvP22TyjEOBZbutGavD6U8zOA4gXzRgTkcbjmVEL6N3pLhzWNpJJP0X7kgEQrNw3E7SukmE93UpPv63eCn67JZk42TCkaRkco93YeCixJOiSA9PcGfGk=
+	t=1771661454; cv=none; b=inzKv6hEbmIbQ87tKn/Q+I9tth5CXOjPctKQNW2Hd0k/cH71lw0oq1tn1sdqVzj+ApqupiaiExmDw9oaWMA1FiO7C/dm2Pu5ggNuq0fYfeiC6VbiU3nkEela7c708u3NFEg6xvQBKwhDwBcc8F5tUKZuHELeGREFm58RDyeWf6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771660925; c=relaxed/simple;
-	bh=EMezMcZ7Cnpxy6tKkXOdPnd/mjPztuFS/knvswVlaMs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V7eM+mRJ928FuXYXdHGaLEnEIcUvgOmV5y4KgcchewG/ONdAYiioa0cWI4BBslhjvqHKFOdQQvUktdKQcnxJ+2p6hzmyYZ5xcRoE+5dlPXFQJwR4+LD3sStOF8Mmr1o0auAk+Swa1gb+8zPyL9BlqtFFwsXwzjdflEL4UVz7epw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G9cza94e; arc=none smtp.client-ip=209.85.167.47
+	s=arc-20240116; t=1771661454; c=relaxed/simple;
+	bh=dXnRPMiTrDex3cRF2jJWZcRoAONWotF9h35aYdD+TVc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bjpTuqmyWWQDJqZCrobD5AgYX8dN9Wtu88gfQOZkyx98mJiVZnwjyeRzAyxsVQ4hekBCA4tg8huDKbNaMpM3AV8qJACbYoA+wAURp1qVMCXqkOmDq6BRjRoDOSQxNoE17DqmkwZ4tDzkByqMxD/WktXz+UX+q1YAt06vImq/nI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QEScGTfc; arc=none smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G9cza94e"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-59de66fda55so3092397e87.3
-        for <git@vger.kernel.org>; Sat, 21 Feb 2026 00:02:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QEScGTfc"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c2a00109fd8so340806a12.3
+        for <git@vger.kernel.org>; Sat, 21 Feb 2026 00:10:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771660923; x=1772265723; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EMezMcZ7Cnpxy6tKkXOdPnd/mjPztuFS/knvswVlaMs=;
-        b=G9cza94eR1tNmwHTws/ZYjqkt6inslbpg+uVFPWBK1ATSzHFNRkW4AyQ0mauZUy9zC
-         Nzjd1lW6LM+xlRMLLCQoCaXzJ5rVak9ilHaQ8It4RjT51W+WOQzW1Ztdh9yu8JdW7yw6
-         VjmM8Tcy1Gky2/XylVDGbd76w/5V5nQpCKu5KrCPKqhttS5YIYPth3Dk8ITil+3eKvOB
-         vN4I1WoC3cnmYURCyli8E9TxsyinWUWmVZAZCNATsVF4xPGUxGBynfD8egDzHLJDYPPc
-         XqwpxAQ6x4I105ZvxifNJ8expnsz4FlvYAfhEyVMswAqE1upbxhSckAWGfbTkFe+MYlV
-         +YPQ==
+        d=gmail.com; s=20230601; t=1771661452; x=1772266252; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p4T72TEQcs8DqL9KStfdRnnv7eqdbKy24qoTGhGUJ7o=;
+        b=QEScGTfcENIu7zZbGG9Q+tU+dktyhZsPtjM7eLfhC/t+KYtiNeM2EajWHBW54dV7VS
+         2VX64lAfBxpv0/j5ht8qf1fpBPQdHxEcC4R+33dN15KO+0WKS8Fv2sux+i36QMU6RLnt
+         NzqzBD4RsdG7biE0dlzrLWbhYdtGENSQhLHav8MJqV+1T/7mESRie/AqvWLsmPHMsSXm
+         eoNEGHZywcAc4QzkBZNWyphyU4SeGGSt3zjtLbbIwFQ+nBNdPmmlremmVmune7e2ZhkE
+         h5fCPkPFhte3FCjIB/DatHdffDwbzCMCf0P2iMyvI42hNvGRfpz9II8GhNH1gVW+SSqm
+         iSaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771660923; x=1772265723;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=EMezMcZ7Cnpxy6tKkXOdPnd/mjPztuFS/knvswVlaMs=;
-        b=dT3y2RhOQDKemtary7dXzw8uuZf/R543igZ+Jh39Pk4yIKHYo3m9FOVLLnIU8FJEkU
-         DnEzlSlLNFlt834A5mmpz9JFeyWZnspYtjVpMmLITTXtOiYVipUwl4u8ZBcN1V939F4u
-         40cYznZZ7fiR7B1yJMYaktYGFw1X9AAht+evzQfGSacT7Xnh3Xa1qek3z0tLKIS+Vrqj
-         uSSEBfqmfZQ7ZOVJfFSYa/ekIA+eX16MN0qk03Ed8eIgaS7K534p0fm94JIobgK/bRZI
-         eNjvvl3XmdQ9gGuKscRujr9Fhp671GRra1Cn3pFM+dR930LwGinZpTcHyWDQVI6jd61S
-         75lg==
-X-Gm-Message-State: AOJu0Yzfnqs7sM6AdhucSITyRxJS02VBcCY3hshqc5pZvJ/kodahlYVi
-	H32sVKvlcoH9D19uoosw7f8GZ41f4D1uZg/3FUgqLBW/hMbaOqdN2FUG
-X-Gm-Gg: AZuq6aJCd0duBgoX1LiaT5XYBaZt3EebTz2CVDvrtJYGSSbiy9a5zLjFAmRstWPC/NO
-	dak1GBVgRNnFoDx9zrBGBR+NJ/ONEa91gR1MXgpgxl3MQSRss0/DVDfD3kqO21Ythom2LHKK7G+
-	el4Au3YuokbUe88KpZBgc+JP+JBDT2C5rOJAPxoE3MqEvEDMlyxHVUZaXZTCuG9f4HOFTAUdGez
-	FM4sP5lMtEsOflGLbUij/TTGZcpUD/XkpVsWH1qhDaT2GY5+x7B9lBhEkXo2wWPNiFcrWSW/5X0
-	6o1OIujMBjREGB4mjdUGvKxSJX9kGo6Bu7p+e/O8xolcMeFIMgugj4HjGtqKgw3BmHDvKyxgG5P
-	+WuIx9dZMiXj0oADKpWAjA3uEQ1b3gXhZzm6CKORw2O8+xxPV9/OxbhygYQbGSIz5ZjqMZB7TRO
-	38lfDeEZekOVJdysMzL2gqy3zQ66Kbn0LhB1oH5dGF/3dUW0OszfbQ/rjs6k2EOrmSYh18iTOUq
-	CESX0mTzeodDgK5F8hsc6bltAo=
-X-Received: by 2002:a05:6512:1306:b0:59e:6447:f520 with SMTP id 2adb3069b0e04-5a0ed99d856mr685271e87.37.1771660922698;
-        Sat, 21 Feb 2026 00:02:02 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a0eeb3eaf1sm308476e87.53.2026.02.21.00.02.01
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 21 Feb 2026 00:02:01 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitgitgadget@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	peff@peff.net,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH v28 2/2] status: add status.compareBranches config for multiple branch comparisons
-Date: Sat, 21 Feb 2026 09:02:01 +0100
-Message-ID: <20260221080201.7847-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <067978dd0946732e00e4805d62ea51348fbf336e.1769112471.git.gitgitgadget@gmail.com>
-References: <067978dd0946732e00e4805d62ea51348fbf336e.1769112471.git.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1771661452; x=1772266252;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p4T72TEQcs8DqL9KStfdRnnv7eqdbKy24qoTGhGUJ7o=;
+        b=M46xdLKpLE31ZxDJUsFAAlxV/MwpcLRz49ovYvDe7ZmJ1g9Ob/fk9gO7v6nAnbVpKr
+         XyIxpMpp3y+DiCUhfIIbpko42nEpXyJy40uhNAqBuIMZ7rj6zVbeeuROjGvsZOGGl4eR
+         JnU1ZcF8q4LiIzUdgOr5l2v9EmdEqRNFvQB5stoYlok6F0ABmz3z4Jv9nZF6GRS8dBNM
+         gqyaBcA2sywR4L3OPk2VEjEpi8QYcRVV0o/L3R4fe/Auh7lGCvozvXS0zE2R+bIk4OEB
+         iUI95cypoAKyRJTsLkQkxwbA/J2epJ93uDr+z8wTR4WnDGCH9qcaqxdBSMTJTUnFeCE4
+         ib0Q==
+X-Gm-Message-State: AOJu0Yx0M9WSdFxIbdgiInZCycZMh10Ywfg+l0DQm8ZA/4DcnkF0UqRd
+	7gQj6TnZlpZAuyDCoZZWsJHBB1kVGrNSkGj3IZ/FkVMSMVqrEd+ular3
+X-Gm-Gg: AZuq6aIt6mGjddsHm/67FJ8X78BzhBKttmUHWmIBwkMsg6W3atNLn3cBsFGDuUXLuCE
+	M+8fJEq742ISPdLQkBHmOdKD0noWcXXlURGaXN06D84ZxUJnbLu8wNev+4c6PzHWvaQCWiDNpcI
+	dJHskGD/EbKMkLI3QkMMIahCh8ddpgt+dN4mqsP/EdzxhodUJqCxArbtdrHH0mwBXhwQJqGfJnp
+	rgM7SIcekdjgfXBXBXZiZmwdGPHtEwj2PWR8uLJoYNcYTeGWjO9rbOhZR9du7DPazBoSQtdCUTm
+	e3BTQUTyIG3W0qrbgx6TBx3cjEsZ04bY/XzgYut6mcqp4msmOPWh+DVgXeNvppKEaNV9vGy1IIx
+	ZWoa6vqPY3zCoyFyHiw7MYhIFbsNC5UaZssgCaLWYrPmz/OP5j7Kmnh9Juc3oK5as+ljHE74Fsh
+	Ppo8eYKzVW4apTomqInkp+dQhguJFF0LH1TkGP5g==
+X-Received: by 2002:a05:6a20:728d:b0:342:1aab:4c79 with SMTP id adf61e73a8af0-39545f7ce78mr1421156637.3.1771661452494;
+        Sat, 21 Feb 2026 00:10:52 -0800 (PST)
+Received: from [10.16.17.83] ([111.223.90.163])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-826dd68c0b8sm1679827b3a.17.2026.02.21.00.10.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Feb 2026 00:10:52 -0800 (PST)
+Message-ID: <60e4cbcd-6dfe-4e1a-9c63-be905c815bed@gmail.com>
+Date: Sat, 21 Feb 2026 16:10:49 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8] setup: allow cwd/.git to be a symlink to a directory
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+References: <20260218124638.176936-1-a3205153416@gmail.com>
+ <20260220164512.216901-1-a3205153416@gmail.com> <xmqqfr6vxpkn.fsf@gitster.g>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <xmqqfr6vxpkn.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Junio and Jeff!
+Hi junio,
 
-I see that this topic has now been marked as "Stale". Isn't it time to
-merge this now?
+> So, "Fix this" written here does not resonate with my understanding
+> of what we have been discussing so far.  Puzzled.
 
-We went to several rounds of reviews and edits to reach something that I
-think everyone agrees with 🤗
+You are completely right to be puzzled.
 
+In an earlier iteration of this patch, another reviewer brought up a 
+case regarding symlinks. I adjusted the logic and wrote the commit 
+message around that "symlinks" narrative.
 
-Harald
+Through the subsequent refactors up to v8, the code evolved to tackle 
+the much deeper issue-addressing the two decade-old 'NEEDSWORK' 
+comments. The code structure was completely rewritten but I forgot that 
+the symlinks stuff was not relevant anymore.
+
+You are right. The actual value of this patch is the error code 
+refactoring, not fixing symlinks.
+
+> All of the above are exactly what I expected to see.  Nice.
+
+I'm glad I finally got it right ;)
+
+> This design decision may be debatable, but not tightening everything
+> at once may be a prudent thing to do to avoid accidental regression.
+> 
+> Having said that.
+>
+> If you have a directory ".git/" somewhere in your working tree, and
+> the directory is somehow corrupt that is_git_directory() says "nope,
+> that is not a valid Git directory", wouldn't you rather want to know
+> about it as a potential problem?
+
+Great point. A corrupt '.git' dir is definitely a red flag. However, 
+silently ignoring it and moving on has been the historical behavior, 
+hasn't it?
+
+Still, if we decide to tighten this in the future, it will be very 
+simple change within this new 'switch' structure. Nothing much to worry 
+about IMO.
+
+Will send v9 soon, with commit message rewritten.
+
+Regards,
+
+Yuchen
+
