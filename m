@@ -1,250 +1,137 @@
-Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F87C10FD
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 14:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.195
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771682852; cv=none; b=F0MOCVT1iLD1MRKFR3ddiW84+mQuw7MigqbbqZZG9gEvUXDTck3R/UZmvGP4ZOHEEvfEFiRLmckr/+w9GKo99aS8pxOF4PXJUUOZJFZTnh13OVDaL1ktL1NoC2LZw9XkcCciTgws25UWCjbxz6L4Myjpv0Xnz5pgO1Wnn+EhpU8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771682852; c=relaxed/simple;
-	bh=IiFDJKAI1zjf2kXa2FDatTdDX2aqMhnsUOdeBMVFkEA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LsK4gG0O+EI96qpb7h1UJmLpoLPANXQsT0TIYFdNwPWwkVtek7nQfrnl694BFc6PW1toqNODts6VruhwaWo8z6MWoHzU72IVCRaoFS+CT3c33srtu0Pi/A8lKwE2cMAzcU6h5727mi0kCWvY2k3FysQ1tuVDZCsZRmX+b4i3uRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G4VDD2RC; arc=none smtp.client-ip=209.85.128.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0901B983F
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 14:27:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771684075; cv=pass; b=AUbd9DmpTKapMAuzJrTXXWyP2TtauRD7nap3lOqRruSvNQsTYW48bDKe2ioUbKsNWKSh34MGvupl+BspBI03yAyJwwoAnXgsLCbVqPrZ/dQyz65MvZSIvcv71NbSER/+cKdf+0jQTuN3sYnoSzkEaxXeAGYepCh5jdB1YCvuFgE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771684075; c=relaxed/simple;
+	bh=9nbCBpGY0TnpSIR9Meo60EU9QKEMokN754Nq9JBFQGU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fSFYNaDqsE7BDoVll9HRLGTMLvtE07UiTx1UkgNFHibEBVNC6EA8O+WojNXffbgn+ZRM7b3sHjPPCjdyUi9UZAHPLQt9lGmn/XfWPaxY2AD/EU+iNdbF5r7OO5wgFu+b5RseSWJlpqqc7rxy0f3hiE0EbnSAno8kTSoi1mDYzWo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=PJAIf2+T; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G4VDD2RC"
-Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-79827d28feaso9283977b3.3
-        for <git@vger.kernel.org>; Sat, 21 Feb 2026 06:07:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771682850; x=1772287650; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s02UO1avsTEnvFgDYmJr6iXuvLrni41wjWmkzuWvdGQ=;
-        b=G4VDD2RCCHYOELWEWJzRU8e2nSIqpXZDz9nRx6WjHDGSc6fFTBc3TslDq7pt01G/jO
-         DbHZRbjzd8Igo5Fw2GFUB9ZjZLWSoruJReR+cZQ6zakdzAwltPVRddrzWFHtRp0O9jem
-         uo3TRIukM8A+n0c6y1xSKOfLaaPgp9UzV93Isx5rIttQOcKcrG12fVc5BwC2sv9swUAf
-         EcNmF0txSOabx83iHAODWUpdrTv+B0qB6y9kHo1P112CjY+QPEPNcZw1ZtEU3jH1DMDa
-         UpEA61hIdFnxWiSooRfpHm9CoPgZgacu4hFwNgr19t7fxYWepYWfwAv8niYsezgE7B4V
-         PTCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771682850; x=1772287650;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s02UO1avsTEnvFgDYmJr6iXuvLrni41wjWmkzuWvdGQ=;
-        b=GahHWTu0rjsVi9FpCGXFJMPC6Ro7kbICXWpAm1ONXSqXu4WYW3JRcKBNrgZ0OXpxqk
-         IG1hO2+Z10ZckbPe3yxviM0YOIPODmFyOWYrjPWZWZoGDfmEqw4yp9qjHTKNIlQ8yqNb
-         xp60QRU7bXrSbuyNcQIEal6lm385OkVJJ6Ue0EAabsjsnop0Obn+vKxJuWVBrX2zTi7O
-         eXmjNaU0h/7+IetkCUB3VYmne6MmCImuajzW7gMDHx3yx+rASLQBNuTzALboabCoigRe
-         kipN6ZMcZsHvf95Pts/mLKCwUhR9x+4CBN4TRFEuFZi8l6xcgfxL+VbStN8Gg/uOy3Da
-         0TTg==
-X-Gm-Message-State: AOJu0YylphRqLc2YdKTLm51pR+BhpLBnW+wTvm29dXZUxJRVq0SP1qkX
-	ShHOIbBnOhfifdcbghUiGtcW96SwdhZfhq7aZ+Wj1xbQ6nZf+g3JJYTGaLyxiPK3
-X-Gm-Gg: AZuq6aJJZkox+DKYHRffqJ8EFWDAY+bYBrQQReGE0x8qBlwg3PoX0GJr6CK7pyxCD5E
-	XZeniCktvJ8ARx6sLCvSjpQljR2X6drqNOj2nm8j8buzkVP0LlC2u8MVmosw2afG/+1+G/4cnaz
-	LWrOLKFN0rR+wFyqRwEKw/Bz87KCnwM31um/n1aYfMsa75r0Jb3oE2Pr5C9dSneZlaXuvlfnuP4
-	NRKZLenRCsg9ttcN2vQ4wW69w9rABOVl0xAEpldqaCBbdLUYw+urD8hp5dOWfEEWxNfp2a80+Bo
-	Yf+Kf4Uu+V+THB3TIvN2VJNzTnP8J86QD2jF7U+pxojDB+magakaIdVnmGu+DHm6wj0oU5lXdmm
-	PlR2pSaKhUtbzDruvhFcWiyIeIEgom1RtDLnuV4ur8+45nUJbNC3zfx8RbAFB9ghhiH/1eFUEZN
-	OXys0K51HKPl4ESk6RiKzFFSdZlVNJLL80uv91dbGyj0ZL7tnmko9wPC53HwScylnsQcAFVL/zb
-	Eor4vCor22xGAhfTFjqXAlUrOyX5YSUBlC46s2Ssh2oKjwc
-X-Received: by 2002:a05:690c:c4fa:b0:794:e348:fc4b with SMTP id 00721157ae682-79828cf3ef4mr28021837b3.13.1771682849932;
-        Sat, 21 Feb 2026 06:07:29 -0800 (PST)
-Received: from macaroon.lan ([2605:a601:90eb:5600:bd86:3f2a:ab6:399a])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7982db94290sm9939717b3.1.2026.02.21.06.07.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Feb 2026 06:07:29 -0800 (PST)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Patrick Steinhardt <ps@pks.im>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Evan Martin <evan.martin@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v6] build: regenerate config-list.h when Documentation changes
-Date: Sat, 21 Feb 2026 09:07:17 -0500
-Message-ID: <5dcd4e9308100a25603c50fecb36447c0ee4df62.1771682788.git.ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>
-References: <611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="PJAIf2+T"
+ARC-Seal: i=1; a=rsa-sha256; t=1771684052; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Oh1ke8PhyXsvv1YnOu1ma/TWSQxlxslDzM0z+l3imthCy2ZAdRL9RLcNilGXX0VXye5I5YcmwczsmonLLEGk7ut8xV/0bkbt2u7mPdBXTKjvH0BC3cT54yJZFQ3LJlv0eHCf1FMjufPdWZy1S2Ch9uF58aFwz4J+JvUqqIxnORY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1771684052; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=KS1j1JPsLgr+500mX6KH7jaCY6Q0cZ4VRW//c9D7W/c=; 
+	b=jylr5awUurk0CB57B1uUyJE1bpYEK3azqrevnXGEdTJpKO0Rw3jgFyiv9Lyl/fv2XFOC4P1Fal6wU8At+5fzU7/9T37E63QFvdqDGz/1eTL32v+8bH37zZHtsnHrOF2bjLLjIZ5AG3aQIi/jgUO0hebjnVVrdUIEKMxQ+kaBVe4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771684052;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=KS1j1JPsLgr+500mX6KH7jaCY6Q0cZ4VRW//c9D7W/c=;
+	b=PJAIf2+Tg+sj1fpBooVpiMcK6KsP/aA3jKfD1WQTEcGTLRqHjpjLU+Jc0JvkJO9P
+	/DcpmOETCSCuOMgxQF3OqGriQ7/sGLMKTEmmcAii4h0IKzAFlcbEfLrno1vVZDPDrkR
+	1BKNJfrRenuApY5CMQORmwC0ik6KJJvocBdwIi/o=
+Received: by mx.zohomail.com with SMTPS id 1771684050826792.8788522684885;
+	Sat, 21 Feb 2026 06:27:30 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
+ <emilyshaffer@google.com>, Junio C Hamano <gitster@pobox.com>, Patrick
+ Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2 0/8] Specify hooks via configs
+In-Reply-To: <aZjuTSopOMvwR4hQ@fruit.crustytoothpaste.net>
+References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
+ <20260218222352.55393-1-adrian.ratiu@collabora.com>
+ <aZjuTSopOMvwR4hQ@fruit.crustytoothpaste.net>
+Date: Sat, 21 Feb 2026 16:27:26 +0200
+Message-ID: <87o6liw4s1.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-The Meson-based build doesn't know when to rebuild config-list.h, so the
-header is sometimes stale.
+On Fri, 20 Feb 2026, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+> On 2026-02-18 at 22:23:44, Adrian Ratiu wrote:
+>> Hello everyone,
+>> 
+>> v2 addresses all feedback received in v1.
+>> 
+>> This series adds a new feature: the ability to specify commands to run
+>> for hook events via config entries (including shell commands).
+>> 
+>> So instead of dropping a shell script or a custom program in .git/hooks
+>> you can now tell git via config files to run a program or shell script
+>> (can be specified directly in the config) when you run hook "foo".
+>> 
+>> This also means you can setup global hooks to run in multiple repos via
+>> global configs and there's an option to disable them if necessary.
+>> 
+>> For simplicity, because this series is becoming rather big, hooks are
+>> still executed sequentially (.jobs == 1). Parallel execution is added
+>> in another patch series.
+>
+> I'm interested in how you plan to make parallel execution work
+> gracefully.
+>
+> We've already established that it's necessary to preserve stdout and
+> stderr (including wiring them up to the TTY) so as to not break
+> existing, widely deployed hooks, such as those in Git LFS.  That means
+> that to get parallel execution where the hooks don't write over each
+> other's output and fight for the terminal, you'd need to multiplex each
+> one, including providing a PTY if the appropriate descriptor already has
+> a terminal, such that the output is at the very least handled line by
+> line and ideally batched into per-hook chunks.  Is that the plan, or do
+> you plan to do it differently?
+>
+> I ask because situations where the hook output is not handled gracefully
+> and hooks fight over output or where the existence of TTY on a file
+> descriptor is not preserved will result in bug reports and broken tests
+> for tools that use Git, which I think we'd all like to avoid.
 
-For example, an old build directory might have config-list.h from before
-4173df5187 (submodule: introduce extensions.submodulePathConfig,
-2026-01-12), which added submodule.<name>.gitdir to the list. Without
-it, t9902-completion.sh fails. Regenerating the config-list.h artifact
-from sources fixes the artifact and the test.
+Hi Brian,
 
-Since Meson does not have (or want) builtin support for globbing like
-Make, teach generate-configlist.sh to also generate a list of
-Documentation files its output depends on, and incorporate that into the
-Meson build.
+Yes, this is all done already. Phillip Wood actually brought this TTY
+issue up in his review of the v1 parallel hooks series (many thanks). :) 
 
-We assume that if a user adds a new file under
-Documentation/config then they will also edit one of the existing files
-to include that new file, and that will trigger a rebuild. Also mark the
-generator script as a dependency.
 
-While we're at it, teach the Makefile to use the same "the script knows
-it's dependencies" logic.
+> Of course, that's not in this series, so it may not even be written yet,
+> but if it's not, then this is something to keep in mind for when it gets
+> submitted.
 
-For Meson, combining the following commands helps debug dependencies:
+Yes, that's a separate series [1] and I'm about to send v2 very soon.
 
-    ninja -C <builddir> -t deps config-list.h
-    ninja -C <builddir> -t browse config-list.h
+Please review v2 directly when I send it because it will contain
+significant changes from v1. v1 is not worth reviewing at this point.
 
-The former lists all the dependencies discovered from our output ".d"
-file (the config documentation) and the latter shows the dependency on
-the script itself, among other useful edges in the dependency graph.
+To give you a high level description:
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
+All hooks continue to run sequentially (serialized) by default, just
+like before.
 
-Notes (benknoble/commits):
-    Changes from v5 (<611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>):
-    
-    • Reword a confusing sentence in the commit message
+To run some of the hooks in parallel, I had to introduce an extension,
+because we need to break backwards compatibility by combining stdout and
+stderr and piping them through run-command's muxer, detached from the
+terminal. There is only 1 known hook requiring this extension (pre-push)
+but it's trivial to add more, if necessary.
 
- Makefile               |  5 +++--
- generate-configlist.sh | 11 ++++++++++-
- meson.build            |  5 ++++-
- 3 files changed, 17 insertions(+), 4 deletions(-)
+Patrick's idea is to leave it up to the user to decide what to
+parallelize, because the user knows if their hooks are safe or not (eg 
+if they write the same file or call the same program), or if it's ok the
+enable the extension or not.
 
-diff --git a/Makefile b/Makefile
-index 7f37ad8f58..6f926ffb1f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2688,9 +2688,10 @@ $(BUILT_INS): git$X
- 	cp $< $@
- 
- config-list.h: generate-configlist.sh
-+	@mkdir -p .depend
-+	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@ .depend/config-list.h.d
- 
--config-list.h: Documentation/*config.adoc Documentation/config/*.adoc
--	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@
-+-include .depend/config-list.h.d
- 
- command-list.h: generate-cmdlist.sh command-list.txt
- 
-diff --git a/generate-configlist.sh b/generate-configlist.sh
-index 75c39ade20..39ac8845ab 100755
---- a/generate-configlist.sh
-+++ b/generate-configlist.sh
-@@ -2,10 +2,11 @@
- 
- SOURCE_DIR="$1"
- OUTPUT="$2"
-+DEPFILE="$3"
- 
- if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
- then
--	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-+	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT> [<DEPFILE>]"
- 	exit 1
- fi
- 
-@@ -36,3 +37,11 @@ print_config_list () {
- 	echo
- 	print_config_list
- } >"$OUTPUT"
-+
-+if test -n "$DEPFILE"
-+then
-+	QUOTED_OUTPUT="$(printf '%s\n' "$OUTPUT" | sed 's,[&/\],\\&,g')"
-+	printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
-+		"$SOURCE_DIR"/Documentation/config/*.adoc |
-+		sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /" >"$DEPFILE"
-+fi
-diff --git a/meson.build b/meson.build
-index 762e2d0fc0..74b459b004 100644
---- a/meson.build
-+++ b/meson.build
-@@ -720,11 +720,14 @@ endif
- 
- builtin_sources += custom_target(
-   output: 'config-list.h',
-+  depfile: 'config-list.h.d',
-+  depend_files: [ 'generate-configlist.sh' ],
-   command: [
-     shell,
--    meson.current_source_dir() + '/generate-configlist.sh',
-+    meson.current_source_dir() / 'generate-configlist.sh',
-     meson.current_source_dir(),
-     '@OUTPUT@',
-+    '@DEPFILE@',
-   ],
-   env: script_environment,
- )
+Some hooks are known never to be safe to parallelize, in that case git
+will always enforce serial execution.
 
-Diff-intervalle contre v5 :
-1:  611a94cd98 ! 1:  5dcd4e9308 build: regenerate config-list.h when Documentation changes
-    @@ Commit message
-         it, t9902-completion.sh fails. Regenerating the config-list.h artifact
-         from sources fixes the artifact and the test.
-     
-    -    Teach the meson build to depend on the Documentation files that
-    -    generate-configlist.sh reads by having it an additional output as a list
-    -    of dependency files, since Meson does not have (or want) builtin support
-    -    for globbing like Make. We assume that if a user adds a new file under
-    +    Since Meson does not have (or want) builtin support for globbing like
-    +    Make, teach generate-configlist.sh to also generate a list of
-    +    Documentation files its output depends on, and incorporate that into the
-    +    Meson build.
-    +
-    +    We assume that if a user adds a new file under
-         Documentation/config then they will also edit one of the existing files
-         to include that new file, and that will trigger a rebuild. Also mark the
-         generator script as a dependency.
-    @@ Commit message
-     
-     
-      ## Notes (benknoble/commits) ##
-    -    Changes from v4 (<9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>):
-    +    Changes from v5 (<611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>):
-     
-    -    • Include Patrick's suggested Makefile changes. Note there's no quiet
-    -      equivalent for mdkir that isn't for the current target's containing
-    -      directory…
-    -    • Make depfile output efficient again, thanks to Phillip.
-    -
-    -    I've kept printf instead of echo (from Patrick/Junio) because I think it
-    -    is easier to reason about ("it works" vs. "did I use this in a way that
-    -    might cause problems").
-    -
-    -    Junio asked about other problematic bytes: the other one I could think
-    -    of (since all the inputs should be paths, anyway) is newlines. I gave
-    -    meson's depfile.py a glance [1], and it looks like they don't handle
-    -    newlines in paths. Other whitespace doesn't appear to be an issue (see
-    -    "elif c in {' ', '\n'}"); I think _most_ characters are just added to
-    -    the filename.
-    -
-    -    [1]: https://github.com/mesonbuild/meson/blob/master/mesonbuild/depfile.py
-    +    • Reword a confusing sentence in the commit message
-     
-      ## Makefile ##
-     @@ Makefile: $(BUILT_INS): git$X
+Please wait for v2 of that series, it's my top priority to get it out,
+Adrian
 
-base-commit: 4a7958ca1415077ce9b1d0a38223ede55da779d9
--- 
-2.53.0
-
+1:
+https://lore.kernel.org/git/20260204173328.1601807-1-adrian.ratiu@collabora.com/n
