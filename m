@@ -1,156 +1,172 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4AF2C08D0
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 11:06:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771672012; cv=none; b=kQwgxln9OXNXzuzyFwbeYmUEVRBQX0y3Q6zlQTOxkZ+zRswC191Wk8+mOn2laZSsP94Oph76PuWsmj70U+7LT+IEONgsbS9sZiN4BFSsylrj1e54Be8fzN+TRAwP7Nevea6GE1DNpOSbed3DNDVVZn4EiTKQha+Ve9KskThI3zU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771672012; c=relaxed/simple;
-	bh=z+Tq7m0vd7QVkbLH2hQnx+0rqmLXFu5UE4z7LmI0H1Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pJZR7ioKtI+/zNGsQsCJo3UjJqyNm5FUcx3z62v0JlGUyQ1nhfvq/DB8jGtJcNgibAK9MrkrjvGjAxzJtesEF/QOSqTAQARWgi28xXmsucbukrv6aTBattIaSPkY16S6IkKdHU11nysjWTSWCRya4TCNEl2k0CQ7J2bAZAJiqCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dPmcptmN; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65A0155C87
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 13:58:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771682304; cv=pass; b=T45dMOGmwX9+/oJdCV+/mf7EOdXyVknAs2ucc58CVWRAosMmP2wR4drfCV8ZhthFsrNREqXtGo/38mAtoVL5PEhdcUVMRnJSIwXPUblNzNdYrmYm4mmbmEtG9ONBCSG7SLa85ZUdegwQ/XZidCESBoupR2hZRAFOBjkPQ+qu/aQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771682304; c=relaxed/simple;
+	bh=yAMr2mOpIENVoHzpkcLtzmM8Efrm0TyMBUawwcL5UAw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hcM7lVIpeO8o0bivWfcPKWJg4qXO81epHBcxKfiiV7pciFpMAsrgSEYVEzYt1oplrwkgpscNiWT6NyVSiFAmZ9dt+lCGGyDo1dTz8/kZ8FRbwmtJMKs2Ro+asnm2bboLGSrEuvGGbZruTdkuRPBMe2qZ2r6Abnevy5egKrNhaO0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mspteiTU; arc=pass smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dPmcptmN"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-82311f4070cso1896911b3a.0
-        for <git@vger.kernel.org>; Sat, 21 Feb 2026 03:06:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mspteiTU"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a7a9b8ed69so26738305ad.2
+        for <git@vger.kernel.org>; Sat, 21 Feb 2026 05:58:22 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771682302; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ekslvotMMcq7nfhG22jKu5NRECQJmgBHO4u18hDJ8d9UKaR6tBU/fllJFl4mDKtZa5
+         1Y6K3xoS5qM+I/Xc9JdnVsp2WI2a0JYpg3xfRkzGDMfr+B3kqbUJac4d+ePw3e3J72Oi
+         RcNHslmRpqaoafi9nGxTi5ovPvEwnWDnacYdpwjR2WhRNSd4MLeunWmdztUqdSyFHPR5
+         nGGa7LbHI0Z6bIlT0VkH2NX8AcazJvWd+wV7g3P1+cY7rHphWZN1WRGNQiCiL9t1Z9+k
+         BJFOjWEiLpM4BNnvcaKWy0Vc0flch9XSxOsfAUjgB8ZLopVra9AaR/d1qWG3NcYvc3TX
+         jbQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=dEY6vwp1DPFWBibpBSpQGLxexjLeLqoMeUKR4S2Zmuc=;
+        fh=WYFal4PD61lPbX6SPNp2lNFheeszDDBThluPHNMXZ/M=;
+        b=hV1KgqEXVyZY+9p7Wx5rfMZA2cb+UJOZeoXTfBFcWfQma2PWOyUt/Mzwi0usEA/UB+
+         KVngWdrVrRbEwe2fQlFDsHknnxOhYmUwJum0eoU6NfHIO7L0a9SPAN3ktX9iaPvDnump
+         sj+AhgWmRHTDn5BfbXT7DhahZqp9H9X0muWqPPwyku8C9UcC+EdERuZ2n3GdMRk7BQXf
+         RlXFQdIYMk1ew64sdDYMwA6yjT90odjs6xfU8V/t3h+lM88znTFhFT6/ouWQusRhKQZi
+         u0m3zZdZs8ZFogAV93lapTEZfaEztvJ1+AoXMb4Y68P2K9LEJxiYau95Z9/tCD9qWSYx
+         SkvA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771672010; x=1772276810; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771682302; x=1772287102; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iBMz/QYv//I140V+qgtIo7QvJDXptWue3HBKstMTB0M=;
-        b=dPmcptmNFNoSUUoFzt8UJyzyFsoXzAfntNv+la6zvcbINhXA+umQiRVGfQMg2ZouTH
-         FutrL+BQVoJBpC2KYktgiz02oxbhufQfCSVoilo9zwvKZXBcJwheFHGwJYmOARDCKm8R
-         ggqL6V3Tq9xcpraQ6G1atsQKlI7zfBJ/tePbtVeiLLvTSjFo7e9fNFDZfK/4KMWgpYbk
-         BN36HkKD33ck6KbkcxETeMk4llxQ4iexkXOBEPa9NCSPAJ9tP46CR1aicfKvtbNZNBJt
-         7O2Je2SBCuPR1aRLf/pbATCu8wkgbJYPQF9m8+sLdimFqS0LLg4MBdm/CPzc7rZV1Dm3
-         nHCg==
+        bh=dEY6vwp1DPFWBibpBSpQGLxexjLeLqoMeUKR4S2Zmuc=;
+        b=mspteiTUSrPX0Rek+IRUpi5Cf2TeNaDGNgBc+O7dgfRJ5lmp73BSf9WpSr7GoL5hlM
+         CNS/kEiWh0ofzovi7Z9fLj1a6UpdzOpwMVza4L1ndP2D/6FpRZVYj1yH1IMNu7UiBJVK
+         1zkR8I43/99USxdltFAAw1AZFklDFuLEwHp+fjlfEDh7p3Da6W+uaDniijGcjEWSSP7f
+         7kHXhthpy5G5d5I63SRl/QYzqiII5p1uCQA+QaZ2v6ep41rVYkn7+RDPRePeg9pNW+MW
+         /d3YbGK5KfsV/Xm5qZhUY81hQaUbCkVgjlyV3ht+1gDnM2uNTvko3mIlEMmc9evlr+JN
+         72/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771672010; x=1772276810;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1771682302; x=1772287102;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=iBMz/QYv//I140V+qgtIo7QvJDXptWue3HBKstMTB0M=;
-        b=rGr8BvpLWaTKXcXVHlXAmyqlqHw2+n3s0YRbxaZDq64abbfgWN88Sni4U7QbvWVZFr
-         9+tSjWwhDkDdJpphmVV7bZpzaj/wWRYrSlRQNmOzr+vJTf0yuNo3ZpODKaTnnTh3hTS1
-         lGwd8x3lLED3IhWzSLiDnmNxUrBKUQgHeblxsINGeTe//fgeA970uwSX+fe59LNjHtkN
-         k5VhVxyzqHZVF0hooARKa74mSC3A3Sgk5b7vtt+lProTuOH1zav5ypHFFHYSMTJHyRlq
-         J1p1yQSc2awSQPBg8+BEkWWRxf6I9SJ61fex52iCn1wjcMZkbARTNs/zJ6Dcf1sglGvL
-         aMPA==
-X-Gm-Message-State: AOJu0YyTMWThj9ZYDqeqnHdfzvXowHmpGQma+z+0YoHWAzWChXjnYvkh
-	C14GvHvyr1vFxz9o7mv+A4f8rcJYR1haQAGgaCEiWO8sak7970Yh3oPa
-X-Gm-Gg: AZuq6aLxYwFcYysI7DOh7chnNcwkXH2L9xiZGg9OUMPd4kKYWv0lQ1oR7MkvjT/hvd7
-	/e25/Lxvo9sHCSIFiKkHxdm/5NwtObr02LZJN2QhrSX4mP5FE+5kTcFzsKHxAkpKENpfeIEgNgx
-	Y4b8GzC52Vum7yabx6/rqaOnLMekZEds8pbIBETH1nQ+QjEHoO4ZaoY77WZL8FAMSbE9h3NH/wp
-	roH9msa4esbPgFMu06iMN6NvfQ6kkpI2dT6aHIUjtkDe7udLQc9w7NK1PJcye7On2LALDWaJQ1+
-	P0KloLAGEwhUv+F/wEt8/gp/9C4s7Y5s/M/T8gq+Tf4wSRHpFy+gSWBgTRC+hVuVZ3T0kvedH5U
-	DsXIg2Ie0K0oEY/dEU1vsEUrwd7FEnwHSRNNxVm7nuO2x4Qtg3iOk3M6kRogxLStx1isJsIC7zd
-	UCAtslo8OyDMs4kxvFvdY7P83gIAmcEJEbAX95c5ceTib7
-X-Received: by 2002:a05:6a00:4b4c:b0:7e8:3fcb:9b00 with SMTP id d2e1a72fcca58-826badc1ffcmr7565449b3a.22.1771672010039;
-        Sat, 21 Feb 2026 03:06:50 -0800 (PST)
-Received: from Pushkar.xu.edu.in ([103.92.44.199])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-826dd8bc0c8sm1804361b3a.54.2026.02.21.03.06.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Feb 2026 03:06:49 -0800 (PST)
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	peff@peff.net,
-	pushkarkumarsingh1970@gmail.com
-Subject: [PATCH v3] path: factor out skip_slashes() in normalize_path_copy_len()
-Date: Sat, 21 Feb 2026 11:05:12 +0000
-Message-ID: <20260221110511.1592-2-pushkarkumarsingh1970@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <xmqqms17cjjj.fsf@gitster.g>
-References: <xmqqms17cjjj.fsf@gitster.g>
+        bh=dEY6vwp1DPFWBibpBSpQGLxexjLeLqoMeUKR4S2Zmuc=;
+        b=oIiC1Si06cc8w1npOXTBzFt1kjPg8Ch9Z5qW3NKULa7rdq0LRl/AQXO5y8A3n7BSWR
+         Tsf02nCw3Bs1r0kuQq2vaamEzQdtS3wrlDN80losJJbR9kIAlUVvAXTmDYK9Zbi9jC43
+         6SsNoh/abHp0CUzHnfwOgsxfsKImTcmaN7IjLT1wrrtmu2QzyPl5bTQXtJglIZoQjxia
+         ngVhsPc6E7wp7/oWoBgImgSPmIWHpdCMoPcDwyu3ixLGQivQcKOiAKaN6M+mokq5yxNG
+         QAanSu0x8AfBizwKg8eabdOVmP/aB374GMfst9EdAM8HMt3OufhsAH8+V+VmUHyHBYSK
+         OuxA==
+X-Gm-Message-State: AOJu0YyBYg9rbC7NUd2ndt0MMmdgLAib31cpjx2rdjNED9eAbL09xoJB
+	MWoOd7h+MJ4KpFffBK4eEi1EqoNLsbNisM9zatDIEr+gGWou5L31fy/A9BlaI2QZzOV8QQzXC50
+	Jj7WiNkE4ueUwiM3M8dXl6v95tAQsbVY=
+X-Gm-Gg: AZuq6aICoYVY6SRfUF3MXdJihfh8Ky7tPgWNcUrHNZnNGnKRhEOGOq02l+2w2BVRT7k
+	x6RSIl5TmyZNoe9cnHZo6Caa+trnxH3ejyaNDCqJ562Quq2qQDeKWrV5vI/HfqWpDwVUBzat3xd
+	x/o/EifBU892K17oR8kUEWxlncdEthAwoNVZyJvOUqKa8Lhv+KzTSSIw/Yy1peZUWYywZ+5wad9
+	rDceehXZtkfHSdK1/7lOWD0WpAWGmQi6e7rqLHQP8tLbZhqy0dfWFD6dju/kdgke9pGT4cDFvT3
+	rZ6y/JvV5YQXBa+6DNa03JF5SpEpORFhvVN4Td/c3B3ROXSPV2b8zvt5PeVDRIQ//dNJ7n2nRjt
+	LyqHYNPIgxHtPs8GzvqPC8Ye8sQ==
+X-Received: by 2002:a17:902:c94b:b0:2ab:2311:e4fc with SMTP id
+ d9443c01a7336-2ad7456f9abmr28328025ad.56.1771682302314; Sat, 21 Feb 2026
+ 05:58:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <9cdcc9de04f0f8fff657f0474b31c063466ed808.1771280837.git.ben.knoble+github@gmail.com>
+ <611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>
+ <aZcWq9SapNnRAXti@pks.im>
+In-Reply-To: <aZcWq9SapNnRAXti@pks.im>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Sat, 21 Feb 2026 08:58:10 -0500
+X-Gm-Features: AaiRm52irfuhuteSE6WBR0FSHUEcxnqVcy5tZrSEldmOCzYlx5jcEVT-AcGLenE
+Message-ID: <CALnO6CB0db28NCeoq7zJU-BF=ruoTsD9_f48rgEuweumoT7--w@mail.gmail.com>
+Subject: Re: [PATCH v5] build: regenerate config-list.h when Documentation changes
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Evan Martin <evan.martin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Extract skip_slashes() to avoid repeating the same is_dir_sep()
-loop in multiple places inside normalize_path_copy_len().
+On Thu, Feb 19, 2026 at 8:57=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Wed, Feb 18, 2026 at 09:37:59AM -0500, D. Ben Knoble wrote:
+> > diff --git a/generate-configlist.sh b/generate-configlist.sh
+> > index 75c39ade20..39ac8845ab 100755
+> > --- a/generate-configlist.sh
+> > +++ b/generate-configlist.sh
+> > @@ -36,3 +37,11 @@ print_config_list () {
+> >       echo
+> >       print_config_list
+> >  } >"$OUTPUT"
+> > +
+> > +if test -n "$DEPFILE"
+>
+> We could arguably drop conditional now that both the Makefile and Meson
+> pass that argument, but I don't mind it much.
 
-Keep the dot-component handling inline to preserve the original
-control flow and readability, as suggested in review.
+I'm going to reroll a commit message, so I could drop this. OTOH, I
+think we've got a working configuration, and maybe someone runs this
+script occasionally to generate the list without wanting the deps.
+Idk.
 
-No functional changes. Behavior verified with t0060-path-utils.sh.
+> > +then
+> > +     QUOTED_OUTPUT=3D"$(printf '%s\n' "$OUTPUT" | sed 's,[&/\],\\&,g')=
+"
+> > +     printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
+> > +             "$SOURCE_DIR"/Documentation/config/*.adoc |
+> > +             sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /" >"$DEPFI=
+LE"
+> > +fi
+>
+> Okay, so we first quote the target output file once, and then we quote
+> the sources with a single call to sed(1), too. To not perform quoting
+> of the target output file twice we don't include it in the printf call,
+> but instead prepend it to each line.
+>
+> Looks reasonable to me, and we spawn at most two sed(1) processes. Nice.
+>
+> > diff --git a/meson.build b/meson.build
+> > index 762e2d0fc0..74b459b004 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -720,11 +720,14 @@ endif
+> >
+> >  builtin_sources +=3D custom_target(
+> >    output: 'config-list.h',
+> > +  depfile: 'config-list.h.d',
+> > +  depend_files: [ 'generate-configlist.sh' ],
+> >    command: [
+> >      shell,
+> > -    meson.current_source_dir() + '/generate-configlist.sh',
+> > +    meson.current_source_dir() / 'generate-configlist.sh',
+> >      meson.current_source_dir(),
+> >      '@OUTPUT@',
+> > +    '@DEPFILE@',
+> >    ],
+> >    env: script_environment,
+> >  )
+> >
+> > Diff-intervalle contre v4 :
+> > 1:  e2f4e1f9ba < -:  ---------- completion: add stash import, export
+>
+> The range-diff is a bit broken, but that doesn't really matter much.
 
-Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
----
-Changes since v2:
-- Clarify commit message to reflect reduced scope.
-- Make intent explicit and ready for application.
+Gr. I must have tweaked something at the last second and missed this. Bumme=
+r.
 
- path.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+> Overall this patch looks good to me, thanks!
+>
+> Patrick
 
-diff --git a/path.c b/path.c
-index d726537622..1772fcb21c 100644
---- a/path.c
-+++ b/path.c
-@@ -1112,6 +1112,14 @@ const char *remove_leading_path(const char *in, const char *prefix)
-  * end with a '/', then the callers need to be fixed up accordingly.
-  *
-  */
-+
-+static const char *skip_slashes(const char *p)
-+{
-+	while (is_dir_sep(*p))
-+		p++;
-+	return p;
-+}
-+
- int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- {
- 	char *dst0;
-@@ -1129,8 +1137,7 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- 	}
- 	dst0 = dst;
- 
--	while (is_dir_sep(*src))
--		src++;
-+	src = skip_slashes(src);
- 
- 	for (;;) {
- 		char c = *src;
-@@ -1150,8 +1157,7 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- 			} else if (is_dir_sep(src[1])) {
- 				/* (2) */
- 				src += 2;
--				while (is_dir_sep(*src))
--					src++;
-+				src = skip_slashes(src);
- 				continue;
- 			} else if (src[1] == '.') {
- 				if (!src[2]) {
-@@ -1161,8 +1167,7 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- 				} else if (is_dir_sep(src[2])) {
- 					/* (4) */
- 					src += 3;
--					while (is_dir_sep(*src))
--						src++;
-+					src = skip_slashes(src);
- 					goto up_one;
- 				}
- 			}
-@@ -1182,6 +1187,8 @@ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
- 
- 	up_one:
- 		/*
-+		 * strip the last component
-+		 *
- 		 * dst0..dst is prefix portion, and dst[-1] is '/';
- 		 * go up one level.
- 		 */
--- 
-2.43.0
-
+Thanks for the help and reviews!
