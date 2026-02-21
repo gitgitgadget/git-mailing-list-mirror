@@ -1,137 +1,118 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0901B983F
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 14:27:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771684075; cv=pass; b=AUbd9DmpTKapMAuzJrTXXWyP2TtauRD7nap3lOqRruSvNQsTYW48bDKe2ioUbKsNWKSh34MGvupl+BspBI03yAyJwwoAnXgsLCbVqPrZ/dQyz65MvZSIvcv71NbSER/+cKdf+0jQTuN3sYnoSzkEaxXeAGYepCh5jdB1YCvuFgE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771684075; c=relaxed/simple;
-	bh=9nbCBpGY0TnpSIR9Meo60EU9QKEMokN754Nq9JBFQGU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fSFYNaDqsE7BDoVll9HRLGTMLvtE07UiTx1UkgNFHibEBVNC6EA8O+WojNXffbgn+ZRM7b3sHjPPCjdyUi9UZAHPLQt9lGmn/XfWPaxY2AD/EU+iNdbF5r7OO5wgFu+b5RseSWJlpqqc7rxy0f3hiE0EbnSAno8kTSoi1mDYzWo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=PJAIf2+T; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7812E3EBF25
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 15:59:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771689553; cv=none; b=kSCzvcYDQujsR2XTod4OYQTQaQaGDORHSmon+aeKnJFw4Ld6hlNamdXA4XWoVIvZxjRuIKxG+rI1YGViZH80jAVCLCt0OQU5VkIYyMrp5FKn+f0/6ECVAIdZo9EsED2l5dKwzODX3vZCzkfCPQYrRZzkglHI/Q2St5tq8h01GW0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771689553; c=relaxed/simple;
+	bh=Vo+lXD3nymrZ4cmH69aUx9Wn/tgaE5dZQ/HEZ+eywY4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fc9at2j7qVA3nsYXcSP+rsFeupSoZTQj04g5WUtm/VcWouIo3GU6GibwMazGUV31R7JKge4WLnxwUoe0dYVXZNi/PC3noAJ3WMeiBmdf4VFQzNwhDSEhCAoD7eDQMT43HGmcZ85JfjSolCzV7xMUISZh4FQxgep7Jo+T5q4ZdYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=RrQL4ke/; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="PJAIf2+T"
-ARC-Seal: i=1; a=rsa-sha256; t=1771684052; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Oh1ke8PhyXsvv1YnOu1ma/TWSQxlxslDzM0z+l3imthCy2ZAdRL9RLcNilGXX0VXye5I5YcmwczsmonLLEGk7ut8xV/0bkbt2u7mPdBXTKjvH0BC3cT54yJZFQ3LJlv0eHCf1FMjufPdWZy1S2Ch9uF58aFwz4J+JvUqqIxnORY=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1771684052; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=KS1j1JPsLgr+500mX6KH7jaCY6Q0cZ4VRW//c9D7W/c=; 
-	b=jylr5awUurk0CB57B1uUyJE1bpYEK3azqrevnXGEdTJpKO0Rw3jgFyiv9Lyl/fv2XFOC4P1Fal6wU8At+5fzU7/9T37E63QFvdqDGz/1eTL32v+8bH37zZHtsnHrOF2bjLLjIZ5AG3aQIi/jgUO0hebjnVVrdUIEKMxQ+kaBVe4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771684052;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=KS1j1JPsLgr+500mX6KH7jaCY6Q0cZ4VRW//c9D7W/c=;
-	b=PJAIf2+Tg+sj1fpBooVpiMcK6KsP/aA3jKfD1WQTEcGTLRqHjpjLU+Jc0JvkJO9P
-	/DcpmOETCSCuOMgxQF3OqGriQ7/sGLMKTEmmcAii4h0IKzAFlcbEfLrno1vVZDPDrkR
-	1BKNJfrRenuApY5CMQORmwC0ik6KJJvocBdwIi/o=
-Received: by mx.zohomail.com with SMTPS id 1771684050826792.8788522684885;
-	Sat, 21 Feb 2026 06:27:30 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
- <emilyshaffer@google.com>, Junio C Hamano <gitster@pobox.com>, Patrick
- Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 0/8] Specify hooks via configs
-In-Reply-To: <aZjuTSopOMvwR4hQ@fruit.crustytoothpaste.net>
-References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
- <20260218222352.55393-1-adrian.ratiu@collabora.com>
- <aZjuTSopOMvwR4hQ@fruit.crustytoothpaste.net>
-Date: Sat, 21 Feb 2026 16:27:26 +0200
-Message-ID: <87o6liw4s1.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="RrQL4ke/"
+Date: Sat, 21 Feb 2026 16:59:06 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1771689548;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YE+X1MVkrttfzzbkmVaTVDST2IlWbALXocAtBVuf/84=;
+	b=RrQL4ke/JVRSNSihKciXofkpB6JxVElkyk6hEpT8C9Ka+zErR/L5Q4xuc2yw0kLhAL+cT6
+	Iz86K7MkmQRsFdxudKVlxF5S7DvqGsvreXLbKHwgIFek/F2zmlKFI+/YGuUcL2soUBlom2
+	zpu9Sgm9+Dwc4gjj4bjRdQkpW46IK9+eDLHL2J5IxOsz/gRvpU96h/XdLwURVoTgd/TC35
+	fEFhDklwkajXJXN+QkJ4PczKdRpElUXsoEMiCfVpkDdbjlYgwwD0hjjEjMpUYytfTgR1Ft
+	lvafkCbNpDrYfdt3sWyFkscEq/AL5D9dfTw/r2c8CByNaa4NvvhYhSRzJLkfQg==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Mirko Faina <mroik@delayed.space>
+Subject: Re: [RFC PATCH] format-patch: better commit list for cover letter
+Message-ID: <aZnOyYGzOByayPFK@exploit>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1262; i=mroik@delayed.space;
+ h=from:subject:message-id; bh=Vo+lXD3nymrZ4cmH69aUx9Wn/tgaE5dZQ/HEZ+eywY4=;
+ b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpmdYufTAU8Xo3hoU58Rj7NASygLwSyKi4x13o5
+ 22J/2csDyaJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaZnWLgAKCRBIeX6hnBm+
+ 0beSD/0YSZguVi8Sr0MUn0RnE5tHc6KK6R4d87ZHLE8NbCHBxFt0mGpN4Jdrv0WQi0VD/43oQ7o
+ lVXebjTiRFpflNN/x/wPKpQvTeWM3W/qZrx/LOE3OsqDY6lywYg75uYtFsgWvrsAxVnGjBEABRp
+ aYDh6X03674++R+AvOClebjtuTQia9ACJZFwgNuNnfuPoxffMOGGY31TTruMYavTPa/pizHss6z
+ EpGTtWY8jBkHonKC6FTCay/DjkHtqsi88ELzOBvJswDpz5kudt6okuMM5u0OnCx13LTpUz16Qmv
+ 2kxISW1x9sLVzyM4BgOH3/KLll8EkkpDvsHTf5AkQDN0UEDNY3nUdArb4Bf+0AyEM9m2zAtB6Bh
+ BAMZZECeuOIUxUgvUdmviIvzDCBJNI0ML0UrYm3a+J/IUSNWbNXxdwczbeLMGPBd3K0qTdjYYwM
+ couAtvn9bZm+HDmBcD1lmwMiMJufWYVNifs9qreMe/js+Mbr/mwv11KclF3we/Y6mPQMySUMXd9
+ fxxZdtaqkVZ2h1gReI1zHmMR0ieo0QqBc34MnBrqmayTcBPmYa0RQ09n9EI3wT1Zzbw+/9Q2DOr
+ W/eF/QUJmr7D88IH4lCKHcOf8fy+fnu0RA12a09WzCiE9IN+tE0VPpNK4yrrzRvUs4KKcoCK6J3
+ UDF1aXSvYUBpqMw==
+X-Developer-Key: i=mroik@delayed.space; a=openpgp;
+ fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
+References: <20260220230633.132213-1-mroik@delayed.space>
+ <xmqqldgmu25h.fsf@gitster.g>
+ <aZk9QlH2PDugXKrh@exploit>
+ <xmqqh5ratzc6.fsf@gitster.g>
+ <xmqqcy1ytz0y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqcy1ytz0y.fsf@gitster.g>
+X-Spamd-Bar: --
 
-On Fri, 20 Feb 2026, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
-> On 2026-02-18 at 22:23:44, Adrian Ratiu wrote:
->> Hello everyone,
->> 
->> v2 addresses all feedback received in v1.
->> 
->> This series adds a new feature: the ability to specify commands to run
->> for hook events via config entries (including shell commands).
->> 
->> So instead of dropping a shell script or a custom program in .git/hooks
->> you can now tell git via config files to run a program or shell script
->> (can be specified directly in the config) when you run hook "foo".
->> 
->> This also means you can setup global hooks to run in multiple repos via
->> global configs and there's an option to disable them if necessary.
->> 
->> For simplicity, because this series is becoming rather big, hooks are
->> still executed sequentially (.jobs == 1). Parallel execution is added
->> in another patch series.
+On Fri, Feb 20, 2026 at 10:02:21PM -0800, Junio C Hamano wrote:
 >
-> I'm interested in how you plan to make parallel execution work
-> gracefully.
+> Just off the top of my head...
 >
-> We've already established that it's necessary to preserve stdout and
-> stderr (including wiring them up to the TTY) so as to not break
-> existing, widely deployed hooks, such as those in Git LFS.  That means
-> that to get parallel execution where the hooks don't write over each
-> other's output and fight for the terminal, you'd need to multiplex each
-> one, including providing a PTY if the appropriate descriptor already has
-> a terminal, such that the output is at the very least handled line by
-> line and ideally batched into per-hook chunks.  Is that the plan, or do
-> you plan to do it differently?
+> Perhaps with
 >
-> I ask because situations where the hook output is not handled gracefully
-> and hooks fight over output or where the existence of TTY on a file
-> descriptor is not preserved will result in bug reports and broken tests
-> for tools that use Git, which I think we'd all like to avoid.
+>     [format]
+> 	commitListFormat ;# true
+>
+> we use
+>
+> 	[1/1] format-patch: better commit list for cover letter
+>
+> and with
+>
+>     [format]
+> 	commitListFormat="%s (%an)"
+>
+> we use
+>
+> 	[1/1] format-patch: better commit list for cover letter	(Mirko Faina)
+>
+> instead.  IOW, the value of the configuration variable is used as
+> the format argument "log --format=...", and appended to the fixed
+> [n/m] that gives the numbers.
+>
+> Without format.commitListFormat defined, or when it is defined to
+> false, we'd use the traditional "shortlog" format.
+>
+> Hmm?
 
-Hi Brian,
+Yes, sounds good.
 
-Yes, this is all done already. Phillip Wood actually brought this TTY
-issue up in his review of the v1 parallel hooks series (many thanks). :) 
+> And the corresponding command line option can look like
+> 
+> 	--cover-letter=(shortlog | log:<log format spec>)
+> 
+> e.g.,
+> 
+> 	--cover-letter=log:"%s (%an)"
+> 
+> to override configured value per invocation basis.
 
+Not too sure about this one. The point was to have a useful default for
+the cover letter template. If users have to pass a format spec through
+the command line it kinda defeates the purpose.
 
-> Of course, that's not in this series, so it may not even be written yet,
-> but if it's not, then this is something to keep in mind for when it gets
-> submitted.
-
-Yes, that's a separate series [1] and I'm about to send v2 very soon.
-
-Please review v2 directly when I send it because it will contain
-significant changes from v1. v1 is not worth reviewing at this point.
-
-To give you a high level description:
-
-All hooks continue to run sequentially (serialized) by default, just
-like before.
-
-To run some of the hooks in parallel, I had to introduce an extension,
-because we need to break backwards compatibility by combining stdout and
-stderr and piping them through run-command's muxer, detached from the
-terminal. There is only 1 known hook requiring this extension (pre-push)
-but it's trivial to add more, if necessary.
-
-Patrick's idea is to leave it up to the user to decide what to
-parallelize, because the user knows if their hooks are safe or not (eg 
-if they write the same file or call the same program), or if it's ok the
-enable the extension or not.
-
-Some hooks are known never to be safe to parallelize, in that case git
-will always enforce serial execution.
-
-Please wait for v2 of that series, it's my top priority to get it out,
-Adrian
-
-1:
-https://lore.kernel.org/git/20260204173328.1601807-1-adrian.ratiu@collabora.com/n
+Since we're close to having Git 3.0, maybe the change in default
+behaviour can be scheduled for 3.0?
