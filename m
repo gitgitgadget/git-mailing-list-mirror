@@ -1,86 +1,90 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248AC299954
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12247359F8F
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:07:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771693212; cv=none; b=SbHvglNxdqHo8IjTNpZmZFeTQqr+rlrz30rQRLHOj2cxKV8EOxX8XaxAeWLwgBmf4iSh2eyKj2PSo92CaWLZyeJfhaLCJ76V5PTL3y4AXCwjHJEYjyRgnZf3ms9t+6eXeQ2hlm42ib1SuFypO6Hmk06FYiJEwjDgFrtGNaVcXTM=
+	t=1771693677; cv=none; b=S0AxXxEpQ8uhP96G38wao7ECwt/n6JzCi8Azv7TT+cKnKXcuGg1mSGkhgLR4oSPD3dgwqyiFwmgke6uJaMXr+4phwuWQeueeqzRwV9qMxy3unAbCfJIsCwTsu5LU9BFDnnVwQz4MTmMTD5cyt+DbYebULEgaYPybt7PCyNR/sIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771693212; c=relaxed/simple;
-	bh=XUyI1hJeQYaIECWLZ3g+kCgr1ktfX7q5XUGoQ1Cqsbw=;
+	s=arc-20240116; t=1771693677; c=relaxed/simple;
+	bh=wqweFh+pERx5RxjXJku4hVOQ10aomiiwyiG5lkHhUI0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UPJ6hLD8GYU9KcHwrZCulwMXaonLW52T9uwAgzmxD7auJgoZKEhXqLnZnJUkNjaosgaM0T8h+A3WITRtLz8sB0rvVsayZL5pwpyp9XoMszk3SMqe0oFg3hqRC9Yb31cyC1pNR/BRsVqb2T6q4Jm0mH+2C5GYgQF4K+ODfjJM0KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dVhOREda; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ivdz8V1F; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=mPbBW97ZKnsRAW9NPExg95DKxFTXUCMZoprUcoSRxFG8kRVLsjGlivUlaunuMsj/+gbv8q5qKOcRcrjMKpVfN7zMMsJd3h/IfSJX/CPDwWFlD7v5W81D+cy9i0EEMycjClIewISh+k1v7rFAv5tCi2rxC+JQJA39U2u2eTVbmcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A9mCkFO7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I4m0orJF; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dVhOREda";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ivdz8V1F"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1FE357A01C1;
-	Sat, 21 Feb 2026 12:00:08 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A9mCkFO7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I4m0orJF"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0F34F1D00197;
+	Sat, 21 Feb 2026 12:07:54 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Sat, 21 Feb 2026 12:00:09 -0500
+  by phl-compute-02.internal (MEProxy); Sat, 21 Feb 2026 12:07:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771693208; x=1771779608; bh=EWDgZLdZhW
-	m5QoGEqH9pGXU7V/0NhYo2SHlgcohE9Dc=; b=dVhOREdaWMaDrkjxeIKMjUSt/d
-	Y8Q2rGG6BVxdlWeXwwyp6eDnXxh0phAI6hxhbNLPvyZywbwI2gecQazr/KxtfwkC
-	nJzkdSrzUIQoboe7ZkWLczTi/qOBlpi2WYwywf7uU/8DlC2Uh7yBd8B76GaVLTiO
-	HC3cZ3ZTIyUnYVWQXqFW35IRvc1VQo8dm9YYU4Kiwnq2bJoG3NgKBwvWUOzv0FEh
-	DP1TAUllmBINmpvTIe752uvQOMLhky6T9pq8bEGp1MiNfbjq9+Vl3NIChUT6HaHI
-	GD6TWgS5J0baY0AfafCZrHtjjaXo0ECCv5w3QnnVUBrAkzHkV2f8c+GyImwg==
+	:subject:to:to; s=fm2; t=1771693674; x=1771780074; bh=JL0JQCVANL
+	aqObyPqVs8hN1OBrjO//Xv2B+g/SjoKRE=; b=A9mCkFO7RQGx25jRp6OluW3sfC
+	JsMsuIeF8RCe9p4zku2l+Xj/GpgKvPHWz97ibME0P3KHpwb39+Y6j4JOvfrJD5D7
+	pdOQgjg0pF7VHjoUDF47S8Ob9qco1QmhVyM3RGbMQjtl68mq/XGNXlADAwOKaGmX
+	xi3ABqBhD+t4r15mgECCaEQGMbDM43piRWNsOwDY1Wr13Tbe5fOYcpAXjFhV5bmO
+	O+73RWYy8t5De9C+c8YzZeQ4Z8FulEU5SX7kLW79aEAKvuvTA3n4BpESU5qaQK4O
+	hBfSbf8wBUFyH3HBRdfcEogqEB0+xU1sSyW3s8D1s4ne3qXWxikivfh+P0hA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771693208; x=1771779608; bh=EWDgZLdZhWm5QoGEqH9pGXU7V/0NhYo2SHl
-	gcohE9Dc=; b=ivdz8V1F+UOholwg6WUtJhgUvnaG9md2nxjvAVPNRVH2TOggG53
-	MEwBQBMfGjTTRHXdi/USmuh/f2V7lhHcUHGTB0XRQpWUUM7i7QlYmJ9HsKLj7qvF
-	PV4YME3PvgsfTiJlNIox6+Kzdlz6jl1Am4bLLoAyioaBdsd47f+Q7iLDMX9Lg0/V
-	sh183yC/X3IbiUXgCkrhj1s64R0M6PaSXrLJWc44OEvWN9Xe7Y41hCk2zd+VUGoc
-	rPdli8SkeyEGTE+KUoD7JW6uwHzFeIgieBzlA8ZURLurCF/zYAopXUWWqWoh4PAr
-	uLgZfHY/3XS7o6WdD3O35aSbWKS1TJQv11Q==
-X-ME-Sender: <xms:mOSZaXHXeXxtBZqlW6HH910uVpXOfQNj9m5VQnr7Fiod80DzKAwapQ>
-    <xme:mOSZabUBy3QOxbecejGp0WgavCq3PcEz2O59oAFpWcgaJQGgAuNcEwasER0MQhogV
-    A3fVP7cN8I1zduFoGmLNMAiTh5wzImE7iipUScCNOQwhtPHdyIlAA>
-X-ME-Received: <xmr:mOSZaeJlvhQRDAVeMJUHmub8PF7VJ-BsT5dfBG1q7GYfSytIbvOb8m-7ziRQsQ0FCMFWogDmZKo0czy1UFYn8NBicNGSL1kKFw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduledvucetufdoteggodetrf
+	1771693674; x=1771780074; bh=JL0JQCVANLaqObyPqVs8hN1OBrjO//Xv2B+
+	g/SjoKRE=; b=I4m0orJFmrgTBLJVm7HJLX/BCdL8RgQQt73ARqFB2JmFX3uOPoC
+	36MT1Zy4netgJL0n9CdjYD28I4FNelTcqROCDi4B8OynmstUcXG1R+tg0ibfiWDQ
+	V/1PF4u+Kp1s6S9oJExbi9kdojMU5HwbLx65d52OIHTv3UzJO7t/smsK587W4iEk
+	jAQRhwIK3SEg9R1QBWT60Nz2fz4DXWSwMW1dbHQVt4ZDtu3DZOiBMoBYlY+4Lpct
+	PiG+LwhB9eRW88NrkmWpPHBCUzObLJMbfLD5Qw0eDeUECUa5Wb3Y8jcDOlTmLLRA
+	UDXytAjJWj8+tajkujRcw17YYCnvdj4LtTw==
+X-ME-Sender: <xms:auaZaTYJflhIZa_ISAN_TNaC8FvDi6X1-gAxOnZ45e30dn0oopEZMA>
+    <xme:auaZaWGxKTMfkH_8pAyK6OPN5QyCnViYw5KGkMotKdjuLHxc-n6_ybLW-GoPFQd89
+    riepowMezYg7_6cFwUAofAzHLWDEeQSe8hlYxFm1a5_kq3zQmackQ>
+X-ME-Received: <xmr:auaZafwGTSrSc4Jucfs31wljHUk1dSZwH9_Z1eRH-mGNczDahwHjhWkcGQOwJQ4pzB6dIAgi-ZX-rT39roSlMgRKa7q073hgQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduleehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhrohgvlhhssehthhhomhhsvghnrdhiohdprhgtph
-    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:mOSZaT97EqaDE8igtcRYUyr-N2XJeyO2tP_92EyFWLlRuk8speAZGw>
-    <xmx:mOSZaZJJ7j2hMl2zIJifO--IzfwEhxDF6qZoYhZwxlKvpv2JwHwdZA>
-    <xmx:mOSZaQnNvDFY-fPkrveX2IrShqN_9eSAlSkdKiInKe4pS-VsS4oMYg>
-    <xmx:mOSZaVN20CcIh3lhtRZc6qKZuOoqXkRQ5YTWlbXiJUYcvX6eZF8NQg>
-    <xmx:mOSZaZr6BNDZss83QEcXG7aUjSLtakH7qLfJW9PWsCWsne4Pntu2p8vq>
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprg
+    hulhesphgruhhlthgrrhhjrghnrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdp
+    rhgtphhtthhopehgihhthhhusgesphgruhhlihhsrghgvggvkhdrtghomhdprhgtphhtth
+    hopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:auaZaQnRTxPmvxrqsmC06_7t9RqX64DrkRE_RTTZ33fwi2cyp-fz4A>
+    <xmx:auaZaQnmi9fbiAPScAPHx_nGxRmYJ-6MtiBs1SB_EWKCGKIqZLfpIg>
+    <xmx:auaZaawmueThkJySygIspJyKiGFd3irOoOVSFB8ercYeGoSSOBVISA>
+    <xmx:auaZadp1LJgwhTpV9wnz8FwuZKXasfMeuNds5I0F0sDCfaytpNDezA>
+    <xmx:auaZadjFkuAzgILA7w65mvZTrYRxtWGMO1gqB2NtqgPdk6EjlnAyj5z0>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Feb 2026 12:00:07 -0500 (EST)
+ 21 Feb 2026 12:07:54 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Troels Thomsen" <troels@thomsen.io>
-Cc: "Troels Thomsen via GitGitGadget" <gitgitgadget@gmail.com>,
+To: Paul Tarjan <paul@paultarjan.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Paul Tarjan <github@paulisageek.com>,
+  Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>,
   git@vger.kernel.org
-Subject: Re: [PATCH] receive-pack: fix crash on out-of-namespace symref
-In-Reply-To: <xmqqbjjgiz3a.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	30 Dec 2025 09:37:45 +0900")
-References: <pull.2144.git.git.1766850014289.gitgitgadget@gmail.com>
-	<xmqqfr8uk61i.fsf@gitster.g>
-	<a16bf8a6-2f57-4794-91b5-92615f184c4b@app.fastmail.com>
-	<xmqqbjjgiz3a.fsf@gitster.g>
-Date: Sat, 21 Feb 2026 09:00:05 -0800
-Message-ID: <xmqq8qcmt4kq.fsf@gitster.g>
+Subject: Re: [PATCH v4] fsmonitor: implement filesystem change listener for
+ Linux
+In-Reply-To: <CALvWuB70kwPAnQ+v4ch1TKMDxbUQgi5NP8NX7tbCZRqivJ=vig@mail.gmail.com>
+	(Paul Tarjan's message of "Sat, 21 Feb 2026 09:15:02 -0700")
+References: <pull.2147.v3.git.git.1767099302592.gitgitgadget@gmail.com>
+	<pull.2147.v4.git.git.1767202894884.gitgitgadget@gmail.com>
+	<aVuplzNaoCHlZG3S@pks.im> <xmqqikbrvz2l.fsf@gitster.g>
+	<CALvWuB70kwPAnQ+v4ch1TKMDxbUQgi5NP8NX7tbCZRqivJ=vig@mail.gmail.com>
+Date: Sat, 21 Feb 2026 09:07:52 -0800
+Message-ID: <xmqq1piet47r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,43 +94,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Paul Tarjan <paul@paultarjan.com> writes:
 
-> "Troels Thomsen" <troels@thomsen.io> writes:
+>> I just noticed that the discussion thread went silent after this
+>> message.  Has the patch been reviewed and tested well to proceed,
+>> except for that meson-build support?
 >
->> On Sun, Dec 28, 2025, at 15:57, Junio C Hamano wrote:
->>
->>> Fixing crash is certainly a good thing, but when the namespace is
->>> segregated and receive-pack wants to get updates only within the
->>> given namespace, would presence of such a cross namespace symref
->>> cause updates outside the namespace through the symref, defeating
->>> the point of setting up a namespace in the first place?
->>>
->>> I am not objecting to the new behaviour, but am not sure if it is a
->>> sensible one.  You _might_ be able to argue that an attempt to update
->>> underlying refs outside the namespace through such a symbolic ref
->>> should result in an error (i.e., a fix to the current crashing
->>> behaviour is to die in a controlled way).
->>>
->>> Thoughts?
->>
->> I think it's important that the symbolic ref needs to be explicitly
->> created on the receiving side.
+> I'd love to see it integrated upstream. Is there anything else you
+> need from me?
 >
-> Yes, and that can cut both ways.  In an ideal world without any
-> end-users who make any mistakes, deliberate cross namespace symref
-> may be a handy feature to break out of the namespace jail on purpose
-> in a controlled way.
+>> > This would also need the below patch to support Meson. Would be great if
+>> > you include it, otherwise I can send it as a separate patch once this
+>> > topic lands. Thanks!
 >
-> But if the symref was made to point across the namespace boundary by
-> mistake, catching it as a misconfiguration may be a crucial chance
-> the user has to prevent it from turning into a security incident.
-> And that is why I asked.
+> I'd prefer to take you up on the offer to send the meson support as a
+> separate patch.
 
-The review discussion thread ended here.  I am dropping the topic
-out of my tree now, but I do not think it would be a bad idea to
-resurrect the topic that turns the uncontrolled segmentation fault
-into a controlled death that calls die("hey, what is that cross
-namespace link doing there?").
+This part of your message is one thing we needed from you to unblock
+ourselves, I guess.
+
+Patrick, do you think you can help making this into two-patch
+series, the original one being the [PATCH 1/2] and update for
+meson-build in [PATCH 2/2]?
+
+> I'm unfamiliar with that system and the suggested
+> patch failed in CI on some dependency installation steps which felt
+> unrelated but I didn't want to debug.
+> https://github.com/git/git/actions/runs/20720903513
+
+The topic has been in my tree near the tip of 'seen' and I do not
+think we saw CI failures coming from this topic.
 
 Thanks.
+
