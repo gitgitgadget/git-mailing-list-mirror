@@ -1,90 +1,87 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12247359F8F
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793CDBA21
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:17:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771693677; cv=none; b=S0AxXxEpQ8uhP96G38wao7ECwt/n6JzCi8Azv7TT+cKnKXcuGg1mSGkhgLR4oSPD3dgwqyiFwmgke6uJaMXr+4phwuWQeueeqzRwV9qMxy3unAbCfJIsCwTsu5LU9BFDnnVwQz4MTmMTD5cyt+DbYebULEgaYPybt7PCyNR/sIY=
+	t=1771694274; cv=none; b=O2z4TYTMpFnc291Oak5kokqMKRFP1VTiMokoDe0jjo9ThO3tzH1zKMJ7qOWA7NAXC4a+x2kFoDUWxP3mg0795RlBoNpQsISO0Y3USnooAyA8M/WQjpBjeWnORSWYi24ZYTi+9VfRg77zc7q78Wch7/a1LdbBVNoPJDscpN3AZg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771693677; c=relaxed/simple;
-	bh=wqweFh+pERx5RxjXJku4hVOQ10aomiiwyiG5lkHhUI0=;
+	s=arc-20240116; t=1771694274; c=relaxed/simple;
+	bh=nzxoPlCOkofiLmQ20GyTDLb+LR51tIgA6e3kt3lCVe8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mPbBW97ZKnsRAW9NPExg95DKxFTXUCMZoprUcoSRxFG8kRVLsjGlivUlaunuMsj/+gbv8q5qKOcRcrjMKpVfN7zMMsJd3h/IfSJX/CPDwWFlD7v5W81D+cy9i0EEMycjClIewISh+k1v7rFAv5tCi2rxC+JQJA39U2u2eTVbmcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A9mCkFO7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I4m0orJF; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=C5n9EWTHUJ1Qikstl7G3DsfFW1W3QCT4aB3/u37t2f23spgUS86y4HiauuYbZhD7/m/n+MdJ3D4V+n4g9fAEQIG7SJhelx/MSOgMBjNEWNS24y9jevj6v4YV8KUMQPYroFC6l9PYL6uS/E1sCm0eSvtJc6j2JugE0ng0pbcqVCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P11owOgZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z7K9X5TA; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A9mCkFO7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I4m0orJF"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0F34F1D00197;
-	Sat, 21 Feb 2026 12:07:54 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sat, 21 Feb 2026 12:07:55 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P11owOgZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z7K9X5TA"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 884F77A012C;
+	Sat, 21 Feb 2026 12:17:52 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sat, 21 Feb 2026 12:17:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771693674; x=1771780074; bh=JL0JQCVANL
-	aqObyPqVs8hN1OBrjO//Xv2B+g/SjoKRE=; b=A9mCkFO7RQGx25jRp6OluW3sfC
-	JsMsuIeF8RCe9p4zku2l+Xj/GpgKvPHWz97ibME0P3KHpwb39+Y6j4JOvfrJD5D7
-	pdOQgjg0pF7VHjoUDF47S8Ob9qco1QmhVyM3RGbMQjtl68mq/XGNXlADAwOKaGmX
-	xi3ABqBhD+t4r15mgECCaEQGMbDM43piRWNsOwDY1Wr13Tbe5fOYcpAXjFhV5bmO
-	O+73RWYy8t5De9C+c8YzZeQ4Z8FulEU5SX7kLW79aEAKvuvTA3n4BpESU5qaQK4O
-	hBfSbf8wBUFyH3HBRdfcEogqEB0+xU1sSyW3s8D1s4ne3qXWxikivfh+P0hA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1771694272;
+	 x=1771780672; bh=nzxoPlCOkofiLmQ20GyTDLb+LR51tIgA6e3kt3lCVe8=; b=
+	P11owOgZzU6NMvEE1DIHXqDfyRH8PJecqSFHjmod0l+ubl6BffbhtBmxWZzoPAny
+	rNzAMCbIhhQQ1IuQgW4XJQZpi/hpUrfpBLxuuzeiA3pZL0zrnJGQpc2LDWD4VPq6
+	M1UBrIXMMBTUDgq/saRNBMqWJKWPtBWoGVB5wc0HnMJE55RTPDBV4SQGXLNItDPt
+	Q91gGF5zBWOIxmW8LEilWLj/cJ+RBFb9NalxMB2wpvlDfcoPXld3dHDdlN1u6NsE
+	NtqTST3ftlFIcmASZPL/tVuf9Ka9WLM3ujvRf7hoTHiwFOWE1tUlkvGQRttjXt1O
+	GbJ8xN80Ss1Emoi3c/uQhA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771693674; x=1771780074; bh=JL0JQCVANLaqObyPqVs8hN1OBrjO//Xv2B+
-	g/SjoKRE=; b=I4m0orJFmrgTBLJVm7HJLX/BCdL8RgQQt73ARqFB2JmFX3uOPoC
-	36MT1Zy4netgJL0n9CdjYD28I4FNelTcqROCDi4B8OynmstUcXG1R+tg0ibfiWDQ
-	V/1PF4u+Kp1s6S9oJExbi9kdojMU5HwbLx65d52OIHTv3UzJO7t/smsK587W4iEk
-	jAQRhwIK3SEg9R1QBWT60Nz2fz4DXWSwMW1dbHQVt4ZDtu3DZOiBMoBYlY+4Lpct
-	PiG+LwhB9eRW88NrkmWpPHBCUzObLJMbfLD5Qw0eDeUECUa5Wb3Y8jcDOlTmLLRA
-	UDXytAjJWj8+tajkujRcw17YYCnvdj4LtTw==
-X-ME-Sender: <xms:auaZaTYJflhIZa_ISAN_TNaC8FvDi6X1-gAxOnZ45e30dn0oopEZMA>
-    <xme:auaZaWGxKTMfkH_8pAyK6OPN5QyCnViYw5KGkMotKdjuLHxc-n6_ybLW-GoPFQd89
-    riepowMezYg7_6cFwUAofAzHLWDEeQSe8hlYxFm1a5_kq3zQmackQ>
-X-ME-Received: <xmr:auaZafwGTSrSc4Jucfs31wljHUk1dSZwH9_Z1eRH-mGNczDahwHjhWkcGQOwJQ4pzB6dIAgi-ZX-rT39roSlMgRKa7q073hgQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduleehucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771694272; x=
+	1771780672; bh=nzxoPlCOkofiLmQ20GyTDLb+LR51tIgA6e3kt3lCVe8=; b=Z
+	7K9X5TAtnHODtUBWzmR4Eh+HvIn/E8iQynoonjueNtNYyd97GKMvZhqxEBNmIeWP
+	EljRle6loirz1ndLuVwDPegIS9maaz0KAmHtmGqJqhkaKylok3xlA9GyL9ni21p2
+	yY8l7Hoxz7vkiX87d4mvoZ+FymRS7mh4m+oYtrdY1C4kGaVad55UtqOjOG3p/Gxr
+	1vjKEERfxq8qONGNQYj5YJW1uvTlEWR4saRov3cGoWsYqoeRW10SmuJhLt50eol9
+	WozkIi8YCFP/tHgZzEr6qRn+RMbl8kWnkatBksdSh8eLVwyQ0m6j05bckkaqS8Sg
+	dn9scXpxjvkZoTxnuAhUA==
+X-ME-Sender: <xms:wOiZafcs2BFoZJuQhQ4hVkW149wcALwHfFQzjc5OXLVYx81h-CwgHg>
+    <xme:wOiZacH1UZLyHV1b7M8kPy0DlHXc0W-rdO1rfUz7eVz3wHnXPuMdtML33nknd2CCv
+    5bp5zLpPKiqZLvtAdIRFVXoymdQVwrEN1sgGYI1GRWGJx6b64sMzA>
+X-ME-Received: <xmr:wOiZaQ2cr37juI1iecbPSaU3fIlg2WqXUecFq1s8_tQ32odAp8TjPsc3Fg8xgKbYS1U18bMmyNr0fVVEoGN9Ri2G70xK6sdeQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduleeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprg
-    hulhesphgruhhlthgrrhhjrghnrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdp
-    rhgtphhtthhopehgihhthhhusgesphgruhhlihhsrghgvggvkhdrtghomhdprhgtphhtth
-    hopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:auaZaQnRTxPmvxrqsmC06_7t9RqX64DrkRE_RTTZ33fwi2cyp-fz4A>
-    <xmx:auaZaQnmi9fbiAPScAPHx_nGxRmYJ-6MtiBs1SB_EWKCGKIqZLfpIg>
-    <xmx:auaZaawmueThkJySygIspJyKiGFd3irOoOVSFB8ercYeGoSSOBVISA>
-    <xmx:auaZadp1LJgwhTpV9wnz8FwuZKXasfMeuNds5I0F0sDCfaytpNDezA>
-    <xmx:auaZadjFkuAzgILA7w65mvZTrYRxtWGMO1gqB2NtqgPdk6EjlnAyj5z0>
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:wOiZaclJll4E1ZPRnAWV_6iIeDNeyl_JX9Ex2vX3e95GatEgpvDbOQ>
+    <xmx:wOiZaY-9qdT3umBSq_rSRHZJdMFmpY6N1LEU69C35lP-DeRocWyfcg>
+    <xmx:wOiZaZqJZNIi714W_HL7e_w8n0AECKo8mzTw9dxKEwJtbh1q4AnjUA>
+    <xmx:wOiZaZk6oKTbjW2AJ_tZLLQ1K5AguhhVhilnMqkMc9iUn8vP5_AzVg>
+    <xmx:wOiZaTGxO5y-Ts1idASHoiVDQQUfalVww9401ftHr_pzYJoz_ka6Js_I>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Feb 2026 12:07:54 -0500 (EST)
+ 21 Feb 2026 12:17:51 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Paul Tarjan <paul@paultarjan.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Paul Tarjan <github@paulisageek.com>,
-  Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v4] fsmonitor: implement filesystem change listener for
- Linux
-In-Reply-To: <CALvWuB70kwPAnQ+v4ch1TKMDxbUQgi5NP8NX7tbCZRqivJ=vig@mail.gmail.com>
-	(Paul Tarjan's message of "Sat, 21 Feb 2026 09:15:02 -0700")
-References: <pull.2147.v3.git.git.1767099302592.gitgitgadget@gmail.com>
-	<pull.2147.v4.git.git.1767202894884.gitgitgadget@gmail.com>
-	<aVuplzNaoCHlZG3S@pks.im> <xmqqikbrvz2l.fsf@gitster.g>
-	<CALvWuB70kwPAnQ+v4ch1TKMDxbUQgi5NP8NX7tbCZRqivJ=vig@mail.gmail.com>
-Date: Sat, 21 Feb 2026 09:07:52 -0800
-Message-ID: <xmqq1piet47r.fsf@gitster.g>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: gitgitgadget@gmail.com,  git@vger.kernel.org,  peff@peff.net
+Subject: Re: [PATCH v28 2/2] status: add status.compareBranches config for
+ multiple branch comparisons
+In-Reply-To: <20260221080201.7847-1-haraldnordgren@gmail.com> (Harald
+	Nordgren's message of "Sat, 21 Feb 2026 09:02:01 +0100")
+References: <067978dd0946732e00e4805d62ea51348fbf336e.1769112471.git.gitgitgadget@gmail.com>
+	<20260221080201.7847-1-haraldnordgren@gmail.com>
+Date: Sat, 21 Feb 2026 09:17:50 -0800
+Message-ID: <xmqqwm06rp6p.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,38 +89,27 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Paul Tarjan <paul@paultarjan.com> writes:
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
->> I just noticed that the discussion thread went silent after this
->> message.  Has the patch been reviewed and tested well to proceed,
->> except for that meson-build support?
+> Hi Junio and Jeff!
 >
-> I'd love to see it integrated upstream. Is there anything else you
-> need from me?
+> I see that this topic has now been marked as "Stale". Isn't it time to
+> merge this now?
 >
->> > This would also need the below patch to support Meson. Would be great if
->> > you include it, otherwise I can send it as a separate patch once this
->> > topic lands. Thanks!
->
-> I'd prefer to take you up on the offer to send the meson support as a
-> separate patch.
+> We went to several rounds of reviews and edits to reach something that I
+> think everyone agrees with 🤗
 
-This part of your message is one thing we needed from you to unblock
-ourselves, I guess.
+The entry has been asking "What's the status of this topic?" in the
+past handful of issues of "What's cooking" report and we heard
+nothing from anybody (until you responded ;-)), so I moved it
+together with others to the [Stalled] section.
 
-Patrick, do you think you can help making this into two-patch
-series, the original one being the [PATCH 1/2] and update for
-meson-build in [PATCH 2/2]?
-
-> I'm unfamiliar with that system and the suggested
-> patch failed in CI on some dependency installation steps which felt
-> unrelated but I didn't want to debug.
-> https://github.com/git/git/actions/runs/20720903513
-
-The topic has been in my tree near the tip of 'seen' and I do not
-think we saw CI failures coming from this topic.
+The topic has been paged out of my consciousness for quite a while,
+so it may take some time for me to answer this question myself, but
+list participants, do you imagine yourselves using this feature in
+your daily life?
 
 Thanks.
-
