@@ -1,119 +1,89 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5D141754
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 04:54:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13751DED4C
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 05:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771649696; cv=none; b=V21NmQ56dQ38qtE/CalQSEYqkT7hBGX9QUxZaXsNfGk7OfE1sb1Cy7Iznu7TfUT/GnwZ2Xl9l7/Sq7cOicKgcYOLKQQP0aR1e0y1lp8AJ55MFZcDYTERiD2Jb8nK7n5KHjYPA9lJcByiLm152yNb89e1aGQVEKXuL4E9Pc8vQi8=
+	t=1771651132; cv=none; b=VSncsX6SfJ6dBRcwukkrCgk/bkWBTIzWteG67z20ZGv0++88Ca+S4+UHnCubqusnAEb8kv+9sbBiBON1wXyCvHdRT/lamRfP+OJ8idNqR8HXZ3aw6VXu251GNwwg5XYPlKS5noaV6shA5ig8B5Xai4L+9QEgCAeujMwDiLESj1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771649696; c=relaxed/simple;
-	bh=CrGqKuttXGX24wR+L5wpHXXGyUATGgGQ6OKzO2NwLbk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P/bYocgrxaM+OlTnzO3LuntetwdJfPsRwyfx9qGbMkuKo8eW0UCi66O/Se5jxZ9X98jDhzWbqXM1T165yZfmGOKSr1ewhDPLawxkQeJPua9weDOImWqXB/S943p7HBA3VeNnQIsca9lN6O5e3IZg8/ubf8f3np6zgF+zy+SXtr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pGTQG83L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZlN7VxiN; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771651132; c=relaxed/simple;
+	bh=1gvoWntgzlDXtp6nuuD1yd50Q0qJZRENMh3YAIOEpmQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bczB5lbVpAaFXts1s1c7AgpLJg9uUCHRo9eYRanWxp0+3G2u/hz9bBDNiVy5/pzwLziMBRCdBG5mvyljTivfuD7baJ2HtP/BbG4kXOTpKxY7QHxj97IpOOU9dkQMAFNw9hVBC0ViXaHX++9aU3kDUg8rZVpvcScCekksN2v6kBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=jaBvSVil; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pGTQG83L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZlN7VxiN"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 049557A01B0;
-	Fri, 20 Feb 2026 23:54:52 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 20 Feb 2026 23:54:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771649692; x=1771736092; bh=9/HQyIFZMJ
-	ObrJRylE8uYrbRge0ow7gty47hH91tzUA=; b=pGTQG83L2jZSdokrTOUc+2ws/K
-	hwJIaal4/NQchigiSmM91fqM+hdwb5vFVjTd61mYJnwIbPSxbBC0xSfdBsTTIVo+
-	RwQ9jbmnvoeQc3AWnc3CwsZRTvDtpa9u/3TjyW5AapE+zguwDfmDEWgYa0XQoVkX
-	fvOG2ekRscpJrOs5FwHOg8DeqXM9nCpd1HREaulonA7yAwA40AQrVZrFNuOxvGfs
-	yowZI5OvJx1cxIjj331i/EBewPXOOOCEAP6emRt0gvJzvVz57N7ypbtGgNBVk0EV
-	cjREtYm5Du6NsgrRbaEZul+2N4oEQd7MsVwi4PcDbnH0Wj8Eij320TTczJoQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771649692; x=1771736092; bh=9/HQyIFZMJObrJRylE8uYrbRge0ow7gty47
-	hH91tzUA=; b=ZlN7VxiNRphSz+H9TmIopyEeH19pSLmzW242qbF3OkCU4QS3cb/
-	V1LHboyhciQ0HCb2fGu4FpLrdUoefTDPFv+UhzGi6+guQrz9UUiJWTAGn63MUV+F
-	fJGi5/uO2O+lE4UA664POaKJr3fUHFa7J9OKGe1REyAbrfJ7T4RAGACFYYonC7nb
-	V7Zy/qdTQ2wpe+VkkSOHfVg7xWgvlW21pYuXpInM/zpPWK7o2dd44OVG7VUrlMDl
-	ooR31C5KGjJIzfPLsQ2eWHDuq2OoPz4dzTlpDUzuGNiScFp0BLDYWRtQI+EgCzcr
-	iiciSc+aXZ1TAmdPU3ZlgnkOBOY2PGnDtlA==
-X-ME-Sender: <xms:nDqZaTrF5km9qMB35mrOJv_Jpb2R6X7YW1SZOnDjxvQvT_YW5Je9dA>
-    <xme:nDqZaVENvpvENIxQQQN3S20btCdHq1zZ7WoyBxm9u6X2cAmKSb4JZMgt0u-sKlj9m
-    qu5zdWIHwiTF_Agjhcm1YgMVKy9GyBAxvuMc0PLuVVIA44S0Les5w>
-X-ME-Received: <xmr:nDqZadl5DMkXhOZEv9YpVnfumnNuX8QMUrAe7p6J3FyHNFYOK-6dfhx-u_rOUWW7Ig4KPuzFi_8AaY68ri_Qlz1dbKNfzB0Urg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfedtgeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
-    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:nDqZaQlbnzpv6ucr-C02EM0xCHE3zbUDDTGewIx5SgOl6X7U5wAMHw>
-    <xmx:nDqZaWtUUUb593Qudw1U8gMxyQ8U9Ram2j28eIBMeGi7t_V3njIq8A>
-    <xmx:nDqZabmUrqmtEWYPwbohri_z-2S13PFJM68_nH3WFXmH3toZwGev1Q>
-    <xmx:nDqZaZuSUg8qmBvtOuZCvGu2rVmNGaDwSW7_GCncyykA_fyDXxcOfA>
-    <xmx:nDqZaQQzKh1KhLxUuUPZgFMop6-dwZIXRI4P_xj_0FScUzNwn_fk1kI1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Feb 2026 23:54:52 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="jaBvSVil"
+Date: Sat, 21 Feb 2026 06:18:46 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1771651128;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=eST/LTJ4Sf0NdIKBUxUwDJLc7GpNeLuL4eNIp4a5oB0=;
+	b=jaBvSVil3va/feYh3iEmeZLr/P7oopQ9hDGEEkps8HbFOpgX7k+ug7xXUB124xBX9DdwsO
+	ALnTzLn00ptwAXO7sBds4icO+1lcmF0vVPoEB13uH0goajHPkeCVyQyicuhD1oBCiLUZwK
+	sVoAJzmOlAeZMd57dJfT9W9Yf0VovElsorXZvu36agEk+dfeLjaSKdq8paiRTD6C91Y0Jy
+	n7NfYX/oOsu2ACW1VNVTiSObaDj6Wb1dspo+dbUCyq4qS+qdIk91BxJ4r5ApUBnsLfiBAj
+	vEUNkM5GD0bzRjbaCKq2M3mABgsGgsWKJBaybEBP27zYUozTVZ9jaNmka9nmrA==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Mirko Faina <mroik@delayed.space>
 Subject: Re: [RFC PATCH] format-patch: better commit list for cover letter
-In-Reply-To: <20260220230633.132213-1-mroik@delayed.space> (Mirko Faina's
-	message of "Sat, 21 Feb 2026 00:06:31 +0100")
+Message-ID: <aZk9QlH2PDugXKrh@exploit>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1231; i=mroik@delayed.space;
+ h=from:subject:message-id; bh=1gvoWntgzlDXtp6nuuD1yd50Q0qJZRENMh3YAIOEpmQ=;
+ b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpmUAgeVePj1fLlAyj/j/LAIEjajUq7TywmJ745
+ LsR3kwqJUOJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaZlAIAAKCRBIeX6hnBm+
+ 0T/zD/9K9NWdQ/QnycQuioXkORfgwscjR2CxbdE51lpPXW84NC0yYjNbpk5QzGXZRIyTjNYE74s
+ p9yrROa/L/dsE62YzI3oPdHtGkH00K3/u3FWJ+fLqCsXbgjHi72L8Knw9K+0yGrQRGWx1eZhblX
+ snop1EKyjlQZHTaWTq6wO6JYtp5tDMf/2tNk25WfvwBdbbQNpqbxlYTmc5h1nSaf4u2jbK4geRE
+ UfPc74dXwa+0b0u7y8a5OPNoIaEJM5f5h91+oE+7cBqRHAeuAlUVWMmhXBy2P2MiX4zSFvIoIoV
+ QJRWw4qTPDK4QMsMWpg0KX2X1fyTS6z0rdrSQWJxzi9qgAKYhosErcc+NPBEuRiciBSMkEOLvmF
+ lfYCNvnWPLNUsAomrGQSxorxFVgzUT6KvjQfjBqDVUB6KC63/IaHIKu7x5kEEtDOYWbH3MqA+4d
+ 2xUt8MsEZUO3GNEndheBu3+hnaMybfA28wPE1lnXaIqq6OkXEPl5h0OdSMlxzMdf92w6HK/56Bp
+ CObUgyaioFQ/eFmI7CnzHZkPnMThbfItRDfBUj4fQLg0c748PRpSr9WnGv54OwZkB2/vDbN3KUX
+ 2W1Khp1pqJ0p7pY1MuHrRGqLzPhUGWLGqfPCa4MPgnGljfkDwSjw95g2mpGBGbpr9GFeLOidsOd
+ 15Rm4gq5nd9IJlg==
+X-Developer-Key: i=mroik@delayed.space; a=openpgp;
+ fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
 References: <20260220230633.132213-1-mroik@delayed.space>
-Date: Fri, 20 Feb 2026 20:54:50 -0800
-Message-ID: <xmqqldgmu25h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <xmqqldgmu25h.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqldgmu25h.fsf@gitster.g>
+X-Spamd-Bar: --
 
-Mirko Faina <mroik@delayed.space> writes:
+On Fri, Feb 20, 2026 at 08:54:50PM -0800, Junio C Hamano wrote:
+>  (1) Drop the abbreviated object name, as they are useless garbage.
+>      The result of applying these patches will not have these commit
+>      object names anyway, so even when people find these messages on
+>      a mail archive in 6 months, they will not find the result of
+>      applying the patches from the official project history with
+>      these object names.
 
-> Often when sending patch series there's a need to clarify to the
-> reviewer what's the purpose of said series, since it might be difficult
-> to understand it from reading the commits messages one by one.
->
-> "git format-patch" provides the useful "--cover-letter" flag to declare
-> if we want it to generate a template for us to use. By default it will
-> generate a "git shortlog" of the changes, which developers find less
-> useful than they'd like, mainly because the shortlog groups commits by
-> author, and gives no obvious chronological order.
+Should there be a reference to the author ident instead of the object
+name then? A quick glance on who worked on what before diving into the
+patches themselves might be useful.
 
-All true.
+>  (2) Do we need to make this optional, in order to allow those users
+>      who do prefer the current "shortlog" style that groups patches
+>      from the same person together to keep the original style?  I am
+>      undecided myself.
 
-> Teach the make_cover_letter() a better cover letter format to replace
-> the current. The format can be seen from the following example:
->
->     [1/3] abcc234s: this is a summary
->     [2/3] 73s84ns2: this is another summary
-
-Two things to consider.
-
- (1) Drop the abbreviated object name, as they are useless garbage.
-     The result of applying these patches will not have these commit
-     object names anyway, so even when people find these messages on
-     a mail archive in 6 months, they will not find the result of
-     applying the patches from the official project history with
-     these object names.
-
- (2) Do we need to make this optional, in order to allow those users
-     who do prefer the current "shortlog" style that groups patches
-     from the same person together to keep the original style?  I am
-     undecided myself.
+Maybe the "--cover-letter" option can take an argument like
+"--cover-letter=<shortlog | commitlist>". Although I doubt there's
+anyone that actually likes the shortlog version, it gives very little
+information. I'm inclined to think that most leave it there because they
+think it must be somewhat since it is the default, tho this is just my
+assumption.
