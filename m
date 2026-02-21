@@ -1,119 +1,235 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9781DF72C
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:20:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0875F2877CF
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:28:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771694441; cv=none; b=LjxncZOCaDG9lGtL5YUp71OMYw9Iz0q/AVd2Gb6k+PcSwP17J9DQvP5MKcdQnxfpAulr6ARMttAnuttmxnTOEwQIGLOMG7EwFTgQkJXEBK3DxUyRd8cjZadU7c0ktqJ6VrMOM+sEu/SWZXVZO+vlXyG6p0A7E0KeaucGbDJ8h7Y=
+	t=1771694897; cv=none; b=h/5e/Pdhhe1KhO7LLgDlHnVE/O7ANBXDpjxGBK7QdHxLJMrRFZP6OVgEB6+CmyXOoIgR37sE+wgzuM/54UtShjot8ER5xY0nA70lLYkzGTZPyDIfSa7nDfV9qzzdFMhFGmcNGMcBprOOvyrNYbEZpj3MCI836p57o3PhXqdAWt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771694441; c=relaxed/simple;
-	bh=bH2bZ2X5b4LpM3XXKqTxw7DAcMT4Pwr/BS+7v1sHy14=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Nqi91ow7oLdm+eCMwUYxHuIVCk8OciwjcCcQaAmwEypkAO/nfTfk5bXa9W0kDdMWrnC107S9b+bA5y6fFKQQ3XfavLpWNLPwTW55pE4BjiXFBZlIcEsyZ3hpnIR4+87A7sUIBn+uPUltHFAEFosEzeAJfwWKmGXqqh/YCt5yV3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oWWNOlui; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WWTnmyHb; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771694897; c=relaxed/simple;
+	bh=wyixuyjnVPrRaGc71S+BAKFa+ktHhkuBTBSWpqVbWSE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Dfbl6DOoL/JPtlwipe6nAGj7fSCRZ1k7oGi8IE94CaOruOALtQdjH0GpMIukKmFj5SWc3oz/kA5TLmFB94XE5zknxXhiPOxnj5q7IEjEPHYvY7DEFCfUMril8x96RjBFsNWtCPE0W4akdRUWqmYS2g3jrEHJlTVGeqiJ8kDNd2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k/G8XgdK; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oWWNOlui";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WWTnmyHb"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4D5657A0130;
-	Sat, 21 Feb 2026 12:20:40 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Sat, 21 Feb 2026 12:20:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771694440; x=1771780840; bh=3HpgB2K6hl
-	Nhps4Dm8dZw9XPZuve8BZMsQzVsBJ7+fs=; b=oWWNOluiiNKZ7jZLdzWgwM9LYz
-	FSYMYDqIBjx9MLmsM1dFK1FzD4Dmj7L3KahPDB9t65pot5X7VJyVWJrDobVbZqHy
-	UV1h204B8vRQYPSN+rw+mSNG2c/s0AMedd9ZtbkZBZbducHOuNJLbRdDpvjDQdmH
-	UjYxz9wFs2LUgah010lxMQsZcQN6GHGVpRtSgM214yAgBPbblLnBGCkygAPvdPhD
-	6j3p8E/BFbGIcdC4kmCQdfML06jqiYlGmmORxkPGDDCqG0OjzunWbgHhxEWeTDsP
-	AB4WDQPVXgtE6/f4CrA9iKQLVJzoiBlTBYjzwOY+NcLal7ynAEwH9bbfyfew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771694440; x=1771780840; bh=3HpgB2K6hlNhps4Dm8dZw9XPZuve8BZMsQz
-	VsBJ7+fs=; b=WWTnmyHbgnGRAPMKddUaoDpEh1f4FFE8W6StrcOFL5TxT15LF+E
-	j6TIauMI3+uFWpne0WfvQLdyhAd51YXcYZ4UmphllpAIPwwj/QHSsD5CWBHep5eJ
-	khbK+d1Uxcf63CASG4F+/QAqa83J+XRUooYP1aa7puYTM5dB6TmI3mBnw8gg5XFN
-	NlbQr9g8jOLpJL7Ng2IplsMxvQ32tqkQGRYzujrKMiaWTdgEb624B7MPNDGhEHDk
-	ntl3oLxKwLP0yXFjGXzUaWUaLYfw/sejx+p7RbDJdgbj3hKwk0k8PCXOZAihCxa7
-	w5kvK+EkrmocrhU8kXS8p5gfDHnrEeCDI+A==
-X-ME-Sender: <xms:aOmZaf0Jbct5qz4fluqLanK3LUR2twq5QSz21Rd4iscYUkfBrldK1g>
-    <xme:aOmZaVFP0ZIvn5enk_suxfCE-2xuKCf-a_J4qT5h7DW7FMKgsQkEiQdRMcai9a-av
-    vnkQ_fQ2-ZuD-fvNxQVjuIOdVBfn-3KP7y4eXfzvEkCmWmI3mwk>
-X-ME-Received: <xmr:aOmZaU6Z91rFZEZBdS0xU4unC6Fps2auijYGBgFQz5MZQ-6xLZBkc-oU33BavPSzj63L4lxPcKM1zsnFU8AxPbvYhB0aiYuVOw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
-    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:aOmZaTtoMAB4JUpKUXJM6kUX6M0rSgNp31k2cq8oB_IXnKsFe5ohww>
-    <xmx:aOmZad6Y5n_2bRn5ohRyuM_ukNkZF3zXXBtXdFPoBBQZtuoX3TVlyA>
-    <xmx:aOmZaWXYxGFSETSGzPaMEJCTKMmlZuwikujU5_iDU9zZB7eGwGzdgA>
-    <xmx:aOmZaX_0QRbnvZbo3XDhMpGmrE9N81bCq4aHubQC1NG5T71C13qQTQ>
-    <xmx:aOmZaQYtjPfuy6PABel_iPkEfe6pIEP882WbtVRb3TyEit1jRZFoRaGz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Feb 2026 12:20:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [PATCH v8] setup: allow cwd/.git to be a symlink to a directory
-In-Reply-To: <60e4cbcd-6dfe-4e1a-9c63-be905c815bed@gmail.com> (Tian Yuchen's
-	message of "Sat, 21 Feb 2026 16:10:49 +0800")
-References: <20260218124638.176936-1-a3205153416@gmail.com>
-	<20260220164512.216901-1-a3205153416@gmail.com>
-	<xmqqfr6vxpkn.fsf@gitster.g>
-	<60e4cbcd-6dfe-4e1a-9c63-be905c815bed@gmail.com>
-Date: Sat, 21 Feb 2026 09:20:38 -0800
-Message-ID: <xmqqqzqerp21.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k/G8XgdK"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8972a14e27bso40712036d6.2
+        for <git@vger.kernel.org>; Sat, 21 Feb 2026 09:28:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771694894; x=1772299694; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1BvGCZ5IVbje1ftONX0Imn7nYWvNLy+FsCqQANCjOgM=;
+        b=k/G8XgdKgGds85tk0dtlnF7BZ8GfrXA1IKH+Yuab4BTPqrLDQdG4sE+VEUlnlkWydi
+         8/9uxJpmhV92aTzHfQb1lDopDenwvDKM2507tCnyqbsH+H2o+RV2FcaMy8EXvoyJgxFN
+         YBKwzxRT/f/Eyn3iAzvR0KrVom9gX3O84hYFd3iiU778SMpZu+xRN+l0jlxiF1QDs3e5
+         UfF1vTaKxhdDkrPbBHyMPb/hJq7nHl5HTFv+8G5sUKlijrd7eemSmLrYtugcYRtfdWPB
+         MW6CepcBXwdskjHf5tXuF4yWCtsLYBe/HOkHBydVm43dFOpDTDhPzqOxFdCwpjm1LBLn
+         vm7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771694894; x=1772299694;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1BvGCZ5IVbje1ftONX0Imn7nYWvNLy+FsCqQANCjOgM=;
+        b=GoRneax1P1VcCOJIiG/sCHD8HlcsuFoaXWbaDI4VFWmP2sq1tzzrf/D4fRMLnPkzVX
+         6GKlzvGRwpEE+o71i8wruNEySWc1F6AJNsDVbTWYQ5wseNxMXa2dVtaxNe79Hnp+5EYm
+         QNkJS0WHoNEUshvcJ0iSvqd8ahf5gKs5XFir6NpavoTR20109I/YieHkpuVBlV+6MSH5
+         /ylLq2r0NIeHEFnxt3SU+QOQue04QADpPV+eOqc006b8a+Tl1uwGwS57gaNkNVpZuDvX
+         6w2TtELxEbLuqwTAOjXXPKqzFg2wa81aCQgwYoSHUIy6z3qMwjRisWcsDlqpSEbGaKV9
+         XgFw==
+X-Gm-Message-State: AOJu0Yz8C5k3B3dpBZeaKEKjxoLCiZw9hNExK0DTOqF2U1oACD9yJJrF
+	Yv7HoFQ6xZGVd+Lji9R4mxTyolgdFWgY04LJnJJd7zRTu0bx4Di+wSb1OtQkGQ==
+X-Gm-Gg: AZuq6aJKrjl43030essJ6KN00ZfUEJbvQrJkGZLi13Vgq3wytviXPh9OKS7GzVnOrX0
+	WpS4MSBFATYmPkRPRlGcwtbAvlt6Opasr5hsiA4dPm86tJtDDwnR80JuooCq6xzFPCwzt+aitcn
+	tPK5gKIu8m/ncuNiHYXNvuXu1Of6ZjqWiNDRvE4Vjt33QgipNJvUvaFczlQNSJm4IKHdqpIN44P
+	cutnKfjW/1awoDoMvlTR0gO/kCMZFwbqLvxEGMsqmuXKMcLpY5GhXyKSc8I2ZkWeuTpECORrs4a
+	0wJToBqB0klbvzXOalv7X3eHwRwkfaVHHNGGyRuvbGf028GTVFQULP0DMv3WNDiDoIGR6elaUuG
+	e9nVK6JNkvCcbeVTTZD4RmjcOensoQDqbxvRMKUsW5C7R9EIM4UktL/1a/m9S+BLQeEZqaFaSH5
+	qI+PUeGN+VAsaAtHQMWDAVc1uF
+X-Received: by 2002:a05:6214:21ae:b0:894:835d:b112 with SMTP id 6a1803df08f44-89979ecbd6fmr66307646d6.40.1771694894604;
+        Sat, 21 Feb 2026 09:28:14 -0800 (PST)
+Received: from [127.0.0.1] ([64.236.161.19])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8997c697469sm21614196d6.9.2026.02.21.09.28.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Feb 2026 09:28:14 -0800 (PST)
+Message-Id: <pull.2049.git.1771694893208.gitgitgadget@gmail.com>
+From: "Lambert Duclos via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 21 Feb 2026 17:28:13 +0000
+Subject: [PATCH] t2004: use test_path_is_file instead of test -f
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Lambert Duclos <lambertddg@gmail.com>,
+    Lambert Duclos-de Guise <lambertddg@gmail.com>
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+From: Lambert Duclos-de Guise <lambertddg@gmail.com>
 
->> This design decision may be debatable, but not tightening everything
->> at once may be a prudent thing to do to avoid accidental regression.
->> 
->> Having said that.
->>
->> If you have a directory ".git/" somewhere in your working tree, and
->> the directory is somehow corrupt that is_git_directory() says "nope,
->> that is not a valid Git directory", wouldn't you rather want to know
->> about it as a potential problem?
->
-> Great point. A corrupt '.git' dir is definitely a red flag. However, 
-> silently ignoring it and moving on has been the historical behavior, 
-> hasn't it?
+Replace 'test -f' with the helper function 'test_path_is_file'
+to provide better error messages upon failure.
 
-Exactly.  That is where my reference to "not tightening everything
-at once" comes from.
+Signed-off-by: Lambert Duclos-de Guise <lambertddg@gmail.com>
+---
+    [GSoC] t2004: use test_path_is_file instead of test -f
+    
+    Replace 'test -f' with the helper function 'test_path_is_file' to
+    provide better error messages upon failure.
 
-> Still, if we decide to tighten this in the future, it will be very 
-> simple change within this new 'switch' structure. Nothing much to worry 
-> about IMO.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2049%2FLambertDuclos%2Ft2004-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2049/LambertDuclos/t2004-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2049
 
-Yup.  Perhaps it would deserve a new "/* NEEDSWORK: should we catch a
-directory .git that is not a git directory here? */" comment there.
+ t/t2004-checkout-cache-temp.sh | 42 +++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
-> Will send v9 soon, with commit message rewritten.
+diff --git a/t/t2004-checkout-cache-temp.sh b/t/t2004-checkout-cache-temp.sh
+index b92d96fdc4..0afe0ff7ca 100755
+--- a/t/t2004-checkout-cache-temp.sh
++++ b/t/t2004-checkout-cache-temp.sh
+@@ -42,7 +42,7 @@ test_expect_success 'checkout one stage 0 to temporary file' '
+ 	test_line_count = 1 actual &&
+ 	test $(cut "-d	" -f2 actual) = path1 &&
+ 	p=$(cut "-d	" -f1 actual) &&
+-	test -f $p &&
++	test_path_is_file $p &&
+ 	test $(cat $p) = tree1path1
+ '
+ 
+@@ -55,7 +55,7 @@ test_expect_success 'checkout all stage 0 to temporary files' '
+ 	do
+ 		test $(grep $f actual | cut "-d	" -f2) = $f &&
+ 		p=$(grep $f actual | cut "-d	" -f1) &&
+-		test -f $p &&
++		test_path_is_file $p &&
+ 		test $(cat $p) = tree1$f || return 1
+ 	done
+ '
+@@ -71,7 +71,7 @@ test_expect_success 'checkout one stage 2 to temporary file' '
+ 	test_line_count = 1 actual &&
+ 	test $(cut "-d	" -f2 actual) = path1 &&
+ 	p=$(cut "-d	" -f1 actual) &&
+-	test -f $p &&
++	test_path_is_file $p &&
+ 	test $(cat $p) = tree2path1
+ '
+ 
+@@ -83,7 +83,7 @@ test_expect_success 'checkout all stage 2 to temporary files' '
+ 	do
+ 		test $(grep $f actual | cut "-d	" -f2) = $f &&
+ 		p=$(grep $f actual | cut "-d	" -f1) &&
+-		test -f $p &&
++		test_path_is_file $p &&
+ 		test $(cat $p) = tree2$f || return 1
+ 	done
+ '
+@@ -108,9 +108,9 @@ test_expect_success 'checkout all stages/one file to temporary files' '
+ 	test_line_count = 1 actual &&
+ 	test $(cut "-d	" -f2 actual) = path1 &&
+ 	cut "-d	" -f1 actual | (read s1 s2 s3 &&
+-	test -f $s1 &&
+-	test -f $s2 &&
+-	test -f $s3 &&
++	test_path_is_file $s1 &&
++	test_path_is_file $s2 &&
++	test_path_is_file $s3 &&
+ 	test $(cat $s1) = tree1path1 &&
+ 	test $(cat $s2) = tree2path1 &&
+ 	test $(cat $s3) = tree3path1)
+@@ -143,8 +143,8 @@ test_expect_success 'checkout some stages/one file to temporary files' '
+ 	test $(cut "-d	" -f2 actual) = path2 &&
+ 	cut "-d	" -f1 actual | (read s1 s2 s3 &&
+ 	test $s1 = . &&
+-	test -f $s2 &&
+-	test -f $s3 &&
++	test_path_is_file $s2 &&
++	test_path_is_file $s3 &&
+ 	test $(cat $s2) = tree2path2 &&
+ 	test $(cat $s3) = tree3path2)
+ '
+@@ -162,9 +162,9 @@ test_expect_success '-- path0: no entry' '
+ test_expect_success '-- path1: all 3 stages' '
+ 	test $(grep path1 actual | cut "-d	" -f2) = path1 &&
+ 	grep path1 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
+-	test -f $s1 &&
+-	test -f $s2 &&
+-	test -f $s3 &&
++	test_path_is_file $s1 &&
++	test_path_is_file $s2 &&
++	test_path_is_file $s3 &&
+ 	test $(cat $s1) = tree1path1 &&
+ 	test $(cat $s2) = tree2path1 &&
+ 	test $(cat $s3) = tree3path1)
+@@ -174,8 +174,8 @@ test_expect_success '-- path2: no stage 1, have stage 2 and 3' '
+ 	test $(grep path2 actual | cut "-d	" -f2) = path2 &&
+ 	grep path2 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
+ 	test $s1 = . &&
+-	test -f $s2 &&
+-	test -f $s3 &&
++	test_path_is_file $s2 &&
++	test_path_is_file $s3 &&
+ 	test $(cat $s2) = tree2path2 &&
+ 	test $(cat $s3) = tree3path2)
+ '
+@@ -183,9 +183,9 @@ test_expect_success '-- path2: no stage 1, have stage 2 and 3' '
+ test_expect_success '-- path3: no stage 2, have stage 1 and 3' '
+ 	test $(grep path3 actual | cut "-d	" -f2) = path3 &&
+ 	grep path3 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
+-	test -f $s1 &&
++	test_path_is_file $s1 &&
+ 	test $s2 = . &&
+-	test -f $s3 &&
++	test_path_is_file $s3 &&
+ 	test $(cat $s1) = tree1path3 &&
+ 	test $(cat $s3) = tree3path3)
+ '
+@@ -193,8 +193,8 @@ test_expect_success '-- path3: no stage 2, have stage 1 and 3' '
+ test_expect_success '-- path4: no stage 3, have stage 1 and 3' '
+ 	test $(grep path4 actual | cut "-d	" -f2) = path4 &&
+ 	grep path4 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
+-	test -f $s1 &&
+-	test -f $s2 &&
++	test_path_is_file $s1 &&
++	test_path_is_file $s2 &&
+ 	test $s3 = . &&
+ 	test $(cat $s1) = tree1path4 &&
+ 	test $(cat $s2) = tree2path4)
+@@ -203,7 +203,7 @@ test_expect_success '-- path4: no stage 3, have stage 1 and 3' '
+ test_expect_success '-- asubdir/path5: no stage 2 and 3 have stage 1' '
+ 	test $(grep asubdir/path5 actual | cut "-d	" -f2) = asubdir/path5 &&
+ 	grep asubdir/path5 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
+-	test -f $s1 &&
++	test_path_is_file $s1 &&
+ 	test $s2 = . &&
+ 	test $s3 = . &&
+ 	test $(cat $s1) = tree1asubdir/path5)
+@@ -216,7 +216,7 @@ test_expect_success 'checkout --temp within subdir' '
+ 		test_line_count = 1 actual &&
+ 		test $(grep path5 actual | cut "-d	" -f2) = path5 &&
+ 		grep path5 actual | cut "-d	" -f1 | (read s1 s2 s3 &&
+-		test -f ../$s1 &&
++		test_path_is_file ../$s1 &&
+ 		test $s2 = . &&
+ 		test $s3 = . &&
+ 		test $(cat ../$s1) = tree1asubdir/path5)
+@@ -230,7 +230,7 @@ test_expect_success 'checkout --temp symlink' '
+ 	test_line_count = 1 actual &&
+ 	test $(cut "-d	" -f2 actual) = path6 &&
+ 	p=$(cut "-d	" -f1 actual) &&
+-	test -f $p &&
++	test_path_is_file $p &&
+ 	test $(cat $p) = path7
+ '
+ 
 
-Thanks.
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+-- 
+gitgitgadget
