@@ -1,87 +1,84 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793CDBA21
-	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9781DF72C
+	for <git@vger.kernel.org>; Sat, 21 Feb 2026 17:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771694274; cv=none; b=O2z4TYTMpFnc291Oak5kokqMKRFP1VTiMokoDe0jjo9ThO3tzH1zKMJ7qOWA7NAXC4a+x2kFoDUWxP3mg0795RlBoNpQsISO0Y3USnooAyA8M/WQjpBjeWnORSWYi24ZYTi+9VfRg77zc7q78Wch7/a1LdbBVNoPJDscpN3AZg4=
+	t=1771694441; cv=none; b=LjxncZOCaDG9lGtL5YUp71OMYw9Iz0q/AVd2Gb6k+PcSwP17J9DQvP5MKcdQnxfpAulr6ARMttAnuttmxnTOEwQIGLOMG7EwFTgQkJXEBK3DxUyRd8cjZadU7c0ktqJ6VrMOM+sEu/SWZXVZO+vlXyG6p0A7E0KeaucGbDJ8h7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771694274; c=relaxed/simple;
-	bh=nzxoPlCOkofiLmQ20GyTDLb+LR51tIgA6e3kt3lCVe8=;
+	s=arc-20240116; t=1771694441; c=relaxed/simple;
+	bh=bH2bZ2X5b4LpM3XXKqTxw7DAcMT4Pwr/BS+7v1sHy14=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C5n9EWTHUJ1Qikstl7G3DsfFW1W3QCT4aB3/u37t2f23spgUS86y4HiauuYbZhD7/m/n+MdJ3D4V+n4g9fAEQIG7SJhelx/MSOgMBjNEWNS24y9jevj6v4YV8KUMQPYroFC6l9PYL6uS/E1sCm0eSvtJc6j2JugE0ng0pbcqVCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P11owOgZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z7K9X5TA; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=Nqi91ow7oLdm+eCMwUYxHuIVCk8OciwjcCcQaAmwEypkAO/nfTfk5bXa9W0kDdMWrnC107S9b+bA5y6fFKQQ3XfavLpWNLPwTW55pE4BjiXFBZlIcEsyZ3hpnIR4+87A7sUIBn+uPUltHFAEFosEzeAJfwWKmGXqqh/YCt5yV3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oWWNOlui; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WWTnmyHb; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P11owOgZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z7K9X5TA"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 884F77A012C;
-	Sat, 21 Feb 2026 12:17:52 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 21 Feb 2026 12:17:52 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oWWNOlui";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WWTnmyHb"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4D5657A0130;
+	Sat, 21 Feb 2026 12:20:40 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Sat, 21 Feb 2026 12:20:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1771694272;
-	 x=1771780672; bh=nzxoPlCOkofiLmQ20GyTDLb+LR51tIgA6e3kt3lCVe8=; b=
-	P11owOgZzU6NMvEE1DIHXqDfyRH8PJecqSFHjmod0l+ubl6BffbhtBmxWZzoPAny
-	rNzAMCbIhhQQ1IuQgW4XJQZpi/hpUrfpBLxuuzeiA3pZL0zrnJGQpc2LDWD4VPq6
-	M1UBrIXMMBTUDgq/saRNBMqWJKWPtBWoGVB5wc0HnMJE55RTPDBV4SQGXLNItDPt
-	Q91gGF5zBWOIxmW8LEilWLj/cJ+RBFb9NalxMB2wpvlDfcoPXld3dHDdlN1u6NsE
-	NtqTST3ftlFIcmASZPL/tVuf9Ka9WLM3ujvRf7hoTHiwFOWE1tUlkvGQRttjXt1O
-	GbJ8xN80Ss1Emoi3c/uQhA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771694440; x=1771780840; bh=3HpgB2K6hl
+	Nhps4Dm8dZw9XPZuve8BZMsQzVsBJ7+fs=; b=oWWNOluiiNKZ7jZLdzWgwM9LYz
+	FSYMYDqIBjx9MLmsM1dFK1FzD4Dmj7L3KahPDB9t65pot5X7VJyVWJrDobVbZqHy
+	UV1h204B8vRQYPSN+rw+mSNG2c/s0AMedd9ZtbkZBZbducHOuNJLbRdDpvjDQdmH
+	UjYxz9wFs2LUgah010lxMQsZcQN6GHGVpRtSgM214yAgBPbblLnBGCkygAPvdPhD
+	6j3p8E/BFbGIcdC4kmCQdfML06jqiYlGmmORxkPGDDCqG0OjzunWbgHhxEWeTDsP
+	AB4WDQPVXgtE6/f4CrA9iKQLVJzoiBlTBYjzwOY+NcLal7ynAEwH9bbfyfew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771694272; x=
-	1771780672; bh=nzxoPlCOkofiLmQ20GyTDLb+LR51tIgA6e3kt3lCVe8=; b=Z
-	7K9X5TAtnHODtUBWzmR4Eh+HvIn/E8iQynoonjueNtNYyd97GKMvZhqxEBNmIeWP
-	EljRle6loirz1ndLuVwDPegIS9maaz0KAmHtmGqJqhkaKylok3xlA9GyL9ni21p2
-	yY8l7Hoxz7vkiX87d4mvoZ+FymRS7mh4m+oYtrdY1C4kGaVad55UtqOjOG3p/Gxr
-	1vjKEERfxq8qONGNQYj5YJW1uvTlEWR4saRov3cGoWsYqoeRW10SmuJhLt50eol9
-	WozkIi8YCFP/tHgZzEr6qRn+RMbl8kWnkatBksdSh8eLVwyQ0m6j05bckkaqS8Sg
-	dn9scXpxjvkZoTxnuAhUA==
-X-ME-Sender: <xms:wOiZafcs2BFoZJuQhQ4hVkW149wcALwHfFQzjc5OXLVYx81h-CwgHg>
-    <xme:wOiZacH1UZLyHV1b7M8kPy0DlHXc0W-rdO1rfUz7eVz3wHnXPuMdtML33nknd2CCv
-    5bp5zLpPKiqZLvtAdIRFVXoymdQVwrEN1sgGYI1GRWGJx6b64sMzA>
-X-ME-Received: <xmr:wOiZaQ2cr37juI1iecbPSaU3fIlg2WqXUecFq1s8_tQ32odAp8TjPsc3Fg8xgKbYS1U18bMmyNr0fVVEoGN9Ri2G70xK6sdeQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduleeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771694440; x=1771780840; bh=3HpgB2K6hlNhps4Dm8dZw9XPZuve8BZMsQz
+	VsBJ7+fs=; b=WWTnmyHbgnGRAPMKddUaoDpEh1f4FFE8W6StrcOFL5TxT15LF+E
+	j6TIauMI3+uFWpne0WfvQLdyhAd51YXcYZ4UmphllpAIPwwj/QHSsD5CWBHep5eJ
+	khbK+d1Uxcf63CASG4F+/QAqa83J+XRUooYP1aa7puYTM5dB6TmI3mBnw8gg5XFN
+	NlbQr9g8jOLpJL7Ng2IplsMxvQ32tqkQGRYzujrKMiaWTdgEb624B7MPNDGhEHDk
+	ntl3oLxKwLP0yXFjGXzUaWUaLYfw/sejx+p7RbDJdgbj3hKwk0k8PCXOZAihCxa7
+	w5kvK+EkrmocrhU8kXS8p5gfDHnrEeCDI+A==
+X-ME-Sender: <xms:aOmZaf0Jbct5qz4fluqLanK3LUR2twq5QSz21Rd4iscYUkfBrldK1g>
+    <xme:aOmZaVFP0ZIvn5enk_suxfCE-2xuKCf-a_J4qT5h7DW7FMKgsQkEiQdRMcai9a-av
+    vnkQ_fQ2-ZuD-fvNxQVjuIOdVBfn-3KP7y4eXfzvEkCmWmI3mwk>
+X-ME-Received: <xmr:aOmZaU6Z91rFZEZBdS0xU4unC6Fps2auijYGBgFQz5MZQ-6xLZBkc-oU33BavPSzj63L4lxPcKM1zsnFU8AxPbvYhB0aiYuVOw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeduleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepph
-    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:wOiZaclJll4E1ZPRnAWV_6iIeDNeyl_JX9Ex2vX3e95GatEgpvDbOQ>
-    <xmx:wOiZaY-9qdT3umBSq_rSRHZJdMFmpY6N1LEU69C35lP-DeRocWyfcg>
-    <xmx:wOiZaZqJZNIi714W_HL7e_w8n0AECKo8mzTw9dxKEwJtbh1q4AnjUA>
-    <xmx:wOiZaZk6oKTbjW2AJ_tZLLQ1K5AguhhVhilnMqkMc9iUn8vP5_AzVg>
-    <xmx:wOiZaTGxO5y-Ts1idASHoiVDQQUfalVww9401ftHr_pzYJoz_ka6Js_I>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
+    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:aOmZaTtoMAB4JUpKUXJM6kUX6M0rSgNp31k2cq8oB_IXnKsFe5ohww>
+    <xmx:aOmZad6Y5n_2bRn5ohRyuM_ukNkZF3zXXBtXdFPoBBQZtuoX3TVlyA>
+    <xmx:aOmZaWXYxGFSETSGzPaMEJCTKMmlZuwikujU5_iDU9zZB7eGwGzdgA>
+    <xmx:aOmZaX_0QRbnvZbo3XDhMpGmrE9N81bCq4aHubQC1NG5T71C13qQTQ>
+    <xmx:aOmZaQYtjPfuy6PABel_iPkEfe6pIEP882WbtVRb3TyEit1jRZFoRaGz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Feb 2026 12:17:51 -0500 (EST)
+ 21 Feb 2026 12:20:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: gitgitgadget@gmail.com,  git@vger.kernel.org,  peff@peff.net
-Subject: Re: [PATCH v28 2/2] status: add status.compareBranches config for
- multiple branch comparisons
-In-Reply-To: <20260221080201.7847-1-haraldnordgren@gmail.com> (Harald
-	Nordgren's message of "Sat, 21 Feb 2026 09:02:01 +0100")
-References: <067978dd0946732e00e4805d62ea51348fbf336e.1769112471.git.gitgitgadget@gmail.com>
-	<20260221080201.7847-1-haraldnordgren@gmail.com>
-Date: Sat, 21 Feb 2026 09:17:50 -0800
-Message-ID: <xmqqwm06rp6p.fsf@gitster.g>
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com
+Subject: Re: [PATCH v8] setup: allow cwd/.git to be a symlink to a directory
+In-Reply-To: <60e4cbcd-6dfe-4e1a-9c63-be905c815bed@gmail.com> (Tian Yuchen's
+	message of "Sat, 21 Feb 2026 16:10:49 +0800")
+References: <20260218124638.176936-1-a3205153416@gmail.com>
+	<20260220164512.216901-1-a3205153416@gmail.com>
+	<xmqqfr6vxpkn.fsf@gitster.g>
+	<60e4cbcd-6dfe-4e1a-9c63-be905c815bed@gmail.com>
+Date: Sat, 21 Feb 2026 09:20:38 -0800
+Message-ID: <xmqqqzqerp21.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,27 +86,34 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Tian Yuchen <a3205153416@gmail.com> writes:
 
-> Hi Junio and Jeff!
+>> This design decision may be debatable, but not tightening everything
+>> at once may be a prudent thing to do to avoid accidental regression.
+>> 
+>> Having said that.
+>>
+>> If you have a directory ".git/" somewhere in your working tree, and
+>> the directory is somehow corrupt that is_git_directory() says "nope,
+>> that is not a valid Git directory", wouldn't you rather want to know
+>> about it as a potential problem?
 >
-> I see that this topic has now been marked as "Stale". Isn't it time to
-> merge this now?
->
-> We went to several rounds of reviews and edits to reach something that I
-> think everyone agrees with 🤗
+> Great point. A corrupt '.git' dir is definitely a red flag. However, 
+> silently ignoring it and moving on has been the historical behavior, 
+> hasn't it?
 
-The entry has been asking "What's the status of this topic?" in the
-past handful of issues of "What's cooking" report and we heard
-nothing from anybody (until you responded ;-)), so I moved it
-together with others to the [Stalled] section.
+Exactly.  That is where my reference to "not tightening everything
+at once" comes from.
 
-The topic has been paged out of my consciousness for quite a while,
-so it may take some time for me to answer this question myself, but
-list participants, do you imagine yourselves using this feature in
-your daily life?
+> Still, if we decide to tighten this in the future, it will be very 
+> simple change within this new 'switch' structure. Nothing much to worry 
+> about IMO.
+
+Yup.  Perhaps it would deserve a new "/* NEEDSWORK: should we catch a
+directory .git that is not a git directory here? */" comment there.
+
+> Will send v9 soon, with commit message rewritten.
 
 Thanks.
