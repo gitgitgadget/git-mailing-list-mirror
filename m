@@ -1,41 +1,41 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5814A78F26
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 00:29:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D8F3EBF33
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 00:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771720194; cv=pass; b=jLJDiTmabuxaA+dT3Km0sSeCKOy2upu0s+X/NZrjMUhz5nyflWiU/T2n76VT8b3nLWgkcYiF5/ggUz6dfphMNkFYr3qNTAVCpS8udGEg2dZ7/MSBZeKDosNVwZzTjDVeJ14skVSjE5VpEnCakYU85HT4HTKk+IKqjZCNKcfFj6E=
+	t=1771720195; cv=pass; b=PTrbiXMWUu+E02R/IZDX3la3oFdo4VjXuwOHAMV8szqyC5pv5v+egSrkN236gbVtoN6GE0ExFTIoUxMZap/AOzou1YEfnJve56/McSJ8iKC5kzwyjP5Qpbcm37/1OOGoh3xq8BjhfG4g2pKTiHlPZpRFHxUj6rCBGS7IRVUMZa4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771720194; c=relaxed/simple;
-	bh=6h1qJj2lvtOZcjj5GG40yR8C1sHq6X31OoHkTGl0NWQ=;
+	s=arc-20240116; t=1771720195; c=relaxed/simple;
+	bh=FzBnhhkAJciYJIUikRNdQ/g/Cx8uJ3VCykKFx4L4dB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HXlVSgc1uZn4tktWv0KZaoGVs55WVOVvtoEF4DeSjLuuzzuArbHmDTFvmG/ns5ad4aXgUyDFvk6upRXNPOe7/FXPTPmPy+EKSaIoY7XDjIY+gvldI3XKxa4wh/U2JVkNseAAEX08XLzCx6j8QCJCkNJ2mWJDAU/vWSm8X0qp3nk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Gm4EUI9l; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version:Content-Type; b=VjBJSiyu/ngZGheJdOhVmQtDjaPQUi5tmHfBS4McTOHbIaoTBsLWA7nGRKd5Bt6B9fees45H57x3XUeh2/488f7TlGrAbOurI6Td1Y/cZy7G9vdzhYZC5FNU20c50G5F3kJT6rhg9F18xHfD0OFA2urgSt4m0lVgY+H4kmgpdn0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=UrN8Fw+3; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Gm4EUI9l"
-ARC-Seal: i=1; a=rsa-sha256; t=1771720163; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="UrN8Fw+3"
+ARC-Seal: i=1; a=rsa-sha256; t=1771720171; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=FfyNZapRMBpPcZzIGdFPT5vGsZ4xbeK948Av4/1r9huSGxL5hHJfZNir8eKaNy63WUHWHnuRhzRKETpbjneey40SwKEfUaJg3aFJM6cy11HiVbt1tqmIgC+O4gdMFOXqwXaaaKEa7Pf2EcMTN8BZ9jxUVvjloMIcnpNvQ8tx+rQ=
+	b=XBoLidUELFiWLnqdY73a3HVqTQYpPlQEB2Jrt0sW6xC9FOSbatLws9zlYfqsa04+FIEL0Doyn31N5cFNmSuVO03eimV4+cJfpBTe3H8fVoXKYmoHokGBgsy1auQJ1QwprFIyGf9CPYqnLXiQDBEmeQL6K3uJUo5tTSPbOGUwHXY=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1771720163; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=9g+wMRneq0WkNVAWniZfV5py0Yuh5GOt4ndmFxAQaVk=; 
-	b=XzKSZbRxRbeB+eCw7tHx9fLVfmYsNlop2rKBCNE39PqFvWdhjy4Ln1/agglJoT9Iv5KNkefrFALUp9AiNcvIFTMR6RmbT90JzBTMhbl9ZjO1B4AjdnEDUapwolOWpuK8tk1Slvu7XsXSy/lpcjyRgDdMN4WLrPXx3yfHOop2U8I=
+	t=1771720171; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=IlZdBXZo7/JXpQZ6Yl7m48aCiPVbOBNbk2bXG4QH+ic=; 
+	b=PuYUFk+ls2wv76+fFmkEQWvhv1gIzusuA3GE+LPKKjUXzhlQzR12guQtrmsXmQht6kCIrqowh7eXCG4CmbDh+ohULeGZHGkhCrEiXw5IqGXxdLC8E55sbrRV+B7LF5Jo9AuoSgHb75/ZoJrp+fy0tc37O0G8cy9eH7wODKHsWHE=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771720163;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771720170;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=9g+wMRneq0WkNVAWniZfV5py0Yuh5GOt4ndmFxAQaVk=;
-	b=Gm4EUI9lSRBgPXtIkFXzkJe2CFU+vHnH9YZf6S6uhnVyxc+bmnmVZREFROAg+eKk
-	6eysOMvkOTxeUNH++tXURekGnzCfLl2Ip7OdJ7+ayS4Td4jeO8kHrArN5j4bPbKL0+J
-	YyG9Qz3sm5pT61OsEdBEaKTHZr6z+rfNJST+VROA=
-Received: by mx.zohomail.com with SMTPS id 1771720159633594.331005534723;
-	Sat, 21 Feb 2026 16:29:19 -0800 (PST)
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=IlZdBXZo7/JXpQZ6Yl7m48aCiPVbOBNbk2bXG4QH+ic=;
+	b=UrN8Fw+3x0TGvYoGrm8q2Z4e/FpfWUe1hvGWfIhaNwAJIOlykn6s8w2Z4tbEmTj2
+	nE54oyYQwvdeMas4mR/pkp8L/lGTi5DNWhh5Vo8CAQxRTZCJ1bKmLLgjqTciQHM6CKt
+	U+/3tbj3NDg5Y8lD+W8WFmH0pTAqslK/NPJ14seg=
+Received: by mx.zohomail.com with SMTPS id 1771720168277449.0630366895547;
+	Sat, 21 Feb 2026 16:29:28 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -45,10 +45,12 @@ Cc: Jeff King <peff@peff.net>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Emily Shaffer <nasamuffin@google.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v2 01/10] repository: fix repo_init() memleak due to missing _clear()
-Date: Sun, 22 Feb 2026 02:28:55 +0200
-Message-ID: <20260222002904.1879356-2-adrian.ratiu@collabora.com>
+Subject: [PATCH v2 05/10] hook: allow parallel hook execution
+Date: Sun, 22 Feb 2026 02:28:59 +0200
+Message-ID: <20260222002904.1879356-6-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260222002904.1879356-1-adrian.ratiu@collabora.com>
 References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
@@ -59,36 +61,442 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-There is an old pre-existing memory leak in repo_init() due to failing
-to call clear_repository_format() in the error case.
+From: Emily Shaffer <nasamuffin@google.com>
 
-It went undetected because a specific bug is required to trigger it:
-enable a v1 extension in a repository with format v0. Obviously this
-can only happen in a development environment, so it does not trigger
-in normal usage, however the memleak is real and needs fixing.
+Hooks always run in sequential order due to the hardcoded jobs == 1
+passed to run_process_parallel(). Remove that hardcoding to allow
+users to run hooks in parallel (opt-in).
 
-Fix it by also calling clear_repository_format() in the error case.
+Users need to decide which hooks to run in parallel, by specifying
+"parallel = true" in the config, because git cannot know if their
+specific hooks are safe to run or not in parallel (for e.g. two hooks
+might write to the same file or call the same program).
 
+Some hooks are unsafe to run in parallel by design: these will marked
+in the next commit using RUN_HOOKS_OPT_INIT_FORCE_SERIAL.
+
+The hook.jobs config specifies the default number of jobs applied to all
+hooks which have parallelism enabled.
+
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- repository.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/config/hook.adoc |  13 +++
+ hook.c                         |  69 ++++++++++++++--
+ hook.h                         |  25 ++++++
+ t/t1800-hook.sh                | 142 +++++++++++++++++++++++++++++++++
+ 4 files changed, 241 insertions(+), 8 deletions(-)
 
-diff --git a/repository.c b/repository.c
-index f27ab29b0e..78aa2d31d0 100644
---- a/repository.c
-+++ b/repository.c
-@@ -298,6 +298,7 @@ int repo_init(struct repository *repo,
- 	return 0;
+diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
+index c617261c57..e306ffa80b 100644
+--- a/Documentation/config/hook.adoc
++++ b/Documentation/config/hook.adoc
+@@ -23,6 +23,19 @@ hook.<name>.enabled::
+ 	in a system or global config file and needs to be disabled for a
+ 	specific repository. See linkgit:git-hook[1].
  
- error:
-+	clear_repository_format(&format);
- 	repo_clear(repo);
- 	return -1;
++hook.<name>.parallel::
++	Whether the hook `hook.<name>` may run in parallel with other hooks
++	for the same event. Defaults to `false`. Set to `true` only when the
++	hook script is safe to run concurrently with other hooks for the same
++	event. If any hook for an event does not have this set to `true`,
++	all hooks for that event run sequentially regardless of `hook.jobs`.
++	Only configured (named) hooks need to declare this. Traditional hooks
++	found in the hooks directory do not need to, and run in parallel when
++	the effective job count is greater than 1. See linkgit:git-hook[1].
++
+ hook.jobs::
+ 	Specifies how many hooks can be run simultaneously during parallelized
+ 	hook execution. If unspecified, defaults to 1 (serial execution).
+++
++This setting has no effect unless all configured hooks for the event have
++`hook.<name>.parallel` set to `true`.
+diff --git a/hook.c b/hook.c
+index f4213f5878..3d624e2bcd 100644
+--- a/hook.c
++++ b/hook.c
+@@ -120,11 +120,11 @@ static void unsorted_string_list_remove(struct string_list *list,
+ 
+ /*
+  * Cache entry stored as the .util pointer of string_list items inside the
+- * hook config cache. For now carries only the command for the hook. Next
+- * commits will add more data.
++ * hook config cache. Carries both the resolved command and the parallel flag.
+  */
+ struct hook_config_cache_entry {
+ 	char *command;
++	unsigned int parallel:1;
+ };
+ 
+ /*
+@@ -132,12 +132,14 @@ struct hook_config_cache_entry {
+  * commands: friendly-name to command map.
+  * event_hooks: event-name to list of friendly-names map.
+  * disabled_hooks: set of friendly-names with hook.name.enabled = false.
++ * parallel_hooks: friendly-name to parallel flag.
+  * jobs: value of the global hook.jobs key. Defaults to 0 if unset.
+  */
+ struct hook_all_config_cb {
+ 	struct strmap commands;
+ 	struct strmap event_hooks;
+ 	struct string_list disabled_hooks;
++	struct strmap parallel_hooks;
+ 	unsigned int jobs;
+ };
+ 
+@@ -216,6 +218,10 @@ static int hook_config_lookup_all(const char *key, const char *value,
+ 		default:
+ 			break; /* ignore unrecognised values */
+ 		}
++	} else if (!strcmp(subkey, "parallel")) {
++		int v = git_parse_maybe_bool(value);
++		if (v >= 0)
++			strmap_put(&data->parallel_hooks, hook_name, (void *)(uintptr_t)v);
+ 	}
+ 
+ 	free(hook_name);
+@@ -259,6 +265,7 @@ static void build_hook_config_map(struct repository *r,
+ 	strmap_init(&cb_data.commands);
+ 	strmap_init(&cb_data.event_hooks);
+ 	string_list_init_dup(&cb_data.disabled_hooks);
++	strmap_init(&cb_data.parallel_hooks);
+ 
+ 	/* Parse all configs in one run, capturing hook.* including hook.jobs. */
+ 	repo_config(r, hook_config_lookup_all, &cb_data);
+@@ -273,6 +280,7 @@ static void build_hook_config_map(struct repository *r,
+ 		for (size_t i = 0; i < hook_names->nr; i++) {
+ 			const char *hname = hook_names->items[i].string;
+ 			struct hook_config_cache_entry *entry;
++			void *par = strmap_get(&cb_data.parallel_hooks, hname);
+ 			char *command;
+ 
+ 			/* filter out disabled hooks */
+@@ -289,6 +297,7 @@ static void build_hook_config_map(struct repository *r,
+ 			/* util stores a cache entry; owned by the cache. */
+ 			CALLOC_ARRAY(entry, 1);
+ 			entry->command = xstrdup(command);
++			entry->parallel = par ? (int)(uintptr_t)par : 0;
+ 			string_list_append(hooks, hname)->util = entry;
+ 		}
+ 
+@@ -298,6 +307,7 @@ static void build_hook_config_map(struct repository *r,
+ 	cache->jobs = cb_data.jobs;
+ 
+ 	strmap_clear(&cb_data.commands, 1);
++	strmap_clear(&cb_data.parallel_hooks, 0); /* values are uintptr_t, not heap ptrs */
+ 	string_list_clear(&cb_data.disabled_hooks, 0);
+ 	strmap_for_each_entry(&cb_data.event_hooks, &iter, e) {
+ 		string_list_clear(e->value, 0);
+@@ -364,6 +374,7 @@ static void list_hooks_add_configured(struct repository *r,
+ 		hook->kind = HOOK_CONFIGURED;
+ 		hook->u.configured.friendly_name = xstrdup(friendly_name);
+ 		hook->u.configured.command = xstrdup(entry->command);
++		hook->parallel = entry->parallel;
+ 
+ 		string_list_append(list, friendly_name)->util = hook;
+ 	}
+@@ -499,21 +510,67 @@ static void run_hooks_opt_clear(struct run_hooks_opt *options)
+ 	strvec_clear(&options->args);
  }
+ 
++/* Determine how many jobs to use for hook execution. */
++static unsigned int get_hook_jobs(struct repository *r,
++				  struct run_hooks_opt *options,
++				  struct string_list *hook_list)
++{
++	unsigned int jobs;
++
++	/*
++	 * Hooks needing separate output streams must run sequentially. Next
++	 * commits will add an extension to allow parallelizing these as well.
++	 */
++	if (!options->stdout_to_stderr)
++		return 1;
++
++	/* An explicit job count (FORCE_SERIAL jobs=1, or -j from CLI). */
++	if (options->jobs)
++		return options->jobs;
++
++	/*
++	 * Use hook.jobs from the already-parsed config cache (in-repo), or
++	 * fall back to a direct config lookup (out-of-repo).  Default to 1.
++	 */
++	if (r && r->gitdir && r->hook_config_cache)
++		/* Use the already-parsed cache (in-repo) */
++		jobs = r->hook_config_cache->jobs ? r->hook_config_cache->jobs : 1;
++	else
++		/* No cache present (out-of-repo call), use direct cfg lookup */
++		jobs = repo_config_get_uint(r, "hook.jobs", &jobs) ? 1 : jobs;
++
++	/*
++	 * Cap to serial any configured hook not marked as parallel = true.
++	 * This enforces the parallel = false default, even for "traditional"
++	 * hooks from the hookdir which cannot be marked parallel = true.
++	 */
++	for (size_t i = 0; jobs > 1 && i < hook_list->nr; i++) {
++		struct hook *h = hook_list->items[i].util;
++		if (h->kind == HOOK_CONFIGURED && !h->parallel)
++			jobs = 1;
++	}
++
++	return jobs;
++}
++
+ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 		  struct run_hooks_opt *options)
+ {
++	struct string_list *hook_list = list_hooks(r, hook_name, options);
+ 	struct hook_cb_data cb_data = {
+ 		.rc = 0,
+ 		.hook_name = hook_name,
++		.hook_command_list = hook_list,
+ 		.options = options,
+ 	};
+ 	int ret = 0;
++	unsigned int jobs = get_hook_jobs(r, options, hook_list);
+ 	const struct run_process_parallel_opts opts = {
+ 		.tr2_category = "hook",
+ 		.tr2_label = hook_name,
+ 
+-		.processes = options->jobs,
+-		.ungroup = options->jobs == 1,
++		.processes = jobs,
++		.ungroup = jobs == 1,
+ 
+ 		.get_next_task = pick_next_hook,
+ 		.start_failure = notify_start_failure,
+@@ -529,9 +586,6 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 	if (options->path_to_stdin && options->feed_pipe)
+ 		BUG("options path_to_stdin and feed_pipe are mutually exclusive");
+ 
+-	if (!options->jobs)
+-		BUG("run_hooks_opt must be called with options.jobs >= 1");
+-
+ 	/*
+ 	 * Ensure cb_data copy and free functions are either provided together,
+ 	 * or neither one is provided.
+@@ -543,7 +597,6 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 	if (options->invoked_hook)
+ 		*options->invoked_hook = 0;
+ 
+-	cb_data.hook_command_list = list_hooks(r, hook_name, options);
+ 	if (!cb_data.hook_command_list->nr) {
+ 		if (options->error_if_missing)
+ 			ret = error("cannot find a hook named %s", hook_name);
+diff --git a/hook.h b/hook.h
+index 7e83a3474f..1f29798a77 100644
+--- a/hook.h
++++ b/hook.h
+@@ -29,6 +29,13 @@ struct hook {
+ 		} configured;
+ 	} u;
+ 
++	/**
++	 * Whether this hook may run in parallel with other hooks for the same
++	 * event. Only useful for configured (named) hooks. Traditional hooks
++	 * always default to 0 (serial). Set via `hook.<name>.parallel = true`.
++	 */
++	unsigned int parallel:1;
++
+ 	/**
+ 	 * Opaque data pointer used to keep internal state across callback calls.
+ 	 *
+@@ -62,6 +69,8 @@ struct run_hooks_opt
+ 	 *
+ 	 * If > 1, output will be buffered and de-interleaved (ungroup=0).
+ 	 * If == 1, output will be real-time (ungroup=1).
++	 * If == 0, the 'hook.jobs' config is used or, if the config is unset,
++	 * defaults to 1 (serial execution).
+ 	 */
+ 	unsigned int jobs;
+ 
+@@ -142,7 +151,23 @@ struct run_hooks_opt
+ 	cb_data_free_fn feed_pipe_cb_data_free;
+ };
+ 
++/**
++ * Default initializer for hooks. Parallelism is opt-in: .jobs = 0 defers to
++ * the 'hook.jobs' config, falling back to serial (1) if unset.
++ */
+ #define RUN_HOOKS_OPT_INIT { \
++	.env = STRVEC_INIT, \
++	.args = STRVEC_INIT, \
++	.stdout_to_stderr = 1, \
++	.jobs = 0, \
++}
++
++/**
++ * Initializer for hooks that must always run sequentially regardless of
++ * 'hook.jobs'. Use this when git knows the hook cannot safely be parallelized
++ * .jobs = 1 is non-overridable.
++ */
++#define RUN_HOOKS_OPT_INIT_FORCE_SERIAL { \
+ 	.env = STRVEC_INIT, \
+ 	.args = STRVEC_INIT, \
+ 	.stdout_to_stderr = 1, \
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index b1583e9ef9..f8318c3510 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -21,6 +21,57 @@ setup_hookdir () {
+ 	test_when_finished rm -rf .git/hooks
+ }
+ 
++# write_sentinel_hook <path> [sentinel]
++#
++# Writes a hook that marks itself as started, sleeps for a few seconds, then
++# marks itself done. The sleep must be long enough that sentinel_detector can
++# observe <sentinel>.started before <sentinel>.done appears when both hooks
++# run concurrently in parallel mode.
++write_sentinel_hook () {
++	sentinel="${2:-sentinel}"
++	write_script "$1" <<-EOF
++	touch ${sentinel}.started &&
++	sleep 2 &&
++	touch ${sentinel}.done
++	EOF
++}
++
++# sentinel_detector <sentinel> <output>
++#
++# Returns a shell command string suitable for use as hook.<name>.command.
++# The detector must be registered after the sentinel:
++# 1. In serial mode, the sentinel has completed (and <sentinel>.done exists)
++#    before the detector starts.
++# 2. In parallel mode, both run concurrently so <sentinel>.done has not appeared
++#    yet and the detector just sees <sentinel>.started.
++#
++# At start, poll until <sentinel>.started exists to absorb startup jitter, then
++# write to <output>:
++# 1. 'serial'   if <sentinel>.done exists (sentinel finished before we started),
++# 2. 'parallel' if only <sentinel>.started exists (sentinel still running),
++# 3. 'timeout'  if <sentinel>.started never appeared.
++#
++# The command ends with ':' so when git appends "$@" for hooks that receive
++# positional arguments (e.g. pre-push), the result ': "$@"' is valid shell
++# rather than a syntax error 'fi "$@"'.
++sentinel_detector () {
++	cat <<-EOF
++	i=0
++	while ! test -f ${1}.started && test \$i -lt 10; do
++	    sleep 1
++	    i=\$((i+1))
++	done
++	if test -f ${1}.done; then
++	    echo serial >${2}
++	elif test -f ${1}.started; then
++	    echo parallel >${2}
++	else
++	    echo timeout >${2}
++	fi
++	:
++	EOF
++}
++
+ test_expect_success 'git hook usage' '
+ 	test_expect_code 129 git hook &&
+ 	test_expect_code 129 git hook run &&
+@@ -553,4 +604,95 @@ test_expect_success 'server push-to-checkout hook expects stdout redirected to s
+ 	check_stdout_merged_to_stderr push-to-checkout
+ '
+ 
++test_expect_success 'hook.jobs=1 config runs hooks in series' '
++	test_when_finished "rm -f sentinel.started sentinel.done hook.order" &&
++
++	# Use two configured hooks so the execution order is deterministic:
++	# hook-1 (sentinel) is listed before hook-2 (detector), so hook-1
++	# always runs first even in serial mode.
++	test_config hook.hook-1.event test-hook &&
++	test_config hook.hook-1.command \
++	    "touch sentinel.started; sleep 2; touch sentinel.done" &&
++	test_config hook.hook-2.event test-hook &&
++	test_config hook.hook-2.command \
++	    "$(sentinel_detector sentinel hook.order)" &&
++
++	test_config hook.jobs 1 &&
++
++	git hook run test-hook >out 2>err &&
++	echo serial >expect &&
++	test_cmp expect hook.order
++'
++
++test_expect_success 'hook.jobs=2 config runs hooks in parallel' '
++	test_when_finished "rm -f sentinel.started sentinel.done hook.order" &&
++	test_when_finished "rm -rf .git/hooks" &&
++
++	mkdir -p .git/hooks &&
++	write_sentinel_hook .git/hooks/test-hook &&
++
++	test_config hook.hook-2.event test-hook &&
++	test_config hook.hook-2.command \
++	    "$(sentinel_detector sentinel hook.order)" &&
++	test_config hook.hook-2.parallel true &&
++
++	test_config hook.jobs 2 &&
++
++	git hook run test-hook >out 2>err &&
++	echo parallel >expect &&
++	test_cmp expect hook.order
++'
++
++test_expect_success 'hook.<name>.parallel=true enables parallel execution' '
++	test_when_finished "rm -f sentinel.started sentinel.done hook.order" &&
++	test_config hook.hook-1.event test-hook &&
++	test_config hook.hook-1.command \
++	    "touch sentinel.started; sleep 2; touch sentinel.done" &&
++	test_config hook.hook-1.parallel true &&
++	test_config hook.hook-2.event test-hook &&
++	test_config hook.hook-2.command \
++	    "$(sentinel_detector sentinel hook.order)" &&
++	test_config hook.hook-2.parallel true &&
++
++	test_config hook.jobs 2 &&
++
++	git hook run test-hook >out 2>err &&
++	echo parallel >expect &&
++	test_cmp expect hook.order
++'
++
++test_expect_success 'hook.<name>.parallel=false (default) forces serial execution' '
++	test_when_finished "rm -f sentinel.started sentinel.done hook.order" &&
++	test_config hook.hook-1.event test-hook &&
++	test_config hook.hook-1.command \
++	    "touch sentinel.started; sleep 2; touch sentinel.done" &&
++	test_config hook.hook-2.event test-hook &&
++	test_config hook.hook-2.command \
++	    "$(sentinel_detector sentinel hook.order)" &&
++
++	test_config hook.jobs 2 &&
++
++	git hook run test-hook >out 2>err &&
++	echo serial >expect &&
++	test_cmp expect hook.order
++'
++
++test_expect_success 'one non-parallel hook forces the whole event to run serially' '
++	test_when_finished "rm -f sentinel.started sentinel.done hook.order" &&
++	test_config hook.hook-1.event test-hook &&
++	test_config hook.hook-1.command \
++	    "touch sentinel.started; sleep 2; touch sentinel.done" &&
++	test_config hook.hook-1.parallel true &&
++	test_config hook.hook-2.event test-hook &&
++	test_config hook.hook-2.command \
++	    "$(sentinel_detector sentinel hook.order)" &&
++	# hook-2 has no parallel=true: should force serial for all
++
++	test_config hook.jobs 2 &&
++
++	git hook run test-hook >out 2>err &&
++	echo serial >expect &&
++	test_cmp expect hook.order
++'
++
+ test_done
 -- 
 2.52.0.732.gb351b5166d.dirty
 
