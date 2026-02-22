@@ -1,143 +1,116 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0AF1E5702
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 21:14:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC6C79CD
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 21:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771794877; cv=none; b=gB8TDkjpzUgbHkNiv8zGfMgo1RHI7jOQ5svuvWCsawCeWxA+ogActz/fv3IUH2fl8tjo2AOa8LwRStX+HWAlSVdEZOLURuhVTrHzuMdBKxlKy+gHb4DCJFsnVsduX/pzaErJmE6ZJP3EnYMQK/KyTdOO8Jm/gGzAQs6LRKrn2yY=
+	t=1771795755; cv=none; b=Vn5R0+NZTwWU0Sj/i8OOltH07eIzliQl4sx3AzKZt8fjtVyLVMKVU5rMLWMd26d/gtb/4xsdaMV438YFoRCj/POnMozR8CkeWe0L/XScxTZADjnwLqbEhWoPGzAA9BlOKDMlNwXiJfFRSclpv2HO402yLfhgqF1ZrVxVqxggy1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771794877; c=relaxed/simple;
-	bh=cNR58Qd+d4eRXIn6F7RWtJioeRyXcazAeaaWjO/Gezg=;
+	s=arc-20240116; t=1771795755; c=relaxed/simple;
+	bh=FoxFi80Ct7MW2oassqvM6csLlbDR2Jw3wyzJKW8d2zQ=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=YEUG1Cvo1xcRHXSFCwMb1q56xvB5nJ+qZSwU45i0OwWjBbiFTH1shEt7/40EHmbkG6M0bBj9OOqMLI1N0Ra4HQ+0W96/Tbncui+1X5TcYBndaOTWn3mkqr0B4Skg/9OqhDjrFb5QUZ76k3H/B5f8lDPq+I/xKmxy8p17DUhIiYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ddbloHbd; arc=none smtp.client-ip=74.125.82.48
+	 Message-Id:References:To; b=Eb2fT+KYexGSVYxmzXpP9aZBYbDT0UZQcJ16xEZUDuCxfi2qwDfn988HjsMokvArHRSL2KEnMUX3AVp5DyJka5c5Rlm3I8AfEU+3BCgoNw/3iNaDI86kDGIJO/ciQiuP6+54qZzyheC95eytQRAfNJl5L9MRHn2wP45wfAvZmo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ntPszeht; arc=none smtp.client-ip=209.85.221.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ddbloHbd"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-1275910b930so2693484c88.0
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 13:14:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ntPszeht"
+Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-5674f3e80edso3342670e0c.1
+        for <git@vger.kernel.org>; Sun, 22 Feb 2026 13:29:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771794875; x=1772399675; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771795753; x=1772400553; darn=vger.kernel.org;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LrQwtUXcUd0Byoui/MSfgAoBwz8FoAI+OFASoXxILrw=;
-        b=ddbloHbdNoEAhm3vkqUmxOzbkNhijXJzsdqamEmYU8V4l2KAoJPQ9J121IeOnGFKiE
-         vuMHBJFuBMe9IJlL77HdMaMjAbn68cjloo9wpbmGUhVFP/1sVflDc9m4p6tYsJYv6/fM
-         9IkH7IiXjIcGu6IWDDuSu4QXWKs9jnpaJyavcPmzYEptBOY/rPq7og/XDotNsGSUmZ1X
-         Ecx43jW45hnleO+qE6twJb/eKtv/AgRraBuK6pgUlJJzR9AYVtjOZWe9/tjTRjsj9OZB
-         uURKrP9Yj+JKE7RmKxjqzVz1ORpFM2imF6FqfBkU4D969s97LlbwDJe0aS+QzQFyFbfC
-         2Gow==
+        bh=FoxFi80Ct7MW2oassqvM6csLlbDR2Jw3wyzJKW8d2zQ=;
+        b=ntPszehtqWhC4+V0F2vtn/x7tZIDi6ZPoH6seyFIbRnEUo8dH1HWeWBjcAUkQDCUS6
+         ba0+iG1PGofxDdYa1517JWlcTWjslXjzErbzTW3cLgMirjC7/+JgV6nbKcXGVaStQBWj
+         JkcA8tZczcLcK1rz2oURfC1Hn1/yoTYcfZr6tZxV+UssO/BBMC6hVuzQpt0Axqwgzba+
+         cjatUfo7SBX9PJunp9xHLJ2bpKu6HMP3FdWluAn91jqOJU1WaFvreVa8Z0NRlkScqI+S
+         3qWJxVllImrfb/zXqN+tCzxQAhG+xZZJKeE2m9agqgPELEHOv5hxHRBu1XIyKOGd0Q91
+         Mu3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771794875; x=1772399675;
+        d=1e100.net; s=20230601; t=1771795753; x=1772400553;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LrQwtUXcUd0Byoui/MSfgAoBwz8FoAI+OFASoXxILrw=;
-        b=s8YGu9UWyXIGi7Iv+JArhdu1WwInQkb6LlrtEBJ6YmMxLuWYo9uvEzIyTkx51h1YZv
-         Quc3nGMela4YmWjV1TLmXJuGn/WslJqvV3QpJn8Vnq+UyZXlRL02LxI7+88c11oVRuM+
-         F0/lnSv+I+TLGsXRhIRUfJSgId2UbhtYwgqnwa4H3jW+EJop1LWA6NfCacZoK+dTRw1I
-         3QGujGFjY3p/5vp8khdKj9iAG1Yetvv2ZFqTvRlTPMDagluF7JMMQxEgm2COOAyE0KHS
-         cQ2OoHnS+duNE2PJmE5dOMceJlDCJxmOPt5F2fFR6fNQquEv3aRWPkEehsju9aisY25v
-         +MZA==
-X-Gm-Message-State: AOJu0YwH8aPGmpUmne+jzpcaIyFyuNeXZ0IXrPMtQj4H/zf158/85CF+
-	2uVdwRW4bubhytC/HRebg7/JXEYbvR3aPzHlUVDn0maHKZ5sMBIDcXt+
-X-Gm-Gg: AZuq6aL9JcMKMo2WAmFIjPndLHI4z9lWQqECOC8fg363Y6wUCU9VfXPexwhGsM/ODcK
-	1knYsFT98YzV06hq9zCaRw660/6wyQ991xAy6q34Oz3vWYwY7Vc7XZyzl3UWU3gwHAE4U1qwbGz
-	hh/7PxGVuBj0d4Ky0gGr5j5ymgYhJeE4Da9KOdgRU/oWPyX2wzBf8o9XYtj2tLTWEJwPr7vnWLQ
-	AUP4acr/7Wx8Yb95aRv/R9qMrx2qjI16orRVrcGt9KMR9mkqvxgpIpE1soFCOgT04J49mFXB4ow
-	WvH+Yw1LRQa5bUVvmGvsWcCq24mDbEf72jyY8dixSF3EQx7hETZ5spEoMGLc5GQHlAY0seL4b75
-	MqhX3ZeGRf8UUVrORwbLixCau+bLGfsSNlNJLLBy7Wjn8uBs7E7RGuOAYs2WaTE/1HRyWyKQLM1
-	PMKNOLR7A+v/5+jYoxVQodCan7wWERpk2A9+CE0/03ih2CTuqdcSOK9Q==
-X-Received: by 2002:a05:7022:6199:b0:11d:fbf1:1e27 with SMTP id a92af1059eb24-1276abb674fmr2385661c88.19.1771794874795;
-        Sun, 22 Feb 2026 13:14:34 -0800 (PST)
+        bh=FoxFi80Ct7MW2oassqvM6csLlbDR2Jw3wyzJKW8d2zQ=;
+        b=rekLcAaZ79d4t2nOA3QARXDdnEcrhljgAV6R+QBjKXK0aTw48PH7pZ7Wus792H5Sr9
+         OHwHc7CyvPaI0aak7Ee41yjbziw2Ghhcu8JwdGb2qaa13ZcP/byGq1v1pA9Pgtb9UYQA
+         zim8Jvrar2vvRSWHsDtK/lVeWNQhYHNJARQt0QAlqXKzqx8QVZalNrY+Gixcran/f5pf
+         i7VudwvXhrW+Pa/TuomD5vJtoF8yvR5knsqiC5+iyhoWF2IEh/IG8FmQgAk6OH/9WkxE
+         o412eWvQKcN7vXa9ncIwuKIdAC+PPP2D3QqzSZfd18GqbnoaLXeL8LpDZfkCNFhjHsFN
+         jtzA==
+X-Gm-Message-State: AOJu0YwB9syWrRjjCksvnxTpfuMBJ5tQyM4JUOKkZ5dgtrA4j3u0dJuC
+	Z22pIjXulCYF0DV24Vs3N2PUYSnGCclV5QMX860eFZP6we5mY52KK42d
+X-Gm-Gg: AZuq6aLIisveN+sgXKpnV2Vz1qejavWD77hkN7dB9qUOK+rp2rwIB8EWPNvnjIMOrAX
+	ZCGYB54lYjc4blZILTOS2tkG6cijBFx/0Vd5Guu3GtoAFlmRw5e/wGINhjFBQEv2751caxG1ORT
+	CMJ6tm0mIgA/1QPiGLSSzxv524Lob8uw3/TOSCu9/7kvb5GM+n2iKBuClKF+kLtXaywuqQA1+b2
+	ay25/8s3mPRxnVfZ+CkFwy9p72lQZ9z5wwPSioi2LNcG7bmclUPrOGJI2BoyIWORHFvOiuXwlx/
+	KPWlMZ+EA3XnfcJodj5WyqSqoqyoVnwWwFv/iEMr8g2ptiZRV8P5VrOKoImHgdVHuwxEbVX8iss
+	PmPKkq4FuFopqoNZouclb7Er3F0p4sTyelxA/ZevfQqM+6C51XeZmzBUUuiFAEK+D9kJOziR/Ys
+	aokyLX/yQvt/t/WlMYn/QXVVXXpsrtbg8V2AzLg0PUZj/qrXHVjTmoGA==
+X-Received: by 2002:a05:6102:3588:b0:5f5:259b:66e1 with SMTP id ada2fe7eead31-5fe90aba011mr7140197137.3.1771795753304;
+        Sun, 22 Feb 2026 13:29:13 -0800 (PST)
 Received: from smtpclient.apple ([189.62.150.156])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1276af8a657sm6524508c88.12.2026.02.22.13.14.33
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94da8996314sm5365262241.2.2026.02.22.13.29.10
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Feb 2026 13:14:34 -0800 (PST)
+        Sun, 22 Feb 2026 13:29:13 -0800 (PST)
 Content-Type: text/plain;
-	charset=us-ascii
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [proposal][RFC] Improve the new git repo command
+Subject: Re: [GSoC] Lambert Presentation
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CA+rGoLdSR=NPoD7XEbYPoRTt0VS5M0QhzHcy-OmyuZMMVN-H5w@mail.gmail.com>
-Date: Sun, 22 Feb 2026 18:14:20 -0300
-Cc: GIT Mailing-list <git@vger.kernel.org>,
+In-Reply-To: <CAHU-3nJVDmdU9FGiPTxR=rL7nZEC3K=0Xyc5gAZNCRYrQMG4uQ@mail.gmail.com>
+Date: Sun, 22 Feb 2026 18:28:58 -0300
+Cc: git@vger.kernel.org,
+ christian.couder@gmail.com,
  karthik nayak <karthik.188@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
  jltobler@gmail.com,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
  Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <3C0852FD-59FE-496D-9521-E123181901B3@gmail.com>
-References: <CA+rGoLdSR=NPoD7XEbYPoRTt0VS5M0QhzHcy-OmyuZMMVN-H5w@mail.gmail.com>
-To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <826B22F7-E1D9-4070-B15D-01780C752BF7@gmail.com>
+References: <CAHU-3nJVDmdU9FGiPTxR=rL7nZEC3K=0Xyc5gAZNCRYrQMG4uQ@mail.gmail.com>
+To: Lambert Duclos <lambertddg@gmail.com>
 X-Mailer: Apple Mail (2.3864.400.21)
 
 
-> A list of my past activities in Git:
+> Hi everyone,
 
-Looking the Git history (`git log --author='K Jayatheerth'`), there
-are many meaningful patches that you didn't listed here.
+Hi, Lambert!
 
-> 3. Project Proposal
-> 
-> 3.1 Why "Improve the new git repo command"?
-> This project is particularly compelling because I have closely
-> followed its development since its inception. Consistently reading
-> the weekly updates (https://lucasoshiro.github.io/gsoc-en/) and
-> following the mailing list patches for git repo info has deepened
-> my ongoing interest in this specific initiative since GSoC 2025.
-> This continuous engagement has provided a strong understanding of
-> why the command exists and exactly what needs to be done.
+> - Submitted my first patch using GitGitGadget:
+> https://github.com/gitgitgadget/git/pull/2049
 
-Thanks for your interest in my work :-).
+Even though it's ok to send patches through GitGitGadget, your patches
+will be reviewed through the Git mailing list. This way, it would be
+better to reference the message sent by GitGitGadget rather than the
+pull request. In this case, the message is this:
+pull.2049.git.1771694893208.gitgitgadget@gmail.com
 
-> 3.3 Proposed Solution and Objectives
-> The main objective of this project is to implement the changes and
-> additions discussed in the introduction to make git repo a complete,
-> modern replacement for parts of rev-parse. My proposed solutions are:
-> 
-> - Removing the global state: The builtin/repo.c file currently opts
->  into using global state by declaring
->  #define USE_THE_REPOSITORY_VARIABLE at the top of the file. My
->  goal is to remove this macro entirely to align with Git's
->  libification efforts. To achieve this, I will refactor functions
->  that implicitly rely on this global state instead of the passed
->  repository context. For example, in get_layout_bare(), the repo
->  argument is currently marked as UNUSED because the function calls
->  is_bare_repository() (which checks global state). I will update
->  this and similar functions to evaluate the explicit repo struct
->  instead.
-> 
-> - Implementing category keys: I will add a way to map specific
->  categories to a group of values. For example, if a user types
->  git repo info paths, the internal logic will look up the paths
->  category and return git-dir, common-dir, and other related
->  values all at once instead of requiring manual queries for each.
-> 
-> - Adding path values: I will integrate the missing path values
->  currently obtained through git rev-parse (like toplevel and
->  superproject-working-tree) and --git-path (like index and hooks).
->  Since initial work on this has already started, my goal is to
->  take over the effort, lead the necessary design choices on the
->  mailing list, and complete the implementation.
-> 
-> - Enhancing repo structure: I will study the external git-sizer
->  tool to figure out which of its repository analysis and
->  statistics features can be natively implemented into the git
->  repo structure sub-command.
+> I=E2=80=99m really excited to keep contributing and to learn more =
+about the
+> process. Please let me know what you think would be a good next step
+> for me.
 
-It looks to me that you're proposing too much here. I mean, I agree
-with everything that you proposed here, but maybe you won't have
-enough time to do that given the pace of the reviewing process. For
-example, my first GSoC patch series took 11 versions until it was
-accepted.
+Take a look at the General Application Information [1]. You can send
+other patches that you find relevant and join the discussions on the
+mailing lists.
 
+I'm one of the GSoC'25 alumni, and you can see in my blog what I did
+before I was accepted [2]. You can also take a look on the other
+GSoC alumni and see what they did to have other ideas.
 
+You can also send the draft of your GSoC proposal to see if you are
+going in the right direction.
+
+[1] https://git.github.io/General-Application-Information/
+[2] https://lucasoshiro.github.io/gsoc-en/
+[3] https://git.github.io/GSoC-Participants/=
