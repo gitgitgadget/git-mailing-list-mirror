@@ -1,105 +1,98 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6ECB665
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 17:19:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C83B18787A
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 17:59:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771780772; cv=none; b=c+UKHTMTkpvc+cfL+l0KGx3fQFjWhKOX1+QDxxnleDZHGWLItW80qV81qYXLMKOA1/CfF1ft6j7Su4skCq6pFl1NeCGXb2xqjpyYTWJ08F9uGP3WjhjvGNyRSyY1hm01j7Y2Vyh/WUeTyfqpuo12HseFdPyhCc2rxbSxvnr6O7Q=
+	t=1771783160; cv=none; b=d/KC56dHFF8b5qS5XvEM6oa6Z+vA4n5/QOW6xQ+vu7S/Dj7y9I30fNf0OQIAODuLCNHv4CcbD7c7PJvRxUraGCZojZJM9HnhtCPon97TWMLysaWtwWRq4bjxUZm3MwOgTEx4QO/NF3X3u1xZBS4tek8wWXgHzZFCTiOPVkYAMvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771780772; c=relaxed/simple;
-	bh=woXQP9fNMkmQOt1hRhdVoORg/xsl3I5RPyl8+UjMyKA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QKgB8RU81keJJj/0ZXHhXwEB4g4HP6Qc9+X2bOlMfHbDldzU4XCWQjmN1vmsZVJd7G3ZOSfqURoEudtIAW7ubmya9nPft7ilfUGZGPBKmxS4pBUqm867tJ8ZSxBH9vCMEn7517CMcjNQ6fj3UYhYYHbyHBGIXGbrAEHEbJO01m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jqZr/a9e; arc=none smtp.client-ip=209.85.210.42
+	s=arc-20240116; t=1771783160; c=relaxed/simple;
+	bh=uETTRSQRY0k+mux+XO2A5z/tkc45bLRkDDqyVXbP0CA=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=n6zn2NgLjGqV0qwxVNkMIVWt4v6adQm1X7u0pd7J7rNDsayHJ5WKmwQ19SE5LqIuaoS1JfZ3oHViyb3WZ4fM/nU+XqBMqULxBRiCpe0qohqI8M8jH1b7R4cGeiMG3nJqPTMfFIlVJCCh735GVOOgir9BbuQLERW+1WjEe0p43yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nfVcGbPQ; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jqZr/a9e"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7d4bc9e48bbso1339728a34.2
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 09:19:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nfVcGbPQ"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c70c38515d3so101445a12.0
+        for <git@vger.kernel.org>; Sun, 22 Feb 2026 09:59:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771780770; x=1772385570; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+ckEovyKYu9LVIqfOdj5Pg83nmdTeQZauolWpBnTT/U=;
-        b=jqZr/a9e5R9L/IIMzcoBawamQn1vlOODejaR5JqJ6XrJmrNDBAJtDqPLwdIkNoR0YY
-         yuUMUxbHdzi4bET/veB1X55vXxFfrLfpe3/C3/wsLrOCmj1z+W4shkwwXBJbXo2ae4Nj
-         PX1fzwFUn23HyV2b4MuVeg6/T04r93tsJ1AwRhz1OQKAlo6aFpRO4Xd5AsHgvdd0OhHK
-         Ixv8aQFkudJLG0eVPsH4OmFgCsRK4fd3ypRDvaB+cYYsAC/fOv+9zQS+p0tcXgsgKy1x
-         FIo5VF3gXBIR/swzf7fqhwqn5FofEjmSodacswacvLBGj6W0gB409M6aVb3eu+oM9dFJ
-         6xWQ==
+        d=gmail.com; s=20230601; t=1771783158; x=1772387958; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tct6RWHNCxgita9xnrGfQUQQhD9Wi9wQ43Og4L+o90A=;
+        b=nfVcGbPQNSCTRNyu4A6Cz8G0JMBDrqbycDKHnMPU6BE7VS3RZPSeX7Zt1YiqRkc1OW
+         L9x+HKWKwEE9CA7p4aW9QXWWPhIjMVYqHF9kTr/ac4UHs3dWWBnmsSy6YwS4GErhjzNr
+         h4JruqTi+LYZ37ADAD1eNFxtdYaA05WDRy6jPyUD72XL050Efmy2GsU42DwsZVGSp3l5
+         MoB077kEqVFkV0xiFhrRJ0skaMGvYSjAN2QB/3Zjp5SaUSSCIleUQUxbhX74/is1rT51
+         Wt/SvTwNAZAZEtHXRfV27uyceRCCVC8HYsn4uWcGrS3gUu/jh5qdYM7mdyEQRllZpkMu
+         MK9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771780770; x=1772385570;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+ckEovyKYu9LVIqfOdj5Pg83nmdTeQZauolWpBnTT/U=;
-        b=GKgYIRWhh+79CuaZF1Flm+9ip6aLAuJPTtyh8C6A8GQHMkCVAAoybRF24f1nyHoGW+
-         YLTXO9GuOSDr8KQhZ3fyX4gzL15XurJUJ6vFYpXHJwnrDBEHgu4QOCNZig4A1A0f0GG7
-         blSG4GF2U5cuTuIUzMfK7qYWyZyB560l6IcumWlH1OQrZ6voLADyBovrM6x+bmQgctN0
-         PpQWPv6bud9d6FEyBwRyUxWqrVMhlpSpexi4dVnSqaXYrN5xsGOelQTooWYxp7zREfUS
-         DV7qNAafNpcnLWsMaRIfWcy9G0d+vZ/fDfLNSNjr3PrlbmIBKc0+I6yPqi7KUXhAtGxs
-         cBVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVSLX6F7Efu7jyeIf1IrGazkKEdmUaJ7z93rCWosb0IjJJUX+Gwp4MY//7cDaTOngBeajQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnNLkuN0ME8fxW7GmpclW2+M5lTa2XO0TGW8hjP0SHtnrAZTpg
-	adcEuw3WdrDfVbh7wQvQa7NCQCMMUu8jodk6jXMEueIz2GIpFJidZY7RCXgK8w==
-X-Gm-Gg: AZuq6aIDjgwcjuFvpVs155k0LgRkJ+famMzhh+791KulH5npn04IkEoPtFsjPimlIQY
-	tUthdOvIDnDjWkfrHltlVXPkPimacxE01pFIquDU/z8DOMmrufmeOyhkxNJpo+vayyh4kSvYhAz
-	IBtRj8AP2IIetFeeWLWWFdZYRyH2r4+oI7VJKUBDq3Vr9Kr4DRleQ0Ebg/USJuHi0SzY9IbaYRL
-	NA/co0c/yg2Q8MqHQH20oksKf2kw7QmJavdwX2F2YkXeZtIOY9MmKGBvsCFYexcLhK9FV8d1/G3
-	nYjCHgfIbmS0P7IkdTAgShaClF/biBcd5TXikaMhzNubfQIY8z5hIUWigW8ZolUxxqkbLAE6N7N
-	wzbPKCdWnHtzhNiVE/pG7WljS/dTWi9BK8CIAMrfENOFAKWSCQWg8FIAi4DrQC5+2bpSm2CcX3C
-	VpEmZ2u8FrY7mXD3IX
-X-Received: by 2002:a05:6830:6610:b0:7d1:9da9:c6e with SMTP id 46e09a7af769-7d52bf6bb20mr3097991a34.25.1771780770068;
-        Sun, 22 Feb 2026 09:19:30 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d52cf9f663sm4923516a34.11.2026.02.22.09.19.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Feb 2026 09:19:29 -0800 (PST)
-Date: Sun, 22 Feb 2026 11:19:29 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] object-file: use `container_of()` to convert from base
- types
-Message-ID: <aZs6OvvBB4WPNx8j@denethor>
-References: <20260218210120.1146078-1-jltobler@gmail.com>
- <xmqqms11qmsj.fsf@gitster.g>
- <20260222094158.GA1319383@coredump.intra.peff.net>
+        d=1e100.net; s=20230601; t=1771783158; x=1772387958;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Tct6RWHNCxgita9xnrGfQUQQhD9Wi9wQ43Og4L+o90A=;
+        b=mdjJNwScyLu5AtU7P/2a64FUXcSXj915Xli5/Y333r55IGpvWi3LA8qxkYW/0lGUqw
+         YiwuqJSG/1lnb+wZjjI61VmGbU45thJs72IL0OshrJN0ufIyEIPmh90HMSOyMIlWxl1h
+         8a1T7RAbDKaUH1Osk7fZK1eolssxlITLo+Ks5wKikmWlN9GTciioBtc8Tj4ivxsK4RTr
+         yskR44LwCRdfC3Blszs/RSGB8c3ZE1UIeEu+9uBEu4Q0AN/Ax5GooGP+hUFWkPyQTibL
+         hhBOXV+EEZgf4EpG+krQzQZOyRWm+cxOUnjhjNjVg90qy/bD9FwP9AO+2n2wbT7WZT3W
+         ZdnA==
+X-Gm-Message-State: AOJu0YyXNIlym2j5YPtmD5yVamEf3YhXvqcB72bvHkrDZlXa8yktDqgN
+	2QfX+Co9H2QPbkPzc0XzoYaSQtKr3zG09qxNP86RXPWm7LrxThzHg9OntxWBpw==
+X-Gm-Gg: AZuq6aK35Mm1cD1GQorGmxKAsjKmHmI9f4VlK1V4r6LfHk7QH9Qvs276Uzhqn7+3vCX
+	TpnDQL3aot8KpF91Z6qBhL4BOAWJ6rTWZzqWixGVAjNuFbzQYtPxXqYXquPqqQ0DKMUSS8cS1HI
+	Rr/jP/4YmxaI5qXQddMKq4r2IbDLeZQEzuDR1tMp8ouYMinChaUcc4qOdQqpZgF0NwCzfAqpvhq
+	N+DDnUkCvBShxa5NkU74+lsU9ce1bxz+jBvr6XoEXH9G7sWNoILXV3mgv79LTBVCh54lQ1nAssT
+	HvSea+/HuvLFDWj48kYgPqiQ9xhDcTudCHBgtciK2pws86xVZJgyNdmr+IQruZsrNdk912VNQNA
+	OgeGj8F3bpNGREvhW5zeMTMqPm5Cvq1yS27h7l5wJFQrYB18FXb0eISIL7uSSfmS0sPmbVCPbW1
+	LGNmI9jk4ntzMmFfYj4DPdQfNHzIA=
+X-Received: by 2002:a17:90b:5246:b0:340:29cd:dce with SMTP id 98e67ed59e1d1-358ae8eeb67mr3924815a91.8.1771783158418;
+        Sun, 22 Feb 2026 09:59:18 -0800 (PST)
+Received: from [192.168.0.101] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-358af95863dsm4961511a91.17.2026.02.22.09.59.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Feb 2026 09:59:17 -0800 (PST)
+Message-ID: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
+Date: Mon, 23 Feb 2026 01:59:15 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260222094158.GA1319383@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>,
+ Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Siddharth Asthana <siddharthasthana31@gmail.com>
+From: Tian Yuchen <a3205153416@gmail.com>
+Subject: [GSoC][Draft Proposal] Refactoring in order to reduce Git's global
+ state
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 26/02/22 04:41AM, Jeff King wrote:
-> On Sat, Feb 21, 2026 at 11:07:08PM -0800, Junio C Hamano wrote:
-> 
-> > Perhaps a fix-up patch on top of the topic branch like this?
-> > 
-> > ----- >8 -----
-> > Subject: [PATCH] object-file.c: avoid container_of() of a NULL container
-> > [...]
-> >  static void prepare_loose_object_transaction(struct odb_transaction *base)
-> >  {
-> > -	struct odb_transaction_files *transaction =
-> > -		container_of(base, struct odb_transaction_files, base);
-> > +	struct odb_transaction_files *transaction = NULL;
-> > +
-> > +	if (base)
-> > +		transaction =
-> > +			container_of(base, struct odb_transaction_files, base);
-> 
-> That works, but you can also use container_of_or_null() in the
-> initializer. IMHO the result is easier to read.
+Hi everyone,
 
-I agree that container_of_or_null() looks a bit better here. Happy to
-know about this now.
+I'm Tian Yuchen and I'm planning to apply for GSoC this year!
 
-Thanks,
--Justin
+Instead of pasting a giant wall of text into this email, I have
+drafted my proposal in Google Doc. I thought it might be easier for
+everyone to leave inline comments and suggestions there. (Of course, if 
+you're more accustomed to email replies, you can also quote the content 
+from the doc in your response. Thank you.)
+
+Here is the link:
+
+https://docs.google.com/document/d/1t2sznOvnPz-9tOzVMH--pLxzRqYSJCFzqVWBVfL_NP8/edit?tab=t.0#heading=h.c3c40ftj1ilv
+
+Feel free to provide feedback!
+
+Regards,
+
+Yuchen
