@@ -1,128 +1,123 @@
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E71D350D7F
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 18:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771784945; cv=none; b=InCsenRQig7/u2QtS0qCSN917olfs968/WrwM4onAO6hwXXQlikNNfTjxC3LP/5zqGEt69BEA0ccAxz+hcw1kv7x6v0l1TA3ZpJvbWq7J8LgXrVfQH1722g5sqCeST4ZQC4mmHJnzqMxnK+yqtE8mCa/GeJ/Z9MkcVbQpHyg33Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771784945; c=relaxed/simple;
-	bh=KVRu/T8sbAy5YSm7dTQjUWqS7wQDeL7asGyVPUoRKdg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FSGC/mDJH4rV3wpKou62s3jXjEnGKU+MAucB6Pn4Op2umEdZWFMF2BLk9g3lQtod6YtsF6NCYWK2h9E3c5eKl41RsYK3i7Kg6z6Am9ZWeMT5YbsXhKJyBzon2UHb5CcaMlYagHgjyWRGUulse2VUG1gHPTY1RO5HbuUE6ztlt4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZLNFPTQb; arc=none smtp.client-ip=74.125.82.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F5AE555
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 18:34:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771785257; cv=pass; b=RxaCJLKILiG0D7IbqQCOtiKi71HhiJWruOEIksb1ur8ZA/t5MGFkIwEqyZRnTKACV+CDiG/kShPZQs3z8Z5Bk2gJn2uId+PV6MEbZVXmCIniDRhvH7/IqA8JAueUTPIypuR1Dy1AdKBbDoIkzsGw//pd2QUZxloe4Bw+bzHmNHQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771785257; c=relaxed/simple;
+	bh=EK1Y9vc3COqAIBO798HGd9XFZT3WHhfMMhjT5VPvBc0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MlUqH3VSbvaBbAwE5Qi4kBMyPnZThWlHNHarYbsIZsWsbG9H9rDK0Z0PIS3Wm09dTgZDF4k23TjerJVMUNSpGn2Scl590cg8uEPdjx29L2ukWstgDJg1W3/QO09By9yZFUVzSlgBCJC47bBackpprh+/lXJiq9uUt1ldHjxw/88=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZGu0U8p8; arc=pass smtp.client-ip=209.85.217.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZLNFPTQb"
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-2ba90683995so1512282eec.1
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 10:29:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZGu0U8p8"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-5f5418c40daso4285903137.0
+        for <git@vger.kernel.org>; Sun, 22 Feb 2026 10:34:16 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771785255; cv=none;
+        d=google.com; s=arc-20240605;
+        b=SFzn/V5HfabDGDRJl28Ol821sfNRlbdumLcVEcjI7wKuJSUlkFcF+7WaFWQd8iAKmG
+         tSIe7LkeibebuNgwIqBPOhJJapfvayC4wocFUzTy9swWP9WdAoYk/rAKW1PPB00eztHw
+         XmYP5QLhysTBPnjTd9gf9BWC3PuJwxaudr4/AZpDB268ohMqKTpJQ6U7MlmOKvswEI9V
+         7nYMZ5YVUFaJZd+9iCHVbiIJwrw9PdQebslQdfeCq0EbBNoB9be8y8i6iF+pybXQdvM1
+         EIt2jgDHT7eXgNyDworVHAmU9FEIhxSO1LqZk7Khu6pP+WrAAlUIYtMbAtBIGH9OaMYW
+         HghA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=EK1Y9vc3COqAIBO798HGd9XFZT3WHhfMMhjT5VPvBc0=;
+        fh=XeDXraPVs7A9ac3VLZPyyuV4JPfhQ157OBXcK++VJAU=;
+        b=USVGVvG19g2I4GEDVGSCXtT7jzwsIY6fX/JW5/gg20MhLO2+d2mPY7uugwhTuytgMT
+         1NshfpfoNBtp8S/L9PldnD/YCDvurLnwjwPCdoFRIbmGQuc5InKxXglry279/mNgniux
+         5fNJZd3wLW+fPBDEQF+7KMt1pnr5BLMfOctAd6Gg7bCp9gYteCs4n9YqMyTiMow7R4kk
+         SMMjZn2Dr6/3VIND4+dkOrQqktgQY/yjJSTtKk4z3RNxiIjj+kpZi58xRofYrGnfN8AC
+         cZrzueVZfokqx210/yB6XkZkgxjN2sp2ho3Ay+piD8q44OrUIM/wbJDFtYTJfv/ETNDI
+         z/MA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771784943; x=1772389743; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771785255; x=1772390055; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=X8cWgGEb2SUnlm2MWwt9TeA24kPEyOrI5lHY91E7cXY=;
-        b=ZLNFPTQbrKD6DnqU/KpjZw+KsFzwNC9GrzY+6CGZ3i033XAB/zzGQMq7Y1recKdPjY
-         hJnPg4s1D8PHInYv0tFfNiBKnQCj0Ga0mZNL816jG53XqnccPXv+4ilRLdDBd7yYeUWx
-         mUy+d+/z5Zn34COos5cn2LMEw97oDXu1Jw20ctLSWLR4waT5BOv4umm9qUlJbOUfVjGL
-         a3HMXI3/mgsgBuz+71n8Lsgz0WoyKDK5HtcR9UALE6VxbiUwirZjpgRYK9JYmKGD8LPj
-         hSmuwE5yIfXKKaUkadVGk7otBmrd9LcwXoxm4dv0r/idmKyadPj3LTZ8K7aWi7SxckdY
-         lumQ==
+        bh=EK1Y9vc3COqAIBO798HGd9XFZT3WHhfMMhjT5VPvBc0=;
+        b=ZGu0U8p8PG8+hQP11wfwOV1WROaYcIYUPHAlQSA7jjol00JK+t7OXUtXT8YlhZM6vc
+         vBW69JLkPk2KblfV7WXAiZY+LKZcaGZjUTFm7pKHeEFWLKnOg5X0ksBi14gQWIxJYdc/
+         AkHh8+NzGJ2+VdqcWhkCGRbzd42Turxtzv8gDrjOBqj5hoxpiVafVgXYdJ4YL90Fv4Dd
+         uci4Su5In2XqfSTGzZlJp131ZRE4KDg3nEDluMMICAFTSq5ceuSW+D/ZzbEIhIY7h1pp
+         OPR0H37wz2CfZ8KYT4YxJOif6KaxlriOCRIGFEoit52kCRg9KXhuMtikiHNM5baMEPN8
+         Ih2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771784943; x=1772389743;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1771785255; x=1772390055;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=X8cWgGEb2SUnlm2MWwt9TeA24kPEyOrI5lHY91E7cXY=;
-        b=kfPi9K/hqctFiWrT5vwuPGOCpGhPC/a8H9BffcQzW4Oz7Yz7ojn2uX3abROwXfvOEL
-         nOCxLNAC+omil1XozoJwkjXxexOEhy6wMj/bSI1dYYe8bX2fDPG+bV8YjT4TU0XWtdk6
-         Gkq8vlSgFB/NoTT66m+TGcknDZ8wIBEck6QpzdpL5+KHJgh9+qsE8QfDZ1pnTKQcligq
-         9zsjH0l0UmV88MZPjIPy3naShB3D7OZVN064RXxxPly2kmW58eLEakmOdzwO0kqO8e30
-         73PVjKhMY/Mv/m4DC/JzirbP4OYE7KeAiEBgaZQckGA8gGwfctdovGpUKiVgvm7ZD2E+
-         Vsmw==
-X-Gm-Message-State: AOJu0YxXJJiobdhONBqkkdZGdhqOFlqSrBBueUltWZev9abDzZFgNmo9
-	0X3E+iC8fC3z4ofiM2NKpskSRgO0t3USd661VtboBqyw8ebUpsfVIAnfgVh5vOIg
-X-Gm-Gg: AZuq6aLsBFipoDcKyBPCyhj93KaZYXkNstQCti9A0Vj69/mAsYPAv5yRa/ly0QX0UR/
-	X26P/KbA135GhO1JdwJmemDFpRyCWplE3B6kWK4hFfrEnEg10JZYc3beeV0Bo72LxzSY5HsqZnw
-	20AOSSxOjMIiJbqxPW7CBL5SdaZzyroRvqHMN0GSivqO0asFfg+ahuF6txQruKdsgDjey5QJYzY
-	hliGs8sdwFLwY+/9zhQnvcNMZqm6YaFSsM0Ar4itSBu9EUF3MC8ji0PRIeR5r+EXKbljTo8dWEK
-	tOmaxWem15diUrxgLzBRqcfIxw5CeZoKiMcCHXJD973tQ9V41Trn0XgEPe5+pPVuR+XOEb2B6ia
-	Pf78RDjp0dODb21CnCVcZ5f4VPCTY1wypkbT5Np8GRd7alSzHCxh6VC7Plgpv3AhJVd9ZSOVJB9
-	3AzBL1RyrQCzf//qugYC42wYNc
-X-Received: by 2002:a05:7301:4443:b0:2ba:7046:b6b5 with SMTP id 5a478bee46e88-2bd7b8b943bmr2232051eec.15.1771784942894;
-        Sun, 22 Feb 2026 10:29:02 -0800 (PST)
-Received: from [127.0.0.1] ([20.171.51.209])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bd7daa35f7sm3636163eec.8.2026.02.22.10.29.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Feb 2026 10:29:02 -0800 (PST)
-Message-Id: <3c656bf152a9d18ab87c60b0581dad5d67f55104.1771784936.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2208.git.git.1771784936.gitgitgadget@gmail.com>
-References: <pull.2208.git.git.1771784936.gitgitgadget@gmail.com>
-From: "Eslam reda ragheb via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 22 Feb 2026 18:28:56 +0000
-Subject: [PATCH 3/3] t1900,t1901: fix test portability issues
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=EK1Y9vc3COqAIBO798HGd9XFZT3WHhfMMhjT5VPvBc0=;
+        b=DTq5R9YAra1VKCNe3/zEuMJcLIMqZ6inoAOea9tKcPPBu7msk/NwOmz8BCaGDXPCM/
+         YPOaQJtqM/KeKI203Idu8YdPxtXwIQBkUXsxrfugC5qvSPEt/4tuPTNbpQ3QytvH9OgK
+         rVAkd+bsKoXw0ZV1T1t/jvX4QGG8tttw6nhJpxeBTVSPU3OaKmz2BtjCMDTURgfWWVKo
+         97yUWzy/43LZ38GXxqgje4sRmMOrsFsXpFTPcgEZaBSOA3ILIPPcnb2k8lSbi9bJ/9Ci
+         +5tuSYrtSgmOyAnRIFZ6axGSa0bRQc4HE/QffJf8r78GVSTalIdrrhQzEv2J5pH1/E5I
+         Mo2g==
+X-Gm-Message-State: AOJu0YzOwpVG8hGCXwZwB9BUmiBx1iUhC45dqujBgu6Jln1Gznm9CEY4
+	bi5Df/OZyRmn0Eos8doWbacyTz1M8npsZN1XQ1H8Rx5vE7DAo9DLMTbs6GIX/5ugtZHDwIREPCY
+	Wj64AMArzMaRSdmYnQSSZmDCmyF9vdyE=
+X-Gm-Gg: AZuq6aKh0hcBYLoWvxr/Yoboxn6ube3JPed+IUQGZJ6mARfY6yckMTR64I21stw+i32
+	LtZPPprPIyWC/8UblmjYBispbsLx7Oi8pJdpuoYoy+CzWtJMHb32m8dijrH/GTTUpl9xdCbpd7R
+	vUSyoYsf/A8q1MfKjpASMkdYBTntp7W0mmLJNo/jL21T60EGqENii7Be+vZyPL8GMkGTyZawzim
+	I2HVykOz9+9j+iwNc9Xg68rCuumoqU2vRyr+LWJozcPGshEpr+1+4sQJQ3bVOc/bCEtD/zx04wU
+	5NFdLS0Rq7vaJjOQpt62O9Yp9JFWG3xBEOIra+Q=
+X-Received: by 2002:a05:6102:38cb:b0:5ef:233e:6b25 with SMTP id
+ ada2fe7eead31-5fe90bebbecmr6635292137.13.1771785255192; Sun, 22 Feb 2026
+ 10:34:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-    Justin Tobler <jltobler@gmail.com>,
-    Ayush Chandekar <ayu.chandekar@gmail.com>,
-    Siddharth Asthana <siddharthasthana31@gmail.com>,
-    Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
-    eslam reda <eslam.reda.div@gmail.com>,
-    Eslam reda ragheb <eslam.reda.div@gmail.com>
+References: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
+In-Reply-To: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 23 Feb 2026 00:04:02 +0530
+X-Gm-Features: AaiRm50Bpyx0OFlWZoVzCLcimInoMNMxr67O1p_xkSXo_XA9xmDREOsfuT3d3tM
+Message-ID: <CAPSxiM-f1nQiFAW=dDCCqr1Yce=ZrVrMYE0YHc+-cFAjx+5m8A@mail.gmail.com>
+Subject: Re: [GSoC][Draft Proposal] Refactoring in order to reduce Git's
+ global state
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Ayush Chandekar <ayu.chandekar@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Eslam reda ragheb <eslam.reda.div@gmail.com>
-
-Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
----
- t/t1901-repo-structure.sh | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
-
-diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index d9e2842307..7b7c4117aa 100755
---- a/t/t1901-repo-structure.sh
-+++ b/t/t1901-repo-structure.sh
-@@ -228,20 +228,20 @@ test_expect_success SHA1 'keyvalue and nul format' '
- 
- 		cat >expect <<-EOF &&
- 		references.count=$(reference_count_total)
--		references.branches.count=$(git for-each-ref --format="%(refname)" refs/heads | sed -n "\$=")
--		references.tags.count=$(git for-each-ref --format="%(refname)" refs/tags | sed -n "\$=")
--		references.remotes.count=$(git for-each-ref --format="%(refname)" refs/remotes | sed -n "\$=")
-+		references.branches.count=1
-+		references.tags.count=1
-+		references.remotes.count=0
- 		references.others.count=0
- 		objects.count=$(object_count_total)
--		objects.commits.count=$(object_type_count commit)
--		objects.trees.count=$(object_type_count tree)
--		objects.blobs.count=$(object_type_count blob)
--		objects.tags.count=$(object_type_count tag)
-+		objects.commits.count=42
-+		objects.trees.count=42
-+		objects.blobs.count=42
-+		objects.tags.count=1
- 		objects.inflated_size=$(object_total_inflated_size)
--		objects.commits.inflated_size=$(object_type_total_inflated_size commit)
--		objects.trees.inflated_size=$(object_type_total_inflated_size tree)
--		objects.blobs.inflated_size=$(object_type_total_inflated_size blob)
--		objects.tags.inflated_size=$(object_type_total_inflated_size tag)
-+		objects.commits.inflated_size=9225
-+		objects.trees.inflated_size=28554
-+		objects.blobs.inflated_size=453
-+		objects.tags.inflated_size=132
- 		objects.max_inflated_size=$(object_max_inflated_size)
- 		objects.commits.max_inflated_size=$(object_type_max_inflated_size commit)
- 		objects.trees.max_inflated_size=$(object_type_max_inflated_size tree)
--- 
-gitgitgadget
+On Sun, Feb 22, 2026 at 11:29=E2=80=AFPM Tian Yuchen <a3205153416@gmail.com=
+> wrote:
+>
+> Hi everyone,
+>
+> I'm Tian Yuchen and I'm planning to apply for GSoC this year!
+>
+> Instead of pasting a giant wall of text into this email, I have
+> drafted my proposal in Google Doc. I thought it might be easier for
+> everyone to leave inline comments and suggestions there. (Of course, if
+> you're more accustomed to email replies, you can also quote the content
+> from the doc in your response. Thank you.)
+I believe that a giant wall of text is the appropriate way to send a
+proposal to the
+Git community. I will advise you to send that giant of text actually.
+It is easier for the
+community to review and give feedback. Also future gsoc participants
+can also learn
+from it. By telling the reviewer to go through the link to the docs
+and then copy it on the
+to the email just to reply is giving them an extra lot of work to do.
+So send it through text
+and make it easy for people to review.
+>
+>
+Thank you.
