@@ -1,98 +1,125 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C83B18787A
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 17:59:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541B723BF83
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 18:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771783160; cv=none; b=d/KC56dHFF8b5qS5XvEM6oa6Z+vA4n5/QOW6xQ+vu7S/Dj7y9I30fNf0OQIAODuLCNHv4CcbD7c7PJvRxUraGCZojZJM9HnhtCPon97TWMLysaWtwWRq4bjxUZm3MwOgTEx4QO/NF3X3u1xZBS4tek8wWXgHzZFCTiOPVkYAMvc=
+	t=1771784941; cv=none; b=Eimi7YmpT2lZJbgBh4pHO4Xgnavi3EC8xfO1oWmoOXLIM/WcLKzhgTeyIc9A4Ug/8ONEcJVICsx585U5P38OEkBmUVybBgorWq9a/2nh1ig4mIziGgRTUsaiKDDoBwKCtt3n/dc1u7ktuhTpIrqoDd0Wng0Wt81UpDB+Heh31rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771783160; c=relaxed/simple;
-	bh=uETTRSQRY0k+mux+XO2A5z/tkc45bLRkDDqyVXbP0CA=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=n6zn2NgLjGqV0qwxVNkMIVWt4v6adQm1X7u0pd7J7rNDsayHJ5WKmwQ19SE5LqIuaoS1JfZ3oHViyb3WZ4fM/nU+XqBMqULxBRiCpe0qohqI8M8jH1b7R4cGeiMG3nJqPTMfFIlVJCCh735GVOOgir9BbuQLERW+1WjEe0p43yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nfVcGbPQ; arc=none smtp.client-ip=209.85.215.180
+	s=arc-20240116; t=1771784941; c=relaxed/simple;
+	bh=xgT9M3+JKpAb9yfDX1cgCZ39FI1srZZ/PzqVOgG9U0U=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=RvE+FbX06NnDxmCy2hY64r8VCWzUXLZDdW/qYSoVezp4goWmDF2tToLT5g3qB/RBFitkwBczfiOoBUQiQsyGUO2CYL9qDvaTcSw4phT7TVsOF6OdrpKBpKslHHfKJNgtTqzW6/GxXHGIOkiAsbQBnCsIgNkZ/R+61kNULHaVJTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FqT41iEe; arc=none smtp.client-ip=74.125.82.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nfVcGbPQ"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c70c38515d3so101445a12.0
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 09:59:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FqT41iEe"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2ba6aa57d5fso3575943eec.1
+        for <git@vger.kernel.org>; Sun, 22 Feb 2026 10:29:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771783158; x=1772387958; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tct6RWHNCxgita9xnrGfQUQQhD9Wi9wQ43Og4L+o90A=;
-        b=nfVcGbPQNSCTRNyu4A6Cz8G0JMBDrqbycDKHnMPU6BE7VS3RZPSeX7Zt1YiqRkc1OW
-         L9x+HKWKwEE9CA7p4aW9QXWWPhIjMVYqHF9kTr/ac4UHs3dWWBnmsSy6YwS4GErhjzNr
-         h4JruqTi+LYZ37ADAD1eNFxtdYaA05WDRy6jPyUD72XL050Efmy2GsU42DwsZVGSp3l5
-         MoB077kEqVFkV0xiFhrRJ0skaMGvYSjAN2QB/3Zjp5SaUSSCIleUQUxbhX74/is1rT51
-         Wt/SvTwNAZAZEtHXRfV27uyceRCCVC8HYsn4uWcGrS3gUu/jh5qdYM7mdyEQRllZpkMu
-         MK9A==
+        d=gmail.com; s=20230601; t=1771784939; x=1772389739; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=KP6mtzr0BEkkssQ6cQAy0Sf/i30Ub0gvDzy4cUndnEc=;
+        b=FqT41iEewGTqSfH74qZogGTk1JCR/ZUx1Zz2sL1gSHeuUQsAkpWa3IjyCpPV99baiA
+         nTtsiwbAmpuwfIpItH6h7VMH0zmparxmOUmn95Uinm8OS2BeEQmCjwU4YlLuzcdA5uPs
+         8s10+Wtqi/ZxYc6o/jo/PC+eOrAmSwfqGeJJBD/HIN2LVrrWj5fPOo3+brndd6qsbv53
+         JnIAAXMJRo8WsG6azPVh8ho3YHM+EhvoqMT2SWEf5e8lwBXxqAccztx/fx5JTC5QviUF
+         /yeP3hzQwkttDCj+xYqkz9+hdFaW1OR8tNe+L2ONvFl9DMnZjTxrzyShbrdiiBKqs/cr
+         9hYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771783158; x=1772387958;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Tct6RWHNCxgita9xnrGfQUQQhD9Wi9wQ43Og4L+o90A=;
-        b=mdjJNwScyLu5AtU7P/2a64FUXcSXj915Xli5/Y333r55IGpvWi3LA8qxkYW/0lGUqw
-         YiwuqJSG/1lnb+wZjjI61VmGbU45thJs72IL0OshrJN0ufIyEIPmh90HMSOyMIlWxl1h
-         8a1T7RAbDKaUH1Osk7fZK1eolssxlITLo+Ks5wKikmWlN9GTciioBtc8Tj4ivxsK4RTr
-         yskR44LwCRdfC3Blszs/RSGB8c3ZE1UIeEu+9uBEu4Q0AN/Ax5GooGP+hUFWkPyQTibL
-         hhBOXV+EEZgf4EpG+krQzQZOyRWm+cxOUnjhjNjVg90qy/bD9FwP9AO+2n2wbT7WZT3W
-         ZdnA==
-X-Gm-Message-State: AOJu0YyXNIlym2j5YPtmD5yVamEf3YhXvqcB72bvHkrDZlXa8yktDqgN
-	2QfX+Co9H2QPbkPzc0XzoYaSQtKr3zG09qxNP86RXPWm7LrxThzHg9OntxWBpw==
-X-Gm-Gg: AZuq6aK35Mm1cD1GQorGmxKAsjKmHmI9f4VlK1V4r6LfHk7QH9Qvs276Uzhqn7+3vCX
-	TpnDQL3aot8KpF91Z6qBhL4BOAWJ6rTWZzqWixGVAjNuFbzQYtPxXqYXquPqqQ0DKMUSS8cS1HI
-	Rr/jP/4YmxaI5qXQddMKq4r2IbDLeZQEzuDR1tMp8ouYMinChaUcc4qOdQqpZgF0NwCzfAqpvhq
-	N+DDnUkCvBShxa5NkU74+lsU9ce1bxz+jBvr6XoEXH9G7sWNoILXV3mgv79LTBVCh54lQ1nAssT
-	HvSea+/HuvLFDWj48kYgPqiQ9xhDcTudCHBgtciK2pws86xVZJgyNdmr+IQruZsrNdk912VNQNA
-	OgeGj8F3bpNGREvhW5zeMTMqPm5Cvq1yS27h7l5wJFQrYB18FXb0eISIL7uSSfmS0sPmbVCPbW1
-	LGNmI9jk4ntzMmFfYj4DPdQfNHzIA=
-X-Received: by 2002:a17:90b:5246:b0:340:29cd:dce with SMTP id 98e67ed59e1d1-358ae8eeb67mr3924815a91.8.1771783158418;
-        Sun, 22 Feb 2026 09:59:18 -0800 (PST)
-Received: from [192.168.0.101] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-358af95863dsm4961511a91.17.2026.02.22.09.59.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Feb 2026 09:59:17 -0800 (PST)
-Message-ID: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
-Date: Mon, 23 Feb 2026 01:59:15 +0800
+        d=1e100.net; s=20230601; t=1771784939; x=1772389739;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KP6mtzr0BEkkssQ6cQAy0Sf/i30Ub0gvDzy4cUndnEc=;
+        b=JjXTvi+ziPBvjIvkk0WPCstj3YG1EybOv/YqAg8nrLfywZTU943a5QseBkhxyXHhm+
+         xl9vjvYI5YDefWNU/+3Uk4BKPAsKYpCwOo4W4TczxGmC8rUGkosnSQNLBC7yws6cnsZX
+         m6vTpCGsDEspThE0N0jQrVfUtATZFv5DxLcU7Sz5JSSbbgvo3nTQ1dwHehZZRmWRQC84
+         3X8XRH1WXmHqg+Z3XClltkkY0jCv8uxaXSL3N+SArvtAzNhQf5WEDlx28K2QcEQQ6slb
+         3UX9c1+xsa6Ba2aoZZEwmncnXIqzGXQwBqT6kggrT3bwraRm6SlzouyPW+Hv0kDR4fK/
+         nIyA==
+X-Gm-Message-State: AOJu0YzhsQ/nDB8Ie0+qNqtcPg/xqnF5jgbRR5zK5Cph2bg6pJkN/MQG
+	RLHAE9CZi/yZtW/1+H+SdCUqfWvrLwoXfPtMhFuoaI6+xAuVidpsnaXgcIcDoA==
+X-Gm-Gg: AZuq6aKAG5+EHLm3Zd6JTtM1AuwtW18BHBXkAprhewtoUbr3lw6Px/EW3FxQLF+8G4Y
+	EPHw4aqkvAvYn+mLnnon6f+ghnD6EnhE/zmWn8zE4pZ3gLf6LnFS0kPkh4vOyba+ws22z7SQ5uF
+	KI1nE8PIjx/wZg2g8PbATH6kQ34He0SK7Pyds9bKKv61+brB8DZ1RcgYigjgN3tjPoDQWo2toRS
+	+BxKnMu1uRgjkTTckZWt2hrxbiaAaPUPBtprjPXW/StJyYSs9m9GfpdV1tEXmFmE5klEQWoOAlS
+	ISNE3xJPTpc31EQzyRUXOa8HgYcpmTNTXU7MZ5SzDEWZpMmvpCty+aX2gvfFGBfVkXvTwtVbizH
+	Gkry3WLpBaMKdjLcb0PwucaQkiK2sUyInwW5doaCoBp/GfSg05ttxksd6tvKEgboPL08r6isqqF
+	ZfpKYJJg3tNg0w/SiqwUoziWXE
+X-Received: by 2002:a05:693c:310b:b0:2b7:1abc:a6e9 with SMTP id 5a478bee46e88-2bd7bc648a5mr2387968eec.12.1771784938745;
+        Sun, 22 Feb 2026 10:28:58 -0800 (PST)
+Received: from [127.0.0.1] ([20.171.51.209])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bd7daa3701sm3374725eec.10.2026.02.22.10.28.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Feb 2026 10:28:57 -0800 (PST)
+Message-Id: <pull.2208.git.git.1771784936.gitgitgadget@gmail.com>
+From: "eslam reda via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 22 Feb 2026 18:28:53 +0000
+Subject: [PATCH 0/3] repo: extend info path reporting and structure statistics
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
 To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
- Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>
-From: Tian Yuchen <a3205153416@gmail.com>
-Subject: [GSoC][Draft Proposal] Refactoring in order to reduce Git's global
- state
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+    Justin Tobler <jltobler@gmail.com>,
+    Ayush Chandekar <ayu.chandekar@gmail.com>,
+    Siddharth Asthana <siddharthasthana31@gmail.com>,
+    Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+    eslam reda <eslam.reda.div@gmail.com>
 
-Hi everyone,
+This series improves git repo info and git repo structure.
 
-I'm Tian Yuchen and I'm planning to apply for GSoC this year!
+For git repo info, it:
 
-Instead of pasting a giant wall of text into this email, I have
-drafted my proposal in Google Doc. I thought it might be easier for
-everyone to leave inline comments and suggestions there. (Of course, if 
-you're more accustomed to email replies, you can also quote the content 
-from the doc in your response. Thank you.)
+ * removes reliance on global repository state in this command path
+ * supports category keys (e.g. layout, path)
+ * adds rev-parse-like path keys and git-path-derived keys
+ * adds --path-format=(absolute|relative) for path output control
 
-Here is the link:
+For git repo structure, it adds deeper repository metrics inspired by
+git-sizer:
 
-https://docs.google.com/document/d/1t2sznOvnPz-9tOzVMH--pLxzRqYSJCFzqVWBVfL_NP8/edit?tab=t.0#heading=h.c3c40ftj1ilv
+ * max inflated and max disk size per object type
+ * max commit parent count
+ * max tree entry count
+ * max blob path length/depth
+ * max annotated tag chain depth
+ * aggregate keyvalue/nul totals and maxima
 
-Feel free to provide feedback!
+Tests and docs are updated accordingly.
 
-Regards,
+Validation:
 
-Yuchen
+ * t/t1900-repo.sh
+ * t/t1901-repo-structure.sh
+ * full make -j4 test in Docker (failed 0)
+
+Eslam reda ragheb (2):
+  t1900,t1901: make repo tests hash-agnostic and wc-portable
+  t1900,t1901: fix test portability issues
+
+eslam-reda-div (1):
+  repo: extend info paths and structure statistics
+
+ Documentation/git-repo.adoc |  67 ++++-
+ builtin/repo.c              | 525 ++++++++++++++++++++++++++++++++++--
+ t/t1900-repo.sh             | 196 ++++++++++++++
+ t/t1901-repo-structure.sh   | 250 ++++++++++++-----
+ 4 files changed, 948 insertions(+), 90 deletions(-)
+
+
+base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2208%2Feslam-reda-div%2Fgsoc-contribute-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2208/eslam-reda-div/gsoc-contribute-v1
+Pull-Request: https://github.com/git/git/pull/2208
+-- 
+gitgitgadget
