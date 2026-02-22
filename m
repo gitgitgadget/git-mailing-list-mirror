@@ -1,132 +1,105 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AD91DF248
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 07:59:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1072B2E63C
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 08:39:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.169
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771747174; cv=pass; b=P0K/cwSG4WyfSpwMmkg74WLQeIktoasRuUrWQaZpWk6nADVmCxEl3Xv+dkgkxsApL+CVh1Rqf8JZVBrusopXbWHHVpWmIFDel4DvayO8NKI4pzznpTcakXaXtFn/Bd7UqDKfxmmWNuUHAHPoH1HYmB5N05XmeDRc1GVpvhfxua8=
+	t=1771749587; cv=pass; b=S/9KI31aY+hEeci8hqNKk7jozJC+3ZQbCxQ+DGeKPYHzgpFbMOo8mY67/Tx1jI33mlTql5wMNtJEeSfBEO3jYSg2sW6vrU1eKzn12sX9X8udTlgyGJ8tIQzP7GP0UK68MNAvxk0jy87INgu05iOFoTKeGBivWgEgAmSW4bDB4kM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771747174; c=relaxed/simple;
-	bh=WRsYmHFNnIdl4jxCkv+vxhUqKNOlTm6ecbE9MTeCnsM=;
+	s=arc-20240116; t=1771749587; c=relaxed/simple;
+	bh=789JVcDQ4JrErjjK3x49tdyrOrIsnOCxAUeT2cuLEdE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ClPRevgIDw/+6dBzCHzhSyGFsLskVmfuf9IRfcQ2otXLHkQiBYvY2WvkkoQUItMBpnM4VYgnTlNeOQH1CbWjqWK8S78AnGtJnSGaYagvX2aUg9228/7lTOsCijFkP2ecQpnfLkIANCS/9RgdsR9i0oRatDDaRXpvWNW0SrzX9VU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kbL02yNr; arc=pass smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	 To:Cc:Content-Type; b=GxcEbOHUCRWT6JCmtH9Vrg7n8X7mJYtlRelSxLZ9NGubvKX1O4SJ5844owxlS4JiENMtz8MGQ0EqmQSh3EL34S4w5BhNH/uneV2H2+FsuI9eDmeiek7uWoubcw3M1Hdim/yV9ZSOhr7+Yx+G+wxMoWKQDl3NBfZdmbqJPjkMbiU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kbL02yNr"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-506362ac5f7so32202831cf.1
-        for <git@vger.kernel.org>; Sat, 21 Feb 2026 23:59:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771747172; cv=none;
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2bd5658b901so110587eec.3
+        for <git@vger.kernel.org>; Sun, 22 Feb 2026 00:39:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771749585; cv=none;
         d=google.com; s=arc-20240605;
-        b=F1QbLp3T6wycIFf+EtbU3P2QV/gB4DGcmj4XXLBSYuXBQQzsZH1Qq8WV8VKZvQ45oi
-         HxjjIgjdr6E9ys2iwfVLJJhNNeXFM/U0yw9lEC6C50Tyhnr1UQiRCKZP+mwPgXBgdFWz
-         nbgGZ8KrChPjTkkFN56Iq8yphYUIULhavsBTFk7H5odCobOjZv+cBhgoHs7KNjknsT9l
-         jSGe1s6PqbD8meTbDqiWHv3PBi/vU6KLjN4+UehZD0IUb9jiYeainC9t4Ak5wrll6atK
-         13CJVxs1EgLkkm+ID9T0w8CtBTWFgDCPbuPI1VOPxJ2T71iYGhAFoS6hYO0oBKcPjTvC
-         ndhA==
+        b=Edza9sNkdJp6ddJwlF2Ho+mCkII88yumdGJl8nNhID2PS/y3oRz7pJSWfhEJEyv6Vk
+         DDKa6AA76wSghGdF6/tJ07v2ZULR+tqwRKGri50EmyMOMWT/YAxZsw4PIQoMrd6FxQUN
+         vWUnL+ZRzZh3XX9KXZLW4IhZ0aexVzDSJ3hInJYrENS8yUAu5ZpM5Rp/6h24ERs2tOWO
+         X4i0ulAG1dp/6NPiw5tddJGQJz7/WKsHK/KCvZiP+c78oNy1JfjyounrYnyvqbrUXsPx
+         6byfMV+vM3Ka3FQG0lL/MuXSicdDe5eFbmeVTTcLshZPG2FYrJPko+cwlS7fHTTbeXrd
+         NgCA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=K2/AdaMGyUD/9ldINNrNYvE5Zqt24YKgnxDWFEFpsZA=;
-        fh=vz33kSUMLEbtIucqTkURGRL8oiBSV8AqTo0Pka5NLvc=;
-        b=jddly9U4EgTNMmYtJGkShJklBBLCRld9dzPqNGL8PEzdw07WZAk75Hruq6QAlBi/Rv
-         aKdpDnVSb+rghOTmuGydmY0lGTo031MdEQFerOgkTydOvnIdPckBC/24XfOEqxolq8zo
-         cBBdaTvKjVS2OU/zvui4ihG9tgUT6PvGjt3HGGxyxg/xXBkoCWaFcOLhslqXtc496HJ8
-         GD5lfS2a4ECaWekfWEbsmH+4u+hF0r1dWhIkx6jGhBdq36y9QDpU5vz7ybfFnL84yUvJ
-         rhMJYIOQgn3YqsPl5ZuY4cd9RxFpbHdd7sFPy3CIqQWk6rtB0YnJHkaPcZ110DBdNQIU
-         9TaQ==;
+         :in-reply-to:references:mime-version;
+        bh=DbFVIvUzBBA7Ko58qu3CR8HkIJuuR7L/4ODvFreepRc=;
+        fh=WzQDSfG+8tRUk0dFyLK0A4YzsmgvrEzqraXUiGzWxlw=;
+        b=lO021bMhhll1RgDFR2/gHiJR201KvK7947z1jS/lt2B2KfWSe45jneQSvGO4z70JgV
+         deRFIlARz4rXcxna9xdd38Awo0lzVejugIWfnlKIHjNXSUIxZUEtCfk7sN/Z2gU0w5vM
+         P+8lbfwSWEfcvWjhFOW/4tvEd7vui+35Iq+3DNGltnNcK9xpblCEo7qFmWr7W2ybTjup
+         XpjKwhfyW1aCSvNn+ePX7DLVHCrtUC/ySeI1HBnGl7knVBaxlok1w3suY/4El7smn1Ig
+         fNgMiTrDPGumst7wZQLK3jtnUdUDcAEZhRlYzpCahryT7m5JrjcBAmZz1l98RIvWixA5
+         dx6w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771747172; x=1772351972; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K2/AdaMGyUD/9ldINNrNYvE5Zqt24YKgnxDWFEFpsZA=;
-        b=kbL02yNr7D+I4PCeXpgHDhgPUBYw+bNAgKmXb1MI8w5sz6+JTw4rp7rdsabz0lA2A+
-         GUXCfL0L/Bl4zHVQap5zQz4aj9QzicvhXkEG0kTOaWojE6ht7EAS5VctmPMRxIetG1rD
-         aGzFPucn3GGviv8gnQaT+CUarbWYWF7Bl95J3ohZYH+DM5V8qBdZHA8j1SmUqJee2m0u
-         aypfiueFXTCarI/MvJpbQoED0crDoqiuoAa+XASGCifVOqtRTO3CFPj8X9m24tF5x2nx
-         wFd8DRG36tfFEv4IhLKfZiPGBZdEHHVLffiZmhx97wRIsjhuuKv4ZJXrFZx/WSdzWYTj
-         z32w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771747172; x=1772351972;
+        d=1e100.net; s=20230601; t=1771749585; x=1772354385;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=K2/AdaMGyUD/9ldINNrNYvE5Zqt24YKgnxDWFEFpsZA=;
-        b=giR4UYFEvgGVBV9vlUJXH7bSVOE9sV7Z92zTp+HJghJG9YqOKP8/bhLDW5BPx/xPnu
-         qGBuYG6CrQNZSHRtkhZC6w/HHWa5Z0zsNryJ+/RZP2KYGGZHqlggu1VXs0BT9CRutbv8
-         suJlb7RAPabNaU4fR3mEfYIMr0rQweqo5divHW3LrjRlponE1pJv7UEieOpw3y/I6H1h
-         eqMQjjVFmFh/azE0CfLH4m+TlGMi1aawf/hdi1gIjSFbPay4xFVQmpiPHV2uB5NC++4u
-         950ilxN0vfqqpA0n2KScvnZlAJiOZBaLzBZDU6QqW2p7Q4PGhWhsXk3rZ0hwDKqY3YrF
-         uHTw==
-X-Gm-Message-State: AOJu0Yz4WtJnNne3VAnIG1o+7VfAE3CfNBSzD9oBoM1+gXNUBWuuD2Ox
-	pc5NnSONbe4hGZqux9lsI1KBVd2CThzK9OBfmSNPgp8qM0apb91V9kVcinVWVpHDsDVGHitkgfv
-	Aek6hLcFe0ezL/XyuH84rfd0ir92lbe0=
-X-Gm-Gg: AZuq6aIiXJ2xDPtpyC3I+qR3n5fO37TsROUnEH/3JjAwg0n8m/MbXdsN9t0w19jWX4V
-	OYlz7o7SVtAGU7e6u5MJHEufq6BLOv1RxQZLxMYHnc+A9cOD0dxkWyOo2zR2JKCf71eqR80MYkR
-	1KgAG2CAmHFoj+ZLbrp3mMlrhzP00aoxCQ558u8vzzqtlOjaFHwG2hKcvOUiN77itxazPtOxXdn
-	QIQ0zXgfbQnN5Y4OVYJYmp/sshF/K9wufRDgJNlV+fJHyH8xXsiJ115+MCjdWIgpeQEEtemjGsj
-	8R8NuKsygdvYm16Se+ZJeYpTOG4ROpuHkCPV7ldeQ0KdEhgIyQQ=
-X-Received: by 2002:a05:622a:1903:b0:506:6ed8:3791 with SMTP id
- d75a77b69052e-5070bbdb98emr66845181cf.28.1771747172195; Sat, 21 Feb 2026
- 23:59:32 -0800 (PST)
+        bh=DbFVIvUzBBA7Ko58qu3CR8HkIJuuR7L/4ODvFreepRc=;
+        b=h6EQKWEiHDXmpf4rABrrpE3+Bm3hwXov8L+5UDxksWwTOKLJNCJTYa6ilVyExULzEt
+         p5gWBqa5TaSmSpgQe2sxHoF1lChce+09UTYINznat0KpwuCU6J2XUiwhYfIRCuE/dboU
+         dQzKK86XryBNLMBLVUU9hDCYUJfOoYNg97kDXp1QVD2ikZ4ergUvStILvtba91drnPNp
+         /CGUtbiY5GHrp5RCUz0j7uZUrE7cFfU7wjwBXz6QtHc7lgxOLmkX7clsze2hiA7qPc6r
+         L4+kVdt6SaoWYZjF0QM++ZenoKex4tGuIkanqgG6laFdC1rHzom0b4+XwjpdQcQ//daH
+         yXIA==
+X-Forwarded-Encrypted: i=1; AJvYcCWUIpsa1AK9Qi8Tco64TJC+BBW6hEABYiNazAleig9o0Sbps7DpsZYVxzO3D5khYrxoRfE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTrzYvJFYHAjq3h+mDAb63o2/sObuDI2nx4RJ0rqSEa0aGfFIB
+	CCchJHg8pcPgysMAdSqbIUN4zxjA8bWTUbQ7LwXTUWmGp1LCbtpv2loxq+zpT7kvsBI2H9YC5RU
+	q9GXY6mDeYbegTXMDRyhjYNTs/RorzrI=
+X-Gm-Gg: AZuq6aJoYwkJrBE1Pk4SIDMD0myRnCLPCY8ytGUPu63aZWYRH8ogDi17o9+v91UcidC
+	SIHTHOlTk3R4Ftrw9lTeorKTB3ioiljhZ5fXWYfYzlEcj8aSCZQ87rdyOsYos/0Exghp7kL+wBX
+	vPatmipYXqyKnBjBydK8AuQcR2D2B0PTg7NtX9SUDPF86wiBqGsJqUaXAIab+NFTM6QkCs/uK+E
+	+lMkZZyUVQeVPqYILts/KuBj8AlWk6ihhYUa8wbfToEbo6nXcMLudIC8x7wThTunrEcZQU0R3Ql
+	+6yCYugANF1Cr9X69XpC7LreIx9afhjO2MR1ukmUhQ==
+X-Received: by 2002:a05:693c:310b:b0:2ba:7783:d1d1 with SMTP id
+ 5a478bee46e88-2bd7bb62b24mr1139313eec.2.1771749585032; Sun, 22 Feb 2026
+ 00:39:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260222004036.47744-1-jayatheerthkulkarni2005@gmail.com> <aZqPXRHOHU3EjfvH@denethor>
-In-Reply-To: <aZqPXRHOHU3EjfvH@denethor>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Sun, 22 Feb 2026 13:29:21 +0530
-X-Gm-Features: AaiRm51V85VfY-M1-F6eEA73I5mk8zZ-WolfgdPt6v6T9vu3KOJCfHNokv8Y4Mo
-Message-ID: <CA+rGoLdmQ6wS5_PN=SEwOntXKKAfTyZkhSY=L3Lh1xfRnLVPgA@mail.gmail.com>
-Subject: Re: [GSoC] repo: remove unused header
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, ayu.chandekar@gmail.com, 
-	siddharthasthana31@gmail.com, lucasseikioshiro@gmail.com
+References: <pull.2043.git.1770679038.gitgitgadget@gmail.com>
+ <pull.2043.v2.git.1771257211.gitgitgadget@gmail.com> <xmqqo6ljujkl.fsf@gitster.g>
+In-Reply-To: <xmqqo6ljujkl.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 22 Feb 2026 03:39:33 -0500
+X-Gm-Features: AaiRm53T-jAvaxgPJl5Iwp9jY-cq15Vq1rPWFU6b96QbW2QTmTdQt9aX5Z3Or8k
+Message-ID: <CAPig+cSnD+jopFfgjYU+vv=DudcyFwpKLHaEfu5McS5hdViqWg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] gitweb: fix broken mobile layouts across views
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Rito via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Rito <rito@ritovision.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Feb 22, 2026 at 10:43=E2=80=AFAM Justin Tobler <jltobler@gmail.com>=
- wrote:
+On Fri, Feb 20, 2026 at 5:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> "Rito via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > This patch series fixes mobile responsiveness bugs that currently break=
+ page
+> > layouts in gitweb. The approach is adaptive rather than transformative:
+> > preserve legacy desktop layout, add targeted mobile constraints at =E2=
+=89=A4768, and
+> > prevent content from escaping its containers and breaking the layout.
 >
-> On 26/02/22 06:10AM, K Jayatheerth wrote:
-> > The "hex.h" header is included in "builtin/repo.c", but none of the
-> > functions or macros it provides are used in this file.
-> >
-> > Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-> > ---
-> >
-> > As instructed in the Getting Started section of SoC 2026 Ideas page in =
-repo project
-> > This comes as a micro patch.
-> >
-> >  builtin/repo.c | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> > diff --git a/builtin/repo.c b/builtin/repo.c
-> > index 0ea045abc1..63d21df4c2 100644
-> > --- a/builtin/repo.c
-> > +++ b/builtin/repo.c
-> > @@ -2,7 +2,6 @@
-> >
-> >  #include "builtin.h"
-> >  #include "environment.h"
-> > -#include "hex.h"
+> The latest round of these patches have seen no reactions; is
+> everybody happy with them, or do we have too small number of people
+> who care about gitweb or feel competent enough in the area to review?
 >
-> This include is indeed unused. I am currently working on a series [1]
-> that will use this header again. I can of course just re-add it in that
-> series as well though.
->
+> I am inclined to say that we should just merge it down and see who
+> screams.  Maybe we hear nothing, or complaints, or praises.
 
-Understood Justin
-Thanks for the info
+I'm neither a gitweb user nor a CSS expert, but the structure of v2
+seems more sensible than v1, thus addressing my earlier comments[*],
+and the changes overall make sense (given a superficial reading).
 
-Regards
-- Jayatheerth
+[*]: https://lore.kernel.org/git/CAPig+cSb=3DzzDJCoo91detBgfAi9p4a3R8sVc6iT=
+XfzpbNxsNrg@mail.gmail.com/
