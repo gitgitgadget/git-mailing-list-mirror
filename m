@@ -1,130 +1,120 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B62A14A8E
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 14:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56910335BA
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 14:53:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771771832; cv=pass; b=SU1fs3apxqBZVVk/JqN1oj/F/8VOmQ4Q+7nYH6XKFwpdHKXUwXsMm/DvKChFqGDjbbVk1Ta9O4BKIgJI2JJFt3UT9Vq51nfE5L8NvZOCeURlPu3T3SbPrDn1nlK5TXYvoEaCJc7hYHBAc6jAWqsTfj6kVc0AJ3IIRdQ/fTWyhqo=
+	t=1771772003; cv=pass; b=kOBaQ/odtpjYj45Raxvy6wy2xad8FPGSFIjl4KDIuqnuMLASxOxoJ7fDQfSlSsz/k5/ePTj9lEBzhQgDD5pHYyt850odqdBiy8ItBOGcgO4x6cs2O3lgNYnqxbyXUgjXZROYYLUMWWSVPwNhoNeNsVaJ2DpNUAWbA9BdyOfWmNk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771771832; c=relaxed/simple;
-	bh=yBemny6J/OhgRLbpxpcVhFHKk4WUSUDrzE6SPaqP8V8=;
+	s=arc-20240116; t=1771772003; c=relaxed/simple;
+	bh=VMkZhvfslvfP5puYdns1dXhdD1lHJ50WjGkCa6+yNqM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JmPOypvD0JMTjbC7lq3PWDYMdhKCl9CyoZMiQcfDLjLLTtqJRAd02G/DwDUOHiAwA5saNxF7Y+zHC/QQi75VQlYWoUha94QDLrvXFti2oYHE27I/UF0Tg55NOcADp8SEcz/bko41yxLgJZirpA8XMe7M+LWp+9xpV38jKcZwrN8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=krNNcL1W; arc=pass smtp.client-ip=209.85.214.171
+	 To:Cc:Content-Type; b=j4pwSgiL8z4HDTCzzmlJZRTmXnjXTBz09rIOKGNI0fyup9fHjFAw0qvtnEafSP5aS8ct8XsAgpx3oeUdICuSMpxlu1WoPXijZIG2LtwsaAuaZcp1ag3q2wG8/czbxyknx4a9xk/5Af5wwFq71VvrYrbGvOhkhhNfOMbG1T6uCeQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=etpdxw0z; arc=pass smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="krNNcL1W"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2ab47d8b33cso19386715ad.2
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 06:50:31 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771771830; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="etpdxw0z"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a7a9b8ed69so31652745ad.2
+        for <git@vger.kernel.org>; Sun, 22 Feb 2026 06:53:22 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771772002; cv=none;
         d=google.com; s=arc-20240605;
-        b=QiKOkBaUwDkq85mM+f/pxX1iOlY9mqJtpd6Gfbozn1GCak2Y3SlHcIojAP4mtIflbm
-         mfxQMQ+cbjio+6U4i2Z0SrRVkocrqXRtTAeUwvvZkVEOfLseaVYipTLk2RjSC/B3DPjL
-         Zc/Aa4AGt05h1b5agr6pt3duxlldFaPbtkuK2rg3UUwaQdimfmoFcHGIw19SblNc9exA
-         ZjaY3h3f02FIPTK/Lh4PuQv8F+/U4ewVyUomWrKDj0fduwi8+5n5evfmbLwjZOMo7UC4
-         kGuvyXk/Hoczu4qXg7QPkqxbV/AeCNUpyLyIM/8VzzVsCvIIlxWQPaY5eAK/5Qkf6iX+
-         8xHQ==
+        b=LaDp1ZQAXxcHTe1V/rpkTKrtWKYvJ/Nov8HaS86jwGDvj107riy6ZuTnDu4mJd4CAf
+         /1qA/AuMzCM1gy+0ddQhFgFzqtLk83VkwF4Qx9Bve1bxaiLWRXjEJV8vDDWXIpY5s27y
+         omcfrIN1z1XO4lyPWmGKbIqfooLuR0ZRqxxvsIfPve8YEx71oG7++Vqx6koxgIFwqA9d
+         Iuy0s6xvLOPItViyif7QQSJ0FDhzU5pmQwyQsNsO4YIynr12/kfGew4dqKzBBZ9+gBY1
+         PFleujqMd80xs75Em8iGPpOaAaNdEVJpTcBkivB0tDVDQtaOhys7Sg3/fBk/W+eUTYsJ
+         PuRw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=yBemny6J/OhgRLbpxpcVhFHKk4WUSUDrzE6SPaqP8V8=;
-        fh=/2bo4TQ84E4NNbGCxFjpOOLzr/SLggTSNDQtqHHLULQ=;
-        b=CrIAShwz5GFkRHxfMxLe8RSNZ+IMIxwWcrkZ5yBpmWD/Y46Lnjj9JN4/Xl3olBHTPE
-         yLYsZwvwjnkEYyjHF/ELz7ZBP4YIP2gfIuXS6z+k7xt7dOdNha3rWQvxIh9Gk/B1245f
-         9zHKQYaieu4iCksEwan0lrgRegenOlWMkE2kD3/n6tRHglOC1kJkIQfc4lE5+DN/woCh
-         HFYlDr45kAcCqCahx5pT2HBeDjef2MNvfAj56ajKxsKEap8t8Bt+2ehAnuguT8F+XHH/
-         zFbnW9T2U4DpfpbX0b25n1r5uloOMTu1Rl24Ww9VKyI/vJQMvmhSK3MZXw2iea3/WNYM
-         xDPQ==;
+        bh=VMkZhvfslvfP5puYdns1dXhdD1lHJ50WjGkCa6+yNqM=;
+        fh=S21/Y0+PBneLWqLMucCA2hsEvMQmo8FbCxOAIgmVYeY=;
+        b=PHy1fo+8aM2uaNlDS0AlY0YPTiGgpchXxndIYcaJpZSlIuPxKODvM7Azrmw5/ZmLsv
+         5/F2KCh/H9WcqB3ICKQ+Z5F4EzOIXUUVZCW65Bm6sBs5QavWvmCrawAgCmp//NqHEZX/
+         ZWx3z0OxJiOa1viGZ22/18SxBU4nlC3nScd3SVQrkmhP8r/zdBw9AAR9hVDRYAEwboST
+         0wzV2b8PA/xAdx30YybBVm1wwvp3NhCp41LrIvsrj9OUFYGATwH8r3qCyybbf5H1nyYg
+         vJAS7rJgVRv4JidIWxUwnG0RLGImjdJvt4AT/ROJK8/nZhvFltkhp00RcgGNwXHYlK4w
+         nmbQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771771830; x=1772376630; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771772002; x=1772376802; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yBemny6J/OhgRLbpxpcVhFHKk4WUSUDrzE6SPaqP8V8=;
-        b=krNNcL1Wkg4f+oY91qdkq8oWB1FWmfWCCfgITwkKzO0cl9PW8M9PTORuFEhLwnvokx
-         Dvxj1gQiEUetO/lulKnXxRtSbAqZU4LSy0v5F//cADCvji3DItV61HnxBH8XRWy9/AVz
-         6COt3NRRH8f4wB8I30V6MM32Od6MfQCocnWrSK8tjA9Aq8UgCrlqx1QWl/ZA2nytr7yH
-         Fpekr1E4ChGu+4nQAW7s6OoVcXWN6WT6WsRDanUI1KbHvhoQf6t/r2HaSeAa1nJaJT6K
-         5UPqFzBQ5emF5V1QbRhhX+J/1rrsjGPBahTcJgskkOYIIQksVskKp84naQww9e5/UOST
-         dmwQ==
+        bh=VMkZhvfslvfP5puYdns1dXhdD1lHJ50WjGkCa6+yNqM=;
+        b=etpdxw0zeD3zl5QDUk3puja7EZABpXN9hJRyt2YXH4LVs1il2QfYP10inYxM8c/lcY
+         OPF2bv+D2H63cA9mET44hWM3MMwR83wnPt/S+5H2jCtc1tmOv52TmbXZ9jH3N8Fw+n2J
+         2XQquc0PYz+fLtN3CFxFxHon7zUSqiQiCBfR2oaylLz3q98nuOsbnuHZQSra4FfN20pS
+         GeNusyeKjl1JAcm1RLrHEK4fc35ztM1my9Q/tKi5pFAAokwu5GA9Z+9weQUzUd/60xen
+         KmUYpqO+j9VCcfx0aVXP0YMQrkpGvDkVMRERnOgH06Yz8FxBdj7thUV+YZ6+wauMaL7M
+         t+gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771771830; x=1772376630;
+        d=1e100.net; s=20230601; t=1771772002; x=1772376802;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=yBemny6J/OhgRLbpxpcVhFHKk4WUSUDrzE6SPaqP8V8=;
-        b=jP+MILC+cX9wZ+bxfO3tjSFFcbhEQFtBb1t55tTzHFGT7QZ5eZFNlkX2gzjaQTaabh
-         FymLX++U6uS53S5S1je0XYU+WGtQbSX/S332Ku5m9zvOS+bmGNU4G/TvSXjQNgnu5vVC
-         B77PcpTdhurwmkvN/307Br89mWXl0ZlOd6tlZuTS1CLU3brB2oxR8e2zu5ZpLm+Nf9Rj
-         uoXss8hsUonaMMa3NhS6FO/2lszuCOvnGaSoRe3ca8foh/FEUdBWVjNouKTMXJGy8Tac
-         aIbJM4WrJ8MewXU4Sp2ME9HHF8IQxJrsWQSyeMdTWW3EfUZWKVDw9DaQ0vElP6YiS8qd
-         NFcg==
-X-Forwarded-Encrypted: i=1; AJvYcCVePNEyhtUj3YW7zWHpLnf148/9nO8tdcbejJZsQn3sdfnNosZZDNKSo6xfqkDzNY7JFH4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyEeMWpUp4pRFN6eMTDvBWZj8GnzanGZroE2RYU+brpODnS54Tf
-	LqsychXRvtsEscV84c/Tfc/MFDQf+gjqhm96umGVEv+NLRLeRW95SXp/vtsczLxT1LC45VD/K0R
-	zrstzV3Pt50UkVGy80fufXd+F0vwBDP4=
-X-Gm-Gg: AZuq6aIA00LkweCUttgJM1f3mhTDz+OYNwUqz7yGsQipE5W1xmRvBATo772JXrRqZBl
-	ApCw0DeJaqxY6MHrQUjdOInB5SllHN9TRnIcNLLwfsjRC3lsQjxo/lk6sfLR5FIzMoTe5MG+l7F
-	IFK3l7ySdnrMG4Dxj8p/xI1Okb1+o4EvJ2hhj0vDRkNHpEQ0cQnVMkQ89f1Vf3Zty2mTGtpYLei
-	pZX3Eze5mChpqHTooZfifhI1U1hh7dU1pr/Q8HgDJK8u9+ayoacq3x8xwgbuX9y49vgpqs2Jm38
-	UMnRiY5Xnnx4XKmLzOmsgD3qsoba2kfj/NV5nb1YKqAtJ6MGDWIIb21E47jJp/RVYDsF61B87oo
-	WrA3hFbOqpVBpJx+V5ddviea3c/Ml7Cc+wLJH
-X-Received: by 2002:a17:902:d48d:b0:2a9:2942:e15a with SMTP id
- d9443c01a7336-2ad7449f6e7mr43354875ad.19.1771771830513; Sun, 22 Feb 2026
- 06:50:30 -0800 (PST)
+        bh=VMkZhvfslvfP5puYdns1dXhdD1lHJ50WjGkCa6+yNqM=;
+        b=aNJ2ZXBpl2040p+KtakSAE7PuDASnDdMc9Entmev4oqptVEtj5Ai/VQ0hNbeAlUSm2
+         1X+kohIYYbJyf0V25IVHbFCy4czPMA6T/6Ipyd7GmK157NDJxsbMbNmbHGCGelJaBytk
+         dSpfsZz58jA+eCZmYlJXvUBMBaMY7FGT29EId+6wF84nUMYDObbrB/3Y7AwzUTUGY6pj
+         IGlNZWxQLZ5lx4zTKHARsFLa/C6xa+yk0GK95BuiCCu7sDXeohWEsTXpUG/U6ZWj2QYq
+         0e3hkQonJCs+i8/UV4HHzYFNbb2u8CJb42sg3FPNVKQiyWfOoBifD2x1R661m/L5x+e5
+         O75w==
+X-Forwarded-Encrypted: i=1; AJvYcCXQMGdOCE4eF9vFpUPonjVgXrWgEq/Y/zJ9eC/q/lhTtCLDxf9918f2ViDS3mq1NJqzqRg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzLQdmD8vF2wccNMzO1fL1Wsn1v2r9rQhar1ade43IgB8PeGyD
+	8oChydQa04MIxbOsIHxcMKwlErtuWfqKZMTrASh11aMn3VIK9+cgdLS3xwtnmSmkxuA/3XSnSlx
+	j0w+W5abOE2vghItN/7Hq+cQnAirJNSaFaRi8
+X-Gm-Gg: AZuq6aJRrEHBh/C+sMdPKtKgEgsTlctxEyGs65XCEwx9U/fb0RIRF3r/VX8jbG/ZMec
+	o5rFscvPNdjv7CuD9ITlpbz5OfQ0KQegiiKR4PB06+Wk6DugUxJFK6lEcb8pwv4nO1tB7VXmKEW
+	IQ3V9hEeQopMPDJfrXCOHWK0hNDD4NU6e0Vz7fJO1dxqKAb49zQ+LkW0DnQxCpK6j2sfzZDX6Hb
+	f3Di7Rz5uS5OWHocvxVbgKdtzD2q+E58B5sqPIefyIA4g8N1tqUjSbgI4u3YeK8EsK6tEgpNhX7
+	fAUkV0pgySQG3wXR8XsOoGjgxFeXFteNwNBlDQ+rlXbcgD6dTVzY4dDUhkAhIxAoSbG7Nj5usq/
+	i0u7FN2t9Fmck16ewMjsZG97B7w==
+X-Received: by 2002:a17:902:ccc4:b0:2a7:3db0:6e1d with SMTP id
+ d9443c01a7336-2ad743fb670mr54915485ad.9.1771772001690; Sun, 22 Feb 2026
+ 06:53:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <067978dd0946732e00e4805d62ea51348fbf336e.1769112471.git.gitgitgadget@gmail.com>
- <20260221080201.7847-1-haraldnordgren@gmail.com> <xmqqwm06rp6p.fsf@gitster.g>
-In-Reply-To: <xmqqwm06rp6p.fsf@gitster.g>
+References: <5EDD26EE-51B6-4BE2-A7C7-E1E0991537E4@gmail.com>
+ <20260221140049.579922-1-shreyanshpaliwalcmsmn@gmail.com> <xmqqldgmrom9.fsf@gitster.g>
+In-Reply-To: <xmqqldgmrom9.fsf@gitster.g>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sun, 22 Feb 2026 09:50:19 -0500
-X-Gm-Features: AaiRm508pmJdy1A4XcKUqBSQrNuhXuYAkqsXPFb0Lv74fblCC7Q0kDRrCPVKLQA
-Message-ID: <CALnO6CD_dCoHCOVAUbXE-5LmgU3tVOhyYchDTpAGO+acYPaqRw@mail.gmail.com>
-Subject: Re: [PATCH v28 2/2] status: add status.compareBranches config for
- multiple branch comparisons
+Date: Sun, 22 Feb 2026 09:53:10 -0500
+X-Gm-Features: AaiRm50uSOlAgG3JgF9PW2FJBnA1VsBZ_82G-NrZ7MrqDnXjsgGVPTob_Tobt-g
+Message-ID: <CALnO6CALy48cmpqSp7TMjkg0ZuuMwhw_hsvLU09yxp5MSEi=Wg@mail.gmail.com>
+Subject: Re: [RFC] send-email: UTF-8 encoding in subject line
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>, gitgitgadget@gmail.com, git@vger.kernel.org, 
-	peff@peff.net
+Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Feb 21, 2026 at 12:18=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+On Sat, Feb 21, 2026 at 12:30=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
  wrote:
 >
-> Harald Nordgren <haraldnordgren@gmail.com> writes:
+> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 >
-> > Hi Junio and Jeff!
-> >
-> > I see that this topic has now been marked as "Stale". Isn't it time to
-> > merge this now?
-> >
-> > We went to several rounds of reviews and edits to reach something that =
-I
-> > think everyone agrees with =F0=9F=A4=97
+> >> Yeah, that was a bit confusing for me until I got used to it. Maybe
+> >> saying =E2=80=9C[default: UTF-8]=E2=80=9D would be a small and definit=
+e improvement?
 >
-> The entry has been asking "What's the status of this topic?" in the
-> past handful of issues of "What's cooking" report and we heard
-> nothing from anybody (until you responded ;-)), so I moved it
-> together with others to the [Stalled] section.
+> The current message can be mistaken, if the reader does not READ, if
+> it is asking a yes/no question, but with the "default" label, you
+> cannot imagine answering "yes", which is clearly not one of the
+> things in the same class as "UTF-8" that is given as the default,
+> which also serves as an example.
 >
-> The topic has been paged out of my consciousness for quite a while,
-> so it may take some time for me to answer this question myself, but
-> list participants, do you imagine yourselves using this feature in
-> your daily life?
->
-> Thanks.
+> This is indeed a clever hack (not hack on computer code but hack on
+> the mind of human who is reading the message).
 
-I'm trying to run something closer to the tip of "next" at home and
-work, and I can see a few places where I might try this, at least.
+Yep. I've seen it somewhere before; I thought it was from Portage's
+emerge in "ask" mode, but checking that doesn't seem to be the case.
 
 --=20
 D. Ben Knoble
