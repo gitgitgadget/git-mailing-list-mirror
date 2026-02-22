@@ -1,123 +1,148 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F5AE555
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 18:34:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771785257; cv=pass; b=RxaCJLKILiG0D7IbqQCOtiKi71HhiJWruOEIksb1ur8ZA/t5MGFkIwEqyZRnTKACV+CDiG/kShPZQs3z8Z5Bk2gJn2uId+PV6MEbZVXmCIniDRhvH7/IqA8JAueUTPIypuR1Dy1AdKBbDoIkzsGw//pd2QUZxloe4Bw+bzHmNHQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771785257; c=relaxed/simple;
-	bh=EK1Y9vc3COqAIBO798HGd9XFZT3WHhfMMhjT5VPvBc0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MlUqH3VSbvaBbAwE5Qi4kBMyPnZThWlHNHarYbsIZsWsbG9H9rDK0Z0PIS3Wm09dTgZDF4k23TjerJVMUNSpGn2Scl590cg8uEPdjx29L2ukWstgDJg1W3/QO09By9yZFUVzSlgBCJC47bBackpprh+/lXJiq9uUt1ldHjxw/88=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZGu0U8p8; arc=pass smtp.client-ip=209.85.217.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC90A3590B9
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 18:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771785446; cv=none; b=mYIwqWHppnNCxzUns83oFj0WyZzL+rn3F4yqhrn8ope70RNFjbxB1wimM2/E8NRzMXPjwn8dSzOFjDBSiXdGlWtiQg3u2ohpuMnK3WadtGY4oX46/1OuP7wqB7Bnyjh/96eaCP/yljiEn9xBEllOg/ea7qZAeSJyvFwFGJgzt68=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771785446; c=relaxed/simple;
+	bh=anewnvvY64RzoQns5FOapegb7y7kwrGp39moAECPvsY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jUImDW8qv9uQi7/PGhmvDJcg80qp087ODhI7FBycCD44PXi4C6jrjPscClNAgd6AgzbMnsFpAa+AATBR/Vt/iEuNGkcY9DmC+yWU0xdIxoudK4xoWHcbj6qZDSFe+3MNRW6ch73Xin8i75lyBSgG1rrLPMCF0VGfHDIxggGarZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=HH4r4Odl; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZGu0U8p8"
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-5f5418c40daso4285903137.0
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 10:34:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771785255; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SFzn/V5HfabDGDRJl28Ol821sfNRlbdumLcVEcjI7wKuJSUlkFcF+7WaFWQd8iAKmG
-         tSIe7LkeibebuNgwIqBPOhJJapfvayC4wocFUzTy9swWP9WdAoYk/rAKW1PPB00eztHw
-         XmYP5QLhysTBPnjTd9gf9BWC3PuJwxaudr4/AZpDB268ohMqKTpJQ6U7MlmOKvswEI9V
-         7nYMZ5YVUFaJZd+9iCHVbiIJwrw9PdQebslQdfeCq0EbBNoB9be8y8i6iF+pybXQdvM1
-         EIt2jgDHT7eXgNyDworVHAmU9FEIhxSO1LqZk7Khu6pP+WrAAlUIYtMbAtBIGH9OaMYW
-         HghA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=EK1Y9vc3COqAIBO798HGd9XFZT3WHhfMMhjT5VPvBc0=;
-        fh=XeDXraPVs7A9ac3VLZPyyuV4JPfhQ157OBXcK++VJAU=;
-        b=USVGVvG19g2I4GEDVGSCXtT7jzwsIY6fX/JW5/gg20MhLO2+d2mPY7uugwhTuytgMT
-         1NshfpfoNBtp8S/L9PldnD/YCDvurLnwjwPCdoFRIbmGQuc5InKxXglry279/mNgniux
-         5fNJZd3wLW+fPBDEQF+7KMt1pnr5BLMfOctAd6Gg7bCp9gYteCs4n9YqMyTiMow7R4kk
-         SMMjZn2Dr6/3VIND4+dkOrQqktgQY/yjJSTtKk4z3RNxiIjj+kpZi58xRofYrGnfN8AC
-         cZrzueVZfokqx210/yB6XkZkgxjN2sp2ho3Ay+piD8q44OrUIM/wbJDFtYTJfv/ETNDI
-         z/MA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771785255; x=1772390055; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EK1Y9vc3COqAIBO798HGd9XFZT3WHhfMMhjT5VPvBc0=;
-        b=ZGu0U8p8PG8+hQP11wfwOV1WROaYcIYUPHAlQSA7jjol00JK+t7OXUtXT8YlhZM6vc
-         vBW69JLkPk2KblfV7WXAiZY+LKZcaGZjUTFm7pKHeEFWLKnOg5X0ksBi14gQWIxJYdc/
-         AkHh8+NzGJ2+VdqcWhkCGRbzd42Turxtzv8gDrjOBqj5hoxpiVafVgXYdJ4YL90Fv4Dd
-         uci4Su5In2XqfSTGzZlJp131ZRE4KDg3nEDluMMICAFTSq5ceuSW+D/ZzbEIhIY7h1pp
-         OPR0H37wz2CfZ8KYT4YxJOif6KaxlriOCRIGFEoit52kCRg9KXhuMtikiHNM5baMEPN8
-         Ih2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771785255; x=1772390055;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=EK1Y9vc3COqAIBO798HGd9XFZT3WHhfMMhjT5VPvBc0=;
-        b=DTq5R9YAra1VKCNe3/zEuMJcLIMqZ6inoAOea9tKcPPBu7msk/NwOmz8BCaGDXPCM/
-         YPOaQJtqM/KeKI203Idu8YdPxtXwIQBkUXsxrfugC5qvSPEt/4tuPTNbpQ3QytvH9OgK
-         rVAkd+bsKoXw0ZV1T1t/jvX4QGG8tttw6nhJpxeBTVSPU3OaKmz2BtjCMDTURgfWWVKo
-         97yUWzy/43LZ38GXxqgje4sRmMOrsFsXpFTPcgEZaBSOA3ILIPPcnb2k8lSbi9bJ/9Ci
-         +5tuSYrtSgmOyAnRIFZ6axGSa0bRQc4HE/QffJf8r78GVSTalIdrrhQzEv2J5pH1/E5I
-         Mo2g==
-X-Gm-Message-State: AOJu0YzOwpVG8hGCXwZwB9BUmiBx1iUhC45dqujBgu6Jln1Gznm9CEY4
-	bi5Df/OZyRmn0Eos8doWbacyTz1M8npsZN1XQ1H8Rx5vE7DAo9DLMTbs6GIX/5ugtZHDwIREPCY
-	Wj64AMArzMaRSdmYnQSSZmDCmyF9vdyE=
-X-Gm-Gg: AZuq6aKh0hcBYLoWvxr/Yoboxn6ube3JPed+IUQGZJ6mARfY6yckMTR64I21stw+i32
-	LtZPPprPIyWC/8UblmjYBispbsLx7Oi8pJdpuoYoy+CzWtJMHb32m8dijrH/GTTUpl9xdCbpd7R
-	vUSyoYsf/A8q1MfKjpASMkdYBTntp7W0mmLJNo/jL21T60EGqENii7Be+vZyPL8GMkGTyZawzim
-	I2HVykOz9+9j+iwNc9Xg68rCuumoqU2vRyr+LWJozcPGshEpr+1+4sQJQ3bVOc/bCEtD/zx04wU
-	5NFdLS0Rq7vaJjOQpt62O9Yp9JFWG3xBEOIra+Q=
-X-Received: by 2002:a05:6102:38cb:b0:5ef:233e:6b25 with SMTP id
- ada2fe7eead31-5fe90bebbecmr6635292137.13.1771785255192; Sun, 22 Feb 2026
- 10:34:15 -0800 (PST)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="HH4r4Odl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1771785438;
+	bh=anewnvvY64RzoQns5FOapegb7y7kwrGp39moAECPvsY=;
+	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=HH4r4OdlIK1sotBW1MkE6Z5hD8CgjSCVE2SJ6iau+aUjqhCQ/7AvPgtbci4+WjaT5
+	 2LuA1WZRj5R3B7opMx0QY7g3hjpP14oLGNqDitNl6ofYWpAAZB6i62k+hPLmH13WSq
+	 fXd25QnrpVs1SYF93RGSY5T8+eX9YZBTcu2OpZkKToALBDMkNcG3gqOVjF398g2iAF
+	 RRyirmpEefzmeo+CjVw/n5k9GTy6Sqc2qx82+lEfMMAGrUHqwh8AuFtBiGpeKbo5G+
+	 gvUWh/cJtOqMb1ErNXjqZSjhG0+8WUXsZfnVouLJkSX+uvjEXvQAQ0smnjc1fd7GAx
+	 uCI+PJ/GZFP8BXXDB/tBd5z/BUOX9CXIgTWjYtYkP37LAsCV5sgkwpfU1KgTz88iMC
+	 pvWAHyx5S4/vwBLyVWwejVSVkjdeur2ssxMOYiX+MkmVFSLc5/WUyGeaAZm+SSB6w7
+	 2tftaHEnWiov55qdPnJoifTsEpjCH/kIGpEaaxTJHZYMUQk2iRz
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b212:146a:138c:fd27])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 27F4720083;
+	Sun, 22 Feb 2026 18:37:18 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH] fsck: do not loop infinitely when processing packs
+Date: Sun, 22 Feb 2026 18:37:10 +0000
+Message-ID: <20260222183710.2963424-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
-In-Reply-To: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Mon, 23 Feb 2026 00:04:02 +0530
-X-Gm-Features: AaiRm50Bpyx0OFlWZoVzCLcimInoMNMxr67O1p_xkSXo_XA9xmDREOsfuT3d3tM
-Message-ID: <CAPSxiM-f1nQiFAW=dDCCqr1Yce=ZrVrMYE0YHc+-cFAjx+5m8A@mail.gmail.com>
-Subject: Re: [GSoC][Draft Proposal] Refactoring in order to reduce Git's
- global state
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Feb 22, 2026 at 11:29=E2=80=AFPM Tian Yuchen <a3205153416@gmail.com=
-> wrote:
->
-> Hi everyone,
->
-> I'm Tian Yuchen and I'm planning to apply for GSoC this year!
->
-> Instead of pasting a giant wall of text into this email, I have
-> drafted my proposal in Google Doc. I thought it might be easier for
-> everyone to leave inline comments and suggestions there. (Of course, if
-> you're more accustomed to email replies, you can also quote the content
-> from the doc in your response. Thank you.)
-I believe that a giant wall of text is the appropriate way to send a
-proposal to the
-Git community. I will advise you to send that giant of text actually.
-It is easier for the
-community to review and give feedback. Also future gsoc participants
-can also learn
-from it. By telling the reviewer to go through the link to the docs
-and then copy it on the
-to the email just to reply is giving them an extra lot of work to do.
-So send it through text
-and make it easy for people to review.
->
->
-Thank you.
+When we iterate over our packfiles in the fsck code, we do so twice.
+The first time, we count the number of objects in all of the packs
+together and later on, we iterate a second time, processing each pack
+and verifying its integrity.
+
+This would normally work fine, but if we have two packs and we're
+processing the second, the verification process will open the pack to
+read from it, which will place it at the beginning of the most recently
+used list.  Since this same list is used for iteration, the pack we most
+recently processed before this will then be behind the current pack in
+the linked list, so when we next process the list, we will go back to
+the first pack again and then loop forever.  This also makes our
+progress indicator loop up to many thousands of percent, which is not
+only nonsensical, but a clear indication that something has gone wrong.
+
+Solve this by skipping our MRU updates when we're iterating over
+packfiles, which avoids the reordering that causes problems.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+I realize that t1050 may seem like a bizarre place to put this test.
+However, I was debugging my sha256-interop branch and why the final test
+calling `git fsck` was failing, so I placed a `git fsck` earlier in the
+test to double-check and discovered the problem.  Since we already have
+a natural testcase here, I thought I'd just place the test where we
+already know it will trigger the problem.
+
+ packfile.h       | 16 ++++++++++++++--
+ t/t1050-large.sh |  4 ++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/packfile.h b/packfile.h
+index acc5c55ad5..086d98c1a0 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -183,6 +183,7 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
+ struct repo_for_each_pack_data {
+ 	struct odb_source *source;
+ 	struct packfile_list_entry *entry;
++	struct repository *repo;
+ };
+ 
+ static inline struct repo_for_each_pack_data repo_for_eack_pack_data_init(struct repository *repo)
+@@ -191,8 +192,13 @@ static inline struct repo_for_each_pack_data repo_for_eack_pack_data_init(struct
+ 
+ 	odb_prepare_alternates(repo->objects);
+ 
++	data.repo = repo;
++
+ 	for (struct odb_source *source = repo->objects->sources; source; source = source->next) {
+-		struct packfile_list_entry *entry = packfile_store_get_packs(source->packfiles);
++		struct packfile_list_entry *entry;
++
++		source->packfiles->skip_mru_updates = true;
++		entry = packfile_store_get_packs(source->packfiles);
+ 		if (!entry)
+ 			continue;
+ 		data.source = source;
+@@ -212,7 +218,10 @@ static inline void repo_for_each_pack_data_next(struct repo_for_each_pack_data *
+ 		return;
+ 
+ 	for (source = data->source->next; source; source = source->next) {
+-		struct packfile_list_entry *entry = packfile_store_get_packs(source->packfiles);
++		struct packfile_list_entry *entry;
++
++		source->packfiles->skip_mru_updates = true;
++		entry = packfile_store_get_packs(source->packfiles);
+ 		if (!entry)
+ 			continue;
+ 		data->source = source;
+@@ -220,6 +229,9 @@ static inline void repo_for_each_pack_data_next(struct repo_for_each_pack_data *
+ 		return;
+ 	}
+ 
++	for (struct odb_source *source = data->repo->objects->sources; source; source = source->next)
++		source->packfiles->skip_mru_updates = false;
++
+ 	data->source = NULL;
+ 	data->entry = NULL;
+ }
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 5be273611a..75e75e627c 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -160,6 +160,10 @@ test_expect_success 'hash-object' '
+ 	git hash-object large1
+ '
+ 
++test_expect_success 'fsck does not loop forever' '
++	git fsck
++'
++
+ test_expect_success 'cat-file a large file' '
+ 	git cat-file blob :large1 >/dev/null
+ '
