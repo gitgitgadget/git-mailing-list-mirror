@@ -1,171 +1,126 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9084C92
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 20:15:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771791344; cv=pass; b=Vja84C+Yb8/OiAMoePR+VfSgrD7VJEA6XKdqH/xiMbO/yPdyHnDrS3sUnKPb5R89/fwHEsxaldQDaATGI6cSaPExXT2xlFY/xM7Z7qvDOBs/xbd4npU1jyaNgG8zHD01L1ixKwniQj/Mn4nC5ySxbqdZ+2ctIm7CQcYwK0dXaS4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771791344; c=relaxed/simple;
-	bh=bXfbaAApv/3ZggaljPEBkZCnZCQbJpS3/nZWoRnglsg=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZzY6W8gt0L878GbuXXQTUozEEPc2MYAGmryFE5BkErxbqngnIzEod7apZALYM6paCyHJ4a+yR0EDeRxzxmIhCd7iHLAaHhv6izbSIp0xshzG9WisQ8bl2+KfFqA1MJcQCBsx2L07c+QcF0R9DGFBIuOIYmWrJN2KxBMcpAofDIk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WVtFBDpo; arc=pass smtp.client-ip=209.85.221.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39C71B6CE9
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 20:16:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771791384; cv=none; b=rAb5j9lRezDaZZ4qezBPM/XzsLtPbnrJuz3IOprHVrjc2cffJgXK7ztE1wKQrh+y7JRb4sD1D+9IEFWnM3yK8cbvNUomty6zZiNCLuqDVGnuXzAx6Qs1bFL0uGiiU1hNlXiVgzvFrfzR/myYcPvS/TpjBk4fqk3xoWRN/4jN36I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771791384; c=relaxed/simple;
+	bh=7mrzTLCk6yjZ4DQamMW3kFFw8XhupgrEAWrf9F89PfQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Io+GYIKyotYnNan3PGjxC/NRopjcUImVSfdObekueQyMF4oyYH1226XN2P8p0SUBhB8QtWpcITQCIrji8MktmtFMaGqBQ4yKwFFQ8I4FXdk4DIgcJOPBPnjWiL6PVM8aZsQHrwtQHja+oGedgCDMzwxpjU4zLZjWjeHJ8Pvbx2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a2FW6Oc1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jwF/OOA1; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WVtFBDpo"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-56706fd623fso2571241e0c.3
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 12:15:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771791342; cv=none;
-        d=google.com; s=arc-20240605;
-        b=QtG6a8ME3I4zZZ2uAmIs49oVciXlCUf85x0cTjpWYzPuJaQZ8vugsNMvem7evqOWV+
-         hoA8riyA09ZbhRxhLSU6jo6ljKPemAHnQRFHa8rnPh9VfVY7pcspff6yInA2//IVnWfG
-         z3BwSv1e/96csFbslZwcKUWkwVCEwoY4UevKTc5htFhObuwbLc1jfZ+zOBX3/Y6DYMqo
-         ctmRK+07ltbGuvokpm8A14wIXSpbfyRu5a8bSYDnFOelfWvfP5X1k6zbAB3vlUKvLqLB
-         PpC8tY79P6rA64C3UoKbGqm1A/sRETH5nT4Xo0UV1nRLroYvocMt3Vt2JWB8LG9hS3bY
-         ZxmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=X2EM9TybrHu2l7IjDJe4Ojt5JW8LU8LRCLs+Y1j3yng=;
-        fh=/TBaAqmZw2i4XTLXF7LaIZIjAn/j/SoAPJGgEUJpgpM=;
-        b=MZkee78fU+jtw+qu4JCpesAJILnR5XsbUPgdWhEtHQt8lWnyhHU/SCZ6yYnZEGHpj6
-         t58NNU7lfYfkusmbQxgGDkz3BbCsCkDxED69EMDOH4lwO4On1TrGPLr4E87hkiI0LLbP
-         yUKC9EYWPYWnhANZTwM6GR8g0nOhh9Ih7QTNh57OGG1RYJtmPZm6YSl+z5gpcLRySegB
-         NXoi/MzypWvj03ENERH/hs8eat8BPOAX9YZoVOIqT5uW0NhEO8mxu0sUo7UZEW9x2Biy
-         ZWesdF67haYDL2wKjzGpSLtzW2zPZFENljDWUnAStubsQvVkQ1ByUYgff3rnSSznXQSr
-         ylzw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771791342; x=1772396142; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=X2EM9TybrHu2l7IjDJe4Ojt5JW8LU8LRCLs+Y1j3yng=;
-        b=WVtFBDpocPvIyqBwI4LkNEV5jNzoX5+eByYe/xtjLFWq0LT9GPSeMkjUnuNSrTl8hv
-         4/URDhKsHgscpm8ezLRo0TCMcKhXhtgSnbyjjDzNj7Q4MVYQP479uiOSk97N+/BqdZA+
-         bYcWG0MUo8CY2Z1n7OIkJAysYqdwOI18Zopb8N59kwTCGs104hYWHa/nTVt4xfJLG5th
-         K6nu83wobeGjjviVUNX/rdPgkleff7i26m8+iy447icQf89UrhqOjleZceyP4W5Rleqe
-         oP70hC5aZ5df2inR7iMwSk6A+PCu7OhQKBlzfYiv1gk76eDI0uGVPZytfvuJMWwExbyT
-         D7mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771791342; x=1772396142;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X2EM9TybrHu2l7IjDJe4Ojt5JW8LU8LRCLs+Y1j3yng=;
-        b=ge73ovJ2D/iC/QUMcYEkvVb1+kl0q+PDI2f8t5A5Lqyp+xYjWtuzBQusnmDTtGCQ7S
-         n0t2lgzDZIK/OJZt5gVRtHmxpOpVAPSQ4R9jFHHAIH89tZhSjM1e1kP0waQKuQ4rjuPE
-         imDLA5V/U56r5CZmX5+FA9Eb+OWPxdJwa75nHQ6gndyei1sFMDYXtDAw4z8LEKOKCnbX
-         T0XfHUMtTLdWdOu2WzzNsatmKts6fyTDp9ScrVvNXzNuNRx7rXCddTei+myqvCDMkV+7
-         lQmT7UtJGLxRDPgh6BCsUsub6s/M5wCewShy6KwiIOdrza1/T9MCm7XTxLMM9tj5HxjA
-         LF+A==
-X-Gm-Message-State: AOJu0YwH40TCoF53lAKgaTfDCt/lFhAWhAy+3ykn2hRblfcg+Qy5sW91
-	bWzr/E9UoOAuSdfBnfyN9ZJuk4Uyp33N48E39EhG0Wr8NqkWm0Lokx2Buds/50sOe2HbvEB2484
-	ElAR6xrXF2mTMk+CsEIFCxvuam+xCyzw=
-X-Gm-Gg: AZuq6aKbY/UXNn/9bzQk7t0zIjWPAjX3OsxJvXlNmWiujAr6G4JIUID7jNjlrFsuepP
-	3BL/8ep7jdOu0RVHHD/7RCcyQjwozL66yGqeyOZKj5I0tyQH2gGrKuxY3kKB/y5dhscMuF9P02Z
-	pkv+7L60cvHXjeDuRpm1Ai82oM0Q4BuHgpmjTeBql52V4ZTDLyShrqLuzaVhgED1voQkuTYMQUI
-	LIEVT3iDYB3WN/MkVyfGAJuqSmlxds5yRmIaZTo6XyFcXp91LMHT+TuoaaScS0Is1GO9xevgVUd
-	ctqTmfGC6CqYwK1Ly4IYLV1z33IVPDKIm3uSJPK2
-X-Received: by 2002:a05:6123:4208:20b0:568:f213:7330 with SMTP id
- 71dfb90a1353d-568f2137459mr604488e0c.2.1771791342379; Sun, 22 Feb 2026
- 12:15:42 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 22 Feb 2026 12:15:41 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 22 Feb 2026 12:15:41 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqbjhjz793.fsf@gitster.g>
-References: <20260219-kn-alternate-ref-dir-v7-0-16f27860dbdf@gmail.com>
- <20260219-kn-alternate-ref-dir-v7-5-16f27860dbdf@gmail.com>
- <87342vfmud.fsf@iotcl.com> <xmqqbjhjz793.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a2FW6Oc1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jwF/OOA1"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8243A1D00163;
+	Sun, 22 Feb 2026 15:16:21 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sun, 22 Feb 2026 15:16:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771791381; x=1771877781; bh=6XFDWzhxN5
+	D44U/7enzk7Xc3bo/xtRshI5yBTCMTGE8=; b=a2FW6Oc18cHxwp+ABQev7xNYoL
+	Si3Cp2/jEhe6qMLWDBiyv09VwVxtsFRdGat9bUOthnHXMI0Xkl+VDzX6mTc0oLg7
+	XvfeEnQii/1l70OymCSvCX/ep7iH/7frLcZjLFc91AXKI3pgCb0+vCqleNgmtDBh
+	UQkx6C5nbQzwLDCWhHA2SKXN/G5K6d4KxGxuwd+oW7kpYAU2TiRh1V71PXSPV7tH
+	XkoXsffu/zutB5dtcgKX5IEUogvvnzFpVR5RP4i3mIcEXVzHklFBFLnbeo5x3bn4
+	FFk8L5i+++k57KqUvTYP4fhjwgUnjQotlq4FrtsZFsolLh0iLEEnoW5oNrJw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771791381; x=1771877781; bh=6XFDWzhxN5D44U/7enzk7Xc3bo/xtRshI5y
+	BTCMTGE8=; b=jwF/OOA1l16ddGpR9qe4t8GbqCArCURXbFtXRsJQ6Zpt4Mmg1qB
+	pxpt5DvADvLvhA4i1GvW6mJz1mVpu9Pdt0oVmoldOK0z6UIiJHejRvZ54rq/zRST
+	31n6Ts2b7ATueao4/TRMwpXEEIh7JzA/+JtS65AuBjZSEEEDGP4MePCgO0ewK13N
+	SZAXOAe07X1l8mwit3p2bPZ/XQvIDnADY7reTgCKrfwpNX/J+HGYm1ya0c1OnFqY
+	EVgrlvBR4T81ZFKIGC2Z2J07XmkQwS9VkRDG1ttj6Xpz69wUrShpcxK6xBMEQVxE
+	1K2TaUriHsLpUfFaRg7rzFxGNqnEpCrAk5A==
+X-ME-Sender: <xms:FWSbaZliOFp8PghsSpN6FvLcXX0R3bbrrsU5is9l4sdoH1jkTVbB-w>
+    <xme:FWSbab0x0ghGgLuOKFP9PlUtOZW2zwfsQaBuSrwHylOFgeAUAUzeOg_GodAzPOU_h
+    9l-9yyw15O_GuWrJUAt2pCCqQ5tSLRmYcrzibk9x3Yzd8swjs_RsA>
+X-ME-Received: <xmr:FWSbaUoJVch4E2XMBfAXPBwJTHMg9T57deaJ2ttC6zX1VTUXXMmUz5uFQwk6dvAaVw5CEav3pZ52pc1Yqme_PAgfJmjStCO7ww>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeehvdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghf
+    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FWSbaYd-5Ucr18yxHoLfQU4eD9GBcR-MSVKynZvLAbb_Q2PIXypUfA>
+    <xmx:FWSbaTpfGTCAj96AayXq-RRFoESG8bWaVlVhE28Ai0Nu2JsAHzOb8g>
+    <xmx:FWSbaZH1aaqnWzB5WszCW6T35fKR-nlUQqGZRzxgwXFvX1h5yCaueQ>
+    <xmx:FWSbaTvoVGl0qi_af1HZzz1bYSTkl4GmUkfTj6Fy6DegaoojrlC4ag>
+    <xmx:FWSbaUmgstJmvsN0MPvzkfQX8ObHZS4h_T_yRX8cC4-LpNneDW_9MY4h>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 22 Feb 2026 15:16:20 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: [PATCH] object-file.c: avoid container_of() of a NULL container
+In-Reply-To: <xmqqms11qmsj.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+	21 Feb 2026 23:07:08 -0800")
+References: <20260218210120.1146078-1-jltobler@gmail.com>
+	<xmqqms11qmsj.fsf@gitster.g>
+Date: Sun, 22 Feb 2026 12:16:19 -0800
+Message-ID: <xmqqh5r8r0to.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 22 Feb 2026 12:15:41 -0800
-X-Gm-Features: AaiRm52ByQmiogTGl78W04Gi18fAXBkl0-iffRZstvyN9EBkRcLaCWJvPx_dym4
-Message-ID: <CAOLa=ZQsfOpP1cxFCjLWqbfxQ_upzuKHDojhNYtU=oFmeZsjVw@mail.gmail.com>
-Subject: Re: [PATCH v7 5/6] refs: allow reference location in refstorage config
-To: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Content-Type: multipart/mixed; boundary="000000000000944553064b6f51a1"
+Content-Type: text/plain
 
---000000000000944553064b6f51a1
-Content-Type: text/plain; charset="UTF-8"
+Even though the "struct odb_transaction" member is at the beginning
+of the containing "struct odb_transaction_files", i.e., at offset 0,
+using container_of() to add offset 0 to a NULL pointer gets flagged
+as a bad behaviour under SANITIZE=undefined.
 
-Junio C Hamano <gitster@pobox.com> writes:
+Use container_of_or_null() to work around this issue.
 
-> Toon Claes <toon@iotcl.com> writes:
->
->>> +static void parse_reference_uri(const char *value, char **format,
->>> +				char **payload)
->>> +{
->>> +	const char *schema_end;
->>> +
->>> +	schema_end = strstr(value, "://");
->>> +	if (!schema_end) {
->>> +		*format = xstrdup(value);
->>> +		*payload = NULL;
->>> +	} else {
->>> +		*format = xstrndup(value, schema_end - value);
->>> +		*payload = xstrdup_or_null(schema_end + 3);
->>
->> Also here, why did you put the negated condition in the if clause?
->
-> Hmph, would it make it easier to follow if you swap them?
->
-> 	if (schema_end) {
-> 		*format = xstrndup(value, schema_end - value);
-> 		*payload = xstrdup_or_null(schema_end + 3);
-> 	} else {
-> 		*format = xstrdup(value);
-> 		*payload = NULL;
-> 	}
->
-> Maybe it is just me, but I often find it easier to follow if the
-> case that require shorter and/or simpler body, or the case that is
-> narrower (e.g., error condition), comes first before the main logic.
-> It is in line with preferring an early return on a more specific
-> condition.  It frees readers from having to worry about these cases
-> early and let them concentrate on what is expected to usually happen
-> in the code.
->
-> In this particular case, I do not know which one I would prefer,
-> though.
->
-> Thanks.
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ object-file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Kinda similar thought process. Since the URI format is new, the most
-likely case here is that 'strstr' will not find a match. That's why the
-negative case is first.
+diff --git a/object-file.c b/object-file.c
+index 1a24f08978..bd580ef032 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -720,7 +720,7 @@ struct odb_transaction_files {
+ static void prepare_loose_object_transaction(struct odb_transaction *base)
+ {
+ 	struct odb_transaction_files *transaction =
+-		container_of(base, struct odb_transaction_files, base);
++		container_of_or_null(base, struct odb_transaction_files, base);
+ 
+ 	/*
+ 	 * We lazily create the temporary object directory
+@@ -740,7 +740,7 @@ static void fsync_loose_object_transaction(struct odb_transaction *base,
+ 					   int fd, const char *filename)
+ {
+ 	struct odb_transaction_files *transaction =
+-		container_of(base, struct odb_transaction_files, base);
++		container_of_or_null(base, struct odb_transaction_files, base);
+ 
+ 	/*
+ 	 * If we have an active ODB transaction, we issue a call that
+-- 
+2.53.0-455-gd82541b467
 
-But I'd be happy to change, if others feel differently.
-
-Karthik
-
---000000000000944553064b6f51a1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 7e04d2199ef9c8e_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tYlkrd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNTRYQy80M3NiN2xBaFdPbUlRTTB5TVZBdzJTbFFBSQpsUmNmb0hBUXFY
-MmVwdHgrQ3psYWdBTC9YVGdFUXVmenFHaTI4dGxPZGNBZXBGcUo3TXRaaUVySno3a2xVMm11Cmgr
-ZkxpL3MzNjFkS2tvR1gxcjZ3NmhwdVZ3MVZmQ3lMenRreVovNVVXY2hrMXBCV3N4emhxRGc4c25h
-d09pVVoKd1pod1Q1SWV6cmVnTjhSdFZjdjRza3diaUdPcjJOWWhWLzdqWis0SGo3MFZwdWV4WERO
-S2FjaTdtOGoxN2VCcApmU2hHR09SY0IxT3k3aUdsdkFLVFhLdUp4c1lKaEhuVDRaV05rcG1HbnU5
-endFVHoxN2FKUlBZa2lNL0ZoN3kvCkRLT3hDV09BMnlQU3BlR3VOTHBWZmR4SmQ0UmZKZ0ViNXRR
-bjh3a1JNUVprWEp5czVJRXJSVVAvQ1p5cjlQL0MKclFmV3dTMkJrNEJBd1BOY1BKWVBQblhwdVZi
-OFNRN1JXR1ZVSHNpWXViaEVIVG1McDQ0dG1MYUtPWlkvKzZ0WAo4cHNCVnIyd1dmZmMxNjRDN0l6
-Z1pKdGJDWjBXTllzQXhlUjlsWVp0R1d5bE1rclpNQUZ5N2JuSS81aVY4WEQxCnZtSGlJMnJjVTBO
-RFpFT1dRbnFLSWxWY0RTNVgyL1hRdTJjUndaWT0KPUN4b00KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000944553064b6f51a1--
