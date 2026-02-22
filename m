@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07563EBF33
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 00:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031AC84039
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 00:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771720187; cv=pass; b=bWrTEEZS3KZMynRGJngmI0aW4DUqKIfRQ/bCYNHkeG/y4QlGEcYG+fu/2+cnAzQbEfGqzzDXKK2OavIz6qxOXkDefw35HCUAdIbgxE/ezeX2TjfvD9UVuroJAKEXrpSfovR4nPvDjf+Wp3+cb18shrW3MaC0je4kSrZ157961CA=
+	t=1771720188; cv=pass; b=FDR95YPus8bna8Y5wBkEQdcpSCqG5MPu2bVGtTLyLFA0MsfstWjqtyL8Oe1n4W5IX+dbTzKkIfIiWRHeRC/d1inlMqWpqaERgRov0vTxNiYRxbE61sgRDsGGXUIIYi7UF1elkZ6HGaHhhPc1M8fWovRVx7geOeRBNOZA/JKmBjE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771720187; c=relaxed/simple;
-	bh=EtfMR/c2lGc38ypnTMDm5Ha249/eADePs6uJtDr6W+Y=;
+	s=arc-20240116; t=1771720188; c=relaxed/simple;
+	bh=Lh1zlGp3wJbW4HGmfoUWLUAaZ+KgLR+IUVGH3trsf88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ppeq4wjL3EfekiUhrFRb2pjgUVR/mvEQY5EdKn84Puz4cH8i/d784jLJ9qUwXU3S7Ra3KU+iUhmFAhuZ81TBp+PqQ/tTKsm6bT/0AuxsSGWVlRVrPtIKU7hEPlwOkvpYYh0HgRMXVyP4KgEeWnAHiS7yIFtGWc8yvBAWpnmQOlI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=OhR0kKNV; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=ajDfqaCWfdDcSscgTgmF+PLRkM+FjptWcDsGN+3cOgDEButrOUcuEQPxGs0RqRoBr00JN7g2LBF3VFdL39nYLVmK04ZYWKIZOsDo9aP/slfffg6S7Fh9mbX9Hw6P8oNV2xXxfByXnY7OoG8eGDmI+BxlEhXBVT0qVEdlfNh41EY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=h4Hagvaf; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="OhR0kKNV"
-ARC-Seal: i=1; a=rsa-sha256; t=1771720166; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="h4Hagvaf"
+ARC-Seal: i=1; a=rsa-sha256; t=1771720168; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=el/iRSvDtJjd8BXly/WBKaYYoXwEQJRFh47tesNotOURqOSf7/Vd5iddkUNsOPgUDi3Otsz3Cci8RX36yCwLq8507YPzT0eAFEdCgoHbIjijIGO/OpPrxdCIu02kVoSf1bxjuAncvgBPk16ih2NrN56yZNjHBH4EoXE12hcw16w=
+	b=MkTY47FDcMUII/0bMOFz4tkV8ENB0t+2vbQoGkNo4jAPDmHmrqliv5R19Ktc6d0inkx2raSQwDolfowrj3LeYwGyRdklqYEgHLqv41waYPFJeKiaK1GvooiHGMVWxnOCrGz3AAIY+DEHRwVxqdjyRBHycp0qmhT4HXyAvwAZJJs=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1771720166; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=sFDxkO5EWa+kY+3uezwBbIkZ0loenroas54jDt7Dwoo=; 
-	b=W2WXyqH6V+ow4BZvwSaOfcYRTRj52lqCrBCVomkbZUQvBa+UoP/FRyMZ4lXNRf9MU3xj1Fbz7bpRQZOZoZx7oorJnMs6E+8RAA+Lpi1Qzwwt7JUFBqeXRmFecwHfPf6pGe0vMDnV+nc4N6lzGRAbASPdY3WBqG409YMywZLd7QI=
+	t=1771720168; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=y2G1HEaH1rKPj8wwPteVcb4Q7wQBVnyvHXiPeu3LTGI=; 
+	b=nHoyHU4SV1HdoVmnAF+svuWmW5LvAiDux5TrYZx0svESUHMh3iPz+9o4mSo9qlLTSnY9g7IQc7RdySbpo/tqS4dokp7Mm3eAV79GW7T/ZvErXkq+xhXjjLy0qDNvOcja6rbFLCe9sPUo4F3ctsSFeybvXVs+Zx65Yk2vRE0/910=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771720166;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771720168;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=sFDxkO5EWa+kY+3uezwBbIkZ0loenroas54jDt7Dwoo=;
-	b=OhR0kKNVrdAmyp4IHFn2zjJYrz5u4yV1j5pCsGX+k54qRPTgFEJO5P3rjiH5LeTU
-	DEne3RWRla9vvXTsltfKtwZ0H/+MAoYxJxQe1MQekKrHMXczEF55J2EcPDVDdMgtaBo
-	CsOUaF2Ftn9XlF10r/6ekeySwkpV5a5fzazKUqto=
-Received: by mx.zohomail.com with SMTPS id 1771720163930321.27437706826345;
-	Sat, 21 Feb 2026 16:29:23 -0800 (PST)
+	bh=y2G1HEaH1rKPj8wwPteVcb4Q7wQBVnyvHXiPeu3LTGI=;
+	b=h4Hagvaf/UgRxM7v7xtJv1NxSYqMUO3TyNMZNbKS5fuFP4BrNsAR9OVu2vEtaEz8
+	M+0WvJNXOydKBpl7VE1WQZxrZtnuPd1wj0pIcSZsuxmXpUnxSDhyc1h5jCKcEqyrezj
+	ub7//T2G3g/CSDgQUDhhjFbTIDf8xbEddjFtl1UY=
+Received: by mx.zohomail.com with SMTPS id 1771720165973396.00935086646905;
+	Sat, 21 Feb 2026 16:29:25 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -46,9 +46,9 @@ Cc: Jeff King <peff@peff.net>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v2 03/10] hook: refactor hook_config_cache from strmap to named struct
-Date: Sun, 22 Feb 2026 02:28:57 +0200
-Message-ID: <20260222002904.1879356-4-adrian.ratiu@collabora.com>
+Subject: [PATCH v2 04/10] hook: parse the hook.jobs config
+Date: Sun, 22 Feb 2026 02:28:58 +0200
+Message-ID: <20260222002904.1879356-5-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260222002904.1879356-1-adrian.ratiu@collabora.com>
 References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
@@ -62,222 +62,116 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Replace the raw `struct strmap *hook_config_cache` in `struct repository`
-with a `struct hook_config_cache` which wraps the strmap in a named field.
+The hook.jobs config is a global way to set hook parallelization for
+all hooks, in the sense that it is not per-event nor per-hook.
 
-Replace the bare `char *command` util pointer stored in each string_list
-item with a heap-allocated `struct hook_config_cache_entry` that carries
-that command string.
+Finer-grained configs will be added in later commits which can override
+it, for e.g. via a per-event type job options. Next commits will also
+add to this item's documentation.
 
-This is just a refactoring with no behavior changes, to give the cache
-struct room to grow so it can carry the additional hook metadata we'll
-be adding in the following commits.
+Parse hook.jobs config key in hook_config_lookup_all() and store its
+value in hook_all_config_cb.jobs, then transfer it into
+hook_config_cache.jobs after the config pass completes.
+
+This is mostly plumbing and the cached value is not yet used.
 
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- hook.c       | 65 +++++++++++++++++++++++++++++++++-------------------
- hook.h       | 10 +++++++-
- repository.h |  3 ++-
- 3 files changed, 52 insertions(+), 26 deletions(-)
+ Documentation/config/hook.adoc |  4 ++++
+ hook.c                         | 22 ++++++++++++++++++++--
+ hook.h                         |  1 +
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
+index 64e845a260..c617261c57 100644
+--- a/Documentation/config/hook.adoc
++++ b/Documentation/config/hook.adoc
+@@ -22,3 +22,7 @@ hook.<name>.enabled::
+ 	configuration. This is particularly useful when a hook is defined
+ 	in a system or global config file and needs to be disabled for a
+ 	specific repository. See linkgit:git-hook[1].
++
++hook.jobs::
++	Specifies how many hooks can be run simultaneously during parallelized
++	hook execution. If unspecified, defaults to 1 (serial execution).
 diff --git a/hook.c b/hook.c
-index 2c8252b2c4..89b9948512 100644
+index 89b9948512..f4213f5878 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -118,6 +118,15 @@ static void unsorted_string_list_remove(struct string_list *list,
- 		unsorted_string_list_delete_item(list, item - list->items, 0);
- }
- 
-+/*
-+ * Cache entry stored as the .util pointer of string_list items inside the
-+ * hook config cache. For now carries only the command for the hook. Next
-+ * commits will add more data.
-+ */
-+struct hook_config_cache_entry {
-+	char *command;
-+};
-+
- /*
-  * Callback struct to collect all hook.* keys in a single config pass.
+@@ -132,11 +132,13 @@ struct hook_config_cache_entry {
   * commands: friendly-name to command map.
-@@ -205,21 +214,27 @@ static int hook_config_lookup_all(const char *key, const char *value,
-  * Disabled hooks and hooks missing a command are already filtered out at
-  * parse time, so callers can iterate the list directly.
+  * event_hooks: event-name to list of friendly-names map.
+  * disabled_hooks: set of friendly-names with hook.name.enabled = false.
++ * jobs: value of the global hook.jobs key. Defaults to 0 if unset.
   */
--void hook_cache_clear(struct strmap *cache)
-+void hook_cache_clear(struct hook_config_cache *cache)
+ struct hook_all_config_cb {
+ 	struct strmap commands;
+ 	struct strmap event_hooks;
+ 	struct string_list disabled_hooks;
++	unsigned int jobs;
+ };
+ 
+ /* repo_config() callback that collects all hook.* configuration in one pass. */
+@@ -152,6 +154,20 @@ static int hook_config_lookup_all(const char *key, const char *value,
+ 	if (parse_config_key(key, "hook", &name, &name_len, &subkey))
+ 		return 0;
+ 
++	/* Handle plain hook.<key> entries that have no hook name component. */
++	if (!name) {
++		if (!strcmp(subkey, "jobs") && value) {
++			unsigned int v;
++			if (!git_parse_uint(value, &v))
++				warning(_("hook.jobs must be a positive integer, ignoring: '%s'"), value);
++			else if (!v)
++				warning(_("hook.jobs must be positive, ignoring: 0"));
++			else
++				data->jobs = v;
++		}
++		return 0;
++	}
++
+ 	if (!value)
+ 		return config_error_nonbool(key);
+ 
+@@ -236,7 +252,7 @@ void hook_cache_clear(struct hook_config_cache *cache)
+ static void build_hook_config_map(struct repository *r,
+ 				  struct hook_config_cache *cache)
  {
+-	struct hook_all_config_cb cb_data;
++	struct hook_all_config_cb cb_data = { 0 };
  	struct hashmap_iter iter;
  	struct strmap_entry *e;
  
--	strmap_for_each_entry(cache, &iter, e) {
-+	strmap_for_each_entry(&cache->hooks, &iter, e) {
- 		struct string_list *hooks = e->value;
--		string_list_clear(hooks, 1); /* free util (command) pointers */
-+		for (size_t i = 0; i < hooks->nr; i++) {
-+			struct hook_config_cache_entry *entry = hooks->items[i].util;
-+			free(entry->command);
-+			free(entry);
-+		}
-+		string_list_clear(hooks, 0);
- 		free(hooks);
- 	}
--	strmap_clear(cache, 0);
-+	strmap_clear(&cache->hooks, 0);
- }
+@@ -244,7 +260,7 @@ static void build_hook_config_map(struct repository *r,
+ 	strmap_init(&cb_data.event_hooks);
+ 	string_list_init_dup(&cb_data.disabled_hooks);
  
- /* Populate `cache` with the complete hook configuration */
--static void build_hook_config_map(struct repository *r, struct strmap *cache)
-+static void build_hook_config_map(struct repository *r,
-+				  struct hook_config_cache *cache)
- {
- 	struct hook_all_config_cb cb_data;
- 	struct hashmap_iter iter;
-@@ -241,6 +256,7 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
+-	/* Parse all configs in one run. */
++	/* Parse all configs in one run, capturing hook.* including hook.jobs. */
+ 	repo_config(r, hook_config_lookup_all, &cb_data);
  
- 		for (size_t i = 0; i < hook_names->nr; i++) {
- 			const char *hname = hook_names->items[i].string;
-+			struct hook_config_cache_entry *entry;
- 			char *command;
- 
- 			/* filter out disabled hooks */
-@@ -254,12 +270,13 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
- 				      "'hook.%s.event' must be removed;"
- 				      " aborting."), hname, hname);
- 
--			/* util stores the command; owned by the cache. */
--			string_list_append(hooks, hname)->util =
--				xstrdup(command);
-+			/* util stores a cache entry; owned by the cache. */
-+			CALLOC_ARRAY(entry, 1);
-+			entry->command = xstrdup(command);
-+			string_list_append(hooks, hname)->util = entry;
- 		}
- 
--		strmap_put(cache, e->key, hooks);
-+		strmap_put(&cache->hooks, e->key, hooks);
+ 	/* Construct the cache from parsed configs. */
+@@ -279,6 +295,8 @@ static void build_hook_config_map(struct repository *r,
+ 		strmap_put(&cache->hooks, e->key, hooks);
  	}
  
++	cache->jobs = cb_data.jobs;
++
  	strmap_clear(&cb_data.commands, 1);
-@@ -272,35 +289,35 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
- }
- 
- /*
-- * Return the hook config map for `r`, populating it first if needed.
-+ * Return the hook config cache for `r`, populating it first if needed.
-  *
-  * Out-of-repo calls (r->gitdir == NULL) allocate and return a temporary
-- * cache map; the caller is responsible for freeing it with
-+ * cache; the caller is responsible for freeing it with
-  * hook_cache_clear() + free().
-  */
--static struct strmap *get_hook_config_cache(struct repository *r)
-+static struct hook_config_cache *get_hook_config_cache(struct repository *r)
- {
--	struct strmap *cache = NULL;
-+	struct hook_config_cache *cache = NULL;
- 
- 	if (r && r->gitdir) {
- 		/*
--		 * For in-repo calls, the map is stored in r->hook_config_cache,
--		 * so repeated invocations don't parse the configs, so allocate
-+		 * For in-repo calls, the cache is stored in r->hook_config_cache,
-+		 * so repeated invocations don't parse the configs; allocate
- 		 * it just once on the first call.
- 		 */
- 		if (!r->hook_config_cache) {
--			r->hook_config_cache = xcalloc(1, sizeof(*cache));
--			strmap_init(r->hook_config_cache);
-+			CALLOC_ARRAY(r->hook_config_cache, 1);
-+			strmap_init(&r->hook_config_cache->hooks);
- 			build_hook_config_map(r, r->hook_config_cache);
- 		}
- 		cache = r->hook_config_cache;
- 	} else {
- 		/*
- 		 * Out-of-repo calls (no gitdir) allocate and return a temporary
--		 * map cache which gets free'd immediately by the caller.
-+		 * cache which gets freed immediately by the caller.
- 		 */
--		cache = xcalloc(1, sizeof(*cache));
--		strmap_init(cache);
-+		CALLOC_ARRAY(cache, 1);
-+		strmap_init(&cache->hooks);
- 		build_hook_config_map(r, cache);
- 	}
- 
-@@ -312,13 +329,13 @@ static void list_hooks_add_configured(struct repository *r,
- 				      struct string_list *list,
- 				      struct run_hooks_opt *options)
- {
--	struct strmap *cache = get_hook_config_cache(r);
--	struct string_list *configured_hooks = strmap_get(cache, hookname);
-+	struct hook_config_cache *cache = get_hook_config_cache(r);
-+	struct string_list *configured_hooks = strmap_get(&cache->hooks, hookname);
- 
- 	/* Iterate through configured hooks and initialize internal states */
- 	for (size_t i = 0; configured_hooks && i < configured_hooks->nr; i++) {
- 		const char *friendly_name = configured_hooks->items[i].string;
--		const char *command = configured_hooks->items[i].util;
-+		struct hook_config_cache_entry *entry = configured_hooks->items[i].util;
- 		struct hook *hook = xcalloc(1, sizeof(struct hook));
- 
- 		if (options && options->feed_pipe_cb_data_alloc)
-@@ -328,7 +345,7 @@ static void list_hooks_add_configured(struct repository *r,
- 
- 		hook->kind = HOOK_CONFIGURED;
- 		hook->u.configured.friendly_name = xstrdup(friendly_name);
--		hook->u.configured.command = xstrdup(command);
-+		hook->u.configured.command = xstrdup(entry->command);
- 
- 		string_list_append(list, friendly_name)->util = hook;
- 	}
+ 	string_list_clear(&cb_data.disabled_hooks, 0);
+ 	strmap_for_each_entry(&cb_data.event_hooks, &iter, e) {
 diff --git a/hook.h b/hook.h
-index e949f5d488..994f15522d 100644
+index 994f15522d..7e83a3474f 100644
 --- a/hook.h
 +++ b/hook.h
-@@ -191,11 +191,19 @@ struct string_list *list_hooks(struct repository *r, const char *hookname,
+@@ -197,6 +197,7 @@ void hook_list_clear(struct string_list *hooks, cb_data_free_fn cb_data_free);
   */
- void hook_list_clear(struct string_list *hooks, cb_data_free_fn cb_data_free);
- 
-+/**
-+ * Persistent cache for hook configuration, stored on `struct repository`.
-+ * Populated lazily on first hook use and freed by repo_clear().
-+ */
-+struct hook_config_cache {
-+	struct strmap hooks; /* maps event name -> string_list of hooks */
-+};
-+
- /**
-  * Frees the hook configuration cache stored in `struct repository`.
-  * Called by repo_clear().
-  */
--void hook_cache_clear(struct strmap *cache);
-+void hook_cache_clear(struct hook_config_cache *cache);
+ struct hook_config_cache {
+ 	struct strmap hooks; /* maps event name -> string_list of hooks */
++	unsigned int jobs; /* hook.jobs config value; 0 if unset (defaults to serial) */
+ };
  
  /**
-  * Returns the path to the hook file, or NULL if the hook is missing
-diff --git a/repository.h b/repository.h
-index 25b2801228..2105768b8c 100644
---- a/repository.h
-+++ b/repository.h
-@@ -11,6 +11,7 @@ struct lock_file;
- struct pathspec;
- struct object_database;
- struct submodule_cache;
-+struct hook_config_cache;
- struct promisor_remote_config;
- struct remote_state;
- 
-@@ -161,7 +162,7 @@ struct repository {
- 	 * Lazily-populated cache mapping hook event names to configured hooks.
- 	 * NULL until first hook use.
- 	 */
--	struct strmap *hook_config_cache;
-+	struct hook_config_cache *hook_config_cache;
- 
- 	/* Configurations related to promisor remotes. */
- 	char *repository_format_partial_clone;
 -- 
 2.52.0.732.gb351b5166d.dirty
 
