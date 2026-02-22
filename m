@@ -1,54 +1,54 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39C71B6CE9
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 20:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9301D61BC
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 20:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771791384; cv=none; b=rAb5j9lRezDaZZ4qezBPM/XzsLtPbnrJuz3IOprHVrjc2cffJgXK7ztE1wKQrh+y7JRb4sD1D+9IEFWnM3yK8cbvNUomty6zZiNCLuqDVGnuXzAx6Qs1bFL0uGiiU1hNlXiVgzvFrfzR/myYcPvS/TpjBk4fqk3xoWRN/4jN36I=
+	t=1771792550; cv=none; b=kqEC+fTWCUIZXDPRFdVbm3o3qdyBcLqyCoys4LV7dpZqWen6FCZKfSwjQ2N4W4Y0+XdzsvduysH6xSD0U/5HLanoGgNtB10xBRn6x2KzjniRwNJbr60/DvlSfTBJO9WCpxLVo0+uAPb3z1D+8ucLWBjpdBZuPE9X55B7rWNp+SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771791384; c=relaxed/simple;
-	bh=7mrzTLCk6yjZ4DQamMW3kFFw8XhupgrEAWrf9F89PfQ=;
+	s=arc-20240116; t=1771792550; c=relaxed/simple;
+	bh=PfuxcBIdOoqkDHXmNb3wy6unD1NaimTq1s9MorCO3GI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Io+GYIKyotYnNan3PGjxC/NRopjcUImVSfdObekueQyMF4oyYH1226XN2P8p0SUBhB8QtWpcITQCIrji8MktmtFMaGqBQ4yKwFFQ8I4FXdk4DIgcJOPBPnjWiL6PVM8aZsQHrwtQHja+oGedgCDMzwxpjU4zLZjWjeHJ8Pvbx2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a2FW6Oc1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jwF/OOA1; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=m60HscDIQvnezBSuCGyrQe2dWdlh9cfO9v3JzVJmX8vZ9XWYlPq2Q5baK/Da+IdBUNW/OgunmHV71b3mPHXq3UfqouoToCq4Sug9viDrehwEe0mEdHhquoLDqBsg4/gw+ByczRooddwBlaIMjHqMO9v9XzoO9itoM8ogqdvcCCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RQPgEezT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RHv9qs+0; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a2FW6Oc1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jwF/OOA1"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8243A1D00163;
-	Sun, 22 Feb 2026 15:16:21 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RQPgEezT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RHv9qs+0"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6CA901D00177;
+	Sun, 22 Feb 2026 15:35:48 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sun, 22 Feb 2026 15:16:21 -0500
+  by phl-compute-01.internal (MEProxy); Sun, 22 Feb 2026 15:35:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771791381; x=1771877781; bh=6XFDWzhxN5
-	D44U/7enzk7Xc3bo/xtRshI5yBTCMTGE8=; b=a2FW6Oc18cHxwp+ABQev7xNYoL
-	Si3Cp2/jEhe6qMLWDBiyv09VwVxtsFRdGat9bUOthnHXMI0Xkl+VDzX6mTc0oLg7
-	XvfeEnQii/1l70OymCSvCX/ep7iH/7frLcZjLFc91AXKI3pgCb0+vCqleNgmtDBh
-	UQkx6C5nbQzwLDCWhHA2SKXN/G5K6d4KxGxuwd+oW7kpYAU2TiRh1V71PXSPV7tH
-	XkoXsffu/zutB5dtcgKX5IEUogvvnzFpVR5RP4i3mIcEXVzHklFBFLnbeo5x3bn4
-	FFk8L5i+++k57KqUvTYP4fhjwgUnjQotlq4FrtsZFsolLh0iLEEnoW5oNrJw==
+	:subject:to:to; s=fm2; t=1771792548; x=1771878948; bh=S0S41KzprO
+	pQY2z4kPUWOluYOsNBoeMoe0I+xVnfZv8=; b=RQPgEezTPIjPEPeucv8N66VUk6
+	qXtJErXQuodpRyWSW1poCtfFDZ8E9EULHxCfJCjydDvTq9+atKK4yAm7nm7GGTZ3
+	pRpwEEJXFYPdwGNMpBJWofUzafmxb6bvcKsL3PCBAfqcOVKGc1xPIfIit7kzaSkw
+	0wE3KNy/lcuTlNTAsCr8uJkZxmX34FynFv++eQToWNNjiSmVYFmyNFwp3UzemNWo
+	fsvSdxRIdrv2c8i52ORrImPMHt4mL5jQW4d9btAinMyDdX0LS4iDECZjsGtc04cd
+	zj4BQ9qrKfToO5QM7Pl+LrI/L2AazkRjTW5k5dbIDFXX8FF+xAEiMs0n1nZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771791381; x=1771877781; bh=6XFDWzhxN5D44U/7enzk7Xc3bo/xtRshI5y
-	BTCMTGE8=; b=jwF/OOA1l16ddGpR9qe4t8GbqCArCURXbFtXRsJQ6Zpt4Mmg1qB
-	pxpt5DvADvLvhA4i1GvW6mJz1mVpu9Pdt0oVmoldOK0z6UIiJHejRvZ54rq/zRST
-	31n6Ts2b7ATueao4/TRMwpXEEIh7JzA/+JtS65AuBjZSEEEDGP4MePCgO0ewK13N
-	SZAXOAe07X1l8mwit3p2bPZ/XQvIDnADY7reTgCKrfwpNX/J+HGYm1ya0c1OnFqY
-	EVgrlvBR4T81ZFKIGC2Z2J07XmkQwS9VkRDG1ttj6Xpz69wUrShpcxK6xBMEQVxE
-	1K2TaUriHsLpUfFaRg7rzFxGNqnEpCrAk5A==
-X-ME-Sender: <xms:FWSbaZliOFp8PghsSpN6FvLcXX0R3bbrrsU5is9l4sdoH1jkTVbB-w>
-    <xme:FWSbab0x0ghGgLuOKFP9PlUtOZW2zwfsQaBuSrwHylOFgeAUAUzeOg_GodAzPOU_h
-    9l-9yyw15O_GuWrJUAt2pCCqQ5tSLRmYcrzibk9x3Yzd8swjs_RsA>
-X-ME-Received: <xmr:FWSbaUoJVch4E2XMBfAXPBwJTHMg9T57deaJ2ttC6zX1VTUXXMmUz5uFQwk6dvAaVw5CEav3pZ52pc1Yqme_PAgfJmjStCO7ww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeehvdegucetufdoteggodetrf
+	1771792548; x=1771878948; bh=S0S41KzprOpQY2z4kPUWOluYOsNBoeMoe0I
+	+xVnfZv8=; b=RHv9qs+0BNDGJHAWgl0PCIgWOmYGW95TTCgcun5F7hh/Ie5FXzN
+	kKdsO2WqDCU18v1/2ldxt30YNfKDBnWOh/tBay+t+vPZ5xGIYaO+qY5JcnWOwmQY
+	yeOIUwS5I8NrUXk9dzXNQ0pqdvbsSev/SeIfOK/HVSSlnChBngcZJaoo/qOCl4R8
+	vEx5R5RCQXT9B6s9wXtxZT9OcF4L39j6Iiw2S7X1+6JfvkbB7EUIvaCI1playxfR
+	pHT7svvEVzrVn5YEut2ZCfsdmrSoxP8TL3ahjIHiEtDWlmO9WEOAMVpb+CBaXJfL
+	vAs/6pLDkIGE2EZ4OwvCQWOZqWshQqsEQCw==
+X-ME-Sender: <xms:o2ibaQrLMSB35_YhdA7xvXcNXsYP24yVy147jEfEax3EftVMVP-FvA>
+    <xme:o2ibadovBa7Tn1sf3nvfh2sSz4Q5Zvk_hyhqYiaQrAuZhG3stTWOSwxk-nS6fQToI
+    pUCfp532P9GhcS_942Gec8DuyC73px8myPl94r-g1IcOs_4dKaSOdI>
+X-ME-Received: <xmr:o2ibaaNJFViXJjCF43k0zwttGEM_tDPDub2n44Rzv_hc23R-HPWEMTPXxQt0pr12wneDpeckuJRVvBuWMzsQMEjFHUJYZY6rZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeehvdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -56,27 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeehvdegucetufdote
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghf
-    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:FWSbaYd-5Ucr18yxHoLfQU4eD9GBcR-MSVKynZvLAbb_Q2PIXypUfA>
-    <xmx:FWSbaTpfGTCAj96AayXq-RRFoESG8bWaVlVhE28Ai0Nu2JsAHzOb8g>
-    <xmx:FWSbaZH1aaqnWzB5WszCW6T35fKR-nlUQqGZRzxgwXFvX1h5yCaueQ>
-    <xmx:FWSbaTvoVGl0qi_af1HZzz1bYSTkl4GmUkfTj6Fy6DegaoojrlC4ag>
-    <xmx:FWSbaUmgstJmvsN0MPvzkfQX8ObHZS4h_T_yRX8cC4-LpNneDW_9MY4h>
+    mhhtphhouhhtpdhrtghpthhtohepthhrohgvlhhssehthhhomhhsvghnrdhiohdprhgtph
+    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:o2ibaWzanLb-ejefidrHkEy6lXLyVNJaMuMkgzors6C7tf8uPTgy2Q>
+    <xmx:o2ibabs9112-0u810cPqsfFMUASHstqQSnONvmi5l8S6V4foM4Iyfg>
+    <xmx:o2ibaX6YFbelJ7vLy3Px09WMXMNCDAR3ZHNQRBxJX-9tGFXcm32q0Q>
+    <xmx:o2ibaSQ1RrvKMM_d6NH9EHknGcANnrQezrm_Rpg9T2RFaIAhHAONfQ>
+    <xmx:pGibaZu5FPEPhB7b87rR7rocjoP0Vv9jDk0Zm2yDNYlMcSwkqPtMsH77>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 22 Feb 2026 15:16:20 -0500 (EST)
+ 22 Feb 2026 15:35:47 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: [PATCH] object-file.c: avoid container_of() of a NULL container
-In-Reply-To: <xmqqms11qmsj.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-	21 Feb 2026 23:07:08 -0800")
-References: <20260218210120.1146078-1-jltobler@gmail.com>
-	<xmqqms11qmsj.fsf@gitster.g>
-Date: Sun, 22 Feb 2026 12:16:19 -0800
-Message-ID: <xmqqh5r8r0to.fsf_-_@gitster.g>
+To: "Troels Thomsen" <troels@thomsen.io>
+Cc: "Troels Thomsen via GitGitGadget" <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] receive-pack: fix crash on out-of-namespace symref
+In-Reply-To: <ead4041f-bbc3-41ea-8729-9534e69e5e83@app.fastmail.com> (Troels
+	Thomsen's message of "Sun, 22 Feb 2026 08:56:55 +0100")
+References: <pull.2144.git.git.1766850014289.gitgitgadget@gmail.com>
+	<xmqqfr8uk61i.fsf@gitster.g>
+	<a16bf8a6-2f57-4794-91b5-92615f184c4b@app.fastmail.com>
+	<xmqqbjjgiz3a.fsf@gitster.g> <xmqq8qcmt4kq.fsf@gitster.g>
+	<ead4041f-bbc3-41ea-8729-9534e69e5e83@app.fastmail.com>
+Date: Sun, 22 Feb 2026 12:35:46 -0800
+Message-ID: <xmqqcy1wqzx9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,41 +91,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Even though the "struct odb_transaction" member is at the beginning
-of the containing "struct odb_transaction_files", i.e., at offset 0,
-using container_of() to add offset 0 to a NULL pointer gets flagged
-as a bad behaviour under SANITIZE=undefined.
+"Troels Thomsen" <troels@thomsen.io> writes:
 
-Use container_of_or_null() to work around this issue.
+> Do you think your original concern could be addressed by adding a note
+> to the security section of gitnamespaces?
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- object-file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/object-file.c b/object-file.c
-index 1a24f08978..bd580ef032 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -720,7 +720,7 @@ struct odb_transaction_files {
- static void prepare_loose_object_transaction(struct odb_transaction *base)
- {
- 	struct odb_transaction_files *transaction =
--		container_of(base, struct odb_transaction_files, base);
-+		container_of_or_null(base, struct odb_transaction_files, base);
- 
- 	/*
- 	 * We lazily create the temporary object directory
-@@ -740,7 +740,7 @@ static void fsync_loose_object_transaction(struct odb_transaction *base,
- 					   int fd, const char *filename)
- {
- 	struct odb_transaction_files *transaction =
--		container_of(base, struct odb_transaction_files, base);
-+		container_of_or_null(base, struct odb_transaction_files, base);
- 
- 	/*
- 	 * If we have an active ODB transaction, we issue a call that
--- 
-2.53.0-455-gd82541b467
+Not really.  Nobody reads documentation, so it would be far more
+preferrable to make the default strict, with a documented way to
+optionally loosen, than the other way around.
 
