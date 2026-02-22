@@ -1,203 +1,105 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33126335BA
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 17:04:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771779891; cv=pass; b=N5YTmhyF3yW7EyulKhQbXtflB6t5JYoYh7u//FdWU+xEkr/EJ5OTIXhy0hsSILDapy+XkVz81TmkFsAQGDBY6+wgOWr2T4/ATAyfN9SIJChjDc04myYA3Z1Y0S/aRdhYD0lKhRmw2ZHWuuJtpDA/ipfUn/PXm9LtUyPfBWYtqh4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771779891; c=relaxed/simple;
-	bh=GfTG7M4irKus2uZBru9HaYQswxpMwhjpnwH+42kIdB0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C8ZqVaQvFDUb+gLpZWtCktTpuniD/5uE05r66O4scBmgxJ2KWNFWv291cG/gfYUYVsppBmUcXx7tNwZitDOBrJTize8okXC6XEVODm1AQzgSqsSKFugfn7tlgK2vEuppGUsDmmztoLxqxbVrWUUCh8QjV6bDPbTA8bWFhVkGyBA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IJdyVWXV; arc=pass smtp.client-ip=209.85.222.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6ECB665
+	for <git@vger.kernel.org>; Sun, 22 Feb 2026 17:19:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771780772; cv=none; b=c+UKHTMTkpvc+cfL+l0KGx3fQFjWhKOX1+QDxxnleDZHGWLItW80qV81qYXLMKOA1/CfF1ft6j7Su4skCq6pFl1NeCGXb2xqjpyYTWJ08F9uGP3WjhjvGNyRSyY1hm01j7Y2Vyh/WUeTyfqpuo12HseFdPyhCc2rxbSxvnr6O7Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771780772; c=relaxed/simple;
+	bh=woXQP9fNMkmQOt1hRhdVoORg/xsl3I5RPyl8+UjMyKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QKgB8RU81keJJj/0ZXHhXwEB4g4HP6Qc9+X2bOlMfHbDldzU4XCWQjmN1vmsZVJd7G3ZOSfqURoEudtIAW7ubmya9nPft7ilfUGZGPBKmxS4pBUqm867tJ8ZSxBH9vCMEn7517CMcjNQ6fj3UYhYYHbyHBGIXGbrAEHEbJO01m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jqZr/a9e; arc=none smtp.client-ip=209.85.210.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IJdyVWXV"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-948aec218a2so951291241.0
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 09:04:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771779889; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Aq04WFkpMmGpL+Scd69DYyGansRx8wtMCXyM0L32hvbvxkZv9F0J3ainy5MktbMK0Z
-         P39p7I/Oc/ixWvJyYOM1EgjcyV0zTwNv8S+OuZV44ymfUVvgpwTiUa7uAlHQ1iYg3pn8
-         bzj3Rz6oEnQ+AvbO2hYwZebtSr2P9vEfRhOKcTW2XlhQGeFYc3rXB+ZL9qYChW945GhZ
-         SEieQ+aFwThIAPSGgyybFSCoYGyZmJjtYG2c6rfxcYBCzp4zJ1uNtrz7ButByrwimWqr
-         vKPJE5Vg/2ab1dV9n1L5PWoyu5ojl1mVB4xUEbE7UhE0qDx7RdBHGIAkAmCV24ddKOWs
-         aUvQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=ZX57e1bHN/kgrRCl31HOE9lAkdUM2dkA72XmtXvX7Nw=;
-        fh=V7iu0p+2fxnmv5oNVRFBVcgdvkW8PQdAQbrAzTbQ0So=;
-        b=h1LBHgryhD3eU7mqnoZe7j5ABGpjuAQylTTFszaDA//IqwnnWt/jgoqmkkCmJpgwHl
-         nUoSfTTbCMir3vnveRFxWyVoV1P2hh9bF8ilfvnnZG7Rxc7kddsQ7DB7uFs5sjzxnuz7
-         ZF8FDjEJl9or7MP1k8+4jj/2Q+/VPNQND9uQwRhO08bi/G8SvgqMqbALjr+ARhdPZT/+
-         xL44XHooOEkxb/VvhQ3Nsd8KTNx77/H8GJk3L/0hdrVO3q82iRl+yuTGJGq21MrZJc9A
-         mJdd/+9iJArT5/U3esrSpTD9eXC4q96DPM4cuBUI/Py00Ei/T+cWy0AssIzJbwZt3KY9
-         HK5w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jqZr/a9e"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7d4bc9e48bbso1339728a34.2
+        for <git@vger.kernel.org>; Sun, 22 Feb 2026 09:19:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771779889; x=1772384689; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZX57e1bHN/kgrRCl31HOE9lAkdUM2dkA72XmtXvX7Nw=;
-        b=IJdyVWXVZM1jj04qo6CA8wru4vLWCgR+hSqmeiGbFN74ks7lbxqgmMGucbjo1bidUW
-         btm9PLxqmSOGSZXyz9TBD6VYpdhElKB2I2l/d2zbNTiibHay/lvZxDPVjveHFGnJZOA0
-         +EVagB4ghoJx+ZHNd2H6kESugoromG9BCNT5qiZCuo/ZdGK+zpPonfvm8hvpZCppCXrS
-         Joif3bfqbbU2k/mnHtAqF0lahp534X3xSsIykj7HuDKs7nxRaUKW6Trny32+w5iV7J1F
-         r8NOAj5+i8Kgl9jZpHtsqYCL9A+ZAFxFVmiNlpJUiXIgYMpVhRi3AotZ7m0tqV5GPGBx
-         iHoA==
+        d=gmail.com; s=20230601; t=1771780770; x=1772385570; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+ckEovyKYu9LVIqfOdj5Pg83nmdTeQZauolWpBnTT/U=;
+        b=jqZr/a9e5R9L/IIMzcoBawamQn1vlOODejaR5JqJ6XrJmrNDBAJtDqPLwdIkNoR0YY
+         yuUMUxbHdzi4bET/veB1X55vXxFfrLfpe3/C3/wsLrOCmj1z+W4shkwwXBJbXo2ae4Nj
+         PX1fzwFUn23HyV2b4MuVeg6/T04r93tsJ1AwRhz1OQKAlo6aFpRO4Xd5AsHgvdd0OhHK
+         Ixv8aQFkudJLG0eVPsH4OmFgCsRK4fd3ypRDvaB+cYYsAC/fOv+9zQS+p0tcXgsgKy1x
+         FIo5VF3gXBIR/swzf7fqhwqn5FofEjmSodacswacvLBGj6W0gB409M6aVb3eu+oM9dFJ
+         6xWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771779889; x=1772384689;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZX57e1bHN/kgrRCl31HOE9lAkdUM2dkA72XmtXvX7Nw=;
-        b=q+6t6FeSwx11nCCw62pYqEtmULpWDgDFQs8pDtoDsO20O42GoH526TiNshgdciub8W
-         lnLaKDicjrBxvx02Ckl3ttd/RBcCN5ulbSzKG4JKmGbSHl9F4W3l6SCb/vUbh2asbX+b
-         QnFtN08DblHgaP5CV8USqqS2xAxNWgpFe+ZKnc1VAgzTIfzpyEGBvBYSXwSPjjfooTrY
-         Y/SYmAYXw4hpVrsOqonzuh+E1sbjkwLlkotHGSy7JhTi79VFNzieT5/Q1vWm4BJSgT5w
-         2tVU99ZNdhqIP4H2TvK2TJcautlw2bna2YuoEqDdSKvCtXSFmSRBhiP4cQVvrW9kJ5tD
-         o1TA==
-X-Forwarded-Encrypted: i=1; AJvYcCUudkk8AnA5ww3RTdxbtzSy3afT2rEFHIyqkjbRLr6LrjxawB3G5PTDHaUkyjQkbvQ3qMM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzWJhhAJtPEHzDAZNwNwjMLqgMLAcfJbmbR6qEZlr+1iJSr7h+
-	3TZN5SMsJrH4LTeEcRZlcCx9wscjWuu5gkYfzO3exj9WccugZt1LSvMge0PiCEqY7YVHyayldNV
-	71xTq3bw8Jqdu08S4ACF42DOptiit7TE=
-X-Gm-Gg: AZuq6aJyDVYEN1q0ZPBmAngbuOF2JD4JV0hBrLSl5UGO9tYLbXn0NtOe78AqmdwFToE
-	JwbkmWcDs5i6UptzpgZjAFkoN/jDNS7kHDbyEEB2EC/F6Os8mk0gkjgB8yErqh0XliTiU11CMZV
-	jrqrDR61trNtSfehferiqujt+e3zNFs2U4yQTQwx03p9SwkiFrMHZmVJLO+oih2hfVACHlFWYuz
-	xSyMXI5ZaZ4IFlEvhS9PgNkzTcWVQdbJzNn5yx56cbMzglrOdhSXbt9J8gy6pRq4Y8tMa0lYOF8
-	ZkZcA1hNUIORuMCPrhVp5zvI+HcHYC/lPBtYhAA=
-X-Received: by 2002:a05:6102:26d5:b0:5ef:2cb7:b6a5 with SMTP id
- ada2fe7eead31-5feb311e736mr2197229137.38.1771779889087; Sun, 22 Feb 2026
- 09:04:49 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 22 Feb 2026 12:04:47 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 22 Feb 2026 12:04:47 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260219112149.GA3529@coredump.intra.peff.net>
-References: <20260215085755.GA86262@coredump.intra.peff.net>
- <20260215090052.GA695631@coredump.intra.peff.net> <xmqqqzqjckgu.fsf@gitster.g>
- <20260219112149.GA3529@coredump.intra.peff.net>
+        d=1e100.net; s=20230601; t=1771780770; x=1772385570;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+ckEovyKYu9LVIqfOdj5Pg83nmdTeQZauolWpBnTT/U=;
+        b=GKgYIRWhh+79CuaZF1Flm+9ip6aLAuJPTtyh8C6A8GQHMkCVAAoybRF24f1nyHoGW+
+         YLTXO9GuOSDr8KQhZ3fyX4gzL15XurJUJ6vFYpXHJwnrDBEHgu4QOCNZig4A1A0f0GG7
+         blSG4GF2U5cuTuIUzMfK7qYWyZyB560l6IcumWlH1OQrZ6voLADyBovrM6x+bmQgctN0
+         PpQWPv6bud9d6FEyBwRyUxWqrVMhlpSpexi4dVnSqaXYrN5xsGOelQTooWYxp7zREfUS
+         DV7qNAafNpcnLWsMaRIfWcy9G0d+vZ/fDfLNSNjr3PrlbmIBKc0+I6yPqi7KUXhAtGxs
+         cBVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVSLX6F7Efu7jyeIf1IrGazkKEdmUaJ7z93rCWosb0IjJJUX+Gwp4MY//7cDaTOngBeajQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwnNLkuN0ME8fxW7GmpclW2+M5lTa2XO0TGW8hjP0SHtnrAZTpg
+	adcEuw3WdrDfVbh7wQvQa7NCQCMMUu8jodk6jXMEueIz2GIpFJidZY7RCXgK8w==
+X-Gm-Gg: AZuq6aIDjgwcjuFvpVs155k0LgRkJ+famMzhh+791KulH5npn04IkEoPtFsjPimlIQY
+	tUthdOvIDnDjWkfrHltlVXPkPimacxE01pFIquDU/z8DOMmrufmeOyhkxNJpo+vayyh4kSvYhAz
+	IBtRj8AP2IIetFeeWLWWFdZYRyH2r4+oI7VJKUBDq3Vr9Kr4DRleQ0Ebg/USJuHi0SzY9IbaYRL
+	NA/co0c/yg2Q8MqHQH20oksKf2kw7QmJavdwX2F2YkXeZtIOY9MmKGBvsCFYexcLhK9FV8d1/G3
+	nYjCHgfIbmS0P7IkdTAgShaClF/biBcd5TXikaMhzNubfQIY8z5hIUWigW8ZolUxxqkbLAE6N7N
+	wzbPKCdWnHtzhNiVE/pG7WljS/dTWi9BK8CIAMrfENOFAKWSCQWg8FIAi4DrQC5+2bpSm2CcX3C
+	VpEmZ2u8FrY7mXD3IX
+X-Received: by 2002:a05:6830:6610:b0:7d1:9da9:c6e with SMTP id 46e09a7af769-7d52bf6bb20mr3097991a34.25.1771780770068;
+        Sun, 22 Feb 2026 09:19:30 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d52cf9f663sm4923516a34.11.2026.02.22.09.19.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Feb 2026 09:19:29 -0800 (PST)
+Date: Sun, 22 Feb 2026 11:19:29 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] object-file: use `container_of()` to convert from base
+ types
+Message-ID: <aZs6OvvBB4WPNx8j@denethor>
+References: <20260218210120.1146078-1-jltobler@gmail.com>
+ <xmqqms11qmsj.fsf@gitster.g>
+ <20260222094158.GA1319383@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 22 Feb 2026 12:04:47 -0500
-X-Gm-Features: AaiRm50--ZAvhdNF0JBk87RtdTnCFVy2wZpH-J3Vow2l3wwo7pEpl11JIDfDG3E
-Message-ID: <CAOLa=ZRr-Oa-aSzMBOnKWdyjMxuo6cd6mpcCydDrN7SMe2ahjQ@mail.gmail.com>
-Subject: Re: [PATCH 1/4] ref-filter: factor out refname component counting
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc: Collin Funk <collin.funk1@gmail.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000e9016d064b6ca6e1"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260222094158.GA1319383@coredump.intra.peff.net>
 
---000000000000e9016d064b6ca6e1
-Content-Type: text/plain; charset="UTF-8"
+On 26/02/22 04:41AM, Jeff King wrote:
+> On Sat, Feb 21, 2026 at 11:07:08PM -0800, Junio C Hamano wrote:
+> 
+> > Perhaps a fix-up patch on top of the topic branch like this?
+> > 
+> > ----- >8 -----
+> > Subject: [PATCH] object-file.c: avoid container_of() of a NULL container
+> > [...]
+> >  static void prepare_loose_object_transaction(struct odb_transaction *base)
+> >  {
+> > -	struct odb_transaction_files *transaction =
+> > -		container_of(base, struct odb_transaction_files, base);
+> > +	struct odb_transaction_files *transaction = NULL;
+> > +
+> > +	if (base)
+> > +		transaction =
+> > +			container_of(base, struct odb_transaction_files, base);
+> 
+> That works, but you can also use container_of_or_null() in the
+> initializer. IMHO the result is easier to read.
 
-Jeff King <peff@peff.net> writes:
+I agree that container_of_or_null() looks a bit better here. Happy to
+know about this now.
 
-> On Tue, Feb 17, 2026 at 10:07:29AM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->> > +	if (len < 0) {
->> > +		int i;
->> > +		const char *p = refname;
->> > +
->> > +		/* Find total no of '/' separated path-components */
->> > +		for (i = 0; p[i]; p[i] == '/' ? i++ : *p++)
->> > +			;
->>
->> Sorry, but I have no idea what this loop (copied verbatim from the
->> original) is trying to do.
->>
->> We start at the beginning of the refname string, and while we are in
->> the leading run of '/' we increment i to find the end of that
->> run. E.g., we start with refname="///foo", p points at the leftmost
->> '/', i runs from 0 to 3 at which point p[i] points at the first
->> non-'/' character, at which point we do *p++, to make p point at the
->> second slash?  Is the dereferencing of the pointer in *p++ a no-op
->> that is there only to confuse readers?
->>
->> And then p moves to the right until p[i] points at the end of the
->> string.  It does count the number of slashes in 'i', but there is no
->> satisfying simple answer to this question: "what does p mean while
->> this loop runs?".
->>
->> Anyway, the conversion looks very faithful to the original.
->
-> Heh, I missed your message initially but was independently staring at
-> this because Coverity complained that the dereference in "*p++" is
-> useless. Which is...kind of right. It is a void context, so the
-> dereferenced char goes nowhere and it is a noop. But if you don't do it,
-> then gcc complains that the two sides of the ternary have mis-matched
-> types (an int and a pointer). Which is true, but since nobody looks at
-> the result, it does not matter.
->
-> Writing it like:
->
->   int i = 0;
->   while (p[i]) {
-> 	if (p[i] == '/')
-> 		i++;
-> 	else
-> 		p++;
->   }
->
-> perhaps resolves the syntactic confusion. Leaving only the semantic
-> confusion. ;)
->
-> I guess the thinking was that "p+i" represents the traversal, with "i"
-> encoding the counted slashes (so we must increment _one_ of them each
-> time). But I cannot fathom how that is easier than counting the slashes
-> like:
->
->   int slashes = 0;
->   for (p = refname; *p; p++) {
-> 	if (*p == '/')
-> 		slashes++;
->   }
->
-> Which made me wonder if I am missing some corner case, and it is not
-> just counting slashes. But it must be, because "i" is never incremented
-> except when we see a slash.
->
-> +cc Karthik, the original author, for any wisdom, but the commit is now
-> almost 10 years old.
->
-
-I'm embarrassed and frankly don't remember this code :) Your new patch
-looks sensible to me.
-
-> Is it worth rewriting to the "slashes" form above for clarity? I was
-> afraid to touch it just to shut up Coverity, but now we have two
-> confused people.
->
-> -Peff
-
---000000000000e9016d064b6ca6e1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: c992ef7297f19a1c_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tYk55NFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNzdkQy85b2xpSEduVktvcWx1cHFLbnlXNVpDR1R3Sgp3c0toempReHZj
-c0M2Wjk0VjNmVldEYURYMnZyUzlSbVRNUWJkd085RlpueTNwank4M1Uwd3Z6aXBzeDl5QjNOCitq
-L3hVREdJNG1tY0d5VW1tMmtLbng2UExvOHM0ZHBKb0lzeXNLS3h3c0pJQjMzMzBNb043T1VIRlNp
-L24xWWoKMmttZEp4QWM5NWN4ZnpTdVRTYU1venJvM0ZXYWZUcWVydzBsM1lKeXhPSUJSdW5oQWVD
-ZmNrQS9Wdk5oVDN1MApFaGM4cGJJRmFGSnpLcW52cUdPdTY4ck1ubFlEOFlEazZkMngzVmorQTNG
-N09MWmhFWlE2YkNqZlk4aGI2b0VYCjBGSkRCTFFjRCt4OFg0NXdWRXVOU2Zac1pQdjAwcm04WUZ3
-S0ZnT3JXVXA3SXoxYlQyVnYzRUsxa1luNHRENmwKVlk3TXd1NkdZeDNxdXovNHZPNVVmSnNzL3Rq
-ajkwb3pQMW1nSm1xYTB5RTZ1NjZVeG92VDk4eTFqd0czRzBKMwpZaHhCOWZYNEFTNkdScU5VUjNR
-dG1BRnk3Y1BJdEsyODM5MzRJMk1SQWtsaVVhOEZJZEZHcmdZYkllMFFZMUZQCnlKQ1JValVWaDFO
-ckg2VTFHT2YrUTFrem1LZGEzMEh3RnpnbFRuND0KPU8zQzAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000e9016d064b6ca6e1--
+Thanks,
+-Justin
