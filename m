@@ -1,85 +1,154 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C5C34E777
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866A1346A14
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771838871; cv=none; b=R0vZcDcdrFyfiEbGIfMcfs/9gKo6kL9Evf6tt3qo/dCL0AiEmpBJKz+BhuAQv4G5Qu8f87h3PWHbpSOuCAz1aF38fKfMxEM1bifW7U1RqFLp6pni+73G/9K0mG1jPWa26U5uCii5pBt/JPjeT3LAFlyzYuAX3gII3YxwmDPVD+0=
+	t=1771838996; cv=none; b=AEuG0F/neDinA47s6D8CRl/660LWYS6qC3lt71xBmtJBu4V2L4KuT7JnbCp+GMnPOd0R8xGBGhYyk14+YA2p0fkDKS/Ohu9WqxBaZtIBXzcfZQmRwMDO694H4dqVnIGOa593cj+NJolXigw3AKW6jkPbAlJOt5xjzcu2vVvlXLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771838871; c=relaxed/simple;
-	bh=j4UTKZS5Iff0eSquV0ZnXpuldhyVfi2JT5ThlI/q/JQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NXht1D6n3T7p7yjk8efVXUdhqaAnySaqW+OHywZZ+D/ZYOnsdNnY4kCrBJBAKNBI6NnMgpzcJhyQ/3Z6WbArAuKodSIc1wrhBbfoNNrkHx0+YaPj/78n59Zh7Ulr/g9wXgQHpY65LaWDHYshRbKz8RdfUDuXYyoO02MWC78E9y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JKCFxsRa; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1771838996; c=relaxed/simple;
+	bh=5XuaLjtpqxAZd8dKoHGok8H+A+n/ExmUUNSteKQY0NI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=HnTVT3Je6imfJOXYZ93iVzM0Bq480A+iJZKTME2q3LLueC2XbDry9BAGs/CqT9zlDJ25FULhwSKDgDbky817ezaBaoDA19Nrmqli+xsDxrsKnFXXtdkYGj4kOAz7whIlss1HKJH/mhdXGJjzH7yVN7djQ6v1K5W+NvsnK85sKUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=pNMV6TVg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ajUFIQR9; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JKCFxsRa"
-Received: (qmail 49458 invoked by uid 109); 23 Feb 2026 09:27:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=j4UTKZS5Iff0eSquV0ZnXpuldhyVfi2JT5ThlI/q/JQ=; b=JKCFxsRaelORjym1NtPTLfZBUpobHN7WQ1iBLvAsVl4+uSKVTP5iDu1zk6S4NIUtFU+XXW5sNdXNkLf51T7mzXiX0c2qXD7y3e/b/Mfmgf59JbB6QO7ffAmglnGX43/ayonn3zewGmZKTnNOOgypbsuBH3ApC5bMFRkIBeIKEAM4n/Zai+iwRudhLzs4MffZBRlVgDNzJalUkS9aDljYczsACZuvJxO+DQuCm9hJ9O2qzO1fMewyIBVc4W4QUWi4scfgT1MXpy+65KnSQKlNlk12tO7PzC8EJr0YRcm1/SI5XUK0ggC0c3T1BHrf5J0XxozTdeAqdU3BNGOLdd0zTQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Feb 2026 09:27:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 96216 invoked by uid 111); 23 Feb 2026 09:27:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Feb 2026 04:27:54 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 23 Feb 2026 04:27:49 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fsck: do not loop infinitely when processing packs
-Message-ID: <20260223092749.GA209358@coredump.intra.peff.net>
-References: <20260222183710.2963424-1-sandals@crustytoothpaste.net>
- <aZwTPfmyrFp-QAPq@pks.im>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="pNMV6TVg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ajUFIQR9"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id D5F75EC0567;
+	Mon, 23 Feb 2026 04:29:53 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 04:29:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771838993;
+	 x=1771925393; bh=3nJR7RSuxIju7Ro6fpXK8WO4Pzf+jh8ek4WPfg63EWk=; b=
+	pNMV6TVgANhmrLDOpHL6ksIFkEg7TvY9y2d0tVvx+m8neN7DZz5SH6MizlrQxsy9
+	QkviEDShlU428fgTsPjTajKXavXEGh7Huu7fXiroRMxCUPwzePvbiTYm3lNGJsQ2
+	Y0SFvv+brcjC4p8tkpScdHtZUgytEhyCRQPHaRnQ21XZ71N2edgna8Vzxjd6PE0L
+	XM72SIDYFaYVc+lB91xkwhw3nszGUI2jMQ/32y6aCjPnFpL1bwGtqKF2zLsNAz2z
+	go2PJV8vCLLLIVisOuRCRV3O7OUsR+ck4LDKs/KFPOc6IkM9oGHgw5x/eLA79gEP
+	pjvkiw6iO0ncXLB2C442iA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771838993; x=
+	1771925393; bh=3nJR7RSuxIju7Ro6fpXK8WO4Pzf+jh8ek4WPfg63EWk=; b=a
+	jUFIQR9QTnpVBdC1XOFYZdLALrvMHPph8UuELh8DaRTgX6zvsFvuvJesiC05YjrS
+	M5H43IuNbGMgaUWeWZ9vyGT8YzrCsO3exjQudx2OxsIg9mh9ab4chsu0mSMc9bvq
+	b3bH38Gf/EYpirLE+45kLQXJnTTJy0HvmD+rzBBPeanDXuIZcUkSXodwNECfSQJv
+	6mgV+Jy3c6CoYHvrIO3D7reTeQYlz5X30Hnvov/Of8IsPQCUyyakk0IFWTYK3wrF
+	cjkjqKqFmouLyuRfqBelZL823ANbxbuvg6hcq9UpC+bdx/Mjab6RmIuEpFcTzBbA
+	vFq/lezLOiDyTSfuXX9Kw==
+X-ME-Sender: <xms:ER6caaGbeh4HUmqSPyi6ahR0m5hv5vH3lsZJDuOOsaZuyiHFFplzZIM>
+    <xme:ER6caWK9ARR7wPuT_Rtv9UF5AzMl92tKOBu_4chluLNQSh2D70t43YmonxKWAsj5B
+    CczwmJz2FJ3cLMn24CNz0QkcRqoMtHt_iyePDjhGe_eIqznZ3diJw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeikeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeeipdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
+    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopegsvghnkhhnohgslhgvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepjhhonhgrthgrnhesjhhonhhtvghsrdhprghgvgdprhgtphht
+    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ER6cafwns0NuFEV4cq6m2RC8MHumlfl9zai_QFm9k5h5wvTANnXx8w>
+    <xmx:ER6caQnecRF67UjPqQNX3LJSljmWsDcrjdHMQ9Fd4zkW47XMn79gGA>
+    <xmx:ER6caQlvuZ_VYmwlcyg2VJaOXTGxJwIeY_ZMdzdHXbFAbLy21X9gcw>
+    <xmx:ER6caax7MlWlidbjbJsVhog9ksG-BOXdpetNgRqoefeBKZY_D_w5HQ>
+    <xmx:ER6cafjKHs5ubQkRQsD59nSUPi3Uvva7oZoP1w_RebQ-SgIe4KMaHMvt>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 78F001EA006B; Mon, 23 Feb 2026 04:29:53 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: AdFosU1OfSzV
+Date: Mon, 23 Feb 2026 10:29:26 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Jonatan Holmgren" <jonatan@jontes.page>, git@vger.kernel.org
+Cc: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>,
+ "D . Ben Knoble" <benknoble@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Message-Id: <112cccfd-ee04-4c23-bc5e-fd269ebc6c1f@app.fastmail.com>
+In-Reply-To: <20260210183110.1151072-3-jonatan@jontes.page>
+References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+ <20260210183110.1151072-1-jonatan@jontes.page>
+ <20260210183110.1151072-3-jonatan@jontes.page>
+Subject: Re: [PATCH v2 2/2] alias: support non-alphanumeric names via subsection syntax
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aZwTPfmyrFp-QAPq@pks.im>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 23, 2026 at 09:43:41AM +0100, Patrick Steinhardt wrote:
+On Tue, Feb 10, 2026, at 19:31, Jonatan Holmgren wrote:
+> [snip]
+>
+> Suggested-by: Jeff King <peff@peff.net>
+> Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
+> ---
+>  Documentation/config/alias.adoc | 44 +++++++++++++++++++++-----
+>  alias.c                         | 45 ++++++++++++++++++++++-----
+>  help.c                          | 12 +++++--
+>  t/t0014-alias.sh                | 55 +++++++++++++++++++++++++++++++++
+>  4 files changed, 137 insertions(+), 19 deletions(-)
+>
+> diff --git a/Documentation/config/alias.adoc
+> b/Documentation/config/alias.adoc
+> index 80ce17d2de..17a548cd64 100644
+> --- a/Documentation/config/alias.adoc
+> +++ b/Documentation/config/alias.adoc
+>[snip]
+> +# With subsection (allows UTF-8 and special characters)
+> +[alias "h=C3=A4mta"]
+> +    command =3D fetch
+> +[alias "g=C3=B6mma"]
+> +    command =3D stash
+> +----
+> ++
+> +E.g. after defining `alias.last =3D cat-file commit HEAD`, the invoca=
+tion
+> +`git last` is equivalent to `git cat-file commit HEAD`. To avoid
+> +confusion and troubles with script usage, aliases that
+> +hide existing Git commands are ignored except for deprecated
+> +commands.  Arguments are split by
+> +spaces, the usual shell quoting and escaping are supported.
+> +A quote pair or a backslash can be used to quote them.
+>  +
+>  Note that the first word of an alias does not necessarily have to be a
 
-> This is because ultimately the root cause seems to be a bit more
-> complex: we don't only care about there being multiple packfiles. We
-> also care about "core.bigFileThreshold".
-> 
-> Typically, we don't execute `find_pack_entry()` at all when verifying
-> packfiles as we iterate through objects in packfile order. We thus don't
-> have to look up objects via their object ID, but instead we do so by
-> using their packfile offset. And this mechanism will not end up in
-> `find_pack_entry()`, and thus we wouldn't update the MRU.
-> 
-> But there's an exception: when the size of the object that is to be
-> checked exceeds "core.bigFileThreshold" we won't read it directly, but
-> we'll instead use `stream_object_signature()`, which eventually ends up
-> calling `odb_read_stream_open()`. And that of course _will_ call
-> `find_pack_entry()`, as we're now in the mode where we search by object
-> ID, not by offset. And consequently, we'll update the MRU in this call
-> path.
+The HTML output shows the list continuation character (+).
 
-Good find.
+    + Note that the first word of an alias does not ...
 
-> With that knowledge it's kind of easy to reproduce the issue: we simply
-> need two packfiles, and each of them must contain at least one blob that
-> is larger than "core.bigFileThreshold".
-> 
-> Now I agree that the below proposed fix would be a good change to make
-> the code more solid while we still have `repo_for_each_pack()` (I plan
-> to eventually get rid of it). But arguably, the above logic is kind of
-> broken regardless of this: we are asked to verify objects in the current
-> pack, but we may end up verifying the object via a different pack. So if
-> the same object were to exist in multiple packs, we might end up only
-> verifying one of its instances.
+>  command. It can be a command-line option that will be passed into the
 
-Yeah, that was my immediate response after reading your analysis above
-(that fsck should not be doing find_pack_entry() in the first place
-here).
+And there are two more outside this context which I suspect are knock-on=
+s?
 
--Peff
+    + If the alias expansion is prefixed ..
+
+    ...
+
+    + * Shell commands will be executed ...
+
+See `Documentation/doc-diff master next`.
+
+=E2=80=A2 master: 7c02d39f (The 6th batch, 2026-02-20)
+=E2=80=A2 next: 4a7958ca (Sync with 'master', 2026-02-20)
+
+> diff --git a/alias.c b/alias.c
+>[snip]
