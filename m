@@ -1,150 +1,100 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579E5343203
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 08:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771836983; cv=none; b=c4y/PyjO35ayEZm3SayW83MfjgrNKLrPtkM14S4XDm4umGS0qIqLT4nNowb8phKB4MLBMMkuD90gZfQ4aVyKivJUheZ4ety6M1L89kMsIArBkkdNFIwoO/Ou/3mXMDos9Jpbm/BAGJYC+28BgF+M5iLnrgfKR+A/EfDGzZ/jwRY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771836983; c=relaxed/simple;
-	bh=mz+mWwIS8IxWWjpGWnPw8aUakSGI6hk7e74LRtq22Pk=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=kDTZRHTTq0ghS3Kz5M1ICNWrFrwR22iUQFWbBmyEkDgxIh+lU+MfdcTeo2JcrykOUf6JeFn/5jewdGWnyiBb0C7AyNGNKYSMkk4qg/ZMMYTpnhHoxhpN/wFSD/Rb7s1iXtTulT2gAZr/9uMnTFDq3HdULVXflxOuju/O+pCVN0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jih59F1l; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA5A34E74D
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:00:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771837201; cv=pass; b=g1BX8mTpeAm681WXDF1qWXBthrODNJlEwokT7jc1tTANxcOlwHepuLUkIwfUYww77GFETiufKcQ8Pnvs8FpRzEyhQBzyA5kJimlU/5TP9hGkUVOf9l4Y3XxueqtrLXOTx+yz34uPR2PzAnfLlav900pypgFbxhAFqZZ532LiQz4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771837201; c=relaxed/simple;
+	bh=IrJP4aCMg/pUbxYXwsfCMWIjbqsCGYVodG6tzvJ/R2U=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=DX3EptJk43+rON3401P6KvUTOH8x67ynWMLm4SoZZMSDA00EpHL9V7OG+UBq/C/H8DWKLEibcKG3LQYoC066fk3/SyOtONr5OeXHPWW6RcnO19/GpqBcDq1TdF8ehZgAtVWQ11hAyo7yq0DXQgK+GtBPIsdY/eHyYsqy8TGwC1g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bU9+EbLG; arc=pass smtp.client-ip=74.125.82.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jih59F1l"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-50334dd44d2so50538431cf.1
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 00:56:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bU9+EbLG"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-12758ce1e8dso1440566c88.0
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 00:59:59 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771837199; cv=none;
+        d=google.com; s=arc-20240605;
+        b=BRKYpNaDMYx/fDKl9HZdskMINk8M02RTTWg+P5/GnxMAn/fQ0jICnwuJx2/DJzSrCt
+         nuImpdNs+AF2ecOBrLomWqSkjKa0ilTn4Hu/PVVtxpW3oxWlq65q6KskHUgLUuvgM0+e
+         X+Cwhqo1cCK9ISC9LNy26YtoKOAf3lI15P4LXl93yhkPg5YnG9J+vGRYX251vEawljWP
+         DdfLL3fcDoJc+FJUDO3ESwfeeqOUwHI/mVMH3UIowY6SJp0SiarlxNxsmiNvdHN/bx2x
+         3gOVisjYYB280+4ZJp0ItM79DSDOX+bWOeQIo/lJri9yvs8hZwWcoFcXSJGvEtO6MTQm
+         +NhQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=IrJP4aCMg/pUbxYXwsfCMWIjbqsCGYVodG6tzvJ/R2U=;
+        fh=wsvoWvBz3+zI3cO8xbdreD5Z3aI/wpKopH/flyQpgVg=;
+        b=NceTDib55IRG2Ol/o/rSEuRyfb++EaeEPyqygKq2GwjY6lVddp+MISUYHBciTpPyWU
+         qJU+3ZHkIPiMiUpptlMw3c6H5Fi63pu/eu6thmAULom9zfmKKHWGGtBjmMgjcw4o07v3
+         j904jgNs7gjqk31y6+7PpqFegz1cLgq0VY1IuC2jIV0wN56G/swPcsCg53xqBDM0DsoT
+         xgltKPOypTwRv8McX5lmCZ1MZzP8dNnd11RIOzQGJa75ROxQlTSCzQSe/cblR8KyrL/1
+         8tb7gvOBJu/B7qPMGohWvQP7rbN8OsgLd/h5l2zIY3M31zE+w/TbBBz9w+CBsefBahwA
+         74AQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771836980; x=1772441780; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JbC8orVLJP0WLE2r7ZamYDKq4ciz8x98E2J365Tco2Q=;
-        b=jih59F1lIhL9JF0jfT269Ddh08YaULF8yVJ2CXSDcP0JW/5zXn2SpgPBxpA7OEY1cm
-         ovZbZm28XzwTPB0GLB2Jy9OhVUGqUhf13Ud5o6IyWToib4tRs0bQxLo8EORoKdUaQAc6
-         e7S01NWw9mDYztp/LItWxyBY7ARs1cbeGLrO/CTyh65ZAX9tnd58sgyfDyEUdInZWlJ5
-         TMNnDvAJRgiU49z4fW3SOefoeBpldVGfjJt+W78ekBchCcVv4vsM4ZS9RboKxFUPfUdv
-         G/bQTVgUnZomk+lbRY3OmOFzsihdF+jum7JapGYWcyJlrvYnMKBvdVqTRkn8G/CL1V19
-         YLng==
+        d=gmail.com; s=20230601; t=1771837199; x=1772441999; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=IrJP4aCMg/pUbxYXwsfCMWIjbqsCGYVodG6tzvJ/R2U=;
+        b=bU9+EbLGZmcJMc0/7AgbEnskLN5Hyrh0/FU1OsnbArDWpiVu9N8BbnrEYCXUjNBlan
+         fXJTHGRFdmBE3nuq4gyBCwK+MmHQdtG/K48rPBEN7H1vNx6nWNukioJnqH39q7kZmkWO
+         a85dG4gQ5AF5MuhV/cIYA80i9Tb4hGPWIzXqgvix88DEerU928rTrl4HNY+/ezCEWGUm
+         V4E90C3+emd7IOjWWDN56532FzEM2fYc4CGfWaMZ3aUHCXxRgbul6qg1yKd+w+yfN4BZ
+         nKt+k04pICEGt17kvgzkEm1pATyT8Q/sjGK77mdO3ulsGOiVoZa3b1mx567J8uqv3ynl
+         FyyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771836980; x=1772441780;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JbC8orVLJP0WLE2r7ZamYDKq4ciz8x98E2J365Tco2Q=;
-        b=TaZpbPxQ6cQeuegDWBD659/eN61WJsfyEDyQ88BX1u05IDtacOPQ3sftn5IlySIevw
-         zB+D+gKZOhjnVpv/cynh4EW+vWN4cs6PvlBwK+HAsPemZDjAcbabfvj45kXgJ4psdeP6
-         x12IWu+kuED28nWSM51g6EDbDCv0j6lWaFh8wSM4MIDR5Syiozd8IimtIILsNOoDuvrR
-         H4qpbW1S2Kiey060skdnMExVxX1x/MIKSm4GUCWeeaONsHmpVs73TtPeGTkW4bjFOGnF
-         0fDkr+9+RwpVJi1oxYXXITpF7sFpBV2CZ/JkZFe6CrJgGZAgk+XVnCAYo665kptrKs08
-         DIxw==
-X-Gm-Message-State: AOJu0Yw4J2VsOOsDL+YyWigS+jCfgy3w3vnaIyyk+SpM2CXD8+GqjxxS
-	NUvq8i/P+R7cDHc9OOB3YdcmH82UWYDK93xleQLPYXlrZYRo4xqxLWeXBBgsxQ==
-X-Gm-Gg: AZuq6aLcc9I19RC8m4zzOjgQIaMKW4jqkRim6kvrZITCcRJ/UP1xPzmw9Xl50mjdR3q
-	FfMeyrguRGeSvOk/AybWfwKVW2/beluVxq26LB7Nbo+RmB/Um7LGFJpRPcroO4Y8oTvmcgAlgUJ
-	J+JGoyItWDqbdOmF7Eku6NNBt60AJhiE6kYWd8iAs1ZXaW8RyjA3e0MyPLrbKsmEhZ3UQDaYD8x
-	1OFmFcTeQ8A7FNUkFFkjoyTNICWAqDYekRYSu4ERACiyMgirpvKFNWODRCPWONFONXbWkSwGDIz
-	CofvyE6Dz/HTNPtevLxdlkPYrdNrqWFZE6anFbLQqPQkDCTlYjSWGUkW/gG4zr6WKvnzj0mMuRo
-	RXyOHcetrumj2jDGiwCA0ZlJn1v++RGm3Iuu37dk+oxnqqCPwyjHX0n8aiIsuMHQGbObP/1NqrS
-	CbDYagQbM983OS6mVd2VnGGIqEEWk=
-X-Received: by 2002:ac8:5906:0:b0:4ee:2352:1bb1 with SMTP id d75a77b69052e-5070bba117emr110235751cf.5.1771836980530;
-        Mon, 23 Feb 2026 00:56:20 -0800 (PST)
-Received: from [127.0.0.1] ([135.232.177.250])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8997e7747f0sm63327326d6.51.2026.02.23.00.56.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 00:56:19 -0800 (PST)
-Message-Id: <pull.2053.git.1771836979176.gitgitgadget@gmail.com>
-From: "Md Ferdous Alam via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Feb 2026 08:56:19 +0000
-Subject: [PATCH] merge-base, ls-remote, ls-tree: fix error message formatting
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1771837199; x=1772441999;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IrJP4aCMg/pUbxYXwsfCMWIjbqsCGYVodG6tzvJ/R2U=;
+        b=cIs/1GlxDE82lGQ4umKSLpr4L09Qid2tY3zgKPA/0Huh+kmKHh2+n4I36oRZn3ZESP
+         JOBV9VxJW1+oO46kidZrpECuD36y4SZJPGrTotvNBu3ymmn29dn/kRUw+2cGiFw1BvkC
+         SFCQRwXs81oD/l5XST24fKOTGsSmhblodKyzGthdnsAFzzA6WQWIpnVu3coj0GzwBdaU
+         jP9VAJfFngwXmczrtEKN9g/64+TsOPf/ewBtD3K6wWHuIlb8DVTksxetYKFOtJHwDdtN
+         BKW9E0CrOUGBwdOPmECL2jzjc1dqpcmPXnOtGW1VgJ5JQxwReiJxFTToOmMSteJ9wMmb
+         hEsQ==
+X-Gm-Message-State: AOJu0YzSj/LUDPOnV0C9IZg4SciGPdTuGiFbO78F2sQrFADuw09x1ygp
+	YlblDFIHrMvJSFGNq8VH73N1UxeBnxBCzuWlFXqhqAaANjhPCCvowNpVP8TXfBMPeQ2/PLIO/Fk
+	EqPWnHEHqLOL7876EyvCydDNeiNvcGes7RWpQLdc=
+X-Gm-Gg: AZuq6aLICLI2a2n6xzSo+CUeCR2K15HIDm0HugQRIxCIMrQTnigAH+j4G3Wwbc/7uFD
+	i8VHuoXbYDZgU2vk1pc7k4NuDws/BsqhHosHTRJXBQk5zFN4bU406aXHOzK2AH5Li4nVec8DN0C
+	NLNa+7o/bnRo0KU/ujts7azoHiH5kR/WKIB3DOl+z1FZpoXk2lZ91ISpzWH0PDs7zPO8n0wOyFd
+	d2jlRjvzlTHxIi+oOugtr0jYLucafUckNp2n5KxrpqSn49kKnuIugHIkL/MQf2DscfBwluYgKGs
+	TJ/bnpOm02NpfhRHdFq+v5tyOFqrzxH4WsiNgVnd9SCT
+X-Received: by 2002:a05:7022:2521:b0:11b:9386:a3c8 with SMTP id
+ a92af1059eb24-1276ad8bb87mr3748579c88.41.1771837199009; Mon, 23 Feb 2026
+ 00:59:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: Bello Olamide <belkid98@gmail.com>
+Date: Mon, 23 Feb 2026 09:59:48 +0100
+X-Gm-Features: AaiRm52BQf1HCyz7SZ4dueXv-4TSNcLmk3xnDMNQmnemza9KCY6r6E1J8q4sx8c
+Message-ID: <CAD=f0L-X5r8nUeY1Zm-kpjw1-kJa9=U5qX==dn-Y0H8zHFqOMA@mail.gmail.com>
+Subject: =?UTF-8?Q?=5BOutreachy=5D_Blog=3A_Refactor_in_order_to_reduce_Git=E2=80=99?=
+	=?UTF-8?Q?s_global_state_=28week_8_=26_9=29?=
 To: git@vger.kernel.org
-Cc: Md Ferdous Alam <mdferdousalam1989@yahoo.com>,
-    mdferdousalam <mdferdousalam1989@yahoo.com>
+Cc: Christian Couder <christian.couder@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: mdferdousalam <mdferdousalam1989@yahoo.com>
+As my Outreachy internship progresses, Weeks 8 and 9 marked an
+important turning point in my project: not just moving code around,
+but confronting deeper design questions about how Git should behave in
+a future where multiple repositories can coexist safely within a
+single process.
 
-The CodingGuidelines state that error messages should not begin
-with a capital letter and should not end with a full stop.  Fix
-the die() messages in builtin/merge-base.c, builtin/ls-remote.c,
-and builtin/ls-tree.c that violate these rules.
 
-Signed-off-by: mdferdousalam <mdferdousalam1989@yahoo.com>
----
-    merge-base, ls-remote, ls-tree: fix error message formatting
+I wrote about the lessons here:
+https://cloobtech.hashnode.dev/weeks-8-and-9-initialization-defaults-and-designing-for-multiple-repositories-in-git
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2053%2Fmdferdousalam%2Ffix-error-messages-misc-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2053/mdferdousalam/fix-error-messages-misc-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2053
-
- builtin/ls-remote.c  | 2 +-
- builtin/ls-tree.c    | 2 +-
- builtin/merge-base.c | 6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index fe77829557..51d7579ca1 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -128,7 +128,7 @@ int cmd_ls_remote(int argc,
- 	if (!remote) {
- 		if (dest)
- 			die("bad repository '%s'", dest);
--		die("No remote configured to list refs from.");
-+		die("no remote configured to list refs from");
- 	}
- 
- 	if (get_url) {
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 113e4a960d..7670aa77a3 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -406,7 +406,7 @@ int cmd_ls_tree(int argc,
- 		usage_with_options(ls_tree_usage, ls_tree_options);
- 	if (repo_get_oid_with_flags(the_repository, argv[0], &oid,
- 				    GET_OID_HASH_ANY))
--		die("Not a valid object name %s", argv[0]);
-+		die("not a valid object name %s", argv[0]);
- 
- 	/*
- 	 * show_recursive() rolls its own matching code and is
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index c7ee97fa6a..e337f283f7 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -47,10 +47,10 @@ static struct commit *get_commit_reference(const char *arg)
- 	struct commit *r;
- 
- 	if (repo_get_oid(the_repository, arg, &revkey))
--		die("Not a valid object name %s", arg);
-+		die("not a valid object name %s", arg);
- 	r = lookup_commit_reference(the_repository, &revkey);
- 	if (!r)
--		die("Not a valid commit name %s", arg);
-+		die("not a valid commit name %s", arg);
- 
- 	return r;
- }
-@@ -131,7 +131,7 @@ static int handle_fork_point(int argc, const char **argv)
- 
- 	commitname = (argc == 2) ? argv[1] : "HEAD";
- 	if (repo_get_oid(the_repository, commitname, &oid))
--		die("Not a valid object name: '%s'", commitname);
-+		die("not a valid object name: '%s'", commitname);
- 
- 	derived = lookup_commit_reference(the_repository, &oid);
- 
-
-base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
--- 
-gitgitgadget
+Best regards,
+Bello C. Olamide
