@@ -1,152 +1,250 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A604637F751
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 23:25:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2F437F758
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 23:31:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771889145; cv=none; b=FxMlcusZl9y6XLzMDwLVWGDXtAZRAWkDW68vcpI2lcWXPMPnX/taXojaEUeCwsQvMLV0KAK7VNrIe7x2IlTEMyj329uSo1i+zLqVco3zk1UKIUJK4vAAqEF1hykEk7xNbPnvLicJpnm/ysRfy7LVmJWg+Pxyo+IJIPvqtw+lkTc=
+	t=1771889463; cv=none; b=kG8VFnPo6FA9xuEfUb/MmubVPhmqjkVCipw9vPN2qwCYlN4fVr42HGdzxcQhQ/wKmWNHU82+UkHPiAz5ftXNYKA95/Ktu0CWTy7P9lpJ15CTa88gp9X8x4jB4LSq7uhziHLmQRQkv3hgR/k6EIEhSjl3MNj8glaRbRIR534Dk/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771889145; c=relaxed/simple;
-	bh=3mzIl0bUP85PDfd8dorAP82gG03+p9pjsHWdKadkA1Y=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=UedlrfAgBETjmIKJ6khM1gva8xoPMl9YdBiwcGI6mEnNjnadjsqsvLegYDyjxe9zUnzM8HCtWCQybX5kphICFgOIU1Rx1cFW+tFg52D5n5lnbANJEom/sPrL3ZWhy5WDMR1i7LsHZ54+F4TNhcIauXXZXPg/R4rhBvcCrFKTKag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=SFfB6CwK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BsDwlYDC; arc=none smtp.client-ip=103.168.172.146
+	s=arc-20240116; t=1771889463; c=relaxed/simple;
+	bh=7QKKvZ32WbtOydUNei4z/VIGXQfpPg1O1+W4UeJebjc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=i0KU11W4RPjS7H3+gwd/pCWGjRbHEYltbIESUHey5Z/RSN8f1Om5TTWlo1LUI7rBTK2/OqrvgceH9yfbOGogNzurn1F76YrnhjbuHMmtKGvXqszbdBDix2EMMLh71S11WWsBf6qtSUI9KFfDlu6bGO2/cgAXb5GlZFADE7hmssY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=BXhWVU98; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vLaaPpGt; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="SFfB6CwK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BsDwlYDC"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id EEC1BEC016F;
-	Mon, 23 Feb 2026 18:25:42 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 18:25:42 -0500
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="BXhWVU98";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vLaaPpGt"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B2195140022E;
+	Mon, 23 Feb 2026 18:31:01 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 23 Feb 2026 18:31:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771889142;
-	 x=1771975542; bh=v/lHY1zw9tNTa/4pxbbqz1TZa04eKl7lnbRu4NxAaMU=; b=
-	SFfB6CwKQnVJWl92j6mscwbyYvElR9G2Pi6WZgyD0QUMIpwU6cdwworYWLRYIguf
-	7bFbmZ0AIHIB7fydSXvzAlEHYfG4UqAwlGcEIMnzdgOMSQuzNQeoIOT8lLWHl3Y9
-	3UXdYCq6sZ3kp5Oh5OgVKAxZzKG7tP9oGqfyUBylgmAlNrYc/aGtam2A4mY8zgyI
-	uCjcqYfCkANGpMNBfvbf64BnkFRSPZLjxrE8mcEITgULxAovVt5PQP4R6oVfUafM
-	3G2RXumDWkNtoinr6rzaqLM37y9cEIM2qH0pV8uVSyI1fVDDI0paS7uob/L9XRo+
-	YcH1j63R5/K5NhpIKy72XA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771889461;
+	 x=1771975861; bh=4r5tYyNXFDfqOY6FnjSBajVE0DgPXQ2lB5mu2Q+tl6s=; b=
+	BXhWVU98emZWEa4ptcsZGC61ZL5e+AkZFNAxrNuUTWLM1frQ8foKg77ai2pVzvTv
+	WfJwUdQf66uXfdwd8MPAo9HmtSpQRFEvrIjyU6vpz/SRZTb/0o+XtQuW32EboGit
+	MIwXUxf2J1IyeLPU7RIwXkUr+z3TAo0Y/PfaIhKkvP4eZAJDFUN5oI1XIrFK/PFH
+	SIYkoDlRrYotfUEFBU4UwVYccCjTlkqbKEeR0JNZ3S90SxSS1qqEUOftOvyh9weL
+	vRT+ivUtQjWGCAyd93Ggd6BEvJ/NGj2egKbzPAN1VvBKl498bwtOAB8gcKUA7Qkd
+	7s2PJLRN527oRODIvWCAMg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771889142; x=
-	1771975542; bh=v/lHY1zw9tNTa/4pxbbqz1TZa04eKl7lnbRu4NxAaMU=; b=B
-	sDwlYDC+A8IOuwVQirS22jClS8EcVVEal93KQc3txMqlabMlP4RDRwumx1UHHEvY
-	sAgZ1y+a9SRIx7SIi28KYx+UTurn95iI55i/7TKAvZs3pHpT1J66fjwSDVVMvplA
-	2rpKpW5njsicUw3u8XSMSeNd/CvADfEwzurjiEUKLRqxazNBoVJvHpC5pFLM/xo0
-	ehz7bm7ML7ffE8wIR9e7H4G71pdt3wRkWp90NFH0GC8O7nlT6fH54qCMQp38pibj
-	A2gSh59PM8Ff5as4y+s7duhPKc6IuRlV6Dbkq4xedYNM7KU9FYNDVzFwOVrFQmnP
-	Yn1onD+YU40Z+r2taclSQ==
-X-ME-Sender: <xms:9uGcaZOle3SnwIyDw4prMbbM9wrZjdcWuehg8HQRq69cxpPPB3icmdw>
-    <xme:9uGcaWxleqhI7F2sv3DnSTNJ-2GXOFPZqb92KWFIHCpb_7PaIoOKrrsjv1PN_UKjA
-    KiaErfcnfzTd882xyRFnvkx-ENy0QstILdz4yiWPPtLkdtrtq__RA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeekheeiucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771889461; x=
+	1771975861; bh=4r5tYyNXFDfqOY6FnjSBajVE0DgPXQ2lB5mu2Q+tl6s=; b=v
+	LaaPpGt6HG9nZJ8XrVZd6vBSHXJPrA/coyIzDrhMa+d+QpY69t5ihlhwKIdwtOuR
+	ooO25Oo9VUs0xD57IK2zHk+Z3QQ7MUBEpcj6MNx0VK/FYB1kcsVMfNEj1mSQTv4U
+	do56YG+0Q8dIHNF1iSI99tZjl1zsrvvNBZpV5Qf5DAqz8craU1NLX49p+4/NiNrY
+	4MABAWk3FnfNhKvKks4YT5374Atj49zndmaJDjX/BajMIyUpKtSyTXQYCbdt0GdA
+	sBh7VXFjlL+LtE1Lm6EDalT2UQSXmxK8mbXDTQqYaSvDkHaPz5AbWRuvUtn9C/Hz
+	AslfWrGan6hirbM7U9bbw==
+X-ME-Sender: <xms:NeOcaZjuVjJ2_OXKBtVLnuG1uXNcYLhPMp5ONgYppxODAy341CTEqSE>
+    <xme:NeOcaVceUv8v1BAUSB1wm6-GVkkL_-DH6BbOddJ8R2k0Q5Dh_SiH1lqpKxwZSlqqs
+    DjKzA7RaXSrA2Gu-h-aQ6B161KHrFaI7fOEkN-9ZYOR8JLNoz_aRA>
+X-ME-Received: <xmr:NeOcaWcd6xtXOHZfeq0hrNzhZTtnb3s83QnlrCEUYUnkDeOYMZfM-euBbOKaI635H8c5wT0qFnJvphYX5whqPNtVL0dZdgVKBEs91cmTOkILphicc8lRlXzCwg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeekheejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
-    dtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenuc
-    ggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveej
-    gfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkh
-    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
-    thhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:9uGcaY2FBIbtDol-8MjRiBQy-oJqw5xxw57FiMnFo9qS9Hvdy2yHEA>
-    <xmx:9uGcaQ6ZBV3BuNgZNde32z_XTxoDffZyIogJjB7eW5dDnWgSo17zWQ>
-    <xmx:9uGcabX0DY1eHsod43Cki9mvY_viyvupjOMyi_JwqGCOBsqAIXL1fA>
-    <xmx:9uGcafAcPnRnO0peiFwsjTLUx6QtqP6dm2hCwDtgL8wHodLIX3OawA>
-    <xmx:9uGcaTZvB4IBUHAugvX6go1rm4JzkzOP04oFZlL5qsD15aoJFPX3qWIK>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id B7EDA1EA006B; Mon, 23 Feb 2026 18:25:42 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlvdefmdenucfjughrpefhvfevuf
+    ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepudelgf
+    euieeuteekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffgnecuffhomhgr
+    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
+    vgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehpvghffhesphgvfhhfrd
+    hnvght
+X-ME-Proxy: <xmx:NeOcaX-SRHXP4AuDN9wsJYsje1d0163OJpuHkU-XJm1YQHR9VIKhWg>
+    <xmx:NeOcaan1RSPhyIdD-LkxVi4MWivZwFdHM-LvixvK3fP0ehx7Q-KFHA>
+    <xmx:NeOcaR_w3O8xizGaq2kBJx-Azh8Yq6Rrjy8Y6ovECSKzBD8YTzOI0w>
+    <xmx:NeOcaQkhNU2Uj6dGZBQG4Gg5DNKkeeJ5v_RspwJhXoHJTrW2xjnSxA>
+    <xmx:NeOcaQMaSGxdtvtDWn5BRliB8UMjilg3WePnK1TqhghOO_h9mH_NwP4L>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Feb 2026 18:31:00 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH v2 0/2] format-patch: make boolean and mention in diff-options.adoc
+Date: Tue, 24 Feb 2026 00:30:49 +0100
+Message-ID: <V2_CV_format.noprefix_boolean.421@msgid.xyz>
+X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
+In-Reply-To: <CV_format.noprefix_boolean.39c@msgid.xyz>
+References: <CV_format.noprefix_boolean.39c@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AebKJJRYDV9c
-Date: Tue, 24 Feb 2026 00:25:22 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>
-Message-Id: <ff92bec9-19b1-4107-9208-f692709ba9b4@app.fastmail.com>
-In-Reply-To: <xmqqy0ko626g.fsf@gitster.g>
-References: <CV_format.noprefix_boolean.39c@msgid.xyz>
- <format.noprefix_boolean.39d@msgid.xyz> <xmqqy0ko626g.fsf@gitster.g>
-Subject: Re: [PATCH 1/2] format-patch: make format.noprefix a boolean
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Feb 19, 2026, at 19:03, Junio C Hamano wrote:
->>[snip]
->> Let=E2=80=99s only offer a breaking change fig leaf by hinting about =
-the
->> previous behavior before dying.
->
-> One case that is often problematic is what happens to those who use
-> the same set of configuration variables with different versions of
-> Git, before and after such behaviour change.  But I do not think
-> this is such a bad thing.  The only reason why they had this
-> variable set (to any value, or to a value-less true) with existing
-> versions of Git is because they wanted to omit the prefixes, so when
-> a new version of Git dies with "Heh, 'nothanks' is not a valid
-> boolean value", they can edit the configuration variable to "1".
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Yeah.
+See: https://lore.kernel.org/git/a9602602-5fea-40c0-a505-34133ed4d58c@app.fastmail.com/
 
-I like how this was handled for `core.commentString`: You can set both
-`core.commentChar` and the new config and still be able to run on old
-versions.
+Topic name (applied): kh/format-patch-noprefix-is-boolean
 
-> And from that point of view, I think the hint given together with
-> the "bad boolean" error can and should be phrased a bit more
-> strongly, i.e.,
->
->> +		format_no_prefix =3D git_parse_maybe_bool(value);
->> +		if (format_no_prefix < 0) {
->> +			int status =3D die_message(
->> +				_("bad boolean config value '%s' for '%s'"),
->> +				value, var);
->> +			fprintf(stderr,
->> +				_("hint: '%s' used to accept any value but "
->> +				  "now only\n"
->> +				  "hint: accepts boolean values, like '%s'\n"),
->> +				var, "diff.noprefix");
->
-> The target audience of this (hint) is those who have set this
-> variable to a non-boolean strring from the existing version of Git,
-> and the only thing they meant to express was "I do not want any
-> prefix", so "we used to accept any value as true, but now accepts
-> only valid boolean values", perhaps?  That would nudge those who
-> wrote "[format] noprefix =3D NoThanks" to rewrite it correctly to
-> "true" or "1", and not "no".
+Topic summary: The config `format.noprefix` should act like a
+boolean. But now it is active no matter what the value is. Change it to
+act like a boolean like `diff.noprefix`. Also mention it instead of
+`diff.noprefix` in git-format-patch(1) doc.
 
-Very true. I=E2=80=99ll change to spell out that any value used to be
-treated as `true`.
+§ Changes in v2
 
-Right now it just says =E2=80=9Cused to accept any value=E2=80=9D. But n=
-ot what it means
-to accept any value...
+Got feedback from Junio.
 
-> This is a related tangent, but shouldn't this use advise() without
-> configuration?  There is no need to allocate an advice_type and use
-> advise_if_enabled(), because correcting a malformed configuration is
-> an action enough to squelch the message.
+Copied from note on Patch 1/2:
 
-Oh, right. That fits well here.
+• Use `advise()` for the hint; you get the `hint:` prefix and color
+• Rework the hint, or the advise, to say that any value *used to be*
+  treated as `true`. That better helps people who maybe set `nope` when
+  they meant, “no, I don’t want any prefix” (for example)
 
-In hindsight I think I should have used that in 5a312527 (whatchanged:
-hint about git-log(1) and aliasing, 2025-09-17).
+Also a commit message tweak on Patch 2/2.
+
+§ Link to v1
+
+https://lore.kernel.org/git/CV_format.noprefix_boolean.39c@msgid.xyz/
+
+§ Breaking change (unchanged since v1)
+
+This is a breaking change. But I have opted to die if the config is not
+a boolean and just hint about the change. See also Peff’s comment on
+such a breaking change in that link.
+
+I have also asked here about marking breaking changes:
+
+https://lore.kernel.org/git/3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page/T/#ma8856238748d0794a0da6c64e1c0c8a4824b996f
+
+Kristoffer Haugsbakk (2):
+  format-patch: make format.noprefix a boolean
+  doc: diff-options.adoc: show format.noprefix for format-patch
+
+ Documentation/diff-options.adoc |  4 +++-
+ builtin/log.c                   | 14 +++++++++++++-
+ t/t4014-format-patch.sh         | 16 ++++++++++++++++
+ 3 files changed, 32 insertions(+), 2 deletions(-)
+
+Interdiff against v1:
+diff --git a/builtin/log.c b/builtin/log.c
+index e56af7465ae..275122b807e 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -40,6 +40,7 @@
+ #include "mailmap.h"
+ #include "progress.h"
+ #include "commit-slab.h"
++#include "advice.h"
+ 
+ #include "commit-reach.h"
+ #include "range-diff.h"
+@@ -1101,11 +1102,11 @@ static int git_format_config(const char *var, const char *value,
+ 			int status = die_message(
+ 				_("bad boolean config value '%s' for '%s'"),
+ 				value, var);
+-			fprintf(stderr,
+-				_("hint: '%s' used to accept any value but "
+-				  "now only\n"
+-				  "hint: accepts boolean values, like '%s'\n"),
+-				var, "diff.noprefix");
++			advise(_("'%s' used to accept any value and "
++				 "treat that as 'true'.\n"
++				 "Now it only accepts boolean values, "
++				 "like what '%s' does.\n"),
++			       var, "diff.noprefix");
+ 			exit(status);
+ 		}
+ 		return 0;
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 645ac402a19..c20091e36fe 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -2555,8 +2555,8 @@ test_expect_success 'format-patch --default-prefix overrides format.noprefix' '
+ test_expect_success 'errors on format.noprefix which is not boolean' '
+ 	cat >expect <<-EOF &&
+ 	fatal: bad boolean config value ${SQ}not-a-bool${SQ} for ${SQ}format.noprefix${SQ}
+-	hint: ${SQ}format.noprefix${SQ} used to accept any value but now only
+-	hint: accepts boolean values, like ${SQ}diff.noprefix${SQ}
++	hint: ${SQ}format.noprefix${SQ} used to accept any value and treat that as ${SQ}true${SQ}.
++	hint: Now it only accepts boolean values, like what ${SQ}diff.noprefix${SQ} does.
+ 	EOF
+ 	test_must_fail git -c format.noprefix=not-a-bool \
+ 		format-patch -1 --stdout 2>actual &&
+Range-diff against v1:
+1:  49fa161a392 ! 1:  eee61561eb3 format-patch: make format.noprefix a boolean
+    @@ Commit message
+           format.noprefix* (current behavior) will now have the opposite
+           experience. Which is not a reasonable setup.
+     
+    -    Let’s only offer a breaking change fig leaf by hinting about the
+    +    Let’s only offer a breaking change fig leaf by advising about the
+         previous behavior before dying.
+     
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## builtin/log.c ##
+    +@@
+    + #include "mailmap.h"
+    + #include "progress.h"
+    + #include "commit-slab.h"
+    ++#include "advice.h"
+    + 
+    + #include "commit-reach.h"
+    + #include "range-diff.h"
+     @@ builtin/log.c: static int git_format_config(const char *var, const char *value,
+      		return 0;
+      	}
+    @@ builtin/log.c: static int git_format_config(const char *var, const char *value,
+     +			int status = die_message(
+     +				_("bad boolean config value '%s' for '%s'"),
+     +				value, var);
+    -+			fprintf(stderr,
+    -+				_("hint: '%s' used to accept any value but "
+    -+				  "now only\n"
+    -+				  "hint: accepts boolean values, like '%s'\n"),
+    -+				var, "diff.noprefix");
+    ++			advise(_("'%s' used to accept any value and "
+    ++				 "treat that as 'true'.\n"
+    ++				 "Now it only accepts boolean values, "
+    ++				 "like what '%s' does.\n"),
+    ++			       var, "diff.noprefix");
+     +			exit(status);
+     +		}
+      		return 0;
+    @@ t/t4014-format-patch.sh: test_expect_success 'format-patch respects format.nopre
+     +test_expect_success 'errors on format.noprefix which is not boolean' '
+     +	cat >expect <<-EOF &&
+     +	fatal: bad boolean config value ${SQ}not-a-bool${SQ} for ${SQ}format.noprefix${SQ}
+    -+	hint: ${SQ}format.noprefix${SQ} used to accept any value but now only
+    -+	hint: accepts boolean values, like ${SQ}diff.noprefix${SQ}
+    ++	hint: ${SQ}format.noprefix${SQ} used to accept any value and treat that as ${SQ}true${SQ}.
+    ++	hint: Now it only accepts boolean values, like what ${SQ}diff.noprefix${SQ} does.
+     +	EOF
+     +	test_must_fail git -c format.noprefix=not-a-bool \
+     +		format-patch -1 --stdout 2>actual &&
+2:  0cef1915a9c ! 2:  b9b583bd007 doc: diff-options.adoc: show format.noprefix for format-patch
+    @@ Commit message
+         git-format-patch(1) uses `format.noprefix` and ignores `diff.noprefix`.
+     
+         The configuration variable `format.prefix` was added as an “escape
+    -    hatch” because “it’s unlikely that anybody really wants format.
+    +    hatch”, and “it’s unlikely that anybody really wants format.
+         noprefix=true in the first place.”[1] Based on that there doesn’t
+         seem to be a need to widely advertise this configuration variable.
+     
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+-- 
+2.53.0.26.g2afa8602a26
+
