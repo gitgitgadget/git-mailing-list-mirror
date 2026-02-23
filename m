@@ -1,80 +1,80 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F06E3644BA
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 11:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E219D34EF05
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 11:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771847996; cv=none; b=s1+3bxVY4ZbU5+odD84G/j4VweIHa1BuBtfH8f4nmVHdkKYe1AX2286eCUXeLyNGR2XroOvUNjLu1dMIdlrKIFy5/EPbhJeuyugNNoLGjk5+vVzNtAtGs7Qu9b/JKlknu13JPlYuuUDG7V8a9snRadZn7ZhZKCT55iL7TFI9Esg=
+	t=1771847997; cv=none; b=WlYOWKVJN79eSN2agS86xrINqDC+zS1eYl7VoCv5pCPftW228i7SGWS9o/YFTjVXxuNDTiYX90aU3G7JRYwiNHUcDUROFPBQ8HwbUKTa6BxypL2fNhG/eKQ1jYCdX6yFeHi8OOH6uDe/W9Q9DJA8RqTmBID4rI7ZxFrNihPK7VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771847996; c=relaxed/simple;
-	bh=oj6pdNvgNxggfN3ptMQKhp6JFtgF92jl/m+/z9FzI80=;
+	s=arc-20240116; t=1771847997; c=relaxed/simple;
+	bh=E+tz9C8806ltkp4862/0iBQPOvgp6p4l2TTlparwT98=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FcLf0cM5nEGv6hT2csTGkLx2/9RDQ9luUGK8shxh6RisVqRBLT6dh6wlRDT+9lm7HwKtSXsuTckfSJZ54c3LcdCFk9zt3i5Fjwdi5Ad31SYnFjHOgZSMMMQxbxiLs49syLxmUGSmDZpXGYLhRBLT4XBz2i7EsETI3oMpxbyX4t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LoyWBdcw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A7onkKfm; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=jybATchLGoJDc6DAQOxuNdSIa2633pNixH/BuamcHLp5PQVOdwEBEl2vQ5/vLB3aL+nlpZ55gxX7xDko5X2V3/dNfqjU64nB3+67PUTqhUSL9Tn6P3BxGzihvpbL5X4YGIp6ADJbGsdDaG6Hieo3W80qRs6q3Z6L+fnwpP3KJhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K8Y4x51A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eBk3zMdM; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LoyWBdcw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A7onkKfm"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 592AEEC05BE;
-	Mon, 23 Feb 2026 06:59:52 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K8Y4x51A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eBk3zMdM"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5F074EC05BB;
+	Mon, 23 Feb 2026 06:59:55 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 23 Feb 2026 06:59:52 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 23 Feb 2026 06:59:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771847992;
-	 x=1771934392; bh=z8XYynN/4YLGKWwEhmmyBsddZIsSMTRO/5Yc9eH8myo=; b=
-	LoyWBdcwMNsCG9Xmx9eeIIeqHCILHvUSRclkgZwn82ppUakPTocUgu2Mo1u7VjJ3
-	HfLtU1O+30unptdzD5wXOn6CZBUCSffbYKenHZyNENJ9eTpxi4fq5Z34BRFW8S/t
-	O7Ojz/LGTx6Bdi/pTxlFDujVPHQ6XfwvmE/KBOeK9dF1XK32fRGTyNxcfW+SCyZq
-	NaeoScKV5HDDvbQRbxs7p/Dv5fraMfEod9dE/Upc1cK4WSRYwXDaAVOJSPP4XZ15
-	uYhbyy5+Is1lOmpEhpDcZcbyCMpZyTwiQG1qaRLxnC2VP8DaQ6iu5hjSXp9SmZT9
-	dHRNmywmMegyjqTyvzsReg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771847995;
+	 x=1771934395; bh=ngksjQB8Z9yFz32tAA5e+8PtyyAJRMoiTJQPo1HWd14=; b=
+	K8Y4x51A2djC6J5xtz+wifASlf9j5no7rTqpmfVwoxH/ecesKN0byf922+UkGeMf
+	ftU63Euo+M0gk1kO/+XvnvPcIgHkBsGiXA0KlOMh9NdSA4K8EKy3ztLLnFRvCFta
+	zpSQnDbOYdraTIkn2CBFF1owWpCi+plX1I5I0z7srCH1wCbuDn3JHoRXbBnhbA1a
+	MFc6v63GkILBQ6qs2mC0ewCcgVQGthbGuhqsNqO5rLgcCcILthFBExojmX/HqQyJ
+	NVbCzSlgX7LKfW7Qp6K7PiXH3fCtCFcQfC6LJrOXz9WtpJRDSNMe8cRib4qlZqIn
+	lJvhyv7H1YAk24g7RdbUYQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771847992; x=
-	1771934392; bh=z8XYynN/4YLGKWwEhmmyBsddZIsSMTRO/5Yc9eH8myo=; b=A
-	7onkKfmk7cAAC1VtKKLIU7iMyNtrsGxb970VkHgPX8Tx3C9rjTMXqaCGVCrE4ee/
-	EeFxUurKxaddWHcs+HlrsWgOoluFq4/lD1C0EUxLJU4puDIcafA6dMbFy8xh8pk1
-	nBT6hyxNeTz7w3Blf8NOh0FC7FIBmbSKQ75+qzIOQT9hvVFYNFi60Ite65FjWWrn
-	vJAKUCnWF6B72hjCB5PM1r24UJHU/d+uTOfs+vnYLgOdIy7ETgfSyOZ79SqYuLZP
-	Whkdf1GhtemalvoxtbcplrvRQHcY2hteoYFiU+S3U4Pe5qgnWMZq2U85cedeNg6d
-	2FnJKMh8tjG7Fof8akQ0A==
-X-ME-Sender: <xms:OEGcafydid7raQBty8PqjFssX1naxP8O_Opim840je5yTSI9HFrQ3A>
-    <xme:OEGcaeujqkL4Y9JROEnovqYCR_G5D59LcX5XMpMTSmcQCpElS-5omhp94Cu01WjZN
-    81DJYjOxfHJxrZg-7nSdGOnY4Sk-Z-iRIxKgfahcg3br-w1g2Iv>
-X-ME-Received: <xmr:OEGcaWv1Ds3et7l-qJ59p7IwSdNnvpEMOmUzHRXqsfRJ0ag3JgcjRWRDBil6_E0TcC_HVlgn1UrRcNwM5rappTuhq4e3wjHMYhMF5UpKIg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771847995; x=
+	1771934395; bh=ngksjQB8Z9yFz32tAA5e+8PtyyAJRMoiTJQPo1HWd14=; b=e
+	Bk3zMdMQMrAAIWWvYq54Tj0NFVleqLTeP75weuCDOA1IYquNg05yyZKRkwuJtEe2
+	7/+8cTiifAM3xNV+AIRJJiO2647gg76mYGTL/MP+8gf4XGjNBikVIG/CphP7bCAb
+	2/TR5DEJ8i91A+yeIPLjOHACOxOCcsb0SUjMOiNseYpMuScY3GjY89ZbU152difT
+	trEpsPaYpS3pB9iKjjusO6dex+9lxmwrEwCYfJb6le5rbmaT5+YfANmHwzGeZosC
+	/fhp/HImZYa0soU1WtxU1mzBbGz1Hz5PvD6W2016lregJJxdFA5EbYUd8UujBC2V
+	k4IwuUNC376FVmCyJ7xcA==
+X-ME-Sender: <xms:O0GcaToqJSTCvFcFqsjqJlxIR1VZSLjOAsQYnU_xoR5dcScoCgI3pw>
+    <xme:O0GcaVEODbM1dxd0tqBbe9lb4lLA9WJB4OoIr5L84LiGzGHCf84-6UZ3J8dgCkWiX
+    RujNPs1bSnEdj7FPnraFBZFo1TOUZRShNdIveu4Wnjgn0X83J-k3A>
+X-ME-Received: <xmr:O0GcadnmlZwP4rgh9jUUWk_NwLeW6mYoVVS5LuliB8scgW_BR6_f1JowWmIbdNDY4pg9ngnYzUtbcyVN8SHHd7pKKISo4CcrkJsc-ozIwg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejudejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeuvdekgfefgfdvgeekteelkeehueevgffflefgfeejheeggfeigffgudefffdukeen
-    ucffohhmrghinheprhgvfhdrnhgrmhgvnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidr
-    uggvpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:OEGcaTMkS7G-dotHYc68Eje1gga8w0X2HQUvZxlDfFJVC6r1dXXvTg>
-    <xmx:OEGcaU236QJ04zGBZZWeJLKrECiGvZxekdFggryrmbMDvy_nZSNF2g>
-    <xmx:OEGcafO6vwMGtwLa6OvTzqPPyAgwRISUw92nmSu46uhmPv8lrRT9GA>
-    <xmx:OEGcaU31b1qj4jND6-D8P2SMmFvSGPn2xJQHmrSKD6PrgsXbQGQCOQ>
-    <xmx:OEGcaXNDZxW7OOfWJN7wEI1XQM8zCQAuZgppsQNhwocg9WHDOq4H-1L->
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhsfigrlh
+    gurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtphhtthhopehkrghrthhhihhk
+    rddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:O0GcaQnEEEAnbxyxor850RTbI2Xj0qWj95LRLW4bm5sXt_iAyyXGNQ>
+    <xmx:O0GcaWsJ8Ue73UMCXqd_zRlqry-9PBB6evFd5wOsOMosmu8XayMlYw>
+    <xmx:O0GcabmlTLNQilGeBBck39_cKiAwOb0ozBN_1F6YYP7aFfKBwfKUuQ>
+    <xmx:O0GcaZvP5dbfpZFG7Ll-S0RdBiQJDVrkl4A2kLL_TvFZ8pY7co6XFQ>
+    <xmx:O0GcabkhtWsJWaX8vuzWZ7D3BhMW-L-f71q3yeBx7br-uctH4BmomjxL>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 06:59:51 -0500 (EST)
+ 23 Feb 2026 06:59:54 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 58bcf298 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Feb 2026 11:59:51 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 235f847c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Feb 2026 11:59:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 23 Feb 2026 12:59:38 +0100
-Subject: [PATCH v2 04/17] refs: rename `do_for_each_ref_flags`
+Date: Mon, 23 Feb 2026 12:59:39 +0100
+Subject: [PATCH v2 05/17] refs: rename `each_ref_fn`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260223-pks-refs-for-each-unification-v2-4-515d48c8087b@pks.im>
+Message-Id: <20260223-pks-refs-for-each-unification-v2-5-515d48c8087b@pks.im>
 References: <20260223-pks-refs-for-each-unification-v2-0-515d48c8087b@pks.im>
 In-Reply-To: <20260223-pks-refs-for-each-unification-v2-0-515d48c8087b@pks.im>
 To: git@vger.kernel.org
@@ -91,297 +91,435 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 X-Mailer: b4 0.14.3
 
-The enum `do_for_each_ref_flags` and its individual values don't match
-to our current best practices when it comes to naming things. Rename it
-to `refs_for_each_flag`.
+Similar to the preceding commit, rename `each_ref_fn` to better match
+our current best practices around how we name things.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ref-filter.c            |  2 +-
- refs.c                  | 18 +++++++++---------
- refs.h                  | 12 ++++++------
- refs/files-backend.c    | 12 ++++++------
- refs/packed-backend.c   |  8 ++++----
- refs/reftable-backend.c | 10 +++++-----
- 6 files changed, 31 insertions(+), 31 deletions(-)
+ pack-bitmap.c   |  2 +-
+ pack-bitmap.h   |  2 +-
+ ref-filter.c    |  6 +++---
+ refs.c          | 34 +++++++++++++++++-----------------
+ refs.h          | 38 +++++++++++++++++++-------------------
+ refs/iterator.c |  2 +-
+ revision.c      |  8 ++++----
+ submodule.c     |  2 +-
+ upload-pack.c   |  2 +-
+ worktree.c      |  2 +-
+ worktree.h      |  2 +-
+ 11 files changed, 50 insertions(+), 50 deletions(-)
 
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 1c93871484..efef7081e6 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -3324,7 +3324,7 @@ static const struct string_list *bitmap_preferred_tips(struct repository *r)
+ }
+ 
+ void for_each_preferred_bitmap_tip(struct repository *repo,
+-				   each_ref_fn cb, void *cb_data)
++				   refs_for_each_cb cb, void *cb_data)
+ {
+ 	struct string_list_item *item;
+ 	const struct string_list *preferred_tips;
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index d0611d0481..a95e1c2d11 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -105,7 +105,7 @@ int for_each_bitmapped_object(struct bitmap_index *bitmap_git,
+  * "pack.preferBitmapTips" and invoke the callback on each function.
+  */
+ void for_each_preferred_bitmap_tip(struct repository *repo,
+-				   each_ref_fn cb, void *cb_data);
++				   refs_for_each_cb cb, void *cb_data);
+ 
+ #define GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL \
+ 	"GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL"
 diff --git a/ref-filter.c b/ref-filter.c
-index 3917c4ccd9..4bc54ebd9d 100644
+index 4bc54ebd9d..049e845a19 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -2810,7 +2810,7 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
- 	if (filter->kind & FILTER_REFS_ROOT_REFS) {
- 		/* In this case, we want to print all refs including root refs. */
- 		return for_each_fullref_with_seek(filter, cb, cb_data,
--						  DO_FOR_EACH_INCLUDE_ROOT_REFS);
-+						  REFS_FOR_EACH_INCLUDE_ROOT_REFS);
- 	}
+@@ -2781,7 +2781,7 @@ static int start_ref_iterator_after(struct ref_iterator *iter, const char *marke
+ 	return ret;
+ }
  
- 	if (!filter->match_as_path) {
+-static int for_each_fullref_with_seek(struct ref_filter *filter, each_ref_fn cb,
++static int for_each_fullref_with_seek(struct ref_filter *filter, refs_for_each_cb cb,
+ 				       void *cb_data, unsigned int flags)
+ {
+ 	struct ref_iterator *iter;
+@@ -2804,7 +2804,7 @@ static int for_each_fullref_with_seek(struct ref_filter *filter, each_ref_fn cb,
+  * pattern match, so the callback still has to match each ref individually.
+  */
+ static int for_each_fullref_in_pattern(struct ref_filter *filter,
+-				       each_ref_fn cb,
++				       refs_for_each_cb cb,
+ 				       void *cb_data)
+ {
+ 	if (filter->kind & FILTER_REFS_ROOT_REFS) {
+@@ -3303,7 +3303,7 @@ void filter_is_base(struct repository *r,
+ 	free(bases);
+ }
+ 
+-static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref_fn fn, void *cb_data)
++static int do_filter_refs(struct ref_filter *filter, unsigned int type, refs_for_each_cb fn, void *cb_data)
+ {
+ 	const char *prefix = NULL;
+ 	int ret = 0;
 diff --git a/refs.c b/refs.c
-index 466398494f..52a680797a 100644
+index 52a680797a..a45cc61211 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1812,7 +1812,7 @@ struct ref_iterator *refs_ref_iterator_begin(
- 		const char *prefix,
- 		const char **exclude_patterns,
- 		int trim,
--		enum do_for_each_ref_flags flags)
-+		enum refs_for_each_flag flags)
- {
- 	struct ref_iterator *iter;
- 	struct strvec normalized_exclude_patterns = STRVEC_INIT;
-@@ -1834,14 +1834,14 @@ struct ref_iterator *refs_ref_iterator_begin(
- 		exclude_patterns = normalized_exclude_patterns.v;
- 	}
- 
--	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN)) {
-+	if (!(flags & REFS_FOR_EACH_INCLUDE_BROKEN)) {
- 		static int ref_paranoia = -1;
- 
- 		if (ref_paranoia < 0)
- 			ref_paranoia = git_env_bool("GIT_REF_PARANOIA", 1);
- 		if (ref_paranoia) {
--			flags |= DO_FOR_EACH_INCLUDE_BROKEN;
--			flags |= DO_FOR_EACH_OMIT_DANGLING_SYMREFS;
-+			flags |= REFS_FOR_EACH_INCLUDE_BROKEN;
-+			flags |= REFS_FOR_EACH_OMIT_DANGLING_SYMREFS;
- 		}
- 	}
- 
-@@ -1861,7 +1861,7 @@ struct ref_iterator *refs_ref_iterator_begin(
- static int do_for_each_ref(struct ref_store *refs, const char *prefix,
- 			   const char **exclude_patterns,
- 			   each_ref_fn fn, int trim,
--			   enum do_for_each_ref_flags flags, void *cb_data)
-+			   enum refs_for_each_flag flags, void *cb_data)
- {
- 	struct ref_iterator *iter;
- 
-@@ -1897,7 +1897,7 @@ int refs_for_each_replace_ref(struct ref_store *refs, each_ref_fn fn, void *cb_d
- 	const char *git_replace_ref_base = ref_namespace[NAMESPACE_REPLACE].ref;
- 	return do_for_each_ref(refs, git_replace_ref_base, NULL, fn,
- 			       strlen(git_replace_ref_base),
--			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
-+			       REFS_FOR_EACH_INCLUDE_BROKEN, cb_data);
- }
- 
- int refs_for_each_namespaced_ref(struct ref_store *refs,
-@@ -1929,7 +1929,7 @@ int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
- 			    each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(refs, prefix, NULL, fn, 0,
--			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
-+			       REFS_FOR_EACH_INCLUDE_BROKEN, cb_data);
- }
- 
- static int qsort_strcmp(const void *va, const void *vb)
-@@ -2741,7 +2741,7 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
- 
- 			if (!iter)
- 				iter = refs_ref_iterator_begin(refs, dirname.buf, NULL, 0,
--							       DO_FOR_EACH_INCLUDE_BROKEN);
-+							       REFS_FOR_EACH_INCLUDE_BROKEN);
- 			else if (ref_iterator_seek(iter, dirname.buf,
- 						   REF_ITERATOR_SEEK_SET_PREFIX) < 0)
- 				goto cleanup;
-@@ -3281,7 +3281,7 @@ int repo_migrate_ref_storage_format(struct repository *repo,
- 	 * ensure that there are no concurrent writes.
- 	 */
- 	ret = do_for_each_ref(old_refs, "", NULL, migrate_one_ref, 0,
--			      DO_FOR_EACH_INCLUDE_ROOT_REFS | DO_FOR_EACH_INCLUDE_BROKEN,
-+			      REFS_FOR_EACH_INCLUDE_ROOT_REFS | REFS_FOR_EACH_INCLUDE_BROKEN,
- 			      &data);
- 	if (ret < 0)
- 		goto done;
-diff --git a/refs.h b/refs.h
-index 6fd7a706b5..2ae4a6e75b 100644
---- a/refs.h
-+++ b/refs.h
-@@ -406,7 +406,7 @@ typedef int each_ref_fn(const struct reference *ref, void *cb_data);
-  * These flags are passed to refs_ref_iterator_begin() (and do_for_each_ref(),
-  * which feeds it).
-  */
--enum do_for_each_ref_flags {
-+enum refs_for_each_flag {
- 	/*
- 	 * Include broken references in a do_for_each_ref*() iteration, which
- 	 * would normally be omitted. This includes both refs that point to
-@@ -416,7 +416,7 @@ enum do_for_each_ref_flags {
- 	 * ref; this is not a corruption, but as they have no valid oid, we
- 	 * omit them from normal iteration results).
- 	 */
--	DO_FOR_EACH_INCLUDE_BROKEN = (1 << 0),
-+	REFS_FOR_EACH_INCLUDE_BROKEN = (1 << 0),
- 
- 	/*
- 	 * Only include per-worktree refs in a do_for_each_ref*() iteration.
-@@ -424,19 +424,19 @@ enum do_for_each_ref_flags {
- 	 * where all reference backends will presumably store their
- 	 * per-worktree refs.
- 	 */
--	DO_FOR_EACH_PER_WORKTREE_ONLY = (1 << 1),
-+	REFS_FOR_EACH_PER_WORKTREE_ONLY = (1 << 1),
- 
- 	/*
- 	 * Omit dangling symrefs from output; this only has an effect with
- 	 * INCLUDE_BROKEN, since they are otherwise not included at all.
- 	 */
--	DO_FOR_EACH_OMIT_DANGLING_SYMREFS = (1 << 2),
-+	REFS_FOR_EACH_OMIT_DANGLING_SYMREFS = (1 << 2),
- 
- 	/*
- 	 * Include root refs i.e. HEAD and pseudorefs along with the regular
- 	 * refs.
- 	 */
--	DO_FOR_EACH_INCLUDE_ROOT_REFS = (1 << 3),
-+	REFS_FOR_EACH_INCLUDE_ROOT_REFS = (1 << 3),
+@@ -445,7 +445,7 @@ char *refs_resolve_refdup(struct ref_store *refs,
+ struct for_each_ref_filter {
+ 	const char *pattern;
+ 	const char *prefix;
+-	each_ref_fn *fn;
++	refs_for_each_cb *fn;
+ 	void *cb_data;
  };
  
- /*
-@@ -1372,7 +1372,7 @@ struct ref_iterator;
- struct ref_iterator *refs_ref_iterator_begin(
- 	struct ref_store *refs,
- 	const char *prefix, const char **exclude_patterns,
--	int trim, enum do_for_each_ref_flags flags);
-+	int trim, enum refs_for_each_flag flags);
+@@ -527,22 +527,22 @@ void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
+ 	refs_for_each_rawref(refs, warn_if_dangling_symref, &data);
+ }
+ 
+-int refs_for_each_tag_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++int refs_for_each_tag_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	return refs_for_each_ref_in(refs, "refs/tags/", fn, cb_data);
+ }
+ 
+-int refs_for_each_branch_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++int refs_for_each_branch_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	return refs_for_each_ref_in(refs, "refs/heads/", fn, cb_data);
+ }
+ 
+-int refs_for_each_remote_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++int refs_for_each_remote_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	return refs_for_each_ref_in(refs, "refs/remotes/", fn, cb_data);
+ }
+ 
+-int refs_head_ref_namespaced(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++int refs_head_ref_namespaced(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret = 0;
+@@ -590,7 +590,7 @@ void normalize_glob_ref(struct string_list_item *item, const char *prefix,
+ 	strbuf_release(&normalized_pattern);
+ }
+ 
+-int refs_for_each_glob_ref_in(struct ref_store *refs, each_ref_fn fn,
++int refs_for_each_glob_ref_in(struct ref_store *refs, refs_for_each_cb fn,
+ 			      const char *pattern, const char *prefix, void *cb_data)
+ {
+ 	struct strbuf real_pattern = STRBUF_INIT;
+@@ -620,7 +620,7 @@ int refs_for_each_glob_ref_in(struct ref_store *refs, each_ref_fn fn,
+ 	return ret;
+ }
+ 
+-int refs_for_each_glob_ref(struct ref_store *refs, each_ref_fn fn,
++int refs_for_each_glob_ref(struct ref_store *refs, refs_for_each_cb fn,
+ 			   const char *pattern, void *cb_data)
+ {
+ 	return refs_for_each_glob_ref_in(refs, fn, pattern, NULL, cb_data);
+@@ -1788,7 +1788,7 @@ const char *find_descendant_ref(const char *dirname,
+ 	return NULL;
+ }
+ 
+-int refs_head_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++int refs_head_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	struct object_id oid;
+ 	int flag;
+@@ -1860,7 +1860,7 @@ struct ref_iterator *refs_ref_iterator_begin(
+ 
+ static int do_for_each_ref(struct ref_store *refs, const char *prefix,
+ 			   const char **exclude_patterns,
+-			   each_ref_fn fn, int trim,
++			   refs_for_each_cb fn, int trim,
+ 			   enum refs_for_each_flag flags, void *cb_data)
+ {
+ 	struct ref_iterator *iter;
+@@ -1874,25 +1874,25 @@ static int do_for_each_ref(struct ref_store *refs, const char *prefix,
+ 	return do_for_each_ref_iterator(iter, fn, cb_data);
+ }
+ 
+-int refs_for_each_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++int refs_for_each_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	return do_for_each_ref(refs, "", NULL, fn, 0, 0, cb_data);
+ }
+ 
+ int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
+-			 each_ref_fn fn, void *cb_data)
++			 refs_for_each_cb fn, void *cb_data)
+ {
+ 	return do_for_each_ref(refs, prefix, NULL, fn, strlen(prefix), 0, cb_data);
+ }
+ 
+ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
+ 			     const char **exclude_patterns,
+-			     each_ref_fn fn, void *cb_data)
++			     refs_for_each_cb fn, void *cb_data)
+ {
+ 	return do_for_each_ref(refs, prefix, exclude_patterns, fn, 0, 0, cb_data);
+ }
+ 
+-int refs_for_each_replace_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++int refs_for_each_replace_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	const char *git_replace_ref_base = ref_namespace[NAMESPACE_REPLACE].ref;
+ 	return do_for_each_ref(refs, git_replace_ref_base, NULL, fn,
+@@ -1902,7 +1902,7 @@ int refs_for_each_replace_ref(struct ref_store *refs, each_ref_fn fn, void *cb_d
+ 
+ int refs_for_each_namespaced_ref(struct ref_store *refs,
+ 				 const char **exclude_patterns,
+-				 each_ref_fn fn, void *cb_data)
++				 refs_for_each_cb fn, void *cb_data)
+ {
+ 	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
+ 	struct strbuf prefix = STRBUF_INIT;
+@@ -1920,13 +1920,13 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
+ 	return ret;
+ }
+ 
+-int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++int refs_for_each_rawref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	return refs_for_each_rawref_in(refs, "", fn, cb_data);
+ }
+ 
+ int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
+-			    each_ref_fn fn, void *cb_data)
++			    refs_for_each_cb fn, void *cb_data)
+ {
+ 	return do_for_each_ref(refs, prefix, NULL, fn, 0,
+ 			       REFS_FOR_EACH_INCLUDE_BROKEN, cb_data);
+@@ -1994,7 +1994,7 @@ int refs_for_each_fullref_in_prefixes(struct ref_store *ref_store,
+ 				      const char *namespace,
+ 				      const char **patterns,
+ 				      const char **exclude_patterns,
+-				      each_ref_fn fn, void *cb_data)
++				      refs_for_each_cb fn, void *cb_data)
+ {
+ 	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
+ 	struct string_list prefixes = STRING_LIST_INIT_DUP;
+diff --git a/refs.h b/refs.h
+index 2ae4a6e75b..5190e98b2c 100644
+--- a/refs.h
++++ b/refs.h
+@@ -170,7 +170,7 @@ int ref_store_remove_on_disk(struct ref_store *refs, struct strbuf *err);
+  *
+  *   peel_object(r, oid, &peeled);
+  *
+- * with the "oid" value given to the each_ref_fn callback, except
++ * with the "oid" value given to the refs_for_each_cb callback, except
+  * that some ref storage may be able to answer the query without
+  * actually loading the object in memory.
+  */
+@@ -329,7 +329,7 @@ int check_tag_ref(struct strbuf *sb, const char *name);
+ struct ref_transaction;
  
  /*
-  * Advance the iterator to the first or next item and return ITER_OK.
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index b1b13b41f6..6c98e14414 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -439,7 +439,7 @@ static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs,
+- * Bit values set in the flags argument passed to each_ref_fn() and
++ * Bit values set in the flags argument passed to refs_for_each_cb() and
+  * stored in ref_iterator::flags. Other bits are for internal use
+  * only:
+  */
+@@ -400,7 +400,7 @@ int reference_get_peeled_oid(struct repository *repo,
+  * argument is only guaranteed to be valid for the duration of a
+  * single callback invocation.
+  */
+-typedef int each_ref_fn(const struct reference *ref, void *cb_data);
++typedef int refs_for_each_cb(const struct reference *ref, void *cb_data);
  
- 		dir = get_ref_dir(refs->loose->root);
+ /*
+  * These flags are passed to refs_ref_iterator_begin() (and do_for_each_ref(),
+@@ -449,22 +449,22 @@ enum refs_for_each_flag {
+  * stop the iteration. Returned references are sorted.
+  */
+ int refs_head_ref(struct ref_store *refs,
+-		  each_ref_fn fn, void *cb_data);
++		  refs_for_each_cb fn, void *cb_data);
+ int refs_head_ref_namespaced(struct ref_store *refs,
+-			     each_ref_fn fn, void *cb_data);
++			     refs_for_each_cb fn, void *cb_data);
  
--		if (flags & DO_FOR_EACH_INCLUDE_ROOT_REFS)
-+		if (flags & REFS_FOR_EACH_INCLUDE_ROOT_REFS)
- 			add_root_refs(refs, dir);
+ int refs_for_each_ref(struct ref_store *refs,
+-		      each_ref_fn fn, void *cb_data);
++		      refs_for_each_cb fn, void *cb_data);
+ int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
+-			 each_ref_fn fn, void *cb_data);
++			 refs_for_each_cb fn, void *cb_data);
+ int refs_for_each_tag_ref(struct ref_store *refs,
+-			  each_ref_fn fn, void *cb_data);
++			  refs_for_each_cb fn, void *cb_data);
+ int refs_for_each_branch_ref(struct ref_store *refs,
+-			     each_ref_fn fn, void *cb_data);
++			     refs_for_each_cb fn, void *cb_data);
+ int refs_for_each_remote_ref(struct ref_store *refs,
+-			     each_ref_fn fn, void *cb_data);
++			     refs_for_each_cb fn, void *cb_data);
+ int refs_for_each_replace_ref(struct ref_store *refs,
+-			      each_ref_fn fn, void *cb_data);
++			      refs_for_each_cb fn, void *cb_data);
  
- 		/*
-@@ -955,17 +955,17 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 	int ok;
+ /*
+  * references matching any pattern in "exclude_patterns" are omitted from the
+@@ -472,7 +472,7 @@ int refs_for_each_replace_ref(struct ref_store *refs,
+  */
+ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
+ 			     const char **exclude_patterns,
+-			     each_ref_fn fn, void *cb_data);
++			     refs_for_each_cb fn, void *cb_data);
  
- 	while ((ok = ref_iterator_advance(iter->iter0)) == ITER_OK) {
--		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
-+		if (iter->flags & REFS_FOR_EACH_PER_WORKTREE_ONLY &&
- 		    parse_worktree_ref(iter->iter0->ref.name, NULL, NULL,
- 				       NULL) != REF_WORKTREE_CURRENT)
- 			continue;
+ /**
+  * iterate all refs in "patterns" by partitioning patterns into disjoint sets
+@@ -487,13 +487,13 @@ int refs_for_each_fullref_in_prefixes(struct ref_store *refs,
+ 				      const char *namespace,
+ 				      const char **patterns,
+ 				      const char **exclude_patterns,
+-				      each_ref_fn fn, void *cb_data);
++				      refs_for_each_cb fn, void *cb_data);
  
--		if ((iter->flags & DO_FOR_EACH_OMIT_DANGLING_SYMREFS) &&
-+		if ((iter->flags & REFS_FOR_EACH_OMIT_DANGLING_SYMREFS) &&
- 		    (iter->iter0->ref.flags & REF_ISSYMREF) &&
- 		    (iter->iter0->ref.flags & REF_ISBROKEN))
- 			continue;
+ /* iterates all refs that match the specified glob pattern. */
+-int refs_for_each_glob_ref(struct ref_store *refs, each_ref_fn fn,
++int refs_for_each_glob_ref(struct ref_store *refs, refs_for_each_cb fn,
+ 			   const char *pattern, void *cb_data);
  
--		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
-+		if (!(iter->flags & REFS_FOR_EACH_INCLUDE_BROKEN) &&
- 		    !ref_resolves_to_object(iter->iter0->ref.name,
- 					    iter->repo,
- 					    iter->iter0->ref.oid,
-@@ -1012,7 +1012,7 @@ static struct ref_iterator *files_ref_iterator_begin(
- 	struct ref_iterator *ref_iterator;
- 	unsigned int required_flags = REF_STORE_READ;
+-int refs_for_each_glob_ref_in(struct ref_store *refs, each_ref_fn fn,
++int refs_for_each_glob_ref_in(struct ref_store *refs, refs_for_each_cb fn,
+ 			      const char *pattern, const char *prefix, void *cb_data);
  
--	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN))
-+	if (!(flags & REFS_FOR_EACH_INCLUDE_BROKEN))
- 		required_flags |= REF_STORE_ODB;
+ /*
+@@ -502,12 +502,12 @@ int refs_for_each_glob_ref_in(struct ref_store *refs, each_ref_fn fn,
+  */
+ int refs_for_each_namespaced_ref(struct ref_store *refs,
+ 				 const char **exclude_patterns,
+-				 each_ref_fn fn, void *cb_data);
++				 refs_for_each_cb fn, void *cb_data);
  
- 	refs = files_downcast(ref_store, required_flags, "ref_iterator_begin");
-@@ -1050,7 +1050,7 @@ static struct ref_iterator *files_ref_iterator_begin(
- 	 */
- 	packed_iter = refs_ref_iterator_begin(
- 			refs->packed_ref_store, prefix, exclude_patterns, 0,
--			DO_FOR_EACH_INCLUDE_BROKEN);
-+			REFS_FOR_EACH_INCLUDE_BROKEN);
+ /* can be used to learn about broken ref and symref */
+-int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data);
++int refs_for_each_rawref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data);
+ int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
+-			    each_ref_fn fn, void *cb_data);
++			    refs_for_each_cb fn, void *cb_data);
  
- 	overlay_iter = overlay_ref_iterator_begin(loose_iter, packed_iter);
+ /*
+  * Normalizes partial refs to their fully qualified form.
+@@ -1421,6 +1421,6 @@ void ref_iterator_free(struct ref_iterator *ref_iterator);
+  * iterator style.
+  */
+ int do_for_each_ref_iterator(struct ref_iterator *iter,
+-			     each_ref_fn fn, void *cb_data);
++			     refs_for_each_cb fn, void *cb_data);
  
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 59b3ecb9d6..5ef4ae32b8 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -982,11 +982,11 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 		const char *refname = iter->base.ref.name;
- 		const char *prefix = iter->prefix;
+ #endif /* REFS_H */
+diff --git a/refs/iterator.c b/refs/iterator.c
+index d79aa5ec82..d5cacde51b 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -423,7 +423,7 @@ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
+ }
  
--		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
-+		if (iter->flags & REFS_FOR_EACH_PER_WORKTREE_ONLY &&
- 		    !is_per_worktree_ref(iter->base.ref.name))
- 			continue;
+ int do_for_each_ref_iterator(struct ref_iterator *iter,
+-			     each_ref_fn fn, void *cb_data)
++			     refs_for_each_cb fn, void *cb_data)
+ {
+ 	int retval = 0, ok;
  
--		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
-+		if (!(iter->flags & REFS_FOR_EACH_INCLUDE_BROKEN) &&
- 		    !ref_resolves_to_object(iter->base.ref.name, iter->repo,
- 					    &iter->oid, iter->flags))
- 			continue;
-@@ -1159,7 +1159,7 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 	struct ref_iterator *ref_iterator;
- 	unsigned int required_flags = REF_STORE_READ;
+diff --git a/revision.c b/revision.c
+index 29972c3a19..8c206830d5 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1646,7 +1646,7 @@ static void init_all_refs_cb(struct all_refs_cb *cb, struct rev_info *revs,
  
--	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN))
-+	if (!(flags & REFS_FOR_EACH_INCLUDE_BROKEN))
- 		required_flags |= REF_STORE_ODB;
- 	refs = packed_downcast(ref_store, required_flags, "ref_iterator_begin");
+ static void handle_refs(struct ref_store *refs,
+ 			struct rev_info *revs, unsigned flags,
+-			int (*for_each)(struct ref_store *, each_ref_fn, void *))
++			int (*for_each)(struct ref_store *, refs_for_each_cb, void *))
+ {
+ 	struct all_refs_cb cb;
  
-@@ -1401,7 +1401,7 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
- 	 * of updates is exhausted, leave i set to updates->nr.
- 	 */
- 	iter = packed_ref_iterator_begin(&refs->base, "", NULL,
--					 DO_FOR_EACH_INCLUDE_BROKEN);
-+					 REFS_FOR_EACH_INCLUDE_BROKEN);
- 	if ((ok = ref_iterator_advance(iter)) != ITER_OK) {
- 		ref_iterator_free(iter);
- 		iter = NULL;
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 5611808ad7..34bc074dd3 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -662,7 +662,7 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 		 * the root refs are to be included. We emulate the same behaviour here.
- 		 */
- 		if (!starts_with(iter->ref.refname, "refs/") &&
--		    !(iter->flags & DO_FOR_EACH_INCLUDE_ROOT_REFS &&
-+		    !(iter->flags & REFS_FOR_EACH_INCLUDE_ROOT_REFS &&
- 		      is_root_ref(iter->ref.refname))) {
- 			continue;
- 		}
-@@ -676,7 +676,7 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 		if (iter->exclude_patterns && should_exclude_current_ref(iter))
- 			continue;
+@@ -2728,7 +2728,7 @@ void revision_opts_finish(struct rev_info *revs)
+ 	}
+ }
  
--		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
-+		if (iter->flags & REFS_FOR_EACH_PER_WORKTREE_ONLY &&
- 		    parse_worktree_ref(iter->ref.refname, NULL, NULL, NULL) !=
- 			    REF_WORKTREE_CURRENT)
- 			continue;
-@@ -714,12 +714,12 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 			flags |= REF_BAD_NAME | REF_ISBROKEN;
- 		}
+-static int for_each_bisect_ref(struct ref_store *refs, each_ref_fn fn,
++static int for_each_bisect_ref(struct ref_store *refs, refs_for_each_cb fn,
+ 			       void *cb_data, const char *term)
+ {
+ 	struct strbuf bisect_refs = STRBUF_INIT;
+@@ -2739,12 +2739,12 @@ static int for_each_bisect_ref(struct ref_store *refs, each_ref_fn fn,
+ 	return status;
+ }
  
--		if (iter->flags & DO_FOR_EACH_OMIT_DANGLING_SYMREFS &&
-+		if (iter->flags & REFS_FOR_EACH_OMIT_DANGLING_SYMREFS &&
- 		    flags & REF_ISSYMREF &&
- 		    flags & REF_ISBROKEN)
- 			continue;
+-static int for_each_bad_bisect_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++static int for_each_bad_bisect_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	return for_each_bisect_ref(refs, fn, cb_data, term_bad);
+ }
  
--		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
-+		if (!(iter->flags & REFS_FOR_EACH_INCLUDE_BROKEN) &&
- 		    !ref_resolves_to_object(iter->ref.refname, refs->base.repo,
- 					    &iter->oid, flags))
- 				continue;
-@@ -871,7 +871,7 @@ static struct ref_iterator *reftable_be_iterator_begin(struct ref_store *ref_sto
- 	struct reftable_ref_store *refs;
- 	unsigned int required_flags = REF_STORE_READ;
+-static int for_each_good_bisect_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
++static int for_each_good_bisect_ref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+ {
+ 	return for_each_bisect_ref(refs, fn, cb_data, term_good);
+ }
+diff --git a/submodule.c b/submodule.c
+index 508938e4da..4f9aaa2c75 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -101,7 +101,7 @@ int is_staging_gitmodules_ok(struct index_state *istate)
+ }
  
--	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN))
-+	if (!(flags & REFS_FOR_EACH_INCLUDE_BROKEN))
- 		required_flags |= REF_STORE_ODB;
- 	refs = reftable_be_downcast(ref_store, required_flags, "ref_iterator_begin");
+ static int for_each_remote_ref_submodule(const char *submodule,
+-					 each_ref_fn fn, void *cb_data)
++					 refs_for_each_cb fn, void *cb_data)
+ {
+ 	return refs_for_each_remote_ref(repo_get_submodule_ref_store(the_repository,
+ 								     submodule),
+diff --git a/upload-pack.c b/upload-pack.c
+index 2d2b70cbf2..7fe397b0d0 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -607,7 +607,7 @@ static int allow_hidden_refs(enum allow_uor allow_uor)
+ 	return !(allow_uor & (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
+ }
  
+-static void for_each_namespaced_ref_1(each_ref_fn fn,
++static void for_each_namespaced_ref_1(refs_for_each_cb fn,
+ 				      struct upload_pack_data *data)
+ {
+ 	const char **excludes = NULL;
+diff --git a/worktree.c b/worktree.c
+index 9308389cb6..bf8c54c04d 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -575,7 +575,7 @@ void strbuf_worktree_ref(const struct worktree *wt,
+ 	strbuf_addstr(sb, refname);
+ }
+ 
+-int other_head_refs(each_ref_fn fn, void *cb_data)
++int other_head_refs(refs_for_each_cb fn, void *cb_data)
+ {
+ 	struct worktree **worktrees, **p;
+ 	struct strbuf refname = STRBUF_INIT;
+diff --git a/worktree.h b/worktree.h
+index e4bcccdc0a..12484a91a7 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -191,7 +191,7 @@ int is_shared_symref(const struct worktree *wt,
+  * Similar to head_ref() for all HEADs _except_ one from the current
+  * worktree, which is covered by head_ref().
+  */
+-int other_head_refs(each_ref_fn fn, void *cb_data);
++int other_head_refs(refs_for_each_cb fn, void *cb_data);
+ 
+ int is_worktree_being_rebased(const struct worktree *wt, const char *target);
+ int is_worktree_being_bisected(const struct worktree *wt, const char *target);
 
 -- 
 2.53.0.536.g309c995771.dirty
