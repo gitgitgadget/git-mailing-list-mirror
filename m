@@ -1,65 +1,66 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699733EBF22
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 03:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB219343208
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 03:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771817751; cv=none; b=ExSqhYEmIoHOZtMjhrJ2xdRSgcY5u1aY18H2DLVpzfQlnqlCx18MNNQfJGKpuDREEmLersz0WOexfc2dgmN3xhoLv+TS3RFMkgAK0sNCCPpmekaMQVQqEA4Z2+sXCosgVQmP+/CjO0VsK/leOgTpVg0PPIQqnvhRUaa+q13d17o=
+	t=1771818072; cv=none; b=DjqgcaaSSUGdTkTfAaTqe2IyAEVicSe6cHbHj1T7BxKiAPsZQOKLL5/0P0GJBWm5stplAbj7Pat2B8qfz+JEcrct11PDzbXPko62AOrCXgKHhlpdyhEgD6U4nm14kkFmW0dd3o8h8fKBmtFtWI5uZ4rbW78r6ZEXayot2E4aBh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771817751; c=relaxed/simple;
-	bh=Sl/FOEfvwL+bx4LF3I7xf6X43aRsNc0maP2v4oSUccA=;
+	s=arc-20240116; t=1771818072; c=relaxed/simple;
+	bh=Iux959/8KrRHTJGhwi5M4bBwheYgrCXDZz2e5t6RxQw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VVPRz8aelefGwIICHBYMhKzXxuDugzK/HBTTCqZO8y4tpOZ2QbzM7l+TOYsWfsvme2leQ3sz/7KDhHh9ld42pACn9jHvp8MEbr3S16OGdAL7a9zj0yrEUCj/+CLY03LsJ7u8v4wYSDQgWPrL+AvLajAhKmhrymvg0NYfz/SyXtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q8FMiIfj; arc=none smtp.client-ip=209.85.215.170
+	 In-Reply-To:Content-Type; b=Io5G1ur5DXnsIIvgUU6NoL3IrsyEV5UMhEOz77ttApFw/ngSu99bWcWRKPZ+9Z9bwpAieNGgWmF0nDW1cXML5QgbLY2SqxBMANt9eMH7UNI0EEppkPECgykk1jjoouKCAfLOWfR/pH9pql/RGvp2vWK/vv+Aen8LFJ1K2aNayD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=es1L6pw+; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q8FMiIfj"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c632ca0c317so365463a12.1
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 19:35:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="es1L6pw+"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8cb3a8494c5so373290185a.2
+        for <git@vger.kernel.org>; Sun, 22 Feb 2026 19:41:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771817750; x=1772422550; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771818070; x=1772422870; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JuDoFuw3eSg/epatlR7+L+CDLWmTIbLS0Y4njvVPrL4=;
-        b=Q8FMiIfjduumnTaNzWu79JKCELgmucW0JaJWpt0Y11EltnoYXVS5Byt7MpZwYBVFbT
-         9gPA0hE/rP55Q6nh5h5DMMR7owEIqK3ntmKulEjBCtarY+acgklyjQtnsnZ0u/TwJi4B
-         s3bhW+jilfcWJQXUz+LlbYMgn0ZiACxdP2RMaDg01QBWnyGbZ7Mloz70vLDD6cjlaHGO
-         YUZ65pU6wUvpeLD3TDCgZ6QLbviqUbQVd0E3ygLMWRxBX0dbD0mPFc/+JVWgPLFv8kK9
-         RBDNojNb84PSm9Yc9wTHbd+YSWZw93F+PvG0ZByOEWVW74Nfn9vixyhq80gkufpSpy16
-         2IzA==
+        bh=l1Yhc9cZViv4BTjuVfbqSEdaVun4ywLsiwicy8A/+Fc=;
+        b=es1L6pw+Sdr1dbxpDwoc5G2rqJqiGkfuhMR7cnAsiPb85HLRa/Pf8PdMmOZPFlm6aY
+         5GQMAu1SmD6S+ZGuLpS1ZLRKuMWoODyilvkAOiVuMDyoEGNIgd5gh5084WaLpjKKb85W
+         NiBH1lpEsfbUaVaOh+Qb0DnhVhgbxGsCN0VlnFTZWuVe03vjqzpFWJwCq2nPGmPLW04A
+         KmfqRRYfI3+vtGXpOW1qAVPwtCX/RyZyNvmEKkNe77KMdvPmFyAgcTlqHxz9CkNIpD+a
+         DcJSJXPyigF/X+ThVHE9UNaD0XqRX9QpeRjd+wgoTo09l3DDtzzQU8h2XwanRYUre4kh
+         Fkuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771817750; x=1772422550;
+        d=1e100.net; s=20230601; t=1771818070; x=1772422870;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JuDoFuw3eSg/epatlR7+L+CDLWmTIbLS0Y4njvVPrL4=;
-        b=v3wNRfTWjirPc4UXJoYNLoQAPUPuMvnJUHdMXExrsmlkc8RhHaiKMPDOBeyGOmcPKl
-         FQ5f1UT+fTmej8f5WDLbCahFdhT2Hfsg33jk/f4wHLAGBQfgSWMs2104MR+V0A7utZjy
-         Co6Ms6+bA69EIF36CzgaFPb6N9mohJT7b00Cz7Jl1KZAQzhmN0ax2dpta4u2GKV3OkWG
-         uJqwl6S1rR0X0VbSIfOj1Mj+XhSwU9r8RFpPbGX2cr6pKUyscSLBEtmD2ZGGhAihIpon
-         184xuuI3P2FJSPhdNIM+1vZSQPx7GR7/X+xfYBGzAoiqy53/ON2E5eWbMazjQW406R3c
-         eWSQ==
-X-Gm-Message-State: AOJu0YwIMdT6nO2YOSP7Mu++wYt0JT6zQM0pAMvAeoDL+aef6dlvM0tg
-	jgzwGa+9xjsJZw97RNMHqj0W1HkbSjtL852OJGIl4i9NfZFL2qiQWAgihiLz1Q==
-X-Gm-Gg: AZuq6aLNUbZ8UJMI6qZSapGxfjjmJk9vu+qbAcYamlN9E26SaYJMO0ZODbfWrOCUc3Q
-	cApLTHxEFOmmR5d+YNiLGORK+kGo9fi5/Rpo3Hn7xcdzb/nlBeYB6ogd7Ign8Ho6ju/iwQDiYAT
-	kr3odJmjNKu76SpKCllwBaEmy0uy2ZmVP/GoMt4UhCDY4C8e3Wz73AxHhVIiEoJkQSju1VPIYf7
-	6oeFPP89qqZeCJceE+zXrWbJJiO1C0LJ8Bi4vhrtRvf2qDUaPp4SMX0VgL3CC29Gpk6kgse7ivN
-	jc7cxNNwefTXsLPDvNANnDYQFDZXe7rfjyVPX3JQ8QIOD1LChW45wJB2Zjd7+E79uJqtl9Guu/K
-	eOevwuwvGKXdwmyknSRWZpBPTlm5sXi4OqTk/SXFv4rSz6MjAzNsMAogNMT8OgBc1/EhoW7mbEr
-	gDwANwUAzAeEGx6+XzkWH+IuQOfUehSqTTpk9aTfMB
-X-Received: by 2002:a05:6a20:939e:b0:38e:9479:8a4e with SMTP id adf61e73a8af0-39545f47ef7mr4368836637.4.1771817749768;
-        Sun, 22 Feb 2026 19:35:49 -0800 (PST)
-Received: from [10.226.142.119] ([119.56.65.112])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-826dd8cbb02sm6015827b3a.57.2026.02.22.19.35.48
+        bh=l1Yhc9cZViv4BTjuVfbqSEdaVun4ywLsiwicy8A/+Fc=;
+        b=IB/F8gXArdFYHLoXN/jeus9n30c769KrMVXL4iMKkR765v5y65h9elBC0fb6+B0+WA
+         rF+Babr3Hm0yHYtXUYgwR379ZRwJ4v+hv+GljEeiN9KSWjudJS/gtG4rFCceQ9/RAK5R
+         +Agx1tsLxFYu25t1ryoYzFH5w/+h0jxKxxG/TRC0QUZ0HfBD1UAPY1T1ardR7j1En1If
+         o4W3Z4gs/2x/hYrKeGEDbylRCaydjO5fOQX61q3C4jktzNbvDDoHRFsLUVMEi5WjVOji
+         VM+ywgbU35qVxMzmn4KW3AF1BMQWA3WE3/7lTKGvMyR9mUgoT+4gmMp6/6N1EIwoSaeb
+         WAaw==
+X-Gm-Message-State: AOJu0YxNHfjc1AEe2VovrrJh+cJahzUuwGLNcx7m03DqX6tefV3di8MI
+	aeKzIfCKR6d5+iV44ozNmo1YcfKP2Dnq25KNz5JUOTG/02t8wapNwy2s
+X-Gm-Gg: AZuq6aLrAMKAjqTmcjYMa+cN/5MCGKXaKO+pCfea13PNnjsKIL0NZPqkLmj1cX7CCMo
+	VEockf+pATpw7lqRKeJdPxPM8Xu4xry0uUqbC+F6LdY8vQyWw2/7UcwDx7EQj2GFYu86Bt/jX+X
+	I3sGgnnN1AjU1wNp7Y4twsUOTbTkusd56X+Ot+1gHeQUFmWjUMpXvJGDY4SZroF5kwnvTQwAz16
+	1cFf+Hjjiop4/Gf5NmtuoSLXM48kLPRnEbffhHLvgKPlkQ6npfyhRPQ6GYzlCqXTeHFsZp6/rkN
+	f9C2bPvlkWFMbAX8MTGx2Ut2xAIHZHO4M710udefk98hlvuM59UHavHZKY6PyWFV6uWp/whtBbm
+	9+u9wT5L6KIp75tAAdlH/moFfLK/uYQ0cJlVOx4HnMmaC8uvVfOcemNFhbWPzBB/6egNsRkJySQ
+	HUetGpGN9Ky94/7hc7ikSLIpqQEGFHbvFNxcgSsuJZ+qz+bSRcx+fImv3E3wiyX+89HaTS+lq/x
+	ypDBxNGd9UK9X5WvrGsZdcBpuCJ0Bh/b7NyyQyy8qdpMFJE
+X-Received: by 2002:a05:620a:4016:b0:8b1:728f:952e with SMTP id af79cd13be357-8cb8ca135b5mr912959985a.31.1771818069831;
+        Sun, 22 Feb 2026 19:41:09 -0800 (PST)
+Received: from ?IPV6:2605:a601:a6b4:9c00:55d0:428:5136:da98? ([2605:a601:a6b4:9c00:55d0:428:5136:da98])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8997e242fadsm58219246d6.34.2026.02.22.19.41.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Feb 2026 19:35:49 -0800 (PST)
-Message-ID: <5263825f-163c-43af-bac7-152d670919d9@gmail.com>
-Date: Mon, 23 Feb 2026 11:35:46 +0800
+        Sun, 22 Feb 2026 19:41:09 -0800 (PST)
+Message-ID: <94ee4b78-48f9-4e2c-aee5-ced1dc9a12fd@gmail.com>
+Date: Sun, 22 Feb 2026 22:41:08 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,62 +68,45 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10] setup: improve error diagnosis for invalid .git files
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-References: <20260221083001.220061-1-a3205153416@gmail.com>
- <20260222102928.377519-1-a3205153416@gmail.com> <xmqq4in8quxn.fsf@gitster.g>
- <xmqqqzqcpatz.fsf@gitster.g>
+Subject: Re: [PATCH v2 04/13] config: format int64s gently
+To: Patrick Steinhardt <ps@pks.im>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
+ <pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
+ <2bca4d231686e33ea9d4d85b10fcffd60a63ad46.1771026918.git.gitgitgadget@gmail.com>
+ <aZQvP21anXXZWcMh@pks.im>
 Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <xmqqqzqcpatz.fsf@gitster.g>
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <aZQvP21anXXZWcMh@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Junio,
+On 2/17/26 4:05 AM, Patrick Steinhardt wrote:
+> On Fri, Feb 13, 2026 at 11:55:09PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> diff --git a/builtin/config.c b/builtin/config.c
+>> index 4c4c791883..d259a91d53 100644
+>> --- a/builtin/config.c
+>> +++ b/builtin/config.c
+>> @@ -237,6 +237,25 @@ struct strbuf_list {
+>>   	int alloc;
+>>   };
+>>   
+>> +static int format_config_int64(struct strbuf *buf,
+>> +			       const char *key_,
+>> +			       const char *value_,
+> 
+> Why do we have the trailing underscores here?
 
- >> We'd probably need to treat ENOTDIR the same way as ENOENT to deal
- >> with cases where we expect a directory "sm1" to be the root of a
- >> submodule working tree, and we have a modification that removes the
- >> submodule directory and replace it with a regular file "sm1".  In
- >> the code path touched by this patch in submodule.c, we would ask "is
- >> sm1/.git a git directory?" and the stat(2) call on that path in
- >> read_gitfile_gently() used to say "Ah, a failure, that means we
- >> cannot positively say that 'sm1/.git' is a git directory or a gitdir
- >> file."  Now we inspect the error code in an attempt to tell if it is
- >> a system failure (e.g., a corrupt filesystem), but catching only
- >> ENOENT is probably a bit too tight.  In the above scenario, asking
- >> about 'sm1/.git' when 'sm1' is a regular file will not result in
- >> ENOENT but in ENOTDIR (i.e., "the leading 'sm1' is not a directory so
- >> it makes no sense to ask about 'sm1/.git'").
+This is all to match the existing names from format_config(). This may help to
+recognize moved lines by keeping the variable names the same. Definitely not
+my preference to use this name format, but I thought it fitting to avoid a
+rename of all variables.
 
-I must admit I hadn't considered this edge case at all. Thank you for 
-pointing it out :]
+Thanks,
+-Stolee
 
->> Is it always sensible to treat ENOTDIR and ENOENT as two equivalent
->> errors for the purpose of read_gitfile_gently()?  I have no clear
->> answer offhand myself.  This is part of what we need to think about
->> and resolve while addressing the original "NEEDSWORK:" comment.
-
-Hummm, I believe it is safe. From the perspective of 
-'read_gitfile_gently()', the sole purpose is to locate and read a 
-repository file. Whether 'stat()' returns 'ENOENT' (the file physically 
-does not exist) or 'ENOTDIR' (a component of the path is not a 
-directory, making it impossible for the file to exist there), the 
-functional result is exactly the same: the '.git' file is missing.
-
-But I must say I can't 100% guarantee its safety. Anyway, lemme just do 
-what I can for now.
-
-I will:
-  - squash your diff into my patch
-  - rename the error code to `READ_GITFILE_ERR_STAT_MISSING`
-  - combine this with the commit message refinements and test cleanups 
-suggested by Karthik in the previous thread.
-
-Thank you for the patch and for walking me through this edge case. I'll 
-send out v11 soon! (2~3 hours later)
-
-Regards,
-
-Yuchen
