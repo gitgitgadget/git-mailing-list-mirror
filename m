@@ -1,202 +1,93 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE72E30EF80
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DA9306B05
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:07:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771862516; cv=none; b=XjbgCxA+AJxhqDH8t/ATfJ1FCvAr2HM5BvAizILY5yeYPO61FW40btDbyFVYZvo2IVeEnqqhqkN90cywWokUzG5cgun7GkiKMu5aTpy/87m6uv1dDmHScoPGZnMZX08KNFBXolE3QO7LTkryEdEWHD9zz96JsvDQSB/ufKVJTFo=
+	t=1771862829; cv=none; b=SOqYtblVcHct3PYIx88i9fgWgx4pqe20QorLeekudp7k0z2lEfmJaYU5ZaQIKwoBy2jzc6p7FpQEzsr5ocmIl+lTZgQwa0804BSeaP4XmyyEZP6P/RtFCYRSriCel4otXNEOxPEpi62+9FxbCy2bNTfiyqRoI3dZvoVHReMULDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771862516; c=relaxed/simple;
-	bh=UKmWtS2fLaPXZSsEA0Auy8uDslV9nzLuKsljT39PxUU=;
+	s=arc-20240116; t=1771862829; c=relaxed/simple;
+	bh=WUbPneILjgVgJtjbAG6trMUPObOfmyD9G5hnY+/nz5I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X8w9iLKJHnWopKSerYS4epTwWGMSmJ3h3+7xZGOLL6vDmJLoUpPKPEiIimuFc8PkFF4TXXjlNI6Hrkgok358Qz9VWWtgS9WUAooUA9eFLZPUtY8/1jb/Od2C/IqlKuXLcvXv5VlMwVXOFyE9WiVuL/qyhG8VXEAp8BPA5MUlpY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SbP8rba2; arc=none smtp.client-ip=209.85.161.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=M4vjp/YUNQl1XTp8aJxA7NcLEOBdFh+xGEL5aD8zIKxOf2zZdxn2NnqofPkjIZmkY8ti3EddMjYw0lk6GwCR0HRXCJn+9tcbe2fwSHRV9ucTYWRFFn2HaoejR/0NUPQ0/EjY4jSjH5F2ZxXkhf6gDRa/WT4ZBINko/zXOODpiIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nFbJNW0v; arc=none smtp.client-ip=209.85.160.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SbP8rba2"
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-67997ce9e1cso2596442eaf.2
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 08:01:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nFbJNW0v"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-40f1ffba6a0so2652300fac.0
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 08:07:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771862514; x=1772467314; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=swwUWuk13egwdh4qES5CXIgwfg13Z4JCZBRRBgL0LcE=;
-        b=SbP8rba2I5P7Pq1TlIgHrSAGf9qHNTYViBG9Y9gblhv4uI/K+XFW1NIxAq3UN+8Ncx
-         GyOZ5NMxtFWgVr+0bJWtQXChfhYBfky0hvOMebA2Ph+hB9YtmRoSpnCjzb2YZSHNGqPh
-         XzUaYVW085UDaniRjARZY5tRYBRpkWnlJUkMS9aVMnP9ik169Wt6olLCzgQEeHmtnk6Y
-         3zzl7ifWy/zWOgNBsXPX6glpKkczTWIU+HoDAl85I+9U8+2ZB5BwKQK6YLKVnVf8clJl
-         oMluJmvwSZIhCVxykGiMmPc4pirMdE2gknxFXgey8F+Gd9pUGafh9MZ5XUjSaXtiz/4i
-         TvMQ==
+        d=gmail.com; s=20230601; t=1771862827; x=1772467627; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0Ft6wE9RCEUQ5NBXdDOQBQbLkxDFL1RgoafCNB9DYtU=;
+        b=nFbJNW0vEIqoLyXbsi/yuc1ILTqlxWERtegFLpoYCQa07pgYTxIR2zg1IO/8rI/nua
+         HRm8MR8gPgbsFYxW5zOfNdvHXBhabmFYaSIhJem9ynbZ4+OY/P8SOmcxlDUbVocCbSk5
+         aP9HK6SIbhBwZQDecj8GOzdPjAhmBP8wm87jXXULoPLVXOCzeqIDNFvOJyBoGIhQJ6B4
+         W5v9NVU00zd0k7D5NwrnBASH2qVnwhNm8+Ro0Zj+dS1gA4asbQhgVnIm8nld+d/6guio
+         9HlwElCRE3K5PPGcjyLBZavCZmx3tJS7ocVNimhcr+VElAKmostAyDw04BV4/iDt3mfN
+         H6Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771862514; x=1772467314;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=swwUWuk13egwdh4qES5CXIgwfg13Z4JCZBRRBgL0LcE=;
-        b=BsxDv28qQtNqmp2beT2aVeg38dbe00p4RX1Yq1lINBNI7plwOIO650b0n+RedSjfyJ
-         l9CGCmeGb/Qs8/EClRLO2bm0Ck/68OgYLWRcbJF7rT842VvzYk4KhmA5gqUBxz+uDHuZ
-         oLELzEIh+aM2/5fT+o9lIkFRCOA/fKAwaeyMdfetdf/0w2D8rHEbVhmglU6YJIFyuq+n
-         mR9yjoIofXFpu8pNHNYGW/yxAtLd/+mecnLtme80aoOH4UU7wrOqlZ0xrTe+Wz21jbFR
-         Q7DxC0/Sf32AjiaeuBgxOFiHaCEXJUWzJjqwehuv3iz61VUenBAi7NC5F/Qb5FbM9FcX
-         461A==
-X-Gm-Message-State: AOJu0YySN08xC2Ag1l9MKVt+aRVCdWi3f5BjrByxhx9nQ3a5I9SkNKHI
-	a3p0sNWsBQlkub9K4FF013N+Cd/9v47l5nuzdur8TMbHqxlCfWh0QpoSUWsHRA==
-X-Gm-Gg: AZuq6aLlfaOnoANN+Jugh1gQ7LhmgJZnGjPlrFWBT1Nna76P7/N1Vvf1uX+1eQDIUMs
-	W8bVhbJP6vwEI6C8bSR1ofDLvLhAuOUJBmkgA4NBcE96jRhgAj2Bus8LAqOVfzNlcmtDp0/qVBK
-	3tbas52MmrSKbhSGFLrxNKe4G4WRTef9o71ZdfZhMUclZRQn+gv28CFWMqB2mR4HilaBGtQ2hiz
-	yVK/fRrB8ZlMNQnT9Pk7LNJuAnXiGwf9umsATFxpwcXTJOgCJCC+fSa2sbWRSRsmM0xeWy8N731
-	gJvGx6rOwZLaDKu5IczWiOGSh24jQGog8hcmtINrWXl9UPn7RMHw2netxcV0x0pqACyc+WeqcOU
-	7TpoRIjmPmBlRQvpD5Od+zrCUJYfjqBc3srdmmaH8JHsNRKEIwdLtEqlt3FagSw/K9KSe9bRpQe
-	Lkz9AoAXK0mdr16eEd
-X-Received: by 2002:a05:6820:2013:b0:663:40d:4893 with SMTP id 006d021491bc7-679c425a323mr4476042eaf.3.1771862513412;
-        Mon, 23 Feb 2026 08:01:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771862827; x=1772467627;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0Ft6wE9RCEUQ5NBXdDOQBQbLkxDFL1RgoafCNB9DYtU=;
+        b=XUTWuXWnukyeBBWB/3iTl5fMFh+sJkekZmqCpAFL7K4cKzuy5riP9HuFQtXzV9Cqgj
+         /YNK9pOm+y1kooosZ4x7lri1MaNn9l08HO87Vx6OxBxIg2hKyAuDbkohyYBdJeIKDtZ6
+         hMmhNgH2op+fke3e7Aqkpop4uwA+yJo+4MvAGS9ufVw9Zzi/TeQ+FLNmm/mDHNnPBi7L
+         48AV1weZglt2rxNEyqyxsE+Q5Eh+5wqPvH4cz8lvvFSaudPQpqowEcD3qpfyURgNuxSD
+         qHiS4Me9YuuK/MTFXGeMnnS1+t2rBjVYE0dhgSvH088xCzX9VPObvrt6iO2uHQlP6aN8
+         yj/g==
+X-Gm-Message-State: AOJu0Yxlm9bWilaej06OuZGye2vwLAu++gDmnPhNSpSmhMpfOdAYWV0m
+	wjZ7SU0Wcb3zPs97QLFEZL175dmxhj0tirY4JBn7jPR4FOPtwUzW286I
+X-Gm-Gg: ATEYQzzopTRuLAh535v9YDlkq4ifTVXo71TI77bSKSUBhm1aAcbV+x0+YefSbuoRLOp
+	658iyJ/u3DDhQW9kGkwlnrFhkQ3Ttw2WnfKQwJOh9TSoxwqgJulhZUGnSHFJCC7gkqtrrNfPQYe
+	yHwUOWTH9FnkXMwU0XTEFs+eies1egSY5/VgWRNrwoyEBKTe1Tv65I65ffeyAFWpasavfvgoRDk
+	3YXTtC2nFljcHwvQVaNttoch5go2pqRdJGQjjaT2y8kCopzY8VLIQy2PClSlB4nuS9207d4peq+
+	BkoK4F9Hto/YEQD7z1FGNQTeeaG0hOE5W34haGLiGRWZWNuH76ORkjZiAdWKBHA3Z7MmvNXNfs8
+	OS/uhEJ3O6sv9Q0o803jS5aQcZrZmKvnQRn/5bOmGhb2XoffvliQjd/iDOBNMPmbuG1VmS4AAXb
+	Ct+F9aspYEDWVYEJc6CnPP4V+deH0=
+X-Received: by 2002:a05:6870:41cd:b0:409:96e4:8746 with SMTP id 586e51a60fabf-4157b1ad49dmr4485025fac.51.1771862827271;
+        Mon, 23 Feb 2026 08:07:07 -0800 (PST)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679c56ec56dsm6418842eaf.12.2026.02.23.08.01.52
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4157d3a24bdsm7655199fac.18.2026.02.23.08.07.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 08:01:52 -0800 (PST)
-Date: Mon, 23 Feb 2026 10:01:48 -0600
+        Mon, 23 Feb 2026 08:07:06 -0800 (PST)
+Date: Mon, 23 Feb 2026 10:07:06 -0600
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
 	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/8] t: fix races caused by background maintenance
-Message-ID: <aZx3NCv9hjap_yoP@denethor>
+Subject: Re: [PATCH 2/8] t: disable maintenance where we verify object
+ database structure
+Message-ID: <aZx6eh9r73fGAT2k@denethor>
 References: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
- <20260220-b4-pks-maintenance-default-geometric-strategy-v1-1-faeb321ad13b@pks.im>
+ <20260220-b4-pks-maintenance-default-geometric-strategy-v1-2-faeb321ad13b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-1-faeb321ad13b@pks.im>
+In-Reply-To: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-2-faeb321ad13b@pks.im>
 
 On 26/02/20 11:15AM, Patrick Steinhardt wrote:
-> Many Git commands spawn git-maintenance(1) to optimize the repository in
-> the background. By default, performing the maintenance is for most of
-> the part asynchronous: we fork the executable and then continue with the
-> rest of our business logic.
+> We have a couple of tests that explicitly verify the structure of the
+> object database. Naturally, this structure is dependent on whether or
+> not we run repository maintenance: if it decides to optimize the object
+> database the expected structure is likely to not materialize.
 > 
-> This is working as expected for our users, but this behaviour is
-> somewhat problematic for our test suite as this is inherently racy. We
-> have many tests that verify the on-disk state of repositories, and those
-> tests may easily race with our background maintenance. In a similar
-> fashion, we may end up with processes that "leak" out of a current test
-> case.
-> 
-> Until now this tends to not be much of a problem. Our maintenance uses
-> git-gc(1) by default, which knows to bail out in case there aren't
-> either too many packfiles or too many loose objects. So even if other
-> data structures would need to be optimized, we won't do so unless the
-> object database also needs optimizations.
-> 
-> This is about to change though, as a subsequent commit will switch to
-> the "geometric" maintenance strategy as a default. The consequence is
-> that we will run required optimizations even if the object database is
-> well-optimized. And this uncovers races between our test suite and
-> background maintenance all over the place.
-> 
-> Disabling maintenance outright in our test suite is not really an
-> option, as it would result in significantly divergence from the "real
+> Explicitly disable auto-maintenance in such tests so that we are not
+> dependent on decisions made by our maintenance.
 
-s/significantly/significant/
-
-> world" and reduce our test coverage. But we've got an alternative up our
-> sleeves: we can ensure that garbage collection runs synchronously by
-> overriding the "maintenance.autoDetach" configuration.
-> 
-> Of course that also diverges from the real world, as we now stop testing
-> that background maintenance interacts in a benign way with normal Git
-> commands. But on the other hand this ensures that the maintenance itself
-> does not for example lead to data loss in a more reproducible way.
-> 
-> Another concern is that this would make execution of the test suite much
-> slower. But a quick benchmark on my machine demonstrates that this does
-> not seem to be the case:
-> 
->     Benchmark 1: meson test (revision = HEAD~)
->       Time (mean ± σ):     131.182 s ±  1.293 s    [User: 853.737 s, System: 1160.479 s]
->       Range (min … max):   130.001 s … 132.563 s    3 runs
-> 
->     Benchmark 2: meson test (revision = HEAD)
->       Time (mean ± σ):     129.554 s ±  0.507 s    [User: 849.040 s, System: 1152.664 s]
->       Range (min … max):   129.000 s … 129.994 s    3 runs
-> 
->     Summary
->       meson test (revision = HEAD) ran
->         1.01 ± 0.01 times faster than meson test (revision = HEAD~)
-> 
-> Funny enough, it even seems as if this speeds up test execution ever so
-> slightly, but that may just as well be noise.
-> 
-> Introduce a new `GIT_TEST_MAINT_AUTO_DETACH` environment variable that
-> allows us to override the auto-detach behaviour and set that varibale in
-
-s/varibale/variable/
-
-> our tests.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  run-command.c            | 2 +-
->  t/t5616-partial-clone.sh | 6 +++---
->  t/t7900-maintenance.sh   | 1 +
->  t/test-lib.sh            | 4 ++++
->  4 files changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/run-command.c b/run-command.c
-> index e3e02475cc..438a290d30 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -1828,7 +1828,7 @@ int prepare_auto_maintenance(int quiet, struct child_process *maint)
->  	 */
->  	if (repo_config_get_bool(the_repository, "maintenance.autodetach", &auto_detach) &&
->  	    repo_config_get_bool(the_repository, "gc.autodetach", &auto_detach))
-> -		auto_detach = 1;
-> +		auto_detach = git_env_bool("GIT_TEST_MAINT_AUTO_DETACH", true);
-
-So now if "maintenance.autodetach" and "gc.autodetach" are both not set,
-we then check for the "GIT_TEST_MAINT_AUTO_DETACH" env before defaulting
-to true. Looks good.
-
->  
->  	maint->git_cmd = 1;
->  	maint->close_object_store = 1;
-[snip]
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index 7cc0ce57f8..d11d6f8f15 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -6,6 +6,7 @@ test_description='git maintenance builtin'
->  
->  GIT_TEST_COMMIT_GRAPH=0
->  GIT_TEST_MULTI_PACK_INDEX=0
-> +sane_unset GIT_TEST_MAINT_AUTO_DETACH
-
-I assume here we are unsetting the env for testing purposes. It might be
-nice to leave some sort of breadcrumb comment here to explain to future
-readers.
-
->  test_lazy_prereq XMLLINT '
->  	xmllint --version
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 0fb76f7d11..aa805a01ce 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1947,6 +1947,10 @@ test_lazy_prereq COMPAT_HASH '
->  GIT_TEST_MAINT_SCHEDULER="none:exit 1"
->  export GIT_TEST_MAINT_SCHEDULER
->  
-> +# Ensure that tests cannot race with background maintenance by default.
-> +GIT_TEST_MAINT_AUTO_DETACH="false"
-> +export GIT_TEST_MAINT_AUTO_DETACH
-
-Looks good.
+I assume that these tests previously did not trigger maintenance to
+begin with so now explicitly disabling maintenance does not change the
+resulting structure. Changing the default to geometric repacking may
+change this though.
 
 -Justin
