@@ -1,251 +1,162 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CA213D891
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:02:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771837379; cv=pass; b=AImil/DMcYvb9smcpUUkuINdAAY4Dwk1zXd9+RCUkfTQ+BNnZfEIj1nli+HA9p7Fg+UtCkNX8RpYgDepjRwXD34vd8VxrMFg9tZ6aXTxkjZZjLsHuvRIjyWc/R/A1MDH5ZfH90hbJCHC3TfI2eri8mT7raM5bdr3Ei7CNHFVLHM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771837379; c=relaxed/simple;
-	bh=8LHZxRBMo4bAiVNctbunNCOXU+5g1g87qSFlXLKi9/w=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=U1Qn6cPyL7hSUbtOKi8bekb2ytjBN3mBAUBvvLzASzPjXIOYKzFfl7P0BB2KzSMe43MY2GXLtjpw1QEetKR3svA09vEwF+2iqjm1VXAUhg9Xme96zKXkweam5faxWrOhzNzPpLNJ6p8D926FonDAUKsajHfTbv1cBWjDYTwoVrQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+GIPD8L; arc=pass smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191CA495E5
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:03:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771837403; cv=none; b=rAzXXC14N7tUREVejBwwux84LoWECvJEX7eBJsGaJx7lUTAs7Gn70vtCyRZPIg1orIzXVa3qmn1Bvv/LcG7FJoYfPgncpVXfV/Or+wepZC8tRb7/Mbf75QSC9BpI+kpv1kIGtCkxf5C924IqkENKlMjeNB2ULhKnVQBK4htBpbE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771837403; c=relaxed/simple;
+	bh=FlTxwar7421c7s9oCma+NRaQzhqhVH2Y9frWVSL99Wc=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=gDzF0g0YKXBLiUqK8pEP/eCnplKaXfdU6WHbuvJoM/d8duxwyU1mYo1X2dQzDwGp4bW+8+JwGvJLcGiO+Ac1SkEQZJjlLuYNXoShOjygnyEoNVSNRTKhFwHzo3d/elSzNO+CDHEIBcathzoTVTKgjzPjh5eXi/AiodMB46pT32I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FPn81j+9; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+GIPD8L"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-56743b33c67so1763572e0c.2
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 01:02:57 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771837377; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lFSb3O7gWR0laNqO8DGVKt2rl+sHv66oLZk/7W+V3aflstwqWeOa5sGwDw3zSYcpKh
-         6dnDoEK0UYz2xeqQWRpxx7nFLVBy6ZETSSr9vhgXtYMVIshLPWt4gOhDQZ9ZqbwcJ4I+
-         tjSVWpEFc1FmfIGwIGIK1b8sRsbmSpj8ynzPqZIOX+pb6Okt4S9uoPWFfSBnHs1HE1+3
-         SCRVE2myQqtj0kAf88ndmiFceZrZ8mQ5liGL73uMKyShhMgMMvVYIcRtFu1fcWtT1f+K
-         PuZiQaW72FZW4/A5zmZJwnSLrTNOIKpl5yhTErBohUHJk+48q/I3vxr0YyOnTCBl1838
-         SzMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=ittFZeo9lQe4laAZ/1Hd0EyxcLdkqk97UiCpdoAWUT8=;
-        fh=AiiKlACw5ic0k5UGf1vyFkQhwztneOTZZYIfLI5IqiE=;
-        b=Hzww2iCGknvBeVZRFaTMGjDuQfjfhwwvKlz6USrsWNkQjaMR9gpL9osWIVyxBGBqpX
-         gCq9cZF3+8+LF96EFAOfOYmdo4iklrxH0LKTp/Wq0vjF/iJsRH4D/1xMcPAdq1ZVKiVQ
-         4KSM+6idm48vs3qmMX+JPe/rLXIq8gVaArqUgMpQp4coBFl2vqT9mNMA7mESI1A/De0k
-         TrlqBOqn2siuBqaRohoGJ66I9NiyVLGOL9MNbk8r7LMQ2mtO40Ri17YQ48DFTfoRvJnR
-         VIrarfOFSlekYSO+oYIwTWreRPVe3Kjoao0A43halu79EeIW1rbrjcv7hCcfPJTP9aPy
-         m3ZA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FPn81j+9"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8947e6ffd20so43059736d6.1
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 01:03:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771837377; x=1772442177; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ittFZeo9lQe4laAZ/1Hd0EyxcLdkqk97UiCpdoAWUT8=;
-        b=b+GIPD8L6beM/1hs6P0xe3M5vD565kx+BKzlt8pgczu5bcj8APbxtZo2GJEn7pH/dd
-         y9JhSvDCvJ4Y8K5D+ug3oNad/+U0OOEDjeqMswe5n8OHDfTScT1kMnePX2xEVNNVazc9
-         alrfhbGPu/uXHpLR6YlMeDnKfRM6ucgFEKzk0mEpjOwubU+ir73o+DXFKeO5fPlCMN5D
-         Hk2CWq0rdyrwnO5bDicSe5T2mXCbB0j93H/udx/t/sQ4rLdwTGW9RIOv5uICBjYDF4mK
-         qYu8oPHkhkgSCmc3Ts0dnB/CwQqRg/G2nnrg0foY1mZ6x5k7zeamPdAGwsGO/Yynrgtl
-         oHwg==
+        d=gmail.com; s=20230601; t=1771837400; x=1772442200; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/hZb/JcGTVxPgwJwp9ZJK9WuQokozY2884BVCKzOkuE=;
+        b=FPn81j+9XAAJMlcpfGvZzKbPjqufpIZv+6vj6MHKTVn6nPaU0vnRyiera1dHZyarnY
+         dJWzji6HhaXWaa0iG7YzPuOU2OV2sWcGvUri+k9GGGf3JWEJajgZ3jYM6W2Jc40ihMca
+         Ry6DJOA+3E+Z7GHZt4EeDIHLN9CJFL/61keXXlVYqNIabXqPjlC6K/f9t6eHaNSce7Cx
+         NYM0ClNofwYOznraoglJB8AIfwTQFOVpl0qk+qKkFOBMsBNTKEuEpuUiAr+NOAA+Fafm
+         uz/jWabNX2QK+jPu7mvn9j8cy7XAwN9RTu4bXqgHWpH81OtD+McIfBVHnUepz9XuJkFY
+         HM8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771837377; x=1772442177;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ittFZeo9lQe4laAZ/1Hd0EyxcLdkqk97UiCpdoAWUT8=;
-        b=iPvZsCItFdismuNzZUoAU8rPYrf6HBZFRKhu1rtf8kOo9fADvfA68/H2XjxKrAgUvr
-         FL1XiFv7PeIf4pa3LipQyIC+NHO1mfsx+y7W7z08A4sLXhkjoTjliNTHdNZLjfA1MraC
-         mzbtieuNQQl2FhHH2x+QYaluFapVKwbxCexeaZnu4nbidj6zhovxzA0PKfznPhbfwtic
-         UqIst6CfP2lriG5uwWsa35omrn5qRTYyhlaAYZqulwKz8tTEZYDpkfKQnTdXLcjKT9gu
-         NXfuyA5RDACQhWaXUe9SeVnDXqwkRgW46ga7BnMNitVI3npGI+xgYJ0z6GFQBVlXHKd2
-         DCOA==
-X-Forwarded-Encrypted: i=1; AJvYcCXDnrbQLihtxcJl7hjGHFB5IC7MYAAuyS8tFuTEOdRnFXKGAqPs/Ml+hyQpaXxMOyPoass=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhgclCgJyqq0V2LVWGQrr0ysbS9WBWrBSSVV9eNGmrkw9PhJv0
-	82+izdUCO4nGzCQkWwbNr1vQ3jQCXZzHB4eQcm+l2tA+MWmzxZ5kI6lSc+ZGlXRkU0i8IqS6srb
-	mv0s+nSj90/Kxqsop5M3Pr/4SB7OEDTfzhPGQ
-X-Gm-Gg: AZuq6aKkmWb/F19MhbT959E88djzC3h6WpprNzk9WgMRSm/qBfRmchSSP9qFiwWHveB
-	nv+BI48tpiB+MdUjk6+OmJ8DkB4+/4DPGaH52tsqCXCadQokAEC6q/wiyW2otxONPY9K/ELm/yU
-	DqYk2qVjFfQUsElUPb00OWiPu5Wq2DCMm2Aakhzb9plO9xpRVbfPBsvGhQghbDg5lbYwCwGy7ci
-	+wc5ah8OguUdqeyt8iALKKWvGvWAOGTOwSvHTiojYsbLVgmKdDBRI1UR9VkIfPReWDibxbTkXo9
-	Kc4183XDIi37RMKcPLjYm5DEnmjjZ71aVB6nj/tW
-X-Received: by 2002:a05:6102:26d4:b0:5f9:35a4:f5e3 with SMTP id
- ada2fe7eead31-5feb2f0fa16mr2673417137.12.1771837376941; Mon, 23 Feb 2026
- 01:02:56 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 23 Feb 2026 01:02:56 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 23 Feb 2026 01:02:56 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260220-pks-refs-for-each-unification-v1-8-17170bd99de1@pks.im>
-References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im> <20260220-pks-refs-for-each-unification-v1-8-17170bd99de1@pks.im>
+        d=1e100.net; s=20230601; t=1771837400; x=1772442200;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/hZb/JcGTVxPgwJwp9ZJK9WuQokozY2884BVCKzOkuE=;
+        b=Q9K0kTtC3t1lCRtS3Q3u8hM1N9K09WEE0baKMFbMosxrCXZaC5vDuuNaO24Bcwv7r+
+         WlKNeZ14mYXXxtEaJnronaRdYsz3F4VyrOQjZWGx5BaQOIleN/lmUQSz9+YDvjztNy9k
+         24t1I2u5EYS8IPF3Uu8E/vA0F3Xn1Mk4UXG2SEYYwFdHHaNOpa2qsZkp3Rpmh6DVVQRq
+         3qQ28ymlyfVYaM4IUrejk+nySBgr3nyF9wJPfOSJ/13s08SDFqx6+svVfAJNG5vb4tAe
+         mfoTC2hQgCEYCMKF+xgfGrj81RpwTj0X4bP4aCKuKctC080g3rVEK/UisN9MbSgsulAA
+         WANA==
+X-Gm-Message-State: AOJu0YyLfRBR7dP/Pgg3NHFOtQXOM7wOCXWG/DbPdppFJO2T2Dti3U/b
+	LBLmkl3dqsaF2bWqrNeQw79jwqgT/NMp+SpKGW79qZ7GQGRgCmr+obueYjoNSw==
+X-Gm-Gg: AZuq6aKXFKc8DUQG7nYYsGHoH93OkFVbzkU9MII3mGcyqJsNKGwrjV8WtKrJ8OkWi1K
+	JhWq1ZxBOR3TCFdgNkKk2bCfnMla6cC4fsiTrb5YNX2507xd06aB4whpNckJ3IsC318drkBPuGF
+	pw0hQjEDdZoNkkRNH4ryMFUx7sC/YtcrD5CEQ+obDNPzyj4AmTFUBJ1G7H63sRxWEtUxovGku+F
+	79jdyNjvaARsmZ7mPCCi8nriHjW5kxGc4PgguFXUhCI5p5S0BFncAhN9T0LuSL6zFVNpvWbXWBv
+	Gz1KQEJl4RGjw5maB4lWJk5MvdNHRZrDfmfRIEl5zNV4vNBXh6WZqGo1QnEO9JvyMnuTulyOJj5
+	4muDRMFhWPBDWaVEFR2MJnP6qRFmj4TDCFddma+vrwt6L4LzxIkbIj8wAb4XrtYbdslIGWQvzAM
+	feYAibkoiodQGkWs1e5NDk5MT9LtVT+SFKBeGL
+X-Received: by 2002:a05:622a:249:b0:501:45c5:935e with SMTP id d75a77b69052e-5070bb81b0fmr94406491cf.7.1771837400517;
+        Mon, 23 Feb 2026 01:03:20 -0800 (PST)
+Received: from [127.0.0.1] ([48.211.210.118])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d6df762sm62329021cf.29.2026.02.23.01.03.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Feb 2026 01:03:20 -0800 (PST)
+Message-Id: <pull.2054.git.1771837399472.gitgitgadget@gmail.com>
+From: "Md Ferdous Alam via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 23 Feb 2026 09:03:19 +0000
+Subject: [PATCH] t2018: move checkout case-insensitive test from t0050
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 23 Feb 2026 01:02:56 -0800
-X-Gm-Features: AaiRm52So48fg3l4mzxw1FyI94ehjVNq6BHC0rXI6F0yPpvtjwGCT9m34wYy2pA
-Message-ID: <CAOLa=ZQjZ-YLedF=Cqn=Tb8-rhX8=+Lnd2VKv0fn_ryrO563_g@mail.gmail.com>
-Subject: Re: [PATCH 08/17] refs: generalize `refs_for_each_namespaced_ref()`
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000073f506064b7a0970"
+To: git@vger.kernel.org
+Cc: Md Ferdous Alam <mdferdousalam1989@yahoo.com>,
+    mdferdousalam <mdferdousalam1989@yahoo.com>
 
---00000000000073f506064b7a0970
-Content-Type: text/plain; charset="UTF-8"
+From: mdferdousalam <mdferdousalam1989@yahoo.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+The test 'checkout with no pathspec and a case insensitive fs' in
+t0050 does not really belong there as it tests branch checkout
+behavior, not filesystem properties.  It also had an unnecessary
+CASE_INSENSITIVE_FS prereq since the sequence of commands should
+succeed on any filesystem, and it did not verify the resulting
+worktree contents.
 
-> The function `refs_for_each_namespaced_ref()` iterates through all
-> references that are part of the current ref namespace. This namespace
-> can be configured by setting the `GIT_NAMESPACE` environment variable
-> and is then retrieved by calling `get_git_namespace()`.
->
-> If a namespace is configured, then we:
->
->   - Obviously only yield refs that exist in this namespace.
->
->   - Rewrite exclude patterns so that they work for the given namespace,
->     if any namespace is currently configured.
->
-> Port this logic to `refs_for_each_ref_ext()` by adding a new `namespace`
-> field to the options structure. This gives callers more flexibility as
-> they can decide by themselves whether they want to use the globally
-> configured or an arbitrary other namespace.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs.c | 47 +++++++++++++++++++++++++++++------------------
->  refs.h |  6 ++++++
->  2 files changed, 35 insertions(+), 18 deletions(-)
->
-> diff --git a/refs.c b/refs.c
-> index ac34bbe6c1..99994879d9 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1845,9 +1845,13 @@ int refs_for_each_ref_ext(struct ref_store *refs,
->  			  refs_for_each_cb cb, void *cb_data,
->  			  const struct refs_for_each_ref_options *opts)
->  {
-> +	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
-> +	struct strbuf namespaced_prefix = STRBUF_INIT;
->  	struct strbuf real_pattern = STRBUF_INIT;
->  	struct for_each_ref_filter filter;
->  	struct ref_iterator *iter;
-> +	const char **exclude_patterns;
-> +	const char *prefix;
->  	int ret;
->
->  	if (!refs)
-> @@ -1876,11 +1880,29 @@ int refs_for_each_ref_ext(struct ref_store *refs,
->  		cb_data = &filter;
->  	}
->
-> -	iter = refs_ref_iterator_begin(refs, opts->prefix ? opts->prefix : "",
-> -				       opts->exclude_patterns,
-> +	if (opts->namespace) {
-> +		strbuf_addstr(&namespaced_prefix, opts->namespace);
-> +		if (opts->prefix)
-> +			strbuf_addstr(&namespaced_prefix, opts->prefix);
-> +		else
-> +			strbuf_addstr(&namespaced_prefix, "refs/");
-> +
+Move it to t2018-checkout-branch.sh where it belongs, drop the
+prereq, and add a check that the expected file is present after
+the checkout.
 
-So if the namespace is 'foo', we'll have the namespace folder as
-'refs/namespace/foo', and a prefix of 'refs/heads/' would mean that the
-'namespaced_prefix' is now 'refs/namespace/foo/refs/heads'. Looks good.
+Signed-off-by: mdferdousalam <mdferdousalam1989@yahoo.com>
+---
+    t2018: move checkout case-insensitive test from t0050
 
-> +		prefix = namespaced_prefix.buf;
-> +		exclude_patterns = get_namespaced_exclude_patterns(opts->exclude_patterns,
-> +								   opts->namespace,
-> +								   &namespaced_exclude_patterns);
-> +	} else {
-> +		prefix = opts->prefix ? opts->prefix : "";
-> +		exclude_patterns = opts->exclude_patterns;
-> +	}
-> +
-> +	iter = refs_ref_iterator_begin(refs, prefix, exclude_patterns,
->  				       opts->trim_prefix, opts->flags);
->
->  	ret = do_for_each_ref_iterator(iter, cb, cb_data);
-> +
-> +	strvec_clear(&namespaced_exclude_patterns);
-> +	strbuf_release(&namespaced_prefix);
->  	strbuf_release(&real_pattern);
->  	return ret;
->  }
-> @@ -1927,22 +1949,11 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
->  				 const char **exclude_patterns,
->  				 refs_for_each_cb cb, void *cb_data)
->  {
-> -	struct refs_for_each_ref_options opts = { 0 };
-> -	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
-> -	struct strbuf prefix = STRBUF_INIT;
-> -	int ret;
-> -
-> -	opts.exclude_patterns = get_namespaced_exclude_patterns(exclude_patterns,
-> -								get_git_namespace(),
-> -								&namespaced_exclude_patterns);
-> -	strbuf_addf(&prefix, "%srefs/", get_git_namespace());
-> -	opts.prefix = prefix.buf;
-> -
-> -	ret = refs_for_each_ref_ext(refs, cb, cb_data, &opts);
-> -
-> -	strvec_clear(&namespaced_exclude_patterns);
-> -	strbuf_release(&prefix);
-> -	return ret;
-> +	struct refs_for_each_ref_options opts = {
-> +		.exclude_patterns = exclude_patterns,
-> +		.namespace = get_git_namespace(),
-> +	};
-> +	return refs_for_each_ref_ext(refs, cb, cb_data, &opts);
->  }
->
->  int refs_for_each_rawref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
-> diff --git a/refs.h b/refs.h
-> index a66dbf3865..2bde60aa0e 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -468,6 +468,12 @@ struct refs_for_each_ref_options {
->  	 */
->  	const char *pattern;
->
-> +	/*
-> +	 * If set, only yield refs part of the configured namespace. Exclude
-> +	 * patterns will be rewritten to apply to the namespace.
-> +	 */
-> +	const char *namespace;
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2054%2Fmdferdousalam%2Fmove-checkout-test-from-t0050-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2054/mdferdousalam/move-checkout-test-from-t0050-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2054
 
-Nit: should we also mention how prefix is appended to namespace?
+ t/t0050-filesystem.sh      | 20 --------------------
+ t/t2018-checkout-branch.sh | 21 +++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 20 deletions(-)
 
-> +
->  	/*
->  	 * Exclude any references that match any of these patterns on a
->  	 * best-effort basis. The caller needs to be prepared for the exclude
->
-> --
-> 2.53.0.414.gf7e9f6c205.dirty
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index ca8568067d..003329c082 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -117,24 +117,4 @@ $test_unicode 'merge (silent unicode normalization)' '
+ 	git merge topic
+ '
+ 
+-test_expect_success CASE_INSENSITIVE_FS 'checkout with no pathspec and a case insensitive fs' '
+-	git init repo &&
+-	(
+-		cd repo &&
+-
+-		>Gitweb &&
+-		git add Gitweb &&
+-		git commit -m "add Gitweb" &&
+-
+-		git checkout --orphan todo &&
+-		git reset --hard &&
+-		mkdir -p gitweb/subdir &&
+-		>gitweb/subdir/file &&
+-		git add gitweb &&
+-		git commit -m "add gitweb/subdir/file" &&
+-
+-		git checkout main
+-	)
+-'
+-
+ test_done
+diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
+index a48ebdbf4d..5f37e40591 100755
+--- a/t/t2018-checkout-branch.sh
++++ b/t/t2018-checkout-branch.sh
+@@ -285,4 +285,25 @@ test_expect_success 'checkout -b rejects an extra path argument' '
+ 	test_grep "Cannot update paths and switch to branch" err
+ '
+ 
++test_expect_success 'checkout a branch when file and directory share case-insensitive name' '
++	git init repo-case &&
++	(
++		cd repo-case &&
++
++		>Gitweb &&
++		git add Gitweb &&
++		git commit -m "add Gitweb" &&
++
++		git checkout --orphan other &&
++		git reset --hard &&
++		mkdir -p gitweb/subdir &&
++		>gitweb/subdir/file &&
++		git add gitweb &&
++		git commit -m "add gitweb/subdir/file" &&
++
++		git checkout master &&
++		test_path_is_file Gitweb
++	)
++'
++
+ test_done
 
---00000000000073f506064b7a0970
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 6cf2e46abbfd9f34_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEpCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tY0Y3NFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meFpMQy9pU1VRT0NKKzltQ2V5YldRL24xL1dMa3c0RAp4dU5KMkFOK2Qz
-RXVTYm1EYWpPcXF0Qkx0bjlReW51L3BMS1E5bUkyVXBHaFBEVEttRzRlYnA0cG5lQnN6K1dzCjRR
-Q3Y5cUlrbFNBT3MzYWRjZzFqNlhHWjA1dWhKQXRNbVVKazdOSHgyOW9sTlFoTWhLMnpBTFNORHZM
-aDRXWmIKdkFhSHRNeWZnQWFtV3UveXdDMkR5ME9SdVFuS1djanI1TDNSTUUybDN0dXhZTjRqWDFt
-a05NajdxMUt3SmJjMwpFeU5lUURlWWE5QXF3MWJHSE9hRDJCaktzQ0x3Uy9lSERnZFdhSm5iS1Vh
-aGpzMy9tdGErM0FNWC9ucURXVmhwCkpHQ2VvQVYrK2MyOWZLNjZucUh6aHl5N3NzbmlzSGkrTVJD
-RE1xMXNyVmFOREUrL2JQREFla20vQWlXek1ZbGoKTDhnUkNBUk5pQjdkZExvaituaDhta1dsZE01
-dzkva2tqbmJNTnVJVWxKSGhFdFdRM2p4bjJQWnBnRjNLQXRheQpYN0NKTVdKUW1oc1AvTWdGbFBX
-dzliNTRTQkl6Q09BR0h6dkN5WDVxdTRSQzVwMzNGcGFTRzFQYUxDUHZobGJqCjIwSjQ5VysyanVO
-OHIwdnp5cmk4SDZjdVhCNmlKZVdHSW1ITDlnPT0KPWNVK0oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000073f506064b7a0970--
+base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
+-- 
+gitgitgadget
