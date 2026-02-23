@@ -1,105 +1,95 @@
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9452E2765F8
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 14:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771855315; cv=pass; b=twT4+Wkell8/HPZpk90SI3izxboWEO1tky+Xof8XgyBb8EPekqjxzS1HaYZ2XDVnhnztRWhUgAAz3jmlTUQHdp5SVkE3hpZv56/zdGQ+Idrfcua1t0xzlJJl54H3ccHxi1Ex/h6jSGBayFUQUNJZEahnrh0q9HstsVewCmzI7Kg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771855315; c=relaxed/simple;
-	bh=1LYHU8zmoSQTBAqP6EnNibbtob3u5ZDV4v+K7k9pIXU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AaiVKtPULXhvPO7liHd/t5YppDt4uPw9dHn45ESrygVprqOr9rMKA0Z9wr+HDjTCsHReyIeLnb8v4Zwp7quljQNqD+uxE+TYt1eVkwFPAF36BaeFEAkv8vdWdAya1HL85YU71cLzrktTiuCCmx/Sez4igxlavZyE4lnwLxewfDc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-2ba6d1e047cso148458eec.0
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 06:01:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771855314; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Mu3I9+9dydrnndcIG+0IfCr+dc03z0Iqe9c/F9TlBvUNF7KxOPRjUzd8Jhcd6k22d5
-         UI+9v5MB1kJNzw+tYOxtxoFvucwc02n3AZu0ihSu4+VvcK4UdI5JR2wgcqUYKf/Ygy/l
-         fRUDZQw9KoaL69SWZr1m1fys2G9OXnZog8994YuaMxelLeQ6GJvZpxE5thhwJBR9yi5R
-         39eip7t+rBci9aQjY+AQ5RxjgTzMhD+ZomuecgWZgbVIYuEypWOSgio5TQX5ytZWAbqG
-         8V0HfcAgzOic55DbTPYEH5Lc8df3okcVMxMrtrgXa7Q/HEI+be6KM7FDzTxoNKd66EW/
-         LLfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=VZPO0XMDs0ojy58ZXCrpG6MW0TKNbfS/LMkI1+Xc98Q=;
-        fh=9sEzfdr/LoEbwvL5msN3KdZWDik/jaAFs88bddl/50s=;
-        b=aShDgJ7jcx7NOvgLZmmj8DJKinzYqXd4GVVSTdL46NWyrtI8158B336MwWLcFl9XRx
-         XMIZjZrVSrhvUBhiheVcYjhDRW/y+YkvBXQzjuHeWaSaOZJHlevEvLOL0lRplEfQPRAJ
-         9UDEXuHBoITxfz0mo3GpMCBjnW6/oNFOyNrMmlfS7nvkdrAzoQ8TEvByETSx09ho6Q1G
-         cUZoOfl/S0/iPgpr6X8LBJdUnblrxwNCSg6QTpdTyL1e3NwQH3PnlzIPKcJtgDp5xKYg
-         E0vEmn4tcBuCfQdX8vmO0nxqHTTU+WquJziGngHP1ZrGQ+67ucidoHGjbvykmx5Q6Yin
-         RlzQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771855314; x=1772460114;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=VZPO0XMDs0ojy58ZXCrpG6MW0TKNbfS/LMkI1+Xc98Q=;
-        b=UnzB1t6KDlAcwwxojxQzt4NY92lF5YNVMSO9mmXWzVxWMWk4GZNHtZFXelgz0ENG7G
-         MLwyiIQs+oyzVpSDkl/G9xx7kL7i1YEU+gw5GWwd8NfCvLUGmXes5494qInDtOGgQjKn
-         4DRetOfSHQdxWBE4mF6DrbqOW/J+WgxK2Z12O/BPHHkOaC4xVbELbzxcWyNXUcVujQWz
-         j/MmJEB4QyWze3DtUETr7fXonP9g2BhPSFrTz6wgM/RkDq94NSdq8g+RcA59s6vnUBVQ
-         qozzEWlD+FGG9JaFIkj3Zp0OgENqMilsMCtn/9O4M6XhmV2ZM1scEzisd+uftTIGoFT+
-         vg0A==
-X-Gm-Message-State: AOJu0YyixnAvlnOcIWx1zJi3raxk3pie/ksq5uRJ7BR0crbTFd2Q1uBh
-	J+UsWB/oIc+F2JT5dRmUIErv/cQGY+FzDrFa/qkVT0TlyjoOsL/NMcb3hw8fZAAyCQcdqt0Jczl
-	woN+hqvN5lMA1oioPg9aS6jMQExlI8Us=
-X-Gm-Gg: ATEYQzyTqfyyBAkKsnXXZl8GfDLtpVdjyv1qOJ8TM39KZ8LW5VfjiNYtchJtPH0rOy9
-	tPKGnPofovo0YyWHXHUiF3oJrvYP3RSArmAAzazlmE6aqBpZgojXe8+KmcY9+xG3gNNsZbHVX4n
-	cXC+yX/FNGhmToKMDNThkVxFTS3JO8qyYwHaBt277USZKQpGbypeZFIfx3yowZZjBpdlQcVHn1q
-	75dzgMbNo64aXBsBA0WtMT/SSTDHGidmAyM8c2PG6QBLJx5gEQ0hEpmGvcLRHCgBEaJtd0aTK2h
-	2iEtMTVIm1oukT/v8EzBsUoNFUT8SKFzHojlBFrTKA==
-X-Received: by 2002:a05:7300:cd43:b0:2b9:1375:b551 with SMTP id
- 5a478bee46e88-2bd7b906c25mr1418943eec.0.1771855313277; Mon, 23 Feb 2026
- 06:01:53 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759481E49F
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 14:08:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771855731; cv=none; b=B3jywAZ5jSf8RNwVk2K9SKVWg2KdE3nlplEVxRiYxBtYH1zUEzdIsZ+Yl9jRyvwCBHNy8tcFyO3sDBf6hzddYHQ5302vlH4gqONgPW8PHTvLLOWjyFCuf/xw65D4teL/8LPSIUWGkVHOUGstECKVlgpTqX4vLOeh/f73HudKecw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771855731; c=relaxed/simple;
+	bh=4DYaHNd7Pp/WFPsLOjkWvu5Boe/l6SzVPEkH9UO6S0I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qd00H69xxmDu3I6aiM1kLCV6N8Zi8zBDIWwG/FBpt/6ydWFbYbkWdAx2ySFbnePd38SKsrFVx5DbDkjhjBONblTyt4XajPkCukLHE7Mibdhd0/GQgC/DCdMVZlk4E9cUrlEV8GljDwxgVChq59yz66m4vivXgSM7zyxD7cqx1ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FFqPmeNl; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FFqPmeNl"
+Received: (qmail 55279 invoked by uid 109); 23 Feb 2026 14:08:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=4DYaHNd7Pp/WFPsLOjkWvu5Boe/l6SzVPEkH9UO6S0I=; b=FFqPmeNlHsFnOW4PcSAPmi2bS7IgGgCVGqIUhondQzn4akVfI1t7Va5u4g1VXuZxeihW6JvxDL6LYxHwhIkOhJjBzWvYVlw33+o7dvfz5Pd0nxxQlvyb4GiMYKAr0bE6MpnIVwwmQchpAq9IUNfAV57er6ftRYpNH2G7XIlup+JzPQWnvSMowIkjAoRxdp2RvheqkRXRbomiZhVFrpvbe3fVjcmWCRl5/RkD4LOQ8kU1+1eRPRp+Gn25fU4og1ZaO8/ncPHBkvl+vXAPETvj4NXBRKL3/rruAMz39v93wT2fgQ4pZqHJ4YfGfOrN4Dc+my2WxoBRhgQhNeMhK2pKLw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Feb 2026 14:08:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 106409 invoked by uid 111); 23 Feb 2026 14:08:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Feb 2026 09:08:48 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 23 Feb 2026 09:08:47 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 00/18] midx: incremental MIDX/bitmap layer compaction
+Message-ID: <20260223140847.GB271392@coredump.intra.peff.net>
+References: <cover.1765053054.git.me@ttaylorr.com>
+ <cover.1768420450.git.me@ttaylorr.com>
+ <xmqqbjhjvysm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260223-pks-fsck-fix-v1-0-c29036832b6e@pks.im> <20260223-pks-fsck-fix-v1-1-c29036832b6e@pks.im>
-In-Reply-To: <20260223-pks-fsck-fix-v1-1-c29036832b6e@pks.im>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 23 Feb 2026 09:01:40 -0500
-X-Gm-Features: AaiRm514RdtL1ILOiQD2Nb-cKrhFxZQm9-jpcxRFq8T4oFxZunk2L3CM6Evcptc
-Message-ID: <CAPig+cSSLd0MqEsvaeQFPN2-usZHvSCS=1Nor_w2xbOR+W9eWA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] t/helper: improve "genrandom" test helper
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbjhjvysm.fsf@gitster.g>
 
-On Mon, Feb 23, 2026 at 4:51=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
-> The `test-tool genrandom` test helper can be used to generate random
-> data, either as an infinite stream or with a specified number of bytes.
-> The way we handle parsing the number of bytes is lacking though:
->
->   - We don't have good error handling, so if the caller for example uses
->     `test-tool genrandom 200xyz` then we'll end up generating 200 bytes
->     of random data successfully.
->
->   - Many callers want to generate e.g. 1 kilobyte or megabyte of data,
->     but they have to either use unwieldy numbers like 1048576, or they
->     have to precompute them.
->
-> Fix both of these issues by using `git_parse_ulong()` to parse the
-> argumemnt. This function has better error handling, and it knows to
-> handle unit suffixes.
+On Fri, Feb 20, 2026 at 02:24:25PM -0800, Junio C Hamano wrote:
 
-s/argumemnt/argument/
+> Taylor Blau <me@ttaylorr.com> writes:
+> 
+> > [Note to the maintainer: this is based on 'master' with my
+> > 'tb/midx-write-corrupt-checksum-fix' merged in and should produce zero
+> > conflicts when applied on top.]
+> >
+> > This is a reroll of my series to implement MIDX layer compaction
+> > adjusted in response to reviewer feedback.
+> 
+> Haven't seen a lot happen since the end of last month or so.
+> Anything left to do here?
 
-> Adapt a couple of our tests to use suffixes instead of manual
-> computations.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Sorry, I promised Taylor I would review it and I have been dragging my
+feet.
+
+I just read through the whole series, and didn't find anything that
+hadn't already been brought up. The scariest / most complicated bits
+are:
+
+  1. Dropping the sort-order requirement for midx pack lists in patch
+     10. But I think the approach with the version bump is the maximally
+     conservative one, and I feel good about that. IIRC we discussed
+     previously the possibility of using new chunks to give the
+     alternate ordering, but I think this keeps the complexity in the
+     code to a minimum.
+
+  2. The actual compaction bits in the final two patches. I didn't see
+     anything wrong here, but this is exactly the kind of spot where I
+     think review fails, because you don't realize the corner case that
+     you missed (speaking from experience with midx and bitmap code).
+     But the nice thing here is that it should be quite unlikely to
+     cause a regression if you're not using compaction. As this is
+     mostly a building block for "part 3" that starts doing compaction
+     as part of a broader repacking strategy, I think it is OK to
+     consider it somewhat-experimental, build the next layer, and then
+     eventually let it see more exercise in a production environment.
+
+     That's how we've traditionally found those corner cases, and I
+     think trying to spend more time staring at it in review is not
+     likely to produce more insights.
+
+There were a couple minor issues brought up in review, like out-dated
+comments and the u32_add interface. So I think we might need a v3 with a
+few touch-ups, but that's it.
+
+-Peff
