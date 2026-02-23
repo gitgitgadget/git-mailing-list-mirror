@@ -1,204 +1,202 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7137C30F53C
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE72E30EF80
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:01:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771862430; cv=none; b=iQpdqxyn2+EvMmT+hZn/SBL4KvQxPXsMHVXpl6Hvh2s0HeIOHfmDqmazuH6WmKjBVDKSiWNWcTCfcVmbcdmb7fq1ix0/wkr3CF38F/TNiHm9BWFDpjzPfDH1zRcOmKH3kKyYflzkRMDT889rpXP3753x2ChaytSTsgaNnhxaC+w=
+	t=1771862516; cv=none; b=XjbgCxA+AJxhqDH8t/ATfJ1FCvAr2HM5BvAizILY5yeYPO61FW40btDbyFVYZvo2IVeEnqqhqkN90cywWokUzG5cgun7GkiKMu5aTpy/87m6uv1dDmHScoPGZnMZX08KNFBXolE3QO7LTkryEdEWHD9zz96JsvDQSB/ufKVJTFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771862430; c=relaxed/simple;
-	bh=0Y3vUKMKCtOPEncYIk4WmYDEc8ekR+/hSxDvPYCuV80=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ef4+/PZDTnYDoNO3KsSNFjfXZVXU+bcsZjpqsAv30ana7fgxct1P7FxXsKDY6QXBr6tnxBs7Kxlx4SEqzRRm+Om0bBais0WkItaiNivIdvWDxhQHwUFOHRsD+wihhFP9DJG4GX9HcluaQZYXC9s+WBUWx0or3B1i8/G0FMRt9WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LhYXz021; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vhy/Wqsc; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1771862516; c=relaxed/simple;
+	bh=UKmWtS2fLaPXZSsEA0Auy8uDslV9nzLuKsljT39PxUU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X8w9iLKJHnWopKSerYS4epTwWGMSmJ3h3+7xZGOLL6vDmJLoUpPKPEiIimuFc8PkFF4TXXjlNI6Hrkgok358Qz9VWWtgS9WUAooUA9eFLZPUtY8/1jb/Od2C/IqlKuXLcvXv5VlMwVXOFyE9WiVuL/qyhG8VXEAp8BPA5MUlpY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SbP8rba2; arc=none smtp.client-ip=209.85.161.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LhYXz021";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vhy/Wqsc"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BD8D514001E3;
-	Mon, 23 Feb 2026 11:00:28 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 23 Feb 2026 11:00:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771862428;
-	 x=1771948828; bh=mJ3O8FiSFNJCEKBT1valf+PNy1e8eFROk1mB40CRG6w=; b=
-	LhYXz021rA7y0OnaS3v7R1w0cx5OETRyWWkN0sQCXxDmlez1a+Ktvw7ZFU9q5I3y
-	kqtX21H/Y5umGGrlWqur2Uh8GJ7o/LjtyoPnZzyAWPLMxsMqtIIhDDJJpJgl+E8+
-	v3srNVQ8wE9pB/k7uzsfb3OM+YTiFPDUVVmzWr1+BtrVEGibJ+RcI0dM0vTiDBZU
-	+j4Ajo3sh0zUwpF24Doub10TWS4FWMKwXe3hfjU7pBINQ5lygRKsn68ln0i8vlTn
-	M7aaPyLseOM2yvNOWGiUEd8fl/QGH3xzBeRUX63P7lh4ocaJYJvObXWVJ8EuHQay
-	6h7bY8b5pE8IJIcMvkGhYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771862428; x=
-	1771948828; bh=mJ3O8FiSFNJCEKBT1valf+PNy1e8eFROk1mB40CRG6w=; b=v
-	hy/WqscwrISFuRrxtCgk6PQCuO0ylUlmT+Y9WvyxDdUcAleQpHGGbV45zXljjheg
-	nkmLY0KyAMAJjsTte58LMqiBz7xggoL7WYmQ9JxhOGMX00Mn4GnwFu80Pjbih4zR
-	MgPzvLd4DLqVZpVVpTiAzQWon6flBX3XA+Wn+FkZx08fx+LqueQsKc1zDOHo+9cl
-	Vh+iOqKkZcqKRwvUtuGkSrPq+OTK3JLZZtwnzqxszs729+1thwHINWSuzU9u13Vg
-	LHKSLynTsQxn14diQ+oXIMDPPtkIw1bg6Gq7dGtEtvSIJb+fh/GmmhtJuC9Feu5B
-	f3VMTvshzsv95Nkz5VEAg==
-X-ME-Sender: <xms:nHmcaY8UQeysPuXwLpNHonFHg7vnLrEgcGgPJyAxSDRH9jzv_10ctA>
-    <xme:nHmcaXkhLyGnN57fSDmD3uH7bjZhM-bqHBUt6vCxVoK9cfD_bCCiWAwQPjmrOkdh_
-    5lR5mnARzgc2E9W-qCx3Thsw0nr1VmsgmLOS_miF-Pf8xrMcLCW>
-X-ME-Received: <xmr:nHmcaWWJwuUiT2R19jwFaP_-HAOBsuFb2WKiL75-8exQ-gyFpKkS-qn7qe6981zEMi4vpQUOY6qfAZQTp5orfH1UwbLp-TDprkTC9OQEoQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepshhunhhshhhi
-    nhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:nHmcaUFoAmAgjIkSipTSR8xArGs2zzwSaXTg1VT7YtSv-0DR1h5tKg>
-    <xmx:nHmcaaeGsrmJ6-abgHwhuS4w9Y5rY5sNDnKHii7RBNnN6_B6bbnB_g>
-    <xmx:nHmcadK47W3EQN6yUWJl_x4Y3EIKsMOpBETlEX2Allk_k7ziZ9egFw>
-    <xmx:nHmcaXGlFTYUe_pM_pD7EBd_UQAAJdfxTjyjtqpKWQRMEpxt1XLiXw>
-    <xmx:nHmcaQPHrCNMbMeKVtA7WoKt0sozHa_X6r7URF3vsUqBcKFFCQ0QSMZI>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 11:00:27 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4f731412 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Feb 2026 16:00:27 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 23 Feb 2026 17:00:09 +0100
-Subject: [PATCH v2 4/4] pack-check: fix verification of large objects
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SbP8rba2"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-67997ce9e1cso2596442eaf.2
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 08:01:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771862514; x=1772467314; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=swwUWuk13egwdh4qES5CXIgwfg13Z4JCZBRRBgL0LcE=;
+        b=SbP8rba2I5P7Pq1TlIgHrSAGf9qHNTYViBG9Y9gblhv4uI/K+XFW1NIxAq3UN+8Ncx
+         GyOZ5NMxtFWgVr+0bJWtQXChfhYBfky0hvOMebA2Ph+hB9YtmRoSpnCjzb2YZSHNGqPh
+         XzUaYVW085UDaniRjARZY5tRYBRpkWnlJUkMS9aVMnP9ik169Wt6olLCzgQEeHmtnk6Y
+         3zzl7ifWy/zWOgNBsXPX6glpKkczTWIU+HoDAl85I+9U8+2ZB5BwKQK6YLKVnVf8clJl
+         oMluJmvwSZIhCVxykGiMmPc4pirMdE2gknxFXgey8F+Gd9pUGafh9MZ5XUjSaXtiz/4i
+         TvMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771862514; x=1772467314;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=swwUWuk13egwdh4qES5CXIgwfg13Z4JCZBRRBgL0LcE=;
+        b=BsxDv28qQtNqmp2beT2aVeg38dbe00p4RX1Yq1lINBNI7plwOIO650b0n+RedSjfyJ
+         l9CGCmeGb/Qs8/EClRLO2bm0Ck/68OgYLWRcbJF7rT842VvzYk4KhmA5gqUBxz+uDHuZ
+         oLELzEIh+aM2/5fT+o9lIkFRCOA/fKAwaeyMdfetdf/0w2D8rHEbVhmglU6YJIFyuq+n
+         mR9yjoIofXFpu8pNHNYGW/yxAtLd/+mecnLtme80aoOH4UU7wrOqlZ0xrTe+Wz21jbFR
+         Q7DxC0/Sf32AjiaeuBgxOFiHaCEXJUWzJjqwehuv3iz61VUenBAi7NC5F/Qb5FbM9FcX
+         461A==
+X-Gm-Message-State: AOJu0YySN08xC2Ag1l9MKVt+aRVCdWi3f5BjrByxhx9nQ3a5I9SkNKHI
+	a3p0sNWsBQlkub9K4FF013N+Cd/9v47l5nuzdur8TMbHqxlCfWh0QpoSUWsHRA==
+X-Gm-Gg: AZuq6aLlfaOnoANN+Jugh1gQ7LhmgJZnGjPlrFWBT1Nna76P7/N1Vvf1uX+1eQDIUMs
+	W8bVhbJP6vwEI6C8bSR1ofDLvLhAuOUJBmkgA4NBcE96jRhgAj2Bus8LAqOVfzNlcmtDp0/qVBK
+	3tbas52MmrSKbhSGFLrxNKe4G4WRTef9o71ZdfZhMUclZRQn+gv28CFWMqB2mR4HilaBGtQ2hiz
+	yVK/fRrB8ZlMNQnT9Pk7LNJuAnXiGwf9umsATFxpwcXTJOgCJCC+fSa2sbWRSRsmM0xeWy8N731
+	gJvGx6rOwZLaDKu5IczWiOGSh24jQGog8hcmtINrWXl9UPn7RMHw2netxcV0x0pqACyc+WeqcOU
+	7TpoRIjmPmBlRQvpD5Od+zrCUJYfjqBc3srdmmaH8JHsNRKEIwdLtEqlt3FagSw/K9KSe9bRpQe
+	Lkz9AoAXK0mdr16eEd
+X-Received: by 2002:a05:6820:2013:b0:663:40d:4893 with SMTP id 006d021491bc7-679c425a323mr4476042eaf.3.1771862513412;
+        Mon, 23 Feb 2026 08:01:53 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679c56ec56dsm6418842eaf.12.2026.02.23.08.01.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Feb 2026 08:01:52 -0800 (PST)
+Date: Mon, 23 Feb 2026 10:01:48 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 1/8] t: fix races caused by background maintenance
+Message-ID: <aZx3NCv9hjap_yoP@denethor>
+References: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
+ <20260220-b4-pks-maintenance-default-geometric-strategy-v1-1-faeb321ad13b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260223-pks-fsck-fix-v2-4-99a0714ea3bd@pks.im>
-References: <20260223-pks-fsck-fix-v2-0-99a0714ea3bd@pks.im>
-In-Reply-To: <20260223-pks-fsck-fix-v2-0-99a0714ea3bd@pks.im>
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
- Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
- Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-1-faeb321ad13b@pks.im>
 
-It was reported [1] that git-fsck(1) may sometimes run into an infinite
-loop when processing packfiles. This bug was bisected to c31bad4f7d
-(packfile: track packs via the MRU list exclusively, 2025-10-30), which
-refactored our lsit of packfiles to only be tracked via an MRU list,
-exclusively. This isn't entirely surprising: any caller that iterates
-through the list of packfiles and then hits `find_pack_entry()`, for
-example because they read an object from it, may cause the MRU list to
-be updated. And if the caller is unlucky, this may cause the mentioned
-infinite loop.
+On 26/02/20 11:15AM, Patrick Steinhardt wrote:
+> Many Git commands spawn git-maintenance(1) to optimize the repository in
+> the background. By default, performing the maintenance is for most of
+> the part asynchronous: we fork the executable and then continue with the
+> rest of our business logic.
+> 
+> This is working as expected for our users, but this behaviour is
+> somewhat problematic for our test suite as this is inherently racy. We
+> have many tests that verify the on-disk state of repositories, and those
+> tests may easily race with our background maintenance. In a similar
+> fashion, we may end up with processes that "leak" out of a current test
+> case.
+> 
+> Until now this tends to not be much of a problem. Our maintenance uses
+> git-gc(1) by default, which knows to bail out in case there aren't
+> either too many packfiles or too many loose objects. So even if other
+> data structures would need to be optimized, we won't do so unless the
+> object database also needs optimizations.
+> 
+> This is about to change though, as a subsequent commit will switch to
+> the "geometric" maintenance strategy as a default. The consequence is
+> that we will run required optimizations even if the object database is
+> well-optimized. And this uncovers races between our test suite and
+> background maintenance all over the place.
+> 
+> Disabling maintenance outright in our test suite is not really an
+> option, as it would result in significantly divergence from the "real
 
-While this mechanism is somewhat fragile, it is still surprising that we
-encounter it when verifying the packfile. We iterate through objects in
-a given pack one by one and then read them via their offset, and doing
-this shouldn't ever end up in `find_pack_entry()`.
+s/significantly/significant/
 
-But there is an edge case here: when the object in question is a blob
-bigger than "core.largeFileThreshold", then we will be careful to not
-read it into memory. Instead, we read it via an object stream by calling
-`odb_read_object_stream()`, and that function will perform an object
-lookup via `odb_read_object_info()`. So in the case where there are at
-least two blobs in two different packfiles, and both of these blobs
-exceed "core.largeFileThreshold", then we'll run into an infinite loop
-because we'll always update the MRU.
+> world" and reduce our test coverage. But we've got an alternative up our
+> sleeves: we can ensure that garbage collection runs synchronously by
+> overriding the "maintenance.autoDetach" configuration.
+> 
+> Of course that also diverges from the real world, as we now stop testing
+> that background maintenance interacts in a benign way with normal Git
+> commands. But on the other hand this ensures that the maintenance itself
+> does not for example lead to data loss in a more reproducible way.
+> 
+> Another concern is that this would make execution of the test suite much
+> slower. But a quick benchmark on my machine demonstrates that this does
+> not seem to be the case:
+> 
+>     Benchmark 1: meson test (revision = HEAD~)
+>       Time (mean ± σ):     131.182 s ±  1.293 s    [User: 853.737 s, System: 1160.479 s]
+>       Range (min … max):   130.001 s … 132.563 s    3 runs
+> 
+>     Benchmark 2: meson test (revision = HEAD)
+>       Time (mean ± σ):     129.554 s ±  0.507 s    [User: 849.040 s, System: 1152.664 s]
+>       Range (min … max):   129.000 s … 129.994 s    3 runs
+> 
+>     Summary
+>       meson test (revision = HEAD) ran
+>         1.01 ± 0.01 times faster than meson test (revision = HEAD~)
+> 
+> Funny enough, it even seems as if this speeds up test execution ever so
+> slightly, but that may just as well be noise.
+> 
+> Introduce a new `GIT_TEST_MAINT_AUTO_DETACH` environment variable that
+> allows us to override the auto-detach behaviour and set that varibale in
 
-We could fix this by improving `repo_for_each_pack()` to not update the
-MRU, and this would address the issue. But the fun part is that using
-`odb_read_object_stream()` is the wrong thing to do in the first place:
-it may open _any_ instance of this object, so we ultimately cannot be
-sure that we even verified the object in our given packfile.
+s/varibale/variable/
 
-Fix this bug by creating the object stream for the packed object
-directly via `packfile_read_object_stream()`. Add a test that would have
-caused the infinite loop.
+> our tests.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  run-command.c            | 2 +-
+>  t/t5616-partial-clone.sh | 6 +++---
+>  t/t7900-maintenance.sh   | 1 +
+>  t/test-lib.sh            | 4 ++++
+>  4 files changed, 9 insertions(+), 4 deletions(-)
+> 
+> diff --git a/run-command.c b/run-command.c
+> index e3e02475cc..438a290d30 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1828,7 +1828,7 @@ int prepare_auto_maintenance(int quiet, struct child_process *maint)
+>  	 */
+>  	if (repo_config_get_bool(the_repository, "maintenance.autodetach", &auto_detach) &&
+>  	    repo_config_get_bool(the_repository, "gc.autodetach", &auto_detach))
+> -		auto_detach = 1;
+> +		auto_detach = git_env_bool("GIT_TEST_MAINT_AUTO_DETACH", true);
 
-[1]: <20260222183710.2963424-1-sandals@crustytoothpaste.net>
+So now if "maintenance.autodetach" and "gc.autodetach" are both not set,
+we then check for the "GIT_TEST_MAINT_AUTO_DETACH" env before defaulting
+to true. Looks good.
 
-Reported-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- pack-check.c    |  2 +-
- t/t1450-fsck.sh | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+), 1 deletion(-)
+>  
+>  	maint->git_cmd = 1;
+>  	maint->close_object_store = 1;
+[snip]
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index 7cc0ce57f8..d11d6f8f15 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -6,6 +6,7 @@ test_description='git maintenance builtin'
+>  
+>  GIT_TEST_COMMIT_GRAPH=0
+>  GIT_TEST_MULTI_PACK_INDEX=0
+> +sane_unset GIT_TEST_MAINT_AUTO_DETACH
 
-diff --git a/pack-check.c b/pack-check.c
-index 46782a29d5..7378c80730 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -155,7 +155,7 @@ static int verify_packfile(struct repository *r,
- 			err = error("packed %s from %s is corrupt",
- 				    oid_to_hex(&oid), p->pack_name);
- 		else if (!data &&
--			 (!(stream = odb_read_stream_open(r->objects, &oid, NULL)) ||
-+			 (packfile_read_object_stream(&stream, &oid, p, entries[i].offset) < 0 ||
- 			  stream_object_signature(r, stream, &oid) < 0))
- 			err = error("packed %s from %s is corrupt",
- 				    oid_to_hex(&oid), p->pack_name);
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 8fb79b3e5d..54e81c2636 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -852,6 +852,44 @@ test_expect_success 'fsck errors in packed objects' '
- 	! grep corrupt out
- '
- 
-+test_expect_success 'fsck handles multiple packfiles with big blobs' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		# We construct two packfiles with two objects in common and one
-+		# object not in common. The objects in common can then be
-+		# corrupted in one of the packfiles, respectively. The other
-+		# objects that are unique to the packs are merely used to not
-+		# have both packs contain the same data.
-+		blob_one=$(test-tool genrandom one 200k | git hash-object -t blob -w --stdin) &&
-+		blob_two=$(test-tool genrandom two 200k | git hash-object -t blob -w --stdin) &&
-+		blob_three=$(test-tool genrandom three 200k | git hash-object -t blob -w --stdin) &&
-+		blob_four=$(test-tool genrandom four 200k | git hash-object -t blob -w --stdin) &&
-+		pack_one=$(printf "%s\n" "$blob_one" "$blob_two" "$blob_three" | git pack-objects .git/objects/pack/pack) &&
-+		pack_two=$(printf "%s\n" "$blob_two" "$blob_three" "$blob_four" | git pack-objects .git/objects/pack/pack) &&
-+		chmod a+w .git/objects/pack/pack-*.pack &&
-+
-+		# Corrupt blob two in the first pack.
-+		git verify-pack -v .git/objects/pack/pack-$pack_one >objects &&
-+		offset_one=$(sed <objects -n "s/^$blob_two .* \(.*\)$/\1/p") &&
-+		printf "\0" | dd of=.git/objects/pack/pack-$pack_one.pack bs=1 conv=notrunc seek=$offset_one &&
-+
-+		# Corrupt blob three in the second pack.
-+		git verify-pack -v .git/objects/pack/pack-$pack_two >objects &&
-+		offset_two=$(sed <objects -n "s/^$blob_three .* \(.*\)$/\1/p") &&
-+		printf "\0" | dd of=.git/objects/pack/pack-$pack_two.pack bs=1 conv=notrunc seek=$offset_two &&
-+
-+		# We now expect to see two failures for the corrupted objects,
-+		# even though they exist in a non-corrupted form in the
-+		# respective other pack.
-+		test_must_fail git -c core.bigFileThreshold=100k fsck 2>err &&
-+		test_grep "unknown object type 0 at offset $offset_one in .git/objects/pack/pack-$pack_one.pack" err &&
-+		test_grep "unknown object type 0 at offset $offset_two in .git/objects/pack/pack-$pack_two.pack" err
-+	)
-+'
-+
- test_expect_success 'fsck fails on corrupt packfile' '
- 	hsh=$(git commit-tree -m mycommit HEAD^{tree}) &&
- 	pack=$(echo $hsh | git pack-objects .git/objects/pack/pack) &&
+I assume here we are unsetting the env for testing purposes. It might be
+nice to leave some sort of breadcrumb comment here to explain to future
+readers.
 
--- 
-2.53.0.536.g309c995771.dirty
+>  test_lazy_prereq XMLLINT '
+>  	xmllint --version
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 0fb76f7d11..aa805a01ce 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1947,6 +1947,10 @@ test_lazy_prereq COMPAT_HASH '
+>  GIT_TEST_MAINT_SCHEDULER="none:exit 1"
+>  export GIT_TEST_MAINT_SCHEDULER
+>  
+> +# Ensure that tests cannot race with background maintenance by default.
+> +GIT_TEST_MAINT_AUTO_DETACH="false"
+> +export GIT_TEST_MAINT_AUTO_DETACH
 
+Looks good.
+
+-Justin
