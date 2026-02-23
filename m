@@ -1,400 +1,263 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC87371056
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 19:42:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C66221726
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 19:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771875743; cv=none; b=SYUyAJtnZITbPpHEFeqsvXap4NWKwhYfqMlwGSCNNy/KgXRJo9e+Avcls6FOs4SnNjOZGMnInqzpMZUVmlO/tl8nnojQcye7JpZ/4EH+WWACZS7HzKPewqVOu0mrU5o/ZklcpoZtavN0XZygIk0/tUyNN50L/X5voHPt+4xehlU=
+	t=1771875818; cv=none; b=ENGNUIzg0WUAqRwYVeMp2LBa5uaHEZrWMl2WWHwo1Cul6c6Jvfs904n1XTVQ3b4bOzwBwOoSNSdWVjL2PJtkIfN7euqOC1WNWNTkRNrNGw2QqyW/GtLhOn5H5WH5GFJJBT3VeHbkmFANUYXtvfls07gMNlPLFZ0O4ubuvqm7taM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771875743; c=relaxed/simple;
-	bh=GgnyW1MjfGCUavwkcIlHT2gpEm1qmQPGmiCgOaT4G1M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lw5v7zyyHyElCXGFS3I0xP0GYY+C2ow/U9+w/dkz+mKr5pmkEUARnw6+6OqxHw9qhJkhJ9+IR/TrLEzUidaVo9j3zFCTHsokJXOjgC45Bsgy6MgOCvU8ddOfQejgUsKJN9XdINBsYKQUQTXnFgPJk+bOzaQMSVrXpT96BSKQ5oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cCJjILCN; arc=none smtp.client-ip=209.85.167.171
+	s=arc-20240116; t=1771875818; c=relaxed/simple;
+	bh=9OkTPPLqfG5Ki8Nw8MMA4y2GC8evNVfyo7LHaiIN1pA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=JlODwL/5tTBuXtcWG3aFLwGDSkeMoag9RXiNUR1122PdGs0rq2DdUR2qh44EXOBEyQTh/UeSndwe2UDfIqVr9ywU0XqsCdIAd72r7b9u6GbsIFaIVkGFxgbraXjD1oZL2TJ1chUbk2GlZUt3qDGZXJBaYWJBRm5HHCjzRRxTxHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FPtYbw6B; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cCJjILCN"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-46394090d2fso1408865b6e.3
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 11:42:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FPtYbw6B"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-8946e0884afso79148096d6.1
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 11:43:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771875740; x=1772480540; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771875815; x=1772480615; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eVlGAC6tM4/2gKKUV2RJldT3aH9nXpo2pe4PkFEnuuM=;
-        b=cCJjILCN8bPHm+q7Ir21z1a+mxEZ97S3gs97DI+HhP8jkSq/fo1dr96zzzOZVpt3r1
-         NJBd0+bC+qSBoP+AJ1vut1tISn1WYAvPT7Myrkj1E8X7BhO+xkZRF9Bt0ZpVF6dxZmSA
-         RAaCktLzw4NwYqhDeEckxqAjmdEP2/C7iBJOTNbQ2bOi334O6R6jOsDhdGbhjXBD3eTn
-         WiEKqpMLEhLDxcsNzjTzbw51DIlQfVBBqijV7XzmlUyN+QeMPkscEdEdumHQD9JzpVSP
-         8iOuvbHlRxT2RR4ZK/7O27lZ7e/OmJQ4Xt1jHj4pgeGg9Z11A59QTkK8BY3aWpQazFUD
-         UqZA==
+        bh=s3cyJrMJSIZrDx2UiYIPsu3tJVr02ZUWZC2ppILeW48=;
+        b=FPtYbw6Bvs9TKQF9LLAzLf+hamQW4L/U8yFCxDCAXzp4t88z45s/NuNgaaEZNCwZq0
+         lPruxv8mvmz62rhMbK/z4944BuANCE44aAtcs32hRR33vsH0BmQNPa/P9uQ/eqEcr9t9
+         Y1wIEqNMCBGJ6nR2x+Yw+oERuZPpbLfgBRBd3LjMWvjkI7P59TpEhDGiZcM2eaJYDnyD
+         W7M4/vr7JhKNFEi8x26vSo42IKe2czTxuhPr344r6uLpQnwG8HOv7b6Lii48rmlZCnXh
+         igpb7zVFlm0stmCb+aX60+jL0JIeIVv8Tr3veGpHCvh9X/r6PAtdZqY22Mzrz0m5WfJ1
+         M2Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771875740; x=1772480540;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1771875815; x=1772480615;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=eVlGAC6tM4/2gKKUV2RJldT3aH9nXpo2pe4PkFEnuuM=;
-        b=uvLZC8N+IpCS45FgTugHJ9SNzLxgEQcgzY11cAe4LrhG0K2lWfYVa8r+PNbK7RW+X2
-         Ey6fPSzrLFacgW4bf7/YJ912b7a2i5LfWEbZOG4TQfQaDNfHdq86wYxYkeDfno+jt6tL
-         BJ0ErAFznbqrYgKxhP/YvY9LeQgJRsQOZ/6fR/dC2fzz9htbMIlzas1dSrh2I+mgB5e+
-         q14QPPfGqt6fYwo9ZaX7vIcDVMHbRzyyN1UY8KwCT/UKOcXd2DmO8DOp0WuPN+UuR4mv
-         BOImvHw5/894ytRj5ClIuNUfl8jHm5XQiYtJc9TCb/zA643UogHcdTbDPvyAj8e56k8Q
-         yJwA==
-X-Gm-Message-State: AOJu0YytQ0uKw/JDeQINbKI3/IOh6gWyiIkjPK7R3VOHKnas1daCtqPc
-	Cj40r+E01lDtZvkR6dGtbsiVgtkoNWEOq1LUkyHiK0OVCfZ7YHGjEjq4wUVyYg==
-X-Gm-Gg: AZuq6aLNAj6/AxgZavklbMoJaitcBPI7QZcB9ldJD/pE6ikknpqZ1nXwaNiCRLaPLD5
-	ylxcX0utYyWuYsu7BLeGamS5QE+i+3dzgTM5awFhnmZToVZPKEFz3vcS85wt5xEPTueeOmAtc4s
-	8ubBzPwmNJRg7/B5Kr/Z9KDiYxqfXX+C55fVQ+NiLnuvYbWXXKNVpIThur7Y/DWC52YqXvRgeDH
-	VpJ/4n30E3p9v0Y+9t6JoT2UWNeGkZ13QEiEYXyb90S+nP50zo436Hyx0dZsdOPenPEaSAlF4MG
-	2Tzmv8bbaUHamtCaHQ0zkusH+IiWBIoHGUYpj90ATGB2gWgr7bPGYCITOVO22RlMPjT28ME2ktw
-	WII+DGK9zYnTK+zy1VHP7u6X4I1/nzd9co5pflddyKYlE7nKS5PuWxi3zYdjh5ZMAwRAzC259Oe
-	UB5dUypAd2WYtHu8+9B4sHMAgtIVfg4Cg=
-X-Received: by 2002:a05:6808:1641:b0:45f:21a:4995 with SMTP id 5614622812f47-46446196631mr5673608b6e.23.1771875739913;
-        Mon, 23 Feb 2026 11:42:19 -0800 (PST)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4157d3a9121sm8051179fac.19.2026.02.23.11.42.19
+        bh=s3cyJrMJSIZrDx2UiYIPsu3tJVr02ZUWZC2ppILeW48=;
+        b=xIeyRzLUuH8wdzETqqQmlkKceQ5+f/++wkrqsxh74nOqVRWpGoVJ0ngghnxwQ2N63a
+         K2vGfVddT39QXKNgV1yqKb3OLSn1tVHGkRBV9zKETgzubDAYaI1CO7baOPUPfIoMEYhr
+         xrJClP2FwMVJ5P810ZsU2kYKnNrRPaIVkRODY1POgNIPa+BHD2w+uguSAJYU9v6nJagH
+         AL9qE4pt6mEzjzFjJxb2Fat8Iecmk5s57JYZ1Tpcujpg+cxD35Bg97VwrYbgjosmvIkc
+         Ghyz+R5Vol0Rp3leasn+X6FgBe/9SZqamP2xzDi6Dx1FQAi8QKLO6+baj0KoDzgwlAdj
+         9vvw==
+X-Gm-Message-State: AOJu0Yy6vnPo/SoI+Amlmax/wVxS0l1s2fr94ioQ/yPUWZ9a3bim327J
+	wHoAyVzbLL4OSEAU3jam9sJas+4g9raUcbEt9spftn1YxY0uJPj3vXbiNJkJ6g==
+X-Gm-Gg: AZuq6aJzhhQM6honVdk4rJmHPPTrdygtyQCUy5rvgaUrMCSEfOJ0HfFukO6d6w4NmKF
+	0xK6T2CnvWhzPhjPhc3NxeAAA6hbtZwrh7owqaIr8Z8pVJ2EjVjnHijKQXCivR9fyHMPBqkSbkv
+	XuQS0wApUabz6BJ0vyluSoJnJeHM4cA3Z3ZHMsZukiIs3S6Fwl9ArJjylBAJiBB921Cu5LUf4Dd
+	6P5/apkDcVnoRuBUI1rNkK5mrdSRCqD4MN8Z1yMfnRdtw/MmodNLUMjh157jv1PLFxvsbY+yk3P
+	IIL0/IBBSiHJyHEOO0X4GdcQJ68to3a/2c5Dd2uc8kyj8IJc6Q1mH4qKPgHL04ZZaMNj6XPmqtr
+	8cbv/4EOVt5yFoJ0ydm+3h5tf6R5/e4IARNioD/lbDbjS0n8rt2R15NpJo13hnly1nzz46agNdl
+	/hvRSiSu3y66pvCZ8P5HGqAxvvULo=
+X-Received: by 2002:ac8:5cd2:0:b0:4ed:bad6:9fa9 with SMTP id d75a77b69052e-5070bba0e2amr139585311cf.6.1771875814420;
+        Mon, 23 Feb 2026 11:43:34 -0800 (PST)
+Received: from [127.0.0.1] ([135.232.224.163])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5072afdef0bsm8424131cf.16.2026.02.23.11.43.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 11:42:19 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: sandals@crustytoothpaste.net,
-	christian.couder@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 2/2] fast-import: add mode to re-sign invalid commit signatures
-Date: Mon, 23 Feb 2026 13:41:46 -0600
-Message-ID: <20260223194146.3476768-3-jltobler@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260223194146.3476768-1-jltobler@gmail.com>
-References: <20260223194146.3476768-1-jltobler@gmail.com>
+        Mon, 23 Feb 2026 11:43:33 -0800 (PST)
+Message-Id: <pull.2208.v3.git.git.1771875812.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2208.v2.git.git.1771856469.gitgitgadget@gmail.com>
+References: <pull.2208.v2.git.git.1771856469.gitgitgadget@gmail.com>
+From: "eslam reda via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 23 Feb 2026 19:43:27 +0000
+Subject: [PATCH v3 0/5] repo: extend info path reporting and structure statistics
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+    Justin Tobler <jltobler@gmail.com>,
+    Ayush Chandekar <ayu.chandekar@gmail.com>,
+    Siddharth Asthana <siddharthasthana31@gmail.com>,
+    Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+    eslam reda <eslam.reda.div@gmail.com>
 
-With git-fast-import(1), handling of signed commits is controlled via
-the `--signed-commits=<mode>` option. When an invalid signature is
-encountered, a user may want the option to re-sign the commit as opposed
-to just stripping the signature. To faciliate this, introduce a
-"re-sign-if-invalid" mode for the `--signed-commits` option.
 
-Note that commits are re-signed using only the repository object format
-hash algorithm. If a commit has an additional signature due to the
-`compatObjectFormat` repository extension being set, the other signature
-is stripped.
+This series improves git repo info and git repo structure with a
+================================================================
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/git-fast-import.adoc |   3 +
- builtin/fast-export.c              |   6 ++
- builtin/fast-import.c              |  43 +++++++--
- gpg-interface.c                    |   2 +
- gpg-interface.h                    |   1 +
- t/t9305-fast-import-signatures.sh  | 142 +++++++++++++++--------------
- 6 files changed, 125 insertions(+), 72 deletions(-)
+cleanly split commit history and explicit documentation/tests.
 
-diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
-index 479c4081da..b902a6e2b0 100644
---- a/Documentation/git-fast-import.adoc
-+++ b/Documentation/git-fast-import.adoc
-@@ -86,6 +86,9 @@ already trusted to run their own code.
- * `strip-if-invalid` will check signatures and, if they are invalid,
-   will strip them and display a warning. The validation is performed
-   in the same way as linkgit:git-verify-commit[1] does it.
-+* `re-sign-if-invalid` is the same as `strip-if-invalid`, but additionally the
-+  commits with invalid signatures are signed again, so that old invalid
-+  signatures are replaced with new valid ones.
- 
- Options for Frontends
- ~~~~~~~~~~~~~~~~~~~~~
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 0c5d2386d8..76fad1dec5 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -825,6 +825,9 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 		case SIGN_STRIP_IF_INVALID:
- 			die(_("'strip-if-invalid' is not a valid mode for "
- 			      "git fast-export with --signed-commits=<mode>"));
-+		case SIGN_RESIGN_IF_INVALID:
-+			die(_("'re-sign-if-invalid' is not a valid mode for "
-+			      "git fast-export with --signed-commits=<mode>"));
- 		default:
- 			BUG("invalid signed_commit_mode value %d", signed_commit_mode);
- 		}
-@@ -970,6 +973,9 @@ static void handle_tag(const char *name, struct tag *tag)
- 			case SIGN_STRIP_IF_INVALID:
- 				die(_("'strip-if-invalid' is not a valid mode for "
- 				      "git fast-export with --signed-tags=<mode>"));
-+			case SIGN_RESIGN_IF_INVALID:
-+				die(_("'re-sign-if-invalid' is not a valid mode for "
-+				      "git fast-export with --signed-tags=<mode>"));
- 			default:
- 				BUG("invalid signed_commit_mode value %d", signed_commit_mode);
- 			}
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index b8a7757cfd..e34a373d2f 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -2836,10 +2836,11 @@ static void finalize_commit_buffer(struct strbuf *new_data,
- 	strbuf_addbuf(new_data, msg);
- }
- 
--static void handle_strip_if_invalid(struct strbuf *new_data,
--				    struct signature_data *sig_sha1,
--				    struct signature_data *sig_sha256,
--				    struct strbuf *msg)
-+static void handle_invalid_signature(struct strbuf *new_data,
-+				     struct signature_data *sig_sha1,
-+				     struct signature_data *sig_sha256,
-+				     struct strbuf *msg,
-+				     enum sign_mode mode)
- {
- 	struct strbuf tmp_buf = STRBUF_INIT;
- 	struct signature_check signature_check = { 0 };
-@@ -2866,6 +2867,30 @@ static void handle_strip_if_invalid(struct strbuf *new_data,
- 			warning(_("stripping invalid signature for commit\n"
- 				  "  allegedly by %s"), signer);
- 
-+		if (mode == SIGN_RESIGN_IF_INVALID) {
-+			struct strbuf signature = STRBUF_INIT;
-+			struct strbuf payload = STRBUF_INIT;
-+			char *key = get_signing_key();
-+
-+			/*
-+			 * Commits are resigned using the repository object
-+			 * format hash algorithm only. Consequently if
-+			 * extensions.compatObjectFormat is set, the
-+			 * compatability hash is not currently used to
-+			 * additionally sign the commit. If the commit payload
-+			 * were reconstructed in the compatability format, it
-+			 * would be possible to generate the other signature
-+			 * accordingly though.
-+			 */
-+			strbuf_addstr(&payload, signature_check.payload);
-+			sign_buffer(&payload, &signature, key);
-+			add_header_signature(new_data, &signature, the_hash_algo);
-+
-+			strbuf_release(&signature);
-+			strbuf_release(&payload);
-+			free(key);
-+		}
-+
- 		finalize_commit_buffer(new_data, NULL, NULL, msg);
- 	} else {
- 		strbuf_swap(new_data, &tmp_buf);
-@@ -2927,6 +2952,7 @@ static void parse_new_commit(const char *arg)
- 			/* fallthru */
- 		case SIGN_VERBATIM:
- 		case SIGN_STRIP_IF_INVALID:
-+		case SIGN_RESIGN_IF_INVALID:
- 			import_one_signature(&sig_sha1, &sig_sha256, v);
- 			break;
- 
-@@ -3011,9 +3037,11 @@ static void parse_new_commit(const char *arg)
- 			"encoding %s\n",
- 			encoding);
- 
--	if (signed_commit_mode == SIGN_STRIP_IF_INVALID &&
-+	if ((signed_commit_mode == SIGN_STRIP_IF_INVALID ||
-+	     signed_commit_mode == SIGN_RESIGN_IF_INVALID) &&
- 	    (sig_sha1.hash_algo || sig_sha256.hash_algo))
--		handle_strip_if_invalid(&new_data, &sig_sha1, &sig_sha256, &msg);
-+		handle_invalid_signature(&new_data, &sig_sha1, &sig_sha256, &msg,
-+					 signed_commit_mode);
- 	else
- 		finalize_commit_buffer(&new_data, &sig_sha1, &sig_sha256, &msg);
- 
-@@ -3060,6 +3088,9 @@ static void handle_tag_signature(struct strbuf *msg, const char *name)
- 	case SIGN_STRIP_IF_INVALID:
- 		die(_("'strip-if-invalid' is not a valid mode for "
- 		      "git fast-import with --signed-tags=<mode>"));
-+	case SIGN_RESIGN_IF_INVALID:
-+		die(_("'re-sign-if-invalid' is not a valid mode for "
-+		      "git fast-import with --signed-tags=<mode>"));
- 	default:
- 		BUG("invalid signed_tag_mode value %d from tag '%s'",
- 		    signed_tag_mode, name);
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 87fb6605fb..e7eb42d9d6 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -1156,6 +1156,8 @@ int parse_sign_mode(const char *arg, enum sign_mode *mode)
- 		*mode = SIGN_STRIP;
- 	else if (!strcmp(arg, "strip-if-invalid"))
- 		*mode = SIGN_STRIP_IF_INVALID;
-+	else if (!strcmp(arg, "re-sign-if-invalid"))
-+		*mode = SIGN_RESIGN_IF_INVALID;
- 	else
- 		return -1;
- 	return 0;
-diff --git a/gpg-interface.h b/gpg-interface.h
-index 789d1ffac4..2ab2a21e1a 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -112,6 +112,7 @@ enum sign_mode {
- 	SIGN_WARN_STRIP,
- 	SIGN_STRIP,
- 	SIGN_STRIP_IF_INVALID,
-+	SIGN_RESIGN_IF_INVALID,
- };
- 
- /*
-diff --git a/t/t9305-fast-import-signatures.sh b/t/t9305-fast-import-signatures.sh
-index 022dae02e4..b52fb75976 100755
---- a/t/t9305-fast-import-signatures.sh
-+++ b/t/t9305-fast-import-signatures.sh
-@@ -103,71 +103,81 @@ test_expect_success GPG 'strip both OpenPGP signatures with --signed-commits=war
- 	test_line_count = 2 out
- '
- 
--test_expect_success GPG 'import commit with no signature with --signed-commits=strip-if-invalid' '
--	git fast-export main >output &&
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
--	test_must_be_empty log
--'
--
--test_expect_success GPG 'keep valid OpenPGP signature with --signed-commits=strip-if-invalid' '
--	rm -rf new &&
--	git init new &&
--
--	git fast-export --signed-commits=verbatim openpgp-signing >output &&
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
--	IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
--	test $OPENPGP_SIGNING = $IMPORTED &&
--	git -C new cat-file commit "$IMPORTED" >actual &&
--	test_grep -E "^gpgsig(-sha256)? " actual &&
--	test_must_be_empty log
--'
--
--test_expect_success GPG 'strip signature invalidated by message change with --signed-commits=strip-if-invalid' '
--	rm -rf new &&
--	git init new &&
--
--	git fast-export --signed-commits=verbatim openpgp-signing >output &&
--
--	# Change the commit message, which invalidates the signature.
--	# The commit message length should not change though, otherwise the
--	# corresponding `data <length>` command would have to be changed too.
--	sed "s/OpenPGP signed commit/OpenPGP forged commit/" output >modified &&
--
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <modified >log 2>&1 &&
--
--	IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
--	test $OPENPGP_SIGNING != $IMPORTED &&
--	git -C new cat-file commit "$IMPORTED" >actual &&
--	test_grep ! -E "^gpgsig" actual &&
--	test_grep "stripping invalid signature" log
--'
--
--test_expect_success GPGSM 'keep valid X.509 signature with --signed-commits=strip-if-invalid' '
--	rm -rf new &&
--	git init new &&
--
--	git fast-export --signed-commits=verbatim x509-signing >output &&
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
--	IMPORTED=$(git -C new rev-parse --verify refs/heads/x509-signing) &&
--	test $X509_SIGNING = $IMPORTED &&
--	git -C new cat-file commit "$IMPORTED" >actual &&
--	test_grep -E "^gpgsig(-sha256)? " actual &&
--	test_must_be_empty log
--'
--
--test_expect_success GPGSSH 'keep valid SSH signature with --signed-commits=strip-if-invalid' '
--	rm -rf new &&
--	git init new &&
--
--	test_config -C new gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
--
--	git fast-export --signed-commits=verbatim ssh-signing >output &&
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
--	IMPORTED=$(git -C new rev-parse --verify refs/heads/ssh-signing) &&
--	test $SSH_SIGNING = $IMPORTED &&
--	git -C new cat-file commit "$IMPORTED" >actual &&
--	test_grep -E "^gpgsig(-sha256)? " actual &&
--	test_must_be_empty log
--'
-+for mode in strip-if-invalid re-sign-if-invalid
-+do
-+	test_expect_success GPG "import commit with no signature with --signed-commits=$mode" '
-+		git fast-export main >output &&
-+		git -C new fast-import --quiet --signed-commits=$mode <output >log 2>&1 &&
-+		test_must_be_empty log
-+	'
-+
-+	test_expect_success GPG "keep valid OpenPGP signature with --signed-commits=$mode" '
-+		rm -rf new &&
-+		git init new &&
-+
-+		git fast-export --signed-commits=verbatim openpgp-signing >output &&
-+		git -C new fast-import --quiet --signed-commits=$mode <output >log 2>&1 &&
-+		IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
-+		test $OPENPGP_SIGNING = $IMPORTED &&
-+		git -C new cat-file commit "$IMPORTED" >actual &&
-+		test_grep -E "^gpgsig(-sha256)? " actual &&
-+		test_must_be_empty log
-+	'
-+
-+	test_expect_success GPG "strip signature invalidated by message change with --signed-commits=$mode" '
-+		rm -rf new &&
-+		git init new &&
-+
-+		git fast-export --signed-commits=verbatim openpgp-signing >output &&
-+
-+		# Change the commit message, which invalidates the signature.
-+		# The commit message length should not change though, otherwise the
-+		# corresponding `data <length>` command would have to be changed too.
-+		sed "s/OpenPGP signed commit/OpenPGP forged commit/" output >modified &&
-+
-+		git -C new fast-import --quiet --signed-commits=$mode <modified >log 2>&1 &&
-+
-+		IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
-+		test $OPENPGP_SIGNING != $IMPORTED &&
-+		git -C new cat-file commit "$IMPORTED" >actual &&
-+		test_grep "stripping invalid signature" log &&
-+
-+		if test "$mode" = strip-if-invalid
-+		then
-+			test_grep ! -E "^gpgsig" actual
-+		else
-+			test_grep -E "^gpgsig(-sha256)? " actual &&
-+			git -C new verify-commit "$IMPORTED"
-+		fi
-+	'
-+
-+	test_expect_success GPGSM "keep valid X.509 signature with --signed-commits=$mode" '
-+		rm -rf new &&
-+		git init new &&
-+
-+		git fast-export --signed-commits=verbatim x509-signing >output &&
-+		git -C new fast-import --quiet --signed-commits=$mode <output >log 2>&1 &&
-+		IMPORTED=$(git -C new rev-parse --verify refs/heads/x509-signing) &&
-+		test $X509_SIGNING = $IMPORTED &&
-+		git -C new cat-file commit "$IMPORTED" >actual &&
-+		test_grep -E "^gpgsig(-sha256)? " actual &&
-+		test_must_be_empty log
-+	'
-+
-+	test_expect_success GPGSSH "keep valid SSH signature with --signed-commits=$mode" '
-+		rm -rf new &&
-+		git init new &&
-+
-+		test_config -C new gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+
-+		git fast-export --signed-commits=verbatim ssh-signing >output &&
-+		git -C new fast-import --quiet --signed-commits=$mode <output >log 2>&1 &&
-+		IMPORTED=$(git -C new rev-parse --verify refs/heads/ssh-signing) &&
-+		test $SSH_SIGNING = $IMPORTED &&
-+		git -C new cat-file commit "$IMPORTED" >actual &&
-+		test_grep -E "^gpgsig(-sha256)? " actual &&
-+		test_must_be_empty log
-+	'
-+done
- 
- test_done
+For git repo info, this series:
+
+ * introduces explicit command context plumbing (instead of ad-hoc global
+   reliance in this codepath),
+ * adds category-key expansion (for example, requesting layout expands to
+   layout.* keys),
+ * adds path-oriented keys (path.*) that expose repository locations,
+ * adds --path-format=(absolute|relative) to control path rendering.
+
+For git repo structure, this series adds richer metrics:
+
+ * maximum inflated object size (overall + per type),
+ * maximum on-disk object size (overall + per type),
+ * maximum commit parent count,
+ * maximum tree entry count,
+ * maximum blob path length and path depth,
+ * maximum annotated tag chain depth,
+ * aggregate keyvalue/nul totals (references.count, objects.count,
+   objects.inflated_size, objects.disk_size).
+
+Tests and documentation are updated accordingly.
+
+----------------------------------------------------------------------------
+
+
+Why this change
+===============
+
+The intent is to make git repo more script-friendly and more useful for
+repository diagnostics:
+
+ * repo info becomes easier to query programmatically (category keys,
+   explicit path formatting).
+ * repo structure becomes more actionable by exposing outlier-focused
+   metrics (maxima), not only totals.
+ * keyvalue/nul output now includes aggregate totals so scripts do not need
+   to recompute them externally.
+
+----------------------------------------------------------------------------
+
+
+Commit structure (v2 rewrite)
+=============================
+
+This iteration rewrites history into smaller logical steps (no
+“fix-on-fix”):
+
+ 1. repo: teach info context and category keys
+ 2. repo: add path keys to repo info
+ 3. repo: add --path-format for info path output
+ 4. repo: add structure max object size metrics
+ 5. repo: add structure topology and path-depth metrics
+ 6. repo: add aggregate structure totals to keyvalue output
+ 7. t1900: cover repo info path keys and path-format
+ 8. t1901: extend structure metric coverage and portability
+ 9. docs: describe repo info path keys and structure metrics
+
+All commits are signed off using real-name identity.
+
+----------------------------------------------------------------------------
+
+
+Changes since v1
+================
+
+ * Rewrote series into smaller logical commits.
+ * Folded fixes into proper history (no trailing fix-up patches).
+ * Unified author/sign-off identity to real name.
+ * Addressed portability concerns raised in review:
+   * hash-algorithm-sensitive expectations are handled robustly,
+   * BSD/macOS wc whitespace behavior is handled in tests.
+ * Improved test robustness around keyvalue/nul expectations.
+ * Expanded docs to explicitly describe new keys/metrics and behavior.
+ * Revalidated in Docker with focused and full test runs.
+
+----------------------------------------------------------------------------
+
+
+Validation
+==========
+
+Focused:
+
+ * t1900-repo.sh
+ * GIT_TEST_DEFAULT_REF_FORMAT=reftable t/t1901-repo-structure.sh
+
+Full:
+
+ * make -C t -j4 test in clean Docker environment
+ * Result: failed 0
+
+----------------------------------------------------------------------------
+
+Eslam reda ragheb (5):
+  repo: teach info context and category keys
+  repo: add path keys to repo info
+  repo: add --path-format for info path output
+  t1900: cover repo info path keys and path-format
+  docs: describe repo info path keys
+
+ Documentation/git-repo.adoc |  60 ++++++++-
+ builtin/repo.c              | 244 +++++++++++++++++++++++++++++++++---
+ t/t1900-repo.sh             | 196 +++++++++++++++++++++++++++++
+ 3 files changed, 480 insertions(+), 20 deletions(-)
+
+
+base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2208%2Feslam-reda-div%2Fgsoc-contribute-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2208/eslam-reda-div/gsoc-contribute-v3
+Pull-Request: https://github.com/git/git/pull/2208
+
+Range-diff vs v2:
+
+  1:  99c8058298 =  1:  e9ea572e52 repo: teach info context and category keys
+  2:  6d5b9ff075 =  2:  348e361fe7 repo: add path keys to repo info
+  3:  5c438d045b =  3:  93585ad079 repo: add --path-format for info path output
+  4:  504d9cf7a0 <  -:  ---------- repo: add structure max object size metrics
+  5:  4b502925c9 <  -:  ---------- repo: add structure topology and path-depth metrics
+  6:  1751181950 <  -:  ---------- repo: add aggregate structure totals to keyvalue output
+  7:  fd18f28db0 =  4:  6ea263fee9 t1900: cover repo info path keys and path-format
+  8:  0525ed4cd9 <  -:  ---------- t1901: extend structure metric coverage and portability
+  9:  f17c0f03e5 !  5:  a2a6768042 docs: describe repo info path keys and structure metrics
+     @@ Metadata
+      Author: Eslam reda ragheb <eslam.reda.div@gmail.com>
+      
+       ## Commit message ##
+     -    docs: describe repo info path keys and structure metrics
+     +    docs: describe repo info path keys
+      
+     -    Document the newly added repo info capabilities, including
+     -    category keys and path-oriented key definitions.
+     -
+     -    Also describe --path-format behavior for path outputs.
+     -
+     -    Update git repo structure documentation to cover newly reported
+     -    maxima and aggregate keyvalue/nul fields.
+     -
+     -    This keeps command behavior and output keys fully specified for
+     -    users and scripts.
+     +    Document repo info category keys, path.* keys, and
+     +    --path-format behavior.
+      
+          Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
+      
+     @@ Documentation/git-repo.adoc: supported:
+       `structure [--format=(table|keyvalue|nul) | -z]`::
+       	Retrieve statistics about the current repository structure. The
+       	following kinds of information are reported:
+     -@@ Documentation/git-repo.adoc: supported:
+     - * Reachable object counts categorized by type
+     - * Total inflated size of reachable objects by type
+     - * Total disk size of reachable objects by type
+     -+* Largest inflated reachable object size by type
+     -+* Largest disk size of a reachable object by type
+     -+* Largest parent count among reachable commits
+     -+* Largest entry count among reachable trees
+     -+* Longest and deepest path among reachable blobs
+     -+* Deepest annotated tag chain
+     - +
+     - The output format can be chosen through the flag `--format`. Three formats are
+     - supported:
+     -@@ Documentation/git-repo.adoc: supported:
+     - `keyvalue`:::
+     - 	Each line of output contains a key-value pair for a repository stat.
+     - 	The '=' character is used to delimit between the key and the value.
+     -+	Both aggregate metrics and per-type metrics are included.
+     - 	Values containing "unusual" characters are quoted as explained for the
+     - 	configuration variable `core.quotePath` (see linkgit:git-config[1]).
+     - 
+      @@ Documentation/git-repo.adoc: supported:
+       
+       INFO KEYS
+
 -- 
-2.53.0
-
+gitgitgadget
