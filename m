@@ -1,206 +1,183 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455CA34D4DF
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 08:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0181134D91C
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 08:45:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771836230; cv=none; b=Q7xwyR+7CrkecGqT7MWeL0nKjN1N0IuQYbccKn+o4QcaEXm+UNihnx5zirWywY66poHZzrvABdfrC/MCp+m1suwvXabwbgGvpENN2kTMjzjyZxfxS8erj/xxPN7K+heM1IRFFWkvc3XMrwb6fIHxEJj6qEcYYHbuQQIgYNTKRr0=
+	t=1771836307; cv=none; b=qlZwWkwofxh9J4KDpESix1ykGm9E8t2bhLHVSIyJNgQrUMrqk9NsTuV/8+3MUS3YeZoh8v8cVvn0FZYI8sztYyTb0F5gj1Pg/hWPU0ETWXKRVAeR5P7reksCITRVxd4XPig1Q8CWtGfUu/w449NJQbWJaS8KCMEV6AjQNa+UrWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771836230; c=relaxed/simple;
-	bh=k0ZeEFWc4JxBHBMytEo73j+1uovRp8ceiv2F5Bk91z8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FQnQ333vOAPL3A5nGZeOJkoCV98GzXTZ/OH1pyUJJNgtKimRnIMgh7ejbkR6xx2+5ixukXU0hHbGaplhPs2cIqyS9crCjSqAwjqKwPEiBtD30fbO5TUWkbc6+WetQdIZq+WvJi2imvd0EVocAtSNQIu2RUnIq+52yet2NMIzaBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qiaTcmFM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C2Z3OvJp; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1771836307; c=relaxed/simple;
+	bh=Cd1trX037lv1DFXMFWYDdR/1yXJUU7Sv2L1/i9XBjxE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=oFVzf98JpgxO6zcqVD5k1A1UoJfLVXbqT2NDxzNsxwkytyFLKahVFYlcgPMsQ0bljPFUfN+xw5jJNUgsa1NtYbinpoT0VkTN/XJ4O/oceG3dOd2WQYYgb9ry4AISY/7rH9nKDX6NgkslRlHOPn0vEW7Wb8EZjLKfwcKGeCfRrfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aL+/fWZC; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qiaTcmFM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C2Z3OvJp"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 80C94EC05CA;
-	Mon, 23 Feb 2026 03:43:47 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Mon, 23 Feb 2026 03:43:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771836227; x=1771922627; bh=NcmndZDzmk
-	K1elitOModidQFDr6u5mW41hmtnAEBJlI=; b=qiaTcmFMoCRom0ePrH0EQuoO/4
-	sBBwMJ2758QJ/1e1mrtZb2Yv6apJhdWqPnfQBiANxmmUrgLiyvcvclG9j259Cclb
-	Q2e/Digc3puUTJaL15SqEPgWDFaJvzmfzPk2pi6n6Z3JlxYakNEynvYzN/vQsULr
-	BvDB6qjm+psXeDtxrKdbU86LTCFblqB8o4aSpmZLOZ1yXf20AUGIdS6nYBDrfYFI
-	Peg1UiP2k03JWQ0hXGsZbzAIfVaT0Rk4iHtjA2QzR4uyMrAWGxfOcrlhZbPpy1hh
-	PVgB8p0zt2mufguBpge7pU4aqATh1OdrIC5XcS4ZGpqWDtHy4zb/qxZwd1Lw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771836227; x=1771922627; bh=NcmndZDzmkK1elitOModidQFDr6u5mW41hm
-	tnAEBJlI=; b=C2Z3OvJpQjmkkdUH0JHTtBXlMhau+OunFqWPZXkW7WLRAKYXfiE
-	P2bj6kRq4wtuxP/G8sZWKCK+lEfeNjCVpYUcj6Cz5+ePxvk6wnmMIixuPNgGVxcd
-	VNt8f6G4Kz9EqW/CIkynFUv3cjHYjLCGxTmmbkhFUaSlByka7aRxVGJkKKogWPGH
-	QQTn9551/JqLChV5ETTGtMrog/Fp5Z6hvarGtyAr4eTLJQZRvNECLbzafBftdD5a
-	ZbiLukENUhE3xOfk0zQr8DZ5GnM5G9ix0hye1kOxl/nJYdGUQ0bPHXAIIG4eeeQT
-	akq/13htkxBMaBJi1QgO45tQKJTL6C167SQ==
-X-ME-Sender: <xms:QxOcaRjWxFLgzGp4MgqyAT901_lCW2KOq9RXiH-4On7j0scAQ9zcNA>
-    <xme:QxOcadevGvbYnlbm8iUD3DyY8obsK2oQ9EkVripYGdvpO5EQqCaU_v9HvyIhBfKAs
-    T7ZLRxgupTSZGj6nLCJaY--aexf85D6ktNPD6sxIzNJCUoZrvptpA>
-X-ME-Received: <xmr:QxOcaecQCoR5vumnAvp8IDtrz4bGkDoR0ytFpgcPeYeQexp_sPeiCtYjbzKQlHactCWDtD_CZE0aV4FH-eGkKyd8uD9CCmkzZ5Ua3tp57A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeijeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpefhhfffveefffevieeifeelueejueekuefgte
-    fhkeeggeetkefggeefueffuddtgfenucffohhmrghinhepsghighhfihhlvghthhhrvghs
-    hhholhgurdhnohifnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshgrnhgurghl
-    shestghruhhsthihthhoohhthhhprghsthgvrdhnvght
-X-ME-Proxy: <xmx:QxOcaf8_NxMektigHvC0cUG56jPNtfFuLY0ROlQYy7wqP8ugTCijFw>
-    <xmx:QxOcaSnVel1PGTIyMvdPP5M101a-Ai-uG0TFx_CXzyCMZXhMyUQH7A>
-    <xmx:QxOcaZ8ZLUMUFgYq_jFupsi3NAtRtoMAZTt7QGtG66whJH5reeNKxw>
-    <xmx:QxOcaYnMnw0T7azgRFCIyLD1nC6Jch9g5qAwr_9bN1DtDcb86XIHTA>
-    <xmx:QxOcaVqUuzu1YpAY52_XZ2ftOuoSmoEFXxzBXGAuDuFAKBiGlhPsg3xW>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 03:43:46 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cadc1394 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Feb 2026 08:43:44 +0000 (UTC)
-Date: Mon, 23 Feb 2026 09:43:41 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fsck: do not loop infinitely when processing packs
-Message-ID: <aZwTPfmyrFp-QAPq@pks.im>
-References: <20260222183710.2963424-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aL+/fWZC"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-506a7bbe9d0so34224401cf.0
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 00:45:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771836303; x=1772441103; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=H+FJ0ba2V39VCziLYWAS/6lAbzoXYMnDQ4LGwLSFAFU=;
+        b=aL+/fWZCoYrzyDx2uvloqhl8/YVEabMBs9mPCGzYyDd2iU41VNj7+j+k0XHeEwSQ4m
+         w04PbC6J6hPP97ynBy05Q+a1Jc2ko1d0c5yHbISS6Pn7FT9QbHTrW9+wf6IVn8m5Z+uR
+         niQNAzg9tMx8+A4xW1yRvGwcEU53T906tAP0nYoWOkDHEm1oMNiVVSNLnFg4aV7HS+jk
+         BNK/BQw4LV7UBIM1m0QiD+sDnFDa0e5IWFSfhaQGS+HheiYHc0f1v/lqZtdWRH7hG2WW
+         nyENGTGClcGz09wzzHaOHQzv9271dVEbTXVFO84/PZBwxX6s8ZjmOQEkSoFzatLUkNV+
+         BfJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771836303; x=1772441103;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H+FJ0ba2V39VCziLYWAS/6lAbzoXYMnDQ4LGwLSFAFU=;
+        b=cydTjzhziHSAdRNYLTAfNJRjiyeT1/5Cg1pJxe5ERCY3h0ow/wFBnICgMY4yTotu4W
+         u26GiYHRMv7n5ws4Pvaj+NbqZdEius4K7jbyIVmrTjmK6x5AlxRlckQMXvEVTdFNH5uf
+         MtFtiqcgkO/UjTJWjq67LvZsqvGK4/ssFPJ2rtTlG1bGQSBxjKWM32yYxXN0+mEWHF1s
+         I7pfkX4rQ9A9fiAz2Hn7B2mb1O5bLL31WrcaDICophyvg28nCu/vBn/m5CgQZx0m2BKj
+         MFE0YBjzD/ipSqZd1xek/D7QC8bEGbMfMXyTJBBbD32dTQODw3Q2h4HmFSS/2nHw3IWE
+         Dbwg==
+X-Gm-Message-State: AOJu0YxU691EZqmdf5SVz/dP2JQIGuSD9aYJ6/nPnjP7yUt0q1hLOzBq
+	WhyiFgYFXocALG0KgmhV+t3wa1UBZU4W3NMYlQJkfCsS/WHIAWDd8V8QhdZweA==
+X-Gm-Gg: AZuq6aIpKz+VekYetQh8gT5csd0CXBZnrbi7/2+O+cnrGHa5qyNyFhkyne/Wi3XNwmX
+	2WdI8z6gRWnMxwUqKSO3ON0q+ni1UBvm2UsceAEdU1Hx4/zKG3TkEIzPrWgg9QlBM7VYpzFfJab
+	lPWQuF58//MQejB9ZeBcXwGevJkoTCnGlhKR3p/ePF1LuDDgjshxQCoMKyEefmhfy4+nP/6SIzQ
+	ytDMuxwENYFlJaEmEmve+wvY7AJVdT+GWFkp/P7kDALJHy+Ls0Vy1+BMUm6mGI4c+GAmfypBZ/t
+	/oDV0w++rIYAhOx61ZGovuwpBjNclYfT0TVjDVEA6yFhNCeL1l7Ug0+Q7/uuj4P6Sqy/7FMpkUk
+	oCU2xCyARGuxz3k+sc9lTEHtuyouSTulAloaUmgIk9ReYy33nohczkciLSYdE6QUzQ8HqPpax2G
+	qBSU1nbimkCl88mGHSu2PHN9QkkRyRiaqOD8aq
+X-Received: by 2002:a05:622a:446:b0:4f1:c66d:4c98 with SMTP id d75a77b69052e-5070bbaec81mr93228251cf.24.1771836303128;
+        Mon, 23 Feb 2026 00:45:03 -0800 (PST)
+Received: from [127.0.0.1] ([135.119.237.67])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d6c9de8sm62013871cf.26.2026.02.23.00.45.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Feb 2026 00:45:02 -0800 (PST)
+Message-Id: <pull.2052.git.1771836302101.gitgitgadget@gmail.com>
+From: "Md Ferdous Alam via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 23 Feb 2026 08:45:02 +0000
+Subject: [PATCH] cat-file: fix error and warning message formatting
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260222183710.2963424-1-sandals@crustytoothpaste.net>
+To: git@vger.kernel.org
+Cc: Md Ferdous Alam <mdferdousalam1989@yahoo.com>,
+    mdferdousalam <mdferdousalam1989@yahoo.com>
 
-On Sun, Feb 22, 2026 at 06:37:10PM +0000, brian m. carlson wrote:
-> When we iterate over our packfiles in the fsck code, we do so twice.
-> The first time, we count the number of objects in all of the packs
-> together and later on, we iterate a second time, processing each pack
-> and verifying its integrity.
-> 
-> This would normally work fine, but if we have two packs and we're
-> processing the second, the verification process will open the pack to
-> read from it, which will place it at the beginning of the most recently
-> used list.  Since this same list is used for iteration, the pack we most
-> recently processed before this will then be behind the current pack in
-> the linked list, so when we next process the list, we will go back to
-> the first pack again and then loop forever.  This also makes our
-> progress indicator loop up to many thousands of percent, which is not
-> only nonsensical, but a clear indication that something has gone wrong.
-> 
-> Solve this by skipping our MRU updates when we're iterating over
-> packfiles, which avoids the reordering that causes problems.
+From: mdferdousalam <mdferdousalam1989@yahoo.com>
 
-Right, this makes sense. We know that we cannot modify the list of packs
-in case we're iterating through them, so `repo_for_each_pack()` should
-indeed skip the MRU updates.
+The CodingGuidelines state that error messages should not begin
+with a capital letter and should not end with a full stop.  Fix
+the die(), error() and warning() messages in builtin/cat-file.c
+that violate these rules, and update the corresponding test
+expectations in t1006 and t8007.
 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-> I realize that t1050 may seem like a bizarre place to put this test.
-> However, I was debugging my sha256-interop branch and why the final test
-> calling `git fsck` was failing, so I placed a `git fsck` earlier in the
-> test to double-check and discovered the problem.  Since we already have
-> a natural testcase here, I thought I'd just place the test where we
-> already know it will trigger the problem.
+Signed-off-by: mdferdousalam <mdferdousalam1989@yahoo.com>
+---
+    cat-file: fix error and warning message formatting
 
-Makes me wonder though why none of the tests t1450-fsck exhibit this
-pattern. I cannot imagine that there is no test there that doesn't have
-multiple packs. *goes checking* We actually might not, but when trying
-to come up with a minimum reproducer I failed at first.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2052%2Fmdferdousalam%2Ffix-error-messages-cat-file-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2052/mdferdousalam/fix-error-messages-cat-file-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2052
 
-This is because ultimately the root cause seems to be a bit more
-complex: we don't only care about there being multiple packfiles. We
-also care about "core.bigFileThreshold".
+ builtin/cat-file.c           | 8 ++++----
+ t/t1006-cat-file.sh          | 6 +++---
+ t/t8007-cat-file-textconv.sh | 2 +-
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
-Typically, we don't execute `find_pack_entry()` at all when verifying
-packfiles as we iterate through objects in packfile order. We thus don't
-have to look up objects via their object ID, but instead we do so by
-using their packfile offset. And this mechanism will not end up in
-`find_pack_entry()`, and thus we wouldn't update the MRU.
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index df8e87a81f..a8d564dd6a 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -121,7 +121,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+ 
+ 	if (get_oid_with_context(the_repository, obj_name, get_oid_flags, &oid,
+ 				 &obj_context))
+-		die("Not a valid object name %s", obj_name);
++		die("not a valid object name %s", obj_name);
+ 
+ 	if (!path)
+ 		path = obj_context.path;
+@@ -182,7 +182,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+ 	case 'p':
+ 		type = odb_read_object_info(the_repository->objects, &oid, NULL);
+ 		if (type < 0)
+-			die("Not a valid object name %s", obj_name);
++			die("not a valid object name %s", obj_name);
+ 
+ 		/* custom pretty-print here */
+ 		if (type == OBJ_TREE) {
+@@ -200,7 +200,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+ 		buf = odb_read_object(the_repository->objects, &oid,
+ 				      &type, &size);
+ 		if (!buf)
+-			die("Cannot read object %s", obj_name);
++			die("cannot read object %s", obj_name);
+ 
+ 		if (use_mailmap) {
+ 			size_t s = size;
+@@ -910,7 +910,7 @@ static int batch_objects(struct batch_options *opt)
+ 			data.skip_object_info = 1;
+ 
+ 		if (repo_has_promisor_remote(the_repository))
+-			warning("This repository uses promisor remotes. Some objects may not be loaded.");
++			warning("this repository uses promisor remotes; some objects may not be loaded");
+ 
+ 		disable_replace_refs();
+ 
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 0eee3bb878..0283c7400d 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -705,7 +705,7 @@ do
+ 		then
+ 			cat >expect <<-EOF
+ 			error: header for $bogus_long_oid too long, exceeds 32 bytes
+-			fatal: Not a valid object name $bogus_long_oid
++			fatal: not a valid object name $bogus_long_oid
+ 			EOF
+ 		else
+ 			cat >expect <<-EOF
+@@ -721,7 +721,7 @@ do
+ 
+ 	test_expect_success "cat-file $arg1 error on missing short OID" '
+ 		cat >expect.err <<-EOF &&
+-		fatal: Not a valid object name $(test_oid deadbeef_short)
++		fatal: not a valid object name $(test_oid deadbeef_short)
+ 		EOF
+ 		test_must_fail git cat-file $arg1 $(test_oid deadbeef_short) >out 2>err.actual &&
+ 		test_must_be_empty out &&
+@@ -732,7 +732,7 @@ do
+ 		if test "$arg1" = "-p"
+ 		then
+ 			cat >expect.err <<-EOF
+-			fatal: Not a valid object name $(test_oid deadbeef)
++			fatal: not a valid object name $(test_oid deadbeef)
+ 			EOF
+ 		else
+ 			cat >expect.err <<-\EOF
+diff --git a/t/t8007-cat-file-textconv.sh b/t/t8007-cat-file-textconv.sh
+index c3735fb50d..3a69b03794 100755
+--- a/t/t8007-cat-file-textconv.sh
++++ b/t/t8007-cat-file-textconv.sh
+@@ -22,7 +22,7 @@ test_expect_success 'setup ' '
+ 
+ test_expect_success 'usage: <bad rev>' '
+ 	cat >expect <<-\EOF &&
+-	fatal: Not a valid object name HEAD2
++	fatal: not a valid object name HEAD2
+ 	EOF
+ 	test_must_fail git cat-file --textconv HEAD2 2>actual &&
+ 	test_cmp expect actual
 
-But there's an exception: when the size of the object that is to be
-checked exceeds "core.bigFileThreshold" we won't read it directly, but
-we'll instead use `stream_object_signature()`, which eventually ends up
-calling `odb_read_stream_open()`. And that of course _will_ call
-`find_pack_entry()`, as we're now in the mode where we search by object
-ID, not by offset. And consequently, we'll update the MRU in this call
-path.
-
-With that knowledge it's kind of easy to reproduce the issue: we simply
-need two packfiles, and each of them must contain at least one blob that
-is larger than "core.bigFileThreshold".
-
-Now I agree that the below proposed fix would be a good change to make
-the code more solid while we still have `repo_for_each_pack()` (I plan
-to eventually get rid of it). But arguably, the above logic is kind of
-broken regardless of this: we are asked to verify objects in the current
-pack, but we may end up verifying the object via a different pack. So if
-the same object were to exist in multiple packs, we might end up only
-verifying one of its instances.
-
-I've got a couple patches in the making that'll fix this.
-
-> diff --git a/packfile.h b/packfile.h
-> index acc5c55ad5..086d98c1a0 100644
-> --- a/packfile.h
-> +++ b/packfile.h
-> @@ -191,8 +192,13 @@ static inline struct repo_for_each_pack_data repo_for_eack_pack_data_init(struct
->  
->  	odb_prepare_alternates(repo->objects);
->  
-> +	data.repo = repo;
-> +
->  	for (struct odb_source *source = repo->objects->sources; source; source = source->next) {
-> -		struct packfile_list_entry *entry = packfile_store_get_packs(source->packfiles);
-> +		struct packfile_list_entry *entry;
-> +
-> +		source->packfiles->skip_mru_updates = true;
-> +		entry = packfile_store_get_packs(source->packfiles);
->  		if (!entry)
->  			continue;
->  		data.source = source;
-> @@ -212,7 +218,10 @@ static inline void repo_for_each_pack_data_next(struct repo_for_each_pack_data *
->  		return;
->  
->  	for (source = data->source->next; source; source = source->next) {
-> -		struct packfile_list_entry *entry = packfile_store_get_packs(source->packfiles);
-> +		struct packfile_list_entry *entry;
-> +
-> +		source->packfiles->skip_mru_updates = true;
-> +		entry = packfile_store_get_packs(source->packfiles);
->  		if (!entry)
->  			continue;
->  		data->source = source;
-> @@ -220,6 +229,9 @@ static inline void repo_for_each_pack_data_next(struct repo_for_each_pack_data *
->  		return;
->  	}
->  
-> +	for (struct odb_source *source = data->repo->objects->sources; source; source = source->next)
-> +		source->packfiles->skip_mru_updates = false;
-> +
->  	data->source = NULL;
->  	data->entry = NULL;
->  }
-
-I still think that this hardening here would be worth it, but it has the
-problem that we won't reset the value in case the caller breaks out of
-the loop by themselves. I don't really have a good idea for how to fix
-this, except by turning it into a function with a callback.
-
-Patrick
+base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
+-- 
+gitgitgadget
