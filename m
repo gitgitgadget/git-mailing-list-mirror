@@ -1,218 +1,95 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.runxiyu.org (runxiyu.org [155.138.132.239])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753801EE7D5
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 14:21:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516DD155757
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 14:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.138.132.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771856488; cv=none; b=EvJMX7DpkB2CLPURzwUEnLwGq9q6y2Rfyia/b53BiH1NIYSLSXLWfDeQuF51Vpc/8bZlDByss2GXx898m0Tz9ZX9y8KdYcU8BxgDDGIj8cA8+8TKTi/+7I92VAFu1qZImecZNOemjpB/Bp2PbrNhirVGtkQZYwZR4Tzbm4+xqC0=
+	t=1771856506; cv=none; b=fMGDyEimPKKl2IouxF416j1J7xxeUpumS6F+qbi2PteKKv5fUWUXxbRXqpGlOmxucIsJ0Ca+methI4CDSotRhHM9nQp+Fl2voaZmg8a3CcvaB3m7SqgON8GsCJnTiqyhuS0TxLC2iUU8Bc30C0sUQwEzDUjj4tdu3g1kdFbb8Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771856488; c=relaxed/simple;
-	bh=LpkrZE9ZYUZw67HF9kFoQq6MaAkZa6q8pYU5d/t1+hY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hPcgxtRBHFswADNpTu/hUuOGn5XgV/MYTaDc2Jpc/LDyNaxdS69jQhLfa5syssebBgh7AeRQXi9CQnnXOBk4ZRa+TQVqi9vQwPUIgbXD7bh9sp+JKXeyildyxHwnuJJ/87tPI7cAn1KRa5/2kr9/PvyUzeE9tIXc+BbL/xbOD1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QN38rEIQ; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771856506; c=relaxed/simple;
+	bh=FaXX+9Hys7vTMi1YnAVq/Bs0Z6EhQgGv/4ineGM0jFA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uX0Qiemdc6/1VCBAiRZz3sEJEHtbIBZLr3PwBdzviyeeaA18mwqGrgoMMWa8JY9n9N3mbZB6L2cN25/sNcYUhK0hGdfPAGdxwoFFxCaVC7lNMaHCLo5zuu9Z+5FajLdSBt5dkjIzdMfysCk+UPKhr7Aym7hiO4lpxERuO9Ak4KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=runxiyu.org; spf=pass smtp.mailfrom=runxiyu.org; dkim=pass (2048-bit key) header.d=runxiyu.org header.i=@runxiyu.org header.b=C3OZNJJ8; arc=none smtp.client-ip=155.138.132.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=runxiyu.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=runxiyu.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QN38rEIQ"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-506a1b23c05so55537531cf.0
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 06:21:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771856486; x=1772461286; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dGMA7vPkvfPMJtiGjXbBrpxghWpD1BIOrwwz/9dAxEs=;
-        b=QN38rEIQ93o1bKBp5Mb9+G/0WeucGqGX3AaZLwavXVfPX+MK/V5kfEhjz9SDVZ7DkH
-         DteFKFz5FtrBm6g5fWyKRA3LnM9m8ytPlGNbB+Z+b+k07HQXNLa1OzgPRQsq7or9RZgC
-         BdfDTtIaabkBmWGnJLKSDJiyuJNuxunuq0YUqujZuEzo/m75uRPZthckLwdMyvISWSIq
-         uJCN6m7ZrWnk9tKJbUGmxptyRl8U4NCxrX2G9PxXm3eujxruGEb3zT4tfZYHZAYqfqKl
-         MQ2MeuyDlFfHBvKUH76WWc9xBU1z/nHIcO4M23rz0cjOSxHdaffibTd/U5gl0U8mUb66
-         t/eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771856486; x=1772461286;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=dGMA7vPkvfPMJtiGjXbBrpxghWpD1BIOrwwz/9dAxEs=;
-        b=fYOnMvyBxhc21g9DtqYnjLqiCxhH9W+ZlNO7wrLd2iRTtyQ9kimCuxlKyqQvhiqAqg
-         58KOYKm/eKxEGiDbAd9CcgrLlX1Bi5xnUDHcLQB+DtyqBeaDisD6K97nWGC/1HNk8xqw
-         AWJLFjX5heqXlxPocGGJH13Y9/96/6WszDSeaEbH6WT3/995BWn1JtWdQNr5oKDEHo92
-         bNB/qV+sUBk3K9fmK5jhuxYZwQsWi1kg+PzEJoXPzzYI51eGLOlpSJWsV0PSITJ1sHFH
-         XFiyVsRX/nSEsETC3SDcSRpk313rtiLonvE9H0f+DAXecw1xGOkIPqul3zXLCzYeAwZU
-         qFqA==
-X-Gm-Message-State: AOJu0YygENbYQFIauGsUQB0808lF4thx2IcNrJDmf+AMgW79+P3itU1i
-	gQTuY0wyfy5dz5OcMbZV9JGDc7vYWi/zeKnG5DRKqR87Dj+WlXFK8fykaI+9W8Il
-X-Gm-Gg: AZuq6aKxuGq00dV+NDto4r6HQgbx0OFp+Ii48Pyz5nEs8hWifdoUtmGAKDFEqam1s4S
-	P/B1UuEX0qqkDDqQfNCvNmCrZ+bJqQHNQi8aqOwxhy6AIHxOIQqK4ALtSDzOU6xnX14LPCNbsCP
-	D62HyBDm8CaSSZ0keu3Jm4SF4oAkUjPkswFYJpzh0Ka5eBIPh1ikdDJTxPTZzpeloCYZ2rcOH1d
-	h27R4JqfP0vO0oqAo5AGcd2IkWVUe1w1xFsNT3Q/FmcjcEBvi+fZ899L8RdoS16ix0FcSjkLVru
-	JFm7wxjKsizIktRgA1A9IIGF6OWvZDwvo43lOvXVh2YGw0bkPv3ccdUZ17x4nPk3Hzf0+aF54WP
-	XRIOrSJqybNnvSFAL4u3O+DoByBNP7vU6d7hrtVtFmrf1cW6PoODtvTe5ciTbehhsnQju44vNJG
-	Pj7ErcbzpHNrebb6b1F3fNo9U=
-X-Received: by 2002:a05:622a:292:b0:506:9ad2:8d4a with SMTP id d75a77b69052e-5070bcf84b2mr119788311cf.75.1771856486013;
-        Mon, 23 Feb 2026 06:21:26 -0800 (PST)
-Received: from [127.0.0.1] ([20.55.15.231])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d6c9de8sm68076331cf.26.2026.02.23.06.21.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 06:21:24 -0800 (PST)
-Message-Id: <f17c0f03e5daf6b905cbdba88285ee9d8e371f3f.1771856469.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2208.v2.git.git.1771856469.gitgitgadget@gmail.com>
-References: <pull.2208.git.git.1771784936.gitgitgadget@gmail.com>
-	<pull.2208.v2.git.git.1771856469.gitgitgadget@gmail.com>
-From: "Eslam reda ragheb via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Feb 2026 14:21:09 +0000
-Subject: [PATCH v2 9/9] docs: describe repo info path keys and structure
- metrics
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=runxiyu.org header.i=@runxiyu.org header.b="C3OZNJJ8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=runxiyu.org; s=mail;
+	t=1771855968; bh=FaXX+9Hys7vTMi1YnAVq/Bs0Z6EhQgGv/4ineGM0jFA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=C3OZNJJ88/BBvzIwZoCrRzQBG+wB2ft4qR0sQ52X9TOCz/tFzJ/eVEZpW+MZhTtXi
+	 6maFNV0L3ShS+hPYQ3xCrQVJ9bWLnclk/UE2rYqyDk5LW02xMH2P9HahzEKT8wOeSW
+	 mtgQGe8Kh03Q3ulIGoGmsP0YF46SshUmmI9mvD/gaucsSPN1cf58DQXe09HbCCbb/O
+	 PL6DsbDwE40ZhETvCAF/xeLv8DbVZzh3qTHq8ABtjD8vtIPS+xjeIZ8nBLliNVBCL6
+	 BkPDYqnTzWFScCzYRSp1pSCj4zLxYyBrwm6uqLHQbwzJt14tPxtpNQJYc3Zga1CG9e
+	 wzv+yneQ07EOg==
+From: Runxi Yu <me@runxiyu.org>
+To: git@vger.kernel.org
+Cc: Runxi Yu <me@runxiyu.org>
+Subject: [PATCH git] t5516: test updateInstead with worktree and unborn bare HEAD
+Date: Mon, 23 Feb 2026 22:12:20 +0800
+Message-ID: <20260223141236.22476-1-me@runxiyu.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-    Justin Tobler <jltobler@gmail.com>,
-    Ayush Chandekar <ayu.chandekar@gmail.com>,
-    Siddharth Asthana <siddharthasthana31@gmail.com>,
-    Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
-    eslam reda <eslam.reda.div@gmail.com>,
-    Eslam reda ragheb <eslam.reda.div@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Eslam reda ragheb <eslam.reda.div@gmail.com>
+This is a regression test which should presently fail, to demonstrate
+the behavior I encountered that looks like a bug.
 
-Document the newly added repo info capabilities, including
-category keys and path-oriented key definitions.
+When a bare repository has a worktree checked out on a separate branch,
+receive.denyCurrentBranch=updateInstead should allow a push to that
+branch and update the linked worktree, as long as the linked worktree is
+clean.
 
-Also describe --path-format behavior for path outputs.
+But, if the bare repository's own HEAD is repointed to an unborn branch,
+the push is rejected with "Working directory has staged changes", even
+though the linked worktree itself is clean.
 
-Update git repo structure documentation to cover newly reported
-maxima and aggregate keyvalue/nul fields.
+This test is essentially a minimal working example of what I encountered
+while actually using Git; it might not be the optimal way to demonstrate
+the underlying bug. I suspect builtin/receive-pack.c is using the bare
+repository's HEAD even when comparing it to the worktree's index.
 
-This keeps command behavior and output keys fully specified for
-users and scripts.
-
-Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
+Signed-off-by: Runxi Yu <me@runxiyu.org>
 ---
- Documentation/git-repo.adoc | 67 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 63 insertions(+), 4 deletions(-)
+ t/t5516-fetch-push.sh | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 7d70270dfa..b575977a4b 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -8,7 +8,7 @@ git-repo - Retrieve information about the repository
- SYNOPSIS
- --------
- [synopsis]
--git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
-+git repo info [--format=(keyvalue|nul) | -z] [--path-format=(absolute|relative)] [--all | <key>...]
- git repo structure [--format=(table|keyvalue|nul) | -z]
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 29e2f17608..f44250c38f 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1816,6 +1816,24 @@ test_expect_success 'denyCurrentBranch and bare repository worktrees' '
+ 	test_must_fail git push --delete bare.git wt
+ '
  
- DESCRIPTION
-@@ -44,6 +44,11 @@ supported:
- +
- `-z` is an alias for `--format=nul`.
- 
-+`--path-format=(absolute|relative)`:::
-+	Controls formatting for keys in the `path` category. The default is
-+	`absolute`. This option may be specified multiple times; the last one
-+	specified takes effect.
++# NEEDSWORK: updateInstead unexpectedly fails when bare HEAD points to unborn
++# branch (or probably any ref that differs from the target worktree) despite
++# the target worktree being clean. This seems to be because receive-pack.c
++# diffs the target worktree index against the bare repository HEAD.
++test_expect_failure 'updateInstead with bare repository worktree and unborn bare HEAD' '
++	test_when_finished "rm -fr bare.git cloned" &&
++	git clone --bare . bare.git &&
++	git -C bare.git worktree add wt &&
++	git -C bare.git config receive.denyCurrentBranch updateInstead &&
++	git -C bare.git symbolic-ref HEAD refs/heads/unborn &&
++	test_must_fail git -C bare.git rev-parse -q --verify HEAD^{commit} &&
++	git clone . cloned &&
++	test_commit -C cloned mozzarella &&
++	git -C cloned push ../bare.git HEAD:wt &&
++	test_path_exists bare.git/wt/mozzarella.t &&
++	test "$(git -C cloned rev-parse HEAD)" = "$(git -C bare.git/wt rev-parse HEAD)"
++'
 +
- `structure [--format=(table|keyvalue|nul) | -z]`::
- 	Retrieve statistics about the current repository structure. The
- 	following kinds of information are reported:
-@@ -52,6 +57,12 @@ supported:
- * Reachable object counts categorized by type
- * Total inflated size of reachable objects by type
- * Total disk size of reachable objects by type
-+* Largest inflated reachable object size by type
-+* Largest disk size of a reachable object by type
-+* Largest parent count among reachable commits
-+* Largest entry count among reachable trees
-+* Longest and deepest path among reachable blobs
-+* Deepest annotated tag chain
- +
- The output format can be chosen through the flag `--format`. Three formats are
- supported:
-@@ -64,6 +75,7 @@ supported:
- `keyvalue`:::
- 	Each line of output contains a key-value pair for a repository stat.
- 	The '=' character is used to delimit between the key and the value.
-+	Both aggregate metrics and per-type metrics are included.
- 	Values containing "unusual" characters are quoted as explained for the
- 	configuration variable `core.quotePath` (see linkgit:git-config[1]).
- 
-@@ -78,9 +90,11 @@ supported:
- 
- INFO KEYS
- ---------
--In order to obtain a set of values from `git repo info`, you should provide
--the keys that identify them. Here's a list of the available keys and the
--values that they return:
-+In order to obtain values from `git repo info`, provide either individual keys
-+or category names. A category returns all keys within that category. For
-+example, `layout` returns both `layout.bare` and `layout.shallow`.
-+
-+Here's a list of the available keys and the values that they return:
- 
- `layout.bare`::
- 	`true` if this is a bare repository, otherwise `false`.
-@@ -91,6 +105,51 @@ values that they return:
- `object.format`::
- 	The object format (hash algorithm) used in the repository.
- 
-+`path.common-dir`::
-+	The path to the common git directory.
-+
-+`path.config-file`::
-+	The path to the `config` file in the git directory.
-+
-+`path.git-dir`::
-+	The path to the git directory.
-+
-+`path.git-prefix`::
-+	The path of the current working directory relative to the top-level
-+	directory.
-+
-+`path.grafts-file`::
-+	The path to the `info/grafts` file.
-+
-+`path.hooks-directory`::
-+	The path to the `hooks` directory.
-+
-+`path.index-file`::
-+	The path to the index file.
-+
-+`path.logs-directory`::
-+	The path to the `logs` directory.
-+
-+`path.objects-directory`::
-+	The path to the objects directory.
-+
-+`path.packed-refs-file`::
-+	The path to the `packed-refs` file.
-+
-+`path.refs-directory`::
-+	The path to the `refs` directory.
-+
-+`path.shallow-file`::
-+	The path to the `shallow` file.
-+
-+`path.superproject-working-tree`::
-+	The path to the superproject's working tree root, or an empty string
-+	when the repository is not used as a submodule.
-+
-+`path.toplevel`::
-+	The path to the top-level working tree directory, or an empty string
-+	for bare repositories.
-+
- `references.format`::
- 	The reference storage format. The valid values are:
- +
+ test_expect_success 'refuse fetch to current branch of worktree' '
+ 	test_when_finished "git worktree remove --force wt && git branch -D wt" &&
+ 	git worktree add wt &&
 -- 
-gitgitgadget
+2.53.0
+
