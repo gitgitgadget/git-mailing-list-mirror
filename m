@@ -1,157 +1,110 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7117C1534EC
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 06:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAA53EBF3C
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 06:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771828449; cv=none; b=OtDymQyv5U5qG9sQweeNDNG0h11H6nnOkI4njcCrhrSoJ346zUszJkIlfgUXu/uQI97Ug4/mDXI/uuDpnRLWZpqaJZSjg42uT1JqoC/r2mOCKnE1WIW4VJcP3PvHBCuXqbooe4+WYRPkyBaaQOdU0yI4WtJPPSFNGoQi86wVyz0=
+	t=1771828656; cv=none; b=pg9jGwm8t0I8j8xB16WqoitUjIIUwvMw00L2Ds3Ey5WlXnaZW1vMR/gwUjR2/j1xfZNS8Rj5UJlOwpmFwHIRwlCnrWcpWRyRy3+thzuL26n1Av18j+Pt/oxS9FrQtswkP3cc9FALdYBjcx98tOl40lxuackc5Mi8qwcEOxZOgLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771828449; c=relaxed/simple;
-	bh=DJ8aJg3AiBSvHSIPEESdYiKc9UXqO7qF2s00YQpgaWM=;
+	s=arc-20240116; t=1771828656; c=relaxed/simple;
+	bh=nH0y2pHSV3OrONTnGpfy2DVlrEGjYthIzshGUjwClv8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j/4cAVuMOcQ+qd4W8TYJAW/lpp4R/AvaCbr7MeVGhZi6tGuJl5TwaJU/yu6756WonSX/8XWrFdGiGDo086Hb5ANEeGprAyNX5VgR4tRoeC9Gm3YkG8oAygkAVTrdOYUU+RnUGK9hwfa4POMsxih4IvJ21D+1BTNd0nWSSSvTg+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=madKkb8X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GTewJxg0; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=cqwggWl9QirahbhaF0U79W61vOwZsSHevnq66v6zcs7cAzPYxtlaqESlSoDBUarocF56JuDEYxhzhr/fBxbjaIkj2zOgpK04tZX6ZOqjVZT5UenTIQTxfJJh7IEQzPSXUsnjMImczAksfjtQv5rJnS4tQvhsV/xNYFT71+FhsZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HFSrb3z3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EypcF6Vt; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="madKkb8X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GTewJxg0"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9EE8F1400012;
-	Mon, 23 Feb 2026 01:34:06 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 23 Feb 2026 01:34:06 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HFSrb3z3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EypcF6Vt"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8BEED14000F7;
+	Mon, 23 Feb 2026 01:37:34 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 01:37:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771828446; x=1771914846; bh=O1bkFaM/6C
-	wj62ciETbW4CVK01WghCuAScTKzw96NYs=; b=madKkb8XBBRMddyS/VK1x3sfIe
-	x9ips0X+KcOqtVDGvmlbMfqZhNnqhxTOkAQ/DUSbGPGY43r965W+IWXyGqwJPpFe
-	BPpBLddHtduV+2l7p5pGLK5+pQLytUhWXZ5iPvsZ9rVxi5fS/mIf0l9pndigA9kR
-	4y76XPQPljjlUuXMbAoRg51hag1pVhZTc9NVRFuH3+63vT4FNr87J/7vX9DMnzRs
-	osaNYFUncztdeei+AKdNpi63nEiIm1AVD2U3GzzVTXyKBqnZu3nHq6gkuZcm6NDR
-	FBxU8y91sEPODFAVwkmfQhJ4fb7XixXsN3okZ/hhC1I5JdgDt6vPMCRG/Y3A==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771828654;
+	 x=1771915054; bh=Hvp0P1aUjf8+wN4RsWDtqPIoEdbkfARtVBzGS1HIX08=; b=
+	HFSrb3z3/wCe53y2CU6j9TcAzMmyWyFWRfdNS9cK+CAvus+6XAUm6NZnAm7FYpVj
+	RwPXG1O6Hi/TvIz/XJeXDZDvoXjxgAsQo3mcnP1nb7iuxnjac24kFHR3BgrP/8vu
+	vKYEDEovsJazRbWqWyioAqhcJRjefSoeYrqfDLEUT3Uc7Oz0jLO8kz/B9Rs7WSRs
+	N7kRuG+QYOaNu6bMFPg8idnPprrTuSIqkfDiyxnFAPu/DswdAI+NCqm7z9dGDUW0
+	ggWlRy/qoa6tQtDD7uiJMiPoT2HdO55WKEaVhB8ikM2CozHxv44orcwH4indb0gf
+	AQ6VyhqDcvP5pZczqnFs2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771828446; x=1771914846; bh=O1bkFaM/6Cwj62ciETbW4CVK01WghCuAScT
-	Kzw96NYs=; b=GTewJxg0V7tcXzFoBrx1k0anuczQuVUyuLvUdGFPm5B/uNQgMRf
-	/F8n4rtzbNrbjMzekSIWCG89ARJkdaTrG5GoZk5Nf2pNc8Bt8dtcq8yxCv1+EHw8
-	7dg6WTK6ELLmhZqL7BQeE5Q371XkwJgzul910/YhllDHZoLUgrGkAFNWV5+y8LfS
-	L7/kcfanTDVDnh35LDIWFDYeljA3FMUCx2LyLV4yISid+9LZClGvWFZP37YwHqAT
-	gw88Crggfo8GKz4j0i5JgWU1CabUWtUZO5A1L8HgTyjzp0wTPv9tIzP8c7NPWgFC
-	MbUPUXDY76o4QbO6zMnkOJMsSuzfU9epd/g==
-X-ME-Sender: <xms:3vSbaVwKxLn7ubRH1t2Vyzptt1aP-OJ67xTEvXqAcyWZajQIcLRLUA>
-    <xme:3vSbacL3w6nptBi5cM8HRuAKhSOQuGb89wYvpT5zsshXxu5q4_NkWOXF3-KhvqIAD
-    stJ0d5pntcaSuRnbwvleTwgCes-T1DColCJjQvAHBRkxUhE_v08fw>
-X-ME-Received: <xmr:3vSbaXpc857g6Y4CMEiVmHXxfHbFSuEk-HAj6pUNvcZDLBlGx3B2-oGBPVP_LYmcwp7xI2PexfWbPbPkNN0_n0mPE_ksLm4KFSrL0lhY8g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeihedtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771828654; x=
+	1771915054; bh=Hvp0P1aUjf8+wN4RsWDtqPIoEdbkfARtVBzGS1HIX08=; b=E
+	ypcF6VtnMFUR7jPLLWWlfjtequc90GJhwy023osCz1R4ZcTFCZnBr8adzMNeQ33m
+	WgTCaHsDL7I98PAkn/gmfcT4CLKpeuPk4H7waM+9N7Jqmy0IHek4oP4WPqo5T91S
+	n+D8rX6Q/5EZcxq9SX9N0DQAj3jw2XtAAWaHqOYQChqhASNHBItG4j4I/a0uM/E2
+	Uk4Z/lS6ZD0J0o2pvqGgJvFjReKkOCW3gsM6J41rHdjchPB7v3wz6oZsUBbjc396
+	3HjXqdmbrkR/JMfGi52qQuUNqkcoUch+rEwNvuTQ5vNa2LdhspLqKOz/WmUebL3E
+	B/+37HiXN1LYIZ3QqP4+Q==
+X-ME-Sender: <xms:rfWbaYpgSbxFgZkGi-eOfkQMECs-FgbF7VdqE4HHycZpbXrPz58rrA>
+    <xme:rfWbafWE4VFb9CqzWk1DMLpX-zKg7L7-n5zOQx8-AoRgsjL6ohNhFLGKw4bpX8dzQ
+    6O9Cx50-iwnz26SIN2e5r9tPZq5WD2j2vYEXcstAEvJaI-dfBaI>
+X-ME-Received: <xmr:rfWbabaOCsqf6xRyJLDIpXvGJAQRP8QPyGvj_0ABS7Oybx4k41CQeNxO3xnOHAntEuf788L-FNyy0q7Inp7Jr4qI2iLXRnbRwqHfNnRRDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeiheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveevfefhhfehtdekheelfedtfeevveejjeelvdekfeffffehvdejhfdvleevffdvnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhdpuhgsuhhnthhurdgtohhmnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
-    nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepghhithhhuhgssehprghulhhishgrghgvvghkrdgtoh
-    hmpdhrtghpthhtohepphgruhhlsehprghulhhtrghrjhgrnhdrtghomhdprhgtphhtthho
-    pehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:3vSbaTImzeRTlND9Hr_mATltx4JOWgKqLZwXn4n0PpGzy5gT8JSNig>
-    <xmx:3vSbaUTs14ISSzDfx2Ago7GGEZLb56dDly8ifpQp5ueGWYHRHjd0zw>
-    <xmx:3vSbaasK4X4gkkAlYFWJDHLrO0VXX-MKW5UWz_qiwC1c8U2b2NOxZQ>
-    <xmx:3vSbadZ0RKtSFJQ8iaxhfdHKIrzp29VWKZLeluydOaiUXM6jKnZbdg>
-    <xmx:3vSbaSk69iUdqq-jaBnONdPAlSbrNOGFYv1lmN5spV68W6VxbcYA1rBd>
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopegvvhgrnhdrmhgrrhhtihhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnh
+    drkhhnohgslhgvodhgihhthhhusgesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
+    shhtvgdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrd
+    horhhgrdhukhdprhgtphhtthhopehmrghrtghnrghrtgesgihiphhlihhnkhdrtghomh
+X-ME-Proxy: <xmx:rfWbaUenyzjEDNKmntk3HeomrK6VyNHag0XPAxvJiWiA7nCcuvVeig>
+    <xmx:rfWbad1eTmIPuv-ApFsW_4DN8g8YzCeVq1nDrbqMhRfOIudxDTzQPA>
+    <xmx:rfWbaTLtvezUvRbX1zQKagEsthmrrh2he7zcc3VPvst_KE20TE8pog>
+    <xmx:rfWbaUGonQnv557rgoEaYby7t7JpMMO38dpXRmbjIFZerif-EBolCQ>
+    <xmx:rvWbaVngZ4STTmgPmxPttMXjiMg-9H2Xm4JCWQLMJdL6Dk3-V_N5A3F2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 01:34:05 -0500 (EST)
+ 23 Feb 2026 01:37:32 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 827c4677 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Feb 2026 06:34:03 +0000 (UTC)
-Date: Mon, 23 Feb 2026 07:34:00 +0100
+	by mail (OpenSMTPD) with ESMTPSA id ffc48d0d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Feb 2026 06:37:31 +0000 (UTC)
+Date: Mon, 23 Feb 2026 07:37:28 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Paul Tarjan <paul@paultarjan.com>, Paul Tarjan <github@paulisageek.com>,
-	Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v4] fsmonitor: implement filesystem change listener for
- Linux
-Message-ID: <aZv02KjfheyFlMfb@pks.im>
-References: <pull.2147.v3.git.git.1767099302592.gitgitgadget@gmail.com>
- <pull.2147.v4.git.git.1767202894884.gitgitgadget@gmail.com>
- <aVuplzNaoCHlZG3S@pks.im>
- <xmqqikbrvz2l.fsf@gitster.g>
- <CALvWuB70kwPAnQ+v4ch1TKMDxbUQgi5NP8NX7tbCZRqivJ=vig@mail.gmail.com>
- <xmqq1piet47r.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Evan Martin <evan.martin@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] build: regenerate config-list.h when Documentation
+ changes
+Message-ID: <aZv1qIBz9khlxSGC@pks.im>
+References: <611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>
+ <5dcd4e9308100a25603c50fecb36447c0ee4df62.1771682788.git.ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq1piet47r.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5dcd4e9308100a25603c50fecb36447c0ee4df62.1771682788.git.ben.knoble+github@gmail.com>
 
-On Sat, Feb 21, 2026 at 09:07:52AM -0800, Junio C Hamano wrote:
-> Paul Tarjan <paul@paultarjan.com> writes:
-> 
-> >> I just noticed that the discussion thread went silent after this
-> >> message.  Has the patch been reviewed and tested well to proceed,
-> >> except for that meson-build support?
-> >
-> > I'd love to see it integrated upstream. Is there anything else you
-> > need from me?
-> >
-> >> > This would also need the below patch to support Meson. Would be great if
-> >> > you include it, otherwise I can send it as a separate patch once this
-> >> > topic lands. Thanks!
-> >
-> > I'd prefer to take you up on the offer to send the meson support as a
-> > separate patch.
-> 
-> This part of your message is one thing we needed from you to unblock
-> ourselves, I guess.
-> 
-> Patrick, do you think you can help making this into two-patch
-> series, the original one being the [PATCH 1/2] and update for
-> meson-build in [PATCH 2/2]?
+On Sat, Feb 21, 2026 at 09:07:17AM -0500, D. Ben Knoble wrote:
+> Notes (benknoble/commits):
+>     Changes from v5 (<611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.git.ben.knoble+github@gmail.com>):
+>     
+>     • Reword a confusing sentence in the commit message
 
-The changes I sent should be sufficient, so I'd propose to just roll
-it into the v5 patch.
-
-> > I'm unfamiliar with that system and the suggested
-> > patch failed in CI on some dependency installation steps which felt
-> > unrelated but I didn't want to debug.
-> > https://github.com/git/git/actions/runs/20720903513
-> 
-> The topic has been in my tree near the tip of 'seen' and I do not
-> think we saw CI failures coming from this topic.
-
-Yeah, I think this was simply a flaky CI job. The "linux-reftable" job
-has failed installing packages:
-
-  Err:3 http://security.ubuntu.com/ubuntu questing-security/universe amd64 Packages
-    404  Not Found [IP: 91.189.91.83 80]
-    File has unexpected size (89328 != 89310). Mirror sync in progress? [IP: 91.189.91.83 80]
-    Hashes of expected file:
-     - Filesize:89310 [weak]
-     - SHA256:16943889a9abc4aaeb0e701e99db0004ac0241de728183f7a2923bb7927b107b
-     - SHA1:fac9e79fb36b57de3770e639c4b5bf9231342f15 [weak]
-     - MD5Sum:8cf081c59fbb279da27867d94f2b9520 [weak]
-    Release file created at: Mon, 05 Jan 2026 13:30:45 +0000
-
-And all the other jobs simply got aborted because of that initial
-failure. In any case, the changes work alright with Meson on my system.
-
-By the way, I haven't yet done a full review of this patch, I only
-chimed in to help out with Meson. But I can have a deeper look once v5
-was sent out.
-
-Thanks!
+Thanks, this version looks ready to me.
 
 Patrick
