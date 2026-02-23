@@ -1,180 +1,154 @@
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB51328B61
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 17:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771866289; cv=pass; b=jr2QHSpBc9novEx0tlna/NyI6G8ZNF0Ut2TfI5oOAgkvRpNAMuJWqb4bFWq+Y4FYIp1INvcG1dyh2qj7sd43FEr+ZXbwOrsbfsoNQWx6c1O017iusxZdDGhekJj0P8hViT8sA4H9g/kKwZDjflerDDjrdmZJi5rX5VZM4N4twiw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771866289; c=relaxed/simple;
-	bh=Wpf/z6GzqyG72VKCb60JTpsarAxXLEFEFCqepsokx8Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=twt6JTxCPpJ2BKrmVI6dxGlqr6P4ZTqqYKapx42WCEgrXVMcKbX/STc8lu1RW8uk+2z9qnFcYCSlPTkPJz/WaX0JYHwMb9RwgXMekhMLgb9qXNY5LebCq17LPRpYCqbJZlT9Xi7kfUSdHiwB73QrcL1zBC2n910UzL8W8QZRQ7o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b5AcdVLQ; arc=pass smtp.client-ip=209.85.161.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B3A2EC09B
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 17:09:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771866568; cv=none; b=PoC9Dt7n6BMlUDK7PZrquhAI2+Dk2Uc+Ty2TGQMZlaGw7eSEIvJmvql7+/h1HH+A8K7KiCW3y3g4o/TFjcb4Jvt2WNjq24M9j6R/7xMQeOoh29N/Ww6I57LTP0xC5WpggGzW1CC5r9DViZbpEU1N197100WfplIfgcesG6CjWXc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771866568; c=relaxed/simple;
+	bh=meINWGwytK6pgCPln9/SvcH5S38UVcCrZw+k9gAEkjU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UXeQaFHA7Ls0JAwwAERGVEuRw0SGlcmLR9/ZQzmqUhBelhfiuU/bkYkjp9PdZzTVx5Pl8EjInxqhv4W3igYnuXo05HHDQJa8hIYkhXsyctJMyzXKfyCL3HnPv9GMQScdBtxZtglv5GYWwhisgHIWqOdbDBuIxqZM6yZ19BYy//E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mWvYX0wM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BgMTkvMf; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b5AcdVLQ"
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-677a11d11e0so1700377eaf.2
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:04:48 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771866287; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VAdKB/wn1VGX6zQuCpQd/ORi2mQ7WgBEWNsKVBzIFiFd0p1HPqMOvq70AsH0qgDmj7
-         CEFC+kNrkqBjljV7/gB0n1fDkhOmk/1222sB5ChTxNqIMscbRrXd+toP8W2CNnCvnUP4
-         cYqLfrHVbmvGxUelH1Ej+OueFl6clPK/hO3Zy1w4SBqj3UGrBHIj33VKcXHpxxUc/ZNZ
-         cDumIsd4VDy+S329+k6PPxazVvUIbNLQTz82ku9Y8Bz0sOYN1epnsVjB6f7zXH8umnm0
-         8Q15NE1ADROnj98+doBqraMNeYV7yVcXG7GDhg6+M/ydQ8JD2Cz2rp9gLH3BTyhKWbrA
-         oWsQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+7wDC+qvbAI5Ob6FDRoBXS1ODMYDcDi6ACW3pQla4bg=;
-        fh=4zLAr358KLnmEWirS5350TtoH2Id33GSf5WuMtM1gig=;
-        b=BzMWwXKO3zOKzVOhzti5gkKeEmLeeiaDV9PLerLUqhPC6IJFO8i/achVDb8bh++zdC
-         dy7uEHPLHQGuWNzQUfQx8ePtC8P5NlYTpWlpcnseQN4Itu1j35twuZyF2PnE2rki66FZ
-         JEjHVDbU5LjeE92x3/tTeKvPYOEvNPqLx8NuSBPyEYzs+HtgTD68356m9ukJOWrV2JE8
-         XQ9iyIllo76ekcarCGgQaNDzhPm4D7Q5DTBn789ivkVuX+X/BzoLV0NYPDIzWjCx732t
-         lCnHslv0AHCyfXObbrX+0+JwUW2baEPo0dWmnlio+MS2huhrsGivfB3SuVjEoxj6ScQL
-         ByLA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771866287; x=1772471087; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+7wDC+qvbAI5Ob6FDRoBXS1ODMYDcDi6ACW3pQla4bg=;
-        b=b5AcdVLQIyyMjlPh3qq0Va+yykqWYlu2CRyuthpwyzs30ILAtRbq30wRACJ5H7X52i
-         REursq1Cm0quYpoNbFW0v+SkuZPx79b7Ik589a51vmA0BLDjUHP80sGRjZR8+lTd3Xnb
-         ZzqNmGGORtb2PjQJ+OTa0mECa/EgM/oM6cHR0GIWR5nAgoa5plSJ3V5t7Rs8E2Z0Cpdh
-         tiILhO13Qkb3k+d+fVEGw+udmcCNbp+S4MqMl9hvLQEj2tGaFdvr7Q2Qdt16RkrPqN/5
-         9bSn/rI/9vHGiBsQbVF/nnOIrKAYmcqzpC+5xgGHEtZDwGR+NZy2YIyMAhiRA6y0xi2i
-         8Xgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771866287; x=1772471087;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=+7wDC+qvbAI5Ob6FDRoBXS1ODMYDcDi6ACW3pQla4bg=;
-        b=qcYwkGLV3IyJdbn0L7aVXK2GeJ2qNzb/JBQHMO+pJfsCjim0pxtyppSwRGS9bx10fb
-         3ITj7uX+L3AsLKhAnVrGsHVSeBjtMHB89wY8jINbzi40wEXKob8oDJqBfk18AhPHNmcN
-         GxsdCScJKFeOB7Bvou4Dh3S1pvSa+nuxfM1XHOR0rFFJNri3B0rGLp1pUvUXyOLudsxz
-         6duxqvUX51Ep5LDcRZUHKEUB28eIdWgpXmyR6zGUK27iKUKSrQixrJlNMfmKvcfRAet5
-         HhYOPWvWae02aQEAwikkmJNP4jtTVMlbSjBSP6hYeIDFzOoiU5H+4+NFVruELdsja7mS
-         x+ow==
-X-Forwarded-Encrypted: i=1; AJvYcCXpadEC7sxKiPUE+K69v7ne/ELqqp0sea2IFW1IVfNJReRcmVEBRFfo9vW1emiyjntoVzM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8oKGUNn+9ijjMimTnRsm729HmSbMImWkrdC3RL0Gz2fxpYPoF
-	tRc/STEgSIR26U1O1n7snHZ/ncmmVm8tuY5e3HJTrOp08XXg+mWW4y5VhmXXogaG51Oi9T42oEe
-	RPP3wOT213ygtKt1+x1GSoXJh3wSXvJE=
-X-Gm-Gg: AZuq6aLNua7hUdOJ2L7E4XVIqGo+kWiN4z8fXvz/0RwMsC5k7LjAxzM57NFLujuWpni
-	0by8hA49LuzTf2AIjqkZ8WNRocnSBycEe2s8aNm0MsGY507LgYTsQu9emGH5SJkMhCt6L+B7Nne
-	SqsXLhaWbkpIh+ngW4SqiMKZ4FqHM++xlkF2XmcDfoYhM8rlF5V3fNuSd613B19YvQLngHWJBfK
-	mtg6Mdr+7+bAzVCRSAoj/QWIo/VwjP33X7Ysu2ccqmh4K9lubvuwFZ5TQKQml8mCm1uogEczbGz
-	8QbsbWtYLdOPpkQjpTo7TvUSaUTb7AMD3LOcW5+z
-X-Received: by 2002:a05:6820:2215:b0:66f:6d5e:76c3 with SMTP id
- 006d021491bc7-679c46eaeb1mr4443415eaf.42.1771866287440; Mon, 23 Feb 2026
- 09:04:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mWvYX0wM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BgMTkvMf"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5D32BEC0013;
+	Mon, 23 Feb 2026 12:09:23 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 23 Feb 2026 12:09:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm3; t=1771866563; x=1771952963; bh=X8
+	rH3HzBSQYmcxkkjKzLFoZIJf0jgLf7mnOHqy/tfPo=; b=mWvYX0wMxxhTw1YECp
+	FuYG8RXWySpiAV1mvXoHDUeyWFrqt8OSCjH/sktmWrdKBRqYgE465vMY1eEDaF0+
+	Ay4ns0Usy5+CEpwFQUrtbVNYzRkdFqYwO18a+8QKMs+t/CQqpJ+yxHsS3qCTzK5x
+	zJQA7LITR8OlPKrSEFWlWJBfbvILtr90iBMyUHZuKsjvtAZFqeMnxswS6RT9QV0M
+	h6aKg4HSo+66QVCgcVuNtp9nvX7C3cTUOrYehkRbo+HYfBAZcW6cs3FK9ZMquPnN
+	+GIYHgLfvMl/I24NqbHZqkatKf8b3w680wtP4TE24C4kbUp4oVTRxfTJpPtT2h14
+	GpJw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1771866563; x=1771952963; bh=X8rH3HzBSQYmcxkkjKzLFoZIJf0j
+	gLf7mnOHqy/tfPo=; b=BgMTkvMftN6+kPImLVqCsvbQH3yvoYeog8OPgfI+rZ6o
+	PTb+GbBU6AEwSMAzjNOexGmcQ/nARa8TC/hg2h+z1KO2Oe+RrrVhTtlcbzWTYLAA
+	lyljuWtCydWvAFeGi2rhXnvLet/YpH8pnXXKSi8ZtQXHrgFdgTlwYrX+kd2HrClJ
+	6yDZAV9H6P+whCbOMSF4AgA4F0wIu2DKk4tKolTXreBshdsBtEvPCH63kDCjw908
+	V2YilIhybsHzg0qTiQgQm5OSDj7TTyn0+isxtJLrjfxzg/c3hsK/YjP1WluFkYl4
+	5fu+9qTqAm4GoSOZ2ps0nc1mItc9jiCpvCwn4uKLEw==
+X-ME-Sender: <xms:w4mcaR5syfHSqH2hUG6F6Psju-6qOGdUp275fht9p-gUwK676YMIx9k>
+    <xme:w4mcaRIBXJiVRuSyPbfwPAr297ZOkYb0TA7HXTCPDFZ8aqQFp9qFurO4SfN2CMmBs
+    QaFGl2bp4fO9PBYZ4C7zOgYgmiHFTNmKCcR6US-JHtubL_V6MKLaA>
+X-ME-Received: <xmr:w4mcaat8_gvn4j7PDcYcgO5Rp7ORAXT7Q7yDGuY8pV_e6JVJbkAA1VvmyRmEwY0J7_zp8GS1hc8EchnNW9Ay9Ql-GicXKX_dBHwP_VQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejkedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlvdefmdenucfjughrpefhvfevuf
+    ffkffogggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepheelhefhie
+    euheejveeftdfgiedtueevhfdugedvheekvedvuedtueeffeeigeevnecuffhomhgrihhn
+    pehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
+    lhdrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhnrght
+    rghnsehjohhnthgvshdrphgrghgvpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvpdhrtghpthhtohepsggvnhhknhhosghlvgesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfh
+    hfsehpvghffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
+    thhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:w4mcaQIlsIUGtEiYNX06dzSf2Yu5bRiWTqIdyGKIaGmTmE7-KARjuA>
+    <xmx:w4mcaT9izE4Impm6zkZKqvsFQVsyPy3EdVMa_njzZ7JFmlcilXUvhw>
+    <xmx:w4mcaZzOq7NM_PRRRHSlzzgwff_XmPI-PO3tbS7wvjr-wYU_xcPWew>
+    <xmx:w4mcaQ58cQ9XMUIF7edEckSWbtAXEH-sp3pX-6LLA-cNwzNIQr8dQQ>
+    <xmx:w4mcaedOBLeVKsbXY5R75gQHGIuVLN8TdDHEF2mwwwgQ_PXdYEZInqnw>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Feb 2026 12:09:21 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org,
+	jonatan@jontes.page
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	benknoble@gmail.com,
+	gitster@pobox.com,
+	peff@peff.net,
+	sandals@crustytoothpaste.net
+Subject: [PATCH v7 5/4] doc: config: fix list continuation in alias section
+Date: Mon, 23 Feb 2026 18:09:00 +0100
+Message-ID: <followup-alias-i18n.3e0@msgid.xyz>
+X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2054.git.1771837399472.gitgitgadget@gmail.com> <xmqqjyw3o2w2.fsf@gitster.g>
-In-Reply-To: <xmqqjyw3o2w2.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 23 Feb 2026 09:04:36 -0800
-X-Gm-Features: AaiRm51QTq0ThbSlanRQrlkGPg5lbfQuDRRgPlHRW8H7GCexlMBURrTUzBzkiAk
-Message-ID: <CABPp-BENP2tUt1MufKeGxXwgr+iHEDnXjOLsaFk7OPkbOsLAMw@mail.gmail.com>
-Subject: Re: [PATCH] t2018: move checkout case-insensitive test from t0050
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Md Ferdous Alam via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Md Ferdous Alam <mdferdousalam1989@yahoo.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Feb 23, 2026 at 8:12=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Md Ferdous Alam via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> Adding CC the authors of 69f272b9 (dir: special case check for the
-> possibility that pathspec is NULL, 2019-10-01) and 06d53148 (t[01]*:
-> adjust the references to the default branch name "main", 2020-11-18)
-> the block of lines removed by this patch are blamed for.
->
-> One thing that I noticed that needs checking but I didn't do so
-> myself is that the original is prepared not to break after Git 3.0
-> by using 'main' in t0050 (which forces the initial branch name to be
-> 'main').  Whereever the corresponding new code goes, there needs a
-> similar provision to prevent the test from getting broken with the
-> default change.
->
-> I think specifying the initial branch name explicitly when the test
-> creates "repo-case" test repository and use that to go back to that
-> branch would be better for the purpose of this single test, rather
-> than using the blanket "GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME" for
-> the entire script.
->
->
-> > From: mdferdousalam <mdferdousalam1989@yahoo.com>
-> >
-> > The test 'checkout with no pathspec and a case insensitive fs' in
-> > t0050 does not really belong there as it tests branch checkout
-> > behavior, not filesystem properties.  It also had an unnecessary
-> > CASE_INSENSITIVE_FS prereq since the sequence of commands should
-> > succeed on any filesystem, and it did not verify the resulting
-> > worktree contents.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Actually, the CASE_INSENSTIVE_FS was very much intentional and
-critical to triggering the original bug before it was fixed, and in
-fact was overlooked by both Denton (the original reporter) and I,
-which made us unable to figure out how to reproduce the segfault he
-had triggered.  (The testcase does use both "Gitweb" and "gitweb" in
-it as paths).  Luckily, G=C3=A1bor came along and noticed the case
-differences and created a testcase for us, and then I dug further for
-other surrounding issues with that initial guide.  See the threads
-around https://lore.kernel.org/git/20190925215530.GA9013@generichostname/
-and https://lore.kernel.org/git/20190927021746.GL2637@szeder.dev/
+ac1f12a9 (alias: support non-alphanumeric names via subsection syntax,
+2026-02-18) did not use list continuation for this code block[1] which
+means that the block ends after it. In turn the paragraph starting with
+`git last` goes to the outer block and the next paragraphs are not
+continued properly.
 
-> > Move it to t2018-checkout-branch.sh where it belongs, drop the
-> > prereq,
+We can simply add list continuation right before and after the code
+block. Let’s of course do that, but let’s also change to use a non-
+indented code block (----) in line with the preceding configuration
+example.
 
-I think it belongs where it already is, and the prereq should be kept.
+Also use `$ #` for the comment to be consistent with
+the terminal prompt.
 
-> > and add a check that the expected file is present after
-> > the checkout.
+† 1: From https://lore.kernel.org/git/xmqqqzqqrk2h.fsf@gitster.g/
 
-Not sure if that's worth changing, but if others feel strongly then it
-doesn't hurt anything.
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-> >
-> > Signed-off-by: mdferdousalam <mdferdousalam1989@yahoo.com>
+Notes (series):
+    Notes to the maintainer:
+    
+    This is based on top of jh/alias-i18n (merged to
+    `next` on 2026-02-20 at b9a5c15c4f).
+    
+    See: https://lore.kernel.org/git/112cccfd-ee04-4c23-bc5e-fd269ebc6c1f@app.fastmail.com/#t
 
-From Documentation/SubmittingPatches:
+ Documentation/config/alias.adoc | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-"""
-Please use a known identity in the `Signed-off-by` trailer, since we cannot
-accept anonymous contributions. It is common, but not required, to use some=
- form
-of your real name. We realize that some contributors are not comfortable do=
-ing
-so or prefer to contribute under a pseudonym or preferred name and we can a=
-ccept
-your patch either way, as long as the name and email you use are distinctiv=
-e,
-identifying, and not misleading.
+diff --git a/Documentation/config/alias.adoc b/Documentation/config/alias.adoc
+index 115fdbb1e3f..dc04b0b4bfe 100644
+--- a/Documentation/config/alias.adoc
++++ b/Documentation/config/alias.adoc
+@@ -30,11 +30,13 @@ Examples:
+ ----
+ +
+ With a Git alias defined, e.g.,
+-
+-    $ git config --global alias.last "cat-file commit HEAD"
+-    # Which is equivalent to
+-    $ git config --global alias.last.command "cat-file commit HEAD"
+-
+++
++----
++$ git config --global alias.last "cat-file commit HEAD"
++$ # Which is equivalent to
++$ git config --global alias.last.command "cat-file commit HEAD"
++----
+++
+ `git last` is equivalent to `git cat-file commit HEAD`. To avoid
+ confusion and troubles with script usage, aliases that
+ hide existing Git commands are ignored except for deprecated
 
-The goal of this policy is to allow us to have sufficient information to co=
-ntact
-you if questions arise about your contribution.
-"""
+base-commit: edd8ad18a643d47dd92b08ab865bf7f4a26f50bc
+-- 
+2.53.0.26.g2afa8602a26
 
-Since your patch was sent by "Md Ferdous Alam via GitGitGadget" I
-suspect that your Signoff should have been "Signed-off-by: Md Ferdous
-Alam <mdferdousalam1989@yahoo.com>" (and the From line updated to
-match).  If I'm wrong about that, it might be helpful for you to
-include an explanation of the name differences with or before your
-next patch submission.
