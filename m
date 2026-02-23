@@ -1,147 +1,73 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6EE36073E
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 12:49:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771850978; cv=pass; b=NvjftzsfHzeV1jRJRCgYhOPQQ/TicWyCS8CvcOdCIk+N2z8U40X6+DS4HUsttDM7Z8Z9oX2BgSBIpgUOrfQonZi1kRbZqiJEZl00gcNJWmPPlHvDfPWfjLIYlITrfJ6zcMr5jp2+bcLijAd/nqdnaoSBiH6PKg+esWJATKhRpg4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771850978; c=relaxed/simple;
-	bh=OeSKHcEm+oLyfyy9NWH0oUBE0zGslshddg5H73j218Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OidWB6tmeyldGJfEIUqd7W8VjAFrsjDwcrkOfN20Kvvvtm4sNnw7K0Nu5tKOtA8yr3EpJGDqryNhptRs0QnfjVpz5bihymHVd/nPaFXNUaQ5D8NzrP5aSW3yhN3p6bwm5+lD4imNun3niysGIMT+/PojUMtMBG2elFOuXG9+TmU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=ilpXhkSf; arc=pass smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CF03644D3
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 12:58:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771851527; cv=none; b=iAoSP86NYaxE8qAW37TlmU6t5eXZHosATaDiHej2kn8OHtcspLRRHvDddF+1rkj7CFmuJnq15Ai6OUYjiJwz1dV2E9ZDPSh/7ibGl3MwInWEMgewWnRJlADNNXu/bfq2g7yX6LreD+y0Ku9iLJJk6WZsh0Zyg6h0IbhG1WJjKj8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771851527; c=relaxed/simple;
+	bh=fYn9IDpQ6IE73KzAowrKuHcKYHNg9p+zI6MLduqJBbE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cT2/WGnD2ePmV/z4+6eMb0fj8f46D5gynfGfca9NbYQDDJUJpqNhm0sIhl5XRKlKUx0tMOG8gNp4Q5Q0KuySkqOa28S/5vvjmuYiqdbVXOYPquBDCJ73bVStpoCKDO3ISqp6DbQqG6fcE1+ywGpfjHTPIxkQp3oD5t3w+BW0acU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CYRfLBFb; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="ilpXhkSf"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-38710d7d8baso32880381fa.2
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 04:49:36 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771850975; cv=none;
-        d=google.com; s=arc-20240605;
-        b=bzqIhpnaQQooXKbfHuJK05VMeaCmY+TAtVoDy5DgDTd7ghSxlLU8gVvITOo/riC5sw
-         X5JdnBjsGiWdr+mthwjxs6e2/+8HLvnEi9QXXk2iQaDQnbN0PBDG6xyEqaZteB+pl4Lk
-         4W34RXMk8Uw8WptJLAL9cQEKH1UtsV8khBKplUojzUTjKhPIj+aOHfPR1b4k55sVwvrt
-         /euQWQCNKogTmEF+Th/EOGTN+T2tj3Xif54gkZdFsIU9LZN+l+V9t5Z8bnRWVLXaB+/K
-         rAFSy65IcAb1rMehgH/hsk1Ymbzt/fzl6+8evMj4ZjiYGBObFmdKCQlHxlWqRfGgSRIq
-         wk5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=9DQiZzZHG7oMwCb+n3UGEJC0IzUXrrBULYwvWKbJYrA=;
-        fh=Da6HE5biy/3dHQaqZlewo2+9LhXYm/JveSxLkqx1u3w=;
-        b=BnbQMN1e7d0Wis0JARnaZIekEifkmrMc3BPLyEaCJfq+BLLFHhntDYczPgUd/PMJq7
-         brQ/hkx45Uknf9tiyqnP7aa5L80Vw/9dEb+qz2flPOPDZkVK80lP2dsMt2bglJBp2a5w
-         uKCmeuiSoKkFtt+IuaiF/QfcxJF7jRbal6i9sO2ibcctUbd0ujnAPDop2t1ZPBef/L4e
-         +/Taei5nBYt6Z82LlTwhOz4k9MYpDiOEBsLnu0PV9TtptrtWiBg0g7a7QeGV70KXRRkr
-         oSBTljV0FO6ady6PRDDsSkjj0EJQchKneAHgO7HpqOc1qXzcRgVrBFh+7z4UgGzyxDa4
-         mwsw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shopify.com; s=google; t=1771850975; x=1772455775; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9DQiZzZHG7oMwCb+n3UGEJC0IzUXrrBULYwvWKbJYrA=;
-        b=ilpXhkSfLnPz9k4dENkIXkZ58lEaMuDjifR9gd2eDsE8qbIOnwlDzV7IvPQlQ2EIca
-         pMkWF8lfvsRh5xyyCqNhgr6H2xWEmLw8Q4rWKVJTcRZepCgp9IDZGRD3Wib6Iv8eGDiF
-         GglQie7dUxlW88vNqpfkZc3XbEtpzjopY4yes=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771850975; x=1772455775;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=9DQiZzZHG7oMwCb+n3UGEJC0IzUXrrBULYwvWKbJYrA=;
-        b=QMHh2UF6QDOhML92UGMmplWYZ9LwX287vZX4tvzlhXafbFAfrTGhArt+EbUUl0j6XQ
-         YRdbsOtbbzwRJ5/TdzvbU9Hg0ZvGiOT8Zoy+ayqjHRXcm5uAa6sKar0rQqM3V+xesFIM
-         dyC1Nj+micAL7BetNpwRmr9x5DzOO/zqnGTy+Lwe++tZ71vIg+JTKwygjgSocGHKMnIJ
-         VZHk2X5SPyZZ3Sm0DJ3x88FUH2eRQXN1E6LpBp4fUJ0LuZuDlp6bBhzza/fyCU3Rjvna
-         Yt4vyd+jsibj8GOobW7ATIihEXmHRFs4KJVvc+AuJAb4WzACZ1B5bo1uw80ackgb8Rj6
-         siug==
-X-Forwarded-Encrypted: i=1; AJvYcCVVy6GZJnnCFHjyzE3bc2ur7ZFdHYM0rCvqmYSLOXB2F8oysZ16yL5pR6bzKXEfdsP38L0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxE6NkUFgj2e0A3f4yYXfypaMVwk8BGcrG7vygzxcdUEx3NnTVP
-	2Io4KaAUSFnbJEREMOQO05YMp+BmvHsSS1scJkiVo9EUUAWFCVfT1/KVClamoNXLasVILu6v1wW
-	OKwYkYMN8bEI/fjfUDG+grYP+bPwgQp6I5MRI0lbrFQ==
-X-Gm-Gg: AZuq6aJ59iZM83FjPq4uXtA3AL8U/fwsaSmDAzikwTVbAej6NmvTwxBnQ5aeE7r9VZQ
-	gKCpmqfZVLQbrUUSO/qbbgVNgMF804MydC5MZrgvAzdxyWXGauEtMzE1oltq/REO1XzOtuCrjta
-	xKwrv9mLzp3pKeIkIHjT/qOqTgS3UitHgU/qqNC+Q7NAmAKUcByDHdWFeMh0hSEfN7xcBMpZena
-	M3bU14tawu3qUOPEaPbNCtwtx0wKrE5alqwyamMD2iZjVGGDsjII+c9ErFRv/+dxMQPtlhXSk26
-	s70=
-X-Received: by 2002:a05:651c:41d6:b0:383:1c18:adfd with SMTP id
- 38308e7fff4ca-389a5d517edmr21628271fa.7.1771850974476; Mon, 23 Feb 2026
- 04:49:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CYRfLBFb"
+Received: (qmail 54035 invoked by uid 109); 23 Feb 2026 12:58:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=fYn9IDpQ6IE73KzAowrKuHcKYHNg9p+zI6MLduqJBbE=; b=CYRfLBFbuxe6h6GwYNuOAzsSf8/Y7eAWpsMd3T9Ix6xfB+9tNYXmN6M2Hyr7gH+LcqxDSmCKraK2qajTI3Z1QyS5sAgbPV5JEr/Xp6Le2aAmyX775cjkF6Uz/XT4UE8AtLG0yjTSnz1N46BLaZ84RFTRZ8RFVU1LHI+ppy+BXVZVBHpJ5zcRRGQ3tGKCeNrykKNLoDAuVmgkJNU7TJqWD/zC+6IG17xv61Z59pVj6QIgkRkD57h7MeFH4vUEQj2IIAkAsNCJwsjk7iqSYTpxjhjqESSb/7i6B8tskcepATfxopjmfWBGgk1ermdlzW59bgnN5rhWXN61mlMwzaFm6g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Feb 2026 12:58:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 104146 invoked by uid 111); 23 Feb 2026 12:58:44 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Feb 2026 07:58:44 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 23 Feb 2026 07:58:43 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] pack-check: fix verification of large objects
+Message-ID: <20260223125843.GA215671@coredump.intra.peff.net>
+References: <20260223-pks-fsck-fix-v1-0-c29036832b6e@pks.im>
+ <20260223-pks-fsck-fix-v1-4-c29036832b6e@pks.im>
+ <20260223111120.GC215364@coredump.intra.peff.net>
+ <aZw6W_BHoYiC9RYl@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2008.v3.git.1771326521.gitgitgadget@gmail.com>
- <pull.2008.v4.git.1771423748.gitgitgadget@gmail.com> <f48b1f07c45f6237f91fa6f746c58b791edef5bd.1771423748.git.gitgitgadget@gmail.com>
- <xmqqfr6vuisp.fsf@gitster.g>
-In-Reply-To: <xmqqfr6vuisp.fsf@gitster.g>
-From: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
-Date: Mon, 23 Feb 2026 14:49:22 +0200
-X-Gm-Features: AaiRm51CJRrU7k3kzrpQO0ZArGUi7-Ak64nDDEJ45xVgFlq-ab8QbB91DypjLUI
-Message-ID: <CAGjQmDOfikPmyouaG9zzAYxsEZsW_0p5UU=k_0NkGvUcGa9-Zw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] strbuf_attach: fix all call sites to pass correct alloc
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Vaidas Pilkauskas via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aZw6W_BHoYiC9RYl@pks.im>
 
-On Sat, Feb 21, 2026 at 12:55=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> > - rerere, apply: ll_merge returns a buffer with exactly result.size
-> >   bytes (no extra NUL). Use strbuf_add() to copy and NUL-terminate
-> >   into the strbuf, then free the merge result, so alloc is correct.
->
-> I am not sure about this, because this will result in unnecessary
-> reallocation.
->
-> For example
->
-> > -     strbuf_attach(&image->buf, result.ptr, result.size, result.size);
->
-> This would have resulted in realloc(result.ptr, result.size + X) to
-> preserve the strbuf invariants that len + 1 <=3D alloc inside the
-> strbuf_attach().
->
-> It depends on what the system allocator does, but when X is a small
-> number, often no new memory needs to be carved out when this
-> realloc() happens, and all that needs to happen is that the size of
-> the memory region recorded by the system allocator is adjusted, and
-> the program will keep using the same memory region plus X bytes out
-> of the slop that has already been there when result.ptr was
-> allocated.  We will call realloc(), and it may result in a true
-> allocation and copy when X is larger than the existing slop, but it
-> may end up to be a cheap operation.
->
-> But if we rewrite it to do this ...
->
-> > +     strbuf_add(&image->buf, result.ptr, result.size);
-> > +     free(result.ptr);
->
-> ... we will allocate as much as result.size and copy the bytes.
-> Guaranteed, regardless of how much slop the system allocator left
-> after result.ptr+result.size when it allocated result.ptr.
->
-> Of course, we could rewrite the original to
->
->         result.ptr =3D realloc(result.ptr, result.size + 1);
->         strbuf_attach(&image->buf, result.ptr, result.size, result.size +=
- 1);
->
-> which would avoid the extra allocation and copy when there is even a
-> single byte of slop after result.ptr+result.size, but at that point,
-> for the sake of simplicity, we may be better off with the original
-> implementation of strbuf_attach() that automatically does that for
-> us.
+On Mon, Feb 23, 2026 at 12:30:35PM +0100, Patrick Steinhardt wrote:
 
-It seems reasonable to stay with the original implementation. So I'll
-change this patch to keep original calls to strbuf_attach() in rerere and
-apply. And I'll remove patch which enforces strbuf_attach() contract with
-BUG().
+> > A more concrete test would probably be something like:
+> > 
+> >    1. Two packs, $X and $Y, both contain the same object.
+> > 
+> >    2. The object is corrupt in $X but not in $Y.
+> > 
+> >    3. Running fsck detects that one copy is corrupt but the other is
+> >       not.
+> > 
+> > Right now it may or may not fail depending on the ordering of the packs
+> > in the MRU list (which we might be able to tweak via mtimes). But
+> > hopefully in the "after" state it should deterministically complain
+> > about $X.
+> 
+> Yeah. The problem I had here is that I'm not sure whether we have any
+> tools to reliably create a corrupted object, e.g. with a hash mismatch.
+> I'll have a look for v2.
+
+You can see how do_corrupt_object() in t5303 does it. It's basically
+finding an offset via show-index and then writing a zero over it with
+dd.
+
+-Peff
