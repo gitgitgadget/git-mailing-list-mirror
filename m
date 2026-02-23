@@ -1,109 +1,108 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013DF32FA30
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 17:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E1332ED58
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 17:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771866626; cv=none; b=gkOBJfzbQiWgzXpJSKWsfVxeECc16fPjE0opw/UyJOaYvtojTzXptbdURzuFUd6SM/ELbD3nqso66p3QrtH+XpQIjrKTyhgsnl3OSIq/wWVcnr5cbZ9/EXyfk9kFVQVBlq6p8werZKt16NTlxNW+AfyC34BSZ95MWRfJ1vzkYaw=
+	t=1771866945; cv=none; b=e4g1LnlQ/r2gyCRhiFQF7Lv+rkZEBUO0p4BT/QZ6z9rHPrkuYF9OzgCfa4doDOzUmGOxEv1pzkFvD+QSWuN7uYkk03WWI2VU8XMoLCL2IEvUvTOKOiKrvTvLoSN8+QxRtoWteJndpXpXOkQGGYVrCEECfWTsG8h0oEbCqooGxgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771866626; c=relaxed/simple;
-	bh=v/yMq6y/Ol5rVMhNYO68HjEEqK1LUWb3zSrMROVMiHc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mGT4Raz7wFJZnvkGnFsOp0D68b21QHVYdTR7gNbCIbC0I6Bg8qRhREWstCe5mmglnbb9wTfjEC1IcRN0bNA5DdsrideifRBMKQFmtabPoDOqHMhMn5gWFLQ/KGs/X+4Vumgt8Awk1GSnpChJbrCNjt3AeMyeJ3Ud1xsfwsfYASg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OGmhJNmx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wb7CtR1t; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771866945; c=relaxed/simple;
+	bh=sgX8b6auet/c6pJtMdAEkO0T5SHXycdUsenaNevbMr4=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=E1eaFC9tm7btbWwyFKCn6m1PiF+SNSx9dUywF3VxWvLPVZMkCFe6pvcRasXbe2MwJE0eYr4WNc4h8LlOPkqvSDqN8NcBtaZynsq8bvQganaS+gbLGP3/YonMUF2LFZQhQha7nIq+PwG7ixCPkvBSrw3oj8fiApPuQ5H3AGhyXNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=U5kPfrHV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IwBBMG5S; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OGmhJNmx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wb7CtR1t"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 214F214001D1;
-	Mon, 23 Feb 2026 12:10:22 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 23 Feb 2026 12:10:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771866622; x=1771953022; bh=3ONJjpPctX
-	dH0uQ7Pu5uMc446LdD2lYtSmD1ngXpFs0=; b=OGmhJNmxt/Cg0yrVsorybS8UBi
-	aOu1rZZMz3G4PsaFX0bZmdLmq3wFMNTHntjeaXZvq4OupEeNdwiYLOCcX5P87jLW
-	TWukKP+xVEdoBLklBLy5Sillzt4w7Bku+XhNjGLhePkqZvXWGWyk+XXv/VWV/89J
-	j3hkJa004vielzPmxkfljwg+AQj2AWj20gjtOgUIeJbrtgTvtlsNl8qOqKrLmDcG
-	30dzdyoFaCbGarcvqeOOX7s/gHT7U7Sde3Qdi/I6U9pK2qQdvFcB5OQAkEJS5uu0
-	SL+7ZX/kudkMlAge28qRFMoz290CyoKTwwsIoQxGiVYemd3jSogQRqAmGN1g==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="U5kPfrHV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IwBBMG5S"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DFBD914001AB;
+	Mon, 23 Feb 2026 12:15:43 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 12:15:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771866943;
+	 x=1771953343; bh=sgX8b6auet/c6pJtMdAEkO0T5SHXycdUsenaNevbMr4=; b=
+	U5kPfrHV9p8dBq5IefUnSMbN0e90cyQbK8zFfNH6zlYpqTG7YPWbPKgQaL+WIeqo
+	yx2CTinbz7gIHJf6s4xEwWOdrj8z6mEd7sUtnI5Cf3gR/qtJpBlwaDuzhlWKmYlf
+	84b5ORmXehQNjJ6zdvK6MU+ho2SwL35+l1Yf5YNa5I1E6pHDnYDguVi4+YFOSoGF
+	FdmNbW7YtqPoNopF0wq4v+0iO47QYSsSk5hoedtclHYYln4ENzyR2sb/i2aENiXD
+	EKhCOxGD9P9gmrNiMwviq4jRxmGdz0/JoKUsgUFv4QrbVNmk3HbDRfK7EMUDH/9b
+	wNVSJuN0qrzz6qhEhMDcCA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771866622; x=1771953022; bh=3ONJjpPctXdH0uQ7Pu5uMc446LdD2lYtSmD
-	1ngXpFs0=; b=wb7CtR1taKuCOqb3uSTCTatdYozEHrXKNexmlzJ6U5RQtivbbfd
-	jLhNXgPmB2hU8bf6bDDRELN5rPWBbm9yiRtKbgyDJ7X6rG9OW6F82OZy8rWV9Bsh
-	RefzXV1/xySuXgafYNGoQbdZDNdheP+SFaEq52XaaAHfHAIM88rsVNnJxxqyj3H4
-	GpkVK9DeNa+CsYtRIDMMXT6o9+uJjAxAakEwDdKRqO9jQVtl2s0iiU7pCDfCD0ME
-	bd8qIQCpCe/j2Mj8tTivBz6PQjEfF5rj8hkZl1hEWlu88WMIR+1UYVmWsj8rZDFS
-	MVqHDm+VW2STiXyTDpDzJxYoE/GNx38yLxQ==
-X-ME-Sender: <xms:_omcaehh-JUCrqbx1I4t4KJ1nGeSytalDz7Ny11iOoVSh44Pv5l2LQ>
-    <xme:_omcaWDgxtco3xwLiR6I9D37StEbgy_o6GGJU03gAi9ZZu6jqbFrH46MEm-EM-NeD
-    8DwBa4NeJltvMQQT3hOv5HP91baMAYMU5Cv7iv8MDR6DRcquFnF4w>
-X-ME-Received: <xmr:_omcabHWrRMMkiPG_xpS1Oj8XXN2IBDejHcpKA4zg-KaBFzqzBsHFA68x22ZNMnbWX-ci7ZPvFHCsbTx8bNpGYO16hWiIqrd8A>
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1771866943; x=1771953343; bh=s
+	gX8b6auet/c6pJtMdAEkO0T5SHXycdUsenaNevbMr4=; b=IwBBMG5SBTqta3JYs
+	ESdzyNGNBFtZrhU5D3CELJhwdrsS+sTM0BokSARRTATrSVfuRc29scit7TLZsZSd
+	dggvqqLYeEAPcQLjtt3/EDd1TJfYZxMDjuBrR5ZLoF4IjcEqeTQVkGD+HtpIjvUE
+	Zjg5BXTYaJof/phD3oyCjxyF0mfm5jrIDjm7Oj4IFwpSPYdEHhcx5SsUR1jev6dp
+	xHPaQqLLzsAOGbdr4AnsP6i7dopse1RDOvLg9C6LQ7i7lUX2cKkBakqEJ6Bgohgs
+	dyn+4yuwk1RoRnX8YZ/K6CKTgTW3H6vaRaYOvWfOcSCDX0Be805FhRExDHvXVJpU
+	7k5RQ==
+X-ME-Sender: <xms:P4ucab75SdQCZjkfSU4zSdUk0t5NJ_njQ9sAfSOO6hmJhMm99Xe9-mw>
+    <xme:P4ucabvdlrR1FAUie6Gxw8mcH0r9v8FZvjWpfJIc8dZERnO8GeHISrl5p6iYv3Gnv
+    MylsUQ--2x0bcCDwU3dGew96wsl-63tcYCIsb4iqqnAUExVxj_S>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehmughfvghrughouhhsrghlrghmudelkeelseihrghhohhordgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_omcaWJ9M9LlvSufClwDg3-FFK3P_VOpCAhUh1ZOWLOraE6UyK-cKA>
-    <xmx:_omcaXmkKwJDxaMWj0pzWfPAyEMlm0n_8B-7MhdNEKOnzPj_tfp0SA>
-    <xmx:_omcaWQLfP5Ej_EcKm3sXZvPbCRBRkwA5lQJHZEkx2Ba1XxfPSPVIg>
-    <xmx:_omcaRLFJ40m7SS5qj3xrYx2uyU3RCHWswFoela5G-K_iQaR-Hd9VQ>
-    <xmx:_omcadHZpkzoILPqTL4JkHp_cvDedh4qSQhbq9l8r3heH-KINHh2iTso>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 12:10:21 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Md Ferdous Alam via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Md Ferdous Alam <mdferdousalam1989@yahoo.com>
-Subject: Re: [PATCH] doc: commit: document special date keywords for --date
-In-Reply-To: <pull.2051.git.1771836303147.gitgitgadget@gmail.com> (Md Ferdous
-	Alam via GitGitGadget's message of "Mon, 23 Feb 2026 08:45:03 +0000")
-References: <pull.2051.git.1771836303147.gitgitgadget@gmail.com>
-Date: Mon, 23 Feb 2026 09:10:20 -0800
-Message-ID: <xmqqa4wzo077.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtqhertd
+    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
+    ftrfgrthhtvghrnheptdfgffettedulefhfeekheetgfegfeejveeikeeffeeikeekhfev
+    ieeltdekgfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtsh
+    hhuhhnghesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhg
+X-ME-Proxy: <xmx:P4ucaWlMHuB5JbSwJr7hHizy5qyPNBO--A1SkGkPhtFH4zH5ZFqrTQ>
+    <xmx:P4ucabwnM0yqmjQpo6G8hRLcts66Hk9nimlYPoDU9emS-JKTrg6jfg>
+    <xmx:P4ucacNQkfptoBdM6pFoozcLlazdWVzJ909R57JWcCiggzsaogaz_w>
+    <xmx:P4ucaXSAymlBgc5VQCrm0hehWGDtqDHbIO0OOCW93FxKNIBOBcdHtw>
+    <xmx:P4ucacf16cjZTO4XTvJuoZTQJnmnMowlnm75FMhBZh-pie9khS_aYA_e>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id B99881EA006B; Mon, 23 Feb 2026 12:15:43 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: ApPrxj3Ujcv-
+Date: Mon, 23 Feb 2026 18:14:58 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Andrew Au" <cshung@gmail.com>, git@vger.kernel.org
+Message-Id: <92e33f7c-f45f-4f5c-9d51-83ef6232364b@app.fastmail.com>
+In-Reply-To: <20260223165147.3294516-2-cshung@gmail.com>
+References: <20260223165147.3294516-1-cshung@gmail.com>
+ <20260223165147.3294516-2-cshung@gmail.com>
+Subject: Re: [PATCH 1/1] transport-helper, connect: add atexit handler to reap children
+ on abnormal exit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-"Md Ferdous Alam via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Feb 23, 2026, at 17:51, Andrew Au wrote:
+> From: Andrew Au <3410332+cshung@users.noreply.github.com>
 
-> From: mdferdousalam <mdferdousalam1989@yahoo.com>
+This email here,
+
+>[snip]
 >
-> The --date option in git-commit accepts human-readable keywords
-> like "now", "yesterday", "noon", "midnight", "tea", and "never",
-> but these were not documented.
+> Signed-off-by: Andrew Au <cshung@gmail.com>
 
-I've always thought that these are easter eggs to be discovered,
-deliberately left out of documentation, as they mostly exist to be
-amusing.  For those who want to be precise, the date formats section
-gives sufficient information.
+has to match with the email here. Or probably vice versa since a real
+email address is better than a GitHub noreply email in this context.
 
-Other than perhaps "now", which may be handy but not so useful in
-the context of "git commit --date=now".
+Maybe this was just an automatic don=E2=80=99t-use-my-real-email-address=
+ thing
+that GitHub did?
 
-Moreover, 7.days.ago and 1.week.ago are also in the same category as
-what you called "keywords" here, but we do not try to make an
-exhausitive list.
-
-So, I dunno.
+> ---
+>[snip]
