@@ -1,95 +1,106 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC1035B633
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 10:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B2B356A24
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 10:47:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771841259; cv=none; b=a2Od0yG0IdafOi77ZssqlC1/c6QZ9bPQPikU1VqNCGb4Hrrn/zMlIwEe4VEK2hc4U9mlvpsmqISnB/wJ/lz81T5WoIceXZnX/DDhSqqOet8ghiQlL6X9se4t2l90OParNeLWWDJvBF1dG3fffWq3AVHU/6RPFq7zU59CQMtcIxA=
+	t=1771843624; cv=none; b=l2oJkRyZII2gOZuuOSBop96mVprB3wiGMRCS6jsWdf22vbaVWN6erg4KGg9Q1mEJTiEs/UgrahUAxwD+OPZaXL/L8KzD2LtUPnFRYnGpTiECdCeo1oFc8DPx4L8/wSTW3wGwwYyBxYRUyuZb1MCyLgzcFOsvE/YdANKLCL2J2Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771841259; c=relaxed/simple;
-	bh=ozHSpYy1j0Sw9Osk4aDDcZrsmDMZw1Vx6TZ/5gzZM6U=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=qWs06xzhv1aXZNXNLhOOxE/qd3f7RYwzSWE0PXhC+wiNhLosfRIKAOot4bN9izFsUqF0RpFoyWh9GXZj0qDG8I21/gh33qCAXT9B7nNDGQHOOXY6xrbagXtRkaaj0oU0aFUrxfGViGI5MlU8qTDhxF0Wtl8/LI0cwFRs7jEpEoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fTEPlqUb; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771843624; c=relaxed/simple;
+	bh=O6qMQhwvGcPIMQ8Q0yqFf71dr0/RzwxKyye5YUZQQQY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UxFDUus8JVFdiB4a6VR/bjX1Q5+sHtNJMbg1dbGGBqxvtamiBHLmututuHHebJpHoS1+jvNuWvfnmSJJ3x5jxjIJHOTS8UWtL31poOhLeBy9zzoH11M+ZIcDyzlXrTrNF5UMNYqU4W07PS6ucpQwUT2PibjKSgHvFb5biJ08B+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bBquMHcn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fkVqLeuJ; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fTEPlqUb"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-354c6619a07so1598289a91.3
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 02:07:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771841257; x=1772446057; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KrI/FyWk5xf/ADYExGInVgj3qwlJXs9zaSPD2d8RNF4=;
-        b=fTEPlqUbVKrXl5T+7P8950c4BVbKSms8wViabEwKVUhb6nx+bgxkg2My9JEWX0ZhBT
-         5Oa8CHjzGR68MLf+1yw3baPLo6HbeDX+cMwZKovJqbkXDJ5mKEPeRgDJj2LyoVJo8ZmT
-         JO7sCxgUHNYxz0STqO9shRyDqNDAPpLbQMnnygbswfxPZ9VqsWS8jXVvU2diPJmqLf0h
-         zt+VshTCyaFgUoTVtkb74+0CC4rBbbRHWF2ZcD0JXydtokg3uTlTPrvcx/rs9P/0pMWA
-         Fu7gemvRinGGatFuZg2svyqLXlJi3E2sXHvxLao78njhBIauTEeQ7Kouc3vwlBC6FQaO
-         6Edw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771841257; x=1772446057;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KrI/FyWk5xf/ADYExGInVgj3qwlJXs9zaSPD2d8RNF4=;
-        b=K2DDLDQyTL/Su7xVfMVtn+KulezK3h/ylraT3oeZeVDsZqt5JKIXsUJZvDIHXrREEE
-         +pPqs0/iR900LsgXsdYN1HhS24JUaRizZ3fwMHFyA9taft56asEdpHFmDFf17WkS+FC3
-         N0YF3e9s6LbY1W95mjpxxPMSPo/XhyMjNJgrgkVflftd/1PGwF51AjT964AeE8fQfBur
-         tRTRBL5Ux/fe3ifzvflIzcOgbeac8leyYcIkfJ/D8RykXgDD3z5hFNMSu0ey8pEfvY1O
-         SeXr02dx8j9/1KcXMBlKenFL/NBUbo2vXaZH9mASzDjR300HXDbY7lwF5+A6HYzf1Dxk
-         do6Q==
-X-Gm-Message-State: AOJu0YyKqFqZVO/utzGNt5dMMM55phtiIuKrfL5fRHIRMWNn+sLkHfMY
-	rYq6qad8mZkoq9AQd2kcrkUNmh5ncC/xX86FM38irEjbkdneISUUAqkxiIQbaCiH988=
-X-Gm-Gg: ATEYQzyTxlVTALyPT28kulsxHsIbPQwRPmbCpGBp0LsRuYeFKeVVjb21Ng1ySR6+IZF
-	p+fqBNflUMPF0w8bRWInzWqsj6w5RMqmwx/9Xwccj84METUYC43qO/Amy5Tfy8K/J2mTVsbEqzp
-	KHODZ9HVlX/DtKIpZwJBGnvcy6ezmPyRVdCq67AqNWjbz6pT2bs1HXlNaCE8Zkxuz13lVC8aeQA
-	LOx1o46YrETPI+yPvV5YAlaw3CFn1daYi84LZKurJr8UvjI2dc12MUp2ZvbRK3Nixsl6+hRas31
-	wCHJVQj7GIz3WXgcMAUg9ezeKU90epnC6u9U+9Zb+/vOUqVOjdF8zyHv4K/91xKdCcHcBoAs4eo
-	3P3Mc3UgsXEEvwZGQ6nAkR2JOsg/5S4Z6lA6LjskNZrGWJancoNOzmN5MorZ0tVZcNWTTjNaZKA
-	Wq3+SaQjbJv3NDf8kaMdM1Kv/nMY1eru4yIjR2
-X-Received: by 2002:a17:90b:52cf:b0:356:1edc:b31 with SMTP id 98e67ed59e1d1-358ae8a590bmr6779206a91.20.1771841257038;
-        Mon, 23 Feb 2026 02:07:37 -0800 (PST)
-Received: from 192.168.2.102 ([120.235.196.245])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-358af71fd04sm6299565a91.7.2026.02.23.02.07.35
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 23 Feb 2026 02:07:36 -0800 (PST)
-From: cuiweixie <cuiweixie@gmail.com>
-To: git@vger.kernel.org
-Cc: cuiweixie <cuiweixie@gmail.com>
-Subject: [PATCH] fetch: fix wrong evaluation order in URL trailing-slash trimming
-Date: Mon, 23 Feb 2026 18:07:28 +0800
-Message-Id: <20260223100728.79928-1-cuiweixie@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bBquMHcn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fkVqLeuJ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9F3A714001D1;
+	Mon, 23 Feb 2026 05:47:02 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 05:47:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1771843622; x=1771930022; bh=kL5erMxBf6
+	RLnRTtfqLspIDS3Yu8V+eRwrze3UN9qfg=; b=bBquMHcnkvFMT05qVnJWt61EHr
+	ROkyCkqpJZHVclvDEx8ED0kYcTCoehZFAtAvjsWNGy82fNI5XWB4e41+8bJhayUV
+	8GcKKuOM+zC0ZMo0pjmI8QMg3WkchKNetSoB7rYF77juDnpm0X4kClInE6Nr0Y+d
+	OR4H1rOSBf6zNbJAvQjKUq9GlEZLs/VH2xNyKnjbzGDaFAaTkqP+/BGouNB5tCTT
+	reckqZ6XQlgtwk54WMoqySP1tnjFBvHcvEKqHECQTQ4E62RZccmCoUnJvoPmIUmR
+	EJV5enb5xFLU0NVuFTN1nq6ydqvQ9GocxkifsvMd5s86OYvEdkT2hrtnjspQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771843622; x=1771930022; bh=kL5erMxBf6RLnRTtfqLspIDS3Yu8V+eRwrz
+	e3UN9qfg=; b=fkVqLeuJ8g9uWR+q9BLaQr1eIJbxZ8t1og1IZK6t8rdMp8z6Emj
+	Ot6NuM523qEK8xsjJNo0TWNYchx1ag6/AYQH6ajd6NpqR+zmuF1sIWAh57DLi1mn
+	50VaBY8hwqBT7NIxpVdnDuo1Tqeg0OA5hBQFae4I/Ok/U93BMRmTWAHdO9o5z8ZZ
+	0iH7GmCjwE1D3/CN57YE2+RgdFmBkVgIsM35ni3kQ25kBR6a/70ekQd43Z8DhJ8T
+	MYaCNxpAigJGid/vFXXgEmBSjgOwI9sO6dPrWAMe5EkeVCPLUxbY1vUoVnXsP8Kh
+	yMgiv2X+LfZnotCWXn4XJsosL774WiuZF1g==
+X-ME-Sender: <xms:JjCcaVHld5cwMAb9YY7VmZgJpkQeDkg21vsubwDsvZsRn0x_ZqmpJA>
+    <xme:JjCcaQUJU7OQ3Ld4PV5yruuN6tVwi-bE-BZoRZ85RVrx9xY6NMpyiUqIr6eo9D0gT
+    TdsFCpdiRhUsfxLpiX1YSP8DEj_h5OAOJgjDqTtuQKrPs4fo230Ag>
+X-ME-Received: <xmr:JjCcaUxLWs8rc-wtNR1xXvbOR8DtPQCgEWv1HZTcIBl1kB7OoyVB4TvutPVGhrU7-roT9-NMI12hZy5-aTrqtaYWQrMeGGrRsQ1uqZb09g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejtdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:JjCcaWOgAuOm8uf7uYTa0yYWf0X60LTM6ymRhOR3ts3S7FErc1T7wA>
+    <xmx:JjCcad65QaNr71vVqZ5KiBM_enfrNivc91GdlLyDYISRIkveWAH4vA>
+    <xmx:JjCcafOCOQq5fGWQpYwUng_DaI5_6mMFZ-uUefELyVlyArdUdCQo_g>
+    <xmx:JjCcaTnGu1N25d1IgJ5116EGjvQVtYPC9Q_TiuiABvjnf9y5lEWE0g>
+    <xmx:JjCcaV0N6eNglx-EbfmtHj6mc7Kvu07VWBWpjBXSz1x9rZ7uQ1Cv8CSX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Feb 2026 05:47:01 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 7d170e0b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Feb 2026 10:47:00 +0000 (UTC)
+Date: Mon, 23 Feb 2026 11:46:57 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/17] refs: move `refs_head_ref_namespaced()`
+Message-ID: <aZwwIUaoN4bmmXXR@pks.im>
+References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
+ <20260220-pks-refs-for-each-unification-v1-1-17170bd99de1@pks.im>
+ <CAOLa=ZRLeTmGQJF3Wo0SHaQDgy+0G4L6=zciEMtwMPoYqpPM1A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZRLeTmGQJF3Wo0SHaQDgy+0G4L6=zciEMtwMPoYqpPM1A@mail.gmail.com>
 
-if i == -1, url[i] will be UB.
+On Mon, Feb 23, 2026 at 03:05:27AM -0500, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > The function `refs_head_ref_namespaced()` is somewhat special when
+> > compared to most of the other functions that take a callback function:
+> > while `refs_for_each_*()` functions yield multiple refs, we only yield
+> 
+> Perhaps swap s/we/refs_head_ref_namespaced() will/
+> 
+> > at most the HEAD ref of the current function. As such, the function is
+> 
+> Should this be s/function/namespace?
 
-Signed-off-by: cuiweixie <cuiweixie@gmail.com>
----
- builtin/fetch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Yup. Will adapt both, thanks!
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index a3bc7e9380..306138c6e5 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -722,7 +722,7 @@ static void display_state_init(struct display_state *display_state, struct ref *
- 		display_state->url = xstrdup("foreign");
- 
- 	display_state->url_len = strlen(display_state->url);
--	for (i = display_state->url_len - 1; display_state->url[i] == '/' && 0 <= i; i--)
-+	for (i = display_state->url_len - 1; 0 <= i && display_state->url[i] == '/'; i--)
- 		;
- 	display_state->url_len = i + 1;
- 	if (4 < i && !strncmp(".git", display_state->url + i - 3, 4))
--- 
-2.39.5 (Apple Git-154)
-
+Patrick
