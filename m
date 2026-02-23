@@ -1,110 +1,102 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FF922FF22
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 13:49:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308141F8AC5
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 13:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771854578; cv=none; b=SvRa1vAvpJoMmHRcsfHIXrP4nY3guHyYbqIDX6wjRp8yPXnYmAmPHiLoliwiUxodtejXBE5Uds+4GjCMZ0bYMBXsCkXUcKbu1m7MF7dd99LIdllf+rT4usXeCuw7ztP1UZ7a8oxvWTRMKD9+FC4pc3D30z/bZvo7/l/njmBSC4A=
+	t=1771854830; cv=none; b=H6j6P9CekonoLnkGINdR3u+wS0Hrm4UMWalfpRpzYGU22jY8T0MliKisfloI8PwUSYMsy8lOZ36PJeYdKX7pr53Qao0Jc/35d0EBnfU/z5HFeQE2G2p0Lw2VzTTTMPPsiXpJhXe21wAZARbYSK0VXmh4HxIioZ89geNyzpChyC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771854578; c=relaxed/simple;
-	bh=X9FBeFlOB4Vr3vuNhkeTtYF6EHfcoYhjrv64rGZVsMs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e0NWi1wR93J9AaTL2FAYd+1WzspFjep3Sa7y0nnN6C4yxLOnmkwZ89lxBJsT08f/8zGKeC5KQyRyJ/9q+YLR3CQul+4KEN8dnKJ61JlwRe222GrWrFREorFtylWGAhlUIqPE4/T2Hcr6hVHHQVPrhjS/3QOMlYCbFDQv/QvN1oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ONMNMbTu; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1771854830; c=relaxed/simple;
+	bh=0rUZe99SO7f8U7lj+8YBlAskhwPOcIrswYxHYujrPCw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZOw3+CrDPhJasKsLc/M7qMWW96VNo5iPEqON4wHF+2cQEyQGhhGkN/mtyPqN/8R/vcEXgsM5exLpDykyYn5I+ip/ZBnmMUTVekXMi+LgO86tl+gQaVN7Dmv8whK3STkOHPJUKQZtFvjnuuL48+RLlI00RGHAoRauMKtRrWdMgqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LD8e7O8I; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ONMNMbTu"
-Received: (qmail 54886 invoked by uid 109); 23 Feb 2026 13:49:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=X9FBeFlOB4Vr3vuNhkeTtYF6EHfcoYhjrv64rGZVsMs=; b=ONMNMbTuQIKYPQC8reQN3gq82HAUU9l/wRWcDICSbvOIDjRCLPohZqqD2qMf6psf5jpmfH3PB8gVhtu2lzbw5oxnz8XvezQl6W4N/BGO9kG0xqlPBhh3XPJwvXGv3o7Dd9x+jMb3oh2yrKWCcSGGLqKaqqdTpteDgkOXJ0EZp+5HpR40zZfNMF1qeEsTwNPuGLIv2+7T6+SdqfQ7jpe4d5P6dHVSaGVs3ed8/ed0HjPqEg52T2XsXjlmlJggjZ2MXjPDhr8ujdQFWLu3QU3pubpi4H+oRkFlC89yWljjvXr1J+v8B0Wzpr20EykGZuyVouvoNbt6zEPeteN71vqbHQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Feb 2026 13:49:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 105979 invoked by uid 111); 23 Feb 2026 13:49:36 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Feb 2026 08:49:36 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 23 Feb 2026 08:49:35 -0500
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 11/18] git-compat-util.h: introduce `u32_add()`
-Message-ID: <20260223134935.GA271392@coredump.intra.peff.net>
-References: <cover.1765053054.git.me@ttaylorr.com>
- <cover.1768420450.git.me@ttaylorr.com>
- <c0c1769464b1c8065c2cea59dfd85a1d37de9dd1.1768420450.git.me@ttaylorr.com>
- <xmqqpl7beugj.fsf@gitster.g>
- <aWgSzI30k0BZfZ4Q@nand.local>
- <aWgwn2rk/qw+fRoA@nand.local>
- <aXCTkVpjJkTabx_0@pks.im>
- <aXFni2tE7vn1dKFp@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LD8e7O8I"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c70378ddaafso2606072a12.3
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 05:53:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771854828; x=1772459628; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MJWC3+7WSIOVGtrdHKZHLKkCklxGZDJteHmC4Z3gIIY=;
+        b=LD8e7O8IE0FO6znXr178tTIKpzNsRoqAkK0cIrycFwUCsf1jULx0Hbsj38YUhrTrp9
+         wcFwc8+sWKXRACYYb3exwF6YYy+OE+0iZa78LO32tl5dkzYU2eUBfOxnmTb3n2D8sb9L
+         0zx4mdgf5NxhhbOgTa//1A4V4x3l1tl/r/7wyZkxEtzW7h70F7pwE+yQ5buubfYPveb7
+         WQvB85MTt3lbea0ZrGTxM4iKIPkkwMO3q281jvoqlGToW3XG6OdgQWdszNBXjbnqG8+X
+         mJNbeKUvjShHHw27W6dATEg6KAs3Lgen+M7DffjuqCo2wykUPz2QfWrXVuliLRLeIgwF
+         37ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771854828; x=1772459628;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MJWC3+7WSIOVGtrdHKZHLKkCklxGZDJteHmC4Z3gIIY=;
+        b=bGzvqrqGRdjrL4b4xvuVbjQaDJN/ACc5RdpX+4XPWhoZqu9ZZb4AiOQ4iN2umAe8qB
+         hSB/Yg4/VpBxzWOF2tf3seeFX0H4RYrKtfisrJRkrOvFPqNimohI0yepIrXOyHV76k/n
+         8qBzzxRIx5pmd6cI74UqAka8LLAl0wPdiU7o+StNJZKp9ytv1XTHMO7XuE/m8QTz6GcR
+         +m/sA7jmolgRqAxR8OUVxMs14CFZciM/RZ3p4WbwjUtZwhBN1EvTpWNqZ44fiCnAifhx
+         xmOcl9C5TXisftyBI3za7boXcKgC4DXshhkJqfbfpaqwUF1U/vySYEs7zeL6jcy0PyJB
+         7rCg==
+X-Gm-Message-State: AOJu0Yxm/eAVkb+TJ1d6pn1I7dJIJXAq2/P9UAVrms08jb9bmpUMLH3k
+	CdL7iF/0bxkTYmHgutNH+k/XCq0ZYIlByzc9fKNcDKCiJIazGRQTFAwqd6knE6mj
+X-Gm-Gg: ATEYQzzkvB2jZf4WakfOjfNxAoTpOfTLsdA6FwprB9moUidAWRSZiXMm57It+KmLo1O
+	+wFSeF3R/EyOE1ngoxWg/5y6nZnXFo4uVn+GfbIEQPQqH7lshMLlAbZGe4nlyykveFVN1vOhRk3
+	CZYcaPn0s9FzD2II/ZzLaP1FSqBOr/Irik7Hl8oYNWg1swsNWFQpar7pJCelAGpeec3g0T7v2QI
+	66yK28nBDkCJDUIE5B4PUQp34/MIKOSW8k3FyIFpCzG3YXmUsJGJKe+1Mnf5QUa2ByEnOlIbAiw
+	EOhmb8uRe7j7SvxL+5AJEO905jgKDXsaB86EJXm4Eo0ufKv5QqIU6SRBVxbkVSKDjguE04gc5sw
+	YuNXvh2WNMbgPfNmWlM0JFfcjGRn1oHTKDXhUY11LS3IIMjGdsXehaJRB8sVLflnzh4Iq4PFVgW
+	OJoGHV9ayDNpCW8krfHGeZT1u4C2LSeJxWCEs52+q7NaNdSs1XxmnLI6yWwhcT4pK4HJtZC5y9I
+	lTrBEXb8JlAmco7MmSqJ9MMLIuFcMn8
+X-Received: by 2002:a17:902:f706:b0:298:5abe:4b1 with SMTP id d9443c01a7336-2ad7456d11bmr77464655ad.52.1771854828363;
+        Mon, 23 Feb 2026 05:53:48 -0800 (PST)
+Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ad74f5dcb4sm77565525ad.27.2026.02.23.05.53.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Feb 2026 05:53:47 -0800 (PST)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Siddharth Asthana <siddharthasthana31@gmail.com>,
+	lucasseikioshiro@gmail.com,
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Subject: [PATCH GSoC] repo: Remove unnecessary variable shadow
+Date: Mon, 23 Feb 2026 19:22:48 +0530
+Message-ID: <20260223135248.127935-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aXFni2tE7vn1dKFp@nand.local>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jan 21, 2026 at 06:55:55PM -0500, Taylor Blau wrote:
+Avoid redeclaring `entry` inside the conditional block, removing
+unnecessary variable shadowing and improving code clarity without
+changing behavior.
 
-> I had considered this approach when writing, but ultimately decided
-> against it, since it felt a little clunky to have to pass a pointer in
-> to do a simple arithmetic operation. But I think your point about
-> ensuring that we actually do:
-> 
->     if (unsigned_mult_overflows(a, b))
->       die(...);
->     result = a * b;
-> 
-> and not "result = a * c" or some other expression which is not "a * b"
-> is a good one.
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+---
+ builtin/repo.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-It is clunky, but it's how the compiler intrinsics work (if we ever
-chose to use them).
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 0ea045abc1..5540bd25d2 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -412,7 +412,6 @@ static void stats_table_print_structure(const struct stats_table *table)
+ 		const char *unit = "";
+ 
+ 		if (entry) {
+-			struct stats_table_entry *entry = item->util;
+ 			value = entry->value;
+ 			if (entry->unit)
+ 				unit = entry->unit;
+-- 
+2.53.0
 
-> I dunno. The spots in this patch are the only uses of u64_mult() and
-> u64_add(), so I'm hesitant to keep a helper function around just for
-> that sole use-case. I wonder if we should do what you suggest here for
-> the much more frequently used st_add() / st_mult() / st_sub() functions?
-
-I am to blame for the crappy interface of the st_add() etc functions. It
-did make conversion _much_ easier, because you can do stuff like:
-
-  -foo = malloc(nr * size);
-  +foo = malloc(st_mult(nr, size));
-
-as opposed to:
-
-  size_t total;
-  ...
-  st_mult(&total, nr, size));
-  foo = malloc(total);
-
-My rationale was that size_t computations like this are OK to die() with
-very little useful error reporting up the chain because:
-
-  1. The result is generally just passed along to malloc() anyway, where
-     we likewise find it OK to die() without much info. So you can
-     imagine a world where we just do 128-bit size computations and then
-     let malloc() fail, and it would look the same. ;)
-
-  2. They don't happen in practice unless there is a bug or a malicious
-     input. Which is mostly true for 64-bit systems. Maybe less so for
-     32-bit ones, where you might conceivably wish to have 4 billion of
-     something.
-
-I don't think any of that holds true for u32 values like counts of
-objects. It's conceivable that you might want to try to write a midx for
-two packs with 2.1 billion objects each (though from my experience, such
-a repo would be unusable).
-
-Anyway. My point is mostly that I think we can design u32_add() to be
-what we want and not worry too much about going back to fix st_add(),
-etc.
-
--Peff
