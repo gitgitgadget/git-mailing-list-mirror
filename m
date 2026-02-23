@@ -1,94 +1,129 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700045695
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:46:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F09B3451D9
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:49:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771840014; cv=none; b=qdu7AGj0g9ufhsG62iqKJCad0CuqoJV1ekafveghweOwJOB/8H3GZNhmiZqcBDeTL44kwdHMwf5bsqKT3c6o0zVkDvfVgjPuzOyGKqvtyZUE8I3xJrS2FjObKnA8BWfagvH/uVDn+/E1V5m2kQlGXm0BVhtDAogtrLWz7nx6EJA=
+	t=1771840166; cv=none; b=ubacNR8b/8ZVZKf4BDdF9LFrFPdbMjwcN/VB4Dbb/DdpDymSndeCxY/sc18BUqtZIX+bCaUbpC6OkRgh8mBIuTOHwvfPXyfx9RsZw2LXgnRv/RlicmUgAkBMvEAUKk0kYaYsegB6bDwC+woIKzFSKi5opGTrS/ahc5mvmJ3ignE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771840014; c=relaxed/simple;
-	bh=X6TXJhH/p18pqRhMtGaf8nL22Rp6cGS1aPlCsyvb2O0=;
+	s=arc-20240116; t=1771840166; c=relaxed/simple;
+	bh=USzRd4kxyy2IsrAhFrBzemuNNBWBXAl/+BAnuI9fUhM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rh425kes/mSb6XFiZlasEp0ugzZXC/3hhw/jNfatTLjWJCs1STa4FdEaprgFQGObHvmKsa5LcKjNLoa55wcZ/frXMRDrDtoA03v2c6Cuov2N6WCgZa5is69MSClG5NFoqg96wMy45opkWRG9TUxSzx+t8NryO0dIR/byB/zMGfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MVDNcWss; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=MOFabb2kWiPyOyb9fBvbIVKqYoJOWKNnP9jvKQzSs5ZEdtzHOYKzkbFth1YgWn0ebU9BVZberWrIjHlqOBcVGR6/ja9ss7hEIdaKoG/D26oKHYkiMFqON87UTs8zWSiDj6I2tcfowwWO57k1ojA5sx0URwrMIve/U9lgVrSeabs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Og75ss5D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TycjDi90; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MVDNcWss"
-Received: (qmail 50228 invoked by uid 109); 23 Feb 2026 09:46:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=X6TXJhH/p18pqRhMtGaf8nL22Rp6cGS1aPlCsyvb2O0=; b=MVDNcWssROghyixdpzrHIv4LZOUx3GbUuhAjGncEyuIlC00/9Qs1ZCs0ATiTGfZTo/4CAOiPmAp48p6sOrjbpg9QdC5aTMsbWJZDJC3JM3Kt1wwHEmSlbDzYWHkDU8FRgqzQ2rVfdsHtValv6PA4MnYZ2KZ9e45LO4ht9/x5HRUx2H1zBr/hnf8+pG+bIc3KIQoHuP5KU2hOc7zM0grfqkveI9HkK9ptWezcNsBjJXeYloGNkXY6o+ko3reQC9MuXHICV2NdNBoO5Um/c1YMORIQf+eiHeBbd+KC7dpc5sX1gZMUt4elmImzF+Cko8StT61/JV8ffnjz5DRx0HpOUQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Feb 2026 09:46:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 97101 invoked by uid 111); 23 Feb 2026 09:46:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Feb 2026 04:46:50 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 23 Feb 2026 04:46:45 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] fsck: do not loop infinitely when processing packs
-Message-ID: <20260223094645.GA210808@coredump.intra.peff.net>
-References: <20260222183710.2963424-1-sandals@crustytoothpaste.net>
- <xmqqv7fopflu.fsf@gitster.g>
- <aZuMPcMYwFi4Sch5@fruit.crustytoothpaste.net>
- <20260223071215.GA136463@coredump.intra.peff.net>
- <aZwTyLMWbcXWnYhQ@pks.im>
- <20260223092523.GA209277@coredump.intra.peff.net>
- <aZwfmXG113t6OsUH@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Og75ss5D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TycjDi90"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6046014001B6;
+	Mon, 23 Feb 2026 04:49:24 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Mon, 23 Feb 2026 04:49:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1771840164; x=1771926564; bh=iqzaO2rTok
+	0LNIufZ3jQCLh4uE/4HKG3ErVZG8q9UAA=; b=Og75ss5D0bobVXkzuyPqv2rXBP
+	ne9+mXDkfBzbRtISwmrHwoDj+xTg1o4jmU6xB2z1vvtpGPLAZnPUcFNGvrQWm+Ht
+	wOoV5klri3vtJENntrP81fv5tHMNBktwOJRmUnSzW+8Mcvvp9gB13MNQoM+o7eKS
+	JuGbeW57DBYNBBoNYU+LIgPxSfMg4Ym3IxEfbm3XGXDr87nv0qqqYUHBYB1lT2Qf
+	dPW4IJ4drVnahvWZKDMYAv/j6D+Gow3duBoDh3IDgx7OSXE3G25ktHbmhig3hVCy
+	DfsMngXSfBPBA3iz0m5NHjVsVO9ThfiLJRIyctNhd2UPfmbCwNFXI3aRbtQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771840164; x=1771926564; bh=iqzaO2rTok0LNIufZ3jQCLh4uE/4HKG3ErV
+	ZG8q9UAA=; b=TycjDi90CI40UmAPuzh7d73nklIE6maHl6THwdLEjFqO5GhQQqH
+	9ZWhvXRYG7nwD1E4CJb3H+Wba8RF+fsCfUUbJtoiDP3DLzyMTojnvdXgcfC0+1U6
+	wJas2yN2r2mYQ4PErNzCOoDtVqVgvL+yudJuIyMnKHaD1YQFsD9Oqd++NPFt+erE
+	wW1s79MATHjXGNt42GTFFzQCrN2BGkQTDvIMlIJTJjJxK3e8+fxTB+lOD6KJtoxj
+	HKFwyZZ58o4C1CIzyFJp3qcVu6bzTqBlqvnISGnmS7UmdZhi8dX04HO2EwKqtFn9
+	7T1bk3qHfyYOo0ghk0tqkClcBQjfMnaEYAA==
+X-ME-Sender: <xms:pCKcaSmYXRbo3jsISlzrRT3fLYYWijUPkzpOv-cTtkwrqvZbYdOy7A>
+    <xme:pCKcaRSXLCJCcSxKZpYPOMYyRinDsLESPwTfgGoWFzj-Et6L_ZKlWhk64rPWPIiAn
+    mP59-6EAQBZDv3URMf0F4fkQwjrQE5PwOQD94eeoAhJfzAeezZv7rE>
+X-ME-Received: <xmr:pCKcaeBTpm9C0d30ixhjXAhYl7C940H_aLCXzGnpeCJCy0OnMnYfN_DzmMPkhNicrrX418ziqqLnyqrJr61RmUNAt2GDj71QxR7Ci2BIOw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeileduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvg
+    esghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:pCKcaQR6d3TZXiOhelqusmlGyAgPsXmxudJZ6cVjwKXI7X8NCfBdkA>
+    <xmx:pCKcaUoHkEyDDrmjNakI47vhAYYE4Ay1qWy3P1alxHv0pbXuN8d43A>
+    <xmx:pCKcaawXqe4pexXk7Q7aaEpQDSnIfvPZFbS4uMyFgQ_i43SIM9EJtw>
+    <xmx:pCKcaRKmpvFPhDjGm26iUBE79GmwjpySiSayASxj7vDtwOr_y8U1mw>
+    <xmx:pCKcaRuJ_e1peTaJvp9hhiGNuv_PYBJTyaAxXpDdVB_5UgyoSxgK4wB6>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Feb 2026 04:49:23 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a75478b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Feb 2026 09:49:21 +0000 (UTC)
+Date: Mon, 23 Feb 2026 10:49:18 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 8/8] builtin/maintenance: use "geometric" strategy by
+ default
+Message-ID: <aZwinjoywwnzEvRG@pks.im>
+References: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
+ <20260220-b4-pks-maintenance-default-geometric-strategy-v1-8-faeb321ad13b@pks.im>
+ <4ec59d18-5aef-48e9-a4ec-77e20a2a14c8@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aZwfmXG113t6OsUH@pks.im>
+In-Reply-To: <4ec59d18-5aef-48e9-a4ec-77e20a2a14c8@gmail.com>
 
-On Mon, Feb 23, 2026 at 10:36:25AM +0100, Patrick Steinhardt wrote:
-
-> On Mon, Feb 23, 2026 at 04:25:23AM -0500, Jeff King wrote:
-> > On Mon, Feb 23, 2026 at 09:46:00AM +0100, Patrick Steinhardt wrote:
-> > 
-> > > As pointed out in [1] the root cause is actually something different,
-> > > and we merely expose this now with the MRU-based iteration. But I
-> > > wouldn't mind if we eventually switched back to maintaining two lists,
-> > > or finding a different way for how to maintain the iteration order.
-> > 
-> > Maybe I don't understand what you're saying, but isn't the root cause
-> > the same?
-> > 
-> > Code is iterating the list, and then during that iteration calls
-> > find_pack_entry(). The fact that fsck only calls find_pack_entry() in
-> > some subset of cases is immaterial, I'd think. The risk is always there
-> > when iterating now.
+On Sun, Feb 22, 2026 at 07:52:40PM -0500, Derrick Stolee wrote:
+> On 2/20/26 5:15 AM, Patrick Steinhardt wrote:
+> > The git-gc(1) command has been introduced in the early days of Git in
+> > 30f610b7b0 (Create 'git gc' to perform common maintenance operations.,
+> > 2006-12-27) as the main repository maintenance utility. And while the
+> > tool has of course evolved since then to cover new parts, the basic
+> > strategy it uses has never really changed much.
 > 
-> It is, true. All I'm saying is that the problem runs a bit deeper, and
-> that fixing the actual root cause would also fix the issue reported by
-> brian.
+> I agree that the 'gc' strategy no longer serves users as a good default.
+> For those that want foreground commands to trigger maintenance (detached
+> on Unix, and as a blocking child on Windows) the 'geometric' strategy is
+> a good one.
+> 
+> > Switch the default strategy away from "gc" to "geometric", but retain
+> > the "incremental" strategy configured by Scalar.
+> 
+> Instead of "configured by Scalar" I'd say instead "configured when
+> initializing background maintenance with 'git maintenance start'" which
+> is how how Scalar sets this up indirectly.
+> 
+> Users could still opt-in to 'geometric' in the background, but it
+> would cause difficulties for the largest of repos that rely on the
+> 'incremental' strategy's limit of the amount of data processed.
 
-Ah, OK, after reading your other email again, I see what you're saying.
-The root cause (for you) is that it is unexpected for fsck to call
-find_pack_entry() at all in this case. Which I agree is wrong, but I
-just wouldn't haven't called it the "root". ;)
+Makes sense, will rephrase.
 
-But I think we are both on the same page that there are two problems
-worth looking at (fsck should not be looking up the object again, and we
-should make iteration less susceptible to re-ordering bugs).
+> >   	} else {
+> > -		strategy = gc_strategy;
+> > +		strategy = geometric_strategy;
+> >   		type = MAINTENANCE_TYPE_MANUAL;
+> >   	}
+> 
+> Should this include some kind of documentation update in
+> Documentation/config/maintenance.adoc?
 
-> So we might want to have another look at hardening packfile iteration
-> either by reinstating the second list for iteration or by extending
-> `repo_for_each_pack()` to also set the `skip_updating_mru` bit. Over
-> time though I'd rather get rid of `repo_for_each_pack()`, and once that
-> is the case and packed object iteration is neatly encapsulated in the
-> backend the risk of only having the MRU will be significantly reduced.
+Oh, right, it definitely should!
 
-OK. Of the two short term solutions, I prefer the double-list. IMHO
-skip_updating_mru is a bit of a hack in the first place, because it
-misses opportunities to update the MRU.
-
--Peff
+Patrick
