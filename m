@@ -1,125 +1,199 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BD423A99E
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0220130AD0A
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:12:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771862853; cv=none; b=jWr0VFj7O7sY8PN9D4TTrRQ/A5MzhbFw/Pv8ftRtmmJUPmc/A8IEdIoGZlQppCOp/ODRZAn/1CtJ7KDbGzeFpQY9gRlgxpFqOFBMG3aeQGZzDOZKJHoUVmJo0tCJ9ePFSCMQ0m9ghQVQf5P4PYDIznrNiW/UeipL+2xV92Xhzco=
+	t=1771863137; cv=none; b=dQpJzjN9DjFwixU5sau88/yBUfMfILL33P7PO/BoX/26R025HK4CkVgSr+K/5fhE1dce7PzQIuJ0/0+f0dZGx+utkRCOtxwWeegRrMZ7CwUsZIvU1SofH438HSt1AUF86YjDUf0ZRgC6yJbDPATY2D2uKenQhyBXf+WkemAFRck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771862853; c=relaxed/simple;
-	bh=pBOD3PNBm7JASFuSFyF6L6pWqzTXfhGvnG+xRiuoTkA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=pKgLyMPUDexB4KQOCIuD9gWuTiBYpMM6OCXVvOo1VupffGkmeawmlDD0lhufSfdsLtsG1ichxPvhZ5+OtJSCdnZFQn1vIbr3nxIRYqP4bx4HSpVlzXQaSyWIi4x/P9ZrVgXWJPMyTgJEtSPQnxFZK4b5tzPERq3lr4DIGxPWAV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Ru1Y1gV2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tPgxRdF+; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1771863137; c=relaxed/simple;
+	bh=wju/+SNaX1ePj61P4GCtDMHJkMY1e52WDrOKv0Y6Gfw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=O4qZhoetlcK7p+uXUX5/i4MumlW9eXoO3vzfk8iJjRNNHM83huJEJpD50qGdT2hBd1Ip6e5sUA3B1JX3duuMuVEnDqxsvBaJ9jNmWfKHt4ifLxWLC7RBiBw0fOSR7KW5DLZeMmU1jHHfSjF/PaT6rhHyCdj8Q9CODvdvJk4HVws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V1nweXGa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S/n4He5P; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Ru1Y1gV2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tPgxRdF+"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 59CFE140016A;
-	Mon, 23 Feb 2026 11:07:31 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 11:07:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771862851;
-	 x=1771949251; bh=Z3tsRfCYzRq9AXDRSUWmpkTYcFt6t/ZOh+I/G4reNvw=; b=
-	Ru1Y1gV2PyMA/Sl2WSw7aQgc3hFc1CGTlAFGrdHzfPbLEkDudnTjp/ETS6ec7mdv
-	gP2zYpQSA/4LpX5yXnJWHRXb2cbvzp2ddi5BM00Uhb8PBjxV0M9PkO4OpoQNdxKj
-	CjRq4Cgj3CGeFT/+mHJJj1pLVnXB7kxLJbR+gjoE+no7d+UzKfBoUSQ9ZE1lerCK
-	NIQleYmtY04orynWAW1+Px0Ih9sp+muGD/jpLqUwuf0sUZwWvNF5UoHBEjkntT2P
-	96K/F+eLoRWj4fcItdRvHxI3SioLI21PuKvNszMajA4flksnG95RPJTboGolk8ES
-	kn8inzA8Sv8tqofJNLlptg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V1nweXGa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S/n4He5P"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 22BC414001B9;
+	Mon, 23 Feb 2026 11:12:15 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Mon, 23 Feb 2026 11:12:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771863135; x=1771949535; bh=MBjyOsbaDl
+	7iQiQJpyu04W8ebkRG+GiTT5/T9G0UGaY=; b=V1nweXGabipSCQ+EtCPyd5J3tL
+	CO8d1ZMdrsqUecaOVuzVO9rlXfh2+xzvzXf5rT8jnYP0EeXtOYa2YA+zHkkgQ7fd
+	MJ9XoKYhypb2nKvjQmz5QqR9e8PXSqxNKO3BRuXcGrD0ibfn51xoMBPeJE4oNAgr
+	C6oMg+0aRdzq5dAt/WuGRjZFmF2xU8dqtqv0PlKJe5ZYpxylZ3mdObFFJjzUog0E
+	q8QSLeTqd1BOJ5EXj1a7C0dY/D83QY+oi20KPu+6sdTRvILRmvBlfDDgRZlI/KVK
+	SB/QDPduRW+57LmJiVMsY2phdxm2d0AhWJW3PaRjfNjc/hoHBCZ+PvqiIgBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771862851; x=
-	1771949251; bh=Z3tsRfCYzRq9AXDRSUWmpkTYcFt6t/ZOh+I/G4reNvw=; b=t
-	PgxRdF+VRI9Pw/nGcys2wW7K8UHz5z8wedDR+KV27ciFmeM0LkQIJedNj3hjGm51
-	Ljh/YM0RWJXWWB0nyqFNk7oIooIPoolUivhogbgVCLcz7JE7AmEg/OdKFcyGObEg
-	KgKNxPPuvozQsqbrsjvx4QnIF+aAk5exyhnnNePiEr8gvlfsOS+3SLu4pMsKOPk6
-	MfJ7ycHKD0kSdP3KERu5FQelbbzuW9BnprV/hjalqIgV0MmeZ0EYttgW4tmEEixD
-	0dWmPkc/5P7q9+5fhY29aJkzLdZcJ8AVSkmsufse/WOU21AkwBGwdWnFS6zh8OHT
-	dz02SeI74OEe1M/h6KXTw==
-X-ME-Sender: <xms:Q3ucaSblulbcNPgfuCb5Z26Degs-b5MBiWiyuSvPohvJEVc1IXIE2sE>
-    <xme:Q3ucaQOJCuaxIacj0o1FG7gCW1vdzSEji-RYpw2rt0X62-9ml19z82Ua41J07qAvc
-    iBK6rIO1rgFcwrJY8TAxRzqHa2YQg2DXCBEdWREQO4QiARn5l09>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejieejucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771863135; x=1771949535; bh=MBjyOsbaDl7iQiQJpyu04W8ebkRG+GiTT5/
+	T9G0UGaY=; b=S/n4He5P17ppfZyr+0ctTTiMXigRZlc4GqXoM46obsEg1DtOQv6
+	a01or2MDnMVU9jZPekQHGyZmlyc53agLOwInH1v0HuNX9tJY3QnnY+C3EXDgmwkK
+	JGQOqTiuVvfiEfNmFgCKKQpxmSMl2xuMbnIKv6NRZp1WBkEsgsgbrXDEFmqkoCSm
+	pEfwLHzy7HbBOKc6rFhR2kpxs0ynAMPRbcwt9l1v4Gj074ktzgO3TC9ADw1bnmha
+	UR0Gw5r5k+iEKKiwP3y9FmDbDsi9+bBi9ynwpgfG+kDuMsF/XeDB/3hAv9zKnI+i
+	/ZDeVRhH/E4lmeh0KYy/jxdhqmUwORjBqLA==
+X-ME-Sender: <xms:X3ycad4G6hPfOEG1bf9hGP_n-Uh815qZCqCs23-AmOXEh_FuyP7svQ>
+    <xme:X3ycaemh6Yxnqeo4K1bi04Z5PAAyt4K3mq0bvozYfL46xEdMrENOj1RBPKBqEZOdM
+    JqxOlIbeu5FZNbkNCYQ6huesFkT2DNjoP8Pti_V4MRbk67u-1MipA>
+X-ME-Received: <xmr:X3ycaeSggICEvWoS7aFvzsBUgwUa8K6VUNSzQICjN2SISKYElvtZsOrkETZtKsNcx6k0Gy0PenKrnGUScSHhpfDg3hWaZo1lTw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeeipdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
-    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopegsvghnkhhnohgslhgvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepjhhonhgrthgrnhesjhhonhhtvghsrdhprghgvgdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Q3ucaaGz0XmqISoosleJCJZJOHep-iJaf2PITYjjE0ilyU3ydwTPkg>
-    <xmx:Q3ucaUqRBWAZMzunH3-_CsIxw4GZjkIMqBdTUJ2zj6Xzh3Tm4eskjQ>
-    <xmx:Q3ucabYnlWXJcbZstxX5x10os2ASSQlCisgNqKcEtw_n1oEg9GOqUA>
-    <xmx:Q3ucaVWLJ0EMgs_mago6WXxddy-c59aOwpBnpaeuSs3z7BN33R10gQ>
-    <xmx:Q3ucackGo3HUsLTeP-IrqRp1zBIYuBw0k_ggAq21CETtKxysEG0rFNER>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 0F6FA1EA006B; Mon, 23 Feb 2026 11:07:31 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgufhgvrhguohhushgrlhgrmhdule
+    ekleeshigrhhhoohdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:X3ycadHIbjWZF0iRs_INBOgDP74epHZ73LLWKVMwl6H56t0mWrbwew>
+    <xmx:X3ycaTEWuQ1Hj1eTJ6jWvGcWq1iGYUB7k2Oze2L6TiGZTb7D1ga83Q>
+    <xmx:X3ycabSXGqQ2Ab4OYbwZUMK8RRazAo8sgSbLboikx431Rln_tXBl7A>
+    <xmx:X3ycaULGlsOnkvWJwcGpH01KcQxC4AyHe4TRlK_Zsjfst3adrMiUwA>
+    <xmx:X3ycaS3wKmUbf9PusjmHlnIDB2OfFrAE-11MEAmyxVyXGRvxKgGp_5hU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Feb 2026 11:12:14 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Md Ferdous Alam via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Md Ferdous Alam <mdferdousalam1989@yahoo.com>,
+    Elijah Newren <newren@gmail.com>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t2018: move checkout case-insensitive test from t0050
+In-Reply-To: <pull.2054.git.1771837399472.gitgitgadget@gmail.com> (Md Ferdous
+	Alam via GitGitGadget's message of "Mon, 23 Feb 2026 09:03:19 +0000")
+References: <pull.2054.git.1771837399472.gitgitgadget@gmail.com>
+Date: Mon, 23 Feb 2026 08:12:13 -0800
+Message-ID: <xmqqjyw3o2w2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AdFosU1OfSzV
-Date: Mon, 23 Feb 2026 17:07:10 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Jonatan Holmgren" <jonatan@jontes.page>, git@vger.kernel.org
-Cc: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>,
- "D . Ben Knoble" <benknoble@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-Message-Id: <6706edc2-04c7-4bd0-81ec-33710088f0bc@app.fastmail.com>
-In-Reply-To: <112cccfd-ee04-4c23-bc5e-fd269ebc6c1f@app.fastmail.com>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
- <20260210183110.1151072-1-jonatan@jontes.page>
- <20260210183110.1151072-3-jonatan@jontes.page>
- <112cccfd-ee04-4c23-bc5e-fd269ebc6c1f@app.fastmail.com>
-Subject: Re: [PATCH v2 2/2] alias: support non-alphanumeric names via subsection syntax
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Feb 23, 2026, at 10:29, Kristoffer Haugsbakk wrote:
->>[snip]
->
-> The HTML output shows the list continuation character (+).
->
->     + Note that the first word of an alias does not ...
->
->>  command. It can be a command-line option that will be passed into the
->
-> And there are two more outside this context which I suspect are knock-=
-ons?
->
->     + If the alias expansion is prefixed ..
->
->     ...
->
->     + * Shell commands will be executed ...
->
-> See `Documentation/doc-diff master next`.
->
-> =E2=80=A2 master: 7c02d39f (The 6th batch, 2026-02-20)
-> =E2=80=A2 next: 4a7958ca (Sync with 'master', 2026-02-20)
->
->> diff --git a/alias.c b/alias.c
->>[snip]
+"Md Ferdous Alam via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Sorry that I just replied to the first hit that I found in my
-inbox. This applies to the latest version which is in `next`.
+Adding CC the authors of 69f272b9 (dir: special case check for the
+possibility that pathspec is NULL, 2019-10-01) and 06d53148 (t[01]*:
+adjust the references to the default branch name "main", 2020-11-18)
+the block of lines removed by this patch are blamed for.
+
+One thing that I noticed that needs checking but I didn't do so
+myself is that the original is prepared not to break after Git 3.0
+by using 'main' in t0050 (which forces the initial branch name to be
+'main').  Whereever the corresponding new code goes, there needs a
+similar provision to prevent the test from getting broken with the
+default change.
+
+I think specifying the initial branch name explicitly when the test
+creates "repo-case" test repository and use that to go back to that
+branch would be better for the purpose of this single test, rather
+than using the blanket "GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME" for
+the entire script.
+
+
+> From: mdferdousalam <mdferdousalam1989@yahoo.com>
+>
+> The test 'checkout with no pathspec and a case insensitive fs' in
+> t0050 does not really belong there as it tests branch checkout
+> behavior, not filesystem properties.  It also had an unnecessary
+> CASE_INSENSITIVE_FS prereq since the sequence of commands should
+> succeed on any filesystem, and it did not verify the resulting
+> worktree contents.
+>
+> Move it to t2018-checkout-branch.sh where it belongs, drop the
+> prereq, and add a check that the expected file is present after
+> the checkout.
+>
+> Signed-off-by: mdferdousalam <mdferdousalam1989@yahoo.com>
+> ---
+>     t2018: move checkout case-insensitive test from t0050
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2054%2Fmdferdousalam%2Fmove-checkout-test-from-t0050-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2054/mdferdousalam/move-checkout-test-from-t0050-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2054
+>
+>  t/t0050-filesystem.sh      | 20 --------------------
+>  t/t2018-checkout-branch.sh | 21 +++++++++++++++++++++
+>  2 files changed, 21 insertions(+), 20 deletions(-)
+>
+> diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+> index ca8568067d..003329c082 100755
+> --- a/t/t0050-filesystem.sh
+> +++ b/t/t0050-filesystem.sh
+> @@ -117,24 +117,4 @@ $test_unicode 'merge (silent unicode normalization)' '
+>  	git merge topic
+>  '
+>  
+> -test_expect_success CASE_INSENSITIVE_FS 'checkout with no pathspec and a case insensitive fs' '
+> -	git init repo &&
+> -	(
+> -		cd repo &&
+> -
+> -		>Gitweb &&
+> -		git add Gitweb &&
+> -		git commit -m "add Gitweb" &&
+> -
+> -		git checkout --orphan todo &&
+> -		git reset --hard &&
+> -		mkdir -p gitweb/subdir &&
+> -		>gitweb/subdir/file &&
+> -		git add gitweb &&
+> -		git commit -m "add gitweb/subdir/file" &&
+> -
+> -		git checkout main
+> -	)
+> -'
+> -
+>  test_done
+> diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
+> index a48ebdbf4d..5f37e40591 100755
+> --- a/t/t2018-checkout-branch.sh
+> +++ b/t/t2018-checkout-branch.sh
+> @@ -285,4 +285,25 @@ test_expect_success 'checkout -b rejects an extra path argument' '
+>  	test_grep "Cannot update paths and switch to branch" err
+>  '
+>  
+> +test_expect_success 'checkout a branch when file and directory share case-insensitive name' '
+> +	git init repo-case &&
+> +	(
+> +		cd repo-case &&
+> +
+> +		>Gitweb &&
+> +		git add Gitweb &&
+> +		git commit -m "add Gitweb" &&
+> +
+> +		git checkout --orphan other &&
+> +		git reset --hard &&
+> +		mkdir -p gitweb/subdir &&
+> +		>gitweb/subdir/file &&
+> +		git add gitweb &&
+> +		git commit -m "add gitweb/subdir/file" &&
+> +
+> +		git checkout master &&
+> +		test_path_is_file Gitweb
+> +	)
+> +'
+> +
+>  test_done
+>
+> base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
