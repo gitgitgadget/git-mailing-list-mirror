@@ -1,63 +1,64 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-yx1-f68.google.com (mail-yx1-f68.google.com [74.125.224.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C51B378D94
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 21:38:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF60C378D86
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 21:42:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771882725; cv=none; b=utTYXZkg2RCn4LZzjARa9M7NW+6Q+0NkFmPz9eWydPSku/N9oNwUN0IVWKYQY6vF6X4IQ6x+ZKUXixfLlA0U/cll7JBEKxsykfEs7XGnCt4co7fsaX/SGX4SSUgZNxhj2AcHzzic4JlNguZRS2VBnI0RlanxNBc7bw2YYOZkx80=
+	t=1771882922; cv=none; b=BkTCaILON+R8dcELEaaFUB6Hh/74LhlE5RxNWIdeGLvqjKleUI+T6dPeTVMuOI18TZcibrgi96wLyrMYKLC3EzH5dknXDeewKV2w+4TRAbc8hiSxHmagLhpmnKoliUSLjFpg0eIyX1qGPhKJaxltUoR1vtcKSFoK6hzZ6+ALdxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771882725; c=relaxed/simple;
-	bh=/x+jvJFdBSss8NvML0660N8uymd3oLxq7xXBNphXIXQ=;
+	s=arc-20240116; t=1771882922; c=relaxed/simple;
+	bh=XZkGfXHZCzuy6mvFSBrf+om0WcDPJN2kqjuC8Rs8i80=;
 	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=eoQ0Xd3MlcAeEB+HCfOGcw/POTkFzUq2qz7FMs+L7NPAmsZsZ/45wX2F3NkIvDo9ttmNtWtdRiNksMLsuKm0iozN9gqYwSwjKvPS+tgj60p++Y7BIJeRAXWib4F0LbIY35bQYKaQBRXtvj4MhYaZnzGY0eoU2XEeQeZ2C2HWA9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Meck6mGb; arc=none smtp.client-ip=74.125.224.42
+	 Cc:In-Reply-To:To; b=XDwGAMGnwcRLJTBXO66CJ9e4Z4e/0A/+vCk2ufPXS3+1St+FvFNkm5PkvJgRHNczmBuI8ebFgxNt+P9wXOoSVhXlMg3TuzuCtZc4RGlag87eJCUqsyK0sRAhnzLaHlxf+y/mTf62LaDPInDLgmtTFPDncx8Ne2A6SkvlZSXJYk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2MvtE5R; arc=none smtp.client-ip=74.125.224.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Meck6mGb"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-64ad46a44easo4565353d50.0
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 13:38:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2MvtE5R"
+Received: by mail-yx1-f68.google.com with SMTP id 956f58d0204a3-64ad79df972so4682688d50.1
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 13:42:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771882723; x=1772487523; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771882920; x=1772487720; darn=vger.kernel.org;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZMoDJyS8qxGl6wx3Or6kxQVfGwp9AJFqciaWS26lRjk=;
-        b=Meck6mGbvPDzv5MVJmVvfIr3aitlo7vL99qo/APoZH+4EfD61ziZPyi40LOtyHQzRw
-         6GHOQMz0nt3OlQTGh6ryl7mJsQf1nnO4ebIHmimwAv1QYTnUpV4z/PWMrhV0NH5NM0I9
-         B10wN9G1Eip8sd2GCIh/98y1+8LpHiuaPGd3djHk+DYVWsjJi5iryqCSfvJmiqGhf+OL
-         /ITQxQEEa69hmwf+ZXBkmtfyzdYwjtKgK6XOboa9q3AISJ3/ZrgyBmDvPxoftGr+Jmda
-         /B2yVsag4iJqKfuIlhI4OOiju57lHmnGO9336nVuLp/BVvZgRIQ1f5LaFiyOu6QJ+iF9
-         uoVg==
+        bh=K26y1Fs94D1DQPbXRGVqpazB0LMjeYGBztS63z7/1TI=;
+        b=c2MvtE5RnVTL/JzvOXHEkZtetLAGt+ncgVOaSwzfoUT2YEpDVcnLvKOaX5PjcU6g66
+         kbgVFv67WAFKziA6/dAoHk6+kNex3qaK3VqOGP89bNBwSKlfPPxn/4HXWARuu8oDjUkm
+         7AYMeqLAXlRKwHIIU9OjMrXalOxmsM0ctl7ubuVl4z7V+mYyCpq/lNw+X0ecrRe2i/k8
+         bjiB9bkREkLemqDoMoJPcSRv8xT2CY4b/07F4NQj5OU/1Yl4PRvyGij9jrWlVmcwy70T
+         03X1RbuWK7LMLgAJWbMotbW5P3uTKQJGmsDSI5o74OhO9i0AK3BQukCQngsLvs0jhbZE
+         FoDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771882723; x=1772487523;
+        d=1e100.net; s=20230601; t=1771882920; x=1772487720;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=ZMoDJyS8qxGl6wx3Or6kxQVfGwp9AJFqciaWS26lRjk=;
-        b=pV/IMgLOjsCqy+lIUd4alrnVsUGVgOYP6XUZIx5YdzwCk5w6wg0JtKdZ+LtByhmRia
-         HWq9/Pe0ytTn6NXz9mVNBuuCZpjlzELBuNY65RKBgsI0LsXI//roAS22QSh552/ip88Y
-         073JQg16qztX2U5fIp62L3EkHQw/wYN9lwO3CCaQ0mULrHRw5LZc1oA7ePpDqiuk8uT9
-         1ibvIcNd+7FoeTXz5ngCm5v8t4BPE2/+XR/+gPhIHoGjTVSHrObrC1btU+M5hM2ruGVI
-         /Jlp2Cd+Zur/wOpBIf/8qgJI7JOU59Vv4VKElIlvAK5JtAJMW84iCmwtMq15CwY94xDK
-         c3XA==
-X-Gm-Message-State: AOJu0YyAkbuP7APwLjCF/DWbNFh2UGrGgaW44NCLelP2/YmF9PKB+cSr
-	mlJt/9MpnRIrT2d3V+JG1VOOsnu1TGwsVVhpmJtY3xMJUKrwZKmzCwilT1LpxA==
-X-Gm-Gg: ATEYQzxSrhjifV//2blf/NL3PtlqfFhnxVRZ9z4OMiudVqwItQ/h5bmVfjbijYRj6l2
-	tuDd2mYtRV4I6ShSAegbr0E0v5NbSm7nAz1rwmq4fZe4McbnKouAzEg6OmxHyREpt9Nfao7/tJ2
-	+zSYHma2w8q5UnTm6H/ApsXtr3dhRmVsejHUkYO9DvV6ynwPfGRdza+a6jtnSlNbvpq4T5n0qkZ
-	ITJCRgal1B7jhbi7zacAcpF25+UgE5dh2EUAy9x0L8+1JSDvOEirD8NJdOHbR2Mcu573hi3Qppx
-	b6F74tglUP6F/h9fCB2+NLAYcdEjg4UHPPWji1GFo3RRZ4zDiR2nnozRwAywNuFu9GruPsQNhED
-	1jL3L9xolWqXEyb90IJtX1+D/1sVr6ohYrrZdI+5sG012DJ26BLuzYtDLEzmxeD6xMTnvliLSbZ
-	35WGF2ZzXFyAPJWQvZzPFAl/g0iNtqx9nteqXp/51B8aWjmEhj/0rXYdjf0m+ad07vxOv2YZbPe
-	cBdSsxFLXwTNKw4hKfFFklpm3XW4k+HXYR8kelR
-X-Received: by 2002:a05:690e:144a:b0:64a:dbe3:fab7 with SMTP id 956f58d0204a3-64c787d422cmr8180265d50.8.1771882722587;
-        Mon, 23 Feb 2026 13:38:42 -0800 (PST)
+        bh=K26y1Fs94D1DQPbXRGVqpazB0LMjeYGBztS63z7/1TI=;
+        b=jYzSLUIdtQhk3wsh2f4k90jVB9ngjm6svwrsKhGxvNGNFzzcyCVaPy0u52PNcVrQa5
+         Kw9DlSB/IqgmmE4Xmehzy53vKtG8vD4MNxQhWdQVW8pYXeyCwtwLZg7sVhCpMz3GBQhw
+         jMIhSZTw5dqXozQU2xfqv33dtR+xPrWOnxUEnpQj1fPLLpHyX7TZmtKoZV8o/U/RHSj0
+         q/QlW67z3UMFo8xuMbH124NDdbWEPhOuPxJdQDVGcRk+QTb/vyZsD+V30xJSLfZDm1CE
+         gSSoj4gsnv0QEAE+DkNuRSg6X8hDwb6WwY5A4lyerbBksxw54B4gQqSaj0qptM6Tg5Eq
+         0YtA==
+X-Forwarded-Encrypted: i=1; AJvYcCUB17TcmpI/W3fbgw2TFDzriOKM6FATG6nHzoYkLRq/N9E0+FhINIlNlJ8yeZaaHJxlbQE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywt912xRA3sEKwDaMn1tR5rnFDOsJyRwCtDuh0z88PSn9OBflTO
+	FrH3TfsW/VYrqBDHIAA3QSMrWLAFvhFh/qS81Ilm17eNq2SoWJoRlC+1
+X-Gm-Gg: ATEYQzyP25oiriyOzrQxONT8ai/RZiNa6JNWa/63Zs+df2C8HCS1cP4HzqVxGg/7s0o
+	yAh2AtYorSXpqHvtPWBNUrqSCjPxi4wgzfTyq9lBEcPGAmmiCqFnRSn08KUTE2VS5OiLjHiYORG
+	ir8umMd9bs8C5wnv0zgxQ9sWI2XrhSH/N2n5u71ccKchA9MAc1rxlUTua+XWLg3UpuEMp66xTj6
+	vKW4CEhPq76yaqjZv6yG5QywxPUUb7ZivbCWfrlnEkHKSoEoSU9tLSzOpoasWQgx8LFfyJNq0Fj
+	KYDtVMbYv0oSg8LwNF0tj6FONYZAzFm5UPP/v8eNRV4AElIs+26K1voMeyJsQf0FwT32UYVpOgg
+	+iNUFjxbrMfNKlrzuPqN+x7wPTclfV7piGrtSX5yWHxaRlXodJMwWDSzgN4vJ7mhIae+ovrV6PY
+	lLK0z36pbr0YZ4OzZllzLZXbrlvnyhWQBDoijUCh4AGrB6PRQARGvkcA2u8GizAklTB7Se1poJu
+	4glPaf0I3uUjzN/LSMjWb2bBqH9jWyMNAbbwzkj
+X-Received: by 2002:a53:ca52:0:b0:64c:2114:1766 with SMTP id 956f58d0204a3-64c78e373d7mr6290687d50.45.1771882919837;
+        Mon, 23 Feb 2026 13:41:59 -0800 (PST)
 Received: from smtpclient.apple ([2605:a601:90eb:5600:c890:ad73:1b25:1a30])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-64c7a39b308sm3634392d50.21.2026.02.23.13.38.42
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-64c7a39ce5esm3711104d50.23.2026.02.23.13.41.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Feb 2026 13:38:42 -0800 (PST)
+        Mon, 23 Feb 2026 13:41:59 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 From: Ben Knoble <ben.knoble@gmail.com>
@@ -67,144 +68,120 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (1.0)
-Subject: Re: [RFC] send-email: UTF-8 encoding in subject line
-Date: Mon, 23 Feb 2026 16:38:31 -0500
-Message-Id: <43DCEEB9-33C4-4EE2-9FF3-49DCB9B837E0@gmail.com>
-References: <20260222155559.1777883-1-shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-In-Reply-To: <20260222155559.1777883-1-shreyanshpaliwalcmsmn@gmail.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: Re: [PATCH v6] build: regenerate config-list.h when Documentation changes
+Date: Mon, 23 Feb 2026 16:41:48 -0500
+Message-Id: <8AB2DD1B-FAFA-4510-82FA-BBD76B442676@gmail.com>
+References: <aZv54vN9DdGsvre/@szeder.dev>
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>,
+ Marc Branchaud <marcnarc@xiplink.com>, Evan Martin <evan.martin@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <aZv54vN9DdGsvre/@szeder.dev>
+To: =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 X-Mailer: iPhone Mail (21F90)
 
 
-> Le 22 f=C3=A9vr. 2026 =C3=A0 10:56, Shreyansh Paliwal <shreyanshpaliwalcms=
-mn@gmail.com> a =C3=A9crit :
+> Le 23 f=C3=A9vr. 2026 =C3=A0 01:55, SZEDER G=C3=A1bor <szeder.dev@gmail.co=
+m> a =C3=A9crit :
 >=20
-> =EF=BB=BF
+> =EF=BB=BFOn Sat, Feb 21, 2026 at 09:07:17AM -0500, D. Ben Knoble wrote:
+>> The Meson-based build doesn't know when to rebuild config-list.h, so the
+>> header is sometimes stale.
 >>=20
->>> On Sun, Feb 22, 2026 at 9:07=E2=80=AFAM Shreyansh Paliwal
->>> <shreyanshpaliwalcmsmn@gmail.com> wrote:
->>>=20
->>>>> That makes sense, I tried it below.
->>>>> I also wondered whether, in addition to this, it might be helpful to w=
-arn on
->>>>> an invalid charset, and/or possibly fall back to UTF-8.
->>>>=20
->>>> Agreed on the first half of the statement, if we have an easy and
->>>> portable way to tell if a given random string names a valid charset.
->>>> I do not recommend to "fall back" to anything, if we are asking an
->>>> input from the user.
->>>=20
->>> Following up on this, I tried adding a warning when the provided charset=
+>> For example, an old build directory might have config-list.h from before
+>> 4173df5187 (submodule: introduce extensions.submodulePathConfig,
+>> 2026-01-12), which added submodule.<name>.gitdir to the list. Without
+>> it, t9902-completion.sh fails. Regenerating the config-list.h artifact
+>> from sources fixes the artifact and the test.
+>>=20
+>> Since Meson does not have (or want) builtin support for globbing like
+>> Make, teach generate-configlist.sh to also generate a list of
+>> Documentation files its output depends on, and incorporate that into the
+>> Meson build.
+>>=20
+>> We assume that if a user adds a new file under
+>> Documentation/config then they will also edit one of the existing files
+>> to include that new file, and that will trigger a rebuild. Also mark the
+>> generator script as a dependency.
+>>=20
+>> While we're at it, teach the Makefile to use the same "the script knows
+>> it's dependencies" logic.
+>>=20
+>> For Meson, combining the following commands helps debug dependencies:
+>>=20
+>>    ninja -C <builddir> -t deps config-list.h
+>>    ninja -C <builddir> -t browse config-list.h
+>>=20
+>> The former lists all the dependencies discovered from our output ".d"
+>> file (the config documentation) and the latter shows the dependency on
+>> the script itself, among other useful edges in the dependency graph.
+>>=20
+>> Helped-by: Patrick Steinhardt <ps@pks.im>
+>> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+>> ---
+>>=20
+>> Notes (benknoble/commits):
+>>    Changes from v5 (<611a94cd988e3795bc63dba2f1b270aa0d058bd2.1771425395.=
+git.ben.knoble+github@gmail.com>):
+>>=20
+>>    =E2=80=A2 Reword a confusing sentence in the commit message
+>>=20
+>> Makefile               |  5 +++--
+>> generate-configlist.sh | 11 ++++++++++-
+>> meson.build            |  5 ++++-
+>> 3 files changed, 17 insertions(+), 4 deletions(-)
+>>=20
+>> diff --git a/Makefile b/Makefile
+>> index 7f37ad8f58..6f926ffb1f 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -2688,9 +2688,10 @@ $(BUILT_INS): git$X
+>>    cp $< $@
+>>=20
+>> config-list.h: generate-configlist.sh
+>> +    @mkdir -p .depend
+>> +    $(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@ .depend/conf=
+ig-list.h.d
+>>=20
+>> -config-list.h: Documentation/*config.adoc Documentation/config/*.adoc
+>> -    $(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@
+>> +-include .depend/config-list.h.d
+>=20
+> This breaks the build when something disappears from
+> Documentation/config/:
+>=20
+>  $ git checkout origin/seen
+>  HEAD is now at 57edfa3ce8 Merge branch 'ty/setup-error-tightening' into s=
+een
+>  $ ls -l Documentation/config/hook.adoc
+>  -rw-rw-r-- 1 szeder szeder 3828 Feb 23 07:50 Documentation/config/hook.ad=
+oc
+>  $ git grep hook.adoc
+>  Documentation/git-hook.adoc:include::config/hook.adoc[]
+>  Documentation/howto/meson.build:  'rebuild-from-update-hook.adoc',
+>  Documentation/meson.build:  'git-hook.adoc' : 1,
+>  $ make V=3D1 config-list.h
+>  /bin/sh ./generate-configlist.sh . config-list.h .depend/config-list.h.d
+>  $ git checkout 0aabf70f60
+>  Previous HEAD position was 57edfa3ce8 Merge branch 'ty/setup-error-tighte=
+ning' into seen
+>  HEAD is now at 0aabf70f60 build: regenerate config-list.h when Documentat=
+ion changes
+>  $ ls -l Documentation/config/hook.adoc
+>  ls: cannot access 'Documentation/config/hook.adoc': No such file or direc=
+tory
+>  $ git grep hook.adoc
+>  Documentation/howto/meson.build:  'rebuild-from-update-hook.adoc',
+>  Documentation/meson.build:  'git-hook.adoc' : 1,
+>  $ make V=3D1 config-list.h
+>  GIT_VERSION=3D2.53.0.119.g0aabf70f60
+>  make: *** No rule to make target 'Documentation/config/hook.adoc', needed=
+ by 'config-list.h'.  Stop.
+>  $ grep hook.adoc .depend/config-list.h.d
+>  config-list.h: ./Documentation/config/hook.adoc
 
->>> does not appear to be valid. Current flow is,
->>>=20
->>>  Which 8bit encoding should I declare [UTF-8]? y
->>>  Are you sure you want to use <y> [y/N]? y
->>>=20
->>> With the additional check, it becomes,
->>>=20
->>>  Which 8bit encoding should I declare [default: UTF-8]? y
->>>  warning: 'y' does not appear to be a valid charset name.
->>>  Are you sure you want to use <y> [y/N]?
->>>=20
->>> This uses find_encoding() from Perl=E2=80=99s Encode module to detect an=
-y
->>> unrecognized charset names.
->>>=20
->>> Let me know what you think.
->>> Also, is there any new test that should be added for this change?
->>>=20
->>> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
->>> ---
->>> git-send-email.perl | 23 ++++++++++++++++++++---
->>> 1 file changed, 20 insertions(+), 3 deletions(-)
->>>=20
->>> diff --git a/git-send-email.perl b/git-send-email.perl
->>> index cd4b316ddc..e62fa259ba 100755
->>> --- a/git-send-email.perl
->>> +++ b/git-send-email.perl
->>> @@ -23,6 +23,7 @@
->>> use Git::LoadCPAN::Error qw(:try);
->>> use Git;
->>> use Git::I18N;
->>> +use Encode qw(find_encoding);
->>>=20
->>> Getopt::Long::Configure qw/ pass_through /;
->>>=20
->>> @@ -1044,9 +1045,25 @@ sub file_declares_8bit_cte {
->>>        foreach my $f (sort keys %broken_encoding) {
->>>                print "    $f\n";
->>>        }
->>> -       $auto_8bit_encoding =3D ask(__("Which 8bit encoding should I dec=
-lare [UTF-8]? "),
->>> -                                 valid_re =3D> qr/.{4}/, confirm_only =3D=
-> 1,
->>> -                                 default =3D> "UTF-8");
->>> +       while (1) {
->>> +               my $encoding =3D ask(__("Which 8bit encoding should I de=
-clare [default: UTF-8]? "),
->>> +                       valid_re =3D> qr/^\S+$/,
->>> +                       default  =3D> "UTF-8");
->>=20
->> Here we change things, right?
->>=20
->> - The original validation is "at least 4 characters", the new
->> validation is "at least one non-blank." I'm not sure why we'd prefer
->> one or the other, frankly. The original goes to 852a15d748
->> (send-email: ask confirmation if given encoding name is very short,
->> 2015-02-13), which is motivated by the same problem we're discussing
->> here!
->=20
-> I see.
-> My understanding of the earlier change (852a15d748) is that the
-> length check was intended as a heuristic check to catch obviously invalid
-> inputs like "y" and trigger an extra confirmation based on the fact that
-> charset names would be at least 4 letters.
->=20
-> With the additional find_encoding() check, the validation becomes semantic=
-
-> rather than length-based, recognized charset names are accepted directly,
-> while unrecognized ones trigger a warning and still require explicit
-> confirmation. The relaxed regex (at least one non-blank) is only meant to
-> ensure we receive some non-empty input before passing it to find_encoding(=
-).
->=20
->> - We get rid of confirm_only, since we're about to roll our own
->> confirmation below:
->>=20
->>> +               next unless defined $encoding;
->>> +               if (find_encoding($encoding)) {
->>> +                       $auto_8bit_encoding =3D $encoding;
->>> +                       last;
->>> +               }
->>> +               printf STDERR __("warning: '%s' does not appear to be a v=
-alid charset name.\n"), $encoding;
->>> +               my $yesno =3D ask(
->>> +                       sprintf(__("Are you sure you want to use <%s> [y=
-/N]? "), $encoding),
->>> +                       valid_re =3D> qr/^(?:y|n)/i,
->>> +                       default  =3D> 'n');
->>=20
->> =E2=80=A6which might want refactored a bit so it can stay close to the or=
-iginal? idk.
->>=20
->=20
-> Actually the flow needed to change slightly to insert the validity warning=
-
-> before the final confirmation step. Since ask() handles confirmation inter=
-nally
-> using confrim_only and is used in multiple places, it seemed simpler to ke=
-ep the
-> additional confirmation local here rather than modifying ask() itself.
->=20
-> Let me know what you think.
->=20
-> Best,
-> Shreyansh
-
-Ah, my mistake for being ambiguous. I meant:
-
-The code is similar enough to the original that perhaps a helper can be intr=
-oduced, or at least we should keep the equivalent strings together to help t=
-hose who change one.=20=
+Indeed. This might arise while bisecting, which was my original motivation. T=
+houghts on a path forward? At least this issue (to me) is clearer than a spu=
+rious test failure :)=
