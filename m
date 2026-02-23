@@ -1,53 +1,53 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0663612E4
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 10:48:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A1D35CBD4
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 10:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771843690; cv=none; b=FxUaefx4h2aAxbQuxuHdhTbeE1CyIPTzucxMkRtTsuQIDcmlJUyRFqaVsu7vFLRIdyklZ3UtetLm9voYuCvIVEN6uzpsKUU3kZmk/eUO9oOjy1vBAzYcgkttaxDt/WsJ640OlTrgk931WUs1Az5F1e/jz2/08netEoIJ/b+tSnA=
+	t=1771843694; cv=none; b=boiUSyzdRQWODs4cfMet13XIqORMrTKGSaQaHMVtJ3zUGwmomX9zQj64+pmmjGvnsr2czNl3BeIPEGKv+sAWgsF99X7T1Yhmdp89zlx8/blLZeeJ3avuq0tQQiADL6XPCHCulb6vf+n8NuyP13D3UbRryE2rK2F4Jgd4rFZlnKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771843690; c=relaxed/simple;
-	bh=DV07P43q/GgMAyEk6WBNRjnqOBCD/iiq2QL+BG3yrGc=;
+	s=arc-20240116; t=1771843694; c=relaxed/simple;
+	bh=Cu2VKp28o2kOQWASu8+jOq0SD7OZO93Meaogt0lLs/4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EyJSGhLFtSLEjjXakkTmRxcmmQw1FUzV1IVyR8lLNCIoC3l+BYzXJtzcas4UU4Rx2cUy4YkqV43YUWn7jPiyXwF68X0mu54FW77iMT9uzpmjrEgx7EVXjiGrXNXExeJViLTHy4WY3jFXquMfmpjqM9IT08vDqNkOqsUiPYRbNdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SrqStuHd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iqddWDyl; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ev81ib5lyrg/2KWfkOz8qkqAf+7j4BWUGM+Wg/bam7K2iq75r/rcIRrjc/YuLa6NHm4PQRO1tT5tp75se5qY/I+8iTzA/KyyaJpgLbuj0YJKwmRD9T/rgQDVuKz/f1DxSXfOccdMaHewHnKPhQP+sX4zW9pUSwT6JeDZeLf/DQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lFcXv4yh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wOgVn+4L; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SrqStuHd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iqddWDyl"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 24F88EC05E2;
-	Mon, 23 Feb 2026 05:48:08 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lFcXv4yh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wOgVn+4L"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F0AC914001D1;
+	Mon, 23 Feb 2026 05:48:12 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 23 Feb 2026 05:48:08 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 23 Feb 2026 05:48:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771843688; x=1771930088; bh=aaNHsLvRZl
-	Qv57p4jOrYmTE7MRMQx/TSS+JOaxHrqWg=; b=SrqStuHdL5qSDkXc83ZsaSu1CB
-	UJ055fJ2R+Kr1CegPNlqhk9bOCOMX5nqMY63KqSKSgwusQY4XPGnICWAFoqvAoPB
-	hE2uqXA0p5AfTY2Wiyl558mf0VkwHRIXBrssx6fijIDm83z9SE8K1m2s03OXWp2V
-	nFs8ipJUlAhwxpbLItmE05Znsylqt2AWjrH+dUATx8GhakvEOyXX5IFNHvhYW8OL
-	sFu9puRz/Hh2njgcLnb739bNChviWQKiVcDGWwLbGbmQhio4T+PETlKQoHnJf5vl
-	sddwhBQw/quGpWKfFuXVysaMS1ouxyQtv+PizMQTkYjcmu14IyiIhrl/SbqQ==
+	:subject:to:to; s=fm3; t=1771843692; x=1771930092; bh=jgTX0gbxy4
+	hRk3HKxQEqVUjNez8RNnyCVLv9F/5QZdw=; b=lFcXv4yhr/n/NSnzrvApAiAqLo
+	kAykQ3mR3KwSOe+RFJL1srcAJXTkE+Ik74eFI0hF94OvmkNxTvrSMdijMNzQjmdj
+	4mtUsNbZbMIdaYkEyuii/PBKvXLc/Z34jeOr0IhxqXUA3FbgOUUHUCGuC0nlUzk1
+	qes4hMgfSDVWZ2UybegIlGRMTDomGSomkc17hm6KisGx2KEySMlZzi4mym8senog
+	uoXobpVFDqA8Teeg2X9wuG/0kHY2bb4dFFgU43rpSSS6QXh2eRB28eKX69hcKijD
+	9Ud3K6ZgSVwI9D6JO+YOdNNHvxj33+7TaZNijLUItUXBTrTBjJnISPR9j1BA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771843688; x=1771930088; bh=aaNHsLvRZlQv57p4jOrYmTE7MRMQx/TSS+J
-	OaxHrqWg=; b=iqddWDylJj07h3FCxGtr7tTgyG59o8yJwUjKxBdPEbs8GNyB3WY
-	PBAGZv/ISdRVuLIDDcJYOtH99aCNpUBZmYOm2I0Ey2aw3Dxj1Ui8hC6Aejy0JVWw
-	YAIGM0pb7Pss11sqBjsX+Y4Kn17OHfiRO++sJbpXVIwgzPYuPm3rthTvsJnCPGhz
-	a+Oa4CLUW0OFveyyeeVSVo7eodxTApYBvp33z+FVClT80KK7Lgylo+Ult6BlTiac
-	9KjCc0/UH347RM7QxrwIiA3Z1L6pu/PizT/eiJJlJyrRhk4edVdQlguz16QCYJZu
-	AT2UsT3IPWZTrGxnejJhqU6Tdy0DPllnv3w==
-X-ME-Sender: <xms:ZzCcaThWNkJf3Mxt5kPri8E0b0PzpfnB69end7s0NcczIBJFkJicow>
-    <xme:ZzCcaWClzObPzAkNPDLfQWqZ49JOHl5eRR14xh5U-INCr1o5UVYBYsI1rqUIyXQjj
-    zlfOXS9Y4UEYfhBg_7rQw268QvrpCbAdQSvF4YYY2ycTp8jLWBCBQ>
-X-ME-Received: <xmr:ZzCcaQugfwpXysJbMvW2FEQIyE7LaXsPki0Rd7pN_JEGjRsk--1q259PfSrms-YC_VyE6_YOKJfEZ4rVj4lzUkcI0irZlJRPDPDJ_QRgDw>
+	1771843692; x=1771930092; bh=jgTX0gbxy4hRk3HKxQEqVUjNez8RNnyCVLv
+	9F/5QZdw=; b=wOgVn+4LJroWG3Hrd91ppjhm9dasoYELtyYx318a01VjrEENGDM
+	uLwIYSJxTmMmu3zOkBMCN+jnUEHJmDSox+yEAZZfWabeL4N3ExMdDj76tLyoSFCU
+	Zi/3egE3YynLCYMonU11oodGpL3uXWrVW0sSUVHA6RboPgXZG1CthwqSMiXVfSkH
+	AifG0T/t21THYlMI4ZK/CEClr9p+ORSfdcGrDlsDNxti4jFf1Jp5+qV09rbhRV4F
+	ijdZvuMU4Krr942uavQUZjA8J5jLk2YAkmLtsnuMUpqtXbPVAxOCAGSxZ62XxC9/
+	dDCHd1xC2G9XOb1rh7uXTbOoXGHrE5iidAw==
+X-ME-Sender: <xms:bDCcaXg_jLYJw3BsWNOMZbKMglrxUNbmab7YbnWg0hguYf1eAPdOcg>
+    <xme:bDCcaaB18CWZNranRfxvCVwwmhiJxOE8coGl5zXRFN6hLW-ufY0zX1iVXncdUWt03
+    XucdwtzSSfmkv6Tjnml0DIgY5ShmFsU_TG1OTJAx1yLnsGw7gTSiSU>
+X-ME-Received: <xmr:bDCcaUvL2JSDp95eUbrxbAw5UGSKV3sNZM2-FrzoTchjVIXXU-rOk-4Vt4DSYYhaJab3yIVb2Xvaz9PjU1b_sWneNwmm1Ke3NIfaS5xt_w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejtdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejtdefucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:ZzCcabZPH15gyFyguWVtD1USUejCaf7Cw1B4dk-M526OQ_0vgFcDbQ>
-    <xmx:ZzCcaTXygG4QFzPfbfh8Zf6JUK-uHZg53DhfmBTiornvJeG18Jgbsg>
-    <xmx:ZzCcaf6p9sLdahANglVrdRiXuKVU6o3E1uJEiWrbdw4WZFA2jQYSdw>
-    <xmx:ZzCcaehHfXW9tVMmEhOGlqtXR7NREOnoEe9liUdwABu9olD_lX2GCA>
-    <xmx:aDCcabT0FexRLetPFGjqHePZg06qpUBtRUH7TDCuNoQwAgP2mz1bp7gi>
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:bDCcafY58sFxnLMSHY76_uGNy4urkV7aOHkN0DWxv0qQ6028kbi_YQ>
+    <xmx:bDCcaXUvxODBxYAvR0P_DhjuHe5obkpapjkKBE_Py8dyfTh9ZNtVfQ>
+    <xmx:bDCcaT4-n8kDFJHtKCg8XiD6XLheLVXmfCRig1J7gH1ovTV4-4c0VA>
+    <xmx:bDCcaSjndevlX9OIsunbhRq34trgVuAO0POKF7RC7DJOtHGTrRZt_g>
+    <xmx:bDCcafRx-BdhQ61lg_N5SAfjwaILsknnWMM8ZKm0dgUMhJz70GwAoI9H>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 05:48:07 -0500 (EST)
+ 23 Feb 2026 05:48:12 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ec060fcd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Feb 2026 10:48:06 +0000 (UTC)
-Date: Mon, 23 Feb 2026 11:48:03 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 275a6e88 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Feb 2026 10:48:11 +0000 (UTC)
+Date: Mon, 23 Feb 2026 11:48:09 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 07/17] refs: speed up `refs_for_each_glob_ref_in()`
-Message-ID: <aZwwYynerY8Yauqc@pks.im>
+Subject: Re: [PATCH 08/17] refs: generalize `refs_for_each_namespaced_ref()`
+Message-ID: <aZwwaVr3sObAgley@pks.im>
 References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
- <20260220-pks-refs-for-each-unification-v1-7-17170bd99de1@pks.im>
- <CAOLa=ZRogQCpsD5eXOQrgt_DvgsXNfagbaxQm2eL+NwfUpw9OQ@mail.gmail.com>
+ <20260220-pks-refs-for-each-unification-v1-8-17170bd99de1@pks.im>
+ <CAOLa=ZQjZ-YLedF=Cqn=Tb8-rhX8=+Lnd2VKv0fn_ryrO563_g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,54 +86,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZRogQCpsD5eXOQrgt_DvgsXNfagbaxQm2eL+NwfUpw9OQ@mail.gmail.com>
+In-Reply-To: <CAOLa=ZQjZ-YLedF=Cqn=Tb8-rhX8=+Lnd2VKv0fn_ryrO563_g@mail.gmail.com>
 
-On Mon, Feb 23, 2026 at 12:27:15AM -0800, Karthik Nayak wrote:
+On Mon, Feb 23, 2026 at 01:02:56AM -0800, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/refs.c b/refs.c
-> > index ec9e466381..ac34bbe6c1 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -1862,16 +1845,44 @@ int refs_for_each_ref_ext(struct ref_store *refs,
-> >  			  refs_for_each_cb cb, void *cb_data,
-> >  			  const struct refs_for_each_ref_options *opts)
-> >  {
-> > +	struct strbuf real_pattern = STRBUF_INIT;
-> > +	struct for_each_ref_filter filter;
-> >  	struct ref_iterator *iter;
-> > +	int ret;
+> > diff --git a/refs.h b/refs.h
+> > index a66dbf3865..2bde60aa0e 100644
+> > --- a/refs.h
+> > +++ b/refs.h
+> > @@ -468,6 +468,12 @@ struct refs_for_each_ref_options {
+> >  	 */
+> >  	const char *pattern;
 > >
-> >  	if (!refs)
-> >  		return 0;
-> >
-> > +	if (opts->pattern) {
-> > +		if (!opts->prefix && !starts_with(opts->pattern, "refs/"))
-> > +			strbuf_addstr(&real_pattern, "refs/");
-> > +		else if (opts->prefix)
-> > +			strbuf_addstr(&real_pattern, opts->prefix);
-> > +		strbuf_addstr(&real_pattern, opts->pattern);
-> > +
-> > +		if (!has_glob_specials(opts->pattern)) {
-> > +			/* Append implied '/' '*' if not present. */
-> > +			strbuf_complete(&real_pattern, '/');
-> > +			/* No need to check for '*', there is none. */
-> > +			strbuf_addch(&real_pattern, '*');
-> > +		}
-> > +
-> > +		filter.pattern = real_pattern.buf;
-> > +		filter.prefix = opts->prefix;
+> > +	/*
+> > +	 * If set, only yield refs part of the configured namespace. Exclude
+> > +	 * patterns will be rewritten to apply to the namespace.
+> > +	 */
+> > +	const char *namespace;
 > 
-> Can't we now remove this option and cleanup `for_each_filter_refs()` to
-> remove prefix trimming?
+> Nit: should we also mention how prefix is appended to namespace?
 
-No, unfortunately not. This is because the glob pattern is expected to
-match on the full refname, so if we were to strip the refname before we
-pass it to the `filter` callback then we wouldn't be able to do the call
-to wildmatch anymore.
-
-But the stripping part is still a bit funky after my refactoring, as we
-unconditionall strip the prefix right now. This is the expected
-behaviour, but it is somewhat surprising I guess. I'll rework this part
-a bit, thanks!
+Yeah, makes sense, will do.
 
 Patrick
