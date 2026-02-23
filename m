@@ -1,69 +1,69 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09A2286D5E
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 14:21:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC7A28853E
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 14:21:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771856476; cv=none; b=pfDj1KKYvMONsO5uSAkPt7Ef1IYbbJOIqIOEZdr22dDec/dJZuhf4U8QywxDix+uDayEbGWH35DMws3ftFTGaIJ87EL6nHfRn6/i4y3iKatSVYwHZQfWJB1fmscboOPjcJuvPuNhrAre7TY/ie7fl8hwLQ7nXijXjKdvPdbQ1ZE=
+	t=1771856478; cv=none; b=qOL1ZuzxDke3u5kekbhNksYH2uqvg2QiEkDzVo64QNj4gEzbMiaBUJo9Om5p9a7JhFpSTP+lsYplY5zlFHxeZN+p8PNqu/ICtZzepUJSnF93+B8oj51NpNLPw0vNR2GBJVPTX04hB105B0ITYeAKGe7I78hwZ1GyuMQR25T5GS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771856476; c=relaxed/simple;
-	bh=OjNb9GbMmvoo/AvzqMKMll5S6aCm26qmvy45GbcFE+Y=;
+	s=arc-20240116; t=1771856478; c=relaxed/simple;
+	bh=7bx2v4e6RPXfmbbAPY5QCvFqSG+0DW69/a2Ht6ZKnjs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=fz+Tq706KHlkEgw4PyvJvnUZfvs/lQ09l7MvIRc4VA2hKx8X1aa1LLmlwqMv157H4ua07eQ763j30bktbyF/TqEmM1U2RE1dS7xN/lGvvORM0ebp+j+9QLLYo5ZqC86iAvb/nqaasPnDHZZS+d936FIkCwEp8zsjQRuW5qQkq0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LepXwFz6; arc=none smtp.client-ip=209.85.222.178
+	 MIME-Version:To:Cc; b=JTGNpaMdkeD0c95XgitKvD0VfmFLBf+6QeYa5wFfYPXkR2fXqCHv8ci9qOIb+jHkZHqEIVcDatAu1jQUOe8jnOx5sLoiwZgtEqoIaNkbYNilxizZIdMUBXYElZUtlCCAlnfDrkIbcxzGZpLk5LTKd1gDeF2nWKM4ZlBROqGXplY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ku+p+lzh; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LepXwFz6"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8cb3e22435fso437399485a.1
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 06:21:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ku+p+lzh"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-506a3400f30so33555651cf.1
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 06:21:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771856473; x=1772461273; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771856475; x=1772461275; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SMW1I8meSSb/l+AUNZEA2AyUORzirRK8gxnH32iO8mE=;
-        b=LepXwFz6iObO3/xeaSP5lfQ7qPVtcv33sdsvL5VWp2JZvQlzIrTAXaf+Ai+iHtGL6g
-         NRuESfZQhEXd4G+5eR/hk5AVXcxzVbnyT2o0oHzRdvTbPtJvMUceQjVSEGomQ7Ll52pC
-         7gUAvjdTd9+j9LQ+nnsianRisLMLwcu4U/A71o8LrgExXMwF1gmfvL38xSYccpR5UzDp
-         2ayuWi9qhCTbpnmQKIY5JFTR2l1vyD910cQx2IP7WnUTNCMZh3gjouv5sRmDarg+rHCL
-         UkDFtHt0+iv+yXXzm6DPigmiwt11feZoEQTo3LfBZtsRl6zO0KVN/N2QgOXzHRJDfF4m
-         uHtw==
+        bh=NjluXTqmBa8AdSwvdn27q9HFFxB5bjD/3wfeVCTNVlU=;
+        b=ku+p+lzhNHn9Cl8wg9gRZk6Fl9CwA5ceXpNiL/+uCmXQfGYEmDv0C9DPU3DKG0Ccj0
+         i/amI/i4h7MsHLh8oUPxCoh/UioF4RFCvXXfl+0yG7b0bW/NBrfRAPUULH/oJ8Ywfsh1
+         W71jMKy0XbHOj+/e5BQgsilvHHT5tQ3kCCz73hwdtxRixeNkSOBggZDh1tdemYVkTuYq
+         YW0oQQuAAyjb8T4pbc+xROvvTzpVwZq0Fc9tarm/1nd1N36PqvfaRz10wlVQdTPfyLPH
+         NYlodomqbuwFdO3izSphP9K9Gn6joNv10GvSK4iCq1XI+3kGeR2U9mwaFMBKgE0u1SsV
+         y6pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771856473; x=1772461273;
+        d=1e100.net; s=20230601; t=1771856475; x=1772461275;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=SMW1I8meSSb/l+AUNZEA2AyUORzirRK8gxnH32iO8mE=;
-        b=vuc9m2LtqI2xqGfrpFEdZm8Yg9qV+2rehYoen3xJZEx/dGr7lL8mfo27Fyyj3Nd2mL
-         b9mQfzom92UwE8SYCFCrgSkcCz1RAcwykZqy/VITt0UfI9xdW9h6o4muWasBtvTBRo4R
-         as8EbjnKmvm+IkSsTwO8y5T2mc8jsdSYXy4ESZpsMbVenalIdojZa/mJP0lZKccHwDO8
-         Kc8uPC+HimvKHLXfAkLl88IpH1qommxd8+IqYxQXjZOSIpHQcx8UuerC8mDcG4kCCQiz
-         LUSDkUyTp66CSo/AGBsRJVwGKiPZhq/8Tx0ZZQNHxpPQFlwBNjh3dRCYLPxZiqKS456H
-         dMqA==
-X-Gm-Message-State: AOJu0YzlfOAqr0Ue5HlU9GzsJIEZnY3SGxbSl3oOribsTnGjIOAMKEw7
-	/LkRylEDQXvv29nnjwOlFII6shlVDDrb3xNjWbf2ilTiQfxBZZmvUr7WyWMK9A==
-X-Gm-Gg: AZuq6aJVMKcvr/qFEHfRcekTyxqhIzR1+c9oHs2iwMyxqVdyNWdndDGir6OYoCpbaNU
-	nkvxVHX9Tq2prX455ZlqOkza6aTgcDIs++Oqh+IWTfbGCInvreI36uMQoOPk8TZaHdH5oi09pcd
-	HNvDiZD2746IdxMX4I0CSgsnzT0ZuuZHyS88qKNb4oLPFm1I2rofK8mdbkhD2ejn18QEYjH3zgL
-	pJ2mw8sorZ96Ds02Thf4zmRpe8x2rSpO+bvxosCPVfYTnsmwbvoz+f1edFJRap5nqXfBAtMBtXR
-	hLUkmOXGCivUVjIl9KD1kqa66oWEH9zc8rEC43A83paPvRpj7Y73YyUv2aZtqvbtT9lWlTwaJL3
-	0wRfgzfKL2Ix0jQRm1C//iE8IiXv5lpw2hNYGckkXEjqWoee1xexf/b7tIB0lgX8QWToGLSbi8t
-	BDv3Mq2iNWjqxPlbKlb4sBcqA=
-X-Received: by 2002:a05:622a:452:b0:4ff:b32b:cdf9 with SMTP id d75a77b69052e-5070bf6d4ddmr102718521cf.14.1771856473196;
-        Mon, 23 Feb 2026 06:21:13 -0800 (PST)
+        bh=NjluXTqmBa8AdSwvdn27q9HFFxB5bjD/3wfeVCTNVlU=;
+        b=fN1nmEZKvzhmMJwbOTqJxqgGNtWp/j+0exyhnxREhb7WBs2n8/QfKxJF+0tDbW7nRm
+         boVn00I0TL+qzw9fLynaKQf+pL6BjmMygLkKIEzH66yYCAmWrtvFqjZCi3cO1rt2LvP1
+         Nd7j/Gj4f06wfZSFEZ41fzJraHAmps6OhhzWdUE35dLJ68XclK3gFwqVWdJpyXk+R8Ew
+         pvxC/fqFnI2JHzywRCiupaq+c6to71sM2vIPybLmeq7M8VTjeMOG9UMfOHjRH9h0ajU/
+         WSy83uR7EKIFa0sEuIzat26SplcSv9/23GBzRQpjrbRVKoc8nrVgwF5ok3uIjjjykOYr
+         55Hg==
+X-Gm-Message-State: AOJu0Ywcv1kZwHv2l9/jOKhajGeAcJe6DlHVcshHqGvmWMyDlxRK44MP
+	Jwcg2YhnlH4+pW41Y3LDCShQdMPn3mhv0w9+s5MTDmQSPlTHuSTzjg/bs+y1mw==
+X-Gm-Gg: AZuq6aLUfZSpS813hT33lKN/OiBg5/uOVwxkqQ+a/jsMxOz+22qBxTFPI6CwB7TKf0S
+	E3wngubZKKHZpYeHncrGeHAXZElea9e9HyrCMIl0+NaT4S+D+/0tunvRaO4LTE5n4dBFhINi+c1
+	kz/g2LYOYriYF+AVr5HvxZX/+Ng29GoBpXRiZh3ZtXnlBVJOqJP9NRXuKRUJZax++wNYm87wOzx
+	zFrAK601xPa/WxKYru+U0YkCjHPInLwUL6pFgL9n7x1of834DtHFOWukyOIwiBQQpj4vt8QTT+F
+	oM0ttXVLhLQZiA4qUN9ml7tFPY+OundtYNQBHhA28eji4e2gRvDiuCHuJSy/wJfy2riut1031vB
+	tmZo96pSlXQgtNvgewlip9rFv4RUkWkaLrJKwtiHk98BrPXSXOoXRMrBF4m+KKkxAk5dPu8sVXM
+	+OZh3fosWWdXqHnOagcRlgmGQ=
+X-Received: by 2002:ac8:7f88:0:b0:4ff:7eaf:6fa1 with SMTP id d75a77b69052e-5070bf6c19bmr128375131cf.11.1771856475441;
+        Mon, 23 Feb 2026 06:21:15 -0800 (PST)
 Received: from [127.0.0.1] ([20.55.15.231])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d6a2299sm67526711cf.19.2026.02.23.06.21.12
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d50c920sm70687411cf.7.2026.02.23.06.21.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 06:21:12 -0800 (PST)
-Message-Id: <6d5b9ff07566e1cc28a672cf1f47988e9c8c45da.1771856469.git.gitgitgadget@gmail.com>
+        Mon, 23 Feb 2026 06:21:14 -0800 (PST)
+Message-Id: <504d9cf7a0dbd663ea88c75217e1564504a60937.1771856469.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2208.v2.git.git.1771856469.gitgitgadget@gmail.com>
 References: <pull.2208.git.git.1771784936.gitgitgadget@gmail.com>
 	<pull.2208.v2.git.git.1771856469.gitgitgadget@gmail.com>
 From: "Eslam reda ragheb via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Feb 2026 14:21:02 +0000
-Subject: [PATCH v2 2/9] repo: add path keys to repo info
+Date: Mon, 23 Feb 2026 14:21:04 +0000
+Subject: [PATCH v2 4/9] repo: add structure max object size metrics
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,204 +84,188 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
 
 From: Eslam reda ragheb <eslam.reda.div@gmail.com>
 
-Add a path category to git repo info with key-value pairs that
-mirror repository paths users commonly retrieve via rev-parse and
-git-path lookups.
+Extend git repo structure with maximum inflated and on-disk object
+sizes, both per type and overall max values.
 
-This makes scripting against repo metadata more direct and avoids
-shelling out to multiple commands for related paths.
+This complements existing totals by highlighting outliers that
+often drive repository bloat analysis.
 
-The new keys are introduced as explicit path.* entries in
-repo_info_fields and are resolved through dedicated helpers.
+The implementation updates object counting to track per-type maxima
+while walking reachable objects.
 
-This keeps lookup behavior predictable and makes future path
-additions straightforward.
+It exposes those values in both table and keyvalue formats for
+scripts and human output.
 
 Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
 ---
- builtin/repo.c | 137 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 137 insertions(+)
+ builtin/repo.c | 87 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 86 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/repo.c b/builtin/repo.c
-index e34914a9a7..35e1eaf7d7 100644
+index e5078e5459..a2fc3fd8cc 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -1,10 +1,12 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "builtin.h"
-+#include "abspath.h"
- #include "environment.h"
- #include "hex.h"
- #include "odb.h"
- #include "parse-options.h"
-+#include "path.h"
- #include "path-walk.h"
- #include "progress.h"
- #include "quote.h"
-@@ -14,6 +16,7 @@
- #include "strbuf.h"
- #include "string-list.h"
- #include "shallow.h"
-+#include "submodule.h"
- #include "utf8.h"
- 
- static const char *const repo_usage[] = {
-@@ -40,6 +43,13 @@ struct field {
- 	get_value_fn *get_value;
+@@ -426,7 +426,9 @@ struct object_values {
+ struct object_stats {
+ 	struct object_values type_counts;
+ 	struct object_values inflated_sizes;
++	struct object_values max_inflated_sizes;
+ 	struct object_values disk_sizes;
++	struct object_values max_disk_sizes;
  };
  
-+static void repo_info_add_path(struct repo_info *info,
-+			      struct strbuf *buf,
-+			      const char *path)
-+{
-+	strbuf_add_absolute_path(buf, path);
-+}
-+
- static int get_layout_bare(struct repo_info *info UNUSED, struct strbuf *buf)
- {
- 	strbuf_addstr(buf, is_bare_repository() ? "true" : "false");
-@@ -61,6 +71,119 @@ static int get_object_format(struct repo_info *info, struct strbuf *buf)
- 	return 0;
+ struct repo_structure {
+@@ -529,6 +531,20 @@ static inline size_t get_total_object_values(struct object_values *values)
+ 	return values->tags + values->commits + values->trees + values->blobs;
  }
  
-+static int get_path_common_dir(struct repo_info *info, struct strbuf *buf)
++static inline size_t get_max_object_value(struct object_values *values)
 +{
-+	repo_info_add_path(info, buf, repo_get_common_dir(info->repo));
-+	return 0;
++	size_t max = values->commits;
++
++	if (values->trees > max)
++		max = values->trees;
++	if (values->blobs > max)
++		max = values->blobs;
++	if (values->tags > max)
++		max = values->tags;
++
++	return max;
 +}
 +
-+static int get_path_config_file(struct repo_info *info, struct strbuf *buf)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "config"));
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
-+static int get_path_git_dir(struct repo_info *info, struct strbuf *buf)
-+{
-+	repo_info_add_path(info, buf, repo_get_git_dir(info->repo));
-+	return 0;
-+}
-+
-+static int get_path_git_prefix(struct repo_info *info, struct strbuf *buf)
-+{
-+	if (info->prefix)
-+		strbuf_addstr(buf, info->prefix);
-+	return 0;
-+}
-+
-+static int get_path_grafts_file(struct repo_info *info, struct strbuf *buf)
-+{
-+	repo_info_add_path(info, buf, repo_get_graft_file(info->repo));
-+	return 0;
-+}
-+
-+static int get_path_hooks_directory(struct repo_info *info, struct strbuf *buf)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "hooks"));
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
-+static int get_path_index_file(struct repo_info *info, struct strbuf *buf)
-+{
-+	repo_info_add_path(info, buf, repo_get_index_file(info->repo));
-+	return 0;
-+}
-+
-+static int get_path_logs_directory(struct repo_info *info, struct strbuf *buf)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "logs"));
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
-+static int get_path_objects_directory(struct repo_info *info, struct strbuf *buf)
-+{
-+	repo_info_add_path(info, buf, repo_get_object_directory(info->repo));
-+	return 0;
-+}
-+
-+static int get_path_packed_refs_file(struct repo_info *info, struct strbuf *buf)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "packed-refs"));
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
-+static int get_path_refs_directory(struct repo_info *info, struct strbuf *buf)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "refs"));
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
-+static int get_path_shallow_file(struct repo_info *info, struct strbuf *buf)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "shallow"));
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
-+static int get_path_superproject_working_tree(struct repo_info *info,
-+					     struct strbuf *buf)
-+{
-+	struct strbuf superproject = STRBUF_INIT;
-+
-+	if (get_superproject_working_tree(&superproject))
-+		repo_info_add_path(info, buf, superproject.buf);
-+
-+	strbuf_release(&superproject);
-+	return 0;
-+}
-+
-+static int get_path_toplevel(struct repo_info *info, struct strbuf *buf)
-+{
-+	const char *work_tree = repo_get_work_tree(info->repo);
-+
-+	if (work_tree)
-+		repo_info_add_path(info, buf, work_tree);
-+
-+	return 0;
-+}
-+
- static int get_references_format(struct repo_info *info, struct strbuf *buf)
+ static void stats_table_setup_structure(struct stats_table *table,
+ 					struct repo_structure *stats)
  {
- 	struct repository *repo = info->repo;
-@@ -74,6 +197,20 @@ static const struct field repo_info_fields[] = {
- 	{ "layout.bare", get_layout_bare },
- 	{ "layout.shallow", get_layout_shallow },
- 	{ "object.format", get_object_format },
-+	{ "path.common-dir", get_path_common_dir },
-+	{ "path.config-file", get_path_config_file },
-+	{ "path.git-dir", get_path_git_dir },
-+	{ "path.git-prefix", get_path_git_prefix },
-+	{ "path.grafts-file", get_path_grafts_file },
-+	{ "path.hooks-directory", get_path_hooks_directory },
-+	{ "path.index-file", get_path_index_file },
-+	{ "path.logs-directory", get_path_logs_directory },
-+	{ "path.objects-directory", get_path_objects_directory },
-+	{ "path.packed-refs-file", get_path_packed_refs_file },
-+	{ "path.refs-directory", get_path_refs_directory },
-+	{ "path.shallow-file", get_path_shallow_file },
-+	{ "path.superproject-working-tree", get_path_superproject_working_tree },
-+	{ "path.toplevel", get_path_toplevel },
- 	{ "references.format", get_references_format },
- };
+@@ -583,6 +599,26 @@ static void stats_table_setup_structure(struct stats_table *table,
+ 			      "    * %s", _("Blobs"));
+ 	stats_table_size_addf(table, objects->disk_sizes.tags,
+ 			      "    * %s", _("Tags"));
++
++	stats_table_size_addf(table, objects->max_inflated_sizes.commits,
++			      "  * %s", _("Largest commit"));
++	stats_table_size_addf(table, objects->max_inflated_sizes.trees,
++			      "  * %s", _("Largest tree"));
++	stats_table_size_addf(table, objects->max_inflated_sizes.blobs,
++			      "  * %s", _("Largest blob"));
++	stats_table_size_addf(table, objects->max_inflated_sizes.tags,
++			      "  * %s", _("Largest tag"));
++
++	stats_table_size_addf(table, get_max_object_value(&objects->max_disk_sizes),
++			      "  * %s", _("Largest disk size"));
++	stats_table_size_addf(table, objects->max_disk_sizes.commits,
++			      "    * %s", _("Commits"));
++	stats_table_size_addf(table, objects->max_disk_sizes.trees,
++			      "    * %s", _("Trees"));
++	stats_table_size_addf(table, objects->max_disk_sizes.blobs,
++			      "    * %s", _("Blobs"));
++	stats_table_size_addf(table, objects->max_disk_sizes.tags,
++			      "    * %s", _("Tags"));
+ }
  
+ static void stats_table_print_structure(const struct stats_table *table)
+@@ -661,6 +697,9 @@ static void stats_table_clear(struct stats_table *table)
+ static void structure_keyvalue_print(struct repo_structure *stats,
+ 				     char key_delim, char value_delim)
+ {
++	size_t max_inflated_size = get_max_object_value(&stats->objects.max_inflated_sizes);
++	size_t max_disk_size = get_max_object_value(&stats->objects.max_disk_sizes);
++
+ 	printf("references.branches.count%c%" PRIuMAX "%c", key_delim,
+ 	       (uintmax_t)stats->refs.branches, value_delim);
+ 	printf("references.tags.count%c%" PRIuMAX "%c", key_delim,
+@@ -688,6 +727,28 @@ static void structure_keyvalue_print(struct repo_structure *stats,
+ 	printf("objects.tags.inflated_size%c%" PRIuMAX "%c", key_delim,
+ 	       (uintmax_t)stats->objects.inflated_sizes.tags, value_delim);
+ 
++	printf("objects.max_inflated_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)max_inflated_size, value_delim);
++	printf("objects.commits.max_inflated_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)stats->objects.max_inflated_sizes.commits, value_delim);
++	printf("objects.trees.max_inflated_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)stats->objects.max_inflated_sizes.trees, value_delim);
++	printf("objects.blobs.max_inflated_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)stats->objects.max_inflated_sizes.blobs, value_delim);
++	printf("objects.tags.max_inflated_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)stats->objects.max_inflated_sizes.tags, value_delim);
++
++	printf("objects.max_disk_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)max_disk_size, value_delim);
++	printf("objects.commits.max_disk_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)stats->objects.max_disk_sizes.commits, value_delim);
++	printf("objects.trees.max_disk_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)stats->objects.max_disk_sizes.trees, value_delim);
++	printf("objects.blobs.max_disk_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)stats->objects.max_disk_sizes.blobs, value_delim);
++	printf("objects.tags.max_disk_size%c%" PRIuMAX "%c", key_delim,
++	       (uintmax_t)stats->objects.max_disk_sizes.tags, value_delim);
++
+ 	printf("objects.commits.disk_size%c%" PRIuMAX "%c", key_delim,
+ 	       (uintmax_t)stats->objects.disk_sizes.commits, value_delim);
+ 	printf("objects.trees.disk_size%c%" PRIuMAX "%c", key_delim,
+@@ -772,6 +833,8 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 	struct object_stats *stats = data->stats;
+ 	size_t inflated_total = 0;
+ 	size_t disk_total = 0;
++	size_t max_inflated = 0;
++	size_t max_disk = 0;
+ 	size_t object_count;
+ 
+ 	for (size_t i = 0; i < oids->nr; i++) {
+@@ -786,31 +849,53 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+ 						  OBJECT_INFO_SKIP_FETCH_OBJECT |
+ 						  OBJECT_INFO_QUICK) < 0)
+ 			continue;
++		if (disk < 0)
++			continue;
+ 
+ 		inflated_total += inflated;
+-		disk_total += disk;
++		disk_total += (size_t)disk;
++		if (inflated > max_inflated)
++			max_inflated = inflated;
++		if ((size_t)disk > max_disk)
++			max_disk = (size_t)disk;
+ 	}
+ 
+ 	switch (type) {
+ 	case OBJ_TAG:
+ 		stats->type_counts.tags += oids->nr;
+ 		stats->inflated_sizes.tags += inflated_total;
++		if (max_inflated > stats->max_inflated_sizes.tags)
++			stats->max_inflated_sizes.tags = max_inflated;
+ 		stats->disk_sizes.tags += disk_total;
++		if (max_disk > stats->max_disk_sizes.tags)
++			stats->max_disk_sizes.tags = max_disk;
+ 		break;
+ 	case OBJ_COMMIT:
+ 		stats->type_counts.commits += oids->nr;
+ 		stats->inflated_sizes.commits += inflated_total;
++		if (max_inflated > stats->max_inflated_sizes.commits)
++			stats->max_inflated_sizes.commits = max_inflated;
+ 		stats->disk_sizes.commits += disk_total;
++		if (max_disk > stats->max_disk_sizes.commits)
++			stats->max_disk_sizes.commits = max_disk;
+ 		break;
+ 	case OBJ_TREE:
+ 		stats->type_counts.trees += oids->nr;
+ 		stats->inflated_sizes.trees += inflated_total;
++		if (max_inflated > stats->max_inflated_sizes.trees)
++			stats->max_inflated_sizes.trees = max_inflated;
+ 		stats->disk_sizes.trees += disk_total;
++		if (max_disk > stats->max_disk_sizes.trees)
++			stats->max_disk_sizes.trees = max_disk;
+ 		break;
+ 	case OBJ_BLOB:
+ 		stats->type_counts.blobs += oids->nr;
+ 		stats->inflated_sizes.blobs += inflated_total;
++		if (max_inflated > stats->max_inflated_sizes.blobs)
++			stats->max_inflated_sizes.blobs = max_inflated;
+ 		stats->disk_sizes.blobs += disk_total;
++		if (max_disk > stats->max_disk_sizes.blobs)
++			stats->max_disk_sizes.blobs = max_disk;
+ 		break;
+ 	default:
+ 		BUG("invalid object type");
 -- 
 gitgitgadget
 
