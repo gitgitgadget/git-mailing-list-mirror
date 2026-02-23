@@ -1,138 +1,203 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1D83FEF
-	for <git@vger.kernel.org>; Sun, 22 Feb 2026 23:33:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771803188; cv=pass; b=EaHUOGAlWURguvjW+ezqY0MiXcX+s+KYyPXBMztX67EyVi1OkNk1xhBoQsiXVN+ypziRugIqNHKdv18Ju0KpPnoy5dxk6ckJeclcg9iCuN8JGfZBblJcGPBq1+qPIp5aew1LuBDgERVXg7A9I5MsEvFSrJvqx6Og2qqggSaPPCM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771803188; c=relaxed/simple;
-	bh=9qUImKxQBJ4HY3NZMI2i5PF1upTCjjlwnFr/Pigt4Ow=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UlqAUPSKr2x//rlgAfI4ugRVj/uc37q8SHwzrEMQaPytGR2wXFIRR5NtN/oRnqDaLhTMBo9X1MLI9krARi5FfZUOAso//kied1yMEAAxKkjQNzJGmsgao547wdvc7qp7vNt8+T9Im7O7nnxjSJLEsPDfZU1eW/h4S6EFgnQCsC0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vf8i/ncL; arc=pass smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6324B2110
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 00:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771806189; cv=none; b=kirjs64k936SjO+5vAgoOPbPplm2DuYPhEfVcL+wBV28NsvmV0nwKtvlYXu5eVIU8pirCwRyEuYhYYfUrLJzITfFkcuK0064qfZ8WlHjHmGQpkPCzaEXNb5QGuNajIRzWE+FmRXGV6+cCItOl9SGEZ7uyoH+nllXom5oQeDLnwk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771806189; c=relaxed/simple;
+	bh=pqJSFu/pF6rU4XrnPPb9Fb3iXTLpDlq00X8kNL2MSb4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XSm4zH3uV9NWvndq7VcWDHbNRw4KbywGQSm+zFs97wRwCqBGCadjZrhr4IF9AHOGK5GWpR0gzGp9NNdCB++51oiL8zybztwwb8Y+UG5QvkoAJ2jWm5Fi8TtnfCJ1myFe+7qEMdyifS63ga9F1C52cgCh/Qjc9+YeFSgBcIlBl5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YS1aMfmE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ub214UlN; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vf8i/ncL"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-506e287dd53so30585501cf.1
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 15:33:07 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771803186; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Zb3VFN3qJbysnelbJoWPvLRzwfS2Qy96VQfZwy37/jU6t0n5VARHswvKGGFIhtQD7T
-         8KebOdbiNhEosZ397a7UvJ2OzISnNvRis+tYT4TtcEanCiZ7XrId59XyNhfanc2BL37p
-         Ce3gJ53Vik9qogtJ+Sqfawz+jD4S/W8egQhB4e1J/F5uFNyHBI2I8BQs3HOCUoQkWC+5
-         szfTrF0M+nW0LvbT3O7b4EyiIHB9v9a1j/pMMuEbE/iSK9X3/z5KKvjqrtPTeNa3mi/c
-         rMs+EBKbXWvudTQE0PTWI2Ep5NZNUBQbPrmyq+c5k2EPv5GXZuoq9tacrTrQ0MdqZieS
-         4Upw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=9qUImKxQBJ4HY3NZMI2i5PF1upTCjjlwnFr/Pigt4Ow=;
-        fh=fOfKsK4z23ltzDd9v6rHSXUBGg1St5z4DAQx7hlTzQ8=;
-        b=c3szAzIuUWgUGHlwHhsJj8nX6i4UPxeLfKJliUcvlpJn/AisRaKJ8Y+19bQvw+phml
-         ydeUSXbdJkUaNtjk5v9Kf1DBy04BshB2OP5FUbwCflsVDowYQz1C4nVfmWw1Mwi6E8Fx
-         7NVST3pLbSD+pD0OoU/dsBTDDgq2Bc7Ybcl8AbimH8rLqLBnJk3lxyXt4Q5ZkAF73bK0
-         70WmUTHS8l37X5y8ZMvMuFaWXvaDjzw3fAPXGchCf9EOcNktPf/E/5W0/50nW94m5NaD
-         nl2+sTcGm7NKu33++PWxVa6Cp1/ghRdGmtzOPUg/CpF0HFlwwpbqANrEfsDeHHkeeEGA
-         6d9g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771803186; x=1772407986; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9qUImKxQBJ4HY3NZMI2i5PF1upTCjjlwnFr/Pigt4Ow=;
-        b=Vf8i/ncLO7Hr01JCimu7IfgAImdcbwrrFRd/xDXIOFXEShzTmqTK5JWZ9nMMHJkx4o
-         Vav1O42jzd9ubRpPTgKmkM5jTpMf7cz8DTX10ExLOC6E2tHrUYtGHYJs1g2XIL/V6CRT
-         oBHQ42Ggts3REdHji82A8DVyDjTvr7g0R1xbDV8UDZ0mBuUqejgiaq82BE294qx4EpJv
-         cghZAbuSCpkVTyXuJi4/7MClWv5CKaeV9gKEmYTi7+nDb2MwY8KI5xDXAgq3GdwXDPMH
-         NNr2r6M/gC/bcJyKnUtLRJK/13ClgwBVfJje6FM0YEcty7wZHK0bdcYrAgtyPVuo4DSu
-         0QKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771803186; x=1772407986;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=9qUImKxQBJ4HY3NZMI2i5PF1upTCjjlwnFr/Pigt4Ow=;
-        b=UyB4V3rbuWswQl9INs7VXUAEOiQH/jCXh2hCAA6+Medk5yHursQGvKiPA6CBp57++C
-         7R/qJLq4j6zNQyYM5OypoQL0jB4TtepL7oBTRhffo9urn1o9Xsq+32+ucQjlQab0sQQc
-         Zw3mcwHecHmx56fy/ujoAu2PUhrOHB66FTNxbvFV8/7DBum/YesCnX1pc6VMchmo7nwh
-         VVg5PaPyIWYfei5r2spH0bLHdjEG4/yR0gRsAdTunGye4VR+1N+FUw6kvWhcQp2Pjupi
-         634iNIouSc/MO8FY4txvEt1b+LFLgnb2WhLtNv+mRbY74BShYdSVHVHytNLRkz/0e5Zz
-         /Q2g==
-X-Gm-Message-State: AOJu0YwDBsBp79J5hDT48gjjpm3Qjc6IHg0nUewYq0AEdnb+m3z4gF9A
-	CT3hnXtHm3zG9eULwZBnb9gPlibXEhKZoNwpN7C146yDFRzBmi0Z+tfU4RD8YaBwczA9h4Mdtm7
-	Z4htTmimbz7M/U9RUCmTtLL2PmKn8Yzc=
-X-Gm-Gg: AZuq6aIf++qtZYalrZVI3d1ZjKE/or77zXU95oIvU2oR+cpBrGSMn1VPUZUyt9Tvbda
-	/+OXqYRJWMuTB1iG7Cx759NHU9gUbckXT0qGOOgZkX00iBwQP5Ugoqbm5kJdDR7uzaLSUNcr8Ns
-	Cl8y/rcNz3c3fnQuMrLdL5auZIAvyybsxn/E+iLnjLgOLy7bALnJ4ZwwXoTBDFrU81BOCpmB2xw
-	Q+kdDMrjMAy+fC1PKT/l/okc+cxv6YOGhvixrHCBniviU5EjLJdQ+FTj75wshVmlwrqyrFzu+8/
-	V1RySRKXcv62/wSZ7iKNV6dHbCw7CGnUWs3oUWDTyf/uK06HfMzbj+faweFQFCSLX3/sLNGMsyZ
-	jPH5HpvJjBo4mSs8bEuWVi+Qxjw==
-X-Received: by 2002:a05:622a:1101:b0:4f3:4edc:5414 with SMTP id
- d75a77b69052e-5070bba6b36mr106803821cf.11.1771803186579; Sun, 22 Feb 2026
- 15:33:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YS1aMfmE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ub214UlN"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8ED35EC027B;
+	Sun, 22 Feb 2026 19:23:06 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sun, 22 Feb 2026 19:23:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771806186; x=1771892586; bh=KUKzXEC4x7
+	RZ4fGCFTBT8veqcZ8gexsSCXmkLU4UHUQ=; b=YS1aMfmEih4NrqFy99tK0/1Bjd
+	J0V4z19shsH2gaGSHj/rdiDADFoPYcKyj2XQwBn3rxtSEgI3aazKAUVF/82Ttmyh
+	CEc+Lnh1Ejv7Se9PyxqZWhM2FoGHXCXIvmo4k/8wYw37Y1HgtJ5X3gZxz7iR/vCf
+	Y2tXxCDgpqat0fLlBacItNUEM2/62Dro1KcrlY2CrvKZ4UJLeUxB3spUf1W7w2sS
+	8xkgjshAId2w46VX3swZGQp/veTci99QYkYtSEtjpcbUlBF9nsCjZLEv4TT/g9NF
+	yoFzUx0lwczgEdQzxobEUSLLlyosmDdyckI2xSacd2EOceA1v4juyzBlchTg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771806186; x=1771892586; bh=KUKzXEC4x7RZ4fGCFTBT8veqcZ8gexsSCXm
+	kLU4UHUQ=; b=Ub214UlNRzuACws3V/tIR61t8mzDlTwPjxC/s36Rbcaa+m4ZLGQ
+	6PrmdhZSs/UVeS3Q27sFvy99jnYC+kwsYSseMO5pbQ2CMZ6HOkhesJFZ1GS9zs+S
+	XphYJxXtk6yMFd+c1B2Lw7FqkQzRClrwRNgQFUCYp8509eo05u50g/oGtyRZi0gr
+	DKb7PonvcyqXvXpFMIYQsk6zCy3HMQGQMBECkaGEOWAxw9JvE/36Yqjfi4lFL0/c
+	wDmeBPWfX73BdYEp9Wt1gc0vjoJde3RBfqC5MmslAVTO+hQB5cOHJielC1Ab0vL0
+	g9c6E1Wt0C3juGaErmSY/MpaBiX3+5SC4Ew==
+X-ME-Sender: <xms:6p2baSAlq_6zAWJskl2Fw1a6mnkY4nnbd8-KdbQhHh4LddhFEtMg5g>
+    <xme:6p2baT-Gi92tCQNPvDrajFlnAzVeRkfQl7-CaHr6MAhHbJHNWY6FkC3bQOMBPREr5
+    wffU3wN5LxuCFFv6PkzgmN2PenFAAGtqrpqGDT0Zzz1fyUdMEJ2cg>
+X-ME-Received: <xmr:6p2baS_LlkdUmf4B_h-qWCmCeKhMRsV1OMC7GCQ930bnLhMH6hyVh7Hrxu5TY55Xo6rf-AqOp3EAAXZ_2qjo0x92Btgq-nbjUg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeehjeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhff
+    eggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
+    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:6p2baadA3-_nNavjsq5x9FuwiEClCua8u-ad6G0GsFKVlWQ9RrVm1Q>
+    <xmx:6p2babEMeoyFHSMUrRiBqBL5OwGWyue-ZWUa9Ya_UCct2h2sBbG2SA>
+    <xmx:6p2baYfuG7MiZq5GHirgegNGH0zMDaTGztbk0wPW69Jd_cw0zOYYpA>
+    <xmx:6p2baVHjeL-wVubNtA7jHQSiynnY-SqlCa7SBdSSMl8qSqwrUS9Pbg>
+    <xmx:6p2baT_VaDOOM_zg6S9IBIzCVkHX-WsxcO41L7wqE0AAcU9P76fn-9F1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 22 Feb 2026 19:23:06 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v10] setup: improve error diagnosis for invalid .git files
+In-Reply-To: <xmqq4in8quxn.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
+	22 Feb 2026 14:23:32 -0800")
+References: <20260221083001.220061-1-a3205153416@gmail.com>
+	<20260222102928.377519-1-a3205153416@gmail.com>
+	<xmqq4in8quxn.fsf@gitster.g>
+Date: Sun, 22 Feb 2026 16:23:04 -0800
+Message-ID: <xmqqqzqcpatz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+rGoLdSR=NPoD7XEbYPoRTt0VS5M0QhzHcy-OmyuZMMVN-H5w@mail.gmail.com>
- <3C0852FD-59FE-496D-9521-E123181901B3@gmail.com>
-In-Reply-To: <3C0852FD-59FE-496D-9521-E123181901B3@gmail.com>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Mon, 23 Feb 2026 05:02:55 +0530
-X-Gm-Features: AaiRm51ZGAIj3qugKVI1qqZpJoVYdG40Qov7HT-i465irwrB2na0Cxhjsf34tRE
-Message-ID: <CA+rGoLeq-bnxnzsYmgFg+Cj3uPW+30ApOMFT_wvrp9p9VRwnQg@mail.gmail.com>
-Subject: Re: [proposal][RFC] Improve the new git repo command
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>, karthik nayak <karthik.188@gmail.com>, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, jltobler@gmail.com, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hey Lucas,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for taking time to review my proposal
-
-
-On Mon, Feb 23, 2026 at 2:44=E2=80=AFAM Lucas Seiki Oshiro
-<lucasseikioshiro@gmail.com> wrote:
+>>  setup.c                       | 42 ++++++++++++++------
+>>  setup.h                       |  2 +
+>>  submodule.c                   |  2 +-
+>>  t/meson.build                 |  1 +
+>>  t/t0009-git-dir-validation.sh | 72 +++++++++++++++++++++++++++++++++++
+>>  worktree.c                    |  6 ++-
+>>  6 files changed, 110 insertions(+), 15 deletions(-)
+>>  create mode 100755 t/t0009-git-dir-validation.sh
 >
+> We'd probably need to treat ENOTDIR the same way as ENOENT to deal
+> with cases where we expect a directory "sm1" to be the root of a
+> submodule working tree, and we have a modification that removes the
+> submodule directory and replace it with a regular file "sm1".  In
+> the code path touched by this patch in submodule.c, we would ask "is
+> sm1/.git a git directory?" and the stat(2) call on that path in
+> read_gitfile_gently() used to say "Ah, a failure, that means we
+> cannot positively say that 'sm1/.git' is a git directory or a gitdir
+> file."  Now we inspect the error code in an attempt to tell if it is
+> a system failure (e.g., a corrupt filesystem), but catching only
+> ENOENT is probably a bit too tight.  In the above scenario, asking
+> about 'sm1/.git' when 'sm1' is a regular file will not result in
+> ENOENT but in ENOTDIR (i.e., "the leading 'sm1' is not a directory so
+> it makes no sense to ask about 'sm1/.git'").
 >
-> > A list of my past activities in Git:
->
-> Looking the Git history (`git log --author=3D'K Jayatheerth'`), there
-> are many meaningful patches that you didn't listed here.
->
-
-I agree, I think adding
-https://github.com/git/git/commit/ec727e189cce9e8457e2b00e0756cfdf325a12d9
-Would make sense too because that patch is path related
-
-But the others are doc changes, do you suggest I add those too?
+> Is it always sensible to treat ENOTDIR and ENOENT as two equivalent
+> errors for the purpose of read_gitfile_gently()?  I have no clear
+> answer offhand myself.  This is part of what we need to think about
+> and resolve while addressing the original "NEEDSWORK:" comment.
 
 
+----- >8 -----
+Subject: [PATCH] read_gitfile(): group ENOENT and ENOTDIR into a
+ single MISSING error
 
+The code from the previous step does not deal wellwith a case where
+we check if "sm/.git" is a good directory after replacing "sm" with
+a regular file.  ENOTDIR is returned when we ask about "sm/.git",
+not ENOENT, and the code would want to handle both.
 
->
-> It looks to me that you're proposing too much here. I mean, I agree
-> with everything that you proposed here, but maybe you won't have
-> enough time to do that given the pace of the reviewing process. For
-> example, my first GSoC patch series took 11 versions until it was
-> accepted.
->
+I am not convinced if this is a good change, though.  Outside the
+submodule caller, the story might be different and we may want to
+treat ENOTDIR differently from ENOENT.  I dunno.  That is why this
+is not squashed into the patch (yet).
 
-Alright, this is tough because to me everything seems equally important
-Since you started this command, can you probably point out to me which
-of these in proposals are
-needed urgently? as in which of these are high impact, and do you
-suggest I remove the other parts?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ setup.c     | 8 ++++----
+ setup.h     | 2 +-
+ submodule.c | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-Regards
-- Jayatheerth
+diff --git a/setup.c b/setup.c
+index b79a9233f5..d4afbed3eb 100644
+--- a/setup.c
++++ b/setup.c
+@@ -895,7 +895,7 @@ int verify_repository_format(const struct repository_format *format,
+ void read_gitfile_error_die(int error_code, const char *path, const char *dir)
+ {
+ 	switch (error_code) {
+-	case READ_GITFILE_ERR_STAT_ENOENT:
++	case READ_GITFILE_ERR_STAT_MISSING:
+ 	case READ_GITFILE_ERR_IS_A_DIR:
+ 		/* non-fatal; follow return path */
+ 		break;
+@@ -943,8 +943,8 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
+ 	static struct strbuf realpath = STRBUF_INIT;
+ 
+ 	if (stat(path, &st)) {
+-		if (errno == ENOENT)
+-			error_code = READ_GITFILE_ERR_STAT_ENOENT;
++		if (errno == ENOENT || errno == ENOTDIR)
++			error_code = READ_GITFILE_ERR_STAT_MISSING;
+ 		else
+ 			error_code = READ_GITFILE_ERR_STAT_FAILED;
+ 		goto cleanup_return;
+@@ -1589,7 +1589,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 		gitdirenv = read_gitfile_gently(dir->buf, &error_code);
+ 		if (!gitdirenv) {
+ 			switch (error_code) {
+-			case READ_GITFILE_ERR_STAT_ENOENT:
++			case READ_GITFILE_ERR_STAT_MISSING:
+ 				/* no .git in this directory, move on */
+ 				break;
+ 			case READ_GITFILE_ERR_IS_A_DIR:
+diff --git a/setup.h b/setup.h
+index c23629cb4f..cc45f962fa 100644
+--- a/setup.h
++++ b/setup.h
+@@ -36,7 +36,7 @@ int is_nonbare_repository_dir(struct strbuf *path);
+ #define READ_GITFILE_ERR_NO_PATH 6
+ #define READ_GITFILE_ERR_NOT_A_REPO 7
+ #define READ_GITFILE_ERR_TOO_LARGE 8
+-#define READ_GITFILE_ERR_STAT_ENOENT 9
++#define READ_GITFILE_ERR_STAT_MISSING 9
+ #define READ_GITFILE_ERR_IS_A_DIR 10
+ void read_gitfile_error_die(int error_code, const char *path, const char *dir);
+ const char *read_gitfile_gently(const char *path, int *return_error_code);
+diff --git a/submodule.c b/submodule.c
+index 52a7cf0e43..fc85a7a1d8 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -2413,7 +2413,7 @@ void absorb_git_dir_into_superproject(const char *path,
+ 		const struct submodule *sub;
+ 		struct strbuf sub_gitdir = STRBUF_INIT;
+ 
+-		if (err_code == READ_GITFILE_ERR_STAT_ENOENT) {
++		if (err_code == READ_GITFILE_ERR_STAT_MISSING) {
+ 			/* unpopulated as expected */
+ 			strbuf_release(&gitdir);
+ 			return;
+-- 
+2.53.0-455-g62fcd67e6e
+
