@@ -1,83 +1,81 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DC230E0D5
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F0330DEB2
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771862419; cv=none; b=qaoYZH2bKBxA+MNkhQDIVesLtdk7nd1yvu4glUO5RDpbxbxBp+o9RUn3upeMaFdQYBBaA9X7rmK5LcLqIw++l4hiYfvzkW5/GgHDiapesPsYBCzvkQsMlmNseA2kr0fdUukIW5sBoATMSL5INUdmE67DsZoIDCM40w9UKPPNv48=
+	t=1771862422; cv=none; b=OQjPbGXir+U4fdYi+3uBXzajfuaibWQkOog3SE9d1cuiIBWubQtDqIysTMlDhCXazprLuD/8QBcgPbS69EhkJ6sAzvHZBK/ynDjU64mHxBt9QkXeNwH65t1ZoZPsKK3A30q2KXCpeRXsHBBnoDEmNUXVkEGU2Z+zv+3GFr9u5CE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771862419; c=relaxed/simple;
-	bh=tdWmuLAkDtv3rlqMetPrwMvtDwiJwUfYhJ6Flv3YXDA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=bRK1tJvJ55MFiGXEkhfblFk+4vRPYXOKi66QIz5SUXvWWeQ7vYuUYujgIYUy1YNH/n+AOgFe/0GFzDrOvo0OO6SVoo6pSBBOEAQoWTyF4/zsmrhIQlP3eI9dhUOxuq/jcb8em3uZ9Z37lleEBeSZFu03iwirnKSyr93KdBCLgrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bKx/S2Ld; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hdoQMXvn; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1771862422; c=relaxed/simple;
+	bh=flnc1F9Gybjip9tvRqcVZKX4/JPXLY2/Y2f+eZ1q+nM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=P90JZtYGaGEbRGtyYfmZ/i4QWxq+ZTXZjFCIE/+UZx53aM9OC42qbJdyNR4dLUVbiRs5z+8+UO2q2Grt+jlBEj5LUaG3m7U3k0wc6huuy1svyxGBdOxNVbR5N/z5InNu/RkGDWzBrObvCkoucbBA2H/M/R5j7nCzjLVNItUZNeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GXk1eBYj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VC0xfMBS; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bKx/S2Ld";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hdoQMXvn"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9040214001BB;
-	Mon, 23 Feb 2026 11:00:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GXk1eBYj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VC0xfMBS"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EF94A14001D4;
+	Mon, 23 Feb 2026 11:00:19 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 23 Feb 2026 11:00:17 -0500
+  by phl-compute-05.internal (MEProxy); Mon, 23 Feb 2026 11:00:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771862417;
-	 x=1771948817; bh=+bFSodJnlHTZJStVfSS8kkdDndAvl72NsvhcTyVdZeg=; b=
-	bKx/S2LdXQcexHI6h96IoE7SmWYeMM1cZUg4M641j1M4pihjyzDMkT/M+Igzke5Z
-	73pvFJKtArhCGys7XnF+Lnx2uJ1HEYW0c97/AnLmgLWkIjJkS/RO3e2tlnhGzt3M
-	ogMHnFJKwMeYXgaMCfxRN7doBxMTT8HfKW38tjsKhYIICY/njyAbnzv6POijiuIb
-	UDzb/Qx2Iv9IPOL+cyQXYe2jAuyzWFiqUDqVtRkQlygzIN//enHBBiYkI5t7eG+7
-	dlUgH70dKHeH6bOskXDnOOwXL2goYdlgR9tWsQEwUsJ1qt/ntjcVRkQcfj2nX/14
-	nsfRq3a7cRaLJbcVXKUwIg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771862419;
+	 x=1771948819; bh=VXUrmgVphRP1HTSkkzy0TZX3W4kHuDvZh/nY2Ffoaw8=; b=
+	GXk1eBYj9bGhTWCJqDmHPJZoJAEShpfSV+uyulW8yAesC6tjDLmL6th4mBK9ReA7
+	TyWxSqUpK8QL7yTC8FbcUChZF8pmS8N0BuoBJfd8PL4l/gX1PH/ZvmTLzCFoJMDi
+	GTR4LehBYrU32wKHREKZgWRPDPHCORAR5914bQQEHsazco4dS+nRDDQfZh0kGcLE
+	zFXiJnWjoeh5/b+wm5RNa/NVWTpnaVRiaQWEq/hrZsX39P12/SXJrc0g40JBwrV2
+	T4YNcRQtFcztITD3odDc+flYA6FzkYxPjjsAnXajIHMONl+gFUVgwlGMs8mEnMiq
+	ooTmrQpiC2LwOQUL4i08HQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771862417; x=
-	1771948817; bh=+bFSodJnlHTZJStVfSS8kkdDndAvl72NsvhcTyVdZeg=; b=h
-	doQMXvnNrBzop4O2RiGhv32a8kgSXR5eb2QjHkWEE6PuLLowvDlF2sv6Km3A+eY9
-	juoEb9o7Rsk6Z/zGLY35T6xvkBTy0V5UE3g8GwF1MqMDmT/qoEMqzwgvvdnhsWOI
-	+qoqrPDePQKgSNt8iCXnVJqQKUNZqebjRQibVYx3W10DBA6mGUOOohLO/cOazxTH
-	Y5MsyWDT61pYtyI9IP3TG/vpmFk+qXqn0Tu2INtXqPEjZVtmN1KoqDsa2S7C3T4n
-	mJUMv3LoVL9nK1hM+ANEXglj6mLjV8aP3DdUX+rE/oA5M2Muynm8L4AopO9x8LZr
-	MBKg6m6zV4wRU45mmEEkQ==
-X-ME-Sender: <xms:kXmcadnwNZeNSAQZ7ten61z7Fzmrcqvoh4TVWxXrqwS6gVErPCUmQQ>
-    <xme:kXmcaftokyltqmBbe6rfAk7pZF57q6QP-vP9raNBnG8FlQ8s0mwK8-WX_0Cvd9IS6
-    zJld_Bi7544v0HTLeoL4NWfotDRCuvyuE6lF52D9F-C5wcMdZatBg>
-X-ME-Received: <xmr:kXmcab_Hiziwlz-2V5jT1GJ73tmPGXhQ5zczeho-3jUwSk-AOhVIdRya9syPfHRdEAb0xvNeSlJXOo4rWhQuo0zsfUAElKcFk3ZffGsGpg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejieehucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771862419; x=
+	1771948819; bh=VXUrmgVphRP1HTSkkzy0TZX3W4kHuDvZh/nY2Ffoaw8=; b=V
+	C0xfMBSiUnhm0hmyrk6UMA1Rk/dtw3F+YlMMmXZ3bWY2gKSXIJHvSPIU3DvpDyiu
+	659rsG0a7KQG3HqeYmgFl46JBZ781l1JMxMFD8sz/Y1c895KeqqR1RM+O/28RE0n
+	997+ioU9pJGTXThvlSm3xXK8kuAr2EqDY6LhfWZ/HRs3HzNqXVyiwsShYpynoy79
+	wQWOi79vG1idgxvYQBZy70hWULmssavvYNNYKYwSM2m6F5BDUvzladNH46bXjy20
+	Qax/hK+EnmOe9ON5rfDV7EfZjRjKkZ89/pWjIW3KsLA9gS9GZ3IYk53Ca0LxpmNK
+	LdQ9jKrOXVl/HVJ9mRYHQ==
+X-ME-Sender: <xms:k3mcaYpFUPFEv2GZfx_3-_oyOf51FybKcMnEd03HGk494ih7qy1h_Q>
+    <xme:k3mcaVh-DMDBOSRk3xkPC3QDf9cnO-e4JuYBburV9xnWuSq7lizhX21Soe4-fL0BI
+    GT9mWrk0FnFuSb3Zoud3lOFJW4-rgqYF9U5OkvU3H_3HVZ53fGAhg>
+X-ME-Received: <xmr:k3mcaVhuB2seTuH-61zlTLMF_gvalmbi4OTTKAthU_vMTVVjPoBT_DWdB3ZeEeWp5C6rNRlzQXdFGGTCk9VtIX5QzYaeJHW1MctFp7mSDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejieeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeuvden
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
-    hedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    shhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthih
-    thhoohhthhhprghsthgvrdhnvght
-X-ME-Proxy: <xmx:kXmcaZPQrvSQAUYW2h8xWJNq_SNeVa5IEhK2nUH1-WaAabg7CMvR-Q>
-    <xmx:kXmcaZGdbDT8IRweJzBnAP4ll7iMzrAXlNeQKWSTfxDjKprLQ07T5w>
-    <xmx:kXmcaXS2d-sNjV7JoRHUiTHH2HR4JvPyfJ6xN5eZcHvIWqIgMldJXQ>
-    <xmx:kXmcaWsvDvElED1TKDhr1Zok1PB0VN7b67UouBcfVgCWXduxM3hF9g>
-    <xmx:kXmcafXDaulQD3EwxnBecY1BCEh2k1tHMnLszZuUErMhMO7AGvsiawVy>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhunhhshhhinhgvsehsuh
+    hnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtth
+    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:k3mcabg1Ds4g8VM8yJGATGbyHKH_ksFydcnFdx2AjN56mK-1V96C1w>
+    <xmx:k3mcaVLsBcsAkHEkGw_UYdJh7ZTkR7oM5qirIy_5ch9_NZUhMWAYwg>
+    <xmx:k3mcaaGka78StfQ5Vkv5wcvg5WB-Yxr4KHW0pd4SZUu4HWdsU19aDg>
+    <xmx:k3mcaZQGY-8UCtyfqN-HKjVKstAXovMDUjZQcRMPrENZ-EgaEidi5A>
+    <xmx:k3mcaX4nPz-4aGlulGAuEoagNKriuPqsjaCMt3yY0mvTh4A6HhbW8mWv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 11:00:16 -0500 (EST)
+ 23 Feb 2026 11:00:18 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 964c7f78 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Feb 2026 16:00:15 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 70c5c5f8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Feb 2026 16:00:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/4] pack-check: fix verification of large objects
-Date: Mon, 23 Feb 2026 17:00:05 +0100
-Message-Id: <20260223-pks-fsck-fix-v2-0-99a0714ea3bd@pks.im>
+Date: Mon, 23 Feb 2026 17:00:06 +0100
+Subject: [PATCH v2 1/4] t/helper: improve "genrandom" test helper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,210 +84,186 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIV5nGkC/3WMQQrCMBBFr1Jm7UgygRBdeQ/pIsbUDsW2ZCQoJ
- Xd37N7le5//NpBcOAucuw1Kriy8zAp06CCNcX5k5LsykCFviByuk+AgacKB3xhjiDZE9SmAXta
- SVe+5a688sryW8tnr1f7sn1C1aDDRyTgfHN18vuh85Cf0rbUvi0nXo6UAAAA=
-X-Change-ID: 20260223-pks-fsck-fix-aa8a18a223c8
-In-Reply-To: <20260223-pks-fsck-fix-v1-0-c29036832b6e@pks.im>
-References: <20260223-pks-fsck-fix-v1-0-c29036832b6e@pks.im>
+Message-Id: <20260223-pks-fsck-fix-v2-1-99a0714ea3bd@pks.im>
+References: <20260223-pks-fsck-fix-v2-0-99a0714ea3bd@pks.im>
+In-Reply-To: <20260223-pks-fsck-fix-v2-0-99a0714ea3bd@pks.im>
 To: git@vger.kernel.org
 Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
  Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
  Eric Sunshine <sunshine@sunshineco.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+The `test-tool genrandom` test helper can be used to generate random
+data, either as an infinite stream or with a specified number of bytes.
+The way we handle parsing the number of bytes is lacking though:
 
-this small patch series addresses the bug reported by brian in [1].
-Thanks!
+  - We don't have good error handling, so if the caller for example uses
+    `test-tool genrandom 200xyz` then we'll end up generating 200 bytes
+    of random data successfully.
 
-Changes in v2:
-  - Extend the test to verify that we actually find corrupted objects in
-    both packs, even in the case where a non-corrupt version exists in
-    another pack.
-  - Reinstate `mark_packed_object_bad()`.
-  - Fix error checking for `git_parse_ulong()`.
-  - Disambiguate error conditions in `parse_object_with_flags()`.
-  - Link to v1: https://lore.kernel.org/r/20260223-pks-fsck-fix-v1-0-c29036832b6e@pks.im
+  - Many callers want to generate e.g. 1 kilobyte or megabyte of data,
+    but they have to either use unwieldy numbers like 1048576, or they
+    have to precompute them.
 
-Patrick
+Fix both of these issues by using `git_parse_ulong()` to parse the
+argument. This function has better error handling, and it knows to
+handle unit suffixes.
 
-[1]: <20260222183710.2963424-1-sandals@crustytoothpaste.net>
+Adapt a couple of our tests to use suffixes instead of manual
+computations.
 
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (4):
-      t/helper: improve "genrandom" test helper
-      object-file: adapt `stream_object_signature()` to take a stream
-      packfile: expose function to read object stream for an offset
-      pack-check: fix verification of large objects
+ t/helper/test-genrandom.c             | 5 ++++-
+ t/t1006-cat-file.sh                   | 2 +-
+ t/t1050-large.sh                      | 6 +++---
+ t/t1450-fsck.sh                       | 2 +-
+ t/t5301-sliding-window.sh             | 2 +-
+ t/t5310-pack-bitmaps.sh               | 2 +-
+ t/t5710-promisor-remote-capability.sh | 4 ++--
+ t/t7700-repack.sh                     | 6 +++---
+ 8 files changed, 16 insertions(+), 13 deletions(-)
 
- object-file.c                         | 10 +++------
- object-file.h                         |  4 +++-
- object.c                              | 19 ++++++++++++++---
- pack-check.c                          | 12 ++++++++---
- packfile.c                            | 40 +++++++++++++++++++++--------------
- packfile.h                            |  5 +++++
- t/helper/test-genrandom.c             |  5 ++++-
- t/t1006-cat-file.sh                   |  2 +-
- t/t1050-large.sh                      |  6 +++---
- t/t1450-fsck.sh                       | 40 ++++++++++++++++++++++++++++++++++-
- t/t5301-sliding-window.sh             |  2 +-
- t/t5310-pack-bitmaps.sh               |  2 +-
- t/t5710-promisor-remote-capability.sh |  4 ++--
- t/t7700-repack.sh                     |  6 +++---
- 14 files changed, 114 insertions(+), 43 deletions(-)
+diff --git a/t/helper/test-genrandom.c b/t/helper/test-genrandom.c
+index 51b67f2f87..d681961abb 100644
+--- a/t/helper/test-genrandom.c
++++ b/t/helper/test-genrandom.c
+@@ -6,6 +6,7 @@
+ 
+ #include "test-tool.h"
+ #include "git-compat-util.h"
++#include "parse.h"
+ 
+ int cmd__genrandom(int argc, const char **argv)
+ {
+@@ -22,7 +23,9 @@ int cmd__genrandom(int argc, const char **argv)
+ 		next = next * 11 + *c;
+ 	} while (*c++);
+ 
+-	count = (argc == 3) ? strtoul(argv[2], NULL, 0) : ULONG_MAX;
++	count = ULONG_MAX;
++	if (argc == 3 && !git_parse_ulong(argv[2], &count))
++		return error_errno("cannot parse argument '%s'", argv[2]);
+ 
+ 	while (count--) {
+ 		next = next * 1103515245 + 12345;
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 0eee3bb878..5499be8dc9 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -643,7 +643,7 @@ test_expect_success 'object reference via commit text search' '
+ '
+ 
+ test_expect_success 'setup blobs which are likely to delta' '
+-	test-tool genrandom foo 10240 >foo &&
++	test-tool genrandom foo 10k >foo &&
+ 	{ cat foo && echo plus; } >foo-plus &&
+ 	git add foo foo-plus &&
+ 	git commit -m foo &&
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 5be273611a..7d40d08521 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -104,9 +104,9 @@ test_expect_success 'packsize limit' '
+ 		# mid1 and mid2 will fit within 256k limit but
+ 		# appending mid3 will bust the limit and will
+ 		# result in a separate packfile.
+-		test-tool genrandom "a" $(( 66 * 1024 )) >mid1 &&
+-		test-tool genrandom "b" $(( 80 * 1024 )) >mid2 &&
+-		test-tool genrandom "c" $(( 128 * 1024 )) >mid3 &&
++		test-tool genrandom "a" 66k >mid1 &&
++		test-tool genrandom "b" 80k >mid2 &&
++		test-tool genrandom "c" 128k >mid3 &&
+ 		git add mid1 mid2 mid3 &&
+ 
+ 		count=0 &&
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 3fae05f9d9..8fb79b3e5d 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -918,7 +918,7 @@ test_expect_success 'fsck detects trailing loose garbage (large blob)' '
+ test_expect_success 'fsck detects truncated loose object' '
+ 	# make it big enough that we know we will truncate in the data
+ 	# portion, not the header
+-	test-tool genrandom truncate 4096 >file &&
++	test-tool genrandom truncate 4k >file &&
+ 	blob=$(git hash-object -w file) &&
+ 	file=$(sha1_file $blob) &&
+ 	test_when_finished "remove_object $blob" &&
+diff --git a/t/t5301-sliding-window.sh b/t/t5301-sliding-window.sh
+index ff6b5159a3..3c3666b278 100755
+--- a/t/t5301-sliding-window.sh
++++ b/t/t5301-sliding-window.sh
+@@ -12,7 +12,7 @@ test_expect_success 'setup' '
+ 	for i in a b c
+ 	do
+ 	echo $i >$i &&
+-	test-tool genrandom "$i" 32768 >>$i &&
++	test-tool genrandom "$i" 32k >>$i &&
+ 	git update-index --add $i || return 1
+ 	done &&
+ 	echo d >d && cat c >>d && git update-index --add d &&
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 6718fb98c0..3e3366f57d 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -242,7 +242,7 @@ test_bitmap_cases () {
+ 	'
+ 
+ 	test_expect_success 'splitting packs does not generate bogus bitmaps' '
+-		test-tool genrandom foo $((1024 * 1024)) >rand &&
++		test-tool genrandom foo 1m >rand &&
+ 		git add rand &&
+ 		git commit -m "commit with big file" &&
+ 		git -c pack.packSizeLimit=500k repack -adb &&
+diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
+index 023735d6a8..66af84cd56 100755
+--- a/t/t5710-promisor-remote-capability.sh
++++ b/t/t5710-promisor-remote-capability.sh
+@@ -20,7 +20,7 @@ test_expect_success 'setup: create "template" repository' '
+ 	test_commit -C template 1 &&
+ 	test_commit -C template 2 &&
+ 	test_commit -C template 3 &&
+-	test-tool genrandom foo 10240 >template/foo &&
++	test-tool genrandom foo 10k >template/foo &&
+ 	git -C template add foo &&
+ 	git -C template commit -m foo
+ '
+@@ -376,7 +376,7 @@ test_expect_success "clone with promisor.advertise set to 'true' but don't delet
+ 
+ test_expect_success "setup for subsequent fetches" '
+ 	# Generate new commit with large blob
+-	test-tool genrandom bar 10240 >template/bar &&
++	test-tool genrandom bar 10k >template/bar &&
+ 	git -C template add bar &&
+ 	git -C template commit -m bar &&
+ 
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 73b78bdd88..439ab24d23 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -319,7 +319,7 @@ test_expect_success 'no bitmaps created if .keep files present' '
+ 
+ test_expect_success 'auto-bitmaps do not complain if unavailable' '
+ 	test_config -C bare.git pack.packSizeLimit 1M &&
+-	blob=$(test-tool genrandom big $((1024*1024)) |
++	blob=$(test-tool genrandom big 1m |
+ 	       git -C bare.git hash-object -w --stdin) &&
+ 	git -C bare.git update-ref refs/tags/big $blob &&
+ 
+@@ -495,9 +495,9 @@ test_expect_success '--filter works with --max-pack-size' '
+ 		cd max-pack-size &&
+ 		test_commit base &&
+ 		# two blobs which exceed the maximum pack size
+-		test-tool genrandom foo 1048576 >foo &&
++		test-tool genrandom foo 1m >foo &&
+ 		git hash-object -w foo &&
+-		test-tool genrandom bar 1048576 >bar &&
++		test-tool genrandom bar 1m >bar &&
+ 		git hash-object -w bar &&
+ 		git add foo bar &&
+ 		git commit -m "adding foo and bar"
 
-Range-diff versus v1:
-
-1:  1b1283e837 ! 1:  daf895aef6 t/helper: improve "genrandom" test helper
-    @@ Commit message
-             have to precompute them.
-     
-         Fix both of these issues by using `git_parse_ulong()` to parse the
-    -    argumemnt. This function has better error handling, and it knows to
-    +    argument. This function has better error handling, and it knows to
-         handle unit suffixes.
-     
-         Adapt a couple of our tests to use suffixes instead of manual
-    @@ t/helper/test-genrandom.c: int cmd__genrandom(int argc, const char **argv)
-      
-     -	count = (argc == 3) ? strtoul(argv[2], NULL, 0) : ULONG_MAX;
-     +	count = ULONG_MAX;
-    -+	if (argc == 3 && git_parse_ulong(argv[2], &count) < 0)
-    ++	if (argc == 3 && !git_parse_ulong(argv[2], &count))
-     +		return error_errno("cannot parse argument '%s'", argv[2]);
-      
-      	while (count--) {
-2:  9f25ed1a4b ! 2:  ebca9efaec object-file: adapt `stream_object_signature()` to take a stream
-    @@ Commit message
-         a preconstructed stream. Prepare for this by accepting a stream as input
-         that the caller needs to assemble.
-     
-    +    While at it, improve the error reporting in `parse_object_with_flags()`
-    +    to tell apart the two failure modes.
-    +
-    +    Helped-by: Jeff King <peff@peff.net>
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## object-file.c ##
-    @@ object.c: struct object *parse_object_with_flags(struct repository *r,
-     -			return NULL;
-     +		if (!skip_hash) {
-     +			struct odb_read_stream *stream = odb_read_stream_open(r->objects, oid, NULL);
-    -+			if (!stream || stream_object_signature(r, stream, repl) < 0) {
-    -+				error(_("hash mismatch %s"), oid_to_hex(oid));
-    -+				if (stream)
-    -+					odb_read_stream_close(stream);
-    ++
-    ++			if (!stream) {
-    ++				error(_("unable to open object stream for %s"), oid_to_hex(oid));
-     +				return NULL;
-     +			}
-     +
-    -+			if (stream)
-    ++			if (stream_object_signature(r, stream, repl) < 0) {
-    ++				error(_("hash mismatch %s"), oid_to_hex(oid));
-     +				odb_read_stream_close(stream);
-    ++				return NULL;
-    ++			}
-    ++
-    ++			odb_read_stream_close(stream);
-      		}
-      		parse_blob_buffer(lookup_blob(r, oid));
-      		return lookup_object(r, oid);
-3:  9a28867564 ! 3:  bead96797e packfile: expose function to read object stream for an offset
-    @@ packfile.c: static int close_istream_pack_non_delta(struct odb_read_stream *_st)
-     -				      struct packfile_store *store,
-     -				      const struct object_id *oid)
-     +int packfile_read_object_stream(struct odb_read_stream **out,
-    ++				const struct object_id *oid,
-     +				struct packed_git *pack,
-     +				off_t offset)
-      {
-    @@ packfile.c: static int close_istream_pack_non_delta(struct odb_read_stream *_st)
-      	switch (in_pack_type) {
-      	default:
-      		return -1; /* we do not do deltas for now */
-    ++	case OBJ_BAD:
-    ++		mark_bad_packed_object(pack, oid);
-    ++		return -1;
-    + 	case OBJ_COMMIT:
-    + 	case OBJ_TREE:
-    + 	case OBJ_BLOB:
-     @@ packfile.c: int packfile_store_read_object_stream(struct odb_read_stream **out,
-      	stream->base.type = in_pack_type;
-      	stream->base.size = size;
-    @@ packfile.c: int packfile_store_read_object_stream(struct odb_read_stream **out,
-     +	if (!find_pack_entry(store, oid, &e))
-     +		return -1;
-     +
-    -+	return packfile_read_object_stream(out, e.p, e.offset);
-    ++	return packfile_read_object_stream(out, oid, e.p, e.offset);
-     +}
-     
-      ## packfile.h ##
-    @@ packfile.h: off_t get_delta_base(struct packed_git *p, struct pack_window **w_cu
-      		     off_t delta_obj_offset);
-      
-     +int packfile_read_object_stream(struct odb_read_stream **out,
-    ++				const struct object_id *oid,
-     +				struct packed_git *pack,
-     +				off_t offset);
-     +
-4:  4eaf958e57 ! 4:  6b69624d81 pack-check: fix verification of large objects
-    @@ pack-check.c: static int verify_packfile(struct repository *r,
-      				    oid_to_hex(&oid), p->pack_name);
-      		else if (!data &&
-     -			 (!(stream = odb_read_stream_open(r->objects, &oid, NULL)) ||
-    -+			 (packfile_read_object_stream(&stream, p, entries[i].offset) < 0 ||
-    ++			 (packfile_read_object_stream(&stream, &oid, p, entries[i].offset) < 0 ||
-      			  stream_object_signature(r, stream, &oid) < 0))
-      			err = error("packed %s from %s is corrupt",
-      				    oid_to_hex(&oid), p->pack_name);
-    @@ t/t1450-fsck.sh: test_expect_success 'fsck errors in packed objects' '
-     +	git init repo &&
-     +	(
-     +		cd repo &&
-    ++
-    ++		# We construct two packfiles with two objects in common and one
-    ++		# object not in common. The objects in common can then be
-    ++		# corrupted in one of the packfiles, respectively. The other
-    ++		# objects that are unique to the packs are merely used to not
-    ++		# have both packs contain the same data.
-     +		blob_one=$(test-tool genrandom one 200k | git hash-object -t blob -w --stdin) &&
-     +		blob_two=$(test-tool genrandom two 200k | git hash-object -t blob -w --stdin) &&
-    -+		printf "%s\n" "$blob_one" | git pack-objects .git/objects/pack/pack &&
-    -+		printf "%s\n" "$blob_two" | git pack-objects .git/objects/pack/pack &&
-    -+		remove_object "$blob_one" &&
-    -+		remove_object "$blob_two" &&
-    -+		git -c core.bigFileThreshold=100k fsck
-    ++		blob_three=$(test-tool genrandom three 200k | git hash-object -t blob -w --stdin) &&
-    ++		blob_four=$(test-tool genrandom four 200k | git hash-object -t blob -w --stdin) &&
-    ++		pack_one=$(printf "%s\n" "$blob_one" "$blob_two" "$blob_three" | git pack-objects .git/objects/pack/pack) &&
-    ++		pack_two=$(printf "%s\n" "$blob_two" "$blob_three" "$blob_four" | git pack-objects .git/objects/pack/pack) &&
-    ++		chmod a+w .git/objects/pack/pack-*.pack &&
-    ++
-    ++		# Corrupt blob two in the first pack.
-    ++		git verify-pack -v .git/objects/pack/pack-$pack_one >objects &&
-    ++		offset_one=$(sed <objects -n "s/^$blob_two .* \(.*\)$/\1/p") &&
-    ++		printf "\0" | dd of=.git/objects/pack/pack-$pack_one.pack bs=1 conv=notrunc seek=$offset_one &&
-    ++
-    ++		# Corrupt blob three in the second pack.
-    ++		git verify-pack -v .git/objects/pack/pack-$pack_two >objects &&
-    ++		offset_two=$(sed <objects -n "s/^$blob_three .* \(.*\)$/\1/p") &&
-    ++		printf "\0" | dd of=.git/objects/pack/pack-$pack_two.pack bs=1 conv=notrunc seek=$offset_two &&
-    ++
-    ++		# We now expect to see two failures for the corrupted objects,
-    ++		# even though they exist in a non-corrupted form in the
-    ++		# respective other pack.
-    ++		test_must_fail git -c core.bigFileThreshold=100k fsck 2>err &&
-    ++		test_grep "unknown object type 0 at offset $offset_one in .git/objects/pack/pack-$pack_one.pack" err &&
-    ++		test_grep "unknown object type 0 at offset $offset_two in .git/objects/pack/pack-$pack_two.pack" err
-     +	)
-     +'
-     +
-
----
-base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
-change-id: 20260223-pks-fsck-fix-aa8a18a223c8
+-- 
+2.53.0.536.g309c995771.dirty
 
