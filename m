@@ -1,212 +1,159 @@
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2EE733468C
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 17:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE243191BD
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 17:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771868495; cv=none; b=R7EWu0NzcH+jhLOwl34vPhaMbDlTSEWQzwb2KF97rkqDfwqQMjBelu6HEY5Zepi0E3uzCaX3o4+N7cP+z13VNjNvhcmYIOI2IwqkcBGlDmtO/ti6hIy2kyxhXpB4XE0ui8ygEDsWUvfHiEOqT82RcARrHYZSmOVQU9/9Cs7BkiM=
+	t=1771868803; cv=none; b=uHtsU+uDOyT5faJBgHIhFGKO9k6M4/drKOp0LapX05NjFqRAkWtpRNTVtKd01z3h7h8mYnRoTTwmuzmk0LYYnepP+hkLyObRTSPx/K59aTucSWHt9CmS7P3RvEN71c5IKHlZU7YD6PruZP3pbDxj7P90XUvXgJNUGGZh+W9jDZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771868495; c=relaxed/simple;
-	bh=5rDVLDDRAKYtVtEo0t2M9IJJ3U+ncx1OuLYHQb86o9g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YtoKO/osx+SifD6FQ4e9ER4O++NWS/qzT+bRl9zhBztS8nu4iqAf+bEcOWAnMgaRFX21BKag9ixSv0fx2k16Q7GFD4ZWHz9szEhVMvragzDU/crPqol4dpXIk/72htrmc1d0XrpxGqaX3+sHcP7pVH3qVQbsHLiYDl3LT4XfIgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SqIX28ov; arc=none smtp.client-ip=209.85.167.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771868803; c=relaxed/simple;
+	bh=ggfCOEzqgiM4roqhnWVej6rhrAXm5CSdKlhuD0kAJ0c=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=i5sPA/FPgtsu41xR0RazM3I4smJ+3H5YEnpUd/amCZhdAKsCxEj/JgzAMV92xzuoxXXv6+N9rDtA3qXtZ9w4pklrMKrsmxrVX+ljdRiqlBnRcOCSodhp4pukI7V3jRSI7BQrgHNcGRsx26xctkoC2jLiEkysk3XyPknOKDK/yJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RmSqrYo7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eRT0Gto1; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SqIX28ov"
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-4645dde00a7so1330217b6e.1
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:41:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771868492; x=1772473292; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=87onjkU9GeLHhDcK/mIJBh09LsgLUoYCu3zxVCeXOPE=;
-        b=SqIX28ovBhqyNKCuc/wp7uS3I0RiEzFAhw7Bgu5sPNTQ1lmRLfashhlNKIzGXqe1z4
-         NeDwtizF2TSvqccz8jtFcJD03zO5Okzr8CdGq9K1goETPBOla2jMD/pFsfZDuFqOO9Cd
-         43JK4JGpr4AuhYIOnAIEYZqBTG9fjTp0Ll0IpGtaaimgN84ljtDr4ikF4GiZhXsaB8CY
-         ZH0d8VEHswF+FvudLt7jqLXVU1cpl1n946su9SPzWeB8Ri0RqLZfHLsMwXsyeE03+pob
-         pyrlTjTaER22Ia54dBXkJ8UlvPCc8ljVKgcU5qQsQckAttPyZLJM1hFfizUocGKgpGZ2
-         DwJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771868492; x=1772473292;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=87onjkU9GeLHhDcK/mIJBh09LsgLUoYCu3zxVCeXOPE=;
-        b=ojJ1JU9wETH+Guc81zHihfFGYM5WMjFgIsecIPO8BXgJEMncs9ao8VtJF7BvzK+J1G
-         hsABdsx9P23pC2CZemxD27+IntHGPuVGUvtd8YfChTsF2gSV1K1esJFLCW5S/SwkC0Mk
-         mF/VHRgHWKBSClp9N48dr/pjs10/xAcRiE+tdwaV7ACk4Mb0lbNdYvwKQsA3sARaRKWA
-         icoS+KGV/JT6sAyATVrUnX9ic9ItI0hVUzgViHZ8+1tJJRAW+y+wcqtV9uXkgOWdYg3F
-         Q7QNOZnuFwJVgDG+KW1KWih7pWd4F/voVYuVcmFkkKSt8ksYgZTFehwlJ8TC36nqVata
-         qBlQ==
-X-Gm-Message-State: AOJu0YzTbZbqhj/Dtiv41K3ZGPoa/uaszaPX3IGkCWF4t95T0F7iOxLT
-	CDDxrzepVNMZSDw2m7iPZS+8bsXyejVtwW8EmEFC0HGw/lvo2zGtkxO25RU0Ww==
-X-Gm-Gg: AZuq6aJYugPYoECdJc1XT2/EVNEls7Z0kXBBTryGjs019kHbAhru+9ALUK73wEUmy+U
-	4CZwK4Mue4p4Lh91GBOq4DE5FeX66GsPnysgs4lniJcQMeqj1hCcFFZiMhdMmgWzZVFh2OAOEun
-	Ei/rtf0SwtBRK9fBhvApjpsBFHyYwItEUwEBJqJS8Pjmz1dvPmMlJFgVvn2wsqkU42z4nBeCGSP
-	i8l79pcLj+FPzQWRgXYcW9uR00Qp4qQm8PwkBSt6hIkBJ2N44mF28eguaEicgf6kBu0dd1dbRha
-	2xiPEwJJCPTyFHsoXmGYynHInfUX0ZfZHr39Ye8razajfXhcOZ08QlN1jsloL5X4KpSY0mZSbJD
-	L8GAuLg7/cko5LjcSClncE3Ma3CxB6rSs7lkY3Xkz4ltxK7IlDHfiD6rX7d6llYVqdxauooxfPo
-	z1Tlk9BomQ9bXt5AUoqD0bQPTDyxIomDc=
-X-Received: by 2002:a05:6808:169f:b0:45c:85fa:5a3e with SMTP id 5614622812f47-464276252femr7184842b6e.25.1771868492383;
-        Mon, 23 Feb 2026 09:41:32 -0800 (PST)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d52d0386c6sm8305476a34.13.2026.02.23.09.41.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 09:41:32 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	gitster@pobox.com,
-	kristofferhaugsbakk@fastmail.com,
-	eslam.reda.div@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 5/5] builtin/repo: find tree with most entries
-Date: Mon, 23 Feb 2026 11:41:20 -0600
-Message-ID: <20260223174120.2356504-6-jltobler@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260223174120.2356504-1-jltobler@gmail.com>
-References: <20260203221758.1164434-1-jltobler@gmail.com>
- <20260223174120.2356504-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RmSqrYo7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eRT0Gto1"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E322E14001B4;
+	Mon, 23 Feb 2026 12:46:40 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 12:46:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771868800;
+	 x=1771955200; bh=kM6r1mmLRzmCdBfaP+IA3mnZbqvPLm2G9gJWxyhBzV0=; b=
+	RmSqrYo7/ycC3ye/tnPM5Y0SO9MFp1pHvRLqYis58F+S4Ry7q8Y+GUG3jCIExpI4
+	U0g4ZBCneOTYOBSvV6OV80HL/2V4wHHhAlfHyxIjMC8qdNfu3YU1wAGRaBGqExbQ
+	5vNtbbJc7fiE8mSOPiMoYoqCAazbhuGqPqBktFeJUZNmqvkzcCY+I/hVHTM9VM32
+	7UP1JAbPitrOnA7xZgsQUuWhqQNblcxEg1d7WJ1uMcgK80n/i48M7pxbagi0izhX
+	RQIuvFuB8YSYyGGKNnzgnMJOCJEgL0fg4GiHDBLCCzReG3WYgPV3I/1ywH3hoi6f
+	AszHwb9uG9iVyfMjjdDXGg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771868800; x=
+	1771955200; bh=kM6r1mmLRzmCdBfaP+IA3mnZbqvPLm2G9gJWxyhBzV0=; b=e
+	RT0Gto1KAgu81TlmcrLFYI2bRUDSigkTt3XRkhtpw9yvSXsSKJIy8lJrosjXfrIw
+	1Q0XeylQUheglfZ2GWtHOp8fTR1cKtlkOBWA8GJnOWyOuCdZdHAkcHFDUGyfH6yu
+	Tf30vRz91idi5fYbD/pvY0Xvxre4Bid0tROIdCMyygzoJ5jkZjq9KnBDVud8twAw
+	wld9Z33kWAwACqkGWcOa/NFqVYHvYshM2o5yNQ3a5vepel7NN6nrv4P56q5uO9nO
+	O+YHFCENnCbyeIGTgWUdDW8zGFuACSxjf8sm8+PUWTqo1d68XlrAcaFATc0wU6//
+	3OwK3EuIeC686+N/OkjXw==
+X-ME-Sender: <xms:gJKcaf5UNtcj25XRczkuy2DouArYOwTHZA809j3xYh_XNAPJ-tigw-U>
+    <xme:gJKcafs3NewivzxlDALGpSjVcizhxrjpvIDiz2fwS8SEvXacyLXF3sqZCP-5STHLC
+    CN0_mu9NqI7wcZX6DabQ_EMU_KoR4JCaGSya5FhCHX5Fv5JCCG01A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:gJKcaX_z2C1k9vYT-RNd9lcnA_kcFz5tqdGVVLNmGZeEjo2CRMCWKg>
+    <xmx:gJKcaVPx2JDb6qpDMDfCk5zSUFH1amvvEtCvsUNE6E21AMYK2_w8MQ>
+    <xmx:gJKcaVEPyTzkrtblLgLIEUKHSPemnVg0JzMda8znHk_bfBo9fgjNYg>
+    <xmx:gJKcaTSlBuZ6CZQQCYJ9fwxOBHEBRo-CfsJU8n96dDqCbC26zyq3fw>
+    <xmx:gJKcaTTVjtYqMGNYr5a7SwxrQwtM6CoTY3rAJCdVjfWvmW67C5yvOKOK>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 26AA21EA006B; Mon, 23 Feb 2026 12:46:40 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AA44t9WoDwMk
+Date: Mon, 23 Feb 2026 18:43:29 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Karthik Nayak" <karthik.188@gmail.com>, git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>,
+ "Toon Claes" <toon@iotcl.com>
+Message-Id: <3af8a2ba-dfe4-4e43-8f86-b03a0cbc3698@app.fastmail.com>
+In-Reply-To: <20260223-kn-alternate-ref-dir-v8-5-0509c132a203@gmail.com>
+References: <20260223-kn-alternate-ref-dir-v8-0-0509c132a203@gmail.com>
+ <20260223-kn-alternate-ref-dir-v8-5-0509c132a203@gmail.com>
+Subject: Re: [PATCH v8 5/6] refs: allow reference location in refstorage config
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-The size of a tree object usually corresponds with the number of entries
-it has. While iterating through objects in the repository for
-git-repo-structure, identify the tree with the most entries and display
-it in the output.
+On Mon, Feb 23, 2026, at 09:01, Karthik Nayak wrote:
+>[snip]
+>
+> Helped-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  Documentation/config/extensions.adoc |  16 +++-
+>  builtin/worktree.c                   |  34 ++++++++
+>  refs.c                               |   6 +-
+>  repository.c                         |   9 +-
+>  repository.h                         |   8 +-
+>  setup.c                              |  34 +++++++-
+>  setup.h                              |   1 +
+>  t/meson.build                        |   1 +
+>  t/t1423-ref-backend.sh               | 159 ++++++++++++++++++++++++++=
++++++++++
+>  9 files changed, 259 insertions(+), 9 deletions(-)
+>
+> diff --git a/Documentation/config/extensions.adoc
+> b/Documentation/config/extensions.adoc
+> index 532456644b..3e51da36d3 100644
+> --- a/Documentation/config/extensions.adoc
+> +++ b/Documentation/config/extensions.adoc
+> @@ -57,10 +57,24 @@ For historical reasons, this extension is respected
+> regardless of the
+>  `core.repositoryFormatVersion` setting.
+>
+>  refStorage:::
+> -	Specify the ref storage format to use. The acceptable values are:
+> +	Specify the ref storage format and a corresponding payload. The value
+> +	can be either a format name or a URI:
+>  +
+>  --
+> +* A format name alone (e.g., `reftable` or `files`).
+> +
+> +* A URI format `<format>://<payload>` explicitly specifies both the
+> +  format and payload (e.g., `reftable:///foo/bar`).
+> +
+> +Supported format names are:
+> ++
+>  include::../ref-storage-format.adoc[]
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- builtin/repo.c            | 27 +++++++++++++++++++++++++++
- t/t1901-repo-structure.sh | 13 +++++++++----
- 2 files changed, 36 insertions(+), 4 deletions(-)
+It looks like this causes list continuation (+) and the `;;` syntax to
+appear in the HTML output of git-config(1).
 
-diff --git a/builtin/repo.c b/builtin/repo.c
-index 97da147f68..349cb27aca 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -16,6 +16,8 @@
- #include "strbuf.h"
- #include "string-list.h"
- #include "shallow.h"
-+#include "tree.h"
-+#include "tree-walk.h"
- #include "utf8.h"
- 
- static const char *const repo_usage[] = {
-@@ -211,6 +213,7 @@ struct largest_objects {
- 	struct object_data blob_size;
- 
- 	struct object_data parent_count;
-+	struct object_data tree_entries;
- };
- 
- struct ref_stats {
-@@ -458,6 +461,10 @@ static void stats_table_setup_structure(struct stats_table *table,
- 				     &objects->largest.tree_size.oid,
- 				     objects->largest.tree_size.value,
- 				     "    * %s", _("Maximum size"));
-+	stats_table_object_count_addf(table,
-+				      &objects->largest.tree_entries.oid,
-+				      objects->largest.tree_entries.value,
-+				      "    * %s", _("Maximum entries"));
- 	stats_table_addf(table, "  * %s", _("Blobs"));
- 	stats_table_object_size_addf(table,
- 				     &objects->largest.blob_size.oid,
-@@ -619,6 +626,10 @@ static void structure_keyvalue_print(struct repo_structure *stats,
- 	       (uintmax_t)stats->objects.largest.parent_count.value, value_delim);
- 	printf("objects.commits.max_parents_oid%c%s%c", key_delim,
- 	       oid_to_hex(&stats->objects.largest.parent_count.oid), value_delim);
-+	printf("objects.trees.max_entries%c%" PRIuMAX "%c", key_delim,
-+	       (uintmax_t)stats->objects.largest.tree_entries.value, value_delim);
-+	printf("objects.trees.max_entries_oid%c%s%c", key_delim,
-+	       oid_to_hex(&stats->objects.largest.tree_entries.oid), value_delim);
- 
- 	fflush(stdout);
- }
-@@ -697,6 +708,20 @@ static void check_largest(struct object_data *data, struct object_id *oid,
- 	}
- }
- 
-+static size_t count_tree_entries(struct object *obj)
-+{
-+	struct tree *t = object_as_type(obj, OBJ_TREE, 0);
-+	struct name_entry entry;
-+	struct tree_desc desc;
-+	size_t count = 0;
-+
-+	init_tree_desc(&desc, &t->object.oid, t->buffer, t->size);
-+	while (tree_entry(&desc, &entry))
-+		count++;
-+
-+	return count;
-+}
-+
- static int count_objects(const char *path UNUSED, struct oid_array *oids,
- 			 enum object_type type, void *cb_data)
- {
-@@ -749,6 +774,8 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
- 			stats->disk_sizes.trees += disk;
- 			check_largest(&stats->largest.tree_size, &oids->oid[i],
- 				      inflated);
-+			check_largest(&stats->largest.tree_entries, &oids->oid[i],
-+				      count_tree_entries(obj));
- 			break;
- 		case OBJ_BLOB:
- 			stats->type_counts.blobs++;
-diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index d003d64a8e..12ed67e846 100755
---- a/t/t1901-repo-structure.sh
-+++ b/t/t1901-repo-structure.sh
-@@ -59,6 +59,7 @@ test_expect_success 'empty repository' '
- 		|     * Maximum parents     |    0   |
- 		|   * Trees                 |        |
- 		|     * Maximum size        |    0 B |
-+		|     * Maximum entries     |    0   |
- 		|   * Blobs                 |        |
- 		|     * Maximum size        |    0 B |
- 		|   * Tags                  |        |
-@@ -122,16 +123,18 @@ test_expect_success SHA1 'repository with references and objects' '
- 		|     * Maximum parents [2] |      1     |
- 		|   * Trees                 |            |
- 		|     * Maximum size    [3] |  32.29 KiB |
-+		|     * Maximum entries [4] |   1.01 k   |
- 		|   * Blobs                 |            |
--		|     * Maximum size    [4] |     13 B   |
-+		|     * Maximum size    [5] |     13 B   |
- 		|   * Tags                  |            |
--		|     * Maximum size    [5] |    132 B   |
-+		|     * Maximum size    [6] |    132 B   |
- 
- 		[1] 0dc91eb18580102a3a216c8bfecedeba2b9f9b9a
- 		[2] 0dc91eb18580102a3a216c8bfecedeba2b9f9b9a
- 		[3] 60665251ab71dbd8c18d9bf2174f4ee0d58aa06c
--		[4] 97d808e45116bf02103490294d3d46dad7a2ac62
--		[5] 4dae4f5954f5e6feb3577cfb1b181daa3fd3afd2
-+		[4] 60665251ab71dbd8c18d9bf2174f4ee0d58aa06c
-+		[5] 97d808e45116bf02103490294d3d46dad7a2ac62
-+		[6] 4dae4f5954f5e6feb3577cfb1b181daa3fd3afd2
- 		EOF
- 
- 		git repo structure >out 2>err &&
-@@ -176,6 +179,8 @@ test_expect_success SHA1 'keyvalue and nul format' '
- 		objects.tags.max_size_oid=1ee0f2b16ea37d895dbe9dbd76cd2ac70446176c
- 		objects.commits.max_parents=1
- 		objects.commits.max_parents_oid=de3508174b5c2ace6993da67cae9be9069e2df39
-+		objects.trees.max_entries=42
-+		objects.trees.max_entries_oid=09931deea9d81ec21300d3e13c74412f32eacec5
- 		EOF
- 
- 		git repo structure --format=keyvalue >out 2>err &&
--- 
-2.53.0
+    + files;; for loose files with packed-refs. ...
 
+    + The payload is passed ...
+
+According to `Documentation/doc-diff master seen`.
+
+It looks like dropping the list continuations fixes it.
+
+    Supported format names are:
+
+    include::../ref-storage-format.adoc[]
+
+    The payload is passed directly to the reference backend. For the fil=
+es and
+    [...]
+
+Maybe because you are inside an open block? I don=E2=80=99t know.
+
+> ++
+> +The payload is passed directly to the reference backend. For the files
+>[snip]
