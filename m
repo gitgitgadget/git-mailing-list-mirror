@@ -1,69 +1,69 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F16221726
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 19:43:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A9E37107E
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 19:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771875821; cv=none; b=NQFGIRgfAly2Zjt+TbuHjllW0/vsfjaHDOECenIizcA3cNFCDS9UbhTh29Y9iV85JS5nZwvCMFtVrUXWgO/utdfpHmeLSpyeSyDwtpa7iHjRK+tZ44BnIqmXLX1ncSpCGgwKezkKhVfSd80bsflHyxV5j8hGqBW5Hp/40n5EbK0=
+	t=1771875823; cv=none; b=QTl9uvEl0E1IBSA2uT5g2GRKGvo9MNkAVIxYZUQPleTs17vL7Ah9fAGIFMPTd8kbBvPIrFWGwMY9dwBMUpdmpW81FhKqGuNTa7jHrn1T3ZY8084Ohw1VPHRQBei5Mq/QppEnf9YtdzvLrS19MDFzrwN881vnWCVmqaS0cbJqEz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771875821; c=relaxed/simple;
-	bh=0bUZXmla5UsacimDsqCATAe2H7uu1M9i9KT3JienMJA=;
+	s=arc-20240116; t=1771875823; c=relaxed/simple;
+	bh=BXKnxJAYzI5+BQyq4ke6xQZoUjJgWhMNKWdahyYmu6g=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=XBQg1C2sve9KzCgS/s+CAQfpapc3aVZPj6ISHy2OAihtl7SXQEp2tFwKPAJc000JZUO1Zu6pUlR5EtwnMVyWz+yvxJdk1n5frmoBt8zaKOMcfpwAPqMQJlafkY25gtQxgAGjeqfMtSz9a05DgnInCuMZR/nK5Fc18/pZezu/9jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V9SYiKJ7; arc=none smtp.client-ip=209.85.222.174
+	 MIME-Version:To:Cc; b=lS5ceWxcVI2VgK6cnka0+ImATNM7zIuNBYYFFEtRXK6DxenHHSqyAOU3KU6FGo0KEXOubKFrSSKWkvDSu5IhNrr4KvFR7EHEM1Bi2pFCAFPQxJ5nPcZF0rETUvdNB2qwQTarpLApj6f9+9/pYTzGhsaDx+3LuXU/p8hyySi69Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yx2Ceuf3; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V9SYiKJ7"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8cb3fd71badso448249885a.0
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 11:43:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yx2Ceuf3"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8c6f21c2d81so457677685a.2
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 11:43:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771875819; x=1772480619; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771875821; x=1772480621; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3VMgLadHKUC5Slj27qjnqYHkUgr6izYn0jYmmMwo+0k=;
-        b=V9SYiKJ7u5sL+/gCjGp3qYmZoGXMsgnsZV5tBDyNX6EYeusAU8OV4ChJaeK5WJY12F
-         BnInsF/oDrI9UX6DEJUoXgbUNQ2OdEaJJRgR6cR+pOpUEl/dtKOnICc4mMpWx5vkbUS1
-         0Ow+4CgBVsEvRsWk/iI2IM5ep85GAvqlnY7fjSpGgCT9jIu9Zdz3XtUFmJf9Kti88ZwO
-         g5k+lu+VSJiC9OZpQsuwipfsRf/cn9ooEx/GVgPcn1F3D6hpoqyzzfSyRgSg0/Gf0s7B
-         eI1cjSNRuPp1jwkOHNcd6zdIh1T2YtPipIcOhWsqKplQc7fFm9hzjbeQ+tpP3gAu3naP
-         n95A==
+        bh=6aKeJpnmXGNCGtZ7wzEwaHUJPnmqm1Yzc5DSgNEAels=;
+        b=Yx2Ceuf3rn7uv1gglKIeb528s1dL+keSxJoRcy3yuOFzHdfVt9ajp1QQnTP84ibS27
+         3L9i30AopKWKGPeTTuLXnE1J0vrz3d+UWLXGSEctM2i+m6XgwrT7Vo9WrfJMUllqBMjl
+         lrn9d18dEFXgiX7FKQHGV684oZq76bBWx2e3Cb379AYss3HvR1wA9yi/04b5JlnSjMKc
+         XN/Zqx4KfVyNo8rY4aS701WlBkSwCyuSd4/LLIob8bFkFfyNys8vV8WWgv/Zv1lWoZOn
+         rUVZrpWA0rKGP/k4FRpG/KwC4fiUe0xs3nCgEUz8H3cba1x87Z0awjFiS1iJVOJFZFF5
+         bFsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771875819; x=1772480619;
+        d=1e100.net; s=20230601; t=1771875821; x=1772480621;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=3VMgLadHKUC5Slj27qjnqYHkUgr6izYn0jYmmMwo+0k=;
-        b=opU8DJrtfNp2vTi/bu5/u4Mkcgqrs7vSVZZaWQpaAYeGewEmvQCP+r/55yknkVoY9r
-         Q61HO1FK0pg1j9njVtaR5q05KHzzsicmGts/4FpKG6R19xeWFaKteESfKaSlJnG8uUfA
-         OL4HOLmLj60wwe0e2L4KT6qpcyXYVeNEewSYMnYLksZL5sc5fYp7MjuwbTZlvesoK2VK
-         m3TP44s1QFTtkjM2LJSXHXKdTJ5CUFhGRGWR+8SJvHW+Ea6ExltAIgBA2zUn1u9Qg5Ir
-         v2VtP49ZtbzS9uihSdu5S3vwfzF5EludsB7mK1pDGJ5p/cNJxybtdsdtagLVlTiliE3m
-         RROQ==
-X-Gm-Message-State: AOJu0YxRRiOiep3ghFWNQgxYx1ZQyJ0kRCkxHXsRkgkV3oEitszw/PSB
-	2Y5S+w7JQyial04hUHUBujlKnrMWCxcoE61p/s9qKwVMKTK2x6rxpbJU4mepFw==
-X-Gm-Gg: AZuq6aKjj2IayjR+86SuhbNU+gNwcnNdWO2xAyux2Zhk2s2DguAW5Yz1soEMMAQ8ZIC
-	IXT48kfTy4gSoJpKP0vtzROWLdPNalg+xNmqDP9Tod4jevR8peBSWPYbflxRD+26uMUiI2hx/b9
-	pW876H/30oxDvsGrbuY8scuaN1lxtssxwLPxQIYd++CCF8SC5+BsuxLhBuSc/tuREjJR5fTETvT
-	hsfw4ryuBwNJ3KABGK1aM89i0R2/9V6IvmQthpDOZFcKzP+kiP9c5XvJpNacKwtWF7Dbz/DOdkx
-	aGZVqHVvRMRWgk/chqKiccGWjzbnvbMM76nElDkA8RVM0F8ZMQvy39OcPwyk3VarDiePYU02EtF
-	lA9UDEoo4xwZdZG4U5pJa+wcJShzecUMGerjxLRa5H26qt64NOqF/DM0TeWrIQLSEGB++AeENAz
-	JspccXI0LDLA8UYaWk4g58DLaIWuY=
-X-Received: by 2002:a05:620a:45ab:b0:8c6:d2ca:1d0e with SMTP id af79cd13be357-8cb8c9e62a4mr1109451285a.11.1771875819135;
-        Mon, 23 Feb 2026 11:43:39 -0800 (PST)
+        bh=6aKeJpnmXGNCGtZ7wzEwaHUJPnmqm1Yzc5DSgNEAels=;
+        b=QL7xR9Ys7Kcj3m1lXx1oaHjuyioW62gaNjVk8oPaXOlCgM37iDNmpT3UQDcrPxZOld
+         9cnyc2kvAEBDqFtWMxFjTiul08OjqyCTTEYy8Qxqy7cvMrJyUPveYo0iCmaKidKQZtYU
+         koB3ppfeN9b8mIMG/JYCKTHJrxq5oCLmmCnJCegB8DLbZwRCijyHPXoAeDp50RYZi7kN
+         xggkfMjywe/lJHhAmWSmR69V+zYEOLCG7I9cPU03r1saQJ52+aFlms6cUOU4GxGs6jvd
+         YVxXydlIStsFqrfVUVfPQggMQJuQkxqLHuZwCWU9adjSfsbj2E2jmtgxgJE15N+VBDI0
+         UFdw==
+X-Gm-Message-State: AOJu0YwxDLmyvXkfBnkOr2GiFtNwYjS8Nbh7MkAqMQBu/yhRzLSb19XJ
+	1ihRP+LwzHIlq79zOXkc6uJuQ1ONplyCNvW5gKKCwqjX+kuYR/XoJ/d5JZsWGQ==
+X-Gm-Gg: AZuq6aIBA7esosFjY7/9WkT2rUbr4umbarP3IUfx6xf+icVJq01VIcQzpRorX/WB3HS
+	KRAUyyzS+82j85SHsUBIbhkkS4/zywOJf922NM4x26d0NRG6Mi7ceLuxAHlCHJ8kwX5+EIJ9kux
+	76wLUx4AFi8560iuhb/ltWxJh26lV4LmUHrJO7ubce7WyxalNPA9aKd5G5lPpGRPPNOf6IM0Fsb
+	lTf7sLagfsG5zakH1ICKa3AYpJ6Poq7dntl7kLoIC7FfFRIuWdoKNK5M6hUgPr19YFxcUPINqWj
+	RQbfSNZ7lswu3d3F/ddh0FGMq3XIvoO0VUwoPlEpYt6Rbd6FGZsBC40kcqkHYKvfVwiVzzt5Xxe
+	KJx0vjNrrSkA8htwt2xEb5VDGuKrmBTgcMqSDKm3WRcDVwQZgsHVbM6+JQZJFHPYjN0Bkrp40vf
+	MxU5IVQ697mWBUQo4FpS+0IhOp/9M=
+X-Received: by 2002:a05:620a:489b:b0:892:5b57:ea41 with SMTP id af79cd13be357-8cb8c9d2672mr1214112285a.4.1771875820492;
+        Mon, 23 Feb 2026 11:43:40 -0800 (PST)
 Received: from [127.0.0.1] ([135.232.224.163])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d120e11sm783067685a.49.2026.02.23.11.43.38
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d046055sm925307685a.8.2026.02.23.11.43.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 11:43:38 -0800 (PST)
-Message-Id: <93585ad0796245e57a3305598d13fdb3c72d7fdb.1771875812.git.gitgitgadget@gmail.com>
+        Mon, 23 Feb 2026 11:43:39 -0800 (PST)
+Message-Id: <6ea263fee9fcf670ca2f9f26fa86a76ce0701c9e.1771875812.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2208.v3.git.git.1771875812.gitgitgadget@gmail.com>
 References: <pull.2208.v2.git.git.1771856469.gitgitgadget@gmail.com>
 	<pull.2208.v3.git.git.1771875812.gitgitgadget@gmail.com>
 From: "Eslam reda ragheb via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Feb 2026 19:43:30 +0000
-Subject: [PATCH v3 3/5] repo: add --path-format for info path output
+Date: Mon, 23 Feb 2026 19:43:31 +0000
+Subject: [PATCH v3 4/5] t1900: cover repo info path keys and path-format
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,104 +84,240 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
 
 From: Eslam reda ragheb <eslam.reda.div@gmail.com>
 
-Teach git repo info to accept --path-format=(absolute|relative)
-so scripts can request stable path style explicitly.
+Extend t1900 to validate category-key expansion, path.* key
+behavior, and --path-format handling for git repo info.
 
-This aligns path.* output behavior with existing rev-parse usage
-patterns and reduces ad-hoc path conversion in callers.
+The tests compare repo info output to equivalent rev-parse values.
 
-The option is wired through repo_info context and used by
-repo_info_add_path(), so path formatting remains centralized and
-consistent across all path.* keys.
+This ensures behavior remains aligned with existing plumbing
+semantics.
+
+Also keep mixed key/category ordering coverage so callers can rely
+on deterministic output order when combining explicit keys with
+category requests.
 
 Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
 ---
- builtin/repo.c | 37 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+ t/t1900-repo.sh | 196 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 196 insertions(+)
 
-diff --git a/builtin/repo.c b/builtin/repo.c
-index 35e1eaf7d7..e5078e5459 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -20,14 +20,20 @@
- #include "utf8.h"
+diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
+index 51d55f11a5..dcacf84cc3 100755
+--- a/t/t1900-repo.sh
++++ b/t/t1900-repo.sh
+@@ -10,9 +10,40 @@ REPO_INFO_KEYS='
+ 	layout.bare
+ 	layout.shallow
+ 	object.format
++	path.common-dir
++	path.config-file
++	path.git-dir
++	path.git-prefix
++	path.grafts-file
++	path.hooks-directory
++	path.index-file
++	path.logs-directory
++	path.objects-directory
++	path.packed-refs-file
++	path.refs-directory
++	path.shallow-file
++	path.superproject-working-tree
++	path.toplevel
+ 	references.format
+ '
  
- static const char *const repo_usage[] = {
--	"git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]",
-+	"git repo info [--format=(keyvalue|nul) | -z] [--path-format=(absolute|relative)] [--all | <key>...]",
- 	"git repo structure [--format=(table|keyvalue|nul) | -z]",
- 	NULL
- };
++REPO_INFO_PATH_KEYS='
++	path.common-dir
++	path.config-file
++	path.git-dir
++	path.git-prefix
++	path.grafts-file
++	path.hooks-directory
++	path.index-file
++	path.logs-directory
++	path.objects-directory
++	path.packed-refs-file
++	path.refs-directory
++	path.shallow-file
++	path.superproject-working-tree
++	path.toplevel
++'
++
+ # Test whether a key-value pair is correctly returned
+ #
+ # Usage: test_repo_info <label> <init command> <repo_name> <key> <expected value>
+@@ -89,6 +120,171 @@ test_expect_success 'values returned in order requested' '
+ 	test_cmp expect actual
+ '
  
-+enum path_format {
-+	PATH_FORMAT_ABSOLUTE,
-+	PATH_FORMAT_RELATIVE,
-+};
++test_expect_success 'category key returns all matching keys' '
++	cat >expect <<-\EOF &&
++	layout.bare=false
++	layout.shallow=false
++	EOF
++	git init category-layout &&
++	git -C category-layout repo info layout >actual &&
++	test_cmp expect actual
++'
 +
- struct repo_info {
- 	struct repository *repo;
- 	const char *prefix;
-+	enum path_format path_format;
- };
- 
- typedef int get_value_fn(struct repo_info *info, struct strbuf *buf);
-@@ -47,6 +53,16 @@ static void repo_info_add_path(struct repo_info *info,
- 			      struct strbuf *buf,
- 			      const char *path)
- {
-+	if (info->path_format == PATH_FORMAT_RELATIVE) {
-+		char *cwd = xgetcwd();
-+		struct strbuf rel_path = STRBUF_INIT;
++test_expect_success 'mixed key/category requests preserve request order' '
++	cat >expect <<-EOF &&
++	object.format=$(test_oid algo)
++	layout.bare=false
++	layout.shallow=false
++	EOF
++	git init mixed-order &&
++	git -C mixed-order repo info object.format layout >actual &&
++	test_cmp expect actual
++'
 +
-+		strbuf_addstr(buf, relative_path(path, cwd, &rel_path));
-+		strbuf_release(&rel_path);
-+		free(cwd);
-+		return;
-+	}
++test_expect_success 'path.git-dir matches rev-parse --absolute-git-dir' '
++	git init path-git-dir &&
++	expected_value=$(git -C path-git-dir rev-parse --absolute-git-dir) &&
++	echo "path.git-dir=$expected_value" >expect &&
++	git -C path-git-dir repo info path.git-dir >actual &&
++	test_cmp expect actual
++'
 +
- 	strbuf_add_absolute_path(buf, path);
- }
- 
-@@ -340,6 +356,21 @@ static int parse_format_cb(const struct option *opt,
- 	return 0;
- }
- 
-+static int parse_path_format_cb(const struct option *opt,
-+				const char *arg, int unset UNUSED)
-+{
-+	enum path_format *path_format = opt->value;
++test_expect_success 'path.common-dir matches rev-parse --git-common-dir' '
++	git init path-common-dir &&
++	expected_value=$(git -C path-common-dir rev-parse --path-format=absolute --git-common-dir) &&
++	echo "path.common-dir=$expected_value" >expect &&
++	git -C path-common-dir repo info path.common-dir >actual &&
++	test_cmp expect actual
++'
 +
-+	if (!strcmp(arg, "absolute"))
-+		*path_format = PATH_FORMAT_ABSOLUTE;
-+	else if (!strcmp(arg, "relative"))
-+		*path_format = PATH_FORMAT_RELATIVE;
-+	else
-+		die(_("invalid path format '%s'"), arg);
++test_expect_success 'path.toplevel matches rev-parse --show-toplevel' '
++	git init path-toplevel &&
++	expected_value=$(git -C path-toplevel rev-parse --show-toplevel) &&
++	echo "path.toplevel=$expected_value" >expect &&
++	git -C path-toplevel repo info path.toplevel >actual &&
++	test_cmp expect actual
++'
 +
-+	return 0;
-+}
++test_expect_success 'path.toplevel is empty in bare repository' '
++	git init --bare bare-path-toplevel &&
++	echo "path.toplevel=" >expect &&
++	git -C bare-path-toplevel repo info path.toplevel >actual &&
++	test_cmp expect actual
++'
 +
- static int cmd_repo_info(int argc, const char **argv, const char *prefix,
- 			 struct repository *repo)
- {
-@@ -347,6 +378,7 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
- 	struct repo_info info = {
- 		.repo = repo,
- 		.prefix = prefix,
-+		.path_format = PATH_FORMAT_ABSOLUTE,
- 	};
- 	int all_keys = 0;
- 	struct option options[] = {
-@@ -357,6 +389,9 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
- 			       N_("synonym for --format=nul"),
- 			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
- 			       parse_format_cb),
-+		OPT_CALLBACK_F(0, "path-format", &info.path_format,
-+			       N_("format"), N_("path output format"),
-+			       PARSE_OPT_NONEG, parse_path_format_cb),
- 		OPT_BOOL(0, "all", &all_keys, N_("print all keys/values")),
- 		OPT_END()
- 	};
++test_expect_success 'path.git-prefix matches rev-parse --show-prefix' '
++	git init path-prefix &&
++	mkdir -p path-prefix/a/b &&
++	expected_value=$(git -C path-prefix/a/b rev-parse --show-prefix) &&
++	echo "path.git-prefix=$expected_value" >expect &&
++	git -C path-prefix/a/b repo info path.git-prefix >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git-path style keys match rev-parse --git-path' '
++	git init path-git-path &&
++
++	expected_value=$(git -C path-git-path rev-parse --path-format=absolute --git-path info/grafts) &&
++	echo "path.grafts-file=$expected_value" >expect &&
++	git -C path-git-path repo info path.grafts-file >actual &&
++	test_cmp expect actual &&
++
++	expected_value=$(git -C path-git-path rev-parse --path-format=absolute --git-path index) &&
++	echo "path.index-file=$expected_value" >expect &&
++	git -C path-git-path repo info path.index-file >actual &&
++	test_cmp expect actual &&
++
++	expected_value=$(git -C path-git-path rev-parse --path-format=absolute --git-path objects) &&
++	echo "path.objects-directory=$expected_value" >expect &&
++	git -C path-git-path repo info path.objects-directory >actual &&
++	test_cmp expect actual &&
++
++	expected_value=$(git -C path-git-path rev-parse --path-format=absolute --git-path hooks) &&
++	echo "path.hooks-directory=$expected_value" >expect &&
++	git -C path-git-path repo info path.hooks-directory >actual &&
++	test_cmp expect actual &&
++
++	expected_value=$(git -C path-git-path rev-parse --path-format=absolute --git-path config) &&
++	echo "path.config-file=$expected_value" >expect &&
++	git -C path-git-path repo info path.config-file >actual &&
++	test_cmp expect actual &&
++
++	expected_value=$(git -C path-git-path rev-parse --path-format=absolute --git-path logs) &&
++	echo "path.logs-directory=$expected_value" >expect &&
++	git -C path-git-path repo info path.logs-directory >actual &&
++	test_cmp expect actual &&
++
++	expected_value=$(git -C path-git-path rev-parse --path-format=absolute --git-path packed-refs) &&
++	echo "path.packed-refs-file=$expected_value" >expect &&
++	git -C path-git-path repo info path.packed-refs-file >actual &&
++	test_cmp expect actual &&
++
++	expected_value=$(git -C path-git-path rev-parse --path-format=absolute --git-path refs) &&
++	echo "path.refs-directory=$expected_value" >expect &&
++	git -C path-git-path repo info path.refs-directory >actual &&
++	test_cmp expect actual &&
++
++	expected_value=$(git -C path-git-path rev-parse --path-format=absolute --git-path shallow) &&
++	echo "path.shallow-file=$expected_value" >expect &&
++	git -C path-git-path repo info path.shallow-file >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'path.superproject-working-tree is empty when not a submodule' '
++	git init path-superproject &&
++	echo "path.superproject-working-tree=" >expect &&
++	git -C path-superproject repo info path.superproject-working-tree >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'path.superproject-working-tree matches rev-parse in submodule' '
++	git init path-superproject-origin &&
++	echo x >path-superproject-origin/x &&
++	git -C path-superproject-origin add x &&
++	git -C path-superproject-origin commit -m x &&
++
++	git init path-superproject-parent &&
++	git -C path-superproject-parent -c protocol.file.allow=always submodule add ../path-superproject-origin sm &&
++
++	expected_value=$(git -C path-superproject-parent/sm rev-parse --show-superproject-working-tree) &&
++	echo "path.superproject-working-tree=$expected_value" >expect &&
++	git -C path-superproject-parent/sm repo info path.superproject-working-tree >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'path category returns all path keys' '
++	git init path-category &&
++	>expect &&
++	for key in $REPO_INFO_PATH_KEYS
++	do
++		git -C path-category repo info "$key" >>expect || return 1
++	done &&
++	git -C path-category repo info path >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'path-format=relative matches rev-parse for git-dir' '
++	git init path-format-relative &&
++	expected_value=$(git -C path-format-relative rev-parse --path-format=relative --git-dir) &&
++	echo "path.git-dir=$expected_value" >expect &&
++	git -C path-format-relative repo info --path-format=relative path.git-dir >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git repo info uses the last requested path format' '
++	git init path-format-last &&
++	expected_value=$(git -C path-format-last rev-parse --path-format=relative --git-dir) &&
++	echo "path.git-dir=$expected_value" >expect &&
++	git -C path-format-last repo info --path-format=absolute --path-format=relative path.git-dir >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git-repo-info aborts when requesting an invalid path format' '
++	echo "fatal: invalid path format ${SQ}foo${SQ}" >expect &&
++	test_must_fail git repo info --path-format=foo path.git-dir 2>actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'git-repo-info fails if an invalid key is requested' '
+ 	echo "error: key ${SQ}foo${SQ} not found" >expect &&
+ 	test_must_fail git repo info foo 2>actual &&
 -- 
 gitgitgadget
 
