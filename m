@@ -1,100 +1,251 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA5A34E74D
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:00:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CA213D891
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771837201; cv=pass; b=g1BX8mTpeAm681WXDF1qWXBthrODNJlEwokT7jc1tTANxcOlwHepuLUkIwfUYww77GFETiufKcQ8Pnvs8FpRzEyhQBzyA5kJimlU/5TP9hGkUVOf9l4Y3XxueqtrLXOTx+yz34uPR2PzAnfLlav900pypgFbxhAFqZZ532LiQz4=
+	t=1771837379; cv=pass; b=AImil/DMcYvb9smcpUUkuINdAAY4Dwk1zXd9+RCUkfTQ+BNnZfEIj1nli+HA9p7Fg+UtCkNX8RpYgDepjRwXD34vd8VxrMFg9tZ6aXTxkjZZjLsHuvRIjyWc/R/A1MDH5ZfH90hbJCHC3TfI2eri8mT7raM5bdr3Ei7CNHFVLHM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771837201; c=relaxed/simple;
-	bh=IrJP4aCMg/pUbxYXwsfCMWIjbqsCGYVodG6tzvJ/R2U=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=DX3EptJk43+rON3401P6KvUTOH8x67ynWMLm4SoZZMSDA00EpHL9V7OG+UBq/C/H8DWKLEibcKG3LQYoC066fk3/SyOtONr5OeXHPWW6RcnO19/GpqBcDq1TdF8ehZgAtVWQ11hAyo7yq0DXQgK+GtBPIsdY/eHyYsqy8TGwC1g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bU9+EbLG; arc=pass smtp.client-ip=74.125.82.47
+	s=arc-20240116; t=1771837379; c=relaxed/simple;
+	bh=8LHZxRBMo4bAiVNctbunNCOXU+5g1g87qSFlXLKi9/w=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=U1Qn6cPyL7hSUbtOKi8bekb2ytjBN3mBAUBvvLzASzPjXIOYKzFfl7P0BB2KzSMe43MY2GXLtjpw1QEetKR3svA09vEwF+2iqjm1VXAUhg9Xme96zKXkweam5faxWrOhzNzPpLNJ6p8D926FonDAUKsajHfTbv1cBWjDYTwoVrQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+GIPD8L; arc=pass smtp.client-ip=209.85.221.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bU9+EbLG"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-12758ce1e8dso1440566c88.0
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 00:59:59 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771837199; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+GIPD8L"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-56743b33c67so1763572e0c.2
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 01:02:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771837377; cv=none;
         d=google.com; s=arc-20240605;
-        b=BRKYpNaDMYx/fDKl9HZdskMINk8M02RTTWg+P5/GnxMAn/fQ0jICnwuJx2/DJzSrCt
-         nuImpdNs+AF2ecOBrLomWqSkjKa0ilTn4Hu/PVVtxpW3oxWlq65q6KskHUgLUuvgM0+e
-         X+Cwhqo1cCK9ISC9LNy26YtoKOAf3lI15P4LXl93yhkPg5YnG9J+vGRYX251vEawljWP
-         DdfLL3fcDoJc+FJUDO3ESwfeeqOUwHI/mVMH3UIowY6SJp0SiarlxNxsmiNvdHN/bx2x
-         3gOVisjYYB280+4ZJp0ItM79DSDOX+bWOeQIo/lJri9yvs8hZwWcoFcXSJGvEtO6MTQm
-         +NhQ==
+        b=lFSb3O7gWR0laNqO8DGVKt2rl+sHv66oLZk/7W+V3aflstwqWeOa5sGwDw3zSYcpKh
+         6dnDoEK0UYz2xeqQWRpxx7nFLVBy6ZETSSr9vhgXtYMVIshLPWt4gOhDQZ9ZqbwcJ4I+
+         tjSVWpEFc1FmfIGwIGIK1b8sRsbmSpj8ynzPqZIOX+pb6Okt4S9uoPWFfSBnHs1HE1+3
+         SCRVE2myQqtj0kAf88ndmiFceZrZ8mQ5liGL73uMKyShhMgMMvVYIcRtFu1fcWtT1f+K
+         PuZiQaW72FZW4/A5zmZJwnSLrTNOIKpl5yhTErBohUHJk+48q/I3vxr0YyOnTCBl1838
+         SzMw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=IrJP4aCMg/pUbxYXwsfCMWIjbqsCGYVodG6tzvJ/R2U=;
-        fh=wsvoWvBz3+zI3cO8xbdreD5Z3aI/wpKopH/flyQpgVg=;
-        b=NceTDib55IRG2Ol/o/rSEuRyfb++EaeEPyqygKq2GwjY6lVddp+MISUYHBciTpPyWU
-         qJU+3ZHkIPiMiUpptlMw3c6H5Fi63pu/eu6thmAULom9zfmKKHWGGtBjmMgjcw4o07v3
-         j904jgNs7gjqk31y6+7PpqFegz1cLgq0VY1IuC2jIV0wN56G/swPcsCg53xqBDM0DsoT
-         xgltKPOypTwRv8McX5lmCZ1MZzP8dNnd11RIOzQGJa75ROxQlTSCzQSe/cblR8KyrL/1
-         8tb7gvOBJu/B7qPMGohWvQP7rbN8OsgLd/h5l2zIY3M31zE+w/TbBBz9w+CBsefBahwA
-         74AQ==;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=ittFZeo9lQe4laAZ/1Hd0EyxcLdkqk97UiCpdoAWUT8=;
+        fh=AiiKlACw5ic0k5UGf1vyFkQhwztneOTZZYIfLI5IqiE=;
+        b=Hzww2iCGknvBeVZRFaTMGjDuQfjfhwwvKlz6USrsWNkQjaMR9gpL9osWIVyxBGBqpX
+         gCq9cZF3+8+LF96EFAOfOYmdo4iklrxH0LKTp/Wq0vjF/iJsRH4D/1xMcPAdq1ZVKiVQ
+         4KSM+6idm48vs3qmMX+JPe/rLXIq8gVaArqUgMpQp4coBFl2vqT9mNMA7mESI1A/De0k
+         TrlqBOqn2siuBqaRohoGJ66I9NiyVLGOL9MNbk8r7LMQ2mtO40Ri17YQ48DFTfoRvJnR
+         VIrarfOFSlekYSO+oYIwTWreRPVe3Kjoao0A43halu79EeIW1rbrjcv7hCcfPJTP9aPy
+         m3ZA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771837199; x=1772441999; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=IrJP4aCMg/pUbxYXwsfCMWIjbqsCGYVodG6tzvJ/R2U=;
-        b=bU9+EbLGZmcJMc0/7AgbEnskLN5Hyrh0/FU1OsnbArDWpiVu9N8BbnrEYCXUjNBlan
-         fXJTHGRFdmBE3nuq4gyBCwK+MmHQdtG/K48rPBEN7H1vNx6nWNukioJnqH39q7kZmkWO
-         a85dG4gQ5AF5MuhV/cIYA80i9Tb4hGPWIzXqgvix88DEerU928rTrl4HNY+/ezCEWGUm
-         V4E90C3+emd7IOjWWDN56532FzEM2fYc4CGfWaMZ3aUHCXxRgbul6qg1yKd+w+yfN4BZ
-         nKt+k04pICEGt17kvgzkEm1pATyT8Q/sjGK77mdO3ulsGOiVoZa3b1mx567J8uqv3ynl
-         FyyA==
+        d=gmail.com; s=20230601; t=1771837377; x=1772442177; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ittFZeo9lQe4laAZ/1Hd0EyxcLdkqk97UiCpdoAWUT8=;
+        b=b+GIPD8L6beM/1hs6P0xe3M5vD565kx+BKzlt8pgczu5bcj8APbxtZo2GJEn7pH/dd
+         y9JhSvDCvJ4Y8K5D+ug3oNad/+U0OOEDjeqMswe5n8OHDfTScT1kMnePX2xEVNNVazc9
+         alrfhbGPu/uXHpLR6YlMeDnKfRM6ucgFEKzk0mEpjOwubU+ir73o+DXFKeO5fPlCMN5D
+         Hk2CWq0rdyrwnO5bDicSe5T2mXCbB0j93H/udx/t/sQ4rLdwTGW9RIOv5uICBjYDF4mK
+         qYu8oPHkhkgSCmc3Ts0dnB/CwQqRg/G2nnrg0foY1mZ6x5k7zeamPdAGwsGO/Yynrgtl
+         oHwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771837199; x=1772441999;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IrJP4aCMg/pUbxYXwsfCMWIjbqsCGYVodG6tzvJ/R2U=;
-        b=cIs/1GlxDE82lGQ4umKSLpr4L09Qid2tY3zgKPA/0Huh+kmKHh2+n4I36oRZn3ZESP
-         JOBV9VxJW1+oO46kidZrpECuD36y4SZJPGrTotvNBu3ymmn29dn/kRUw+2cGiFw1BvkC
-         SFCQRwXs81oD/l5XST24fKOTGsSmhblodKyzGthdnsAFzzA6WQWIpnVu3coj0GzwBdaU
-         jP9VAJfFngwXmczrtEKN9g/64+TsOPf/ewBtD3K6wWHuIlb8DVTksxetYKFOtJHwDdtN
-         BKW9E0CrOUGBwdOPmECL2jzjc1dqpcmPXnOtGW1VgJ5JQxwReiJxFTToOmMSteJ9wMmb
-         hEsQ==
-X-Gm-Message-State: AOJu0YzSj/LUDPOnV0C9IZg4SciGPdTuGiFbO78F2sQrFADuw09x1ygp
-	YlblDFIHrMvJSFGNq8VH73N1UxeBnxBCzuWlFXqhqAaANjhPCCvowNpVP8TXfBMPeQ2/PLIO/Fk
-	EqPWnHEHqLOL7876EyvCydDNeiNvcGes7RWpQLdc=
-X-Gm-Gg: AZuq6aLICLI2a2n6xzSo+CUeCR2K15HIDm0HugQRIxCIMrQTnigAH+j4G3Wwbc/7uFD
-	i8VHuoXbYDZgU2vk1pc7k4NuDws/BsqhHosHTRJXBQk5zFN4bU406aXHOzK2AH5Li4nVec8DN0C
-	NLNa+7o/bnRo0KU/ujts7azoHiH5kR/WKIB3DOl+z1FZpoXk2lZ91ISpzWH0PDs7zPO8n0wOyFd
-	d2jlRjvzlTHxIi+oOugtr0jYLucafUckNp2n5KxrpqSn49kKnuIugHIkL/MQf2DscfBwluYgKGs
-	TJ/bnpOm02NpfhRHdFq+v5tyOFqrzxH4WsiNgVnd9SCT
-X-Received: by 2002:a05:7022:2521:b0:11b:9386:a3c8 with SMTP id
- a92af1059eb24-1276ad8bb87mr3748579c88.41.1771837199009; Mon, 23 Feb 2026
- 00:59:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771837377; x=1772442177;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ittFZeo9lQe4laAZ/1Hd0EyxcLdkqk97UiCpdoAWUT8=;
+        b=iPvZsCItFdismuNzZUoAU8rPYrf6HBZFRKhu1rtf8kOo9fADvfA68/H2XjxKrAgUvr
+         FL1XiFv7PeIf4pa3LipQyIC+NHO1mfsx+y7W7z08A4sLXhkjoTjliNTHdNZLjfA1MraC
+         mzbtieuNQQl2FhHH2x+QYaluFapVKwbxCexeaZnu4nbidj6zhovxzA0PKfznPhbfwtic
+         UqIst6CfP2lriG5uwWsa35omrn5qRTYyhlaAYZqulwKz8tTEZYDpkfKQnTdXLcjKT9gu
+         NXfuyA5RDACQhWaXUe9SeVnDXqwkRgW46ga7BnMNitVI3npGI+xgYJ0z6GFQBVlXHKd2
+         DCOA==
+X-Forwarded-Encrypted: i=1; AJvYcCXDnrbQLihtxcJl7hjGHFB5IC7MYAAuyS8tFuTEOdRnFXKGAqPs/Ml+hyQpaXxMOyPoass=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhgclCgJyqq0V2LVWGQrr0ysbS9WBWrBSSVV9eNGmrkw9PhJv0
+	82+izdUCO4nGzCQkWwbNr1vQ3jQCXZzHB4eQcm+l2tA+MWmzxZ5kI6lSc+ZGlXRkU0i8IqS6srb
+	mv0s+nSj90/Kxqsop5M3Pr/4SB7OEDTfzhPGQ
+X-Gm-Gg: AZuq6aKkmWb/F19MhbT959E88djzC3h6WpprNzk9WgMRSm/qBfRmchSSP9qFiwWHveB
+	nv+BI48tpiB+MdUjk6+OmJ8DkB4+/4DPGaH52tsqCXCadQokAEC6q/wiyW2otxONPY9K/ELm/yU
+	DqYk2qVjFfQUsElUPb00OWiPu5Wq2DCMm2Aakhzb9plO9xpRVbfPBsvGhQghbDg5lbYwCwGy7ci
+	+wc5ah8OguUdqeyt8iALKKWvGvWAOGTOwSvHTiojYsbLVgmKdDBRI1UR9VkIfPReWDibxbTkXo9
+	Kc4183XDIi37RMKcPLjYm5DEnmjjZ71aVB6nj/tW
+X-Received: by 2002:a05:6102:26d4:b0:5f9:35a4:f5e3 with SMTP id
+ ada2fe7eead31-5feb2f0fa16mr2673417137.12.1771837376941; Mon, 23 Feb 2026
+ 01:02:56 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 23 Feb 2026 01:02:56 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 23 Feb 2026 01:02:56 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260220-pks-refs-for-each-unification-v1-8-17170bd99de1@pks.im>
+References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im> <20260220-pks-refs-for-each-unification-v1-8-17170bd99de1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Bello Olamide <belkid98@gmail.com>
-Date: Mon, 23 Feb 2026 09:59:48 +0100
-X-Gm-Features: AaiRm52BQf1HCyz7SZ4dueXv-4TSNcLmk3xnDMNQmnemza9KCY6r6E1J8q4sx8c
-Message-ID: <CAD=f0L-X5r8nUeY1Zm-kpjw1-kJa9=U5qX==dn-Y0H8zHFqOMA@mail.gmail.com>
-Subject: =?UTF-8?Q?=5BOutreachy=5D_Blog=3A_Refactor_in_order_to_reduce_Git=E2=80=99?=
-	=?UTF-8?Q?s_global_state_=28week_8_=26_9=29?=
-To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 23 Feb 2026 01:02:56 -0800
+X-Gm-Features: AaiRm52So48fg3l4mzxw1FyI94ehjVNq6BHC0rXI6F0yPpvtjwGCT9m34wYy2pA
+Message-ID: <CAOLa=ZQjZ-YLedF=Cqn=Tb8-rhX8=+Lnd2VKv0fn_ryrO563_g@mail.gmail.com>
+Subject: Re: [PATCH 08/17] refs: generalize `refs_for_each_namespaced_ref()`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000073f506064b7a0970"
+
+--00000000000073f506064b7a0970
 Content-Type: text/plain; charset="UTF-8"
 
-As my Outreachy internship progresses, Weeks 8 and 9 marked an
-important turning point in my project: not just moving code around,
-but confronting deeper design questions about how Git should behave in
-a future where multiple repositories can coexist safely within a
-single process.
+Patrick Steinhardt <ps@pks.im> writes:
 
+> The function `refs_for_each_namespaced_ref()` iterates through all
+> references that are part of the current ref namespace. This namespace
+> can be configured by setting the `GIT_NAMESPACE` environment variable
+> and is then retrieved by calling `get_git_namespace()`.
+>
+> If a namespace is configured, then we:
+>
+>   - Obviously only yield refs that exist in this namespace.
+>
+>   - Rewrite exclude patterns so that they work for the given namespace,
+>     if any namespace is currently configured.
+>
+> Port this logic to `refs_for_each_ref_ext()` by adding a new `namespace`
+> field to the options structure. This gives callers more flexibility as
+> they can decide by themselves whether they want to use the globally
+> configured or an arbitrary other namespace.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  refs.c | 47 +++++++++++++++++++++++++++++------------------
+>  refs.h |  6 ++++++
+>  2 files changed, 35 insertions(+), 18 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index ac34bbe6c1..99994879d9 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1845,9 +1845,13 @@ int refs_for_each_ref_ext(struct ref_store *refs,
+>  			  refs_for_each_cb cb, void *cb_data,
+>  			  const struct refs_for_each_ref_options *opts)
+>  {
+> +	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
+> +	struct strbuf namespaced_prefix = STRBUF_INIT;
+>  	struct strbuf real_pattern = STRBUF_INIT;
+>  	struct for_each_ref_filter filter;
+>  	struct ref_iterator *iter;
+> +	const char **exclude_patterns;
+> +	const char *prefix;
+>  	int ret;
+>
+>  	if (!refs)
+> @@ -1876,11 +1880,29 @@ int refs_for_each_ref_ext(struct ref_store *refs,
+>  		cb_data = &filter;
+>  	}
+>
+> -	iter = refs_ref_iterator_begin(refs, opts->prefix ? opts->prefix : "",
+> -				       opts->exclude_patterns,
+> +	if (opts->namespace) {
+> +		strbuf_addstr(&namespaced_prefix, opts->namespace);
+> +		if (opts->prefix)
+> +			strbuf_addstr(&namespaced_prefix, opts->prefix);
+> +		else
+> +			strbuf_addstr(&namespaced_prefix, "refs/");
+> +
 
-I wrote about the lessons here:
-https://cloobtech.hashnode.dev/weeks-8-and-9-initialization-defaults-and-designing-for-multiple-repositories-in-git
+So if the namespace is 'foo', we'll have the namespace folder as
+'refs/namespace/foo', and a prefix of 'refs/heads/' would mean that the
+'namespaced_prefix' is now 'refs/namespace/foo/refs/heads'. Looks good.
 
-Best regards,
-Bello C. Olamide
+> +		prefix = namespaced_prefix.buf;
+> +		exclude_patterns = get_namespaced_exclude_patterns(opts->exclude_patterns,
+> +								   opts->namespace,
+> +								   &namespaced_exclude_patterns);
+> +	} else {
+> +		prefix = opts->prefix ? opts->prefix : "";
+> +		exclude_patterns = opts->exclude_patterns;
+> +	}
+> +
+> +	iter = refs_ref_iterator_begin(refs, prefix, exclude_patterns,
+>  				       opts->trim_prefix, opts->flags);
+>
+>  	ret = do_for_each_ref_iterator(iter, cb, cb_data);
+> +
+> +	strvec_clear(&namespaced_exclude_patterns);
+> +	strbuf_release(&namespaced_prefix);
+>  	strbuf_release(&real_pattern);
+>  	return ret;
+>  }
+> @@ -1927,22 +1949,11 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
+>  				 const char **exclude_patterns,
+>  				 refs_for_each_cb cb, void *cb_data)
+>  {
+> -	struct refs_for_each_ref_options opts = { 0 };
+> -	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
+> -	struct strbuf prefix = STRBUF_INIT;
+> -	int ret;
+> -
+> -	opts.exclude_patterns = get_namespaced_exclude_patterns(exclude_patterns,
+> -								get_git_namespace(),
+> -								&namespaced_exclude_patterns);
+> -	strbuf_addf(&prefix, "%srefs/", get_git_namespace());
+> -	opts.prefix = prefix.buf;
+> -
+> -	ret = refs_for_each_ref_ext(refs, cb, cb_data, &opts);
+> -
+> -	strvec_clear(&namespaced_exclude_patterns);
+> -	strbuf_release(&prefix);
+> -	return ret;
+> +	struct refs_for_each_ref_options opts = {
+> +		.exclude_patterns = exclude_patterns,
+> +		.namespace = get_git_namespace(),
+> +	};
+> +	return refs_for_each_ref_ext(refs, cb, cb_data, &opts);
+>  }
+>
+>  int refs_for_each_rawref(struct ref_store *refs, refs_for_each_cb fn, void *cb_data)
+> diff --git a/refs.h b/refs.h
+> index a66dbf3865..2bde60aa0e 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -468,6 +468,12 @@ struct refs_for_each_ref_options {
+>  	 */
+>  	const char *pattern;
+>
+> +	/*
+> +	 * If set, only yield refs part of the configured namespace. Exclude
+> +	 * patterns will be rewritten to apply to the namespace.
+> +	 */
+> +	const char *namespace;
+
+Nit: should we also mention how prefix is appended to namespace?
+
+> +
+>  	/*
+>  	 * Exclude any references that match any of these patterns on a
+>  	 * best-effort basis. The caller needs to be prepared for the exclude
+>
+> --
+> 2.53.0.414.gf7e9f6c205.dirty
+
+--00000000000073f506064b7a0970
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 6cf2e46abbfd9f34_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEpCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tY0Y3NFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meFpMQy9pU1VRT0NKKzltQ2V5YldRL24xL1dMa3c0RAp4dU5KMkFOK2Qz
+RXVTYm1EYWpPcXF0Qkx0bjlReW51L3BMS1E5bUkyVXBHaFBEVEttRzRlYnA0cG5lQnN6K1dzCjRR
+Q3Y5cUlrbFNBT3MzYWRjZzFqNlhHWjA1dWhKQXRNbVVKazdOSHgyOW9sTlFoTWhLMnpBTFNORHZM
+aDRXWmIKdkFhSHRNeWZnQWFtV3UveXdDMkR5ME9SdVFuS1djanI1TDNSTUUybDN0dXhZTjRqWDFt
+a05NajdxMUt3SmJjMwpFeU5lUURlWWE5QXF3MWJHSE9hRDJCaktzQ0x3Uy9lSERnZFdhSm5iS1Vh
+aGpzMy9tdGErM0FNWC9ucURXVmhwCkpHQ2VvQVYrK2MyOWZLNjZucUh6aHl5N3NzbmlzSGkrTVJD
+RE1xMXNyVmFOREUrL2JQREFla20vQWlXek1ZbGoKTDhnUkNBUk5pQjdkZExvaituaDhta1dsZE01
+dzkva2tqbmJNTnVJVWxKSGhFdFdRM2p4bjJQWnBnRjNLQXRheQpYN0NKTVdKUW1oc1AvTWdGbFBX
+dzliNTRTQkl6Q09BR0h6dkN5WDVxdTRSQzVwMzNGcGFTRzFQYUxDUHZobGJqCjIwSjQ5VysyanVO
+OHIwdnp5cmk4SDZjdVhCNmlKZVdHSW1ITDlnPT0KPWNVK0oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000073f506064b7a0970--
