@@ -1,75 +1,76 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE243191BD
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 17:46:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A6A30C343
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 18:06:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771868803; cv=none; b=uHtsU+uDOyT5faJBgHIhFGKO9k6M4/drKOp0LapX05NjFqRAkWtpRNTVtKd01z3h7h8mYnRoTTwmuzmk0LYYnepP+hkLyObRTSPx/K59aTucSWHt9CmS7P3RvEN71c5IKHlZU7YD6PruZP3pbDxj7P90XUvXgJNUGGZh+W9jDZM=
+	t=1771869966; cv=none; b=T8GUZM12DhbfAP5OVxa3saRydanSazbXQ36e/Ei02VE2ZyUHCrySp6OB36UxkREc9SVJlwFvqq/ddUVSz1FCcn32DED4xQ/HaD0QWGmb7jwli8QIRhHG6GIJPTz212dX0HTuJbTkg45MiYtdsJlNJkDWs1ix3XDew+uhsIbl6M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771868803; c=relaxed/simple;
-	bh=ggfCOEzqgiM4roqhnWVej6rhrAXm5CSdKlhuD0kAJ0c=;
+	s=arc-20240116; t=1771869966; c=relaxed/simple;
+	bh=c2RgPs8/gZZBoFG7aIVjYQOk7loOgMHuxYttzOdUhZ0=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=i5sPA/FPgtsu41xR0RazM3I4smJ+3H5YEnpUd/amCZhdAKsCxEj/JgzAMV92xzuoxXXv6+N9rDtA3qXtZ9w4pklrMKrsmxrVX+ljdRiqlBnRcOCSodhp4pukI7V3jRSI7BQrgHNcGRsx26xctkoC2jLiEkysk3XyPknOKDK/yJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RmSqrYo7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eRT0Gto1; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	 Subject:Content-Type; b=sfLvH7x3PBsz83KH0IdyjKjp+IL2P3lkVQzSxTHdXnncx+b7QMd9D6Oz9v+ZcQ9d8R86IZuavyDGtuqH14ic2IXo7VbyZ56r0QvfX8BkgnQ/HuJignUwRIWhd09mV0e3ZvZbfuugkYVzqdzYGPw18rWykUUZ5echXdaa9tQHmYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=UJcwRw4v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gMI2kCs9; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RmSqrYo7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eRT0Gto1"
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="UJcwRw4v";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gMI2kCs9"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E322E14001B4;
-	Mon, 23 Feb 2026 12:46:40 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id AFB2EEC05E5;
+	Mon, 23 Feb 2026 13:06:03 -0500 (EST)
 Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 12:46:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771868800;
-	 x=1771955200; bh=kM6r1mmLRzmCdBfaP+IA3mnZbqvPLm2G9gJWxyhBzV0=; b=
-	RmSqrYo7/ycC3ye/tnPM5Y0SO9MFp1pHvRLqYis58F+S4Ry7q8Y+GUG3jCIExpI4
-	U0g4ZBCneOTYOBSvV6OV80HL/2V4wHHhAlfHyxIjMC8qdNfu3YU1wAGRaBGqExbQ
-	5vNtbbJc7fiE8mSOPiMoYoqCAazbhuGqPqBktFeJUZNmqvkzcCY+I/hVHTM9VM32
-	7UP1JAbPitrOnA7xZgsQUuWhqQNblcxEg1d7WJ1uMcgK80n/i48M7pxbagi0izhX
-	RQIuvFuB8YSYyGGKNnzgnMJOCJEgL0fg4GiHDBLCCzReG3WYgPV3I/1ywH3hoi6f
-	AszHwb9uG9iVyfMjjdDXGg==
+  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 13:06:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1771869963; x=1771956363; bh=ULkL96S1hdHn4Dql9N8m0X9kvNZOoQiL
+	SN22BsZthdo=; b=UJcwRw4v5DgOp4afQxmMWEUCLZtVZO989ZuswMNRUuftJqRp
+	C3QlwvDBS2upDreJVaQozIen9Q5vRVBb3WedUB00Y5lo+vkCZ6bFuL1N5635uLag
+	znN25LBo6fFDAwT64+XYIT9NmOEa3jwpohD9CMHQbShvvo/9Rq7ZH5GmoD4U8owH
+	K3jKTxHM+GrfoAVCSutK2BUVzVYHPo7eomHi22GlZdPCIX/Nlpwo5z9GyiWKu9bQ
+	xTOA2xh5r8eYCGKbdpM7k6DPCuR2vBfgevs7ha5WzzgSG8+0wDeDwLoEZza+2gd2
+	8mpnqkkLSNjYDIeuSDY2g0cY14Dz5LyuZglZrA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771868800; x=
-	1771955200; bh=kM6r1mmLRzmCdBfaP+IA3mnZbqvPLm2G9gJWxyhBzV0=; b=e
-	RT0Gto1KAgu81TlmcrLFYI2bRUDSigkTt3XRkhtpw9yvSXsSKJIy8lJrosjXfrIw
-	1Q0XeylQUheglfZ2GWtHOp8fTR1cKtlkOBWA8GJnOWyOuCdZdHAkcHFDUGyfH6yu
-	Tf30vRz91idi5fYbD/pvY0Xvxre4Bid0tROIdCMyygzoJ5jkZjq9KnBDVud8twAw
-	wld9Z33kWAwACqkGWcOa/NFqVYHvYshM2o5yNQ3a5vepel7NN6nrv4P56q5uO9nO
-	O+YHFCENnCbyeIGTgWUdDW8zGFuACSxjf8sm8+PUWTqo1d68XlrAcaFATc0wU6//
-	3OwK3EuIeC686+N/OkjXw==
-X-ME-Sender: <xms:gJKcaf5UNtcj25XRczkuy2DouArYOwTHZA809j3xYh_XNAPJ-tigw-U>
-    <xme:gJKcafs3NewivzxlDALGpSjVcizhxrjpvIDiz2fwS8SEvXacyLXF3sqZCP-5STHLC
-    CN0_mu9NqI7wcZX6DabQ_EMU_KoR4JCaGSya5FhCHX5Fv5JCCG01A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejkeejucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771869963; x=
+	1771956363; bh=ULkL96S1hdHn4Dql9N8m0X9kvNZOoQiLSN22BsZthdo=; b=g
+	MI2kCs9ml8XnwAesADTXVIWvDKyy2K6bV7aV1DCbanRfjwOpRsoUzV8QFUq2PGIA
+	PLWscmunzADZm5PyuXASHE/W7XZAIgQJDoWOS8WYDv5kZOgcCD1pQmjl+UQhv0p7
+	FkgOKS3R10w96uVli4qvPJNGfjunzfnU+8Z5WWklHGSFBq8qbvkxW5sjfWK+zjt9
+	eoSDzAxVpRTYmthKxpNmRVX7lIaE7lL1Szv6at7IKbAuKBUHL2ZHlm1KiNnQVSnO
+	Eu0UGOAfV5uhXSU259sS7HfBPilKURVXWp8VWpnsdLkCJi8p7sWnLtIroA8BBuWb
+	QuZK5d++m5A5mKQpfbQlA==
+X-ME-Sender: <xms:C5ecaV2rhCHmXyGHXwZdVP8qk54FGewbT2b5HH5UxfD4422qbeuDnV4>
+    <xme:C5ecaW5YvfIb733vWGJDj_Y0lYY3R7pnUTkrp71J9n0xQwwQlUq8rY_rxbPpZthpk
+    FcWSN89ya3XUgOK9yc4faDRJJK8b1Wcsdv3JyBXW_3HprQ7BxA4wA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejleduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:gJKcaX_z2C1k9vYT-RNd9lcnA_kcFz5tqdGVVLNmGZeEjo2CRMCWKg>
-    <xmx:gJKcaVPx2JDb6qpDMDfCk5zSUFH1amvvEtCvsUNE6E21AMYK2_w8MQ>
-    <xmx:gJKcaVEPyTzkrtblLgLIEUKHSPemnVg0JzMda8znHk_bfBo9fgjNYg>
-    <xmx:gJKcaTSlBuZ6CZQQCYJ9fwxOBHEBRo-CfsJU8n96dDqCbC26zyq3fw>
-    <xmx:gJKcaTTVjtYqMGNYr5a7SwxrQwtM6CoTY3rAJCdVjfWvmW67C5yvOKOK>
-Feedback-ID: i8b11424c:Fastmail
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkhhkrd
+    hnrghmvgeqnecuggftrfgrthhtvghrnhepleeivdeijeehgfekveetieeludegheehtdej
+    geeigfelteevleehheevheffjeehnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpth
+    hhrghnkhhsrdhnohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghrtghpthhtoh
+    ephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnoh
+    gslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhorhhvrghlughssehlihhnuhig
+    qdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:C5ecafbd8VJEz2i4HPZvX865KtZFy7q2F4dw9RqQ4IiZqs0WMTK8xA>
+    <xmx:C5ecaf6vzxbfi8CCXhucBWuTnwuHTFEbJkswvAPvTZtq2Md9WEegog>
+    <xmx:C5ecaSDgyQUydjr9s3NklUKAr2zmto1AYR1YQ-I7RFiMmfu1fIIr_g>
+    <xmx:C5ecaVeHzTdYXf6HPTwOKjAh_OaiHH64RKrZXx4pasMU0VgO0oTviw>
+    <xmx:C5ecaSGYD2y6CE3A1VhOgKp1gKtajCLUeCfeldy95f7AZyw2iTfE08Qe>
+Feedback-ID: i2671468f:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 26AA21EA006B; Mon, 23 Feb 2026 12:46:40 -0500 (EST)
+	id 78FB01EA006B; Mon, 23 Feb 2026 13:06:03 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,83 +78,73 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AA44t9WoDwMk
-Date: Mon, 23 Feb 2026 18:43:29 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Karthik Nayak" <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>,
- "Toon Claes" <toon@iotcl.com>
-Message-Id: <3af8a2ba-dfe4-4e43-8f86-b03a0cbc3698@app.fastmail.com>
-In-Reply-To: <20260223-kn-alternate-ref-dir-v8-5-0509c132a203@gmail.com>
-References: <20260223-kn-alternate-ref-dir-v8-0-0509c132a203@gmail.com>
- <20260223-kn-alternate-ref-dir-v8-5-0509c132a203@gmail.com>
-Subject: Re: [PATCH v8 5/6] refs: allow reference location in refstorage config
+X-ThreadId: AtIroVKetKJJ
+Date: Mon, 23 Feb 2026 19:04:01 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org, "Linus Torvalds" <torvalds@linux-foundation.org>
+Message-Id: <af41be2a-daac-4d23-852d-61ff7e0dae6d@app.fastmail.com>
+In-Reply-To: <F628C3EE-0600-419E-8D85-0CEA9EEA2243@gmail.com>
+References: <xmqq1pifvyhm.fsf@gitster.g>
+ <F628C3EE-0600-419E-8D85-0CEA9EEA2243@gmail.com>
+Subject: Re: [PATCH v2 0/3] doc: patch-id: explain how to map efficiently
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 23, 2026, at 09:01, Karthik Nayak wrote:
->[snip]
+On Sat, Feb 21, 2026, at 03:38, Ben Knoble wrote:
+>> Le 20 f=C3=A9vr. 2026 =C3=A0 17:31, Junio C Hamano <gitster@pobox.com=
+> a =C3=A9crit :
+>>
+>> =EF=BB=BFkristofferhaugsbakk@fastmail.com writes:
+>>
+>>> This is the fourth patch series for git-patch-id(1). This one focuse=
+s on
+>>> emphasizing how the command is an efficient patch ID=E2=80=93commit =
+mapper and
+>>> how to use the patch IDs to join commits in a script.
+>>>
+>>> =C2=A7 Changes in v2
+>>>
+>>> =E2=80=A2 Delete temporary files at the end of the script.
+>>> =E2=80=A2 Consistent footnote style: https://lore.kernel.org/git/c70=
+adde6-e3db-4a46-bb29-a19d7aba8c7e@app.fastmail.com/
+>>
+>> The latest iteration of this series has seen no responses.  Is
+>> everybody happy with them?
+>>
+>> Thanks.
 >
-> Helped-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  Documentation/config/extensions.adoc |  16 +++-
->  builtin/worktree.c                   |  34 ++++++++
->  refs.c                               |   6 +-
->  repository.c                         |   9 +-
->  repository.h                         |   8 +-
->  setup.c                              |  34 +++++++-
->  setup.h                              |   1 +
->  t/meson.build                        |   1 +
->  t/t1423-ref-backend.sh               | 159 ++++++++++++++++++++++++++=
-+++++++++
->  9 files changed, 259 insertions(+), 9 deletions(-)
->
-> diff --git a/Documentation/config/extensions.adoc
-> b/Documentation/config/extensions.adoc
-> index 532456644b..3e51da36d3 100644
-> --- a/Documentation/config/extensions.adoc
-> +++ b/Documentation/config/extensions.adoc
-> @@ -57,10 +57,24 @@ For historical reasons, this extension is respected
-> regardless of the
->  `core.repositoryFormatVersion` setting.
->
->  refStorage:::
-> -	Specify the ref storage format to use. The acceptable values are:
-> +	Specify the ref storage format and a corresponding payload. The value
-> +	can be either a format name or a URI:
->  +
->  --
-> +* A format name alone (e.g., `reftable` or `files`).
-> +
-> +* A URI format `<format>://<payload>` explicitly specifies both the
-> +  format and payload (e.g., `reftable:///foo/bar`).
-> +
-> +Supported format names are:
-> ++
->  include::../ref-storage-format.adoc[]
+> No /further/ responses, perhaps? Unless my mail didn=E2=80=99t come th=
+rough. I
+> completely understand if my approval was not weighted particularly
+> highly, though, ;)
 
-It looks like this causes list continuation (+) and the `;;` syntax to
-appear in the HTML output of git-config(1).
+Thanks for following this series.
 
-    + files;; for loose files with packed-refs. ...
+I was wondering if a relatively lengthy example like that would be
+accepted on such a small (doc footprint) command. I was ready to drop
+that example patch/commit if the series didn=E2=80=99t move ahead.
 
-    + The payload is passed ...
+In general *I* would like to see more examples and discussions in the
+docs where commands that are better used in conjunction with other Git
+commands and general utilities (c.f. git-commit(1), git-tag(1),
+...). And in this case, this =E2=80=9Cwrite a script for it=E2=80=9D com=
+mand, as it was
+called in the linked email,[1] seemed like a good candidate.
 
-According to `Documentation/doc-diff master seen`.
+=E2=80=A0 1: https://lore.kernel.org/workflows/CAHk-=3DwiN+8EUoik4UeAJ-H=
+PSU7hczQP+8+_uP3vtAy_=3DYfJ9PQ@mail.gmail.com/
 
-It looks like dropping the list continuations fixes it.
+It=E2=80=99s a bit hard to find information on this on the Web, I think,=
+ because
+=E2=80=9CGit plumbing=E2=80=9D has been SEO=E2=80=99ed into the silo of =
+=E2=80=9Chere=E2=80=99s how you can use
+three Git plumbing commands to do what you can do in one Git porcelain
+command=E2=80=9D.
 
-    Supported format names are:
+But I also can understand if others think (maybe?) think that this would
+be too much verbiage.
 
-    include::../ref-storage-format.adoc[]
-
-    The payload is passed directly to the reference backend. For the fil=
-es and
-    [...]
-
-Maybe because you are inside an open block? I don=E2=80=99t know.
-
-> ++
-> +The payload is passed directly to the reference backend. For the files
->[snip]
+But I see that this is in `next` now. Which I am glad to see of course.
