@@ -1,146 +1,168 @@
-Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8DA1AA1F4
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243B734DB66
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.169
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771838009; cv=pass; b=YePlIk2WcTkdYvRfGjcITUDOAqK4rEHZQdLz3HMs/H3Qm0sblwiG56cWSRCsIhzWVgM5dHZB1qKyMMOn7GH93XUII1K9CQf/n6iEnyHcnQpva7+g8U3C5eQIe6iMdTp0/Qpo3u5sRZChO3VFC6I0i1scq4wK1OnMi/N5uuZu+UM=
+	t=1771838063; cv=pass; b=SCwOHB1SNaJpOTE5CwZDhpBmozMEB2b6rJR6b7miuQJzdqwBOoJHmdx6lv0dCNfyO0gIpdZS07+oxhDarFe0Np65AsO6OyKmzwxmPljCJ069quVXBWojnqEcO4pIuvUkwibPc8CSouaKbXNc3lw1C/Ux5YHp8inOiNGxffBrook=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771838009; c=relaxed/simple;
-	bh=Nhhdb6eax1jr+JU4nICoeYNzvL9oLHlf6e28gJ/1Hi0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hubyfdK0/YBk0Lg9EjkNN2fgY5NXdnMyc2x6+xWlrNjW5czGLELwUeB+OYPkySKcAPW3p+/Jb+gQqgmAlH7pddVgrj+vaH8ygSBCrBn8zkQ7Di9v9dE/5DX4JrjvuNF78aGN3mdKhv/yPrMy007+nIOl15QuFLKTSeMgOrrm/pY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kgvm1vmn; arc=pass smtp.client-ip=74.125.82.45
+	s=arc-20240116; t=1771838063; c=relaxed/simple;
+	bh=oh0prsEeVP/8RU9H9U4bYZtuh2PHjbjCjhqdRqvMnsM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=U+tNgTjJx6KNi4pr/h4dHVJYGLSS71HWqFG8QzrqfQvaj3hVigD1WqeVJEiSoINdZT3O2kXxQyLWtZowLXWMmLwPei5R8jO9D/9fLdxeXgU43WyoBErhPn3dJ6IfR8Okj9opDc8EUuyesgGextZPfaxXglXirtiYnMmgu6DnNXI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=edqIJFAg; arc=pass smtp.client-ip=209.85.221.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kgvm1vmn"
-Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-1275750cf9cso3302710c88.0
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 01:13:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771838007; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="edqIJFAg"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-56706fd623fso2876667e0c.3
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 01:14:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771838061; cv=none;
         d=google.com; s=arc-20240605;
-        b=WjQik5wa7EsbDdEE+0fkqiBIqedaiA5i0AhBE3oUMw3sDCv+RnF6YWzIOrOaQrO84L
-         Rf2EI0TnFSGzyUS/w7mSEBnGfUWRWilB0Q6rtwNg16E67UoufGHOZfasafBM4fgV3l/b
-         Alp9cwb8yJhlw9SOxtXemng7QYWfah3iwDiGi1YRbZTn56xyvm+nECiSvWuUK8kOxKwU
-         nqiaP+0NEvpvszrvOhEOM28TN2s7W2W2JW7B2hiGK9+s2fUDR+2DuD51/WepdYXRCxJf
-         ux4xB0XQcMuMGe2Vpoz6G69bBNfl3rWYrDJNarVeJT1Mco1ecnrJkXa3NHs5QaTkldf5
-         J2aQ==
+        b=GmlFpG47I2SNe9SmMNF8HAzEhe5mWQBoupkG2vii/ut2qoV4g9i+HUxTVPEpsJT4pd
+         QSiRo55wfCc13OiJ9xMh5LuHNJ/5+iRPXyCFEzyC2C/5z3ckSeN0Q0gQRA9i2nrjZ4M5
+         WWCOc/RskkNHTBfD6AC0DPRickhxu3FGkJiOZHjOnwxyg+tLuJ4o8pKEtGwbqWLVw7WQ
+         RLqSAQQnrOw2zuOX4Xk4L+C4jj25EhvcXjcqiWOfJwOh1mggAmXANDj/46AQKaWGz3lY
+         cqZWQLRF7+AgVC2nlw/Rvxp64b0nYp0RO0qXnEKDa03054pVFENaf+9nG0vP1RzffRzp
+         +N1A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=NI4IfDDin/v1W7Xn9okdNcg5clUT2mtvt5q8Ie7m4NM=;
-        fh=I4NWZxxpTxBMD9KYmCkAd/66dH+Eiv5NcJzRAC59BMg=;
-        b=PXCb/O8bzzBKoyUIqnhnVvDjEp2+LwIRPdmvJvmFocmAyHNjXC1LZfIACfSM8let7l
-         eORuUWTKo1joRwdfPLUm7OC/1dDgNcbwX518+VPYzYdVAMkIgHbMaRoVgBU1svrzGory
-         L6LtR34XeVhYe/sM6w+6RSFcmWbsysdSZ697YLxPxdltOwIFHce2OhzeIGTXEwh2py0i
-         kPdrQR9P5LQa5qGoUWmeUKyiXsm81t0qK9vO76y8IcwT31XnF7Ai48tNfZ3eEtkCerme
-         JM3EWY5wTgDfRIWa8aoKrTnSjVcj4TJ6HY5LAMw2KnmDDhhupQuXv58nHNi7ysYfCVvx
-         teQg==;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=Fi6VEoLrYJfYF4Q/uBubFQNUyeFpJr3Ih7DP+kU/hGE=;
+        fh=TNfLVDec+pXW2k1qsY2jVTLFEImSdyRtIH3MCQw9rqE=;
+        b=GV90LvHo+wKErEqiU1LlosLKg2jMGw88fQhPLx88yMPfSa2Sw76QlZ5hKiGbJAW7nW
+         +97gsXKJ5cAgZRIVGGd98kMtZ1tJ+5PseYX4y9t7td/xiytfHP86mSsp+o4eiuEoD+Vt
+         QEw0LBf26W+zu1aa4W1cSGIzGNx32Wh9p6fYH9o8K2IvDNerhGX9Nd6ht/BBqJa/Jirq
+         PagXGAJjCSFw7SmoPicyaebal3ztn3pm91UBjUXmOVqfyeRhQIorPQBP91Kqh6VdL1OM
+         rBcMIjnqC8SHVFxN2hQnC+nZ5LfkL9jLM5tOiz6qaCNNCs4DRFede07itME7HmYScSeZ
+         g//w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771838007; x=1772442807; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NI4IfDDin/v1W7Xn9okdNcg5clUT2mtvt5q8Ie7m4NM=;
-        b=Kgvm1vmnnG4JMUw91Y+mlgRH7ApQcfuAAyPNqYy3xo9tiRZSNpS5qKmnL2YLcNx2OC
-         VS//NrvX/iU7ByyOoh5lnsbumX5ZOiuMiEHY07Tild7xXT3gNfsSA9BX/9BxAbPpCOOO
-         WX0LbL8SjFdm8Hfgm58FNiIIdaembCB6OUeqS+mGXQHBFLd+yDM6sazG9147fmJyzML2
-         t4LUbeXt/8YKwO3yNUM5H3H4blnnIF8DAh9J0HxFA8R++4Wt3O1nh3DPnEDdFzVuUsJY
-         HZVI81xuE9eDxNYOGUtNB4TZr3KJDtv7i62B0cBllis+rnlvongaAeEz3K0UYJzrvsbN
-         CkWQ==
+        d=gmail.com; s=20230601; t=1771838061; x=1772442861; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Fi6VEoLrYJfYF4Q/uBubFQNUyeFpJr3Ih7DP+kU/hGE=;
+        b=edqIJFAgeJZsrpXeRfK4ICBwMIFuL/zroFtd6aWzX+5FqgHniDO7ip4dfDY8ifbT8j
+         B0sj+0oiSYwr+POX+Ib69wj5emPYVSgG+Xv3UkYw2aEAiQ0m8ky+WgeSJ+BjQkaC9mmJ
+         H8v/S39XwjBSWP4i+ORpP4TaXjXAVx2fJeTwFTtaKCvZPwKmOE+uLnuxyoe/RwaXGlEi
+         ATaDJQyf7jQheGHnTUxSGIByfLZzJbXs/etjBKIhHWk+qbeE5L6jEhI3KMLofqdF2/AN
+         Ayz0gsikN4OaU2PNitglq8jNUT8sk6AO4bMLAlVgwlTW4w5UO4XnN9uZU+PSZHaL9eng
+         sQvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771838007; x=1772442807;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=NI4IfDDin/v1W7Xn9okdNcg5clUT2mtvt5q8Ie7m4NM=;
-        b=hpADBTrUSnXJzjHnQ97A6yCm8Qak5sBwf35OTHSQATzode/KJJKl+0A5Z6G90FUPV0
-         wMCWXDWlTIImL6d62TLky0RoB6PMtBpqpJNRIxGOykM2FVcBQR1EDyOyMKW9MOmzK9ed
-         hhH//znZuLfE3uDIIpU5uU4U6G41NIhYwpRM1RULHFI1F5n4RJLnd2MDYPty77x/UKkD
-         5WPSqlLeqrpOnTQs+1j+HDsAoUZiN/wqCctTK+KBnDotzMR3BDUDxViyXwO3d37mqiNy
-         jNxHOOXfwJFJM849LUWWZsJpudOx7TqGkRLHjmlezVESwopmZCb7lylGm6r0bXXfJI2J
-         r/BA==
-X-Forwarded-Encrypted: i=1; AJvYcCX3L44OVp8PVm4/xoYGTme3qRlqm654Bfo/kjtOYEe4ShwvsoU6lF6fcab/SErwIqBcEN0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYNx23CrE+bKiW9WJGGKYwJy6sX+EFV42It4S5bXfYPH2CyzMJ
-	GSUL85ndn+SjboiA0sx7fx9v6v0uvOvJQSdgutONEiDDN4ggcjaMhdO2M2DWRFqDHuJvbUgO7MH
-	McDzZXdP1xvfvn4RjkZCj6lvuPUfgi/A=
-X-Gm-Gg: AZuq6aJojjRmFKPiyjRsNComKGZBhHDYpU4Sg8aLJ+0T6YE//r/7PscdEJjeI09qwhr
-	/6dSl3UToNdf0fSBBV4njQoBkR6KihlOTtPdJatHeuhOL35BDmwPVYjl4Mku36r5uTvgum4Cnb0
-	IuxRKfDwq0eYF2PkLG9NghIy0qaINmTHFnsUNlMGG734OBXMRXR3gGanqEoSGnGXl9WZwSO0Fpx
-	EK1mME5A2NtzYJvW04wrk5p7oDixO/sxkw9DmQEncx1aXh8ns3xqZ7qwIdFRQl5CsXFkhRgIVDU
-	TQwWkOgln4nCpKez1F4cRU4wp3H9FejdTb41O7Mz3DhYDBXFmdH4FcjaVpdqrFWc4ZN7
-X-Received: by 2002:a05:7022:b84:b0:11b:d211:3a64 with SMTP id
- a92af1059eb24-1276ac5d55emr3983762c88.0.1771838007255; Mon, 23 Feb 2026
- 01:13:27 -0800 (PST)
+        d=1e100.net; s=20230601; t=1771838061; x=1772442861;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Fi6VEoLrYJfYF4Q/uBubFQNUyeFpJr3Ih7DP+kU/hGE=;
+        b=ZZc1gzb4CcFSlwzM80ZwaptQ/emBVShH39CuDH9h7+yVxe8tDM555NFtQlxgRo7Bqo
+         rzXCsa+qdLguNVUEzWgoND6Ggj+9bzLGGoggZByQ0JSUZawVTuKA+9c0+iOu7suAE2eb
+         Nt7o5wKUJPNWZNFKWoyPcqpUnp+9HPsjisdQ54C/Dnp6konmIFNT3KpE0lW/55vUiCVq
+         bRgSi5fpT3KSxe7rAc+BO5B9KCBlaZ4Yyjf1tBsuHN+MZTFyktdXsV5IuN9VYHOd40Y0
+         FGQ+qJbcsiVrqnPIDTHpXiO1T9PcCEc5AAg7Hux077BgCgcs2v5hMDvwmh068E3LdrA5
+         Y/sw==
+X-Forwarded-Encrypted: i=1; AJvYcCV+rrXjGLN7o1vN4HFifLdnTmlmhkv2jDuEmSOrnQF+Ie6FpEUMrVGWWOknUPw9y+VDLn4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyzA+73tqmHvDm0E4/p+xbvPJYqrEDwOdnmDFMJMa+EZqfe6XGD
+	0wNJE6KaoX+gkiy/P9MnA4q2coFipn1qcR8aiLGr6Flb9OkZG0nSdofeuRVzH8gm/8YZzvUcWbY
+	pB7nBeVE5eu24qnPHb+njfyGylmTsxGKCXSVU
+X-Gm-Gg: AZuq6aLDRz1HcZO7I4vK0u7x9Nrrn3UJSDRsYubfAOF/VGQExPiERbQR3xsEShmgrIw
+	7PKv6Il25xsXkWGzIOARrkRz+AX6fuW4TTgg5c0YshYYEOe10ER1aZdj2M0U76bNjmZtAZ0CzD8
+	hu8pbTtyG4PjoaJgNgWwONsiSQZDdRx/JicpCqdFGODYJx19Bgp9/9yaP4yF69YL1KEIc/miUWq
+	LlA01WZGEc1o1QVXjW6GRU9OT3m7kezAvfUuVuqHBTlWNLoFQ4dWdcYwoHLzUTKMoT0r7B/ijj8
+	bIH5H+4OZ2q6bHBn1t7ziNCAjBQR8nIU+43OUEHo
+X-Received: by 2002:a05:6102:3f0e:b0:5f7:2413:903d with SMTP id
+ ada2fe7eead31-5feb2ee4a9bmr2849591137.15.1771838061101; Mon, 23 Feb 2026
+ 01:14:21 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 23 Feb 2026 04:14:20 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 23 Feb 2026 04:14:20 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
+References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251202201611.22137-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-1-siddharthasthana31@gmail.com> <20260218234215.89326-3-siddharthasthana31@gmail.com>
- <87tsvbe2sm.fsf@iotcl.com>
-In-Reply-To: <87tsvbe2sm.fsf@iotcl.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 23 Feb 2026 10:13:15 +0100
-X-Gm-Features: AaiRm52uUtrFUuX2E4cGOFpRwGFsuwW9XZ-ubE4pqoZZoTLyXw_ohfA13OO-IK0
-Message-ID: <CAP8UFD1CAYZwK4x4-AZWjx3cubzu5WcndR8WJzhcegET+i22nA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] replay: add --revert mode to reverse commit changes
-To: Toon Claes <toon@iotcl.com>
-Cc: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org, ps@pks.im, 
-	gitster@pobox.com, phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk, 
-	karthik.188@gmail.com, johannes.schindelin@gmx.de, 
-	Elijah Newren <newren@gmail.com>
+Date: Mon, 23 Feb 2026 04:14:20 -0500
+X-Gm-Features: AaiRm533hJagOAotMu5GzAkRphNPwy7XaNqACt2a6NCiP-21FFNV0yDCnkMFSJI
+Message-ID: <CAOLa=ZT6a8wdMgznVr7+ou3mhYKDT_AC3M0s4FCZ-Orjxf+6eQ@mail.gmail.com>
+Subject: Re: [PATCH 00/17] refs: unify `refs_for_each_*()` functions
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000003b718f064b7a32ba"
+
+--0000000000003b718f064b7a32ba
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 20, 2026 at 6:35=E2=80=AFPM Toon Claes <toon@iotcl.com> wrote:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> Hi,
 >
-> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
-
-> > diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.a=
-doc
-> > index 8d696ce3ab..ffdf790278 100644
-> > --- a/Documentation/git-replay.adoc
-> > +++ b/Documentation/git-replay.adoc
-> > @@ -9,7 +9,7 @@ git-replay - EXPERIMENTAL: Replay commits on a new base=
-, works with bare repos t
-> >  SYNOPSIS
-> >  --------
-> >  [verse]
-> > -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advan=
-ce <branch>) [--ref-action[=3D<mode>]] <revision-range>
-> > +(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advan=
-ce <branch> | --revert <branch>) [--ref-action[=3D<mode>]] <revision-range>=
-...
+> we currently have 14 different `refs_for_each_*()` functions, with each
+> of them doing slightly different things. This makes for a confusing API
+> surface, and because the API is not built for extension we have to add a
+> new function every now and then to handle another esoteric edge case
+> that will ultimately only have at most a handful of callers.
 >
-> The modes `--onto`, `--advance` and `--revert` seem to be extremely
-> different from each other. So I'm starting to wonder whether it won't
-> make more sense to instead create subcommands instead of options for
-> these. Maybe something like:
+> This design isn't really sensible in my opinion, and this patch series
+> aims to fix that. Instead of having a dozen different functions, it
+> introduces a new `refs_for_each_ref_ext()` function that simply takes an
+> options structure as input. From thereon, callers can mix and match the
+> parameters that they care about.
 >
->     git replay revert --base=3D<branch> <revision-range>
->     git replay pick --base=3D<branch> <revision-range>
->     git replay replay --base=3D<branch> <revision-range>
+> The patch series is structured like this:
+>
+>   - Patches 1 to 5 introduce some preliminary cleanups.
+>
+>   - Patches 6 to 9 introduce `refs_for_each_ref_ext()` and move
+>     more functionality into it. This also fixes a performance bug that
+>     we have in one of the implementations.
+>
+>   - Patch 10 adds some more verification for options that would have
+>     caught the bugs in ps/for-each-ref-in-fixes.
+>
+>   - The remaining patches drop 7 out of 14 functions and replace them
+>     with `refs_for_each_ref_ext()`. It results in a bit of churn, so
+>     while I think this churn is worth it, I consider these patches to be
+>     optional.
+>
+> The patch series is built on top of 73fd77805f (The 5th batch,
+> 2026-02-17) with ps/for-each-ref-in-fixes at 6375a00ef1 (bisect:
+> simplify string_list memory handling, 2026-02-19) merged into it.
+>
+> Thanks!
+>
+> Patrick
+>
 
-(I think you mean `git replay rebase` in the above line, no?)
+I'm really happy with the patches, I have some small nits/questions, but
+it looks good otherwise.
 
-I agree that we should consider this. But I think we should do it
-separately in another series, after this one about --revert is merged.
-We might even consider waiting until we have more experience using
-`git replay --revert` to make a more informed decision. We shouldn't
-wait for too long either though...
+Thanks,
+Karthik
 
-Also if we nearly always need a base, then why not:
+[snip]
 
-  git replay rebase <base> <revision-range>
-  git replay pick <base> <revision-range>
-  git replay revert <base> <revision-range>
+--0000000000003b718f064b7a32ba
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 2def97df8429d7f3_0.1
 
-?
-
-Or what was the reason for introducing --base=3D<branch>?
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tY0dtb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMjdHQy85U3Y2MTFCb3BzNWlmZEZZdnJiNmljckxOegpCR0VZVHB2V1k5
+STJ5NGxCRjBrN2JGeFNEY29uYnQ3ZUFUNXlPM3N6L09OdEhyUmcyY0JmbitmTmhHbWVTaEUvCml6
+TmNnYmtKdStVSk5XdGpnRGtTM2s2OEZJMzArcGFTQXdRMDJJcWdVWmpLNTBrdEIxK2xya2RFdWsx
+WHkzcVoKc1BCNFIrdmx3aVVvK0dLby9FaWpuU09YYlMrVlREb1dRN2hSeThJYzN4YnE1MGpLMjJl
+c1FXcGVWdUE4UFhleAplb1VFai9QMVNLOXE5Zlg2d0JiRFhCd29KcU1ZcU9rdXA5ZndhZXA0SVZP
+dW1zNmpOU0lFbG9SeHE0ZGw4NnUvCmNLYllsZHNLRHllcjVwM3hJZFZOU2hxNS82S2NPc3V3K3Zs
+NjcwaTl2OGN1NEtJLzBubmhIcVNBbnA2U2NLZ3YKMlVoSDVPc1BSdXUrZCtENGE0MG1RTzFYMm8r
+UG1QeU1ueVROVlQ2ZXdjcDI5NW9XcUdiQjZRcXBGa0M2Y29BUgphb01Ub2pRZm9EcXhaRWJjbHlQ
+WloveWVEWnpRRnpvdStLRWRxNnRvaFBFLzNndC9KQ1dHbGl6aTBXajVYSmE2ClB6T0YzaUdOWTda
+YTVwQWtWWXJBS25RdkYzdlpQYnZFandPWDlFVT0KPTkwRlMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000003b718f064b7a32ba--
