@@ -1,80 +1,71 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F2030C610
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:21:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB1031578E
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:49:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771863713; cv=none; b=aFjJ0f1H7XQg/7QgZo6WtHvxvU+T8q7oo+wuPz/qxdzg5nJyq+tTp1hyPYERjxoEP1mEIbyNn0B/Xnv4kaX8x27zpLriyRpT0dZwR+tpOr2X8HSMMCwYS5Ov3+TQs6EtQBJ4fM9mXOiTssAm6B6m+/c5BbrEt2zeSE0rRj59Zk8=
+	t=1771865345; cv=none; b=nsi3odpSMIdsAo2lp1K+Ff3+ZJMKbBfDDoHj61In2U5Bx2wL+zmD/OxxPgrOFPD+xh9pWJQcnSQURR1yd8VxsatEwRpNH7At+TucsakeFbA9VJ/jEiWgwSRgitPt6hGnb4WK7jaHLpzoQ8DyZ8g3z/jkfOEIiUndQoLDafAUnAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771863713; c=relaxed/simple;
-	bh=+/QBxrS+Q+474Y7zTsj7w+vaTqeiPROMOpFOpkC07yM=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EZ0eq1dE13UF4JPX2aVtrNTAuMpVn23KpwzDSJbowvn0kY6p5CPxVDwtc3B6kFkkBiZI2SOHEwRqBzSzbbi1F+c+JwETN++/kMLyFPuikIL6sbeWlimh7wfPKSw/C0EMVssZ0NWNLj/TLu48vsxKOVzWSVY8q0umUKzXv5bl5xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nmw9Dtyw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HP4ngLmc; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1771865345; c=relaxed/simple;
+	bh=kN0TugSOI2gMe3Zaax348xPi/m6pHB14uiVvGdUtcbg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BGJH6+nNqHerEkyysFMGIhcycXt2lcOvLVrGd0VCmoWFxj3pCqAzn4odXaAJZrYJsen5f+tknkHNL9CcOosz3NtQ8giMQNEe1Q1oiWyNlUP22m4RXICRgZ0JfgpWuAkeQoiE8qMEsDz7pykgwaRV5qISMiMfR6lz11/ZR8j+4rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JsDB2RPh; arc=none smtp.client-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nmw9Dtyw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HP4ngLmc"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 23C3014001BB
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 11:21:51 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 23 Feb 2026 11:21:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771863711; x=1771950111; bh=XhwrJCWa7L
-	zD34w5VV6dBgL6MPNLq8e9zVQ7Y5nv/tU=; b=nmw9DtywXq9LiTr6evoN1Q4Gzj
-	wOstemiuwjRaG4DksJhgF5HHpxipOMLX4ePzhBBQxDWjH+MtqijbCu1dVQgW0FG9
-	oEcONcmeOPvlGjmEy1djkKCWAhiVPDyMjPPOlZ0Xt2x5DDSJnDboI1de4KMNn1LK
-	wAwvfKJsJHOkS3E9NifTraotAz/dR2rp1wHvUXroCXgO7VzrnM0ETUHnHZTd82Hu
-	YcZj5k9ih7eEHUgE3nwi01+4tZovSjJor3g2B42UgDTrKlMeqT+DqrMJ2uB5QRxt
-	Y7p/6S/4/3k7zoscdpI1aj3XgcZAvCVNCWdh3QEACxgFq/L3z3sJ01V45Fjg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771863711; x=1771950111; bh=XhwrJCWa7LzD34w5VV6dBgL6MPNLq8e9zVQ
-	7Y5nv/tU=; b=HP4ngLmc1VVRHHoKghmUjNDrCoKwbrWdcBfvmiLlVHAqzGEV8nA
-	dTQ1yo75EdI/Wa3s6OMxN12LlolSFOhpg3114S9K03dTxc7NmoYmkxUQ0Os9RQE1
-	LX4yGVNDSSjGfF7ETymVEvEqCMofXqCcFSYEpHE05AuGo5hFr+L7FYh+E4KIFhRQ
-	zesJuIRrgMFoaNJAwYmjPRg8jLHiv691BvJvqSjP1REEN7qAg7UMpRX2SIbu5LPb
-	5AM5kgWxvSguZ1ac8Cjd5h+Z+To/iEXtExyV9nfr6IYWQoiF67dWrnFu6ebAgBgj
-	dtbllWSwB6ENzoJUsrzYDZIuKRXLPsde3LA==
-X-ME-Sender: <xms:n36cafC9c5j07cvZJwsxefcB9mlDM4FYbEZ9eoWQccDOW88QHqj0yw>
-    <xme:n36caceTzcUc0Y8RbNhc9na2U7TROxPi9cvWkYCmKklf4MPhM-3n7ViCQ1gkxjOiD
-    R6QdbKqsyvU7KeenlV6AEKrDw6MRvJ6MTQmm-7AVwxHkpn_VimK>
-X-ME-Received: <xmr:n36caQMh4zQ9XmYLuu4GKQGOUuUS4h4x4_roU9aDQFHhNuI3a4qUM2QSaPaaRxSkVD8plg9gVxMB_-21xttTFb2jM9JiR1r_wGUce4HHgg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejjedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvdegvdeffeehtedttdffjeeuff
-    elgffgheefleffleejvdefheeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    gh
-X-ME-Proxy: <xmx:n36caW5BlwXnedw6IahOhuWPp2_Kw909K8wIwIRoMRfx_6cQzfDVMA>
-    <xmx:n36caUKlvJyjJyO4ybERqhIxdu1UMuxMGehvUi91gAyt7_f1bn66PA>
-    <xmx:n36caQeWTo82W-RaUMEeHNGaRWzjmt2N4l7_YDGWLJzhWdewilQBtw>
-    <xmx:n36caXc0sw5gEkgrZT6HfdFFa1M0hn2Pm174wK4lBwsx5FwuRZWzog>
-    <xmx:n36caWDItuF6nQJ95yWPqpzPnNI1SUdl8gzQOxI-gzkb81HeLOtQEpf6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 23 Feb 2026 11:21:50 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 10ec1b7a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 23 Feb 2026 16:21:49 +0000 (UTC)
-Date: Mon, 23 Feb 2026 17:21:46 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: Re: [PATCH 00/17] odb: make object database sources pluggable
-Message-ID: <aZx-mrdbZp-7VZfi@pks.im>
-References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JsDB2RPh"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-40ee9b945d5so2717264fac.0
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 08:49:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771865342; x=1772470142; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DV+0AaRRHR3DN8PfFkvdurRkTykBU7sLSPH0ruip+/g=;
+        b=JsDB2RPhh2Nf2c2C52MEJG/ZJ6rn3C2S+T1L1BVm+q+utvNsflJBhhs9SPdZQTIt2h
+         asJE0zmHhybldIA/8fS7gR8HzvpzGa8cq76debE3lnx2YJa7f+NijCy0e45g0xKV9DzF
+         ye59LBz84W4DuLGN6K7RRA8aad9DXk4baf85dA6qf6KQDdWCQfaFiFn/8MspQDyjFwqi
+         TMvPtWJiCgjES6cNioO/dn72q9odPOoH/rO57PfrxuXmUaa0bo+NbtfWOHSkcBUJp5a9
+         c/H6B5CzrAzct6VAD342ikDeZHDMQwfN42ta3YQTVFAxin2MXhcM1BByFS3qUNVd8/3x
+         jRvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771865342; x=1772470142;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DV+0AaRRHR3DN8PfFkvdurRkTykBU7sLSPH0ruip+/g=;
+        b=EApRMX9ZLMRYSmjFn89Nq39gJd23ue/jL4zo+Im5DS9wCRQ0TgDblTicZhbgpgPOf0
+         OqmD+Ym7ihCu5ZekXuKKFoCEpuKNhCpV86U4+EpItS4upxiJj9y/mGoyuSk6aQl5HiBZ
+         IKUS61x5JS+u8r4u2RSfuP4VKRvPq5Ub1mjObDSi6y8Jay3lD+R2NSOJEHypT4xz6UX6
+         XvfDu7Dlbh/hcA1eLkkTY9pjoIOVJ09UUzqWMgd2uOrAgoJu4FZiXdQb7jBgyRNhU23Q
+         bHZ9lyh5eKA/wB1k9QuDqvcRF6Iifu2DwybpUfkDggl1poAoTffzDxXeFjAc89Djfxlp
+         ItAA==
+X-Gm-Message-State: AOJu0Yx5XWsuQXHdLYwRu8+hVDfnAQ3Ka32IBRZkmdgu4g78Hu2PHOL8
+	mzPViEALvLE83h+led5kVSV2a06yfkV5TGnni80QyD7+eomaR5nc1iwg
+X-Gm-Gg: ATEYQzzJEQrXaNy+gHOKQQgSlGNM79K6YHtGqRfPP+kmv5KpJCCvDL2MSUao+9kf0c+
+	X+HbyXlfrEELtMkeJwPN39XAWfwkjjfEgH6gy/+BJUHOLp/2nvRpGbI8Gkh6nY8bnDv/m6kRnXZ
+	Am2OjLY6WY3QVyzy6eJvfDy+rOYHqYst1KOzF9areS06Zgu1Gr1MK7sWvLY4eaJmQKSV166nfo5
+	bkN7ei6DkdwMCWpgNWrpFIIuBl/2CFsfhCwN3WgSsdWl+BKTM27dgIlhRF0k+1jQwvSrVMKeeYp
+	6PiYcctwzIFP80lRa1g6uGkLG3cWsO/15CtRLXhKBJQC7NU39zIM7WlU2wnyj5pLkbtMqvMQ6dO
+	YoiS4cbVb7gszrLQcOgQ06LciaXKHgGxuwXtMBHGpRfuMepV65DiGSB4lfJm9KsR8oEgRIinfEw
+	LshfbSUORLFIZ8GMi+
+X-Received: by 2002:a05:6870:328c:b0:409:5ef5:be0c with SMTP id 586e51a60fabf-4157ac67e02mr3900007fac.12.1771865342368;
+        Mon, 23 Feb 2026 08:49:02 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4157cf9f666sm7695267fac.7.2026.02.23.08.49.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Feb 2026 08:49:01 -0800 (PST)
+Date: Mon, 23 Feb 2026 10:48:59 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 8/8] builtin/maintenance: use "geometric" strategy by
+ default
+Message-ID: <aZyAOsRX5484naIU@denethor>
+References: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
+ <20260220-b4-pks-maintenance-default-geometric-strategy-v1-8-faeb321ad13b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,50 +74,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
+In-Reply-To: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-8-faeb321ad13b@pks.im>
 
-On Mon, Feb 23, 2026 at 05:17:51PM +0100, Patrick Steinhardt wrote:
-> Hi,
+On 26/02/20 11:15AM, Patrick Steinhardt wrote:
+> The git-gc(1) command has been introduced in the early days of Git in
+> 30f610b7b0 (Create 'git gc' to perform common maintenance operations.,
+> 2006-12-27) as the main repository maintenance utility. And while the
+> tool has of course evolved since then to cover new parts, the basic
+> strategy it uses has never really changed much.
 > 
-> this patch series finally makes the object database source pluggable.
-> This is done by moving backend-specific logics into callback functions
-> that are part of `struct odb_source` and providing thin wrappers that
-> call those functions.
+> It is safe to say that since 2006 the Git ecosystem has changed quite a
+> bit. Repositories tend to be much larger nowadays than they have been
+> almost 20 years ago, and large parts of the industry went crazy for
+> monorepos (for various wildly different definitions of "monorepo"). So
+> the maintenance strategy we used back then may not be the best fit
+> nowadays anymore.
 > 
-> To set expectations: this is only a start, there is still functionality
-> missing that needs to be made pluggable. Most importantly:
+> Arguably, most of the maintenance tasks that git-gc(1) does are still
+> perfectly fine today: repacking references, expiring various data
+> structures and things like tend to not cause huge problems. But the big
+> exception is the way we repack objects.
 > 
->   - Counting of objects.
+> git-gc(1) by default uses a split strategy: it performs incremental
+> repacks by default, and then whenever we have too many packs we perform
+> a large all-into-one repack. This all-into-one repack is what is causing
+> problems nowadays, as it is an operation that is quite expensive. While
+> it is wasteful in small- and medium-sized repositories, in large repos
+> it may even be prohibitively expensive.
 > 
->   - Abbreviating object IDs and finding ambiguous objects.
-> 
->   - Consistency checks.
-> 
->   - Optimizing the object database.
-> 
->   - Generating packfiles.
-> 
-> These will all happen in later patch series. That being said, with this
-> patch series one already gets a lot of the basic functionality, and it's
-> almost possible to do local workflows. Only "almost" though because we
-> rely on abbreviating object IDs in a lot of places, but once that part
-> is implemented in a subsequent patch series you can indeed work locally
-> with an alternate backend.
-> 
-> Furthermore, what I didn't include as part of this patch series just yet
-> is the introduction of the "objectStorage" extension. I mostly wanted to
-> focus on the mostly-trivial parts without introducing any change in
-> behaviour.
+> We have eventually introduced git-maintenance(1) that was slated as a
+> replacement for git-gc(1). In contrast to git-gc(1), it was much more
+> flexible as it is structured around configurable tasks and strategies.
+> And while it knows about the "incremental" strategy that we may use for
+> scheduled maintenance when configured via Scalar, its default still is
+> to use git-gc(1) in the background.
 
-I forgot to note that this series is based on top of 7c02d39fc2 (The 6th
-batch, 2026-02-20) with the following two series merged into it:
+I'm a tad bit confused here. git-gc(1) by default uses an
+"incremental/all-into-one" strategy and it is my understanding that this
+is what git-maintenance(1) is currently using. Is there also another
+"incremental" strategy for git-maintenance(1)?
 
-  - ps/odb-for-each-object at 3565faf28c (odb: drop unused
-    `for_each_{loose,packed}_object()` functions, 2026-01-26)
+> The "incremental" strategy isn't really a full replacement for git-gc(1)
+> though, as it doesn't know to expire unused data structures. In Git 2.52
+> we have thus introduced a new "geometric" strategy that is a proper
+> replacement for the old git-gc(1).
+> 
+> In contrast to the incremental/all-into-one split used by git-gc(1), the
+> new "geometric" strategy maintains a geometric progression of packfiles,
+> which significantly reduces the number of all-into-one repacks that we
+> have to perform in large repositories. It is thus a much better fit for
+> large repositories than git-gc(1).
+> 
+> Note that the "geometric" strategy isn't perfect though: while we
+> perform way less all-into-one repacks compared to git-gc(1), we still
+> have to perform them eventually. But for the largest repositories out
+> there this may not be an option, as client machines might not be
+> powerful enough to perform such a repack in the first place. These cases
+> would thus still be covered by Scalar's "incremental" strategy.
 
-  - ps/object-info-bits-cleanup at 732ec9b17b (odb: convert
-    `odb_has_object()` flags into an enum, 2026-02-12)
+So the "problem" is the "all-into-one" repack. This ultimately occurs
+for both the "gc" and "geometric" strategies so changing the default
+strategy shouldn't make anything worse. Geometric repacking should in
+fact delay the costly "all-into-one" repacks which is good.
 
-Thanks!
+> Switch the default strategy away from "gc" to "geometric", but retain
+> the "incremental" strategy configured by Scalar.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/gc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 4390eee6ec..fb329c2cff 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1980,7 +1980,7 @@ static void initialize_task_config(struct maintenance_run_opts *opts,
+>  		strategy = none_strategy;
+>  		type = MAINTENANCE_TYPE_SCHEDULED;
+>  	} else {
+> -		strategy = gc_strategy;
+> +		strategy = geometric_strategy;
 
-Patrick
+Looks good.
+
+-Justin
