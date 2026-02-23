@@ -1,112 +1,127 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB219343208
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 03:41:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BD64F5E0
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 05:03:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771818072; cv=none; b=DjqgcaaSSUGdTkTfAaTqe2IyAEVicSe6cHbHj1T7BxKiAPsZQOKLL5/0P0GJBWm5stplAbj7Pat2B8qfz+JEcrct11PDzbXPko62AOrCXgKHhlpdyhEgD6U4nm14kkFmW0dd3o8h8fKBmtFtWI5uZ4rbW78r6ZEXayot2E4aBh0=
+	t=1771822987; cv=none; b=LDwduf3DBgyqmR3dbeDOkzb5B6jdH0t0jGVO0h2wj8DC4SjOZmEo/UHXx4qYbRV5Hms5kPmC+LXy/+VQUwsHHlgcXL1C4BuuNrVYMjnlPNiKqg+XdjPVWmfzso9TKkFoEyVaD/+wWwFdW/4AHOYs5jmU+wWSm9DwzUmK1OYWX48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771818072; c=relaxed/simple;
-	bh=Iux959/8KrRHTJGhwi5M4bBwheYgrCXDZz2e5t6RxQw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Io5G1ur5DXnsIIvgUU6NoL3IrsyEV5UMhEOz77ttApFw/ngSu99bWcWRKPZ+9Z9bwpAieNGgWmF0nDW1cXML5QgbLY2SqxBMANt9eMH7UNI0EEppkPECgykk1jjoouKCAfLOWfR/pH9pql/RGvp2vWK/vv+Aen8LFJ1K2aNayD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=es1L6pw+; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771822987; c=relaxed/simple;
+	bh=+dAzn5AiSPI1le6oS5cPoBjky6z17Vnxo8I6ocf/8Lc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jniNbMnq9rnnLOisJuSzmZC2yhbfEvKjHxizjGn2vkGaZGDEiuKkgBbcGmEK9/UtBzWuCqvI4NLDtCRP4vJ8/gWs5JM5BLAHK6gYiaRqeyGKQmesfQpKwDScgnpiGQtDDUpT67Vh48dgCulXyWz0NOYQ1PcAr3dpA2JoQEMMwN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tJW4L/d1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VT/6oZDb; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="es1L6pw+"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8cb3a8494c5so373290185a.2
-        for <git@vger.kernel.org>; Sun, 22 Feb 2026 19:41:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771818070; x=1772422870; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=l1Yhc9cZViv4BTjuVfbqSEdaVun4ywLsiwicy8A/+Fc=;
-        b=es1L6pw+Sdr1dbxpDwoc5G2rqJqiGkfuhMR7cnAsiPb85HLRa/Pf8PdMmOZPFlm6aY
-         5GQMAu1SmD6S+ZGuLpS1ZLRKuMWoODyilvkAOiVuMDyoEGNIgd5gh5084WaLpjKKb85W
-         NiBH1lpEsfbUaVaOh+Qb0DnhVhgbxGsCN0VlnFTZWuVe03vjqzpFWJwCq2nPGmPLW04A
-         KmfqRRYfI3+vtGXpOW1qAVPwtCX/RyZyNvmEKkNe77KMdvPmFyAgcTlqHxz9CkNIpD+a
-         DcJSJXPyigF/X+ThVHE9UNaD0XqRX9QpeRjd+wgoTo09l3DDtzzQU8h2XwanRYUre4kh
-         Fkuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771818070; x=1772422870;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l1Yhc9cZViv4BTjuVfbqSEdaVun4ywLsiwicy8A/+Fc=;
-        b=IB/F8gXArdFYHLoXN/jeus9n30c769KrMVXL4iMKkR765v5y65h9elBC0fb6+B0+WA
-         rF+Babr3Hm0yHYtXUYgwR379ZRwJ4v+hv+GljEeiN9KSWjudJS/gtG4rFCceQ9/RAK5R
-         +Agx1tsLxFYu25t1ryoYzFH5w/+h0jxKxxG/TRC0QUZ0HfBD1UAPY1T1ardR7j1En1If
-         o4W3Z4gs/2x/hYrKeGEDbylRCaydjO5fOQX61q3C4jktzNbvDDoHRFsLUVMEi5WjVOji
-         VM+ywgbU35qVxMzmn4KW3AF1BMQWA3WE3/7lTKGvMyR9mUgoT+4gmMp6/6N1EIwoSaeb
-         WAaw==
-X-Gm-Message-State: AOJu0YxNHfjc1AEe2VovrrJh+cJahzUuwGLNcx7m03DqX6tefV3di8MI
-	aeKzIfCKR6d5+iV44ozNmo1YcfKP2Dnq25KNz5JUOTG/02t8wapNwy2s
-X-Gm-Gg: AZuq6aLrAMKAjqTmcjYMa+cN/5MCGKXaKO+pCfea13PNnjsKIL0NZPqkLmj1cX7CCMo
-	VEockf+pATpw7lqRKeJdPxPM8Xu4xry0uUqbC+F6LdY8vQyWw2/7UcwDx7EQj2GFYu86Bt/jX+X
-	I3sGgnnN1AjU1wNp7Y4twsUOTbTkusd56X+Ot+1gHeQUFmWjUMpXvJGDY4SZroF5kwnvTQwAz16
-	1cFf+Hjjiop4/Gf5NmtuoSLXM48kLPRnEbffhHLvgKPlkQ6npfyhRPQ6GYzlCqXTeHFsZp6/rkN
-	f9C2bPvlkWFMbAX8MTGx2Ut2xAIHZHO4M710udefk98hlvuM59UHavHZKY6PyWFV6uWp/whtBbm
-	9+u9wT5L6KIp75tAAdlH/moFfLK/uYQ0cJlVOx4HnMmaC8uvVfOcemNFhbWPzBB/6egNsRkJySQ
-	HUetGpGN9Ky94/7hc7ikSLIpqQEGFHbvFNxcgSsuJZ+qz+bSRcx+fImv3E3wiyX+89HaTS+lq/x
-	ypDBxNGd9UK9X5WvrGsZdcBpuCJ0Bh/b7NyyQyy8qdpMFJE
-X-Received: by 2002:a05:620a:4016:b0:8b1:728f:952e with SMTP id af79cd13be357-8cb8ca135b5mr912959985a.31.1771818069831;
-        Sun, 22 Feb 2026 19:41:09 -0800 (PST)
-Received: from ?IPV6:2605:a601:a6b4:9c00:55d0:428:5136:da98? ([2605:a601:a6b4:9c00:55d0:428:5136:da98])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8997e242fadsm58219246d6.34.2026.02.22.19.41.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Feb 2026 19:41:09 -0800 (PST)
-Message-ID: <94ee4b78-48f9-4e2c-aee5-ced1dc9a12fd@gmail.com>
-Date: Sun, 22 Feb 2026 22:41:08 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tJW4L/d1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VT/6oZDb"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2EA491400041;
+	Mon, 23 Feb 2026 00:03:05 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 23 Feb 2026 00:03:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771822985; x=1771909385; bh=tONW0ZnFiF
+	6FTZpSu59Xw1Vlstgyjul0KPuNZ9CCUCY=; b=tJW4L/d1YRgOmaTqr2bEqA7Qxu
+	m2AOddVkNv08PJ/5Cu/8tDaE6bTNuErqUeI/f12zEFgVdaKmfiaNoomhMpwNOpNA
+	c18+2/hNHsjWsQD1HrC/xJ87MoXIggNftgT9oRWKxTMh9Vh2wOyFpikW/Ddq0zg2
+	gnkV7zVDpSmw4JO2XLKmkrBbEAxR0iQoSt2NtXEXnquJI7KKmvRkUBdqI/SyPi/I
+	yAzCMIQUwbKDQ0VTHdFSG3oBdEFeMH4xnSBpEn3MlXS81MFUTUZhu7c6f6X/kHmH
+	35WFd//g112InM45hhLbeuHgpNfLx3ugdwEXkK55LopVjnjx8Pt/yITvO/Xg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771822985; x=1771909385; bh=tONW0ZnFiF6FTZpSu59Xw1Vlstgyjul0KPu
+	NZ9CCUCY=; b=VT/6oZDbXw4LPi0+FCaNXt430bhE4GT4hlZfj5lQCo4F6Nm+tQg
+	cylYfhA4BGl5ORzITiCmSCibz/OuXbqQSBxU65WadpSi7sitocVRyYg9PCgOYntB
+	MFokpskR+IHgwaRB5ohsLCbzCMFZMPY0mMaMjTKbsRwF68iIxg8jVpZEX5vUkCpC
+	88b/O8EJtLaDPtBAv4GyMESlbJglVlSulwxCDgMYJVM0Hn3d1UYDN+8ofeMxRKY4
+	pTXRethLBtxrgcaOf9xB7Ik5lutv7gch6HF1FjVBUyVO4qjoRejoeQBh2g4Iiaqq
+	f1LnjDEsK/XVTGEchTtGy8z7H84JiNs2Grw==
+X-ME-Sender: <xms:h9-baafTfD3Y4WTgFySjinRnWHIGuF6yij54NGG5rKRiGXPzeh_F-A>
+    <xme:h9-baWwI9nYaTcIBvuSQutxfKUEdI1EXs21eJXujk1GfY2dCn5mJXTwdODG8LMVZ1
+    -ZKe4HZAawij9xySJz0N-UgLn2AefyNglUJXu1mIjHTJYtg6JAZxA>
+X-ME-Received: <xmr:h9-bafJyAKWtTcK9EDncn4C1S0KEWZ1J2o--QlmQrVbp1tLOgB19WWtFOnfwoQLGNxjJhzw7XI2TI4GlYQvfS6vkxGHWRGK6rg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeifedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvght
+    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
+    gtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdr
+    tghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:h9-baYESG4mqevu-2qkbW0l0HKPIjzyYWyXaFmzxCtUmGrXjtKK8ow>
+    <xmx:h9-bab_2kiEywNjAj5dnXukFzyf1LNc6JkSDm75ZkdrOU-_LL79sMQ>
+    <xmx:h9-baYJf-ICNRudOjmvB-_ka-4cNkkADz9B82yALo82JV7RxZNEB0Q>
+    <xmx:h9-baZtybqClOvPVtjx6DeSMZBWDtFoGEkfvIydkRrf6ZzIiLtE_Qw>
+    <xmx:id-baV6IDRMGGl7W6VbjxnfYiAig8i_L8nJlGuLgcV2CA9dsL8bGn7wQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Feb 2026 00:03:03 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Derrick Stolee via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Phillip Wood <phillip.wood123@gmail.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  =?utf-8?Q?Jean?=
+ =?utf-8?Q?-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH v2 11/13] color: add color_parse_gently()
+In-Reply-To: <8fae2d15-cb0d-4ccb-8cd3-c4775b6666dd@gmail.com> (Derrick
+	Stolee's message of "Sun, 22 Feb 2026 21:12:04 -0500")
+References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
+	<pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
+	<ddf6131ac9283bfbf4ec9ec000606765d887e6ec.1771026918.git.gitgitgadget@gmail.com>
+	<aZQvT_fTlUIJd1DM@pks.im> <xmqq5x7ve3zw.fsf@gitster.g>
+	<8fae2d15-cb0d-4ccb-8cd3-c4775b6666dd@gmail.com>
+Date: Sun, 22 Feb 2026 21:03:01 -0800
+Message-ID: <xmqqldgkoxve.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/13] config: format int64s gently
-To: Patrick Steinhardt <ps@pks.im>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-References: <pull.2044.git.1770698579.gitgitgadget@gmail.com>
- <pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
- <2bca4d231686e33ea9d4d85b10fcffd60a63ad46.1771026918.git.gitgitgadget@gmail.com>
- <aZQvP21anXXZWcMh@pks.im>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <aZQvP21anXXZWcMh@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 2/17/26 4:05 AM, Patrick Steinhardt wrote:
-> On Fri, Feb 13, 2026 at 11:55:09PM +0000, Derrick Stolee via GitGitGadget wrote:
->> diff --git a/builtin/config.c b/builtin/config.c
->> index 4c4c791883..d259a91d53 100644
->> --- a/builtin/config.c
->> +++ b/builtin/config.c
->> @@ -237,6 +237,25 @@ struct strbuf_list {
->>   	int alloc;
->>   };
->>   
->> +static int format_config_int64(struct strbuf *buf,
->> +			       const char *key_,
->> +			       const char *value_,
-> 
-> Why do we have the trailing underscores here?
+Derrick Stolee <stolee@gmail.com> writes:
 
-This is all to match the existing names from format_config(). This may help to
-recognize moved lines by keeping the variable names the same. Definitely not
-my preference to use this name format, but I thought it fitting to avoid a
-rename of all variables.
+>> Do you mean that this error() call is not die(), the flag does not
+>> fit the usual "gently" criteria?  In other words, should we make
+>> this call die() if we call it "gently"?
+>
+> This is an interesting case where the existing color parsing logic is
+> not following the typical pattern that uses die() on a failed parse.
 
-Thanks,
--Stolee
+I see.  I personally would view that an existing bug worth fixing,
+but I ...
 
+> If we want to change the behavior to die() later, then that could be
+> considered, though I don't want to consider the ramifications right now.
+
+... agree with you that it should be fixed outside the scope of this
+topic.
+
+> I think the easiest "local" fix is to use the 'quiet' way, though it adds
+> some asymmetry in the config code in how it uses the 'gently' parameter.
+
+Or, just add comments to the function that takes gently but does not
+die() to warn those who would add new callers.  They can pass
+gently=1 if they want to handle the errors themselves and keep it
+that way.  If they want the function to die, well they have to wait
+until the function is fixed to behave like everybody else.
