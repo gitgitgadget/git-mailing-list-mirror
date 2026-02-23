@@ -1,111 +1,152 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3046737C0F2
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 22:58:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771887527; cv=pass; b=iIjpGNIqnwOtaoSSBljmOU46vqPxaBbvIrezbCnUmxvMweJFSR2OrhDNuRad3DKgbFRFbunT2xR0H6GgrdyzLhxIaALp38auRmDFzTnEw8yKxJtPX9QNk23dAhSrKbjNdEfw1E72hPkpOD96Z6ioVpYWRg29YFN7wqRMSOqLP7M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771887527; c=relaxed/simple;
-	bh=Cb/1vz2mgv3iH08Ju00FuXTepobEk218rELNkhc0R1E=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=KYR9AExgyM0Ro6x2QDl7+EmiV3a3aA1ZYMRexmmI30IAKvKA2ztTA+aJB6bFSHWSn8+7OG6RlXJUqZq777tGT7lYgxRO+ytsshUQlVoVahgVtcrYDGoOgC2gyHcoTVOYyjHSOJpAlr6S6r3guIflkGkmmUOqoFaAnJ5HH0UsQ5g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BdyO96Lz; arc=pass smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A604637F751
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 23:25:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771889145; cv=none; b=FxMlcusZl9y6XLzMDwLVWGDXtAZRAWkDW68vcpI2lcWXPMPnX/taXojaEUeCwsQvMLV0KAK7VNrIe7x2IlTEMyj329uSo1i+zLqVco3zk1UKIUJK4vAAqEF1hykEk7xNbPnvLicJpnm/ysRfy7LVmJWg+Pxyo+IJIPvqtw+lkTc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771889145; c=relaxed/simple;
+	bh=3mzIl0bUP85PDfd8dorAP82gG03+p9pjsHWdKadkA1Y=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=UedlrfAgBETjmIKJ6khM1gva8xoPMl9YdBiwcGI6mEnNjnadjsqsvLegYDyjxe9zUnzM8HCtWCQybX5kphICFgOIU1Rx1cFW+tFg52D5n5lnbANJEom/sPrL3ZWhy5WDMR1i7LsHZ54+F4TNhcIauXXZXPg/R4rhBvcCrFKTKag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=SFfB6CwK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BsDwlYDC; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BdyO96Lz"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-48370174e18so26414385e9.2
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 14:58:45 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771887524; cv=none;
-        d=google.com; s=arc-20240605;
-        b=h58xok9tRXsnM9EzVIeI500FzEGSEbkOBRYDx2smxx+ctKB2ESc5Z7RW6kRPoeAqXm
-         S5nVyMMItc4tJfvlQRMTHl7CmeB/KatGvvSgXX+GgVqs4FNwwHGV+7XoIMdF6+nQTaCK
-         9lSDxr6+EMngENKrJiPRZQDAZB7PGeBcnYUPKeQYNXGBPo1A/5uiWp8BfQVeRN++Eb22
-         q4HFUtWECtf6HnmCnok7TLG0CaYsaLi69x1YUxd0SLEPYTIaU6VC+Vbc63tXRPk8+YGj
-         ve9T6grkrExNdttUj+zJzKuJK+IDj+29THQGzDvIS5i1w3NAJg6gL8GUnWAiOl15o5bp
-         xrfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=Cb/1vz2mgv3iH08Ju00FuXTepobEk218rELNkhc0R1E=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=MSWbdaMBHBaZj50U3JQCdVIpEVcQMfGB5NzVMA+kZR7LXmiOQWS5Cd/fWF1/SfB0am
-         NtX+1eehy18ffE673OG8QDdazWAWGRUAJyTjyyGh0jCufFYRihJ2UZFRqo4ziWTuZimI
-         0damppYI06t+FQbsgyrtuBOVqHLBDPrkGMmbBovDDvzhuM6Ee9CTgqM5HzxiCTMISSyR
-         ZtwiJXxEDbX8nyAnTMrW7PWl+BjLyyNp+rLy2+oLI5gzH+sF8ryC6fc1M1KIA7AcR/dv
-         EntjtXAMbr70/TnPVwhMwu764Lxqsr6ZSlKzCFp4mAdgwnBSalfrVFHmYCAYHS3Ir1Sv
-         XVoA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771887524; x=1772492324; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Cb/1vz2mgv3iH08Ju00FuXTepobEk218rELNkhc0R1E=;
-        b=BdyO96LzD95tXz5FBTkSBFkVfXXwTX7LLGa/QN0BnXPLB7mEIBUsG8GKDgH4o9s2gU
-         ED5MsCBpJACScI8PSt0czIyC85UTnQ/OSQlo/3fxtkuj+9Mza0qHk5go8+SjgbumAEk6
-         xWHM2OTmpxiDGW7R1LKag7iv+3eqjQzWxexkccirOpXgi1eDI1IGGRaB10w/e/TRUsEb
-         TuCDNaHbzqXTZHJYm3WdMmNoLgW7KTZQYIyLm4q3x8KKWI2uFwPS/M9nxttm7QWogaqb
-         rsu+WRcTwwpUnH9e/TSSzMlE6ywgHEf2OM2PH9GyvFzG0TXi+9Jb2VD/T8y/RgEPWdSe
-         /1Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771887524; x=1772492324;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cb/1vz2mgv3iH08Ju00FuXTepobEk218rELNkhc0R1E=;
-        b=sKlHR8+6z2qFIjl3VURTYrWVAfjZ39I4Kv17GljzrSxOvAC6kGQrbYCFqW3qyM1dpd
-         tlJuDY3EoUoXMD96MdurK4/3WuS4O64BdsXGnMgvR1GXlVz4w/71tj8F4UlrUUR1MKJG
-         HKWMxyzz511ILLExf0zqcCexVeWnWhT+64/cpwGCA7nt9A0oxSoXl3vYqvvRyxcOkdi0
-         KGfCvwzkwgRvUPW4j8kLbTWykdSHz1zYahMkHyOw9yPlmf4l+ARZkGWOrRUD1hnfzn2w
-         fAfylko3xCsXvRAn7JHxaFs6r0Qe/E2Gn2LgisAv85mmU3+Qz+bzTcW/hRAIGQeO/kH4
-         et3A==
-X-Gm-Message-State: AOJu0YyPcI8IwmiG9kfT0O55fgmNw5j5R+/2idhbAB6l6LFpeVqfRfxI
-	3p0eNxUbfeKe320KypwGpwo2zsUIXRJ4Jx36kWwMbHYwAd/MrzynqcUp/M5Xna88/8e/3UXZBhk
-	nq3AEH+UNvDSX206+BL2ra8gvQDOk56LH9A==
-X-Gm-Gg: AZuq6aKBC2HYNrc3/Y7JloheasqUncSY/y+3EM3l7ck3fzigv+8mJaJE4FT5eaJmKtH
-	NoFGhNDjqWIgKR9iAzVP8cmLRME5Kbb1n+BVeR/l4IjUN9DucADtWvRE4IoJhYM+qdQJvsbiEPP
-	fVxD5c2uFiEuiwwE0gIkoyicAPG8hBOPDDHQ9FSCpnbojoXlxwGkazRnZ7h5fejQxnMNSJaa9WD
-	2kEnnD0OKoM+gtjwymK9yoM2KgwFKMAweD2O0OmbR8rLgXoHYWkpps3miNZdCtfMcnnPSYkGsqd
-	4h3E3A==
-X-Received: by 2002:a05:600c:820e:b0:471:1765:839c with SMTP id
- 5b1f17b1804b1-483a95eb319mr180530825e9.20.1771887524158; Mon, 23 Feb 2026
- 14:58:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="SFfB6CwK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BsDwlYDC"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id EEC1BEC016F;
+	Mon, 23 Feb 2026 18:25:42 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Feb 2026 18:25:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771889142;
+	 x=1771975542; bh=v/lHY1zw9tNTa/4pxbbqz1TZa04eKl7lnbRu4NxAaMU=; b=
+	SFfB6CwKQnVJWl92j6mscwbyYvElR9G2Pi6WZgyD0QUMIpwU6cdwworYWLRYIguf
+	7bFbmZ0AIHIB7fydSXvzAlEHYfG4UqAwlGcEIMnzdgOMSQuzNQeoIOT8lLWHl3Y9
+	3UXdYCq6sZ3kp5Oh5OgVKAxZzKG7tP9oGqfyUBylgmAlNrYc/aGtam2A4mY8zgyI
+	uCjcqYfCkANGpMNBfvbf64BnkFRSPZLjxrE8mcEITgULxAovVt5PQP4R6oVfUafM
+	3G2RXumDWkNtoinr6rzaqLM37y9cEIM2qH0pV8uVSyI1fVDDI0paS7uob/L9XRo+
+	YcH1j63R5/K5NhpIKy72XA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771889142; x=
+	1771975542; bh=v/lHY1zw9tNTa/4pxbbqz1TZa04eKl7lnbRu4NxAaMU=; b=B
+	sDwlYDC+A8IOuwVQirS22jClS8EcVVEal93KQc3txMqlabMlP4RDRwumx1UHHEvY
+	sAgZ1y+a9SRIx7SIi28KYx+UTurn95iI55i/7TKAvZs3pHpT1J66fjwSDVVMvplA
+	2rpKpW5njsicUw3u8XSMSeNd/CvADfEwzurjiEUKLRqxazNBoVJvHpC5pFLM/xo0
+	ehz7bm7ML7ffE8wIR9e7H4G71pdt3wRkWp90NFH0GC8O7nlT6fH54qCMQp38pibj
+	A2gSh59PM8Ff5as4y+s7duhPKc6IuRlV6Dbkq4xedYNM7KU9FYNDVzFwOVrFQmnP
+	Yn1onD+YU40Z+r2taclSQ==
+X-ME-Sender: <xms:9uGcaZOle3SnwIyDw4prMbbM9wrZjdcWuehg8HQRq69cxpPPB3icmdw>
+    <xme:9uGcaWxleqhI7F2sv3DnSTNJ-2GXOFPZqb92KWFIHCpb_7PaIoOKrrsjv1PN_UKjA
+    KiaErfcnfzTd882xyRFnvkx-ENy0QstILdz4yiWPPtLkdtrtq__RA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeekheeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
+    dtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenuc
+    ggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveej
+    gfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+    hrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
+    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkh
+    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
+    thhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:9uGcaY2FBIbtDol-8MjRiBQy-oJqw5xxw57FiMnFo9qS9Hvdy2yHEA>
+    <xmx:9uGcaQ6ZBV3BuNgZNde32z_XTxoDffZyIogJjB7eW5dDnWgSo17zWQ>
+    <xmx:9uGcabX0DY1eHsod43Cki9mvY_viyvupjOMyi_JwqGCOBsqAIXL1fA>
+    <xmx:9uGcafAcPnRnO0peiFwsjTLUx6QtqP6dm2hCwDtgL8wHodLIX3OawA>
+    <xmx:9uGcaTZvB4IBUHAugvX6go1rm4JzkzOP04oFZlL5qsD15aoJFPX3qWIK>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id B7EDA1EA006B; Mon, 23 Feb 2026 18:25:42 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Matthew Gabeler-Lee <fastcat@gmail.com>
-Date: Mon, 23 Feb 2026 17:58:07 -0500
-X-Gm-Features: AaiRm52IoKTZQsWgYq0oaGud2ROqDWMQm2vGBDaHyPuVUTJZ7Cnr6Y-eC2ZeyW0
-Message-ID: <CABpCjbY=wpStuhxqRJ5TSNV3A-CmN-g-xZGJOQGSSv3GYhs2fQ@mail.gmail.com>
-Subject: bug: for-each-repo malfunctions in worktree due to GIT_DIR
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AebKJJRYDV9c
+Date: Tue, 24 Feb 2026 00:25:22 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>
+Message-Id: <ff92bec9-19b1-4107-9208-f692709ba9b4@app.fastmail.com>
+In-Reply-To: <xmqqy0ko626g.fsf@gitster.g>
+References: <CV_format.noprefix_boolean.39c@msgid.xyz>
+ <format.noprefix_boolean.39d@msgid.xyz> <xmqqy0ko626g.fsf@gitster.g>
+Subject: Re: [PATCH 1/2] format-patch: make format.noprefix a boolean
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-I noticed some scripts I have that utilize `git for-each-repo` don't
-work if I run them from within a git worktree, but they do work fine
-from within other directories, including the parent git clone of those
-worktrees. The symptom is that the command I pass to `for-each-repo`
-is run as if from within the worktree each time, instead of the repos
-fetched from the corresponding config entry.
+On Thu, Feb 19, 2026, at 19:03, Junio C Hamano wrote:
+>>[snip]
+>> Let=E2=80=99s only offer a breaking change fig leaf by hinting about =
+the
+>> previous behavior before dying.
+>
+> One case that is often problematic is what happens to those who use
+> the same set of configuration variables with different versions of
+> Git, before and after such behaviour change.  But I do not think
+> this is such a bad thing.  The only reason why they had this
+> variable set (to any value, or to a value-less true) with existing
+> versions of Git is because they wanted to omit the prefixes, so when
+> a new version of Git dies with "Heh, 'nothanks' is not a valid
+> boolean value", they can edit the configuration variable to "1".
 
-After a bit of sleuthing with strace, I think I identified the cause:
-$GIT_DIR is set in the `git for-each-repo` process, and gets passed to
-the child git invocations it launches.
+Yeah.
 
-And thus, from within that worktree, `git for-each-repo
---config=foo.bar -- branch` becomes the equivalent of:
+I like how this was handled for `core.commentString`: You can set both
+`core.commentChar` and the new config and still be able to run on old
+versions.
 
-GIT_DIR=/worktree-parent/.git git -C /unrelated-repo branch
+> And from that point of view, I think the hint given together with
+> the "bad boolean" error can and should be phrased a bit more
+> strongly, i.e.,
+>
+>> +		format_no_prefix =3D git_parse_maybe_bool(value);
+>> +		if (format_no_prefix < 0) {
+>> +			int status =3D die_message(
+>> +				_("bad boolean config value '%s' for '%s'"),
+>> +				value, var);
+>> +			fprintf(stderr,
+>> +				_("hint: '%s' used to accept any value but "
+>> +				  "now only\n"
+>> +				  "hint: accepts boolean values, like '%s'\n"),
+>> +				var, "diff.noprefix");
+>
+> The target audience of this (hint) is those who have set this
+> variable to a non-boolean strring from the existing version of Git,
+> and the only thing they meant to express was "I do not want any
+> prefix", so "we used to accept any value as true, but now accepts
+> only valid boolean values", perhaps?  That would nudge those who
+> wrote "[format] noprefix =3D NoThanks" to rewrite it correctly to
+> "true" or "1", and not "no".
 
-Which of course is not what the `for-each-repo` invocation would be
-expected to do.
+Very true. I=E2=80=99ll change to spell out that any value used to be
+treated as `true`.
 
-Observed with git 2.51.0 from Ubuntu 25.10. I haven't tested
-explicitly with latest, but I took a quick look at git.c and
-for-each-repo.c changes between there and master and didn't see
-anything that looked like it would affect this behavior.
+Right now it just says =E2=80=9Cused to accept any value=E2=80=9D. But n=
+ot what it means
+to accept any value...
 
-PS: please CC me on replies
+> This is a related tangent, but shouldn't this use advise() without
+> configuration?  There is no need to allocate an advice_type and use
+> advise_if_enabled(), because correcting a malformed configuration is
+> an action enough to squelch the message.
+
+Oh, right. That fits well here.
+
+In hindsight I think I should have used that in 5a312527 (whatchanged:
+hint about git-log(1) and aliasing, 2025-09-17).
