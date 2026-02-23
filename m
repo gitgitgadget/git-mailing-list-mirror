@@ -1,189 +1,210 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CA624C076
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 20:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C51B378D94
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 21:38:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771878952; cv=none; b=FARJPzAXLtbfWpUcW+ymLw0WPL9wdj6fmgqU1Az1r2UmjKOczr7Z3/8v4dfBePujBKSyW0JUXrXfEB69p8CcIhbIvoHOMctnQMu6pniQarIT2DIQ4mIlexp+wPAOiKdDwnOI8S7aIeOfxtpqlNghMks0qwecolcMAcZGG0SIflk=
+	t=1771882725; cv=none; b=utTYXZkg2RCn4LZzjARa9M7NW+6Q+0NkFmPz9eWydPSku/N9oNwUN0IVWKYQY6vF6X4IQ6x+ZKUXixfLlA0U/cll7JBEKxsykfEs7XGnCt4co7fsaX/SGX4SSUgZNxhj2AcHzzic4JlNguZRS2VBnI0RlanxNBc7bw2YYOZkx80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771878952; c=relaxed/simple;
-	bh=xJtucf3+/QU4xoM6d5Ve3Ac6OFXAPAxzuIV0PbKIGPg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MRXcU5ivb74vBLYkllYhZfkOQRb2fe8S+tLfO8YWKa7GUuVg0RUVJ8a9x7Ja11JPIKT34gitP8KfYEeD8ow+kqbj6e2RIqYpwbWRr7H1ekRnS6xrtVF9jjWP/RACAoJB6ZOpsMbBN5N4Ma/s0Tqa0kJ5oK41O1UpJm+PAexlHjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=1NWurzEN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VpY4Xz7e; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771882725; c=relaxed/simple;
+	bh=/x+jvJFdBSss8NvML0660N8uymd3oLxq7xXBNphXIXQ=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=eoQ0Xd3MlcAeEB+HCfOGcw/POTkFzUq2qz7FMs+L7NPAmsZsZ/45wX2F3NkIvDo9ttmNtWtdRiNksMLsuKm0iozN9gqYwSwjKvPS+tgj60p++Y7BIJeRAXWib4F0LbIY35bQYKaQBRXtvj4MhYaZnzGY0eoU2XEeQeZ2C2HWA9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Meck6mGb; arc=none smtp.client-ip=74.125.224.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="1NWurzEN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VpY4Xz7e"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 09EF614001EA;
-	Mon, 23 Feb 2026 15:35:50 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Mon, 23 Feb 2026 15:35:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771878950; x=1771965350; bh=t9diJw2UdT
-	1KHnsWSAEod+m2NAPYGprhy86PKbjGM7g=; b=1NWurzENH+AZuj+B1fIjbtlnFt
-	T4edMyWBB9QPs0sXMf8AY6j9uIVpnevxNZQ87klHgcNkujWyPp2c1x3EnWKYZ0e5
-	XzlShdhYMaLivX6yezt4vbcpdAfuxwbVYyTdd622YO6SfivjWOt0wDai9KC95vF5
-	dhQbRo5LOlaW0sFng1yOEQ8aHtcti+dkEMppCpb5QpwK3CVQLmHZkG+XBf9CUt2p
-	KsRhROC813rzqoQe/OAVaTxerqhjB5ENXbwFe7SFL1BE/ZQuzBlvLxr6U9J4c9aH
-	VycQHGsWyjA+Fx5/M0+Jr1DJd71x0YxDT5YZnp3jyywmrGsWCDvr0TpGhaqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771878950; x=1771965350; bh=t9diJw2UdT1KHnsWSAEod+m2NAPYGprhy86
-	PKbjGM7g=; b=VpY4Xz7eLYmITmk7rIG3QxklEUeNwE4JriLBAFBdGYzv5M3R3Lv
-	NCRmCr9baCFgngnymR1O4M6onE601mfbXAAeiC1e20eDKrUk23mQIoV+ccY55gNd
-	FEdOSBdUInPemrJjfZitCZl+rjaWtwyfc257PAZCbKrVGQcFRfATWag2HHpBBwPM
-	dEYwg7f64P1BAh4JCrhBWXjSMhjUzQVeq4BjokhWBYnNbd7PxsHXgxW5V1576XOb
-	RZaXEqcowWG4SIbIMwb2X44b6GljJuV4+BRLQ1gHEF1oHPtW5Xneop3QKyYG/TcL
-	weFpU/2DV8WIZgQObx8oscs7yFiAcXIpxiw==
-X-ME-Sender: <xms:JbqcaYdgo0dX1OMOXPb84LW5O0aUkR74g3elM_3OlHf02XQUBgdBCQ>
-    <xme:JbqcaRFK6nI8ekK0Na8VkLzRI4-lg-faCgbHQlKwIf3sm1buX-Ocdir68TR1ewy4U
-    cH_f_E4YWkjRcEbEmXmMH8TV_P84NCwG_wiYMB23A9-CCL7adegKNk>
-X-ME-Received: <xmr:JbqcaR1iCxWzjPzRvxpp0ahltZB6irdivFfbiVXKi6i2K0wXhgenV8v_uVtiH7aiIh_BT4C3RbWgFxTz9WQQ1nFV7eVg1y3HpQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeekvdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhs
-    thihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:JbqcaZn-W063rx6ua_xG3xVFeRbacqTNm-y6IUJmqxm7S9e9g_I8Ew>
-    <xmx:JbqcaR-aCpwpghRMjJp2OA7JdzHN-OMyd4dMfcC525DdWKGkTSKxEQ>
-    <xmx:JbqcaerSi_Ey2UwPDr7DIuv0OmqQZS-YPam1u4n8YrfQVV6pae85_g>
-    <xmx:JbqcaalR-CnznLI9s8P1k5hdZJBXcNUDDF9iVp2SNB26G9RGFtelhA>
-    <xmx:JrqcaaBH5lxu6OH-c8BmHK_UpGuPpAvBmhE1zHyqR8zioUP6hNmjy2zq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 15:35:49 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] pack-check: fix verification of large objects
-In-Reply-To: <20260223-pks-fsck-fix-v1-4-c29036832b6e@pks.im> (Patrick
-	Steinhardt's message of "Mon, 23 Feb 2026 10:50:43 +0100")
-References: <20260223-pks-fsck-fix-v1-0-c29036832b6e@pks.im>
-	<20260223-pks-fsck-fix-v1-4-c29036832b6e@pks.im>
-Date: Mon, 23 Feb 2026 12:35:48 -0800
-Message-ID: <xmqqsearkxjv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Meck6mGb"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-64ad46a44easo4565353d50.0
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 13:38:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771882723; x=1772487523; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZMoDJyS8qxGl6wx3Or6kxQVfGwp9AJFqciaWS26lRjk=;
+        b=Meck6mGbvPDzv5MVJmVvfIr3aitlo7vL99qo/APoZH+4EfD61ziZPyi40LOtyHQzRw
+         6GHOQMz0nt3OlQTGh6ryl7mJsQf1nnO4ebIHmimwAv1QYTnUpV4z/PWMrhV0NH5NM0I9
+         B10wN9G1Eip8sd2GCIh/98y1+8LpHiuaPGd3djHk+DYVWsjJi5iryqCSfvJmiqGhf+OL
+         /ITQxQEEa69hmwf+ZXBkmtfyzdYwjtKgK6XOboa9q3AISJ3/ZrgyBmDvPxoftGr+Jmda
+         /B2yVsag4iJqKfuIlhI4OOiju57lHmnGO9336nVuLp/BVvZgRIQ1f5LaFiyOu6QJ+iF9
+         uoVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771882723; x=1772487523;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ZMoDJyS8qxGl6wx3Or6kxQVfGwp9AJFqciaWS26lRjk=;
+        b=pV/IMgLOjsCqy+lIUd4alrnVsUGVgOYP6XUZIx5YdzwCk5w6wg0JtKdZ+LtByhmRia
+         HWq9/Pe0ytTn6NXz9mVNBuuCZpjlzELBuNY65RKBgsI0LsXI//roAS22QSh552/ip88Y
+         073JQg16qztX2U5fIp62L3EkHQw/wYN9lwO3CCaQ0mULrHRw5LZc1oA7ePpDqiuk8uT9
+         1ibvIcNd+7FoeTXz5ngCm5v8t4BPE2/+XR/+gPhIHoGjTVSHrObrC1btU+M5hM2ruGVI
+         /Jlp2Cd+Zur/wOpBIf/8qgJI7JOU59Vv4VKElIlvAK5JtAJMW84iCmwtMq15CwY94xDK
+         c3XA==
+X-Gm-Message-State: AOJu0YyAkbuP7APwLjCF/DWbNFh2UGrGgaW44NCLelP2/YmF9PKB+cSr
+	mlJt/9MpnRIrT2d3V+JG1VOOsnu1TGwsVVhpmJtY3xMJUKrwZKmzCwilT1LpxA==
+X-Gm-Gg: ATEYQzxSrhjifV//2blf/NL3PtlqfFhnxVRZ9z4OMiudVqwItQ/h5bmVfjbijYRj6l2
+	tuDd2mYtRV4I6ShSAegbr0E0v5NbSm7nAz1rwmq4fZe4McbnKouAzEg6OmxHyREpt9Nfao7/tJ2
+	+zSYHma2w8q5UnTm6H/ApsXtr3dhRmVsejHUkYO9DvV6ynwPfGRdza+a6jtnSlNbvpq4T5n0qkZ
+	ITJCRgal1B7jhbi7zacAcpF25+UgE5dh2EUAy9x0L8+1JSDvOEirD8NJdOHbR2Mcu573hi3Qppx
+	b6F74tglUP6F/h9fCB2+NLAYcdEjg4UHPPWji1GFo3RRZ4zDiR2nnozRwAywNuFu9GruPsQNhED
+	1jL3L9xolWqXEyb90IJtX1+D/1sVr6ohYrrZdI+5sG012DJ26BLuzYtDLEzmxeD6xMTnvliLSbZ
+	35WGF2ZzXFyAPJWQvZzPFAl/g0iNtqx9nteqXp/51B8aWjmEhj/0rXYdjf0m+ad07vxOv2YZbPe
+	cBdSsxFLXwTNKw4hKfFFklpm3XW4k+HXYR8kelR
+X-Received: by 2002:a05:690e:144a:b0:64a:dbe3:fab7 with SMTP id 956f58d0204a3-64c787d422cmr8180265d50.8.1771882722587;
+        Mon, 23 Feb 2026 13:38:42 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:90eb:5600:c890:ad73:1b25:1a30])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-64c7a39b308sm3634392d50.21.2026.02.23.13.38.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Feb 2026 13:38:42 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [RFC] send-email: UTF-8 encoding in subject line
+Date: Mon, 23 Feb 2026 16:38:31 -0500
+Message-Id: <43DCEEB9-33C4-4EE2-9FF3-49DCB9B837E0@gmail.com>
+References: <20260222155559.1777883-1-shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+In-Reply-To: <20260222155559.1777883-1-shreyanshpaliwalcmsmn@gmail.com>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: iPhone Mail (21F90)
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> It was reported [1] that git-fsck(1) may sometimes run into an infinite
-> loop when processing packfiles. This bug was bisected to c31bad4f7d
-> (packfile: track packs via the MRU list exclusively, 2025-10-30), which
-> refactored our lsit of packfiles to only be tracked via an MRU list,
+> Le 22 f=C3=A9vr. 2026 =C3=A0 10:56, Shreyansh Paliwal <shreyanshpaliwalcms=
+mn@gmail.com> a =C3=A9crit :
+>=20
+> =EF=BB=BF
+>>=20
+>>> On Sun, Feb 22, 2026 at 9:07=E2=80=AFAM Shreyansh Paliwal
+>>> <shreyanshpaliwalcmsmn@gmail.com> wrote:
+>>>=20
+>>>>> That makes sense, I tried it below.
+>>>>> I also wondered whether, in addition to this, it might be helpful to w=
+arn on
+>>>>> an invalid charset, and/or possibly fall back to UTF-8.
+>>>>=20
+>>>> Agreed on the first half of the statement, if we have an easy and
+>>>> portable way to tell if a given random string names a valid charset.
+>>>> I do not recommend to "fall back" to anything, if we are asking an
+>>>> input from the user.
+>>>=20
+>>> Following up on this, I tried adding a warning when the provided charset=
 
-"lsit of" -> "list of"
+>>> does not appear to be valid. Current flow is,
+>>>=20
+>>>  Which 8bit encoding should I declare [UTF-8]? y
+>>>  Are you sure you want to use <y> [y/N]? y
+>>>=20
+>>> With the additional check, it becomes,
+>>>=20
+>>>  Which 8bit encoding should I declare [default: UTF-8]? y
+>>>  warning: 'y' does not appear to be a valid charset name.
+>>>  Are you sure you want to use <y> [y/N]?
+>>>=20
+>>> This uses find_encoding() from Perl=E2=80=99s Encode module to detect an=
+y
+>>> unrecognized charset names.
+>>>=20
+>>> Let me know what you think.
+>>> Also, is there any new test that should be added for this change?
+>>>=20
+>>> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+>>> ---
+>>> git-send-email.perl | 23 ++++++++++++++++++++---
+>>> 1 file changed, 20 insertions(+), 3 deletions(-)
+>>>=20
+>>> diff --git a/git-send-email.perl b/git-send-email.perl
+>>> index cd4b316ddc..e62fa259ba 100755
+>>> --- a/git-send-email.perl
+>>> +++ b/git-send-email.perl
+>>> @@ -23,6 +23,7 @@
+>>> use Git::LoadCPAN::Error qw(:try);
+>>> use Git;
+>>> use Git::I18N;
+>>> +use Encode qw(find_encoding);
+>>>=20
+>>> Getopt::Long::Configure qw/ pass_through /;
+>>>=20
+>>> @@ -1044,9 +1045,25 @@ sub file_declares_8bit_cte {
+>>>        foreach my $f (sort keys %broken_encoding) {
+>>>                print "    $f\n";
+>>>        }
+>>> -       $auto_8bit_encoding =3D ask(__("Which 8bit encoding should I dec=
+lare [UTF-8]? "),
+>>> -                                 valid_re =3D> qr/.{4}/, confirm_only =3D=
+> 1,
+>>> -                                 default =3D> "UTF-8");
+>>> +       while (1) {
+>>> +               my $encoding =3D ask(__("Which 8bit encoding should I de=
+clare [default: UTF-8]? "),
+>>> +                       valid_re =3D> qr/^\S+$/,
+>>> +                       default  =3D> "UTF-8");
+>>=20
+>> Here we change things, right?
+>>=20
+>> - The original validation is "at least 4 characters", the new
+>> validation is "at least one non-blank." I'm not sure why we'd prefer
+>> one or the other, frankly. The original goes to 852a15d748
+>> (send-email: ask confirmation if given encoding name is very short,
+>> 2015-02-13), which is motivated by the same problem we're discussing
+>> here!
+>=20
+> I see.
+> My understanding of the earlier change (852a15d748) is that the
+> length check was intended as a heuristic check to catch obviously invalid
+> inputs like "y" and trigger an extra confirmation based on the fact that
+> charset names would be at least 4 letters.
+>=20
+> With the additional find_encoding() check, the validation becomes semantic=
 
-> exclusively. This isn't entirely surprising: any caller that iterates
-> through the list of packfiles and then hits `find_pack_entry()`, for
-> example because they read an object from it, may cause the MRU list to
-> be updated. And if the caller is unlucky, this may cause the mentioned
-> infinite loop.
->
-> While this mechanism is somewhat fragile, it is still surprising that we
-> encounter it when verifying the packfile. We iterate through objects in
-> a given pack one by one and then read them via their offset, and doing
-> this shouldn't ever end up in `find_pack_entry()`.
->
-> But there is an edge case here: when the object in question is a blob
-> bigger than "core.largeFileThreshold", then we will be careful to not
-> read it into memory. Instead, we read it via an object stream by calling
-> `odb_read_object_stream()`, and that function will perform an object
-> lookup via `odb_read_object_info()`. So in the case where there are at
-> least two blobs in two different packfiles, and both of these blobs
-> exceed "core.largeFileThreshold", then we'll run into an infinite loop
-> because we'll always update the MRU.
+> rather than length-based, recognized charset names are accepted directly,
+> while unrecognized ones trigger a warning and still require explicit
+> confirmation. The relaxed regex (at least one non-blank) is only meant to
+> ensure we receive some non-empty input before passing it to find_encoding(=
+).
+>=20
+>> - We get rid of confirm_only, since we're about to roll our own
+>> confirmation below:
+>>=20
+>>> +               next unless defined $encoding;
+>>> +               if (find_encoding($encoding)) {
+>>> +                       $auto_8bit_encoding =3D $encoding;
+>>> +                       last;
+>>> +               }
+>>> +               printf STDERR __("warning: '%s' does not appear to be a v=
+alid charset name.\n"), $encoding;
+>>> +               my $yesno =3D ask(
+>>> +                       sprintf(__("Are you sure you want to use <%s> [y=
+/N]? "), $encoding),
+>>> +                       valid_re =3D> qr/^(?:y|n)/i,
+>>> +                       default  =3D> 'n');
+>>=20
+>> =E2=80=A6which might want refactored a bit so it can stay close to the or=
+iginal? idk.
+>>=20
+>=20
+> Actually the flow needed to change slightly to insert the validity warning=
 
-Good find, and it is not surprising.  What is surprising is that we
-do not see this kind of breakage more often.  The mechanism does
-sound fragile, not just "somewhat" X-<.
+> before the final confirmation step. Since ask() handles confirmation inter=
+nally
+> using confrim_only and is used in multiple places, it seemed simpler to ke=
+ep the
+> additional confirmation local here rather than modifying ask() itself.
+>=20
+> Let me know what you think.
+>=20
+> Best,
+> Shreyansh
 
-> We could fix this by improving `repo_for_each_pack()` to not update the
-> MRU, and this would address the issue. But the fun part is that using
-> `odb_read_object_stream()` is the wrong thing to do in the first place:
-> it may open _any_ instance of this object, so we ultimately cannot be
-> sure that we even verified the object in our given packfile.
+Ah, my mistake for being ambiguous. I meant:
 
-Again, very good reasoning.
-
-> Fix this bug by creating the object stream for the packed object
-> directly via `packfile_read_object_stream()`. Add a test that would have
-> caused the infinite loop.
-
-Curious that we have a completely different test.  I've locally
-applied (without committing or amending) t1050 update from brian's
-patch and with this series, fsck there does not seem to get stuck.
-Of course, the new test added here doesn't either ;-).
-
->
-> [1]: <20260222183710.2963424-1-sandals@crustytoothpaste.net>
->
-> Reported-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  pack-check.c    |  2 +-
->  t/t1450-fsck.sh | 15 +++++++++++++++
->  2 files changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/pack-check.c b/pack-check.c
-> index 46782a29d5..6149567060 100644
-> --- a/pack-check.c
-> +++ b/pack-check.c
-> @@ -155,7 +155,7 @@ static int verify_packfile(struct repository *r,
->  			err = error("packed %s from %s is corrupt",
->  				    oid_to_hex(&oid), p->pack_name);
->  		else if (!data &&
-> -			 (!(stream = odb_read_stream_open(r->objects, &oid, NULL)) ||
-> +			 (packfile_read_object_stream(&stream, p, entries[i].offset) < 0 ||
->  			  stream_object_signature(r, stream, &oid) < 0))
->  			err = error("packed %s from %s is corrupt",
->  				    oid_to_hex(&oid), p->pack_name);
-> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-> index 8fb79b3e5d..ec68397ea3 100755
-> --- a/t/t1450-fsck.sh
-> +++ b/t/t1450-fsck.sh
-> @@ -852,6 +852,21 @@ test_expect_success 'fsck errors in packed objects' '
->  	! grep corrupt out
->  '
->  
-> +test_expect_success 'fsck handles multiple packfiles with big blobs' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		blob_one=$(test-tool genrandom one 200k | git hash-object -t blob -w --stdin) &&
-> +		blob_two=$(test-tool genrandom two 200k | git hash-object -t blob -w --stdin) &&
-> +		printf "%s\n" "$blob_one" | git pack-objects .git/objects/pack/pack &&
-> +		printf "%s\n" "$blob_two" | git pack-objects .git/objects/pack/pack &&
-> +		remove_object "$blob_one" &&
-> +		remove_object "$blob_two" &&
-> +		git -c core.bigFileThreshold=100k fsck
-> +	)
-> +'
-> +
->  test_expect_success 'fsck fails on corrupt packfile' '
->  	hsh=$(git commit-tree -m mycommit HEAD^{tree}) &&
->  	pack=$(echo $hsh | git pack-objects .git/objects/pack/pack) &&
+The code is similar enough to the original that perhaps a helper can be intr=
+oduced, or at least we should keep the equivalent strings together to help t=
+hose who change one.=20=
