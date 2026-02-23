@@ -1,69 +1,69 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFD9365A03
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 12:27:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6083659F3
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 12:27:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771849624; cv=none; b=hvT10+ml4IhXwLs5/P/0wAz9jjZzHhQIGjQmRu6GfaS+bqKEJEU7AubGTJ3iM5TGx805G8DxvgEP/nigFV7v2LHKBHTVkhcPJPOwTOBITi1YRAUFCxbxXCcIrfprJOhlj5J3vVvMzGyto66wButx7kq1XTx1cl3FKGlNzDbOIXc=
+	t=1771849625; cv=none; b=nNeGJWF4jKvyLPdXOKiO+LVXsxR/QZ50+oWQlDEM0IlPj36aXY3gxe1bErGDD36uNKCfm0J67Mrw2+grEqd+gJyU5YthFM6Ny9NcBabCSq6aqtp9GYlRWvn67Cn3o/4cqqM5hp8vb9UQBuhuiSQiHdcyJqVSxK52YMF2wS6eVCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771849624; c=relaxed/simple;
-	bh=1TRGazi899sOFII7dM5ZtIXUkND8xfoY4IokJfu/zz8=;
+	s=arc-20240116; t=1771849625; c=relaxed/simple;
+	bh=GvHyLLdq5zr5f67o7wACCABuPDFFnW50otGSKA90d64=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ZRUdq9x/0AdmOLKsG3td1P4SqAKTnrtIFpP4RZhA7Qe6CxnS0JhDZRDAHPS8AyvSc555m7rg/FOgajhhGoxs/wg7l7BQjpPI7lJwZjFFStN+diIHKXQj1hyEa7m5emnpOHqiR+SBcB0wNnRUF+2XA/zdzI4QdtEpGv/C6EaQHMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cKAOch8O; arc=none smtp.client-ip=209.85.128.182
+	 MIME-Version:To:Cc; b=IX1P+l2OuXOqDmqFBtskZUToN/k9+4QVxrpgJdyfARKJs5595atOyT3lnBTiJsLnMrd2UTT8Y9PNFkA6LLyNGDSl2FfV6pcGSnQTjmUGKR9vQ9VIopNflAPehDmCBl3xNn/f0lZjX47zw/Ru4uWGICmWcyCrsLKimeJyz0izxqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lHz62wN/; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cKAOch8O"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-797d6f934e2so39955987b3.0
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 04:27:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lHz62wN/"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7964f1405a0so41660757b3.1
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 04:27:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771849622; x=1772454422; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771849623; x=1772454423; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=m/8/dI/miYQFdbZevFeKbT9ZWTIPZ6sliYe7jLed6AE=;
-        b=cKAOch8OVIg+VxIsoaf/SUJo6dg/yLQELkB79VqXfiCGm9ivF5WtmcIi8RmwRWwstv
-         Tn4P6vs4idkYMDEnXQyh8fj+ZXBEGw23yPYLobNtIOqfJ1899L9RZCUc2eKXisF7sdsX
-         sZsrNcoUJzftb9TwAaRe5F1N1ONJoU0WvJVx+/ZaEDZc/lo2JjXoobh4xoKQpWp/JvLO
-         TA4THGTmyNX9mupMJAPR3lMWwaPsZbnEToAJq6GAS7ubPz48W6/bI25RVTCvd1I8vNtX
-         Di+rw8qxnM2utx4upVyQ3CcsyMbGSEXB8dztLZ21ZeWV8fH7UBioKkO6ThIA4S8OP16E
-         KztA==
+        bh=71nFCR43NKhe83w39LyefSyoYAT06N7WaVJRIbf4miY=;
+        b=lHz62wN/ZcNK0p8CCtoJaiqAN4NJ5X2hzaTt5oVygaIHbvFx5U0LPDde8ijpVLYKBa
+         KsRp7KBJatHRe4i5AezL+IV/ho6LVSAOvoBwjLwr0XnRLoSKiyMTTsUUKMChkDH7kVOZ
+         1wup+FEcR5NDJsqbyrWd1vgQ5BAD64+7Chp/Q6vFdRAZDP7ENzaMlPwIC5Ny68yF+8+V
+         jzcsH6g2COZkBg0JmImEdIGiceTo4dVZYLK8DgS5sQ6x1PAljJBKPZlzfIAZBdYtUNzC
+         PuQVcRSPAB3IJzFU9Yj7edasU3u+fwpvDMQtafTKBnVrgE6sw98ge4uCKpGqV2HBDWGZ
+         4xnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771849622; x=1772454422;
+        d=1e100.net; s=20230601; t=1771849623; x=1772454423;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=m/8/dI/miYQFdbZevFeKbT9ZWTIPZ6sliYe7jLed6AE=;
-        b=l8yFjmyonhWepYHNIWXHUt8gj+VGEiKZ2n9xhjAHFdTNPiPin3lWpAzoC+VnHRftg9
-         6eWTBOkRy3SXUBkAgth6MF3FBbvUVlMTfX3RO7q0fQZrKQH/Wetsms61U60OZkIDul21
-         thboKY7bbYgbTIl5Om5RQ9a9a7fHZs+8EVgHnkkKLI5AarqL5hsSsxOP6lSJHfk/AYPU
-         s1H/cIL3qesgck9f9wp3IbTtONVlE1EmqcSlca/0kaCwBN+kS3l8eB/Li+er/QOqzl5z
-         F58Q27XgiMkAfyEFx9/cAOwugY4duUrAbPuH81xeZTYCYhp4G+jMtjHk6xpTn5/w3KKD
-         07Fw==
-X-Gm-Message-State: AOJu0YycqndzWMLDYJg+jSgrGHBiasmJxuXRDc3OwVzimgAW1cSLh2ut
-	lumNDsPvRYyGVtjXaA48lAJ6x+bkTtfONm1n3LjL7XUe5GBdguqKgLzQo/djLA==
-X-Gm-Gg: ATEYQzzC5EbSPnqSdfYNcfRMxvH6ru71cHil2i1DpyzrDu5eaEvmNUWLsoiRt2DQOF0
-	kJkiVeCDKhJGot474XSIzqzRl5o8cEEBJStDIQbi6px7zWRCC7/kx1s1Hfi1yHaV+H0myMYTMo/
-	RcwUWsxRBSw1/IH+5TNi29pszRfrMKiyMHy/GW7YQe2iXgMNwW7nELw18j5c84rKSsL7SteVytM
-	yZgEUK/J7EW8jLjtRDmrt/8ODjZDfSQdnIciOqFABWbCl+CYS+BAuBnMpI9QLl1QIK/eaBfmUwj
-	volnQxCQ2R1Cyal/e9APgQeouQmsQiDQWGfieApA0E6mpZ0h7hPjYCM3iDVsCU10yO516u0FC5i
-	gBvs8vUuYp4BlWfOVtE2GFXPVv/hT3vHcHO0z7h0m30wJXXnF151aHvujuGDxk57HJqgJ1o1GPT
-	bt0yMlS8uNARdTvJ9Tf5/WVY999w==
-X-Received: by 2002:a05:690c:a6d4:b0:797:e0ec:b8df with SMTP id 00721157ae682-79828f1e7c4mr51603677b3.18.1771849622238;
-        Mon, 23 Feb 2026 04:27:02 -0800 (PST)
+        bh=71nFCR43NKhe83w39LyefSyoYAT06N7WaVJRIbf4miY=;
+        b=PLia5fOFs470nZMOHgiWVUWHyjTu1Qidd+S43W9TN6KufuoMUG1FDrx2WJCWvbmmdW
+         JCZ+vUitt1nkO2AI3IbmSgRkCO6yhzCXLmM+s9x2P0TWiBF9j/MBHpU0kynX5unniecr
+         /QjWhV1nqrMb1Yfj5kjCqIp6DIezU+tPjdn2VVI2AkNm9GzjpA+1Q4TAQ23JVBpZkNDq
+         CBXqREUojdm5UmA0lSErcscGND+5XCcbClaeuqY1cxfPw+Y1nuK7aPlNLj78bQdr8hJR
+         A2rSaWLUiaMJ94IN3pJMoXrRu9s2ma7s3CVDUcL6E+vQV36x6A8g3JaBF7U3vwHWY6Q1
+         w7Bw==
+X-Gm-Message-State: AOJu0YxH269fIeXRbOdORecFLCPuU9vVXnhK9kcudH8GYU2gnEza8Ecr
+	08E6vXSUgcFbRtpKRFOxOnnlDhswWLouWraRFOwo/f07lewKKD7H9WCADgP+Kg==
+X-Gm-Gg: ATEYQzwZJII6sBPdA1RsTEZgbQv7VwAWcFSzrvzSN1EdgOznhFvUKX1i8zfQcAunv+F
+	ZRP8hh0DQOw4BBupTusJDICgkMzsmERlhj1Nzp9bteK3F3ld4RPfN3UDpwfpdkOaD/nkjzoE6xb
+	exDCCgoK1Ca5FdxoCzfg4842l8rCvj5IeTOAmSk+yiq/k3FnIBZEvds5cXw4ECP36zBKnDYr+VO
+	JWZbuEDhg6F88UasCBTQPoOYfDFOUUPBcs1QpcL7mDWTKSdCD3OER30MHaC/ytkGHSzZJiHMtYK
+	o0OJZomR/D+p3YpcT3elicUt9Ov7ziRloYMTP3OidGlnI5EqvWwRxLvtpteSKex0R6pnNRobA3G
+	gY1nY5tqIqv94fTMpMkFv9Jt75/aeMeUf0TJCp5YhVoRPeDnrFMKFFOcDfYXiDFajMK3T9GaWYM
+	bwNjeV8bY4FaG6fIDRtP57kd56Ig==
+X-Received: by 2002:a05:690c:4b85:b0:798:1219:c779 with SMTP id 00721157ae682-79829181626mr64795137b3.66.1771849623473;
+        Mon, 23 Feb 2026 04:27:03 -0800 (PST)
 Received: from [127.0.0.1] ([20.171.125.131])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7982dd81dd1sm31097857b3.27.2026.02.23.04.27.01
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7982ddc5a60sm31056497b3.35.2026.02.23.04.27.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 04:27:01 -0800 (PST)
-Message-Id: <4835ee51800871f0388bc0c4ea812bb90bfe4284.1771849615.git.gitgitgadget@gmail.com>
+        Mon, 23 Feb 2026 04:27:03 -0800 (PST)
+Message-Id: <24eb757a4031c0c712d24b835a97e81c6b2a84f1.1771849615.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2044.v3.git.1771849615.gitgitgadget@gmail.com>
 References: <pull.2044.v2.git.1771026918.gitgitgadget@gmail.com>
 	<pull.2044.v3.git.1771849615.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Feb 2026 12:26:46 +0000
-Subject: [PATCH v3 04/13] config: format int64s gently
+Date: Mon, 23 Feb 2026 12:26:47 +0000
+Subject: [PATCH v3 05/13] config: format bools gently
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,90 +86,72 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Move the logic for formatting int64 config values into a helper method
+Move the logic for formatting bool config values into a helper method
 and use gentle parsing when needed.
+
+This makes 'git config list --type=bool' not fail when coming across a
+non-boolean value. Such unparseable values are filtered out quietly.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/config.c  | 27 +++++++++++++++++++++++----
+ builtin/config.c  | 21 +++++++++++++++++++--
  t/t1300-config.sh |  4 +++-
- 2 files changed, 26 insertions(+), 5 deletions(-)
+ 2 files changed, 22 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index 4c4c791883..448b148563 100644
+index 448b148563..d8b38c51d3 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -237,6 +237,25 @@ struct strbuf_list {
- 	int alloc;
- };
+@@ -256,6 +256,24 @@ static int format_config_int64(struct strbuf *buf,
+ 	return 0;
+ }
  
-+static int format_config_int64(struct strbuf *buf,
-+			       const char *key_,
-+			       const char *value_,
-+			       const struct key_value_info *kvi,
-+			       int gently)
++static int format_config_bool(struct strbuf *buf,
++			      const char *key_,
++			      const char *value_,
++			      int gently)
 +{
-+	int64_t v = 0;
++	int v = 0;
 +	if (gently) {
-+		if (!git_parse_int64(value_, &v))
++		if ((v = git_parse_maybe_bool(value_)) < 0)
 +			return -1;
 +	} else {
 +		/* may die() */
-+		v = git_config_int64(key_, value_ ? value_ : "", kvi);
++		v = git_config_bool(key_, value_);
 +	}
 +
-+	strbuf_addf(buf, "%"PRId64, v);
++	strbuf_addstr(buf, v ? "true" : "false");
 +	return 0;
 +}
 +
  /*
   * Format the configuration key-value pair (`key_`, `value_`) and
   * append it into strbuf `buf`.  Returns a negative value on failure,
-@@ -249,8 +268,9 @@ struct strbuf_list {
- static int format_config(const struct config_display_options *opts,
- 			 struct strbuf *buf, const char *key_,
- 			 const char *value_, const struct key_value_info *kvi,
--			 int gently UNUSED)
-+			 int gently)
- {
-+	int res = 0;
- 	if (opts->show_scope)
- 		show_config_scope(opts, kvi, buf);
- 	if (opts->show_origin)
-@@ -262,8 +282,7 @@ static int format_config(const struct config_display_options *opts,
- 			strbuf_addch(buf, opts->key_delim);
- 
+@@ -284,8 +302,7 @@ static int format_config(const struct config_display_options *opts,
  		if (opts->type == TYPE_INT)
--			strbuf_addf(buf, "%"PRId64,
--				    git_config_int64(key_, value_ ? value_ : "", kvi));
-+			res = format_config_int64(buf, key_, value_, kvi, gently);
+ 			res = format_config_int64(buf, key_, value_, kvi, gently);
  		else if (opts->type == TYPE_BOOL)
- 			strbuf_addstr(buf, git_config_bool(key_, value_) ?
- 				      "true" : "false");
-@@ -309,7 +328,7 @@ static int format_config(const struct config_display_options *opts,
- 		}
- 	}
- 	strbuf_addch(buf, opts->term);
--	return 0;
-+	return res;
- }
- 
- static int show_all_config(const char *key_, const char *value_,
+-			strbuf_addstr(buf, git_config_bool(key_, value_) ?
+-				      "true" : "false");
++			res = format_config_bool(buf, key_, value_, gently);
+ 		else if (opts->type == TYPE_BOOL_OR_INT) {
+ 			int is_bool, v;
+ 			v = git_config_bool_or_int(key_, value_, kvi,
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index dc744c0bae..05a812fd6d 100755
+index 05a812fd6d..568cfaa3c5 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -2515,7 +2515,9 @@ test_expect_success 'list --type=int shows only canonicalizable int values' '
- 	section.big=1048576
+@@ -2527,7 +2527,9 @@ test_expect_success 'list --type=bool shows only canonicalizable bool values' '
+ 	section.big=true
  	EOF
  
--	test_must_fail git config ${mode_prefix}list --type=int
-+	git config ${mode_prefix}list --type=int >actual 2>err &&
+-	test_must_fail git config ${mode_prefix}list --type=bool
++	git config ${mode_prefix}list --type=bool >actual 2>err &&
 +	test_cmp expect actual &&
 +	test_must_be_empty err
  '
  
- test_expect_success 'list --type=bool shows only canonicalizable bool values' '
+ test_expect_success 'list --type=bool-or-int shows only canonicalizable values' '
 -- 
 gitgitgadget
 
