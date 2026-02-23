@@ -1,55 +1,55 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C1323A99E
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:00:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C42830C62D
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 16:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771862424; cv=none; b=Z8H0APmjL0dbiMeZE5eDNmv78ilqzfzOpQ5a3zmbDIl77fYZB5LCaoNzk58SiOSM5L/TMtSnNPCDU1JDDNIim5HxB9UfWi+JQmf6jeL2t87SuSKMbjxAAMEdSzRDnZh+1JTpV9T109Uxcv+4WRboiVB1USsi4noFiguHpHiC580=
+	t=1771862427; cv=none; b=bvgeeNTxEZW014L8B69bO+4sCsp4bO2oBe7E8J3+0Tc8axv4LIvnFMIo1Fkw45O5PrZNJL9PtBS5yoicupxH0N2oZ2AFOFE6BwPg7uON4qG9g9tRvz8ZbrKIl3AphSLq1rehKarsiADyB6RD8C4X6luLr+KE5iRcBMWhiZMd8oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771862424; c=relaxed/simple;
-	bh=pWTYL0N7mhuarebcfw4U0xS6f2BO/foCZUe5rotQqZw=;
+	s=arc-20240116; t=1771862427; c=relaxed/simple;
+	bh=N90xE22SeIToXbA2FyyuEkYVdpxHA7QFvP37x6tdZOw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=o0HNSE3RirveUDO/fSmq1B5FNS0Nyb/Ja3ObKiYyM60sFJq1bN498S1GYBcER26tvmWNFysO72oGnmeA+IlYF8jzH5ZZ6YG4I0w+ZP1+hQyopa9Cx4K0awnMJiypTHwZBQYl39GKD/gJ8+MOLP8DAPAY1iKX9afBnz3BBgjcfcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ky1hEYio; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sQlbM+tL; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=AUFL3Zu6AhEnL67YowpIJ4Gguuafs/T8JRDcTC223+gMFC+MTH3CKFii5d5Xw8IiWKDtrDj2spiuI2HkG1YGHHSCNRuJD6KA72W/AF7z+Rdr1lNXdNe1rMfN+1XUaWaYiksRjMWr16yI/jBxac2Ttk07/QTdHavdDC+xx5C83Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fDikbM0Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T5Hcst+Q; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ky1hEYio";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sQlbM+tL"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 334BC1400012;
-	Mon, 23 Feb 2026 11:00:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fDikbM0Q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T5Hcst+Q"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7DBE4EC04F0;
+	Mon, 23 Feb 2026 11:00:25 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 23 Feb 2026 11:00:22 -0500
+  by phl-compute-03.internal (MEProxy); Mon, 23 Feb 2026 11:00:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771862422;
-	 x=1771948822; bh=3V+GH2m1f0qxj7BmRnmVu/8zShpkpMyMYKDqynjHOeA=; b=
-	Ky1hEYio+KaAaNKDgeM2B8wCixG2kkLIiW6CVAGGoSjTBO0SKMLKYEzI6dPqfUpQ
-	f/zMsdIM+bkHVZLrSdtDoDuet36smNE+muQJDwx0C3Bxue3LdNqh8r2GFEwRakTd
-	KZuP3hiR3wzLSISYiifEKmOrDWhskSMoN3MhiAmaGMUT8s4BumkduCeJbwjy2PaN
-	Xx072iQPCq0KQDmHQSholOqS2gky6tPmPePy8TdMH/BsesKTaldL07J/SCCQRVZw
-	Kcs5u4dTpNvGY2AstStjB2m2ijvP0kDP4svQAdmhYy9F2SaEH6/+eSoMLD/LIV7Y
-	iVMUr/ZMsoj3nGW4IbbmQA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771862425;
+	 x=1771948825; bh=lrfMdZa0k38fDCQ481NUAhaK72ohKRpxXOIAS/CNRq8=; b=
+	fDikbM0QquUECwXt0LmCWgHug1/0EsjRHcuyBxofO3fFtb5VVmg3fDIKX/mot+YE
+	UZR5TyPa0+hw9G69kQ6jno7X2YMpOX0gQ95O/GSUXs5RuG35RyVWqXhO0iM67K9e
+	YZ6ib9QiCL/lwJSxyJsSekms7jL3X53WzwPKhJKBAQxrn1r0dp6askMzzi8JOLYq
+	CJbmmTGTAx4D/nJCkQqfu/jgMH6asB/a+ITAQdZW+BsS+PAXtgoXoH8ghcwrOBle
+	Q0cT0IzyC1k8VpIbU434hoAe6OtyJSibOZ+D7Of3PfiipzbWk/ld1MykusjSDkxz
+	uMkGy28M04mvikJP+fYubQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771862422; x=
-	1771948822; bh=3V+GH2m1f0qxj7BmRnmVu/8zShpkpMyMYKDqynjHOeA=; b=s
-	QlbM+tL+Prp+l62ohlHH6OypgnNFeRMgvqtwcPyiHK+z45hPSAAcWK17CjsSO8wU
-	ExMl1i/M4m3EP+ewPZw39Nj98FAN2IhXWVpeLWd4rQoY8vzZUYxqbGFbNNngdqkd
-	J0ZKEgbi6BicoefCG3hOKSQmZ1D8O9l0AR1qtUQ6OauO5OIsT9gp742yG6fe67Gu
-	l7sLsh+Y5ga1UmQA5kbs5Q7cvwuqau/AJEQW4fUXNz6bWt7AHs61MKeuATmRIUS4
-	wpJphfyzJazHjiQlf9MasF/FH2NegdTMCLIyMtBpdb1lAKjnjctKwbm1NqwENwCU
-	VAk02TkvKp8++qP/oHFUw==
-X-ME-Sender: <xms:lnmcaX-RtMZKXAaP21eYU3bTE4NG44J4Bq5i-Gzw0v53XMQGVerdog>
-    <xme:lnmcaanz2jPsGLsimlDBQo9YPFnGPkJcxFE_iPz_TLv8dzInsaaITzXBBHMvnvpSP
-    TBkoF7-tT5r-EKRzMUacd2HDe_gcvGugdyd9NHdrCb1qA0bTrPx8Q>
-X-ME-Received: <xmr:lnmcadUnApwpYaeSBfM7L2H6Z1ziGM7cMd1BGdpOOOOe4aMJA7Ig1Sn3EuVkUd02HOwERmjw6JZvtGlAqVNZ9bxtmgQyONBLeBA6aIuRsw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771862425; x=
+	1771948825; bh=lrfMdZa0k38fDCQ481NUAhaK72ohKRpxXOIAS/CNRq8=; b=T
+	5Hcst+Q5sMKAgmRkk4KGKuYk8Y6kN1P3BVVjv2h3Ajzxpu0W7WuIwbsnzgW4Od/4
+	ZQcsK98Hvilb86Gdfuz7LDHEqm4CTaWvqCDQunGVVKz+PERF2Na6p/J8yb05uKGG
+	VUZesXSbwAztiU0sqxHQgjU8tEiwUjkhBvr6aHoBKQ1JhrdKSUtQv58Z1u1QNkXi
+	sKOObIJBCcmOZPw3NWeuMEuBFEcErwQN0jAszpG79NJ+EdFXuTenk6hL0wmq+vzA
+	WW5k1TCOt4wG+a1wyo6gGGd3rrq/lgA38DFTUceSvSU3SHsNruU5bT4A1y4XEdJ6
+	N8mHpYam6Fjr6yXCz5O7A==
+X-ME-Sender: <xms:mXmcaakE4QfJPSsyTyyZ4r_o5EyH9DdHTAiuUyRo3DEkdN7S-cxLSg>
+    <xme:mXmcaYu493lziJYBrUd2yI5jikSxBtt6rRjfEMQMU7DJ0gGCz14LR681_hrvTcvhw
+    RcaOMRxX968rD6ubRzZ759wFt9-bhsVbuZRGpFVR5c1KpdD3AB3>
+X-ME-Received: <xmr:mXmcaQ8IfctdWoDKFmiZzzUDUMw4t77YrLoeMDdZk68d0tIlv94NezqtKQYu0ak7fB0xNpCtRu-JvPkZgHhhCN9622Cm4oU2CVgxThbYAA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejieehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,25 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeejieehucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
-    htthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhunhhshhhinh
+    gvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhu
+    shhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkh
     gvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:lnmcafF9sVDvcaVG6Ktd5a0X8QM79hfi4cO0NeW44jQY8rJf8NMDhw>
-    <xmx:lnmcaZfi-h9msSfDXBO7AW2v40rP_HsW8eTpIG8DPFUloSZDlApVBg>
-    <xmx:lnmcaQJ-lt6nfH7pV7luLoPV-GItVonmNB3O2dCyXsfHFiQjI65PBg>
-    <xmx:lnmcaeG6WjfdedrXHpaY8GzZRwZQnl1P2D8Dukb22N2LtiLN-P_e0Q>
-    <xmx:lnmcabMrH3PI6AijTl4LS67-c6t_7BQhulZkt8Wm47nENvrUhdz7CWkP>
+X-ME-Proxy: <xmx:mXmcaaMS7-5yu-VIePTs3pASWCxGW55kDr5LHS7TkmLUoP5raO-HUg>
+    <xmx:mXmcaWEe40M4NxO1SI_Zha0kfcRP9exTOjPY0nTbDEGxAus4xbcSVQ>
+    <xmx:mXmcaQRvZxiKpcWRWcl2Tmesxy07ZLNVNY2LPHbPFnSHqmXf40TGsg>
+    <xmx:mXmcabsksXerQ43zIePM0-vUZvM6yCdsllSd7xiIJXkJgPRmmZ16xg>
+    <xmx:mXmcaQXDptzixyqN35Jy2Tqym789jT_QJZI1-pvlGrp2FfietlsbslVT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 11:00:21 -0500 (EST)
+ 23 Feb 2026 11:00:24 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8bc4c5aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Feb 2026 16:00:20 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id aada980d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Feb 2026 16:00:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 23 Feb 2026 17:00:07 +0100
-Subject: [PATCH v2 2/4] object-file: adapt `stream_object_signature()` to
- take a stream
+Date: Mon, 23 Feb 2026 17:00:08 +0100
+Subject: [PATCH v2 3/4] packfile: expose function to read object stream for
+ an offset
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260223-pks-fsck-fix-v2-2-99a0714ea3bd@pks.im>
+Message-Id: <20260223-pks-fsck-fix-v2-3-99a0714ea3bd@pks.im>
 References: <20260223-pks-fsck-fix-v2-0-99a0714ea3bd@pks.im>
 In-Reply-To: <20260223-pks-fsck-fix-v2-0-99a0714ea3bd@pks.im>
 To: git@vger.kernel.org
@@ -94,162 +94,109 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
  Eric Sunshine <sunshine@sunshineco.com>
 X-Mailer: b4 0.14.3
 
-The function `stream_object_signature()` is responsible for verifying
-whether the given object ID matches the actual hash of the object's
-contents. In contrast to `check_object_signature()` it does so in a
-streaming fashion so that we don't have to load the full object into
-memory.
+The function `packfile_store_read_object_stream()` takes as input an
+object ID and then constructs a `struct odb_read_stream` from it. In a
+subsequent commit we'll want to create an object stream for a given
+combination of packfile and offset though, which is not something that
+can currently be done.
 
-In a subsequent commit we'll want to adapt one of its callsites to pass
-a preconstructed stream. Prepare for this by accepting a stream as input
-that the caller needs to assemble.
+Extract a new function `packfile_read_object_stream()` that makes this
+functionality available.
 
-While at it, improve the error reporting in `parse_object_with_flags()`
-to tell apart the two failure modes.
-
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.c | 10 +++-------
- object-file.h |  4 +++-
- object.c      | 19 ++++++++++++++++---
- pack-check.c  | 12 +++++++++---
- 4 files changed, 31 insertions(+), 14 deletions(-)
+ packfile.c | 40 ++++++++++++++++++++++++----------------
+ packfile.h |  5 +++++
+ 2 files changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index 1b62996ef0..ca2c4dddf3 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -129,18 +129,15 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
- 	return !oideq(oid, &real_oid) ? -1 : 0;
+diff --git a/packfile.c b/packfile.c
+index 402c3b5dc7..3e61176128 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2553,32 +2553,28 @@ static int close_istream_pack_non_delta(struct odb_read_stream *_st)
+ 	return 0;
  }
  
--int stream_object_signature(struct repository *r, const struct object_id *oid)
-+int stream_object_signature(struct repository *r,
-+			    struct odb_read_stream *st,
-+			    const struct object_id *oid)
+-int packfile_store_read_object_stream(struct odb_read_stream **out,
+-				      struct packfile_store *store,
+-				      const struct object_id *oid)
++int packfile_read_object_stream(struct odb_read_stream **out,
++				const struct object_id *oid,
++				struct packed_git *pack,
++				off_t offset)
  {
- 	struct object_id real_oid;
--	struct odb_read_stream *st;
- 	struct git_hash_ctx c;
- 	char hdr[MAX_HEADER_LEN];
- 	int hdrlen;
+ 	struct odb_packed_read_stream *stream;
+ 	struct pack_window *window = NULL;
+-	struct object_info oi = OBJECT_INFO_INIT;
+ 	enum object_type in_pack_type;
+ 	unsigned long size;
  
--	st = odb_read_stream_open(r->objects, oid, NULL);
--	if (!st)
--		return -1;
--
- 	/* Generate the header */
- 	hdrlen = format_object_header(hdr, sizeof(hdr), st->type, st->size);
+-	oi.sizep = &size;
++	in_pack_type = unpack_object_header(pack, &window, &offset, &size);
++	unuse_pack(&window);
  
-@@ -160,7 +157,6 @@ int stream_object_signature(struct repository *r, const struct object_id *oid)
- 		git_hash_update(&c, buf, readlen);
- 	}
- 	git_hash_final_oid(&real_oid, &c);
--	odb_read_stream_close(st);
- 	return !oideq(oid, &real_oid) ? -1 : 0;
+-	if (packfile_store_read_object_info(store, oid, &oi, 0) ||
+-	    oi.u.packed.type == PACKED_OBJECT_TYPE_REF_DELTA ||
+-	    oi.u.packed.type == PACKED_OBJECT_TYPE_OFS_DELTA ||
+-	    repo_settings_get_big_file_threshold(store->source->odb->repo) >= size)
++	if (repo_settings_get_big_file_threshold(pack->repo) >= size)
+ 		return -1;
+ 
+-	in_pack_type = unpack_object_header(oi.u.packed.pack,
+-					    &window,
+-					    &oi.u.packed.offset,
+-					    &size);
+-	unuse_pack(&window);
+ 	switch (in_pack_type) {
+ 	default:
+ 		return -1; /* we do not do deltas for now */
++	case OBJ_BAD:
++		mark_bad_packed_object(pack, oid);
++		return -1;
+ 	case OBJ_COMMIT:
+ 	case OBJ_TREE:
+ 	case OBJ_BLOB:
+@@ -2592,10 +2588,22 @@ int packfile_store_read_object_stream(struct odb_read_stream **out,
+ 	stream->base.type = in_pack_type;
+ 	stream->base.size = size;
+ 	stream->z_state = ODB_PACKED_READ_STREAM_UNINITIALIZED;
+-	stream->pack = oi.u.packed.pack;
+-	stream->pos = oi.u.packed.offset;
++	stream->pack = pack;
++	stream->pos = offset;
+ 
+ 	*out = &stream->base;
+ 
+ 	return 0;
  }
- 
-diff --git a/object-file.h b/object-file.h
-index a62d0de394..733d232309 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -164,7 +164,9 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
-  * Try reading the object named with "oid" using
-  * the streaming interface and rehash it to do the same.
-  */
--int stream_object_signature(struct repository *r, const struct object_id *oid);
-+int stream_object_signature(struct repository *r,
-+			    struct odb_read_stream *stream,
-+			    const struct object_id *oid);
- 
- enum finalize_object_file_flags {
- 	FOF_SKIP_COLLISION_CHECK = 1,
-diff --git a/object.c b/object.c
-index 4669b8d65e..9d2c676b16 100644
---- a/object.c
-+++ b/object.c
-@@ -6,6 +6,7 @@
- #include "object.h"
- #include "replace-object.h"
- #include "object-file.h"
-+#include "odb/streaming.h"
- #include "blob.h"
- #include "statinfo.h"
- #include "tree.h"
-@@ -330,9 +331,21 @@ struct object *parse_object_with_flags(struct repository *r,
- 
- 	if ((!obj || obj->type == OBJ_NONE || obj->type == OBJ_BLOB) &&
- 	    odb_read_object_info(r->objects, oid, NULL) == OBJ_BLOB) {
--		if (!skip_hash && stream_object_signature(r, repl) < 0) {
--			error(_("hash mismatch %s"), oid_to_hex(oid));
--			return NULL;
-+		if (!skip_hash) {
-+			struct odb_read_stream *stream = odb_read_stream_open(r->objects, oid, NULL);
 +
-+			if (!stream) {
-+				error(_("unable to open object stream for %s"), oid_to_hex(oid));
-+				return NULL;
-+			}
++int packfile_store_read_object_stream(struct odb_read_stream **out,
++				      struct packfile_store *store,
++				      const struct object_id *oid)
++{
++	struct pack_entry e;
 +
-+			if (stream_object_signature(r, stream, repl) < 0) {
-+				error(_("hash mismatch %s"), oid_to_hex(oid));
-+				odb_read_stream_close(stream);
-+				return NULL;
-+			}
++	if (!find_pack_entry(store, oid, &e))
++		return -1;
 +
-+			odb_read_stream_close(stream);
- 		}
- 		parse_blob_buffer(lookup_blob(r, oid));
- 		return lookup_object(r, oid);
-diff --git a/pack-check.c b/pack-check.c
-index 67cb2cf72f..46782a29d5 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -9,6 +9,7 @@
- #include "packfile.h"
- #include "object-file.h"
- #include "odb.h"
-+#include "odb/streaming.h"
++	return packfile_read_object_stream(out, oid, e.p, e.offset);
++}
+diff --git a/packfile.h b/packfile.h
+index acc5c55ad5..b9f5f1c18c 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -436,6 +436,11 @@ off_t get_delta_base(struct packed_git *p, struct pack_window **w_curs,
+ 		     off_t *curpos, enum object_type type,
+ 		     off_t delta_obj_offset);
  
- struct idx_entry {
- 	off_t                offset;
-@@ -104,6 +105,7 @@ static int verify_packfile(struct repository *r,
- 	QSORT(entries, nr_objects, compare_entries);
- 
- 	for (i = 0; i < nr_objects; i++) {
-+		struct odb_read_stream *stream = NULL;
- 		void *data;
- 		struct object_id oid;
- 		enum object_type type;
-@@ -152,7 +154,9 @@ static int verify_packfile(struct repository *r,
- 							type) < 0)
- 			err = error("packed %s from %s is corrupt",
- 				    oid_to_hex(&oid), p->pack_name);
--		else if (!data && stream_object_signature(r, &oid) < 0)
-+		else if (!data &&
-+			 (!(stream = odb_read_stream_open(r->objects, &oid, NULL)) ||
-+			  stream_object_signature(r, stream, &oid) < 0))
- 			err = error("packed %s from %s is corrupt",
- 				    oid_to_hex(&oid), p->pack_name);
- 		else if (fn) {
-@@ -163,12 +167,14 @@ static int verify_packfile(struct repository *r,
- 		}
- 		if (((base_count + i) & 1023) == 0)
- 			display_progress(progress, base_count + i);
--		free(data);
- 
-+		if (stream)
-+			odb_read_stream_close(stream);
-+		free(data);
- 	}
++int packfile_read_object_stream(struct odb_read_stream **out,
++				const struct object_id *oid,
++				struct packed_git *pack,
++				off_t offset);
 +
- 	display_progress(progress, base_count + i);
- 	free(entries);
--
- 	return err;
- }
+ void release_pack_memory(size_t);
  
+ /* global flag to enable extra checks when accessing packed objects */
 
 -- 
 2.53.0.536.g309c995771.dirty
