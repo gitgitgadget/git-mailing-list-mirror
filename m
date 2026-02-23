@@ -1,264 +1,175 @@
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9467635C190
-	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:06:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7477034EF0F
+	for <git@vger.kernel.org>; Mon, 23 Feb 2026 09:09:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771837603; cv=pass; b=swoQ/gBUJXivONb3e86pyma1Wom1un/RE1N27yhQj8a5n+1stXPk+h+dpSpP7XInc+TTuhnaSvqOuUvv3pnKjlI6qlkpxOCCjA8ag1ZZdnnoyow0A1/pQos4eY1g91KobFHur3ufcqLfYE68F8UqSQmTeqJTF/tKedcKc/7oDTM=
+	t=1771837759; cv=pass; b=qEiJqRaW2ZDoWWMOSRLUuL04mkdhYTmlOzA5p/DyeID5IFGnrr0dFFo9K8q6k2FuHu7UyXHsjmcN1BCckYAxunwDrkvNuSAeuPfd7QS9TBBaDwpKRSpVA1KMNpChECXWOE5pvetBqRy+qBfMTLTZ06y9LBffcYtNoMVZrVRuFys=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771837603; c=relaxed/simple;
-	bh=Tg4FklpoT5tJ/m4/n6/FFLO/7I3Auob6wS9bdOMRl6k=;
+	s=arc-20240116; t=1771837759; c=relaxed/simple;
+	bh=NkV7tmaoRpcgcgkOCwOilEAES6GX0TV6fayvTEzuCIs=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=RHJvj9OkvdOmUEYDw6UfEuE5/9VA4Kj+YZe6QFO5XAHRRDBYmcmT5allqHU9ikRfTLZed6B9+ro8/hA2rWvHIwGk4Ze/nRkzGSr0eHAqOYgMNv1/ovSQUTUY2ZsCASWr9HfwOU43G5eo6W8ljfNzanI1YlswROW0XRBpV7mdPEQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S8LMaZAe; arc=pass smtp.client-ip=209.85.217.45
+	 To:Content-Type; b=NSF9NK3r8lEbsT4We2VTNjY9wk+xw1LDbnaek4+Zk9GDvHkGEF/cpCno9aiFSvpucEmhKqy4G7GDVtkD6Wfk+8GKOnx1ZW3gvpmxdv5plAWgAiQv3rAz2p3xrf78WTCDl2c3yEc3x9Whf2xw1kXFDL/rfTj7voG65W4C8p6sTGc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jrqgm3v3; arc=pass smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S8LMaZAe"
-Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-5fc41f88ff1so953401137.2
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 01:06:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771837600; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jrqgm3v3"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-948c2035a27so1036770241.1
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 01:09:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771837757; cv=none;
         d=google.com; s=arc-20240605;
-        b=QvT5adPVD8NghqKpnFahkxeCXD36tdIln4X1rFwJVEXxM/nt2jAkOvOxhGuu/OjWEd
-         2m+RrTP52HSG3blI+c7Lsul3+VxsjcKkPjnlEHoUmh1TcggAbMlxmdf7sYpIAknr5CWv
-         PdFG2AQBo249Zh4n9IS3E07YretMpmaHlzgk1gifHxHXs0llaJBTkfmOx58jpnE52xmx
-         60B0kVztMwN4EMy4n3wU89WqtSWtknL1PlW5wMEkKzWapHaQmB1lt17oXPlJI6kbLaNL
-         xp0IwnzCLORrH7O7A7lkatdafuys/Y2TUeml/uWfwiLuZSRiKHbxdqmNagUcre8e9urM
-         xZMg==
+        b=TU3WB1jvEPdB+PBA6KMUkqm1Jza2maL3dULpcZ2AjBwwaWBCuVRMX4pZyZvqhbDAW5
+         vB5VwJjC7+u90uz9og9YauJ6vxsTNWfY/2JR1fHa0XremkbYJneFmoPUbp7wLna8Qi79
+         XTok7UYW/ekxHIagIdIHX8HD0lskZxW594dK8OXkUapBCpH4mxLPC5o9BZcnRtFGuhGs
+         MFjUtwk+YpH4vYD2kAXotco4AEl9Y3DmBX9Tvx787F/6DU8Y18A9W63eWJrWs4Soy3MC
+         yxWVTobckP16x8VZzD5bcbhJwtySOCKb0GQoBoAkM1+Iwcacfy3bxBIxdXAqdRuAdEM3
+         bu6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :dkim-signature;
-        bh=Vf8OCkLcF925yHhQDRYccujsEGySF7mdTQjjKgoTi8A=;
-        fh=+AdotoCj3nf9MYu725b5iQ8s/2BsiKyuDkgRoyPAnPc=;
-        b=eRrXAXX4a/JeqC8aboVliBgHgLnlcxQgIsBz4gp/4jUlAc/9XKwS3r8gSd8s6fsPqI
-         LaswRLgB1dDhDUsaDS5XyGklo5bzw/QHUAZ56lxGGb8CqbK5Wwcy0uTTzLfy7GIfMu7R
-         14SXs7g3UtFonK3IcU6IoMaoZZrwVYyIVCV7GvNt0/qJo/KVpjfIszTzEFlA/u+3BSsy
-         ZveioFi6hYqhUQRbG+0CX8w6xjm84KXClWIU7dkFgxUwIsA7JWK/d49KxDbXu+hLjUTZ
-         6aByEGSDwmYlxvd/6pmtCARyBJrX61DDTCLXFcm9jCOlbM/2AMxrsOXeSTLPCiuucLLE
-         R/Rw==;
+        bh=Fm9rodHOqPK/SMnDjhtEFEuxbgdj1oa8x9/7KIcoy+k=;
+        fh=++9OUv5HaKEuKa2w0QVevdrNoFIfMb/a4XmrhLBGkxw=;
+        b=fd2r99Vjb6fq7CNxgQ8I7aPS7w92i9+UK4OngdDD/PjPuE39+PdQVXOGvpDlsHnKae
+         MupPgYVwTyI1EkaiUYlcwnGp5whrbGRsYDyfsgUY6iG97NzUHn+Lvg34r5PjucL776VM
+         /KT5lDLuPgJAoT+mypl8l//nj53BsVB2En8dkT9QVy2bGTr6Wte4o765Mp65dM+E+u2u
+         xbMP72ChGhEcuTRpXNbhKIAMHPoTTjwTHX9istkbCvFGEs2npdv3twsTAVfyHqnNYn8B
+         UHDw7QiIiGDca3DMxmLdnCh8xTvfXiSZ5PNHFEVkP5Im09H6KLNwetViHyMO8NBWqulr
+         KcNw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771837600; x=1772442400; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771837757; x=1772442557; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Vf8OCkLcF925yHhQDRYccujsEGySF7mdTQjjKgoTi8A=;
-        b=S8LMaZAeL7pV5mD5lwjUYzO9X7+2DSkmAb82Qrv7Ifs2qFxBxgRcg4GiNIQXMkrgxq
-         jTW5F3TmP6hLhKHC+isdKTxffRa1uXGu/yZdEbEYZnjuGbcy7AkpPxES1Y7KUCQjNaq9
-         LH5QF8ZdyCkbmtg5Ur6pWfYeOv/MhehF7DpWY2xmWT7hhpKKhbXGB7kqqVbRGLcmGuDy
-         s/mTghdwF+EoRr1QExCyaa5Ee+G2jsPO8dqhjts3CKtY00N4PK0m6YU4yotr4WEaEnOb
-         olKW54lZWOZUTYmaVwETORK6vJoDT7dOThVK3gaJLAqJzaaWOjvUdXxIRSEwoZvVyNpr
-         rK8w==
+        bh=Fm9rodHOqPK/SMnDjhtEFEuxbgdj1oa8x9/7KIcoy+k=;
+        b=jrqgm3v3mCXJrUREeN+TF6EbICi4iePCzzh+m8tPn3hhBDCx8hW/BS33tNHQHM/VZ2
+         MXbiX4Qw3tXor3Ms2+sg4iA/9vxVfElbz9YIL51LfCMuD7sHTPMajmFaYiEnNLpT+EyM
+         imCQ96BYcw5chvV5ABx06/Yi+ZORpn5YFVG0pkEX9vQ14/lGfp9wccO4yIlTGrkahEO9
+         npjQI4+XYuuS112//IV8RkXNsnEHMKVXyyVqW+p8YtJ4F5mhJx/1JbJTOcBIrJJsG8wa
+         RV1br2Go8efF2f4UFaS7GXbDDRctyzgSvNoofYZ4BtR3vl6fIqe8w89GzwfJWUmMQQjz
+         nzKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771837600; x=1772442400;
+        d=1e100.net; s=20230601; t=1771837757; x=1772442557;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Vf8OCkLcF925yHhQDRYccujsEGySF7mdTQjjKgoTi8A=;
-        b=UMMEQG+eG3gsU/zbaNj64Aym2LxeImFcCTpp9kAfTXR7pTjnv5zITittD44+8XD3Ku
-         z8qHfxC9X9W0dzQAuCy+1bdm0VrXG83X9ncFd55JNlMyooSqcnN3u1FLJ+xd45UbLKQr
-         /Nc9XiZfK4HFdr/rTw1z9dj0+e3w76AO8Yddbdw+WY2LK6tm7simSLmTaCxeZfm39iXc
-         ppMct4CN+gdmz2TWo8cH6pPVICMceWqZXNNRWKjySePIPUacJsQKzN/+XtbcACawDYq/
-         E4jDw3Zcr6r3+QWnXZr1453IVfI6eCLCIwg+Qdo+t2oBKkAH6QPzZOTob84FbFmheMww
-         +HNw==
-X-Forwarded-Encrypted: i=1; AJvYcCWvduNhUsKJeMXs7GnKVPuMIu7MeClDhhMa8iXwepelLDLc3Q126MJguctfkIhW+hasl50=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCTUfkTcS5y5lXLRVsfCyevtxltZ/11em+F2tpCOdWERMgwLiB
-	94FZcalR+diVO7ZfHessJ5SRvoiCwd3n70PMigK7mkr+pBLs2Rowdn1kS4QPY0XrQuUoV9J+kXY
-	t4Skr1l+uTGoAiBB1194c23iIXAvwkzaCaglQ
-X-Gm-Gg: AZuq6aKiBjWL/r6brP4i2UCGy/FcKrb8A0iDHw62N3Z/ly4t6ASRA4KanxpqYlK4R2W
-	MMwhNR542WJsqa+yFJrGv8EljhhDOweab2mLhmAthQm1DNkd2B1Pas+TLO3rbXodc/kZuxSoGO2
-	7iQJV07lHseUTxaQb7UKL4vBO+wBCFRNy4dwgcLgoKjUed9IzU4hZ6PvwRMVg9kZQtEqXx9jmbW
-	L9KYEhQVsE9tLOqaT4gdE3o1x2yxsew1zHx3NZB15HEe4v5s7wIQHCw6+WI14gs985F+hxdRhdP
-	FkGBtBwxYuTWqe30LudycfZbuQjmYLgEt6LPfr5Vgz2YorUV7+c=
-X-Received: by 2002:a05:6102:3048:b0:5f8:e2cb:d245 with SMTP id
- ada2fe7eead31-5feb2c23567mr2751351137.0.1771837600223; Mon, 23 Feb 2026
- 01:06:40 -0800 (PST)
+        bh=Fm9rodHOqPK/SMnDjhtEFEuxbgdj1oa8x9/7KIcoy+k=;
+        b=upEv8Yx+n9vQNBr14lr2peqqawj/9T2jpJ4BK4FVjfXKyE0IoI76kaXRMcKvR5GIG8
+         wOm4uPTABl1IIh+1WxRJyGn9CiMIRuK1muogx9HspzUCBHUrwo25hPO39/OXOSuz/WL+
+         7ajEtPlqkdZPjVbPdtUwAeEYREswcAPEhYotD4L6F/vKCl5BBehoI0/pVJHePKkB5TLW
+         D3dmieYAeibTb3aXkmpSBVxyh11ANy0YO6ThpqlRu93OxWZRUh0MEXA+3l0lyrR9yllG
+         jWGRZv13xyfPfhEIiYk+HFSreZKt4oUNrw5GDeRIJvCMuxP4LZ98fp4mZMiW96BFDK0g
+         v4BQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVC/9yEmzNwuBkUVURfHMR9mFqctA5Eqg6/7YkOTDa9zmuysEph/t2zIu7WmCET7TziFDE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFxMDM/KoU2V8sxaePp72HdULJ9eRLcYBh8VNN+srQyMp65F0f
+	8caRt+LeUHe4tiFgVgAIPLeO+1X07CwKF4OsM4jMb50Gjt1xmAhTS2wzHe1xnvHiPJMPIA+saug
+	zGI1ADXTZbNwMaEbsIpZX3Nraxxs2JdY=
+X-Gm-Gg: AZuq6aLAuUP8RGFeVJ7IoblrNr/cIhpdBrMYWSYnd5nhjG9dDcqAjdcyVJ+fv4pmzG8
+	geKkB0pR3mfETM17AcHet3d8Yv//Bk8apzA1RhiR3ELo9ILFu2dNbZ0AYEcyQ1f6O0Jc0vSEiVF
+	EqQTx8I6N71gXnXBhuKAjSY91ifZIB1qObeKMEfrPeAkaLXrSjg6y9Oar/Znveu2B6cemzx1rm4
+	71Gcpuzj8G2UBvOjpYd5BihIJvrVbycMsBRSmPJ5WoNMJDUqhurl4AGpAW6k49eZcSNIC7fQBtT
+	TgwbquFiS9MSw3lq1i40iY1FlV7b5j+cVm96ZdfG
+X-Received: by 2002:a05:6102:3585:b0:5f5:4d9b:bd67 with SMTP id
+ ada2fe7eead31-5feb2e5af0dmr2651308137.6.1771837757213; Mon, 23 Feb 2026
+ 01:09:17 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 23 Feb 2026 04:06:38 -0500
+ HTTPREST; Mon, 23 Feb 2026 04:09:15 -0500
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 23 Feb 2026 04:06:38 -0500
+ HTTPREST; Mon, 23 Feb 2026 04:09:15 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260220-pks-refs-for-each-unification-v1-9-17170bd99de1@pks.im>
-References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im> <20260220-pks-refs-for-each-unification-v1-9-17170bd99de1@pks.im>
+In-Reply-To: <20260220-pks-refs-for-each-unification-v1-10-17170bd99de1@pks.im>
+References: <20260220-pks-refs-for-each-unification-v1-0-17170bd99de1@pks.im> <20260220-pks-refs-for-each-unification-v1-10-17170bd99de1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 23 Feb 2026 04:06:38 -0500
-X-Gm-Features: AaiRm508_xkFWErcjW9tgNalfm45WROHYC-9VbfKVnes1uMt0WKvWlq88TsalW4
-Message-ID: <CAOLa=ZSKF1WoE_2q5oEjU8MOh=_0s--cPwf0R8xnQQF8=9dWDw@mail.gmail.com>
-Subject: Re: [PATCH 09/17] refs: generalize `refs_for_each_fullref_in_prefixes()`
+Date: Mon, 23 Feb 2026 04:09:15 -0500
+X-Gm-Features: AaiRm50-EXeomqH7yPUMd7xTs42igOyEFalyLwXerKZ93rZ_87XxhP5cos4jb7E
+Message-ID: <CAOLa=ZQa5riqB37bVL0_2KZbXS3V2L=iHqpAwMYom1bjKiNsRg@mail.gmail.com>
+Subject: Re: [PATCH 10/17] refs: improve verification for-each-ref options
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000c2f89f064b7a16a2"
+Content-Type: multipart/mixed; boundary="0000000000001e6a97064b7a20e4"
 
---000000000000c2f89f064b7a16a2
+--0000000000001e6a97064b7a20e4
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The function `refs_for_each_fullref_in_prefixes()` can be used to
-> iterate over all references part of any of the user-provided prefixes.
-> In contrast to the `prefix` parameter of `refs_for_each_ref_ext()` it
-> knows to handle the case well where multiple of the passed-in prefixes
-> start with a common prefix by computing longest common prefixes and then
-> iterating over those.
+> Improve verification of the passed-in for-each-ref options:
 >
-> While we could move this logic into `refs_for_each_ref_ext()`, this one
-> feels somewhat special as we perform multiple iterations. But what we
-> _can_ do is to generalize how this function works: instead of accepting
-> only a small handful of parameters, we can have it accept the full
-> options structure.
+>   - Require that the `refs` store must be given. It's arguably very
+>     surprising that we simply return successfully in case the ref store
+>     is a `NULL` pointer.
 >
-> One obvious exception is that the caller must not provide a prefix via
-> the options. But this case can be easily detected.
+>   - When expected to trim ref prefixes we will `BUG()` in case the
+>     refname would become empty or in case we're expected to trim a
+>     longer prefix than the refname is long. As such, this case is only
+>     guaranteed to _not_ `BUG()` in case the caller also specified a
+>     prefix. And furthermore, that prefix must end in a trailing slash,
+>     as otherwise it may produce an exact match that could lead us to
+>     trim to the empty string.
 >
-> Refactor the code accordingly.
+> An audit shows that there are no callsites that rely on either of these
+> behaviours, so this should not result in a functional change.
 >
-
-I've attempted the refactoring that this series is doing a couple of
-times, I always got stuck up on how to integrate this function with the
-rest. This is a novel approach.
-
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  ls-refs.c    | 11 +++++++----
->  ref-filter.c | 11 +++++++----
->  refs.c       | 39 +++++++++++++++------------------------
->  refs.h       | 16 +++++-----------
->  4 files changed, 34 insertions(+), 43 deletions(-)
+>  refs.c | 13 ++++++++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
 >
-> diff --git a/ls-refs.c b/ls-refs.c
-> index 8641281b86..9759826ca7 100644
-> --- a/ls-refs.c
-> +++ b/ls-refs.c
-> @@ -160,6 +160,7 @@ static int ls_refs_config(const char *var, const char *value,
->
->  int ls_refs(struct repository *r, struct packet_reader *request)
->  {
-> +	struct refs_for_each_ref_options opts = { 0 };
->  	struct ls_refs_data data;
->
->  	memset(&data, 0, sizeof(data));
-> @@ -201,10 +202,12 @@ int ls_refs(struct repository *r, struct packet_reader *request)
->  	send_possibly_unborn_head(&data);
->  	if (!data.prefixes.nr)
->  		strvec_push(&data.prefixes, "");
-> -	refs_for_each_fullref_in_prefixes(get_main_ref_store(r),
-> -					  get_git_namespace(), data.prefixes.v,
-> -					  hidden_refs_to_excludes(&data.hidden_refs),
-> -					  send_ref, &data);
-> +
-> +	opts.exclude_patterns = hidden_refs_to_excludes(&data.hidden_refs);
-> +	opts.namespace = get_git_namespace();
-> +
-> +	refs_for_each_ref_in_prefixes(get_main_ref_store(r), data.prefixes.v,
-> +				      &opts, send_ref, &data);
->  	packet_fflush(stdout);
->  	strvec_clear(&data.prefixes);
->  	strbuf_release(&data.buf);
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 049e845a19..7c682e0a33 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -2807,6 +2807,10 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
->  				       refs_for_each_cb cb,
->  				       void *cb_data)
->  {
-> +	struct refs_for_each_ref_options opts = {
-> +		.exclude_patterns = filter->exclude.v,
-> +	};
-> +
->  	if (filter->kind & FILTER_REFS_ROOT_REFS) {
->  		/* In this case, we want to print all refs including root refs. */
->  		return for_each_fullref_with_seek(filter, cb, cb_data,
-> @@ -2836,10 +2840,9 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
->  		return for_each_fullref_with_seek(filter, cb, cb_data, 0);
->  	}
->
-> -	return refs_for_each_fullref_in_prefixes(get_main_ref_store(the_repository),
-> -						 NULL, filter->name_patterns,
-> -						 filter->exclude.v,
-> -						 cb, cb_data);
-> +	return refs_for_each_ref_in_prefixes(get_main_ref_store(the_repository),
-> +					     filter->name_patterns, &opts,
-> +					     cb, cb_data);
->  }
->
->  /*
 > diff --git a/refs.c b/refs.c
-> index 99994879d9..20d34faeb5 100644
+> index 20d34faeb5..3b676432b4 100644
 > --- a/refs.c
 > +++ b/refs.c
-> @@ -2029,40 +2029,31 @@ static void find_longest_prefixes(struct string_list *out,
->  	strbuf_release(&prefix);
->  }
+> @@ -1855,7 +1855,18 @@ int refs_for_each_ref_ext(struct ref_store *refs,
+>  	int ret;
 >
-> -int refs_for_each_fullref_in_prefixes(struct ref_store *ref_store,
-> -				      const char *namespace,
-> -				      const char **patterns,
-> -				      const char **exclude_patterns,
-> -				      refs_for_each_cb fn, void *cb_data)
-> +int refs_for_each_ref_in_prefixes(struct ref_store *ref_store,
-> +				  const char **prefixes,
-> +				  const struct refs_for_each_ref_options *opts,
-> +				  refs_for_each_cb cb, void *cb_data)
->  {
-> -	struct strvec namespaced_exclude_patterns = STRVEC_INIT;
-> -	struct string_list prefixes = STRING_LIST_INIT_DUP;
-> +	struct string_list longest_prefixes = STRING_LIST_INIT_DUP;
->  	struct string_list_item *prefix;
-> -	struct strbuf buf = STRBUF_INIT;
-> -	int ret = 0, namespace_len;
-> +	int ret = 0;
->
-> -	find_longest_prefixes(&prefixes, patterns);
-> +	if (opts->prefix)
-> +		BUG("refs_for_each_ref_in_prefixes called with specific prefix");
->
-> -	if (namespace)
-> -		strbuf_addstr(&buf, namespace);
-> -	namespace_len = buf.len;
-> +	find_longest_prefixes(&longest_prefixes, prefixes);
->
-> -	exclude_patterns = get_namespaced_exclude_patterns(exclude_patterns,
-> -							   namespace,
-> -							   &namespaced_exclude_patterns);
-> +	for_each_string_list_item(prefix, &longest_prefixes) {
-> +		struct refs_for_each_ref_options prefix_opts = *opts;
-> +		prefix_opts.prefix = prefix->string;
->
-> -	for_each_string_list_item(prefix, &prefixes) {
-> -		strbuf_addstr(&buf, prefix->string);
-> -		ret = refs_for_each_fullref_in(ref_store, buf.buf,
-> -					       exclude_patterns, fn, cb_data);
-> +		ret = refs_for_each_ref_ext(ref_store, cb, cb_data,
-> +					    &prefix_opts);
+>  	if (!refs)
+> -		return 0;
+> +		BUG("no refs passed");
+> +
 
-Okay so it still calls `refs_for_each_ref_ext()` on the longest prefix.
-Makes sense.
+Nit: s/refs/ref store/, mostly from a readability point, but since this
+is a BUG(), I think its okay to leave as is.
 
-[snip]
+> +	if (opts->trim_prefix) {
+> +		size_t prefix_len;
+> +
+> +		if (!opts->prefix)
+> +			BUG("trimming only allowed with a prefix");
+> +
+> +		prefix_len = strlen(opts->prefix);
+> +		if (prefix_len == opts->trim_prefix && opts->prefix[prefix_len - 1] != '/')
+> +			BUG("ref pattern must end in a trailing slash when trimming");
+> +	}
+>
+>  	if (opts->pattern) {
+>  		if (!opts->prefix && !starts_with(opts->pattern, "refs/"))
+>
+> --
+> 2.53.0.414.gf7e9f6c205.dirty
 
---000000000000c2f89f064b7a16a2
+--0000000000001e6a97064b7a20e4
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 19cfe9ccc207e841_0.1
+X-Attachment-Id: f435503bf6f69f0d_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tY0dKMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mKzM2Qy9zRTlmVTZxVk9QUGhWQ3Z4c3g2QUc0dnNxVwo5N1NNREdSWTZI
-ME1uWXphdUZWRS9EQkhCMTBGb1g0ODZYZ0dIajNjTE9qSHo0Q0RtUU5SemxXbDFtMy8xZElOCkxh
-WklOK1BlNkVQRXBwNnBuSmlueDhOYVpES0lpdU5Da2tzc3BLTzBHc1lZZEdKMW1ua2hESmtMQXVF
-K0R5dEIKWC9iOUFHY0NDQ1N2RzlUaHhMUWNEeEdCUUcwU3pqZHZ1Zi9QdjQzNGkyaGNsRFFnZ2th
-VEoyaW05cHNsLzJUVQpxd3UxRWZhU0EwRXVZKzBtWldaU2JvSVZYOFBDTW1mRUZmMGN0NzJ3RVAw
-S296TjhlWklaTVNJc3RiUkI0RkN0CmpJRDVkeGFseWlsbzZpUGJOb1pnNzhESTFMZEdJRERxcHFm
-bkJ1bllkODR6MjIyZklhSHR3M1QvNmxYSzYvN0cKMjl1aXBDR042RjlsaGZOWTJWVFNxRDUyK25J
-Z041TXZBd1FRd3I0bE4zTGRrSzk1YXRqekw3clNxTGNKM001YQpOR21jT1lCdUVDUE5lWGtHU0hE
-T3orWTZQdUpXdlRJUkJiU3FzUEZKQmZDWjcwVzhLQThTUkRWNzY0V2hzWk5OCkluSVp4RTJ6MXVq
-aFdhNHZ3TkplYjdodzRNVytXeWV6aUNiQUswRT0KPUpyWG8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tY0dUa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN1Z6Qy85cURBUDZnRVZKZjJHVkFIMnZDSU1NOFgyTQpoejV6azJWSHc3
+azc4U0IzR3lPK3V1WE14bHBtVWFpWHZYWTJ5Wksvbkl4N2ZKdGJaU0R0L0JvWXFLbTY5SXl5CjBu
+c2UrbjVKM1BCaEdKQlp1VXhwYk9qeWo0Z0ltNmFZcGk3VE5jcXVzNnZOVXhMMG0ycVNETVpNNmRB
+QitoMS8KZHR1MDltMHJtS0w1TVZGOEtJdS8xZFFiRVFadGVQTWZOdDV3S2ZEV0VnSnMwZS8wSjYx
+MDZaNGpqR3d4emlYSwpuaUdVVWNEZXgweDhZYVo5V3RSa2pxWXZLVDRydndiRXJqVkRSQzZqRGdt
+T0VzbjNxeGxpTkJpUDJDVURmVmtXCmV1alNnNkVZcE5nMXNIdXZZUnNDdjY0UlpNa0xvczQwdTUv
+b3ZGS3pvNXdWWnhZTkI3KzhHdk53eXhHSUVEZ1EKbFhLc3JjWWg1QlJnYjlZcm1yeHRybHpSQWtR
+UXlrZnVZL25xNmJWRzNLOXNma2xWU3o5THlZbTVHUVBBa0dXOQpBdExnejFpY3FZQ0ZRSzlnYytu
+NTZGRUxFOEJabGFHVnJDN0ZZaFJtRjVHUmNJZ3ZPSDY0dHVYelVaUzI4M1A0CjN4ODFsRTF0K01J
+S3B1eWhDRUNMV3JVczVSSHZNSnh2THlFT053WT0KPWowMmQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000c2f89f064b7a16a2--
+--0000000000001e6a97064b7a20e4--
