@@ -1,147 +1,227 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0622133B95D
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:24:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F804317D
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:35:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771968242; cv=none; b=mKBDXtjEA2Zy5xKtiuOLmQTeKpl8DLs8nxfuN/Tbwtix6CzzA2wTiG7E7lXPgYpldR/mrjkiwcXd1XM0j7uHMFVFLeONP2M9olWZoVpdhuencdvHCbMYksRnjjiKaBZUV9t0wvRoEuPEm0Pp4/5PGuAf3rrLjwuUpeqpZqc9D1Q=
+	t=1771968928; cv=none; b=pspjr8Ft9tsfzJ6zNudQqODd3SnLpE1mlm1rZmow91N74CmrVWcGh+ZeQ3oP4lvWsAIGA9/E2qOHMiHz0jcXYNTFwLD34FXmZmlnni37Q4N1Hq9t/SUDoyEIILqw1Czpo3XPBtyiMod+QWAm/LuA4TJzglGvYWbzmMotNqIsaNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771968242; c=relaxed/simple;
-	bh=lc6tKtTHBF1WOgDuC5TzU1KLYkD/od0Jy4Qi6mwEl/8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T1dw/1YXBMFala09HmxKjFQj0YTn/WSOIuUCHNN9irV5J+CFPzHt3ntkO9VoD2tEYkr9+mU7C7Pqev2nRiSaTC+r20iU/sApwglKfYwB5p90EkOJRkT01CkkU2it9z0/JlSlIwgQUJS21ATBTYCph/j9tD0fc66q1ZM9/68ze64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xv0v8obb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hdUNdi2h; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771968928; c=relaxed/simple;
+	bh=4k9q7SJR2PKVBlcQKt2YI6zG4XpYF4b60S/fOuczcyY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=qPURHexyCXE5GFdaNmvGikXunNzlzJGNhm8hdmu6XABIPVgaNFMr40E+MdZlq075tsJ/dZ6fXTDHiAQRcYRYL1jyPs14x9nnwIv8n62mOUmMNXXwB+GGFk0EMPoRDu2/OtYF3TYI4mzqA4+aF26un4DzQOddSZJrGpXcQ4Zbt1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YGCAWxUX; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xv0v8obb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hdUNdi2h"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2BDD41D001B8;
-	Tue, 24 Feb 2026 16:24:00 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Feb 2026 16:24:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771968240; x=1772054640; bh=mGE3Fu3p7U
-	eBf/ErsW6No4Am8I0d8SWDA2AbrQzXMDY=; b=Xv0v8obbrT1Op4qGSRzHTF08JK
-	qzPnIdomR1fPH/v7FtJW3WbbuDxVpVFMv0nOmyU1P77yl7SvJSV/cCjhx0hcXULy
-	cWbwOSvqmS81/bu4foApP1dO5ONjWCjpAqcLiItNwwbHUxrWR7fTGrkB+B8myPwt
-	oNUfpUtbk8JFsS2ciY2NlJzdmsLtmC8pHyIcKl0639QseVgKn9o2APj4umaVLB4l
-	UEqVuJHdvf3qKrsa5HRe2hgnz4HHwnKnzvmV7LUNNx64ROXeC+4+PhOZ7bi1UJIl
-	F+82MYpxxXS7UeHlBS6uUBBeVbeqhNkRl+jtcAscFjD43C0RtMD1y21PYCOA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771968240; x=1772054640; bh=mGE3Fu3p7UeBf/ErsW6No4Am8I0d8SWDA2A
-	brQzXMDY=; b=hdUNdi2hPaHVdXVSfa06IQQMuycTwZOpSlYplz6mZwKfo7JuvOa
-	XkKsMZ91cDDm9y/Xmg9Q6rjkJRn6b506ehrEFmgE1q4SGtuE6z0cET+qukf7a0mr
-	YuIuWBW9bnhnkEcskN7ebtBbarvin3rOKXM64Ys9z6Wie4qLnC3zdzjvJaVPqEU9
-	84BhpsdCNRRZERT0vBnxuIsZ+vqekYs66ocg35rRuK+GPVqtNXePT1+4rOP/h8hT
-	DMwLDmSjA6O0mu18RiHoP5IdvHwgWQ9jb4M9o2Ot2Arb+YNkpNA5GegPxH0NkVxH
-	FlA2EHLkNdutyXtiHEx64h6f18k3JKf9BuA==
-X-ME-Sender: <xms:7xaeaftcxcKdSCTZdjEW84ulGxhZoUsfk8hW0AEH__eD_FqAP2zLZg>
-    <xme:7xaeafgTXy_4K66_FwJ2hkYyU_SRk_Pen9UcUIR4g4JquNvd942lJ0Q8BeXETWCDq
-    bLtEaDFsVBITCl9H5kyT8xmL_ztRXB3CGR6c5SFBKLCoxHq1GVJWg>
-X-ME-Received: <xmr:7xaeaY8OmaNdUwQZjhpivGsx0orco6uN81phugTqIfpY82sAoLM7uYjqOYiOSuFQ0kqC_RuYL9_cN2j5FUE9P7_6zQqOK6y45A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeduvdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeevveeluefffefhueefvdevheejue
-    fgkedtfeeuveegheejtdfgudefjefhtdfgieenucffohhmrghinhepphhusghlihgtqdhi
-    nhgsohigrdhorhhgpdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
-    sggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehvrghluh
-    hsohhuthhrihhksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
-    oheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhopehsih
-    guughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgtphhtthhopehl
-    uhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7xaeaavK_A0gdJddeswCfE3RDRzMKANPO-taCh9vWLzsub0BosAPCQ>
-    <xmx:7xaeaUp7mlpzLBhXyICuKS3QM6-X3NMdaWQhBnJ5nJh5TQxwTgRVBA>
-    <xmx:7xaeaWr4ehO4z5PZKJw4baJ4KhKdF-VrcF29RHM7x45ZYTOyk5fgbQ>
-    <xmx:7xaeabZRBjf5XMQlNDtdi3vexIoxWZgRBg8JredisccvisIvDxxKJw>
-    <xmx:8BaeaXQ6lx2PE8aqDYx5bwcjs550NyMpKVPG7noinoGek0jsCvTH8KB0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 16:23:59 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: SoutrikDas <valusoutrik@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com,  jltobler@gmail.com,
-  ayu.chandekar@gmail.com,  siddharthasthana31@gmail.com,
-  lucasseikioshiro@gmail.com
-Subject: Re: [RFC RFC PATCH] builtin/repo.c: change info default behavior to
- show all fields
-In-Reply-To: <20260224204047.8452-1-valusoutrik@gmail.com> (SoutrikDas's
-	message of "Wed, 25 Feb 2026 02:10:47 +0530")
-References: <20260224204047.8452-1-valusoutrik@gmail.com>
-Date: Tue, 24 Feb 2026 13:23:58 -0800
-Message-ID: <xmqq5x7lg7ip.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YGCAWxUX"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8cb513e860cso641735685a.2
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 13:35:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771968926; x=1772573726; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=benQchgAbKUk2vpMP0YguZie7UM/MqNay1PHJe9nT4c=;
+        b=YGCAWxUXCaX3bbcFrzQy4+6NJJxIy9EiA9i2N4TvZ5GARqcVYd6iu0HDPyuRyUTojC
+         ExPbUVxlsKHH7kUNKuomZOk9TIInGCLNeQWFsZKOYwyF1puj2JAjamazE9ruddstw5XS
+         ROsgmbWHyErn1uKG5I9gutdZ8IMMozFZQpiJQxfi0pTZocK92iwspsOS3gbUqGcK6KeV
+         20JgVCkHzKagMdQO7A6lI+mCZz5zqWhHmHOssLgNAJ+77AAidp96DmSFNiJuePLgXKXJ
+         MaRjYHst8FrkAu6aRIYy+pD6r7KREFJWPwH9yIpTbcTCAhX9T6duJBF3OpIIBGAUHAlu
+         tLhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771968926; x=1772573726;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=benQchgAbKUk2vpMP0YguZie7UM/MqNay1PHJe9nT4c=;
+        b=jcmWgO4b6ETBhl4MirG/At5M+pVON+XfW3byXoZPAmy9yjswfpg5ieerj6ka9Ddl3Z
+         FxILyN6XobmZ1Gcyb6DKYv1z42ppxCVH/LJ3bSovsMQ8hwBNLt+QoXgctiauCs3n/3Jo
+         kMbCHOa3kEiuwJ2eq5INLdGmGbQ1orG4tCCGy3SmK+7uR0xSuS5twsZS1xHb5DxS1vwu
+         94pWX0qqmdOE4W7UqT1ktQmzrirYoZL4hQLvhY4tbRsL4fzqbYvFUCc5JNtIyHOSsCaj
+         MYNhuH6NQmbt2ZoLLjEkN80KL1PXbBeSrEkV8OLCLpWefLopIP3LZKU7yc8Hehk2P1XB
+         QEEQ==
+X-Gm-Message-State: AOJu0YzQJLQQLfGAHdY8vq5yKh2CsfjVSF8xVTzec75GlAfdlphoOwkl
+	t3ug3cXLgfkVy5U4IxZGmdoyf+56V3dkP98FBGLqrJHPEHgq2CfxwykBuJGGvw==
+X-Gm-Gg: AZuq6aI6+UwMscGYzgXG8+GNw7dWJbeB4k2R2wrej31vXVIDJxbvPAgaGJu5x1qhsNb
+	Mx6ITDYAIuESNMB+Ybr9mOauQzi7PjkfqnZLpIGmgdrTrJZ9ctU98hpxAE5uV5avkoU/zUULqeV
+	Lj0MjnxUkhdzMK0SoSPN5B26pVRdHnBsX6jVqMMPNpTRLVJPIBr2+0HFkDc7pwUy082CdZhYUuf
+	1cvZmrQUIsNqRsmplt2jo8TPgxSKQ4fDjoK3uQYWG6du2TRT6/jz/NkgUVdAwtN6NNtR70E85f2
+	0Rg3D2ItP+Wvht8ML5yAfjkNeeTbr9uj4VSuD50uduE2MouWXk0YpvQ+Yt00K3uSlpEBKtibBSx
+	jCHkN/jCg2F2Gdtqz1/YIhJXJ97qmMk3hPY8WFht9Crd23ugsZz84hKhrTxMwYw1qeOfOlo76B1
+	H+h3WtkKNA4J0IymlbV+ewa8prZ7lDKte82A==
+X-Received: by 2002:a05:620a:414c:b0:8ca:123e:819c with SMTP id af79cd13be357-8cb8ca0fae0mr1781202885a.35.1771968925739;
+        Tue, 24 Feb 2026 13:35:25 -0800 (PST)
+Received: from [127.0.0.1] ([20.55.87.153])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8997c6b6af6sm105403276d6.12.2026.02.24.13.35.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Feb 2026 13:35:25 -0800 (PST)
+Message-Id: <pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
+References: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 24 Feb 2026 21:35:22 +0000
+Subject: [PATCH v2 0/2] for-each-repo: work correctly in a worktree
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    fastcat@gmail.com,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    Jeff King <peff@peff.net>,
+    Patrick Steinhardt <ps@pks.im>,
+    Derrick Stolee <stolee@gmail.com>
 
-SoutrikDas <valusoutrik@gmail.com> writes:
+This was reported by Matthew [1] and is a quick fix.
 
->> After this review, I'm starting to think that leaving it empty by default
->> would be better. Specially after the review by Phillip Wood [2], who
->> has a good argument for it:
->> 
->> """
->>   As this is a plumbing command I think it would be clearer if the caller 
->>   was required to specify the output format and the information that they 
->>   require with an "--all" option for "show me everything" as Junio 
->>   suggested. If we were to set defaults for the format and keys now we 
->>   would be stuck with them forever.
->> """
->
-> I don't really have much experience writing scripts, but ... if one is 
-> scripting to get a certain value, would they not specify that ? like 
-> why would they excecute a "git repo info" without any fields?
->
-> Also ... mayeb this does not make much sense, but the
-> 'git repo info --all' has only 4 fields now, so showing all 4, should be okay ?
-> Or maybe not.
->
->
-> [1] : https://public-inbox.org/git/20250610152117.14826-1-lucasseikioshiro@gmail.com/t/#m04cb1fc694f334cc861f6ab146f50b45ae277874
-> [2] : https://lore.kernel.org/git/af27af92-73d5-4f0a-84f4-9c91de6ab6e6@gmail.com/
-> ---
-> Previously, git repo info would print nothing,
-> when invoked without arguements. Change the default
-> behaviour to display all available fields, to make
-> it a little more user friendly.
+[1]
+https://lore.kernel.org/git/CABpCjbY=wpStuhxqRJ5TSNV3A-CmN-g-xZGJOQGSSv3GYhs2fQ@mail.gmail.com/
 
-The number of things do not matter.  "user friendly" does not
-matter.
+I also took the liberty of removing the_repository as I wanted to make sure
+that wasn't involved here.
 
-They do not matter plumbing commands intended to be used in scripts.
-What matters more is being predictable.
+Thanks, -Stolee
 
-The silly example you saw in the discussion thread can be solved
-even if by default we showed everything.  The UI can count the
-checkboxes it is going to turn into command's arguments (i.e., "I
-want to ask you about these pieces of information"), and if that is
-empty, just can refrain from invoking the command.  But that is
-arguably _more_ work on the script.  A simpler rule "we give only
-what you ask, always, no exceptions that depends on the number of
-things you ask (like when you ask for zero things)" would end up
-being easier to use.
+Derrick Stolee (2):
+  for-each-repo: test outside of repo context
+  for-each-repo: work correctly in a worktree
 
-And it is more predictable.  If you ask for two things, you get two
-things.  If you ask for one thing, you get one thing.  If you ask
-for zero things?  You get none.
+ builtin/for-each-repo.c  | 33 ++++++++++++++++++++++++++++++---
+ t/t0068-for-each-repo.sh | 33 ++++++++++++++++++++++++---------
+ 2 files changed, 54 insertions(+), 12 deletions(-)
 
-So...?
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2056%2Fderrickstolee%2Ffor-each-repo-in-gitdir-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2056/derrickstolee/for-each-repo-in-gitdir-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2056
+
+Range-diff vs v1:
+
+ 1:  86cd83f65b < -:  ---------- for-each-repo: stop using the_repository
+ -:  ---------- > 1:  6e9d4f3029 for-each-repo: test outside of repo context
+ 2:  a47f9e9386 ! 2:  4e3f4aa6cd for-each-repo: work correctly in a worktree
+     @@ Commit message
+          repository's local config (demonstrating that it worked with
+          non-worktree Git repositories).
+      
+     -    The fix is simple: unset the environment variable before looping over
+     -    the repos.
+     +    We need to be careful to unset the local Git environment variables and
+     +    let the child process rediscover them, while also reinstating those
+     +    variables in the parent process afterwards. Update run_command_on_repo()
+     +    to store, unset, then reset the non-NULL variables.
+      
+          Reported-by: Matthew Gabeler-Lee <fastcat@gmail.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+       ## builtin/for-each-repo.c ##
+      @@
+     + 
+       #include "builtin.h"
+       #include "config.h"
+      +#include "environment.h"
+       #include "gettext.h"
+       #include "parse-options.h"
+       #include "path.h"
+     -@@ builtin/for-each-repo.c: int cmd_for_each_repo(int argc,
+     - 	else if (err)
+     - 		return 0;
+     +@@ builtin/for-each-repo.c: static const char * const for_each_repo_usage[] = {
+     + 
+     + static int run_command_on_repo(const char *path, int argc, const char ** argv)
+     + {
+     +-	int i;
+     ++	int res;
+     + 	struct child_process child = CHILD_PROCESS_INIT;
+     ++	char **envvars;
+     ++	size_t envvar_nr = 0;
+     + 	char *abspath = interpolate_path(path, 0);
+     + 
+     ++	while (local_repo_env[envvar_nr])
+     ++		envvar_nr++;
+     ++
+     ++	CALLOC_ARRAY(envvars, envvar_nr);
+     ++
+     ++	for (size_t i = 0; i < envvar_nr; i++) {
+     ++		envvars[i] = getenv(local_repo_env[i]);
+     ++
+     ++		if (envvars[i]) {
+     ++			unsetenv(local_repo_env[i]);
+     ++			envvars[i] = xstrdup(envvars[i]);
+     ++		}
+     ++	}
+     ++
+     + 	child.git_cmd = 1;
+     + 	strvec_pushl(&child.args, "-C", abspath, NULL);
+     + 
+     +-	for (i = 0; i < argc; i++)
+     ++	for (int i = 0; i < argc; i++)
+     + 		strvec_push(&child.args, argv[i]);
+       
+     -+	/* Be sure to not pass GIT_DIR to children. */
+     -+	unsetenv(GIT_DIR_ENVIRONMENT);
+     + 	free(abspath);
+     + 
+     +-	return run_command(&child);
+     ++	res = run_command(&child);
+     ++
+     ++	for (size_t i = 0; i < envvar_nr; i++) {
+     ++		if (envvars[i]) {
+     ++			setenv(local_repo_env[i], envvars[i], 1);
+     ++			free(envvars[i]);
+     ++		}
+     ++	}
+      +
+     - 	for (size_t i = 0; i < values->nr; i++) {
+     - 		int ret = run_command_on_repo(values->items[i].string, argc, argv);
+     - 		if (ret) {
+     ++	free(envvars);
+     ++	return res;
+     + }
+     + 
+     + int cmd_for_each_repo(int argc,
+      
+       ## t/t0068-for-each-repo.sh ##
+     -@@ t/t0068-for-each-repo.sh: test_description='git for-each-repo builtin'
+     +@@ t/t0068-for-each-repo.sh: TEST_NO_CREATE_REPO=1
+       test_expect_success 'run based on configured value' '
+       	git init one &&
+       	git init two &&
+     @@ t/t0068-for-each-repo.sh: test_description='git for-each-repo builtin'
+      +	git -C two worktree add --orphan ../three &&
+       	git init ~/four &&
+       	git -C two commit --allow-empty -m "DID NOT RUN" &&
+     --	git config run.key "$TRASH_DIRECTORY/one" &&
+     --	git config --add run.key "$TRASH_DIRECTORY/three" &&
+     --	git config --add run.key "~/four" &&
+     -+	git config --global run.key "$TRASH_DIRECTORY/one" &&
+     -+	git config --global --add run.key "$TRASH_DIRECTORY/three" &&
+     -+	git config --global --add run.key "~/four" &&
+     -+
+     - 	git for-each-repo --config=run.key commit --allow-empty -m "ran" &&
+     - 	git -C one log -1 --pretty=format:%s >message &&
+     - 	grep ran message &&
+     -@@ t/t0068-for-each-repo.sh: test_expect_success 'run based on configured value' '
+     - 	grep ran message &&
+     - 	git -C ~/four log -1 --pretty=format:%s >message &&
+     - 	grep ran message &&
+     -+
+     - 	git for-each-repo --config=run.key -- commit --allow-empty -m "ran again" &&
+     - 	git -C one log -1 --pretty=format:%s >message &&
+     - 	grep again message &&
+     + 	git config --global run.key "$TRASH_DIRECTORY/one" &&
+      @@ t/t0068-for-each-repo.sh: test_expect_success 'run based on configured value' '
+       	git -C three log -1 --pretty=format:%s >message &&
+       	grep again message &&
+
+-- 
+gitgitgadget
