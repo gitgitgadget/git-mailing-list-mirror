@@ -1,141 +1,96 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D466E33BBB1
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 22:06:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14AF33BBB1
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 22:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771970770; cv=none; b=vFTQXLwnLB5BbTHTZdzqLDfptnpbAMGoJ2iD1jbJXoh0Eikl4RrMcCP93IE3FOno5Ro36rsZ/HRqM7I4XsIBoAnDneD3z42mYuv6+U71H5ULqt3xqDFr9fhRAilQZS7JARdIP9z/TnKch7wpgYefdCNoHgoKeL+LB3yGq+Joguw=
+	t=1771970923; cv=none; b=lfYVOPtELDCxD5x3h2ieRATCbJ2Qinn/RV//ybPt0AElN/cVwCK0eUbD3owZHlxRaItqxU9rSqsttpGzMMS5+eoeffnvSsi1sMHRABdkio/b/Z64g833nWHritQvk4/2SuU50HnvFSVdRhHaRS7R/GsxBW0lP5JISdFMqJchN5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771970770; c=relaxed/simple;
-	bh=GZNxGyFwLUValIvtIeNozk9WZBY49eYUIIPqo2CHsRo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IBLep9hTdjhAw3qYSZmVXd/AKf/BESJ53UnMEIW+71p01QYt3pbpxwD/5ASoGvqKAet3H6dUQq2vNwPCW2Bgfg9qf7sE6GAfXtNlN3g8kwEUiN+nz6ACFgXrCI9bW4zQTkOh5A+HJS7jvIjOZ9u1zc2XAoTu7+W3RkxfZ99Auek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rdAWTbTJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Icob9Ei8; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771970923; c=relaxed/simple;
+	bh=Eih/icQW+Qxf+dEKluQwLPJulJBCz3zChCVevFoIIRg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KSfKCXusq2xVRp68fnVwRxs+ySKzoxReg9qDelXo69QkAROXofkMEvFuUHNlGEn6WaPy3zElrgxiwUWvroc/JEnKNIut2MftDIX8szMjBUVkruCzY5k8OR69YW1mo6rqamSmtmigEZUpPRXvUX89GQ+0emO3rQcf6F7JN3LGa4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LcmO0tmG; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rdAWTbTJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Icob9Ei8"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id C678B1D0020D;
-	Tue, 24 Feb 2026 17:06:08 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Feb 2026 17:06:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771970768; x=1772057168; bh=yUXjw4YRxa
-	FqAF330G2CDNLI2S48u+ByLYIIJrPVSAA=; b=rdAWTbTJyWLRk+BGopzfhnL42k
-	uHsPbs73gm5+G8N1HeUmqzYZqjTRFjLSNw1JV3gQ5IHrJUB6byxH74VZPmLov+2r
-	GLAGXLLvrC+2RrTSW/t4rflWvTN6GJn0Ao61Zn9nEKLe0TBxgrBNwbY4iV+9u5zY
-	eSKy6YfW20CVur+QUQmZhCEcTNlfOy2B3cuKljdZ7F3+7YLhFuel8VXY+89fT0iN
-	gogS8h/TSQ6Bnh4WYyotovQvXPRq5KYgbM+ZPdWnmMICxYjPE6AGtrsE/NaSl1yJ
-	3Hikp3MGwrVBzvut7DPnmDbntN2r1j6HLPluLT1wWDxkzlhxtLuTt0Fb5amA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771970768; x=1772057168; bh=yUXjw4YRxaFqAF330G2CDNLI2S48u+ByLYI
-	IJrPVSAA=; b=Icob9Ei8fZlk9ibLpuaWJMHYHHJAVqn08DGDFYGneNIoXFWzXQG
-	SNayqzDC1P4zPMFlWcDRbCAzr1kUhrhVkqtbf7a2ZnTs0mA1PDsl/JUwDIsVOHzy
-	7uH9lTvItELdPyfgkXElFachpSU+/9mFlj5+D5twiwnx8RlvqwIbbo8ZdgvlGHqy
-	ZPGaeil8LzE/QetewnpyLgQvT/s5DfivTrEiTF5u9hg5Z9RdKiHPbVcvS4Grdapr
-	iLtashSJ9u/L0N9hJu7px5mhC8mS6Ay1AxmLQZ6kgAqFqQHnUIk2bg4pvGid2ag5
-	QC3LF+7WVHlxM+W1+RpK0GMZCPCd8iHluBQ==
-X-ME-Sender: <xms:0CCeaTp-xWKp0ZlJsAVewRbgCOkuu5u8nOSFNFmOn7HzteuLzpLqKQ>
-    <xme:0CCeaUjBI0K3vdA-PTPshYIRTMALWghnk-zKgUJdfzaSx0XtrwBnZM8kNdpEWn0gK
-    jOPpV2pScqWj79VrbxVvtspnmcdhvMnl8OW8WnNWW6amFghLbZ2iA>
-X-ME-Received: <xmr:0CCeaYiOUoo_DA4mFoKGZRR1DlNWJE_wyrhvR0CUc23BdVC_pp26xtAwnYO0UbCIFWyoai1ZWmOpmDORdHef4DCwAxdxzmxv1g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedufeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeffieetueejveefheduvdejudffie
-    ejgeefhfdtvdekfeejjeehtdegfefgieejtdenucffohhmrghinhepghhithhhuhgsrdgt
-    ohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhhrhgvhigrnhhshhhprghlihifrghltghmshhmnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepphhhihhlihhpohgrkhhlvgihsehivggvrdgvmhgrihhlpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:0CCeaSgKNuxrpmTvjYw2K1WczNUfi4k-y14dA31zCufeMxN5VmSbZA>
-    <xmx:0CCeaQIAGGJG3hZPsL7Wo9GWwao-hsHmXyF5RsNUMKsqUuVP0kwhGw>
-    <xmx:0CCeaZEmDhZKrC4F1Mau-EHEP9QoLFgo7MHjtgCsPLpyuHZb8yr1lw>
-    <xmx:0CCeacT5kby6rcbDueqeXYVuiw5N0N-7E6Bd0Yc5NGlYZNE7NJ8nmQ>
-    <xmx:0CCeaY6QPOqFiCzw0Xf3VVn433PUDKFrRDYF5kavCwyeV4Rgq9y-t5-x>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 17:06:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org,  ben.knoble@gmail.com,  philipoakley@iee.email
-Subject: Re: [PATCH v2] send-email: validate charset name in 8bit encoding
- prompt
-In-Reply-To: <20260224213932.92364-1-shreyanshpaliwalcmsmn@gmail.com>
-	(Shreyansh Paliwal's message of "Wed, 25 Feb 2026 03:07:39 +0530")
-References: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
-	<20260224213932.92364-1-shreyanshpaliwalcmsmn@gmail.com>
-Date: Tue, 24 Feb 2026 14:06:06 -0800
-Message-ID: <xmqqqzq9er01.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LcmO0tmG"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ad9f2ee29aso8911595ad.1
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 14:08:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771970922; x=1772575722; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ia6jEQG4YhKd4h/MEAygoJasSA4Ct9/TtMuEdonmZng=;
+        b=LcmO0tmGHoxELRUtBJ8ZFRM94HIB2D5vAktnftOkYMIQ1NEaE5J9fqwl9DjZBikrUw
+         9llHwmFqtIGEqnHT7VHKLK6GSmGfpgs1QZRlKPHIWJEX8IWzTfHxnpImbppcFUdwi9k+
+         qDzUpwhLMo/Ec2Jq9RyuzAnjUZbe/aoQ5JT+vr53pPPaIxBJjAD5qLH26dROWi/LRFV+
+         Na6asXFhiZaAhXhzq7B4a4O6ia/GHfQBuqzW0MWqlCcpaJSzMWOqUzu0SBBEFrUdVoBd
+         SlMkYLhzaPfCnwxR8Ss+vgbCVcWcl+kbmiW+eS7DeTPlG9PDG5gO56kG91Oqo+tGPcTt
+         A+nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771970922; x=1772575722;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ia6jEQG4YhKd4h/MEAygoJasSA4Ct9/TtMuEdonmZng=;
+        b=miQD6etvI+KxjgeAKwR2ArAHpLgpUZSR0kk1A81c2tCgUuDTDJNQLICdGzdmvtd9UH
+         /50MdLsPH2PUxKOZ8EEMf0uLYZEJewOC5ac83wA4kBBUPGTN1ISZRxeSNTAryyUJILkA
+         tfG+/h97hvBspL1x2FMuC/PvOhyUYF1gI5vXWZU9p8lCtWqQIm3yIn5WUhl/wyJoRYDm
+         bNr27xawPT4kphvhT4o6cGEAsy34711nCSr84MvPRCtiJq3l5xCjgGmWA82WTDofVVl6
+         uVAVFSj/K6q2Y89Ao0VgvPE6gyQnSdbgjcQ9CC/glFFSCbQ9kG3yQq4tPlHP3Dc3o8zW
+         p4Zg==
+X-Forwarded-Encrypted: i=1; AJvYcCUM+OGWriUweTUBQdDDp0rAm0WqtMUG3M3nMEPbn2D30pYs8W9yTFqSty9gkvG8IapRvYY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YztpOD7/ZmMGQXS0fegxD4U4M/ECKSwFLuvy6ho0BAC1xENU6CD
+	uk28WjX1M63+KUE7LLIL3Z++rrQ0P9BZ80pr7gmkNR3rf3mjzNdrs1Mp
+X-Gm-Gg: ATEYQzzFdumLS3OaddTOPXP6PSWJ9GxQ76K8xZbb/IMAwCt9BwStJGLimo67b4lyobL
+	rVFe/dRiz8PC1ZSSmgb49OexqMDDhbKat1sdDHa1iHRxnANRsMpG+6zSoTs49IUgXZ/VbcAMqNF
+	PKyJNns5V18adaT4b5chFbNhdGonXZzxjPnbY/vaSY1i+0961Q4gppC8/Nscc7fM6HOLfPUQIeu
+	vobWq0hhfwxKQb3Zt5VH1I8EscrFHqN2GpiYr6KtPOYqnqnU56vwN9C0hL6ozJv+1c5rekcKOqD
+	SIkfslTfmnvIqNT8pFFg8YFMKCXW8naVxrjPv2zRXMNnLuBDB/DMNyF0tzpI6l51mlHO4lsz6+k
+	j3Bs2WAlfcM39uHqTVstIxmZu37v5bI/7E8+4w5m6je8v9g9EUSn/RxwOs+wOiTjj6Sv2rdvJFz
+	bHwKZKzEcc0RJzL3+8k8GgIhEUAaM2En5PZeTukupso1UWOTcs1OzY8MxthQaOm+CMp2+9Im4xK
+	FiGOw19OF3TPnik27ZuK+zFcqzdA4MBeIdamVJMWdKFaXqF088Qe1S0SjvYXQYVpx7dH8Y3SB71
+	QZoAEXAZ
+X-Received: by 2002:a17:903:1a2d:b0:2ab:253b:3941 with SMTP id d9443c01a7336-2ad7455a42emr129928345ad.45.1771970922051;
+        Tue, 24 Feb 2026 14:08:42 -0800 (PST)
+Received: from localhost.localdomain ([2409:40e2:1019:ef66:f559:688:b6ad:cb04])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ad74f5dd7asm155406845ad.28.2026.02.24.14.08.36
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 24 Feb 2026 14:08:41 -0800 (PST)
+From: SoutrikDas <valusoutrik@gmail.com>
+To: gitster@pobox.com
+Cc: ayu.chandekar@gmail.com,
+	git@vger.kernel.org,
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	lucasseikioshiro@gmail.com,
+	siddharthasthana31@gmail.com,
+	valusoutrik@gmail.com
+Subject: Re: [RFC RFC PATCH] builtin/repo.c: change info default behavior to show all fields
+Date: Wed, 25 Feb 2026 03:38:33 +0530
+Message-ID: <20260224220833.17730-1-valusoutrik@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqq5x7lg7ip.fsf@gitster.g>
+References: <xmqq5x7lg7ip.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+> They do not matter plumbing commands intended to be used in scripts.
+> What matters more is being predictable.
 
-> When a non-ASCII character is detected in the body or subject of the email
-> the user is prompted with,
->
->   Which 8bit encoding should I declare [UTF-8]? foo
->
-> After this the input string is validated by the regex, based on the fact
-> that the charset string will be minimum 4 characters [1]. If the string is
-> more than 4 letters the email is sent, if not then a second prompt to
-> confirm is asked to the user,
->
->   Are you sure you want to use <foo> [y/N]? y
->
-> This relies on a length based regex heuristic check to validate the user
-> input, and can allow clearly invalid charset names to pass if the input is
-> greater than 4 characters.
->
-> Add a semantic validation of the charset name using the
-> Encode::find_encoding() module of perl. If the encoding is not recognized,
-> warn the user and ask for confirmation before proceeding. After this
-> validation the lenght based validation becomes redundant and also breaks
-> flow, so change the regex of valid input to any non blank string.
->
-> Additionally, the wording of the first prompt can confuse the user if not
-> read properly or under any default assumptions for a yes/no prompt. Change
-> the wording to make it explicitly clear to the user that the prompt needs a
-> string input, UTF-8 being the default.
->
-> The intended flow is,
->
->   Declare which 8bit encoding to use [default: UTF-8]? foobar
->   warning: 'foobar' does not appear to be a valid charset name.
->   Are you sure you want to use <foobar> [y/N]?
->
-> [1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
->
-> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-> ---
-> Changes in v2:
->  - Added braces in if-else block.
->
->  git-send-email.perl   | 17 ++++++++++++++---
->  t/t9001-send-email.sh |  2 +-
->  2 files changed, 15 insertions(+), 4 deletions(-)
+My bad for this ... I did not know about plumbing commands.
 
-Curious.  This change to t9001 was there even in the previous
-iteration that did not even work.  How did you test it?
+> And it is more predictable.  If you ask for two things, you get two
+> things.  If you ask for one thing, you get one thing.  If you ask
+> for zero things?  You get none.
 
-Will replace.
+Got it.
+Thanks for the clarification.
