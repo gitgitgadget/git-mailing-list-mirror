@@ -1,133 +1,118 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6868D2D59E8
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:41:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54152366DD3
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:41:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771922473; cv=none; b=jDCTlET723baSNOoSwU5tQ5oU30w83rptxIKLUs6k5TSYKMZmfHJdFFayzQqbOD8gCSsGh58qduMrnn9aFPlZhZ9CH7Ei6C7xZy0ML1yuwBp4W3dg6uzpHxdd4iCxLF3Opi0/eo3C0dtd/YXu5tCe+ZfDo5iit/pERALpZp3s2A=
+	t=1771922515; cv=none; b=K5joWuvJmhF9KSeS0qvIELUye3s9DP3EMVfVDf3T6Q2km1NMOYDbJV3XewYpVWda3Crql5IR0zl3OdmVXS60c3TniVxcbWTOkJZ58owSUl04yPkfT7r0atOZjMjnn4hW3UcNiB8luZc/TRiGtR9Hths+7ScB9cWnPDgUd6u2oDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771922473; c=relaxed/simple;
-	bh=+U/FaeJsiuUhKng7lAMTcU54WPfIY93IfXgIXBvQVoo=;
+	s=arc-20240116; t=1771922515; c=relaxed/simple;
+	bh=Z5v0PPYNP/hBWDo9rlSq6JTdbO9a/dak8zQdpNM5Taw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p2UrU0QowR/hldk7df3+YCQvwFOn1VQLXsdQ4Da2uw54oWI/EDGkz30KLJmKtHhy4l5skR/3k5rIjYylVUl6d3Gsscj66FMdN2X+BskdsN6Hdpm8Bo1PKyHVSwGXFrcsAWhGJKEeBq+bZz77dXmCyc63MQ93okbKGeOOwIibxEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RFqKQdqJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VvZg2fwQ; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=pKqS8rP1Hyvheh9ZICllH1clpg68PCdkGaiqczkB0Eam5C6RqAifSle6g25YKBpKVHSaFPf0Mms6UMZmfzywkbo22UbE0zYSWZ+RnxVCZX6DxkfXnX3onVPMi/6sfQ20pJtgYjQwC2Ofygy64ANNB23mBJ++iLOWUM3EcC9gJLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gpaf7AHm; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RFqKQdqJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VvZg2fwQ"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AA0FE14001C1;
-	Tue, 24 Feb 2026 03:41:11 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Tue, 24 Feb 2026 03:41:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771922471; x=1772008871; bh=mpTVjPA5rF
-	HJf/j1WyAGl5ktCP1qM2HCrKvO6kpxy50=; b=RFqKQdqJV8bMYFyPviBwTLnR9u
-	gtpMJtNK3QinS1PS87j7ZHeqMzdsRkLS+wL3kbwxJoG2gCjm+EoXvf12kzc/Y2Ip
-	agViOgFNOWyhMB0dckWHx+kqS0ENaRfIMyrTaWkDW847t/jzVAqk8slRHQCzndpJ
-	mEdegYgJI5sq9dYqUec8GgwRqkwG9hfSTF2MpHheQ4/Q9+xS04xiCpapgZfX3CR4
-	TrKnpG46ZatvyrdvfmhAw1OvatMhXrVsjaJXHV6zteS1T7Fcvgr7Xw7ID/lv4dqL
-	xcvuTPjhehmrcaoZ2qnpOkhBwA2qt1qapkLH+iDpA1PX14zNE0zox79eZ6sg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771922471; x=1772008871; bh=mpTVjPA5rFHJf/j1WyAGl5ktCP1qM2HCrKv
-	O6kpxy50=; b=VvZg2fwQ/9txfj5hz058XYFJWvRlDBs3hzl3N4FzJ1OGVvjaMTT
-	uHS6kMMUHXUidtKex/Fjdu2xIb/babxmLdrSu52L1fTHw5PBVJkcvfZp70dBJ4SA
-	A82e6AQ5ZxPfmiSdbsNjZcGiWIlIp406BnwrBI34+cgqFS0LqQkWEtIAYtL+eQyT
-	kjJbsJHyM1mR6YSwx3oVD2SHlUU6HMXqbFZgMYWueeINcOFwYOUGi3eX8eAFb0Pa
-	HtEtG0+jsdfOzHinASvbbBs7Iz+dhbIrVaRh0ghNIzjPULopxnlkqm1X2uxrWePe
-	Csdu9DI7FzWONVxzeYfSQTGreiHchFhEe9w==
-X-ME-Sender: <xms:J2SdaVbWyjRHVCOrePYUfHNmXFN27WmBK0gOmTRRR4-ZnY3LRk0qkw>
-    <xme:J2SdaSYmyro1eihsgziEoAHoRsroX2CLP3HybYRBOt3YR8a3X2uPtnkypTjyN4lLL
-    hn2mrK6v5GuYT6_zxfd3pXo06m9B3Eo-h_zczPH1QFpwp7U03mdouY>
-X-ME-Received: <xmr:J2SdaVlYqXlClh5spRlOYovN2DkfaO6k6fmzb-2RS7k6S3nC_tS00-jU3sVj2hKe6ns7wXUDBfSmki2Ict_JhuL_ygqSXsBnfvuXEPxauVxvmQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeljeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:J2SdaezcYLrq8hmjKu67rwtRWpOJs4SaejoNXC-DMxWYa3lIjyjSmA>
-    <xmx:J2SdaTOWEJ0tk7s7YAsZpaqOEcnPjT_gMf_ChhrhB9xAWOElVv1WuA>
-    <xmx:J2SdaSSxnRUAY7SK45-xEv7G_MGp9V8mpmIEnHFsQXmd2mamP0cY8Q>
-    <xmx:J2SdaRZ3D0Jj-iaoGIa0wGCD4lq0Ka14dBAiGA0OasiI3u0TToyanQ>
-    <xmx:J2SdaYzH52JtmM7QNMR5DYB5eg3qh3iaZ6YIS8_KburTykENVefrfeze>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 03:41:10 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c6a29203 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Feb 2026 08:41:09 +0000 (UTC)
-Date: Tue, 24 Feb 2026 09:41:06 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/17] odb: make object database sources pluggable
-Message-ID: <aZ1kIib-CaeOHGSO@pks.im>
-References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
- <aZx-mrdbZp-7VZfi@pks.im>
- <xmqqjyw3ktns.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gpaf7AHm"
+Received: (qmail 59458 invoked by uid 109); 24 Feb 2026 08:41:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Z5v0PPYNP/hBWDo9rlSq6JTdbO9a/dak8zQdpNM5Taw=; b=gpaf7AHmZ/G3x1U3oRObejqas4AjX7dTt/kqIj+2mo3nHUxHi1nX4VY1RDzlwzp7wZtS/uo2Cjpw+ypR3XFnnhV34XSZzE3ZoqM+UIh8EXTA875ukFnshW5Ul0rQTrZYRcVq1UuSDD0vqwmO+QRMvXZLRbeYJ2x8WvcbV+n1tjy2Av0EPXTV+n8KCPI+bnw7aNX9oYPtUVQvZm88o2FOH+soC+P3m5tw9xNwkDZpWYLUYnzl5IHSGblsAWhLiXtwAfRh9l7f6g2jNlr4CJVU0fhiR1SzTrvMlbucpA4cSgPhXUwheEdIjkv3j+hqn4tJeHO0GF36wTmE4X4ucrMRDQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Feb 2026 08:41:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 142318 invoked by uid 111); 24 Feb 2026 08:41:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Feb 2026 03:41:54 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 24 Feb 2026 03:41:49 -0500
+From: Jeff King <peff@peff.net>
+To: Mirko Faina <mroik@delayed.space>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] pretty.c: fix null pointer dereference
+Message-ID: <20260224084149.GA986367@coredump.intra.peff.net>
+References: <20260220230633.132213-1-mroik@delayed.space>
+ <20260224040400.751247-2-mroik@delayed.space>
+ <xmqqcy1uk69o.fsf@gitster.g>
+ <aZ1JND7sGspCJEoc@exploit>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqjyw3ktns.fsf@gitster.g>
+In-Reply-To: <aZ1JND7sGspCJEoc@exploit>
 
-On Mon, Feb 23, 2026 at 01:59:51PM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Feb 24, 2026 at 08:08:35AM +0100, Mirko Faina wrote:
+
+> On Mon, Feb 23, 2026 at 10:25:07PM -0800, Junio C Hamano wrote:
+> > Interesting.
+> > 
+> > Are any of the existing calls to this function that passes
+> > CMIT_FMT_USERFORMAT trigger a segfault with certain condition?
+> > 
+> > For example, there are only two places where CMIT_FMT_USERFORMAT is
+> > assigned to something.  One is save_user_format() where user_format
+> > gets a non NULL string before rev->commit_format gets assigned
+> > CMIT_FMT_USERFORMAT.  Another is git_pretty_formats_config() that
+> > parses configuration variables "pretty.*" and populate
+> > commit_formats map.  This is later used in get_commit_format() and
+> > that function always calls save_user_format() we just saw when the
+> > format used is CMIT_FMT_USERFORMAT.  So the existing code paths seem
+> > to be safe by design.
+> > 
+> > What I am wondering is if a NULL user_format should be flagged as a
+> > programming error, instead of getting swept under the rug like this
+> > patch does.  IOW,
+> > 
+> > 	int commit_format_is_empty(enum cmit_fmt fmt)
+> > 	{
+> > 		if (fmt != CMIT_FMT_USERFORMAT)
+> > 			return 0;
+> > 		if (!user_format)
+> > 			BUG("never called save_user_format() and using USERFORMAT?");
+> > 		return !*user_format;
+> > 	}
 > 
-> > I forgot to note that this series is based on top of 7c02d39fc2 (The 6th
-> > batch, 2026-02-20) with the following two series merged into it:
-> >
-> >   - ps/odb-for-each-object at 3565faf28c (odb: drop unused
-> >     `for_each_{loose,packed}_object()` functions, 2026-01-26)
-> >
-> >   - ps/object-info-bits-cleanup at 732ec9b17b (odb: convert
-> >     `odb_has_object()` flags into an enum, 2026-02-12)
+> This doesn't convince me, I think it is a bug. If dereferencing NULL was
+> done on purpose why not use die() instead? Also, the only way for us to
+> check user_format is through commit_format_is_empty() as it is static.
+> In a complex config setup it might be useful to double check just to be
+> sure, and I wouldn't want the program to crash on a failed check.
 > 
-> With the above base, [09/17] fails to apply, as the function
-> signature of odb_source_loose_read_object_info() no longer has
-> "unsigned flags" after "int flags" turns into "enum
-> object_info_flags flags" in f6516a5241 (odb: convert object info
-> flags into an enum, 2026-02-12).
-
-Indeed. It seems like I mis-resolved the conflict that happens when
-those two patch series are merged together. I properly resolved it in
-the header, but not in the implementation.
-
-The fun part is that this compiles cleanly with Clang 20. I would have
-expected a warning here that the function signatures are different. I
-tried to play around with -Weverything, but couldn't get it to produce
-the expected warning. Oh, well...
-
-> +++ b/object-file.c
-> @@ -543,9 +543,19 @@ static int read_object_info_from_path(struct odb_source *source,
->  int odb_source_loose_read_object_info(struct odb_source *source,
->  				      const struct object_id *oid,
->  				      struct object_info *oi,
-> -				      unsigned flags)
-> +				      enum object_info_flags flags)
+> save_user_format() is not available neither, so evaluation of the format
+> string has to be done through get_commit_format(). If I pass any of the
+> predefined formats (CMIT_FMT_*) get_commit_format() won't set
+> user_format. So the only way for us to check if it was set is through
+> commit_format_is_empty() (well technically there's
+> rev_info->commit_format but it still doesn't feel like it was
+> intentional).
 > 
-> Tweaking the patch (e.g., "unsigned" -> "enum object_info_flags") to
-> make it apply was trivial, so there is no need to resend.  Hopefully
-> there is no semantic conflicts due to confused bases (the result
-> compiled and linked fine).
+> But if the intended behaviour was for the program to crash then I take
+> issue with the name.
 
-Yeah. I'll rebuild my patch series on top of the base that you have
-constructed. Thanks!
+I am not quite sure what you are asking. No, the intent of that function
+is not to crash. It is to check whether the user passed us an empty
+string. Like the "git diff-tree --format= $commit" example given
+in the commit message of b9c7d6e433 (pretty: make empty userformats
+truly empty, 2014-07-29). If they did, then the first character of the
+string will be the NUL terminator.
 
-Patrick
+So dropping the "*" as your patch 1/3 does is just wrong. It is losing
+the check for an empty string and replacing it with a check for a NULL
+pointer.
+
+The user_format string should never be NULL if we are using
+CMIT_FMT_USERFORMAT. That's not checked for explicitly here, but is an
+assumption of the pretty.c code. If there's some way to violate that
+assumption, that's a bug (but it sounds from digging that there isn't).
+
+If you have _new_ code which is using CMIT_FMT_USERFORMAT without
+setting user_format to a non-NULL value, we might need to work around
+that assumption. But I think what your 2/3 is doing is not quite at the
+right level, which is the source of the trouble. I'll respond separately
+to that patch.
+
+-Peff
