@@ -1,104 +1,111 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F921C84B8
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 22:44:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2484A335064
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 22:45:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771973095; cv=none; b=RMbEyNONelwjF3/qeQWcjYluPBtee3RHWDMv6HJWXXSEFXt2kzUlTBak7MEOsl9gOVEb42o1iZAHIWT/z0WrPHO47dPKMFxCoVLFf0RcY+vmJ8nu7Eh71d+qLNgQ5L/8ZbK85qw3BzZxzvkSYCh7PZrdhVUvfglUMH07nRpkNpk=
+	t=1771973128; cv=none; b=nxUJXuIzBdkJnE7bJAlFhDkUNQ+WmLwIXjXnv1Qc+/caRnrozFbnx2aRBuRWQ9uVuRfTe2HqUfFW3xOgXQ8EUJevE5VPZZLSCTY/tnfo2+iFACrLsnb7o6MleTspr1DlS2cF/NSoD2xugVl7+gZAtbU9dMsILm4hOON+f38QoZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771973095; c=relaxed/simple;
-	bh=O9ccseRC1da+G6wUKCFuDSlZC77Ruh99vU/ERREm1Qw=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=OkHLeAyelLPsyECsVTkRXuR7ablOVEyYR7hrvpcemHpFQ2kTn5L2RAKN4Ff6lXRotFmYZBSPvDU3vtoZPDYW6DkEZr6n8v9wjbV4hk9shbNR6mhpFitYGbJBrO+MZVweo0WBWX6fhFSJo9vYXWsOUZwSblrQqrmk8r2YbKNbiaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Xk8gSk+7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jLqz4CNP; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1771973128; c=relaxed/simple;
+	bh=tB5JW+pPlwBEtGi1tTH7602OPlsEDN4lDcY9WJXy954=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q9BmRNFHtQGplE73ECJ2QpHyEmwCqM804e7kYYY9+mHKs83Qoz/JNBWtqxxMJ3ZWkoBcxuMZJ+4bbPRYwcXlKHv1XUOAtrihhFzC9PvAfigub71WLJnU/qckXdoR65COCm9lOwQtRyNSP6s26VwupA99TG+7E5qEBCtLRnqZuXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W/EW0PWR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DdkujuTH; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Xk8gSk+7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jLqz4CNP"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W/EW0PWR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DdkujuTH"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2B2C7EC0652;
-	Tue, 24 Feb 2026 17:44:53 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Feb 2026 17:44:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771973093;
-	 x=1772059493; bh=O9ccseRC1da+G6wUKCFuDSlZC77Ruh99vU/ERREm1Qw=; b=
-	Xk8gSk+7dKxaLHLa2a5UaR/P8oxwOLN0zVDGJVFOPgarCVy0axfAJm2cK29AmIRV
-	j2Kth4XupXGu7Rm56CEyeWz0TlhNHK+ecLMizmAL6CiUaDtSr+8jnl8JOEtLuzvo
-	hkMsnRqlCY1Uyo/CtyycujYf1N20L7vIOaxaM1LU5zucp4pal6Py2HrBIT6S6sR+
-	c63Pqa4JdDPUX4KecDJv7hNopNZi38bHCfr5lhR8m7oy317Zknk61ZDv1dSJKUpY
-	CCHtQ9fDk1SlMmtfjLls9fQUiD18782Kz8zqz1H2Pu5WY/19vLTZRjNbFqP+FwOR
-	WJLiRFV2YLlr5utX1Yeb9A==
+	by mailfout.stl.internal (Postfix) with ESMTP id 236CF1D0008A;
+	Tue, 24 Feb 2026 17:45:26 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 24 Feb 2026 17:45:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771973125; x=1772059525; bh=GE0PIHDCBE
+	zosTHchERTxGCYsc7sbkPIEgfCq9be2EQ=; b=W/EW0PWRDNnEVU+q8mAQllBBP0
+	eitUGz/O+4PaZgOE/KQ7vMhdEVRCre0eDxu5CU1pL7C4kEBv8dLRZi2Tpsq1ZFLG
+	f4Ib/w8FrEGr3Z1ZpKHfPDgBxPkQ9GNuCcWCrpgsMVGbfTDxTljnxyyY6sWuqKom
+	R92M2l/qfuiosG26hm9WSS8zVxbuJayzHjDmwA+RzoRa8NwI8Uh2kfWtu+EvbyJw
+	iGs+5no2K4P4TnJpTlnZd8trLPQZYl7uELJ88mmVIu89e1MZ7lW/LuPZCg5lNIoA
+	iGp55jsGjYAqJnz/ln+co9BvRU6cCsVx16k77R/6/MfdoHMl88B9zhNv/16w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1771973093; x=1772059493; bh=O
-	9ccseRC1da+G6wUKCFuDSlZC77Ruh99vU/ERREm1Qw=; b=jLqz4CNPJ4q8Qfufe
-	sn+Z6xEDbo4QWqDh8mx2MFah95uDjbOF2dF19XbNnzElxoPLwkuiSX2kENFwHUE3
-	d5wEW11BcomJIKORN8qQrrMmATFuh8/aRIEIWEZ8f2wgEL2B8Tli68HMH/TrUMei
-	ZwaHhxjEpJoavi73SGoEmTZQbQu+pZ4gO7YbjrIGuzzt7MQLRNktq8zcDGrI9oN3
-	e3YdgscQFfyykbNN2Gg+pM5u57fMb2zcxmGNk0r0YMXztXI0adBVPU4XS0RxacoJ
-	h7qvWThuAsP00q1mvF7foPE2JGPJsJphPjU6n33pBT1L/mL7NfrTTRRxbp916fNl
-	j56fg==
-X-ME-Sender: <xms:5SmeaafRPsk4iYUG3roqc44xQkN9aaWkC4qdkk1c9A206OKZiwJqIik>
-    <xme:5SmeafAhnhPo49Kq4YVA3yW5e72VxjbyhVkDTYwFr5gYuJtMZxAvmhTrZtTOOgjHT
-    8jtHnMvhrpboZXz7Rd4UvNp5E3IiO4sIRk7XGdFTh6rGbrnuq7-VjY>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771973125; x=1772059525; bh=GE0PIHDCBEzosTHchERTxGCYsc7sbkPIEgf
+	Cq9be2EQ=; b=DdkujuTHXk3qeQEzIMmZeCzKBpOilB4a6XlW7/St/cWnG4Q6cpA
+	QroW4P1ZJZjb+3kzRThVXgHq6WyPqdy4AHYpwJ3x6ZWn2KdT2yK/C5K+xxMHUoSV
+	AR8baM3p8vlM1MHip5A0iGefSJBEEjUqtHML2fshd0GM3A0vUtBaVlkwRhSPI/Pg
+	zi4sfQY+gioPO5ojeWrgZKqo4RzW+mlCdNipPxkhWmVwUJhs6LMGY3kXPoTPGJkn
+	8KPQC4dvHyC3UEf0owPwtXVUhlyE7E+aSzJ785H4dAJLpVkBKZSwYwPvyG+X/4lD
+	DrY7KJh01kA3+4o3Z+gq/xKrl2tAtdUV2HA==
+X-ME-Sender: <xms:BSqeaZKR1EZyYyKj8cWjEhaVGddjHfrevCOC9fD0kYKO6naoqtXHZQ>
+    <xme:BSqeacANEA2CJJpm5VF2KEOTMv7YGd3YqU-qt3g4j530eLQc8qh0qmey1aHuKWIzY
+    r5cV768DSv4U-alh-XzHk1vCjAm4xwRK7xNXQRSw12oPckjRkvhBA>
+X-ME-Received: <xmr:BSqeaaDtQszPbwcMVI8FE7n51D7bUJPYrzfsAOC8ORPzRmgxj82vNoYwcpY3fJlbxtOnI5Aww1BqJE1jlhI-gYW9ECvVSGnFcg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedugedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvffkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedvieegtdfgteeg
-    hfffteetleduveehteefkeffheehfeeihedukeevleevfffhjeenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepthhithgrnhhirgdrshhughhirghrthhosehr
-    fihthhdqrggrtghhvghnrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhg
-X-ME-Proxy: <xmx:5SmeaZLwjDFpHhzkRUf4UDc5-Zm0zg-QiKM9CRffVQ8KqEpg6MrqhA>
-    <xmx:5SmeaTHjl0NMjdufLwr0RJQfGThec2GaC1LMZeZVTLdRw0-hXVWxlQ>
-    <xmx:5SmeaZQ_vBZUBIqJCqV1auIBkBdy6lvlwODd1v0zmQbbtmNBw1fGaA>
-    <xmx:5SmeaXH1TWGp5c0tA2JEg7zUAJBQ9-SG_1gBrM0uwSa5T_fya2VL3Q>
-    <xmx:5SmeaVdFhY7Lobvn9sh3bKNpxSyaUGzbQDll0Pf5BflLFc4oO9me1VrI>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id E49111EA006B; Tue, 24 Feb 2026 17:44:52 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
+    hsthgvrdhnvghtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthh
+    hrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:BSqeaWAXHm80cp8DM9b6Ow7twslUYFL3JqybWuProuamvgKIr71GSQ>
+    <xmx:BSqeadrwZVpXv7J_JbT59YlXRpQWsvJ6rQlDp1cUtCSB58MNlp2Baw>
+    <xmx:BSqeaYnCvyznAnn0gq8xXkcTvJXxIX_FPUOL3z5xIuLokGNtD05zMQ>
+    <xmx:BSqeaVwy8tAZrJtrZmkESER0Jxjc3MLikNKDjpELO8EQ054zgDCoWQ>
+    <xmx:BSqeafQ7XvPhJmI7fXVoJXR7LTqWkqtiGmR15mmdInmfBpcqgVNaq4p2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Feb 2026 17:45:25 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org,
+  christian.couder@gmail.com
+Subject: Re: [PATCH 0/2] fast-import: add mode to re-sign invalid commit
+ signatures
+In-Reply-To: <aZ4pFUJApZosh9Gc@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Tue, 24 Feb 2026 22:41:25 +0000")
+References: <20260223194146.3476768-1-jltobler@gmail.com>
+	<aZ4pFUJApZosh9Gc@fruit.crustytoothpaste.net>
+Date: Tue, 24 Feb 2026 14:45:24 -0800
+Message-ID: <xmqqwm01dam3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AXazdfGPY0gV
-Date: Tue, 24 Feb 2026 23:44:31 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Sugiarto, Titania" <titania.sugiarto@rwth-aachen.de>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-Message-Id: <b743b7fe-5f5a-4906-9ea6-0755acf5875d@app.fastmail.com>
-In-Reply-To: <14775be9ed944bf684c3696e1a10f44d@rwth-aachen.de>
-References: <532e9d58b905404fa625aa59104ce8f5@rwth-aachen.de>
- <14775be9ed944bf684c3696e1a10f44d@rwth-aachen.de>
-Subject: Re: Feature that allows the user to merge only specific files/folders from
- another branch
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 24, 2026, at 14:44, Sugiarto, Titania wrote:
-> Hi,
->
-> I have a suggestion for Git, which includes a feature that allows the
-> user to merge (I want to highlight merge here, not replace) specific
-> files/folders from another branch.
-> I feel like a lot of users have spoken about this online but up until
-> now, there hasn't been an update regarding such feature.
->
-> Might be worthwhile to consider?
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Why?
+> If you're _not_ going to implement that in interoperability mode, then
+> I'd rather you just die in that case so that the test fails and then I
+> or someone else will fix it.  `extensions.compatObjectFormat` is
+> presently experimental and the data formats will change, so nobody
+> should be relying on it working as it stands right now.  There _will_ be
+> more compatibility breakage coming in future series, for instance.
+
+It sounds like a very prudent thing to do to die as unsupported.
+Thanks!
+
+> I _would_ recommend regardless that you add a test like in t7004's
+> "signed tag with embedded PGP message" if you apply this to tags as well
+> as commits.  That requires a special case in our interoperability code
+> (since it normally converts things that look like signatures, but when
+> we're _generating_ a tag, we don't want to do that since there are no
+> signatures yet) and making sure we do the same thing in fast-import will
+> avoid corruption in our conversions.
