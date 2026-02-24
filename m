@@ -1,83 +1,83 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB72E555
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 17:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F8D19E97F
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 18:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771954860; cv=none; b=Z51Ebg/+ie7QJCPq0BN00FPaLyhFolur0OBshYQmypKC+dkF6tBTZHCAppnphSrRn3zIVVdcortkRIiwpjWBliu0PLEoD1pKoGOKijys04MUtpVsLkrA0iZ94kqdWdD/sU8EkiwbgD8UcLMTS99ikCpafrnfaBFlVAqznyy6XGc=
+	t=1771956473; cv=none; b=Aq1mO1KpzK32IzBgmRI1UZhjUdrpIJHBi3LqjTj9Jc0GrzyQ/LXOUiP5QfpwaGcl2ySDMgxk3OXIWKbwSYpC0b90bJmQLLULi8uX4hXkqzvrB7L8oqpzYk/UYUhqKWifZStTzhR1Z5RzTs3ngcS0xkqslUj5AcUzdXTPx1Gh3oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771954860; c=relaxed/simple;
-	bh=r2Yp1wJ31lpRjcSHAzK0w/zbM07jWV9fzJL/cLH9yMs=;
+	s=arc-20240116; t=1771956473; c=relaxed/simple;
+	bh=F8hTDIId2aLge0nv2202YJgufcG5K58xQD/0qYqeauo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MyJEo3i+U1w5bEAWGjaCSHDX0VwI9L/+7JqsbkbVbC4o9Yl4F/AdNuf2cOHO+yao16MUJAJP0MrubQBcmk6v5v25FlovpljnkseLQ0vzFDbXD+s7q7texCflBB6nf2GCLbsjpdzCSHYq/zqSr/UGfccdUs/vdpJgpukdp4KaP0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Apsj981m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bnEBsUn6; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=V//xFTRYVyPwmean68CWHsu3tNkyCCkstUSGo+mYPnh2GHC0IhRNo14ByxW24rSijXzzS5ec3qRTn2OUPHg2QJY51+zQzNG2JcYcy1Vju9mk110AjFR/fu113lI6Z2nH53RSqbhlQ/jAbCxSKMUmlUonGxxb1L+pd6z7uI0ynt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E+rzYyTH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rCCFXeUY; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Apsj981m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bnEBsUn6"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B18DF14001AD;
-	Tue, 24 Feb 2026 12:40:56 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 24 Feb 2026 12:40:56 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E+rzYyTH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rCCFXeUY"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DA33E7A0185;
+	Tue, 24 Feb 2026 13:07:50 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 24 Feb 2026 13:07:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771954856; x=1772041256; bh=oRme9PX/av
-	1MVx7D39t3mq+WwTvFirF5pI1W7ONZ5iA=; b=Apsj981mshoG+e+2DVAk8iCHIe
-	YsZo8vBPxKz8GnErU/0EXPWP6mM73VpnFjPRSt7s85ZDrL69DifI+fBhpf/HvICe
-	z82aEAkJCY/wgTeB/PCjzZuLS/RVVPVDxQbe9+m2gwBg+h4ph4YHl2P9krLbPtD1
-	4MFOQB/V0AqcV/+seqTWspHWYxcFAVqAMYhIa9FDYQLMWax15L2xFiKGF5R2TV4t
-	aeIrnFkMDbxwJ4GhuLcvQbd6Ooqnidfdh5V2x/eIFPB4vbNQobhPQbdu2H59JNbp
-	nV5wsJzDpCPGsy+gezdPRdl1oWeqVqxlhPvAmdcKdsj7t5wsxTmeoL3rifLQ==
+	:subject:to:to; s=fm2; t=1771956470; x=1772042870; bh=K8AJfnHX5D
+	2vA5CyW702AMlckeGrAmrQutbR8GibvCg=; b=E+rzYyTHqR8eIhZFsku94/FIJT
+	PwfiqvDN/8ov3XCN4pgGbojjBvK/MkxpYTRbzOJb/YB05Z2KVIuQDAYKGSC6f8/E
+	qYy1j9YruqSfrwroFjirnxDKs/cXDRNjaIqhywk96ZJeQDe09luJhCwqJdMJpUG0
+	kP4JJ1pTBUo/958vlNcBwkLfyLucMv69BdJx+vm/WcL5IBjm9LLgbxlaYgv8/Hrw
+	lmUJcV+wpK/fOz2r69+SBoWq7ZAj2UKLxoVOhuPjZ5esMcYkfm24b2mHXRf67LQh
+	vh4AreFwJ/uQPVxS+Nn/EoHc0/3CYVvj/vYlGz1KgClZwyiYC4b1cvdkbj7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771954856; x=1772041256; bh=oRme9PX/av1MVx7D39t3mq+WwTvFirF5pI1
-	W7ONZ5iA=; b=bnEBsUn61eN3eWJH682nr/ssT4oAOE72MZVQ9N6uEZFy7m95fwa
-	HiW8RPMtj1OBj33M5wKBBnaG7DIcmk4j9GVy5zyi/HbQQ+zLwKXx6oL08ItRqEE8
-	yIXktVWkS+o0HkJb+Q1f7wob3rAybhYjzJPZ9JCU5P4xIZcO6OvFeSLOnAdyNUQy
-	BwJYu4/caYLQ2M58Y078ARMcaoHrb5aHR/3XGnXbmdMzXyEQ4tFewEm5+7u1+udJ
-	PZ3EsEJBd/KUNx9DQCKLPbyoR4W7XerBkErAP/RH6GJ7Wz8yggioYZdKR+uQy75P
-	UL3vjyt/gu6kkUaCdlkT9CIL7EkG+0DSJNw==
-X-ME-Sender: <xms:qOKdacehl_pIa8OPmSrYhKgFpf4Tajnzrf095m5TpluKYOBSgKsi9w>
-    <xme:qOKdaVNsiwYGemuBFgeHwSSBDv1eGgD656E07UTVVIYBvm9JLLMyT8no08AOYtuSY
-    gBKl8LPKt4TEZsLcoBTvBuUbQPQY7flODvaGnIR_KEi7xge9Hfo>
-X-ME-Received: <xmr:qOKdaSi_HVHXCxAwtP6cJaCQb755SDTR42Q-vD1gZcTw_qyPHfNWglSUBF2Rehv-xq2YdxrOiXY2YH301Q3jf8zUF2eUUPCvjA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedtjeelucetufdoteggodetrf
+	1771956470; x=1772042870; bh=K8AJfnHX5D2vA5CyW702AMlckeGrAmrQutb
+	R8GibvCg=; b=rCCFXeUYqHZVNwOm2KdkGdr2Uh0y95FUhAIot42z3F25bYpgQk9
+	mOSoq8yJpa/Lanu2d+o2PFcwnZRHoXHxpPn6QDEW1EM6lmzgb700d8mwQDIDrs6F
+	Uuo2WQcT0AElg9kqEuoqObFyyBSqJMU5B/Dm89vxq7vRTJIL/HfjiZkCWWLYD1eH
+	K+Pi1H61c5m2BIN3p6IG/9A0Q38QzwPYD9n+OIG+jpg7jEO/5N5561v+NKiz8ITN
+	3cZ8rw6cOGa/3QR+Oj7oyRQUheMm46z8wMDXkMrrrfyxjxOmmidt9PWGyRpPU1XN
+	/r7uUAVooIWkT4d9OHHZ1XnMDnWkUMr6STQ==
+X-ME-Sender: <xms:9uidaUzSmIFb4Ztw5gatI-B85j-wcaXgW0JJiyecTzEdEV3voHHLZw>
+    <xme:9uidafSSQKQrr__NjIoDE8xqkJYAOxcz39HAjuc680yOURTmAMwF_8ZCPMUGFuPJt
+    OyLdhbMq3K1oQ7VtiQHh-OOPmJ0W9-LJ0_L4ZLb-iXC6F9Sv6Hfgw>
+X-ME-Received: <xmr:9uidabXXX3IrsneCDloRLysSst9-8Jo-5PWZHiwV-b62VNls6tp3ewFlysxqZSIqKk3VI5y7ZmBcrnPXGUQBFcf--qhLh742bA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedtkeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotd
     dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhff
+    eggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecu
     rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
     gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
     seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
     gvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
     ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:qOKdaQ1iaAUdX-dYUeZBAmD6UrKCdPQAUf4Ab824L9AlOEaBcnOkfg>
-    <xmx:qOKdaUijxmwqDkmy1cp9kJOBgegpbgRyWxEWg9l6TAGwJz0QaVzbtA>
-    <xmx:qOKdaYeDPAwYpCw7aH2fVQ2Uowq71WTzNSWeofp4g0XZ9rliwlDlXA>
-    <xmx:qOKdafldTm7KYkF-lEOfyD6cbmT9-62INX2iLypqK-ji9BAfrOcjqQ>
-    <xmx:qOKdaVhqHdzCjL267wL2S_HJE6IMu9WJm3s5D8qdCJ_o0sXtckAf_bhk>
+X-ME-Proxy: <xmx:9uidaRaEl3hRLtOPs_VnAWtrR6qO3oI5_IHdA5LL_2xwkd1jQ4bm0w>
+    <xmx:9uidaR03uP6vK7hbPniKgwp5e2qGSACxNUIeY1sdeghco1v4LSeKzw>
+    <xmx:9uidaTjTRTnH7pD0KM64WOhyDhznG-09nSlbfdDjATNc5YFL2NHbkg>
+    <xmx:9uidaVZSCu45r8eJOMgIcB2cecxL-VNSAWplBv1FQYTq959GzLVDEA>
+    <xmx:9uidaZ0MylEF1FBo5owRX2NZVfBrwX0QOZnesppPvjQa3x1jw2mDWGsq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 12:40:56 -0500 (EST)
+ 24 Feb 2026 13:07:50 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Mirko Faina <mroik@delayed.space>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] format-patch: add ability to use alt cover format
-In-Reply-To: <66cac565f8a40f8de3dc3d857feb681bb80cb136.1771925291.git.mroik@delayed.space>
-	(Mirko Faina's message of "Tue, 24 Feb 2026 10:29:01 +0100")
+Subject: Re: [PATCH v2 2/2] format-patch: add commitListFormat config
+In-Reply-To: <6a0c7aecfd6dc1ee873d5e81110b723fa2d225fb.1771925291.git.mroik@delayed.space>
+	(Mirko Faina's message of "Tue, 24 Feb 2026 10:29:02 +0100")
 References: <20260224040400.751247-1-mroik@delayed.space>
 	<cover.1771925291.git.mroik@delayed.space>
-	<66cac565f8a40f8de3dc3d857feb681bb80cb136.1771925291.git.mroik@delayed.space>
-Date: Tue, 24 Feb 2026 09:40:54 -0800
-Message-ID: <xmqqpl5uhwex.fsf@gitster.g>
+	<6a0c7aecfd6dc1ee873d5e81110b723fa2d225fb.1771925291.git.mroik@delayed.space>
+Date: Tue, 24 Feb 2026 10:07:48 -0800
+Message-ID: <xmqqqzqaggln.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,236 +89,114 @@ Content-Type: text/plain
 
 Mirko Faina <mroik@delayed.space> writes:
 
-> Often when sending patch series there's a need to clarify to the
-> reviewer what's the purpose of said series, since it might be difficult
-> to understand it from reading the commits messages one by one.
->
-> "git format-patch" provides the useful "--cover-letter" flag to declare
-> if we want it to generate a template for us to use. By default it will
-> generate a "git shortlog" of the changes, which developers find less
-> useful than they'd like, mainly because the shortlog groups commits by
-> author, and gives no obvious chronological order.
->
-> Give the ability to format-patch to specify an alternative format spec
-> through the "--cover-letter-format" option. This option either takes
-> "shortlog", which is the current format, or a format spec prefixed with
-> "log:".
->
-> Example:
->     git format-patch --cover-letter \
->         --cover-letter-format="log:%s (%an)" HEAD~3
->
->     [1/3] this is a commit summary (Mirko Faina)
->     [2/3] this is another commit summary (Mirko Faina)
->     ...
->
-> Signed-off-by: Mirko Faina <mroik@delayed.space>
-> ---
->  builtin/log.c | 65 ++++++++++++++++++++++++++++++++++++++-------------
->  1 file changed, 49 insertions(+), 16 deletions(-)
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index c1cd3999a7..5e99660d7c 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1324,13 +1324,32 @@ static void get_notes_args(struct strvec *arg, struct rev_info *rev)
+> +	char* fmt_cover_letter_commit_list;
+
+In this project, asterisk sticks to the variable, not the type,
+i.e.,
+
+	char *fmt_cover_letter_commit_list;
+
+I think you got this point right in the previous patch.
+
+> @@ -1052,6 +1054,19 @@ static int git_format_config(const char *var, const char *value,
+>  		cfg->config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
+>  		return 0;
 >  	}
->  }
->  
-> +static void generate_commit_list_cover(FILE *cover_file,const char *format,
-
-"cover_file,const" -> "cover_file, const" (missing SP).
-
-> +				       struct commit **list, int n)
-> +{
-> +	struct strbuf commit_line = STRBUF_INIT;
-> +	struct pretty_print_context ctx = {0};
+> +	if (!strcmp(var, "format.commitlistformat")) {
+> +		struct strbuf tmp = STRBUF_INIT;
+> +		strbuf_init(&tmp, 0);
+> +		strbuf_addstr(&tmp, "log:");
+> +		if (value)
+> +			strbuf_addstr(&tmp, value);
+> +		else
+> +			strbuf_addstr(&tmp, "%s");
 > +
-> +	strbuf_init(&commit_line, 0);
+> +		git_config_string(&cfg->fmt_cover_letter_commit_list, var, tmp.buf);
 
-So a single commit_line is given to repo_format_commit_message()
-repeatedly to accumulate those lines in it, which makes sense.
+What if /etc/gitconfig has "[format] commitListFormat = shortlog",
+~/.gitconfig has a different setting, and then .git/config has yet
+another setting?  Woudln't cfg->fmt_cover_letter_commit_list at this
+point have a copy of the value read from the previous configuration
+file?  Without first freeing it, wouldn't we leak the previous value?
 
-We prepare pretty_print_context once above and feed it repeatedly to
-repo_format_commit_message()---is that intended?  Not a rhetorical
-question; I do not know the answer.  I guess some existing callers
-(like builtin/archive.c) do reuse the structure when making multiple
-calls to the function, so this would be kosher, perhaps?
+    $ git grep -C2 git_config_string\(
 
-> +	for (int i = n - 1; i >= 0; i--) {
-> +		strbuf_addf(&commit_line, "[%0*d/%d] ", decimal_width(n), n - i, n);
-> +		repo_format_commit_message(the_repository, list[i], format, &commit_line, &ctx);
+gives plenty of precedence, like this one.
 
-Let's line-wrap this overly long line (my lithmus test to complain
-about "overly long lines" is after losing three columns to the left
-for "> +" in e-mail quote like the above the right edge of the line
-does not fit on my 92-column terminal, which will never happen if
-you stick to the official "fit 80-column after quoted for a few
-times in e-mail" guideline).
+builtin/commit.c-	if (!strcmp(k, "commit.cleanup")) {
+builtin/commit.c-		FREE_AND_NULL(cleanup_config);
+builtin/commit.c:		return git_config_string(&cleanup_config, k, v);
+builtin/commit.c-	}
+builtin/commit.c-	if (!strcmp(k, "commit.gpgsign")) {
 
-		repo_format_commit_message(the_repository, list[i], format,
-					   &commit_line, &ctx);
-
-perhaps.
-
-> +		fprintf(cover_file, "%s\n", commit_line.buf);
-
-I somehow would have expected that as we internally prepare "format"
-string given to this function , we ensure it ends with "\n" so we do
-not have to do a fprintf() here.
-
-> +		strbuf_reset(&commit_line);
+> +		strbuf_release(&tmp);
+> +		return 0;
 > +	}
-> +	fprintf(cover_file, "\n");
-
-OK, so we have a blank line after a block of one line per commit.
-Sensible.
-
-> +	strbuf_release(&commit_line);
-> +}
-> +
->  static void make_cover_letter(struct rev_info *rev, int use_separate_file,
->  			      struct commit *origin,
->  			      int nr, struct commit **list,
->  			      const char *description_file,
->  			      const char *branch_name,
->  			      int quiet,
-> -			      const struct format_config *cfg)
-> +			      const struct format_config *cfg,
-> +			      const char *format)
->  {
->  	const char *from;
->  	struct shortlog log;
-> @@ -1342,6 +1361,8 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
->  	struct commit *head = list[0];
->  	char *to_free = NULL;
->  
-> +	assert(format);
-> +
-
-Curious.  We do not assert() for any other pointer arguments.  What
-makes this so special?
-
->  	if (!cmit_fmt_is_mail(rev->commit_format))
->  		die(_("cover letter needs email format"));
->  
-> @@ -1377,18 +1398,22 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
->  	free(pp.after_subject);
->  	strbuf_release(&sb);
->  
-> -	shortlog_init(&log);
-> -	log.wrap_lines = 1;
-> -	log.wrap = MAIL_DEFAULT_WRAP;
-> -	log.in1 = 2;
-> -	log.in2 = 4;
-> -	log.file = rev->diffopt.file;
-> -	log.groups = SHORTLOG_GROUP_AUTHOR;
-> -	shortlog_finish_setup(&log);
-> -	for (i = 0; i < nr; i++)
-> -		shortlog_add_commit(&log, list[i]);
-
-It would have been much nicer to first create a short helper
-function generate_shortlog_cover(), move the above plus a call to
-shortlog_output(&log) to that helper function, without doing
-anything else and make it a preliminary patch [1/n].  Then introduce
-the corresponding generate_commit_list_cover() function in patch
-[2/n] (which is what this step is doing), which would have resulted
-in the body of the make_cover_letter() around here a short-and-sweet
-
-	if (... we are doing shortlog style ...)
-		generate_shortlog_cover(...);
-	else
-		generate_commit_list_cover(...);
-
-Just like readers of _this_ function are helped by not having to
-know the details of what happens inside commit-list style cover
-generation, they can concentratre on the flow without having to care
-about details on shortlog side that way.
-
-> @@ -1906,6 +1931,7 @@ int cmd_format_patch(int argc,
->  	int just_numbers = 0;
->  	int ignore_if_in_upstream = 0;
->  	int cover_letter = -1;
-> +	char *cover_letter_fmt = NULL;
->  	int boundary_count = 0;
->  	int no_binary_diff = 0;
->  	int zero_commit = 0;
-> @@ -1952,6 +1978,8 @@ int cmd_format_patch(int argc,
->  			    N_("print patches to standard out")),
->  		OPT_BOOL(0, "cover-letter", &cover_letter,
->  			    N_("generate a cover letter")),
-> +		OPT_STRING(0, "cover-letter-format", &cover_letter_fmt, N_("format-spec"),
-> +			    N_("format spec used for the commit list in the cover letter")),
->  		OPT_BOOL(0, "numbered-files", &just_numbers,
->  			    N_("use simple number sequence for output file names")),
->  		OPT_STRING(0, "suffix", &fmt_patch_suffix, N_("sfx"),
-> @@ -2289,13 +2317,14 @@ int cmd_format_patch(int argc,
->  		/* nothing to do */
+>  	if (!strcmp(var, "format.outputdirectory")) {
+>  		FREE_AND_NULL(cfg->config_output_directory);
+>  		return git_config_string(&cfg->config_output_directory, var, value);
+> @@ -2318,6 +2333,13 @@ int cmd_format_patch(int argc,
 >  		goto done;
 >  	total = list.nr;
+>  
+> +	if (cover_letter_fmt && (strcmp(cover_letter_fmt, "shortlog") && strncmp(cover_letter_fmt, "log:", 4))) {
+
+Overly long line.
+
+What if it turns out that the --cover-letter option is not given
+(and we are dealing with a single-patch topic, so auto setting has
+decided that there is no need for cover letter)?  Shouldn't we
+continue ignoring the typo on a setting that we are not going to use
+anyway?
+
+Stepping back a bit, even if we do not validate the format *here*,
+shouldn't the code that does use cover_letter_fmt later in the
+control flow *already* be checking the validity of the format and
+complaining?  If that happens early enough, perhaps we do not want
+to have an extra "early check and die" here.
+
+> +		die(_("--cover-letter: invalid format spec"));
+> +	}
 > +
+> +	if (!cover_letter_fmt)
+> +		cover_letter_fmt = cfg.fmt_cover_letter_commit_list;
 
-What is this churn about?
+As I pointed out in my review of [1/2], it is not a crime to set a
+value to cover_letter_fmt even when !cover_letter, and the above
+line does exactly that ;-).
 
->  	if (cover_letter == -1) {
->  		if (cfg.config_cover_letter == COVER_AUTO)
-> -			cover_letter = (total > 1);
-> +			cover_letter = total > 1;
+By the way, the usual technique used in this codebase when handing
+configuration and command line option is to these in this order:
 
-What is this churn about?
+ * Initialize a variable to the built-in hardcoded default (e.g.,
+   "shortlog") upon variable declaration.
 
->  		else if ((idiff_prev.nr || rdiff_prev) && (total > 1))
-> -			cover_letter = (cfg.config_cover_letter != COVER_OFF);
-> +			cover_letter = cfg.config_cover_letter != COVER_OFF;
+ * Let repo_config() call overwrite that same variable.  This is the
+   typical implementation of "if there is no configuration, we use
+   the hardcoded default, but the configured value can override it".
 
-What is this churn about?
+ * Then parse_options() overwrites that same variable.
 
->  		else
-> -			cover_letter = (cfg.config_cover_letter == COVER_ON);
-> +			cover_letter = cfg.config_cover_letter == COVER_ON;
+But because we read configuration into a separarte variable (i.e.,
+members of cfg structure), this function cannot literally follow the
+usual pattern.  But the pattern we instead can follow is this:
 
-What is this churn about?
+	/* initiailize to NULL */
+	char *cover_letter_fmt = NULL;
 
-Please do not distract reviewers by mixing immaterial "style fixes"
-on existing code to a patch whose primary purpose is to introduce
-new code.  A separate "preliminary fix and/or clean-up" patch before
-the main series begins is often a welcome addition, though.
+        /* read configuration */
+        repo_config(... &cfg);
 
+	/* cover_letter_fmt will point at command line arg */
+	parse_options(...);
 
-> @@ -2375,12 +2404,16 @@ int cmd_format_patch(int argc,
->  	}
->  	rev.numbered_files = just_numbers;
->  	rev.patch_suffix = fmt_patch_suffix;
-> +
-> +	if (cover_letter && !cover_letter_fmt)
-> +		cover_letter_fmt = "shortlog";
-> +
+        /* NULL if no command line argument */
+	if (!cover_letter_fmt) {
+		/* perhaps configuration has one */
+        	cover_letter_fmt = cfg.fmt_cover_letter_commit_list;
 
-I do not quite see the point of doing this.  There is no law that
-"cover_letter_fmt != NULL" is a crime when cover_letter is false.
+                /* otherwise, use hardcoded default */
+                if (!cover_letter_fmt)
+                	cover_letter_fmt = "shortlog";
+	}
 
-cover_letter_fmt can be initialized to a fixed string "shortlog",
-and nobody cares what random value cover_letter_fmt has when
-cover_letter is false.
-
->  	if (cover_letter) {
->  		if (cfg.thread)
->  			gen_message_id(&rev, "cover");
->  		make_cover_letter(&rev, !!output_directory,
->  				  origin, list.nr, list.items,
-> -				  description_file, branch_name, quiet, &cfg);
-> +				  description_file, branch_name, quiet, &cfg, cover_letter_fmt);
-
-This line has become overly long.  Please wrap it.
-
->  		print_bases(&bases, rev.diffopt.file);
->  		print_signature(signature, rev.diffopt.file);
->  		total++;
-
-In any case, the implementation in this iteration looks much nicer
-than the previous one.
-
-New set of tests should come together with implementation of a new
-feature in the same patch.
-
-Thanks.
