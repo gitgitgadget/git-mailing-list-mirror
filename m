@@ -1,74 +1,79 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADE133A9CD
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 20:41:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B509304BB4
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:03:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771965661; cv=none; b=d640WSHI1b9T6gDqPu3wWPpmS5c4WF+jog6wY64xxxe8XoeXgeDO+XeCMAu35yjBYyHaWdMiSJJKHftjoKNsbBg8ep7nDlWPeftcn9F/twp62A4TSWOrlvAfxQiFX9JdeEGxXs9flm8vTWPyyZddvDxbXmL80P7T5kzLGzNDm3Q=
+	t=1771967015; cv=none; b=JO8g69YOqS0lreqA2R6EZmaA1/+RP/ZVho/PShReegXWo2cm4lprYxX42PO/+6eEjrM7eckMeRPOwP5xfHrXQjgfI64fXNyg0TDPfZ6wCx/NIq1wIPl8KNdBzgDVmhsJdgfOWdzQ6fAeDPGXVDm4T4nor4nZkn0ngbj2RPycISU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771965661; c=relaxed/simple;
-	bh=16jlSpJxBDZzFBmjSKVimmPiQOJMpZjeEZIZVmBorMc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MMc8Mb7uw6hzA1mk3ED/ZGRjOMjZy1YzAAltfJSBjdHUIb0PWVkrPayFG0VJZWGk8/Jjf2EMjNx0XtMhcI+l1stS++clY/r/tWqQruU4zKUi8syxxISSaq+v8hYs1nOe6VHYD+t0bkVyqv2mQCv51DXrwg3VcLFSxbTizIwwURU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S2glvtp5; arc=none smtp.client-ip=209.85.216.48
+	s=arc-20240116; t=1771967015; c=relaxed/simple;
+	bh=yI7HqHgxpmxkG2x537KgpHEjpIdxY6gjjx3pkWa4KfM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oJ2pbmmCCZImZVkwvTRm4nqtS0G0DtFwoiqF27hNRuh1wU9w5BIbY29gcBJqGy7bG+JxqnXiZfGJ1HKoFzz3lYNOA4KSocIhDA1Bch0XGzA4gqYKKGfUectV6EcXOk3D2yVu4QWECmhUt2q+6NPUa7/NLgza1hkJ/VpyQKixVxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IXd9Kj2n; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S2glvtp5"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-3590042fa8eso285608a91.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 12:41:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IXd9Kj2n"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-bde0f62464cso2286772a12.2
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 13:03:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771965659; x=1772570459; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kNpFGcLmGsFlRPVvRJT+JxMWTJbFjxfZzciQ/jJw9h0=;
-        b=S2glvtp500Kn5aHc88hT7GoKoPJyoKq5AL9q9+ZXmu/tU0nVUZBUhkEhBU/t54EjAS
-         LA+8YysTTfcCpg3BHoUorWsVCHEzh0ixLe3etQPIUJekORLDSpINyt/++kJlndON2yA1
-         zwKGWJ10HJYP4uoYYP93+u3stQkXNIxKb5RII48HVES8BjUx0MeYn6HDs6TSYbE5ssNp
-         j3Iyo9XbV+FDhXUf8IILtfYHkm6RHLoVz6tHaztZTPJ+7ehoWvtwwLv6KiwMc0MEvLR5
-         BotqdRYpMlhVTVbW8Pv+TH5Mok93Ubirb45bUkz2BsklvUaqPPvFXFrGDdr6FaNIQYTH
-         QBxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771965659; x=1772570459;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771967013; x=1772571813; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kNpFGcLmGsFlRPVvRJT+JxMWTJbFjxfZzciQ/jJw9h0=;
-        b=uDLAimTv5fgMqr6gnp3NEVNJUWif3RJE3g+H1p/mRL09aQG2t7iFkGObnYF4OcmhNO
-         yPtO9Kcsxu65xZQbJ1pzaC3CkOXLbllUE2YZRHCNJ1rnhZ03aeEUy6oAEKHqp9d52kIz
-         QVBUzdZ0jcumIIwZnkKK3VSD+2DYfTfrhq+BHyQqmK6mSrngVo4QQ9+gs/V98s+/p0QH
-         FA5BEI8/mkBlgUVgfpsXorg7brUcIF05k+Qsyf07RvPxjf2NL2vzui8D03mE3KNpCRty
-         eylAL3sFVioXt10fJfUYELY8YFL7GzLelq5ojjDy1AH/MzYN/BnMZRjzGm2eE/qVgq8b
-         rCCA==
-X-Gm-Message-State: AOJu0YyURQaIfoJVmPwtx6uS9qj7mqgG1m65SOvsCmxeB0FndVW1c39u
-	sT8s3LtgD2rFFbHelN0BiNBe8IAhUJeEsc7UfNKUoep/8g5iC5esJ9syDvQo1g==
-X-Gm-Gg: ATEYQzwzgJ3UV9/NNJEqE4M4/BKhT8b1h2gkdRdQ9RAJbmhA4t+sj+jvIJd1c8nMVoY
-	EKAhJ6LUkrNN17cDCT4CEyoAKURWNJPfZE+EwCmL37N33LV1Zs13CiuRuh4w3ngsz6kBtijlMSv
-	3j3FY5KTEkdUTWnbHFlXhjhBAVW1BWFrBzXJwnzlD+0NZa205IW4V7fWNExug0NfKenqzTBR9Q0
-	7FAnmZoPPYYPETprKjQuTaJFZ7WZAzTxqYV1kvgQNmyDfJBS8sK5iWriA/tuyZ5hTIqwQUSuA9J
-	1ow2sHM01GT7bF7yp/4UoFAVEDZJDJIlrhllC+Bx1WvmAOO+2f+VwtYNcAPXYnybSvntKfbSsKk
-	G/z3rJqWciiHCqSmLSANEhDWVJFNGf3Y9WlFCxndquj26RNLlZ/0BYG2NNebIpgsWkViaNCOndQ
-	1OMqJzPIRGT0T/lXa/rGH2olNcHd5TPk13hnPr31IyoAnMjMDkXrEFnXkZ2E7HcJcHAXMGWOfrr
-	kExpVN5bqDZ1eqMfJX7oLmLqow8bL3WY8bJJ1cW7KjA4ahrwUVzrFvJuCdzOQ9Lpd+BgmF7YQXt
-	WwRKq/ZvQw==
-X-Received: by 2002:a17:90a:e7c4:b0:353:3b33:8263 with SMTP id 98e67ed59e1d1-358ae7fe516mr13820955a91.9.1771965659239;
-        Tue, 24 Feb 2026 12:40:59 -0800 (PST)
+        bh=QwArzwE9sMIeYrkYTXVboW3nWKAvZF2IQSFPvblnor0=;
+        b=IXd9Kj2nLCgFSotj7cPVqOTDffyS/a2dhZkDlEUs1OEG3n7lvdBov1MlxXWWTOr1hS
+         efKWRgtm10jfl+Gx/XjiDUzlSL79iQnJP6wEgHSaf3El2LtKX8cyAqK41djBeB0hMGK3
+         EoeUHjedTQiaJhV85jOoT5JIUchwpsVnj0BMXIvKFA6+SnSbhauK0ekoN2IoNfIHdn0L
+         9DLbIiJhA8VZcnaqJ5SFT8bBE6TkgQXDVQEuaxwWjZjIM4fDXAwSrBWeqFx2W4SfBcro
+         eTbiscm5NhiuwAiTfbnbAyx7nDNg6P8pV1NRCyWpZ7xotWfCMJDpRxjcgGUcbJbwctM+
+         mQ8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771967013; x=1772571813;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=QwArzwE9sMIeYrkYTXVboW3nWKAvZF2IQSFPvblnor0=;
+        b=IJYeMtQJqt+ilrCCdrbyrQl9D76oyHEClFZjPZJNrVPKakuTGHSs7N8aeWeiNRnUA/
+         tOhGVOv2F0S6yBCQawPkzGhopwyL+eRkHP4k2nQeio5RK/B4fGJxoWJqU9qlOhS9i547
+         yL8pHiuTnwh0FnsrjZzFlYyD31jxGxXioiOwTpDNAMJE+qweF0mr3VjoVkRAfKAWD0Wm
+         /UDTfIfvHqDZvhi481DXSf0fDoFvmz7O4CcIrf+qScTFQGi/4lXzyYPHONRZgh95Rxh8
+         ivqEJ2InBjpL2Vxwshs5uxE5WghCKZZjcOUHSG7FGX+55WmhE4MUdsnHex2pe4C2RnKP
+         Kz3g==
+X-Forwarded-Encrypted: i=1; AJvYcCXStK9AL8naw/Ny1iFcZBhhSGxr0rcQUa0shP8r0AwNeiJgje3EXW5Zc5DRz8E3SWG8LQQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOrzJHlCBanfMDsuF48yRiI9ZO6pzBD0fV/AQ+g4mZZlBKZJw9
+	tjUcJoO8jhT7HWwl/mWlp7ZwmlJga5ZtwJX30PFtiI4vVAQ005JSePwl
+X-Gm-Gg: ATEYQzwXvrkwwBxlxcky1TMNwynPA+ckxQMcG+PRLctPHazBLdZfcHBrl2n29qWgF8D
+	1T//LJxSsoipxDbhzjNhdc8mx2GTC/djlBfAxFV0p6aIgOr9IM4xhTYLP6uuGnycgjxGOlAiIl2
+	E3LT3qRWXuAh7+Hl0kvTYXvc8Cr2G1UVbKNY73P0oizmDxzsBMH7jv5W8NNL+IUABo9CIaVH0R0
+	DhKCmKuhKR94gom/yoNIzJYyHrA1Ziy4bBCzgBxIfCBL+BJa+CrF9MKZBeKMU0Fr3D+e0Xm1379
+	hyRdjaZzHhA5xAJvBJf7G3pGfbUuJAHaZq75QZo0cUVgZaOma7us6jUNGRMtX3DpgQgn6D0Dkal
+	S3Ont5Y8bsZYVWT+trbnXJEVmgQ06OFVPbtc4ceYgxpxHa2rBOTnPdQEbEqR3Ogwk97JqrIhnqP
+	tmYSRZhSg3bQvNORJcE8fzb3oPpY8qN/Lig/VHrhHEVcvgZe6Gn4SHxaSLVIEh407nPOfVnGTH0
+	waRDmCrHm/5OANr4S54ahS3L6PC1BIsSSL8WlamlbkxRoO4lSWLyssveD+Ar/sFoBwR9MQ6buqa
+	jUySl49nTg==
+X-Received: by 2002:a17:90b:390a:b0:352:c995:808a with SMTP id 98e67ed59e1d1-3590f08f704mr75564a91.14.1771967013420;
+        Tue, 24 Feb 2026 13:03:33 -0800 (PST)
 Received: from localhost.localdomain ([2409:40e2:100f:98c3:814b:c2e4:a180:5c47])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3590bd208b6sm75921a91.5.2026.02.24.12.40.54
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3590158f91esm690527a91.4.2026.02.24.13.03.25
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 24 Feb 2026 12:40:58 -0800 (PST)
+        Tue, 24 Feb 2026 13:03:32 -0800 (PST)
 From: SoutrikDas <valusoutrik@gmail.com>
-To: git@vger.kernel.org
-Cc: SoutrikDas <valusoutrik@gmail.com>,
-	karthik.188@gmail.com,
+To: valusoutrik@gmail.com
+Cc: ayu.chandekar@gmail.com,
+	git@vger.kernel.org,
 	jltobler@gmail.com,
-	ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com,
-	lucasseikioshiro@gmail.com
-Subject: [RFC RFC PATCH] builtin/repo.c: change info default behavior to show all fields
-Date: Wed, 25 Feb 2026 02:10:47 +0530
-Message-ID: <20260224204047.8452-1-valusoutrik@gmail.com>
+	karthik.188@gmail.com,
+	lucasseikioshiro@gmail.com,
+	siddharthasthana31@gmail.com
+Subject: [PATCH v2] builtin/repo.c: change info default behavior to show all fields
+Date: Wed, 25 Feb 2026 02:33:18 +0530
+Message-ID: <20260224210318.16547-1-valusoutrik@gmail.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260224204047.8452-1-valusoutrik@gmail.com>
+References: <20260224204047.8452-1-valusoutrik@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,66 +82,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi everyone!
-
-I wish to undertake the "Improve repo" GSOC idea,so I was going through
-the repo.c code and trying to make a small patch.
-
-I saw that by default "git repo info" does not print anything at all,
-I went through the first discussions [1] : 
->> Also add a flag --allow-empty, which will force the output data to be
->> empty when no field is requested.
->>
->
-> Why do you suppose we need this, I'm not against it, but it would be
-> nice to state why this is necessary. The idea is to have a default
-> output when a user runs `git repo-info`, so I'm missing why this would
-> be useful.
-
-And 
-
-> I was thinking about use cases where repo-info is used inside scripts.
-> A simple (but kinda useless...) example: an application that is a GUI
-> for this command, where the fields are selected in a checkbox, calling
-> repo-info with them and then displaying their contents in a dialog.
-> 
-> In this example, if no field is selected and there's no validation in
-> the GUI side, the default set of data will be retrieved. With
-> git repo-info --allow-empty, we don't need to care about it.
-
-Would it not be a bit better if we allow the default behaviour to show all
-fields and then any subsequent scripts or application can make sure to 
-check if they are appending any fields to the git repo info command, 
-if not then dont show anything, because even if they ran the command without 
-any fields they would get nothing. 
-
-But now if we change default behaviour to show all fields then it becomes a 
-bit more user friendly.
-
-> After this review, I'm starting to think that leaving it empty by default
-> would be better. Specially after the review by Phillip Wood [2], who
-> has a good argument for it:
-> 
-> """
->   As this is a plumbing command I think it would be clearer if the caller 
->   was required to specify the output format and the information that they 
->   require with an "--all" option for "show me everything" as Junio 
->   suggested. If we were to set defaults for the format and keys now we 
->   would be stuck with them forever.
-> """
-
-I don't really have much experience writing scripts, but ... if one is 
-scripting to get a certain value, would they not specify that ? like 
-why would they excecute a "git repo info" without any fields?
-
-Also ... mayeb this does not make much sense, but the
-'git repo info --all' has only 4 fields now, so showing all 4, should be okay ?
-Or maybe not.
-
-
-[1] : https://public-inbox.org/git/20250610152117.14826-1-lucasseikioshiro@gmail.com/t/#m04cb1fc694f334cc861f6ab146f50b45ae277874
-[2] : https://lore.kernel.org/git/af27af92-73d5-4f0a-84f4-9c91de6ab6e6@gmail.com/
+>  	if (all_keys)
+>  		return print_all_fields(repo, format);
+> +	else if(!argc)
+> +		return print_fields(argc, argv, repo, format);
+I did not mean to send the above patch. It was a mistake.
 ---
+
 Previously, git repo info would print nothing,
 when invoked without arguements. Change the default
 behaviour to display all available fields, to make
@@ -144,22 +96,22 @@ it a little more user friendly.
 
 Signed-off-by: SoutrikDas <valusoutrik@gmail.com>
 ---
- builtin/repo.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/repo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 0ea045abc1..4d7efcd833 100644
+index 0ea045abc1..d044d83b14 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -193,6 +193,8 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+@@ -191,7 +191,7 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+ 	if (all_keys && argc)
+ 		die(_("--all and <key> cannot be used together"));
  
- 	if (all_keys)
+-	if (all_keys)
++	if (all_keys || !argc)
  		return print_all_fields(repo, format);
-+	else if(!argc)
-+		return print_fields(argc, argv, repo, format);
  	else
  		return print_fields(argc, argv, repo, format);
- }
 -- 
 2.52.0
 
