@@ -1,143 +1,134 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD362EACF9
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 19:08:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D72C2F1FFC
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 19:11:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771960092; cv=none; b=bbddogjKLGDwU2v+sB/miR7KTUXhXj5GUNm6LcAPwSP2O9d0eImlc8qnfNecSmhU1/m4MbBGjKeKhmYiJ6JVtwvfrHE6hUjeOiewZKCwtntGASzrqD6w93v0KWI8PEq5X3nFVLcQpVVQ4gLUqbBs3/GuvT2u+lwfEcXIzxuyIUE=
+	t=1771960285; cv=none; b=jbOxyVxoTJ5f9oiGCFwCIowmU1iMCOvbZDWAvsfLitHltUm0DY2vY+gOjCvA/IAZ5VVMZYOfa4/crQOOjmbgdblIVAT64fBtctCS0NkXZNJgVFieL3AKoTTj0AWUJRHpaxI4ZZRhvogH6ExSNnZdKaysXalOEUHM2NqlObWQhxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771960092; c=relaxed/simple;
-	bh=P+jPXEB0I/o4aTaogc9OsTPxVXzN0fjxTtQ6bU6kMdI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=liUm0m9JVj5lGYUCj0gSoAH2+xOVxiJmsNAH/VJlPsWuJzGbQmkfcrT/YVmrOM6/aMYhViK1eabCFWO5Izxjy33VfxpvwNxQIKDkDD2hxBPr6EndnRE1jKifrWREJLkRraSuw8z3unwaLbfIyoRFxjiygljioVQZL/EkWxGNEuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=cfN1wPth; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1771960285; c=relaxed/simple;
+	bh=O/kQ7wTtoWtlpRzbDdEDGnWOWbF/2Vof7BA4Eh4+U3M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X7UmjN0Q3r9rfqOmsUNVnrw6JKJZkIRBGDrfjp2VVXkKB4Y67jznm3iDLG42xbn8WjAiZnmBH79yOKSVVp5stESZMvZY61u/X63Vz3+6benguzioemdsnwBt0kZ3Ut2/MrR0d2F192hR4BPUB20m9Z3FP4RgKY9814fk6q63mHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PTN4OTDU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wjnQlNZ2; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="cfN1wPth"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8cb20bcff5aso602753685a.3
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 11:08:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1771960090; x=1772564890; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IINThSeLwgA16Z7d3cxbP1d5smMyCd0Lc8MEEhz9XEQ=;
-        b=cfN1wPthOQg9w6IImf1/kzSY+bZJ8gEGxMm3baAtpsd79h0NOoYjGtx782nTHhHz0L
-         EZuG6Aeas6s/K1LkLqqpiN/D4pu+Gk3bNmNM+NV+9G+TZBWBZIInTSnV35QBWZNqXoTI
-         HaGs0m3qYAnvBm0Vx6X6FllTH3tSMKn6kXr5duy2hP7cHN90d3LyZGQWoeIvJ4kAOqVe
-         Cj3GEoBkHK6PvbRVGG0wDNcl7tM4BBX8zM/MoQWmr8zumpe4AbAYFgmp1kawJdy6pFE/
-         /OWPhvme/fXcL+SK/HS1740QhuetJ1ZiujFZ2tQKeQ7IbxSt677SiTkvdKy9nu4n2lBl
-         LO+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771960090; x=1772564890;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IINThSeLwgA16Z7d3cxbP1d5smMyCd0Lc8MEEhz9XEQ=;
-        b=Lm1gH3S+Pw5kJ2/qTOPiAqCUNkmj5CGdqyRTZO+ch/8r5nm4wTaX4TQocQJ9r1Ab7H
-         9/KRp+P6nFWQ1J8cg+rSBVzcppCDx8Hnb87LbQKrY3p8A/u4Rj5lPMQ4183BtuObUPRp
-         z8B033LN4o+3bghT3A6jGj6Pc8E1fx+qxeCvHDOLBJKtoowFQkBGRRP5yc8kgwQFA5Zq
-         Qg5RW8YFwD7LARHs9s5h6eiqTIhnRZF6cnp78rA76ue+W4M6rn6dPBSxyDnLERllfzj4
-         bo14NgZRjbjKKFg1KIZfi1csJyZHkP+6W/VNU/Fc5uRsaGPGrSA3WlhrTRyqkmRJLboZ
-         UgOQ==
-X-Gm-Message-State: AOJu0YzOapmkvwF+VKErNZf2YwsK47vc3Ge9TtSml0Sli2rbYOEnGn3L
-	zPM6skjmKqA5LbpzUAsTbBS7CFthq84V6Pxd5RD8zjsMn978FUR54p7A8ZRQWL2ehrEnw1I42D1
-	VzMQDSekCeg==
-X-Gm-Gg: AZuq6aLclCSNmMl4andWevPT1wUjtWyJLNtbnGaPc4+32EXzDFTkhX4VCGaHJl+2sRc
-	oiih6ghONZwEO/YMwtMj4EmUDSk2S+SkFcdVEHegEWXbUhlK0+ng0C3KqvgJw+h0jHCsgKtKqIi
-	L60A3EO0/u85fRO+gmnZ5k9SgLNvlNepCcrvlggmzL6wPWWlbLA7OzddosTS24sP2B9NfRHyHq/
-	zVcJDFVaQtTl9r0udrjqJlmf6KeA+N9Kn0U6aIwOAEFoRSBP427gny4wKAotyBil5k8pkihppwh
-	L8liOGUFuf5kK2TzKTgnyAzIngczFRGz2efg7g0OUBoTt72WRW+uZ9fBQxqK40hw8sbwnT3HhYJ
-	rV9u6DHh1CsZH4ovfZke49IG2XSXzHM+quVDHnIkXkhc/x3rpd+3iJRh9IqtIZgV/GNutv3FTvV
-	u9iw2Xx+w0rSIQfHcvZmmU5FawMOHX+GKNHSZ8qAPAK5hidtY0/1bFG6BxK6zwogOCrkLK3KQw7
-	EGiTnh13swifrvXPajHrMmRvteOcQ==
-X-Received: by 2002:a05:622a:1113:b0:501:3e36:1513 with SMTP id d75a77b69052e-5070bb8283fmr181282711cf.6.1771959624175;
-        Tue, 24 Feb 2026 11:00:24 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d6c62fcsm102729701cf.23.2026.02.24.11.00.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 11:00:23 -0800 (PST)
-Date: Tue, 24 Feb 2026 14:00:21 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 12/17] midx-write.c: extract `fill_pack_from_midx()`
-Message-ID: <f3952f7db36585642145f5dc7c2192e5ddff7610.1771959555.git.me@ttaylorr.com>
-References: <cover.1765053054.git.me@ttaylorr.com>
- <cover.1771959555.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PTN4OTDU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wjnQlNZ2"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C39907A01FE;
+	Tue, 24 Feb 2026 14:11:21 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 24 Feb 2026 14:11:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771960281; x=1772046681; bh=JsVYGHezm0
+	rfiBl9/FWE+n1Ayx+n8SP+KMXzKR8K6Bo=; b=PTN4OTDUKJdf7BfNEGA5X+46NT
+	V9ive9e69hYopSND4/riV9tKH7ZyB5qx6m5fb3iQ9BvkcUOZNUf9Tf6FPMhPEYBe
+	yv+oDE/rGJA7Idcdb4jBAeOO5cxYN329wYNoZf9n8dGnzhw1hsz+HtJr/XQSLzWC
+	kt0Zw4ylUfJFe280ycEoUn9MmxKb1rHBS1GBh3IVC6GCH3Kg7Zh0xkryApOTh4EE
+	3JkDstjcZoyQw1sAqpDnjP8nKFZOtk99vGsrCppu+RkpWsKZfNxG08wGfSbgxcim
+	ytemzUolTGhWeyGaJyNZxpcKkV2azenfaTqL8sh7UickVFKS9x2HX8sfXBSw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771960281; x=1772046681; bh=JsVYGHezm0rfiBl9/FWE+n1Ayx+n8SP+KMX
+	zKR8K6Bo=; b=wjnQlNZ2J6z4l8/pMWpK2fNNb/Bsb3KeXhBgOvffx8yvjCqSu5X
+	ECkAaa6YvAAKqaPYt8J136mhKfMSH6Ltds72tGd86g/IxAU0lD1tyVLz6xLXf1ey
+	0Gh1H5nWJkd1NvMT/rugDXGW0Sb525RuY1bxbGrWMkAKqb8FLAhhQSiSRmUBBERt
+	ZwDPS/XJmwnDqq6rqxpujqlJc3EU4Skc5B/LwjzrgqKoizUTjw+mtAcCL/Ykd5h1
+	FmGj7mCEx4IJTMO6WJnC9I+EiT+mPAar5Fkpxe8nElgr52tiJ2Yd6+bZGe+QhVUW
+	mGWm4UdSLV2Dd1XeBIznUiE4jgVxvXO5qLQ==
+X-ME-Sender: <xms:2fedaSmKGB07rXDVeIcPojjGw59YbAgNAeYMe7MlDaxOlgkJ2_hUxQ>
+    <xme:2fedacGtLVq9GhlH9rhzFSr8DN632GsKIrr1hCw8__VxVY_K0ENzmKIh-OkYQM_xs
+    IGe6C1H50DQCiK1cxRcFuf94Ts0lxARFzmZKGtrM15bFSPR61Qdow>
+X-ME-Received: <xmr:2fedaS49vuaHH-L9WBakYXk_Ty6UdIeF8atSCzoJglztRHQoUseRoNkISOF53nRqHTRg9tguVaIMrZmhy08I0xCfUgFhXHmbQw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedtleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhonhgrthgrnhesjhhonhhtvghsrdhprghgvgdprh
+    gtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffh
+    drnhgvthdprhgtphhtthhopegsvghnkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:2fedacnODgN6HdFT8tdlB8WYWlXfUtJwjmBgheBnb5223d4-awN_Yg>
+    <xmx:2fedafp1F9K06DMq653DnyxFce94afLmv_64boL_WMTeUIdI3ltpIQ>
+    <xmx:2fedaTs3wWjY1JAujLuk2SCiFXMjq_3NWMtBYlPNFQ8gHKVitwT1qg>
+    <xmx:2fedacHhIbrHBRGLRlinLfJEwv7hxXv-cSENIhSj9akvQkaCb301Ew>
+    <xmx:2fedafZcolvDdB69Cscvj6bvjaImUCePEiRTSBOT8d2g95bu_eeg7qwC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Feb 2026 14:11:20 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jonatan Holmgren <jonatan@jontes.page>,
+    Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org,
+  peff@peff.net,
+  "D . Ben Knoble" <benknoble@gmail.com>,
+  "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 1/2] doc: fix list continuation in alias subsection example
+In-Reply-To: <20260224171245.458377-2-jonatan@jontes.page> (Jonatan Holmgren's
+	message of "Tue, 24 Feb 2026 18:12:35 +0100")
+References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+	<20260224171245.458377-1-jonatan@jontes.page>
+	<20260224171245.458377-2-jonatan@jontes.page>
+Date: Tue, 24 Feb 2026 11:11:19 -0800
+Message-ID: <xmqqwm02ez3c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1771959555.git.me@ttaylorr.com>
+Content-Type: text/plain
 
-When filling packs from an existing MIDX, `fill_packs_from_midx()`
-handles preparing a MIDX'd pack, and reading out its pack name from the
-existing MIDX.
+Jonatan Holmgren <jonatan@jontes.page> writes:
 
-MIDX compaction will want to perform an identical operation, though the
-caller will look quite different than `fill_packs_from_midx()`. To
-reduce any future code duplication, extract `fill_pack_from_midx()`
-from `fill_packs_from_midx()` to prepare to call our new helper function
-in a future change.
+> The example showing the equivalence between alias.last and
+> alias.last.command was missing the list continuation marks (+
+> between the shell session block and the following prose, leaving
+> the paragraph detached from the list item in the rendered output.
+>
+> Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
+> ---
+>  Documentation/config/alias.adoc | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- midx-write.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+This seems to address the same issue as 0ed2275f (doc: config: fix
+list continuation in alias section, 2026-02-23).  Should we treat
+this one as a replacement of that one?
 
-diff --git a/midx-write.c b/midx-write.c
-index 9d345fb4737..c54113cdc84 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -913,6 +913,21 @@ static int write_midx_bitmap(struct write_midx_context *ctx,
- 	return ret;
- }
- 
-+static int fill_pack_from_midx(struct pack_info *info,
-+			       struct multi_pack_index *m,
-+			       uint32_t pack_int_id)
-+{
-+	if (prepare_midx_pack(m, pack_int_id))
-+		return error(_("could not load pack %d"), pack_int_id);
-+
-+	fill_pack_info(info,
-+		       m->packs[pack_int_id - m->num_packs_in_base],
-+		       m->pack_names[pack_int_id - m->num_packs_in_base],
-+		       pack_int_id);
-+
-+	return 0;
-+}
-+
- static int fill_packs_from_midx(struct write_midx_context *ctx)
- {
- 	struct multi_pack_index *m;
-@@ -921,13 +936,13 @@ static int fill_packs_from_midx(struct write_midx_context *ctx)
- 		uint32_t i;
- 
- 		for (i = 0; i < m->num_packs; i++) {
--			if (prepare_midx_pack(m, m->num_packs_in_base + i))
--				return error(_("could not load pack"));
--
- 			ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
--			fill_pack_info(&ctx->info[ctx->nr++], m->packs[i],
--				       m->pack_names[i],
--				       m->num_packs_in_base + i);
-+
-+			if (fill_pack_from_midx(&ctx->info[ctx->nr], m,
-+						m->num_packs_in_base + i) < 0)
-+				return -1;
-+
-+			ctx->nr++;
- 		}
- 	}
- 	return 0;
--- 
-2.53.0.171.gde83996e422
-
+> diff --git a/Documentation/config/alias.adoc b/Documentation/config/alias.adoc
+> index 115fdbb1e3..7830379f58 100644
+> --- a/Documentation/config/alias.adoc
+> +++ b/Documentation/config/alias.adoc
+> @@ -30,13 +30,14 @@ Examples:
+>  ----
+>  +
+>  With a Git alias defined, e.g.,
+> -
+> ++
+>      $ git config --global alias.last "cat-file commit HEAD"
+>      # Which is equivalent to
+>      $ git config --global alias.last.command "cat-file commit HEAD"
+> ++
+> +`git last` is equivalent to `git cat-file commit HEAD`. 
+>  
+> -`git last` is equivalent to `git cat-file commit HEAD`. To avoid
+> -confusion and troubles with script usage, aliases that
+> +To avoid confusion and troubles with script usage, aliases that
+>  hide existing Git commands are ignored except for deprecated
+>  commands.  Arguments are split by
+>  spaces, the usual shell quoting and escaping are supported.
