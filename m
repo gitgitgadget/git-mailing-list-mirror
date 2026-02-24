@@ -1,135 +1,107 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-out-4.itc.rwth-aachen.de (mail-out-4.itc.rwth-aachen.de [134.130.5.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1660A39C648
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 13:40:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771940458; cv=pass; b=Rr0t2Yajrg2cAPSol/hRUTRmZdiOPk9UylNv5gYY7xcCY/FrDvHf7V3EX2mh1yIZQbYCE66lqYEznlbOvAt343aqzGGkrrtgSMFns2e69FsrbLbfs2yS+qtAE+VaP875zBbQsuvSrQv4ypVlRd/67y5II4JDAcIEVYRn9NCkj1I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771940458; c=relaxed/simple;
-	bh=k/dAbbJsSjOvxKKhdLF7tPDJWHCyhvv0NQp5cHIdb1A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C1l1Eg86TLeTmpmerLTgo6bAkWyFALnUUS1w5t3oYlN2UZbrbUNzOv5W3s9dO6sd4TMgk826WoqvK9Meb31nh2jVBkEkHyXH9cqwNu5C9NlHMO6PyP7I/QLavfqg+aF1qzv+WA1EGyrUhyusjYS1wC0aue/qEUcUXnBBRUsqEFk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z3tamyXO; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9674939E16A
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 13:44:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.130.5.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771940670; cv=none; b=n+Mxw3xBOPDQ/aEqFZhHoaHqLyePtpGV8i/MBsFKUkd+XLYqt1UCKeazaB1gkIGRKiVRFTFkWgWMyRZO3h/vJJsUV8Uoo2TaY629Gg6rrXzQ7NGvDJQejJpkTFbllESGCpZ31+AqCpABpisdGHuUgCS+G4uKPD60d2vzz9bxqMw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771940670; c=relaxed/simple;
+	bh=VH/5Z1gKnEioK78tWF6LqxfCMaT4EyV0HNiPg4Yvj1Q=;
+	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=ugGKsQ4Q5yA/M+VqAZCtdUWsLPyM5+G8BPPSMCXIOIhW95BwkaELXIEwT3rK+LKQdrpvXyszWGVMt6bsuoMzUG4V7OX/RmlNUjqpfhAoTNmiPJKQi7DxS7S5fky4XwIX2JaRYYVzsopgbVnykR9z/hB/VGD9eOdTgmYOoZJXyAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rwth-aachen.de; spf=pass smtp.mailfrom=rwth-aachen.de; dkim=pass (2048-bit key) header.d=rwth-aachen.de header.i=@rwth-aachen.de header.b=nDDotBct; arc=none smtp.client-ip=134.130.5.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rwth-aachen.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rwth-aachen.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3tamyXO"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-124afd03fd1so7620980c88.0
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 05:40:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771940456; cv=none;
-        d=google.com; s=arc-20240605;
-        b=DVT7606dwuigbk7GbzfWN5I0uiFK8grr2vRGywYYLY2UhOL08q0MAvX5QiNEKfwCY1
-         zq/Ns04/m/RMipQ1SgTMusvSxLExHJqTWliu1GMYM3bBX1+/NvlZeT6Y2oWw1qZUOg0k
-         taJca35zAoa75UwNdD2/u6e+UhzqRVGZpogYDO7KwLD98c2T7KLDSjRTqA1kAeyvwWLh
-         lyaQoxhxrrL+yUR9pOwv6DsM/R7kOYIDnf4cA+GsEP9nz4qW90wSZck8qeuuDaX0k0Ip
-         Po1X+4uPxJHm//bPRpAYXIvOeA2ti5YvPxbn+2MDyrxfKYaI1/ukwPmcott14g+aiYA7
-         TISg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=k/dAbbJsSjOvxKKhdLF7tPDJWHCyhvv0NQp5cHIdb1A=;
-        fh=zTHgSnOoigxay7MAqW6/2L46bMXCjzW0qVatUn5WI/Q=;
-        b=NRsvL3LSIG7jqPdS19nM3/MjIFZqVc3aHWY6sE+R/8eELf9jY0slyhz6MtyI98k9R+
-         mhVScwthJmLBZbWOFfJ3suQ0QmiTwuBQyAe+nQL3Hew/l48Nn/qNUMIR/u1BJ5f5fnBd
-         JVYTXjF34UbOwapanPjGFVWyeF0VEMK5X8g2YMAbfDPaPYhsl9NJGctHZBDT+3XXY1/y
-         R8jiHVTXRXhp7cK/NUtUjeygDDqjEUPAaYCUjhUEGvem3F+tnbwYRF3MlN/e1Nwzk4/8
-         wyzBSCm8I9uwAPGkvvosWpND/yR1p72m3MZrjP52vNyrMK8GtswoBq12nEFPsxLExhOs
-         kRKw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771940456; x=1772545256; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k/dAbbJsSjOvxKKhdLF7tPDJWHCyhvv0NQp5cHIdb1A=;
-        b=Z3tamyXOn41ikRcjDd2Y2GKwYNzBlFBydZFxU0V9hEIoNRtMFdkpBg1m3g2zHSo0Yt
-         NfZ3iyoN8bgFuDQzdY/cVN6vd90HvQFiZ/03l5YIZHuaLGB4zhL/o95ZNEIjqUyHUkL5
-         1gPv9+vn3ZJkFNmXTyirtqaAOufRfLR6qYNqu5QUTBBBe30bs9K6koXF2fS9Io8IeqtV
-         KgwIm9oSUWZQBwlXXZJJDanqLi6jCZORvV3FqcIomA066T9HhAi+Q+HB4UQb5wOdnftm
-         OebfEbIe1P1ap6dS1H8ukcy8hTExs2BUMprjE9ODpXKO0tHWZ86brf16HBCZnuSbC/ij
-         6uPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771940456; x=1772545256;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=k/dAbbJsSjOvxKKhdLF7tPDJWHCyhvv0NQp5cHIdb1A=;
-        b=PDds/FmeeVlU039FZneI+FlZRTnKU5yQuRUGb46zHOt4bKyWmMXguBjEhTGG7rzezv
-         qyLQkcqTShqklv4f0vS7qAUUjwkHInpnxajypnT0RVz9g2P8Ebf9OT/Me2C/OjKEX0wy
-         ECvUFiYIZMNXbamVjOtZm/sK2O50HFmoAQ0TN/Y66mBgjpTd8kd6/8b9HC/iqmhoMI5t
-         mIfo/PsiuYNaRwB9VWfLCE62MgXOgDAzIc3GlwGpeXYGB5G5ms8xqF8RIhZweg4x9Ll4
-         FEKYAngG5JLF7qixVN2OesNEV8qjJV9AP/Vz9BoDDhqFoRwbe3RvhN032T6cUxMWwrQk
-         FtEA==
-X-Gm-Message-State: AOJu0YyVYtvSdExxFDHVWJbeZX4u1/gHGEbVye3L4p9l47T9u0gcsEHu
-	n1CIe4vIo1BX1XPqnyZJAiV5DmnnBD4gxpbF7wvKxgSG1jXimDJ7cChofeq1bxtx+UFjqlzbYhi
-	6SGDQfk10nqiTSkcJfngsANC+k4wPwsbfA0CU
-X-Gm-Gg: AZuq6aILvegz40ub3ltRirkUiuEZZ0rZbA34uL+riyyX355GQLzUuLYvSQeDOaeqj65
-	LrFVVH69/mq/IjcvhYJEO/B7oq4msimn4IKvSikCOQIum8qoxr6CF5T/19q9NdHMrgcBJ1c0qCg
-	IELmdPtrGKC25WwtK/JKpNjO9YKMzQepVFR0VT1iuSnrLG+RzJPHgAHfz/dJbIvkD0dzzs5Ulh+
-	R+kurRvWbjzZhfO3diq8hD+qLj3gRl98XDaEpkn9aCWDPVfBLvaymXp+mS6AkaQDMyl2BayHGfQ
-	7OT2DF1j8QMoJfmOUebeQdxLMIpSkrZLtpd4kRLWIoAVXSvClYqLHeekgBv+W5bF7to+
-X-Received: by 2002:a05:7022:61b:b0:127:5cda:aaf2 with SMTP id
- a92af1059eb24-1276acbf40bmr5199319c88.10.1771940456019; Tue, 24 Feb 2026
- 05:40:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=rwth-aachen.de header.i=@rwth-aachen.de header.b="nDDotBct"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=rwth-aachen.de; i=@rwth-aachen.de; q=dns/txt;
+  s=20240516-RWTH; t=1771940669; x=1803476669;
+  h=from:to:subject:date:message-id:references:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=VH/5Z1gKnEioK78tWF6LqxfCMaT4EyV0HNiPg4Yvj1Q=;
+  b=nDDotBctQ4OCoWEhGoBsQbTXwfH+JJCplYpvpPIf/b3f0Wm52u5pH4q8
+   x2R2ipRwhQZt9aHgxy25gXrlw9OzQy1XtD5TT0VrsrXKrZPkrQHuj0/x7
+   NWakOcHuGNluHSGK2B7y2YQlpWEokGcYnhC8wLvKt6G9BYQEKwBpxRatq
+   fhdi0sD5S7a+ou04On5AmaHWAlon8YD1Dnhvu48h3gWmdOnJ0JcJidOcS
+   b1go+TkV0G3ZKIj9jjo+IDf/jzZu3lPfXQADaQFBy86B6WxBVypiaRHSE
+   QTVTxBCZC9FmvDTmOjsjY+G8I5yexID7uhH7YiJ4HLBp9HvOa5vZHwJ7P
+   w==;
+X-CSE-ConnectionGUID: hlo5JDDqQ16BL4fb7oI7Ug==
+X-CSE-MsgGUID: YMZrx9I+RRWPuF8GFZ5kKg==
+X-IPAS-Result: =?us-ascii?q?A2BOJADlqZ1p/58agoZagQmBUoVNAQG0SoF+DwEBAQEBA?=
+ =?us-ascii?q?QEBAQgBFD0EAQGEfQEBCAKNHyg7Aw0BAgQBAQEBAwIDAQEBAQEBAQEBAQELA?=
+ =?us-ascii?q?QEGAQEBAQEBBgWBIYYJRwyGWwaBCQIBTjElAgQbhW6pPoE0gQGEfNsygU6IU?=
+ =?us-ascii?q?wGGLIRCggxDhA6LVCIEgiJ6FB2TGCyBHngsAQ9GExcLBwWBZgMqLy0yPDIdg?=
+ =?us-ascii?q?SM+FzNYGwcFhlwPiHeBZoEegV8DCwdmPTcUGwYBgTWRewaBO4E4AqRqoXoDB?=
+ =?us-ascii?q?AOCNYFnBaFbLheDcQESk1yTC5kGIoI2pj4CBAIEBQIYghIBgWpxgzdRFwIPj?=
+ =?us-ascii?q?l/EVIE0AgcLAQEDCZJKAYEcAQE?=
+IronPort-Data: A9a23:1Vk8S6Aap/21sBVW/3riw5YqxClBgxIJ4kV8jS/XYbTApGsr1mRTm
+ jcXCDqCPvbYZGCjLYxwb462oEhTsMeHzIQ3OVdlrnsFo1CmCCbmLYnDch2gb3v6wunrFh8PA
+ xA2M4GYRCwMZiaC4E/raf658SUUOZigHtLUEPTDNj16WThqQSIgjQMLs+Mii+aEu/Dga++2k
+ Y20+ZS31GONgWYubDpOsf7b8XuDgdyr0N8mlg1mDRx0lAKG/5UlJMp3Db28KXL+Xr5VEoaSL
+ 87fzKu093/u5BwkDNWoiN7TKiXmlZaLYGBiIlIPM0STqkAqSh4ai87XB9JAAatjsAhlqvgqo
+ Dl7ncHqFV15bvWkdNM1CHG0GwkmVUFPFSSuzXKX6aR/xGWeG5fgLmkH4EweZeUlFuhL7W5m9
+ fgfdRIhQgm63ryc5O61QLZrp5seI5y+VG8fkikIITDxF+k6QZ3TBrqQoNUexigshoVHEbDSa
+ qL1axI2N0iGOkYXfA1JTstjzY9EhVGmG9FcgE6UuaMx4mGV1xF+0bH3LN39YMOWRYBcl02Yq
+ 2SA82mR7hQybobFmGDUri/EaunnrAbJQpJDNf6CzMFSnXPD6UIhVR41Wg7uyRW+ogvkMz5FE
+ GQb+zYGs6c/7gqoQ8P7Uhn+p2SL1iPwQPJKDPE65RHI1fCR6UCDGXQECzdNLtAr3CMreQEXO
+ payt4uBLVRSXHe9EBpxKp/8QeuOBBUo
+IronPort-HdrOrdr: A9a23:+t615K7eFx8Z1jMRSgPXwO/XdLJyesId70hD6qkmc20zTiX4rb
+ HXoB1173HJYVoqOU3I+urwQZVoI0mslqKdurNhWItKNTOO0ADDEGgF1+vfKlbbdxEWmNQx6U
+ 5ISdkbNDSJNykZse/KpC2/FdskzJ2g66CnheDX0ndrQ0VRYbph9hoRMHf8LqWhLDMoOaYE
+X-Talos-CUID: 9a23:fUETTmDeHVLNw3j6Eylj8xM2Nuw8SySD5lOMLUXnDkc2dbLAHA==
+X-Talos-MUID: 9a23:dcSwYQqQrnFvy99ubO4ezwBHBt14soXtMnoyqYgo6+aqB3FzGDjI2Q==
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="6.21,308,1763420400"; 
+   d="scan'208";a="22292945"
+Received: from rwthex-w2-b.rwth-ad.de ([134.130.26.159])
+  by mail-in-4.itc.rwth-aachen.de with ESMTP; 24 Feb 2026 14:44:27 +0100
+Received: from RWTHEX-S2-B.rwth-ad.de (134.130.26.155) by
+ rwthex-w2-b.rwth-ad.de (134.130.26.159) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Tue, 24 Feb 2026 14:44:26 +0100
+Received: from RWTHEX-S2-B.rwth-ad.de ([fe80::da1b:3f9e:2ef:13be]) by
+ RWTHEX-S2-B.rwth-ad.de ([fe80::da1b:3f9e:2ef:13be%8]) with mapi id
+ 15.02.2562.037; Tue, 24 Feb 2026 14:44:26 +0100
+From: "Sugiarto, Titania" <titania.sugiarto@rwth-aachen.de>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Feature that allows the user to merge only specific files/folders
+ from another branch
+Thread-Topic: Feature that allows the user to merge only specific
+ files/folders from another branch
+Thread-Index: AQHcpZMvLszBf3EeWEaY9rlSzRf8trWR2/kK
+Date: Tue, 24 Feb 2026 13:44:26 +0000
+Message-ID: <14775be9ed944bf684c3696e1a10f44d@rwth-aachen.de>
+References: <532e9d58b905404fa625aa59104ce8f5@rwth-aachen.de>
+In-Reply-To: <532e9d58b905404fa625aa59104ce8f5@rwth-aachen.de>
+Accept-Language: en-GB, de-DE, en-US
+Content-Language: en-GB
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260223194146.3476768-1-jltobler@gmail.com>
-In-Reply-To: <20260223194146.3476768-1-jltobler@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 24 Feb 2026 14:40:44 +0100
-X-Gm-Features: AaiRm52cD5DrXu5UhIVms8n8dRelUTPtdxOJY0wHKrpSriZQCAs1reQQ2ihkkdk
-Message-ID: <CAP8UFD0OP3BP2RxiL2ip8WEC8SqT5LGH5dSco-2Jwzsd_4=60g@mail.gmail.com>
-Subject: Re: [PATCH 0/2] fast-import: add mode to re-sign invalid commit signatures
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi,=A0
 
-On Mon, Feb 23, 2026 at 8:42=E2=80=AFPM Justin Tobler <jltobler@gmail.com> =
-wrote:
->
-> Greetings,
->
-> With c20f112e51 (fast-import: add 'strip-if-invalid' mode to
-> --signed-commits=3D<mode>, 2025-11-17), it became possible to remove
-> invalid signatures from commits via git-fast-import(1) while maintaining
-> valid commits. Building upon this functionality, a user may want to
+I have a suggestion for Git, which includes a feature that allows the user =
+to merge (I want to highlight merge here, not replace) specific files/folde=
+rs from another branch.
+I feel like a lot of users have spoken about this online but up until now, =
+there hasn't been an update regarding such feature.
 
-s/valid commits/valid commit signatures/
+Might be worthwhile to consider?
 
-> re-sign these invalid commit signatures. This series introduces the
-> `re-sign-if-invalid` mode to do so accordingly.
->
-> The newly added mode in this series currently ignores
-> `extensions.compatObjectFormat` when generating the new signatures. From
-> my understanding, to generate the compatability structure would also
 
-Here and below: s/compatability/compatibility/
 
-> require us to reconstruct the compatability object for the object being
-> signed. I think this would be possible to do, but would require getting
-> the mapped OIDs for the commit parents and tree. I'm not competely sure
 
-s/competely/completely/
 
-> of a good way to go about this yet though. I'm also not completely
-> certain if this is something that should be adressed as part of this
-
-s/adressed/addressed/
-
-> series, or could be done later down the road. So for now I've opted to
-> delay its implementation. I'm open going down the other route if that is
-> preferred though.
-
-That's a reasonable approach to me.
-
-Thanks for taking over this.
+       =
