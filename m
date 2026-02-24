@@ -1,108 +1,150 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFB129B76F
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 06:26:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771914414; cv=none; b=o0lesY2naLQPCpaS9D3Cx+zjWk6ADC+SpfWSK4kV6GqH5G+xrsHeGXZcxlk2Tuy7DnDwjmVkxzCpJ6g7iV6/ApfJZ8Gwqpd22W52g7xPGSXFzHQxvtybwXd7B0ZNr71YFqIvdysnoD4v2bALEvD818eFlAqNnawaZaweAOr7+OI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771914414; c=relaxed/simple;
-	bh=4ep6CHok0noF4HdmaNWhCVu7OAq2zreGwPaJ6sCYJJQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jqt6WI9ctZJTqvPIxLbua5H/PEDeWlodl90K3JdljlngOMG3qdkJKBHRzGKCWYl9g9coysZXsyY77kwuSefFTsWt9U90mvU71bubUJ7TuZCTNIPFGFGV2ZVYhhgj8jPp3ZjDZWHzQIzBzqh4EN9/RkBB+CGTdfKOuk3g4f2iOmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Z1hDc1jQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MJHfPmWB; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1948E187346
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 06:36:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771914989; cv=pass; b=FseVT7I6nPYsq50E93YBmhwAXgqNNgbG70azjZUvxV+vc8A51pdtZoiBN6Wcwo4PqgeWgS4ANeVZdDW+RSMEDzt1lWwmhz9wJhbJ6/PSOLg24UBKc1pBwh+O+SHiUgu4F1Vf0jBzxq32rMnjarUbjmybcDXeSmoBpMtAxQ9eBys=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771914989; c=relaxed/simple;
+	bh=nmhTnoXRMmg/I0fU/KgnYLW1jg2Upe1+glE8LUwMzsI=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=hyFnmNxdtbPLj3Ec40uJoZw4xhtEOqBgwByjsHLvK6VXIi7s9EwKGb1dndsBULo3HAw/s7lSwfOpBnbTjRBBop7EEBtdivHGfaxHzbSG0rjUfUfjkvj+AZikoafugfIbDja2E5eYbxRy6lC6MCpHRO9pjuU2fniVE+MXEmGC/Xw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=VcuQOa4J; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.beauty
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Z1hDc1jQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MJHfPmWB"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C3B5F140019B;
-	Tue, 24 Feb 2026 01:26:51 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Feb 2026 01:26:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771914411; x=1772000811; bh=0u7eApjV/F
-	lPPhdAvqubWxL61AlvOOmQbRSfJxSkFJw=; b=Z1hDc1jQ8vcGxeTKvfBjl7myGZ
-	qjAkug8ngBov+CvPzvlr5UynT0jFouqG7yqmdTb7SBJIfkbqB/GwBqUNsixU12Xx
-	4bjj/FN3ODIUc32AgD3EOLm5f3KF9Ynlm6eK09AWqNN8+n94TKk4fLQU+bPN23Hc
-	oteczsLa4w6sbWebTqLzhUE0ITl2H4+F+dUPtdjrzYz6jHXvHb4RL89eF/2W3L1z
-	Lo0Qry0Cj3qhZkOJOPcj+uz6NrJbxzGwEd6EkofMda1dI83FL/09NdV9F8J2zBM2
-	rM5WVxL2htAqI+IWvpQDbnhiiIy8gL44a+ntDkzcTBYAGDd0WPYYpBnGv+ng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771914411; x=1772000811; bh=0u7eApjV/FlPPhdAvqubWxL61AlvOOmQbRS
-	fJxSkFJw=; b=MJHfPmWBAE5KklQDOeq4GXx0azlGaxSrgv8O6yk/xKpqH7NWYNh
-	JngWlrFXcapqYDYfcknadK94Dh5PLrlp3jLrWLuZqwXJxvx9JIqm+looGeHSHRn0
-	EjbWpTzGpHxkSdBf0FrNYfu8VQCD3Kd7qa64c5l501RlWcwbGz1gGRodI38pGSHU
-	kxzrVlQG587vr/0tgzXztoSc1+718voo7m9+uZVvQ9Iuu2qBGpV/PNVKbutG/IPu
-	7qybLDnofnM2TAKBx6DLOpTUB0XClmPx5QIJKvswbpZJ7JcZrBdyWi1cwwSYLINX
-	qep7hS43GEcSuQGo4TXDtquQtd8671OCuaQ==
-X-ME-Sender: <xms:q0SdafiFMcDeESDgyMznHM-7wA_IFi_5z-bAk0T2qw1jgwVhUr_hwA>
-    <xme:q0SdaTCbQUdoe54Gb4x_IKo4W3S2VQawzZEYXqekjMC_x7FYcwcBC6TUN-35PitiZ
-    Uyliey3Kbmv_Y99_nkTa2BpvzLbS8YaM317psIWc8TgFdMxOdeb-ow>
-X-ME-Received: <xmr:q0SdaUFBhma3rPq7gcJ3t5tlxh2HMZ6KxgOTY1Ksk_1DvBWwj1ItriYJM2o0unyZ8sd14yPDFsr5HsIT010Ykp41ktCtFgsooLFFCrdx9goyeA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeelgeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
-    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:q0SdabI81qTHqza_2tYXIkhiQuKhm2UidVTlQ-do4Y16N8_SLU_GDg>
-    <xmx:q0SdaYn5GKesvJmfy9TCydL298bt0dtEF_AgaYHjuHGst4IiXFYF7g>
-    <xmx:q0SdaTSjtbwCFNpKJkdyL4IrlU_aEIUVogegf63t30WVrVDbdhSkZQ>
-    <xmx:q0SdaaJI0p3Vm74AVSd0P1bp_iT8KbfoAaKQTF_xUEqhe-TjYa9srg>
-    <xmx:q0SdaUnJ47jZ6HC2KqDRu2C4i25Yv0LWM799iBjuQ_bYcIpeDdAbt6sn>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 01:26:50 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 24f107b5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Feb 2026 06:26:48 +0000 (UTC)
-Date: Tue, 24 Feb 2026 07:26:45 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] pack-check: fix verification of large objects
-Message-ID: <aZ1EpbaPfILWFbcT@pks.im>
-References: <20260223-pks-fsck-fix-v1-0-c29036832b6e@pks.im>
- <20260223-pks-fsck-fix-v1-4-c29036832b6e@pks.im>
- <xmqqsearkxjv.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="VcuQOa4J"
+ARC-Seal: i=1; a=rsa-sha256; t=1771914976; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=WQEnWBdqTguJPqcLlpl43ec4pYMRob7Fr/F6HkYDdWdsarbCkjBdDYDZPuxorYzNDN8n1xQVrS17iGjBUWg3Hfe22AmX3lONgtxpNdYeFlwKNKZtvELwhK5ULrlPP2bsnVKcX7fDQB/lIXVRJdVWw3Xt7Dq+ay5opWrCGS0JgM0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1771914976; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=FzS9xW4yiiVHn1fFV12jF3tF1veGzwmzYwll1RisOSg=; 
+	b=m1prLnWy14cB1orBVeXmKRvxqlJfOGaHnygGogDh/uHasXVshvvYxIA92c7hcrwnahVDPUp1vaE/aS6oUoKhFcNjbgsgcgROcwQ6SMnFgkgn50/1chCmbj6atEWf74X8npm0sqjLVRt00JchAziy9R8Z7lR20tyOrwv2vhaRE0E=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=linux.beauty;
+	spf=pass  smtp.mailfrom=me@linux.beauty;
+	dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1771914976;
+	s=zmail; d=linux.beauty; i=me@linux.beauty;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=FzS9xW4yiiVHn1fFV12jF3tF1veGzwmzYwll1RisOSg=;
+	b=VcuQOa4Jvfv0+RbkMgZlq4Kk0pJJEUdxkRZCz7SPwDLarJ3Bm7yiEioJsm+JCKan
+	kmQpesGa8V9d6r1VwK65eWk/dSp+lE3K6KsLzrCn0FeUDkqGB3Sdwp7dGeaMNF/n7Np
+	Wq71zviHUeKCLKt95J5ANVympmKXC/Oju/HjW9JQ=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1771914973719449.0248939079995; Mon, 23 Feb 2026 22:36:13 -0800 (PST)
+Date: Tue, 24 Feb 2026 14:36:13 +0800
+From: Li Chen <me@linux.beauty>
+To: "phillipwood" <phillip.wood@dunelm.org.uk>
+Cc: "git" <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>,
+	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Message-ID: <19c8e5cd208.389d71793180723.4083726630202768168@linux.beauty>
+In-Reply-To: <ef12ada7-13ae-4df0-a823-6f428c797223@gmail.com>
+References: <20251105142944.73061-1-me@linux.beauty>
+ <20251105142944.73061-4-me@linux.beauty> <ef12ada7-13ae-4df0-a823-6f428c797223@gmail.com>
+Subject: Re: [PATCH v6 3/4] trailer: append trailers in-process and drop the
+ fork to `interpret-trailers`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqsearkxjv.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-On Mon, Feb 23, 2026 at 12:35:48PM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > Fix this bug by creating the object stream for the packed object
-> > directly via `packfile_read_object_stream()`. Add a test that would have
-> > caused the infinite loop.
-> 
-> Curious that we have a completely different test.  I've locally
-> applied (without committing or amending) t1050 update from brian's
-> patch and with this series, fsck there does not seem to get stuck.
-> Of course, the new test added here doesn't either ;-).
+Hi Phillip,
 
-Yeah, the fact that the test in t1050 hit the bug was pure coincidence,
-and I wanted to have something a bit more reliable that also allowed
-myself to prove what exact circumstances cause this to fail.
+ ---- On Tue, 11 Nov 2025 00:38:55 +0800  Phillip Wood <phillip.wood123@gma=
+il.com> wrote ---=20
+ > Hi Li
+ >=20
+ > On 05/11/2025 14:29, Li Chen wrote:
+ > > From: Li Chen <chenl311@chinatelecom.cn>
+ > >=20
+ > > diff --git a/builtin/commit.c b/builtin/commit.c
+ > > index 0243f17d53..67070d6a54 100644
+ > > --- a/builtin/commit.c
+ > > +++ b/builtin/commit.c
+ > > @@ -1719,7 +1719,7 @@ int cmd_commit(int argc,
+ > >           OPT_STRING(0, "fixup", &fixup_message, N_("[(amend|reword):]=
+commit"), N_("use autosquash formatted message to fixup or amend/reword spe=
+cified commit")),
+ > >           OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("u=
+se autosquash formatted message to squash specified commit")),
+ > >           OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commi=
+t is authored by me now (used with -C/-c/--amend)")),
+ > > -        OPT_PASSTHRU_ARGV(0, "trailer", &trailer_args, N_("trailer"),=
+ N_("add custom trailer(s)"), PARSE_OPT_NONEG),
+ >=20
+ > We have OPT_STRVEC to handle this. The commit message should explain why=
+=20
+ > we're doing this (because we only want to pass the value to=20
+ > amend_file_with_trailers()). Alternatively we could use skip_prefix() in=
+=20
+ > amend_file_with_trailers() to skip the "--trailer=3D" prefix in this pat=
+ch=20
+ > and then clean it in a separate patch.
+ >=20
+ > > +        OPT_CALLBACK_F(0, "trailer", &trailer_args, N_("trailer"), N_=
+("add custom trailer(s)"), PARSE_OPT_NONEG, parse_opt_strvec),
+ > >           OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-by t=
+railer")),
+ > >           OPT_FILENAME('t', "template", &template_file, N_("use specif=
+ied template file")),
+ > >           OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")=
+),
+ > > diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers=
+.c
+ > > index bce2e791d6..268a43372b 100644
+ > > --- a/builtin/interpret-trailers.c
+ > > +++ b/builtin/interpret-trailers.c
+ > >=20
+ > > @@ -142,21 +110,15 @@ static void interpret_trailers(const struct proc=
+ess_trailer_options *opts,
+ > >   {
+ > >       struct strbuf sb =3D STRBUF_INIT;
+ > >       struct strbuf out =3D STRBUF_INIT;
+ > > -    FILE *outfile =3D stdout;
+ > > -
+ > > -    trailer_config_init();
+ >=20
+ > Why is this being moved?
 
-Patrick
+In v7 I'll initialize trailer config once in
+cmd_interpret_trailers() (after option parsing), and keep
+interpret_trailers() focused on read input / call helper / emit output.
+
+ > >       read_input_file(&sb, file);
+ > >  =20
+ > > -    if (opts->in_place)
+ > > -        outfile =3D create_in_place_tempfile(file);
+ > > -
+ > >       process_trailers(opts, new_trailer_head, &sb, &out);
+ > >  =20
+ > > -    fwrite(out.buf, out.len, 1, outfile);
+ > >       if (opts->in_place)
+ > > -        if (rename_tempfile(&trailers_tempfile, file))
+ > > -            die_errno(_("could not rename temporary file to %s"), fil=
+e);
+ > > +        write_file_buf(file, out.buf, out.len);
+ >=20
+ > This truncates the existing file which means that if there is a error=20
+ > while writing the new version the user is now left with garbage rather=
+=20
+ > than the original file which does not seem like a good idea.
+
+Great catch! v7 will keep --in-place writing via tempfile+rename (no
+truncate+write), matching the previous behavior.
+
+> ...
+
+Regards,
+Li=E2=80=8B
+
