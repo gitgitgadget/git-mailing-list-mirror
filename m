@@ -1,111 +1,100 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6A418EFD1
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 01:52:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D823EBF17
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 03:32:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771897933; cv=none; b=WUILSa28peRGRTRTOmku44SuU3z5ulDuPTNU+y1QD0rYMqyLafArarUqS+mxibSc0MljNzt0QeRuu+9lammDw7LFggzPosx4aqXpKIx4TY5UwfRTJ8EycaJP7N1uHPcGUSlkrxxwfbnPpuJ2eum3sQGLhh0P2vmMLjDcZpO4dag=
+	t=1771903954; cv=none; b=jqWT2/i+I03XT8L6XeR0IFU+pOy/h+EQiz4gFRrzfVfF3DnXWfetN5pKFa2INa6zEEEThImFPss6dj9z2bjrLt5czZT0ZK/GAit7lW9kNLL2xb+SxE8jx/+Wc4BGttSJa5CHRG26NqQxXWz4IPl+2zr+vwKoBocAIKZf1DgeDps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771897933; c=relaxed/simple;
-	bh=ptgyRvG6ra8v7zRYP5Kpwe3ESIuzoYU0LDg/Hjqo2XQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=ey8gH2T3HhBk6vZJoIlm2TFe0DxPsZcznaTamqniV4nRWBRKRq/Bb3McJ333P+HapTS2CvM/q6bb3WZRs8c9KQLoV4fdOCXVdbVcAr6WxjSTuwbP3qSzol6ibLjCf/NMdd5777cLcyQWAEvzflulnphXJpFYlov/hbO/6ABPfKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dYanRkZb; arc=none smtp.client-ip=209.85.222.178
+	s=arc-20240116; t=1771903954; c=relaxed/simple;
+	bh=DbBtxKh45HOIPrQNnKF7iqwRzEjbB+zCEVIH7Rh9It8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Yz/XnXU71L2wvtJM228QjT0P2LIaegnBAaY49N84felNHpRX+QjPK0hJ8hOMHe5go163gq1YgCWpqdh+s3jaPmy9e0XhGWjBAoe7hoRkI0LY0eyp+X3NTRYiE4AUxKqlZhtK2IeAbtYkVkZmnP/6f1wA90OB54gN2rKhgR1jWpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mFhpwSZ7; arc=none smtp.client-ip=209.85.219.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dYanRkZb"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8cb3fd71badso475750185a.0
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 17:52:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mFhpwSZ7"
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-899a98c2421so2315646d6.3
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 19:32:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771897931; x=1772502731; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=N7hPFi5/RokDC7BihW2uwmrqqeVUt4XcWuJIEmkHQMA=;
-        b=dYanRkZb7EI7Cc1mQ6ZHGyZI+4L5M2/HgiO/8cgSIwSlMYzZa1bTa14QS2RHAypNcE
-         LiCw7qGVcSWrPq7fhsLTcDSf8rDkPQJYn++s7wp2gj5z5UtR/dv7sJsypfcpd5WvrjG1
-         BAghh/yCha4lFdmin/3rFtQuQD/Vo0lv+aqGn3OGN0NKl1X7h5YheyJ+9w8RthAsrXAF
-         j/G72ly+kjmZ/Gf+hkXKkQB5+CSQEnBYPe3f0PIp9eF54kybGqCSn3S45Z7Xh6PJGHoB
-         phusJ6pOzTTQLqFIl5A4u3ljvoRymGPXuTHeswjVX+3VFkTB7f2IUtvGB1epKg2IH3Gn
-         5oCw==
+        d=gmail.com; s=20230601; t=1771903952; x=1772508752; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/chvvTWGwht57g82JtwCzb4MI3beCAZc8XyFx21ZOo8=;
+        b=mFhpwSZ78ZvInHfnJ7DREZ087ajwAiuCTbuTiyLThVtY2u8xh3U84obONR53qjAb2h
+         FEInFiiTg8zjYzlYm2ib2xxAHHqvt3PQh/BwVYPrOaEc1uWzcc7WKYn9uKm98JQU5/Em
+         eN7tW5zIGt/up9hhfZYjKVkpHbVv9RT34D0op2abQnlMjx2hrq+hQWudLaP9qbV1imyP
+         UlQqu2uISeIpCLxI0R8kug7L97vAF7VSz3m2teYvYzQU49Hwfy1FOtSIcWsyipQ8y0ly
+         vL5gFp00Fpr+16eePrQ6bD74LdH4HINs02JQ5Jw4hEAbPW8gbNOVy2RJNcbl8AYTnkW6
+         ttMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771897931; x=1772502731;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N7hPFi5/RokDC7BihW2uwmrqqeVUt4XcWuJIEmkHQMA=;
-        b=JXl4UFHuSToSw5u37eL8eFytn4AvP/G+tSVqPXlUr62gBXTaUJbB26lY9O04jQRUpD
-         He74N8CF8frDYVxmxng1YwybNx0aHvRV5+Y5pJ9MgRezvgdEXWPxuoEZR1B3tjyezsgU
-         hS7oI5/zg3HUCDgcuk685UrsCi9RrJhPklN9mce2Do4oACTf78YN2kcYTxOhdAWozwbR
-         RbR+eFYPBj421axxQNZcIZqAxnG+pQDUFwgOTnoswDcoe90oZoqdnXUY+vslo9rGSpTc
-         8eK3sNetgEZYsJ0CNCL5093MfcQnI5wdZP/2jVZUK6PrBm+goFBxxophHSyPHO0uyvhe
-         jegQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWZEoGo0nTcRpPSYDlblfBpsCW3O2YsGLMfLWtgayZtXNyRtrW1iN6vgoSeu0g+VIIuwH8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyi4t1l2hdMtLZ1VkEKFzk+HSdIxwjsg1ahlLgctJr8uz4dMP7c
-	tGZk9OeFQ2b7U4LEL4QE0TwC+4uBqAR46z6KcjVqMwt8WKS1KyBhSLVa
-X-Gm-Gg: AZuq6aLu4kLCk4g9micgmW3BaUj5QJCxa47tn2ZJzSzdTJuiXjeIRWZ+HPmKa1EWtXf
-	3QlgwUz3cyWHKruhcqr23o/r6TKwkfEGLQhar5M8VgDxb3Mt0iXRr9t25dIbhgtqF9hDaehhrYQ
-	2nw3Df4O+b8Kr1CvpdCbBUSWF8MpRJOz8Be1ZAT9Ki3fZfGoqClLcgO9qR2DpUmuFc+yk6QRtrG
-	cC2tnjKPtT6CPqigfSfqpVHwGu2qIXPbX4WhnMCXyRR9KUY42dFJrk6XY1ZEYi4AXbVs2wTybmp
-	THgi+aDugulbQbDzhuJMgSCH0XyP3qnUlrCfvHbY9cGBTU1G4q+VjzcYhz2mQKQ7+3l3oyHr6MK
-	zFgAIk5eRsHlnqyx5QP3ducYwjs0JySZFsIF9f23wDKsB1O2wh4u8eoeHQetExW5yxHaZmB4b8C
-	iop5/+Jj/kygIovdhCDG0eN5SuFQJgAN0KGAHqfmrFPpgraN3oHzdAmRwNcJW/7bFOMAU2Abits
-	pttpcSjuYP4/9SLqR3PiltJsStRoe7vMIpCDPt235lPT/9J
-X-Received: by 2002:a05:620a:414c:b0:8c9:f9c2:118e with SMTP id af79cd13be357-8cb8ca156e3mr1192394685a.32.1771897931462;
-        Mon, 23 Feb 2026 17:52:11 -0800 (PST)
-Received: from ?IPV6:2605:a601:a6b4:9c00:55d0:428:5136:da98? ([2605:a601:a6b4:9c00:55d0:428:5136:da98])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d100591sm864061985a.35.2026.02.23.17.52.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Feb 2026 17:52:10 -0800 (PST)
-Message-ID: <1d4d795d-3a0b-47c5-864f-56f3c7601d39@gmail.com>
-Date: Mon, 23 Feb 2026 20:52:10 -0500
+        d=1e100.net; s=20230601; t=1771903952; x=1772508752;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/chvvTWGwht57g82JtwCzb4MI3beCAZc8XyFx21ZOo8=;
+        b=li5V/EiZtqdZwx2jjnmOea/UHQPchGZRxb6llMs85HqpKlI8BSPAoDjJMQbFZ82yiC
+         94Gs2pO/CNUhrVZrWs59DwQy4JSFNKGhKZvBRYKUDYxaN1IoMJtNWDpnfsw6gnjQ3elI
+         DnecWGLA3oZqM7zddFyNA53f/AubZtYycGCZ23ivef9nNz52RwQ5FkoGBJlmycsnJQfp
+         9p0Dw66KxT1PPndOYoAJMmllMknvR/evdwwkKFXcLSy0+Oik9aqtrTmFIrOolR/SYQd5
+         UKs4+hjKvmLVKOnwGRL5AZLRvljo+24vmzehcnRCI0Q0h2JwS2rRy8/oGOAPQvFXiavv
+         DK4g==
+X-Gm-Message-State: AOJu0Yw14o8xFStgkc0JIpMgWh5TVyAMsss8n5itpVdgFnWuAtB5ni/a
+	Npo6Ctc6s9IeCovUvmDE27ksFGDFx+ohba6j9Ivz022vzVA19BPMZQcx+IrKvQ==
+X-Gm-Gg: ATEYQzyC5JUqajMpQDsFOZNASnMgHLjhzzmkzegK/zP++jVdUYiRRSuZWY9Y3yh6MQW
+	iMoe23vQzk0i6vj+eUwU8R1QojtY2AaLd2tLufnLc2F20BmP6nUEzVSkn+1fcSKN1KlaLajVa4S
+	0+A0MISKmG0FmKYIsgi76jr3dfW/PTGpez/julvdzgE5Q/zQCDVhwkLXNbdI/kzXMkKjcCgq4k8
+	l1hu9IIj/7NCnE5RjS/1lInvTvK4qYgne0DD3kgVnKstB07HWw2QxwsQlvuDtlaWUeVp/KF6xKi
+	53fkgSaP9rn72EsPgKBwsUyqc7Enu2UtOwdrYw3qBCaJ5MxjUmUTH8bC9zkDc+V0G19EaQvoW27
+	0+2wjzBYz9b2u4xmCWA445Z+xbr/SrRiVyKrS/CTLYk9kZVcatOg2V7ix3KULAItEcMpPJhKOn/
+	LfLtNmv+E1/m34MzwB4Ha7Iy6z
+X-Received: by 2002:a05:6214:f05:b0:895:c06:8cbf with SMTP id 6a1803df08f44-89979db8304mr172570836d6.62.1771903951783;
+        Mon, 23 Feb 2026 19:32:31 -0800 (PST)
+Received: from [127.0.0.1] ([20.97.198.241])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8997e6341c4sm86136096d6.35.2026.02.23.19.32.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Feb 2026 19:32:31 -0800 (PST)
+Message-Id: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 24 Feb 2026 03:32:28 +0000
+Subject: [PATCH 0/2] for-each-repo: work correctly in a worktree
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: bug: for-each-repo malfunctions in worktree due to GIT_DIR
-To: Matthew Gabeler-Lee <fastcat@gmail.com>, git@vger.kernel.org
-References: <CABpCjbY=wpStuhxqRJ5TSNV3A-CmN-g-xZGJOQGSSv3GYhs2fQ@mail.gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABpCjbY=wpStuhxqRJ5TSNV3A-CmN-g-xZGJOQGSSv3GYhs2fQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    fastcat@gmail.com,
+    Derrick Stolee <stolee@gmail.com>
 
-On 2/23/26 5:58 PM, Matthew Gabeler-Lee wrote:
-> I noticed some scripts I have that utilize `git for-each-repo` don't
-> work if I run them from within a git worktree, but they do work fine
-> from within other directories, including the parent git clone of those
-> worktrees. The symptom is that the command I pass to `for-each-repo`
-> is run as if from within the worktree each time, instead of the repos
-> fetched from the corresponding config entry.
-> 
-> After a bit of sleuthing with strace, I think I identified the cause:
-> $GIT_DIR is set in the `git for-each-repo` process, and gets passed to
-> the child git invocations it launches.
-> 
-> And thus, from within that worktree, `git for-each-repo
-> --config=foo.bar -- branch` becomes the equivalent of:
-> 
-> GIT_DIR=/worktree-parent/.git git -C /unrelated-repo branch
-> 
-> Which of course is not what the `for-each-repo` invocation would be
-> expected to do.
-You're absolutely right on this. It's a subtle oversight, as it's not
-one of the worktree-specific variables, but GIT_DIR is being set by
-the worktree logic.
+This was reported by Matthew [1] and is a quick fix.
 
-I have a test and a fix on the way in [1]. You'll be CC'd when I send
-the patches after a CI run.
+[1]
+https://lore.kernel.org/git/CABpCjbY=wpStuhxqRJ5TSNV3A-CmN-g-xZGJOQGSSv3GYhs2fQ@mail.gmail.com/
 
-[1] https://github.com/gitgitgadget/git/pull/2056
+I also took the liberty of removing the_repository as I wanted to make sure
+that wasn't involved here.
 
-Thanks,
--Stolee
+Thanks, -Stolee
 
+Derrick Stolee (2):
+  for-each-repo: stop using the_repository
+  for-each-repo: work correctly in a worktree
+
+ builtin/for-each-repo.c  | 10 ++++++----
+ t/t0068-for-each-repo.sh | 22 +++++++++++++++++-----
+ 2 files changed, 23 insertions(+), 9 deletions(-)
+
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2056%2Fderrickstolee%2Ffor-each-repo-in-gitdir-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2056/derrickstolee/for-each-repo-in-gitdir-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2056
+-- 
+gitgitgadget
