@@ -1,230 +1,182 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58444369982
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 14:13:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771942390; cv=pass; b=hHJzPc6ymyBLPXjN5JRs5YYHdNwxhgMkxa4VOCUiP3Tcfn+ktxkM+ogpelC7tYxfHqtubX7XR9RGofdArlaLzalPHVbfvLmHLgydFEoVi0DivgVFMLoosYiLNK4PT8SA99zeICX5pHADqeir6Onfwo50wZb3WKce0H2UkcM4k3w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771942390; c=relaxed/simple;
-	bh=lcPivFteeDmb4CK5bTJD03nTMnHTh+oxFRHL02go+6k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tpQMC+RfiOc9p0r5m6aCVNfvuTOPQ8sX699+trJKeeYAh3Ay3pv5pesTmsCBgW/z563D4pUrNy7h7WU6tlmbUS2m8TCZMWKufJt58/lmdR1dswR/oJm2mvRDKV2tDJBTE3O3EYSdlSAqru+RlCzQrkCT/B+R/dVRT4wxEbo4aKI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sm5a1wAL; arc=pass smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C1139C627
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 14:37:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771943823; cv=none; b=ctIbHqpIWWMLMIbptaNseMka8ka3MAmnE0gGAAc+AEU4M8MV/smNT00qI+9qK4CuUVf4Oc6fg8gpRAswc7WA0pkKMxmmEvN1QGOx0U9IuNnh0xfyVEegWJj1lhxMJmCzp/L/tyOJJlqHQq9kLGimtc6rdfPxt2IOzIyQEzqLxwA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771943823; c=relaxed/simple;
+	bh=qMxzngOLmdMVRtlgZPpz+XXv3NxKVH4guX6DkuEJ4Mw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=W9DYxkhdPMK16kAhN9//WV8QLaYZJa5VzZgT6yMC63L8jMKB+jQ/vQq3ZajP62QM8XPYKBcwrCYWAr9f3CUQcue9gQEzAEeKOKKd0Xs3ua3eOKKlHvmY5bWWHDitPmf/QBJEk59Sa9BSfpaXbYoz+ofendk7ycTsXsnzMtACBdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bq+VO4nU; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sm5a1wAL"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-35640ad94d3so4339799a91.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 06:13:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771942389; cv=none;
-        d=google.com; s=arc-20240605;
-        b=loxTTVS8dX9gUHHTanX5dYa7PGFe5JZRImCJgW6QgqgsuwItsfW4MSqxpDDP8ES3uF
-         OWKcSynNIbSdU6NkoVKmkA5jjcW1isNheaUfzrKLF6cpSPka2aiGGJHDyv10rr7T3GiT
-         p0BNcxr4hgIp5t/rHp/CVq8ZjzsM1EYX1ou4Oh1WL+MQJpC0OkXRNE+ALjSGakoUkWuj
-         jRMODV0O+4zI9qKuwF1b5b9O2aamoy8mjZz0DEfRRECa8qznbXS2bOnU88LOKIQ+y4mP
-         BCkhNie9oUInNoziZt5AAhpccLXlxBEI0ws5es7n+Irm77nDgUV7Z/EUNnqNhE5k6KNa
-         G7Zg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ZeuaQDk9MpOHi+5fF6jx1L/cqylFkRxiw63qrzhy51o=;
-        fh=h6XiemxEM3satBaN9yqQR47BiaspIFmeP/T9OCfV+10=;
-        b=kZBauS5DRcV4clvRSQ2kyMB0sxXHkYqi1pL8TjvG3/Ak71Nq5QQSTvPeZAR4caNMgv
-         4+7QXkPIdQsyvrSP27V5tAnC4M0ogAxSBa5/26khZFvrJlixuOIBQCC8DFvjb/qU4aYS
-         fUw/gJ5qXthcQnx0mr5lKR5v5Ei90giCPIKwXUIuSXVcWSiMqxHrOEK92in3BktP4qU/
-         1c4Wi/q1K1BXlTeasMFnCIpUEEpDb0snJUT39ZJ7HJW6Tny3+EpAkk0IfhO9aZQYYp1O
-         2qNf08GUc9i4skm+Hd8SXqMU5hbXANGbkHwpcR8qIqWJkoWfNhupRiLcc9o3NNdagwuk
-         s+iA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bq+VO4nU"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2aadc18f230so34373255ad.3
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 06:37:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771942388; x=1772547188; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771943821; x=1772548621; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZeuaQDk9MpOHi+5fF6jx1L/cqylFkRxiw63qrzhy51o=;
-        b=Sm5a1wALryd4VOFgiOZzq1JKp3/2chRm6iYoIUQn37SM7z08UrHXWmPlgqn7mSEXvY
-         FdByZcnqXssum2EAWpb2aCE/jsyxsE9ernTc4JRAgHl6BHKf5SHCNElTpErLuY6PuUuB
-         OOzPi9UKKX3B3wAkqCjQBj1y6OfQQBlVG52zMQy+Z/CB/WP9/xQzqosYc+eNHCdtIFQz
-         a0TEKY2U2SSeVv8HVpJ/HHQYD3P/fWAmu8/JW2WaFMVYvNTUrHlqf6JbPPq0WOaFSUFR
-         isi/31TbxZknlhaATn7f0R9AhdNDI5tRFAt1+vbhyotXjFMvKrOCoQ0upJPfmJ+n+Oq5
-         XdPw==
+        bh=IoSvYlglYT66pOu5LurpDApiym5caENIZGaLpbsZ/ew=;
+        b=Bq+VO4nUWc4RbJXA0iqyE8Xi8ZrPVTXfdo93udLkSEnvakR/Ui4Htx4QtVHoSNmIV+
+         BWSZnpDCqPa4JnBtaHtuXd4G7a+W3//PnLNcqSM/AYPF9X4MRoM5U8xNe7D1NoF0jm2m
+         mkGtIwJ/SGBNRbJUwm0lpBdkufnZcAgtmab5fth65WGkNk3vQOK+D8Ym/Uc5mGWyDIOC
+         6UTo0RJDrX4IhxSW4S+hjAn4j6xBi87nsgmHXOyN8yokhh73t7Eb71vaoF95+VOKKht0
+         jrmkXRGMWPJjIMh6f3fo98KXy5+9Kan+WqbD1lNTbNYT5d7NBzo4JeVX0tT1nPybnFhE
+         Bf1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771942388; x=1772547188;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1771943821; x=1772548621;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ZeuaQDk9MpOHi+5fF6jx1L/cqylFkRxiw63qrzhy51o=;
-        b=UuogAGlrWaaUOIaodEr9rSqqqvXjA27EYaghMfyb+Q1PVXsaJCzm38I0J2Qha+5Cp7
-         Ek2Pp0IwyeltJ9iJ/U9C9SriAnXvdtPhlkGXotRddbcqKHG9b7kCXOV8xvP2jmHIYVjd
-         xrLYsSAeCNlZRyfgs1ixqZu+xp37bp/3mfAHi8H+drT3Dt3c0NLcOmBz79H5wQx0wjHR
-         nicDmFZtfV+Y3KmGelziMF7SkRsNuIJfQrmXq9ztdgoJ5TI+VqOZoUmdE8OYCKliPs7W
-         7dP3SbIP3Z79JSo+x28HnwmAWwDIr2H6L1UKVXAmHmpZtDwo5xRECTK3bD0R0TJ7u4eL
-         zVnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWokUwlJfxS6yTkvr33cz1yhiz96c3lf4yYC2qwzXsHr/rYi8Gok6TQwGttWkMwTLYO/3U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVOJvkFbpsUrKtomKK+Xlaiw3K8rUCKq7+aMqRgm+NnX7zbSfq
-	E1/KngukjvTlmMMTT5ckYC585lNfdLsx0K5XYebJHHHwPrxGiFIE9B+kf1FlpD6FiYj2eXXU82g
-	DKpoqqPaPm92iKpfljumVJmA3ObVJu2Y=
-X-Gm-Gg: ATEYQzyaGYM2gTlbv6PCMvZd/1LmSx9XkPDdqHk5TyC9ec6ylCsCLdQ9KJJ2Y8Qq9t1
-	yuMjZ2nEgOdGeZVWpojdvGhPx1m4r70c98uATeWcVuSwnA4z55TrqEQucQs44qOAhwJGPHGBH8G
-	mtbq6W503adUVQFa8KWVJvyGnffWmF5jNhyksiQqxEwl6f/bw/Cx7sFB7gkdSi1M8iM+6ksLlgp
-	GoGwN38Jnvrn9rmgdQoKG4CJUPDuh+QTPJG66yuA/PT0wPoty6VV6sWHJGKa1Rnl+7m57pNJ3C8
-	a49PWkvUo0LFfIXInJhBLQLxcXSnRxWVDd9K5RYqTO7ChLO+fRCOpBec3kuPa7Oha5LEw8Bng1C
-	JKnhl
-X-Received: by 2002:a17:90b:5252:b0:34e:5aa2:cf61 with SMTP id
- 98e67ed59e1d1-358ae8d2529mr10347313a91.28.1771942388490; Tue, 24 Feb 2026
- 06:13:08 -0800 (PST)
+        bh=IoSvYlglYT66pOu5LurpDApiym5caENIZGaLpbsZ/ew=;
+        b=Z1ASwhtaSOvPTACVI7lJSxo/4E6GE+xzBxv0YOOrMRg5bzV/bQOVE9lIwHnIlxJPwu
+         aoroEpAPq5CehxFfAJiGURqKyl4ZC1dC9UGlqNq/oV7qynMjxwGZjsxUozjm7kiCHMJp
+         YPTh3mVsufe7nWU8KilnrG4e+K3l5l503PW1JpUeeElanRiUVZF+SrvEGg86rfussSSX
+         ib9nPZFYqqAOpykOZWjxtkNpFGQ99apXsiGBwA2+7zgnsGfxxxDIhau3t2JfkVM+2m8N
+         r/onsnpEw6gxob7Z53HqzSVKQJZrEsxu2XMgP2rXQzmg941fal8fAvTn/IFVybzR3QFe
+         PUlA==
+X-Gm-Message-State: AOJu0YxKWf1nWxW+TrniBG+SWX+EULKjOQczMzUhgbRmdF6XjSOewMfo
+	yE1UPPkD1Z9/EGvPEYibPewRY207iLUPufD5/DNJJ/MnpZREiaffp3bKZOWhAQ==
+X-Gm-Gg: ATEYQzySU2UJdjcr/g3oqzbhu47A5peMZV0OPB980gYVqj7wuGjOSRABNZEk+cg9RSX
+	Xw34hSix97WMAyBwdfBokZWCo2bnTmtKuuekeeSRNNhGfhlfGH9kyJrXQ1PNkfN5mAHZyaBzZSz
+	rh9+ttRzYRz42qeYXYFeFA2cLSK6/HM3QNyHGy0iRJECQH8LdTTA+R876BCy4/fbqVdgs7Nkl7G
+	jQvMv/XgaE3j6RCZ4W8Yb7W0GWgm3Mw15MgsCUfQLz9njiWP6Lc/vqwc6hBuaG8E+qxlAWk0N1X
+	MEU2ISCdbPjAObDumTGauaezzi4AZUoAQjhjGIHybbkBNk95NfxAHq3L6S522eLLj4QoGXnRP9N
+	jQvy2iMzdMgC4G+8hxxp6b5DyrQ3uroQQL0hLZTW6hC4iHN+zz8OHhMZjPfG3IASyGm56qgspY1
+	PXAM5hvpxD5FsK1Fk6IQbpj7Htf+1r+ajZGKje4zMlmq8XGkSYHv5i+d7yHRCJAllYg6rZ
+X-Received: by 2002:a17:902:e950:b0:2ad:ba7e:904b with SMTP id d9443c01a7336-2adba7e9197mr4082625ad.22.1771943820743;
+        Tue, 24 Feb 2026 06:37:00 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:4f6d:51a:7183:89a2])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70b7244dadsm11239936a12.20.2026.02.24.06.36.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Feb 2026 06:37:00 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: ben.knoble@gmail.com,
+	gitster@pobox.com,
+	philipoakley@iee.email,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH] send-email: validate charset name in 8bit encoding prompt
+Date: Tue, 24 Feb 2026 20:03:52 +0530
+Message-ID: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0.155.g35e93594f7.dirty
+In-Reply-To: <20260220145126.131651-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260220145126.131651-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aZv54vN9DdGsvre/@szeder.dev> <8AB2DD1B-FAFA-4510-82FA-BBD76B442676@gmail.com>
- <aZ12Lk85bSajirCY@pks.im> <39acbf7e-86f4-4dbe-8b58-3c04fccd7984@gmail.com>
-In-Reply-To: <39acbf7e-86f4-4dbe-8b58-3c04fccd7984@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 24 Feb 2026 09:12:57 -0500
-X-Gm-Features: AaiRm50gWt95Q-vvcAekGfdtA6Q012i2HahUPV1A2FUTffZRHwzlV_jqVJuP-OI
-Message-ID: <CALnO6CBsj_2+pZG+bqbrE3tQH=6_kqdtCnNPm8MfJ2XZOA9e3Q@mail.gmail.com>
-Subject: Re: [PATCH v6] build: regenerate config-list.h when Documentation changes
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
-	git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>, 
-	Evan Martin <evan.martin@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Feb 24, 2026 at 6:00=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
->
->
-> On 24/02/2026 09:58, Patrick Steinhardt wrote:
-> > On Mon, Feb 23, 2026 at 04:41:48PM -0500, Ben Knoble wrote:
-> >>> Le 23 f=C3=A9vr. 2026 =C3=A0 01:55, SZEDER G=C3=A1bor <szeder.dev@gma=
-il.com> a =C3=A9crit :
-> >>> =EF=BB=BFOn Sat, Feb 21, 2026 at 09:07:17AM -0500, D. Ben Knoble wrot=
-e:
-> >>>> diff --git a/Makefile b/Makefile
-> >>>> index 7f37ad8f58..6f926ffb1f 100644
-> >>>> --- a/Makefile
-> >>>> +++ b/Makefile
-> >>>> @@ -2688,9 +2688,10 @@ $(BUILT_INS): git$X
-> >>>>     cp $< $@
-> >>>>
-> >>>> config-list.h: generate-configlist.sh
-> >>>> +    @mkdir -p .depend
-> >>>> +    $(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@ .depend=
-/config-list.h.d
-> >>>>
-> >>>> -config-list.h: Documentation/*config.adoc Documentation/config/*.ad=
-oc
-> >>>> -    $(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@
-> >>>> +-include .depend/config-list.h.d
-> >>>
-> >>> This breaks the build when something disappears from
-> >>> Documentation/config/:
-> >>>
-> >>>   $ git checkout origin/seen
-> >>>   HEAD is now at 57edfa3ce8 Merge branch 'ty/setup-error-tightening' =
-into seen
-> >>>   $ ls -l Documentation/config/hook.adoc
-> >>>   -rw-rw-r-- 1 szeder szeder 3828 Feb 23 07:50 Documentation/config/h=
-ook.adoc
-> >>>   $ git grep hook.adoc
-> >>>   Documentation/git-hook.adoc:include::config/hook.adoc[]
-> >>>   Documentation/howto/meson.build:  'rebuild-from-update-hook.adoc',
-> >>>   Documentation/meson.build:  'git-hook.adoc' : 1,
-> >>>   $ make V=3D1 config-list.h
-> >>>   /bin/sh ./generate-configlist.sh . config-list.h .depend/config-lis=
-t.h.d
-> >>>   $ git checkout 0aabf70f60
-> >>>   Previous HEAD position was 57edfa3ce8 Merge branch 'ty/setup-error-=
-tightening' into seen
-> >>>   HEAD is now at 0aabf70f60 build: regenerate config-list.h when Docu=
-mentation changes
-> >>>   $ ls -l Documentation/config/hook.adoc
-> >>>   ls: cannot access 'Documentation/config/hook.adoc': No such file or=
- directory
-> >>>   $ git grep hook.adoc
-> >>>   Documentation/howto/meson.build:  'rebuild-from-update-hook.adoc',
-> >>>   Documentation/meson.build:  'git-hook.adoc' : 1,
-> >>>   $ make V=3D1 config-list.h
-> >>>   GIT_VERSION=3D2.53.0.119.g0aabf70f60
-> >>>   make: *** No rule to make target 'Documentation/config/hook.adoc', =
-needed by 'config-list.h'.  Stop.
-> >>>   $ grep hook.adoc .depend/config-list.h.d
-> >>>   config-list.h: ./Documentation/config/hook.adoc
-> >>
-> >> Indeed. This might arise while bisecting, which was my original
-> >> motivation. Thoughts on a path forward? At least this issue (to me) is
-> >> clearer than a spurious test failure :)
-> >
-> > For Meson this case works alright. So maybe we just drop the changes to
-> > the Makefile and call it a day?
-> >
-> > An alternative would be to have the following patch on top:
-> >
-> > diff --git a/generate-configlist.sh b/generate-configlist.sh
-> > index 39ac8845ab..e28054f9e0 100755
-> > --- a/generate-configlist.sh
-> > +++ b/generate-configlist.sh
-> > @@ -41,7 +41,12 @@ EOF
-> >   if test -n "$DEPFILE"
-> >   then
-> >       QUOTED_OUTPUT=3D"$(printf '%s\n' "$OUTPUT" | sed 's,[&/\],\\&,g')=
-"
-> > -     printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
-> > -             "$SOURCE_DIR"/Documentation/config/*.adoc |
-> > -             sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /" >"$DEPFI=
-LE"
-> > +     {
-> > +             printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
-> > +                     "$SOURCE_DIR"/Documentation/config/*.adoc |
-> > +                     sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /"
-> > +             printf '%s:\n' "$SOURCE_DIR"/Documentation/*config.adoc \
-> > +                     "$SOURCE_DIR"/Documentation/config/*.adoc |
-> > +                     sed -e 's/[# ]/\\&/g'
-> > +     } >"$DEPFILE"
-> >   fi
-> >
-> > What it does is to also create an empty target for all of the
-> > dependencies. Which is in fact what GCC/Clang also do when you pass -MP=
-:
->
-> Oh, I was wondering how they got around the problem we're seeing here.
-> While it seems ninja is happy it ignore missing dependencies in
-> depfiles, are we sure the build systems meson uses on other platforms
-> are as well? If not it might be worth adding this, rather than just
-> dropping the Makefile changes.
->
-> Thanks
->
-> Phillip
->
-> >
-> >      $ cat main.c
-> >      #include "foo.h"
-> >      int main()
-> >      {
-> >          puts("foobar");
-> >          return 0;
-> >      }
-> >
-> >      $ clang -MMD -MP main.c
-> >      $ cat main.d
-> >      main.o: main.c foo.h
-> >      foo.h:
-> >
-> > Patrick
+When a non-ASCII character is detected in the body or subject of the email
+the user is prompted with,
 
-Yep, I agree with Phillip: I have a feeling Meson intends folks to
-produce output like GCC/Clang do, so let's honor that (even if it's
-not well-documented IMO). Will add.
+  Which 8bit encoding should I declare [UTF-8]? foo
 
---=20
-D. Ben Knoble
+After this the input string is validated by the regex, based on the fact
+that the charset string will be minimum 4 characters [1]. If the string is
+more than 4 letters the email is sent, if not then a second prompt to
+confirm is asked to the user,
+
+  Are you sure you want to use <foo> [y/N]? y
+
+This relies on a length based regex heuristic check to validate the user
+input, and can allow invalid charset names to pass if the input is greater
+than 4 characters.
+
+Add a semantic validation of the charset name using the
+Encode::find_encoding() module of perl. If the encoding is not recognized,
+warn the user and ask for confirmation before proceeding. After this
+validation the lenght based validation becomes redundant and also breaks
+flow, so change the regex of valid input to any non blank string.
+
+Additionally, the wording of the first prompt can confuse the user if not
+read properly or under any default assumptions for a yes/no prompt. Change
+the wording to make it explicitly clear to the user that the prompt needs a
+string input, UTF-8 being the default.
+
+The intended flow is,
+
+  Declare which 8bit encoding to use [default: UTF-8]? foobar
+  warning: 'foobar' does not appear to be a valid charset name.
+  Are you sure you want to use <foobar> [y/N]?
+
+[1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
+
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+---
+ git-send-email.perl   | 15 ++++++++++++---
+ t/t9001-send-email.sh |  2 +-
+ 2 files changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index cd4b316ddc..dc4e5418d3 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -23,6 +23,7 @@
+ use Git::LoadCPAN::Error qw(:try);
+ use Git;
+ use Git::I18N;
++use Encode qw(find_encoding);
+ 
+ Getopt::Long::Configure qw/ pass_through /;
+ 
+@@ -987,6 +988,7 @@ sub get_patch_subject {
+ sub ask {
+ 	my ($prompt, %arg) = @_;
+ 	my $valid_re = $arg{valid_re};
++	my $warn_invalid = $arg{warn_invalid};
+ 	my $default = $arg{default};
+ 	my $confirm_only = $arg{confirm_only};
+ 	my $resp;
+@@ -1005,7 +1007,13 @@ sub ask {
+ 			return $default;
+ 		}
+ 		if (!defined $valid_re or $resp =~ /$valid_re/) {
+-			return $resp;
++			if ($warn_invalid) {
++				if (find_encoding($resp))
++					return $resp;
++				else
++					printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $resp;
++			} else
++				return $resp;
+ 		}
+ 		if ($confirm_only) {
+ 			my $yesno = $term->readline(
+@@ -1044,8 +1052,9 @@ sub file_declares_8bit_cte {
+ 	foreach my $f (sort keys %broken_encoding) {
+ 		print "    $f\n";
+ 	}
+-	$auto_8bit_encoding = ask(__("Which 8bit encoding should I declare [UTF-8]? "),
+-				  valid_re => qr/.{4}/, confirm_only => 1,
++	$auto_8bit_encoding = ask(__("Declare which 8bit encoding to use [default: UTF-8]? "),
++				  valid_re => qr/^\S+$/, confirm_only => 1,
++				  warn_invalid => 1,
+ 				  default => "UTF-8");
+ }
+ 
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index e56e0c8d77..24f6c76aee 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1691,7 +1691,7 @@ test_expect_success $PREREQ 'asks about and fixes 8bit encodings' '
+ 			email-using-8bit >stdout &&
+ 	grep "do not declare a Content-Transfer-Encoding" stdout &&
+ 	grep email-using-8bit stdout &&
+-	grep "Which 8bit encoding" stdout &&
++	grep "Declare which 8bit encoding to use" stdout &&
+ 	grep -E "Content|MIME" msgtxt1 >actual &&
+ 	test_cmp content-type-decl actual
+ '
+-- 
+2.53.0.155.g35e93594f7.dirty
