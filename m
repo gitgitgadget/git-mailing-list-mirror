@@ -1,94 +1,200 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C371E36405C
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 07:43:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07719364EBF
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 07:57:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771919007; cv=none; b=EyDWFGZERu6lZQlaQCGlh3v1RpA04DebvsEmwS7k//3IYZ0/sDDBjHvyT5+NMulVHZ+yq6g5NVd7RatCCbojyo26C43mQThlgYaipX/kPyUlmDBRsqoXG/V9J0jCGL9bxgQqZ3/dSGQByq9lntsXhBseWdLOaTc8IzJD/2SUygA=
+	t=1771919835; cv=none; b=g5T5mWBqOjxKaC+yiCU+TujyxBosrnqoVJX49h/apnqWSOjGgEc80jM7h6FxyABaI/7kqcH1mOD0DrKpVbIV/MwDtYbpRsqXEFUl+8ZAXrdAIUo0OpVR0WwbDV88M1PGW6WuEpH1IUBY+6ZIleWT/0hC64hKEV2HrrVrHM17Tu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771919007; c=relaxed/simple;
-	bh=3gaEDJl7OIC5GoG7hu/II7yQEdK1DFYGdVduISIAuyA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kJiQP0J1KTj3X4e4+UWjHDGBsNVVsepysmamyf+GfOUG8biymNQozrdofXVSKmT+0KYnkNghocnzmOIYwBuFlGkjacZ7FFVlDzboyvQsX1YrBgUxBCI+c/wCsdymXKNBqxkDYksWA1gjvF/F0JKnt0inMSb5oJEZe6Iw2V0Tez4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=WmJF4F1H; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1771919835; c=relaxed/simple;
+	bh=j9WEjLUAEblLibNc2NWcvkO2j8pRhoadK07Fe3nYUM0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=T9h/AV8UlrKarsU3SljO9umtkXXv5srrcCSKuAe/l67mRd62e9I8tR7LzKpme+SMaIcmXvUlfPFnmby5Nkjs+IqGHPiuZmKt7D0F7V96vqBKIOejaUFjykGzLvcqZbNpZ2z/GArN1sP3U4FEys84nQ8MA6wt3FdbXlRZAitEVVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iKRHFWye; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="WmJF4F1H"
-Date: Tue, 24 Feb 2026 08:43:22 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1771919003;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8YyJ0U3QD1xUc+jTt+yU+ZYbgyda8GN1ptLY3WHfYmI=;
-	b=WmJF4F1HhPfL9lAM2gkSJjCi/BUZI1Esvoh6+uFFa5gNorduvB39/TAAE4jpS6B6rZVT/T
-	Ao+4tYJ4NtKkcGxwUUQgXZZAznLRnv6jjO82ob4g0AdyH66pZBWG6eclmhHlA+V7HZAr9B
-	083yNQ7mIz7VrII72oPsUxyJkXKA5DR2Y4cqTSrLVzAw09GIaW0W4mLLKzpMzy7wqWoIfT
-	DMQMMPU9QR11e+MtG/LwglOSNOpU7V95p1xUlwoqDSwSQs6IXUGlzaagbEKptGXoXZ5AdK
-	MoMi3pn1AXLuB51mfE6sNXMGbswGcBGa3OiuoY1cGLDj7IXtiWMtIzjt2eU4Dw==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Mirko Faina <mroik@delayed.space>, 
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] pretty.c: fix null pointer dereference
-Message-ID: <aZ1VUDSc7LUDC-Ty@exploit>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=575; i=mroik@delayed.space;
- h=from:subject:message-id; bh=3gaEDJl7OIC5GoG7hu/II7yQEdK1DFYGdVduISIAuyA=;
- b=kA0DAAoBSHl+oZwZvtEByyZiAGmdVnyhY9ccOeXnMqi4OiztGslp03uGueAs/g6ENTV0x1Xj5
- YkCMwQAAQoAHRYhBP8rLfsrSlLCbCzJtkh5fqGcGb7RBQJpnVZ8AAoJEEh5fqGcGb7RFzUP/3Yy
- oTaFZDx/sqEWtOOwt8mz5ZrPn4tu50YQF6queTGw5qAdmXbIfTZIV1WVNwSGf1GF05FSxX1yQ6c
- Vl8QcgWrZB4Zv3EMJ5LP2KBjATyF51ebhcl4LdsesRSuNlJDI86QJjkzjbBZS9agNhKEmJnEf0U
- VzbLk2gxmqxdFuaeGgxD7YZtxUIZ8YHXvSYnki//qkAfYhRjkHTqY7xR3aOH8ZiB/D5b1C1fv7N
- PZUkZlRGnYDpNVhvd7v2qO+dC6AWLPg+2FMT3PhVLt33VXHvJKSmfLt0V8yVS1pDPgLNQHzrDOD
- 7doddC/Y3FbZ9rppuwLJ1vvcwNH0X2ozIc8+XsiE4nWMSZOekv8cu19sD2OotCAmA+fYLAFc42r
- Di5/87ASfsvLBvU9QUF9TvNOYGmSXSZ8hyEZl5BlPzswpczdu1laI36EarCfteMj3zm1aQbTuXw
- 9rMNS/wY+w11zCHlG9OQxN8viI38WgiuLWCaQfIkWY6QXeMuhpGmNQgTVda5nGstw5XpAALnq+/
- nY+JX89Y3h2RTMnN4oHCLwNnkm/MQDKiV653ukpkKFBDFjHxMqYQ14klRM0aAoVqey80gATuHyf
- Rt4iaSIZi6xd1nNO+xsJdM0uKusUGOxoq97VCe7JNQM1bxSpcCWLYmwM4l/OHba0Yku0Svg1sPW
- kLKM9
-X-Developer-Key: i=mroik@delayed.space; a=openpgp;
- fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-References: <20260220230633.132213-1-mroik@delayed.space>
- <20260224040400.751247-2-mroik@delayed.space>
- <xmqqcy1uk69o.fsf@gitster.g>
- <aZ1JND7sGspCJEoc@exploit>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iKRHFWye"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-358ed90bcefso107241a91.2
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 23:57:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771919833; x=1772524633; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VBKfBBa8UXUKjU9w1KUuyzDd0JsQd1QwSMM+2RYB1OU=;
+        b=iKRHFWyevZBpJgvSI6jv8zYwr6SCY7rkBwyykzzd+dBxSE/c2cLaFxDZmhDbn1L+W6
+         nawRiHEkxIabMQs6jeRUHMGimM/XGrXpRbNQ255SBAxU/nMDa748XEcQOhEMMOWxobe0
+         ekYag2cR1QWzHHLzy5kiV5P2BzZynVXd6HYbmlJxNv9zQ+VBb7BrjKQsA5WWAlgTczse
+         I6zz571gSchIeXsZ8YmIxttzCwfSHy9jOX2Uka40BtLTEW241g+dkJeyNtO56fogZSdW
+         ADvUeLVn147APJ8mHSwjzVZYp86CCoqt6Ob1dZWjYJF8FnuXEHSJkM2Sqcxdtdgw1o1h
+         ODlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771919833; x=1772524633;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VBKfBBa8UXUKjU9w1KUuyzDd0JsQd1QwSMM+2RYB1OU=;
+        b=XruLD0FQCf64SitHIDnVwav5uGtT32lqaF59Yjje6bTppuAa+6AoCZcOn8d9Woo1nG
+         RmrnFIAngwFvpDtpxhKvexNBj8feCfUYC6Ijx9sYWnZS4EAWrZIgGqbCf57i6xe4NXhK
+         skThiiu6hzyg2TvNceJ2XKF4wZM2Er8SudCJcIqTSM5rLaT4/FNjjiMTUco2ra5iF7Qe
+         Wo2saAVNQAEFNEMcY2Q46PPhFgyRSVmka0WLKaHQeFqpqgAa/a2mYOksUwkXnW4E1j3K
+         2H68fxCsreXbwl8JefNz+9a908NKHF8YAYg2W+jCBE2eqXuC3pNjqRWD7eZDQzvThMgD
+         mhuQ==
+X-Gm-Message-State: AOJu0YxOFxjrqAXdoaAAxhJMmDNExt4DStH8+QP2NfPCqI6oTopN5lM5
+	a7wlkV2L/qk3JAErCI/LhP7p0+3yYohuqNQyrCX05X17AzvUtQvBLM0lk5NA+A==
+X-Gm-Gg: ATEYQzxsLeYrXZ2e5eyPvJJaAT8szKSg6HnoGjuCZx1xjS67ULuyOFs0HCoprLxAXKS
+	V6vNw93Z1fOPvdfH/9jLtzzaVQ6zQQCEVTc6AIbpKwsIvr+9C8/A+fOz9farqB3rK1uF+c87Trd
+	J+pjTuvOLGYqaiXtDlufebONKscC85UBHARkQVf6DDqW4fZwggr+AqhhLoMS4yf3XpJIvbTedXG
+	RzGR8ZWkVWUOONiDnfu5rKGCJS/81DlnvDhCGsaSBIMi95coWoWNiYDe8wHUNChzsl3L0RA0a1S
+	NqFCCqcRKwfeDPJOlZFeuGmqdfGNG7XbEi6bgdCCHukDLu88wSEUmrHb6Oje6/gQmydjCQgBWkQ
+	69uWfrOfOKA1HR8UgOTirXbM70Oy7oMVc6RQjdLLzuR6HiLdpzkfGO7sWKGGimIhM3QtF/SEXl/
+	Dr6S46ddPKvy9qMtqE+h4Em0xjaqa607pVtm0Gt4uty0ktVN8xKTIoyziUwm4=
+X-Received: by 2002:a17:90b:2cc5:b0:354:9b26:cdf8 with SMTP id 98e67ed59e1d1-358ae818565mr9792663a91.10.1771919833040;
+        Mon, 23 Feb 2026 23:57:13 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:c914:4ec6:1b85:93b7])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-358d79b8332sm890555a91.2.2026.02.23.23.57.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Feb 2026 23:57:12 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: ben.knoble@gmail.com,
+	gitster@pobox.com
+Subject: Re: [GSOC] Discuss: Refactoring in order to reduce global state
+Date: Tue, 24 Feb 2026 13:25:44 +0530
+Message-ID: <20260224075650.1885050-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <43DCEEB9-33C4-4EE2-9FF3-49DCB9B837E0@gmail.com>
+References: <43DCEEB9-33C4-4EE2-9FF3-49DCB9B837E0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aZ1JND7sGspCJEoc@exploit>
-X-Spamd-Bar: ------
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> void get_commit_format(const char *arg, struct rev_info *rev)
-> {
-> 	struct cmt_fmt_map *commit_format;
-> 
-> 	rev->use_terminator = 0;
-> 	if (!arg) {
-> 		rev->commit_format = CMIT_FMT_DEFAULT;
-> 		return;
-> 	}
-> 	if (skip_prefix(arg, "format:", &arg)) {
-> 		save_user_format(rev, arg, 0);
-> 		return;
-> 	}
-> 
-> 	if (!*arg || skip_prefix(arg, "tformat:", &arg) || strchr(arg, '%')) {
+> > Le 22 févr. 2026 à 10:56, Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> a écrit :
+> >
+> > ﻿
+> >>
+> >>> On Sun, Feb 22, 2026 at 9:07 AM Shreyansh Paliwal
+> >>> <shreyanshpaliwalcmsmn@gmail.com> wrote:
+> >>>
+> >>>>> That makes sense, I tried it below.
+> >>>>> I also wondered whether, in addition to this, it might be helpful to warn on
+> >>>>> an invalid charset, and/or possibly fall back to UTF-8.
+> >>>>
+> >>>> Agreed on the first half of the statement, if we have an easy and
+> >>>> portable way to tell if a given random string names a valid charset.
+> >>>> I do not recommend to "fall back" to anything, if we are asking an
+> >>>> input from the user.
+> >>>
+> >>> Following up on this, I tried adding a warning when the provided charset
+> >>> does not appear to be valid. Current flow is,
+> >>>
+> >>>  Which 8bit encoding should I declare [UTF-8]? y
+> >>>  Are you sure you want to use <y> [y/N]? y
+> >>>
+> >>> With the additional check, it becomes,
+> >>>
+> >>>  Which 8bit encoding should I declare [default: UTF-8]? y
+> >>>  warning: 'y' does not appear to be a valid charset name.
+> >>>  Are you sure you want to use <y> [y/N]?
+> >>>
+> >>> This uses find_encoding() from Perl’s Encode module to detect any
+> >>> unrecognized charset names.
+> >>>
+> >>> Let me know what you think.
+> >>> Also, is there any new test that should be added for this change?
+> >>>
+> >>> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+> >>> ---
+> >>> git-send-email.perl | 23 ++++++++++++++++++++---
+> >>> 1 file changed, 20 insertions(+), 3 deletions(-)
+> >>>
+> >>> diff --git a/git-send-email.perl b/git-send-email.perl
+> >>> index cd4b316ddc..e62fa259ba 100755
+> >>> --- a/git-send-email.perl
+> >>> +++ b/git-send-email.perl
+> >>> @@ -23,6 +23,7 @@
+> >>> use Git::LoadCPAN::Error qw(:try);
+> >>> use Git;
+> >>> use Git::I18N;
+> >>> +use Encode qw(find_encoding);
+> >>>
+> >>> Getopt::Long::Configure qw/ pass_through /;
+> >>>
+> >>> @@ -1044,9 +1045,25 @@ sub file_declares_8bit_cte {
+> >>>        foreach my $f (sort keys %broken_encoding) {
+> >>>                print "    $f\n";
+> >>>        }
+> >>> -       $auto_8bit_encoding = ask(__("Which 8bit encoding should I declare [UTF-8]? "),
+> >>> -                                 valid_re => qr/.{4}/, confirm_only => 1,
+> >>> -                                 default => "UTF-8");
+> >>> +       while (1) {
+> >>> +               my $encoding = ask(__("Which 8bit encoding should I declare [default: UTF-8]? "),
+> >>> +                       valid_re => qr/^\S+$/,
+> >>> +                       default  => "UTF-8");
+> >>
+> >> Here we change things, right?
+> >>
+> >> - The original validation is "at least 4 characters", the new
+> >> validation is "at least one non-blank." I'm not sure why we'd prefer
+> >> one or the other, frankly. The original goes to 852a15d748
+> >> (send-email: ask confirmation if given encoding name is very short,
+> >> 2015-02-13), which is motivated by the same problem we're discussing
+> >> here!
+> >
+> > I see.
+> > My understanding of the earlier change (852a15d748) is that the
+> > length check was intended as a heuristic check to catch obviously invalid
+> > inputs like "y" and trigger an extra confirmation based on the fact that
+> > charset names would be at least 4 letters.
+> >
+> > With the additional find_encoding() check, the validation becomes semantic
+> > rather than length-based, recognized charset names are accepted directly,
+> > while unrecognized ones trigger a warning and still require explicit
+> > confirmation. The relaxed regex (at least one non-blank) is only meant to
+> > ensure we receive some non-empty input before passing it to find_encoding().
+> >
+> >> - We get rid of confirm_only, since we're about to roll our own
+> >> confirmation below:
+> >>
+> >>> +               next unless defined $encoding;
+> >>> +               if (find_encoding($encoding)) {
+> >>> +                       $auto_8bit_encoding = $encoding;
+> >>> +                       last;
+> >>> +               }
+> >>> +               printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $encoding;
+> >>> +               my $yesno = ask(
+> >>> +                       sprintf(__("Are you sure you want to use <%s> [y/N]? "), $encoding),
+> >>> +                       valid_re => qr/^(?:y|n)/i,
+> >>> +                       default  => 'n');
+> >>
+> >> …which might want refactored a bit so it can stay close to the original? idk.
+> >>
+> >
+> > Actually the flow needed to change slightly to insert the validity warning
+> > before the final confirmation step. Since ask() handles confirmation internally
+> > using confrim_only and is used in multiple places, it seemed simpler to keep the
+> > additional confirmation local here rather than modifying ask() itself.
+> >
+> > Let me know what you think.
+> >
+> > Best,
+> > Shreyansh
+>
+> Ah, my mistake for being ambiguous. I meant:
+>
+> The code is similar enough to the original that perhaps a helper can be
+> introduced, or at least we should keep the equivalent strings together to
+> help those who change one.
 
-Seeing how "arg" is being handled here I am now unsure if it is actually
-a bug.
+Thanks for clarifying, that makes sense.
+I'll refactor and send a revised patch on this.
 
-CC'ing Jeff for clarifications
-
-> 		save_user_format(rev, arg, 1);
-> 		return;
-> 	}
-
+Best,
+Shreyansh
