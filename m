@@ -1,86 +1,82 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA2936604B
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:15:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6868D2D59E8
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771920919; cv=none; b=MeDI3w1buuLr9jrBz7E/FQ0LJ94msp3MfL+yKiyBt30cbCb0MSVQngXIJJUKVMJdKSG9pSPNDwc0bHjolgGTIMg7/SdXtk5Xd06BgsBi9gWgahl1xo0ajso14tgA+B/udvyIaACrs6ucU/Vf/X0k7Ok0sDBVpWwwtu3Wc648Htc=
+	t=1771922473; cv=none; b=jDCTlET723baSNOoSwU5tQ5oU30w83rptxIKLUs6k5TSYKMZmfHJdFFayzQqbOD8gCSsGh58qduMrnn9aFPlZhZ9CH7Ei6C7xZy0ML1yuwBp4W3dg6uzpHxdd4iCxLF3Opi0/eo3C0dtd/YXu5tCe+ZfDo5iit/pERALpZp3s2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771920919; c=relaxed/simple;
-	bh=HRlu0ZcjMJxlg/XAoVqdmwFW/NBvlvHHo0p9ltqWpgE=;
+	s=arc-20240116; t=1771922473; c=relaxed/simple;
+	bh=+U/FaeJsiuUhKng7lAMTcU54WPfIY93IfXgIXBvQVoo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WC9n4BOWnR3bJzyK/JQ86CCnKARyspQcdUaHQHvgCmTkOxMtETM38v1RKngam32qMW+fpjjoYFUl/5XKjebNbOKe+Via3/hMWXzFXZhwD05SDrAZ3vPe2UFojb6ArHRG5EA+iXD4QY9GYUAfwFWFlEQyS1bt7hMVcVKbQB2Smjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b0yqJ0Ri; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ppfj0GSz; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=p2UrU0QowR/hldk7df3+YCQvwFOn1VQLXsdQ4Da2uw54oWI/EDGkz30KLJmKtHhy4l5skR/3k5rIjYylVUl6d3Gsscj66FMdN2X+BskdsN6Hdpm8Bo1PKyHVSwGXFrcsAWhGJKEeBq+bZz77dXmCyc63MQ93okbKGeOOwIibxEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RFqKQdqJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VvZg2fwQ; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b0yqJ0Ri";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ppfj0GSz"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 94CE0EC0547;
-	Tue, 24 Feb 2026 03:15:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RFqKQdqJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VvZg2fwQ"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AA0FE14001C1;
+	Tue, 24 Feb 2026 03:41:11 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Feb 2026 03:15:17 -0500
+  by phl-compute-11.internal (MEProxy); Tue, 24 Feb 2026 03:41:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771920917; x=1772007317; bh=1lTd/u+7r4
-	krUby2z8064Tf8TvbwtwJPYGH6j9AAN/0=; b=b0yqJ0RitwL0oVFzb47P6rXfG/
-	6/cG4yRwaVgAJ3PPlpNYeYzJ4whcRiQ6B27TjPfrI9521ri2ukhyr5SQgIqP9jB/
-	+xfz1DXMcsIWDNMxuRDqnz8BvIE01NNEOLiQmZtmOaAEXKWE7SWDBIfcHVwMDwKB
-	VM2KZnUql5/Yh2esz2w7Ay6nB3mGA/4uQ47OASdF6wEDQZgmUtNibhIWTL6uw/YG
-	g71IKH6AMvsHhgb/jb57oC7HtPT8EjSM0c1R9+7xoCtEcSdfGKADZ5GAHtDr7oXN
-	+4u1/DeRIT0jzDxhDWeYbv0KMRGFbls8ARqZSZCRi4dN/fPLtvOp16fCXN3Q==
+	:subject:to:to; s=fm3; t=1771922471; x=1772008871; bh=mpTVjPA5rF
+	HJf/j1WyAGl5ktCP1qM2HCrKvO6kpxy50=; b=RFqKQdqJV8bMYFyPviBwTLnR9u
+	gtpMJtNK3QinS1PS87j7ZHeqMzdsRkLS+wL3kbwxJoG2gCjm+EoXvf12kzc/Y2Ip
+	agViOgFNOWyhMB0dckWHx+kqS0ENaRfIMyrTaWkDW847t/jzVAqk8slRHQCzndpJ
+	mEdegYgJI5sq9dYqUec8GgwRqkwG9hfSTF2MpHheQ4/Q9+xS04xiCpapgZfX3CR4
+	TrKnpG46ZatvyrdvfmhAw1OvatMhXrVsjaJXHV6zteS1T7Fcvgr7Xw7ID/lv4dqL
+	xcvuTPjhehmrcaoZ2qnpOkhBwA2qt1qapkLH+iDpA1PX14zNE0zox79eZ6sg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771920917; x=1772007317; bh=1lTd/u+7r4krUby2z8064Tf8TvbwtwJPYGH
-	6j9AAN/0=; b=Ppfj0GSz4ootJW2q808l1WEcK5n6lsBxa7hsoi0CJLH0bmysDTF
-	RJfUhV0PFIotsBpYxwRTF4+r/tcMaU5H2syWu450COxMNuL2slw0DGTfeywq8ocs
-	4CIUBOIaNw62a6bezaKE2AHb5W68oSjEyQw4qk+Rzxfd2y89JngIwrk3a7JUaANh
-	TDEicRD7Vp0rGOo6rzKd2tGh0MSvpE0+NoJgIqAsS9CDiZ84RrTF7wlp9xeqWJ+2
-	Kj1CjYItpABOp/Q/d1miAKj9ZZEcQkZy5oJ1t6t+raHpGlgG0IJ2aQbTNf+PuYcT
-	VRL36xrO5Bp/gDeoJbJq8FleBGjo0R1FBxQ==
-X-ME-Sender: <xms:FV6daSZY2wAK5Pe-jhoEPqciANZCErJRpcZXaymjGvXca9SRrRPy1g>
-    <xme:FV6dacZszQgeVGPlMynqPbNIIvMTAfV-HSvl0-XohQwMZJ4c63hvx2FJpw5X7BfsW
-    cNrXFJmp4fTMaJRw0bzAQYIlLiMY629yiaZSi30Ts2wlSde8mOzpQ>
-X-ME-Received: <xmr:FV6daR9Co7cRqx7a6frZvLeVKEYlHCjNrUNmvJJG0qI7WZE0gSfnx7hRjeb_uMNytzKlYUuPFSfZSXo3eyWPoG8MCMd4wX5EDcl3BmrhQARkwQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeelieehucetufdoteggodetrf
+	1771922471; x=1772008871; bh=mpTVjPA5rFHJf/j1WyAGl5ktCP1qM2HCrKv
+	O6kpxy50=; b=VvZg2fwQ/9txfj5hz058XYFJWvRlDBs3hzl3N4FzJ1OGVvjaMTT
+	uHS6kMMUHXUidtKex/Fjdu2xIb/babxmLdrSu52L1fTHw5PBVJkcvfZp70dBJ4SA
+	A82e6AQ5ZxPfmiSdbsNjZcGiWIlIp406BnwrBI34+cgqFS0LqQkWEtIAYtL+eQyT
+	kjJbsJHyM1mR6YSwx3oVD2SHlUU6HMXqbFZgMYWueeINcOFwYOUGi3eX8eAFb0Pa
+	HtEtG0+jsdfOzHinASvbbBs7Iz+dhbIrVaRh0ghNIzjPULopxnlkqm1X2uxrWePe
+	Csdu9DI7FzWONVxzeYfSQTGreiHchFhEe9w==
+X-ME-Sender: <xms:J2SdaVbWyjRHVCOrePYUfHNmXFN27WmBK0gOmTRRR4-ZnY3LRk0qkw>
+    <xme:J2SdaSYmyro1eihsgziEoAHoRsroX2CLP3HybYRBOt3YR8a3X2uPtnkypTjyN4lLL
+    hn2mrK6v5GuYT6_zxfd3pXo06m9B3Eo-h_zczPH1QFpwp7U03mdouY>
+X-ME-Received: <xmr:J2SdaVlYqXlClh5spRlOYovN2DkfaO6k6fmzb-2RS7k6S3nC_tS00-jU3sVj2hKe6ns7wXUDBfSmki2Ict_JhuL_ygqSXsBnfvuXEPxauVxvmQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeljeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:FV6daTgPn42REjcoXCFUDGdQ-jOIXBx1hfyEdSlxXZTl7SlNFgc0-w>
-    <xmx:FV6daZcAR3kOf3Cb8_kqV0F5iUntGvMqJ_oBNb4EZ8uvDFGN-W2TVg>
-    <xmx:FV6daSo4jTm7hKenDhhi00QTQJW_32hiEGp21o7LSt_4FkmwzE2Mcw>
-    <xmx:FV6daWC5ORzNyKaw34Wptyu6HCU_F0nanLOiUfd0Sux74yV9-eUEpw>
-    <xmx:FV6daTNfCFf9dk9njENvmBlLkniJQiDuEYW2EB7xi0P8EQZ87T3sehde>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:J2SdaezcYLrq8hmjKu67rwtRWpOJs4SaejoNXC-DMxWYa3lIjyjSmA>
+    <xmx:J2SdaTOWEJ0tk7s7YAsZpaqOEcnPjT_gMf_ChhrhB9xAWOElVv1WuA>
+    <xmx:J2SdaSSxnRUAY7SK45-xEv7G_MGp9V8mpmIEnHFsQXmd2mamP0cY8Q>
+    <xmx:J2SdaRZ3D0Jj-iaoGIa0wGCD4lq0Ka14dBAiGA0OasiI3u0TToyanQ>
+    <xmx:J2SdaYzH52JtmM7QNMR5DYB5eg3qh3iaZ6YIS8_KburTykENVefrfeze>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 03:15:16 -0500 (EST)
+ 24 Feb 2026 03:41:10 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3c923bee (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Feb 2026 08:15:14 +0000 (UTC)
-Date: Tue, 24 Feb 2026 09:15:12 +0100
+	by mail (OpenSMTPD) with ESMTPSA id c6a29203 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Feb 2026 08:41:09 +0000 (UTC)
+Date: Tue, 24 Feb 2026 09:41:06 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 8/8] builtin/maintenance: use "geometric" strategy by
- default
-Message-ID: <aZ1eENpDpagp77dN@pks.im>
-References: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
- <20260220-b4-pks-maintenance-default-geometric-strategy-v1-8-faeb321ad13b@pks.im>
- <aZyAOsRX5484naIU@denethor>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/17] odb: make object database sources pluggable
+Message-ID: <aZ1kIib-CaeOHGSO@pks.im>
+References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
+ <aZx-mrdbZp-7VZfi@pks.im>
+ <xmqqjyw3ktns.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,58 +85,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aZyAOsRX5484naIU@denethor>
+In-Reply-To: <xmqqjyw3ktns.fsf@gitster.g>
 
-On Mon, Feb 23, 2026 at 10:48:59AM -0600, Justin Tobler wrote:
-> On 26/02/20 11:15AM, Patrick Steinhardt wrote:
-> > The git-gc(1) command has been introduced in the early days of Git in
-> > 30f610b7b0 (Create 'git gc' to perform common maintenance operations.,
-> > 2006-12-27) as the main repository maintenance utility. And while the
-> > tool has of course evolved since then to cover new parts, the basic
-> > strategy it uses has never really changed much.
-> > 
-> > It is safe to say that since 2006 the Git ecosystem has changed quite a
-> > bit. Repositories tend to be much larger nowadays than they have been
-> > almost 20 years ago, and large parts of the industry went crazy for
-> > monorepos (for various wildly different definitions of "monorepo"). So
-> > the maintenance strategy we used back then may not be the best fit
-> > nowadays anymore.
-> > 
-> > Arguably, most of the maintenance tasks that git-gc(1) does are still
-> > perfectly fine today: repacking references, expiring various data
-> > structures and things like tend to not cause huge problems. But the big
-> > exception is the way we repack objects.
-> > 
-> > git-gc(1) by default uses a split strategy: it performs incremental
-> > repacks by default, and then whenever we have too many packs we perform
-> > a large all-into-one repack. This all-into-one repack is what is causing
-> > problems nowadays, as it is an operation that is quite expensive. While
-> > it is wasteful in small- and medium-sized repositories, in large repos
-> > it may even be prohibitively expensive.
-> > 
-> > We have eventually introduced git-maintenance(1) that was slated as a
-> > replacement for git-gc(1). In contrast to git-gc(1), it was much more
-> > flexible as it is structured around configurable tasks and strategies.
-> > And while it knows about the "incremental" strategy that we may use for
-> > scheduled maintenance when configured via Scalar, its default still is
-> > to use git-gc(1) in the background.
+On Mon, Feb 23, 2026 at 01:59:51PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> I'm a tad bit confused here. git-gc(1) by default uses an
-> "incremental/all-into-one" strategy and it is my understanding that this
-> is what git-maintenance(1) is currently using. Is there also another
-> "incremental" strategy for git-maintenance(1)?
+> > I forgot to note that this series is based on top of 7c02d39fc2 (The 6th
+> > batch, 2026-02-20) with the following two series merged into it:
+> >
+> >   - ps/odb-for-each-object at 3565faf28c (odb: drop unused
+> >     `for_each_{loose,packed}_object()` functions, 2026-01-26)
+> >
+> >   - ps/object-info-bits-cleanup at 732ec9b17b (odb: convert
+> >     `odb_has_object()` flags into an enum, 2026-02-12)
+> 
+> With the above base, [09/17] fails to apply, as the function
+> signature of odb_source_loose_read_object_info() no longer has
+> "unsigned flags" after "int flags" turns into "enum
+> object_info_flags flags" in f6516a5241 (odb: convert object info
+> flags into an enum, 2026-02-12).
 
-There are three strategies right now:
+Indeed. It seems like I mis-resolved the conflict that happens when
+those two patch series are merged together. I properly resolved it in
+the header, but not in the implementation.
 
-  - "gc", which is the current default strategy that uses git-gc(1) to
-    perform the incremental packs followed by the all-into-one repacks.
+The fun part is that this compiles cleanly with Clang 20. I would have
+expected a warning here that the function signatures are different. I
+tried to play around with -Weverything, but couldn't get it to produce
+the expected warning. Oh, well...
 
-  - "incremental", which is set up by `git maintenance start`. This
-    strategy never performs the all-into-one repacks, and it instead
-    creates packs of a fixed upper size.
+> +++ b/object-file.c
+> @@ -543,9 +543,19 @@ static int read_object_info_from_path(struct odb_source *source,
+>  int odb_source_loose_read_object_info(struct odb_source *source,
+>  				      const struct object_id *oid,
+>  				      struct object_info *oi,
+> -				      unsigned flags)
+> +				      enum object_info_flags flags)
+> 
+> Tweaking the patch (e.g., "unsigned" -> "enum object_info_flags") to
+> make it apply was trivial, so there is no need to resend.  Hopefully
+> there is no semantic conflicts due to confused bases (the result
+> compiled and linked fine).
 
-  - "geometric", which is the strategy that'll become the new default.
-
-I'll try to clarify this a bit.
+Yeah. I'll rebuild my patch series on top of the base that you have
+constructed. Thanks!
 
 Patrick
