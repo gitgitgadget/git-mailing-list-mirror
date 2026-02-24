@@ -1,70 +1,71 @@
-Received: from mail-qk1-f194.google.com (mail-qk1-f194.google.com [209.85.222.194])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262151DED42
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 19:00:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DC51DED42
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 19:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771959623; cv=none; b=GO6+hl4G8CNt6Vk3/qEeQlBXDDa2Bs8s8z1JG8vVHNykg0YNTT8x8XGjijjxau6X97aXunua9JyFm/b1CthmgIN0Gv0g4beH6eoa68Wd/Ml5foaSgoAICm6nBIKQ5s4UgSjhmJQTpcJUdWxeSBiAtjb5uMpc9yjN5/EtB0U0BUY=
+	t=1771959631; cv=none; b=K9JqsVCzjOstbMisVFy28GF4R320p3rpjk1jDYUNgqBEDn+5lXkOB9pUVCIE0MnaLk0Z3a8n56uIli8fAHke/KFsCsMW7QSBEYn40SqOfn83RMoE9sa7uuujnL4lz95JqxWGbrLALBWmHSBrdj1ULygq+Et9/i/C9LAU8sNLB6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771959623; c=relaxed/simple;
-	bh=zRUGWvcPPz4zSlsNs/2A8aW8Dp8K/0MrCnxirAJ29uk=;
+	s=arc-20240116; t=1771959631; c=relaxed/simple;
+	bh=5l/7czIVKdacsSvtr2ntGIL0CPCf4w6//Jio5g/eHVM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VV/FI/+JdO14EDwupsptXqkesjYEwTZJTzwudqJvc+v4ImdQH+qMihNanmcb6VvZVoNZn+xMFMvosE5Vw79xWZli9B+WBgu+PNahWZezWkuuopVUnBJw3eh+etGADNsJDNHmWmS4CnzvE6uJH8i/s8tjQgBaCw6tv0sjIta/bkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=AlDN0mSA; arc=none smtp.client-ip=209.85.222.194
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pw1zP3ApkrZw7oKTqnLfTdweT6PHh/VnKz7GIzss1mC9TF6Og2VHcqN62Z7Cru2qJFCJDEmpktythoeCNHHqCqswux+dTVTc9PYqXFKvGxQl+3KVJO+kQyza2l+BZJI9EA+vdw/88qwXJm/2VyeB0PV9/M3RaOi3CAnvtcxyYuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=dvhGq/jg; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="AlDN0mSA"
-Received: by mail-qk1-f194.google.com with SMTP id af79cd13be357-8cb38e6d164so720021685a.3
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 11:00:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="dvhGq/jg"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-5069b3e0c66so1329791cf.1
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 11:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1771959621; x=1772564421; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1771959629; x=1772564429; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lYXfZ6aZHXCHz65jtQQTu4u3ZURnc/UsQBHWDHQsri0=;
-        b=AlDN0mSA1REAgb/fWhDSSJWUQAhHRX9KoxCtAiOiMUY++haUfjoO5i7Nlszhzoa0mg
-         dgwjYxDJfZ46lzi8pGtMVbc6vsLL2Sy3JTcmqxXGQIxPPUFVxY+0fYpDcnnh08kxE7+3
-         63r1zVtyn8bz48VxnnVUN3BXS+wehQDP0bVgz9OV6j4jPsD+3M0j6RkcGOaV9Pt9zLNC
-         vZY7jKUmtGagUBqMoTdjQNRJJ+3fyrEkqedCWzfvQ1yGC7c1oXJuAaCM8hVLegIfd8Ee
-         L/VeSfAu8LqT/gn72j9iESfDpZEvAp985GvIPYtHjYH6ZaOKa7Unu3rbQIISHEmX0PRh
-         YDOw==
+        bh=FiEU1/FltzBRp5zD4+UY+AEVcKfKNduGI5kEEFDPApM=;
+        b=dvhGq/jgLE4Gdp+NcL/lxsc0QRcxWVtq4R6Mt0MZVmWheVy5FZ53pw/k4VWjr0Cj3Y
+         TVbrMUYxtcVbutd4VTUHlclQkf3BmkpRC1nIXqJ6xdXd22Y6SILJMqfK+aJbvf6y+PCY
+         1K3YAZV5ypHPV0sUYaEljhmfnTi/8tkpEZPjvKLbxjOBwp6ORAJ5HvW1UgkYz0V4KcEU
+         2P17HxxTz0ytMeiDIEjE2OlTQySYP3OQm4N1OIq8mGwKYYgC+lJjcFhWBlI3PnZSIr0M
+         i0yMZl8++RHCgXSI7hG9ey/JZ4LzH4hSvlbe51gROYEDpXAJ+e+0B+Ey4NxJqPcX9ozt
+         XagA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771959621; x=1772564421;
+        d=1e100.net; s=20230601; t=1771959629; x=1772564429;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lYXfZ6aZHXCHz65jtQQTu4u3ZURnc/UsQBHWDHQsri0=;
-        b=WXO1K343HofynOJE6R5ckQReMjxzAOd6LKDaIakvsVB/t3ITI9nat0S2WT+M/0hV57
-         GavdItzpt5c1QarqEANDYkClvbifObEQHHTnIJEutxey0p5F5nIPSZl56ICAbewNvVfd
-         CNhNwNJG+i6pxnn+WNcgubsctQqhWdVBdDk6zGmQW7qSmi2HaRDgG1+V/d40vLpmPmjB
-         4cE9TehNONQZGCeA5fABQZsdHBGbFLkT+SCLKbt2NHA0n+/GNzcCSLicKHyEBg/0a5Na
-         AnfYt3t4jbOJMYD3j/Jzi2vDjj4jtVzK2/k6kdwWF/5j3Yy88kBj7cjAIKybf8L9014Z
-         Nrqg==
-X-Gm-Message-State: AOJu0Yx2AnWemTu1j87tGH8TTVOMbKLLj9Q42AgTB9DTiQ5/4YGc+lNG
-	0SUMTWy2S/NhbybcGm7rMk/7B6jtqRRntOxhUjZ20HjbQL7oUSANaFdsDtd9Rtvbpp05JztOshj
-	3sEhErX+xqbqh
-X-Gm-Gg: AZuq6aK+yPcf10c/T3LOMcK/Ag8gLFFysBZMu/oVGRQxALTq7own2Ij+V42DXNz5gR+
-	PUvxC8HFn1+2NChg/6vnHwjQiLQv07lgBB5cnVM8vZCsVgJSFcK2TZoMiDLvNYpE2sRG2QuHAXB
-	ZV2jfv08Cg67B3BUmG3lRgWgM/81dZsITIB1JeJEK/UeDBg3NRILq3aMeoX9CtDSVtP7LscPsHH
-	NAquxxmlNXMPxyuPSYa7v/ECTrLfjqBE89xQo+agmwaCf6rsPUoPqn7OsLfFoT6kgSOt6TwcvfL
-	zhxaKrK6hJ1KcHi5HwS03lFFGaB5SF70YoWF4vArjXbBN9gyOUARyaAOBcGT/7OVs0NB9y42/rV
-	cuaX72krms0Mnr81ZELQ6zqYTpjQSuEptEuSdbLJf804EP+cTO/LC+OokSL+E4f8LsEzSvD7k/q
-	ZGO7CkZpsIrLT5+S5LLODklT8Ys8Zzj+HuuwJJK2qzKAhPXDIxYSfnC6/P3NsDUn3Ho0ERKr6Wx
-	SKETyJp1zUqSpPrWbX6806SHlBCEw==
-X-Received: by 2002:a05:620a:4455:b0:8c9:f996:81fd with SMTP id af79cd13be357-8cb8ca0a8femr1806865785a.33.1771959619998;
-        Tue, 24 Feb 2026 11:00:19 -0800 (PST)
+        bh=FiEU1/FltzBRp5zD4+UY+AEVcKfKNduGI5kEEFDPApM=;
+        b=sw3bmNABY+D3o+zbzXIZ8EYTLIu3gmuSIgXJJzkpXUYMP18c9zy2Cy1kfYlbd0mYG0
+         Qyg/GLxl+Pceg65Ux3MUDTzd2fgrSnpMtRLFWOm38Q2pIKcY0RuEmj5HyekdCyRybA3R
+         DkXAhVfWzPXVJC2bXbLXDnHkvVDAVho2m4Ym0SlwhWmDlkkyCSukgofPKUTxYkKE49PU
+         ou1YlRmFRrdGsqIUueAXNpWKVpZjQfr8HT0p2QI4EymCtyZTAIZyYAbsibB0NIgMfDW0
+         kretXpy+uNwMiPxs1CDurlbKKsVlK01AX+Z8dMo5Zpmqq0FA5P0NT+iEHYI2ATanAfIt
+         sL9A==
+X-Gm-Message-State: AOJu0YxcUX3xCF7wKIVWMGIRAqbqhxE2zDK+xuBZiS5V5BLnSWNBIXwK
+	wpXS/gbUis4e814GMealxKlwdgI2tFYeeCCh7hRLokWdlFPQguU0E7DScJAZFhlMlu15fyrAyLj
+	aEq/oM9QDeg==
+X-Gm-Gg: AZuq6aLQ4tRKE/oVHuLU8X3r13oGGiN5QINFFJEw6HIGYRJTWvPODBoP+/XAV4qV7yS
+	EQc1M1jRZVzhZRUT565ZVqDdLu4RYSW0QIuQMEhmmeLxjpz8tMukeyVUx/fQIqb4f78eC5Dp6ZU
+	B7i9P7OwKCHGEIKURrOvRKipwL0XxmRdjfH/VVOpAVWXlq8GpgVDrp00L9RmlDfgyJtii8BuqKM
+	fmhIQqZZJs+Tz1hGvXfwDmmZHFIID1QTreOZJ4sqIzR7eSfQEdpV/Y/KGlOwTxOJzOQlUZqbjwL
+	LdS04GpEGYPnl2y/tfzgwWvPMcgkWjkRMbNb3HRh3zMohxsLWy7AjhR9UlsNIjXTYIYFl1VcDNT
+	bhJ+146u1PCKjO095rtAgRLUpRFWJ9tjA+p/70SLtla316eZaKqyRDOCp1RLZyeyPPhhKcPlyDi
+	QdFnFewYaRNf47e6p/Orev07FuA+9gFgYqDN84Q5YpUbkhi9OQ17sBye+F6k/wY87N2hfsRmT4S
+	2pe4ClXQKasZA1vn3GIPVeXHQXNIw==
+X-Received: by 2002:ac8:578e:0:b0:501:3aed:fa5f with SMTP id d75a77b69052e-507365466c1mr15923681cf.12.1771959628725;
+        Tue, 24 Feb 2026 11:00:28 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d1218d5sm1030030785a.50.2026.02.24.11.00.19
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d544cb8sm101686651cf.12.2026.02.24.11.00.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 11:00:19 -0800 (PST)
-Date: Tue, 24 Feb 2026 14:00:17 -0500
+        Tue, 24 Feb 2026 11:00:28 -0800 (PST)
+Date: Tue, 24 Feb 2026 14:00:26 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 11/17] midx-write.c: introduce `midx_pack_perm()` helper
-Message-ID: <7f99d3d728a41b7df37009def10dcd1a5bdfc9b3.1771959555.git.me@ttaylorr.com>
+Subject: [PATCH v3 13/17] midx-write.c: enumerate `pack_int_id` values
+ directly
+Message-ID: <238bd203eaa7629baf95ea5c94593561848dc7bb.1771959555.git.me@ttaylorr.com>
 References: <cover.1765053054.git.me@ttaylorr.com>
  <cover.1771959555.git.me@ttaylorr.com>
 Precedence: bulk
@@ -77,117 +78,42 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1771959555.git.me@ttaylorr.com>
 
-The `ctx->pack_perm` array can be considered as a permutation between
-the original `pack_int_id` of some given pack to its position in the
-`ctx->info` array containing all packs.
+Our `midx-write.c::fill_packs_from_midx()` function currently enumerates
+the range [0, m->num_packs), and then shifts its index variable up by
+`m->num_packs_in_base` to produce a valid `pack_int_id`.
 
-Today we can always index into this array with any known `pack_int_id`,
-since there is never a `pack_int_id` which is greater than or equal to
-the value `ctx->nr`.
+Instead, directly enumerate the range:
 
-That is not necessarily the case with MIDX compaction. For example,
-suppose we have a MIDX chain with three layers, each containing three
-packs. The base of the MIDX chain will have packs with IDs 0, 1, and 2,
-the next layer 3, 4, and 5, and so on. If we are compacting the topmost
-two layers, we'll have input `pack_int_id` values between [3, 8], but
-`ctx->nr` will only be 6.
+    [m->num_packs_in_base, m->num_packs_in_base + m->num_packs)
 
-In that example, if we want to know where the pack whose original
-`pack_int_id` value was, say, 7, we would compute `ctx->pack_perm[7]`,
-leading to an uninitialized read, since there are only 6 entries
-allocated in that array.
-
-To address this, there are a couple of options:
-
- - We could allocate enough entries in `ctx->pack_perm` to accommodate
-   the largest `orig_pack_int_id` value.
-
- - Or, we could internally shift the input values by the number of packs
-   in the base layer of the lower end of the MIDX compaction range.
-
-This patch prepare us to take the latter approach, since it does not
-allocate more memory than strictly necessary. (In our above example, the
-base of the lower end of the compaction range is the first MIDX layer
-(having three packs), so we would end up indexing `ctx->pack_perm[7-3]`,
-which is a valid read.)
-
-Note that this patch does not actually implement that approach yet, but
-merely performs a behavior-preserving refactoring which will make the
-change easier to carry out in the future.
+, which are the original pack_int_ids themselves as opposed to the
+indexes of those packs relative to the MIDX layer they are contained
+within.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx-write.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ midx-write.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/midx-write.c b/midx-write.c
-index 5c8700065a1..9d345fb4737 100644
+index c54113cdc84..80334914d3e 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -119,6 +119,12 @@ struct write_midx_context {
- 	struct odb_source *source;
- };
+@@ -935,11 +935,11 @@ static int fill_packs_from_midx(struct write_midx_context *ctx)
+ 	for (m = ctx->m; m; m = m->base_midx) {
+ 		uint32_t i;
  
-+static uint32_t midx_pack_perm(struct write_midx_context *ctx,
-+			       uint32_t orig_pack_int_id)
-+{
-+	return ctx->pack_perm[orig_pack_int_id];
-+}
-+
- static int should_include_pack(const struct write_midx_context *ctx,
- 			       const char *file_name)
- {
-@@ -521,12 +527,12 @@ static int write_midx_object_offsets(struct hashfile *f,
- 	for (i = 0; i < ctx->entries_nr; i++) {
- 		struct pack_midx_entry *obj = list++;
+-		for (i = 0; i < m->num_packs; i++) {
++		for (i = m->num_packs_in_base;
++		     i < m->num_packs_in_base + m->num_packs; i++) {
+ 			ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
  
--		if (ctx->pack_perm[obj->pack_int_id] == PACK_EXPIRED)
-+		if (midx_pack_perm(ctx, obj->pack_int_id) == PACK_EXPIRED)
- 			BUG("object %s is in an expired pack with int-id %d",
- 			    oid_to_hex(&obj->oid),
- 			    obj->pack_int_id);
+-			if (fill_pack_from_midx(&ctx->info[ctx->nr], m,
+-						m->num_packs_in_base + i) < 0)
++			if (fill_pack_from_midx(&ctx->info[ctx->nr], m, i) < 0)
+ 				return -1;
  
--		hashwrite_be32(f, ctx->pack_perm[obj->pack_int_id]);
-+		hashwrite_be32(f, midx_pack_perm(ctx, obj->pack_int_id));
- 
- 		if (ctx->large_offsets_needed && obj->offset >> 31)
- 			hashwrite_be32(f, MIDX_LARGE_OFFSET_NEEDED | nr_large_offset++);
-@@ -627,7 +633,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
- 	for (i = 0; i < ctx->entries_nr; i++) {
- 		struct pack_midx_entry *e = &ctx->entries[i];
- 		data[i].nr = i;
--		data[i].pack = ctx->pack_perm[e->pack_int_id];
-+		data[i].pack = midx_pack_perm(ctx, e->pack_int_id);
- 		if (!e->preferred)
- 			data[i].pack |= (1U << 31);
- 		data[i].offset = e->offset;
-@@ -637,7 +643,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
- 
- 	for (i = 0; i < ctx->entries_nr; i++) {
- 		struct pack_midx_entry *e = &ctx->entries[data[i].nr];
--		struct pack_info *pack = &ctx->info[ctx->pack_perm[e->pack_int_id]];
-+		struct pack_info *pack = &ctx->info[midx_pack_perm(ctx, e->pack_int_id)];
- 		if (pack->bitmap_pos == BITMAP_POS_UNKNOWN)
- 			pack->bitmap_pos = i + base_objects;
- 		pack->bitmap_nr++;
-@@ -698,7 +704,7 @@ static void prepare_midx_packing_data(struct packing_data *pdata,
- 		struct object_entry *to = packlist_alloc(pdata, &from->oid);
- 
- 		oe_set_in_pack(pdata, to,
--			       ctx->info[ctx->pack_perm[from->pack_int_id]].p);
-+			       ctx->info[midx_pack_perm(ctx, from->pack_int_id)].p);
- 	}
- 
- 	trace2_region_leave("midx", "prepare_midx_packing_data", ctx->repo);
-@@ -1384,7 +1390,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 						      sizeof(*ctx.info),
- 						      idx_or_pack_name_cmp);
- 		if (preferred) {
--			uint32_t perm = ctx.pack_perm[preferred->orig_pack_int_id];
-+			uint32_t perm = midx_pack_perm(&ctx, preferred->orig_pack_int_id);
- 			if (perm == PACK_EXPIRED)
- 				warning(_("preferred pack '%s' is expired"),
- 					opts->preferred_pack_name);
+ 			ctx->nr++;
 -- 
 2.53.0.171.gde83996e422
 
