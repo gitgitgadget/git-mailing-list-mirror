@@ -1,113 +1,72 @@
-Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F048C1F
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 03:34:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771904084; cv=pass; b=E74pgMdaqsqnEReoHJsBrxIvClj5rpdHP/lbyPpTyyIGAQl+rQWfHRSwiNUSmwgWln6WNn14fIJuZ75N/OmVnLvlm7WJUftr9V+e1Ue0S37G5ivKwdrlRPmM+TpbCIjFQ1ClZ3qsjsTlgD6GLr9CBI2inthfeFGirG9hVWLEYmg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771904084; c=relaxed/simple;
-	bh=1/UnOo8Oaoy3V+tJTfFFftfE8blSjboWBB9/6cA4oWc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XU8z6dkgq97Q0ef3uKm39LtklSIZrRO7pyW8fZ0GGB3/Oo7nC5HrGH79AHu6houtfSb4F1F20GFekepcNQTknaIKkGhhrlDZ8ka6zyylkJ8slSukl+oJxqRHtA6zKqVSBtRzsjQV3EOtq+tzBK0EGSxlMqHKgFMjtgftr6YvoO8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-2ba85f77203so270613eec.1
-        for <git@vger.kernel.org>; Mon, 23 Feb 2026 19:34:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771904082; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Z9ImZCRNGlbyFS/nmmLedJd5iZ0wYmfEhiu46K/cChTQLx0eERKu/+DH97776WTUQa
-         LF87CFLDdtlitB1FYD0XuvI1YAzyz/9D/cxw1rnkNeNw8GmJsQgmz5aqd/08zYA99rrd
-         XiuyDBr34MtQ8qKCX+vUOWxdY+PxBALdIuij559ATmuMC+v/hZpzCRoJd3ddxDOzVgfS
-         LBBHb/Xk1JC1YRWQ0RNCY6mHUOEyJV6KKgX5ryki0g/grpRTXE3pvzFHbtjgM20+6Cr8
-         qyFZdpd81cGmuHRyuaDgFkxhuhkSJtuMEqu4Rlfy/bwuyzUx0jBh05h1l1tpgi1vTjLv
-         BIEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=LtrEtXbTKawYSN0DPbgbVMw8XlhVNHOtR+zCXookDSE=;
-        fh=36iwRaJBsb32XvpeUe98G8QFtbYqPVSB+M7lMi+IMik=;
-        b=T2PA22ccy8dSuk/FOWLzkE8vVpuDKNHYHO4O79X/5N1oUVyG+ikYDkNFoZQ2guL7v6
-         b0jJpy8ZCLKS8dQu//2KH/jeu0doLE2Y9GJREv2D7144CS5ZmK/W+MWp9zXX+MajgIs7
-         ggzebsMdaja7WBrKJBRCqO3yMGjOdyz33xN0Cin7k/h3y3l2cbpbjt2Ht+E6frLUyeux
-         ErWe3VoQqpNAmrlxRdKmQQeVJyZJAfzHgw8ptwnPdizosVwLG2GRPNLDyqs0nwNg8nSE
-         yCOYtcP5L6AI8xoeMpJBLB0L9CvrJBTFMvYZuFsOLNIQc03eK5G+QiredJ3RiIOAgtaX
-         /Ygw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771904082; x=1772508882;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LtrEtXbTKawYSN0DPbgbVMw8XlhVNHOtR+zCXookDSE=;
-        b=gyTRXMIZUCknGV5zSmFvpbck2Ec0jOeJsZA2i1kHls+8bXid2OwGjxnkyw3oWDVrFL
-         lORlxkzhppHwiGOZilVpa17gx2RFXjmHHIPpKw7Ej9/8V3aToNQeQitZu5IPOPbgTI+A
-         e3waYrEkbZJGQ3xDk2NCVGXKoK7VQfpWJHxfbimB3LEr5SMJY5at6s5Pfu9TWRWUqjrw
-         0Buvjx0n6P60da1iCYXjs1T1RJ/7cyqklp9Un1FubTLJDI1UrqvTnT1Hy/s49TPfh0QK
-         bmRzqcAA/fB3HCn5XNywg8C1mrfDwLteo3ACQshSH2BE6lM2B/W9ZPai2vIEfA+ITSgn
-         WFLg==
-X-Gm-Message-State: AOJu0YxZGgqgMRbYAFvsj/xRNho3L1Df/Rg0mVThla1CW0HLrrZregX0
-	oF2St2AQYLwj2rQvzntQ3aaIuoXxlNYkXsBVCIBMTfQK/mMahsp/ZpTZNj2TC0oKRsp2Z7hk116
-	mO4sf0ufjr2F2E+olI1TuPGA4iuEvnGo=
-X-Gm-Gg: ATEYQzxvJFGarg8tmaAXK1ylsUeOiwn7E9b/ZAM9ItQ9Kd+U5jYPedhfe3coi/Tt8aC
-	37EuzeM90w2yZ8Wnft1yTSHMV3VEpINtY8K55JmvBMTJsjfaMIhvJRSEvEozZt0DaYJb/3aZCcx
-	/bcq5exuPhSu9Pcy9NUBkh8LzObzZpIHPOEBP4uSDhcNm49NImqduhfTdUxA/K+qKtjU/EzG/us
-	8i+YJHTbvWKTY3sKcv8VaNGdY2cSdZsbicfE80YhFo7xPK9XuEaavI/exuf87HUvAO13bOidNvW
-	c/x2x0w3T70AXrfprJ9zxqG8IQM+BkwLPCjZYXM=
-X-Received: by 2002:a05:7300:df43:b0:2b7:e929:856b with SMTP id
- 5a478bee46e88-2bd7bd714f0mr2294576eec.5.1771904082278; Mon, 23 Feb 2026
- 19:34:42 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E828EAC7
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 04:04:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771905859; cv=none; b=TgHZ6jXPyoBcsXPt77/GcgPs9Ha/3qjsbghSPOop0aD1lMrGzU9JyORrtxfzOuckpb/EbVimf2YsPJa6vFKzWZ5CoMA6n/iR3S/P90kx8sN3ZhI++2JgJF34V3Q+kr36XTo28cGsXWOITtjvupSDGq3wFitD+8PPi4zRzNxcgDQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771905859; c=relaxed/simple;
+	bh=MBQQhsOGM6PmEjz/xhN0XJfywWwOHczApDJMAYQI/V0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qf1ryNDDoi3vcpDWFhmc4fI2h76i4KF7daahLDo13klFz1nYnahHVj/29q+5my/GZ88oBKVUmnMvLhLnBK/sCxcVrXSJ74+wlbIfCq9TOZHxsfXgR/YZsF0D9XfOjFboUUbXFxiPT9E92FLZ4i6leaBVav6vT/MVeOhF9jFd7gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=ANBBH/BI; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="ANBBH/BI"
+From: Mirko Faina <mroik@delayed.space>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1771905849;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xlR3F6vC5Ptnc/znrGCRkFoz+O8fbybx8a46qMwFNJc=;
+	b=ANBBH/BIotbf09x3/MjTYEVMv8Huo9ut9Hdd9ItrIOJl4sCmQxMEcWtKU4kUyXIKabhVYz
+	7Cnc6EW15vcDSr7G27OUbkE1/fpDpSNSFXMPU4/2QfRf2Fg+kD5HC0sjgC180NSa2g/T6/
+	RkbyZuk4j26jgppYjtMCvUl06Zt5HhjVFvE2mwtPM6bO1az/XSPXcTnw4RwQSAN7/QDCwp
+	oM5ZVKU+XMlEZSunSjFnGMbX4ItZxfEV+ufSEj/CxGQ04rn88LCqsC101QApfRzJX/U1RC
+	noTSKO3WAO0CcCnJVDscaqm8LiyNgvqLdmHC+IMu1YahObRXtP6w2fqPBs/08A==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+To: git@vger.kernel.org
+Cc: Mirko Faina <mroik@delayed.space>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/3] format-patch: add cover-letter-format option
+Date: Tue, 24 Feb 2026 05:03:55 +0100
+Message-ID: <20260224040400.751247-1-mroik@delayed.space>
+In-Reply-To: <20260220230633.132213-1-mroik@delayed.space>
+References: <20260220230633.132213-1-mroik@delayed.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2056.git.1771903950.gitgitgadget@gmail.com> <a47f9e9386badd83f0f5820f33f5eed68ca5fd82.1771903950.git.gitgitgadget@gmail.com>
-In-Reply-To: <a47f9e9386badd83f0f5820f33f5eed68ca5fd82.1771903950.git.gitgitgadget@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 23 Feb 2026 22:34:30 -0500
-X-Gm-Features: AaiRm51UYCDeM2d-S4vq_Et7imkdUcHGxQWS_WzTcWpVEPCrFxigJEYHJb14OUE
-Message-ID: <CAPig+cQcpJu_Z6VXbn5cee2AHmPHQaOLG39HFRG1SGnnY1cWFA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] for-each-repo: work correctly in a worktree
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, fastcat@gmail.com, 
-	Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Developer-Signature: v=1; a=openpgp-sha256; l=845; i=mroik@delayed.space; h=from:subject; bh=MBQQhsOGM6PmEjz/xhN0XJfywWwOHczApDJMAYQI/V0=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpnSMb+vHtgurQ+RtjcmEyvRW2BhrOSfqAwGBu8 zWs3jSd0j+JAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaZ0jGwAKCRBIeX6hnBm+ 0R4OEACU1k1UR5xpcG8ageiTUTiTZLG+rIwaY7vESO6qj0MKTpo2t/bATub0lwcXUNVGzkZ5xln zJZsYAtqkPDZHJhrrrsy8TfZYDFM2+ocZzOjNxuNKNB9004NLzez/A9eKPVXFigumfl824bwO9n b3oFy+qVxIfm3wII0qB9Ei/MtlZ8bQc8Gj18rCkdhuokDMCtLBIxdzJ3SdF86eBGLTUJcyFtswp rHnKtOAdbuJI3V71m+03NC7IcGFS17nEF+b0qrCl7BTYe53+AoQhMunWRW1WSboF/jRXhqcmR92 vkEP5lqUKNc1asXZfGuzYneA+18uGZWTtDwVR0G/pLsW0B6QSY8G+ih4e0OqUF/A8pFTBkizKyB C0tfkzyoYzpPfuoNHVRStcT8lhyPkVDJYPLKklCSWMlohRZuTphQYosnTLYaASA7dPb2Pq4D1Sv 2zYFTOG2QK2t6DFe9daFxBKIHpRsgMyJ0OQFqt2Y4vRyIktN86BSZmXJ4B/HZmCM+8cMtWozMYY mrdxTkiRzqT30WAx19mY0ZT+2uhBvAgb8VlC09c+PMPmovoK2VHeCWueJuY8/1Q+3rA3zid+007 iI7RnWOVAwBBT1bYVuiXOpaavUoTllzNtmY6ItM8lhaqeC12/R9RON50IA1jpuwUIfpIsMh3ATP t+QFRf6kTl1vqHw==
+X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: -
 
-[Cc:+peff]
+I've implemented the "--cover-letter-format" as we discussed. In the end
+I've decided to add a new option instead of changing "--cover-letter".
+This better reflects how the config file is structured too since we can
+have "commitListFormat" set while also having "coverLetter" to false.
 
-On Mon, Feb 23, 2026 at 10:32=E2=80=AFPM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> When run in a worktree, the GIT_DIR directory is set in a different way
-> than in a typical repository. Show this by updating t0068 to include a
-> worktree and add a test that runs from that worktree. This requires
-> moving the repo.key config into a global config instead of the base test
-> repository's local config (demonstrating that it worked with
-> non-worktree Git repositories).
->
-> The fix is simple: unset the environment variable before looping over
-> the repos.
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
-> diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
-> @@ -60,6 +61,9 @@ int cmd_for_each_repo(int argc,
-> +       /* Be sure to not pass GIT_DIR to children. */
-> +       unsetenv(GIT_DIR_ENVIRONMENT);
+While working on this patch series I also encountered a NULL dereference
+bug in commit_format_is_empty(). Since I needed it for this patch series
+I went ahead and fixed it.
 
-This only unsets GIT_DIR. Is that sufficient in the general case?
-Elsewhere, we recommend[*] unsetting all of Git's local environment
-variables.
+[1/3] pretty.c: fix null pointer dereference (Mirko Faina)
+[2/3] format-patch: add ability to use alt cover format (Mirko Faina)
+[3/3] format-patch: add commitListFormat config (Mirko Faina)
 
-[*]: From the "githooks" man page: "Environment variables, such as
-GIT_DIR, GIT_WORK_TREE, etc., are exported so that Git commands run by
-the hook can correctly locate the repository. If your hook needs to
-invoke Git commands in a foreign repository or in a different working
-tree of the same repository, then it should clear these environment
-variables so they do not interfere with Git operations at the foreign
-location. For example: `unset $(git rev-parse --local-env-vars)`"
+ builtin/log.c | 90 ++++++++++++++++++++++++++++++++++++++++++---------
+ pretty.c      |  2 +-
+ 2 files changed, 75 insertions(+), 17 deletions(-)
+
+-- 
+2.53.0.4.geaa3cc5f7e
+
