@@ -1,69 +1,69 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B32338904
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7A233EAF9
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:35:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771968929; cv=none; b=Wme1v1dux+iRsMU8zXwUMjL7Ls11vtJyJC/BvQmHw1MtfpGsFHfkoUR/8nk30e9kvs6/kXk50WYfiNu8ryak8E8OSkO+GtlpvtkCuVv00dYciEDORQEKL0/qThsxo0a34zUpJQyMYSz/QuUog69LUhBj97ISy1RMhN6jcKIlBvQ=
+	t=1771968930; cv=none; b=n6934mo+o91aZe2UA3cw3xnj0uUI7qEDv6aq8wdyhmUD2ehkkKRCw2gb6tZeadp3rmg0K6MXjCGD3pRZb5PDbvVoh/yumJ2tFfxrZvdSpkLOTxf61rh3Y6ecdjsYdZIu93piYSl0eaQYtFm3HCsoELNOfCTKc7b7riJ7LH6wadI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771968929; c=relaxed/simple;
-	bh=nL/l8L9isnefRQJbrHLgTyQn96wA11x8KEEHRrthZnQ=;
+	s=arc-20240116; t=1771968930; c=relaxed/simple;
+	bh=3Iz4qjYEvJWnOHQ2fTY+GBxAtUxjsJ4xTpLNZz2Qw1E=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=VAcTpvpWECp3+0Pn9tnnfab8eopFU2JAL/q94nrD6wSCqy8RQjCtXE9nC8vYQyFPKOPlnu/+nWFLA1moMtruBx/yvqjCwAUzR7Aqsfa6Z0co86WDN2Rbli03YP5XXE08xzD5WRiab23af0tD4joixSpB/UxfOo6Hu40MHIlBPGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HDC6XcjK; arc=none smtp.client-ip=209.85.160.178
+	 MIME-Version:To:Cc; b=i2MnXthSliZY/j0qE7cXAkMGWAztbHrGWRbdAPbOHxMFR7f09+niL5wtkRfO8Shwzev+B647grWMVMccdNMJlP40eRPt+LbYQ4PXe8gibsMhPEf/5wjVE3qXr56KsUJfNq0EyuX1UZnQe3cYrVuDfCrWJE2ssK2F+Yg7hbFRg0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fC9Kbo5f; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HDC6XcjK"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-503347e8715so72724401cf.2
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 13:35:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fC9Kbo5f"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8cb40030be5so603358185a.3
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 13:35:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771968927; x=1772573727; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771968928; x=1772573728; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/+d4Sv66rhjD5wiRebiqtbfSuBjUBTzMQir1i6glMjE=;
-        b=HDC6XcjKg5K/0YYp/sm2k3hG2kv84xnzyD8jLSVeZukO+8HcV0duZH2wHYxzIfnydN
-         zs9Z4JVTMdjd/TWa1aHx//56G3WH3m0jXiWdpUTIvMH9gzNFNLwr94v6KwNczpcO+Wr1
-         sAxs/pm7WfC0J1xEn2f6hEZOdKgpQ6yXKg0NSPIMwVljLZWzI91czzzCTIDcUGeng8ik
-         cCmufvxSnLIRG4PrcKR1p9wS+i6ssNqoec14cD0ZpWBCFskYqa91blNI9b6wqXRY73Fw
-         1e4cZELdA23dTXOk1FSNp5HuUfpXNmd0wqvh57vyayabHMKAv4iNRTKtPVZsVECaCROs
-         V1UA==
+        bh=KtnO1S+Uadi0xiWNE9T17Qvzkm5eFy0bYW0AuxRMV/4=;
+        b=fC9Kbo5fXMkfChjQlrZdxOcDbfpLY86PQzSWLnJQ8A81AQGlq1zJlMciEwboCrTCu7
+         DTizXjdSO0CzVSX2guPQpPAWkZn1Kbw63LNz/JgWTQP0c5Lio6PHeu7HIFK5Nxvm3QCN
+         R64fDJJqS7N2Hjp+wFChhI0xBdp1+/CsxqGw08rcT+WltDy+46c3ik8WNGRplBR9V7gZ
+         +5ltrFVYP+0MPuWZ3bF+UibDAzZ7nmEFfdKC91BmP8Z6a/svGvyfWLVuYBlbEDhAPYeL
+         HNH9zpT0XjojK/aCzY38pNMghDs9XhtgrXHJHnlonZQALv0WwA7GFV0driQK9HC3x5kf
+         6pFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771968927; x=1772573727;
+        d=1e100.net; s=20230601; t=1771968928; x=1772573728;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/+d4Sv66rhjD5wiRebiqtbfSuBjUBTzMQir1i6glMjE=;
-        b=Pj6iEye1PNbOpLCtLHH7+UVrK6HEXqntnGt3zfkJeyX20AVMXWA2TMH1jKdqtXdNw7
-         SVGWx0CueQrMdm/d20RWgx9Grg9Rdxg+MxGlBjd6bg4yk2KwaQdHS0B9XglNGDnzYp3W
-         VG01ZbBn56Vlvo/P66n7ZCZUVkW1c9LwVXlJb/5ZzdEJlsFOyvebjHoMpYylpfOutNbX
-         oZj32FzszDNub3S5/l053WlYZhbv5/kA2W0WJs44e/+OQYcQv0X4QiAPj4h6+NqP2N8g
-         /Gd/6RIZiZshP5KgjdVRyL3gGTRQT1NU6ARaH0Ue9BPew3mWYm/ntCXMf5W6RxQ0Trk8
-         dbDg==
-X-Gm-Message-State: AOJu0YwB8gsAnfegQF9Dq1XEPCxICHCQsrp+bNWCdP2AFlt0GBOR0y50
-	NlO4dVHub5cX1B6y6h0svOOkmd0h5mwsirDuqMD+4t25mzT7d15bZg1KpmviCQ==
-X-Gm-Gg: ATEYQzwtJ1zZiR56D7vkRp57hwmcjoOKml97eBmA6YDTooZM1+UcfOAQM23cM10DNtI
-	W4Rucqyt+aejNi4Df2kRgXsxOkTILczlq6kx5bVFdvshiRBKDEwF1GTJNQ67V+5jx4xQ8KCTl65
-	QIejUv2eGhwMsz4sKNrRIOggrjwrZAwwhqZo5xexVBrFTl9V3pUmF/n5xznhqXc3XfHRNg59ytz
-	0UCojeCrDiCRVkU79bDe0w74RRPFG/UGv0kACpNTujXT1FniV9Ok9iw1xIcB3rubA897IUuapd6
-	VAGKTPOTFxRNG9pHYmGCP8XGNSMb04OtCsXGlD067R54z6W2k2dcgzs4581HC00srQZeq9G6vud
-	6EplnP3J98nJ5indmJZVwzkzPGMNsuxruL+BhLV4gjY3Cx4y8LxvsezNEP39JaGk2AQfg9ifQ/d
-	c9UeFac0HET3vD3ZLIKMBo2Eo=
-X-Received: by 2002:a05:622a:1909:b0:4f0:23b6:c285 with SMTP id d75a77b69052e-5073a2f31d6mr2679611cf.41.1771968926953;
-        Tue, 24 Feb 2026 13:35:26 -0800 (PST)
+        bh=KtnO1S+Uadi0xiWNE9T17Qvzkm5eFy0bYW0AuxRMV/4=;
+        b=m2ON61xsBV1FmdxG8EBLB5upywg+Byxayipz5PK7EC/jfMlD/KLtGb3nxjEyRlMkuS
+         1CxkAowj7ydqDey9uiZ+rudXqOVvhfZyRydAZxys7a2dARVcv0zcEiZz1r7D0CNuqSdN
+         BSLKEvWupt9Z4iZtB7SxK/LKg7ac/+4SajWMdHwAJrcLY5Ti2nbCUGxEvPiAaq5gxPeb
+         9uKxph1wlvgHCev4Cst4h61gD5yybMytWrMgnXhaOLKVsM/Y4V/EcEJAHe/8F+TMKK4O
+         MugML///0f0IL9G2sn0k3bvDaFbZEc/TLNdzGf/XwQXFgxqfdTZqArlIN7ONGPBbZROd
+         PSKg==
+X-Gm-Message-State: AOJu0Yza/0TGQP15tsVm6htWHRh8fqqai0ejpyVm05+/L6tt3dLeYg6J
+	TyIk0NHIH+/dLvvDYrjk+ZO7WjqyYuTJtwodwiP7WItIzoHhy1RK9w1J0yXGfQ==
+X-Gm-Gg: AZuq6aLrG/ZoJ+6DWNmHXB/3fY2OFL4oc6LhzHvU03f6izGrCi/HZ3ZUnHh1SdnvFcH
+	XXHmqYdRdIKC9VJZ/J+mpug0eRtL1pXXFs0he75Fu7L+9PBbjlUrqt/c1hp7kTnYKGUrfjZctzW
+	DQjgGTVjuUAMaxtxGKoKo9TFCs9pjSzYt/lMOW6gfIhekA8aON4IpgjbH5GRt0PEVlyf0qGFSj0
+	8LG7d+Pjo4CRKqlaLoeDzb48GwO0XIYtOTy+LRYlv1Etnsjukf/fqBUc8g/Iw6ZT0D5spypc7AM
+	W5hwQQ5Z1izgdoR3t0yPt7n/OZV8CwUohMO+iIqhmCYyhDW36wCqNxF0WCBczeoDEJi0FoScy9u
+	NS8LWkY/Oerv2JDj3FictkpNLdEaw7X0mYKKvH2Tw7hF+dcWntsQb6fJIjNQcOMs1oL1S4wyB4L
+	zN1zivGDw9XNF8OILXJFvT/0o=
+X-Received: by 2002:a05:620a:bd6:b0:8cb:1d9a:42ac with SMTP id af79cd13be357-8cb8ca6e5eamr1480597885a.51.1771968928097;
+        Tue, 24 Feb 2026 13:35:28 -0800 (PST)
 Received: from [127.0.0.1] ([20.55.87.153])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d550785sm131488961cf.11.2026.02.24.13.35.26
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d1202e2sm1074119885a.44.2026.02.24.13.35.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 13:35:26 -0800 (PST)
-Message-Id: <6e9d4f3029daa2c0068bb16939b943e7ac924222.1771968924.git.gitgitgadget@gmail.com>
+        Tue, 24 Feb 2026 13:35:27 -0800 (PST)
+Message-Id: <4e3f4aa6cd36f779c6c1d6b4f30bb68ed807b9da.1771968924.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
 References: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
 	<pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 24 Feb 2026 21:35:23 +0000
-Subject: [PATCH v2 1/2] for-each-repo: test outside of repo context
+Date: Tue, 24 Feb 2026 21:35:24 +0000
+Subject: [PATCH v2 2/2] for-each-repo: work correctly in a worktree
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,91 +84,117 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The 'git for-each-repo' tool is frequently run outside of a repo context
-in the real world. For example, it powers background maintenance.
-Despite this typical case, we have not been testing it without a local
-repository.
+When run in a worktree, the GIT_DIR directory is set in a different way
+than in a typical repository. Show this by updating t0068 to include a
+worktree and add a test that runs from that worktree. This requires
+moving the repo.key config into a global config instead of the base test
+repository's local config (demonstrating that it worked with
+non-worktree Git repositories).
 
-Update t0068 to stop creating a test repo and to use global config
-everywhere. This has some subtle changes to test across the file.
+We need to be careful to unset the local Git environment variables and
+let the child process rediscover them, while also reinstating those
+variables in the parent process afterwards. Update run_command_on_repo()
+to store, unset, then reset the non-NULL variables.
 
-This was noticed because an earlier attempt to remove the_repository
-from builtin/for-each-repo.c did not catch a segmentation fault since
-the passed 'repo' is NULL. This use of the_repository will need to stay
-until we have a better way to handle config queries outside of a repo
-context. Similar use still exists in builtin/config.c for the same
-reason.
-
+Reported-by: Matthew Gabeler-Lee <fastcat@gmail.com>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- t/t0068-for-each-repo.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ builtin/for-each-repo.c  | 33 ++++++++++++++++++++++++++++++---
+ t/t0068-for-each-repo.sh | 14 ++++++++++++--
+ 2 files changed, 42 insertions(+), 5 deletions(-)
 
+diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
+index 325a7925f1..3f3e71979c 100644
+--- a/builtin/for-each-repo.c
++++ b/builtin/for-each-repo.c
+@@ -2,6 +2,7 @@
+ 
+ #include "builtin.h"
+ #include "config.h"
++#include "environment.h"
+ #include "gettext.h"
+ #include "parse-options.h"
+ #include "path.h"
+@@ -15,19 +16,45 @@ static const char * const for_each_repo_usage[] = {
+ 
+ static int run_command_on_repo(const char *path, int argc, const char ** argv)
+ {
+-	int i;
++	int res;
+ 	struct child_process child = CHILD_PROCESS_INIT;
++	char **envvars;
++	size_t envvar_nr = 0;
+ 	char *abspath = interpolate_path(path, 0);
+ 
++	while (local_repo_env[envvar_nr])
++		envvar_nr++;
++
++	CALLOC_ARRAY(envvars, envvar_nr);
++
++	for (size_t i = 0; i < envvar_nr; i++) {
++		envvars[i] = getenv(local_repo_env[i]);
++
++		if (envvars[i]) {
++			unsetenv(local_repo_env[i]);
++			envvars[i] = xstrdup(envvars[i]);
++		}
++	}
++
+ 	child.git_cmd = 1;
+ 	strvec_pushl(&child.args, "-C", abspath, NULL);
+ 
+-	for (i = 0; i < argc; i++)
++	for (int i = 0; i < argc; i++)
+ 		strvec_push(&child.args, argv[i]);
+ 
+ 	free(abspath);
+ 
+-	return run_command(&child);
++	res = run_command(&child);
++
++	for (size_t i = 0; i < envvar_nr; i++) {
++		if (envvars[i]) {
++			setenv(local_repo_env[i], envvars[i], 1);
++			free(envvars[i]);
++		}
++	}
++
++	free(envvars);
++	return res;
+ }
+ 
+ int cmd_for_each_repo(int argc,
 diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
-index f2f3e50031..512af34c82 100755
+index 512af34c82..d55557a934 100755
 --- a/t/t0068-for-each-repo.sh
 +++ b/t/t0068-for-each-repo.sh
-@@ -2,6 +2,9 @@
- 
- test_description='git for-each-repo builtin'
- 
-+# We need to test running 'git for-each-repo' outside of a repo context.
-+TEST_NO_CREATE_REPO=1
-+
- . ./test-lib.sh
- 
+@@ -10,7 +10,7 @@ TEST_NO_CREATE_REPO=1
  test_expect_success 'run based on configured value' '
-@@ -10,9 +13,10 @@ test_expect_success 'run based on configured value' '
- 	git init three &&
+ 	git init one &&
+ 	git init two &&
+-	git init three &&
++	git -C two worktree add --orphan ../three &&
  	git init ~/four &&
  	git -C two commit --allow-empty -m "DID NOT RUN" &&
--	git config run.key "$TRASH_DIRECTORY/one" &&
--	git config --add run.key "$TRASH_DIRECTORY/three" &&
--	git config --add run.key "~/four" &&
-+	git config --global run.key "$TRASH_DIRECTORY/one" &&
-+	git config --global --add run.key "$TRASH_DIRECTORY/three" &&
-+	git config --global --add run.key "~/four" &&
-+
- 	git for-each-repo --config=run.key commit --allow-empty -m "ran" &&
- 	git -C one log -1 --pretty=format:%s >message &&
- 	grep ran message &&
-@@ -22,6 +26,7 @@ test_expect_success 'run based on configured value' '
- 	grep ran message &&
- 	git -C ~/four log -1 --pretty=format:%s >message &&
- 	grep ran message &&
-+
- 	git for-each-repo --config=run.key -- commit --allow-empty -m "ran again" &&
- 	git -C one log -1 --pretty=format:%s >message &&
+ 	git config --global run.key "$TRASH_DIRECTORY/one" &&
+@@ -35,7 +35,17 @@ test_expect_success 'run based on configured value' '
+ 	git -C three log -1 --pretty=format:%s >message &&
  	grep again message &&
-@@ -46,7 +51,7 @@ test_expect_success 'error on bad config keys' '
+ 	git -C ~/four log -1 --pretty=format:%s >message &&
+-	grep again message
++	grep again message &&
++
++	git -C three for-each-repo --config=run.key -- commit --allow-empty -m "ran from worktree" &&
++	git -C one log -1 --pretty=format:%s >message &&
++	grep worktree message &&
++	git -C two log -1 --pretty=format:%s >message &&
++	! grep worktree message &&
++	git -C three log -1 --pretty=format:%s >message &&
++	grep worktree message &&
++	git -C ~/four log -1 --pretty=format:%s >message &&
++	grep worktree message
  '
  
- test_expect_success 'error on NULL value for config keys' '
--	cat >>.git/config <<-\EOF &&
-+	cat >>.gitconfig <<-\EOF &&
- 	[empty]
- 		key
- 	EOF
-@@ -59,8 +64,8 @@ test_expect_success 'error on NULL value for config keys' '
- '
- 
- test_expect_success '--keep-going' '
--	git config keep.going non-existing &&
--	git config --add keep.going . &&
-+	git config --global keep.going non-existing &&
-+	git config --global --add keep.going one &&
- 
- 	test_must_fail git for-each-repo --config=keep.going \
- 		-- branch >out 2>err &&
-@@ -70,7 +75,7 @@ test_expect_success '--keep-going' '
- 	test_must_fail git for-each-repo --config=keep.going --keep-going \
- 		-- branch >out 2>err &&
- 	test_grep "cannot change to .*non-existing" err &&
--	git branch >expect &&
-+	git -C one branch >expect &&
- 	test_cmp expect out
- '
- 
+ test_expect_success 'do nothing on empty config' '
 -- 
 gitgitgadget
-
