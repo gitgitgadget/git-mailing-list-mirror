@@ -1,121 +1,94 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C15477F39
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 10:14:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ED8377560
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 10:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771928088; cv=none; b=OlrmPVmSRb1GyP40oB53bIYzZTwrhiJP2m4AYmh8WL0lPgKwhMozSU0+Cc11sTAYHIBOcXoqBbGTC29lxETURbXko7u6PoQsYjkbqAtAYBMN1RQqpnF5GLQ+PYhcxY0mNFQ9Xl+lZnhsOvwMG282YG0PRKtvO6RsxuRJpGhj9Wk=
+	t=1771928627; cv=none; b=WdQ43hwI1mfaqoOglnN9FQ0wPBv37c+kx3izgkRL0CPa+Q2+FZx8MLh33GIVpMbvIxj9Nj3GD1enW6rmulOh1vGEFz8n5KlI7+JELhwy3umWnnpDXdoS9AUOPS0D1ardwlfrybyFmgRkaiQ/po9I53NkFAfsrCkyv0pWN373wAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771928088; c=relaxed/simple;
-	bh=drcz7bStEGVONU8ZH1JmmkV2U07s416w6ComBYgvYvw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=muM4QsntEItPBoxnlJi9cjroF5H2jZBKLK2ChTs8ICdx8fZO7usIFWm0tmQmWJiqvLfsTw0/EjEt2ARwMIc2o8V3+H8EgY6oHhHU690nwDyk2Fe6ketQV9tc0OvuL4yEs1mvtgVZHBo0/GyIF7TL5Bvc6CFI6U2dIKH0LXMqNOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L6YwCwUt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IPLglFRS; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1771928627; c=relaxed/simple;
+	bh=sCgm/PikM2oZCUKLY91nSWk4vhzBrCCMYW+9W+OJHBk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sZwj000MTtGhnSN/mK5z4p/x7yf2NAN6Q3nNyKlMaWfI5aZegUNcOd4uF6U9bamknE1SXELshkBu7Ewy0BO/IoOp8wZqS7B/imJKkK3cw86yY2/K56tLBvJm8D3oO7aHiZ2xNYVof0BJnuNg4UEV630Sta+YGVDHTg85GXx+MjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GLJfhBK7; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L6YwCwUt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IPLglFRS"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id C6A77EC03A2;
-	Tue, 24 Feb 2026 05:14:46 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Tue, 24 Feb 2026 05:14:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1771928086; x=1772014486; bh=aI9TKQl7SP
-	VvOBpcZCgaLqSuyqmMIiQBr9GsQcV0ARg=; b=L6YwCwUtPZ0EwsgVZL5Ck7YeJQ
-	B4xxopZ62wMwwDWmRUkg1vIg4TcqGwuJa73UEHYlTPXW/7e+nY/PZAlAVi8Kzwcn
-	zFLlL81o+S7qCaYhxv4JfR9G328lQW8+8zKs0/ABI53AtX7B3JzzPmfITsWyyblf
-	iaJkHSm/yucp2s1hB6T8CWP2vxOq2FsgYjoPT807WxzMAQwL9w8gJnSqeUaVSW5O
-	hNIDXQRxDunHkBcWJf7t51GDm6rOt5Z8GyWeWFZVBmM/gVpGXvTzbj5ijgDGZJev
-	hqdLOCSDbb2C9ThqO2fILj90Gj+/ld+g3YsM3Mx3lwAOE9R47EToXA9D4FvA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771928086; x=1772014486; bh=aI9TKQl7SPVvOBpcZCgaLqSuyqmMIiQBr9G
-	sQcV0ARg=; b=IPLglFRSW84cbxNUZCfFeAeJapVijbKbmGHaX06+ClqlSvT3UKt
-	lx9Q5iPunz8CaPuJBHItdyfpXc8+LgG7pjAo6E1Rj1IC3ByTZ2Ce6uVgyAu8YGSL
-	bjuitK9Dcmusxx5FiGSkXdrYqqRVYep9HYXm0uBIUkCmd/02JcnD+5bcVJL1MjYt
-	zVgTTTTKMfBPmwSf25YhV+E4hFN+XR6EDaaMNwwGlP43CK02AVWBqAU37QH13kz/
-	T+Xg6Bd0l2/RUwCampJ6/kOLhxKjJkOlmDQWoSC4asBurHmna4pebgRx61F2hF5x
-	0CAz0ogvbi0vQHEtTth5zwCHBRD0oASd9Rw==
-X-ME-Sender: <xms:FnqdaX6oSO7WYo__OGwmk_V4Wi0CcAuxAzxqo_ZacVBgt--w3L0WPg>
-    <xme:FnqdaUXpSgannta8bQsjqEFq8hMOT2PKE7DYwUHjBFXHeaK6L47UJG291Li3JIeRs
-    jION7c3R131lfQt-A4gW9tpA0u8v5XpG4_O93v7-v8tyyc8AQRBJtk>
-X-ME-Received: <xmr:Fnqdab1YkxFpFdReW0hMC9XZLzeBdbMwn9UfAE0cHJvolrxXwMx7UdYGQn9xOE29PEr4Q-uSftRmq64GDxaY9ZUItW3xKdXUSFJKP9nHY2pqfg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeelkeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
-    hsrghhihhthigrjhgssehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:FnqdaR0afXo9F08dP-GDbbV5Bn-AqO0hlctgj67G3Vvbk8TyRtJw4Q>
-    <xmx:Fnqdae-n1y_p-zkCBrT3j0KmNT3gITe6x_xINfGOFRHMGzCbMpB2VQ>
-    <xmx:Fnqdae27mDzNwH-0us624wX8Qf1likukP-4N5Au8ZMEw30RzKx_4gg>
-    <xmx:Fnqdab_7LTi2Tadac-oBA2oHibCUwl5QXF1ucZjGVMD0V6bObh__9Q>
-    <xmx:FnqdacX7WW1sTZ59eHO27rtKCVWbp6g9yf6YfHRcF-49ZEVg9ycB-Mg_>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 05:14:45 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id eaf5c3a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Feb 2026 10:14:44 +0000 (UTC)
-Date: Tue, 24 Feb 2026 11:14:41 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Sahitya Chandra <sahityajb@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pack-redundant: fix memory leak when open_pack_index()
- fails
-Message-ID: <aZ16EWgLFbTPwM-v@pks.im>
-References: <20260221103900.41740-1-sahityajb@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GLJfhBK7"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-8244105fa96so498159b3a.3
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 02:23:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771928625; x=1772533425; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sCgm/PikM2oZCUKLY91nSWk4vhzBrCCMYW+9W+OJHBk=;
+        b=GLJfhBK7JLUP0kBlCaZoWYRwp2fBKRJiWKYSDliaV5ExbmpIUkQF+cBTs1qCCYYYIH
+         /AXFw16/2VeAcpPWxy+lFnwvirQODHkiNzfY341gCpXErvVu/R5wbxtxSfVQd2HR0Obr
+         K1wV9/l1O1B2Dac+4xR6xsDxh3k/6UvE2tfVEZ463c+qznbuJRTrUsC2Yv20tp1MbG++
+         s7DjHkN/ozE6Chg72P8jKQf6XLZ8cQTchGKfL4/xlnhOXHLCfClCJ/wTQg96xtY9RcQq
+         XIETPMeFjX3XHdafUvRQiAyM2OnrY1xVqwtgl+AboQnbb1qWuSvSdOkifnfQ+WR+uYON
+         XFXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771928625; x=1772533425;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sCgm/PikM2oZCUKLY91nSWk4vhzBrCCMYW+9W+OJHBk=;
+        b=XnUlz7grRfZDloOuOZbfJZB12BNXV/Kc591IehEk9ktD1kLygmaJj0P7VMp4PsnIjg
+         4gSIgL+6zSHiILcddbHiptDvll0ImRcfu7EF+0RfZ0UlcO3sGcpH0kMkWgAH7kErcwq8
+         ptcorWpjcYbTb2rE+LZInN7c/ky7MEF4DYJdu8mnedEGA42yAJAybG+eyTO5PPcTmQ0X
+         +nxxzFghsbmBxtFwNqhF37GYXyL5CiZV48w+QKOhBZGoZ1GXKbkU4Oqv5jqvg9y/MZNw
+         tZUhvQLhaHpcl3BGm6xNw+YGkPetgy5LA6dZ6CcZa6Z3Nvr7GAcc2a5QOhBd8kUuB+gF
+         uOoQ==
+X-Gm-Message-State: AOJu0Yx/Z8rPlxSsut2MBBTeKU462bcxPdbBfGMgK4IzX8aaaBx3msww
+	VGQ6PlRBkUiwFUXaqOz3MCNu/r7gsnksZeJhzBxDqZfA+8Q5apQc2AQN
+X-Gm-Gg: AZuq6aI7Kq+izghGOy3GKan4+ZXJ7iStIqEmSbq5VmFrNu3aHIzOA/TVcTRnMvUvLZQ
+	RTnstxoyt74BIRxzvhYNGesVqDuW7QcUbMMLA0PxNVFWsbb8yRjqyD6NF6mJpNwDk+Nu+PyXUhe
+	PgOGrQ31wFweu/5pc3EtAgtvE39BJkzqKiTLp8LvxXBvakf/kND9l5SEU7vG24vOtvqXSpGbiCy
+	J7B6cU/b8unnSWwC8IzWbSwzxThHMDJu7Tw26D+VbGrddKMhN4SBEYfBDuOrUYBaIBKUlnoJ5G3
+	xmpvsaUI/j3SGRFxiJk1odTZGPx6ITmSURCgVDVUgyfZyDYtXK9EK71eeoOVm5qUCTFQ3z9mwAQ
+	inIGXhTLReLczmNcKPbk4TRP5HPgZMh7MDyEVwYI7ph6CyY5LuXxKVDZvUOCcGkMHdaCyWW1olP
+	jyJUCXG9nZIvdbalKjKsDoHIV0lFA=
+X-Received: by 2002:a05:6a20:918e:b0:366:21f0:b4fb with SMTP id adf61e73a8af0-39545fe847fmr7518930637.7.1771928625266;
+        Tue, 24 Feb 2026 02:23:45 -0800 (PST)
+Received: from [192.168.0.106] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-826dd8b961dsm8869759b3a.47.2026.02.24.02.23.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Feb 2026 02:23:44 -0800 (PST)
+Message-ID: <c0b31daf-0997-46a0-95d3-e1f608b23888@gmail.com>
+Date: Tue, 24 Feb 2026 18:23:42 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260221103900.41740-1-sahityajb@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10] setup: improve error diagnosis for invalid .git files
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+References: <20260221083001.220061-1-a3205153416@gmail.com>
+ <20260222102928.377519-1-a3205153416@gmail.com> <xmqq4in8quxn.fsf@gitster.g>
+ <xmqqqzqcpatz.fsf@gitster.g> <5263825f-163c-43af-bac7-152d670919d9@gmail.com>
+ <xmqqfr6soxjq.fsf@gitster.g> <xmqq7bs3piz7.fsf@gitster.g>
+ <a2b2e581-18ba-42ad-9bf1-a3e16b85f4e9@gmail.com> <xmqqwm03mfax.fsf@gitster.g>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <xmqqwm03mfax.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Feb 21, 2026 at 04:08:59PM +0530, Sahitya Chandra wrote:
-> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-> index e4ecf774ca..86749bb7e7 100644
-> --- a/builtin/pack-redundant.c
-> +++ b/builtin/pack-redundant.c
+Hi Junio,
 
-It's arguably not really worth it to work on git-pack-redundant(1)
-as it's deprecated and dies unless you pass "--i-still-use-this". But
-the fix is small enough, so it doesn't hurt much, either.
+Understood.
 
-> @@ -546,8 +546,10 @@ static struct pack_list * add_pack(struct packed_git *p)
->  	l.pack = p;
->  	llist_init(&l.remaining_objects);
->  
-> -	if (open_pack_index(p))
-> +	if (open_pack_index(p)) {
-> +		llist_free(l.remaining_objects);
->  		return NULL;
-> +	}
+I'll leave the patch series as it is. Please reply to me any time
+when new bugs are observed.
 
-Right. The confusing part here is that `llist_init()` doesn't only
-initialize the data structure as its name might suggest, but it also
-ends up allocating memory. It would be great do adjust this interface to
-clarify, but that is certainly out of scope for this patch series.
+Regards,
 
-By the way, can't we avoid the memory allocation altogether by
-reordering the code so that we try to open the pack before we allocate
-memory?
+Yuchen
 
-Thanks!
-
-Patrick
