@@ -1,70 +1,71 @@
-Received: from mail-qk1-f196.google.com (mail-qk1-f196.google.com [209.85.222.196])
+Received: from mail-qk1-f194.google.com (mail-qk1-f194.google.com [209.85.222.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202A22E091E
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 19:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B27E2E11BC
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 19:00:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771959647; cv=none; b=ML9XUznZAMr/ZEPfvkf4S1GSFdG+SZeNisEhqeqCjtXP0nFFhdCJwmeA+n75J1uAT6BgSAS4b4vXrFUwAmDl5djcvBYv9a6JDmMCDvmE+ZugQtY344+umSQHw1vAcLmIDIbRqRgk8s7R9vu0AlcpIbJ0l2UefAN4EPiSByrxACA=
+	t=1771959652; cv=none; b=gDjoiuJAvlmfiiBjN6qaHdvrcqIxCJWZKiWdlVldZVFWrAT7FDE/epiCvtyuqkuhLP6iLzWyB2f1pOWrcJDSynbUaBcBrwahFSyI6Zhn0SGmvOYXQcHOjGNF0JcwObqyKd+zLVmmkmlouZt2VyKcc6aB6iWgvD7sHOl2JIVwssY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771959647; c=relaxed/simple;
-	bh=HSJ8WOPG70LzDLPUC+USQ4bXdNdOEg8B8txqeSQk7kU=;
+	s=arc-20240116; t=1771959652; c=relaxed/simple;
+	bh=kdYIpiQHX05upMqyhJCGk3lxSyxtFGHG+Cf2rCBFkCA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kQ57HKKr+WkbEzNDexiDOVqBWhutheYX7M0PnRBoyR/qPLyNPV3Sv1HWDQbZWSkWVxvxo6KbGyJ2IrtlFxfB2oen9YKvbr8eWAG0sx+Ob239q5jgLj17pOfqg1f3l2ieeqlQfKK4Q2O3vST93OBjWmz+ke1QE881blcEwYHXzZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=NtkF0f7/; arc=none smtp.client-ip=209.85.222.196
+	 Content-Type:Content-Disposition:In-Reply-To; b=WVPdGFJbQ4giIYiIBbr3Vdo4aelvHxDCJO9y5EPVVx6ikPXEUZ+3AU1hRCB3pVcDxOWm3pzPA6Ii/oMlm7LhfFQ6lKDJ+Uag9zgsGJ87s4WC5raJ4CFuaDjMFv0dU+BDbTJSRWdjcrJcIzy7Iuu/lCwrG0o2ixC/VvrIE2PRY2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=DGb1xvls; arc=none smtp.client-ip=209.85.222.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="NtkF0f7/"
-Received: by mail-qk1-f196.google.com with SMTP id af79cd13be357-8cb513e860cso626567385a.2
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 11:00:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="DGb1xvls"
+Received: by mail-qk1-f194.google.com with SMTP id af79cd13be357-8cb3bae8d3eso574489385a.1
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 11:00:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1771959644; x=1772564444; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1771959650; x=1772564450; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PEDZn/h5bGS4e5+perIT0suWGX6veW5M0JXlVhNtlvI=;
-        b=NtkF0f7//C9aMWCx8Z0rJoYxho2CoCzD75wNlYnml4ANxfW0rfpl6ctXIWlqw/QiF7
-         8bwy8pxlXFjkr9aa2UZNL5+2L9LBet4/HrvfgfywsJAW7pw+AP00IY/maQKRF68k7Lhm
-         0mFyyYOLY2l74G1xDlHRYagZWuapEATzRoXiiPSDiOJRMn+NXuQQ7Bv89B+enbyZOdCv
-         jG3unFpCFpnI0IS9Oq1LvP3Cc0rB3fNByQGPKdrs4ICNMXyinNzwHh2/bbTSa62qzHm3
-         YCa/vaZWz2HFlAt3UHnKmqIH1vj9x+9skkZh//MO/KXUSRPaB2c+ZLS3bTXYu3XSQFs2
-         co+Q==
+        bh=7QA/Uc7HMdlZDfpoR9PUOqGIWe4HyLecRKeyAlmgAKo=;
+        b=DGb1xvlsSD9Nw75QhT7Ezr8Q6ufGXIUOuFJZs55Kk+TvN1fjk00td0apPlWeEwYnlC
+         QzGcvbRJbadhk73PwRvWrEmy4v8FXUPVeFjg5JW7hb5+hZFmjAzaUc4H+c27S6WXc8/j
+         /3J5DwYe8VziA3vadV3BSemo3evs67dHjTbCNDKFs4oY68ub0kHuCH9qalWrxcwytNw3
+         pAvy66n838rsZgXyrXdVPljwE211VEm3N5Jaw5CmdVTTQPxE1NcnFkuy2J8ckb4BO10u
+         VY2uLErYri9JTiauJ26TEN2VN4dSEC7jbbWPEBPqQF46e3mDYKG/idp/BiC3C0aER032
+         apNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771959644; x=1772564444;
+        d=1e100.net; s=20230601; t=1771959650; x=1772564450;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PEDZn/h5bGS4e5+perIT0suWGX6veW5M0JXlVhNtlvI=;
-        b=XWgtLPKLzAsJwiN6wmM2ftd4aPMAwMhnySverWvytZeuRv6gbv+xnxMF7WAf52TxXL
-         WGZhVd++A9sxkj9Je/t3fqkc8DHCG7ihGd8AZeHic96xuvR98UrgR74AP6jIp1xoOMVj
-         UrdgwiHHV8uqStHgMD1iwO+5Xe2aAPWRCfr+V3U7CYCbzad3fO0a8IYCeemFvNhYQMXh
-         hSSyTMgWelinA+i797YM61nbtVlYwldK5ouSe5LqvSCDkF1C8GZPjXXTVAMhpOeYuqA9
-         1Xm5QOIiPmFLgl0s2awB99rveHsDroLkQWCAcvKI35+2FIa4nOd0yOOOxlVAc4uzlQDF
-         tnZQ==
-X-Gm-Message-State: AOJu0YyT+3iZ0f4+WipJQHCoboNIZr4OBu+LDoALt7sNU9UNraxTmrET
-	2eboYRnZwPG6NS0mKDGokXyRAC2dn1fvQNR8LMoj0na5LDEx9UTZHfCioHfCxymEYSLApN3TmRi
-	MSqMtu9wjzwWl
-X-Gm-Gg: AZuq6aL77GSncjCtjq8C6sFPMXIeJ+kUmzL9SJ2cIABr8ITgm9fUWUTro/tMrMpB8lt
-	HnbHuxikWuFrRv53AeqzuvPb7bJiK9qaKcpFNz6qS+yEIRGEeSf2hX9E3oceojM19ABXm2oqMsX
-	RtXm6AOhtaEOaGTT6GVguFBh7vpCipYB71UKl6CM4jgdvJsKR0u9zw6QYxt9Z8aR3kXOwV/2wI5
-	oCsxF4Ua0+BchtsPEQgo1riC+Nh07NL5eVDIyb+DCkCWM1U3vIRMC4GA+bbyQouBNK6RqAb8Qfg
-	Ftl57XNS1QCovsN8i062Oa0jj7Iw7dcfD8Skk5a232HER8ehbFa1aBVEwCIJPomIoN31wWQ5QT9
-	lAqHPfpkesmFZ+kP+J4un91V+CQM4d1u9Sfk18pjbsVqvkqpf9v4k5Y1eKyXbVlWOvtMTP5Fhs8
-	AONSVt7IO0XFSmW7QyWIKpZujaUGlZy9o2xJK9SFt0WBeq8e1XBshtQFIH3OTZd9dpLruJhHMle
-	c+CX/8CbQ2A0p88D/kJktSjPXRPJQ==
-X-Received: by 2002:a05:620a:4891:b0:8ca:110b:38cb with SMTP id af79cd13be357-8cb8c9fbd9bmr1711143985a.29.1771959643535;
-        Tue, 24 Feb 2026 11:00:43 -0800 (PST)
+        bh=7QA/Uc7HMdlZDfpoR9PUOqGIWe4HyLecRKeyAlmgAKo=;
+        b=m0FWFLmP3IyILJoBnfaBP1swbQ4ZFzybZkIzIbGmSLjKS1lPg22t+gVSOLERG2g4ko
+         1kbu7XPshHErlJDLyB5uAckzIAy8PPUpg8IKkH3L6k1r8XmrlhP+wzl6ffCe4JKiAiF+
+         ATewMxCDAdcPCqYiDjCbkz+TI0e9JEK28cec3FV47L6ZZDOBUOQxdIHdV6K/VsanxmtV
+         RdIEStbCbC5CcKLoTPAu4CjCTsnha/BIjp+G01MUNmFCiU/l1XZXXq3DrDwQmGvRM5qR
+         LOgrrFZlkDj3YBcfCEXz66awT92/bDAhz0ApB3cKHbOuNm+pZSpXCAOfTjVcqUEEkJFf
+         Hqww==
+X-Gm-Message-State: AOJu0Yy+5nFJAaGJgLDrv7xtKpywnyA7tulFGjHmI7s4pXK4NcS8yfEn
+	juydOvX/SGPWyglfwjKAylYULK6zZWAWc8qLSpBHwK3rnqB7sSPpRWEni2XlL6FBu6WSngDJLMO
+	nX8bJTDkP8kTS
+X-Gm-Gg: AZuq6aKSARFJ9TH0D0m+OUCXiwUQl7LguPGUgCJG/FSr0kIVyVxSHEYVA+smOdq08Dp
+	1dx/3vNQJpY7MLM8iAEqIg19qExthZBIfMo7CvIEdueRcqwhcfSTes2UYh2IfsPK412fe5HLUTs
+	DVDTw/pKi4tskSLVaq9I7oao9NlWpY7d4MR5JTADOMaoCxoWMRrMCHWeylGxe0zbumAW2J+O2PX
+	oJqaMIFwlQxpAGb8A8guE2757JX+g1OkjcXv2Q4ZBHGVsfEyDfZQaZWsWKoYx1qPxRH7HvAFD1G
+	LlwfiS20x9ouud8sRlFTlBLn36hzGrczLOB7RtC9T0iq/LBjibvbEaCgtIIuLS4TZV/lpqOmOtJ
+	TRZ+BtLyvbhPSJmo9vzUJrgHnsKjbnGKWS8lOGShcWxy9FFNQ5yU7A2y4WxgDzQKq4brJj1uIP+
+	Tik8yz5LYc2RxHVy//eY5MkTKLcMJvlP91M88Nup5/9G9pywsYy0IaDaxpcPMoqQpl3qt8falux
+	Uxv5DH2Mq/Fb5NMZdfxzacLgwy1Yg==
+X-Received: by 2002:a05:620a:28cf:b0:8cb:4543:c5c5 with SMTP id af79cd13be357-8cb8c9fbee5mr1633327285a.22.1771959648023;
+        Tue, 24 Feb 2026 11:00:48 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d046291sm1050584785a.6.2026.02.24.11.00.42
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d0eba54sm1171977985a.30.2026.02.24.11.00.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 11:00:42 -0800 (PST)
-Date: Tue, 24 Feb 2026 14:00:41 -0500
+        Tue, 24 Feb 2026 11:00:47 -0800 (PST)
+Date: Tue, 24 Feb 2026 14:00:45 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 16/17] midx: implement MIDX compaction
-Message-ID: <19c983138c75728fcbb7b723feac1f604902794f.1771959555.git.me@ttaylorr.com>
+Subject: [PATCH v3 17/17] midx: enable reachability bitmaps during MIDX
+ compaction
+Message-ID: <ac6221686db11ba802ced8ea6b8b2fa8388b21b2.1771959555.git.me@ttaylorr.com>
 References: <cover.1765053054.git.me@ttaylorr.com>
  <cover.1771959555.git.me@ttaylorr.com>
 Precedence: bulk
@@ -77,911 +78,236 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1771959555.git.me@ttaylorr.com>
 
-When managing a MIDX chain with many layers, it is convenient to combine
-a sequence of adjacent layers into a single layer to prevent the chain
-from growing too long.
+Enable callers to generate reachability bitmaps when performing MIDX
+layer compaction by combining all existing bitmaps from the compacted
+layers.
 
-While it is conceptually possible to "compact" a sequence of MIDX layers
-together by running "git multi-pack-index write --stdin-packs", there
-are a few drawbacks that make this less than desirable:
+Note that because of the object/pack ordering described by the previous
+commit, the pseudo-pack order for the compacted MIDX is the same as
+concatenating the individual pseudo-pack orderings for each layer in the
+compaction range.
 
- - Preserving the MIDX chain is impossible, since there is no way to
-   write a MIDX layer that contains objects or packs found in an earlier
-   MIDX layer already part of the chain. So callers would have to write
-   an entirely new (non-incremental) MIDX containing only the compacted
-   layers, discarding all other objects/packs from the MIDX.
+As a result, the only non-test or documentation change necessary is to
+treat all objects as non-preferred during compaction so as not to
+disturb the object ordering.
 
- - There is (currently) no way to write a MIDX layer outside of the MIDX
-   chain to work around the above, such that the MIDX chain could be
-   reassembled substituting the compacted layers with the MIDX that was
-   written.
-
- - The `--stdin-packs` command-line option does not allow us to specify
-   the order of packs as they appear in the MIDX. Therefore, even if
-   there were workarounds for the previous two challenges, any bitmaps
-   belonging to layers which come after the compacted layer(s) would no
-   longer be valid.
-
-This commit introduces a way to compact a sequence of adjacent MIDX
-layers into a single layer while preserving the MIDX chain, as well as
-any bitmap(s) in layers which are newer than the compacted ones.
-
-Implementing MIDX compaction does not require a significant number of
-changes to how MIDX layers are written. The main changes are as follows:
-
- - Instead of calling `fill_packs_from_midx()`, we call a new function
-   `fill_packs_from_midx_range()`, which walks backwards along the
-   portion of the MIDX chain which we are compacting, and adds packs one
-   layer a time.
-
-   In order to preserve the pseudo-pack order, the concatenated pack
-   order is preserved, with the exception of preferred packs which are
-   always added first.
-
- - After adding entries from the set of packs in the compaction range,
-   `compute_sorted_entries()` must adjust the `pack_int_id`'s for all
-   objects added in each fanout layer to match their original
-   `pack_int_id`'s (as opposed to the index at which each pack appears
-   in `ctx.info`).
-
-   Note that we cannot reuse `midx_fanout_add_midx_fanout()` directly
-   here, as it unconditionally recurs through the `->base_midx`. Factor
-   out a `_1()` variant that operates on a single layer, reimplement
-   the existing function in terms of it, and use the new variant from
-   `midx_fanout_add_compact()`.
-
-   Since we are sorting the list of objects ourselves, the order we add
-   them in does not matter.
-
- - When writing out the new 'multi-pack-index-chain' file, discard any
-   layers in the compaction range, replacing them with the newly written
-   layer, instead of keeping them and placing the new layer at the end
-   of the chain.
-
-This ends up being sufficient to implement MIDX compaction in such a way
-that preserves bitmaps corresponding to more recent layers in the MIDX
-chain.
-
-The tests for MIDX compaction are so far fairly spartan, since the main
-interesting behavior here is ensuring that the right packs/objects are
-selected from each layer, and that the pack order is preserved despite
-whether or not they are sorted in lexicographic order in the original
-MIDX chain.
+In the future, we may want to adjust which commit(s) receive
+reachability bitmaps when compacting multiple .bitmap files into one, or
+even generate new bitmaps (e.g., if the references have moved
+significantly since the .bitmap was generated). This commit only
+implements combining all existing bitmaps in range together in order to
+demonstrate and lay the groundwork for more exotic strategies.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-multi-pack-index.adoc |  13 ++
- builtin/multi-pack-index.c              |  74 +++++++
- midx-write.c                            | 277 +++++++++++++++++++++---
- midx.h                                  |   5 +
- t/meson.build                           |   1 +
- t/t5335-compact-multi-pack-index.sh     | 175 +++++++++++++++
- 6 files changed, 518 insertions(+), 27 deletions(-)
- create mode 100755 t/t5335-compact-multi-pack-index.sh
+ Documentation/git-multi-pack-index.adoc |   5 +-
+ builtin/multi-pack-index.c              |   4 +-
+ midx-write.c                            |   2 +-
+ t/t5335-compact-multi-pack-index.sh     | 122 +++++++++++++++++++++++-
+ 4 files changed, 128 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-multi-pack-index.adoc
-index 164cf1f2291..883a0529741 100644
+index 883a0529741..61256830141 100644
 --- a/Documentation/git-multi-pack-index.adoc
 +++ b/Documentation/git-multi-pack-index.adoc
-@@ -12,6 +12,8 @@ SYNOPSIS
- 'git multi-pack-index' [<options>] write [--preferred-pack=<pack>]
+@@ -13,7 +13,7 @@ SYNOPSIS
  		         [--[no-]bitmap] [--[no-]incremental] [--[no-]stdin-packs]
  		         [--refs-snapshot=<path>]
-+'git multi-pack-index' [<options>] compact [--[no-]incremental]
-+		         <from> <to>
+ 'git multi-pack-index' [<options>] compact [--[no-]incremental]
+-		         <from> <to>
++		         [--[no-]bitmap] <from> <to>
  'git multi-pack-index' [<options>] verify
  'git multi-pack-index' [<options>] expire
  'git multi-pack-index' [<options>] repack [--batch-size=<size>]
-@@ -83,6 +85,17 @@ marker).
- 		necessary.
+@@ -94,6 +94,9 @@ compact::
+ 	--incremental::
+ 		Write the result to a MIDX chain instead of writing a
+ 		stand-alone MIDX.
++
++	--[no-]bitmap::
++		Control whether or not a multi-pack bitmap is written.
  --
  
-+compact::
-+	Write a new MIDX layer containing only objects and packs present
-+	in the range `<from>` to `<to>`, where both arguments are
-+	checksums of existing layers in the MIDX chain.
-++
-+--
-+	--incremental::
-+		Write the result to a MIDX chain instead of writing a
-+		stand-alone MIDX.
-+--
-+
  verify::
- 	Verify the contents of the MIDX file.
- 
 diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index c0c6c1760c0..043ee8c478a 100644
+index 043ee8c478a..2f24c113c8f 100644
 --- a/builtin/multi-pack-index.c
 +++ b/builtin/multi-pack-index.c
-@@ -17,6 +17,10 @@
- 	   "  [--[no-]bitmap] [--[no-]incremental] [--[no-]stdin-packs]\n" \
- 	   "  [--refs-snapshot=<path>]")
+@@ -19,7 +19,7 @@
  
-+#define BUILTIN_MIDX_COMPACT_USAGE \
-+	N_("git multi-pack-index [<options>] compact [--[no-]incremental]\n" \
-+	   "  <from> <to>")
-+
+ #define BUILTIN_MIDX_COMPACT_USAGE \
+ 	N_("git multi-pack-index [<options>] compact [--[no-]incremental]\n" \
+-	   "  <from> <to>")
++	   "  [--[no-]bitmap] <from> <to>")
+ 
  #define BUILTIN_MIDX_VERIFY_USAGE \
  	N_("git multi-pack-index [<options>] verify")
+@@ -216,6 +216,8 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
  
-@@ -30,6 +34,10 @@ static char const * const builtin_multi_pack_index_write_usage[] = {
- 	BUILTIN_MIDX_WRITE_USAGE,
- 	NULL
- };
-+static char const * const builtin_multi_pack_index_compact_usage[] = {
-+	BUILTIN_MIDX_COMPACT_USAGE,
-+	NULL
-+};
- static char const * const builtin_multi_pack_index_verify_usage[] = {
- 	BUILTIN_MIDX_VERIFY_USAGE,
- 	NULL
-@@ -44,6 +52,7 @@ static char const * const builtin_multi_pack_index_repack_usage[] = {
- };
- static char const * const builtin_multi_pack_index_usage[] = {
- 	BUILTIN_MIDX_WRITE_USAGE,
-+	BUILTIN_MIDX_COMPACT_USAGE,
- 	BUILTIN_MIDX_VERIFY_USAGE,
- 	BUILTIN_MIDX_EXPIRE_USAGE,
- 	BUILTIN_MIDX_REPACK_USAGE,
-@@ -195,6 +204,70 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
- 	return ret;
- }
- 
-+static int cmd_multi_pack_index_compact(int argc, const char **argv,
-+					const char *prefix,
-+					struct repository *repo)
-+{
-+	struct multi_pack_index *m, *cur;
-+	struct multi_pack_index *from_midx = NULL;
-+	struct multi_pack_index *to_midx = NULL;
-+	struct odb_source *source;
-+	int ret;
-+
-+	struct option *options;
-+	static struct option builtin_multi_pack_index_compact_options[] = {
-+		OPT_BIT(0, "incremental", &opts.flags,
-+			N_("write a new incremental MIDX"), MIDX_WRITE_INCREMENTAL),
-+		OPT_END(),
-+	};
-+
-+	repo_config(repo, git_multi_pack_index_write_config, NULL);
-+
-+	options = add_common_options(builtin_multi_pack_index_compact_options);
-+
-+	trace2_cmd_mode(argv[0]);
-+
-+	if (isatty(2))
-+		opts.flags |= MIDX_PROGRESS;
-+	argc = parse_options(argc, argv, prefix,
-+			     options, builtin_multi_pack_index_compact_usage,
-+			     0);
-+
-+	if (argc != 2)
-+		usage_with_options(builtin_multi_pack_index_compact_usage,
-+				   options);
-+	source = handle_object_dir_option(the_repository);
-+
-+	FREE_AND_NULL(options);
-+
-+	m = get_multi_pack_index(source);
-+
-+	for (cur = m; cur && !(from_midx && to_midx); cur = cur->base_midx) {
-+		const char *midx_csum = midx_get_checksum_hex(cur);
-+
-+		if (!from_midx && !strcmp(midx_csum, argv[0]))
-+			from_midx = cur;
-+		if (!to_midx && !strcmp(midx_csum, argv[1]))
-+			to_midx = cur;
-+	}
-+
-+	if (!from_midx)
-+		die(_("could not find MIDX: %s"), argv[0]);
-+	if (!to_midx)
-+		die(_("could not find MIDX: %s"), argv[1]);
-+	if (from_midx == to_midx)
-+		die(_("MIDX compaction endpoints must be unique"));
-+
-+	for (m = from_midx; m; m = m->base_midx) {
-+		if (m == to_midx)
-+			die(_("MIDX %s must be an ancestor of %s"), argv[0], argv[1]);
-+	}
-+
-+	ret = write_midx_file_compact(source, from_midx, to_midx, opts.flags);
-+
-+	return ret;
-+}
-+
- static int cmd_multi_pack_index_verify(int argc, const char **argv,
- 				       const char *prefix,
- 				       struct repository *repo UNUSED)
-@@ -295,6 +368,7 @@ int cmd_multi_pack_index(int argc,
- 	struct option builtin_multi_pack_index_options[] = {
- 		OPT_SUBCOMMAND("repack", &fn, cmd_multi_pack_index_repack),
- 		OPT_SUBCOMMAND("write", &fn, cmd_multi_pack_index_write),
-+		OPT_SUBCOMMAND("compact", &fn, cmd_multi_pack_index_compact),
- 		OPT_SUBCOMMAND("verify", &fn, cmd_multi_pack_index_verify),
- 		OPT_SUBCOMMAND("expire", &fn, cmd_multi_pack_index_expire),
+ 	struct option *options;
+ 	static struct option builtin_multi_pack_index_compact_options[] = {
++		OPT_BIT(0, "bitmap", &opts.flags, N_("write multi-pack bitmap"),
++			MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX),
+ 		OPT_BIT(0, "incremental", &opts.flags,
+ 			N_("write a new incremental MIDX"), MIDX_WRITE_INCREMENTAL),
  		OPT_END(),
 diff --git a/midx-write.c b/midx-write.c
-index ca2469213e6..bf53ad1c4b7 100644
+index bf53ad1c4b7..0ff2e45aa7a 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -113,6 +113,10 @@ struct write_midx_context {
- 	int incremental;
- 	uint32_t num_multi_pack_indexes_before;
- 
-+	struct multi_pack_index *compact_from;
-+	struct multi_pack_index *compact_to;
-+	int compact;
-+
- 	struct string_list *to_include;
- 
- 	struct repository *repo;
-@@ -122,6 +126,8 @@ struct write_midx_context {
- static uint32_t midx_pack_perm(struct write_midx_context *ctx,
- 			       uint32_t orig_pack_int_id)
- {
-+	if (ctx->compact)
-+		orig_pack_int_id -= ctx->compact_from->num_packs_in_base;
- 	return ctx->pack_perm[orig_pack_int_id];
- }
- 
-@@ -268,18 +274,14 @@ static void midx_fanout_sort(struct midx_fanout *fanout)
- 	QSORT(fanout->entries, fanout->nr, midx_oid_compare);
- }
- 
--static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
--					struct multi_pack_index *m,
--					uint32_t cur_fanout,
--					uint32_t preferred_pack)
-+static void midx_fanout_add_midx_fanout_1(struct midx_fanout *fanout,
-+					  struct multi_pack_index *m,
-+					  uint32_t cur_fanout,
-+					  uint32_t preferred_pack)
- {
- 	uint32_t start = m->num_objects_in_base, end;
- 	uint32_t cur_object;
- 
--	if (m->base_midx)
--		midx_fanout_add_midx_fanout(fanout, m->base_midx, cur_fanout,
--					    preferred_pack);
--
- 	if (cur_fanout)
- 		start += ntohl(m->chunk_oid_fanout[cur_fanout - 1]);
- 	end = m->num_objects_in_base + ntohl(m->chunk_oid_fanout[cur_fanout]);
-@@ -303,6 +305,17 @@ static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
+@@ -676,7 +676,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
+ 		struct pack_midx_entry *e = &ctx->entries[i];
+ 		data[i].nr = i;
+ 		data[i].pack = midx_pack_perm(ctx, e->pack_int_id);
+-		if (!e->preferred)
++		if (!e->preferred || ctx->compact)
+ 			data[i].pack |= (1U << 31);
+ 		data[i].offset = e->offset;
  	}
- }
- 
-+static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
-+					struct multi_pack_index *m,
-+					uint32_t cur_fanout,
-+					uint32_t preferred_pack)
-+{
-+	if (m->base_midx)
-+		midx_fanout_add_midx_fanout(fanout, m->base_midx, cur_fanout,
-+					    preferred_pack);
-+	midx_fanout_add_midx_fanout_1(fanout, m, cur_fanout, preferred_pack);
-+}
-+
- static void midx_fanout_add_pack_fanout(struct midx_fanout *fanout,
- 					struct pack_info *info,
- 					uint32_t cur_pack,
-@@ -352,6 +365,21 @@ static void midx_fanout_add(struct midx_fanout *fanout,
- 					    cur_fanout);
- }
- 
-+static void midx_fanout_add_compact(struct midx_fanout *fanout,
-+				    struct write_midx_context *ctx,
-+				    uint32_t cur_fanout)
-+{
-+	struct multi_pack_index *m = ctx->compact_to;
-+
-+	ASSERT(ctx->compact);
-+
-+	while (m && m != ctx->compact_from->base_midx) {
-+		midx_fanout_add_midx_fanout_1(fanout, m, cur_fanout,
-+					      NO_PREFERRED_PACK);
-+		m = m->base_midx;
-+	}
-+}
-+
- /*
-  * It is possible to artificially get into a state where there are many
-  * duplicate copies of objects. That can create high memory pressure if
-@@ -370,6 +398,9 @@ static void compute_sorted_entries(struct write_midx_context *ctx,
- 	size_t alloc_objects, total_objects = 0;
- 	struct midx_fanout fanout = { 0 };
- 
-+	if (ctx->compact)
-+		ASSERT(!start_pack);
-+
- 	for (cur_pack = start_pack; cur_pack < ctx->nr; cur_pack++)
- 		total_objects = st_add(total_objects,
- 				       ctx->info[cur_pack].p->num_objects);
-@@ -388,7 +419,10 @@ static void compute_sorted_entries(struct write_midx_context *ctx,
- 	for (cur_fanout = 0; cur_fanout < 256; cur_fanout++) {
- 		fanout.nr = 0;
- 
--		midx_fanout_add(&fanout, ctx, start_pack, cur_fanout);
-+		if (ctx->compact)
-+			midx_fanout_add_compact(&fanout, ctx, cur_fanout);
-+		else
-+			midx_fanout_add(&fanout, ctx, start_pack, cur_fanout);
- 		midx_fanout_sort(&fanout);
- 
- 		/*
-@@ -956,6 +990,75 @@ static int fill_packs_from_midx(struct write_midx_context *ctx)
- 	return 0;
- }
- 
-+static uint32_t compactible_packs_between(const struct multi_pack_index *from,
-+					  const struct multi_pack_index *to)
-+{
-+	uint32_t nr;
-+
-+	ASSERT(from && to);
-+
-+	if (unsigned_add_overflows(to->num_packs, to->num_packs_in_base))
-+		die(_("too many packs, unable to compact"));
-+
-+	nr = to->num_packs + to->num_packs_in_base;
-+	if (nr < from->num_packs_in_base)
-+		BUG("unexpected number of packs in base during compaction: "
-+		    "%"PRIu32" < %"PRIu32, nr, from->num_packs_in_base);
-+
-+	return nr - from->num_packs_in_base;
-+}
-+
-+static int fill_packs_from_midx_range(struct write_midx_context *ctx,
-+				      int bitmap_order)
-+{
-+	struct multi_pack_index *m = ctx->compact_to;
-+	uint32_t packs_nr;
-+
-+	ASSERT(ctx->compact && !ctx->nr);
-+	ASSERT(ctx->compact_from);
-+	ASSERT(ctx->compact_to);
-+
-+	packs_nr = compactible_packs_between(ctx->compact_from,
-+					     ctx->compact_to);
-+
-+	ALLOC_GROW(ctx->info, packs_nr, ctx->alloc);
-+
-+	while (m != ctx->compact_from->base_midx) {
-+		uint32_t pack_int_id, preferred_pack_id;
-+		uint32_t i;
-+
-+		if (bitmap_order) {
-+			if (midx_preferred_pack(m, &preferred_pack_id) < 0)
-+				die(_("could not determine preferred pack"));
-+		} else {
-+			preferred_pack_id = m->num_packs_in_base;
-+		}
-+
-+		pack_int_id = m->num_packs_in_base - ctx->compact_from->num_packs_in_base;
-+
-+		if (fill_pack_from_midx(&ctx->info[pack_int_id++], m,
-+					preferred_pack_id) < 0)
-+			return -1;
-+
-+		for (i = m->num_packs_in_base;
-+		     i < m->num_packs_in_base + m->num_packs; i++) {
-+			if (preferred_pack_id == i)
-+				continue;
-+
-+			if (fill_pack_from_midx(&ctx->info[pack_int_id++], m,
-+						i) < 0)
-+				return -1;
-+		}
-+
-+		ctx->nr += m->num_packs;
-+		m = m->base_midx;
-+	}
-+
-+	ASSERT(ctx->nr == packs_nr);
-+
-+	return 0;
-+}
-+
- static struct {
- 	const char *non_split;
- 	const char *split;
-@@ -1075,6 +1178,9 @@ static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_c
- 	if (ctx->incremental)
- 		goto out;
- 
-+	if (ctx->compact)
-+		goto out; /* Compaction always requires an update. */
-+
- 	/*
- 	 * Otherwise, we need to verify that the packs covered by the existing
- 	 * MIDX match the packs that we already have. The logic to do so is way
-@@ -1120,12 +1226,23 @@ static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_c
- 	return needed;
- }
- 
-+static int midx_hashcmp(const struct multi_pack_index *a,
-+			const struct multi_pack_index *b,
-+			const struct git_hash_algo *algop)
-+{
-+	return hashcmp(midx_get_checksum_hash(a), midx_get_checksum_hash(b),
-+		       algop);
-+}
-+
- struct write_midx_opts {
- 	struct odb_source *source; /* non-optional */
- 
- 	struct string_list *packs_to_include;
- 	struct string_list *packs_to_drop;
- 
-+	struct multi_pack_index *compact_from;
-+	struct multi_pack_index *compact_to;
-+
- 	const char *preferred_pack_name;
- 	const char *refs_snapshot;
- 	unsigned flags;
-@@ -1150,6 +1267,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	int dropped_packs = 0;
- 	int result = -1;
- 	const char **keep_hashes = NULL;
-+	size_t keep_hashes_nr = 0;
- 	struct chunkfile *cf;
- 
- 	trace2_region_enter("midx", "write_midx_internal", r);
-@@ -1162,6 +1280,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 		die(_("unknown MIDX version: %d"), ctx.version);
- 
- 	ctx.incremental = !!(opts->flags & MIDX_WRITE_INCREMENTAL);
-+	ctx.compact = !!(opts->flags & MIDX_WRITE_COMPACT);
-+
-+	if (ctx.compact) {
-+		if (ctx.version != MIDX_VERSION_V2)
-+			die(_("cannot perform MIDX compaction with v1 format"));
-+		if (!opts->compact_from)
-+			BUG("expected non-NULL 'from' MIDX during compaction");
-+		if (!opts->compact_to)
-+			BUG("expected non-NULL 'to' MIDX during compaction");
-+
-+		ctx.compact_from = opts->compact_from;
-+		ctx.compact_to = opts->compact_to;
-+	}
- 
- 	if (ctx.incremental)
- 		strbuf_addf(&midx_name,
-@@ -1189,11 +1320,18 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 			 */
- 			if (ctx.incremental)
- 				ctx.base_midx = m;
--			else if (!opts->packs_to_include)
-+			if (!opts->packs_to_include)
- 				ctx.m = m;
- 		}
- 	}
- 
-+	/*
-+	 * If compacting MIDX layer(s) in the range [from, to], then the
-+	 * compacted MIDX will share the same base MIDX as 'from'.
-+	 */
-+	if (ctx.compact)
-+		ctx.base_midx = ctx.compact_from->base_midx;
-+
- 	ctx.nr = 0;
- 	ctx.alloc = ctx.m ? ctx.m->num_packs + ctx.m->num_packs_in_base : 16;
- 	ctx.info = NULL;
-@@ -1210,7 +1348,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 			ctx.num_multi_pack_indexes_before++;
- 			m = m->base_midx;
- 		}
--	} else if (ctx.m && fill_packs_from_midx(&ctx)) {
-+	} else if (ctx.m && !ctx.compact && fill_packs_from_midx(&ctx)) {
- 		goto cleanup;
- 	}
- 
-@@ -1223,9 +1361,18 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	else
- 		ctx.progress = NULL;
- 
--	ctx.to_include = opts->packs_to_include;
-+	if (ctx.compact) {
-+		int bitmap_order = 0;
-+		if (opts->preferred_pack_name)
-+			bitmap_order |= 1;
-+		else if (opts->flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP))
-+			bitmap_order |= 1;
- 
--	for_each_file_in_pack_dir(opts->source->path, add_pack_to_midx, &ctx);
-+		fill_packs_from_midx_range(&ctx, bitmap_order);
-+	} else {
-+		ctx.to_include = opts->packs_to_include;
-+		for_each_file_in_pack_dir(opts->source->path, add_pack_to_midx, &ctx);
-+	}
- 	stop_progress(&ctx.progress);
- 
- 	if (!opts->packs_to_drop) {
-@@ -1354,12 +1501,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 			ctx.large_offsets_needed = 1;
- 	}
- 
--	QSORT(ctx.info, ctx.nr, pack_info_compare);
-+	if (ctx.compact) {
-+		if (ctx.version != MIDX_VERSION_V2)
-+			BUG("performing MIDX compaction with v1 MIDX");
-+	} else {
-+		QSORT(ctx.info, ctx.nr, pack_info_compare);
-+	}
- 
- 	if (opts->packs_to_drop && opts->packs_to_drop->nr) {
- 		size_t drop_index = 0;
- 		int missing_drops = 0;
- 
-+		ASSERT(!ctx.compact);
-+
- 		for (size_t i = 0;
- 		     i < ctx.nr && drop_index < opts->packs_to_drop->nr; i++) {
- 			int cmp = strcmp(ctx.info[i].pack_name,
-@@ -1391,12 +1545,20 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	 */
- 	ALLOC_ARRAY(ctx.pack_perm, ctx.nr);
- 	for (size_t i = 0; i < ctx.nr; i++) {
-+		uint32_t from = ctx.info[i].orig_pack_int_id;
-+		uint32_t to;
-+
- 		if (ctx.info[i].expired) {
-+			to = PACK_EXPIRED;
- 			dropped_packs++;
--			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
- 		} else {
--			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
-+			to = i - dropped_packs;
- 		}
-+
-+		if (ctx.compact)
-+			from -= ctx.compact_from->num_packs_in_base;
-+
-+		ctx.pack_perm[from] = to;
- 	}
- 
- 	for (size_t i = 0; i < ctx.nr; i++) {
-@@ -1542,7 +1704,24 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	if (ctx.num_multi_pack_indexes_before == UINT32_MAX)
- 		die(_("too many multi-pack-indexes"));
- 
--	CALLOC_ARRAY(keep_hashes, ctx.num_multi_pack_indexes_before + 1);
-+	if (ctx.compact) {
-+		struct multi_pack_index *m;
-+
-+		/*
-+		 * Keep all MIDX layers excluding those in the range [from, to].
-+		 */
-+		for (m = ctx.base_midx; m; m = m->base_midx)
-+			keep_hashes_nr++;
-+		for (m = ctx.m;
-+		     m && midx_hashcmp(m, ctx.compact_to, r->hash_algo);
-+		     m = m->base_midx)
-+			keep_hashes_nr++;
-+
-+		keep_hashes_nr++; /* include the compacted layer */
-+	} else {
-+		keep_hashes_nr = ctx.num_multi_pack_indexes_before + 1;
-+	}
-+	CALLOC_ARRAY(keep_hashes, keep_hashes_nr);
- 
- 	if (ctx.incremental) {
- 		FILE *chainf = fdopen_lock_file(&lk, "w");
-@@ -1567,17 +1746,47 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 
- 		strbuf_release(&final_midx_name);
- 
--		keep_hashes[ctx.num_multi_pack_indexes_before] =
--			xstrdup(hash_to_hex_algop(midx_hash, r->hash_algo));
-+		if (ctx.compact) {
-+			struct multi_pack_index *m;
-+			uint32_t num_layers_before_from = 0;
-+			uint32_t i;
- 
--		for (uint32_t i = 0; i < ctx.num_multi_pack_indexes_before; i++) {
--			uint32_t j = ctx.num_multi_pack_indexes_before - i - 1;
-+			for (m = ctx.base_midx; m; m = m->base_midx)
-+				num_layers_before_from++;
- 
--			keep_hashes[j] = xstrdup(midx_get_checksum_hex(m));
--			m = m->base_midx;
-+			m = ctx.base_midx;
-+			for (i = 0; i < num_layers_before_from; i++) {
-+				uint32_t j = num_layers_before_from - i - 1;
-+
-+				keep_hashes[j] = xstrdup(midx_get_checksum_hex(m));
-+				m = m->base_midx;
-+			}
-+
-+			keep_hashes[i] = xstrdup(hash_to_hex_algop(midx_hash,
-+								   r->hash_algo));
-+
-+			i = 0;
-+			for (m = ctx.m;
-+			     m && midx_hashcmp(m, ctx.compact_to, r->hash_algo);
-+			     m = m->base_midx) {
-+				keep_hashes[keep_hashes_nr - i - 1] =
-+					xstrdup(midx_get_checksum_hex(m));
-+				i++;
-+			}
-+		} else {
-+			keep_hashes[ctx.num_multi_pack_indexes_before] =
-+				xstrdup(hash_to_hex_algop(midx_hash,
-+							  r->hash_algo));
-+
-+			for (uint32_t i = 0; i < ctx.num_multi_pack_indexes_before; i++) {
-+				uint32_t j = ctx.num_multi_pack_indexes_before - i - 1;
-+
-+				keep_hashes[j] = xstrdup(midx_get_checksum_hex(m));
-+				m = m->base_midx;
-+			}
- 		}
- 
--		for (uint32_t i = 0; i <= ctx.num_multi_pack_indexes_before; i++)
-+		for (uint32_t i = 0; i < keep_hashes_nr; i++)
- 			fprintf(get_lock_file_fp(&lk), "%s\n", keep_hashes[i]);
- 	} else {
- 		keep_hashes[ctx.num_multi_pack_indexes_before] =
-@@ -1590,8 +1799,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	if (commit_lock_file(&lk) < 0)
- 		die_errno(_("could not write multi-pack-index"));
- 
--	clear_midx_files(opts->source, keep_hashes,
--			 ctx.num_multi_pack_indexes_before + 1,
-+	clear_midx_files(opts->source, keep_hashes, keep_hashes_nr,
- 			 ctx.incremental);
- 	result = 0;
- 
-@@ -1609,7 +1817,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	free(ctx.pack_perm);
- 	free(ctx.pack_order);
- 	if (keep_hashes) {
--		for (uint32_t i = 0; i <= ctx.num_multi_pack_indexes_before; i++)
-+		for (uint32_t i = 0; i < keep_hashes_nr; i++)
- 			free((char *)keep_hashes[i]);
- 		free(keep_hashes);
- 	}
-@@ -1651,6 +1859,21 @@ int write_midx_file_only(struct odb_source *source,
- 	return write_midx_internal(&opts);
- }
- 
-+int write_midx_file_compact(struct odb_source *source,
-+			    struct multi_pack_index *from,
-+			    struct multi_pack_index *to,
-+			    unsigned flags)
-+{
-+	struct write_midx_opts opts = {
-+		.source = source,
-+		.compact_from = from,
-+		.compact_to = to,
-+		.flags = flags | MIDX_WRITE_COMPACT,
-+	};
-+
-+	return write_midx_internal(&opts);
-+}
-+
- int expire_midx_packs(struct odb_source *source, unsigned flags)
- {
- 	uint32_t i, *count, result = 0;
-diff --git a/midx.h b/midx.h
-index aa99a6cb215..08f3728e520 100644
---- a/midx.h
-+++ b/midx.h
-@@ -82,6 +82,7 @@ struct multi_pack_index {
- #define MIDX_WRITE_BITMAP_HASH_CACHE (1 << 3)
- #define MIDX_WRITE_BITMAP_LOOKUP_TABLE (1 << 4)
- #define MIDX_WRITE_INCREMENTAL (1 << 5)
-+#define MIDX_WRITE_COMPACT (1 << 6)
- 
- #define MIDX_EXT_REV "rev"
- #define MIDX_EXT_BITMAP "bitmap"
-@@ -131,6 +132,10 @@ int write_midx_file_only(struct odb_source *source,
- 			 struct string_list *packs_to_include,
- 			 const char *preferred_pack_name,
- 			 const char *refs_snapshot, unsigned flags);
-+int write_midx_file_compact(struct odb_source *source,
-+			    struct multi_pack_index *from,
-+			    struct multi_pack_index *to,
-+			    unsigned flags);
- void clear_midx_file(struct repository *r);
- int verify_midx_file(struct odb_source *source, unsigned flags);
- int expire_midx_packs(struct odb_source *source, unsigned flags);
-diff --git a/t/meson.build b/t/meson.build
-index f80e366cff7..2421220917a 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -618,6 +618,7 @@ integration_tests = [
-   't5332-multi-pack-reuse.sh',
-   't5333-pseudo-merge-bitmaps.sh',
-   't5334-incremental-multi-pack-index.sh',
-+  't5335-compact-multi-pack-index.sh',
-   't5351-unpack-large-objects.sh',
-   't5400-send-pack.sh',
-   't5401-update-hooks.sh',
 diff --git a/t/t5335-compact-multi-pack-index.sh b/t/t5335-compact-multi-pack-index.sh
-new file mode 100755
-index 00000000000..797ae05c3bd
---- /dev/null
+index 797ae05c3bd..40f3844282f 100755
+--- a/t/t5335-compact-multi-pack-index.sh
 +++ b/t/t5335-compact-multi-pack-index.sh
-@@ -0,0 +1,175 @@
-+#!/bin/sh
-+
-+test_description='multi-pack-index compaction'
-+
-+. ./test-lib.sh
-+
-+GIT_TEST_MULTI_PACK_INDEX=0
-+GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
-+GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=0
-+
-+objdir=.git/objects
-+packdir=$objdir/pack
-+midxdir=$packdir/multi-pack-index.d
-+midx_chain=$midxdir/multi-pack-index-chain
-+
-+nth_line() {
-+	local n="$1"
-+	shift
-+	awk "NR==$n" "$@"
+@@ -67,7 +67,7 @@ test_expect_success 'MIDX compaction with lex-ordered pack names' '
+ 		write_packs A B C D E &&
+ 		test_line_count = 5 $midx_chain &&
+ 
+-		git multi-pack-index compact --incremental \
++		git multi-pack-index compact --incremental --bitmap \
+ 			"$(nth_line 2 "$midx_chain")" \
+ 			"$(nth_line 4 "$midx_chain")" &&
+ 		test_line_count = 3 $midx_chain &&
+@@ -90,7 +90,7 @@ test_expect_success 'MIDX compaction with non-lex-ordered pack names' '
+ 		write_packs D C A B E &&
+ 		test_line_count = 5 $midx_chain &&
+ 
+-		git multi-pack-index compact --incremental \
++		git multi-pack-index compact --incremental --bitmap \
+ 			"$(nth_line 2 "$midx_chain")" \
+ 			"$(nth_line 4 "$midx_chain")" &&
+ 		test_line_count = 3 $midx_chain &&
+@@ -172,4 +172,122 @@ test_expect_success 'MIDX compaction with midx.version=1' '
+ 	)
+ '
+ 
++midx_objs_by_pack () {
++	awk '/\.pack$/ { split($3, a, "-"); print a[2], $1 }' | sort
 +}
 +
-+write_packs () {
-+	for c in "$@"
-+	do
-+		test_commit "$c" &&
-+
-+		git pack-objects --all --unpacked $packdir/pack-$c &&
-+		git prune-packed &&
-+
-+		git multi-pack-index write --incremental --bitmap || return 1
-+	done
++tag_objs_from_pack () {
++	objs="$(git rev-list --objects --no-object-names "$2")" &&
++	printf "$1 %s\n" $objs | sort
 +}
 +
-+test_midx_layer_packs () {
-+	local checksum="$1" &&
-+	shift &&
-+
-+	test-tool read-midx $objdir "$checksum" >out &&
-+
-+	printf "%s\n" "$@" >expect &&
-+	# NOTE: do *not* pipe through sort here, we want to ensure the
-+	# order of packs is preserved during compaction.
-+	grep "^pack-" out | cut -d"-" -f2 >actual &&
-+
-+	test_cmp expect actual
-+}
-+
-+test_midx_layer_object_uniqueness () {
-+	: >objs.all
-+	while read layer
-+	do
-+		test-tool read-midx --show-objects $objdir "$layer" >out &&
-+		grep "\.pack$" out | cut -d" " -f1 | sort >objs.layer &&
-+		test_stdout_line_count = 0 comm -12 objs.all objs.layer &&
-+		cat objs.all objs.layer | sort >objs.tmp &&
-+		mv objs.tmp objs.all || return 1
-+	done <$midx_chain
-+}
-+
-+test_expect_success 'MIDX compaction with lex-ordered pack names' '
-+	git init midx-compact-lex-order &&
++test_expect_success 'MIDX compaction preserves pack object selection' '
++	git init midx-compact-preserve-selection &&
 +	(
-+		cd midx-compact-lex-order &&
++		cd midx-compact-preserve-selection &&
 +
 +		git config maintenance.auto false &&
 +
-+		write_packs A B C D E &&
-+		test_line_count = 5 $midx_chain &&
++		test_commit A &&
++		test_commit B &&
 +
-+		git multi-pack-index compact --incremental \
-+			"$(nth_line 2 "$midx_chain")" \
-+			"$(nth_line 4 "$midx_chain")" &&
-+		test_line_count = 3 $midx_chain &&
++		# Create two packs, one containing just the objects from
++		# A, and another containing all objects from the
++		# repository.
++		p1="$(echo A | git pack-objects --revs --delta-base-offset \
++			$packdir/pack-1)" &&
++		p0="$(echo B | git pack-objects --revs --delta-base-offset \
++			$packdir/pack-0)" &&
 +
-+		test_midx_layer_packs "$(nth_line 1 "$midx_chain")" A &&
-+		test_midx_layer_packs "$(nth_line 2 "$midx_chain")" B C D &&
-+		test_midx_layer_packs "$(nth_line 3 "$midx_chain")" E &&
++		echo "pack-1-$p1.idx" | git multi-pack-index write \
++			--incremental --bitmap --stdin-packs &&
++		echo "pack-0-$p0.idx" | git multi-pack-index write \
++			--incremental --bitmap --stdin-packs &&
 +
-+		test_midx_layer_object_uniqueness
-+	)
-+'
++		write_packs C &&
 +
-+test_expect_success 'MIDX compaction with non-lex-ordered pack names' '
-+	git init midx-compact-non-lex-order &&
-+	(
-+		cd midx-compact-non-lex-order &&
-+
-+		git config maintenance.auto false &&
-+
-+		write_packs D C A B E &&
-+		test_line_count = 5 $midx_chain &&
-+
-+		git multi-pack-index compact --incremental \
-+			"$(nth_line 2 "$midx_chain")" \
-+			"$(nth_line 4 "$midx_chain")" &&
-+		test_line_count = 3 $midx_chain &&
-+
-+		test_midx_layer_packs "$(nth_line 1 "$midx_chain")" D &&
-+		test_midx_layer_packs "$(nth_line 2 "$midx_chain")" C A B &&
-+		test_midx_layer_packs "$(nth_line 3 "$midx_chain")" E &&
-+
-+		test_midx_layer_object_uniqueness
-+	)
-+'
-+
-+test_expect_success 'setup for bogus MIDX compaction scenarios' '
-+	git init midx-compact-bogus &&
-+	(
-+		cd midx-compact-bogus &&
-+
-+		git config maintenance.auto false &&
-+
-+		write_packs A B C
-+	)
-+'
-+
-+test_expect_success 'MIDX compaction with missing endpoints' '
-+	(
-+		cd midx-compact-bogus &&
-+
-+		test_must_fail git multi-pack-index compact --incremental \
-+			"<missing>" "<missing>" 2>err &&
-+		test_grep "could not find MIDX: <missing>" err &&
-+
-+		test_must_fail git multi-pack-index compact --incremental \
-+			"<missing>" "$(nth_line 2 "$midx_chain")" 2>err &&
-+		test_grep "could not find MIDX: <missing>" err &&
-+
-+		test_must_fail git multi-pack-index compact --incremental \
-+			"$(nth_line 2 "$midx_chain")" "<missing>" 2>err &&
-+		test_grep "could not find MIDX: <missing>" err
-+	)
-+'
-+
-+test_expect_success 'MIDX compaction with reversed endpoints' '
-+	(
-+		cd midx-compact-bogus &&
-+
-+		from="$(nth_line 3 "$midx_chain")" &&
-+		to="$(nth_line 1 "$midx_chain")" &&
-+
-+		test_must_fail git multi-pack-index compact --incremental \
-+			"$from" "$to" 2>err &&
-+
-+		test_grep "MIDX $from must be an ancestor of $to" err
-+	)
-+'
-+
-+test_expect_success 'MIDX compaction with identical endpoints' '
-+	(
-+		cd midx-compact-bogus &&
-+
-+		from="$(nth_line 3 "$midx_chain")" &&
-+		to="$(nth_line 3 "$midx_chain")" &&
-+
-+		test_must_fail git multi-pack-index compact --incremental \
-+			"$from" "$to" 2>err &&
-+
-+		test_grep "MIDX compaction endpoints must be unique" err
-+	)
-+'
-+
-+test_expect_success 'MIDX compaction with midx.version=1' '
-+	(
-+		cd midx-compact-bogus &&
-+
-+		test_must_fail git -c midx.version=1 multi-pack-index compact \
++		git multi-pack-index compact --incremental --bitmap \
 +			"$(nth_line 1 "$midx_chain")" \
-+			"$(nth_line 2 "$midx_chain")" 2>err &&
++			"$(nth_line 2 "$midx_chain")" &&
 +
-+		test_grep "fatal: cannot perform MIDX compaction with v1 format" err
++
++		test-tool read-midx --show-objects $objdir \
++			"$(nth_line 1 "$midx_chain")" >AB.info &&
++		test-tool read-midx --show-objects $objdir \
++			"$(nth_line 2 "$midx_chain")" >C.info &&
++
++		midx_objs_by_pack <AB.info >AB.actual &&
++		midx_objs_by_pack <C.info >C.actual &&
++
++		{
++			tag_objs_from_pack 1 A &&
++			tag_objs_from_pack 0 A..B
++		} | sort >AB.expect &&
++		tag_objs_from_pack C B..C >C.expect &&
++
++		test_cmp AB.expect AB.actual &&
++		test_cmp C.expect C.actual
 +	)
 +'
 +
-+test_done
++test_expect_success 'MIDX compaction with bitmaps' '
++	git init midx-compact-with-bitmaps &&
++	(
++		cd midx-compact-with-bitmaps &&
++
++		git config maintenance.auto false &&
++
++		write_packs foo bar baz quux woot &&
++
++		test-tool read-midx --bitmap $objdir >bitmap.expect &&
++		git multi-pack-index compact --incremental --bitmap \
++			"$(nth_line 2 "$midx_chain")" \
++			"$(nth_line 4 "$midx_chain")" &&
++		test-tool read-midx --bitmap $objdir >bitmap.actual &&
++
++		test_cmp bitmap.expect bitmap.actual &&
++
++		true
++	)
++'
++
++test_expect_success 'MIDX compaction with bitmaps (non-trivial)' '
++	git init midx-compact-with-bitmaps-non-trivial &&
++	(
++		cd midx-compact-with-bitmaps-non-trivial &&
++
++		git config maintenance.auto false &&
++
++		git branch -m main &&
++
++		#               D(4)
++		#              /
++		# A(1) --- B(2) --- C(3) --- G(7)
++		#              \
++		#               E(5) --- F(6)
++		write_packs A B C &&
++		git checkout -b side &&
++		write_packs D &&
++		git checkout -b other B &&
++		write_packs E F &&
++		git checkout main &&
++		write_packs G &&
++
++		# Compact layers 2-4, leaving us with:
++		#
++		#  [A, [B, C, D], E, F, G]
++		git multi-pack-index compact --incremental --bitmap \
++			"$(nth_line 2 "$midx_chain")" \
++			"$(nth_line 4 "$midx_chain")" &&
++
++		# Then compact the top two layers, condensing the above
++		# such that the new 4th layer contains F and G.
++		#
++		#  [A, [B, C, D], E, [F, G]]
++		git multi-pack-index compact --incremental --bitmap \
++			"$(nth_line 4 "$midx_chain")" \
++			"$(nth_line 5 "$midx_chain")"
++	)
++'
++
+ test_done
 -- 
 2.53.0.171.gde83996e422
-
