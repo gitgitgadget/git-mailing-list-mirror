@@ -1,208 +1,198 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163A8330D5E
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE58330D5E
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771969190; cv=none; b=AKasA3dknQTZfZsI3HAXIgximmAErhodibvooW/egeCsmLwq2qRnkrSrPAmq7Xxw5yrjP34D6L50tvZftN4FGTruGxnYSjpPI2wLtqA2GiOZ/j0BeM/vvcMretFrNduoIMnBWEvWQyKaSWN/8ttDEi8oNf59uh+wU88zc0U7obo=
+	t=1771969193; cv=none; b=lt/4HC/HQQGHcNGNIClbKslauMEuC74OuBBdw3F9+zpHDeoMZy7YObE51tbJpkGuKorrm+dQh/TDhfeY23QUSaUWh+JRVrcaqigxh+OLXcNfUcm7MqjBr+OoXtC3miGnB16J5d6R6gMd5kfG+jLEFZjoWQPa1PPTVLI9PA2il/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771969190; c=relaxed/simple;
-	bh=4/wYLaY7DZs15tIIac3Np5JsHvwGNknoHK8pLFqrGG8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dP1Qdlu+xgEeMYk5uWHQypnT1mX2Ef3ChxSGdSNBEKcwFkFnQQd2pwSGco3ynBRyhl+bjpUzqX4I0WOyLvKPsHUWKshu+VgDx1D5jHuYNT3PMFs9VTTxcYUrWWYMQS1TuZYR/jF3OHNuY1QQl0RGHRqZ3wR4rJOxI6/FgM65oyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YjOz+m4/; arc=none smtp.client-ip=209.85.215.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771969193; c=relaxed/simple;
+	bh=rjFFBI0ysCWFAe5cgDn6z0tyBswgBmhPED/WrgAPvSs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=T8YOh9qMgtIfu+qGi/FEgv4CreKt3NOR5vuy6u+TpgfqgF6W/S2W+BdBpOex4hpkOctX22IjGgJaK0WIdkGNgb3l5keO70DL7FljjIlUFdkCmaQdp+wv/9EDrSWD1y2OWEpS++MGGFIo00PMvPpxmBMUITR08PUFUMR96aRHjj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SKYlRcTP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m5f4yYDW; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YjOz+m4/"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-bde0f62464cso2296859a12.2
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 13:39:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771969188; x=1772573988; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FybDoIzXWmBHRgR2NXAcF2TLbqLZKcpjErHri7cLe3g=;
-        b=YjOz+m4/yMlQZJ7v49YrdGmVTBC2b6gPKFg91RuJyMap8SmAX35Jwjy6qWYi/WDliF
-         wZrPIVEFDmwl0MKk9LJM8K3XEjOwwLMtACquLc6NTmDvVkjhpHBTmlG1RJF+3yc4mqEy
-         6dD2tgV7zpfdaLOGjoB/MF8TiNn2B5LI/j/SH48aiBlap2uwXTd6SNtOzYRGCz8g9FoQ
-         kiTHGFoWMwikns0fl0vghaBtTgOJuEHMVNdZNDQpALAY+8S7EjncesZEEE0DtnYJgHu2
-         M2Vmtmwx20jh0x7SZrL27/81/ay5/3ritkxSiI9npaL+GM1f0kkcPzUK2PWJ3KzCi9UT
-         mqOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771969188; x=1772573988;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=FybDoIzXWmBHRgR2NXAcF2TLbqLZKcpjErHri7cLe3g=;
-        b=hHqkhVPjYPBSqJeqj+VmWHCrPhDlr3MKfNDrAeKbUwOm+OWaGE7FeBi0R3xUT0c+vh
-         +/pzXMbdD1mC+kB4SlCrTkvn4f4/FLmngM9prSU5KAib6LALJPt+/+3jITbae0D6mVlH
-         9XkRcGlteVMzKs/9wdz0nwsR9YWmq9ifcfu1x/RfmOWHG6uuJk3sKQOaEFsQWDlX14WP
-         M7XWk0w+Yb95BDG0la/a71jRT4rVNA4yAn7GMjfxmy4A5VI91rM4sqzlpqCFfbYZKXHq
-         0dtBJYOJY7YlvAQCwYAAm8H9BJv+x9MVbbUvPWQmm/PPvZUOD2x1/Jmj0liC/eivrSu/
-         bIUg==
-X-Gm-Message-State: AOJu0Yxsk/q+qljq2WDE2sLf7aNOpc/JY0H/ceYFZrPV/PIM7BUIv9hG
-	vQBTbE79uN0yJXDy/1rLWOpg/KZXZE8ZG1qKLCjDmg/9sfirgYdhyFJwOmzKmw==
-X-Gm-Gg: ATEYQzzE1eX/Ld13dNhF30t+ZGuV2vt+PXlwI7Jw0FWAlVv1FneDmJRJTVpixpdWIgq
-	Ec76MaCw77BNNZMm75TW7wo0Rhw1hdthNdfu2k76ArTfmJQ/u3ZsX1wsxnJjscF3AeuAzLHGjUm
-	BWwVPYFoWJ/VuP1J5xvipKg/ZT1h1sLik21tVYXZ7Ni+8081phIhbzzwGGdX1X5dQPXMM+/xlFs
-	YIRT4G/xLzk/g/dAEjJVuVFe6qlncDGhqzUF/hzPS60dvQcCqssIAdujHMua9dQ5n2pZYbo1+xX
-	BDRCkCXKKEv8/PjYbAfKFEj/e6TkMC9aJ81UHgyHMUmsVTgQ+y6dgMRRhOTAR3trDcDsfK+3DgZ
-	8lCkBdipIAHKm9yTilqWK4RTwoEavBrZswXfyxALrxa+9FAtxg4jZhkHo4uxJYmpIQc0BODrIn1
-	HUrJkX8FfdGacZqqggB9fVkbUqT0d8ntp77hJ+QK8aScVwOo8y/g/I2/NdtyQ=
-X-Received: by 2002:a17:90b:2885:b0:340:9d52:44c1 with SMTP id 98e67ed59e1d1-3590f2462e9mr96744a91.35.1771969188176;
-        Tue, 24 Feb 2026 13:39:48 -0800 (PST)
-Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:b842:6614:18b3:b64d])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3590e7f1f84sm56859a91.9.2026.02.24.13.39.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 13:39:47 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: ben.knoble@gmail.com,
-	gitster@pobox.com,
-	philipoakley@iee.email,
-	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [PATCH v2] send-email: validate charset name in 8bit encoding prompt
-Date: Wed, 25 Feb 2026 03:07:39 +0530
-Message-ID: <20260224213932.92364-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
-References: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SKYlRcTP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m5f4yYDW"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id C60E01D001A5;
+	Tue, 24 Feb 2026 16:39:50 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 24 Feb 2026 16:39:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771969190; x=1772055590; bh=4vv00kRUv8
+	0yavxAsWZjzESyT8hgj/xuAMXfNo3tqMU=; b=SKYlRcTPJsG21KMHmbIsTU/IPw
+	SQhA4khJjYDigXAMvB4npJQ3YuFXxiKuHuCuiK/Tp9gWZbW+u1ulP9o3Z+wsPekL
+	Q9hdlL7yjuiFWiFPps5t7HECAEkSLQ1+pJxz/kwBJHzW6ECOmX8+gUPYE8MVF70T
+	b5EaFZewQVns++km+ayFu2F4trF7tWgSHLtf/xIPmt7TGi4Y7tnBA9qT5GEtp1bR
+	O5d1kLbFjuGP19+2n2p6kL2+7DI0skVX1WfQdpKzQiOhL5dUR1FXMj27e9Fnnt4X
+	xZI0q0v9YlwsXTVvMInOQInUh3eZ6IMGhUa2QDjBW3+CenyUFULCDtEagLjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771969190; x=1772055590; bh=4vv00kRUv80yavxAsWZjzESyT8hgj/xuAMX
+	fNo3tqMU=; b=m5f4yYDW/CVWpRwwSBLbK5tVsfaY2CwmwtK5kfQxzCBhFLq7Nr4
+	mWzf3VuQVeN5DuzmZwcAYBMH2nhwTUa17nO6nMUDT30axf9RsiVLjmpXCZAgIBkd
+	+Md6CM25dtM7O4bjBqSORuqTos49DwjnN2ZL1u9YR5Np+COj9Rovq2XNdAzEuRVO
+	Am/1Eyg9QH+jo+p1NglkPvdcHrm5HnZ5qjN+JfhTQUbxEC3EcjabO9/FZFRbCaZU
+	jKcRJWFoc5/Dvo6+G1ZVX1DfV3yUi35ThsI01E0fiW4WfChPnUNqDD7Jpfo2KF7w
+	io5UTFOsg4F99ZyzlMMAfgoLiHAbxolevcA==
+X-ME-Sender: <xms:phqeac3U3xd473X0VlmQpIhhlj5FnRYAWeBA2WH0SeWBoNCApsNXnQ>
+    <xme:phqeaeGJqJlUu-dziryBKfv7W-otlb2Nriyz_rIdEKwrGz9zZCngf-2nnlRL0Rosq
+    ZUnZpKCNnNQsh8dPDgfUhUpmGFM2HZHoDdqaT7lqL2PZAAwTHHW9g>
+X-ME-Received: <xmr:phqeaZ7o-H-PDlx5m0Gs1q6FXVQYfRy1rBZBAMs4ylglFAH--KQcs39Z09t2rqHMiAF2VP225HfateTGpe3dYPhLoW0J77ob8A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeduvdelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
+    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:phqeaUsNwWzZsKQxFOW2Mpl4sB2hMaycbdRyLKUpk-c1MuBCySKDxg>
+    <xmx:phqeaa5AibjaSCCREZ9_voIGmTp5K2KrUsiL-spYaj04sGKsHGmdqw>
+    <xmx:phqeafUri7WPiKhBSuYNJONW5Yo89Io-hWs26_4rsXLxYHwUO1qAug>
+    <xmx:phqeac_ohtkwqNiFr-8oDcP5Xt84QBi1esZuanQHUH-xlv-p4Efgrg>
+    <xmx:phqead4lKahcK1KCQMV7WHu9vjfycdUmDY28yc2z-ieoHxdAtdum7GWF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Feb 2026 16:39:50 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/2] format-patch: add cover-letter-format option
+In-Reply-To: <xmqqjyw1g9m5.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	24 Feb 2026 12:38:42 -0800")
+References: <20260224040400.751247-1-mroik@delayed.space>
+	<cover.1771925291.git.mroik@delayed.space>
+	<xmqqjyw1g9m5.fsf@gitster.g>
+Date: Tue, 24 Feb 2026 13:39:48 -0800
+Message-ID: <xmqq1pi9g6sb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When a non-ASCII character is detected in the body or subject of the email
-the user is prompted with,
+Junio C Hamano <gitster@pobox.com> writes:
 
-  Which 8bit encoding should I declare [UTF-8]? foo
+> Mirko Faina <mroik@delayed.space> writes:
+>
+>> From: Mroik <mroik@delayed.space>
+>>
+>> I've dropped the first patch of the series and applied the changes that
+>> Jeff suggested.
+>
+>
+> These are queued somewhere in 'seen', with a small fix-up to have
+> the build pass plus a bit of obvious tweak on error handling, but
+> most of the remarks I made in my reviews (like "doesn't this leak?"
+> and "shouldn't we have tests") are not addressed with the fix-up.
+>
+> You'll find the topic in 'seen' after I push it out for today
+> perhaps in a few hours.
+>
+>     a981554b03 format-patch: add ability to use alt cover format
+>     8bf8e6ccda format-patch: add commitListFormat config
+>     a85e8e535d SQUASH???
+>
+> Thanks.
 
-After this the input string is validated by the regex, based on the fact
-that the charset string will be minimum 4 characters [1]. If the string is
-more than 4 letters the email is sent, if not then a second prompt to
-confirm is asked to the user,
+I found another change that is needed to make the tests pass, so the
+commit object name for the squash fixup is no longer a85e8e535d;
+fetching my 'seen' from any of the mirrors should let you find these
+commits near the tip of 'seen'.
 
-  Are you sure you want to use <foo> [y/N]? y
 
-This relies on a length based regex heuristic check to validate the user
-input, and can allow clearly invalid charset names to pass if the input is
-greater than 4 characters.
 
-Add a semantic validation of the charset name using the
-Encode::find_encoding() module of perl. If the encoding is not recognized,
-warn the user and ask for confirmation before proceeding. After this
-validation the lenght based validation becomes redundant and also breaks
-flow, so change the regex of valid input to any non blank string.
 
-Additionally, the wording of the first prompt can confuse the user if not
-read properly or under any default assumptions for a yes/no prompt. Change
-the wording to make it explicitly clear to the user that the prompt needs a
-string input, UTF-8 being the default.
+ builtin/log.c         | 18 ++++++++----------
+ t/t9902-completion.sh |  1 +
+ 2 files changed, 9 insertions(+), 10 deletions(-)
 
-The intended flow is,
-
-  Declare which 8bit encoding to use [default: UTF-8]? foobar
-  warning: 'foobar' does not appear to be a valid charset name.
-  Are you sure you want to use <foobar> [y/N]?
-
-[1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
-
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
----
-Changes in v2:
- - Added braces in if-else block.
-
- git-send-email.perl   | 17 ++++++++++++++---
- t/t9001-send-email.sh |  2 +-
- 2 files changed, 15 insertions(+), 4 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index cd4b316ddc..15387ac377 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -23,6 +23,7 @@
- use Git::LoadCPAN::Error qw(:try);
- use Git;
- use Git::I18N;
-+use Encode qw(find_encoding);
-
- Getopt::Long::Configure qw/ pass_through /;
-
-@@ -987,6 +988,7 @@ sub get_patch_subject {
- sub ask {
- 	my ($prompt, %arg) = @_;
- 	my $valid_re = $arg{valid_re};
-+	my $warn_invalid = $arg{warn_invalid};
- 	my $default = $arg{default};
- 	my $confirm_only = $arg{confirm_only};
- 	my $resp;
-@@ -1005,7 +1007,15 @@ sub ask {
- 			return $default;
- 		}
- 		if (!defined $valid_re or $resp =~ /$valid_re/) {
--			return $resp;
-+			if ($warn_invalid) {
-+				if (find_encoding($resp)) {
-+					return $resp;
-+				} else {
-+					printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $resp;
-+				}
-+			} else {
-+				return $resp;
-+			}
- 		}
- 		if ($confirm_only) {
- 			my $yesno = $term->readline(
-@@ -1044,8 +1054,9 @@ sub file_declares_8bit_cte {
- 	foreach my $f (sort keys %broken_encoding) {
- 		print "    $f\n";
+diff --git a/builtin/log.c b/builtin/log.c
+index e6ff3627b8..c531784581 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1415,7 +1415,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+ 
+ 	if (skip_prefix(format, "log:", &format)) {
+ 		generate_commit_list_cover(rev->diffopt.file, format, list, nr);
+-	} else {
++	} else if (!strcmp(format, "shortlog")) {
+ 		shortlog_init(&log);
+ 		log.wrap_lines = 1;
+ 		log.wrap = MAIL_DEFAULT_WRAP;
+@@ -1428,6 +1428,8 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+ 			shortlog_add_commit(&log, list[i]);
+ 
+ 		shortlog_output(&log);
++	} else {
++		die(_("--cover-letter: invalid format spec '%s'"), format);
  	}
--	$auto_8bit_encoding = ask(__("Which 8bit encoding should I declare [UTF-8]? "),
--				  valid_re => qr/.{4}/, confirm_only => 1,
-+	$auto_8bit_encoding = ask(__("Declare which 8bit encoding to use [default: UTF-8]? "),
-+				  valid_re => qr/^\S+$/, confirm_only => 1,
-+				  warn_invalid => 1,
- 				  default => "UTF-8");
- }
+ 
+ 	/* We can only do diffstat with a unique reference point */
+@@ -1946,7 +1948,7 @@ int cmd_format_patch(int argc,
+ 	int just_numbers = 0;
+ 	int ignore_if_in_upstream = 0;
+ 	int cover_letter = -1;
+-	char *cover_letter_fmt = NULL;
++	const char *cover_letter_fmt = NULL;
+ 	int boundary_count = 0;
+ 	int no_binary_diff = 0;
+ 	int zero_commit = 0;
+@@ -2333,12 +2335,11 @@ int cmd_format_patch(int argc,
+ 		goto done;
+ 	total = list.nr;
+ 
+-	if (cover_letter_fmt && (strcmp(cover_letter_fmt, "shortlog") && strncmp(cover_letter_fmt, "log:", 4))) {
+-		die(_("--cover-letter: invalid format spec"));
+-	}
+-
+-	if (!cover_letter_fmt)
++	if (!cover_letter_fmt) {
+ 		cover_letter_fmt = cfg.fmt_cover_letter_commit_list;
++		if (!cover_letter_fmt)
++			cover_letter_fmt = "shortlog";
++	}
+ 
+ 	if (cover_letter == -1) {
+ 		if (cfg.config_cover_letter == COVER_AUTO)
+@@ -2427,9 +2428,6 @@ int cmd_format_patch(int argc,
+ 	rev.numbered_files = just_numbers;
+ 	rev.patch_suffix = fmt_patch_suffix;
+ 
+-	if (cover_letter && !cover_letter_fmt)
+-		cover_letter_fmt = "shortlog";
+-
+ 	if (cover_letter) {
+ 		if (cfg.thread)
+ 			gen_message_id(&rev, "cover");
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 964e1f1569..4f760a7468 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -2774,6 +2774,7 @@ test_expect_success PERL 'send-email' '
+ 	test_completion "git send-email --cov" <<-\EOF &&
+ 	--cover-from-description=Z
+ 	--cover-letter Z
++	--cover-letter-format=Z
+ 	EOF
+ 	test_completion "git send-email --val" <<-\EOF &&
+ 	--validate Z
+-- 
+2.53.0-485-gd48bbca10f
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index e56e0c8d77..24f6c76aee 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1691,7 +1691,7 @@ test_expect_success $PREREQ 'asks about and fixes 8bit encodings' '
- 			email-using-8bit >stdout &&
- 	grep "do not declare a Content-Transfer-Encoding" stdout &&
- 	grep email-using-8bit stdout &&
--	grep "Which 8bit encoding" stdout &&
-+	grep "Declare which 8bit encoding to use" stdout &&
- 	grep -E "Content|MIME" msgtxt1 >actual &&
- 	test_cmp content-type-decl actual
- '
-
-Range-diff against v1:
-1:  70fa4d2899 ! 1:  954c1dae9f send-email: validate charset name in 8bit encoding prompt
-    @@ git-send-email.perl: sub ask {
-      		if (!defined $valid_re or $resp =~ /$valid_re/) {
-     -			return $resp;
-     +			if ($warn_invalid) {
-    -+				if (find_encoding($resp))
-    ++				if (find_encoding($resp)) {
-     +					return $resp;
-    -+				else
-    ++				} else {
-     +					printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $resp;
-    -+			} else
-    ++				}
-    ++			} else {
-     +				return $resp;
-    ++			}
-      		}
-      		if ($confirm_only) {
-      			my $yesno = $term->readline(
---
-2.53.0
