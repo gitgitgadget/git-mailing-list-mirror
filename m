@@ -1,80 +1,80 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4662368267
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB168368275
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:46:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771922769; cv=none; b=mH4DkETEu0k7FiebFzkvv/VXfLelj0qA2NsOctRQ727XVgrcHkHK86jseGVSjS4+dTtmMTMdjKJhMlCf8AbP6VAa9AnyzVv7QWBopu18dgdDxZXyyjeg67ovaAJ+doux47taHcooCg5na6RkNKHu8k21ClnIE0aBpINrV6vUmuo=
+	t=1771922772; cv=none; b=VECnZX2e4fuDuinvRm4eRB2ApV5iKDxVwwdT+tEre4I5wsCDuatJUapUElXs+oOqwWGiRLFWLrl84YCWDKfrUD99uczqZL4ejQTCvhf3esM8fl5WAHllFXwhp9PnhN5HvxbAoclalvkBrvw6KFYqO4jfupNJb+3ZaYrU2HBXQ8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771922769; c=relaxed/simple;
-	bh=IPwzR/tLcqyJX2ST9ZEhyl2zH9iWylWNkYFwcifLDeA=;
+	s=arc-20240116; t=1771922772; c=relaxed/simple;
+	bh=B2nmYfUCxOnI/NZZ6cfQ4sP1OXKCyhSO8jSZWfK5b/Y=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kGRG+Z8aOyJ22BMyBw0EP+HPblwgQDJNch7RVVIi5vQryC954TtyUTCEFD1BUZ5I54d/UMmtKfcCfgl7JqJE+3muQAb8UC571+iSIhYbMcE3N24Zq7w28NPPxr0e5ar61rb6AaT1Bn20pAqeaK3aUYpU3zfmHu6vZ5OzAX2KM9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cjr+ysTn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U5Lb+wtI; arc=none smtp.client-ip=103.168.172.155
+	 In-Reply-To:To:Cc; b=bB674fUOaMgCivASutOfta/Kjwb/dKKMpP1nPvkEkiVUzYxPf3HZKSGQeX3+sWqXfBl7wTiqmz6MVbOC4CCOo7TnbEZ7VQboTUbfY8V87Km5ALhUU9/CzJ3MiWj5kjyhnUQ8fdaW6+u7SN82scqHcLX40FhnnCkVPkqpLY9QQOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bel07maf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FxBkhqEi; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cjr+ysTn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U5Lb+wtI"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4D4991400049;
-	Tue, 24 Feb 2026 03:46:07 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bel07maf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FxBkhqEi"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5EC3FEC0597;
+	Tue, 24 Feb 2026 03:46:10 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Feb 2026 03:46:07 -0500
+  by phl-compute-04.internal (MEProxy); Tue, 24 Feb 2026 03:46:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771922767;
-	 x=1772009167; bh=uYg+3N4bJXAWuoMqRYkvHk6ID7H06J9+3V7useXoUgc=; b=
-	cjr+ysTn+0SZfTxDPQHbu4Pq455BuXhOsBzzd5OroSPoz66AjaLzm3Od2MlH/TIZ
-	X+bMustifpqHqn7sI2gX+g8PPc4mO8V0sSsNEw6RAGktW17+K+8qUX8QfJ44+kzn
-	1L+wsik2zvuYAnmGBL93R5qvCUd/unvEeUaq4Z8ACaMn1+qDSiZ3wTx2jvUTCCL9
-	wjJVOqWEoqKiAuvygLwGT/h4iQ5eYoJQHCfbHhovvdgv+eM8K1u2+rPE8uUIOFIK
-	f25/VmdXGFlyKku3J0u+DsiXMHu4Lu5QaL27qG5Cn6PLHkd19kdYQ5lwk2NKTGYF
-	NtOaA6hd2ByAZ3DdP61dcg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771922770;
+	 x=1772009170; bh=UdywW1x+k3hamWS0XVGGJSsdflkN1WWkDRl8HlQk/wE=; b=
+	bel07mafMmAHCI2o/OHRjxLeJoYUyzMcXtRnymJTwKzQyfRkscjhpwyzY7FZf32U
+	85F0JHITE/uer/pOuX9uaI9QWktzSKqdwk7U/8y/QcNGSVt1yI7oflf1BzZvghid
+	76tc25aXS6bW/bt7lpwm8HKm3PReAplBDlId/EcVzvAcrypKsTI3oi0RVC9/5uNm
+	1H9eO/jNhyLznX3VF9f61Q3hTgmFxV67G3BGo9yHW5BvSI8bDqe8UC1gfiVuboW6
+	e6zy/F0ahGf8aB4KKLZ7rnf3l+AwKtnofPkjMUCQUlXWmx7SWIu2URpWu41FUvFS
+	2K8IJa3/IrBkTHktXhe+0Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771922767; x=
-	1772009167; bh=uYg+3N4bJXAWuoMqRYkvHk6ID7H06J9+3V7useXoUgc=; b=U
-	5Lb+wtIw9OS0a+WV4fCB4N0cKm7pe4GArERFGUXYjvo2GF832It0MuSabglcbpzz
-	pCZhtCdFLErvFlavKTn/ClauwaNGNfkfpv5QVzYL+nh5jtX7uX7owpuV0p7ruoQc
-	oLdlxMWPBFjwdTr9x5jDbWCzWW5Tyu2NBHwIu+GgZYXnzNwc1wsny0n6hHo28JnV
-	YqbMmK1mE1jn/DEs5W0NUVt1sm+CXiN/0p0yGG9Hh+yw0BOy8do+JpVN2XdnfmJM
-	ha+heazSUnbipLRi9ZLSxaB/4LAm+2rUL9hS+CZ+U8RiYvhfCjYyXTPyvQFZBKrJ
-	f4EvybrjzEbeEwFOTx9LQ==
-X-ME-Sender: <xms:T2WdaS1D-lvdlDHuo7bE6cXn_610zyYclDKwM2EvTB1Fx6D_eAm_gQ>
-    <xme:T2WdacHIk1iUDSEKHkha2nK5-YtzaIe9whh4yBgVUGH-NmEeEtIoN6JdG9Rk6E02O
-    Lae1QJCbcsFEvQLYDuVcByUe6D_4SYMJuWmBTVOyqPjLkndjID9aA>
-X-ME-Received: <xmr:T2Wdaf7tH1sZjh_Mm37LQ7fq50mvYIyqVNi4to-lVqfG9dQUsnnZ0aZ3ZUyEa_oAUPSBWA_LqKw5vTifUBLV2c49kDdG6oYJkGyDT9pgOQYhGA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771922770; x=
+	1772009170; bh=UdywW1x+k3hamWS0XVGGJSsdflkN1WWkDRl8HlQk/wE=; b=F
+	xBkhqEiCFd+sNk1nymGgMGdTJwwE3sGhjESX1VhCUgHx2vyYlOP0cS/ZxxxF67de
+	xEDJDLostiVFG0DxbQLMMyHLL1am6qwobOIAjnsLXNRzbB6HxggZ7hhmPVz2fxcH
+	8StWtP+FqfJwxE9ifBnO0QBz4hrodnGjEhB0PaBa4FoH5et/CCeQPWFlBZxWQz6x
+	25tJy1AVyX9ZSxOJdZrVuxWBzCkwz+4sQRj8pz/PqZv+vm+RfIhTn3SkLW+EO4hG
+	xZF64/hUSZQLi8o2+4dCJS4N50SXIxy2ZytUibdGePevIzlaYJPxWZpHUfNEVRSR
+	H+f1Tdov3mauzZ026c4vQ==
+X-ME-Sender: <xms:UmWdaYxHXcW-lkzKrR1BBo-Uk4vmyO5QbCEds-yL0JpKJgr5JWN7fQ>
+    <xme:UmWdaTT_PZcHivk2dPlyasoGjxlg6dRCMJ2sn6M-CkVOLxE4iMSpSxLsAwCpPrCiM
+    i0iFsUk1uqveFcdGxP6iOUQO3Px3s2d8lznIslooorf1XBpfaKHRg>
+X-ME-Received: <xmr:UmWdafVuiOIpECVYd4AZhirlXpIV0swS2a4B4Jt7MmLLCNH4doEO6LNQlhBRUwd5Yg1mkZfCeBxxe74IdLD2TkTID7BYtZ8Ztjc0fMbyAWDtXA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeljedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
     thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
     hkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtgho
     mhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:T2WdaSuXsv_b095dG6YtMnVSZp_3RBE0AW2A5KIXtKbJxsEBYt7OSQ>
-    <xmx:T2WdaQ41wKWOsIKEGBLz7qzenV-SlzNVPkcGASWmSDRvKFD8MrR62Q>
-    <xmx:T2WdadV4_53K0z2DISZmDvxRGiy3cC-md3F2nQoMREApJ_afHCT0fA>
-    <xmx:T2WdaS_knG7OdmZkDlZpD-AAvs4CRZw9VquvvzEtp3hHOkWTBuNEpQ>
-    <xmx:T2WdaT3EjR0MJyrkwP0G56-fDCm4qG3iroX9pCUvav0ksqQ7nq0F4Eru>
+X-ME-Proxy: <xmx:UmWdaVZqw6Bp83rBEx8K6IoLpoDCrnuKLpiJ0zRLA4Wl3dpd2ImMaw>
+    <xmx:UmWdaV3ARk3Jr5RxfKYRXYvE7Hpawef7VPXBn7pc8cOHTthgIAl4DQ>
+    <xmx:UmWdaXjDRcIirpIFAttfCPxPCiBz9WBRWaHHACN9lW6XdHOSmSD-PQ>
+    <xmx:UmWdaZYd3S_wmWcht-xAWfa916O6Vx6hvy7e51ANJrRDWSlaqJlt5w>
+    <xmx:UmWdaQTyvPfpoyEeuEakRdIw-3lwH8aOS6JYw1dGlZSYnY6xQ-g6-7v3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 03:46:06 -0500 (EST)
+ 24 Feb 2026 03:46:09 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1a525e57 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Feb 2026 08:46:05 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id e9377556 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Feb 2026 08:46:08 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 24 Feb 2026 09:45:49 +0100
-Subject: [PATCH v2 5/8] t5510: explicitly use "gc" strategy
+Date: Tue, 24 Feb 2026 09:45:50 +0100
+Subject: [PATCH v2 6/8] t6500: explicitly use "gc" strategy
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-5-8657338c6fa1@pks.im>
+Message-Id: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-6-8657338c6fa1@pks.im>
 References: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-0-8657338c6fa1@pks.im>
 In-Reply-To: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-0-8657338c6fa1@pks.im>
 To: git@vger.kernel.org
@@ -91,27 +91,34 @@ Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-One of the tests in t5510 wants to verify that auto-gc does not lock up
-when fetching into a repository. Adapt it to explicitly pick the "gc"
-strategy for auto-maintenance.
+The test in t6500 explicitly wants to exercise git-gc(1) and is thus
+highly specific to the actual on-disk state of the repository and
+specifically of the object database. An upcoming change modifies the
+default maintenance strategy to be the "geometric" strategy though,
+which breaks a couple of assumptions.
+
+One fix would arguably be to disable auto-maintenance altogether, as we
+do want to explicitly verify git-gc(1) anyway. But as the whole test
+suite is about git-gc(1) in the first place it feels more sensible to
+configure the default maintenance strategy to be "gc".
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t5510-fetch.sh | 1 +
+ t/t6500-gc.sh | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index c69afb5a60..5dcb4b51a4 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1321,6 +1321,7 @@ test_expect_success 'fetching with auto-gc does not lock up' '
- 		git config fetch.unpackLimit 1 &&
- 		git config gc.autoPackLimit 1 &&
- 		git config gc.autoDetach false &&
-+		git config maintenance.strategy gc &&
- 		GIT_ASK_YESNO="$TRASH_DIRECTORY/askyesno" git fetch --verbose >fetch.out 2>&1 &&
- 		test_grep "Auto packing the repository" fetch.out &&
- 		! grep "Should I try again" fetch.out
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index bef472cb8d..ea9aaad470 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -11,6 +11,7 @@ test_expect_success 'setup' '
+ 	# behavior, make sure we always pack everything to one pack by
+ 	# default
+ 	git config gc.bigPackThreshold 2g &&
++	git config set --global maintenance.strategy gc &&
+ 	test_oid_init
+ '
+ 
 
 -- 
 2.53.0.536.g309c995771.dirty
