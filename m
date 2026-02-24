@@ -1,172 +1,196 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2650136B05A
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 10:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6361E36BCD5
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 11:01:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771930540; cv=none; b=T77MWAF7QIcFxBhmwVN5aEPdsmxs4kn/vamKjMowHCHFTKydOIqkRp5ixwY35mnLJHY79Z3o0ZDAM/zmBy/Lc7wG2O0FqY9LHRh88Ig7F7PfgUraNWwUR4Hb28BpMXI9p6hyDGdSyTwKsQBdpg2SQk8+lZH2GEutCMfpX+1KmRA=
+	t=1771930861; cv=none; b=DQed+4hQ0VURhnNZDcALiJFPcuB15vWX0muUESYe9IO8jigkbOfF/JmRLpGwHKBq4z1Q2pWk/pfOUVM3Ami7F83OYrHnYYp0aGxO3LkWKnOy3ZWpm38CQrp00cILEXvy1chd8w5BUAFmVfPh73XLP1e1xfytG/npKyTmEEPH5SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771930540; c=relaxed/simple;
-	bh=2+sUWIIsMUADTPPQiVha9HJD+R9qrmwxWpcq4ocfzUI=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=VB/Ka54BB3fCQytvfyRdOVloNtsEUBOaHri+0d2dx4wxuja5qLgz73M6Y87U0Tp54fYq7O9pTgZLMW296887UC6a8AtmTe2RJt5B7LuhKuxmENjhSzh7T7Ec6mu+JnxhsT52awP5bTTe1HrlkX13P9UcEm0Y/Uv8pLQ/PHqtOPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=IdLB2H73; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mUFcWQdO; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1771930861; c=relaxed/simple;
+	bh=QRGtr/NOvNB+BZ0Og2tlLGkLRZq6r5AJHXpsIGH53mM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=GHDvGa/t7tu9D7VXHWs45ElETP6iiSTv88U3KPG/dTqNKTtsUbO7nRBL2cBO44JGVwpMIU9jOB68YjbtgsBT+2izqh83FbUxgvV9X93FvI/qtX+Fzo/6oDV/1pSK8tP+5/89M6N+/4Y6Kqz7/NaYLmVDNWktA8Q/pTYx+qd+Ld0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CMVUUuhL; arc=none smtp.client-ip=209.85.218.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="IdLB2H73";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mUFcWQdO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6B9BAEC05F1;
-	Tue, 24 Feb 2026 05:55:37 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Feb 2026 05:55:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771930537;
-	 x=1772016937; bh=teytu0ZSrGxOeVD4i2ZPXUk2bCGZXvQdHFLN3sVq8UI=; b=
-	IdLB2H73U5UPVB7fgn7Asxrs5bfllHcVQCN3AW+nVnscibpoZJRpsVBJ7t9CV0l8
-	zsCxpJFxwuhn8ctcycwwtX3jqP/VFb6kLMQYVcb7+8ZkBo2HX4i+y+xIJQMomWO9
-	4Ug4jXIBs4APgLBku8ZMKIZZIXQwDoMr4NtR/+fT1mXnHaR50U72m6wd6shjD3jA
-	srqG/dzTzEz3w+3e4ejWCvrqPBGpKiUK/4T4V9o4CS3h69NNpVqUHekD9jmockDz
-	+xmcMn0xG4KugOlf+vM66Xlev9YhvmsYuaQLAVTKQoWaFHBUQs7wLdIFwDVPLPgt
-	2nBjRiC4UpgagLqQKHDp6w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771930537; x=
-	1772016937; bh=teytu0ZSrGxOeVD4i2ZPXUk2bCGZXvQdHFLN3sVq8UI=; b=m
-	UFcWQdOnH2r8iOxVke5Ki8dY0TOqW8b9aOC5the7bsAH33NiDhhWddHIDktzYgSD
-	HmwE94N+D3Qbx/Qw80Wt/peAqf1/vlUzroemhuSDONLTSCESz35GQjkdlcf1RNxA
-	B17wf50xwHNDjdpaF/jenkw0uj3vo2t42i2NPWODW31h6kl3m/iSgLa02kB3I3aY
-	lakGn0Ol+1tGNZB/3a4bWXez6WnkbXt9JBMPHSuh4bPLLKBC3Z76TqfxF/Xv5XAn
-	86QoIjCduO6G6tt7oZc+wmrFoktsl52m+o/fCADvQqoaG+tQHJbTKCOBzb1UcYZr
-	hTdMQWfZ8F1D0n+rEUjQQ==
-X-ME-Sender: <xms:qYOdafXnLjsTimG4wU_UbN5J6dv69Vb6jhFibv-qv7evU6l-YogF_aY>
-    <xme:qYOdaSa1yX4IBMXU-xMWc6DSTQHJWu9sWAaafLnYs8-3yghiqa7s4aJ69KA6ewpye
-    cFvmSJY4lu9LbIeqFUyzFZcxur6hpuaIVd0fYbBom7guZIi68zCiw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeelleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeeipdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
-    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopegsvghnkhhnohgslhgvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepjhhonhgrthgrnhesjhhonhhtvghsrdhprghgvgdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:qYOdadAk-zl_G4ozVEjG-j789p98jajDBBfMwq-VJT8XKHPFcBvJ9A>
-    <xmx:qYOdaU38roZdAmAmmzGtGsLE9bCjRRSRKpla4HWsFH2f67f0JNDKGw>
-    <xmx:qYOdaf1poFLBaM7G1Wv_OxgZ_9E_MuB0suw-XFdLqp9xVL-jjicOYw>
-    <xmx:qYOdaZCN8vcSMXsLsn7z__63zdTMTMcc1XSAopvpNTfsq5ZJLlR3XA>
-    <xmx:qYOdaXy_zJR_ZkB4oAhcyAi3kUUXbeLC2RMjXR8DEAL5NSYcyMSG0E8m>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1D0681EA006B; Tue, 24 Feb 2026 05:55:37 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CMVUUuhL"
+Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-b8fd976e90cso725030466b.0
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 03:01:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771930859; x=1772535659; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yWIjKMsOitCp5jTzZTq+Mh3pwniljKfNuZjSgRZB8T4=;
+        b=CMVUUuhLTruh3ov6Rsmk36nUkVuH0q8gvg+gY42TkmxhOJlfKT3xjJ20eAMd+l444s
+         Gr2ObSsgVYsTd3wIcumQZ2U55Y4z8IlG0LBIik/0/n53BfcGo6y6COK3NN09+lzCXIu7
+         lhvAoxIg0KobXpHVfPu0/7HcW8srPXppzEVY0k6NSxYdxOPEEcCHGWENI4k0ZV19eMMu
+         rRDMnrd2Ka8PAJWjHCyb2tLjb8wXfwzd/Zj6ILBMzGwxVD25XEaMQJIm0PEFiAOxjCFv
+         LHL/LHKD4iD5MzC0A75VZjeW3WgomZWzEJ946oTYsvh4fTOj/ej6nd88KEklnNE3/6pD
+         icFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771930859; x=1772535659;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yWIjKMsOitCp5jTzZTq+Mh3pwniljKfNuZjSgRZB8T4=;
+        b=T6ntnpwNohhUy/Lc1qOleDevDfYLfphxg4gkJGNuhhuSRePf2tFOjkODdrbfgk7cKn
+         pomXSBp0u8SCHAWXRoZMU7UL5vY/OT1pKYuOrQoSYNfvpQ+5kK2HpHIKuKX+GTlw/s0a
+         KClH6yyyMlkg5O7RD5P8ZEHSahpDW/a3l7QdxHKqx5v38eb/h1GrgnemsGKihk/bPEHs
+         coRF13zSAvEnqVrKFySOTH92z8ZaKQxlN3CY9kxTMZNecaJOxY4W27NUvAZVemPnalGn
+         xQe28mXL2eUllD54AfrnAybvnRCQCg82fpCrujkSV4lm9Bju19HKvfF2KG0ftbPpBFvG
+         FOkg==
+X-Forwarded-Encrypted: i=1; AJvYcCXmmTvgZU4KQg4t2GEnsLP5tm3ZZ2UdiKkpOyfYvkJuLDs7nj4R6Kqvv2WIdC6VR8wq9kg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzeT9BFfAmWhl5YW0h8SACF6kqhMLy1P6JZwyAODOxJulrZodg0
+	kSppyaO/k8QEY1r1Arh92T0GtcG+sMrbJnFQ8ysQ0B88RLsphnfuC3g0
+X-Gm-Gg: ATEYQzypQohpmRfrcKCHEBfalmdVw1dvNOrvn4UMI2SACK8ABUorytuL4SOvNIiMgZ1
+	zZf9X3i1QB8sMwq8j01+TkyUOzv35aopMlG9Fur1TNiJuyif09lcr5rcVtwSwjfkrVqIgeyK7pc
+	QAvt6edXM2wzt1J3HGTzVFjSAWM1kdsx95NElg2P2/GL02cxMgxe+/qYaPkfZV6BkTpAFv6+Rpr
+	ldmrEa7tP+vXEhLJgm4ddAXofDWGCGV5AM0IWTjwDARsxeNp8lfPiz9+Hg09G53HxSGIl1gT7mU
+	D6ShvL342QoV+zg4gpqE9iGWOsHNzqlo+aeSldHg+peKEV6xhicqaTmJhkmJ4GMhMhJZYAjkt7K
+	GTeTZGHI21pA1gYTEKf2jCJKfArfiQE2L9kZaz77kpNDBJCBzHCp2F/F3wMEIkEgWtGL2nUHkD3
+	fkEIr4HmqeYX8eaKPP/sdrGUFoB5hOqkW3DQSXEaKzWmW6sFZ2+gUupIUkG1rBVNrKl8jvzCMp0
+	dOOKw==
+X-Received: by 2002:a17:906:48ce:b0:b8f:bf7e:e19d with SMTP id a640c23a62f3a-b9081b41c78mr521286366b.34.1771930858419;
+        Tue, 24 Feb 2026 03:00:58 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9338baee1dsm5594666b.58.2026.02.24.03.00.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Feb 2026 03:00:57 -0800 (PST)
+Message-ID: <39acbf7e-86f4-4dbe-8b58-3c04fccd7984@gmail.com>
+Date: Tue, 24 Feb 2026 11:00:54 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AdFosU1OfSzV
-Date: Tue, 24 Feb 2026 11:55:16 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Jonatan Holmgren" <jonatan@jontes.page>, git@vger.kernel.org
-Cc: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>,
- "D . Ben Knoble" <benknoble@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-Message-Id: <f1f37010-2e93-4e11-8298-420cd8931d62@app.fastmail.com>
-In-Reply-To: <20260218215737.1181147-4-jonatan@jontes.page>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
- <20260218215737.1181147-1-jonatan@jontes.page>
- <20260218215737.1181147-4-jonatan@jontes.page>
-Subject: Re: [PATCH v7 3/4] alias: support non-alphanumeric names via subsection syntax
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6] build: regenerate config-list.h when Documentation
+ changes
+To: Patrick Steinhardt <ps@pks.im>, Ben Knoble <ben.knoble@gmail.com>
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+ "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Marc Branchaud <marcnarc@xiplink.com>, Evan Martin <evan.martin@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Junio C Hamano <gitster@pobox.com>
+References: <aZv54vN9DdGsvre/@szeder.dev>
+ <8AB2DD1B-FAFA-4510-82FA-BBD76B442676@gmail.com> <aZ12Lk85bSajirCY@pks.im>
+Content-Language: en-US
+In-Reply-To: <aZ12Lk85bSajirCY@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Feb 18, 2026, at 22:57, Jonatan Holmgren wrote:
-> Git alias names are limited to ASCII alphanumeric characters and
-> dashes because aliases are implemented as config variable names.
-> This prevents aliases being created in languages using characters
-> outside that range.
->
-> Add support for arbitrary alias names by using config subsections:
->
->     [alias "f=C3=B6rgrena"]
->         command =3D branch
->
-> The subsection name is matched as-is (case-sensitive byte comparison),
-> while the existing definition without a subsection (e.g.,
-> "[alias] co =3D checkout") remains case-insensitive for backward
-> compatibility. This uses existing config infrastructure since
-> subsections already support arbitrary bytes, and avoids introducing
-> Unicode normalization.
->
-> Also teach the help subsystem about the new syntax so that "git help
-> -a" properly lists subsection aliases and the autocorrect feature can
-> suggest them. Use utf8_strwidth() instead of strlen() for column
-> alignment so that non-ASCII alias names display correctly.
->
-> Suggested-by: Jeff King <peff@peff.net>
-> Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
-> ---
->  Documentation/config/alias.adoc | 50 ++++++++++++++++++++++-----
->  alias.c                         | 38 ++++++++++++++++----
->  help.c                          | 14 ++++++--
->  t/t0014-alias.sh                | 61 +++++++++++++++++++++++++++++++++
->  4 files changed, 145 insertions(+), 18 deletions(-)
->
-> diff --git a/Documentation/config/alias.adoc b/Documentation/config/al=
-ias.adoc
-> index 80ce17d2de..09a6499249 100644
-> --- a/Documentation/config/alias.adoc
-> +++ b/Documentation/config/alias.adoc
->[snip]
-> +# With subsection (allows any characters, including UTF-8)
-> +[alias "h=C3=A4mta"]
-> +    command =3D fetch
-> +[alias "r=C3=A4tta till"]
-> +    command =3D commit --amend
 
-This is in `next` now so this is a question or note for later.
 
-Is this `r=C3=A4tta till` supposed to have a space in it? Or is there
-supposed to be a hyphen? I couldn=E2=80=99t get it to work.
+On 24/02/2026 09:58, Patrick Steinhardt wrote:
+> On Mon, Feb 23, 2026 at 04:41:48PM -0500, Ben Knoble wrote:
+>>> Le 23 févr. 2026 à 01:55, SZEDER Gábor <szeder.dev@gmail.com> a écrit :
+>>> ﻿On Sat, Feb 21, 2026 at 09:07:17AM -0500, D. Ben Knoble wrote:
+>>>> diff --git a/Makefile b/Makefile
+>>>> index 7f37ad8f58..6f926ffb1f 100644
+>>>> --- a/Makefile
+>>>> +++ b/Makefile
+>>>> @@ -2688,9 +2688,10 @@ $(BUILT_INS): git$X
+>>>>     cp $< $@
+>>>>
+>>>> config-list.h: generate-configlist.sh
+>>>> +    @mkdir -p .depend
+>>>> +    $(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@ .depend/config-list.h.d
+>>>>
+>>>> -config-list.h: Documentation/*config.adoc Documentation/config/*.adoc
+>>>> -    $(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@
+>>>> +-include .depend/config-list.h.d
+>>>
+>>> This breaks the build when something disappears from
+>>> Documentation/config/:
+>>>
+>>>   $ git checkout origin/seen
+>>>   HEAD is now at 57edfa3ce8 Merge branch 'ty/setup-error-tightening' into seen
+>>>   $ ls -l Documentation/config/hook.adoc
+>>>   -rw-rw-r-- 1 szeder szeder 3828 Feb 23 07:50 Documentation/config/hook.adoc
+>>>   $ git grep hook.adoc
+>>>   Documentation/git-hook.adoc:include::config/hook.adoc[]
+>>>   Documentation/howto/meson.build:  'rebuild-from-update-hook.adoc',
+>>>   Documentation/meson.build:  'git-hook.adoc' : 1,
+>>>   $ make V=1 config-list.h
+>>>   /bin/sh ./generate-configlist.sh . config-list.h .depend/config-list.h.d
+>>>   $ git checkout 0aabf70f60
+>>>   Previous HEAD position was 57edfa3ce8 Merge branch 'ty/setup-error-tightening' into seen
+>>>   HEAD is now at 0aabf70f60 build: regenerate config-list.h when Documentation changes
+>>>   $ ls -l Documentation/config/hook.adoc
+>>>   ls: cannot access 'Documentation/config/hook.adoc': No such file or directory
+>>>   $ git grep hook.adoc
+>>>   Documentation/howto/meson.build:  'rebuild-from-update-hook.adoc',
+>>>   Documentation/meson.build:  'git-hook.adoc' : 1,
+>>>   $ make V=1 config-list.h
+>>>   GIT_VERSION=2.53.0.119.g0aabf70f60
+>>>   make: *** No rule to make target 'Documentation/config/hook.adoc', needed by 'config-list.h'.  Stop.
+>>>   $ grep hook.adoc .depend/config-list.h.d
+>>>   config-list.h: ./Documentation/config/hook.adoc
+>>
+>> Indeed. This might arise while bisecting, which was my original
+>> motivation. Thoughts on a path forward? At least this issue (to me) is
+>> clearer than a spurious test failure :)
+> 
+> For Meson this case works alright. So maybe we just drop the changes to
+> the Makefile and call it a day?
+> 
+> An alternative would be to have the following patch on top:
+> 
+> diff --git a/generate-configlist.sh b/generate-configlist.sh
+> index 39ac8845ab..e28054f9e0 100755
+> --- a/generate-configlist.sh
+> +++ b/generate-configlist.sh
+> @@ -41,7 +41,12 @@ EOF
+>   if test -n "$DEPFILE"
+>   then
+>   	QUOTED_OUTPUT="$(printf '%s\n' "$OUTPUT" | sed 's,[&/\],\\&,g')"
+> -	printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
+> -		"$SOURCE_DIR"/Documentation/config/*.adoc |
+> -		sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /" >"$DEPFILE"
+> +	{
+> +		printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
+> +			"$SOURCE_DIR"/Documentation/config/*.adoc |
+> +			sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /"
+> +		printf '%s:\n' "$SOURCE_DIR"/Documentation/*config.adoc \
+> +			"$SOURCE_DIR"/Documentation/config/*.adoc |
+> +			sed -e 's/[# ]/\\&/g'
+> +	} >"$DEPFILE"
+>   fi
+> 
+> What it does is to also create an empty target for all of the
+> dependencies. Which is in fact what GCC/Clang also do when you pass -MP:
 
-Is the intent to use quotes for the command (in e.g. Bash)?
+Oh, I was wondering how they got around the problem we're seeing here. 
+While it seems ninja is happy it ignore missing dependencies in 
+depfiles, are we sure the build systems meson uses on other platforms 
+are as well? If not it might be worth adding this, rather than just 
+dropping the Makefile changes.
 
-    ./bin-wrappers/git "r=C3=A4tta till"
+Thanks
 
-> +----
-> ++
-> +With a Git alias defined, e.g.,
-> +
-> +    $ git config --global alias.last "cat-file commit HEAD"
-> +    # Which is equivalent to
-> +    $ git config --global alias.last.command "cat-file commit HEAD"
-> +
-> +`git last` is equivalent to `git cat-file commit HEAD`. To avoid
+Phillip
 
-This is also a note for later. I think this =E2=80=9CTo avoid=E2=80=9D s=
-hould now be
-moved to a separate paragraph since it=E2=80=99s a different topic.
+> 
+>      $ cat main.c
+>      #include "foo.h"
+>      int main()
+>      {
+>          puts("foobar");
+>          return 0;
+>      }
+> 
+>      $ clang -MMD -MP main.c
+>      $ cat main.d
+>      main.o: main.c foo.h
+>      foo.h:
+> 
+> Patrick
 
-Sorry that all my feedback is this late! These are just notes for the
-list in any case.
-
-> +confusion and troubles with script usage, aliases that
-> +hide existing Git commands are ignored except for deprecated
-> +commands.  Arguments are split by
-> +spaces, the usual shell quoting and escaping are supported.
-> +A quote pair or a backslash can be used to quote them.
->[snip]
