@@ -1,123 +1,132 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85981347BC9
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 22:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE3B2E11BC
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 22:41:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771972329; cv=none; b=HgH80/40o0RCH+pPJbmrytbZHt3dbo5GG3648/+j0k1Bj0IL/aaRiXO0tailo9sf42Rt023ELPREnzLDXZRb39bqR+QZI+r1l/Z+Cn7G1s/UFSWqYfZeZHaWo23ueJ41cCOpXIQyBWjdzQVW05MUWk86uC5HTPy742WG+VM+bx0=
+	t=1771972888; cv=none; b=dDtQMS0JRnXTsB4BiiCa0/A2HCWNFML6Hwk2CRDzO9nOTOCXkgtGyDqsKAk2rYlZT7pFWFR0mzWujwhxxgJ7BTSAgYE+GUq5bfQMGKLsJNk9uKFq/d44kBK64pYSH71fAIMkvluvHCtbn0wEGM1LWPA5+6d1LXcKYjkRwxtq7Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771972329; c=relaxed/simple;
-	bh=fTfkAyKQJB0t2hnyoo5Q6Wc9kVbDU8kaOBNrOnTpLMg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UyUrngN+nmWhfe26qTcvsSnasCKY7dUI7HPbBzhd56p6TPTNHde5BoXbW8KeyGqP+Sl0aC1v3jRYdvWVQvRxSfCIpOljOt4QN719P3jCFrKFCQc0VgmFukBKCNJwktx4kZMn0XEBXsI31qp4eRJEbOSi6B4wx416xdN08OvoE7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YOR/g9Qf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hQfRa+n5; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771972888; c=relaxed/simple;
+	bh=7QQn7E/pI5bknXTHmnu1klT6tDRddNhCBAMxF8sCR04=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MsbPpTfGScbLCnfX5pKeLutidW39+QXUR+WPRst32eSnSsZWxwY5Sb8OPTDem8PCv1vdjodMnLgJgoeitXng+v/nnva/z4EoWXzzgX3zsobPHLxXKwh85ab4zkGaqdl4SFHfh4/MslTtfEhV0ME6dMU1ZL4ZHHMdXKmI56WuFrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=YTH5zL3/; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YOR/g9Qf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hQfRa+n5"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 69E8C1D00077;
-	Tue, 24 Feb 2026 17:32:07 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 24 Feb 2026 17:32:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771972327; x=1772058727; bh=b20/4ka2f3
-	0fyVRCDUQAC4y4lEGgXh4XE9uPiJlDEFg=; b=YOR/g9Qf0xIEV8ny+Bm78ohrBs
-	Wu18YGBMs2MFDgZkgv2o7twyP4H9diScIkJXL88eNm0InQf1GsfaLDVvV39GSHED
-	3MQOLKS+R7uIN00LQv/q9Y9SGGeSHxuz6TBNdxXc/tiO2BWmzPleKahRu4HQ9jQ6
-	b9w+nanov9Cre/Ogdm1X94nu8IVYG1ESCy7EjpiU7MEMnC3QykOP4f9wh3BXKyfq
-	QEM/AiVFhj37Rxnd74a5FxdJO8NUGtFfNdpNrLYrk6HYdSLEieI9Mg0aneKDQwkt
-	KR6iVJqEjdzcajobDdme832YkgakAFvrTfrrodlZzGQUkIikZouKLm2xEA1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771972327; x=1772058727; bh=b20/4ka2f30fyVRCDUQAC4y4lEGgXh4XE9u
-	PiJlDEFg=; b=hQfRa+n5qK8RTgSNVB3+BwL/Ft8CPFPdZQRReZrYLemLjyd0SEk
-	6LcQSYIMLJIgTb8nlRF3HpPly5PAD8GePD37p4CMS2coTe38PqUjH2KGWGyMQhfV
-	oEfcgXJvhEoo/14OLdGGCqmeqk4uRq/+ey5wckr0OUCCurSIWgRh+wXRy5+My5N4
-	OM+rMWzsoP7+TAUi2/WEaBe5XLhrOoJEICLtHoMqiWRjuAozYactRO8SwD+u11WO
-	FSmlx9uvrvpBvtxrbPvLnW9jdg1SuNYWghr81gkOiNUtq7V7WiYeKmg2b57uREUf
-	2oemqNwGZ++tXyonkFkEqoW4ViPaWqpZXLQ==
-X-ME-Sender: <xms:5iaeadWbQaQcG_lQYl7UgtCUExr8Pe8xqlqC3339HeVDVvcPsi06nQ>
-    <xme:5iaeaUl4e6MvK4KAeXsaZKlpwfz6AoseEohm1zuR4UCZn3vHqd3uVxUuU3yS5AX17
-    bvmOJfKf9POgYyBrQIyYhlV9dBwMyS-tdD3SkOyslnXqI80Y2NOug>
-X-ME-Received: <xmr:5iaeaeba2Sj_8oZ4_9r1ACXB07e5wqN75vBsX-To4mFJlgmiBOSFMPi2fh3sZnsOGv-qRzOapuSAWkXPgsXzzThfT9AZ0yK5Sw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedugedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:5iaeafPllDi3OMdIL20YzZMj_P8q_RdXWkzcWgu6Jm9D2q3DN31PYw>
-    <xmx:5iaeaTZwQ0GKWnA6AYgrWx5XVi319gPq1W_jAQqhg-nt-SgaE4ceGw>
-    <xmx:5iaead2Y5fSU-OsnXMHKY_jJt71P9yNQVf8d9ChVx2AyyOCm7BNg4A>
-    <xmx:5iaeaZe3v6a4s3XiRpdDvNLh-7ioX8YRlwd0xXvWFbro_TNRXUYLdw>
-    <xmx:5yaeabdQmcpZp2uey2cSppp26t4xBtnoXt0TxLlyyN9dnkEmTdsi4Rif>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 17:32:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH] fsck: do not loop infinitely when processing packs
-In-Reply-To: <aZ4k5C_i_rK_yq68@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Tue, 24 Feb 2026 22:23:32 +0000")
-References: <20260222183710.2963424-1-sandals@crustytoothpaste.net>
-	<aZwTPfmyrFp-QAPq@pks.im>
-	<aZ4k5C_i_rK_yq68@fruit.crustytoothpaste.net>
-Date: Tue, 24 Feb 2026 14:32:05 -0800
-Message-ID: <xmqq5x7lepsq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YTH5zL3/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1771972886;
+	bh=7QQn7E/pI5bknXTHmnu1klT6tDRddNhCBAMxF8sCR04=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=YTH5zL3/4BemJR0hsUT1CZQiPAG0ZS7jDTPdUc5Zw+Lw+GZEsdftcQ4zp50/5nq4H
+	 i+TBg9mFYQeDwMcVqHQE0AY1kyoPJpGlCx8+es9/fsare7HyWTzbMeibjvEtXY48VB
+	 OWjYILceowr+CeZ06azgFSBYpmagfEZUv74R+Bu538Fs1nPDSBY4/3RPGVQ+9viV2l
+	 2GFxMvL0GXu7J9HaIXJNmKimVdDa27jlyJnsWfwCzBb0Tfk0WuAfcd06AAcD6o/bzN
+	 ZW6UzU42pxovthSOYd7RVA9sTvHdrVU1w1xt9tffs88c0LbK+OA7egAwYG85msXhAm
+	 VnipkgezsEtDTEmaAPkAEimV3apZ8wzPSWGVlbADUWsemN6hEtWqRLm0Evd6Rb4HmI
+	 t12W0bb48YEX9XDHctrF79BXLLrT7gADXPh/bedBlX/2oJGD/scEIwAsvJEVpfEcbO
+	 HtgStOLbNl3UbJBQKPXYWD0qzmStg1RSfh4wHE90d4UoJ4+wHCH
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5975:bd7e:3325:4c49])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 52C5E2010E;
+	Tue, 24 Feb 2026 22:41:26 +0000 (UTC)
+Date: Tue, 24 Feb 2026 22:41:25 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+Subject: Re: [PATCH 0/2] fast-import: add mode to re-sign invalid commit
+ signatures
+Message-ID: <aZ4pFUJApZosh9Gc@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
+References: <20260223194146.3476768-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5R04n9EdeVZfQWV6"
+Content-Disposition: inline
+In-Reply-To: <20260223194146.3476768-1-jltobler@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On 2026-02-23 at 08:43:41, Patrick Steinhardt wrote:
->> Typically, we don't execute `find_pack_entry()` at all when verifying
->> packfiles as we iterate through objects in packfile order. We thus don't
->> have to look up objects via their object ID, but instead we do so by
->> using their packfile offset. And this mechanism will not end up in
->> `find_pack_entry()`, and thus we wouldn't update the MRU.
->
-> If you're thinking about `nth_packed_object_id`, that is index (object
-> ID) order, not packfile order.  I actually made this mistake when
-> writing the interop code and having that function operate in pack order
-> breaks a surprising number of things in very subtle ways, notably
-> generating multi-pack indexes.
->
-> I will be sending a patch in the future documenting that requirement
-> clearly.
->
->> I've got a couple patches in the making that'll fix this.
->
-> I'm happy to drop this patch in favour of yours.  Thanks for a quick
-> response.
+--5R04n9EdeVZfQWV6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-OK, so I'll retire your fef2a726 (fsck: do not loop infinitely when
-processing packs, 2026-02-22) and replace it with the four-patch
-series:
+On 2026-02-23 at 19:41:44, Justin Tobler wrote:
+> Greetings,
+>=20
+> With c20f112e51 (fast-import: add 'strip-if-invalid' mode to
+> --signed-commits=3D<mode>, 2025-11-17), it became possible to remove
+> invalid signatures from commits via git-fast-import(1) while maintaining
+> valid commits. Building upon this functionality, a user may want to
+> re-sign these invalid commit signatures. This series introduces the
+> `re-sign-if-invalid` mode to do so accordingly.
+>=20
+> The newly added mode in this series currently ignores
+> `extensions.compatObjectFormat` when generating the new signatures. From
+> my understanding, to generate the compatability structure would also
+> require us to reconstruct the compatability object for the object being
+> signed. I think this would be possible to do, but would require getting
+> the mapped OIDs for the commit parents and tree. I'm not competely sure
+> of a good way to go about this yet though. I'm also not completely
+> certain if this is something that should be adressed as part of this
+> series, or could be done later down the road. So for now I've opted to
+> delay its implementation. I'm open going down the other route if that is
+> preferred though.
 
-26fc7b59cd t/helper: improve "genrandom" test helper
-10a6762719 object-file: adapt `stream_object_signature()` to take a stream
-41b42e3527 packfile: expose function to read object stream for an offset
-13eb65d366 pack-check: fix verification of large objects
+There's an API for converting object IDs to another algorithm:
+`repo_oid_to_algop`.  If you want to convert a non-blob object, there's
+`convert_object_file`, which will serialize the object in the other
+format (blobs are invariant in the hash algorithm transformation, so
+converting them is not necessary).  Those are present right now in the
+codebase and using them would be a good idea.
 
-Thanks.
+If you want to test your code in interoperability mode, you can rebase
+onto the `sha256-interop` branch of https://github.com/bk2204/git.git
+and run with `GIT_TEST_DEFAULT_HASH=3Dsha256:sha1`.
+
+If you're _not_ going to implement that in interoperability mode, then
+I'd rather you just die in that case so that the test fails and then I
+or someone else will fix it.  `extensions.compatObjectFormat` is
+presently experimental and the data formats will change, so nobody
+should be relying on it working as it stands right now.  There _will_ be
+more compatibility breakage coming in future series, for instance.
+
+I _would_ recommend regardless that you add a test like in t7004's
+"signed tag with embedded PGP message" if you apply this to tags as well
+as commits.  That requires a special case in our interoperability code
+(since it normally converts things that look like signatures, but when
+we're _generating_ a tag, we don't want to do that since there are no
+signatures yet) and making sure we do the same thing in fast-import will
+avoid corruption in our conversions.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--5R04n9EdeVZfQWV6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaZ4pFAAKCRB8DEliiIei
+gRTmAQCtW35wOM/XdFrsjXmBLEZLkeijjQnfGaIq8mVnyNzKagD/d3Fi3nJGBv2v
+huX9uwWcfziVHQqY5DwTPTUmaw/E+QA=
+=KRqX
+-----END PGP SIGNATURE-----
+
+--5R04n9EdeVZfQWV6--
