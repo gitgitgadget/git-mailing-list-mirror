@@ -1,71 +1,70 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED3C2DEA68
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 18:59:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C52DC789
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 18:59:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771959585; cv=none; b=HkOtPEWL5h+xAfOpMQWLSL12SECUxLKkZY77INzalfL9if80kr/66hVXG2gkYdI0rXfXRdv8hJla1ujp/FDebpO66XqLFYzoHtxECDghfJYKzbLwcgS3lc4alCzgYHUwPnw7VHbExYLbbJZ2USsM2tA+oPTOe+dpbFn/tPoeSpM=
+	t=1771959589; cv=none; b=RnrEKAhuWqPogeznerT6zm1FV6D+0oE2siIa2Yng4BUnQ6BUG9nPPs5GpD/9Muwjt4hkbB8zpJfSZ6MG+ZJF8gpa7C8ik7joK3xpPota4szVAJaWV5e97fiCiX4bZ1wWSIWsnui+LCBw6pZBkrsqyhKWWl7OHxHwgUmvxJWd0x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771959585; c=relaxed/simple;
-	bh=aOohPY4KRZCE/SwTfRcUdHha/tzsChIK4ZziVHaSDUM=;
+	s=arc-20240116; t=1771959589; c=relaxed/simple;
+	bh=TST1qn5/vstEvkToBUQEj3mUx6JBNQU7f2O+2Qn5s/M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZK3/j3VrocnozVMbNNZghAKRvfX6HAQFMARL5otRxttBkdGhddrJ902ptwDbzlHmk/0HFs5dqtOFFxx9Bz2S2Fu6YRSLaOUvMqYpBgSztF9ZgqIJ5NdFYiq3TxiruMtbZDAVH77QwrsP5JNLhJ38PfKmedCl9j+jl1we4cyg5LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=nD3sHnkv; arc=none smtp.client-ip=209.85.219.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=QZew9KBvMm7jprzNu+i+6/CaeqPO659RnVMj7PmfGLtw4rm4dCN43AAOUS+E4Fo+nl4zWiLKUGYl392slB4EiEXzaprtxDwz+qQWBPG8yjyflvIWKYe+QBC4fo7pF5TuCSANuZVZRuZkkiajv0D0bsHajyRYeFwdFHidJapLsQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ZBffTm9o; arc=none smtp.client-ip=209.85.219.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="nD3sHnkv"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-897002b7576so77459416d6.3
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 10:59:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ZBffTm9o"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-896f632d206so1325426d6.0
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 10:59:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1771959582; x=1772564382; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1771959586; x=1772564386; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WRIs6QESrK37CfcXMYu4duAScIndgs+RbvotXJ0bvbc=;
-        b=nD3sHnkvAiNQf1/9c+j7MKpyvRS9plDSoNRH6qoi/PNrLLIewFcKUPHOCzgKTD1aUf
-         fIThkPgACc0h3Wp6tM4OczaIfrRJeNfjsGWtb1YnY0x5027XoB7kgf5MgaRq9CvK3VTp
-         uWejL2HBH0dbSXhvtPKsqQ5/+frTPNa6vrqNuco3mcnCz0+RvmcR2gEzF2p1UjM+L14V
-         pULKZEEEIg/EFpr4NujbWDhK8YwqWDvmWEzUb7b9WdyJsgXvEriusbGMebVXnpofZp3B
-         3q6CalAWIEA4DVWGvPKGDZR+6/3gd5BCJ6+PBDgGoQFAASboIl/yMejWP5TKq04mXSdf
-         2kdQ==
+        bh=VOaAm+WA6gpjURZou1b0NfilISkqWnJdPSKs/RYP8Yk=;
+        b=ZBffTm9oAji7bb7/PgP/a58sLgydi5h984VCX9YlAmKqeXpPVXsSchxnm5fCeSJ9qd
+         y5nkJm3rY1qvgkoLgp6BmW7/96jAUrTgfTMhABkJ3FifnQ2nZZY5yhG7uvms2xQnWsjm
+         OS9+4QmSuwhK8+1R6J9cEyyuKR4m+4qY/Q1sxEZIq4GqQFx+zKOCGMKM6ac2zhyYiF1X
+         dB5ofdRLFeJ5rXWtNlpnaAKzyqngQXXAlqs7iTzQXnysA6O1gU7vhJ3Ht2y4pEHP/7TA
+         dLCXLMK+egItoncnj25uadkd2IS6PmoSCzRuY0Apu9UNH8fOo2/lAzdB5MgFILmA/PrT
+         ZK5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771959582; x=1772564382;
+        d=1e100.net; s=20230601; t=1771959586; x=1772564386;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WRIs6QESrK37CfcXMYu4duAScIndgs+RbvotXJ0bvbc=;
-        b=u0EBd1Gu/tnnrEGXD7qJUVMfE/wdTw3aF/qbUDi6QpywGi9peVPQmfZftcamaOs1qj
-         ON2jIQDr3bOEXnMuvFtPWjmIT3cpMrdP0MV63lyYcX0myb+gqxuwQWklojb/8+hSqoKq
-         AghQSIQYoSS/4JnNQ0z96GDR2LJMgoATsL+EKC+gI+kOUmj8YHbtBXVSjPWZWiIbZUie
-         1Rp/iubOe0QntJUwB9RJUsvBMXNQnOUg0Euzvu5+nV4Zoh+LLwUL8m561s6EZ0wmekWq
-         TcEzKDRbdXSwOYUUAK0MI5IVI9gvUYATsFYljImcVqZ4rlo6TgV+osS1VFrKHGhrOlyN
-         wU1w==
-X-Gm-Message-State: AOJu0YzG7ExJ0qwfOSQb47myxC6Sh8mOSw/2xMvPWSEJx1g1Tu1Z+zMa
-	f/PfoVS+zGLJpBXAfIRy6xdV2mWIz+MHwYabqVpkhEPluB+RQGltgGetW1iW2mIJASvC+dwZf2c
-	Tw564ZEvUZQ==
-X-Gm-Gg: AZuq6aKMydTFkzx+5g45P+IA+0k6gVSXIqE6MQwyVJV3TfYhYK9BFL9wCWpOUmsS4n5
-	OgSObgGEgDbyeIeRysVP/BXQatEIkFGdDhUmpA82f/ubbmXNrKbbRq/OBkesYJThV5zr/7UJPdr
-	qFvtm7G1DXYlGl639grQBQE8DWkGeBicc7aIILbI4qZ7Yl/OBy73H2HhXJorzW5lkJJO+kRUN9f
-	PqoCJvUCC8FedWzmvUgzODbs+/p2CA2al8+HshKQuSQTAYs4mmQMestjzum8XwYa1eGTXUqV+0n
-	AzZoyayBRYhe4BDwa0IS8HBqzFGs3/cfUGmolIUFVSO2vcd1dWX+WbLxuLG/18shoflspLfOp0T
-	WJZjZuf3bGCu8u/BESDje9pkGFs8zCbxtxZprQnmOpt5aHGbEWhWhM5Ppn6NbUaXX4l6futj0w6
-	x6DAgiUdhhymgzzpq6hS4hSj7dS8vAULkhmKUhfbK5VydxK5XnWTg3VMHON89u85y43FqbwW564
-	zZytwqYG85mO8XSakwLCa9yLm26bg==
-X-Received: by 2002:a05:620a:29d1:b0:8c7:1156:efd8 with SMTP id af79cd13be357-8cb8ca0e734mr1627923785a.29.1771959582178;
-        Tue, 24 Feb 2026 10:59:42 -0800 (PST)
+        bh=VOaAm+WA6gpjURZou1b0NfilISkqWnJdPSKs/RYP8Yk=;
+        b=lIOhjft7y1wsBY/VBami5J11CHLObISx20/ccb/lc4Iy+4hDNu3MhS8pSuqbCdIeIF
+         cJcA1Qw5qc6VZ/Wy99AlX52ILPOFdDiCs//F7gWgaTWxJcDm1QlQgUjrEqI2JNg3lik0
+         xD1QF9YLyWOmhcDhRCJotNmg3Lrix6epR/UAeo5TmzNGIoso3r0aYkRKPFQ2y4PcHSiO
+         o61Vs0HaqeqoN7TcS7SFREhzwAO1RT5ADnYitMJP4WNd3dLUP+h3d2DVIsZtxUYKUEdd
+         kfkDBWW7RLKp5vAjlv7Z+1Wgyc1FWwzJN4zS9p7WwQdPzdmuOoC+KkoMHLNWC7Yfc7h7
+         /kng==
+X-Gm-Message-State: AOJu0Yx8LQIFoQ7laXS7rIuSGnWtuRVJlHrYzIyJxea08aSf3TdvFUur
+	77Bu9CsfwQJvdmDs/VeDgkAcWt65/n+SG0+gF4m8W+9g7QJhYAhdez6hOkK7US+kQDvn1yLBD0U
+	yFq5CHqqCYg==
+X-Gm-Gg: ATEYQzxY+lcF5WFk8wUcUFycgGIIooYwBzjOp2CImsaLhVIf8XwWxI8VUT/8X/YUeec
+	I2PP14sBiBNmDPAELtCWu9NE5hRavEdVXFPNy+xVPGQhWb7IkaEIl7LXZbb9uErUvqVQttCL7FU
+	La2eaHO0X5yTZYU7dQUTMxdca+03caqAp5OWPluzx3LZg2m8oTq0Rh6B8eorG4AEwe8OaFOEtMv
+	19wyn7Lh41cLst7yvF/AUsNJu55CN6ICP7TSimAVLbAq2IcxitgKOQN4zbt06ZDlIXuXmzhVqkI
+	xgUthJ3dG1Qzf5VI9NSHNsXCOnW2BwOaPk+3apPnDViycd28g69QRRMBh/nOZ+xXfF27QHqAwoT
+	bHa2Nhc35CnHE6nyIpUvLl0ZtfesBoQg3uQF8TMy+ipl5u4s9Ur6TsJKxnNI3fZG1O4ExCGrASX
+	8nRHTmgLX88h6oTGiq1Mk9Y1iLdJqxckUvwBPHkPvnD37Z8GFe9BxFOEwJkXAwU9XVNVt6MSvkL
+	nugxW3//4tlOFs0j6rJJYqXvngbceKgYO+ytw6h
+X-Received: by 2002:a05:6214:761:b0:897:192f:6d34 with SMTP id 6a1803df08f44-899b38225f6mr16220586d6.29.1771959586357;
+        Tue, 24 Feb 2026 10:59:46 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d0460e1sm1283498285a.2.2026.02.24.10.59.41
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8997e62ffdbsm110869706d6.43.2026.02.24.10.59.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 10:59:41 -0800 (PST)
-Date: Tue, 24 Feb 2026 13:59:39 -0500
+        Tue, 24 Feb 2026 10:59:45 -0800 (PST)
+Date: Tue, 24 Feb 2026 13:59:44 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 02/17] midx: rename `get_midx_checksum()` to
- `midx_get_checksum_hash()`
-Message-ID: <61dd8e65d1a6d4c68648f73de1e4f991c9d6f2cf.1771959555.git.me@ttaylorr.com>
+Subject: [PATCH v3 03/17] midx: introduce `midx_get_checksum_hex()`
+Message-ID: <cc5c77830625997e141156fcc2bf86085254fe12.1771959555.git.me@ttaylorr.com>
 References: <cover.1765053054.git.me@ttaylorr.com>
  <cover.1771959555.git.me@ttaylorr.com>
 Precedence: bulk
@@ -78,149 +77,108 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1771959555.git.me@ttaylorr.com>
 
-Since 541204aabea (Documentation: document naming schema for structs and
-their functions, 2024-07-30), we have adopted a naming convention for
-functions that would prefer a name like, say, `midx_get_checksum()` over
-`get_midx_checksum()`.
+When trying to print out, say, the hexadecimal representation of a
+MIDX's hash, our code will do something like:
 
-Adopt this convention throughout the midx.h API. Since this function
-returns a raw (that is, non-hex encoded) hash, let's suffix the function
-with "_hash()" to make this clear. As a side effect, this prepares us
-for the subsequent change which will introduce a "_hex()" variant that
-encodes the checksum itself.
+    hash_to_hex_algop(midx_get_checksum_hash(m),
+                      m->source->odb->repo->hash_algo);
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
+, which is both cumbersome and repetitive. In fact, all but a handful of
+callers to `midx_get_checksum_hash()` do exactly the above. Reduce the
+repetitive nature of calling `midx_get_checksum_hash()` by having it
+return a pointer into a static buffer containing the above result.
+
+For the handful of callers that do need to compare the raw bytes and
+don't want to deal with an encoded copy (e.g., because they are passing
+it to hasheq() or similar), they may still rely on
+`midx_get_checksum_hash()` which returns the raw bytes.
+
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx-write.c              | 6 +++---
- midx.c                    | 2 +-
- midx.h                    | 2 +-
- pack-bitmap.c             | 8 ++++----
- pack-revindex.c           | 4 ++--
+ midx-write.c              | 6 ++----
+ midx.c                    | 6 ++++++
+ midx.h                    | 1 +
+ pack-bitmap.c             | 3 +--
  t/helper/test-read-midx.c | 4 ++--
- 6 files changed, 13 insertions(+), 13 deletions(-)
+ 5 files changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/midx-write.c b/midx-write.c
-index 6485cb67068..73d33752ef1 100644
+index 73d33752ef1..13171d7e9c4 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -946,7 +946,7 @@ static int link_midx_to_chain(struct multi_pack_index *m)
- 	}
- 
- 	for (i = 0; i < ARRAY_SIZE(midx_exts); i++) {
--		const unsigned char *hash = get_midx_checksum(m);
-+		const unsigned char *hash = midx_get_checksum_hash(m);
- 
- 		get_midx_filename_ext(m->source, &from,
- 				      hash, midx_exts[i].non_split);
-@@ -1151,7 +1151,7 @@ static int write_midx_internal(struct odb_source *source,
+@@ -1151,8 +1151,7 @@ static int write_midx_internal(struct odb_source *source,
  		while (m) {
  			if (flags & MIDX_WRITE_BITMAP && load_midx_revindex(m)) {
  				error(_("could not load reverse index for MIDX %s"),
--				      hash_to_hex_algop(get_midx_checksum(m),
-+				      hash_to_hex_algop(midx_get_checksum_hash(m),
- 							m->source->odb->repo->hash_algo));
+-				      hash_to_hex_algop(midx_get_checksum_hash(m),
+-							m->source->odb->repo->hash_algo));
++				      midx_get_checksum_hex(m));
  				goto cleanup;
  			}
-@@ -1520,7 +1520,7 @@ static int write_midx_internal(struct odb_source *source,
+ 			ctx.num_multi_pack_indexes_before++;
+@@ -1520,8 +1519,7 @@ static int write_midx_internal(struct odb_source *source,
  		for (uint32_t i = 0; i < ctx.num_multi_pack_indexes_before; i++) {
  			uint32_t j = ctx.num_multi_pack_indexes_before - i - 1;
  
--			keep_hashes[j] = xstrdup(hash_to_hex_algop(get_midx_checksum(m),
-+			keep_hashes[j] = xstrdup(hash_to_hex_algop(midx_get_checksum_hash(m),
- 								   r->hash_algo));
+-			keep_hashes[j] = xstrdup(hash_to_hex_algop(midx_get_checksum_hash(m),
+-								   r->hash_algo));
++			keep_hashes[j] = xstrdup(midx_get_checksum_hex(m));
  			m = m->base_midx;
  		}
+ 
 diff --git a/midx.c b/midx.c
-index 2a6b18954c5..1d072bd9931 100644
+index 1d072bd9931..bae45892323 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -24,7 +24,7 @@ void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext
+@@ -24,6 +24,12 @@ void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext
  int cmp_idx_or_pack_name(const char *idx_or_pack_name,
  			 const char *idx_name);
  
--const unsigned char *get_midx_checksum(const struct multi_pack_index *m)
-+const unsigned char *midx_get_checksum_hash(const struct multi_pack_index *m)
++const char *midx_get_checksum_hex(const struct multi_pack_index *m)
++{
++	return hash_to_hex_algop(midx_get_checksum_hash(m),
++				 m->source->odb->repo->hash_algo);
++}
++
+ const unsigned char *midx_get_checksum_hash(const struct multi_pack_index *m)
  {
  	return m->data + m->data_len - m->source->odb->repo->hash_algo->rawsz;
- }
 diff --git a/midx.h b/midx.h
-index 7c7e0b59121..62d6105195f 100644
+index 62d6105195f..a39bcc9d03f 100644
 --- a/midx.h
 +++ b/midx.h
-@@ -85,7 +85,7 @@ struct multi_pack_index {
+@@ -85,6 +85,7 @@ struct multi_pack_index {
  #define MIDX_EXT_BITMAP "bitmap"
  #define MIDX_EXT_MIDX "midx"
  
--const unsigned char *get_midx_checksum(const struct multi_pack_index *m);
-+const unsigned char *midx_get_checksum_hash(const struct multi_pack_index *m);
++const char *midx_get_checksum_hex(const struct multi_pack_index *m) /* static buffer */;
+ const unsigned char *midx_get_checksum_hash(const struct multi_pack_index *m);
  void get_midx_filename(struct odb_source *source, struct strbuf *out);
  void get_midx_filename_ext(struct odb_source *source, struct strbuf *out,
- 			   const unsigned char *hash, const char *ext);
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 972203f12b6..6307bbdf1e1 100644
+index 6307bbdf1e1..afc7fba0197 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -441,11 +441,11 @@ char *midx_bitmap_filename(struct multi_pack_index *midx)
- 	struct strbuf buf = STRBUF_INIT;
- 	if (midx->has_chain)
- 		get_split_midx_filename_ext(midx->source, &buf,
--					    get_midx_checksum(midx),
-+					    midx_get_checksum_hash(midx),
- 					    MIDX_EXT_BITMAP);
- 	else
- 		get_midx_filename_ext(midx->source, &buf,
--				      get_midx_checksum(midx),
-+				      midx_get_checksum_hash(midx),
- 				      MIDX_EXT_BITMAP);
- 
- 	return strbuf_detach(&buf, NULL);
-@@ -502,7 +502,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
- 	if (load_bitmap_header(bitmap_git) < 0)
- 		goto cleanup;
- 
--	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum,
-+	if (!hasheq(midx_get_checksum_hash(bitmap_git->midx), bitmap_git->checksum,
- 		    bitmap_repo(bitmap_git)->hash_algo)) {
- 		error(_("checksum doesn't match in MIDX and bitmap"));
- 		goto cleanup;
-@@ -2819,7 +2819,7 @@ void test_bitmap_walk(struct rev_info *revs)
+@@ -2819,8 +2819,7 @@ void test_bitmap_walk(struct rev_info *revs)
  
  		if (bitmap_is_midx(found))
  			fprintf_ln(stderr, "Located via MIDX '%s'.",
--				   hash_to_hex_algop(get_midx_checksum(found->midx),
-+				   hash_to_hex_algop(midx_get_checksum_hash(found->midx),
- 						     revs->repo->hash_algo));
+-				   hash_to_hex_algop(midx_get_checksum_hash(found->midx),
+-						     revs->repo->hash_algo));
++				   midx_get_checksum_hex(found->midx));
  		else
  			fprintf_ln(stderr, "Located via pack '%s'.",
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 56cd803a679..294b802d402 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -390,11 +390,11 @@ int load_midx_revindex(struct multi_pack_index *m)
- 
- 	if (m->has_chain)
- 		get_split_midx_filename_ext(m->source, &revindex_name,
--					    get_midx_checksum(m),
-+					    midx_get_checksum_hash(m),
- 					    MIDX_EXT_REV);
- 	else
- 		get_midx_filename_ext(m->source, &revindex_name,
--				      get_midx_checksum(m),
-+				      midx_get_checksum_hash(m),
- 				      MIDX_EXT_REV);
- 
- 	ret = load_revindex_from_disk(m->source->odb->repo->hash_algo,
+ 				   hash_to_hex_algop(found->pack->hash,
 diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
-index 6de5d1665af..b8fefb1a124 100644
+index b8fefb1a124..9d42c587564 100644
 --- a/t/helper/test-read-midx.c
 +++ b/t/helper/test-read-midx.c
 @@ -34,7 +34,7 @@ static int read_midx_file(const char *object_dir, const char *checksum,
  		return 1;
  
  	if (checksum) {
--		while (m && strcmp(hash_to_hex(get_midx_checksum(m)), checksum))
-+		while (m && strcmp(hash_to_hex(midx_get_checksum_hash(m)), checksum))
+-		while (m && strcmp(hash_to_hex(midx_get_checksum_hash(m)), checksum))
++		while (m && strcmp(midx_get_checksum_hex(m), checksum))
  			m = m->base_midx;
  		if (!m)
  			return 1;
@@ -228,8 +186,8 @@ index 6de5d1665af..b8fefb1a124 100644
  	m = setup_midx(object_dir);
  	if (!m)
  		return 1;
--	printf("%s\n", hash_to_hex(get_midx_checksum(m)));
-+	printf("%s\n", hash_to_hex(midx_get_checksum_hash(m)));
+-	printf("%s\n", hash_to_hex(midx_get_checksum_hash(m)));
++	printf("%s\n", midx_get_checksum_hex(m));
  
  	close_midx(m);
  	return 0;
