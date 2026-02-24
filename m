@@ -1,196 +1,148 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9BE2D59E8
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:46:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B4C24C692
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 09:02:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771922777; cv=none; b=eERZVpjcq7i/dbGh5imRivtvumiAVnD2LxGXcoClSdIYj6lXtDM3uekRDLYOuFAbRqhDfxcgs2liBH8UYf7Cu4BvTqRq9U47PVH03GdKPe4z1IhFMypNy8lxz5Y3OKraw+u7ntQp5QNOX5sm1HIplBC+QjlXLiUI3g8Uerdo49A=
+	t=1771923730; cv=none; b=ao1gLTRAFIXQI8ERjNR/m1cJO5Cd/B1l/Ci/lry60BD5uZdkDt38lKwys7Gxr9hiwAk1152qG3Loh6wvbiP/yddbG+RBEj8my0bzBFsFY1lTwCTexplhNITAYqnHlG7IOWiy/gV9UKPfXjEO3OidvNODIssFu7nNF8f6bcWTP/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771922777; c=relaxed/simple;
-	bh=YY4bdoKONBi7LBxnhZX53Npwd/y9QNuuap34EnNuSHQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bWsL8V/lnwYRiiwt3MklF/DyIlRLzSJmacSSuCpI5TwKzs5y7O0nPl1K469yRIuriYaQX5y40Vtbjhw2qo9YY1TmokVjFGMdoxG9A308WTPNwYMaDJxFmxlB/3I5r4QJC7U3PIg/Xy8DWmsEqX5vsF8T0XRvVP0hWRG/4LSe5/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A07ZnO+5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hFc/6fBD; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1771923730; c=relaxed/simple;
+	bh=U+UflC1nijLP1KD7+AW38Y/JLU0f5BKygTHribZ8Tzs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ma+Hd7wnuTpy8z9wwJ4BdaabaW51PxBGWd5/iKzmvXuEdsR9DmAc9Y1zcWna9TLMHsQaxrKeZWLvxvFaA08bIf7j/HhMy4+u5DD4wt9T6gkUkSi79rSWnrWeR9Z5ZEtxtNAAv8rVzOjDOrp8qZKnFJuxqrE9GEwP2PuTX3PDxiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=A5gZPRwn; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A07ZnO+5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hFc/6fBD"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7BE9D14001CE;
-	Tue, 24 Feb 2026 03:46:15 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 24 Feb 2026 03:46:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771922775;
-	 x=1772009175; bh=geujpZP3GceSlpX47G+QVeizVyChfhLm38Y7XtEl3k8=; b=
-	A07ZnO+5pyoxtfR+5c4F1Mhb5yotXRRuWqI1JdyJgojmE/9Cl2QeBoR4hz/jBwnV
-	a5jXGQ77F13CdGEfr2vYOTrr/fZYlGWuk5e/QVyGMh5SPfIRwP+7kqzoNRj/o1S/
-	A7oOesfORftQMOX7QAh1dYT/Lkx1ICbE75V2n1ZoPvetlVqqQ3Fv87ZBBmDjvmX+
-	O8dD01x5gm5xwqAeLUdytB1h0PBGKCNYHWnY6j4M8LsqJ3mW500n8IlmNHDToLnC
-	ZkCzTR/1URzkdWyu2pcs1JJBdOsvlMGWDKyJbZovJeP949M78K1U67fm37lfw1Rx
-	60S+RqXcZEwkTpzAMEP2iA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771922775; x=
-	1772009175; bh=geujpZP3GceSlpX47G+QVeizVyChfhLm38Y7XtEl3k8=; b=h
-	Fc/6fBDlcmBJE/BXXBPxUDlHLkRUrcyOThlTSTxVJWanaHQOySzPqLuAsdGIRBqK
-	0zJsJ6FQ/8x2ZjZWzZ2CIDBzreLIAI9ClXJPfgM/nycO9vdoGQ8BwezkyCs7hBj5
-	ncFm2RJDzBJlagc6CamBzyF0P2uvJpu10HMcv+ryY44Mu3vDO0dq+/sacVwPlHUn
-	Bni+iZlISWuX87arszALRm8o40OjLKKZhqmxZhyl8MdjMhV5kZu7JhNLp1/pNjNE
-	sKoCftsgnlNNoog+NwpPSiZt52oEKmAbDhO8r7E4VM25OMDF+XXZ1OUk6gaxE0sE
-	bgAz+HFQ22zynjWruZPEw==
-X-ME-Sender: <xms:V2WdaRXdPEEijy82wRobpZm0RM4wbSnJiY71M9G-DSVF1tZGH9bKbQ>
-    <xme:V2WdaYnAFd62g4OX8uBFRcyevSUS4oXKEntEENO8d9_e13T72iw1BXefCp33vCrXa
-    UuxyXbJstqw7N1yIto3oNbkf7vYDabkyqQNXJ0WhgXgvmiFHg_3wg>
-X-ME-Received: <xmr:V2WdaSYedNR6Lvp4wswsJY2CROMNFwtMIesE-lVRziuuJ-2xd-AJV6isfupG2-W_iOsgIqs2voDR_arpbjQxWbq8RQpbzxkFuV-u7U6MfC4WvA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeljedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvg
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:V2WdaTMIr2C_PeShht83tf8-mYEANkjSyUpYFLYqzPLUyGdkxhkeow>
-    <xmx:V2WdaXaFKeISjy90zoGIYAk3GrQ_mEjLYgcTpEB13Qhk85jC3pbq3A>
-    <xmx:V2WdaR0l9ETMZvslc56JAiLT2pKh2JdG4UOsoyLZuB2V3mjLAEq10w>
-    <xmx:V2Wdadfu8pkkZSiEyaCzKhKaiFTl2sHXQtnG50hGryXHvMKsbLdKJw>
-    <xmx:V2WdaeVXYNvYpZXpuaot1dQAfio47H_ZMXVqzWQBf9xuDUAxPJzepxxu>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 03:46:14 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 266b56a1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Feb 2026 08:46:13 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 24 Feb 2026 09:45:52 +0100
-Subject: [PATCH v2 8/8] builtin/maintenance: use "geometric" strategy by
- default
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="A5gZPRwn"
+Received: (qmail 59483 invoked by uid 109); 24 Feb 2026 09:02:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=U+UflC1nijLP1KD7+AW38Y/JLU0f5BKygTHribZ8Tzs=; b=A5gZPRwnz432/xbq0RnKKs1hb8CjmHz+Nts0jlyEdjKzz+71wEOM1RZt/EuMIelFL5nWdA7lxpJzkPySD1OoWH2bogvT2CUmDVu+22a/N9FyxrZyyQVkrvOx23ilam5uZG/ESAI5i+kPPK5cd2ZYEtBboPHa26njBt/ZOSuo9tjwpN3vagXPc2Lv9yVA0EFDdij6syz9d92G+RtWorGA+POkKVeIdV/Xt6rixH5dxrJqrK4visCG/G92CP5o5u/UVM32FTmspQOB26560elSocWh+yoTVhj5SWfbLmfETQueW9JtDJXjjivOEZZ8WJIZkDCBl4B2Cid1IZOjHBh1wA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Feb 2026 09:02:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 143035 invoked by uid 111); 24 Feb 2026 09:02:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Feb 2026 04:02:12 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 24 Feb 2026 04:02:07 -0500
+From: Jeff King <peff@peff.net>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] format-patch: add ability to use alt cover format
+Message-ID: <20260224090207.GB986367@coredump.intra.peff.net>
+References: <20260220230633.132213-1-mroik@delayed.space>
+ <20260224040400.751247-3-mroik@delayed.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-8-8657338c6fa1@pks.im>
-References: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-0-8657338c6fa1@pks.im>
-In-Reply-To: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-0-8657338c6fa1@pks.im>
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
- Justin Tobler <jltobler@gmail.com>
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260224040400.751247-3-mroik@delayed.space>
 
-The git-gc(1) command has been introduced in the early days of Git in
-30f610b7b0 (Create 'git gc' to perform common maintenance operations.,
-2006-12-27) as the main repository maintenance utility. And while the
-tool has of course evolved since then to cover new parts, the basic
-strategy it uses has never really changed much.
+On Tue, Feb 24, 2026 at 05:03:57AM +0100, Mirko Faina wrote:
 
-It is safe to say that since 2006 the Git ecosystem has changed quite a
-bit. Repositories tend to be much larger nowadays than they have been
-almost 20 years ago, and large parts of the industry went crazy for
-monorepos (for various wildly different definitions of "monorepo"). So
-the maintenance strategy we used back then may not be the best fit
-nowadays anymore.
+> +static void generate_commit_list_cover(FILE *cover_file, const char *format, struct commit **list, int n)
+> +{
 
-Arguably, most of the maintenance tasks that git-gc(1) does are still
-perfectly fine today: repacking references, expiring various data
-structures and things like tend to not cause huge problems. But the big
-exception is the way we repack objects.
+OK, so we're expecting "format" here to be the full format string here
+(so "%s" or whatever).
 
-git-gc(1) by default uses a split strategy: it performs incremental
-repacks by default, and then whenever we have too many packs we perform
-a large all-into-one repack. This all-into-one repack is what is causing
-problems nowadays, as it is an operation that is quite expensive. While
-it is wasteful in small- and medium-sized repositories, in large repos
-it may even be prohibitively expensive.
+But here...
 
-We have eventually introduced git-maintenance(1) that was slated as a
-replacement for git-gc(1). In contrast to git-gc(1), it is much more
-flexible as it is structured around configurable tasks and strategies.
-So while its default "gc" strategy still uses git-gc(1) under the hood,
-it allows us to iterate.
+> +	get_commit_format(format, &rev);
 
-A second strategy it knows about is the "incremental" strategy, which we
-configure when registering a repository for scheduled maintenance. This
-strategy isn't really a full replacement for git-gc(1) though, as it
-doesn't know to expire unused data structures. In Git 2.52 we have thus
-introduced a new "geometric" strategy that is a proper replacement for
-the old git-gc(1).
+...this isn't quite the function you want to parse it. This function is
+more about parsing the --pretty option for git-log, etc. It allows named
+formats like "oneline", "medium", and so on, as well as "format:%s" (and
+just "%s", as we treat unknown names with a percent as if they had
+tformat: prepended).
 
-In contrast to the incremental/all-into-one split used by git-gc(1), the
-new "geometric" strategy maintains a geometric progression of packfiles,
-which significantly reduces the number of all-into-one repacks that we
-have to perform in large repositories. It is thus a much better fit for
-large repositories than git-gc(1).
+As a side effect, it sets up the global user_format variable. Which is
+horrible and subtle, but a result of historical function interfaces.
+I'll get to that at the bottom of this email.
 
-Note that the "geometric" strategy isn't perfect though: while we
-perform way less all-into-one repacks compared to git-gc(1), we still
-have to perform them eventually. But for the largest repositories out
-there this may not be an option either, as client machines might not be
-powerful enough to perform such a repack in the first place. These cases
-would thus still be covered by the "incremental" strategy.
+Back to your patch, I guess here:
 
-Switch the default strategy away from "gc" to "geometric", but retain
-the "incremental" strategy configured when registering background
-maintenance with `git maintenance register`.
+> +	if (commit_format_is_empty(CMIT_FMT_USERFORMAT))
+> +		die(_("invalid format spec"));
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/config/maintenance.adoc | 6 +++---
- builtin/gc.c                          | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+you are trying to check if we got a USERFORMAT, versus something else. A
+more direct way to check that would be:
 
-diff --git a/Documentation/config/maintenance.adoc b/Documentation/config/maintenance.adoc
-index d0c38f03fa..b578856dde 100644
---- a/Documentation/config/maintenance.adoc
-+++ b/Documentation/config/maintenance.adoc
-@@ -30,8 +30,7 @@ The possible strategies are:
- +
- * `none`: This strategy implies no tasks are run at all. This is the default
-   strategy for scheduled maintenance.
--* `gc`: This strategy runs the `gc` task. This is the default strategy for
--  manual maintenance.
-+* `gc`: This strategy runs the `gc` task.
- * `geometric`: This strategy performs geometric repacking of packfiles and
-   keeps auxiliary data structures up-to-date. The strategy expires data in the
-   reflog and removes worktrees that cannot be located anymore. When the
-@@ -40,7 +39,8 @@ The possible strategies are:
-   are already part of a cruft pack will be expired.
- +
- This repacking strategy is a full replacement for the `gc` strategy and is
--recommended for large repositories.
-+recommended for large repositories. This is the default strategy for manual
-+maintenance.
- * `incremental`: This setting optimizes for performing small maintenance
-   activities that do not delete any data. This does not schedule the `gc`
-   task, but runs the `prefetch` and `commit-graph` tasks hourly, the
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 4390eee6ec..fb329c2cff 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1980,7 +1980,7 @@ static void initialize_task_config(struct maintenance_run_opts *opts,
- 		strategy = none_strategy;
- 		type = MAINTENANCE_TYPE_SCHEDULED;
- 	} else {
--		strategy = gc_strategy;
-+		strategy = geometric_strategy;
- 		type = MAINTENANCE_TYPE_MANUAL;
- 	}
+  if (rev->commit_format != CMIT_FMT_USERFORMAT)
+
+But if we do not use get_commit_format() in the first place, we don't
+need to worry about that. And I guess you used it because of:
+
+> +		pp_commit_easy(CMIT_FMT_USERFORMAT, list[i], &commit_line);
+
+that line, which is using the full-on pretty-print system that git-log,
+etc, use. It doesn't really work with CMIT_FMT_USERFORMAT because you
+have to set up the global user_format first (for those same historical
+reasons).
+
+So I think the entry point you want is repo_format_commit_message(),
+which does a one-off custom format into a strbuf without needing a
+rev_info, or touching the global user_format, etc.
+
+Something like this:
+
+diff --git a/builtin/log.c b/builtin/log.c
+index 5e9e337be4..370367a15a 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1326,16 +1326,12 @@ static void get_notes_args(struct strvec *arg, struct rev_info *rev)
+ static void generate_commit_list_cover(FILE *cover_file, const char *format, struct commit **list, int n)
+ {
+ 	struct strbuf commit_line = STRBUF_INIT;
+-	struct rev_info rev = REV_INFO_INIT;
+-
+-	strbuf_init(&commit_line, 0);
+-	get_commit_format(format, &rev);
+-	if (commit_format_is_empty(CMIT_FMT_USERFORMAT))
+-		die(_("invalid format spec"));
++	struct pretty_print_context ctx = {0};
  
+ 	for (int i = n - 1; i >= 0; i--) {
+ 		strbuf_addf(&commit_line, "[%0*d/%d] ", decimal_width(n), n - i, n);
+-		pp_commit_easy(CMIT_FMT_USERFORMAT, list[i], &commit_line);
++		repo_format_commit_message(the_repository, list[i],
++					   format, &commit_line, &ctx);
+ 		fprintf(cover_file, "%s\n", commit_line.buf);
+ 		strbuf_reset(&commit_line);
+ 	}
 
--- 
-2.53.0.536.g309c995771.dirty
 
+I think that should make your series do what you want. Now...is the
+pretty-print code a horrible minefield of booby traps waiting to spring
+on the unwary developer? Yes, it is. ;)
+
+The global user_format thing is there because it was bolted onto the
+existing pretty-print code, which used a single enum to store the
+format. But that enum isn't enough for a user-format, because we also
+have an associated string. The "right" type is probably something like:
+
+  struct commit_format {
+	enum cmit_fmt fmt;
+	const char *user_format;
+  };
+
+But C being what it is, switching all of the functions to that breaks
+all of the callers which just want to pass CMIT_FMT_ONELINE or whatever.
+So we have sort of a split world, where you can use pp_commit_easy()
+with the baked-in formats, and using the custom format code uses a
+totally different function.
+
+I think in the long run we probably do need to clean up the global
+user_format. Two pieces of code interleaving calls to the pretty-printer
+would stomp on each other's formats, for example. We've mostly gotten by
+because Git, being organized as a set of small programs, generally has
+one "main" output (for git-log, etc) and then any smaller outputs within
+a program are done by one-off calls to repo_format_commit_message(),
+etc.
+
+-Peff
