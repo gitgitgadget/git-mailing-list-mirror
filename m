@@ -1,94 +1,167 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ED8377560
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 10:23:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B17377541
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 10:27:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771928627; cv=none; b=WdQ43hwI1mfaqoOglnN9FQ0wPBv37c+kx3izgkRL0CPa+Q2+FZx8MLh33GIVpMbvIxj9Nj3GD1enW6rmulOh1vGEFz8n5KlI7+JELhwy3umWnnpDXdoS9AUOPS0D1ardwlfrybyFmgRkaiQ/po9I53NkFAfsrCkyv0pWN373wAQ=
+	t=1771928859; cv=none; b=ZVFb14nW+MmT0IwLVpWXa/x5IiziG5pEcQML7AcbTDhx7SOez1VDe383bl7m6SPzawWcgCEL7a1WG9VVPwfDhlPgfB7AAYLcAqov92M2E76nRa5tU3QIw7FZOo9uAsPTuzgfGQJRBGA6HOQXxwyKE6Doy17xqaC2f17IghA/rTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771928627; c=relaxed/simple;
-	bh=sCgm/PikM2oZCUKLY91nSWk4vhzBrCCMYW+9W+OJHBk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sZwj000MTtGhnSN/mK5z4p/x7yf2NAN6Q3nNyKlMaWfI5aZegUNcOd4uF6U9bamknE1SXELshkBu7Ewy0BO/IoOp8wZqS7B/imJKkK3cw86yY2/K56tLBvJm8D3oO7aHiZ2xNYVof0BJnuNg4UEV630Sta+YGVDHTg85GXx+MjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GLJfhBK7; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771928859; c=relaxed/simple;
+	bh=kQalDDrj+r8EnlCyE0Zb+4JbuMU9aFYJC4+ADEBgko8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eMbx3tSzDHSKzp+24HfJ6X95ck16Cf7pPvjVptLJelaT5g/Rp9d0dVCtkW3TFqJWEq0D9H6LZh5tq8iw9ICfPByh/NyGTSGUOzY1tBOLaTXGCzxdXhgHcPRPAmuKDSZLi8/zfMd1ZsTOOqh1IgAr0KcVq93sq81cgjHaL0JMNC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BBBez3pr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MsDOJxv3; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GLJfhBK7"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-8244105fa96so498159b3a.3
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 02:23:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771928625; x=1772533425; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sCgm/PikM2oZCUKLY91nSWk4vhzBrCCMYW+9W+OJHBk=;
-        b=GLJfhBK7JLUP0kBlCaZoWYRwp2fBKRJiWKYSDliaV5ExbmpIUkQF+cBTs1qCCYYYIH
-         /AXFw16/2VeAcpPWxy+lFnwvirQODHkiNzfY341gCpXErvVu/R5wbxtxSfVQd2HR0Obr
-         K1wV9/l1O1B2Dac+4xR6xsDxh3k/6UvE2tfVEZ463c+qznbuJRTrUsC2Yv20tp1MbG++
-         s7DjHkN/ozE6Chg72P8jKQf6XLZ8cQTchGKfL4/xlnhOXHLCfClCJ/wTQg96xtY9RcQq
-         XIETPMeFjX3XHdafUvRQiAyM2OnrY1xVqwtgl+AboQnbb1qWuSvSdOkifnfQ+WR+uYON
-         XFXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771928625; x=1772533425;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sCgm/PikM2oZCUKLY91nSWk4vhzBrCCMYW+9W+OJHBk=;
-        b=XnUlz7grRfZDloOuOZbfJZB12BNXV/Kc591IehEk9ktD1kLygmaJj0P7VMp4PsnIjg
-         4gSIgL+6zSHiILcddbHiptDvll0ImRcfu7EF+0RfZ0UlcO3sGcpH0kMkWgAH7kErcwq8
-         ptcorWpjcYbTb2rE+LZInN7c/ky7MEF4DYJdu8mnedEGA42yAJAybG+eyTO5PPcTmQ0X
-         +nxxzFghsbmBxtFwNqhF37GYXyL5CiZV48w+QKOhBZGoZ1GXKbkU4Oqv5jqvg9y/MZNw
-         tZUhvQLhaHpcl3BGm6xNw+YGkPetgy5LA6dZ6CcZa6Z3Nvr7GAcc2a5QOhBd8kUuB+gF
-         uOoQ==
-X-Gm-Message-State: AOJu0Yx/Z8rPlxSsut2MBBTeKU462bcxPdbBfGMgK4IzX8aaaBx3msww
-	VGQ6PlRBkUiwFUXaqOz3MCNu/r7gsnksZeJhzBxDqZfA+8Q5apQc2AQN
-X-Gm-Gg: AZuq6aI7Kq+izghGOy3GKan4+ZXJ7iStIqEmSbq5VmFrNu3aHIzOA/TVcTRnMvUvLZQ
-	RTnstxoyt74BIRxzvhYNGesVqDuW7QcUbMMLA0PxNVFWsbb8yRjqyD6NF6mJpNwDk+Nu+PyXUhe
-	PgOGrQ31wFweu/5pc3EtAgtvE39BJkzqKiTLp8LvxXBvakf/kND9l5SEU7vG24vOtvqXSpGbiCy
-	J7B6cU/b8unnSWwC8IzWbSwzxThHMDJu7Tw26D+VbGrddKMhN4SBEYfBDuOrUYBaIBKUlnoJ5G3
-	xmpvsaUI/j3SGRFxiJk1odTZGPx6ITmSURCgVDVUgyfZyDYtXK9EK71eeoOVm5qUCTFQ3z9mwAQ
-	inIGXhTLReLczmNcKPbk4TRP5HPgZMh7MDyEVwYI7ph6CyY5LuXxKVDZvUOCcGkMHdaCyWW1olP
-	jyJUCXG9nZIvdbalKjKsDoHIV0lFA=
-X-Received: by 2002:a05:6a20:918e:b0:366:21f0:b4fb with SMTP id adf61e73a8af0-39545fe847fmr7518930637.7.1771928625266;
-        Tue, 24 Feb 2026 02:23:45 -0800 (PST)
-Received: from [192.168.0.106] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-826dd8b961dsm8869759b3a.47.2026.02.24.02.23.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Feb 2026 02:23:44 -0800 (PST)
-Message-ID: <c0b31daf-0997-46a0-95d3-e1f608b23888@gmail.com>
-Date: Tue, 24 Feb 2026 18:23:42 +0800
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BBBez3pr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MsDOJxv3"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 73E0AEC04F2;
+	Tue, 24 Feb 2026 05:27:37 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 24 Feb 2026 05:27:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771928857;
+	 x=1772015257; bh=ZteebkQVnDq9BesiukjqrhLgQ/L6gOWbT9vQgdkw/qw=; b=
+	BBBez3prdbEtmaCaFw2fp2St8s6OrWfmK+QJWovELmRJyXGGjcoYLLMYWVpnNgvE
+	MYr3fLuGxOO5XhE8XVAfZBfEvq3FZPApFTW3U2DS4kZ1j6jg32a3n9BoE2KgJH4y
+	8hCgmKMraSESZE4S0KqRASciBNrBxo67Uhc4smFTgVmTbu8wOkQdoJFyWKTOvsMq
+	0kSz1rMCqCw6ejoS1XEqJUrga+anUPWTXnUFicCY1VTYZCy/EyJLkZuwcz13BEwk
+	Noe1xI5wo0OdiYya8N2BYFoRP1aj+Wg1Y3UGCveTWeO26G+551k/yzjWMLkLDYbJ
+	C/sXMr+pO/m6am4hR14z0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771928857; x=
+	1772015257; bh=ZteebkQVnDq9BesiukjqrhLgQ/L6gOWbT9vQgdkw/qw=; b=M
+	sDOJxv3FTKuVhi9R025KpAGmOqabThEaaPNzVthNr9rxrPFdlHtlpaP2Xv/M7HPb
+	PiJ+85O3tUdjmkupuydsDskUgH+VFcj2R8/+RMk5wAmLJueYhuglnmfiOtQnjuy0
+	O7Zf1pPC6AZSLHR72IKfydxCl2izDYXysbUexN99WjP3XdSCP/OChx9S3W/xCASk
+	lgymqTTdAMEcDKtRjqdu37QBtKtnncICPguvq+gIYtEtN3EZ22+2velVWeqiuaOy
+	5PIRMyhRC/VmbTvwk0LzYhMJPljyLBZO8FKIWATDcu/cxj9nXFTpWPIpUkBS0XYz
+	rrBUr/BuO3vfFQlaXFIgg==
+X-ME-Sender: <xms:GX2daYIrwV7KAr4Gixi4tcFexsg-kbBw6cCEVcT4sW29tyelRVcFHw>
+    <xme:GX2daaZW_Luwr3PW1YMz3TzmxhzTfu24rMs_UPb9JGiiH4S_Grm7wBZb2UeZ_f0a3
+    2Lptbz8v8-di47bkCR3BFeRkQw0RwiSuixZVNtzoJGtNj6kd-iR_A>
+X-ME-Received: <xmr:GX2daa_klYBq3V8MPo9O2BN4wDxLVRiWB2W8OdzWZjJw8rDIFav2TebUDqowq8YEOD6R6T7eVzgxuCaVHluCsCFxNmSUWdsDcfL_RyHi81aPlw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeelledvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeelkeeikeejueejkeehhfehgeevvdffheeiieehgfekueekvdfhkedvjeevveetuden
+    ucffohhmrghinhepghhithhhuhgsrdgtohhmpdhshhgvrghrshdrshhhnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
+    nhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnh
+    hknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhu
+    shhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehjohhnrghtrghnsehjoh
+    hnthgvshdrphgrghgvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphht
+    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:GX2dabYGS434YuQyVCZHobqqDXcVZ353JnVR1zWh8spcIkCYduAaUA>
+    <xmx:GX2daeMzdtxsF4x65pYV9a-z5KKI6XbA48qbmiNvKFdeUXbJAn7ebQ>
+    <xmx:GX2daXBpgxKnKEXqYK29wgcxbRS41u6Xv31Rzn91cc06gs1b0WvA9w>
+    <xmx:GX2daVLgyLmqL-IO68_kbdl9VzyNfIkKbJbKghhhwkeknycRR7eeng>
+    <xmx:GX2daTmzs1sss_i2Fp-V1SQDQVjczPg3T8zAldk1bW8totRuy8UILT5K>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Feb 2026 05:27:36 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 48f609d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Feb 2026 10:27:34 +0000 (UTC)
+Date: Tue, 24 Feb 2026 11:27:31 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jonatan Holmgren <jonatan@jontes.page>
+Cc: git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
+	"D . Ben Knoble" <benknoble@gmail.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/2] alias: support non-alphanumeric names via
+ subsection syntax
+Message-ID: <aZ19E2Bs0iIt2TN2@pks.im>
+References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+ <20260210183110.1151072-1-jonatan@jontes.page>
+ <20260210183110.1151072-3-jonatan@jontes.page>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10] setup: improve error diagnosis for invalid .git files
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-References: <20260221083001.220061-1-a3205153416@gmail.com>
- <20260222102928.377519-1-a3205153416@gmail.com> <xmqq4in8quxn.fsf@gitster.g>
- <xmqqqzqcpatz.fsf@gitster.g> <5263825f-163c-43af-bac7-152d670919d9@gmail.com>
- <xmqqfr6soxjq.fsf@gitster.g> <xmqq7bs3piz7.fsf@gitster.g>
- <a2b2e581-18ba-42ad-9bf1-a3e16b85f4e9@gmail.com> <xmqqwm03mfax.fsf@gitster.g>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <xmqqwm03mfax.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260210183110.1151072-3-jonatan@jontes.page>
 
-Hi Junio,
+On Tue, Feb 10, 2026 at 07:31:10PM +0100, Jonatan Holmgren wrote:
+> Git alias names are limited to alphanumeric characters and dashes
+> because config variable names are validated by iskeychar(). This
+> prevents non-English speakers from creating aliases in their native
+> languages.
+> 
+> Add support for arbitrary alias names by using config subsections:
+> 
+>     [alias "förgrena"]
+>         command = branch
+> 
+> The subsection name is matched as-is (case-sensitive byte comparison),
+> while the existing definition without a subsection (e.g.,
+> "[alias] co = checkout") remains case-insensitive for backward
+> compatibility. This uses existing config infrastructure since
+> subsections already support arbitrary bytes, and avoids introducing
+> Unicode normalization.
+> 
+> Also teach the help subsystem about the new syntax so that "git help
+> -a" properly lists subsection aliases and the autocorrect feature can
+> suggest them. Use utf8_strwidth() instead of strlen() for column
+> alignment so that non-alphanumeric alias names display correctly.
 
-Understood.
+This patch has caused a regression in a somewhat esoteric use case.
+Before this patch, you could do the following:
 
-I'll leave the patch series as it is. Please reply to me any time
-when new bugs are observed.
+    $ git config set "alias..foobar" "!echo barfoo"
+    $ git .foobar
+    barfoo
 
-Regards,
+Or, phrased as a test case:
 
-Yuchen
+    diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
+    index a13d2be8ca..dca50e87e2 100755
+    --- a/t/t0014-alias.sh
+    +++ b/t/t0014-alias.sh
+    @@ -4,6 +4,13 @@ test_description='git command aliasing'
 
+     . ./test-lib.sh
+
+    +test_expect_success 'alias with leading dot' '
+    +	test_config_global alias..something "!echo foobar" &&
+    +	git .something >actual &&
+    +	echo foobar >expect &&
+    +	test_cmp expect actual
+    +'
+    +
+     test_expect_success 'nested aliases - internal execution' '
+     	git config alias.nested-internal-1 nested-internal-2 &&
+     	git config alias.nested-internal-2 status &&
+
+I kind of doubt that this was intentional design, but I know that it is
+used e.g. by Dscho in his shears scripts [1]. What this script does is
+to create a temporary alias "alias..r" that then gets executed via the
+sequencer, and this patch broke this. I happened to discover the
+regression as I use shears myself.
+
+Chances are that there are other users out there that rely on the
+current behaviour.
+
+Thanks!
+
+Patrick
+
+[1]: https://github.com/git-for-windows/build-extra/blob/a82c8fcb0b8f165c1379c12b0cf914741b8dc8d5/shears.sh
