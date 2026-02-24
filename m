@@ -1,200 +1,208 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7A233EAF9
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:35:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163A8330D5E
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771968930; cv=none; b=n6934mo+o91aZe2UA3cw3xnj0uUI7qEDv6aq8wdyhmUD2ehkkKRCw2gb6tZeadp3rmg0K6MXjCGD3pRZb5PDbvVoh/yumJ2tFfxrZvdSpkLOTxf61rh3Y6ecdjsYdZIu93piYSl0eaQYtFm3HCsoELNOfCTKc7b7riJ7LH6wadI=
+	t=1771969190; cv=none; b=AKasA3dknQTZfZsI3HAXIgximmAErhodibvooW/egeCsmLwq2qRnkrSrPAmq7Xxw5yrjP34D6L50tvZftN4FGTruGxnYSjpPI2wLtqA2GiOZ/j0BeM/vvcMretFrNduoIMnBWEvWQyKaSWN/8ttDEi8oNf59uh+wU88zc0U7obo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771968930; c=relaxed/simple;
-	bh=3Iz4qjYEvJWnOHQ2fTY+GBxAtUxjsJ4xTpLNZz2Qw1E=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=i2MnXthSliZY/j0qE7cXAkMGWAztbHrGWRbdAPbOHxMFR7f09+niL5wtkRfO8Shwzev+B647grWMVMccdNMJlP40eRPt+LbYQ4PXe8gibsMhPEf/5wjVE3qXr56KsUJfNq0EyuX1UZnQe3cYrVuDfCrWJE2ssK2F+Yg7hbFRg0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fC9Kbo5f; arc=none smtp.client-ip=209.85.222.169
+	s=arc-20240116; t=1771969190; c=relaxed/simple;
+	bh=4/wYLaY7DZs15tIIac3Np5JsHvwGNknoHK8pLFqrGG8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dP1Qdlu+xgEeMYk5uWHQypnT1mX2Ef3ChxSGdSNBEKcwFkFnQQd2pwSGco3ynBRyhl+bjpUzqX4I0WOyLvKPsHUWKshu+VgDx1D5jHuYNT3PMFs9VTTxcYUrWWYMQS1TuZYR/jF3OHNuY1QQl0RGHRqZ3wR4rJOxI6/FgM65oyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YjOz+m4/; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fC9Kbo5f"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8cb40030be5so603358185a.3
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 13:35:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YjOz+m4/"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-bde0f62464cso2296859a12.2
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 13:39:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771968928; x=1772573728; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771969188; x=1772573988; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KtnO1S+Uadi0xiWNE9T17Qvzkm5eFy0bYW0AuxRMV/4=;
-        b=fC9Kbo5fXMkfChjQlrZdxOcDbfpLY86PQzSWLnJQ8A81AQGlq1zJlMciEwboCrTCu7
-         DTizXjdSO0CzVSX2guPQpPAWkZn1Kbw63LNz/JgWTQP0c5Lio6PHeu7HIFK5Nxvm3QCN
-         R64fDJJqS7N2Hjp+wFChhI0xBdp1+/CsxqGw08rcT+WltDy+46c3ik8WNGRplBR9V7gZ
-         +5ltrFVYP+0MPuWZ3bF+UibDAzZ7nmEFfdKC91BmP8Z6a/svGvyfWLVuYBlbEDhAPYeL
-         HNH9zpT0XjojK/aCzY38pNMghDs9XhtgrXHJHnlonZQALv0WwA7GFV0driQK9HC3x5kf
-         6pFQ==
+        bh=FybDoIzXWmBHRgR2NXAcF2TLbqLZKcpjErHri7cLe3g=;
+        b=YjOz+m4/yMlQZJ7v49YrdGmVTBC2b6gPKFg91RuJyMap8SmAX35Jwjy6qWYi/WDliF
+         wZrPIVEFDmwl0MKk9LJM8K3XEjOwwLMtACquLc6NTmDvVkjhpHBTmlG1RJF+3yc4mqEy
+         6dD2tgV7zpfdaLOGjoB/MF8TiNn2B5LI/j/SH48aiBlap2uwXTd6SNtOzYRGCz8g9FoQ
+         kiTHGFoWMwikns0fl0vghaBtTgOJuEHMVNdZNDQpALAY+8S7EjncesZEEE0DtnYJgHu2
+         M2Vmtmwx20jh0x7SZrL27/81/ay5/3ritkxSiI9npaL+GM1f0kkcPzUK2PWJ3KzCi9UT
+         mqOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771968928; x=1772573728;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1771969188; x=1772573988;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=KtnO1S+Uadi0xiWNE9T17Qvzkm5eFy0bYW0AuxRMV/4=;
-        b=m2ON61xsBV1FmdxG8EBLB5upywg+Byxayipz5PK7EC/jfMlD/KLtGb3nxjEyRlMkuS
-         1CxkAowj7ydqDey9uiZ+rudXqOVvhfZyRydAZxys7a2dARVcv0zcEiZz1r7D0CNuqSdN
-         BSLKEvWupt9Z4iZtB7SxK/LKg7ac/+4SajWMdHwAJrcLY5Ti2nbCUGxEvPiAaq5gxPeb
-         9uKxph1wlvgHCev4Cst4h61gD5yybMytWrMgnXhaOLKVsM/Y4V/EcEJAHe/8F+TMKK4O
-         MugML///0f0IL9G2sn0k3bvDaFbZEc/TLNdzGf/XwQXFgxqfdTZqArlIN7ONGPBbZROd
-         PSKg==
-X-Gm-Message-State: AOJu0Yza/0TGQP15tsVm6htWHRh8fqqai0ejpyVm05+/L6tt3dLeYg6J
-	TyIk0NHIH+/dLvvDYrjk+ZO7WjqyYuTJtwodwiP7WItIzoHhy1RK9w1J0yXGfQ==
-X-Gm-Gg: AZuq6aLrG/ZoJ+6DWNmHXB/3fY2OFL4oc6LhzHvU03f6izGrCi/HZ3ZUnHh1SdnvFcH
-	XXHmqYdRdIKC9VJZ/J+mpug0eRtL1pXXFs0he75Fu7L+9PBbjlUrqt/c1hp7kTnYKGUrfjZctzW
-	DQjgGTVjuUAMaxtxGKoKo9TFCs9pjSzYt/lMOW6gfIhekA8aON4IpgjbH5GRt0PEVlyf0qGFSj0
-	8LG7d+Pjo4CRKqlaLoeDzb48GwO0XIYtOTy+LRYlv1Etnsjukf/fqBUc8g/Iw6ZT0D5spypc7AM
-	W5hwQQ5Z1izgdoR3t0yPt7n/OZV8CwUohMO+iIqhmCYyhDW36wCqNxF0WCBczeoDEJi0FoScy9u
-	NS8LWkY/Oerv2JDj3FictkpNLdEaw7X0mYKKvH2Tw7hF+dcWntsQb6fJIjNQcOMs1oL1S4wyB4L
-	zN1zivGDw9XNF8OILXJFvT/0o=
-X-Received: by 2002:a05:620a:bd6:b0:8cb:1d9a:42ac with SMTP id af79cd13be357-8cb8ca6e5eamr1480597885a.51.1771968928097;
-        Tue, 24 Feb 2026 13:35:28 -0800 (PST)
-Received: from [127.0.0.1] ([20.55.87.153])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d1202e2sm1074119885a.44.2026.02.24.13.35.27
+        bh=FybDoIzXWmBHRgR2NXAcF2TLbqLZKcpjErHri7cLe3g=;
+        b=hHqkhVPjYPBSqJeqj+VmWHCrPhDlr3MKfNDrAeKbUwOm+OWaGE7FeBi0R3xUT0c+vh
+         +/pzXMbdD1mC+kB4SlCrTkvn4f4/FLmngM9prSU5KAib6LALJPt+/+3jITbae0D6mVlH
+         9XkRcGlteVMzKs/9wdz0nwsR9YWmq9ifcfu1x/RfmOWHG6uuJk3sKQOaEFsQWDlX14WP
+         M7XWk0w+Yb95BDG0la/a71jRT4rVNA4yAn7GMjfxmy4A5VI91rM4sqzlpqCFfbYZKXHq
+         0dtBJYOJY7YlvAQCwYAAm8H9BJv+x9MVbbUvPWQmm/PPvZUOD2x1/Jmj0liC/eivrSu/
+         bIUg==
+X-Gm-Message-State: AOJu0Yxsk/q+qljq2WDE2sLf7aNOpc/JY0H/ceYFZrPV/PIM7BUIv9hG
+	vQBTbE79uN0yJXDy/1rLWOpg/KZXZE8ZG1qKLCjDmg/9sfirgYdhyFJwOmzKmw==
+X-Gm-Gg: ATEYQzzE1eX/Ld13dNhF30t+ZGuV2vt+PXlwI7Jw0FWAlVv1FneDmJRJTVpixpdWIgq
+	Ec76MaCw77BNNZMm75TW7wo0Rhw1hdthNdfu2k76ArTfmJQ/u3ZsX1wsxnJjscF3AeuAzLHGjUm
+	BWwVPYFoWJ/VuP1J5xvipKg/ZT1h1sLik21tVYXZ7Ni+8081phIhbzzwGGdX1X5dQPXMM+/xlFs
+	YIRT4G/xLzk/g/dAEjJVuVFe6qlncDGhqzUF/hzPS60dvQcCqssIAdujHMua9dQ5n2pZYbo1+xX
+	BDRCkCXKKEv8/PjYbAfKFEj/e6TkMC9aJ81UHgyHMUmsVTgQ+y6dgMRRhOTAR3trDcDsfK+3DgZ
+	8lCkBdipIAHKm9yTilqWK4RTwoEavBrZswXfyxALrxa+9FAtxg4jZhkHo4uxJYmpIQc0BODrIn1
+	HUrJkX8FfdGacZqqggB9fVkbUqT0d8ntp77hJ+QK8aScVwOo8y/g/I2/NdtyQ=
+X-Received: by 2002:a17:90b:2885:b0:340:9d52:44c1 with SMTP id 98e67ed59e1d1-3590f2462e9mr96744a91.35.1771969188176;
+        Tue, 24 Feb 2026 13:39:48 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:b842:6614:18b3:b64d])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3590e7f1f84sm56859a91.9.2026.02.24.13.39.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 13:35:27 -0800 (PST)
-Message-Id: <4e3f4aa6cd36f779c6c1d6b4f30bb68ed807b9da.1771968924.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
-References: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
-	<pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 24 Feb 2026 21:35:24 +0000
-Subject: [PATCH v2 2/2] for-each-repo: work correctly in a worktree
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 24 Feb 2026 13:39:47 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: ben.knoble@gmail.com,
+	gitster@pobox.com,
+	philipoakley@iee.email,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH v2] send-email: validate charset name in 8bit encoding prompt
+Date: Wed, 25 Feb 2026 03:07:39 +0530
+Message-ID: <20260224213932.92364-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    fastcat@gmail.com,
-    Eric Sunshine <sunshine@sunshineco.com>,
-    Jeff King <peff@peff.net>,
-    Patrick Steinhardt <ps@pks.im>,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Derrick Stolee <stolee@gmail.com>
+When a non-ASCII character is detected in the body or subject of the email
+the user is prompted with,
 
-When run in a worktree, the GIT_DIR directory is set in a different way
-than in a typical repository. Show this by updating t0068 to include a
-worktree and add a test that runs from that worktree. This requires
-moving the repo.key config into a global config instead of the base test
-repository's local config (demonstrating that it worked with
-non-worktree Git repositories).
+  Which 8bit encoding should I declare [UTF-8]? foo
 
-We need to be careful to unset the local Git environment variables and
-let the child process rediscover them, while also reinstating those
-variables in the parent process afterwards. Update run_command_on_repo()
-to store, unset, then reset the non-NULL variables.
+After this the input string is validated by the regex, based on the fact
+that the charset string will be minimum 4 characters [1]. If the string is
+more than 4 letters the email is sent, if not then a second prompt to
+confirm is asked to the user,
 
-Reported-by: Matthew Gabeler-Lee <fastcat@gmail.com>
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
+  Are you sure you want to use <foo> [y/N]? y
+
+This relies on a length based regex heuristic check to validate the user
+input, and can allow clearly invalid charset names to pass if the input is
+greater than 4 characters.
+
+Add a semantic validation of the charset name using the
+Encode::find_encoding() module of perl. If the encoding is not recognized,
+warn the user and ask for confirmation before proceeding. After this
+validation the lenght based validation becomes redundant and also breaks
+flow, so change the regex of valid input to any non blank string.
+
+Additionally, the wording of the first prompt can confuse the user if not
+read properly or under any default assumptions for a yes/no prompt. Change
+the wording to make it explicitly clear to the user that the prompt needs a
+string input, UTF-8 being the default.
+
+The intended flow is,
+
+  Declare which 8bit encoding to use [default: UTF-8]? foobar
+  warning: 'foobar' does not appear to be a valid charset name.
+  Are you sure you want to use <foobar> [y/N]?
+
+[1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
+
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 ---
- builtin/for-each-repo.c  | 33 ++++++++++++++++++++++++++++++---
- t/t0068-for-each-repo.sh | 14 ++++++++++++--
- 2 files changed, 42 insertions(+), 5 deletions(-)
+Changes in v2:
+ - Added braces in if-else block.
 
-diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
-index 325a7925f1..3f3e71979c 100644
---- a/builtin/for-each-repo.c
-+++ b/builtin/for-each-repo.c
-@@ -2,6 +2,7 @@
- 
- #include "builtin.h"
- #include "config.h"
-+#include "environment.h"
- #include "gettext.h"
- #include "parse-options.h"
- #include "path.h"
-@@ -15,19 +16,45 @@ static const char * const for_each_repo_usage[] = {
- 
- static int run_command_on_repo(const char *path, int argc, const char ** argv)
- {
--	int i;
-+	int res;
- 	struct child_process child = CHILD_PROCESS_INIT;
-+	char **envvars;
-+	size_t envvar_nr = 0;
- 	char *abspath = interpolate_path(path, 0);
- 
-+	while (local_repo_env[envvar_nr])
-+		envvar_nr++;
-+
-+	CALLOC_ARRAY(envvars, envvar_nr);
-+
-+	for (size_t i = 0; i < envvar_nr; i++) {
-+		envvars[i] = getenv(local_repo_env[i]);
-+
-+		if (envvars[i]) {
-+			unsetenv(local_repo_env[i]);
-+			envvars[i] = xstrdup(envvars[i]);
-+		}
-+	}
-+
- 	child.git_cmd = 1;
- 	strvec_pushl(&child.args, "-C", abspath, NULL);
- 
--	for (i = 0; i < argc; i++)
-+	for (int i = 0; i < argc; i++)
- 		strvec_push(&child.args, argv[i]);
- 
- 	free(abspath);
- 
--	return run_command(&child);
-+	res = run_command(&child);
-+
-+	for (size_t i = 0; i < envvar_nr; i++) {
-+		if (envvars[i]) {
-+			setenv(local_repo_env[i], envvars[i], 1);
-+			free(envvars[i]);
-+		}
-+	}
-+
-+	free(envvars);
-+	return res;
+ git-send-email.perl   | 17 ++++++++++++++---
+ t/t9001-send-email.sh |  2 +-
+ 2 files changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index cd4b316ddc..15387ac377 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -23,6 +23,7 @@
+ use Git::LoadCPAN::Error qw(:try);
+ use Git;
+ use Git::I18N;
++use Encode qw(find_encoding);
+
+ Getopt::Long::Configure qw/ pass_through /;
+
+@@ -987,6 +988,7 @@ sub get_patch_subject {
+ sub ask {
+ 	my ($prompt, %arg) = @_;
+ 	my $valid_re = $arg{valid_re};
++	my $warn_invalid = $arg{warn_invalid};
+ 	my $default = $arg{default};
+ 	my $confirm_only = $arg{confirm_only};
+ 	my $resp;
+@@ -1005,7 +1007,15 @@ sub ask {
+ 			return $default;
+ 		}
+ 		if (!defined $valid_re or $resp =~ /$valid_re/) {
+-			return $resp;
++			if ($warn_invalid) {
++				if (find_encoding($resp)) {
++					return $resp;
++				} else {
++					printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $resp;
++				}
++			} else {
++				return $resp;
++			}
+ 		}
+ 		if ($confirm_only) {
+ 			my $yesno = $term->readline(
+@@ -1044,8 +1054,9 @@ sub file_declares_8bit_cte {
+ 	foreach my $f (sort keys %broken_encoding) {
+ 		print "    $f\n";
+ 	}
+-	$auto_8bit_encoding = ask(__("Which 8bit encoding should I declare [UTF-8]? "),
+-				  valid_re => qr/.{4}/, confirm_only => 1,
++	$auto_8bit_encoding = ask(__("Declare which 8bit encoding to use [default: UTF-8]? "),
++				  valid_re => qr/^\S+$/, confirm_only => 1,
++				  warn_invalid => 1,
+ 				  default => "UTF-8");
  }
- 
- int cmd_for_each_repo(int argc,
-diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
-index 512af34c82..d55557a934 100755
---- a/t/t0068-for-each-repo.sh
-+++ b/t/t0068-for-each-repo.sh
-@@ -10,7 +10,7 @@ TEST_NO_CREATE_REPO=1
- test_expect_success 'run based on configured value' '
- 	git init one &&
- 	git init two &&
--	git init three &&
-+	git -C two worktree add --orphan ../three &&
- 	git init ~/four &&
- 	git -C two commit --allow-empty -m "DID NOT RUN" &&
- 	git config --global run.key "$TRASH_DIRECTORY/one" &&
-@@ -35,7 +35,17 @@ test_expect_success 'run based on configured value' '
- 	git -C three log -1 --pretty=format:%s >message &&
- 	grep again message &&
- 	git -C ~/four log -1 --pretty=format:%s >message &&
--	grep again message
-+	grep again message &&
-+
-+	git -C three for-each-repo --config=run.key -- commit --allow-empty -m "ran from worktree" &&
-+	git -C one log -1 --pretty=format:%s >message &&
-+	grep worktree message &&
-+	git -C two log -1 --pretty=format:%s >message &&
-+	! grep worktree message &&
-+	git -C three log -1 --pretty=format:%s >message &&
-+	grep worktree message &&
-+	git -C ~/four log -1 --pretty=format:%s >message &&
-+	grep worktree message
+
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index e56e0c8d77..24f6c76aee 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1691,7 +1691,7 @@ test_expect_success $PREREQ 'asks about and fixes 8bit encodings' '
+ 			email-using-8bit >stdout &&
+ 	grep "do not declare a Content-Transfer-Encoding" stdout &&
+ 	grep email-using-8bit stdout &&
+-	grep "Which 8bit encoding" stdout &&
++	grep "Declare which 8bit encoding to use" stdout &&
+ 	grep -E "Content|MIME" msgtxt1 >actual &&
+ 	test_cmp content-type-decl actual
  '
- 
- test_expect_success 'do nothing on empty config' '
--- 
-gitgitgadget
+
+Range-diff against v1:
+1:  70fa4d2899 ! 1:  954c1dae9f send-email: validate charset name in 8bit encoding prompt
+    @@ git-send-email.perl: sub ask {
+      		if (!defined $valid_re or $resp =~ /$valid_re/) {
+     -			return $resp;
+     +			if ($warn_invalid) {
+    -+				if (find_encoding($resp))
+    ++				if (find_encoding($resp)) {
+     +					return $resp;
+    -+				else
+    ++				} else {
+     +					printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $resp;
+    -+			} else
+    ++				}
+    ++			} else {
+     +				return $resp;
+    ++			}
+      		}
+      		if ($confirm_only) {
+      			my $yesno = $term->readline(
+--
+2.53.0
