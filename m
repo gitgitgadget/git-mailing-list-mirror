@@ -1,81 +1,81 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03CF368267
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2C836681F
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771922758; cv=none; b=t5Rf/joye6A2Mq5/HyHhyIdESCQl7ehtGhdmfFBVaaRTUXKDJ1gDE8DApFGd7xiVgHV7ogdKzG1PmePs26JDWygQojP9UVJhk+0rj4bc3S5D1qKw1uFTl+ZOoFn/yi+niTMp3im8GOurC0678dyZv7/ApXtz4hhyBtroP6SHE/k=
+	t=1771922761; cv=none; b=c7rio0MNdu5YsDWdP//PIW6rt2YpUHzUZEV1KFbHdBNdd1F9ibwtDpe1pPwWMRE08TxOHEYceWMwH6FKZCvPncT4WfOPQDqYW0Ecb3Ye0HnLQuG54OxJQ5P0WoOscdbfooELW5Elgqf22TfsBC0YPZ9Malkx/jd8Rp18/ShqllY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771922758; c=relaxed/simple;
-	bh=Ul+OCHyBftC1Tum5r645rHjlqCInxBTWEF/ToqXg5dA=;
+	s=arc-20240116; t=1771922761; c=relaxed/simple;
+	bh=mytFHovAW2sHY4lDHEJeKHdrI/eJYpUTHN+8MovzgYg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=r7iP4+h9+uYIkuAr7oZkK02BhH9tOHBMZRqE8vAlDgd4J5KkSkd9AVYGBUXNoFjSj7w5tahadZotQ7C2iLGWL/MZlFhTun1cM5/JV8nebKHrdoKO/9MkwcByzxGahRySEuEHppQFjgV2ythhmiZelxpfE4JuRlUM2QSH+tSOc3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=no1meHmY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=emZFVvZp; arc=none smtp.client-ip=103.168.172.155
+	 In-Reply-To:To:Cc; b=JVXdFleDZg5Mw85IJNh6FK0ZuqzwFet+ihbwV8SzZ86Pw18NPsE2l+I2fXLj4OTXV15GGRATr7vqX3bTc3iYG3QapLFd8Bv2I2KtMeZl0BkYCiASbmYEdsggMX0zPZJgWgzDE8ergXzA6PKcuTArvcHwg/HR7pjI63kYlDP36Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AReilKp0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vKZvRSDp; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="no1meHmY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="emZFVvZp"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0D3B714001CE;
-	Tue, 24 Feb 2026 03:45:56 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AReilKp0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vKZvRSDp"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1E6671400064;
+	Tue, 24 Feb 2026 03:45:59 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 24 Feb 2026 03:45:56 -0500
+  by phl-compute-02.internal (MEProxy); Tue, 24 Feb 2026 03:45:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1771922756;
-	 x=1772009156; bh=OCKuVoby+B5qyfECRbd1Bn9Yda3IsVaC3QmeAl/8bG8=; b=
-	no1meHmY9dQ0okdjPpwaxumXOLt1b/9gBlG23F4TCkWWmtiZJPRutdM2kqFlhIAO
-	S7Rl9tmzQPfCu3IL2pPG7+H5d5m7RQs96AyLzcPKL41IdrgbSMEcF18ynnKvYpG2
-	5UuIRpcJGD25wRjMkclnkU9vAPXC7SLLNVwiSK40tY75KSuhamE/kVEADy7K4mP3
-	lH4FQHXwqZz3PcpCrNoeOicfyrvJSR/q/MKGk6q3EWdct1gcBNP4L8JT8sUQf9JD
-	zGa3ivW0kWAhcMERoRcPUp4r26WJWfnlQ4ffDEAK8j7yvGzGVzE2D2AtJsJCF5JY
-	iH2NYdpWRT7aCJw5mN07ow==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771922759;
+	 x=1772009159; bh=FF/Ena8owYpq5viVtx87FKYKXwCDYHEs9WGMciLBync=; b=
+	AReilKp0aJUXfJbZKDN5L/A2ZIvGb7ouiECTXiQMR0IR7+r0vBeRoOTZjOK7WkGe
+	uDs+HfyGNcd/m17d5bsh9+ZE2WxmwOcwQik1mfr6evxAwsB9BY0zS543jlcD3Gbn
+	7jzfERnE80BA2femVQUTOWc4zUqJDrFg2DxaMO3lKc9G+amGcOnNqilqeE+Otwp6
+	QJ94de+7XJGfbOrBQIMVXjj2HU2yZIbhQT84PaAJaVmGqvGI+COz1VZ39ZReA+zf
+	8zOXyPtsgqyG8yZ+020JLaDv3EffBoRQ4p8pKmVxR4Nn9GEMllEE+q3+MR4ffwvG
+	z+gnY9dOA0uDbVGd8W4+Dw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771922756; x=
-	1772009156; bh=OCKuVoby+B5qyfECRbd1Bn9Yda3IsVaC3QmeAl/8bG8=; b=e
-	mZFVvZpO/ZILGZ73Szs4mhZ3Tmhlc0YWZ6JBQooqMRLveCQzxunMZ5lad7OJFhY8
-	AEKVFdz7Kj94d+VqqpjgO4PCo06D8njIpzZNoGYpNrTZFfmQk1wDN7l6A+ESfHZE
-	kwkW6KQRfsJupufQW48gclGWZmc0lkgw5omCccNTtAf0IlCUlg1G3S8CcVf6SXIz
-	E41xeiedAx1txRJUpBaJAD2PKY+rhZ22703evRyj76uOlfXT8cD/ipe9ypITTt1J
-	DGBDcavFWVrjc7zmNA/n1yajvXcEBuvRTbJeeE5PmTFgBM49dmjZiuNxSY3pS78J
-	uYZq5wXiGbnwFDeW/jN2A==
-X-ME-Sender: <xms:Q2WdabHrpqA0Or2iIcyRJ8iHgiAmg6cy2qHVFJ35Xb1xTLS0XOTzXg>
-    <xme:Q2WdafUgLofcvLQ05HMrfg42Sii2FYFK9ZvnGWvBGHDiNv5gm-UUfSy6b6YYtrz6U
-    6Ly1mfFwBpTrZcA4vrVs_8a8z3DPMECU4lS4kjfD9tWgw_zqvmk_Q>
-X-ME-Received: <xmr:Q2WdaSI0BkYRr4wp0aZnue7qjCOx7Fin3LJCMsXVrgdP3J02w-A-WCdlZtBd4hpoAmildqbrpdgDGKqoeH9M67VqcHW2Zsc170uXuhZ1rzSYCQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeljedvucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771922759; x=
+	1772009159; bh=FF/Ena8owYpq5viVtx87FKYKXwCDYHEs9WGMciLBync=; b=v
+	KZvRSDpTmHYvbk2Ak3fvy21rtRPtbyHOc5VFQJLIvAsXkqoPmonVRrHqbaMHsrXz
+	l3m20ToGWSnnTEfvWcrJhPVjm3KprbAdMkP7oyTwaK77PLCUUvJv0mlXz08W8T3Q
+	bpg44jwMdkgcTgTSYiKeqx845q3N25ilFK6HwqHpCrQJfmnPg9eB6liFnRdnfFuD
+	SEbFoNsYGOnxVNt2HvjGCuJmXb4TbMZqDS30Vzdfpiq3ISBBwAAWAkBIGOC9FyF/
+	J48mfjbOS8emxClZmN4r8tg1Yp7Ts5rxrpvgg/Q1NjheoEOqRvddUTlWdKVqcw8q
+	y0asMlSHK6qwCo3g29RAw==
+X-ME-Sender: <xms:R2WdabO_y6rdaLyj5Pv2k9OalmhhS7dlSaSasX1BPBJoTx4zrMZpSA>
+    <xme:R2Wdac8xLh2YWBp6K4nOFU5LJx0fI6YUIotL9X5mSAX5HcB8cc3Z0sLBJTFq9VY9r
+    QIy6DzlqY7nueX_F3RHF_oBxdr6zO-UssSbZJYoFwy2BH7VJszy9w>
+X-ME-Received: <xmr:R2WdafQ8Kcj-XgWRigW_HQZ4663QE7c9sWNqP7DkrY9__dZmQKR3oOGuOvyc35Qrvf6tzsCUcdFjNwfObOQK_NOWPHB4TMTVFRejFLL_U-5Svg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeljeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeugeelgfffhfdvtedtvefgkeeitddthefftdeuhfehvdevjeekteeuleeufeefgeen
-    ucffohhmrghinhepihhntghrvghmvghnthgrlhdqrhgvphgrtghkrdgruhhtohenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:Q2WdaX_M8sdnxQXQUZ05uQMGBbsBN1UOmhmycoptMJMa2A3KiqnCMQ>
-    <xmx:Q2WdadJhcJrLYDwhL_JszfPFw-iuT3OR0rt_CgtaZ8FmQtTDK5uopw>
-    <xmx:Q2WdaUmg6lHZ2H6uh5NNynVK5g8kZ7UP53Oq17APhJoU-nbTOxaYwQ>
-    <xmx:Q2WdaZPoHkZYmN0z00n_WWq0YIrwK9fLQYFe7B61Xr_jLPmVOIJWeQ>
-    <xmx:RGWdaUrQIj6kj4wwl0AZ_aaVfGgby4T4mIoEvim6qqoXdop5DAns1i9d>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtgho
+    mhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:R2Wdaek5YuhA7UlI8ZQDt7jGdSpRyYXnhCBrQzHpxQOpQtdz15qQmg>
+    <xmx:R2WdafQz509Lzt23NCTeWlEwv3kt29ofByKqj-nyyoOYHF3cBGxAfQ>
+    <xmx:R2WdacOkpIm76wJRk2QMU8W5-tqWAujO4_2BH3-pj7SZkEK4ZBoQVA>
+    <xmx:R2WdaYVs0Azd-rdWUxyRwjJqFyQbCIp8e7FthVtjS_vY-a5yyLBK9g>
+    <xmx:R2WdaVMKjQpz0LPEVAPyIgF3TQpTc_PJVd0R1lEjzxf94Y6LIxzhWd1N>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 03:45:55 -0500 (EST)
+ 24 Feb 2026 03:45:58 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9f2dfd05 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Feb 2026 08:45:54 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 146c6bd2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Feb 2026 08:45:57 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 24 Feb 2026 09:45:45 +0100
-Subject: [PATCH v2 1/8] t: fix races caused by background maintenance
+Date: Tue, 24 Feb 2026 09:45:46 +0100
+Subject: [PATCH v2 2/8] t: disable maintenance where we verify object
+ database structure
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,8 +83,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-1-8657338c6fa1@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-2-8657338c6fa1@pks.im>
 References: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-0-8657338c6fa1@pks.im>
 In-Reply-To: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-0-8657338c6fa1@pks.im>
 To: git@vger.kernel.org
@@ -92,145 +92,191 @@ Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-Many Git commands spawn git-maintenance(1) to optimize the repository in
-the background. By default, performing the maintenance is for most of
-the part asynchronous: we fork the executable and then continue with the
-rest of our business logic.
+We have a couple of tests that explicitly verify the structure of the
+object database. Naturally, this structure is dependent on whether or
+not we run repository maintenance: if it decides to optimize the object
+database the expected structure is likely to not materialize.
 
-This is working as expected for our users, but this behaviour is
-somewhat problematic for our test suite as this is inherently racy. We
-have many tests that verify the on-disk state of repositories, and those
-tests may easily race with our background maintenance. In a similar
-fashion, we may end up with processes that "leak" out of a current test
-case.
-
-Until now this tends to not be much of a problem. Our maintenance uses
-git-gc(1) by default, which knows to bail out in case there aren't
-either too many packfiles or too many loose objects. So even if other
-data structures would need to be optimized, we won't do so unless the
-object database also needs optimizations.
-
-This is about to change though, as a subsequent commit will switch to
-the "geometric" maintenance strategy as a default. The consequence is
-that we will run required optimizations even if the object database is
-well-optimized. And this uncovers races between our test suite and
-background maintenance all over the place.
-
-Disabling maintenance outright in our test suite is not really an
-option, as it would result in significant divergence from the "real
-world" and reduce our test coverage. But we've got an alternative up our
-sleeves: we can ensure that garbage collection runs synchronously by
-overriding the "maintenance.autoDetach" configuration.
-
-Of course that also diverges from the real world, as we now stop testing
-that background maintenance interacts in a benign way with normal Git
-commands. But on the other hand this ensures that the maintenance itself
-does not for example lead to data loss in a more reproducible way.
-
-Another concern is that this would make execution of the test suite much
-slower. But a quick benchmark on my machine demonstrates that this does
-not seem to be the case:
-
-    Benchmark 1: meson test (revision = HEAD~)
-      Time (mean ± σ):     131.182 s ±  1.293 s    [User: 853.737 s, System: 1160.479 s]
-      Range (min … max):   130.001 s … 132.563 s    3 runs
-
-    Benchmark 2: meson test (revision = HEAD)
-      Time (mean ± σ):     129.554 s ±  0.507 s    [User: 849.040 s, System: 1152.664 s]
-      Range (min … max):   129.000 s … 129.994 s    3 runs
-
-    Summary
-      meson test (revision = HEAD) ran
-        1.01 ± 0.01 times faster than meson test (revision = HEAD~)
-
-Funny enough, it even seems as if this speeds up test execution ever so
-slightly, but that may just as well be noise.
-
-Introduce a new `GIT_TEST_MAINT_AUTO_DETACH` environment variable that
-allows us to override the auto-detach behaviour and set that variable in
-our tests.
+Explicitly disable auto-maintenance in such tests so that we are not
+dependent on decisions made by our maintenance.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- run-command.c            | 2 +-
- t/t5616-partial-clone.sh | 6 +++---
- t/t7900-maintenance.sh   | 3 +++
- t/test-lib.sh            | 4 ++++
- 4 files changed, 11 insertions(+), 4 deletions(-)
+ t/t0081-find-pack.sh                    | 1 +
+ t/t5316-pack-delta-depth.sh             | 1 +
+ t/t5319-multi-pack-index.sh             | 1 +
+ t/t5326-multi-pack-bitmaps.sh           | 3 ++-
+ t/t5327-multi-pack-bitmaps-rev.sh       | 3 ++-
+ t/t5331-pack-objects-stdin.sh           | 2 ++
+ t/t5332-multi-pack-reuse.sh             | 1 +
+ t/t5334-incremental-multi-pack-index.sh | 1 +
+ t/t5500-fetch-pack.sh                   | 3 ++-
+ t/t5616-partial-clone.sh                | 1 +
+ t/t7700-repack.sh                       | 3 +++
+ 11 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index e3e02475cc..438a290d30 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1828,7 +1828,7 @@ int prepare_auto_maintenance(int quiet, struct child_process *maint)
- 	 */
- 	if (repo_config_get_bool(the_repository, "maintenance.autodetach", &auto_detach) &&
- 	    repo_config_get_bool(the_repository, "gc.autodetach", &auto_detach))
--		auto_detach = 1;
-+		auto_detach = git_env_bool("GIT_TEST_MAINT_AUTO_DETACH", true);
+diff --git a/t/t0081-find-pack.sh b/t/t0081-find-pack.sh
+index 5a628bf735..26f017422d 100755
+--- a/t/t0081-find-pack.sh
++++ b/t/t0081-find-pack.sh
+@@ -68,6 +68,7 @@ test_expect_success 'add more packfiles' '
+ '
  
- 	maint->git_cmd = 1;
- 	maint->close_object_store = 1;
+ test_expect_success 'add more commits (as loose objects)' '
++	test_config maintenance.auto false &&
+ 	test_commit six &&
+ 	test_commit seven &&
+ 
+diff --git a/t/t5316-pack-delta-depth.sh b/t/t5316-pack-delta-depth.sh
+index 03dfb7a61e..8a067a45cb 100755
+--- a/t/t5316-pack-delta-depth.sh
++++ b/t/t5316-pack-delta-depth.sh
+@@ -48,6 +48,7 @@ test_description='pack-objects breaks long cross-pack delta chains'
+ # repeatedly-modified file to generate the delta chain).
+ 
+ test_expect_success 'create series of packs' '
++	test_config maintenance.auto false &&
+ 	test-tool genrandom foo 4096 >content &&
+ 	prev= &&
+ 	for i in $(test_seq 1 10)
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index faae98c7e7..7672d599d4 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -1315,6 +1315,7 @@ test_expect_success 'bitmapped packs are stored via the BTMP chunk' '
+ 	git init repo &&
+ 	(
+ 		cd repo &&
++		git config set maintenance.auto false &&
+ 
+ 		for i in 1 2 3 4 5
+ 		do
+diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
+index 892aeb09e4..62bd973d92 100755
+--- a/t/t5326-multi-pack-bitmaps.sh
++++ b/t/t5326-multi-pack-bitmaps.sh
+@@ -93,7 +93,8 @@ test_midx_bitmap_cases () {
+ 	test_expect_success 'setup test_repository' '
+ 		rm -rf * .git &&
+ 		git init &&
+-		git config pack.writeBitmapLookupTable '"$writeLookupTable"'
++		git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
++		git config maintenance.auto false
+ 	'
+ 
+ 	midx_bitmap_core
+diff --git a/t/t5327-multi-pack-bitmaps-rev.sh b/t/t5327-multi-pack-bitmaps-rev.sh
+index 9cac03a94b..cfa12de2a8 100755
+--- a/t/t5327-multi-pack-bitmaps-rev.sh
++++ b/t/t5327-multi-pack-bitmaps-rev.sh
+@@ -30,7 +30,8 @@ test_midx_bitmap_rev () {
+ 	test_expect_success 'setup bitmap config' '
+ 		rm -rf * .git &&
+ 		git init &&
+-		git config pack.writeBitmapLookupTable '"$writeLookupTable"'
++		git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
++		git config maintenance.auto false
+ 	'
+ 
+ 	midx_bitmap_core rev
+diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
+index cd949025b9..b03f6be164 100755
+--- a/t/t5331-pack-objects-stdin.sh
++++ b/t/t5331-pack-objects-stdin.sh
+@@ -14,6 +14,7 @@ packed_objects () {
+ 
+ test_expect_success 'setup for --stdin-packs tests' '
+ 	git init stdin-packs &&
++	git -C stdin-packs config set maintenance.auto false &&
+ 	(
+ 		cd stdin-packs &&
+ 
+@@ -255,6 +256,7 @@ test_expect_success '--stdin-packs=follow walks into unknown packs' '
+ 	git init repo &&
+ 	(
+ 		cd repo &&
++		git config set maintenance.auto false &&
+ 
+ 		for c in A B C D
+ 		do
+diff --git a/t/t5332-multi-pack-reuse.sh b/t/t5332-multi-pack-reuse.sh
+index 395d09444c..881ce668e1 100755
+--- a/t/t5332-multi-pack-reuse.sh
++++ b/t/t5332-multi-pack-reuse.sh
+@@ -59,6 +59,7 @@ test_pack_objects_reused () {
+ 
+ test_expect_success 'preferred pack is reused for single-pack reuse' '
+ 	test_config pack.allowPackReuse single &&
++	git config set maintenance.auto false &&
+ 
+ 	for i in A B
+ 	do
+diff --git a/t/t5334-incremental-multi-pack-index.sh b/t/t5334-incremental-multi-pack-index.sh
+index d30d7253d6..99c7d44d8e 100755
+--- a/t/t5334-incremental-multi-pack-index.sh
++++ b/t/t5334-incremental-multi-pack-index.sh
+@@ -15,6 +15,7 @@ midx_chain=$midxdir/multi-pack-index-chain
+ 
+ test_expect_success 'convert non-incremental MIDX to incremental' '
+ 	test_commit base &&
++	git config set maintenance.auto false &&
+ 	git repack -ad &&
+ 	git multi-pack-index write &&
+ 
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 4bb56c167a..0c88d04d0a 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -154,7 +154,8 @@ test_expect_success 'clone shallow depth 1 with fsck' '
+ '
+ 
+ test_expect_success 'clone shallow' '
+-	git clone --no-single-branch --depth 2 "file://$(pwd)/." shallow
++	git clone --no-single-branch --depth 2 "file://$(pwd)/." shallow &&
++	git -C shallow config set maintenance.auto false
+ '
+ 
+ test_expect_success 'clone shallow depth count' '
 diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 1e354e057f..d62760eb92 100755
+index d62760eb92..1c2805acca 100755
 --- a/t/t5616-partial-clone.sh
 +++ b/t/t5616-partial-clone.sh
-@@ -229,7 +229,7 @@ test_expect_success 'fetch --refetch triggers repacking' '
+@@ -585,6 +585,7 @@ test_expect_success 'verify fetch downloads only one pack when updating refs' '
+ 	git clone --filter=blob:none "file://$(pwd)/srv.bare" pack-test &&
+ 	ls pack-test/.git/objects/pack/*pack >pack-list &&
+ 	test_line_count = 2 pack-list &&
++	test_config -C pack-test maintenance.auto false &&
+ 	for i in A B C
+ 	do
+ 		test_commit -C src $i &&
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 73b78bdd88..acc2589f21 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -217,6 +217,7 @@ test_expect_success 'repack --keep-pack' '
+ 		cd keep-pack &&
+ 		# avoid producing different packs due to delta/base choices
+ 		git config pack.window 0 &&
++		git config maintenance.auto false &&
+ 		P1=$(commit_and_pack 1) &&
+ 		P2=$(commit_and_pack 2) &&
+ 		P3=$(commit_and_pack 3) &&
+@@ -260,6 +261,7 @@ test_expect_success 'repacking fails when missing .pack actually means missing o
  
- 	GIT_TRACE2_EVENT="$PWD/trace1.event" \
- 	git -C pc1 fetch --refetch origin &&
--	test_subcommand git maintenance run --auto --no-quiet --detach <trace1.event &&
-+	test_subcommand git maintenance run --auto --no-quiet --no-detach <trace1.event &&
- 	grep \"param\":\"gc.autopacklimit\",\"value\":\"1\" trace1.event &&
- 	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"-1\" trace1.event &&
+ 		# Avoid producing different packs due to delta/base choices
+ 		git config pack.window 0 &&
++		git config maintenance.auto false &&
+ 		P1=$(commit_and_pack 1) &&
+ 		P2=$(commit_and_pack 2) &&
+ 		P3=$(commit_and_pack 3) &&
+@@ -534,6 +536,7 @@ test_expect_success 'setup for --write-midx tests' '
+ 	(
+ 		cd midx &&
+ 		git config core.multiPackIndex true &&
++		git config maintenance.auto false &&
  
-@@ -238,7 +238,7 @@ test_expect_success 'fetch --refetch triggers repacking' '
- 		-c gc.autoPackLimit=0 \
- 		-c maintenance.incremental-repack.auto=1234 \
- 		-C pc1 fetch --refetch origin &&
--	test_subcommand git maintenance run --auto --no-quiet --detach <trace2.event &&
-+	test_subcommand git maintenance run --auto --no-quiet --no-detach <trace2.event &&
- 	grep \"param\":\"gc.autopacklimit\",\"value\":\"0\" trace2.event &&
- 	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"-1\" trace2.event &&
- 
-@@ -247,7 +247,7 @@ test_expect_success 'fetch --refetch triggers repacking' '
- 		-c gc.autoPackLimit=1234 \
- 		-c maintenance.incremental-repack.auto=0 \
- 		-C pc1 fetch --refetch origin &&
--	test_subcommand git maintenance run --auto --no-quiet --detach <trace3.event &&
-+	test_subcommand git maintenance run --auto --no-quiet --no-detach <trace3.event &&
- 	grep \"param\":\"gc.autopacklimit\",\"value\":\"1\" trace3.event &&
- 	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"0\" trace3.event
- '
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 7cc0ce57f8..fe344f47ee 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -7,6 +7,9 @@ test_description='git maintenance builtin'
- GIT_TEST_COMMIT_GRAPH=0
- GIT_TEST_MULTI_PACK_INDEX=0
- 
-+# Ensure that auto-maintenance detaches as usual.
-+sane_unset GIT_TEST_MAINT_AUTO_DETACH
-+
- test_lazy_prereq XMLLINT '
- 	xmllint --version
- '
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0fb76f7d11..aa805a01ce 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1947,6 +1947,10 @@ test_lazy_prereq COMPAT_HASH '
- GIT_TEST_MAINT_SCHEDULER="none:exit 1"
- export GIT_TEST_MAINT_SCHEDULER
- 
-+# Ensure that tests cannot race with background maintenance by default.
-+GIT_TEST_MAINT_AUTO_DETACH="false"
-+export GIT_TEST_MAINT_AUTO_DETACH
-+
- # Does this platform support `git fsmonitor--daemon`
- #
- test_lazy_prereq FSMONITOR_DAEMON '
+ 		test_commit base
+ 	)
 
 -- 
 2.53.0.536.g309c995771.dirty
