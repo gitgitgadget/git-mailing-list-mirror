@@ -1,89 +1,85 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA73335BBB
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 21:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D466E33BBB1
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 22:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771969630; cv=none; b=Wmt70GmUbDs2wKp/y/L/POh6d0yrMc3WZmr+CvVowr6IZoyDF6xdjxpiObzjVXv4g96qWAtcjHMnYHDUxlCYIF0uDnrH89tdGkzeHuUcApn2J3W+XWIeWnhhS3IL5ujYHc2Hw0oWM6E67CxLwKl+vFiZ7TGFYdTiIokKtLDiaKc=
+	t=1771970770; cv=none; b=vFTQXLwnLB5BbTHTZdzqLDfptnpbAMGoJ2iD1jbJXoh0Eikl4RrMcCP93IE3FOno5Ro36rsZ/HRqM7I4XsIBoAnDneD3z42mYuv6+U71H5ULqt3xqDFr9fhRAilQZS7JARdIP9z/TnKch7wpgYefdCNoHgoKeL+LB3yGq+Joguw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771969630; c=relaxed/simple;
-	bh=K15vs3VOazZMulacno1mY70Azh3Kw0Vn5KtLvkgzN20=;
+	s=arc-20240116; t=1771970770; c=relaxed/simple;
+	bh=GZNxGyFwLUValIvtIeNozk9WZBY49eYUIIPqo2CHsRo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=vDudjpRrXj2gj0zPSG5BfKAOuLb9xhCtbzfkymtahTN1YL+j/Z4gIbUbRef8tAcWArPnGoOTmhCwFOfX2sanH7+ngRNZ3ZglshbmqVTDHtsLOv1x0uS5rGNokHzuUwn62ocjPTg+aPWKz11YekR1nH3PZJmG49OhAVEMunuS5e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jN6gkklF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P21BQ1ia; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=IBLep9hTdjhAw3qYSZmVXd/AKf/BESJ53UnMEIW+71p01QYt3pbpxwD/5ASoGvqKAet3H6dUQq2vNwPCW2Bgfg9qf7sE6GAfXtNlN3g8kwEUiN+nz6ACFgXrCI9bW4zQTkOh5A+HJS7jvIjOZ9u1zc2XAoTu7+W3RkxfZ99Auek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rdAWTbTJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Icob9Ei8; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jN6gkklF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P21BQ1ia"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id A0FDC1D001B1;
-	Tue, 24 Feb 2026 16:47:07 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rdAWTbTJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Icob9Ei8"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id C678B1D0020D;
+	Tue, 24 Feb 2026 17:06:08 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 24 Feb 2026 16:47:08 -0500
+  by phl-compute-06.internal (MEProxy); Tue, 24 Feb 2026 17:06:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771969627; x=1772056027; bh=YSFqOR92xH
-	D1IjEMtwQlTK6Vtw5QHTW7jKJOmh5GtIE=; b=jN6gkklFEuXdJo039BgYJMTC9n
-	Nb6o5lDfYOpNH4NNuBx6AP3Wk7F/VnIaI+/mQGMu4sINJyytoShapuQThbOleUgc
-	ji3yD2Y4t9Fl9kFyht8YlPbKqs31s6+ZRIsb4OsyI0I0h40Vc4RjPeU27D0deRfi
-	szUMraYrGFzGUcZix/kVb8/07wXWGfrJ27iaslqmKBOTQOnZltq2RYl12ei7KDDW
-	BgQewynzTePU3e3Ok3AJh5o/YPXo29Gw9FF3CFgbE7tFo8L3CptMwZQJIDnx/ACA
-	wSgaT/vNbLsH9N06Q7uxCaUO/9I53XBo83cxRUwBk1W5MSWNkq+rf2YE2ccQ==
+	:subject:to:to; s=fm2; t=1771970768; x=1772057168; bh=yUXjw4YRxa
+	FqAF330G2CDNLI2S48u+ByLYIIJrPVSAA=; b=rdAWTbTJyWLRk+BGopzfhnL42k
+	uHsPbs73gm5+G8N1HeUmqzYZqjTRFjLSNw1JV3gQ5IHrJUB6byxH74VZPmLov+2r
+	GLAGXLLvrC+2RrTSW/t4rflWvTN6GJn0Ao61Zn9nEKLe0TBxgrBNwbY4iV+9u5zY
+	eSKy6YfW20CVur+QUQmZhCEcTNlfOy2B3cuKljdZ7F3+7YLhFuel8VXY+89fT0iN
+	gogS8h/TSQ6Bnh4WYyotovQvXPRq5KYgbM+ZPdWnmMICxYjPE6AGtrsE/NaSl1yJ
+	3Hikp3MGwrVBzvut7DPnmDbntN2r1j6HLPluLT1wWDxkzlhxtLuTt0Fb5amA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771969627; x=1772056027; bh=YSFqOR92xHD1IjEMtwQlTK6Vtw5QHTW7jKJ
-	Omh5GtIE=; b=P21BQ1iaTp0At5c4+xMBilSKouDeYAc5Jf0TaJsEMEHr46DtG53
-	9/WHihA9hfuAJLUJyrMKqc2L5oa6NocU+/RTPujc3qjVUcTBCf0AJxNvULvKg3+A
-	RcvV3rYSJmxTQG53E0vJtx1U+A2gPNAh80dJ9KrF0EgBEJG3ooS3pbp5acHUbgmR
-	1r8lb80tYyXZUTySL7T0bA44pZwKtzshWJYtfWL8dQBncYk7AfbhOPP9hG//utfr
-	zxstvQ08GNZms4edCWkGn/tCMNDUsmFF+Bv+tLd5DOmQddd/FQYS3JrBlHb6cM/s
-	intS2PWeDJwMOfTGSsFj1frJGBRYm+Xq35w==
-X-ME-Sender: <xms:Whyeaecl5VlaHBeJ2calU05qguBYKCpwYPh6c5SQXurW6JUz9O5I2A>
-    <xme:WhyeaXSo-_dtuRT0wINgED7waY7NYx09C7J5sqBA7R2szOeECkcguuKQMn_fSA6Eb
-    QtofSUeEEGPnpZpszv2-B05m4Foqp0WLT4sXUJVxhfcF1p0mst_>
-X-ME-Received: <xmr:WhyeaVuv-yWZJzEFuR9cwx9UqKzfdpk_qmhERerjzlxht8RlwVHVYIEpQjg6BplMlsV1S-vNG8rwks_9L2lm00fY-lpW7-YvXg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedufedtucetufdoteggodetrf
+	1771970768; x=1772057168; bh=yUXjw4YRxaFqAF330G2CDNLI2S48u+ByLYI
+	IJrPVSAA=; b=Icob9Ei8fZlk9ibLpuaWJMHYHHJAVqn08DGDFYGneNIoXFWzXQG
+	SNayqzDC1P4zPMFlWcDRbCAzr1kUhrhVkqtbf7a2ZnTs0mA1PDsl/JUwDIsVOHzy
+	7uH9lTvItELdPyfgkXElFachpSU+/9mFlj5+D5twiwnx8RlvqwIbbo8ZdgvlGHqy
+	ZPGaeil8LzE/QetewnpyLgQvT/s5DfivTrEiTF5u9hg5Z9RdKiHPbVcvS4Grdapr
+	iLtashSJ9u/L0N9hJu7px5mhC8mS6Ay1AxmLQZ6kgAqFqQHnUIk2bg4pvGid2ag5
+	QC3LF+7WVHlxM+W1+RpK0GMZCPCd8iHluBQ==
+X-ME-Sender: <xms:0CCeaTp-xWKp0ZlJsAVewRbgCOkuu5u8nOSFNFmOn7HzteuLzpLqKQ>
+    <xme:0CCeaUjBI0K3vdA-PTPshYIRTMALWghnk-zKgUJdfzaSx0XtrwBnZM8kNdpEWn0gK
+    jOPpV2pScqWj79VrbxVvtspnmcdhvMnl8OW8WnNWW6amFghLbZ2iA>
+X-ME-Received: <xmr:0CCeaYiOUoo_DA4mFoKGZRR1DlNWJE_wyrhvR0CUc23BdVC_pp26xtAwnYO0UbCIFWyoai1ZWmOpmDORdHef4DCwAxdxzmxv1g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedufeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehfrghsthgtrghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvse
-    hsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-    pdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsthholhgvvgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:WhyeaYeJglLQSJYUeGlQtsAXBFk3nVk2W2glLtB1Xlrvrmz00SQzRA>
-    <xmx:WhyeafZm1mtglve5YCtgZvrX2pF3P_lAzxAR6ROMy8_yAvPyBxjEPA>
-    <xmx:WhyeaabYSqoPrrdM-ZL0DxAkSdJcTmBSt7_zeIv3dld3yY1LMf2PgQ>
-    <xmx:WhyeaUKzTvBBBYKyI-ikM2spwdjbM3BRzBPLfGZW-3RIyQgBFV4JJA>
-    <xmx:WxyeaRj7Si6PDjoH0_5d9R4xop-6i14UljNJxYMmI2e8JD4xujtSby8R>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeffieetueejveefheduvdejudffie
+    ejgeefhfdtvdekfeejjeehtdegfefgieejtdenucffohhmrghinhepghhithhhuhgsrdgt
+    ohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhhrhgvhigrnhhshhhprghlihifrghltghmshhmnh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepphhhihhlihhpohgrkhhlvgihsehivggvrdgvmhgrihhlpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:0CCeaSgKNuxrpmTvjYw2K1WczNUfi4k-y14dA31zCufeMxN5VmSbZA>
+    <xmx:0CCeaQIAGGJG3hZPsL7Wo9GWwao-hsHmXyF5RsNUMKsqUuVP0kwhGw>
+    <xmx:0CCeaZEmDhZKrC4F1Mau-EHEP9QoLFgo7MHjtgCsPLpyuHZb8yr1lw>
+    <xmx:0CCeacT5kby6rcbDueqeXYVuiw5N0N-7E6Bd0Yc5NGlYZNE7NJ8nmQ>
+    <xmx:0CCeaY6QPOqFiCzw0Xf3VVn433PUDKFrRDYF5kavCwyeV4Rgq9y-t5-x>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 16:47:06 -0500 (EST)
+ 24 Feb 2026 17:06:08 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  fastcat@gmail.com,  Eric Sunshine
- <sunshine@sunshineco.com>,  Jeff King <peff@peff.net>,  Patrick Steinhardt
- <ps@pks.im>,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 2/2] for-each-repo: work correctly in a worktree
-In-Reply-To: <4e3f4aa6cd36f779c6c1d6b4f30bb68ed807b9da.1771968924.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Tue, 24 Feb 2026
-	21:35:24 +0000")
-References: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
-	<pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
-	<4e3f4aa6cd36f779c6c1d6b4f30bb68ed807b9da.1771968924.git.gitgitgadget@gmail.com>
-Date: Tue, 24 Feb 2026 13:47:05 -0800
-Message-ID: <xmqqv7flervq.fsf@gitster.g>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org,  ben.knoble@gmail.com,  philipoakley@iee.email
+Subject: Re: [PATCH v2] send-email: validate charset name in 8bit encoding
+ prompt
+In-Reply-To: <20260224213932.92364-1-shreyanshpaliwalcmsmn@gmail.com>
+	(Shreyansh Paliwal's message of "Wed, 25 Feb 2026 03:07:39 +0530")
+References: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
+	<20260224213932.92364-1-shreyanshpaliwalcmsmn@gmail.com>
+Date: Tue, 24 Feb 2026 14:06:06 -0800
+Message-ID: <xmqqqzq9er01.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,97 +89,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 
->  static int run_command_on_repo(const char *path, int argc, const char ** argv)
->  {
-> -	int i;
-> +	int res;
->  	struct child_process child = CHILD_PROCESS_INIT;
-> +	char **envvars;
-> +	size_t envvar_nr = 0;
->  	char *abspath = interpolate_path(path, 0);
->  
-> +	while (local_repo_env[envvar_nr])
-> +		envvar_nr++;
-> +
-> +	CALLOC_ARRAY(envvars, envvar_nr);
-> +
-> +	for (size_t i = 0; i < envvar_nr; i++) {
-> +		envvars[i] = getenv(local_repo_env[i]);
-> +
-> +		if (envvars[i]) {
-> +			unsetenv(local_repo_env[i]);
-> +			envvars[i] = xstrdup(envvars[i]);
-> +		}
-> +	}
+> When a non-ASCII character is detected in the body or subject of the email
+> the user is prompted with,
 >
->  	child.git_cmd = 1;
->  	strvec_pushl(&child.args, "-C", abspath, NULL);
->  
-> -	for (i = 0; i < argc; i++)
-> +	for (int i = 0; i < argc; i++)
->  		strvec_push(&child.args, argv[i]);
->  
->  	free(abspath);
->  
-> -	return run_command(&child);
-> +	res = run_command(&child);
-> +
-> +	for (size_t i = 0; i < envvar_nr; i++) {
-> +		if (envvars[i]) {
-> +			setenv(local_repo_env[i], envvars[i], 1);
-> +			free(envvars[i]);
-> +		}
-> +	}
-> +
-> +	free(envvars);
-> +	return res;
->  }
-  
+>   Which 8bit encoding should I declare [UTF-8]? foo
+>
+> After this the input string is validated by the regex, based on the fact
+> that the charset string will be minimum 4 characters [1]. If the string is
+> more than 4 letters the email is sent, if not then a second prompt to
+> confirm is asked to the user,
+>
+>   Are you sure you want to use <foo> [y/N]? y
+>
+> This relies on a length based regex heuristic check to validate the user
+> input, and can allow clearly invalid charset names to pass if the input is
+> greater than 4 characters.
+>
+> Add a semantic validation of the charset name using the
+> Encode::find_encoding() module of perl. If the encoding is not recognized,
+> warn the user and ask for confirmation before proceeding. After this
+> validation the lenght based validation becomes redundant and also breaks
+> flow, so change the regex of valid input to any non blank string.
+>
+> Additionally, the wording of the first prompt can confuse the user if not
+> read properly or under any default assumptions for a yes/no prompt. Change
+> the wording to make it explicitly clear to the user that the prompt needs a
+> string input, UTF-8 being the default.
+>
+> The intended flow is,
+>
+>   Declare which 8bit encoding to use [default: UTF-8]? foobar
+>   warning: 'foobar' does not appear to be a valid charset name.
+>   Are you sure you want to use <foobar> [y/N]?
+>
+> [1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
+>
+> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+> ---
+> Changes in v2:
+>  - Added braces in if-else block.
+>
+>  git-send-email.perl   | 17 ++++++++++++++---
+>  t/t9001-send-email.sh |  2 +-
+>  2 files changed, 15 insertions(+), 4 deletions(-)
 
-Doesn't run_command() let you unsetenv in the child without
-affecting the parent process?
+Curious.  This change to t9001 was there even in the previous
+iteration that did not even work.  How did you test it?
 
-Looking at run-command.c:prep_childenv(), it seems that you can pass
-"VAR=VAL" to "export VAR=VAL" in the child, and pass "VAR" to "unset
-VAR" in the child.
-
-Or is it essential to unset in both parent and child while the child
-is working and that is why we unset in the parent and then restore
-later?  I find this highly confusing.
-
-
->  int cmd_for_each_repo(int argc,
-> diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
-> index 512af34c82..d55557a934 100755
-> --- a/t/t0068-for-each-repo.sh
-> +++ b/t/t0068-for-each-repo.sh
-> @@ -10,7 +10,7 @@ TEST_NO_CREATE_REPO=1
->  test_expect_success 'run based on configured value' '
->  	git init one &&
->  	git init two &&
-> -	git init three &&
-> +	git -C two worktree add --orphan ../three &&
->  	git init ~/four &&
->  	git -C two commit --allow-empty -m "DID NOT RUN" &&
->  	git config --global run.key "$TRASH_DIRECTORY/one" &&
-> @@ -35,7 +35,17 @@ test_expect_success 'run based on configured value' '
->  	git -C three log -1 --pretty=format:%s >message &&
->  	grep again message &&
->  	git -C ~/four log -1 --pretty=format:%s >message &&
-> -	grep again message
-> +	grep again message &&
-> +
-> +	git -C three for-each-repo --config=run.key -- commit --allow-empty -m "ran from worktree" &&
-> +	git -C one log -1 --pretty=format:%s >message &&
-> +	grep worktree message &&
-> +	git -C two log -1 --pretty=format:%s >message &&
-> +	! grep worktree message &&
-> +	git -C three log -1 --pretty=format:%s >message &&
-> +	grep worktree message &&
-> +	git -C ~/four log -1 --pretty=format:%s >message &&
-> +	grep worktree message
->  '
->  
->  test_expect_success 'do nothing on empty config' '
+Will replace.
