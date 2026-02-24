@@ -1,114 +1,99 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BCC171CD
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 00:07:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7334722A80D
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 01:09:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771891643; cv=none; b=GuLqsH4K9D/0xmOpPoM53NhanVV8qR/VqZABNlEA8NXHcQvylaJjj5PJ7Fmbyww1xOKqdmrYx80lfiuhZ622KwjMoso4ax2OBdlIIcvmMi/H2yqmCHyGlRO1Bz84jvNbUhUAgxJ9lHANzFNjObaMuuH3IoeJZjj1n7jAW6IE9Hk=
+	t=1771895391; cv=none; b=FaFwOrPhEevMvmOKUiumHig3CDX8DhQdH1CjSetmAldfBrbLNd7CogpyYA3mVo/ojKPfdY4WfqeivjiNNf3tcARXLN6wv8MkHPnGTPVDfhOfm85UYCR6CCnUUHS5lnq/55bTWxGCSYrQpzSX4HSNk9ZtK0r0MGngKrBaLHwJVCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771891643; c=relaxed/simple;
-	bh=OUnzSPoApnMUEZAecpGkBbSBIbXz0U3JYGlNmVM/ddA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Q/nGMF/eVYCpGjwR1xU8nV5H3cZ4R7jcN2dhbmorAKkBLbNOPpga1c9Pq71QUNlyI1GTqjlKErhHfc9rZtdFvENuf5yhQidcPXpimUXgMqczuvdII957q6Se90zEzNlLCXyv7ZEJAc+yai2kjeanrhBJ71qdsyAp+kd+bWeOFDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wclIzNSP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NDP0wz34; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771895391; c=relaxed/simple;
+	bh=hBVHPWyMFeOVX4Ke6n46MgXM+sMFaudDZBIVNlTm3Zs=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=VQ8hvrfbS3JfeRz+lzbeKndvmG2NECUIb2P0461CDjcuJ50+ETOrC/YgRaUId68gRoLyMKVPuAwNSt1FGhStC9BJxBB1f6lcfCcF618/X6IxXsXlRU5Cb/ZIAfCiIl7ZlyTBiXNaEChCrB3V8ul+fgGO9u53ijs/fYMZcgyTiMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lMlAzy52; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wclIzNSP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NDP0wz34"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CA4AF7A01C1;
-	Mon, 23 Feb 2026 19:07:20 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 23 Feb 2026 19:07:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771891640; x=1771978040; bh=y9qOs+iAj6
-	q1/3LNfaqDGGe0DBDEP45p2twA5wzbC9s=; b=wclIzNSP4v1orBdRn0WqN8cEku
-	4sMbCYilK5ymd0gvDGTBJnD4P1OlhmIpuW5o3a9yStSH2+LLZiuQj9yp2vqR/wVe
-	6LdgBQWGz/I7zmm9Ra6BVMiNbL7+Bs4NWQso37KHICrGRWNqWCMFo047vgvD2CTp
-	s9UgVvj03PFjLqWxLpWsD6j2yzXwSlmJrqVYidVlZ4deGSIXYHXUKLJiglhjjEBJ
-	ca+TkNhp5awuGhABC/FuZdhmwZ2pQ/d+dRKrfxp16CIZj3Etwrw80Wb70KaGEm7v
-	NxfG/dO875GciVnNul7vbmwjawLJsjt5P/is9s4Mvt1w1FuOizpQ1mmMLUOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771891640; x=1771978040; bh=y9qOs+iAj6q1/3LNfaqDGGe0DBDEP45p2tw
-	A5wzbC9s=; b=NDP0wz34iYzEDtjKZEx4gheMRadRqBb/nK7NSJ6dF+9JktfmuR3
-	F3MgO8KMvtsDtLv0bkvr8zjm4yanTk0XXjFgTDyT2NroVsjQfuNMfrWxjOOi6Sb5
-	Pq/striF32+Czr7ir6UbvoqLfOruRDR+hr+RGdkNXZ8GTSwWcHl3P/2zm+2KiQac
-	MZy9w0s6aF273NAf9HO4CAV+U3icuPtp0tj8HA5NrHTYXLVz0Y8BK0zbXTtzGQg5
-	5vOZs6jF4Bx2tZdKP8LlRp+nlP8a/Ug14JJ6PTZTvyRKins8wZsORYu9IR3fbEtx
-	pi9rOWW0tBCnq0TCuMx1mWAC507XjzR5qNA==
-X-ME-Sender: <xms:uOucac2KIM6fXJDFk65UgdYZwjDkuLW3Tf5yL1Dbl2rs04IdFE0duA>
-    <xme:uOucaayI_LIRcEEk4KMiNMSOet_rBKE3107XOeez8eO2v7a-ZVyxlVyF0lbGXFPkh
-    9nZMXcwIiPqMfq05fSsNPPN4jZ_LIg8Aq4MN3KuRxfVY0oZt7D0EAc>
-X-ME-Received: <xmr:uOucaesTpIdhOFsY_b--_Wf_yqWcRdyOHt5lW0g1-Wo4wd125na1JDS0Pc8VeH5ric78EUw5u90hcBi9_fbPI2xRzqfsmL0Cpg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeekieegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehvrghiuggrshdrphhilhhkrghushhkrghssehshhhophhifhih
-    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:uOucacwMUzVIr7Qwnu8k6VnY75D-CoBOSviyhNfsFDQ8HQp8YGPoTg>
-    <xmx:uOucaRCKYWxGK8FBfc1A3cbWhRM93KJ6ug1OM4Wa1GVGFFPhen0wNg>
-    <xmx:uOucaadHgn1F4Xrn2wa6LUD6NI9qaVQj0jqyZt81q-Og_dy15s2OCA>
-    <xmx:uOucabkC1WopzE56fTdZs3Kcat0cqeEnX0x-vNA-1OimHy3JOy7Skw>
-    <xmx:uOucafv7DjOoZT1ZZqOVemhWkTOs3xcN3mre_afx1USRc8diyrc9Osez>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Feb 2026 19:07:20 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Vaidas Pilkauskas via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Jeff King
- <peff@peff.net>,  Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
-Subject: Re: [PATCH v5 0/4] http: add support for HTTP 429 rate limit retries
-In-Reply-To: <pull.2008.v5.git.1771856405.gitgitgadget@gmail.com> (Vaidas
-	Pilkauskas via GitGitGadget's message of "Mon, 23 Feb 2026 14:20:01
-	+0000")
-References: <pull.2008.v4.git.1771423748.gitgitgadget@gmail.com>
-	<pull.2008.v5.git.1771856405.gitgitgadget@gmail.com>
-Date: Mon, 23 Feb 2026 16:07:18 -0800
-Message-ID: <xmqq5x7nknrd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lMlAzy52"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-43622089851so4872276f8f.3
+        for <git@vger.kernel.org>; Mon, 23 Feb 2026 17:09:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771895388; x=1772500188; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=soXUqTaVK5VNkh2DElTIOrf4n+I8zS5BiEsvWqjyxEY=;
+        b=lMlAzy52sbSeAuC+w08UwJ1/phRm8U3SgqDGto2s3dAbpQ28tNwHDcc8dPUaj2lxIb
+         1v50Rbo/eDkdaQ0qbYk4ZTPVqsZDIdcXapQGro1lzpzR6Uu9gRgPGaNksZu4+V+EvKvj
+         ZS/VbPfpnllMdc/y3aSJABpKgdqx2FCWqEm8LtJmkbXmnkFRWsPNLIJzatOEeFu6vCEt
+         cbqXvUaIaYaNRO19lMwN46f5KbEHAh5B/Tn+WmkINvNtdk7ApU3w4CqDqtRYNhdEm5dG
+         yrmgth6CDWCXVEtyU8OXvjq4ARrB1EWE3XxOsvH65AJmtCzFXA+PQimqOm9iGmNoob/0
+         gXKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771895388; x=1772500188;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=soXUqTaVK5VNkh2DElTIOrf4n+I8zS5BiEsvWqjyxEY=;
+        b=tu7HxnSiB++h35JAJmeYyh2V8q00I3lU2VcZcGLTZ/1EUZdskPXmTuOszS8/VceJXc
+         EpdUaRCQ87FZuko7vSBTBT7i+vFqKeDZKKva5Shn5HityniKymEUkUwJsQwnigdxM+ZQ
+         n+a4nf4GdEeHpBnAm/DX+mYMB2yLhozHiWLCr6r17abKJFdtFbEJrr9EmXL8CDR/nUU9
+         HjUe2wfXrp2+92tQhZkaZXaqw8mhXfi64c0VTFlHeD7lH4Qmk2LMfiAREfkp0iv0CPxW
+         Stuq2sWjjMyhR+fPa7FoVpiYVJfGB/pxuC0nbv4N9wOuTi7+drB8pWBJZ9Dt263QPuKp
+         D3Nw==
+X-Gm-Message-State: AOJu0YyI+Xpv8V7u2InbGIQkAR06C7mPMz021yrIisyjq3h694+m3fdd
+	osmx+TT7CLXitNC/DVpt+KmIW/csxfMunMM4FWLITq/DxoWYxEFNSwwMik5qtw==
+X-Gm-Gg: ATEYQzwQGzFAkvqJLYhLfgApeo2vcQwOTnnMcdHgp7c7rlsEdf2KPiiEzjBnDvLFZSE
+	FBBkxBB56j7md64BIAGZ/5gkaB3L6qtlipI7IkcSvrxuHJY8OVz+FiX2aU8/SOFoB3o6knCUMcn
+	Mw2t419EswZjrNv5ckAHEfrsbrtwaSilUryigpo+Zls349RdaaLdgcTujXc7o+tEgOvicQdL5G1
+	tBU17AmpPHZSXE6o0pKulwy5eEiWLf6AwEJN3f8OWmEPnZehNRWAg12cYqwQPapR6nMzsbK5rtF
+	h818hl+4qDB8rTkQbIAvZRz4Lcn1MmijKkyLPfIcshHH3VsCSVMwudOaq3uV61SZO+kb9l23Ply
+	88M4nmiEPzky/vpI+D3B1tmlt/35jm4kaj63KLv/dTVB+JZHhSwD582SWcQ8Um+EMX4N59J8n3V
+	cdfqUsHxjp8HhHGgp6PV6aYHEAH39tc8QfG3IO4MmiuIckRg==
+X-Received: by 2002:a05:6000:611:b0:432:5b81:483 with SMTP id ffacd0b85a97d-4396f15c44bmr18750716f8f.24.1771895388270;
+        Mon, 23 Feb 2026 17:09:48 -0800 (PST)
+Received: from lorenzo-VM ([84.33.161.195])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43986aa2f84sm448039f8f.7.2026.02.23.17.09.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Feb 2026 17:09:47 -0800 (PST)
+Date: Tue, 24 Feb 2026 02:09:46 +0100
+From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [GSoC PATCH 0/2] diff: handle ANSI chars in prefix when calculating
+ diffstat width
+Message-ID: <cover.1771894207.git.lorenzo.pegorari2002@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-"Vaidas Pilkauskas via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+This patch aims to fix a bug where the calculation of the diffstat width
+incorrectly uses the strlen() of line_prefix instead of its actual
+display width.
 
-> Changes since v4:
->
->  * fix only strbuf_attach() calls which don't need reallocation
->  * remove patch, which enforces strbuf_attach() contract via BUG()
-> ...
-> Vaidas Pilkauskas (4):
->   strbuf: pass correct alloc to strbuf_attach() in strbuf_reencode()
->   strbuf_attach: fix call sites to pass correct alloc
->   remote-curl: introduce show_http_message_fatal() helper
+This patch addresses the NEEDSWORK item added by ce8529b2 (diff: leave
+NEEDWORK notes in show_stats() function, 2022-10-21).
 
-These three patches looked quite reasonable to me.
+Also, this bug was reported and suggested to me by Junio C Hamano here:
+https://lore.kernel.org/git/xmqqikd3ermt.fsf@gitster.g/
 
->   http: add support for HTTP 429 rate limit retries
+Junio, do you wish to be included in this patch by a Reported-by and/or
+Suggested-by tag?
 
-I'd feel comfortable to see somebody more familiar with the HTTP
-transport code base to take a look at this step before we declare
-victory.
+LorenzoPegorari (2):
+  diff: handle ANSI chars in prefix when calculating diffstat width
+  t4074: add test for diffstat width when prefix contains ANSI chars
 
-Thanks.
+ diff.c                                      | 12 ++----
+ t/t4074-diff-stat-width-with-line-prefix.sh | 42 +++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 8 deletions(-)
+ create mode 100755 t/t4074-diff-stat-width-with-line-prefix.sh
+
+-- 
+2.43.0
+
