@@ -1,118 +1,280 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54152366DD3
-	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:41:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC45236604E
+	for <git@vger.kernel.org>; Tue, 24 Feb 2026 08:45:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771922515; cv=none; b=K5joWuvJmhF9KSeS0qvIELUye3s9DP3EMVfVDf3T6Q2km1NMOYDbJV3XewYpVWda3Crql5IR0zl3OdmVXS60c3TniVxcbWTOkJZ58owSUl04yPkfT7r0atOZjMjnn4hW3UcNiB8luZc/TRiGtR9Hths+7ScB9cWnPDgUd6u2oDI=
+	t=1771922756; cv=none; b=pnbYDSu7A6qWK8sbxBtxjUF5rr+QRALY1TOMV/mLvXyXqqoYDR9ufna4BpCdSxu8RImM+JXidnFCL4cWoXNu8UeYC6TCQn8y49dzoEZ25bqVRdi2NGdDsG+R37ZKNLUgJ/gF6oYbpoQ4rekEnFf7wgn6lIdiPmBvVXqT1hPj8Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771922515; c=relaxed/simple;
-	bh=Z5v0PPYNP/hBWDo9rlSq6JTdbO9a/dak8zQdpNM5Taw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pKqS8rP1Hyvheh9ZICllH1clpg68PCdkGaiqczkB0Eam5C6RqAifSle6g25YKBpKVHSaFPf0Mms6UMZmfzywkbo22UbE0zYSWZ+RnxVCZX6DxkfXnX3onVPMi/6sfQ20pJtgYjQwC2Ofygy64ANNB23mBJ++iLOWUM3EcC9gJLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gpaf7AHm; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1771922756; c=relaxed/simple;
+	bh=wqwq9Hze5Kj2cqiYEjOkSX3kAi0xvbcCpIDwI5y/SU0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=chVORSWI06OOQPlKXXQQdCDGTvdD/42zAalnBdNG5d+sQNQQCoO1qU1RpT7QGI4AmFqjEmBSTPvuvR1FOKyllBqZZprG+1yCHK2HzFOfPlz9HypsL0q2iE+2fAn0F6Jx11uMflcCUKf81sBrOZp5fv2Rk228rEdKfHLNi6QyMr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LVRI/9cG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=guZFhC+C; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gpaf7AHm"
-Received: (qmail 59458 invoked by uid 109); 24 Feb 2026 08:41:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Z5v0PPYNP/hBWDo9rlSq6JTdbO9a/dak8zQdpNM5Taw=; b=gpaf7AHmZ/G3x1U3oRObejqas4AjX7dTt/kqIj+2mo3nHUxHi1nX4VY1RDzlwzp7wZtS/uo2Cjpw+ypR3XFnnhV34XSZzE3ZoqM+UIh8EXTA875ukFnshW5Ul0rQTrZYRcVq1UuSDD0vqwmO+QRMvXZLRbeYJ2x8WvcbV+n1tjy2Av0EPXTV+n8KCPI+bnw7aNX9oYPtUVQvZm88o2FOH+soC+P3m5tw9xNwkDZpWYLUYnzl5IHSGblsAWhLiXtwAfRh9l7f6g2jNlr4CJVU0fhiR1SzTrvMlbucpA4cSgPhXUwheEdIjkv3j+hqn4tJeHO0GF36wTmE4X4ucrMRDQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Feb 2026 08:41:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 142318 invoked by uid 111); 24 Feb 2026 08:41:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Feb 2026 03:41:54 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 24 Feb 2026 03:41:49 -0500
-From: Jeff King <peff@peff.net>
-To: Mirko Faina <mroik@delayed.space>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] pretty.c: fix null pointer dereference
-Message-ID: <20260224084149.GA986367@coredump.intra.peff.net>
-References: <20260220230633.132213-1-mroik@delayed.space>
- <20260224040400.751247-2-mroik@delayed.space>
- <xmqqcy1uk69o.fsf@gitster.g>
- <aZ1JND7sGspCJEoc@exploit>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LVRI/9cG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="guZFhC+C"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0115314001D1;
+	Tue, 24 Feb 2026 03:45:54 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 24 Feb 2026 03:45:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1771922753;
+	 x=1772009153; bh=QjoFeXiLiQEZTYChe3CP5fQMgUVwqht5L4q7+E5pTv8=; b=
+	LVRI/9cG2A2mUPPiYWnd+VzlUAeuKacNQDPJfzJdqmWoMyk0F2Uan8EB09IuCOdb
+	blJaEDNNycFuUTeVgNfbo2pXazcIEANZCHuZdicHCRoUYBGV1Hlin+bxJ48AABiF
+	5WDqiEIQyDMngqGI6hg/I1zA9Dn/HWb9QWfWBuGgnPSfXVMIPQ/uXUMtIMxYHCUy
+	/YmC8pRx2dCgXCElvGVeP67XMTp4Su+YdScPiGcHrdeFTLgg14Tfs4W8MqtdHCzu
+	yJ2KNwNTDlreR5KcH6UmLcWcUplQhXtxwtmWaMZQoL+kCsVqlOHD9pS+/JMSinpe
+	+BCsewLByXkJOVZTnYe6YQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1771922753; x=
+	1772009153; bh=QjoFeXiLiQEZTYChe3CP5fQMgUVwqht5L4q7+E5pTv8=; b=g
+	uZFhC+CP2h3jPnh96U2yqdQ6M5oyGplJX4mB/K+dRnyHtlGMMUqAzcg6/0SkAec/
+	/sXTkYfCnhKT/HbappsIHyB/ekibjoPrOodGksiOwe55rJjogrmeKHqiVBfq7HIT
+	cxdMA71rYfSJ3GvP1rYNTgYAZdFnU3EIzGatVw5XIR0sFvh1Z0Ab1D2bGGHa7N30
+	t28ZMce6UBgmAU59Re0jD7L1lr9IJMgTxeQNhquHvIPoVcu/noAAoJcTFd7haaOR
+	OYiewCXJVyioAItDQeGp116CJxFti8YCgTTiaCVIriqZFYKqxRQyQQQ2jwhJG2OS
+	Nt4c2bJYs/fuRQQ1HBsNw==
+X-ME-Sender: <xms:QWWdaapufEJr65QTtFEwF7OvMyg3vzBQK7P5vDl8K8EoG1bqPso4NQ>
+    <xme:QWWdafqaTu6Mgv0NIhAbJ2u40_Um2fgj5dfkfT7Vhm-0x7_StGrmZMg-MKGRKbWYV
+    -aoVB_FU3dnetbDdpuw-hT3yZ1tdEzXTQdi6Kjdj6tTQ2QESZBLYJ0>
+X-ME-Received: <xmr:QWWdaUOmFi9ypzzexDzOCr9ErZD2iJjR_irNc79c9EgtBvXFpzRUQIl4OM1r7CdOLKZgMP5HchsPUeYCNwFMgzZ4gE17C0t-7PFkn10yxMuOfw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvfeeljeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeuvden
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
+    gedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehj
+    lhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:QWWdaYwK6Z5IY-f1iXQhCIbFD0b0fHmZRHn6Ng46SiQAmbdwQ3VNmQ>
+    <xmx:QWWdaVt7BNfrOnKD83g7Pc8JKcin2OxC1NV2_MXaUwXqJ52usqaGRw>
+    <xmx:QWWdaZ6VNoTaF-hdDeAmnnPWF4fhqVS6bNRtyh6yGK-ebHczerhXgQ>
+    <xmx:QWWdacS7PM_TMcd16Dbsyzp333aMPzzKr7EIoIxej45AlIhG4FSbHg>
+    <xmx:QWWdafIUJuwwbTaYEdzYVDwsetaJ4DsuCN_ISoJJkaWS9kCn0v9_RhVW>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Feb 2026 03:45:53 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 94ae9697 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Feb 2026 08:45:52 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/8] builtin/maintenance: use "geometric" strategy by
+ default
+Date: Tue, 24 Feb 2026 09:45:44 +0100
+Message-Id: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-0-8657338c6fa1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aZ1JND7sGspCJEoc@exploit>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADhlnWkC/5XNTQ6CMBCG4auQrh3TKQR/Vt7DsCjtFCZKIW0lE
+ sLdrcQLuHwnme9ZRaTAFMW1WEWgmSOPPoc6FML02ncEbHMLJVUtFZ6hrWB6RBg0+0Ree0Ngyen
+ XM0FH40ApsIGYgk7ULYAnZ8i6i6pqFHlzCuT4vXv3JnfPMY1h2fkZv9efpOSf0owgwWlqS4XaY
+ tne8vORB9Fs2/YBjQ9YpecAAAA=
+X-Change-ID: 20260218-b4-pks-maintenance-default-geometric-strategy-17fcedf92461
+In-Reply-To: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
+References: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
+ Justin Tobler <jltobler@gmail.com>
+X-Mailer: b4 0.14.3
 
-On Tue, Feb 24, 2026 at 08:08:35AM +0100, Mirko Faina wrote:
+Hi,
 
-> On Mon, Feb 23, 2026 at 10:25:07PM -0800, Junio C Hamano wrote:
-> > Interesting.
-> > 
-> > Are any of the existing calls to this function that passes
-> > CMIT_FMT_USERFORMAT trigger a segfault with certain condition?
-> > 
-> > For example, there are only two places where CMIT_FMT_USERFORMAT is
-> > assigned to something.  One is save_user_format() where user_format
-> > gets a non NULL string before rev->commit_format gets assigned
-> > CMIT_FMT_USERFORMAT.  Another is git_pretty_formats_config() that
-> > parses configuration variables "pretty.*" and populate
-> > commit_formats map.  This is later used in get_commit_format() and
-> > that function always calls save_user_format() we just saw when the
-> > format used is CMIT_FMT_USERFORMAT.  So the existing code paths seem
-> > to be safe by design.
-> > 
-> > What I am wondering is if a NULL user_format should be flagged as a
-> > programming error, instead of getting swept under the rug like this
-> > patch does.  IOW,
-> > 
-> > 	int commit_format_is_empty(enum cmit_fmt fmt)
-> > 	{
-> > 		if (fmt != CMIT_FMT_USERFORMAT)
-> > 			return 0;
-> > 		if (!user_format)
-> > 			BUG("never called save_user_format() and using USERFORMAT?");
-> > 		return !*user_format;
-> > 	}
-> 
-> This doesn't convince me, I think it is a bug. If dereferencing NULL was
-> done on purpose why not use die() instead? Also, the only way for us to
-> check user_format is through commit_format_is_empty() as it is static.
-> In a complex config setup it might be useful to double check just to be
-> sure, and I wouldn't want the program to crash on a failed check.
-> 
-> save_user_format() is not available neither, so evaluation of the format
-> string has to be done through get_commit_format(). If I pass any of the
-> predefined formats (CMIT_FMT_*) get_commit_format() won't set
-> user_format. So the only way for us to check if it was set is through
-> commit_format_is_empty() (well technically there's
-> rev_info->commit_format but it still doesn't feel like it was
-> intentional).
-> 
-> But if the intended behaviour was for the program to crash then I take
-> issue with the name.
+this series converts our default strategy used by git-maintenance(1)
+from "gc" to "geometric". The aim of this is twofold:
 
-I am not quite sure what you are asking. No, the intent of that function
-is not to crash. It is to check whether the user passed us an empty
-string. Like the "git diff-tree --format= $commit" example given
-in the commit message of b9c7d6e433 (pretty: make empty userformats
-truly empty, 2014-07-29). If they did, then the first character of the
-string will be the NUL terminator.
+  - It completes the conversion to a more flexible infrastructure for
+    repository maintenance. git-maintenance(1) is structured around
+    tasks that can be toggled on/off as needed, and this is a lot easier
+    to extend going forward.
 
-So dropping the "*" as your patch 1/3 does is just wrong. It is losing
-the check for an empty string and replacing it with a check for a NULL
-pointer.
+  - We start to use a more efficient repacking strategy by default,
+    which should especially help large repositories out there.
 
-The user_format string should never be NULL if we are using
-CMIT_FMT_USERFORMAT. That's not checked for explicitly here, but is an
-assumption of the pretty.c code. If there's some way to violate that
-assumption, that's a bug (but it sounds from digging that there isn't).
+Out of these two, I think that the first point is actually the more
+important one.
 
-If you have _new_ code which is using CMIT_FMT_USERFORMAT without
-setting user_format to a non-NULL value, we might need to work around
-that assumption. But I think what your 2/3 is doing is not quite at the
-right level, which is the source of the trouble. I'll respond separately
-to that patch.
+Unfortunately, a lot of our tests are racy or will fail with the new
+strategy. This is mostly because the new strategy may decide to optimize
+data structures in cases where the old strategy didn't, and because the
+tasks we perform might be different. The majority of this patch series
+thus adapts our tests accordingly. The actual change is a one-line
+change in the final commit.
 
--Peff
+I was a bit torn initially whether or not I want to make the geometric
+strategy the default right away, or whether we might first want to use
+"feature.experimental" as an additional step. I'm quite happy to adapt
+the series accordingly, but for the initial version I thought it might
+invite more discussions if I pick the nuclear option :)
+
+Of course, no matter how we do this, it is still possible to revert back
+to the old strategy by setting "maintenance.strategy=gc".
+
+Changes in v2:
+  - Document the updated default strategy.
+  - Clarify how this interacts with Scalar.
+  - Explain the current landscape of strategies a bit better.
+  - Leave some breadcrumbs in the tests.
+  - Link to v1: https://lore.kernel.org/r/20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im
+
+Thanks!
+
+Patrick
+
+---
+Patrick Steinhardt (8):
+      t: fix races caused by background maintenance
+      t: disable maintenance where we verify object database structure
+      t34xx: don't expire reflogs where it matters
+      t5400: explicitly use "gc" strategy
+      t5510: explicitly use "gc" strategy
+      t6500: explicitly use "gc" strategy
+      t7900: prepare for switch of the default strategy
+      builtin/maintenance: use "geometric" strategy by default
+
+ Documentation/config/maintenance.adoc   | 6 +++---
+ builtin/gc.c                            | 2 +-
+ run-command.c                           | 2 +-
+ t/t0081-find-pack.sh                    | 1 +
+ t/t3404-rebase-interactive.sh           | 6 ++++++
+ t/t3406-rebase-message.sh               | 6 ++++++
+ t/t3431-rebase-fork-point.sh            | 6 ++++++
+ t/t3432-rebase-fast-forward.sh          | 6 ++++++
+ t/t5316-pack-delta-depth.sh             | 1 +
+ t/t5319-multi-pack-index.sh             | 1 +
+ t/t5326-multi-pack-bitmaps.sh           | 3 ++-
+ t/t5327-multi-pack-bitmaps-rev.sh       | 3 ++-
+ t/t5331-pack-objects-stdin.sh           | 2 ++
+ t/t5332-multi-pack-reuse.sh             | 1 +
+ t/t5334-incremental-multi-pack-index.sh | 1 +
+ t/t5400-send-pack.sh                    | 1 +
+ t/t5500-fetch-pack.sh                   | 3 ++-
+ t/t5510-fetch.sh                        | 1 +
+ t/t5616-partial-clone.sh                | 7 ++++---
+ t/t6500-gc.sh                           | 1 +
+ t/t7700-repack.sh                       | 3 +++
+ t/t7900-maintenance.sh                  | 9 ++++++++-
+ t/test-lib.sh                           | 4 ++++
+ 23 files changed, 64 insertions(+), 12 deletions(-)
+
+Range-diff versus v1:
+
+1:  c5fadf42d0 ! 1:  9efc6d0a22 t: fix races caused by background maintenance
+    @@ Commit message
+         background maintenance all over the place.
+     
+         Disabling maintenance outright in our test suite is not really an
+    -    option, as it would result in significantly divergence from the "real
+    +    option, as it would result in significant divergence from the "real
+         world" and reduce our test coverage. But we've got an alternative up our
+         sleeves: we can ensure that garbage collection runs synchronously by
+         overriding the "maintenance.autoDetach" configuration.
+    @@ Commit message
+         slightly, but that may just as well be noise.
+     
+         Introduce a new `GIT_TEST_MAINT_AUTO_DETACH` environment variable that
+    -    allows us to override the auto-detach behaviour and set that varibale in
+    +    allows us to override the auto-detach behaviour and set that variable in
+         our tests.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    @@ t/t5616-partial-clone.sh: test_expect_success 'fetch --refetch triggers repackin
+     
+      ## t/t7900-maintenance.sh ##
+     @@ t/t7900-maintenance.sh: test_description='git maintenance builtin'
+    - 
+      GIT_TEST_COMMIT_GRAPH=0
+      GIT_TEST_MULTI_PACK_INDEX=0
+    -+sane_unset GIT_TEST_MAINT_AUTO_DETACH
+      
+    ++# Ensure that auto-maintenance detaches as usual.
+    ++sane_unset GIT_TEST_MAINT_AUTO_DETACH
+    ++
+      test_lazy_prereq XMLLINT '
+      	xmllint --version
+    + '
+     
+      ## t/test-lib.sh ##
+     @@ t/test-lib.sh: test_lazy_prereq COMPAT_HASH '
+2:  805417a4a7 = 2:  f80bde1353 t: disable maintenance where we verify object database structure
+3:  8a579a768d ! 3:  7087a68815 t34xx: don't expire reflogs where it matters
+    @@ t/t3404-rebase-interactive.sh: Initial setup:
+      . "$TEST_DIRECTORY"/lib-rebase.sh
+      
+      test_expect_success 'setup' '
+    ++	# Commit dates are hardcoded to 2005, and the reflog entries will have
+    ++	# a matching timestamp. Maintenance may thus immediately expire
+    ++	# reflogs if it was running.
+     +	git config set gc.reflogExpire never &&
+     +	git config set gc.reflogExpireUnreachable never &&
+    ++
+      	git switch -C primary &&
+      	test_commit A file1 &&
+      	test_commit B file1 &&
+    @@ t/t3406-rebase-message.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      . ./test-lib.sh
+      
+      test_expect_success 'setup' '
+    ++	# Commit dates are hardcoded to 2005, and the reflog entries will have
+    ++	# a matching timestamp. Maintenance may thus immediately expire
+    ++	# reflogs if it was running.
+     +	git config set gc.reflogExpire never &&
+     +	git config set gc.reflogExpireUnreachable never &&
+     +
+    @@ t/t3431-rebase-fork-point.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      # C was formerly part of main but main was rewound to remove C
+      #
+      test_expect_success setup '
+    ++	# Commit dates are hardcoded to 2005, and the reflog entries will have
+    ++	# a matching timestamp. Maintenance may thus immediately expire
+    ++	# reflogs if it was running.
+     +	git config set gc.reflogExpire never &&
+     +	git config set gc.reflogExpireUnreachable never &&
+    ++
+      	test_commit A &&
+      	test_commit B &&
+      	test_commit C &&
+    @@ t/t3432-rebase-fast-forward.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      . ./test-lib.sh
+      
+      test_expect_success setup '
+    ++	# Commit dates are hardcoded to 2005, and the reflog entries will have
+    ++	# a matching timestamp. Maintenance may thus immediately expire
+    ++	# reflogs if it was running.
+     +	git config set gc.reflogExpire never &&
+     +	git config set gc.reflogExpireUnreachable never &&
+    ++
+      	test_commit A &&
+      	test_commit B &&
+      	test_commit C &&
+4:  283143c1d8 = 4:  d230055b22 t5400: explicitly use "gc" strategy
+5:  410dc16eb0 = 5:  dba219391f t5510: explicitly use "gc" strategy
+6:  c4c8c5a7e4 = 6:  61bc1add2a t6500: explicitly use "gc" strategy
+7:  93893cfee3 = 7:  b89505178d t7900: prepare for switch of the default strategy
+8:  9e7aa390a5 < -:  ---------- builtin/maintenance: use "geometric" strategy by default
+-:  ---------- > 8:  647d46a239 builtin/maintenance: use "geometric" strategy by default
+
+---
+base-commit: 73fd77805fc6406f31c36212846d9e2541d19321
+change-id: 20260218-b4-pks-maintenance-default-geometric-strategy-17fcedf92461
+
