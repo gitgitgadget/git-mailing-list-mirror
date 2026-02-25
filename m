@@ -1,121 +1,96 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5410F182B7
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 18:45:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4B031815D
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 18:54:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772045119; cv=none; b=Nqd9hPTbmviAMbgzQ+F14poP7s1K74wZxt1CGpIapyDmllwt7n++OxQdNW//AfRgfxSRrH071TaB/u7EiCaw633LxwbiMXHqvMsWjcjpkI+kIekNpcJSpPboVLm9OWXbRW2p6t/W4VjYaB7uvUG8x8hzF8ioBkGI7AX+fvI3H1U=
+	t=1772045644; cv=none; b=TwxPj/Zs/jgkiCeWwiSiRzjFKDm5s3Shpyih+9iXhriT920XS0MTcCFdXWQ6TtSBERovcKlkbFcF8O1p2hTxYkQMyB7SH3aUToCAMWQjgSn8GMWNe3czfUbjQwQ2PinEepLPrKabYCF2fCpEAwMdh1bhy0TybBveUlPHgNtw3Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772045119; c=relaxed/simple;
-	bh=2kNvqUFHTBxzws+sYWf9bVsXnDu2/tz0GdA1LICAWek=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oul1IlSGffTS2ZYNYDHpK9t2prjh+BGcj1+EaIbgRv9HX4DWfDodElCIsKQcsbZSP5uhmgZYjEViaSKinnRt0UnX7s0/BSb3uLDZ2O3BrMCwfAoISoqo2QoCCp7wA59h7PyV/tmJYSGdCpZJgN5XgdEzDu7KfqmpIuxamqnFQXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X+qXTxn2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hBuccg8c; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772045644; c=relaxed/simple;
+	bh=/8kjQFZp05wZFA3oz5RT822e+CoyqUwv8CJf5NSRw84=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=iTq/k7P3JWMfrtrKyd7SXJQLVjryFF1e5TLfJTOSP0qg2SW2wsjVAE1RPwsooaDqIeEqL2em7iZkDz73vu2hSZwFZws/Fz2k+kS6o9Tl67GLu04MNujPUmLLzowqUWFJPbqn80vW9oBlON1lN5FgIribn6vf0X+qeUJjQDe1VMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MBmVQly8; arc=none smtp.client-ip=209.85.222.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X+qXTxn2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hBuccg8c"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 95F031400233;
-	Wed, 25 Feb 2026 13:45:17 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 25 Feb 2026 13:45:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1772045117;
-	 x=1772131517; bh=bp7WmDGDTtus3enH4Lbc1+CsLCx1LZA29Bn0+gWSqBc=; b=
-	X+qXTxn2NeR/yoFFio3ZPUNQhfwPOQm7Xocc0iu28a5eLhEJVIk7eI5Kp03zRuqd
-	skfyDuA1eHJzhV/hu1lN0NNGQItwSGdfbFBIjyEVtyGYpPT/MfypaIuxFcojY630
-	adQSDmRW0wPREYv+hBLH9YBy3jJmkItj75FxSxVVrop9Xp8KLTedEKictk5jHfxv
-	QGQV1ljuAQt9atporRD6vdMaKJbZCybpb6qFwiqJ/c69xxxjwzuTXEfIhi+PiZUK
-	m46L7F+dYgf2x7MRfQW4OpBIXqj3ONVfwAPggOzwfFEWkdLK9s7TQkNATMF31LeA
-	rRq0tzcde1wFQWpNmqfosQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1772045117; x=
-	1772131517; bh=bp7WmDGDTtus3enH4Lbc1+CsLCx1LZA29Bn0+gWSqBc=; b=h
-	Buccg8cB1BFeaCSHs4a/w1A44naPdrVVOCqrCgTFa9zTrAxSdWxAeG6VS9t9paOw
-	8iMyL9/6NQzlPfMny5xxwNggsP2BwGEu8eYf+AK9nGRxW/2ylHrs1sNXPJzBuNZP
-	3+Ssa9KVzpcPSKR+zc5y7VcW7CZ4bWfedXy2C4xbcgBYGrR4v60cDdhIPoVtG4js
-	Fu7L9qbvDbboaDfPhKguqWKSrLJiNtwCFecAZ/UX9evKEs4LaUn+XeqAMoVkbicc
-	LBMDLEqFLWEQ3z41/9BAXsiswq2LjlDv7ukSFLs6fKFvAquDHslqRHqqohXQITIG
-	/jmgshJe0VKiYXEpgOnog==
-X-ME-Sender: <xms:PEOfadEOiWWb4n8-AaK2dNJcUEPAh3Qdp4ws_rNTUbI-hwg8TaiEOw>
-    <xme:PEOfaXTK41L5IoqKQbfIiW61VunE-MeKat78s048BU91oA3slLVPNnZpqwtJTRJ4O
-    g_xRaXzjxyCGFp6NEHgVr3teIykslC6bvErabOof1w7mF2-vB8w>
-X-ME-Received: <xmr:PEOfaTabUa-F1EOP4XvJxmnsw4Dgcql1QFHi9tInba_OQeMs4ieXNQCE9oYkSh1pXEgZjEP_HgxoZwhCP5drwnQ6JltiB6kKBg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeefkeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
-    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgrrhgtnhgrrhgtseigihhp
-    lhhinhhkrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepvghvrghnrdhmrghrthhinhesghhmrghilhdrtghomhdprhgtphht
-    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:PEOfaS1Qm_KADWYAJ1uVfD3OBvAB6KHB8Djame-u70Rc1YxPfIWdDA>
-    <xmx:PEOfaWqNrI4BqFTMT3HM0gpW7D1fERP5NOYj2rs95KatbY9NcybCbw>
-    <xmx:PEOfaRNZCYhHuQHjYYhA7UBuP01vjoWSdQxi97vPR9UH893Bs6W_3Q>
-    <xmx:PEOfafo3LF3eY5bN_SnxsexIvkFkCZsZZi0Q-dr2488K9ROhZClZcw>
-    <xmx:PUOfaQe_DtiSRevilHo7c8p34pSydggcSztfidKACoLlLrkc5ZYGMElS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Feb 2026 13:45:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>,
-  Patrick Steinhardt <ps@pks.im>,  Marc Branchaud <marcnarc@xiplink.com>,
-  SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,  Evan Martin
- <evan.martin@gmail.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v7] build: regenerate config-list.h when Documentation
- changes
-In-Reply-To: <4ef96c6bbf698a08df1df87b7cb053b6d0d00822.1771943954.git.ben.knoble+github@gmail.com>
-	(D. Ben Knoble's message of "Tue, 24 Feb 2026 09:39:44 -0500")
-References: <5dcd4e9308100a25603c50fecb36447c0ee4df62.1771682788.git.ben.knoble+github@gmail.com>
-	<4ef96c6bbf698a08df1df87b7cb053b6d0d00822.1771943954.git.ben.knoble+github@gmail.com>
-Date: Wed, 25 Feb 2026 10:45:15 -0800
-Message-ID: <xmqqv7fkachw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MBmVQly8"
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-94dda16ff9aso11591241.2
+        for <git@vger.kernel.org>; Wed, 25 Feb 2026 10:54:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772045642; x=1772650442; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/8kjQFZp05wZFA3oz5RT822e+CoyqUwv8CJf5NSRw84=;
+        b=MBmVQly8hqNGJ7x04pYi8TQyZ2d+ZD2Y6vQjhx7fOq7RqJLTByPufCb4EGvex0P5ey
+         9etvv1eGrULHKJzcU7ihlFEYR8Oonw00V9sT9gGtFGl91xrccxjY6T44V+WkUF9pd4Gd
+         TAIj5e5L+pPaP1vIujBNPL+Y3lQCnBhak9ydoR5KE4RXblaCQxXjK8KXu+364Z7PxXkR
+         FtD0JXuYmuh+go009L6Kdpdf7Cc5Ngb+Wazn92dtt/Fb450fHpU3nm+gd9bFhvyHrV2D
+         CicKRAlCGTHm4w7fTsL31Nj/EicDejsmWXU9FRz3nSEulwCXugB2sFIzLpJY+WuYjOyv
+         7exQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772045642; x=1772650442;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/8kjQFZp05wZFA3oz5RT822e+CoyqUwv8CJf5NSRw84=;
+        b=WdnCq3W8tcRL8oHfkzWztn0SyjdgzDXrL101246UDYIAb0cHU95LFAy9puXKlhU5/f
+         GNnqGKfcvOIIP3uNJEyAymy2QwDpYhtFsxL59zCtecv18KYAple46VVnToN2oKUrXJIZ
+         ba2H12SHK1F38uGy0HKRFQ/V+iAjBNbH7chEEkfv07VxiJlEUD0Vn0H9DKs+uot6QDOs
+         wqfK7myBsziVF5NB+3uhK/yI6vKRrD4+JpZQcHrbF88uUALXdYeyGojPu2JeTtziS77t
+         PgtEUa1oVhKSEsh4ZwZ+JAQOXNxtjddrJ8Zf/yZ1FJmgFCdT9XVKh94AjNkri0Rfy93u
+         HTtA==
+X-Gm-Message-State: AOJu0Yzk5H1gJwwtAoQjH+bEJG/IlHc6ZDNqZB98VuiSzalyuAyfS5UF
+	WrlCHMUJ4JZ8S768OrwgI87J7JvHizQ9QSbonI55O149eGwWMyw+FdqapHG/yQ==
+X-Gm-Gg: ATEYQzy/U5AT2dy3CTCFOCA+GGFMDeR+AhCqS9qB/d9+R2sx72ny07F65TpFAu65P7q
+	dyvhhcw196TojVMojYI0WYEJwZA7seYITMDr/rkFwIhPHx98H3TdMkweSg8DP6J6at8F+pDHC7h
+	WKKzlOi9Q8HcfsOYaqwMKpPKrjkNMQG6ruZSBY+je/SuPBQS8l0I6uCm8H0uVgUUlEpAFX2uv2S
+	kkugN7WLPm42Ju+mtW3s45n4QgVnSMiP6XTuZrKokJR/9rliYl5JkDIqWdJrD3OxNNY3wc1O1cn
+	S1abDFtNh91jm4CoPr04s05v/PfZyJ5zluYcJXKXfBT9vIiouWJK4g0ihxa5pc1wqHSRF+o8UPh
+	naRbZobq5xIUyxEAsa0hbMKsziXq6m2ZDIPN1CXVYuT/RQ4N7X+WrYiznPruDGQumHelZELI1Us
+	zJMWH2yFA+LVJOOr+BMlL2XcIZj7CHqDeWdNXrYGyZExMVXLqyC+6TQA==
+X-Received: by 2002:a05:6102:c54:b0:5fe:b030:ebcb with SMTP id ada2fe7eead31-5ff140aabaamr747514137.26.1772045641740;
+        Wed, 25 Feb 2026 10:54:01 -0800 (PST)
+Received: from smtpclient.apple ([189.62.150.156])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5feb6245d40sm15388354137.4.2026.02.25.10.54.00
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Feb 2026 10:54:01 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [GSoC] Introduction - Mansi, microproject t7605
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <CAO_P5U2i5aqGWu9woUPS8GWB1VHpHfwNKUBXoTaQg3DSn9YOLA@mail.gmail.com>
+Date: Wed, 25 Feb 2026 15:53:48 -0300
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <8E443FFE-7C61-4C37-94EE-CFF7234C91CC@gmail.com>
+References: <CAO_P5U2i5aqGWu9woUPS8GWB1VHpHfwNKUBXoTaQg3DSn9YOLA@mail.gmail.com>
+To: Mansi Maanu <mansimaanu8627@gmail.com>
+X-Mailer: Apple Mail (2.3864.400.21)
 
-"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
-> The Meson-based build doesn't know when to rebuild config-list.h, so the
-> header is sometimes stale.
-> ...
-> Helped-by: Patrick Steinhardt <ps@pks.im>
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> ---
->
-> Notes (benknoble/commits):
->     Changes from v6 (<5dcd4e9308100a25603c50fecb36447c0ee4df62.1771682788.git.ben.knoble+github@gmail.com>):
->     
->     • Fix Make-based builds when a dependency is removed by generating the
->       expected empty targets. (Thanks to a report from Szeder Gábor.)
+> Hi Team,
 
-OK, now we are pretty much completed and ready to merge it down to
-'next'?  Let me mark it as such.
+Hi, Mansi!
 
-Thanks.
+> All 4 tests pass. Patch submitted via GitGitGadget:
+> https://github.com/gitgitgadget/git/pull/2050
+
+It's perfectly fine to use GitGitGadget, but given that your patch
+will be reviewed in the mailing list, it's better to reference the
+message [1] instead of the pull request.
+
+> Thanks,
+> Mansi Singh
+> GitHub: https://github.com/MansiSingh17
+
+[1] pull.2050.git.1771911268805.gitgitgadget@gmail.com
+
