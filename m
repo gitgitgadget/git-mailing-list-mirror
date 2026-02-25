@@ -1,126 +1,127 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609991DF258
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 02:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771987823; cv=none; b=ZDq6A7c06Mqq6Upxymbdu0TMFirQ49FVGX3t5mgQZs2erVkeQMNnA8u7Yhn9SyaMGaGMO7tcbYkjs6OQavhKcCX0uBIPSxWs+NPtkV84y0OXPHS67lUCSY0xxqispyi0n/eo6fzWY/hwELkfrQkSSJAlzoaReOSBuJLUJpJ9RtE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771987823; c=relaxed/simple;
-	bh=IOHs6Yajdep6aF02fCYgGKy40eySXui7VgZN6VwT2SA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JWr5+N9owhY3+h/SDSaGqibkoTOK67IGCk++FPLoNl2CoGyb5CQbQ5UCKtFzZ1jkJMkllGFQmlg2bLb1npdtkmkuJfuQNwVlaeXsay68bAey/DpPYYpWnSpVNOl1rIjMp5Gs8u3jMOxMrwXzURHc9MdtIfnnVHfP7CUyaxm+xwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yDmue0pv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VrD959G/; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED3828850E
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 06:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772000269; cv=pass; b=Lt05Cdf0DfhsWx6JaKfrUNj6Iy8r+LohbD/vXAnknif5LUYlCjBAlwaDgL5mOlH3JwHFlHxGALCxw85T8gY4oQim+HgUDjh3Vmgxv6xbYzowbn1g8T6fe8oGIMawYOEDc9jCKVV5dsXI8nu5cEuiRrvY6Bg0J0Asbqo9SJRsRVM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772000269; c=relaxed/simple;
+	bh=t/ewPb4eUVUyPbu39CpJgUbQ8sfgcSatCrgvyNFUVII=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=lF22hAXiL5RDk41OlgUZgPCdmf9QBEZigL/fLXk30JvjlNjwOE4oDEMAcQdL66clD1aydX/hQ32L1LvQS8Fh4O4MNxIOgnm8XpVoLESNRRrecRqw4bQ7Uu1fOBvwZpL9Fr9VADnIIIBChtxr5aQXPvYmn/mr3tFCnbjKsEq4RRM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hoT37a7d; arc=pass smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yDmue0pv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VrD959G/"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 951A6EC05F4;
-	Tue, 24 Feb 2026 21:50:21 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Tue, 24 Feb 2026 21:50:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771987821; x=1772074221; bh=fZ7MxCp+RB
-	sxHYNMgSGTqOV78+sHxbe5XUK0lSL5xeQ=; b=yDmue0pv64eMOY5Ui0jI5bjWqD
-	wq0Dv2+fzyVshnaCpFf5U7QIX9Maj7p0bDbhwKEzROhJcUikLaw2hGG5oFHtJilF
-	fBp4F1cgQrW2Gfby9eMkHm99CIAYO83OWGeEzEg/Dyh/evP7Ft5rYrEqxzgRNXXd
-	nlhALuGPtsH0p2jSXe3mt0ErksnYqewLiodcgoABrOrWhUBOIb7lQm7lmjI/3bpo
-	mSGAcTo9Fc3U3t2uomlMDTvIG9p7nM8rAf8FuO8BZa4g8GkWO8Jt+7o+XF8j9QZu
-	hZWkA/JI3cS2Bd+TQ8Ty5uUyKenXUlgKzSpCoacb83FKEj81uvXKa9VaYglQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771987821; x=1772074221; bh=fZ7MxCp+RBsxHYNMgSGTqOV78+sHxbe5XUK
-	0lSL5xeQ=; b=VrD959G/EVuz12znnpiOYjGqVCK4w/GsqpYZj6/XrAJmoOWzmxP
-	ytBmAvwH1zH2PKKXZ6EKSky+YUupJ+mz5ErdmZY2/PR7sLzb1CRNtpPTxPaCsFKG
-	Y5I/s64O7PBIC4PfhaKGW5FgqQZWf9s7/c5P/GLYrRpIW17cXQAj7anrdr6mfdDC
-	Pq4dDDuWosd6eLm7ZVFtFK0GMZ2V/jkEAB/5ylPh8+W7DosJzg2IQ7WBkxEmmwD2
-	jajfnip1KhEYifoB1H2rT9HZr4ZhDenJqDL2C+Hz/9y+BW1sNxdPLJ5xLYSfG8DH
-	a5cwvNFWwJC4kiXj+Sr+cqP3f6rdh9gwsXw==
-X-ME-Sender: <xms:bWOeac3FDV4UutXfGWr_gBfpeksANTSaC1Ta6baATOA8SUH9S5zPSw>
-    <xme:bWOeaeEmvu2ptKZoOFEAgxgsMpXjhhiH4T7BIkFFRBs_v6cKhRfr6MA2Ej6UEUrj8
-    ztBfngQf5uRkax3OwQX41nLaY3w_-hWioQWFZs85gZHlcXPvscvCA>
-X-ME-Received: <xmr:bWOeaZ7BOnQOr9NVYgprrzhtp8E5fsrvJbnPpN6fNhyrHl7NWzEl7y2QFEbxZIvymsd4NbkWjMS03PJaM-ozteYTibRXnQvw4g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeduleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprgefvddtheduheefgeduieesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    khgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bWOeaUtywKHnSNsTPH_wcuW9Uo5pDYnpFMUsdaSVLX05sdonin-UpQ>
-    <xmx:bWOeaa5BBdoTfVOtcsAAU1acunlT_b-7Dj1JstbTbnf7IwSjnpf8BQ>
-    <xmx:bWOeafWYPUw2sBtyKUW2OM4Bjvi67LZ3-h0UAnJVud2-Yx3sbSnOqw>
-    <xmx:bWOeac9Rbc0ZAvJxlGy7gsW4tQM41yCZU5tgEJUYi0BCwk2M1BvwEw>
-    <xmx:bWOeaVbZ5hrcUVulf8jnMMWQVtyDceI2tNFO3nUAvYnH9Hvs65IWUSGD>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 21:50:21 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v10] setup: improve error diagnosis for invalid .git files
-In-Reply-To: <e48c68ce-de45-4d45-8bd2-1307686a8910@gmail.com> (Tian Yuchen's
-	message of "Wed, 25 Feb 2026 01:01:36 +0800")
-References: <20260221083001.220061-1-a3205153416@gmail.com>
-	<20260222102928.377519-1-a3205153416@gmail.com>
-	<xmqq4in8quxn.fsf@gitster.g> <xmqqqzqcpatz.fsf@gitster.g>
-	<5263825f-163c-43af-bac7-152d670919d9@gmail.com>
-	<xmqqfr6soxjq.fsf@gitster.g> <xmqq7bs3piz7.fsf@gitster.g>
-	<a2b2e581-18ba-42ad-9bf1-a3e16b85f4e9@gmail.com>
-	<xmqqwm03mfax.fsf@gitster.g>
-	<e48c68ce-de45-4d45-8bd2-1307686a8910@gmail.com>
-Date: Tue, 24 Feb 2026 18:50:19 -0800
-Message-ID: <xmqq8qchcz9w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hoT37a7d"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-79863ab8478so10548607b3.3
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 22:17:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772000267; cv=none;
+        d=google.com; s=arc-20240605;
+        b=YfnLeB0UKSMwUIINiCAyQbKjVLaLnXhBrf9hIz/bXE0BRK/SiaSLZtGEqAynLbpRGT
+         cPg9RlKXxjbrhBYiuvAsFjPz10uMYF0lMV3dDUN4XPCJNoJ9fCFDRw+rcvC3UQMwmfcj
+         LuNQK7MKTsoektTIJzSw/qYg1LPwloItzQb9S7yUOa189Q4EhEN0vf9z61QAARUBzdQC
+         gTnSpq0pnqz0xiFlCG7QT+7PSn6CwBIbpdIO6K4Nu+iptpXCtZOivw965d0Djs3I4vXg
+         lVl6QNMt1LChFet/cBqAk4k9xcxXP+qKKXttoCLWeBkF+7K9/XQPEEbMN4jRUu0fOkkC
+         TR3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=3MmzNl7u6hdCAvCO88Bk/eQwtrrmM6QlH1H+7A6jzsE=;
+        fh=dGTPn3PQ3NTAlbL6AZM/EXmZgWx7s3uA3uG1Xk/xOuA=;
+        b=KHfPrzjEV1A4QPoEj7kjd80H+OgjsMCKcwsN5av9cUMH6OxllqmAjThEpEoilxG49K
+         T9qFipr3mQCztGpRhf2u9xZXQ1xZrSIoG0GXqrtwIY8UCY37RzrGbkdri9q5doyE2Vaa
+         h0LY3QVrsY91kvDVchaVNR4LlSu3TrWP+IhwynV2DwIxNxaMeAmpPQYgeayXpUDjuU03
+         66rxrL6D3MR7zH4gKgIelDqyiuuirOwR1KOxxCCYncKtQgVsozcDnstJQtsLzGZ3e2IY
+         eSUXrpv2GHxRSXay2onzllLTEpTjsI7cL/9VCz6ONIT3vPxHUrh9xlAM4wgIws+qihv7
+         QIQQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772000266; x=1772605066; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=3MmzNl7u6hdCAvCO88Bk/eQwtrrmM6QlH1H+7A6jzsE=;
+        b=hoT37a7dWFaQb9XIZ/4HVCUEKJlLCSnC/dngUwNkr4ouypK8JrQN4cVeISfUb4tTGt
+         jRcZlx91BFcj174Ffz7Ef19iBUm37mF72CL1tbEa74E/lakbnMHu1vji8pqUxg9ksOfl
+         a1S66q+k+7kizO30Gcqin4C371MsK/r4qRbYPlIrwC1Me9VXKqrrSmoCdrNNYq6p3hGl
+         MF+uYz0oWVc+wT40jyg62khTAyTnaPjBdX+xOX9A7SvRsApCl3x441qOvUn2rbQ1tzoB
+         xV1hgPSndPKH9fR3xMGE2ACGXVMg4ARC9oXPwMuyqw6F05PHljMmo6feplOGQwx8o3Sr
+         G4QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772000266; x=1772605066;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3MmzNl7u6hdCAvCO88Bk/eQwtrrmM6QlH1H+7A6jzsE=;
+        b=p5kni3+nuWWYbSQPRexkKyUTYjykOz2f6KkJZR11AWy/WzN8DgYJWlwnY7rqGw4KMr
+         riT4uKWqqLC2QWbh+fGTRRSbdSWxwdJiOoEgv4if/gD6N+VH/DTyH00/iFZt8rg97uHW
+         WTxdUSPRsPHlhUcFoQyaDG6KCCL18DgJNal6YAUzASAn9j63lbDLe8naPcZw7djLO/H1
+         D9CgpniWin/IV3OH8qCNb8VfZy8/8MOiGw9pdnXnUyXc5y0Bgl8lNowCXMQ+7TsWEKjI
+         NuappZMTxq8owGt9BvEWTVUxoFZzPezvBUomjJpW1X6PJ+Y2cF2tVMNCV+FHvDJsNfer
+         ZOvw==
+X-Gm-Message-State: AOJu0Yzdf6ksK33pFjDlL58PD91F0bJ7yf9e/bQFEicAD96WLzKSxD77
+	q2Et0bTl9c01yLQXRU9A2zypa3MNkrkU/QWkk+qQ1GjhRwQGis3p6qX1MWA1blR7yKRlT1Tu/AG
+	8OwjtcM3PxecJjvBwcBaNGn+7G221Kc/e2b8nMAo=
+X-Gm-Gg: ATEYQzyVInkv5Re9A1o0QLywWTjIUhzTim49yFuyRaSHGczNYOaP3TTEcooYhrU5VeB
+	IjTuEjjMunlSlSjpwqj4Hz9bZ79p3ibrCUrTB6fZ6XjFdr8TpgG5ifaach437ag6bN/LLgoukr+
+	thsyEsQQfYlR+QKgKnc5nTKqDDHtyK0UiD5+8cuCBODXBIeNiy5GjQJCGEWbHHkEr4vWvPWVORS
+	wLtnS1dnw1KBmmOjtqNz3tO/GSU2aRVC1MWuZHU+awhuqOo7VWmHo5WsR4hgKVfjv2a7JEg2awI
+	4KGMLe2gnWa3m1bUNGioU/rAeK+9+nQew4Eic/BN
+X-Received: by 2002:a05:690c:48c5:b0:797:de07:2102 with SMTP id
+ 00721157ae682-79828eec9e7mr148314537b3.3.1772000266549; Tue, 24 Feb 2026
+ 22:17:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Amisha Chhajed <amishhhaaaa@gmail.com>
+Date: Wed, 25 Feb 2026 11:47:34 +0530
+X-Gm-Features: AaiRm52nnKaVJ0UP-VuHq8eEveddLFMZRXITGU_F_gdiYnhgUM2ulBHaWz0gnhw
+Message-ID: <CAPvEtrfYtEvsxbsD2Q378R3e84DwHPPCSgaa1pQugrwchj9h8g@mail.gmail.com>
+Subject: [GSOC] Discuss and Introduction: Improve disk space recovery for
+ partial clones
+To: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>, 
+	"jltobler@gmail.com" <jltobler@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
+	Ayush Chandekar <ayu.chandekar@gmail.com>, christian.couder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+Hello everyone!
+I am Amisha, I have made some contributions to Git highlighted below,
 
->   1. Perhaps I took it literally, but as far as the original intent 
-> goes, shouldn't 'read_gitfile_gently()' be solely responsible for 
-> *opening a .git file and parsing the gitdir: <path> format*? However, it 
-> currently executes 'stat()', checks 'S_ISDIR', checks 'S_ISREG', handles 
-> missing components, and *then* attempts to parse. Do we need an 'enum 
-> git_componet_type git_componet(cost char *path)' which returns pure 
-> filesystem states, then parse it with 'parse_gitfile_format(const char 
-> *path)'? I don't know.
+https://lore.kernel.org/git/20260121130005.72375-1-amishhhaaaa@gmail.com/
 
-Sorry, but I do not see what such a change buys us.
+sparse-checkout: optimize string_list construction and add tests to
+verify deduplication.
+Improve O(n^2) complexity to O(n log n) while building a sorted
+'string_list' by constructing it unsorted then sorting it
+followed by removing duplicates.
 
->   2. Let's say, when stat() encounters a EACCES when cheaking a 
-> restricted sub-folder. Git funnels this into STAT_FAILED and 
-> subsequently invokes die(), which calls exit().
+https://lore.kernel.org/git/20260129121220.69267-1-amishhhaaaa@gmail.com/
 
-Yes all this happens in repository set-up which should happen very
-early in the process, no?
+u-string-list: add unit tests for string-list methods
+string-list: add string_list_sort_u() that mimics "sort -u"
 
+[WIP] https://lore.kernel.org/git/20260221162359.43336-2-amishhhaaaa@gmail.com/
 
-> I'm thinking of 
-> libification: if a long running multi threaded git server encounters a 
-> permission-denied directory, is killing the entire process the expected 
-> behavior?
+My time while contributing to this project has been very rewarding and amazing!
 
-It is a bug in the way you wrote that multi-threaded git server, no?
+I am aspiring to apply for project 'Improve disk space recovery for
+partial clones',
+I am aware of sparse-checkout and surrounding code while working on my
+first patch,
+hence i believe if we are in cone mode we can easily free up the space
+in partial clone
+for files outside of cone mode whenever user runs cleanup command, however
+figuring out what to free in non cone mode is a fairly new topic for
+me, i would love to have
+discussions surrounding this, i believe a lot inspiration about what
+we can clean can be
+derived from git gc and git maintenance.
 
-We have the "_gently" variant for such a use case, and I do not
-think we expect the normal single-process git start-up sequence
-should be reused there.
+I would love to hear opinions and ideas on this!
+
+-- 
+Thanks,
+Amisha
