@@ -1,91 +1,87 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F70230F94B
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 20:45:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA3C30DEB7
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 21:01:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772052305; cv=none; b=QcEGP8tOnogQ8/wa3xAaP92Crw6OVJIS7lgoDQmXbOj5IBcDM2GviSkgsRH3C8dHzSLxaYMJAB1r9baLxJob5yWMveZhuOSZX4DNHkYOx4TKFEKH1s3gFj6MByAqk6gcKCmc2wJJEgSqSu5QgRwevmS8exQNMq9q2jEbaC36dDo=
+	t=1772053284; cv=none; b=T/mEb1jhPNz8g6HEi+msQ2Lben7hNIT3688wF0sXV9akVP2UMdMxzziNQMYDRXZaf+UOeX9QPgjX+bWOKI1OZ8HJyl3nAQdoJ6/Atcdfs3pMdil+XtCd6uG4KC9ZhAUyCaso2kvsxgb/GMfuDpC8EsWi4N/6FcG6H/R4Irwipes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772052305; c=relaxed/simple;
-	bh=vjEZYG6witns3XRq3FdGkvDLHbwk4KcDvQnm28BzOaY=;
+	s=arc-20240116; t=1772053284; c=relaxed/simple;
+	bh=LkFouZE7DpcPh4I0iKZ0Q+FBPaFi2ecxeDuOcQNDg5I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PvzT1nxFd4mmRPnZbP5jDfy90wpfLoGFiyKUFSSQd25weKLGfzAojbJiMHntpwnS/dDyjvfrm4CLcJXpKvkuJhtj1RyRPeq+IV2CJmOEULrtbjbhNSfLBvzrof5l6geSh6OgyZ20+VdVpVa4Oikj0lpFvmBWZRxSLHRz5XUXBWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZZaU9yVu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A28trUgR; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=cFQj8/B98OV2ErvpshY4dIfmWRN1Bgy7in7p6ysYhvGQqrveq8jenTzS/zWlBkYWxI+GXYyy2KoRy2GXLPJq0F6MYA/XtuZpXS+5pbjy9HMPOTgR6fQ/rqUTM1CZRleCrqICPP/Lzo1s1sFN3GLnXOk47jzWhccAKE/kyHnrzN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UuJDqRNW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PI0DAn6h; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZZaU9yVu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A28trUgR"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UuJDqRNW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PI0DAn6h"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AFAB91400123;
-	Wed, 25 Feb 2026 15:45:03 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id 3DD23EC0674;
+	Wed, 25 Feb 2026 16:01:22 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 25 Feb 2026 15:45:03 -0500
+  by phl-compute-06.internal (MEProxy); Wed, 25 Feb 2026 16:01:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772052303; x=1772138703; bh=6uFPs4agri
-	2DYUVGnAhvoZ8dp9UROUHvDyNE/yGldHo=; b=ZZaU9yVuVYNoKhucnvi5VhKYaJ
-	wNrOdOqgczPJMEdJe/OGO43WobgTZGZGtq54cBYRxq7XO+nrh8GvE68SHpWdwRIp
-	aZrgq53PQBeuOM4e++mBUTEJeHOWALjamk4VDVb7yUdsrGnh62uaDCAeqDgML1RS
-	zBnSUFV2+B3kNDHB90II1BMAH8jg8uPewDY4IdHERGnvjusrUcJyQsQWIbinDsVK
-	TXRK89fcT+jnvoZOuDM969ptDV2ldOYHWDaMFT5080397rDhFWSIzZFan4pr1nKG
-	E7KHbrFJG41SNYKZeszJuAN6/1ZeQIb11wPy9EEmMPPADUAX7I1nxORs6IUw==
+	:subject:to:to; s=fm2; t=1772053282; x=1772139682; bh=v+gN2J8Gw0
+	UNOrB3IzOX6Mcgnowod21mm/EaYV7mGl0=; b=UuJDqRNW7/KkwjfgDdwWX8mLC0
+	0nHLp56/bWuPgWigOd/UXYq3iEEdpvEfBWhwLARGp85fCZ+rIb+OC4C6ZytjB6oR
+	aJdMx3oGyzLacHWNwHfvb4c/I+OuRGjNEvZ+OHgQtgXm0xpuo6P2ls6qShulRErl
+	NIeXvDLom+7Y+vNclIQX9L0PARUNR+11fgk7XGfYayySECTqs/erAGHxzQKsxu1g
+	/dX6zhKqJ/LHqiBt/Jf0/Ya8sZsYyPiCuhTHUFUYlhxVW7kl3Y7eRo2LFiV3VRaV
+	c9/KlpXB29jFUPXcQ5th0rW8LJ52UUQiniExJumzooPhTIeBExuatMOM3MKQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772052303; x=1772138703; bh=6uFPs4agri2DYUVGnAhvoZ8dp9UROUHvDyN
-	E/yGldHo=; b=A28trUgRdT3RHSJs+N78XOWzGWUmInxJSb4PIzHARVzAS/DA9sW
-	zrLUIQffC9UoZTPnArwh+dgQc/tnoL09vPcd1FDD2xXCH+qnCwHAM00ZH0tnztdf
-	d7lt6Xkji0FGuNZ6scCYHz1qYY65FX6eGCmLtwM+QPvBPteB9lStxP9WC0UajKjI
-	AhJMeNQjssLFjafbotFivlUsELYUYiwdjt2uOpUjTF3Y9PGzJS9IY9uXuPa6BBO/
-	n2PkGPC4wiDRhUPw0419F9gWZtuPP/2WJMeiynYRV8rlXDtKdDAvUQfWnV4Yhgh8
-	l7gUZwMV8y4cBWDQZgRELRTixZEd99nuNsg==
-X-ME-Sender: <xms:T1-fabaHPqOpK5Z57qI2V9o4HHVfuJWa2cTF7rQiPqmXWs7n5UOkvg>
-    <xme:T1-facpQI56PNp8l1zM2UyZ3qlpB9s378wVONq67OpXwG6aMWJJR7jG91VthxrKC0
-    z9eCcSs8yaWQ2cHXMiCYY3EaSFH8P5ubd_CKPW8zfGo4R0v75BnGA>
-X-ME-Received: <xmr:T1-faQO-GqFPstpOFFtxmlsH0nMfu7ZuS379inhcTgr6Pa1BPsbFwB24u04kEF7Zhv0ZDcQ0hpZVNqGKckES865lOR_9Fkeu-w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeguddtucetufdoteggodetrf
+	1772053282; x=1772139682; bh=v+gN2J8Gw0UNOrB3IzOX6Mcgnowod21mm/E
+	aYV7mGl0=; b=PI0DAn6hsqkDrNWew9VICIsLNrgdTSCPP3jBtZdLwkagQ/fN+aP
+	YBe4IrM4DFP62c+kaNFPLP93qNi2/U2WSN31JMiaxLua4g5XpdoCaXhQlKnZi6wl
+	n9HBjzn06bBCPWFb1yMSNoGpH9whWiKYoAXfll+qdljt0wbnc+FxyTyiqReW0NwD
+	RSgunzQFuBEE6mfyOHc4vY6te4djaOXwobgEhqpcAYkuGlfdt9+5nAdQ6ZJr8F5E
+	qdPncoSXMd9L1X1S+YrUbBX7IDbuo5O7VDIgaVrtO0RXG5LdMOPcB05BRvk3iCwN
+	4JAltVd0bSgcR6i9W5Wrowd9KQ2myT2qeOg==
+X-ME-Sender: <xms:IWOfaYE4RInnHNnWCnwP7oAyRf0vUONiTlxUHPA62-2qK3VTlVsMvA>
+    <xme:IWOfaYPb6MxyVKIWUpTsdEKOn1x0OgySDt43QQkQiu4P0-BRrtGgoCCweOhUTDMDs
+    JC_qM1AJN8gxQO_lwks4_gtuWaEeFIxQ9rsilgCb9f8j_Z8MzfqBw>
+X-ME-Received: <xmr:IWOfaae7Mw4Y9w8Gx9YAXepvrabe8JopJaKjO8atosWlWdhsA_0pH8laq6RjgFYjPChEJvaAwvA9OAK0C-AM3jWIZVt2b8ItDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeegudegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhephefgjeevuedujedvvdeigedtheffueekueetheelfefhueelgfdtffffgfet
-    gedvnecuffhomhgrihhnpehgihhtrdgtihenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjohhnrghtrg
-    hnsehjohhnthgvshdrphgrghgvpdhrtghpthhtohepjhgrtghosgdrvgdrkhgvlhhlvghr
-    sehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnhhk
-    nhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhush
-    hthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:T1-faXoHjfInB2KEpXU4gNj-fHhROM3YmRnoGyZ_GUpMKkhKMO7xYw>
-    <xmx:T1-faVef8PKI92DsVl3xmSByAUl2eQGJEr0XPhvDZsrGBPGRTQdB1Q>
-    <xmx:T1-fadRhHUgQsCFDRHjmo75mO_zpeFYi-fZbCuqSXxCeFTfNxA1stw>
-    <xmx:T1-faeZ6sZUGLGNegqU4pJwyOZeAVVV-J3HvZQiQAixKpsDlNa2OMQ>
-    <xmx:T1-fabL-NSH8Ztx4sff-EoCzJhPnueErhxRn2RN9wClkmyu2sxuDueHt>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpshesphhkshdrihhmpdhrtghpthhtohepghhithhhuhgssehprghulhhishgrghgvvg
+    hkrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:IWOfaVsaNNzh5M7IBE1Bk_KmTzizAmoZX9GVtgcWVrVDX27iovqShw>
+    <xmx:IWOfabm31vzfNHfaJOxRGAs1z7vdv6poweBpVeDDOZuLgOTOpLVKxw>
+    <xmx:IWOfaXzJBGFi5Z8RIMR-mFm7eVi0HZDiHK-URmXya1ftzr06fNuCFQ>
+    <xmx:IWOfadN5mDio9gYODC9vGni9a8O6C9xHtRhTHqYHjjJZeAECRGIa8g>
+    <xmx:ImOfafJzaWA7hhNf7FZc0WuveMb3dvfpBLkkwd0jsjI-FZ8O0w8O_6by>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Feb 2026 15:45:02 -0500 (EST)
+ 25 Feb 2026 16:01:21 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jonatan Holmgren <jonatan@jontes.page>
-Cc: Jacob Keller <jacob.e.keller@intel.com>,  <git@vger.kernel.org>,
-  <peff@peff.net>,  "D . Ben Knoble" <benknoble@gmail.com>,  "brian m .
- carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v7 1/4] help: use list_aliases() for alias listing
-In-Reply-To: <xmqq1pi9epc9.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	24 Feb 2026 14:41:58 -0800")
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
-	<20260218215737.1181147-1-jonatan@jontes.page>
-	<20260218215737.1181147-2-jonatan@jontes.page>
-	<6953f6f2-22e8-4efb-8169-395e1c52634f@intel.com>
-	<xmqq1pi9epc9.fsf@gitster.g>
-Date: Wed, 25 Feb 2026 12:45:01 -0800
-Message-ID: <xmqq8qcga6ya.fsf@gitster.g>
+To: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Paul Tarjan
+ <github@paulisageek.com>
+Subject: Re: [PATCH v6 01/10] fsmonitor: fix khash memory leak in
+ do_handle_client
+In-Reply-To: <4d4dec8fa161926e6f6ac822aff0db35353705eb.1772050636.git.gitgitgadget@gmail.com>
+	(Paul Tarjan via GitGitGadget's message of "Wed, 25 Feb 2026 20:17:07
+	+0000")
+References: <pull.2147.v5.git.git.1771896704209.gitgitgadget@gmail.com>
+	<pull.2147.v6.git.git.1772050636.gitgitgadget@gmail.com>
+	<4d4dec8fa161926e6f6ac822aff0db35353705eb.1772050636.git.gitgitgadget@gmail.com>
+Date: Wed, 25 Feb 2026 13:01:20 -0800
+Message-ID: <xmqq4in4a673.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,76 +91,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Jacob Keller <jacob.e.keller@intel.com> writes:
+> From: Paul Tarjan <github@paulisageek.com>
 >
->> SUMMARY: AddressSanitizer: 1453 byte(s) leaked in 37 allocation(s).
->>
->> This leak occurs because you now copy and store the value of the alias 
->> in the util element, but the call of list_aliases() in list_cmd() 
->> doesn't clean these up, since its string_list_clear passes 0 to the 
->> free_util argument.
->>
->> The following fixed it for me:
->>
->> diff --git c/git.c i/git.c
->> index 744cb6527e06..aeb099ab1162 100644
->> --- c/git.c
->> +++ i/git.c
->> @@ -119,7 +119,7 @@ static int list_cmds(const char *spec)
->>          }
->>          for (size_t i = 0; i < list.nr; i++)
->>                  puts(list.items[i].string);
->> -       string_list_clear(&list, 0);
->> +       string_list_clear(&list, 1);
->>          return 0;
->>   }
+> The `shown` kh_str_t was freed with kh_release_str() at a point in
+> the code only reachable in the non-trivial response path.  When the
+> client receives a trivial response, the code jumps to the `cleanup`
+> label, skipping the kh_release_str() call entirely and leaking the
+> hash table.
 >
-> Thanks. This looks like one of the right things to do.  I checked
-> all list_*() that are called from the loop in this list_cmds(), and
-> list_aliases() is the only thing that uses .util member of the
-> string_list_item instances.
+> Fix this by initializing `shown` to NULL and moving the cleanup to the
+> `cleanup` label using kh_destroy_str(), which is safe to call on NULL.
+> This ensures the hash table is freed regardless of which code path is
+> taken.
+
+Makes perfect sense, the changes to the code matches the
+description, and the difference between kh_release_* and
+kh_destroy_* in khash.h is exactly as described in the log message.
+
+Perfect.  I wish all the patches posted here are as easy to review
+as this one ;-)
+
+> Signed-off-by: Paul Tarjan <github@paulisageek.com>
+> ---
+>  builtin/fsmonitor--daemon.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 >
-> However, we need to be a bit careful with list_cmds_by_config().  It
-> sorts the list accumulated so far, uses remove_duplicates() on it
-> without passing free_util=1, so there is also the same kind of leak
-> there, I suspect, until we adjust the call there.
-
-FWIW, here is what I tentatively queued on top of these four
-patches.  Hopefully we can have a small and final reroll for these
-"Fix small issues in alias" patches and merge them down to 'next'
-soonish?
-
-Thanks.
-
-
-diff --git a/git.c b/git.c
-index c5fad56813..b5eb740e83 100644
---- a/git.c
-+++ b/git.c
-@@ -119,7 +119,7 @@ static int list_cmds(const char *spec)
- 	}
- 	for (size_t i = 0; i < list.nr; i++)
- 		puts(list.items[i].string);
--	string_list_clear(&list, 0);
-+	string_list_clear(&list, 1);
- 	return 0;
- }
- 
-diff --git a/help.c b/help.c
-index 82fb2eaa3f..725e92a195 100644
---- a/help.c
-+++ b/help.c
-@@ -423,7 +423,7 @@ void list_cmds_by_config(struct string_list *list)
- 		return;
- 
- 	string_list_sort(list);
--	string_list_remove_duplicates(list, 0);
-+	string_list_remove_duplicates(list, 1);
- 
- 	while (*cmd_list) {
- 		struct strbuf sb = STRBUF_INIT;
--- 
-2.53.0-514-g5fc6f9e594
-
+> diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+> index 242c594646..bc4571938c 100644
+> --- a/builtin/fsmonitor--daemon.c
+> +++ b/builtin/fsmonitor--daemon.c
+> @@ -671,7 +671,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+>  	const struct fsmonitor_batch *batch;
+>  	struct fsmonitor_batch *remainder = NULL;
+>  	intmax_t count = 0, duplicates = 0;
+> -	kh_str_t *shown;
+> +	kh_str_t *shown = NULL;
+>  	int hash_ret;
+>  	int do_trivial = 0;
+>  	int do_flush = 0;
+> @@ -909,8 +909,6 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+>  		total_response_len += payload.len;
+>  	}
+>  
+> -	kh_release_str(shown);
+> -
+>  	pthread_mutex_lock(&state->main_lock);
+>  
+>  	if (token_data->client_ref_count > 0)
+> @@ -954,6 +952,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+>  	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
+>  
+>  cleanup:
+> +	kh_destroy_str(shown);
+>  	strbuf_release(&response_token);
+>  	strbuf_release(&requested_token_id);
+>  	strbuf_release(&payload);
