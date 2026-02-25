@@ -1,103 +1,81 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C0913E02A
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:14:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CFF381AF
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:19:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771978492; cv=none; b=bTMHBOdsZUhBQ9c/HBFIvQOqMPC4JiGORe1XWhHYK0mw99dprXNBhb+vI34ApV+uApseOc2FL/oal0LkPstn9xKV2EgWcvU/U6Qsf1j7qYHWdu+Q5w2FPRnLfaOsV3NXuGEDjjeTrCW0BXSY7gdXKsg/x7QZP8eQKZp0ZjDoylo=
+	t=1771978776; cv=none; b=NL1NR/68hgoYLRRPqpLP+XiwyVfsZ0CTui7m8S5aWDq0mQRQd3Lj3FKJ27XQf+DQMnqY9TWYKOyMda5Ul8w6578puAymCF3jguWHV02FRzA55QRcbGzajbKGOvTPu9FG1ss85tYrIoLU/PgYQDS9HZR1n7rJNEUPl6M8smeN5Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771978492; c=relaxed/simple;
-	bh=JPhZdV2NoNbVaN7IOjQnAJiMY/U8DLbNmwJCsUGtMcM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1hvvnQpVO3xHZUKUfCEY/Xb+rEGVOuAaaSqsedqvcUgWkcDk/HIUZTTtZgMwK3p0O1j2HWRIjOUbA5ESd0xtOrMZM2PQQBUj/8spofPxxtP6kdzXlCa8eJREgdmr3VIh8udyIEEgD47vxnsgDq/4DNSTTdeOVonxDuNIsIuLCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fU4wgHel; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1771978776; c=relaxed/simple;
+	bh=FhnCavsnJwxZ8sMn968/zvSexdntcuTL6fvXmB9R5LE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GRGkjHcyPdhedEVIXfbQvfb/IxTpQQ6k8bmxIrpVnlWHNC1jbYecLkcEKJq5+rQV6jYr+f0WvLAk9+mxxTfC031fSWlx3su7/dD+JI7vBKiB3cZXQr3P9qeMB2K8bJC4jYsL/B70OOjgjFk4Da57J7WDGb5u0uAseknc65IgV0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=Y0/zwVPx; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fU4wgHel"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8230c2d3128so2599583b3a.0
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 16:14:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771978491; x=1772583291; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=y70B25JV8VVnbbmYi0j4FP9IQjmOaroWCkMdqTBr4eQ=;
-        b=fU4wgHelrar71JNNQCzVSWrGB+zr+iBYASLw2jnOnDypAlt8KhCCohqCqqUBkIt08c
-         Oieqa1O9tAYuOuboVtak9ondUQT7MitdPW1ENtZLgx9oK6fDcOnRKiGP6h26wzraaJ/4
-         DbvGViRFzemkktCTlRWkohd0QatZO+TRk7I6IiDDpfwqb9tLweJAvbqMDVuwQyIpTu7O
-         PF1J/sIfCP4XVttOCYgL0Emij8oskiZ+hP4aAvOjb/O1zBhrZ3pxyuygAvmvWTnJjAf7
-         R5xv8ZlDSD4wXYv0xi8VVAwFKTq1yGTLFIcFwZE2lSUgpEr5jMi3XIH+EZ4MAJJMUPA6
-         H9Zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771978491; x=1772583291;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=y70B25JV8VVnbbmYi0j4FP9IQjmOaroWCkMdqTBr4eQ=;
-        b=OxuwXvZWJcAK7HnJa2QrEO4VLQ/SAKdFQZDMJ2U181j+jjIGXO28Cyiq44B6o2Xxl8
-         yAl2mX+X7IS02s1s3viSBkYHtm/q5S3ykhr07UycXfYp8K3W7cSanoYphmr7z78JZDWb
-         66GI2YFOspfo7W+6dXSNf8kXIfTzIdZZwUyGb46QcVygPKimmuG3UTH9Lx6INQdfMcbT
-         O070USIdaQ2c6CSI7p65aUWDJZ/IlE7bgifZfzswY0CjtfdwnPEJxLFIMiVka5B3AcSy
-         AylXu6a7IYqPPCXYO/7Z0wypt/MT90/e0M3yTEFWsQ7wDhVZ7WncqTCXk2FW1wicDRXE
-         pBGA==
-X-Forwarded-Encrypted: i=1; AJvYcCWGp0LsZyhRfwc50ANyl1RZQcaS4G5XaN9IKCaMq1vDoZcxtvX/VFbcGzKJjyZNPDRvdxo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxqPbHsHY/TzdLaYsRnM5vkfE6N6kXS2H4Vh0COgZRVMcpl/Fh5
-	6t8nDQrfzL2+PPALR7JKNDYqE2godYqM9h57/0NmrYmmSgshCOesg1ZQ
-X-Gm-Gg: ATEYQzxAtX2az9bZuDyAJFn4+9VohD6T9rBLMjVUCfFpOdWj4RA5Eo6s1ypiZ2j2q34
-	Yxb2grPfhuJ01E/rz6XZKaNIgP2BFljujbIBpb8+ux/O5RVOUuca/FykuSEuza4o0q3wPsE/GDj
-	F/lozx7fFRu4qlatYa4eVYzbeejgLCCI7Og9QXXePTB64wMHMY7kpXH9USM8QmvBAKIfg7+v7LH
-	uigRsT9gfIYo4KrVw3JwhcKJ86CKlXCpvbKVN5iXufZorKws4cpEBAx9OkKD6gDdBSyhIgohtqy
-	i3URrHaOs9Xq1999KNQKUiWTUE7QTG4EObN0ItDnHzEuWQv9yDxQw/sjdR1wkn1TbFsJEtEsM2v
-	ayRsWhRj/7xIuHRNrfpSd0tAlSEYdmixidv9766aPacFDad02DvnWAEHESkcQn4usxU9Dc3fyoo
-	y4ZC3YCK0i7OmTam3ft+eGXiqidUcu8YRONUAS6CC9qGdRPBiF0ogVGFeb65V8gD9R8+28cwqOL
-	Gq+rGzjmL8AYrcsa4x+xONhhGHYXKnm
-X-Received: by 2002:a05:6a00:929c:b0:824:16ae:9ec4 with SMTP id d2e1a72fcca58-826daa8a3b3mr12251301b3a.63.1771978490839;
-        Tue, 24 Feb 2026 16:14:50 -0800 (PST)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-826dd6c601esm12888661b3a.29.2026.02.24.16.14.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 16:14:50 -0800 (PST)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: valusoutrik@gmail.com
-Cc: ayu.chandekar@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	jltobler@gmail.com,
-	karthik.188@gmail.com,
-	lucasseikioshiro@gmail.com,
-	siddharthasthana31@gmail.com
-Subject: Re: [RFC RFC PATCH] builtin/repo.c: change info default behavior to show all fields
-Date: Wed, 25 Feb 2026 05:44:39 +0530
-Message-ID: <20260225001439.54954-1-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260224220833.17730-1-valusoutrik@gmail.com>
-References: <20260224220833.17730-1-valusoutrik@gmail.com>
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="Y0/zwVPx"
+Date: Wed, 25 Feb 2026 01:19:31 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1771978773;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FhnCavsnJwxZ8sMn968/zvSexdntcuTL6fvXmB9R5LE=;
+	b=Y0/zwVPxZvIavPH34iRf9eOLy3q+FfVhxlCd6PAvlMEIdNW1jrFZJxTkXFNRl5pxjyJQSN
+	yKx4K59b59iahtQE7iM4d4YkmO9iHxT9+tkyjaSGepo2KkK43iz3WKCf+f56SgrI/QC796
+	X4DnlrQIkrsBE7UXrA00cDQGr0HiVImpqOI3ZLow1p9DSPcfw2W46fzdFRAu36WRCwAGyq
+	qlmHBlU43Gn6Y+RtRL8PNiJ6vchq5bhA8E71sk3ngmSaUa4UtT4XYCuzsxH7vApVENeIlJ
+	IAbY7dlWCSFBdjP6/v6YUVe+EXrXfwzSHFH7Fb5rF2vTwBFcAVb8eKBQcxeaLg==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Mirko Faina <mroik@delayed.space>
+Subject: Re: [PATCH v2 0/2] format-patch: add cover-letter-format option
+Message-ID: <aZ4-_jmFS8yS4g49@exploit>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=575; i=mroik@delayed.space;
+ h=from:subject:message-id; bh=FhnCavsnJwxZ8sMn968/zvSexdntcuTL6fvXmB9R5LE=;
+ b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpnkAGLH/7LWtsmtjwUJ4yuwjq+4kKHKz2Eyf6W
+ 8RceBv5IqqJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaZ5ABgAKCRBIeX6hnBm+
+ 0YbxD/9ovW4zH6+xFQq8/ZyQhttH2x4T/e1D/raeHHI6/DBk1eeiNpBb60dZqrV59+pehryleCX
+ WgTJUF3taFiW6xzyX36DHcDZ+SAH3Xzn5rR2s/hBcqqQixL5oT5lmLqrMKTlhOspk3tUNzt3YoF
+ yVIGkaCTMVqdOCnfm03eRrj/yiGWXpDuuWlp7lc9P6cJBOmnLjm4D29y0ojPH8Cgid4HggwmXMF
+ rr25uEvROZzhcr6OcfkfYd5SY6bGGybUDH8qzZF92xF4gPnXVj0aVliK3T5kLDM48UgfD76jh6B
+ uf7U2GWMQq+gFLEQIJUaNYrhuHTk2PeERLivAFiTGDZDsQ1k8m6ike8dKsR1m5EtGDRUqcUkCmy
+ bcYgvTpqYR+llDreFkHUBFagxYDRSR8/TVL3jbE/JwrN8XIyJ/STC+J8hQf/Zw7jpm6HsoVsCEr
+ IVnZr7OmxDGqn+gAGGdwXca8mL6NlOmQdocqc3BvmTTZMUEf0WNKDgk8ZM42O/h5RBrHhGBNY6N
+ 31D1BUiaUEoPLPLRYKuVqlSfuWOU05qYL5vxJxeBzz1Y2PwM5vNI8lqyycsRX/KV9wc/2ZJGC3f
+ NAOrRQG0SwkuxgC53fehQixVErBkAGIvz0NrpDO6ut9bxOJwZyWs/Du0cSA+zfE4gGvLgnS6jAY
+ TUDn2JsfENX7jlQ==
+X-Developer-Key: i=mroik@delayed.space; a=openpgp;
+ fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
+References: <20260224040400.751247-1-mroik@delayed.space>
+ <cover.1771925291.git.mroik@delayed.space>
+ <xmqqjyw1g9m5.fsf@gitster.g>
+ <xmqq1pi9g6sb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1pi9g6sb.fsf@gitster.g>
+X-Spamd-Bar: --
 
->> They do not matter plumbing commands intended to be used in scripts.
->> What matters more is being predictable.
+On Tue, Feb 24, 2026 at 01:39:48PM -0800, Junio C Hamano wrote:
+> I found another change that is needed to make the tests pass, so the
+> commit object name for the squash fixup is no longer a85e8e535d;
+> fetching my 'seen' from any of the mirrors should let you find these
+> commits near the tip of 'seen'.
 
-> My bad for this ... I did not know about plumbing commands.
+Didn't notice the test failing, I only ran *format-patch* tests.
+Thinking about it more carefully there are other related tests that
+could fail due to the nature of format-patch being used in preparation
+for other commands.
 
-In the Pro Git book there is a chapter which has a very good description of
-plumbing vs porcelain [1]. It might help.
-
->> And it is more predictable.  If you ask for two things, you get two
->> things.  If you ask for one thing, you get one thing.  If you ask
->> for zero things?  You get none.
-
-> Got it.
-> Thanks for the clarification.
-
-[1] https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain
-
-Regards,
-Jayatheerth
+Will run all tests next time.
