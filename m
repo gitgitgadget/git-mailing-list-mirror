@@ -1,108 +1,77 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3B22DCF55
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 16:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6478C3D5240
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 16:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772035405; cv=none; b=uEEvidt+3kSL7aOk8FiTsMkKdyhRUX+cK8dATDjUtVsh1ByT/5zEHeGh7qxkWtRRO+BR2+a01KsZtMgVXPdRF1JSIhfk1x88JTNUY6B3ZlpN4JD6WpVCQ+241ZoykY48gIWnNi+ar8iqLDQlhZun/hYO7B0e9dTkP5+ajhm1wIA=
+	t=1772035725; cv=none; b=WV5F18rrtlHJf+jzXOhdQ1Hj4d3LdZJXFtcUK/fUbQZSP9Nu/usnCVCR2RUzyCjTFn6HOAHuD+yyR5Ol807Yj3lx3dIAsL6z+1mXCZs1Hu1NR6ULFcF0mZHc7o7WeVrvc1Y2FpBKH+k+5l24ElZ84qBn7/lshrN+sEG/+J1VjBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772035405; c=relaxed/simple;
-	bh=mRB0EUGE/OBnK+YxY6KEYcbSPK8z9aeeA/Gxn0EKjw0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gWRulCpavijGjaNGoxtf3y9Ist7GgSh1cCP78s0qSWm+Y7pGtFlGkE9TEzjpxPirSNktJbj/LVxhNUTqF5tophA9xdgD9tk043AyumqYDUiOsOdWIO5ucVk7fYc+wiaIFU5haMdkbKtq6X+ubYhj1VgUjvylFXkzjijMRg4cPqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iiZ7ZRV/; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772035725; c=relaxed/simple;
+	bh=tK7v/znSlef3TNmYujna4fbqV34wotf1Cz53UFewSz0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SxWb31iCHIy8v/N9lPU9mBZLtVWSDhtbl6b+6JWz6Sg1W7kWwMOqQUKjaaHe5Q6X9RKiBgBsDkR3TPYdgDPNhb+8QSNqI3ybpJ9LurVcjJb0uCBiLd4v4G93sslpPiEPW1LSW5Ugb0iM9k4A62v7d2BAPqSa7wzsMRWSAUdfcFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fKgm2Guq; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iiZ7ZRV/"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8243d189704so305147b3a.1
-        for <git@vger.kernel.org>; Wed, 25 Feb 2026 08:03:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772035404; x=1772640204; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MxtyuXCsPg+7zUWFYhO/dmAPBBGTMwC3DmLjEdf08/A=;
-        b=iiZ7ZRV/9AhIo1IZi4VTP9/05gBr67JiGMuFfxVr/5e2B48X4eMWMYeCsLkobjW3T5
-         xO4uHgkBWZqDqRxEr4DfKYPUEyiVdF4qGOtw0JtbGbwplG2EOmIlH6fQAqKhbjtyDlcb
-         Dtm/KxeNbjj7iuUAjZ4F3ufpfcwxGb+dXsmtGIsLAk2EFcQhSIQi1y5HZASrOTsP1Wn4
-         A1wAGL3yXSicNiV/EkrZI6mn2oq+mVNjORwSE+qyuJhRcYdPTn1RJ41bhO3j2tvMqwFN
-         empm45U9MfFvigsSCnXJNZ40GbFi9mElyQCbz97G0mPLInhmT+0j9i9e9qXqss+JOhg+
-         stxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772035404; x=1772640204;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MxtyuXCsPg+7zUWFYhO/dmAPBBGTMwC3DmLjEdf08/A=;
-        b=MitpMhcgQB0mDmBCPVf1SovHQXwlPXuN0QNWHolXZ+Ze2jJbq3bfN9AwiI97tmXHE+
-         aBAc/y8NMgFKn3RVf10/LVnS6+XyxajsyEHDVouQ0HBWspe9FWZ2XCjgW+Df9nzXVtmZ
-         JTuFHcHW5ivWm+SbqRPWwmgkA+mzbHzJlkeQIZHCeNDsvsdg46KK2xGq0n5zdsKvnR2O
-         5Ln0Nt4qBxexRNiu4+BvmCe8uqILMFD+PKoI6sSEWk5twix9dLv3mOxgVfVOSvJKVRWg
-         TrTqQM2O+fXKUOq5sVFe07urm3KxDIdIxBHwjOQ5foEBm4yWfF2x7LlGu4fzy+MuNLSb
-         17Bg==
-X-Gm-Message-State: AOJu0YzYFGQ/DKPOfGqIdWa6Z9ARZqrHZL4dKAsumIpsAXgEpI7b9cQT
-	kM3nurGgaWNltLru7E0KwH7UuEjnAHCkpEGUK93M7ItdC+VwqCcNikj3p7PuVg==
-X-Gm-Gg: ATEYQzyRKsOGnjinmBkh7h22ihXgJRPGmyZv6canEXBeaDSmM87mokV+9nyrFVryfq6
-	Jkw5nBy/1EN1rvyi5O95z2CbgwZ83m8pRCkCrhiuUqWxnWU056yIY4PIsQqTSYfxMVgmioBYUqd
-	aMaGspgqHhziF1EdLZzvS3Iu9e8elwhFFTs6AGQfiDaGuI2zpvWEdvQ6GlnBdJ/moW2AqGF5NQh
-	Y5HUXqb6dU8LH8PZJ5rVm9eIrMzXzghMTXsncWxY+yjTAebOaDeSmRAae6ipUwLo4nTFHSaDrIU
-	4SG5pESCJbep73lHn+mf2M9Zi7736kvqnLOoMtC4bKHiRgf9SFGV4SAgfMa/QZ16hhAAy8d9r3P
-	974O/ajQC3WNPeHwCYWZRfd1LCOlk/yXG/9iK36Lo3lxPJy2KeVLXUjIz0Wh1fZwol/egg55zgJ
-	wxAva6G525c6yF3AMXkvELJQoeUao=
-X-Received: by 2002:a05:6a00:1a92:b0:81f:3940:3aff with SMTP id d2e1a72fcca58-826da716025mr9480791b3a.0.1772035402816;
-        Wed, 25 Feb 2026 08:03:22 -0800 (PST)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-826dd8bf9besm17407263b3a.55.2026.02.25.08.03.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Feb 2026 08:03:21 -0800 (PST)
-Message-ID: <28bf5b66-8c08-43b1-b472-acb97c8f0eb7@gmail.com>
-Date: Thu, 26 Feb 2026 00:03:18 +0800
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fKgm2Guq"
+Received: (qmail 67603 invoked by uid 109); 25 Feb 2026 16:08:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tK7v/znSlef3TNmYujna4fbqV34wotf1Cz53UFewSz0=; b=fKgm2Guqa+fVoZWomNkCbSPJr8V5Un39rN6Hv8ivmsoDCNEyJfFVdiYookuF/LIfpDvDlp1XhtF3U+/scWQft8/kfmzHjbMI063F0g82mrSW/eWvG1EomAzSozkcxZSeXHfdBD3Swzh3VCmxsPhamJmt+/rFG74YQ4Nw93HVmRmuEBsesoy1r2GbgyagPTrCqVYwJ59uNLJgWV8TBgfTmf4w8sNT947mx3YpgcbKvFUp0nmvMUY21EBgEno0MdCxBHxtMDrGh5cErNaXm7Pf6/jJxIdxfW1fyr2sSt4Iyh6vGyOStFHu6ezoXZJli2QhlZIrpOucEZrkg/bA947nDQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 25 Feb 2026 16:08:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 203904 invoked by uid 111); 25 Feb 2026 16:08:44 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 25 Feb 2026 11:08:44 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 25 Feb 2026 11:08:42 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>, git@vger.kernel.org,
+	gitgitgadget@gmail.com
+Subject: Re: [PATCH v28 2/2] status: add status.compareBranches config for
+ multiple branch comparisons
+Message-ID: <20260225160842.GA2160019@coredump.intra.peff.net>
+References: <xmqqms0xeqaq.fsf@gitster.g>
+ <20260225102228.95152-1-haraldnordgren@gmail.com>
+ <xmqqzf4wbzev.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10] setup: improve error diagnosis for invalid .git files
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-References: <20260221083001.220061-1-a3205153416@gmail.com>
- <20260222102928.377519-1-a3205153416@gmail.com> <xmqq4in8quxn.fsf@gitster.g>
- <xmqqqzqcpatz.fsf@gitster.g> <5263825f-163c-43af-bac7-152d670919d9@gmail.com>
- <xmqqfr6soxjq.fsf@gitster.g> <xmqq7bs3piz7.fsf@gitster.g>
- <a2b2e581-18ba-42ad-9bf1-a3e16b85f4e9@gmail.com> <xmqqwm03mfax.fsf@gitster.g>
- <e48c68ce-de45-4d45-8bd2-1307686a8910@gmail.com> <xmqq8qchcz9w.fsf@gitster.g>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <xmqq8qchcz9w.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzf4wbzev.fsf@gitster.g>
 
-Hi Junio,
+On Wed, Feb 25, 2026 at 07:44:56AM -0800, Junio C Hamano wrote:
 
-> Sorry, but I do not see what such a change buys us.
-
-My primary concern was the function's semantics, though it is indeed 
-redundant.
-
-> Yes all this happens in repository set-up which should happen very
-> early in the process, no?
-
-Should be like this.
-
-> It is a bug in the way you wrote that multi-threaded git server, no?
+> > I worked on this feature for 2 months, and then it got marked as stale
+> > instead of being merged. Will this time be different?
 > 
-> We have the "_gently" variant for such a use case, and I do not
-> think we expect the normal single-process git start-up sequence
-> should be reused there.
+> A topic becoming stalled is something the original author can (and
+> has the primary responsibility to) avoid by keeping the discussion
+> thread alive by responding to reviews, pinging the thread with
+> comments similar to "now I think this one is done, all comments are
+> addressed by either updating the code or replying why we would not
+> want to go there (which the reviewer who made the comment hasn't
+> responded yet, so the ball is in their court)", etc.  Even though I
+> try to help keep the ball rolling by pinging discussion threads that
+> smell about to go stalled from time to time, I cannot guarantee that
+> it would not happen again.   But you can help ;-).
 
-I see. Thank you for the insights. I will drop these overly abstract 
-ideas and keep my focus on practical fixes.
+To be fair to Harald, he did ping a few times, but I think was just
+unsure how to proceed after the issues raised in the last round.
 
-Regards,
+I think what would have moved things forward more than just a ping,
+though, is generating a plan for moving forward in the face of confusing
+review. That can be quite hard for first-time contributors, though.
 
-Yuchen
+That was why I tried to lay something out in the last email. I _think_
+it would not be too much work to get there from the last iteration. It
+would mostly be removing code/feature that we're not ready to commit to
+yet.
+
+-Peff
