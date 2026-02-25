@@ -1,89 +1,109 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533391EFFB7
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:23:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0B021420B
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:29:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771979013; cv=none; b=HhRvBA5mRFTxnEguDuN1VDA1sLOUtEYcCbp19KSnwXUuUmER9f+TYxLsRYxT3uCLljv9VG0SPwf+B3/kwpvOZAt3845hjOAvqUUeATBtEGbMbnF65D2epzjMyBlUYwUy/LN8/A7eE1zla1TAUFieaDakxY/BmLWY6J02J57cOx8=
+	t=1771979388; cv=none; b=F4exTPTSbLoSiOi6pYdsNLk/8meNlXvulwsuCHeY2i9tnjtUIm6tjKv7r6PYTxKsPCgh2F5K6/7YB8/DOlAi9c4IdO/ckP0Qb1BpxIIf68KYH+YXvo3QpPEW6SlHLkgPSSpIFmKGMnjALEX9XjasRGLQMTo2rFif5vv18YOrkAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771979013; c=relaxed/simple;
-	bh=HNmFeSq5yPwDoFyt6BG5wXau6nGG3M8Aa/E42ZZ3pA4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OZI2rXFJtA1RI0Ca2P/9W9LZ9etqUHSOwstCU7fUA2DBjtpUHPc7pTjcswDFeLRYocywvhXjnMkE5mGR8uSx2OmVoiqCrICiBQV+r/Ukmo5KrFTa3wmHKe/UFbAd1CItvq0GXFa69W/NT2UbxWY124FdqYxl8f4v0+L/YM+r1Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ICNe3j8+; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1771979388; c=relaxed/simple;
+	bh=jQRkH0+nw7WyJ57GVaAIw14d84+eWMTMePYOY6jxiz0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TLzCg/0FVbXbrRF7uXm14fNk7ekEOufDl47+CkYqo0MnHwfUd0oo+dxqv2MNDdlLuQWbAvPQfp5fJ6CIFmSSx1kbawgJ44XOD10YQu+k+e1d6qES3IJ0os17PzEjkWj6NcgCatZoO5b8WkUjyVJO1hriFsDbeG9NP7KbPLhcjGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YfebRzs+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n4dNEOHn; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ICNe3j8+"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8cb4136d865so751756685a.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 16:23:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1771979011; x=1772583811; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HNmFeSq5yPwDoFyt6BG5wXau6nGG3M8Aa/E42ZZ3pA4=;
-        b=ICNe3j8+IK5YCxEsqIBYDsaE6ocafTSW2zzrZud+q/XYm18xEJnON8uk9XBcDvHeC3
-         M/WlOtF8RFqqXsqUdjHjXq3k+e0JHvFa7IVbzgFQjywtQ4/u6m/WdZxjVtaPZFrTySoY
-         l4CU6BZcy1/U5Ld93KpbtTaFd0w+w+87UQGqSnet6RtNtwQQX3YdZTyaO0WpRJTADzuX
-         A98fwBoxyjEMCKzqqpQScsw9BOOPNevqn4lHBUjGocK/807LPjHQnvP1gaSIxSGKUJFX
-         xLT3yoPKmHITN116x7lGJqqswGZs75rdGLUvauMBN3LbwqzRFBTXFuKWEFh36YQlafQO
-         hRzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771979011; x=1772583811;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HNmFeSq5yPwDoFyt6BG5wXau6nGG3M8Aa/E42ZZ3pA4=;
-        b=o0pvRjPUN1z6qe4wu+27+zJHnS5gyUPULEWUPefc8aIq4KNhzOuywVbN8m2kFWHJUb
-         k+wccVKKd7XRr3h8si/38Kq8GJEdllXoVwFQcqr4Jb5dWsAb5JClkARhjpr/I9UIGq1A
-         zF/Cq6oSE2oG8x/hKpF783GEMZySepLXRpBChgrA7hlAFdZoVuWnK7jQgeFxAm1Qh40W
-         YBEQekF2iGmwMpzLlGY/XSUx1MH2TeMMdyWqNM2J73GLgsDpfFqRRA+l6TaL8tMUn+Mo
-         hQKucioALoJUyvQjyiJuy9VaJPmPylPRe+I15J0AR5rud733cWQ1gAquxne9m0YzpY6w
-         wKxw==
-X-Gm-Message-State: AOJu0YxFg6Iv7A3Uy2IJOIt1Ji5QAAXEQ1BGv7nDj6S76XfEFL44Zt80
-	GL7reAk0xedxwm1Ylxxsx5ydOmt0En055bojJ7Dk1zxMjN1ah0vMy9/AWLjAMpmYZ3d2W1WCgwP
-	dcW6s36noNQ==
-X-Gm-Gg: ATEYQzy+vpLsuU01DHZtnkQVoBGfU7slEEGYQe62qNYTF+0IHhQpyGcHGnvTGsavh74
-	ZVzR+XUePfoNitcbMJwYAMN/XORhlI8Ed3RJaTbd+men894/KHzSqvQYEd/PSHXegYYLdKfzECz
-	mzpo5vHyQbYgqOFn0Gs+ANwlu+ewoz9IP7IBsvUCFsEbfmYgt+eTS6uR38S87LBoA8ZU0LO83Ii
-	qgpLmmvhkoeJOoeA0l2XdtfNqEVntNyTGxcTMIDhHBL2Sp63/jo23rp3T9wvX2HOUyo8j/KN1Ud
-	tjz0F22i/VIjYgN8kF+he2AexR5MZSnud+HNSUa8NGB3OXYYaAhWK0WHTY9Zo+izFzYQf+m3ciG
-	cOvVI7vZrCDb8L4Xhrn9jN3KpPU/GQAa+MPbFzYbV0xY3ht5JhnlKaVkfSef1ZgGwLWdoDpdwFg
-	6XwaqZpEoX71bkPGZHYHzENmMyGeNQ3q5RuX8TiBSqhq0hSiY7a1NUsQwG2tgUS4iYgNUlW5oxF
-	zhIfmCrfORvfDAzzDQOQ2dXn5xwWw==
-X-Received: by 2002:a05:620a:2a07:b0:8cb:4059:a90d with SMTP id af79cd13be357-8cbb5871379mr70874785a.38.1771979011090;
-        Tue, 24 Feb 2026 16:23:31 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d0eb32dsm1265367085a.31.2026.02.24.16.23.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 16:23:30 -0800 (PST)
-Date: Tue, 24 Feb 2026 19:23:28 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 06/14] repack: track the ODB source via existing_packs
-Message-ID: <aZ5BANxASSKHdqBu@nand.local>
-References: <cover.1771978829.git.me@ttaylorr.com>
- <df37959d2933d84ec61b9ba570c87f9e5213c735.1771978829.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YfebRzs+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n4dNEOHn"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A5491400112;
+	Tue, 24 Feb 2026 19:29:43 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Tue, 24 Feb 2026 19:29:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1771979383; x=1772065783; bh=r9haUV7Cg1
+	8y+NmomMLJue5z5LrhBBVWmcghzzDK10M=; b=YfebRzs+kgHhPkvOJs7jnyoIvB
+	wV0zFO12YJj4hA1IeY5LV9BIwNPbWbV15I0MGe0/ZNESE5TCPW3pSzkF7e8pUoUv
+	HiCBZG7bQJCJegqi/WFScoq0j94CFvMWOCdKOOkXtqFCRVsfxVnEJMOplus0UUc9
+	LU8zu0pmXFD/O17CQ182OIyTTCRWUvLMzo69KF8AHTgTX+3mJFQEvVSiyQguBggi
+	JWgM5T/CQRzPaPVa+yP9BXeduj285L1g3rzDa+ZvCt0GUcNLRqnnsKzoRUUcUmIY
+	rmYj1eSABj/gi4p2B7rMfWTHzwzhFCM0DF5CmVBhw3aVQQukVHp0BYTVUdWQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1771979383; x=1772065783; bh=r9haUV7Cg18y+NmomMLJue5z5LrhBBVWmcg
+	hzzDK10M=; b=n4dNEOHnyJEwqIFwjpwepkZnonti1yvhzj+xeN3zwA6OanEvXUq
+	UqFGOa0E9OFRSV/f+bfEumRA6W6XZ4WADg7E0T5jWnvli3ErUqiMwYocds4rnAxY
+	EUwCNjXfPzlrOEu5EE5JHkoKAaEmwoYoiCbxIsGWrehvMkzEAZGm6vN0fflrTLsT
+	1423RNKvqr0JYC/I0csbHvrP50OwzAVVqPNj0gUNlHmSxFHSJs0aLC76rpn/wAzs
+	ebIvhyIVJQJdRsUX0Q8Gn3P7fcQ+mcbPbdnCI9kdRYRMRF81Kw9ZCL9CwfEjbzz+
+	Yo6Lf/XM6D5Xker5RZvNKnHB9zW6JEz/Pxw==
+X-ME-Sender: <xms:d0KeaXKU-bkPApITjDghuM-sM7ccUN7V7q6YPD-r5oUwZbRlZENK_w>
+    <xme:d0KeaSJh6YJQgmh_6BL37qqT7caoZrKwciLeTlfNamX0zjOKxAGFDUS-v8kgPdqcQ
+    _v6VpOSwdMlDNdrswyG1050sCh9A9UskCKbEsl2R4SVkJ-pBj6N>
+X-ME-Received: <xmr:d0KeaUv15N-Cq_akTzEUccMDzZFPNbtVT8E-2TaFdwPOQrXOhk9EhZnbCKqDKpI-_oB533XC3igJJFAokbe66i2v06f2MII1wQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeduieefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
+    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:d0KeafTgIQ3JBrDdsff-3hbm21qQyCycDjkxK3dACUqcKt-Nk5nF4Q>
+    <xmx:d0KeaaM1ua2DLmCqd0xqXkDf5mKmjDPa3Rj2F2EJ6wPXIwAjfNgfuw>
+    <xmx:d0KeaUaW5ngH5eMgSLy0fbMQ5JSXAp5jc3I2OE3_TnFahFWWiipGUA>
+    <xmx:d0KeaUzzo2mmSIMldAMDf9NB6WOI5I0XSgkU0U9227-bKmHQH_ONPg>
+    <xmx:d0KeaUNvarTQ1_77dWAeAK9BpDCfjRRbqKaF9n3FLE1Ed9fYsAXQBWOc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Feb 2026 19:29:42 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/2] format-patch: add ability to use alt cover format
+In-Reply-To: <aZ4v6p_oKCayr9A7@exploit> (Mirko Faina's message of "Wed, 25 Feb
+	2026 00:54:54 +0100")
+References: <20260224040400.751247-1-mroik@delayed.space>
+	<cover.1771925291.git.mroik@delayed.space>
+	<66cac565f8a40f8de3dc3d857feb681bb80cb136.1771925291.git.mroik@delayed.space>
+	<xmqqpl5uhwex.fsf@gitster.g> <aZ4v6p_oKCayr9A7@exploit>
+Date: Tue, 24 Feb 2026 16:29:41 -0800
+Message-ID: <xmqqo6ldd5sa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <df37959d2933d84ec61b9ba570c87f9e5213c735.1771978829.git.me@ttaylorr.com>
+Content-Type: text/plain
 
-On Tue, Feb 24, 2026 at 07:20:46PM -0500, Taylor Blau wrote:
-> Store the ODB source in the `existing_packs` struct and use that in
-> place of the raw `repo->objects->sources` access within `cmd_repack()`.
+Mirko Faina <mroik@delayed.space> writes:
 
-I have no idea why my scripts sent this patch twice, but there are two
-copies of [06/14], which are identical. I'll make sure to just send one
-of these in the non-RFC version of this series ;-).
+>> > +		fprintf(cover_file, "%s\n", commit_line.buf);
+>> 
+>> I somehow would have expected that as we internally prepare "format"
+>> string given to this function , we ensure it ends with "\n" so we do
+>> not have to do a fprintf() here.
+>
+> The value of format is user defined, I'm not doing any pre proccessing
+> to it apart from stripping the prefix. Would it be much different had I
+> appended a newline here? I personally think it's fine doing a fprintf
+> here.
 
-Thanks,
-Taylor
+I thought you are stripping the prefix and making a copy in the
+configuration parser.  I didn't look closely but I thought it would
+be trivially cheap to also append LF there.  If not, I agree with
+you that it is not a huge deal to do the "%s\n" here instead.
+
+Thanks for working on this topic.
