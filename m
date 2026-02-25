@@ -1,62 +1,62 @@
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
+Received: from mail-vs1-f68.google.com (mail-vs1-f68.google.com [209.85.217.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F0B2ED154
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 18:37:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39A42ED154
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 18:37:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772044637; cv=none; b=OmcYos4CPyUC5xXOoG62PIX5khDZZg4oTCvXU0rexAaBGfIYTb9p1EKu3GFYHSmgzBRSx/Ck0T1xjQ+rXquO6kEOMeGuiHn98qGcvAGozN9rFteiDLrSnAEwKALAhWqYWSPHs10t7nw6bUMBfPbskJBSw735LQwACfolWnxTH8M=
+	t=1772044640; cv=none; b=PnmZTn6rfR8u+X8h4aRM5zJYdA8jburEEv0iMXV3W2pUgHiqRVTPt8HfCGPNLKKfuYCizHdIXrmee0Qoqa8BgEa7q1cWNqZfHxsozaINqy3sQneNdp17vbJ6iws0M+xz4PoT9wFPGVBU19w29IHEuCmJ7Ds+7RyVNpBNxuCDbkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772044637; c=relaxed/simple;
-	bh=R4xLmtH6+DybdKTENzhtIDpW+SbNROj9N0i9qF/fNhE=;
+	s=arc-20240116; t=1772044640; c=relaxed/simple;
+	bh=3pK6duStGRlqfbmNEhgJ2TpC5Eb0Wljx0IeZXTLgh1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EC5thd6BI0MBcvokdQ6Ve6EqOtIPoeW1g136zxfKnNT1sFsL/n7MHYiyyiXqwxcnEkMPAwAEQbl6yyJEJwqs8PGf/+lM3aCdCQyK2P5c1wZytCXrOSKTqG38AfzFJt2bPAGeFfCaP5Kv9uSAkhwrS2bBcrJr5QlcacRl/GZP1BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lv9VTs05; arc=none smtp.client-ip=209.85.221.178
+	 MIME-Version; b=uBihRHPGlPbJDFEZY4yRbcwEl5Ffj6BJ56jXUs+8VU8sieQVa6TLCsv5lIFRCQToR/zYQggr1660mtsXH+XOCL6RDiIlU48/wJySl2DGdqcJ45phqzZ1H269+nYf6OQvnXlz3WlhzVXVXq9lgKwSfabgQiwDXP16sKLWT0vOIYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UeJvx3bY; arc=none smtp.client-ip=209.85.217.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lv9VTs05"
-Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-56a8dce7235so19607e0c.1
-        for <git@vger.kernel.org>; Wed, 25 Feb 2026 10:37:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UeJvx3bY"
+Received: by mail-vs1-f68.google.com with SMTP id ada2fe7eead31-5ff09bb6335so417196137.2
+        for <git@vger.kernel.org>; Wed, 25 Feb 2026 10:37:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772044635; x=1772649435; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772044638; x=1772649438; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=USG858bWCVmFbTvR8ssqa4Qoe03huPrAf9GVMzB5U2Q=;
-        b=Lv9VTs05PKMeEUTP76NvW9MZIXza08LVr23y71gkjoBhGVTON3b8zcouLBxXxPtZMt
-         pePmqn5U20vqVTwCwLY4b5ll+IuvlwWTA6oTPHRHw65IPO/R3eBPjn4QUkqWe1JwYizM
-         gy65Vj9gidyjEJpMnMFlrDn8eceZm99+MctXqZfF7aYBl2rKb0YduKbscHYog9lARqsu
-         Yi34u7Ax3TKEQ0qF7njahfDA8z789DuHULYx32FpSrHT1c40veFURsJdez/DbPl2j0yy
-         dqV7OYv9ZyIGFRcyi5ClpS6Aaf8bv+DUdv5+X1e9PWV6VqM8gY2r67AqwcQmp9S/FBcW
-         XO4w==
+        bh=AEvaXiGurTnSUNvKLKHpKgwOnvSRSdl6BrAlY+eHVIY=;
+        b=UeJvx3bYScLTnEDnxCvGdGmMemsnN9g5DEdl4sH7Zi6wP+K6jcvxveawI5EVKobosl
+         6KgPhJNms9TWQuotOvW30SPlIq1QXV25aCRpZi94mmyR2H8Kj7DCUoNQFkl7X2dFfzdl
+         RiqgFQJStsA7J4eNOFhHAOBQKG73T+cw7S/vFsiMtVsYdiWTIIVeuDAKJuBC5NC7mnFq
+         5dDhJMNLRX0+UYq8YiTEox/KqM7gxL8b5x+s82qzhkouwPxdGGBtyGBRS7I0T+2yyOZU
+         eGfmSCGqOjSmCMBYvBQWRjpaKwo//Zf9ofGw0esg0z2yjVLzVXXfYDwHNIMO3/XbE8qi
+         OKjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772044635; x=1772649435;
+        d=1e100.net; s=20230601; t=1772044638; x=1772649438;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=USG858bWCVmFbTvR8ssqa4Qoe03huPrAf9GVMzB5U2Q=;
-        b=uI0h9/QkgU9LvPnqCMKg4EFgOQNJ8hFNZMnFyDr1QmjoZ6la//xd9FYNfh6LJ1Ka4G
-         qG+NX/ei8N9oNt1NKFL7fmMcx2Jh3hlTZQLg5wW0MHP8xv8tuGoL8JVVW4Q5CyRiHfdX
-         bO07w6hI0aP1ynZWdOUTseWSyup/0T3p2YZqWhR0w7TN9FEHcqwKeH4i89vwaRB3hWia
-         60Vpq3/Jp7CQwtPxQwYIkr8naCXXPKTIjhpUfI57XyduVfNFoY8DtqFPjjwkfsJXat3C
-         WXC1wq9Tp2ky+sk5tx0lrOzSSy8JDyArkIp7P2HQt44vZ3jLu4Ez0xKfd5j+8I/Kmg6Z
-         l67w==
-X-Gm-Message-State: AOJu0YxmPTI6u3dbfmKzsHYcbhklIsIDMmwGGggEL+gztL4C7I7h00U7
-	v4wbL0O/IkkRVlxxPvoSYZ0lHbEPMSy+VXTYmxvf4YAQ+Co2yknIe+wiiN564Q==
-X-Gm-Gg: ATEYQzym+Ub+qjWJfLfpCPmjUJA5igcgtIlcLXQ8Un4lv0IJZict8P5/Qht3Q9SkQ22
-	k1JffnTSQhjKimiZJQiAFLG9Pnwiu1UxWrg6bfBKlB/0bXHho7EftHSIgk2yRKCEcC74j3ogsef
-	tYOfU5Hb0Czw52JZBLZaonAq/RSZj6TDMOHyzREMPIiAiX8OWa1/NjWVks8wkX4dI/W/KHC9VVt
-	Js8UA5PlQHD6pTwGpiGNoH69o6itVmkoCHakYyKTg40RvnOiZymu08THBOKKmIgv4B03cj5qpC7
-	uh7rEceb7Snx1j3KXic/WbppI1EwQ14bVAd/doPFWfNvzK0oeCe0/XNVC+zbPWsySTKc0fpT5pg
-	ngZCa5ahto8FlU7FKEo1gFRzSSCoJSuWgGfo2on7fSPwDiW7J8I1hlt6fFeyv7m4qpXQO5WWHX9
-	gMtudwqaxesZ4brUPAnNa4juiQ9AAE451HkbsERxlvFCLYduSAg2uLIv/HJYwm
-X-Received: by 2002:a05:6102:b11:b0:5ee:a12d:55b7 with SMTP id ada2fe7eead31-5ff140f7030mr737014137.29.1772044634711;
-        Wed, 25 Feb 2026 10:37:14 -0800 (PST)
+        bh=AEvaXiGurTnSUNvKLKHpKgwOnvSRSdl6BrAlY+eHVIY=;
+        b=Q05ZJ4ZVxykN4mJusg5edFq23O4siGhdtNpXU2CiXMXFZBhqxcZ0j35nspsVHhq/J8
+         xGXbINFnYQjWuNb3PtkSPDGa1LyDc2DMjnoM/wZc2h8r1NiNPHM4lCET4u+0LwhHEgTS
+         w7UO629p0kKzVDAaGh1tyIZQSJKP2WtjJc/pgRx1I4Xl8SoJW5/AGEHHYppnlXhI8I6u
+         M8DPYTlkYF4h1oydqAZXnEDfOHvo2jCrgG++azEb/4+qOVunxxsal7L7M9eduHUT5z2t
+         NpH7qAmvf9QoadjNMW+6525AlviOqltaYc13MHQmNDqbt1a1wAlVAeCod1Vdc+eL99th
+         Lo9g==
+X-Gm-Message-State: AOJu0YwD7FBfjkfQPiq6n04BNdYk2mMuGeE+mLVN1y9o5lSDrG1NgmEU
+	v1wA7Qj/jKVVVYcw1Vlp6+ocEBl1UCWNbBqEaDdGeNnsXz3eM2T982VmUFO+vttK
+X-Gm-Gg: ATEYQzybx1yO7Sp6A6W89Pw7MUN77uCpOBaOqdtPet1wbKly8f4loNuzHxfKYnLd9Ae
+	+oqrzg3NwfsNKQmVNPGXsXBhfuznYDtDLQzGXJg1i62cdEmvYeHAAXRSwfcBFHfQ+2QX9gNiq38
+	+BHUL17QggfEEp7v7PyV7xZWA7AuOK0pJtjj1GbwrIHjXjZvzLQLI9QNKJJ1p05x37/S5kKCVH/
+	ulPDxEvfD2LvdhOFVnoUXgU9McplFnpaIO5deadtdM1IZ0vfQimfT/PFj+rwWxl829Lul3ckJQ1
+	Mu534jHp4ggJYDbIPGVR7oDcXGJyu0jhZ1pLKca01WCrPd+AnfPUcm/llNF8nP8IkIsfA+vnMoq
+	/aSnjaV222Q7Jma6WAa1yoAFhOm2WAgRIXkdWDNbqdnqxMm0FIDJpQTEhvdsjzyJiP45hu/Qf1T
+	a9N2vJYmUkkY+kZr8fnj3VZssxu5QCozYDA1+aSqtepbVU5v8xOZA34yLk0W1v
+X-Received: by 2002:a05:6102:5493:b0:5f5:4d9c:de4c with SMTP id ada2fe7eead31-5feb2e60da4mr6627275137.3.1772044637698;
+        Wed, 25 Feb 2026 10:37:17 -0800 (PST)
 Received: from localhost.localdomain ([189.62.150.156])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94da89e129esm13457485241.5.2026.02.25.10.37.12
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94da89e129esm13457485241.5.2026.02.25.10.37.15
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 25 Feb 2026 10:37:14 -0800 (PST)
+        Wed, 25 Feb 2026 10:37:17 -0800 (PST)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: sunshine@sunshineco.com,
@@ -65,9 +65,9 @@ Cc: sunshine@sunshineco.com,
 	jltobler@gmail.com,
 	avila.jn@gmail.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [PATCH v2 6/8] t1901: adjust nul format output instead of expected value
-Date: Wed, 25 Feb 2026 13:32:15 -0300
-Message-ID: <20260225183559.79303-7-lucasseikioshiro@gmail.com>
+Subject: [PATCH v2 7/8] Documentation/git-repo: replace 'NUL' with '_NUL_'
+Date: Wed, 25 Feb 2026 13:32:16 -0300
+Message-ID: <20260225183559.79303-8-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260225183559.79303-1-lucasseikioshiro@gmail.com>
 References: <20260218211845.96009-1-lucasseikioshiro@gmail.com>
@@ -80,54 +80,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The test 'keyvalue and nul format', as it description says, test both
-`keyvalue` and `nul` format. These formats are similar, differing only in
-their field separator (= in the former, LF in the latter) and their
-record separator (LF in the former, NUL in the latter). This way, both
-formats can be tested using the same expected output and only replacing
-the separators in one of the output formats.
-
-However, it is not desirable to have a NUL character in the files
-compared by test_cmp because, if that assetion fails, diff will consider
-them binary files and won't display the differences properly.
-
-Adjust the output of `git repo structure --format=nul` in t1901, matching the
---format=keyvalue ones. Compare this output against the same value expected
-from --format=keyvalue, without using files with NUL characters in
-test_cmp.
+Replace all occurrences of "NUL" by "_NUL_" in git-repo.adoc, following the
+convention used by other documentation files.
 
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- t/t1901-repo-structure.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/git-repo.adoc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index a6f2591d9a..a67b38ab17 100755
---- a/t/t1901-repo-structure.sh
-+++ b/t/t1901-repo-structure.sh
-@@ -145,18 +145,18 @@ test_expect_success SHA1 'lines and nul format' '
- 		test_cmp expect out &&
- 		test_line_count = 0 err &&
+diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+index 319d30bd86..f76f579b20 100644
+--- a/Documentation/git-repo.adoc
++++ b/Documentation/git-repo.adoc
+@@ -40,7 +40,7 @@ supported:
  
--		# Replace key and value delimiters for nul format.
--		tr "\n=" "\0\n" <expect >expect_nul &&
- 		git repo structure --format=nul >out 2>err &&
-+		tr "\012\000" "=\012" <out >actual &&
+ `nul`:::
+ 	similar to `lines`, but using a newline character as the delimiter
+-	between the key and the value and using a NUL character after each value.
++	between the key and the value and using a _NUL_ character after each value.
+ 	This format is better suited for being parsed by another applications than
+ 	`lines`. Unlike in the `lines` format, the values are never quoted.
+ +
+@@ -80,7 +80,7 @@ supported:
+ 	configuration variable `core.quotePath` (see linkgit:git-config[1]).
  
--		test_cmp expect_nul out &&
-+		test_cmp expect actual &&
- 		test_line_count = 0 err &&
- 
- 		# "-z", as a synonym to "--format=nul", participates in the
- 		# usual "last one wins" rule.
- 		git repo structure --format=table -z >out 2>err &&
-+		tr "\012\000" "=\012" <out >actual &&
- 
--		test_cmp expect_nul out &&
-+		test_cmp expect actual &&
- 		test_line_count = 0 err
- 	)
- '
+ `nul`:::
+-	Similar to `lines`, but uses a NUL character to delimit between
++	Similar to `lines`, but uses a _NUL_ character to delimit between
+ 	key-value pairs instead of a newline. Also uses a newline character as
+ 	the delimiter between the key and value instead of '='. Unlike the
+ 	`lines` format, values containing "unusual" characters are never
 -- 
 2.50.1 (Apple Git-155)
 
