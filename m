@@ -1,592 +1,237 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74CC38E5F9
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 09:40:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772012459; cv=none; b=sGjzJXcjsPCF6GSvDImJTenHASPGLsbdos2LObvrvCEvjOZFvydU6WXuazr8rWkhQgwTXpYv5e2WEnKNTmk6b1KRbBtFhNJh82SDyODueEegYeemLsF2ibOp+DhWcwwAyZCSrtEdOvv4tZdcy7YBmr5+ozUQOIaKPrH2dSnO60o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772012459; c=relaxed/simple;
-	bh=3F1WeJ2LB2s9bLZ04bWn9sWmBUrCOVIWVSWZfkJO52I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=miod9o7IFvr9+z8yJ+1Q73KYqUmgo7p/S0ZTt/4P9ahalswhN8zQPef4vr/eJYJwy4Z0s3XWFw0hm+5628YdZ3+oR3/ereafw96JyUgW/vZCIKUvv+bCTmjiMYBJeVheSHqtgyTWWuahDLIhnt1Ew5AmHs0VLj927GoMmSCfHhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CtmAbWom; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29A938F22E
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 09:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772012470; cv=pass; b=jC9qN703S20opa5+tuD9PCIY9DY9QS4tMIbzORcJpwW7rm191H8o8SltBN02Bx9J+mBR7OSzZx4s9hgpWqDBp8lXcDgyWcJYaM8OUkKbLbyjji3cZcu+RKeVUnJWjoufANrLl123NX+EbWmXEqxjVmxSo/ytsqjOuHwNqgueydM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772012470; c=relaxed/simple;
+	bh=XeuG3zQ/XaVIaI+5k0jYTrqx5L4nN7QgY02h9FgjkXM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UEjWj6/ny285DIQqoUjcCvVEXAayBDKDntoPktZgaytTnUb1/lPPnj/QG4abr8UrtbKOmg+7wnbXvNsXZzGRQ4QhLnuyhLer+YlZxu7wLEUYg5/7Bx9mpKvimAA9xCnp7jwMyuapGpcE0f8bVzmCo9GlZRZ+XU5jXYa6vcnoiik=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=adTHBO5q; arc=pass smtp.client-ip=209.85.221.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CtmAbWom"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-48371bb515eso80857685e9.1
-        for <git@vger.kernel.org>; Wed, 25 Feb 2026 01:40:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="adTHBO5q"
+Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-567530bc03fso5276009e0c.3
+        for <git@vger.kernel.org>; Wed, 25 Feb 2026 01:41:08 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772012467; cv=none;
+        d=google.com; s=arc-20240605;
+        b=V/NJ4VwdKGXwjEj+2vQygq4/hWdedzSTgNGkYYVaRSTSQoPBoTo+Y+3RFRzKPO9uwp
+         ppQ8cyCk1Z+4845FawmHeoDlTvzXPYPCfBZjOGMd9h27tk9KLDVJGLXvCtTzT/R2N7Hf
+         XeVTyEftUXwCwdDJzs/u1kd56409XcE3wD13b/kMx7/0w/EnFKvvwcOP1OZMRDgVh9nE
+         4j8zR0YpxnIrUghi194L3Amn95PqaP5mbY8DWcODD/Idg6Dm+MvEDpP01IYXfMbRkztg
+         wbaqgs63Xwc+9QE/X3lrDvLUnSudG9clMnw1+V4RRHIRX8r1M9gfHqnkpHvRbtPubSol
+         w0WA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=1HESsn4yb0CGmx4gbVOtO97dCJnYDtLatYxwwNl20Q0=;
+        fh=7o792llG9EbTqV0Dsbyv1ts2cuNjwg+QmhZsoS26nig=;
+        b=UhI7vqYpkdgK/iepOfmM1yy8aV+xgnctikSYtAk5gyjmvVBhscrfTY5HTA+ODpnyJk
+         nGBXxNQzis/Wb3PBLS2aKNy3irLyYzUdJHApC7qGh9D8tL+NlbjCZjGINwj2rej9MPQ6
+         H8ig5ed5dv1sxgVKu8420OZr6h3k7ua7BUXOJ47a2Jl/Opo/z2PaMhq9X1fBk76PoKmm
+         pnpAMt5GcRZoeN1kQlpahlipZqGac4/VjzD23wzMbPtiepiYBzci7CZP2EyEs/b7h8FN
+         dymjGFGxEADMPlIJtJuZQZ4EMoPtc96kQb0jyYb1+zceDg+6RAYa14A42B+StIPeYrCM
+         PodA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772012456; x=1772617256; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yx1qsAdhda0PHs3cquNcUj2KRdQcTaq9+8gzs7I/qog=;
-        b=CtmAbWomplmiIb21e4NdNmV3SkfQkinmWPR02lwmplUsjdo2PDBf3VWmSyoN8RL+RG
-         9kOdVOTrPSb6b2O8co1J2WJphdq7Wggfgz2HnIP9G6bHE6jrlKCKuBARlp4sUxHdyy+2
-         MLGrde3YKuFpnfdZNwbTwCeBlXpszFlBGXOmJhy7oLSFQ+tL4nsP+Li4JcG/pIGi1Gfk
-         aUAFF2OJ/VGn9Rh0BfFMPqPBkmYsUIIf8Myr49c4uRtNA2uKytp3ZgmaKKbSX6JaVno/
-         lAqHXmGsGyW8GCHzZqlPV0DwoFsVewYQFVTKmIwcpYOj2q1VdRQCPGFbUDLuP37Yfm2b
-         aYQw==
+        d=gmail.com; s=20230601; t=1772012467; x=1772617267; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1HESsn4yb0CGmx4gbVOtO97dCJnYDtLatYxwwNl20Q0=;
+        b=adTHBO5qze/ZSuEcu5EoW+ZEnSXp0GElLzU+5gkTiI12hsWrHuOcJISBdQnfpGCyUW
+         OHP6PaSH62z3jPUSsWj/qvdC+RE1ihF8vjy9C8/n+jBdmO+fhTDinjfU8EVyHVmZDMWU
+         FlG/HkWnQZSYnpYg/63D+hTJyLPhvDRfyqsYrS2VgGU6WPx5vlCXzzd16ghqCw7f8fDJ
+         3tmbh5YU3/gNTlT+UmJEN+rT/x9M4O/trTKS1cLFqStTY8tpeDR3odYm18/df+7ezETO
+         3SO8L4Pf/VXjU6c7Cvc0kNrSDbU9obzZIxGDLd30qZzvfeAApTqZxfiwXpSxlFJZZpWo
+         mmyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772012456; x=1772617256;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=yx1qsAdhda0PHs3cquNcUj2KRdQcTaq9+8gzs7I/qog=;
-        b=NlovGSiqu7CxfCE9wiMR8ODNmHoRSXzblrPZVyJoemx8KjHdQaTcfOiWSY+/Z+sgm4
-         m9eXLd3u0xRBbnQ/DzMIg4yIGS7qyy64P7v85slCQfbLc7/Q7B8j4K8r1YSWQ+9dzEOw
-         bIlXZQm8Z5r4+wd+GUc0HwTmNqOQ6Qhh/AuUpQPW2OVamueedX4XzOfWoHhmoBwhff3k
-         rvFgi1Cx21H9wmQGGnfukEM39HRp304f6fcKEYFhoNZAlq8ZXKbF01NNztxzDt4u0vDZ
-         v41tmMWC6mbEYFSc8ocytMbhzIAsnnVYYI3qVmV0tX3/7TagpH1XoyNqSIpLyMdKXTT7
-         OSqg==
-X-Gm-Message-State: AOJu0Yy6fj7x+xXfIzvqfFsbCzxAIchjOToekp6LQsRCYMdpmvJWqmvi
-	nKJmQejKG99NfC8Hkre9/xW72H2yqwhVA7Ttqj4R+9Z86mxK9yElDu+E
-X-Gm-Gg: ATEYQzwMEhD7IrwaydNfYEVVvpgOvCD2Jiitsgy/LVSSSqkQb4+2UJjRI2Dv/6lYCZ+
-	dcWu54xoEKg9qDtdLRrHryzf0v4Zu1vYeycH4bbr8eK21K/vHEk13hnZAweCRj7NHotGyVnT6/e
-	bE9AAuqMbMq+2S1k8cZOmM89UOkX9GHOc2b9usqLhtWF9qqOriJpPHjuN0NyGkTW6RAeSZlojkt
-	iIkOg/OwqO53FDLG58hDRGpzx/zYCVTfvY0oMHhzdgrBJ9CLxsn+VTY8eySNz/XGn8P5AZaoYx7
-	gdhPYsz5EmhiQ7YbjJx0CQPYh5tgBzyjFNfCdRLRUsGcZTE82pu53oOrYUwLBsv1JjTRxAvqMGU
-	3oqfb4Objc+BfXiuJmY+PqBW/gjZXMGgYaGDbjbMXAi352qFH7fnK2iCJAm8FnHTp1UcRwuA0L7
-	wWQjMHT7WI8jkXTtuks7YQM0kP/p5u7AVLs+tkMWImYg==
-X-Received: by 2002:a05:600c:190c:b0:47e:e712:aa88 with SMTP id 5b1f17b1804b1-483b427b6f8mr170349875e9.31.1772012456025;
-        Wed, 25 Feb 2026 01:40:56 -0800 (PST)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:d32e:ae2b:c73c:65c6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bffc17dasm12956025e9.2.2026.02.25.01.40.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Feb 2026 01:40:55 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772012467; x=1772617267;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1HESsn4yb0CGmx4gbVOtO97dCJnYDtLatYxwwNl20Q0=;
+        b=wMzqc/4iEDcxRAB7UHhFjjPmQr3yADcfF1vAuWcEC5w/C/Hw1g+OfT/u+OpX8dFvZA
+         gfX9jRaoD0Y9hNccJZ2Z38lTjxaE+b75HJnKUQE2zGfTpfsX9kesEdzAP+u8Ex9nhnd8
+         ojOyaXpUfwiI0A3sFAupsySHFS3S6Lm066DcRXCmoRrDB6OG5Szofg02ysolZAHiBcYd
+         ga5+XVAsOLeytYjbkcw3CnBp6VVmJvo3/uyUAcJnksw/ULW+en3b6PYByyGryZ6Yqm1g
+         PMvpEEFdBMa/O1mNBHOcIClRmQ6zNMCP/Dp/qz7oEHGEwLSugCTvUsiY/f6mZBrUcve6
+         Q5oA==
+X-Forwarded-Encrypted: i=1; AJvYcCVZt6lmZOvvZFjBINQChp5N4jZAYACyXGggmfrPTsazc/0zk6iImDH+kUTjcEW8K5Xc9CI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxudaHnfU1Bf5qP3YnCWuCZO3YsDCMUZ3UiV6vwMP9ugL3kIOzh
+	Pz81qlPh4485MoFkYWJ00ZJEsP9vaJVo9Bez2XU254Ewgyxin7C2vzQCqQOmiNM/SAS1kaUh3FA
+	bECEza6339MF0ifAM9Toe3uAAVjNdFXo=
+X-Gm-Gg: ATEYQzzDiFnr9czY654WOqJ1a7a2fLHY8mVwZak3fVvBYcV6rGX66A6DYFSZJQeYieS
+	ljJCN76wM4+06HjTWIIG4g7mK/XI68Ji7PamPgc9sch6JlVr5VUusshX+hnXrHzae90Jr7tNRTx
+	K/rqnNMT7CpBHgehQFPzK97VawlxnWT534w/L1pkxatElubtDaR7wSYkNsiKFEV4rqb82fQzxka
+	1QGDqAmICs0o+6apZiX51cWB2usPoGzH7Xhglbu+1tSndRSa8pK1xt7i2FrXCaEGeR6EhHDhCGV
+	JTXscfrM4dkQ5SXACoGk2yfkIQ/RhCM5ifj/TQw+GB/SwxgaQuSp
+X-Received: by 2002:a05:6102:38d3:b0:5fd:eeb6:c945 with SMTP id
+ ada2fe7eead31-5feb2ef99bbmr7337280137.11.1772012467413; Wed, 25 Feb 2026
+ 01:41:07 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 25 Feb 2026 09:41:06 +0000
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 25 Feb 2026 09:41:06 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 25 Feb 2026 10:40:46 +0100
-Subject: [PATCH v9 6/6] refs: add GIT_REFERENCE_BACKEND to specify
- reference backend
+In-Reply-To: <874in5nr5p.fsf@iotcl.com>
+References: <20260223-kn-alternate-ref-dir-v8-0-0509c132a203@gmail.com>
+ <20260223-kn-alternate-ref-dir-v8-6-0509c132a203@gmail.com> <874in5nr5p.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260225-kn-alternate-ref-dir-v9-6-3fe118e40e28@gmail.com>
-References: <20260225-kn-alternate-ref-dir-v9-0-3fe118e40e28@gmail.com>
-In-Reply-To: <20260225-kn-alternate-ref-dir-v9-0-3fe118e40e28@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im, toon@iotcl.com, 
- =?utf-8?q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>, 
- Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=17862;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=3F1WeJ2LB2s9bLZ04bWn9sWmBUrCOVIWVSWZfkJO52I=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGmew52Tmx9+xYJS0znM4p++gPFvgRERfBP6b
- mEcKE0t8zOmkIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpnsOdAAoJED7VnySO
- Rox/G3sL/RIkhFh1M90fAhS63juy/dNW9+c+GnK6sH+U6acpgTojAQIUqzzT0Ot+Utn4GDdgReS
- kPozDXZ5jPUT+5N7NRGjMLhUSMe2xlAFtO+45l+txR5jgrC2dV6WGPAaLnDlryt2HJEAHT4Jny6
- xBsaq7ateF+nX5VYK4nXpvLsD8z7Nap/wbUJ/yHwOUzmZW7vZGqFMaEU4l9WLkXPWsiyVcg4Srw
- s+ExPy6m+BML6u0WcRQWCDU3/DDEbP2Z9N8iaShq4KD2cCOVKRQ4LRn5qDvJjQhPSWGD8eT2VCX
- hsmHK+lnRLSE1oLughZLtE3izyzju2EXdInpCJCJDeKSnmrnWkKoc9D5d90VTAcyUw60Y2RM2aW
- +0/qZOEuOK+X2eRgcLwO4LZuiJSXkMxHRgZGNBV9r+lqyY1fhkgTcFBqcrqhJ+owxuoBBcwXhQu
- 7byzTHSSnGaISQVw6YfgIwORmJW6xpRVokDnbRB6XxkyUS5lBdO/HLo/T7x0a2OnP7pTjLPEVy7
- DE=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Date: Wed, 25 Feb 2026 09:41:06 +0000
+X-Gm-Features: AaiRm53UrmaTOGHvkCZ77CbsQX9TwMW6vcKa_3L0Yy8mgu76RrKTFgF5RNna0dI
+Message-ID: <CAOLa=ZQ54NpKGywvW2aVdZNmSFarkWyp97hmwB5Ou3K40FavNA@mail.gmail.com>
+Subject: Re: [PATCH v8 6/6] refs: add GIT_REFERENCE_BACKEND to specify
+ reference backend
+To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, ps@pks.im, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Type: multipart/mixed; boundary="000000000000a881f9064ba2cd56"
 
-Git allows setting a different object directory via
-'GIT_OBJECT_DIRECTORY', but provides no equivalent for references. In
-the previous commit we extended the 'extensions.refStorage' config to
-also support an URI input for reference backend with location.
+--000000000000a881f9064ba2cd56
+Content-Type: text/plain; charset="UTF-8"
 
-Let's also add a new environment variable 'GIT_REFERENCE_BACKEND' that
-takes in the same input as the config variable. Having an environment
-variable allows us to modify the reference backend and location on the
-fly for individual Git commands.
+Toon Claes <toon@iotcl.com> writes:
 
-The environment variable also allows usage of alternate reference
-directories during 'git-clone(1)' and 'git-init(1)'. Add the config to
-the repository when created with the environment variable set.
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> diff --git a/t/t1423-ref-backend.sh b/t/t1423-ref-backend.sh
+>> index 9912433b8c..1a7b8eadba 100755
+>> --- a/t/t1423-ref-backend.sh
+>> +++ b/t/t1423-ref-backend.sh
+>> @@ -138,22 +189,92 @@ do
+>>  				git refs migrate --dry-run --ref-format=$to_format >out &&
+>>  				BACKEND_PATH="$dir/$(sed "s/.* ${SQ}.git\/\(.*\)${SQ}/\1/" out)" &&
+>>
+>> -				git config set core.repositoryformatversion 1 &&
+>> -				git config set extensions.refStorage "$to_format://$BACKEND_PATH" &&
+>> -
+>> -				git worktree add ../wt 2
+>> -			) &&
+>> +				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" \
+>> +					"worktree add ../wt 2" "$method" &&
+>>
+>> -			git -C repo for-each-ref --include-root-refs >expect &&
+>> -			git -C wt for-each-ref --include-root-refs >expect &&
+>> -			! test_cmp expect actual &&
+>> +				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" \
+>> +					"for-each-ref --include-root-refs" "$method" >actual &&
+>> +				run_with_uri ../wt "$from_format" "$to_format://$BACKEND_PATH" \
+>> +					"for-each-ref --include-root-refs" "$method" >expect &&
+>> +				! test_cmp expect actual &&
+>>
+>> -			git -C wt rev-parse 2 >expect &&
+>> -			git -C wt rev-parse HEAD >actual &&
+>> -			test_cmp expect actual
+>> +				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" \
+>> +					"rev-parse 2" "$method" >actual &&
+>> +				run_with_uri ../wt "$from_format" "$to_format://$BACKEND_PATH" \
+>> +					"rev-parse HEAD" "$method" >expect &&
+>> +				test_cmp expect actual
+>> +			)
+>>  		'
+>>  	done # closes dir
+>> +
+>> +	test_expect_success "migrating repository to $to_format with alternate refs directory" '
+>> +		test_when_finished "rm -rf repo refdir" &&
+>> +		mkdir refdir &&
+>> +		GIT_REFERENCE_BACKEND="${from_format}://$(pwd)/refdir" git init repo &&
+>> +		(
+>> +			cd repo &&
+>> +
+>> +			test_commit 1 &&
+>> +			test_commit 2 &&
+>> +			test_commit 3 &&
+>> +
+>> +			git refs migrate --ref-format=$to_format &&
+>> +			git refs list >out &&
+>> +			test_grep "refs/tags/1"	out &&
+>> +			test_grep "refs/tags/2"	out &&
+>> +			test_grep "refs/tags/3"	out
+>> +		)
+>> +	'
+>> +
+>>  done # closes to_format
+>>  done # closes from_format
+>>
+>> +done # closes method
+>> +
+>> +test_expect_success 'initializing repository with alt ref directory' '
+>> +	test_when_finished "rm -rf repo refdir" &&
+>> +	mkdir refdir &&
+>> +	BACKEND="$(test_detect_ref_format)://$(pwd)/refdir" &&
+>> +	GIT_REFERENCE_BACKEND=$BACKEND git init repo &&
+>> +	verify_files_exist repo/.git refdir &&
+>> +	(
+>> +		cd repo &&
+>> +
+>> +		git config get extensions.refstorage >expect &&
+>> +		echo $BACKEND >actual &&
+>
+> Shouldn't these two be swapped, like:
+>
+> 		git config get extensions.refstorage >actual &&
+> 		echo $BACKEND >expect &&
+>
+>> +		test_cmp expect actual &&
+>> +
+>> +		test_commit 1 &&
+>> +		test_commit 2 &&
+>> +		test_commit 3 &&
+>> +		git refs list >out &&
+>> +		test_grep "refs/tags/1"	out &&
+>> +		test_grep "refs/tags/2"	out &&
+>> +		test_grep "refs/tags/3"	out
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'cloning repository with alt ref directory' '
+>> +	test_when_finished "rm -rf source repo refdir" &&
+>> +	mkdir refdir &&
+>> +
+>> +	git init source &&
+>> +	test_commit -C source 1 &&
+>> +	test_commit -C source 2 &&
+>> +	test_commit -C source 3 &&
+>> +
+>> +	BACKEND="$(test_detect_ref_format)://$(pwd)/refdir" &&
+>> +	GIT_REFERENCE_BACKEND=$BACKEND git clone source repo &&
+>> +
+>> +	git -C repo config get extensions.refstorage >expect &&
+>> +	echo $BACKEND >actual &&
+>> +	test_cmp expect actual &&
+>
+> Same here.
+>
 
-When initializing the repository with an alternate reference folder,
-create the required stubs in the repositories $GIT_DIR. The inverse,
-i.e. removal of the ref store doesn't clean up the stubs in the $GIT_DIR
-since that would render it unusable. Removal of ref store is only used
-when migrating between ref formats and cleanup of the $GIT_DIR doesn't
-make sense in such a situation.
+Makes sense. Will amend.
 
-Helped-by: Jean-Noël Avila <jn.avila@free.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git.adoc |   5 ++
- environment.h          |   1 +
- refs.c                 |  30 +++++---
- setup.c                |  55 ++++++++++++++-
- t/t1423-ref-backend.sh | 187 ++++++++++++++++++++++++++++++++++++++++---------
- 5 files changed, 233 insertions(+), 45 deletions(-)
+--000000000000a881f9064ba2cd56
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 8e9e23bc9a69e9bb_0.1
 
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index ce099e78b8..66442735ea 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -584,6 +584,11 @@ double-quotes and respecting backslash escapes. E.g., the value
- 	repositories will be set to this value. The default is "files".
- 	See `--ref-format` in linkgit:git-init[1].
- 
-+`GIT_REFERENCE_BACKEND`::
-+    Specify which reference backend to be used along with its URI.
-+    See `extensions.refStorage` option in linkgit:git-config[1] for more
-+    details. Overrides the config variable when used.
-+
- Git Commits
- ~~~~~~~~~~~
- `GIT_AUTHOR_NAME`::
-diff --git a/environment.h b/environment.h
-index 27f657af04..540e0a7f6d 100644
---- a/environment.h
-+++ b/environment.h
-@@ -42,6 +42,7 @@
- #define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
- #define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
- #define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
-+#define GIT_REFERENCE_BACKEND_ENVIRONMENT "GIT_REFERENCE_BACKEND"
- 
- /*
-  * Environment variable used to propagate the --no-advice global option to the
-diff --git a/refs.c b/refs.c
-index ef1902e85c..a700a66f08 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2192,13 +2192,17 @@ int ref_store_create_on_disk(struct ref_store *refs, int flags, struct strbuf *e
- {
- 	int ret = refs->be->create_on_disk(refs, flags, err);
- 
--	if (!ret &&
--	    ref_storage_format_by_name(refs->be->name) != REF_STORAGE_FORMAT_FILES) {
--		struct strbuf msg = STRBUF_INIT;
--
--		strbuf_addf(&msg, "this repository uses the %s format", refs->be->name);
--		refs_create_refdir_stubs(refs->repo, refs->gitdir, msg.buf);
--		strbuf_release(&msg);
-+	if (!ret) {
-+		/* Creation of stubs for linked worktrees are handled in the worktree code. */
-+		if (!(flags & REF_STORE_CREATE_ON_DISK_IS_WORKTREE) && refs->repo->ref_storage_payload) {
-+			refs_create_refdir_stubs(refs->repo, refs->repo->gitdir,
-+						 "repository uses alternate refs storage");
-+		} else if (ref_storage_format_by_name(refs->be->name) != REF_STORAGE_FORMAT_FILES) {
-+			struct strbuf msg = STRBUF_INIT;
-+			strbuf_addf(&msg, "this repository uses the %s format", refs->be->name);
-+			refs_create_refdir_stubs(refs->repo, refs->gitdir, msg.buf);
-+			strbuf_release(&msg);
-+		}
- 	}
- 
- 	return ret;
-@@ -2208,10 +2212,18 @@ int ref_store_remove_on_disk(struct ref_store *refs, struct strbuf *err)
- {
- 	int ret = refs->be->remove_on_disk(refs, err);
- 
--	if (!ret &&
--	    ref_storage_format_by_name(refs->be->name) != REF_STORAGE_FORMAT_FILES) {
-+	if (!ret) {
-+		enum ref_storage_format format = ref_storage_format_by_name(refs->be->name);
- 		struct strbuf sb = STRBUF_INIT;
- 
-+		/* Backends apart from the files backend create stubs. */
-+		if (format == REF_STORAGE_FORMAT_FILES)
-+			return ret;
-+
-+		/* Alternate refs backend require stubs in the gitdir. */
-+		if (refs->repo->ref_storage_payload)
-+			return ret;
-+
- 		strbuf_addf(&sb, "%s/HEAD", refs->gitdir);
- 		if (unlink(sb.buf) < 0) {
- 			strbuf_addf(err, "could not delete stub HEAD: %s",
-diff --git a/setup.c b/setup.c
-index d407f3347b..90cb9be578 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1838,6 +1838,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	static struct strbuf cwd = STRBUF_INIT;
- 	struct strbuf dir = STRBUF_INIT, gitdir = STRBUF_INIT, report = STRBUF_INIT;
- 	const char *prefix = NULL;
-+	const char *ref_backend_uri;
- 	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
- 
- 	/*
-@@ -1995,6 +1996,25 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
- 	}
- 
-+	/*
-+	 * The env variable should override the repository config
-+	 * for 'extensions.refStorage'.
-+	 */
-+	ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
-+	if (ref_backend_uri) {
-+		char *backend, *payload;
-+		enum ref_storage_format format;
-+
-+		parse_reference_uri(ref_backend_uri, &backend, &payload);
-+		format = ref_storage_format_by_name(backend);
-+		if (format == REF_STORAGE_FORMAT_UNKNOWN)
-+			die(_("unknown ref storage format: '%s'"), backend);
-+		repo_set_ref_storage_format(the_repository, format, payload);
-+
-+		free(backend);
-+		free(payload);
-+	}
-+
- 	setup_original_cwd();
- 
- 	strbuf_release(&dir);
-@@ -2337,7 +2357,8 @@ void initialize_repository_version(int hash_algo,
- 	 * the remote repository's format.
- 	 */
- 	if (hash_algo != GIT_HASH_SHA1_LEGACY ||
--	    ref_storage_format != REF_STORAGE_FORMAT_FILES)
-+	    ref_storage_format != REF_STORAGE_FORMAT_FILES ||
-+	    the_repository->ref_storage_payload)
- 		target_version = GIT_REPO_VERSION_READ;
- 
- 	if (hash_algo != GIT_HASH_SHA1_LEGACY && hash_algo != GIT_HASH_UNKNOWN)
-@@ -2346,11 +2367,20 @@ void initialize_repository_version(int hash_algo,
- 	else if (reinit)
- 		repo_config_set_gently(the_repository, "extensions.objectformat", NULL);
- 
--	if (ref_storage_format != REF_STORAGE_FORMAT_FILES)
-+	if (the_repository->ref_storage_payload) {
-+		struct strbuf ref_uri = STRBUF_INIT;
-+
-+		strbuf_addf(&ref_uri, "%s://%s",
-+			    ref_storage_format_to_name(ref_storage_format),
-+			    the_repository->ref_storage_payload);
-+		repo_config_set(the_repository, "extensions.refstorage", ref_uri.buf);
-+		strbuf_release(&ref_uri);
-+	} else if (ref_storage_format != REF_STORAGE_FORMAT_FILES) {
- 		repo_config_set(the_repository, "extensions.refstorage",
- 				ref_storage_format_to_name(ref_storage_format));
--	else if (reinit)
-+	} else if (reinit) {
- 		repo_config_set_gently(the_repository, "extensions.refstorage", NULL);
-+	}
- 
- 	if (reinit) {
- 		struct strbuf config = STRBUF_INIT;
-@@ -2623,6 +2653,7 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 		.ignore_repo = 1,
- 		.ignore_worktree = 1,
- 	};
-+	const char *ref_backend_uri;
- 	const char *env;
- 
- 	config_with_options(read_default_format_config, &cfg, NULL, NULL, &opts);
-@@ -2668,6 +2699,24 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 	} else {
- 		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_DEFAULT;
- 	}
-+
-+
-+	ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
-+	if (ref_backend_uri) {
-+		char *backend, *payload;
-+		enum ref_storage_format format;
-+
-+		parse_reference_uri(ref_backend_uri, &backend, &payload);
-+		format = ref_storage_format_by_name(backend);
-+		if (format == REF_STORAGE_FORMAT_UNKNOWN)
-+			die(_("unknown ref storage format: '%s'"), backend);
-+
-+		repo_fmt->ref_storage_format = format;
-+		repo_fmt->ref_storage_payload = payload;
-+
-+		free(backend);
-+	}
-+
- 	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format,
- 				    repo_fmt->ref_storage_payload);
- }
-diff --git a/t/t1423-ref-backend.sh b/t/t1423-ref-backend.sh
-index 9912433b8c..9884a07447 100755
---- a/t/t1423-ref-backend.sh
-+++ b/t/t1423-ref-backend.sh
-@@ -11,16 +11,25 @@ test_description='Test reference backend URIs'
- #   <backend> is the original ref storage of the repo.
- #   <uri> is the new URI to be set for the ref storage.
- #   <cmd> is the git subcommand to be run in the repository.
-+#   <via> if 'config', set the backend via the 'extensions.refStorage' config.
-+#         if 'env', set the backend via the 'GIT_REFERENCE_BACKEND' env.
- run_with_uri() {
- 	repo=$1 &&
- 	backend=$2 &&
- 	uri=$3 &&
- 	cmd=$4 &&
-+	via=$5 &&
- 
--	git -C "$repo" config set core.repositoryformatversion 1
--	git -C "$repo" config set extensions.refStorage "$uri" &&
--	git -C "$repo" $cmd &&
--	git -C "$repo" config set extensions.refStorage "$backend"
-+	git -C "$repo" config set core.repositoryformatversion 1 &&
-+	if test "$via" = "env"
-+	then
-+		test_env GIT_REFERENCE_BACKEND="$uri" git -C "$repo" $cmd
-+	elif test "$via" = "config"
-+	then
-+		git -C "$repo" config set extensions.refStorage "$uri" &&
-+		git -C "$repo" $cmd &&
-+		git -C "$repo" config set extensions.refStorage "$backend"
-+	fi
- }
- 
- # Test a repository with a given reference storage by running and comparing
-@@ -30,44 +39,84 @@ run_with_uri() {
- #   <repo> is the relative path to the repo to run the command in.
- #   <backend> is the original ref storage of the repo.
- #   <uri> is the new URI to be set for the ref storage.
-+#   <via> if 'config', set the backend via the 'extensions.refStorage' config.
-+#         if 'env', set the backend via the 'GIT_REFERENCE_BACKEND' env.
- #   <err_msg> (optional) if set, check if 'git-refs(1)' failed with the provided msg.
- test_refs_backend() {
- 	repo=$1 &&
- 	backend=$2 &&
- 	uri=$3 &&
--	err_msg=$4 &&
-+	via=$4 &&
-+	err_msg=$5 &&
-+
- 
--	git -C "$repo" config set core.repositoryformatversion 1 &&
- 	if test -n "$err_msg";
- 	then
--		git -C "$repo" config set extensions.refStorage "$uri" &&
--		test_must_fail git -C "$repo" refs list 2>err &&
--		test_grep "$err_msg" err
-+		if test "$via" = "env"
-+		then
-+			test_env GIT_REFERENCE_BACKEND="$uri" test_must_fail git -C "$repo" refs list 2>err
-+		elif test "$via" = "config"
-+		then
-+			git -C "$repo" config set extensions.refStorage "$uri" &&
-+			test_must_fail git -C "$repo" refs list 2>err &&
-+			test_grep "$err_msg" err
-+		fi
- 	else
- 		git -C "$repo" refs list >expect &&
--		run_with_uri "$repo" "$backend" "$uri" "refs list" >actual &&
-+		run_with_uri "$repo" "$backend" "$uri" "refs list" "$via">actual &&
- 		test_cmp expect actual
- 	fi
- }
- 
--test_expect_success 'URI is invalid' '
-+# Verify that the expected files are present in the gitdir and the refsdir.
-+# Usage: verify_files_exist <gitdir> <refdir>
-+#   <gitdir> is the path for the gitdir.
-+#   <refdir> is the path for the refdir.
-+verify_files_exist() {
-+	gitdir=$1 &&
-+	refdir=$2 &&
-+
-+	# verify that the stubs were added to the $GITDIR.
-+	echo "repository uses alternate refs storage" >expect &&
-+	test_cmp expect $gitdir/refs/heads &&
-+	echo "ref: refs/heads/.invalid" >expect &&
-+	test_cmp expect $gitdir/HEAD
-+
-+	# verify that backend specific files exist.
-+	case "$GIT_DEFAULT_REF_FORMAT" in
-+	files)
-+		test_path_is_dir $refdir/refs/heads &&
-+		test_path_is_file $refdir/HEAD;;
-+	reftable)
-+		test_path_is_dir $refdir/reftable &&
-+		test_path_is_file $refdir/reftable/tables.list;;
-+	*)
-+		BUG "unhandled ref format $GIT_DEFAULT_REF_FORMAT";;
-+	esac
-+}
-+
-+methods="config env"
-+for method in $methods
-+do
-+
-+test_expect_success "$method: URI is invalid" '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
--	test_refs_backend repo files "reftable@/home/reftable" \
-+	test_refs_backend repo files "reftable@/home/reftable" "$method" \
- 		"invalid value for ${SQ}extensions.refstorage${SQ}"
- '
- 
--test_expect_success 'URI ends with colon' '
-+test_expect_success "$method: URI ends with colon" '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
--	test_refs_backend repo files "reftable:" \
-+	test_refs_backend repo files "reftable:" "$method" \
- 		"invalid value for ${SQ}extensions.refstorage${SQ}"
- '
- 
--test_expect_success 'unknown reference backend' '
-+test_expect_success "$method: unknown reference backend" '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
--	test_refs_backend repo files "db://.git" \
-+	test_refs_backend repo files "db://.git" "$method" \
- 		"invalid value for ${SQ}extensions.refstorage${SQ}"
- '
- 
-@@ -86,7 +135,7 @@ do
- 	for dir in "$(pwd)/repo/.git" "."
- 	do
- 
--		test_expect_success "read from $to_format backend, $dir dir" '
-+		test_expect_success "$method: read from $to_format backend, $dir dir" '
- 			test_when_finished "rm -rf repo" &&
- 			git init --ref-format=$from_format repo &&
- 			(
-@@ -101,7 +150,7 @@ do
- 			)
- 		'
- 
--		test_expect_success "write to $to_format backend, $dir dir" '
-+		test_expect_success "$method: write to $to_format backend, $dir dir" '
- 			test_when_finished "rm -rf repo" &&
- 			git init --ref-format=$from_format repo &&
- 			(
-@@ -113,20 +162,22 @@ do
- 				git refs migrate --dry-run --ref-format=$to_format >out &&
- 				BACKEND_PATH="$dir/$(sed "s/.* ${SQ}.git\/\(.*\)${SQ}/\1/" out)" &&
- 
--				test_refs_backend . $from_format "$to_format://$BACKEND_PATH" &&
-+				test_refs_backend . $from_format "$to_format://$BACKEND_PATH" "$method" &&
- 
- 				git refs list >expect &&
--				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" "tag -d 1" &&
-+				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" \
-+					"tag -d 1" "$method" &&
- 				git refs list >actual &&
- 				test_cmp expect actual &&
- 
- 				git refs list | grep -v "refs/tags/1" >expect &&
--				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" "refs list" >actual &&
-+				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" \
-+					"refs list" "$method" >actual &&
- 				test_cmp expect actual
- 			)
- 		'
- 
--		test_expect_success "with worktree and $to_format backend, $dir dir" '
-+		test_expect_success "$method: with worktree and $to_format backend, $dir dir" '
- 			test_when_finished "rm -rf repo wt" &&
- 			git init --ref-format=$from_format repo &&
- 			(
-@@ -138,22 +189,92 @@ do
- 				git refs migrate --dry-run --ref-format=$to_format >out &&
- 				BACKEND_PATH="$dir/$(sed "s/.* ${SQ}.git\/\(.*\)${SQ}/\1/" out)" &&
- 
--				git config set core.repositoryformatversion 1 &&
--				git config set extensions.refStorage "$to_format://$BACKEND_PATH" &&
--
--				git worktree add ../wt 2
--			) &&
-+				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" \
-+					"worktree add ../wt 2" "$method" &&
- 
--			git -C repo for-each-ref --include-root-refs >expect &&
--			git -C wt for-each-ref --include-root-refs >expect &&
--			! test_cmp expect actual &&
-+				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" \
-+					"for-each-ref --include-root-refs" "$method" >actual &&
-+				run_with_uri ../wt "$from_format" "$to_format://$BACKEND_PATH" \
-+					"for-each-ref --include-root-refs" "$method" >expect &&
-+				! test_cmp expect actual &&
- 
--			git -C wt rev-parse 2 >expect &&
--			git -C wt rev-parse HEAD >actual &&
--			test_cmp expect actual
-+				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" \
-+					"rev-parse 2" "$method" >actual &&
-+				run_with_uri ../wt "$from_format" "$to_format://$BACKEND_PATH" \
-+					"rev-parse HEAD" "$method" >expect &&
-+				test_cmp expect actual
-+			)
- 		'
- 	done # closes dir
-+
-+	test_expect_success "migrating repository to $to_format with alternate refs directory" '
-+		test_when_finished "rm -rf repo refdir" &&
-+		mkdir refdir &&
-+		GIT_REFERENCE_BACKEND="${from_format}://$(pwd)/refdir" git init repo &&
-+		(
-+			cd repo &&
-+
-+			test_commit 1 &&
-+			test_commit 2 &&
-+			test_commit 3 &&
-+
-+			git refs migrate --ref-format=$to_format &&
-+			git refs list >out &&
-+			test_grep "refs/tags/1"	out &&
-+			test_grep "refs/tags/2"	out &&
-+			test_grep "refs/tags/3"	out
-+		)
-+	'
-+
- done # closes to_format
- done # closes from_format
- 
-+done # closes method
-+
-+test_expect_success 'initializing repository with alt ref directory' '
-+	test_when_finished "rm -rf repo refdir" &&
-+	mkdir refdir &&
-+	BACKEND="$(test_detect_ref_format)://$(pwd)/refdir" &&
-+	GIT_REFERENCE_BACKEND=$BACKEND git init repo &&
-+	verify_files_exist repo/.git refdir &&
-+	(
-+		cd repo &&
-+
-+		git config get extensions.refstorage >actual &&
-+		echo $BACKEND >expect &&
-+		test_cmp expect actual &&
-+
-+		test_commit 1 &&
-+		test_commit 2 &&
-+		test_commit 3 &&
-+		git refs list >out &&
-+		test_grep "refs/tags/1"	out &&
-+		test_grep "refs/tags/2"	out &&
-+		test_grep "refs/tags/3"	out
-+	)
-+'
-+
-+test_expect_success 'cloning repository with alt ref directory' '
-+	test_when_finished "rm -rf source repo refdir" &&
-+	mkdir refdir &&
-+
-+	git init source &&
-+	test_commit -C source 1 &&
-+	test_commit -C source 2 &&
-+	test_commit -C source 3 &&
-+
-+	BACKEND="$(test_detect_ref_format)://$(pwd)/refdir" &&
-+	GIT_REFERENCE_BACKEND=$BACKEND git clone source repo &&
-+
-+	git -C repo config get extensions.refstorage >actual &&
-+	echo $BACKEND >expect &&
-+	test_cmp expect actual &&
-+
-+	verify_files_exist repo/.git refdir &&
-+
-+	git -C source for-each-ref refs/tags/ >expect &&
-+	git -C repo for-each-ref refs/tags/ >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-
--- 
-2.53.GIT
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tZXc3QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meHhrQy80OVNVQ2J3VHpDZkJrMy9UQ0RlZkRjMC8vcQpOWGsvVkhNNmRa
+aEtWZC81Rmc5dDdzdFVZenVhNTQrMHdqSjRGeExwUjRhc0pBWDdveWRZTVRaN3liK3ZlaUZ0CmpB
+clRoY1gzZy9jbkkvRlJzb2FRN3o0eC9FOWhncHFmZWRrNmV0OXM3WHR6RHlBSnAvRnVGd1VLVUxJ
+SEptYloKWGYxQlZVWERxQ0Vvd1l6TjNwditQV0h6TExLa1dmOFFyNVRWakR2VjlMUGlza1ZrV2Zq
+bDR4T0FJSmxabitwWgpJaUdVYzJoRTl2aEVxajd6MjE4ek9uY2N6bTlpWEFZTWx5VHc1Z1hXN0pW
+Vm5oZUxGV0MrQWZncnRPWWtWekVBClVta2l0UDV1RjVXajg3SDQzMmtQU1R0MytwM0dXVmZ6cHl3
+Wkw0NUlHR3VPWW15b3pZQ2FFMkpmWG9JcFU2VGoKNnZCbzEwOU9MNlRkNU8vcEFRSXp4N1RDU2No
+bGdjeHNSSVY1RmdKL2phelo3eFB1WkZLU04xamRyOE5BWmhLOQpGLzd3WFp6a2NQYUUvay9SVEpB
+ZSthZ2FzczdHZlozeDVCT1htT1lQTVJyVCtrWjJGMHRRMktNM1FHVGdKeWNzCkp2eExKWTZ2OVZ4
+Y2g2U00vT1NDSXk3a2hBb0xUVEFrMEYwVW11OD0KPTN0ZVAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000a881f9064ba2cd56--
