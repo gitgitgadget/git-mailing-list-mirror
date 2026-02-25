@@ -1,62 +1,131 @@
-Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9882023EA90
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 10:33:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D33C39B4BC
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 11:44:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772015603; cv=none; b=R346AuzHly1fjuQUc+yfBG3FV1R2C4eD2ttzn6Bhp6zwivb/jGFX+LLs4oflAJMv1ZIvKKR/vk+P3FH+Ql3DZlW7rin/eDn0TZu4kBmlggUvB9pyJEWJVJ8tInWJlhcJjS9/8kUUlInyEhjec2z1WqmT153G02VNh9pRtTliNi4=
+	t=1772019900; cv=none; b=rH6KhwrjLoQFMOxtC6bG0Mw3lyCqCae2CU6XXhePm1z1683l9JKOP8CACp74BNYRTeGjKkw+2a+JIUbYeeFYb5XRoFxFGlqP9Jmr2X8R5ix/ppqwrlgZwHObKlzQ8O5KqzZ+AjdIwMkgvCAYxOQUAmFh/dtQGIOOH5IBOaGFaQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772015603; c=relaxed/simple;
-	bh=se57fZICSGPWJr3kaqdC4wdabn/ZolIIgSHMvtI+kQ0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UYe5rXzFN1MyKKF9hs3gRrAIxI0VKAbI2/okydy7IBJ6yhLAmHzjwMNCi85S582mGBtH10TaC5o7Trvx08QRzk72XVeQ8dQZiCgTZhc3dcH+kqHce9QkHFNvkd7fQL5awuQZ3SIxTFvAtbNDLYqLFdZstML9Ctgy+Vqgq1hYkKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=0Sxu/d2j; arc=none smtp.client-ip=95.215.58.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1772019900; c=relaxed/simple;
+	bh=Y/G9oOxdpoR1XKQ1pamx8pz3Uck8q7lP4xU6zKxC87k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=THunRYjfN/Yiz7oLNu44egrHMnbszA60OM7VtgvY2CqnnARaulsYnOHlYPtvsjZmTLvboRsnim45LumGqnxrtyeUkoDWOX6lee0jX8Y2KzKNyA1y47c1W9w4Pe4liKtqfpb2tu6heRS/57TRns7R1sPnO7kLiJXekah9b6rF+Hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N7gpGWLm; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="0Sxu/d2j"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1772015599;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=fpVd4tyYWvDMST3hH1HRl3+Thhrwzh8RpHTI6d8Zlzk=;
-	b=0Sxu/d2jf56YFS942FxMi0Z0TkXybTqncK8gkNVOjckuf/MBuqsM9m/J0l6mOaAevKfEC1
-	wT6XpmM8/wrWUDgn3RFs3Fn+BwZA/NnbcfVyIbyCjWVT4n/MS8JLQ9ZEUoi6dgoEiWZN4W
-	Y3ayP3zfyzTC9hwb2h25fFY0s+paHyI=
-From: Toon Claes <toon@iotcl.com>
-To: Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 8/8] builtin/maintenance: use "geometric" strategy by
- default
-In-Reply-To: <20282180-d018-47db-a44e-93c53af10d00@gmail.com>
-References: <20260224-b4-pks-maintenance-default-geometric-strategy-v2-0-8657338c6fa1@pks.im>
- <20260224-b4-pks-maintenance-default-geometric-strategy-v2-8-8657338c6fa1@pks.im>
- <20282180-d018-47db-a44e-93c53af10d00@gmail.com>
-Date: Wed, 25 Feb 2026 11:33:07 +0100
-Message-ID: <87wm01m7to.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N7gpGWLm"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-896f82e5961so99147396d6.0
+        for <git@vger.kernel.org>; Wed, 25 Feb 2026 03:44:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772019893; x=1772624693; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=J04wV6ncMKKo4Zxswzr4FsnxALlfi5RAWCouhIVxzkU=;
+        b=N7gpGWLmquSqx/GqcuvtH9iSmhAoDXriuZ5ZB2kEVCaFBNtCCvveHErGSkFmuprJmQ
+         ShrGYcbKQjRqXbRFWtSyInFQRnl33nnuv1j0C+U9XdWOOvzwY2bkwTo55cdQlsUaRTPX
+         8XnBxZUUuiMmYeDibK+SK3i5+7Flycv9fYXmeAzSnM/gFNsaVFzhNpe2DDf1AhqmvEFp
+         UifpIwY/Z63PEnS0BPTNVgyeg5ie1eSWcKjdG71/0qMJb6ku50GLGsBOltHeb1ugkf+Z
+         xmP+VNd3FnoEBhoAdX2jtIOfICsaXuGnyJ+nibvvzfF+Ou+b0JHfK4XXCbfkZJGzIRVi
+         EfWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772019893; x=1772624693;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=J04wV6ncMKKo4Zxswzr4FsnxALlfi5RAWCouhIVxzkU=;
+        b=i35BGB5+9WQDyKMnncWr5Y+mwwKs79mYLxFvv028a3u8skz8XMvEB/fAVCdyTx95TL
+         O6OREGcB5pTcUPvxoCbgjIgHL4X3gjLxnaj901az1DQ4DhhvMYDG1SS6k4o0ovixgAxO
+         LV4iQqM1qqtRgjR1dvn+mKWin7L9wERnDIZ543hy8Ll1cJdi8k84uxhbPD4wHfydEL2a
+         3gRLBHvdtQ1HEmv27oC+bIkE4nhs0Rz6oXI7WIpWMEOctDvq1QKvaT0kz3G7coWEs0Bi
+         K5BSiA7Y/D8O8aQs/Yi6KuIrUh2Mc6R/PtTihVeTKrIFJ8z2QtuswWMgHIFJhIqZdD//
+         MpjA==
+X-Gm-Message-State: AOJu0Yyb3EWCZNubZiGNvj7it+uNIxk4atyTBvAnRlYrnY9/VKwbadTY
+	0H1zvEVM2c2NBib2e/RglX5GzNGlJFHwX8LYw4PHJvWkIjdcMjS+Z1Mn
+X-Gm-Gg: ATEYQzwGsXaUVy/iaDtH8xW3s/gJ0xeNGXAJuBKxwhOPVJJ5iDsjv4I4U2fGe/bHmKb
+	QOOI4plefuEXuwgLTbs3zk81HmhMl8wyeVEtp0u77PpLOfLnsDMJi+AZA9rIWBsKkzgRFyWRqi1
+	HJs7dUiCnuz3/M0WCVhNx5+WDqMfAXBJuk2Jp6Omtg/z7KP4WtZErKRMYmN37P3v3EYf1km80Tp
+	px8HyfHGN2EX+gqFZbtoKUJJZzmUhZKMrni3MV/6yCJtB2qv6ES3/NzBgXcpRvX7820Sn3k0lGn
+	xpF49by/KoyAGh8FzJ9cDUL5qc+f4cDQsPxPrb2tppQCAKa9ryyFnoZBUuNEdrW5InVOZnIjLSz
+	2jhIjAFXM42m8/DeLURO2K+zFrQVLlWcoH+xXmk3LLgBTrGpz0Rq0oGkf/ZNywAVD31rRfBlt06
+	gLS8Fd6VF4S2mqaP9znuTBKePmCI1veo+09hfjorjVO2i/SgTtF2GCte0ofAE8hRkjyeaHhTgEj
+	rfbTwYMAbrIOwSn+DM+5hwQVkGs1Car04UwPdZPAUyD36tI
+X-Received: by 2002:a05:6214:1c43:b0:880:5bff:74b6 with SMTP id 6a1803df08f44-899c13b94a0mr590236d6.7.1772019893229;
+        Wed, 25 Feb 2026 03:44:53 -0800 (PST)
+Received: from ?IPV6:2605:a601:a6b4:9c00:55d0:428:5136:da98? ([2605:a601:a6b4:9c00:55d0:428:5136:da98])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899b894a227sm17651256d6.8.2026.02.25.03.44.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Feb 2026 03:44:52 -0800 (PST)
+Message-ID: <eeebc30a-40bf-40ac-a16b-ca5e128c3c01@gmail.com>
+Date: Wed, 25 Feb 2026 06:44:51 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] for-each-repo: work correctly in a worktree
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, fastcat@gmail.com,
+ Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
+ Patrick Steinhardt <ps@pks.im>
+References: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
+ <pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
+ <4e3f4aa6cd36f779c6c1d6b4f30bb68ed807b9da.1771968924.git.gitgitgadget@gmail.com>
+ <xmqqv7flervq.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqv7flervq.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Derrick Stolee <stolee@gmail.com> writes:
+On 2/24/26 4:47 PM, Junio C Hamano wrote:
 
-> With this, v2 looks good to me.
->
-> -Stolee
->
+> Doesn't run_command() let you unsetenv in the child without
+> affecting the parent process?
+> 
+> Looking at run-command.c:prep_childenv(), it seems that you can pass
+> "VAR=VAL" to "export VAR=VAL" in the child, and pass "VAR" to "unset
+> VAR" in the child.
 
-Also did a review on v2, and I've got no comments about it. Approving.
+You're right. Here's a much simpler implementation:
 
--- 
-Cheers,
-Toon
+static int run_command_on_repo(const char *path, int argc, const char ** argv)
+{
+	int i = 0;
+	struct child_process child = CHILD_PROCESS_INIT;
+	char *abspath = interpolate_path(path, 0);
+
+	while (local_repo_env[i]) {
+		strvec_push(&child.env, local_repo_env[i]);
+		i++;
+	}
+
+	child.git_cmd = 1;
+	strvec_pushl(&child.args, "-C", abspath, NULL);
+
+	for (i = 0; i < argc; i++)
+		strvec_push(&child.args, argv[i]);
+
+	free(abspath);
+
+	return run_command(&child);
+}
+
+> Or is it essential to unset in both parent and child while the child
+> is working and that is why we unset in the parent and then restore
+> later?  I find this highly confusing.
+
+Nope, not necessary to adjust it in the parent. The simpler version
+above works in my test case. I'll apply it to an upcoming v3, but
+will wait a couple of days to see if there is any more feedback on
+this v2.5 before doing so.
+
+Thanks,
+-Stolee
 
