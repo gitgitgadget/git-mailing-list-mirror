@@ -1,122 +1,124 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03487318EE6
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 21:56:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C43339B32
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 22:31:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772056571; cv=none; b=CQgf9KJjNLLD0UEnyyK9VJ6PlVVgXxolPrxStKpWlDkAj1EuP6vJqq1Ahqwx9fJWpavHFaD3shvpMRCifJazfTbX1Wap/5LdqoostMrE2J8w+I/1DVryDsr8Ikg8Qr5O8TzENstgaaW53M3Z6B1aNzjVpGwRM6IetwgNvSuBcpg=
+	t=1772058662; cv=none; b=PrUEba42Em9esdG+kSsz81YygLZl/XDwRTZfJ3QRMNuPF4boiwp0quJaEq168dlqbREN7+e/scBe+gLMSnzgs0zc2BIF3A4QKlXmaZT01diQlqDmdS9l4yBP2d72WoyIjJ8k3vDd5UtC/ny65GXQkmmqKuBsrjK9hZ37zRm/G8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772056571; c=relaxed/simple;
-	bh=QrPVxF5HaCmqTR3Q11XbgVZgns21c6DmQvEMe7g4hAA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mvMfeHc/ACyug02KdSGqdDGoIH3Hyct7kek/2Et+eJ9WrNc2apdGMoa0aCZ1tHenyVZUV6rEZHJkYI1R3x8v8Jh3woGidh5Qi6ZfWLlHyql1Om2KXRbILbTcaD44dee9Wa+Ngt96tsSdlmWf+LoBH/NZzG2GNYN0hqsKjKM/O1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LC7upnKh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I02jYtKg; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772058662; c=relaxed/simple;
+	bh=aYEicOxZ7Px15yyttIL4YD6ClpjCNT63SfWAfwXIPpM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UsJEExyGLoo5Mrc1iN0aRdGP8WuV0/nqqfcVv7+UC/6+pRSW51Kgg96FBRszjhTe7+hG4HWXqAbKgKWw+kmyGjNK+Jk75VLq8KYKsKBq68FbukJfnu2jNX7SayADCNRbcDEBV9VJCldCywtRElwfbgPvMvy+3v2GPfZU+CLwru0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IB3rVGEC; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LC7upnKh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I02jYtKg"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3A27EEC05C8;
-	Wed, 25 Feb 2026 16:56:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 25 Feb 2026 16:56:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772056569; x=1772142969; bh=QrPVxF5HaC
-	mqTR3Q11XbgVZgns21c6DmQvEMe7g4hAA=; b=LC7upnKhbc5MlA8+2i6rOidvnz
-	WaZ8tt4VZ7q46iD2AJuzKO0pYN+aV3T6F4ntmW0Ym6JXnU+Ti93MTvXNjRweuERx
-	F0q67NKarhnJHoVV2O2AMZldAb2djU9vdZdEY3PkYHlhgEAWdtxsfTPak7fgwZCM
-	Q0EB/5s2K7yv3pKcZW+jv17RC4jfbz6SEAnbyHavrZydXmWmAmQUjsyhjQA4mhAb
-	xnXt4xYLA/RWLJmzcLDBLc3ZShivz0whPw4AZr9isacRJUoGDCU1c429+1aWRDDC
-	nDrfM2CX/zbeZe0U7AgawoY4XUJyzwpS6aCp8L/kOCjWnnr+adt4vb+KH9PA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772056569; x=1772142969; bh=QrPVxF5HaCmqTR3Q11XbgVZgns21c6DmQvE
-	Me7g4hAA=; b=I02jYtKgQNeXGN6IHG6+etSAEquXFY1Bin7JHXiQ+ueERAJjjbl
-	Mqs+UhgrUKnzc5dClwCx7DZ4Jfa7GDHWCwFei6qdsyllJsXE8M1bgkyN1CFaV+yL
-	M5irXPqIe5tIpqodUJmHY5wQa0d0SaZLhtYxQk4AJL6ZzjtA93Q6aN2zA87F6jBL
-	MxR04M+IdGk5/WHcrxJMRxP1tZs1jIFq+tSdeeh9QUvcA0YsXGvhfXHojpLX+uP7
-	uSZT6Sm5/9/mUa8FP+R5O547ZZZcJE0ah9xD4qp0wn7NjOHKqpLK15Xx8pZVJ1Wp
-	lqLUTYV16HUyxV6rVEey8cAyb02s6nFL5oQ==
-X-ME-Sender: <xms:-W-faacifDofX7UnVeOFs-g0rPwRGQUZra9I0ibyQsgwyOLxm8YSow>
-    <xme:-W-fabOLH5Xs2HFP8inEJsyFow0DCTOYw6lTxSzlC0Y0fh5hODto-XwusKRkiQrJl
-    kLKyzmLYx8IXdJZ1KAU04Dx9cWNaIBzT8G9IkztkSnRcVUGNoJDjYA>
-X-ME-Received: <xmr:-W-faQhb30Zmx14xwzOIUFsA_iEFNcm9PO_Nlmjl-QD4EKPwth0aFxLgi1nGVcBwY5VSowZjd9m4RusbhBYj5aBQeAGYbz9Bpg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeegvdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepthhithgrnhhirgdrshhughhirghrthho
-    sehrfihthhdqrggrtghhvghnrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-W-faW0AY438LV30kxGawyoFQAiwPJc-Cy0LY3IJJDjJsDCrNCu2MA>
-    <xmx:-W-faShSRr2OFJIq_DRfcZLDKfhqvltN0nAA78dKYGeVed_zrzpPvw>
-    <xmx:-W-faec4N4B1NnZ36GbJhpNkVSI4iw2VYuF6YazifV9N_Bn34eV9hA>
-    <xmx:-W-fadnXgYOfhTyeccg7Csa_yPss-vJXNjpbdRZN8X88H36q0OZrHg>
-    <xmx:-W-faVc6KiVhLSv-W_GOFdHaPyu5vXqjqChoiIjWNrqY_ltW2tpNNQle>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Feb 2026 16:56:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Sugiarto, Titania" <titania.sugiarto@rwth-aachen.de>,
-  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Feature that allows the user to merge only specific
- files/folders from another branch
-In-Reply-To: <b743b7fe-5f5a-4906-9ea6-0755acf5875d@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Tue, 24 Feb 2026 23:44:31 +0100")
-References: <532e9d58b905404fa625aa59104ce8f5@rwth-aachen.de>
-	<14775be9ed944bf684c3696e1a10f44d@rwth-aachen.de>
-	<b743b7fe-5f5a-4906-9ea6-0755acf5875d@app.fastmail.com>
-Date: Wed, 25 Feb 2026 13:56:07 -0800
-Message-ID: <xmqq1pi88p3c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IB3rVGEC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1772058654;
+	bh=aYEicOxZ7Px15yyttIL4YD6ClpjCNT63SfWAfwXIPpM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=IB3rVGECqdnomIMnlfwIapvHqvbL+5SvcoPhhRgZjhZVeebxUOaaPRMrF3jlgHW0R
+	 2fTyDkaY3A25AZ+9JdTZEhkxFIf0YFcG8yodzr0zFs6azNEsDGp3zRAwwlp+9r4G9B
+	 UjMTbYcZD4HQnPQq5GnlFbK/CPDUN/0pYc5gcFjF9PCMYGonwZzQWMnyoP8iVdzMah
+	 J40ttyr7hj70kF7jLREIJaXEYxoGuNAfD0Pw6XZ0vmMAg3L6pZ8P9QF8Y7Bg8OeGKi
+	 xBBgaZa1hbd3Uaw9fulTdtG2dgr3hpCIVAe8BfhWc/5BQkHnF/HjOTs9ySxpTxa1ex
+	 ZZQEvfuu611XF3ibDszIDXBeZysQ7WovvZV0liYp7ffyChIWaZNnhCaE3EbpAd+86d
+	 qJTBNRWfRpnoqzPgze5VeIEZBSCR9Q7oXXjHv+Y8tiaE4bMRWQyo5vg8TD1GENPxXB
+	 NipA6fyjdsNcxzloTU3mCiwcrBs9vt3QkN6j4DRe4JEuPLlrLgm
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:754c:74b3:5794:b1f9])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B646020106;
+	Wed, 25 Feb 2026 22:30:54 +0000 (UTC)
+Date: Wed, 25 Feb 2026 22:30:53 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 0/8] Specify hooks via configs
+Message-ID: <aZ94HdcOUGp91UBT@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org
+References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
+ <20260218222352.55393-1-adrian.ratiu@collabora.com>
+ <aZjuTSopOMvwR4hQ@fruit.crustytoothpaste.net>
+ <87o6liw4s1.fsf@collabora.com>
+ <87ikbpwr13.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
-
-> On Tue, Feb 24, 2026, at 14:44, Sugiarto, Titania wrote:
->> Hi,
->>
->> I have a suggestion for Git, which includes a feature that allows the
->> user to merge (I want to highlight merge here, not replace) specific
->> files/folders from another branch.
->> I feel like a lot of users have spoken about this online but up until
->> now, there hasn't been an update regarding such feature.
->>
->> Might be worthwhile to consider?
->
-> Why?
-
-Because many people talked about it?
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="C0o6HKOazLVCSXM6"
+Content-Disposition: inline
+In-Reply-To: <87ikbpwr13.fsf@collabora.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
+--C0o6HKOazLVCSXM6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On 2026-02-22 at 00:39:04, Adrian Ratiu wrote:
+> Hi again Brian,
+>=20
+> v2 of the parallel series is out if you want to review it:
+>=20
+> https://lore.kernel.org/git/20260222002904.1879356-1-adrian.ratiu@collabo=
+ra.com/T/#u
 
+Thanks, I'll take a look either today or a little later this week.
 
+> P.S. I think your spam filter is blocking all my e-mails? I get this
+> reply from you:
+>=20
+>  sandals@crustytoothpaste.net, ERROR CODE :554 - 5.7.1
+>  <sender4-op-o12.zoho.com[136.143.188.12]>: Client host rejected:
+>  CONN:SPAM
+>=20
+>    Original-Recipient: rfc822; sandals@crustytoothpaste.net
+>    Final-Recipient: rfc822; sandals@crustytoothpaste.net
+>    Status: 554
+>    Action: failed
+>    Last-Attempt-Date: 22 Feb 2026 00:30:10 GMT
+>    Diagnostic-Code: 5.7.1 <sender4-op-o12.zoho.com[136.143.188.12]>: Clie=
+nt host rejected: CONN:SPAM
 
+Yes, this is because one of Zoho's customers sent me spam and they
+didn't act on the spam complaint in a timely manner.  I've removed that
+block[0] and we'll see if they've fixed that in the past six years or
+so.  If not, I'll re-block them and you can have their postmaster reach
+out to me at my postmaster address to discuss things further.
 
+I regret that this is necessary, but unfortunately when you run your own
+mail server, you have to deal with all the abuse yourself and many
+companies choose to ignore abuse complaints.
 
+[0] It may take up to thirty minutes for Puppet to update the mail
+server configuration.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
+--C0o6HKOazLVCSXM6
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaZ94HQAKCRB8DEliiIei
+gTX8AP9Dh2mzAhxNEK8tWxGz7DXhqY1WUnKJ0UGouPIzEo1MmQD/fdXZs2hWVW6o
+eevfWwLniEFhHnHdhrynSfP796bi/Aw=
+=bgJg
+-----END PGP SIGNATURE-----
 
-Yes, I know that an idea is not necessarily a good one only because
-many talk about it ;-)
+--C0o6HKOazLVCSXM6--
