@@ -1,70 +1,69 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6952D8396
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 20:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE0E2F60CC
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 20:17:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772050648; cv=none; b=o7kowBtv1Oi7C0T+XAVoAmMMD9m8fas8CUjT8+VPqa9puXXy4vEHto3EeQl2oy+ot6Fj8hxc4ObUBRDMAJ1Sy8V6ydLzL7y1Wg934tQ0BVoXvmht+QznQMUD8/RYuvsNLNQzjN0FAuicEXff0kWXFcBxySk9FAsq7jGjssNGe2M=
+	t=1772050650; cv=none; b=pQqXB2SXn09+hOpQc7a3t7qV8IPvsc+1NyZu6bhKxFZ9OkWN9TCO5hVeNhvoXN9d61KfKcUK9A5yvH4ZNX22Kk+D+AmfKvHoemcIbM89s9tvCXfLtFs00C4kiS+cjE+NwC4PDCbpBntzwI9BD+m/cA0WUH5Re0syCIIW+43n8+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772050648; c=relaxed/simple;
-	bh=WoVwBebDLP1L58D3yfXpkZur/VvRYBObhRH9oOXi9tM=;
+	s=arc-20240116; t=1772050650; c=relaxed/simple;
+	bh=Sz7Lt7pJP+zXlWyOyieOr2OBnfkRJy2aiI3ybYsMWCg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=dz5ubMN44IOQa4+CvWxoxEu07Ij5v1LlDEoArlxWvn+L4NU5AihgYxgARIUhcsAWYhiDNbwdQgGWjMdFYv5zr79oPxwB11Xx9YAjxACu6BOuZbyPf7n31dLsxfJaELPfmHC5YIcpaTj5ezQ/q8pJv1npXrRkISWf+lL+2Kme0Ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MnIbHXqr; arc=none smtp.client-ip=209.85.222.172
+	 MIME-Version:To:Cc; b=jZ4oisPviidyZsqB9ryq599PQP+sXrQXmtF0BGY6caNR527S04eyZ67zaHtCF0U2i6iQ9M+dUSe0s3xCPo+c0KwvxEos3oIjTLukY3PU7pN1JahpbqYZ+ddSsmF/IAovTMQ4jRQar04FOoaVdHNYH7w04NPoPbDpElT14jJ20/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S/NUf0EC; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MnIbHXqr"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-8cb49f63238so1433085a.0
-        for <git@vger.kernel.org>; Wed, 25 Feb 2026 12:17:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S/NUf0EC"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8cb40030be5so2032285a.3
+        for <git@vger.kernel.org>; Wed, 25 Feb 2026 12:17:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772050646; x=1772655446; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772050648; x=1772655448; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e16B2hYSwiuWwHC4muzll+PUd3JxZKb+DKnX51j0lBI=;
-        b=MnIbHXqrPYD4WQLJ2qbmM/ACzUQqBLvJlrZ2Yt35cAMVFHynSy5ONMHLaaHb9JmH/I
-         lCznAmCOV+jI9kpS2qVXXSIaFB4YNxEpGWVuXMnXCoYi1Ot3lYzuKKgPa/HDEawSdV/I
-         4cTN5OHxfy5uynfNZ54oR3C/vFKz1Uq70Xigp4BbZhTsBtagNWggEjGGwT32Hsp5ufnx
-         F/u8U7cjZy6Wp2Hu3X46ur+cJd60SL8Lt3/0FIWyK8w1B1ds0rO50OkNepOhp6RIi9ss
-         4NKjYEqUdoYnaxBUvvOqKKl4BaYLusq/ZJa9jRO0Q5gA+4MtMAWzqh+ZTu7BWJ+SbFd6
-         TiHg==
+        bh=4LYtMiJ64hOo8+lkj+izFgE4rdJNmMrlfm8z/RrZBl4=;
+        b=S/NUf0ECwdguu3mtHbdIZwrDNhC49BZ2T9kWOR2njNaw7EzyjNlyZtZyx6+K87CZGz
+         KdApf63YOQW10+PY94QiHYS3q3ocaDwpwXwjy/aEzw9ERP4Jsdlqn64lexJwJElDicvp
+         xkRE0ja2GPNO5H8RgIwfNkms5QHrkgIe2phcFGTzfTMFymGSiU6hEEzCkL+9TiiRCcaM
+         ze3SLHOkkaXpPUpIr2gibBiLcsetViLCTFP8OJbTq5MNS74JporePj6H+ILpM6lHgTdE
+         H1CrZg0YzzFZ0qlx29cLyJwfmc3FZHI1zHUv7AVu9ultjhBrosKx0bar6/TjaIXzhmbf
+         sfMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772050646; x=1772655446;
+        d=1e100.net; s=20230601; t=1772050648; x=1772655448;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=e16B2hYSwiuWwHC4muzll+PUd3JxZKb+DKnX51j0lBI=;
-        b=TOrLWwAdVfQZGdMSsasrrV8OuFicGNTNrV5+5B+Mc28efPdRIwDgJ2E22UyzszaELu
-         Xkbh22JiWpHDRSBUdLfi9C5n6KnRRGPa8io0KHfXXQeCchEjWy9Bnw9OSs6BghdcdEaa
-         z55FeiHqeFg3UYQgG6+pv+0+m2R8e+7CJEQ7S0U8EAg1cNIE9pWh+l8EGpAW0YYFte9T
-         B+jJuAWuq1p1cmUCEDit+kxxP+XHOrE+vObz7iBoAfT8Do32N5Q6DrU5UQ7jlsOWBTXJ
-         6sCQtiCVGd29B+14x08aySyxmLw42T9wIlf6nHyvAa//ypX6kWhyOH6sFJ8Lf302KiK8
-         7A5A==
-X-Gm-Message-State: AOJu0Yx7MYlT9uAF/mCAmL0k7Tr48LTRJmt+RAYpp0lJ/dRO/n38PUqc
-	NNNn1E+Qz1Vuv4GIWcMRv0z0FY/kB0TwZWniOoPk45GkqP5mgD3UnzY80DTW3w==
-X-Gm-Gg: ATEYQzympARycXDOKXe+Wctmo1/raGm+YRPGAG+1yUUt4NRHTOGix6sLyyQfgBhBA+l
-	h+KdsOSCbAV6fHM1KzYfWHtthQdGSU7d1hvJpvCPSlbjGXCkGuk71UI1G05xD0o5PFxw4EvL5zC
-	tJwOiRHg+gWqjIUf4bXjWWjVkbd16SaVknKSxJ11V1iAKjm1BbG1FMgkfWj7jNBF6ey/N9GY7YQ
-	GDKfZ7STUVIyrkaOCCOUVj1cnZwI++Ry99hRtgedT9nC5V11H1RIcphMcZQiQnXLEwIfKh7mHSt
-	38d0Q+F+Mwc+EZIt0iEEdhNSpZGpTNrO1W/JcWE4QGw02ugNEejFxkGC5iCqMOyfYrOLJfd27Ne
-	BoWIMtjg+JI5lwd9kxB749U1hhA9WJsx9uzgId92RUdU9h8zB74sftxm1JM5fcK595Oi5kDywin
-	ICnVB5J9Eq/XTRFJiuQq6CFqb1pQ==
-X-Received: by 2002:a05:620a:bc2:b0:8cb:3fb3:7bee with SMTP id af79cd13be357-8cb8ca65f6emr2165643785a.51.1772050645437;
-        Wed, 25 Feb 2026 12:17:25 -0800 (PST)
+        bh=4LYtMiJ64hOo8+lkj+izFgE4rdJNmMrlfm8z/RrZBl4=;
+        b=ZkCjd6nIrfYg0YACIpaMNCYAytz1JHAEDOcT18HHd3kQpfBff+xgS4mlqB6AXJRMhU
+         NhJE7Ee4Nju5LRirrvCtA2ayNmIsL+Ayfp18Tg7PDI3gHcdOg+gF+6E7seFMme0xhLVU
+         TIhLf1WCCN/r7lIizHK59O/BeRtavTRdv99rQFrVlYLfWCAYaEKs3FydhgHxG5q3B4p3
+         /3DQy5MpwZoeGbysJbVwDWnfRUna9iU93x0roy0RdDUTy5URgzP7Z3ykZwGvNg3yUoT0
+         fAqZnDqUfzfdm3skgC9NiTg8/q1y7KCuFnJcRlwbv6ueZEsv4B1pLJcck18sRIxrULZ7
+         KCYw==
+X-Gm-Message-State: AOJu0Yx60AyvyHReUpQUdUNfSETMtoND28WQjdK+kbrKmO0QOdvCby8O
+	BDoKijIKJjVuqtc2ELk3MKu8dxbVpWv7NRFOuiDwz9jaHTvTDssgbYiLdvM7EA==
+X-Gm-Gg: ATEYQzyd2peYn6eW6eGfKkX+H1v6VtpN/wYr4xFqN+/ViCjHzAypRbZP2NH5WAHnVVj
+	FCBg0C0g7jtPyFNJP4m8ms9xTRoCuhhIiuhmMQHox48niBD5BwTDyLKLRNGNBBERo6jOql1RdZN
+	LpNECKYiK9XXCYHxr3KeStprKKzO+SiZMpW2UhoEbgL+xUkOYbsRGNKNKgRW2On0MmIQ3LAyXvR
+	59aIE4fJO496bGbREy+jT2xD51P4DCh8nr0q3MHP2O8Bo1A7Rl3Zm6bNTYjEMyqphs+glZ22QBe
+	SJkYwC99+c//jnIdZf2Sxo1sggojToi5JadaCYkvMfgG3yDw9uPrfORw2jb5RJwtr78itb2/jEX
+	tUMzHA1NxRAz5VtrChUMb4T4POq1mne7OMm+As/2gjPWkh22WzcqZuODrCIiahYGgU295JDSRhF
+	TwWpuX97s8v0VnUMYQQB5x/jH/Zw==
+X-Received: by 2002:a05:620a:3943:b0:8b2:2066:ffca with SMTP id af79cd13be357-8cb8cab0d39mr1986053485a.82.1772050647926;
+        Wed, 25 Feb 2026 12:17:27 -0800 (PST)
 Received: from [127.0.0.1] ([135.119.235.86])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf731c0bsm13466185a.45.2026.02.25.12.17.24
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf7319bdsm13465885a.43.2026.02.25.12.17.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Feb 2026 12:17:24 -0800 (PST)
-Message-Id: <39da1e6be359a23ddad8f099d427823a774324f7.1772050636.git.gitgitgadget@gmail.com>
+        Wed, 25 Feb 2026 12:17:27 -0800 (PST)
+Message-Id: <8fec92d5b4c86da5f85797516c10812150fed557.1772050636.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2147.v6.git.git.1772050636.gitgitgadget@gmail.com>
 References: <pull.2147.v5.git.git.1771896704209.gitgitgadget@gmail.com>
 	<pull.2147.v6.git.git.1772050636.gitgitgadget@gmail.com>
 From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Feb 2026 20:17:12 +0000
-Subject: [PATCH v6 06/10] fsmonitor: deduplicate settings logic for Unix
- platforms
+Date: Wed, 25 Feb 2026 20:17:14 +0000
+Subject: [PATCH v6 08/10] fsmonitor: add tests for Linux
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,140 +80,195 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Paul Tarjan <github@paulisageek.com>
 
-The fsmonitor settings logic for checking Unix domain socket
-compatibility is nearly identical between macOS and Linux.  Both check
-whether the IPC socket directory resides on a remote filesystem or a
-filesystem that does not support Unix domain sockets (NTFS, FAT32, etc).
+Add a smoke test that verifies the filesystem actually delivers
+inotify events to the daemon.  On some configurations (e.g.,
+overlayfs with older kernels), inotify watches succeed but events
+are never delivered.  The daemon cookie wait will time out, but
+every subsequent test would fail.  Skip the entire test file early
+when this is detected.
 
-Merge the two implementations into a single fsm-settings-unix.c shared
-by both platforms.  The unified version uses the safer xstrdup() +
-dirname() approach from the macOS implementation (avoiding strbuf
-mutation with dirname()) and includes the "vfat" filesystem check.
-
-Update Makefile, meson.build, and CMakeLists.txt to use the new shared
-file for non-Windows platforms.
+Add a test that exercises rapid nested directory creation to verify
+the daemon correctly handles the EEXIST race between recursive scan
+and queued inotify events.  When IN_MASK_CREATE is available and a
+directory watch is added during recursive registration, the kernel
+may also deliver a queued IN_CREATE event for the same directory.
+The second inotify_add_watch() returns EEXIST, which must be treated
+as harmless.  An earlier version of the listener crashed in this
+scenario.
 
 Signed-off-by: Paul Tarjan <github@paulisageek.com>
 ---
- Makefile                                      |  6 ++++-
- ...-settings-darwin.c => fsm-settings-unix.c} | 24 ++++++++++++-------
- contrib/buildsystems/CMakeLists.txt           |  2 +-
- meson.build                                   | 11 ++++++---
- 4 files changed, 29 insertions(+), 14 deletions(-)
- rename compat/fsmonitor/{fsm-settings-darwin.c => fsm-settings-unix.c} (82%)
+ t/meson.build                |  8 +++-
+ t/t7527-builtin-fsmonitor.sh | 89 +++++++++++++++++++++++++++++++++---
+ 2 files changed, 89 insertions(+), 8 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 2157bbf173..febdaeb42c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2374,7 +2374,11 @@ endif
+diff --git a/t/meson.build b/t/meson.build
+index 19e8306298..85ef2ae2fa 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -1210,12 +1210,18 @@ test_environment = script_environment
+ test_environment.set('GIT_BUILD_DIR', git_build_dir)
  
- ifdef FSMONITOR_OS_SETTINGS
- 	COMPAT_CFLAGS += -DHAVE_FSMONITOR_OS_SETTINGS
--	COMPAT_OBJS += compat/fsmonitor/fsm-settings-$(FSMONITOR_OS_SETTINGS).o
-+ifeq ($(FSMONITOR_OS_SETTINGS),win32)
-+	COMPAT_OBJS += compat/fsmonitor/fsm-settings-win32.o
-+else
-+	COMPAT_OBJS += compat/fsmonitor/fsm-settings-unix.o
-+endif
- 	COMPAT_OBJS += compat/fsmonitor/fsm-path-utils-$(FSMONITOR_OS_SETTINGS).o
- endif
+ foreach integration_test : integration_tests
++  per_test_kwargs = test_kwargs
++  # The fsmonitor tests start daemon processes that in some environments
++  # can hang.  Set a generous timeout to prevent CI from blocking.
++  if fs.stem(integration_test) == 't7527-builtin-fsmonitor'
++    per_test_kwargs += {'timeout': 1800}
++  endif
+   test(fs.stem(integration_test), shell,
+     args: [ integration_test ],
+     workdir: meson.current_source_dir(),
+     env: test_environment,
+     depends: test_dependencies + bin_wrappers,
+-    kwargs: test_kwargs,
++    kwargs: per_test_kwargs,
+   )
+ endforeach
  
-diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-unix.c
-similarity index 82%
-rename from compat/fsmonitor/fsm-settings-darwin.c
-rename to compat/fsmonitor/fsm-settings-unix.c
-index a382590635..27d89207af 100644
---- a/compat/fsmonitor/fsm-settings-darwin.c
-+++ b/compat/fsmonitor/fsm-settings-unix.c
-@@ -5,7 +5,7 @@
- #include "fsmonitor-settings.h"
- #include "fsmonitor-path-utils.h"
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 409cd0cd12..774da5ac60 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -10,9 +10,58 @@ then
+ 	test_done
+ fi
  
-- /*
-+/*
-  * For the builtin FSMonitor, we create the Unix domain socket for the
-  * IPC in the .git directory.  If the working directory is remote,
-  * then the socket will be created on the remote file system.  This
-@@ -22,25 +22,31 @@
-  * The builtin FSMonitor uses a Unix domain socket in the .git
-  * directory for IPC.  These Windows drive formats do not support
-  * Unix domain sockets, so mark them as incompatible for the daemon.
-- *
-  */
- static enum fsmonitor_reason check_uds_volume(struct repository *r)
- {
- 	struct fs_info fs;
- 	const char *ipc_path = fsmonitor_ipc__get_path(r);
--	struct strbuf path = STRBUF_INIT;
--	strbuf_add(&path, ipc_path, strlen(ipc_path));
-+	char *path;
-+	char *dir;
++# Verify that the filesystem delivers events to the daemon.
++# On some configurations (e.g., overlayfs with older kernels),
++# inotify watches succeed but events are never delivered.  The
++# cookie wait will time out and the daemon logs a trace message.
++#
++# Use "timeout" (if available) to guard each step against hangs.
++maybe_timeout () {
++	if type timeout >/dev/null 2>&1
++	then
++		timeout "$@"
++	else
++		shift
++		"$@"
++	fi
++}
++verify_fsmonitor_works () {
++	git init test_fsmonitor_smoke || return 1
 +
-+	/*
-+	 * Create a copy for dirname() since it may modify its argument.
-+	 */
-+	path = xstrdup(ipc_path);
-+	dir = dirname(path);
++	GIT_TRACE_FSMONITOR="$PWD/smoke.trace" &&
++	export GIT_TRACE_FSMONITOR &&
++	maybe_timeout 30 \
++		git -C test_fsmonitor_smoke fsmonitor--daemon start \
++			--start-timeout=10
++	ret=$?
++	unset GIT_TRACE_FSMONITOR
++	if test $ret -ne 0
++	then
++		rm -rf test_fsmonitor_smoke smoke.trace
++		return 1
++	fi
++
++	maybe_timeout 10 \
++		test-tool -C test_fsmonitor_smoke fsmonitor-client query \
++			--token 0 >/dev/null 2>&1
++	maybe_timeout 5 \
++		git -C test_fsmonitor_smoke fsmonitor--daemon stop 2>/dev/null
++	! grep -q "cookie_wait timed out" "$PWD/smoke.trace" 2>/dev/null
++	ret=$?
++	rm -rf test_fsmonitor_smoke smoke.trace
++	return $ret
++}
++
++if ! verify_fsmonitor_works
++then
++	skip_all="filesystem does not deliver fsmonitor events (container/overlayfs?)"
++	test_done
++fi
++
+ stop_daemon_delete_repo () {
+ 	r=$1 &&
+-	test_might_fail git -C $r fsmonitor--daemon stop &&
++	test_might_fail maybe_timeout 30 \
++		git -C $r fsmonitor--daemon stop 2>/dev/null
+ 	rm -rf $1
+ }
  
--	if (fsmonitor__get_fs_info(dirname(path.buf), &fs) == -1) {
--		strbuf_release(&path);
-+	if (fsmonitor__get_fs_info(dir, &fs) == -1) {
-+		free(path);
- 		return FSMONITOR_REASON_ERROR;
- 	}
+@@ -67,7 +116,7 @@ start_daemon () {
+ 			export GIT_TEST_FSMONITOR_TOKEN
+ 		fi &&
  
--	strbuf_release(&path);
-+	free(path);
+-		git $r fsmonitor--daemon start &&
++		git $r fsmonitor--daemon start --start-timeout=10 &&
+ 		git $r fsmonitor--daemon status
+ 	)
+ }
+@@ -520,6 +569,28 @@ test_expect_success 'directory changes to a file' '
+ 	grep "^event: dir1$" .git/trace
+ '
  
- 	if (fs.is_remote ||
--		!strcmp(fs.typename, "msdos") ||
--		!strcmp(fs.typename, "ntfs")) {
-+	    !strcmp(fs.typename, "msdos") ||
-+	    !strcmp(fs.typename, "ntfs") ||
-+	    !strcmp(fs.typename, "vfat")) {
- 		free(fs.typename);
- 		return FSMONITOR_REASON_NOSOCKETS;
- 	}
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 32ef6ebe1b..0eba0c2c98 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -307,7 +307,7 @@ if(SUPPORTS_SIMPLE_IPC)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-path-utils-darwin.c)
++test_expect_success 'rapid nested directory creation' '
++	test_when_finished "git fsmonitor--daemon stop; rm -rf rapid" &&
++
++	start_daemon --tf "$PWD/.git/trace" &&
++
++	# Rapidly create nested directories to exercise race conditions
++	# where directory watches may be added concurrently during
++	# event processing and recursive scanning.
++	for i in $(test_seq 1 20)
++	do
++		mkdir -p "rapid/nested/dir$i/subdir/deep" || return 1
++	done &&
++
++	# Give the daemon time to process all events
++	sleep 1 &&
++
++	test-tool fsmonitor-client query --token 0 &&
++
++	# Verify daemon is still running (did not crash)
++	git fsmonitor--daemon status
++'
++
+ # The next few test cases exercise the token-resync code.  When filesystem
+ # drops events (because of filesystem velocity or because the daemon isn't
+ # polling fast enough), we need to discard the cached data (relative to the
+@@ -910,7 +981,10 @@ test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
+ start_git_in_background () {
+ 	git "$@" &
+ 	git_pid=$!
+-	git_pgid=$(ps -o pgid= -p $git_pid)
++	git_pgid=$(ps -o pgid= -p $git_pid 2>/dev/null ||
++		awk '{print $5}' /proc/$git_pid/stat 2>/dev/null) &&
++	git_pgid="${git_pgid## }" &&
++	git_pgid="${git_pgid%% }"
+ 	nr_tries_left=10
+ 	while true
+ 	do
+@@ -921,15 +995,16 @@ start_git_in_background () {
+ 		fi
+ 		sleep 1
+ 		nr_tries_left=$(($nr_tries_left - 1))
+-	done >/dev/null 2>&1 &
++	done >/dev/null 2>&1 3>&- 4>&- 5>&- 6>&- 7>&- &
+ 	watchdog_pid=$!
+ 	wait $git_pid
+ }
  
- 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
--		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-darwin.c)
-+		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-unix.c)
- 	endif()
- endif()
+ stop_git () {
+-	while kill -0 -- -$git_pgid
++	test -n "$git_pgid" || return 0
++	while kill -0 -- -$git_pgid 2>/dev/null
+ 	do
+-		kill -- -$git_pgid
++		kill -- -$git_pgid 2>/dev/null
+ 		sleep 1
+ 	done
+ }
+@@ -944,7 +1019,7 @@ stop_watchdog () {
  
-diff --git a/meson.build b/meson.build
-index 8de795f9d4..e02f9708da 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1334,13 +1334,18 @@ if fsmonitor_backend != ''
-     'compat/fsmonitor/fsm-health-' + fsmonitor_backend + '.c',
-     'compat/fsmonitor/fsm-listen-' + fsmonitor_backend + '.c',
-     'compat/fsmonitor/fsm-path-utils-' + fsmonitor_backend + '.c',
--    'compat/fsmonitor/fsm-settings-' + fsmonitor_backend + '.c',
-   ]
+ test_expect_success !MINGW "submodule implicitly starts daemon by pull" '
+ 	test_atexit "stop_watchdog" &&
+-	test_when_finished "stop_git; rm -rf cloned super sub" &&
++	test_when_finished "set +m; stop_git; rm -rf cloned super sub" &&
  
-   if fsmonitor_backend == 'win32'
--    libgit_sources += 'compat/fsmonitor/fsm-ipc-win32.c'
-+    libgit_sources += [
-+      'compat/fsmonitor/fsm-ipc-win32.c',
-+      'compat/fsmonitor/fsm-settings-win32.c',
-+    ]
-   else
--    libgit_sources += 'compat/fsmonitor/fsm-ipc-unix.c'
-+    libgit_sources += [
-+      'compat/fsmonitor/fsm-ipc-unix.c',
-+      'compat/fsmonitor/fsm-settings-unix.c',
-+    ]
-   endif
- endif
- build_options_config.set_quoted('FSMONITOR_DAEMON_BACKEND', fsmonitor_backend)
+ 	create_super super &&
+ 	create_sub sub &&
 -- 
 gitgitgadget
 
