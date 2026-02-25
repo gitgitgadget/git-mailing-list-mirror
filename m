@@ -1,184 +1,103 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E493586331
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C0913E02A
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:14:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771978458; cv=none; b=EPNI4GFSp/QkbRCWo1hF7xBcGmvBRKefuyoQ2Lek1eiFPOSKzvJ+rQAImBj4LBkD8Dq9GlEMudRrbeXZ42E+iMJ+B6fXjQiNf022yzvbhB+TD7HvF06FaYcp6XVOEIMUASRB8l2AoGQCRnBNot8YKBQqLhsTA+ymDvIdadnaU+E=
+	t=1771978492; cv=none; b=bTMHBOdsZUhBQ9c/HBFIvQOqMPC4JiGORe1XWhHYK0mw99dprXNBhb+vI34ApV+uApseOc2FL/oal0LkPstn9xKV2EgWcvU/U6Qsf1j7qYHWdu+Q5w2FPRnLfaOsV3NXuGEDjjeTrCW0BXSY7gdXKsg/x7QZP8eQKZp0ZjDoylo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771978458; c=relaxed/simple;
-	bh=GrF/rdCMqkVLv1wDC7I5DV5Yx87B6wsWFES16qBXZIY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c7A0Zl41QmRKto7HK7ObmvxofpZnw9kboorA7egOms6nDcKC7iPDfH6aQWPlAWN2Zc6aHxhrBhEo1zf7QYnAVR+eDLR0/6TT0eaee2u/eB3bqyp7dKP2+UDvtzkn3AQiFygrp/ZLyCu8+xHf1jtoFY8OvRco8jfI1V6ppxFMQWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=KItF6QCE; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1771978492; c=relaxed/simple;
+	bh=JPhZdV2NoNbVaN7IOjQnAJiMY/U8DLbNmwJCsUGtMcM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=q1hvvnQpVO3xHZUKUfCEY/Xb+rEGVOuAaaSqsedqvcUgWkcDk/HIUZTTtZgMwK3p0O1j2HWRIjOUbA5ESd0xtOrMZM2PQQBUj/8spofPxxtP6kdzXlCa8eJREgdmr3VIh8udyIEEgD47vxnsgDq/4DNSTTdeOVonxDuNIsIuLCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fU4wgHel; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="KItF6QCE"
-Date: Wed, 25 Feb 2026 01:14:13 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1771978454;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=HjQ1UOW11XwWgtXRznwi1uvNmYWWrruCbEkVKcjp9aQ=;
-	b=KItF6QCEKnNgakyD0FBaayonWbaBnS5ZJJ3Xp9aU/zfI+4PUGBF+1ln1KE9bggtFuwxTNH
-	r01dWeU6UUOHx4q3RIev38iIRyFPgCygw/WICFz5gndXu7yy7vx0CBm8KrRD2axukMbNdR
-	zsUduwwY6CQIfZJcQ/b3cCxr6EjhCaAQL4QvWK7PXqTKIammsIDGkt/cloowaoTahkj8YL
-	fEeGsPYOLKH8pOfW7A4zyyv7xdPGxOkY/xY3Ne62JsBCycSn6EJtWEFr4nVcXT49A9OYD/
-	Nr4is3nvzEWJtdLqlSWz3CYFl6KZLyWTE1C4Szm5GP8IPdViDV9N2kjwR8X5rw==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Mirko Faina <mroik@delayed.space>
-Subject: Re: [PATCH v2 2/2] format-patch: add commitListFormat config
-Message-ID: <aZ46xqCusF1av-va@exploit>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4439; i=mroik@delayed.space;
- h=from:subject:message-id; bh=GrF/rdCMqkVLv1wDC7I5DV5Yx87B6wsWFES16qBXZIY=;
- b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpnj7C5QK4jemeUw4D/gvuHuRP0l6i8jxSSE9vi
- ek25uM9gfOJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaZ4+wgAKCRBIeX6hnBm+
- 0U08EACKo+hRUXuIk/Vo6OfT3EqWZTGbEfedru3oViqvYPislIanHKEBSgs+W4fPTeEQ22PuV5V
- h5ki1R/Y85ANH14ko6IYo+evZ1I+pVweeIltA5ZUNjo+JMz3v3XEc7VtY4CG13qlH7yzchyZrvp
- NmP0OxK+jVjR8c0kbLZs7cu6DPKB4nRwyFuTvuugNKvo4/3mnNJhZv48jKcHBeoKYtjpuDlOSpo
- NmSefC+sRgCRwu8qj2epDIFDZhXOPnsoY+6pmcyDLGPW2X8CKQxHflhk4DKjYRDJf+dhyRyZWD1
- W1lk4BuTUjpcPrsnlTvQEECgcK+yOVMeHhLPHTsdsbAi2Rq+0donuUfpA0W1GkXe7jd1cWODSNG
- dOqWilaoZqw6qtcD4szrjgYkx6bLTn9wU+dKlwQZrbTPqOpAsnl/vrMCL0mgHduvckDjJUXFTfa
- ywo3iP7uckHekoDVYtAY+ecEODi98mvvcIG+E+CL2g005laUXm3LxJHTdb06nWJH/VUhNRyXHYu
- ijoy2NNZymJWInopa9gtUPUHl62fm1wfr+u4j9eGrUoreFk9w9oyFA1aYLjgFEval9CsBcKHONk
- b6o6L2KeXqYJ0I51l1KzEnICpIIZmq7boCGvmLovDuWYZFT5d9XYQq6R/8F1W2G3nAk2qXZrCIn
- AhW3k5N0dVp+v1Q==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp;
- fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-References: <20260224040400.751247-1-mroik@delayed.space>
- <cover.1771925291.git.mroik@delayed.space>
- <6a0c7aecfd6dc1ee873d5e81110b723fa2d225fb.1771925291.git.mroik@delayed.space>
- <xmqqqzqaggln.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fU4wgHel"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8230c2d3128so2599583b3a.0
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 16:14:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771978491; x=1772583291; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y70B25JV8VVnbbmYi0j4FP9IQjmOaroWCkMdqTBr4eQ=;
+        b=fU4wgHelrar71JNNQCzVSWrGB+zr+iBYASLw2jnOnDypAlt8KhCCohqCqqUBkIt08c
+         Oieqa1O9tAYuOuboVtak9ondUQT7MitdPW1ENtZLgx9oK6fDcOnRKiGP6h26wzraaJ/4
+         DbvGViRFzemkktCTlRWkohd0QatZO+TRk7I6IiDDpfwqb9tLweJAvbqMDVuwQyIpTu7O
+         PF1J/sIfCP4XVttOCYgL0Emij8oskiZ+hP4aAvOjb/O1zBhrZ3pxyuygAvmvWTnJjAf7
+         R5xv8ZlDSD4wXYv0xi8VVAwFKTq1yGTLFIcFwZE2lSUgpEr5jMi3XIH+EZ4MAJJMUPA6
+         H9Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771978491; x=1772583291;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=y70B25JV8VVnbbmYi0j4FP9IQjmOaroWCkMdqTBr4eQ=;
+        b=OxuwXvZWJcAK7HnJa2QrEO4VLQ/SAKdFQZDMJ2U181j+jjIGXO28Cyiq44B6o2Xxl8
+         yAl2mX+X7IS02s1s3viSBkYHtm/q5S3ykhr07UycXfYp8K3W7cSanoYphmr7z78JZDWb
+         66GI2YFOspfo7W+6dXSNf8kXIfTzIdZZwUyGb46QcVygPKimmuG3UTH9Lx6INQdfMcbT
+         O070USIdaQ2c6CSI7p65aUWDJZ/IlE7bgifZfzswY0CjtfdwnPEJxLFIMiVka5B3AcSy
+         AylXu6a7IYqPPCXYO/7Z0wypt/MT90/e0M3yTEFWsQ7wDhVZ7WncqTCXk2FW1wicDRXE
+         pBGA==
+X-Forwarded-Encrypted: i=1; AJvYcCWGp0LsZyhRfwc50ANyl1RZQcaS4G5XaN9IKCaMq1vDoZcxtvX/VFbcGzKJjyZNPDRvdxo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqPbHsHY/TzdLaYsRnM5vkfE6N6kXS2H4Vh0COgZRVMcpl/Fh5
+	6t8nDQrfzL2+PPALR7JKNDYqE2godYqM9h57/0NmrYmmSgshCOesg1ZQ
+X-Gm-Gg: ATEYQzxAtX2az9bZuDyAJFn4+9VohD6T9rBLMjVUCfFpOdWj4RA5Eo6s1ypiZ2j2q34
+	Yxb2grPfhuJ01E/rz6XZKaNIgP2BFljujbIBpb8+ux/O5RVOUuca/FykuSEuza4o0q3wPsE/GDj
+	F/lozx7fFRu4qlatYa4eVYzbeejgLCCI7Og9QXXePTB64wMHMY7kpXH9USM8QmvBAKIfg7+v7LH
+	uigRsT9gfIYo4KrVw3JwhcKJ86CKlXCpvbKVN5iXufZorKws4cpEBAx9OkKD6gDdBSyhIgohtqy
+	i3URrHaOs9Xq1999KNQKUiWTUE7QTG4EObN0ItDnHzEuWQv9yDxQw/sjdR1wkn1TbFsJEtEsM2v
+	ayRsWhRj/7xIuHRNrfpSd0tAlSEYdmixidv9766aPacFDad02DvnWAEHESkcQn4usxU9Dc3fyoo
+	y4ZC3YCK0i7OmTam3ft+eGXiqidUcu8YRONUAS6CC9qGdRPBiF0ogVGFeb65V8gD9R8+28cwqOL
+	Gq+rGzjmL8AYrcsa4x+xONhhGHYXKnm
+X-Received: by 2002:a05:6a00:929c:b0:824:16ae:9ec4 with SMTP id d2e1a72fcca58-826daa8a3b3mr12251301b3a.63.1771978490839;
+        Tue, 24 Feb 2026 16:14:50 -0800 (PST)
+Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-826dd6c601esm12888661b3a.29.2026.02.24.16.14.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Feb 2026 16:14:50 -0800 (PST)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: valusoutrik@gmail.com
+Cc: ayu.chandekar@gmail.com,
+	git@vger.kernel.org,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	lucasseikioshiro@gmail.com,
+	siddharthasthana31@gmail.com
+Subject: Re: [RFC RFC PATCH] builtin/repo.c: change info default behavior to show all fields
+Date: Wed, 25 Feb 2026 05:44:39 +0530
+Message-ID: <20260225001439.54954-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260224220833.17730-1-valusoutrik@gmail.com>
+References: <20260224220833.17730-1-valusoutrik@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqqzqaggln.fsf@gitster.g>
-X-Spamd-Bar: --
+Content-Transfer-Encoding: 8bit
 
-On Tue, Feb 24, 2026 at 10:07:48AM -0800, Junio C Hamano wrote:
-> In this project, asterisk sticks to the variable, not the type,
-> i.e.,
-> 
-> 	char *fmt_cover_letter_commit_list;
-> 
-> I think you got this point right in the previous patch.
+>> They do not matter plumbing commands intended to be used in scripts.
+>> What matters more is being predictable.
 
-Yes, that was not intentional, must've been a typo.
+> My bad for this ... I did not know about plumbing commands.
 
-> > @@ -1052,6 +1054,19 @@ static int git_format_config(const char *var, const char *value,
-> >  		cfg->config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
-> >  		return 0;
-> >  	}
-> > +	if (!strcmp(var, "format.commitlistformat")) {
-> > +		struct strbuf tmp = STRBUF_INIT;
-> > +		strbuf_init(&tmp, 0);
-> > +		strbuf_addstr(&tmp, "log:");
-> > +		if (value)
-> > +			strbuf_addstr(&tmp, value);
-> > +		else
-> > +			strbuf_addstr(&tmp, "%s");
-> > +
-> > +		git_config_string(&cfg->fmt_cover_letter_commit_list, var, tmp.buf);
-> 
-> What if /etc/gitconfig has "[format] commitListFormat = shortlog",
-> ~/.gitconfig has a different setting, and then .git/config has yet
-> another setting?  Woudln't cfg->fmt_cover_letter_commit_list at this
-> point have a copy of the value read from the previous configuration
-> file?  Without first freeing it, wouldn't we leak the previous value?
-> 
->     $ git grep -C2 git_config_string\(
-> 
-> gives plenty of precedence, like this one.
-> 
-> builtin/commit.c-	if (!strcmp(k, "commit.cleanup")) {
-> builtin/commit.c-		FREE_AND_NULL(cleanup_config);
-> builtin/commit.c:		return git_config_string(&cleanup_config, k, v);
-> builtin/commit.c-	}
-> builtin/commit.c-	if (!strcmp(k, "commit.gpgsign")) {
+In the Pro Git book there is a chapter which has a very good description of
+plumbing vs porcelain [1]. It might help.
 
-Will do.
+>> And it is more predictable.  If you ask for two things, you get two
+>> things.  If you ask for one thing, you get one thing.  If you ask
+>> for zero things?  You get none.
 
-> > +		strbuf_release(&tmp);
-> > +		return 0;
-> > +	}
-> >  	if (!strcmp(var, "format.outputdirectory")) {
-> >  		FREE_AND_NULL(cfg->config_output_directory);
-> >  		return git_config_string(&cfg->config_output_directory, var, value);
-> > @@ -2318,6 +2333,13 @@ int cmd_format_patch(int argc,
-> >  		goto done;
-> >  	total = list.nr;
-> >  
-> > +	if (cover_letter_fmt && (strcmp(cover_letter_fmt, "shortlog") && strncmp(cover_letter_fmt, "log:", 4))) {
-> 
-> Overly long line.
+> Got it.
+> Thanks for the clarification.
 
-Will fix.
+[1] https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain
 
-> What if it turns out that the --cover-letter option is not given
-> (and we are dealing with a single-patch topic, so auto setting has
-> decided that there is no need for cover letter)?  Shouldn't we
-> continue ignoring the typo on a setting that we are not going to use
-> anyway?
-
-Yes, a check on cover_letter should fix this.
-
-> Stepping back a bit, even if we do not validate the format *here*,
-> shouldn't the code that does use cover_letter_fmt later in the
-> control flow *already* be checking the validity of the format and
-> complaining?  If that happens early enough, perhaps we do not want
-> to have an extra "early check and die" here.
-
-That is true, and initially I did not introduce a check here, but
-make_cover_letter() is called after the cover letter file has already
-been created. Failing before format-patch could create a file or print
-anything on screeen seemed more clean to me, that's the only reason
-there's a check there.
-
-> By the way, the usual technique used in this codebase when handing
-> configuration and command line option is to these in this order:
-> 
->  * Initialize a variable to the built-in hardcoded default (e.g.,
->    "shortlog") upon variable declaration.
-> 
->  * Let repo_config() call overwrite that same variable.  This is the
->    typical implementation of "if there is no configuration, we use
->    the hardcoded default, but the configured value can override it".
-> 
->  * Then parse_options() overwrites that same variable.
-> 
-> But because we read configuration into a separarte variable (i.e.,
-> members of cfg structure), this function cannot literally follow the
-> usual pattern.  But the pattern we instead can follow is this:
-> 
-> 	/* initiailize to NULL */
-> 	char *cover_letter_fmt = NULL;
-> 
->         /* read configuration */
->         repo_config(... &cfg);
-> 
-> 	/* cover_letter_fmt will point at command line arg */
-> 	parse_options(...);
-> 
->         /* NULL if no command line argument */
-> 	if (!cover_letter_fmt) {
-> 		/* perhaps configuration has one */
->         	cover_letter_fmt = cfg.fmt_cover_letter_commit_list;
-> 
->                 /* otherwise, use hardcoded default */
->                 if (!cover_letter_fmt)
->                 	cover_letter_fmt = "shortlog";
-> 	}
-
-Will rewrite to follow this config flow.
+Regards,
+Jayatheerth
