@@ -1,62 +1,62 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEDB2ED154
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 18:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F0B2ED154
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 18:37:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772044634; cv=none; b=YC0cjzbXDiY5ql9TiK+E/al3wBdjj9LiH1clKmt1iB/wzqQh/SMM9E1o94QM6pnNgr15tsQaDVLp3AAun/CB72QoyxfRXKwEEi79nJmqIN9fcKpESuazfHZPmorViPpiXSEoox2WtCCO4c4jxrRXhoqKk7ijXszVj6QFT5C98g8=
+	t=1772044637; cv=none; b=OmcYos4CPyUC5xXOoG62PIX5khDZZg4oTCvXU0rexAaBGfIYTb9p1EKu3GFYHSmgzBRSx/Ck0T1xjQ+rXquO6kEOMeGuiHn98qGcvAGozN9rFteiDLrSnAEwKALAhWqYWSPHs10t7nw6bUMBfPbskJBSw735LQwACfolWnxTH8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772044634; c=relaxed/simple;
-	bh=VwXn94Inui7JD0HuhLToIRT4y7BXDqkw26L9epAIE3g=;
+	s=arc-20240116; t=1772044637; c=relaxed/simple;
+	bh=R4xLmtH6+DybdKTENzhtIDpW+SbNROj9N0i9qF/fNhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvOoVNi+d4J9w2vnQ6Hv3/rfVh1NDbngKUIKKZtikHPxxWEgX6NWdleuRPieUdkwZFuvrCwu3BI9U/ngTqWZ0HtTvhcKd5ng8eRt0bISKgq3Oxcy4XjD7Z1NsQhpxQfnoCnHw1eNwHDV6/fs41M4NIm4hvts+2+DQrU7lA5kn9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fpRX0J3T; arc=none smtp.client-ip=209.85.221.170
+	 MIME-Version; b=EC5thd6BI0MBcvokdQ6Ve6EqOtIPoeW1g136zxfKnNT1sFsL/n7MHYiyyiXqwxcnEkMPAwAEQbl6yyJEJwqs8PGf/+lM3aCdCQyK2P5c1wZytCXrOSKTqG38AfzFJt2bPAGeFfCaP5Kv9uSAkhwrS2bBcrJr5QlcacRl/GZP1BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lv9VTs05; arc=none smtp.client-ip=209.85.221.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fpRX0J3T"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5674f3e80edso870150e0c.1
-        for <git@vger.kernel.org>; Wed, 25 Feb 2026 10:37:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lv9VTs05"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-56a8dce7235so19607e0c.1
+        for <git@vger.kernel.org>; Wed, 25 Feb 2026 10:37:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772044632; x=1772649432; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772044635; x=1772649435; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=stmOIs91mzJ9z3kpV4IR831k/l+kBAwTn+uqcqS+3JQ=;
-        b=fpRX0J3TDFGFJJn118ihph+Q1+JkO0i0V3LsKkhqcl0eelLqdx8sfoytDJYJXZy8Uh
-         9ITv53/3c/CW2ifupTMxdbJyamjZP+n9cIahbOMoaEWZOGmXoYoGug455VWIMdlX8/R5
-         TbuNka4Gk2AMJj8K3fdLVxG8IslkTzWNef+3iqSY1WkFAvbXft6Lg7VUylw3BwIB8OWl
-         +8zI288/y3EfbFXozFRV/knVe73LWjZQLVV+DgdJx8M5QFuFsOqJpV+7AIkzo7GyQnwH
-         Zruj0Zzlz1GMWIAFGjWlvttTSKkLW/nCfWFxNCEbDRGRaCckZ4IBhBKenBQggW9oCJik
-         hVGg==
+        bh=USG858bWCVmFbTvR8ssqa4Qoe03huPrAf9GVMzB5U2Q=;
+        b=Lv9VTs05PKMeEUTP76NvW9MZIXza08LVr23y71gkjoBhGVTON3b8zcouLBxXxPtZMt
+         pePmqn5U20vqVTwCwLY4b5ll+IuvlwWTA6oTPHRHw65IPO/R3eBPjn4QUkqWe1JwYizM
+         gy65Vj9gidyjEJpMnMFlrDn8eceZm99+MctXqZfF7aYBl2rKb0YduKbscHYog9lARqsu
+         Yi34u7Ax3TKEQ0qF7njahfDA8z789DuHULYx32FpSrHT1c40veFURsJdez/DbPl2j0yy
+         dqV7OYv9ZyIGFRcyi5ClpS6Aaf8bv+DUdv5+X1e9PWV6VqM8gY2r67AqwcQmp9S/FBcW
+         XO4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772044632; x=1772649432;
+        d=1e100.net; s=20230601; t=1772044635; x=1772649435;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=stmOIs91mzJ9z3kpV4IR831k/l+kBAwTn+uqcqS+3JQ=;
-        b=MjEt7zvYOgR9NJNb1Nk/t6l+aulfKmpFQJA5WCpq2BgBmf5ospwDqUBxh/qdlQZSpg
-         iw+NllslY0MX2dyFvxuRlyb6VK3OFsYqs+ifpmHlAvANM/STmtcnxSKynAR9nTm/q7AM
-         GZt2mk2QjlT/NLVlkXVw37KOBtm9w/bD9V04SZv4R8FaIQhPmEWH9Hx5aAzwfjpxTNsX
-         jx5nvdhWoWGe8OJTYhvPGe/xp40epLWVEn92olf9fbdMd+/kFLU43tVWpdDpCg238hnd
-         3VR63RjfbR9G0ZAIZ4UVuGSIF/f+yUWfXSjE81i4nf/ZFkQRlzAgu+rZ3m4G33r2d6tc
-         FiAg==
-X-Gm-Message-State: AOJu0YzWICP5bUA1pXRE7zvz+qETa2lSM2ZQlSyEe4sgx7z4BSlGJfu3
-	t7mSjJedNDL8uTKYeBjSj/o2G+JM7qiFiTWIFENL188funMgY22PX/AgmKs9tw==
-X-Gm-Gg: ATEYQzwSNsDE8Vv78pGcvnOheLXs+GZ7L5vL0VBLF2n7rbjSdYi4vQMBnJNKg/gD2+Y
-	UHgJKmrBI2Flu1PspRLmFut28GdMnizDv2rM0Ih9aDUzgjNM27Xm8PTassAE+O0kXbCiOwrmxU8
-	9qtV1I+Kn9T4yxBXQt1ewJ2nHFZqQGVL2PorfSqrCAEFvdyVJWlDto91vGZoVB+DOvzj8V0j3RM
-	tZPQDr0MU3Bj10wrQUWLSDgDuxPPl/Qx6pwE1a/tLsBL4/OSn4Ua6xqwOEJyCMeyT7mrtLYXsw5
-	xe7OLFaaEbw2vOI2udC5QCMHsKgF6OE3TjFWxp4VlsnzNW3HTPzLuSrB8VK5tQL/HFI4z0dIob6
-	153nwcEXn0SvgG0if0/tEoT8nh+AS56wTki9/E7n0ddNxSYyvzV7ig4JHaJXnKl4vYzSMt4rHaF
-	YfD1qARYy22VggPME7/1BvUStQO2wiiEMIsg20RbSgqv1jsV4bqd+oz14Qs5oUKeXBzUmAxx4=
-X-Received: by 2002:a05:6102:e13:b0:5f9:39a6:3c13 with SMTP id ada2fe7eead31-5ff1cfc9d0amr8354137.19.1772044631670;
-        Wed, 25 Feb 2026 10:37:11 -0800 (PST)
+        bh=USG858bWCVmFbTvR8ssqa4Qoe03huPrAf9GVMzB5U2Q=;
+        b=uI0h9/QkgU9LvPnqCMKg4EFgOQNJ8hFNZMnFyDr1QmjoZ6la//xd9FYNfh6LJ1Ka4G
+         qG+NX/ei8N9oNt1NKFL7fmMcx2Jh3hlTZQLg5wW0MHP8xv8tuGoL8JVVW4Q5CyRiHfdX
+         bO07w6hI0aP1ynZWdOUTseWSyup/0T3p2YZqWhR0w7TN9FEHcqwKeH4i89vwaRB3hWia
+         60Vpq3/Jp7CQwtPxQwYIkr8naCXXPKTIjhpUfI57XyduVfNFoY8DtqFPjjwkfsJXat3C
+         WXC1wq9Tp2ky+sk5tx0lrOzSSy8JDyArkIp7P2HQt44vZ3jLu4Ez0xKfd5j+8I/Kmg6Z
+         l67w==
+X-Gm-Message-State: AOJu0YxmPTI6u3dbfmKzsHYcbhklIsIDMmwGGggEL+gztL4C7I7h00U7
+	v4wbL0O/IkkRVlxxPvoSYZ0lHbEPMSy+VXTYmxvf4YAQ+Co2yknIe+wiiN564Q==
+X-Gm-Gg: ATEYQzym+Ub+qjWJfLfpCPmjUJA5igcgtIlcLXQ8Un4lv0IJZict8P5/Qht3Q9SkQ22
+	k1JffnTSQhjKimiZJQiAFLG9Pnwiu1UxWrg6bfBKlB/0bXHho7EftHSIgk2yRKCEcC74j3ogsef
+	tYOfU5Hb0Czw52JZBLZaonAq/RSZj6TDMOHyzREMPIiAiX8OWa1/NjWVks8wkX4dI/W/KHC9VVt
+	Js8UA5PlQHD6pTwGpiGNoH69o6itVmkoCHakYyKTg40RvnOiZymu08THBOKKmIgv4B03cj5qpC7
+	uh7rEceb7Snx1j3KXic/WbppI1EwQ14bVAd/doPFWfNvzK0oeCe0/XNVC+zbPWsySTKc0fpT5pg
+	ngZCa5ahto8FlU7FKEo1gFRzSSCoJSuWgGfo2on7fSPwDiW7J8I1hlt6fFeyv7m4qpXQO5WWHX9
+	gMtudwqaxesZ4brUPAnNa4juiQ9AAE451HkbsERxlvFCLYduSAg2uLIv/HJYwm
+X-Received: by 2002:a05:6102:b11:b0:5ee:a12d:55b7 with SMTP id ada2fe7eead31-5ff140f7030mr737014137.29.1772044634711;
+        Wed, 25 Feb 2026 10:37:14 -0800 (PST)
 Received: from localhost.localdomain ([189.62.150.156])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94da89e129esm13457485241.5.2026.02.25.10.37.09
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94da89e129esm13457485241.5.2026.02.25.10.37.12
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 25 Feb 2026 10:37:11 -0800 (PST)
+        Wed, 25 Feb 2026 10:37:14 -0800 (PST)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: sunshine@sunshineco.com,
@@ -65,9 +65,9 @@ Cc: sunshine@sunshineco.com,
 	jltobler@gmail.com,
 	avila.jn@gmail.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [PATCH v2 5/8] t1900: rename t1900-repo to t1900-repo-info
-Date: Wed, 25 Feb 2026 13:32:14 -0300
-Message-ID: <20260225183559.79303-6-lucasseikioshiro@gmail.com>
+Subject: [PATCH v2 6/8] t1901: adjust nul format output instead of expected value
+Date: Wed, 25 Feb 2026 13:32:15 -0300
+Message-ID: <20260225183559.79303-7-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260225183559.79303-1-lucasseikioshiro@gmail.com>
 References: <20260218211845.96009-1-lucasseikioshiro@gmail.com>
@@ -80,35 +80,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Since the commit bbb2b93348 (builtin/repo: introduce structure subcommand,
-2025-10-21), t1901 specifically tests git-repo-structure. Rename
-t1900-repo to t1900-repo-info to clarify that it focus solely on
-git-repo-info subcommand.
+The test 'keyvalue and nul format', as it description says, test both
+`keyvalue` and `nul` format. These formats are similar, differing only in
+their field separator (= in the former, LF in the latter) and their
+record separator (LF in the former, NUL in the latter). This way, both
+formats can be tested using the same expected output and only replacing
+the separators in one of the output formats.
+
+However, it is not desirable to have a NUL character in the files
+compared by test_cmp because, if that assetion fails, diff will consider
+them binary files and won't display the differences properly.
+
+Adjust the output of `git repo structure --format=nul` in t1901, matching the
+--format=keyvalue ones. Compare this output against the same value expected
+from --format=keyvalue, without using files with NUL characters in
+test_cmp.
 
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- t/meson.build                           | 2 +-
- t/{t1900-repo.sh => t1900-repo-info.sh} | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename t/{t1900-repo.sh => t1900-repo-info.sh} (100%)
+ t/t1901-repo-structure.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/meson.build b/t/meson.build
-index f80e366cff..9867762bac 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -240,7 +240,7 @@ integration_tests = [
-   't1700-split-index.sh',
-   't1701-racy-split-index.sh',
-   't1800-hook.sh',
--  't1900-repo.sh',
-+  't1900-repo-info.sh',
-   't1901-repo-structure.sh',
-   't2000-conflict-when-checking-files-out.sh',
-   't2002-checkout-cache-u.sh',
-diff --git a/t/t1900-repo.sh b/t/t1900-repo-info.sh
-similarity index 100%
-rename from t/t1900-repo.sh
-rename to t/t1900-repo-info.sh
+diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
+index a6f2591d9a..a67b38ab17 100755
+--- a/t/t1901-repo-structure.sh
++++ b/t/t1901-repo-structure.sh
+@@ -145,18 +145,18 @@ test_expect_success SHA1 'lines and nul format' '
+ 		test_cmp expect out &&
+ 		test_line_count = 0 err &&
+ 
+-		# Replace key and value delimiters for nul format.
+-		tr "\n=" "\0\n" <expect >expect_nul &&
+ 		git repo structure --format=nul >out 2>err &&
++		tr "\012\000" "=\012" <out >actual &&
+ 
+-		test_cmp expect_nul out &&
++		test_cmp expect actual &&
+ 		test_line_count = 0 err &&
+ 
+ 		# "-z", as a synonym to "--format=nul", participates in the
+ 		# usual "last one wins" rule.
+ 		git repo structure --format=table -z >out 2>err &&
++		tr "\012\000" "=\012" <out >actual &&
+ 
+-		test_cmp expect_nul out &&
++		test_cmp expect actual &&
+ 		test_line_count = 0 err
+ 	)
+ '
 -- 
 2.50.1 (Apple Git-155)
 
