@@ -1,70 +1,70 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83025198A17
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E799B1F5858
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:21:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771978861; cv=none; b=O1raI9D9ER2eec5Lq8wmEA4PtxTUJef1HBpJUopi7Zniu23H8Gf5zCyec1eAciMzSsAjxV41iXB5gNRpx7DVKete5TmkiHKFbXg36r301qAlCvIJeARajiykJ9C8NnoUZHxbUqDppisJYJQZDMEPb3s08rmqGU/p/jakDorcy08=
+	t=1771978866; cv=none; b=jDlvZMYOTJAkxzoJl9DlUYufD+N45MZMDZ2kemWvd7UgBi7RuMS2LxC04lLAPE+c0+Z/eB9+dRB86veC5e2SPjC807k/0KZzpAZZ1KeI7EWtnvG2fCp+d3MVgrohTsFQ4L4EUfXsMATe7TRYMfm60jQguhtvn6SmHLU6vbiU7SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771978861; c=relaxed/simple;
-	bh=WTDp2v3PGV4EL0POoURvul3hjpcVMBvPpR1wqq13e/4=;
+	s=arc-20240116; t=1771978866; c=relaxed/simple;
+	bh=xO+nB4e2kWHXyq4y+d+RQIYnts/BwxhyapO5Sq67ff0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ejK7j38dBi13yXV6A6WXuSLAWExsCmi1dW4x0uUH3on+kC5NsnWLl+DAPErGxo6s0EAufp9iahpJCOilTqw85E9dPvKP5jS9RcJrwvv8FIkRGDWwniE5UU6ysW3mSkOXIxd4FYMAVAzKeT91RxJ882tJ9/11naOo07xjzAowruc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=h6e+ZQ/f; arc=none smtp.client-ip=209.85.160.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=AZHDsn8WtBtsyzna8UN7YW+pAqizDXFh/okp+Bn7hbkVfmdHBLZ19yLfZfRefR/VKuclmQxtmkRfx86G4461v7UnNL1BPOpBFyFtfLNDroCUgWHg4rilzwQc41GNPB6l/axzp0mcm4gqSy39lHJkc+QszhKLe0PHZJBgdavBkaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=VSnqA4DU; arc=none smtp.client-ip=209.85.160.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="h6e+ZQ/f"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-50334dd44d2so72743931cf.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 16:21:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="VSnqA4DU"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-506a67282a0so55688841cf.0
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 16:21:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1771978859; x=1772583659; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1771978864; x=1772583664; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=d4j4y0ceQAlpQjGKy2p1uUs71NwIwAY2sgqbt/3FGj0=;
-        b=h6e+ZQ/fIDjDm9Ze1XTUMCI587x46NNg0nsUdW2rJFwv7m5YKQdsvJ+k/6C7cwOZT+
-         J/wYU5kpg93swYUA/GHqwJv1SVI8eWlH4P0DraKtGYUDOz0mA0dbDjDOsJtOhvIz1Q0y
-         2pMZhxVckG78wCgWdcwSQji86jeHZIKfnHB+tKPF4l7H1aKnmgs/n7zCRIGWsBWjQyJN
-         1iLdvkKVOungsyo0BfDPBwG8MSFRE6n3/ntssVKAG/0CGsVtT3tv89Suxh64uR1IjtId
-         ChRgctcH979V0Qe1s98ZPQZtnqAfAFk+E0FFP1n/9BBwIGO70E2aU7RLFuJbBo+GhIK6
-         auZQ==
+        bh=RdtUHkd1Cv8E8Y0+TYPZAkybFhnxwKoHL+lnl6s05lI=;
+        b=VSnqA4DUMSNaH4OKd0uUjnUwW2BQrHktr9/0WM34G0LPfJBJD7bwKM/FuDbm7MbIjv
+         vMoTWSfuOmYXbiZmBQpaqwg2+gHX63gDhKVBwU++LaRYM1w9SM89Ry4NtSUKNA+QYY1f
+         kgEvg9A9tQ3lMDX0KRTSDwmEfqQVC8XgRX+/CKQQuNaafG/6jeD69fvHH2i5j/tYc//1
+         2Fd9MLHgd03nAXI0Dhf67At2F1XBZ67I1uRAx3TU0txeixm6SnCCnARyr5IozGKXo1mx
+         gGWQ4VmvypBBngCqD/k6tnUxUjhalQroqU5cKtMFBAUNyzcs4yA0mzHAVKaXi47cRbtF
+         H3ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771978859; x=1772583659;
+        d=1e100.net; s=20230601; t=1771978864; x=1772583664;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=d4j4y0ceQAlpQjGKy2p1uUs71NwIwAY2sgqbt/3FGj0=;
-        b=koaQNmeM3OAQLDZY/j8A+8nHUF44/cX3SN7v36TSnnjn20H2Jv1Z74HI+xbc14HbHb
-         lFRwJAqnv1vcoI2TeIhUIkIOViCGGFeT+dldIgDM5cHUzBWk73Mr/IHONR9usD1jwxTJ
-         D4vf17zOzN9nFIgI40FLhTGt3Mfsqsd5FTyDryaeRPF2w+PQ6dLztaYl0uPphLtUt/gB
-         FuWN+IzFQfp10Fnk4G2/CLiwkumNZax3Zzb2NOW9FYqqewbb6GxEHL/3NYTvLdr9s08O
-         /cDCXLrh12Cr5zV1GpdOhSIpqfGTlEMumXbky4Q3l52DGbZDrgznLb1nIfsslwjzUAaC
-         U1dw==
-X-Gm-Message-State: AOJu0Yw/GimwrXTj31xx853Lo1gfZZlK0F/PcMZF3fwErFAWwL4BWJWW
-	mrd+UHODNwdZPFRo4fEAjTgNrvFG02no7gXmlJx9UTC54I0RXth5dpmIvYE0jb33zFJY8Rrz97W
-	P8XJmJIZbsw==
-X-Gm-Gg: ATEYQzzvp1/pwXDBVvisKfZk7RM7Fn3L2wy9vp90vxbe/zOEJqWs4pQ1oTi1Wb+bvGc
-	Rt/v0r7FNlMzzOQbw3gDJZEw/SHEKTRA+lO4ob9FI4iJRJP80Ix/mwbNqknbaq4IJ1jNNRm3KDH
-	inSbgiwlvbhVhMufLZgM38th5uwB5r9ysJuyBpv26uR6Zr9uADkYT0Qbj18HnLjsf3Anec5U3Dm
-	rMr4iO6vmGAY/1F2dykc9FnEqDtunDR5FFIlL3bFxGGpz1APNPFi79tMLaSt1sk2VrqO8YsxgQA
-	0V4vsWRWLcDu1vaIzQ2Puzw3CBOgAI8ppqjkvN7hupmA3zZH2ACpY1ldo/9eiZvVSe3aDRycgCK
-	OqbAzFUxFtcKR4dcvn75zgjUvGrMne1mI02DCRkHwbVnWpe048ZDrBGB4c0j1v9zE43u+xFvgKQ
-	71/Ss1ojWlLyohd25BYA54z+hbeWvihD9+XyLre0fYx27BlmZFWoL/2wTSDpGQFr9cxc6/olEDr
-	K+8JbZqTm7I9MgSXtdlY534BtZ1TQ==
-X-Received: by 2002:a05:622a:1191:b0:4ee:24e8:c9ae with SMTP id d75a77b69052e-5073a324679mr7770971cf.53.1771978859218;
-        Tue, 24 Feb 2026 16:20:59 -0800 (PST)
+        bh=RdtUHkd1Cv8E8Y0+TYPZAkybFhnxwKoHL+lnl6s05lI=;
+        b=dUJNANeMN8jNXDO6+6amYMGvKrzQ6nyQY5f9nTgfp40ZyFKez3Ns071hh3ffrAKpu8
+         7GBVv++7rpa08KOo61Oy3NcOwBVwV4PkGPukbTCLPIQYL50+CIAE3gz44ShJfhj5dmId
+         v813MrR3OHsaSvYRe5fsjAQMWzU8PUYXLkv9A8pWdwRbDiS2ACJrvSxhAIklS+IUWo4F
+         Xz9jqRwekpPGVBIJIX3lyYHarrGQLmmVgCEqtwd77n6Jc4r6/dTmbva41dbNqeCuyFDL
+         ZuWf5b0WYwc6Q4O3nA+yoyDng+h+Sxe4qBioYAG910KM2kruxaJQHkuDeGkYe3upg0RN
+         c+8A==
+X-Gm-Message-State: AOJu0YzxKY2VVdV4eO/EwzlKengcDI2+ogQKgeOqG0sb62Kkm/RWk0s3
+	aLQS+XqUle9TyrVc9Ep6wIF68ip0WBYJP5ziNJUr0A7+Hzfasw4DjDhM0/8/imwRz+ImnivZf7r
+	1/4LblxbQ9Q==
+X-Gm-Gg: ATEYQzx6Lkr5rBgvIGcxmQsA7rvqeZeHxSF2n2Xp0w6H0LTC20HDV21Z/RClN0r3x8y
+	6x92rJ8LHFt/VGlGiwwwgv67ewE2f2jAFLVwY268WqbuYIRu9Y9KCN/Na68ysy3Z194RMr1FTl8
+	Uj91is1eerqs1QlioVLM6ydfGlMFUVol5YMfa6ZmYkSSft1r1aqHA/kumIbRHDM+a4YMoGkrYt8
+	GgYatm7PquN91gNuBX5QSc9RxP+WX3dd5GDXPcwuc7qVaHbtDUpwm/KrgWpkJ98dUsd6SR+wUcJ
+	KIeaAa4/XCWj1iLWwfqHhAADTgP37pjYbN3bsA3i4kikf+umzSuZjEeSTqR9MKxbdfflCrNOy6n
+	ADnRKSN1mof/e1RpfzFl+2LZaorFPnf6UQ7/P77gNBrb0+je3P/R9Aj3SKVjH+jafilYqookOB5
+	rm06SnH3ZOrvAIXJEdHB7Bzeuik5LiPzcDPxwzZZ/cIFkA1G5GhU19shfncZ2dvLWMt2/dbYRtg
+	0AapqfZxya1kYcRNT6Gyn4YQ44IAw==
+X-Received: by 2002:ac8:5d86:0:b0:506:8738:651d with SMTP id d75a77b69052e-5070bd02eecmr210989381cf.62.1771978863584;
+        Tue, 24 Feb 2026 16:21:03 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d50cdcasm112575081cf.6.2026.02.24.16.20.58
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5070d575a8bsm106641321cf.14.2026.02.24.16.21.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 16:20:58 -0800 (PST)
-Date: Tue, 24 Feb 2026 19:20:56 -0500
+        Tue, 24 Feb 2026 16:21:03 -0800 (PST)
+Date: Tue, 24 Feb 2026 19:21:01 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH 01/14] midx: use `string_list` for retained MIDX files
-Message-ID: <d64a799afd620363c1940d7c2e634e78ea553cb6.1771978829.git.me@ttaylorr.com>
+Subject: [RFC PATCH 02/14] strvec: introduce `strvec_init_alloc()`
+Message-ID: <50efbbb0fe8d897d7c4cd51489af4cb4c4c49d02.1771978829.git.me@ttaylorr.com>
 References: <cover.1771978829.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -76,121 +76,55 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1771978829.git.me@ttaylorr.com>
 
-Both `clear_midx_files_ext()` and `clear_incremental_midx_files_ext()`
-build a list of filenames to keep while pruning stale MIDX files. Today
-they hand-roll an array instead of using a `string_list`, thus requiring
-us to pass an additional length parameter, and makes lookups linear.
+When the caller knows upfront how many elements will be pushed onto a
+`strvec`, it is useful to pre-allocate enough space in the array to fit
+that many elements (and one additional slot to store NULL, indicating
+the end of the list.)
 
-Replace the bare array with a `string_list` which can be passed around
-as a single parameter. Though it improves lookup performance, the
-difference is likely immeasurable given how small the keep_hashes array
-typically is.
+Introduce `strvec_init_alloc()`, which allocates the backing array large
+enough to hold `alloc` elements and the termination marker without
+further reallocation.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.c | 56 ++++++++++++++++++++++----------------------------------
- 1 file changed, 22 insertions(+), 34 deletions(-)
+ strvec.c | 7 +++++++
+ strvec.h | 5 +++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/midx.c b/midx.c
-index c1b9658240d..c5e3553e2bb 100644
---- a/midx.c
-+++ b/midx.c
-@@ -755,8 +755,7 @@ int midx_checksum_valid(struct multi_pack_index *m)
+diff --git a/strvec.c b/strvec.c
+index f8de79f5579..f7f32a53b56 100644
+--- a/strvec.c
++++ b/strvec.c
+@@ -10,6 +10,13 @@ void strvec_init(struct strvec *array)
+ 	memcpy(array, &blank, sizeof(*array));
  }
  
- struct clear_midx_data {
--	char **keep;
--	uint32_t keep_nr;
-+	struct string_list keep;
- 	const char *ext;
- };
- 
-@@ -764,15 +763,12 @@ static void clear_midx_file_ext(const char *full_path, size_t full_path_len UNUS
- 				const char *file_name, void *_data)
- {
- 	struct clear_midx_data *data = _data;
--	uint32_t i;
- 
- 	if (!(starts_with(file_name, "multi-pack-index-") &&
- 	      ends_with(file_name, data->ext)))
- 		return;
--	for (i = 0; i < data->keep_nr; i++) {
--		if (!strcmp(data->keep[i], file_name))
--			return;
--	}
-+	if (string_list_has_string(&data->keep, file_name))
-+		return;
- 	if (unlink(full_path))
- 		die_errno(_("failed to remove %s"), full_path);
- }
-@@ -780,48 +776,40 @@ static void clear_midx_file_ext(const char *full_path, size_t full_path_len UNUS
- void clear_midx_files_ext(struct odb_source *source, const char *ext,
- 			  const char *keep_hash)
- {
--	struct clear_midx_data data;
--	memset(&data, 0, sizeof(struct clear_midx_data));
--
--	if (keep_hash) {
--		ALLOC_ARRAY(data.keep, 1);
--
--		data.keep[0] = xstrfmt("multi-pack-index-%s.%s", keep_hash, ext);
--		data.keep_nr = 1;
--	}
--	data.ext = ext;
--
--	for_each_file_in_pack_dir(source->path,
--				  clear_midx_file_ext,
--				  &data);
-+	struct clear_midx_data data = {
-+		.keep = STRING_LIST_INIT_NODUP,
-+		.ext = ext,
-+	};
- 
- 	if (keep_hash)
--		free(data.keep[0]);
--	free(data.keep);
-+		string_list_insert(&data.keep, xstrfmt("multi-pack-index-%s.%s",
-+						       keep_hash, ext));
++void strvec_init_alloc(struct strvec *array, size_t alloc)
++{
++	CALLOC_ARRAY(array->v, st_add(alloc, 1));
++	array->nr = 0;
++	array->alloc = alloc + 1;
++}
 +
-+	for_each_file_in_pack_dir(source->path, clear_midx_file_ext, &data);
-+
-+	string_list_clear(&data.keep, 0);
- }
- 
- void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext,
- 				      char **keep_hashes,
- 				      uint32_t hashes_nr)
+ void strvec_push_nodup(struct strvec *array, char *value)
  {
--	struct clear_midx_data data;
-+	struct clear_midx_data data = {
-+		.keep = STRING_LIST_INIT_NODUP,
-+		.ext = ext,
-+	};
- 	uint32_t i;
+ 	if (array->v == empty_strvec)
+diff --git a/strvec.h b/strvec.h
+index f74e061e141..34cb1f939f0 100644
+--- a/strvec.h
++++ b/strvec.h
+@@ -43,6 +43,11 @@ struct strvec {
+  */
+ void strvec_init(struct strvec *);
  
--	memset(&data, 0, sizeof(struct clear_midx_data));
--
--	ALLOC_ARRAY(data.keep, hashes_nr);
- 	for (i = 0; i < hashes_nr; i++)
--		data.keep[i] = xstrfmt("multi-pack-index-%s.%s", keep_hashes[i],
--				       ext);
--	data.keep_nr = hashes_nr;
--	data.ext = ext;
-+		string_list_append(&data.keep,
-+				   xstrfmt("multi-pack-index-%s.%s",
-+					   keep_hashes[i], ext));
-+	string_list_sort(&data.keep);
++/*
++ * Initializes an array large enough to store `alloc` elements.
++ */
++void strvec_init_alloc(struct strvec *, size_t alloc);
++
+ /* Push a copy of a string onto the end of the array. */
+ const char *strvec_push(struct strvec *, const char *);
  
- 	for_each_file_in_pack_subdir(source->path, "multi-pack-index.d",
- 				     clear_midx_file_ext, &data);
- 
--	for (i = 0; i < hashes_nr; i++)
--		free(data.keep[i]);
--	free(data.keep);
-+	string_list_clear(&data.keep, 0);
- }
- 
- void clear_midx_file(struct repository *r)
 -- 
 2.53.0.185.g29bc4dff628
 
