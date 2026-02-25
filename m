@@ -1,136 +1,178 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D65A2E3B15
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 21:53:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A5A2E3B15
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 21:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772056403; cv=none; b=B+Ubcoo1TW2CSFLiuGAqukVjUk+5XeebftebGtwztf2DDOK0MU9/JLYQhw9HKSZnecSrrShQMqLUPQkSU8jSR5G6G3KNxVqkFfhDRctWFSLW37oMJsExhFLLYnNTnJ/l1jGOPCgF/lsUBYw8AwlBuqhDu9jvx96Hpjelr1MYV64=
+	t=1772056465; cv=none; b=Xd2bod4aDwwcTjZMmPcJ3NTE4hk4CTudhjs5DrtusMMxI2xqIVUksL8ydU5UDYfipqp8oss30mbq9ibuHLOkHgzzI2mxNVVVRjntM0U0m2Y8KrzTBZLAaz13c9UlfBgSzAB/U3Z2TY7r9QmQlSu2o3QMIJWtDKaP8ztHB1FiVII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772056403; c=relaxed/simple;
-	bh=fiWiRFEXZYP7uPS+To9oGzgRwJ+bHSD/Qg+kd1DbcQI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=W4tfJgqogiHfP/25Yq7LxqgcYekqkJa9m7rJq22HHzHkLXJfQKI3u5JZtI1KSGhKSYboXhKsW2duY45nq6zD9XIo4VGq4HdjSpGc1/Spf3UcbCIs47Ktnk7RBQqyJjs36egZ+TkXIpl1oisM97n6tjGxPyF1eWuSK2AOIK16DdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uyYqsJZk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KOHfX9Iw; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772056465; c=relaxed/simple;
+	bh=n/HMo7Dn5JxP1HIX5XDVBWe3Y52cCEJDkczuZfsbHEo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jPil2Z97glsl/rGnCB2oMjTxhBimLceA+HJ8+GTg8CtL+076QKouho2QDjPffFI76R8zeAauPV15Vzzgdy0J6IKeZI++6PD3cRvuWRi1YO87L+sTXf34YU0Myk00RbiliRImUyERqlBb3aNdawljTgHMf/wV5tHaIG0SkXMv2Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qdf3tccW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uyYqsJZk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KOHfX9Iw"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id CD51DEC05C8;
-	Wed, 25 Feb 2026 16:53:20 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 25 Feb 2026 16:53:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772056400; x=1772142800; bh=kPKas6+DCx
-	VGZng3a3hvmGnxB5O5unihToZUS82CTrc=; b=uyYqsJZkM0cwmMviTJZwQKFR07
-	+hVCsblj45Aj8YXRU0jO0xKPFCwiBvyYGj7EP9cCtoRjnukMt6Ykr75BAfPAopb2
-	e9abhxXunXwd+3BWkDfItQclQJdadOo8oq0WcCBsjBR+vjZGcIydKejpQdlrBVVu
-	m1Rl8qbMPbA4lFeYO4qlxjKGwBVa6zJvive+vPBVwpp5hfaq+j2QpwScnUs/afpZ
-	KNsTmBVJeT/8s5hd67ueQc80+lHeo92pxKQcFAZsYc8AupJRB/XHwFAtH31ROESr
-	jkS6SBk+d+EyuwXaKGRQEDbYr5bKbVGL9sY3c1dKsfzsbQRsAb/3HYMhs1ng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772056400; x=1772142800; bh=kPKas6+DCxVGZng3a3hvmGnxB5O5unihToZ
-	US82CTrc=; b=KOHfX9Iw1n3hNFB21XtFDA/1ItvvttjLnMDhLMpqygbgdWQXSgC
-	/h8fAi60Zk0PaD+5ObxK4U1xhqOk5APa0GlMf72w4V8S8JqmLeW8T3WM5r32a8TA
-	kuQOpgo3FJnPsPoJkPVoYmYJu6vgSRmvz/lLnHQPr46ue0kE4schbN3R7s/fRW6e
-	VwesJbYy5viwmVS7T3DKA8moctrYMI9CGv0/vY3mwcFyIUVm1FWe/0NEfOoal6RH
-	GBAA7U1JDln0OpVIoAh81u0hTQCKS8kzOWxHNIXgBa7oNTmTpCH85BLbxRost5VN
-	skfZMZ059On3VJdUM+uw0TifvOVCOM0yOAw==
-X-ME-Sender: <xms:T2-faYBxnxbo6cAl7dKIF8RdiBs0NbX9_tFtsdltauf_dQgbWLf5rw>
-    <xme:T2-faYzZVOZp3jkknD3-wtFgUIQd9e5Jdzz0egK5JNp6ONxlXAu_KOwW1RHloCFUm
-    EpLIq_y5XbfbRrAoBBxbZKFYmwrroHFkYGXJUYaFhLpPLZEqjPt-A>
-X-ME-Received: <xmr:T2-faU6s8jnvprPBtFBlU_JsTn1KctcnXQBGPzq1tzXXiPV0VKwG-NkNx4hkMEZNMNafG8wP6-uqPIYPPJ6SORSeEaB4QCdrjg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeegvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepth
-    hoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgr
-    nhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepnhgvfihrvg
-    hnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfees
-    ghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlh
-    hmrdhorhhgrdhukhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:T2-faRxE7iUSf-TZRFltDSoCs0E19cNovGzUzMJp8juS8L94ngz_bA>
-    <xmx:T2-faQdDPxn6eNXZfDPLsYURvz328ByjHNZyOxG3IVw42Wu6vLONFA>
-    <xmx:T2-faeA-zS9qiq1w-xBdOM9xAnX6WDpjchxo9J7gXvoZcoKLdk7_FA>
-    <xmx:T2-fac4-sr8yHR0zrb_O-BKkG7CYhKjpiPGt06nIiH8iwGhk13wcow>
-    <xmx:UG-fad0k2xd8gYQErnXNHm8Gl82u1mCHXjaTe_MgCvE7emMgmeKvP-kA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Feb 2026 16:53:19 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Siddharth Asthana <siddharthasthana31@gmail.com>,  git@vger.kernel.org,
-  christian.couder@gmail.com,  ps@pks.im,  newren@gmail.com,
-  phillip.wood123@gmail.com,  phillip.wood@dunelm.org.uk,
-  karthik.188@gmail.com,  johannes.schindelin@gmx.de
-Subject: Re: [PATCH v3 1/2] sequencer: extract revert message formatting
- into shared function
-In-Reply-To: <87wm07e4ck.fsf@iotcl.com> (Toon Claes's message of "Fri, 20 Feb
-	2026 18:01:47 +0100")
-References: <20251202201611.22137-1-siddharthasthana31@gmail.com>
-	<20260218234215.89326-1-siddharthasthana31@gmail.com>
-	<20260218234215.89326-2-siddharthasthana31@gmail.com>
-	<87wm07e4ck.fsf@iotcl.com>
-Date: Wed, 25 Feb 2026 13:53:18 -0800
-Message-ID: <xmqqcy1s8p81.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qdf3tccW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDB8C116D0;
+	Wed, 25 Feb 2026 21:54:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772056465;
+	bh=n/HMo7Dn5JxP1HIX5XDVBWe3Y52cCEJDkczuZfsbHEo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qdf3tccWDAocZTXhPuEFjr1E6iHRH97Ej9cFLTdLBpfs5MFPp4jcnUonPImfeQh6W
+	 +H3SXK1aLLSOLAPXGvIj0GptH30IapCS5C8iY4uZXbWTnYygGIknpU9sD5d2qJHutk
+	 OptOnaV3GsUgkH+0uyMea93tgTvsdc5LYzccBcv4UQcT9nGP/pkOn5hj01Hl8vYK20
+	 Bw8zGQN8MuyHu17X+etOoHPhIDWdfQw0wQnlqklCw/UBZj+wvwcgwSR0PalwsQnwHQ
+	 XA0WKzFuE7OyCdlmYg0FEfqMhQjblgE4unfzJIVVYH8lhEbapTLzyRaQhDR5XOy3G/
+	 5h5gvnsCv9Qbg==
+Date: Wed, 25 Feb 2026 22:54:21 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: Marc Branchaud <marcnarc@xiplink.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: --no-decorate and %d in git-log(1)
+Message-ID: <aZ9vBfhiaR7gO9hs@devuan>
+References: <aZ81X6ERyx5fcm6L@devuan>
+ <xmqq4in4brt3.fsf@gitster.g>
+ <aZ9AuD3dYzCKtI0s@devuan>
+ <8f6441ab-5c9a-4b42-ab2e-a670d462569d@xiplink.com>
+ <xmqqcy1sa8mx.fsf@gitster.g>
+ <cf3d274e-7363-4557-809a-a649b1d304ad@xiplink.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="64gvwz7y5qdq2mo7"
+Content-Disposition: inline
+In-Reply-To: <cf3d274e-7363-4557-809a-a649b1d304ad@xiplink.com>
 
-Toon Claes <toon@iotcl.com> writes:
 
->> -		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
->> -			   /*
->> -			    * We don't touch pre-existing repeated reverts, because
->> -			    * theoretically these can be nested arbitrarily deeply,
->> -			    * thus requiring excessive complexity to deal with.
->> -			    */
->> -			   !starts_with(orig_subject, "Revert \"")) {
->> -			strbuf_addstr(&ctx->message, "Reapply \"");
->> -			strbuf_addstr(&ctx->message, orig_subject);
->> -			strbuf_addstr(&ctx->message, "\n");
->> +			strbuf_addstr(&ctx->message, "\nThis reverts commit ");
->>  		} else {
->> -			strbuf_addstr(&ctx->message, "Revert \"");
->> -			strbuf_addstr(&ctx->message, msg.subject);
->> -			strbuf_addstr(&ctx->message, "\"\n");
->> +			sequencer_format_revert_header(&ctx->message, msg.subject, NULL);
->>  		}
->> -		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
->>  		refer_to_commit(opts, &ctx->message, commit);
->
-> I still find it somewhat confusing we have some the code that deals with
-> `opts->commit_use_reference` partly in here and partly in
-> sequencer_format_revert_header().
+--64gvwz7y5qdq2mo7
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Marc Branchaud <marcnarc@xiplink.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: --no-decorate and %d in git-log(1)
+Message-ID: <aZ9vBfhiaR7gO9hs@devuan>
+References: <aZ81X6ERyx5fcm6L@devuan>
+ <xmqq4in4brt3.fsf@gitster.g>
+ <aZ9AuD3dYzCKtI0s@devuan>
+ <8f6441ab-5c9a-4b42-ab2e-a670d462569d@xiplink.com>
+ <xmqqcy1sa8mx.fsf@gitster.g>
+ <cf3d274e-7363-4557-809a-a649b1d304ad@xiplink.com>
+MIME-Version: 1.0
+In-Reply-To: <cf3d274e-7363-4557-809a-a649b1d304ad@xiplink.com>
 
-True.  Making sure plumbing commands are unaffected by random
-end-user configuration is a good thing, but I am not sure if this
-command is truly a plumbing.
+Hi Junio, Marc,
 
-> Part of the confusion comes from sequencer_format_revert_header() being
-> called with NULL for the commit OID.
->
-> Was is not possible to incorporate Patrick's suggestion[1]?
->
-> [1]: https://lore.kernel.org/git/aTZ5RrjnwJ2ZnT7A@pks.im/
+On 2026-02-25T14:46:10-0700, Marc Branchaud wrote:
+>=20
+> On 2026-02-25 13:08, Junio C Hamano wrote:
+> > Marc Branchaud <marcnarc@xiplink.com> writes:
+> >=20
+> > > BTW, --decorate=3Dauto is documented as "if the output is going to a
+> > > terminal, the ref names are shown as if `short` were given, otherwise=
+ no
+> > > ref names are shown."  But in my experiments %d still shows refs even
+> > > when the output is piped to a file.  Seems like another symptom of the
+> > > same bug?
+> >=20
+> > Isn't that documentation merely referring to "git log" without
+> > "--format=3D... %d ..." and not about the case where you explicitly
+> > ask for "%d"?  That is, the description is there to explain the
+> > differences between
+> >=20
+> > 	git log --oneline --decorate=3Dauto -1
+> > 	git log --oneline --decorate=3Dauto -1 | cat
+> >=20
+> > isn't it?
+>=20
+> I'm sure that's how the code works, but I don't see any indication in the
+> documentation that this is for when --format isn't used or when the format
+> doesn't contain %d.  The descriptions of --decorate and --format mostly j=
+ust
+> ignore each other.
+>=20
+> We do have this at the end of the --format section:
+>=20
+> 	The %d and %D placeholders will use the "short"
+> 	decoration format if --decorate was not already
+> 	provided on the command line.
+>=20
+> Given this documented connection between %d/%D and --decorate, it seems
+> reasonable for a reader to assume that --decorate=3Dauto would do the same
+> thing regardless of whether or not a --format=3D...%d... was present.
+>=20
+> > I think --decorate=3Dauto is the default so the above
+> > without --decorate=3Dauto would behave similarly.
+> >=20
+> > > (Do people who use `--format` (with or without %d) *also* use
+> > > `--decorate`?  It seems like the two are naturally exclusive, even if
+> > > the code allows them both.)
+> >=20
+> > That is an interesting question, but I am not sure if it affects how
+> > we decide to resolve this discussion.
+>=20
+> Yeah, it's more philosophical, though if we did know the answer was "the =
+two
+> are almost never used together" we'd be more comfortable changing how
+> --decorate=3Dno and --format=3D%d interact.
+>=20
+> I note that currently --decorate has no effect at all if the --format
+> doesn't contain %d or %D.  To me this bolsters the argument for making
+> --decorate=3Dno suppress %d/%D.
+>=20
+>=20
+> To expand on my earlier point: --decorate=3Dno currently has the same eff=
+ect
+> on %d/%D as --decorate=3Dshort, so it seems to me that we can change what
+> --decorate=3Dno does because if anyone needs to preserve the existing beh=
+avior
+> for their favorite --format they can just use --decorate=3Dshort.  (I'd be
+> surprised if anyone is using --decorate=3Dno to ensure that they get the =
+short
+> ref names).
+
+I agree with this.  If anyone has a script, I expect it won't use both
+--decorate=3Dno and %d together, because it makes no sense (at least with
+the current behavior).  And if there's some case where they do it for
+some reason, they're able to change =3Dno to =3Dshort to keep the old
+behavior.
+
+
+Cheers,
+Alex
+
+>=20
+> 		M.
+>=20
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--64gvwz7y5qdq2mo7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmmfb40ACgkQ64mZXMKQ
+wqmn0w//dmgP3jBRaxyYDwIEoVizqSu86S1gHyAxpEht2cmHyrQ630ZMupvgUt5z
+r40qy9rNy7sD9iCA/E0VFRFolUrTShQsZepsJ5rz8Xt2Z+FxjWjKSjP9R1Yniwu8
+4YnPpokxe6y4ubgqK9eU3AKCaoawig9s+oTytUbXvZiEuwesV2K0eJzz8N/OtEyu
+07r/yQ9I8JEDcfq6oQvbian1wsm0m3KgR3VBXmFPhVGjlyTu5vpdoO3F+sQNrZi4
+lWNLAF3thdlkaxSqULI5rYrGIiEbIz5dBnZWlU42lcLNSQlOxR81yquAiRKpu9uO
+SFDs9ZtRAlV9sGjNEDxeu5tB9+fgCigNJg6SpXhW/56rNIc3QQVptwraFKbIdCU9
+/KxZksWq0/MUUv6xsvhZCyAffH+inbKy3wtOr7sWlAeoHQcLfQJXjP2UEkyBCn/7
+2QJtjrOagpiGPUcsvlRoEeKCx0gKwahKWT8l7bCUw+EKAoic00HALpb0YtQjZMNm
+EhbkzZJ7QeeR0NEh+CduMaMpxTifXHEnkkDXoshVFJ20RsPCRJwut6vsaWMlGDDF
+BSEM1sbhNjXOUztOWkYRAHg9bYAUpyxmmGrpaMr/0OIoVfaAK3sEk4Qt6fE4yGBs
+WdTDYxDzLlEtmZtukaB8Ja7mv6wTIInPMPN/JSi2xd3oQnD95aU=
+=q5Ba
+-----END PGP SIGNATURE-----
+
+--64gvwz7y5qdq2mo7--
