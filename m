@@ -1,65 +1,65 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30AC38E5F3
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 09:40:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1797438F220
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 09:40:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772012453; cv=none; b=dU50jkTJr91eYvH/Qo5jLmxim2Gb70H5d1kzdX7CItfdR0L9ic72Wyj4xPRp4ik5lCEsE883aabDG1cYSuVmPN5cTjKPy3V/8bshrMySWxbc7fSxFgH9UlqXa4O3ppbuK4e781Z8VyQsES3LI5WtC7cJ6heScEwPHvuoYZKOLnU=
+	t=1772012454; cv=none; b=lCfJTUpJeDfP+K5h4aL8fc+cedAkh2fPimK7O0yMlR5wJmrZZZrOitR48rwY4IYwn8mnh7TI0UPa7TG0SHM5RaM1t/ouh8jCoGALgHrVDaz2nvl6xENRSmecJG9mU16mtNEN0HsUoQXXTyU4j5IMi7t3wbRtpEHNKYKyYMwMh7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772012453; c=relaxed/simple;
-	bh=3pAVZqyYQd44HjXJ3zB97rsDR3C2TAjGHqsd+Z7tbtI=;
+	s=arc-20240116; t=1772012454; c=relaxed/simple;
+	bh=ORde0fdTcyXggqTNNk6zNTCVEag2mH6gRCQ9/9wuTjo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IkHZhV1ZIo7AnwraUBUEyQ1hAIc1ictpkysjsbEUiaXmhjgiIz16rV3Ct1bHKgiwhuLyIWyK097jzXx1qKyZLnhOwRtmPvaqCHEJXhP207wJVHdkBkyKdO23lPMZ+01I4s4U3Hh2kfNQ3prWOuUy3VoPezTdogIAywEeI/dOh7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HhI0tlQN; arc=none smtp.client-ip=209.85.128.66
+	 In-Reply-To:To:Cc; b=NddHbJk9ipJ6aPP8n5aEAp6YNb97TPxomqir58UMyXYnEeZN1B9Ul7ZlHEbE0vbIEFernf+h0LmlmFkMb9IhoidxPF9FddhcbixEaXljXC6vlHaJCd/5Z1toYrfwKGtOHVN1ffpxDfrpRizOqn0aoUhN8y2iPATcMBBA9LxR1RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NJgiD7Ra; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HhI0tlQN"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-482f454be5bso6307675e9.0
-        for <git@vger.kernel.org>; Wed, 25 Feb 2026 01:40:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NJgiD7Ra"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4834826e5a0so79600195e9.2
+        for <git@vger.kernel.org>; Wed, 25 Feb 2026 01:40:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772012450; x=1772617250; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772012451; x=1772617251; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=g764AcE8tF1f80OWvHYEL0ofqMQL+KicfXN9lnSr5Zs=;
-        b=HhI0tlQNAqK4v9H7vZqpFhekfpC1K1iHXEC75nA/0eNBOiaR9TP0xpuft8gdx1mrVF
-         4LVop8b4EhxbKkKu06PsYy07le0gA5SqpMme6cnrytBpfEYraCGwGmhEMuuNLZ1naMCH
-         TN0PabEJ9fwUZLog3kSbt4epvclSUaT1lmG2oAO9D6TfvzOT/P/9+lnrhopgIc1/e+5E
-         8ERsSVLI/HftbFkoJl+D3nGf1gmscT6rGh2uH/GEfefJqvJQi5IonUv2RKuOk6/ruvNN
-         irhQNZAkQz/lSX7lYmOVX42dPiSkl4kFbrlgEoZAZ3fmvhzmXX7DXzo7N4X8u4tZiAdL
-         JHeQ==
+        bh=HpB7gxHYv1RCrBGJEiZQU1GK/+eaWL5POIje2U5zOks=;
+        b=NJgiD7RarGI43KV0W9dlXW6P/nDu0L3otVR1JelYBfIRbWSeD1y0Dc7Fy2FGDml+wz
+         yGttfZ3vUC6v7dpMU8B6/oZGAaRdv/Qc5uBsAi/tf9lbb2N/f9uYAOqgwdlYpnr1QroB
+         uAMH24MJZW+0QFx32qtwGGgAQ5bIaTfTeldztWxuf2v+EQMDh8wASDv71a2/vVDshm6s
+         8gqW3ckO2+bP+Pj2JfygGeFOM8sbMFIFpdsKGX7YVoSxoNMsVr3sG9h4Sa60xHu1uqb6
+         PeG63/ryZFfTMOX1j82HGYY9s7diE0vvGzk+sCdZD2QXp9/RZnyphXruNvcI0HkvIz37
+         AFyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772012450; x=1772617250;
+        d=1e100.net; s=20230601; t=1772012451; x=1772617251;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=g764AcE8tF1f80OWvHYEL0ofqMQL+KicfXN9lnSr5Zs=;
-        b=KMFgbrZ/M7l2XbtYg7ji+gCjulnzVZpE6ynPzIltVIc1ykDVH4Y439owLdLZseh0Ms
-         ol52uWpIZ3yA5ejZybndyuV3PCM7E8Z8L4FaMmCxtdjZw+NXa8LNZ8m2kluwJpGSYzjM
-         Cr0b1Me2IwBYZq3ZwGzb1oowzl+kInfPr9qU9nA81DF4f1JkyzJJ8xgcJCXckc6r8mO2
-         YQ1EfB7mgzEEyJJyExRaLh7V5aiXaNG0QbbIJGQ1oATrE/pH0LWVvWGGl7jww0gRDyne
-         BYfe+Vjl9RHiwe1cwJ0fYladTinqoX54NV0s1cj/fDUTrhLeuUmp7eK5MdzhjE60uG1y
-         NcuA==
-X-Gm-Message-State: AOJu0YwZHrTPZEYAvhRXIdUkisdE2mTZrx6/WEAe4qEQJCuTBK88c9hn
-	j7OOqx3EhswlbaQteIhSE9H+UtRIOPzR8kW53DC1A/dDZfZG+95wNQEt
-X-Gm-Gg: ATEYQzyRP+gKuO+a8Hl0jU785vydLPjFCDDDu/HPHF/FtdJT+vyWKZFpfvUie1ADtya
-	PsWbDQft2cTfXaqz9C3+0krSe5Q+Docmot2fkLStvc6kIUaS2lvtIDcj+lkv14pAcvF0IwYW3iW
-	fKMGNLRkPYySbSTvc6N/57dE3TKOnJjs+/U86p5yl2R/zqnsu3dokugDMlcuL5ItWDFSfmhLam6
-	Fd/JBu9LOOhLWECuMIDZ41aQgr6ZRW83RP6rZhAFQ/zQD0bbPi778rIOzSzH6fw1WzJEcjhMfPm
-	t1Ld9tPRiuCPsksSKHEIjy9ljjiZ+SHzUBH6JGYH1z2lKaN+DojiHY3aDvGDBACSIG/Vz0Z+JGU
-	4zLa+5TzVwGLLCqVHFPtYyxP+enJrXnvcbfm8bv4ZGL+crvHrwjXKt3ZUd7ML5EO6R/3DEQAFub
-	IJsOxsVB+Sn551Q2mfVfJVb55D+w01pok=
-X-Received: by 2002:a05:600c:3552:b0:477:9890:9ab8 with SMTP id 5b1f17b1804b1-483bd725417mr54419165e9.3.1772012450146;
-        Wed, 25 Feb 2026 01:40:50 -0800 (PST)
+        bh=HpB7gxHYv1RCrBGJEiZQU1GK/+eaWL5POIje2U5zOks=;
+        b=sXFuXTwi9s+JOd0re30y7gJF0ABPyjwH1Ty4U6x4Ql6LV6YZyq6yBBLqjvGGlvEiRE
+         vw+WLKZfbLb8zPNFlMZ3urAazqW6DqPxwT+ibkD/AqnlZ/bEBGiXp1PgR1gvAEmceBrB
+         MBLtMtiB3sW/7sF/5fDtbm20fjIsZf2DMLGac3k/WzUxXd6vkiFAkjk70M4ICmQfAteD
+         veksQACX63mVxkqJA9pnSl8f1OWyQmPBpc3k3Yu/RH0mp3gQU5V+LGzAodXUxAVBN1Gk
+         3VvYo/e2xMQFHI1U7FIAUNNks+viWhh5vms0rTeDfqwahRB7HvSSMt7Fp/26IQxdDDA3
+         5cnA==
+X-Gm-Message-State: AOJu0YynGLJeF1bgk7TAk2MX4jQzGnNpi2RU3s1O6/Klr7kqctE5IBzp
+	DkjaOb9uJ8pxfLfC+YfrudMPVuYkCWgF/dMaJyFOW5Ia1A/V0MDHwXU1
+X-Gm-Gg: ATEYQzxirOsDcnWt7IKrU1H6Ebrup0fl9/AALLX2cnyk5rmzor5dnUl8tPp3PAoHrlW
+	Hnm4/kyBLClMeFwRKuUwlzYxv4k1ixV+uG1JyBhX4pxFbqNXq3rhYQoj19CbYatJigJ/ZLcAPb9
+	3rqpHET6OfPj67WdMyCyqTkRIxgiP/Gzz+PPsc3YUc2ux8LP7/S/w8Ii8s8Sm6hKJKmcPBqQyvc
+	hRmcc7IQ7UIaTEGCcza71DC94foxthYsMOEtfMI5n9y8jY9rk1/SYzA7dN2gFa2YiWl74yJ9ZbN
+	zNP5Z8P8rg1HriDD1IhX+hifSoL/JbBJshvNJDB712Mrk83VZIkjefhX1wv1tCAzZ5oOuccmx4P
+	wILkgBOK2ItBwUfa+T4yjF4sP+p1OwMH0YyDswCPv/Z8NVUw7f7sQ88Sxi+ZuEO78jzE8wAGhAy
+	EH7/v7HqZj4c3Z21meY7fSBOBL6ppzOVE=
+X-Received: by 2002:a05:600c:45cc:b0:477:7a53:f493 with SMTP id 5b1f17b1804b1-483a95f554amr251079925e9.23.1772012451166;
+        Wed, 25 Feb 2026 01:40:51 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:d32e:ae2b:c73c:65c6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bffc17dasm12956025e9.2.2026.02.25.01.40.49
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bffc17dasm12956025e9.2.2026.02.25.01.40.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Feb 2026 01:40:49 -0800 (PST)
+        Wed, 25 Feb 2026 01:40:50 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 25 Feb 2026 10:40:42 +0100
-Subject: [PATCH v9 2/6] refs: extract out `refs_create_refdir_stubs()`
+Date: Wed, 25 Feb 2026 10:40:43 +0100
+Subject: [PATCH v9 3/6] refs: move out stub modification to generic layer
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,157 +68,173 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260225-kn-alternate-ref-dir-v9-2-3fe118e40e28@gmail.com>
+Message-Id: <20260225-kn-alternate-ref-dir-v9-3-3fe118e40e28@gmail.com>
 References: <20260225-kn-alternate-ref-dir-v9-0-3fe118e40e28@gmail.com>
 In-Reply-To: <20260225-kn-alternate-ref-dir-v9-0-3fe118e40e28@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com, ps@pks.im, toon@iotcl.com, 
  Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4498; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=3pAVZqyYQd44HjXJ3zB97rsDR3C2TAjGHqsd+Z7tbtI=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGmew5xDhNxdBTh68620zmBmGie+YGccjqk/i
- dTUdmTCUlpTQIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpnsOcAAoJED7VnySO
- Rox/IvEL/3lqIBOUPTgbKpVtYJMG5kyUzxhyn6ABLVxZtp5V7KceHax+gfTUuxs5cJA57mysmg5
- dz7IgKh47orFZSo/JESj2//8FWoW6lsUJz4WGFJ7a4yakqZgDTVHDqYRHZJIpJrfuvRI3mHgK+v
- L7jC3zP6OdO6cFGaiAR0qae+Bj49q0FEFhqyUYWwK/aDpugwDUjSVVN9k5cKQUs/V4po5tCRUNR
- A/PCyWc/1RqMed3yd04EIRieRrsDVi4CDhOCahk82kIejoiMEJ5Efk2/p7crDFDKwxGtlNc/hBI
- +TL92Am9ZTBYmVymhojeFL1ZpqJjz/XI4Mw/Cwit5SPYT0U6XV9gZGKPvNnu+FLuKjAM2SvFzof
- FrmmFT7tNAxl6rn66AIFsw5pSpR4WlLiXD6haL2CRZf5UxfFQORccgNgwE1GKYnwbH7AxbIkO2t
- ZI7EhhmpBTJs87f0piz8HTNI0HiL20gB8vNKqFU+ogb8BnnVPbEPwrZwI/RCc0DbCT5+x2xXOs2
- rw=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4830; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=ORde0fdTcyXggqTNNk6zNTCVEag2mH6gRCQ9/9wuTjo=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGmew5wSLw8cD2zijvucRVDi8JSbN2+au/uA6
+ bLYWTblCwHZvIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpnsOcAAoJED7VnySO
+ Rox/VYEL/0/ALuHnXZw/J+2UH0QHpQQoLXZvpL5DB+GjgNggN8R5XR89NUTf3m9kpoHoRyE7YIN
+ 2QbOaCvkhFEzZPQ0hnvQrzD8bhWyYhlRr4Y4S1NKVRYLJQSUR/6XM3jzOa0LzQJMoZQ7Zq2QMQW
+ GOmwVYJ+H7E2Bnv1ka5PIfkxShUVlKNXcOhLWLmeIG/Jf6GYXO3JL2mesLmP2h2VT56I7k0FciT
+ jpejwFBO0PN2J8qozL2hovpsC5s1htRD4JE2hT0Ki6zQmKcOZhzGOn8OYjltD/LP0+BeU2nriny
+ n7L1piUAzo49gJnJrL19EHrq381/Z2qZf8HdL4swGIfgMJEWRiL3viiD5Uud0GO12nMDtbajNAj
+ 30YcRDCJeStbQPE7gUzdmFgMkFWHdPJYAK/KFyVoBiquaZ2q+qDTMFj9FoEpJHDyVAdcu/5XYE2
+ yRFtv0gVeGiUWlML9oR7B8ZRFlge7Ucmwm9aSt1eXD5xyjGUspzzVgxxw+87ouVd00h1Qis7qN4
+ 20=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-For Git to recognize a directory as a Git directory, it requires the
-directory to contain:
+When creating the reftable reference backend on disk, we create stubs to
+ensure that the directory can be recognized as a Git repository. This is
+done by calling `refs_create_refdir_stubs()`. Move this to the generic
+layer as this is needed for all backends excluding from the files
+backends. In an upcoming commit where we introduce alternate reference
+backend locations, we'll have to also create stubs in the $GIT_DIR
+irrespective of the backend being used. This commit builds the base to
+add that logic.
 
-  1. 'HEAD' file
-  2. 'objects/' directory
-  3. 'refs/' directory
-
-Here, #1 and #3 are part of the reference storage mechanism,
-specifically the files backend. Since then, newer backends such as the
-reftable backend have moved to using their own path ('reftable/') for
-storing references. But to ensure Git still recognizes the directory as
-a Git directory, we create stubs.
-
-There are two locations where we create stubs:
-
-- In 'refs/reftable-backend.c' when creating the reftable backend.
-- In 'clone.c' before spawning transport helpers.
-
-In a following commit, we'll add another instance. So instead of
-repeating the code, let's extract out this code to
-`refs_create_refdir_stubs()` and use it.
+Similarly, move the logic for deletion of stubs to the generic layer.
+The files backend recursively calls the remove function of the
+'packed-backend', here skip calling the generic function since that
+would try to delete stubs.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/clone.c         |  7 +------
- refs.c                  | 23 +++++++++++++++++++++++
- refs.h                  | 13 +++++++++++++
- refs/reftable-backend.c | 14 ++------------
- 4 files changed, 39 insertions(+), 18 deletions(-)
+ refs.c                  | 47 +++++++++++++++++++++++++++++++++++++++++++++--
+ refs/files-backend.c    |  6 +++++-
+ refs/reftable-backend.c | 27 ---------------------------
+ 3 files changed, 50 insertions(+), 30 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index cd43bb5aa2..697c5bb5cb 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1225,12 +1225,7 @@ int cmd_clone(int argc,
- 	initialize_repository_version(GIT_HASH_UNKNOWN,
- 				      the_repository->ref_storage_format, 1);
- 
--	strbuf_addf(&buf, "%s/HEAD", git_dir);
--	write_file(buf.buf, "ref: refs/heads/.invalid");
--
--	strbuf_reset(&buf);
--	strbuf_addf(&buf, "%s/refs", git_dir);
--	safe_create_dir(the_repository, buf.buf, 1);
-+	refs_create_refdir_stubs(the_repository, git_dir, NULL);
- 
- 	/*
- 	 * additional config can be injected with -c, make sure it's included
 diff --git a/refs.c b/refs.c
-index 627b7f8698..77b93d655b 100644
+index 77b93d655b..c83af63dc5 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2163,6 +2163,29 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 	return NULL;
- }
- 
-+void refs_create_refdir_stubs(struct repository *repo, const char *refdir,
-+			      const char *refs_heads_content)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	strbuf_addf(&path, "%s/HEAD", refdir);
-+	write_file(path.buf, "ref: refs/heads/.invalid");
-+	adjust_shared_perm(repo, path.buf);
-+
-+	strbuf_reset(&path);
-+	strbuf_addf(&path, "%s/refs", refdir);
-+	safe_create_dir(repo, path.buf, 1);
-+
-+	if (refs_heads_content) {
-+		strbuf_reset(&path);
-+		strbuf_addf(&path, "%s/refs/heads", refdir);
-+		write_file(path.buf, "%s", refs_heads_content);
-+		adjust_shared_perm(repo, path.buf);
-+	}
-+
-+	strbuf_release(&path);
-+}
-+
+@@ -2189,12 +2189,55 @@ void refs_create_refdir_stubs(struct repository *repo, const char *refdir,
  /* backend functions */
  int ref_store_create_on_disk(struct ref_store *refs, int flags, struct strbuf *err)
  {
-diff --git a/refs.h b/refs.h
-index f0abfa1d93..a35fdc6642 100644
---- a/refs.h
-+++ b/refs.h
-@@ -1427,4 +1427,17 @@ void ref_iterator_free(struct ref_iterator *ref_iterator);
- int do_for_each_ref_iterator(struct ref_iterator *iter,
- 			     each_ref_fn fn, void *cb_data);
- 
-+/*
-+ * Git only recognizes a directory as a repository if it contains:
-+ * - HEAD file
-+ * - refs/ folder
-+ * While it is necessary within the files backend, newer backends may not
-+ * follow the same structure. To go around this, we create stubs as necessary.
-+ *
-+ * If provided with a 'refs_heads_content', we create the 'refs/heads/head' file
-+ * with the provided message.
-+ */
-+void refs_create_refdir_stubs(struct repository *repo, const char *refdir,
-+			      const char *refs_heads_content);
+-	return refs->be->create_on_disk(refs, flags, err);
++	int ret = refs->be->create_on_disk(refs, flags, err);
 +
- #endif /* REFS_H */
++	if (!ret &&
++	    ref_storage_format_by_name(refs->be->name) != REF_STORAGE_FORMAT_FILES) {
++		struct strbuf msg = STRBUF_INIT;
++
++		strbuf_addf(&msg, "this repository uses the %s format", refs->be->name);
++		refs_create_refdir_stubs(refs->repo, refs->gitdir, msg.buf);
++		strbuf_release(&msg);
++	}
++
++	return ret;
+ }
+ 
+ int ref_store_remove_on_disk(struct ref_store *refs, struct strbuf *err)
+ {
+-	return refs->be->remove_on_disk(refs, err);
++	int ret = refs->be->remove_on_disk(refs, err);
++
++	if (!ret &&
++	    ref_storage_format_by_name(refs->be->name) != REF_STORAGE_FORMAT_FILES) {
++		struct strbuf sb = STRBUF_INIT;
++
++		strbuf_addf(&sb, "%s/HEAD", refs->gitdir);
++		if (unlink(sb.buf) < 0) {
++			strbuf_addf(err, "could not delete stub HEAD: %s",
++				    strerror(errno));
++			ret = -1;
++		}
++		strbuf_reset(&sb);
++
++		strbuf_addf(&sb, "%s/refs/heads", refs->gitdir);
++		if (unlink(sb.buf) < 0) {
++			strbuf_addf(err, "could not delete stub heads: %s",
++				    strerror(errno));
++			ret = -1;
++		}
++		strbuf_reset(&sb);
++
++		strbuf_addf(&sb, "%s/refs", refs->gitdir);
++		if (rmdir(sb.buf) < 0) {
++			strbuf_addf(err, "could not delete refs directory: %s",
++				    strerror(errno));
++			ret = -1;
++		}
++
++		strbuf_release(&sb);
++	}
++
++	return ret;
+ }
+ 
+ int repo_resolve_gitlink_ref(struct repository *r,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 240d3c3b26..d3f6423261 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3700,7 +3700,11 @@ static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
+ 	if (for_each_root_ref(refs, remove_one_root_ref, &data) < 0)
+ 		ret = -1;
+ 
+-	if (ref_store_remove_on_disk(refs->packed_ref_store, err) < 0)
++	/*
++	 * Directly access the cleanup functions for packed-refs as the generic function
++	 * would try to clear stubs which isn't required for the files backend.
++	 */
++	if (refs->packed_ref_store->be->remove_on_disk(refs->packed_ref_store, err) < 0)
+ 		ret = -1;
+ 
+ 	strbuf_release(&sb);
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index fe74af73af..d8651fe779 100644
+index d8651fe779..6ce7f9bb8e 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -491,18 +491,8 @@ static int reftable_be_create_on_disk(struct ref_store *ref_store,
+@@ -491,9 +491,6 @@ static int reftable_be_create_on_disk(struct ref_store *ref_store,
  	safe_create_dir(the_repository, sb.buf, 1);
  	strbuf_reset(&sb);
  
--	strbuf_addf(&sb, "%s/HEAD", refs->base.gitdir);
--	write_file(sb.buf, "ref: refs/heads/.invalid");
--	adjust_shared_perm(the_repository, sb.buf);
+-	refs_create_refdir_stubs(the_repository, refs->base.gitdir,
+-				 "this repository uses the reftable format");
+-
+ 	strbuf_release(&sb);
+ 	return 0;
+ }
+@@ -519,30 +516,6 @@ static int reftable_be_remove_on_disk(struct ref_store *ref_store,
+ 			    strerror(errno));
+ 		ret = -1;
+ 	}
 -	strbuf_reset(&sb);
 -
--	strbuf_addf(&sb, "%s/refs", refs->base.gitdir);
--	safe_create_dir(the_repository, sb.buf, 1);
+-	strbuf_addf(&sb, "%s/HEAD", refs->base.gitdir);
+-	if (unlink(sb.buf) < 0) {
+-		strbuf_addf(err, "could not delete stub HEAD: %s",
+-			    strerror(errno));
+-		ret = -1;
+-	}
 -	strbuf_reset(&sb);
 -
 -	strbuf_addf(&sb, "%s/refs/heads", refs->base.gitdir);
--	write_file(sb.buf, "this repository uses the reftable format");
--	adjust_shared_perm(the_repository, sb.buf);
-+	refs_create_refdir_stubs(the_repository, refs->base.gitdir,
-+				 "this repository uses the reftable format");
+-	if (unlink(sb.buf) < 0) {
+-		strbuf_addf(err, "could not delete stub heads: %s",
+-			    strerror(errno));
+-		ret = -1;
+-	}
+-	strbuf_reset(&sb);
+-
+-	strbuf_addf(&sb, "%s/refs", refs->base.gitdir);
+-	if (rmdir(sb.buf) < 0) {
+-		strbuf_addf(err, "could not delete refs directory: %s",
+-			    strerror(errno));
+-		ret = -1;
+-	}
  
  	strbuf_release(&sb);
- 	return 0;
+ 	return ret;
 
 -- 
 2.53.GIT
