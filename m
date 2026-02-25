@@ -1,71 +1,71 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qk1-f195.google.com (mail-qk1-f195.google.com [209.85.222.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80912745C
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:21:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F43A2745C
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:21:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771978875; cv=none; b=K2UMZhBiPi67A74XhmQ1jBOGbD9lMK2LJ2843qy41WIUX5janHjJr9ZHcdD2ZCNbZs3GNbXXIMFdSm3nTuLupg/Cr9laBHsG6uYSa26CojcjfbumLItS+XTZEQWtgn1Xy6me6b8zMpJZ32pKZUC4fvxxRWxoYoLFSbwbi7bSi34=
+	t=1771978881; cv=none; b=PldbRrULJpgkXSbFY/hWCheUz/24DSIs1rkaebBC2u5dbLK73n8rPExuOb6OrkeFGNZw0Csv4K72mEqdFYC6t07ZtLAIMAdLTV+sK5KajgEpSAZT3DusrTlWcy0Nz2Jcz4wjzXlApEmo+ZpNY4cEuRrX2lvNUXnsLgTWpgOEnbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771978875; c=relaxed/simple;
-	bh=ylswdcGLnkBxpqBcR3D3yRf+0x3KuADALJEo1U9A4Fo=;
+	s=arc-20240116; t=1771978881; c=relaxed/simple;
+	bh=Iul7wgsvZi8M+du2q08hEwxpWONjMaamlBD01gN0s14=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CjgX1Wsq7+UBfqd1D5vqsVX6WJO8P+uTeKKPm/MAM3XgznKBP/ECGBQHvNe4pjw8Qa1TGrAuXVnlPEW+kdnQ4UA3Ipe/jUvZWDZ5W/ql4n1tkl3RHZtF121lGe2cJ9Q47tiShdqQxydfMKFAIED8Y5JHzgQKVCZQ8oMSLOJwFMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=AoAdm9y/; arc=none smtp.client-ip=209.85.219.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZI1NSI/I+vhsrrkNugDYLnkPrlDLZ+KLtItn6COOVpnjR3KJqyec4ehkqYPZn9amXj29SKlbERrQki6upOq01E1wttfOB+hobcuyDYzMYxK7wK/KjSJ0JTv4EQ/mL3H8FPdrenwokWlNcFiIqCuOzmbs3v+Wx8qoD5vYp4DBgA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=nncr56oT; arc=none smtp.client-ip=209.85.222.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="AoAdm9y/"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-899b676b5d2so3918826d6.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2026 16:21:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="nncr56oT"
+Received: by mail-qk1-f195.google.com with SMTP id af79cd13be357-8cb20bcff5aso629096785a.3
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 16:21:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1771978873; x=1772583673; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1771978879; x=1772583679; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3xbqxHta8NuiEoLJ1Bq47eIGFO5aMrKMVwWujAoM7Xc=;
-        b=AoAdm9y/kG9OpV1rNh3TMbSpbbXI8hG4u77gs6zH7GVRpb+lKy8cO9jm4cYo0XKy8o
-         CXs59TQ2t6i6ehMojnQvtkfYdDmtw1LKxlNGHDS9Y+r+sdSMS4Kd2e3BbYNpI65TX20l
-         UwQUyQRJVVPiUa2IQ9WACEGpj7yUcyPeTHiqnV5EUhXODyc4rBhEqxfIFy8/DavwiomS
-         2aoa1WJOR6dgJH1qtjh6BFX4SPYsFd49M76Z/AfWF3Qh8Dl+tTxfpc98mjTG+EgiP+Sv
-         ZPacxtz/RIhqCFUSZ3RQH8tQzgVawHa3cenm0DxZJm12fm//Uc5aX3jX1ZA7Lub4c3NO
-         +MFw==
+        bh=NgiVSdQq7F6PzjswvTLmr2R8cdTb0P2oi/qw0ksOVxc=;
+        b=nncr56oTgLs4DZZ/tKcMcxCPDgeKv1+Y5DppnN4JP77PBOe2bJmlOMW30Pw7tL7afe
+         AMb9qdA7Sw1EMFUv0DTv5GHgrtSbt5MoPymRsj2bk8+hoarl3mmhnZFRD+VqUFZld6WN
+         Roaa0xH3Jj5qBF5w/XxgnVcBrJEf8/Af5N/dCHuw/kRYzzy7f3Q9NkGyX44urMbwx7HZ
+         CBGfeVtaobmllWkliDjYR0dMw2Ey+gGw5WLaACYqMc2fXi7RCxBDTdxgntbdsW2q7B5h
+         55+LDwRNiU0C8i/j+DZyp8pcCD/rxSrEJsZtjlNsMuPEfW9kH7QdxQIb8MefYa3VJ4gY
+         gk3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771978873; x=1772583673;
+        d=1e100.net; s=20230601; t=1771978879; x=1772583679;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3xbqxHta8NuiEoLJ1Bq47eIGFO5aMrKMVwWujAoM7Xc=;
-        b=U3ICaEpUZR6KdNsijBwuQpAp7x7tApVfzdfCyW4yQ1ThnoBVfGkOSl118YmaRKyb77
-         RSmOeaYfmnFmmhR4SDEzNmqquqFM02iUBtEGyDpuptgEGIGqx8Y0Be9V5uD1l0qE90vP
-         bFZ48AUJsIoFFsppc9Zvn2AMqFyQXPWhtnpptF2mVwuNPcSTqh5cU/cbCRCub2OdS4w+
-         0e6gdkWTMxUbFNrFsnO32r9sIodFohJPU3KLj8m3Zb2Z6aU685psYICMthZAigEHNUbJ
-         eWhgGq5nBeqmSoAa3QNsUam6edRsOPqt2daHt/MnnC9z0EfNcoMO6ogz0g7dubukTTuf
-         MCng==
-X-Gm-Message-State: AOJu0Yyj9bnsTiJ0E/IdzRWL1DgaZG4NU7GHv8KUH2E/V23OSSm0B2xO
-	FF3z0h8KHeByfGBtkBPIliEFp8dv9plrJ2KJjwScPJdcPW/16gYoK/9MO5Y77X/SxNnRwG+XtWA
-	JKiqDoeUaGw==
-X-Gm-Gg: ATEYQzwcR35i21A81zlJmFlz1I6+mu/1/gVFh7ygMDhYTXwFiuP2khGJO6wmiCY+7Tp
-	r2gQvlRsfeioOLRtmtUu1KWe3MezV8SRPvmADl0JamHTYVD/5Yh2rVHTPYt4AnSiPA9wCV/ML+x
-	mZq/1PeN+NCY1DKtdHrYTSVGlyQYI5xVpjv8/Y91tLTmZYXNVnLmuUxNPxuyqJYFcupNNQEqlOa
-	zLBbwZU1flTyCKu9cnBBSVDo2pwbMim2iIXcRfRrI/tfYluQluniv611+h5xwuck7C80IgRoWvl
-	eWjNMWPqx/YY3Z+p0+BnhD+XDD0a9YCUlLzPoSQfUbQh95AVr1M4Rmd2ZnKnqZJSKCpzRoYmJJg
-	1K1/oVa0HgBBaeweMFhWLWPJ2wYC2p5x5is4wfYhkUu3pepv40PZN7MZGas4VzHflHN914HJG3y
-	2s8seH3wCjUnDv4znH0lxkIbJRdS/VvMlqWXOrdOiDrXMKiLAjR8YwGEYxaHU/HUAhsZ27+XmP3
-	tcRNPrPxaDGj7DVYQ+jjkLVz1+QBA==
-X-Received: by 2002:a05:620a:448b:b0:8b9:dc23:89b9 with SMTP id af79cd13be357-8cbb58aea38mr72512085a.58.1771978872662;
-        Tue, 24 Feb 2026 16:21:12 -0800 (PST)
+        bh=NgiVSdQq7F6PzjswvTLmr2R8cdTb0P2oi/qw0ksOVxc=;
+        b=YcMeGc2vsnnMLb6qtSwMXUMhz3loQathKrH724cTnN5CCYyI6aOVEI3B2LRRW+Ki7v
+         IFqwMtbef32VbNUrB9J8GP+S2lbwS5cUnbE6qaurfTVTdGYlmnj8UYUwEwKPz6V+fBy3
+         LO0BYknCanBWqajayqsO8dSaZTCo2YqHQhzlfcXCOwYlv4P8PatLe8PI8SXm77GjyL46
+         GhABjgqnxgtUZ1tcCB3H4X54YcyqgfZmJKSqcchPPcBMlsSmmS0mh0JzCx2m7l9BYkRb
+         dDBI2MBON3cADO3SLax4thmDD5P2NPpL2+ACCsQNw8jqdc1R0VMntKN/VqgE1YExtaLx
+         wQKQ==
+X-Gm-Message-State: AOJu0Yzi0JHM3acKyNZeArK1d0ismteU0AXfP0jrSeV98mNXAcOxjT3p
+	VWmIyE16PH/5RDmXYDGDoz6dk92vWTkxjF3Gthvj/BMEg/pl7dPyInayd7/48kqPqC2yRSwLAD1
+	iIYlx4fGUaMm1
+X-Gm-Gg: ATEYQzy0tWmZtpZDLsIS8glsIoFXeBN9UPJkdg3pjyJbx5ZqCWjupPIUjNGyShS6cOG
+	u13KcYI1JlRcIDLSA5NkzyiU4/fRHqF8w+EosXKQv4dlzPyZxrCQS8HcsygeohGOvaZ3tZU6UHZ
+	ryzTxB1gZdyRl2HWyj4NZZ4MG9PlW+cBJsPcQOoybO5EQ7rgNo0Ip/T1P7LncwpgC88K+rFgwZd
+	GBzM4srLSyuCt/qoaIxD/CkDF5A4gNeCcQHzIYMTQ+xj0fbsdCfATM11RFx1IEXkCYyRk0puX+G
+	RZhlWd+iH8kO2+epJXYCtxUyZ5neIHZqBAPK6P/DnmB0EKRkPwaROQ6g2l1S5FdiaHHIDefOdKI
+	lrG+up2Ec+6TZE8DWMj118VekZS6m9io8U/zrjcit5V4JCDk4wuORa969exwElII5Io9R6i0mDh
+	/TpXwAu/GLfCz0pTvNk9XRE1lj4KeSoZI04rdcIH7SLlCejbY/PtpKebjAR7ViE3Q6VbKkWdQIZ
+	QAYqtVPrjS7h1Tqv4vzzUfvOLdNZA==
+X-Received: by 2002:a05:620a:45ab:b0:8b2:598d:6e66 with SMTP id af79cd13be357-8cb8c9f9a9fmr1741537985a.22.1771978878995;
+        Tue, 24 Feb 2026 16:21:18 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d0eba54sm1241822085a.30.2026.02.24.16.21.12
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899b894a227sm3263456d6.8.2026.02.24.16.21.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Feb 2026 16:21:12 -0800 (PST)
-Date: Tue, 24 Feb 2026 19:21:10 -0500
+        Tue, 24 Feb 2026 16:21:18 -0800 (PST)
+Date: Tue, 24 Feb 2026 19:21:16 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH 04/14] midx: introduce `--checksum-only` for incremental
- MIDX writes
-Message-ID: <2d31ea3907ff1965302acb089a594746c8dfb149.1771978829.git.me@ttaylorr.com>
+Subject: [RFC PATCH 05/14] midx: support custom `--base` for incremental MIDX
+ writes
+Message-ID: <9ab735bafe37c2bf3b5e9064d83415e7c4e555c6.1771978829.git.me@ttaylorr.com>
 References: <cover.1771978829.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,93 +77,137 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1771978829.git.me@ttaylorr.com>
 
-When writing an incremental MIDX layer, the MIDX machinery writes the
-new layer into the multi-pack-index.d directory and then updates the
-multi-pack-index-chain file to include the freshly written layer.
+Both `compact` and `write --incremental` fix the base of the resulting
+MIDX layer: `compact` always places the compacted result on top of
+"from's" immediate parent in the chain, and `write --incremental` always
+appends a new layer to the existing tip. In both cases the base is not
+configurable.
 
-Future callers however may not wish to immediately update the MIDX chain
-itself, preferring instead to write out new layer(s) itself before
-atomically updating the chain. Concretely, the new incremental
-MIDX-based repacking strategy will want to do exactly this (that is,
-assemble the new MIDX chain itself before writing a new chain file and
-atomically linking it into place).
+Future callers need additional flexibility. For instance, the incremental
+MIDX-based repacking code may wish to write a layer based on some
+intermediate ancestor rather than the current tip, or produce a root
+layer when replacing the bottommost entries in the chain.
 
-Introduce a `--checksum-only` flag that:
+Introduce a new `--base` option for both subcommands to specify the
+checksum of the MIDX layer to use as the base. The given checksum must
+refer to a valid layer in the MIDX chain that is an ancestor of the
+topmost layer being written or compacted.
 
- * writes the new MIDX layer into the multi-pack-index.d directory
+The special value "none" is accepted to produce a root layer with no
+parent. This will be needed when the incremental repacking machinery
+determines that the bottommost layers of the chain should be replaced.
 
- * prints its checksum
+If no `--base` is given, behavior is unchanged: `compact` uses "from's"
+immediate parent in the chain, and `write` appends to the existing tip.
 
- * does not update the multi-pack-index-chain file.
+For the `write` subcommand, `--base` requires `--checksum-only`. A plain
+`write --incremental` appends a new layer to the live chain tip with no
+mechanism to atomically replace it; overriding the base would produce a
+layer that does not extend the tip, breaking chain invariants. With
+`--checksum-only` the chain is left unmodified and the caller is
+responsible for assembling a valid chain.
 
-The MIDX chain file (and thus, the lock protecting it) remain untouched,
-allowing callers to assemble the chain themselves. This flag requires
-`--incremental`, since the notion of a separate layer only makes sense
-for incremental MIDXs.
+For `compact`, no such restriction applies. The compaction operation
+atomically replaces the compacted range in the chain file, so writing
+the result on top of any valid ancestor preserves chain invariants.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-multi-pack-index.adoc |  4 +--
- builtin/multi-pack-index.c              | 28 ++++++++++++++++--
- midx-write.c                            | 38 ++++++++++++++++---------
- midx.h                                  |  1 +
- t/t5334-incremental-multi-pack-index.sh | 17 +++++++++++
- t/t5335-compact-multi-pack-index.sh     | 34 ++++++++++++++++++++++
- 6 files changed, 105 insertions(+), 17 deletions(-)
+ Documentation/git-multi-pack-index.adoc | 17 +++++-
+ builtin/multi-pack-index.c              | 24 +++++++--
+ midx-write.c                            | 34 ++++++++++--
+ midx.h                                  |  5 +-
+ t/t5334-incremental-multi-pack-index.sh | 30 +++++++++++
+ t/t5335-compact-multi-pack-index.sh     | 71 +++++++++++++++++++++++++
+ 6 files changed, 172 insertions(+), 9 deletions(-)
 
 diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-multi-pack-index.adoc
-index 61256830141..657e0639f6a 100644
+index 657e0639f6a..635105ad801 100644
 --- a/Documentation/git-multi-pack-index.adoc
 +++ b/Documentation/git-multi-pack-index.adoc
-@@ -11,9 +11,9 @@ SYNOPSIS
- [verse]
+@@ -12,8 +12,10 @@ SYNOPSIS
  'git multi-pack-index' [<options>] write [--preferred-pack=<pack>]
  		         [--[no-]bitmap] [--[no-]incremental] [--[no-]stdin-packs]
--		         [--refs-snapshot=<path>]
-+		         [--refs-snapshot=<path>] [--[no-]checksum-only]
+ 		         [--refs-snapshot=<path>] [--[no-]checksum-only]
++			 [--base=<checksum>]
  'git multi-pack-index' [<options>] compact [--[no-]incremental]
--		         [--[no-]bitmap] <from> <to>
-+		         [--[no-]bitmap] [--[no-]checksum-only] <from> <to>
+-		         [--[no-]bitmap] [--[no-]checksum-only] <from> <to>
++		         [--[no-]bitmap] [--base=<checksum>] [--[no-]checksum-only]
++			 <from> <to>
  'git multi-pack-index' [<options>] verify
  'git multi-pack-index' [<options>] expire
  'git multi-pack-index' [<options>] repack [--batch-size=<size>]
+@@ -83,6 +85,13 @@ marker).
+ 		and packs not present in an existing MIDX layer.
+ 		Migrates non-incremental MIDXs to incremental ones when
+ 		necessary.
++
++	--base=<checksum>::
++		Specify the checksum of an existing MIDX layer to use
++		as the base when writing a new incremental layer.
++		The special value `none` indicates that the new layer
++		should have no base (i.e., it becomes a root layer).
++		Requires `--checksum-only`.
+ --
+ 
+ compact::
+@@ -97,6 +106,12 @@ compact::
+ 
+ 	--[no-]bitmap::
+ 		Control whether or not a multi-pack bitmap is written.
++
++	--base=<checksum>::
++		Specify the checksum of an existing MIDX layer to use
++		as the base for the compacted result, instead of using
++		the immediate parent of `<from>`. The special value
++		`none` indicates that the result should have no base.
+ --
+ 
+ verify::
 diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 2f24c113c8f..ee1ddf1386f 100644
+index ee1ddf1386f..4fc53a5971c 100644
 --- a/builtin/multi-pack-index.c
 +++ b/builtin/multi-pack-index.c
-@@ -15,11 +15,11 @@
+@@ -15,11 +15,13 @@
  #define BUILTIN_MIDX_WRITE_USAGE \
  	N_("git multi-pack-index [<options>] write [--preferred-pack=<pack>]\n" \
  	   "  [--[no-]bitmap] [--[no-]incremental] [--[no-]stdin-packs]\n" \
--	   "  [--refs-snapshot=<path>]")
-+	   "  [--refs-snapshot=<path>] [--[no-]checksum-only]")
+-	   "  [--refs-snapshot=<path>] [--[no-]checksum-only]")
++	   "  [--refs-snapshot=<path>] [--[no-]checksum-only]\n" \
++	   "  [--base=<checksum>]")
  
  #define BUILTIN_MIDX_COMPACT_USAGE \
  	N_("git multi-pack-index [<options>] compact [--[no-]incremental]\n" \
--	   "  [--[no-]bitmap] <from> <to>")
-+	   "  [--[no-]bitmap] [--[no-]checksum-only] <from> <to>")
+-	   "  [--[no-]bitmap] [--[no-]checksum-only] <from> <to>")
++	   "  [--[no-]bitmap] [--base=<checksum>] [--[no-]checksum-only]\n" \
++	   "  <from> <to>")
  
  #define BUILTIN_MIDX_VERIFY_USAGE \
  	N_("git multi-pack-index [<options>] verify")
-@@ -152,6 +152,9 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
+@@ -62,6 +64,7 @@ static char const * const builtin_multi_pack_index_usage[] = {
+ static struct opts_multi_pack_index {
+ 	char *object_dir;
+ 	const char *preferred_pack;
++	const char *incremental_base;
+ 	char *refs_snapshot;
+ 	unsigned long batch_size;
+ 	unsigned flags;
+@@ -150,6 +153,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
+ 			   N_("pack for reuse when computing a multi-pack bitmap")),
+ 		OPT_BIT(0, "bitmap", &opts.flags, N_("write multi-pack bitmap"),
  			MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX),
++		OPT_STRING(0, "base", &opts.incremental_base, N_("checksum"),
++			   N_("base MIDX for incremental writes")),
  		OPT_BIT(0, "incremental", &opts.flags,
  			N_("write a new incremental MIDX"), MIDX_WRITE_INCREMENTAL),
-+		OPT_BIT(0, "checksum-only", &opts.flags,
-+			N_("write a MIDX layer without updating the MIDX chain"),
-+			MIDX_WRITE_CHECKSUM_ONLY),
- 		OPT_BOOL(0, "stdin-packs", &opts.stdin_packs,
- 			 N_("write multi-pack index containing only given indexes")),
- 		OPT_FILENAME(0, "refs-snapshot", &opts.refs_snapshot,
-@@ -177,6 +180,15 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
- 	if (argc)
- 		usage_with_options(builtin_multi_pack_index_write_usage,
+ 		OPT_BIT(0, "checksum-only", &opts.flags,
+@@ -189,6 +194,13 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
  				   options);
-+
-+	if (opts.flags & MIDX_WRITE_CHECKSUM_ONLY &&
-+	    !(opts.flags & MIDX_WRITE_INCREMENTAL)) {
-+		error(_("cannot use %s without %s"),
-+		      "--checksum-only", "--incremental");
+ 	}
+ 
++	if (opts.incremental_base &&
++	    !(opts.flags & MIDX_WRITE_CHECKSUM_ONLY)) {
++		error(_("cannot use --base without --checksum-only"));
 +		usage_with_options(builtin_multi_pack_index_write_usage,
 +				   options);
 +	}
@@ -171,187 +215,267 @@ index 2f24c113c8f..ee1ddf1386f 100644
  	source = handle_object_dir_option(repo);
  
  	FREE_AND_NULL(options);
-@@ -220,6 +232,9 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
+@@ -200,7 +212,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
+ 
+ 		ret = write_midx_file_only(source, &packs,
+ 					   opts.preferred_pack,
+-					   opts.refs_snapshot, opts.flags);
++					   opts.refs_snapshot,
++					   opts.incremental_base, opts.flags);
+ 
+ 		string_list_clear(&packs, 0);
+ 		free(opts.refs_snapshot);
+@@ -228,6 +241,8 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
+ 
+ 	struct option *options;
+ 	static struct option builtin_multi_pack_index_compact_options[] = {
++		OPT_STRING(0, "base", &opts.incremental_base, N_("checksum"),
++			   N_("base MIDX for incremental writes")),
+ 		OPT_BIT(0, "bitmap", &opts.flags, N_("write multi-pack bitmap"),
  			MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX),
  		OPT_BIT(0, "incremental", &opts.flags,
- 			N_("write a new incremental MIDX"), MIDX_WRITE_INCREMENTAL),
-+		OPT_BIT(0, "checksum-only", &opts.flags,
-+			N_("write a MIDX layer without updating the MIDX chain"),
-+			MIDX_WRITE_CHECKSUM_ONLY),
- 		OPT_END(),
- 	};
+@@ -289,7 +304,8 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
+ 			die(_("MIDX %s must be an ancestor of %s"), argv[0], argv[1]);
+ 	}
  
-@@ -238,6 +253,15 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
- 	if (argc != 2)
- 		usage_with_options(builtin_multi_pack_index_compact_usage,
- 				   options);
-+
-+	if (opts.flags & MIDX_WRITE_CHECKSUM_ONLY &&
-+	    !(opts.flags & MIDX_WRITE_INCREMENTAL)) {
-+		error(_("cannot use %s without %s"),
-+		      "--checksum-only", "--incremental");
-+		usage_with_options(builtin_multi_pack_index_compact_usage,
-+				   options);
-+	}
-+
- 	source = handle_object_dir_option(the_repository);
+-	ret = write_midx_file_compact(source, from_midx, to_midx, opts.flags);
++	ret = write_midx_file_compact(source, from_midx, to_midx,
++				      opts.incremental_base, opts.flags);
  
- 	FREE_AND_NULL(options);
+ 	return ret;
+ }
 diff --git a/midx-write.c b/midx-write.c
-index 7fdc4d31243..9cf085ca333 100644
+index 9cf085ca333..c3e70d76d7c 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -1598,11 +1598,14 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	}
+@@ -1245,6 +1245,7 @@ struct write_midx_opts {
  
- 	if (ctx.incremental) {
--		struct strbuf lock_name = STRBUF_INIT;
-+		if (!(opts->flags & MIDX_WRITE_CHECKSUM_ONLY)) {
-+			struct strbuf lock_name = STRBUF_INIT;
+ 	const char *preferred_pack_name;
+ 	const char *refs_snapshot;
++	const char *incremental_base;
+ 	unsigned flags;
+ };
  
--		get_midx_chain_filename(opts->source, &lock_name);
--		hold_lock_file_for_update(&lk, lock_name.buf, LOCK_DIE_ON_ERROR);
--		strbuf_release(&lock_name);
-+			get_midx_chain_filename(opts->source, &lock_name);
-+			hold_lock_file_for_update(&lk, lock_name.buf,
-+						  LOCK_DIE_ON_ERROR);
-+			strbuf_release(&lock_name);
-+		}
+@@ -1327,11 +1328,32 @@ static int write_midx_internal(struct write_midx_opts *opts)
  
- 		incr = mks_tempfile_m(midx_name.buf, 0444);
- 		if (!incr) {
-@@ -1723,14 +1726,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	}
- 	strvec_init_alloc(&keep_hashes, keep_hashes_nr);
+ 	/*
+ 	 * If compacting MIDX layer(s) in the range [from, to], then the
+-	 * compacted MIDX will share the same base MIDX as 'from'.
++	 * compacted MIDX will share the same base MIDX as 'from',
++	 * unless a custom --base is specified (see below).
+ 	 */
+ 	if (ctx.compact)
+ 		ctx.base_midx = ctx.compact_from->base_midx;
  
-+	if (opts->flags & MIDX_WRITE_CHECKSUM_ONLY)
-+		printf("%s\n", hash_to_hex_algop(midx_hash, r->hash_algo));
++	if (opts->incremental_base) {
++		if (!strcmp(opts->incremental_base, "none")) {
++			ctx.base_midx = NULL;
++		} else {
++			while (ctx.base_midx) {
++				const char *cmp = midx_get_checksum_hex(ctx.base_midx);
++				if (!strcmp(opts->incremental_base, cmp))
++					break;
 +
- 	if (ctx.incremental) {
--		FILE *chainf = fdopen_lock_file(&lk, "w");
- 		struct strbuf final_midx_name = STRBUF_INIT;
- 		struct multi_pack_index *m = ctx.base_midx;
- 
--		if (!chainf) {
--			error_errno(_("unable to open multi-pack-index chain file"));
--			goto cleanup;
-+		if (!(opts->flags & MIDX_WRITE_CHECKSUM_ONLY)) {
-+			FILE *chainf = fdopen_lock_file(&lk, "w");
-+			if (!chainf) {
-+				error_errno(_("unable to open multi-pack-index chain file"));
++				ctx.base_midx = ctx.base_midx->base_midx;
++			}
++
++			if (!ctx.base_midx) {
++				error(_("could not find base MIDX '%s'"),
++				      opts->incremental_base);
 +				goto cleanup;
 +			}
- 		}
- 
- 		if (link_midx_to_chain(ctx.base_midx) < 0)
-@@ -1791,8 +1799,10 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 			}
- 		}
- 
--		for (uint32_t i = 0; i < keep_hashes_nr; i++)
--			fprintf(get_lock_file_fp(&lk), "%s\n", keep_hashes.v[i]);
-+		if (!(opts->flags & MIDX_WRITE_CHECKSUM_ONLY))
-+			for (uint32_t i = 0; i < keep_hashes_nr; i++)
-+				fprintf(get_lock_file_fp(&lk), "%s\n",
-+					keep_hashes.v[i]);
- 	} else {
- 		keep_hashes.v[ctx.num_multi_pack_indexes_before] =
- 			xstrdup(hash_to_hex_algop(midx_hash, r->hash_algo));
-@@ -1802,10 +1812,12 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	if (ctx.m || ctx.base_midx)
- 		odb_close(ctx.repo->objects);
- 
--	if (commit_lock_file(&lk) < 0)
--		die_errno(_("could not write multi-pack-index"));
-+	if (!(opts->flags & MIDX_WRITE_CHECKSUM_ONLY)) {
-+		if (commit_lock_file(&lk) < 0)
-+			die_errno(_("could not write multi-pack-index"));
- 
--	clear_midx_files(opts->source, &keep_hashes, ctx.incremental);
-+		clear_midx_files(opts->source, &keep_hashes, ctx.incremental);
++		}
 +	}
- 	result = 0;
++
+ 	ctx.nr = 0;
+ 	ctx.alloc = ctx.m ? ctx.m->num_packs + ctx.m->num_packs_in_base : 16;
+ 	ctx.info = NULL;
+@@ -1844,7 +1866,8 @@ static int write_midx_internal(struct write_midx_opts *opts)
  
- cleanup:
+ int write_midx_file(struct odb_source *source,
+ 		    const char *preferred_pack_name,
+-		    const char *refs_snapshot, unsigned flags)
++		    const char *refs_snapshot,
++		    unsigned flags)
+ {
+ 	struct write_midx_opts opts = {
+ 		.source = source,
+@@ -1859,13 +1882,16 @@ int write_midx_file(struct odb_source *source,
+ int write_midx_file_only(struct odb_source *source,
+ 			 struct string_list *packs_to_include,
+ 			 const char *preferred_pack_name,
+-			 const char *refs_snapshot, unsigned flags)
++			 const char *refs_snapshot,
++			 const char *incremental_base,
++			 unsigned flags)
+ {
+ 	struct write_midx_opts opts = {
+ 		.source = source,
+ 		.packs_to_include = packs_to_include,
+ 		.preferred_pack_name = preferred_pack_name,
+ 		.refs_snapshot = refs_snapshot,
++		.incremental_base = incremental_base,
+ 		.flags = flags,
+ 	};
+ 
+@@ -1875,12 +1901,14 @@ int write_midx_file_only(struct odb_source *source,
+ int write_midx_file_compact(struct odb_source *source,
+ 			    struct multi_pack_index *from,
+ 			    struct multi_pack_index *to,
++			    const char *incremental_base,
+ 			    unsigned flags)
+ {
+ 	struct write_midx_opts opts = {
+ 		.source = source,
+ 		.compact_from = from,
+ 		.compact_to = to,
++		.incremental_base = incremental_base,
+ 		.flags = flags | MIDX_WRITE_COMPACT,
+ 	};
+ 
 diff --git a/midx.h b/midx.h
-index 08f3728e520..9f1acd7ace4 100644
+index 9f1acd7ace4..e4a75ff2bef 100644
 --- a/midx.h
 +++ b/midx.h
-@@ -83,6 +83,7 @@ struct multi_pack_index {
- #define MIDX_WRITE_BITMAP_LOOKUP_TABLE (1 << 4)
- #define MIDX_WRITE_INCREMENTAL (1 << 5)
- #define MIDX_WRITE_COMPACT (1 << 6)
-+#define MIDX_WRITE_CHECKSUM_ONLY (1 << 7)
- 
- #define MIDX_EXT_REV "rev"
- #define MIDX_EXT_BITMAP "bitmap"
+@@ -132,10 +132,13 @@ int write_midx_file(struct odb_source *source,
+ int write_midx_file_only(struct odb_source *source,
+ 			 struct string_list *packs_to_include,
+ 			 const char *preferred_pack_name,
+-			 const char *refs_snapshot, unsigned flags);
++			 const char *refs_snapshot,
++			 const char *incremental_base,
++			 unsigned flags);
+ int write_midx_file_compact(struct odb_source *source,
+ 			    struct multi_pack_index *from,
+ 			    struct multi_pack_index *to,
++			    const char *incremental_base,
+ 			    unsigned flags);
+ void clear_midx_file(struct repository *r);
+ int verify_midx_file(struct odb_source *source, unsigned flags);
 diff --git a/t/t5334-incremental-multi-pack-index.sh b/t/t5334-incremental-multi-pack-index.sh
-index d30d7253d6f..96449178c07 100755
+index 96449178c07..77fb40ade01 100755
 --- a/t/t5334-incremental-multi-pack-index.sh
 +++ b/t/t5334-incremental-multi-pack-index.sh
-@@ -95,6 +95,23 @@ test_expect_success 'show object from second pack' '
- 	git cat-file -p 2.2
+@@ -112,6 +112,36 @@ test_expect_success 'write non-incremental MIDX layer with --checksum-only' '
+ 	test_grep "cannot use --checksum-only without --incremental" err
  '
  
-+test_expect_success 'write MIDX layer with --checksum-only' '
-+	test_commit checksum-only &&
++test_expect_success 'write MIDX layer with --base without --checksum-only' '
++	test_must_fail git multi-pack-index write --bitmap --incremental \
++		--base=none 2>err &&
++	test_grep "cannot use --base without --checksum-only" err
++'
++
++test_expect_success 'write MIDX layer with --base=none and --checksum-only' '
++	test_commit base-none &&
 +	git repack -d &&
 +
 +	cp "$midx_chain" "$midx_chain.bak" &&
 +	layer="$(git multi-pack-index write --bitmap --incremental \
-+		--checksum-only)" &&
++		--checksum-only --base=none)" &&
 +
 +	test_cmp "$midx_chain.bak" "$midx_chain" &&
 +	test_path_is_file "$midxdir/multi-pack-index-$layer.midx"
 +'
 +
-+test_expect_success 'write non-incremental MIDX layer with --checksum-only' '
-+	test_must_fail git multi-pack-index write --bitmap --checksum-only 2>err &&
-+	test_grep "cannot use --checksum-only without --incremental" err
++test_expect_success 'write MIDX layer with --base=<hash> and --checksum-only' '
++	test_commit base-hash &&
++	git repack -d &&
++
++	cp "$midx_chain" "$midx_chain.bak" &&
++	layer="$(git multi-pack-index write --bitmap --incremental \
++		--checksum-only --base="$(nth_line 1 "$midx_chain")")" &&
++
++	test_cmp "$midx_chain.bak" "$midx_chain" &&
++	test_path_is_file "$midxdir/multi-pack-index-$layer.midx"
 +'
 +
  for reuse in false single multi
  do
  	test_expect_success "full clone (pack.allowPackReuse=$reuse)" '
 diff --git a/t/t5335-compact-multi-pack-index.sh b/t/t5335-compact-multi-pack-index.sh
-index 40f3844282f..55b9773568b 100755
+index 55b9773568b..f0d1d68d26c 100755
 --- a/t/t5335-compact-multi-pack-index.sh
 +++ b/t/t5335-compact-multi-pack-index.sh
-@@ -290,4 +290,38 @@ test_expect_success 'MIDX compaction with bitmaps (non-trivial)' '
+@@ -302,6 +302,7 @@ test_expect_success 'MIDX compaction with --checksum-only' '
+ 
+ 		layer="$(git multi-pack-index compact --incremental \
+ 			--checksum-only \
++			--base="$(nth_line 1 "$midx_chain")" \
+ 			"$(nth_line 2 "$midx_chain")" \
+ 			"$(nth_line 3 "$midx_chain")")" &&
+ 
+@@ -324,4 +325,74 @@ test_expect_success 'MIDX compaction with --checksum-only' '
  	)
  '
  
-+test_expect_success 'MIDX compaction with --checksum-only' '
-+	git init midx-compact-with--checksum-only &&
++test_expect_success 'MIDX compaction with --base' '
++	git init midx-compact-with--base &&
 +	(
-+		cd midx-compact-with--checksum-only &&
++		cd midx-compact-with--base &&
++
++		write_packs A B C D &&
++
++		test_line_count = 4 "$midx_chain" &&
++
++		cp "$midx_chain" "$midx_chain.bak" &&
++
++		git multi-pack-index compact --incremental \
++			--base="$(nth_line 1 "$midx_chain")" \
++			"$(nth_line 3 "$midx_chain")" \
++			"$(nth_line 4 "$midx_chain")" &&
++		test_line_count = 2 $midx_chain &&
++
++		nth_line 1 "$midx_chain.bak" >expect &&
++		nth_line 1 "$midx_chain" >actual &&
++
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'MIDX compaction with --base=none' '
++	git init midx-compact-base-none &&
++	(
++		cd midx-compact-base-none &&
 +
 +		write_packs A B C D &&
 +
 +		test_line_count = 4 $midx_chain &&
++
 +		cp "$midx_chain" "$midx_chain".bak &&
 +
-+		layer="$(git multi-pack-index compact --incremental \
-+			--checksum-only \
++		# Compact the two bottommost layers (A and B) into a new
++		# root layer with no parent.
++		git multi-pack-index compact --incremental \
++			--base=none \
++			"$(nth_line 1 "$midx_chain")" \
++			"$(nth_line 2 "$midx_chain")" &&
++
++		test_line_count = 3 $midx_chain &&
++
++		# The upper layers (C and D) should be preserved
++		# unchanged.
++		nth_line 3 "$midx_chain.bak" >expect &&
++		nth_line 4 "$midx_chain.bak" >>expect &&
++		nth_line 2 "$midx_chain" >actual &&
++		nth_line 3 "$midx_chain" >>actual &&
++
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'MIDX compaction with bogus --base checksum' '
++	git init midx-compact-bogus-base &&
++	(
++		cd midx-compact-bogus-base &&
++
++		write_packs A B C &&
++
++		test_must_fail git multi-pack-index compact --incremental \
++			--base=deadbeef \
 +			"$(nth_line 2 "$midx_chain")" \
-+			"$(nth_line 3 "$midx_chain")")" &&
-+
-+		test_cmp "$midx_chain.bak" "$midx_chain" &&
-+
-+		# After writing the new layer, insert it into the chain
-+		# manually. This is done in order to make $layer visible
-+		# to the read-midx test helper below, and matches what
-+		# the MIDX command would do without --checksum-only.
-+		{
-+			nth_line 1 "$midx_chain.bak" &&
-+			echo $layer &&
-+			nth_line 4 "$midx_chain.bak"
-+		} >$midx_chain &&
-+
-+		test-tool read-midx $objdir $layer >midx.data &&
-+		grep "^pack-B-.*\.idx" midx.data &&
-+		grep "^pack-C-.*\.idx" midx.data
-+
++			"$(nth_line 3 "$midx_chain")" 2>err &&
++		test_grep "could not find base MIDX" err
 +	)
 +'
 +
