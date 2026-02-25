@@ -1,165 +1,119 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E749D31197C
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 19:03:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77292313522
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 19:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772046222; cv=none; b=o/Tvya0esq4WX6bt7sFobGsPwQVhnytxOxYeppQtvUWHO6jo+GGjr8KjRwxUpLj+0HWLQysT9v7370LuIDBZ4GezxuUoTVoUHqpSz5liODTteGd63ydIoxCwvDohnQ7u+juauo/B209Bcd6QNfCBZpTgqoxMqaXs6DxUCLk1Q2w=
+	t=1772046315; cv=none; b=M/nPbzI/zyyvVt+z5Oq8P9gmITXhVRtnigHIs6IOe+pcQ9mE9ttv2vJi/+KkHcqCIejHSlTKWAQR1agq1/92afrFOJKIJw8Pfm48D/lun6NUx0VpZ/vtErD00PymJbHFB21ripU78kD+sFbFiJ7w1Ol16OPpDIFnorP6AoZYAZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772046222; c=relaxed/simple;
-	bh=LqzCuGDZy5KYFZjhTgjBzAYM1OYk3NIxzmkfTaT6b/M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=eRqxdyyqeLFTpyZ2ZOPX/eZcmvsomlz4VCFn1/hCrRpoHT5L91ZIkYiiZYu8c4fiZyXnGGrG6ErCxq/3IhEWR0I9V2pUhlaMCfGUL9aqzGMulVWZx0txtpSh1TkoXgvcVPD1GdJOyaCDlyvziXaww9eFzIMZfCciVbHuYt/lE0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eSKn4hIr; arc=none smtp.client-ip=209.85.210.178
+	s=arc-20240116; t=1772046315; c=relaxed/simple;
+	bh=t9f0RTqEVJhIL8CjErtO2YNk3u1EtHTpVWpjjPKLWB0=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=dIEbyPn1ckG+Zs0evCahv8CS+XECL5kinhu6vLNOCGklNMSh7tWDzRqHS9p7r51fjyU71TVoghQc/zevlmQ6TiwHjGcA9+yGH1FMs0pyAwGF5LpCz4ySShM7LAppbZFlXw8RvP/zg+hwrzKBcgdfXjJBxkfk/OyMb0fPYKZ2bPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bnnx14fJ; arc=none smtp.client-ip=209.85.221.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eSKn4hIr"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-823210d1d8eso49253b3a.1
-        for <git@vger.kernel.org>; Wed, 25 Feb 2026 11:03:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bnnx14fJ"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-567543b8989so57268e0c.2
+        for <git@vger.kernel.org>; Wed, 25 Feb 2026 11:05:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772046220; x=1772651020; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/1up2EzajAZhZetwYPArw1mSz4vjXsyzFnT30DwVT/s=;
-        b=eSKn4hIrq8XawxU+UW/4u5cJL5Cj+c3w05lKePcMgIvSKgT9n8Ye+8IMkFUKa5iDPK
-         BndOZIIDxhrFDuLOriJ34+MFK+vmGRyUTfVprEB7sDU/gG3XXmmQyU8LIsSDTGVLF6PW
-         NL4gY2Y0K4nM3ubmUSW42+tPtwdV3CuZZ/vaU5sQPDkEJBq68JscqJJUb7Qdny/ppYUA
-         tMX1Kz5GRMbndaHaOP5lymttvCrwjLZFiVMnZwaz260xiK0uzQGwrKB6zea5VuxUwG7G
-         7E0W7g2BN/4kcv9/NW1/3RYh/nngjx/8/0F72BjBmYHVC38mi31fLu3jCTGTF8BibT6Z
-         Z+dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772046220; x=1772651020;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772046313; x=1772651113; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/1up2EzajAZhZetwYPArw1mSz4vjXsyzFnT30DwVT/s=;
-        b=XOh+2fo0CrObtC7SeFh9+nHGLeQQwe0mQ24T8zjHRYmUnytEbRGeNpZO/H9JKGuatF
-         hOz5ZV/7ziqjPReREdmHFxp2DaLF6c3tNAvGToIW/qqdYc9aplXmZ96SypqyA4vSopTu
-         9hDusduw2eupPjNmoHro8pfJ9rWbxO3UxdtdXVpcIVlAIv/rNnebN36DDbJ5hbq5x772
-         V+W9RwTsQ3Hq12V5pRidhlPwedMJGJDzxW1U5c7ISTqBxr8TN5jq/HcWfWNGK0I6U9Fy
-         xZrdtzhBnbbIdkaxR+YVNfaUS+uI6QenXR1EUbeOoDGw9kdZoxI8HVcJuEGAmhVvFYWX
-         692w==
-X-Gm-Message-State: AOJu0Yys2zdz8i68rJQtKvo0NOq4oSc3F+gSYwMJ0gNbg53q0AAVuwut
-	SCFg6QyuJSngOA2P5wbQhxJjLjUtSAv7plcRI1WVOLHAxlvBm+0lUIiP3OGTwg==
-X-Gm-Gg: ATEYQzyxMjROonttn7hxgI+WGTrkVG8qAcRhh8F/KqK5cTL4rvYzsRcyVkcneLWA4fL
-	VP2VpcXJ8dbbPDZWs/O3mVX6SkjsPhQp/BZFD4uueTXiowLmxH698bdRxKfJR5X8bCqcl2muydB
-	kSDV4nscKSsttb0Kq/VU44+98OZ1YTXFDjPkxPBKBgfgRgAvz85tYb0O6NN7YIEjf7ZmIbaIGck
-	Qf2ZdCL84zImc6CL7b38CZk6hdNJkJQ+jEYrYom9dVhKxFSFi0gIQyvoCozFxHB0FUQLbnhZMN4
-	o1Al8DBFJv7+CmxTFoCS7rfkwTJey2Q7vYPsmTi9kXDujPImUSNDlb/2vDjc6XzxmYRM+JfrU2C
-	tyv0TETKjpnSeUvKnvydeWmr+6lPINLOdhvIOasILzRfnzOTOowL1WUk4IFZ36fIurim2v2yxwR
-	4yOF/W2W17QVMGSA4ppgb5EQTNTmt59WVJDqt6RYuQ0ynr383/OEU3SH73iEpGrcHLoKmuJBllg
-	KkaIdmd5ydojX5dMn7Up9vabm+kOGqVn7US0wHbFZXdpalouevpazlCp4BH6c9LzFmHoXqWOp5v
-	ZdCSW+o=
-X-Received: by 2002:a17:903:19eb:b0:2ad:ba3a:3827 with SMTP id d9443c01a7336-2ade9aa6ec2mr13490965ad.54.1772046219671;
-        Wed, 25 Feb 2026 11:03:39 -0800 (PST)
-Received: from localhost.localdomain ([2409:40e2:1f:68ce:51ab:ae14:d451:e822])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adaa3d0f6bsm56101345ad.12.2026.02.25.11.03.23
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 25 Feb 2026 11:03:39 -0800 (PST)
-From: SoutrikDas <valusoutrik@gmail.com>
-To: git@vger.kernel.org
-Cc: SoutrikDas <valusoutrik@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Siddharth Asthana <siddharthasthana31@gmail.com>,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSOC RFC PATCH] builtin/repo: add path.in-worktree field
-Date: Thu, 26 Feb 2026 00:33:04 +0530
-Message-ID: <20260225190306.39358-1-valusoutrik@gmail.com>
-X-Mailer: git-send-email 2.52.0
+        bh=O5hPaVe20F37K9oFCshWcjF7ZuLpr99cpYxuVeD2i58=;
+        b=Bnnx14fJbc7SkyZxh0HXmqAR4fdpzI1MyttTNJHMsX2cFHjXPaMcKQYje/lcFN0gXh
+         Hj0ekb9t8ydnhePLxjTluKsfE+SbSJdG0HCrG6j1jIwK+WOpfB5bXNkYZ/3iAA0AoXpH
+         SC83lGhcVxGHN6LDjomnavqfH7ZCueiZLBm47ZQqm/jrzsTdtBkhPmBPk93nsmibazTl
+         JXRfok3NoEVFHy6rvnzWp/ETegJ8Zizf+RExq/3Bfg/29EjY7RY2Ds0KZITrl6gInXk4
+         LFq391rU+NnLagO58nVA2OaSkwT3TY+Sy7dg7Jotpj17tfzpMpPkzOrMNUoUDLEnx4z7
+         IY3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772046313; x=1772651113;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=O5hPaVe20F37K9oFCshWcjF7ZuLpr99cpYxuVeD2i58=;
+        b=pSNRNV0qhff2m4A8yZwsvgnGSB7I3lcToH9UDUi/HJbRlFwu40m4xwxAVTmzy9nB9P
+         v9GNkSbNod6PGDgxEv4E7YSM8N3+ZZgpvMG/5T9jX/5Mfp1tGd+tP5seW95bcDV2JY+T
+         rMx47tG8fioGRqkaNK2MauLTl0Y/7yjFkG468WQKAGqIl5QW59UPPBFR7q7y6kIwgDs4
+         qe2ByUPiggzIwoAX8hjNosdSnhgzRK3tex+NrPM2Rh07QWV0WfjEELcBklYOuvcGgq5d
+         qfG4/gS7kvxC4TcxuXVfnIRdlf75Q0Ksq4XWXqJ5o0z908iZWBvh4spN94rdkDV8L7Wj
+         XxZA==
+X-Gm-Message-State: AOJu0YxUMjuTZAQqgyhDzBwn8GVXjamlQx4R6ngSHfuPqQVL3o7OzlvM
+	eFSWl2Ja4gFACTrar4/Fl9pUArIJNqFxtRCsTG1ePQy2LoZ5qi8QmcWu
+X-Gm-Gg: ATEYQzwoocUzCwKjJxoaKRI4sWL9wW05CdqiU9pD2iRfFi1Mn6yWKxfgop9ZGcyudEu
+	A4zR9IzAjBAMumInkuyP2StqBkL7U++vLhH7KsOGLiyHXAG9u+bnDqkT3Eu+zFwSSWXaXrp3He0
+	8NY0RD6xC+yy0ckuwvfl/BsLR8dk+m6uPoalb/9HrrifyeD2Ze+EqtvQQsEgOFxPa5N4vTumSnw
+	UVV59G/nVBilxFxQC/D4jAumKQUhRXjCACLSBx23r8gbN1QJsg5s2VjJE7UbOmYHATIdZdJ+Oll
+	jZTWPx/voM1qsrkOalEZWuOMuRDucShQqdC3lEXYKFUJz8MgofbntXuR1rLcfK4as67Ff0jeiuV
+	+cl0DhniYLORxjm6ckWyv7K/G1EJmms04zfJQbvmDtXBl69NbOUwSUOkRxlLBcxzNGPk5IVco7S
+	DbC9ZUSAQElm5dAuUlTtJdo2Vxb0E2xLUZsLd+bO9+JamoWM7pWF1OHw==
+X-Received: by 2002:a05:6122:1d54:b0:566:eb31:4715 with SMTP id 71dfb90a1353d-568e47c487dmr7111561e0c.8.1772046313340;
+        Wed, 25 Feb 2026 11:05:13 -0800 (PST)
+Received: from smtpclient.apple ([189.62.150.156])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94da899b566sm13226927241.1.2026.02.25.11.05.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Feb 2026 11:05:12 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH] t7605: use test_path_is_file instead of test -f
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <pull.2050.git.1771911268805.gitgitgadget@gmail.com>
+Date: Wed, 25 Feb 2026 16:04:59 -0300
+Cc: git@vger.kernel.org,
+ Mansi Singh <mansimaanu8627@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <2C345ED6-BE80-4947-A1B9-4065CB54086C@gmail.com>
+References: <pull.2050.git.1771911268805.gitgitgadget@gmail.com>
+To: Mansi Singh via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: Apple Mail (2.3864.400.21)
 
-Hi everyone,
+Hi, Mansi!
 
-In this patch I am trying to provide the equivalent functionality of
-'git rev-parse --is-inside-work-tree'
-I found that I could either use the 'is_inside_work_tree' inside setup.h
-which does not take anything , or use the 'is_inside_dir' from dir.h
-and use the worktree directory in the repo variable that the function
-is getting. 
+> Replace old-style 'test -f' path checks with the modern
+> test_path_is_file helper in the merge_c1_to_c2_cmds block.
+> 
+> The helper provides clearer failure messages and is the
+> established convention in Git's test suite.
+> 
+> These instances were found using:
+>  grep -rn "test -[efd]" t/ --include="*.sh"
 
-I went with the latter because the former was using 'the_repository'
-inside. 
+I don't think this information is relevant to be placed in
+the commit description. Perhaps it would better placed after
+the scissors mark (the --- after the message) which is sent
+to the mailing list but ignored in the final commit.
 
-My reason behind adding this is because : [1]
+Btw, since we're in Git we can use Git's special powers to
+do that. This is equivalent to your command line:
 
-> Add path-related values currently obtained through git rev-parse 
-> (see “Options for Files” in git-rev-parse documentation): 
-> git-dir, common-dir, toplevel, superproject-working-tree
+   $ git grep 'test -[efd]' -- 't/*.sh'
 
-Since its intended for repo to have more path related values, then 
-'--is-inside-work-tree' would also make sense. 
+And this may be more useful, separating the output per file
+and using pathspecs to filter the tests (files that begin with
+"t") from other helper scripts inside t/:
 
+   $ git grep --heading --break 'test -[efd]' -- 't/t*.sh'
 
-Although I am not sure if 'path.in-worktree' is the best name for it.
-Also, I did run t1900-repo.sh and it was failing one test case,
-which also ran with an ok when I added the new field to REPO_INFO_KEYS.
+I wrote a blog post about git-grep and other tools [1] that
+may be useful for you.
 
-[1] : https://git.github.io/SoC-2026-Ideas/
+> - test -f c0.c &&
+> - test -f c1.c &&
+> - test -f c2.c &&
+> + test_path_is_file c0.c &&
+> + test_path_is_file c1.c &&
+> + test_path_is_file c2.c &&
 
-Add a 'path.in-worktree' field to 'git repo info' that indicates
-whether the current directory is inside the worktree or not.
-Equivalent to 'git rev-parse --is-inside-work-tree'.
+The code itself looks good to me!
 
-Signed-off-by: SoutrikDas <valusoutrik@gmail.com>
----
- builtin/repo.c  | 8 ++++++++
- t/t1900-repo.sh | 1 +
- 2 files changed, 9 insertions(+)
-
-diff --git a/builtin/repo.c b/builtin/repo.c
-index 0ea045abc1..3eb7115208 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -1,6 +1,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "builtin.h"
-+#include "dir.h"
- #include "environment.h"
- #include "hex.h"
- #include "odb.h"
-@@ -61,11 +62,18 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
- 	return 0;
- }
- 
-+static int get_path_in_worktree(struct repository *repo, struct strbuf *buf)
-+{
-+	strbuf_addstr(buf, is_inside_dir(repo->worktree) ? "true" : "false");
-+	return 0;
-+}
-+
- /* repo_info_fields keys must be in lexicographical order */
- static const struct field repo_info_fields[] = {
- 	{ "layout.bare", get_layout_bare },
- 	{ "layout.shallow", get_layout_shallow },
- 	{ "object.format", get_object_format },
-+	{ "path.in-worktree", get_path_in_worktree },
- 	{ "references.format", get_references_format },
- };
- 
-diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-index 51d55f11a5..d793d1b8e2 100755
---- a/t/t1900-repo.sh
-+++ b/t/t1900-repo.sh
-@@ -10,6 +10,7 @@ REPO_INFO_KEYS='
- 	layout.bare
- 	layout.shallow
- 	object.format
-+	path.in-worktree
- 	references.format
- '
- 
--- 
-2.52.0
-
+[1] https://lucasoshiro.github.io/posts-en/2023-02-13-git-debug/#git-grep
