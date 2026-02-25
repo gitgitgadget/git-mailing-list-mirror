@@ -1,109 +1,107 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0B021420B
-	for <git@vger.kernel.org>; Wed, 25 Feb 2026 00:29:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D240F26B2D7
+	for <git@vger.kernel.org>; Wed, 25 Feb 2026 02:01:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771979388; cv=none; b=F4exTPTSbLoSiOi6pYdsNLk/8meNlXvulwsuCHeY2i9tnjtUIm6tjKv7r6PYTxKsPCgh2F5K6/7YB8/DOlAi9c4IdO/ckP0Qb1BpxIIf68KYH+YXvo3QpPEW6SlHLkgPSSpIFmKGMnjALEX9XjasRGLQMTo2rFif5vv18YOrkAY=
+	t=1771984862; cv=none; b=YaDKrIPbTYCF0kbXdNVGPj3s3YGna+XXsyfUg8j834KbMlYmiJYVTi5kf43JV+Oale59r3TQTjmWxrs8LP58WDdpFKAAiULNMRIfftpVHxcUob/Nm/eJzHX0wRSsplyrjlvQI4H6gl3pMifEVGDhW0QcS3yQxai7+CMipLLPwCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771979388; c=relaxed/simple;
-	bh=jQRkH0+nw7WyJ57GVaAIw14d84+eWMTMePYOY6jxiz0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TLzCg/0FVbXbrRF7uXm14fNk7ekEOufDl47+CkYqo0MnHwfUd0oo+dxqv2MNDdlLuQWbAvPQfp5fJ6CIFmSSx1kbawgJ44XOD10YQu+k+e1d6qES3IJ0os17PzEjkWj6NcgCatZoO5b8WkUjyVJO1hriFsDbeG9NP7KbPLhcjGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YfebRzs+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n4dNEOHn; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1771984862; c=relaxed/simple;
+	bh=IwVWfHG9itEEWUUcG7mnBHPjdMYE9kq6U4kxwDmpzw0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=aH/wze9QM6lGLwaXuJLXCQ6Vs6faE1/fNDG/e6Qo/9N31H1fQXlxmEZn/+Y2OLLYnnbCcd96OD1qA+yYD5vXkDoW6Agb5HpmOK/LaXCAeQ53vRhmZe40+BedHrBpz/Wg8fkQw2DIeLPBb9kyl6BAl00YtIKYXtQ+oqQvh4y5wOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QZrWpPTN; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YfebRzs+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n4dNEOHn"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A5491400112;
-	Tue, 24 Feb 2026 19:29:43 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 24 Feb 2026 19:29:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1771979383; x=1772065783; bh=r9haUV7Cg1
-	8y+NmomMLJue5z5LrhBBVWmcghzzDK10M=; b=YfebRzs+kgHhPkvOJs7jnyoIvB
-	wV0zFO12YJj4hA1IeY5LV9BIwNPbWbV15I0MGe0/ZNESE5TCPW3pSzkF7e8pUoUv
-	HiCBZG7bQJCJegqi/WFScoq0j94CFvMWOCdKOOkXtqFCRVsfxVnEJMOplus0UUc9
-	LU8zu0pmXFD/O17CQ182OIyTTCRWUvLMzo69KF8AHTgTX+3mJFQEvVSiyQguBggi
-	JWgM5T/CQRzPaPVa+yP9BXeduj285L1g3rzDa+ZvCt0GUcNLRqnnsKzoRUUcUmIY
-	rmYj1eSABj/gi4p2B7rMfWTHzwzhFCM0DF5CmVBhw3aVQQukVHp0BYTVUdWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1771979383; x=1772065783; bh=r9haUV7Cg18y+NmomMLJue5z5LrhBBVWmcg
-	hzzDK10M=; b=n4dNEOHnyJEwqIFwjpwepkZnonti1yvhzj+xeN3zwA6OanEvXUq
-	UqFGOa0E9OFRSV/f+bfEumRA6W6XZ4WADg7E0T5jWnvli3ErUqiMwYocds4rnAxY
-	EUwCNjXfPzlrOEu5EE5JHkoKAaEmwoYoiCbxIsGWrehvMkzEAZGm6vN0fflrTLsT
-	1423RNKvqr0JYC/I0csbHvrP50OwzAVVqPNj0gUNlHmSxFHSJs0aLC76rpn/wAzs
-	ebIvhyIVJQJdRsUX0Q8Gn3P7fcQ+mcbPbdnCI9kdRYRMRF81Kw9ZCL9CwfEjbzz+
-	Yo6Lf/XM6D5Xker5RZvNKnHB9zW6JEz/Pxw==
-X-ME-Sender: <xms:d0KeaXKU-bkPApITjDghuM-sM7ccUN7V7q6YPD-r5oUwZbRlZENK_w>
-    <xme:d0KeaSJh6YJQgmh_6BL37qqT7caoZrKwciLeTlfNamX0zjOKxAGFDUS-v8kgPdqcQ
-    _v6VpOSwdMlDNdrswyG1050sCh9A9UskCKbEsl2R4SVkJ-pBj6N>
-X-ME-Received: <xmr:d0KeaUv15N-Cq_akTzEUccMDzZFPNbtVT8E-2TaFdwPOQrXOhk9EhZnbCKqDKpI-_oB533XC3igJJFAokbe66i2v06f2MII1wQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeduieefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
-    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:d0KeafTgIQ3JBrDdsff-3hbm21qQyCycDjkxK3dACUqcKt-Nk5nF4Q>
-    <xmx:d0KeaaM1ua2DLmCqd0xqXkDf5mKmjDPa3Rj2F2EJ6wPXIwAjfNgfuw>
-    <xmx:d0KeaUaW5ngH5eMgSLy0fbMQ5JSXAp5jc3I2OE3_TnFahFWWiipGUA>
-    <xmx:d0KeaUzzo2mmSIMldAMDf9NB6WOI5I0XSgkU0U9227-bKmHQH_ONPg>
-    <xmx:d0KeaUNvarTQ1_77dWAeAK9BpDCfjRRbqKaF9n3FLE1Ed9fYsAXQBWOc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Feb 2026 19:29:42 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] format-patch: add ability to use alt cover format
-In-Reply-To: <aZ4v6p_oKCayr9A7@exploit> (Mirko Faina's message of "Wed, 25 Feb
-	2026 00:54:54 +0100")
-References: <20260224040400.751247-1-mroik@delayed.space>
-	<cover.1771925291.git.mroik@delayed.space>
-	<66cac565f8a40f8de3dc3d857feb681bb80cb136.1771925291.git.mroik@delayed.space>
-	<xmqqpl5uhwex.fsf@gitster.g> <aZ4v6p_oKCayr9A7@exploit>
-Date: Tue, 24 Feb 2026 16:29:41 -0800
-Message-ID: <xmqqo6ldd5sa.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QZrWpPTN"
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-899a917a4feso18939936d6.1
+        for <git@vger.kernel.org>; Tue, 24 Feb 2026 18:01:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771984859; x=1772589659; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=eHViz9uzA0qn0/Cwgl0PYBQiuFPJ7tiOWkbrkXBOjJk=;
+        b=QZrWpPTNA90SvfrW2aJarMJ1kCa3LPbL64vV/bGWRIR8NW16GVvF3QVkKWtPvy1Am7
+         OFCvwe64BqBMP6IApQXyJu7adN8K/tZoZIa8b8Vy/4SvMZvKVsg6JeUrnck225+fqHFo
+         KppReAaDseV5KNbDB66e1x8dqs4AeCvY42webeCzwDsuZ7o4l0RYquHoCip6H/FwieNA
+         TQKmaG0OOhmiYrcSKbtVrydHYc6bixANTp6cUSpyTM3ucTbdlwcD446LDy6seEN8vma8
+         +kpcxfuwEr+7J8saRYejErxg7C/wqkMH6V/+5cUm9Yhr9EBjK/AS3/4N6HyZ3FSs3YZX
+         P7Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771984859; x=1772589659;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eHViz9uzA0qn0/Cwgl0PYBQiuFPJ7tiOWkbrkXBOjJk=;
+        b=bZhY4xh4v3Jz73Z+0pwZmAuCnjV/fUb3Q1dUCzwnQD+PDFo35o/56DLqVsy/1sVmNI
+         av55ZsHESbWd2BjDDyq4HvBuDc2wax06l2inSi0SdUsQk3V7JQxDS4JiR85D9YUxorkY
+         p8NGfPzoQOiz7HFrrQyKTajdCp0RLP3FNUxwOSCw+P8W6yQhlsVXKoA8u8eLKBkKT4qF
+         EC9DOZ6Nz4tnfLs2G2JN20l3BFFDRaQqPirkjyPKrzYAISm/RB15QB7k7QNmlk1z8D1o
+         fkwI/au6n22vrIajE5RchPL9/CGNvbZHD5TED+qw8Xue6uo/zQ1Hrfa/MG5CJwSnFXrX
+         LZGA==
+X-Gm-Message-State: AOJu0YxphNL8g+Gbdm+hnhY/1dQIv6thFYzXnyksVNyiw5nxSrzewZBa
+	zZKu5pKf+s2auBXta0caXPu7dwMSkOyPsWL6JkbYZJWxl2Pet4kyzoHMFWWeig==
+X-Gm-Gg: ATEYQzzDbr8lWPahSZBLo34e5+AicX3HfzTlcjacWbsVe0MiVA0oWMwzdTazZXzIOI7
+	9KnmdUjOCdYO7zFLDZJPjvjmQapbWlIbIgpGS2ORUXvNLJsWO2IWVShbhASv3T74rX74HlSyPBN
+	qfRM9NsMVnc/Utr54aC3MHYhrVKV4uQz00wTA6P6pKIYWzLbhnoaYpFOHYex9GZoo1xazGOpVub
+	9OJvNyQa38iBtKM55VHoPNxXb7RQeOpIaenwwzlDqG5FO12KheV3kvx6B7KsICPVieH0AHhMYk7
+	ri9oG7GoNVw+tuFd1W0OGw01RWNOLsDZPftWvSvnJ+5HM5PM7LgKx9V3hKRHIocDazUa1SyN9LI
+	BWtnvfFaJnHwFldSW4QGZuq7oyY/9nrTilaSc7bpVgBnap3lOvDK5tFzYeIFK5sb9TrC+PAQWmw
+	+7MINQ6qc+sQPzA9pvfnNOABgUpB8=
+X-Received: by 2002:a05:6214:1d0a:b0:899:b7f4:6fe8 with SMTP id 6a1803df08f44-899b8c84eeemr7867616d6.65.1771984859146;
+        Tue, 24 Feb 2026 18:00:59 -0800 (PST)
+Received: from [127.0.0.1] ([135.232.211.212])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899b894a227sm5438346d6.8.2026.02.24.18.00.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Feb 2026 18:00:58 -0800 (PST)
+Message-Id: <pull.2211.git.git.1771984857879.gitgitgadget@gmail.com>
+From: "cui via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 25 Feb 2026 02:00:57 +0000
+Subject: [PATCH] fetch: fix wrong evaluation order in URL trailing-slash
+ trimming
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: cui <523516579@qq.com>,
+    cuiweixie <cuiweixie@gmail.com>
 
-Mirko Faina <mroik@delayed.space> writes:
+From: cuiweixie <cuiweixie@gmail.com>
 
->> > +		fprintf(cover_file, "%s\n", commit_line.buf);
->> 
->> I somehow would have expected that as we internally prepare "format"
->> string given to this function , we ensure it ends with "\n" so we do
->> not have to do a fprintf() here.
->
-> The value of format is user defined, I'm not doing any pre proccessing
-> to it apart from stripping the prefix. Would it be much different had I
-> appended a newline here? I personally think it's fine doing a fprintf
-> here.
+if i == -1, url[i] will be UB.
 
-I thought you are stripping the prefix and making a copy in the
-configuration parser.  I didn't look closely but I thought it would
-be trivially cheap to also append LF there.  If not, I agree with
-you that it is not a huge deal to do the "%s\n" here instead.
+Signed-off-by: cuiweixie <cuiweixie@gmail.com>
+---
+    fetch: fix wrong evaluation order in URL trailing-slash trimming
 
-Thanks for working on this topic.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2211%2Fcuiweixie%2Fbugfix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2211/cuiweixie/bugfix-v1
+Pull-Request: https://github.com/git/git/pull/2211
+
+ builtin/fetch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index a3bc7e9380..306138c6e5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -722,7 +722,7 @@ static void display_state_init(struct display_state *display_state, struct ref *
+ 		display_state->url = xstrdup("foreign");
+ 
+ 	display_state->url_len = strlen(display_state->url);
+-	for (i = display_state->url_len - 1; display_state->url[i] == '/' && 0 <= i; i--)
++	for (i = display_state->url_len - 1; 0 <= i && display_state->url[i] == '/'; i--)
+ 		;
+ 	display_state->url_len = i + 1;
+ 	if (4 < i && !strncmp(".git", display_state->url + i - 3, 4))
+
+base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
+-- 
+gitgitgadget
