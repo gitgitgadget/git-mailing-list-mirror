@@ -1,105 +1,115 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA9633B94B
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 12:41:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCC02DB7B2
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 12:57:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772109714; cv=pass; b=mlMEFmTPzgo6fq5V70yVdc7w5JmJNwwqxufZScc823JuJSQNXi9F3e/XNWNkshen0iMaWetxW4cyyZlQ2lmhc5+mWX3TWAovvaNFFQiC875Q8n+hssi3E/rPNaqbBz2OhiXxPBFi5oGGz6clrizayVOXdCLE0mfz0aASnaM9HsA=
+	t=1772110679; cv=pass; b=f1cgPVdbr2ztYD/NE6uIl4auUSpKMp8f8ijby3qjpDgYv4vHIl3XTbDFDPVX6MYHGwpzfo0Tg1X4garbmjkut6l95Zv/jdFWj0v4EtRWhUUiiyqv72apRyyVq/qg6TFWTuGpm3W8381rXUfcvvsYPEHCcyYDUajAO2fhtM8FEhQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772109714; c=relaxed/simple;
-	bh=54jxkySuJqL+5Qof6XslR9s5ChBCbvOdNef0ce31GjE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ducup1SmafASswdfsPqaRZ8P9J0BS/HxcxxSwhlKoDgjwHPgezwk2urw71BcnOLz0fJ55cj+kHIVpEmaSA/h+D0iWWAHIDRy5LY9R/FHqjRGV1711g+5rdjnTUfNx86IhNlWl8I52b3EgqiENO1dvGa3UO6Z/0m0eFuz8kTpars=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=SkDZbSd9; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1772110679; c=relaxed/simple;
+	bh=ibsX//lCefMPoqLlia806J0JXA6+VKu18l7jMW7sS5c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZQSHKMIUjvefeXvNtalaNnbFlPJP1VkeyjGOsE1ZJUUObBuOd5lsIFISZ6nmU7OQJEMouZIN63BsRAQsPpBGfDgX5ign29ef9ajdTB1WTORq7s7BkCh4aTuEiZ5Ad0QSJ+4DFb5tKNkMQTfh0yUsASQVHC0vTYiXOfBKeXfjN2s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hzNxSbsf; arc=pass smtp.client-ip=74.125.82.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="SkDZbSd9"
-ARC-Seal: i=1; a=rsa-sha256; t=1772109706; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ls5d+7/X5WAvLuycw/0gYr0T8MlhFK9VbXajUlrLRpZTqsPG3RCA1/ctWrIGW9MgR/+XkibmpN+WtL0oV3r/3hqaZgRtImZf2QmgEKH+w832/1q+Hkjvy1ALtjuzV6jlI+GPbJSTl6EFLBcrAHcrwSHdOFyqj2Gg9YeFMw2gty8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1772109706; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=pwMebswdEsGf+/O9JMMpB1a3s6bA7f0rEXPwXDLAZuk=; 
-	b=LsqwcKajkl92UiAWPxwCqbJHYERvqXQnwczEiH7sCDyqs4QWsqkefCDhSqE+Ayir0JPQabW/0r4RsOTYVov/oQmwReOpkhZiWw6/1Bo00HN4vofvufe047KZxv53TmR/gU4aTCFGq9L4cxlmvJkGy724hSHwnELJ4FHOx1OU/IQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772109706;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=pwMebswdEsGf+/O9JMMpB1a3s6bA7f0rEXPwXDLAZuk=;
-	b=SkDZbSd96qdKuQbkSumSBFgHkNngXfye8eVA4RrIV+mhXzmuFPpKgPeVXRZt28sa
-	ewA0LgjnN0jteKwZy1OJA/6kOvPtpCLz8UG5ytjeURo8M17yV6zAkyENYyvdUTqY6Up
-	X3FnHh88rb7i2qyBBcXbcXZfPqD7CJXfNnpLXfcg=
-Received: by mx.zohomail.com with SMTPS id 177210970380657.744923136503985;
-	Thu, 26 Feb 2026 04:41:43 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 0/8] Specify hooks via configs
-In-Reply-To: <aZ94HdcOUGp91UBT@fruit.crustytoothpaste.net>
-References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
- <20260218222352.55393-1-adrian.ratiu@collabora.com>
- <aZjuTSopOMvwR4hQ@fruit.crustytoothpaste.net>
- <87o6liw4s1.fsf@collabora.com> <87ikbpwr13.fsf@collabora.com>
- <aZ94HdcOUGp91UBT@fruit.crustytoothpaste.net>
-Date: Thu, 26 Feb 2026 14:41:41 +0200
-Message-ID: <87a4wvbrsq.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hzNxSbsf"
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-127380532eeso1340713c88.1
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 04:57:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772110677; cv=none;
+        d=google.com; s=arc-20240605;
+        b=B7G1iky9pJioXFzzMdE7dMXqwK7gkiHY37vn3/i1PTYsGdZO9Mxz2HNYr3SohaQ9pa
+         7EuW5CDtu5KPGfsTiKhOW05XuDihxevUBJ7L7znIKaSTgvbZMw3COjRpu4faw3UenUB9
+         /WBX/yeTQ4GOez267dDq1nD56xnQzyc2CqOkMZz9ZHF3b1iIMr91M73JDXXNWKqv2+vm
+         gpPkzdSiFkRYPSSsEX2IKWIXO62Gj0oWsDJAT5cQYmAZjYStnd55DuOB73a/fLaJkVNp
+         a4Mbchs5vpqbAemppCIR0cBApcmQScHaNludE3YwQPCnZhYvf6Sf5aLt54LYKU33ArBi
+         mbJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=FfRvcsa/6FtSZgk+ffPCwt3t3PsLGlpSdnNP9MdA4GQ=;
+        fh=d1OiLHDdPg0fo3w5ZN4iTzpH9FgWNOi2p7e6HPfuyEk=;
+        b=PjmJCQ3e9ZPqqalD+P4rNaNgZTYHguKN6ogguByYI7VRnFTJOh55GVNiRJQVgYwoL7
+         KM1CUW2lztLTwUhR1aSXCkpRcVnP4AD2LwnlVYoF0VNdGKJJC0tfB4lhUnPnvS9vbkIu
+         HE8B2F6TSaXVPOF0+DOqJAdgFY2Vte8BIZwAn9Hx31xTl7zawWprBxG0IZQgzQdwBanV
+         hFiQA9kZbaKXVJ62OmZsjqaxKG6yTFtzvzkKw73DmdWapzMcuJOnlGDBKOa88mM+mAeT
+         88q6rCkMIW/X3TN+XeH9smpQM8RWtTjCVbYP57TXqn6IqwB6KxAGVoMe8uPURWgR1T6Y
+         DVYg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772110677; x=1772715477; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FfRvcsa/6FtSZgk+ffPCwt3t3PsLGlpSdnNP9MdA4GQ=;
+        b=hzNxSbsfvnhfUAnFg3eYFZSQ9ejjM8bWHWaEFqfBxMKSPlEF7jw9yMDfcZaP6/6Lt8
+         vbARDYqz84WrMXWEAK0z1V+OIYweyzmuLHjEUylV6usqXPXDFnqPbWGyQfNt+ZnRsmKy
+         /V795a8+2JECydB38xPdfo6ZZ4+/39IrLB14RC+NDAJkgPKxZBZQcqNnRvHUF77bzqSm
+         BF/BeEDTbN49ZgDNawmVNSdKLGeZoItnKn6dYVdOS7kKv8N/uV2OAJpuADF+lWUcJQRj
+         sTTMXlXf5ooJ9R61sB0B00HiDt0ZfC3pFfko74jDVbvlVFtoLqp+OIJcawi9NilMYcHR
+         JTog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772110677; x=1772715477;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FfRvcsa/6FtSZgk+ffPCwt3t3PsLGlpSdnNP9MdA4GQ=;
+        b=BMwd1rteXDT95oIzhnGpQOlhsRgnCnXIUHWjO3yzjMbGHfzpeU7tqHNn96p2K6Wfju
+         8vo1vaD2GL3s2ftzXznvlTtH0MsL2RkN3pW8hPfdAdf+Ktlq6Yw7tN+1oid0h4JnkeMw
+         qEuHeMwNN7H3eILfYhgyACtCwTbMQUS+4H9jy4ofY2FiA80HMBcpWNplO7C4VNjo0tQ5
+         KBDhY6rnqe8jV5k0dmHjWDtZy1tpiNQw6DOZukJQFtbzcOS9b5iel+9HAwfOqsSW/BrP
+         TMcL25m8bagOQW7PmBWB+5cf4laEEDyb20IaFnq5VXmjKX9Yr/R3DJTi9SMJzWD2+K8R
+         jrag==
+X-Gm-Message-State: AOJu0YyJDlV+ZQZejosIrT4CWFpC5RpiiWbx5QYheXNwQNMx7WhPtXWd
+	s4MEjPtRV6j+HFS4nXIFZ6idhrCAupiyC+vaRiulrhx8cCv/ryT+2sE0Q2E6DRYzJecRDFB2h/3
+	Fgq9gsh1RIxl8CkjGEhkFcqd/77A+JBs=
+X-Gm-Gg: ATEYQzxGm789v8gQ4j7n/SjkI+QtfHgYnVHea7Ur+ITNOxPBefg7TQ9ociZut49r5zF
+	QCFwHlqjh7H0CduzHtQD/3rSlw6bTG0gizXkh3DAvE2VrAK7KqwmmSVBySyS3M5s2Gtp+iVoJ0W
+	hFJEx6qTtMSaqhC4cDwRSFinQIASD/MqIfN9D6kTU1Perr3AKSijuNuxTxR7qOsXKK7gPt04YK+
+	ky5J/hF4NYPHkmS77KcDx28Nn6nnAbZ6O/BdzwtjizMdlPQq3zHKqyQteBwh0HSHMgRNqFLDa5s
+	0REIO6ewEtQwmqChZdaHu8TuGDvX7dYvMnk5bqYMlp05KVEb1KCnA2RKtMieT8o/GxNWckY3v6x
+	G8o2s0WdrZ74ctTBiXrZGa4aV
+X-Received: by 2002:a05:7022:e25:b0:119:e56b:c75b with SMTP id
+ a92af1059eb24-12789cc4cc0mr821369c88.32.1772110677366; Thu, 26 Feb 2026
+ 04:57:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+References: <cover.1771258573.git.belkid98@gmail.com> <7d33f1ef0f8182893d63d49b350984025ab757d4.1771258573.git.belkid98@gmail.com>
+In-Reply-To: <7d33f1ef0f8182893d63d49b350984025ab757d4.1771258573.git.belkid98@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 26 Feb 2026 13:57:45 +0100
+X-Gm-Features: AaiRm53IgdSvHGFiwbZBCsStDsYDrflNSTl6ZpRI2M74Am0QmG1GJLzJ0Cejcik
+Message-ID: <CAP8UFD1c5JgpQwMuTPE-VWS=7-1Lw7mWVaGGXCPwaG5=VYhk2A@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v7 2/3] environment: stop using
+ core.sparseCheckout globally
+To: Olamide Caleb Bello <belkid98@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, phillip.wood123@gmail.com, 
+	gitster@pobox.com, usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, 
+	me@ttaylorr.com, karthik.188@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 25 Feb 2026, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
-> On 2026-02-22 at 00:39:04, Adrian Ratiu wrote:
->> Hi again Brian,
->> 
->> v2 of the parallel series is out if you want to review it:
->> 
->> https://lore.kernel.org/git/20260222002904.1879356-1-adrian.ratiu@collabora.com/T/#u
+On Mon, Feb 16, 2026 at 5:39=E2=80=AFPM Olamide Caleb Bello <belkid98@gmail=
+.com> wrote:
+
+> @@ -670,7 +672,8 @@ static void clear_skip_worktree_from_present_files_fu=
+ll(struct index_state *ista
 >
-> Thanks, I'll take a look either today or a little later this week.
+>  void clear_skip_worktree_from_present_files(struct index_state *istate)
+>  {
+> -       if (!core_apply_sparse_checkout ||
+> +       struct repo_config_values *cfg =3D repo_config_values(the_reposit=
+ory);
 
-Much appreciated. I'm in no rush, as I mentioned to Junio we could even
-put the parallel series on pause until we finish and land this config
-series, which is its dependency.
+Nit: it would be better with a blank line here.
 
-It's still good to have all the code out, though, and I do intend to
-periodically rebase the parallel series on this one.
-
->> P.S. I think your spam filter is blocking all my e-mails? I get this
->> reply from you:
->> 
->>  sandals@crustytoothpaste.net, ERROR CODE :554 - 5.7.1
->>  <sender4-op-o12.zoho.com[136.143.188.12]>: Client host rejected:
->>  CONN:SPAM
->> 
->>    Original-Recipient: rfc822; sandals@crustytoothpaste.net
->>    Final-Recipient: rfc822; sandals@crustytoothpaste.net
->>    Status: 554
->>    Action: failed
->>    Last-Attempt-Date: 22 Feb 2026 00:30:10 GMT
->>    Diagnostic-Code: 5.7.1 <sender4-op-o12.zoho.com[136.143.188.12]>: Client host rejected: CONN:SPAM
->
-> Yes, this is because one of Zoho's customers sent me spam and they
-> didn't act on the spam complaint in a timely manner.  I've removed that
-> block[0] and we'll see if they've fixed that in the past six years or
-> so.  If not, I'll re-block them and you can have their postmaster reach
-> out to me at my postmaster address to discuss things further.
->
-> I regret that this is necessary, but unfortunately when you run your own
-> mail server, you have to deal with all the abuse yourself and many
-> companies choose to ignore abuse complaints.
-
-Thanks, much appreciated.
-
-Collabora also runs an internal mail-server behind a VPN, so if Zoho
-continues being a problem, I'll just switch to sending mails through
-that server. I mostly use Zoho to avoid dealing with the VPN. :)
+> +       if (!cfg->apply_sparse_checkout ||
+>             sparse_expect_files_outside_of_patterns)
+>                 return;
