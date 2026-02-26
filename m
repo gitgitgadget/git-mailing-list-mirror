@@ -1,24 +1,24 @@
 Received: from pio-pvt-msa3.bahnhof.se (pio-pvt-msa3.bahnhof.se [79.136.2.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5297A372B51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528FA364930
 	for <git@vger.kernel.org>; Thu, 26 Feb 2026 20:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772139253; cv=none; b=dP7iHMmwl9h/uQh5QdzCfLBWh1x0qGbAmer0TPrx8uCWUW9NmWanhU1IGmrZaA30s+oxzlcEEAlxdsoIgKqsKmIrzdgNcq6oQL6wFkVb9pawBEwxKTejsFxJEQVgtFUk6ZnjiO8rn3hqrr9d0bQcKGcg8YpmcmvF48rghUrr8Zs=
+	t=1772139254; cv=none; b=Tusu8k2iep+L1MlX38clbCgYmjKDXYQpPbyOOtX2vrQN9tOnB1VE0Y1u2liUxZozBvV6xZ5RKmRkhDKwiRKJVCthol9naqZfrV+hXYPqac0rhlnTOUene6ly6XALMz1ImPXIbG8J46q7l18xctppMgjMTfl0RGCluVF43Lsn0xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772139253; c=relaxed/simple;
-	bh=sxwowMzS6+5R7JnxhZdwbyolkmmTshlLemAe4AuGKf0=;
+	s=arc-20240116; t=1772139254; c=relaxed/simple;
+	bh=jCRJxsDnudvlIxSyUPm7km0NkQvjpwwkp9KP6YYzoA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kR9SeB9Sm44jHP1Zx6GpOKoKtSRkSCWpq9nlYT0GMu3YwzgjcwGqbSPGv+hOZh7y2pbffrLZfb7aKFbBI8/uGeB3gkYJrAxU/92+RMsU5b4qr/64YAvY8nitlrpqsJYgRKyiG0IZ4CVNIecC4WmHKFlkNBDHzxe0mLUi8mdLuDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=Gp7cU7it; arc=none smtp.client-ip=79.136.2.42
+	 MIME-Version; b=UfzqY6Z0BiuPUSS64MxnNzbKfdDk27icS7Waw5nFB1IP4qEPNfMrdtKX8ywnspojjfaB2S78PFMtR3likQSJAP9U/fjWv1st/iRL2wu5dmmvE0tifCDK8NlTEbl6KImXqteiUU64EuR4KODgK0s9XSb75FRCGa53ho7kv4Nwoks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=imaszV0o; arc=none smtp.client-ip=79.136.2.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="Gp7cU7it"
+	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="imaszV0o"
 Received: from localhost (localhost [127.0.0.1])
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTP id 08C853F642;
-	Thu, 26 Feb 2026 21:54:03 +0100 (CET)
+	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTP id 850173F654;
+	Thu, 26 Feb 2026 21:54:02 +0100 (CET)
 X-Virus-Scanned: Debian amavisd-new at bahnhof.se
 X-Spam-Flag: NO
 X-Spam-Score: -2.1
@@ -27,21 +27,21 @@ Authentication-Results: pio-pvt-msa3.bahnhof.se (amavisd-new);
 	dkim=pass (2048-bit key) header.d=jontes.page
 Received: from pio-pvt-msa3.bahnhof.se ([127.0.0.1])
 	by localhost (pio-pvt-msa3.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oFrJxljvZ8NA; Thu, 26 Feb 2026 21:54:02 +0100 (CET)
+	with ESMTP id GP2MLYkZgb0F; Thu, 26 Feb 2026 21:54:01 +0100 (CET)
 Received: 
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTPA id F012E3F64B;
+	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTPA id 7E7BD3F642;
 	Thu, 26 Feb 2026 21:54:01 +0100 (CET)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E110AB2110;
-	Thu, 26 Feb 2026 21:52:40 +0100 (CET)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E3DAFB234B;
+	Thu, 26 Feb 2026 21:52:39 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
-	t=1772139161; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1772139160; h=from:subject:date:message-id:to:cc:mime-version:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=v+lL0KEq4qQQyYF07B7E9vsXQoAbDsTY6KuelbWlcjk=;
-	b=Gp7cU7itBxwNqLb3b7loygLWgin2R4rU6Ab0+qra2oGCFhXrdTozxFR1TPL4c6Vxhctms0
-	AMqmwixbxBSvzqrlmKZUEpqztB1cpOFbjkao+95VhCLs5zT6MbVFTdrUhNOirFqk+x/Wrr
-	zJg8g2pSAKsWyiED9vQOwS8xm/eYsMXnbzeTcag79ObpWrcSzBrYhQsYNwvT+4H1xYLf73
-	7/Og73lwOc9V5+Huiy8FyU5JyEp8RFDPUCuD5RxNhEt6zRdmCXIN8K8QZNKTJbUZzVJhmJ
-	S/jYm354nbfYMxsfbHKnj6knEQ3YpJUuCFa/p+aSYkgVhjRqPqemXXy6VL9GjA==
+	bh=EZ7/tJmUdsMAijM5mpnasnJ6bEgFShYSvXg2HZrUwu0=;
+	b=imaszV0oj2ZIqVKbmytod9Q+Gdtt6MhpIAMjD7fTR+jzbDFCqgqU5qS1ZU4WbsEq0mJBL7
+	cKgIYxSNXXfBnEZXYTg/YA7OPKCSW2X0nemkjI+h+XsQyG5RKo+swHordxSLQVPQHcxRj0
+	10SvHqInw7t5qYhavayvu582KCmWv+AB5dcOYPcBQ+msUOIi+Ri7IbGqlN7HGy/W4GwKxw
+	lnBRbq0T+YuRx0PO53NLw4j9q8wGOpSj5g87tKVLedlmf/1Rmq4p7HYoDpQ/qaYSTe6CyH
+	+5NF5MYAm0l//Bw08VFI+dvcogbBU0ExYH6DwF9r2wf/PktDpTzPBSsVGzNGYA==
 From: Jonatan Holmgren <jonatan@jontes.page>
 To: git@vger.kernel.org
 Cc: peff@peff.net,
@@ -49,9 +49,9 @@ Cc: peff@peff.net,
 	"D . Ben Knoble" <benknoble@gmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Jonatan Holmgren <jonatan@jontes.page>
-Subject: [PATCH v2 2/3] alias: treat empty subsection [alias ""] as plain [alias]
-Date: Thu, 26 Feb 2026 21:53:27 +0100
-Message-ID: <20260226205339.1535482-3-jonatan@jontes.page>
+Subject: [PATCH v2 1/3] doc: fix list continuation in alias subsection example
+Date: Thu, 26 Feb 2026 21:53:26 +0100
+Message-ID: <20260226205339.1535482-2-jonatan@jontes.page>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260226205339.1535482-1-jonatan@jontes.page>
 References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
@@ -62,73 +62,41 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-When git-config stores a key of the form alias..name, it records
-it under an empty subsection ([alias ""]). The new subsection-aware
-alias lookup would see a non-NULL but zero-length subsection and
-fall into the subsection code path, where it required a "command"
-key and thus silently ignored the entry.
-
-Normalize an empty subsection to NULL before any further processing
-so that entries stored this way continue to work as plain
-case-insensitive aliases, matching the pre-subsection behaviour.
-
-Users who relied on alias..name to create an alias literally named
-".name" may want to migrate to subsection syntax, which looks less confusing:
-
-    [alias ".name"]
-        command = <value>
-
-Add tests covering both the empty-subsection compatibility case and
-the leading-dot alias via the new syntax.
+The example showing the equivalence between alias.last and
+alias.last.command was missing the list continuation marks (+
+between the shell session block and the following prose, leaving
+the paragraph detached from the list item in the rendered output.
 
 Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
 ---
- alias.c          |  4 ++++
- t/t0014-alias.sh | 14 ++++++++++++++
- 2 files changed, 18 insertions(+)
+ Documentation/config/alias.adoc | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/alias.c b/alias.c
-index 0d636278bc..ec9833dd30 100644
---- a/alias.c
-+++ b/alias.c
-@@ -30,6 +30,10 @@ static int config_alias_cb(const char *var, const char *value,
- 	 * - [alias "name"]
- 	 *       command = value  (with subsection, case-sensitive)
- 	 */
-+	/* Treat [alias ""] (empty subsection) the same as plain [alias]. */
-+	if (subsection && !subsection_len)
-+		subsection = NULL;
-+
- 	if (subsection && strcmp(key, "command"))
- 		return 0;
+diff --git a/Documentation/config/alias.adoc b/Documentation/config/alias.adoc
+index 115fdbb1e3..26949a0ccb 100644
+--- a/Documentation/config/alias.adoc
++++ b/Documentation/config/alias.adoc
+@@ -30,13 +30,14 @@ Examples:
+ ----
+ +
+ With a Git alias defined, e.g.,
+-
+++
+     $ git config --global alias.last "cat-file commit HEAD"
+     # Which is equivalent to
+     $ git config --global alias.last.command "cat-file commit HEAD"
+++
++`git last` is equivalent to `git cat-file commit HEAD`.
  
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index 34bbdb51c5..68b4903cbf 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -183,4 +183,18 @@ test_expect_success 'subsection aliases listed in help -a' '
- 	test_grep "förgrena" output
- '
- 
-+test_expect_success 'empty subsection treated as no subsection' '
-+	test_config "alias..something" "!echo foobar" &&
-+	git something >actual &&
-+	echo foobar >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'alias with leading dot via subsection syntax' '
-+	test_config alias.".something".command "!echo foobar" &&
-+	git .something >actual &&
-+	echo foobar >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
+-`git last` is equivalent to `git cat-file commit HEAD`. To avoid
+-confusion and troubles with script usage, aliases that
++To avoid confusion and troubles with script usage, aliases that
+ hide existing Git commands are ignored except for deprecated
+ commands.  Arguments are split by
+ spaces, the usual shell quoting and escaping are supported.
 -- 
 2.53.0
 
