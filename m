@@ -1,57 +1,58 @@
-Received: from pio-pvt-msa3.bahnhof.se (pio-pvt-msa3.bahnhof.se [79.136.2.42])
+Received: from ste-pvt-msa1.bahnhof.se (ste-pvt-msa1.bahnhof.se [213.80.101.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528FA364930
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 20:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FACA3921EE
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 20:54:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.80.101.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772139254; cv=none; b=Tusu8k2iep+L1MlX38clbCgYmjKDXYQpPbyOOtX2vrQN9tOnB1VE0Y1u2liUxZozBvV6xZ5RKmRkhDKwiRKJVCthol9naqZfrV+hXYPqac0rhlnTOUene6ly6XALMz1ImPXIbG8J46q7l18xctppMgjMTfl0RGCluVF43Lsn0xE=
+	t=1772139254; cv=none; b=o03wdKgQAEd0sqvGAbpJcT/HnEUmiWYRwkYuC4NUHhckfLJwVWRXOTFyqWcozyGCtRQljprc8y5W43tl6gTDdTQRhRSeiV+eYlYxAWNMPU+t3WvWQ3nZPXb/jwIQ9hPQWMkY8W99ifRqPEJYt2Fx4PQVbO/NJmIfFWvj6yV0AbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772139254; c=relaxed/simple;
-	bh=jCRJxsDnudvlIxSyUPm7km0NkQvjpwwkp9KP6YYzoA0=;
+	bh=ZoFDWnM+ZeB+Y32rI0kI0/LVgDBJmIB//OG+KuQaDk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfzqY6Z0BiuPUSS64MxnNzbKfdDk27icS7Waw5nFB1IP4qEPNfMrdtKX8ywnspojjfaB2S78PFMtR3likQSJAP9U/fjWv1st/iRL2wu5dmmvE0tifCDK8NlTEbl6KImXqteiUU64EuR4KODgK0s9XSb75FRCGa53ho7kv4Nwoks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=imaszV0o; arc=none smtp.client-ip=79.136.2.42
+	 MIME-Version; b=uHkzy+zo9/WC9NMmTAM34crbfgldO+cDRGVEY8a4fjJvanmw3VQaw7SYewl7wtVq2JtmvaY/uhPdxYtpduAPcASHjJiLxk34ytL3dGlHEDJxUmoRuOB9ha5IY0SrifGsvQbNR0aV7AFHggX2HBf0GChyZkv4lgEmpEhASCsl9V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=knCUDRs5; arc=none smtp.client-ip=213.80.101.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="imaszV0o"
+	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="knCUDRs5"
 Received: from localhost (localhost [127.0.0.1])
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTP id 850173F654;
-	Thu, 26 Feb 2026 21:54:02 +0100 (CET)
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 853443F83E;
+	Thu, 26 Feb 2026 21:54:05 +0100 (CET)
 X-Virus-Scanned: Debian amavisd-new at bahnhof.se
 X-Spam-Flag: NO
 X-Spam-Score: -2.1
 X-Spam-Level:
-Authentication-Results: pio-pvt-msa3.bahnhof.se (amavisd-new);
+Authentication-Results: ste-pvt-msa1.bahnhof.se (amavisd-new);
 	dkim=pass (2048-bit key) header.d=jontes.page
-Received: from pio-pvt-msa3.bahnhof.se ([127.0.0.1])
-	by localhost (pio-pvt-msa3.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GP2MLYkZgb0F; Thu, 26 Feb 2026 21:54:01 +0100 (CET)
+Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
+	by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3J5Up29Q6-_r; Thu, 26 Feb 2026 21:54:04 +0100 (CET)
 Received: 
-	by pio-pvt-msa3.bahnhof.se (Postfix) with ESMTPA id 7E7BD3F642;
-	Thu, 26 Feb 2026 21:54:01 +0100 (CET)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E3DAFB234B;
-	Thu, 26 Feb 2026 21:52:39 +0100 (CET)
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 936BB3F3EF;
+	Thu, 26 Feb 2026 21:54:04 +0100 (CET)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5EAE4B234B;
+	Thu, 26 Feb 2026 21:52:41 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
-	t=1772139160; h=from:subject:date:message-id:to:cc:mime-version:
+	t=1772139162; h=from:subject:date:message-id:to:cc:mime-version:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=EZ7/tJmUdsMAijM5mpnasnJ6bEgFShYSvXg2HZrUwu0=;
-	b=imaszV0oj2ZIqVKbmytod9Q+Gdtt6MhpIAMjD7fTR+jzbDFCqgqU5qS1ZU4WbsEq0mJBL7
-	cKgIYxSNXXfBnEZXYTg/YA7OPKCSW2X0nemkjI+h+XsQyG5RKo+swHordxSLQVPQHcxRj0
-	10SvHqInw7t5qYhavayvu582KCmWv+AB5dcOYPcBQ+msUOIi+Ri7IbGqlN7HGy/W4GwKxw
-	lnBRbq0T+YuRx0PO53NLw4j9q8wGOpSj5g87tKVLedlmf/1Rmq4p7HYoDpQ/qaYSTe6CyH
-	+5NF5MYAm0l//Bw08VFI+dvcogbBU0ExYH6DwF9r2wf/PktDpTzPBSsVGzNGYA==
+	bh=jZmo8c9V6Y0vpnSnRNGn4wi/NIF8Lp74egfePTpovOY=;
+	b=knCUDRs5y9EmMCuE5JWJoSKQfP9BTPp/3a7LGj7M4zjuIaK9lMFAvslUq4zzHUttcqRPOk
+	Yc/SFr6xy6G4OvYUOByDG4SFOU7S2cIzWeqUbw9+Fwv4To/S7R0J+2n/fI/4jLr2UqEmdn
+	FpFzVTYKOlRf/It4YylFX+CfWNRzSZgrioAn0MNvA3iaC+tRIpqGpbzivHBHtURGFm4rwA
+	CkMcdTWhwz4Ta+gDiTi+j8f09eEPrYdazvai75hMFm516grg9ACexWsHnIFq+H4/kL5zfB
+	Cu1mtGcLJjKjGv1+QNovZkHWZMmLZoohfvZK6ejm7Z9o7uqJ0cjgmnex6J9xGw==
 From: Jonatan Holmgren <jonatan@jontes.page>
 To: git@vger.kernel.org
 Cc: peff@peff.net,
 	gitster@pobox.com,
 	"D . Ben Knoble" <benknoble@gmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Jonatan Holmgren <jonatan@jontes.page>
-Subject: [PATCH v2 1/3] doc: fix list continuation in alias subsection example
-Date: Thu, 26 Feb 2026 21:53:26 +0100
-Message-ID: <20260226205339.1535482-2-jonatan@jontes.page>
+	Jonatan Holmgren <jonatan@jontes.page>,
+	Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v2 3/3] git, help: fix memory leaks in alias listing
+Date: Thu, 26 Feb 2026 21:53:28 +0100
+Message-ID: <20260226205339.1535482-4-jonatan@jontes.page>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260226205339.1535482-1-jonatan@jontes.page>
 References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
@@ -65,38 +66,53 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-The example showing the equivalence between alias.last and
-alias.last.command was missing the list continuation marks (+
-between the shell session block and the following prose, leaving
-the paragraph detached from the list item in the rendered output.
+The list_aliases() function sets the util pointer of each list item to
+a heap-allocated copy of the alias command value.  Two callers failed
+to free these util pointers:
 
+ - list_cmds() in git.c collects a string list with STRING_LIST_INIT_DUP
+   and clears it with string_list_clear(&list, 0), which frees the
+   duplicated strings (strdup_strings=1) but not the util pointers.
+   Pass free_util=1 to free them.
+
+ - list_cmds_by_config() in help.c calls string_list_sort_u(list, 0) to
+   deduplicate the list before processing completion.commands overrides.
+   When duplicate entries are removed, the util pointer of each discarded
+   item is leaked because free_util=0.  Pass free_util=1 to free them.
+
+Reported-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
 ---
- Documentation/config/alias.adoc | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ git.c  | 2 +-
+ help.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/alias.adoc b/Documentation/config/alias.adoc
-index 115fdbb1e3..26949a0ccb 100644
---- a/Documentation/config/alias.adoc
-+++ b/Documentation/config/alias.adoc
-@@ -30,13 +30,14 @@ Examples:
- ----
- +
- With a Git alias defined, e.g.,
--
-++
-     $ git config --global alias.last "cat-file commit HEAD"
-     # Which is equivalent to
-     $ git config --global alias.last.command "cat-file commit HEAD"
-++
-+`git last` is equivalent to `git cat-file commit HEAD`.
+diff --git a/git.c b/git.c
+index 744cb6527e..aeb099ab11 100644
+--- a/git.c
++++ b/git.c
+@@ -119,7 +119,7 @@ static int list_cmds(const char *spec)
+ 	}
+ 	for (size_t i = 0; i < list.nr; i++)
+ 		puts(list.items[i].string);
+-	string_list_clear(&list, 0);
++	string_list_clear(&list, 1);
+ 	return 0;
+ }
  
--`git last` is equivalent to `git cat-file commit HEAD`. To avoid
--confusion and troubles with script usage, aliases that
-+To avoid confusion and troubles with script usage, aliases that
- hide existing Git commands are ignored except for deprecated
- commands.  Arguments are split by
- spaces, the usual shell quoting and escaping are supported.
+diff --git a/help.c b/help.c
+index 95f576c5c8..3e59d07c37 100644
+--- a/help.c
++++ b/help.c
+@@ -422,7 +422,7 @@ void list_cmds_by_config(struct string_list *list)
+ 	if (repo_config_get_string_tmp(the_repository, "completion.commands", &cmd_list))
+ 		return;
+ 
+-	string_list_sort_u(list, 0);
++	string_list_sort_u(list, 1);
+ 
+ 	while (*cmd_list) {
+ 		struct strbuf sb = STRBUF_INIT;
 -- 
 2.53.0
 
