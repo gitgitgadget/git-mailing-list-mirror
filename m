@@ -1,122 +1,341 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007BB43E4BF
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 16:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9142C3290A3
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 16:56:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772124758; cv=none; b=L11rprglhqltSazdTJH5Wj9jZRKzgJzakD3MpXKlkeqKm3ZNjP5MKF3hcAz/tiOtQC4ZecffGRGH5bed/36fB6/C3enXLAnReieIQ3nc99iV4Eu8NLmorYddkAbxKFvL/U0R8rhqCk14p2ZYGduEwUy2VjBNKKiZwHDwdJpL40M=
+	t=1772124980; cv=none; b=DuMRgdUWLWqVhBGBx3TX3D/F/AxSVziMt1DGNj/dtjkOmxH3HerAbBbJmZcd8XqumFGolmBMmM20aht21tGAmRG+yQwmw1mry7uFHXtgc2qLXX3jNbEAB753FbNpSxDz+g7iC1jMP3ywaWqSMCxMgpq0pKQKl7os+EDDEWftIKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772124758; c=relaxed/simple;
-	bh=S82flx3urjtPMSHVxvUI9GMar0PX0krRqXdaRP3G1gA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U3VG3PE6NYukQMNXK7SWCD8JHvqUuc3MlwwXukydz2G5k5W79KfFC6wl4sLaCLgnCoTlvYJo9V9cPFjBEi/LKmAWAmieiqp7rgW4J8W4Z3F0YND4HvzNmHvjFBnVbKqkQvK/QSr630zw5sTblT9yDLTkl9/JACE/y1GSYRLLh84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ryt+CuHJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hIMZ5P0k; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772124980; c=relaxed/simple;
+	bh=B2uIq/DFe2GaTxiohcOSHNcgfB2UgDAv9Dxd2fGUXUQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dq/U8fXmPoYla5rHCgzMjgQeE+/LQSpfoEwZncBrErtXGWDfivB54YQar/jlhu+sn+XVzU5pdm8yZdiUHMlQlX7V+ckK44TPRRNwD/taqHRMKAPNtQcjP4N9I8hlkMCsPmHKGJVevoFLHQPHxn2XQTKlOOyXnMXAChzj879PCoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V0pJc3TL; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ryt+CuHJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hIMZ5P0k"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4A92BEC057B;
-	Thu, 26 Feb 2026 11:52:36 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 26 Feb 2026 11:52:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772124756; x=1772211156; bh=ZOZunnfokg
-	EHJA2+fFZlu0eAC1rsdeZ9CxL3lfnN1no=; b=Ryt+CuHJcCQvdfHOv/+vi94xzh
-	QwV6pNHVt11fSqJ7eXC/EqmTLsGQVoj32gGhgNIHHT1V4at7KYvzcdLWrqjUMheN
-	udpXZ7KVjHxWSC7BvoaI/pCMqYaFdiDSPNWHaDlBIfr99YvSN+5Sm8ztZKTw+Bo3
-	n2eHc0S5opvs0TO943LjEySKQR5315OelzXVZuBq1U8wpAQBtYcN5HhyLfPcQICo
-	5TxAU7E/q1wtcXpag0TXRBw+Dwjr0CNICfZA8qm6eOLNnGqLbgp5X9PMSBq5yggy
-	sqQKizCHv4CxvGacCPkaFyHbKfFmv2WSGhQpmW5450yjzsrzzpLt0aUyR1pQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772124756; x=1772211156; bh=ZOZunnfokgEHJA2+fFZlu0eAC1rsdeZ9CxL
-	3lfnN1no=; b=hIMZ5P0kXkcTWxZZyYDvpY7bzReRYZR+ag22vuGhxjFhFQFpbvX
-	onrXvhH6PxJrFjjJxwEWbsSa6yh17AMz1D/q06xE6uDrsCHDwDr2a89N8juy1jwQ
-	7J6vwPR19mCZp3+n26n/DiKHIQQGXXF58l8kY0ppJgU3L/Avm4tW9oA9VwtZ005F
-	Nr5OKbfsDoOyaV6pR0mmkewAjbUUFe0IsXdffUYj2GKh8JInC1VKYi0nhghOlQbk
-	Qwuuu4jXUxD3ptyVAbmo6UP9LGthi2owbWdRWl1mxgnuaO/V2LALhFu+jMoPF0Ey
-	c664tE9whMnRuE2X3m4ETeZvTbS6j8JmWUg==
-X-ME-Sender: <xms:VHqgaQtiXI8p5R74b7D3LVo-N-CLDm-g3ZB-t5wJt8at0m_1L8y8gA>
-    <xme:VHqgae_KMHyOZP0jAFj_xJiKn3uy79BJuwAULsZHnsdC3X3ZKQelj2WHNxv_Wcufv
-    xcM4glr7RuxuR5XJh2Ux46qQef8zYj1BOd5qvbSzss4n3wH3hWW>
-X-ME-Received: <xmr:VHqgab3egkIm8yhQnasqOvOZKgDDwUg8bXOByklRE1ldzFdTF0BlSjiTl7lV510SawCh03x4W6BQU6m3cGznwnGZOsd0Sd0TOQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeiheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehlihhnuhigrdgsvggruhhthidprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhi
-    phdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:VHqgaTD-DiYa2fS_uxvkRhXxXQbNpWJ_62d3R8oZUeIM0NfDpBthew>
-    <xmx:VHqgaXeiOvcba9B57oLPQtX84kUmKXusi7M_xBd5OxavQytYEoUubg>
-    <xmx:VHqgaQ5YE-H4CMzBX89nJrE3aaA8p850R1Dr6x4H5ELrbsnrkL1sfw>
-    <xmx:VHqgaaVsBNArzQ1OrUjGBBwynVITYc_Tmi6KrbymWr73gAgVkrR5TA>
-    <xmx:VHqgabVKmWuLcIXsGbCc7Jmz9rD1MxtQe7w4jvLb_uWeE_mZdzkkB6yG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Feb 2026 11:52:35 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Li Chen <me@linux.beauty>
-Cc: git@vger.kernel.org,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-      Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v7 0/5] rebase: support --trailer
-In-Reply-To: <20260224070552.148591-1-me@linux.beauty> (Li Chen's message of
-	"Tue, 24 Feb 2026 15:05:46 +0800")
-References: <20260224070552.148591-1-me@linux.beauty>
-Date: Thu, 26 Feb 2026 08:52:34 -0800
-Message-ID: <xmqqecm74fcd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V0pJc3TL"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35851eadc17so621096a91.2
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 08:56:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772124978; x=1772729778; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yJJtTPg6P1d4SopxumdMJ67vYATSDF7J9paoHOiL+U8=;
+        b=V0pJc3TLAhGYUttvJBxJxzTDEaZ6hL0Cn8Io6TLNo/ZT69cAub1bLapKr7nrpt1z1W
+         U1++dZV3ZZNlx8pffhuKH4XX6AL1hGretAHxK50Zc9VrqnA2hJoBHKB5LDeVt9YIciK1
+         UbIQAZgNLaQKwi303mPO05SmsRy94IakJTQI+RJ4N0C6mejaqHxeQp6icXGsD9QPkT1E
+         jPOiJbBYhneH1t+FH+Oc48J6xzw2EFrTKQokeCuqIG9zXWw03h8NjmbIgtXInikeCSOD
+         0Q5XT7zbnXVhet4+MhYnIRTo3zqsarPa0sWxPs/BZTK0lPM8+Z86yY1PLGDBSm8npoJU
+         xWRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772124978; x=1772729778;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=yJJtTPg6P1d4SopxumdMJ67vYATSDF7J9paoHOiL+U8=;
+        b=kAf2vIu4mdsNEcs17HpRG7sVc8AqTewBcX4fKFJ6w7skHWgRtwixO4kFPGcv+J1/rn
+         MOVFkZApLlP7c8/SG7lWk3GXxKR7dmHctv8YqW6BBj6vg3ce8GxVtahFXCdlV5hG+LcV
+         0Q355fL7hetNIJaTaT1pXheNHz0bQBzk8qUJiiTfxtHJ+G4XJ0ESwXD0BK0bPBzfNksP
+         k2yWDvbscwgdxzf3UjnhAbz05o3jFvQAByFn2QNgc44i/875KQALvpgFi4IetqZFp4yb
+         V1Xth2ZXZ87Eor3/rZ9OHVzS5O4stECbhfZfP3FKWDZj4ZB2WHgtz7ZF3GApghwjP6Gn
+         kMuQ==
+X-Gm-Message-State: AOJu0YwX8M8CX3Z7QoH7NTlWLJUYL+6B5pNnAaX9xhQrI7f8pwDX0nZ4
+	fv+npKbwEAhntyaOoFhyiitq/63eLb5xNKJLur3QgWyGIeCNM38eOXPwXV+P3w==
+X-Gm-Gg: ATEYQzwG52yyYeY2xvtpwzuhopM5w2Qkfju2XLgGwPgFv8UdEUhOrk2OMW6tbq+ER7U
+	o/8zMySITQ9nP7n0QSq+x6aJHd7CxVrc/kaCH31qneuKC0bOgCVJnZEjKn8a3UKmTXM+Ta6nSZt
+	Bkr47OCVoGeo83n1gQv4HpyKLu4ToPDU6tel6bSVeq0CxVCNq7rc3dO9Iy1KZcZ0lx22sgwMlM2
+	3zfY80THBD5v0zuqY3gsoiLFjgbpl/b8i9Tlo3DlwgBEQ/gwvQFtg7xVqSU9zf4E0lDQyWDMXDW
+	DhOthsXP2nFVk48d4HNsIC4HW94/6WDE6P892QZknTmjgLjTWaC0vAm2WXcr25GKlyk4BIbQ+VC
+	N3NP6wAFYUlU/wUrDCNrF/Nc6NVcLt/mVdGwedZSlIymgSR3PaoGarJ0BAmP+haYALknUmaM2YL
+	FdQHFLpS2UJJalAkyibQscJVckqlY9ltV5KeU5egU/C47YRtOLEvvjmCjwJjI=
+X-Received: by 2002:a17:90b:1f86:b0:354:9b26:cdf7 with SMTP id 98e67ed59e1d1-358ae8121camr20346322a91.14.1772124977618;
+        Thu, 26 Feb 2026 08:56:17 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:5354:a570:7b23:3daf])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3593dcad237sm3006692a91.3.2026.02.26.08.56.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Feb 2026 08:56:17 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: ben.knoble@gmail.com,
+	gitster@pobox.com,
+	philipoakley@iee.email,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH v3] send-email: validate charset name in 8bit encoding prompt
+Date: Thu, 26 Feb 2026 21:46:34 +0530
+Message-ID: <20260226165559.187261-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0.154.g7c02d39fc2.dirty
+In-Reply-To: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Li Chen <me@linux.beauty> writes:
+When a non-ASCII character is detected in the body or subject of the email
+the user is prompted with,
 
-   > Apologies for the long delay in sending v7.
->
-> v7 is based on origin/master at v2.53.0-154-g7c02d39fc2.
->
-> This series routes trailer insertion through an in-process path, removing the
-> fork/exec to builtin/interpret-trailers.
->
-> The first four commits refactor trailer rewriting in builtin/interpret-trailers
-> and trailer.c so callers can reuse a single in-process helper (used by git
-> interpret-trailers, git commit and git tag). The final commit adds git rebase
-> --trailer, currently supported with the merge backend only (rejecting apply-only
-> scenarios and validating input early).
->
-> v7:
-> Rebased onto origin/master at v2.53.0-154-g7c02d39fc2.
-> Split out a new patch to parse --trailer with OPT_STRVEC in git commit and git
-> tag.
-> Use strbuf_write() in interpret-trailers when emitting buffered output.
-> Restore --in-place rewriting semantics via tempfile+rename.
-> Drop wrapper.c/h and validate trailer args via validate_trailer_args().
-> Drop redundant rebase basic-state save/restore for --trailer arguments.
-> ...
-> Comments very very welcome!
+        Which 8bit encoding should I declare [UTF-8]? foo
 
-Yes indeed.  The discussion thread for v6 saw quite a bit of
-activity, but this one is quiet.  Is everybody happy with this
-iteration?
+After this the input string is validated by the regex, based on the fact
+that the charset string will be minimum 4 characters [1]. If the string is
+more than 4 letters the email is sent, if not then a second prompt to
+confirm is asked to the user,
 
-Thanks.
+        Are you sure you want to use <foo> [y/N]? y
+
+This relies on a length based regex heuristic check to validate the user
+input, and can allow clearly invalid charset names to pass if the input is
+greater than 4 characters.
+
+Add a semantic validation of the charset name using the
+Encode::find_encoding() module of perl. If the encoding is not recognized,
+warn the user and ask for confirmation before proceeding. After this
+validation the lenght based validation becomes redundant and also breaks
+flow, so change the regex of valid input to any non blank string.
+
+Introduce a dedicated helper for confirmation handling that can be reused
+both by ask() and the custom 8bit prompt flow. Make the encoding warning
+logic specific to the 8bit prompt, this reduces the load on ask(), and
+improves maintainability.
+
+Additionally, the wording of the first prompt can confuse the user if not
+read properly or under any default assumptions for a yes/no prompt. Change
+the wording to make it explicitly clear to the user that the prompt needs a
+string input, UTF-8 being the default.
+
+The intended flow is,
+
+        Declare which 8bit encoding to use [default: UTF-8]? foobar
+        warning: 'foobar' does not appear to be a valid charset name.
+        Are you sure you want to use <foobar> [y/N]?
+
+[1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
+
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+---
+Changes in v2:
+ - Added a helper function confirm_ask() to handle yes/no confirmation prompts.
+ - Added the validation and warning logic in the 8bit prompt instead of ask().
+
+ git-send-email.perl   | 36 +++++++++++++++++++++++++++++-------
+ t/t9001-send-email.sh |  2 +-
+ 2 files changed, 30 insertions(+), 8 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index cd4b316ddc..3230b80701 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -23,6 +23,7 @@
+ use Git::LoadCPAN::Error qw(:try);
+ use Git;
+ use Git::I18N;
++use Encode qw(find_encoding);
+
+ Getopt::Long::Configure qw/ pass_through /;
+
+@@ -984,6 +985,18 @@ sub get_patch_subject {
+ 	}
+ }
+
++sub confirm_ask {
++	my ($resp) = @_;
++	my $term = term();
++	return 0
++		unless defined $term->IN and defined fileno($term->IN) and
++		       defined $term->OUT and defined fileno($term->OUT);
++	my $yesno = $term->readline(
++		# TRANSLATORS: please keep [y/N] as is.
++		sprintf(__("Are you sure you want to use <%s> [y/N]? "), $resp));
++	return defined $yesno && $yesno =~ /y/i;
++}
++
+ sub ask {
+ 	my ($prompt, %arg) = @_;
+ 	my $valid_re = $arg{valid_re};
+@@ -1008,10 +1021,7 @@ sub ask {
+ 			return $resp;
+ 		}
+ 		if ($confirm_only) {
+-			my $yesno = $term->readline(
+-				# TRANSLATORS: please keep [y/N] as is.
+-				sprintf(__("Are you sure you want to use <%s> [y/N]? "), $resp));
+-			if (defined $yesno && $yesno =~ /y/i) {
++			if (confirm_ask($resp)) {
+ 				return $resp;
+ 			}
+ 		}
+@@ -1044,9 +1054,21 @@ sub file_declares_8bit_cte {
+ 	foreach my $f (sort keys %broken_encoding) {
+ 		print "    $f\n";
+ 	}
+-	$auto_8bit_encoding = ask(__("Which 8bit encoding should I declare [UTF-8]? "),
+-				  valid_re => qr/.{4}/, confirm_only => 1,
+-				  default => "UTF-8");
++	while(1) {
++		my $encoding = ask(__("Declare which 8bit encoding to use [default: UTF-8]? "),
++		valid_re => qr/^\S+$/,
++		default  => "UTF-8");
++		next unless defined $encoding;
++		if (find_encoding($encoding)) {
++			$auto_8bit_encoding = $encoding;
++			last;
++		}
++		printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $encoding;
++		if (confirm_ask($encoding)) {
++			$auto_8bit_encoding = $encoding;
++			last;
++		}
++	}
+ }
+
+ if (!$force) {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index e56e0c8d77..24f6c76aee 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1691,7 +1691,7 @@ test_expect_success $PREREQ 'asks about and fixes 8bit encodings' '
+ 			email-using-8bit >stdout &&
+ 	grep "do not declare a Content-Transfer-Encoding" stdout &&
+ 	grep email-using-8bit stdout &&
+-	grep "Which 8bit encoding" stdout &&
++	grep "Declare which 8bit encoding to use" stdout &&
+ 	grep -E "Content|MIME" msgtxt1 >actual &&
+ 	test_cmp content-type-decl actual
+ '
+
+Range-diff against v2:
+1:  954c1dae9f ! 1:  748bb03a00 send-email: validate charset name in 8bit encoding prompt
+    @@ Commit message
+         When a non-ASCII character is detected in the body or subject of the email
+         the user is prompted with,
+
+    -      Which 8bit encoding should I declare [UTF-8]? foo
+    +            Which 8bit encoding should I declare [UTF-8]? foo
+
+         After this the input string is validated by the regex, based on the fact
+         that the charset string will be minimum 4 characters [1]. If the string is
+         more than 4 letters the email is sent, if not then a second prompt to
+         confirm is asked to the user,
+
+    -      Are you sure you want to use <foo> [y/N]? y
+    +            Are you sure you want to use <foo> [y/N]? y
+
+         This relies on a length based regex heuristic check to validate the user
+         input, and can allow clearly invalid charset names to pass if the input is
+    @@ Commit message
+         validation the lenght based validation becomes redundant and also breaks
+         flow, so change the regex of valid input to any non blank string.
+
+    +    Introduce a dedicated helper for confirmation handling that can be reused
+    +    both by ask() and the custom 8bit prompt flow. This makes the encoding
+    +    warning logic specific to the 8bit prompt, reduces the load on ask(), and
+    +    improves maintainability.
+    +
+         Additionally, the wording of the first prompt can confuse the user if not
+         read properly or under any default assumptions for a yes/no prompt. Change
+         the wording to make it explicitly clear to the user that the prompt needs a
+         string input, UTF-8 being the default.
+
+    +    The intended flow is,
+    +
+    +            Declare which 8bit encoding to use [default: UTF-8]? foobar
+    +            warning: 'foobar' does not appear to be a valid charset name.
+    +            Are you sure you want to use <foobar> [y/N]?
+    +
+    +    [1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
+    +
+         Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+
+      ## git-send-email.perl ##
+    @@ git-send-email.perl
+      Getopt::Long::Configure qw/ pass_through /;
+
+     @@ git-send-email.perl: sub get_patch_subject {
+    + 	}
+    + }
+    +
+    ++sub confirm_ask {
+    ++	my ($resp) = @_;
+    ++	my $term = term();
+    ++	return 0
+    ++		unless defined $term->IN and defined fileno($term->IN) and
+    ++		       defined $term->OUT and defined fileno($term->OUT);
+    ++	my $yesno = $term->readline(
+    ++		# TRANSLATORS: please keep [y/N] as is.
+    ++		sprintf(__("Are you sure you want to use <%s> [y/N]? "), $resp));
+    ++	return defined $yesno && $yesno =~ /y/i;
+    ++}
+    ++
+      sub ask {
+      	my ($prompt, %arg) = @_;
+      	my $valid_re = $arg{valid_re};
+    -+	my $warn_invalid = $arg{warn_invalid};
+    - 	my $default = $arg{default};
+    - 	my $confirm_only = $arg{confirm_only};
+    - 	my $resp;
+     @@ git-send-email.perl: sub ask {
+    - 			return $default;
+    - 		}
+    - 		if (!defined $valid_re or $resp =~ /$valid_re/) {
+    --			return $resp;
+    -+			if ($warn_invalid) {
+    -+				if (find_encoding($resp)) {
+    -+					return $resp;
+    -+				} else {
+    -+					printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $resp;
+    -+				}
+    -+			} else {
+    -+				return $resp;
+    -+			}
+    + 			return $resp;
+      		}
+      		if ($confirm_only) {
+    - 			my $yesno = $term->readline(
+    +-			my $yesno = $term->readline(
+    +-				# TRANSLATORS: please keep [y/N] as is.
+    +-				sprintf(__("Are you sure you want to use <%s> [y/N]? "), $resp));
+    +-			if (defined $yesno && $yesno =~ /y/i) {
+    ++			if (confirm_ask($resp)) {
+    + 				return $resp;
+    + 			}
+    + 		}
+     @@ git-send-email.perl: sub file_declares_8bit_cte {
+      	foreach my $f (sort keys %broken_encoding) {
+      		print "    $f\n";
+      	}
+     -	$auto_8bit_encoding = ask(__("Which 8bit encoding should I declare [UTF-8]? "),
+     -				  valid_re => qr/.{4}/, confirm_only => 1,
+    -+	$auto_8bit_encoding = ask(__("Declare which 8bit encoding to use [default: UTF-8]? "),
+    -+				  valid_re => qr/^\S+$/, confirm_only => 1,
+    -+				  warn_invalid => 1,
+    - 				  default => "UTF-8");
+    +-				  default => "UTF-8");
+    ++	while(1) {
+    ++		my $encoding = ask(__("Declare which 8bit encoding to use [default: UTF-8]? "),
+    ++		valid_re => qr/^\S+$/,
+    ++		default  => "UTF-8");
+    ++		next unless defined $encoding;
+    ++		if (find_encoding($encoding)) {
+    ++			$auto_8bit_encoding = $encoding;
+    ++			last;
+    ++		}
+    ++		printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $encoding;
+    ++		if (confirm_ask($encoding)) {
+    ++			$auto_8bit_encoding = $encoding;
+    ++			last;
+    ++		}
+    ++	}
+      }
+
+    + if (!$force) {
+
+      ## t/t9001-send-email.sh ##
+     @@ t/t9001-send-email.sh: test_expect_success $PREREQ 'asks about and fixes 8bit encodings' '
+--
+2.53.0.154.g7c02d39fc2.dirty
