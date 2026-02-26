@@ -1,268 +1,483 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508FB3A0E94
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 09:27:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772098045; cv=pass; b=oBUu1w6s08J9jbJgb+2nin2/J2iPHEGp9GD4TmWxxMA2LX3pCR/OKIUla6bA94aV9DE886Yom4F1hEBTwOkSN5LdvflAKSfcHCslTrxQTanUMFBkQ6hmPk06bzwNRMsePxHd7LEBNtnvTQPv4bzvcq/muIuYVXiLCKU2Ii+RpRw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772098045; c=relaxed/simple;
-	bh=jAN+3WRdwHw+e7E3oN5i7qw+Bq5ioTezG73YGJiXpJ8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P7jkseO1b6PTifZBmrKsYaHOwZQtCpsuoERvIHDv3tHeayBT4WiNrwF0FUg5t9DPP3fmcaf6DJx8WpGiqPpCoB+g2eLXDIIN9PxpBlvRAx+wq/EhX3O+76gTsiIp6Sh3ZgEkxLnzqVCxZGkkzlfLtRXSZgixfFukwbfzstF49xo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cIfrmE/C; arc=pass smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8021932692B
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 10:33:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772102027; cv=none; b=qbEqf6Y3zCoun5ikRwAAeJxrg/B1OOOyAmRGzr0vCb+TY5YE6X+FGGFrQja8PNH/BXQM7KK8IwG3S2mbYnAsHhiAYS23pT15DZTBohgQcbmqLqB6jwFTPD/6AQqQlL3wYe+bDqvZcKae3PfLKIxl3KO+s7b6dHe1oeRx3HsgjzE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772102027; c=relaxed/simple;
+	bh=sWWOLWtuGPy+crEDx/5SUbQspceXKI2+Ue+B38HBqD8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Se5F1j+QwyD9avVM5K4pX2E2LKasXCaWAN4XOW8WMJ042QYjZSZNkgsjuoZ6Rwm94+oExiJz1xp3FarT0vIpSd4wbbNkzmrjfk2ipnFYqxrdb326Bs5xMPxY6kD9v/I8wQW+Ho26JtO9Ef20Ez6kJL3LXlM5NwZz+BMDoKqiiwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l8ieO0uc; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cIfrmE/C"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-56a8d7bb872so794721e0c.1
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 01:27:22 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772098041; cv=none;
-        d=google.com; s=arc-20240605;
-        b=hQejGvuWzqqQpZqS7I3mCVJQMXO8rJpzAlbSiKWcueNEMznGFbwMQoIDQnD9WJQhhL
-         tpByJODemj3gbalmOp8YiDJkrULcOU1K4nMidkdJTjPre46xogr03U4I3Pu7lBbc2W2R
-         XT04MzaKnvT4vyR4AXTHwmYokMn594klL0Q7OLPtdNYDJoI4kmSdNCIaDAPjthNh4WGU
-         e4xgp/QWKD/o5Omal52jEtq3F7dV8ipWruwh0aU3EUesW9WwqZYCyNhmKYq2jDgyA484
-         DxcEfkn4KsO4A3KrZGd8WQa/PvIg6+uN66Dt30UdwFX/lF1SxhGduilYhARVvFEjKwLD
-         YpHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=QHMSDq18FEb3jkxj/8CDuwQmacIl+g2zrT+fNE+W9ag=;
-        fh=NHcSxoEZmGAQKwxj0VK7htoH9aWGrHTbW87oIzTL0Yw=;
-        b=L/UpTRSowSPqOZs3rcb7FzQe0ssBjRmjSPP69cBrqRdSazjEyuGMtNmL+wpO7hB2Mh
-         EGuURZneWIhwQbSrL0IBWNj2sVkZ0POTdvKY61wgQPI8u/AvmRhyKOHy8ezpJgY67Qca
-         C3RaH22QjKSEtTVGtGSK0CE0FGQ2omLwNSzmvC1/ocbrCj+UqV6g/Et0iX6sicdoPVUu
-         DPLOMpkFdYPeU5BMKhPBZ8yxmbd3P4Bo3PbQmV2Y7ne0c/EB7diomM5gFmIr6gM48YMN
-         HM4amxSgSBiKRJhLyNFVjSjBfABUUIoIrReojLgnd/QJoKyfO9uoBxsQI8gnFOPj0+FD
-         S+Zg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l8ieO0uc"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8cb3fb47559so68231285a.1
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 02:33:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772098041; x=1772702841; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=QHMSDq18FEb3jkxj/8CDuwQmacIl+g2zrT+fNE+W9ag=;
-        b=cIfrmE/CpI4SW6kWlnTdeQ/azXE21Se9HS/+YTE0y2ITk5BA4wGl0pERW+DchYFJ2x
-         fhXIuo+CxfO7wLiGwovP0iuF4P7TnYpUIvP/ry6iTPeAWfgKcDHN7aDn1dui2Bu3u2r9
-         OnEL4j87dMASioxuztPllzCpML+LzfQPiQr+sJdc1xcfmZzYTMUtRnLhcqPLBwyeK2qC
-         3rSn/NEwsGX4EKpqm+tVExryOVs6l1rTV/6hVvXQwv6GrGAKhdXwENhIbGkbLtQ3aBiH
-         8r2r6sAn0XFQXSONfJzedRl7k6CCEp4tyxzVjnhAU72R4yeKOlZQMpATCQ2uLAGLqFlz
-         fXSg==
+        d=gmail.com; s=20230601; t=1772102024; x=1772706824; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kCB9kPvfgG9h3k6Fwa+FbszqUvuHkUmD8d7PfUa/BXo=;
+        b=l8ieO0ucot2+mAWr8yUTL4ia1/Rja2DjSCfNUStxYkE5vjL62zIrOjU98TwInpqbJN
+         0aOUrOHZJlVEOhPlolJFydjCbX2dSGRVY78+H1nwfzaorGQUDKdVBE/BDWIahEZ8mEr0
+         vY5hWEa+ASJtydn9WfAeevWLC2iHo1h8BnSz7F3nDMaNW3ubhQ36y6n2JQ5IijkF3MKL
+         5AFBhoAL7ILHJ4NPN02D/iM05hEBRpOJTm3S5Y9DnscNIHFyv7gCBKbLKJI7PVuliN+f
+         QddQPWlNaVw/aiQ/C08gW8760u7d/4wcqJj2otHBuDw0/A+KyiekWBKbutc3O2NN7PGs
+         RX2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772098041; x=1772702841;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QHMSDq18FEb3jkxj/8CDuwQmacIl+g2zrT+fNE+W9ag=;
-        b=kcMsq5shSUegT1c1T22Rhz2YphRh5f+LV+xaxD7XOUnn+JBh3JXrT5yIp9MmUa0qSB
-         Jb1L8pAMHw/vINx1noBGW6LsneqeJBHLij+8vScgpQfYJ7dwhdPSJuM6n9sL90rpV6Cl
-         sFw81ABF7E55aRjWi/FA9NbKiYh+2VaL+KHggSBxBreat6q0SuqWmZa/G2n1MdmgxRir
-         F7OQQO3hZ3m/BXZNLMb8MlfJL6w5IPFOAZQch06IeFFOrVDrqlCmAx3Le2VBcDucZMQx
-         F5VO/xNojisHkM0k+5eHT3bmizhg/kku0SVBvzVBy2ovomwFlXaB40duoVAj5c1VfQBE
-         HnVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWsZtw3DuFcGO0zJgqWn4RcWP4CHOpPkYEsBAzFDcoW8/YdRXMA+PkPFRkFf+UDSsBikHM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6CWXbkE3s8lEfxhBrtqELg1Jv8gzMT9cqsPZDdBEo7fmAlJiI
-	10ZDBEpeaQ7olSRBtV73iABVGN7RblhO2wCxfcpZtx1YrCdZ7cwkRRR1hFYmM3yPXAf7mwP1PMX
-	9SWDreOcKJ+bz4vjCb6kS3O8y4/DhLgU=
-X-Gm-Gg: ATEYQzwqOmaQhAzjwMNfTb/r+9arBt+knityp1gpw1yk3OJ8jwpBh7vUd7RCllXTfcf
-	taL+2LFMlT+3BKT8vAz5tvzOk/Ha/Fo+DIjsTdb3I9ewcfu6yMXgSFX7UpKjhbtV7dWdY7HKZjH
-	OhKZCClKqZNdRY8UjW6p8TtM4pEVi8wIB6mZ/HRjV7q3EYFNaPJwIZZ43ce0ePPPeQCGckgO1n2
-	O+Jl8dej0llD+a7wnZ4aXOJfXD7qJK4SOoZXahE/YE/KJoy9BvdyLXYhl8/N3dyNL4aWODdR/yX
-	V+3pJRurXhOAVtqJEiP30dLCEVsmRmcWqv0C2ytEOA==
-X-Received: by 2002:a05:6102:dd3:b0:5ef:ac78:3c77 with SMTP id
- ada2fe7eead31-5ff20a672f9mr734915137.18.1772098041071; Thu, 26 Feb 2026
- 01:27:21 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 26 Feb 2026 01:27:20 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 26 Feb 2026 01:27:20 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <b98780d7-3aa9-4838-9234-290b1d72ffd7@gmail.com>
-References: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com> <b98780d7-3aa9-4838-9234-290b1d72ffd7@gmail.com>
+        d=1e100.net; s=20230601; t=1772102024; x=1772706824;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=kCB9kPvfgG9h3k6Fwa+FbszqUvuHkUmD8d7PfUa/BXo=;
+        b=iXDFWQqkpAW8Jjr5sSCbwiLBs4BjmUnioJiocqqgI6SDrDzLD20LYCS7xNu87T6H0U
+         A8Tj5bVrpfPIWqajM0zKQLqIoWCD32ncTkBUMKODeZp7pfZmNyhBooqhSWxhd7QOSO9q
+         xvufevnUE2SvjTYtVx6x9i/E1XHujobWWRFEq87q8MaMhvCH6hNaxJB7iMAxi0vRPLXu
+         aZ34O3vBp5xlZsKbhsUOY2AoZj4dGK9qrEr+tSzeSg5iRg9LyA4psDByxuTYplgQbAE7
+         aS0rJNjuNEUiYWgHqrtakgEmtfamzaPzeZCBYr6YfFu0uAnkibZM5uV4Iu+BykyA+dFH
+         aW8w==
+X-Gm-Message-State: AOJu0Yx0J5WWr6f5zbF2hyySqwcxXNUFGEogFTSJYqh/YgaAENKijmjo
+	ZN3qWvix7oQ2v/vEMtGqiOzaIoVJ4CkxhUpWGp2G2jLM4gQR4W7DMwjcNF6ZhA==
+X-Gm-Gg: ATEYQzwu1f4YQ9GCmLATJZl+ydFhenIXnuq9Q/1ZjNkjETTTWP69nhtABNZV303IKlR
+	OX0yP5O7K19CJFjNt+AyKtZiZo34qQfYBUImEnqJc9AaCVN6K0xvU73emSMfeSYqjZIFyxBzdCL
+	vhwwrLg2xp1DBXkOYAvNI3acSxJqmQwf3cf/HmSmBdxucZ9C1y1S6kCYr3RhVdmR3Mfh/Vd5KV8
+	sQ/5iyGM0Xu5Vgg5nTCa1fmRKaDGGe0C8yD1+vJnZGapUcppHT6Szs8YyHjroOkKTU0pAM3KEC1
+	VwQ0Zvf2ZBeRboq6geUnez6QLc93Miqvg06k7/7TxYktuPP3MADa3nTNgd3uAFDPjLkRyC7xo3w
+	2qZSosylTSMsQJCARH6mTxhSwIWHq+wv5djfAdX2b9fEoRcHYx/0qOt+qg93b3aUtBY8GABimLn
+	i92fxp9koMbsFyBbV0IDaitoSv
+X-Received: by 2002:a05:620a:4801:b0:8c9:f8e5:9f12 with SMTP id af79cd13be357-8cb8ca807b8mr2745783585a.57.1772102023678;
+        Thu, 26 Feb 2026 02:33:43 -0800 (PST)
+Received: from [127.0.0.1] ([52.150.29.101])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899c738cba0sm14204306d6.38.2026.02.26.02.33.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Feb 2026 02:33:42 -0800 (PST)
+Message-Id: <pull.2138.v30.git.git.1772102022.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v29.git.git.1772056263.gitgitgadget@gmail.com>
+References: <pull.2138.v29.git.git.1772056263.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 26 Feb 2026 10:33:40 +0000
+Subject: [PATCH v30 0/2] status: add status.compareBranches config for multiple branch comparisons
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 26 Feb 2026 01:27:20 -0800
-X-Gm-Features: AaiRm50EejZ8in2C50NybO40ao6AZXYt95N7q5c63p__WM64ZHiB2_3zvwL6CfY
-Message-ID: <CAOLa=ZSyeNg7kSGV4=5wg02FYomGe0CbJ7GzCzT6okC64UWHMA@mail.gmail.com>
-Subject: Re: [GSoC][Draft Proposal v3] Refactoring in order to reduce Git's
- global state
-To: Tian Yuchen <a3205153416@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000003eeb78064bb6bae3"
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
---0000000000003eeb78064bb6bae3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
+ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
+cc: Ben Knoble ben.knoble@gmail.com cc: "Kristoffer Haugsbakk"
+kristofferhaugsbakk@fastmail.com cc: Phillip Wood phillip.wood123@gmail.com
+cc: Nico Williams nico@cryptonector.com cc: Patrick Steinhardt ps@pks.im cc:
+Jeff King peff@peff.net
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+Harald Nordgren (2):
+  refactor format_branch_comparison in preparation
+  status: add status.compareBranches config for multiple branch
+    comparisons
 
-Hello Tian,
+ Documentation/config/status.adoc |  19 ++
+ remote.c                         | 178 ++++++++++++++----
+ t/t6040-tracking-info.sh         | 310 +++++++++++++++++++++++++++++++
+ 3 files changed, 470 insertions(+), 37 deletions(-)
 
-> Hi mentors and the git community,
->
-> Here is the proposal V3.
->
 
-[snip]
+base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v30
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v30
+Pull-Request: https://github.com/git/git/pull/2138
 
->
-> -- Approach
->
-> The task at hand goes beyond simply repackaging the global variables
-> into the struct repository structure. Based on my recent experience
-> refactoring setup.c, I realized that libification requires careful
-> management of variable lifecycles and api boundaries:
->
->      [ Current ]
->      Core functions --------reads-------> Global variables (via getenv)
->                                           [Thread unsafe]
->
->      [ Target ]
->      Core functions ----passes context--> struct repository
->                                                  | owns
->                                                  v
->                                           struct git_env
->
-> Although the principle is simple, the scope of changes is extensive. The
-> following three-step approach can serve as a guiding principle for it:
->
->    1. Identify isolated environment variables currently residing in the
->       global scope. Introduce a dedicated structure to hold these states,
->       e.g. `struct git_env` within the `struct repository`.
+Range-diff vs v29:
 
-Well it depends, we already have `struct repo_settings`, and individual
-settings within the `struct repository` struct. It would be a very case
-by case basis, to understand which variables fit where.
+ 1:  48db1f4847 = 1:  7f517b8c7f refactor format_branch_comparison in preparation
+ 2:  6a88f41fa5 ! 2:  501bd40294 status: add status.compareBranches config for multiple branch comparisons
+     @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_
+      +	if (!branch || !name)
+      +		return NULL;
+      +
+     -+	if (!strcasecmp(name, "@{upstream}"))
+     ++	if (!strcasecmp(name, "@{upstream}")) {
+      +		resolved = branch_get_upstream(branch, NULL);
+     -+	else if (!strcasecmp(name, "@{push}"))
+     ++	} else if (!strcasecmp(name, "@{push}")) {
+      +		resolved = branch_get_push(branch, NULL);
+     -+	else {
+     -+		warning(_("ignoring value '%s' for status.compareBranches; only @{upstream} and @{push} are supported"),
+     ++	} else {
+     ++		warning(_("ignoring value '%s' for status.compareBranches, "
+     ++			  "only @{upstream} and @{push} are supported"),
+      +			name);
+      +		return NULL;
+      +	}
+     @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_
+      -				     bool show_divergence_advice)
+      +				     unsigned flags)
+       {
+     -+	bool enable_push_advice = (flags & ENABLE_ADVICE_PUSH) &&
+     -+		advice_enabled(ADVICE_STATUS_HINTS);
+     -+	bool enable_pull_advice = (flags & ENABLE_ADVICE_PULL) &&
+     -+		advice_enabled(ADVICE_STATUS_HINTS);
+     -+	bool enable_divergence_advice = (flags & ENABLE_ADVICE_DIVERGENCE) &&
+     -+		advice_enabled(ADVICE_STATUS_HINTS);
+     ++	bool use_push_advice = (flags & ENABLE_ADVICE_PUSH);
+     ++	bool use_pull_advice = (flags & ENABLE_ADVICE_PULL);
+     ++	bool use_divergence_advice = (flags & ENABLE_ADVICE_DIVERGENCE);
+      +
+       	if (up_to_date) {
+       		strbuf_addf(sb,
+     @@ remote.c: static void format_branch_comparison(struct strbuf *sb,
+       			    _("Your branch and '%s' refer to different commits.\n"),
+       			    branch_name);
+      -		if (advice_enabled(ADVICE_STATUS_HINTS))
+     -+		if (enable_push_advice)
+     ++		if (use_push_advice && advice_enabled(ADVICE_STATUS_HINTS))
+       			strbuf_addf(sb, _("  (use \"%s\" for details)\n"),
+       				    "git status --ahead-behind");
+       	} else if (!theirs) {
+     @@ remote.c: static void format_branch_comparison(struct strbuf *sb,
+       			   ours),
+       			branch_name, ours);
+      -		if (advice_enabled(ADVICE_STATUS_HINTS))
+     -+		if (enable_push_advice)
+     ++		if (use_push_advice && advice_enabled(ADVICE_STATUS_HINTS))
+       			strbuf_addstr(sb,
+       				_("  (use \"git push\" to publish your local commits)\n"));
+       	} else if (!ours) {
+     @@ remote.c: static void format_branch_comparison(struct strbuf *sb,
+       			   theirs),
+       			branch_name, theirs);
+      -		if (advice_enabled(ADVICE_STATUS_HINTS))
+     -+		if (enable_pull_advice)
+     ++		if (use_pull_advice && advice_enabled(ADVICE_STATUS_HINTS))
+       			strbuf_addstr(sb,
+       				_("  (use \"git pull\" to update your local branch)\n"));
+       	} else {
+     @@ remote.c: static void format_branch_comparison(struct strbuf *sb,
+       			branch_name, ours, theirs);
+      -		if (show_divergence_advice &&
+      -		    advice_enabled(ADVICE_STATUS_HINTS))
+     -+		if (enable_divergence_advice)
+     ++		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS))
+       			strbuf_addstr(sb,
+       				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
+       	}
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	test_cmp expect actual
+      +'
+      +
+     -+test_expect_success 'setup for compareBranches tests' '
+     -+	(
+     -+		cd test &&
+     -+		git config push.default current &&
+     -+		git config status.compareBranches "@{upstream} @{push}"
+     -+	)
+     -+'
+     -+
+      +test_expect_success 'status.compareBranches from upstream has no duplicates' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout main &&
+     -+		git status >../actual
+     -+	) &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout main &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch main
+      +	Your branch is up to date with ${SQ}origin/main${SQ}.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status.compareBranches shows ahead of both upstream and push branch' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout -b feature2 origin/main &&
+     -+		git push origin HEAD &&
+     -+		advance work &&
+     -+		git status >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout -b feature2 origin/main &&
+     ++	git -C test push origin HEAD &&
+     ++	(cd test && advance work) &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature2
+      +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'checkout with status.compareBranches shows both branches' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout feature2 >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout feature2 >actual &&
+      +	cat >expect <<-EOF &&
+      +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
+      +
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status.compareBranches shows diverged and ahead' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout feature4 &&
+     -+		git branch --set-upstream-to origin/main &&
+     -+		git push origin HEAD &&
+     -+		advance work &&
+     -+		git status >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout feature4 &&
+     ++	git -C test branch --set-upstream-to origin/main &&
+     ++	git -C test push origin HEAD &&
+     ++	(cd test && advance work) &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature4
+      +	Your branch and ${SQ}origin/main${SQ} have diverged,
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status --no-ahead-behind with status.compareBranches' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout feature4 &&
+     -+		git status --no-ahead-behind >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout feature4 &&
+     ++	git -C test status --no-ahead-behind >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature4
+      +	Your branch and ${SQ}origin/main${SQ} refer to different commits.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	(
+      +		cd test &&
+      +		git remote add upstream ../. &&
+     -+		git fetch upstream &&
+     -+		git config remote.pushDefault origin
+     ++		git fetch upstream
+      +	)
+      +'
+      +
+      +test_expect_success 'status.compareBranches with upstream and origin remotes' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout -b feature5 upstream/main &&
+     -+		git push origin &&
+     -+		advance work &&
+     -+		git status >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout -b feature5 upstream/main &&
+     ++	git -C test push origin &&
+     ++	(cd test && advance work) &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature5
+      +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status.compareBranches supports ordered upstream/push entries' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout -b feature6 upstream/main &&
+     -+		git push origin &&
+     -+		advance work &&
+     -+		git -c status.compareBranches="@{push} @{upstream}" status >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test status.compareBranches "@{push} @{upstream}" &&
+     ++	git -C test checkout -b feature6 upstream/main &&
+     ++	git -C test push origin &&
+     ++	(cd test && advance work) &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature6
+      +	Your branch is ahead of ${SQ}origin/feature6${SQ} by 1 commit.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status.compareBranches with diverged push branch' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout -b feature7 upstream/main &&
+     -+		advance work &&
+     -+		git push origin &&
+     -+		git reset --hard upstream/main &&
+     -+		advance work &&
+     -+		git status >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout -b feature7 upstream/main &&
+     ++	(cd test && advance work71) &&
+     ++	git -C test push origin &&
+     ++	git -C test reset --hard upstream/main &&
+     ++	(cd test && advance work72) &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature7
+      +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status.compareBranches shows up to date branches' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout -b feature8 upstream/main &&
+     -+		git push origin &&
+     -+		git status >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout -b feature8 upstream/main &&
+     ++	git -C test push origin &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature8
+      +	Your branch is up to date with ${SQ}upstream/main${SQ}.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status --no-ahead-behind with status.compareBranches up to date' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout feature8 &&
+     -+		git push origin &&
+     -+		git status --no-ahead-behind >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout feature8 >actual &&
+     ++	git -C test push origin &&
+     ++	git -C test status --no-ahead-behind >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature8
+      +	Your branch is up to date with ${SQ}upstream/main${SQ}.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'checkout with status.compareBranches shows up to date' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout feature8 >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout feature8 >actual &&
+      +	cat >expect <<-EOF &&
+      +	Your branch is up to date with ${SQ}upstream/main${SQ}.
+      +
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status.compareBranches with upstream behind and push up to date' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout -b ahead upstream/main &&
+     -+		advance work &&
+     -+		git push upstream HEAD &&
+     -+		git checkout -b feature9 upstream/main &&
+     -+		git push origin &&
+     -+		git branch --set-upstream-to upstream/ahead &&
+     -+		git status >../actual
+     -+	) &&
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout -b ahead upstream/main &&
+     ++	(cd test && advance work) &&
+     ++	git -C test push upstream HEAD &&
+     ++	git -C test checkout -b feature9 upstream/main &&
+     ++	git -C test push origin &&
+     ++	git -C test branch --set-upstream-to upstream/ahead &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature9
+      +	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status.compareBranches with remapped push refspec' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout -b feature10 origin/main &&
+     -+		git config remote.origin.push refs/heads/feature10:refs/heads/remapped &&
+     -+		git push &&
+     -+		advance work &&
+     -+		git status >../actual
+     -+	) &&
+     ++	test_config -C test remote.origin.push refs/heads/feature10:refs/heads/remapped &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout -b feature10 origin/main &&
+     ++	git -C test push &&
+     ++	(cd test && advance work) &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature10
+      +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status.compareBranches with remapped push and upstream remote' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout -b feature11 upstream/main &&
+     -+		git config remote.origin.push refs/heads/feature11:refs/heads/remapped &&
+     -+		git push origin &&
+     -+		advance work &&
+     -+		git status >../actual
+     -+	) &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test remote.origin.push refs/heads/feature11:refs/heads/remapped &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout -b feature11 upstream/main &&
+     ++	git -C test push origin &&
+     ++	(cd test && advance work) &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature11
+      +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	EOF
+      +	test_cmp expect actual
+      +'
+     -+
+     -+test_expect_success 'clean up after compareBranches tests' '
+     -+	(
+     -+		cd test &&
+     -+		git config --unset status.compareBranches
+     -+	)
+     -+'
+      +
+       test_done
 
->    2. Instead of blindly passing struct repository *repo down into every
->       single low-level library function, bubbling the dependency up is
->       the true goal. External callers of the functions must be carefully
->       audited to prevent regressions.
->    3. Safely remove the old global variables and macro definitions. Tools
->       such as AddressSanitizer can be helpful to ensure that the new
->       struct-based lifecycle introduces zero memory leaks.
-
-Yes, we also have CI jobs for GitLab and GitHub which do this already,
-you can run them locally too, meson makes it very easy to do this too:
-
-  $ meson setup address --fatal-meson-warnings --warnlevel 3 --werror \
-  --wrap-mode nofallback -Dfuzzers=3Dtrue -Db_sanitize=3Daddress \
-  -Db_lundef=3Dfalse
-  $ cd address
-  $ meson test
-
->    4. Many globals like are parsed once and remain available globally.
-
-I think you're missing a reference in this sentence.
-
->       New data flow might need to be designed to maintain the lazy-
->       loading efficiency.
->
-> Additionally, given the anticipated high volume of commits, we must
-> ensure each patch is independent and atomic, preventing any
-> user-untraceable or unexplainable bugs from occurring in the codebase at
-> any state.
->
->
-> AVAILABILITY
-> ------------
-> Fortunately, my summer vacation coincides with the GSoC work period.
-> I will treat this project as my primary focus, dedicating a minimum of
-> 35 hours per week. If needed, I can work a 9-to-5 schedule.
->
-> I will have a significant head start to draft RFC patches before the
-> official coding period even begins. Having this buffer period allows me
-> to go through the rigorous code review process within the Git community
-> with greater ease.
->
->
-> TIMELINE & MILESTONES
-> ---------------------
-> Considering the differences between this project and other projects on
-> the idea list, rather than hoarding massive changes, I will submit
-> 3-to-5-patch series frequently to respect reviewers' time and maintain a
-> steady velocity.
->
-> Below is the tentative schedule I have prepared for myself:
->
-> * Community Bonding (May 1 - May 25): Planning & RFC
->    - May 1 - May 7: Wrap up university finals. Discuss and finalize the
->      prioritized list of subsystems with my mentor.
->    - May 8 - May 25: Define the core context container. Draft and submit
->      the initial RFC patch series for this new data structure.
->
-
-What is the 'core context container' here?
-
-> * Phase 1 (May 26 - July 10): Foundation
->    - Weeks 1-2: Plumb the context pointer (`struct repository *repo`)
-> through call chains for simple variables (e.g., boolean flags or integer
-> configs).
->    - Weeks 3-4: Audit and update external callers to use the new API.
->    - Weeks 5-6: Submit the first major refactoring patch series. Address
->      mailing list feedback and resolve merge conflicts. (Midterm Evaluati=
-on)
->
-> * Phase 2 (July 11 - August 18): Complex Migration & Cleanup
->    - Weeks 7-8: Refactor higher-complexity variables (e.g., path-related
-> globals).
->    - Weeks 9-10: Compile the codebase with AddressSanitizer and run the
-> full test suite to execute strict memory leak checks.
->    - Weeks 11-12: Remove unused global macro definitions and static
-> variables. Update internal documentation and write the final GSoC report.
->
-> (The above is for reference only. Personally, I always finish tasks
-> faster than planned =F0=9F=98=89)
->
->
-> ~$ git checkout HEAD@{postGSoC}
-> -------------------------------
-> This past month since joining the Git community has been the most
-> enjoyable month of my programming journey. To quote a close friend of
-> mine (who is applying for the Neovim GSoC project):
->
->    "Only fools chase trends; open source is the game for the brave."
->
-> The words may be blunt, but the logic holds true. This statement surely
-> resonates with me (and maybe many other GSoC contributors): our passion
-> for code and open-source drives us forward.
->
-> Even if I didn't make the cut, so what? ~$ git reset --hard...
-> Just kidding. The Git codebase is far too interesting to abandon now.
->
-> -------------------------------------------------------------------------
-> Changes since V3:
->
->   - Based on reviewing last year's contributors' changes and recent
-> experience modifying setup.c, additional descriptions have been added to
-> the synopsis & approach section.
-
-Thanks for the proposal :)
-
---0000000000003eeb78064bb6bae3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 10dcfd1bd44768ca_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tZ0VmUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMmZHQy8wUjVFeWs0UitnYnEzZTlidUtsdm9LUFgvYQo3cFZPVnJSeWJ6
-bHFNSUV1RFFXQkJEbHdubndiaG5vVXUvbHBzSHRzS2xNaXJiU3VFY3l2ZERNR05iVG94VGtECi8z
-dTRzN1dqYWViMzROWGUydkl2R2hheElsWFc4MXg0bUU3UVdOWW5UTjN4YlRMTzRsNmkyNmd6Rk5T
-eWxKc2wKbjl3RnpiNDVWMWJRTVU0a3dtaUVCTEg1WEREYXBBMVpyT1JlQlY1eWFwL2Mza1dGalJu
-REE0Vi9hUkh6WUdBRwppemt1M0JXSG5QRkpxcmtDMzdJRjljNWxKN1dXdjFwTWJVOW9yOXExRHVF
-SnliemoyWUNUcDFRQWlwb0trNVVIClJUTmZ6dXFmRnF2a0NudDVyWG41Mm5FN21RVmZSaVllR1J3
-VHZGbDNmSlhUNm5Ha2lFUkkwbXg1SEE4VHovRVgKNURFS2ZyUmlYcy9JY3g3aWRPYkNYQ2lXVE1T
-S3ZIVUJNT0N6akoxYkRCZUNrTzNuMURPekxnZFVQWTVpa1ZWUApMdmFMdUZuZVN1SFEwVXdSOU9q
-K0V2bDBPOWNDRlFTNXIzbU5iQ3JNalg2bS94Z3M1djFseWZscGxscm1rRUdYCm5xNkovVm5EVUtF
-OGd5c0k5UVphLytCdHBPRER1VEtERnJGVUREQT0KPUY5QmoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000003eeb78064bb6bae3--
+-- 
+gitgitgadget
