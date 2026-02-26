@@ -1,129 +1,91 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from ste-pvt-msa1.bahnhof.se (ste-pvt-msa1.bahnhof.se [213.80.101.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438B542885D
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 20:34:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521143624A8
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 20:54:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.80.101.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772138047; cv=none; b=p3beMO+Y87GKZR0zCwTF/kkf9QU1dSnfSXBe4iRVZHGS3XtZiHQvNQHTVKG78SJsyIgsLrOWmv76uwJXdlb5J+KvMEq37/+87KhDOl7zv4Pb5nKDzH6zpeMPA7QeAByOHdecUDQKp6FDoW4Tk8sJ6f5unGVTL0ZK0kuw63CUOdw=
+	t=1772139253; cv=none; b=kjhJec+sjrJE9mv7NlhGBsSfP5xyOu0BbgpqTK5+SzGhVKjPi5EeMl8l1rspZ9+G5xnRhBKxq9eiXZtvfgtwdyMLz9CboQCTGQiOxT48+zl5w6XBJfUMlY/T+bHJbqX1Nhr6iNpta3bNUAbvGT17s+ofn4IPIzz7G7yzGr/m6EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772138047; c=relaxed/simple;
-	bh=ayDOUkXQhZYc65DdDewc9nJP49yC1w5SnpqVg+kp9jA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UvX/X/3j9BO+dZy5121WtlWbLw7YtWBS2AWRcOg4dn4OctMfWdIcXLyHGVTyy4j000L4C2tsAbp9GFta56NLcaFQipCV+SYCRo2rLKV+QteCCEuuO32dL/M41SfnCw6x6IY3IMFZ9tBu3Wp66AxrXI3M244pmuKl4GuIdNV1eKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MmuQcD92; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=glgfIzt0; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772139253; c=relaxed/simple;
+	bh=5EndbWBh0T8Zodnqz6fUdphuP5k6PH/HCAogF/PW+oI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QeP6wFXe0lZIdfjRGzGBu8QLy71W8HC5wOoF0vUlOi30Z/hcyy+3/O3rqZu7J8YMWHWYg2JCzMtR/Ltxs93ltY4OWRvoDRKD+ZXPd5AvDnAqxUW0jvn3TKOtA3DeEFTOW7fdUItV9jW0xiNuNTS/MB1QXfJbnodkx/wumO08w7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=QLVIOyCU; arc=none smtp.client-ip=213.80.101.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MmuQcD92";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="glgfIzt0"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6F1547A01DF;
-	Thu, 26 Feb 2026 15:34:05 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 26 Feb 2026 15:34:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772138045; x=1772224445; bh=Ax7huFBbxN
-	SDj4/UgldzPxGlq3giuH2VRYtr2qIM5w8=; b=MmuQcD927ldoiuG1HwQJS/md6G
-	pfbnOzQXHUUEU0TGeIfl5HqFY1Zy1GLT08CHOAM70f20eYPPedOhE77ZgHUJnBcm
-	M1sy599r9Hvx8dalP2tedOom8fQd/rVp7Q6l+xWjMt6HCPsoVp9TnkWVmUqVZov+
-	8neIjDfKxbvxKi1ev12If3C5lSbDcnKWiukMqe3wzvQse6ktkt2E7esYynV/ZPxR
-	PZHF1heIziTLQQuwaYyMGqJq/iRWQ7J9RpBwAQpKHSjhfeMH5de6TPwfb9b9fIhO
-	otpmWasbJOztT3ik637dcj/YExxYCCFsDAZqp0RUJV9TsJayquws87EssfZA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772138045; x=1772224445; bh=Ax7huFBbxNSDj4/UgldzPxGlq3giuH2VRYt
-	r2qIM5w8=; b=glgfIzt0SFQJTYB6B20A1nTyTAzJik7EyW9Yw5Zzw3T0ltVs47S
-	iYFc0Ia5WRXov3lZIxJdokMc21Eh7Ce/dAGM2n54Fmx9sXMxb1sM129UMvaVX2UH
-	DuTEU/fGWrfabc5a9Sd9JytM9HR3bBof9vmMz/vwt+n6VivhuAF7zP4Xjqk19Gy/
-	tSgR7MHPTvrzprPcEXkghOH64nRWaiQ1RL1PEhxlaxi+eXUxuwrq4GfLhcklbO9c
-	GykMoFT6pspYOSEArebO5U+aCy+GoE4LV670jD81hUnk5VeKRCn9rNNQUSWeFbVZ
-	RBBQTM02iuXwdD2SuuS5mOdtIMHG3mWZXTQ==
-X-ME-Sender: <xms:Pa6gaVTY86iIZ5XyVb_wa6ekrpph-gILi24Ns7wuVgWOw9mHyJofEg>
-    <xme:Pa6gaSfVD0G9jBw3XUg5GgP6JdDVTR0wGTAQ3xkOG2jvePnVmq92PG-qCCxIoYe9K
-    YLATF5ZY6q_v_MRuHQVJHAG5BahLWHKTm_D33I0aDUs1VpkD7HK5A>
-X-ME-Received: <xmr:Pa6gaUom9oegFubLuRcrGCdVitBKuzsu-f4-8tPUj-Aa323lTriQhVAomCxvZBOFCzq3fasGa6m9w-2NpieMH8KN5aFEIK3jTA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeejtdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:Pa6gaT85WmatX6Fq2ZuB4BmFVqFdsKcbio4SqYwyCrxPnYBNW0CpEQ>
-    <xmx:Pa6gaQfJYnLIxxSuJoQSHAThBClC-34bycQPZB_Rdoq-azTWJnsnkg>
-    <xmx:Pa6gadIAUGhewuu6dE9D-C5FU6MJqkUd4_QzYg9fkTp8R-vTCyIMcw>
-    <xmx:Pa6gaQh8bTb0YX-c0XbKvGEnwEuitzDjZwJSC-b6cEvmIC8M6Zf-mg>
-    <xmx:Pa6gaetQBhWPAbebI0QV86aOshtqqI0qeTDlQAf1KayoaO-meXFO7YIF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Feb 2026 15:34:04 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [RFC PATCH 02/14] strvec: introduce `strvec_init_alloc()`
-In-Reply-To: <50efbbb0fe8d897d7c4cd51489af4cb4c4c49d02.1771978829.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Tue, 24 Feb 2026 19:21:01 -0500")
-References: <cover.1771978829.git.me@ttaylorr.com>
-	<50efbbb0fe8d897d7c4cd51489af4cb4c4c49d02.1771978829.git.me@ttaylorr.com>
-Date: Thu, 26 Feb 2026 12:34:03 -0800
-Message-ID: <xmqqh5r31byc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="QLVIOyCU"
+Received: from localhost (localhost [127.0.0.1])
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 4A8683F7EC;
+	Thu, 26 Feb 2026 21:54:02 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -2.1
+X-Spam-Level:
+Authentication-Results: ste-pvt-msa1.bahnhof.se (amavisd-new);
+	dkim=pass (2048-bit key) header.d=jontes.page
+Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
+	by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5BWRgQ2uTaiW; Thu, 26 Feb 2026 21:54:01 +0100 (CET)
+Received: 
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id D5A403F3EF;
+	Thu, 26 Feb 2026 21:54:00 +0100 (CET)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 40C3AB2332;
+	Thu, 26 Feb 2026 21:52:37 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
+	t=1772139159; h=from:subject:date:message-id:to:cc:mime-version:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=8DRqYSr5zcYUtZSrC/CPy6YL7tgYyiidrUpQuLPs53Y=;
+	b=QLVIOyCU67QdHhIpUVkqHmXQgTOmUkODkMtI3vxoAyZ1iy9VLM3AjpIjFbVyudz3qxOJxf
+	Nm+Lqe5c+cb6HwTgP4bnU8wVqofdtroZma/ijXwjHszIKpUFJBUFYUFQaR3kb9A0zxN2Pv
+	MxOd8yFHVy6wAmj+s7wCiM4O+0EZph+22gisZdTz4gksL0Bgo3N+dJ87qkLBy4QERgnwW4
+	zChpcabOGEFVP05um58uNG/5mB0Fj7O5WWgrhfdsQpWL/wjez2UUGuOoibh9xHdrGO1QU1
+	GOHTppKQ9k4Pz39HDlgLarcRrgzQ68SKXxLqqScjxvjAR1cUjbbiVQC4Fde6mw==
+From: Jonatan Holmgren <jonatan@jontes.page>
+To: git@vger.kernel.org
+Cc: peff@peff.net,
+	gitster@pobox.com,
+	"D . Ben Knoble" <benknoble@gmail.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Jonatan Holmgren <jonatan@jontes.page>
+Subject: [PATCH v2 0/3] Fix small issues in alias subsection handling
+Date: Thu, 26 Feb 2026 21:53:25 +0100
+Message-ID: <20260226205339.1535482-1-jonatan@jontes.page>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-Taylor Blau <me@ttaylorr.com> writes:
+v2: Add patch 3 to fix memory leaks in alias listing reported by
+    Jacob Keller.  The leaks were introduced by the jh/alias-i18n
+    series (specifically "help: use list_aliases() for alias listing"):
+    list_aliases() allocates util pointers but two callers cleared
+    the list without freeing them.
 
-> When the caller knows upfront how many elements will be pushed onto a
-> `strvec`, it is useful to pre-allocate enough space in the array to fit
-> that many elements (and one additional slot to store NULL, indicating
-> the end of the list.)
->
-> Introduce `strvec_init_alloc()`, which allocates the backing array large
-> enough to hold `alloc` elements and the termination marker without
-> further reallocation.
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  strvec.c | 7 +++++++
->  strvec.h | 5 +++++
->  2 files changed, 12 insertions(+)
->
-> diff --git a/strvec.c b/strvec.c
-> index f8de79f5579..f7f32a53b56 100644
-> --- a/strvec.c
-> +++ b/strvec.c
-> @@ -10,6 +10,13 @@ void strvec_init(struct strvec *array)
->  	memcpy(array, &blank, sizeof(*array));
->  }
->  
-> +void strvec_init_alloc(struct strvec *array, size_t alloc)
-> +{
-> +	CALLOC_ARRAY(array->v, st_add(alloc, 1));
-> +	array->nr = 0;
-> +	array->alloc = alloc + 1;
-> +}
+    Also fix a stray trailing whitespace in patch 1.
 
-It is not satisifying that strvec_init() does *not* become a thin
-wrapper around this that says "my initial allocation is for zero
-elements", but that cannot be done easily as a strvec that begins as
-an empty one has a small optimization to avoid one-slot allocation
-only to store NULL.  So, ... OK.
+    No changes in patch 2.
+
+Jonatan Holmgren (3):
+  doc: fix list continuation in alias subsection example
+  alias: treat empty subsection [alias ""] as plain [alias]
+  git, help: fix memory leaks in alias listing
+
+ Documentation/config/alias.adoc |  7 ++++---
+ alias.c                         |  4 ++++
+ git.c                           |  2 +-
+ help.c                          |  2 +-
+ t/t0014-alias.sh                | 14 ++++++++++++++
+ 5 files changed, 24 insertions(+), 5 deletions(-)
+
+-- 
+2.53.0
 
