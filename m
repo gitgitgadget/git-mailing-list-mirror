@@ -1,69 +1,70 @@
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DAD25F99F
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 00:27:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4399523AE62
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 00:27:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772065654; cv=none; b=I2Z9Nmm1avPGw+iub2dU7WzcyfX2YXGVC6+uihy4xE6o3ZJv0JKaXfm/YCEMkEdmsgsgwndlBDXANFiLIJAs+MF34xSRDly4r1apvUny276TZZ5MHqHGLlK+HS70NSBpvaN2sPudU0m5bUHVzy3HR68Nxsq2bRnRYx0pCLuYBck=
+	t=1772065655; cv=none; b=UWxdtjRXU/Sd2HKcnlc9vTnW4GeAx22d2V6P8vPoB9xdubhTFZXRb8WH86JUEH/86NfO/QY24yzzhJWj+j2kpeHzYDdLsXECAIrLqGELx57XWX+jC2EdU9ASCxGDEnjOMdrB0kXH+UYqrJm/c5QTg95+MpOkkjq4mQScux94WaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772065654; c=relaxed/simple;
-	bh=4lDNxkT0s0i4xTd5xY3LXQcX+d3MTEmwV7TVliwIZmE=;
+	s=arc-20240116; t=1772065655; c=relaxed/simple;
+	bh=kNFC8EE1UFnLlKwIAfGGN5ofkrxe4wu+wOxhxyMvmik=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=e1US6xD6PCGObiOYUJvljY6XHWVq5llLb25we+UQ5KzBHTnIXE31t3jze7ErTG1Y+xUqSA2brE6cO9erEfX2+KZcFDwLE86RZ9NHwjnf71nWcFfWoddQTBf7IPfnh+95WdPH7OA3P/6kcGpTRkRJU7HBjE5joABioC5jc6aTvkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e0DtWGo+; arc=none smtp.client-ip=74.125.82.172
+	 MIME-Version:To:Cc; b=Z4kukfzQL93pxNmqtSS6B28W2vHhMx7+770VRDe+DfYCVHVAYjs+oVrTcGD2xeueAOZkaRsXOVJRR3rJnRZ9eT613o492PMV4P7bGKmhQ9zr7gGg8SCajiLJw3x2mXp6dRf1mdRcyb1pqcJsHtodGlfQiFcSw4hdyBljHF1MkJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BLjbxTMR; arc=none smtp.client-ip=74.125.82.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e0DtWGo+"
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2bdca815fdfso549213eec.1
-        for <git@vger.kernel.org>; Wed, 25 Feb 2026 16:27:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BLjbxTMR"
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-2b4520f6b32so346117eec.0
+        for <git@vger.kernel.org>; Wed, 25 Feb 2026 16:27:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772065651; x=1772670451; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772065653; x=1772670453; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xDi8oFw3VzJyuV5g7iQWn5k67xLK5Zswvz7O+MebhCI=;
-        b=e0DtWGo+9PicJOs0O8SZT+1An5jS5e5izd85qcvocFa61unRRYHgmTccS5Onmdf4mE
-         Dr23GNdccnIw503QScEcfHysiLcevs9zpmZkTxX6td0xkO+dppOJ5EAx0WDR/aasxQSs
-         /MBX7JjMeSARW7zasTcTt2uIWJMM1DkIeW2ZCami5gJTVlE731SWQloCMx7j3vAYyoT+
-         5sHEa9cxM1WB06ZmqSRJL3V167N/e1r/KyGu4Siq9KFx5IH/0lnddv0hDXIXk6lNmyJh
-         p4NPJmOkoLoNuU2DI3YcTuhHDPohYpq1tqcj33QCV5jvNE7wict6iLG/h20OOQzLjyLy
-         p7hA==
+        bh=+TjjV9P6Xuf3j3ghwgMhIPyhncvi97Q2Ji7+AqPh5wk=;
+        b=BLjbxTMRVbwBkBIBQEfnW8dj1UjTFTgBjR9sujERKGwaY5R58kuTJVY5qp3YR1xXrJ
+         F/61TWuA0XstATXf/KK+mpxF0IIO3SZVVA79Ho2obnKYPHe1TfcnRm7YIpSBSWo4hKX5
+         8ktf4B61mDp4yNnqWUtBNfkr9JoVaII3UGN6O0nm1YANZUfuvl8ZZy7C6vD0GCBXw1nA
+         l+kr4udcA//cEJVVkYBbJkCtnMhkY4aroasSi992wcrs94Zhof1ceKtiS1Qfwc6C992d
+         loAby+7Ro6fvhZBT7cFYFHVdQtFO5jxDJQoiAeVaHMKIkLdh3VcgO+LaPpXQasgmMzm9
+         wzDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772065651; x=1772670451;
+        d=1e100.net; s=20230601; t=1772065653; x=1772670453;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=xDi8oFw3VzJyuV5g7iQWn5k67xLK5Zswvz7O+MebhCI=;
-        b=fxZkc5MkuKM47nTlqB9Z7T2TllDUY7MyinuDnpgun6G2wGmdGL0Eq/Nk+u25djE1N0
-         Bd8t+2gPuSueKA/y0ll7DbJVGh9giGwEDpL3RHG4tvphGB9VFvOnbqR5x5Ss5Hce31ib
-         fgNAqHUpRpLM1Z/1RrOzPTDpJI59JSxO9N3udEHtfIVxqDWGziMzezZVRyO3suKn4bMF
-         gz7/+h7+v4VdQDmv+5sZWhnbP/yIgmIx9BHuL39xJC7opUGwe10Sz9Lvjabf3BegP+uV
-         DiOxLa9+iKFL1herivAIkfgw4WujjvbVm+tblEjMi6rwF/NYsCLLTgVwYN2GfZiQWyWy
-         0+kw==
-X-Gm-Message-State: AOJu0Yw3OBLSit05J3SNVEEWX+hkWef5mHvKeVSufTCUQvbP+tKQ63l5
-	/flqU2KBTtr8kvT4T2Ek8bm3c4LMVt/C9HcyMVdKfbKX9ctp3acxAo7gaoHWNMiE
-X-Gm-Gg: ATEYQzyz8xlVi+Mvq4GI/IdkGexcH6uDZ2GpI0aW3P8HJUbw5E/TP8qaSli+1qwM8Dk
-	zT+5VVkuIsgpNUypstIouL5W/0ePWeDNh43tnc0OdokSRyBI/kJlJhp6WjWc/SzlXHRkiD6DipZ
-	ZizoX/6GFhOzimiuNuyPGB7WvnARIaQUO232dAAGsClOuBn59pmcts7YviHOGzYaY+m/eo5vBX/
-	e/8h7MfY6/ftBoYSEm6+gEW3vnb7CqTHabJRziyoaShBtmmB3x2lb05lCC3DtoIogtIWtfhYXpx
-	DpD28spbBgPVYWp3qz0bIfeJ7/cN3EtRzMscaaQKwh9wLRZ2EBnyfDazkhwtK3P+88uqtWURbN3
-	arf82rWvpa08ColmoLI5sl0a6lTDAu/PvBS6vMnLB4h4NeXobDj1xr2gxoEEFyMOu0xz6+kAbjS
-	u3WTDm4u5fPjl4mynyFVkUiIALRg==
-X-Received: by 2002:a05:693c:25c7:b0:2ba:a1a5:b5b1 with SMTP id 5a478bee46e88-2bd7b9efc61mr7271306eec.7.1772065651392;
-        Wed, 25 Feb 2026 16:27:31 -0800 (PST)
+        bh=+TjjV9P6Xuf3j3ghwgMhIPyhncvi97Q2Ji7+AqPh5wk=;
+        b=w/43bhSoquL5do6js1X7TC3rPcj4K3DmyRNM2xN2h0iiQypUoJ7LBsK/PpdAL+YpDJ
+         B0kPsfiRlarncrzmeMm+53XmwsMGWVdhmXDRGXATfAiMoFB29Th/MUbBkD3u2nOQgaIU
+         2VgsZLs75BJWnGUvWNMPpZowtIqMg8nT3pjMCE2VAVpHNkM9WWWIs+Ol42N0V+vLub74
+         7a0vOzU5DKJbO367A6q7kryd2CMpRd+tYiKlHg88Y6aAupBNCE4vsQMWZBQ4edssLOoH
+         JryXCvUmEKCeK82MkSAjTl51J+pxP10v8Mx+O7ebfemlIox1mxgsLhDcmPz69rpTZ62D
+         o2Pg==
+X-Gm-Message-State: AOJu0Yx9pYKyUIaUsjJIvuqtvIpDAZBtvT6VGPsxhsZuzZPoUi0v46/4
+	3AN4HbFS5xKvrwGgeEmoBR2HpQTYfw8LvAAw4NPGEQu673FUvghyUe7J3XXtiJr1
+X-Gm-Gg: ATEYQzxmRJVscPYIzne8u5ugL+bfmu6RJEkI0BmR82gmJWjUixDOSps78ddF3woNtA6
+	q79MXnd1CYi8YFedURyPAJ+73yRbg/5s0o8AgSteO3WTJ+uIgpakEHrcZeGVDBgxqd7vS+B1qCs
+	foofmzuhwCb9zszUlVgfZ9nFWc4p9D/k2NTcgsdg92pCmoG49jnCs4JPUyVAY72iw7KLbq26b7b
+	l9OzR/tMd1ulfvwUevjhb2+I82xCPmOzcUUMiMevSlPtSS2DawPFlPj5+dZPjq8bdCCzLG+XGOH
+	Uv6l9mMpnjlytWKo0SVcFn7Q4lwv4wVQzX2Suk6gzLMRPSeiZYqrAMISjDErIib+g6XNdLZU4f2
+	in/OzF4udv1ewZ4JhCVN15J2mFptfbpCJONqVhTlykeJHA4OZnpXmrGgsNR10dbUqPqei57RFrd
+	NhRGhaafYPhQOCZiJ/5AeszdsWiw==
+X-Received: by 2002:a05:7300:641f:b0:2ba:858b:3751 with SMTP id 5a478bee46e88-2bdd2ef8490mr197748eec.3.1772065652942;
+        Wed, 25 Feb 2026 16:27:32 -0800 (PST)
 Received: from [127.0.0.1] ([52.159.229.150])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bdd1f48c77sm603370eec.26.2026.02.25.16.27.30
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bdd1f48c77sm603411eec.26.2026.02.25.16.27.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Feb 2026 16:27:30 -0800 (PST)
-Message-Id: <d2c5ca09396e020adb717055d82f50de7c1b7431.1772065643.git.gitgitgadget@gmail.com>
+        Wed, 25 Feb 2026 16:27:32 -0800 (PST)
+Message-Id: <0a586709524f36c189cc32159b643a49abdbd51c.1772065643.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2147.v7.git.git.1772065643.gitgitgadget@gmail.com>
 References: <pull.2147.v6.git.git.1772050636.gitgitgadget@gmail.com>
 	<pull.2147.v7.git.git.1772065643.gitgitgadget@gmail.com>
 From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 26 Feb 2026 00:27:16 +0000
-Subject: [PATCH v7 03/10] compat/win32: add pthread_cond_timedwait
+Date: Thu, 26 Feb 2026 00:27:17 +0000
+Subject: [PATCH v7 04/10] fsmonitor: use pthread_cond_timedwait for cookie
+ wait
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,66 +81,75 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Paul Tarjan <github@paulisageek.com>
 
-Add a pthread_cond_timedwait() implementation to the Windows pthread
-compatibility layer using SleepConditionVariableCS() with a millisecond
-timeout computed from the absolute deadline.
+The cookie wait in with_lock__wait_for_cookie() uses an infinite
+pthread_cond_wait() loop.  The existing comment notes the desire
+to switch to pthread_cond_timedwait(), but the routine was not
+available in git thread-utils.
 
-This enables callers to use bounded waits on condition variables
-instead of blocking indefinitely with pthread_cond_wait().
+On certain container or overlay filesystems, inotify watches may
+succeed but events are never delivered.  In this case the daemon
+would hang indefinitely waiting for the cookie event, which in
+turn causes the client to hang.
+
+Replace the infinite wait with a one-second timeout using
+pthread_cond_timedwait().  If the timeout fires, report an
+error and let the client proceed with a trivial (full-scan)
+response rather than blocking forever.
 
 Signed-off-by: Paul Tarjan <github@paulisageek.com>
 ---
- compat/win32/pthread.c | 26 ++++++++++++++++++++++++++
- compat/win32/pthread.h |  2 ++
- 2 files changed, 28 insertions(+)
+ builtin/fsmonitor--daemon.c | 37 ++++++++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 13 deletions(-)
 
-diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-index 7e93146963..538ef92d9d 100644
---- a/compat/win32/pthread.c
-+++ b/compat/win32/pthread.c
-@@ -66,3 +66,29 @@ int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex)
- 		return err_win_to_posix(GetLastError());
- 	return 0;
- }
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 4d52622e24..110fe5fb55 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -197,20 +197,31 @@ static enum fsmonitor_cookie_item_result with_lock__wait_for_cookie(
+ 	unlink(cookie_pathname.buf);
+ 
+ 	/*
+-	 * Technically, this is an infinite wait (well, unless another
+-	 * thread sends us an abort).  I'd like to change this to
+-	 * use `pthread_cond_timedwait()` and return an error/timeout
+-	 * and let the caller do the trivial response thing, but we
+-	 * don't have that routine in our thread-utils.
+-	 *
+-	 * After extensive beta testing I'm not really worried about
+-	 * this.  Also note that the above open() and unlink() calls
+-	 * will cause at least two FS events on that path, so the odds
+-	 * of getting stuck are pretty slim.
++	 * Wait for the listener thread to observe the cookie file.
++	 * Time out after a short interval so that the client
++	 * does not hang forever if the filesystem does not deliver
++	 * events (e.g., on certain container/overlay filesystems
++	 * where inotify watches succeed but events never arrive).
+ 	 */
+-	while (cookie->result == FCIR_INIT)
+-		pthread_cond_wait(&state->cookies_cond,
+-				  &state->main_lock);
++	{
++		struct timeval now;
++		struct timespec ts;
++		int err = 0;
 +
-+int pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex,
-+			   const struct timespec *abstime)
-+{
-+	struct timeval now;
-+	long long now_ms, deadline_ms;
-+	DWORD timeout_ms;
++		gettimeofday(&now, NULL);
++		ts.tv_sec = now.tv_sec + 1;
++		ts.tv_nsec = now.tv_usec * 1000;
 +
-+	gettimeofday(&now, NULL);
-+	now_ms = (long long)now.tv_sec * 1000 + now.tv_usec / 1000;
-+	deadline_ms = (long long)abstime->tv_sec * 1000 +
-+		      abstime->tv_nsec / 1000000;
-+
-+	if (deadline_ms <= now_ms)
-+		timeout_ms = 0;
-+	else
-+		timeout_ms = (DWORD)(deadline_ms - now_ms);
-+
-+	if (SleepConditionVariableCS(cond, mutex, timeout_ms) == 0) {
-+		DWORD err = GetLastError();
-+		if (err == ERROR_TIMEOUT)
-+			return ETIMEDOUT;
-+		return err_win_to_posix(err);
++		while (cookie->result == FCIR_INIT && !err)
++			err = pthread_cond_timedwait(&state->cookies_cond,
++						     &state->main_lock,
++						     &ts);
++		if (err == ETIMEDOUT && cookie->result == FCIR_INIT) {
++			trace_printf_key(&trace_fsmonitor,
++					 "cookie_wait timed out");
++			cookie->result = FCIR_ERROR;
++		}
 +	}
-+	return 0;
-+}
-diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
-index ccacc5a53b..d80df8d12a 100644
---- a/compat/win32/pthread.h
-+++ b/compat/win32/pthread.h
-@@ -64,6 +64,8 @@ int win32_pthread_join(pthread_t *thread, void **value_ptr);
- pthread_t pthread_self(void);
  
- int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
-+int pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex,
-+			   const struct timespec *abstime);
- 
- static inline void NORETURN pthread_exit(void *ret)
- {
+ done:
+ 	hashmap_remove(&state->cookies, &cookie->entry, NULL);
 -- 
 gitgitgadget
 
