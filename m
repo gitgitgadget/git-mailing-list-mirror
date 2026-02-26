@@ -1,171 +1,105 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADC031064E
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 14:45:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF77E270545
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 15:19:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772117157; cv=none; b=YcBHPHC+RexgFVuhy9ftGTcOgE+Pnl4e2RyZJul7k2oz/L/uqy7HCEjATgE44LKlvr4ZpqyddrftAMG6Ox1REgpPu2pKvUPYQlGT10gc2eaJrCnI86WRWywm2mMZ5zVwqbhvA8UFM74G8iOnzoO4nubtcxJjvramnEhm1wQaN5s=
+	t=1772119197; cv=none; b=QlSG83AI2gt89Tu2HENcSucRWQV4I3Kf2mhrQVn+rgaoO+bMjkbqzSU+KIVZRhgVv3t8i6wXgiCA604B1eH4QQSfZ4YkyKe1pgNlmf/z2XrAm96Hgr3oJVLlB24EgW49N+igBMzsqmtkUEnKO4Mqt67RyZc5BdHpw3SrJoju/rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772117157; c=relaxed/simple;
-	bh=opA9ZtxxaMucAL+Eavfd+NfRxx9ySxOUfBEchBL8BDQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n/39fo0TOs5Fg5+71unj8Cxp+3YhvkTrpcrUfiSsCA4VMX1lXWiZubSyAOAKQm9g3tfmCxkeBw6PtKVyd7cvrvSjipALSWmV/TES3jbyDRqAJ048agHeX8UrnmJtFJkztQSjxDRvxX55VjXLMMZH54saFaZ9e4QQS01p0F8pfv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SE/BDjWX; arc=none smtp.client-ip=209.85.128.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772119197; c=relaxed/simple;
+	bh=e8EDj49u1T1bgSqPMqQaZFr0LJCP7l6L7pKh9AzagLc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=C81HzOhqKAUGydZXrRjNvJeF+yXgauqZAu86G4Jgld4mI7ARtDi6x+jbIYBjjsxvq2GMFGIQnf0FSi8xaXmZ9v5daDSXH9crRzX2DriC29jZrVZIZM11ctD8O3uocrGYx7lE9oqsJ6jAjIZKIbF8CeirTSU5LoLhGYT8gXnEZ3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DqpvouCq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a71u5Eee; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SE/BDjWX"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-4806bf39419so15415015e9.1
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 06:45:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772117152; x=1772721952; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y3aMm1P07gvrQes0xDsQjIWPutgWl3sxnmAobhw4fOA=;
-        b=SE/BDjWXDAwn/1J+UWz7YUZeCH3WersaUgfsuFh0LIyOnbchfe6BgcNgEoO/jDh59K
-         ppExaQ5jyBh1GykJ0K0J5tYDwnEKb1VgozzF1Stv/4OTG1Z8HumBd3/gxU8lIE+/hISM
-         qZr9GzYWDbO4QjIwEh2vPbU28oWQBt4tGMBmZda1denAV0wmXkZJ4HY08uaOqX6/vbDl
-         Kq6g8yv58sFVVuyq4JF8eZyOctIVCHYq/jyDSgip2GyOBB8qnFyhGfTs+Pjxcbmkhjhg
-         nmX3jA+fi0jBaTdUcoIsLeKYCPO/xhVK/w6Nt547OU8l9v9uuM47tnmg3ZY+6Pb4HMV5
-         2xEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772117152; x=1772721952;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y3aMm1P07gvrQes0xDsQjIWPutgWl3sxnmAobhw4fOA=;
-        b=G0aEUUnfmfk8xLknmeRJlCRviwLYPuKZFr5UqzuEnjSpAEtsy/oDukrY6VvKmDzuz/
-         ZZB6GvXK1uwSAj2m9r+3KFZagPCQKer34FRvMZfZOTZB8h7xFJnl+Q73U22Izgg3x11d
-         n/ieIjfLxuRPfEGNApPhhRlF0V8m+0fB+KVAn/lbn/9mR6+xzV5+oQOQVgTPGW88PuS/
-         U364MfL99k/Bt3I50gWNpgDFEIduW1pdgCHiGUB7NBcIVdICaBOvFyhXn3+xH8YgIMSY
-         Nrqgd1ghtHiPx0ob4My6Qz/YHkNlBri95/NjToTW2o3VqEeoGIj7vgYa6C19KBjhhRyC
-         Q1pQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWrDOKlK+UFK1PaD1+6z5vLg3CCtT5sNSSZrysFM+xYtWzSYtfKddNEQaCxb3ORgEZwKGQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzmwlxrkWOuWS02PMVWvDUSF1fOzLxYJVgyXlvFXmoK+hSdsK7M
-	QCOCDeSX8Hysd2ENP42XL7RgWez9nPcNGPaDAh4Pqx+dxuW9fhK8DZ3R
-X-Gm-Gg: ATEYQzzJ98G9RwJBhElHP1joSJYdIaOROqd4O73EJj4LA1HHwOBW/sNjE7Ir3G2oBxQ
-	aK3ah0ooYGiJZXnB31olSx6rkmv4vg20pR9grvM48g4buRxe8niMzQfVVJKLjZR4DN/rBkJbtnS
-	Ktu6l9Jm+vaVv+SMRrwn2TOnotq/L+g7oBPsZKgvE2MKLuIJ1RN70f05gnjUZO5KRnFnLd6/l/n
-	gvJ90hs6ud3SFckTFtHZ78dsyWiCFnT8tyt1ICcYD22uC8Bdj1Dr5aylUr2g1g9OyHkHDpIgygt
-	BsvD55IVAoHlB9OyVuY7ajO+CHPV286oty6U18AelLOasb0cAL2CI/7qXEO4Qi47omj2Qks5S1g
-	sFbDigsKhN0x9gIlSxJBBbR9nvoXId8dOZQ7PbN4h1P6pkhoo7DBnWN8JoQ/KVWnU342kYea33I
-	zALnANZ7d0InZDgwonJaM/g3SKoCNtbv4NhwzU5aYmpY2Fzc9j3oyl5wH9gBZ5ozmKxutlUjNoc
-	nsN8g==
-X-Received: by 2002:a05:600c:46cf:b0:481:a662:b3f3 with SMTP id 5b1f17b1804b1-483c33ccbe8mr64532175e9.7.1772117152354;
-        Thu, 26 Feb 2026 06:45:52 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bfbb465bsm91371385e9.3.2026.02.26.06.45.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Feb 2026 06:45:51 -0800 (PST)
-Message-ID: <405b0d34-c2ad-498d-93a1-2e7925ae11f1@gmail.com>
-Date: Thu, 26 Feb 2026 14:45:50 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DqpvouCq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a71u5Eee"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E14EA140019E;
+	Thu, 26 Feb 2026 10:19:54 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 26 Feb 2026 10:19:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1772119194; x=1772205594; bh=e8EDj49u1T
+	1bgSqPMqQaZFr0LJCP7l6L7pKh9AzagLc=; b=DqpvouCqNo9vXvfXEh8YBI9bmq
+	m42ltpQyd2QDbEqCg4UXSHEWdUMReKGS5f8hlZodh5rXtnepGxNrCBNc9Df6Pgqj
+	GBIQCFqAqgoGjoafr8wym8DQOYjGXFt6ZeQEe3voFo/cpAVNGRHV9YLHQnMiuFKB
+	dmIJMDcisoZCAGHsYERTzlQhKcsTYUOwJm5ucKBt1gCvh7plKmHghm9q9Nqq7qMf
+	pvTl5qaZHubK5cNKX9V9NxoaeEwiASvEmgpQ1Bjux0T4pgjuM2S68XVIV3ntv1R2
+	0Z6CtgUVmxR3ZC6y32bxX1QFVJofOLPtt3YuqClmQSk0WKGW+pIutREQyPww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1772119194; x=1772205594; bh=e8EDj49u1T1bgSqPMqQaZFr0LJCP7l6L7pK
+	h9AzagLc=; b=a71u5EeeXmZ3Tt3OJQpR+BaiHEoXy/ewVITsKadcQc7/8sNKyrK
+	LR7nOn7xfkwV73jx+QkkoHeUgVMtYv4VIT77AlS8OwSTU0nHArB4+vWSDBQrqjqu
+	exru1mcrSS4XyQNhyybX5UvY+/Qg7AbWmfWvhpd6+85TcDf/yP5w2MUX19DwSvf8
+	+Xsef5Dp9zeFIinZ5ZCMefmFZsPKyKcmJpwE1gDufTeL1eszvDJdjjAwudxOwta+
+	67EFghPbJRUW7O/xeTrg4vdpqiuOBdyH8OSelh3Yi5/JRFKS5impRz2CDiFcPkZI
+	kdQ2TbPA9Tvsh0o/FwdJwmdESENKyzDdt9w==
+X-ME-Sender: <xms:mmSgaTaptdicxozDszgT_2Hvww0Z-svThWE7SuVikt3b8t86o9p4YA>
+    <xme:mmSgaeHIzcATcsZKh2neqBLCrT1zhC7ky74ePHnxRT6VO2GICAwcwjnkEK4hSd5bP
+    gNCU2XvQJ8KNSjJ2bDcSnLH0KLOfwy8GiZviT7dU9M_DTq4W4gdfEA>
+X-ME-Received: <xmr:mmSgaSav-XcSsdmqpNbZYx50--q8dN8Bxd5QZWnpdxGdqjMlibnb-oSW12OjhEGN8UrmQd30Wdl-Cfpx1S8X62TaYUgNJeNL5w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeifeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopegsvghlkhhiugelkeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhooh
+    hnsehiohhttghlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfees
+    ghhmrghilhdrtghomhdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehkrggrrhhtihgtrdhsihhvrghrrggrmhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
+    htohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:mmSgaSyP0S8jGLRIxskfsfdES9mm7pHCyvj7XjAsTkRk1IJgGiZmEQ>
+    <xmx:mmSgaUT1baBeOHNSa887807rs0UmxFk4bZO53SvOF_GdInMb8A4SZw>
+    <xmx:mmSgafLunL8XTOeKNBsZasvGKRRDzMzv3zheomAtKZaltdH3q6I7JQ>
+    <xmx:mmSgabU5CXqH8DjqqbaEsIopf2sebSr3WWb6SSC9xNuVvZ1BJDHD3g>
+    <xmx:mmSgaZH3P0EoJDZ_Ji6RSUhrRQXT8DFC_oT4-w35sW8xaDFnIFnt7T2a>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Feb 2026 10:19:54 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Olamide Caleb Bello <belkid98@gmail.com>,  git@vger.kernel.org,
+  toon@iotcl.com,  phillip.wood123@gmail.com,  usmanakinyemi202@gmail.com,
+  kaartic.sivaraam@gmail.com,  me@ttaylorr.com,  karthik.188@gmail.com
+Subject: Re: [Outreachy PATCH v7 0/3] store repo specific config values in
+ new `struct repo_config_values`
+In-Reply-To: <CAP8UFD2Rz3NMrTayi9yjRk4-51tStaLWKeBVB9RaJMWmiBLqrQ@mail.gmail.com>
+	(Christian Couder's message of "Thu, 26 Feb 2026 14:03:36 +0100")
+References: <cover.1769256839.git.belkid98@gmail.com>
+	<cover.1771258573.git.belkid98@gmail.com> <xmqqa4x7b0ba.fsf@gitster.g>
+	<CAP8UFD2Rz3NMrTayi9yjRk4-51tStaLWKeBVB9RaJMWmiBLqrQ@mail.gmail.com>
+Date: Thu, 26 Feb 2026 07:19:52 -0800
+Message-ID: <xmqqms0v5y7b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 2/2] replay: add --revert mode to reverse commit
- changes
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, phillip.wood@dunelm.org.uk, karthik.188@gmail.com,
- johannes.schindelin@gmx.de, toon@iotcl.com
-References: <20251202201611.22137-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-3-siddharthasthana31@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260218234215.89326-3-siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Siddharth
+Christian Couder <christian.couder@gmail.com> writes:
 
-On 18/02/2026 23:42, Siddharth Asthana wrote:
-> @@ -42,6 +42,25 @@ The history is replayed on top of the <branch> and <branch> is updated to
->   point at the tip of the resulting history. This is different from `--onto`,
->   which uses the target only as a starting point without updating it.
->   
-> +--revert <branch>::
-> +	Starting point at which to create the reverted commits; must be a
-> +	branch name.
-> ++
-> +When `--revert` is specified, the commits in the revision range are reverted
-> +(their changes are undone) and the reverted commits are created on top of
-> +<branch>. The <branch> is then updated to point at the new commits. This is
-> +the same as running `git revert <revision-range>` but does not update the
-> +working tree.
-> ++
-> +The commit messages follow `git revert` conventions: they are prefixed with
-> +"Revert" and include "This reverts commit <hash>." When reverting a commit
-> +whose message starts with "Revert", the new message uses "Reapply" instead.
-> +Unlike cherry-pick which preserves the original author, revert commits use
-> +the current user as the author, matching the behavior of `git revert`.
-> ++
-> +This option is mutually exclusive with `--onto` and `--advance`. It is also
-> +incompatible with `--contained` (which is a modifier for `--onto` only).
+> I took another look at the series and found only another nit (a
+> missing blank line). Otherwise the series looks good to me.
+>
+> Thanks.
 
-We seem to have lost
-
-     NOTE: For reverting an entire merge request as a single commit
-     (rather than commit-by-commit), consider using `git merge-tree
-     --merge-base $TIP HEAD $BASE` which can avoid unnecessary merge
-     conflicts.
-
-from V2 which is a shame.
-
-I do think we should seriously consider reverting commits in the reverse 
-order that they were created (i.e. do not set '--reverse' when setting 
-up the rev-list options) to reduce the likely-hood of conflicts when 
-reverting a sequence of commits.
-
-> @@ -152,6 +172,15 @@ all commits they have since `base`, playing them on top of
->   `origin/main`. These three branches may have commits on top of `base`
->   that they have in common, but that does not need to be the case.
->   
-> +To revert commits on a branch:
-> +
-> +------------
-> +$ git replay --revert main main~2..main
-
-It might be more realistic to revert some commits from a different 
-branch, for example
-
-   git replay --revert main topic~2..topic
-
-> +static void set_up_branch_mode(struct repository *repo,
-> +			       char **branch_name,
-> +			       const char *option_name,
-> +			       struct ref_info *rinfo,
-> +			       struct commit **onto)
-> [...]
-> +	if (rinfo->positive_refexprs > 1)
-> +		die(_("cannot %s target with multiple sources because ordering would be ill-defined"),
-> +		    option_name + 2); /* skip "--" prefix */
-
-This is a bit of a nasty hack as it stuffs an English word into the 
-middle of a translated sentence. Using the option name as below might be 
-nicer
-
-     die(_("'%s' cannot be used with multiple revision ranges because 
-the ordering would be ill defined", option_name);
-> @@ -226,25 +269,46 @@ static struct commit *pick_regular_commit(struct repository *repo,
->  [...]
-> -	/* Drop commits that become empty */
-> -	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
-> +	/* Drop commits that become empty (only for picks) */
-
-Why? What's the advantage in creating empty revert commits?
-
-> +	if (mode == REPLAY_MODE_PICK &&
-> +	    oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
-
-Thanks
-
-Phillip
+Thanks for reviewing.
