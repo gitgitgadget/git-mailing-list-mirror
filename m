@@ -1,237 +1,153 @@
-Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB772DC79F
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 14:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772116081; cv=none; b=JwTyMrzg05AnTNx1TfoYgiVAz/0BCgF4hkiDNHgx3K3Oi9ymr1vV65LEXQ429QMEnIsupAS8bFPzZcYZiMfpPLwwwTDABSKzGbZv2trZrCCPEC7qpOYRpkhJb8cZ0KndrulpJOmofZEEHkds53VGCcEfSc+pFCmL4Pf08NNqW64=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772116081; c=relaxed/simple;
-	bh=0I5tMg+JH6uxuvLr8uH9m5r2tYnpkN40Vl+o95gxdhk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pHt1M9CnIn8ADM2pTZk+KH06DVHCuhKbgH1n8RYuEuniT60nBAKRrLS+s+7i5M/sU0qObVHbj135u4NBf6b3yTI//u7Mcn31squvLTglyP9FnbzQLXHKR5i+TY43G+JO8pPIlz36+s/3hkBSeBVdinjJ6SpC9//2iCjb4eEexzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FUrHIJJ+; arc=none smtp.client-ip=209.85.221.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F286D3ACEFD
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 14:31:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772116310; cv=pass; b=cgs059XhGjQBa3efO1GQkmA19AGgkfU1xQK3I74rLQPbjv4O81apcsifuoQ1H6ABrKJA9/6cQEPyp/G6A75jPtvtN/cKRAz/BH6zAB5YHo/CxYPa8oTomQlJCyuVxXPz+DbglNxqywz1/HR4bBA2qlw6nH7ihhrPxKfpT0Ri+eI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772116310; c=relaxed/simple;
+	bh=sJlhj6DqM87fRtExz5/BW2Tvj3+uRm4r86zoWKfYtXI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HU8++U1L/wldeAxkKCVpVlf/2vTc+lzjoeGMiIEu2jsAStsS4bcXFJO039j/6BvJr1C5QhOZrQhxqVlHRiqkFTbqaT9vjo1o+HkE2+NSdaCAX9j2+cn4UkhdDDIF++D9GJ11YzHaWVfmxrcLdAsBE8BLjkOMGUVWG/zYHet+F68=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bFlpdXxm; arc=pass smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FUrHIJJ+"
-Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-43984d7e49bso836657f8f.2
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 06:27:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bFlpdXxm"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-79495b1aaa7so7785507b3.1
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 06:31:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772116307; cv=none;
+        d=google.com; s=arc-20240605;
+        b=CCS3OIvDj8ivhHdUtVvCCJ1gQYK8aODO0r8lQlriZg8Ttwogd49QDoDqSA+tZD6M0p
+         v03xRxLMeLVsr1dTlDaYIIvR8YB9PFNCv8WEa9PUqh9aSjV4n+RPsNjjojEzKv87xLlo
+         GVqZv735qRdbNbswEbpYfk1zLbyv69o7oTbLUCe3K3/ToVMSKM1cVtznTjvZv1uymPuw
+         eUcElGhyrx5BksGzv92jjojLxgQEnjWEndr/HK7JBBfOrZVeETtkzDUDiTiKXhkQ4fT0
+         n/UY11a/+a6Rzu3kqQ2FwxV6d3Gy2/LItl5R+J0/XxiBOzMR/agdoipRpW4CLZ7fy8Qj
+         6EeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=sJlhj6DqM87fRtExz5/BW2Tvj3+uRm4r86zoWKfYtXI=;
+        fh=ScZ/ikSy2559JyhTqbMtlTXvx14z2n4cNGqCa6I9g3o=;
+        b=b4d/XM/Evjxp9BLxXzBo2weudHBF6c26FWkzV+nMT6nQ5DUVDIGVIBZhnuLUjFWpg0
+         pDvHPI2B6yXW46G7WmkIzTQbxRwNq0nM3Mu6hnc6Mdf4ZJe5r9MIsHj2IFAdKP6WytcW
+         a1rvQPkiyZC+q+50ov77cjuBFjUrgwIVziv014aUeeavxpvTpsYovlx3XU7jaO/5L8VE
+         QIqJux3u9u+xLohAVnpePkUvFvMl7xKdzgdQCe4xdgkNRD+BieKso/N+4yV9jQwwgK3N
+         6ICFaYbOR9skYgK3/lVdhuMgFG01oVYr4ZPrsEgrdJ3+LPxkVKUcgOKb6CH3WjSYuLD1
+         CpdQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772116078; x=1772720878; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=oS3V5s2LCtOb5guzJE3xmyliECCYPRC7F7wplJ5oQkQ=;
-        b=FUrHIJJ+wY+v165Ib8obT+gbqZMEE+pKsxpX8cMw3R3muPckObJaUIylhHLkNsNK5J
-         /mQHl4u8Z/J2x4V3X6xXaY1aQoWY/bD42eX7gkw1A5wkKl3hin2NKLbxKZrOmSKlPcCg
-         HXRdhUfJrUOPQvndlG2zCn2Mq1Onpd+/JJ5ebDi/VrBYAo+vYG7/Me4KEqIwLv2zxNbq
-         va3cW6m9UQgw7bJrnmSvZRGArfZtb3/kB663ay8p8cslVLoANar/OV6hJOpayPGTeeKl
-         Uz2sVIOMeDC1Y6aL9cH9SUkUYy68kuWuGc9+fdF1+cIxO7nAP2bVfM6w1UTJx1sA2y7F
-         w91A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772116078; x=1772720878;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772116307; x=1772721107; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oS3V5s2LCtOb5guzJE3xmyliECCYPRC7F7wplJ5oQkQ=;
-        b=fyS+KvJIbpGC6Txm+1obEMQEvNjxeS2bhRWg98ATcMnJaTJGRpL1g38T8VaoYSwpw1
-         VjVZ8hC9O12+F3KqFTqKIa2hqxDHOCPS6wm8Ruh9LyKCnKrDwohQDAw+UCQaZviily8I
-         Eke+pEArz2Z1KMiR2dchmyf9+QptZcIvwanin68F9V8IpzOhBA1qlp7DfrMZ4c/2HF9T
-         3k2QuTHcCV8y9ByFW63ZIPinakL4ca/5fwzzwZt4XU4BQNKh0c5SKZd/0tHhHYwzAEk3
-         s/tLTJdTbw+6F1y7RIrfqr9oi1zTYimijzJX2AIVaCJlQTBM1gw4vECohSTCIJQR7EvB
-         LfLg==
-X-Forwarded-Encrypted: i=1; AJvYcCXaTSug+1rmboq1dgxKjX26rCeBaYlBMjQr+LIKXEL6m95mCMfjFAnSgqR5Bk2T4B3VQx0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzmnEzJz2B4F7vBNVv2KT6Dpa1qBOwj2BY2jIdsowv098vDHPpu
-	uaR8mbpmTjCRYC0ofVgFCxVe6hrQcAhduRXrSa1VgCTxILfkJiD+fqfu
-X-Gm-Gg: ATEYQzyBE3Y/YjkKv/kg/SeAHCLR0WVVjk6YrUYgkyqt18hWRBD4LDwRzQbBCzKjH5r
-	G7xeHCfRJfuW902Md8mocUlvsmtXxO2RNQVYJ6/2I1Rv/LT/5GnnaWfTBb2S91E19pJVrEss706
-	pm4sPYxFBJ1o9rxaWqJBht80L/dpN++mJGmGzOGdOCnSXY9k4VsISleowh6HvWn40jaG7MLeY/I
-	0veb97COnB+X5SOyo2Y7Uj3YHgcnTAPuYvkIs912Ii9ZjCts2A1nfFHwcDgrIASE4H7+CZgdOg5
-	A1fbVyvim2CkRQeiwt6d1D1fqrQaY/rKy1n5xfvv/fD/qiVk7MHatL+RkaJis+Lp/+XXacMyDKH
-	4sRyVraXTAw15R7gwZuvhqBfsrKHoJKROfkPlciOznX1ZvBciULOO+6M8LjKOYefUZZ8qOYkf9j
-	q4sTdhoTDgr5TKbPk2uTtPIhuaRZUrpxlzRN1CvqzsoqNecPS3SQfgeMxbfq0HNFR5F6oNKesKG
-	ksUHkfGqPYzZLb5
-X-Received: by 2002:a05:6000:1883:b0:439:8a14:ba2f with SMTP id ffacd0b85a97d-43997f3a510mr4819452f8f.48.1772116077981;
-        Thu, 26 Feb 2026 06:27:57 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43990c388acsm12974923f8f.28.2026.02.26.06.27.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Feb 2026 06:27:57 -0800 (PST)
-Message-ID: <c2048ddf-ced4-425d-af6e-14e9442e9d99@gmail.com>
-Date: Thu, 26 Feb 2026 14:27:54 +0000
+        bh=sJlhj6DqM87fRtExz5/BW2Tvj3+uRm4r86zoWKfYtXI=;
+        b=bFlpdXxm/PUpZ5VDkqNgYLQLQ0Qkp+kZ+r4x8BliHahKuqnZuh59izMTHgjXU4buHE
+         HfksPWyA1oGAYzU8unTSIMgnVAUIVxQSumq0M78p0zC7y9Feixha0Lsg2nH+FrAVV0wV
+         1Sr5CcrYvS7n1NevR2mzXYUSLfUp5j29DzSkUemEzj40OG/qfYVq/T0cXlN7I1zp2FSb
+         OnRKXHy6u9PjGeedxGuLeonYbSKOVJ3vBkahMpzDgjOWaBDD+bBYnFleste7/IxQfj0K
+         mXNO40hjR4/bSAmewCv9/01cnzoG57BEY0zRtFpwqkIm2zaB3Jh3okpymHP+GymKMawI
+         bK/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772116307; x=1772721107;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=sJlhj6DqM87fRtExz5/BW2Tvj3+uRm4r86zoWKfYtXI=;
+        b=pluZ9VCaDL2O1aI3RP8naMgQfET6SDqqEvGJzMLIHDPXhNdNpzFB3pAOzysrpw7QZW
+         Y9aOLerM/R6YyB7cVolHS11hZ6J+qsL7f0Od9CcEf50BgcyXlkuNrBOmgK6HJPnu6OL5
+         ChnJPIBtYvDfAXpVGZrlXDunpGQGc6UNBevKjnNqS/FLGs96zQ1XwpgpGNzoJrqr3KEy
+         IiAq9ZG0N1zVvBKoXxytmC3zjrliJxM/g6P4uwhtE8Jx3IjMqApHHvr+a8ghPS8TlFsm
+         ensILC7iTrNdEfXyNMwRzcGnKEhS/pbsDldTAx9kZ4IRzSgOycnwbPWx3qwj+Xkkz8+q
+         y/jA==
+X-Gm-Message-State: AOJu0Yzsb5kLd33umPG6aX5EVT1YLKR9mETwpLBFufNt5TLY8ThVm/Pt
+	flDfgKnpTjDG6VJqH68XjyrkprQgiBAjP49KXCi/jBOvNpaA0A8hvPMHFEYf/pxn7gRqGM1JJ/R
+	0Zh7CJpSxoehisqRY0IkKpp7coWE/iJNI6UP6T45NzYbV
+X-Gm-Gg: ATEYQzyYqzT5JG9zmu3PQz49hwx6NLH/etKPhLbQTqw8F57Aqw05ArdKuy3EM6K43jp
+	gLq6KDJixpYYEDfyrDJtCzvAV7LyMve0/b3eiJO0Hs9Wv8QS+CzjlqI+coPEqwPR+CBEgKTn0JX
+	TeLcOwesjblYokR7WbahqFEUllNzsFkMSWxI+8n/4tHIMiUqiG5Jq1anuhK6bAYNSd3wwV2DPY4
+	3qu3TeX4nRuEpnEoxtIJbFaaDjCI81ybUbgH5vEnumb65gD/aF6L6JvVFKIJzvYEN6Vx0Opj5mv
+	1GAl/TxUwPqB9w9EMkH3n1KGLCNN4VUvMHwgUcdWNmjgncIjTYc=
+X-Received: by 2002:a05:690c:e1a:b0:798:1637:fee0 with SMTP id
+ 00721157ae682-79829157044mr184732817b3.52.1772116306523; Thu, 26 Feb 2026
+ 06:31:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/2] sequencer: extract revert message formatting into
- shared function
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, phillip.wood@dunelm.org.uk, karthik.188@gmail.com,
- johannes.schindelin@gmx.de, toon@iotcl.com
-References: <20251202201611.22137-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-2-siddharthasthana31@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260218234215.89326-2-siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CABFJD6-7_bkixVA4Oj_JV1N5hMqFXFqBvK4KBAjM5hqcgC=_rg@mail.gmail.com>
+ <0009780A-381B-4025-9C66-376680AD75CC@gmail.com>
+In-Reply-To: <0009780A-381B-4025-9C66-376680AD75CC@gmail.com>
+From: Santiago Leal <santiagojoseleal27@gmail.com>
+Date: Thu, 26 Feb 2026 10:31:34 -0400
+X-Gm-Features: AaiRm50Pn385fA4uf-JEywEcTYjEJifj_atCCMT_dzCor1EBqFlxLWOskAULaG4
+Message-ID: <CABFJD6_daPbAB52fmBTd3px7s1hqHjrTk8gbdP0BATDmjKe+wA@mail.gmail.com>
+Subject: Re: [GSoC 2026] Early Introduction - Interested Contributor
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Siddharth
+I'm comfortable with C, but I need to review some concepts. I'm
+currently unsure if Google will offer any monetary incentives to
+Venezuelans, which is a bit discouraging, but I feel that
+participating in Git will be a good way to improve my CV.
 
-On 18/02/2026 23:42, Siddharth Asthana wrote:
-> The logic for formatting revert commit messages (handling "Revert" and
-> "Reapply" cases) is currently duplicated between sequencer.c and will be
-> needed by builtin/replay.c.
-> 
-> Extract this logic into a new sequencer_format_revert_header() function
-> that can be shared. The function handles both regular reverts ("Revert
-> "<subject>"") and revert-of-revert cases ("Reapply "<subject>"").
-> When an oid is provided, the function appends the full commit hash and
-> period; otherwise the caller should append the commit reference.
-> 
-> Update do_pick_commit() to use the new helper, eliminating code
-> duplication while preserving the special handling for commit_use_reference.
-
-I agree with the other comments that this ends up being a bit awkward, I think
-something like the diff below which moves all of the revert message formatting
-into a helper function would be a better approach. Note that I've also added a
-repository argument to refer_to_commit(). You might want to do that in a
-separate commit, but I think it is worth doing if we're adding more callers.
-I've also just used a bool for the use_commit_reference flag, if we want to add
-more flags in the future we can convert it to an unsigned int when we do that.
-
-Thanks
-
-Phillip
+I wish you all the best, Santiago
 
 
----- 8< ----
-diff --git a/sequencer.c b/sequencer.c
-index a3eb39bb252..30f6da6f959 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2198,21 +2198,55 @@ static int should_edit(struct replay_opts *opts) {
-  	return opts->edit;
-  }
-  
--static void refer_to_commit(struct replay_opts *opts,
--			    struct strbuf *msgbuf, struct commit *commit)
-+static void refer_to_commit(struct repository*r, struct strbuf *msgbuf,
-+		const struct commit *commit, bool use_commit_reference)
-  {
--	if (opts->commit_use_reference) {
-+	if (use_commit_reference) {
-  		struct pretty_print_context ctx = {
-  			.abbrev = DEFAULT_ABBREV,
-  			.date_mode.type = DATE_SHORT,
-  		};
--		repo_format_commit_message(the_repository, commit,
-+		repo_format_commit_message(r, commit,
-  					   "%h (%s, %ad)", msgbuf, &ctx);
-  	} else {
-  		strbuf_addstr(msgbuf, oid_to_hex(&commit->object.oid));
-  	}
-  }
-  
-+void sequencer_format_revert_message(struct repository *r, const char *subject,
-+			const struct commit *commit, const struct commit *parent,
-+			bool use_commit_reference, struct strbuf *message)
-+{
-+	const char *orig_subject;
-+
-+	if (use_commit_reference) {
-+			strbuf_commented_addf(message, comment_line_str,
-+				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-+		} else if (skip_prefix(subject, "Revert \"", &orig_subject) &&
-+			   /*
-+			    * We don't touch pre-existing repeated reverts, because
-+			    * theoretically these can be nested arbitrarily deeply,
-+			    * thus requiring excessive complexity to deal with.
-+			    */
-+			   !starts_with(orig_subject, "Revert \"")) {
-+			strbuf_addstr(message, "Reapply \"");
-+			strbuf_addstr(message, orig_subject);
-+			strbuf_addstr(message, "\n");
-+		} else {
-+			strbuf_addstr(message, "Revert \"");
-+			strbuf_addstr(message, subject);
-+			strbuf_addstr(message, "\"\n");
-+		}
-+		strbuf_addstr(message, "\nThis reverts commit ");
-+		refer_to_commit(r, message, commit, use_commit_reference);
-+
-+		if (commit->parents && commit->parents->next) {
-+			strbuf_addstr(message, ", reversing\nchanges made to ");
-+			refer_to_commit(r, message, parent, use_commit_reference);
-+		}
-+		strbuf_addstr(message, ".\n");
-+}
-+
-  static const char *sequencer_reflog_action(struct replay_opts *opts)
-  {
-  	if (!opts->reflog_action) {
-@@ -2356,38 +2390,13 @@ static int do_pick_commit(struct repository *r,
-  	 */
-  
-  	if (command == TODO_REVERT) {
--		const char *orig_subject;
--
-  		base = commit;
-  		base_label = msg.label;
-  		next = parent;
-  		next_label = msg.parent_label;
--		if (opts->commit_use_reference) {
--			strbuf_commented_addf(&ctx->message, comment_line_str,
--				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
--		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
--			   /*
--			    * We don't touch pre-existing repeated reverts, because
--			    * theoretically these can be nested arbitrarily deeply,
--			    * thus requiring excessive complexity to deal with.
--			    */
--			   !starts_with(orig_subject, "Revert \"")) {
--			strbuf_addstr(&ctx->message, "Reapply \"");
--			strbuf_addstr(&ctx->message, orig_subject);
--			strbuf_addstr(&ctx->message, "\n");
--		} else {
--			strbuf_addstr(&ctx->message, "Revert \"");
--			strbuf_addstr(&ctx->message, msg.subject);
--			strbuf_addstr(&ctx->message, "\"\n");
--		}
--		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
--		refer_to_commit(opts, &ctx->message, commit);
--
--		if (commit->parents && commit->parents->next) {
--			strbuf_addstr(&ctx->message, ", reversing\nchanges made to ");
--			refer_to_commit(opts, &ctx->message, parent);
--		}
--		strbuf_addstr(&ctx->message, ".\n");
-+		sequencer_format_revert_message(r,msg.subject, commit, parent,
-+						opts->commit_use_reference,
-+						&ctx->message);
-  	} else {
-  		const char *p;
-  
-diff --git a/sequencer.h b/sequencer.h
-index 719684c8a9f..a61ec6d81d4 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -271,4 +271,8 @@ int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
-   */
-  int sequencer_get_update_refs_state(const char *wt_dir, struct string_list *refs);
-  
-+void sequencer_format_revert_message(struct repository *r, const char *subject,
-+				     const struct commit *commit, const struct commit *parent,
-+				     bool use_commit_reference, struct strbuf *message);
-+
-  #endif /* SEQUENCER_H */
-
+El jue, 26 feb 2026 a las 10:15, Lucas Seiki Oshiro
+(<lucasseikioshiro@gmail.com>) escribi=C3=B3:
+>
+>
+> > Hi Git community,
+>
+> Hi, Santiago!
+>
+> > My name is Santiago Leal, a Computer Engineering student (3rd
+> > semester) at Universidad Gran Mariscal de Ayacucho in Venezuela, and
+> > I'm interested in participating in Google Summer of Code 2026 with
+> > Git.
+> >
+> > My technical background includes:
+> > - Languages: Python, JavaScript, TypeScript, Rust, C++
+>
+> Are you comfortable with C? Most of Git's code is written in C.
+>
+> > I've been exploring the GSoC project ideas page and I'm excited about
+> > contributing to such a foundational tool used by developers worldwide.
+> > I'd appreciate guidance on:
+> > - Which project ideas would be most suitable for a newcomer with my bac=
+kground
+>
+> Probably all of them. GSoC is for newcomers. I recommend that
+> you take a look at Abraham's suggestions and read the
+> "Git Internals" chapters of Pro Git [1].
+>
+> > - How to set up the Git development environment
+>
+> Git is really easy to build, you'll only need to install a few
+> dependencies and run `make`. If everything goes well you'll have
+> a `git` executable that you can run.
+>
+> Tests are shellscripts inside the `t` directory.
+>
+> > - Any recommended beginner-friendly contributions to start with
+>
+> Take a look at the microprojects page [2]. They are suitable for
+> newcomers and finishing one of them is mandatory to be accepted
+> in GSoC.
+>
+> > Thank you for your time!
+>
+> Thanks!
+>
+> [1] https://git-scm.com/book/en/v2
+> [2] https://git.github.io/SoC-2026-Microprojects/
+>
+>
