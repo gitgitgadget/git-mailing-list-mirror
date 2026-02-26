@@ -1,141 +1,109 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268C1316905
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 22:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41F33A0E97
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 22:39:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772145231; cv=none; b=AbYvg/dyRPi2IKG3b6rEQGal97t8hJjg5ZXUGQq8c78BJ5MgjSUwCBjcQxeyMPC9pvef7t73TdYNW3ofvQwSM5vRLeDYGgpDfvnqUIH+bey4PnO9AB4KfZbWUzEp5lTIXuzU5dAuf/UCwGJf1vzHqBhj9URwu1aC+waDl7pSP9c=
+	t=1772145543; cv=none; b=A+63bhYW/8qPgZEZiuHIGm4qQkHsiSUaJVhy3dRuuDXdDUqBM/Ccdak8uKPxqZt3c225HFVP09CvKidHYxlJAeN82xBAiYqhHj1oAGAVHg37tyedFCGJYDz3Q6kDahWnteyqL50kvq2Incl7Qthb/K6GA9vZ6yVYVvvcZAj0WEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772145231; c=relaxed/simple;
-	bh=yBIHSFufdhFas+kAVdB7c65wpnJ92Qe/b74i7kFsG8k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qeDcMfncNFMCy+72KeIGOH47WwccvmOIuwDqFzjLP9EljwEc1GTw3Jet77pET0cbNirUvirX2pHVOV1BECCFtZPEA4ijUdm4uKIIW93ASI3SvheKdHmbf1S3ymxXYTI/y5GMxqdWDkgW6HnqJ30lHioK6Cn3mOPhaANQ7rfbYeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wv7PCnxz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Imd3GUcE; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772145543; c=relaxed/simple;
+	bh=7JmuGnkKyKL93kM0ollccuHX07Nj268Hpyvzy/8IdS0=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=ECrw0lbsDMK35plpBTnL5KP47DIT2TjLmTmqrmW38W5HjHD7BkcclHLHIm5kSK/J75VlauqSnkEMLhDX19unzXxbYpexLJLyJ5U14eWIhAIcYMOFMldW6RAygGMglH+fF73T1UbDMlQsR0nJVWsTaZd1bBGBaqXihOlCWSEDG7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iAjRKYFg; arc=none smtp.client-ip=209.85.221.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wv7PCnxz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Imd3GUcE"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 43D791D00045;
-	Thu, 26 Feb 2026 17:33:49 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Thu, 26 Feb 2026 17:33:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772145229; x=1772231629; bh=fhzPe+E8kT
-	yvzIqf7/W9KeyU992HU84cXMTri72QY3I=; b=wv7PCnxz0DsrOLqrTWRvfZfP1N
-	AdAXHTnDpKJ1IBBi6GRXD28XRDOng9SOhPGIElsK5RKi3HpSMxzFNcCrdyEZM5yQ
-	zClOY8j8lmgEZ3PECgx24WjMWJhD92oOYPejnLpS7qrVzi4lJJl8drS7VJL2L60b
-	uCNMw3rhxuihMI5NHyAbTG9NpSfEYZAez76DE3OnQgvLEJvx3JgMpNyzvY5r9unl
-	gPxbOwLV9+Euk6+F/RS6o9OdJdaktj+bC2ym8tkOQBuwMwPd5YNAI20LZ5XxO5WC
-	VIhUZ4Zw/ARADphNMBAC2AiyWUVlpowo2MJJgEuyFysdRp8GtX0iK7eXTnXA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772145229; x=1772231629; bh=fhzPe+E8kTyvzIqf7/W9KeyU992HU84cXMT
-	ri72QY3I=; b=Imd3GUcE3ScROmG/JmEbq+/0gTTKHsHQg/7snz1rP+e2FsVfFik
-	rboKZNZP9/6PvIi6MHQ5eDHRW11zqNfrzyH6S9voQGZgOO2CoHDE0u4ImjO8c8g3
-	AbAlY3m9h7+weI2EnqYx98XaBmfCuZXmz+1jdbJcW4OGNbh1P71kYUyV/n4DSru7
-	k1XqEvM6xSWASYopROdGHgEPXh+34m70yayoXpb0N/o2pycy97j6mFnCfxrgKvqN
-	HzAdSpyYCnTkBhTlAcUDOf51N6+UzofBmyA7u11MOZUTDmwazmhQD6wtYu5eF35V
-	xscC9pQYVt+aQ37aMqpNNCWE60aQbKVILgA==
-X-ME-Sender: <xms:TcqgaU9MEQa-C5Q0fIqzj5ZvNep1KOI9tvASLwlB5EdtllrZWMcjgA>
-    <xme:TcqgafRXdC1_QwhL9PelLI5xezkoiz_qhjXYfCuopLn72kk2IOSy1fbecp_jwlMdW
-    XhrceXjiOI4NRjZvmkl_Ka1pkyXg0poaZ13xdY-cQm4-3loy6Js4A>
-X-ME-Received: <xmr:Tcqgadp_nBWqGn7VU9Ypi7YGvP89HFSB-MULZw-u9LLlaWML1jF4vqMazypCspI3eV6BIuYrOQkGn1dpxMkopTaNicTFLJ9Grw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeejfedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegouf
-    hushhpvggtthffohhmrghinhculdegledmnecujfgurhephffvvefujghffffkfgggtges
-    thdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsth
-    gvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepgeeuheelveevleffkeeg
-    hedvhfevfeekuddujeehheegkeetueetueefgfduheefnecuffhomhgrihhnpehgihhthh
-    husgdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepvhgrlhhushhouhhtrhhikhesghhmrghilhdrtg
-    homhdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhht
-    ohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeekse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedu
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:TcqgaUkBBcUzMZj2OoWwb5tN7o-Jl7ppjBOE9ebb4OM08YtoGOL9rg>
-    <xmx:TcqgaedRFWHVAtTgKYIuYp9xVfjlP_eCAnMZkBvD_qtjhzWUbDvwuQ>
-    <xmx:TcqgaYofP2KwUjaDC1tvZHd8aBMF0SgqvB04E9lSsASRaRH6ljiGVQ>
-    <xmx:TcqgaQNmdRNM2rirBJf08E_Nd2t6hfcJNyirryjzzdal4GDlfGT_9g>
-    <xmx:TcqgaeYcBRLyM_gfCCJhz6QmC7XbSd-Hj0m6mcpDACly6DAL3eSmMKJU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Feb 2026 17:33:48 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: SoutrikDas <valusoutrik@gmail.com>,  ayu.chandekar@gmail.com,
-  christian.couder@gmail.com,  git@vger.kernel.org,  jltobler@gmail.com,
-  karthik.188@gmail.com,  siddharthasthana31@gmail.com
-Subject: Re: [GSOC RFC PATCH] builtin/repo: add path.in-worktree field
-In-Reply-To: <BEE3B56B-F8E0-43B5-95EA-8506A84CB2EA@gmail.com> (Lucas Seiki
-	Oshiro's message of "Thu, 26 Feb 2026 18:26:41 -0300")
-References: <05C28DD8-251A-4990-BBB2-26C144CAD982@gmail.com>
-	<20260226201643.5152-1-valusoutrik@gmail.com>
-	<BEE3B56B-F8E0-43B5-95EA-8506A84CB2EA@gmail.com>
-Date: Thu, 26 Feb 2026 14:33:47 -0800
-Message-ID: <xmqqtsv3uoc4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iAjRKYFg"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-56a91a5e64eso550881e0c.3
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 14:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772145541; x=1772750341; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lNk+RN787duxkT6/seE80qUblE/gg4N55TkaIlDGAzs=;
+        b=iAjRKYFgfUq++qT7KhkBmsdXw/YSeF9dLZD+pZ3lWBHUq8cNglWuh0RSTrCESHsuXU
+         fA38XgRnW0u6zTAVKeu7RMdavc47zmiY7Ha0eMMXcAN0hPpuVL5eXXKPmpBzAMmjA7UE
+         lCG72AyeQRgNoGYYycWU1X8tndsx1Q0sFDoFbVzp5B3Vwc7hY931zc6Yj+rANUqU3Bng
+         OBgr2zTELa9frALNcwxlbHhhFK9X73ntVGUATTQSGZv2Bb5YLI35QDMzBtL3++FW0pi2
+         wKjgoGBS+XR9W/smcnPXjoNQOx0GphrsA3FVGmblqoLrdrPGIrjdXq7HGDsrgPXCUzDS
+         WcCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772145541; x=1772750341;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lNk+RN787duxkT6/seE80qUblE/gg4N55TkaIlDGAzs=;
+        b=TKAyPaRsVB/n5QiM7Y70SNKE+SRGiPEUo8caYpOMejPXdR6m2kRO0lsGN6oznV1SS5
+         Ln5Bf/r25IVHH8O6PaxmVf6wrngtPdFTUjeNEVZohIkpqsU9qTmxO7l8kxf0mQ9/AOVg
+         /s3QrRJzSvLTljH9X/OCgvDczRJDlPPtKiiXLlhxCNtY4S8NOsM+3So4eRR0JWy465uy
+         gJW+sL8kjPEDoqu3BrIZQD39CCsr6mjkb/0ntXt1na9iSnTTiaTREp5/IT9Lt/wkFhop
+         +69lQBgVMh8W183zGe8cQ+ddlREKofrg9UCl1sOYnIHSk4Lgg+iWgkxsBjgUeEVdcyEV
+         2LyA==
+X-Forwarded-Encrypted: i=1; AJvYcCVlXEdyApzQDuc3rzeWcupL27EnG+bj+9PMBgQPBI5uiiKjhHvF1C4Yt9o21ZPV9P9toIU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxT+BP+ajkF6cCYAABL1PQrDjVCRSR5yBRYz4Vt+QUCYKBZSFvD
+	L6U1UybZLN2xfduy3OPmXqbKgleOiaHZi9KSytRCN53VKdZak9cbxez7
+X-Gm-Gg: ATEYQzyvkRrz+V2wdDIyN/ZDC1MN6c2ozb3ybGQCj7SB9/On7rDFyHga2a8VCKYoTEv
+	jc7PToKQPaAM2E+B8Iw4u07f7DbAyE8yPC65KLtuxmf+csAaxLWB5zqTKFb6rub1PknuufFUtI8
+	KQk11Td4zoJk9KwYUmpg+HiyZ5zEbnZFb56VQIvaPM+wDiTb0RrqFb0dZCFeAcPibxoChyYo7Qa
+	nyJQsvG4XTWFGOJJRuX8zNC/PWcDmYNpUD22PzeZTI+VTf5pxXhxxmckz3EZGUsEVdtD8DU68oc
+	W4zfDCNjQ+ZiepqS1c3HV4PULqNofkjth1Jax09qG3zvqfK7GRuL35s5EDYJ9b7yNtpT7TRRb0x
+	mOK956OCppoBeLsqpJZyUJWEWamzqeROgzrNyf/qbNSJ+JD/iWi6/A8xZ8oJIYgky6P9PvP7vG0
+	+/YSsmTtfIF8Ld/m1ksrPRlE0A7jc4/sC8o6fliMSgbOJ8+3ahT4e7wPCJdQj7dXMs
+X-Received: by 2002:a05:6122:3a02:b0:566:2711:d8ab with SMTP id 71dfb90a1353d-56aa0a12cd5mr441104e0c.6.1772145541516;
+        Thu, 26 Feb 2026 14:39:01 -0800 (PST)
+Received: from smtpclient.apple ([189.62.150.156])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-56a920493f9sm4213694e0c.13.2026.02.26.14.38.58
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Feb 2026 14:39:01 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [GSOC RFC PATCH] builtin/repo: add path.in-worktree field
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqqtsv3uoc4.fsf@gitster.g>
+Date: Thu, 26 Feb 2026 19:38:46 -0300
+Cc: SoutrikDas <valusoutrik@gmail.com>,
+ ayu.chandekar@gmail.com,
+ christian.couder@gmail.com,
+ git@vger.kernel.org,
+ jltobler@gmail.com,
+ karthik.188@gmail.com,
+ siddharthasthana31@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <AC839D5A-0221-4935-9E9B-92C2BB612C60@gmail.com>
+References: <05C28DD8-251A-4990-BBB2-26C144CAD982@gmail.com>
+ <20260226201643.5152-1-valusoutrik@gmail.com>
+ <BEE3B56B-F8E0-43B5-95EA-8506A84CB2EA@gmail.com> <xmqqtsv3uoc4.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3864.400.21)
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-> A
-> microproject is something simpler than that. See the microprojects
-> page [1] for suggestions. They are more straightforward things that
-> have more chances of being accepted quickly. And since having an accepted
-> microproject is a mandatory step, you'll probably want it to be merged
-> as soon as possible.
+> Microproject is to serve as a practice session for a new contributor
+> to go through the patch submission + getting reviewed + sending
+> polished version cycle.  It does not have to result in a merge to
+> the project, but it is essential to get reviewed and respond to
+> reviews.  How well you work with reviewers is the focus of the
+> observation, and how complex the problem you tackle is is of much
+> lessor importance.
+> 
+>> I think that this seems to be easy to do, but the reviewing process
+>> may take some time, so it would be better if you stick to a
+>> one of the selected microprojects [1].
+>> 
+>> [1] https://git.github.io/SoC-2024-Microprojects/
+> 
+> Is https://git.github.io/SoC-2026-Microprojects/ the latest?  The
+> above URL points at one a few years old.
 
-Microproject is to serve as a practice session for a new contributor
-to go through the patch submission + getting reviewed + sending
-polished version cycle.  It does not have to result in a merge to
-the project, but it is essential to get reviewed and respond to
-reviews.  How well you work with reviewers is the focus of the
-observation, and how complex the problem you tackle is is of much
-lessor importance.
+Oops. I've trusted by browser history and pasted the link that I
+during my application.
 
-> I think that this seems to be easy to do, but the reviewing process
-> may take some time, so it would be better if you stick to a
-> one of the selected microprojects [1].
->
-> [1] https://git.github.io/SoC-2024-Microprojects/
-
-Is https://git.github.io/SoC-2026-Microprojects/ the latest?  The
-above URL points at one a few years old.
-
-Anyway, this list however might want a bit of updating.
-
- * I personally feel that "run_command*() to internal call" is way
-   too involved for a microproject.  All the low-hanging frutis have
-   already been picked in this area, I think.  That is why this does
-   not appear in the list of microproject ideas in more recent
-   years.
-
- * People seem to be finding more instances of "test -X" to replace
-   with test_path_is_* helpers, so that would be fine to keep for
-   now.
-
- * Ditto for "do not place git upstream of a pipe".
-
- * "Do not use signed int for collection of flag bits" may have
-   outlived its usefulness, as it seems we are pushing more and more
-   uses of enum for collection of flag bits.
-
+Thanks for correcting me.
