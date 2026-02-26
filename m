@@ -1,69 +1,69 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93574441056
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 21:14:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69BB472783
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 21:14:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772140494; cv=none; b=F+1ZgJBFu/l7BVeID9MBnuUZZlHTHbc8VpJrxfwL1ACW8UaniDAbu8CXsJ0E0FC3PNARGcAz6lo+wC7XPpuA1NEF/2OxZL/jaruWqeSc9fZxiNaqtUjcT2Q3jTeyim2+0yVtQCoAgQJhjk3D2AYXrbhCSLdzavra3ujXyO25u/c=
+	t=1772140496; cv=none; b=YXOZSN8HGfxISTaDBbzADR+f73RoKFJUOwHEDMBsmBOzoVie7ZGuqygyu8Ms60bIOWukn12RbKFYQBaNJ/fper7V9zolL1wZEpGRHfBmgR6zg2JNiIbhMBpTQKYJbmGa0jiEirPK5Ft+w0bc6131HaZG01pWlQdBREIin9Gzvs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772140494; c=relaxed/simple;
-	bh=Br9fh4xYZp/0+MMbJVSZzLA+hlTvy+PAmwgycQT9I3I=;
+	s=arc-20240116; t=1772140496; c=relaxed/simple;
+	bh=OjNb9GbMmvoo/AvzqMKMll5S6aCm26qmvy45GbcFE+Y=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=G4/H+lNR81Qzk0scjyvKH7HQtdEmkUy3PjRB5Q7Adqsxt/M/nMtdVyXTnD7sY2ssQYee3kevPHZgDxdxyiMPuc7MlKEHI3RKeiv090Yc4bgnh4Vk2M3l9pzuQne5NxuuNMuNMMq4aiTkPlv8j0W1WzzN9Rx9HNVEs7RChE9mG1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iYcYyMod; arc=none smtp.client-ip=209.85.222.179
+	 MIME-Version:To:Cc; b=f7eT+XGs8NTN0/Vo+yktz8bQt6rL2ZUrEtC4aOgSjmGCA7t7h4mMZhRGY4vg13Wzm5yJt3WsDF0lOPKkcJKiIMrSUSLixC9nYHuMK1s2tGgi9q1SPsfz7lNSeO+IujUdssTo5SkakuFhPAJTBg7G9puynDteAwVk0PV2y0zRe6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GW2cQ83p; arc=none smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iYcYyMod"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8cb5138df1aso134445185a.3
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 13:14:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GW2cQ83p"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-5069df1de6fso11404761cf.3
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 13:14:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772140490; x=1772745290; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772140491; x=1772745291; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dyHey4t4KqYE+27pGtOhB2Kz5WT8ieoG1Bb3LiW+6fE=;
-        b=iYcYyModlOoBKArqk04302rJGAjJZVdRaxIqkX+Iu9XApwnnSALQ8dzRiY3sckEfeM
-         tonjhWTL3AoYRlDlvFImdpQMgJLtBi/YWZd+XlJsg57T8GhjGczZuZdL6WGDN8JR+VPQ
-         rdPK3SDeBzDSBk6QgDl+NPhVfTdw7qhVQb7btSTDJFnp4lzSK2i1NwGxnrpIWUYVAy8L
-         qWGKLhacAw+KIGpRC8HfQuvZ6RF8jZ8Ko7RZOgBzOrmDprZ2NXdkP3FLpiml8hofItDf
-         iSS1A0874BOG1J5hRkfPF2k789yYZprumaqUXGj4ODrmLaPsfihxQRbZpBEHPJC83/sv
-         tssw==
+        bh=SMW1I8meSSb/l+AUNZEA2AyUORzirRK8gxnH32iO8mE=;
+        b=GW2cQ83pUt0ciDsmK1/P3+nMbjEsEb0rP8nWo2TC5AnlwYBEOtB7JI8eFvfjgkny8K
+         1EcserEPOfIdUmH92jSH0Kf+sIZov83lSKR6sMCNwIJOHVq6ygBzl4nn5TzBEIhOLXlq
+         cFHZcn0fFdMzkR6dPsqlF3Lxjz9nvdpbfPblINptKf1zCYZxSsxU4C7zzHjynYjtPno9
+         ToypCO+GCA+08a7JfqTDW4DwlPN6tdqvd61AD0Nca4zZCo/581AWr3cV2j3ec3EEzvU1
+         Ki0DoRPUf8EGe0HduY7R1f3rjM7SBH9+rFyo7V5XYQlWB6jNatFaW62ICj1mev5kAngh
+         h8uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772140490; x=1772745290;
+        d=1e100.net; s=20230601; t=1772140491; x=1772745291;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=dyHey4t4KqYE+27pGtOhB2Kz5WT8ieoG1Bb3LiW+6fE=;
-        b=WXc+9JBJ1syIiHmuRE+BZ/JGPEW+9An4FW9rvHtM9LN9ud02OMnyIv8ura7tVgtPX7
-         JlYPGykSJSHMdNPgamQQtbbLO7jh3h7LsJrQtW8jyGVY/UeceGSRcbP0nEzxhQmNPENE
-         aEX3B8iBxIT6BQeQ1R0z9jvBMoufqH+GYTe7LWv+7nEZAEfCSuCFjuKePuJNDlAfTTil
-         kBDDXZ7UvADSJBhhZ7APL549rcTNIBi9dVj3LaRFm7v0SdGxHrzVLQVYrzOpzKjpKU5L
-         StD8J9+N9N7mqg97vLABxfuhuIzGWFUaHCts65Fq2rbCtxpWNFfUGLZLL8ytpd64GnSv
-         pNwQ==
-X-Gm-Message-State: AOJu0Yxs9qKfqnIeO58rcFG2z6YNyjmMO9VEggple4l51y8p1JO2UpKL
-	YkUFxX8+VZ4hsOTUNjr7AXDh3yfobIR/J5OLOneq5dt3LwjWwOf0sQQluEPtCA==
-X-Gm-Gg: ATEYQzx8OS09qARqhXK3j2iEa2CkWedwEUOh8QXiO+KGVqMiEQDYvkawowXhdmoewof
-	5Rq+D6c2Dv+iV/XQ8FMzxGeRBuoybOaDlm4wySGXjg4MyVOStaLxXpgO3m6Y1xsOqqXhkc7/baU
-	01MocnFm7dboAgrGV5QrplfUlzox2uzy4tjmxygWYHscIfFtRzBUI5GsEHTHyfhYPognbIq8Sj9
-	Q4Ipbo27lH28iBVtCYJJBWxkmT1tdQGE8UbEs8jWJo8d2l396KzX7UUr6oxL+535M3ei8byhFXw
-	hsbuvDXmjb9Ae1CzRi5WqOjCsRhhHFEhKVbRXzta6YdLu3hNb6EsWEdF+yqfVxqA9WXEFuyUkeb
-	OaKWh6PtqSFJvzb3IMu9u0Ib3mxcO4dJpOZIFkn89jh1TjyELMZ04YFYmnfCSoZcaTmqaoC5q+r
-	lStEWEkBGDk5xGFIAKSazVB33lRQ==
-X-Received: by 2002:a05:620a:2949:b0:8c6:a64e:92b4 with SMTP id af79cd13be357-8cbc8e41e34mr57310985a.78.1772140489803;
-        Thu, 26 Feb 2026 13:14:49 -0800 (PST)
+        bh=SMW1I8meSSb/l+AUNZEA2AyUORzirRK8gxnH32iO8mE=;
+        b=jWt+czF8KpPTu3gCdvNiSI519N7TT+XPBC5BXa0lc/0yiD/GW9lQqKp0YQxdToQ9wi
+         XzNvxCbDK8T5yD1V3JU+3biyKMp5T+ykcbuGjMhSVQtLA5lk4LpMOJDtW8ZTwJsAdZdT
+         XBl9aqUb2ZM1pFBxjPDGMU/Tjw1S2XXXaCkn+ZIDG583vAhEazNfKduTpmYLkcKSPQ2Z
+         D2v7op6CZOpTwdskkfvFJWnPe8z1CASVGU9dur1UFHuOGYNQj73HDyU0WgSUrvGFzwN4
+         NmX6wKg2qab2A6LUw7eYZ46E/xpggl+ODNhUJuIOzUdWBNh9ofyxIa12hlntOKhYgaBh
+         fB+Q==
+X-Gm-Message-State: AOJu0Yx5peJFjN9zEWiWSgbrz4F8E5lHchplHeedKZw5vfi0jTYUw7MC
+	vFPYgP1W70RtwyTbZfcrYPqd1wydT1mCaJxGWuMrsHOJJ2DGLCW5s3mbb2Y8sA==
+X-Gm-Gg: ATEYQzzsC4TKCWGcsBg2zqZfc1f4G8/jKK2gcFXf3dswdrKIbRuW67i6J+0+Q+y0HlR
+	ykYdUtSExUB9iT5g0qHYYEZd0DF5x0aidlE5DY7XSa+lZaowYLGWU1pEeZuo3B2B10s66/Zp7v8
+	H/XoNo1iyiZ2b4qQNrzNsKgjLg7CryomSoi5K21SABBzLtoLfP1CiE7LGYhOarq5UC4PVfYNxZo
+	108W7UzoryUkx+zLy0EXCG17sJFuXn3OyMs6bFhPTtuMPHE/JGD83tRuKpGQXl5r/J8q+AAW5ye
+	c0v3iIQtl7BIaVUzAYgdIAyPXnFBziKCd36cDre8Mz7hAGaGhXbME17vcd483D3FQpaDeBg7SZx
+	K/0p1nRzwg1T9d++QnCzFArLE6gXWa9osxyP5yoFZcXQM0BQ2iBQjcNMLsjZidDdaSG5YsZHbN0
+	Li6jH6gyTv2PTObxKFBfdmA9eY6A==
+X-Received: by 2002:a05:622a:30e:b0:4ff:b231:eea8 with SMTP id d75a77b69052e-507527146b8mr5808031cf.14.1772140491003;
+        Thu, 26 Feb 2026 13:14:51 -0800 (PST)
 Received: from [127.0.0.1] ([145.132.100.81])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf6f873dsm321169185a.25.2026.02.26.13.14.48
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf677448sm283409085a.19.2026.02.26.13.14.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Feb 2026 13:14:49 -0800 (PST)
-Message-Id: <99c8058298d403508ab2a23ed06c36b8707989d0.1772140487.git.gitgitgadget@gmail.com>
+        Thu, 26 Feb 2026 13:14:50 -0800 (PST)
+Message-Id: <6d5b9ff07566e1cc28a672cf1f47988e9c8c45da.1772140487.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
 References: <pull.2208.v3.git.git.1771875812.gitgitgadget@gmail.com>
 	<pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
 From: "Eslam reda ragheb via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 26 Feb 2026 21:14:38 +0000
-Subject: [PATCH v4 01/10] repo: teach info context and category keys
+Date: Thu, 26 Feb 2026 21:14:39 +0000
+Subject: [PATCH v4 02/10] repo: add path keys to repo info
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,182 +79,204 @@ Cc: eslam reda <eslam.reda.div@gmail.com>,
 
 From: Eslam reda ragheb <eslam.reda.div@gmail.com>
 
-Introduce an explicit repo_info context for the repo info codepath
-and thread it through value lookups and field printing.
+Add a path category to git repo info with key-value pairs that
+mirror repository paths users commonly retrieve via rev-parse and
+git-path lookups.
 
-This removes direct coupling from these helpers to ad-hoc
-repository globals and makes key retrieval logic easier to extend
-safely.
+This makes scripting against repo metadata more direct and avoids
+shelling out to multiple commands for related paths.
 
-Also teach git repo info to accept category names (for example,
-layout) and expand them to matching key.* entries in request
-order.
+The new keys are introduced as explicit path.* entries in
+repo_info_fields and are resolved through dedicated helpers.
 
-This improves script ergonomics while preserving existing behavior
-for explicit keys and clear errors for unknown names.
+This keeps lookup behavior predictable and makes future path
+additions straightforward.
 
 Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
 ---
- builtin/repo.c | 70 +++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 55 insertions(+), 15 deletions(-)
+ builtin/repo.c | 137 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 137 insertions(+)
 
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 0ea045abc1..e34914a9a7 100644
+index e34914a9a7..35e1eaf7d7 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -22,7 +22,12 @@ static const char *const repo_usage[] = {
- 	NULL
- };
+@@ -1,10 +1,12 @@
+ #define USE_THE_REPOSITORY_VARIABLE
  
--typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
-+struct repo_info {
-+	struct repository *repo;
-+	const char *prefix;
-+};
-+
-+typedef int get_value_fn(struct repo_info *info, struct strbuf *buf);
+ #include "builtin.h"
++#include "abspath.h"
+ #include "environment.h"
+ #include "hex.h"
+ #include "odb.h"
+ #include "parse-options.h"
++#include "path.h"
+ #include "path-walk.h"
+ #include "progress.h"
+ #include "quote.h"
+@@ -14,6 +16,7 @@
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "shallow.h"
++#include "submodule.h"
+ #include "utf8.h"
  
- enum output_format {
- 	FORMAT_TABLE,
-@@ -35,27 +40,30 @@ struct field {
+ static const char *const repo_usage[] = {
+@@ -40,6 +43,13 @@ struct field {
  	get_value_fn *get_value;
  };
  
--static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
-+static int get_layout_bare(struct repo_info *info UNUSED, struct strbuf *buf)
- {
- 	strbuf_addstr(buf, is_bare_repository() ? "true" : "false");
- 	return 0;
- }
- 
--static int get_layout_shallow(struct repository *repo, struct strbuf *buf)
-+static int get_layout_shallow(struct repo_info *info, struct strbuf *buf)
- {
-+	struct repository *repo = info->repo;
- 	strbuf_addstr(buf,
- 		      is_repository_shallow(repo) ? "true" : "false");
- 	return 0;
- }
- 
--static int get_object_format(struct repository *repo, struct strbuf *buf)
-+static int get_object_format(struct repo_info *info, struct strbuf *buf)
- {
-+	struct repository *repo = info->repo;
- 	strbuf_addstr(buf, repo->hash_algo->name);
- 	return 0;
- }
- 
--static int get_references_format(struct repository *repo, struct strbuf *buf)
-+static int get_references_format(struct repo_info *info, struct strbuf *buf)
- {
-+	struct repository *repo = info->repo;
- 	strbuf_addstr(buf,
- 		      ref_storage_format_to_name(repo->ref_storage_format));
- 	return 0;
-@@ -87,6 +95,33 @@ static get_value_fn *get_value_fn_for_key(const char *key)
- 	return found ? found->get_value : NULL;
- }
- 
-+static void print_field(enum output_format format, const char *key,
-+			const char *value);
-+
-+static int print_category_fields(const char *category,
-+				 struct repo_info *info,
-+				 enum output_format format,
-+				 struct strbuf *valbuf)
++static void repo_info_add_path(struct repo_info *info,
++			      struct strbuf *buf,
++			      const char *path)
 +{
-+	int found = 0;
-+	size_t category_len = strlen(category);
-+
-+	for (size_t i = 0; i < ARRAY_SIZE(repo_info_fields); i++) {
-+		const struct field *field = &repo_info_fields[i];
-+
-+		if (!starts_with(field->key, category) ||
-+		    field->key[category_len] != '.')
-+			continue;
-+
-+		strbuf_reset(valbuf);
-+		field->get_value(info, valbuf);
-+		print_field(format, field->key, valbuf->buf);
-+		found = 1;
-+	}
-+
-+	return found;
++	strbuf_add_absolute_path(buf, path);
 +}
 +
- static void print_field(enum output_format format, const char *key,
- 			const char *value)
+ static int get_layout_bare(struct repo_info *info UNUSED, struct strbuf *buf)
  {
-@@ -105,7 +140,7 @@ static void print_field(enum output_format format, const char *key,
+ 	strbuf_addstr(buf, is_bare_repository() ? "true" : "false");
+@@ -61,6 +71,119 @@ static int get_object_format(struct repo_info *info, struct strbuf *buf)
+ 	return 0;
  }
  
- static int print_fields(int argc, const char **argv,
--			struct repository *repo,
-+			struct repo_info *info,
- 			enum output_format format)
++static int get_path_common_dir(struct repo_info *info, struct strbuf *buf)
++{
++	repo_info_add_path(info, buf, repo_get_common_dir(info->repo));
++	return 0;
++}
++
++static int get_path_config_file(struct repo_info *info, struct strbuf *buf)
++{
++	struct strbuf path = STRBUF_INIT;
++
++	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "config"));
++	strbuf_release(&path);
++	return 0;
++}
++
++static int get_path_git_dir(struct repo_info *info, struct strbuf *buf)
++{
++	repo_info_add_path(info, buf, repo_get_git_dir(info->repo));
++	return 0;
++}
++
++static int get_path_git_prefix(struct repo_info *info, struct strbuf *buf)
++{
++	if (info->prefix)
++		strbuf_addstr(buf, info->prefix);
++	return 0;
++}
++
++static int get_path_grafts_file(struct repo_info *info, struct strbuf *buf)
++{
++	repo_info_add_path(info, buf, repo_get_graft_file(info->repo));
++	return 0;
++}
++
++static int get_path_hooks_directory(struct repo_info *info, struct strbuf *buf)
++{
++	struct strbuf path = STRBUF_INIT;
++
++	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "hooks"));
++	strbuf_release(&path);
++	return 0;
++}
++
++static int get_path_index_file(struct repo_info *info, struct strbuf *buf)
++{
++	repo_info_add_path(info, buf, repo_get_index_file(info->repo));
++	return 0;
++}
++
++static int get_path_logs_directory(struct repo_info *info, struct strbuf *buf)
++{
++	struct strbuf path = STRBUF_INIT;
++
++	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "logs"));
++	strbuf_release(&path);
++	return 0;
++}
++
++static int get_path_objects_directory(struct repo_info *info, struct strbuf *buf)
++{
++	repo_info_add_path(info, buf, repo_get_object_directory(info->repo));
++	return 0;
++}
++
++static int get_path_packed_refs_file(struct repo_info *info, struct strbuf *buf)
++{
++	struct strbuf path = STRBUF_INIT;
++
++	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "packed-refs"));
++	strbuf_release(&path);
++	return 0;
++}
++
++static int get_path_refs_directory(struct repo_info *info, struct strbuf *buf)
++{
++	struct strbuf path = STRBUF_INIT;
++
++	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "refs"));
++	strbuf_release(&path);
++	return 0;
++}
++
++static int get_path_shallow_file(struct repo_info *info, struct strbuf *buf)
++{
++	struct strbuf path = STRBUF_INIT;
++
++	repo_info_add_path(info, buf, repo_git_path_replace(info->repo, &path, "shallow"));
++	strbuf_release(&path);
++	return 0;
++}
++
++static int get_path_superproject_working_tree(struct repo_info *info,
++					     struct strbuf *buf)
++{
++	struct strbuf superproject = STRBUF_INIT;
++
++	if (get_superproject_working_tree(&superproject))
++		repo_info_add_path(info, buf, superproject.buf);
++
++	strbuf_release(&superproject);
++	return 0;
++}
++
++static int get_path_toplevel(struct repo_info *info, struct strbuf *buf)
++{
++	const char *work_tree = repo_get_work_tree(info->repo);
++
++	if (work_tree)
++		repo_info_add_path(info, buf, work_tree);
++
++	return 0;
++}
++
+ static int get_references_format(struct repo_info *info, struct strbuf *buf)
  {
- 	int ret = 0;
-@@ -117,21 +152,22 @@ static int print_fields(int argc, const char **argv,
+ 	struct repository *repo = info->repo;
+@@ -74,6 +197,20 @@ static const struct field repo_info_fields[] = {
+ 	{ "layout.bare", get_layout_bare },
+ 	{ "layout.shallow", get_layout_shallow },
+ 	{ "object.format", get_object_format },
++	{ "path.common-dir", get_path_common_dir },
++	{ "path.config-file", get_path_config_file },
++	{ "path.git-dir", get_path_git_dir },
++	{ "path.git-prefix", get_path_git_prefix },
++	{ "path.grafts-file", get_path_grafts_file },
++	{ "path.hooks-directory", get_path_hooks_directory },
++	{ "path.index-file", get_path_index_file },
++	{ "path.logs-directory", get_path_logs_directory },
++	{ "path.objects-directory", get_path_objects_directory },
++	{ "path.packed-refs-file", get_path_packed_refs_file },
++	{ "path.refs-directory", get_path_refs_directory },
++	{ "path.shallow-file", get_path_shallow_file },
++	{ "path.superproject-working-tree", get_path_superproject_working_tree },
++	{ "path.toplevel", get_path_toplevel },
+ 	{ "references.format", get_references_format },
+ };
  
- 		get_value = get_value_fn_for_key(key);
- 
--		if (!get_value) {
--			ret = error(_("key '%s' not found"), key);
-+		if (get_value) {
-+			strbuf_reset(&valbuf);
-+			get_value(info, &valbuf);
-+			print_field(format, key, valbuf.buf);
- 			continue;
- 		}
- 
--		strbuf_reset(&valbuf);
--		get_value(repo, &valbuf);
--		print_field(format, key, valbuf.buf);
-+		if (!print_category_fields(key, info, format, &valbuf))
-+			ret = error(_("key '%s' not found"), key);
- 	}
- 
- 	strbuf_release(&valbuf);
- 	return ret;
- }
- 
--static int print_all_fields(struct repository *repo,
-+static int print_all_fields(struct repo_info *info,
- 			    enum output_format format)
- {
- 	struct strbuf valbuf = STRBUF_INIT;
-@@ -140,7 +176,7 @@ static int print_all_fields(struct repository *repo,
- 		const struct field *field = &repo_info_fields[i];
- 
- 		strbuf_reset(&valbuf);
--		field->get_value(repo, &valbuf);
-+		field->get_value(info, &valbuf);
- 		print_field(format, field->key, valbuf.buf);
- 	}
- 
-@@ -171,6 +207,10 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
- 			 struct repository *repo)
- {
- 	enum output_format format = FORMAT_KEYVALUE;
-+	struct repo_info info = {
-+		.repo = repo,
-+		.prefix = prefix,
-+	};
- 	int all_keys = 0;
- 	struct option options[] = {
- 		OPT_CALLBACK_F(0, "format", &format, N_("format"),
-@@ -192,9 +232,9 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
- 		die(_("--all and <key> cannot be used together"));
- 
- 	if (all_keys)
--		return print_all_fields(repo, format);
-+		return print_all_fields(&info, format);
- 	else
--		return print_fields(argc, argv, repo, format);
-+		return print_fields(argc, argv, &info, format);
- }
- 
- struct ref_stats {
 -- 
 gitgitgadget
 
