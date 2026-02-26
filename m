@@ -1,102 +1,99 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7034395274
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 21:40:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5305742E006
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 21:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772142015; cv=none; b=T/+RFH1K5+BFD/lgcf0X4i/Ar6H3Mgbp446cDnHYRdHTyDhZKbBTKcFbK1c9A8xfU6w5IZsc/iNE+wzbcng2iXDXABi9X/mMJaDZg3aUYacWLOIma46BeYwwitlUWcl+bowWWIaG7VJkWtbhIPDo4yQjnaTIvBvCZPLEIXKCkpg=
+	t=1772142864; cv=none; b=Qrb7JZtfksJBmo43lBCX/95A76lBH1Cns0gp1S2JGDBiNFJxdTOM+snT/9So0KZzdjc2pP9ANgytna/vfFyK8xWMN6/Gm29JMfO3euur8xp8FmHdr9Q6DBVe7pjCDOMjv8sH+v3zaaqnBe4bcdPjbramzbKIxq21xA/9WNKz0g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772142015; c=relaxed/simple;
-	bh=YSijgVKvbbFtq+z7ih45BSdi7b5p5nEYHmXds3+iyQg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dZKt+he9RApuXzz81VmKyXC3cb4+ZSKLw+qEa88UHPYY4cROree/0qN/lrcDigpOG1jIsjnwGtyxDjoEwCzrqcAI8qqewaaKWaBlSBxdcQMf7QCJgwIKcEInnXzNur5oMeAPfxy6bs5fgASYp017TXOytA988dsrNTQP2sn0uEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=G47KDPPy; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1772142864; c=relaxed/simple;
+	bh=2z5QqihA0URc7vxhnQgQ+77lINt6UTjlkqojpYAMcoU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d4uuNYTz4Q0sA7dqxGNi9JXIUCg2I0YidqVrOf+xdtAGAoqe81w1sTe0ac9u9XxBIKEtmBPV7HxdsGC/HMAUQFoIn6MEXVRMhRDeLaSMnV2O5hy5EjqcDOYZg9tnGniO4jkvbqS8X1nMhV0a1/fE5chlg71RjMwFtyCkkZ6tBbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X9xCm5Nw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pbfmehup; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="G47KDPPy"
-Date: Thu, 26 Feb 2026 22:40:09 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1772142010;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=XpFlP9gtayHyLYXOJ0CHe+7JEO/BbNPvCYOGu2pa2Ds=;
-	b=G47KDPPyh9lpNtijr/SyXGz4TYpB403uYqevrmdQsYD6NWjNiSAINSWbhUR7uGu58PHUsc
-	ybicvEEO/ZHNSmlitsY6d4duLnslMvWtbnwgj5hSprBonnRUy2rfyGRHWLSQJ4FMGZYSOa
-	m6CTIu8uzTZMcRcOp71HYVd5tCEwwl522hiB87HKUWoz1e8vEaIhXlJ2baC3fzHxsYrTM9
-	ierHbSTz18dXp+SqKRmh8F8o6U0WiyzoypW8bsJ0G2su69pH66o4o5kaRlHgocNZqpGSzC
-	6QWhYDG7GDSIg+te/QQvjLRAjqHY2en8a7kENvtyjZbABnSVEqQRLcYxnO6oLw==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Mirko Faina <mroik@delayed.space>
-Subject: Re: [PATCH v2 2/2] format-patch: add commitListFormat config
-Message-ID: <aaC81Hk3tO5N2Rl0@exploit>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1403; i=mroik@delayed.space;
- h=from:subject:message-id; bh=YSijgVKvbbFtq+z7ih45BSdi7b5p5nEYHmXds3+iyQg=;
- b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpoL2YZnQ/JiqFeo+aH+s9m8MFuPP+R0m96TH9J
- f1lDVwKwgiJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaaC9mAAKCRBIeX6hnBm+
- 0UtLD/9To/7j6z+E3tsRAG5NrXNPgrYkni7sEPWIpiX7H42V1hxw9/rpQBOJOQT+2SrlLB0+g6E
- iNpFlV8px2FzBhZe+XrIe2DglL9Ypi/VXSHMclArOGiUnXRFb1haVfgltYKLPdhx+76MqwnLM8e
- Mrudo1iGtNGReIHvKMM7aZZbHEX89yxMBaOUz+gSHOmL3MnQGSrvyiqOVq6IUyZfLXmrscH79ra
- 2sVAMUu7Br0cmPRrNGu5auPbBA8xaOTpsDxwZzQSjcw5xogBnckP5leon8KFFnz98pYNP/1VNV6
- tJNtGLYczG+18T60XyEaVh5dRbGU2CW0ULw+Qi5mgVUpM4bilJFuSFBS3K6Dn++r3tnNWtu8R/v
- xfVDDkPYGx+c3Wim4K2ncSLsoInRVosTbXij5NQrK5H4AhY0csXDICdcXw8Kcqur7LMhuF8u/O4
- 4Z64G87tdMF6zwfSmvCPVJroWO/8Gh0BaJVrVsvGNFX/qj8P4NVK9N+XxnG2caOvo6SawC/Syzu
- pS71H0DjJAhhQoMyx0TE5es0wU+2BGPBVJQNbnbGa0jhl8IXaqcbhUh63Sp5vfYgUwGUSSvvKjt
- YqYah6wjAr9fTTdW1o8tXZxCChFCUEEh5H5xslDTI5xiEVptcqsaGSKkFfUKHv1rVQsdnUuebR7
- XClVQCV+R2BQsKA==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp;
- fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-References: <20260224040400.751247-1-mroik@delayed.space>
- <cover.1771925291.git.mroik@delayed.space>
- <6a0c7aecfd6dc1ee873d5e81110b723fa2d225fb.1771925291.git.mroik@delayed.space>
- <xmqqqzqaggln.fsf@gitster.g>
- <aZ46xqCusF1av-va@exploit>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X9xCm5Nw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pbfmehup"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id A5A461D001BE;
+	Thu, 26 Feb 2026 16:54:22 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 26 Feb 2026 16:54:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1772142862; x=1772229262; bh=2z5QqihA0U
+	Rc7vxhnQgQ+77lINt6UTjlkqojpYAMcoU=; b=X9xCm5Nwxeh8+w4LH6SvFnN357
+	E3J1gkBiD5ZYafqP1ie+OFBLJBiJs/FmfMR/awnDlNS3kvVXC8V/mueDBWD6D205
+	EwTU+8QF5K3Rm/PtxeCORE+09hAN880qbKX1Cbq/7a8YIKNiubhkS1AXYm+nYTU8
+	vyP+TkhepHSbxvnMU1slZVOa6NMV8FWMLYq75oy4c6rZzb1S64Zl0ObfjaQBJC3k
+	LlqDKafZPwpLWj2T2d+xv2rObp5hqpRWBku22tSQG9Ary4z3yt3RuwksOBod0TXG
+	BntCFpnf6AqYlKD3BsYF4nHbj9FUdoiWD/A9zbU0M4XxIX4bwGmY3JYm8Zkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1772142862; x=1772229262; bh=2z5QqihA0URc7vxhnQgQ+77lINt6UTjlkqo
+	jpYAMcoU=; b=PbfmehupS/UHu1vW5Gj2DK2/QWGXwWVJzKK5bWkzMJ/oJ/6Th6r
+	wJk+00mJljm7zudDChLeHwAfRitsoxjTTLM71tWJ6KK2YSVXmBUf4OkqF7GGDOgk
+	zI7ngxG0h3UtLxntX+bdADjHddx8tMTOpN75h6Nvb9jPHecgBl6SehICflo6aTzp
+	u/3fwt4/tdNdD4Y2coYskymjyk34uSe4YloIXZMAAlB60UhOqrC7tSOawnTfoyFn
+	IpqIQyKAxuxErlCaE/osj6Y7+nkRHDbKDb7JhpUAlB4FVd1c2U+Zd41xnLf7/ChG
+	KTNusSrzW64HLuS+mH6cVHZRqnl3FffOJYA==
+X-ME-Sender: <xms:DsGgaXmRkr-vN64yZz46ztImEwdAxGJaS7b5cCuepD4Vf9xHR8-fWg>
+    <xme:DsGgaSSeePvtOcBIqMQGT8aY0mK5l25gVLJlNtVqwXDhoXKA8RM7PO1uC01MVq4mr
+    F0k1XoMck6ijUTXBxgk1QFADPx-4bPcoB0c_QBe4dIsjX9SOW1FrA>
+X-ME-Received: <xmr:DsGgabC1HaaRJdyrL0KbB21vqn0-y_PDbHqgKBkZNX7k9_ltUakhQg1wPwIntS2KB1Dyi22Hyz56eLcaHfTj04GByK4OmJhmjg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeejvdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:DsGgaZT_7HLEBMcZ3wD4qKh91oUU7Z8IF_KSlNbzfmDJtamRuWlyxw>
+    <xmx:DsGgaZpFWTto-g0BLg7qF5jxy6u9om6m5pBf7zHCD59hkQHL3aDryg>
+    <xmx:DsGgabx_FDo6qf5pHluywx5iSfzu68kT2_9YC9_BvVz5sGqbbplGLw>
+    <xmx:DsGgaeJUoFxmOIhhkDYZ1dsH8gTJ20bo9nFVzfIX-9SZ2orW8OtkVw>
+    <xmx:DsGgaWTdp2LgJRzfOJTKbv-u7SUt8LN9IbineS0RAvpevp4lrtyKn6AQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Feb 2026 16:54:22 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [Bug] With "[remotes] group = a b c", "git push group" does not
+ work
+In-Reply-To: <20251226185725.51201-1-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Sat, 27 Dec 2025 00:27:25 +0530")
+References: <xmqqiki0ivgy.fsf@gitster.g>
+	<20251226185725.51201-1-usmanakinyemi202@gmail.com>
+Date: Thu, 26 Feb 2026 13:54:21 -0800
+Message-ID: <xmqq7brzw4qa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aZ46xqCusF1av-va@exploit>
-X-Spamd-Bar: --
+Content-Type: text/plain
 
-On Wed, Feb 25, 2026 at 01:14:13AM +0100, Mirko Faina wrote:
-> > > +		strbuf_release(&tmp);
-> > > +		return 0;
-> > > +	}
-> > >  	if (!strcmp(var, "format.outputdirectory")) {
-> > >  		FREE_AND_NULL(cfg->config_output_directory);
-> > >  		return git_config_string(&cfg->config_output_directory, var, value);
-> > > @@ -2318,6 +2333,13 @@ int cmd_format_patch(int argc,
-> > >  		goto done;
-> > >  	total = list.nr;
-> > >  
-> > > +	if (cover_letter_fmt && (strcmp(cover_letter_fmt, "shortlog") && strncmp(cover_letter_fmt, "log:", 4))) {
-> > 
-> > Overly long line.
-> 
-> Will fix.
-> 
-> > Stepping back a bit, even if we do not validate the format *here*,
-> > shouldn't the code that does use cover_letter_fmt later in the
-> > control flow *already* be checking the validity of the format and
-> > complaining?  If that happens early enough, perhaps we do not want
-> > to have an extra "early check and die" here.
-> 
-> That is true, and initially I did not introduce a check here, but
-> make_cover_letter() is called after the cover letter file has already
-> been created. Failing before format-patch could create a file or print
-> anything on screeen seemed more clean to me, that's the only reason
-> there's a check there.
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-May I have a confirmation on this. Is it ok to leave the extra check
-here or would you like me to remove it and just let make_cover_letter()
-handle it?
+> Hi Junio,
+>
+> I will be working on this.
+>
+> Best,
+> Usman Akinyemi
+
+Did anything happen after this?
