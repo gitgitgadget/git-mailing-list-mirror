@@ -1,93 +1,88 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E3A3ECBCC
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 15:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B6114A62B
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 15:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772119425; cv=none; b=h0s7ov1reriwBVvD1h24c/G84LEWzkzYwqQ+umnUBma7tonitqXs2eYDVLT1PexgKfoLHk6bwMFzFl1LPmwRhFX4hPsTKYw3kyHkaz8eIsPshQvJgsnkaKjz1zRMxksipL2nlF9rMlNAcJ4tx3xa+nlrVbffZ1z85oDFz/v6TYg=
+	t=1772119509; cv=none; b=rp34j/POjB7LR7derEuM1EyGi5DPkOiWfu4VlfJN1Mb5pqS7mroq107hsf/8QZ1mDjRJmgupXNDVM/yrf4IGei1sv4XBi4+QXrSp+k1gXaFEcccnB7NEXuRjlfg+MSDcl6x8yHQjQn31p5K9KMdY1ifWkusXKrEO6nuKixOqV+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772119425; c=relaxed/simple;
-	bh=IxHtekbcABV5mdyubw00ICPj/wGjKqcYxK7ytzIm2us=;
+	s=arc-20240116; t=1772119509; c=relaxed/simple;
+	bh=9JQGcGa/LVQ/3FYnsS7pWqheIruoGzre/ER+7gCkBIg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KmYufpgXo3QcHnwFYA2E/UpX+W2+K8E2Akzg0fkgHOFrFp1T2GQW4myMMp/MiLO8gJcWCe8PT9Jvf8wwF1Vw3UqYUt+gB2SBEsa8GygdH7bXNO2VvEOyelH/raio1L/a/O4v2KWXWuLMSY54+sbQKdyNBwQn2X9WXlULVYntf/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ARbupMvv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hs9Vg7Nr; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=cV9hcrZa7U+J9yaFlPgVsJK0fEKF9raeAXV0x1/WtEOyzXNJNLm8n4WeT1gtb0pM3C/Zbfx7eWQNfM4ZVrFsIEJgV3oc1craq6QhKh+zM77s44ew8QNfLRztNe1IpfPEjoEL3hZrPvgkravjWsX6DOwJ6U9tE9S4vFb+y8+53eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VRg537X+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZfuKSP8D; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ARbupMvv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hs9Vg7Nr"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 10761EC05B3;
-	Thu, 26 Feb 2026 10:23:43 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 26 Feb 2026 10:23:43 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VRg537X+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZfuKSP8D"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 65419EC05AC;
+	Thu, 26 Feb 2026 10:25:07 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 26 Feb 2026 10:25:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1772119423;
-	 x=1772205823; bh=jXydYiJl8invPvS7jUxXaQeTMkClMADzGxP9xUNKI6o=; b=
-	ARbupMvvpMaBDz1S38y2Vuunw7IX8DWkdjjRapvCLUqJag2+ggJVrJ3ufzq3ZTSM
-	HRUpX8T0rkB0/NpoQCfMTFWDwBJhsozpQVbxQROfTttTERS5AM9mqOM0ET121faG
-	Quzv+UcdWq4/zyYA1s+pIwM5Oz5Mix1NvqePv/6JHF5oH2HQMZy2vl6JmxdjsTHB
-	qJx5W88/BkEcH1AII6rL5nNMj54ty//+YiG7Xq0rdUBfLBv4oZfLOHVz5ARFzuHU
-	1LGgpUiDETO9fAlWWYLx4cvGixT1YjmHWtirjvFGo3ee7FlkdhoOuVMKBJyCquEB
-	D72mZOHIagjpnt3rJN9KzA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1772119507; x=1772205907; bh=tMxMQkVh+R
+	qY4fMMJOy0C4PdWAtagP81J4l1aanDrCA=; b=VRg537X+72qZOsjP+3uWikLTsK
+	w8g7Nj/WPUQgi+VFWJo/QcBqQFww8eZQ+2UIdwIiuRMABcV6ExwZSmnuHhbTU5Yy
+	zNYJnIo1YGw3QOYGYrbvAC8JzLOtewagnFfN5MB2wFDKLifOQ8tt0zF3NP75A3l9
+	xjllEN3siYXPmVghRSwwhh4XgDDVx5ElGsdyiopH5PjYc5+37oO/VNFU1mmUSdJc
+	i+AjvCiapdlHB5bR00SkxQKlWwYneEbGW2aQ0y+o15pcpXLuoxM3/DAq624XQHMW
+	SdfaHRR4FO1D5GaFo/DwOSWpaiqaU8c3ntzBh9oXT4TbAhTT6blD5mhMxcyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1772119423; x=
-	1772205823; bh=jXydYiJl8invPvS7jUxXaQeTMkClMADzGxP9xUNKI6o=; b=h
-	s9Vg7NrwtyL3nP86aSnC/gxkEu5ANtzHK9cJmkwfvNU4K3mlVPLq1fFvM/4hsDyM
-	ZXIsNkJVo7GS8W1v3IsuYuTasuojb1FpwL3ZmOK99R9BlSwSUXiqOPkOdIu7gWuq
-	y/WkrEtaAEXnyRQE6HkF5G4x76n/tkeZ21EmufMKeOqRaB46nlrfmXBGI5wJD1Wf
-	xa2d+9EhMwTAoF6Xu1LYXfAoGssRck7NLaAJPDDDrqAalOILIIXJKJIVP6e7zNBP
-	d26wmSAJgElNmfewhJqiErQ7rCsRoKVjNtlQq7eBmHWVzRzyyo1X2IypnDS5w8K3
-	/JX1nwu73KlCx5HkOww2A==
-X-ME-Sender: <xms:fmWgafwUhGY51AP5lKEHshenuiOpU0mWhDr7m4tc5k9PnBTHcBcPbQ>
-    <xme:fmWgaT0-M6nWC3ZO9aCGnid5QGGK_rf8ypnQHGeOylWB-N1FpT1N8m8hfYi7H4yTT
-    nWzZHl0EH7dvUqXcpX4N_SSvqgdVMgVMzZGwNyTyZ4PcM5aEJtg>
-X-ME-Received: <xmr:fmWgadyGns5HHNC9gBnQGUg6dqyqqFOnVDT2A4uDdh5izgoTcPzu9m-FG7cWU-DI_95GhCTDrHi0AgYkVRLUpyWofyVPZGQlOQ>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1772119507; x=1772205907; bh=tMxMQkVh+RqY4fMMJOy0C4PdWAtagP81J4l
+	1aanDrCA=; b=ZfuKSP8DGhmnKeZhoct6OYmPXOLo1MDRKzdwE06qbjtMkPeRLI1
+	cAyjSoBvQRMagqUXp2Yr34MVOTc8DhlzT+kU8ibc0pUUMOOI71sxTBDkFYGmDerN
+	zdd5/QTEkf3Xeuc72sNhrDRAwTmWUnDu52hAx+TfI6QtG9kI6FsELMF4We7KLOd6
+	rw77hXMrN6NOuuZ7UVJ7cmuazJ4e/ST+4OP/yJcUtezAT+KEffYato9FlMLMTxPU
+	VnyVRxC+OhIi3HYGhTbx+ojv0JXIH7zsYu+ldYfynSwI/zHc9nqkvXYpUTT83cLD
+	NHngaSg44MWsb9RdjdzGSDAskkADtIq2pFA==
+X-ME-Sender: <xms:02Wgab7CN_Bc4sw9PKbrTnTyKN4vYVtqUgreWh7k2h0uUt28itqU9w>
+    <xme:02WgaZX5n_ShbMnzjlAI78I1bKYLPppxvbjaTztp00TJdb6ZFpKGjiQS0zeDkGEP2
+    AJrJAmif_ubD2KSik8p4cEk9fHVSKsTcbsfuenldDp22o8Ei58B>
+X-ME-Received: <xmr:02WgaS6SohHWMfSoK05ZnlgbcsMr6dWpvcxm2QeE7alRwpzz7yUxXjAnwcVe7OtGB78t3OXTSpA6Jov8wtkOGN8UFBbokG0g6Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeifeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepsggvlhhkihguleeksehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtoh
-    honhesihhothgtlhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdef
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrghrthhitgdrshhivhgrrhgrrghmsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtph
-    htthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:fmWgaQUV7rGd7IhSV28_mlLNESVXTAvbGAxpb4xnRDbPTqFSEyoSZw>
-    <xmx:fmWgaR9J-7uPm7_N8AsU3V_Ze2sbJbUjzD1Ky0hZRZNDK7CescbFNA>
-    <xmx:fmWgabtzRvHk0vnNnoQbaMGgJSXtfuMP9vSEJno7trMKiaG4uIZvug>
-    <xmx:fmWgaZ2xHXXhrbuFNcAUhPO_Aii_f0mGDBWsQMnaRINRj0ORdqKFaQ>
-    <xmx:f2WgaTX9O4vx255PQFDIyyd7J89-dnCbxHhwKEEKj5HX9stndHCHr0Tc>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjie
+    htsehkuggsghdrohhrghdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepghhithessghluhhmihgrrdhnvghtpdhrtghpthhtohepfigrnhhgiihitghh
+    ohhnghesuggvvghpihhnrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:02Wgacpga54NWpKphi3yC0sVxxVpmy13YcT0zai_8mLcFf6YCBJ9aQ>
+    <xmx:02WgadnQFeIn7-dxupi61j0BC3y0OoR_InMv4hsFkO1gLndSkCOXTQ>
+    <xmx:02WgaQNZAaE4IvkPSgZjy4UXOzX2eZaagjC582zBOAT8vuVoBHrorA>
+    <xmx:02WgaZOcHWtAGNezbS8mP0DTuWS3UlBy2_PKQDr_y_BCnOl12tYnDw>
+    <xmx:02WgaYYmLskwuYd9LJID0i3W3BCMoa_E3W9BUWbv3hzOsoqxyLB_QPYa>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Feb 2026 10:23:42 -0500 (EST)
+ 26 Feb 2026 10:25:06 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Olamide Caleb Bello <belkid98@gmail.com>,  git@vger.kernel.org,
-  toon@iotcl.com,  phillip.wood123@gmail.com,  usmanakinyemi202@gmail.com,
-  kaartic.sivaraam@gmail.com,  me@ttaylorr.com,  karthik.188@gmail.com
-Subject: Re: [Outreachy PATCH v7 2/3] environment: stop using
- core.sparseCheckout globally
-In-Reply-To: <CAP8UFD1c5JgpQwMuTPE-VWS=7-1Lw7mWVaGGXCPwaG5=VYhk2A@mail.gmail.com>
-	(Christian Couder's message of "Thu, 26 Feb 2026 13:57:45 +0100")
-References: <cover.1771258573.git.belkid98@gmail.com>
-	<7d33f1ef0f8182893d63d49b350984025ab757d4.1771258573.git.belkid98@gmail.com>
-	<CAP8UFD1c5JgpQwMuTPE-VWS=7-1Lw7mWVaGGXCPwaG5=VYhk2A@mail.gmail.com>
-Date: Thu, 26 Feb 2026 07:23:41 -0800
-Message-ID: <xmqqikbj5y0y.fsf@gitster.g>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: "Gary Wang via GitGitGadget" <gitgitgadget@gmail.com>,
+    git@vger.kernel.org,
+    Gary Wang <git@blumia.net>,
+      Wang Zichong <wangzichong@deepin.org>
+Subject: Re: [PATCH] gitk: support config the color of linkfgcolor via Gitk
+ Preferences
+In-Reply-To: <pull.2217.git.git.1772109195114.gitgitgadget@gmail.com> (Gary
+	Wang via GitGitGadget's message of "Thu, 26 Feb 2026 12:33:15 +0000")
+References: <pull.2217.git.git.1772109195114.gitgitgadget@gmail.com>
+Date: Thu, 26 Feb 2026 07:25:05 -0800
+Message-ID: <xmqqecm75xym.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,26 +90,75 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+"Gary Wang via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Mon, Feb 16, 2026 at 5:39 PM Olamide Caleb Bello <belkid98@gmail.com> wrote:
+> From: Wang Zichong <wangzichong@deepin.org>
 >
->> @@ -670,7 +672,8 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
->>
->>  void clear_skip_worktree_from_present_files(struct index_state *istate)
->>  {
->> -       if (!core_apply_sparse_checkout ||
->> +       struct repo_config_values *cfg = repo_config_values(the_repository);
+> As a dark-theme user, I use the Preferences dialog to set colors
+> for gitk, the only color I cannot change via that dialog is the
+> link foreground color, which will lead me to use the default link
+> color on a dark background that make it not really readable.
 >
-> Nit: it would be better with a blank line here.
+> This patch makes the link foreground color also configurable in the
+> Gitk Preferences dialog's Color tab, so user won't need to dig into
+> the code/manual to know if the link color is configurable and can
+> simply set the color there.
 >
->> +       if (!cfg->apply_sparse_checkout ||
->>             sparse_expect_files_outside_of_patterns)
->>                 return;
-
-OK.  Agreed and locally amended.
-
-Let's merge the topic down to 'next'.
+> CC: Mark Levedahl <mlevedahl@gmail.com>, Paul Mackerras <paulus@samba.org>
+> Signed-off-by: Wang Zichong <wangzichong@deepin.org>
+> ---
+>     gitk: support config the color of linkfgcolor via Gitk Preferences
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2217%2FBLumia%2Fgitk-linkfgcolor-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2217/BLumia/gitk-linkfgcolor-v1
+> Pull-Request: https://github.com/git/git/pull/2217
+>
+>  gitk-git/gitk | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+>
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index cbaaee994e..b60f140636 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -11796,7 +11796,7 @@ proc prefspage_general {notebook} {
+>  
+>  proc prefspage_colors {notebook} {
+>      global bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
+> -    global diffbgcolors
+> +    global diffbgcolors linkfgcolor
+>      global themeloader
+>  
+>      set page [create_prefs_page $notebook.colors]
+> @@ -11873,6 +11873,11 @@ proc prefspage_colors {notebook} {
+>          -command [list choosecolor selectbgcolor {} $page [mc "background"]]
+>      grid x $page.selbgbut $page.selbgsep -sticky w
+>  
+> +    label $page.linkfg -padx 40 -relief sunk -background $linkfgcolor
+> +    ttk::button $page.linkfgbut -text [mc "Link color"] \
+> +        -command [list choosecolor linkfgcolor {} $page [mc "link color"]]
+> +    grid x $page.linkfgbut $page.linkfg -sticky w
+> +
+>      grid columnconfigure $page 2 -weight 1
+>  
+>      return $page
+> @@ -11880,7 +11885,7 @@ proc prefspage_colors {notebook} {
+>  
+>  proc prefspage_set_colorswatches {page} {
+>      global bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
+> -    global diffbgcolors
+> +    global diffbgcolors linkfgcolor
+>  
+>      $page.bg configure -background $bgcolor
+>      $page.fg configure -background $fgcolor
+> @@ -11891,6 +11896,7 @@ proc prefspage_set_colorswatches {page} {
+>      $page.hunksep configure -background [lindex $diffcolors 2]
+>      $page.markbgsep configure -background $markbgcolor
+>      $page.selbgsep configure -background $selectbgcolor
+> +    $page.linkfg configure -background $linkfgcolor
+>  }
+>  
+>  proc prefspage_fonts {notebook} {
+>
+> base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
