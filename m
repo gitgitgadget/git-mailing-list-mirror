@@ -1,156 +1,118 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD74A3E9F87
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 15:29:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B7F3F23CD
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 15:34:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772119790; cv=none; b=E3Wxi85SD+LhE1IYhO+sy/ttXPDaj+tuOudwoSAqSsqXdLQyZkef1mWwDo4wHgbKORBwzihSmePDEeEcDp69NcDUyqw80pUs2Tuo5zS5g+UZu5mIJyhmU+sS38ISdJIoBg3sfQduBPa8aM9AmI9DzsdVxCgixhhJkqdnaYvFRSk=
+	t=1772120057; cv=none; b=MNZZuu6Pyg9lH8Um0qQhONnugh0aIKEaclys4ceXBg6lQEYa9S8I1+YEweapF5KOGHp4ygB55a/sTYqCE1tWjc9Z0b3shsFzdj2+fWDZ3LayVF2J58Xsn/rAteLd3+lme0itnkZCZCRv5PiawXGg3gd/NDVT8HJDyOjbsebM12k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772119790; c=relaxed/simple;
-	bh=f9oYWkullBN5mBWzQgMWipanQyxPbzo+lGxlrXzwb1A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A1Sa4nkbvjADKLVhRXgRZDaygapARyf8b4NlBLh1mRZYAWXG8r7YvfhF9JXqJfPVKi3qVTH2KLdlE97lW0saGuYdBZW5AzEamprsORc+JiaTCdQyCtl+jIsl9UJxQGQhfAb8RSjYGQ5oWFUCECb7Fn1izV/23w6zkGtZqYi2w1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b1cunwng; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772120057; c=relaxed/simple;
+	bh=rvY1lPH3oROLezzwgtB9wU48Cm725DCcBo6MB7j8WuU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZnVuuY6k+KvPYYefF7wyRwEUZ8sOuQmSBNHRaxabpTx/+wUDW1G6gufNfFxTa55JjLjwqPrTRFglhFzfnIeWatxqScyxVyTaiKs922EX2XH7yyKcLPtM7EtbfzO/EKtwfjSiB2Gbu5ZgnKP3thLzSE8A6WGT0+gXj2VLOowPV5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DXh7F86F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BB8QtXtz; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b1cunwng"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-899a2f4cdddso12398886d6.2
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 07:29:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772119789; x=1772724589; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9xYPBXw4QvDo148gBfZ0qZqCgnihnpHOr5RkDzXBoPI=;
-        b=b1cunwngmyznzeQhe2JNVlatrbYCq9KaNkNx+gAPT8a5N31Ydy5BzP/P2maAAcwKLx
-         YMYwGnFJHB+8JBIzD1AssYyymNFUZJEOol8vBg/UkUYnK6qXR18QI311ejU9wFXjgKHP
-         X/F9wnV+NYgBhjia2X1q/G3Y14TBp3dSN71Helyi81SQpdHKxzYPJtJ33y/E2tgHc7k/
-         4imO1WGOBxHH6hlRfVKjNr+V/TrUI2KFMA7ug+mjrvzeYY37ghFniJ8imkwpI5cEM9Nw
-         ZjmUOJXr1L7bt3HcqicLPEt+utO1gLFHjzTkD/BcwENUvfHO2RIZsx0jpRnUIKHfRo2O
-         3BEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772119789; x=1772724589;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9xYPBXw4QvDo148gBfZ0qZqCgnihnpHOr5RkDzXBoPI=;
-        b=P3hnOWiNN/BVE14GKx5gzXGqxDTp8o0xTQgNxYcpeEhatGtXyZYk2SsKKb+JrR66tX
-         ioMC+j6DUnffKvdNwMuEj30icFz5BK6muehW2lvYv7CXm6McWtQv+UZ0WiDuj1+bTajH
-         M8TdUdn+HaAbIxSgbNnkb3un8e+wYZiX4pDDOo+hFajGdQ2OGVeoR9hAG8aZ11r7INu0
-         ifssYoehbjRRWRZS75QyarZd3jOOsDCJeLr81Hwu6GXeub+Kab2ySWU7YIbObBbIY5um
-         Wq9tkyPZMQYUtchK5JU2Y0U4SaUIG4sWVQIEpy9duXdN5ObBh742/FdO5X0VCTWC8BKr
-         ItKw==
-X-Forwarded-Encrypted: i=1; AJvYcCWuXwL5GFBDwi1IAi4TAuSJS2X6EM9rsYaqXSt1U9xVJEPJIa6g0kE//pB/GoqGgbJj6kc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+7MO+U9YU7o8a1BkkXKB2ngmZ7zw+0pl9KLDv3f21XlzRbw9/
-	qAbYRjIKfMbgKdLpUG+GNH9gMjpj7KJforRu9ZNc7IXjYeVCgp/K68BB
-X-Gm-Gg: ATEYQzyRYcbsH7dGOSm98pTrkdOOHaJ+wnLsFjzdpHxc7aRk+JIik6wZucNsesauBKS
-	bcQ42/Dp8oAmreeuJpfVXT/SPycRDZL+7hTyshtqhc9saoC9K+I70C5zIhbDmWiFbMlV/bSBBxx
-	zYB1/X+aU4j2Vxz6TYUuZSAVBj6yR0Nbs61WX7InDU2dDBV0LNETBUP4KjOtfU394n3jNbDjGwM
-	yzmny7KOFHPslnp7Rc5qxnHidSRkZY9WtGvrRCrAbHV8aBtOtcQq9NZm2oA2XyPf940Y4pWd51p
-	IJfhXDA0d44nWAO66w8RZEeHsS2qiN44N8XOmaVeBq/5I6Z+ZOEjAlP9P3nK2Vwg47ZW4tAEyEN
-	fuNPzB77Npj+diaw4SZ5GFlU+Lcue/blxp+JTtzJuwaTo8nMBE4CvH7sEH47SimDH31jI2SEzL+
-	ox7Mxuv+WkCzDrK3fYezLJp4uuOleYaW9EYv5fX+jfBeVufOWy86gQQ4Gm5+OrpJBCbmQzgXQ1p
-	CfJpw3m
-X-Received: by 2002:a05:6214:29ca:b0:895:73f:db47 with SMTP id 6a1803df08f44-899c1f00ba5mr70084776d6.48.1772119788615;
-        Thu, 26 Feb 2026 07:29:48 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899c7159b44sm19350316d6.9.2026.02.26.07.29.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Feb 2026 07:29:47 -0800 (PST)
-Message-ID: <08c6e203-3444-45c7-9bc9-cc2590be30c3@gmail.com>
-Date: Thu, 26 Feb 2026 10:29:47 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DXh7F86F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BB8QtXtz"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id A179AEC05B3;
+	Thu, 26 Feb 2026 10:34:15 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 26 Feb 2026 10:34:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1772120055;
+	 x=1772206455; bh=jKgVRL4b1PCjUtcy9NAMDSSXvQcNBmduXoho/9kBSXU=; b=
+	DXh7F86FYUnFScc0QEVqwelUoREgb+GWNiE6ihALLAtnYgJlsfGJqd2o3MTBZEFN
+	jd8r5tcoo+TubiNU9bN/Lhujm5I5x7q/cP9PpSdmCgYNK2kUeiDOISjD+1dSkkCu
+	HDV+unT9Ml0+tk3/MecIgaa65YZxU2nkHCMOZM0eKyDNKdVKDYpCJzMjVNDIdp4u
+	GpAR7yILpkeuaqsHFJTtykTfaWuUvi1+gjDOLllNBXDb+nZ5LHZTIogFQNKDgraD
+	O5n4SzjNQYN7LFZtkCDXqi8pB+XDDF2zXJAVtf3zTCXgbLOTn+EH+l+CZPkxNsXx
+	Cx6ZNQM2IYRdsHsIkjlYNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1772120055; x=
+	1772206455; bh=jKgVRL4b1PCjUtcy9NAMDSSXvQcNBmduXoho/9kBSXU=; b=B
+	B8QtXtz+qtCroMvwxK4XnwP8lg+HTm3Rst7pYJEFRPcFNaptbquXLTaOVfJ6PP+M
+	ssrCwBoo9UWGXO5rHrLuMEfqHB3gEW6DSE1DCGfiPovIzaBSTCK7cRc1BP45oCIT
+	tOR2eG1sCWLwLW/5YGhut1pzWz3NDwAHFAo8YzwJadnexpNkcBjJFeJX1FHQBr5x
+	8208EX0p7PSuBYJ6LYoECUdwVC8tMJJigv1dodbhYBh1ZY+itpcr2meb5psnLD5J
+	PvszSdMdBiYV8tkygaJuBlyY9bREsa28IAF9e5b3BUbRzb3z9n0ehjeFLNjBRGcC
+	zh4fYTVl4ijs7yUaHHZQA==
+X-ME-Sender: <xms:92egaWcfu1Qj3xh3hiVspzucnbuxKNHK8hLLLoLfvveCqYtO7YqFnA>
+    <xme:92egaXHPA5I9-fEdK1Fvji7t8gtYCiHJiQFZFtsSek8coS9E-3RYJdb3XY91ghFvC
+    gzQCH3ISibmzaV_FPMWO-HUlrO67aUsAh7GB9WyB76jHVE8jbcoIA>
+X-ME-Received: <xmr:92egaf1rPXUHBGwbZX1-D2ICtZWKXsgALYfNDWsWuuozlJsKodQtHciVRbalzuEISsCtGodSesF38NF7tsJw9ZaGSFFAcHjGbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeigeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhthhhusgesphgruhhlihhsrghgvg
+    gvkhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:92egaflyCZPw8_KeHcPcTKvljoZCXFUa9-2twHqJHTHY2IoJ9Og2GA>
+    <xmx:92egaf9m8zjXY5HSI7rg5k9szK5xs42R9DSHsckziv_XsY3JdMM1Tw>
+    <xmx:92egaUpOPAdYSdtJqfa-5c42-A2mj7uMy8wt_EN_jgqpuqM6ZRoFYw>
+    <xmx:92egaYkZdfHtHLdLxfRvaakFNEuiIv6Ir8h_yKJ4z-NpS0Gk5Z4VIw>
+    <xmx:92egaVAXPiOi_lNgGzvxg6SwP5xOROy0OJrkZd3OtWMT13-B4yQ9SbQM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Feb 2026 10:34:14 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Paul Tarjan
+ <github@paulisageek.com>
+Subject: Re: [PATCH v7 00/10] fsmonitor: implement filesystem change
+ listener for Linux
+In-Reply-To: <pull.2147.v7.git.git.1772065643.gitgitgadget@gmail.com> (Paul
+	Tarjan via GitGitGadget's message of "Thu, 26 Feb 2026 00:27:13
+	+0000")
+References: <pull.2147.v6.git.git.1772050636.gitgitgadget@gmail.com>
+	<pull.2147.v7.git.git.1772065643.gitgitgadget@gmail.com>
+Date: Thu, 26 Feb 2026 07:34:13 -0800
+Message-ID: <xmqq5x7j5xje.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] for-each-repo: work correctly in a worktree
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, fastcat@gmail.com,
- Eric Sunshine <sunshine@sunshineco.com>, Patrick Steinhardt <ps@pks.im>
-References: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
- <pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
- <4e3f4aa6cd36f779c6c1d6b4f30bb68ed807b9da.1771968924.git.gitgitgadget@gmail.com>
- <xmqqv7flervq.fsf@gitster.g> <eeebc30a-40bf-40ac-a16b-ca5e128c3c01@gmail.com>
- <20260225131344.GA2139176@coredump.intra.peff.net>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260225131344.GA2139176@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 2/25/2026 8:13 AM, Jeff King wrote:
-> On Wed, Feb 25, 2026 at 06:44:51AM -0500, Derrick Stolee wrote:
-> 
->>> Looking at run-command.c:prep_childenv(), it seems that you can pass
->>> "VAR=VAL" to "export VAR=VAL" in the child, and pass "VAR" to "unset
->>> VAR" in the child.
+"Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> But I really think you should consider keeping config-related variables
-> in place, as prepare_other_repo_env() does. Otherwise something like:
-> 
->   git -c pack.threads=1 for-each-repo repack -ad
-> 
-> will ignore that config in the sub-processes (whereas it currently is
-> respected).
-> 
-> And for that, you do need to loop yourself.
+> Changes since v6:
+>
+>  * Introduced FSMONITOR_OS_SETTINGS build variable (set to "unix" for macOS
+>    and Linux, "win32" for Windows) to eliminate if/else conditionals in
+>    Makefile, meson.build, and CMakeLists.txt per Junio's review
+>  * Moved fsm-path-utils from FSMONITOR_OS_SETTINGS to
+>    FSMONITOR_DAEMON_BACKEND since path-utils files are platform-specific
+>  * Removed V9FS_MAGIC from remote filesystem detection (9p is used for local
+>    VM/container host mounts where fsmonitor works fine)
+>  * Removed redundant #include <libgen.h> (already provided by
+>    compat/posix.h)
+>  * Fixed cookie wait comment wording ("see" → "observe")
+>  * Rewrote commit messages for IPC and settings dedup patches
 
-Great point. Here's another attempt:
+I saw nothing unexpected in this iteration relative to the previous
+one.  Looking good.
 
-static int run_command_on_repo(const char *path, int argc, const char ** argv)
-{
-	int i = 0;
-	struct child_process child = CHILD_PROCESS_INIT;
-	char *abspath = interpolate_path(path, 0);
+It would be nice to have another set of eyes on the inotify part of
+this series before we mark it for 'next'.
 
-	while (local_repo_env[i]) {
-		/*
-		 * Preserve pre-builtin options:
-		 * - CONFIG_ENVIRONMENT, CONFIG_DATA_ENVIRONMENT, and
-		 *   CONFIG_COUNT_ENVIRONMENT persist -c <name>=<value>
-		 *   and --config-env=<name>=<envvar> options.
-		 * - NO_REPLACE_OBJECTS_ENVIRONMENT persists the
-		 *   --no-replace-objects option.
-		 *
-		 * Note that the following options are not in local_repo_env:
-		 * - EXEC_PATH_ENVIRONMENT persists --exec-path option.
-		 */
-		if (strncmp(local_repo_env[i], "CONFIG_", 7) &&
-		    strcmp(local_repo_env[i], NO_REPLACE_OBJECTS_ENVIRONMENT))
-			strvec_push(&child.env, local_repo_env[i]);
-
-		i++;
-	}
-
-	child.git_cmd = 1;
-	strvec_pushl(&child.args, "-C", abspath, NULL);
-
-	for (i = 0; i < argc; i++)
-		strvec_push(&child.args, argv[i]);
-
-	free(abspath);
-
-	return run_command(&child);
-}
-
-This comment details my findings from comparing the list in
-local_repo_env[] and the top-level options listed in
-Documentation/git.adoc. That's how I was able to find that
---exec-path sets an environment variable that's NOT in the
-list and we want to be sure we don't set it.
-
-Should we add the comparison to EXEC_PATH_ENVIRONMENT as a
-precaution to make sure it's not added to local_repo_env in
-the future? Or is that too defensive?
-
-Thanks,
--Stolee
-
+Thanks.
