@@ -1,118 +1,108 @@
-Received: from ste-pvt-msa1.bahnhof.se (ste-pvt-msa1.bahnhof.se [213.80.101.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FACA3921EE
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 20:54:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.80.101.70
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772139254; cv=none; b=o03wdKgQAEd0sqvGAbpJcT/HnEUmiWYRwkYuC4NUHhckfLJwVWRXOTFyqWcozyGCtRQljprc8y5W43tl6gTDdTQRhRSeiV+eYlYxAWNMPU+t3WvWQ3nZPXb/jwIQ9hPQWMkY8W99ifRqPEJYt2Fx4PQVbO/NJmIfFWvj6yV0AbA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772139254; c=relaxed/simple;
-	bh=ZoFDWnM+ZeB+Y32rI0kI0/LVgDBJmIB//OG+KuQaDk4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uHkzy+zo9/WC9NMmTAM34crbfgldO+cDRGVEY8a4fjJvanmw3VQaw7SYewl7wtVq2JtmvaY/uhPdxYtpduAPcASHjJiLxk34ytL3dGlHEDJxUmoRuOB9ha5IY0SrifGsvQbNR0aV7AFHggX2HBf0GChyZkv4lgEmpEhASCsl9V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=knCUDRs5; arc=none smtp.client-ip=213.80.101.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B77364930
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 20:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772139421; cv=pass; b=gUbepCJ7EpZvRcqwbrAqy6FNu2tIslKIMeHkr5KiBwkRI2ecZQz3Ck6uyONlqV4bfT5V/DBGtryXemia95MnRX9MRWeOjsoQuibr4AP+XNzsVwFQ9TIYygfZmqsBRiDDcJus/GZyfv1cT8E6nrcpvrEGZwYSPsyzIS3TidFEmuQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772139421; c=relaxed/simple;
+	bh=F8VN31Y1Itqw/BCG8erR3Al2KjDqDiyHLeDNuOVj2pM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=tzEjRhkSlqB6HUDhDPnULQk8aLsHEq/gCoZzReQItJM9UXMwMQjj3d7Ul/glrAQlWkxz7zqsrCZtMntbcRakdOY9AN3JRtyQyma5lGNJCNb9onjBfHWNUeXsX23JEyMqfuABVoxi9Ze5IBcr6sWSZQaE1rEVw1EDEieSJ8Npy64=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhPy0Xc+; arc=pass smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="knCUDRs5"
-Received: from localhost (localhost [127.0.0.1])
-	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 853443F83E;
-	Thu, 26 Feb 2026 21:54:05 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.1
-X-Spam-Level:
-Authentication-Results: ste-pvt-msa1.bahnhof.se (amavisd-new);
-	dkim=pass (2048-bit key) header.d=jontes.page
-Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
-	by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3J5Up29Q6-_r; Thu, 26 Feb 2026 21:54:04 +0100 (CET)
-Received: 
-	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 936BB3F3EF;
-	Thu, 26 Feb 2026 21:54:04 +0100 (CET)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5EAE4B234B;
-	Thu, 26 Feb 2026 21:52:41 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
-	t=1772139162; h=from:subject:date:message-id:to:cc:mime-version:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=jZmo8c9V6Y0vpnSnRNGn4wi/NIF8Lp74egfePTpovOY=;
-	b=knCUDRs5y9EmMCuE5JWJoSKQfP9BTPp/3a7LGj7M4zjuIaK9lMFAvslUq4zzHUttcqRPOk
-	Yc/SFr6xy6G4OvYUOByDG4SFOU7S2cIzWeqUbw9+Fwv4To/S7R0J+2n/fI/4jLr2UqEmdn
-	FpFzVTYKOlRf/It4YylFX+CfWNRzSZgrioAn0MNvA3iaC+tRIpqGpbzivHBHtURGFm4rwA
-	CkMcdTWhwz4Ta+gDiTi+j8f09eEPrYdazvai75hMFm516grg9ACexWsHnIFq+H4/kL5zfB
-	Cu1mtGcLJjKjGv1+QNovZkHWZMmLZoohfvZK6ejm7Z9o7uqJ0cjgmnex6J9xGw==
-From: Jonatan Holmgren <jonatan@jontes.page>
-To: git@vger.kernel.org
-Cc: peff@peff.net,
-	gitster@pobox.com,
-	"D . Ben Knoble" <benknoble@gmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Jonatan Holmgren <jonatan@jontes.page>,
-	Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v2 3/3] git, help: fix memory leaks in alias listing
-Date: Thu, 26 Feb 2026 21:53:28 +0100
-Message-ID: <20260226205339.1535482-4-jonatan@jontes.page>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260226205339.1535482-1-jonatan@jontes.page>
-References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
- <20260226205339.1535482-1-jonatan@jontes.page>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhPy0Xc+"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b79f8f7ea43so209620066b.2
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 12:57:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772139419; cv=none;
+        d=google.com; s=arc-20240605;
+        b=IUQBxmz5rnSsjDoVORcTIj65eJvQWrDgKthV/E+qgEhowHW9cbdU1QK0SWg4Z12qHQ
+         SgXyNaSswcipgYdtQJbpyc0H0yW889bq58UT+hNKAFiO9RePotltM5vgK5cM6S3XaQ5W
+         WS6FV3QZ9e18oriplykCtceERbQlzEFHv46n3h6L8hbOk7XixexeZ6EvEHoZQPpPjpiH
+         Si+bVujVQkhe8AxhMkcnUcm3BU5VleaborwufrSGuSBXIpitOZq5V7/KXUyWGT2LLgRA
+         ylXAl1hYN7dotptpD5FUBnilcWPTkoR32Td3MDC1mjYpiqHPmlT1AmPchyghc2bPQiv+
+         j0cQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=F8VN31Y1Itqw/BCG8erR3Al2KjDqDiyHLeDNuOVj2pM=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=exilO1sioOWL4VVXi5eOHNR+5dXSxKcIGRhgvmQ2LYmw06ZFnCWmn483OMsyjWo8QN
+         sD6hpjHY5R3d3aFR/dUmRrib6VGdnEA6igkfrsRy4h2pmbtJUFUu87rxXk8UwYlcIJF6
+         UZQqSPakvmckiXFxGyhAV5m/zngZvQtgXA9rY/laLFOEBtlSNpJsj+CBlUTWlAFGtxqM
+         tsGqfO1WEU4GmffGSImyub7w66LXSUILU56biIt7DkGHiG0hfA8l9aVmSQGRreM2N4Rz
+         EV+N8woDmApQdsjGwC+0z8IEuoKXmmH8/2ARsJsClSGGwK06xH5glRCDGrVxGpyBwhWJ
+         INTQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772139419; x=1772744219; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=F8VN31Y1Itqw/BCG8erR3Al2KjDqDiyHLeDNuOVj2pM=;
+        b=MhPy0Xc+jkQDZu9OFGZhscl8Gjj1XgOpayp46sJuoopf1yLT7fAxKmpQxXKGJQT1BP
+         ED5EB7iva6njAJHudCsCdAxJdbZg1rg4GAZUriaVNzfaF2jfucdtDvb2VjTYWZuI1IRE
+         zzxbVadjc2gCcOe+5tI7vM73s2Cso8ezfCFQT2JDLb/wDCAS7bW/IOh+w9ef/VV0qZdM
+         PhPptsZoN+QNNFFZZku1tvj4PlbX+o8gVqP4SdwAbADlWw1RI7+nz803Z4D4Ac1o9Q0n
+         dGDzvIsdFinRjZQF5JqiZJ2G5PGTJqxYIlvO/NwewZrnIXH1+lUVDbeF9Z4QPHNFp23X
+         YfOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772139419; x=1772744219;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F8VN31Y1Itqw/BCG8erR3Al2KjDqDiyHLeDNuOVj2pM=;
+        b=T9FDigQdxqwwccX12dHySvPt6E4GnuRY2HSG3PdzWm3J4ZKKHShAI+R94zlFfIorOr
+         86KWUz+2RcM+7kbGXSjRSB7n4rDjWWgV5w+RSx2pEbSihkrNd+ZvWPF3QvsWlAGB/J0d
+         jX+nxdwUQt8Z4Ge/Y2f/d3tC5R5DE1qx0tKrVZvuGQbK3Kau71DO2tbsrGOB5GwKA2w6
+         1bDNoPKWEOKtk+W2ndrvFkFlhLMoqRyuo61gNnFGhC0sky10qUEPG4WthqQ+SfT7Vitx
+         jKOpB/zXMGYaRXF3lo8uXcOObZV0KqMG+SO37qb1Nl/wBnWPiVgG3uoFdVz16AQvzp7B
+         7MqQ==
+X-Gm-Message-State: AOJu0YwO4moE5oApZtvrMam9rQH1os7Kx65lamX9KNK1SXtxE2UWfmyu
+	GxZIQ8Nw6UpQsWypmha508qjyoq7RLcXfXcJOHhBfc5c35kouUUqEQ0U/q9Jz3+H10xpUe2h8oe
+	qsNGeYvWVmGalOarxA1JHXwOjWxlv5bsdtDIjZYEZJKM=
+X-Gm-Gg: ATEYQzzT1EO/GUv0AYrrE7eGQ+DUlZlICiB5kQujQfFjy5HeDmkNkGF9JnMggU9xi/w
+	QYbyOgZC9etWbmDH7dDB43apAMOAgNviK82aoteqD1Djpcp2D/dM0gjjRMDp87mlF/5c7BiUKH9
+	KBgAnrq4gtNW/zbhAL+tjTd61f75YpP7sQT7by4zJNKKy8IuUEwy8xDbWLrPbMWjNlkEdLy2r4P
+	32q0JTn6RvjxbPIvM8A89PlB1IK4RAKk2G6H+h07zN4SwFaSwCAmsA1GnbtO6J6FVsUVSt0SYWN
+	BvH5OIU4HqJSs8bx7/JfVYI/DNeOEV2ekb3WXS5mhbco9KBy2ZmN6CcdzLhdQzQDAu/z1DA=
+X-Received: by 2002:a17:907:3d51:b0:b93:5fc6:161a with SMTP id
+ a640c23a62f3a-b93765922d6mr21191266b.52.1772139418509; Thu, 26 Feb 2026
+ 12:56:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+From: Mansi Maanu <mansimaanu8627@gmail.com>
+Date: Thu, 26 Feb 2026 12:56:47 -0800
+X-Gm-Features: AaiRm50UFCD32ch2kp7IIWmgTAn8hUoQ09bQ4EeFm7l3aRAIILmRBfG1pVgPy84
+Message-ID: <CAO_P5U2ePS55_w2OiipW48AwMhvTJZtZnYVJqKuJdXRZhztazg@mail.gmail.com>
+Subject: [GSoC] Introduction - Mansi, microproject t7605
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-The list_aliases() function sets the util pointer of each list item to
-a heap-allocated copy of the alias command value.  Two callers failed
-to free these util pointers:
+Hi,
 
- - list_cmds() in git.c collects a string list with STRING_LIST_INIT_DUP
-   and clears it with string_list_clear(&list, 0), which frees the
-   duplicated strings (strdup_strings=1) but not the util pointers.
-   Pass free_util=1 to free them.
+My name is Mansi Singh. I am a Master's student in Information Systems
+at Northeastern University (Seattle) with 3+ years of software
+development experience at Nokia Solutions and Grant Thornton, where I
+built automation tools and AI assistants.
 
- - list_cmds_by_config() in help.c calls string_list_sort_u(list, 0) to
-   deduplicate the list before processing completion.commands overrides.
-   When duplicate entries are removed, the util pointer of each discarded
-   item is leaked because free_util=0.  Pass free_util=1 to free them.
+I am applying for GSoC 2026 and interested in the "Improve the git
+repo command" project idea.
 
-Reported-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
----
- git.c  | 2 +-
- help.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+As my microproject, I replaced old-style 'test -f' path checks with
+test_path_is_file helpers in t/t7605-merge-resolve.sh. All 4 tests
+pass after the change.
 
-diff --git a/git.c b/git.c
-index 744cb6527e..aeb099ab11 100644
---- a/git.c
-+++ b/git.c
-@@ -119,7 +119,7 @@ static int list_cmds(const char *spec)
- 	}
- 	for (size_t i = 0; i < list.nr; i++)
- 		puts(list.items[i].string);
--	string_list_clear(&list, 0);
-+	string_list_clear(&list, 1);
- 	return 0;
- }
- 
-diff --git a/help.c b/help.c
-index 95f576c5c8..3e59d07c37 100644
---- a/help.c
-+++ b/help.c
-@@ -422,7 +422,7 @@ void list_cmds_by_config(struct string_list *list)
- 	if (repo_config_get_string_tmp(the_repository, "completion.commands", &cmd_list))
- 		return;
- 
--	string_list_sort_u(list, 0);
-+	string_list_sort_u(list, 1);
- 
- 	while (*cmd_list) {
- 		struct strbuf sb = STRBUF_INIT;
--- 
-2.53.0
+Patch submitted via GitGitGadget: https://github.com/gitgitgadget/git/pull/2050
 
+Email: mansimaanu8627@gmail.com
+GitHub: https://github.com/MansiSingh17
+
+Thanks,
+Mansi
+Pronouns: she/her
