@@ -1,108 +1,171 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B77364930
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 20:57:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772139421; cv=pass; b=gUbepCJ7EpZvRcqwbrAqy6FNu2tIslKIMeHkr5KiBwkRI2ecZQz3Ck6uyONlqV4bfT5V/DBGtryXemia95MnRX9MRWeOjsoQuibr4AP+XNzsVwFQ9TIYygfZmqsBRiDDcJus/GZyfv1cT8E6nrcpvrEGZwYSPsyzIS3TidFEmuQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772139421; c=relaxed/simple;
-	bh=F8VN31Y1Itqw/BCG8erR3Al2KjDqDiyHLeDNuOVj2pM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=tzEjRhkSlqB6HUDhDPnULQk8aLsHEq/gCoZzReQItJM9UXMwMQjj3d7Ul/glrAQlWkxz7zqsrCZtMntbcRakdOY9AN3JRtyQyma5lGNJCNb9onjBfHWNUeXsX23JEyMqfuABVoxi9Ze5IBcr6sWSZQaE1rEVw1EDEieSJ8Npy64=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhPy0Xc+; arc=pass smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B023A330B2C
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 20:58:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772139533; cv=none; b=G6MPoswkQCM0v/0C8uPlVGWViB8RTwSFjvde254dnylcs5AK7fCMftwPB8ausU+qy0+AnrK98QNdIfPPxn2kfShrwY4kP6+YHD/EzWOuFU4Cs77XVHydw7wmd5sOuy2t7z+HXTClcSuv6roKnqkxbr5eX5T6oIru0TVGbv7ottk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772139533; c=relaxed/simple;
+	bh=V3pNjQ91/3dZUtpNI2fDuUplrzOoi66sDV9JLscRo2c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FA6SJiKQNmStquCBv0UBzxK/5SCblhZqOmeuTeMSY5fov6hv6NlFZueToZ7cW5Prm/RjmVET3Okh7IKase2Zn3ZKiiBVJQ7FZEiK7wKYehCHLmwoMj0jm5+AZGq2u1sdjrHXQIr1mhVUZhra+37uPcehj5miywnoQ8sbzliE5rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hKkcjKH2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PNFbwZmW; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhPy0Xc+"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b79f8f7ea43so209620066b.2
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 12:57:00 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772139419; cv=none;
-        d=google.com; s=arc-20240605;
-        b=IUQBxmz5rnSsjDoVORcTIj65eJvQWrDgKthV/E+qgEhowHW9cbdU1QK0SWg4Z12qHQ
-         SgXyNaSswcipgYdtQJbpyc0H0yW889bq58UT+hNKAFiO9RePotltM5vgK5cM6S3XaQ5W
-         WS6FV3QZ9e18oriplykCtceERbQlzEFHv46n3h6L8hbOk7XixexeZ6EvEHoZQPpPjpiH
-         Si+bVujVQkhe8AxhMkcnUcm3BU5VleaborwufrSGuSBXIpitOZq5V7/KXUyWGT2LLgRA
-         ylXAl1hYN7dotptpD5FUBnilcWPTkoR32Td3MDC1mjYpiqHPmlT1AmPchyghc2bPQiv+
-         j0cQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=F8VN31Y1Itqw/BCG8erR3Al2KjDqDiyHLeDNuOVj2pM=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=exilO1sioOWL4VVXi5eOHNR+5dXSxKcIGRhgvmQ2LYmw06ZFnCWmn483OMsyjWo8QN
-         sD6hpjHY5R3d3aFR/dUmRrib6VGdnEA6igkfrsRy4h2pmbtJUFUu87rxXk8UwYlcIJF6
-         UZQqSPakvmckiXFxGyhAV5m/zngZvQtgXA9rY/laLFOEBtlSNpJsj+CBlUTWlAFGtxqM
-         tsGqfO1WEU4GmffGSImyub7w66LXSUILU56biIt7DkGHiG0hfA8l9aVmSQGRreM2N4Rz
-         EV+N8woDmApQdsjGwC+0z8IEuoKXmmH8/2ARsJsClSGGwK06xH5glRCDGrVxGpyBwhWJ
-         INTQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772139419; x=1772744219; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=F8VN31Y1Itqw/BCG8erR3Al2KjDqDiyHLeDNuOVj2pM=;
-        b=MhPy0Xc+jkQDZu9OFGZhscl8Gjj1XgOpayp46sJuoopf1yLT7fAxKmpQxXKGJQT1BP
-         ED5EB7iva6njAJHudCsCdAxJdbZg1rg4GAZUriaVNzfaF2jfucdtDvb2VjTYWZuI1IRE
-         zzxbVadjc2gCcOe+5tI7vM73s2Cso8ezfCFQT2JDLb/wDCAS7bW/IOh+w9ef/VV0qZdM
-         PhPptsZoN+QNNFFZZku1tvj4PlbX+o8gVqP4SdwAbADlWw1RI7+nz803Z4D4Ac1o9Q0n
-         dGDzvIsdFinRjZQF5JqiZJ2G5PGTJqxYIlvO/NwewZrnIXH1+lUVDbeF9Z4QPHNFp23X
-         YfOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772139419; x=1772744219;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F8VN31Y1Itqw/BCG8erR3Al2KjDqDiyHLeDNuOVj2pM=;
-        b=T9FDigQdxqwwccX12dHySvPt6E4GnuRY2HSG3PdzWm3J4ZKKHShAI+R94zlFfIorOr
-         86KWUz+2RcM+7kbGXSjRSB7n4rDjWWgV5w+RSx2pEbSihkrNd+ZvWPF3QvsWlAGB/J0d
-         jX+nxdwUQt8Z4Ge/Y2f/d3tC5R5DE1qx0tKrVZvuGQbK3Kau71DO2tbsrGOB5GwKA2w6
-         1bDNoPKWEOKtk+W2ndrvFkFlhLMoqRyuo61gNnFGhC0sky10qUEPG4WthqQ+SfT7Vitx
-         jKOpB/zXMGYaRXF3lo8uXcOObZV0KqMG+SO37qb1Nl/wBnWPiVgG3uoFdVz16AQvzp7B
-         7MqQ==
-X-Gm-Message-State: AOJu0YwO4moE5oApZtvrMam9rQH1os7Kx65lamX9KNK1SXtxE2UWfmyu
-	GxZIQ8Nw6UpQsWypmha508qjyoq7RLcXfXcJOHhBfc5c35kouUUqEQ0U/q9Jz3+H10xpUe2h8oe
-	qsNGeYvWVmGalOarxA1JHXwOjWxlv5bsdtDIjZYEZJKM=
-X-Gm-Gg: ATEYQzzT1EO/GUv0AYrrE7eGQ+DUlZlICiB5kQujQfFjy5HeDmkNkGF9JnMggU9xi/w
-	QYbyOgZC9etWbmDH7dDB43apAMOAgNviK82aoteqD1Djpcp2D/dM0gjjRMDp87mlF/5c7BiUKH9
-	KBgAnrq4gtNW/zbhAL+tjTd61f75YpP7sQT7by4zJNKKy8IuUEwy8xDbWLrPbMWjNlkEdLy2r4P
-	32q0JTn6RvjxbPIvM8A89PlB1IK4RAKk2G6H+h07zN4SwFaSwCAmsA1GnbtO6J6FVsUVSt0SYWN
-	BvH5OIU4HqJSs8bx7/JfVYI/DNeOEV2ekb3WXS5mhbco9KBy2ZmN6CcdzLhdQzQDAu/z1DA=
-X-Received: by 2002:a17:907:3d51:b0:b93:5fc6:161a with SMTP id
- a640c23a62f3a-b93765922d6mr21191266b.52.1772139418509; Thu, 26 Feb 2026
- 12:56:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hKkcjKH2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PNFbwZmW"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 442177A01DA;
+	Thu, 26 Feb 2026 15:58:50 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 26 Feb 2026 15:58:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1772139530; x=1772225930; bh=G1IxahwvKZ
+	sFgCi6t5+U1vjf3AOZuIacX+1phqlp3eM=; b=hKkcjKH2dGTgw6Ga56QKajDecN
+	BMSSjaQPynVzlsSYB/l7yCnEOW6E4ropzcjDUFJO0RxCAgiXbK3sz+zUeMxsbA6u
+	jo6z3VQ8BrKHNSWihGrKy2h7Vd2NNM+OZE5+OtRAzP+Ch2ZVHtj7pR+2GYRie4t6
+	0iip1HudrRDAyHMiiMgYYBrUUXw/QKMqadMTkTbcJ4xWkeTCMVGMBrz8t70xqe/8
+	oON/Jfcr4d+uXBn5yDvg/abONqblcIJi7VhTRBfSx9jwPupbyEsNErMALrPJUga4
+	FjxRUYxMgsM4MC/KiRRcPk8bV3CAEhMZa8vk4if0aCxGviB1RdL4BKGgbf7Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1772139530; x=1772225930; bh=G1IxahwvKZsFgCi6t5+U1vjf3AOZuIacX+1
+	phqlp3eM=; b=PNFbwZmWUZjGHlSk9/aIf8wztlPQSStU4pDDzVGNddRibPVEQy0
+	AjuZ6g1/ZnzZjAG6tBaDrhcQj0q/3XbC0xRP+oiPAzhlH+gpLn32wnsG2yzar8/d
+	QxMjNdswpWDuqJxtwKXfT5HJIXrzWiVfzPylBKOah8NHE5E32JYXCUG3PEp/35Fd
+	AnoA9CiPWjj6FyHWNzruDWRCiaI68jNPW4JdXWfUDImX1hykv7GbXQHIGopGw4Qj
+	aaOI4p551Sr0UCttwuYnyWN0vdazpPYScmtN70muDharpxPDzlrDxvbD50MPkYCf
+	rTS2SQaI3ew8AkstCsg5kqkeVCKmUiGv+3w==
+X-ME-Sender: <xms:CbSgaVN6HT3VwviW6QnpzKYZPmNWSVUelND1TtEmFB-A_dtviecQbA>
+    <xme:CbSgabroaDf6zeZG6L23sTUMeWsYZAJAk5yBSqgzwbGVPMY5tL6Xe5uvYEWpAg97a
+    Z7PITtLAqjr2htvJacYblAJLRQLvF6SBbBofELbQ2cP9_eLXMYWBQ>
+X-ME-Received: <xmr:CbSgaeGN_fh6xs1wm0fjK_ugvWcJJfr3HpsXxzdyzOq5CDwQ65EDfBlXJHymYMlA_CbhR--Uh3ffS14zP6n3YVz2eX2yFOeBwQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeejuddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepgedutdekkeefjeffueeggfefhfeuleegfeevteejgeevvefhieekieekudfh
+    uddunecuffhomhgrihhnpehsthhrvhgvtgdrtgifnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvse
+    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvg
+    ifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:CbSgaYr-xp61ng1zBJlK5necUroEksVpvRnmekGaPw9qLfITjq0JZQ>
+    <xmx:CbSgafYrGB1bqMiz8pb9SCJbHPUANJ9AjfGwvP2CuGqTU6CGAm83zQ>
+    <xmx:CbSgaZXawYSVTmqidKPzaGBpB1EtOtNMjzb8xWKRA2Q1HWAWn7t3XQ>
+    <xmx:CbSgaQ9mUHYyWl3SJDKdXQo-rXMVcQChxqtv-COjhK5EL8t7XsUd9A>
+    <xmx:CrSgadrBBvHCeCnmHUxbAhzGFw5FtQE4V3qfmpXxOwmABR_bOnL4NYl4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Feb 2026 15:58:49 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [RFC PATCH 02/14] strvec: introduce `strvec_init_alloc()`
+In-Reply-To: <xmqqh5r31byc.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	26 Feb 2026 12:34:03 -0800")
+References: <cover.1771978829.git.me@ttaylorr.com>
+	<50efbbb0fe8d897d7c4cd51489af4cb4c4c49d02.1771978829.git.me@ttaylorr.com>
+	<xmqqh5r31byc.fsf@gitster.g>
+Date: Thu, 26 Feb 2026 12:58:48 -0800
+Message-ID: <xmqq4in3xlvb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Mansi Maanu <mansimaanu8627@gmail.com>
-Date: Thu, 26 Feb 2026 12:56:47 -0800
-X-Gm-Features: AaiRm50UFCD32ch2kp7IIWmgTAn8hUoQ09bQ4EeFm7l3aRAIILmRBfG1pVgPy84
-Message-ID: <CAO_P5U2ePS55_w2OiipW48AwMhvTJZtZnYVJqKuJdXRZhztazg@mail.gmail.com>
-Subject: [GSoC] Introduction - Mansi, microproject t7605
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-My name is Mansi Singh. I am a Master's student in Information Systems
-at Northeastern University (Seattle) with 3+ years of software
-development experience at Nokia Solutions and Grant Thornton, where I
-built automation tools and AI assistants.
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+>> When the caller knows upfront how many elements will be pushed onto a
+>> `strvec`, it is useful to pre-allocate enough space in the array to fit
+>> that many elements (and one additional slot to store NULL, indicating
+>> the end of the list.)
+>>
+>> Introduce `strvec_init_alloc()`, which allocates the backing array large
+>> enough to hold `alloc` elements and the termination marker without
+>> further reallocation.
+>>
+>> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+>> ---
+>>  strvec.c | 7 +++++++
+>>  strvec.h | 5 +++++
+>>  2 files changed, 12 insertions(+)
+>>
+>> diff --git a/strvec.c b/strvec.c
+>> index f8de79f5579..f7f32a53b56 100644
+>> --- a/strvec.c
+>> +++ b/strvec.c
+>> @@ -10,6 +10,13 @@ void strvec_init(struct strvec *array)
+>>  	memcpy(array, &blank, sizeof(*array));
+>>  }
+>>  
+>> +void strvec_init_alloc(struct strvec *array, size_t alloc)
+>> +{
+>> +	CALLOC_ARRAY(array->v, st_add(alloc, 1));
+>> +	array->nr = 0;
+>> +	array->alloc = alloc + 1;
+>> +}
+>
+> It is not satisifying that strvec_init() does *not* become a thin
+> wrapper around this that says "my initial allocation is for zero
+> elements", but that cannot be done easily as a strvec that begins as
+> an empty one has a small optimization to avoid one-slot allocation
+> only to store NULL.  So, ... OK.
 
-I am applying for GSoC 2026 and interested in the "Improve the git
-repo command" project idea.
+Actually, we should do the same optimization if a caller explicitly
+asks
 
-As my microproject, I replaced old-style 'test -f' path checks with
-test_path_is_file helpers in t/t7605-merge-resolve.sh. All 4 tests
-pass after the change.
+	strvec_init_alloc(&array, 0);
 
-Patch submitted via GitGitGadget: https://github.com/gitgitgadget/git/pull/2050
+So perhaps we could do this if we wanted to encapsulate the tricky
+bits in a single place for maintainability.
 
-Email: mansimaanu8627@gmail.com
-GitHub: https://github.com/MansiSingh17
+ strvec.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-Thanks,
-Mansi
-Pronouns: she/her
+diff --git c/strvec.c w/strvec.c
+index f8de79f557..cbe72e9411 100644
+--- c/strvec.c
++++ w/strvec.c
+@@ -4,10 +4,21 @@
+ 
+ const char *empty_strvec[] = { NULL };
+ 
++void strvec_init_alloc(struct strvec *array, size_t alloc)
++{
++	if (!alloc) {
++		struct strvec blank = STRVEC_INIT;
++		memcpy(array, &blank, sizeof(*array));
++	} else {
++		CALLOC_ARRAY(array->v, st_add(alloc, 1));
++		array->nr = 0;
++		array->alloc = alloc + 1;
++	}
++}
++
+ void strvec_init(struct strvec *array)
+ {
+-	struct strvec blank = STRVEC_INIT;
+-	memcpy(array, &blank, sizeof(*array));
++	strvec_init(array, 0);
+ }
+ 
+ void strvec_push_nodup(struct strvec *array, char *value)
