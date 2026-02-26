@@ -1,86 +1,85 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64269364947
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 16:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007BB43E4BF
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 16:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772124320; cv=none; b=k2NxLiJ32z7II3MzFMpkIx+2AosboQ+lCAn21K27YJZV9KkAVisaqGxObmwNLeJcBzDgIriDdm4w4Y2GGiugylJW3VxwumPe92nHSSKMIwNuemlqB1d1UxwoW/Q0pAKFTOyXkfJV4HVBLwopB39TdpV+WlqnW9S244uFK+cw+js=
+	t=1772124758; cv=none; b=L11rprglhqltSazdTJH5Wj9jZRKzgJzakD3MpXKlkeqKm3ZNjP5MKF3hcAz/tiOtQC4ZecffGRGH5bed/36fB6/C3enXLAnReieIQ3nc99iV4Eu8NLmorYddkAbxKFvL/U0R8rhqCk14p2ZYGduEwUy2VjBNKKiZwHDwdJpL40M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772124320; c=relaxed/simple;
-	bh=t1JcMOlZRvbyxPaMim3ZYIe9fWkMzXdtL3VUNYJ3BJk=;
+	s=arc-20240116; t=1772124758; c=relaxed/simple;
+	bh=S82flx3urjtPMSHVxvUI9GMar0PX0krRqXdaRP3G1gA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bJevgaGh7ulnOQ7Beu3u4vY7UrH4NMg82cVxRhFTtE4pmBRYChM0smZp1YN5wxuYGi45eiii6Kw31bEI/vMMfqFvUqcy3YYFyJrzsl3X4uOJXIIZe2vniX6w8v7t2lxOzX7hD1qKBcMqAcAWHxjP2dzSY7ZOKFkP8v7hcPmgHzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DpA1NV85; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nil1fSTJ; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=U3VG3PE6NYukQMNXK7SWCD8JHvqUuc3MlwwXukydz2G5k5W79KfFC6wl4sLaCLgnCoTlvYJo9V9cPFjBEi/LKmAWAmieiqp7rgW4J8W4Z3F0YND4HvzNmHvjFBnVbKqkQvK/QSr630zw5sTblT9yDLTkl9/JACE/y1GSYRLLh84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ryt+CuHJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hIMZ5P0k; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DpA1NV85";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nil1fSTJ"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ryt+CuHJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hIMZ5P0k"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7359FEC08E1;
-	Thu, 26 Feb 2026 11:45:18 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id 4A92BEC057B;
+	Thu, 26 Feb 2026 11:52:36 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 26 Feb 2026 11:45:18 -0500
+  by phl-compute-01.internal (MEProxy); Thu, 26 Feb 2026 11:52:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772124318; x=1772210718; bh=t1JcMOlZRv
-	byxPaMim3ZYIe9fWkMzXdtL3VUNYJ3BJk=; b=DpA1NV85+fOMDQMUOLEfgIrOyl
-	gD9joFTFoj0A5TOQ0AcsVK9y2v/m/i319maYux8QqPLKu4q2ziOLWqgMusxMzn/F
-	Y0TIP7ct/PyWQz0OXd1NrCoaCZvZiKHsRL5uuwnldRw8LDhrk/Xib9owY5rPG8yL
-	3S2msrcK/Ye31/46ebk4qPFoUkQahEidx1RcVeqSOLRFqq9sQMDe93dMmlHyUJV5
-	/BXz77N35U052+4e8JVnyUtk0jdpwvAl5xJhG0VEBoMMuRBsAORyCXZq646iLeM+
-	7DuKrQe9gTpPrcyVW1oKAwNpRTpPiLgtKsYQni1UzS4KGu+GTj3gxBzj8fzg==
+	:subject:to:to; s=fm2; t=1772124756; x=1772211156; bh=ZOZunnfokg
+	EHJA2+fFZlu0eAC1rsdeZ9CxL3lfnN1no=; b=Ryt+CuHJcCQvdfHOv/+vi94xzh
+	QwV6pNHVt11fSqJ7eXC/EqmTLsGQVoj32gGhgNIHHT1V4at7KYvzcdLWrqjUMheN
+	udpXZ7KVjHxWSC7BvoaI/pCMqYaFdiDSPNWHaDlBIfr99YvSN+5Sm8ztZKTw+Bo3
+	n2eHc0S5opvs0TO943LjEySKQR5315OelzXVZuBq1U8wpAQBtYcN5HhyLfPcQICo
+	5TxAU7E/q1wtcXpag0TXRBw+Dwjr0CNICfZA8qm6eOLNnGqLbgp5X9PMSBq5yggy
+	sqQKizCHv4CxvGacCPkaFyHbKfFmv2WSGhQpmW5450yjzsrzzpLt0aUyR1pQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772124318; x=1772210718; bh=t1JcMOlZRvbyxPaMim3ZYIe9fWkMzXdtL3V
-	UNYJ3BJk=; b=nil1fSTJLRm4UKoyj4MceFfEbf/qCN2yAI+HcKHxJ00fUn/sVTA
-	+XkvnD80htYXRbkdtI1cAsyVmOk4SXUL5shZ/LjcxFGboD+VZeu+am4+CulwrZUx
-	1GQb+4L9eQqJ+jJ79p0g6+URpr54hUA352Czu242cIXGy7qp/ymWstJw37Pk75fW
-	JETTPf8Vtg+B4dEbiSpRCCtwFbrr3XBX9uuacWXEBapdD8Uo0wHMUf5H/wB4C4aB
-	lLaC88SpQgcr8TbPenKmwVtFHGtDJ+yMYDRPpD//uPYFwwWBuGTYP3ihFlnvS1RL
-	PNU6Eb7fAXuNN57I/FUmnKzJHX+9FbHx0Nw==
-X-ME-Sender: <xms:nnigad2j3weYf7DZcB7TLVO7PKD3S51mkKJhREebWFtCemYKkgE3Tg>
-    <xme:nnigaa85WhhTrnOWtI5faMDsu0QShKecRo8a42RXtaJ_l-vywS-UGVP1bt6-KIQIJ
-    kMJkbxEo00UZ-pA_WJqzIO_IvmnaAKFd90_CMYkMxYMi9zzjmX7>
-X-ME-Received: <xmr:nnigaWNcpADm0RW9eXYZF8fW_DeCDxLOj955onrGrRnzr8D_C1N7bERPuyaHojJj-ceaf-0rkxm47PKYHOmdat2-m5v8ebnCww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeiheehucetufdoteggodetrf
+	1772124756; x=1772211156; bh=ZOZunnfokgEHJA2+fFZlu0eAC1rsdeZ9CxL
+	3lfnN1no=; b=hIMZ5P0kXkcTWxZZyYDvpY7bzReRYZR+ag22vuGhxjFhFQFpbvX
+	onrXvhH6PxJrFjjJxwEWbsSa6yh17AMz1D/q06xE6uDrsCHDwDr2a89N8juy1jwQ
+	7J6vwPR19mCZp3+n26n/DiKHIQQGXXF58l8kY0ppJgU3L/Avm4tW9oA9VwtZ005F
+	Nr5OKbfsDoOyaV6pR0mmkewAjbUUFe0IsXdffUYj2GKh8JInC1VKYi0nhghOlQbk
+	Qwuuu4jXUxD3ptyVAbmo6UP9LGthi2owbWdRWl1mxgnuaO/V2LALhFu+jMoPF0Ey
+	c664tE9whMnRuE2X3m4ETeZvTbS6j8JmWUg==
+X-ME-Sender: <xms:VHqgaQtiXI8p5R74b7D3LVo-N-CLDm-g3ZB-t5wJt8at0m_1L8y8gA>
+    <xme:VHqgae_KMHyOZP0jAFj_xJiKn3uy79BJuwAULsZHnsdC3X3ZKQelj2WHNxv_Wcufv
+    xcM4glr7RuxuR5XJh2Ux46qQef8zYj1BOd5qvbSzss4n3wH3hWW>
+X-ME-Received: <xmr:VHqgab3egkIm8yhQnasqOvOZKgDDwUg8bXOByklRE1ldzFdTF0BlSjiTl7lV510SawCh03x4W6BQU6m3cGznwnGZOsd0Sd0TOQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeiheejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrmhhishhh
-    hhhhrggrrggrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtgho
-    rdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:nnigaWdy4Xu5M6e_aXq_xorS6LJE5oNVXLARonq5D1ALgW69DORK1A>
-    <xmx:nnigadX8z0m-iuAIbGLOkRNAqIO-uLjQs0RjQ_KFIU6alEhM4htdzg>
-    <xmx:nnigaWheDhnWfb-3octdxN4-eWjk_VOniQuDG2ZqmVIs0yoThHivZQ>
-    <xmx:nnigaU_qCCLITBaav92ledStjrbrIik8yl-yocKaz4X6MBDf78R5Zg>
-    <xmx:nnigaViWMoO1TI0hKB_6ammHFow1lAF4ErPrTqsGdgvMLJpfPs7UhdU8>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgvsehlihhnuhigrdgsvggruhhthidprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhi
+    phdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:VHqgaTD-DiYa2fS_uxvkRhXxXQbNpWJ_62d3R8oZUeIM0NfDpBthew>
+    <xmx:VHqgaXeiOvcba9B57oLPQtX84kUmKXusi7M_xBd5OxavQytYEoUubg>
+    <xmx:VHqgaQ5YE-H4CMzBX89nJrE3aaA8p850R1Dr6x4H5ELrbsnrkL1sfw>
+    <xmx:VHqgaaVsBNArzQ1OrUjGBBwynVITYc_Tmi6KrbymWr73gAgVkrR5TA>
+    <xmx:VHqgabVKmWuLcIXsGbCc7Jmz9rD1MxtQe7w4jvLb_uWeE_mZdzkkB6yG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Feb 2026 11:45:17 -0500 (EST)
+ 26 Feb 2026 11:52:35 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Amisha Chhajed <amishhhaaaa@gmail.com>
-Cc: git@vger.kernel.org,  sunshine@sunshineco.com,  avarab@gmail.com
-Subject: Re: [PATCH v3 2/2] help: cleanup the contruction of keys_uniq
-In-Reply-To: <CAPvEtrfmgq8f2z7tAvR-oCEYoiG2B+Pj9EqjUsKuewnO73tVPg@mail.gmail.com>
-	(Amisha Chhajed's message of "Sun, 22 Feb 2026 15:17:19 +0530")
-References: <20260212041017.91370-1-amishhhaaaa@gmail.com>
-	<20260221162359.43336-1-amishhhaaaa@gmail.com>
-	<20260221162359.43336-2-amishhhaaaa@gmail.com>
-	<xmqqwm05qsei.fsf@gitster.g>
-	<CAPvEtrfmgq8f2z7tAvR-oCEYoiG2B+Pj9EqjUsKuewnO73tVPg@mail.gmail.com>
-Date: Thu, 26 Feb 2026 08:45:16 -0800
-Message-ID: <xmqqjyvz4foj.fsf@gitster.g>
+To: Li Chen <me@linux.beauty>
+Cc: git@vger.kernel.org,
+    Phillip Wood <phillip.wood@dunelm.org.uk>,
+      Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v7 0/5] rebase: support --trailer
+In-Reply-To: <20260224070552.148591-1-me@linux.beauty> (Li Chen's message of
+	"Tue, 24 Feb 2026 15:05:46 +0800")
+References: <20260224070552.148591-1-me@linux.beauty>
+Date: Thu, 26 Feb 2026 08:52:34 -0800
+Message-ID: <xmqqecm74fcd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,29 +89,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Amisha Chhajed <amishhhaaaa@gmail.com> writes:
+Li Chen <me@linux.beauty> writes:
 
->>
->> The striking similarity of the body of the loops in these two
->> functions bothered me enough to try writing this; the result does
->> not look too bad, I think.
+   > Apologies for the long delay in sending v7.
 >
+> v7 is based on origin/master at v2.53.0-154-g7c02d39fc2.
 >
-> Agreed, I was also not very happy with the similarity present at these
-> two places,
-> especially the wildcard and tag part, tried to convulse them into something
-> singular. It again started to look like the original so ultimately
-> kept it like this.
+> This series routes trailer insertion through an in-process path, removing the
+> fork/exec to builtin/interpret-trailers.
 >
->>
->> By the way, I'd really prefer to see contributors *NOT* to use
->> undeliverable and/or bouncing e-mail addresses when working on this
->> project, as I'd always have to edit the Cc: list to avoid getting
->> bounces.
->>
->> Thanks.
->>
+> The first four commits refactor trailer rewriting in builtin/interpret-trailers
+> and trailer.c so callers can reuse a single in-process helper (used by git
+> interpret-trailers, git commit and git tag). The final commit adds git rebase
+> --trailer, currently supported with the merge backend only (rejecting apply-only
+> scenarios and validating input early).
 >
-> Thanks, I will take care.
+> v7:
+> Rebased onto origin/master at v2.53.0-154-g7c02d39fc2.
+> Split out a new patch to parse --trailer with OPT_STRVEC in git commit and git
+> tag.
+> Use strbuf_write() in interpret-trailers when emitting buffered output.
+> Restore --in-place rewriting semantics via tempfile+rename.
+> Drop wrapper.c/h and validate trailer args via validate_trailer_args().
+> Drop redundant rebase basic-state save/restore for --trailer arguments.
+> ...
+> Comments very very welcome!
+
+Yes indeed.  The discussion thread for v6 saw quite a bit of
+activity, but this one is quiet.  Is everybody happy with this
+iteration?
 
 Thanks.
