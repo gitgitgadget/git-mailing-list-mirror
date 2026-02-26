@@ -1,130 +1,102 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2585C439000
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 21:26:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7034395274
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 21:40:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772141219; cv=none; b=a/nHgHseXz11XqHZjtZqNdWBvP1Ci3VKJD9zScjQDVyeDynDmllI5WWKgQHFEY2n9i6d1G6PUtwD0wzdLMZlARI7i30SCx4lG825oQ/JlNJmqoyCnFB3oqkyqrbF8EMAK44xF892A5rlOKVVsPU1WstKXHqRHpp06e0JX93Ba88=
+	t=1772142015; cv=none; b=T/+RFH1K5+BFD/lgcf0X4i/Ar6H3Mgbp446cDnHYRdHTyDhZKbBTKcFbK1c9A8xfU6w5IZsc/iNE+wzbcng2iXDXABi9X/mMJaDZg3aUYacWLOIma46BeYwwitlUWcl+bowWWIaG7VJkWtbhIPDo4yQjnaTIvBvCZPLEIXKCkpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772141219; c=relaxed/simple;
-	bh=JVszMwQnaHb7+lpx0Ii2IZt6NEtPwPwdubDTr/mneME=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=nKZtH5rjbwfMwbKILpPX72i55bm1Mi7SwOwHIASQBsVVKhPReZAoAzs22fov1SSWrreda/X99/Ol8z2NriVjfQMelIWD08+6/zlqJn3ebp+sKWwscSdHt9nTl0FIE13N+Z9h5ZsN/KnnbIbBAs6e8/LM+aPBRHRz8PrOyKZ7uEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MVGVZ8pT; arc=none smtp.client-ip=209.85.221.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772142015; c=relaxed/simple;
+	bh=YSijgVKvbbFtq+z7ih45BSdi7b5p5nEYHmXds3+iyQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dZKt+he9RApuXzz81VmKyXC3cb4+ZSKLw+qEa88UHPYY4cROree/0qN/lrcDigpOG1jIsjnwGtyxDjoEwCzrqcAI8qqewaaKWaBlSBxdcQMf7QCJgwIKcEInnXzNur5oMeAPfxy6bs5fgASYp017TXOytA988dsrNTQP2sn0uEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=G47KDPPy; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MVGVZ8pT"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5674cd243d9so1872568e0c.0
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 13:26:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772141217; x=1772746017; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=49LcLc/bX+hR4QybT+NWUEjQooVKzdWxwae9Ao1AKi4=;
-        b=MVGVZ8pT4F4wfaDUeyT6flz6STjWPoT95Lym4nCrOdpwn+dNpzvmqsd7CdHNLWOcx+
-         WtM4PPWFRxfKt8mwlhOpeKOMeZqFRLuYPG70MSBHjz4XK4UjRVnp2ckSCIGU7g/LrO1O
-         wQhDYneTqREaBqkLODciiPp7+frTEydFOkwSjB+1/1YegfHSAXWquRJvPgkd3fDVp8qH
-         4GqkLM6WyrWccwmd16PSglNLdn6nia2QAWAH5JHmk2WXxX8DxdtlpmIHfgPhSL5VnbWR
-         eS/s7arGRtv+PtgetpiO1oepWDMZQHROM2UwY6E6K3E5NelEntdtR4XkVKa5NaQZCkux
-         FcmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772141217; x=1772746017;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=49LcLc/bX+hR4QybT+NWUEjQooVKzdWxwae9Ao1AKi4=;
-        b=IMRImUKMyZ8f9qv8eYz2XLYUAzuITLHrpf8wcklDn+BTI65496lPGI9DRNfv+cj0XT
-         uF8JIym9FWbiKubaJcpT5TCE+2RQoNR6tpqJJjSd+Yj3LiENKdb4kScRQlH8kgfiPT8s
-         1/8tr1LRnAUNYYGbmTlSOfPYXzE23t3ev5e+WRmIzgWzdi4G53HoaoPHBDoVU3AwkFIg
-         M7CunWZlVsV5+lZTcdfmknT1tpCe8DUqzM8FSGMJP9jisvjsTIbMV+cXRge1ucbSincW
-         8ZmfZjLCrocDeEToWUW3NF+dzoXNjb8SDt+Vn7AncaWG/zXR2it+EVrJPKtSVaqmmSDo
-         P/kQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXgS18NXrn7Jx8/WbRNSO7+vR9+WZA16fs50abBsNMYjWe2wCH/2UhO7lgNveu/h3OIX6c=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz63kMgisbQwOVqrXwU6VZgucRy6gvnRo74UaDxjOmVzZZhRlk2
-	CG5NIEF0dd2yoJfU0xRuuCKvr+usElJHPotQ96Pboe32eEpgTnKOVWa1
-X-Gm-Gg: ATEYQzwQR10CrAxLsv/IM6TSSRKganQJqYBYmNaf3viK1XnxcjgnOIWR/vIbFkgiA63
-	85Nlc+60DRZnrO9uTf6/bnJDCtObV0YxiUOLg+tkDjli1378OzdZbhFhvE32M5B11SPsGh01+P1
-	TtYJ+e6KBa7OwpJVcwqnd1KcUVRo9EHlBxt1UnOa2J9K2DkuU7lKCjEpCqKUHnpsM+MQw7WQAu9
-	yLRw7Oshg8hzhMuzFXCNI5NBqPd25pNuWX7e2zbNnb9f8McHoatHsOy/yZJTGFceU506QPLp9RQ
-	p1WL2TokiZW83ovwEjPkIL5gnslkkD431nlO+DJCt8nL1vOJV9J9b1BhsfrwKalVogrCDKsN/lH
-	OEjwOjhvpmtqni/dxd4uTZG5RTHodw4e+GAcvoilRxY0UAycNr+mwvxHPxHCvJGm2wU/zYwSAX6
-	ITY9d7paXUSACcxRuDzjD39R9nlvttPmojNgXkkFJPH5CpCsadINovaNmH9YrlJsKs
-X-Received: by 2002:a05:6102:440e:b0:5ef:b32c:dff8 with SMTP id ada2fe7eead31-5ff1cda8e40mr2293563137.5.1772141217005;
-        Thu, 26 Feb 2026 13:26:57 -0800 (PST)
-Received: from smtpclient.apple ([189.62.150.156])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94df6437c19sm2881800241.6.2026.02.26.13.26.54
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Feb 2026 13:26:56 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="G47KDPPy"
+Date: Thu, 26 Feb 2026 22:40:09 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1772142010;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XpFlP9gtayHyLYXOJ0CHe+7JEO/BbNPvCYOGu2pa2Ds=;
+	b=G47KDPPyh9lpNtijr/SyXGz4TYpB403uYqevrmdQsYD6NWjNiSAINSWbhUR7uGu58PHUsc
+	ybicvEEO/ZHNSmlitsY6d4duLnslMvWtbnwgj5hSprBonnRUy2rfyGRHWLSQJ4FMGZYSOa
+	m6CTIu8uzTZMcRcOp71HYVd5tCEwwl522hiB87HKUWoz1e8vEaIhXlJ2baC3fzHxsYrTM9
+	ierHbSTz18dXp+SqKRmh8F8o6U0WiyzoypW8bsJ0G2su69pH66o4o5kaRlHgocNZqpGSzC
+	6QWhYDG7GDSIg+te/QQvjLRAjqHY2en8a7kENvtyjZbABnSVEqQRLcYxnO6oLw==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Mirko Faina <mroik@delayed.space>
+Subject: Re: [PATCH v2 2/2] format-patch: add commitListFormat config
+Message-ID: <aaC81Hk3tO5N2Rl0@exploit>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1403; i=mroik@delayed.space;
+ h=from:subject:message-id; bh=YSijgVKvbbFtq+z7ih45BSdi7b5p5nEYHmXds3+iyQg=;
+ b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpoL2YZnQ/JiqFeo+aH+s9m8MFuPP+R0m96TH9J
+ f1lDVwKwgiJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaaC9mAAKCRBIeX6hnBm+
+ 0UtLD/9To/7j6z+E3tsRAG5NrXNPgrYkni7sEPWIpiX7H42V1hxw9/rpQBOJOQT+2SrlLB0+g6E
+ iNpFlV8px2FzBhZe+XrIe2DglL9Ypi/VXSHMclArOGiUnXRFb1haVfgltYKLPdhx+76MqwnLM8e
+ Mrudo1iGtNGReIHvKMM7aZZbHEX89yxMBaOUz+gSHOmL3MnQGSrvyiqOVq6IUyZfLXmrscH79ra
+ 2sVAMUu7Br0cmPRrNGu5auPbBA8xaOTpsDxwZzQSjcw5xogBnckP5leon8KFFnz98pYNP/1VNV6
+ tJNtGLYczG+18T60XyEaVh5dRbGU2CW0ULw+Qi5mgVUpM4bilJFuSFBS3K6Dn++r3tnNWtu8R/v
+ xfVDDkPYGx+c3Wim4K2ncSLsoInRVosTbXij5NQrK5H4AhY0csXDICdcXw8Kcqur7LMhuF8u/O4
+ 4Z64G87tdMF6zwfSmvCPVJroWO/8Gh0BaJVrVsvGNFX/qj8P4NVK9N+XxnG2caOvo6SawC/Syzu
+ pS71H0DjJAhhQoMyx0TE5es0wU+2BGPBVJQNbnbGa0jhl8IXaqcbhUh63Sp5vfYgUwGUSSvvKjt
+ YqYah6wjAr9fTTdW1o8tXZxCChFCUEEh5H5xslDTI5xiEVptcqsaGSKkFfUKHv1rVQsdnUuebR7
+ XClVQCV+R2BQsKA==
+X-Developer-Key: i=mroik@delayed.space; a=openpgp;
+ fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
+References: <20260224040400.751247-1-mroik@delayed.space>
+ <cover.1771925291.git.mroik@delayed.space>
+ <6a0c7aecfd6dc1ee873d5e81110b723fa2d225fb.1771925291.git.mroik@delayed.space>
+ <xmqqqzqaggln.fsf@gitster.g>
+ <aZ46xqCusF1av-va@exploit>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [GSOC RFC PATCH] builtin/repo: add path.in-worktree field
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <20260226201643.5152-1-valusoutrik@gmail.com>
-Date: Thu, 26 Feb 2026 18:26:41 -0300
-Cc: ayu.chandekar@gmail.com,
- christian.couder@gmail.com,
- git@vger.kernel.org,
- jltobler@gmail.com,
- karthik.188@gmail.com,
- siddharthasthana31@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <BEE3B56B-F8E0-43B5-95EA-8506A84CB2EA@gmail.com>
-References: <05C28DD8-251A-4990-BBB2-26C144CAD982@gmail.com>
- <20260226201643.5152-1-valusoutrik@gmail.com>
-To: SoutrikDas <valusoutrik@gmail.com>
-X-Mailer: Apple Mail (2.3864.400.21)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aZ46xqCusF1av-va@exploit>
+X-Spamd-Bar: --
 
-
-> I see. Very well, I was searching for something small enough to count
-> as a microproject. If I may ask, can you give some directions ?
-
-I don't think this is small enough to count as a microproject. A
-microproject is something simpler than that. See the microprojects
-page [1] for suggestions. They are more straightforward things that
-have more chances of being accepted quickly. And since having an accepted
-microproject is a mandatory step, you'll probably want it to be merged
-as soon as possible.
-
-> I though about doing the group key thing : 
+On Wed, Feb 25, 2026 at 01:14:13AM +0100, Mirko Faina wrote:
+> > > +		strbuf_release(&tmp);
+> > > +		return 0;
+> > > +	}
+> > >  	if (!strcmp(var, "format.outputdirectory")) {
+> > >  		FREE_AND_NULL(cfg->config_output_directory);
+> > >  		return git_config_string(&cfg->config_output_directory, var, value);
+> > > @@ -2318,6 +2333,13 @@ int cmd_format_patch(int argc,
+> > >  		goto done;
+> > >  	total = list.nr;
+> > >  
+> > > +	if (cover_letter_fmt && (strcmp(cover_letter_fmt, "shortlog") && strncmp(cover_letter_fmt, "log:", 4))) {
+> > 
+> > Overly long line.
 > 
->> Use the category as key (e.g., git repo info layout would return all 
->> layout-related values)
+> Will fix.
 > 
-> But its already on the SoC 2026 Ideas , and I dont know if I should do
-> it.
-
-I think that this seems to be easy to do, but the reviewing process
-may take some time, so it would be better if you stick to a
-one of the selected microprojects [1].
-
->> Something that I would question here if isn't it possible to make
->> is_inside_work_tree accept a repository as parameter and then use it
->> here.
+> > Stepping back a bit, even if we do not validate the format *here*,
+> > shouldn't the code that does use cover_letter_fmt later in the
+> > control flow *already* be checking the validity of the format and
+> > complaining?  If that happens early enough, perhaps we do not want
+> > to have an extra "early check and die" here.
 > 
-> Like change the function in setup.c ? wouldnt that break every call of 
-> is_inside_work_tree ?
+> That is true, and initially I did not introduce a check here, but
+> make_cover_letter() is called after the cover letter file has already
+> been created. Failing before format-patch could create a file or print
+> anything on screeen seemed more clean to me, that's the only reason
+> there's a check there.
 
-Yeah, but then we would need to change all the calls to it, using
-the_repository at first. But I really don't know, I'll leave this
-discussion for more experienced people.
-
-> Yeah ... I missed that. Suppose we were adding this path.is-in-worktree
-> to repo.c , then would the below test be sufficient ? 
-> 1: cd .git and then checking if path.is-in-worktree is false 
-> 2: cd .. and then checking if path.is-in-worktree is true
-
-You can take a look on how `git rev-parse --is-inside-work-tree` is
-being tested today and use it as a base, since
-`git repo info path.is-inside-work-tree` would return true or false
-in the same situations.
-
-[1] https://git.github.io/SoC-2024-Microprojects/
+May I have a confirmation on this. Is it ok to leave the extra check
+here or would you like me to remove it and just let make_cover_letter()
+handle it?
