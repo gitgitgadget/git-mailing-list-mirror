@@ -1,145 +1,105 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9177261B9B
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 12:33:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772109200; cv=none; b=ozAG8A1pHZrUsovZ2+9t0WNWz4ZcK+g6CskUodGea4ePeFi9TZ6gdgwwwxIibuUpJFWFP5FAEiDVX0ObpE64PD//qm4U6CQGyGtp3j1Ip4nCjrrqDqHbPy1rbkCOIG8VPgvI0ddWBskFnEn5Cj+7fo9zx7Q8ivGSc5C48FScarg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772109200; c=relaxed/simple;
-	bh=lfbOAzyP1KmTSsegFPJpzEC4AdlhGFdu9O/XzGcKq+M=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Rdk13YO/ZpWh+3R9/lvaoCMj58StHt6VpyTCCZHYC74uYZi6PFRikDRvPZIC9+3uOI6L6VFcxBGpllF+Lz4EkqVdoX4GDujpVJLxfLISqjcHN8WsLu/7qLnYvwtGCshXxMPDbpjUTk4kX652G9uOC4Bc6xSHbv1XKyozej8GYys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YA3QYXHb; arc=none smtp.client-ip=74.125.82.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA9633B94B
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 12:41:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772109714; cv=pass; b=mlMEFmTPzgo6fq5V70yVdc7w5JmJNwwqxufZScc823JuJSQNXi9F3e/XNWNkshen0iMaWetxW4cyyZlQ2lmhc5+mWX3TWAovvaNFFQiC875Q8n+hssi3E/rPNaqbBz2OhiXxPBFi5oGGz6clrizayVOXdCLE0mfz0aASnaM9HsA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772109714; c=relaxed/simple;
+	bh=54jxkySuJqL+5Qof6XslR9s5ChBCbvOdNef0ce31GjE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ducup1SmafASswdfsPqaRZ8P9J0BS/HxcxxSwhlKoDgjwHPgezwk2urw71BcnOLz0fJ55cj+kHIVpEmaSA/h+D0iWWAHIDRy5LY9R/FHqjRGV1711g+5rdjnTUfNx86IhNlWl8I52b3EgqiENO1dvGa3UO6Z/0m0eFuz8kTpars=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=SkDZbSd9; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YA3QYXHb"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-12758ce1e8dso522744c88.0
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 04:33:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772109198; x=1772713998; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=TNwG9tMm/4fmlZCy2UkHQa2sqXqWuE9MJi4kmJYeu5o=;
-        b=YA3QYXHbZogcfiIbYMhc9+ujeSwsDIsELuY4YUcQlQ4aplTolI1v8xO2FlICMWy96i
-         z3qAPVIkeI+GyMDYlxEa/r4a1Y3NH+qC9UeJPvhbb4e9F7hh0MRYeot+06KKpmnzsmEb
-         GxdY6EkDhPN/US1gz7rX6DN5jm1QUjgjI23/isFQ4jZD418q64wNmjNgmYFwu3dt1k8T
-         /ofFyRoum+X3hJ87Co9cQTi9NwOP2/fGtRU8efdgsYOj/Abr2MLW7yXoPPYl1lBVjrxf
-         nZBy8xgvEtVsLuG9oGtpvrPv4NDuPinHVDonPUdJkXWz1yf/wBdL30nQgz2T8G/UNW87
-         6cGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772109198; x=1772713998;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TNwG9tMm/4fmlZCy2UkHQa2sqXqWuE9MJi4kmJYeu5o=;
-        b=tPisB0WdKUQ4RovT3VlYmNzQ3ErNW66RvcwXuOdXFmP/IELiX+EElLR5LEIM/jNVp/
-         ldcqbYmhwpQ9gn2qSEfX8sTbZWh609oVxug6rx0D2i38v9UNdExh7Dx9cTvEdYEPgamU
-         0i0wQDqEvNsFdP4skCK0aPZE9yPDVPTFdE/oHDZdQrReCN1IP4HdXhsonuEoaPrjIh8Z
-         PSCupXFiB4j6MTB21pA+05SrwG0sYCnLQg9yKI5KH2xlZfBPIgF1rNKUIo+QBg5AeADu
-         8rFmx/XB14AH5cnrbCtXdJXQMZL0AJl3AEgw921FL1maTWV0S92rqVDFzwyPaAX6C30r
-         ZK1A==
-X-Gm-Message-State: AOJu0Ywx02RyXaaeQKCCL+3o8e5F1jb2csf+O7PgaXQOZtHLRw3Y7NtK
-	kIdt/G0ndrJy29rbmf+gLkYsO8eAMO8TROENKsj2vn6LfmBDHU1Z7HuxL4tNeA==
-X-Gm-Gg: ATEYQzy2zFR++waSZ1WBG9h+TSV9I1yWB0Vw9YREHqnH/kuT6vOcXjKEGxeBCHpBnzI
-	F8jLi6RFLxry9g7+UtwF0VIZBpYaJMq0PmjhkBFBDuPvShDQS1Q9t1HlvDks8JJe+gcDy6mj0/y
-	qbW09npPDmAxG25P/wTPvfiACqlbYtKu6J9+4921ndC3eqhlaaVzohK2GbCyFdlPM8yOXXkWlzk
-	SkDRj9RDlTh+9Gof9aA6JevwBg5HqF5AomoOUGC9vJ5ZPk4R/VRGZfmp/ELHVzOZpc5q4Ya5si5
-	abjQJ+9HIxr5F+z+h0iFEHPnHBXphvASXzuJ3Cl3FcHoYmU4f/99s3/uOFL+y+c1vaLGEguwi0Q
-	eFGQfonBi54fiuz7XzcKXF6Gyd0MmJ6gnWBNLaRv5ChL8xhmaptbHUjXRFMfwHDDMFd73b9+8IE
-	dR5lbHvLJ8wWcV6GZpAOb5ZsT2
-X-Received: by 2002:a05:7022:619e:b0:11b:88a7:e1b0 with SMTP id a92af1059eb24-1276ad628dcmr8413873c88.26.1772109197494;
-        Thu, 26 Feb 2026 04:33:17 -0800 (PST)
-Received: from [127.0.0.1] ([20.168.119.82])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bdd1f4658esm1691023eec.25.2026.02.26.04.33.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Feb 2026 04:33:16 -0800 (PST)
-Message-Id: <pull.2217.git.git.1772109195114.gitgitgadget@gmail.com>
-From: "Gary Wang via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 26 Feb 2026 12:33:15 +0000
-Subject: [PATCH] gitk: support config the color of linkfgcolor via Gitk
- Preferences
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="SkDZbSd9"
+ARC-Seal: i=1; a=rsa-sha256; t=1772109706; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ls5d+7/X5WAvLuycw/0gYr0T8MlhFK9VbXajUlrLRpZTqsPG3RCA1/ctWrIGW9MgR/+XkibmpN+WtL0oV3r/3hqaZgRtImZf2QmgEKH+w832/1q+Hkjvy1ALtjuzV6jlI+GPbJSTl6EFLBcrAHcrwSHdOFyqj2Gg9YeFMw2gty8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1772109706; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=pwMebswdEsGf+/O9JMMpB1a3s6bA7f0rEXPwXDLAZuk=; 
+	b=LsqwcKajkl92UiAWPxwCqbJHYERvqXQnwczEiH7sCDyqs4QWsqkefCDhSqE+Ayir0JPQabW/0r4RsOTYVov/oQmwReOpkhZiWw6/1Bo00HN4vofvufe047KZxv53TmR/gU4aTCFGq9L4cxlmvJkGy724hSHwnELJ4FHOx1OU/IQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772109706;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=pwMebswdEsGf+/O9JMMpB1a3s6bA7f0rEXPwXDLAZuk=;
+	b=SkDZbSd96qdKuQbkSumSBFgHkNngXfye8eVA4RrIV+mhXzmuFPpKgPeVXRZt28sa
+	ewA0LgjnN0jteKwZy1OJA/6kOvPtpCLz8UG5ytjeURo8M17yV6zAkyENYyvdUTqY6Up
+	X3FnHh88rb7i2qyBBcXbcXZfPqD7CJXfNnpLXfcg=
+Received: by mx.zohomail.com with SMTPS id 177210970380657.744923136503985;
+	Thu, 26 Feb 2026 04:41:43 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 0/8] Specify hooks via configs
+In-Reply-To: <aZ94HdcOUGp91UBT@fruit.crustytoothpaste.net>
+References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
+ <20260218222352.55393-1-adrian.ratiu@collabora.com>
+ <aZjuTSopOMvwR4hQ@fruit.crustytoothpaste.net>
+ <87o6liw4s1.fsf@collabora.com> <87ikbpwr13.fsf@collabora.com>
+ <aZ94HdcOUGp91UBT@fruit.crustytoothpaste.net>
+Date: Thu, 26 Feb 2026 14:41:41 +0200
+Message-ID: <87a4wvbrsq.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Gary Wang <git@blumia.net>,
-    Wang Zichong <wangzichong@deepin.org>
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-From: Wang Zichong <wangzichong@deepin.org>
+On Wed, 25 Feb 2026, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+> On 2026-02-22 at 00:39:04, Adrian Ratiu wrote:
+>> Hi again Brian,
+>> 
+>> v2 of the parallel series is out if you want to review it:
+>> 
+>> https://lore.kernel.org/git/20260222002904.1879356-1-adrian.ratiu@collabora.com/T/#u
+>
+> Thanks, I'll take a look either today or a little later this week.
 
-As a dark-theme user, I use the Preferences dialog to set colors
-for gitk, the only color I cannot change via that dialog is the
-link foreground color, which will lead me to use the default link
-color on a dark background that make it not really readable.
+Much appreciated. I'm in no rush, as I mentioned to Junio we could even
+put the parallel series on pause until we finish and land this config
+series, which is its dependency.
 
-This patch makes the link foreground color also configurable in the
-Gitk Preferences dialog's Color tab, so user won't need to dig into
-the code/manual to know if the link color is configurable and can
-simply set the color there.
+It's still good to have all the code out, though, and I do intend to
+periodically rebase the parallel series on this one.
 
-CC: Mark Levedahl <mlevedahl@gmail.com>, Paul Mackerras <paulus@samba.org>
-Signed-off-by: Wang Zichong <wangzichong@deepin.org>
----
-    gitk: support config the color of linkfgcolor via Gitk Preferences
+>> P.S. I think your spam filter is blocking all my e-mails? I get this
+>> reply from you:
+>> 
+>>  sandals@crustytoothpaste.net, ERROR CODE :554 - 5.7.1
+>>  <sender4-op-o12.zoho.com[136.143.188.12]>: Client host rejected:
+>>  CONN:SPAM
+>> 
+>>    Original-Recipient: rfc822; sandals@crustytoothpaste.net
+>>    Final-Recipient: rfc822; sandals@crustytoothpaste.net
+>>    Status: 554
+>>    Action: failed
+>>    Last-Attempt-Date: 22 Feb 2026 00:30:10 GMT
+>>    Diagnostic-Code: 5.7.1 <sender4-op-o12.zoho.com[136.143.188.12]>: Client host rejected: CONN:SPAM
+>
+> Yes, this is because one of Zoho's customers sent me spam and they
+> didn't act on the spam complaint in a timely manner.  I've removed that
+> block[0] and we'll see if they've fixed that in the past six years or
+> so.  If not, I'll re-block them and you can have their postmaster reach
+> out to me at my postmaster address to discuss things further.
+>
+> I regret that this is necessary, but unfortunately when you run your own
+> mail server, you have to deal with all the abuse yourself and many
+> companies choose to ignore abuse complaints.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2217%2FBLumia%2Fgitk-linkfgcolor-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2217/BLumia/gitk-linkfgcolor-v1
-Pull-Request: https://github.com/git/git/pull/2217
+Thanks, much appreciated.
 
- gitk-git/gitk | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index cbaaee994e..b60f140636 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -11796,7 +11796,7 @@ proc prefspage_general {notebook} {
- 
- proc prefspage_colors {notebook} {
-     global bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
--    global diffbgcolors
-+    global diffbgcolors linkfgcolor
-     global themeloader
- 
-     set page [create_prefs_page $notebook.colors]
-@@ -11873,6 +11873,11 @@ proc prefspage_colors {notebook} {
-         -command [list choosecolor selectbgcolor {} $page [mc "background"]]
-     grid x $page.selbgbut $page.selbgsep -sticky w
- 
-+    label $page.linkfg -padx 40 -relief sunk -background $linkfgcolor
-+    ttk::button $page.linkfgbut -text [mc "Link color"] \
-+        -command [list choosecolor linkfgcolor {} $page [mc "link color"]]
-+    grid x $page.linkfgbut $page.linkfg -sticky w
-+
-     grid columnconfigure $page 2 -weight 1
- 
-     return $page
-@@ -11880,7 +11885,7 @@ proc prefspage_colors {notebook} {
- 
- proc prefspage_set_colorswatches {page} {
-     global bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
--    global diffbgcolors
-+    global diffbgcolors linkfgcolor
- 
-     $page.bg configure -background $bgcolor
-     $page.fg configure -background $fgcolor
-@@ -11891,6 +11896,7 @@ proc prefspage_set_colorswatches {page} {
-     $page.hunksep configure -background [lindex $diffcolors 2]
-     $page.markbgsep configure -background $markbgcolor
-     $page.selbgsep configure -background $selectbgcolor
-+    $page.linkfg configure -background $linkfgcolor
- }
- 
- proc prefspage_fonts {notebook} {
-
-base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
--- 
-gitgitgadget
+Collabora also runs an internal mail-server behind a VPN, so if Zoho
+continues being a problem, I'll just switch to sending mails through
+that server. I mostly use Zoho to avoid dealing with the VPN. :)
