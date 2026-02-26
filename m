@@ -1,68 +1,69 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624D33ACA73
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 21:14:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93574441056
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 21:14:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772140493; cv=none; b=OPoNbxmXVcQLEV8bjpzy711AeVDz1gX71lG285deLIWdx0JDWUaquj71AQn1GyZTV3uTK62f76BGPNmL0jh016mxLgXJ+X9ReT67MkTPGuoOy9BjpKGSgAQGtnO3F/Haonk1iMH/7Zy79CvIKzgWYzo0+beWksMh6PWfAf7re9A=
+	t=1772140494; cv=none; b=F+1ZgJBFu/l7BVeID9MBnuUZZlHTHbc8VpJrxfwL1ACW8UaniDAbu8CXsJ0E0FC3PNARGcAz6lo+wC7XPpuA1NEF/2OxZL/jaruWqeSc9fZxiNaqtUjcT2Q3jTeyim2+0yVtQCoAgQJhjk3D2AYXrbhCSLdzavra3ujXyO25u/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772140493; c=relaxed/simple;
-	bh=+iZXPafcrFwMzrPwrmCKDd8W/arVmDvvhXIpPRem+LE=;
+	s=arc-20240116; t=1772140494; c=relaxed/simple;
+	bh=Br9fh4xYZp/0+MMbJVSZzLA+hlTvy+PAmwgycQT9I3I=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JSzUJG73W13aZi57rH60PGdaSJ5s+aqYpPRj+NLcsn2Qpre55fWZlHcKl7DTASdX/X8pzqtr7bgYPgx0tiXdmi5a7QPdGxqwz7lcSeIIoCPe96WLyVj14KIynd5JsEb4SyjLKUcvzA7IDImJOEt7tUck2K+gt9PQbmIOOia5ghM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fvSa8F2n; arc=none smtp.client-ip=209.85.219.47
+	 MIME-Version:To:Cc; b=G4/H+lNR81Qzk0scjyvKH7HQtdEmkUy3PjRB5Q7Adqsxt/M/nMtdVyXTnD7sY2ssQYee3kevPHZgDxdxyiMPuc7MlKEHI3RKeiv090Yc4bgnh4Vk2M3l9pzuQne5NxuuNMuNMMq4aiTkPlv8j0W1WzzN9Rx9HNVEs7RChE9mG1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iYcYyMod; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fvSa8F2n"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-899a2f4cdddso16531216d6.2
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 13:14:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iYcYyMod"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8cb5138df1aso134445185a.3
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 13:14:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772140489; x=1772745289; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772140490; x=1772745290; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bKN5dVrTFdWbkwcROxbNJS45SctX7Mv4q+yiMxn8l9w=;
-        b=fvSa8F2nUcDivZ8hW3ngmLaQSgch6b0+lCOUkx8O5L5RmDSEN6DLbR6s8vivJEZVTN
-         pCBD556rYJ8cY4XaGo31RGpfFI6xlPHzYnBCDfGcWO+ShBvwAgSRY2f8cewrFHLxMTZu
-         HM3XsJ7x3DvYuQmC38sxB0q9M7+02+PdYMwe1X/3ouemD1wXPTdTvlJ1SaLStABpFnAn
-         J04/WT3XOvvwWFRnk6Maf8JZr8JQ8Hh4VxPFc4yw0RZ4lBz6EG+IVovqM5Uoh8+HG6OU
-         ZRF2umU+ncQhs+7BV4zawGmr6FfBD1pRqJevNSPR1DUzWwfbcQup0JLJ8VtkB9MhdXjE
-         wV7g==
+        bh=dyHey4t4KqYE+27pGtOhB2Kz5WT8ieoG1Bb3LiW+6fE=;
+        b=iYcYyModlOoBKArqk04302rJGAjJZVdRaxIqkX+Iu9XApwnnSALQ8dzRiY3sckEfeM
+         tonjhWTL3AoYRlDlvFImdpQMgJLtBi/YWZd+XlJsg57T8GhjGczZuZdL6WGDN8JR+VPQ
+         rdPK3SDeBzDSBk6QgDl+NPhVfTdw7qhVQb7btSTDJFnp4lzSK2i1NwGxnrpIWUYVAy8L
+         qWGKLhacAw+KIGpRC8HfQuvZ6RF8jZ8Ko7RZOgBzOrmDprZ2NXdkP3FLpiml8hofItDf
+         iSS1A0874BOG1J5hRkfPF2k789yYZprumaqUXGj4ODrmLaPsfihxQRbZpBEHPJC83/sv
+         tssw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772140489; x=1772745289;
+        d=1e100.net; s=20230601; t=1772140490; x=1772745290;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=bKN5dVrTFdWbkwcROxbNJS45SctX7Mv4q+yiMxn8l9w=;
-        b=mO5jE8Yd9Z7etVmvyHdH7su2kZUBXeOxaqJ5STeVvMpxEqLxZy00Tip9sR9GZPcwpM
-         CEu6hrgUUaYE0EVxuJq0WDrUd56BbeY8IIftx72j3Eud4rfaxRftrBjBP9MY610UhRLm
-         W5a0V1rSTBxbo8RPa/CdHW3feQRA2GLvFwukwfPs28+s/p1xElXXckRbntcEffNWxtCq
-         7cSSuZC96gvspydJXMFGhjWUQXwjDqf0JEmy3lS/vAiALwri42AKGFb8VkU/BQiGe+fq
-         eln2NTNXDqR6HAQo+INUrwO/6AQHLUCFUcCdDc/2dvYSMzXVkJ/jq+fj2F2PKrY7F3On
-         T7qw==
-X-Gm-Message-State: AOJu0YxyKVQIfRNVDIhecmUckD7RnaEHAGNqGdvM0PANsxk579vn/adA
-	d1J6ZqSiwEAExOPhZ9+FGeQcc2/d4V8Ofjjb21AhiiE75WnDLlwvTS8HTGd3GA==
-X-Gm-Gg: ATEYQzxLm+73D2X15vQpGywXTCRfC6lkSAVDEGcakb5NczTdD8Ye0m3ntAfcQYOIHrT
-	23+DNI9+1YhCbuRFrQ1s6czhduP9qx1LzW3HgJKf9qEtOJVuNPhrXa0OdTE9MRzxy9rd4M1RxUj
-	2Bpw6DWtopbB8NVXLEQRis1+kg22Et9nc3HDeX6sOBU9IYECBt5HSDHDwl21OXXmQ/yopMTewhd
-	7ks+TmJh18Qb1hgxk/kmKfcFz48EBhPCLUs0XSSn+y1lx/MGo7w3SE7ke/Ra0ggJc9xZi01ZWex
-	VJB3zE8KyDNvZudBgPJEMt6Rr83ZGZcXXX1Z9UWzY8w9/ECb9NAVyglpadmZopIEGHIveWt+v3D
-	I5xOTKFy9aPOCtcJbNZvLzhDcQww/KAlYHa56wkiyxwYbA8XYf0UVIv80AqovF9Dfk1fefx1itq
-	L5yqH4QraFbKtTJ1nIZl5gNVyIUIT3OHxQ0R1Q
-X-Received: by 2002:ac8:5987:0:b0:4ff:c15d:b5a3 with SMTP id d75a77b69052e-5075286bb2amr5175621cf.50.1772140488661;
-        Thu, 26 Feb 2026 13:14:48 -0800 (PST)
+        bh=dyHey4t4KqYE+27pGtOhB2Kz5WT8ieoG1Bb3LiW+6fE=;
+        b=WXc+9JBJ1syIiHmuRE+BZ/JGPEW+9An4FW9rvHtM9LN9ud02OMnyIv8ura7tVgtPX7
+         JlYPGykSJSHMdNPgamQQtbbLO7jh3h7LsJrQtW8jyGVY/UeceGSRcbP0nEzxhQmNPENE
+         aEX3B8iBxIT6BQeQ1R0z9jvBMoufqH+GYTe7LWv+7nEZAEfCSuCFjuKePuJNDlAfTTil
+         kBDDXZ7UvADSJBhhZ7APL549rcTNIBi9dVj3LaRFm7v0SdGxHrzVLQVYrzOpzKjpKU5L
+         StD8J9+N9N7mqg97vLABxfuhuIzGWFUaHCts65Fq2rbCtxpWNFfUGLZLL8ytpd64GnSv
+         pNwQ==
+X-Gm-Message-State: AOJu0Yxs9qKfqnIeO58rcFG2z6YNyjmMO9VEggple4l51y8p1JO2UpKL
+	YkUFxX8+VZ4hsOTUNjr7AXDh3yfobIR/J5OLOneq5dt3LwjWwOf0sQQluEPtCA==
+X-Gm-Gg: ATEYQzx8OS09qARqhXK3j2iEa2CkWedwEUOh8QXiO+KGVqMiEQDYvkawowXhdmoewof
+	5Rq+D6c2Dv+iV/XQ8FMzxGeRBuoybOaDlm4wySGXjg4MyVOStaLxXpgO3m6Y1xsOqqXhkc7/baU
+	01MocnFm7dboAgrGV5QrplfUlzox2uzy4tjmxygWYHscIfFtRzBUI5GsEHTHyfhYPognbIq8Sj9
+	Q4Ipbo27lH28iBVtCYJJBWxkmT1tdQGE8UbEs8jWJo8d2l396KzX7UUr6oxL+535M3ei8byhFXw
+	hsbuvDXmjb9Ae1CzRi5WqOjCsRhhHFEhKVbRXzta6YdLu3hNb6EsWEdF+yqfVxqA9WXEFuyUkeb
+	OaKWh6PtqSFJvzb3IMu9u0Ib3mxcO4dJpOZIFkn89jh1TjyELMZ04YFYmnfCSoZcaTmqaoC5q+r
+	lStEWEkBGDk5xGFIAKSazVB33lRQ==
+X-Received: by 2002:a05:620a:2949:b0:8c6:a64e:92b4 with SMTP id af79cd13be357-8cbc8e41e34mr57310985a.78.1772140489803;
+        Thu, 26 Feb 2026 13:14:49 -0800 (PST)
 Received: from [127.0.0.1] ([145.132.100.81])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899c7375f30sm26194456d6.27.2026.02.26.13.14.47
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf6f873dsm321169185a.25.2026.02.26.13.14.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Feb 2026 13:14:48 -0800 (PST)
-Message-Id: <pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2208.v3.git.git.1771875812.gitgitgadget@gmail.com>
+        Thu, 26 Feb 2026 13:14:49 -0800 (PST)
+Message-Id: <99c8058298d403508ab2a23ed06c36b8707989d0.1772140487.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
 References: <pull.2208.v3.git.git.1771875812.gitgitgadget@gmail.com>
-From: "eslam reda via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 26 Feb 2026 21:14:37 +0000
-Subject: [PATCH v4 00/10] repo info: add category/path keys and --path-format
+	<pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
+From: "Eslam reda ragheb via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 26 Feb 2026 21:14:38 +0000
+Subject: [PATCH v4 01/10] repo: teach info context and category keys
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,167 +74,187 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: eslam reda <eslam.reda.div@gmail.com>
+Cc: eslam reda <eslam.reda.div@gmail.com>,
+    Eslam reda ragheb <eslam.reda.div@gmail.com>
 
+From: Eslam reda ragheb <eslam.reda.div@gmail.com>
 
-This series now focuses only on git repo info improvements.
-===========================================================
+Introduce an explicit repo_info context for the repo info codepath
+and thread it through value lookups and field printing.
 
-It introduces category-aware key requests, adds path-oriented keys (path.*),
-and adds --path-format=(absolute|relative) so scripts can request stable
-path rendering behavior.
+This removes direct coupling from these helpers to ad-hoc
+repository globals and makes key retrieval logic easier to extend
+safely.
 
+Also teach git repo info to accept category names (for example,
+layout) and expand them to matching key.* entries in request
+order.
 
-What this PR does
-=================
+This improves script ergonomics while preserving existing behavior
+for explicit keys and clear errors for unknown names.
 
-For git repo info, this series:
+Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
+---
+ builtin/repo.c | 70 +++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 55 insertions(+), 15 deletions(-)
 
- * introduces explicit info-context plumbing in the codepath,
- * adds category-key expansion (for example, layout expands to layout.*),
- * adds path-oriented keys (path.*) for common repository locations,
- * adds --path-format=(absolute|relative) to control path output style.
-
-Tests and documentation are updated accordingly.
-
-
-What this PR does NOT do
-========================
-
- * No git repo structure feature changes.
- * No t1901 structure test changes.
- * No structure metrics/docs additions.
-
-
-Why this change
-===============
-
- * Makes git repo info more script-friendly by reducing the need for
-   multiple plumbing calls.
- * Improves output ergonomics through category requests and explicit path
-   formatting.
- * Keeps this series narrowly scoped and non-overlapping with in-flight repo
-   structure work.
-
-
-Commit structure
-================
-
- * repo: teach info context and category keys
- * repo: add path keys to repo info
- * repo: add --path-format for info path output
- * t1900: cover repo info path keys and path-format
- * docs: describe repo info path keys
-
-All commits are signed off with the same real-name identity.
-
-
-Changes since previous revision
-===============================
-
- * Dropped all repo structure code, tests, and docs from this PR.
- * Kept only the repo info subset and matching t1900/documentation updates.
- * Preserved split, review-friendly commit structure.
-
-
-Validation
-==========
-
-Focused:
-
- * make -C t test T=t1900-repo.sh (Linux container): passed.
-
-Full:
-
- * make test in Linux Docker environment: failed 0 (with expected
-   prereq-based broken/skipped categories).
-
-Eslam reda ragheb (10):
-  repo: teach info context and category keys
-  repo: add path keys to repo info
-  repo: add --path-format for info path output
-  repo: add structure max object size metrics
-  repo: add structure topology and path-depth metrics
-  repo: add aggregate structure totals to keyvalue output
-  t1900: cover repo info path keys and path-format
-  t1901: extend structure metric coverage and portability
-  docs: describe repo info path keys and structure metrics
-  repo: reduce repetition in structure keyvalue output
-
- Documentation/git-repo.adoc |  67 ++++-
- builtin/repo.c              | 584 ++++++++++++++++++++++++++++++++----
- t/t1900-repo.sh             | 196 ++++++++++++
- t/t1901-repo-structure.sh   | 250 +++++++++++----
- 4 files changed, 977 insertions(+), 120 deletions(-)
-
-
-base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2208%2Feslam-reda-div%2Fgsoc-contribute-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2208/eslam-reda-div/gsoc-contribute-v4
-Pull-Request: https://github.com/git/git/pull/2208
-
-Range-diff vs v3:
-
-  1:  e9ea572e52 =  1:  99c8058298 repo: teach info context and category keys
-  2:  348e361fe7 =  2:  6d5b9ff075 repo: add path keys to repo info
-  3:  93585ad079 =  3:  5c438d045b repo: add --path-format for info path output
-  -:  ---------- >  4:  504d9cf7a0 repo: add structure max object size metrics
-  -:  ---------- >  5:  4b502925c9 repo: add structure topology and path-depth metrics
-  -:  ---------- >  6:  1751181950 repo: add aggregate structure totals to keyvalue output
-  4:  6ea263fee9 =  7:  fd18f28db0 t1900: cover repo info path keys and path-format
-  -:  ---------- >  8:  0525ed4cd9 t1901: extend structure metric coverage and portability
-  5:  a2a6768042 !  9:  f17c0f03e5 docs: describe repo info path keys
-     @@ Metadata
-      Author: Eslam reda ragheb <eslam.reda.div@gmail.com>
-      
-       ## Commit message ##
-     -    docs: describe repo info path keys
-     +    docs: describe repo info path keys and structure metrics
-      
-     -    Document repo info category keys, path.* keys, and
-     -    --path-format behavior.
-     +    Document the newly added repo info capabilities, including
-     +    category keys and path-oriented key definitions.
-     +
-     +    Also describe --path-format behavior for path outputs.
-     +
-     +    Update git repo structure documentation to cover newly reported
-     +    maxima and aggregate keyvalue/nul fields.
-     +
-     +    This keeps command behavior and output keys fully specified for
-     +    users and scripts.
-      
-          Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
-      
-     @@ Documentation/git-repo.adoc: supported:
-       `structure [--format=(table|keyvalue|nul) | -z]`::
-       	Retrieve statistics about the current repository structure. The
-       	following kinds of information are reported:
-     +@@ Documentation/git-repo.adoc: supported:
-     + * Reachable object counts categorized by type
-     + * Total inflated size of reachable objects by type
-     + * Total disk size of reachable objects by type
-     ++* Largest inflated reachable object size by type
-     ++* Largest disk size of a reachable object by type
-     ++* Largest parent count among reachable commits
-     ++* Largest entry count among reachable trees
-     ++* Longest and deepest path among reachable blobs
-     ++* Deepest annotated tag chain
-     + +
-     + The output format can be chosen through the flag `--format`. Three formats are
-     + supported:
-     +@@ Documentation/git-repo.adoc: supported:
-     + `keyvalue`:::
-     + 	Each line of output contains a key-value pair for a repository stat.
-     + 	The '=' character is used to delimit between the key and the value.
-     ++	Both aggregate metrics and per-type metrics are included.
-     + 	Values containing "unusual" characters are quoted as explained for the
-     + 	configuration variable `core.quotePath` (see linkgit:git-config[1]).
-     + 
-      @@ Documentation/git-repo.adoc: supported:
-       
-       INFO KEYS
-  -:  ---------- > 10:  1bc100d6ca repo: reduce repetition in structure keyvalue output
-
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 0ea045abc1..e34914a9a7 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -22,7 +22,12 @@ static const char *const repo_usage[] = {
+ 	NULL
+ };
+ 
+-typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
++struct repo_info {
++	struct repository *repo;
++	const char *prefix;
++};
++
++typedef int get_value_fn(struct repo_info *info, struct strbuf *buf);
+ 
+ enum output_format {
+ 	FORMAT_TABLE,
+@@ -35,27 +40,30 @@ struct field {
+ 	get_value_fn *get_value;
+ };
+ 
+-static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
++static int get_layout_bare(struct repo_info *info UNUSED, struct strbuf *buf)
+ {
+ 	strbuf_addstr(buf, is_bare_repository() ? "true" : "false");
+ 	return 0;
+ }
+ 
+-static int get_layout_shallow(struct repository *repo, struct strbuf *buf)
++static int get_layout_shallow(struct repo_info *info, struct strbuf *buf)
+ {
++	struct repository *repo = info->repo;
+ 	strbuf_addstr(buf,
+ 		      is_repository_shallow(repo) ? "true" : "false");
+ 	return 0;
+ }
+ 
+-static int get_object_format(struct repository *repo, struct strbuf *buf)
++static int get_object_format(struct repo_info *info, struct strbuf *buf)
+ {
++	struct repository *repo = info->repo;
+ 	strbuf_addstr(buf, repo->hash_algo->name);
+ 	return 0;
+ }
+ 
+-static int get_references_format(struct repository *repo, struct strbuf *buf)
++static int get_references_format(struct repo_info *info, struct strbuf *buf)
+ {
++	struct repository *repo = info->repo;
+ 	strbuf_addstr(buf,
+ 		      ref_storage_format_to_name(repo->ref_storage_format));
+ 	return 0;
+@@ -87,6 +95,33 @@ static get_value_fn *get_value_fn_for_key(const char *key)
+ 	return found ? found->get_value : NULL;
+ }
+ 
++static void print_field(enum output_format format, const char *key,
++			const char *value);
++
++static int print_category_fields(const char *category,
++				 struct repo_info *info,
++				 enum output_format format,
++				 struct strbuf *valbuf)
++{
++	int found = 0;
++	size_t category_len = strlen(category);
++
++	for (size_t i = 0; i < ARRAY_SIZE(repo_info_fields); i++) {
++		const struct field *field = &repo_info_fields[i];
++
++		if (!starts_with(field->key, category) ||
++		    field->key[category_len] != '.')
++			continue;
++
++		strbuf_reset(valbuf);
++		field->get_value(info, valbuf);
++		print_field(format, field->key, valbuf->buf);
++		found = 1;
++	}
++
++	return found;
++}
++
+ static void print_field(enum output_format format, const char *key,
+ 			const char *value)
+ {
+@@ -105,7 +140,7 @@ static void print_field(enum output_format format, const char *key,
+ }
+ 
+ static int print_fields(int argc, const char **argv,
+-			struct repository *repo,
++			struct repo_info *info,
+ 			enum output_format format)
+ {
+ 	int ret = 0;
+@@ -117,21 +152,22 @@ static int print_fields(int argc, const char **argv,
+ 
+ 		get_value = get_value_fn_for_key(key);
+ 
+-		if (!get_value) {
+-			ret = error(_("key '%s' not found"), key);
++		if (get_value) {
++			strbuf_reset(&valbuf);
++			get_value(info, &valbuf);
++			print_field(format, key, valbuf.buf);
+ 			continue;
+ 		}
+ 
+-		strbuf_reset(&valbuf);
+-		get_value(repo, &valbuf);
+-		print_field(format, key, valbuf.buf);
++		if (!print_category_fields(key, info, format, &valbuf))
++			ret = error(_("key '%s' not found"), key);
+ 	}
+ 
+ 	strbuf_release(&valbuf);
+ 	return ret;
+ }
+ 
+-static int print_all_fields(struct repository *repo,
++static int print_all_fields(struct repo_info *info,
+ 			    enum output_format format)
+ {
+ 	struct strbuf valbuf = STRBUF_INIT;
+@@ -140,7 +176,7 @@ static int print_all_fields(struct repository *repo,
+ 		const struct field *field = &repo_info_fields[i];
+ 
+ 		strbuf_reset(&valbuf);
+-		field->get_value(repo, &valbuf);
++		field->get_value(info, &valbuf);
+ 		print_field(format, field->key, valbuf.buf);
+ 	}
+ 
+@@ -171,6 +207,10 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+ 			 struct repository *repo)
+ {
+ 	enum output_format format = FORMAT_KEYVALUE;
++	struct repo_info info = {
++		.repo = repo,
++		.prefix = prefix,
++	};
+ 	int all_keys = 0;
+ 	struct option options[] = {
+ 		OPT_CALLBACK_F(0, "format", &format, N_("format"),
+@@ -192,9 +232,9 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+ 		die(_("--all and <key> cannot be used together"));
+ 
+ 	if (all_keys)
+-		return print_all_fields(repo, format);
++		return print_all_fields(&info, format);
+ 	else
+-		return print_fields(argc, argv, repo, format);
++		return print_fields(argc, argv, &info, format);
+ }
+ 
+ struct ref_stats {
 -- 
 gitgitgadget
+
