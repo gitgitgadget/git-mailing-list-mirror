@@ -1,333 +1,177 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85043290A5
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 17:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD823290D0
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 17:33:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772125393; cv=none; b=YXo2e/7N1mAAbKhN4eSjI6Oj1fFuSM8aK+EnxNqhHLnYfSgThdDc47neROMScyMc/4dcJpjofh08t+a/02yOV6YEQ/GkRfk78gXDxED8qJMssy81tZWkz7U2C1zbV8G4NZyyQ24ZJRzwkaPWydE/3w+aVkqx/LWCKEAyize6DNg=
+	t=1772127236; cv=none; b=I3He5fhhlouKaCHo+Wb4lO/0C5B4lNHIiF/XZ4SkTw3L/nbb6zPB9YkjihMXSFqssYVAaGOdFMtTkXk67Z8t/QxMnhqgBzhJr73/+fwXp8u0SZG167jIvIFRbWzj2yqa3DMdkotOToiGkFjgc+Ds3XhGFzdRvPyznuNZPRSk1DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772125393; c=relaxed/simple;
-	bh=GN2AYHw2czjzTR4DCuOBXFfdgIylQtQ5XL2lLZtUXUo=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=rpMmIeDe1dRFZ39q6NaH3H3QDgZQMAwL3N7MbAuPnhrTXUGQANaMQ3rKXBf2JqDkBxI15kG7mhe4AC7frXCPUpQ1eiVqCyZ9sgorpVJEaoQE+Ft4MhebcoadRbjnRGWZnosDYPIiEO0l3jRsJkNQWA54GTYfmHi0g4rkDJzaAjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OxBVmva0; arc=none smtp.client-ip=209.85.214.176
+	s=arc-20240116; t=1772127236; c=relaxed/simple;
+	bh=vFhwywmQDPr+20VUivmksJzL3k/iTxX+eYkJ5HJ2h18=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VbfzT09SRJ4db+iaBgy+8w47VEU4n1fVn3/WljKir3kulAITuuUQEUYSIeH6B17ll07T9MUEyAy8JVnQC1LPkppDqlwdlwMatNQLe7bZA2XhWcwJ8Y5KqlIVMPCT3Vf05SSOyr6XKdTR1Bqigp2tkRLDee+QsbJgCwwtdo6X66I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XzrzzCoJ; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OxBVmva0"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a8fba89cb5so821275ad.2
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 09:03:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XzrzzCoJ"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-3562e858da5so460327a91.2
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 09:33:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772125391; x=1772730191; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=E1K1dl4GF+lIBMvOgllb6l2wEaiaJ9G+AZ0kizV7Si8=;
-        b=OxBVmva03+n4gyGWhHv9yj6ZxZ+g815UE570mZoD6ggDYcZuP+zYS/EEOOlfE9Cnuq
-         8uak8tSDbwhAcgjEqYMqtvMiEpnpBNNZRo1DUo7TZuYzzKSd15WKUYOXnRlvv2kZv7HU
-         thHvTaJQ2doyVWE/2iV6emwbeWCcLrXn62oHQC7bbyGJnGf+fgpKTapk3Frwbu4Wv/xV
-         BY6DWgQoyLUdRfsPQSvJi4NpzGCkrrr5PC7DqjQNRqJLCTRM0QgNONKi7g6eyd/89qBL
-         KgKD3N15ar60HtXWaizYVH6DrJbRFXMan24zJYTdRxhDXZKHuduzhsDOwVKJSksbsQTC
-         GHEw==
+        d=gmail.com; s=20230601; t=1772127234; x=1772732034; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c71q4QByOoM/R3q4TivdKh2FrLs6zDCZFIKVKkQ4klM=;
+        b=XzrzzCoJJ0bgXKqgDTOFHYh92c1Rat413NfwXXsczYsaDxY9NQAHrNakxmTbuq/mEa
+         9N+x7ZU7V+n+Aw5ro5rzoI1WwJ/2dH1O0LefUcdj8oUBdnbwlrZSV0U/7X+iHHqYFl5X
+         0s1XzqIhPz7qN7lqE471YQZY2Pt0eHJ/XrShg6vF/IOnw1mDavslCu1bnkkLuDFVPnNd
+         v5zZdLvRHYh8ZSS8pcpws2UG4FUyFDKrGkyKvIAbeEv8LLJ5Z5VZ/kWoq3bTslVOCb1C
+         Eie5nqbS3B2VNLvlw1iEV/Sz+7XBgovX0tXJgG82fOqX59/FD0wNd3ddOMp5/e6TT+iC
+         SoTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772125391; x=1772730191;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E1K1dl4GF+lIBMvOgllb6l2wEaiaJ9G+AZ0kizV7Si8=;
-        b=Ja6xC74kxK1B5nDAPAv34DRjjhmSO/Rd5wRcn6Pw2fvK+Ima1qXEFZjoEF+h5ZelKP
-         sHxv3xpUoPoQUttq90aZ+b0HEBuvPUoJeUBZxUd4eQCHwu9taR+WiW3mT4qOxBE2wTD4
-         ldoi3Hl6g1hG7JtLKt1353HuMXmCdzwJxPVWUV3ly3ypCEtHDg+vWMES9NkBxXPvDjVr
-         8F448eFGtAtjkgaXwpecjuVnA5hDUzfvAs2vmmInMEAYdpQU5QAO8GcyOcyiAKhNrBpl
-         LY5xkrWhPpKVtxjrDqiwgFfRy+A1fAFWIyXVr3Zl1pnkr9BN6341wBYs7TcBKITEcSX9
-         R8Ig==
-X-Gm-Message-State: AOJu0YwzcA18VhwbWQG4H25NYZ79c02cown+r7nH7llJwttXOvGwkyfF
-	jYm4QRaInvGfOTSxIz316Qz1IFGqoR546EO++D03cCDINr6mXjc44UT4GdTtFNT5
-X-Gm-Gg: ATEYQzyrgGrh70qWlJv7iTSSY0qWulno2nLBmHlmZS0Mt1xPSHv1Xqh/oVen512J7Qo
-	WI1hI9SyLRU0YzJrPkPkx/jDxZk/PspEP4yUrp8hEMm/gHb69JQLmeUF9YuE+rCKnN8EkVrHKlA
-	L3jCrKngcVepgqqU1/NQA00CLdxYtH5iFVfU3awjoGvPrbuPlQR2ttdoB4i6scr1WmHeQKQOpjC
-	IqRizkp8fN46yF8C1C9Ik8EeYgqZg5sJ2PkAeFUJwRYHbXxq2U3/DTC8OYLwF9upkvtpSeug7y6
-	tsc0f2jWmiSphjeMjLDneCxRb7WdI4y+P2JpQTJrheF4AoAk3wUF2NXrPOK9QkuTujB0wRaCabC
-	Q5q5czv+dXbOzr07AV3kQGXKUIFw9A6ms3jmmKfzUwbtcliJMR2cFM+5qNRFwYDiAc8aiwoE9PJ
-	1IW5gHD5cI687/tzDVhJJvMsxPIJ4=
-X-Received: by 2002:a17:902:d2c6:b0:2aa:d5fe:6d27 with SMTP id d9443c01a7336-2ad743cd942mr153916345ad.2.1772125390363;
-        Thu, 26 Feb 2026 09:03:10 -0800 (PST)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6a041asm30639485ad.57.2026.02.26.09.03.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Feb 2026 09:03:09 -0800 (PST)
-Message-ID: <5e5f07ec-72ba-46ee-812c-d6773a4bdbe7@gmail.com>
-Date: Fri, 27 Feb 2026 01:02:51 +0800
+        d=1e100.net; s=20230601; t=1772127234; x=1772732034;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=c71q4QByOoM/R3q4TivdKh2FrLs6zDCZFIKVKkQ4klM=;
+        b=VEvMJ634i7XpIG7Zp2Mlh72Etg0m/me7mKl45FjLpqenK3R9Cqgn24UDwKbA4cSZyG
+         aGCFTWf/wWI27ZgtmEhIMkYS9dx3KSMXAkAJrY1L1+zAWJ+OmyIgNXV5PZFtoV8Pq+tm
+         XBHnjpxe+Wg+ioBaXu1qaSulPCU9224RqsSURFXXkpEboucVBRAI41jDyiuR4u2KOcCP
+         FLxxPXRgdZGe+uEjyVf6DzoVH5BjSJ/K+ndejhGVlyEE+c2l+1FzsYzIuMdV5CzuLVqj
+         uWd17fFlVHvUoBv3lQPhtVnPmInPvrpn0Oxg2PC+YWSXl8SJ8CyMSyDoX36IctgoNnKx
+         x1Uw==
+X-Gm-Message-State: AOJu0YzwXl8Q5Ob2c5VB3ze2cr373H91Gk0xPt4+fa1AXQuAkMSya+6t
+	05oU9zvGpXfeAODPv+G0y1fJxz3KytEsORJlly/3sB6iIPi+TinOPNJaKOqHhw==
+X-Gm-Gg: ATEYQzyw7WNuU9eu8EgBMOGk+tZfhTCeiXBegVJ5F7t+jcGACdEwS0WoYSmqwDhE65t
+	1yjJeGqJ+aunbr0T1Gu1pM4ocbRq45SfK24pK2MNeQ6nfU5/JFns+9ZzHmfcCJHCvlIf5fGvZrb
+	X8b6PxyvMe7tOci2vhtq86Ugnq8b6uQqa4zb5j+8R/VKzRDDgE73ncyanSFiYZ0phc4qZJdFxts
+	qT6n/5tU8eDGT7bwu/EozdhlEDvkVTmJgYuhZtaaEAvGaFfFwiWzd3/N3LidKXH7ZfRt/06tc/+
+	3Mt2kHmp0M8DPgiMJ4Csyizmix13/Qp28ORlUX4MOF8QWCQyqwP2MBA3s7TTYs7NvBwFyDcVKjB
+	c6SPrcFjznD5x+CmZ7c0FsbgS0NdRniL2xUgGyh+sZ46LmTHKB/KgHabTchrQPZMmRnb80qqnCP
+	gEzAUiEm2BhYVIC9BRSrAZexXj0erdrJU/U92ee5nBD1o4KXjDNAYSOnboSLs=
+X-Received: by 2002:a17:90b:4b0e:b0:354:a60e:9bcb with SMTP id 98e67ed59e1d1-35928a38f31mr3404317a91.5.1772127233951;
+        Thu, 26 Feb 2026 09:33:53 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:5354:a570:7b23:3daf])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359037af175sm6276131a91.13.2026.02.26.09.33.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Feb 2026 09:33:53 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: ben.knoble@gmail.com,
+	gitster@pobox.com,
+	philipoakley@iee.email
+Subject: Re: [PATCH v2] send-email: validate charset name in 8bit encoding prompt
+Date: Thu, 26 Feb 2026 23:02:47 +0530
+Message-ID: <20260226173336.194601-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0.154.g7c02d39fc2.dirty
+In-Reply-To: <CALnO6CDSJPnVi-1RUsr7tFMwa0_xTJkiQmzTL_b-BGq=6PSz0A@mail.gmail.com>
+References: <CALnO6CDSJPnVi-1RUsr7tFMwa0_xTJkiQmzTL_b-BGq=6PSz0A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC][Draft Proposal v4] Refactoring in order to reduce Git's
- global state
-From: Tian Yuchen <a3205153416@gmail.com>
-To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
- Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>
-References: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
- <b98780d7-3aa9-4838-9234-290b1d72ffd7@gmail.com>
-Content-Language: en-US
-In-Reply-To: <b98780d7-3aa9-4838-9234-290b1d72ffd7@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi all,
+> On Tue, Feb 24, 2026 at 4:39 PM Shreyansh Paliwal
+> <shreyanshpaliwalcmsmn@gmail.com> wrote:
+> >
+> > When a non-ASCII character is detected in the body or subject of the email
+> > the user is prompted with,
+> >
+> >   Which 8bit encoding should I declare [UTF-8]? foo
+> >
+> > After this the input string is validated by the regex, based on the fact
+> > that the charset string will be minimum 4 characters [1]. If the string is
+> > more than 4 letters the email is sent, if not then a second prompt to
+> > confirm is asked to the user,
+> >
+> >   Are you sure you want to use <foo> [y/N]? y
+> >
+> > This relies on a length based regex heuristic check to validate the user
+> > input, and can allow clearly invalid charset names to pass if the input is
+> > greater than 4 characters.
+> >
+> > Add a semantic validation of the charset name using the
+> > Encode::find_encoding() module of perl. If the encoding is not recognized,
+> > warn the user and ask for confirmation before proceeding. After this
+> > validation the lenght based validation becomes redundant and also breaks
+> > flow, so change the regex of valid input to any non blank string.
+> >
+> > Additionally, the wording of the first prompt can confuse the user if not
+> > read properly or under any default assumptions for a yes/no prompt. Change
+> > the wording to make it explicitly clear to the user that the prompt needs a
+> > string input, UTF-8 being the default.
+> >
+> > The intended flow is,
+> >
+> >   Declare which 8bit encoding to use [default: UTF-8]? foobar
+> >   warning: 'foobar' does not appear to be a valid charset name.
+> >   Are you sure you want to use <foobar> [y/N]?
+> >
+> > [1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
+> >
+> > Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+> > ---
+> > Changes in v2:
+> >  - Added braces in if-else block.
+> >
+> >  git-send-email.perl   | 17 ++++++++++++++---
+> >  t/t9001-send-email.sh |  2 +-
+> >  2 files changed, 15 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index cd4b316ddc..15387ac377 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -23,6 +23,7 @@
+> >  use Git::LoadCPAN::Error qw(:try);
+> >  use Git;
+> >  use Git::I18N;
+> > +use Encode qw(find_encoding);
+> >
+> >  Getopt::Long::Configure qw/ pass_through /;
+> >
+> > @@ -987,6 +988,7 @@ sub get_patch_subject {
+> >  sub ask {
+> >         my ($prompt, %arg) = @_;
+> >         my $valid_re = $arg{valid_re};
+> > +       my $warn_invalid = $arg{warn_invalid};
+> >         my $default = $arg{default};
+> >         my $confirm_only = $arg{confirm_only};
+> >         my $resp;
+> > @@ -1005,7 +1007,15 @@ sub ask {
+> >                         return $default;
+> >                 }
+> >                 if (!defined $valid_re or $resp =~ /$valid_re/) {
+> > -                       return $resp;
+> > +                       if ($warn_invalid) {
+> > +                               if (find_encoding($resp)) {
+> > +                                       return $resp;
+> > +                               } else {
+> > +                                       printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $resp;
+> > +                               }
+> > +                       } else {
+> > +                               return $resp;
+> > +                       }
+>
+> I think this is asking "ask" to do too much, since only encoding
+> askers can use warn_invalid.
+>
+> What I rather meant was to extract relevant helper procedures so that
+> open-coding ask around the encoding question would be easier to
+> maintain.
 
-Here is the V4 patch.
+Hi,
 
-Thanks Karthink Nayak <karthink.188@gamil.com>, for help and guidance.
+I have sent a v3 on this, in which I introduced a helper for the confirmation
+prompt and also made validation logic specific to the 8bit prompt.
+Do you think it would also be better to move the encoding validation
+into a separate helper, or does the current split look reasonable?
 
-
-Refactoring in order to reduce Git's global state
-=================================================
-
-PERSONAL INFORMATION
---------------------
-Name: Tian Yuchen
-E-mail: a3205153416@gmail.com
-Phone number: +65 98740318
-Time-zone: UTC + 08:00
-Github: https://github.com/malon7782
-
-Education: NTU, Singapore
-Year: Year 1 semester 2
-Degree: Electrical and Electronic Engineering (EEE)
-
-
-PRE GSOC
---------
-I have always held a deep passion for the open-source community. 
-Although I wasn't a computer science major, I tinkered with open-source 
-projects long before college. I have solid hands-on experience in C 
-programming and system-level debugging.
-
-I use Ubuntu 24.04 on a daily basis, so I am proficient in using the 
-Linux command line and CLI tools.
-
-I have contributed to the Git community by sending patches. Since my 
-first commit (17/1/2026), I have maintained a nearly daily contribution. 
-Here is the list of contributions I have made:
-
-* [PATCH v1] t1005: modernize "! test -f" to "test_path_is_missing"
-
-https://lore.kernel.org/git/20260117062515.319664-1-a3205153416@gmail.com/
-   This patch is my microproject, the first contribution I made to the 
-codebase.
-   [Graduated to 'master']
-
-* [PATCH v2] t2203: avoid masking exit codes in git status
-
-https://lore.kernel.org/git/20260118043537.338769-1-a3205153416@gmail.com/#t
-
-* [PATCH v2] symlinks: use unsigned int for flags
-
-https://lore.kernel.org/git/20260120152219.398999-1-a3205153416@gmail.com/
-   [Will merge to 'next']
-
-* [PATCH v4] t/perf/p3400: speed up setup using fast-import
-
-https://lore.kernel.org/git/20260130170123.642344-1-a3205153416@gmail.com/
-   [Will merge to 'master']
-
-* Re: [PATCH] [RFC] attr: use local repository state in read_attr
-
-https://lore.kernel.org/git/cc2f400e-49c2-4de0-9c51-9a5c0294735e@gmail.com/
-   Code review. To verify the performance loss, I wrote a test script to
-   measure the time difference before and after the modification.
-
-* Re: Bug: git add :!x . exits with error when x is in .gitignore
-
-https://lore.kernel.org/git/1d560aa1-d452-47f5-aaf2-4cb1ccdab100@gmail.com/
-   Code review. Pointed out logical error.
-
-* [PATCH v10] setup: allow cwd/.git to be a symlink to a directory
-
-https://lore.kernel.org/git/20260220164512.216901-1-a3205153416@gmail.com/
-   [Under review]
-   After over half a month of discussions, repeated refactoring, and code
-   reviews, I delved deep into setup.c. I gained insights into Git's 
-design philosophy, and learned the art of striking a balance in 
-developer communication. It took me a large amount of time and effort to 
-thoroughly understand every line of the code. I often found myself 
-poring over the call chain of a single function well into the night.... 
-But I persevered until the end, and I believe my patience will see me 
-through even larger projects.
-
-
-ABOUT THE PROJECT
------------------
-
--- Synopsis
-
-As far as I know, the Git community is actively working towards 
-'libification' - making Git's internal machinery reusable as a C 
-library. The extensive reliance on global state is a major roadblock to 
-this goal.
-
-Many core functions implicitly read environment variables and store them 
-in global static variables. This can cause several issues:
-
-   1. Global variables prevent Git's core functions from being executed 
-safely in multi-threaded contexts. For example, When unexpected states 
-(e.g., a permission denied error when probing a directory), they often 
-rely on the global state to decide whether to call die(), which 
-internally calls exit(). It’s fine for a standalone CLI tool, but for a 
-linked C library used by a long-running multi-threaded server, a single 
-die() call will kill the entire host process. Structured status, instead 
-of fatal exits, should be returned.
-   2. When Git is called multiple times within the same process, global 
-states can lead to memory leaks or incorrect behaviors.
-   3. Unit testing becomes difficult because the environment must be 
-artificially manipulated before calling functions.
-
-Take a look at this example from environment.c:
-
-     206 const char *get_commit_output_encoding(void)
-     207 {
-     208     return git_commit_encoding ? git_commit_encoding : "UTF-8";
-     209 }
-
-If Git is invoked as a C library by a multi-threaded server:
-- Thread A formats a commit for Repo A (using GBK);
-- Thread B concurrently formats a commit for Repo B (using UTF-8);
-
-Then they will race to read and overwrite the exact same global
-`git_commit_encoding` pointer, which is not what we expect. Therefore,
-we have to refactor these environment variables by moving them from
-global scope into a well-defined and encapsulated context.
-
-
--- Approach
-
-The task at hand goes beyond simply repackaging the global variables 
-into the struct repository structure. Based on my recent experience 
-refactoring setup.c, I realized that libification requires careful 
-management of variable lifecycles and api boundaries:
-
-     [ Current ]
-     Core functions --------reads-------> Global variables (via getenv)
-                                          [Thread unsafe]
-
-     [ Target ]
-     Core functions ----passes context--> struct repository
-                                                 | owns
-                                                 v
-                                          struct repo_settings
-
-				         other domain-specific structs
-
-Although the principle is simple, the scope of changes is extensive. The
-following three-step approach can serve as a guiding principle for it:
-
-   1. Identify isolated environment variables currently residing in the
-      global scope. Conduct a case-by-case analysis to map each variable
-      to its most appropriate existing home (e.g., struct repo_settings
-      for configuration values, or specific localized structs within
-      struct repository).
-   2. Instead of blindly passing struct repository *repo down into every
-      single low-level library function, bubbling the dependency up is
-      the true goal. External callers of the functions must be carefully
-      audited to prevent regressions.
-   3. Safely remove the old global variables and macro definitions. Make
-      full use of Git's existing GitLab/GitHub CI and utilize local
-      Meson builds with AddressSanitizer enabled to ensure that the new
-      lifecycle introduces zero memory leaks.
-   4. Many globals like `editor_program` are parsed once and remain
-      available globally. New data flow might need to be designed to
-      maintain the lazy-loading efficiency.
-
-Additionally, given the anticipated high volume of commits, we must 
-ensure each patch is independent and atomic, preventing any 
-user-untraceable or unexplainable bugs from occurring in the codebase at 
-any state.
-
-
-AVAILABILITY
-------------
-Fortunately, my summer vacation coincides with the GSoC work period.
-I will treat this project as my primary focus, dedicating a minimum of
-35 hours per week. If needed, I can work a 9-to-5 schedule.
-
-I will have a significant head start to draft RFC patches before the
-official coding period even begins. Having this buffer period allows me
-to go through the rigorous code review process within the Git community
-with greater ease.
-
-
-TIMELINE & MILESTONES
----------------------
-Considering the differences between this project and other projects on 
-the idea list, rather than hoarding massive changes, I will submit 
-3-to-5-patch series frequently to respect reviewers' time and maintain a 
-steady velocity.
-
-Below is the tentative schedule I have prepared for myself:
-
-* Community Bonding (May 1 - May 25): Planning & RFC
-   - May 1 - May 7: Wrap up university finals. Discuss and finalize the
-     prioritized list of subsystems with my mentor.
-   - May 8 - May 25: Categorize the targeted global variables and map out
-     their intended destinations (e.g., repo_settings). Draft and submit
-     the initial RFC patch series.
-
-* Phase 1 (May 26 - July 10): Foundation
-   - Weeks 1-2: Plumb the context pointer (`struct repository *repo`) 
-through call chains for simple variables (e.g., boolean flags or integer 
-configs).
-   - Weeks 3-4: Audit and update external callers to use the new API.
-   - Weeks 5-6: Submit the first major refactoring patch series. Address
-     mailing list feedback and resolve merge conflicts. (Midterm Evaluation)
-
-* Phase 2 (July 11 - August 18): Complex Migration & Cleanup
-   - Weeks 7-8: Refactor higher-complexity variables (e.g., path-related 
-globals).
-   - Weeks 9-10: Compile the codebase with AddressSanitizer and run the 
-full test suite to execute strict memory leak checks.
-   - Weeks 11-12: Remove unused global macro definitions and static 
-variables. Update internal documentation and write the final GSoC report.
-
-(The above is for reference only. Personally, I always finish tasks 
-faster than planned 😉)
-
-
-~$ git checkout HEAD@{postGSoC}
--------------------------------
-This past month since joining the Git community has been the most 
-enjoyable month of my programming journey. To quote a close friend of 
-mine (who is applying for the Neovim GSoC project):
-
-   "Only fools chase trends; open source is the game for the brave."
-
-The words may be blunt, but the logic holds true. This statement surely
-resonates with me (and maybe many other GSoC contributors): our passion
-for code and open-source drives us forward.
-
-Even if I didn't make the cut, so what? ~$ git reset --hard...
-Just kidding. The Git codebase is far too interesting to abandon now.
-
--------------------------------------------------------------------------
-Changes since V3:
-
-  - The idea of introducing a new container is abandoned now. Therefore, 
-In approach section, the diagram and corresponding 
-descriptions/"guidelines" are modified;
-  - Emphasize on Meson and GitLab/GitHub which can be used for necessary 
-safety checks;
-  - Refined timeline section (community bonding).
-
-  ** I wrote "Changes since v3" as well in last patch (V3). Sorry for 
-the typo :( **
-
-Regards,
-
-Yuchen
+Best,
+Shreyansh
