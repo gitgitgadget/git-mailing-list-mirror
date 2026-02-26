@@ -1,678 +1,316 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0171A08AF
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 10:33:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772102030; cv=none; b=DDCod9IHLQpWycQN9pyxdDF1u3JMuGvhc69iH7mzfa7F0XUlro2kJFmOiazHN2Q8hzUISGJ3SjA8YK7p1vbtt2DrEbP+59GXjnI7O09fBiDAA76NAGph8EEud0DZCKNTG3/bakRbEVs/ZRudaGdwyEjaLPS7+qrM5P8tws18osM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772102030; c=relaxed/simple;
-	bh=siVHuAy07486Bo0w72Io7LkMpfMTvL9jakiEzHBuV7o=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=TmPrxgI5awBplFKEQfcXj6AiHpJ46sFPmZz56kfBTQkazRRGwm35KxihQtLYWOJhkG0PUKsK8HBA6+X7xbhEAputJo2uAa0n7vnzXQa9o7rLrLB266rvr6aadisdqZk86mkvmDzWcqVKa2mZCrno2Kqo1DUVTlzSiF86P4bVNnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F3SsCEyO; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBE53081C2
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 11:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772105694; cv=pass; b=fl7ZmrYVO6bXMXb1s+wwjkHXfbMRtvqMMMVgml4JcVLz2zvwOORx3k2b691a6R58T38rsMlNBFhUh5Z1Q674KEXgaGoH5sEkNMXif45owQEB4xf6azeEqOxwYu/ChhgREABjznbUKeMvWTseI45QP4gbPKIm9P+Zg2Ol6qtToR8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772105694; c=relaxed/simple;
+	bh=OwakIC665zaeGiLcFnTSVmIlyyCXvPWk3f2FNZcWxnY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F9LssvxHFZ6O0S858yj9fzoFTudz8vtlFtBMx9gMwfI0IG+2kcOE/NFkdsVwfNmwD0ApZKpc4DcImL1OSustboFs5l1yIg571bEfSNczAy82HqsixZdJGMDIWeqwoQuwS37HE21Zs4NTy1OKaazXV24wapCAqi4Q+/AIL6Fd6NY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hkIgoE0V; arc=pass smtp.client-ip=209.85.222.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F3SsCEyO"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cb5138df1aso67962285a.3
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 02:33:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hkIgoE0V"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8cb420f7500so68980285a.2
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 03:34:53 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772105692; cv=none;
+        d=google.com; s=arc-20240605;
+        b=OoLYHcdJMP90Xk0evm7j4964ldJIKOrBuRpVxNbjJxY9uecL0Qw/6lSpEL29U0eD08
+         ZYREL98dIoYrHoXlHcQVGvjup+IUovNjpeOh7xjmdv1Y5jPqq2Gqd1sE+9gDBm/aXO6/
+         juqzbeErNGW+NrGJjJkTzhnQI6UxIBsnfNqtkFxGkYxgjxkX2mlo6kNq5X/1+IXlYFRr
+         xHPQgyJ8nZ7k7VObpGMMC5zWkR8waU0R+fNDFDZz11fejdvamoJA0XKpeVp74ziI0lvT
+         jl6MPDtA14lYUEDGFgpMvnupiWPe5DYrV1tIBEY/Lzm/Hocs0Pxdjh5X9mEtUe1dpu++
+         1KhQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=M36LtLVSjmxDXfxWVm+uJ4Q33UH7M1ixZuVUnq0gyZY=;
+        fh=h645OTMYlFE8yjP1X4H3QS6aBDIsBfMm6sYHUUqmlmw=;
+        b=SNCDfYsF8Q9t9v7TuNzdnVuuHB3LOUozsGlJbiNw7rpTxusLIDoCyDFbiNuCmB+5QU
+         Z1kvBSuzQntmEJngkuvQEY0IjHVPygxGZwjvGNx5+kq7bYpWAp/rKDxUrqTzOU61WxHm
+         9zOHWL9x20iOVV5sjUivmFVyHqAb/c0sxST6IwjFSww11WeYbmycBUkHU3UjdtLb30DA
+         AuEWEBa3PmAL/hnIp8F53orQAxJLoXZTYO+1LvoIe2X2BkPBQjQ9optPPi1Nn8quzd/j
+         Izh+lSw4lenm5sYYgzz1C2GH3a1ezOOI8mb7aXiq5pIn8jm+8Pd6oLuEX0UP8KANRe7J
+         RLuQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772102027; x=1772706827; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tJrTyIFXCk6Mzp6T7KIc0XuQELIW8J4ribX/jhDqXdY=;
-        b=F3SsCEyOJiymrI+LDs2JMLb0I84wxpt0aDewBf0qmoNTK8eun/72ASyT27FH5moaSk
-         yetqB64lnF+mvqmTs5201i/5Qvo2r6jY0KcLiuCaP32ja0LmgaS5lvv5qWb/Ybp81Mj9
-         VRb4Y/iuzL8oQigmw+oXv08Q551bUS6hOgYfPX9ljY++JlbtV9v0TkiCFEBHibL6lXZ4
-         +6KB4q7QgXSEnd2UnzO1NXph9XsNjAx5B2zrRzItr7B8ZolIe3aZe/5jX3mCRX7P0a1B
-         4pq9Hil4UQ04aUAiMBmFymt2IackuL0dEr1dpHfJII0Yp+6BaPTkJKYLaYYPa4j3oFrR
-         IpLg==
+        d=gmail.com; s=20230601; t=1772105692; x=1772710492; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=M36LtLVSjmxDXfxWVm+uJ4Q33UH7M1ixZuVUnq0gyZY=;
+        b=hkIgoE0VMc9hZVPYXSDoWpPXrb8if8ng/ghqmk03HFuhMIeFZ3ffpQHeY6FT8itXj3
+         bP7eP4ipXddkQTgieF/+uHYXBUHHKFra1FNn3iKzK58Za8vp5f3Xrbxlknr5jiSR/lOa
+         Dn/KjbktczFVaJ32JA+yyXg6kqNRqGdLx+FQSUp3kvw11oeUoH7L8T5T2eaL5nufmPU6
+         uyJhRjeP2hh+W8dniALA5izrUT6VaTPhe90Jbvj0Hq6i3Nb0Q50l8CZUmrbt6OeBFyUF
+         jVps/74uFiLuDCCJyr51ugkus29E+hK1mmKF614e3BlW/4rSp8kEmefsOpg/4UxluM36
+         7H+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772102027; x=1772706827;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tJrTyIFXCk6Mzp6T7KIc0XuQELIW8J4ribX/jhDqXdY=;
-        b=W2vTRwspIjczJyyXpH1qMWeopXdnHMYCWiC7ToKG+Lm77nOuNSPj6U4AhzxP0RJ9ek
-         ljVXz+SACxOWKqRlgmGeoBAMtqUCz1jGqqu/klrWjSZTnUOwrAczErcXxWGVdnTWlxNa
-         li1zONEnghr9nr8fg6L3Xg61e83IoPtAhjOsyJxysG2H4qrCypIFJGPvuzN2D3WhsJyN
-         pc37SICtwPS0PURWYv4onHPLNR1O6fF6R4SbDeBGAczISyq94uI3Ic2SmRrGpzIXiy0v
-         ODtpKG76aoCzRM81N73tL/3BpbzvUv/FGYVBUQ8BUQBdti2mfZWtGgwhxFDR1L20py0l
-         XTnQ==
-X-Gm-Message-State: AOJu0YxMEM0hB2K8NM/56J9rgBDIpHAqIYJ4Zfzk9uY7EXAKpP6wLkOZ
-	GnUqU+0OcqJltSf+KobpMeQjnbT1JBy55nRBFN/Lk2r43cnot9G4RT+ipPfQWIMs
-X-Gm-Gg: ATEYQzyA3JeIBqgaScSBqJkyUYEQd9ToTJmV3LzNK9LQmiryVvgxMR0iw7MYvLKQErQ
-	ehRM9IUXH69alAZ65GJCadRNB87gAojgAM4Z6AFboM6J9n0L408lcxk6KG2ps+ajwLkKlDeGP90
-	3y9IdQyM3FFzwx2IXM+WKGnCoOtitZ9JXMPn9LpsxiQ2xfvt9uFEECzPttfW/ZIE8v1xudtXD26
-	7rPA2Jm4ySY5c6uRPSZ/ASvAAk/KJtjt6SSX5OsO4v0XgIkcEaLiGLtMjJhasNw/t+SpXU6y1lQ
-	5v3C8PALTNhpBwZCeaFQF4e1ZDoujoW3Bar40kZvCXG4Lcg/269kxrEAe0vHznkSYztK6XJwqu6
-	mrJNF7iqC2vJiKxgFrsQWAAGHm4Uvqk8IkbV61jDsA9rSBpUmWP4vSYFYXb0LOibo7Wfp3V4Dav
-	VB4oaW3LnHk5dlmc7LUHFQgT3/
-X-Received: by 2002:a05:620a:3185:b0:8c7:15fc:2a23 with SMTP id af79cd13be357-8cbbd07a441mr488160185a.79.1772102026358;
-        Thu, 26 Feb 2026 02:33:46 -0800 (PST)
-Received: from [127.0.0.1] ([52.150.29.101])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf6541f1sm169980485a.3.2026.02.26.02.33.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Feb 2026 02:33:45 -0800 (PST)
-Message-Id: <501bd402944146aa02fb5515783f6745eede28d3.1772102022.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2138.v30.git.git.1772102022.gitgitgadget@gmail.com>
-References: <pull.2138.v29.git.git.1772056263.gitgitgadget@gmail.com>
-	<pull.2138.v30.git.git.1772102022.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 26 Feb 2026 10:33:42 +0000
-Subject: [PATCH v30 2/2] status: add status.compareBranches config for
- multiple branch comparisons
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1772105692; x=1772710492;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M36LtLVSjmxDXfxWVm+uJ4Q33UH7M1ixZuVUnq0gyZY=;
+        b=FL46Qdv/PGsuJF+l6ZD1TtmbmRiNjX70hmmfks//hrzuhgCkZDgnmQhxJgan3QZHBY
+         CwXtwAgGIwsrWmVPC7TDdz0hlMZhYCQmxxmPj9hohSVfChIzVRwTZnP6N3+NsfIWvoZR
+         wwEH0cGsu7tUtQaSvvD5OkHlmODMj38PWU9KtPW1NgjKaNRc2uz2010sX2Nwz6/MTkAU
+         CmbtTaITsnywFM8AgfAr+WzOm0PVi9Gtm881My88HJIo9+lTBj2voORYrwOtK3H9d8pu
+         SBE866IDwecMLGmzW39Q0IcyuyfSHe0sb5q8JCRFf6HCc2x/hzG0bltXUS4lGAC2Vxuz
+         /4pw==
+X-Gm-Message-State: AOJu0YzopCHwrv5N+XMPEy9NE4fQv7lwdiS3W6qLociLrGTrGRZfOFZb
+	YM4lOV04ohqhEEC0+sbJJt1gA9C0eLgubzpGdJin3TxDrmawhAs4Ph574SS8fIB6P/lepXBd+nA
+	0bluDNcPm5xVYBb7Aw+CPzmMJ6KoLQFY=
+X-Gm-Gg: ATEYQzzDbcUvFH2ASQCKt0qGwwcs1aIangjKlJK4ZCUH8ju0J+ivAg1t5KSmNozkp4H
+	wmzWy2H+AstE7Qtmrqi9sJy3Z4Vwx1Hr1P8qNzguuEsQzRazOpXJntVcw6wJVm9MR2ibn5AnBSm
+	ZzbrTaXaBQR0jG9axnWtA2o/TPCYfBQVxgpn8lfW3rRyeA+BSO9Pl2e6Y1ng8C2IOMjBEh6ztFi
+	4CJr0KAOGsiwD6nZy4SvH1krKpWbqMOVYuuCm81NkAayNgtKtcK5dbU2HzRFnvNfsg0gB0RQ4gZ
+	xM83DFWDKh6MQZMkSUHpiu1JmLb6X4fmYpa7p9FfFdajTJzjb3cccaQacRgAZ/7zWQXX3nuvJ9z
+	oISFhGn7YcF7WLrv8IozcDunlTg==
+X-Received: by 2002:a05:622a:4ca:b0:4eb:9eaf:ab4d with SMTP id
+ d75a77b69052e-50741fc50f3mr49633221cf.62.1772105692140; Thu, 26 Feb 2026
+ 03:34:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+References: <CA+rGoLdSR=NPoD7XEbYPoRTt0VS5M0QhzHcy-OmyuZMMVN-H5w@mail.gmail.com>
+ <3C0852FD-59FE-496D-9521-E123181901B3@gmail.com>
+In-Reply-To: <3C0852FD-59FE-496D-9521-E123181901B3@gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Thu, 26 Feb 2026 17:04:40 +0530
+X-Gm-Features: AaiRm52Odiu49M3-aGYPkxEUlQHkuaRL2xmxh6WtULj3R67aR_TIDO-StplFn4E
+Message-ID: <CA+rGoLcQUFPCZJt9Ph_1yQW_3zWg0Zuo9BSysF5mh-6Q7m2-mw@mail.gmail.com>
+Subject: Re: [GSoC proposal v2][RFC] Improve the new git repo command
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, karthik nayak <karthik.188@gmail.com>, 
+	Ayush Chandekar <ayu.chandekar@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Since the last feedback from Lucas
+I have taken some time to improve my proposal
 
-Add a new configuration variable status.compareBranches that allows
-users to specify a space-separated list of branch comparisons in
-git status output.
+- I have added all my patches that I raised in Git.
+- I have also taken up a much more realistic timeline.
 
-Supported values:
-- @{upstream} for the current branch's upstream tracking branch
-- @{push} for the current branch's push destination
-
-Any other value is ignored and a warning is shown.
-
-When not configured, the default behavior is equivalent to setting
-`status.compareBranches = @{upstream}`, preserving backward
-compatibility.
-
-The advice messages shown are context-aware:
-- "git pull" advice is shown only when comparing against @{upstream}
-- "git push" advice is shown only when comparing against @{push}
-- Divergence advice is shown for upstream branch comparisons
-
-This is useful for triangular workflows where the upstream tracking
-branch differs from the push destination, allowing users to see their
-status relative to both branches at once.
-
-Example configuration:
-    [status]
-        compareBranches = @{upstream} @{push}
-
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/config/status.adoc |  19 ++
- remote.c                         | 146 ++++++++++++---
- t/t6040-tracking-info.sh         | 310 +++++++++++++++++++++++++++++++
- 3 files changed, 447 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/config/status.adoc b/Documentation/config/status.adoc
-index 8caf90f51c..15ccd0116b 100644
---- a/Documentation/config/status.adoc
-+++ b/Documentation/config/status.adoc
-@@ -17,6 +17,25 @@ status.aheadBehind::
- 	`--no-ahead-behind` by default in linkgit:git-status[1] for
- 	non-porcelain status formats.  Defaults to true.
- 
-+status.compareBranches::
-+	A space-separated list of branch comparison specifiers to use in
-+	linkgit:git-status[1]. Currently, only `@{upstream}` and `@{push}`
-+	are supported. They are interpreted as `branch@{upstream}` and
-+	`branch@{push}` for the current branch.
-++
-+If not set, the default behavior is equivalent to `@{upstream}`, which
-+compares against the configured upstream tracking branch.
-++
-+Example:
-++
-+----
-+[status]
-+	compareBranches = @{upstream} @{push}
-+----
-++
-+This would show comparisons against both the configured upstream and push
-+tracking branches for the current branch.
-+
- status.displayCommentPrefix::
- 	If set to true, linkgit:git-status[1] will insert a comment
- 	prefix before each output line (starting with
-diff --git a/remote.c b/remote.c
-index e9e2f56ed6..7ca2a6501b 100644
---- a/remote.c
-+++ b/remote.c
-@@ -29,6 +29,12 @@
- 
- enum map_direction { FROM_SRC, FROM_DST };
- 
-+enum {
-+	ENABLE_ADVICE_PULL       = (1 << 0),
-+	ENABLE_ADVICE_PUSH       = (1 << 1),
-+	ENABLE_ADVICE_DIVERGENCE = (1 << 2),
-+};
-+
- struct counted_string {
- 	size_t len;
- 	const char *s;
-@@ -2234,13 +2240,40 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- 	return stat_branch_pair(branch->refname, base, num_ours, num_theirs, abf);
- }
- 
-+static char *resolve_compare_branch(struct branch *branch, const char *name)
-+{
-+	const char *resolved = NULL;
-+
-+	if (!branch || !name)
-+		return NULL;
-+
-+	if (!strcasecmp(name, "@{upstream}")) {
-+		resolved = branch_get_upstream(branch, NULL);
-+	} else if (!strcasecmp(name, "@{push}")) {
-+		resolved = branch_get_push(branch, NULL);
-+	} else {
-+		warning(_("ignoring value '%s' for status.compareBranches, "
-+			  "only @{upstream} and @{push} are supported"),
-+			name);
-+		return NULL;
-+	}
-+
-+	if (resolved)
-+		return xstrdup(resolved);
-+	return NULL;
-+}
-+
- static void format_branch_comparison(struct strbuf *sb,
- 				     bool up_to_date,
- 				     int ours, int theirs,
- 				     const char *branch_name,
- 				     enum ahead_behind_flags abf,
--				     bool show_divergence_advice)
-+				     unsigned flags)
- {
-+	bool use_push_advice = (flags & ENABLE_ADVICE_PUSH);
-+	bool use_pull_advice = (flags & ENABLE_ADVICE_PULL);
-+	bool use_divergence_advice = (flags & ENABLE_ADVICE_DIVERGENCE);
-+
- 	if (up_to_date) {
- 		strbuf_addf(sb,
- 			_("Your branch is up to date with '%s'.\n"),
-@@ -2249,7 +2282,7 @@ static void format_branch_comparison(struct strbuf *sb,
- 		strbuf_addf(sb,
- 			    _("Your branch and '%s' refer to different commits.\n"),
- 			    branch_name);
--		if (advice_enabled(ADVICE_STATUS_HINTS))
-+		if (use_push_advice && advice_enabled(ADVICE_STATUS_HINTS))
- 			strbuf_addf(sb, _("  (use \"%s\" for details)\n"),
- 				    "git status --ahead-behind");
- 	} else if (!theirs) {
-@@ -2258,7 +2291,7 @@ static void format_branch_comparison(struct strbuf *sb,
- 			   "Your branch is ahead of '%s' by %d commits.\n",
- 			   ours),
- 			branch_name, ours);
--		if (advice_enabled(ADVICE_STATUS_HINTS))
-+		if (use_push_advice && advice_enabled(ADVICE_STATUS_HINTS))
- 			strbuf_addstr(sb,
- 				_("  (use \"git push\" to publish your local commits)\n"));
- 	} else if (!ours) {
-@@ -2269,7 +2302,7 @@ static void format_branch_comparison(struct strbuf *sb,
- 			       "and can be fast-forwarded.\n",
- 			   theirs),
- 			branch_name, theirs);
--		if (advice_enabled(ADVICE_STATUS_HINTS))
-+		if (use_pull_advice && advice_enabled(ADVICE_STATUS_HINTS))
- 			strbuf_addstr(sb,
- 				_("  (use \"git pull\" to update your local branch)\n"));
- 	} else {
-@@ -2282,8 +2315,7 @@ static void format_branch_comparison(struct strbuf *sb,
- 			       "respectively.\n",
- 			   ours + theirs),
- 			branch_name, ours, theirs);
--		if (show_divergence_advice &&
--		    advice_enabled(ADVICE_STATUS_HINTS))
-+		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS))
- 			strbuf_addstr(sb,
- 				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
- 	}
-@@ -2296,34 +2328,92 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 			 enum ahead_behind_flags abf,
- 			 int show_divergence_advice)
- {
--	int ours, theirs, cmp_fetch;
--	const char *full_base;
--	char *base;
--	int upstream_is_gone = 0;
-+	char *compare_branches = NULL;
-+	struct string_list branches = STRING_LIST_INIT_DUP;
-+	struct strset processed_refs = STRSET_INIT;
-+	int reported = 0;
-+	size_t i;
-+	const char *upstream_ref;
-+	const char *push_ref;
- 
--	cmp_fetch = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
--	if (cmp_fetch < 0) {
--		if (!full_base)
--			return 0;
--		upstream_is_gone = 1;
-+	repo_config_get_string(the_repository, "status.comparebranches",
-+			       &compare_branches);
-+
-+	if (compare_branches) {
-+		string_list_split(&branches, compare_branches, " ", -1);
-+		string_list_remove_empty_items(&branches, 0);
-+	} else {
-+		string_list_append(&branches, "@{upstream}");
- 	}
- 
--	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
--					    full_base, 0);
-+	upstream_ref = branch_get_upstream(branch, NULL);
-+	push_ref = branch_get_push(branch, NULL);
- 
--	if (upstream_is_gone) {
--		strbuf_addf(sb,
--			_("Your branch is based on '%s', but the upstream is gone.\n"),
--			base);
--		if (advice_enabled(ADVICE_STATUS_HINTS))
--			strbuf_addstr(sb,
--				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
--	} else {
--		format_branch_comparison(sb, !cmp_fetch, ours, theirs, base, abf, show_divergence_advice);
-+	for (i = 0; i < branches.nr; i++) {
-+		char *full_ref;
-+		char *short_ref;
-+		int ours, theirs, cmp;
-+		int is_upstream, is_push;
-+		unsigned flags = 0;
-+
-+		full_ref = resolve_compare_branch(branch,
-+						  branches.items[i].string);
-+		if (!full_ref)
-+			continue;
-+
-+		if (!strset_add(&processed_refs, full_ref)) {
-+			free(full_ref);
-+			continue;
-+		}
-+
-+		short_ref = refs_shorten_unambiguous_ref(
-+			get_main_ref_store(the_repository), full_ref, 0);
-+
-+		is_upstream = upstream_ref && !strcmp(full_ref, upstream_ref);
-+		is_push = push_ref && !strcmp(full_ref, push_ref);
-+
-+		if (is_upstream && (!push_ref || !strcmp(upstream_ref, push_ref)))
-+			is_push = 1;
-+
-+		cmp = stat_branch_pair(branch->refname, full_ref,
-+				       &ours, &theirs, abf);
-+
-+		if (cmp < 0) {
-+			if (is_upstream) {
-+				strbuf_addf(sb,
-+					_("Your branch is based on '%s', but the upstream is gone.\n"),
-+					short_ref);
-+				if (advice_enabled(ADVICE_STATUS_HINTS))
-+					strbuf_addstr(sb,
-+						_("  (use \"git branch --unset-upstream\" to fixup)\n"));
-+				reported = 1;
-+			}
-+			free(full_ref);
-+			free(short_ref);
-+			continue;
-+		}
-+
-+		if (reported)
-+			strbuf_addstr(sb, "\n");
-+
-+		if (is_upstream)
-+			flags |= ENABLE_ADVICE_PULL;
-+		if (is_push)
-+			flags |= ENABLE_ADVICE_PUSH;
-+		if (show_divergence_advice && is_upstream)
-+			flags |= ENABLE_ADVICE_DIVERGENCE;
-+		format_branch_comparison(sb, !cmp, ours, theirs, short_ref,
-+					 abf, flags);
-+		reported = 1;
-+
-+		free(full_ref);
-+		free(short_ref);
- 	}
- 
--	free(base);
--	return 1;
-+	string_list_clear(&branches, 0);
-+	strset_clear(&processed_refs);
-+	free(compare_branches);
-+	return reported;
- }
- 
- static int one_local_ref(const struct reference *ref, void *cb_data)
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 0b719bbae6..c24f545036 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -292,4 +292,314 @@ test_expect_success '--set-upstream-to @{-1}' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'status tracking origin/main shows only main' '
-+	(
-+		cd test &&
-+		git checkout b4 &&
-+		git status >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch b4
-+	Your branch is ahead of ${SQ}origin/main${SQ} by 2 commits.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status --no-ahead-behind tracking origin/main shows only main' '
-+	(
-+		cd test &&
-+		git checkout b4 &&
-+		git status --no-ahead-behind >../actual
-+	) &&
-+	cat >expect <<-EOF &&
-+	On branch b4
-+	Your branch and ${SQ}origin/main${SQ} refer to different commits.
-+	  (use "git status --ahead-behind" for details)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches from upstream has no duplicates' '
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout main &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch main
-+	Your branch is up to date with ${SQ}origin/main${SQ}.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches shows ahead of both upstream and push branch' '
-+	test_config -C test push.default current &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout -b feature2 origin/main &&
-+	git -C test push origin HEAD &&
-+	(cd test && advance work) &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature2
-+	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/feature2${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'checkout with status.compareBranches shows both branches' '
-+	test_config -C test push.default current &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout feature2 >actual &&
-+	cat >expect <<-EOF &&
-+	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/feature2${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup for ahead of tracked but diverged from main' '
-+	(
-+		cd test &&
-+		git checkout -b feature4 origin/main &&
-+		advance work1 &&
-+		git checkout origin/main &&
-+		advance work2 &&
-+		git push origin HEAD:main &&
-+		git checkout feature4 &&
-+		advance work3
-+	)
-+'
-+
-+test_expect_success 'status.compareBranches shows diverged and ahead' '
-+	test_config -C test push.default current &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout feature4 &&
-+	git -C test branch --set-upstream-to origin/main &&
-+	git -C test push origin HEAD &&
-+	(cd test && advance work) &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature4
-+	Your branch and ${SQ}origin/main${SQ} have diverged,
-+	and have 3 and 1 different commits each, respectively.
-+	  (use "git pull" if you want to integrate the remote branch with yours)
-+
-+	Your branch is ahead of ${SQ}origin/feature4${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status --no-ahead-behind with status.compareBranches' '
-+	test_config -C test push.default current &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout feature4 &&
-+	git -C test status --no-ahead-behind >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature4
-+	Your branch and ${SQ}origin/main${SQ} refer to different commits.
-+
-+	Your branch and ${SQ}origin/feature4${SQ} refer to different commits.
-+	  (use "git status --ahead-behind" for details)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup upstream remote' '
-+	(
-+		cd test &&
-+		git remote add upstream ../. &&
-+		git fetch upstream
-+	)
-+'
-+
-+test_expect_success 'status.compareBranches with upstream and origin remotes' '
-+	test_config -C test push.default current &&
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout -b feature5 upstream/main &&
-+	git -C test push origin &&
-+	(cd test && advance work) &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature5
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/feature5${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches supports ordered upstream/push entries' '
-+	test_config -C test push.default current &&
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test status.compareBranches "@{push} @{upstream}" &&
-+	git -C test checkout -b feature6 upstream/main &&
-+	git -C test push origin &&
-+	(cd test && advance work) &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature6
-+	Your branch is ahead of ${SQ}origin/feature6${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches with diverged push branch' '
-+	test_config -C test push.default current &&
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout -b feature7 upstream/main &&
-+	(cd test && advance work71) &&
-+	git -C test push origin &&
-+	git -C test reset --hard upstream/main &&
-+	(cd test && advance work72) &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature7
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-+
-+	Your branch and ${SQ}origin/feature7${SQ} have diverged,
-+	and have 1 and 1 different commits each, respectively.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches shows up to date branches' '
-+	test_config -C test push.default current &&
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout -b feature8 upstream/main &&
-+	git -C test push origin &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature8
-+	Your branch is up to date with ${SQ}upstream/main${SQ}.
-+
-+	Your branch is up to date with ${SQ}origin/feature8${SQ}.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status --no-ahead-behind with status.compareBranches up to date' '
-+	test_config -C test push.default current &&
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout feature8 >actual &&
-+	git -C test push origin &&
-+	git -C test status --no-ahead-behind >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature8
-+	Your branch is up to date with ${SQ}upstream/main${SQ}.
-+
-+	Your branch is up to date with ${SQ}origin/feature8${SQ}.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'checkout with status.compareBranches shows up to date' '
-+	test_config -C test push.default current &&
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout feature8 >actual &&
-+	cat >expect <<-EOF &&
-+	Your branch is up to date with ${SQ}upstream/main${SQ}.
-+
-+	Your branch is up to date with ${SQ}origin/feature8${SQ}.
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches with upstream behind and push up to date' '
-+	test_config -C test push.default current &&
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout -b ahead upstream/main &&
-+	(cd test && advance work) &&
-+	git -C test push upstream HEAD &&
-+	git -C test checkout -b feature9 upstream/main &&
-+	git -C test push origin &&
-+	git -C test branch --set-upstream-to upstream/ahead &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature9
-+	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
-+	  (use "git pull" to update your local branch)
-+
-+	Your branch is up to date with ${SQ}origin/feature9${SQ}.
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches with remapped push refspec' '
-+	test_config -C test remote.origin.push refs/heads/feature10:refs/heads/remapped &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout -b feature10 origin/main &&
-+	git -C test push &&
-+	(cd test && advance work) &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature10
-+	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/remapped${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches with remapped push and upstream remote' '
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test remote.origin.push refs/heads/feature11:refs/heads/remapped &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout -b feature11 upstream/main &&
-+	git -C test push origin &&
-+	(cd test && advance work) &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature11
-+	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-+
-+	Your branch is ahead of ${SQ}origin/remapped${SQ} by 1 commit.
-+	  (use "git push" to publish your local commits)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-gitgitgadget
+Improve the new git repo command
+Jayatheerth Kulkarni
+February 26, 2026
+
+---
+
+1. About Me
+I am a junior at Geethanjali College of Engineering and Technology
+pursuing a bachelor's degree, with a strong interest in open-source
+projects and systems programming. My interest in the Git project
+stems from a desire to understand the internals of version control
+and contribute to a tool that is fundamental to the global software
+development ecosystem.
+
+1.1 Contact:
+- Email: jayatheerthkulkarni2005@gmail.com
+- Website: https://jayatheerth.com/
+- GitHub: https://github.com/jayatheerthkulkarni
+- LinkedIn: https://www.linkedin.com/in/jayatheerth/
+
+1.2 Logistics:
+- Timezone: Indian Standard Time (IST) / UTC+05:30
+- Tech Stack: C, Shell Scripting, Rust
+
+---
+
+2. Contribution History
+
+I have formally completed all the prerequisites to apply in
+GSoC `Improve the new git repo command` project.
+
+I have listed all of my work I have done in the past few months.
+
+2.1 Featured Contributions
+For many months, I have been actively engaging with the Git community
+through mailing list discussions and patch submissions. Notably, my
+work on fixing stash messaging behavior in submodule environments was
+featured in Git Rev-News edition 124.
+
+- [PATCH v3] stash: fix incorrect branch name in stash message
+  Link: https://lore.kernel.org/git/20250611014204.24994-1-jayatheerthkulkarni2005@gmail.com/T/#u
+  Status: Merged into master & featured in Git Rev-News.
+
+2.2 Core Path and Submodule Patches
+
+- [PATCH v8] submodule: prevent overwriting .gitmodules entry on path reuse
+  Link: https://lore.kernel.org/git/20250608032705.11990-1-jayatheerthkulkarni2005@gmail.com/T/#u
+  Status: Merged into master.
+
+- [PATCH v2] dir: Fix and test wildcard pathspec handling
+  Link: https://lore.kernel.org/git/20250422160547.577524-1-jayatheerthkulkarni2005@gmail.com/
+  Status: Merged into master.
+
+2.3 Refactoring and Micro-Projects
+I am deeply familiar with Git's test suite and standard C conventions,
+having submitted several refactoring and cleanup patches, including
+two specific to the `builtin/repo.c` file:
+
+- [PATCH GSoC] repo: Remove unnecessary variable shadow
+  Link: https://lore.kernel.org/git/aZxyju3B4NHp4c_t@denethor/T/#t
+  Status: Got a review from Justin.
+
+- [GSoC] t7101: modernize test path checks
+  Link: https://lore.kernel.org/git/CALE2CrS0Q2NS1DbFv4pyRQsuypu=KH6Kurs=m4yWrFbR9QosoA@mail.gmail.com/T/#t
+  Status: Merged into master (Official micro-project).
+
+- [PATCH v2] pull: move options[] array into function scope
+  Link: https://lore.kernel.org/git/20251212074433.38027-1-jayatheerthkulkarni2005@gmail.com/T/#u
+  Status: Merged to master.
+
+2.4 Documentation
+I have also contributed to updating community guidelines:
+- [PATCH v3] Update MyFirstContribution.adoc to follow modern practices
+  Link: https://lore.kernel.org/git/CA+rGoLfFVcUFctoEx6wshovGnRW8pTW--ZB42ntd01VHMJm_Rw@mail.gmail.com/T/#t
+
+2.5 Experience with C
+Since Git is mainly written in C, I have no issues navigating the
+codebase. I hold a Cisco CLP - Advanced C Programming certificate
+covering Unix and C systems programming, and I have completed two
+full university semesters of C programming.
+
+---
+
+3. Project Proposal
+
+3.1 Why "Improve the new git repo command"?
+This project is compelling because I have closely followed its
+development since its inception. Consistently reading the weekly
+updates (https://lucasoshiro.github.io/gsoc-en/) and following the
+mailing list patches for `git repo info` has deepened my ongoing
+interest in this specific initiative since GSoC 2025.
+
+3.2 Introduction
+Taken from the SoC 2026 ideas page, the new `repo info` command
+has already started to be a good replacement for parts of `rev-parse`.
+As this command is still in its early stages, there is significant
+opportunity to refine its architecture and expand its feature set.
+Currently, many core functions in Git implicitly read environment
+variables and store them as global states. To support Git's ongoing
+"libification" effort, these global dependencies must be removed.
+
+3.3 Proposed Solution and Objectives
+To ensure realistic pacing and to respect the rigorous nature of Git's
+mailing list review cycle, I have scoped the primary objectives of this
+project down to the two most critical milestones:
+
+Objective 1: Adding Path Values
+I will integrate the missing path values currently obtained through
+`git rev-parse` and `--git-path`. This includes:
+- `git-dir`, `common-dir`, `toplevel`, and `superproject-working-tree`.
+- The grafts file, index file, objects directory, hooks directory, and
+  `git-prefix`.
+Implementation: I will take over the initial design efforts on the
+mailing list, and finish the leftover work.
+
+Objective 2: Removing Global State
+The `builtin/repo.c` file currently opts into using global state by
+declaring `#define USE_THE_REPOSITORY_VARIABLE`.
+Implementation: I will remove this macro entirely. Functions that
+currently implicitly rely on global state (e.g., `get_layout_bare()`,
+which currently marks its `repo` argument as `UNUSED`) will be
+refactored. I will update these functions to evaluate the explicit
+`struct repository *repo` pointer, threading this context down the
+call chain without breaking existing external callers.
+
+---
+
+4. Project Timeline
+
+4.1 Community Bonding Period (May 1 - May 24)
+- Attend the Git community GSoC sessions to introduce myself, the
+  project, and establish a communication schedule with my mentors.
+- Initiate the design discussion on the mailing list regarding the
+  output format for path-related values (absolute vs. relative paths).
+- Dive into existing efforts to map out exactly how resolves its current
+  path outputs.
+
+4.2 Phase 1: Core Path Implementation (May 25 - July 5)
+Weeks 1 - 3 (May 25 - June 14): Foundation and Extended Path Values
+- Implement the core path values (`git-dir`, `common-dir`, `toplevel`,
+  and `superproject-working-tree`).
+- Implement the remaining `--git-path` values.
+- Write initial tests in `t/` to ensure path resolution works correctly.
+
+Weeks 4 - 6 (June 15 - July 5): Review and Refinement
+- Address mailing list feedback for the path values patch series.
+- Begin mapping out the call chains affected by
+  `USE_THE_REPOSITORY_VARIABLE` in preparation for Phase 2.
+
+4.3 Mid-Term Evaluation Phase (July 6 - July 10)
+- Ensure the path-related additions are merged into master or queued
+  in the next.
+- Review progress with mentors and adjust the Phase 2 timeline if
+  necessary. Submit mid-term evaluation.
+
+4.4 Phase 2: Removing Global State (July 11 - August 16)
+Weeks 7 - 9 (July 11 - July 26): Threading the Context
+- Focus entirely on libification. Remove the global state macro from
+  `builtin/repo.c`.
+- Refactor functions like `get_layout_bare()` to utilize the explicit
+  `repo` parameter.
+- Carefully audit and update external callers to use the new API context.
+
+Weeks 10 - 12 (July 27 - August 16): Rigorous Testing and Iteration
+- This period acts as a realistic buffer for the anticipated multiple
+  versions required to get complex architectural refactoring merged.
+- Run the full test suite and perform rigorous edge-case testing
+  (e.g., sparse checkouts, nested submodules).
+
+4.5 Finalization (August 17 - August 24)
+- Finalize the official Git documentation for all new additions.
+- Clean up the commit history, ensure all patches are finalized on
+  the mailing list, and submit the final GSoC project report.
+
+4.6 Stretch Goals
+Given the rigorous nature of Git's patch review process, my primary
+commitment is to successfully merge the core path additions and the
+global state removal. However, if review cycles move faster than
+anticipated, I have prepared the following stretch goals:
+1. Category-Based Queries: Implementing an internal mapping structure
+   so users can query by category (e.g., `git repo info paths`).
+2. `repo structure` Enhancements: Analyzing the `git-sizer` codebase
+   to integrate native repository metrics into `cmd_repo_structure()`.
+
+---
+
+5. Availability and Blogging
+This timeline aligns perfectly with my schedule. The project kicks
+off in May, during which I will be on summer vacation and can
+dedicate full-time hours. During June and July, I will transition
+into my final year of university. My academic schedule during this
+period is highly flexible.
+
+Blogging:
+I have a domain setup at "jayatheerth.com". As patches flow and the
+project progresses, I will host a dedicated endpoint at "/blogs" to
+provide comprehensive, weekly coverage of my project.
+
+---
+
+6. Post GSoC Commitment
+I actively follow the mailing list and intend to continue
+contributing bug fixes and enhancements. I have been a part of the
+Git community since 2025 and hopefully will continue to be one for
+a long time.
+
+
+--- End of proposal ---
+
+
+Regards
+- Jayatheerth
