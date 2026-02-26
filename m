@@ -1,73 +1,73 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E16355F28
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 17:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C22F3290AC
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 17:39:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772127559; cv=none; b=B23I7lm0dCoflXG062J18bh+G9NHvU+73IP3UArDRIFpxUeOQKUD4XZRM5HCJSbWRQLsj/WTxqz1/4ChsgxUuWwgFGTGlnbXCizj62JZtuMbDwCmW3O/g79BHoyhtbaKaGstCfmsquM3Y7uLLWAqEIGfEyTj1WRnDgB2jzKaZW0=
+	t=1772127575; cv=none; b=Lje5Z9zounACCJ/sDVO7cPAmGbl93hMfYUB+gIPTyaszGwCe4xPJCz3oerMYpirLoyljM1rkbLNdsgzA0SyZQpnFMqOJx5GjxFGFFBLXtFHPTbY1fVvPKY5K4hXWHps3Lf204T3oMvH2606eUx+C9lrFpkrrT+g6GkOkL5GozQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772127559; c=relaxed/simple;
-	bh=KvFlc1144eu94GEVw6BdG6jUDnNbi0ng+2Sy5sWJabE=;
+	s=arc-20240116; t=1772127575; c=relaxed/simple;
+	bh=R8HSIXcHTrbraiQn0Cs5RipcpK1Q74n8AT3MrKwiidQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pUY332Q04YQA1UGcp1OGGuOv3nHGtIGWVnSPdKvhr8M3yTr4CA6YOUFyFvPQsWtEQBK4VAeD/BIj+TwyNkOqDSqqJfqHrkUA9wfML5BTXDsKVbr8eh8Fd2bN4JfFsPLggiQCDCNKFRcrV3acZAjZxoWrgEWCW6bMNLf0jJCQrIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m3s+OxrT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pmd5jvMf; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=JySRizfdcwX/e01pAbm9PTFgced5Fliz7h9W0TykreV0a+KyGFpHqZh2699uboqj2Pp9hfXIPAVWE90ylURl8MptG4dnjRV/NLA+BXKcYNEPBmjfIIOjh0jfLmAqB411GJEDXSWweuLTe/8Mrou1XQ6Yr/O0hb2f0T/0J8nBGYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tc4u8XF8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dAchXP0P; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m3s+OxrT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pmd5jvMf"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7C762EC09EA;
-	Thu, 26 Feb 2026 12:39:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tc4u8XF8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dAchXP0P"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8DDC7140019F;
+	Thu, 26 Feb 2026 12:39:33 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 26 Feb 2026 12:39:17 -0500
+  by phl-compute-05.internal (MEProxy); Thu, 26 Feb 2026 12:39:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772127557; x=1772213957; bh=eTIW/U4pPJ
-	343xbrs2sBtIOzswgRBSYdp/wHQDfy87s=; b=m3s+OxrTvx2Pfe3QhMyEqBxaqw
-	UluYYbfIFhvzI3tiPm6f6AVYtYpjgMDCHgdxcoQTd+znC9lVvG8JLh3HZoUi3I6j
-	Ln28Mkw8y1lZaxKcDVoi6+RsTeWBm48XBWUbYoWEEMIm2pZJ5DMqC6I8HVI5tJio
-	G9tdUDqN8GLK4QCN3GFGuowOGxnCenlDJBC5rMaj/DCv84ta4dp4/CnpaOaG0gus
-	HqMOV7LTzzwNhn7lGiHDuYFhH3yvlea8eG9TBMbPgP3jniWkwkUYnLBDmvThasOG
-	Y5XQHjHMfjobUPYHvvUvSH33m5E3E8vGq8hHiF4ALrkG+0gdP2mNxRDGadow==
+	:subject:to:to; s=fm2; t=1772127573; x=1772213973; bh=/Dn2h4CF+M
+	GlR2XY1k/qmWDyymD4xhrfdXwQfei7iZ0=; b=tc4u8XF8GuHDkKswHW5tfwdbpG
+	VWC2r8OgBBZGykgskGh7ImFx8V96xoQzOjIMCLX4KcWMxEYliHPJ94xWsCs7GGur
+	LruDdAEBAsvPCIuHEJuKMmltweZYCUMSqQbVW1t0ksBnAk663oRxWKOFc+/CWYh0
+	BWHmywmlcEDfm2j9OEH77r89BpYVs3nHPWPve1dZCWAOV02ZWy5KvKn5mJvLYeSH
+	k1leL+dMc2feM+U/kDIXq7bNZZNUGNoShkTbjDjfD8XvONCjilPqiUC2wYsIFdec
+	2CTAvxvUpRzeBFG6lXES+8mzonGXXBzUx7x1OBHszmvZk6GiSt+kSII6wAhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772127557; x=1772213957; bh=eTIW/U4pPJ343xbrs2sBtIOzswgRBSYdp/w
-	HQDfy87s=; b=Pmd5jvMf+gaPjz4MY4lfM47/51zq9pYMnr1Wbh9ROXTiGI2bTKj
-	jPZiGsIpWuJaZz7tVf4NPvpsI0jV2fj1tDnX43seGhh1DDchPcWaXM/1s/ioITMQ
-	+XRoKqvpulIfv41WppNBv3/76vkiZhnhxjMNfkYM9YPINfSoAPHuxL2n/TU3XDrQ
-	fkJdpkpVLonjBV8Eu79N8rAufdjsJU/LcbMY8OLmv0sycM5BUWI7st0PIK9pGHRb
-	dPAfH7mH5Z/kSkLbIDta1ktcNAq1/LzL89H7MLB7G5/UuULG21F9WkFv5/S2yQTq
-	Xdra8ye2iJkoDj0i1xdFm6T5HOxhgAgGShg==
-X-ME-Sender: <xms:RYWgacfGU2G75uGSfcmMQL3SMBIXDfubTkL5tOANIuzPAD4NypFiDg>
-    <xme:RYWgaVFT46Ggp29rwwJAsgCKa8P7_ME7Ek0OGwzMjYQpICuXSHVl1zK3UFi1XXTmh
-    akfRozVkQaJY6kVlcuAHSM5EzvdLzQNi0YQikQXjg7hwirUW43wzn8>
-X-ME-Received: <xmr:RYWgaV3SY9pkLU08-dtMskGwF154yziB0_KBx-4g6sihx1rTFmmW6Kh45sXju-0XnPx4utt-bR0pJuJzBOl4fSKZv3NsjO2ewA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeiieejucetufdoteggodetrf
+	1772127573; x=1772213973; bh=/Dn2h4CF+MGlR2XY1k/qmWDyymD4xhrfdXw
+	Qfei7iZ0=; b=dAchXP0P3d44XWW3gBEubOMeKRLwnnS/mLZmNR0LnZXnfK97NL0
+	CoBzNYSwIzkbcc78JEkXk/My9qM1J4KWyQMTTqK+/ufz5WUmc3x9OtTahSCuChry
+	0Hme++6T4a0RrXFMdwsbhxz3awuwlTrPTCx608kW0Sk1PCBW8a1ENbG4c+i6EQVm
+	mz2icj8/Y92nXwXMHFxGFqsX2D/siMyVMS2ZdCvrDto1pGpu5kcMmW3iVuQoK71S
+	EjOpycP7AX3lEUI9lHv4bjWHYKu6ntF08YMf8gkkKhzmyGsQ8rdSXi5LtgHkVn5t
+	zHfq/+Qd6edxPQzRiGoSlsl5ZQnVUO9rosg==
+X-ME-Sender: <xms:VYWgaYsZmnxSchoJigQZaUytajSdmB3FXrbj2XMFaLrcOVgdRds2WA>
+    <xme:VYWgacWo4LEW6M60V0QkFsWY1zMarmhd9-c7rLN4IvpMi1_S-0F44kWgdUyuq5m7w
+    7a3t-I215jkYSse8sHbOPLmy7VfJJU8HlsQ3R9nz0-CZzfOAQ_PnLo>
+X-ME-Received: <xmr:VYWgacFs96JzuhS_QxbmKqhvMbdLTWGbeMZQ4jXcJ1yQuvjAoRkaxFihLl2BeoigC-thLnAvAVPx41RlNu4LMtruDObPqEHmXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeiieeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffgffkfggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    htvghrnhepfeejgeegfeekteffgfehudeugefgffevfeevvddtudevhfeiheekgfegteff
+    kedtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
     dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
     pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
     esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
     rhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphgvfhhfse
     hpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:RYWgadlJ3cQvws--m0bmQDKO6-mxUyNucpk5vmnHZTvcBLcNvrKlKQ>
-    <xmx:RYWgaV8ksxkezf_pTwEyYPu2bKYdMlEoSCJyooaDJ3v-SrQnRzlhMQ>
-    <xmx:RYWgaSowhNGEZQCYUu3ed954oAxC3ugM1ujpLIbDHPbkp9VjyUcyGA>
-    <xmx:RYWgaemFfyHlAPx_Zu3KgYED8d4M4CTjMzag59rlw5ZNtIsk9TV25Q>
-    <xmx:RYWgaU0VULoGgKmN1vgWF0RxnqTUfP3iSYPbeKskm61oXC_bhszgcRxd>
+X-ME-Proxy: <xmx:VYWgaW3em9QqlVIw6unc4tvKSSXoY39gPpE7BvJ28G-XrOwu66VDgQ>
+    <xmx:VYWgaWNfxVePeus8F5QRmKfhvaThg77Fpr8c9xvmU6QZrEjUt3xVGA>
+    <xmx:VYWgad7o_H_SZZwMOnayDBIFEHJnA8VzN2czOtoH9epyQ40mznDbCg>
+    <xmx:VYWgaY3ixz6nSeKgaO-0MAuCmDR7Y0H8v7CfPQYjttAmSrRHgUzudQ>
+    <xmx:VYWgaeGqSlngUtnhX-Gv922yBcy_pr3qOWD6oZgyypqZmhasKaHf8A63>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Feb 2026 12:39:16 -0500 (EST)
+ 26 Feb 2026 12:39:33 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Jeff King
@@ -77,9 +77,9 @@ In-Reply-To: <20260219-b4-pks-fix-for-each-ref-in-misuse-v4-0-57ac30172fae@pks.i
 	(Patrick Steinhardt's message of "Thu, 19 Feb 2026 08:57:48 +0100")
 References: <20260128-b4-pks-fix-for-each-ref-in-misuse-v1-0-deccae3ea725@pks.im>
 	<20260219-b4-pks-fix-for-each-ref-in-misuse-v4-0-57ac30172fae@pks.im>
-Date: Thu, 26 Feb 2026 09:39:15 -0800
-Message-ID: <xmqqwlzz2ym4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Thu, 26 Feb 2026 09:39:32 -0800
+Message-ID: <xmqqv7fj2yln.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -100,8 +100,7 @@ Patrick Steinhardt <ps@pks.im> writes:
 >     non-directory prefixes in exclude patterns, 2025-03-06).
 >   - Link to v2: https://lore.kernel.org/r/20260130-b4-pks-fix-for-each-ref-in-misuse-v2-0-0449b198a681@pks.im
 
-This round saws no activities, but I just re-read all and found them
-quite nice.  Let's mark it for 'next'.
+This round saw no activities, but I just re-read all four patches
+and found them quite nice.  Let's mark it for 'next'.
 
 Thanks.
-
