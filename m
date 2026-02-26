@@ -1,180 +1,127 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A69142E019
-	for <git@vger.kernel.org>; Thu, 26 Feb 2026 16:21:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772122887; cv=none; b=tArPSoXBAOck4TYDzPWfms/rh4/bXiW2xEBwHAShsXvrLT0fWSEl6kstSRbgbkeUK1wBz6k4EZXWm3sDFih6e+zizz+uCw1AwxcfveE/K15+dFVr+xxLT3Kj4in00bd00eFhr7R3tL/wbkQ3OvhLfRQbfuI6MYbqg4AzP7etJpU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772122887; c=relaxed/simple;
-	bh=d5UbyfPGzlZj7iSDuN/ZkX9FKM81YO66zpYAaoPAuoA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Q5vBX00hLdlhDwW7ZzGmyVuS1XyxHsg+DGOfNI25XVCu7eJHxHJV0ih86gUAgmI8MPYjrrpngZmYkl9SnYFfCRPMUyIxyVlQfFVQjGHdzHIa/4kmRkRcCzFAZ6DqhYMkqZALmEiztbtGmIW13/qMwei+mNk2SbqIp1vUC2zpJcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MIiOmCjq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YSgeXwfr; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA7C389DE6
+	for <git@vger.kernel.org>; Thu, 26 Feb 2026 16:24:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772123084; cv=pass; b=EamrsLoircBQNUpJlPA1rMGmeqy2U53IzxZYxPi15zJ8l0K7+NTUgTYS85SpB4Dtqhws4IJ+2uAmrzKx5ulBnfUsIIAy7wIdSEiPN7+hk4kSFZuTRBM0YOuQw3Yea9FQmGXgHCq6YM917aerv0JsKZrndOQZrtQlAfFaru4CXTE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772123084; c=relaxed/simple;
+	bh=vsTmZoAqpM0SCnhr2YgeOAoS3HnZOLhpFIFN3NbTNDA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W60CSL7xAVRXhe1EJjAL6+ufJsgOOuIunBaHzF96F/ihyaOq7DFztP6TEJ53lokzM/7Jbp44I1Cs4q17LuNHymAqKrcniAQkGly5zft6zfZyrB7pTwYxQHaNZf38qCElHOvrqoeiS3kcc3D56YJhtN719rH6TdW3lgWBbnw/GXU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J8kpO++i; arc=pass smtp.client-ip=74.125.82.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MIiOmCjq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YSgeXwfr"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8E9D8EC0942;
-	Thu, 26 Feb 2026 11:21:25 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 26 Feb 2026 11:21:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772122885; x=1772209285; bh=24rxIwIevo
-	nnQ0cHw/utLXqY7AkG3WwNFbjwOIncG7w=; b=MIiOmCjq9dpRYyFyPsyPgq2tQ0
-	rUO5K/qi74A4k+Qvpdn5Z+mSYIEEpOSxqhaP9ERkd1c7C3f06KwHi4o3TbHXSVnT
-	NW/fATrVzqaKy2iVWiPzrL/U/f0lDVCFaD+gsgLYWnm8Bqp/vOPX9a+FLRVJxZ3E
-	p4lsEbP1Jj6hr6iobdPOebh/eIBhfaiSzouALIE7pIj3h1+u4MWjZcSK+ckBmYGR
-	ADo5zEHD7tr7iYIt1n9Y5GgvBzUMYCm3/MlYBE/hGHDCgCZGsp7xyIvOc6Ld1Un7
-	I7nbx3ljoQbUd0/7TFU0n4D17LONnErZ35whCRprj/Sirc01FdVP7BmJ84Vg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772122885; x=1772209285; bh=24rxIwIevonnQ0cHw/utLXqY7AkG3WwNFbj
-	wOIncG7w=; b=YSgeXwfr1OtL54BP2du5MCQU6HzFcnPvRE5vxVWTYt7lOER4HKC
-	BShtjqWrgg8XF5RFiQtQG10mhJcbzqaaBUDJBqxN6VIJNHgWj6H6YqKNZdEfm2fE
-	ejJpX2DDgXMiCL39mkUi2Bebi3+0Fd+SO7y0kcuuj62s0mcmctx4aP/2CyooYmuP
-	17TG+bqlDuYYP0qM7p3oRWTeSFhNuQOB2SPRBHI0nB0A++wGvFbXRofDiTazz6MK
-	q+PtMNDimrr4u9XzmJ+jrlLYVBlKpOA7cDWergg3VnGChbsghdkOrjXE/HFgNd+X
-	P9PqDmu4aMJcamS8KYNQEtfrrx3PuMM2eQw==
-X-ME-Sender: <xms:BXOgaXtJwisKD55SEb2ysIsShMfTvUaVGUPQUqU_lt2ktWhgh8EQZQ>
-    <xme:BXOgaXjGiiXie2qzTzlTRnKwtzHLXRwjMGYAZu-7PonDKQ6xQHz2VAN-YSt-oYdK1
-    kEJYNourx4_qobH20zJEFuFLiZwAZ1YcQjTIH9ay9pLbxtDuSYkchM>
-X-ME-Received: <xmr:BXOgaQ8Pk0S-TQz12WH1a65Dfd3XbiRbATeq8Y-DtNm3WwZWTmnjPuFF6N_Mk2ggWHnIJZe_XWmV0WZR1G6Vzdy6Sffs3P-wMA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeeihedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgv
-    thesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepfhgrshhttggrthesghhmrghilhdrtghomhdprhgtphhtthho
-    pehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphhsse
-    hpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:BXOgaSsB4qrs2PE2aE1epMDEw-yVp0ZDBKzGC5YQr2D0cEO_-NzzmQ>
-    <xmx:BXOgacqvKVV31z1dsL_FLd6b5kugf-08JuiFq5cYh3bTCuckz6yYzg>
-    <xmx:BXOgaepSn9EgHsAhO_cf7ljvWA2sWpgfUQsA8rSa6ZuM0L5MmKY6Og>
-    <xmx:BXOgaTbaz0NdNpOu3uAexkt2nLRe3bz5V4Yz1-Pm0ACAD9YOWFEScQ>
-    <xmx:BXOgaV8ZuuqJY-GAZus9T28TRYRHCo20OASthY7NlLqhNoJ8d0vLzRaS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Feb 2026 11:21:24 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Jeff King <peff@peff.net>,  Derrick Stolee via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  fastcat@gmail.com,  Eric
- Sunshine <sunshine@sunshineco.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 2/2] for-each-repo: work correctly in a worktree
-In-Reply-To: <08c6e203-3444-45c7-9bc9-cc2590be30c3@gmail.com> (Derrick
-	Stolee's message of "Thu, 26 Feb 2026 10:29:47 -0500")
-References: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
-	<pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
-	<4e3f4aa6cd36f779c6c1d6b4f30bb68ed807b9da.1771968924.git.gitgitgadget@gmail.com>
-	<xmqqv7flervq.fsf@gitster.g>
-	<eeebc30a-40bf-40ac-a16b-ca5e128c3c01@gmail.com>
-	<20260225131344.GA2139176@coredump.intra.peff.net>
-	<08c6e203-3444-45c7-9bc9-cc2590be30c3@gmail.com>
-Date: Thu, 26 Feb 2026 08:21:23 -0800
-Message-ID: <xmqqsean4gsc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J8kpO++i"
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-1271195d2a7so1437017c88.0
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 08:24:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772123082; cv=none;
+        d=google.com; s=arc-20240605;
+        b=TG9FukkpsakeZWLqWubgQELbGK7QMZNyx3uDraMPFYieJ6baceCOQItnXwpAMgZk2S
+         bQD4J7mRtrKidfamq25lY2S2BkN2n1sxZ8zDF+gno9uVCd6MJ7YRS/+Jbr4OWm5cBpdB
+         lrmFp61yaEOh1HbLMnhkibhfG0CMf3sVlyG01rHIT2mJBkpSy/IiBvPLTLgBVrbBr3Yo
+         PiUiEIFDEhL3Uk8GlrimrpXuUjy9FzMswonsewZJLm+KxLEZoMDHstjDV+PAXIyidfm4
+         OCqFD/DxZq+W1MTiJDb7M5Q8fyWI7JVYt1x43F/13Xi6+XPgOjeyLyWEq+fTpmNB3Hv9
+         3QQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=C/vKHkjuWIv5c3jceNoFr+mZdA8m9vySxz2hVgd6Vmw=;
+        fh=NwfNtOtU2KQYU7fqF/FMpSt6w8Y2GP+xDflSKw3gN/E=;
+        b=NbV1WLSmoKfukqLsHKEGw3X1CZULkIbBM4Awh47yc3XmHu1tAklZH8SUJ+iFM6aZp2
+         0uofUba4COdMoqO1iOB30McwEcRLFgT1xWHBb5/+CQJAKtkOAh0KYDH4/DaAhJwgdB+B
+         HBJM9g68i8UCXUp6lHQ5IFnJul/bdt2tCIy20BnrtvY6eDUQzB39VpBeYxOR3o5sWoYf
+         t8W8rC0qMrkr4KuNKEub6zGirSRu5BubvAc+lCAEX//SyE/xZZynkB1aixVJ3Iz6wlKk
+         7eUMsDn1J7bbGkzgUdgGhXv8noIlCOB+g7roO3iLUuaKEwcvAjr3Bgx09+SMkU50pse1
+         uUpQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772123082; x=1772727882; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C/vKHkjuWIv5c3jceNoFr+mZdA8m9vySxz2hVgd6Vmw=;
+        b=J8kpO++iRNqm7iuGDktt28sMaNU4PvsqOScdUUHNgaHNePSXnlVVTB2lORUw0WLi/6
+         FkBMj0Hff92nFBNnp1PCa9MHogtZly8U30ypfgukPvWZtlJifTn9dtvMtoKHdELI/zz1
+         b5vBAx3UBXK1tkI17b9Rz4iXxQ38fVKtyCBcznFI3lBXlk8KDZI93nzvm/CLh43NEgCm
+         5YnlgsCfJkLAYuo8Xf4rRupmaipTNgvSHI3YU0Sp91ShtXRmJThM6adsMW6ipX0tP+Rf
+         JK7lTjwv3PZkdbWga3vbFymZOiUiZR7giWhiUSCptp86p3IXLDC9kyol+nuk8DqLiz2a
+         6zyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772123082; x=1772727882;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=C/vKHkjuWIv5c3jceNoFr+mZdA8m9vySxz2hVgd6Vmw=;
+        b=mrqom/d/hLyNGFTnrc5pbeLzPVzHePXPN/NjftpS/WXhfCTynjCAUhKL1w4t7oRygS
+         clPf6HIqf71Zqus+QSOxfU6tcXMNRrOs3iyAJDAg0bCJww89z9XheUU26YZsGodXAkZU
+         6862wCO3cfxDWCqIM4dWrupqCmq6eP3jlQ2rR8KzZQzQnsISd6HWtE8Q1GCU889YviMp
+         qo2TgQS86/0MiVNiMTWoCQy9Uew2Ou9gLbSz+iVSmuPy/3k2cVBDLduKXSKDqd0V68M3
+         Hvs+hBihwV0eQJxFWlvEtpxO8rswnuwvGzmWJD7LglSVvEKbsXXPqPH2O2xEFBEAmXGk
+         gq8g==
+X-Forwarded-Encrypted: i=1; AJvYcCUX756nBu9jDIULbi+pddchiDsEMU5amSnfmK8I2SXBqUTlCskLLY8QZ1ZuSlByFzkBFbw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YweBFDtR9w7VsJugboZ+B0NQzOQ5+nOGK7TXaoCeSlcG2N7RT2E
+	U30qkTq0MsRTIPjAX4WyEBu9TLAcP0YaqDEL6nzgIDCQbP+hh5MQw83OeWYnGaaTdKupTZ3/Lyz
+	dIA2ORclovSy/SRAtsf8j/ztDicBAh9o=
+X-Gm-Gg: ATEYQzyYpcJ5JnKy5m7eJyA3O1qlsUPwkVMZ/9sQoeQXFmiSgEEmFlyNrvBjbUrwt+b
+	LUUE9BCshWB7aBP445MOfOwof1qp30Nkpnzj0suTKz5D9tyCLvBVU06DlyjQ9GrFWjiGNOWi4K/
+	5EGVHIAyo6E99tOe3moMPhPxrQiwLD1hjp5LrRKPP87xfUJK7dWrRLoRdWnOeZb0DgT0xrV/AP8
+	iYnqOGiHxChXNetJFoO8sTEx/EDPh0JgpdMpoPLmVNpZpHhsBGSB+INbIlJ8Dp+SLmFzXqvSznI
+	jVTKA7q+7K0=
+X-Received: by 2002:a05:7022:628b:b0:11b:b882:3ed5 with SMTP id
+ a92af1059eb24-127869a1cdamr2388327c88.37.1772123081913; Thu, 26 Feb 2026
+ 08:24:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1771258573.git.belkid98@gmail.com> <7d33f1ef0f8182893d63d49b350984025ab757d4.1771258573.git.belkid98@gmail.com>
+ <CAP8UFD1c5JgpQwMuTPE-VWS=7-1Lw7mWVaGGXCPwaG5=VYhk2A@mail.gmail.com> <xmqqikbj5y0y.fsf@gitster.g>
+In-Reply-To: <xmqqikbj5y0y.fsf@gitster.g>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Thu, 26 Feb 2026 17:24:41 +0100
+X-Gm-Features: AaiRm53WCmOPeN8zMEYtVU7Vsz4GLJpKczcN1ZcI3ioycB6j5T6baiIY3G_1JRc
+Message-ID: <CAD=f0L-_zq5ACD1mbfyBn3bTSu_X2emeMjv+Cfu5B5zyH8=DFw@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v7 2/3] environment: stop using
+ core.sparseCheckout globally
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, toon@iotcl.com, 
+	phillip.wood123@gmail.com, usmanakinyemi202@gmail.com, 
+	kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Thu, 26 Feb 2026 at 16:23, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > On Mon, Feb 16, 2026 at 5:39=E2=80=AFPM Olamide Caleb Bello <belkid98@g=
+mail.com> wrote:
+> >
+> >> @@ -670,7 +672,8 @@ static void clear_skip_worktree_from_present_files=
+_full(struct index_state *ista
+> >>
+> >>  void clear_skip_worktree_from_present_files(struct index_state *istat=
+e)
+> >>  {
+> >> -       if (!core_apply_sparse_checkout ||
+> >> +       struct repo_config_values *cfg =3D repo_config_values(the_repo=
+sitory);
+> >
+> > Nit: it would be better with a blank line here.
+> >
+> >> +       if (!cfg->apply_sparse_checkout ||
+> >>             sparse_expect_files_outside_of_patterns)
+> >>                 return;
+>
+> OK.  Agreed and locally amended.
+>
+> Let's merge the topic down to 'next'.
 
-> On 2/25/2026 8:13 AM, Jeff King wrote:
->> On Wed, Feb 25, 2026 at 06:44:51AM -0500, Derrick Stolee wrote:
->> 
->>>> Looking at run-command.c:prep_childenv(), it seems that you can pass
->>>> "VAR=VAL" to "export VAR=VAL" in the child, and pass "VAR" to "unset
->>>> VAR" in the child.
->
->> But I really think you should consider keeping config-related variables
->> in place, as prepare_other_repo_env() does. Otherwise something like:
->> 
->>   git -c pack.threads=1 for-each-repo repack -ad
->> 
->> will ignore that config in the sub-processes (whereas it currently is
->> respected).
->> 
->> And for that, you do need to loop yourself.
->
-> Great point. Here's another attempt:
->
-> static int run_command_on_repo(const char *path, int argc, const char ** argv)
-> {
-> 	int i = 0;
-> 	struct child_process child = CHILD_PROCESS_INIT;
-> 	char *abspath = interpolate_path(path, 0);
->
-> 	while (local_repo_env[i]) {
-> 		/*
-> 		 * Preserve pre-builtin options:
-> 		 * - CONFIG_ENVIRONMENT, CONFIG_DATA_ENVIRONMENT, and
-> 		 *   CONFIG_COUNT_ENVIRONMENT persist -c <name>=<value>
-> 		 *   and --config-env=<name>=<envvar> options.
-> 		 * - NO_REPLACE_OBJECTS_ENVIRONMENT persists the
-> 		 *   --no-replace-objects option.
-> 		 *
-> 		 * Note that the following options are not in local_repo_env:
-> 		 * - EXEC_PATH_ENVIRONMENT persists --exec-path option.
-> 		 */
-> 		if (strncmp(local_repo_env[i], "CONFIG_", 7) &&
-
-Minor nit: !starts_with() lets you avoid counting bytes yourself and
-hardcoding "7" here.
-
-> 		    strcmp(local_repo_env[i], NO_REPLACE_OBJECTS_ENVIRONMENT))
-> 			strvec_push(&child.env, local_repo_env[i]);
->
-> 		i++;
-> 	}
->
-> 	child.git_cmd = 1;
-> 	strvec_pushl(&child.args, "-C", abspath, NULL);
->
-> 	for (i = 0; i < argc; i++)
-> 		strvec_push(&child.args, argv[i]);
-
-If argv[argc] == NULL, then here is where we want strvec_pushv().
-
-> 	free(abspath);
->
-> 	return run_command(&child);
-> }
->
-> This comment details my findings from comparing the list in
-> local_repo_env[] and the top-level options listed in
-> Documentation/git.adoc. That's how I was able to find that
-> --exec-path sets an environment variable that's NOT in the
-> list and we want to be sure we don't set it.
-
-Hmph, wouldn't we want to use specified exec-path inside ...
-
-    git --exec-path=~/my/git/libexec for-each-repo sh -c "do things"
-
-... "do things" script when we find Git related binaries?  Or am I
-not getting what you are describing here?
-
-> Should we add the comparison to EXEC_PATH_ENVIRONMENT as a
-> precaution to make sure it's not added to local_repo_env in
-> the future? Or is that too defensive?
->
-> Thanks,
-> -Stolee
+Thank you very much for all your assistance.
