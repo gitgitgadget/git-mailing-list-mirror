@@ -1,70 +1,70 @@
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764994657D2
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 19:30:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3CC44DB65
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 19:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772220657; cv=none; b=HvrrfVzy0IwkflrDqfSAbhXqdKIiGvBmIiehXup604nqc0SXEM8nmeJWqZVWYKmuWjGr/VJ707GCBI2wxWltTlj2Qz3taN9tYxllV3mgC4UChyylJ7ijHahZJtWf0DksNzOQ2ZUv28MFrrQbkRlD/fZlcoUSX9spFQhyaj4o+fk=
+	t=1772220658; cv=none; b=cWHxroqltzdmsL7QuVGOvROJe1gHaoDhPkzvzMNYsIz51in7zKFjpsjCZxXaggIZmmrzzBpTnXWuaSFcioAeHLPGG67AQDr0XpX7a4H9ZbI5LcZQVGPdtByHyki4KRsDRmtIvinPv0nhgEJptl3RF3DKGbnPMobQ05UE1Y6b0EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772220657; c=relaxed/simple;
-	bh=wXV/TpDSyWkEkLX7Wd5f/pF4v/g49KpoUnOgeXFk8+Q=;
+	s=arc-20240116; t=1772220658; c=relaxed/simple;
+	bh=LpkrZE9ZYUZw67HF9kFoQq6MaAkZa6q8pYU5d/t1+hY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=pVWUGGDivYAipO9IPG9EmgqaimurMz74EFhIJa4lryy4npoTLHaH9waTnL3uIrFgpaLbPtRAKfERS2fX8tf8nWnY75nvevOB+UtdYyvfd4zt6TuV5WOFzjjiHn67zZSQ69sJ5rvuX1LdmY9wrWA68L6MsjmAcoCNszBylZWDhzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P/pMDziA; arc=none smtp.client-ip=74.125.82.46
+	 MIME-Version:To:Cc; b=kegng86dMrEhSemMv0Eqh1FAOKklN9GQRgonhvMdOnDJMLZkdR+e6vEXuObl92K1+ss6p0bAsiJMm1iHScTabS8T2eTXzSgno+h4POj+ROZMVd0mIMrVaGpZAtudkjIIiAnphbrcnYQD55IZRx3a1fQhUf8Jnw7Ziptg8vLw2w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eYUSmwcG; arc=none smtp.client-ip=74.125.82.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/pMDziA"
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-1275750cf9cso2010452c88.0
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 11:30:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eYUSmwcG"
+Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2bdecd00ebdso1228888eec.0
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 11:30:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772220654; x=1772825454; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772220656; x=1772825456; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FVEq7b4L3L6Yhqxfg1oEZgwqmWIZzM9/zalPSDEC6UU=;
-        b=P/pMDziAIOISz2C2ePWGQqc+D7GtdSdo1RDTpFLw0v730Z2w9wdmF6Hw7gf13Uznlx
-         z8IRJKnvPl5knBnhuWKXU5CY/sVxLJ43B5ykAO7bUrjni27oGcv+pRQUHLbXHy//Y2MF
-         HMM/ukfDqnY9+F+5NbQ+z2K5lCtJq7DlJjWVnInME5vaeGG5WUOpavoEJkFIEGlZ+uZH
-         gmUjQpHHfLodSjhGLzywHpPsi36nxs6pjgxo6J3yApBZf5s9rgTlR72Y55WPMk6Bn9sQ
-         Gt73DYyHhe1CcmHcrxa36f6/AF0K2U8k4Aip0HOU0iEEFDqv9OTqeqUG6d0JUZLxPHgY
-         3iMg==
+        bh=dGMA7vPkvfPMJtiGjXbBrpxghWpD1BIOrwwz/9dAxEs=;
+        b=eYUSmwcGP3dE/B5Okd3OOX0KS3v/QHrJposTvL4d1/Kf8jxL7Fp3+uyMIUHTgZuun9
+         hOBaKp+FEPpWI2XgX9qSbJDgZ6N/6shUg+ZL+JBa2AJueT2ZiywWmYEMLYKKMijIMajW
+         CruhwO2mCWEFpbLn+jKLsTr7eSsouW392mSenP5DH2WVv1VJjofQleKVxCPSoq/W4cdd
+         4GZxQxI6NxpyPYhZat9IcBiqY/AlM5DxyHiJIaomuMZRGZ0G7J+uLGRGtY+AsSEfdm0y
+         IGdP7kpzspOyZ1y+XIKb17LrpKZbrIYu1AH51LgF9Rv1GDaO96J0ayL10ZIBfbIlpyWr
+         mqEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772220654; x=1772825454;
+        d=1e100.net; s=20230601; t=1772220656; x=1772825456;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=FVEq7b4L3L6Yhqxfg1oEZgwqmWIZzM9/zalPSDEC6UU=;
-        b=sSL25/j7OtTMpelyDUnLDIKqR4HCGL2tNOHbdKQrHtFvVEkteBiYHwQNyvOos+k80n
-         T95n+GDgtsOn+gIY3nHMxvTRcOIrJXiNvCkgnTd7+wB0WwMAcJuyP433xF0Z2fbGd7/y
-         VIYN5shSm+Lr9rWJPvKmjK5hLGylXaqFYuzpQkvk/9aglga5e7EGQ8ZIwv7S58COLlCB
-         5pQP2+RTqTaeJqwyKP+EVP9Vi1Z/e8hwHsjUzw1HQadDE1vDiwH8F+eYUs7fQhhdIR8g
-         sT9wOGA+rAcoyCA1p9d0NZ+0OWfNGLdaZcHLHTQK0ZsverwMurzb7zTIdiTsxLdxJ1qO
-         96YQ==
-X-Gm-Message-State: AOJu0YymBLl1q3dcd/gUIFiL4+w4UJnYG9nmjXYOFQhVGi+ij2JNN19b
-	n4Jfp0ChVe0Vo67KLv8qVqZ8hIx81ptawg8uytTyTRFzBcGiJnDUSQvhjFALoQ==
-X-Gm-Gg: ATEYQzxnoNW7tGPQtaB9qhlNKcu0kEagOGX1oJuQ9hl8asuie9S1OY5rNQhfCEphxLc
-	4YMf8QdWrExYEt1uY7xqBUWUx2t+3oAB+CzamGEMkl9m4ANzM+ASsUQyZjV3QEaZj6I+V0npb8s
-	5/q/v0QZIf5LOuB5lEiD5lT9bF/z4TEr3rYY3+AK0PSzXu8Tck/urM7js38lDC0icS4YxlN9p3K
-	uorU92s1XUznQmJcVMabSg8MH7U+JX0SXxtRtbrP2GT8C0Z8br36kLFk9LHsfJriBLUf9YxhB0I
-	ko2kS3MahwlSdxi/R2GACDVIMURelgT/jgvrzMRu2Q/Jz4vptYgNWNi8w1ckfcRIdjN8upiK0Le
-	59dn/NsNwpi1IibB9fcsRYfL5mAshXoozXM8rQoqGViMo6TJ6xrvnGao2QMSfcCVrjR8cviljoP
-	mzMZ18uo5eHjK3XJWAoeXLNK/frbY=
-X-Received: by 2002:a05:7300:3b24:b0:2ba:6aef:697a with SMTP id 5a478bee46e88-2bde1d6f33dmr1660907eec.24.1772220653862;
-        Fri, 27 Feb 2026 11:30:53 -0800 (PST)
+        bh=dGMA7vPkvfPMJtiGjXbBrpxghWpD1BIOrwwz/9dAxEs=;
+        b=MnIkaAprTURu9lBHRozBckD0Kz/nb57la8yg9TNoIkNwxKCbFHyy3HLr+dL04ToqrJ
+         DRAO1M/ltcxxidruJ/zu8K0f+nPgBd0vzCB9bazu/wJLzSGmS58fQxsGW33oNK2K7mIc
+         +F6GAmkmmlquVp80e+wYTz0eDKW+oL2MUidJkllLISfvSePqRp8U/1eAGiUcUX/hJp2v
+         9qFfvvxxEYh9HbZ3B64zI2SGaOsy2H+C4pKHkFf+MfwxydQQ++nRpU4wSi3hDqdOL7JH
+         J5CQxf5zD9DS6Y6yPAjZpg3OGLZZsizx0OeyBIo+xdF7Hv4LYTfk2vlQguNnS+dmPwYt
+         ewnQ==
+X-Gm-Message-State: AOJu0YyspwfHRV5+Pu8baFsPT1wbV0dBuY+EDAHJLE2+OS0ickEWRDZj
+	IIumyVa5Z6g4PKvi1Mtg0i/OuPqm/3NDQhp8b7QHgHzDndeYZSpVKXtGNscoYQ==
+X-Gm-Gg: ATEYQzz4XZCDcp9zUZrX0nVvesZ9T3dbgGoVdYEa/xb1rfIMzB+89eFNKx+2g1qntMQ
+	mNTFtoBOqJQ7LqKCCtzF+eS+z3Aq8jmDfim4eUyTpeyFvP74A/Sj7F1qUs4YjNMSj8s9dkJ10fV
+	QFFjDHHIHNJpo6HBdQAoKhBqWFrsidUo0YoDm9QZgpJsc9Ys0Fm4rWhbwEfRzw3LHYPhcVeW+TX
+	Vi+lySjYLsKbOiVqVhj+Cwd5oxCtDOrdSD/tqCN89WrUHWvJ6EeICk+p6IaykiJyDSc91bma0H0
+	lMlcKWadSf1DnorVfkfs8WpmoaTH3aybHyFFXAOTupoqV2/gCD4Nh3+fINW/81hNvLwdEz1DYx7
+	lbCW367tOsUy2jY1qspZM+PivAYm6Y1S+FMBLWfWT4iQFzHkiMi90A4NUW5qMT8BGMzSILhlFen
+	92kb9hwkmufkVLv49bekCQQrGPGs7Zd0Bl8rv59A==
+X-Received: by 2002:a05:7301:6084:b0:2ba:6d87:cf6e with SMTP id 5a478bee46e88-2bde1c0f4bfmr1933629eec.4.1772220655292;
+        Fri, 27 Feb 2026 11:30:55 -0800 (PST)
 Received: from [127.0.0.1] ([172.184.191.161])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bdd1f23c1csm4262832eec.18.2026.02.27.11.30.52
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bdd1e04361sm4899887eec.14.2026.02.27.11.30.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 11:30:53 -0800 (PST)
-Message-Id: <0525ed4cd99f312b35cd7c005f16679c682352c0.1772220640.git.gitgitgadget@gmail.com>
+        Fri, 27 Feb 2026 11:30:54 -0800 (PST)
+Message-Id: <f17c0f03e5daf6b905cbdba88285ee9d8e371f3f.1772220640.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2208.v5.git.git.1772220640.gitgitgadget@gmail.com>
 References: <pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
 	<pull.2208.v5.git.git.1772220640.gitgitgadget@gmail.com>
 From: "Eslam reda ragheb via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 27 Feb 2026 19:30:37 +0000
-Subject: [PATCH v5 08/11] t1901: extend structure metric coverage and
- portability
+Date: Fri, 27 Feb 2026 19:30:38 +0000
+Subject: [PATCH v5 09/11] docs: describe repo info path keys and structure
+ metrics
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,318 +81,135 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Eslam reda ragheb <eslam.reda.div@gmail.com>
 
-Expand t1901 to cover additional structure metrics emitted by git
-repo structure, including maxima and aggregate keyvalue/nul
-checks.
+Document the newly added repo info capabilities, including
+category keys and path-oriented key definitions.
 
-The test now validates both human-oriented table content and
-machine-readable fields for the extended metric set.
+Also describe --path-format behavior for path outputs.
 
-Also make expectations more portable across hash algorithms and
-platforms by avoiding brittle assumptions.
+Update git repo structure documentation to cover newly reported
+maxima and aggregate keyvalue/nul fields.
 
-This includes wc output quirks on BSD/macOS and hash-format-
-sensitive expectations.
+This keeps command behavior and output keys fully specified for
+users and scripts.
 
 Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
 ---
- t/t1901-repo-structure.sh | 250 ++++++++++++++++++++++++++++----------
- 1 file changed, 187 insertions(+), 63 deletions(-)
+ Documentation/git-repo.adoc | 67 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 63 insertions(+), 4 deletions(-)
 
-diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index 17ff164b05..7b7c4117aa 100755
---- a/t/t1901-repo-structure.sh
-+++ b/t/t1901-repo-structure.sh
-@@ -21,42 +21,174 @@ object_type_disk_usage() {
- 	fi
- }
+diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+index 7d70270dfa..b575977a4b 100644
+--- a/Documentation/git-repo.adoc
++++ b/Documentation/git-repo.adoc
+@@ -8,7 +8,7 @@ git-repo - Retrieve information about the repository
+ SYNOPSIS
+ --------
+ [synopsis]
+-git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
++git repo info [--format=(keyvalue|nul) | -z] [--path-format=(absolute|relative)] [--all | <key>...]
+ git repo structure [--format=(table|keyvalue|nul) | -z]
  
-+object_type_max_inflated_size() {
-+	max=0
-+
-+	for oid in $(git rev-list --all --objects \
-+		--filter=object:type=$1 --filter-provided-objects | cut -d" " -f1)
-+	do
-+		size=$(git cat-file -s "$oid") || return 1
-+		test "$size" -gt "$max" && max=$size
-+	done
-+
-+	echo "$max"
-+}
-+
-+tag_max_chain_depth() {
-+	max=0
-+
-+	for oid in $(git rev-list --all --objects \
-+		--filter=object:type=tag --filter-provided-objects | cut -d" " -f1)
-+	do
-+		depth=0
-+		current=$oid
-+
-+		while :
-+		do
-+			target=$(git cat-file -p "$current" | sed -n "s/^object //p" | sed -n 1p) || return 1
-+			test -n "$target" || break
-+			depth=$((depth + 1))
-+			type=$(git cat-file -t "$target") || return 1
-+			test "$type" = tag || break
-+			current=$target
-+		done
-+
-+		test "$depth" -gt "$max" && max=$depth
-+	done
-+
-+	echo "$max"
-+}
-+
-+object_max_inflated_size() {
-+	max=0
-+
-+	for type in commit tree blob tag
-+	do
-+		type_max=$(object_type_max_inflated_size "$type") || return 1
-+		test "$type_max" -gt "$max" && max=$type_max
-+	done
-+
-+	echo "$max"
-+}
-+
-+object_type_max_disk_size() {
-+	max=0
-+
-+	for oid in $(git rev-list --all --objects \
-+		--filter=object:type=$1 --filter-provided-objects | cut -d" " -f1)
-+	do
-+		size=$(echo "$oid" | git cat-file --batch-check='%(objectsize:disk)') || return 1
-+		test "$size" -gt "$max" && max=$size
-+	done
-+
-+	echo "$max"
-+}
-+
-+reference_count_total() {
-+	git for-each-ref --format='%(refname)' | sed -n '$='
-+}
-+
-+object_type_count() {
-+	git rev-list --all --objects \
-+		--filter=object:type=$1 --filter-provided-objects | sed -n '$='
-+}
-+
-+object_count_total() {
-+	commits=$(object_type_count commit) || return 1
-+	trees=$(object_type_count tree) || return 1
-+	blobs=$(object_type_count blob) || return 1
-+	tags=$(object_type_count tag) || return 1
-+
-+	echo $((commits + trees + blobs + tags))
-+}
-+
-+object_type_total_inflated_size() {
-+	total=0
-+
-+	for oid in $(git rev-list --all --objects \
-+		--filter=object:type=$1 --filter-provided-objects | cut -d" " -f1)
-+	do
-+		size=$(git cat-file -s "$oid") || return 1
-+		total=$((total + size))
-+	done
-+
-+	echo "$total"
-+}
-+
-+object_total_inflated_size() {
-+	commits=$(object_type_total_inflated_size commit) || return 1
-+	trees=$(object_type_total_inflated_size tree) || return 1
-+	blobs=$(object_type_total_inflated_size blob) || return 1
-+	tags=$(object_type_total_inflated_size tag) || return 1
-+
-+	echo $((commits + trees + blobs + tags))
-+}
-+
-+object_max_disk_size() {
-+	max=0
-+
-+	for type in commit tree blob tag
-+	do
-+		type_max=$(object_type_max_disk_size "$type") || return 1
-+		test "$type_max" -gt "$max" && max=$type_max
-+	done
-+
-+	echo "$max"
-+}
-+
-+commit_max_parent_count() {
-+	git rev-list --all --parents | awk '
-+		{ n = NF - 1; if (n > max) max = n }
-+		END { print max + 0 }
-+	'
-+}
-+
-+tree_max_entry_count() {
-+	max=0
-+
-+	for oid in $(git rev-list --all --objects \
-+		--filter=object:type=tree --filter-provided-objects | cut -d" " -f1)
-+	do
-+		entries=$(git cat-file -p "$oid" | wc -l) || return 1
-+		test $entries -gt $max && max=$entries
-+	done
-+
-+	echo $max
-+}
-+
-+blob_max_path_length() {
-+	git rev-list --all --objects \
-+		--filter=object:type=blob --filter-provided-objects | awk '
-+		NF > 1 {
-+			len = length($2)
-+			if (len > max) max = len
-+		}
-+		END { print max + 0 }
-+	'
-+}
-+
-+blob_max_path_depth() {
-+	git rev-list --all --objects \
-+		--filter=object:type=blob --filter-provided-objects | awk '
-+		NF > 1 {
-+			depth = gsub(/\//, "/", $2) + 1
-+			if (depth > max) max = depth
-+		}
-+		END { print max + 0 }
-+	'
-+}
-+
- test_expect_success 'empty repository' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
- 	(
- 		cd repo &&
--		cat >expect <<-\EOF &&
--		| Repository structure | Value  |
--		| -------------------- | ------ |
--		| * References         |        |
--		|   * Count            |    0   |
--		|     * Branches       |    0   |
--		|     * Tags           |    0   |
--		|     * Remotes        |    0   |
--		|     * Others         |    0   |
--		|                      |        |
--		| * Reachable objects  |        |
--		|   * Count            |    0   |
--		|     * Commits        |    0   |
--		|     * Trees          |    0   |
--		|     * Blobs          |    0   |
--		|     * Tags           |    0   |
--		|   * Inflated size    |    0 B |
--		|     * Commits        |    0 B |
--		|     * Trees          |    0 B |
--		|     * Blobs          |    0 B |
--		|     * Tags           |    0 B |
--		|   * Disk size        |    0 B |
--		|     * Commits        |    0 B |
--		|     * Trees          |    0 B |
--		|     * Blobs          |    0 B |
--		|     * Tags           |    0 B |
--		EOF
--
- 		git repo structure >out 2>err &&
--
--		test_cmp expect out &&
-+		test_grep "Repository structure" out &&
-+		test_grep "\\* References" out &&
-+		test_grep "\\* Reachable objects" out &&
-+		test_grep "Largest disk size" out &&
-+		test_grep "Deepest tag chain" out &&
- 		test_line_count = 0 err
- 	)
- '
-@@ -75,40 +207,13 @@ test_expect_success SHA1 'repository with references and objects' '
- 		# Also creates a commit, tree, and blob.
- 		git notes add -m foo &&
+ DESCRIPTION
+@@ -44,6 +44,11 @@ supported:
+ +
+ `-z` is an alias for `--format=nul`.
  
--		# The tags disk size is handled specially due to the
--		# git-rev-list(1) --disk-usage=human option printing the full
--		# "byte/bytes" unit string instead of just "B".
--		cat >expect <<-EOF &&
--		| Repository structure | Value      |
--		| -------------------- | ---------- |
--		| * References         |            |
--		|   * Count            |      4     |
--		|     * Branches       |      1     |
--		|     * Tags           |      1     |
--		|     * Remotes        |      1     |
--		|     * Others         |      1     |
--		|                      |            |
--		| * Reachable objects  |            |
--		|   * Count            |   3.02 k   |
--		|     * Commits        |   1.01 k   |
--		|     * Trees          |   1.01 k   |
--		|     * Blobs          |   1.01 k   |
--		|     * Tags           |      1     |
--		|   * Inflated size    |  16.03 MiB |
--		|     * Commits        | 217.92 KiB |
--		|     * Trees          |  15.81 MiB |
--		|     * Blobs          |  11.68 KiB |
--		|     * Tags           |    132 B   |
--		|   * Disk size        | $(object_type_disk_usage all true) |
--		|     * Commits        | $(object_type_disk_usage commit true) |
--		|     * Trees          | $(object_type_disk_usage tree true) |
--		|     * Blobs          |  $(object_type_disk_usage blob true) |
--		|     * Tags           |    $(object_type_disk_usage tag) B   |
--		EOF
--
- 		git repo structure >out 2>err &&
--
--		test_cmp expect out &&
-+		test_grep "\\* References" out &&
-+		test_grep "\\* Reachable objects" out &&
-+		test_grep "Largest commit" out &&
-+		test_grep "Largest disk size" out &&
-+		test_grep "Largest parent count" out &&
-+		test_grep "Deepest tag chain" out &&
- 		test_line_count = 0 err
- 	)
- '
-@@ -122,18 +227,37 @@ test_expect_success SHA1 'keyvalue and nul format' '
- 		git tag -a foo -m bar &&
++`--path-format=(absolute|relative)`:::
++	Controls formatting for keys in the `path` category. The default is
++	`absolute`. This option may be specified multiple times; the last one
++	specified takes effect.
++
+ `structure [--format=(table|keyvalue|nul) | -z]`::
+ 	Retrieve statistics about the current repository structure. The
+ 	following kinds of information are reported:
+@@ -52,6 +57,12 @@ supported:
+ * Reachable object counts categorized by type
+ * Total inflated size of reachable objects by type
+ * Total disk size of reachable objects by type
++* Largest inflated reachable object size by type
++* Largest disk size of a reachable object by type
++* Largest parent count among reachable commits
++* Largest entry count among reachable trees
++* Longest and deepest path among reachable blobs
++* Deepest annotated tag chain
+ +
+ The output format can be chosen through the flag `--format`. Three formats are
+ supported:
+@@ -64,6 +75,7 @@ supported:
+ `keyvalue`:::
+ 	Each line of output contains a key-value pair for a repository stat.
+ 	The '=' character is used to delimit between the key and the value.
++	Both aggregate metrics and per-type metrics are included.
+ 	Values containing "unusual" characters are quoted as explained for the
+ 	configuration variable `core.quotePath` (see linkgit:git-config[1]).
  
- 		cat >expect <<-EOF &&
-+		references.count=$(reference_count_total)
- 		references.branches.count=1
- 		references.tags.count=1
- 		references.remotes.count=0
- 		references.others.count=0
-+		objects.count=$(object_count_total)
- 		objects.commits.count=42
- 		objects.trees.count=42
- 		objects.blobs.count=42
- 		objects.tags.count=1
-+		objects.inflated_size=$(object_total_inflated_size)
- 		objects.commits.inflated_size=9225
- 		objects.trees.inflated_size=28554
- 		objects.blobs.inflated_size=453
- 		objects.tags.inflated_size=132
-+		objects.max_inflated_size=$(object_max_inflated_size)
-+		objects.commits.max_inflated_size=$(object_type_max_inflated_size commit)
-+		objects.trees.max_inflated_size=$(object_type_max_inflated_size tree)
-+		objects.blobs.max_inflated_size=$(object_type_max_inflated_size blob)
-+		objects.tags.max_inflated_size=$(object_type_max_inflated_size tag)
-+		objects.disk_size=$(object_type_disk_usage all)
-+		objects.max_disk_size=$(object_max_disk_size)
-+		objects.commits.max_disk_size=$(object_type_max_disk_size commit)
-+		objects.trees.max_disk_size=$(object_type_max_disk_size tree)
-+		objects.blobs.max_disk_size=$(object_type_max_disk_size blob)
-+		objects.tags.max_disk_size=$(object_type_max_disk_size tag)
-+		objects.commits.max_parent_count=$(commit_max_parent_count)
-+		objects.trees.max_entry_count=$(tree_max_entry_count)
-+		objects.blobs.max_path_length=$(blob_max_path_length)
-+		objects.blobs.max_path_depth=$(blob_max_path_depth)
-+		objects.tags.max_chain_depth=$(tag_max_chain_depth)
- 		objects.commits.disk_size=$(object_type_disk_usage commit)
- 		objects.trees.disk_size=$(object_type_disk_usage tree)
- 		objects.blobs.disk_size=$(object_type_disk_usage blob)
+@@ -78,9 +90,11 @@ supported:
+ 
+ INFO KEYS
+ ---------
+-In order to obtain a set of values from `git repo info`, you should provide
+-the keys that identify them. Here's a list of the available keys and the
+-values that they return:
++In order to obtain values from `git repo info`, provide either individual keys
++or category names. A category returns all keys within that category. For
++example, `layout` returns both `layout.bare` and `layout.shallow`.
++
++Here's a list of the available keys and the values that they return:
+ 
+ `layout.bare`::
+ 	`true` if this is a bare repository, otherwise `false`.
+@@ -91,6 +105,51 @@ values that they return:
+ `object.format`::
+ 	The object format (hash algorithm) used in the repository.
+ 
++`path.common-dir`::
++	The path to the common git directory.
++
++`path.config-file`::
++	The path to the `config` file in the git directory.
++
++`path.git-dir`::
++	The path to the git directory.
++
++`path.git-prefix`::
++	The path of the current working directory relative to the top-level
++	directory.
++
++`path.grafts-file`::
++	The path to the `info/grafts` file.
++
++`path.hooks-directory`::
++	The path to the `hooks` directory.
++
++`path.index-file`::
++	The path to the index file.
++
++`path.logs-directory`::
++	The path to the `logs` directory.
++
++`path.objects-directory`::
++	The path to the objects directory.
++
++`path.packed-refs-file`::
++	The path to the `packed-refs` file.
++
++`path.refs-directory`::
++	The path to the `refs` directory.
++
++`path.shallow-file`::
++	The path to the `shallow` file.
++
++`path.superproject-working-tree`::
++	The path to the superproject's working tree root, or an empty string
++	when the repository is not used as a submodule.
++
++`path.toplevel`::
++	The path to the top-level working tree directory, or an empty string
++	for bare repositories.
++
+ `references.format`::
+ 	The reference storage format. The valid values are:
+ +
 -- 
 gitgitgadget
 
