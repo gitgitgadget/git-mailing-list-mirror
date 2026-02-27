@@ -1,116 +1,114 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4F0374162
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 23:28:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B8835A39B
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 23:42:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772234894; cv=none; b=MEf6DktkyDvOPjD90cq0SaiY6oY+B6VyoWBMOw/lRgRp+trmlkfa8QgYwWmdzAFH2j/O7uhooRTq21aLUNyg9q/4uhcE0ZkIrcYXdvZpQ2qKn8wOQmVr3kymujReydblaPhf4jekK+Os3Y3aJAkzS6IlrLK4W5BhkARjjoEPEtg=
+	t=1772235765; cv=none; b=cP9lW3gr+tUB/DKzR4eS9i+VnzQ+RK6S0XMXpWnxW+tCuFJ9RjqSMhtzcWyX5bH6khbApkMLIjdw+qyv8DfJ8L52G5cR1hSrM2kzV5UyOchi5FWi5GQCmcXTTWwl6x6wSmsO21CrpXyqDnoDOVE5IgvA1k9+Otg7Kmh5aqG2q7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772234894; c=relaxed/simple;
-	bh=FMOY8zr1tXrV9cHQrgXEsY5vO/PEWkpyDXQRR6e8H1I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dFfk/fRqdrGVQScPj7eK9e/Hltpqn2G3+D8DEXlVEwk9nYlGrGeYGuM6qIGea6vXz3RS8xYWVAPDhOfONi4GNpTnQRGxY0MvhVmEfNfDoPuayA2e97zA4SufNaOjJyDEcOXINt9CvLWwbqkeikzZGeW2XY8dLhZxqniPfLvZh4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=1oivn5u7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pKUef+3w; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772235765; c=relaxed/simple;
+	bh=8QWPAgAytyigcBgC2XBNk0rJTRA5AeKAiGMQyWqnU7E=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WAxfluTjnowCZD1Ej4OBYHswlw9F3U8nm5w/KvLGlduygJfR8Szda2MPl2S5c1PzOpqG1Obu1+4INVLMD48CyVVpcwI+92rAi9qr9uWINQSQeQxl/pSib3Ar1G7noD6eTVpeT30d6WSYC6sloTT12Z3qvdhHmDsiqhrSUZ3qawU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m92lbctP; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="1oivn5u7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pKUef+3w"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AE0077A00E7;
-	Fri, 27 Feb 2026 18:28:11 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 27 Feb 2026 18:28:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1772234891; x=1772321291; bh=H0gDnUjYzF
-	DRYBNKbYwIXWWsziXEQputeDi2CQENBG4=; b=1oivn5u7Ak1JuyI+ifbQdGZv+x
-	hMSDsKNF2thD2wnc3CXsQ2FifUcJ9G6lmIe4Ec/7hN659q5VCUHVqvp0YPONVNCy
-	kOfyXKboDsy53GKP16OyLM9LjXdTOPEIThjnJPr7zKNKx8yNywFqGf9SC/CLN5Xh
-	wXZul5s5uud25MYjH0ACt+39sdY+m4Cx3Pfj/LWDXeQhFqxiSYTDx+QXdH6xTfil
-	D0xVZzD7yuuuDQ10L0NdTNG/OwO6Iwc0Q88J8KbvjEnEvsVN4z4Iz3w20+uduWVH
-	g0dhHKpAr32wCNREYF7rq+Q8OxFqEVZoelsvBYrVgZ6F+Kb4/ADrAmJ76vzQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1772234891; x=1772321291; bh=H0gDnUjYzFDRYBNKbYwIXWWsziXEQputeDi
-	2CQENBG4=; b=pKUef+3wCmH8QlWTXdMn0FIdAVhg9hkKaIz+NZYLhILY+oT81Lb
-	/mV7UWuEihGrTdxal2F3tsZr2iuumwsRV+4eMrZbwIrVQHrGFzz6WCoM32Fdg6X3
-	CejRRM98UVh5dLgleW2T60B80n4DPRrDc8aaVtpi1U3ZQUJOYptpF6MBE43enXmU
-	QyvMY3gltYIx0KNe2BWMiDx8KHGFWGpHMiDEe69+cEtPQYAmDi6ur1IOlkMNuIr2
-	Q8CtbzCiywCiX/yk3ZiS4LLvPCiwbfNzVSHh4wa0ObbilL1yExJfqqO1BLd+A0UU
-	QnPfLdhYln67qUjWpVOOzgh0s0vKD9UbXUg==
-X-ME-Sender: <xms:iyiiafYnSqlQXIgP82qovXSE0RJKr_szB5Qppv3mMpDxMNhQYmbjEw>
-    <xme:iyiiaVbIcEJ8mug7NNw5Dl8rQg-cXcnbE9GG70OYrFjMq0e2N2yfyMi5LUKtThtUy
-    Au4u4NSam88lkZiqLjQKsijDcuTGUAWH2vnL_EFQoiwn7PnGpJp5A>
-X-ME-Received: <xmr:iyiiaW-eNE8lBLKkigQhvMa_bEkhVqm_s9JgbOiXuol3DbKfdj300rtDJG6gO66-8gktj4b8A9BYdjaZSbuJKSEMAt7pA92eIw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvhedtfedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:iyiiaUg9Myluhf9d416OFYxbwjbOh66n9jCSH_FNMUWTEF7M4HPD4g>
-    <xmx:iyiiaWf9gC-sP_7g6JsrIq0JAh1USP0VP1sszwPKIApu9B2O3dc9vg>
-    <xmx:iyiiabq8IFnyxudT9HQAcHz1iWiQfxEwEr6Ns75U89kGPr-y1-ajVQ>
-    <xmx:iyiiabCK4isXVAwyUvt6Dts662jkdLUM9NbDNxcLisbzXDp8e5N3Rg>
-    <xmx:iyiiaRTfBSAEcXOdIo4rwwjqiya2ESu3bpRPQfWhVDCM52GzUuXQeClH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Feb 2026 18:28:11 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/2] parseopt: check for duplicate long names and
- numerical options
-In-Reply-To: <20260227230822.GA2965111@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 27 Feb 2026 18:08:22 -0500")
-References: <xmqq5x7jujqb.fsf@gitster.g>
-	<7693799a-91a2-480a-ae3e-29f8eed5b55a@web.de>
-	<20260227225055.GC2956443@coredump.intra.peff.net>
-	<20260227230822.GA2965111@coredump.intra.peff.net>
-Date: Fri, 27 Feb 2026 15:28:09 -0800
-Message-ID: <xmqqpl5pojg6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m92lbctP"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-483770e0b25so22711935e9.0
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 15:42:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772235763; x=1772840563; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wed2bIA+iZZ1dvNOWPCZolXkNNt7ZHFMEcQDjuc/Mck=;
+        b=m92lbctPIOlIdUgkILjzm/0jhBubtitaJBQs37V1drEK4vjBk+CgZGnmcOfnWzY7pi
+         lEFUa1TjHwvr/cs5M/zDYmZbcPBzprT5eSX9acX0rHKazdrIlP/Qa0VfjCvvLlfPSlzK
+         w6ZBuoEM9fC+rlET62P9ZCtBrSGTpGEruJFFoE+dHmNYxAxcyEUczoD/PxTUpF3atQeZ
+         O7mXbwkVIMZrcbpOhasfSwS7foS1ka8RVFXjtwBge6yuL8shkBpJ4okF4uq8SITeSxk6
+         WkxQZuKvx6gAd+U/U9CFmviZEiOoVYIkLivOUji2D00xym0gRUG1zS2V0oVWhUDw11x3
+         AV6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772235763; x=1772840563;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wed2bIA+iZZ1dvNOWPCZolXkNNt7ZHFMEcQDjuc/Mck=;
+        b=BSfJd/EkwtaDkTAlZI0gBzY1UlU0Q2IP/rCepDbgdtBujQpMVMwc/wUVsLQUbUv7nV
+         BR0phoyhv+Skn6cxXa/sblI7QchUl3eZuxamR92ihJyVZo6qTXcn272FKduuxsfVfpJY
+         p/5crECcfwT4ypqgqJy9Be/WMnfsRbkb4oRjuDnkehhoD+vnD3muNdCVJyiirqIDbE26
+         WA/pBueVuQ9469F+q3Q1wsyVrVOXhZGF8/EQftRxxN0Mw1Xodl4BDOu0FMJHDhbMskHZ
+         urjGBvsrv2fiHvHElxOW0VcsJztRSQ3p7LKPToyxiyUbr2fBJ5dik69BxrR1LaAJKx18
+         nAnA==
+X-Gm-Message-State: AOJu0YzIH3Ptv/Gd9SVaQtuiMirOEpN3wiR9kZ+i25gX/579xBWy15Fo
+	DvvdF2QiSCJxQZw1/lY3SXbqQhr4vcNolhdskHqdOUm/R52cPxeLgs93Zi7GMKEA
+X-Gm-Gg: ATEYQzyzYgPC3eX6NXCwL7EsJDbmVCV1gp5nfv2QJnhRvCwFEqID3wwp5O4+68k4zPc
+	Gg4ZQKFRV1RO+QCaoX00INyykROTHx8bmgWlnyuQjSe2msyMhh4iRRZ6etOEJugomVcuU5GEN5N
+	jDytxYEQegL8ZqImEm5VVkDI2E5h8cdhADelZ3vO5L1qgdgb0P8WFrvWFeLDsCu3UbNeTfdj5dy
+	oX1OS/X8LOuhNKbfvVhhpFHPZhOLu47L5tQ/gWh2gNAM8CAKmzpNsyrFHW8MelLfLd0S1Noewjo
+	EhGgM0mpGmfFbTgicWsErrDmnoc/qdduBcfL06a0xUsTwWbJttgJU6wxsRzl3H3x9Yl5gadS0os
+	Rwz/vSpM1FGCbUrzr7h0NCQvkX0hN1KjiMg53djsmnQOTZrx8TPF3gpme3GftqOBgPR0ET9xceu
+	RfTQ2hcFi9QEoWKoydPOPqt9sQwlV3Fl6YXnMlchdIjwbYE+rkThks
+X-Received: by 2002:a05:600c:3542:b0:480:1e8f:d15f with SMTP id 5b1f17b1804b1-483c9bc5596mr73816985e9.2.1772235762539;
+        Fri, 27 Feb 2026 15:42:42 -0800 (PST)
+Received: from localhost.localdomain ([105.113.107.46])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4399c76b40esm9710899f8f.36.2026.02.27.15.42.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Feb 2026 15:42:42 -0800 (PST)
+From: Seyi Kuforiji <kuforiji98@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Seyi Kuforiji <kuforiji98@gmail.com>
+Subject: [PATCH 0/5] oidmap: migrate cleanup to oidmap_clear_with_free()
+Date: Sat, 28 Feb 2026 00:42:08 +0100
+Message-ID: <20260227234213.17633-1-kuforiji98@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> Doing this:
->
-> diff --git a/parse-options.c b/parse-options.c
-> index 51b72eee11..f056a4471e 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -659,9 +659,8 @@ static void parse_options_check(const struct option *opts)
->  				optbug(opts, "short name already used");
->  		}
->  		if (opts->long_name) {
-> -			if (strset_contains(&long_names, opts->long_name))
-> +			if (!strset_add(&long_names, opts->long_name))
->  				optbug(opts, "long name already used");
-> -			strset_add(&long_names, opts->long_name);
->  		}
->  		if (opts->type == OPTION_NUMBER) {
->  			if (saw_number_option)
->
-> seems to shave off ~1% of my benchmark. Not that exciting, but hey, it's
-> one line shorter to boot.
+This series replaces oidmap_clear(map, 1) with
+oidmap_clear_with_free() and introduces explicit free callbacks
+at the remaining call sites.
 
-Yeah, it is the right thing not to hash the same thing twice which
-is totally unnecessary.
+The old boolean-based API implicitly assumed plain free(),
+which obscures ownership semantics and does not work well
+when oidmap_entry is embedded inside larger structures.
+The callback-based API makes cleanup explicit and type-safe,
+and avoids relying on hidden assumptions about allocation.
+
+This improves readability, maintainability, and correctness,
+and makes future refactoring of oidmap users more robust.
+
+This is used in subsequent commits to adequately cleanup all
+usage site.
+
+Thanks,
+Seyi Kuforiji
+
+Seyi Kufoiji (5):
+  oidmap: make entry cleanup explicit in oidmap_clear
+  builtin/rev-list: migrate missing_objects cleanup to
+    oidmap_clear_with_free()
+  list-objects-filter: use oidmap_clear_with_free() for cleanup
+  odb: use oidmap_clear_with_free() to release replace_map entries
+  sequencer: use oidmap_clear_with_free() for string_entry cleanup
+
+ builtin/rev-list.c      | 13 ++++++++++---
+ list-objects-filter.c   |  9 ++++++++-
+ odb.c                   | 11 ++++++++++-
+ oidmap.c                | 23 ++++++++++++++++++++---
+ oidmap.h                | 15 +++++++++++++++
+ sequencer.c             | 10 ++++++++--
+ t/unit-tests/u-oidmap.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 112 insertions(+), 10 deletions(-)
+
+-- 
+2.43.0
+
