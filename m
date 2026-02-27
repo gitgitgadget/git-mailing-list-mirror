@@ -1,115 +1,69 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675D42D8384
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 13:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347D6221DB5
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 13:18:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772197776; cv=none; b=DYlncf2lriuPpMT1n2EbZs/FsaQ6kDi85OV0l34ECGjR7ZV8lXAF8D3upCQOt+avbGcslc/jlw71JrjY/xodUY+YzytfzgkIHwID7/spb9FO5qT3NzNRC5658bLFc/onhc8OR7QnqAOmJ/I24zZyO5pBl5oMzVNq92ZD7nzgGvk=
+	t=1772198312; cv=none; b=nnAHRGBG46rl+rFG3RgH9laLdUN/nLeFyYD8l4xE0lVDaxSTaJRPPnBcWZHCHG631aLfXhhk44dYHLO8mZNTwWs2CrPBpRtsbQRu/ePh+0/g4UIoN3wiQz2bgLLCjb33XESvoi1vRQEA/3BB0Hu3RLibkwxf1O2mqnSxr/ZXOjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772197776; c=relaxed/simple;
-	bh=mDNxiz8G7E+Mblk3Tib0mzYrb+75Qg3yjkRtmE/RzZs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CM6kHgw40CdRjiDnl9oX7/EKCONqEBtqBBzMJjzxeLh5SHoCZGC7k0GaMw9D1rCQ5NmdBwXfr1LAeL8tYXxahL4LmQBq0GDJea/4a9o7XxmMefocrd8WblJErFcILdPsMXbO4Rnw9YwHw8MSFEELNX8i9B8F/quVLUIeOah5iLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=OVWffhr+; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1772198312; c=relaxed/simple;
+	bh=U9OAGfoupywIOqpyDFrjIah/pgeMwmr00HCnvcL3cgM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dYORm+QV3NIySvViYg6zLuw9nnr9omwdDMUBopfLH8Nw1mMP18/FgrdzVbTEqRnou1K6K+xWvPS5Z8/oBEQK75v2QTSOmL9Qtjrj1FvrQr5+CzentGUqBGz5d+L/J68oTvjLaRzxUO6pBButo9oGnB5+wXS2RW8MAoZ/KhlqX/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=K2J9Y/T7; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="OVWffhr+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1772197446;
-	bh=mDNxiz8G7E+Mblk3Tib0mzYrb+75Qg3yjkRtmE/RzZs=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=OVWffhr+/o9BLmTA7WCuu1ZJR5W7431cHGgEbKA8eg0+Z5ntDczoDrWWaidXsvs1H
-	 y3zkxIYWJGO07z6zCL63p5LakAenypMWDKPaxTpS2oS7dfTI9+yX+VMqWDlcYMlafn
-	 m+GAPS8ETc0g9pXneDyxyEGW3/MsoekzNsuo0VK+QUi6CiFjss/vL8HGnPEKEwuHjC
-	 i7MbelqJ29OD+37NbEnCxLOefwQXI6JB1CNDTEyd950FU3V5Ta/R5lvCzZf5pTYX2z
-	 qIQFJtYiH1GJICy5rpm+gvt4a6l0fx5rvZynUMHNZl5KWj0PAwgJbooe8D7Tin03zK
-	 AI+7cMlcGlNGp+b93SNN1RRRw5nVpJ6NSsHruHmZK8RltOdz2cLvLFX/bmTzOlINjZ
-	 4Uok/VhzIT4Vy5wnn49gFwHZnXsXpzyLbfPmiJmzU5WmhAoiSUFaGVp2EEpPZKTpId
-	 tYhG2EC0d8DFwRv1LEygQHuf7SWxF4eO6Uxsjh7ewHGuWoauXAR
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:c4c5:ecfe:7f98:ebd])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9F19620106;
-	Fri, 27 Feb 2026 13:04:06 +0000 (UTC)
-Date: Fri, 27 Feb 2026 13:04:05 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>
-Subject: Re: [PATCH 2/2] upload-pack: reduce lock contention when writing
- packfile data
-Message-ID: <aaGWRWcxEtLD1OlK@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Matt Smiley <msmiley@gitlab.com>
-References: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
- <20260227-pks-upload-pack-write-contention-v1-2-7166fe255704@pks.im>
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="K2J9Y/T7"
+From: Mirko Faina <mroik@delayed.space>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1772198308;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=TcFhMmnIW8Iv1WELAdiMoHKOFTP4UJ8Qz7ung1oYw8U=;
+	b=K2J9Y/T784yGPSChygZLyHQP363uVRoFf2TUb5Orvqko34pF2CgsQMcpTXduy06f2PrXxc
+	pOGGWa+vzIohsByMyz/jF6ESc07Xz5PsZ7tOcFNZ1xfl4JG0J175ALrdSpi2eMVu/UAVQy
+	e31SXfUVTknZxBp+e4l3tTCtVJwNB6FuI7PTDTngVuqxyczeEmp8pu703w9xDeEKi1VFcn
+	f57Z6Jys9N4nf/b9C/nQP85i5n/dTbd6lxdxjhmV43ynC/xvSvwMmDqScZH8opiD36yk2j
+	2y4KUxNILr6N5Lo1hHRbNHA4MVs7D8lKjNn6p8LJLgcYKet6uK6iCVXD2Rd/Dg==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+To: git@vger.kernel.org
+Cc: Mroik <mroik@delayed.space>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH v4 0/4] format-patch: add cover-letter-format option
+Date: Fri, 27 Feb 2026 14:18:08 +0100
+Message-ID: <cover.1772196510.git.mroik@delayed.space>
+In-Reply-To: <cover.1772156996.git.mroik@delayed.space>
+References: <cover.1772156996.git.mroik@delayed.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lqwArJJ4Rz9LsQDo"
-Content-Disposition: inline
-In-Reply-To: <20260227-pks-upload-pack-write-contention-v1-2-7166fe255704@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: -----
 
+From: Mroik <mroik@delayed.space>
 
---lqwArJJ4Rz9LsQDo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I've fixed the example in patch number 3
 
-On 2026-02-27 at 11:23:01, Patrick Steinhardt wrote:
-> diff --git a/upload-pack.c b/upload-pack.c
-> index c2643c0295..f8ba245616 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -270,6 +270,13 @@ static int relay_pack_data(int pack_objects_out, str=
-uct output_state *os,
->  		}
->  	}
-> =20
-> +	/*
-> +	 * Make sure that we buffer some data before sending it to the client.
-> +	 * This significantly reduces the number of write(3p) syscalls.
-> +	 */
-> +	if (readsz && os->used < (LARGE_PACKET_DATA_MAX * 2 / 3))
-> +		return readsz;
-> +
->  	if (os->used > 1) {
->  		send_client_data(1, os->buffer, os->used - 1, use_sideband);
->  		os->buffer[0] =3D os->buffer[os->used - 1];
+[1/4] pretty.c: add %(count) and %(total) placeholders (Mirko Faina)
+[2/4] format-patch: move cover letter summary generation (Mirko Faina)
+[3/4] format-patch: add ability to use alt cover format (Mirko Faina)
+[4/4] format-patch: add commitListFormat config (Mirko Faina)
 
-This seems mostly reasonable and well-explained.  The one question I
-have is this: how does this work when packfile generation is actually
-very slow (or when the connection is slow) and we need to send data
-every so often to keep the connection alive?
+ builtin/log.c           |  94 +++++++++++++++++++++++++++++++------
+ pretty.c                |  15 ++++++
+ t/t4014-format-patch.sh | 101 ++++++++++++++++++++++++++++++++++++++++
+ t/t9902-completion.sh   |   1 +
+ 4 files changed, 197 insertions(+), 14 deletions(-)
 
-I just want to make sure we're not breaking the keepalive sideband case
-when that's necessary, but of course I have no objections to improving
-performance and reducing overhead.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+-- 
+2.53.0.4.gf9ee8e2400
 
---lqwArJJ4Rz9LsQDo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaaGWRAAKCRB8DEliiIei
-gZqSAQCB3Gr8Uvq0d6BGUMArPM9tF4yg/SDehNI8nOWb8jWohwD9Guw6DttQ/LuZ
-UNoB70SAZo0NOJhc2kNP0vIl1OZOVw4=
-=lH6m
------END PGP SIGNATURE-----
-
---lqwArJJ4Rz9LsQDo--
