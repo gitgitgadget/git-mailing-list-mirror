@@ -1,68 +1,69 @@
 Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847E6441054
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 15:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B5C441037
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 15:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772207342; cv=none; b=tPNTeM1fA2vdZDGRUwejuC3czvO3bnqo8d2OZwqzlppK3mmtoIFMThFPKwxiGrKYjspFQtgRUDRNPjXv7VSgpx/zpVJ14m+9+B/+4D/ezZ0CUuZy1iC/GW6vu8KzZ20G6JZ3NmtMv/4BRzdBjQ0KS/Tk6oj4HUbWwmuUZgUNC4U=
+	t=1772207345; cv=none; b=TC1kvLLRTbMdvMPRbbKE7C4VnNaBPQJduj/hs/ns2qSEiT3HQsC8RfqBhKgqoZYmA50BGavlpcohwc2VcTiVEB3aKnUVBj+jhR3JbUd3Vkccsnqh+elRLYADSVCZdadx9eQ3wzcUX8waPr7dAWXd6xvuguC9PQiSrD6nTm0Wl3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772207342; c=relaxed/simple;
-	bh=uZhHHqCxwQ/j2sTUrMPsEQJ3WkJScydScI16/DyGhKI=;
+	s=arc-20240116; t=1772207345; c=relaxed/simple;
+	bh=9dNV6hFMvyvuEgAXQGVAceK4FFDMsR0BQAi+YSKtb3c=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=oHBC6E36TK2uTI3U5BeMkqRjFgpeSbiFVhyO48UZu+I2dKSznp9tFZchnljsYnExu35aP6ufz/MmbpTIOek9kKWa0L2+qRsv+ja86wyF37zYMjc+DI7CyFmgw+/fKharXHTJE9EDTwiaNC8zZUd9r40tpuuBsP7N7iNpYcFMlGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XyKKsfLJ; arc=none smtp.client-ip=74.125.82.45
+	 MIME-Version:To:Cc; b=S5HQiX7oiNYkIh/lwsGut5NenHBxhEqrfblvr5N4sS3Mlh5tnSLddiU/r42ZvcUOBh14W8Yhke7Qzg0AHBWFGwywAGYvid7ubAgxA2OU5bKOIaSoFMtLwcDmTnzMJigREHC3ChC+o/+Bqrx1ZRR3qKXUzIAQuPMqg8GZ3bzto0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PQngWBR4; arc=none smtp.client-ip=74.125.82.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XyKKsfLJ"
-Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-127380532eeso5492504c88.1
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 07:48:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PQngWBR4"
+Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-12732165d1eso2382272c88.1
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 07:48:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772207335; x=1772812135; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772207338; x=1772812138; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HzAF6/VNm4LUSW7VKRiLiZCYoOKct47v1p2I3eF0eDs=;
-        b=XyKKsfLJEmsbiGhHV3wDT0erQNWu7vbjtlZefhq3K+4hxGPVxjaSpTQcZDDxKh6w9d
-         Z5krjHUTDbSqezDsQ997QD/BnIxaF6mywOVhbn3ObplS3Y4BUYHryzdRljN7xrFpXneT
-         tzWb4d/BQ7Ey8RwF2OsLE278f8MDwifvamWtnssUMSxYeLSCI/Fm7/aX/85I2jOkIEME
-         ZwdtfHsnZaw/Q1ZRuFsR0yxsfy7nKCXZ7MCnzckj5tJjlvWn2No2rApJQlon0MXlWzem
-         DenlRKYmOSmv934maje1lUk3CVj3lE8oYoRd+1vvOhxnXWscLfVw2If+Jy/NdsDhg1JM
-         MLJA==
+        bh=O2cy6pW4qHDE64qChk6jMeSmLC3yVriN1Ux0ctWCPyk=;
+        b=PQngWBR4w4AKW+BSBjTo0VfUiJKgN5AnUcBpDjaAlHePqr1yW9nR/UqBTPc3mrij+x
+         a90j1su3INeUTn8nRBeQsn++X/hm3P8a2kmwaDlGJjRqTZ39eaFgPpHbaVSK69QZ5KfP
+         alfsN0W+aYbP7kI7ZjMIOF/hUSd2rnMc6SjcsKana/2Khg4zRSvJG5hiSHCzz5GhRzQl
+         dB3i/bu/xsDYcw9fx4o+/YJoASsGzO5MJnUTPP/sfdfKg48IQIzJJKexFuEUQeddMtqi
+         GljxOeXavxOd68cpw3l9r0iGkpfFoPJ3wuz50oPiTJPAO7XSqcfEoNLb4/xcHbwI5fyG
+         B9Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772207335; x=1772812135;
+        d=1e100.net; s=20230601; t=1772207338; x=1772812138;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=HzAF6/VNm4LUSW7VKRiLiZCYoOKct47v1p2I3eF0eDs=;
-        b=gpXQhZd5StGyVpEA4elqwf/oPg0hgUl4VuHx00LbrUc8DC/J4aaly3z6QrLz0LTKMY
-         30RqVHEtWoEm67PEAbWYWEThMSxYVK4mr9uoDI5Mws3buF0LAQ6NVxRMSlpV6EFUiKhk
-         01qvIr+I38a+eHYxejnn9pBI9b0tDR+LM77+HujTwnKbNM+nG4RoCk1+ofs0bK6Mej0j
-         y0DBkdArqhVz5xqsu17E+O+wzYMJAYg7jH2ANd0Di8whuQyGZF/sru7qImWT78cczPIg
-         YqFnq+8L5gCLXvUrMzJsa88T8KcfDrRV/AiAdI7KAAJFv2fVspMoG7I6jYpzdXQ9+1Gr
-         PORQ==
-X-Gm-Message-State: AOJu0Yx8S+ZOORN5Kk/4OApXG2B74gGtzD9WDtpR+7Qla8xkqiTEkU4C
-	dhJDJuo4Lv6lt6swt3BtEsa8Ika58iHZflKG9mUZwmlwGC4ofcLu84NJEIfE2g==
-X-Gm-Gg: ATEYQzwhuK9cNKWI+arFbqAdF37h5QpHNEjNZt57CICOTrpLLe/NyZiKGChq4wvTysP
-	eZcDtM/kAK+J7eH1rm342t5mmNhZWzFhjdBEVkQQJxrXabuEVgtcWtXxGDIxrZIK2rVD3ci21VM
-	gKK3khyAFRD3tkqeCUQfT9KPxQo2CqfGQhfklqDPNj8UnF1i6rAox13aRIbJdDI659FQM5/nk/r
-	EaV/NACdUcjO50rRI+ufDIQLlW0pAoPdnCkQbCQe+PmPJoEvO8h1jD1G5c+c/YF//30P8mmYVu0
-	9DJrKAdD/kgG6ESjGFGf/T4XI5Hbzg4Ye9hHvlNy7QV0+Hku9M1BIxtl6cE+CDoemQh7da9QmRM
-	QHp6A5p76bX98VCU40J6GzByDhRpYCuX+YnUoE/CVDWJE8ApKq5yokc0rDRrTYhN1Oxj4Qm5OA8
-	o98somguwUlyWTDdVvVAjlwnNP18PriSzcJr/R7Q==
-X-Received: by 2002:a05:7022:486:b0:119:e56b:c74d with SMTP id a92af1059eb24-1278fc6a7e2mr1590456c88.18.1772207334931;
-        Fri, 27 Feb 2026 07:48:54 -0800 (PST)
+        bh=O2cy6pW4qHDE64qChk6jMeSmLC3yVriN1Ux0ctWCPyk=;
+        b=OZLajak65OsmOtGEmdSfpYDBxVICZykbHYo1NfKO6NRQ4vvVzSRdKYOJKAbkd2YpDi
+         NxyfHR7DGbPuIJYu6SsljgIcotoa5YugijpQoiHcpbTWsG1keZcdJWAi8V6OsfeXlYbi
+         4ZZRO1wJXJHQFfFPYMohsGe/KM617v1q2jJCOgoCEbTs0wi+ACYlQBZSv1lCDmmLIVGC
+         TXHSKqrVeselGW+Vz+L7narOzefiaO3sW7PRQQ9zLOmdOjVrvJIvNUfpgQTZrBuv96gy
+         RzhkRI+UNaegYz46rwfz+hEE2EKw8nG9yoU/d0jxN0HjaiVIkKK9s4AH0iYD6XNDYsK5
+         VA4g==
+X-Gm-Message-State: AOJu0YypofgVkNKVb2B8c2uYzfHVcYvHSg+FPYJTWUqCMS2LB49JBJ4W
+	rTWM3CujAJ/ifj+2R9RRdirSWiYwa2yTispFSD90SrO1VlK0aCIqtk0bDwuGQw==
+X-Gm-Gg: ATEYQzxfNkHyCVZtGRBYFPDePghMiUu7N7YczbTDQV4WpkVteFb8EOsPx5ARdmznOOT
+	ol72UyN0//6mCXpSgDk/pYwTJiXKIKkZti7CNuh+59bMarcqvo3EUK2HwmIAoxLROz15BQdf+3y
+	IiB94VDe7z7/HULS2s4L6npUHq1qigPLhos3GleY9nSzd7ju2cq8X//rRnv3BytFM3XfbjT9vf0
+	7o+11QRH8EshMYu6NhPOQLvfR7u39Beq0H4/wimoDEBVVvVzuCnHnopGtcGOfJIysClOwfuwicy
+	sOPWvmu2AgJb/z/0h/lI+vm4YGzDIcd05rvk0cLjh+NEGeCFlLCSsGj0bOSohaz5KMY9XUdX85I
+	aCmJoWUBYe3I2GmOx2jujQI1bsN6w53Uc96VDq+a+79PoraN8PcItPGH1r2GVDi5CIWrO/IGqjm
+	NN3V2U0WiD/pXHOjCK9vOhDvt7FKY=
+X-Received: by 2002:a05:7022:6986:b0:119:e56b:98ab with SMTP id a92af1059eb24-1278fc2096dmr1397856c88.18.1772207338063;
+        Fri, 27 Feb 2026 07:48:58 -0800 (PST)
 Received: from [127.0.0.1] ([172.184.209.165])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12789a32dabsm5600023c88.11.2026.02.27.07.48.54
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127899ea1e5sm6390958c88.7.2026.02.27.07.48.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 07:48:54 -0800 (PST)
-Message-Id: <pull.2202.v2.git.git.1772207333.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2202.git.git.1771574833967.gitgitgadget@gmail.com>
+        Fri, 27 Feb 2026 07:48:57 -0800 (PST)
+Message-Id: <0fbdf031cb9f054e023d44fd3eb3315732d527c0.1772207333.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2202.v2.git.git.1772207333.gitgitgadget@gmail.com>
 References: <pull.2202.git.git.1771574833967.gitgitgadget@gmail.com>
-From: "Yoann Valeri via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 27 Feb 2026 15:48:51 +0000
-Subject: [PATCH v2 0/2] branch: add 'branch.addCurrentBranchAsPrefix' config param
+	<pull.2202.v2.git.git.1772207333.gitgitgadget@gmail.com>
+From: "VALERI Yoann via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 27 Feb 2026 15:48:53 +0000
+Subject: [PATCH v2 2/2] branch: add a no-prefix option
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,36 +77,69 @@ To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
     Junio C Hamano <gitster@pobox.com>,
     Yoann Valeri <yoann.valeri@cea.fr>,
-    Yoann Valeri <yoann.valeri@cea.fr>
+    Yoann Valeri <yoann.valeri@cea.fr>,
+    VALERI Yoann <yoann.valeri@cea.fr>
 
-Changes since v1:
+From: VALERI Yoann <yoann.valeri@cea.fr>
 
- * Added a '--no-prefix' option to git branch
+This patch adds a '--no-prefix' option to 'git branch' to selectively
+override the 'branch.addCurrentBranchAsPrefix' configuration parameter.
+Signed-off-by: VALERI Yoann <yoann.valeri@cea.fr>
+---
+ builtin/branch.c  | 9 +++++++--
+ t/t3200-branch.sh | 4 +++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-VALERI Yoann (2):
-  branch: add 'branch.addCurrentBranchAsPrefix' config param
-  branch: add a no-prefix option
-
- Documentation/config/branch.adoc |  7 +++++
- branch.c                         | 14 +++++++++
- branch.h                         |  8 +++++
- builtin/branch.c                 | 24 ++++++++++-----
- builtin/checkout.c               | 52 +++++++++++++++++++++++---------
- t/t2018-checkout-branch.sh       | 26 ++++++++++++++++
- t/t2060-switch.sh                | 26 ++++++++++++++++
- t/t3200-branch.sh                | 16 ++++++++++
- 8 files changed, 150 insertions(+), 23 deletions(-)
-
-
-base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2202%2Fvaleriyoann%2Fbranch-with-prefix-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2202/valeriyoann/branch-with-prefix-v2
-Pull-Request: https://github.com/git/git/pull/2202
-
-Range-diff vs v1:
-
- 1:  30a6d8e195 = 1:  49641fb34c branch: add 'branch.addCurrentBranchAsPrefix' config param
- -:  ---------- > 2:  0fbdf031cb branch: add a no-prefix option
-
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 2fbf2d9722..701c2a3180 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -713,7 +713,8 @@ int cmd_branch(int argc,
+ {
+ 	/* possible actions */
+ 	int delete = 0, rename = 0, copy = 0, list = 0,
+-	    unset_upstream = 0, show_current = 0, edit_description = 0;
++	    unset_upstream = 0, show_current = 0, edit_description = 0,
++	    no_prefix = 0;
+ 	const char *new_upstream = NULL;
+ 	int noncreate_actions = 0;
+ 	/* possible options */
+@@ -776,6 +777,7 @@ int cmd_branch(int argc,
+ 		OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
+ 		OPT_BOOL(0, "recurse-submodules", &recurse_submodules_explicit, N_("recurse through submodules")),
+ 		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
++		OPT_BOOL(0, "no-prefix", &no_prefix, N_("do not add a prefix to the branch being created")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -1004,7 +1006,10 @@ int cmd_branch(int argc,
+ 		if (track == BRANCH_TRACK_OVERRIDE)
+ 			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead"));
+ 
+-		add_branch_prefix(start_name, branch_name, &new_branch_name);
++		if (!no_prefix)
++			add_branch_prefix(start_name, branch_name, &new_branch_name);
++		else
++			strbuf_addstr(&new_branch_name, branch_name);
+ 
+ 		if (recurse_submodules)
+ 			create_branches_recursively(the_repository, new_branch_name.buf,
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 496b034d0b..bc09abf725 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1725,9 +1725,11 @@ test_expect_success 'create branch with prefix' '
+ 	git branch branch-with-prefix &&
+ 	git checkout branch-with-prefix &&
+ 	git branch branch-with-prefix &&
++	git branch branch-with-no-prefix --no-prefix &&
+ 	test_ref_exists refs/heads/branch-with-prefix &&
+ 	test_ref_exists refs/heads/main-branch-with-prefix &&
+-	test_ref_exists refs/heads/branch-with-prefix-branch-with-prefix
++	test_ref_exists refs/heads/branch-with-prefix-branch-with-prefix &&
++	test_ref_exists refs/heads/branch-with-no-prefix
+ '
+ 
+ test_done
 -- 
 gitgitgadget
