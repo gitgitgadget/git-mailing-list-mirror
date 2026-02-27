@@ -1,107 +1,129 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675372D94B0
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 21:52:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632CD35BDBC
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 22:20:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772229151; cv=none; b=sDIeUdFj4Uv7rHrNNWstHqgZoHWCaCXrGLIa0Dk+dgk87wKNiPhjggtJWk2Cvy9NGVTGuQAnOe4FqTbcibyPAqZa8QqRDGyESeR+pwlDHiVmjpUJcZ607dEwy0edH7wxBsNa21QWzfdORgSaVkx7VZpwkEB8B0vBPZLHMROq1Ag=
+	t=1772230845; cv=none; b=NVF7DYo46SuXAiN6ZXhhHmKNzKo4szZWVk9I5fQxwjYD5Pn0muxrBAXQUEsfI/S2+BgqXMkMjGXEruuAzvSxdC1VjJuL8utK4VNCxG6SoLdbiYWvXFM94q3PzDP+0tNprGOjVj/nlRpyeJVMSiX7EACJ6jK/8fsBs5rJYcHSJcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772229151; c=relaxed/simple;
-	bh=eoP8vzMi2b9pTTQtoTPHzKOuEeJE7Tv6EncgnR/Nenc=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=p9kQJCB0iTiSPXaK+lbLMNniAMveQWLpuFylNA6r8/9MMeVMlpDE0YjfOviJjXU40k/FEkzlJ11Lw7Z2AeRLxphQo07dKCfWXux+fH7ratHH+SheaG0XhKMtRDtKhdzZANPb42LAGeOFxHJfoEmRXHvjJuND5sC5ttUbv+gUEMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fGD63KhJ; arc=none smtp.client-ip=209.85.217.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772230845; c=relaxed/simple;
+	bh=TWN0Np6//AW3OePYX+onZgPHO2m7WE5mzXlIkMcfDpY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=V4YYR7XzKUF8wvMzHJ4cHBYOcni1BxXN0ckUgRWBXRFRidO5BMDMziP00dvcZdMxWpsF5GNTSDl7NBEqgTlxYrojZnLfeL6OHKlUcmSvHORu5at0gqeST/YkzZC3ao0M9wV6xEQvJ47WY8e8U2XReTQvzfeYkajEtikYB5UZzCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tQkR32Ew; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ISRKkL1d; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fGD63KhJ"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-5ff0f61abd7so729738137.1
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 13:52:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772229149; x=1772833949; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rYm4F5eGp/EZHcY+jcs+VWqP2RoDD4elqHVGLbSX28s=;
-        b=fGD63KhJzzj7iszS1rTxU7AxVWrFiHcsPIaSXtXWrB4W2n11ATMHdIK3yW7kvfMgVW
-         etwrHGy7K+HAl/6IJqe0DoGrB6NksEc6r7HPQvJ1zVWqJ9atrjKNztpvShB1BAIdoksw
-         aWVAnUg/uirrxsQ23VqnPKSBt6Doss8oOcOrD5zgxDTpyAve9KXVUWEO6PzvV9RT65vw
-         pozF3uyoWXn0WtjkRp61rShBIheLk0i3lU0BtE/l7iVxOXyktkuxKU17t452qfkgzg3O
-         SHpVgzFhmijZAf3r2BzxkMkzBLi89ZKk3lXajc7/md9npCET7oSXCBM2dDEI14jE3pOq
-         x2Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772229149; x=1772833949;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rYm4F5eGp/EZHcY+jcs+VWqP2RoDD4elqHVGLbSX28s=;
-        b=GC0uMh1ffGjQ0OjujDshqfNuAHu2sAuKSljeTtB8dVJEEFL2DAnDl3gpZ3SgoTgw6e
-         6rAdrNJaz1sw0QKg9G8Y+agSvoWzg0cMbwhkhU7qMg8oT4BweDGxl1UgtD/eqJj7PxZ2
-         /TqNedHSFNugfgrqV9fVv3PxCBuXwhz9fR/SNn5/UcFDRda8w/b8ARt5hcKYoVdcA01n
-         PCCBSatgJ/6BR/bDwRdh0B4dakxmxMidBw2IThdHnnzlhpvbiPacQNZLXhIiWrjHwHrz
-         tzCwZUAIMZcS5PCWVvpQ3d0CtBXWkFndl2wQ1oC4KYeYiFE4VicgX4kkaHLYfGm+qwdb
-         343Q==
-X-Gm-Message-State: AOJu0YxvbuNOxM7xcKmV4japBurVHn64/pla4qlWxH3S0Vc3hchoMeo4
-	WCobmJMRYPu7QRSE2FUVWuuyca6yH2sJf988Dr4xXMvpAV7L9Jk9k/Va
-X-Gm-Gg: ATEYQzyyQc0+/eQ4rocr4BFhHJigNuBJRXT6vIqTk7eqPeevVsQecUu+g4m6d2yYSiA
-	NY3tMq20/NTox6zrF8By9DTGBuKYRiIp2kaRA8ADZ3/oZoPnjVjNCDlx6FAkdij75AkU2kM6c0n
-	ccthuXkB57XLDI9cWAmG3uohUAOPFRcjj4Hvc2ft50RRRu4wTTn2ZUl0e3cjQYTZ3DSbX8rRBft
-	7ovECUFJ/OS0Tyc8CYWKxUFWGzoQLHt9LqbK3gtQkOrM8wHWmyCcu4L//zKrM6VairUI5I3zIAf
-	0sLfJ3MAaVE7KdI+V9Mfihpw29FEeF1O1D1+Dd4l8CE9aFS9lemw0MOS9tgOPsEtf+1eFm1o3jv
-	/0ibbaB1oR106W21BMCYk9nRH2M9/mzA9h2tD/rVXg6OmUsleb3LaeDd6DxMlj0WwCAeH7D+vj5
-	j9i00Sr2/n/Y+Gzhvr5e2QmS8p/zVDWWCJYZou/62lH9QB7c2E8W/BHw==
-X-Received: by 2002:a05:6102:3907:b0:5f5:25a4:c6a9 with SMTP id ada2fe7eead31-5ff324c0658mr1910443137.20.1772229149290;
-        Fri, 27 Feb 2026 13:52:29 -0800 (PST)
-Received: from smtpclient.apple ([189.62.150.156])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ff1ea1596asm6827955137.9.2026.02.27.13.52.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Feb 2026 13:52:28 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tQkR32Ew";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ISRKkL1d"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9CFAF7A0206;
+	Fri, 27 Feb 2026 17:20:43 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 27 Feb 2026 17:20:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1772230843; x=1772317243; bh=fVhdSjr6HR
+	dyRn/grihidCDFU2+Q/s3Iqq68c1n+bVk=; b=tQkR32EwofKZG6fF3wCkyuLCKT
+	gyFZOHGvKyLDgt3bIyCY3UT/F6zXPp+aJndis3AyB3s/jaqYuL9+grvNG415nss0
+	ysj8rUKitS0j2YpN9t1mLpSU1JuKji+z5F8KCPkHKiK6ZG8KV/gZCNxXtPlxDzjc
+	oHXg4rK6YAfl4gw+8FpuOgfoKRESKtIG+wNTQZD1hraKl7ERi3EuXbSdlZybxP0E
+	o8GoqsqZEziu5qUTygHutBkW//03EWUFdCp7Rihil6Oe+8K/+HSz8z9J+jweHWp4
+	cR6vuXQu5Qks02gJqIKLjDR+OkEqQ0QBvb5EvKpR4l3OiPqjBR5pd050Rvxg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1772230843; x=1772317243; bh=fVhdSjr6HRdyRn/grihidCDFU2+Q/s3Iqq6
+	8c1n+bVk=; b=ISRKkL1dRIzUmm85xaEkVqu5dlYvL8E28ptRv9rxCPdNFYi4ZTd
+	ongul7psm190KbN3+T858QZ5gmoH5c2HCCmYlBobsL3oclsQ5/1H3Ieu4TLdcwaq
+	ammysV5OB+l5jWIr0W2Uu0COgSvARkzppuafYB22o2TAiXnhItXJ0M7sKaJ+OoY0
+	vfJM7wxy4fxyNCv4PL93rUtzeEHG3L0VrVurEt+cH+FIKdP8gwUUEX8gAUfYLDss
+	5fp9cmGQe5oASAVFXTDNEwcVPFTBM/Gfzsa2ZiDHX3zVwU7L+4p0aUl3liNevQbM
+	0zXVbuE4ZnEed4dNUJVeS6Xycmb8RzKRLoQ==
+X-ME-Sender: <xms:uxiiaR6UMkuxtTt6rleivvMATf3ui_MWjqMzc12j8S4C-XjSD6u0Iw>
+    <xme:uxiiaV7FcmgChS326Mdg02g_W_cE05jsdrrbl4n1Jcv0gK64dh11yjl8Vd82b5nUn
+    MD8KCC39TZhsXgs1LeR32F8j9ZBqHROxwo2z_HWGQceMaHhfqqgbQ>
+X-ME-Received: <xmr:uxiiadeKwnr_2mNyooW1A8lNIaXVh6JmIXvGm6xTraZjlhL7ZaLYEH8bBA8DOmkYS79_F_gTOQKcC8ukRGxuBb4uVBkikodQdA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvhedtudekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdeh
+    udehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:uxiiaZBV5lZ3zN5LqV9IRNlSrhVFfUVFVniPkvQKtRlhFD9nes7iLg>
+    <xmx:uxiiaQ8E816yD4CE3Zhe4Z6E-6zya7FsV-VjNb3solV8n-2T_nlYog>
+    <xmx:uxiiaUKCiNFETq9lP8EHZ2lX59nEQS7d5bSqRHqMu_UHiWd1wnJpfQ>
+    <xmx:uxiiaZjV6bTryz_QDiX604EG1tkBCvjTqrHlWBgKXh4KoB_BUSR0Zg>
+    <xmx:uxiiac8DuE7m9kRC0o7_w8wyzIeWUcitr7OkFkwDFv6-YWLs6DdbkUIu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Feb 2026 17:20:43 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com
+Subject: Re: [PATCH v11] setup: improve error diagnosis for invalid .git files
+In-Reply-To: <bcf64540-fe84-4fcc-a969-6927f348608e@gmail.com> (Tian Yuchen's
+	message of "Fri, 27 Feb 2026 13:26:51 +0800")
+References: <20260222102928.377519-1-a3205153416@gmail.com>
+	<20260223074410.917523-1-a3205153416@gmail.com>
+	<xmqqpl5rumy0.fsf@gitster.g>
+	<bcf64540-fe84-4fcc-a969-6927f348608e@gmail.com>
+Date: Fri, 27 Feb 2026 14:20:41 -0800
+Message-ID: <xmqq4in1q152.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH v5 00/11] repo info: add category/path keys and
- --path-format
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <pull.2208.v5.git.git.1772220640.gitgitgadget@gmail.com>
-Date: Fri, 27 Feb 2026 18:52:14 -0300
-Cc: git@vger.kernel.org,
- Phillip Wood <phillip.wood123@gmail.com>,
- eslam reda <eslam.reda.div@gmail.com>,
- Junio C Hamano <gitster@pobox.com>,
- Justin Tobler <jltobler@gmail.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <31BA8EEA-9C2C-4485-9066-B342D847807B@gmail.com>
-References: <pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
- <pull.2208.v5.git.git.1772220640.gitgitgadget@gmail.com>
-To: eslam reda via GitGitGadget <gitgitgadget@gmail.com>
-X-Mailer: Apple Mail (2.3864.400.21)
+MIME-Version: 1.0
+Content-Type: text/plain
+
+Tian Yuchen <a3205153416@gmail.com> writes:
+
+> It seems that failure "fatal: error reading 'nul'" matches the 
+> 'die(_("error reading %s"), path)', if my understanding is correct?
+
+The message is likely to be with its own pair of single quotes,
+i.e., "error reading '%s'".
+
+> So during 'git diff --no-index', the test passes 'GIT_DIR=/dev/null'. I 
+> highly suspect that 'stat("nul")' on Windows fails with an 'errno' other 
+> than 'ENOENT', so it falls into the 'STAT_FAILED' branch...
+
+In the expected case, how would
+
+    $ GIT_DIR=/dev/null git diff --no-index . .
+
+start up?  setup_git_directory_gently() is called with a non-NULL
+&nongit in turn it calls setup_git_directory_gently_1() that gives
+us GIT_DIR_EXPLICIT, which makes us call setup_explicit_git_dir().
+
+It would make us call is_git_diretory() on "/dev/null", and a
+non-NULL nongit_ok pointer causes us to return NULL from there.
+
+I am not sure how the result of calling stat() gets in the picture.
+
+> ...which can be simply fixed by reverting 'READ_GITFILE_ERR_STAT_FAILED' 
+> (and probably 'READ_GITFILE_ERR_NOT_A_FILE') back to being non-fatal 
+> inside 'read_gitfile_error_die()', if I'm correct? In that case, the 
+> logic of the test script should also be changed, shouldn't it?
+>
+> However, I'm sure that this change runs counter to our previous 
+> discussions. I can't think of any good ideas since I'm no windows expert 
+> either. So you can pretend I never said anything :P
+
+It sounds like saying "oh, this is too hard, let's punt and roll all
+failures from stat() into 'nothing there, move on'", which is how
+the code used to work before this patch X-<.
 
 
-> * No git repo structure feature changes.
-
-Patch 4/11 changes git repo structure
-
-> * No t1901 structure test changes.
-
-Patch 8/11 changes t1901
-
-> * No structure metrics/docs additions.
-
-Patch 9/11 changes git-repo.adoc
-
-> Commit structure
-> ================
-> 
-> * repo: teach info context and category keys
-> * repo: add path keys to repo info
-> * repo: add --path-format for info path output
-> * t1900: cover repo info path keys and path-format
-> * docs: describe repo info path keys
-
-Only 5 commits are described here, while you sent 11 patches in this series.
