@@ -1,70 +1,69 @@
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3CC44DB65
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 19:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D3C46AEFE
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 19:30:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772220658; cv=none; b=cWHxroqltzdmsL7QuVGOvROJe1gHaoDhPkzvzMNYsIz51in7zKFjpsjCZxXaggIZmmrzzBpTnXWuaSFcioAeHLPGG67AQDr0XpX7a4H9ZbI5LcZQVGPdtByHyki4KRsDRmtIvinPv0nhgEJptl3RF3DKGbnPMobQ05UE1Y6b0EA=
+	t=1772220660; cv=none; b=izaw4AoeAIvYTVCQyRE75mGsIhElgEwcfKlVJSR8HzjEgk0VSlrRs9VBoIjVMGqsRwA9wxpFEjk67/PDPFb1VG4MWygNDPkUUYjKWB3IPn7ojnVHrdBkGojcBM4DlxGhmdkPUNW6hKo081GAT9KO9TjlxUkERHj7g7EKB2hOFOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772220658; c=relaxed/simple;
-	bh=LpkrZE9ZYUZw67HF9kFoQq6MaAkZa6q8pYU5d/t1+hY=;
+	s=arc-20240116; t=1772220660; c=relaxed/simple;
+	bh=gLKopDZBCpxScOZQCCHySjaKkc87nKYAK2RjSiqAlAQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kegng86dMrEhSemMv0Eqh1FAOKklN9GQRgonhvMdOnDJMLZkdR+e6vEXuObl92K1+ss6p0bAsiJMm1iHScTabS8T2eTXzSgno+h4POj+ROZMVd0mIMrVaGpZAtudkjIIiAnphbrcnYQD55IZRx3a1fQhUf8Jnw7Ziptg8vLw2w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eYUSmwcG; arc=none smtp.client-ip=74.125.82.174
+	 MIME-Version:To:Cc; b=sNW50zQ2en0LKeltfniiEpkJR8VxixSB8lQPuBcSMuJrEyrFnZF87cJ4KrI21dpov5lwRKL/iMCyRwOO15upHN2LqJ30lJHYIvGZaNaUdchuU4QhatD8jHyef7dllFshvYtawF/acJru6Gg25ozYQw0O0+bP/uWeP1P1c6G7K28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RpQzkxlz; arc=none smtp.client-ip=74.125.82.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eYUSmwcG"
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2bdecd00ebdso1228888eec.0
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 11:30:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RpQzkxlz"
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1275910b930so1483021c88.0
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 11:30:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772220656; x=1772825456; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772220657; x=1772825457; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dGMA7vPkvfPMJtiGjXbBrpxghWpD1BIOrwwz/9dAxEs=;
-        b=eYUSmwcGP3dE/B5Okd3OOX0KS3v/QHrJposTvL4d1/Kf8jxL7Fp3+uyMIUHTgZuun9
-         hOBaKp+FEPpWI2XgX9qSbJDgZ6N/6shUg+ZL+JBa2AJueT2ZiywWmYEMLYKKMijIMajW
-         CruhwO2mCWEFpbLn+jKLsTr7eSsouW392mSenP5DH2WVv1VJjofQleKVxCPSoq/W4cdd
-         4GZxQxI6NxpyPYhZat9IcBiqY/AlM5DxyHiJIaomuMZRGZ0G7J+uLGRGtY+AsSEfdm0y
-         IGdP7kpzspOyZ1y+XIKb17LrpKZbrIYu1AH51LgF9Rv1GDaO96J0ayL10ZIBfbIlpyWr
-         mqEg==
+        bh=IM79YludtzkQXEMggwUjpXxaxNlvU5LmAlafGw7+5Cw=;
+        b=RpQzkxlzHKEQ2csR9riXrBfxXNtK+I4jagtf7zOgaB2ZkXk5tJuGqMboqvjudepxDw
+         xXU2aNtUKjUWAdehJmhmya4EVrCRFFDHD7bp8TUMuQ6bM46cJgV6aHkNzPgxajWK6qNd
+         PVhygvW+ifsfnn9W/Qzs4akjTM8Z3kjHLGLzGNmW6F/v7cSuBGdCNUZfF402H5sh3YXh
+         O5kT0g8nXDdV8RvRKbNdd+zadGjftrtu1eqZTbVs8gWLFYIYC8OssU0PcjEInlhsTlGc
+         v3Z9oBtdFW44wp1SwAmD6pjkvQprns8+XDV7VsU7cn/1eoTMTO0tbAAv2WMCTQjXziiv
+         MPrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772220656; x=1772825456;
+        d=1e100.net; s=20230601; t=1772220657; x=1772825457;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=dGMA7vPkvfPMJtiGjXbBrpxghWpD1BIOrwwz/9dAxEs=;
-        b=MnIkaAprTURu9lBHRozBckD0Kz/nb57la8yg9TNoIkNwxKCbFHyy3HLr+dL04ToqrJ
-         DRAO1M/ltcxxidruJ/zu8K0f+nPgBd0vzCB9bazu/wJLzSGmS58fQxsGW33oNK2K7mIc
-         +F6GAmkmmlquVp80e+wYTz0eDKW+oL2MUidJkllLISfvSePqRp8U/1eAGiUcUX/hJp2v
-         9qFfvvxxEYh9HbZ3B64zI2SGaOsy2H+C4pKHkFf+MfwxydQQ++nRpU4wSi3hDqdOL7JH
-         J5CQxf5zD9DS6Y6yPAjZpg3OGLZZsizx0OeyBIo+xdF7Hv4LYTfk2vlQguNnS+dmPwYt
-         ewnQ==
-X-Gm-Message-State: AOJu0YyspwfHRV5+Pu8baFsPT1wbV0dBuY+EDAHJLE2+OS0ickEWRDZj
-	IIumyVa5Z6g4PKvi1Mtg0i/OuPqm/3NDQhp8b7QHgHzDndeYZSpVKXtGNscoYQ==
-X-Gm-Gg: ATEYQzz4XZCDcp9zUZrX0nVvesZ9T3dbgGoVdYEa/xb1rfIMzB+89eFNKx+2g1qntMQ
-	mNTFtoBOqJQ7LqKCCtzF+eS+z3Aq8jmDfim4eUyTpeyFvP74A/Sj7F1qUs4YjNMSj8s9dkJ10fV
-	QFFjDHHIHNJpo6HBdQAoKhBqWFrsidUo0YoDm9QZgpJsc9Ys0Fm4rWhbwEfRzw3LHYPhcVeW+TX
-	Vi+lySjYLsKbOiVqVhj+Cwd5oxCtDOrdSD/tqCN89WrUHWvJ6EeICk+p6IaykiJyDSc91bma0H0
-	lMlcKWadSf1DnorVfkfs8WpmoaTH3aybHyFFXAOTupoqV2/gCD4Nh3+fINW/81hNvLwdEz1DYx7
-	lbCW367tOsUy2jY1qspZM+PivAYm6Y1S+FMBLWfWT4iQFzHkiMi90A4NUW5qMT8BGMzSILhlFen
-	92kb9hwkmufkVLv49bekCQQrGPGs7Zd0Bl8rv59A==
-X-Received: by 2002:a05:7301:6084:b0:2ba:6d87:cf6e with SMTP id 5a478bee46e88-2bde1c0f4bfmr1933629eec.4.1772220655292;
-        Fri, 27 Feb 2026 11:30:55 -0800 (PST)
+        bh=IM79YludtzkQXEMggwUjpXxaxNlvU5LmAlafGw7+5Cw=;
+        b=PDyndPkMDVtd4Vfpr65+DGLJcB7LQyOHsPnd7OA2o1jk/lFzFAznMAI4q1VvpNerd/
+         77YbOjmuzzbAA+rUf6kTlq1mZN1Csd+4lEMCjEai4KIGlJiNllIzr40EQSJVZlTdm1ay
+         F3pDnShbfnYDW4n7YXjUTQ5R+XbGLfnEXriSdp7MLRTtt8PF6vIMm/WBTcpgVw8vteU+
+         YI6udZDeMROgopW7NK8OsecMsj2ETHPEBd3xdEdTaKThN5ZktnVzOWe4s+GviknmgfQl
+         xsOeurX4yvh1Zln4IwYRA6GUFEKjgiJKE+brRTS5JItNbazdBznQsAiqcfFEiqsSmIBl
+         8EPw==
+X-Gm-Message-State: AOJu0YzBj8c9mLestXIos+9C8jZ0pdCjbWRGvAB2biG02NU8aEVpK1yR
+	7kd5GbF9S+uyu4rG4ed30Y6PkIKNOqG2ucjoDIRlVW96veP2N308OhDhzQUS2Q==
+X-Gm-Gg: ATEYQzwQ/sNtxZnxPN+q2KmbmvMOw5HJbu99HYNnYbiMxrZzm6fjtV27cmZPWSy7+D1
+	cNCeay0TO8Z2p2NVUN1z4DAAHWcFJg5xwVU9w5VruhvfQhE6lYphmZ4+DWzGFhvw5bAXqWgo2ts
+	5tnWBxRn6I+mIa/S4xnkm2YopdzUdphmXa8bXLONr6qshQtoR/1mo5QE8lAAamQ5+eZUIJGfmeH
+	nUUCEDwI24aIA4aeAHhfv+9K+/lddyS6lhpDkKQ5suCEV5/JoeWz6mmS+727R1kSuDH6X26nH8Z
+	3kTiACwYIfqTEvWWJANNEHwuS+M8x2g+Hz5hvgtVgt6RtSwKhmgWwyVh2UlYwgUkCNcim/jq4Vg
+	1+S5h0tz6Xhuisvvq3g7HfPBjfhP/Y+X5v0XxtFpNK4DKI2lCyRA5oAdulad4ZKG3T7+7xCyuW6
+	25D0HgVKSJUjXHXXASK1MsqBnO7Qk=
+X-Received: by 2002:a05:7022:a8e:b0:11b:3eb7:f9d7 with SMTP id a92af1059eb24-127890d4f6amr3234969c88.14.1772220657012;
+        Fri, 27 Feb 2026 11:30:57 -0800 (PST)
 Received: from [127.0.0.1] ([172.184.191.161])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bdd1e04361sm4899887eec.14.2026.02.27.11.30.54
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127899d49ccsm6234789c88.3.2026.02.27.11.30.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 11:30:54 -0800 (PST)
-Message-Id: <f17c0f03e5daf6b905cbdba88285ee9d8e371f3f.1772220640.git.gitgitgadget@gmail.com>
+        Fri, 27 Feb 2026 11:30:56 -0800 (PST)
+Message-Id: <1bc100d6cab3b77badb5d79fb8133e22a35bd96e.1772220640.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2208.v5.git.git.1772220640.gitgitgadget@gmail.com>
 References: <pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
 	<pull.2208.v5.git.git.1772220640.gitgitgadget@gmail.com>
 From: "Eslam reda ragheb via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 27 Feb 2026 19:30:38 +0000
-Subject: [PATCH v5 09/11] docs: describe repo info path keys and structure
- metrics
+Date: Fri, 27 Feb 2026 19:30:39 +0000
+Subject: [PATCH v5 10/11] repo: reduce repetition in structure keyvalue output
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,135 +80,191 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Eslam reda ragheb <eslam.reda.div@gmail.com>
 
-Document the newly added repo info capabilities, including
-category keys and path-oriented key definitions.
+Refactor structure_keyvalue_print() to use small helpers for
+single-key and per-object-type metrics.
 
-Also describe --path-format behavior for path outputs.
-
-Update git repo structure documentation to cover newly reported
-maxima and aggregate keyvalue/nul fields.
-
-This keeps command behavior and output keys fully specified for
-users and scripts.
+This makes the output section easier to review and reduces
+copy/paste risk while keeping output keys unchanged.
 
 Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
 ---
- Documentation/git-repo.adoc | 67 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 63 insertions(+), 4 deletions(-)
+ builtin/repo.c | 156 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 76 insertions(+), 80 deletions(-)
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 7d70270dfa..b575977a4b 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -8,7 +8,7 @@ git-repo - Retrieve information about the repository
- SYNOPSIS
- --------
- [synopsis]
--git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
-+git repo info [--format=(keyvalue|nul) | -z] [--path-format=(absolute|relative)] [--all | <key>...]
- git repo structure [--format=(table|keyvalue|nul) | -z]
+diff --git a/builtin/repo.c b/builtin/repo.c
+index cb70171412..ecd9d3aee5 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -821,6 +821,27 @@ static void stats_table_clear(struct stats_table *table)
+ 	string_list_clear(&table->rows, 1);
+ }
  
- DESCRIPTION
-@@ -44,6 +44,11 @@ supported:
- +
- `-z` is an alias for `--format=nul`.
++static void print_keyvalue_size(const char *key, size_t value,
++				      char key_delim, char value_delim)
++{
++	printf("%s%c%" PRIuMAX "%c", key, key_delim, (uintmax_t)value,
++	       value_delim);
++}
++
++static void print_object_values(const struct object_values *values,
++				const char *metric,
++				char key_delim, char value_delim)
++{
++	printf("objects.commits.%s%c%" PRIuMAX "%c", metric, key_delim,
++	       (uintmax_t)values->commits, value_delim);
++	printf("objects.trees.%s%c%" PRIuMAX "%c", metric, key_delim,
++	       (uintmax_t)values->trees, value_delim);
++	printf("objects.blobs.%s%c%" PRIuMAX "%c", metric, key_delim,
++	       (uintmax_t)values->blobs, value_delim);
++	printf("objects.tags.%s%c%" PRIuMAX "%c", metric, key_delim,
++	       (uintmax_t)values->tags, value_delim);
++}
++
+ static void structure_keyvalue_print(struct repo_structure *stats,
+ 				     char key_delim, char value_delim)
+ {
+@@ -831,86 +852,61 @@ static void structure_keyvalue_print(struct repo_structure *stats,
+ 	size_t max_inflated_size = get_max_object_value(&stats->objects.max_inflated_sizes);
+ 	size_t max_disk_size = get_max_object_value(&stats->objects.max_disk_sizes);
  
-+`--path-format=(absolute|relative)`:::
-+	Controls formatting for keys in the `path` category. The default is
-+	`absolute`. This option may be specified multiple times; the last one
-+	specified takes effect.
+-	printf("references.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)references_count_total, value_delim);
+-
+-	printf("references.branches.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->refs.branches, value_delim);
+-	printf("references.tags.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->refs.tags, value_delim);
+-	printf("references.remotes.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->refs.remotes, value_delim);
+-	printf("references.others.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->refs.others, value_delim);
+-
+-	printf("objects.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)object_count_total, value_delim);
+-
+-	printf("objects.commits.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.type_counts.commits, value_delim);
+-	printf("objects.trees.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.type_counts.trees, value_delim);
+-	printf("objects.blobs.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.type_counts.blobs, value_delim);
+-	printf("objects.tags.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.type_counts.tags, value_delim);
+-
+-	printf("objects.inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)inflated_size_total, value_delim);
+-
+-	printf("objects.commits.inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.inflated_sizes.commits, value_delim);
+-	printf("objects.trees.inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.inflated_sizes.trees, value_delim);
+-	printf("objects.blobs.inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.inflated_sizes.blobs, value_delim);
+-	printf("objects.tags.inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.inflated_sizes.tags, value_delim);
+-
+-	printf("objects.max_inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)max_inflated_size, value_delim);
+-	printf("objects.commits.max_inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_inflated_sizes.commits, value_delim);
+-	printf("objects.trees.max_inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_inflated_sizes.trees, value_delim);
+-	printf("objects.blobs.max_inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_inflated_sizes.blobs, value_delim);
+-	printf("objects.tags.max_inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_inflated_sizes.tags, value_delim);
+-
+-	printf("objects.disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)disk_size_total, value_delim);
+-
+-	printf("objects.max_disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)max_disk_size, value_delim);
+-	printf("objects.commits.max_disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_disk_sizes.commits, value_delim);
+-	printf("objects.trees.max_disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_disk_sizes.trees, value_delim);
+-	printf("objects.blobs.max_disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_disk_sizes.blobs, value_delim);
+-	printf("objects.tags.max_disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_disk_sizes.tags, value_delim);
+-
+-	printf("objects.commits.max_parent_count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_commit_parent_count, value_delim);
+-	printf("objects.trees.max_entry_count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_tree_entry_count, value_delim);
+-	printf("objects.blobs.max_path_length%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_blob_path_length, value_delim);
+-	printf("objects.blobs.max_path_depth%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_blob_path_depth, value_delim);
+-	printf("objects.tags.max_chain_depth%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.max_tag_chain_depth, value_delim);
+-
+-	printf("objects.commits.disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.disk_sizes.commits, value_delim);
+-	printf("objects.trees.disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.disk_sizes.trees, value_delim);
+-	printf("objects.blobs.disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.disk_sizes.blobs, value_delim);
+-	printf("objects.tags.disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.disk_sizes.tags, value_delim);
++	print_keyvalue_size("references.count", references_count_total,
++			   key_delim, value_delim);
 +
- `structure [--format=(table|keyvalue|nul) | -z]`::
- 	Retrieve statistics about the current repository structure. The
- 	following kinds of information are reported:
-@@ -52,6 +57,12 @@ supported:
- * Reachable object counts categorized by type
- * Total inflated size of reachable objects by type
- * Total disk size of reachable objects by type
-+* Largest inflated reachable object size by type
-+* Largest disk size of a reachable object by type
-+* Largest parent count among reachable commits
-+* Largest entry count among reachable trees
-+* Longest and deepest path among reachable blobs
-+* Deepest annotated tag chain
- +
- The output format can be chosen through the flag `--format`. Three formats are
- supported:
-@@ -64,6 +75,7 @@ supported:
- `keyvalue`:::
- 	Each line of output contains a key-value pair for a repository stat.
- 	The '=' character is used to delimit between the key and the value.
-+	Both aggregate metrics and per-type metrics are included.
- 	Values containing "unusual" characters are quoted as explained for the
- 	configuration variable `core.quotePath` (see linkgit:git-config[1]).
++	print_keyvalue_size("references.branches.count", stats->refs.branches,
++			   key_delim, value_delim);
++	print_keyvalue_size("references.tags.count", stats->refs.tags,
++			   key_delim, value_delim);
++	print_keyvalue_size("references.remotes.count", stats->refs.remotes,
++			   key_delim, value_delim);
++	print_keyvalue_size("references.others.count", stats->refs.others,
++			   key_delim, value_delim);
++
++	print_keyvalue_size("objects.count", object_count_total,
++			   key_delim, value_delim);
++
++	print_object_values(&stats->objects.type_counts, "count",
++			    key_delim, value_delim);
++
++	print_keyvalue_size("objects.inflated_size", inflated_size_total,
++			   key_delim, value_delim);
++
++	print_object_values(&stats->objects.inflated_sizes, "inflated_size",
++			    key_delim, value_delim);
++
++	print_keyvalue_size("objects.max_inflated_size", max_inflated_size,
++			   key_delim, value_delim);
++	print_object_values(&stats->objects.max_inflated_sizes,
++			    "max_inflated_size", key_delim, value_delim);
++
++	print_keyvalue_size("objects.disk_size", disk_size_total,
++			   key_delim, value_delim);
++
++	print_keyvalue_size("objects.max_disk_size", max_disk_size,
++			   key_delim, value_delim);
++	print_object_values(&stats->objects.max_disk_sizes, "max_disk_size",
++			    key_delim, value_delim);
++
++	print_keyvalue_size("objects.commits.max_parent_count",
++			   stats->objects.max_commit_parent_count,
++			   key_delim, value_delim);
++	print_keyvalue_size("objects.trees.max_entry_count",
++			   stats->objects.max_tree_entry_count,
++			   key_delim, value_delim);
++	print_keyvalue_size("objects.blobs.max_path_length",
++			   stats->objects.max_blob_path_length,
++			   key_delim, value_delim);
++	print_keyvalue_size("objects.blobs.max_path_depth",
++			   stats->objects.max_blob_path_depth,
++			   key_delim, value_delim);
++	print_keyvalue_size("objects.tags.max_chain_depth",
++			   stats->objects.max_tag_chain_depth,
++			   key_delim, value_delim);
++
++	print_object_values(&stats->objects.disk_sizes, "disk_size",
++			    key_delim, value_delim);
  
-@@ -78,9 +90,11 @@ supported:
- 
- INFO KEYS
- ---------
--In order to obtain a set of values from `git repo info`, you should provide
--the keys that identify them. Here's a list of the available keys and the
--values that they return:
-+In order to obtain values from `git repo info`, provide either individual keys
-+or category names. A category returns all keys within that category. For
-+example, `layout` returns both `layout.bare` and `layout.shallow`.
-+
-+Here's a list of the available keys and the values that they return:
- 
- `layout.bare`::
- 	`true` if this is a bare repository, otherwise `false`.
-@@ -91,6 +105,51 @@ values that they return:
- `object.format`::
- 	The object format (hash algorithm) used in the repository.
- 
-+`path.common-dir`::
-+	The path to the common git directory.
-+
-+`path.config-file`::
-+	The path to the `config` file in the git directory.
-+
-+`path.git-dir`::
-+	The path to the git directory.
-+
-+`path.git-prefix`::
-+	The path of the current working directory relative to the top-level
-+	directory.
-+
-+`path.grafts-file`::
-+	The path to the `info/grafts` file.
-+
-+`path.hooks-directory`::
-+	The path to the `hooks` directory.
-+
-+`path.index-file`::
-+	The path to the index file.
-+
-+`path.logs-directory`::
-+	The path to the `logs` directory.
-+
-+`path.objects-directory`::
-+	The path to the objects directory.
-+
-+`path.packed-refs-file`::
-+	The path to the `packed-refs` file.
-+
-+`path.refs-directory`::
-+	The path to the `refs` directory.
-+
-+`path.shallow-file`::
-+	The path to the `shallow` file.
-+
-+`path.superproject-working-tree`::
-+	The path to the superproject's working tree root, or an empty string
-+	when the repository is not used as a submodule.
-+
-+`path.toplevel`::
-+	The path to the top-level working tree directory, or an empty string
-+	for bare repositories.
-+
- `references.format`::
- 	The reference storage format. The valid values are:
- +
+ 	fflush(stdout);
+ }
 -- 
 gitgitgadget
 
