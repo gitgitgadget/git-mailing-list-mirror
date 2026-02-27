@@ -1,162 +1,116 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0632D345736
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 19:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1115C45107D
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 19:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772221092; cv=none; b=EO7PnVlRaNy2yy+gvNpRdLU8cRPbby3jiDYzPBhw+Jc+DtwzHIcjjFjLawoBvJ9Tu05IfRXseNFe79TWCEH7QTqlXIUuwU9iD1pLTfmHlJfNRn6Q0YR2yjHYBUwZuzjIkITB6KPKXj+t71DSCi3lqtwtM1saC5TYyMa/Cpxtl6A=
+	t=1772221323; cv=none; b=AHcmZyyBNAfKjX0PQ9CZuTKITBr7NZ4n86SJPna48mOvazxzT/RNw3OH1+Jll9HjQciVqJH8jH2nLDjdo8KqUmkzdlGvw3du3NCShTLl/YDu0U64DBAaj33nl3JhF/2cixMPu/Y8sggvY+ACkiVCB6gTtH/IH35mHRJZ5WswAPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772221092; c=relaxed/simple;
-	bh=SzOCVSCArREbE65HlQgCuR5UjDSfKrZueqaPuFdfOXk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=La+SlCWR5HoDAuUeT6PNl1er0i1ua+4EKxNzzd6xVOQzD4jZ2DfXRxEEJI9cFc592LOJd85m+phWr0Tqz0z58ynesYcWewbdQHHIOfwwg7ctUkI1GYaNXYOOSUOLqk/ohVw5CwYyRJJ+nd67J+qZaKrTYEHfXo/y6OGNMM7YEoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bRVou2z2; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1772221323; c=relaxed/simple;
+	bh=cs4lF7r6W6cIpBI6drMlpqaM93ckeAvtDUbvvhU/P8Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=keTZ0vuI1Xh33dqrfX34FkemHNnPFzcH2xf+abvbOle7z8Bke1fG7XwFoIxTXOPAuYrZ1BZ9OHAd2MstjFkp0rx7xVH9gxpqnrIfgzL91dF5ws+1TufuU9bzYooZUJoSih1JfyC62+rS+dqwa7sW1y/oBaqxEESBz2zuVRlIHTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m4a3FxZD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XTTzIRQM; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bRVou2z2"
-Received: (qmail 80876 invoked by uid 109); 27 Feb 2026 19:38:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SzOCVSCArREbE65HlQgCuR5UjDSfKrZueqaPuFdfOXk=; b=bRVou2z2u8K1e137qo8E6xI4Ek0A8ip7Lm94ivwSwLyQLB8QV1toZBmNm2qGhmD1YjOvkfZOm7bYOhQE/skm5Gqw2kG8EQJUfPXQA4GDO3t+vcWS1kaIk/bX9K5GxBVVuZBilXxMRaSG0rN8KgSXF8CTMbbWDti/ArhtN0mPECTiU5r/sEnlcLjddLEFbreHQvfu5hitjCpAk0bhA/deqvhL4lRPnt0H1t3MusDEk5dNF4nTtX1V9ggZkEFEM7XcxeMUOuxG9e3R/P5B9Gd6wsT42uncvroSCNsQnGA/XJFI9CpO1Y+Pyp938kTuBHXNZfFqnDScel2f+/6r1E1NuQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 27 Feb 2026 19:38:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 279468 invoked by uid 111); 27 Feb 2026 19:38:00 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 27 Feb 2026 14:38:00 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 27 Feb 2026 14:37:58 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] upload-pack: reduce lock contention when writing
- packfile data
-Message-ID: <20260227193758.GA2931515@coredump.intra.peff.net>
-References: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
- <20260227-pks-upload-pack-write-contention-v1-2-7166fe255704@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m4a3FxZD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XTTzIRQM"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A35117A025A;
+	Fri, 27 Feb 2026 14:41:58 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Fri, 27 Feb 2026 14:41:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1772221318; x=1772307718; bh=6Mw4bdGQwG
+	Bh1jEV92+GdHCOjzmJb5XkIgqdscPVKao=; b=m4a3FxZDcdO9IuYdN7AcEbsnLZ
+	eGE29f7MO1BQmQtfJqEr+5dn2+VkDdZL0G6jBuyFP3KlvqCCvfJBZK+jS5dM9/uQ
+	WpBSIyQTFeYSPPhGKdV5oiC1yBJWQSAzDe85eOoLcxMAS04FkcbspQ2iNKWVEVLX
+	TD0627qCEqaNR1rUBxRx2nRp4jB87dg0+L7EDpjFV3XBjPgIbJhfscRkAschii5c
+	pYqAtZz7TnyLuEqA0Les4gaUvXB5mHXTtRJX1dUvNXKhVhRANKpLCaFX3hm3L9jJ
+	+7psq+hMrTDiZSLqHGtrAmEnWTVaZJ51lEdP3Uqr/L/DARKgCokF0b9UCGaQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1772221318; x=1772307718; bh=6Mw4bdGQwGBh1jEV92+GdHCOjzmJb5XkIgq
+	dscPVKao=; b=XTTzIRQMeJPBaM+LqxAV2OEuLwNT8pAH53mI5Mjl3q2aeqFyxI7
+	vZaifR0XeGyAwp9B2NZkgza6eGhwCcGcvs0V9IR/PSAZemwsS1y7ql2GLgkkt814
+	U1NJNI5KZKsOzbFK2xOISG+8MCeNK7X74oUjSMJYQw/xDfQacwbxX8EevYQ/iW2V
+	rrhPujKjq4NBTaIeg8HwHqMvRbFUULdBHGrJnn/6VnWabZ2jEx4MKHaWd0b5/b4f
+	lGlEtxWCDUNOU0LLkViUPZeE7z//pQN/TFpJe0/Mz1xy+iY8nb6NYhUZ72xb+C6w
+	SInrHNqqVB3PcoZHcS0d2otcppYOTRJeAJA==
+X-ME-Sender: <xms:hvOhaVe6z1U42CwSkrDvZuQJ-KWkLeHqNsvatIWGyOUWsrzNRDFrRA>
+    <xme:hvOhaVxhxJd6MroNJ71xw00-xQ4s8oKsnxM0I7B3s4IAjL-5Env8nObGkDlHIHaaH
+    4OTN25xjiOKRXHIPgvWnt0FpLtDgApoemO5QOV1ZBUEiAT8f7ih9g>
+X-ME-Received: <xmr:hvOhaSLxAx7vaxb1e0lrKwIxrdvPu4f8rAHHyKuxd-ABN6w9iQw-E3uBVBhXoH9itvSWJ1cWPKy7t6J9oBRXXqI98moDE6bNVA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeelkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhgihhtghgrughgvghtse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehfrghsthgtrghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsh
+    hunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehpshesphhk
+    shdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:hvOhafHsNicJmdlBEGGD8BxBIIuViN4eyk_vNTkSjmH76aThQ-TSBw>
+    <xmx:hvOhaW-Y7_gyhCubUJoHDd3JUBtqT-NNX1bkxpCOAyUlKWHzVf9w2Q>
+    <xmx:hvOhaXJX7RrLw9GL-admGLrpCdx_rPRHgtNFmrBCw8rD8-F5arKNGw>
+    <xmx:hvOhacujvfVfIwcaooYgW1MWF5BQNS5po_dX9d2UwEc9iBr_6l2BZg>
+    <xmx:hvOhaQilEsOZvaG5TcT_8fV0kDdZ0UzZeJ_-sSMk5Dwh7GRKI7RN8xmR>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Feb 2026 14:41:57 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Derrick Stolee <stolee@gmail.com>,  Jeff King <peff@peff.net>,  Derrick
+ Stolee via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
+  fastcat@gmail.com,  Eric Sunshine <sunshine@sunshineco.com>,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 2/2] for-each-repo: work correctly in a worktree
+In-Reply-To: <1ee5927a-c90d-4a4b-a468-5be3644481bc@gmail.com> (Phillip Wood's
+	message of "Thu, 26 Feb 2026 18:14:28 +0000")
+References: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
+	<pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
+	<4e3f4aa6cd36f779c6c1d6b4f30bb68ed807b9da.1771968924.git.gitgitgadget@gmail.com>
+	<xmqqv7flervq.fsf@gitster.g>
+	<eeebc30a-40bf-40ac-a16b-ca5e128c3c01@gmail.com>
+	<20260225131344.GA2139176@coredump.intra.peff.net>
+	<08c6e203-3444-45c7-9bc9-cc2590be30c3@gmail.com>
+	<xmqqsean4gsc.fsf@gitster.g>
+	<1ee5927a-c90d-4a4b-a468-5be3644481bc@gmail.com>
+Date: Fri, 27 Feb 2026 11:41:56 -0800
+Message-ID: <xmqqqzq6otx7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260227-pks-upload-pack-write-contention-v1-2-7166fe255704@pks.im>
+Content-Type: text/plain
 
-On Fri, Feb 27, 2026 at 12:23:01PM +0100, Patrick Steinhardt wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Extend our use of the buffering infrastructure so that we soak up bytes
-> until the buffer is filled up at least 2/3rds of its capacity. The
-> change is relatively simple to implement as we already know to flush the
-> buffer in `create_pack_file()` after git-pack-objects(1) has finished.
+>>> 		 * Note that the following options are not in local_repo_env:
+>>> 		 * - EXEC_PATH_ENVIRONMENT persists --exec-path option.
+>>> 		 */
+>>> 		if (strncmp(local_repo_env[i], "CONFIG_", 7) &&
+>> 
+>> Minor nit: !starts_with() lets you avoid counting bytes yourself and
+>> hardcoding "7" here.
+>
+> More seriously it should be looking for strings starting with 
+> "GIT_CONFIG_", not the name of the preprocessor definitions.
 
-We are relaying write() calls from pack-objects here, which is writing
-to us in 8kb chunks (due to csum-file.c buffering). So most of our
-writes will be 8k.
-
-Rather than buffering in upload-pack, would it not be simpler to just
-increase the write size from pack-objects? Then we do not have to worry
-about disrupting upload-pack's keepalive timeouts. And as a bonus, if
-you are worried about the system-wide number of calls, you will likewise
-be reducing the number of read() and write() calls over the pipe between
-pack-objects and upload-pack.
-
-Something like this:
-
-diff --git a/csum-file.c b/csum-file.c
-index 6e21e3cac8..94798fa429 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -206,7 +206,7 @@ struct hashfile *hashfd_throughput(const struct git_hash_algo *algop,
- 	 * size so the progress indicators arrive at a more
- 	 * frequent rate.
- 	 */
--	return hashfd_internal(algop, fd, name, tp, 8 * 1024);
-+	return hashfd_internal(algop, fd, name, tp, 32 * 1024);
- }
- 
- void hashfile_checkpoint_init(struct hashfile *f,
-
-reduces the number of write calls reported by:
-
-  git clone \
-    --upload-pack='perf stat -e syscalls:sys_enter_write git-upload-pack' \
-    --bare --no-local linux.git foo.git
-
-from ~420k to ~160k. In theory we expect ~8x reduction in our target
-area, 4x for each of pack-objects and upload-pack, but of course there
-are other writes going on, too, including the extra sideband ones. And
-obviously we could push it further towards LARGE_PACKET_MAX to save even
-more.
-
-> Now git-upload-pack(1) already has the infrastructure in place to buffer
-> some of the data it reads from git-pack-objects(1) before actually
-> sending it out. We only use this infrastructure in very limited ways
-> though, so we generally end up matching one read(3p) call with one
-> write(3p) call. Even worse, when the sideband is enabled we end up
-> matching one read with _two_ writes: one for the pkt-line length, and
-> one for the packfile data.
-
-Using writev() would be an easy-ish fix here, modulo portability
-concerns (though of course it is easy to implement a fallback writev()
-in terms of write()). Doing this:
-
-diff --git a/sideband.c b/sideband.c
-index ea7c25211e..b5509fbaa2 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -266,19 +266,25 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
- 	while (sz) {
- 		unsigned n;
- 		char hdr[5];
-+		struct iovec iov[2];
- 
- 		n = sz;
- 		if (packet_max - 5 < n)
- 			n = packet_max - 5;
- 		if (0 <= band) {
- 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 5);
- 			hdr[4] = band;
--			write_or_die(fd, hdr, 5);
-+			iov[0].iov_base = hdr;
-+			iov[0].iov_len = 5;
- 		} else {
- 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 4);
--			write_or_die(fd, hdr, 4);
-+			iov[0].iov_base = hdr;
-+			iov[0].iov_len = 4;
- 		}
--		write_or_die(fd, p, n);
-+		iov[1].iov_base = p;
-+		iov[1].iov_len = n;
-+		/* obviously needs looping and error detection */
-+		writev(fd, iov, 2);
- 		p += n;
- 		sz -= n;
- 	}
-
-drops my 160k write calls down to 82k.
-
-Another option here is teaching the packet-forming code to reserve a few
-bytes at the front of the packet. There's a little discussion here:
-
-  https://lore.kernel.org/git/YBkeYSA5UfQP1m%2Fx@coredump.intra.peff.net/
-
-In theory it's easy and elegant to do, but I'm not sure what the
-refactoring fallout would be like.
-
-> This significantly reduces the number of write(3p) syscalls we need to
-> do. Before this change, cloning the Linux repository resulted in around
-> 400,000 write(3p) syscalls. With the buffering in place we only do
-> around 130,000 syscalls.
-
-Out of curiosity, how did you end up measuring? I first tried with
-strace (without "-f") on the upload-pack process, but strace slowed it
-enough that it ended up collecting multiple of pack-object's 8k write()
-calls in a single read() call. ;) The "perf stat" above seemed to work
-OK, though of course it's counting child processes, too.
-
--Peff
+Thanks.  I missed that completely.
