@@ -1,119 +1,97 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE851D8E01
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 01:53:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BCE3043A2
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 03:02:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772157185; cv=none; b=HoUJO6T7iwdDPzRMcbp+7JXOb8O/hB4jMIqORsD4FUmTW+4jQL5ce+wA8Do0AKN+Rh4MFyfXzXx9aUlzVBvLapG3TG9eiuUlJRbwnk5DrM9cWEnaj05doZYBwbCAZr4wzFQZ9LFO+uV6cGqyE0Uj9RJRgR1kfH5IxdMbcwVBo/U=
+	t=1772161369; cv=none; b=BoOxgsBvAGia5O05WgFqlp3l7C3J9MiC8Z7XUvg7x9w3M6nEwqv4bC+6oTbVY/4kGiDHUCnxYYvag3QNA6t2pvZ+6TPdvcJy2XE9EYBGHr7fDeyRCC/LtmgUwy5ylsjBMxylNEK2ENY47nMolKszqraKzsSpPmgF9ZUPDXS+15M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772157185; c=relaxed/simple;
-	bh=NoG4XtJDxLmbHnZU4B7GeFcbXBspBeSVy3dF4/9npVs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bc2e9PZ8Yvkz2LDDcWAs+/T5Z5NOkQCzOS+Q6dnOVklZf+QKqvkGHMvfex88bFYvQ3eoOShHjO9uB3E6QQKkAgnGnoscROdrMk8sMlM5HSAQVkm52jz86q8/A4sRnhgrg0LcWdc4ihQdR68BYv3DQkuAKKKIwIwCdxJcamaL3zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=Lei5mAzU; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1772161369; c=relaxed/simple;
+	bh=YouwgXep/Cx0hcGrMSCIqBZMAMPGf8mZhfPtaUXgXrI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=taig24DL8ZsO58vtzK3ri8q4NF7a70doXIwkXhcbBaE4wgmauFxx5AGU6ansU7YOTmbg+p/51olwk2Aio7M5LT6GlRiWcgp9eLHIveQ0ceDO6WLuTQF67xVVaTdh8iTaJtNKoG//cDKTbZ73xkF8t0ecPM2iIweSCzquZwNSkIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=mvH0cW5v; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="Lei5mAzU"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1772157175;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0dvXQxC6KAS8eV2h87hmCbiC799H9dKy720yAIuVD3M=;
-	b=Lei5mAzU26bvWW8YgGncedTM/jPPePaGcRhWIJd+UyaG+hXaqneagLrBGeqGauAInOPwdo
-	B3o5ZzrcwKWmC8/Ngt9qhakcuSpo2LPf9bTu6E49D6lkn5JeStJjL5y4T8WhTTHbcKbMuA
-	N/PQJA1wROWz0pvKDVfOsMkMnB70KlJ6k3X9FlPUMfysgYwHGzsEOk0xEybj0Y4491agXl
-	QCICnDWGW9lDNvr9sQzFRG9keUohp39Iz+/DtvDzj5wi6cNDbnS1F1tIhLa3HY5wC20lsN
-	PX4HoQ1lo+jsKJsU5UbSzAwBXkWYi0RY061+ebWA6khistIYmRevq51Znl8NfQ==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH v3 2/4] format-patch: move cover letter summary generation
-Date: Fri, 27 Feb 2026 02:52:37 +0100
-Message-ID: <dc131c756520a0982d1d6f733dff48a464900ea5.1772156996.git.mroik@delayed.space>
-In-Reply-To: <cover.1772156996.git.mroik@delayed.space>
-References: <cover.1771925291.git.mroik@delayed.space> <cover.1772156996.git.mroik@delayed.space>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="mvH0cW5v"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-7986e0553bdso14622327b3.2
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 19:02:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1772161367; x=1772766167; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YouwgXep/Cx0hcGrMSCIqBZMAMPGf8mZhfPtaUXgXrI=;
+        b=mvH0cW5vScZbs7LhCFaH/2A+FVsaHb+ckftUVIskqvD2WH3RWm3g/JzgKKxaiYnDq4
+         jUCFUYtU2Ggtam/6eGwgWfhJ3Zq11ItWEa5uQLbQ6PtnfJPZIVufFUwbPgk2M5g4+Otq
+         uKHLeIpjjBm1a4r8JrFTjJKqTx2LR+S7TjiVFaYchXJGiUfo0uHH+cfEuBN7/1cEUkhF
+         9KTS82ZU9Gu1hdk6Gsa5nUbG7UfETcjTjLw675jvz4782jMv5YBEfyXNnPWcxk8b5IYV
+         3+ViWieqHAsry6Ux0GMdbWcnFA3itB3tqojp8S72yNQh9bRn2YGEkgf37nDuqzXSHd4Q
+         D+EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772161367; x=1772766167;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YouwgXep/Cx0hcGrMSCIqBZMAMPGf8mZhfPtaUXgXrI=;
+        b=wwT1xe3wRRfBdY4rAH7SxJjgTdlKoKgJvBbIssMbzOtpzw68OEouZje/DNUNs2UJo6
+         9abNZNwAx3z5qp095t1jLSc2d3M8NEyXhchYSf6JrbCmP9fIgHRPa8bFJL/SK/bdJl8+
+         VK5o610noEpmqXtAiR0p4Wv9MRlpgjInT5HadKbQUts0jw6/Gw8Q5MpDlFx87QnGHTjc
+         A9yDSqr3yah8kjF5VYd3PIegZusvPua+pCuTRSHc+5Mp0gWBMV7Z90YmIo710IyU92cG
+         Jn4SNkexcBcADFH81XFsdQPcZKa91P6+/UjMFd5zfmEaN1wiPVroEaFtQ0wUG8v7itvT
+         D70Q==
+X-Gm-Message-State: AOJu0Yy6WTJst+weMyf/qoSx5JBD5PVV+hXpr+1XRAs6xi7LtZd5c/T+
+	wgt7zRuZq2XNWKgguQLiKidHidKZIKtThoV2rWOKutzJLJnqcO3RdU71KLP2gRQ4nfE=
+X-Gm-Gg: ATEYQzwio9//TIC9N3FZOH3A4WRNKmYwq1ZbMdZF4a5fVcV4E1FxYHQEnTrry0FKsYp
+	2VDPp+K5VXMNXUk/+TSKoBZ5x75UWskNhtXYjXlInV2lai76Twc0PXaXVIEk5lr058Mte6qPyE/
+	OslgWoWazmjl/cesbYYX18IgY01EnoL2Njc8Qch5WCHh6TD2cPM73Bbt82/V4LT2r30UhzNAvg6
+	mqUCfZDaR+pJDwYm/WK18Inle4pjYJImZyr7/B3PA1qeJ0lc1nfo3/CgJr5oxEuuWfQVNaXBXDf
+	c590b5EF1arBeyLoI1vLS1SnakpzdPJzhe0BBknvKrlM+4PgkuJkcv693YK8f734vqxuzfPwLBL
+	/56CIqAnnRW6Lk9HiVmLeqndcm149gOBJ7rqh3XVDOSl8wWdSe3lPw+mjIEQCHWR+t0vBo1erQG
+	lOnPOxDMYkX6V1G4p3TszVonD6A7PXmKqfXbqRNSyHg/5TPY5WpeOnoQbXC9K3dY501EJCdX3+T
+	uK9W4YoX+APESlqdrtUijWVkmfTgG8tMBphx2f+
+X-Received: by 2002:a05:690c:4c12:b0:798:6542:3112 with SMTP id 00721157ae682-798856495bemr14185617b3.65.1772161367334;
+        Thu, 26 Feb 2026 19:02:47 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79876ca3953sm16062897b3.51.2026.02.26.19.02.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Feb 2026 19:02:46 -0800 (PST)
+Date: Thu, 26 Feb 2026 22:02:44 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [RFC PATCH 01/14] midx: use `string_list` for retained MIDX files
+Message-ID: <aaEJVDoUyL/QbY9O@nand.local>
+References: <cover.1771978829.git.me@ttaylorr.com>
+ <d64a799afd620363c1940d7c2e634e78ea553cb6.1771978829.git.me@ttaylorr.com>
+ <xmqqldgf1c65.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1958; i=mroik@delayed.space; h=from:subject:message-id; bh=NoG4XtJDxLmbHnZU4B7GeFcbXBspBeSVy3dF4/9npVs=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpoPiZm4Ab3Ya25Oq4Upkxoctxr1KYpNu/e7UVy aerQ0fW0LOJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaaD4mQAKCRBIeX6hnBm+ 0Yl7EACc5EFqtVvlYLoJHNRZEiEp5YZUN9HrzCViqZ1swXNynmkABf+mgcEX6cLcYS18LQCibr0 OryGcMb4RV0Xm8Kwxts6OMrD7AAoGRBPCaZ7+I9NfimOpmmKrPuV4jy9tvfbCTCOhjrc2y1kQp3 sUW+7JLMxllfRNmlOXlxbOdXTaWBXbnAptKoUKM28cKlTYhFYFp/299jzjwuSRvurYlQeYM1jVI Th0KVWZF7eFmQEKZ3AZWY17RpL9liR1NM1g5U53oUXyKYL0UBw38YPgbiejZw6apWIbbvFe68xl yK0eLwXj1belusqQGAHmXmSc+m6k9J+N445QKsZWS1fGpFaLJhL1turqd7bOXpkHTJ85uKmrvVn 03juSUxd91pLAPVo+BsmzWakfdr/yeSKW2Y/yonYL1hC8DSU1ZLUQkx1W9zUyfOEXfyDx0BcUTK yCj1LvaMAkLthMmy5UdvTKNMnXkV92wJYinzUp4Otf6QeEcIdxOeFPrsr2BBUJ1RFF6TDryZFB6 gaL6wenB9alCPn7fjfZDP3sWJbrQBbUskxxca5eKsvL/Ef/6+TY/1ljtLekraHcquPXcBH9++95 xvwGAD0Y7ysOoNDMtPM7Nd0O9rYf/3ZhcZgw+HO58tjbELB5FC1d7Xxus5eSsHLHpLMG/NWyW5k fSE2Ef5S1
- ozxCmg==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: -----
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqldgf1c65.fsf@gitster.g>
 
-As of now format-patch allows generation of a template cover letter for
-patch series through "--cover-letter".
+On Thu, Feb 26, 2026 at 12:29:22PM -0800, Junio C Hamano wrote:
+> > Replace the bare array with a `string_list` which can be passed around
+> > as a single parameter. Though it improves lookup performance, the
+> > difference is likely immeasurable given how small the keep_hashes array
+> > typically is.
+>
+> And if it the lookup performance turns out to be an issue, we can
+> switch to strmap or something more appropriate.
 
-Move shortlog summary code generation to its own function. This is done
-in preparation to other patches where we enable the user to format the
-commit list using thier own format string.
+True. In practice these should have at most tens of entries, so I
+suspect the string_list will be completely fine.
 
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
- builtin/log.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+If we are cleaning up so many stale MIDX files that we need a more
+efficient data structure just to keep track of those files, we likely
+have far greater problems to worry about ;-).
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 5c9a8ef363..0d12272031 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1324,6 +1324,25 @@ static void get_notes_args(struct strvec *arg, struct rev_info *rev)
- 	}
- }
- 
-+static void generate_shortlog_cover_letter(struct shortlog *log,
-+					   struct rev_info *rev,
-+					   struct commit **list,
-+					   int nr)
-+{
-+	shortlog_init(log);
-+	log->wrap_lines = 1;
-+	log->wrap = MAIL_DEFAULT_WRAP;
-+	log->in1 = 2;
-+	log->in2 = 4;
-+	log->file = rev->diffopt.file;
-+	log->groups = SHORTLOG_GROUP_AUTHOR;
-+	shortlog_finish_setup(log);
-+	for (int i = 0; i < nr; i++)
-+		shortlog_add_commit(log, list[i]);
-+
-+	shortlog_output(log);
-+}
-+
- static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 			      struct commit *origin,
- 			      int nr, struct commit **list,
-@@ -1377,18 +1396,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 	free(pp.after_subject);
- 	strbuf_release(&sb);
- 
--	shortlog_init(&log);
--	log.wrap_lines = 1;
--	log.wrap = MAIL_DEFAULT_WRAP;
--	log.in1 = 2;
--	log.in2 = 4;
--	log.file = rev->diffopt.file;
--	log.groups = SHORTLOG_GROUP_AUTHOR;
--	shortlog_finish_setup(&log);
--	for (i = 0; i < nr; i++)
--		shortlog_add_commit(&log, list[i]);
--
--	shortlog_output(&log);
-+	generate_shortlog_cover_letter(&log, rev, list, nr);
- 
- 	/* We can only do diffstat with a unique reference point */
- 	if (origin)
--- 
-2.53.0.4.g55f3102ead
-
+Thanks,
+Taylor
