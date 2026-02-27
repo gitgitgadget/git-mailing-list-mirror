@@ -1,195 +1,140 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F3F345CCE
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 19:00:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772218821; cv=pass; b=n7XldjTTBixOq0ulbjqDMUTIYEhSqEMHV7R8qvZ2vs2MuwJAhUExqpLHGdEd5hhty3jwj22WkhRvbEgbF/F3fBfF/63lt6VKWXSWBRyyd1z9Upb+wmbqzIDfh1yH+2kiWuIIR7qX+8yJwx4eUU2Q3oolYgQPRnSjI/mc+7GKKqM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772218821; c=relaxed/simple;
-	bh=AimTi2KU9CB3UtDnG38CeXD7Y3vvprimtRtGTL9iHo8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Cx2GXW98+4aPpqS0uClnVbPjLiU9qqNa+rUq9ORYKdJ+ddonpbZrbW+6pD4c8XolqbIQek9pP91cW3cMG/O2u02taeQW0OORh7aqH6PCZt/WhnRlri5cWld1hgjbKhLA9xyc56b4hGkZWmlkktWZPkkaW5sMAn0Kw/VPxzc0o0o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=anthropic.com; spf=pass smtp.mailfrom=anthropic.com; dkim=pass (2048-bit key) header.d=anthropic.com header.i=@anthropic.com header.b=FhKBcjHk; arc=pass smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=anthropic.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=anthropic.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F293859FE
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 19:11:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772219485; cv=none; b=pnKIiYEdqE/MCPf8f5mr1Sin+OkjKqzbpNTd6afCLESxxHE4eeAWkyH/2MHVJPW37P2co9WG953ZFDap6pzVmkTyASgGiSJbYj6WaZkwIFs6K8vJI0A1qcPN3CEhv3eHnUuJ0I11jIF45VoLptSFc7DTvWdmCLdBidoH4gtTqVk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772219485; c=relaxed/simple;
+	bh=DuGtIGgFmGUS43NOSwyOousLLXCcYBXyVNvn9e9Futw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MWK1lDZIDe483bCzh/30+yejfuNQr99ZvFeyj+YhsaxUidPSJUjK3O1AGY6sed/dNoWdwDd1faBNG4P60r4/wDApZOIm8zhgufcEyQKk1qtTDa67lLHf40Vcr5R4zTook3YyFV8L4ojI5Sz97gmfYerfMPmjG2XVO4b5nuHzJtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XLPKGFqm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fLnpDxAO; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=anthropic.com header.i=@anthropic.com header.b="FhKBcjHk"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-506a019a7f3so29229951cf.3
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 11:00:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772218819; cv=none;
-        d=google.com; s=arc-20240605;
-        b=IYMaktO3D2GmwbpRd8xL94vUmVIWJsr2RzGoFnmLA9W2bfEbWiJjI6/UgSOew5bKwz
-         3hrPl2KFQ1rNPI4fLMdWzdxP2JvHGyWPX7pM+OqB0sYLOzwIZgzznx21vXXm6xeHlTjw
-         7P/C/f8mO/LeTafshAkxmiMhokeTvmXI2CYjBukIg3SAdm0XS683GU9YUfa1+kz3miWz
-         OEXFeFKLrzodhtnKO4tn8BDpMHi4FckXZf4bGNjkZZQL16gMIjFCbGDQl/646F6GX33E
-         6YFZcsOfKvqb+utzlCck/rqC4PvlBqsbHVZsYJstDU8RvhHa9gIlZ5jVaofKkbzFUVhj
-         vP/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=fPQOMCeV2MJzFtm08Jtst3YMULtwpnujywueAJYjUiw=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=bkArwiZewYELUlgzp+sOiIxJMA9vsfrDEFphNJOdFAoV1ekS46Zm3UIXMVALnvlbn2
-         XdjQd3BaUcpvwKuNyCia9WuWmE8ifT10mgKga3L2ykYEfzAnXR9qMtYrmAGn2B4dJpzn
-         Xsx+pysfyE4IVR+FLxS7519In6kKwv72hK7Hn+MqbLBJzruuvzC0GRs2Ygk1gcZ49LxX
-         hv/ourGxuzrNVnbz2wyQEDPo5kRX/BqbYmBU0Divwnx9IIHgqi8WqMccGPgUBOApW1f+
-         Jrez4gcVltMOvN0SnU4zWZk48qP7fxGBsBXfxh8sJ091lBK9MOKsQGkqYvMIZNmGSKr+
-         6CAw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=anthropic.com; s=google; t=1772218819; x=1772823619; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fPQOMCeV2MJzFtm08Jtst3YMULtwpnujywueAJYjUiw=;
-        b=FhKBcjHkxRBVQloUv84j2vhiCIN+uYnm75y4okDkba2xoXB55FECVZECnqE42jGjrm
-         8FZOqfglcJUdKPgQGX9f50/wgcqr9Xo1dBRLzvVDMmRLWRScIO3b5HqZ2PiGFeKNyhnL
-         /bgICWDhbIdHB3IwcPJu8ZQ9+8qAm2woxZgNpDGxsZnQr262PkzzfOv1M6xowFaRqcco
-         pRC8z4hLUXxT8Dxuhqwxz1VmajvCm8zh1Z45JSqC7K5eooXPCzHQUSN6PwS5d8oH2uex
-         UnawsRbVeNqm+IwKADqjJ9Nk3NkfgomHU2jeKTd6/bI4eF7JPCULzpt86GejdwktiV+h
-         jYag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772218819; x=1772823619;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fPQOMCeV2MJzFtm08Jtst3YMULtwpnujywueAJYjUiw=;
-        b=RmpHX97p7H4lmEO4SyoQ48Lu/bw8FjLWzHQLtC3kye91Q4o9X3vsafg2iGc2MmCLvX
-         44mIeDdkPvTyvHcuYt0EXFeA7v6bB6lM46B6kdRTNQwNdNhfLW9JwWoI8umDaHVso9oA
-         FiKHnSWXtuXZtyRd3RFphnPzTMgLKTEklee8xpxls2NxasVYglKZt3Ic+WTQL7joN5wN
-         7jzqDHuhcZrmFpXUYSKweUErWEqi1kRbbL2yLSKv5dyAg/R6FI6n5CKhlDH1Et1NIKhS
-         5kg/kAro3ryLkd93XIhU3YxULC7cwtY3sWrJBwWgXdAzzMj6YcDPZFNqFpjHdiwOXXac
-         aOew==
-X-Gm-Message-State: AOJu0YxUgiCw2luHD/O5eL26A4a7LgCXKz91Si5kTuDzqJ3+rvUnXAkr
-	N1VWte+WtrAEzQ4xbeiLnorLEEGkxga4AT9T+pR4ruDaIH7yZ0lTUfVhJqLfilkd+CeyDMNVB9X
-	ac8LuQlzXAflxMNMFeWQNB3e4gqytJvXi88DCyGSJ4oWSlYexzJgBxqDzHw==
-X-Gm-Gg: ATEYQzzFD/Xmef+m9mdfFbQ93aojs0J5EXeLnbPoxXw7qEkHkJWdWgfzMNw8A3fnrxL
-	mQ2LSYF3C04qvD5FkywCxlYJXUHCNpOM/x0/ySHmga4jwsc3Zc+aISgJM+p1wNw4yCasJX0EmwI
-	rDHlulC4rU5Wi/KBa2+TPxQa9+nB+7I3Zk0mfxgMC8mlqzjSSb/JwAp9Dp4k1X3UvbfStVO/Ggq
-	S07vGCxL1G3duRzodLE/q0yw8S7VMrjaDBPxXerS4fUkWw4zTGTYIi58AIGDepOUQnaBEj6bCG/
-	+kN9UkMjYU2oUMPPc5mt6932Si3OUnXSmvbWFr8=
-X-Received: by 2002:ac8:5891:0:b0:4f1:d85c:d7c3 with SMTP id
- d75a77b69052e-507529161e2mr45264111cf.66.1772218818223; Fri, 27 Feb 2026
- 11:00:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XLPKGFqm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fLnpDxAO"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DFE607A0201;
+	Fri, 27 Feb 2026 14:11:22 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 27 Feb 2026 14:11:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1772219482; x=1772305882; bh=kMjtNfL8Wz
+	+u1v4+aE0/cKNMH6TLfSVa1g5+XNdTcvI=; b=XLPKGFqm0AvWF7ku6wCnXjS5pa
+	Z+qO18BPIOVVE7KdcWubnSFkfOup3C1UQLjSzPUgHpAYOZV4QlrpnByqbhfUlJkM
+	XFe1b+b22bfpSkWZ23eYu0J7wlIaK/24EUNjbxUeKA+C9sqaubTdeg57TcqxcsIZ
+	E/af4BIXzy17MIpn07s3RoAWjI8ipQ5BID7EhDmSbENyNYCvZFEoU3e+Cuh152z+
+	e5shNiwsraJCp/Do+xAaM0HHqDq0GSsYVWHbdbM5K1JiCcD/pofVBNcppBWeZLMq
+	isuDbE5/0gsm44vf5BvHV/jLRaxFBqin2YDt8StbrQ78cw816lSlZEK6EIdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1772219482; x=1772305882; bh=kMjtNfL8Wz+u1v4+aE0/cKNMH6TLfSVa1g5
+	+XNdTcvI=; b=fLnpDxAOtZZ8kA/N8wWuYFG4Ex5gBHtitfUTw1e0Nv6HVG4aTBr
+	05Cdr2crencSu25JiotuH3kmiZXEkQHg5FswV/4OYsazTcf5bTLRI2oP3LHAUmid
+	OmOWRz967Z79C/pzwelXDV4+fHDOt8OoamxPaKkWTf5oJBpasxhDexYYn/z+IIwx
+	3k6xxzAOjX+YsCgtBMLT2WuVU2jTjA32GpkOKMj+cwEsHMnkFK2/FAXujaasrXHl
+	4ntbTWVX7505hFfVb4+RkKJY1pO3kXbCiskoVZm5QcZd+koNQs1pvq/Obc1+U/j8
+	UbmxQ4Z5qB1u1HMdY65ljb+671jbuYjusug==
+X-ME-Sender: <xms:WuyhaW2cNiIqM8TauS843Q2SZRJmix3q4euXemlgzSUwPGSfL0RaFA>
+    <xme:WuyhaYKDr-ossiJ5p7_v_k6FRsYvwiycd8k5xlPVudHV3vfOexIf05IUYLpluSRLH
+    Y2dGkka7LoDm2eBWuiv-IzXE8mCuO7PmMS6mF9USSXqpNjnDdlUDA>
+X-ME-Received: <xmr:WuyhaVGIRijnGlyLneoWQj7vDJExW7l5bSRqU7JD-9i1Fsp3yonjilIoMOyKnmY344J65zRLBO6hW77wPL9MOlXo1HhhOYb8rw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeelkedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtd
+    dtheesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprh
+    gtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegrhihu
+    rdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrh
+    hthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhutggrshhs
+    vghikhhiohhshhhirhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:WuyhaUXuFeLQZ3L4-NfXxzHiA1Pk6K9UURTDziK3-1ymMsqNLT4zrw>
+    <xmx:Wuyhadz_Qp3BtpN6XWFqL0KUgOxQgE938aZ6ovPWL1mZYVhSU0mQPg>
+    <xmx:WuyhaZSW7q4csnA3Gg0tvloHoYatDGcVHO7zskWlql5dPPLxcpS1fw>
+    <xmx:WuyhaZhlEoI3nebqKYjxEwj1xn5gV80LZFz7FFBoghzKA7PFeZAOSw>
+    <xmx:WuyhaRU6EHSExNnwx8xPtGn36x9FN9uiCkX9t1xzZ0M2vp64uyfgLiKN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Feb 2026 14:11:22 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
+ Tobler <jltobler@gmail.com>,  Ayush Chandekar <ayu.chandekar@gmail.com>,
+  Siddharth Asthana <siddharthasthana31@gmail.com>,
+  lucasseikioshiro@gmail.com
+Subject: Re: [PATCH GSoC] repo: Remove unnecessary variable shadow
+In-Reply-To: <CA+rGoLeppg4Xaoqg6+SZ=ET=ze6rXUbmjLm5UvmitmRGm9u6ag@mail.gmail.com>
+	(JAYATHEERTH K.'s message of "Fri, 27 Feb 2026 22:37:45 +0530")
+References: <20260223135248.127935-1-jayatheerthkulkarni2005@gmail.com>
+	<CA+rGoLeppg4Xaoqg6+SZ=ET=ze6rXUbmjLm5UvmitmRGm9u6ag@mail.gmail.com>
+Date: Fri, 27 Feb 2026 11:11:21 -0800
+Message-ID: <xmqq1pi6q9wm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Nick Gavalas <njg@anthropic.com>
-Date: Fri, 27 Feb 2026 13:00:07 -0600
-X-Gm-Features: AaiRm52YYDGipxkrGc5AVzL_cX9waYob5lpxea5KgZAlWpfb1S0ZD-4lHv67_V0
-Message-ID: <CAHPsMLNvvneszHtBfHwuADss=_rtbi3jYkXd8gYFrxSs8A1X-Q@mail.gmail.com>
-Subject: bug: fetch --shallow-since can produce .git/shallow entries with no
- backing objects
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi,
+JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
 
-I'm not sure if this is a bug or if I'm misunderstanding the intended
-semantics of `--shallow-since`, but I'm seeing behavior that surprised me
-and I'd appreciate another pair of eyes on it.
+> I got a review on this patch,
+> if no one has an issue I wanted to remind it for the next cycle.
 
-When fetching with `--shallow-since` into an empty repository, I can end up
-with entries in `.git/shallow` that point to commit objects which were
-never sent in the pack. The resulting repo looks healthy for read-only
-operations, but a later attempt to deepen the clone fails with a confusing
-error.
+Thanks.
 
-Here's a minimal reproducer:
+An easier way to ping is to resubmit exactly the same patch, with
+reviewed-by: or acked-by: trailer crediting the reviewer.  We have
+2000+ messages in 4 weeks, so "I got a review on this patch" without
+a pointer is much less useful to verify what feedback came to the
+thread from whom.  FYI here are from the headers of the message I am
+responding to.
 
-    git init --bare server.git
-    git clone server.git work
-    (
-        cd work
-        GIT_COMMITTER_DATE=3D"100000000 +0000" git commit --allow-empty -m =
-V
-        V=3D$(git rev-parse HEAD)
-        GIT_COMMITTER_DATE=3D"200000000 +0000" git commit --allow-empty -m =
-T
-        GIT_COMMITTER_DATE=3D"300000000 +0000" git commit --allow-empty -m =
-S
-        git checkout -b feature "$V"
-        GIT_COMMITTER_DATE=3D"100000001 +0000" git commit --allow-empty -m =
-Fold
-        git checkout -
-        GIT_COMMITTER_DATE=3D"400000000 +0000" git merge --no-ff -m M featu=
-re
-        GIT_COMMITTER_DATE=3D"500000000 +0000" git commit --allow-empty -m =
-want
-        git push origin HEAD
-    )
+    References: <20260223135248.127935-1-jayatheerthkulkarni2005@gmail.com>
+    Message-ID: <CA+rGoLeppg4Xaoqg6+SZ=ET=ze6rXUbmjLm5UvmitmRGm9u6ag@mail.gmail.com>
 
-    git init --bare client
-    git -C client fetch --shallow-since=3D"150000000 +0000" \
-        "file://$PWD/server.git" main
+The reference points at the patch itself, and just like Git commits
+do not have pointers to their children, the original patch message
+has no links to reviews on it X-<.
 
-    # Check each shallow entry actually exists
-    while read oid; do
-        git -C client cat-file -e "$oid" \
-            && echo "$oid OK" \
-            || echo "$oid MISSING"
-    done < client/shallow
+I'll commit this with the following change now.
 
-On my machine (git 2.51.0, and also against recent `next`) this prints:
+Thanks.
 
-    79f92113... OK
-    bc6015ef... MISSING
+1:  006c49ee01 ! 1:  a66c8c7f91 repo: Remove unnecessary variable shadow
+    @@ Metadata
+     Author: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+     
+      ## Commit message ##
+    -    repo: Remove unnecessary variable shadow
+    +    repo: remove unnecessary variable shadow
+     
+         Avoid redeclaring `entry` inside the conditional block, removing
+         unnecessary variable shadowing and improving code clarity without
+         changing behavior.
+     
+         Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+    +    Acked-by: Justin Tobler <jltobler@gmail.com>
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+      ## builtin/repo.c ##
 
-The history looks like this (newest at top):
 
-    want     (time=3D500M)
-      |
-      M      (time=3D400M, merge)
-     / \
-   Fold  S   (time=3D100M+1 / time=3D300M)
-     \   |
-      \  T   (time=3D200M)
-       \ |
-        V    (time=3D100M)
-
-With `--shallow-since=3D150M`, I'd naively expect the cutoff to exclude `V`
-and `Fold`, so the shallow boundary would be whichever commits have those
-as parents. The server does seem to compute both `M` (parent `Fold` is too
-old) and `T` (parent `V` is too old) as boundaries =E2=80=94 both show up i=
-n
-`.git/shallow`.
-
-But the pack only contains `want` and `M`. My guess is that once `M` is
-treated as a graft point (no parents), the path `M -> S -> T` disappears,
-so `T` never gets enumerated for the pack =E2=80=94 but it was already prom=
-ised
-to the client as a shallow boundary.
-
-I noticed the same thing with `--shallow-exclude=3Dfeature`, which I think
-goes through the same codepath. `--depth=3DN` doesn't exhibit this.
-
-The repo looks healthy for read-only operations, and a plain incremental
-fetch against the same server also works (the server has the object, so it
-just silently ignores the shallow line). But if you then try to *deepen* th=
-e
-clone, the server sends back `unshallow <T>` and the client dies:
-
-    # after the reproducer above
-    git -C client fetch --shallow-since=3D"100000000 +0000" \
-        "file://$PWD/server.git" main
-    # -> fatal: error in object: unshallow bc6015ef...
-
-I believe this is fetch-pack.c:receive_shallow_info hitting parse_object()
-on an object the client never actually received.
-
-Is there an invariant here that I'm missing? Should `.git/shallow` always
-point at objects the client actually has, or is the client expected to
-tolerate missing shallow objects?
-
-Happy to provide more detail or a larger real-world reproducer if helpful =
-=E2=80=94
-I originally hit this on a repo with heavy merge-queue history where about
-a third of the shallow entries were missing.
-
-Thanks,
-Nick
