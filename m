@@ -1,114 +1,121 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E00E636EAAD
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 09:58:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D0D3EFD04
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 11:26:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772186303; cv=none; b=EoPOPVbIWHAcTZfMobjRuEMSSPOgNO9Q8SGLj5ktylg61taqNKgQ7INZ1fpZDBcA57TzUadLSNAHm2yTySS3hz+Gr6sAviQMCqcujSwWAuu3sHC+P6uO5iq7ie73gK02BbJckfuO6GK9tVR3NrFTneaQkuZnXXpLE5eQZtQstA0=
+	t=1772191621; cv=none; b=As0TTG8dTGzJzDwX8tNu4H/hb2HAfcS1KAg/J1bH0KmIkLklcA5vk+DcJxlgfLq9xlp4Igs8Y17Q2CLHCDEy3IMAj2Y3EaD2Aam6StBs1PtCpMY9FG6p6bCNqyu12zREOZH+AFzMvo2Y0mkOBQ4bFyac7J/aemsQFd/y3PLTgMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772186303; c=relaxed/simple;
-	bh=Pf+HfC8b83C3SCA4UcC+M0+6gtUHAYMg6IwFSNQ1HR4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hVO6EAYyqa71hERzBiMCXRIAhn4hyDUaKNFHIFMx+UsJ1+XFBTn9rHYZ4YE2tJ0p9QISNV9j/N9PbBeotD3OBdAGwQXr4NaQk+/a833BdotigsVfZcrZjqqi8U2jPUk5KLAJj31ogx1+LwVSo2iw0B5eShkh4kyBB4Vwj4LNGn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=IYRD5jP/; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1772191621; c=relaxed/simple;
+	bh=VwaVmn1EgL6rJnddtme0NjhhhSF91a+A3AaZDo1NpPY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XzuPDwh+tXCF0TbUeo23dNgFtXxRexHcDj8z4S13uZFBDtU9yqAHAiHR3BSRmJ/zzEqPjgtcSwR+a5/vhtphLixuXBZHeeHVS2txBTj3/SclQLp00Ilq2CAr+tw+FJqmqMFAngNnhrUFRhCU1yCXvrnhTJWiophFKdU5yqPZpiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cKaYsg3d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oRWTZdB3; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="IYRD5jP/"
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 5D3114D412
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 10:58:10 +0100 (CET)
-Received: from [192.168.3.191] (unknown [92.173.128.58])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 43A725FFAA;
-	Fri, 27 Feb 2026 10:57:59 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1772186282;
-	bh=Pf+HfC8b83C3SCA4UcC+M0+6gtUHAYMg6IwFSNQ1HR4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IYRD5jP/SV20/adQd+r+QBz7pr/EOl6aSLxGXEmLyhlmcSGlLPPXwKGPk1hs2MKsd
-	 uj/akYh4be8ZsZGEw/8M9QOnwznWk4f1g5GhsaOXdvnlZAz/Jq6ctLW9SkvuXTag/W
-	 g3HpuYkt7tTBvSfrVURVFZQsKO1eKetNwnLtYiVV0+9oT6kf38MjtPBzVzIiWkw9jG
-	 zapWMddHJdqR9qpqJ+N8H7fywtrBcfcxfA2wuUSWu9SyPOA9pNO8fGCqNHqEyignvJ
-	 4JgSVnUxeWF7reRX17PhUxDWAin0e4I5ub6EtvenOXKITUlVYqlOFDRWgTzX08Yo/y
-	 5kA8h2BpdP+ew==
-Message-ID: <ff86f877-4b75-403d-a5a4-10ab528a9691@free.fr>
-Date: Fri, 27 Feb 2026 10:57:58 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cKaYsg3d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oRWTZdB3"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4DE69EC0B56;
+	Fri, 27 Feb 2026 06:26:56 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Fri, 27 Feb 2026 06:26:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1772191616; x=1772278016; bh=Pjmmk4WZyB
+	nKfuPHYWqJBj36AFahRwPZFISaXmqveas=; b=cKaYsg3dnKWN3GPnFSm1t8XccN
+	XZj3/fKNoHUMHxBMu0HQs75QWG9u2GELsWOVPn6IeXivCTo1F2nuMpyghTtQFw8y
+	qETLrxlGrVAX9A4XphEID4F1DaPwab5vTWPT4PCZT2yVL+Vu9ZQ1ErF0KkdjrJ1i
+	MegKedPke2MpZ4jb5TYA+0fqMgxOpPsGDLyq6n0fT3LaQjail2JB7YvZybZUKuQe
+	fuzAYNUm15eqZEUrNcVl5zspMKpn8soDdEFtNkZ575UYfBxw85PbAF4aMb0ARkFt
+	fAIZ7FyL5m2eq55edvA9KOuQhHonKHfxiQqzHzd/PH68MYDlZzardhMvKHVg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1772191616; x=1772278016; bh=Pjmmk4WZyBnKfuPHYWqJBj36AFah
+	RwPZFISaXmqveas=; b=oRWTZdB3OrRu/PzGqCQ8GYDifpZ3hjnqDyc8S7XsfuDy
+	dqSL/HQunQ7VqZiph+iprVY9wsfIZuBlPCyTuFPvWv0VOMAjDMejhHGPR3SxIcEx
+	a+S1M+YRy+0G10fi1SKEyY/I/6tVs09WyULE5b0Rzn4VGXrNGzu6UYfYcayDlnRT
+	ZanLG7zu1shoFodhYxFH3QUTm6wM3XM3YJaDCIZLtHh/1A1CEoaTZPzwWLtIR+JN
+	NTYtiqjUwR2AFVDy4vhmgkBEXwyHap0zA3YRhU3ahRphwivvZUMfE8FVBonzNd43
+	Z8dbITnh7T2aIP6w9RhY2mtiocOc3ivHgZoPr4p11A==
+X-ME-Sender: <xms:f3-haXB1eWCNI18l-4AenAoRBiPv9MGNfE1hzHtSTckNrTuaTRVhFg>
+    <xme:f3-haThADW96sZQ-ma8qPNpzNWHT1HAiFyqz4nNJTTaNcNETa0K7jGvRl7kuyW66Y
+    xL175SPIGaUxSOuSmHSNatZn6HUu1lESP98Bf3kfiT1BZC8sJnFLA>
+X-ME-Received: <xmr:f3-haQOePyjWRjAoFjWN-2_zQViSQKIOpxIKFsEMsI1OAHUfhDj-v8G4yNMB4TM63L4ypTd_W8UOxIM1zxqmhENwHhBknXW1goYkVgTu>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeekkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    efkeelvdfggfdufefhhfdugfelhfefleehueeftdekgfffffevtdegudevteehieenucff
+    ohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehmshhmihhlvgihsehgihhtlhgrsgdrtghomh
+X-ME-Proxy: <xmx:f3-haU5Cq7dlno2CWsf-aNeRqXZk4Zk87bELBP_yU4J7f2AdtTEm1g>
+    <xmx:f3-hae3MK79Em-ElADh5laQWmR07tPsDkW1gpKugVurc6LsypthLKw>
+    <xmx:f3-haVYa180P-DGe6sYGLfKFNP2XAsRQZdrHcghWzIkQNT0AXNLH1A>
+    <xmx:f3-haWAtHJ0yLiQE4Iy1jDz_QpsQFvAk2ZSbCtGAGD-kWmD9ygZ6qw>
+    <xmx:gH-haYwQ1dZKYvkDCPpedDfBodXpt_T7kAY7Yy3fkD60rw8W36SQZV5v>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Feb 2026 06:26:55 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c5d77acd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Feb 2026 11:26:53 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/2] upload-pack: reduce lock contention when writing
+ packfile data
+Date: Fri, 27 Feb 2026 12:22:59 +0100
+Message-Id: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] doc: diff-options.adoc: show format.noprefix for
- format-patch
-To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, Jeff King <peff@peff.net>
-References: <CV_format.noprefix_boolean.39c@msgid.xyz>
- <V2_CV_format.noprefix_boolean.421@msgid.xyz>
- <V2_format.noprefix_and_--default-prefix.423@msgid.xyz>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Language: fr
-In-Reply-To: <V2_format.noprefix_and_--default-prefix.423@msgid.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJN+oWkC/x2NQQrDIBQFrxL+Oh+MbVqSq4QsxDzbT4qKmrYgu
+ Xuly1nMTKWMJMg0d5US3pIl+AZD35F9Gv8Ay9aYtNI3pfWd4575iK9gNo7G7vxJUsA2+AJfmsz
+ Xy2ihBjc6TNQyMcHJ979Y1vP8ARlUMe5yAAAA
+X-Change-ID: 20260227-pks-upload-pack-write-contention-435ce01f5fe9
+To: git@vger.kernel.org
+Cc: Matt Smiley <msmiley@gitlab.com>
+X-Mailer: b4 0.14.3
 
-Le 24/02/2026 à 00:30, kristofferhaugsbakk@fastmail.com a écrit :
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> 
-> git-format-patch(1) uses `format.noprefix` and ignores `diff.noprefix`.
-> 
-> The configuration variable `format.prefix` was added as an “escape
-> hatch”, and “it’s unlikely that anybody really wants format.
-> noprefix=true in the first place.”[1] Based on that there doesn’t
-> seem to be a need to widely advertise this configuration variable.
-> 
-> But in any case: the documentation for this option should not claim
-> that it overrides a config that is always ignored.
-> 
-> † 1: 8d5213de (format-patch: add format.noprefix option, 2023-03-09)
-> 
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
-> 
-> Notes (series):
->     v2:
->     Change commit message. Don’t use “because”: the two quotes are not causally
->     linked like that.
->     
->     v1:
->     `--default-prefix` does override `format.noprefix`. See test `format-patch
->     --default-prefix overrides format.noprefix`.
-> 
->  Documentation/diff-options.adoc | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-> index 9cdad6f72a0..8f632d5fe1a 100644
-> --- a/Documentation/diff-options.adoc
-> +++ b/Documentation/diff-options.adoc
-> @@ -860,7 +860,9 @@ endif::git-format-patch[]
->  
->  `--default-prefix`::
->  	Use the default source and destination prefixes ("a/" and "b/").
-> -	This overrides configuration variables such as `diff.noprefix`,
-> +	This overrides configuration variables such as
-> +ifndef::git-format-patch[`diff.noprefix`,]
-> +ifdef::git-format-patch[`format.noprefix`,]
->  	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
->  	(see linkgit:git-config[1]).
->  
+Hi,
 
-Hello,
+this small patch series fixes some heavy lock contention when writing
+data from git-upload-pack(1) into pipes. This lock contention can be
+observed when having hundreds of git-upload-pack(1) processes active at
+the same time that write data into pipes at dozens of gigabits per
+second.
 
-This kind of sentence assembly does not fit well with translations. Each
-hunk of the sentence is processed separately and it is a difficulty for
-translators as they need to understand the surrounding context of a
-segment when translating it.
+I have uploaded the flame graph that clearly shows the lock contention
+at [1].
 
-It is safer to just write the whole paragraph, or at least a sentence in
-the ifdef/ifndef sections.
+Thanks!
 
-Thanks
+Patrick
 
+[1]: https://gitlab.com/gitlab-org/git/-/work_items/675
+
+---
+Patrick Steinhardt (2):
+      upload-pack: fix debug statement when flushing packfile data
+      upload-pack: reduce lock contention when writing packfile data
+
+ upload-pack.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+
+---
+base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
+change-id: 20260227-pks-upload-pack-write-contention-435ce01f5fe9
 
