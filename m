@@ -1,74 +1,75 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C58368965
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 06:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA4033A9F0
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 06:31:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772173523; cv=none; b=BTEyMwmMpzk5i/zOwzzWoifRrIWPayoCSU/F0O0MY/jrcd5xmNeq0HjYmTt16S6uaMw9l4xxMpzN9cu6KFEu+7kTXWxKYeUMwP+lILXe7SQwKY919HUR61xn3yecBkUb+JlD36/7uqLcuCCo9mIAm8BWihv6LrPP+5oQ9Xu5oTI=
+	t=1772173883; cv=none; b=F+yz75FUjwmy1BU02D2sXkiYcZjO6xfCBMBrXh38kYHFoQVEc27EiAl93q0iPARtZ8yFxnm5M/gL44efxbREIJAIyfVTHVpM8cAzzOhO+b91GxdyqL2ZfvpXXJwy1jcJpCuxBW1Q+Nvzha46zwRqkI2J63C/se25LZtk7aS/qsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772173523; c=relaxed/simple;
-	bh=MWuUmblZt1BxzG9TE1aASpaDoJU/Qm/lvde/ymOB5Ls=;
+	s=arc-20240116; t=1772173883; c=relaxed/simple;
+	bh=wWRy2E3MpLj7dGOlHSrjovv4/4yCB/iA83g/3Wv1lkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uH1R9qSKNU7IqQP9naZFlItN6fdJhdOGS9qgd/cmeqo2cWHQQTxwzLaHsc/m7U9sLiFOEQSqXCMdBLheEsWPADxF8XK4xpxhb7ulwAVT61W99Z1IV8PeD7fdXTadDhGQN21oyHE052nHax7zv5Eaj7dc4Rm4Lg8DdP9cZau50Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EGFR/6Xi; arc=none smtp.client-ip=209.85.215.177
+	 MIME-Version:Content-Type; b=sL4eE/ojDtcDFPbmbqVmsGBFRQMka4tBYffQaScpr7Xn1/ERgb5Hr14Um36spVIrxlJzTcidF4ZZudmYIJLmkuDb2LMHua4dZFRTS843Pp+m9lbU1h4VheseLD3pALlmmRqvi1FNu+7RdFl3zs+tW8pEPfMa0QfPWjZ9imdYoyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PJZn+Ky3; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EGFR/6Xi"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c6e72d7a4d7so1026275a12.0
-        for <git@vger.kernel.org>; Thu, 26 Feb 2026 22:25:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PJZn+Ky3"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c70378ddaafso1127937a12.3
+        for <git@vger.kernel.org>; Thu, 26 Feb 2026 22:31:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772173521; x=1772778321; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772173880; x=1772778680; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MWuUmblZt1BxzG9TE1aASpaDoJU/Qm/lvde/ymOB5Ls=;
-        b=EGFR/6XiwVJYh/XthJVIo5WGZoJ+XJf52lRKnRCSNoWApPJwFnJppUGm+xuzRyFbnS
-         OF/2HoU5CRHbjuksiAu8ESBobt11nD7k/vyeBq+S6V2QPQct0Yh1LUkRh756xVxVjECM
-         0fP5fGWoHCBDzlb1Tf8CbX5jgIfRi5kHBozxUyvcQOaDjK6BZhC8xiaJ+BB0jdya7zXO
-         daSO7cR4jC53KVaIQyLc80CWtD0Qo7umtnpa35h73PwS9+Jq1Cpg9ZCYX9MXY0gAt1LZ
-         k4c5vM4iuqj+jvhaVsnE+ZEQfJbW2ClUF77ogE3RhyPWXSCiWUJKseieMhALmUO0aKH8
-         sNdg==
+        bh=wWRy2E3MpLj7dGOlHSrjovv4/4yCB/iA83g/3Wv1lkU=;
+        b=PJZn+Ky3Bp+Ki+PzbrbKSqtZDxkD9VvCcQRYBsHW5+rxQQOcblsuKahpYP4Hh7Gehx
+         Z0yDQIRmC0gbEsrdwP0JRbuFkWVHJhwdBEupjO5DxfC/qfMzvaGAy4y3YhXo4l6YcUph
+         wTZXvPfj64BFeFNetDZPvM15iG/5jYb8+dfwa4VtX4bCo9AycoD167cJfS2FFV+Xn2E6
+         UHVvxwuP7yCOjWTEZtz31EQj40OKBF4bF/Jr1F1uIv+P5MngsoKoZJzfm+zzdXs8WsYS
+         OGpRXWAilQ2pwMYWjznHqSdwQxR/OaUC8C0Ch/Vt5CBxczB2QvUNDgtOBvOoiUv/9ckS
+         8RHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772173521; x=1772778321;
+        d=1e100.net; s=20230601; t=1772173880; x=1772778680;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MWuUmblZt1BxzG9TE1aASpaDoJU/Qm/lvde/ymOB5Ls=;
-        b=N/Z0xGifnTnpJxIMALeoj8F80GeCUFdfPw9FUUhL5hHGO+jGAoUS0Kn3CmSgEGdMJU
-         gIYTNBo8Slp+bO+FH/jdCvjwd+eYSBGQXPLQZMLwyDirFQICHtLpQVDhgvEdfl/hSOi1
-         68r7HIUmCeOHAyWWJQ3tkUe3UkoeL/j2Qyr/QwSyIxmtxvomEfczit/9pqNo7EMvFAEJ
-         oI8255YToNaRGrhnrji61DvGMdQUWFLCPQD6gCC7Sxs22Tpe02z6/0uHIsGofNMEB1ob
-         19qmVu9phWsB921LKomAYCxAFUGIN3To+ViZtOpJ3By+oonBe04GaNDp5jgNfGhi7AAs
-         w13A==
-X-Gm-Message-State: AOJu0YxhEfH773O0d1DLGkYo2I9usw9TPZduW1D1TSdlWhf6JZcAUPZR
-	TtObnA68RvPjXs1fnp1q052zS880pRaxxhQPRTYpLeRSrDA9sDyk/inlHmzcTg==
-X-Gm-Gg: ATEYQzyyCkI2A7SsYGr+7X/d5CVbftGTSo9fVeLFEBCok0xXyVwz4cNf6zyoGWJGzlj
-	Pa4Lx5DXiXazRuz6HiTxQICX2ff+BNjXTMVeVImdZVN87nzcmTfPT3VSsWb/N8t4sl+XEv5QWVr
-	FqGfJvmlMNVokeNrWRu+ks4A5gWSmh0a5uyY2FMCEFvwqR5lMTxzwuPbo7BwRGxDW+hB8JF/ZVj
-	4p8toJCdqiki//1jZJ+cCsKwZ3NZuKRMMXHZzIB8DMR6zhIyTawP5On+VTRCAu44xupQwB7MAlu
-	WWOuxu4+Z7fjq9NmsgAB7ls5QxZSZJp/DO5usVfknBNNspoUeJPF/ShK1Y2uC3CdDmdiwF7mEQu
-	QOo/MHh3F2kgGqHTb6S6XuLLW0+UwHyIYKd7zADvtBWDNF9H1oqctxbYjVDRTgvPoOgcxpOwLhf
-	QCgtv0XfzBvfnjCbMkZkAXeOjNDh3tYPqhCM6S5j4M6gcaOEzlZS16LzcBxzYqQWJVOY3OFdy1N
-	aDJLpEBCW5c65lIv/bP
-X-Received: by 2002:a17:902:da8f:b0:2ad:a9a9:4bde with SMTP id d9443c01a7336-2ae2e4b55f6mr17699275ad.40.1772173521344;
-        Thu, 26 Feb 2026 22:25:21 -0800 (PST)
+        bh=wWRy2E3MpLj7dGOlHSrjovv4/4yCB/iA83g/3Wv1lkU=;
+        b=YPozemISMkcSnGtoOLkBks1KZ1qLsH4ix+qMb5lsc0Kb5ujedrwDBiwkAgPGXLE3jI
+         Vk4I0gN8JaWkF3EN/RIzliAyGM5JOUMFdLj94mKz8dFZG0t4OObuO2R+ew0Yt099h61u
+         XqXLnXMblxzRXAjAiWvBySQHjq6qGle/QxcmC1GWSRPrpuEZNZutXV/Gdyjr3lh+CEX+
+         HSrj9/grl8ZG7q/YrIXCZgEnG0UN8/ysNPZRCbotsUTw7if18+pjSIoKb0Q8tqn0DgoQ
+         ysaCgwnYo4ED06plEZ+MmivvjjmUkFYrJuops7mPjbLv2aZ8o3Xp4v5Z/N6Ykdw/Tknl
+         KCbA==
+X-Gm-Message-State: AOJu0YyCBMhpDoijfsOqfE0qXqJ12UjozuZ/XXNcLgiV93udm6WuJOLs
+	K/u3vZa8tqcHHgt9DPyRd10XHV/uIw4UkpxLySFwyko/SzPRXnGNoiyJuAyC9A==
+X-Gm-Gg: ATEYQzzry1lUlF7o2tldFdvLZVS2ltq//KyFn6zVJeFYpRINmnEzeoUwdoIsqcd3Scs
+	UIH5ZCqyKQtIjoMdcUBLOS60kMKcWe8a1Z55SP1qz4ID20PAtQbIMHheCZuC5hI4LLFiN4BDm0C
+	TnJbsbqYdd77PvcEJ14Iaq8BbrkJKKmzOBf8pKDrWDXA53v9HkMrqjUxij2TwYlMEaZxH197JE4
+	/wsK72MaF5hpwzOhaNIo9Ghf/qQuTMFnJCV0ySjjKjuGVcrfKMd2Fesv/GB2RMJRaMh+fcZ0NZI
+	6O0j061s/8/O4nG692BT7ohTk3QBn2Pm+C5CfA+R3tSbXVhctrJHWd4ECafkw4aWYOtMVsTpJtd
+	iAHfaWktY2nFmjWFtERflQMXoTOCBXpo4go94bKs61i8eJqyYyH2cymNmczE8xfWqaAChigwg4f
+	JZY7emJV1lhkIgaCN4N6DnxtgL5+lz6ySBt3JnR4y6oDyOrb+k1V8eTSQQw2Cc+y3Ni3c3GhYCX
+	9N6xjIkRg==
+X-Received: by 2002:a05:6a20:6a04:b0:366:14ac:e1dd with SMTP id adf61e73a8af0-395c3b3db19mr2060972637.67.1772173880297;
+        Thu, 26 Feb 2026 22:31:20 -0800 (PST)
 Received: from localhost.localdomain (d75-158-111-22.abhsia.telus.net. [75.158.111.22])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6f8206sm40651305ad.90.2026.02.26.22.25.20
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb69fa43sm44748755ad.46.2026.02.26.22.31.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Feb 2026 22:25:20 -0800 (PST)
+        Thu, 26 Feb 2026 22:31:19 -0800 (PST)
 Sender: Paul Tarjan <ptarjan@gmail.com>
 From: Paul Tarjan <paul@paultarjan.com>
 X-Google-Original-From: Paul Tarjan <github@paulisageek.com>
 To: git@vger.kernel.org
-Cc: Paul Tarjan <github@paulisageek.com>
-Subject: Re: [PATCH] fsmonitor-watchman: fix variable reference and remove redundant code
-Date: Thu, 26 Feb 2026 23:25:02 -0700
-Message-ID: <20260227062502.6995-1-github@paulisageek.com>
+Cc: gitster@pobox.com,
+	Paul Tarjan <github@paulisageek.com>
+Subject: Re: [PATCH v6 04/10] fsmonitor: use pthread_cond_timedwait for cookie wait
+Date: Thu, 26 Feb 2026 23:31:18 -0700
+Message-ID: <20260227063118.9069-1-github@paulisageek.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260208060359.50233-1-github@paulisageek.com>
-References: <20260208060359.50233-1-github@paulisageek.com>
+In-Reply-To: <xmqqzf4w8r20.fsf@gitster.g>
+References: <xmqqzf4w8r20.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,7 +79,21 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Friendly ping on this patch. Happy to address any feedback.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> I cannot convince myself if one-second interval is not too frequent
+> to force everybody, including those with working inotify, to poll.
+> I wonder if this is something that may want to be configurable (or
+> better yet, auto-detectable, but that may be wishing for moon).
+
+The 1-second timeout only fires when the filesystem fails to deliver
+the cookie event at all (e.g. overlayfs in containers where inotify
+watches succeed but events never arrive). On a working filesystem
+the cookie event comes back in well under a millisecond, so the
+timeout never triggers. When it does fire, the client falls back to
+a full scan, which is the safe default. Happy to make it
+configurable if you think that's worth it, but the current behavior
+seemed reasonable as a starting point.
 
 Thanks,
 Paul
