@@ -1,67 +1,67 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E657D1F92E
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 09:03:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A1C2D249E
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 09:04:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772183031; cv=none; b=MeP12VdO/SvR6HgkUrzCh02ZEPxAiNbd+sJDI98imNY10v+xgsXdSLTH/ptfV62Fap0j4dxrea9lTv6QabO/aPQDychwAnZLDZtdWBuzvGERfPUps3bXGfFtJRHzjY1Qy9CUNpjx8Ogji7sAlopf5Yn8bNg2oDatF1kOxCuW7To=
+	t=1772183048; cv=none; b=SF3AgNuszVt/E9PFJGf53R8DUx4UYgCn3/5MH1ZXFuvwRkHDXmfd+OkcOB4JVz6TQIhT6q6TDxZPjCSzSRIBbiPBuxu9n2KnAC8qtEJvW4Y8R4ULfZ7O/5SV6hluiX8/BsPwbMmZX9jabQ82g05T4/lyTFWLqhyUkXfw5T6aFrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772183031; c=relaxed/simple;
-	bh=1TSsd58LLz/+GrQBG/g529ZV/a4/xZK67u8PCiSRzQc=;
+	s=arc-20240116; t=1772183048; c=relaxed/simple;
+	bh=A0QWxhwjVoV4TkUTlbybeSWy8yJ+V8rjg0+DJEv30gE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jh+0EQMEpsze0wqNbgpwQ6ZDWmr8piTBNloxduj+ynCeB5APZYCIiJF0N5p9ocDpqkJeve+wZP9IL6C0mKcAEkoMef2B/HTmYWB/oOU5qnaa3CsGJQNbUiOkd5SNcnwi+dR7OkkCYhsdK8KQavrGY4WuRv08f23VYo7nIOh2z3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hs7S0rh7; arc=none smtp.client-ip=209.85.128.42
+	 In-Reply-To:Content-Type; b=jV4ijJ9Z0RLiFypYrZcignfjX2xX/hzFCkeVjl2TKAp4oGvOsBC/9H4PD3pJK0zf+027Vmetwb342kLhhPVvM4dtgqyvy7c5gajogQwbecwkL5oRZwpohGXSkcoG1OTvbBGb/pgX8NtWNG/1NRFstr7uoRGm06F516PH9Hh1kos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SIf0a5ts; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hs7S0rh7"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-48374014a77so20064005e9.3
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 01:03:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SIf0a5ts"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-483bd7354efso22890735e9.2
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 01:04:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772183028; x=1772787828; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772183046; x=1772787846; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=KPoAi2Jj06tlsjxB31eiCB4skHRTYrURC0Y0jO+0a/k=;
-        b=Hs7S0rh7aaIgxNQzjMaNRM+lBVA0/EvSPBPg5xhXdp8iZ7M/AWw/xodS3KjlrVhz4R
-         1gBjuOGTVFr1pBUl0tzs+xgoCVkgbsef3kGO3hmUGZz7L4nOP4TYdAsIdn5IHUb8iImx
-         T8MZ6/8EkoscguVzsMlE0RFwwUlF8jFzgD0cuTltcnepS0I/AZD4gvsehySE+R0+zB02
-         I14kBspwtk4OZww7pK97wW/BkgWTVQ7sfM3e90I3FY7MSWVg+6f+fm+2YQ+yyJ9lhseR
-         NSU9ywFY5QAKEBrCyBu8k4i7Gm4ZSUK5s+Gm6nj4Td4GjW70IrcWtuzTdGwsjK8WbvrT
-         DIIw==
+        bh=Q6tuAAL0hccaoJ70p4t8AHQ5c0nWXrbktNZU4+vC6LU=;
+        b=SIf0a5tsDtxsa1LuDmE0QimGUitOirqfRfXgwURBFdBBMmuOZbGO5n+XWIUSM+M9AG
+         h6V0DmGZTs4I1xE6yKro6YYw2q8QOAr1kL4YBdMj0nsj3sScB1KOrRDx4mNBxlc0ixHA
+         iSN4/xTS3TAGwSnWQ9ykMBu2DG2JSNH9KeytGleFokJUn+Ny80ryAGHJzjCKh7tatqPj
+         TaZ3X8ZgVWO25A5PKQlQJabvEtO9Ki9sHQ9iYpgZe+M24dieNWDwLcZYTmlA9fmScHKy
+         YthvbdJf2gm9CYT4EsEXJvMXE6VSlWXH8aAVPDKZHWdpQnYKjuli1BNvHcM6VQyoIEXI
+         bwrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772183028; x=1772787828;
+        d=1e100.net; s=20230601; t=1772183046; x=1772787846;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KPoAi2Jj06tlsjxB31eiCB4skHRTYrURC0Y0jO+0a/k=;
-        b=uQJDJx+ISwjFG/8cV7LHBOjh6JSqTCSSd/87HejFfqZ+Ox3t1UKKIbiMQP/KDyHTnX
-         OkdmScPCoJb0rWOIuW2nCDn+PWeyezzrbqEoXCYo4hMTZdIpVKX7OekwkiNh94PLIexT
-         hyE4kv1j99oe3iuL/dladZ5AEotxh5Hq2+o3BgpFJql07OEjg2dGXdX3pueSJVtetEX/
-         4qMlmsta5UFy4VVrWqdlaUfMJ1fxY4zqqu1fD1E6PZjchBx4O72WaKeENp+WRTYU1tBM
-         t6l8huNzqtYYYg1RWUTZCgMYkpO8wj3iLDasVV+QTrEOe3r1FOcyxyz9Lyng7TW8zk/V
-         WFxw==
-X-Forwarded-Encrypted: i=1; AJvYcCWOZ0zaUlMTDkkOEuAwIj1Wo/EcRS4vyhst2vJ3Bte17N4R3n/RSQn4Z24TbNMx8muTJPM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzCLTySRCmTHj2Q4WSZOubYTQtS+8oO+9zT84dCOV3GGxFVOehk
-	y0l4qYs/QUwgDvXrcR8/ZaQvf7bmZlXKEHgyjT7nG6uLkTJyqqMTR0AJ
-X-Gm-Gg: ATEYQzyQN1+ZETlywYto+IAxo+ffPU/NkIkKZGNnopKL+CDX0tS7VnDbjj1ftArt7SD
-	pV2V0E8/pc/W2mww+8ZrTCsAYD3KZ6p3JR1ObyfaxbOTCX0suLJzDhiF/npEQaNREYQzz5BgW9b
-	8SX0qdHp3Rigc+bT5/cKkTqF6BY1ruJadVA3SvqpMyoVke2T6nwRuHXQD3+Mco0zqVr4dFB3eH5
-	kiswEqqEPsKWjA8ERHRqGKIT2cC5SAbqQ8Q0dnL91ir6ZYpneXSmqaSXkkDi+e0qdEjV9EHZHKq
-	TKqe1bVzFN15dUPuKecE+q3Q8AUKK2nHFZG3QH0+OX8GjAvz64wajf/ZW+Gk6y8x29LBnLjwTeL
-	BuEpXYNy25+F+/Tkgt/zbfvcm4+VWrutCz/mHYHMQpxBwsJXqw+cdjQMcBtBfL4dbrzcvPo69WT
-	My/hst0yg1RlODRFHUfR1Czsu3JCUIyGp+jKt1sTQyVowhHiM5o0M6zibfp1bE/qp/2jlRjcC0H
-	zeI/A==
-X-Received: by 2002:a05:600c:c4a6:b0:480:1d0b:2d32 with SMTP id 5b1f17b1804b1-483c9bc0344mr28948975e9.12.1772183028082;
-        Fri, 27 Feb 2026 01:03:48 -0800 (PST)
+        bh=Q6tuAAL0hccaoJ70p4t8AHQ5c0nWXrbktNZU4+vC6LU=;
+        b=FI+G5/l6AWGgJN2uAZDTeWNYpxNYu4C+aXrsCMtnIas5HHk3T408ko0jYh4rGBFMdx
+         zIyGkudWUS3kWlDfZjr22akgfG69SwaKug4ZnCGVwpUxEn6oZJXDJDbLjtji0Yf5/jIE
+         0IKJxgy3GQUD2FLQb8Ca0Bsbqy7tjxlwZLXiqf9wfrRepXn5AsF71sEtjUArimXO+xM6
+         9v3EfdSD/c3vWfLXwfH5VWTvV5Jc/jXlT50+vDmwzRTBa9QXJudl2DA3uJGaAWApm+Wx
+         568gFecjeWaQjWgfuuca5juchI8kFAm54GBNu72L5mMl0A/qNvKFUjcid1upvGMOopvr
+         1oKg==
+X-Forwarded-Encrypted: i=1; AJvYcCX38VALqI/zbsmutKiRavpUYvLw8V16qIgkhKKUX3eQWXlJ8uU2wd1p120+2hiPAaMoNks=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxuh6yaIj5UAJD7MLNy8HsH2FCToIls2mQ7EISf35p1l6yU6V3X
+	dhj03bq1+oaOAL4SreOHvN/j35URgjF8C0FuGIcmqN5CFz/Vza9YEhWT
+X-Gm-Gg: ATEYQzxu1q29nMs29kUeUfNd+L320FOQ8fOF1ef41n1f09LWflhvhXeuDEuZmeScDos
+	iKnjBGZX7HNUADCWvISrMVoa9JN9sNY5XB0XADNOtUv+exffFEKa9dvVcbr8sQ6yL+PrW34xOTB
+	oHYGpswMgSwjfyoWTqHdOuMCJhttKS6wU94uLdE6tGOGD5Zo71JdgpqiAqh0/AHPXBUvRCDHJMu
+	5W5fnJLv+ATcTJwMXC5sGBFCsmx1df12PIfO46oq9aHZLcnUeq9VNfOnUMxV3Ksmg5r09Yqdjxp
+	eTL+5nT8iKhrKjvtJ3Rg9TnF7HDQtNf5ebobNYRcIETIr9AEO0GZuiTrny25qNCv6JTEyDMMgl4
+	oLqcooDu/teHlZThM0oanT3VUn8qFkkfK8pRONh5u0gZcwX7UzRmzLlfDmVZE2tWeGXg8ps8jLB
+	Tbo4yfXN4I//no2L/3OlcX71IwUaRxmVUEbVPJ1p2JileIclMYmumqKuZwx+Uf5i6Ovcbadz2b2
+	Zui6E//gMz3wnMs
+X-Received: by 2002:a05:600c:6309:b0:47e:e87f:4bba with SMTP id 5b1f17b1804b1-483c9bc6164mr26975425e9.29.1772183045693;
+        Fri, 27 Feb 2026 01:04:05 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483c35910f1sm84471115e9.2.2026.02.27.01.03.47
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd7507adsm222721125e9.9.2026.02.27.01.04.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Feb 2026 01:03:47 -0800 (PST)
-Message-ID: <1d43d1d0-bf6b-4806-834e-89f545fab766@gmail.com>
-Date: Fri, 27 Feb 2026 09:03:46 +0000
+        Fri, 27 Feb 2026 01:04:05 -0800 (PST)
+Message-ID: <3c4d4909-4eb1-47f4-b601-8f877a07ddd5@gmail.com>
+Date: Fri, 27 Feb 2026 09:04:04 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,65 +70,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][Draft Proposal v4] Refactoring in order to reduce Git's
- global state
-To: Tian Yuchen <a3205153416@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
- Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>
-References: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
- <b98780d7-3aa9-4838-9234-290b1d72ffd7@gmail.com>
- <5e5f07ec-72ba-46ee-812c-d6773a4bdbe7@gmail.com>
+Subject: Re: [PATCH v4 02/10] repo: add path keys to repo info
+To: Eslam reda ragheb via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: eslam reda <eslam.reda.div@gmail.com>
+References: <pull.2208.v3.git.git.1771875812.gitgitgadget@gmail.com>
+ <pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
+ <6d5b9ff07566e1cc28a672cf1f47988e9c8c45da.1772140487.git.gitgitgadget@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <5e5f07ec-72ba-46ee-812c-d6773a4bdbe7@gmail.com>
+In-Reply-To: <6d5b9ff07566e1cc28a672cf1f47988e9c8c45da.1772140487.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Tian
+Hi Eslam
 
-On 26/02/2026 17:02, Tian Yuchen wrote:
-> [...]
-> Although the principle is simple, the scope of changes is extensive. The
-> following three-step approach can serve as a guiding principle for it:
+On 26/02/2026 21:14, Eslam reda ragheb via GitGitGadget wrote:
+> From: Eslam reda ragheb <eslam.reda.div@gmail.com>
+> 
+> Add a path category to git repo info with key-value pairs that
+> mirror repository paths users commonly retrieve via rev-parse and
+> git-path lookups.
 
-There are four steps below
+I think that makes sense, I'm not sure about some of the paths though, 
+see below.
 
->    1. Identify isolated environment variables currently residing in the
->       global scope. Conduct a case-by-case analysis to map each variable
->       to its most appropriate existing home (e.g., struct repo_settings
->       for configuration values, or specific localized structs within
->       struct repository).
+> This makes scripting against repo metadata more direct and avoids
+> shelling out to multiple commands for related paths.
 
-Note that as settings in struct repo_settings are lazily parsed, it is 
-only suitable for settings that are already lazily parsed. That means it 
-is not a suitable home for any settings that are parsed at startup by 
-git_default_config().
+You can get more than one path at a time from "git rev-parse" so I'm not 
+sure what this is saying.
 
->    2. Instead of blindly passing struct repository *repo down into every
->       single low-level library function, bubbling the dependency up is
->       the true goal. External callers of the functions must be carefully
->       audited to prevent regressions.
+It would be helpful to include the tests and Documentation for the new 
+keys in this patch.
 
-Where a function only needs one piece of information from struct 
-repository that sounds like a good strategy.
+> The new keys are introduced as explicit path.* entries in
+> repo_info_fields and are resolved through dedicated helpers.
+> 
+> This keeps lookup behavior predictable and makes future path
+> additions straightforward.
+> 
+> Signed-off-by: Eslam reda ragheb <eslam.reda.div@gmail.com>
+> ---
 
->    3. Safely remove the old global variables and macro definitions. Make
->       full use of Git's existing GitLab/GitHub CI and utilize local
->       Meson builds with AddressSanitizer enabled to ensure that the new
->       lifecycle introduces zero memory leaks.
->    4. Many globals like `editor_program` are parsed once and remain
->       available globally. New data flow might need to be designed to
->       maintain the lazy-loading efficiency.
+> @@ -74,6 +197,20 @@ static const struct field repo_info_fields[] = {
+>   	{ "layout.bare", get_layout_bare },
+>   	{ "layout.shallow", get_layout_shallow },
+>   	{ "object.format", get_object_format },
+> +	{ "path.common-dir", get_path_common_dir },
+> +	{ "path.config-file", get_path_config_file },
+> +	{ "path.git-dir", get_path_git_dir },
+> +	{ "path.git-prefix", get_path_git_prefix },
 
-Although `editor_program` is parsed once, that happens in 
-git_default_config() so it is not lazily loaded and making it lazily 
-loaded would be a regression as if the config value is invalid we want 
-to exit with an error early in the process, not just before we prompt 
-the user to edit a file.
+I'm not sure about calling this 'git-prefix', 'prefix' might be more 
+appropriate as it is about prefixing paths in the worktree rather than 
+the git_dir.
+
+> +	{ "path.grafts-file", get_path_grafts_file },
+> +	{ "path.hooks-directory", get_path_hooks_directory },
+> +	{ "path.index-file", get_path_index_file },
+> +	{ "path.logs-directory", get_path_logs_directory },
+
+We're moving away from file based refs and reflogs so I'm not sure 
+adding this, pick-refs-file or refs-directory is a good idea as we 
+should not be encouraging people to access these files directly.
+
+> +	{ "path.objects-directory", get_path_objects_directory },
+> +	{ "path.packed-refs-file", get_path_packed_refs_file },
+> +	{ "path.refs-directory", get_path_refs_directory },
+> +	{ "path.shallow-file", get_path_shallow_file },
+> +	{ "path.superproject-working-tree", get_path_superproject_working_tree },
+> +	{ "path.toplevel", get_path_toplevel },
+
+'path.toplevel' matches the git-rev-parse option but 'path.work-tree' 
+might be more descriptive?
+
+What happens if 'path.toplevel' is requested in a bare repository?
 
 Thanks
 
 Phillip
+
+>   	{ "references.format", get_references_format },
+>   };
+>   
 
