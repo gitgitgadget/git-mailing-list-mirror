@@ -1,68 +1,68 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F94A3A0B18
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 16:04:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E686C3EDAB1
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 16:08:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772208250; cv=none; b=FKpXXwvyNDM6NXBUdNU6iqP3kvJkKjis+HN4t5bhbr3u9jEvJ3YIEyPw1rDSeNWGiJwhJxmPiVWCR1WPKug45FbnHAIhvheg0VkpfbQXjscTOw7dpoaM483WPvGNmveecHl543m69uDsxeJKZOYCUEQJiNG1PqTeKSFXHj/EmGI=
+	t=1772208498; cv=none; b=k8YlslwsbKZEIy0fEsgWfTCpbNw6AE+havbQLxSSk029/q2KFHKlAM90CtlLQft3vAKX4SptfXFK+wVwkSa/jIj7KT393JGPYM8aT72Ay52Bltkhlf6bJfzUcr9BQ3pxnp14qLOJSgmnFDg4HG3V/Z/IITYeISHlD9jEzXde7yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772208250; c=relaxed/simple;
-	bh=ofdjp6D6qpF7nzC2L+XqqBitrCzoSJ+ffhqQ+lERq8M=;
+	s=arc-20240116; t=1772208498; c=relaxed/simple;
+	bh=6vK+xxaC/InZk1ZkxH7xhwh+djpVBuvaot+/f7sxfIs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k3DA3Wdx1VG1GGTr0WZyQKeTdBngxqC3qar8zJVFZMZnHgFpSS3ruvOhKzxLQWz9jHtioOKB2xT9YibZ1J0m0mOC4uDJ12NuntVWvHHURqYkjzcgpXDcP+RKHLJ95r6pZyLpg8iy/DCbEaXtBRthdiXSrXGPFanhtUHEdn0lVHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LeXLuVUb; arc=none smtp.client-ip=209.85.221.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=vDArOYhWHhKMrx5f82XU+6lg/VPv7LNB770kskbScjp/dh7hJwsk9OGCrLxbAO4+m4hatKsNDhtCTX6k6n7A09KatNyHHcJeOngq2YC7PHHttGH6Oadxpn40Xdqvbpi+l9dZGNFntXWIrhCS0I6LvczmCf9baREmE6V87L8exkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ljzrmu+K; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LeXLuVUb"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-43767807cf3so1501857f8f.1
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 08:04:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ljzrmu+K"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-483abed83b6so18294645e9.0
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 08:08:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772208247; x=1772813047; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772208495; x=1772813295; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5MxSKjmzOKfX0dLQUJ+WeKeQldI+ggDx/042yVFQ+3k=;
-        b=LeXLuVUboa/dMyN2XBPMTAwL2Ek0tJs2lrxEYW+h62TEaoWX2AnoYvJ9LJGxxSZdr8
-         LBNATvgjIan4UEqT9MgXEtrxOWFaYXOVY5sY8flW6vwZmAJdwQgYfLvvkc5YepOmnphC
-         5p88nBWUtnPCciQ8AqT7rOU1P4NfYfP/z8wpoz4yCCAfJJcARZFLvWNx08RfnufosguX
-         qJ0WmYcli0gE3A46aITzTCaBdSk1RmNJ+uZaICkg+5ibT7cbLIuJfLx7cC0TcjEB2ZTR
-         ApEaoT1wJJyCN716/FxC/n7ld8rIzpHmJqqEssyzDKLw+NnG12xz6DKNUDZocU7yYKXB
-         WQPQ==
+        bh=VxFCoXP1JDO4Z+CsM/annzkptJy7ZeWjhQT1rBTEXDc=;
+        b=ljzrmu+KZTSnohgUYDNjrkPoFzVTeLA28wiT8QMtk1bLfrZedYnEopwMGNpL6ZzE+H
+         CvPiQYBI4Ri54A+er5jfvl0tWKOpp5qDq7j79r4h1nGKidrLsv2NJ4Aaf15edb3O0WKL
+         lvf4+tIdZSZZ7l0qSr+cwOIS/fpCNwFvzstRhkrNqm54sHm8Nb0GzXaarwz/DUoNfmF8
+         kCYOYsRW4uTCE7a1tFmUCwcC9TgLJVNdYfqIv3BaKieJT9PW6qbdgvnqC4LXuSPKXzyR
+         zGeZ0l0sAwzQr0eCZi+2LKC9oy1I12LRn1GBVDKY5SWIyZHFl0xsPyPfWSzkgdkj588n
+         mu2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772208247; x=1772813047;
+        d=1e100.net; s=20230601; t=1772208495; x=1772813295;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5MxSKjmzOKfX0dLQUJ+WeKeQldI+ggDx/042yVFQ+3k=;
-        b=WbWaYP2HwSkk5Q1efldj3e9eVF5xk/RMQVE4Woj3N7Alp5FR8axOTwNWjx1SigxFLi
-         52GUt4I/XSBfE8RntTn/Q1hE3C+re+of6wp/95NKUlEY+EGw/muGbSqtCSluuepP+YX/
-         kq/Rgq0dyVeKjXYzryvLTcdFAHu+H5LW2FpJEtQq2Ci5Q3OBq6aG9lAHal7sC3vHBLzI
-         1wnHb5BZBC0TJ6h0LatpDcBNRW1lVXWoarGvR2S0iG5Xm1Z6AGcNBOzqy9roETcjYmV/
-         mTGvQtLlMZie0j9bS2lO1/F2wuT30AFgCZlsTIi7Annnc5UmW70Vb5v/LBAmrJyNoRl7
-         kizQ==
-X-Gm-Message-State: AOJu0YxTnat6oMUkyyFW/JoNhRIvY3fKCOdIx7qKllNITwd2LZ6wmuUq
-	q8ZjR7EuTwKij6VeCyzNEhheb14QZnbx6DtLj/3OjMu3mIGfg3dhze61tfB9hw==
-X-Gm-Gg: ATEYQzypcWHL4pPIyb3/+VVj0/UzlHfjAaxmfcjVnp1EZG4fAKFqyZfT418XKjCBLzg
-	LSB+fYZxUpbHSoHaklvngghCgvkGrQI0X9OrQf6mq+FIe0r7rXCC86p4k4ryDv9szdqbwLrVr2t
-	cR7mpQJ5X4ZIGVczft4JW2v1qVNO+YjdnmwZofet0wXj34NrOk5LQqISps/sl3WJgKIMqtda6tH
-	ndpT+dVBzsxTqzIVCZOQxwHadB5fESGoHk3qXkNjmLi6zVL/2LPpWjr20eyfnsfi3ynXfwBJQj4
-	qZWgFTbO4P1jQ6UOEZSIngIavdDW3AiZ2ueTgUILc8SCfjY+H2vV+Bq/jXd2g2q10wE0G7AKXmq
-	tGw0co+qMAqxWQweNLGcvWm7LL18ioM45Gfv6safwBo74LBfK0830aKhaabwt+qI72C/x2aTzEA
-	ueLtlVfRb8JYIb9Ue3s5owV1lHPWJ+LFQ3Uo65KCn25P8SLQ==
-X-Received: by 2002:a5d:5889:0:b0:435:e061:9e10 with SMTP id ffacd0b85a97d-4399dde302fmr5717792f8f.12.1772208247137;
-        Fri, 27 Feb 2026 08:04:07 -0800 (PST)
+        bh=VxFCoXP1JDO4Z+CsM/annzkptJy7ZeWjhQT1rBTEXDc=;
+        b=A33RYqzQ1B+TSKcQabYaPWe8kEcNtpO60LdkyNMv5blVMsqR4f5ahQ4cJNaaHcPmFN
+         Zyafp/vGa3NvPS2Dty//XvmQUx2tQfk+w8jpNIJ9NF7TH/cAtcFdXYVJTlpew0H0cAei
+         akMyq/NcDhzwNBri25TWtZfGAJ5CK8DrjxNULScn4Ht3OtcaIjEzE4d6KaiDw0NH6nMS
+         cy4YFGoOye/io2jKedoMEkrv6Pwu1WvNYQTP76wIPtmA/4S99QbJ7QbqPHmat0FtdqyL
+         AJJvMgqK+XSt5dAPH9vOyFrwKqnKJRH0Uxut1EDJ7zIss2hjcV4JnoPvFjPgByE7sFdd
+         I4/Q==
+X-Gm-Message-State: AOJu0Yx4ArPrMb9ntVXWbPkkdL/Pt5Sjd9oCGINdIAiafzFOPgvOW1tV
+	DKLwB+TojzxL3EBBSFOYfGU+dlFgkDkACavUpB8zsbx9rVdSxA8xJJ5DlSS7FA==
+X-Gm-Gg: ATEYQzwgZqVq/UGGsD37ny5vxG35zRbIjlDoaezBwY4pFTMoMzsUeJ2cazlP8aXD94p
+	SV090FJ+LLS2YWITbI+95QbPTUPA1nZffDdKtFeq2bagafYl50Lhjn8sGxFzvYQoprd3m4hcozf
+	d+j5tJIaUwjgJlA14UZaTOXWtzDpYFOQojc6qcnq3OGiPlSoE6WjjviRyfoXDp94SZ0rIQLabbG
+	s2bS9cg/qwIJB13r8VgOFHqkGgF8h8ja6ZBtE8NJ2UtSegHy07tc+0XbA856n5t67aGaF6j06AA
+	l8w9Azc6x5Mmxc3Ph7xGE33KIUt0aktHpeXVVnMDLVvN23LSG/YZsXtxhfCWIO9MyPG79a0FXq4
+	TtCAAZ2asnub+oLxZkyyoSOaeVIVl8zGJ9TpIi1GrAW6JKqkIKDuT+htFgQf3pmuAW9wCx5I5/l
+	Swfv97qqtRR4O1UNujNh2MNMaPzMDkhf+NKpM=
+X-Received: by 2002:a05:600c:190c:b0:47e:e8c2:905f with SMTP id 5b1f17b1804b1-483c9ba7b9fmr51101975e9.8.1772208494875;
+        Fri, 27 Feb 2026 08:08:14 -0800 (PST)
 Received: from lorenzo-VM ([84.33.161.195])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4399c76b48asm8247952f8f.37.2026.02.27.08.04.06
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483c3b770e7sm124939915e9.9.2026.02.27.08.08.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 08:04:06 -0800 (PST)
-Date: Fri, 27 Feb 2026 17:04:04 +0100
+        Fri, 27 Feb 2026 08:08:14 -0800 (PST)
+Date: Fri, 27 Feb 2026 17:08:12 +0100
 From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC PATCH v2 1/2] diff: handle UTF-8 chars in prefix when
- calculating diffstat width
-Message-ID: <9e8161a7009e270c76a7cc4411b1977837ee7d19.1772136203.git.lorenzo.pegorari2002@gmail.com>
+Subject: [GSoC PATCH v2 2/2] t4052: add test for diffstat width when prefix
+ contains UTF-8 chars
+Message-ID: <984fa10d728aad049d0430472e85f1ed0e5ea4de.1772136203.git.lorenzo.pegorari2002@gmail.com>
 References: <cover.1771894207.git.lorenzo.pegorari2002@gmail.com>
  <cover.1772136203.git.lorenzo.pegorari2002@gmail.com>
 Precedence: bulk
@@ -75,50 +75,65 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1772136203.git.lorenzo.pegorari2002@gmail.com>
 
-The diffstat width is calculated by taking the terminal width and
-incorrectly subtracting the `strlen()` of `line_prefix`, instead of the
-actual display width of `line_prefix`, which may contain UTF-8
-characters (e.g., ANSI-colored strings in `log --graph --stat`).
+Add test checking the calculation of the diffstat display width when the
+`line_prefix`, which is text that goes before the diffstat, contains
+UTF-8 characters.
 
-Utilize the display width instead, obtained via `utf8_strnwidth()` with
-the flag `skip_ansi`.
+This situation happens, for example, when `git log --stat --graph` is
+executed:
+* `--stat` will create a diffstat for each commit
+* `--graph` will stuff `line_prefix` with the graph portion of the log,
+  which contains UTF-8 characters (ANSI escape codes to color the text)
 
 Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 ---
- diff.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ t/b                    |  0
+ t/t4052-stat-output.sh | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
+ create mode 100644 t/b
 
-diff --git a/diff.c b/diff.c
-index 35b903a9a0..395cb464f4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2749,7 +2749,9 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	count = i; /* where we can stop scanning in data->files[] */
+diff --git a/t/b b/t/b
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+index 740bb97091..cc4665047d 100755
+--- a/t/t4052-stat-output.sh
++++ b/t/t4052-stat-output.sh
+@@ -413,4 +413,34 @@ test_expect_success 'merge --stat respects COLUMNS with long name' '
+ 	test_cmp expect actual
+ '
  
- 	/*
--	 * We have width = stat_width or term_columns() columns total.
-+	 * We have width = stat_width or term_columns() columns total minus the
-+	 * length of line_prefix skipping UTF-8 chars to get the display width
-+	 * (e.g., to skip ANSI-colored strings in "log --graph --stat").
- 	 * We want a maximum of min(max_len, stat_name_width) for the name part.
- 	 * We want a maximum of min(max_change, stat_graph_width) for the +- part.
- 	 * We also need 1 for " " and 4 + decimal_width(max_change)
-@@ -2776,14 +2778,8 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	 * separators and this message, this message will "overflow"
- 	 * making the line longer than the maximum width.
- 	 */
--
--	/*
--	 * NEEDSWORK: line_prefix is often used for "log --graph" output
--	 * and contains ANSI-colored string.  utf8_strnwidth() should be
--	 * used to correctly count the display width instead of strlen().
--	 */
- 	if (options->stat_width == -1)
--		width = term_columns() - strlen(line_prefix);
-+		width = term_columns() - utf8_strnwidth(line_prefix, strlen(line_prefix), 1);
- 	else
- 		width = options->stat_width ? options->stat_width : 80;
- 	number_width = decimal_width(max_change) > number_width ?
++# git-log will print only 1 commit containing a single branch graph and a diffstat.
++# The diffstat will be only one file, with a placeholder FILENAME, that, with
++# enough terminal display width, will contain the following line:
++#     "<RED>|<RESET>  ${FILENAME} | 0"
++# where "<RED>" and "<RESET>" are ANSI escape codes to color the text.
++# To calculate the minimium terminal display width MIN_TERM_WIDTH so that the
++# FILENAME in the diffstat will not be shortened, we take the FILENAME length
++# and add 9 to it.
++# To check if the diffstat width, when the line_prefix (the "<RED>|<RESET>" of
++# the graph) contains UTF-8 characters (the ANSI escape codes), is calculated
++# correctly, we:
++#     1. check if it contains the line defined before when using MIN_TERM_WIDTH
++#     2. check if it contains the line defined before, but with the FILENAME
++#        shortened by only one character, when using MIN_TERM_WIDTH - 1
++
++test_expect_success 'diffstat where line_prefix contains UTF-8 chars is correct width' '
++	FILENAME="placeholder-text-placeholder-text" &&
++	FILENAME_TRIMMED="...eholder-text-placeholder-text" &&
++	MIN_TERM_WIDTH=$((${#FILENAME} + 9)) &&
++	test_config color.diff always &&
++	git commit --allow-empty --allow-empty-message &&
++	>${FILENAME} &&
++	git add ${FILENAME} &&
++	git commit --allow-empty-message &&
++	COLUMNS=$((MIN_TERM_WIDTH)) git log --graph --stat -n1 | test_decode_color >out &&
++	test_grep "<RED>|<RESET>  ${FILENAME} | 0" out &&
++	COLUMNS=$((MIN_TERM_WIDTH - 1)) git log --graph --stat -n1 | test_decode_color >out &&
++	test_grep "<RED>|<RESET>  ${FILENAME_TRIMMED} | 0" out
++'
++
+ test_done
 -- 
 2.43.0
 
