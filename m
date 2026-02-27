@@ -1,129 +1,111 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59872C15AB
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 15:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847E6441054
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 15:48:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772204880; cv=none; b=EfdCUkV8Xz8pv9t2eWCkblrrePZtmvSpJjIlzQ8H6r4k+r/2EFbsw3d9FpAsXTriBTDHybZqEpsa3s8xldo3ppW+dedTiQQCJYy4WoDgLUwBlIFBs4IpdTPiP5cXL8JHGdAQ7Tgmw2K+IadjVu4oL5GRcYSJFYVXZDZoW/TIoqI=
+	t=1772207342; cv=none; b=tPNTeM1fA2vdZDGRUwejuC3czvO3bnqo8d2OZwqzlppK3mmtoIFMThFPKwxiGrKYjspFQtgRUDRNPjXv7VSgpx/zpVJ14m+9+B/+4D/ezZ0CUuZy1iC/GW6vu8KzZ20G6JZ3NmtMv/4BRzdBjQ0KS/Tk6oj4HUbWwmuUZgUNC4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772204880; c=relaxed/simple;
-	bh=S9surBzAOyqlXh3epjM7NtQWlw4eyai+fKKsVH8jNZQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LV0XwasruJnpqWnpaaWXz/vR/yZmNldxWLr0b2xCIXdZX0zWcSEhGkGhbiwpBv6aT1vLnGL63YjAqmlE7EoMvGzn/IKLuJmPAfVc7hwv/BQGNEyXmxYVj6Nh5zbYbx/hNWNgPzlrKGX95K5Ck2Us3sfTsP0t5TZuWSzSXY7dLf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YDttmJoI; arc=none smtp.client-ip=209.85.210.171
+	s=arc-20240116; t=1772207342; c=relaxed/simple;
+	bh=uZhHHqCxwQ/j2sTUrMPsEQJ3WkJScydScI16/DyGhKI=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=oHBC6E36TK2uTI3U5BeMkqRjFgpeSbiFVhyO48UZu+I2dKSznp9tFZchnljsYnExu35aP6ufz/MmbpTIOek9kKWa0L2+qRsv+ja86wyF37zYMjc+DI7CyFmgw+/fKharXHTJE9EDTwiaNC8zZUd9r40tpuuBsP7N7iNpYcFMlGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XyKKsfLJ; arc=none smtp.client-ip=74.125.82.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YDttmJoI"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-824ba13c49eso88357b3a.3
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 07:07:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XyKKsfLJ"
+Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-127380532eeso5492504c88.1
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 07:48:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772204879; x=1772809679; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wFLGhKOEcQJSCAFLp4QxPkN4+JY5yD6XKgCplWN/mrE=;
-        b=YDttmJoI3wJ0wMQi7v+tEjbvn/ZCNLlgMH+hT5mPVJsli/99cjfqVBmGtWBdBtlrS6
-         1H5iOGScMnUnbuA0rkpkVjjO7pKj5Cc9sNg9sSOaZMOf8A7SNkWR5Nd6FXIOIm9uicSF
-         eUpIYzkLyGwK6We2y2snm4fOmUmlL+BoXVYQ4KTY/m7ijCV+wgctTZVGuEiDnk85ssPO
-         0BV2MUhZoGy+ere0HB6t+7jMSiC5S4xalfAylid1I8RmPAj6+SuoX4KTsCkSUqFKV4jT
-         MtWg8N98Xi1KDqVOfR3BZ3S47ttY/y0yr0kaFxOpxfgHTSgpl4QQXWYO9dz3keFsUaWj
-         A9IQ==
+        d=gmail.com; s=20230601; t=1772207335; x=1772812135; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HzAF6/VNm4LUSW7VKRiLiZCYoOKct47v1p2I3eF0eDs=;
+        b=XyKKsfLJEmsbiGhHV3wDT0erQNWu7vbjtlZefhq3K+4hxGPVxjaSpTQcZDDxKh6w9d
+         Z5krjHUTDbSqezDsQ997QD/BnIxaF6mywOVhbn3ObplS3Y4BUYHryzdRljN7xrFpXneT
+         tzWb4d/BQ7Ey8RwF2OsLE278f8MDwifvamWtnssUMSxYeLSCI/Fm7/aX/85I2jOkIEME
+         ZwdtfHsnZaw/Q1ZRuFsR0yxsfy7nKCXZ7MCnzckj5tJjlvWn2No2rApJQlon0MXlWzem
+         DenlRKYmOSmv934maje1lUk3CVj3lE8oYoRd+1vvOhxnXWscLfVw2If+Jy/NdsDhg1JM
+         MLJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772204879; x=1772809679;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wFLGhKOEcQJSCAFLp4QxPkN4+JY5yD6XKgCplWN/mrE=;
-        b=ezSL3EB1z27PdP6lrEcs1+cjM4D9OhyCGZarty7Hf321ajrpMawG2zt3t4ZByxH0Oo
-         yHNPDvloTXoUaL6Vb3mmcyuOxmw5MkfRZlZ/pUuWVAzSuzdzcr91L7aGj9rmTvgcAuz4
-         50ZPaYRW84QX4ovo0Lxz0PLG/v2cC/c0pWx5FpYoiHEWGXwfXUb3GmLCQk/4TFXKQO2u
-         L4XASIvwFBAbfdPTlp0W2iubQkxGRRhFuBbhk4Yy4kMjL4DoahxpcIVCnouGBLw9Gvt8
-         c2jhLVanbar/Pc5Tk9zxbAqhjL2Q35wYPWmdWdwsVqruWvuFFa9cSiE+fFcXaFFS8C4k
-         Ikew==
-X-Forwarded-Encrypted: i=1; AJvYcCV9WuarSftsfaGnpYSDsPIJ2ev/uGV5nToAK6J4JSQrFRIdXtPI6bPyx3vKP7IYehJMkS0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6oKSyKuZ7AClBFw41Hb6rzzjzUIrsfavZzD4jLyNb2EhZUtjf
-	oSul6ZQvgwfpcuADkUQUkiP24LzHsc/ULRn57s9KITkdnSlNf7p2VlwM
-X-Gm-Gg: ATEYQzw/kl+b7tqdaWvakUeKvnOvJbW3elI59pYN8PrQ8MqwmqcqSy+Efiv6kOYd9i/
-	AdeXU6upFW6CFXvpDKHjqLPL42uuo3JdowKtwU1aLAm7dduXVdFuNI8fFE1bJUszEfo+nIgGRz2
-	4D/tdcIJYPPr6VwYe4JPl4OmW2LBijc6EKqQzy55RpP9wuh9ainKo1UrTF3+ajwt/kEvD2+sLhX
-	mcZC05L/282IIjG8rr6w2u/eO1vge80g66+YxKtcgYafr631unTJhl5ijzQBKDGXmztBy3gaO5l
-	CazOpYmJ29BRUGuggWcLZy2d+nl/iRn+XMZGNYnUUXwJmSHHnmBsiG8m1oUcM23b4fbpKv44WWx
-	7NPflxubZ1Giv5GpvaxrnHGsunprK1NQl/e26NMcSqxAqq4P/Mnkf9mSGA8A30pftR8EBUgJIsW
-	kHACGIExcG+WuSnrEX10RxdpvsTqU=
-X-Received: by 2002:a05:6a00:a474:b0:827:36ed:c6ba with SMTP id d2e1a72fcca58-8274da1b3a5mr1288533b3a.5.1772204878628;
-        Fri, 27 Feb 2026 07:07:58 -0800 (PST)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8273a010996sm5221547b3a.44.2026.02.27.07.07.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Feb 2026 07:07:57 -0800 (PST)
-Message-ID: <86cf5f3f-1459-4281-ae97-24f2d834e099@gmail.com>
-Date: Fri, 27 Feb 2026 23:07:54 +0800
+        d=1e100.net; s=20230601; t=1772207335; x=1772812135;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HzAF6/VNm4LUSW7VKRiLiZCYoOKct47v1p2I3eF0eDs=;
+        b=gpXQhZd5StGyVpEA4elqwf/oPg0hgUl4VuHx00LbrUc8DC/J4aaly3z6QrLz0LTKMY
+         30RqVHEtWoEm67PEAbWYWEThMSxYVK4mr9uoDI5Mws3buF0LAQ6NVxRMSlpV6EFUiKhk
+         01qvIr+I38a+eHYxejnn9pBI9b0tDR+LM77+HujTwnKbNM+nG4RoCk1+ofs0bK6Mej0j
+         y0DBkdArqhVz5xqsu17E+O+wzYMJAYg7jH2ANd0Di8whuQyGZF/sru7qImWT78cczPIg
+         YqFnq+8L5gCLXvUrMzJsa88T8KcfDrRV/AiAdI7KAAJFv2fVspMoG7I6jYpzdXQ9+1Gr
+         PORQ==
+X-Gm-Message-State: AOJu0Yx8S+ZOORN5Kk/4OApXG2B74gGtzD9WDtpR+7Qla8xkqiTEkU4C
+	dhJDJuo4Lv6lt6swt3BtEsa8Ika58iHZflKG9mUZwmlwGC4ofcLu84NJEIfE2g==
+X-Gm-Gg: ATEYQzwhuK9cNKWI+arFbqAdF37h5QpHNEjNZt57CICOTrpLLe/NyZiKGChq4wvTysP
+	eZcDtM/kAK+J7eH1rm342t5mmNhZWzFhjdBEVkQQJxrXabuEVgtcWtXxGDIxrZIK2rVD3ci21VM
+	gKK3khyAFRD3tkqeCUQfT9KPxQo2CqfGQhfklqDPNj8UnF1i6rAox13aRIbJdDI659FQM5/nk/r
+	EaV/NACdUcjO50rRI+ufDIQLlW0pAoPdnCkQbCQe+PmPJoEvO8h1jD1G5c+c/YF//30P8mmYVu0
+	9DJrKAdD/kgG6ESjGFGf/T4XI5Hbzg4Ye9hHvlNy7QV0+Hku9M1BIxtl6cE+CDoemQh7da9QmRM
+	QHp6A5p76bX98VCU40J6GzByDhRpYCuX+YnUoE/CVDWJE8ApKq5yokc0rDRrTYhN1Oxj4Qm5OA8
+	o98somguwUlyWTDdVvVAjlwnNP18PriSzcJr/R7Q==
+X-Received: by 2002:a05:7022:486:b0:119:e56b:c74d with SMTP id a92af1059eb24-1278fc6a7e2mr1590456c88.18.1772207334931;
+        Fri, 27 Feb 2026 07:48:54 -0800 (PST)
+Received: from [127.0.0.1] ([172.184.209.165])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12789a32dabsm5600023c88.11.2026.02.27.07.48.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Feb 2026 07:48:54 -0800 (PST)
+Message-Id: <pull.2202.v2.git.git.1772207333.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2202.git.git.1771574833967.gitgitgadget@gmail.com>
+References: <pull.2202.git.git.1771574833967.gitgitgadget@gmail.com>
+From: "Yoann Valeri via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 27 Feb 2026 15:48:51 +0000
+Subject: [PATCH v2 0/2] branch: add 'branch.addCurrentBranchAsPrefix' config param
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC][Draft Proposal v4] Refactoring in order to reduce Git's
- global state
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
- Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>
-References: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
- <b98780d7-3aa9-4838-9234-290b1d72ffd7@gmail.com>
- <5e5f07ec-72ba-46ee-812c-d6773a4bdbe7@gmail.com>
- <1d43d1d0-bf6b-4806-834e-89f545fab766@gmail.com>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <1d43d1d0-bf6b-4806-834e-89f545fab766@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Junio C Hamano <gitster@pobox.com>,
+    Yoann Valeri <yoann.valeri@cea.fr>,
+    Yoann Valeri <yoann.valeri@cea.fr>
 
-Hi Phillip,
+Changes since v1:
 
-Wow, your reply is very detailed. Appreciate.
+ * Added a '--no-prefix' option to git branch
 
-> There are four steps below...
+VALERI Yoann (2):
+  branch: add 'branch.addCurrentBranchAsPrefix' config param
+  branch: add a no-prefix option
 
-Yup, a typo.
-
-> Note that as settings in struct repo_settings are lazily parsed, it is 
-> only suitable for settings that are already lazily parsed. That means it 
-> is not a suitable home for any settings that are parsed at startup by 
-> git_default_config().
-
-This makes sense to me. So for variables in like 'git_default_config()', 
-their startup parsing nature must be preserved. Will update the proposal 
-to explicitly distinguish between these different lifecycles.
+ Documentation/config/branch.adoc |  7 +++++
+ branch.c                         | 14 +++++++++
+ branch.h                         |  8 +++++
+ builtin/branch.c                 | 24 ++++++++++-----
+ builtin/checkout.c               | 52 +++++++++++++++++++++++---------
+ t/t2018-checkout-branch.sh       | 26 ++++++++++++++++
+ t/t2060-switch.sh                | 26 ++++++++++++++++
+ t/t3200-branch.sh                | 16 ++++++++++
+ 8 files changed, 150 insertions(+), 23 deletions(-)
 
 
-> Where a function only needs one piece of information from struct 
-> repository that sounds like a good strategy.
+base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2202%2Fvaleriyoann%2Fbranch-with-prefix-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2202/valeriyoann/branch-with-prefix-v2
+Pull-Request: https://github.com/git/git/pull/2202
 
-It's much better to pass just that value down rather than passing the 
-entire 'struct repository', right?
+Range-diff vs v1:
 
-> Although `editor_program` is parsed once, that happens in 
-> git_default_config() so it is not lazily loaded and making it lazily 
-> loaded would be a regression as if the config value is invalid we want 
-> to exit with an error early in the process, not just before we prompt 
-> the user to edit a file.
+ 1:  30a6d8e195 = 1:  49641fb34c branch: add 'branch.addCurrentBranchAsPrefix' config param
+ -:  ---------- > 2:  0fbdf031cb branch: add a no-prefix option
 
-Oh, I thought it was lazy-loaded. I completely overlooked the user 
-experience in terms of a delayed fatal config error also. Will double 
-check the source code and rewrite this part.
-
-I'm delighted to see more people reviewing my proposal. I've truly 
-gained valuable insights into Git's design philosophy. My sincere 
-gratitude to you.
-
-Regards,
-
-Yuchen
-
+-- 
+gitgitgadget
