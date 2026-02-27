@@ -1,108 +1,99 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC223CA4E
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 00:13:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF09212D7C
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 01:53:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772151201; cv=none; b=YwRFY0ytZrKQxLX86fTcs7a36XRuquFvzbSZTKVhq86YPsyWnwTN/lo7kZM/pND58DZJOZnDiBygKWmA8Wrio9x+j4VuMtvUg9S1MZ+EHjDJXNsw5dm3Ti7zrHSSCDhHWD/oLxC2EPLPe36PEqkanb8wbgNspxbrYBLkgFmIIuM=
+	t=1772157184; cv=none; b=Glt1cAlpBcJ652yMrbs/CmyqnbWKIojoeK2Hmm6+yM8bijWPnRuYXKx8J5eMSrY0MM1vLjpFmUEFHJjqEJa/igUfegt38IzD/XYisR6diBK2ZjeQL/1cvA7zE2wwfZZ6oeat5+ptCQRjLBvzoClZaWy/8+tEAIpSunnSU7qMdlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772151201; c=relaxed/simple;
-	bh=ppNR4A/8Q7PimWtJ17yMDKyq+aLdVQd2cyo07/I+5hc=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gmowXFglvCiKFyYOJA5gmnpm1e6F5yoCSQMhve5Z6A+txNpUxELCe6fV7/vDMrmvrytlUhC3O9bFHu3C8wTWtgXToRBgrie6mHU4q1merTQt9CCrY3xp9DycvkTqbZuduXwLg3z6msr3FwdVsv/0fVoX/gIsvVK6X4fvUcBhT1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EL2zUUWw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wyPc4fMG; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772157184; c=relaxed/simple;
+	bh=bLZgvnafKz/vxPN2JuOU5UauFNma+fldLgi2cTV538s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ov51AXkBhZM38kMX0KJvQBMvcWwyFIrJDC4FHEpMrpUwv/qZnJzzHT6sfNgx+yQG5Y1W89eEGh6Y1Ex0wDAqsDxQ/L14FFwdK0GET2dS+piLnyrItxGAwS0ctSrxQgNLG9yxNN1Ed+iC9adrI+qppdsEqdU3yLX9f/UmEQsZjxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=G3VSO7UW; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EL2zUUWw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wyPc4fMG"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D50FC1400221;
-	Thu, 26 Feb 2026 19:13:18 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 26 Feb 2026 19:13:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1772151198; x=1772237598; bh=IY4aF4QZhKkpdd2qlu2vfmUKnzCp4jCq
-	lPVvOVYE70E=; b=EL2zUUWw2xvNsZ+fVEPGytfvUa/Uw2Ub1FuJLe/vXB6buZe2
-	Hqa6GwWxTgGP3VzSWuxyhin1uS5ui275Q5mQAnmk156ic6HQjtwKS2ocKBjNm/nm
-	xWpebQ75ntw3pp7cA8WI8vml9A1T8V4VtQ4GWwrDytsZqQQI91ps7tO0yAwuG6KU
-	eaZDtjurkB5H/WIgKB5y3YvhVYRpOD8NVmsjcCy5GrG2JqQuP5rJ8rr0gC6Dzg2a
-	f5ACgycnkLMX3OvNvq7h1hy3CmKWpGP/pArx80ejiQWXj+oGhzKJ2S5tgprOhaou
-	aYryJbWVkWvqS5ev74j5ZP/TvGJs1pUiUphgjw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1772151198; x=
-	1772237598; bh=IY4aF4QZhKkpdd2qlu2vfmUKnzCp4jCqlPVvOVYE70E=; b=w
-	yPc4fMGwG027qDnLvofq6pCLIMnlW4+CeHLoIiGU0Wi5hRAev6qBVKflf3jSr1SD
-	vvOprm/Kj+3uuROruBRvMGoUR0e2tPM9oyi4DAQ/b7Y6OQw4m+7BcUVm/tQOfmTm
-	nnOZSqERtFnJrxmg4Sqz0KnN/iSk3CnEdTudmTfc6Meot9yfKXDLKCwTyl9TNwr/
-	5JOSe06zc0SXjHvYHn12OuirpSyqam0iZtpIQ9IT2NX2sx6YFPy0Ai8UReiMucz0
-	ywIZKzR+mJvYxCEi3XpeJOY98Ek5jEuFHg7f0VO3f8yHFvKKDYQUI+gzdvjZF7Yq
-	CWDBw2GzwbyIFzj5tbq0A==
-X-ME-Sender: <xms:nuGgabtgl2viHvAAfsHzdu1EOvA5XPM4mMYWlU3cnFBK7Wp02LEoqg>
-    <xme:nuGgaSfRU_-AbWwcl8Q-xREw5tEGOdmm7xwtOrG_EC-pD51rsCwDYUTqjUuuvGd5a
-    k2ThXuf_hufvjymQ5dfakypNysApNzaI_1ksRM8vO-Y4fdOrO505oY>
-X-ME-Received: <xmr:nuGgacYN1trfJQyIbXmsDqkdH3HlpQloc4JAwI_Dslyn2drid7xVVq_r96OZiU4Mdl0MxhHkEYJS_SZDg-BVMFQCJPC9cbYCDw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeejhedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnhepkefhjeefieelhfdtgeeghfejkedufeegue
-    fgheekiedtieffuddtheegveegudfgnecuffhomhgrihhnpegtrghtqdhfihhlvgdrtgif
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:nuGgaVUK5gttBHviAh4MsaNuR2v7WRt9mWJI3XMlashj7yElef4QsA>
-    <xmx:nuGgaehBXeQqiC0EpWQaRaNG8DSrK5XIb173KR-wRZaoVjs3LXLsBg>
-    <xmx:nuGgaTVrY5RhFdiQ6QwloSNGR88Iqat-fhGUr7pXC0_f4iNx_7npzw>
-    <xmx:nuGgaVP2Fid0G08Kv6sTrH4SS4_-tPhxH88_guFcoyXiGHKxMoqloQ>
-    <xmx:nuGgaXFoSswqkPLktrof0581VECcAVJr8nc69rUC3GlxvvWo4lLGnDMO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Feb 2026 19:13:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="G3VSO7UW"
+From: Mirko Faina <mroik@delayed.space>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1772157174;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Vi5vMcTuslWFzzpIbm/NWZWlGoqWKKI81Ah8ughkmSo=;
+	b=G3VSO7UWktfy0X7D57OLnMO3NoN+rGFPY8py5wsTGnoJCWHuO5ekyb2hkgHOSQ8yfzG3Zn
+	TKv/b9rD+9R+K/XyEMK5xI1ntKLmeNQyetAKaNNcqrK/HhFY+6L7l52R2Pc4CvHTP86Dxu
+	P61iTTNghLPZtUyq89Ph30UhJwo6UfdRFT4pI5R4VDjhuULZTjIJm4Qe/JOiGVyq7DzyrT
+	DpAX3CP4cmsEW4VD8rzrsc2l8lvC7m1CTfFkguScV3LQsELNT7aHNbGdgSg8gQP/bTGbJv
+	rd1ga6YtmeMDPXWjQ3jW8eMFvTyKVRKcnv/LcgKCbxkG3U5d48/6BRps05l2zg==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
 To: git@vger.kernel.org
-Subject: [Bug] duplicated long-form options go unnoticed
-Date: Thu, 26 Feb 2026 16:13:16 -0800
-Message-ID: <xmqq5x7jujqb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: Mirko Faina <mroik@delayed.space>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH v3 1/4] pretty.c: add %(count) and %(total) placeholders
+Date: Fri, 27 Feb 2026 02:52:36 +0100
+Message-ID: <cfed3bddf66ed2fab1f4da896759de1ba086578f.1772156996.git.mroik@delayed.space>
+In-Reply-To: <cover.1772156996.git.mroik@delayed.space>
+References: <cover.1771925291.git.mroik@delayed.space> <cover.1772156996.git.mroik@delayed.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1528; i=mroik@delayed.space; h=from:subject:message-id; bh=bLZgvnafKz/vxPN2JuOU5UauFNma+fldLgi2cTV538s=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpoPiZwZyQvhuKbsT4/f6KluobxygKWp+RRX+KW LAaBTW21dOJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaaD4mQAKCRBIeX6hnBm+ 0aXaEACD3okN/jCTHIpjAhANfghEJRBNjsXKMYvUAow4gdQPzZTBxRPZ4JYl+t/LUobv2+E8Fx1 kOWKldWEEw2dxMc4svvoIc5qCQVc1+hj5eXA6rQ0d8qFjQzBi/tn+MGTplFz2Oaw0R5yFvOAW0Y 2kKap0xXq0orkUz62hEJFTUh2NI4to+rEKNRifHEwihPJIfwcuDOoqc3/NUm+kxvAPhWF85ES6D DApLDWOthR/JOCGNeu9oA+skbWGlUhyWW3gIOVW7eydExQGxO0+8M5ukXu0PzLMwfBb+PWNlqCK 05tN5vG8A4QWC2C5roPrgiRFlUP98dIXGBcDEYssUfUS5b/V+ViXBmyjYytF6Aic5RmUEgdRWYi vY7B/r8Il+r3b8FccKAhzQRgGo3PjK7GDiW54IiPWGf34PTa25muyqzSn7zjb7mSXJNaorH9ePq 4AgO9oPIHbAKaqRWD1QbdX9+aVBSn9kOoMKvOmNy20yrYNJKjpssXdUYNaVmmgiSjM4+K1T9iZT 17aRSeGMzJezYsmoFGp9mbb0QqGUFTjm4PAlYyM64Z+MZ/FTomf4zpbnMdE0XGjrchmbUzcD4/l NW0jlu6WnF7zNOaC7VMEn4ktnM/EHFA+eQPnzMt6xYF9NUo8j5n50gQY7MU/yc2A0doLxNvLhR9 6/+DxugsI
+ sVr4xw==
+X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: -----
 
-If you make this stupid change to builtin/cat-file.c, rebuild your
-git and run "git cat-file --batch-check", without anybody helping
-you notice that your change to add a duplicated long command to the
-options table is a nonsense.  There should be some way to help the
-developer.
+In many commands we can customize the output through the "--format" or
+the "--pretty" options. This patch adds two new placeholders used mainly
+when there's a range of commits that we want to show.
 
-The most expensive would be a run-time check in parse_options_check(),
-which is not very advisable, but it may be OK to have one hidden behind
-a conditional debugging option (like exporting GIT_PARSEOPT_PARFNOID
-variable).
+Currently these two placeholders are not usable as they're coupled with
+the rev_info->nr and rev_info->total fields, fields that are used only
+by the format-patch numbered email subjects.
 
+Teach repo_format_commit_message() the %(count) and %(total)
+placeholders.
 
- builtin/cat-file.c | 1 +
- 1 file changed, 1 insertion(+)
+Signed-off-by: Mirko Faina <mroik@delayed.space>
+---
+ pretty.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git i/builtin/cat-file.c w/builtin/cat-file.c
-index b6f12f41d6..eaa53b2b29 100644
---- i/builtin/cat-file.c
-+++ w/builtin/cat-file.c
-@@ -1091,6 +1091,7 @@ int cmd_cat_file(int argc,
- 			N_("like --batch, but don't emit <contents>"),
- 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
- 			batch_option_callback),
-+		OPT_BOOL(0, "batch-check", &batch, N_("batch")),
- 		OPT_BOOL_F('z', NULL, &input_nul_terminated, N_("stdin is NUL-terminated"),
- 			PARSE_OPT_HIDDEN),
- 		OPT_BOOL('Z', NULL, &nul_terminated, N_("stdin and stdout is NUL-terminated")),
+diff --git a/pretty.c b/pretty.c
+index e0646bbc5d..e29bb8b877 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1549,6 +1549,21 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	if (!commit->object.parsed)
+ 		parse_object(the_repository, &commit->object.oid);
+ 
++	if (starts_with(placeholder, "(count)")) {
++		if (!c->pretty_ctx->rev)
++			die(_("this format specifier can't be used with this command"));
++		strbuf_addf(sb, "%0*d", decimal_width(c->pretty_ctx->rev->total),
++			    c->pretty_ctx->rev->nr);
++		return 7;
++	}
++
++	if (starts_with(placeholder, "(total)")) {
++		if (!c->pretty_ctx->rev)
++			die(_("this format specifier can't be used with this command"));
++		strbuf_addf(sb, "%d", c->pretty_ctx->rev->total);
++		return 7;
++	}
++
+ 	switch (placeholder[0]) {
+ 	case 'H':		/* commit hash */
+ 		strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_COMMIT));
+-- 
+2.53.0.4.g55f3102ead
+
