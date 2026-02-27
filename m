@@ -1,132 +1,116 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5080127F4CA
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 23:08:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4F0374162
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 23:28:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772233705; cv=none; b=i/HyXaJXJIBa620FKMsseGhjGjFVF9m1+AXgn8VKoSTbNYPuors26sgv6gcO2baxYQ8gGo2nawXq39wRHJNd+atBY8oHalxNAWVAcfjdlEAkl09sS2nDH5/P7/CMjhh5biyn+kXFrhAJplg8TcilsZshEErAStcaqKVQWPDDKXs=
+	t=1772234894; cv=none; b=MEf6DktkyDvOPjD90cq0SaiY6oY+B6VyoWBMOw/lRgRp+trmlkfa8QgYwWmdzAFH2j/O7uhooRTq21aLUNyg9q/4uhcE0ZkIrcYXdvZpQ2qKn8wOQmVr3kymujReydblaPhf4jekK+Os3Y3aJAkzS6IlrLK4W5BhkARjjoEPEtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772233705; c=relaxed/simple;
-	bh=Hzj9+BE1ObzrxVktE6a8nkD/97+rdrXrfbmvyek4dJc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AMzA8OISHZS3EAZoEOYyQCBier63hh0wpxHRxTa3U1AUEub9NnbguSvV/o4HJChwIh2Rjl42WYWN8IOG94e2FMMrYtzHp46xbNKrfsbV7e/4+ivaA5aNQmL6GKBQ5j7AhhaHLR3TeF18/absH9MO9AP/koCX5dnKwtediRxuqA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Keh3EbCt; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1772234894; c=relaxed/simple;
+	bh=FMOY8zr1tXrV9cHQrgXEsY5vO/PEWkpyDXQRR6e8H1I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dFfk/fRqdrGVQScPj7eK9e/Hltpqn2G3+D8DEXlVEwk9nYlGrGeYGuM6qIGea6vXz3RS8xYWVAPDhOfONi4GNpTnQRGxY0MvhVmEfNfDoPuayA2e97zA4SufNaOjJyDEcOXINt9CvLWwbqkeikzZGeW2XY8dLhZxqniPfLvZh4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=1oivn5u7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pKUef+3w; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Keh3EbCt"
-Received: (qmail 83609 invoked by uid 109); 27 Feb 2026 23:08:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=Hzj9+BE1ObzrxVktE6a8nkD/97+rdrXrfbmvyek4dJc=; b=Keh3EbCtgL1ME6bpWQyDiDNrpv4FRmhE+jq3sAslmz0V3HcScp6Mrhgb3pEVaFhzkIp5bdkJmTsLXGaZNMJrMUGp7N1BhHTar4csvLv5m1X7QL/LC4kgZWNuhAi9YjQhsG6wjE/YMYMs7iUw1ZxhAWMGWEwQ3opeLLEDFAu1awVh9vOZDFY2Ia5hW8pv7biW/GEnptDSeQZpRXzXvN/vXatZf1Mm8z4jXeUJ9M5ZSKr2y21nWcCJ+jabN2RTGlg3AZhdE8mjgAi3h3fJIE343nQir28AfArrWS1osP8dTQLH1nxAVJaksW0MSIse4HXIJCGYK8hydrOYeXcIHg9yaQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 27 Feb 2026 23:08:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 282259 invoked by uid 111); 27 Feb 2026 23:08:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 27 Feb 2026 18:08:25 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 27 Feb 2026 18:08:22 -0500
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="1oivn5u7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pKUef+3w"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AE0077A00E7;
+	Fri, 27 Feb 2026 18:28:11 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 27 Feb 2026 18:28:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1772234891; x=1772321291; bh=H0gDnUjYzF
+	DRYBNKbYwIXWWsziXEQputeDi2CQENBG4=; b=1oivn5u7Ak1JuyI+ifbQdGZv+x
+	hMSDsKNF2thD2wnc3CXsQ2FifUcJ9G6lmIe4Ec/7hN659q5VCUHVqvp0YPONVNCy
+	kOfyXKboDsy53GKP16OyLM9LjXdTOPEIThjnJPr7zKNKx8yNywFqGf9SC/CLN5Xh
+	wXZul5s5uud25MYjH0ACt+39sdY+m4Cx3Pfj/LWDXeQhFqxiSYTDx+QXdH6xTfil
+	D0xVZzD7yuuuDQ10L0NdTNG/OwO6Iwc0Q88J8KbvjEnEvsVN4z4Iz3w20+uduWVH
+	g0dhHKpAr32wCNREYF7rq+Q8OxFqEVZoelsvBYrVgZ6F+Kb4/ADrAmJ76vzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1772234891; x=1772321291; bh=H0gDnUjYzFDRYBNKbYwIXWWsziXEQputeDi
+	2CQENBG4=; b=pKUef+3wCmH8QlWTXdMn0FIdAVhg9hkKaIz+NZYLhILY+oT81Lb
+	/mV7UWuEihGrTdxal2F3tsZr2iuumwsRV+4eMrZbwIrVQHrGFzz6WCoM32Fdg6X3
+	CejRRM98UVh5dLgleW2T60B80n4DPRrDc8aaVtpi1U3ZQUJOYptpF6MBE43enXmU
+	QyvMY3gltYIx0KNe2BWMiDx8KHGFWGpHMiDEe69+cEtPQYAmDi6ur1IOlkMNuIr2
+	Q8CtbzCiywCiX/yk3ZiS4LLvPCiwbfNzVSHh4wa0ObbilL1yExJfqqO1BLd+A0UU
+	QnPfLdhYln67qUjWpVOOzgh0s0vKD9UbXUg==
+X-ME-Sender: <xms:iyiiafYnSqlQXIgP82qovXSE0RJKr_szB5Qppv3mMpDxMNhQYmbjEw>
+    <xme:iyiiaVbIcEJ8mug7NNw5Dl8rQg-cXcnbE9GG70OYrFjMq0e2N2yfyMi5LUKtThtUy
+    Au4u4NSam88lkZiqLjQKsijDcuTGUAWH2vnL_EFQoiwn7PnGpJp5A>
+X-ME-Received: <xmr:iyiiaW-eNE8lBLKkigQhvMa_bEkhVqm_s9JgbOiXuol3DbKfdj300rtDJG6gO66-8gktj4b8A9BYdjaZSbuJKSEMAt7pA92eIw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvhedtfedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:iyiiaUg9Myluhf9d416OFYxbwjbOh66n9jCSH_FNMUWTEF7M4HPD4g>
+    <xmx:iyiiaWf9gC-sP_7g6JsrIq0JAh1USP0VP1sszwPKIApu9B2O3dc9vg>
+    <xmx:iyiiabq8IFnyxudT9HQAcHz1iWiQfxEwEr6Ns75U89kGPr-y1-ajVQ>
+    <xmx:iyiiabCK4isXVAwyUvt6Dts662jkdLUM9NbDNxcLisbzXDp8e5N3Rg>
+    <xmx:iyiiaRTfBSAEcXOdIo4rwwjqiya2ESu3bpRPQfWhVDCM52GzUuXQeClH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Feb 2026 18:28:11 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  git@vger.kernel.org
 Subject: Re: [PATCH 2/2] parseopt: check for duplicate long names and
  numerical options
-Message-ID: <20260227230822.GA2965111@coredump.intra.peff.net>
+In-Reply-To: <20260227230822.GA2965111@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 27 Feb 2026 18:08:22 -0500")
 References: <xmqq5x7jujqb.fsf@gitster.g>
- <7693799a-91a2-480a-ae3e-29f8eed5b55a@web.de>
- <20260227225055.GC2956443@coredump.intra.peff.net>
+	<7693799a-91a2-480a-ae3e-29f8eed5b55a@web.de>
+	<20260227225055.GC2956443@coredump.intra.peff.net>
+	<20260227230822.GA2965111@coredump.intra.peff.net>
+Date: Fri, 27 Feb 2026 15:28:09 -0800
+Message-ID: <xmqqpl5pojg6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260227225055.GC2956443@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Fri, Feb 27, 2026 at 05:50:56PM -0500, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Fri, Feb 27, 2026 at 08:27:02PM +0100, René Scharfe wrote:
-> 
-> > The check clearly has a cost, but I have a hard time measuring it.
-> > We already do lots of (kinda cheap) checks.  Turning them on only
-> > in DEVELOPER builds (and ideally demonstrating a speedup) left as
-> > an exercise for interested readers (with stronger benchmark-fu)..
-> 
-> I agree it is probably not introducing a measurable slowdown. If we were
-> to make it conditional, I'd suggest a run-time toggle (so we could turn
-> it on for all test scripts, but not regular use).
+> Doing this:
+>
+> diff --git a/parse-options.c b/parse-options.c
+> index 51b72eee11..f056a4471e 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -659,9 +659,8 @@ static void parse_options_check(const struct option *opts)
+>  				optbug(opts, "short name already used");
+>  		}
+>  		if (opts->long_name) {
+> -			if (strset_contains(&long_names, opts->long_name))
+> +			if (!strset_add(&long_names, opts->long_name))
+>  				optbug(opts, "long name already used");
+> -			strset_add(&long_names, opts->long_name);
+>  		}
+>  		if (opts->type == OPTION_NUMBER) {
+>  			if (saw_number_option)
+>
+> seems to shave off ~1% of my benchmark. Not that exciting, but hey, it's
+> one line shorter to boot.
 
-Just for fun, I was going to write a script that generated a test-tool
-parse-options list with 100k entries. But then I realized we already
-have something like that!
-
-If you do this:
-
-  (
-    echo usage
-    echo --
-    for i in $(seq 100000); do
-      echo "opt$i option $i"
-    done
-  ) >input
-
-then hyperfine reports (before and after your patches):
-
-  Benchmark 1: ./git.old rev-parse --parseopt -- --opt42 <input
-    Time (mean ± σ):      22.2 ms ±   0.4 ms    [User: 16.6 ms, System: 5.6 ms]
-    Range (min … max):    21.5 ms …  23.9 ms    127 runs
-  
-  Benchmark 2: ./git.new rev-parse --parseopt -- --opt42 <input
-    Time (mean ± σ):      32.5 ms ±   0.5 ms    [User: 23.8 ms, System: 8.6 ms]
-    Range (min … max):    31.7 ms …  34.8 ms    89 runs
-  
-  Summary
-    ./git.old rev-parse --parseopt -- --opt42 <input ran
-      1.46 ± 0.03 times faster than ./git.new rev-parse --parseopt -- --opt42 <input
-
-So it is measurable (even with the extra per-option costs to generate
-the option structs in the first place). Looks like on the order of 10ms
-for 100k options, or about 100ns per option. If you imagine that most
-option lists are smaller than 100, we're talking about probably the
-equivalent of 50-100 syscalls. If we are really looking to
-micro-optimize startup time, I suspect there's pretty low-hanging fruit
-to be found of that magnitude.
-
-> > +		if (opts->long_name) {
-> > +			if (strset_contains(&long_names, opts->long_name))
-> > +				optbug(opts, "long name already used");
-> > +			strset_add(&long_names, opts->long_name);
-> > +		}
-> 
-> ...if you want to micro-optimize, note that the return value of
-> strset_add() tells you whether the item was already in the set. That can
-> save one hash of the string.
-> 
-> Probably the allocation for each element is the dominating cost, though,
-> and it doesn't help with that.
-
-Doing this:
-
-diff --git a/parse-options.c b/parse-options.c
-index 51b72eee11..f056a4471e 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -659,9 +659,8 @@ static void parse_options_check(const struct option *opts)
- 				optbug(opts, "short name already used");
- 		}
- 		if (opts->long_name) {
--			if (strset_contains(&long_names, opts->long_name))
-+			if (!strset_add(&long_names, opts->long_name))
- 				optbug(opts, "long name already used");
--			strset_add(&long_names, opts->long_name);
- 		}
- 		if (opts->type == OPTION_NUMBER) {
- 			if (saw_number_option)
-
-seems to shave off ~1% of my benchmark. Not that exciting, but hey, it's
-one line shorter to boot.
-
--Peff
+Yeah, it is the right thing not to hash the same thing twice which
+is totally unnecessary.
