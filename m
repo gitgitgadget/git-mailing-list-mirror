@@ -1,69 +1,69 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5A4296BBF
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 23:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1795296BBF
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 23:43:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772235778; cv=none; b=AXPSIPDDDVFzeoePB5dZePn4Q88Qq6QbsAZKbNRA1Noq56XovFxGzxn0FOv+9E2oPEfqJMI6xPnZbeLQj+wTptVdMAotvprK8NZRKBCEJfqkF9S5Kp4uY7UH61/SW3dPRvha5+5j7eGZSvdR7IcBcBcFR/lP+MGlgwl0L1jjISs=
+	t=1772235783; cv=none; b=jdh8QBwjFvmztXI1Sj92fJ8HZt7HmZbt1t0ByT65ZZ6vcRB+BGNHAewRA8PccOglYUxGuWypn6dzFRh5cGqLZWG/LOfmF0aKrhTLOonGaRpQbB6GG/Gg5tgyDuLLhDQCtyyispmkYf5K0I/8KtglOlxtG2RodU4XHQEqBl1Rpto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772235778; c=relaxed/simple;
-	bh=uGMmbmSGti8tVPszMpjyLFkxHtLIR2oYeqFu8yTZh8E=;
+	s=arc-20240116; t=1772235783; c=relaxed/simple;
+	bh=mlzJEw6JEvMw7iJ2ttuiQyx/7g85Z0oxyXwRXGivzxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kiHGy/EwbIAS1xTiSybqx8KbiQDckJ5j5xo+eFkifIgpPxOR9q5pzFHChAC/J9fiI4IDEb3WegrpLVtBXq/uQE5IIieOEPbPu1DF4m8ES7Q/enZaVS6XohbDD6q4/kYKZZa9oc7+RZLHW1MwoHcGLffWYfQvh+MHopyCnhIMbEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XCIE4Ncu; arc=none smtp.client-ip=209.85.221.53
+	 MIME-Version; b=OB66jyRB/q9/LEdI/7qKilbkG4+ROq/sVUX1TYmCbdsVRtze9G+rLFjfrRMEArG7o9IdPq1i0Y1luvlbhYAQN26pXKHMh3hqwixQoGQwaA6kDNBhwIDzmyeFI2qG9JN+uuWUfetUkFD4WbA8kjY5+GoEEBHDM0Q3ZeTUp2yYNo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eLEOm42y; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XCIE4Ncu"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-4398913af88so2267935f8f.2
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 15:42:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eLEOm42y"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-436317c80f7so2364503f8f.1
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 15:43:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772235775; x=1772840575; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772235780; x=1772840580; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=u3Z/n+1CxnYwK1fBsgJFps56ZeQoKd6svcB3MrTBPho=;
-        b=XCIE4Ncurjgkxydf0eRn4M4+IsqMcuKDV2sXG5EiVKDpPcGQm7nrRonQyGFo8G7KUp
-         ukBRdRTUis7rfYH3Mw8YiEeZEkrQFTemSND0dxr7lvDCMkWEXaQ9+FhjEY32HnehOBQB
-         OPOWhbYLWaF4tCVjCg1MHaL+6JKutGM659DWelpVKnPUiNs79BivQuYB90jFLM6aEO/u
-         IU8MxTD8ACN+AJOu02sfsfeAXUmeHx9VS5AoTR3OqEafccLFZLv6XvNQMM0x+u7tQb5x
-         tDD5nSzMaLzTLke8UzN71CsDIZot2iIr0vNBZvmH44+yI+39osDNMpIsl8SSvAvGZMUc
-         jXUA==
+        bh=wI5EGYyWEW1cyUezTJTLtE683buKJEjDOwsfAOa4zMo=;
+        b=eLEOm42ylfBbasOdUt3daQOgHK23w0N113XAzLA0Pw0Q1h2wVAmHl2zgGK7+WCC1Lc
+         aTZNNn/+tNl2GeaC3Rvtf0pI0xAXwD8rOxU9U1fUFEKJSaq7bs0PXYbGqRkR3KDvzw4J
+         q1NEIEFT4DKYl+TO2WiJwrXIEOkpHkZlXU368FZ6mynWyyFmOEQbbXtgLYJh07RrRbzw
+         LVmFeW5WLc1PQGSe21CDP9JG/4J6L1t4iIoiV5ct7Lu+pPycL11NG3YlTy5jRFGE4VZv
+         MfRm6NGULiR3jC3A7AtqPXB2NV5MPT3DURsEnmBeUZjYHyPZv/mUgfdVAv3TuT61EqL7
+         XjTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772235775; x=1772840575;
+        d=1e100.net; s=20230601; t=1772235780; x=1772840580;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=u3Z/n+1CxnYwK1fBsgJFps56ZeQoKd6svcB3MrTBPho=;
-        b=X2jW1EeUzejvZdUk+GTpuPQh9UoXr5vLEN6pkiydzqMCOzOUAvGx6A11prW6L2dy7d
-         wIEgGNPXeEUw9hlUdQUEItbLUttpdP8ozwlKZJ7nDj2qwXLYlrvIQQ+Nn9pPJdtsMlZL
-         KIOOPDS5EfphmXu+3rI3Em37+u4+bpXkfNfluC1CSHLYvFYHCzlmVnzJQ0ml/BORtrt8
-         oxJOlAtfgKG1WPPvuabTDbmJmjR5OitelLJc1x69sjWtmCsAgOjpMTzNgdtigjfKB43q
-         VECV4SiNQRxyttBPy6zjiXESdIc34j92dNFN2Hgs1xZIMq0YAyy3OU4YWMt1EsNOenl6
-         khWQ==
-X-Gm-Message-State: AOJu0YxDeNf0IVtVnWU6yM5GmBiwXbZY6OGjEVSNFuAVBikmTDw6eOLn
-	JjdBW2QuBjlmhK95gpFK67+/rFsoZl7G+4G6Ur/k8QBPSNrnlhOQt+i79rTQ46Ju
-X-Gm-Gg: ATEYQzyKEmeRnNXMiifrHyxPe0cAbVDcyBAUVLLbyuSUPC3Ln30paWkutpduOz0p5+Z
-	qvvqHTIKJgRigezMoLAIvDaCcnU8tKQTKkzEUwLpeNfvKetkZsPcJL9kvHRCewzGn4RNPQt1yWH
-	HOKGDk0a311Y2FZcheWPyvKVbyccw/H4LFJSXtFJuf3i2gCCZBHOr10nlh07jf6DFZ50I5ogXuw
-	o4JRM+J8vBD1EXEA3U5nm6GLyXEXm3cCCB8nX5v+yAJBm9IpiXixbCirTg3HqoUSTz2wEKNaNbc
-	OUp8a5h6J6tdhKGcvKtiUlh0tPxisYzAJy6k/glX1HS+JVm2+2u2m70xWY4zqOGX1M/p3rP/j6A
-	ciyqgXApIq7spssJgAZfte8SPqcROaUxHy7NZn7HKbewGAinlTsEqCoBxSVlXbSiFAyWh7cHWRP
-	PZ+NowrqtthN5U5Ii2rx7O5Tfdx3UvP3D7pX8GMLZlRyRFFtioDbwF
-X-Received: by 2002:a5d:584f:0:b0:430:f985:a7b2 with SMTP id ffacd0b85a97d-4399de38167mr7740199f8f.51.1772235775023;
-        Fri, 27 Feb 2026 15:42:55 -0800 (PST)
+        bh=wI5EGYyWEW1cyUezTJTLtE683buKJEjDOwsfAOa4zMo=;
+        b=pETO57vz2kzzdu4HIfmr205sQ0XBjT2/+ry99xZOO5dEVie6Lqv42KjWzD865EAza2
+         8yS06aJ27YsdwKfM5iV2DBtAhf8vodjB9YijI7MGoRauz4sxya2cSmcW0HNRtXGbZ9i/
+         Ey6BfFoJlySHvZ7pDxfxe35p5gxd/h1dTnKoGdN7xIPySgRxRNN1D3HYbNDx2XfKC8Aw
+         Y++u2Ab+5JlJPpm4Dw23uz7E33BZK90W8/LVxb0GWm9Zz2/4IKSX7T89CXgRzIXlcqJ+
+         mg5z2MjCYywUuOYGgT77h0b5QM+u27HPnJD5IvAUQ8KWPw59RScojagZzqdYoK4k1Z4s
+         H/qA==
+X-Gm-Message-State: AOJu0Yxgvc9jM6iJyYkvJKQPZOygSilGKCtXNclYkJb77CiJPBWO3ZVm
+	961dn5hcrkYQr7fraY1YRfjFfBanEIJq7oZFSGcgRTRxTDkqT2vlgjGnYsfupIU7
+X-Gm-Gg: ATEYQzyNbldF+w43/vQrE5i5Y8KNap7uZIRDM8qe5h1V6V4UemR9paEwV8TbN1DivlP
+	EO6oO58517vNsvIvEibajc/UHJ5zwmmrCn5EoXl86CNJQbz384sThcE8rsXMXOhIX0T3RwjRHeT
+	/adoXStfoPo5/GnTCgO0No6C+a/XAyBBnZNRvVNuXIzmcLXSMtGPRonzXI33m0i1y05k2019pci
+	vXyNYeDMyFgsD8N3WY7EN1B075/+OiSOJsovymZUlEfYqpE1Yo1OqEggWBGUgM1CgS7FvKodzC8
+	Q6rXDl2e7KSMLJ2wL15W01b1+ntWbU9g+hlPeHCDkimqxUMPAOu1JMnkRP4LidcWIi/icfwBZbc
+	cbahBaRtHVF+Jd22EClbgeE5bQGOF3s5vkrHzjZmmj49iwsE+5HIHkEMcjp1UYwav7AJT5U+JPl
+	TeUV6vNLU5rbs7J1+08OqDXsomkgc1HIXrF0pNM3IWcwaDtzwO/M8zcFFM+Dj6Ues=
+X-Received: by 2002:a7b:ca50:0:b0:483:78e7:ce15 with SMTP id 5b1f17b1804b1-483c33e9899mr104018635e9.13.1772235779942;
+        Fri, 27 Feb 2026 15:42:59 -0800 (PST)
 Received: from localhost.localdomain ([105.113.107.46])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4399c76b40esm9710899f8f.36.2026.02.27.15.42.53
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4399c76b40esm9710899f8f.36.2026.02.27.15.42.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 15:42:54 -0800 (PST)
+        Fri, 27 Feb 2026 15:42:59 -0800 (PST)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Seyi Kufoiji <kuforiji98@gmail.com>
-Subject: [PATCH 2/5] builtin/rev-list: migrate missing_objects cleanup to oidmap_clear_with_free()
-Date: Sat, 28 Feb 2026 00:42:10 +0100
-Message-ID: <20260227234213.17633-3-kuforiji98@gmail.com>
+Subject: [PATCH 3/5] list-objects-filter: use oidmap_clear_with_free() for cleanup
+Date: Sat, 28 Feb 2026 00:42:11 +0100
+Message-ID: <20260227234213.17633-4-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260227234213.17633-1-kuforiji98@gmail.com>
 References: <20260227234213.17633-1-kuforiji98@gmail.com>
@@ -77,59 +77,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Seyi Kufoiji <kuforiji98@gmail.com>
 
-As part of the conversion away from oidmap_clear(), switch the
-missing_objects map to use oidmap_clear_with_free().
+Replace the use of oidmap_clear(&seen_at_depth, 1) in
+filter_trees_free() with oidmap_clear_with_free().
 
-missing_objects stores struct missing_objects_map_entry instances,
-which own an xstrdup()'d path string in addition to the container
-struct itself. Previously, rev-list manually freed entry->path
-before calling oidmap_clear(&missing_objects, true).
+The seen_at_depth map stores heap-allocated struct
+seen_map_entry objects. Previously, passing 1 relied on
+oidmap_clear() internally calling free() on each entry.
 
-Introduce a dedicated free callback and pass it to
-oidmap_clear_with_free(), consolidating entry teardown into a
-single place and making cleanup semantics explicit. This improves
-clarity and maintainability.
+Convert this to the explicit oidmap_clear_with_free() API
+and provide a typed free_seen_map_entry() helper to free
+each container entry.
+
+This makes the ownership and cleanup policy explicit and
+removes reliance on the legacy boolean free_entries
+parameter.
 
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- builtin/rev-list.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ list-objects-filter.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index ddea8aa251..567dc5e7f5 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -88,9 +88,17 @@ static int arg_print_omitted; /* print objects omitted by filter */
- 
- struct missing_objects_map_entry {
- 	struct oidmap_entry entry;
--	const char *path;
-+	char *path;
- 	unsigned type;
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index 78316e7f90..0038bfaac5 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -143,6 +143,13 @@ struct seen_map_entry {
+ 	size_t depth;
  };
-+
-+static void free_missing_objects_entry(void *e)
+ 
++static void free_seen_map_entry(void *e)
 +{
-+	struct missing_objects_map_entry *entry =
-+		container_of(e, struct missing_objects_map_entry, entry);
++	struct seen_map_entry *entry =
++		container_of(e, struct seen_map_entry, base);
 +	free(entry);
 +}
 +
- static struct oidmap missing_objects;
- enum missing_action {
- 	MA_ERROR = 0,    /* fail if any missing objects are encountered */
-@@ -935,10 +943,9 @@ int cmd_rev_list(int argc,
- 		while ((entry = oidmap_iter_next(&iter))) {
- 			print_missing_object(entry, arg_missing_action ==
- 							    MA_PRINT_INFO);
--			free((void *)entry->path);
- 		}
+ /* Returns 1 if the oid was in the omits set before it was invoked. */
+ static int filter_trees_update_omits(
+ 	struct object *obj,
+@@ -244,7 +251,7 @@ static void filter_trees_free(void *filter_data) {
+ 	struct filter_trees_depth_data *d = filter_data;
+ 	if (!d)
+ 		return;
+-	oidmap_clear(&d->seen_at_depth, 1);
++	oidmap_clear_with_free(&d->seen_at_depth, free_seen_map_entry);
+ 	free(d);
+ }
  
--		oidmap_clear(&missing_objects, true);
-+		oidmap_clear_with_free(&missing_objects, free_missing_objects_entry);
- 	}
- 
- 	stop_progress(&progress);
 -- 
 2.43.0
 
