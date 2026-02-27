@@ -1,115 +1,107 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D905D229B38
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 21:52:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675372D94B0
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 21:52:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772229123; cv=none; b=H7KDVeearCNG4jDMP6VcdS333IVEF00WgKNJXOQfb36/Bj6fkU8ZUEhbm5J4BdSpgEwWGHeJ4Zh7t4K04o4UIs76ZWxGJNXf+6pG/RWtG45knhdy7Zx4dQLdXDT5UCj0je3q4OZ8wt8ANmTAje7MY84KvDqQpvZ3R115OWYUWQc=
+	t=1772229151; cv=none; b=sDIeUdFj4Uv7rHrNNWstHqgZoHWCaCXrGLIa0Dk+dgk87wKNiPhjggtJWk2Cvy9NGVTGuQAnOe4FqTbcibyPAqZa8QqRDGyESeR+pwlDHiVmjpUJcZ607dEwy0edH7wxBsNa21QWzfdORgSaVkx7VZpwkEB8B0vBPZLHMROq1Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772229123; c=relaxed/simple;
-	bh=bFUGJB1GhfkiJlxnK79ZlXReDW/IkZLneqzuEe1+JhI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=apkSOuy34gNOokkkZ3LYuvdwTn5Jh9CmwMUwsALStV3UqwTMSFH/tyoPWbaOI+aUjIjXGG/WEzRf4XYAOnv1xyJZ0O5tMV5xroBYNNeDsfNXbO9PYuTuP6RmzVKb8Il6XjPBvONTjIs+DHmHBZLC9qfJw7TqIri5ICSU7q1Pr94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=UHJQ3gWZ; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1772229151; c=relaxed/simple;
+	bh=eoP8vzMi2b9pTTQtoTPHzKOuEeJE7Tv6EncgnR/Nenc=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=p9kQJCB0iTiSPXaK+lbLMNniAMveQWLpuFylNA6r8/9MMeVMlpDE0YjfOviJjXU40k/FEkzlJ11Lw7Z2AeRLxphQo07dKCfWXux+fH7ratHH+SheaG0XhKMtRDtKhdzZANPb42LAGeOFxHJfoEmRXHvjJuND5sC5ttUbv+gUEMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fGD63KhJ; arc=none smtp.client-ip=209.85.217.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="UHJQ3gWZ"
-Date: Fri, 27 Feb 2026 22:51:57 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1772229119;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Y04bbK+IjNuG/sISEqDnTGifoZxivwwmSzmtqDDM00U=;
-	b=UHJQ3gWZ3Avy6wQe7Vcrc8IX4nfNdsNbzWWhVKe0H0wgw1/2DXKG5MudpyGIXr86hSR9ux
-	dxecSxfekkuugpRvsNqL1mz5ZMV2/2+0klKTAd3SSgIXHN6GBYhHjxoAR/sEbbxosUhkZI
-	Sqd9vx82ncq3WXQ3T4P2Mol/oObYeZsnXTgJdxYfp9k/zwu1O1EvfBDq+NvwRYTLzxjaMA
-	9qzBPhtJEZw/i9KLJDdLCk79qbglbxqIPhgUba4r4XzScra8Xzn2p1VW2c2mT929XdAqvN
-	VuHTHfuALqQyvdYwtdr4ENIZt/u506NBHrIVhLOHBZ0PP/xflUdSpeiXcqffAQ==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Mirko Faina <mroik@delayed.space>
-Subject: Re: [PATCH v4 4/4] format-patch: add commitListFormat config
-Message-ID: <aaIQcXgOVLHXP_WM@exploit>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2299; i=mroik@delayed.space;
- h=from:subject:message-id; bh=bFUGJB1GhfkiJlxnK79ZlXReDW/IkZLneqzuEe1+JhI=;
- b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpohHqnNendM7lMkBoZ2Ks/QKXlmXeiiElahr9r
- cHTXUR/422JAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaaIR6gAKCRBIeX6hnBm+
- 0X4gEAC6lvpyktYnjofeUQsswAw4zXX7O+ggWRCDRf9JxGwDMDXSTVh1krh/nmfXCaHZdtuhGaR
- NBavVniK7kPL7uRhgTIWGKoe7V+800jKHNWC6Tlq6jT+TIUfpAQLoKBAWk+ryyUOnv9uowORwh9
- Nph0iIZdCajkerxqh+wxtI+1XgjAme+EdOEY3hmSgQ/3T7SrJIqnU+KmKhqTyenkB/Xu+EzpbsP
- TZ6ekAmER20u6wWuiHM1IgtOhIXDutiAD/VdB9YhYrfGvgiwI5+jHdaMWeAVe7ZtDHEjw31WbkL
- Ko98UnU/OXEQHccqwBVd/Jmvy7QZILZcM74U9rInbIR0ktwA1DtqhzfULfVzIocgOcq14+1agtS
- jWSVqyUArQm5AqQ9CYUKuZmEguoiERkq9VBsGFn12AmmaKV2LEH6K3xlpMiy4u2A8MKHutlSxui
- MXUc3KjKcr+fA1CrbR0rREw4bfWMkoT8TF6tKIDhXLHGgoDsmgre25SV//RjAahX6NUIlTpHhfD
- oALH5y87YtjmrOAAo+RkltOJJR4R3/VeFULmR+5xVm8Pz3z+lqMCY1K2wQq+BBNgKL3sl7BVelQ
- Z8LEYqdVRNApg0Mf8nWMy5n5QGb0eX0SfoMUu6tyU2sXNa0Ah0V9mBTwAlsT7Xd0ZJLBrQm0dyS
- lxWB3WbqsMVsDAw==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp;
- fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-References: <cover.1772156996.git.mroik@delayed.space>
- <cover.1772196510.git.mroik@delayed.space>
- <f9ee8e24001aa16e5df3dc0bbfccd1b381e37d85.1772196510.git.mroik@delayed.space>
- <xmqqecm6rs6s.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fGD63KhJ"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-5ff0f61abd7so729738137.1
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 13:52:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772229149; x=1772833949; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rYm4F5eGp/EZHcY+jcs+VWqP2RoDD4elqHVGLbSX28s=;
+        b=fGD63KhJzzj7iszS1rTxU7AxVWrFiHcsPIaSXtXWrB4W2n11ATMHdIK3yW7kvfMgVW
+         etwrHGy7K+HAl/6IJqe0DoGrB6NksEc6r7HPQvJ1zVWqJ9atrjKNztpvShB1BAIdoksw
+         aWVAnUg/uirrxsQ23VqnPKSBt6Doss8oOcOrD5zgxDTpyAve9KXVUWEO6PzvV9RT65vw
+         pozF3uyoWXn0WtjkRp61rShBIheLk0i3lU0BtE/l7iVxOXyktkuxKU17t452qfkgzg3O
+         SHpVgzFhmijZAf3r2BzxkMkzBLi89ZKk3lXajc7/md9npCET7oSXCBM2dDEI14jE3pOq
+         x2Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772229149; x=1772833949;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rYm4F5eGp/EZHcY+jcs+VWqP2RoDD4elqHVGLbSX28s=;
+        b=GC0uMh1ffGjQ0OjujDshqfNuAHu2sAuKSljeTtB8dVJEEFL2DAnDl3gpZ3SgoTgw6e
+         6rAdrNJaz1sw0QKg9G8Y+agSvoWzg0cMbwhkhU7qMg8oT4BweDGxl1UgtD/eqJj7PxZ2
+         /TqNedHSFNugfgrqV9fVv3PxCBuXwhz9fR/SNn5/UcFDRda8w/b8ARt5hcKYoVdcA01n
+         PCCBSatgJ/6BR/bDwRdh0B4dakxmxMidBw2IThdHnnzlhpvbiPacQNZLXhIiWrjHwHrz
+         tzCwZUAIMZcS5PCWVvpQ3d0CtBXWkFndl2wQ1oC4KYeYiFE4VicgX4kkaHLYfGm+qwdb
+         343Q==
+X-Gm-Message-State: AOJu0YxvbuNOxM7xcKmV4japBurVHn64/pla4qlWxH3S0Vc3hchoMeo4
+	WCobmJMRYPu7QRSE2FUVWuuyca6yH2sJf988Dr4xXMvpAV7L9Jk9k/Va
+X-Gm-Gg: ATEYQzyyQc0+/eQ4rocr4BFhHJigNuBJRXT6vIqTk7eqPeevVsQecUu+g4m6d2yYSiA
+	NY3tMq20/NTox6zrF8By9DTGBuKYRiIp2kaRA8ADZ3/oZoPnjVjNCDlx6FAkdij75AkU2kM6c0n
+	ccthuXkB57XLDI9cWAmG3uohUAOPFRcjj4Hvc2ft50RRRu4wTTn2ZUl0e3cjQYTZ3DSbX8rRBft
+	7ovECUFJ/OS0Tyc8CYWKxUFWGzoQLHt9LqbK3gtQkOrM8wHWmyCcu4L//zKrM6VairUI5I3zIAf
+	0sLfJ3MAaVE7KdI+V9Mfihpw29FEeF1O1D1+Dd4l8CE9aFS9lemw0MOS9tgOPsEtf+1eFm1o3jv
+	/0ibbaB1oR106W21BMCYk9nRH2M9/mzA9h2tD/rVXg6OmUsleb3LaeDd6DxMlj0WwCAeH7D+vj5
+	j9i00Sr2/n/Y+Gzhvr5e2QmS8p/zVDWWCJYZou/62lH9QB7c2E8W/BHw==
+X-Received: by 2002:a05:6102:3907:b0:5f5:25a4:c6a9 with SMTP id ada2fe7eead31-5ff324c0658mr1910443137.20.1772229149290;
+        Fri, 27 Feb 2026 13:52:29 -0800 (PST)
+Received: from smtpclient.apple ([189.62.150.156])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ff1ea1596asm6827955137.9.2026.02.27.13.52.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 27 Feb 2026 13:52:28 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqecm6rs6s.fsf@gitster.g>
-X-Spamd-Bar: --
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH v5 00/11] repo info: add category/path keys and
+ --path-format
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <pull.2208.v5.git.git.1772220640.gitgitgadget@gmail.com>
+Date: Fri, 27 Feb 2026 18:52:14 -0300
+Cc: git@vger.kernel.org,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ eslam reda <eslam.reda.div@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>,
+ Justin Tobler <jltobler@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <31BA8EEA-9C2C-4485-9066-B342D847807B@gmail.com>
+References: <pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
+ <pull.2208.v5.git.git.1772220640.gitgitgadget@gmail.com>
+To: eslam reda via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: Apple Mail (2.3864.400.21)
 
-On Fri, Feb 27, 2026 at 09:51:07AM -0800, Junio C Hamano wrote:
-> Some sort of DWIM (e.g., it is not "shortlog", so it must be "log:"
-> as there is nothing else supported) can be beneficial to help make
-> it less cumbersome for users to type for command line options, just
-> like we did for "git log --pretty=X" where we take a string with '%'
-> in it as a cue to default to "--pretty=tformat:".  But as "set and
-> forget" facility, there is no strong need to prefer "%s (%an)" over
-> "log:%s (%an)" on the configuration variable side (other than being
-> consistent to the command line option parsing).  We would probably
-> want to give an escape hatch in the design to avoid painting
-> ourselves into a corner we cannot get out of (imagine what happens
-> when later others want to use something completely different from
-> the log-pretty machinery, making "not a shortlog, must be log:"
-> assumption invalid).
-> 
-> Something like
-> 
->   "log:" is prefixed to the string value, UNLESS the value matches
->   "^[-a-z0-9]*$" or the value matches "^[-a-z0-9]*:".
-> 
-> would probably be extensible enough.  To avoid exposing regexp to
-> the users, we can say "a string that is not an alphanumeric token,
-> nor an alphanumeric token followed by a colon, is prefixed with
-> 'log:'", or something.
-> 
-> WIth such rules in place, a new fixed format other than "shortlog"
-> can be introduced (e.g., "middlelog") without getting munged into
-> nonsense "log:middlelog", and a new parameterized format other than
-> "log:" can be introduced (e.g., "pretty:%(subject) %(author)")
-> without turning into a nonsense "log:pretty:%(subject) %(author)".
-> 
-> Or we do not have to worry about these if we just use what the user
-> gives us without any DWIM.  I just do not think we want to see the
-> "not a shortlog?  must be log" burned into the syntax that will have
-> to stay with us forever.
 
-Since we already require the prefix in the command line might as well
-just make it the same for the configuration file. That way, if someone
-will ever introduce a new preset format other than shortlog we just
-check for "log:" first and then cascade into checking the rest of the
-presets.
+> * No git repo structure feature changes.
 
-Please confirm that you like this and I'll start making changes to the
-patch.
+Patch 4/11 changes git repo structure
 
-Thank you
+> * No t1901 structure test changes.
+
+Patch 8/11 changes t1901
+
+> * No structure metrics/docs additions.
+
+Patch 9/11 changes git-repo.adoc
+
+> Commit structure
+> ================
+> 
+> * repo: teach info context and category keys
+> * repo: add path keys to repo info
+> * repo: add --path-format for info path output
+> * t1900: cover repo info path keys and path-format
+> * docs: describe repo info path keys
+
+Only 5 commits are described here, while you sent 11 patches in this series.
