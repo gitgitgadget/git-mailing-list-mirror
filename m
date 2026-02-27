@@ -1,117 +1,78 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84EF3F23A6
-	for <git@vger.kernel.org>; Fri, 27 Feb 2026 22:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9DB3B52EA
+	for <git@vger.kernel.org>; Fri, 27 Feb 2026 22:50:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772232532; cv=none; b=f/xrgLFpU9Fd/yNb0VHFpUZODxh72m2qTWqhNrr2VEiyGmNdfA5fy9k63BkJJIpwBOfO6qy81Xn3a40Vu23qZF42v4OeIB5rpLuQ6TllpwQ9afyJEY0ro1U3eyZCRyV5o6kxO6UCBMaKxkP50uUxImsDqjJEjKdVfXXF/jejPzE=
+	t=1772232659; cv=none; b=ikt8ekydIWI/cSYEMSi+GYISM2dl3VYvRznGnI5DaQsyvpx5TBL1IRDHmGFQ2fHnsRm7bOpmtxoM5VQANw90stfktFTPbimQeTxEjtI1ecFiTFw6ZjH715LanzyJvBuky6C+vFGQlC0Uif0T5H7TKXkDDjot+U5H3pvaRFmquXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772232532; c=relaxed/simple;
-	bh=2M3dO0/NtCZTdhApKgodTTx28vR1mJN3C1qy8YDk/90=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnjkxaLvwj7b8lcaJ3kIQJYGWuKXqXpmHOjH0q/Iqj/xlHintmvbXdagk5dm87e2HmgswAvyJOD/Xy6UvzKFAapr+LmpRcGE0hTjdZQXfHtaBQ2zykbkZFoxai99m92MH64bNCgc6Kmq5c8PIl7RXCHkR/WlOwdMckZxCSbFwwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=KGHMGAyE; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1772232659; c=relaxed/simple;
+	bh=j2wWeoHMasl9SpgnBzD3+05GJnumUdZa0WQdgnmgYRY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IpYCHdLkhIfMYbAhPrCEr29zTrBoMXiwuSLO78ocfAMuVIObedndBQxiaq38w5sNU3JEabj5ZtMr5ErFROvq3qZNOEkgy0S8yyTjubRZ+TaoAD46c0tMz0vLexB3B771V8N4iYH6jQaFGSB/L8qQvc6azFmm6M/wYQ/yKiKf+WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=daR6riPA; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="KGHMGAyE"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1772232528;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WgFApfdQSXDzTKkS4UQTo7DYlEB3wexFOWgvAwqt+XM=;
-	b=KGHMGAyEQ+3Fh64RME6K0F7pjeMNhft2IsSa1e2UAzRAfde5XWHLEJgsl6orhWjsYEss8f
-	kApWQIdV93sEkm5FKIrXyzQ9npdM917m3odEX4rlFx/ieUH9jjPCjMgMtI3YplnW88a4S9
-	tSJ0ss364AbX38jc4y6W6NPYFLI18WOzxWGnlRE7X0BPd7p+Ec+c6IrS5KIcp3dCI3eXpP
-	Hnen7BnGWwjtReqNlPr6fqpgIYQyqb2pLtLtYyHIBaKhejsqpkrNISlu86pwyAOHbm8hUG
-	XZHhkMWdoe4TGgTHriMU34xt6U2xLeaWsbwuPgCtZ/X4b5ZCEmAo4tnPgU/5ig==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH v5 5/5] docs: add usage for the cover-letter fmt feature
-Date: Fri, 27 Feb 2026 23:48:15 +0100
-Message-ID: <a2160693709ff6867ea5db9a944d13091f03bc5d.1772232373.git.mroik@delayed.space>
-In-Reply-To: <cover.1772232373.git.mroik@delayed.space>
-References: <cover.1772196510.git.mroik@delayed.space> <cover.1772232373.git.mroik@delayed.space>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="daR6riPA"
+Received: (qmail 83515 invoked by uid 109); 27 Feb 2026 22:50:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=j2wWeoHMasl9SpgnBzD3+05GJnumUdZa0WQdgnmgYRY=; b=daR6riPASOepnfXdHUAGBMPFsUPtyImv1HWyp+PvQqZimNTJ2iJCD+wwR/g1AgLhIFqzw4m+MITqwnUgU9sEnCdjPyRb1MU79+Rmu/7+RfsY/i5lMOjPwmMR35ZmSQ7VYagG+hbIzGU308kDw3jeG1tYyb+qMk+pEjMTCAnM1xEU9CwwegdFAlOoA4MyZSm0WLNSpiZrR5xxggt8qVvRi2HKxQSYam+KaHBkcNgrR1XCozz2HvFhDDdaoxnUewnPPxRG5fl9alyUt9xhQKVrz5T699ecYhvrhE20jpjXs8/+Nl1VW5bVhAKs8iEvRQFTczrBuWJCPphtPgvD7fdBlw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 27 Feb 2026 22:50:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 282073 invoked by uid 111); 27 Feb 2026 22:50:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 27 Feb 2026 17:50:58 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 27 Feb 2026 17:50:55 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] parseopt: check for duplicate long names and
+ numerical options
+Message-ID: <20260227225055.GC2956443@coredump.intra.peff.net>
+References: <xmqq5x7jujqb.fsf@gitster.g>
+ <7693799a-91a2-480a-ae3e-29f8eed5b55a@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: -----
+In-Reply-To: <7693799a-91a2-480a-ae3e-29f8eed5b55a@web.de>
 
-Document the new "--cover-letter-format" feature in format-patch and its
-related config variable "format.commitListFormat".
+On Fri, Feb 27, 2026 at 08:27:02PM +0100, René Scharfe wrote:
 
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
- Documentation/config/format.adoc    |  7 +++++++
- Documentation/git-format-patch.adoc | 11 +++++++++++
- 2 files changed, 18 insertions(+)
+> The check clearly has a cost, but I have a hard time measuring it.
+> We already do lots of (kinda cheap) checks.  Turning them on only
+> in DEVELOPER builds (and ideally demonstrating a speedup) left as
+> an exercise for interested readers (with stronger benchmark-fu)..
 
-diff --git a/Documentation/config/format.adoc b/Documentation/config/format.adoc
-index ab0710e86a..771e84af98 100644
---- a/Documentation/config/format.adoc
-+++ b/Documentation/config/format.adoc
-@@ -101,6 +101,13 @@ format.coverLetter::
- 	generate a cover-letter only when there's more than one patch.
- 	Default is false.
- 
-+format.commitListFormat::
-+	A format string that specifies how to generate the commit list
-+	of a cover-letter when format-patch is invoked. This is the
-+	config coupled with `--cover-letter-format` in the format-patch
-+	command and they both accept the same values.
-+	Default is shortlog.
-+
- format.outputDirectory::
- 	Set a custom directory to store the resulting files instead of the
- 	current working directory. All directory components will be created.
-diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-index 9a7807ca71..bdcb5f989c 100644
---- a/Documentation/git-format-patch.adoc
-+++ b/Documentation/git-format-patch.adoc
-@@ -24,6 +24,7 @@ SYNOPSIS
- 		   [(--reroll-count|-v) <n>]
- 		   [--to=<email>] [--cc=<email>]
- 		   [--[no-]cover-letter] [--quiet]
-+		   [--cover-letter-format=<format-spec>]
- 		   [--[no-]encode-email-headers]
- 		   [--no-notes | --notes[=<ref>]]
- 		   [--interdiff=<previous>]
-@@ -321,6 +322,15 @@ feeding the result to `git send-email`.
- 	containing the branch description, shortlog and the overall diffstat.  You can
- 	fill in a description in the file before sending it out.
- 
-+--cover-letter-format=<format-spec>::
-+	Specify the format in which to generate the commit list of the
-+	patch series. This option is available if the user wants to use
-+	an alternative to the default shortlog format. The accepted
-+	values for format-spec are "shortlog" or a format string
-+	prefixed with `log:`.  
-+	e.g. `log: %s (%an)`  
-+	This option is relevant only if a cover letter is generated.
-+
- --encode-email-headers::
- --no-encode-email-headers::
- 	Encode email headers that have non-ASCII characters with
-@@ -452,6 +462,7 @@ with configuration variables.
- 	signOff = true
- 	outputDirectory = <directory>
- 	coverLetter = auto
-+	commitListFormat = shortlog
- 	coverFromDescription = auto
- ------------
- 
--- 
-2.53.0.5.ga216069370
+I agree it is probably not introducing a measurable slowdown. If we were
+to make it conditional, I'd suggest a run-time toggle (so we could turn
+it on for all test scripts, but not regular use).
 
+That said...
+
+> @@ -655,6 +658,16 @@ static void parse_options_check(const struct option *opts)
+>  			else if (short_opts[opts->short_name]++)
+>  				optbug(opts, "short name already used");
+>  		}
+> +		if (opts->long_name) {
+> +			if (strset_contains(&long_names, opts->long_name))
+> +				optbug(opts, "long name already used");
+> +			strset_add(&long_names, opts->long_name);
+> +		}
+
+...if you want to micro-optimize, note that the return value of
+strset_add() tells you whether the item was already in the set. That can
+save one hash of the string.
+
+Probably the allocation for each element is the dominating cost, though,
+and it doesn't help with that.
+
+-Peff
