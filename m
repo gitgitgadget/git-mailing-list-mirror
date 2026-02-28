@@ -1,105 +1,154 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CE91F0991
-	for <git@vger.kernel.org>; Sat, 28 Feb 2026 14:03:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84E791F0991
+	for <git@vger.kernel.org>; Sat, 28 Feb 2026 14:09:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772287391; cv=none; b=Nntel2YD0PdbHzH50kYaC6BsGm0X2JrUWHqufPdBngYvdZDzB3nxEOJk9Q+I5KyBlgTa6ywKbe2v0RNVrjz/DpJdky3mEctJEn0kVc+M5Xw4K4evujN/gycHKmAg/qds6azy3kwHMuce7xpyrcUheZ8L8CtoXDVn3OwVbNtR4/0=
+	t=1772287748; cv=none; b=RIcqx77o1NYN/ncaAa8fWRUJRtNruqMdTKpTgqv0gdtIEAqCyY+btCR3BjUuVnmbs36zNcZkmPju/wqxcCRXrN+wAXehAAEoQzemXsljIoJ0ztNRRtyGJcZ0dJWsF5eP5RhArUMnEZNs66DoL0PXC6c4zu7vekBKiVpOatLfR6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772287391; c=relaxed/simple;
-	bh=hQxziG7vmUW6ufRbbzdoD5Qt1sqKluvEEKS7IEbYoU8=;
+	s=arc-20240116; t=1772287748; c=relaxed/simple;
+	bh=+hpwWdwce7fBfuqkePQt9Kbu+bEhuCEEsJIjbxp/+R8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BsMuF6XgpZe2LdQETzcA6EIhG0sRilnRQP5dznVLGPF+w98dDNB1tzZIVCFTaOADg2B9KTEhY1WNDi48wGbb6+wj8G5LU+jKWkXCYjWdu0wQu71bUbcXRJ0l2MRcJwlGFqvBOh2lWjwPb1HShe/Mcp2RKj36pV/QgLkBMxk0fac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EqF1gNWM; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=EnQgKU/9h8w0flkdp6k9jNY0Ihg53yH9vvLH+IpUWofvaVE5OTZ7DlnC77vIfBV/ApXFqsNGVHMZ0/78NSw+oQtuJ8gh/dvSCWnU2rv/56NXFjcpVHIpyef5I8KFcCauJNfCsnM0SBcgpSBcSnsm5xC9pbw0W6ytBgSSx9PCwhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=hwk3RuHz; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EqF1gNWM"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-824b5f015bcso3524125b3a.1
-        for <git@vger.kernel.org>; Sat, 28 Feb 2026 06:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772287390; x=1772892190; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jI0eaS0bDhTN94PPF5Omhn5N/bdHkIi9EcoX10SWJZ4=;
-        b=EqF1gNWMZs2CAM7gODmkL+KBByl4ENEnUWjf4e5N8ervOGtmIvvxuDCAkSMlm1nRdg
-         F6084vVhtA24NdGxGwv11DAM8EJ5/801IDbJEIefHZpBCZYciXLQ0XoKDHVevPXM1C41
-         eMLbCjMjnrtRYuG9833pNZZaADVDFlIfAepJHfM7mOqjNo2r9kExKyZLheQNzm7S5cLj
-         0txX0K12d8qyIIh+etv1tqlkxBVv44JuqlH5ypOikQXrUEPVXajs1EKFObXHUhQ5ReK4
-         WQbIF3z7ZZdCvptjVaVRppfqBO0af80t5BOo4lpWPh1MH0Z4KfEGSjfF63J+AwwBzu4m
-         cRBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772287390; x=1772892190;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=jI0eaS0bDhTN94PPF5Omhn5N/bdHkIi9EcoX10SWJZ4=;
-        b=g6MlLlJ4jahJkrVuiE754c4fDtaFVIdB26GHgN45l0xHoWyZ+IN3HOY6OJqkETJg4S
-         OWtJFu9q4MFLzf0u/4I4GygV1sR/lBuWw9cZpn9vFDw+qPlTZhWGutVTfawqQaMHekIL
-         /ztMVNwekeWQdYGIEBodfgc+N7J9jzPj5KT0i6ArL3e9NOjCl88adFOuqk+2AbW9v6ge
-         xYNIeCB/d49MCZ1bIRukHB7Vmct5M2Tyyl/WwetUKdzFomOBP+PsZmuWpWrkI6KU+yB3
-         tDSduRH97pbvz/XiUcVKnyhoRfUIZ+LiwpVP38UoHUVYHscOjP2EooWFIuwai/7+7U76
-         HhlA==
-X-Gm-Message-State: AOJu0YwBmdKyD0t3ypCakZwbqylGWZb/6J2c5rZLVfelQqmjqZ0Zelvm
-	K6PH7J568g4iZK04KSqmPpi5ZOBlTOGOK961LFNIHWRQe0wB9LB3NkpzXO6g8g==
-X-Gm-Gg: ATEYQzxUej9ZgbRPiP4QsMLbBZdnezCsOS50aPVSNQoUyfzQZEHcZRpNaUfEFEuzjWH
-	GL/VofDoqWVevuK2lmXqtVc36S5kex6iiUdiDHW368e8ZaikW5Okrg9eah77NhAV5eAE3heUtcx
-	Ful7ks9WpvwMoVmeq4yjd21kwSzMH21DJtwgKUu7SvmHrbPOovYC59ocCABXyqjaV/Hq5oV1dAA
-	RM9UfurdQ4dBzAh2irYNh1u3VLcu5ClmkIJqFzIJRHdlqKEd055l7O2mabXW2spOKUF/UVH469j
-	QHD6Yyf3FG6qZZnGlNc3m71itFCbHW0wEGqBQUgGBwhVcgjl5+tki+Tt498T9kLPNKwc4E4nrIP
-	OUbgmp7xn6T2qO6MI5hzxWiq0ktjxOdR6oXbUjWBxbjBP6q4NAOyd4QDFj+u6XH5zVP5fsDELVF
-	zu1Ak1FzWugvyq4nwBSaemgEmdfIXT6Lw=
-X-Received: by 2002:a05:6a00:a14:b0:827:3ed6:9122 with SMTP id d2e1a72fcca58-8274da77da5mr6527351b3a.59.1772287389530;
-        Sat, 28 Feb 2026 06:03:09 -0800 (PST)
-Received: from dorna-OEM.. ([103.152.144.17])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82739d4c9b5sm8309971b3a.9.2026.02.28.06.03.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Feb 2026 06:03:09 -0800 (PST)
-From: drona <dronarajgyawali@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	Dorna Raj Gyawali <dronarajgyawali@gmail.com>
-Subject: [PATCH v2] v2: revert per-repo move + add clarifying comment
-Date: Sat, 28 Feb 2026 19:47:58 +0545
-Message-ID: <20260228140259.21139-1-dronarajgyawali@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260227125654.249676-1-dronarajgyawali@gmail.com>
-References: <20260227125654.249676-1-dronarajgyawali@gmail.com>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="hwk3RuHz"
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id B91874CF9C
+	for <git@vger.kernel.org>; Sat, 28 Feb 2026 15:08:54 +0100 (CET)
+Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:3d51:7a10:3981:3744])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 8698FB0053D;
+	Sat, 28 Feb 2026 15:08:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1772287727;
+	bh=+hpwWdwce7fBfuqkePQt9Kbu+bEhuCEEsJIjbxp/+R8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=hwk3RuHzWwWaqWCbjXKNVopsN8d8QT9Ggqa33PShwu27DSFD3SVET26eCTGTnXatw
+	 9iUSqabivGoxO80qiaTtKZQLNKYXoYqtXozU38+9phV0yBCeltumKFMUMFpIdbLgeY
+	 1vsW8TabxtUnlwtSRs9pCc5QO0+VcS4CHRe6QM/6zubDewfoah5tD3jdop5tJCOZCf
+	 Dj3+IgRbJawZ88B/uJNybTPTK9tHS4BJGDExKSIgowM0bBNbcsDOSR1mg64JHBKCpZ
+	 nj7cNuG6dQywdiFwQ/sdUZLDM9fIIkPjr5uDqN+ozJpqLglLdD8Ob/3Z+saCK5mbI+
+	 1BbBpvExpGn3w==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, kristofferhaugsbakk@fastmail.com
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+ kristofferhaugsbakk@fastmail.com, gitster@pobox.com, peff@peff.net
+Subject:
+ Re: [PATCH v2 2/2] doc: diff-options.adoc: show format.noprefix for
+ format-patch
+Date: Sat, 28 Feb 2026 15:08:41 +0100
+Message-ID: <5970320.DvuYhMxLoT@piment-oiseau>
+In-Reply-To: <better_for_translators.424@msgid.xyz>
+References:
+ <ff86f877-4b75-403d-a5a4-10ab528a9691@free.fr>
+ <better_for_translators.424@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-From: Dorna Raj Gyawali <dronarajgyawali@gmail.com>
+On Saturday, 28 February 2026 13:20:33 CET kristofferhaugsbakk@fastmail.com=
+=20
+wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>=20
+> On Fri, Feb 27, 2026, at 10:57, Jean-No=C3=ABl Avila wrote:
+> > Le 24/02/2026 =C3=A0 00:30, kristofferhaugsbakk@fastmail.com a =C3=A9cr=
+it :
+> >> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> >>
+> >>[snip]
+> >>
+> >>  `--default-prefix`::
+> >>  	Use the default source and destination prefixes ("a/" and "b/").
+> >>=20
+> >> -	This overrides configuration variables such as `diff.noprefix`,
+> >> +	This overrides configuration variables such as
+> >> +ifndef::git-format-patch[`diff.noprefix`,]
+> >> +ifdef::git-format-patch[`format.noprefix`,]
+> >>=20
+> >>  	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
+> >>  	(see linkgit:git-config[1]).
+> >=20
+> > Hello,
+> >=20
+> > This kind of sentence assembly does not fit well with translations. Each
+> > hunk of the sentence is processed separately and it is a difficulty for
+> > translators as they need to understand the surrounding context of a
+> > segment when translating it.
+> >=20
+> > It is safer to just write the whole paragraph, or at least a sentence in
+> > the ifdef/ifndef sections.
+>=20
+> Thanks for bringing this up. I have never taken doc translations into
+> consideration.
+>=20
+> Would the following be the correct approach?
+>=20
+> -- 8< --
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> Subject: [PATCH] doc: diff-options.adoc: make *.noprefix split translatab=
+le
+>=20
+> We cannot split single words like what we did in the previous
+> commit. That is because the doc translations are processed in
+> bigger chunks.
+>=20
+> Instead write the two paragraphs with the only variations being this
+> configuration variable.
+>=20
+> It=E2=80=99s not easy to spot the difference here. So let=E2=80=99s leave=
+ a comment
+> for translators.
+>=20
+> Reported-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+>  Documentation/diff-options.adoc | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/Documentation/diff-options.adoc b/Documentation/diff-
+options.adoc
+> index 8f632d5fe1a..e4d02cc93a9 100644
+> --- a/Documentation/diff-options.adoc
+> +++ b/Documentation/diff-options.adoc
+> @@ -859,12 +859,19 @@ endif::git-format-patch[]
+>  	Do not show any source or destination prefix.
+>=20
+>  `--default-prefix`::
+> +// TRANSLATORS: format.noprefix / diff.noprefix
+> +ifdef::git-format-patch[]
+>  	Use the default source and destination prefixes ("a/" and "b/").
+> -	This overrides configuration variables such as
+> -ifndef::git-format-patch[`diff.noprefix`,]
+> -ifdef::git-format-patch[`format.noprefix`,]
+> +	This overrides configuration variables such as `format.noprefix`,
+>  	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
+>  	(see linkgit:git-config[1]).
+> +endif::git-format-patch[]
+> +ifndef::git-format-patch[]
+> +	Use the default source and destination prefixes ("a/" and "b/").
+> +	This overrides configuration variables such as `diff.noprefix`,
+> +	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
+> +	(see linkgit:git-config[1]).
+> +ifndef::git-format-patch[]
 
-Following Junio's feedback: this flag is a user/process preference,
-not repository-specific. Reverted the repo_settings changes.
+I think this line should read : endif::git-format-patch[]
+I also don't quite understand the addition of the // TRANSLATORS: part. Thi=
+s=20
+is not needed as each paragraph will be translated as a standalone segment.
 
-Added a small comment for future contributors.
+Otherwise, this format of conditional text is fit for translation.
 
-Signed-off-by: Dorna Raj Gyawali <dronarajgyawali@gmail.com>
----
- environment.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks
 
-diff --git a/environment.c b/environment.c
-index 0026eb2274..09c34d1776 100644
---- a/environment.c
-+++ b/environment.c
-@@ -49,7 +49,7 @@ int minimum_abbrev = 4, default_abbrev = -1;
- int ignore_case;
- int assume_unchanged;
- int is_bare_repository_cfg = -1; /* unspecified */
--int warn_on_object_refname_ambiguity = 1;
-+int warn_on_object_refname_ambiguity = 1; /* process-wide user preference */
- char *git_commit_encoding;
- char *git_log_output_encoding;
- char *apply_default_whitespace;
--- 
-2.43.0
+
+
+
 
