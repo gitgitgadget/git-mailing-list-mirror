@@ -1,73 +1,73 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D422BFC7B
-	for <git@vger.kernel.org>; Sat, 28 Feb 2026 08:38:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4718C13AA2F
+	for <git@vger.kernel.org>; Sat, 28 Feb 2026 08:42:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772267898; cv=none; b=IQCNm58C1io2mMnRf7ffTJ31yVCycPzlmUSGGxTeBxJ/j8MxrmX1Bmgoy71IkcoApQVxYp5aKo8Zv8SCBTNTqkrNn7J9Pjq7uKJBMPuDdeNXcLeH1p5a+wtI0rf5OQ2QUit1isV4lbebpEpYKD2Yl4rn4zJRBcuZP0Tg9TJnT7k=
+	t=1772268149; cv=none; b=styCjgl+cjAwDJUFMRefMheSEiPDxbe5OF8el9Nvv6u6sqCEAIOUXNA8lcAghxLHhmEeSr3YWpRN29XmjOrA18gR34o4jwVfRb9RvPhNtui1bfOcLIDySlLCKxCROvoPeN5Zd309PRxN9EN35p3WO2Twn4xzIUt6ULzzrHnzI6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772267898; c=relaxed/simple;
-	bh=jvEpAMHj2ofjrnXlp83BbqHNyzY6Oo73iDkEN15KJN8=;
+	s=arc-20240116; t=1772268149; c=relaxed/simple;
+	bh=dj5J1MLHTuMjND5fsitNqltegLY0F5aSNW1Y325MSx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qy4fMrscG6nTzqZMAuqC6gSrQHAcuPjuy9m+kdB1v75brd5BGUqa7KQMnFx+P+0qOIQCFKZZEddZ7dtnnnm+Z+GblyExWQHmmU7SrLh1/PvuVlZgGiIMX+YUdzCiKKXqSVP1lYpSbPHbwlylI5UqwGIVv3OAPusVZjC1xsgAjrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OqEDYiPB; arc=none smtp.client-ip=209.85.214.177
+	 MIME-Version; b=VolHwnDZpTnoKe1wGj/bvA4Qjqs/T0SicsMl6rRh7rvqWMebj7GDgGkJ9Qj4f15/tehL/Nvw3i0RxHAJmdtV6AeD7JWRscwTxOjxAIeP1W3JjuTDUDwZVKWildMrFcZCb7mAxHg269S6QVphueCwZ0YQeT4tGbwIxleGEipIFrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CH/iJN31; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OqEDYiPB"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2aaecf9c325so18998995ad.1
-        for <git@vger.kernel.org>; Sat, 28 Feb 2026 00:38:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CH/iJN31"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2ad617d5b80so18708025ad.1
+        for <git@vger.kernel.org>; Sat, 28 Feb 2026 00:42:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772267896; x=1772872696; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772268147; x=1772872947; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NMIdpTiQMC8bngwHjcl2W3JCfMSdHyzT1Qa2tCJDEkM=;
-        b=OqEDYiPBZjGf1y5OIJ4FIXe1LJQ3VeaS4ypO0ZUysVcmsNWMDD+I39VpZK9EMBPnlL
-         qaFk8Dfm8E7UApmVvXeirS/NE/hKSap7e1xY4Jn+CHfh7Ko2YJdD9oPSTCbYPMKfyPEk
-         7MY7tEfKTqV+JSst5qlab+KOw7Taw6EgATyksazUUL17aRNPd94iQnP2xaiF42XbLDy2
-         tA2l9OAYJTitO5Lf5Neg0m6P8FNNUiorpCMD8oYZvLyPhlQumxxiAXjCcpxdlrDhuVUC
-         WIToM9RL0CgEoONoGAwpd2nY82b0Oa20fAEr1AwK9NaZ1YzayAzH/22lUiApkZN/C3iL
-         Ninw==
+        bh=S+TafjU+/+LopRQNo7fMP2oJni9MktuBQToK7T0+6xM=;
+        b=CH/iJN31qIPgAwViZ80EKxGUL0jwv2Yge7LwUPFZAlk2ZlawYxeIPoLRIq6UP+c9b9
+         Qnvsub83M/EYuRZQQs6aDCF7LsDfOL+OI6GCgECBQk8TXvtFo2kRwWAE41KZHrSiHh6S
+         OpD3H/LY3gvxWQCEgL9BzWZpT5lNRTkhFMQqIpw3xolDLexuXgnMr6MMc5P6s+/cJ6NE
+         YLtLSZA5kZmw7pArTS9tHrc3QRJVI4tIcvN7XKUcTiKfBx019o8ekF8LHghrcq4+y6rQ
+         HGuW62m9vkoBViujv4LGNpFg9Dt+KPXupVCChPoL2SH7WFmTEkOsaHnb9y5il8LT3DEK
+         mAAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772267896; x=1772872696;
+        d=1e100.net; s=20230601; t=1772268147; x=1772872947;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=NMIdpTiQMC8bngwHjcl2W3JCfMSdHyzT1Qa2tCJDEkM=;
-        b=TNMGzH3MsJuTuiFLR5uPsHtZzSy+LrLIUo9+tiFmqFEPisH/U5cktxRcUIt/2nypjL
-         YcJSs5YADR3dPyXSSJYqcDQcU0MJJ7I6pNqnLd0AHjHm0ycsr5fjWfToKAQO/N+4Q+cw
-         bdaICyLEXA41fDzb3VG0M7tp055GQSZbhDvWmnRczLoz1cEb2VQKMg2OA4Haa+4jJthH
-         ACTmqDBM0vWU1XG+8kzhbUilY1Wuv1lLZaGibP7w4eEMAevhwE2E+gPkSIJ6YtYmKWXl
-         UmypWQRTw2c2T1h/Bk8g/oZdTTek5ogu+mSVAmTkiff+2hN5ojU+ETo6XhAxl11Ncpej
-         qZoA==
-X-Gm-Message-State: AOJu0YxNJA5b4+C6swOKJxVSFxx0IDZipP8WtFjxgReWz47kSxLce3VP
-	3wFAJIx0fh3rs+1zwh+KcrRWI+HgA6WsgM0Ayjihbw5WLz9lIqCTYd4V8O7k/g==
-X-Gm-Gg: ATEYQzyN7TuNXGCdM2+N0I9RrmgRWNGNvdFMKPruw06NboGG2Idjsg6DeqBQ5q+Tp9j
-	/5DZjM6zH5tBAiAMRV4BrGcT7VjpAsRVSHDVOtLLLZEf0fCMkw0y9TRGPc7NlqnHGtigNA9leaD
-	4IMziG0L44DxAv25Ec7g4Yhpp+llJe29adCXE3lfuf/jCnJWJtEeS/+wiYbKGSoMJpPf6tt2Iko
-	8FGsjThts3IQjPBPWZL8YfCYR7KeUQ78guLEZpF59mSLRvr2gbnF0tR4zIOXZRQ0wzZ/X08ZjEY
-	o2kLBzsEHayv6nmqa+qDmonxAJIZJCjQvbpZuvk2O5Il0D2FRXHaJRRbWiu6F+t6Sm8ZUUYTlvV
-	3sfP6zfJUCRznSCuilLRGY28TRpLbFFZfFx4DjrDucqiD3aCkbODyf6D1ZpI2fEnxt1w+y/dCDg
-	MnVPHJlNzrI2VAsR9M0UBAoBNAidKwDW/xbrZasxSYKaUq1wARXuPTdkQ8xA==
-X-Received: by 2002:a17:902:d489:b0:2a7:c188:bd1b with SMTP id d9443c01a7336-2ae2bbddf43mr51045925ad.25.1772267895846;
-        Sat, 28 Feb 2026 00:38:15 -0800 (PST)
+        bh=S+TafjU+/+LopRQNo7fMP2oJni9MktuBQToK7T0+6xM=;
+        b=wCeZRUPDgy40dTUe9f7C08oterkqrPFTWxgAoR7HMLj+QAqqewdXbN7LsV7Y8yglPz
+         iqyiaK3hQt0EzI0xLCe/EhkdxSCDiw0mGlWHfcR/piAQ1pleoCQLwUzEcttuoMPrBfuH
+         3Prcpy09NT5RJ/oh2uCD9J8a64kvp4Y6CXRkd2emWieSYMt68oMrhuvUE+14/sm88/9i
+         SMZ9r49sd5l5NMh3WyWXgF8RfgeNcOdT+6/LAX7J1Ex+tHqcrvtlnlgGSpXfWTcEdrzQ
+         4YQXTu/GehSI6+kdFMhoux0e5JQpaaG/UCqyUvplD8Rm6DOjcGG7yW1Zc26XYiH0UCAi
+         RqPA==
+X-Gm-Message-State: AOJu0YzhWymE7qhmdj/Jk9MmW+tgVH40JGA1oWE9LsoYSESjvAs81Ic5
+	OKGRZddKMNZ9LjoL0SF7SL9GQ8vps2hKeuvNRBIEsgEYaES2ePsJoeE5evI4lg==
+X-Gm-Gg: ATEYQzz0EnAvAcA+L7BeQxpI3+pXzdSH+q8alAyQJQN95H8qnT8rj6J81Zm4xGUcN3H
+	UwZEK+ffy+sL723pN3BVpvM5wTeFV0YMh+yZ4XYeufMbjJNv9lsQGUoqib8hnp/cH2/KRDYWpa/
+	hVDRFsB6Et7znKYp15r10yU9WI1G1+sF6g7clLGm/MQjptH2g0FzhtSx/nbg7vuoOqVOBNrCP15
+	SApx4RnzsKFqO6UtOwDjnlM0U4ey3pGtlT8+olAfS+gRxwYz8LhnodynQBr60PPiIChaBK4vS4Y
+	m/zQKMZ6i3LizLiyhvLBZqZQLoh+GmZKjzoYnJb2mxImNc8i8Y1yrurdhc+hCbKcQS5Elx0Y7lc
+	ARffogUh+KPxFOAVI9nSsVi5g+jXZTEZBM3AF/96AfJlNB8P90bg55q7mG0OeVb4Ar6Chj/uyeO
+	B4csit0C/thDJnoEynWB+20Mlj4nzBU5HsU/dWhRRkHz5ZeNegGt5jrAv00w==
+X-Received: by 2002:a17:903:98c:b0:2ae:3fb2:ec8c with SMTP id d9443c01a7336-2ae3fb2ee81mr5945665ad.23.1772268147510;
+        Sat, 28 Feb 2026 00:42:27 -0800 (PST)
 Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:2af:8eed:2c20:6d15])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb5e1174sm78965595ad.41.2026.02.28.00.38.13
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6d1913sm108337925ad.77.2026.02.28.00.42.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Feb 2026 00:38:15 -0800 (PST)
+        Sat, 28 Feb 2026 00:42:27 -0800 (PST)
 From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
 Cc: ben.knoble@gmail.com,
 	gitster@pobox.com,
 	philipoakley@iee.email
 Subject: Re: [PATCH v3] send-email: validate charset name in 8bit encoding prompt
-Date: Sat, 28 Feb 2026 14:06:15 +0530
-Message-ID: <20260228083803.238503-1-shreyanshpaliwalcmsmn@gmail.com>
+Date: Sat, 28 Feb 2026 14:11:34 +0530
+Message-ID: <20260228084217.239120-1-shreyanshpaliwalcmsmn@gmail.com>
 X-Mailer: git-send-email 2.53.0.154.g7c02d39fc2.dirty
-In-Reply-To: <xmqq8qcf2vk8.fsf@gitster.g>
-References: <xmqq8qcf2vk8.fsf@gitster.g>
+In-Reply-To: <xmqq4in32ulj.fsf@gitster.g>
+References: <xmqq4in32ulj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,112 +76,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-[...]
-> > +sub confirm_ask {
-> > +	my ($resp) = @_;
-> > +	my $term = term();
-> > +	return 0
-> > +		unless defined $term->IN and defined fileno($term->IN) and
-> > +		       defined $term->OUT and defined fileno($term->OUT);
-> > +	my $yesno = $term->readline(
-> > +		# TRANSLATORS: please keep [y/N] as is.
-> > +		sprintf(__("Are you sure you want to use <%s> [y/N]? "), $resp));
-> > +	return defined $yesno && $yesno =~ /y/i;
-> > +}
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> This is a bit incosistent with what "sub ask" (the only caller of
-> this sub) does, isn't it?  Before entering the loop that makes a
-> call into this, it does this:
->
->         sub ask {
->                 my ($prompt, %arg) = @_;
->                 my $valid_re = $arg{valid_re};
->                 my $default = $arg{default};
->                 my $confirm_only = $arg{confirm_only};
->                 my $resp;
->                 my $i = 0;
->                 my $term = term();
->                 return defined $default ? $default : undef
->                         unless defined $term->IN and defined fileno($term->IN) and
->                                defined $term->OUT and defined fileno($term->OUT);
->
-> If $term is not usable for interactive prompt, it uses the default
-> setting.  But the new confirm_ask always says "no".
->
-> confirm_ask does its own "check term() to see it is usable" because
-> it is called from another code path which does not have its own
-> logic, but it may be a wrong abstraction to give uneven interface.
-> It would make it more clear what is going on if you just do the
-> interactive $term->readline() thing in "sub ask", instead of calling
-> "sub confirm_ask" that does tghe $term thing redundantly.
->
-> Can't the other confirm_ask() caller call a normal "sub ask"?
->
-> I am not sure why we want to add a dedicated sub, just to ask "are
-> you sure you want to use X [y/N]? ".
->
-> > The intended flow is,
+> > Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 > >
-> >         Declare which 8bit encoding to use [default: UTF-8]? foobar
-> >         warning: 'foobar' does not appear to be a valid charset name.
-> >         Are you sure you want to use <foobar> [y/N]?
+> >> diff --git a/git-send-email.perl b/git-send-email.perl
+> >> index cd4b316ddc..3230b80701 100755
+> >> --- a/git-send-email.perl
+> >> +++ b/git-send-email.perl
+> >> @@ -23,6 +23,7 @@
+> >>  use Git::LoadCPAN::Error qw(:try);
+> >>  use Git;
+> >>  use Git::I18N;
+> >> +use Encode qw(find_encoding);
+> >
+> > I wonder how common is this module already installed on users'
+> > systems (not asking "how widely available"---which is "can users
+> > easily make it work?", but asking "would this work out of box with
+> > what users already have?").
 >
-> It somehow looks uneven to have three lines, two of them
-> capitalizing their first word while the other one is all lowercase.
-> I wonder if this would be simpler?
+> Answering my own question: "yes".
 >
->     Declare which 8bit encoding to use [default: UTF-8]?  foobar<RET>
->     Do you really mean 'foobar', not a valid charset name [y/N]?
->
+> We use Encode::find_encoding as well as Encode::{de,en}code in
+> gitweb and git-svn, so it is very likely that anybody who has a full
+> installation of Git would already have it on their system.  Also
+> Encode.pm is distributed as part of Perl itself, if I am not
+> mistaken.
 
-Actually that makes sense, because if we need to add a special warning
-in between the two prompts (what I was aiming for), either we need to
-modify ask() to add the warning into the flow, or we had to seperate the
-confirm_ask because we have to change the flow in any case, but if we
-drop the additional warning, and instead warn/confirm together in the
-second prompt we dont need this abstraction.
-
->
->
-> So, taking all of the above together, perhaps:
->
->  * Discard changes to "sub ask" and addition of "sub confirm_ask".
->
->  * Tweak this part a bit to call ask().
->
-> > +	while(1) {
->
-> Style.  missing SP before "(".
->
-> > +		my $encoding = ask(__("Declare which 8bit encoding to use [default: UTF-8]? "),
->
-> Overly long line.
->
-
-my bad. will fix.
-
-> > +		valid_re => qr/^\S+$/,
-> > +		default  => "UTF-8");
-> > +		next unless defined $encoding;
-> > +		if (find_encoding($encoding)) {
-> > +			$auto_8bit_encoding = $encoding;
-> > +			last;
-> > +		}
->
-> > +		printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $encoding;
-> > +		if (confirm_ask($encoding)) {
->
-> Use ask() to ask
->
->     Do you really mean 'foobar', not a valid charset name [y/N]?
->
-> here, perhaps?
->
-
-Understood. I am hoping now this doesn't need any additional
-abstraction as Ben suggested.
-Sorry for the delay in response to the review.
-I will send a reroll.
-
-Thanks,
-Shreyansh
+That's right, Encode is bundled with Perl, so users do not need to
+install anything extra, other than what is already required for
+building Git.
