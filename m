@@ -1,134 +1,161 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C7FE54B
-	for <git@vger.kernel.org>; Sat, 28 Feb 2026 04:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDB32BE02C
+	for <git@vger.kernel.org>; Sat, 28 Feb 2026 06:11:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772253539; cv=none; b=Vjg7uzbvb8x5ppH40IdORBYRtidyIK6v34lGFyRBCtaOgnPoybAlhvuba59h5l75NiOJwt+v6cWoTAzqf01UfJJs1HQ6BJtb5T42jn5qFclMmc339gwO6XtJEn9mt/DciEs7J8IJF1TF1Sz3tbm7u6262aVpnVhBrPAZ1mkNn7w=
+	t=1772259114; cv=none; b=hEv7OLTBQq3aQBdEZrYznNzqeeuWiJ0OyDXFw/CSUVrrH0gQpQG1hvmvR/2QMt8V13JX7edWJtLU7kvxnysxGQUL1Rqtfk1ben+n6H8G7wgljHTPgMo+FkwYK5esmRIG2uaUss/jnvLVNsDhwZSt3FXt/5SYH2V4pBHVAxDaBNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772253539; c=relaxed/simple;
-	bh=8oEJbV2DSJJnqYZsxiV501xEQR/37rZrZ3hmqPGEeHM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=siVjQUb7rkevNq6JWZMGodwQQPy538Z+CZL2ClFjSHYrHFcbQwd/bgwsCpDqUBz4whx65eQ+hT8vQrLwHqsnjc8FG5hqtN4P90PwXVET8dnsL9gQ5gjkSQK3E7FpQiNlQLdmOzpB44Mckjl++q7oYEDxVWUK0Xzu5mJmBUsoxpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fr2IXhOl; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772259114; c=relaxed/simple;
+	bh=wy+NBhthmxVCHtfa8ZBHC3Xu3nSx4CGeoC5d5Ym9xQo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=swV5J1jccrf9qmJuDpQDitx5HCDGmnWMhn/d6bYYD28VUafK9rM6IqVD8qf9PlZ2zjnofahDmueX6SWUm7ibh7U2aJWhizils6OBOkJri0VDFx8CJsuf/SjBHKNEAjhLkQrVMXvN90JagUebg0GSE8YAy8TGGN5UqnLYYbldgXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kitware.com; spf=pass smtp.mailfrom=kitware.com; dkim=pass (1024-bit key) header.d=kitware.com header.i=@kitware.com header.b=i5w72fuq; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kitware.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kitware.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fr2IXhOl"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2ae3a007bd1so619925ad.2
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 20:38:58 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=kitware.com header.i=@kitware.com header.b="i5w72fuq"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-506362ac5f7so26124991cf.1
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 22:11:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772253538; x=1772858338; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=x/LJiToEkGXe+v3iDmQdQwXJCbpdGC/gCwt4pwg+RAw=;
-        b=fr2IXhOlseRc9MUJgZC+qMpfp6GqovUJ+8uhc+G8kdR4B2aRxjZG9VX0BR8uwxQ92E
-         Y5fom/nx5qzchlwSi+8aFMMfE92r9J2zzgosMS4GP9aFnMcDZZ4ghwXjdAAilZi8ndTZ
-         jzIWThFGVoGwCFjI9nc0t+vPTGHZIgEuC1zLxALfHLy4CxtyOEFcL9x8T3UG8ilOtZMq
-         3ZYn/4q9wtoSpZQ9Fbq08Kn47fHD1U2gJ1khKokmHA5clczlxFiV6UvrCbMLreIPY4w+
-         kX4aa9RTpIKigPiCmlQFeaTc1pAj6P2tLHnu5bjLmnE4GNLp/MAD/u0jDPPEucsnnv6I
-         Y/Tg==
+        d=kitware.com; s=google; t=1772259112; x=1772863912; darn=vger.kernel.org;
+        h=user-agent:in-reply-to:content-transfer-encoding
+         :content-disposition:mime-version:references:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q3IF/rL/DthjtTtXpZgqgm6AV83e4NotwHzWvGu/Ayk=;
+        b=i5w72fuqyMbbxbUQGdMNXlwKMCp2ejIs4dIpVA6sK8guCiIqgxGeugm1RNKQYhdYp9
+         73h61tGj83OLP2KOQdF78vDaXs87LAYXkILC9ArhWaUHqCwyqblxqui2xTPyVbfRQCJm
+         F+KrWaGIscPMpUcxnttshgObXPR812os1nwYs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772253538; x=1772858338;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=x/LJiToEkGXe+v3iDmQdQwXJCbpdGC/gCwt4pwg+RAw=;
-        b=vXOZcGwGiddiQnx9Lv5WiR4wpt52zU0bPGspJ+XsrAK+LWL+ATBidi25LA4M5DLkMU
-         K6gVV81rCaGpVMVG8ECGd5PAdzoHBxbKjwaRNyomy2TddjNCmU2d6NXPX9ef2gIVItZr
-         jUYWYhmzjgqj9f+BqPicOCE1ZGtlxTowifftawlSB39Q+VUk6/nWM2P7k/gp4zieHBIS
-         U89OY5FGzCTe4r5XYjzMhEw4WbJsbtkjh5K9g8Wxye4Edonh+GzV4QnSehT1Rh1s9uAI
-         svX5tjm/Mif7tZl+FuRSW08VX+xzeC0SZAlZF5onI2w/MoO38lZ/CIPcd5BOYM7pavsA
-         F0+A==
-X-Gm-Message-State: AOJu0Yx8T039AeoiGoKZM0HFN796V0f5KdHRUZEfRhLkm5F/i1Mn+uxc
-	PWuwLB6XXcXddvhkOZ1pOHOkj/rGGPHl5VZDXWsBJHXKTrZWakfJ8T2V
-X-Gm-Gg: ATEYQzyGg1lLyVhQLa6YPQF4BAivZOJtwGWSqd0w83Zub7bbAaslCarWdQUG/NRUKGj
-	RvjAnbDE7d9r8PjNKcdruGfKK8dAmj+seS94mALT4MGi/Zaz+ewq6iuncGabosYy+nXXY9PgpJj
-	5qcdT0CJlc+bS70f7rJUuvAi2OcQWKpL0bWOSxOPRE001AGlvOK6r3j9hoMtQNfFc+ClS6XonYN
-	3tImyVpCpoNL8SJzGqoDBFi/2BZwcgXEjZfem0QBRkIF7BzQzUwH+hrtKzXCZqR4jl7M21SChmU
-	d3rEFCmVwG+UX26/Rjxzn6J9Nd9aN8AQ9UVfkYQfnPlzTtyZZZYBLfy6G66Gk+5lyVutEtvA+mA
-	pb6fg1VabJXrJXozPh9AhFT+Ar4v29nzU6m0Ttq3MZC5npbspaYomydRPEWE4NkMktl4d8AS5uA
-	5cnqLJqVvCPu0eKBb/9IUk3cc0jOE=
-X-Received: by 2002:a05:6a21:6d88:b0:393:fb84:dc4c with SMTP id adf61e73a8af0-395c3b42d45mr3716270637.6.1772253537599;
-        Fri, 27 Feb 2026 20:38:57 -0800 (PST)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa5e4aafsm6217908a12.4.2026.02.27.20.38.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Feb 2026 20:38:57 -0800 (PST)
-Message-ID: <e6e7e272-4aec-461e-aebd-33ec0a324770@gmail.com>
-Date: Sat, 28 Feb 2026 12:38:54 +0800
+        d=1e100.net; s=20230601; t=1772259112; x=1772863912;
+        h=user-agent:in-reply-to:content-transfer-encoding
+         :content-disposition:mime-version:references:message-id:subject:cc
+         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q3IF/rL/DthjtTtXpZgqgm6AV83e4NotwHzWvGu/Ayk=;
+        b=fHicnyqJ4iN5pYS3NNujdPpgrgoRE/i7Uy4T+LEFAMg6cpqm2Gg62fgKf5oFW38nXk
+         lTNp9uI/AxTMRxYJzdYWglCgNIF2UaD766sSSI9c27rplSOWFAtd0aPuhYrWSMeTYKKX
+         MJSYOmjXgv4CVXEsrl64GzPlryhNQ2K/GvWyUripUfs7uCy36/9KzU27hOKRMEBPZECJ
+         cpf5Mwu+bGFqje0etw43s5luKl5rBOjP1ZS4bo4LPrRPXQNg9fhW926XjbcPcwEK5Fyx
+         vOtkIQOLV7Zi767MqaDE0hZbRRthgULWjqoJzlmghr0+KMyHDE3ApcAWs6vA7Wn//bH8
+         sbDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU//cD+CKThY+ghZJgdprAV0jh+/FKvInx0Ho3+VENTvFhgMNaTH5VmU2RXLLwu6LyKS0o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzxpBmZKzVGd0a03r0ndUzGBoND4q4ZyTYIfcYhzPMTv7/akq9O
+	IpmaTBN9GLLPtpYEBabRP3y/OVyE02tB5Cf+R2wiMfkVaR8oZ8TD07sx8wv4IoFh2hw7/VwZQYp
+	5QZbbAw==
+X-Gm-Gg: ATEYQzz7HNwb6iBy6DInygjrmTEqJ1LU7sQxB5p3NQs55uq+SvGyWJYOhmPbodDM/2G
+	7rZtO90nsxg3vPCodxzJdgsrLPHWFuelR5HGH91i+PX8XikSDC0EQOr3cAxp1sMOanIf0OkL15b
+	6VDLLGkNK1UAE8XvmwPFs/mUUp5e8JrfdpBGRNilE411CCKZcpEeowsqSNcee+LUlydMo+fSDq1
+	dCtm3wufEDBHDqNKAANDhoAkg8idvPpb9ITSHe+iUDKILWcqdX6BJWJ56VJhR9I0iLC4jMl3DKG
+	3gaUq7++9kufaQgk2bcvxw21X74pSFxOwsCPFnDxPUHreqzt+alsFOJDFkN0I7xJXCcJIPZxvqB
+	ooCidQ2SuLDMtaPszAFRuJbDbEuQ3GoSiCoMg5o9A3wIvPp880rgb6ji9e4zmxkEstVhNMICRrO
+	igJ4O2G0xtdBjMQtudaj/llyOigw1T
+X-Received: by 2002:a05:622a:138d:b0:506:a15c:507e with SMTP id d75a77b69052e-507528a836dmr69625121cf.64.1772259112111;
+        Fri, 27 Feb 2026 22:11:52 -0800 (PST)
+Received: from localhost ([76.37.124.126])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50744ae9313sm60881831cf.29.2026.02.27.22.11.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Feb 2026 22:11:51 -0800 (PST)
+Date: Sat, 28 Feb 2026 01:11:43 -0500
+From: 'Ben Boeckel' <ben.boeckel@kitware.com>
+To: Jeff King <peff@peff.net>
+Cc: rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
+	git@vger.kernel.org
+Subject: Re: [BUG] `git describe` doesn't traverse the graph in topological
+ order
+Message-ID: <aaKHH6Mf_oKJ9H6M@rotor.dev.benboeckel.internal>
+References: <ZQ3GAJ/AHsM9e9a6@farprobe>
+ <02e701d9ed78$436b3c60$ca41b520$@nexbridge.com>
+ <xmqqediq2j0g.fsf@gitster.g>
+ <032d01d9ed80$5e569670$1b03c350$@nexbridge.com>
+ <ZQ3ggxA7KOysXrba@farprobe>
+ <033201d9ed85$991c6af0$cb5540d0$@nexbridge.com>
+ <ZQ3leoLhljc+P5wP@farprobe>
+ <033c01d9ed8a$c6916f30$53b44d90$@nexbridge.com>
+ <aR6BlHflRVLN8_XO@rotor>
+ <20251120080525.GB1283645@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11] setup: improve error diagnosis for invalid .git files
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com
-References: <20260222102928.377519-1-a3205153416@gmail.com>
- <20260223074410.917523-1-a3205153416@gmail.com> <xmqqpl5rumy0.fsf@gitster.g>
- <bcf64540-fe84-4fcc-a969-6927f348608e@gmail.com> <xmqq4in1q152.fsf@gitster.g>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <xmqq4in1q152.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251120080525.GB1283645@coredump.intra.peff.net>
+User-Agent: Mutt/2.3.0 (2026-01-25)
 
-Hi Junio,
+On Thu, Nov 20, 2025 at 03:05:25 -0500, Jeff King wrote:
+> On Wed, Nov 19, 2025 at 09:48:52PM -0500, 'Ben Boeckel' wrote:
+> 
+> > So I finally found some time to go back to this. The actual fix is
+> > actually rather easy (patch attached). However, as guessed at previously
+> > in the thread, the performance is in the tank without an up-to-date
+> > commit graph ("instant" with it versus "minutes" without). On the other
+> > hand, it is *accurate*. It does fix one expect-fail test case already in
+> > the test suite (also included in the patch).
+> 
+> Minutes? Yikes. Let's look...
+> 
+> > +/*
+> > + * Topological comparison: always return parents before children.
+> > + * This is reverse topological order: children before parents.
+> > + */
+> > +static int compare_commits_topo(const void *a_, const void *b_, void *_unused_ UNUSED)
+> > +{
+> > +	struct commit *a = (struct commit *)a_;
+> > +	struct commit *b = (struct commit *)b_;
+> > +	if (repo_is_descendant_of(the_repository, a, &(struct commit_list){ b, NULL }))
+> > +		return -1; // a is descendant, so comes before b
+> > +	if (repo_is_descendant_of(the_repository, b, &(struct commit_list){ a, NULL }))
+> > +		return 1; // b is descendant, so comes before a
+> > +	// fallback: order by hash for determinism
+> > +	return oidcmp(&a->object.oid, &b->object.oid);
+> > +}
+> 
+> Ah. So you are doing two full traversals for each comparison. That is
+> going to be expensive. You would do much better to walk all of history
+> one time, marking the generation number (distance to root) of each
+> commit, and then comparing generations here (if A has a lower generation
+> than B, then you know that B cannot be an ancestor of A). Or if we have
+> commit graphs, just use the generation numbers they already contain. ;)
 
-Thanks for pushing back on my previous suggestion.
+Ok, so it sounds like I should, in `describe_commit`:
 
-> It sounds like saying "oh, this is too hard, let's punt and roll all
-> failures from stat() into 'nothing there, move on'", which is how
-> the code used to work before this patch X-<.
+- check if commit graphs are enabled (and verified?): if so, use their
+  generation numbers
+- if they're not enabled, perform a local walk to store a generation
+  number (somewhere?) that is `max(cmit->parents[].generation) + 1`
+  (however the `generation` is stored)
 
-Yeah, that's why I said this idea was pretty dumb. XD
+and then in the comparator, use this to exclude one of the comparisons
+at least. However…
 
-Regarding your question about how 'stat()' gets into the picture, I 
-tried GDB debugging and simulated Windows behavior by 'GIT_DIR=nul' (I'm 
-NOT sure if it's correct). Here is the back trace caught:
+> We do all of this already for the "--topo-order" option of the revision
+> traversal machinery. If we have commit graphs, it can output in
+> topographical order in a streaming way (see init_topo_walk() in
+> revision.c). If not, then we collect all of the commits up front and
+> call sort_in_topological_order().
 
-(gdb) print path
-$1 = 0x555555a86dd0 "nul"
-(gdb) bt
-#0  read_gitfile_gently (path=0x555555a86dd0 "nul", return_error_code=0x0)
-     at setup.c:936
-#1  0x000055555589dea1 in setup_explicit_git_dir (
-     gitdirenv=0x555555a86dd0 "nul", cwd=0x555555a58070 <cwd>,
-     repo_fmt=0x7fffffffcbe0, nongit_ok=0x7fffffffccc4) at setup.c:1107
-#2  0x000055555589fd53 in setup_git_directory_gently 
-(nongit_ok=0x7fffffffccc4)
-     at setup.c:1867
-#3  0x00005555555c1383 in cmd_diff (argc=4, argv=0x555555a86ce0, 
-prefix=0x0,
-     repo=0x0) at builtin/diff.c:458
-#4  0x0000555555575e30 in run_builtin (p=0x555555a48368 <commands+840>,
-     argc=4, argv=0x555555a86ce0, repo=0x555555a7bdc0 <the_repo>) at 
-git.c:506
-#5  0x0000555555576354 in handle_builtin (args=0x7fffffffdc10) at git.c:780
-#6  0x000055555557667e in run_argv (args=0x7fffffffdc10) at git.c:863
-#7  0x0000555555576b44 in cmd_main (argc=4, argv=0x7fffffffdda0) at 
-git.c:985
-#8  0x00005555556a73bf in main (argc=5, argv=0x7fffffffdd98) at 
-common-main.c:9
+The key here seems to be:
 
-Sorry it might be a bit messy. It turns out that 
-'setup_explicit_git_dir()' calls 'read_gitfile_gently()' right away to 
-check whether GIT_DIR is actually a gitfile, right?
+	if (revs->topo_order && !generation_numbers_enabled(the_repository))
+		revs->limited = 1;
 
-Since stat("nul") fails on windows, STAT_FAILED was caught and 
-immediately triggered die(), blowing up corresponding CI tests.
+which then goes down the `sort_in_topological_order` path.
 
-Still, I don't know Windows well. These thoughts are just to stimulate 
-discussions. （　´_ゝ`）
+> Sadly, git-describe does not seem to use the traversal machinery, so it
+> is not as easy as just setting revs.topo_order. Either we have to adapt
+> to using the regular traversal code, or those same concepts need to be
+> applied to its custom traversal.
+
+I suppose I can try to convert it over to a proper walk following
+`MyFirstObjectWalk.adoc` if that is a more fruitful path than the above
+ideas. As long as all children of a commit are walked before the commit
+itself, it should slot into the existing bookkeeping fairly well.
 
 Thanks,
 
-Yuchen
-
-
+--Ben
