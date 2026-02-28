@@ -1,135 +1,280 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2679B3612FA
-	for <git@vger.kernel.org>; Sat, 28 Feb 2026 10:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EBF342EEAB
+	for <git@vger.kernel.org>; Sat, 28 Feb 2026 11:22:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772276332; cv=none; b=bwEuxLAWHgxoq77/dCJH1suxuV1E4UaRNDbtTIrqkHdFffZADx3P+2j4B5OfCAS8cQYZiCgawd5BZ19Nx0R8VzUJj/KiWgSN5eXcHxp6qG2GrpeiZBRYrec4w/WyYbx45W6H0GqApv4swyKK5ZfxZNZCUjox9jgMlgSUDvmrBNM=
+	t=1772277750; cv=none; b=S/CLp08Jufrlr66wPFoRTyTeXKDalwk3iF9quunnWE4If4VPGaWWm5lR+MpvvyaB+/x5pf+ZnP44kW9AIGp9xoEKMXcAGbIWpsB3aOhcS15p8+NUYHrcaP+4luDtBjBkPAEzV6nEZkW+y6oz3xGOTxkdmNYLoDQbcGh40Pk/OgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772276332; c=relaxed/simple;
-	bh=Vl3YfZ4rIY7EGcFmBwxxQbiXsqbVOqHIl++dyi4Nilc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f++We4ufbCYwgjcg7HYV28/Dxb2V+4jJEaMi1dc/XOZJjcPl9B0OKAlPdVWP336gPxyOk0EkowxL/r9a4a0foz7S56YEhQWQLNA+d2VUWP+Te7ldHdMbWKNF6Ezvpo7JqX52gNRsPdWyMMObAqxOlUNJlPPw55q9ccRWUdmuz7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ahnDJj9k; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1772277750; c=relaxed/simple;
+	bh=HLDzWEJfMWKskWrFMpu3kNv9lO2FeW+tPLw2EUmMghY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bISsh+8ePt4dJbhdoOWKEtx+UWGVi9iz4Z8chq8cSNsp0hWTgRsHd4U4ekqfLYlSqI2ihCVqKUrezqC2KqAcHUPYEkKbWNrjyXIKLXbH6Z3SB8dBZm8G/INALU9lRGnlMWYqXXVo9O3kXn6HilTJLgDMlMu8I3X5X/m8xKglByI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LymimEip; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ahnDJj9k"
-Received: (qmail 86213 invoked by uid 109); 28 Feb 2026 10:58:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=Vl3YfZ4rIY7EGcFmBwxxQbiXsqbVOqHIl++dyi4Nilc=; b=ahnDJj9kf687ca6RfEZIPoiPHwInOJl1GnZf1Tb/Recj9qZRG1F9SVl5kTtn9Q/ZHdXow3B5QApCqNPdiRoZlgCUummTCI1HuafqxpkXP/79/cFpWea4okMbNiUt0kmAuI2JbZE4M/p0e5kW9S+yQLWhV8+l9XLSlDt5nypzlf2N2/kb7hpGMUUWkagFl7TV4TYg9LlTqUIRY9fpnUo+u7r+M7gDaqEemPiXwL3TSR219lTiWt8ja3CwoBsLmLtEPuNmMgkBCeF/Hdhjghr5ex30xNUrVlp5uMQjVjC90EIyW6uiScFglZiXiwaukB7qpeYKRWmtl6wBpgkT4gRWGQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 28 Feb 2026 10:58:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 290650 invoked by uid 111); 28 Feb 2026 10:58:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 28 Feb 2026 05:58:54 -0500
-Authentication-Results: peff.net; auth=none
-Date: Sat, 28 Feb 2026 05:58:49 -0500
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] parseopt: check for duplicate long names and
- numerical options
-Message-ID: <20260228105849.GA3626520@coredump.intra.peff.net>
-References: <xmqq5x7jujqb.fsf@gitster.g>
- <7693799a-91a2-480a-ae3e-29f8eed5b55a@web.de>
- <6b674316-9a6e-4f57-b32c-f1824869ba7e@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LymimEip"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-358d7dcc230so1982453a91.0
+        for <git@vger.kernel.org>; Sat, 28 Feb 2026 03:22:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772277748; x=1772882548; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nz5a6LjDwuk56AvFr2Z/qqRLAx8901f41vWQ8ivrQWI=;
+        b=LymimEipt+hSfEUrZKquRPcWyiu1gDQVjuNwJPlGqrBMbQvXOHAm7WNraLka8JDxzm
+         dQhn3Aa2fxJA3m40Ba2UP52Cqajk2YIHITC3kbia0fIRiZtifhZzAeIJLtx1f5b+EM5F
+         xYucLAyhnAe65NYkytXM8UE/hyWOxS9n2pyrrZIJUJH7kll14aEpYlQ3qH6vVYStDJES
+         Nd1kQZocjtQvLoJYHdZBe5Ukqrfvbt8E2P6PDG0u+Aj4hsplv/mIKX5bL/RzMKrwqohU
+         YQB1/YdBcivEJqKlqNVGXaQsfS0X+SZjEDFyA3bzhymBfSlyAjyUck/XC+wMvBFkBsPj
+         vBrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772277748; x=1772882548;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=nz5a6LjDwuk56AvFr2Z/qqRLAx8901f41vWQ8ivrQWI=;
+        b=Dyi79zuQZesm/G4A5f7leySd7qXhnEJvfOIkCK1I8CsTedhhedM+eBgbU4zQPZUnjD
+         njaQhyrAvEVcXhwrKq841eeZeVvjRbCLHaYtQVXy14JLLORiYIfrF2UDzkYvRSE0VDsR
+         IU3ctdO3hDVG/1G37lMtnTQNkEUbemNZv/JuPuxpaqS6CwuT1XFrC38+Kfxp0Ggj9ins
+         CJCkSKP5zrCiSWCyhE9QctUqoFTYPpSYaiCrhB2CEWVpHFyfbu3kbxAFCkfH70Bc0kM8
+         /V1aN5qKMLLzhKyMdbsdLeOk40qsa2tdsMAVpEY8OJ8pT5zKGA1U7YysuQ50a+yUrksJ
+         p7XA==
+X-Gm-Message-State: AOJu0Yyy6jf+6fLgtKhOE0j4wqD66hxtMXlCl0HG+7qgaLv8KCYWysJQ
+	4oMeL6BjCmDSrGOlf3jf8/20i3xf9hSrBGfc4NoCTVtvu8uTHxGajklixWhr2g==
+X-Gm-Gg: ATEYQzxcIE47XoA4dzrX8X93N3PAjZ1z0pvMIsBtxeCczWdDa0fBDyy6cqgXVIdF+Ub
+	Bw0OTZItP6WNHK5J8Y/iM90DJsTfaKnM7DEi7fAvQvYISEo/tb0RMXZd6MC+I8ozYbim5mIf1J2
+	DcC8muAcrATXToj+BJhAJTrxDh/XXXpKlMdkvnWYdlu54+92ZJFkL7th2l6xIyn8zyBswDcTVgh
+	UQZz6UFdMu8T7X+9n59M1S9/htBdReKHdXfhqnO4fDapgwWtcJTadSoFrx8HVPMJJqwEyOPK2Tl
+	AmxPYUkdaaIisJyRs9deQA39hHHpdXvMI7HX6PW069POpAwFu+CqWtF1dluIBVSzAaHjT4DRy9r
+	UMJsavBo7/HIMOl03nUfLKh/Rks9heUQa5vczOwUFI335WanXuoEBIAMYNI0jihKK4Ln9UPiVt2
+	yO6TQ7zuypU+g+kWtyEztgQVle4n7wgdZwRx0MYF0kyvGeeMEN64MZyBh5Ig==
+X-Received: by 2002:a17:90b:560e:b0:356:1edc:b6e with SMTP id 98e67ed59e1d1-35965c4966bmr5344425a91.8.1772277748426;
+        Sat, 28 Feb 2026 03:22:28 -0800 (PST)
+Received: from Shreyansh-PC.domain.name ([2401:4900:1cd6:375b:2af:8eed:2c20:6d15])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359806913c3sm395638a91.14.2026.02.28.03.22.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Feb 2026 03:22:27 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: ben.knoble@gmail.com,
+	gitster@pobox.com,
+	philipoakley@iee.email,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH v4] send-email: validate charset name in 8bit encoding prompt
+Date: Sat, 28 Feb 2026 16:50:45 +0530
+Message-ID: <20260228112210.270273-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0.155.g748bb03a00.dirty
+In-Reply-To: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260224143624.23678-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <6b674316-9a6e-4f57-b32c-f1824869ba7e@web.de>
 
-On Sat, Feb 28, 2026 at 10:19:16AM +0100, René Scharfe wrote:
+When a non-ASCII character is detected in the body or subject of the email
+the user is prompted with,
 
-> Perform the slightly expensive string duplicate check only when showing
-> the usage to keep the cost of normal invocations low.  t0012-help.sh
-> covers it.
+        Which 8bit encoding should I declare [UTF-8]? foo
 
-Nice, this seems like the perfect compromise to me. We get a runtime
-switch that kicks in at the moment we want, and we don't even have to
-pollute the world with a new switch or environment variable.
+After this the input string is validated by the regex, based on the fact
+that the charset string will be minimum 4 characters [1]. If the string is
+more than 4 letters the email is sent, if not then a second prompt to
+confirm is asked to the user,
 
-> +static void parse_options_check_harder(const struct option *opts)
-> +{
-> +	struct strset long_names = STRSET_INIT;
-> +	for (; opts->type != OPTION_END; opts++) {
-> +		if (opts->long_name) {
-> +			if (!strset_add(&long_names, opts->long_name))
-> +				optbug(opts, "long name already used");
-> +		}
-> +	}
-> +	BUG_if_bug("invalid 'struct option'");
-> +	strset_clear(&long_names);
-> +}
+        Are you sure you want to use <foo> [y/N]? y
 
-I confirmed on my silly pathological case that invoking rev-parse with a
-real option shows no slowdown, and we now pay the same 10ms cost to show
-"-h".
+This relies on a length based regex heuristic check to validate the user
+input, and can allow clearly invalid charset names to pass if the input is
+greater than 4 characters.
 
-Your other email made me wonder how the sorted-array solution might
-perform (patch below). It shaves off 2ms of those 10. Probably not worth
-caring about for "-h" output (which is already spending another 5-10ms
-to generate the output, versus a normal parse).
+Add a semantic validation of the charset name using the
+Encode::find_encoding() which is a bundled module of perl. If the encoding
+is not recognized, warn the user and ask for confirmation before proceeding.
+After this validation the lenght based validation becomes redundant and also
+breaks flow, so change the regex of valid input to any non blank string.
 
--Peff
+Make the encoding warning logic specific to the 8bit prompt, also add a
+unique confirmation prompt which  reduces the load on ask(), and improves
+maintainability.
 
--- >8 --
-diff --git a/parse-options.c b/parse-options.c
-index 0214c106d4..1ea7efd5a3 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -721,17 +721,39 @@ static void parse_options_check(const struct option *opts)
- 	BUG_if_bug("invalid 'struct option'");
- }
- 
-+static int qsort_strcmp(const void *va, const void *vb)
-+{
-+	const char *a = *(const char **)va;
-+	const char *b = *(const char **)vb;
-+	return strcmp(a, b);
-+}
-+
- static void parse_options_check_harder(const struct option *opts)
- {
--	struct strset long_names = STRSET_INIT;
--	for (; opts->type != OPTION_END; opts++) {
--		if (opts->long_name) {
--			if (!strset_add(&long_names, opts->long_name))
--				optbug(opts, "long name already used");
--		}
-+	const struct option *p;
-+	const char **long_names;
-+	size_t i, len;
-+
-+	len = 0;
-+	for (p = opts; p->type != OPTION_END; p++) {
-+		if (p->long_name)
-+			len++;
+Additionally, the wording of the first prompt can confuse the user if not
+read properly or under any default assumptions for a yes/no prompt. Change
+the wording to make it explicitly clear to the user that the prompt needs a
+string input, UTF-8 being the default.
+
+The intended flow is,
+
+        Declare which 8bit encoding to use [default: UTF-8]? foobar
+        <foobar> does not appear to be a valid charset name. Use it anyway [y/N]?
+
+[1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
+
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+---
+Changes in v4:
+ - removed the confirm_ask() helper and changes to ask().
+ - make a new warning/confirmation prompt specific to the 8bit encoding flow.
+
+ git-send-email.perl   | 25 ++++++++++++++++++++++---
+ t/t9001-send-email.sh |  2 +-
+ 2 files changed, 23 insertions(+), 4 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index cd4b316ddc..3186104709 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -23,6 +23,7 @@
+ use Git::LoadCPAN::Error qw(:try);
+ use Git;
+ use Git::I18N;
++use Encode qw(find_encoding);
+
+ Getopt::Long::Configure qw/ pass_through /;
+
+@@ -1044,9 +1045,27 @@ sub file_declares_8bit_cte {
+ 	foreach my $f (sort keys %broken_encoding) {
+ 		print "    $f\n";
  	}
--	BUG_if_bug("invalid 'struct option'");
--	strset_clear(&long_names);
-+
-+	ALLOC_ARRAY(long_names, len);
-+	i = 0;
-+	for (p = opts; p->type != OPTION_END; p++) {
-+		if (p->long_name)
-+			long_names[i++] = p->long_name;
+-	$auto_8bit_encoding = ask(__("Which 8bit encoding should I declare [UTF-8]? "),
+-				  valid_re => qr/.{4}/, confirm_only => 1,
+-				  default => "UTF-8");
++	while (1) {
++		my $encoding = ask(
++			__("Declare which 8bit encoding to use [default: UTF-8]? "),
++			valid_re => qr/^\S+$/,
++			default  => "UTF-8");
++		next unless defined $encoding;
++		if (find_encoding($encoding)) {
++			$auto_8bit_encoding = $encoding;
++			last;
++		}
++		my $yesno = ask(
++			sprintf(
++			__("'%s' does not appear to be a valid charset name. Use it anyway [y/N]? "),
++			$encoding),
++			valid_re => qr/^(?:y|n)/i,
++			default => "n");
++		if (defined $yesno && $yesno =~ /^y/i) {
++			$auto_8bit_encoding = $encoding;
++			last;
++		}
 +	}
-+
-+	QSORT(long_names, len, qsort_strcmp);
-+	for (i = 1; i < len; i++) {
-+		if (!strcmp(long_names[i], long_names[i-1]))
-+			BUG("long name %s used twice", long_names[i]);
-+	}
-+
-+	free(long_names);
  }
- 
- static int has_subcommands(const struct option *options)
+
+ if (!$force) {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index e56e0c8d77..24f6c76aee 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1691,7 +1691,7 @@ test_expect_success $PREREQ 'asks about and fixes 8bit encodings' '
+ 			email-using-8bit >stdout &&
+ 	grep "do not declare a Content-Transfer-Encoding" stdout &&
+ 	grep email-using-8bit stdout &&
+-	grep "Which 8bit encoding" stdout &&
++	grep "Declare which 8bit encoding to use" stdout &&
+ 	grep -E "Content|MIME" msgtxt1 >actual &&
+ 	test_cmp content-type-decl actual
+ '
+
+Range-diff against v3:
+1:  748bb03a00 ! 1:  37e17eac68 send-email: validate charset name in 8bit encoding prompt
+    @@ Commit message
+         validation the lenght based validation becomes redundant and also breaks
+         flow, so change the regex of valid input to any non blank string.
+
+    -    Introduce a dedicated helper for confirmation handling that can be reused
+    -    both by ask() and the custom 8bit prompt flow. This makes the encoding
+    -    warning logic specific to the 8bit prompt, reduces the load on ask(), and
+    -    improves maintainability.
+    +    Make the encoding warning logic specific to the 8bit prompt, also add a
+    +    unique confirmation prompt which  reduces the load on ask(), and improves
+    +    maintainability.
+
+         Additionally, the wording of the first prompt can confuse the user if not
+         read properly or under any default assumptions for a yes/no prompt. Change
+    @@ Commit message
+         The intended flow is,
+
+                 Declare which 8bit encoding to use [default: UTF-8]? foobar
+    -            warning: 'foobar' does not appear to be a valid charset name.
+    -            Are you sure you want to use <foobar> [y/N]?
+    +            <foobar> does not appear to be a valid charset name. Use it anyway [y/N]?
+
+         [1]- https://github.com/git/git/commit/852a15d748034eec87adbee73a72689c8936fb8b
+
+    @@ git-send-email.perl
+
+      Getopt::Long::Configure qw/ pass_through /;
+
+    -@@ git-send-email.perl: sub get_patch_subject {
+    - 	}
+    - }
+    -
+    -+sub confirm_ask {
+    -+	my ($resp) = @_;
+    -+	my $term = term();
+    -+	return 0
+    -+		unless defined $term->IN and defined fileno($term->IN) and
+    -+		       defined $term->OUT and defined fileno($term->OUT);
+    -+	my $yesno = $term->readline(
+    -+		# TRANSLATORS: please keep [y/N] as is.
+    -+		sprintf(__("Are you sure you want to use <%s> [y/N]? "), $resp));
+    -+	return defined $yesno && $yesno =~ /y/i;
+    -+}
+    -+
+    - sub ask {
+    - 	my ($prompt, %arg) = @_;
+    - 	my $valid_re = $arg{valid_re};
+    -@@ git-send-email.perl: sub ask {
+    - 			return $resp;
+    - 		}
+    - 		if ($confirm_only) {
+    --			my $yesno = $term->readline(
+    --				# TRANSLATORS: please keep [y/N] as is.
+    --				sprintf(__("Are you sure you want to use <%s> [y/N]? "), $resp));
+    --			if (defined $yesno && $yesno =~ /y/i) {
+    -+			if (confirm_ask($resp)) {
+    - 				return $resp;
+    - 			}
+    - 		}
+     @@ git-send-email.perl: sub file_declares_8bit_cte {
+      	foreach my $f (sort keys %broken_encoding) {
+      		print "    $f\n";
+    @@ git-send-email.perl: sub file_declares_8bit_cte {
+     -	$auto_8bit_encoding = ask(__("Which 8bit encoding should I declare [UTF-8]? "),
+     -				  valid_re => qr/.{4}/, confirm_only => 1,
+     -				  default => "UTF-8");
+    -+	while(1) {
+    -+		my $encoding = ask(__("Declare which 8bit encoding to use [default: UTF-8]? "),
+    -+		valid_re => qr/^\S+$/,
+    -+		default  => "UTF-8");
+    ++	while (1) {
+    ++		my $encoding = ask(
+    ++			__("Declare which 8bit encoding to use [default: UTF-8]? "),
+    ++			valid_re => qr/^\S+$/,
+    ++			default  => "UTF-8");
+     +		next unless defined $encoding;
+     +		if (find_encoding($encoding)) {
+     +			$auto_8bit_encoding = $encoding;
+     +			last;
+     +		}
+    -+		printf STDERR __("warning: '%s' does not appear to be a valid charset name.\n"), $encoding;
+    -+		if (confirm_ask($encoding)) {
+    ++		my $yesno = ask(
+    ++			sprintf(
+    ++			__("'%s' does not appear to be a valid charset name. Use it anyway [y/N]? "),
+    ++			$encoding),
+    ++			valid_re => qr/^(?:y|n)/i,
+    ++			default => "n");
+    ++		if (defined $yesno && $yesno =~ /^y/i) {
+     +			$auto_8bit_encoding = $encoding;
+     +			last;
+     +		}
+--
+2.53.0.155.g748bb03a00.dirty
