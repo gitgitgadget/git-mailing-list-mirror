@@ -1,161 +1,208 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDB32BE02C
-	for <git@vger.kernel.org>; Sat, 28 Feb 2026 06:11:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B44C314B95
+	for <git@vger.kernel.org>; Sat, 28 Feb 2026 07:00:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772259114; cv=none; b=hEv7OLTBQq3aQBdEZrYznNzqeeuWiJ0OyDXFw/CSUVrrH0gQpQG1hvmvR/2QMt8V13JX7edWJtLU7kvxnysxGQUL1Rqtfk1ben+n6H8G7wgljHTPgMo+FkwYK5esmRIG2uaUss/jnvLVNsDhwZSt3FXt/5SYH2V4pBHVAxDaBNs=
+	t=1772262030; cv=none; b=OOmMfoTuEjVj2cR/u8MvNQ/BZnk5nUD6ClukAA4LZrtDYwirVV3aS/opXAyiasxfy5k5o3+AlVRovZTsRSr5cGyr4b9jVNBV48MOZ9uHBnwxm39Y9jy2YqiURENvaRmXTCXDJIfGGnVkEOCVh9QQAp9GPsTLK9yqgXN5sQSq2sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772259114; c=relaxed/simple;
-	bh=wy+NBhthmxVCHtfa8ZBHC3Xu3nSx4CGeoC5d5Ym9xQo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=swV5J1jccrf9qmJuDpQDitx5HCDGmnWMhn/d6bYYD28VUafK9rM6IqVD8qf9PlZ2zjnofahDmueX6SWUm7ibh7U2aJWhizils6OBOkJri0VDFx8CJsuf/SjBHKNEAjhLkQrVMXvN90JagUebg0GSE8YAy8TGGN5UqnLYYbldgXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kitware.com; spf=pass smtp.mailfrom=kitware.com; dkim=pass (1024-bit key) header.d=kitware.com header.i=@kitware.com header.b=i5w72fuq; arc=none smtp.client-ip=209.85.160.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kitware.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kitware.com
+	s=arc-20240116; t=1772262030; c=relaxed/simple;
+	bh=fzYUA9h6kHpJsVvFa7O9QMQGZLEAU4MUFuJNjuZzvEA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NQEZLfbGbVYSe9EJBM9NA4JmNsqZa9mE5wk2I0/yvtYVg/vilIKiqK7C4wX2jpbNG6+83jrb0M7qNO3XriVwtUiiw1TBMTHBuwlI4RJSQ6C1RoAQr9aMvaAjkCCSpqt1B4Cbbnf20x8L565a7hW8icDe0GdqfHvN2Vj2Jo0fm8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G/kRu0Lx; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kitware.com header.i=@kitware.com header.b="i5w72fuq"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-506362ac5f7so26124991cf.1
-        for <git@vger.kernel.org>; Fri, 27 Feb 2026 22:11:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G/kRu0Lx"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2aaf43014d0so22545465ad.2
+        for <git@vger.kernel.org>; Fri, 27 Feb 2026 23:00:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kitware.com; s=google; t=1772259112; x=1772863912; darn=vger.kernel.org;
-        h=user-agent:in-reply-to:content-transfer-encoding
-         :content-disposition:mime-version:references:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q3IF/rL/DthjtTtXpZgqgm6AV83e4NotwHzWvGu/Ayk=;
-        b=i5w72fuqyMbbxbUQGdMNXlwKMCp2ejIs4dIpVA6sK8guCiIqgxGeugm1RNKQYhdYp9
-         73h61tGj83OLP2KOQdF78vDaXs87LAYXkILC9ArhWaUHqCwyqblxqui2xTPyVbfRQCJm
-         F+KrWaGIscPMpUcxnttshgObXPR812os1nwYs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772259112; x=1772863912;
-        h=user-agent:in-reply-to:content-transfer-encoding
-         :content-disposition:mime-version:references:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772262028; x=1772866828; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q3IF/rL/DthjtTtXpZgqgm6AV83e4NotwHzWvGu/Ayk=;
-        b=fHicnyqJ4iN5pYS3NNujdPpgrgoRE/i7Uy4T+LEFAMg6cpqm2Gg62fgKf5oFW38nXk
-         lTNp9uI/AxTMRxYJzdYWglCgNIF2UaD766sSSI9c27rplSOWFAtd0aPuhYrWSMeTYKKX
-         MJSYOmjXgv4CVXEsrl64GzPlryhNQ2K/GvWyUripUfs7uCy36/9KzU27hOKRMEBPZECJ
-         cpf5Mwu+bGFqje0etw43s5luKl5rBOjP1ZS4bo4LPrRPXQNg9fhW926XjbcPcwEK5Fyx
-         vOtkIQOLV7Zi767MqaDE0hZbRRthgULWjqoJzlmghr0+KMyHDE3ApcAWs6vA7Wn//bH8
-         sbDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU//cD+CKThY+ghZJgdprAV0jh+/FKvInx0Ho3+VENTvFhgMNaTH5VmU2RXLLwu6LyKS0o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzxpBmZKzVGd0a03r0ndUzGBoND4q4ZyTYIfcYhzPMTv7/akq9O
-	IpmaTBN9GLLPtpYEBabRP3y/OVyE02tB5Cf+R2wiMfkVaR8oZ8TD07sx8wv4IoFh2hw7/VwZQYp
-	5QZbbAw==
-X-Gm-Gg: ATEYQzz7HNwb6iBy6DInygjrmTEqJ1LU7sQxB5p3NQs55uq+SvGyWJYOhmPbodDM/2G
-	7rZtO90nsxg3vPCodxzJdgsrLPHWFuelR5HGH91i+PX8XikSDC0EQOr3cAxp1sMOanIf0OkL15b
-	6VDLLGkNK1UAE8XvmwPFs/mUUp5e8JrfdpBGRNilE411CCKZcpEeowsqSNcee+LUlydMo+fSDq1
-	dCtm3wufEDBHDqNKAANDhoAkg8idvPpb9ITSHe+iUDKILWcqdX6BJWJ56VJhR9I0iLC4jMl3DKG
-	3gaUq7++9kufaQgk2bcvxw21X74pSFxOwsCPFnDxPUHreqzt+alsFOJDFkN0I7xJXCcJIPZxvqB
-	ooCidQ2SuLDMtaPszAFRuJbDbEuQ3GoSiCoMg5o9A3wIvPp880rgb6ji9e4zmxkEstVhNMICRrO
-	igJ4O2G0xtdBjMQtudaj/llyOigw1T
-X-Received: by 2002:a05:622a:138d:b0:506:a15c:507e with SMTP id d75a77b69052e-507528a836dmr69625121cf.64.1772259112111;
-        Fri, 27 Feb 2026 22:11:52 -0800 (PST)
-Received: from localhost ([76.37.124.126])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50744ae9313sm60881831cf.29.2026.02.27.22.11.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 22:11:51 -0800 (PST)
-Date: Sat, 28 Feb 2026 01:11:43 -0500
-From: 'Ben Boeckel' <ben.boeckel@kitware.com>
-To: Jeff King <peff@peff.net>
-Cc: rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
-	git@vger.kernel.org
-Subject: Re: [BUG] `git describe` doesn't traverse the graph in topological
- order
-Message-ID: <aaKHH6Mf_oKJ9H6M@rotor.dev.benboeckel.internal>
-References: <ZQ3GAJ/AHsM9e9a6@farprobe>
- <02e701d9ed78$436b3c60$ca41b520$@nexbridge.com>
- <xmqqediq2j0g.fsf@gitster.g>
- <032d01d9ed80$5e569670$1b03c350$@nexbridge.com>
- <ZQ3ggxA7KOysXrba@farprobe>
- <033201d9ed85$991c6af0$cb5540d0$@nexbridge.com>
- <ZQ3leoLhljc+P5wP@farprobe>
- <033c01d9ed8a$c6916f30$53b44d90$@nexbridge.com>
- <aR6BlHflRVLN8_XO@rotor>
- <20251120080525.GB1283645@coredump.intra.peff.net>
+        bh=EbxbIiO/8vul8pI559ZQB8iauF1rQjV2SqwC8/Aa6xU=;
+        b=G/kRu0LxAkJTJgYZJF3tJw9+qp6vukiRC/OZuEy8+OsEkbOgiqbuYldsUnTttZxbKn
+         iY9gVihqyovbq7kvSbRKViQCWDHICoPluBx0e/8m0ILsD+v/NXrZOGSdIrE82u8YPUa8
+         TJoSApNbrrVE098aRKV6xk9Zeah02zAJx++mtSqNX0ANwQfNqqZQpJsBnUljpilWYn6B
+         bvffiFGM9WJLk8BYCAWXrQ/wxS4LOBK3P5L29llUSvva3B+omUdbhhesHFpzcahljp0x
+         NxPf6OWU1qnXGZ6EpucoCq8o9s3T3DMxthnrH1D6Gp/CTfBNfd3lcciHLBpgx3QYTeFI
+         DvKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772262028; x=1772866828;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=EbxbIiO/8vul8pI559ZQB8iauF1rQjV2SqwC8/Aa6xU=;
+        b=XzSN4HN6I9eEG2QsNnBysYdenIDzClJxYWF2gxRvm6qg8cgm+OxzDyn623eXfDiBuw
+         zohQfc/xhmb7rPhOyQ7tmT/Rvgc6nFNbgrEjcuQ8fCwt2T7DSHvaXeBaXnVvtHsUom2B
+         N1sfqXSCDyL4bULxPFUlXGvsRm2mmDJLProfIQDI0y+QEY3ofYPJwuUWBu0RP+DpZuNm
+         uw/NO1fWQv/5n8m/jSYrUpYlIe6xnta9y6FNqiegA9puk0VZHQasPWZbkePsWOtYUXUs
+         +9trtfCWz7oBSkoFNHMNf391sw63str15FpxDtwgAEE9THFuc6jhHMK+tX9yG6KuF+Vk
+         XQqw==
+X-Gm-Message-State: AOJu0YyABzSqbI+VfkNdUN58NxDXojwe6jYkRtP1UMdIQxD1uoDBVnUt
+	YOwttvi6Oti5/iouVHTmiWxLcfVXredNQcBsgN2im5TgjG07Ci5/eK3AJxlpSWueKE+qQg==
+X-Gm-Gg: ATEYQzw5tJmJXE5LSQDu70k3U4SjhE1xUcgVXn/rsmVWCfhwW+EEmyYqUC4T73cDyDi
+	GBBWNa9Wgt3Z9UQWKFR+17WEei4exjqBBdVDQfpVjN61ZH188yBgxpG1bRWaP/bKinSznxTcUAr
+	aPPTzD93ehRsRqrM9DgzrrEFJOEb2MKnMgQNEMSDxNzGpe4oDnILqry7XKeXE+tUFmB80cfirC/
+	Wg3QvcbCdS7FBzlJDOZCBco4/3hfdmXoJrMBZUigVa+W/ttonXEVjWb01l9NeJ0KwCrrMpScw4n
+	0l97HZHh+ZsD7Ew2/v2hIKK614pVh4OnRCPd5ypRr+ypuX4Fq5+pDJRGsj0pzaHyyzfzuqtJB84
+	ze8XSOZ+Z3tT3+RItUvGjqCKLFZq0NF25/oUKOW+/cADibDZIDyBCPu4hwp/M/AnK6rCYtVL+6Q
+	wxeEgM3RsqHRGNBU3bOoU0Bb5VyiqvJKeA55FY6UQ1gcDgxssHgO83QUxm3B1EPQawan/Dj6w75
+	VG7
+X-Received: by 2002:a17:902:da8f:b0:2ad:a9a9:4bde with SMTP id d9443c01a7336-2ae2e4b55f6mr54256495ad.40.1772262028232;
+        Fri, 27 Feb 2026 23:00:28 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:ad51:cd15:ad04:c285:fe0c:c693])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6b5813sm77151355ad.63.2026.02.27.23.00.25
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 27 Feb 2026 23:00:27 -0800 (PST)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	peff@peff.net,
+	r.siddharth.shrimali@gmail.com
+Subject: [PATCH v2] t3700: avoid hidden failures and use test_grep helper
+Date: Sat, 28 Feb 2026 12:30:20 +0530
+Message-ID: <20260228070020.89668-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20260227165143.70188-1-r.siddharth.shrimali@gmail.com>
+References: <20260227165143.70188-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251120080525.GB1283645@coredump.intra.peff.net>
-User-Agent: Mutt/2.3.0 (2026-01-25)
 
-On Thu, Nov 20, 2025 at 03:05:25 -0500, Jeff King wrote:
-> On Wed, Nov 19, 2025 at 09:48:52PM -0500, 'Ben Boeckel' wrote:
-> 
-> > So I finally found some time to go back to this. The actual fix is
-> > actually rather easy (patch attached). However, as guessed at previously
-> > in the thread, the performance is in the tank without an up-to-date
-> > commit graph ("instant" with it versus "minutes" without). On the other
-> > hand, it is *accurate*. It does fix one expect-fail test case already in
-> > the test suite (also included in the patch).
-> 
-> Minutes? Yikes. Let's look...
-> 
-> > +/*
-> > + * Topological comparison: always return parents before children.
-> > + * This is reverse topological order: children before parents.
-> > + */
-> > +static int compare_commits_topo(const void *a_, const void *b_, void *_unused_ UNUSED)
-> > +{
-> > +	struct commit *a = (struct commit *)a_;
-> > +	struct commit *b = (struct commit *)b_;
-> > +	if (repo_is_descendant_of(the_repository, a, &(struct commit_list){ b, NULL }))
-> > +		return -1; // a is descendant, so comes before b
-> > +	if (repo_is_descendant_of(the_repository, b, &(struct commit_list){ a, NULL }))
-> > +		return 1; // b is descendant, so comes before a
-> > +	// fallback: order by hash for determinism
-> > +	return oidcmp(&a->object.oid, &b->object.oid);
-> > +}
-> 
-> Ah. So you are doing two full traversals for each comparison. That is
-> going to be expensive. You would do much better to walk all of history
-> one time, marking the generation number (distance to root) of each
-> commit, and then comparing generations here (if A has a lower generation
-> than B, then you know that B cannot be an ancestor of A). Or if we have
-> commit graphs, just use the generation numbers they already contain. ;)
+Replace pipelines involving git commands with temporary files to ensure
+that any crashes or unexpected exit codes from the git commands are
+properly caught by the test suite. A simple pipeline like
+'git foo | grep bar' ignores the exit code of 'git', which can
+hide regressions.
 
-Ok, so it sounds like I should, in `describe_commit`:
+Additionally, replace standard 'grep' with the 'test_grep' helper.
+This improves debuggability by automatically dumping the contents of
+the 'actual' file when a match is not found. In cases where we were
+counting lines with 'wc -l' to ensure a pattern was absent,
+simplify to 'test_grep !'.
 
-- check if commit graphs are enabled (and verified?): if so, use their
-  generation numbers
-- if they're not enabled, perform a local walk to store a generation
-  number (somewhere?) that is `max(cmit->parents[].generation) + 1`
-  (however the `generation` is stored)
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 
-and then in the comparator, use this to exclude one of the comparisons
-at least. However…
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+---
+Inter-patch notes (v1 -> v2):
+ - Replaced standard 'grep' with 'test_grep' for better diagnostics.
+ - Used 'test_grep !' for negative assertions as per project style.
+ - Simplified 'wc -l' logic to 'test_grep !' to avoid subshells.
+ - Removed unnecessary '<' redirection from function calls.
 
-> We do all of this already for the "--topo-order" option of the revision
-> traversal machinery. If we have commit graphs, it can output in
-> topographical order in a streaming way (see init_topo_walk() in
-> revision.c). If not, then we collect all of the commits up front and
-> call sort_in_topological_order().
+ t/t3700-add.sh | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-The key here seems to be:
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index 66c6114b54..d61bf784d2 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -39,7 +39,7 @@ test_expect_success 'Test with no pathspecs' '
+ 
+ test_expect_success 'Post-check that foo is in the index' '
+ 	git ls-files foo >actual &&
+-	grep foo <actual
++	test_grep foo actual
+ '
+ 
+ test_expect_success 'Test that "git add -- -q" works' '
+@@ -197,8 +197,8 @@ test_expect_success 'git add with filemode=0, symlinks=0, and unmerged entries'
+ 	echo new > symlink &&
+ 	git add file symlink &&
+ 	git ls-files --stage >actual &&
+-	grep "^100755 .* 0	file$" <actual &&
+-	grep "^120000 .* 0	symlink$" actual
++	test_grep "^100755 .* 0	file$" actual &&
++	test_grep "^120000 .* 0	symlink$" actual
+ '
+ 
+ test_expect_success 'git add with filemode=0, symlinks=0 prefers stage 2 over stage 1' '
+@@ -215,8 +215,8 @@ test_expect_success 'git add with filemode=0, symlinks=0 prefers stage 2 over st
+ 	echo new > symlink &&
+ 	git add file symlink &&
+ 	git ls-files --stage >actual &&
+-	grep "^100755 .* 0	file$" actual &&
+-	grep "^120000 .* 0	symlink$" actual
++	test_grep "^100755 .* 0	file$" actual &&
++	test_grep "^120000 .* 0	symlink$" actual
+ '
+ 
+ test_expect_success 'git add --refresh' '
+@@ -258,7 +258,7 @@ test_expect_success POSIXPERM,SANITY 'git add should fail atomically upon an unr
+ 	chmod 0 foo2 &&
+ 	test_must_fail git add --verbose . &&
+ 	git ls-files foo1 >actual &&
+-	! grep foo1 actual
++	test_grep ! foo1 actual
+ '
+ 
+ rm -f foo2
+@@ -293,7 +293,7 @@ test_expect_success POSIXPERM,SANITY 'git add (add.ignore-errors = false)' '
+ 	chmod 0 foo2 &&
+ 	test_must_fail git add --verbose . &&
+ 	git ls-files foo1 >actual &&
+-	! grep foo1 actual
++	test_grep ! foo1 actual
+ '
+ rm -f foo2
+ 
+@@ -305,7 +305,7 @@ test_expect_success POSIXPERM,SANITY '--no-ignore-errors overrides config' '
+ 	chmod 0 foo2 &&
+ 	test_must_fail git add --verbose --no-ignore-errors . &&
+ 	git ls-files foo1 >actual &&
+-	! grep foo1 actual &&
++	test_grep ! foo1 actual &&
+ 	git config add.ignore-errors 0
+ '
+ rm -f foo2
+@@ -316,7 +316,7 @@ test_expect_success BSLASHPSPEC "git add 'fo\\[ou\\]bar' ignores foobar" '
+ 	git add '\''fo\[ou\]bar'\'' &&
+ 	git ls-files fo\[ou\]bar | grep -F fo\[ou\]bar &&
+ 	git ls-files foobar >actual &&
+-	! grep foobar actual
++	test_grep ! foobar actual
+ '
+ 
+ test_expect_success 'git add to resolve conflicts on otherwise ignored path' '
+@@ -334,7 +334,7 @@ test_expect_success 'git add to resolve conflicts on otherwise ignored path' '
+ test_expect_success '"add non-existent" should fail' '
+ 	test_must_fail git add non-existent &&
+ 	git ls-files >actual &&
+-	! grep "non-existent" actual 
++	test_grep ! "non-existent" actual 
+ '
+ 
+ test_expect_success 'git add -A on empty repo does not error out' '
+@@ -544,9 +544,11 @@ test_expect_success 'all statuses changed in folder if . is given' '
+ 		touch x y z sub/a sub/dir/b &&
+ 		git add -A &&
+ 		git add --chmod=+x . &&
+-		test $(git ls-files --stage >actual && grep ^100644 actual | wc -l) -eq 0 &&
++		git ls-files --stage >actual &&
++		test_grep ! "^100644" actual &&
+ 		git add --chmod=-x . &&
+-		test $(git ls-files --stage >actual && grep ^100755 actual | wc -l) -eq 0
++		git ls-files --stage >actual &&
++		test_grep ! "^100755" actual
+ 	)
+ '
+ 
+@@ -582,4 +584,4 @@ test_expect_success CASE_INSENSITIVE_FS 'path is case-insensitive' '
+ 	git add "$downcased"
+ '
+ 
+-test_done
+\ No newline at end of file
++test_done
+-- 
+2.51.2
 
-	if (revs->topo_order && !generation_numbers_enabled(the_repository))
-		revs->limited = 1;
-
-which then goes down the `sort_in_topological_order` path.
-
-> Sadly, git-describe does not seem to use the traversal machinery, so it
-> is not as easy as just setting revs.topo_order. Either we have to adapt
-> to using the regular traversal code, or those same concepts need to be
-> applied to its custom traversal.
-
-I suppose I can try to convert it over to a proper walk following
-`MyFirstObjectWalk.adoc` if that is a more fruitful path than the above
-ideas. As long as all children of a commit are walked before the commit
-itself, it should slot into the existing bookkeeping fairly well.
-
-Thanks,
-
---Ben
