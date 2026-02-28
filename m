@@ -1,131 +1,135 @@
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD23423A83
-	for <git@vger.kernel.org>; Sat, 28 Feb 2026 10:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772275890; cv=pass; b=PYCSKGdPhEqzTPRsuu+XUzftWyXL2L0yWvoKUpmtl0Kx19otKXWSZkW+CftsbQkD5e/qzKSUCn2xFqWdw3c6ouET/rgkKrxQ8vXtLj/Sc/BSQkb2JkkjtR7mpibCjWFHQ0QYEcNSHrGZmr31hzLauBbIB1QxwOkscuw103UPOvo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772275890; c=relaxed/simple;
-	bh=vrVHf3IRzgEsyAQ+xpI+DinCiKHYodjxDW4sFmypOAw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B/NZ4wM6uv/bXnl/U+38h2BNpSpJlppd0X2IpOLbc0Em9xyahJO1Cjsxz6X7PaLb1xNU7a2wmWjLtvbSOlsmgvR8lPjKW38pksnANU6i4dXk4X7gyqHcpYaIXhncZPXhwTqRG4OdcqKelgUoNqWY8n9bUoPsQJdtLh6G9aHhU9M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TgNdfdf5; arc=pass smtp.client-ip=74.125.224.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2679B3612FA
+	for <git@vger.kernel.org>; Sat, 28 Feb 2026 10:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772276332; cv=none; b=bwEuxLAWHgxoq77/dCJH1suxuV1E4UaRNDbtTIrqkHdFffZADx3P+2j4B5OfCAS8cQYZiCgawd5BZ19Nx0R8VzUJj/KiWgSN5eXcHxp6qG2GrpeiZBRYrec4w/WyYbx45W6H0GqApv4swyKK5ZfxZNZCUjox9jgMlgSUDvmrBNM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772276332; c=relaxed/simple;
+	bh=Vl3YfZ4rIY7EGcFmBwxxQbiXsqbVOqHIl++dyi4Nilc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f++We4ufbCYwgjcg7HYV28/Dxb2V+4jJEaMi1dc/XOZJjcPl9B0OKAlPdVWP336gPxyOk0EkowxL/r9a4a0foz7S56YEhQWQLNA+d2VUWP+Te7ldHdMbWKNF6Ezvpo7JqX52gNRsPdWyMMObAqxOlUNJlPPw55q9ccRWUdmuz7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ahnDJj9k; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TgNdfdf5"
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-64ad79df972so3001804d50.1
-        for <git@vger.kernel.org>; Sat, 28 Feb 2026 02:51:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772275888; cv=none;
-        d=google.com; s=arc-20240605;
-        b=PE4eeC56pM+XItjKANFwWX8aIu64Uq4Fg8oKIdPFJFEsZUZj6rl7GRISbrmqr/wO7r
-         8YCpeIPM6OpBT9LaCDVwl5qLKWjd8cHffljpn9Jk0QmNMxxQvozhxHuirVcBC/IfTUCc
-         9eB35isLlDYCYJUwqdEifWxYgasIKEn4S46IDBleL10V5ryMm0KOQnVazAvAJ5TbgxT6
-         72iiadP85nBmfRAk1MoyXVH4Ywe2c01ZNIC4mFTY7vizMw0uWdd67snsS51WjgqWdeTk
-         tQrG/V+L2uaGrVcF+SNRLR++UQWkRcKzo/BkG/lG1BRXNLBIFvGg4NBMDn1deef4tJf8
-         qCaQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=aw9j2bZjstdPQy3iMLkNZTT0S/jyl84modHBtetJ2Ow=;
-        fh=dyqx4q2bh8e/daHqA3J7TKDncsgY4Xrr5cVwvb8Heeo=;
-        b=iZ9GxGPYCTqX3pxExA7z++55pxcQADbb+KX4P2lQcy3mkr2U3KXW25VrR/Prr7o5BP
-         B82jP5mrZALQUhGNSoAduIQM94Y7CDB4BcIvdoBZioGy/vJLVaDk4E0NEHe2GMi16lZc
-         rnv/XT7blHJQ+8VEzbFuh16cM+8bacLSv+BVhh/5CMx8ZcckVYlWPzTGjFjpqk2/j+BL
-         +rjzhIgpj1IV7R1wrXal/VgoYKr+NNCLTrH+hHEv5Hw2kUlSSrZ4fkEJ/xJKzKkTu+KD
-         Xvjhhmtb5Ee/xyxghrESfynPASrxiRW6DdKxGdj1yB/MnzU3xODZbXqjTtvdvQ4e5UUJ
-         PP/Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772275888; x=1772880688; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aw9j2bZjstdPQy3iMLkNZTT0S/jyl84modHBtetJ2Ow=;
-        b=TgNdfdf5ycfhMJd2dNt4EOxB0o7oocMhUNY7vQ7aErWrtTHeCm3j3rEsJOCigWoB42
-         KGVfD6dhzPPiQT0Cq8GVV/0NShlxjDbLe/v4cM/ZNXtcDQIJLHtv0RRfxAniiUJMtKOl
-         u+cvgcXuSaIgn3kksvQrE/LuiSx0aag3W4/tY42oS1vbipkjUUBpDOz8tw34J5egYqcY
-         hOaQasxHF3/mUfT7k07ftkJiHkEqbKw9iLctn3J/mtCBHN2ITL9MhS02jJlPXY84XWUi
-         6a8rzX4AlzXAKsypD4MV9fk5iV/1Y/902VgyflD+B8TeiihfCvSAxuuNY99GpsZjtGAH
-         n6pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772275888; x=1772880688;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aw9j2bZjstdPQy3iMLkNZTT0S/jyl84modHBtetJ2Ow=;
-        b=aAz494+qBHP1a/K4d7ssoB7Bx7xs5uDfk+K6PGkTSAN3aUNgBRlSM5Nc6Y9/facNi+
-         KNtgPnf3WvAuoS4Kqpyan3uiYRfNX277XmjRCGOB5AZBxwreQNJQzyRiztie5mOswXeg
-         dm9qrBOdJ/IMHnQ+zOnuDaFzJ8blMS/SHzcztP0LPw4DGT0xFvYfIJUg9uK1j8VoD8Xv
-         OHiTUWVjWiaANNr+XokFL8hPkrfsfzqi3tSC55UJv3EnGukd2XJI+uOMqr0QKcpxN5mW
-         j/f/rs89fbItNQZuCY7HJ3iCNlIjV8oFIgxL3Zh7CKynxxmAjGBX/XQbJYzdFQeaz/C0
-         f3sQ==
-X-Gm-Message-State: AOJu0YzukIdOnIJGmmenA01pncCYjSlaU4vW4iRIV5SRUnluEk6qpfIQ
-	H5vd0O7t/ytkrM7yew67/lut+NSetXBIGthYEkjg1XRrXMD/T/xYUO57M4z5mxaSOt3zn6TSST1
-	1BgqASlz4vLvrIaH5QDN+ZZ5AyOQ1LBo=
-X-Gm-Gg: ATEYQzzSE1yj0FNh+Ig+EiR8SLPfzGdTU6KMViPe+aF7cUJSdOdQzrwGMDc90FqQlWx
-	qmnkyi3MnbQjEkI0jRt1zc3XzfdPoCLswnr5vMINfHJKAg/BsjaHkJgu/O63pnUMT34Kwfp7B4+
-	SJLGtluXVU6uLyifYvr3Sf3clcDn+kcc3G1VdH0b3xWJLdGDfGbVtLatk/jRhigN9ttm6vuFhki
-	1SD+nsHj50nuF3ESVoF+X/GigdKjeDNnpVCuD6cApYY3o90EIgSnqhc8njt8gE2S7Jr5JYoDV5X
-	6aXxaVA/atYK84bppaCOAafiZl5L1gekTdqxjUc=
-X-Received: by 2002:a53:d38c:0:b0:64a:e3a6:c393 with SMTP id
- 956f58d0204a3-64cc233344emr3625907d50.77.1772275888087; Sat, 28 Feb 2026
- 02:51:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ahnDJj9k"
+Received: (qmail 86213 invoked by uid 109); 28 Feb 2026 10:58:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=Vl3YfZ4rIY7EGcFmBwxxQbiXsqbVOqHIl++dyi4Nilc=; b=ahnDJj9kf687ca6RfEZIPoiPHwInOJl1GnZf1Tb/Recj9qZRG1F9SVl5kTtn9Q/ZHdXow3B5QApCqNPdiRoZlgCUummTCI1HuafqxpkXP/79/cFpWea4okMbNiUt0kmAuI2JbZE4M/p0e5kW9S+yQLWhV8+l9XLSlDt5nypzlf2N2/kb7hpGMUUWkagFl7TV4TYg9LlTqUIRY9fpnUo+u7r+M7gDaqEemPiXwL3TSR219lTiWt8ja3CwoBsLmLtEPuNmMgkBCeF/Hdhjghr5ex30xNUrVlp5uMQjVjC90EIyW6uiScFglZiXiwaukB7qpeYKRWmtl6wBpgkT4gRWGQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 28 Feb 2026 10:58:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 290650 invoked by uid 111); 28 Feb 2026 10:58:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 28 Feb 2026 05:58:54 -0500
+Authentication-Results: peff.net; auth=none
+Date: Sat, 28 Feb 2026 05:58:49 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] parseopt: check for duplicate long names and
+ numerical options
+Message-ID: <20260228105849.GA3626520@coredump.intra.peff.net>
+References: <xmqq5x7jujqb.fsf@gitster.g>
+ <7693799a-91a2-480a-ae3e-29f8eed5b55a@web.de>
+ <6b674316-9a6e-4f57-b32c-f1824869ba7e@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260212041017.91370-1-amishhhaaaa@gmail.com> <20260221162359.43336-1-amishhhaaaa@gmail.com>
- <20260221162359.43336-2-amishhhaaaa@gmail.com> <xmqqwm05qsei.fsf@gitster.g>
- <CAPvEtrfmgq8f2z7tAvR-oCEYoiG2B+Pj9EqjUsKuewnO73tVPg@mail.gmail.com> <xmqqjyvz4foj.fsf@gitster.g>
-In-Reply-To: <xmqqjyvz4foj.fsf@gitster.g>
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
-Date: Sat, 28 Feb 2026 16:21:15 +0530
-X-Gm-Features: AaiRm51knxqqokbjOUDBQ6J7a3ZlEhvExGGAEivxob7hDqWDjezDp7EmAnC4j3s
-Message-ID: <CAPvEtrf_m1Uae27Z9ZKsSJsu=_HAeT8fMO80cnVGc4dfVtrTBQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] help: cleanup the contruction of keys_uniq
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6b674316-9a6e-4f57-b32c-f1824869ba7e@web.de>
 
-Incredibly sorry for the bouncing mail once again, I will fix it locally.
+On Sat, Feb 28, 2026 at 10:19:16AM +0100, René Scharfe wrote:
 
+> Perform the slightly expensive string duplicate check only when showing
+> the usage to keep the cost of normal invocations low.  t0012-help.sh
+> covers it.
 
-On Thu, 26 Feb 2026 at 22:15, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Amisha Chhajed <amishhhaaaa@gmail.com> writes:
->
-> >>
-> >> The striking similarity of the body of the loops in these two
-> >> functions bothered me enough to try writing this; the result does
-> >> not look too bad, I think.
-> >
-> >
-> > Agreed, I was also not very happy with the similarity present at these
-> > two places,
-> > especially the wildcard and tag part, tried to convulse them into something
-> > singular. It again started to look like the original so ultimately
-> > kept it like this.
-> >
-> >>
-> >> By the way, I'd really prefer to see contributors *NOT* to use
-> >> undeliverable and/or bouncing e-mail addresses when working on this
-> >> project, as I'd always have to edit the Cc: list to avoid getting
-> >> bounces.
-> >>
-> >> Thanks.
-> >>
-> >
-> > Thanks, I will take care.
->
-> Thanks.
+Nice, this seems like the perfect compromise to me. We get a runtime
+switch that kicks in at the moment we want, and we don't even have to
+pollute the world with a new switch or environment variable.
 
+> +static void parse_options_check_harder(const struct option *opts)
+> +{
+> +	struct strset long_names = STRSET_INIT;
+> +	for (; opts->type != OPTION_END; opts++) {
+> +		if (opts->long_name) {
+> +			if (!strset_add(&long_names, opts->long_name))
+> +				optbug(opts, "long name already used");
+> +		}
+> +	}
+> +	BUG_if_bug("invalid 'struct option'");
+> +	strset_clear(&long_names);
+> +}
 
+I confirmed on my silly pathological case that invoking rev-parse with a
+real option shows no slowdown, and we now pay the same 10ms cost to show
+"-h".
 
--- 
-Thanks,
-Amisha
+Your other email made me wonder how the sorted-array solution might
+perform (patch below). It shaves off 2ms of those 10. Probably not worth
+caring about for "-h" output (which is already spending another 5-10ms
+to generate the output, versus a normal parse).
+
+-Peff
+
+-- >8 --
+diff --git a/parse-options.c b/parse-options.c
+index 0214c106d4..1ea7efd5a3 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -721,17 +721,39 @@ static void parse_options_check(const struct option *opts)
+ 	BUG_if_bug("invalid 'struct option'");
+ }
+ 
++static int qsort_strcmp(const void *va, const void *vb)
++{
++	const char *a = *(const char **)va;
++	const char *b = *(const char **)vb;
++	return strcmp(a, b);
++}
++
+ static void parse_options_check_harder(const struct option *opts)
+ {
+-	struct strset long_names = STRSET_INIT;
+-	for (; opts->type != OPTION_END; opts++) {
+-		if (opts->long_name) {
+-			if (!strset_add(&long_names, opts->long_name))
+-				optbug(opts, "long name already used");
+-		}
++	const struct option *p;
++	const char **long_names;
++	size_t i, len;
++
++	len = 0;
++	for (p = opts; p->type != OPTION_END; p++) {
++		if (p->long_name)
++			len++;
+ 	}
+-	BUG_if_bug("invalid 'struct option'");
+-	strset_clear(&long_names);
++
++	ALLOC_ARRAY(long_names, len);
++	i = 0;
++	for (p = opts; p->type != OPTION_END; p++) {
++		if (p->long_name)
++			long_names[i++] = p->long_name;
++	}
++
++	QSORT(long_names, len, qsort_strcmp);
++	for (i = 1; i < len; i++) {
++		if (!strcmp(long_names[i], long_names[i-1]))
++			BUG("long name %s used twice", long_names[i]);
++	}
++
++	free(long_names);
+ }
+ 
+ static int has_subcommands(const struct option *options)
