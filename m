@@ -1,374 +1,158 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE473A862C
-	for <git@vger.kernel.org>; Sat, 28 Feb 2026 17:38:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA88C35E958
+	for <git@vger.kernel.org>; Sat, 28 Feb 2026 19:02:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300282; cv=none; b=cnXT4G0bACFFFks0hXKPYpPMqoY98ujzT8J16Jy1iCCstTMpwwU65nS81eqLbaPoYreAzscPV40fIm1GKg3pgIP2g4eTFQaQGIkpx+snOYgPDgnBPVURT9LChOZfRNEeVxMJzH72zA3DiXGIdDn4AlsVXItwBQ+CPZ7e+cmO1kQ=
+	t=1772305335; cv=none; b=WC6ce3k9HS9UaXQO4qPe1A87y5sFUHL21/fWqPTUoQsGw8lO0MvBJI/xuWYiu/s247SHTiEfAiG6NWyQyBc95XYC29+z6na3XHuwhNkcb4937X10nXqF4+i96FIbju7AmKuahdiReoUeKjO+vNR3X46yV8czdp7yuI4IoBZRZaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300282; c=relaxed/simple;
-	bh=m93YkUn8Nux/CBk9QPdzdk8/1lNcuvxbJgxwYK8V9hM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uG2Oh6h/E119gbY+IYtViUVE9UVLCRaitVbMGhKppN3WQ/KiM1iXNRepqH/YqeAlaWXGYwEfimUEHpppbOy+QQvblQyzD9O8/g5j8yqynAH8ZYk8NJDSRuOiDxfd/xDQy4Q2Hj1SddXOtJUZyyUVDl/Eowv9sWkjNWIluFFz9rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EDsMWh/6; arc=none smtp.client-ip=209.85.219.50
+	s=arc-20240116; t=1772305335; c=relaxed/simple;
+	bh=HXQXKhZvBqLNWHo4oJk49zH+xa/EumlTDfJke+/lYwU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=nCjoB56Vk4w/8LEtdgH2n21saOIYVhje5WMnD+Kj3VqzpHcQKtlbLvEykbViqWY1weSFuggyjRdo0V8BjdfzeicHBXSLWdwtrbU2du+VIs8N5h5KddAFFvSSC1z1lfDx65rST0aIbo57fFDM87yPMiggwrEZB74T72NfrtDLz/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QoATjJMp; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EDsMWh/6"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-899c3441177so53593176d6.0
-        for <git@vger.kernel.org>; Sat, 28 Feb 2026 09:38:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QoATjJMp"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-824acdfb73dso161279b3a.2
+        for <git@vger.kernel.org>; Sat, 28 Feb 2026 11:02:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772300280; x=1772905080; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772305333; x=1772910133; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QwM9IpcgT7h6TTrAbZzRKp7V5+SFsILAXmI1Ccut8pU=;
-        b=EDsMWh/6TPs9jOR2dPw+EvNUnNuqs3VkzTGDTsHl8UfxTKULZxGBzsaEGnf4Lr5qR8
-         5mkrEcRv/ng4R/MyYbenvGioAHZ7fRE9exIMGLa+EoD1TNYv6R+ssIieTiR5L+V+Eha3
-         pO0SpaNY18owzIx2jjxAcprGGL5g9U6aMPsL8ltOZM6ChmxhulFoqGlpiNczMUwiGied
-         obQyYjO8oLErP5TwGYRbZH2VLddKRT0ssLv0U+qJ2jQhzfJZTPHJdCkZx7dNoAVwZrZI
-         DkVfK/oBzlzy4fM4XPIRSSCBSRnJ4Dkl8ULxs4NF5z+ac9RNuwoIDPZrjgFMuNNUA9Mn
-         9wfQ==
+        bh=clX+HHNYZKc4iMjbr8oSi19m/sPVKy/vo0r33jT5ZiQ=;
+        b=QoATjJMpbxuMb4eeEtZticzKtKkN1Yn34j+lwzoAjT9YeOs2BHvApSQdarcBCgANRF
+         jLHkNqkfx1FmdgPcF0MLFld+btfJo/VUGmNUU9lkGpZpQjwGzskAr3pNNCSwhZdlGz/c
+         E0j5mxZ0Nt5PwXhLDn33tMew0p1LJSdu0UJMxXIobrEXwI4KP9qlkjnkwjMZ6ei5PZy1
+         v19MOUpFuY1DecQJvalF1NNfiO7R+lLBAX+TTWzEkxjLeXJDLwa8w68SUJhhTbQXB97F
+         w+KbG9HKtPICtdWi/Y8a7/zb/pYUsVUXFwGyc790UteQw5wwaA7TQb3ZuYoO0d4QEnaS
+         pEyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772300280; x=1772905080;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1772305333; x=1772910133;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=QwM9IpcgT7h6TTrAbZzRKp7V5+SFsILAXmI1Ccut8pU=;
-        b=xRCG4YN6eQI8ojFv5IeByd/+/Oa4s0yGHa+lBOGDOlXHZ9blLG2561lrgDRCdWJOmg
-         TUqYHjTnPCjoNE7k934MNW35VPw8KGIdfm+kRWSW/O86LqceRcmo0OWAF0xAxBpKcX4I
-         DsUTjo4q8YTKyv6jOqkMSdlOqACCwaM/RL59BilNAYeKg8Ka9ja0hTR2QDR1ieiH+Wga
-         Tw2Ln9RH9l2bvs26GKzMQcT46MadBtzRG7m/942MA4I9ZvvKUWmDuyjNVtrtVftcc0YZ
-         7ti8TzH7skR+bJSgvTLGxue7OaDLMxeMrp2481SooqFaKMJ6E3ZvXZ2TtRgHZvp1Z5Vc
-         ddcA==
-X-Gm-Message-State: AOJu0YyIpxo/Cjuh1RcMiDb4ir+g0R+E3x1Bxgn34Y08tLECp+F1d8Ln
-	9Sw1lf/5anrJhnbPpBS7S7y4rQ9DO7JukceXemB2n03te/8kDEkzPNCYmVmwrBzI
-X-Gm-Gg: ATEYQzwuU76w53fKYMD3KzEAHlXHT61hCRD+buNYisB+upsdyfj7jWhTDSzPyrF4Feg
-	XTwl8WIqqhPOKcRPrMcSXWS5JzFf1EEw8ctJT4KHpvah5y9KIF+93sGNdOi+NkxS8o1phfSifLb
-	hhYwc67V6ngdpz/inr9UxOo2UpBsCxAGq85vH0pHQTfrqDP9IvEZZBHQ9YfPBzR5CN/d0UNbGAD
-	MAyrbblfkVqSlKmfDxhZ4+qZpIcB+UUu3rpI0LLjdjnjDJ73ugmkRrvg7XVYgZuefc6fLc8wClL
-	/aHgL2LCl1WHFy3L+bcurpps41BHtzEyA4a+zZVTa6r4hI6NHB61ishnBv4nTw+bnS7PgRoFcWx
-	nR+DrvbACiGGDIXT6wT16+M68Vw4U59uMDolyGahK2j1hLduMbdZvuDvAumW425p8jQ/OEfvKgQ
-	YFfhAg6pfvqXa/Yes4YrtoRC+S
-X-Received: by 2002:ad4:596d:0:b0:894:7a38:d665 with SMTP id 6a1803df08f44-899d1d899c4mr101219786d6.3.1772300279626;
-        Sat, 28 Feb 2026 09:37:59 -0800 (PST)
-Received: from [127.0.0.1] ([4.246.134.180])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899c739000fsm67653456d6.44.2026.02.28.09.37.58
+        bh=clX+HHNYZKc4iMjbr8oSi19m/sPVKy/vo0r33jT5ZiQ=;
+        b=WVBic2juq49IlRuEWUmQBez3f7T5wlP5ZB3IC7rr1fvVfXSZpaL+soxtofNCeugt3x
+         JRYP1b+3Mc+V3L0Aj0t/noRoCqmWkdZvUY5grb1jjKBeQbZqzak+XqFWdhYbIYHXv/9k
+         epMrbu2SniZ69qLs5IxPK82RNIsh/1cVpwt7CARCnIPVdwJXOECNl4miOLlFM6pfvhOB
+         SXI5pfo/cmBOcslEjnqfqHnbzQU5BPXp5mS4rqevlqZ+Zh8td7BIQuPje4v6CaC7+OcE
+         FHGmU9vIPafqicZPMX4Eg4q2jzx0e2eoQVrlEGoBVKRsgJZGQel6k2Che0jZe9KKWb2v
+         +8ig==
+X-Gm-Message-State: AOJu0YypFmw8dmhgcLSbP9er6W2ZoWWkJXKo0iIYelPjiIowNQlT959U
+	Y5IuWPXkA+k5g9CyTtVcJbPAB2EVjCJ54uhZIFF0d4yVeCQbaVr4Hxtv3it8lJnH
+X-Gm-Gg: ATEYQzyHFmNbYDOwBzOUCz4xp8K9jObMRcbxWkwCPDYo8ktlEDWNWIrOgAKZToc0R/x
+	+mFJxfIvep6YVn195Uc7BFUrZDU9UOYBZeRoHQjHIM+D08O22xUYEV+hPVybFHXnmWUUtqLxmzc
+	qskxtz5CQW+4mkOi0qmN2AfYpn6I3pMfwuYSEhO4Hw1Da9G1AiML2fnKoGRaTr4vQIcrDxKeSle
+	0dqCzNMpi3djJfBQdu8ZyEoTB6B//PgnBqIIu9SVBmw71dQrXztZKRxnaH6LB3PVZ8qjWctukeJ
+	Sljjgo5Mo+g8lI3bHhUtOwcLrsANyZ3croWrwBHIaDHr6bGkL/IKf/nWcig4Y26I6Menx/kHqst
+	qq9r4KBqBTa+Mh+R5cjc6IcKILYuRJKbeeSIRPUNNfGBnaWHEYkr8lpe5M9ET9A+8089O7JkoZT
+	QJxGsuSY0WcxmfSU5Xg6h2rufwSRoyZf6RgQtw0NJQ/J/WHnIdPWOZmiJGV7zudfFfBHXaGTKMp
+	eEFFfX3SQ1lL6Yb6LSRaEw=
+X-Received: by 2002:a05:6a00:390e:b0:824:9f50:83c7 with SMTP id d2e1a72fcca58-8274d7d4efbmr4779438b3a.0.1772305332273;
+        Sat, 28 Feb 2026 11:02:12 -0800 (PST)
+Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82739db3e4asm8556644b3a.28.2026.02.28.11.02.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Feb 2026 09:37:58 -0800 (PST)
-Message-Id: <pull.2180.v2.git.git.1772300277959.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2180.git.git.1769391202338.gitgitgadget@gmail.com>
-References: <pull.2180.git.git.1769391202338.gitgitgadget@gmail.com>
-From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 28 Feb 2026 17:37:57 +0000
-Subject: [PATCH v2] fsmonitor-watchman: fix variable reference and remove
- redundant code
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 28 Feb 2026 11:02:11 -0800 (PST)
+From: Tian Yuchen <a3205153416@gmail.com>
+To: git@vger.kernel.org
+Cc: karthik.188@gmail.com,
+	gitster@pobox.com
+Subject: [PATCH v2 0/3] migrate encoding settings and bubble up repository
+Date: Sun,  1 Mar 2026 03:01:58 +0800
+Message-ID: <20260228190201.3684705-1-a3205153416@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260228040727.2057192-1-a3205153416@gmail.com>
+References: <20260228040727.2057192-1-a3205153416@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Koji Nakamaru <koji.nakamaru@gree.net>,
-    "brian m. carlson" <sandals@crustytoothpaste.net>,
-    Paul Tarjan <github@paulisageek.com>,
-    Paul Tarjan <github@paulisageek.com>
+Content-Transfer-Encoding: 8bit
 
-From: Paul Tarjan <github@paulisageek.com>
+Hi everyone,
 
-The is_work_tree_watched() function in fsmonitor-watchman.sample has
-two bugs:
+As part of the ongoing libification effort and my GSoC 2026 proposal,
+this series migrates commit and log encoding settings into 'struct
+repo_settings' and bubbles up the 'struct repository *' dependency.
 
-1. Wrong variable in error check: After calling watchman_clock(), the
-   result is stored in $o, but the code checks $output->{error} instead
-   of $o->{error}. This means errors from the clock command are silently
-   ignored.
+Previously, 'git_commit_encoding' and 'git_log_output_encoding' were
+global, where core APIs implicitly rely on 'the_repository'. This
+series resolves this in three steps:
 
-2. Double output violates protocol: When the retry path triggers (the
-   directory wasn't initially watched), output_result() is called with
-   the "/" flag, then launch_watchman() is called recursively which
-   calls output_result() again. This outputs two clock tokens to stdout,
-   but git's fsmonitor v2 protocol expects exactly one response.
+  - Patch 1: Moves encoding configs into 'repo_settings' using lazy
+    -loading, safely handling CLI overrides in 'revision.c'.
 
-Fix #1 by checking $o->{error} after watchman_clock().
+  - Patch 2: Updates 'commit_tree()' and related APIs in 'commit.c'
+    to accept a repository context, passing it down the call chain.
 
-Fix #2 by removing the recursive launch_watchman() call. The "/"
-"everything is dirty" flag already tells git to do a full scan, and
-git will call the hook again on the next invocation with a valid clock
-token.
+  - Patch 3: Updates 'pretty_print_commit()' and 'pp_commit_easy()'.
+    We leverage existing contextual pointers ('diffopt->repo' and 
+    'revs->repo') to pass the repository downwards.
 
-With the recursive call removed, the $retry guard is no longer needed
-since it only existed to prevent infinite recursion. Remove it.
+To maintain a clean boundary, leaf callers in 'builtin/' and top-level
+components (e.g., 'bundle.c') fall back to 'the_repository'.
 
-Apply the same fixes to the test helper scripts in t/t7519/.
+(Though series passes the full test suite and is verified with 'S
+ANITIZE=address,undefined', I'm quite certain I must have inadvertently
+left out some parts. Therefore, this patch series is currently more
+of a self-archival exercise than a final submission.
 
-Signed-off-by: Paul Tarjan <github@paulisageek.com>
----
-    fsmonitor-watchman: fix variable reference and remove redundant code
-    
-    fsmonitor-watchman: fix variable reference and remove redundant code
-    
-    The is_work_tree_watched() function in fsmonitor-watchman.sample has two
-    bugs:
-    
-     1. Wrong variable in error check: After calling watchman_clock(), the
-        result is stored in $o, but the code checks $output->{error} instead
-        of $o->{error}. This means errors from the clock command are
-        silently ignored.
-    
-     2. Double output violates protocol: When the retry path triggers (the
-        directory wasn't initially watched), output_result() is called with
-        the "/" flag, then launch_watchman() is called recursively which
-        calls output_result() again. This outputs two clock tokens to
-        stdout, but git's fsmonitor v2 protocol expects exactly one
-        response.
-    
-    Fix #1 by checking $o->{error} after watchman_clock().
-    
-    Fix #2 by removing the recursive launch_watchman() call. The "/"
-    "everything is dirty" flag already tells git to do a full scan, and git
-    will call the hook again on the next invocation with a valid clock
-    token.
-    
-    Apply the same fixes to the test helper scripts in t/t7519/.
-    
-    Changes since v1:
-    
-     * Removed $retry variable and associated logic, which only existed to
-       prevent infinite recursion from the now-removed recursive
-       launch_watchman() call
-     * Fixed commit authorship
+For example, I might have left out some of the exsiting contextual
+pointers in patch 2. Will check in the following days.)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2180%2Fptarjan%2Fclaude%2Ffix-watchman-query-bug-sfbIw-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2180/ptarjan/claude/fix-watchman-query-bug-sfbIw-v2
-Pull-Request: https://github.com/git/git/pull/2180
+Regards,
 
-Range-diff vs v1:
+Yuchen
 
- 1:  116d26287f ! 1:  b9e00b8ab5 fsmonitor: fix two bugs in watchman hook retry path
-     @@
-       ## Metadata ##
-     -Author: Claude <noreply@anthropic.com>
-     +Author: Paul Tarjan <github@paulisageek.com>
-      
-       ## Commit message ##
-     -    fsmonitor: fix two bugs in watchman hook retry path
-     +    fsmonitor-watchman: fix variable reference and remove redundant code
-      
-          The is_work_tree_watched() function in fsmonitor-watchman.sample has
-          two bugs:
-     @@ Commit message
-          git will call the hook again on the next invocation with a valid clock
-          token.
-      
-     +    With the recursive call removed, the $retry guard is no longer needed
-     +    since it only existed to prevent infinite recursion. Remove it.
-     +
-          Apply the same fixes to the test helper scripts in t/t7519/.
-      
-          Signed-off-by: Paul Tarjan <github@paulisageek.com>
-      
-       ## t/t7519/fsmonitor-watchman ##
-     +@@ t/t7519/fsmonitor-watchman: if ($^O =~ 'msys' || $^O =~ 'cygwin') {
-     + 	$git_work_tree = Cwd::cwd();
-     + }
-     + 
-     +-my $retry = 1;
-     +-
-     + launch_watchman();
-     + 
-     + sub launch_watchman {
-     +@@ t/t7519/fsmonitor-watchman: sub launch_watchman {
-     + 
-     + 	my $o = $json_pkg->new->utf8->decode($response);
-     + 
-     +-	if ($retry > 0 and $o->{error} and $o->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
-     ++	if ($o->{error} and $o->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
-     + 		print STDERR "Adding '$git_work_tree' to watchman's watch list.\n";
-     +-		$retry--;
-     + 		qx/watchman watch "$git_work_tree"/;
-     + 		die "Failed to make watchman watch '$git_work_tree'.\n" .
-     + 		    "Falling back to scanning...\n" if $? != 0;
-      @@ t/t7519/fsmonitor-watchman: sub launch_watchman {
-       		close $fh;
-       
-     @@ t/t7519/fsmonitor-watchman: sub launch_watchman {
-       
-      
-       ## t/t7519/fsmonitor-watchman-v2 ##
-     +@@ t/t7519/fsmonitor-watchman-v2: if ($version ne 2) {
-     + 
-     + my $git_work_tree = get_working_dir();
-     + 
-     +-my $retry = 1;
-     +-
-     + my $json_pkg;
-     + eval {
-     + 	require JSON::XS;
-     +@@ t/t7519/fsmonitor-watchman-v2: sub watchman_query {
-     + sub is_work_tree_watched {
-     + 	my ($output) = @_;
-     + 	my $error = $output->{error};
-     +-	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
-     +-		$retry--;
-     ++	if ($error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
-     + 		my $response = qx/watchman watch "$git_work_tree"/;
-     + 		die "Failed to make watchman watch '$git_work_tree'.\n" .
-     + 		    "Falling back to scanning...\n" if $? != 0;
-      @@ t/t7519/fsmonitor-watchman-v2: sub is_work_tree_watched {
-       		# Watchman query just to get it over with now so we won't pay
-       		# the cost in git to look up each individual file.
-     @@ t/t7519/fsmonitor-watchman-v2: sub is_work_tree_watched {
-       
-      
-       ## templates/hooks/fsmonitor-watchman.sample ##
-     +@@ templates/hooks/fsmonitor-watchman.sample: if ($version ne 2) {
-     + 
-     + my $git_work_tree = get_working_dir();
-     + 
-     +-my $retry = 1;
-     +-
-     + my $json_pkg;
-     + eval {
-     + 	require JSON::XS;
-     +@@ templates/hooks/fsmonitor-watchman.sample: sub watchman_query {
-     + sub is_work_tree_watched {
-     + 	my ($output) = @_;
-     + 	my $error = $output->{error};
-     +-	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
-     +-		$retry--;
-     ++	if ($error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
-     + 		my $response = qx/watchman watch "$git_work_tree"/;
-     + 		die "Failed to make watchman watch '$git_work_tree'.\n" .
-     + 		    "Falling back to scanning...\n" if $? != 0;
-      @@ templates/hooks/fsmonitor-watchman.sample: sub is_work_tree_watched {
-       		# Watchman query just to get it over with now so we won't pay
-       		# the cost in git to look up each individual file.
+Tian Yuchen (3):
+  environment: migrate encoding settings to repo-settings
+  commit: pass 'struct repository' to commit creation APIs
+  pretty: pass 'struct repository' to pretty_print_commit()
 
+ builtin/am.c          |  6 +++---
+ builtin/blame.c       |  2 +-
+ builtin/checkout.c    |  4 ++--
+ builtin/commit-tree.c |  2 +-
+ builtin/commit.c      |  8 ++++----
+ builtin/history.c     |  2 +-
+ builtin/log.c         |  4 ++--
+ builtin/mailinfo.c    |  2 +-
+ builtin/merge.c       |  6 +++---
+ builtin/rebase.c      |  2 +-
+ builtin/reset.c       |  2 +-
+ builtin/rev-list.c    |  4 ++--
+ builtin/shortlog.c    |  4 ++--
+ builtin/show-branch.c |  2 +-
+ builtin/stash.c       | 12 ++++++------
+ bundle.c              |  4 ++--
+ commit.c              | 31 +++++++++++++++++--------------
+ commit.h              |  6 ++++--
+ diff.c                |  2 +-
+ environment.c         | 37 +++++++++++--------------------------
+ environment.h         |  7 ++-----
+ log-tree.c            |  6 +++---
+ notes-cache.c         |  4 ++--
+ notes-cache.h         |  2 +-
+ notes-utils.c         |  2 +-
+ pretty.c              | 13 +++++++------
+ pretty.h              |  4 ++--
+ range-diff.c          | 10 +++++-----
+ remote-curl.c         |  3 ++-
+ replay.c              |  4 ++--
+ repo-settings.c       |  7 +++++++
+ repo-settings.h       |  3 +++
+ revision.c            | 11 ++++++-----
+ sequencer.c           | 36 ++++++++++++++++++------------------
+ submodule.c           |  2 +-
+ 35 files changed, 128 insertions(+), 128 deletions(-)
 
- t/t7519/fsmonitor-watchman                |  6 +-----
- t/t7519/fsmonitor-watchman-v2             | 10 ++--------
- templates/hooks/fsmonitor-watchman.sample | 10 ++--------
- 3 files changed, 5 insertions(+), 21 deletions(-)
-
-diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
-index 264b9daf83..bcc055c1e0 100755
---- a/t/t7519/fsmonitor-watchman
-+++ b/t/t7519/fsmonitor-watchman
-@@ -38,8 +38,6 @@ if ($^O =~ 'msys' || $^O =~ 'cygwin') {
- 	$git_work_tree = Cwd::cwd();
- }
- 
--my $retry = 1;
--
- launch_watchman();
- 
- sub launch_watchman {
-@@ -92,9 +90,8 @@ sub launch_watchman {
- 
- 	my $o = $json_pkg->new->utf8->decode($response);
- 
--	if ($retry > 0 and $o->{error} and $o->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
-+	if ($o->{error} and $o->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
- 		print STDERR "Adding '$git_work_tree' to watchman's watch list.\n";
--		$retry--;
- 		qx/watchman watch "$git_work_tree"/;
- 		die "Failed to make watchman watch '$git_work_tree'.\n" .
- 		    "Falling back to scanning...\n" if $? != 0;
-@@ -109,7 +106,6 @@ sub launch_watchman {
- 		close $fh;
- 
- 		print "/\0";
--		eval { launch_watchman() };
- 		exit 0;
- 	}
- 
-diff --git a/t/t7519/fsmonitor-watchman-v2 b/t/t7519/fsmonitor-watchman-v2
-index 14ed0aa42d..368604c278 100755
---- a/t/t7519/fsmonitor-watchman-v2
-+++ b/t/t7519/fsmonitor-watchman-v2
-@@ -29,8 +29,6 @@ if ($version ne 2) {
- 
- my $git_work_tree = get_working_dir();
- 
--my $retry = 1;
--
- my $json_pkg;
- eval {
- 	require JSON::XS;
-@@ -122,8 +120,7 @@ sub watchman_query {
- sub is_work_tree_watched {
- 	my ($output) = @_;
- 	my $error = $output->{error};
--	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
--		$retry--;
-+	if ($error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
- 		my $response = qx/watchman watch "$git_work_tree"/;
- 		die "Failed to make watchman watch '$git_work_tree'.\n" .
- 		    "Falling back to scanning...\n" if $? != 0;
-@@ -141,15 +138,12 @@ sub is_work_tree_watched {
- 		# Watchman query just to get it over with now so we won't pay
- 		# the cost in git to look up each individual file.
- 		my $o = watchman_clock();
--		$error = $output->{error};
-+		$error = $o->{error};
- 
- 		die "Watchman: $error.\n" .
- 		"Falling back to scanning...\n" if $error;
- 
- 		output_result($o->{clock}, ("/"));
--		$last_update_token = $o->{clock};
--
--		eval { launch_watchman() };
- 		return 0;
- 	}
- 
-diff --git a/templates/hooks/fsmonitor-watchman.sample b/templates/hooks/fsmonitor-watchman.sample
-index 23e856f5de..429e0a51c1 100755
---- a/templates/hooks/fsmonitor-watchman.sample
-+++ b/templates/hooks/fsmonitor-watchman.sample
-@@ -29,8 +29,6 @@ if ($version ne 2) {
- 
- my $git_work_tree = get_working_dir();
- 
--my $retry = 1;
--
- my $json_pkg;
- eval {
- 	require JSON::XS;
-@@ -123,8 +121,7 @@ sub watchman_query {
- sub is_work_tree_watched {
- 	my ($output) = @_;
- 	my $error = $output->{error};
--	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
--		$retry--;
-+	if ($error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
- 		my $response = qx/watchman watch "$git_work_tree"/;
- 		die "Failed to make watchman watch '$git_work_tree'.\n" .
- 		    "Falling back to scanning...\n" if $? != 0;
-@@ -142,15 +139,12 @@ sub is_work_tree_watched {
- 		# Watchman query just to get it over with now so we won't pay
- 		# the cost in git to look up each individual file.
- 		my $o = watchman_clock();
--		$error = $output->{error};
-+		$error = $o->{error};
- 
- 		die "Watchman: $error.\n" .
- 		"Falling back to scanning...\n" if $error;
- 
- 		output_result($o->{clock}, ("/"));
--		$last_update_token = $o->{clock};
--
--		eval { launch_watchman() };
- 		return 0;
- 	}
- 
-
-base-commit: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
 -- 
-gitgitgadget
+2.43.0
+
