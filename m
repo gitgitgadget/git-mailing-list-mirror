@@ -1,115 +1,132 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321011DE2D8
-	for <git@vger.kernel.org>; Sat, 28 Feb 2026 21:30:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD921D5151
+	for <git@vger.kernel.org>; Sat, 28 Feb 2026 22:44:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772314235; cv=none; b=FHYO8iV+U/eCCxtxEhE1EcRu2UzhGYechc4QyWvusVb5s+ZtGalOXDT/SzS+0ZVEYPlo+RSAUwthZfHLcuZfU2gRmh8NXi+ZjALvhqjZDV8HKK33+GoiH/z94EXpaIsVfKnYmM4hg9u6ccd5GaEssBXha21s0VwfycMnUk7OVLo=
+	t=1772318676; cv=none; b=AA4PNzP/iP7VkP8jdYbxxpHCSDcdE1niTeXy2vYqfDVr1dZdMcBKseZctUwuPvJbmgZn2EhiXto90inTVaB1CKC8EQ5ner+1xSz4ix3/E5nqKt40N7uZBqVy4O1O1QSNG84TfQ+qPLqfCHbzgPs7sEpol8IXat60uEXZDEXjXZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772314235; c=relaxed/simple;
-	bh=vpwBbJhC0WclyJ+wzHyvz9zxYb0TzRlIinb8XcHaMZk=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=WLTdxzsY0TaE0G2PFDmA1D9le7JH4dFDZz6thI29IHbkP3qZ7OMy4LEI5KC1KmlTtL1fsSpPPCNzbe1ui6hFLk9lud4MlFgtFNPciNZwzjMVstka9L375cfTzVB9grqUWtLTJEAZvIvjn8WtTiY1fgOTIKuN7pzxaPFtoNygEbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Z2M6njra; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kxXpszgn; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1772318676; c=relaxed/simple;
+	bh=bkBmWYq08dAWVpotFXwhYYjr1JbFlM/1cgU7abpFUD4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pOIkpDjqRTJlBE8Rp/ag5FeFx9iRuKrpT/RAmQOv2VRp2H/0omELB6FnlPlLOwITDvGNRcICXOGquyHbvwQ4CYfr15YKTkX/mTmpK16dKL806RxASp77k3s9MPMPKilVfVXmW+BKRtV/3m+LslwEo73huRFnjTqYhdqhyTWZep8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EXVg0hlx; arc=none smtp.client-ip=209.85.221.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Z2M6njra";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kxXpszgn"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4E2AB14000AF;
-	Sat, 28 Feb 2026 16:30:32 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Sat, 28 Feb 2026 16:30:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772314232;
-	 x=1772400632; bh=IlRuo830p8Qijg6U7ojLX4lSvMan4Kq+xk+QYf1WNvk=; b=
-	Z2M6njra79VBVsxpWnm2psgCeVIlBFTwxTLoGk6fgjxX575mJZdDLXMBExdVzveH
-	ndxEcc9HISAgtXctJkdmVXPseosFh5UGGHVe3KCLVeiw+qvnPGA9kv1W9Sr/YSYy
-	8j5UeBqDe7YnAicV8RZXvZwp0EM3Vn+jdtLt3AHNCyETYddu6n/Y9CJlRDLaVQys
-	YN0+wDp1QM5r9s7OFamIxeJ/Hw6ztObBB2YYjl3Ds2brVmjBO64z5KL0mqir8MpT
-	IwixU2Hy4UsFIyjZWqjMQ5G9p/j6tQvbOmBRTaRqbRlBbsfZl/9kYiEL0qVN5Kjv
-	nhBVB+BAvoszac9UH0eevg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1772314232; x=1772400632; bh=I
-	lRuo830p8Qijg6U7ojLX4lSvMan4Kq+xk+QYf1WNvk=; b=kxXpszgnYV20+Be7M
-	SnmBgjxQDRtlkcGboR0WlaRjM0bv8n69z87HlpupSiPlYgWnsczyN2nKXXS0DG3u
-	q2iWkrdDdtO++mnmyytKzFmhp2ZakaBlJvgLVvESR6WNUvquA9rtotpkCjlL47zi
-	oWI12W+Cb5Ke34zJdjEX0YD8+TZQa39DVPu6L40djgUBNmW3ozGCuqPRvlUyMyUD
-	wfuLGnL+sdJFM7kkiDq79nIiihOJLRThIdOcbKGyhI3XBt0YLjHrlA2WgSI6cect
-	tBW+57vD4aprTi1/8zpDlSFk0u++bKdxWm2TOmrrCcImEZ/nTa6/D/UXLyxAFzkH
-	GfJuQ==
-X-ME-Sender: <xms:eF6jabAtLm0sEV8j8kw2uSvu4SETWHlKA95VZAKT7Sdt7SJ1aB_qXqo>
-    <xme:eF6jacVnhJMGH8xX2m6z3-aTgxSlV_hsYNs1SX9Fq4DXnX3uNcBN3-wYSlhVPFJya
-    2Ms_SD3r841pCrwMANCR3DGz4Ww1JCOmFKVVoX31TbpxGUGY08YwOM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvhedvleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudel
-    hfefkeehtefggeefjeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrshhtvghnshhgsehmrghsthgvnhhsghdr
-    nhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:eF6jadtgH8R11exS_Lg7MNghcamaBc8kDEKAVGTyYvbzDivDhCPAzA>
-    <xmx:eF6jaUZIHw4YYjiekW73EpVRMDLyuz0LwsdUPt2dsrhjQDcHY7i2qw>
-    <xmx:eF6jaYUnj1ypsQG1MMCEiSrqisKjc3Y19T1K4Duo_J-WKpQvvBPgQg>
-    <xmx:eF6jaQ49qWgGzHxV4n894_d_lBCT9pILgXWZJlx2oMv53N7Fsw-4Jw>
-    <xmx:eF6jaZFtR5Hu_TDRSUvR70SzV-aCH-LlXaHUUpGIiS8RSVOH4uLMe6W8>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 184CE1EA006B; Sat, 28 Feb 2026 16:30:32 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EXVg0hlx"
+Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-5688b9e4e80so3472439e0c.1
+        for <git@vger.kernel.org>; Sat, 28 Feb 2026 14:44:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772318674; x=1772923474; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CsR8WI1WESrOUVmASO13b1wb22h3fY5cfAheR90W96U=;
+        b=EXVg0hlxa+N6ppAZWS2ZtMMmi5G5z7wTrHE+FRb42fwU+hXHySHAaSdi2v7O6fuEOM
+         IcmpNvhvbbXGyBJ68KzExVAbEzEcV/sSayB/YMBgJaj2erfpShuFlhVLZk+3HlbZQT90
+         GPgtpWnRXjHLpwC5P6qkURe1o5iwmIP5t3qt4rZbPN2wKymaHWF3VlioocVfamuFJqgF
+         ua4UkzJdop55UAifPsrt067TSKkPPT1p7a8SIztFt/Zo4j6IBVVE2bgI1uCFVnfvYgn+
+         C5Q9135qtw4Mw/FJXgxlLF6P3l2YoVs57o4Q22K/RDf+8+dGnIT/MnMvZN73FJy0DFxB
+         Xe6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772318674; x=1772923474;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CsR8WI1WESrOUVmASO13b1wb22h3fY5cfAheR90W96U=;
+        b=IVp9L1FX/rAKRKURcwqfLhxUNQHjIbHXfZRISNi2369b4W3P3LvZW3CoPzMN4dtIrC
+         qOauXh8jakLZYmnzl7ba8gKSWG/Zu0m4dYJib95SQUodjS/AEge+F+ihDLiEa4lM2bBY
+         Wq+G27yWsvGfKLjOgcllNeyl7FemguzIOLgSkwpX+eos3TSQodKJLD1FHg5joZU87QOl
+         u3bnT/gtJv5K0/5eMFIC3Q8pLQpP6BGLf3qrfSHtfFHviDvFHlQhVZ0Zj0qQJWRctCf9
+         tWlNaHzm/ctiYWolE4iSzrHm9Epq2GjgJX6aY0QsVLka3l3yyc13Vx7iSGNpiWi4ldiP
+         AHfQ==
+X-Gm-Message-State: AOJu0Yznh+5RBQhmFYCBtXQJLSPh+B+CqayaTAIsP0GkZtpPrMQfuXc7
+	sV4MUuPCeebHT4PGUuNy+NQXf5Zqp7cSsplSned6CMuVw4pKWFKT8RwvuDPEsEWd
+X-Gm-Gg: ATEYQzywMBcHIlbJNXZHStwtJf+cd+iy52fuoSs06P5KIB0UYfIu1VZ65XKdrSa+2bO
+	Z4SOIvvUsye3i3OGzIWclJ9lfSVbLfxH3kjLBAxSDIIWskSTXwVHLFx0pIe/AeAerO8B3FdAe9v
+	xf6d487TnZjOlIUg/jbJi7sftuujgmMwY9ygtKiWhrG1hvxLnIBGaB/s8DZVeJ2hKblwoL1NKLo
+	IH6/z3dg+sSMBTv+vxMbN4ULlYewXbKJjCP5pkPB+JbqkkQvPWvwiXbXy6rw9HS0CSMOo49WFr7
+	SnG7T2o2ZKvCV+cyl1hi3ws7CL5d9KXQsVpEEiITEKA7dKXFH3QqPAloYG+zxW/RMmf6xJ1+XUw
+	rDeg/SpefBXl4WsvH5bNfjImgkzELpKC7kPRqBrk6fQOrUdQ6brLtji++uOJYcZFk8BB4+IpDQe
+	5q5f//E2BwF1OpB3hPJQRaK06Yc5noMrJtvrvviN64s51JUxUwgf2JtnGWbgW3OVYRq0GfNOUJn
+	LW/KQ==
+X-Received: by 2002:a05:6122:a16:b0:566:2a19:9ff9 with SMTP id 71dfb90a1353d-56a90a265dbmr5451928e0c.9.1772318674008;
+        Sat, 28 Feb 2026 14:44:34 -0800 (PST)
+Received: from localhost.localdomain ([2804:14c:c4:89c7:617e:ea24:9d26:4bc7])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-56a91659421sm11739094e0c.0.2026.02.28.14.44.30
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 28 Feb 2026 14:44:33 -0800 (PST)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net,
+	kumarayushjha123@gmail.com,
+	a3205153416@gmail.com,
+	jayatheerthkulkarni2005@gmail.com,
+	valusoutrik@gmail.com,
+	pushkarkumarsingh1970@gmail.com,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Subject: [PATCH 0/4] repo: add support for path-related fields
+Date: Sat, 28 Feb 2026 19:05:54 -0300
+Message-ID: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AzthlaOzFtZc
-Date: Sat, 28 Feb 2026 22:30:10 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: =?UTF-8?Q?Martin_Stensg=C3=A5rd?= <mastensg@mastensg.net>,
- git@vger.kernel.org
-Message-Id: <af273fb9-25ae-48e4-ae06-81424383f54d@app.fastmail.com>
-In-Reply-To: <de1a96a4-c38e-4200-90a6-2b87139cdb47@app.fastmail.com>
-References: <de1a96a4-c38e-4200-90a6-2b87139cdb47@app.fastmail.com>
-Subject: Re: whatchanged
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Feb 28, 2026, at 21:22, Martin Stensg=C3=A5rd wrote:
-> git version 2.51.0 told me to let you know that I still use the
-> whatchanged command.
->
-> Please keep it. Thanks :)
+Hi!
 
-This command is being removed because it was supplanted by git-log(1) a
-long while ago. Both commands use the same machinery, just with
-different defaults.
+This patch series adds support for path-related fields in repo-info, based on
+what we already have in git-rev-parse:
 
-You can replace it with `git log` in this way:
+1. The two first patches moves the path formatting used by git-rev-parse to
+   path.c. This will allow us to reuse this code in git-repo-info
+2. The second patch add a new flag --path-format to git-repo-info, similar to
+   the flag of git-rev-parse with the same name
+3. Add the new field `path.toplevel` as a proof of concept.
 
-=E2=80=A2 Given: `git whatchanged <opts>`
-=E2=80=A2 Replace with: `git log <opts> --no-merges --raw`
+This arises from the fact that I didn't know what should be the default behavior
+of git-repo-info when dealing with paths. Some ideas were:
 
-Additionally for the sake of readability, you might have more
-use for `--stat` or `--name-only` rather than `--raw` if you are only
-reading the output (not feeding the output to another program).
+1. Add --path-format, just like we have in git-rev-parse
+2. Use what rev-parse uses by default
+3. Add keys for both relative and absolute formats
 
-You can also set up an alias with that name on Git 2.52:
+In this case, I'm using 1, but I'm not sure if it's the best option. One
+downside that I see here is that git-repo-info won't be able to return
+a relative and an absolute path for different keys in the same call.
 
-    git config set --global alias.whatchanged 'log --raw --no-merges'
+Since there are many people interested in contributing to git-repo-info, I'll
+leave the remaining path-related fields to them :-)
 
-You cannot do that on Git 2.51.0 since you cannot alias builtin
-commands. But you can alias deprecated builtin commands on
-Git 2.52.
+I'm CC'ing here:
+
+- brian, who was the original author of the `print_path` [1]
+- Ayush, Tian, Jayatheerth, Soutrik and Pushkar, since they expressed interested
+  in contributing to git-repo-info in GSoC. (I hope that I didn't forget anyone)
+
+This patch is based on top of master 2cc7191751 (The 8th batch, 2026-02-27) with
+lo/repo-leftover-bits merged.
+
+[1] fac60b8925 (rev-parse: add option for absolute or relative path formatting, 2020-12-13)
+
+Lucas Seiki Oshiro (4):
+  rev-parse: prepend `path_` to path-related enums
+  path: add new function strbuf_add_path
+  repo: add the --format-path flag
+  repo: add the field path.toplevel
+
+ Documentation/git-repo.adoc |  8 ++-
+ builtin/repo.c              | 67 +++++++++++++++++++------
+ builtin/rev-parse.c         | 98 +++++++------------------------------
+ path.c                      | 51 +++++++++++++++++++
+ path.h                      | 23 +++++++++
+ t/t1900-repo-info.sh        | 69 ++++++++++++++++++++++++++
+ 6 files changed, 221 insertions(+), 95 deletions(-)
+
+-- 
+2.50.1 (Apple Git-155)
+
