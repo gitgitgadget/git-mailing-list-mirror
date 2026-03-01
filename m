@@ -1,128 +1,148 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D392236437
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 20:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B991B20C00C
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 20:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772396490; cv=none; b=DxzByjC1pDU8Ztv0lYgewZ1GGB1JD8EUT2hdWBh+Aa9BvNwHV7VL3zK4ZQnQm7zgsI/Oe2mtwq2p2/IjKcy57tNJTvnZHFs4xbgLd6HfWEvWuUjIs44KuRZur62Xm/NIVguWzvKA3iaNYQ8H5dXi8gOlD4xAOeYHv5lYYXfrlVc=
+	t=1772397360; cv=none; b=j6UGUiO3MxRe2R2HI0thFXo76CBsJA3ijmztfYO9TybqkIk94FBStIdr2KlJmwF9Y6W4fyFSoY1c6Q64oDyT8eFpK3Da01Qlg1i4On08li3N6diIy2fut8wKqxJ/7TMwB4rCURpyZ7cHpoNLMkFiCeq6q+4/YMJaPdF2KXMoy+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772396490; c=relaxed/simple;
-	bh=JiDhXZ/xpWPRvT+zAVkiKt7lZN0n0P99UU8FUerBbGI=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Ela/M0PJNbSmAaLEjzR5yVpHtgqhne6DJvmIttLCfrb46ZP0pa5D6wSFrmtNxcSp/4HtS8UddeoHiC/3t72R4JnQfUL3jPOBLUgkvVYeXD4VOZrlzz3AWQjboZClV+SKYX2X8Xki+GAkDdkjcXAKx81OBG7O1omu1KlCb6C4AQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MGIil5FQ; arc=none smtp.client-ip=209.85.217.43
+	s=arc-20240116; t=1772397360; c=relaxed/simple;
+	bh=xHnBjM4bYmBZGEJ/xDpOWtPiwIUExyRTLQihFTUlWiI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=W+0eaEBnMwrLNa0zzxgbZ3aMHs6WzHzjSGcYl6vk48xr9rjY1wNnjRP1fRw+risSp7C0orRK8KVKled6AsaXac6nrH2e6+u3L8cTKQnMHZAlKDOHZAERuGxMCUh+paXD1AgW8rgSC0jZmg295rWSq/ZzxXKPSP53HJmRrzB+u0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qw4kLgfX; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MGIil5FQ"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-5fdef6330bfso2874271137.1
-        for <git@vger.kernel.org>; Sun, 01 Mar 2026 12:21:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qw4kLgfX"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c70c38515d3so244577a12.0
+        for <git@vger.kernel.org>; Sun, 01 Mar 2026 12:35:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772396488; x=1773001288; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772397359; x=1773002159; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JiDhXZ/xpWPRvT+zAVkiKt7lZN0n0P99UU8FUerBbGI=;
-        b=MGIil5FQRvp9jiJ+FP2R/CBkXyUb1CN0fpsApWyQ9wWXGNdOTUN09fU4MySb5r4pgL
-         Pu/Y0btJmpPtZ5cTxmCmPNbxiYDBqXBUGPV5x0knXlbdR+qP/mG9pnLs5P4DOv3nGBHZ
-         z9K14Ij8tz6Dtfisd0natP67dBL7ZAzAPLaKNcHtY99w4Ly15mKfuWHfPtjU8iBzYj13
-         2uub13AcBmxpHnBGYUo0Ymjz+vppbperJYpBvDqL6DlusxxsRvnIRGdbQA1uhKSWupTl
-         rtZT8hrx1hRHgSn9Twt/TXf9LDMmtd3DkAldtQP29mxQg4wM/X1Y4E+MJeR15VzwhsPV
-         2yTA==
+        bh=n/PlGV/P1xhiclaPTTrqu8VuYXEvl7UjGccPMcJ0uFo=;
+        b=Qw4kLgfXDK0bW6Z8+qKRJuhJWZTliUjcN5l9pI369pWiM9Z1mYXFDu/YbIOFjVyXpC
+         TlsbNYxqv5ZVKIdOMa/vZV4jC5Ku0KOcdVURx1f9SBA9/gpsBbKeLc7mB2Nd9wX8GeZz
+         Awk5mfJrw3hhVfFkSiRaYb3y4ar9kPkkY9IxF6iVa12CiLqLo1IhwbnV+L4dGjt/ASTt
+         sImTDpXGOrEM8AjI19oNqRzZ/tRBAcFH3m8i9iWSLQPe4MYycMbKW6x/laGkGdcyUcNP
+         2yf9/R0kmFsTNHgCLLWehqV0zAu0HN2+24DTg/bF4wu4C8XSv+6aAoFgb1VwaGulMEgO
+         MGYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772396488; x=1773001288;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JiDhXZ/xpWPRvT+zAVkiKt7lZN0n0P99UU8FUerBbGI=;
-        b=I9pFD09c1GCXiFRPgfAnKvaw4NrzMOKyyifVp7tTLk2kbZqayEK7XeJsUo3J0rXStm
-         MeFxtZ28FEJUHL7WJMP78xiP2grZqnpIHvkDqwppPNbZgyVn/LA0oQZsaMPDJyufgsLq
-         HE/Llearsglrj/vS5yid+mnxhqZHFua2n5ZOGEr+ics/N6I3WKyqvtGIUVZ4YRZZSyz4
-         eAzfzWsgO7/zZCzNeBUTtpR2pUjjWEsdwxqisK1HgXCBz13xxRL4N3u576/3HFKc7piI
-         XyBASxK3sEUc9EKGAp6O9dl4LOJDzCIToB4dh0U8R7UHXooOKHRYVzJxKKgJAYIH6RBl
-         xVkw==
-X-Gm-Message-State: AOJu0YybTc2fUWAvQjMzzRBVob20u4IzOSFx05lnYmLPyxYyRtoECrYs
-	zUWJNowXPZUwolDz6K6kF6qdtgEmF4kHHlWTRDFneLwklDoB4rusi97C
-X-Gm-Gg: ATEYQzyd6xKl+yopz90D20VaCL9UT3e8KfsONFQyVfr+0XR46ZTVWnctZBtUpscYVso
-	0FsvvhyjdKd4UXaAra/N/mcHN6Z7f2W0xKrW+8P+stVCllutgC3GF4P2c8fMCKMpCrDkJZftQNq
-	eF3fUQILdYYidP/mFwF6HRaGWgr/PWxwGsBqCtAnKLl4J4SQaBkhGW+MFLvh7mbn/mWcngn6q+4
-	zI9+hOkLqT8HGrORKIYtM+4mcW56eTVSRlDXODFikfUQt5p1wZ5OYLKt6A2pBi33zW23rYbHs/o
-	T4nK8L29hNsBKLaR+j4ehz4ZqQTA37f5JCRvnnCnCwXW2JufqX9wmIycThUG8lblVrwTCuWtZis
-	eTiIHh1LPZtKy3NYaHiw8sKQFN8TPv5j7qGqAwcBt62JCNXxTm9ZbtmOlSnMl/WVQiahfICaAE3
-	/6YiKukJzQRVRo9ljOXesbUvISB/5Aw64tUWcYMUEQaDtHSjFgghBKFF65PPZy
-X-Received: by 2002:a05:6102:cd0:b0:5db:23d0:65e7 with SMTP id ada2fe7eead31-5ff324f1f37mr5661505137.27.1772396488533;
-        Sun, 01 Mar 2026 12:21:28 -0800 (PST)
-Received: from smtpclient.apple ([2804:14c:c4:89c7:617e:ea24:9d26:4bc7])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94df65a2a0esm9803322241.12.2026.03.01.12.21.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Mar 2026 12:21:28 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
+        d=1e100.net; s=20230601; t=1772397359; x=1773002159;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=n/PlGV/P1xhiclaPTTrqu8VuYXEvl7UjGccPMcJ0uFo=;
+        b=IxJsF6ipntZbp+7uBqM7aaYgdF6h8+FUua2Kqca5kYsEER9s6rM13gRsxCgCucxrYL
+         KvkAvOv8l8QQUhvQiot8i8zniUvkWwWarv1zvDEeIlch+b8EZo28Z9S5hb4yoUJn/JWH
+         2m//UIDxkkwOHBs6jQ6bAQTNTUF2+HwIHWv/x8osSNAcwdXG7zvqq/Ut0jMI2AWJ5cyB
+         NLc/7A7ZtyJIHRnCgatQCaLUvyk+nc1CxPUqd9QmLJQjH50naUpQVBYbEigDTGPYXbA0
+         Eux3OtSH4SzB3g2m+sOFOFqJbtKQwH8pELdgiYkTmFUmn5Jabds3mdcnD6lbTSdCfpu/
+         bCSQ==
+X-Gm-Message-State: AOJu0YzzAYsZJdCERU3Ack1Zv00bibVH+iFMEAEAVunzWcUJfw2tEKrl
+	9timXM5Wxh69pfebtRdbBXkrIb1ZN/rRgxKLk8FQEaKmjx0JClRuUcOKeOrhGvqo
+X-Gm-Gg: ATEYQzzEUoIqdVzOGhr21ws+FrlFXh9R32TjgvSFTbzfzpgaKvIerlG+0j4fnQftEG8
+	FEjANmnvhhBzyXLu+GMPAYphU64rXnzE+D54Mm2TpRzjgjzwsGlBki5zX7eA4AOm57EBqbkaD5T
+	f1xcYMe5RviRtGBGlvEp71tz8Ps9dqX6mbhgj/AXpTxD/dgRixPrg9hbJKcwA0ZSCKQvg4/WZFh
+	U6Y3b9jqMlIw+Dy7H/EPMXrdX9kIylTpE1VFP1pYQMdVGDH5NDsf3T12VJEzCPCwlIdDw+K4g23
+	T5vYUuY5FCjFPCuI2q3XqIwBiCxVIdUwXMSsyyUaqLQC5CTLnlWQVSHuFTY3uTnmmxDiQ748zn3
+	Z75u3udAtuwSTfaUwF//BGD6ltsegPGe/m71oBUnc/JftyAWlJk10CVGn9Kb799I27wHRf0UDSz
+	+DAR28QEOXz2OY8u4ziJXvJhZyW5fJfjzKNd8MsFm/oRCvL14qgONV6YMQWVbpSbgYRtkNPFCUb
+	IpBZV3UoG5evaWR6cbt+xU=
+X-Received: by 2002:a05:6a21:6d88:b0:393:fb84:dc4c with SMTP id adf61e73a8af0-395c3b42d45mr7009493637.6.1772397358691;
+        Sun, 01 Mar 2026 12:35:58 -0800 (PST)
+Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa5e4abcsm9496976a12.5.2026.03.01.12.35.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Mar 2026 12:35:57 -0800 (PST)
+From: Tian Yuchen <a3205153416@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	phillip.wood@dunelm.org.uk
+Subject: [PATCH v3 0/3] environment: move encoding configs to struct repository
+Date: Mon,  2 Mar 2026 04:35:36 +0800
+Message-ID: <20260301203539.1421152-1-a3205153416@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260228040727.2057192-1-a3205153416@gmail.com>
+References: <20260228040727.2057192-1-a3205153416@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH 4/4] repo: add the field path.toplevel
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <71e42a01-6077-48fc-876e-555431d1288f@gmail.com>
-Date: Sun, 1 Mar 2026 17:21:13 -0300
-Cc: git@vger.kernel.org,
- sandals@crustytoothpaste.net,
- kumarayushjha123@gmail.com,
- jayatheerthkulkarni2005@gmail.com,
- valusoutrik@gmail.com,
- pushkarkumarsingh1970@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <9789E676-4DE0-4C4C-BCAC-5BD880A51CE1@gmail.com>
-References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
- <20260228224252.72788-5-lucasseikioshiro@gmail.com>
- <71e42a01-6077-48fc-876e-555431d1288f@gmail.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-X-Mailer: Apple Mail (2.3864.400.21)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
+This is v3 of the series aimed at reducing the global state associated with 
+'git_commit_encoding' and 'git_log_output_encoding'.
 
-> Hi Lucas,
+Changes since v2:
+Based on the invaluable feedback from Phillip Wood, the architectural 
+approach has been fundamentally adjusted. In v2, I attempted to migrate 
+these variables into 'struct repo_settings'. However, since these are 
+eagerly parsed user preferences, deferring them to lazy evaluation broke 
+early validation.
 
-Hi, Tian!
+In this v3 series, the variables are migrated directly into 'struct repository'. 
 
-> > +void strbuf_add_path(struct strbuf *sb, const char *path, const =
-char > *prefix, enum path_format_type format, enum path_default_type =
-def)
->=20
-> Isn't it a bit inappropriate for a generic character concatenation
-> function to know about format and def? I don't think this should be
-> the responsibility of a low-level function, at least not
-> str_buf_add_path().
+According to the thread Phillip Wood shared, plumbing the repository pointer
+safely through the 'git_default_config' callback machinery is highly
+invasive. Many top-level callers pass custom structs via the 'void *cb' pointer
+so that blindly casting 'cb' to 'struct repository *' results in weird bugs (at
+least I can't fix them all in one single patch)
 
-I don't think it can be considered a low-level function, but I
-agree that its name can be misleading.
+Therefore:
+1. The variables are parsed directly into 'the_repository' during config 
+   parsing to maintain eager validation.
+2. However, the entire read/write paths (commit creation and log APIs) are 
+   fully plumbed to accept any 'struct repository' instance. 
 
-> > + prefix =3D cwd =3D xgetcwd()
->=20
-> Will there be a performance regression? Since xgetcwd() here is a
-> system call, right?
+Future efforts to libify the config machinery itself will only need to update
+the parser, as the core APIs are now context-aware.
 
-In this case, no, it is defined in wrapper.h.
+Tian Yuchen (3):
+  commit: plumb 'struct repository' into commit creation APIs
+  pretty: plumb 'struct repository' into pretty-print APIs
+  environment: migrate encoding configs to struct repository
 
-> I don't think we should add the two new parameters to all get_
-> functions here. As changed in your patch, functions like
-> get_object_format don't really, need to know about prefix or format,
-> so the corresponding parameters are marked as UNUSED. Imagine if
-> more and more data needs to be retrieved by these get_ series
-> functions in the future =E2=80=94 is it really advisable to add =
-unnecessary
-> parameters to all remaining functions just for the sake of a few?
+ builtin/am.c          |  6 +++---
+ builtin/blame.c       |  2 +-
+ builtin/checkout.c    |  4 ++--
+ builtin/commit-tree.c |  2 +-
+ builtin/commit.c      |  8 ++++----
+ builtin/history.c     |  2 +-
+ builtin/log.c         |  4 ++--
+ builtin/mailinfo.c    |  6 +++---
+ builtin/merge.c       |  6 +++---
+ builtin/rebase.c      |  2 +-
+ builtin/reset.c       |  2 +-
+ builtin/rev-list.c    |  4 ++--
+ builtin/shortlog.c    |  4 ++--
+ builtin/show-branch.c |  2 +-
+ builtin/stash.c       | 12 ++++++------
+ bundle.c              |  4 ++--
+ commit.c              | 20 ++++++++++----------
+ commit.h              |  4 ++--
+ environment.c         | 19 ++++++++-----------
+ environment.h         |  7 ++-----
+ log-tree.c            |  6 +++---
+ notes-cache.c         |  2 +-
+ notes-utils.c         |  2 +-
+ pretty.c              |  8 ++++----
+ pretty.h              |  4 ++--
+ range-diff.c          |  2 +-
+ remote-curl.c         |  2 +-
+ replay.c              |  4 ++--
+ repository.c          |  2 ++
+ repository.h          |  5 +++++
+ revision.c            | 10 +++++-----
+ sequencer.c           | 32 ++++++++++++++++----------------
+ submodule.c           |  2 +-
+ 33 files changed, 101 insertions(+), 100 deletions(-)
 
-In this case, we need to add them to match the signature of
-get_value_fn. Those values will be useful for all the path.*, but
-if we start to add more than that I agree that we'll need to think
-in a better solution.
+-- 
+2.43.0
 
-> I'm not entirely sure about the above content either; I'm just
-> throwing out ideas to spark discussion. (=C2=B4=EF=BD=9E`)
-
-Thanks, it's also good to see more points of view. I'm also not
-sure about it :-)
