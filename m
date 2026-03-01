@@ -1,135 +1,134 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48768221DB1
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 21:25:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F64D307492
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 21:57:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772400315; cv=none; b=ODpnif+1N3cfntWLtIc6OAg8JOiape21WTxQ5eVWHqECQsPb7afHouYY+M0u1oCgHzqP4eS6N9BLCliGugDvnU7XOa4BDvVxACKcSYr4ZLTlFYAwyZ4BkCRzc+HVwqDEYFp984A3snnN2mxpcuhxHbqZJnASa75OAryZAmf6B/g=
+	t=1772402259; cv=none; b=jjJn5IiGKioGbqViy5NOfKogbzpEYoBtHE17kjI6/OUcg6DACEJLtc5Sgcjbqyyaej2V42FDRSeTwXJORtNvQK3femvqXe/NPHWaGpHCOnHUPKTzs+qj4xHxliQklUfgaAn189VkSVfHYlxvBzvHBajsxzL+n16XuNPjkFArI0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772400315; c=relaxed/simple;
-	bh=P0vFnkZRrLPGzAa+QZ+QWjYiPL6Ho5Z5fPyIZkoDvJQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R6P3I39N+m7qaHD/YnF4oFDCpAvhsouTGr5k/+ftv6jrR5GxzJJ1xFcRuahsEybhXIL1KgnH0YU6q/9jW3T3U8EYN2gQZnM3cQr+pzNHERvaR0Rwr0npWUAS/2pOZ9f1igIHMa4r/kcBcelzj3vKINnsTNabHcqqyby8xCCoun8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=jKXOQXf8; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1772402259; c=relaxed/simple;
+	bh=J/Ebiy5G1GBZkDM2fqsOeicH6y3yudcX8KwqAO28/AA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:Subject:Content-Type; b=lwG8x5l87UQ8sj/Sdx81LJfAwVQIAHRqI2ywxpwoQ8IftLHnEy1xQJ7hxyFAf1Wtz7ZdB86ZEN/QbVz9yg6p5cMx8YHiXNdk3PfQyVOHgGaQP4aW04s+CCKvi7HtB/+D/7cYpbSQg5X7rBpO8bqCxfdU9c1HXtl8s1bG/fsbYww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wolfgangfaust.com; spf=pass smtp.mailfrom=wolfgangfaust.com; dkim=pass (2048-bit key) header.d=wolfgangfaust.com header.i=@wolfgangfaust.com header.b=Lxym1jly; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W5LfpFZs; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wolfgangfaust.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wolfgangfaust.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="jKXOQXf8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1772400306;
-	bh=P0vFnkZRrLPGzAa+QZ+QWjYiPL6Ho5Z5fPyIZkoDvJQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=jKXOQXf8FtQDKWtplbvFrVUj3qEfRFKNJIbBmckoOkLRt2T64dx6dFYfM+nj7Ni3A
-	 MQ2V+wQDIutE7UYV/H1Ok5Ve+/gkk9jOu6NfSlAmPQIHUH6cL8ZEV1E9nwM5ss5fJX
-	 v9bYk3Pj6ak/JLlxqQN4jnStnfo54W2S7mwz7hMAGTjI2SHiG7QtLkfI8+1M+MSsYd
-	 0MlXTYoeApfY6oS/yQX31aY1R2WSRUYk63nNkjhAW7kINnjM9ewZZ2TMgBWKumZZUW
-	 JFnKCnla61fqihLoWzysbSq4VxtV+oWZ3bTkH5QfuDB0WzLSPEq+f0E/S3TmGBtkUx
-	 XJmq5wnO0uBvZdxvG1PVFPFWWvTN1tGiJdx0ElwkdgnLKhIZf2ZGnw1aeAsoaNvq4Q
-	 Btuot/ys95KOTpZorFK7XpQw+1UVBr/hBJzt9GphX6+0M+1uQsWI8DUfAKgQ+So509
-	 73JkSYATnPX65qn0zq/IXCKK1qh8a3YDTGAGSSeaiH191Cn+tHb
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:6ea2:3fc9:e167:33a0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 74375200B7;
-	Sun,  1 Mar 2026 21:25:06 +0000 (UTC)
-Date: Sun, 1 Mar 2026 21:25:05 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, kumarayushjha123@gmail.com, a3205153416@gmail.com,
-	jayatheerthkulkarni2005@gmail.com, valusoutrik@gmail.com,
-	pushkarkumarsingh1970@gmail.com
-Subject: Re: [PATCH 0/4] repo: add support for path-related fields
-Message-ID: <aaSusXil9nDHYGMR@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
-	git@vger.kernel.org, kumarayushjha123@gmail.com,
-	a3205153416@gmail.com, jayatheerthkulkarni2005@gmail.com,
-	valusoutrik@gmail.com, pushkarkumarsingh1970@gmail.com
-References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=wolfgangfaust.com header.i=@wolfgangfaust.com header.b="Lxym1jly";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W5LfpFZs"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7A9E17A0099;
+	Sun,  1 Mar 2026 16:57:36 -0500 (EST)
+Received: from phl-imap-08 ([10.202.2.84])
+  by phl-compute-01.internal (MEProxy); Sun, 01 Mar 2026 16:57:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	wolfgangfaust.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1772402256; x=1772488656; bh=P8ct7ORZ73nZugh0+IVetti/g30IDQ+w
+	fV7RXPOk3NQ=; b=Lxym1jlyUdfAuihPmMK4blDxBi+Bx2RE44mooYroJ2Vpz+Pm
+	+lM1Fg/oKmmRnq9+JTxkW4S8UdACiWq3bTUDjdtT65E/sWQD9HY6snmbm1ZiHKOq
+	3ruggAogBWMf3fUBHe/Fxf/2aRfE0rArTt9G6V8qyAp9Lc+yzEQJiFwrzRzXlRKu
+	Dln5HaNHmTnz+ZHnFGsgdtx1dmqcn6OcggX5cIaLRofMcQBAHRBY/jyNhL4rqq9K
+	avUWz/YlwBTWwsb4FjJBsecS2DcnnK6p73l3n3JIW9nbj6AeMk+Q7TGpEKVFdt2h
+	+mNd1wCm3cwZaISYl5eYv7snqjnuwJhYqObrjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1772402256; x=1772488656; bh=P8ct7ORZ73nZugh0+IVetti/g30I
+	DQ+wfV7RXPOk3NQ=; b=W5LfpFZs10SZvaAEbHAoz2zaLwLQnM4u0sPxhFuDQV/g
+	aYnJKM9tp7j5PPsdoGjpUCi0JFrLmByJWX6+iqDwQtT+OSE7matOtMIoC2R9ULr/
+	GZB3nDdxZVn0ob46eureOM1bOes4Q+eKKZeeb6CDvb3Rmv+PQNResbp4vuM4yBRH
+	u2mhMP7OF62sUqo/bEbQSFJf8XhVBLHJZ3JyRrr6CyRoYzGRLgMVffLJ84WzABqB
+	oTEqoHbSDA63Y9p/6PaTFOUp+onRhX0A8PEHTwFySgf8c9PQasDM7zZ4+YX42ZxQ
+	+2dBh75WtGANjUs+LA1kVmSDxHGRuUhaIr0sZkryuA==
+X-ME-Sender: <xms:ULakackYJLSTY7eXpbSbKdLVzjecPLFKONKsSm0ZIHvDhRtMO_kujQ>
+    <xme:ULakaWr3fSR6dbiRrylk8ePRQf0BVrdnq8lN8f9GPYTU5A0a4DMEkH5nxdtXFaC6H
+    kkp2rNulofvPLgJgP7daB6dcVwHw9fkXlIIYQ4rx9UKw0r1Ji58PuI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheehleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkufgtgfesthejredtre
+    dttdenucfhrhhomhepfdghohhlfhhgrghnghcuhfgruhhsthdfuceotghonhhtrhhisgdq
+    ghhithesfiholhhfghgrnhhgfhgruhhsthdrtghomheqnecuggftrfgrthhtvghrnhepge
+    ehtefhgfdtjeevgffgkeevtdeivdeitddvkeetvdevudegjefggfekkedtkeffnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghonhhtrhhisg
+    dqghhithesfiholhhfghgrnhhgfhgruhhsthdrtghomhdpnhgspghrtghpthhtohepvddp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ULakaTREupsrL0Kd84LWRdaUJGgadsTx3xYB__WVyZdbbKktJ2df4g>
+    <xmx:ULakaSsLYMe-MK-NXaWd9TUqSdDHfVO2x6gUGeCUtK6C2RGLJWCzNg>
+    <xmx:ULakaQbhV60KFL046Ulo_utAsfmJRAnRYey9l_lvv7i2aeh2_zc74A>
+    <xmx:ULakafsetgXWlNOBCvXN5gp6OwZmlJ5f-1SqdMRGtkYZReDigBqvzA>
+    <xmx:ULakaSnkHyIJrTGqc_AGD7tPboyfXDw-Jv7nNCtUTgYyIxGxzzUdQJBv>
+Feedback-ID: ifd814412:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id F40022CE0078; Sun,  1 Mar 2026 16:57:35 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hUUAqG9Ex84vuZ3w"
-Content-Disposition: inline
-In-Reply-To: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+X-ThreadId: AT0JpTLFp3rB
+Date: Sun, 01 Mar 2026 13:55:58 -0800
+From: "Wolfgang Faust" <contrib-git@wolfgangfaust.com>
+To: git@vger.kernel.org
+Cc: "Johannes Sixt" <j6t@kdbg.org>
+Message-Id: <a72715e2-c3ae-4050-95e3-7fc7f9b74b5d@app.fastmail.com>
+Subject: [PATCH] git-gui: highlight comment lines in commit message
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
+These lines are stripped by wash_commit_message, but there is no indication
+in the UI that they are special and will be removed.
+Add highlighting to make it clear these lines are special.
+Signed-off-by: Wolfgang Faust <contrib-git@wolfgangfaust.com>
 
---hUUAqG9Ex84vuZ3w
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+(I'm not very good with tcl, so I suspect this code could use some work.
+In particular the regex being a mangled copy of the one in the wash
+procedure seems like a code smell, though I'm not sure how to improve
+it.)  
+---
+ git-gui/git-gui.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-On 2026-02-28 at 22:05:54, Lucas Seiki Oshiro wrote:
-> Hi!
->=20
-> This patch series adds support for path-related fields in repo-info, base=
-d on
-> what we already have in git-rev-parse:
->=20
-> 1. The two first patches moves the path formatting used by git-rev-parse =
-to
->    path.c. This will allow us to reuse this code in git-repo-info
-> 2. The second patch add a new flag --path-format to git-repo-info, simila=
-r to
->    the flag of git-rev-parse with the same name
-> 3. Add the new field `path.toplevel` as a proof of concept.
->=20
-> This arises from the fact that I didn't know what should be the default b=
-ehavior
-> of git-repo-info when dealing with paths. Some ideas were:
->=20
-> 1. Add --path-format, just like we have in git-rev-parse
-> 2. Use what rev-parse uses by default
-> 3. Add keys for both relative and absolute formats
->=20
-> In this case, I'm using 1, but I'm not sure if it's the best option. One
-> downside that I see here is that git-repo-info won't be able to return
-> a relative and an absolute path for different keys in the same call.
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index d3d3aa14a9..3a0c08aa38 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -3900,6 +3900,25 @@ if {[winfo exists $ui_comm]} {
 
-I think you should provide both.  I originally added this for things
-like `--git-common-dir`, which Git LFS would really like to have as an
-absolute path in the way that Git canonicalizes it, as well as
-potentially a relative path.
+     backup_commit_buffer
 
-The reason is that the way Git canonicalizes things on Windows is not
-easily accessible on all systems or in all languages.  For instance, Go
-has steadfastly refused to provide functionality for
-`GetFinalPathnameByHandle`, despite that being necessary to canonicalize
-the way Git does, so it's important to be able to get that information
-both in a relative way and as an absolute path.
++    # Grey out comment lines (which are stripped from the final
+commit message by
++    # wash_commit_message).
++    $ui_comm tag configure commit_comment -foreground gray
++    proc highlight_commit_comment_lines {} {
++        global ui_comm comment_string
++        $ui_comm tag remove commit_comment 0.0 end
++        set text [$ui_comm get 1.0 end]
++        # See also cmt_rx in wash_commit_message
++        set cmt_rx [strcat {(?:^|\n)(} [regsub -all {\W}
+$comment_string {\\&}] {[^\n]*)}]
++        set ranges [regexp -all -indices -inline -- $cmt_rx $text]
++        for {set i 1} {$i < [llength $ranges]} {incr i 2} {
++            $ui_comm tag add commit_comment \
++                [$ui_comm index "1.0 + [lindex [lindex $ranges $i] 0] chars"] \
++                [$ui_comm index "1.0 + [lindex [lindex $ranges $i] 0]
+chars lineend + 1 char"]
++        }
++    }
++    highlight_commit_comment_lines
++    bind $ui_comm <<Modified>> { after idle highlight_commit_comment_lines }
++
+     # -- If the user has aspell available we can drive it
+     #    in pipe mode to spellcheck the commit message.
+     #
 
-On Unix, things are easier since there are fewer special file system
-objects and `realpath` or its equivalent are usually present in most
-languages.
-
-With `git rev-parse`, you can change `--path-format` on the command line
-between options, so if you want both, you just request one thing, use
-`--path-format`, and then request the other.  However, that can't be
-done with `git repo` and `--path-format`.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---hUUAqG9Ex84vuZ3w
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaaSusAAKCRB8DEliiIei
-gcrbAP0eec4tx3BGCz05m2XJkCclbgQxhigwTeeovXZzkhY3SwEAwI0uN8jiZJpw
-Dz1a8W1tnkKMUO69e8u3L4jFz2M0eA0=
-=xLh/
------END PGP SIGNATURE-----
-
---hUUAqG9Ex84vuZ3w--
+base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
+-- 
+2.52.0
