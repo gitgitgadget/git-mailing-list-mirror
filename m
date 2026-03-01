@@ -1,131 +1,103 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3905311964
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 19:22:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C670302753
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 19:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772392964; cv=none; b=q8cFpYgWjJAOOC54hl85aLxz+LnEfM8tpOVWk5vddFoQrPIP8j8VSkWwqhgHJVPqKuCpG4yK90ekXHlYH+FW0qi+z71aC452QfaKmvqcngdQRAqHVJPgToF7aQIBurK9AKky9IeFA95ovdm7fbxn4mtLuiro9PJlsSzvihYlX8w=
+	t=1772393285; cv=none; b=iZtrk0y4R891xFvsi+vzbqWATya6Kye2txISOFDTrgQRPd2tXiuCfCB4MvJTTCX/npTffNxZwXJ5lznQ16BjET6+AKf5Ns3/xz3VzagWyG1XtpxwYoIPoqeFzeVFpFOi/MYbjQ3+nEY+ib2HLArpCPXWLBgFPSNsVD8UKRvnLAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772392964; c=relaxed/simple;
-	bh=IO0N5+Ri9cZ4Jd5b4QCrsiaytC7G314WlBzzqqhIHy8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B2ewWE7+QNT2yekoQzPJaB5f4sslbwSRI/MPKtwrcEFx7SNaqpcKuFNDP9oQhW8lY+qk3Bryk52XARhM4vVTE3yykT5pTVku6a5pW3u78mUCRVt5VBoUo2ptDVyK0Ynqb8JhNmjHU8r3hKnSgcLp0z91JKKdwWTXFSwgswZMCi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HEe/CgMs; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772393285; c=relaxed/simple;
+	bh=oXsAQpNYLztWzXMS8ZfGS+4uPYp1q92MmeQSLdZo5R8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=OxKSzs+BDvedS2040oNy4m5qNO83Kwqip5Iq6YLnabTEx6FZl1KzjPYq3YQf7gdGqe3wTMXcXeySgkMbFWEBwo+gYf2E00d3fD2xRyCMRRG5vjccB0gmg3wfk9IINy6R03kL9no+kHm+p9SN9jUrHlsFuFFI5t+tWFG7Lj1LUI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MQkxUw+c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HoD8Mltw; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HEe/CgMs"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-45f194e9a98so1387680b6e.3
-        for <git@vger.kernel.org>; Sun, 01 Mar 2026 11:22:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772392962; x=1772997762; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IO0N5+Ri9cZ4Jd5b4QCrsiaytC7G314WlBzzqqhIHy8=;
-        b=HEe/CgMsWFqbJyG6pZl74FzLDxk2TjszW0WdBNWgyV6jS9DXMp8LTycgIGES6cjYtG
-         zmvaJUuPMu0ebUCnZte1HkOP3loQKUz31LM44nFHrojuYm7yHr/bBXyOzP7CW6KwY/gI
-         +YjvjOLktgsaikMra7ZWTNlMqO7XvjQtnfArxEFhLekUMNtp4fImoWpYsxg2cyflZHBu
-         oAG+1m8xzpmZocVlUY8/cWjiCCdcX7WOV3luk0KbjPlc5h+xkbeWcLdWXSioc2rd9uz6
-         9ELkHwesRMIvZgipcSUVQJcvYtvRIsd4Z+a6s1aF0UeYTksBPbkNBq6SbMcoQMFP0p7S
-         z03w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772392962; x=1772997762;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IO0N5+Ri9cZ4Jd5b4QCrsiaytC7G314WlBzzqqhIHy8=;
-        b=dFDI3eyZKkE4k6Awm7br/FlIT02SgiPpNYtubYPdyA9ooriWWM47RddmvPBFH/TZdw
-         CdEsftSD8nTQ1PCuwuNIFu2g0USxGrRHIRCQc9qo4n/hUVLFxuDR5dWXkvv9P//Bd50a
-         IdqjSIusE/jOIqCqSR93pcPi5Zico+TbfLmgCInj6XvMo2goPhDXRAmGEXf8iL1cV3te
-         1nfF30c/Q8SsjudjcIBpy9LBKzT8sjHwc+RBTdY2SjBt9oE0IwrxDWBaQZ+nF6LOuVoe
-         Q4HBFBpId7V8nWsVlRWAvnwr2VyfsB0gRXXDBPzsDQYg9GBN3kxt8aq+jXFxQFRYpHE3
-         YtIA==
-X-Gm-Message-State: AOJu0YzkixB2zODzeMXKNW2WmLOuFUOrdodWac6tgA3IbEwxdfpEXmAe
-	lplqpmCsDDS2xe7YkcsY4JLV1f69CFONlo9VXhCnGrUcrEnXul6s0Q1n
-X-Gm-Gg: ATEYQzzMzZo7eBNV4ZZAlmYk/eijIBQtif3bAAaJQ9cS4NRXWkzwF/NGOPqziEGDh9q
-	vobpS+yfEvKFZpsRN1QQmZHc7kse5KFfVmelykYCbCJdlm5giwQqWTuT90I7aKMJ/ZQpI8WUr1s
-	xCRI9QOUp+FnDyh1Opl9StekGv5YeGoK8MhyyCZdMTCjm9UQPq97WjeC4qg2SKjQWy0e93Ho9gT
-	+bAnhw5mpaxZz0xubwyuRdL0mwT+Ga2SrFMunSw35KgPqVmSaYwBO/Z0v5zYLRM40Tq6xoKvPZW
-	iCgJe/Q9ErC3XioMHz2r+Nk7yumYdkcJvTaS/m9U1s1OPM3yK3F6YIoAe+4tRc+8uQT5LYo0auC
-	iSN3/QiGk2yrulEkrH1AamAm3S7QwSDg0fgVI+g08fe68JBWuMA8wf+ZTOJMEZoCrlPApqL7rcM
-	pnYzj2E3QKYDv+tesH
-X-Received: by 2002:a05:6808:320e:b0:450:907:b523 with SMTP id 5614622812f47-464be9cc89dmr4864081b6e.6.1772392962495;
-        Sun, 01 Mar 2026 11:22:42 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-464bb59b656sm5934046b6e.12.2026.03.01.11.22.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Mar 2026 11:22:41 -0800 (PST)
-Date: Sun, 1 Mar 2026 13:22:33 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, 
-	kristofferhaugsbakk@fastmail.com, eslam.reda.div@gmail.com
-Subject: Re: [PATCH v2 0/5] builtin/repo: include largest object information
-Message-ID: <aaR6a7o4omOIWJSe@denethor>
-References: <20260203221758.1164434-1-jltobler@gmail.com>
- <20260223174120.2356504-1-jltobler@gmail.com>
- <EB04AA40-87BA-41D9-B2DC-92E87FACEB54@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MQkxUw+c";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HoD8Mltw"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2F28B1D0013C;
+	Sun,  1 Mar 2026 14:28:03 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Sun, 01 Mar 2026 14:28:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772393283;
+	 x=1772479683; bh=oXsAQpNYLztWzXMS8ZfGS+4uPYp1q92MmeQSLdZo5R8=; b=
+	MQkxUw+cRKY0BLbcsuMpDaBq7+e3D0Z+mRCcRbfB0MoJVALmvvL5rk8bGDfjfKta
+	aQBo0W2u8dTqUshSBvNm/6fQkcnUAEcIXXSkY9ab3URjue8/fndSrniZ65mhY2p1
+	RGgD96KeT4QxB3lQazJLMGZ5V6SJq4M6598X7O2ynwlX5LTCeW6qehZCViNNVkRk
+	PYBFPRcEHNMLrd51QT0yKKk7wSJFpTuxspVKUlUNj/fUp6K2uvcOQBA8sZ3YXGuf
+	mQLkemZOol3b7kSdj8NpN9gE1vpKaD8/HGCMkbtgOBiWBQQV/9MaQ5dhU03XiR12
+	Qc4JP5eOzQkc6DmdfCuccw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772393283; x=
+	1772479683; bh=oXsAQpNYLztWzXMS8ZfGS+4uPYp1q92MmeQSLdZo5R8=; b=H
+	oD8MltwcpBNXr+V8hpal5K+ze5stnpudvSrUj61PAQkulYHgvDGVn8HkplRZ9veK
+	UuqdcNMJtdb7DPdhQC5DjbYmvT44qHANVr+320n0OpX/CUqzsuF/eMDEmz+txZbk
+	wp6LXXmb1NMz7ft7ieUoHrdAdL7WICKyg4vzM7px4SyHbRXMOQLCaqdUYi29Joo9
+	FHjti6m4n6whHwf+/S9GkVpLHkNHBqOpBH3xZ6UVSB+yEXzV78emNMC4usmJZBK6
+	fL4CjWB6B5NkBCrLD8cNnGaAiWfCb3zLUIkV/N9DKwa2JdVArJa3ilXY25pz6F7l
+	D89A7oyLHgc0fgLQgGbSQ==
+X-ME-Sender: <xms:QpOkacTYJk12mpfLjce5vihnf6vIDaBk3uTkfTFGfMnW9IMm8VH9yFM>
+    <xme:QpOkaUk3iWgiPobTke_7nalj-95HOoY8WbrqPMOR7HbroI488rtvIcwrii1KmJSAg
+    lDVq1eAIxLJShTLdRpa0ryT396D8f_qhtd4XBLolQW1NYWWkFcqItI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheehieefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:QpOkaS78bK0nsmRCaFlIoZNwWePQqZ-wgSafzifrEtMsgqmTGdvL_Q>
+    <xmx:QpOkaZvBgPnbVEJOQLnq67ATEJeEq13s2R8n1_o1BylzxeV1-byxEg>
+    <xmx:QpOkab7m6HucmLN_hBMBEFW2I1I2ut35BoPXbCQzhAlv5eg6Omh5Dg>
+    <xmx:QpOkacVAN8ub90-dItIV2X3z60lTlx1Tq6Fb7df7iPTQlS9zvZZv6A>
+    <xmx:Q5OkaVfnGIbn_rzE8dEWkVbajiILTNtvDndKEEl_4zcG2hICzOJ9e6Tg>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id D12481EA006B; Sun,  1 Mar 2026 14:28:02 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <EB04AA40-87BA-41D9-B2DC-92E87FACEB54@gmail.com>
+X-ThreadId: AHbM2ju-kMHV
+Date: Sun, 01 Mar 2026 20:25:05 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Harald Nordgren" <haraldnordgren@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Koji Nakamaru" <gitgitgadget@gmail.com>
+Message-Id: <0a861662-3a6f-49bd-b2c9-d90736c1f674@app.fastmail.com>
+In-Reply-To: <20260301190647.41248-1-haraldnordgren@gmail.com>
+References: <xmqqa4wv5xsb.fsf@gitster.g>
+ <20260301190647.41248-1-haraldnordgren@gmail.com>
+Subject: Re: [PATCH v30 0/2] status: add status.compareBranches config for multiple
+ branch comparisons
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 26/02/28 08:43PM, Lucas Seiki Oshiro wrote:
-> I was trying this patch series and I noticed that it took
-> more time to run than before. In my machine, I tested it
-> with the Git repository itself and it took 6s to run, while
-> it took 3s to run in the current master [1].
+On Sun, Mar 1, 2026, at 20:06, Harald Nordgren wrote:
+>> Will replace.
+>
+> What does this mean? =F0=9F=A4=97
 
-Yes, now that objects are being parsed to fetch additional
-commit/tree information we incur some additional overhead when
-collecting metrics.
+That he will replace the branch he has for this topic
+(hn/status-compare-with-push) with this new round.
 
-With git-repo-structure, the goal is to provide the user with an
-overview of size/structure related statistics that may showcase problems
-for a given repostiory and is directly inspired by git-sizer [1]. Thus
-as it currently stands, the implementation of git-repo-structure is
-still incomplete and as we collect additional metrics in subseqent
-series the performance characteristics may still change.
-
-> I understand the reason and I don't think we could avoid
-> that, but I'm wondering if wouldn't be nice to have some
-> way to only retrieve the "lighter" data (perhaps a flag,
-> or something like the keys in git-repo-info).
-
-If the main motivation is to allow the user to reduce the time spent by
-selecting only a subset of metrics, I don't think using keys like
-git-repo-info would be a good fit. Most of the collected metrics pull
-from the same data sources so including/excluding any given metric may
-not have any bearing on actual performance. For example: if the user
-wants to collect largest object info which is a more expensive check, we
-still have to collect the underlying data used by the other metrics
-regardless of if they are shown or not. Furthermore, it would likely not
-be obvious to users which categories of metrics would be more expensive
-than others.
-
-I could maybe see something akin to a `--[no-]extended` option that
-breaks metrics into cheap/expensive categories and computes/displays the
-metrics accordingly, but it would be important that the default set of
-metrics collected satisfy the repository overview this command aims to
-provide.
-
-If we are more interested in adding a mechanism to filter
-git-repo-structure results independent of performance considerations,
-maybe we could eventually explore adding something like the
-git-repo-info keys or a `--filter` option to restrict the output to a
-specified subset. At the same time though, it is probably easy enough
-for git-repo-structure users to filter the machine-parsable output
-themselves if they wish to do so. For now I think this should be fine,
-but an included result filtering option is still something we could
-explore in the future. :)
-
-Thanks,
--Justin
-
-[1]: https://github.com/github/git-sizer
+>[snip]
