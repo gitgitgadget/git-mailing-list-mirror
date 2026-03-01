@@ -1,199 +1,108 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7947E20CCDC
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 05:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772343916; cv=pass; b=K5EqtwRnRTPfEPuzPXuHWZAgD6RhzAEMHxzf8aOfqIyGiHRT9anPoHW+atpICefgHk5xlH3/luBzVH2zHG0YusT7zmgcP3Zo0ze7OHo0dfUubMkdlWHh+6yTEdB+D0R+rvwe9IwAbI/ZhyVrQ87GoL01nSh9KHK+Av48f2vTWew=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772343916; c=relaxed/simple;
-	bh=8cjoUM3+zoqwNvvKMlcOUQ4UxLKmW6SO7MnOLD+wd9Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a9vqj5QuAZyBNNMjFUjB2Ae2JUcIo7qXIPZyN3C/O7Q94p60iFwyk5dqnmqcreFsiv+lOyK1r2+rqnN629dJjQ6uFg9QR90jXyZL/IAyUremJBm35EsiWOOIvn/ST+6mPib9B6wAH8/CaC6sPu98YyzB3gmklMPkxvCrJd3rli4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QVhFk5IB; arc=pass smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EBA4C97
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 05:59:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772344755; cv=none; b=MSfJedeirJ2X1R0FREKi68RawhjG9BHO9kwf/VcU2gPTayUCEb8XOu74Llk8eCoIUouzPfFMcCIEfHzD4fKKlSexhHYn197+ILJF4VQkPmo3yeXhffbu4M/uw1ql/3DVhlqDgO9bHTX8coGyHUWMb4uDslG+alfSN7pqIti7Qs0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772344755; c=relaxed/simple;
+	bh=kMfFhqNzgjJMiOcZQFB3zSfhum4TSOdrmbkk1AKG1w4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jgU7zOXPcAF8KV9qpWqMbr6T5vdSjKQNgESuDLOE+aoGBmc2rxLeQwUWeHmagtMD30jlyVtVJxiTHtd36HX7ou4V7hn2tG9U8hkHXJnQ+rOS7FdMzOdCnlxuIbi8l1HbrzEHvusd2qN5fuG8PGv7jlhfMeOQnQCk9uZk2TR4UT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ca74SsjO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZtngNfDh; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QVhFk5IB"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-389e4330e32so48876201fa.0
-        for <git@vger.kernel.org>; Sat, 28 Feb 2026 21:45:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772343913; cv=none;
-        d=google.com; s=arc-20240605;
-        b=irME8jjYO3ycpdDjeffltAvPFqvMp0N0ia4UEubAuRWDXAsurtOa+QRahdiQ14oLFW
-         cNLFe7Jiwv5rE/sRSBjVejXniUwWLDEGrc6/kaO6qlXooLoQqwZidSsI+U3wan2mThwZ
-         6aZH/FYkIbEdPzlNebETUK61d2MV6zGRkA+bgXb7QdNd1cuxmRwB01KqHrFdTjlgKjN3
-         Pq0Jj/B/yonmBIoXcrpk+1feJrudEm7LuNS12IYp6TbFBvpeP8oZp1mSLWRHD2UCyqgX
-         qdLbutSMElG/q+RtqHtNEyqeiEtG6HfbEpFztJmn22xVkwQlGOIHqHMfy61lrCvF/NWr
-         Nsmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nfR5/X3OYvrIWLzsm1J9OC1Gw06//nS1mu6sNfFZ1lY=;
-        fh=O1v6St9G/Wi/DrzbsDmHBalcIOdtsUQ0YHnG2CJfrrs=;
-        b=I46vaXbIrL83rQSzEqrC3qxFSjWuksKepgpiMhrrVjFME/MwrZfEg23cnf8jzRQqXy
-         oOKBxa7eRoH1s4GQxDHGmPV32q0aaqa6F4EVhqcVII7SL3Iv1DkBYp+iLjOqaqCxHO72
-         WucWS0DFWOeaUoDtxnWTzRgvGaDarDjbFfoXRnS0SkokE1q2BKBqImxgmr4TPVLcneQe
-         iD0XKK/Tc19uK1J+ZqmMnqePqLHVAXkacqRbKvbR+vyXu0z6Sdn/Q/V7Y8suLqLsqTKK
-         nZTZj2p6MCvHkAduiOK8qqF1YNfG8xoLFPCpcFKGOhcyd/hKmAhPUA1F8cXPsNRKj0cx
-         nhHQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772343913; x=1772948713; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nfR5/X3OYvrIWLzsm1J9OC1Gw06//nS1mu6sNfFZ1lY=;
-        b=QVhFk5IB1w0vgaVrOEl/Ll+7MicyLVson0Vu98GBwqvbv+A33AkTZHgAR/QVrX2JEa
-         BrVlV2ZLMB2hSDBgIJXWvmPTF7eYzveHzoHJxIJgiZ5zuuuRnOjOy1KvLKKkyId+PyUd
-         iEXyd6ijwaqb4oxVOHZzsClaVdQhQ6yY1I1H7/mcPOnoAX+arL0lg2cIuDQu3jpGO2tk
-         ozVTr2hqawsWzVN1wdU6yjOPDcHam5XrTUoONOaEV2N/3z9fTh6a7NlcPbzLfQOUvkUZ
-         z732QRI97pNHweqXYSha2P5PJ+eU9fsUDosNHvKfXNKesfgFGfR8kCzoAwklAEz/v5xb
-         fW/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772343913; x=1772948713;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nfR5/X3OYvrIWLzsm1J9OC1Gw06//nS1mu6sNfFZ1lY=;
-        b=BY/or1ziUG6hF9ZBdXjmigF+SJAaca/nP+75WEjD2QhUar39YPFvmj8UfC1GtDSSzM
-         O6Eb4X1AvQDXgP9u7IQ/fdcplvELvnrNV/6gUs3MwaOvCrTsZGYp5Q7z4uHQVvi8jOp7
-         4fwWhDsmjNIxS0Cfjcvt3FMmtZyZZqRs45BcJePxOGiraSKqj0OJIAQwsEwhTA+2Yss2
-         h2OZScFI6q5YUrSjyMX4+GiOV/a0lmHP2iX8rxbyoZKUScyIDqRPaDi8+2VNEGkBSOk8
-         uTp1/nI8nX4rJh7dcO1pakVRvd4XC2hhzAxBttBeSmX22k2XQ4rF6ibz7sZrJ/lzgBXJ
-         KjrA==
-X-Forwarded-Encrypted: i=1; AJvYcCWKXkHW1rbZor7543zZ6IzDEjym1jO7EnscJNcicg+7JYg3JQKVCdhkqK/dlCfVCi6AB5w=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy0PqLb2nSJOd044AYWAMsNNNqIJ6xqgSTj8DLVCQHtDFYr+8oy
-	Bz6AHhR1KymOl/yBueTWS7SFT7b6mn46e7axGMAUVXPLZvaao/yQyuRIynmFDS56Ea5mSykEtN3
-	4tgVQazyMVx8o2lYltzR+V+prmvShaEY=
-X-Gm-Gg: ATEYQzz1M/Pum7q/RFAfXQKaakk2h3dbUlF5qZffvMxrbhk9Bis8RxjK/OAqP2ESVYZ
-	0ZXYK/29r9/PzcUeJyszYMtCWBn5j4wR5t2E7Y+gUOh0DBaNm6YpVGw3ablh7GAusajcuQGky2O
-	7zOZOYSWYztBrnBjp7LQWKQCt3cPdFnfHcAvuATmawWtTyh/wcMYpb1r0FqFwy5MDVsKNsAP6Vv
-	A/l1bnKzqIFDJ5fVZIvJzZ6SMd6bATxdrPI+qDOZlBerHBsQ6Ckmsm8VycH8pcVkzBom4FGSIT7
-	8+i/svsH+Ayi4nmvuzzq
-X-Received: by 2002:a2e:be0a:0:b0:37c:c84a:98f5 with SMTP id
- 38308e7fff4ca-389ff08bf5amr52885041fa.0.1772343912297; Sat, 28 Feb 2026
- 21:45:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ca74SsjO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZtngNfDh"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 13B761D000D3;
+	Sun,  1 Mar 2026 00:59:11 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sun, 01 Mar 2026 00:59:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772344751; x=1772431151; bh=mTwZ9lCSN4
+	qL89x8UBvWQrR7HW/G3RZitzFfa4aHBGI=; b=ca74SsjOBjlapKdy6WIO/alXCE
+	uDHVDRFVdf2t0BQkvQ72ohFKSc3Aq/HOd4VI0SveuMOeCVXUoBY9mY76UdS8FlDn
+	FUGMeq7/vGaRQjMg2sVYcTAYUEniYNQ54USIulpyVapcIxaqOL1SBIoM92EARzSY
+	kRoXPj0IZ5OscZMyj0Z8SsKtZkXVqHR/yNc2w8vUCIyckBrVGpaqebi7Qg377nYp
+	U7kYXg9m7UcxfcFstf7zhoJh1LW7YvaKtQlDIbdCb2YTGFrefRPIuNfhc49TTxYM
+	CSvOhnR696TYDiOpyp0zic95/5XKL5oX7ji1nzK8nJUzm3dNFMhXq4Tc4bRw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772344751; x=1772431151; bh=mTwZ9lCSN4qL89x8UBvWQrR7HW/G3RZitzF
+	fa4aHBGI=; b=ZtngNfDhgbTvnD66FFNMSkodCyrC7sQdLf79Jr8rFsjQjmZwQqu
+	QXUQimfKPKO9doMH4WMVta+DfQKjTZI4UdFV34HJBVus0/jUxbS6bOhfY3iAKMBc
+	VgKyVS4nZxl5oubVonrMUt0QWCg9XBlGOHE/3Fbkp8+554bhblsVFPC4gjPBL9NQ
+	duhnkbeuM90ALTCdCHW/JBoL/2Kuofp61WWpSxhJFsvJyWVMTpZ5sqb/arCBEoxd
+	yZnQZeYv7Mm5/qO/7E2dSniexjMaYGm83wKDW7tUHpVH7PCOM5GUG2+s/oBo7i0N
+	hcYjitBQQsJYuU84xIgcAbL6vMzWAeMVwMQ==
+X-ME-Sender: <xms:r9WjaY2kXLXE-c7oujA7lA7NilzLd8T0MMojAwwuNzq5su9Ine9LZg>
+    <xme:r9WjaaF-c89fPARERFPUyJonWW1f0xAFDuIPqsHOsYYDw1b36hr0OSwHHwZcfQGBw
+    8OaQWJ0ZnWtvvKeiTjYG9m_4JUEsaC_tPOXg3WRvtpiF2Tp1scf1A>
+X-ME-Received: <xmr:r9WjaV6eR-CkLY_gzS0VCQKvLJCpfDPifMrC-eIH5Jjq22hYBrX7Xl08N2KRgunavlBQcYt9tMFtcJwS1vk0fornL5uwWh1PIg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheegtdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghrtghn
+    rghrtgesgihiphhlihhnkhdrtghomhdprhgtphhtthhopegrlhigsehkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:r9WjaQvwjjIHed9poFvn5TP0179e0cyEashImodVV65pjgbZrJHZtA>
+    <xmx:r9WjaW5M63NU_SVFAsKmdGVSCMu0iiBM-Y2SDZy7rcfY4-ZCX4q0bA>
+    <xmx:r9WjabWs2OlikZF-8n0v9EHBaEADXXb8yrrg8Tiu4VxEcJMFuHfMRw>
+    <xmx:r9WjaY86M_EM6JgLCvbXtm0V2-WJBrSGfncRvS3vHwfL1LkGMNtH9Q>
+    <xmx:r9WjaeMhmvFwF_vgziIGxzqw6IB4tg1_9n_HaiPcEqCF7XS3E65h-8vC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 1 Mar 2026 00:59:11 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Marc Branchaud <marcnarc@xiplink.com>
+Cc: Alejandro Colomar <alx@kernel.org>,  git@vger.kernel.org
+Subject: Re: --no-decorate and %d in git-log(1)
+In-Reply-To: <cf3d274e-7363-4557-809a-a649b1d304ad@xiplink.com> (Marc
+	Branchaud's message of "Wed, 25 Feb 2026 14:46:10 -0700")
+References: <aZ81X6ERyx5fcm6L@devuan> <xmqq4in4brt3.fsf@gitster.g>
+	<aZ9AuD3dYzCKtI0s@devuan>
+	<8f6441ab-5c9a-4b42-ab2e-a670d462569d@xiplink.com>
+	<xmqqcy1sa8mx.fsf@gitster.g>
+	<cf3d274e-7363-4557-809a-a649b1d304ad@xiplink.com>
+Date: Sat, 28 Feb 2026 21:59:09 -0800
+Message-ID: <xmqqwlzw5bv6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260228224252.72788-1-lucasseikioshiro@gmail.com> <CA+rGoLdTc2caDUsQedpegL+T4MqwwiA62uuDSFSawAT5vcPvWQ@mail.gmail.com>
-In-Reply-To: <CA+rGoLdTc2caDUsQedpegL+T4MqwwiA62uuDSFSawAT5vcPvWQ@mail.gmail.com>
-From: Ayush Jha <kumarayushjha123@gmail.com>
-Date: Sun, 1 Mar 2026 11:15:01 +0530
-X-Gm-Features: AaiRm53haTzwpsQB5pL6GQrXKDKT1DTt8fOHV8vcPhu3BWtwo6QpG1MVgcd3ojg
-Message-ID: <CAFNBzOdCx=R3r9+m5eDyAykMAbmbcfpX3kPeEPjqXPYT-_89+g@mail.gmail.com>
-Subject: Re: [PATCH 0/4] repo: add support for path-related fields
-To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, 
-	sandals@crustytoothpaste.net, a3205153416@gmail.com, valusoutrik@gmail.com, 
-	pushkarkumarsingh1970@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Lucas,
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-Thanks for sharing this series =E2=80=94 moving the path formatting logic i=
-nto
-path.c makes a lot of sense and avoids duplication with rev-parse.
+> Given this documented connection between %d/%D and --decorate, it seems 
+> reasonable for a reader to assume that --decorate=auto would do the same 
+> thing regardless of whether or not a --format=...%d... was present.
+> ...
+> I note that currently --decorate has no effect at all if the --format 
+> doesn't contain %d or %D.  To me this bolsters the argument for making 
+> --decorate=no suppress %d/%D.
 
-Regarding the limitation you mentioned about not being able to mix
-relative and absolute paths within the same invocation, I was
-wondering whether it might be worth considering making the path format
-part of the key itself, rather than controlled by a global flag.
+OK, that's convincing enough.  
 
-For example, something along the lines of:
-path.toplevel
-path.absolute.toplevel
-path.relative.toplevel
+I no longer mind cooking such a change a bit longer than usual in
+'next' to see if anybody screams, and the have it graduate to a
+released version to further see what happens.
 
-This could allow users to request different formats in a single call
-without introducing global state into the command output.
-That said, I=E2=80=99m not sure whether this would complicate the key
-namespace too much, or whether maintaining parity with rev-parse
-semantics is preferable for consistency.
-
-I=E2=80=99d be interested to hear your thoughts on this trade-off.
-
-Best,
-Ayush
-
-On Sun, Mar 1, 2026 at 8:28=E2=80=AFAM JAYATHEERTH K
-<jayatheerthkulkarni2005@gmail.com> wrote:
->
-> On Sun, Mar 1, 2026 at 4:14=E2=80=AFAM Lucas Seiki Oshiro
-> <lucasseikioshiro@gmail.com> wrote:
-> >
-> > Hi!
-> >
->
-> Hey Lucas,
->
-> > This patch series adds support for path-related fields in repo-info, ba=
-sed on
-> > what we already have in git-rev-parse:
-> >
-> > 1. The two first patches moves the path formatting used by git-rev-pars=
-e to
-> >    path.c. This will allow us to reuse this code in git-repo-info
-> > 2. The second patch add a new flag --path-format to git-repo-info, simi=
-lar to
-> >    the flag of git-rev-parse with the same name
-> > 3. Add the new field `path.toplevel` as a proof of concept.
-> >
-> > This arises from the fact that I didn't know what should be the default=
- behavior
-> > of git-repo-info when dealing with paths. Some ideas were:
-> >
-> > 1. Add --path-format, just like we have in git-rev-parse
-> > 2. Use what rev-parse uses by default
-> > 3. Add keys for both relative and absolute formats
-> >
-> > In this case, I'm using 1, but I'm not sure if it's the best option. On=
-e
-> > downside that I see here is that git-repo-info won't be able to return
-> > a relative and an absolute path for different keys in the same call.
-> >
->
-> Option 1 feels like the cleanest approach.
-> Even though it means git-repo-info can't return both a relative and
-> absolute path in the exact same call, it keeps the API highly predictable
-> for scripting without bloating the key namespace (which Option 3 would do=
-).
->
-> The behaviour is different when compared to the command itself where we
-> have to use --all, but I think in this area this is the right approach.
->
-> > Since there are many people interested in contributing to git-repo-info=
-, I'll
-> > leave the remaining path-related fields to them :-)
-> >
->
-> Thank you ;)
->
-> > I'm CC'ing here:
-> >
-> > - brian, who was the original author of the `print_path` [1]
-> > - Ayush, Tian, Jayatheerth, Soutrik and Pushkar, since they expressed i=
-nterested
-> >   in contributing to git-repo-info in GSoC. (I hope that I didn't forge=
-t anyone)
-> >
-> > This patch is based on top of master 2cc7191751 (The 8th batch, 2026-02=
--27) with
-> > lo/repo-leftover-bits merged.
->
->
-> This provides a fantastic foundation.
-> I have updated my GSoC proposal based on these patches to build out
-> the remaining path.* keys, alongside category-based querying and
-> global state removal.
->
-> I will be sending that in a completely new thread shortly.
->
-> Regards
-> - Jayatheerth
+Thanks.
