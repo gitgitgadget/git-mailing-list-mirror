@@ -1,144 +1,146 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DDC2561A7
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 06:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D733C23D7CF
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 06:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772345650; cv=pass; b=a+2xnzcTQmfWJLj7j/kS0fZD/0peJHle8Ri1nIl56/8U5FmwfiKpJE23FGjzl8cTEhjg7VWsKszU3x0qTqGomjt/gieuDKtdFXmWsnfmEFWzjRRjptm/1K+wTzPtamHShp0MhnYUiMaq4FLuquEgwv6719fbVoaJTcGBHAfZR/g=
+	t=1772347846; cv=pass; b=NWoehxGLM1fkN+/3oa3qwEkP5DBLHvdTF32z5Wkjx5pNSNdkgGTPwpxu8OXliCw80+qXc0sL1pE0YHH7EynCbY2vKaUAiebyVVuNcctBRnelJZQ2dLmpoVAkJFRbkHFRX8h0mPzJzAbthKxTgNEV97sindAn7iPXM+ocrd9AFTM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772345650; c=relaxed/simple;
-	bh=/5GuTwJ/dWDwJhqxfL0eZlN8azyUiPW9ZyHZw6pgplw=;
+	s=arc-20240116; t=1772347846; c=relaxed/simple;
+	bh=bKphyAc5hGx2InlXDA3/UrLz0p1ypLqarDiY9X+NLE0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Up1yGeEHmBHVYdrqU6Ct4zZi3lsBCFB9Tb6Gcwqm/8uDoxSJJRzvT4gxjOsFo6H+f0WJs8VpgJEhdfTlHDg7bf9IcxbXdnrrWZUqsq2xJiCZYQ4AXk7fuLJyfcXtrNhdTj2gMqEKnMFZYI/cL16hK1ecCnFKoLLnraICXxDJQfE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=flESVuPr; arc=pass smtp.client-ip=209.85.208.174
+	 To:Cc:Content-Type; b=suiGeUj3zec69I+Yyk4TbNcASAMYHpK+Ugejad1FZFVBYeCC/H5UgR2PX5jRcpuKVWWV4AfxnBebSkgBi5cZ0IAg18eFXm8KUhWakKXDCFIvvu0h0zBTsfSk2JE517D6RFo2GAUDnZPsYoXRlh9pp/7Mtyj+VS7fF6RITHeP2PY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dDMB22yu; arc=pass smtp.client-ip=209.85.219.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="flESVuPr"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-389f173b91fso52684671fa.1
-        for <git@vger.kernel.org>; Sat, 28 Feb 2026 22:14:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772345647; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dDMB22yu"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-896ff127650so57399336d6.3
+        for <git@vger.kernel.org>; Sat, 28 Feb 2026 22:50:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772347844; cv=none;
         d=google.com; s=arc-20240605;
-        b=iGvLlTF6ey04l0U6S8N1naCNzp/9BcQObZ4+5MPKoJm7kPoq7JafSgps8jjsRJg+ZN
-         5dN43fjs6ddOahjpY023rnIG5f2DPFNGl07/h0puTKt4LLG0c0x06vsjf6BtBK5xz0sg
-         qltmr9MfFkzFZKLSgTgyBHCyJjPr7b/YJq4KNDEo0qSg6bSX8lBW5J0MUDPL+gwSx8Oi
-         C3xDNJ1MtBUmJIYvGckJS1+HKmgUXzg1Da/gOwJFGm+BEEJVK2mekeSx00MCNx5jsTQS
-         dbC7teIwUguDRwkko8/RpCf/Np8rrRZ4DX4eD8fjQznxq80WbNneis+9t+SUY9ILhTix
-         0RsQ==
+        b=JYU7x+G/jtKUEslxsDfoBgLIXTJUB9ecFvgXNJS/HYFqa4poai0N962goLHhKWFN6r
+         y2ckv/ACgSa7Z2YadlrXsLkOPvJwDcsIeGkq9Liidect5FnPuJnwnTyPQID/fWVgoqgL
+         JuC6Ge5QGaLFHeBVXskI7pJ9a4euEftAz7E3eq5kdyBsb9lCtc7fvUdk7Cbty6JsHqrh
+         BuIy2T+UJkqnH0UwT5HlCwimvyI9yeRjLYtNRe5FobA+o+XFkbGnqxQxC4ZG/VYK/H6k
+         fuW4z9I5HSYaeKyeLMw5xErc4+zbwt/1Prmvl0oIgLAcozQyT++mCbGZ560earfnGXzE
+         ZW6Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=/5GuTwJ/dWDwJhqxfL0eZlN8azyUiPW9ZyHZw6pgplw=;
-        fh=vjWiuwtWY/bbMdr/dGFQVRlox5zvvaMnt63AkuuMFPU=;
-        b=XJnEhuMtBgS3yDa0cAT0G4Er8YZ7I5M+FptQ9YhFD9jgnRnkqs7BSXdnRuaQc0Sx79
-         XGpvQ7eZJeK1XZ6Kj6nXFb8rKpJkovxCnekX/lPuso4P94GGAlTCyLEmSbzicH2XfK1L
-         8H5eLPANMUj0SBdyNa1oGz7XfbxKvV681gNyTR589y7KPmnHTZ3F524ChyV/Sna8M+XT
-         MVFTyYANT5nGYS7FqAOdRGAfxiVyZR/82O05OQlBtuDsqc0sqN62ud+LYxAAZBPqizRo
-         pdfYYgbot0QGpJ1pTzkC40Z4cxQQk/rKIr9nH0+UivMcVO4Xg+TLRPAfehogttEFpeh9
-         sGbw==;
+        bh=bKphyAc5hGx2InlXDA3/UrLz0p1ypLqarDiY9X+NLE0=;
+        fh=bVmJrPQ1jIMePCYdRhYiToGimuLeB5IBhI6HIkdodkc=;
+        b=IYTVVEY0hS7bSQik+7tsqNgiKKWBm5bRHgmHOTsdKIXT2qkaoQ3qjIxXqwhjlBbDVs
+         e/DTC0k3xwTUQIuPGwrWMehTKzHnb5pylTOJwq1yDlI09AbUpXqQfIRzc0oZ+d1xfvrk
+         IJ0+EsCPeVtdV/+BAIHij+ysKIMuN49VjdlYAq9cttsKbEfCe/SQhoypVQU7eFG72yXn
+         Q1DMy6teEuZ2OFrzdmIXtwnXLbP2skfrXdXhZwkXM9YUJFrQbbJvdKVJ5Nuo6lOtNAz3
+         nRhGfkJ0lU6as6/GdHJ5F+H/HVDWRV0HPjAoKDZ/K08FhAg2WrNr4g4qcFkSr93JsTu6
+         Rjmw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772345647; x=1772950447; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772347844; x=1772952644; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/5GuTwJ/dWDwJhqxfL0eZlN8azyUiPW9ZyHZw6pgplw=;
-        b=flESVuPrNIKwOLOvzoVgCOFYBGiGLu8RQOisDctlVh032blnudJoroIW304LRZNXcI
-         GAeZ5AxwVOeyE1nCM77CeUbiU3EbK1lAuu2ouGvXofhwza9n7mxHcoSPs2V6JhrYZpL3
-         ifmXCxov99KuAmfbLuSAmdkJuUv3FVGyN899lauTgf9Z+yiI1RpZv5qrRQnTnpdX5B0X
-         M3GjbCr8Iirc/B0LgIE3vxZmFV+JFH3SW73sPXnm0aX6T5Fr+0lZ13dmR/9tAQ1/jHwM
-         QpnILIqta5Bfh2rhp11BxQ+IdpAoLk/E50j/Yk5UvgdNj38f6CbPyhNgCoC8uVN6Cy+Q
-         BfCw==
+        bh=bKphyAc5hGx2InlXDA3/UrLz0p1ypLqarDiY9X+NLE0=;
+        b=dDMB22yu0XPMypwixbKBrHgCL4ayerqrpmkItpvmerH/hf9Kdahe/oCby6co5w3rb+
+         E8m7FCqjKOXhC6bLldtYtqFOHCFOY8hkYtCxeMadxilQc+T1v2pZOeMvJtq6H7xDaG3r
+         T+K3E24EucAnUrpAYL43Y3GkeLdK2n3YvsCrVEpgc/9+WDroUuvOixMQ5KURD9ddQlRT
+         njvGkfz9Rs2G5kl82hbQC5Vpe6qFemgzD7jaF1drVpixH+lCjVygsZSdlRHB7yIUbAlv
+         mQy7T8Fs7IyzJDEqex09P9QB3AJt80d6CcRIl0Hi+Rwfhxb0ocGY1Eh/47j+xQbq6FDv
+         PSZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772345647; x=1772950447;
+        d=1e100.net; s=20230601; t=1772347844; x=1772952644;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/5GuTwJ/dWDwJhqxfL0eZlN8azyUiPW9ZyHZw6pgplw=;
-        b=NOhb2kGv2DwzfmiCg1IwXo5KDVJiC/his5YcC6iyLrEz+N1kw4hDvQnvPxjwJZnkt7
-         QsVkzEURMxp8aYTWlAEHL8dP7s+riK23vC/I2BavGDNN2f5HC18VcydBukVt1D1T80xz
-         VDyh461FxPDyqERi16KYghTDuRH+kuePIpSl+vpmdqWUKPhB7liaFhsAA/l+mUmN7Pao
-         apEgILC98DYMnkAXUZFPBIvrytt12tsDeydMWiYECnnXEbqRh522oXaRKSxhMmj92r76
-         GEXIlXp/uGXu66PQj75qz1wGzsmhV0Zqr1Z2W5r3epYlMzxX8GPGkzoJ8y4x2TjXWOYK
-         dWQw==
-X-Gm-Message-State: AOJu0Ywa0XFMNQM6ivCHo0Glvvrc//2shDe2YGgBKB/crkK3RKkqCI7Z
-	F2VKW5QajJoelt/nFDwzXTZcVHIWGdjkoDwbmxfon8697dw2gdVUDOyXkZ2JMczq/0frvr7G5vc
-	EykI0ayDmMreA7KlHlF0xVmnsY66M2mU=
-X-Gm-Gg: ATEYQzxcP/FJCCRj3B1BjGlO+h4pU3sV9PVXFJxvzSLZftwbEIhm8uhH1jhIa+mqEBX
-	Tcn6vIvAw18yZNe1Bu6Nzea13MinS6DKGO54gAXR9QTt1gOop/2czTQDVbcQF/1UATtjxAjbUQS
-	OHwbIwlPRv1N8ey4bzhvObSa8338zSZqv68j4bewS+VW8LfCLSgQVTWdRz3HRm3tg4X4j3FH+RS
-	PRaYpJiEVNla4/rvXmFE16xAgzjyDFAeRpo7z8RP3cABvpAnX8q7P78MUCRFESz+GEMijn5MmZG
-	YG4/sytVcw==
-X-Received: by 2002:a2e:3219:0:b0:383:1b75:b9bf with SMTP id
- 38308e7fff4ca-389ff356090mr43234421fa.28.1772345647085; Sat, 28 Feb 2026
- 22:14:07 -0800 (PST)
+        bh=bKphyAc5hGx2InlXDA3/UrLz0p1ypLqarDiY9X+NLE0=;
+        b=lnEzpQ62NFbCBRccAtmzA2Gw1TWxUwsLOWDBo9WbTrLFMv3fcOHd4AEHKmDjS4th+3
+         SJyJkfR12GPQS+YCJNZS9jf3dkqo6tT3lsQwf5vvscaE2zVbcjdaPGnEx/fPM/UA46Z3
+         zuJCTQKTM/NIFDycw8wzoIn844WJuevzzgdZ2ilQNVxLWEv+AoUSMSKhIGD5kY/dhJDe
+         nVUwZ3A0SbntN+rmtPig1Wlfvro7NL7QiFcK5kvYUuvm8XW5VaCuCDUetatPQ1CiNodo
+         3BF0gthbrIlCbsSF6pf9gOJhjIuwFG8yGHWqwSZl4DvEJn8bFwOXG2/5hBuAAH5eU2AI
+         wfFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXdOOYAk73p8gVAOplXfpp9VQoqBn6j3y+RweybQnwzJG4PRlXZzIkuw2i0YqXw7qVW5iA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YykollqwxfPKjo6p6BAzpJKh2Rmokwj+SS7C4+JkhHsC5G3GwDU
+	VKbuafXf87YEvHtpCXMnWWkWlIa4d4hcJLxmur+xyu3HQlIn0LGUlqo7Q8ix4JXsjg1aXZzfTid
+	91QCzGQdRdEhq12NzAE8Gm+qJW+ME7wY=
+X-Gm-Gg: ATEYQzyJ1S1vKHCtFTDa4kOoHbtrSPJJrYc4ix9IGeCPuSKcrm6k6kgQ4fUvXKSx7ep
+	ExDJmFcijegzypmpLP5XGSnsSJI7epLsi2DUeQOwA/pqem9ei5XEoQ51fz0a4PGke/p3GmsJaN7
+	hbOM51V9DEGfrPqgZDBkrGJwYD84q5Ut9JFldR+QZKxaE0IEByVC4RR3YuU9kJDeDQKp162bn9A
+	rXRas9PPG9dO7lc/KmbW5UzTiWkDIjyHrthPZoHY0Y9++7gPmXZmq2LxmKIAdYLnvJdWvI8Nf5Q
+	JpAZkOosRmrxLbr9ywQT1RlPjCOw+oC0oIIPypFJMX86QWLOU3XSi951QZ8g1YKkqQBPtZRLFPQ
+	WcF9eZjuXqq8B+qdkSbcq5HeMKDQJI2RE7P68
+X-Received: by 2002:ac8:7d85:0:b0:501:4a4a:c24a with SMTP id
+ d75a77b69052e-507527261a8mr118160811cf.13.1772347843775; Sat, 28 Feb 2026
+ 22:50:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFNBzOc=tuph7ecqt9TAY-aCWUkPyQ84DYjwMp3QS4-0J-wF_Q@mail.gmail.com>
- <B8697AB9-9C9B-41C9-A2D8-1848CD966137@gmail.com>
-In-Reply-To: <B8697AB9-9C9B-41C9-A2D8-1848CD966137@gmail.com>
-From: Ayush Jha <kumarayushjha123@gmail.com>
-Date: Sun, 1 Mar 2026 11:43:56 +0530
-X-Gm-Features: AaiRm51-M5ET4WjXZoaGoOG26GAke1COYcXgRzOuGbV_NN4MpxcuJLio6fjnSfQ
-Message-ID: <CAFNBzOe8_GbXFTmL5UuLWa+5xa=D04jJkmqMumerajeYGkVwaA@mail.gmail.com>
-Subject: Re: [GSoC][PROPOSAL] Improving and Extending the git repo command
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, Ayush Chandekar <ayu.chandekar@gmail.com>, 
-	Justin Tobler <jltobler@gmail.com>, karthik nayak <karthik.188@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>
+References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
+ <CA+rGoLdTc2caDUsQedpegL+T4MqwwiA62uuDSFSawAT5vcPvWQ@mail.gmail.com> <CAFNBzOdCx=R3r9+m5eDyAykMAbmbcfpX3kPeEPjqXPYT-_89+g@mail.gmail.com>
+In-Reply-To: <CAFNBzOdCx=R3r9+m5eDyAykMAbmbcfpX3kPeEPjqXPYT-_89+g@mail.gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Sun, 1 Mar 2026 12:20:32 +0530
+X-Gm-Features: AaiRm52zH0TDQG1K0fOAph66MpGUAySA09YsmRWRqiTvU0j46A0FHv_Y2UEq1m8
+Message-ID: <CA+rGoLcGB-iJX7U16NmONr_EhYLnsn0eNAAdcdExRLQtMv732w@mail.gmail.com>
+Subject: Re: [PATCH 0/4] repo: add support for path-related fields
+To: Ayush Jha <kumarayushjha123@gmail.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, 
+	sandals@crustytoothpaste.net, a3205153416@gmail.com, valusoutrik@gmail.com, 
+	pushkarkumarsingh1970@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Lucas,
+Hi Ayush,
 
-Thank you for this feedback and for pointing out commit fac60b8925!
 
-You are completely right=E2=80=94assuming a blanket "relative by default"
-expectation ignores the historical nuance of how git rev-parse handles
-different path options. I have updated my proposal draft to remove
-that assumption and properly acknowledge the complexity of path
-formatting for repo-info.
+On Sun, Mar 1, 2026 at 11:15=E2=80=AFAM Ayush Jha <kumarayushjha123@gmail.c=
+om> wrote:
+>
+> Hi Lucas,
+>
+> Thanks for sharing this series =E2=80=94 moving the path formatting logic=
+ into
+> path.c makes a lot of sense and avoids duplication with rev-parse.
+>
+> Regarding the limitation you mentioned about not being able to mix
+> relative and absolute paths within the same invocation, I was
+> wondering whether it might be worth considering making the path format
+> part of the key itself, rather than controlled by a global flag.
+>
+> For example, something along the lines of:
+> path.toplevel
+> path.absolute.toplevel
+> path.relative.toplevel
+>
+> This could allow users to request different formats in a single call
+> without introducing global state into the command output.
+> That said, I=E2=80=99m not sure whether this would complicate the key
+> namespace too much, or whether maintaining parity with rev-parse
+> semantics is preferable for consistency.
 
-I also just left my thoughts on your new repo-info --path-format patch
-series addressing this exact issue over on that thread! Let me know if
-that direction seems correct.
+I think this idea works for individual retrieval
+It still won't work when the request is for --all
+The main problem of absolute vs relative would arrive from the --all
+perspective, no?
 
-(Also, apologies if my reply to that patch series looks a bit strange
-in your inbox=E2=80=94I accidentally put Jayatheerth in the 'To' field and =
-you
-in 'CC' when replying!)
+If a script specifically needs both formats for a set of paths, the
+caller can easily just invoke the command twice:
+i.e git repo info --path-format=3Dabsolute <keys...>
+git repo info --path-format=3Drelative <keys...>
 
-Thanks again for the guidance,
-Ayush
+It would still work for individual path terms
 
-On Sun, Mar 1, 2026 at 4:28=E2=80=AFAM Lucas Seiki Oshiro
-<lucasseikioshiro@gmail.com> wrote:
->
->
-> > Hi everyone,
->
-> Hi, Ayush!
->
-> > Note to reviewers: I'd like to hear your thoughts on whether these
-> > paths should default to relative or absolute. My initial thought is
-> > relative by default with an `--absolute` flag, as that seems to match
-> > user expectations for CLI tools like `git rev-parse`.
->
-> I've just sent the path (trying to) add support for paths (the one
-> you mentioned). I don't know if it's the best approach. I CC'ed you
-> and the other GSoC applicants that are interested in git-repo-info.
->
-> I wouldn't say that the user's expectations is to retrieve absolute
-> paths by default, we need to check each one of the "options for
-> files" modified by --path-format and see what makes more sense.
-> See [1].
->
-> [1] fac60b8925 (rev-parse: add option for absolute or relative path forma=
-tting, 2020-12-13)
+I think adding the absolute or relative terms in key is more of a
+"user" friendly one.
+
+What do you think about it?
+
+Regards,
+- Jayatheerth
