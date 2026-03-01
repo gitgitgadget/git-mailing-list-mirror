@@ -1,367 +1,222 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6569A28C87C
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 03:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772334661; cv=pass; b=NjDK/QqU17ouWmlCVlO71TDohbo2w8AAt9jHvjkqimNRvhAysJB8OHT6QzS4ZOwisuTAYmoIw0opUHkwpBSc9kwPpvlaeYyKm2tkd51hKQk41C+eQw8C06gNkifRNqsqFL5MrbDFTEiHMD+CG14SyV05xKf6R0dOJdGK+JZp+/g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772334661; c=relaxed/simple;
-	bh=YYq7TNZpIoYtKDwQ/rXUDSKibfw//ThGNtV+qHaCwco=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=EVVJxCNLPbojJJDWgJOX520V3Js8l6C54IFKujSdd12JgaKYJJj+opL9CYgLqBGXkgGQSI6YcuYa2fWOn/MpMNRW+CfDN9TGnEDMCKiWdez+ORePHOyDnB5iTCh90k42cqJiSSiLcoqevvu4iPR1FVXZY7NnPQbAJUQhM74uUtI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J2AOaCNq; arc=pass smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49E8430B89
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 04:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772339048; cv=none; b=LmWS/bx1vY2W7qTyXpVVsGiLmSTughyiY0f5FreiBxU4WswIjxI/iSoiQk6Mj9TVHRl48ek89nO2RlJMtooIyJH2bVztAGxlzlfiiMSvBby0qYhQ2/J12VPJVIuuHMa2ta26yHcG0mGJcBY3AHUM0HewvfBzkNDocxbgT2bYH4k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772339048; c=relaxed/simple;
+	bh=iecg1svGmARuh1jq8+nfxAj/3wFCiyoRN2ZPNvM0q2A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YdzdyeWKg8YkjedaZLZB+NQSlnpazqxxIhTbma1Sdn1PUdCkzP5b2pfIL/O0uPxmoPm1aCHiW2BG5yrwnuq1e49/vqYi2BzyajNzY8VBEI9nHX3vHl5ywmgzltz+iH/moFHwy41wIvN3//Mav2JhAgvYxyo5xqrtlRRLzt/U/Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EV/SVpBi; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J2AOaCNq"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-50334dd44d2so40505581cf.1
-        for <git@vger.kernel.org>; Sat, 28 Feb 2026 19:11:00 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772334659; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ds2Hmhk+6H7Ah5iOtq3eh1qTapk2mFLBzUWNV5rRIsBLYBgWdZhiOSKK1rIexL1wqy
-         b2WNsEOsGoGsA0sKOER4Xel63+umLnxHRV1yXukGK9YKD+OIpEnrnj/VXV5mSviw7XmS
-         lgxzbWB7YoJlGPGcAaMA5v3OwYWWC+WiFXd0okTkKPGCZGNwmSI+sSRBFVwjsE9Y1dT/
-         q+AHkEXsFiBfBrM2ymceznHm/zrsjEsllJ+/o0p+UVubD70RweztNby7CrnCvUOWYJoS
-         XNRTIU8wtTDI5hPNIpiYRXmtj1SqO7NoJnn6/jsplCcDVTzIhsR94HkAvanGkX+UMI76
-         LXvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=wYFYzZaL4C2l7Rem0y4bAqxlRjJ0xz5OjlWR7XKx27g=;
-        fh=Gwn4hpNQs5+sAqNqM7IZ86HdNhzL5byn0P3rWsKqwTc=;
-        b=VSBbcj0Jv7PjqxVDim+pqI4LUlBHQXpNkhkuXEtIueeh5Snfpgne7SlbrvRW+gr+2m
-         fs9Y1byex6fI+lPawXkjvD5NdNh0yDVsICAyEnHZ7H560DA3oJvgsQb+p6LwovFN+yAQ
-         PdoGZ8L0p5RUmE/mdy47uKws7ayljcOpjbUblZNDY5Ku/6TyVJjdYLlm25ziBRw28pLa
-         zXnR5oRlO4HW8xmxalCf5Ny+eCXnYLfEspS5GqhE+oPa3muU/uf00WDkbkA3jmgRU0cH
-         BwHmf7ZqPkhXtCvu7LIHf2QCFadXyMMLtoRTRWmDbbyHB+f02c2738ynacf5tbfxFlgl
-         FhMg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EV/SVpBi"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3598661fe57so54076a91.1
+        for <git@vger.kernel.org>; Sat, 28 Feb 2026 20:24:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772334659; x=1772939459; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wYFYzZaL4C2l7Rem0y4bAqxlRjJ0xz5OjlWR7XKx27g=;
-        b=J2AOaCNqh630JBW0xcpknDiqYQIbZ3pjVSz6kUPbJL9lzNplAAr3cVNCRBTy0RUvKF
-         WJ5gTYP4BRqAY4b2SddAc9Pt0iTdOWxMpMx8LSaGPYg5EixLYUl4n25Y6zj4QW3yHTSh
-         1FQdpa8DjYEnhuW6TnQhpGSCsw1yl8oKsxqeg7hmOz28AUAMFCQAdpVI5rUp9sWaq5yp
-         tPQO9LQxV7G346/WaGuPj5zhcW6HVMCUHGR8b/BNx3MtX0gzfgr8IB+bg+NoSQMP01o6
-         3kd8d8tSYc9r1TI427Q5wSynaKtAwCyAzwrmQcp70tXjlHRrz7Mnx7LjB3pItjnV+GBJ
-         Z/Ig==
+        d=gmail.com; s=20230601; t=1772339046; x=1772943846; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rM/ZCuEhdKlLsp00Ess8imr2dQGvrU4OKJLrwYlo1LE=;
+        b=EV/SVpBiQ+NIRPkyswPoWkdoAwnuUMBJipOWpagUsi2E+k2gsJhqpHNeXdKAhgSF5a
+         /eS+qM/X0u+svzvsUmHPPpscv/1xwL429TtLqgVbc8Bi7PnGj61EAXuj7EvAjn5sBLhs
+         YvijD25Lp66U6TJ6pTP9VmgTfxZ5DG2cgvspUqpQvqKG4n5EhVfWMRlYXiIIFljt7p1/
+         pSViBmEiW15R+Z0oSR3RPC6PPYnFoiSHkjcvyuoR92veeKa1e66R+rY4dJxfMkGYOy0J
+         vBf6TpWnOWp4VqL2d1vGeH9XLJkA74a/kepK7htQigBl0KTlNzrKilFj2XhnNFoLczqI
+         4Tcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772334659; x=1772939459;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wYFYzZaL4C2l7Rem0y4bAqxlRjJ0xz5OjlWR7XKx27g=;
-        b=qe4P+FYG+sDroOpnB6b0stgvftOCI/am8aVuxn+1L7NsKjXskt/mXCL5YppBS2c+fl
-         m4ToDKOWyX639BbQAa7nmh8KrxOaxScUCEkuyDu9iOqYAaHvLas0Sc+rcub01WFY573A
-         V0urTRbuLZTr15kWCWkTg8zW+ns3D/re1gnrxOehkp9AbutJgRVB4bZX004z998FIZbc
-         FamE3ONqICuZEW269DrrAVSVxAISk5AQLMQetfhrNJAOWXv6UAj14SxVDrv9wLu6tz98
-         GyFhrljheq2mAaPn7v+5ADerz8lo9UxWAiQD+GGLRsKbJJ3/uXgZlrQWet/I5IMxlJ9I
-         EHjA==
-X-Gm-Message-State: AOJu0Yz3e+fjluFKWv0CKu9EtVzxhlE5lzxp4cbhdpKpfb3EF2J89i3l
-	lsgWhfR0jZC4u8EMLrWWPxR6IYAUJYN0MZ+H273YsO+2bjUC5Ef+esqbO2ZZ4wPGPiYKGRJ9/GF
-	JgLAsAG/R3HVQcYwiQ9dCGjuPKd6G+vqL5ULFnfE=
-X-Gm-Gg: ATEYQzzkkTRUJ8IoGGQpfH5wuq83eaJUkpCgyvmSQMl0RrkeQBv40j2Z3zHflO00yHy
-	c7HV/z4ji3yj3GJ+zu529Z//69CkLNlUk2JAk8GztMndWWjvWLHqtfXh4cEwYOnucMRGdCepSxQ
-	PWl2q/qEyw2eqCh4/11KjFeyqptqojGDQotsysqjBHdi6uTaPW2Rv8aEfN7Yo5psl6dXd5FmRzH
-	AwHoXzd0+wADYrj/iYFmfrmovjU12vnlCWlFtM4A68IaxzBAZ19ubY8HJVeAtyl8QNFun048AjS
-	geTzwf1CML972yGRAtwpYYEKzLqKPhgS/048WqAMWfkKjNMXKZNPvP/GW1EWrs8BHswK4ndkypd
-	NA1546g7lkCn4YjXkAZoiWhlusA==
-X-Received: by 2002:ac8:5ac5:0:b0:501:4446:2ce with SMTP id
- d75a77b69052e-5075288b728mr120303101cf.49.1772334659037; Sat, 28 Feb 2026
- 19:10:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772339046; x=1772943846;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rM/ZCuEhdKlLsp00Ess8imr2dQGvrU4OKJLrwYlo1LE=;
+        b=nAEsMSa05MdZuGGI64hv5LC024JKOSoE371nmwKjJh+MNLGWmhvZwuirVXrOMsX9TR
+         +cpXbAxm4R357lo5VlDuQHsZsAUQONdFmCNRW3KzrUPEZ131qcr9ZJXm0WTJ52Z5tmqM
+         Yc7z9ZQprILOXk7wkB/tLP2X87X3NMPTSEsHip+C/iBJ5Ixcs+20F814tzhCtLHqArkY
+         iu3GVhiuO4hbQBM2P+lD1tVGRxwJ7JdzfK9JAX+/8WRHUjp+3S0ukwftBooHqp2Z6sim
+         OYQhrDT8dphYvVZL8o3wIIfAh1NWClHBdh1Pjo4gAGjVwvuJd5MWCgD4l5NumVMuqaaK
+         zXIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWavjsFkmhj5M/tFeNTOjQnPn6AnF65KNYT2jmBQt0pYqKhcI5+7qeYg3CDwGNpL6d/pOA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLWQ2ByHfNAblutqPrpum5FdxVPcLvppJwte/DzmFNpqLQz5tR
+	1LvuJi5TC19shZumHTVRCyqkLCvvdIG+f7RKfE+crnHL4KLkgpahKIyG
+X-Gm-Gg: ATEYQzzJ+8sgQKAhpxbUuBVWAWV+uvAz7zzTLq7aIR/CRe8wd3fAVKZ+Abk6vlLS/DJ
+	1kRWebTTLaTinfcP8shLg1ZE2uLv3LqkQPdBYSJc6+IKi5R+pUa2sfHomZ+UoDsncPCDqeQcSCn
+	x2HBT+Dv+ppf1FFs/KIrD3DXKNPgpDazN1m+kLFH7XDCKyydrWU9dPDSoqT+rKXbLbikCkSs7YW
+	ipVZVAJwx5BRVKBDYbR/axfUy6yjQNxJOoDdivl4FJxNpC0Y1DN8dKFlxbisG6Amojpe7U85gBS
+	WSJtu7A0C6j2K7z+8Gnq9m1TLjHWKko9AsKpS2rSmeqvx6Fx0/9ilrenU9HMbtMM0yPq9p1XHej
+	AwSc/fMMFLLllOLI54rvCjUxq7hmm1353aD4Ua3TdRD1DoTALp1xHcDv8620TdnhHsB655gbPnQ
+	6HwbWdfObwRZ3fMgvxNu6ScPPmnzjhr55XNAMmlYKWpsCF7FHX56X8PjNrnVaJfNg8ZY37GNsoP
+	KCFOIQsu8A=
+X-Received: by 2002:a17:902:da92:b0:2a7:b447:338d with SMTP id d9443c01a7336-2ae2e50409amr61844615ad.8.1772339046018;
+        Sat, 28 Feb 2026 20:24:06 -0800 (PST)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6a041asm102962985ad.57.2026.02.28.20.24.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 28 Feb 2026 20:24:05 -0800 (PST)
+Message-ID: <71e42a01-6077-48fc-876e-555431d1288f@gmail.com>
+Date: Sun, 1 Mar 2026 12:24:01 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Sun, 1 Mar 2026 08:40:48 +0530
-X-Gm-Features: AaiRm50SpK6YKyvdHoZYWE01K5gYw0O5mYNjeUUXhsZNAX-HoGwprO4zvkI8WF0
-Message-ID: <CA+rGoLd-1Mb5JG1H1PvE-kyjdznrLVFjwQiMLHtd2ETQ-igmXg@mail.gmail.com>
-Subject: [GSoC][PROPOSAL] Improve the new git repo command
-To: GIT Mailing-list <git@vger.kernel.org>
-Cc: Justin Tobler <jltobler@gmail.com>, karthik nayak <karthik.188@gmail.com>, 
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, christian.couder@gmail.com, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
-	phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] repo: add the field path.toplevel
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net, kumarayushjha123@gmail.com,
+ jayatheerthkulkarni2005@gmail.com, valusoutrik@gmail.com,
+ pushkarkumarsingh1970@gmail.com
+References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
+ <20260228224252.72788-5-lucasseikioshiro@gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <20260228224252.72788-5-lucasseikioshiro@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hey everyone,
+Hi Lucas,
 
-This is my proposal for the project
-`Improve the new git repo command`.
+ > I'm CC'ing here:
+ >
+ > - brian, who was the original author of the `print_path` [1]
+ > - Ayush, Tian, Jayatheerth, Soutrik and Pushkar, since they expressed 
+ >   interested in contributing to git-repo-info in GSoC. (I hope that I
+ >   didn't forget anyone)
 
----
-= GSoC 2026 PROPOSAL: IMPROVE THE NEW GIT REPO COMMAND
-Jayatheerth Kulkarni <jayatheerthkulkarni2005@gmail.com>
-v1.0, March 1, 2026
+Thank you for your thoughtful consideration!
 
-== 1. ABOUT ME
+ > 1. Add --path-format, just like we have in git-rev-parse
+ > 2. Use what rev-parse uses by default
+ > 3. Add keys for both relative and absolute formats
 
-I am a junior at Geethanjali College of Engineering and
-Technology pursuing a bachelor's degree, with a strong
-interest in open-source projects and systems programming.
-My interest in the Git project stems from a desire to
-understand the internals of version control and contribute
-to a tool that is fundamental to the global software
-development ecosystem.
+It makes me wonder if we can use Format Modifiers as in ref-filter.c...
 
-=== 1.1 Contact
-* Email: jayatheerthkulkarni2005@gmail.com
-* Website: https://jayatheerth.com/
-* GitHub: https://github.com/jayatheerthkulkarni
-* LinkedIn: https://www.linkedin.com/in/jayatheerth/
+	https://git-scm.com/docs/git-for-each-ref
 
-=== 1.2 Logistics
-* Timezone: Indian Standard Time (IST) / UTC+05:30
-* Tech Stack: C, Shell Scripting, Rust and Go
+...which allow us to control the output precisely. For example:
 
-== 2. CONTRIBUTION HISTORY
+	%(path:relative)
+	%(path:absolute)
+	%(path:short)
+	%(path:strip=2)...
 
-I have formally completed all the prerequisites to apply
-for the GSoC "Improve the new git repo command" project.
-I have listed all of my work I have done in the past few
-months.
+Just a thought.
 
-=== 2.1 Featured Contributions
+ > There are two enums used in rev-parse for deciding how paths will
+ > be printed by the function `print_path`: `format_type` and
+ > `default_type`. Even though there aren't any ambiguities yet, their
+ > names aren't clear that those "types" are path types.
 
-For many months, I have been actively engaging with the
-Git community through mailing list discussions and patch
-submissions. Notably, my work on fixing stash messaging
-behavior in submodule environments was featured in Git
-Rev-News edition 124.
+This one makes sense to me. Also reduce naming conflicts.
 
-* [PATCH v3] stash: fix incorrect branch name in stash message*
-  Status: Merged into `master` & featured in Git Rev-News.
-  Link: https://lore.kernel.org/git/20250611014204.24994-1-jayatheerthkulkarni2005@gmail.com/T/#u
+ > +void strbuf_add_path(struct strbuf *sb, const char *path, const char 
+ > *prefix, enum path_format_type format, enum path_default_type def)
 
-=== 2.2 Core Path and Submodule Patches
+Isn't it a bit inappropriate for a generic character concatenation 
+function to know about format and def? I don't think this should be the 
+responsibility of a low-level function, at least not str_buf_add_path().
 
-* [PATCH v8] submodule: prevent overwriting .gitmodules entry on path reuse*
-  Status: Merged into `master`.
-  Link: https://lore.kernel.org/git/20250608032705.11990-1-jayatheerthkulkarni2005@gmail.com/T/#u
+All functions starting with strbuf_add.. listed by git grep strbuf_add 
+are mostly pure string concatenation operations. I believe this should 
+be the case here as well.
 
-* [PATCH v2] dir: Fix and test wildcard pathspec handling*
-  Status: Merged into `master`.
-  Link: https://lore.kernel.org/git/20250422160547.577524-1-jayatheerthkulkarni2005@gmail.com/
+ > +	if (!prefix && (format != PATH_FORMAT_DEFAULT || def != 
+PATH_DEFAULT_RELATIVE_IF_SHARED))
+ > +		prefix = cwd = xgetcwd();
 
-=== 2.3 Refactoring and Micro-Projects
+I think the logic here shouldn't be tied to 
+PATH_DEFAULT_RELATIVE_IF_SHARED, I believe the attribution here is the 
+same as above.
 
-I am deeply familiar with Git's test suite and standard
-C conventions, having submitted several refactoring and
-cleanup patches, including two specific to the
-`builtin/repo.c` file:
+ > +		prefix = cwd = xgetcwd()
 
-* [PATCH GSoC] repo: Remove unnecessary variable shadow*
-  Status: Merged into `next`
-  Link: https://lore.kernel.org/git/aZxyju3B4NHp4c_t@denethor/T/#t
+Will there be a performance regression? Since xgetcwd() here is a system 
+call, right? If prefix == NULL and the get repo info command is used to 
+locate the top-level path among a large number of submodules, and this 
+command will be executed multiple times.
 
-* [GSoC] t7101: modernize test path checks*
-  Status: Merged into `master` (Official micro-project).
-  Link: https://lore.kernel.org/git/CALE2CrS0Q2NS1DbFv4pyRQsuypu=KH6Kurs=m4yWrFbR9QosoA@mail.gmail.com/T/#t
+In my opinion, upper-level commands should call xgetcwd() only once 
+before entering the loop, then pass the obtained prefix as an argument 
+to the underlying implementation.
 
-* [PATCH v2] pull: move options[] array into function scope*
-  Status: Merged to `master`.
-  Link: https://lore.kernel.org/git/20251212074433.38027-1-jayatheerthkulkarni2005@gmail.com/T/#u
+> -typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
+> +typedef int get_value_fn(struct repository *repo, struct strbuf *buf,
+> +			 const char *prefix, enum path_format_type format);
+>  
+>  enum output_format {
+>  	FORMAT_TABLE,
+> @@ -35,26 +36,46 @@ struct repo_info_field {
+>  	get_value_fn *get_value;
+>  };
+>  
+> -static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
+> +static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf,
+> +			   const char *prefix UNUSED,
+> +			   enum path_format_type format UNUSED)
+>  {
+>  	strbuf_addstr(buf, is_bare_repository() ? "true" : "false");
+>  	return 0;
+>  }
+>  
+> -static int get_layout_shallow(struct repository *repo, struct strbuf *buf)
+> +static int get_layout_shallow(struct repository *repo, struct strbuf *buf,
+> +			      const char *prefix UNUSED,
+> +			      enum path_format_type format UNUSED)
+>  {
+>  	strbuf_addstr(buf,
+>  		      is_repository_shallow(repo) ? "true" : "false");
+>  	return 0;
+>  }
+>  
+> -static int get_object_format(struct repository *repo, struct strbuf *buf)
+> +static int get_object_format(struct repository *repo, struct strbuf *buf,
+> +			     const char *prefix UNUSED,
+> +			     enum path_format_type format UNUSED)
+>  {
+>  	strbuf_addstr(buf, repo->hash_algo->name);
+>  	return 0;
+>  }
+>  
+> -static int get_references_format(struct repository *repo, struct strbuf *buf)
+> +static int get_path_toplevel(struct repository *repo, struct strbuf *buf,
+> +			     const char *prefix, enum path_format_type format)
+> +{
+> +	const char *work_tree = repo_get_work_tree(repo);
+> +	if (work_tree)
+> +		strbuf_add_path(buf, work_tree, prefix, format,
+> +				PATH_DEFAULT_UNMODIFIED);
+> +	else
+> +		return error(_("this operation must be run in a work tree"));
+> +	return 0;
+> +}
+> +
+> +static int get_references_format(struct repository *repo, struct strbuf *buf,
+> +				 const char *prefix UNUSED,
+> +
 
-=== 2.4 Documentation
+I don't think we should add the two new parameters to all get_ functions 
+here. As changed in your patch, functions like get_object_format don't 
+really, need to know about prefix or format, so the corresponding 
+parameters are marked as UNUSED. Imagine if more and more data needs to 
+be retrieved by these get_ series functions in the future — is it really 
+advisable to add unnecessary parameters to all remaining functions just 
+for the sake of a few?
 
-* [PATCH v3] Update MyFirstContribution.adoc to follow modern practices*
-  Status: Merged to `master`.
-  Link: https://lore.kernel.org/git/CA+rGoLfFVcUFctoEx6wshovGnRW8pTW--ZB42ntd01VHMJm_Rw@mail.gmail.com/T/#t
+I'm not entirely sure about the above content either; I'm just throwing 
+out ideas to spark discussion. (´～`)
 
-=== 2.5 Experience with C
+Thanks again for starting this discussion!
 
-Since Git is mainly written in C, I have no issues
-navigating the codebase. I hold a Cisco CLP - Advanced C
-Programming certificate covering Unix and C systems
-programming, and I have completed two full university
-semesters of C programming.
+Regards,
 
-== 3. PROJECT PROPOSAL
+Yuchen
 
-=== 3.1 Why "Improve the new git repo command"?
 
-This project is compelling because I have closely followed
-its development since its inception in GSoC 2025.
-Consistently reading the weekly updates
-(https://lucasoshiro.github.io/gsoc-en/) and participating
-in the mailing list discussions has given me a deep
-understanding of the command's architecture.
-My previous work fixing cross-platform wildcard pathspecs
-in `dir.c` makes me uniquely suited to tackle the path
-resolution this project requires, while my C systems
-experience prepares me for the architectural refactoring
-of the command.
-
-=== 3.2 Introduction
-
-The new `git repo info` command is positioned to be a
-cleaner, programmatic replacement for scraping
-`git rev-parse`. However, its current implementation lacks
-category-based querying, relies on global state macros,
-and is missing critical path data.
-To fully realize Git's libification effort and improve
-user experience, the internal architecture of
-`builtin/repo.c` must be modernized.
-
-=== 3.3 Proposed Solution and Objectives
-
-Instead of just scraping basic paths, I propose an
-architectural update to `repo info`, safely utilizing the
-new `strbuf_add_path` API submitted by Lucas Oshiro.
-
-*Objective 1: Category-Based Query Architecture (The Core API)* +
-Currently, the `repo_info_fields` array relies on an
-exact-match binary search (`bsearch`). Users must request
-specific keys or use `--all`.
-I will rewrite the lookup logic to support
-category-prefix matching.
-* *Implementation:* I will implement an internal mapping
-  structure so that calling `git repo info path`
-  successfully identifies the category root and iterates
-  through all keys starting with `path.*`, returning them
-  dynamically.
-
-*Objective 2: Deep Libification (Removing Global State)* +
-The `builtin/repo.c` file is already highly modernized,
-but it opts into global state by declaring
-`USE_THE_REPOSITORY_VARIABLE` at the top of the file.
-* *Implementation:* I will remove this macro entirely.
-  The primary blocker in this file is `get_layout_bare()`,
-  which currently marks its local `repo` argument as
-  `UNUSED` and falls back to the global
-  `is_bare_repository()` helper.
-  I will refactor this function to drop the `UNUSED` tag
-  and explicitly evaluate the passed
-  `struct repository *repo` pointer.
-  I will thread this context down the call chain without
-  breaking existing external callers.
-
-*Objective 3: Core Path Resolution (`git rev-parse` parity)* +
-With the category API built, I will populate the `path.*`
-category by implementing the remaining path values currently
-obtained through `git rev-parse` and `--git-path`.
-Lucas Oshiro's recent patch series implemented `path.toplevel`;
-https://lore.kernel.org/git/20260228224252.72788-1-lucasseikioshiro@gmail.com/T/#t
-I will build upon this foundation to implement the rest.
-Because path normalizations across different systems are
-complex, I will leverage my experience from `dir.c` to safely implement:
-* `path.git-dir`, `path.common-dir`, `path.worktree`.
-* `path.objects`, `path.hooks`, `path.index`, and `path.grafts`.
-
-*Objective 4: Sparse Topology & Boundary Awareness* +
-Modern Git workflows rely heavily on partial checkouts
-and submodules, and `repo info` should report these
-complex states natively.
-* *Implementation:* I will implement `layout.is-sparse`
-  to expose if the repository uses a sparse-checkout
-  cone, and `path.superproject-working-tree` to instantly
-  query if the current repository is a submodule.
-
-== 4. PROJECT TIMELINE
-
-=== 4.1 Community Bonding Period (May 1 - May 24)
-
-* Attend the Git community GSoC sessions to introduce
-  myself and establish a communication schedule.
-* Initiate the design discussion on the mailing list
-  regarding the internal data structure for
-  Category-Based Queries.
-* Map out the exact C call chains affected by
-  `USE_THE_REPOSITORY_VARIABLE` in `builtin/repo.c`.
-
-=== 4.2 Phase 1: Category Architecture & Core Paths
-(May 25 - July 5)
-
-*Weeks 1 - 3 (May 25 - June 14):*
-* Implement the category-based lookup mechanism in
-  `builtin/repo.c`.
-* Update the parsing logic so `git repo info <category>`
-  successfully returns all nested keys.
-
-*Weeks 4 - 6 (June 15 - July 5):*
-* Utilize Lucas's `strbuf_add_path` API to implement the
-  core path values.
-* Implement path related keys.
-  (`path.git-dir`, `path.common-dir`, `path.worktree`,
-   `path.objects`, `path.hooks`, `path.index`, and `path.grafts`)
-* Write rigorous OS-agnostic tests in `t/` to ensure path
-  resolution works correctly across POSIX and Windows
-  environments.
-
-=== 4.3 Mid-Term Evaluation Phase (July 6 - July 10)
-
-* Ensure the category architecture and core paths are
-  merged into `master` or queued in `next`.
-* Review progress with mentors and adjust the Phase 2
-  timeline if necessary.
-* Submit mid-term evaluation.
-
-=== 4.4 Phase 2: Removing Global State & Sparse Topology
-(July 11 - August 16)
-
-*Weeks 7 - 9 (July 11 - July 26):*
-* Focus entirely on libification.
-* Remove the `USE_THE_REPOSITORY_VARIABLE` macro from
-  `builtin/repo.c`.
-* Refactor `get_layout_bare()` and similar functions to
-  utilize the explicit `repo` parameter.
-
-*Weeks 10 - 12 (July 27 - August 16):*
-* Implement the advanced topology and boundary keys
-  (`layout.is-sparse` and `path.superproject-working-tree`).
-* Run the full test suite and perform rigorous edge-case
-  testing ensuring libification does not cause
-  regressions.
-* Buffer period for addressing mailing list feedback
-  regarding the libification and sparse patches.
-
-=== 4.5 Finalization (August 17 - August 24)
-
-* Finalize the official Git documentation
-  (`Documentation/git-repo.txt`) for all new keys and
-  category querying.
-* Clean up the commit history and ensure all patches are
-  finalized on the mailing list.
-* Submit the final GSoC project report.
-
-=== 4.6 Stretch Goals
-
-If review cycles move faster than anticipated, I will
-implement Split-Index Topology (`path.shared-index`)
-to report the path to the shared index file. I will
-also investigate natively parsing `git-sizer` metrics
-into the newly established category API to provide
-deeper repository health insights.
-
-== 5. AVAILABILITY AND BLOGGING
-
-This timeline aligns perfectly with my schedule.
-The project kicks off in May, during which I will be on
-summer vacation and can dedicate 35-50 hours a week.
-During June and July, I will transition into my final
-year of university.
-My academic schedule during this period is highly
-flexible.
-
-*Blogging:* +
-I have a domain setup at jayatheerth.com.
-As patches flow and the project progresses, I will host a
-dedicated endpoint at `/blogs` to provide comprehensive,
-weekly coverage of my project.
-
-== 6. POST GSOC COMMITMENT
-
-I actively follow the mailing list and intend to continue
-contributing bug fixes and enhancements.
-I have been a part of the Git community since 2025 and
-hopefully will continue to be one for a long time.
-
---- End of proposal ---
-
-Regards
-- Jayatheerth
