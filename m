@@ -1,211 +1,131 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB452302753
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 19:22:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3905311964
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 19:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772392950; cv=none; b=TpqgEzD6vooHy+WJCZK9p6wQirvi2OWV2CKwDmPCCtVtwyuvzjnj+Q+pXXD0BRz/xXYD45CvnIuaFAIE9O5noDfaHK12P8LOquofRkX0M55fqJqXe2chan/IhVMZ+TkiL4niraN9ykf5Ev9pc2wZtSwxwpKFg91wJoEZ4/6LDJE=
+	t=1772392964; cv=none; b=q8cFpYgWjJAOOC54hl85aLxz+LnEfM8tpOVWk5vddFoQrPIP8j8VSkWwqhgHJVPqKuCpG4yK90ekXHlYH+FW0qi+z71aC452QfaKmvqcngdQRAqHVJPgToF7aQIBurK9AKky9IeFA95ovdm7fbxn4mtLuiro9PJlsSzvihYlX8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772392950; c=relaxed/simple;
-	bh=DOpdPX41SX0GevXsidgAMLrRVZ8HpydVpoWC3XiP94g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ak5cr+EZaFCj26ddZezTql9Qr9o4As6Dg2Yve9BMpXGgkIbCm0pGoVzAaRodBS13SvXQJXxQPMO8/rrMDZ+XQgWw5Q1bzuPpW+q7h+gqEhSwa1TmUNFkLfjmGe+hbLwO9ZPD51EuMWauKAsT19hhJ5qN9TRLXiI7kolcgeHwjKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=oPifxul5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EoW6RkBI; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1772392964; c=relaxed/simple;
+	bh=IO0N5+Ri9cZ4Jd5b4QCrsiaytC7G314WlBzzqqhIHy8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B2ewWE7+QNT2yekoQzPJaB5f4sslbwSRI/MPKtwrcEFx7SNaqpcKuFNDP9oQhW8lY+qk3Bryk52XARhM4vVTE3yykT5pTVku6a5pW3u78mUCRVt5VBoUo2ptDVyK0Ynqb8JhNmjHU8r3hKnSgcLp0z91JKKdwWTXFSwgswZMCi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HEe/CgMs; arc=none smtp.client-ip=209.85.167.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="oPifxul5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EoW6RkBI"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 856611D000D1;
-	Sun,  1 Mar 2026 14:22:27 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Sun, 01 Mar 2026 14:22:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772392947;
-	 x=1772479347; bh=l48OTAVCW/IEnghgK3qPkH3tR2vZxaPsiNWeLgByo8c=; b=
-	oPifxul5OvfD6AufkX/jVXZn/ftON4NKjGGSNCfVm6xpAd2fVc4AxK2r/SW+Zzvu
-	XASfOXF15Vn8b6tSlypSocLPqfTzyFsiZIBOk7Ilv/GnvsKozrhVfhn7ZEejJ8ev
-	7O6k0ejIciryJeEQdQhoWCsPEyOk/zbGNlqjYW12+SpoHsCz/37uEMa2clcQF1oe
-	mCSX2+FiBx4cpB8Lnnx9Mw7FrG/K9US8F3CaB+mmxEU+YOf2E3vvKYtZpuicdoR3
-	nLnDI9PaEknap+R5y9x1YjmiU4u0c4HBYodNDeDyxYOnrvKhHNNSJ4PgxmPI6ANR
-	o6OK2pirzhvcOIXzaGvaRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772392947; x=
-	1772479347; bh=l48OTAVCW/IEnghgK3qPkH3tR2vZxaPsiNWeLgByo8c=; b=E
-	oW6RkBImzppEydZt11sRnxMLWWLBjWPSvBYGsjit3FsKD6iA1hXqrE7R4a1H5Fdi
-	FwiMK/J6aJampcic50EW9Ev0CQa3vGCelPJYLXSj84LSucHANSCJb9BGm3VkMW2O
-	1k5jatmNAmxCtxKNZ5TcsyQ9mgJS87T8Lw4pp86QE8LZRHIMYPGr//r+TU1DSl/H
-	33PWq6Mku6S7ns4Qivc5VA3ifNuzChqfacrjOiHNtF5O8SrR8dUDLmi8dh3/3lbq
-	Gq2+IOMeBoizUVnwFZUY7UNffMvrRmoYNoWTPvN3zvn4ixTIaRcLUs+vpjJe9JUn
-	LxAP9n4mlYZBvnbCWAzfg==
-X-ME-Sender: <xms:85GkaYEii7WHby4fN6nzKr3014z-xxmuxWEZlsD9ySp5nHq52liup4E>
-    <xme:85GkaYN9VhUMvkVZCeJ-Vf9mOepEtjJEh0acJSsDkhKeBS-ln4aUiS3AwNM4deVt1
-    OgIfyZoFDoGDhfP_gwMdce0RmYA6Lonb5S6-xPnZ8_mXoJrmn-h3A>
-X-ME-Received: <xmr:85Gkaae1bbyJkkc1AEnOZyxlw4hprYhwylyxIWbgYWfsIS4tdF2w7kGlLcLC_jgzJTZ4pEUwUR9h-1vE22-JUYJRg3hTF7RRuLcdc0o4lrlgPmgo0VVdxV4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheehiedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlvdefmdenucfjughrpefhvfevuf
-    ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephffgge
-    elhfejkefgteelteejhfetieehgeeftdduudffgeejhfektedugefghfeknecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjnhdrrg
-    hvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:85GkaVuMf5lbTMuikBLcafL4-Zbb1_STsB0ZxK5TsLrb4ywUgWP6-Q>
-    <xmx:85GkablBYnZdPx8aLAUpjwNMuyURPlR06Rq4MSuDO7Z8NLF9xy0P7w>
-    <xmx:85GkaXyLarfr8Itu_wowLrb-r_CU1ZY6Sniz7wq_7f8DVC5ryT2hyw>
-    <xmx:85GkadMTOEaHpKxKwrF3_HY0Vp-fhJtFPBxNeKlFLUF2TlrA5Tgf9w>
-    <xmx:85GkacBDEo83O_8M1NTZU4nl_8AJ9XbTCdShv7lHEMek4tU72cGmxr7k>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 1 Mar 2026 14:22:25 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	gitster@pobox.com,
-	jn.avila@free.fr,
-	peff@peff.net
-Subject: [PATCH v2] doc: diff-options.adoc: make *.noprefix split translatable
-Date: Sun,  1 Mar 2026 20:21:14 +0100
-Message-ID: <V2_better_for_translators.43b@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.26.g2afa8602a26
-In-Reply-To: <better_for_translators.424@msgid.xyz>
-References: <better_for_translators.424@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HEe/CgMs"
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-45f194e9a98so1387680b6e.3
+        for <git@vger.kernel.org>; Sun, 01 Mar 2026 11:22:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772392962; x=1772997762; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IO0N5+Ri9cZ4Jd5b4QCrsiaytC7G314WlBzzqqhIHy8=;
+        b=HEe/CgMsWFqbJyG6pZl74FzLDxk2TjszW0WdBNWgyV6jS9DXMp8LTycgIGES6cjYtG
+         zmvaJUuPMu0ebUCnZte1HkOP3loQKUz31LM44nFHrojuYm7yHr/bBXyOzP7CW6KwY/gI
+         +YjvjOLktgsaikMra7ZWTNlMqO7XvjQtnfArxEFhLekUMNtp4fImoWpYsxg2cyflZHBu
+         oAG+1m8xzpmZocVlUY8/cWjiCCdcX7WOV3luk0KbjPlc5h+xkbeWcLdWXSioc2rd9uz6
+         9ELkHwesRMIvZgipcSUVQJcvYtvRIsd4Z+a6s1aF0UeYTksBPbkNBq6SbMcoQMFP0p7S
+         z03w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772392962; x=1772997762;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IO0N5+Ri9cZ4Jd5b4QCrsiaytC7G314WlBzzqqhIHy8=;
+        b=dFDI3eyZKkE4k6Awm7br/FlIT02SgiPpNYtubYPdyA9ooriWWM47RddmvPBFH/TZdw
+         CdEsftSD8nTQ1PCuwuNIFu2g0USxGrRHIRCQc9qo4n/hUVLFxuDR5dWXkvv9P//Bd50a
+         IdqjSIusE/jOIqCqSR93pcPi5Zico+TbfLmgCInj6XvMo2goPhDXRAmGEXf8iL1cV3te
+         1nfF30c/Q8SsjudjcIBpy9LBKzT8sjHwc+RBTdY2SjBt9oE0IwrxDWBaQZ+nF6LOuVoe
+         Q4HBFBpId7V8nWsVlRWAvnwr2VyfsB0gRXXDBPzsDQYg9GBN3kxt8aq+jXFxQFRYpHE3
+         YtIA==
+X-Gm-Message-State: AOJu0YzkixB2zODzeMXKNW2WmLOuFUOrdodWac6tgA3IbEwxdfpEXmAe
+	lplqpmCsDDS2xe7YkcsY4JLV1f69CFONlo9VXhCnGrUcrEnXul6s0Q1n
+X-Gm-Gg: ATEYQzzMzZo7eBNV4ZZAlmYk/eijIBQtif3bAAaJQ9cS4NRXWkzwF/NGOPqziEGDh9q
+	vobpS+yfEvKFZpsRN1QQmZHc7kse5KFfVmelykYCbCJdlm5giwQqWTuT90I7aKMJ/ZQpI8WUr1s
+	xCRI9QOUp+FnDyh1Opl9StekGv5YeGoK8MhyyCZdMTCjm9UQPq97WjeC4qg2SKjQWy0e93Ho9gT
+	+bAnhw5mpaxZz0xubwyuRdL0mwT+Ga2SrFMunSw35KgPqVmSaYwBO/Z0v5zYLRM40Tq6xoKvPZW
+	iCgJe/Q9ErC3XioMHz2r+Nk7yumYdkcJvTaS/m9U1s1OPM3yK3F6YIoAe+4tRc+8uQT5LYo0auC
+	iSN3/QiGk2yrulEkrH1AamAm3S7QwSDg0fgVI+g08fe68JBWuMA8wf+ZTOJMEZoCrlPApqL7rcM
+	pnYzj2E3QKYDv+tesH
+X-Received: by 2002:a05:6808:320e:b0:450:907:b523 with SMTP id 5614622812f47-464be9cc89dmr4864081b6e.6.1772392962495;
+        Sun, 01 Mar 2026 11:22:42 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-464bb59b656sm5934046b6e.12.2026.03.01.11.22.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Mar 2026 11:22:41 -0800 (PST)
+Date: Sun, 1 Mar 2026 13:22:33 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, 
+	kristofferhaugsbakk@fastmail.com, eslam.reda.div@gmail.com
+Subject: Re: [PATCH v2 0/5] builtin/repo: include largest object information
+Message-ID: <aaR6a7o4omOIWJSe@denethor>
+References: <20260203221758.1164434-1-jltobler@gmail.com>
+ <20260223174120.2356504-1-jltobler@gmail.com>
+ <EB04AA40-87BA-41D9-B2DC-92E87FACEB54@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <EB04AA40-87BA-41D9-B2DC-92E87FACEB54@gmail.com>
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On 26/02/28 08:43PM, Lucas Seiki Oshiro wrote:
+> I was trying this patch series and I noticed that it took
+> more time to run than before. In my machine, I tested it
+> with the Git repository itself and it took 6s to run, while
+> it took 3s to run in the current master [1].
 
-We cannot split single words like what we did in the previous
-commit. That is because the doc translations are processed in
-bigger chunks.
+Yes, now that objects are being parsed to fetch additional
+commit/tree information we incur some additional overhead when
+collecting metrics.
 
-Instead write the two paragraphs with the only variations being this
-configuration variable.
+With git-repo-structure, the goal is to provide the user with an
+overview of size/structure related statistics that may showcase problems
+for a given repostiory and is directly inspired by git-sizer [1]. Thus
+as it currently stands, the implementation of git-repo-structure is
+still incomplete and as we collect additional metrics in subseqent
+series the performance characteristics may still change.
 
-Reported-by: Jean-Noël Avila <jn.avila@free.fr>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+> I understand the reason and I don't think we could avoid
+> that, but I'm wondering if wouldn't be nice to have some
+> way to only retrieve the "lighter" data (perhaps a flag,
+> or something like the keys in git-repo-info).
 
-Notes (series):
-    Notes to the maintainer: based on topic kh/format-patch-noprefix-is-boolean
-    to fix the issue reported in <ff86f877-4b75-403d-a5a4-10ab528a9691@free.fr>
-    
-    v2:
-    • fix `endif`
-    • Don’t use `TRANSLATORS` callout
+If the main motivation is to allow the user to reduce the time spent by
+selecting only a subset of metrics, I don't think using keys like
+git-repo-info would be a good fit. Most of the collected metrics pull
+from the same data sources so including/excluding any given metric may
+not have any bearing on actual performance. For example: if the user
+wants to collect largest object info which is a more expensive check, we
+still have to collect the underlying data used by the other metrics
+regardless of if they are shown or not. Furthermore, it would likely not
+be obvious to users which categories of metrics would be more expensive
+than others.
 
- Documentation/diff-options.adoc | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+I could maybe see something akin to a `--[no-]extended` option that
+breaks metrics into cheap/expensive categories and computes/displays the
+metrics accordingly, but it would be important that the default set of
+metrics collected satisfy the repository overview this command aims to
+provide.
 
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index 8f632d5fe1a..fcfcdf0286e 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -859,12 +859,18 @@ endif::git-format-patch[]
- 	Do not show any source or destination prefix.
- 
- `--default-prefix`::
-+ifdef::git-format-patch[]
- 	Use the default source and destination prefixes ("a/" and "b/").
--	This overrides configuration variables such as
--ifndef::git-format-patch[`diff.noprefix`,]
--ifdef::git-format-patch[`format.noprefix`,]
-+	This overrides configuration variables such as `format.noprefix`,
- 	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
- 	(see linkgit:git-config[1]).
-+endif::git-format-patch[]
-+ifndef::git-format-patch[]
-+	Use the default source and destination prefixes ("a/" and "b/").
-+	This overrides configuration variables such as `diff.noprefix`,
-+	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
-+	(see linkgit:git-config[1]).
-+endif::git-format-patch[]
- 
- `--line-prefix=<prefix>`::
- 	Prepend an additional _<prefix>_ to every line of output.
+If we are more interested in adding a mechanism to filter
+git-repo-structure results independent of performance considerations,
+maybe we could eventually explore adding something like the
+git-repo-info keys or a `--filter` option to restrict the output to a
+specified subset. At the same time though, it is probably easy enough
+for git-repo-structure users to filter the machine-parsable output
+themselves if they wish to do so. For now I think this should be fine,
+but an included result filtering option is still something we could
+explore in the future. :)
 
-Interdiff against v1:
-  diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-  index e4d02cc93a9..fcfcdf0286e 100644
-  --- a/Documentation/diff-options.adoc
-  +++ b/Documentation/diff-options.adoc
-  @@ -859,7 +859,6 @@ endif::git-format-patch[]
-   	Do not show any source or destination prefix.
-   
-   `--default-prefix`::
-  -// TRANSLATORS: format.noprefix / diff.noprefix
-   ifdef::git-format-patch[]
-   	Use the default source and destination prefixes ("a/" and "b/").
-   	This overrides configuration variables such as `format.noprefix`,
-  @@ -871,7 +870,7 @@ ifndef::git-format-patch[]
-   	This overrides configuration variables such as `diff.noprefix`,
-   	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
-   	(see linkgit:git-config[1]).
-  -ifndef::git-format-patch[]
-  +endif::git-format-patch[]
-   
-   `--line-prefix=<prefix>`::
-   	Prepend an additional _<prefix>_ to every line of output.
+Thanks,
+-Justin
 
-Range-diff against v1:
-1:  55e56c90959 ! 1:  07acc52c3bc doc: diff-options.adoc: make *.noprefix split translatable
-    @@ Commit message
-         Instead write the two paragraphs with the only variations being this
-         configuration variable.
-     
-    -    It’s not easy to spot the difference here. So let’s leave a comment
-    -    for translators.
-    -
-         Reported-by: Jean-Noël Avila <jn.avila@free.fr>
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-    +
-    + ## Notes (series) ##
-    +    Notes to the maintainer: based on topic kh/format-patch-noprefix-is-boolean
-    +    to fix the issue reported in <ff86f877-4b75-403d-a5a4-10ab528a9691@free.fr>
-    +
-    +    v2:
-    +    • fix `endif`
-    +    • Don’t use `TRANSLATORS` callout
-    +
-      ## Documentation/diff-options.adoc ##
-     @@ Documentation/diff-options.adoc: endif::git-format-patch[]
-      	Do not show any source or destination prefix.
-      
-      `--default-prefix`::
-    -+// TRANSLATORS: format.noprefix / diff.noprefix
-     +ifdef::git-format-patch[]
-      	Use the default source and destination prefixes ("a/" and "b/").
-     -	This overrides configuration variables such as
-    @@ Documentation/diff-options.adoc: endif::git-format-patch[]
-     +	This overrides configuration variables such as `diff.noprefix`,
-     +	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
-     +	(see linkgit:git-config[1]).
-    -+ifndef::git-format-patch[]
-    ++endif::git-format-patch[]
-      
-      `--line-prefix=<prefix>`::
-      	Prepend an additional _<prefix>_ to every line of output.
-
-base-commit: b9b583bd007ca814ebd362bdd6441aac02e9414b
--- 
-2.53.0.26.g2afa8602a26
-
+[1]: https://github.com/github/git-sizer
