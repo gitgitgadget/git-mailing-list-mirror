@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2201F875A
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 18:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDCE296BD1
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 18:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772390782; cv=pass; b=nHTfyGctuxYzATgFEYlMVw1AflEgbHr6Xrcaz5WndWgaXLs+cJzx4w6cie1ePiKiyWcVKUt6nt9fA7FNx80Qy3JHvDYLLNgu1Xqk/XBlRlFGFvFq1htFOvarJXj+RTdVu8BEuaod4aIyHVxMNTdC1XjoI40siH7nibOHIGxghD4=
+	t=1772390783; cv=pass; b=u/tCA8KfczPS4yli5oNZ/jaUsbL5P7DkmMP/e44t428JUQNFqvhvXldR1705lC8DfhTsalMQNd5t8NZ0qrk8IkNL7oQAqQyrg5+YMqj5xfQo8EIt7veBb8jjTSK9B33N3pJONcFhDzQrZRBBkCvPwkbxj9qWcC3BnxPWSenFRH8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772390782; c=relaxed/simple;
-	bh=zh5aXqXVFk7EqzcHw8v6q6GX59cI3OpV8vEaHUx3WlM=;
+	s=arc-20240116; t=1772390783; c=relaxed/simple;
+	bh=AGJb8SZD/sICDfFoj/lJ+dafRxpdVGcFfOCTFNn4vvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/BAbJeNUJI7SBFRDmINDJx3ZU2kv06x+A7XI7jJx9ZwpThwG/7C9t1oktMrVwvd1ks7OM++XSuFUkVFX4qLRFduvQvZtkgrEGM3QG2THLf+ueUoMpM2u/QY2IhOU7/RL2EXriKwiGXbqPUupHUqJYOLBlSQKUkeGkqDPwBhZ+o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=S/thIAXA; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=bAdkKrTyz3BgNV081n+pkeLZO9GQnt5XMwqbwPF/40RyxfPAAVCg4+3spytE3W2/69mAb46j9pR+0+Zoac8hEFpAPFwZXCf6zLXwrDVnyRt3M1KFIGBDlUKRV/y0q4VJnWDHhFNUBKtBD0BJWJVdk4iJIepNJwIz9C4BT32uicA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=UayQVlOM; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="S/thIAXA"
-ARC-Seal: i=1; a=rsa-sha256; t=1772390763; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="UayQVlOM"
+ARC-Seal: i=1; a=rsa-sha256; t=1772390765; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=G+rDVINV3LYH9jghcwzIDIgh2oeyg7rPE+wAtCWSKr+ZFY/hxusuW2sLCQS9QX34QAa1oxOLXFZ08+9G6JBKnAx7UTOMGiMWZs2gsTDmq3Iw7r0E97f0zCMlveRZ0dWtYdzSZSPqMxgjYvdPI5OAclYhZOiRJiJHSns8+Q57rPQ=
+	b=bkshnQ9LjRbJj0hqIPbUa9kEFs0jOt3Idb6aCiqFZN2fAOAuf5b2+uv/IR57fcBBhgwmCnFNDPdQzjcs9OiZNwbh/gtaSWsr+mx+8hjWDhR349J2kBmd4XuyeFhP1OdNq53QbWmI5yLaA+IBSD1hVwz/FoinayHuKWoYnRG6Q3w=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1772390763; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=TV3r0gBZsr8fVblVfOEBc9GtCeNWAAw83BOwaaxtT8k=; 
-	b=VVjGKQ7QfEvTAkA1jkchGu4cOVnxrhHjGMHmp9R0WOtzNHY9USdQs6nlW7te+DTZSk8szX657Zg5+nxz3/AQwGcDcrBGMWofJrvavWwit+KPHFONDloI4Is8Bx1TSF1uHzUZALbrYE9vwA75WoSJSHkyKEWnv54tPhiBgkmx9DA=
+	t=1772390765; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=GUcv/vEANiIHE/I+A3EmjRcC2AjC4/I6jYPDOtMn+q4=; 
+	b=GVmCjuzlNAxpI9wnX1PEOsXU6VjZhGoyZ/al+7XFHPwukCvGFuSVbtvzEgSpviZzxC84ogGDavbMRBvvCQVPY38m8hr3CeiHBKW9Xv6PczfOzOwBAYhu2EOgHMEKV1uH3wdJc0hLOjH94nguotJHoGizGXU97CscCKEMAWd1b7M=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772390763;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772390765;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=TV3r0gBZsr8fVblVfOEBc9GtCeNWAAw83BOwaaxtT8k=;
-	b=S/thIAXAUclUdcQR/fcBxEVgCCyKZdlyL9bhQulHM1dLEtD0pQf7og0RQP464J9A
-	ZVxoXkpDU0NZuq8q4m+lU2Vyz86j8nNLE7AWDqp4Y1rfYSq3L+RKKkiCow6FAZuCJ5F
-	H96SLdWN28OGtGP7l+2OGaldBRAzQpx9v80BetGA=
-Received: by mx.zohomail.com with SMTPS id 1772390761773409.48459024822546;
-	Sun, 1 Mar 2026 10:46:01 -0800 (PST)
+	bh=GUcv/vEANiIHE/I+A3EmjRcC2AjC4/I6jYPDOtMn+q4=;
+	b=UayQVlOMhHpzQd6yd5bYsbzFsxcum+j9mjvIPf/2eQEKSPhCT1s5jVo6lR24kfKa
+	Ua+POU0pvPmzei+TKfwomA2aMb6rv0eZKSE3uiiOYJmqklYrHxr+552eJq25gWuOfbl
+	0A3lZMs/XQSDQgerqDsIDmK5RI1NdhTPGFMfM8NU=
+Received: by mx.zohomail.com with SMTPS id 1772390763938452.39938516962786;
+	Sun, 1 Mar 2026 10:46:03 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -45,9 +45,9 @@ Cc: Jeff King <peff@peff.net>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v3 02/12] hook: run a list of hooks to prepare for multihook support
-Date: Sun,  1 Mar 2026 20:44:50 +0200
-Message-ID: <20260301184500.1488433-3-adrian.ratiu@collabora.com>
+Subject: [PATCH v3 03/12] hook: add "git hook list" command
+Date: Sun,  1 Mar 2026 20:44:51 +0200
+Message-ID: <20260301184500.1488433-4-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260301184500.1488433-1-adrian.ratiu@collabora.com>
 References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
@@ -63,85 +63,189 @@ X-ZohoMailClient: External
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Hooks are limited to run one command (the default from the hookdir) for
-each event. This limitation makes it impossible to run multiple commands
-via config files, which the next commits will add.
+The previous commit introduced an ability to run multiple commands for
+hook events and next commit will introduce the ability to define hooks
+from configs, in addition to the "traditional" hooks from the hookdir.
 
-Implement the ability to run a list of hooks in hook.[ch]. For now, the
-list contains only one entry representing the "default" hook from the
-hookdir, so there is no user-visible change in this commit.
+Introduce a new command "git hook list" to make inspecting hooks easier
+both for users and for the tests we will add.
 
-All hook commands still run sequentially like before. A separate patch
-series will enable running them in parallel.
+Further commits will expand on this, e.g. by adding a -z output mode.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- hook.c | 139 ++++++++++++++++++++++++++++++++++++++++++++-------------
- hook.h |  69 +++++++++++++++++++++-------
- 2 files changed, 162 insertions(+), 46 deletions(-)
+ Documentation/git-hook.adoc |  5 ++++
+ builtin/hook.c              | 59 +++++++++++++++++++++++++++++++++++++
+ hook.c                      | 21 ++-----------
+ hook.h                      | 22 ++++++++++++++
+ t/t1800-hook.sh             | 22 ++++++++++++++
+ 5 files changed, 110 insertions(+), 19 deletions(-)
 
+diff --git a/Documentation/git-hook.adoc b/Documentation/git-hook.adoc
+index f6cc72d2ca..eb0ffcb8a9 100644
+--- a/Documentation/git-hook.adoc
++++ b/Documentation/git-hook.adoc
+@@ -9,6 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git hook' run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]
++'git hook' list <hook-name>
+ 
+ DESCRIPTION
+ -----------
+@@ -28,6 +29,10 @@ Any positional arguments to the hook should be passed after a
+ mandatory `--` (or `--end-of-options`, see linkgit:gitcli[7]). See
+ linkgit:githooks[5] for arguments hooks might expect (if any).
+ 
++list::
++	Print a list of hooks which will be run on `<hook-name>` event. If no
++	hooks are configured for that event, print a warning and return 1.
++
+ OPTIONS
+ -------
+ 
+diff --git a/builtin/hook.c b/builtin/hook.c
+index 7afec380d2..855116ba8c 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -9,9 +9,12 @@
+ 
+ #define BUILTIN_HOOK_RUN_USAGE \
+ 	N_("git hook run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]")
++#define BUILTIN_HOOK_LIST_USAGE \
++	N_("git hook list <hook-name>")
+ 
+ static const char * const builtin_hook_usage[] = {
+ 	BUILTIN_HOOK_RUN_USAGE,
++	BUILTIN_HOOK_LIST_USAGE,
+ 	NULL
+ };
+ 
+@@ -20,6 +23,61 @@ static const char * const builtin_hook_run_usage[] = {
+ 	NULL
+ };
+ 
++static int list(int argc, const char **argv, const char *prefix,
++		 struct repository *repo)
++{
++	static const char *const builtin_hook_list_usage[] = {
++		BUILTIN_HOOK_LIST_USAGE,
++		NULL
++	};
++	struct string_list *head;
++	struct string_list_item *item;
++	const char *hookname = NULL;
++	int ret = 0;
++
++	struct option list_options[] = {
++		OPT_END(),
++	};
++
++	argc = parse_options(argc, argv, prefix, list_options,
++			     builtin_hook_list_usage, 0);
++
++	/*
++	 * The only unnamed argument provided should be the hook-name; if we add
++	 * arguments later they probably should be caught by parse_options.
++	 */
++	if (argc != 1)
++		usage_msg_opt(_("you must specify a hook event name to list."),
++			      builtin_hook_list_usage, list_options);
++
++	hookname = argv[0];
++
++	head = list_hooks(repo, hookname, NULL);
++
++	if (!head->nr) {
++		warning(_("no hooks found for event '%s'"), hookname);
++		ret = 1; /* no hooks found */
++		goto cleanup;
++	}
++
++	for_each_string_list_item(item, head) {
++		struct hook *h = item->util;
++
++		switch (h->kind) {
++		case HOOK_TRADITIONAL:
++			printf("%s\n", _("hook from hookdir"));
++			break;
++		default:
++			BUG("unknown hook kind");
++		}
++	}
++
++cleanup:
++	string_list_clear_func(head, hook_free);
++	free(head);
++	return ret;
++}
++
+ static int run(int argc, const char **argv, const char *prefix,
+ 	       struct repository *repo UNUSED)
+ {
+@@ -77,6 +135,7 @@ int cmd_hook(int argc,
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option builtin_hook_options[] = {
+ 		OPT_SUBCOMMAND("run", &fn, run),
++		OPT_SUBCOMMAND("list", &fn, list),
+ 		OPT_END(),
+ 	};
+ 
 diff --git a/hook.c b/hook.c
-index a9ade11952..eb52d706b8 100644
+index eb52d706b8..20c655918d 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -47,9 +47,95 @@ const char *find_hook(struct repository *r, const char *name)
+@@ -47,11 +47,7 @@ const char *find_hook(struct repository *r, const char *name)
  	return path.buf;
  }
  
-+/*
+-/*
+- * Frees a struct hook stored as the util pointer of a string_list_item.
+- * Suitable for use as a string_list_clear_func_t callback.
+- */
+-static void hook_free(void *p, const char *str UNUSED)
++void hook_free(void *p, const char *str UNUSED)
+ {
+ 	struct hook *h = p;
+ 
+@@ -99,20 +95,7 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
+ 	string_list_append(hook_list, hook_path)->util = h;
+ }
+ 
+-/*
+- * Provides a list of hook commands to run for the 'hookname' event.
+- *
+- * This function consolidates hooks from two sources:
+- * 1. The config-based hooks (not yet implemented).
+- * 2. The "traditional" hook found in the repository hooks directory
+- *    (e.g., .git/hooks/pre-commit).
+- *
+- * The list is ordered by execution priority.
+- *
+- * The caller is responsible for freeing the memory of the returned list
+- * using string_list_clear() and free().
+- */
+-static struct string_list *list_hooks(struct repository *r, const char *hookname,
++struct string_list *list_hooks(struct repository *r, const char *hookname,
+ 			       struct run_hooks_opt *options)
+ {
+ 	struct string_list *hook_head;
+diff --git a/hook.h b/hook.h
+index 51fe873298..36d40c98df 100644
+--- a/hook.h
++++ b/hook.h
+@@ -175,6 +175,28 @@ struct hook_cb_data {
+ 	struct run_hooks_opt *options;
+ };
+ 
++/**
 + * Frees a struct hook stored as the util pointer of a string_list_item.
 + * Suitable for use as a string_list_clear_func_t callback.
 + */
-+static void hook_free(void *p, const char *str UNUSED)
-+{
-+	struct hook *h = p;
++void hook_free(void *p, const char *str);
 +
-+	if (!h)
-+		return;
-+
-+	if (h->kind == HOOK_TRADITIONAL)
-+		free((void *)h->u.traditional.path);
-+
-+	if (h->data_free)
-+		h->data_free(h->feed_pipe_cb_data);
-+
-+	free(h);
-+}
-+
-+/* Helper to detect and add default "traditional" hooks from the hookdir. */
-+static void list_hooks_add_default(struct repository *r, const char *hookname,
-+				   struct string_list *hook_list,
-+				   struct run_hooks_opt *options)
-+{
-+	const char *hook_path = find_hook(r, hookname);
-+	struct hook *h;
-+
-+	if (!hook_path)
-+		return;
-+
-+	CALLOC_ARRAY(h, 1);
-+
-+	/*
-+	 * If the hook is to run in a specific dir, a relative path can
-+	 * become invalid in that dir, so convert to an absolute path.
-+	 */
-+	if (options && options->dir)
-+		hook_path = absolute_path(hook_path);
-+
-+	/* Setup per-hook internal state cb data */
-+	if (options && options->feed_pipe_cb_data_alloc)
-+		h->feed_pipe_cb_data = options->feed_pipe_cb_data_alloc(options->feed_pipe_ctx);
-+	if (options)
-+		h->data_free = options->feed_pipe_cb_data_free;
-+
-+	h->kind = HOOK_TRADITIONAL;
-+	h->u.traditional.path = xstrdup(hook_path);
-+
-+	string_list_append(hook_list, hook_path)->util = h;
-+}
-+
-+/*
++/**
 + * Provides a list of hook commands to run for the 'hookname' event.
 + *
 + * This function consolidates hooks from two sources:
@@ -154,246 +258,48 @@ index a9ade11952..eb52d706b8 100644
 + * The caller is responsible for freeing the memory of the returned list
 + * using string_list_clear() and free().
 + */
-+static struct string_list *list_hooks(struct repository *r, const char *hookname,
-+			       struct run_hooks_opt *options)
-+{
-+	struct string_list *hook_head;
++struct string_list *list_hooks(struct repository *r, const char *hookname,
++			       struct run_hooks_opt *options);
 +
-+	if (!hookname)
-+		BUG("null hookname was provided to hook_list()!");
-+
-+	CALLOC_ARRAY(hook_head, 1);
-+	string_list_init_dup(hook_head);
-+
-+	/* Add the default "traditional" hooks from hookdir. */
-+	list_hooks_add_default(r, hookname, hook_head, options);
-+
-+	return hook_head;
-+}
-+
- int hook_exists(struct repository *r, const char *name)
- {
--	return !!find_hook(r, name);
-+	struct string_list *hooks = list_hooks(r, name, NULL);
-+	int exists = hooks->nr > 0;
-+	string_list_clear_func(hooks, hook_free);
-+	free(hooks);
-+	return exists;
- }
- 
- static int pick_next_hook(struct child_process *cp,
-@@ -58,11 +144,14 @@ static int pick_next_hook(struct child_process *cp,
- 			  void **pp_task_cb)
- {
- 	struct hook_cb_data *hook_cb = pp_cb;
--	const char *hook_path = hook_cb->hook_path;
-+	struct string_list *hook_list = hook_cb->hook_command_list;
-+	struct hook *h;
- 
--	if (!hook_path)
-+	if (hook_cb->hook_to_run_index >= hook_list->nr)
- 		return 0;
- 
-+	h = hook_list->items[hook_cb->hook_to_run_index++].util;
-+
- 	cp->no_stdin = 1;
- 	strvec_pushv(&cp->env, hook_cb->options->env.v);
- 
-@@ -85,21 +174,22 @@ static int pick_next_hook(struct child_process *cp,
- 	cp->trace2_hook_name = hook_cb->hook_name;
- 	cp->dir = hook_cb->options->dir;
- 
--	strvec_push(&cp->args, hook_path);
-+	/* Add hook exec paths or commands */
-+	if (h->kind == HOOK_TRADITIONAL)
-+		strvec_push(&cp->args, h->u.traditional.path);
-+	else
-+		BUG("unknown hook kind");
-+
-+	if (!cp->args.nr)
-+		BUG("hook must have at least one command or exec path");
-+
- 	strvec_pushv(&cp->args, hook_cb->options->args.v);
- 
- 	/*
- 	 * Provide per-hook internal state via task_cb for easy access, so
- 	 * hook callbacks don't have to go through hook_cb->options.
- 	 */
--	*pp_task_cb = hook_cb->options->feed_pipe_cb_data;
--
--	/*
--	 * This pick_next_hook() will be called again, we're only
--	 * running one hook, so indicate that no more work will be
--	 * done.
--	 */
--	hook_cb->hook_path = NULL;
-+	*pp_task_cb = h->feed_pipe_cb_data;
- 
- 	return 1;
- }
-@@ -133,8 +223,6 @@ static int notify_hook_finished(int result,
- 
- static void run_hooks_opt_clear(struct run_hooks_opt *options)
- {
--	if (options->feed_pipe_cb_data_free)
--		options->feed_pipe_cb_data_free(options->feed_pipe_cb_data);
- 	strvec_clear(&options->env);
- 	strvec_clear(&options->args);
- }
-@@ -142,13 +230,11 @@ static void run_hooks_opt_clear(struct run_hooks_opt *options)
- int run_hooks_opt(struct repository *r, const char *hook_name,
- 		  struct run_hooks_opt *options)
- {
--	struct strbuf abs_path = STRBUF_INIT;
- 	struct hook_cb_data cb_data = {
- 		.rc = 0,
- 		.hook_name = hook_name,
- 		.options = options,
- 	};
--	const char *const hook_path = find_hook(r, hook_name);
- 	int ret = 0;
- 	const struct run_process_parallel_opts opts = {
- 		.tr2_category = "hook",
-@@ -181,30 +267,21 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
- 	if (!options->feed_pipe_cb_data_alloc != !options->feed_pipe_cb_data_free)
- 		BUG("feed_pipe_cb_data_alloc and feed_pipe_cb_data_free must be set together");
- 
--	if (options->feed_pipe_cb_data_alloc)
--		options->feed_pipe_cb_data = options->feed_pipe_cb_data_alloc(options->feed_pipe_ctx);
--
- 	if (options->invoked_hook)
- 		*options->invoked_hook = 0;
- 
--	if (!hook_path && !options->error_if_missing)
-+	cb_data.hook_command_list = list_hooks(r, hook_name, options);
-+	if (!cb_data.hook_command_list->nr) {
-+		if (options->error_if_missing)
-+			ret = error("cannot find a hook named %s", hook_name);
- 		goto cleanup;
--
--	if (!hook_path) {
--		ret = error("cannot find a hook named %s", hook_name);
--		goto cleanup;
--	}
--
--	cb_data.hook_path = hook_path;
--	if (options->dir) {
--		strbuf_add_absolute_path(&abs_path, hook_path);
--		cb_data.hook_path = abs_path.buf;
- 	}
- 
- 	run_processes_parallel(&opts);
- 	ret = cb_data.rc;
- cleanup:
--	strbuf_release(&abs_path);
-+	string_list_clear_func(cb_data.hook_command_list, hook_free);
-+	free(cb_data.hook_command_list);
- 	run_hooks_opt_clear(options);
- 	return ret;
- }
-diff --git a/hook.h b/hook.h
-index 630e1a3c85..51fe873298 100644
---- a/hook.h
-+++ b/hook.h
-@@ -2,12 +2,52 @@
- #define HOOK_H
- #include "strvec.h"
- #include "run-command.h"
-+#include "string-list.h"
- 
- struct repository;
- 
- typedef void (*hook_data_free_fn)(void *data);
- typedef void *(*hook_data_alloc_fn)(void *init_ctx);
- 
-+/**
-+ * Represents a hook command to be run.
-+ * Hooks can be:
-+ * 1. "traditional" (found in the hooks directory)
-+ * 2. "configured" (defined in Git's configuration, not yet implemented).
-+ * The 'kind' field determines which part of the union 'u' is valid.
-+ */
-+struct hook {
-+	enum {
-+		HOOK_TRADITIONAL,
-+	} kind;
-+	union {
-+		struct {
-+			const char *path;
-+		} traditional;
-+	} u;
-+
-+	/**
-+	 * Opaque data pointer used to keep internal state across callback calls.
-+	 *
-+	 * It can be accessed directly via the third hook callback arg:
-+	 * struct ... *state = pp_task_cb;
-+	 *
-+	 * The caller is responsible for managing the memory for this data by
-+	 * providing alloc/free callbacks to `run_hooks_opt`.
-+	 *
-+	 * Only useful when using `run_hooks_opt.feed_pipe`, otherwise ignore it.
-+	 */
-+	void *feed_pipe_cb_data;
-+
-+	/**
-+	 * Callback to free `feed_pipe_cb_data`.
-+	 *
-+	 * It is called automatically and points to the `feed_pipe_cb_data_free`
-+	 * provided via the `run_hook_opt` parameter.
-+	 */
-+	hook_data_free_fn data_free;
-+};
-+
- struct run_hooks_opt
- {
- 	/* Environment vars to be set for each hook */
-@@ -85,19 +125,6 @@ struct run_hooks_opt
- 	 */
- 	void *feed_pipe_ctx;
- 
--	/**
--	 * Opaque data pointer used to keep internal state across callback calls.
--	 *
--	 * It can be accessed directly via the third callback arg 'pp_task_cb':
--	 * struct ... *state = pp_task_cb;
--	 *
--	 * The caller is responsible for managing the memory for this data by
--	 * providing alloc/free callbacks to `run_hooks_opt`.
--	 *
--	 * Only useful when using `run_hooks_opt.feed_pipe`, otherwise ignore it.
--	 */
--	void *feed_pipe_cb_data;
--
- 	/**
- 	 * Some hooks need to create a fresh `feed_pipe_cb_data` internal state,
- 	 * so they can keep track of progress without affecting one another.
-@@ -132,11 +159,23 @@ struct hook_cb_data {
- 	/* rc reflects the cumulative failure state */
- 	int rc;
- 	const char *hook_name;
--	const char *hook_path;
-+
-+	/**
-+	 * A list of hook commands/paths to run for the 'hook_name' event.
-+	 *
-+	 * The 'string' member of each item holds the path (for traditional hooks)
-+	 * or the unique friendly-name for hooks specified in configs.
-+	 * The 'util' member of each item points to the corresponding struct hook.
-+	 */
-+	struct string_list *hook_command_list;
-+
-+	/* Iterator/cursor for the above list, pointing to the next hook to run. */
-+	size_t hook_to_run_index;
-+
- 	struct run_hooks_opt *options;
- };
- 
--/*
-+/**
+ /**
   * Returns the path to the hook file, or NULL if the hook is missing
   * or disabled. Note that this points to static storage that will be
-  * overwritten by further calls to find_hook and run_hook_*.
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index ed28a2fadb..d1380a4f0e 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -10,9 +10,31 @@ test_expect_success 'git hook usage' '
+ 	test_expect_code 129 git hook run &&
+ 	test_expect_code 129 git hook run -h &&
+ 	test_expect_code 129 git hook run --unknown 2>err &&
++	test_expect_code 129 git hook list &&
++	test_expect_code 129 git hook list -h &&
+ 	grep "unknown option" err
+ '
+ 
++test_expect_success 'git hook list: nonexistent hook' '
++	cat >stderr.expect <<-\EOF &&
++	warning: no hooks found for event '\''test-hook'\''
++	EOF
++	test_expect_code 1 git hook list test-hook 2>stderr.actual &&
++	test_cmp stderr.expect stderr.actual
++'
++
++test_expect_success 'git hook list: traditional hook from hookdir' '
++	test_hook test-hook <<-EOF &&
++	echo Test hook
++	EOF
++
++	cat >expect <<-\EOF &&
++	hook from hookdir
++	EOF
++	git hook list test-hook >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'git hook run: nonexistent hook' '
+ 	cat >stderr.expect <<-\EOF &&
+ 	error: cannot find a hook named test-hook
 -- 
 2.52.0.732.gb351b5166d.dirty
 
