@@ -1,108 +1,144 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EBA4C97
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 05:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772344755; cv=none; b=MSfJedeirJ2X1R0FREKi68RawhjG9BHO9kwf/VcU2gPTayUCEb8XOu74Llk8eCoIUouzPfFMcCIEfHzD4fKKlSexhHYn197+ILJF4VQkPmo3yeXhffbu4M/uw1ql/3DVhlqDgO9bHTX8coGyHUWMb4uDslG+alfSN7pqIti7Qs0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772344755; c=relaxed/simple;
-	bh=kMfFhqNzgjJMiOcZQFB3zSfhum4TSOdrmbkk1AKG1w4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jgU7zOXPcAF8KV9qpWqMbr6T5vdSjKQNgESuDLOE+aoGBmc2rxLeQwUWeHmagtMD30jlyVtVJxiTHtd36HX7ou4V7hn2tG9U8hkHXJnQ+rOS7FdMzOdCnlxuIbi8l1HbrzEHvusd2qN5fuG8PGv7jlhfMeOQnQCk9uZk2TR4UT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ca74SsjO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZtngNfDh; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DDC2561A7
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 06:14:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772345650; cv=pass; b=a+2xnzcTQmfWJLj7j/kS0fZD/0peJHle8Ri1nIl56/8U5FmwfiKpJE23FGjzl8cTEhjg7VWsKszU3x0qTqGomjt/gieuDKtdFXmWsnfmEFWzjRRjptm/1K+wTzPtamHShp0MhnYUiMaq4FLuquEgwv6719fbVoaJTcGBHAfZR/g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772345650; c=relaxed/simple;
+	bh=/5GuTwJ/dWDwJhqxfL0eZlN8azyUiPW9ZyHZw6pgplw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Up1yGeEHmBHVYdrqU6Ct4zZi3lsBCFB9Tb6Gcwqm/8uDoxSJJRzvT4gxjOsFo6H+f0WJs8VpgJEhdfTlHDg7bf9IcxbXdnrrWZUqsq2xJiCZYQ4AXk7fuLJyfcXtrNhdTj2gMqEKnMFZYI/cL16hK1ecCnFKoLLnraICXxDJQfE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=flESVuPr; arc=pass smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ca74SsjO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZtngNfDh"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 13B761D000D3;
-	Sun,  1 Mar 2026 00:59:11 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 01 Mar 2026 00:59:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772344751; x=1772431151; bh=mTwZ9lCSN4
-	qL89x8UBvWQrR7HW/G3RZitzFfa4aHBGI=; b=ca74SsjOBjlapKdy6WIO/alXCE
-	uDHVDRFVdf2t0BQkvQ72ohFKSc3Aq/HOd4VI0SveuMOeCVXUoBY9mY76UdS8FlDn
-	FUGMeq7/vGaRQjMg2sVYcTAYUEniYNQ54USIulpyVapcIxaqOL1SBIoM92EARzSY
-	kRoXPj0IZ5OscZMyj0Z8SsKtZkXVqHR/yNc2w8vUCIyckBrVGpaqebi7Qg377nYp
-	U7kYXg9m7UcxfcFstf7zhoJh1LW7YvaKtQlDIbdCb2YTGFrefRPIuNfhc49TTxYM
-	CSvOhnR696TYDiOpyp0zic95/5XKL5oX7ji1nzK8nJUzm3dNFMhXq4Tc4bRw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772344751; x=1772431151; bh=mTwZ9lCSN4qL89x8UBvWQrR7HW/G3RZitzF
-	fa4aHBGI=; b=ZtngNfDhgbTvnD66FFNMSkodCyrC7sQdLf79Jr8rFsjQjmZwQqu
-	QXUQimfKPKO9doMH4WMVta+DfQKjTZI4UdFV34HJBVus0/jUxbS6bOhfY3iAKMBc
-	VgKyVS4nZxl5oubVonrMUt0QWCg9XBlGOHE/3Fbkp8+554bhblsVFPC4gjPBL9NQ
-	duhnkbeuM90ALTCdCHW/JBoL/2Kuofp61WWpSxhJFsvJyWVMTpZ5sqb/arCBEoxd
-	yZnQZeYv7Mm5/qO/7E2dSniexjMaYGm83wKDW7tUHpVH7PCOM5GUG2+s/oBo7i0N
-	hcYjitBQQsJYuU84xIgcAbL6vMzWAeMVwMQ==
-X-ME-Sender: <xms:r9WjaY2kXLXE-c7oujA7lA7NilzLd8T0MMojAwwuNzq5su9Ine9LZg>
-    <xme:r9WjaaF-c89fPARERFPUyJonWW1f0xAFDuIPqsHOsYYDw1b36hr0OSwHHwZcfQGBw
-    8OaQWJ0ZnWtvvKeiTjYG9m_4JUEsaC_tPOXg3WRvtpiF2Tp1scf1A>
-X-ME-Received: <xmr:r9WjaV6eR-CkLY_gzS0VCQKvLJCpfDPifMrC-eIH5Jjq22hYBrX7Xl08N2KRgunavlBQcYt9tMFtcJwS1vk0fornL5uwWh1PIg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheegtdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghrtghn
-    rghrtgesgihiphhlihhnkhdrtghomhdprhgtphhtthhopegrlhigsehkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:r9WjaQvwjjIHed9poFvn5TP0179e0cyEashImodVV65pjgbZrJHZtA>
-    <xmx:r9WjaW5M63NU_SVFAsKmdGVSCMu0iiBM-Y2SDZy7rcfY4-ZCX4q0bA>
-    <xmx:r9WjabWs2OlikZF-8n0v9EHBaEADXXb8yrrg8Tiu4VxEcJMFuHfMRw>
-    <xmx:r9WjaY86M_EM6JgLCvbXtm0V2-WJBrSGfncRvS3vHwfL1LkGMNtH9Q>
-    <xmx:r9WjaeMhmvFwF_vgziIGxzqw6IB4tg1_9n_HaiPcEqCF7XS3E65h-8vC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 1 Mar 2026 00:59:11 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Marc Branchaud <marcnarc@xiplink.com>
-Cc: Alejandro Colomar <alx@kernel.org>,  git@vger.kernel.org
-Subject: Re: --no-decorate and %d in git-log(1)
-In-Reply-To: <cf3d274e-7363-4557-809a-a649b1d304ad@xiplink.com> (Marc
-	Branchaud's message of "Wed, 25 Feb 2026 14:46:10 -0700")
-References: <aZ81X6ERyx5fcm6L@devuan> <xmqq4in4brt3.fsf@gitster.g>
-	<aZ9AuD3dYzCKtI0s@devuan>
-	<8f6441ab-5c9a-4b42-ab2e-a670d462569d@xiplink.com>
-	<xmqqcy1sa8mx.fsf@gitster.g>
-	<cf3d274e-7363-4557-809a-a649b1d304ad@xiplink.com>
-Date: Sat, 28 Feb 2026 21:59:09 -0800
-Message-ID: <xmqqwlzw5bv6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="flESVuPr"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-389f173b91fso52684671fa.1
+        for <git@vger.kernel.org>; Sat, 28 Feb 2026 22:14:08 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772345647; cv=none;
+        d=google.com; s=arc-20240605;
+        b=iGvLlTF6ey04l0U6S8N1naCNzp/9BcQObZ4+5MPKoJm7kPoq7JafSgps8jjsRJg+ZN
+         5dN43fjs6ddOahjpY023rnIG5f2DPFNGl07/h0puTKt4LLG0c0x06vsjf6BtBK5xz0sg
+         qltmr9MfFkzFZKLSgTgyBHCyJjPr7b/YJq4KNDEo0qSg6bSX8lBW5J0MUDPL+gwSx8Oi
+         C3xDNJ1MtBUmJIYvGckJS1+HKmgUXzg1Da/gOwJFGm+BEEJVK2mekeSx00MCNx5jsTQS
+         dbC7teIwUguDRwkko8/RpCf/Np8rrRZ4DX4eD8fjQznxq80WbNneis+9t+SUY9ILhTix
+         0RsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=/5GuTwJ/dWDwJhqxfL0eZlN8azyUiPW9ZyHZw6pgplw=;
+        fh=vjWiuwtWY/bbMdr/dGFQVRlox5zvvaMnt63AkuuMFPU=;
+        b=XJnEhuMtBgS3yDa0cAT0G4Er8YZ7I5M+FptQ9YhFD9jgnRnkqs7BSXdnRuaQc0Sx79
+         XGpvQ7eZJeK1XZ6Kj6nXFb8rKpJkovxCnekX/lPuso4P94GGAlTCyLEmSbzicH2XfK1L
+         8H5eLPANMUj0SBdyNa1oGz7XfbxKvV681gNyTR589y7KPmnHTZ3F524ChyV/Sna8M+XT
+         MVFTyYANT5nGYS7FqAOdRGAfxiVyZR/82O05OQlBtuDsqc0sqN62ud+LYxAAZBPqizRo
+         pdfYYgbot0QGpJ1pTzkC40Z4cxQQk/rKIr9nH0+UivMcVO4Xg+TLRPAfehogttEFpeh9
+         sGbw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772345647; x=1772950447; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/5GuTwJ/dWDwJhqxfL0eZlN8azyUiPW9ZyHZw6pgplw=;
+        b=flESVuPrNIKwOLOvzoVgCOFYBGiGLu8RQOisDctlVh032blnudJoroIW304LRZNXcI
+         GAeZ5AxwVOeyE1nCM77CeUbiU3EbK1lAuu2ouGvXofhwza9n7mxHcoSPs2V6JhrYZpL3
+         ifmXCxov99KuAmfbLuSAmdkJuUv3FVGyN899lauTgf9Z+yiI1RpZv5qrRQnTnpdX5B0X
+         M3GjbCr8Iirc/B0LgIE3vxZmFV+JFH3SW73sPXnm0aX6T5Fr+0lZ13dmR/9tAQ1/jHwM
+         QpnILIqta5Bfh2rhp11BxQ+IdpAoLk/E50j/Yk5UvgdNj38f6CbPyhNgCoC8uVN6Cy+Q
+         BfCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772345647; x=1772950447;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=/5GuTwJ/dWDwJhqxfL0eZlN8azyUiPW9ZyHZw6pgplw=;
+        b=NOhb2kGv2DwzfmiCg1IwXo5KDVJiC/his5YcC6iyLrEz+N1kw4hDvQnvPxjwJZnkt7
+         QsVkzEURMxp8aYTWlAEHL8dP7s+riK23vC/I2BavGDNN2f5HC18VcydBukVt1D1T80xz
+         VDyh461FxPDyqERi16KYghTDuRH+kuePIpSl+vpmdqWUKPhB7liaFhsAA/l+mUmN7Pao
+         apEgILC98DYMnkAXUZFPBIvrytt12tsDeydMWiYECnnXEbqRh522oXaRKSxhMmj92r76
+         GEXIlXp/uGXu66PQj75qz1wGzsmhV0Zqr1Z2W5r3epYlMzxX8GPGkzoJ8y4x2TjXWOYK
+         dWQw==
+X-Gm-Message-State: AOJu0Ywa0XFMNQM6ivCHo0Glvvrc//2shDe2YGgBKB/crkK3RKkqCI7Z
+	F2VKW5QajJoelt/nFDwzXTZcVHIWGdjkoDwbmxfon8697dw2gdVUDOyXkZ2JMczq/0frvr7G5vc
+	EykI0ayDmMreA7KlHlF0xVmnsY66M2mU=
+X-Gm-Gg: ATEYQzxcP/FJCCRj3B1BjGlO+h4pU3sV9PVXFJxvzSLZftwbEIhm8uhH1jhIa+mqEBX
+	Tcn6vIvAw18yZNe1Bu6Nzea13MinS6DKGO54gAXR9QTt1gOop/2czTQDVbcQF/1UATtjxAjbUQS
+	OHwbIwlPRv1N8ey4bzhvObSa8338zSZqv68j4bewS+VW8LfCLSgQVTWdRz3HRm3tg4X4j3FH+RS
+	PRaYpJiEVNla4/rvXmFE16xAgzjyDFAeRpo7z8RP3cABvpAnX8q7P78MUCRFESz+GEMijn5MmZG
+	YG4/sytVcw==
+X-Received: by 2002:a2e:3219:0:b0:383:1b75:b9bf with SMTP id
+ 38308e7fff4ca-389ff356090mr43234421fa.28.1772345647085; Sat, 28 Feb 2026
+ 22:14:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAFNBzOc=tuph7ecqt9TAY-aCWUkPyQ84DYjwMp3QS4-0J-wF_Q@mail.gmail.com>
+ <B8697AB9-9C9B-41C9-A2D8-1848CD966137@gmail.com>
+In-Reply-To: <B8697AB9-9C9B-41C9-A2D8-1848CD966137@gmail.com>
+From: Ayush Jha <kumarayushjha123@gmail.com>
+Date: Sun, 1 Mar 2026 11:43:56 +0530
+X-Gm-Features: AaiRm51-M5ET4WjXZoaGoOG26GAke1COYcXgRzOuGbV_NN4MpxcuJLio6fjnSfQ
+Message-ID: <CAFNBzOe8_GbXFTmL5UuLWa+5xa=D04jJkmqMumerajeYGkVwaA@mail.gmail.com>
+Subject: Re: [GSoC][PROPOSAL] Improving and Extending the git repo command
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Justin Tobler <jltobler@gmail.com>, karthik nayak <karthik.188@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+Hi Lucas,
 
-> Given this documented connection between %d/%D and --decorate, it seems 
-> reasonable for a reader to assume that --decorate=auto would do the same 
-> thing regardless of whether or not a --format=...%d... was present.
-> ...
-> I note that currently --decorate has no effect at all if the --format 
-> doesn't contain %d or %D.  To me this bolsters the argument for making 
-> --decorate=no suppress %d/%D.
+Thank you for this feedback and for pointing out commit fac60b8925!
 
-OK, that's convincing enough.  
+You are completely right=E2=80=94assuming a blanket "relative by default"
+expectation ignores the historical nuance of how git rev-parse handles
+different path options. I have updated my proposal draft to remove
+that assumption and properly acknowledge the complexity of path
+formatting for repo-info.
 
-I no longer mind cooking such a change a bit longer than usual in
-'next' to see if anybody screams, and the have it graduate to a
-released version to further see what happens.
+I also just left my thoughts on your new repo-info --path-format patch
+series addressing this exact issue over on that thread! Let me know if
+that direction seems correct.
 
-Thanks.
+(Also, apologies if my reply to that patch series looks a bit strange
+in your inbox=E2=80=94I accidentally put Jayatheerth in the 'To' field and =
+you
+in 'CC' when replying!)
+
+Thanks again for the guidance,
+Ayush
+
+On Sun, Mar 1, 2026 at 4:28=E2=80=AFAM Lucas Seiki Oshiro
+<lucasseikioshiro@gmail.com> wrote:
+>
+>
+> > Hi everyone,
+>
+> Hi, Ayush!
+>
+> > Note to reviewers: I'd like to hear your thoughts on whether these
+> > paths should default to relative or absolute. My initial thought is
+> > relative by default with an `--absolute` flag, as that seems to match
+> > user expectations for CLI tools like `git rev-parse`.
+>
+> I've just sent the path (trying to) add support for paths (the one
+> you mentioned). I don't know if it's the best approach. I CC'ed you
+> and the other GSoC applicants that are interested in git-repo-info.
+>
+> I wouldn't say that the user's expectations is to retrieve absolute
+> paths by default, we need to check each one of the "options for
+> files" modified by --path-format and see what makes more sense.
+> See [1].
+>
+> [1] fac60b8925 (rev-parse: add option for absolute or relative path forma=
+tting, 2020-12-13)
