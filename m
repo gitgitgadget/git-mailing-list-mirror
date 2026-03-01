@@ -1,205 +1,114 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5C4175A6A
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 16:51:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B26175A6A
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 16:58:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772383865; cv=none; b=lyAeXwWyEQ46Gkrm66uR8cO1rSQ1sJyNKQ8XxVpuGGiODIXlMqAxFmIGJOo17NTqlNYO9Q8RU8T1MVMDmSEwRBNehkbnYpWT5sMzgumEIwdcg8wmu/I0EYi9xZ/7/T0OPxoQSq+AVXlfK+9wPtDSVZsiIHjj18MFR7cHQPDoMM8=
+	t=1772384304; cv=none; b=KI0XhRmmg+HqbdBRSy2etJ1iOfw+fvHk1sbvjYt4VeL3+nQ1D7HiOdFrE+iUFsn19otPoTPZe0O4tHlql99AfY+gKUsX45OvbHb/iFG7x/IwL2srs7+NSlmsyGj1gD90Xp/qqwo7rOCLlq6mPvmCLF6uXohvGZiv+kA2yhARMR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772383865; c=relaxed/simple;
-	bh=K0buFRbizqnc1HjXZgwEy6jhZZUV46lkOosRh5hAJf8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xa2aK9OJaHr8Bf4yldVMEUX234oOZFUKRQPGdGiLtHg8Dx1KS6fPEoGRKtIX/NZ8LgVTWm7tpmMo7fVqvbCo7sokPy9KqkCOsojTo+qyz+I8aRuB+y3bJCLKSPJ/yLOVNLwBSju8AZbPnTQwrUHqYxHcSkNWlXbtME6FpAb7DvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lhb8NQGU; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1772384304; c=relaxed/simple;
+	bh=zLDEtfHCDB/JJes9FWyaK+CuU2tLBynDWolGrI07w+U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lu84v/uzJHvxfpptD4MVOmdy18kXe1TYhss6QfU1kMlJY4sllSWrS+JivzdRa52QND4yYMk94H07GiYXRJ5TyCktuOqZqLYGbL5kWbLBBkVdmQIainbjwtsiIoylLOcxOQDUavZR4inN2GbxlIZqeG5vwmQVZh84oJ/9Y4leO5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CpE3Pp4z; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lhb8NQGU"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2adbfab4501so16075355ad.2
-        for <git@vger.kernel.org>; Sun, 01 Mar 2026 08:51:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CpE3Pp4z"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-358ee55eafcso404183a91.1
+        for <git@vger.kernel.org>; Sun, 01 Mar 2026 08:58:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772383863; x=1772988663; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UlAlfHxMZQueaal6rLVQmwOH7QAePtGFOBac/o5FbPA=;
-        b=lhb8NQGUZICqoeVnVOJ3wP569qeq4qdo4lt6gfmuMh5AESKl2th8oVIG0xsR5oPCj1
-         4HNhZ7VnJpJjxUpsu6N+1jaFUKH53/vvBuTxM3eR4y2+loI3Z98U9woFiSod+rHZ0dqw
-         INyfCftR/ci8TUYbWJ2yh6tti2xihhOy+rkn+2tUelzjL82bg1Z08Xvo3u2OKX14Dk8Q
-         LRvPRKQdl1U3u2o4DHNEhSWRDAHUnVynIfYD+WdwfGjLhv8Yqt0ai4F15TO23JSzPUIz
-         zWjrQ+AiYkzBVsZfSb/7ZjiSXM0X5lOXsccRz4iPV/N8jJA8SsWDz6rjJPyqIpyVZ3hx
-         CYkw==
+        d=gmail.com; s=20230601; t=1772384303; x=1772989103; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MT5dDn9rzhSWIT2WrbH2wNl34KzXpc+we7ksNqXyGEY=;
+        b=CpE3Pp4zcYdvGueP8Qx31YbkNrXtBm4ug1YTorWXFjyH9tgbGbIXCqfRexoPoOB5Ur
+         cIYCWEBYekh1cmCI6yncH/AOFIR7OMAujauuFjl6WHE2AdQZAKGR8v70/m1NnpPq9Jv4
+         Qwm0kkvqFJfCX0MjvEDHO/nDN+LmA7BqmUkBDNy26FuylpEPcHjahNFDyn4S1UTmbW4k
+         mSr4m0ewguo53H4khx5+NJhqH8JQhlHqaFpopG4BvUQPciaRP/8HrpwPBQwLrQhQtXzR
+         e/DI2+fhkknnb5GrOaK0AyY5IErJbSt6Gd998xHi63YH8A0Llwu6dnT/Mq1Fg/V9JOH7
+         Yyxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772383863; x=1772988663;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=UlAlfHxMZQueaal6rLVQmwOH7QAePtGFOBac/o5FbPA=;
-        b=MCk4Jp6NKQ9fEkXr05MjOCatxpPht5sjkI7RfXJKB3Rval3wK4kxSlTaiKvtS9oxy2
-         3nwZuoKesVejCJ0EAdcq9ZsBOBmhQQQrfvojfmd9PQF8wtqNzJSRw3o5D9jDcO947Q9R
-         iqv9l6smmWOWW44NkPdTfTmOculWB3GJnO9oNgul36P2eg9f/6m7bS5kB68+zL0LQ1K4
-         WYQ6m3uAGsh0payCsdbLDXmoZZ5W+6jis6Sqbl2nhivNdzePPYQVnQceJC2yFvbGNRJ0
-         de1H6yEbe/p6nzBK2IHI2huuehvDUpWB0qIcQgdd8bXCG02lC4lxyXliClrrHW3xpK6K
-         qhlA==
-X-Gm-Message-State: AOJu0YzG3ALasKHCpoYvnXrphuucnFEHdAgUkc9VRyRq7Dg0iGltNhii
-	ekyTH6mK8Q4cBqLTdRBAaH6fvwTQQi2/AqXtE/bwQX66V7tpvEeHuZ07
-X-Gm-Gg: ATEYQzwqBdOsILX3LiyadWBQGfbpfokgGkwHmNEk99kPJ9/0iDxtdgWaiNnU4/CYIP/
-	1mY5u0c+oDS8qfMK8Np3K/Um57mYvETv0fkE2H8OiNoWc+nVwHs6i2uk5YUkdtLMjGh6u+C82F2
-	y2aDF1fQ5c0zNXQh0iILiTYwAY9mBhTeGKyEmQvlc3hpUlCQEEHY+SlgzR9GQkfin63OhY9sWbB
-	f1b3LcqP++CJchqAVhtja3Pg2+mAJE8JjZq5fg66u9t4by5O7EpxbEo0h75nDeLeoz3BmnBXiRE
-	BTXOoUDm9UAWnPFlj8ZlxKYdnqHCs8+IRfQEkel2ieThbEpWIGRA8VVGH+KyUHIV0wfcwaDboXO
-	Hr2Rk8vlQ0inkePm5VH4VkUvqn6UR+jCUnLXq4G+2neLifGNRRtKqd85UZyAOctR6+vDBLLYz8A
-	WaEkNYIGEiy65WZSkBiWwnCE1hU5tuDqAFdmqew1FcMWRAVaen0+jFgiepQCxVKEOK2/Tkq97qZ
-	M3teNgB/ayBkbgOeGiw0HR5X5ZVdJ31
-X-Received: by 2002:a17:902:dac3:b0:2ae:450c:951e with SMTP id d9443c01a7336-2ae450c983bmr30085795ad.17.1772383863414;
-        Sun, 01 Mar 2026 08:51:03 -0800 (PST)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb5c9f79sm123562715ad.33.2026.03.01.08.50.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Mar 2026 08:51:03 -0800 (PST)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: pushkarkumarsingh1970@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	jtobler@github.com,
-	karthiknayak@gmail.com,
-	lucasseikioshiro@gmail.com,
-	patrick@pks.im,
-	peff@peff.net
-Subject: Re: [PATCH 0/2] repo info: add path.git-dir and path.common-dir
-Date: Sun,  1 Mar 2026 22:20:51 +0530
-Message-ID: <20260301165051.90762-1-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260301134412.1072596-2-pushkarkumarsingh1970@gmail.com>
-References: <20260301134412.1072596-2-pushkarkumarsingh1970@gmail.com>
+        d=1e100.net; s=20230601; t=1772384303; x=1772989103;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MT5dDn9rzhSWIT2WrbH2wNl34KzXpc+we7ksNqXyGEY=;
+        b=I2ahPtx3HUOULuAF4ykiSN8AsrCXKu0t+Slm5J8qeyHFGcCDqtjgi5Yuig+1w6MsuM
+         IF7mCu+qnT2yqnrM7120QMgc8RemCxRj7josAwIO1dKdI/SAYWpmCk3h8yjtJuOWE52Y
+         TG9oHASCzdUc8Se4u5izpn7snj4qmIHn/gbjnLDen1by8u0FlLH3JtK2s/OsqoPFYftL
+         z7YkjQWCMcc14gbXarmEk5d+M0y9btk/Z0eWDtuBbl45oSPhUPc5lbqXiAR4roDZISSt
+         Hc1h8oKqqrjwxF7BInTcJOqJZrfDxW/83xUv/hBNy+gfb3LudyKjNHUloi/zTNoWo1Xd
+         WUQg==
+X-Forwarded-Encrypted: i=1; AJvYcCVvGMuIeTlJxlgG7pI1TCRroFL0WRqxxXR1WUPPq/dCKBgD+3L8DzdBMF13gQ0M/rwXv/M=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqnGHVBmPPzZwBlGE0vUS5CfoUSCAkxnDqXCtVmfhxq01b05XW
+	LXg6aCN73aU17h23T9nCQjrien6Pnw/wilGu/TJ1jTwF0eAC4wsQ0OfV
+X-Gm-Gg: ATEYQzxYJgGClEPUtYmQKWI30HIicQiXRcUIGD0uG9mk8myrMibQoW0itx6E8GrwGrC
+	2HI2VLlx6RQBVyNPolTstHCSUVNMFvRJrSLCZxc0gE8vCw7mhbPXCSpf41XIjEOxOQfsUNE8DDD
+	k3NTh+vww4ZFZcoK2XKWVFXuv1g1STuikDCEU+8AP2EnXbAkhktFvFMHoMlgBC+qNRwBPL8na85
+	sXfo7gsnMqIVptlUrFHlh5jZ6PsIbUZKHzU5SxTTnGwB1UUVAP+NsISpDb1OPw+Vo13Yhr3bZhW
+	YwHsxcmjscgcQuiXhJMb/X1OMhjt6Psr7SjRTLKpvRUFsdRcIvUX3o7FhqqHQn5e7nh8SGkf5jG
+	Xw8eGRfPZKVPKPus0NO7n/lI0xv1wXjEFVbcOXawrHFDJ0h4qTAjUZIy1wlaUSKNDaYuF+lTm2F
+	SIC+h8zqn21ugg/+Orpnz6WY5GLdrm2XfbkdMbe10Y2ZlbGF2o/o72Mr596sQFO6EpoK7kgEcKG
+	xe5pAOuhhc=
+X-Received: by 2002:a17:90b:3812:b0:340:29cd:dce with SMTP id 98e67ed59e1d1-35965cf70edmr6603846a91.8.1772384302806;
+        Sun, 01 Mar 2026 08:58:22 -0800 (PST)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359807618d1sm3012318a91.0.2026.03.01.08.58.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Mar 2026 08:58:22 -0800 (PST)
+Message-ID: <7fa1f5c9-d1c1-4d81-a170-74a77468b923@gmail.com>
+Date: Mon, 2 Mar 2026 00:58:17 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC][Draft Proposal v4] Refactoring in order to reduce Git's
+ global state
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>,
+ Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Siddharth Asthana <siddharthasthana31@gmail.com>
+References: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
+ <b98780d7-3aa9-4838-9234-290b1d72ffd7@gmail.com>
+ <5e5f07ec-72ba-46ee-812c-d6773a4bdbe7@gmail.com>
+ <0a944142-7c51-4143-af00-2a5798ea68af@gmail.com>
+ <eecd6531-a7b5-4f0e-8e4d-3807f47d1f9d@gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <eecd6531-a7b5-4f0e-8e4d-3807f47d1f9d@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> Hi,
->
+Hi Phillip,
 
-Hey Pushkar,
+Thank you so much for taking the time to review both my patch and my 
+GSoC proposal draft.
 
-> Following the earlier RFC discussion about exposing repository
-> paths via `git repo info`, this series adds two new fields:
->
->   - path.git-dir
->   - path.common-dir
-> > Hi,
->
+You are right on all points:
 
-Hey Pushkar,
+1. I now agree that commit encoding being a user/environment preference 
+rather than a repository-specific attribution. My example was indeed a 
+flawed assumption.
 
-> Following the earlier RFC discussion about exposing repository
-> paths via `git repo info`, this series adds two new fields:
->
->   - path.git-dir
->   - path.common-dir
->
+2. Thank you for catching the contradiction between my patch and my 
+proposal's guiding principles. However, I changed it to lazy-loading not 
+because I didn't follow the workflow I wrote, but because I thought the 
+original eagerly parsing behavior was *incorrect*. But since I now 
+understand point 1 above, this is no longer an issue to me anymore.
 
+3. I deeply appreciate you pointing out that the GSoC ideas page might 
+be misleading. I will study through the link you provide.
 
-There are no updates to t/t1900-repo-info.sh.
-Since path normalization can be quite tricky across
-different OS environments, we absolutely need tests to
-verify how path.git-dir and path.common-dir behave
-under both --path-format=absolute and --path-format=relative.
+Thank you again for steering me in the right direction!
 
-For example
-In both patches, if the path returns NULL, you return an error(...).
-Have you tested how this behaves if a user runs git repo info --all
+Regards,
 
-This is one I could think of...
-
-
-> These mirror the information available through
-> `git rev-parse --git-dir` and `git rev-parse --common-dir`,
-> respectively.
->
-> This series builds on the recent path-related changes to
-> `git repo info` (including `path.toplevel` and the
-> `--path-format` flag), which are currently under review.
->
-> Both fields respect the `--path-format` semantics introduced
-> there.
->
-
-The new keys haven't been added to Documentation/git-repo.adoc.
-
-
-> Pushkar Singh (2):
->   repo: add the field path.git-dir
->   repo: add the field path.common-dir
->
->  builtin/repo.c | 32 ++++++++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
->
->
-> base-commit: 625c4fb2daac9879b299dd1cae2e793d2821dec0
-> prerequisite-patch-id: a15d35d8ce98f550953b8d2b5766b945ae73013e
-> prerequisite-patch-id: c3311a175dacc8d31ac8143f6deb36a1a46bd960
-> prerequisite-patch-id: e2348c7f5cdad006aeb10ddda81a184859941c8c
-> prerequisite-patch-id: 54003bdf23d570ce671626496a6622319a4ee2c8
-> --
-> 2.43.0
-
-Thank you for the patch
-
-Regards
-- Jayatheerth
-
-
-
-There are no updates to t/t1900-repo-info.sh.
-Since path normalization can be quite tricky across
-different OS environments, we absolutely need tests to
-verify how path.git-dir and path.common-dir behave
-under both --path-format=absolute and --path-format=relative.
-
-For example
-In both patches, if the path returns NULL, you return an error(...).
-Have you tested how this behaves if a user runs git repo info --all
-
-This is one I could think of...
-
-
-> These mirror the information available through
-> `git rev-parse --git-dir` and `git rev-parse --common-dir`,
-> respectively.
->
-> This series builds on the recent path-related changes to
-> `git repo info` (including `path.toplevel` and the
-> `--path-format` flag), which are currently under review.
->
-> Both fields respect the `--path-format` semantics introduced
-> there.
->
-
-The new keys haven't been added to Documentation/git-repo.adoc.
-
-
-> Pushkar Singh (2):
->   repo: add the field path.git-dir
->   repo: add the field path.common-dir
->
->  builtin/repo.c | 32 ++++++++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
->
->
-> base-commit: 625c4fb2daac9879b299dd1cae2e793d2821dec0
-> prerequisite-patch-id: a15d35d8ce98f550953b8d2b5766b945ae73013e
-> prerequisite-patch-id: c3311a175dacc8d31ac8143f6deb36a1a46bd960
-> prerequisite-patch-id: e2348c7f5cdad006aeb10ddda81a184859941c8c
-> prerequisite-patch-id: 54003bdf23d570ce671626496a6622319a4ee2c8
-> --
-> 2.43.0
-
-Thank you for the patch
-
-Regards
-- Jayatheerth
+Yuchen
