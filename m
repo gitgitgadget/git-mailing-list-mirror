@@ -1,130 +1,131 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E13028690
-	for <git@vger.kernel.org>; Sun,  1 Mar 2026 15:34:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772379279; cv=pass; b=sNaBN39YOzHp7c4e63kVFXz7PDakOMnQlKlUoE8c4Kf3RqA3gDdaORCZkNNFVW4vTQv9f/VFUlAP5uxfDQ0q5e+H/6ZEWbbxO0fduweqJKnDFNQcPIMqRUKUETMKqtYuZPg7O7ZoLLZhaNeYZmTJpPnb5g2sa+br+1PZeSHa0MU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772379279; c=relaxed/simple;
-	bh=GgBpO1IGZoWxWX0EMwfzwtRCFtDBOO0xmcAbbSp3pIY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XtnbEkhg/2oj/DtSMpIlN/SS3BsL6qCMj3DPipTeMI11QwhVNLTR4mI2R7qg+IrqdJauxzmj/YRWgUu3sM+XD+fATfMM2wthtCr9AWxmlI2GA8Z3ZJ5CySA0I8U5r/vnlwjxdBz/UvU4kyby5o7XZ9XlTbYS2Uj9qgcBNu0hSzs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e/rptxS2; arc=pass smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C945280338
+	for <git@vger.kernel.org>; Sun,  1 Mar 2026 15:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772380180; cv=none; b=O83ms08ojSmKgoH7K9DgvUTD2iZIacSe1gOm0hzm4//0s8f3qI/xDF789TSLnFQVlQ1plnv1JASvpMWRYam9k7uY+6S0ZLN5Xlfa12NQ8wDR4KrwPM0e6TQ6MJ1ARA2fCu+xk32QWfYZdYEpUz7KEqZlKOFxNm4qt0OMVsDeaAc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772380180; c=relaxed/simple;
+	bh=pBJ0qrO9jZ+uSO9OEwjrgLD45MswmZ21sgMKNpEQiic=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FXgR2VyE5SwXGzTLKYG1MVLZv0Mm4OmENuh1LMiiHpMsGMq/UFsFNgsqlAVhdf4Rj7JiL8ZSIaa11nzj+XtxV9FdD+NMTtkLe7KYUSDpouPmno81DAphHeOn3KpFBdepkPsKR4QziCGKSk/SQob69lKn91R2xkKN74MIqy+p91s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LCbkB58H; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e/rptxS2"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-797ab169454so33310507b3.3
-        for <git@vger.kernel.org>; Sun, 01 Mar 2026 07:34:38 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772379277; cv=none;
-        d=google.com; s=arc-20240605;
-        b=K/inRUDN6z7qBHrXxyfrMvIdXDS4IR99qahf4qJdENKVfbFzvS/wJ6V67RFjRQPCpr
-         erBS9SIrSdQ07zJAJJ38eDobDf5rrOKcr9QdItX0P2V/0m9Of4sWJAGEJwX1nZJ1Ij7Z
-         Dsh/43tu7yhp9QnTr/P09ZbTqN125puR8PAQXNlhVhPmeVymfdctp3ldAq5DmFPKjMkF
-         TRP5n2CxACnKoocywZRh5Xp+P2TCr8oajZ9VzErPF0jTqsaWsWqyKzPxUg6V+n3puPYt
-         L3yycFYk4RGgE8vgV0PrLM77I3depQ+vPkYIWUW5weeBMNwmtfLBXBFj6oVVCuORRSjo
-         NVaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=PDj2l0U9rX8lKZiy1F5GA/xpxAjm/AExQb3nG3fViT4=;
-        fh=hrjQYOLZnIyC6V3MOSSDBqRkT//BjJ+4fP6i3hldr8Q=;
-        b=k5l+fBdk4QC1zYhOPJMgm6xPz9MD+EQVQ61Zhq7h/RhSBF0NV/PMBJI1ny25g3DPtk
-         ab1ka2rX3JeAtv72+Pkld2Zb0GksSqCP62TbXbv3OiTYDCGR53Fs3sen9vXaPjLF4d67
-         nf7DoKRoOlTAqLORieNS8btjrIMV38J78lGGmZ7s9oC97pPfboJBxwFdI1OOxvZp4FGW
-         u94BPzQzv0FUb4vbkw8Tot/C3pLEUIUNB4AIxUd5PDLz/4yN38pkPJcVJ3DSAQD6sf4U
-         LVRYFcFr5dfD/lK5OZOOpo6pJX7k+YBUV2A7+9Ht/JK43G6fLOlYYor5B/WqJiVUN6dc
-         4RUg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LCbkB58H"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2ae4988e039so3108105ad.1
+        for <git@vger.kernel.org>; Sun, 01 Mar 2026 07:49:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772379277; x=1772984077; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PDj2l0U9rX8lKZiy1F5GA/xpxAjm/AExQb3nG3fViT4=;
-        b=e/rptxS2L4rs6qrIGsRUnZb6pVpXTOFT5z4st9AJL2ALiryWLO4xlxj+UMmF/dbUMS
-         /5ogLNRG1IUOBUoYeIzBfqnvyLPrejS0DGhAZ1mtKm/Omea0czXTOXJlK6CBGRZnQ1NA
-         3ysLOk6z0JDjoZEHCJPb6fGcb1R2uimOGavFxYKLECf0qq0jJtto6dWCjFQwqiOiKoZn
-         NJxvL1c3/BNicDY2J24viNda+3+8J+jyMmkCoP0LK7jbYgZdMTxhtRVGQkD76jydhtf1
-         g9zpUONqkrQzhrst6qP1S3aCVd7dXL6iAho+0sqbhNsQs0/iVZvIwtSVIUU36UsWjOHb
-         vMlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772379277; x=1772984077;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772380178; x=1772984978; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PDj2l0U9rX8lKZiy1F5GA/xpxAjm/AExQb3nG3fViT4=;
-        b=Hw64mCa5Nvg22LzwFaGKqjy54X5NFQKQhw3F3PpNOCgClh0DPz1zd41WMMYA11kBt+
-         uoU8ZvC/xhwEG1DC9i6UknH9x/zH9yb/57j5wcXs1jSsvI+5UrKTGLUb0vR6K/ItnXni
-         zAkrShtXqVmYgJh5f+TnEWBj8C0eE3+NbddNXslzm+dslbRel876L7iqrg/G7/MyeLtV
-         7UO7TxSzlIEnsB0Kr4GALw0/g1J2R17vI3pAmVbKLgvtqIheDHr2tkFOlEqVxqVjqnaw
-         UYo5Bz0tEP6zKB7Ku6Y0HFuRogzufsp8j5nj9x3/pVx/yCmnENgroB9j6aqOiB/uF5ss
-         2xaQ==
-X-Gm-Message-State: AOJu0YwK419c0bYiD6y8OAQ8xPnDArPYNZiS5p7Btq16J6bV1biZwcnp
-	3PsYikn2n78qZsQH1zW2rYHsFyO22agowPEjh+H7KgV4V71yPzUzt8XWeQX++Z4yEJMhzzMod6w
-	IsvSP0IMb9tN7QVScT0yudZP+wazhacA=
-X-Gm-Gg: ATEYQzzH+Dcx38weaBhxUxXg1vfKbGOsKyALYkTnZXd2P/pSJTxNLq23GUvZBQpsLfA
-	ZFyC0/z0D/vRF/AoaEnykYXfybHOQWNwsVYouGfw9h+zGyV6mwxOv3HjtdKEBumpDZBhW7vkYv2
-	A+0Zdd+SsRRrGvxTp84+/sd+QbJ3iUH+eZoBT/iPcJBJICHqERsxGrzTH2W9mfmwD3yOu2d+f21
-	P2eFV5UQfqJnZYba++sdjtNCet5BX3pLl2gmkR6NAjZ/cEuRu7igLyxDTCXS/XDN++/l/Q6koj4
-	RstIiuEw7K6senuAPE661tUSAM96aSriZL10u8U=
-X-Received: by 2002:a05:690c:7207:b0:794:e839:ad75 with SMTP id
- 00721157ae682-798855d3bcdmr89138057b3.42.1772379277197; Sun, 01 Mar 2026
- 07:34:37 -0800 (PST)
+        bh=6saVPLDEyaxhwJw2bTsRgCpJuhDC1nFOZD+PdXRkfrY=;
+        b=LCbkB58Ho9serjMHhlq0MVjxTo4AITTja2Z+f1fL8l8i6AyWSVMQpfoJGixChSKLnw
+         eg9AX8GcWp8t32Ock6IyOvSIiOFxghCRQuKeS7uLKf8XXWJcOwOTUP5fatIr4OqkvjV7
+         NV1pDd+dp2Zy+bDklc/LxNMHuznFzgUMB789ARsxBVCYdAT2S9RHO26sGc0+AteE7G+4
+         jUrkdAtGIK+P5WtNLYx+OUC5NnfhBIhFIdH9B9TwRUQqOYd/nCbi9aNQ9TrdvvfSzqec
+         +HBGJ89UBGXm2BmI8eeH+lfPKFjaT7dJgPc1gBGP75Zxy9kX42//S2JLkItOmZ5Ai58K
+         B+yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772380178; x=1772984978;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6saVPLDEyaxhwJw2bTsRgCpJuhDC1nFOZD+PdXRkfrY=;
+        b=XJo+KiqRy+9XlAkc00XNCsCYBXtVMnm4sViS4mBmKOuXesaFSPti20zGTFdS8XbIRb
+         guN1QJJDIj2oDCsTHJZpIXyvMQsnBqriqShGckv1nLUSTEMs4l6znAig+Enq4iWB3mfZ
+         dxxiEeK78Yno2fi0RhriPMCnSTbitbmPy1juCOl8dpXUl1tH3cxz82m5bSt6Eb/ItrEN
+         27dU0B8lygmwwAP+qbndNV/Lncsp0uekF0TuO2cvBBSF0kuAmHoiUlEe/CRaH1xJzmDv
+         AO4l6/qqhbeSKJVmzEFyYj9VVIqqSVP7f4aQDCuXJ+lU5BtHWc6Xl+WBb1v/Sc9V4UtT
+         YWDg==
+X-Gm-Message-State: AOJu0YwbrDlSdBVjx7vkYIdITRXfEX5GT3yFdsGj7y1nq57PGAnb5uzS
+	3zNw/LQD9BsWlsVZBEh0ZMqLWYM4ULJOg5nHNLNWz5mrOxH5VJix1UNU336TnQ==
+X-Gm-Gg: ATEYQzwkUtiRmPVKj0TCNBNGq9xVvuTKZTB1Gm50VNDbmC5ryXSyukIEGk/SSMPPnH4
+	kstJ/VcM7k6VHCwp6Ay6JOdORBfh5boScoWLdZmYvFNYgpQC9VXcqcxgXPZ0obNFs/ddatvwmxd
+	QA2yoQD1FxvWqyni3uSdzdqUJyIWtZHsu1j3b1oxyfpaxVuruKdMMlQUaVgy07ZixDMWPvf+UQZ
+	V9QAufJKXpAhIeiT841JDFPm9rgaU1eKaZmmtlql1VrskpnCfrw2+OJ5n0fdC3XiFiBkwqkzkhV
+	ur55w5o5YsIDss7T2q1vXrk84EAGHW/hgX02807IWLBg2Vt59o6yrh8LnhThKuJMhpyOntvxZXA
+	Pk3TYs4Dz1EO81SiNh5Y+Ad2rjxZV0i98PyC3bhmFwU6JkO0h9BtnYk+TRnRqIZxpC3cpLT/AOE
+	A7eKjzuotO/EaOplxG706glEcZ6GcEcLMBoSH+Ja9E/ZL5ioYm2vKLdw==
+X-Received: by 2002:a17:903:3c6e:b0:2a0:d454:5372 with SMTP id d9443c01a7336-2ae2bad7ce6mr94155025ad.22.1772380178470;
+        Sun, 01 Mar 2026 07:49:38 -0800 (PST)
+Received: from Shreyansh-PC ([2401:4900:88eb:2b10:88fa:5af8:efaa:d5f8])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae3d19559csm46428315ad.5.2026.03.01.07.49.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Mar 2026 07:49:38 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	bkkaracay@gmail.com,
+	lucasseikioshiro@gmail.com
+Subject: Re: [GSOC][PATCH 1/2] editor: make editor_program local to editor.c
+Date: Sun,  1 Mar 2026 21:12:30 +0530
+Message-ID: <20260301154905.13993-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <aaQzlE2lsq4WfFxt@fedora>
+References: <aaQzlE2lsq4WfFxt@fedora>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPvEtrfYtEvsxbsD2Q378R3e84DwHPPCSgaa1pQugrwchj9h8g@mail.gmail.com>
- <735eb76e-44a9-4f79-b769-23a3a07437ae@gmail.com>
-In-Reply-To: <735eb76e-44a9-4f79-b769-23a3a07437ae@gmail.com>
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
-Date: Sun, 1 Mar 2026 21:04:25 +0530
-X-Gm-Features: AaiRm53D9NJEt5tPBB0LzNzmZaUo_vXTMbtV9RMws0vx0-1sZ2Gyxu1JUZLoLgE
-Message-ID: <CAPvEtrd=tJ_QuAvyTm2cdmTevwn_Cwv0tQjVpaUzRS6dxggqJw@mail.gmail.com>
-Subject: Re: [GSOC] Discuss and Introduction: Improve disk space recovery for
- partial clones
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>, 
-	"jltobler@gmail.com" <jltobler@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, christian.couder@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-> I think this is a noble goal. Removing blobs that you don't expect to
-> need again would be valuable.
-
-Thank you!
-
-> I think you will have a larger impact if you focus on _old_ blobs that
-> were maybe necessary for a previous checkout of an old commit but the
-> paths have been updated in more recent checkouts so those blobs are
-> unlikely to be needed again other than for history queries.
-
-Thank you for the insight!
-
-> You should keep in mind that some tools automatically populate stale
-> data (such as VS Code running 'git blame' in the background of every
-> open file) and so you want to consider how any decision you make here
-> may lead to _increased_ resource usage by redownloading data you
-> removed.
+> Hi Shreyansh,
 >
-> These are just things to think about. It's an interesting space to
-> help users save disk.
+> I am a GSoC applicant like you. I just wanted to leave my two cents
+> here.
+>
+> On Sun, Mar 01, 2026 at 04:12:58PM +0530, Shreyansh Paliwal wrote:
+> >+static char *editor_program;
+> >+
+> >+int set_editor_program(const char *var, const char *value)
+> >+{
+> >+	FREE_AND_NULL(editor_program);
+> >+	return git_config_string(&editor_program, var, value);
+> >+}
+> >+
+>
+> While moving the global variable from 'environment.c' to 'editor.c'
+> doesn't cause any behavior change, it still relies on global state.
+>
+> I think passing a 'struct repository' and using the 'repo_config_get*'
+> helpers here might be a more robust approach. I know this means we would
+> catch config errors later (right before the editor start up). However,
+> since it doesn't seem like it would cause a data loss or serious issues,
+> this behavioral change feels like a reasonable trade-off.
+>
+> Thanks again for the patches!
 
-I thought about making the command user-driven, which is when the user
-wants to free up space they can run something like 'git evict
---older-than=30.days'
-or 'git evict --outside-cone' and such similar commands, that way they
-can remove
-exactly what they intend to remove in case of commits and blobs.
-I would love to hear opinions on if the command would look better like this or
-automatic like git maintenance, like a background task.
+Hi Burak,
 
-Thank you again, I really appreciate it.
--- 
-Thanks,
-Amisha
+Thanks for the feedback on this, I appreciate you taking the time to look.
+
+I did consider the approach you suggested. Currently, editor_program is
+only used within editor.c, and it is I believe a process-wide setting rather
+than something tied to a specific repository. Because of that, it did not
+seem necessary to add it to struct repository or repo_settings at this stage.
+
+More importantly, my intention for this was to keep original behavior as-is.
+As noted in earlier discussions [1][2], maintaining early config validation
+is important so that invalid core.editor values are caught early. Moving to
+a repo-based lazy lookup would change that.
+
+That said, I agree that there may be a better way to do this refactor,
+so I'd be glad to hear more thoughts on this :)
+
+Best,
+Shreyansh
+
+[1]- https://lore.kernel.org/git/1d43d1d0-bf6b-4806-834e-89f545fab766@gmail.com/
+[2]- https://lore.kernel.org/git/xmqqpl63b2tm.fsf@gitster.g/
