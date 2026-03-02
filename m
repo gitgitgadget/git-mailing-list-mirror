@@ -1,128 +1,146 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49C53112BA
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 19:31:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057C247D93C
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 19:33:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772479910; cv=none; b=uh/Je2Ng8NYOcfeVcXa2Al1FPV3bYl668aU8QW7wgGWZ/vlj9r4CxpP8v7rZwJPemnUU7/gynd5/TF+C3ZyoIW8PQwPcJgfQ7fqEg9wq3qU/fauGgy/sac0qvTVk/MvwNn21w3BM/jVb+zkxS1sBqiJP9x1OYAEJSzOKfDFFKA4=
+	t=1772479994; cv=none; b=ZHZf6zn54Eu5yoicKtxPmN8LlMAELh7UQ/O8vDplPOVgZvsUe55QT7HAOX1vy+XAci+fPLy3lhWv++lhH9sOT3g7zyACRtk9HEWtFjBtq3ILNc0wZlhC43ilhT9IZxe7VjLYExKSc/2d645PTNAn0jkUdhC2D7aBMi065uzJ7es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772479910; c=relaxed/simple;
-	bh=r1cwmeVZ2S5HIz8yn4pYjW26EktNRAVl6EG63qd6dis=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jWEFled8hlflihwUHkNjpOVVWci+Vm7GEFMDxE2a/J/g/6O/v0Gfbvf4hjWHjvYFZ6fVGuTZs5Knxs0+jl4ZlENsY/5wEzjdQfJySnGTRJAtUr4FaTQs6k4R9R85PJCU27/X09gXhG6QugDXHvDGDG1ZEacgWU3yaES0iYsC36E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NGLu8EvG; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772479994; c=relaxed/simple;
+	bh=xmVGd4o7Auitx1NHQmSdM+kJvDrunR7AbCsDJEd2a4A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hwPVtTsxI6vFpAZxcWrZPvgsNrWniS6Z4fV3aS0WXZllBbyjkbDPzyBWHXoLMOvdymM4tdb+rJX07nRiE/SLYQc2JbkrpTHmgmOA+5A0ykwrC2gSmx2CCbS1BmoHXAZJ3Sy+QcycTzlmYa2uFWYbbAXBAdtz6AtATguZlDV7jOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F7HVi4mY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XHxmChSA; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NGLu8EvG"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8cb3bae8d3eso446752385a.1
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 11:31:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772479908; x=1773084708; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GHL1UjHP1nYVykd23bgfBImcHMi5WfPo/7bl5AU+n7Y=;
-        b=NGLu8EvGOF12e+Cyi3GJ/+dExCMhHIu4Giwm4v/CeVnpoV3odvvGfUfDYS66847END
-         WDZWF9jiBKk6YZcbMJYLCnwPTDpc+slQsowp0U3U3NtxdIuiyaZZSh8j4hrSH3+NDWNg
-         JpjViMuUr1vWwAn/+jwbZMxcshB7IY4NkPzsL2wKMYHu4EaUGKUiIJQzSvYkEr8MB+9D
-         MadSAQjYHjHcXikgzYbspqKCqWPbYi2bB/u1MJPlQt7kH+NubvhRK/TCHZery+1B+Lfi
-         YkLZW8IwbaOlrnlzqTzu7j0G+YapOO028DT4rxvdT8sFRWGgCEjWyR8knOiXnddl2tD9
-         c4ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772479908; x=1773084708;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GHL1UjHP1nYVykd23bgfBImcHMi5WfPo/7bl5AU+n7Y=;
-        b=vcqGOFgUw89H/yVmm4AamzL5rtH/zTeAmhmZjGv1gWBeV/LkcqhfofJw6jT7xoNpjb
-         tkMtJKgKdbyDz1lpEsRNnuSOT68eUVMywMV/7j5RNsADSrj+xu0MSRcPp1cwIlwakEHy
-         xQ0pXPA74XOIk7ZtmZGTEPRlBvdXfVQ+IKsY7K12/JconmLPCIj68l53F4P/iGfaEa7l
-         jydXofPflhxOPpjPe4FrNMd4DB+mjaHOpndBYISxaUVl4tidBcPf1isq6Vh/6TjTZ4bb
-         6v8Y737mLnmqeP4SJIrx8EJFONXyya0jdQ/BqKAJqq3yNUc47UH4lst1P6LydsPOo3hb
-         6dEQ==
-X-Gm-Message-State: AOJu0YxqL1pI1FoUYcY3Uaa9vO4Xkg2pGZvSR4mHNdXj2izyo+HbfDgg
-	3qoaMaJenfau16TMM7QN3p+LTA5YSPTx1AdyGNrsPvAG6YSksR7lnVz8/vP6mA==
-X-Gm-Gg: ATEYQzyT/QUuqHeCu1cwCxKAyjor4rwt/h+QCoIgm9brBEdgHzbaNAyPkMXsydkWmwC
-	sYQY/dbuDNofCezhgXMUSPeG5pMUYrcQesJtbcbzIfti4F/HXqco+qbq4U5BNebTm/GZJQIKZ9L
-	voEsJZ26+OXLZNAQ0Os+oReux0P48MJHZxd3Qz4gkX3Wan5s9VzWjvr7cZFKaDsYFeHh1FeVntt
-	GMVZihA2uCM+fZWt7pKxDnxayffIy429vUZ15LY4rCKM9/bPNyqBmGpj6HbBv7HIRTxfCLtUK+f
-	MsZsK55Hd3aitsOZQrBBj4Dg+mmhrLH5xIBcToOgL2PSqHGpGnkLUBkT1tsqal1Wg60AkZSRxvB
-	P5pO9+OKOfK4AXZfu2GrC3I7Y71kbZnQ2I8UgoEmxxgT+95tXDGEAaO5fs6jAqViwqUSqBOMK9V
-	OiLXv8bSKJs+1GMJsHuHV6zTcUR6msTN5bhvw=
-X-Received: by 2002:a05:620a:40c8:b0:8b2:1ee9:dcfb with SMTP id af79cd13be357-8cbc8d70f06mr1482255185a.8.1772479907969;
-        Mon, 02 Mar 2026 11:31:47 -0800 (PST)
-Received: from [127.0.0.1] ([68.154.116.69])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a0485ca0asm12310876d6.11.2026.03.02.11.31.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 11:31:47 -0800 (PST)
-Message-Id: <pull.2220.git.git.1772479907062.gitgitgadget@gmail.com>
-From: "Omri Sarig via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 02 Mar 2026 19:31:47 +0000
-Subject: [PATCH] doc: add information regarding external commands
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F7HVi4mY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XHxmChSA"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1F98C1400167;
+	Mon,  2 Mar 2026 14:33:12 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Mon, 02 Mar 2026 14:33:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772479992; x=1772566392; bh=cKjJutsIRH
+	Xu2rz7ghpAP1csV4zYbTlXZTjSiLr41ac=; b=F7HVi4mY5Z9FJXAqyGqUNbt8js
+	bXIAkwtDrhplJQjqglEL7wdLdmsJW3I6FiJ9gdi88z5ZiDIMiKPl0UlH+ABmD30C
+	g5i1oMYTx+iihhzPdM7UsrLUs43riyOL68MeJHfD2y5aMwtsWx71KdNld92xnU07
+	nRWVUqZOcEOIXTcdj0RVgoxmEzx2yHpblfov9L3eFPNUNedRn9GvnhbjfT/k65Z6
+	HgmxTWfKUQBY4x0g4jhKCag/ysvze6yszxAVY+tGHkU0YEaxVMbmDft8FOgInD5J
+	rg9vg7/cBmXNP8Jzcn+EIIW0zecb9YSAG7xPZLRXgI0v6wc6g9xlqeuMcg6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772479992; x=1772566392; bh=cKjJutsIRHXu2rz7ghpAP1csV4zYbTlXZTj
+	SiLr41ac=; b=XHxmChSAyMcuYfUri1WyCRovfCOjgcJcjAfdEdkM/JsdTQbHriZ
+	TfgdU4ju6+QigcWRDn64rEZJz8xZqWRC+wutRde4oq+orKEc2YxvOU4YBrmjTa+s
+	SJgwzpL5XZwlaPCprzMjNzbTJOZ4jqYy0aJfhNsSvfio1VJIXrTg6KPdU0PxThgZ
+	oIoykq1nbtbzh8IrJik3eSOUsc20VdgRn2snAdLpeKAtTcuXkVA6IeUd5O+jGoR6
+	6yDw/kD/SR+hpjMT+gAdMjz2LbX00L+irxEVEjPkENISiISn6EkN5/uLRZSSKx4O
+	bT30iw8UFImJtkNDVjBo++3TNe+5Ix4t86w==
+X-ME-Sender: <xms:9-WladZIJAEXsGSKULnE3aIK73wqY2VdPU5hN2uNXvMs1SqDQCA2fQ>
+    <xme:9-WlaWpL-c0bFkAR1Ml0BIGwm7gIOcfDBROXBOUPtJjzjxNZnUmsgGWJpsbOpiohx
+    DponDFlyf78PdFx3bXGmV-TNtZ0wdXTL7Fo9CGKZTQzDoOKF8Xz>
+X-ME-Received: <xmr:9-WlaSM04gkrpeB-rJ6UlRGaFoRC2U7fnshk8vqyeBXIPtn-6EwuidLlTDQPKgxyhLCazgESZcv4gAdpltZtTg2ySgO9EBKz7g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekheefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhes
+    ghhmgidruggvpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopegurghnihgvlhesuggusg
+    gvtghkrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:9-WlaRoTG2kxay7luYFu1uNRKSKfmjUT8JMxpOUek7okMnNhO9v4rA>
+    <xmx:9-WlaXdSXYPzc6p6IOKWuFayhQRmzVj_WgOFFYnSdygnWD8Ake6pIg>
+    <xmx:9-WlaXRm1FCRD39ZKW51xxmwHFR0M4Hunn6w3PTl54qT3qbOfGr2RA>
+    <xmx:9-WlaQYzRr1utS_UaSehLRNbHddVccmnB-ZYS0tw-vof7qEPLiYsYg>
+    <xmx:-OWlaQenktvRAxBLD-OlSHtNX1g941V9uC4QtS4fpeTb6WR-xm8Mgz2E>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Mar 2026 14:33:11 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>
+Cc: "Daniel D. Beck via GitGitGadget" <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+  "Daniel D.
+ Beck" <daniel@ddbeck.com>
+Subject: Re: [PATCH] doc: fetch: document `--jobs=0` behavior
+In-Reply-To: <25715312-b6a0-0cdd-d62c-3a4a840b0244@gmx.de> (Johannes
+	Schindelin's message of "Mon, 2 Mar 2026 13:35:03 +0100 (CET)")
+References: <pull.2047.git.1771443159369.gitgitgadget@gmail.com>
+	<aZb2acEvAtNmt-4j@pks.im> <xmqq4inc5zlt.fsf@gitster.g>
+	<aZggm7R-4VohiCYm@pks.im>
+	<25715312-b6a0-0cdd-d62c-3a4a840b0244@gmx.de>
+Date: Mon, 02 Mar 2026 11:33:10 -0800
+Message-ID: <xmqqo6l6yqkp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Omri Sarig <omri.sarig13@gmail.com>,
-    Omri Sarig <omri.sarig13@gmail.com>
+Content-Type: text/plain
 
-From: Omri Sarig <omri.sarig13@gmail.com>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Git supports running external commands in the user's PATH as if they
-were built-in commands (see execv_dashed_external in git.c).
+>> Dscho, do you remember by chance why you decided to not be more specific
+>> here?
+>
+> Unfortunately not.
+>
+> So I went on reconstructing the lay of the land back when d54dea77dba
+> (fetch: let --jobs=<n> parallelize --multiple, too, 2019-10-05) landed.
+> With that commit, the `max_children` variable (which `--jobs=0` would set
+> to 0) would be passed via `fetch_multiple()` [*1*] or
+> `fetch_populated_submodules()` [*2*] to `run_processes_parallel_tr2()`,
+> which would pass it through to `run_processes_parallel()` as the first
+> parameter (called `n`) [*3*]. That function would pass that variable to
+> `pp_init()` first thing [*4*], which would fall back to `online_cpus()` if
+> it saw a value smaller than 1 [*5*].
+>
+> So: The "reasonable default" is the number of CPUs, or more correctly, of
+> CPU cores. It does seem, though, that that was considered common knowledge
+> at the time, given e.g. v2.40.0's release notes saying [*6*]:
+>
+>   "git fetch --jobs=0" used to hit a BUG(), which has been corrected
+>   to use the available CPUs.
 
-This feature was not documented in any of Git's user-facing
-documentation.
-This commit adds a short documentation of this feature, making it easier
-for users to discover and use.
+The belief that "available CPU cores is a reasonable default" turns
+out to be older than that.
 
-Signed-off-by: Omri Sarig <omri.sarig13@gmail.com>
----
-    doc: Add information regarding external commands
+Back in the days we didn't thread iterations of the same topic
+properly, so visiting the discussion thread and trying to find older
+iterations of the same topic was a nightmare, but I think I found
+where the phrasing came from:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2220%2Fomrisarig13%2Fexternal-commands-documentation-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2220/omrisarig13/external-commands-documentation-v1
-Pull-Request: https://github.com/git/git/pull/2220
+https://lore.kernel.org/git/1446074504-6014-6-git-send-email-sbeller@google.com/
 
- Documentation/git.adoc | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+This is a step in the second iteration of fetching submodules in
+parallel topic from 28 Oct 2015, where "some reasonable default"
+appears.  I think it was done in response to a review comment on its
+earlier iteration which was:
 
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index ce099e78b8..da7c1329da 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -345,6 +345,24 @@ users typically do not use them directly.
- 
- include::{build_dir}/cmds-purehelpers.adoc[]
- 
-+External commands
-+-----------------
-+
-+In addition to the commands implemented by Git, Git will execute any executable
-+with the prefix "git-" in the user path as if it is a Git command.
-+
-+All parameters of the invocation are passed to the script, making running "git
-+foo arg1 arg2" equivalent to running "git-foo arg1 arg2".  When running "git
-+help" with the command name, Git will invoke the man page for the given
-+command, making running "git help foo" equivalent to running "man git-foo".
-+
-+This makes it possible to extend Git with custom commands, without the need to
-+change its source code.
-+
-+Git looks for external commands after looking for built-in commands, but before
-+looking for aliases. Therefore, if an external command have the same name as an
-+alias, it'll run instead of the alias.
-+
- Guides
- ------
- 
+https://lore.kernel.org/git/xmqqio5sni1j.fsf@gitster.mtv.corp.google.com/
 
-base-commit: 2cc71917514657b93014134350864f4849edfc83
--- 
-gitgitgadget
+Later the work resulted in a028a193 (fetching submodules: respect
+`submodule.fetchJobs` config option, 2016-02-29).
+
+https://lore.kernel.org/git/1456798040-30129-4-git-send-email-sbeller@google.com/
+
+The variable fetch.parallel did not exist until d54dea77 (fetch: let
+--jobs=<n> parallelize --multiple, too, 2019-10-05) copied the
+famous "some reasonable default" phrasing to its documentation.
