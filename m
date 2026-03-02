@@ -1,210 +1,109 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF26D347529
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 21:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772487939; cv=none; b=kiMDceWVKRJQcTmRzKFLkoGm5SBuP1HuKS+7wOnMIttgIqBm4wumiZ+EsRTscNLxoZZOzkFLNQqXUVlI0Jl13+v/Nc3obw1iD4fxq1OTm92S56xm46eJ2GxIXRPtQ6oz1zBtfAGIjdq4bEtcvDEchT5JhE+Ckd3Jh1xxpucCAO4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772487939; c=relaxed/simple;
-	bh=5hzTClOVsaOnuKJUpXvWOMFJIMx8FwBwcNbtvrrF3Qc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZZ2jXwuTOSHX/VFkQl1dIwdSGlv5HxYaJqS2m+FrhPGefiF5J87uMCKyiHMeZiTEywUeqjbi3TqVDrofjEGhX3rYOqk4Wx6XUpVVwIHlVWqjEiUO/Z0tEKyrf9OEUMsUD/BLHNB8dmXwKlizndnxdPkX2w3Eh/qtU7fxF20z7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yd/G7mLp; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48100390980
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 21:56:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772488599; cv=pass; b=aPghrBBrpUxcEiBiDS859WaMyiTYBTMDf2/24h0sVLmsm8WH/yUNAZdbEI/cPdR4ilF9kNHmJZg5yFroBuDRYzRzcj27J/qoPgHvXRY/bNhSxiPsWw0cFJc2xbpSGoQTVhKOxt/yWKRLGLrYG7Qd0N8PI0JBX2PJ4iCbkCYVtb4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772488599; c=relaxed/simple;
+	bh=8qQ0+YrTb/BRXIm9WTVP5vwVmk0RWX+wncccx4oP7Pw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=OYOSfvg5MChk2qmJ+pmz1sFLzQNYAliCls49h80sWQP5g12KNNPppVT+SQE4lpYr7Ees+SVqxHclt/icMv7KgHrbRTzLVAQCvwcDz1byExE3tioY06X/n1djgfjgIbqjrvrx98Hfn8w8kKw0sGesdc15HuHJslrFVVkwXka6lyM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IeAeFOYP; arc=pass smtp.client-ip=74.125.82.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yd/G7mLp"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7d4c3896e32so2821388a34.0
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 13:45:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IeAeFOYP"
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2b6b0500e06so5984621eec.1
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 13:56:38 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772488597; cv=none;
+        d=google.com; s=arc-20240605;
+        b=SG47I3ZH+h4SQDHbTuQpBlKuhnbYmDe2qrmYaeCd+72zaFny0X8vPEzec0UyxgopNx
+         X23xHeMBBZSOQj3DlVos5yWL3EGATzbxpNMai9ur30SDqolgnYuKOANKh5Rv/VCi4Rhl
+         hjYCb9xp99m/NfcBW5GVotMHBaLPLJ7MP8xtLv5K3QAEtLpEFjUGemU0jtCTl8/kvB0c
+         0+khkIhjCCpwFS6hRC737rZ5duDYMdlVvL793qOJc9B4TemLtvCsStqVb55cCt+13OOy
+         dno5EgSG6f57/ADpdcwrGGLyADoSDmTSWcIj1e8ZvnanR9/B8/rsu4AxC0lsGYCTabvH
+         /vWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=bccZCXRHn4prXviPuUirwvsuWl1Yl0aeSpuj1Elg3ZM=;
+        fh=RcSxp/iRoIX7Q/bav5aJdqea9/2Sdrg88sfURYTdI64=;
+        b=Zp3yZnWYQ+UWoB/3lrOUAKdbvi7MPMGcLCwelVOhOaz51LnBG/egDgTJyIa6S1ZG2C
+         YI0i692vMjpGGNLSS2IzMUyPlQEk5nH/qXQWTt07hlS3+xPPUGET3z3KIr1OOtOR/up/
+         UE8hRP+mXfAdTV1eF2iHGA6Y535PsHg90Ro2DKTlkzyaG3ZRggDHOpfKxOS8xs5auLeE
+         9P62z45sq95Of8piFvnAcGkD3UgFH8KvXCcEFeuHxcue+ee6zrmQ71vFZ8sJNwOteI/U
+         ohcuRlxas5JbemMAk+xTe983Ou15LQg2cWiZtEVf0Cc5hFoGG2aHbI1O8DZ+P/hgJUFy
+         Afwg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772487937; x=1773092737; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NuvnBiE0Wn7LOt2inIcSTnboQG+Hs43xCUJsIMLJUdw=;
-        b=Yd/G7mLpJhj5tl9EjD9MpUPIVvH+1rP+FADYWT5udG0yzlq2CwCNQQqZK8UDoBybuv
-         Y7125cwUWpNMeau/NvHFZvsIHiRyskkc9ciK0n1sMCRs5CKS3Wum2WK+1QxLtJDGHTue
-         o0znoKg/DrBfSsBh7fI0uyvEVBHBlkoCIDSyBouIwjhd7UCN10kbn6GpahTEvKXhfmbB
-         zHuzUrYLoMf1GOusyBb+6JD4MUrMLUM71YvjjnuXBgHITyrCD6mQk7DSBo8OoSNzRhYv
-         MdCZKanSjjf5hA7P88MbVYYz8mM18Fhv/YcIRkJO9lmUEcMZa8eDb1UzZB9dd69cFn7E
-         8FaQ==
+        d=gmail.com; s=20230601; t=1772488597; x=1773093397; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=bccZCXRHn4prXviPuUirwvsuWl1Yl0aeSpuj1Elg3ZM=;
+        b=IeAeFOYP4UMOObf1b7USiUFYv+ezC9qzZIZyBfXb40urFbd9b6OVjbB25oOHgHFkEZ
+         PlNwMgS0YXz8BLJIjxHKl+9KEybizDb4D9fjmU0IZNal2IKpJ7PmkaTtTvFvvWtgSZI/
+         x7hTrHXnY37acJQ2vWak7KsnMoeg7tuLMQjgv8CqNYRq2ydn1JCvd7EsIhEFni3HjvSS
+         pkUZFsgoXk1h/FkOAO+muT/CNJSQLytPOx6X6KNFTLm1Ii3aFJWGCJFAr+lwHhHZAYpW
+         Ag9iVNi75jXFfXaGTAINmiDfY6uhmHPYSIUHAuJqB8fltfLYOKhOPiqiewUROoiKc0F6
+         lMIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772487937; x=1773092737;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=NuvnBiE0Wn7LOt2inIcSTnboQG+Hs43xCUJsIMLJUdw=;
-        b=DptJxPIOE28p6ASwE0usBP1YkomHgIxFjDpqIDdsqSWONVkJ+O+qaqw+dnjDnK1PeH
-         69BLgiwgUaIbdr0qWhXrm3Yf/tZGMH6UMiTsf2WjytJ4gjbOo3rUrjG78itRfvHVUyrC
-         gT6fUMYVctcRwbMIEcLBJJPMhXIA76V4W1KXmzxSuJA9xUecukoXfIWb3dRgWwYyTdS0
-         mNHfNFlchODcM9Hl3N+6ZrTBbKfCJ16Su0euPX8cR9zQcPh+Kq0ax1c5OJOIejO2spjD
-         4IcOpGIVNtEuG1fOeaC3MBAvcSsLn8fgVx/+sxTJJAM/KVTDNMUkHQXnpKfmmH4mZ/l9
-         lazQ==
-X-Gm-Message-State: AOJu0YweYQq6K1ZYzC3DD/K/oAP3I/tQsSqRQ0qSjzrgAkmyT9aYBDbQ
-	73EMNRI1KqwnXGaGMeyZlHgxqvS3x3ieH/i8VTviKreYY14yaG/pZXdecfhc7Q==
-X-Gm-Gg: ATEYQzzKRQn/jP2AG83P2TX7XwJtsCaic7hbQEwhp1Fftn3I7LOcqe+n5Y/wx1q0gYJ
-	bDapVWIOWFkAmlJmf7dKwWonk6s/rrVko1CpM4geaC9tBAvdDoZNNkD1ZjaOPBB9DfuAP0vn+2z
-	YaFPeXYxcSXB764Py0q5xXAarkN3JK28n0Aume+kWSuE4puD2n2R80ow8FSf8y0SANiwQqikdTt
-	N+0nR0z+iDV9QwuC2i3avxO16L6m/44TEsFYdg+qsO8nhEptKyTuLMuwP/j9/WulZ+RlkHX7dHz
-	yW5z9CisYluVpFgpnRscLBpthrmEtQ9taB4ghUWBVQMrTWwCqa/Ay7xiXJfEIfCc/VU/zVdL4qv
-	NqngUXf1TZk2eI5NC0CNo8rqBn19G8SYoPeeyMUnjeUSTcxWvlFwac2I7M+oTWmbUkD6TsWY2ZT
-	FpWycqu2fHkdKEgyugGoJlf0bfZLUFdZ/z70kPEka1bQ==
-X-Received: by 2002:a05:6820:81d2:b0:662:f244:3530 with SMTP id 006d021491bc7-679fae11a30mr7106125eaf.17.1772487936731;
-        Mon, 02 Mar 2026 13:45:36 -0800 (PST)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679f2d84dacsm9775877eaf.9.2026.03.02.13.45.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 13:45:36 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	gitster@pobox.com,
-	kristofferhaugsbakk@fastmail.com,
-	lucasseikioshiro@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 6/6] builtin/repo: find tree with most entries
-Date: Mon,  2 Mar 2026 15:45:26 -0600
-Message-ID: <20260302214526.2034279-7-jltobler@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260302214526.2034279-1-jltobler@gmail.com>
-References: <20260223174120.2356504-1-jltobler@gmail.com>
- <20260302214526.2034279-1-jltobler@gmail.com>
+        d=1e100.net; s=20230601; t=1772488597; x=1773093397;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bccZCXRHn4prXviPuUirwvsuWl1Yl0aeSpuj1Elg3ZM=;
+        b=oIpLPgVPQtSfvWGkwku3854YA0BMAfoFJgFMaDS8dCoorN5Gf643UHQ+PKUhDJ2X/R
+         /7e9xF37kMTSnvdtUI+gH/IZfabR6E4W9jXIJesuz5nVfA4tfCV444SIly7MvQYVZC4c
+         G3OKlqHG3e4bm4O4OU5SS/pkUfGuU4nO8pmjiS1RzQ8sSuDzboI8/zssxd/H8/yjWwB9
+         DdsGw48SIOslbGQiwDSltUijSgpkSR7rLNpF716R3BbWdEBTsp5SLqOYNjs7fPrM24nB
+         Qg9n6TZSZHk8Kfloy0HbdFpiFVwXT+7vHwzS25sXoPCCxXa4diLJPk1jeyHCWbx8D5hj
+         0fGg==
+X-Gm-Message-State: AOJu0YwzM18HwpAx4DeF1zbacab7nm5Lju4gp2hZGh13UdiSsMpVCISR
+	JmFFP1DMQ6dkV9QRFBuumdKsZEqIajzWvHKJStFBsn0fuDzHwXfeGOjM5GPJOfT75J53Y8X/wFB
+	nfjYb6TBWJVUal5gOAqRUNagNGipXaD/NEDwT
+X-Gm-Gg: ATEYQzwt996ujZry6Oc8fVzQ/Yfe5klnICiJdUzDMxdjVFBfffEkfLljDHuxttzNE9a
+	VEsLScl6EBC6JANrhekDGN2MQCozzpNwZWJKc+EuE3lYe93uo/9xfI3kNYqD4hZSxWqnyyhTVOC
+	KCAaLLVkwHoQcCPf48+xLU4eszpKfRrIUo+rmexw1IKSvhwM9EAy89YNaHZugBkeysTlGGf9ADW
+	KlP/oSoRwiuVqxagSRo42sA83QrsMhbaRddzEnUm0A2nPFnFIC6SZnKLyZV9MIVR+8yEYgIfNwH
+	WIGQI8GcNFZUL5VJ0OOPLLuwNnvaDRPFquMERJg8P2u9n9qyIQFoK2pkkkBJ7WFku1vN
+X-Received: by 2002:a05:693c:300f:b0:2ba:6978:2b4 with SMTP id
+ 5a478bee46e88-2bde1d6f327mr5424708eec.20.1772488596740; Mon, 02 Mar 2026
+ 13:56:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 2 Mar 2026 22:56:25 +0100
+X-Gm-Features: AaiRm50BBSFIgjUJrrV91PDAzbneavWlDZLWx8s_b8E6wWf5QdtffO__GOc-plQ
+Message-ID: <CAP8UFD0MGnKY78gLa-5hgH4_xB_eFCW+n-oEjn6yncUEydz=cw@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 132
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jeff King <peff@peff.net>, 
+	Martin Fick <mfick@nvidia.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Patrick Steinhardt <ps@pks.im>, Bruno Brito <bruno@git-tower.com>, Michael Ryzhikov <samonon@gmail.com>, 
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-The size of a tree object usually corresponds with the number of entries
-it has. While iterating through objects in the repository for
-git-repo-structure, identify the tree with the most entries and display
-it in the output.
+Hi everyone,
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- builtin/repo.c            | 25 +++++++++++++++++++++++++
- t/t1901-repo-structure.sh | 13 +++++++++----
- 2 files changed, 34 insertions(+), 4 deletions(-)
+The 132nd edition of Git Rev News is now published:
 
-diff --git a/builtin/repo.c b/builtin/repo.c
-index 047f5e098d..e726bb858c 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -16,6 +16,8 @@
- #include "strbuf.h"
- #include "string-list.h"
- #include "shallow.h"
-+#include "tree.h"
-+#include "tree-walk.h"
- #include "utf8.h"
- 
- static const char *const repo_usage[] = {
-@@ -211,6 +213,7 @@ struct largest_objects {
- 	struct object_data blob_size;
- 
- 	struct object_data parent_count;
-+	struct object_data tree_entries;
- };
- 
- struct ref_stats {
-@@ -458,6 +461,10 @@ static void stats_table_setup_structure(struct stats_table *table,
- 				     &objects->largest.tree_size.oid,
- 				     objects->largest.tree_size.value,
- 				     "    * %s", _("Maximum size"));
-+	stats_table_object_count_addf(table,
-+				      &objects->largest.tree_entries.oid,
-+				      objects->largest.tree_entries.value,
-+				      "    * %s", _("Maximum entries"));
- 	stats_table_addf(table, "  * %s", _("Blobs"));
- 	stats_table_object_size_addf(table,
- 				     &objects->largest.blob_size.oid,
-@@ -625,6 +632,8 @@ static void structure_keyvalue_print(struct repo_structure *stats,
- 
- 	print_object_data("objects.commits.max_parents", key_delim,
- 			  &stats->objects.largest.parent_count, value_delim);
-+	print_object_data("objects.trees.max_entries", key_delim,
-+			  &stats->objects.largest.tree_entries, value_delim);
- 
- 	fflush(stdout);
- }
-@@ -703,6 +712,20 @@ static void check_largest(struct object_data *data, struct object_id *oid,
- 	}
- }
- 
-+static size_t count_tree_entries(struct object *obj)
-+{
-+	struct tree *t = object_as_type(obj, OBJ_TREE, 0);
-+	struct name_entry entry;
-+	struct tree_desc desc;
-+	size_t count = 0;
-+
-+	init_tree_desc(&desc, &t->object.oid, t->buffer, t->size);
-+	while (tree_entry(&desc, &entry))
-+		count++;
-+
-+	return count;
-+}
-+
- static int count_objects(const char *path UNUSED, struct oid_array *oids,
- 			 enum object_type type, void *cb_data)
- {
-@@ -755,6 +778,8 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
- 			stats->disk_sizes.trees += disk;
- 			check_largest(&stats->largest.tree_size, &oids->oid[i],
- 				      inflated);
-+			check_largest(&stats->largest.tree_entries, &oids->oid[i],
-+				      count_tree_entries(obj));
- 			break;
- 		case OBJ_BLOB:
- 			stats->type_counts.blobs++;
-diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index d003d64a8e..12ed67e846 100755
---- a/t/t1901-repo-structure.sh
-+++ b/t/t1901-repo-structure.sh
-@@ -59,6 +59,7 @@ test_expect_success 'empty repository' '
- 		|     * Maximum parents     |    0   |
- 		|   * Trees                 |        |
- 		|     * Maximum size        |    0 B |
-+		|     * Maximum entries     |    0   |
- 		|   * Blobs                 |        |
- 		|     * Maximum size        |    0 B |
- 		|   * Tags                  |        |
-@@ -122,16 +123,18 @@ test_expect_success SHA1 'repository with references and objects' '
- 		|     * Maximum parents [2] |      1     |
- 		|   * Trees                 |            |
- 		|     * Maximum size    [3] |  32.29 KiB |
-+		|     * Maximum entries [4] |   1.01 k   |
- 		|   * Blobs                 |            |
--		|     * Maximum size    [4] |     13 B   |
-+		|     * Maximum size    [5] |     13 B   |
- 		|   * Tags                  |            |
--		|     * Maximum size    [5] |    132 B   |
-+		|     * Maximum size    [6] |    132 B   |
- 
- 		[1] 0dc91eb18580102a3a216c8bfecedeba2b9f9b9a
- 		[2] 0dc91eb18580102a3a216c8bfecedeba2b9f9b9a
- 		[3] 60665251ab71dbd8c18d9bf2174f4ee0d58aa06c
--		[4] 97d808e45116bf02103490294d3d46dad7a2ac62
--		[5] 4dae4f5954f5e6feb3577cfb1b181daa3fd3afd2
-+		[4] 60665251ab71dbd8c18d9bf2174f4ee0d58aa06c
-+		[5] 97d808e45116bf02103490294d3d46dad7a2ac62
-+		[6] 4dae4f5954f5e6feb3577cfb1b181daa3fd3afd2
- 		EOF
- 
- 		git repo structure >out 2>err &&
-@@ -176,6 +179,8 @@ test_expect_success SHA1 'keyvalue and nul format' '
- 		objects.tags.max_size_oid=1ee0f2b16ea37d895dbe9dbd76cd2ac70446176c
- 		objects.commits.max_parents=1
- 		objects.commits.max_parents_oid=de3508174b5c2ace6993da67cae9be9069e2df39
-+		objects.trees.max_entries=42
-+		objects.trees.max_entries_oid=09931deea9d81ec21300d3e13c74412f32eacec5
- 		EOF
- 
- 		git repo structure --format=keyvalue >out 2>err &&
--- 
-2.53.0
+  https://git.github.io/rev_news/2026/02/28/edition-132/
 
+Thanks a lot to Bruno Brito, Michael Ryzhikov and Shreyansh Paliwal
+who helped this month!
+
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+  https://github.com/git/git.github.io/issues/833
