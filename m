@@ -1,92 +1,92 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39650342523
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:11:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AE233261F
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772475116; cv=none; b=S0rG2JFwOCYYzGfjXPTmXUFnEUHfb7jD4bNwedM6fljC/vFzFmzvkJMaaAjsbSHlveNQJIAWIxHDnsottxU5LpukjacrvN4nVCnnChbjJNZM7HR1ObGBn7PnIfvtGJEguGuigJIsNh/vfMbAHoyHkzMXDJzyNSrL5C0APRsPbyU=
+	t=1772475118; cv=none; b=cAEbpRk8J92Kq7f52a0mSRTJIMILykdhBN662zln1P+1BcM5T/wfG3KE6gzJrgF6aHqWFKDtgt9aFURUV+3DhcLRbgebeHz5MRXlmsXCh3SAo1mn/or9Y+rZO++mFRg/R7ewYnUJvCJ0hv8bCH4AI6pDvcsTGtDr04bCrfcUPvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772475116; c=relaxed/simple;
-	bh=SPuwRqqDjAN7HHujnRErK9VXw3Eme4rdyjHU/dZFC18=;
+	s=arc-20240116; t=1772475118; c=relaxed/simple;
+	bh=XLdoh6BxPwHMgOk6M5EVcVK3edo+ge24oRKctlZPM4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpCJyHIC1w3akCP1ioXUb0iE04nZPZ+kC+OwaT3iNXKyhhxCCMGrKaY8ptqOfRoinY8oSiWS0mAoF+b+9J6mq1exAVBevd5wYu1IzmVsc4nS5sv5My+RXcIWvyhVvcvD7N9HfoT8X+cOHPEt1qbVl74A41znLjRdRM4MRU5r8fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L4N0+47j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e/oOOUiX; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version; b=uKRGl6sH9UPD5Ge5uqCM73wIG8Wl0eke/gE/U7Gu1KQKbl2LeuKJvEC3/kg0fVj3TEC/AYYyiE1QPdLM1xC3AQ2xZelgSyjkkmMT34iQ+F1bhDrcdqAXGO4o2DUppaWo93UemVAkGtl/8Fhf9qmyhNm459Yp45t7mcNYlF27F04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aKY+Oihz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G7j1lxjW; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L4N0+47j";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e/oOOUiX"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 84373EC0546;
-	Mon,  2 Mar 2026 13:11:54 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 02 Mar 2026 13:11:54 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aKY+Oihz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G7j1lxjW"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4375E140012A;
+	Mon,  2 Mar 2026 13:11:56 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 02 Mar 2026 13:11:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1772475114; x=
-	1772561514; bh=Lf4mayG7ikXfagSpS63oBwtXcSGuX3y4G0UZBvPJUdY=; b=L
-	4N0+47jlq4mjhCzj+3agfW6jXlLlyM5olpLJKVHhYMqfEBK3UmJlXgmUpGr7duim
-	lpDaIli7u2GeVOTVvDgSj3rmPkEkB/YbBikELgD1xNzG5+H4DwH3o8psiWwzTY62
-	Q4ilnml0MnGLyBt8ZKJm994rDoY0yKaQBc80pwzW9ACR5MdwwGXnLEn42hsyd4zr
-	R4aGW5NU03itl4o4B03Fr87EBVQ3tY++lAAbfA+Dc74xV2edTJF0NsJqCNaLWg+8
-	ohWBZBrGd6GMaokPJpX0346uVPqTOvmOLUTaLdVCaLDbiccc8Xdk4O6k7DsBeS+d
-	qn6DIR8s8DYkixOsPPL+Q==
+	:reply-to:subject:subject:to:to; s=fm3; t=1772475116; x=
+	1772561516; bh=gCezoCLGPjhetxmravpXlYKB9wrjDy16PX0cYMFF090=; b=a
+	KY+OihzI7ByqRTQYvNV6zR6Qok30oLUelO0tNJE7Y0NLKtgz5RwW70dYCIOT1dhk
+	KWOkGZv+KkF9S0OvBFwwOMczAPXpIitJLZTEh4PeMxTMuWXbnSVKf8uEfxleT7eV
+	4UlFEY6OxomH0dZS57jtYTCpnA8ZqiNvoWkwWj2wuwz4lOqDwzjkEYnDARr2jYR4
+	aDtacFseS88kJOTUouYdF2zXK9ya6SljFv5JvUytGHrYfvIOJAofTF84Pc1n1tRl
+	U5ahIF/gr2HKlW3CoBfLUno0Mm1wvOXE1IFd+vmddovNdV2fAL++0464Rj44dHLW
+	pePZq12/C572/tsATyEZw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1772475114; x=1772561514; bh=L
-	f4mayG7ikXfagSpS63oBwtXcSGuX3y4G0UZBvPJUdY=; b=e/oOOUiXf3aE0JPPu
-	pln7DbJlO3I3/gAvzoXydt3rktqFY0MTtGq5nj5w9zYQNIDu/VOLCnwmUfrDgG7O
-	a8vEq9O2cyVi1hgjqSjKutBI7nqgY2pYYo1bJy7V+qjAIXZdctR2WfSBkLraaD3R
-	Ogc1mGcpnKj9QWi3DIJ4oME91OSW13yA9GduzBIDRyFuxLYU69JksGJ0RuMG+zyQ
-	E9B1qaV9kJ51UIm1fMkYhIhgUI8tyWP/cKX8n7Bihg9bMbe39jDs3umX8llMERNB
-	azQ+AiUHZ6kEueqO+tWPlVSXbbfnu4ygg1UYLlLd2Mo7EHS8p6YbqjIjs6NVyInl
-	dzWfA==
-X-ME-Sender: <xms:6tKlaZ68vgElht12SlHT3c5alMrL7puxV4WEjEabW9ZWZSHUXiEvEA>
-    <xme:6tKlaTcqIHl_LyFhpzo6qbxfL8UdN3japVpypaBZFI5F-Azp-YyYtzCLwm6i-2lke
-    8bh_cAdzEbMlDCKaOUZmn3cHAeofkFEFwMtHeV_8bMEbw-Z9tefng>
-X-ME-Received: <xmr:6tKlaU6c-YieZeiWef8QqWIFHEwBr9rf3jcTFOZoMU1DkU9AZ3Xnq4itKw1QAMI0tlP2hDz0uy8dfY-LJSunJTxD_LATymxgyg>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1772475116; x=1772561516; bh=g
+	CezoCLGPjhetxmravpXlYKB9wrjDy16PX0cYMFF090=; b=G7j1lxjW1S/Bj9mx8
+	IVNUhUhg/OelQ37sSayUOYX2zlrAH4X3AE6K4q5H6F2ZUIqr5A3e9y+YFDY3ddw5
+	nf+JP+2knLnhaBY1pdIL7/gC6x3UMiHbzFpRqkruTdFQKFdNnsKKC4YV2t6bNxli
+	+G1CqfLqBqPfyrTR8scCz3hRC33k8g7WU2u+gU2Kx4qlY0ZsUUn2/H3B1w2QVRmg
+	J0ng8VOW7FzigsW2wtyMD8b7MZ1W7vIAqQLKCudDzCBPvPJFQvrr7R2xwnxP9qmb
+	o0PS2Ss88oSpIw1f4b1YxuV5jpWUFjvu4wNz0wLAll2WvCRO6YfQECOsNjRpmTlU
+	Ix7pA==
+X-ME-Sender: <xms:7NKlaSNT0FEHmmagGYN8ym5JPmDuj0-SF_83ueVflk7dVgErmBfhVA>
+    <xme:7NKladi-dHZ4Ee40ygPjZqDvtx4olkrEuzhMQAxd3VaXVeA6hLMmY5SNlVMh7SgtQ
+    dQKRB0G1CB8phM5D9oMuD4re7G5IQ8FNXKPPhki53jv2w3fJ_x9>
+X-ME-Received: <xmr:7NKladuK8QWYo1fC975zDvB8ruqdcv3HmkPqvt4BdDvhNoBcaRsJf0ibFEKOdEBv56YGAC0Ru0Ug68rvH27x9QfvNT_FC9d-Dw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekfeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepvdfflefhueetgfektedthfduleffudetleefieeulefhvdduieeukefhtddv
-    udeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhr
-    tghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgt
-    phhtthhopehstghhfigrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtohepoh
-    hpohhhohhrvghlsehrvgguhhgrthdrtghomhdprhgtphhtthhopehpshesphhkshdrihhm
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknh
-    hosghlvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:6tKlaY-iEoEClW1x_FTfAERZYBFfMKW3BmHM70y6zSaAtGSpimhv1g>
-    <xmx:6tKlaeGI7exxjtYnV3Vf7O8lXxVkI_uupIvLJ3LynUsYI9ip-b3IsQ>
-    <xmx:6tKlaVXli3C-JCmJ8KXxI9Da86IcBqKvFnRnRsFk4PNMOaAB5CxmvA>
-    <xmx:6tKlaS9st09IRjbWxFqkLhTV38SaoTnK1SjCz2PZFjvDKdJPCIL62A>
-    <xmx:6tKlaSlwV7Jl6_-VGEW2tNs179G__DIuXgWA-k2h3u3ZyD-tLuW76btI>
+    htvghrnhepgfdvfeethfekgfeihfehkeeiffeugeeuhedtheefkeetieffheeuhfdthffh
+    tddtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegt
+    rhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehphhhilhhlihhprd
+    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgthhifrggssehlihhn
+    uhigqdhmieekkhdrohhrghdprhgtphhtthhopehophhohhhorhgvlhesrhgvughhrghtrd
+    gtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffhesphgv
+    fhhfrdhnvghtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:7NKlaZji8aZNKlygQEMPEJk_X52ngERh0NRf90R4U2dcAAySt6wraA>
+    <xmx:7NKlabbiz3ZjA3KO1P02LhFEaSqJ16exX87jhi7suD3yi2B3lRxK7g>
+    <xmx:7NKlaQaD_QjZvVPTfjqnWBZV_5ti3Lw4kZqA-rLGYRlEQvLff_77pA>
+    <xmx:7NKlaYyW8CicURei8v1i1O2Fy8Pmat3AC4DNJP1aT7kJY6ysJS9KtQ>
+    <xmx:7NKlafZFY2PVMVAE30CO3IDE_wD-_g-laSAkylxXTqXVbqX5a_9Y7puM>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 13:11:53 -0500 (EST)
+ 2 Mar 2026 13:11:55 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Andreas Schwab <schwab@linux-m68k.org>,
 	Ondrej Pohorelsky <opohorel@redhat.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Jeff King <peff@peff.net>,
-	"D.  Ben Knoble" <ben.knoble@gmail.com>
-Subject: [PATCH 2/3] sideband: delay sanitizing by default to Git v3.0
-Date: Mon,  2 Mar 2026 10:11:48 -0800
-Message-ID: <20260302181149.3502811-3-gitster@pobox.com>
+	"D.  Ben Knoble" <ben.knoble@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH 3/3] sideband: conditional documentation fix
+Date: Mon,  2 Mar 2026 10:11:49 -0800
+Message-ID: <20260302181149.3502811-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.53.0-549-g863838a955
 In-Reply-To: <20260302181149.3502811-1-gitster@pobox.com>
 References: <xmqqv7gcnwd4.fsf@gitster.g>
@@ -99,127 +99,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Duplicate a bit of text on either side of the ifdef/ifndef
+conditional documentation in order to avoid "sentence assembly" that
+does not fit well with translations, taking hint from the discussion
+on a recent topic.
 
-The sideband sanitization patches allow ANSI color sequences through
-by default, preserving compatibility with pre-receive hooks that
-provide colored output during `git push`.
+cf. https://lore.kernel.org/git/ff86f877-4b75-403d-a5a4-10ab528a9691@free.fr/
 
-Even so, there is concern that changing any default behavior in a
-minor release may have unforeseen consequences. To accommodate this,
-defer the secure-by-default behavior to Git v3.0, where breaking
-changes are expected.
-
-This gives users and tooling time to prepare, while committing to
-address CVE-2024-52005 in Git v3.0.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-[jc: adjusted for the removal of 'default' value]
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config/sideband.adoc  |  7 +++++++
- sideband.c                          |  6 +++++-
- t/t5409-colorize-remote-messages.sh | 18 +++++++++++++-----
- 3 files changed, 25 insertions(+), 6 deletions(-)
+ Documentation/config/sideband.adoc | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/config/sideband.adoc b/Documentation/config/sideband.adoc
-index 96fade7f5f..85205477b7 100644
+index 85205477b7..ddba93393c 100644
 --- a/Documentation/config/sideband.adoc
 +++ b/Documentation/config/sideband.adoc
-@@ -1,6 +1,13 @@
- sideband.allowControlCharacters::
-+ifdef::with-breaking-changes[]
+@@ -2,14 +2,15 @@ sideband.allowControlCharacters::
+ ifdef::with-breaking-changes[]
  	By default, control characters that are delivered via the sideband
  	are masked, except ANSI color sequences. This prevents potentially
-+endif::with-breaking-changes[]
-+ifndef::with-breaking-changes[]
-+	By default, no control characters delivered via the sideband
-+	are masked. This is unsafe and will change in Git v3.* to only
-+	allow ANSI color sequences by default, preventing potentially
-+endif::with-breaking-changes[]
- 	unwanted ANSI escape sequences from being sent to the terminal. Use
- 	this config setting to override this behavior (the value can be
++	unwanted ANSI escape sequences from being sent to the terminal.
+ endif::with-breaking-changes[]
+ ifndef::with-breaking-changes[]
+ 	By default, no control characters delivered via the sideband
+ 	are masked. This is unsafe and will change in Git v3.* to only
+ 	allow ANSI color sequences by default, preventing potentially
++	unwanted ANSI escape sequences from being sent to the terminal.
+ endif::with-breaking-changes[]
+-	unwanted ANSI escape sequences from being sent to the terminal. Use
+-	this config setting to override this behavior (the value can be
++	Use this config setting to override this behavior (the value can be
  	a comma-separated list of the following keywords):
-diff --git a/sideband.c b/sideband.c
-index 04282a568e..5fb60e52bf 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -34,7 +34,11 @@ static enum {
- 	ALLOW_ANSI_CURSOR_MOVEMENTS   = 1<<1,
- 	ALLOW_ANSI_ERASE              = 1<<2,
- 	ALLOW_ALL_CONTROL_CHARACTERS  = 1<<3,
--	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ANSI_COLOR_SEQUENCES
-+#ifdef WITH_BREAKING_CHANGES
-+	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ANSI_COLOR_SEQUENCES,
-+#else
-+	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ALL_CONTROL_CHARACTERS,
-+#endif
- } allow_control_characters = ALLOW_CONTROL_SEQUENCES_UNSET;
- 
- static inline int skip_prefix_in_csv(const char *value, const char *prefix,
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-index 3010913bb1..07cbc62736 100755
---- a/t/t5409-colorize-remote-messages.sh
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -98,6 +98,13 @@ test_expect_success 'fallback to color.ui' '
- 	grep "<BOLD;RED>error<RESET>: error" decoded
- '
- 
-+if test_have_prereq WITH_BREAKING_CHANGES
-+then
-+	TURN_ON_SANITIZING=already.turned=on
-+else
-+	TURN_ON_SANITIZING=sideband.allowControlCharacters=color
-+fi
-+
- test_expect_success 'disallow (color) control sequences in sideband' '
- 	write_script .git/color-me-surprised <<-\EOF &&
- 	printf "error: Have you \\033[31mread\\033[m this?\\a\\n" >&2
-@@ -106,7 +113,7 @@ test_expect_success 'disallow (color) control sequences in sideband' '
- 	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
- 	test_commit need-at-least-one-commit &&
- 
--	git clone --no-local . throw-away 2>stderr &&
-+	git -c $TURN_ON_SANITIZING clone --no-local . throw-away 2>stderr &&
- 	test_decode_color <stderr >decoded &&
- 	test_grep RED decoded &&
- 	test_grep "\\^G" stderr &&
-@@ -138,7 +145,7 @@ test_decode_csi() {
- 	}'
- }
- 
--test_expect_success 'control sequences in sideband allowed by default' '
-+test_expect_success 'control sequences in sideband allowed by default (in Git v3.8)' '
- 	write_script .git/color-me-surprised <<-\EOF &&
- 	printf "error: \\033[31mcolor\\033[m\\033[Goverwrite\\033[Gerase\\033[K\\033?25l\\n" >&2
- 	exec "$@"
-@@ -147,7 +154,7 @@ test_expect_success 'control sequences in sideband allowed by default' '
- 	test_commit need-at-least-one-commit-at-least &&
- 
- 	rm -rf throw-away &&
--	git clone --no-local . throw-away 2>stderr &&
-+	git -c $TURN_ON_SANITIZING clone --no-local . throw-away 2>stderr &&
- 	test_decode_color <stderr >color-decoded &&
- 	test_decode_csi <color-decoded >decoded &&
- 	test_grep ! "CSI \\[K" decoded &&
-@@ -175,14 +182,15 @@ test_expect_success 'allow all control sequences for a specific URL' '
- 	test_commit one-more-please &&
- 
- 	rm -rf throw-away &&
--	git clone --no-local . throw-away 2>stderr &&
-+	git -c $TURN_ON_SANITIZING clone --no-local . throw-away 2>stderr &&
- 	test_decode_color <stderr >color-decoded &&
- 	test_decode_csi <color-decoded >decoded &&
- 	test_grep ! "CSI \\[K" decoded &&
- 	test_grep "\\^\\[\\[K" decoded &&
- 
- 	rm -rf throw-away &&
--	git -c "sideband.file://.allowControlCharacters=true" \
-+	git -c sideband.allowControlCharacters=false \
-+		-c "sideband.file://.allowControlCharacters=true" \
- 		clone --no-local "file://$PWD" throw-away 2>stderr &&
- 	test_decode_color <stderr >color-decoded &&
- 	test_decode_csi <color-decoded >decoded &&
+ +
+ --
 -- 
 2.53.0-549-g863838a955
 
