@@ -1,82 +1,83 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5531282F0E
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 22:56:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5573C308F15
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 23:01:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772492182; cv=none; b=GBnNTaR7oAQAmQhJSl+10eOTfknwXRU1iKAa3Vb3jMRIEEjo0L4On7CAPIZfmlacIRAXCl3SfPNH5ABb6ILmeXQEHvZ2tVYG8Mhtj4v8szSf/pFgTEu043h8J33Is1U+2HwohkLCOfZRbqQMQ3ROwMQoOhxCkla1sqYM88igbcE=
+	t=1772492480; cv=none; b=iliRjbPb+mrE7H7uHOdVEMasKLlUtgHoNcsDAmt7rOdBwjz1Uj5VIrvikHaV7w2Fbi27snTgXBwxkuB9K2lsaGY+fSQcVjeNHVxnra0ju4Cnoi1bFa/dLEC3SzocVEX8APUh2rvhl3bZR/Ed+S+AFsvNbeEAX2ZEsPaGLyXQ3kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772492182; c=relaxed/simple;
-	bh=AQ5YpLwQ9dIvcwPAM3xFwUxyaOx1PQoZpKbTd9ogBTE=;
+	s=arc-20240116; t=1772492480; c=relaxed/simple;
+	bh=U/fJEYZUrneoYuYGfbvv33B6gEcfrroEdzVFqgXfzos=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hTYrirUrfSIfZ3GDm9IrO0G3B6khJdBgXlDpx5FsxjqojdHpMrhMnG9R5sCEfj9NrwayKn1Ok70k74/vGlmODlXYPKU9sbz4pxiE0u5NlCADm404E8dueYPOvyKLa9C9W0xcssowiOtDr4Xk34XHqjRHKOLaQnXRaRpgZiFliH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PuZNtpAq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=auxRyB1v; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=LqxrBtLUMFxt3OPQ6z6dYbwwS2biBuccZGsITvOvYOWiAgSMTbU9ss510Y1LSmuxZHHhyHnZgsxZV//YHxUPTj68VqfeMNoQuxSsZpWp7+xvoiPIkzaz0fF1D/BSMt21IHRkWm6TWquPtQlybMMOiIu1WZm9clz9K3sN60D4tHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GBvljWWY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fbJjhsbN; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PuZNtpAq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="auxRyB1v"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1F522EC05BB;
-	Mon,  2 Mar 2026 17:56:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GBvljWWY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fbJjhsbN"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9D78E1400074;
+	Mon,  2 Mar 2026 18:01:18 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Mon, 02 Mar 2026 17:56:20 -0500
+  by phl-compute-03.internal (MEProxy); Mon, 02 Mar 2026 18:01:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772492180; x=1772578580; bh=iJKInSIUpE
-	F2NF09Ur0Yoz3tEIeSTi+HxHqZbMsRY7w=; b=PuZNtpAqmJaFrUU44VwgCKscLb
-	itl2z0E5yLSRxgyLANzTy9Q4KL8di8KUZNRYC3rWPAmQORbewVm8Ff8xHtTarPrq
-	MJdUU1Be7R7MkreYs8Ut5HKqwvii58X9A8D6mn0u4XKWgoLXHSN/bNH/vtXGDZHY
-	6hg3+6Bcw50IkYaT0Y3MTC9Gm93lJag0xDEKP83zVoIutXBDnb47pJYYSq0wP2tP
-	cZE+dPzMa9nqPaK4Cv16ATO0l0j5zsIkrvuifYutvB9P9XU0H6eQh6UIXd8tA04V
-	prVDqVNavWTqv1Pu9328MF/ETZK5M6VCWsLcHdbLlFScN43K+uXhusY+uiDQ==
+	:subject:to:to; s=fm3; t=1772492478; x=1772578878; bh=mB3v4/xE74
+	E1vBdEBvUhGk8jPa+MlyNnuMw1EfI+RKU=; b=GBvljWWYHGHOKwsrl1gZB2ASTl
+	lDNqN5P9zHBmOQsBLbJm7g3dZmL2Ebjz6H7fz99/slTsZQI58X8Ae4+cIABygXMj
+	4qemmpXxgcMxE+4sSNemB2TUsbq5dp1hn50Ty/lAjPkgFSvUWspsLniJ4cTKRyJK
+	eoeK57nQuR5rn/DaIpPskh53GbE8oA8eT95lIcMJ81U7AwuoYouzL93aKrdMq+U/
+	lRBfQz0ltJeOSu0WndpKPuqL40fPpOcT1GQZWy5PF/801kyulSZk/d/hOfxEm7n/
+	XcCR6/bsM9dIdaHCnYN5mJPxva9+aANtsA2mMsf0mavC79s1MP9Kyz2Q39yg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772492180; x=1772578580; bh=iJKInSIUpEF2NF09Ur0Yoz3tEIeSTi+HxHq
-	ZbMsRY7w=; b=auxRyB1vIuYi2jXUhnRjMmIPFeYbukShqhBw4Xpml/+46MFsP2v
-	hk9BOewOVj+2DSi1DgdRRb2r/fWJutChILvZuIjP5kqSnYwq49wa8Mp04ONNmW9L
-	OEgB47rWX5XoGCsrTcfWbqZMF1JgNGKukNTdGGRovTvMnQWOmvG4qBDS6cikzvZ+
-	xd/EVhcmgBS+n8IRhMmHItwfC6R09P+fO6QelT0aAW5PvX4v7yRz43GU8sgQMVbn
-	AfpGUuomum+UGxrQr7/tPUv2NH6buxx7pOJt47KnctoZBL+VWaz/AiMDPVSS5XEf
-	iJSpaqAVi1FHNvKZ1/Lm1LG7EkaJviwgI/Q==
-X-ME-Sender: <xms:kxWmaSb-B6xSFay9FGykdRuf9SLb-qBk95c_fh2jWW-YGDACRfzxNA>
-    <xme:kxWmacYa9A9-wVcbPmmo1npve8zF6OHPcdaIJqKTAcRJ2Ho9GEkoSHl_dRYruDQwf
-    BM-r6ZGsPPackXLvDmvBjhCSuXLVMBexASt7v5IEhMGFjjI-w>
-X-ME-Received: <xmr:kxWmaR9Yb-ugrcr20QCw0vfO-bwMglX9CDYlVlvI6EPnVGkqLjEOcnAuoHtZ0MC8QW1ebg5nqCIyp0hcnnMVj5TEcDjXG4kD-g>
+	1772492478; x=1772578878; bh=mB3v4/xE74E1vBdEBvUhGk8jPa+MlyNnuMw
+	1EfI+RKU=; b=fbJjhsbNwwc0xJRnm3fZFPQ03yXQ0629RL8i/uJ52PK0likajJ6
+	ChehYG5Nipnq58lxATjUzL/YlfTL4P7/NUzdeC6BABqRU2CIUZB9hKRJ8iP6TvTP
+	DJ2MF25/VivUQLEAnM0AaAVABRTDrk1xpxLskXmpMrr9ZALwzwC5xbpI8PFY8D6Z
+	iAjV4NS3PPsSs9OtNXiO8rBodLja/k7Zj/rnR0BCxqb2Sh5Y0B5iq5BXH6GiL0QV
+	tQtmAXs2NAsYOJhgGH/hOmvPm8LURh1ajJVa40CCLNSIH9MWg+EGpLCw8vkwaQgA
+	z/H8bApGfExjjYQy2FYkdo0s8kPJcoxE8Fw==
+X-ME-Sender: <xms:vhamaTKAUnqb1WR1RohV84t_iYTIz77JHoGqHy9CCcTtN4yE1h7kiQ>
+    <xme:vhamael4N3A4W9TIpytr2WT1Tz4aPhQKrmWyjfu709jJlQzWoI8ptmrN_s7ViRS9a
+    lgifEivsUHokTd0DHwUmIItqHmgyUdHANAnBPsNRwf8BQ2YqL1rjw>
+X-ME-Received: <xmr:vhamaZHZiVeceG-QB4dOcPytoJjlf6pXlSktFZhMs3cmCDUDppUXvRBGlsi2hHnRJFgmMEW8ZKb2n-OA5Ha6W3vPLK03tERH1A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehomhhrihdrshgrrhhighdufeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:kxWmaThtSD9pYvlDT4V3AZ9Yn9bfNDHvpDSyyz8UYCLD052N0zo1mw>
-    <xmx:kxWmaZcG2PDo9SY7BganGOjRDmhWpvSp2n5Cf7j95gsJENRDb_CHpQ>
-    <xmx:kxWmaSrGsPWFFvYqBWoDCFGfRCF3LLueswj4ASjvc00G1sba4Pf3lg>
-    <xmx:kxWmaWAv8RCL0kxWTDb6XmoakpY4sxUebTdAjvr1SPO3UXATgrHavA>
-    <xmx:lBWmaRc7J-CGm3r0KDt7YGmU_bKExCJ8_i7LLshbij9aoYYqP_g6Hwl7>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlohhrvghn
+    iihordhpvghgohhrrghrihdvtddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:vhamaWFsoFcCSo6m-qd_AH1wwkYb7KjCFYDGTv4Ng6bRFZsu1_zs-g>
+    <xmx:vhamaePGeuKkRELX3Bz0iATEU3qAOPQGvhLpo5sma0wdyvfczzl6Lw>
+    <xmx:vhamadEhzPrNcBxCzD3c7GqXx1AH-PtI0Tb4nBf4fZZGlzWUUQkkQQ>
+    <xmx:vhamadM1ywclNEwL7AaFtYFj41QRZc1OzKGQ6_OX6LUoWnt5_-35GQ>
+    <xmx:vhamaWkAlairC2eCx7ykIksq7dgCi0rrwtiEg2MrpZ7WD8-IoGndXB3o>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 17:56:19 -0500 (EST)
+ 2 Mar 2026 18:01:18 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Omri Sarig via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Omri Sarig <omri.sarig13@gmail.com>
-Subject: Re: [PATCH] doc: add information regarding external commands
-In-Reply-To: <pull.2220.git.git.1772479907062.gitgitgadget@gmail.com> (Omri
-	Sarig via GitGitGadget's message of "Mon, 02 Mar 2026 19:31:47 +0000")
-References: <pull.2220.git.git.1772479907062.gitgitgadget@gmail.com>
-Date: Mon, 02 Mar 2026 14:56:18 -0800
-Message-ID: <xmqqqzq1x2lp.fsf@gitster.g>
+To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH 3/3] doc: gitprotocol-pack: normalize inline code
+ formatting
+In-Reply-To: <e0e4ea3d22d11d8d6b6e721228f1420cb8dfa612.1772467050.git.lorenzo.pegorari2002@gmail.com>
+	(LorenzoPegorari's message of "Mon, 2 Mar 2026 17:10:58 +0100")
+References: <cover.1772467050.git.lorenzo.pegorari2002@gmail.com>
+	<e0e4ea3d22d11d8d6b6e721228f1420cb8dfa612.1772467050.git.lorenzo.pegorari2002@gmail.com>
+Date: Mon, 02 Mar 2026 15:01:17 -0800
+Message-ID: <xmqqms0px2de.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,41 +87,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Omri Sarig via GitGitGadget" <gitgitgadget@gmail.com> writes:
+LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
 
-> From: Omri Sarig <omri.sarig13@gmail.com>
+> Uniform inline code usage for command and process names.
 >
-> Git supports running external commands in the user's PATH as if they
-> were built-in commands (see execv_dashed_external in git.c).
+> Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+> ---
+>  Documentation/gitprotocol-pack.adoc | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/gitprotocol-pack.adoc b/Documentation/gitprotocol-pack.adoc
+> index f4c9e024b0..63d3971037 100644
+> --- a/Documentation/gitprotocol-pack.adoc
+> +++ b/Documentation/gitprotocol-pack.adoc
+> @@ -117,7 +117,7 @@ process on the server side over the Git protocol is this:
+>  SSH Transport
+>  -------------
+>  
+> -Initiating the upload-pack or receive-pack processes over SSH is
+> +Initiating the 'upload-pack' or 'receive-pack' processes over SSH is
 
-Correct.
+These are not `backquoted` for <tt>teletype text</tt> typesetting,
+like the other hunks in this patch do?
 
-> This feature was not documented in any of Git's user-facing
-> documentation.
-
-"Not documented in any" is a slight exaggeration.  See "git help
-git" and look at description of "--list-cmds" option; "all commands
-in $PATH that have git- prefix" is mentioned there.  Also "git help
-help" talks about "--no-external-commands" that excludes "git-*"
-commands found on $PATH from the listing, which implies these things
-count as available commands.
-
-Nevertheless, it is a good idea to make it more discoverable.
-
-> This commit adds a short documentation of this feature, making it easier
-> for users to discover and use.
-
-I would have expected that under Environment Variables > System,
-next to HOME, we would add an entry for PATH that says something
-like:
-
-    When a user runs 'git <command>' that is not part of the core
-    Git programs (installed in GIT_EXEC_PATH), 'git-<command>' that
-    is runnable by the user in a directory on `$PATH` is invoked.
-
-
-or something like that; I didn't expect us to add a dedicated
-separate section for it.
+All other things in these three patches I found them reasonable,
+except for this hunk.
 
 Thanks.
 
+>  executing the binary on the server via SSH remote execution.
+>  It is basically equivalent to running this:
+>  
+> @@ -131,7 +131,7 @@ two commands, or even just one of them.
+>  
+>  In an ssh:// format URI, it's absolute in the URI, so the '/' after
+>  the host name (or port number) is sent as an argument, which is then
+> -read by the remote git-upload-pack exactly as is, so it's effectively
+> +read by the remote `git-upload-pack` exactly as is, so it's effectively
+>  an absolute path in the remote filesystem.
+>  
+>         git clone ssh://user@example.com/project.git
+> @@ -163,7 +163,7 @@ supports passing environment variables as an argument.
+>  
+>  A few things to remember here:
+>  
+> -- The "command name" is spelled with dash (e.g. git-upload-pack), but
+> +- The "command name" is spelled with dash (e.g. `git-upload-pack`), but
+>    this can be overridden by the client;
+>  
+>  - The repository path is always quoted with single quotes.
+> @@ -377,10 +377,10 @@ In multi_ack_detailed mode:
+>  
+>  Without either multi_ack or multi_ack_detailed:
+>  
+> - * upload-pack sends "ACK obj-id" on the first common object it finds.
+> + * `upload-pack` sends "ACK obj-id" on the first common object it finds.
+>     After that it says nothing until the client gives it a "done".
+>  
+> - * upload-pack sends "NAK" on a flush-pkt if no common object
+> + * `upload-pack` sends "NAK" on a flush-pkt if no common object
+>     has been found yet.  If one has been found, and thus an ACK
+>     was already sent, it's silent on the flush-pkt.
