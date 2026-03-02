@@ -1,69 +1,69 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39AB32E126
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 20:01:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F4B387584
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 20:01:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772481667; cv=none; b=MWrMxzXiXCvaJ9qPwA/NO6naz9RXJknE67uqV2vlxpeEdNMyi+Cot+J2fgJyvI0oSj/mYPuzomEfq581Y8t1dK5ZuShxFcca1ab2p/MPcBFl57QzSOv5ISQbsEwuA9Mfomslqkubk2qHVQXlP+3pbixSZy6o580G8Jm1HgHeS30=
+	t=1772481674; cv=none; b=ta361jYAgUlU/IjG4xgIMxxm/6Ov8Lzj0tl93oEjNCZQV4OoBJrUM8PDNbZMtIPlC1lHefrAVXK5U2LzEXSiC3NXAgMiRE4VuhKsxoXrq5dFC2Hohpnm5M/kWrMrrGrgtsbKur4GCHMosy4tdZrspmw0tv4iMuBXg5g6Y3ma0p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772481667; c=relaxed/simple;
-	bh=7lY6i39gtJ+3cFcmUkUxRAYFASoPVnRe0uWlIbgVEEE=;
+	s=arc-20240116; t=1772481674; c=relaxed/simple;
+	bh=zflbIZ9gt96VXLr0l9cDCiUH825vOTFRLmIGJ3kK7+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQKSl4/hV5nYn2m9eRRd4roZ6OGbIVwozdzD6YA5TyrfmxTzuSe5ACCbre6sdTTwzxV9QOD8fQJRCvI/p1vmYzBQ3pE52VL0eJom7Y4p7GJhLb5CVZIjofnof85ogOq/n44Gkxa/liqVD/X2Ta/fqYtTudXb074a+f446tQqiyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DUqWWoOO; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version; b=LYZvQb9Vd43a67af75WHIHx5AZoj/OYXdqs7eDde7IZ4iRG9nO2WvPpAg5q7pKWHFHnFmYWSsexXsKYidgF86UlWhiAeYp7rZE/LC/SENWcqk9+BiyqA0oXFY9ELOcfK1uADWH9vsw4hCsOk7Dvl8DDh8O/K0MZlgq+DaVHXpV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HygPsVnh; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DUqWWoOO"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-483703e4b08so43199495e9.1
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 12:01:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HygPsVnh"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4836f363d0dso43052725e9.3
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 12:01:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772481664; x=1773086464; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772481671; x=1773086471; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rhjVihwXwXH+H1aMZRfNz6NYRrWCy6fjycqEgdsuQko=;
-        b=DUqWWoOOCFJ2ISYqw1E5DRpkKX/HEBTJQkcUYEccyfdGwCPHlpNneabwwA5ICQ1bJR
-         55hVpsR4f5wLMTCoBz0u7k3pTiwt3Nu7yAtzFMp++Ha7bL6dGbRo8BqkbYN3w9NfjVGU
-         7D8NXcoHRicUZ12SDLLMzvBpAxJKpRjwuxsvlGIewVE1S4OVaoppsOWXBZt4wsDWYPF9
-         hiY1dqSA6QvgQtxv5cGEX7gOfq4nNx0BHnaAyhL1FTBV1T63y7e0lvvaZ6iXNLoTADYy
-         u6tNRtLL1QcarGk4XCp7XJhUdEhCL37f+3B2+mFyPfK1Va9U5owB+sd4E9m5D2vRrecI
-         faEQ==
+        bh=pG+sgb+bQh4ZCrq8hsbc+XzS8OPi08QixnLVdAvcpII=;
+        b=HygPsVnheAEikfhLIEfrkJL8MrNtJEM+pQwWJcGupirtuCM9KL6AOTw9bSXN+eKY0Q
+         TC1iN+Cv1dpgqQO/v3Ta/bxzS1gZBysiSXM0ku3O2UQU6TmVbFUQ8F6udGwwTefJb8DF
+         ylFhODUjnnrVk20Eu7Ms9npb2RHeM0SEBXKY2sew46wKGwQK0B5Q8NZT4LqBaEi/FLY9
+         ZHjYzOXfG6/zXVxUaRb607W0zJmY+gWTIZdd5HNE40487CN+XorAh13F6TrNa42Dz2Ns
+         i3wBHWdgGcm7ESv4iNjf7WKBifE9p2Q4LBTI+sjhjpFE5pkUjBa0oB61OGQ3IBvlXxcM
+         9qgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772481664; x=1773086464;
+        d=1e100.net; s=20230601; t=1772481671; x=1773086471;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=rhjVihwXwXH+H1aMZRfNz6NYRrWCy6fjycqEgdsuQko=;
-        b=m/ee0E8PTvpU2CY7pW4iqepDZlzkGqjCJrFZEE1etq+Hy7qwPTPlDCQ8y3cOtZsTff
-         u+rfCQZ6qA2hj7P7QAoXpoFm5C6G5LHLddeF59SM5BcNI/BRKZFWptJaadRIYw1nsKRO
-         fwGDABePtZ0NuYtESiOfDcUyYcMSKsBo4ZycUsh4Del5yU+Vd0Bk9z2qHZ6ewO8jZhfs
-         dnWFJzp14+xvBVDxEdJ1QELDDKHixYD9//t4egUuPOqhDyZIEof9DAixVdLvPDSga9DI
-         deSmULtrSsgIWQwaWIWoODYSX07PKHecbh5/mxYCKH4ORaKxgLEYkoT190N3SCpeCpb5
-         ub4Q==
-X-Gm-Message-State: AOJu0YzUxarPniZwR0/TDdRTftimEQJ4lQcdQT8hLsroP4HCHCO8zDCF
-	iFBFV7XnENeBze4kcwOailDXhN3mBpoB89y674Qblb4R/J+BXpjZjDGQVU25O9uQ
-X-Gm-Gg: ATEYQzx3HWUeFaswBywEb9MzmRGl1mIuOilBUCebGpIq4tsTm768hDiZDJ2uU2lDJdw
-	Nj0To9G2aVSWk3p3P02M0PmJk7Z4hzhgtpGsUYzfn37xYQ6xnflzQjRh5TF1oFzHjJ9Ag8Q7K0d
-	vGHYUelR3uTv4S4QCqQm/SjHqox1uB0CLM+Pmf837oaHocwRikHHBZBYZXPHT5gjYF9rcWq9v8I
-	zeBIbWSSz0fiiqt4UMkVjya+74An+hXgjoqAVPdV2S5VtmpbMKjT5L3aLtN/IZIfHxhid6IZwO0
-	Yya7hjn4aTS8Wgkdki2C4SCtkgluDi5C3cRbER0Zn/XzFRim/cqoAt8HS8TCuRwBaaaW0vL63Og
-	XOEpzDr6/gCLpPsXDoF1MVSI/53aDAVMgAXYlXuponYkKSSU/CZwzzRVbtHzVobVZRcE3CoCLJs
-	1aXTSCaoo62EzH7P1GjhFufhI2+RyDQMQM1+q5/CsFCwohc7nt6DrmWgYvtUooqsQ/fvFu1U0=
-X-Received: by 2002:a05:600c:820c:b0:479:13e9:3d64 with SMTP id 5b1f17b1804b1-483c9937b2dmr213913155e9.15.1772481663603;
-        Mon, 02 Mar 2026 12:01:03 -0800 (PST)
+        bh=pG+sgb+bQh4ZCrq8hsbc+XzS8OPi08QixnLVdAvcpII=;
+        b=MnFbvPf7XUZWBQg0/nY1mj9BS1MMa+6em5reJZYZWhMLBhyvvABF0nndZ1Swd5mkfI
+         7yaXNOMTtyGnC+nx0sJu7m/ktJEjxvpJaWiqZ7AaoQ7j0LyEJIT4pPErZnljYMKGV50e
+         eKYIRsUjgLTlLbiXBtS58nEgMbNdfPZaw88ovEtD8yRwXT7TgrOnqTdNCk9aIhRxhOQ5
+         XdeHAuDnH0uaP3alIbSp+i2IFiiIPBc+VefoEnuXINragUaqpR5qJHKseFzmKSXPpiPk
+         V2Cb9j1i7DnFlA7L6+xkJ5ngjG655gSaPtaPZfaG3ku4utnxXgBjEz+y0fEfIq+5xajx
+         6VNw==
+X-Gm-Message-State: AOJu0YwstWuUdbXDBbAgkjIYYOURMf2vQtg0oRam3F6TNvV/eFaBoKO7
+	9D5LuM8he60++Naj1uyR0GwGvzVi94vNl95aQxcKwiuGvPtyCPZROeDmo6K88AFv
+X-Gm-Gg: ATEYQzwQGnPzE3MlzJmMuUblPsnKqnE9qLvaWQo3gWZJcTTG/KtgG5QgMA5zam3vNEj
+	2OIkg+3bHIDtksDhrCn4Yfau4EekL1pAibjCxrdcrYYIIfZaqPrVNl3e6PAQ2WQOrC4nqwQi+jt
+	UUKy1qM28Yl8Y+WZ8OwdCGXecf2uJYttMYAfhkkMj/iAS93q25DM48jfwRbepSOUUOrCH7dzLtE
+	4zlzWGdJvIWdY/aVlgKrRT9ZhlCqYYwSFX5w30TJfG3wyacFwNNiPbHpfad/d+o82p1+5tDwG2g
+	aqOyLXtdD5uf4D5x9bokC7G+hvE+hIm0Vh4e0LHUHW00citcD1p2bTIaPU96I6Gz5ZBNo/Se+gF
+	LKEyuHEYUHW+1dVtuILihuYsUkljd5QYTaIYeKRdKWZZOaeP70pcOFgQQyMwCBgYijRoGzTrMV5
+	JmLh9EIbXrymdZhT1YONPqYlfRekdwNL7gLrwSu0frZhmnCmMZSv+7OrPPmNbBM+BO26NnIf4=
+X-Received: by 2002:a05:600c:1989:b0:477:561f:6fc8 with SMTP id 5b1f17b1804b1-483c9bb1d3cmr249736695e9.5.1772481671001;
+        Mon, 02 Mar 2026 12:01:11 -0800 (PST)
 Received: from localhost.localdomain ([105.113.67.17])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485126547absm446875e9.7.2026.03.02.12.01.00
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485126547absm446875e9.7.2026.03.02.12.01.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 12:01:03 -0800 (PST)
+        Mon, 02 Mar 2026 12:01:10 -0800 (PST)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Seyi Kufoiji <kuforiji98@gmail.com>
-Subject: [PATCH v2 1/5] oidmap: make entry cleanup explicit in oidmap_clear
-Date: Mon,  2 Mar 2026 21:00:13 +0100
-Message-ID: <20260302200018.75731-2-kuforiji98@gmail.com>
+Subject: [PATCH v2 2/5] builtin/rev-list: migrate missing_objects cleanup to oidmap_clear_with_free()
+Date: Mon,  2 Mar 2026 21:00:14 +0100
+Message-ID: <20260302200018.75731-3-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260302200018.75731-1-kuforiji98@gmail.com>
 References: <20260227234213.17633-1-kuforiji98@gmail.com>
@@ -78,143 +78,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Seyi Kufoiji <kuforiji98@gmail.com>
 
-Replace oidmap's use of hashmap_clear_() and layout-dependent freeing
-with an explicit iteration and optional free callback. This removes
-reliance on struct layout assumptions while keeping the existing API
-intact.
+As part of the conversion away from oidmap_clear(), switch the
+missing_objects map to use oidmap_clear_with_free().
 
-Add tests for oidmap_clear_with_free behavior.
-test_oidmap__clear_with_free_callback verifies that entries are freed
-when a callback is provided, while
-test_oidmap__clear_without_free_callback verifies that entries are not
-freed when no callback is given. These tests ensure the new clear
-implementation behaves correctly and preserves ownership semantics.
+missing_objects stores struct missing_objects_map_entry instances,
+which own an xstrdup()'d path string in addition to the container
+struct itself. Previously, rev-list manually freed entry->path
+before calling oidmap_clear(&missing_objects, true).
+
+Introduce a dedicated free callback and pass it to
+oidmap_clear_with_free(), consolidating entry teardown into a
+single place and making cleanup semantics explicit.
 
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- oidmap.c                | 23 ++++++++++++++++++++---
- oidmap.h                | 15 +++++++++++++++
- t/unit-tests/u-oidmap.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 76 insertions(+), 3 deletions(-)
+ builtin/rev-list.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/oidmap.c b/oidmap.c
-index 508d6c7dec..a1ef53577f 100644
---- a/oidmap.c
-+++ b/oidmap.c
-@@ -24,11 +24,28 @@ void oidmap_init(struct oidmap *map, size_t initial_size)
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index ddea8aa251..ab5f69826c 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -88,9 +88,19 @@ static int arg_print_omitted; /* print objects omitted by filter */
  
- void oidmap_clear(struct oidmap *map, int free_entries)
- {
--	if (!map)
-+	oidmap_clear_with_free(map,
-+		free_entries ? free : NULL);
-+}
-+
-+void oidmap_clear_with_free(struct oidmap *map,
-+			    oidmap_free_fn free_fn)
-+{
-+	struct hashmap_iter iter;
-+	struct hashmap_entry *e;
-+
-+	if (!map || !map->map.cmpfn)
- 		return;
- 
--	/* TODO: make oidmap itself not depend on struct layouts */
--	hashmap_clear_(&map->map, free_entries ? 0 : -1);
-+	hashmap_iter_init(&map->map, &iter);
-+	while ((e = hashmap_iter_next(&iter))) {
-+		struct oidmap_entry *entry =
-+			container_of(e, struct oidmap_entry, internal_entry);
-+		if (free_fn)
-+			free_fn(entry);
-+	}
-+
-+	hashmap_clear(&map->map);
- }
- 
- void *oidmap_get(const struct oidmap *map, const struct object_id *key)
-diff --git a/oidmap.h b/oidmap.h
-index 67fb32290f..acddcaecdd 100644
---- a/oidmap.h
-+++ b/oidmap.h
-@@ -35,6 +35,21 @@ struct oidmap {
-  */
- void oidmap_init(struct oidmap *map, size_t initial_size);
- 
-+/*
-+ * Function type for functions that free oidmap entries.
-+ */
-+typedef void (*oidmap_free_fn)(void *);
-+
-+/*
-+ * Clear an oidmap, freeing any allocated memory. The map is empty and
-+ * can be reused without another explicit init.
-+ *
-+ * The `free_fn`, if not NULL, is called for each oidmap entry in the map
-+ * to free any user data associated with the entry.
-+ */
-+void oidmap_clear_with_free(struct oidmap *map,
-+			    oidmap_free_fn free_fn);
-+
- /*
-  * Clear an oidmap, freeing any allocated memory. The map is empty and
-  * can be reused without another explicit init.
-diff --git a/t/unit-tests/u-oidmap.c b/t/unit-tests/u-oidmap.c
-index b23af449f6..00481df63f 100644
---- a/t/unit-tests/u-oidmap.c
-+++ b/t/unit-tests/u-oidmap.c
-@@ -14,6 +14,13 @@ struct test_entry {
- 	char name[FLEX_ARRAY];
+ struct missing_objects_map_entry {
+ 	struct oidmap_entry entry;
+-	const char *path;
++	char *path;
+ 	unsigned type;
  };
- 
-+static int freed;
 +
-+static void test_free_fn(void *p) {
-+	freed++;
-+	free(p);
-+}
-+
- static const char *const key_val[][2] = { { "11", "one" },
- 					  { "22", "two" },
- 					  { "33", "three" } };
-@@ -134,3 +141,37 @@ void test_oidmap__iterate(void)
- 	cl_assert_equal_i(count, ARRAY_SIZE(key_val));
- 	cl_assert_equal_i(hashmap_get_size(&map.map), ARRAY_SIZE(key_val));
- }
-+
-+void test_oidmap__clear_without_free_callback(void)
++static void free_missing_objects_entry(void *e)
 +{
-+	struct oidmap local_map = OIDMAP_INIT;
-+	struct test_entry *entry;
++	struct missing_objects_map_entry *entry =
++		container_of(e, struct missing_objects_map_entry, entry);
 +
-+	freed = 0;
-+
-+	FLEX_ALLOC_STR(entry, name, "one");
-+	cl_parse_any_oid("11", &entry->entry.oid);
-+	cl_assert(oidmap_put(&local_map, entry) == NULL);
-+
-+	oidmap_clear_with_free(&local_map, NULL);
-+
-+	cl_assert_equal_i(freed, 0);
-+
++	free(entry->path);
 +	free(entry);
 +}
 +
-+void test_oidmap__clear_with_free_callback(void)
-+{
-+	struct oidmap local_map = OIDMAP_INIT;
-+	struct test_entry *entry;
-+
-+	freed = 0;
-+
-+	FLEX_ALLOC_STR(entry, name, "one");
-+	cl_parse_any_oid("11", &entry->entry.oid);
-+	cl_assert(oidmap_put(&local_map, entry) == NULL);
-+
-+	oidmap_clear_with_free(&local_map, test_free_fn);
-+
-+	cl_assert_equal_i(freed, 1);
-+}
+ static struct oidmap missing_objects;
+ enum missing_action {
+ 	MA_ERROR = 0,    /* fail if any missing objects are encountered */
+@@ -935,10 +945,9 @@ int cmd_rev_list(int argc,
+ 		while ((entry = oidmap_iter_next(&iter))) {
+ 			print_missing_object(entry, arg_missing_action ==
+ 							    MA_PRINT_INFO);
+-			free((void *)entry->path);
+ 		}
+ 
+-		oidmap_clear(&missing_objects, true);
++		oidmap_clear_with_free(&missing_objects, free_missing_objects_entry);
+ 	}
+ 
+ 	stop_progress(&progress);
 -- 
 2.43.0
 
