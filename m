@@ -1,117 +1,152 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281E53FFAA8
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 14:22:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E143FD13B
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 14:27:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772461340; cv=none; b=qn1dYh5Rhkr5KPkL1Ka6H8nUJRceDJ26TYg8BNGPUwe2/LYDZgpLjcvEj2UhW31FnTCIE/L5ZJusFdyYhYaFKHJicTpoEALeJv3o87RhfmO0eZQkTCQtmzfu7nsa8wSbby1Nf2Tvju8QpH+teFr79i2yPR5V2bFAj1MCAEEXOPY=
+	t=1772461650; cv=none; b=I0Y8+mCTFwXGJekrTXTMXX/PvIZHjMSa0o2WLM7sg58S4URcrmKViLmPbmUJ3kehXJAoZAv5rzciW+QC0K/PuZDHlTd2EAq2kJcpEwpQVdN0ylKhbNdMB9ANgkpvs2JAd/OGBwbScXfMG1lS0oQUydj2jDIkoxGzN3jX5lMybrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772461340; c=relaxed/simple;
-	bh=mOCz2xOvkNTjEwHDKQd4nV7VNNInhZ1cTQguLR5OCmQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPJNkZzqGaUTFmmRZmDnR6oG6/ontnBjlYy01D4S1AuB67SnDBeWB1PzqpFSTwRMmO6tXJfY3u63oxHmJ99Ms4I17qH76dnaOQYH/Pl1c8Y5Lnzqd4E0Enmux5IrXKy/kp6RTT6pIwp5koarHIMDMKdXVHu83aeGxCeNnpEuXzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ri9ChVBy; arc=none smtp.client-ip=209.85.215.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772461650; c=relaxed/simple;
+	bh=cHWY8jBpxD9if2b3ZoEKe8ubvB3jKIDhu2xAK1ccA8Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b9EUnKbXLgJhS9rTfsNb4J2On+kTmmGFxa7ZkzVVYCDiQg9kYMis5KlUdO9X9Ug2t0eT0xt9na31+SKGwXAP47WAKXYPBprD1lB1XTEBHdYt/eCn5gwx26ok3in9WghBsSNF2ITTY+2bIDkivVrmSJbEoDk+bNDgdm4BJ1nQ6/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jOcXRHoz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K81BHAnP; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ri9ChVBy"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c6e1f417918so1290176a12.3
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 06:22:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772461338; x=1773066138; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BQodJtzGCkugPfART5Na7RYlr9mtG4IdQg2otfYUaAM=;
-        b=Ri9ChVByOxzCO25NOCShajRYZr3tJLWurBM+Dd02+/TbVw3hH3NTV8RE1Fs8AKZ5cE
-         tPyxYF2BZUq3MPacb/VnslTNwBxKLQSZZL0ItumNvKP63bgb75ya50xfHE6Jnysko2wi
-         thQRl9Y4WjiJp5yx8TLf4EjDtn6kciGwL2OMQgY9thP/SaamyJ7eSX3YcsBa9A/gqC9S
-         WYNvaTByUMfNUE9GFj2IYm0yLg4A9uiI+LjsIbXN1H/lOJL7Vp6fCDRP+yhbsXxe3Uf7
-         romP0xnox6ttwrghSbByMFlE1ZXc3Z9KMl41hoTfEm3TeVsC7UAbgtQeZCcCF08I6UeN
-         y7Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772461338; x=1773066138;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=BQodJtzGCkugPfART5Na7RYlr9mtG4IdQg2otfYUaAM=;
-        b=VBgN5Msj7OfMOJx9hOl07cNlCFEhwEvkAb9ka3b8SLnO2wauvIQV/mrc8yuKW+D/Kx
-         wHrUsVX+iRzDxN89yDoqPboQwEBC3WOrws+eUE16/VK0RR4Dn+44WQqU8NaTrSoWv+re
-         a5oA40fHBnBXATEACZ347qzz2k9N6LQc2Oi5YxZsxkEgyq5Y027Z5y9BrnriPEcNf6u1
-         /0Eyosg+v3tjzIXrRJjZLwk/kJFNhkajP8xC/PKN5lZDYTEky5rj7LPkrfUZtBVaq2x2
-         DzX1DdxkxX62H3koJj2U+9ge1ub9k/ssr6azf0EA1lkNQuAnLQIc6oxioVrgWLOLbGla
-         0MDA==
-X-Gm-Message-State: AOJu0YwS807cjvbtUG666TFX9JwurV3WjXdy2gQfjRhATw87W1EHq7Lb
-	25ZjoMFKBnPNVT5MEHvRfXhTz+PSI+u0Qh09NxPCrm3VpDeAYEqjx4WqGQUOxZS+
-X-Gm-Gg: ATEYQzyebFNhwnnChCx5JFDi5Xt0WNHTiXHs6o0KCjetQsfC+l+zcGrp2natAq5F+8I
-	seUvPT7xDk0BsnbZH7Jwp8BoKgMz4u8h+bDYUtV0m58/39MPuxvMfUwNMcrGJYX+9PT2+flVHSH
-	w3AgYwi0FOKLCshnms7eg9oaP/JZXAci66XcvSNMRLuCidiiYAEfmUnpRZTIhWkEGd3T2pb5p71
-	CSdXzhXyufJdCp3Lfu2t/eKNA2Ahyym/kwFXUJ7xeddCGk8zxSn4BTWHeCZ5OZJHe+vKBfQy3Z/
-	v2X2+g7Kv5OF9r7DrASF8M0loAHBPwzZa5gyIeHeVM8ycxrdEM5MgjlOP4bSBW/8fLO03CEal9X
-	6OWpXgqfWmUyTwkH2rW7dBVZ6x7jDJv+A2k3Uc46QoNrxhHc+iHyyNwvKIvAkijUQevs9DvDLVA
-	6hKGe7EYpf5XQ4RMkcw7B0TNVg7lb2067/pzVLs9Sct2X20It7/6e0Wp0mx49Kx8NYlbhSXoNyM
-	gHpAwlzx7ZIkaPA+2nn+I724eEqhzzGpTkStvakh9I=
-X-Received: by 2002:a17:90b:52c3:b0:359:8eaa:7f42 with SMTP id 98e67ed59e1d1-3598eaa81e0mr2856603a91.18.1772461338274;
-        Mon, 02 Mar 2026 06:22:18 -0800 (PST)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35912fbc363sm11329843a91.2.2026.03.02.06.22.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 06:22:17 -0800 (PST)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: git@vger.kernel.org
-Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Subject: [PATCH 3/3] path: remove redundant function calls
-Date: Mon,  2 Mar 2026 19:51:38 +0530
-Message-ID: <20260302142138.712273-4-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260302142138.712273-1-jayatheerthkulkarni2005@gmail.com>
-References: <20260302142138.712273-1-jayatheerthkulkarni2005@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jOcXRHoz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K81BHAnP"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E68807A013E;
+	Mon,  2 Mar 2026 09:27:27 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 02 Mar 2026 09:27:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772461647;
+	 x=1772548047; bh=t2lS3Sw00WTZS0tNUfbLPl+XourlOJMkjnRGFkgNz70=; b=
+	jOcXRHoz79iYx3k3ZMbFDVbelWAgSUU0EvnnQANjQmXGe4chjm5tMoCL+OI+cA6F
+	ZlFbvaTemNT8RUSTglb3H173Tx7KUKyFdzDj+z+4MWc/Eb8iUyo4gBylHvwYzsHA
+	sph1ORj0RT8vy6buBjZLkaBlj02HjITqMQT4oZGSuubxh6TZUvCRbJd9vsqBqa9t
+	7PRwkeVMluy9IQLM6LlqBDq3mP2X6BHspzFaLFGVSCZovE1rIOW8b1JoqFdQ9fLL
+	JwTbav8XXhT7bJ6HfBguODjTpGpOfIYWOibv3RcNEjuqJVho1A3vTeQ4Z/TwbDet
+	Wv35CFbgyU7/7VdK75pPHQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772461647; x=
+	1772548047; bh=t2lS3Sw00WTZS0tNUfbLPl+XourlOJMkjnRGFkgNz70=; b=K
+	81BHAnPcVOFFcMXkZCOZCfON4UHzxs54uqTuAhi503nlHUAxwhMt6JZdgcJ72Qrn
+	R9mRRBKERrSrikJk3G6YcPZR2+7/VCY0j0N+CnoITUMiMiuM9qT/S3hI2oAxEIyh
+	fhRs+oGXVUY6suA0pPiaR531H/z3VnZArD/ejYVJvJ1+GhZ8vfg0uMgRHDSTGHaz
+	b222YZ1fBpZI13u8zejSqXyJu7C9SQpsR55IHCv+4J3Vci6rPCpkNBVw/1edAGlF
+	r7C5pFNb2o3eaEw9m/WD26b9MtIIGkRlwZJimH+sMmSrAtAMNRuJQrMt/mfScfwl
+	0CPL1v0X1efupIV23YboA==
+X-ME-Sender: <xms:T56laeN1EnkRdHSNxaX5rn8VA1-ahun_SkCuxRlElfx7r4u6s8l9Qw>
+    <xme:T56laS_DnYJC_D4qzl39ElSEjS0Plxe3w0dS4vRc6M4cH95ONE3cfsPoXoOvacc2B
+    z1eEOG3WY5kChBgz_vCXlu0_UJK4I4Tb0H-rPH4Q8wmhoy4xDBn>
+X-ME-Received: <xmr:T56laS5LJUDdxR2DCy6roIUQkTq8JpK1leyKvlWXOkzLuLzBd0VnfiF6UENI_nZ1oO2d-nwuPLY-j-4UR1uZ8lJDAibNLos2oPeNPQYHMw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheejleduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggurhhirg
+    hnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhm
+X-ME-Proxy: <xmx:T56laZ2frisqGHzVM9V-TYEJ3luZxyGLFh4bcU2YRaDuVXcvjAkCKA>
+    <xmx:T56laZCBQ7FIFXsNnvnyTdCww3byFwC1nsWDFB49wXQq1PiJnx8xZQ>
+    <xmx:T56lab11fQ6izqedQSY9MiBPp2w08YsAbKnkY6EUXBoiKSbeWcuXCQ>
+    <xmx:T56laTuiAy-nT8eNVpa5J5tFmz4byYavsuQdCcI-yEUv-0fREPOFJg>
+    <xmx:T56ladjIHdoDSHEMy32bLcJUCwXPglF4OCzEahC3CTpKS411T8VhvnRM>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Mar 2026 09:27:26 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b8bd301b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Mar 2026 14:27:24 +0000 (UTC)
+Date: Mon, 2 Mar 2026 15:27:22 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org
+Subject: Re: Performance regression in "update" hooks
+Message-ID: <aaWeSu-d1FMz_sW8@pks.im>
+References: <aaU5lZwEuR4OrxCl@pks.im>
+ <87bjh673o0.fsf@gentoo.mail-host-address-is-not-set>
+ <874imy7220.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <874imy7220.fsf@collabora.com>
 
-We fetch the exact same setting up to four times.
-We fix this by evaluating it once, storing it in a local variable,
-and referencing that variable.
+On Mon, Mar 02, 2026 at 04:12:39PM +0200, Adrian Ratiu wrote:
+> On Mon, 02 Mar 2026, Adrian Ratiu <adrian.ratiu@collabora.com> wrote:
+> > On Mon, 02 Mar 2026, Patrick Steinhardt <ps@pks.im> wrote:
+> >> Hi,
+> >>
+> >> Bencher has alerted me that there's been two performance regressions in
+> >> git-receive-pack(1) [1] and git-fetch(1) [2].
+> >>
+> >> The first one is quite easy to reproduce with the benchmarks at [3] and
+> >> bisects to fc148b146a (receive-pack: convert update hooks to new API,
+> >> 2026-01-28):
+> >>
+> >>   $ cd receive-refs
+> >>   $ ./run --revisions /path/to/your/git/repo \
+> >>       fc148b146ad41be71a7852c4867f0773cbfe1ff9~,fc148b146ad41be71a7852c4867f0773cbfe1ff9 \
+> >>       --parameter-list refformat reftable \
+> >>       --parameter-list refcount 10000
+> >>
+> >>   Benchmark 1: receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9~)
+> >>     Time (mean ± σ):     182.0 ms ±   2.7 ms    [User: 91.5 ms, System: 89.3 ms]
+> >>     Range (min … max):   175.8 ms … 185.0 ms    15 runs
+> >>
+> >>   Benchmark 2: receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9)
+> >>     Time (mean ± σ):     484.6 ms ±  27.6 ms    [User: 176.2 ms, System: 376.1 ms]
+> >>     Range (min … max):   406.2 ms … 495.1 ms    10 runs
+> >>
+> >>   Summary
+> >>     receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9~) ran
+> >>       2.66 ± 0.16 times faster than receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9)
+> >>
+> >> I've Cc'd Adrian.
+> >
+> > Hi Patrick,
+> >
+> > I looked at the commits before and after the many-refs test regression
+> > and it appears the regressions started after Junio landed v2 of the
+> > config series in next [1], which might cause it.
+> >
+> > v2 was not ready to land. I sent v3 yesterday addressing all the
+> > feedback, didn't even realize v2 landed. :)
+> >
+> > Does the regression go away if you revert [1] ?
+> >
+> > I don't have the benchmark setup and it might be easier for you to
+> > confirm?
 
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
- path.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+All you need is a normal development infra and hyperfine. The
+benchmarking scripts in the repo I linked should then "just work" with
+the above invocation.
 
-diff --git a/path.c b/path.c
-index 56be5e1726..5cd38b2a16 100644
---- a/path.c
-+++ b/path.c
-@@ -741,18 +741,18 @@ int calc_shared_perm(struct repository *repo,
- 		     int mode)
- {
- 	int tweak;
--
--	if (repo_settings_get_shared_repository(repo) < 0)
--		tweak = -repo_settings_get_shared_repository(repo);
-+	int shared_repo = repo_settings_get_shared_repository(repo);
-+	if (shared_repo < 0)
-+		tweak = -shared_repo;
- 	else
--		tweak = repo_settings_get_shared_repository(repo);
-+		tweak = shared_repo;
- 
- 	if (!(mode & S_IWUSR))
- 		tweak &= ~0222;
- 	if (mode & S_IXUSR)
- 		/* Copy read bits to execute bits */
- 		tweak |= (tweak & 0444) >> 2;
--	if (repo_settings_get_shared_repository(repo) < 0)
-+	if (shared_repo < 0)
- 		mode = (mode & ~0777) | tweak;
- 	else
- 		mode |= tweak;
--- 
-2.53.0
+[snip]
+> Actually I think these are two separate issues.
+> 
+> I will reproduce and look into the regression which bisected to
+> c148b146a (receive-pack: convert update hooks to new API,  2026-01-28).
 
+Perfect, thanks!
+
+Patrick
