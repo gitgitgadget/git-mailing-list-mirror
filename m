@@ -1,138 +1,104 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04E82F3C18
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 22:38:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23303282F1A
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 22:49:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772491120; cv=none; b=t9m45JsXYPEFkjx94KlF1pwOUZOU91wXW2UWzNirqy1yLdJxgVJHB3hgOTxySmw/bedXUtJic2bX913Qw4nCzrlYJXky+jZOm9FNsRJ28OSmnZLakHU8KXFQXArTO6Cx15s5pd4075h/6+gwZ3Ped1vVckwrJprAioOp6ByFyBk=
+	t=1772491776; cv=none; b=twGlS4KpKTICjZgUPTVVNukY8FKwGF7uf9jUFhHbhOYIkO2GOxrtbHj/YBD8HdTZtzbW1AfbRVf9iUmdvEg6WsgWWnHO0YztBzs0K+5CTq6s4u2w8ElOxTilL7aUB5dX8WjEMnLvwdHVA4kRld3tZdIjheNkVARdYNpkrg9di44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772491120; c=relaxed/simple;
-	bh=M0l1Km702T5CXXXbpBpaKpywFeNsrzkbfkFix0Ub1IA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JEhrJC06HQeN5+KA7l6JdZc+3nFoZ12yISFycdjkLpyya/NleQbk8fS/5rtW5FUKzANAJhTI6VBKOFNwkQMF5WvtrJ9HT6t38jISpAah5BeWGmQwsNzdv0DYYJxw0sMhCDLOsZPSeGBhqrY0Zk+phYoFmofkd3QvdnRlAJ390Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cxVfIbxO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jj2hd1q1; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772491776; c=relaxed/simple;
+	bh=lALZ02ISRiztj70Mo97qM9/AIlTDGdpOkdoToSZGLtY=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rzFHxeKQ5ccb3UKUYNzabDuNzvFomGuCC/LeJ47Ym17HdeCVH2U13VHZwOO1b5yOwAsiRWVRlmVeT9Vy64PPgaAeGiNTT1x38qpGsYVcvI2wPHYQhIq2slwSUYLDKunV8JLsLTEKOfHiJyoZhk7bFHeR6RO6yEDmStDjm/lRJF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kdZNlwun; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cxVfIbxO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jj2hd1q1"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1ED83140021D;
-	Mon,  2 Mar 2026 17:38:38 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 02 Mar 2026 17:38:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772491118; x=1772577518; bh=GpO7mmgtNt
-	mMq0es4K+ahsekCcqtHTXQDNA7RuRWhfI=; b=cxVfIbxOapn6h4eK+vsXCXITAs
-	vRf2htt7XokT/JEhu4TLoEaL2eN+D5czyWQ7HpTQe6YUq0oLYVxIERH6uJBOwGn8
-	v8eys70LfzuzERh6KlWAR3d2a3aP2jAZtIeL+/izQ2cEAThunmTXNtliQjlUhadb
-	6tP/jCZffy2+PMKxt2j6nRib64arSBxMqMNAlE70Ke5w7InJMJcwsHPSStyfph98
-	MQU2HO9FKQX2r/E7T7/BS9nPnrRx03N0xDoTO48Gt0PwC556gFBp2VRTmHhFz4Jv
-	ClBlZA+dnO1uKumFweikKO4ZbcRbwQrVIptHsa/m2AGaD5ZZLHq+55JWitHw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772491118; x=1772577518; bh=GpO7mmgtNtmMq0es4K+ahsekCcqtHTXQDNA
-	7RuRWhfI=; b=Jj2hd1q1MjvGYu8LrdlS7O5QCp8MaOuwDu2aoi+YJBFHBh6D/rQ
-	oopqyiXSsyRnNatAm0VMPMKSINVG7bpoOw7jW97fJaXafFQ3wQiV4Us73iWrzLJe
-	pq1z77IMsPlNU+axFPOFYVlu8eOzwwLuhyT8B7s/oGeKMRZtreYiSc6UgN9Xm4Cf
-	c8qkeMiH4DZwo7qU8cRdFsCa/oP+A1Kk586RgqUY/j2hc19Syq+5zDyLbw+hvR/H
-	3KfkG8DyTXWHyZxt/PvOUYT9Nl0JbyYGi1cLzC0BzfA0embECFkQlW229AcTO0NN
-	RySuk76JNlNcK9q/04smAl9F2O/r99TneDg==
-X-ME-Sender: <xms:bhGmaeEtSg2lovSNMFHyiP_f4lGHHaVTcAocDfLTl1Bu2atvOUeVlg>
-    <xme:bhGmaWVvaBruPcRhNnMhubgBxP3uv57hPM-kSzEij3pSOIo7H4u5Y0-yKa4h6AR2B
-    u7s1pXDrduS0s03IKhKiCaB8UbsevH_00sKVcbPQ4xroa6dl9bL>
-X-ME-Received: <xmr:bhGmadI5kseodM2wktkKvH_8BoxnoAGlceIy0ICrPgFv5J-UxtHx0mmB7NitZFSPfNp4O31rt5B-sxR-lHVcG1Ancq8P3dcZ5g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhufhhorhhijhhileeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
-    shesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bhGmaW9Y7ZvFSltT9XhziDvkIN1eUKDeCEqwYMeb_biQBdK2CN1Ehg>
-    <xmx:bhGmaQKXFxepo8dfVfGTqqa44zgA1QbXeU7-jbcxmVoqju8yJY0Q8A>
-    <xmx:bhGmabllJUfjqDqq-dnFdlxVVToReimrpplTvh-xTFm31AZ3OAZy7w>
-    <xmx:bhGmaUOZx6AFk9BH4xs9qog6Bv1qoxuQ_JVR_S986HIjr6ljQBTM8A>
-    <xmx:bhGmaYoaf7jASAhMqroLTU9wOwmNNtgphh48xU2SbC5QuYELc-jGf680>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 17:38:37 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Seyi Kuforiji <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v2 5/5] sequencer: use oidmap_clear_with_free() for
- string_entry cleanup
-In-Reply-To: <20260302200018.75731-6-kuforiji98@gmail.com> (Seyi Kuforiji's
-	message of "Mon, 2 Mar 2026 21:00:17 +0100")
-References: <20260227234213.17633-1-kuforiji98@gmail.com>
-	<20260302200018.75731-1-kuforiji98@gmail.com>
-	<20260302200018.75731-6-kuforiji98@gmail.com>
-Date: Mon, 02 Mar 2026 14:38:36 -0800
-Message-ID: <xmqqwlztx3f7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kdZNlwun"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7d4c383f2fcso3312528a34.0
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 14:49:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772491774; x=1773096574; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8UfvQFU1TdGBFlkMIJuod2gdy8QXRI8rZ0mNbkxOQh4=;
+        b=kdZNlwun+jLd2l+me3mhA/VKnVY5eiEft+OLN5JRg4TWfMIvOkThyPxwJpnbK9nnY4
+         Y/1L0rl4+pmSoCVSJq7YbyLfGOsAwQrwQfbGv/UQeUWp9Flr5dLLZ0x6Cx0eA4P8fDxY
+         ep/gq8rUDLso6ijTlcz9xFDGqvZiscftjYbjQ1BHXqGAJkrjVpSXDIZLNU/1AiZQwJhT
+         npTOKSBtRvukP/O/E9eWb38SyE7LRW1A5lhVDC8mFZOJ3CHPK8f1ac3uecAgtR8SXVlG
+         D89aAvNlW0YhNIjsv9vTmfmNcGgerdWQr/5ct1RhM/0SCpPpY4Ce2zkVm0qudXhYIzXf
+         Gn6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772491774; x=1773096574;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8UfvQFU1TdGBFlkMIJuod2gdy8QXRI8rZ0mNbkxOQh4=;
+        b=tlGDJMIvXQMAFPDYf3KSUgBkeA9SqYn9rKinhg08bOj1vD8nFoOi6cd0pO1w/dWrFk
+         8ou8meKNQFZ5BtwF4906BRT25jEE+V6ZVV/yVR8EfnbCUmsu8BOPgD4fPR3pB7Yd11Ag
+         Ie8IjiDzZ8auNSNguLGXPB7x07TaVoFnTxF4JVpDtfuYE5xox6HqImrUugwAOiyitzpw
+         7SvG1ds8nR94KLj2EX/lJvM0L62/X2J4g2Wp3pVTPavZzL+4hB0VvGoRACrJr0kE4AIk
+         gsl2vO2wJdImIoW+Lu4+KEOpLWAys1ESeJ2KZEqKD5KuRIMDQScG9QFzSuzALQGOZ6gi
+         lv+A==
+X-Forwarded-Encrypted: i=1; AJvYcCXMBBQsrV0XNtnjDU3BhJDobaSfoLO74U242xaNdSTveF4ebJxGVo0lpxr4bY68jDBsQHM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4faY/gw3iRhI5j8oMBNZ2J5+ihV5soBqrMQQ3HAannnU1LlIR
+	nAB7lCseXAiIShFmwlTJ5ACCG6i+Vlj/yHmcbAxdlnKADvrF8v/VlKzxSj37MA==
+X-Gm-Gg: ATEYQzwxSy0Js7/icA+bDbARtXlBoyiDPQ5hrwVVVgB4vjjJrSXtzjuOUGNJtZunk9+
+	ur1V/7nz/iYgKhsboh5JxhHpGYFwS49o8fydyPnkDNjPcN9euK1y8WIWnk+mVnALmuD6AZZIti4
+	k8Apmb7YKTlKNoaqyc/s1Fqp8fghUtOpRQe4O3ocPjOlVL4dwdVWt/ZzfCzLMrry59Kd9Yw8jFz
+	Mv8BnVPM7iZmBKdIH4D8bZzB73osI6XsoQN/wE0GeUY2e82tLHJR05zQseYBnhjr4zYKPMsq/lR
+	5NXw+mjRVCQxxeNz07vSKPCNPca4FyokbrWEsOOsYx/nKRroxZtI9QGjyjf9txva0GltwVcGxMX
+	jzsic0u3NQBXSMBfbyoEekf58xP1XRmyHcyVoFy43TUl8cCBVxdMWTBY0BT6CvfkvYIgJMkU2av
+	9Y0Bf26DxZ3KLqXgKsJsVDpv41gYQ=
+X-Received: by 2002:a05:6830:4197:b0:7c7:2c3c:690e with SMTP id 46e09a7af769-7d591c1adb4mr6960271a34.35.1772491774114;
+        Mon, 02 Mar 2026 14:49:34 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d58647439esm11753354a34.11.2026.03.02.14.49.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Mar 2026 14:49:33 -0800 (PST)
+Date: Mon, 2 Mar 2026 16:49:33 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	christian.couder@gmail.com
+Subject: Re: [PATCH 0/2] fast-import: add mode to re-sign invalid commit
+ signatures
+Message-ID: <aaYStamdm-LCiaP-@denethor>
+References: <20260223194146.3476768-1-jltobler@gmail.com>
+ <aZ4pFUJApZosh9Gc@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aZ4pFUJApZosh9Gc@fruit.crustytoothpaste.net>
 
-Seyi Kuforiji <kuforiji98@gmail.com> writes:
+On 26/02/24 10:41PM, brian m. carlson wrote:
+> If you're _not_ going to implement that in interoperability mode, then
+> I'd rather you just die in that case so that the test fails and then I
+> or someone else will fix it.  `extensions.compatObjectFormat` is
+> presently experimental and the data formats will change, so nobody
+> should be relying on it working as it stands right now.  There _will_ be
+> more compatibility breakage coming in future series, for instance.
 
-> From: Seyi Kufoiji <kuforiji98@gmail.com>
->
-> Switch cleanup of the string_entry oidmap to
-> oidmap_clear_with_free() and introduce a free_string_entry()
-> helper to properly free each allocated struct string_entry.
->
-> This aligns with the ongoing migration to use the callback-based
-> oidmap cleanup API.
->
-> Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
-> ---
->  sequencer.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index a3eb39bb25..75ef2ace4f 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -5654,6 +5654,12 @@ struct string_entry {
->  	char string[FLEX_ARRAY];
->  };
->  
-> +static void free_string_entry(void *e)
-> +{
-> +	struct string_entry *entry = container_of(e, struct string_entry, entry);
-> +	free(entry);
-> +}
+That sounds very sensible. In the next version I'll update to instead
+die() as unsupported if we attempt to re-sign commit signatures in
+interoperability mode.
 
-Exactly the same comment applies to this step as [PATCH v2 3/5].
+> I _would_ recommend regardless that you add a test like in t7004's
+> "signed tag with embedded PGP message" if you apply this to tags as well
+> as commits.  That requires a special case in our interoperability code
+> (since it normally converts things that look like signatures, but when
+> we're _generating_ a tag, we don't want to do that since there are no
+> signatures yet) and making sure we do the same thing in fast-import will
+> avoid corruption in our conversions.
 
-In other words, with the current codebase, these three steps in the
-context of the current code are uninteresting with little value, but
-if we ever add a member to these entries that hold their own
-resources, it would become easier to manage the lifetime rules of
-them.
+Thanks, I'll look into this. This patch series currently only applies
+this new mode to commits, but I plan to tackle tag signatures in a
+separate followup series.
 
-> @@ -6044,8 +6050,8 @@ static int make_script_with_merges(struct pretty_print_context *pp,
->  	oidset_clear(&interesting);
->  	oidset_clear(&child_seen);
->  	oidset_clear(&shown);
-> -	oidmap_clear(&commit2todo, 1);
-> -	oidmap_clear(&state.commit2label, 1);
-> +	oidmap_clear_with_free(&commit2todo, free_string_entry);
-> +	oidmap_clear_with_free(&state.commit2label, free_string_entry);
->  	hashmap_clear_and_free(&state.labels, struct labels_entry, entry);
->  	strbuf_release(&state.buf);
+Thanks,
+-Justin
