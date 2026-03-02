@@ -1,141 +1,90 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EE7322B6F
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 14:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772460769; cv=pass; b=TYlo0rWNn70DdG2O1fIy9vETHWhXyn5+RQe/iJddZZ3jNwUECT6BWqWokjVg57Nxi0YgwqFp9wEbTuDrYcdXx8KvO/XFSgvj2d4IsyCkdSalpy/4TBaOGIRcwvPw1jS6+m+ZO8ikPKlmkRnu3u2yKIjZgSpa/4pcNSd65+OuAxk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772460769; c=relaxed/simple;
-	bh=gUIlvwxUU8Bmh/UBLLyXASSIEwQ8D4DDs7vZFUQCCIY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GnDYugWGbUJcquZJ7RoTjVWVUCClFcUKWbQZqWoWb/0Kx+UGWGDbdjsHlANcvSWj4dPhL0b6zx/o56JY842UYTNXr7c2+0YbcWKdPmyOZ/b6/q8PYGvbMbh//wzxPpXTfQgwq+vROQZk96BLFj6HTj+51njnz0SV0xkO0FomWeY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=eei+G71S; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70DE3FD135
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 14:22:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772461322; cv=none; b=GamBhYY+qOWrm0hkQYWj6PLJMs4PooSkkX5a/oTZiU9Su+nFPqCxan0zvDq1kNRpvd3Uy8b7thI0zYdI5M3WJhKC9W3aVTZa6J21IBTT35lchulxpcNZRzkXlYYoLM9DbOkv29+yhRmh3lmb5SKMYxFRaOxCpHH4uNbZgQnbHSE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772461322; c=relaxed/simple;
+	bh=yzcPLPSnsj1cDOW91IXtfaHWXhbK0RjrLQtH7YFAaSY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fJXOq8g7T9lJuIaCO/qSiy3haVgWGma510atXWJpexmIcvTgRaHfJ03Pt8PLTYPVg4WrWDmWdWFIzt/+UNhPSb+pli+ia1D7aHXPsFTcQRRqdRyEGe7j+znzePrgHvmdEy2VIzHz3Jo+lAlhJ7RrXgmTZUKigo0KzaRxyK4PC14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=StldXOMY; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="eei+G71S"
-ARC-Seal: i=1; a=rsa-sha256; t=1772460763; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=FaEchhi8fP8qd3cMQKjnG6fC/sYGUAK/BrdG1Xqmd6S5zK5uxNgfKtX3+cAW5ZlPXvqifCeNSq//Uk9Y7hECkjLAO1uoHO9nvzKSr11U4uBgGlKk2RFeeI2pT1jFDE5o7p2K+yAx13rY9miG385y61MjWHMRoLkPKX5Gjb8gz4A=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1772460763; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Zq6MoEx7BMcnEiUZODUn5fCoa2g1hFDkDscQPmD8LCQ=; 
-	b=ln89ytkYfnDNUUzPEDjVTIVBrhgsc+Arwobghxwvs2VqPbx1rGI5l4LIYJHpiZeXPOfZwgtolZL+JbX+wu9jKxFnajuhrR7Xxc0XksNl2CPiKTNEK5v80NKxDhHLaOVKBY9YS1wp72abo6P4GpayBWaqa+/QQ2M2L73PNRUqzVY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772460763;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=Zq6MoEx7BMcnEiUZODUn5fCoa2g1hFDkDscQPmD8LCQ=;
-	b=eei+G71S7YCy2bbjyx0wbzvZUWY7Vw36nkdLFry2a8q1VbO5buJi7Hm88Q5qPaZu
-	Tr3YvpuDuLJEtRaYvAhQ3M614eYAWBZZTNzKApoblR3SwMkZr5w+LbvaFjVBdrLwZl6
-	mKXmS5kw8pzardy7eEWSxIBnk/yiE3lET6qsvCCc=
-Received: by mx.zohomail.com with SMTPS id 1772460762369219.217597307029;
-	Mon, 2 Mar 2026 06:12:42 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: Performance regression in "update" hooks
-In-Reply-To: <87bjh673o0.fsf@gentoo.mail-host-address-is-not-set>
-References: <aaU5lZwEuR4OrxCl@pks.im>
- <87bjh673o0.fsf@gentoo.mail-host-address-is-not-set>
-Date: Mon, 02 Mar 2026 16:12:39 +0200
-Message-ID: <874imy7220.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="StldXOMY"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-358d80f60ccso1929568a91.3
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 06:22:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772461321; x=1773066121; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=D5DJNcPX8D33sV31ozsmvznyUftKznsl27iexFyRfs8=;
+        b=StldXOMYqx/ckldDcbqeAj4HJBSvNi2rcZ1irJwJIeoi88+OkneC13iENhlOc4yAcc
+         jVSpqgbW52tSmLzvEafYLZGzV0ut6vNvPYjPr6kTayVRWMIHEO3Y0XIy6pehyxnYXfxu
+         o6vDRtCRb/51Qna9R3seXaXxSjkvKgcKeyrt1ktrMQ//AjwmPHwujLQwTGL7wzKIYX6W
+         rGASzUVG62lU828Lj0oYSd67c4gn3Yq2F01kCIXKMaswEe8ivCMfDkFHIchDJQY6EtxP
+         7cFtfSg9g5mI4PNBR8cVCLEGMrvzB0kMZbftdj3eLSVHD7gTZ0Pv/qePBycfacWh4m01
+         BCrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772461321; x=1773066121;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=D5DJNcPX8D33sV31ozsmvznyUftKznsl27iexFyRfs8=;
+        b=NDWI2ErNf++poZejQlNNxgKkEgdNVuqW32nGo69YzSpWiupXxaazJlLPU1LnE3np/m
+         ElC0F85dm2d3jKpcmkJixnQGv37ltPqHL/DKrVsDkA13DnxYPH4+GdNQIBEGDA2y3CiW
+         SMwAtQK6cPwI1U/HG8xsmHAj373w1Fgi+6MCYpFMyOQis+aLL0veUUS1khNMYn1TlX3L
+         tuCORwtdLYkvYh+pSR7TkjksqQIlM5Y2merRABREmuUmTw2HXBKLFiFnpHqC8wvC9N98
+         qQp4ecq5WTZvbMffscFKuk1ijacjcwWJxBmrNEQC4hBJhc5u098EetnotRZ5Nul0I87N
+         ZaoA==
+X-Gm-Message-State: AOJu0YwiwjLftWmAPpnHc+IeUKRg90mXBqmg9mpqR4vOFaaZ0Sl3oUuJ
+	Zs9aIVtmwBAdB9Udl0675E4CzQQrklg31S+sPT1ZYauBVsxMhIln2df5nRfs6uP7
+X-Gm-Gg: ATEYQzwp0s4YrqQODb7xRKwFcAPykQ1y+uvWR3CT5JCZ7/NVlvUBrx2SFxnTNOY+8dR
+	dBggS4TR0P9VX8GpfDUy1i4OmWmZubr8B4u0VrfHqeTJP8dhe1ymvG9IG1Ygn9DvRxSJpyreRvR
+	fmFtw0OYtexXqZ8EhzHqS4uW4D9W0hgayCEVTSZVLQ9H9XmfMsjVbEnB+IsGJQvataCbY0C331W
+	rMeJsClxa81epIZxR1C8oyjcyJ7btNAO9SGagZRTD+Jfvpn485Xo5la8ZKg+ai+hYy3j8tggnQq
+	QRZNrABNpons7MZhDvDif89YarVAFrWbP+8RrGrJn1AI2enGt7hIXrIryTixvMiVAPJaH+Z8PiD
+	4S0zC40RvbIii9Vj7358U1ZI8D7U1g8ACCSGEZNx9IcRJycqLgqWUC3AVxg4BLIbKlg3aEe/bEK
+	onn4WIKt4uRcq5KrdlK4mQmLB10mg2uYlkllSVLF5E/AbPet4dkWcI0jnS1VegSEwgMg8ZH4yWw
+	cnAfpoYU8hvDADttF7WOoAwWOM6hU3a
+X-Received: by 2002:a17:90b:240e:b0:359:8812:7c07 with SMTP id 98e67ed59e1d1-35988127f37mr3057123a91.14.1772461320966;
+        Mon, 02 Mar 2026 06:22:00 -0800 (PST)
+Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35912fbc363sm11329843a91.2.2026.03.02.06.21.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Mar 2026 06:22:00 -0800 (PST)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Subject: [PATCH 0/3] path: clean up few things
+Date: Mon,  2 Mar 2026 19:51:35 +0530
+Message-ID: <20260302142138.712273-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
 
-On Mon, 02 Mar 2026, Adrian Ratiu <adrian.ratiu@collabora.com> wrote:
-> On Mon, 02 Mar 2026, Patrick Steinhardt <ps@pks.im> wrote:
->> Hi,
->>
->> Bencher has alerted me that there's been two performance regressions in
->> git-receive-pack(1) [1] and git-fetch(1) [2].
->>
->> The first one is quite easy to reproduce with the benchmarks at [3] and
->> bisects to fc148b146a (receive-pack: convert update hooks to new API,
->> 2026-01-28):
->>
->>   $ cd receive-refs
->>   $ ./run --revisions /path/to/your/git/repo \
->>       fc148b146ad41be71a7852c4867f0773cbfe1ff9~,fc148b146ad41be71a7852c4=
-867f0773cbfe1ff9 \
->>       --parameter-list refformat reftable \
->>       --parameter-list refcount 10000
->>
->>   Benchmark 1: receive: many refs (refformat =3D reftable, refcount =3D =
-10000, revision =3D fc148b146ad41be71a7852c4867f0773cbfe1ff9~)
->>     Time (mean =C2=B1 =CF=83):     182.0 ms =C2=B1   2.7 ms    [User: 91=
-.5 ms, System: 89.3 ms]
->>     Range (min =E2=80=A6 max):   175.8 ms =E2=80=A6 185.0 ms    15 runs
->>
->>   Benchmark 2: receive: many refs (refformat =3D reftable, refcount =3D =
-10000, revision =3D fc148b146ad41be71a7852c4867f0773cbfe1ff9)
->>     Time (mean =C2=B1 =CF=83):     484.6 ms =C2=B1  27.6 ms    [User: 17=
-6.2 ms, System: 376.1 ms]
->>     Range (min =E2=80=A6 max):   406.2 ms =E2=80=A6 495.1 ms    10 runs
->>
->>   Summary
->>     receive: many refs (refformat =3D reftable, refcount =3D 10000, revi=
-sion =3D fc148b146ad41be71a7852c4867f0773cbfe1ff9~) ran
->>       2.66 =C2=B1 0.16 times faster than receive: many refs (refformat =
-=3D reftable, refcount =3D 10000, revision =3D fc148b146ad41be71a7852c4867f=
-0773cbfe1ff9)
->>
->> I've Cc'd Adrian.
->
-> Hi Patrick,
->
-> I looked at the commits before and after the many-refs test regression
-> and it appears the regressions started after Junio landed v2 of the
-> config series in next [1], which might cause it.
->
-> v2 was not ready to land. I sent v3 yesterday addressing all the
-> feedback, didn't even realize v2 landed. :)
->
-> Does the regression go away if you revert [1] ?
->
-> I don't have the benchmark setup and it might be easier for you to
-> confirm?
->
-> Many thanks!
->
-> 1:
->
-> commit 6a04cca28e210f0c51cfefcb52475c7ede6e99fb
-> Merge: d6ebc97cb1 4b12cd3ae3
-> Author:     Junio C Hamano <gitster@pobox.com>
-> AuthorDate: Fri Feb 27 15:16:30 2026 -0800
-> Commit:     Junio C Hamano <gitster@pobox.com>
-> CommitDate: Fri Feb 27 15:16:30 2026 -0800
->
->     Merge branch 'ar/config-hooks' into next
->=20=20=20=20=20
->     Allow hook commands to be defined (possibly centrally) in the
->     configuration files, and run multiple of them for the same hook
->     event.
->=20=20=20=20=20
->     * ar/config-hooks:
->       hook: add -z option to "git hook list"
->       hook: allow out-of-repo 'git hook' invocations
->       hook: allow event =3D "" to overwrite previous values
->       hook: allow disabling config hooks
->       hook: include hooks from the config
->       hook: add "git hook list" command
->       hook: run a list of hooks to prepare for multihook support
->       hook: add internal state alloc/free callbacks
+While reviewing path.c in preparation for the upcoming git repo info path expansions,
+I noticed a few areas of accumulated technical debt.
 
-Actually I think these are two separate issues.
+This series cleans up the file by removing an unused header, enforcing proper
+size_t typing for path lengths, and eliminating redundant settings evaluations
+to keep the underlying path API clean.
 
-I will reproduce and look into the regression which bisected to
-c148b146a (receive-pack: convert update hooks to new API,  2026-01-28).
+K Jayatheerth (3):
+  path: remove unused header
+  path: use the right datatype
+  path: remove redundant function calls
+
+ path.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+-- 
+2.53.0
