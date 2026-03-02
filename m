@@ -1,149 +1,142 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D576131E49
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 06:42:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C971D0DEE
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 07:17:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772433766; cv=none; b=tsjRilzkmIHAH3k17Kal6Q76vQwwWOCS5zFqeI+M80zIrMUj9+Ucw5+wj9RgkWVQ1fLulDbF4U2+PHQxdL3M1w1JhYKf063gyVXGqxl5/vN0CRFZ2H/7r4qxB4ew61TUiajhYDWAubI0p2XWrRySD6mnDH2CvbUzfWWOQbngZmE=
+	t=1772435874; cv=none; b=gQkMnpgNnB3uFT4AcB+mhCCWy4/+rknplZZguzVwTQE14qfh5f/ndoiBm2sFM/cJGx0EyfAC8FbIxgVjeohEfv/iBnsyyWKhSceK3+w14pIauT4B4Y5uEFl/eY2LyIc96dTTk3ZmkEPfQblHDqBSt/YSl5z2msLofcJkLisQlz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772433766; c=relaxed/simple;
-	bh=P3GoO4uUfn2/4ld1zu8nX4eJD5wVi/lNUarl7DyLPZ0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rXDyIjV/9KIdEbBnIrbkPDMhtVHHCuPdpFBPqd+Jjv/Ar8mH33OcbTEu0hgEmMlKYQA0baLmmQTc6dz5U76YpR3hSI9FE9GQDgoN1fEW8lxlXIQS9QiIzYbKr1qQWBL6bgiYSk5lLHxwiBhr9OifRE4wmkuVC05cnHZB8W5rN8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FPTLO40o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yefl1z6n; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772435874; c=relaxed/simple;
+	bh=FBAFZIZTZaJDpKd9KxBpB9EJlTh6oJhPbMBicwjxdyQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Vk1PMF+WZfxTeSE4T9UDrRc+5DcpmsxqXXtuE96SutV4ptE/U0ycLSNgkLLngIcXtCLjIoWs/YeX+kLlN/LJgC37/TUVbGs+aOmzjOZG2DYrCMcdTVoP8l+jv7pG/G5AhdOuW/QZ2VSkCfVSCm0ji1q/b9WxfIMFTaaSJHrz1WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O+nRF28V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fnt/U+SG; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FPTLO40o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yefl1z6n"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5DF487A00BC;
-	Mon,  2 Mar 2026 01:42:44 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Mon, 02 Mar 2026 01:42:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772433764; x=1772520164; bh=o1/xM7TiT6
-	WGu54JWzE7o2/CAI3o+ieWzN6I79FnkII=; b=FPTLO40owo+kWJMpExPuPUN+4z
-	fyOELHFvgEFelMfo6W9Kr0wFDMGcubf43V6qpAp4NNhs3SWyAYfYgcp/qM0YWKuw
-	9qYUA3fRjd/fBSuzjOcuXiCbcXBrHvluVz2OuAF/96x/IcUo9HzzxTJxG6WN1rsv
-	Xpizf8pMPx3vmmvFNqW3Jitqp5G2kx7XLeoXxtO8dfRGaR4iEtfoR1OeL9fZUQzd
-	Li8eMrDmaLOIubAPo8754zgV/hYSMr0yWMF5OrHofeqglZ0FhS/gz8H/Yb3BG8df
-	9izbOWXgvezW2pWYK5o6uy/lt+Dqnd7AlCXJmF7tDRXtYAB6wy8E52LhX6sQ==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O+nRF28V";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fnt/U+SG"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8F860EC0562;
+	Mon,  2 Mar 2026 02:17:51 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 02 Mar 2026 02:17:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1772435871; x=1772522271; bh=fJ8SfNAPyI
+	08dzVuIDys6QVvlB/RaJqGy+26M5MOL5o=; b=O+nRF28VC0ppuvap4TliZHrJbc
+	9b6djEnG/hoMn6IXz6nL90WkIqNxUUPdUQwXJQoXM9dPTNiPxYEY1YcWT+wMTx3a
+	r1ID2/Aa0vtoJtXNpxBEbJR524xwhdVhtX/Jh9109C/zG77HtB7rtrds1CXtTnPQ
+	U4qvBwvCrEE8Hvjm9pGpGY0aY+MuxPOyfcPJl8NBiofHPgASoQvtnGTMrgo3tJXO
+	QXjhxe9AE7rElWz+HpTbD5BZNVyWFRw3Iyupg7r4In7OLbhPmQohLwYNHPBqxTk/
+	e0kBBh4Tw9bzJO4KAtFn0tnX8iexgqFIv5WHfW0nKyKH/8WKLfHB8Bd8thSA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772433764; x=1772520164; bh=o1/xM7TiT6WGu54JWzE7o2/CAI3o+ieWzN6
-	I79FnkII=; b=yefl1z6nhS8wcCBJnZBdUqi382XkHaGRiXX/GoLlk4dec9LwwUx
-	E0JED8zvoUFVtFZE6Xf0fGszjXlIapy1/HI9wgnNdXQvh9HIiC3R2RdUFPRmWo9t
-	IfhJ5Vdvs3Rk+VdBLTvBQe9nAWiz3R7We4jZ3k5bx1pQl70ksBOWTKTvbqWUbWwu
-	I7HHpDE68PGR89WhG2u508rrOmmytBO8aXOh8zsTqHf+Hq/1P5ajvHi1+KfnrgWW
-	uvjdADo2T9cZCod0Td2cqBAh0yDmdl3hvNE99iJFm2/TsAg8cDUx1G9WDwy7FnBn
-	VuLG2E82evEcDUwyVsDp01OgfXntmXovuSA==
-X-ME-Sender: <xms:ZDGlabRld5jk1okhtE7az3KagekoS-Rg40stMvB2lpDC5THxUoLMeg>
-    <xme:ZDGlaTrsUiU5_roVQgSeYTgcu5vwxEUFFNGIGgqvyQp3o9FRc-TXrmapxsLkehsdJ
-    d_kE3pVp_QBKui3gdRHrneDG7D5qX_xZarKap4bl1NUd0aXLMzEAA>
-X-ME-Received: <xmr:ZDGlaZJDFRlfhIad6RNIPfMV5F9vvduttHLN34CMuMp8bAK88upGpzxalXIDz22cJqgDZkWEG9qEkz8gOWzGO1PEoheHUKiFFw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheeileekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1772435871; x=1772522271; bh=fJ8SfNAPyI08dzVuIDys6QVvlB/R
+	aJqGy+26M5MOL5o=; b=Fnt/U+SGGMJ8suSMcADWMntzfkndOgg+6f57jkihfd1+
+	JHuCgb7hH57RH+ttYl5n5A/zQNa6e7Vsu/VOoIjgs7+lt8SZGBtqyX9ecVxsaFdU
+	N38gCud2PVLPpc+HeYyR3eSttBJndFYPzT3/YiEZlXGxunL40hl5+tF97Z4XrRYG
+	s5hSAzXNWPa2jn7mfrleMAbPWRGU14A2dCjJPPaE7lzXKCxZNc57E658eCuZpI5o
+	cuuhCRooj1CLEsafa+E3QcC+jfEGv6HwamdwwwfcFaatitCXC0KPDbj2qb9Z9LZz
+	+km8mAxETyg4X11k0o4TqtUBSUwfbo8wXk8vPslNWw==
+X-ME-Sender: <xms:nzmladEONMmeGj3F88UP_h0EGsr2b2xxFouZnOVVJ6MZUgy2mKfSUA>
+    <xme:nzmlaYW0uS8AuGmHsMId2X3PdawtZkJ1Nf5_4XxufeNR94JzAs6bX5ANw7H0KXY65
+    -T8CS_tx3lnDEXa_1AWSjkvMVkrUU2_iy6qJthRtj5wVV8ryflLCQ>
+X-ME-Received: <xmr:nzmlacxQJh9df8x9znX-Ep5auuP4q-jewPhIHbGW-c3r-qT9iwvvU-Hg_p94cY43F4yukiToRATK1oxx1sT0CH5wtR7D8sa9Y8e1z_kSLQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheejtdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvg
-    hslhgrmhdrrhgvuggrrdguihhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ZDGlaWob_DQ7b_hLG3L2fWxpZ6daeAJSHh8evlYRq7_o6r222CBqjw>
-    <xmx:ZDGlaRylxnY5MfcUEJYq0ffKFWGWiuhxu7mZLKxmJ4N4FRig64l0ZQ>
-    <xmx:ZDGlaaPOt4wtjA9WMrRPl2USL7NSjgqH1SYe02VZXsgJQW9H9oSUvg>
-    <xmx:ZDGlaW61ZjzWSNLdOOVantA5pSPxYFzYcDndJyedVntKnTEoxF9luw>
-    <xmx:ZDGlaR4mXai_ifFV5CY0opjFsZwitUuTI2rlFwmNeJBAXftLatSvzMhs>
-Feedback-ID: if26b431b:Fastmail
+    gurhepfffhvfevuffkgggtugfgsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    fhtdetieehtdegjefggeelleefkeevffekgffhjeejieevvdelgedtkedutedufeenucff
+    ohhmrghinhepsggvnhgthhgvrhdruggvvhdpghhithhlrggsrdgtohhmnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
+    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprggurh
+    hirghnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:nzmlaeP30TsFy6g6I8YOo_lE9E4DF1nMEpbcRwHULV1dyuKcLoztAw>
+    <xmx:nzmlaV77JmYH2xKKNLZDCE_gBmtngTY_iYmXwZvhfzQxgPd1JJ6zoQ>
+    <xmx:nzmlaXNmr2BPuFzUMUsUF0DyvVJA7YFDbUw6Od55TKiarbtSb0v7gw>
+    <xmx:nzmlabmjUshxk9ZL4HXwTQ7YPpJSxxBvVTS1KS7mqBQf6AKRlQxHjA>
+    <xmx:nzmlaVZhsRSidvCN8cZORvOHUEO4jY4t_oThbEhoPTA9q3RbLH_zKVIU>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 01:42:43 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Eslam reda ragheb via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  eslam reda <eslam.reda.div@gmail.com>
-Subject: Re: [PATCH v4 02/10] repo: add path keys to repo info
-In-Reply-To: <58d46ec7-99cd-4878-b05d-a378ca119a68@gmail.com> (Phillip Wood's
-	message of "Sun, 1 Mar 2026 10:36:52 +0000")
-References: <pull.2208.v3.git.git.1771875812.gitgitgadget@gmail.com>
-	<pull.2208.v4.git.git.1772140487.gitgitgadget@gmail.com>
-	<6d5b9ff07566e1cc28a672cf1f47988e9c8c45da.1772140487.git.gitgitgadget@gmail.com>
-	<3c4d4909-4eb1-47f4-b601-8f877a07ddd5@gmail.com>
-	<xmqqldgeotgi.fsf@gitster.g>
-	<58d46ec7-99cd-4878-b05d-a378ca119a68@gmail.com>
-Date: Sun, 01 Mar 2026 22:42:42 -0800
-Message-ID: <xmqq8qca68bh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 2 Mar 2026 02:17:50 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id dc548e77 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Mar 2026 07:17:48 +0000 (UTC)
+Date: Mon, 2 Mar 2026 08:17:41 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: Performance regression in "update" hooks
+Message-ID: <aaU5lZwEuR4OrxCl@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Hi,
 
->> FWIW "git rev-parse --show-toplevel" dies with "must be run in a
->> work tree".  Better or worse,
->> 
->> 	rm -fr new
->> 	git init new
->> 	cd new/.git && git rev-parse --show-toplevel
->> 
->> also dies the same way, which I am not sure we want to inherit when
->> we are making a new interrogator command.
->
-> Yes, I think printing an empty value after the key would be better - I 
-> don't think there are any paths where we care about the distinction 
-> between NULL and ""
+Bencher has alerted me that there's been two performance regressions in
+git-receive-pack(1) [1] and git-fetch(1) [2].
 
-If the new and safer variant of the command should signal "error" by
-giving an empty string, it would work with its "--show-toplevel"
-equivalent run in a bare repository.  In a working tree, it would
-give a full/absolute path, and never be an empty string.  I am still
-unsure what that new and safer one should do from inside the .git
-directory.  "rev-parse --show-toplevel" dies.  $(cd .. && pwd) may
-be another plausible and arguably more useful answer.
+The first one is quite easy to reproduce with the benchmarks at [3] and
+bisects to fc148b146a (receive-pack: convert update hooks to new API,
+2026-01-28):
 
-Your idea of equiating NULL and "", I do not think it would work
-well with "git rev-parse --show-cdup" equivalent.  The command will
-give us an empty string from the top-level of the working tree.
+  $ cd receive-refs
+  $ ./run --revisions /path/to/your/git/repo \
+      fc148b146ad41be71a7852c4867f0773cbfe1ff9~,fc148b146ad41be71a7852c4867f0773cbfe1ff9 \
+      --parameter-list refformat reftable \
+      --parameter-list refcount 10000
 
-Curiously, in this sequence
+  Benchmark 1: receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9~)
+    Time (mean ± σ):     182.0 ms ±   2.7 ms    [User: 91.5 ms, System: 89.3 ms]
+    Range (min … max):   175.8 ms … 185.0 ms    15 runs
 
-	rm -fr new
-	git init new
-	cd new/.git && git rev-parse --show-cdup
-	cd objects && git rev-parse --show-cdup
+  Benchmark 2: receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9)
+    Time (mean ± σ):     484.6 ms ±  27.6 ms    [User: 176.2 ms, System: 376.1 ms]
+    Range (min … max):   406.2 ms … 495.1 ms    10 runs
 
-two "rev-parse" do not die with "must be run in a work tree", and
-worse yet, they do not give you ".." or "../../", either.
+  Summary
+    receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9~) ran
+      2.66 ± 0.16 times faster than receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9)
 
-It seems that one rule of "rev-parse --show-<some-path>" is that
-"when you are inside .git directory of a non-bare repository, we'd
-behave as if you are in a bare repository as if its working tree
-does not exist", and the above is consistent with that rule.
-"--show-cdup" does not fail but gives an empty string when run
-anywhere in a bare repository.
+I've Cc'd Adrian.
 
-But among "rev-parse --show-<anything>" that are about working tree
-paths, there seems no unifying rule on what to do when in a bare
-repsitory.  As we already saw, "--show-toplevel" dies without a
-working tree.  This reflects the history of rev-parse that grew
-organizally without a grand design.
+The other performance regression seems to be present in both
+git-receive-pack(1) and git-fetch(1) and happens between e6e9f13364
+(Sync with 'master', 2026-02-25) and ebd1da8b75 (Merge branch
+'cx/fetch-display-ubfix' into next, 2026-02-26). It took me a while to
+reproduce as my local Git configuration was hiding the regression, but I
+have been able to bisect this to 452b12c2e0 (builtin/maintenance: use
+"geometric" strategy by default, 2026-02-24).
 
-If we are adding new and safer interface to these pieces of
-information to "repo info", we may want to straighten these rules.
+The problem here is rather simple though. The benchmark fetches 10,000
+refs into the repository, and before the commit we didn't do anything
+about them. But after the commit we now have per-data-structure tasks,
+and the result is that we thus end up packing refs. That's also why the
+regression isn't present in the reftable backend, as it wouldn't need
+any optimization.
 
+So I'd consider this to be a bug in the benchmarking infrastructure
+itself that I'll fix by disabling auto-maintenance.
+
+Thanks!
+
+Patrick
+
+[1]: https://bencher.dev/perf/git?lower_value=false&upper_value=false&lower_boundary=false&upper_boundary=false&x_axis=date_time&branches=595859eb-071c-48e9-97cf-195e0a3d6ed1&testbeds=02dcb8ad-6873-494c-aabc-9a6237601308&benchmarks=e3553193-aefc-40a4-8816-9c1bdc1838a4%2Ccd00a2a1-0fd1-416a-9812-cfd3e9b4fdb8&measures=63dafffb-98c4-4c27-ba43-7112cae627fc&start_time=1765177145759&end_time=1772434745759&tab=plots&plot=6887f804-2bbc-4219-8211-55b6440fd5c0&plots_search=6887f804-2bbc-4219-8211-55b6440fd5c0&key=true&reports_per_page=4&branches_per_page=8&testbeds_per_page=8&benchmarks_per_page=8&plots_per_page=8&reports_page=1&branches_page=1&testbeds_page=1&benchmarks_page=1&plots_page=1
+[2]: https://bencher.dev/perf/git?lower_value=false&upper_value=false&lower_boundary=false&upper_boundary=false&x_axis=date_time&branches=595859eb-071c-48e9-97cf-195e0a3d6ed1&testbeds=02dcb8ad-6873-494c-aabc-9a6237601308&benchmarks=196480c8-64d1-4768-a3e2-ac3c5f75a26e%2Cb422ed57-2b09-474b-a85f-2d71ba7ca46b&measures=63dafffb-98c4-4c27-ba43-7112cae627fc&start_time=1765177141331&end_time=1772434741331&tab=plots&plot=4134acc8-9194-454c-9d71-f41b44ab969d&plots_search=4134acc8-9194-454c-9d71-f41b44ab969d&key=true&reports_per_page=4&branches_per_page=8&testbeds_per_page=8&benchmarks_per_page=8&plots_per_page=8&reports_page=1&branches_page=1&testbeds_page=1&benchmarks_page=1&plots_page=1
+[3]: https://gitlab.com/gitlab-org/data-access/git/benchmarks
