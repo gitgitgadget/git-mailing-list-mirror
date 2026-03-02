@@ -1,55 +1,55 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C015330D43
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D12630DEDC
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772475113; cv=none; b=HgSgPeu7ANwGOHbK8I3LBT3QsuBS+hZmkvM43lHYYG4OQqY86NQqtjQZyo2OIwaVL0DeAe+i2h4ainqTXUYfLFiTlZbWtakVy1UELt4eqLjXT8ia4exhdlY+FSNEhfXkfM7deAOWzDAz4vDbqpbjVpFVIabgyTCquSAVs5HcgUE=
+	t=1772475114; cv=none; b=IYmRO58WS8+KK4ylO6Y+x6ZeoPCNWD/3cioyVTnUcn1rU3BoDQWUT9pBqJ8wN3Hf4g6OIABL0rofxSmZpfOBSHcJFK9FqdroXG9QzlJJpOhp3Zklez5bAmJwLHt4AzEHMnvTUrNEXzBs8+1FGwySz1F7xGWsKmKc6zhH1bbHWxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772475113; c=relaxed/simple;
-	bh=JAJBswdr3mnbiXyXKLR8SlIkmDujTqEbYe01NjyEhJY=;
+	s=arc-20240116; t=1772475114; c=relaxed/simple;
+	bh=Luaa1A4vYBE8IlRHlYHhdECUW0rNaMfg3Fstausm0nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dry4qwIoP7Z1o1x0pqh7V+fm27nO805TbtQB7D9xbu3VQyXtb4KevWdrTLkG5Dd+DxfqNK1hObzzVNshHeFwQvULP2HiQGWekbqItqmM5p1qmw11OmaagssFouG4YIvd1k1EWejgVLGlSereoBSXwnZnxGKTcOI/bfZTB5TyqSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GwL8Kf62; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ljhq6aKi; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version; b=phcXKmrSOejUUK600BuXhey/JrTROwRdm54Rbs9qzfQuvmrus/TRdderAIdrAo11tOS2aEtDoS6Et4WSbooArFe4kMl/Y6uIo5wJSpxOmEaozhNA3qTaXbD0oc1RU7nqKblU7S6LRFeHX1C8WOpcIh/At0QUwCE1T2A+GEZ302g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DyrQ7pEm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N2ZfPxcB; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GwL8Kf62";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ljhq6aKi"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 49E15EC00D9;
-	Mon,  2 Mar 2026 13:11:51 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DyrQ7pEm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N2ZfPxcB"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id D31FEEC0107;
+	Mon,  2 Mar 2026 13:11:52 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 02 Mar 2026 13:11:51 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 02 Mar 2026 13:11:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1772475111; x=
-	1772561511; bh=kPgsTrAqprJOKpHqlM8lJJgSF1gYBkh6skmJakcjOhc=; b=G
-	wL8Kf62Mc46WUuZ60Wri7mjJPq5zsBtp9L59blUPCRWfkNc6KGJwfJDTzjLbK6y9
-	lRZ2e8WKogWhpDxc65FuCblex4bLXGp00e2mk3l9G9lSlKrucFSwI20L+hlxZySb
-	uYidXV+W0IN38KNLwbU5E/zOBWYyPXa5U8SWcNVRA0xkKyiW1ndZ3SgLAZmAc5Wz
-	Sl8cA1cQK2HxdT1u8C+pBLRXQBod6ttOKv/BLB29P3ebGEtMl765UmWACkiP4VRE
-	Anrv4nu3AT6rtY/WR5IgMwGsHkP/kCzdC2dtAkwYnJya+csfnYxfXNJjAv3uxbv+
-	k013OGv1v1T/3rJFaOMCw==
+	:reply-to:subject:subject:to:to; s=fm3; t=1772475112; x=
+	1772561512; bh=EjkEEFlFMeAOCjklm4RaATNYh80BGrgIkdJjdvd9hu8=; b=D
+	yrQ7pEmv2G7NOKYJ9tPGrYtzEQcLzKKll5vw+63h3ZqpPt+qj8/z53q2jvUoj8BC
+	4pNUA9XNlyqwmBWtWbuc++fnVv9XqLD+eXJhABbAg+T3BKter96OLpIDMF+gB0T+
+	1S9risoiguoAnVg32uOwaaphtalQJXLQ3goYX+N1ULnDQYze7VFGXf/5Yt3hcVLm
+	AS9OcuGKYFJCUHrLDCZp7aZ9D9mDUdBENj2Pq9U5iRixxL9d8nIDhtj6K8CVjzUt
+	scEY8nXpbXf0poU1T9mxqwTYqlJWb8pajUGceZzR9QMu8Da5QX5zsQRlaqC2eBhi
+	Jd8lrMnOoBrYr97ot65FA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1772475111; x=1772561511; bh=k
-	PgsTrAqprJOKpHqlM8lJJgSF1gYBkh6skmJakcjOhc=; b=ljhq6aKiZqpOhKOSi
-	xleh3ebTvdPDJpNIBN2KmCPzEsWlnMbcPR+C1RFjKMblxi6Vq8eLHwuQH4L+yEUs
-	5WdvZbxDpWdqgI0o5X8A/p9yK3+CDXMlR9S0fYE5cH57/490LoSHJzuhtJ4yTL0f
-	3j5D+wpWiPdzoudywGeCtkCoNnDfBYiY5Ui2AzE8mq3jMLTILFuZ4d2Qk0YPYTtl
-	zbvoeM5pqv9xTix2WoYwr0/O5WZi01pyc5ZVaUj+6B650NJFeS++plQaIZcw63Wd
-	1HSaoZHOUYRh8xPNP/xc7reHDwnzlJtuxHfvD+MQA+4V/A7mjQJGupSN9Ilh6zix
-	dIdJA==
-X-ME-Sender: <xms:5tKlaR8YH6uMtsKG_RUXRUZtyqRYWOZnAldi6SaWMsBsJI8op-upiw>
-    <xme:5tKlaSQGSWLw-zS5qCn6neSMYKfzRF6GWOo7KRe6WKKJlytMjkiSmtCSQtGW5uRYK
-    zPejgxwoXfH8m5Ns92r3Hc9BICTiS8LgVnygQIUgDuf6XTTJLlVIA>
-X-ME-Received: <xmr:5tKlaTcucsn5Tczi0ZOGsqZ98NkSL_LXPURmZrSJjCc3Ovx1XDTvphO-x-JEDZ66IF0eLanVRvr1mfo-wGhLTMKQ-OO49369ng>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1772475112; x=1772561512; bh=E
+	jkEEFlFMeAOCjklm4RaATNYh80BGrgIkdJjdvd9hu8=; b=N2ZfPxcBuwBdQLwKa
+	+9AOlanzoXr4Wop106+236zSH4AGZhvQpFwmvoksERZpLti9hNoHu7gm0OIcMh81
+	p8XswW0r73cu92niCnY3L7LOwtYHX8KbV7eBuHQVFVQSBkCDzgN/jmsfbsZ19S5U
+	g/DITKpISOFifkEIYFdub0z+DUghWcQ04CLFW279xBKycj36ZqUJthy+2Mrh1jqw
+	Kh1UayYEHDIDD0r9y+rjRdgOrqukE4IbIP9yr0YFiVZT6eUE6XTp+XL6REqY3eWe
+	wO1GxgWb81NHyb9pvKDC9BsMg+UkVyQ8U0SEVjbd6jtfdjbLDDtZOI1eQ3/5Uex/
+	J/WrA==
+X-ME-Sender: <xms:6NKlaUiUZ5QAnKPivol-OqxyTyV5gTbycFWl4iJUZViwPG3ldvvyfA>
+    <xme:6NKlaZm5ftmiSagXdAjPHr5M2OceXyG_Wsj3IH9DcGZMGdfMBc30nkUmgEnLy9TEM
+    MalUySMv3rGO8o65RU6N7a4WCYLnGSh94M6FnT67gTrM1AuXCPw>
+X-ME-Received: <xmr:6NKlaQi1ZrBEm_mkAZOkVRHpPGap1raKfTEZncK1OFgpppK1R06I5tHKcM3HcScybBLwXf7kaxzCJ1eT88RUjhQklnNU3uTx8A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekfeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -66,14 +66,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekfeejucetufdote
     hmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhk
     nhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthh
     hinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:5tKlacQYTNiJATqlIrFD1rDfzpnsmv7x24VrhM6eqvWIBBcPtzOLQQ>
-    <xmx:5tKlaXJ7dJ94Htglmc67XLahHfzL-Zbpn1M0fn2MeJXwkWMlRcWyAA>
-    <xmx:5tKlaRJzmw0M1xKnwl9ATA0FDhizoVvgTI65uvkDFWNKkyAyo1ZsNw>
-    <xmx:5tKlaaiT6rhgnHEHEUb0G5ELIhAVJOldbnfo9yU5FYUyZYbt9iaM-A>
-    <xmx:59KlaVLw_gVaghJdaMRSJOn5SqXIKnoJ92hIIVSf4fmL_c21oW_4GMwQ>
+X-ME-Proxy: <xmx:6NKlacFFNWZWRt5Z_ivkLxgtUUiDbL-heJt2PP1r3Qdyq55-kRHjJA>
+    <xmx:6NKlaSvxY2kk5dFAb1xl9wbbIiSZycmz1POEYzqp9oVAyau0wMZj2g>
+    <xmx:6NKladfI4CBekTsNQ8Dvs5Ws7tf267Y2bRCDL-7OY7i_QiTYR9FJ5Q>
+    <xmx:6NKlaYkWGyB-zci82OtIxLTG6wCgwP5GrvSyHwOM8ryPu76W63y7ww>
+    <xmx:6NKlaWO_C_cRKv36oyOdQyO_MpP9Ml5ht3qAg0l9R8OyAWOg_Kl-gq7h>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 13:11:50 -0500 (EST)
+ 2 Mar 2026 13:11:52 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -84,12 +84,13 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 	Jeff King <peff@peff.net>,
 	"D.  Ben Knoble" <ben.knoble@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 0/3] Sanitizing sideband output
-Date: Mon,  2 Mar 2026 10:11:46 -0800
-Message-ID: <20260302181149.3502811-1-gitster@pobox.com>
+Subject: [PATCH 1/3] sideband: drop 'default' configuration
+Date: Mon,  2 Mar 2026 10:11:47 -0800
+Message-ID: <20260302181149.3502811-2-gitster@pobox.com>
 X-Mailer: git-send-email 2.53.0-549-g863838a955
-In-Reply-To: <xmqqv7gcnwd4.fsf@gitster.g>
+In-Reply-To: <20260302181149.3502811-1-gitster@pobox.com>
 References: <xmqqv7gcnwd4.fsf@gitster.g>
+ <20260302181149.3502811-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -98,130 +99,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The topic has been waiting for an action but haven't seen any.  Here
-is a follow-up message in an attempt to unblock.
+The topic so far allows users to tweak the configuration variable
+sideband.allowControlCharacters to override the hardcoded default,
+but among which there is the value called 'default'.  The plan [*]
+of the series is to loosen the setting by a later commit in the
+series and schedule it to tighten at the Git 3.0 boundary for end
+users, and the meaning of this 'default' value will change.
 
->> Users who need different behavior get configuration options:
->> sideband.allowControlCharacters provides an escape hatch for environments
->> that require raw passthrough. The defaults in Git v3.0 will be secure.
->>
->> This series applies cleanly on v2.53.0.
->
-> Thanks for an updated series.  They applied cleanly and merged
-> cleanly to 'seen'.
+Which has to be called a horrible design.  A user expresses their
+preference by setting configuration variable in order to guard
+against sudden change brought in by changes to the hardcoded default
+behaviour, and letting them set it to 'default' that will change at
+the Git 3.0 boundary completely defeats its purpose.  If a user
+wants to say "I am easy and can go with whatever hardcoded default
+Git implementors choose for me", they simply leave the configuration
+variable unspecified.
 
-> I have three problems with this round, some minor, some fundamental.
+Let's remove it from the state before Git 3.0 so that those users
+who set it to 'default' will not see the behaviour changed under
+their feet all of a sudden.
 
-... among which I already retracted one.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config/sideband.adoc | 1 -
+ sideband.c                         | 6 ++----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
->  * There is a value "default" that the user can use to configure it,
->    which changes its behaviour across Git 3.0 version boundary.  I
->    think this is a horrible design.  Those who do not configure may
->    be showing their acceptance "I can go with whatever the tool's
->    designers choose with the option, and if that changes in the
->    middle, I can adapt", but for those who do, the configuration is
->    a mechanism, an escape hatch, to express their preference and
->    avoid getting disrupted by future change of behaviour.
->
->    Fixing it is easy here; just remove "default".  Those who want to
->    live in the fiture earlycan set it to "color" and it will stay
->    valid across Git 3.0 version boundary.  Those who want to make
->    sure their control sequences won't be broken can set it to "pass
->    everything" and it will stay valid across Git 3.0 version
->    boundary.
-
-The patch [1/3] in this series addresses this issue.  This is to be
-applied on top of Dscho's [5/6].
-
->  * I would have preferred to see the early parts of the series all
->    being opt-in, and that subset of the series be able to graduate
->    earlier.  Way earlier than the default flip to prove that they do
->    not hurt when unconfigured (they are theoretically no-op while
->    being opt-in, but we want to make sure), and that they do help
->    when configured.  And then once we are satisfied, the default
->    flip can be discussed and applied.
-
-This is what I already retracted.  The structure of the posted
-series to start extra tight and then tighten the default with the
-last patch is actually good for experiment.  We can merge all the
-steps without the "Loosen until Git 3.0 and then tighten Git 3.0
-with WITH_BREAKING_CHANGES option" patch to 'next' and see who
-screams.  Once it proves to be not too bad, we can then merge that
-last step also to 'next' and make sure the loosened state still
-works as expected.
-
-So, the plan is to merge the early part of the series, INCLUDING the
-"do not introduce the value 'default' that will change its meaning
-in the configuration file" step, to 'next', while holding the last
-"Loosen until Git 3.0" step back.  The last step in Dscho's series
-[6/6] has to be adjusted because of minor textual conflicts with the
-"do not introduce the value 'default'" step, so a rebased version of
-it appears as [2/3] in this series.
-
->  * The overall approach is "we know better than our users what
->    control sequences we want to pass, so we will write code to
->    recognize these small number of control sequences and allow
->    them", which I am worried that would put more users at risk.
->
->    But the thing is that our code may not know better than the users
->    what control sequences, which have little security implications,
->    users want to use in the payload between their servers and their
->    desktop clients.  What happens to these users who use the control
->    sequences that the code does not recognize and still want to keep
->    using them?  They have to either
->
->      (1) write code to teach git to recognize their control
->          sequences (perhaps they do want ISO/IEC 2022 passed) and
->          tweak the allowlist mechanism to support it, or
->
->      (2) use the allowlist mechanism to pass everything, even the
->          sequences they are not interested in passing that have
->          security implications.
->
->    Most of them I suspect will do the latter, which is not what we
->    want to see.
->
->    Can't we do this the other way around?  The code may not be able
->    to know what control sequences the users may want to use better
->    than the users, but the code (and the author of the code) should
->    know what control sequences have negative security implications
->    much better than the users.  Instead of teaching the code to
->    recognize control sequences to color strings [*} that have little
->    security implications, can we teach the code to recognise control
->    sequences that we do *not* want to pass and neuter them, without
->    molesting control sequences with little security implications
->    that users may want to use?
-
-And I cannot do this part myself, as the posted series does not shed
-any light what uncertainty we fear in the bytestream coming from the
-other side.  If we know what malicious data we want to protect
-against, we can surgically and specifically protect against them,
-but there is no hint in the posted series X-<.
-
-
-Summary of patches in this series:
-
- * [1/3] sideband: drop 'default' configuration
-
-   Remove the value 'default' from the allowed values for the
-   sideband.allowControlCharacters configuration variable.  Applies
-   on top of Dscho's [5/6].
-
- * [2/3] sideband: delay sanitizing by default to Git v3.0
-
-   Dscho's [6/6] rebased on top of [1/3] of this series.
-
- * [3/3] sideband: conditional documentation fix
-
-   Documentation mark-up update to help translators with the
-   conditional documentation added in [2/3].
-
-
- Documentation/config/sideband.adoc  | 13 ++++++++++---
- sideband.c                          | 10 ++++++----
- t/t5409-colorize-remote-messages.sh | 18 +++++++++++++-----
- 3 files changed, 29 insertions(+), 12 deletions(-)
-
+diff --git a/Documentation/config/sideband.adoc b/Documentation/config/sideband.adoc
+index 32088bbf2f..96fade7f5f 100644
+--- a/Documentation/config/sideband.adoc
++++ b/Documentation/config/sideband.adoc
+@@ -6,7 +6,6 @@ sideband.allowControlCharacters::
+ 	a comma-separated list of the following keywords):
+ +
+ --
+-	`default`::
+ 	`color`::
+ 		Allow ANSI color sequences, line feeds and horizontal tabs,
+ 		but mask all other control characters. This is the default.
+diff --git a/sideband.c b/sideband.c
+index a90db9e288..04282a568e 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -33,8 +33,8 @@ static enum {
+ 	ALLOW_ANSI_COLOR_SEQUENCES    = 1<<0,
+ 	ALLOW_ANSI_CURSOR_MOVEMENTS   = 1<<1,
+ 	ALLOW_ANSI_ERASE              = 1<<2,
+-	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ANSI_COLOR_SEQUENCES,
+ 	ALLOW_ALL_CONTROL_CHARACTERS  = 1<<3,
++	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ANSI_COLOR_SEQUENCES
+ } allow_control_characters = ALLOW_CONTROL_SEQUENCES_UNSET;
+ 
+ static inline int skip_prefix_in_csv(const char *value, const char *prefix,
+@@ -62,9 +62,7 @@ int sideband_allow_control_characters_config(const char *var, const char *value)
+ 
+ 	allow_control_characters = ALLOW_NO_CONTROL_CHARACTERS;
+ 	while (*value) {
+-		if (skip_prefix_in_csv(value, "default", &value))
+-			allow_control_characters |= ALLOW_DEFAULT_ANSI_SEQUENCES;
+-		else if (skip_prefix_in_csv(value, "color", &value))
++		if (skip_prefix_in_csv(value, "color", &value))
+ 			allow_control_characters |= ALLOW_ANSI_COLOR_SEQUENCES;
+ 		else if (skip_prefix_in_csv(value, "cursor", &value))
+ 			allow_control_characters |= ALLOW_ANSI_CURSOR_MOVEMENTS;
 -- 
 2.53.0-549-g863838a955
 
