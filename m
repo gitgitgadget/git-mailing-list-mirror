@@ -1,130 +1,178 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4278C357A4A
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 11:53:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A5936212E
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 11:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772452422; cv=none; b=aopED3sE+aHLfn/dqolv1hNwooeXnMd2LQKkH3r6CjM7N5ZwYosJdHNXn5t3mgMtMTYfM+gnIOqpARBfcA90bKIugjd1uwzZK3xGMCdCcx/zXOdn99nsqKF1MNJhURFQ07GOYgjOndYAnfXksKRbH70qrhh5BRWMFvawAJ06YVo=
+	t=1772452510; cv=none; b=qlprTAzhUQRt+iyPGoyCyhYySKGq1ouUb4GDd39WmCO4K9K5xnyxrKGGuvRL52oWPQPSLGbkQC7O2Nnr8yHgYEIyzQ5ravuToHpetGY3Uq4bWDSKJkfAdw4pZasBOC1vGrlwaWlcpFrWjaHHQpP0Ds66LIqvT7chRuziBpcs4sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772452422; c=relaxed/simple;
-	bh=EdCi0wqpGHA/+MbxNW5A79aNxF0DVMeRg/a8CNUcINU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dd7R9HvGuIxS/C4/ztuZmRHau3mTbiUxmBnscor7uw3LeTmEVAvOftvbYxLgmbhfYRKTmSBq2T/erU+l/ADfSYrDq0YW7lMYmhUXjPe8iDkcmtXmJkeuze8ubIu8aKUXLSgoGip4SS4Eea7wGOgO6rJM6j1jC6TfYTVDhQWA5AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CyI5dLFy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VO6/fxii; arc=none smtp.client-ip=103.168.172.151
+	s=arc-20240116; t=1772452510; c=relaxed/simple;
+	bh=cEklN6FUX/xH79qFcQSxjyNkdJ1Tje8668UDLBX68gM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=UU4GF70WjN3MUj5YXTojWO5GoKKfl/tP8SUL8uRT7+RkEfU0waMhxBgnC4HjZ7EKCvN7hw4hdATf51NEXMu1rrJjP/pyv53qdPAGB3S2Q6wP8NShn/LhxSAtDdWn6VZkH7RDehhABgfxFIbwdyn5zV0I4+TkmVs+8GDqQX3air4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HCG2f5QL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AMdRuCfT; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CyI5dLFy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VO6/fxii"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 48B78EC059A;
-	Mon,  2 Mar 2026 06:53:39 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HCG2f5QL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AMdRuCfT"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6618C140012D
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 06:55:08 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 02 Mar 2026 06:53:39 -0500
+  by phl-compute-05.internal (MEProxy); Mon, 02 Mar 2026 06:55:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772452419; x=1772538819; bh=J7OLgIl+Z+
-	j5aECTHVKfhZOYM/GYB7fucoZL3GLeoiY=; b=CyI5dLFyDe3H4vkC6m4c4R+Om1
-	fY7VpUk7y+dKiUvohYsScgOY42C8qlepQJBsDZmlxMZkiUFqfTos+N/BlKVAjfXv
-	f4HzS1bHsxRSJjzmgrv0dq17WZNa2CeHdivyBkvHpbhwGCwcnCERNscd+j+i2/ac
-	JgLh+V4HAs0Iyx2JXrRmOfzNKbR2PI99srbPpmCI5Ztxwr2Z8f7P+YwMZYvnAvZE
-	uptXmocgx+oLhFgWRGM3R1URRaZXTUB0QBRhPB74PJA4xqI4z9LQgQARBj6asl4Q
-	COcqRFMCssIWM5bpG2Ab8bEJpIxXu6QRiDvmb8eSB+uFltpARTbXW/gqN/XQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1772452508; x=1772538908; bh=1Kjfpka6Zo
+	eOFn+yI4tBUJB/3eTZlEiiUpruDSTU5e8=; b=HCG2f5QLkMdl1Tjo+kXqqZjPgC
+	pkDj4u0MsNOt8A+J9Gd5tROhNlANuilUM4vuwZFWGLy8L1+apwk/Z4yIrWrWgV90
+	9KdIOIHbcoQ4IuQfixUamelN8ACICLbvE7YMGyRr066mZ4NLm/+lz15Y2jWYomON
+	fYgYlIoEYWwH9OdVeRDhvzJfBJ5nM4tt3fas8ugBr/jkOq4nnCUH43j5f4EKfXGx
+	qA4b1lmwk31I141ci7HbjElksBopIN+pJ6N11yJHhI5ov+EOOoCoaBoBJ8snJiAq
+	SYbIU4wKHow/gV/PKLagJja6ZjXwn5pyYzlu5hmyKszFE0y7qnoQWJvR+5gg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772452419; x=1772538819; bh=J7OLgIl+Z+j5aECTHVKfhZOYM/GYB7fucoZ
-	L3GLeoiY=; b=VO6/fxii9M2hSxcxwqjDiHx4U2+HA7QvoS96pabyCDlMSbvcCDq
-	NUl62UWf74emWtIUTiDOf63EDDjdMTuyg2BiHLBkNWvMHDj+ZHZx094MhgqTskdD
-	ENjCXWi+ePAFCXloQ//aMp7lvznMHgMr39glk84bVg5wKT3MQQMsa7xrnWtC9hoT
-	o7S8cnatpmR13RtytfLiN93He+JKwDaO5jpujYFl6Hvf6OWE2DJ056JFNvWB+EFw
-	/8+2tsH1VwDv+skB09rgV73TiFfzHJbsyPWDNW8MqSI8S1iDodsyLn9DdMqQV/UB
-	PYkyyOPZ7+fhlnXbUUtl8FL/Vg/0lbwSE7g==
-X-ME-Sender: <xms:QnqlaXxrX9Er-g-xj4GoCG6ray1mrH6MjZKUZ1sr9umkRCdlVuZUIQ>
-    <xme:QnqlaRgwUH21FOZgaDrfD0bTIy4ZCFG5eEDjP2UFo-V0Arptu4lHUvWVzzVQR0JoM
-    Yq3A4c_uGvBFjzKmKGwDqBFN0Gl_gWIxZktIn3E-BzhMf2ITg6i>
-X-ME-Received: <xmr:QnqlaTnmvXdixI9OcVD2ZbwfksGK03XXgGWi08EoZrwaQgrLEWkZ0b_m4zjMl-F0HWxVfWr_JHXaA2K0dVx8hLh7Reb7rpqywfl7fVTx2g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheejiedtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1772452508; x=1772538908; bh=1Kjfpka6ZoeOFn+yI4tBUJB/3eTZ
+	lEiiUpruDSTU5e8=; b=AMdRuCfTVG/T9SWsOwTFpiJa+Y5t+wa+Q13gK0wg77lN
+	3qjIhX0fYvqZcJERe1m41H/5bZ7XsPgjsiUNP2Hl+GXBNFKuARPcuVszX3+nUVqH
+	v1V7ZBqm2slUdqddMcosn/A7F2WoGzVJe1b8+XCAH9CEF9bs2ZKu9qFv3KLRc6gF
+	EHx+cc/sRQjyvEDYiv/Lklwjl/tftDMSYrRrCvSTGAIrJxKk6R00PiKvuUrK8ljC
+	6cofHoEtV7N4YIrdYRvEaeu3lvJt/49J8rP3oxUgC1ttFgQJ0DH5GAmHw2+urG2l
+	NjnVocnUx7Ylntt7FfUnrDVVG7i77l5mylxKSqJxQA==
+X-ME-Sender: <xms:nHqlaVsDQW6C3ajZ1GDi_vCWCpo7qQsI_YyVnimRagCaRFt_hvhILg>
+    <xme:nHqlaVZENgPdy6Q4xFy7WA7zhYd4Jo8RfAXWsij0wIR8z2b05uNlNmn_ZvGMvGAuC
+    og17g9ZdOqhY1M6h_N25yXNs69L6PE3sfsWnOqX18f49TPTzIsMlA>
+X-ME-Received: <xmr:nHqlaebH6i6sHWHQxfF3FMRBeExkxkO3KKl4jBAemiqnnbBbi9_ppDBInkHvOeaxd3e5dBcYpCIYpCFFSJn4QpckUnAtZlhetmMyIv3AHQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheejieduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
-    gtohhmpdhrtghpthhtoheprghlrghnsegsrhgrihhthhifrghithgvrdguvghvpdhrtghp
-    thhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:QnqlaXiq7dFmuwDpA2lHokOWdzJQL-HL621UjgSLH6kmr1CRKBi-BA>
-    <xmx:QnqlaX05rmdQJcDgcQYw9DJ5PAw1UZ35sUAfOpoH39m4D6vSI7beBw>
-    <xmx:QnqlaQIoXmTw7ewfZEgXIMZZR2ImioYlQnULpl6KZIS3iE-nfeHUkA>
-    <xmx:QnqlaXwwu2WRfJWlDp9VJUCswiXexRHqb16qhTVkV3upqLyKW3iz9A>
-    <xmx:Q3qlaRYcMFDYxrM0OonYE2Z5nZ6QMJlYsawCpCvEX_UIb0oj9JPKcXCs>
+    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
+    dmnecujfgurhephfffufggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpedvgedvleejvdefkeetieejheelledtvefgteffffeuvddtvddtffeikefhvedv
+    gfenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthht
+    ohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:nHqlaRVCDQ63iSQzjlL7DKp7yeVhJyMH8yIOG3Gm_fF6uIlBcgdtRg>
+    <xmx:nHqlaV32hKdKOwnXKj30dQk0LSSYCTodlePCgWae0L-augykuQFYpA>
+    <xmx:nHqlaYZgW06jUuNlDSEi7VsZZqZrGX75rsWgsepiDl_WNOYSW1a8pA>
+    <xmx:nHqlaYqGJ7QNLyWs4fa2mHAmisw5WjtH8nhLZCb4XOxKG-SBdRjs2Q>
+    <xmx:nHqlacdAWt-2prs1AX5Hs4Tw_SZ25HmGuoFNZM350tXowjYDG3Xh3RlI>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 06:53:37 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 2 Mar 2026 06:55:07 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3b3fc927 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Mar 2026 11:53:35 +0000 (UTC)
-Date: Mon, 2 Mar 2026 12:53:32 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 12aabbf7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 2 Mar 2026 11:55:06 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Alan Braithwaite via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	jonathantanmy@google.com, me@ttaylorr.com, gitster@pobox.com,
-	Alan Braithwaite <alan@braithwaite.dev>
-Subject: Re: [PATCH] fetch, clone: add fetch.blobSizeLimit config
-Message-ID: <aaV6PLJCrpb2mQnq@pks.im>
-References: <pull.2058.git.1772383499900.gitgitgadget@gmail.com>
+Date: Mon, 02 Mar 2026 12:55:02 +0100
+Subject: [PATCH] ci: unset GITLAB_FEATURES envvar to not bust xargs(1)
+ limits
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2058.git.1772383499900.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260302-pks-msvc-meson-xargs-v1-1-8e42abd879ce@pks.im>
+X-B4-Tracking: v=1; b=H4sIAJV6pWkC/x3MSwqAMAwA0atI1gZqW79XERdaowaxSgNSEO9uc
+ fkWMw8IBSaBLnsg0M3Cp08o8gzcNvqVkOdk0EpXyiiN1y54yO3wIDk9xjGsgs5OzpS2rVTdQEq
+ vQAvHf9sP7/sBML2S8GYAAAA=
+X-Change-ID: 20260302-pks-msvc-meson-xargs-c4bc35496078
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.14.3
 
-On Sun, Mar 01, 2026 at 04:44:59PM +0000, Alan Braithwaite via GitGitGadget wrote:
-> From: Alan Braithwaite <alan@braithwaite.dev>
-> 
-> External tools like git-lfs and git-fat use the filter clean/smudge
-> mechanism to manage large binary objects, but this requires pointer
-> files, a separate storage backend, and careful coordination. Git's
-> partial clone infrastructure provides a more native approach: large
-> blobs can be excluded at the protocol level during fetch and lazily
-> retrieved on demand. However, enabling this requires passing
-> `--filter=blob:limit=<size>` on every clone, which is not
-> discoverable and cannot be set as a global default.
+We have started to see the following assert happen in our GitLab CI
+pipelines for jobs that use Windows with Meson:
 
-I'm not sure that we should make blob size limiting the default. The
-problem with specifying a limit is that this is comparatively expensive
-to compute on the server side: we have to look up each blob so that we
-can determine its size. Unfortunately, such requests cannot (currently)
-be optimized via for example bitmaps, or any other cache that we have.
+  assertion "bc_ctl.arg_max >= LINE_MAX" failed: file "xargs.c", line 512, function: main
 
-So if we want to make any filter the default, I'd propose that we should
-rather think about filters that are computationally less expensive, like
-for example `--filter=blob:none`. This can be computed efficiently via
-bitmaps.
+The assert in question verifies that we have enough room available to
+pass at least `LINE_MAX` many bytes via the command line. The xargs(1)
+binary in those jobs comes from Git for Windows, which in turn sources
+the binaries from MSYS2, and has the following limits in place:
 
-The downside is of course that in this case we have to do way more
-backfill fetches compared to the case where we only leave out a couple
-of blobs. But unless we figure out a way to serve the size limit filter
-in a more efficient way I'm not sure about proper alternatives.
+  $ & "C:/Program Files/Git/usr/bin/bash.exe" -l -c 'xargs --show-limits </dev/null'
+  Your environment variables take up 17373 bytes
+  POSIX upper limit on argument length (this system): 12579
+  POSIX smallest allowable upper limit on argument length (all systems): 4096
+  Maximum length of command we could actually use: 18446744073709546822
+  Size of command buffer we are actually using: 12579
+  Maximum parallelism (--max-procs must be no greater): 2147483647
 
-Another question to consider: is it really sensible to set this setting
-globally? It is very much dependent on the forge that you're connecting
-to, as forges may not even allow object filters at all, or only a subset
-of them.
+What's interesting to see is the limit of 16 exabits for the maximum
+command line length. This value might seem a bit high, and it is indeed
+the result of an underflow: our environment is larger than the POSIX
+upper limit on argument length, and the value is computed by subtracting
+the former from the latter. So what we get is the result of `2^64 -
+(17373 - 12579)`.
+
+This makes it clear that the problem here is the size of our environment
+variables. A listing sorted by length yields the following result:
+
+  $ Get-ChildItem "Env:" |
+      Sort-Object { $_.Value.Length } -Descending |
+      Select-Object Name, @{Name="Length"; Expression={$_.Value.Length}}
+  Name                                          Length
+  ----                                          ------
+  GITLAB_FEATURES                                 6386
+  Path                                             706
+  PSModulePath                                     229
+
+The GITLAB_FEATURES environment variable makes up for roughly a third of
+the complete environment. This variable is a comma-separated list of
+features available for the GitLab instance, and seemingly it has been
+growing over time as GitLab added more and more features.
+
+Fix the issue by unsetting the environment variable in "ci/lib.sh". This
+ensures that the environment variables are now smaller than the upper
+limit on argument length again, and that in turn fixes the assert in
+xargs(1).
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
+
+this patch series fixes another issue that we saw creeping into GitLab
+CI jobs for MSVC+Windows. The root cause is that our environment
+variables have grown too large, and thus xargs(1) was hitting an assert.
+
+A test run of this can be found at [1].
 
 Thanks!
 
 Patrick
+
+[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/514
+---
+ ci/lib.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 3ecbf147db..42a2b6a318 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -231,6 +231,10 @@ then
+ 	distro=$(echo "$CI_JOB_IMAGE" | tr : -)
+ elif test true = "$GITLAB_CI"
+ then
++	# This environment is multiple kB in size and may cause us to exceed
++	# xargs(1) limits on Windows.
++	unset GITLAB_FEATURES
++
+ 	CI_TYPE=gitlab-ci
+ 	CI_BRANCH="$CI_COMMIT_REF_NAME"
+ 	CI_COMMIT="$CI_COMMIT_SHA"
+
+---
+base-commit: 2cc71917514657b93014134350864f4849edfc83
+change-id: 20260302-pks-msvc-meson-xargs-c4bc35496078
+
