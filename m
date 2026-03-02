@@ -1,69 +1,70 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6F53112BD
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 20:01:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407D13112BD
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 20:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772481680; cv=none; b=PhtIqLw45t2rUqhVwxkNiDMZT3X8+oFIIGY+w1nb7K/DxbyM8GLIX8YOlGTHZP+FPR3lq/kPDa3pcsihTiEIM7XdT0DT8wM15xTh4jt/xmrA1OYF4Xq9qfb66b48VXJ8YHpJvKKet//CfFujkSUA3Kf9orYQp3cC01tv9h869NY=
+	t=1772481684; cv=none; b=Kz6px59DwGO2t4FjSYp/WP7Dqcm4QkIxqSgxpjnPr19No22vNGiCUnAVZ/C66vpH8SIljxEhHRCEWfuYItWjPIdeHcY3sJl/kNsoS2X9lOLhShf6somOQhFFcfjT4qy+rbNs7NfUhj9L3OQr+BxFPRHwMwNKlDuAHbt41Wbep88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772481680; c=relaxed/simple;
-	bh=mlzJEw6JEvMw7iJ2ttuiQyx/7g85Z0oxyXwRXGivzxY=;
+	s=arc-20240116; t=1772481684; c=relaxed/simple;
+	bh=02WURZcZvL7f5bpDeQpVEnldAZd3vQySpU5VPJCKRQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PICAOXUXSpgMOskfX0tODI4Pk0vSzCfE3G4nVO5dTAaHqvwFRkxTPkChLIR52CSMQvxePhKbe3NyW193Kte8QtAr/NNigDlFcw9bhDUu5ngshrVUXCuy8/UsXHfmqn7SETeFemiXIhrEsbqoLumFpCTOai1HCtoDY18kyPi5HnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EzeWTc9l; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version; b=o9oYRXGPfMaF3M9B/iSa1RGov1OWr3ygxeXiMvTAITyz0z+YbA+6rpsIiQm+VowT6KO6akr7Pu+7xrOWtm4N96ndZbiDQTbDZw5MnTvDz/ZVvYInyxah4b6pUvn3hymj2YDrh4Bfa996S1MLwr7fWvSWuFgw7O0CEUHoGSudaDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hy2SJRve; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EzeWTc9l"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4838c15e3cbso44167675e9.3
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 12:01:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hy2SJRve"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-48373a4bca3so29656955e9.0
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 12:01:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772481677; x=1773086477; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772481681; x=1773086481; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wI5EGYyWEW1cyUezTJTLtE683buKJEjDOwsfAOa4zMo=;
-        b=EzeWTc9lI690I6CyB5UQz3TtT4AvVJmI/ChHRX+YdOGZNkQNxhmG1BqeIGVcFuUBVX
-         8uFnfbRnGlR4/hNFRQuP0J5OY4UEBCm+pQKBeKU01kv8JuRpRPnguE6MxhNwPCQjwrsN
-         yY44siufJJMfsbNYYC2ZdOcBYnNdwepQG/3EBej1VXx75Es6cdofUQMtVApjW1EU1yh4
-         T90x1G6n/xCaVdeydKKF4pULZzhNOUgEiwCKLysjj8VsDjkUPOHFZlcCsPc1LhkxKEth
-         AbqXq/gWfRSHELLAoRAE0qAeVNQqV3eLX6RVbvxylJK2jXS3YqU1bt0VupKO15LD/mWh
-         cMKw==
+        bh=94rpIcLxgG7UBMY7yN7x4K5rb5sZ4hArbRLyH+Tf7Ng=;
+        b=Hy2SJRveDXKS1dkcj9jsoW2Fo+vA2PQC4KfKnL5yNxIJwkXggLZ0dTv0NArY91WZcy
+         BpNF/O/m1J/zoip9rTk0ok5W4dmV8tAEwlSEJHnGz/mi7xflOtTuEXXeGOSQQAisoZ7Z
+         M/8Xsuq7Kx8aKEFqg9EbWKv04d1YENLTuTYNf+xDgYlPkpHHxOTuZtyRqaV2njnuq0Bn
+         zuZ3mNadY2NdHWL1fzyF8yWbgxGjtMyiGQuEIfLWrnpXOtUJAMYjyp8GrrT7/1KYjaBa
+         xKBO8wrUakR7sgAuiaH6N/vPu/EGhl7+rBZ5lVG42SGRbv8mDJUcn8cPqw9piSFs+Kj0
+         lbug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772481677; x=1773086477;
+        d=1e100.net; s=20230601; t=1772481681; x=1773086481;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=wI5EGYyWEW1cyUezTJTLtE683buKJEjDOwsfAOa4zMo=;
-        b=Ta+Gl7ZE7Q/SBpfCXnOz5L+kA9CegmLANs3rrzeR4tx2IWwyM8LrLQ1IwPG72Rj4aN
-         8PuJmZWAj0gYxo9RMjB5LH6pNOQxatY1+kHWjl8OvPKd6aF/FBTrYIDNpcvstn7GW1wY
-         bWckKE+dIKqnuqvWbUYFt4nPzLh+DpYjezoZLa6xgm/E5J73UC51kCYrk+l8443isWmi
-         MeuQdqAVwkuGftmRYqjy8Dz4fz4PhxXHyCwg7CNig6Li8GGWynot57bDJGmtjac6ZPGj
-         rBsIDiA5J56LNl1UbOQKAc3FN+P7IjmM/blC+wbRXt1dAcGljAIROhjfn34K/CQmTH1n
-         52gA==
-X-Gm-Message-State: AOJu0Yyr3XkniVjF5iWnPKrHVrwB121AGqLGMwMfe02+EFADkTaCCPWW
-	IdQNcKvBuRI7OhSNLWzMDKr7R4AIHpP4jkRQ7GFrlu97no5xuW4ihFbuEayuCg7m
-X-Gm-Gg: ATEYQzwrF+KcsI2SayX8DIzJmk5fiDvYmKmOcx0cJ3WzUgl1I0DGT4tOIPmt4s+l2RG
-	pa9OXgGwlTtLO6WOWkJ28RFXf4c2nRVVD0AEprY8YOqgvN/uXtdfrebBek3+rTFV0PSUfJKNkbN
-	QYGhUWr9qdzTvxHiLTQfhqTx1PMf3+k0kQUoF1O/iGSNuMx94Uv9tlwRh3Yq4pcSQoFMd6d4hTU
-	STCHrE/NCVL9PszEKFw0j9GmsuZTiHpLYrGB9DbZ4sUPRdThwOH0NeMB2w7a6kJC/vEGWNvBOJL
-	JBEYI3x4NEsQp94NfI+ooBthCNC+KclA6293Xl/xbjzAV9C0klH4XoOAM0lVmOeckHsTxTqveK9
-	fS7f+GXp2iQFe7mVdAP6TKhsyoh+j9pmhYEhDBR7vaBVgywTiomSqwECctItYvmMT6u6cE7IYFo
-	HcmPOS3fbwh4gQZWGqV++N8SnH93GVQPi+LUUr/qGRZ4jfP5Y0S2suJ8yqIaW/E+8cL1abpHY=
-X-Received: by 2002:a05:600c:4444:b0:475:de12:d3b5 with SMTP id 5b1f17b1804b1-483c9c323d8mr211513765e9.34.1772481677199;
-        Mon, 02 Mar 2026 12:01:17 -0800 (PST)
+        bh=94rpIcLxgG7UBMY7yN7x4K5rb5sZ4hArbRLyH+Tf7Ng=;
+        b=QZSckEmRQ+osq4qpsfLbmnfxAw+IbJqBELVldIEF7auvMbbCZJxx7Hr6RQkW32FAO3
+         +0xXwPPGrZ5uRO1+npjh2BjQWD4Jyr+Ji53nrlpYSDCvkBa3Yv00pa05BgftgxshzTAt
+         R1gYhR2EucDrMRtBKBnDnX5VH2tc7FSwV4TuxN+b1VYCBAiqVqZPo92bFYk1Y8AhiFu9
+         WTkQZ80pUfohvmyXw04EEccrdz/pFe4cFjZEW84TFFuHV0c46Al1/mEyhOWJx7Zinr8u
+         Vy7VxTf83AJXLO/B0KADeUAsfjnQukYHv2F+FzhoaN5lHwhjCzLHnTa+XVS9DE+G5VZQ
+         0AsQ==
+X-Gm-Message-State: AOJu0Yy74JkREmZ9HcZ3KqAfwbUdyJJu/KdSU6eoOX46jF88yf1yA3Nf
+	BWgYGylKq91jGQY2gvtfTPIhZOIVYGMxPYhsNYJVQgCJRigjXTIxtKQ2P61WPCQY
+X-Gm-Gg: ATEYQzx89H+Y+c+gt07FXNsi4787NtuyBOmbiIPCQBsLbhMVEUYtUXbiKw1pgshXrKI
+	Pazqf7k5TjqVkIb4aNMvF9zyOPajBj00/tksRVUNACh/Tx5h2q711FKhDV5cIW5xderT+DtEgd1
+	a4PcIEoFxlkzoALYY8xznkFRkf9B18w8RnwmL9Iz1QUlTNT9wff6HT00LTXzbR8U6bCvPjAJOCd
+	cEmpR3HBL8TQT0MKHlK3s/RML+uPgSpHdLDCfcghn40EIJXrPp40eZu/3CoJw10KFiOOmmLIvAp
+	L7DqfvbmM8dQBPIN82GtMU4R+/9DdETJCtfagNfypXZBYPl93BglYpAcxd19npYC4uXbrD3rs3M
+	r6gUC2UYH3RpmPohQa7Z4a0klZJzb8+ACY3kzvdTsBygFdOjh3fG57wgMh5GQHEyHgfGHJBxJ4j
+	W4JRE9fyxY4mk0JVhyc31mJEbQZa6/EyvAq700WdEKXeHGWpo1BIuWrY8Xl7ipLky3ftHdbOMGo
+	vWxhVxnVg==
+X-Received: by 2002:a05:600c:34d0:b0:477:7b16:5f9f with SMTP id 5b1f17b1804b1-483c9bdb2d2mr258971095e9.31.1772481681394;
+        Mon, 02 Mar 2026 12:01:21 -0800 (PST)
 Received: from localhost.localdomain ([105.113.67.17])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485126547absm446875e9.7.2026.03.02.12.01.14
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485126547absm446875e9.7.2026.03.02.12.01.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 12:01:16 -0800 (PST)
+        Mon, 02 Mar 2026 12:01:20 -0800 (PST)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Seyi Kufoiji <kuforiji98@gmail.com>
-Subject: [PATCH v2 3/5] list-objects-filter: use oidmap_clear_with_free() for cleanup
-Date: Mon,  2 Mar 2026 21:00:15 +0100
-Message-ID: <20260302200018.75731-4-kuforiji98@gmail.com>
+Subject: [PATCH v2 4/5] odb: use oidmap_clear_with_free() to release replace_map entries
+Date: Mon,  2 Mar 2026 21:00:16 +0100
+Message-ID: <20260302200018.75731-5-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260302200018.75731-1-kuforiji98@gmail.com>
 References: <20260227234213.17633-1-kuforiji98@gmail.com>
@@ -78,53 +79,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Seyi Kufoiji <kuforiji98@gmail.com>
 
-Replace the use of oidmap_clear(&seen_at_depth, 1) in
-filter_trees_free() with oidmap_clear_with_free().
+Replace the direct oidmap_clear() call in odb_free() with
+oidmap_clear_with_free(), and introduce a free_replace_map_entry()
+helper to properly free each struct replace_object stored in the map.
 
-The seen_at_depth map stores heap-allocated struct
-seen_map_entry objects. Previously, passing 1 relied on
-oidmap_clear() internally calling free() on each entry.
-
-Convert this to the explicit oidmap_clear_with_free() API
-and provide a typed free_seen_map_entry() helper to free
-each container entry.
-
-This makes the ownership and cleanup policy explicit and
-removes reliance on the legacy boolean free_entries
-parameter.
+This centralizes cleanup logic and ensures entries are released
+correctly via a dedicated callback.
 
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- list-objects-filter.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ odb.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index 78316e7f90..0038bfaac5 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -143,6 +143,13 @@ struct seen_map_entry {
- 	size_t depth;
- };
+diff --git a/odb.c b/odb.c
+index 1679cc0465..8ca497203f 100644
+--- a/odb.c
++++ b/odb.c
+@@ -14,6 +14,7 @@
+ #include "object-file-convert.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "oidmap.h"
+ #include "packfile.h"
+ #include "path.h"
+ #include "promisor-remote.h"
+@@ -1089,6 +1090,13 @@ void odb_close(struct object_database *o)
+ 	close_commit_graph(o);
+ }
  
-+static void free_seen_map_entry(void *e)
++static void free_replace_map_entry(void *e)
 +{
-+	struct seen_map_entry *entry =
-+		container_of(e, struct seen_map_entry, base);
++	struct replace_object *entry =
++		container_of(e, struct replace_object, original);
 +	free(entry);
 +}
 +
- /* Returns 1 if the oid was in the omits set before it was invoked. */
- static int filter_trees_update_omits(
- 	struct object *obj,
-@@ -244,7 +251,7 @@ static void filter_trees_free(void *filter_data) {
- 	struct filter_trees_depth_data *d = filter_data;
- 	if (!d)
- 		return;
--	oidmap_clear(&d->seen_at_depth, 1);
-+	oidmap_clear_with_free(&d->seen_at_depth, free_seen_map_entry);
- 	free(d);
- }
+ static void odb_free_sources(struct object_database *o)
+ {
+ 	while (o->sources) {
+@@ -1109,7 +1117,8 @@ void odb_free(struct object_database *o)
  
+ 	free(o->alternate_db);
+ 
+-	oidmap_clear(&o->replace_map, 1);
++	if (o->replace_map_initialized)
++		oidmap_clear_with_free(&o->replace_map, free_replace_map_entry);
+ 	pthread_mutex_destroy(&o->replace_mutex);
+ 
+ 	odb_close(o);
 -- 
 2.43.0
 
