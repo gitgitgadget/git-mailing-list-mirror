@@ -1,239 +1,190 @@
-Received: from embla.dev.snart.me (embla.dev.snart.me [54.252.183.203])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E14199FBA
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 03:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.252.183.203
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0358572618
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 04:54:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772421685; cv=none; b=IOfrVhIbMuGgvb5HRg3iPYccWppi2oSKeER+UD96N9yTRA7ah0Z0MAfS5bUDY6F6rfhYrnrnCs25F55SgVJXevElQmoZXVeyMLOHGmK9OI6p+1PLYxKH3S/Q6gmy9EJiWzCWY7TwBbRxStSzayej4p4GadA9XpK4nnbSrumD3b8=
+	t=1772427259; cv=none; b=TVKJ0pYdEMt/a3nb9zhOGocmmBXcyJrFnTwP+4ZBs/58LF0MsZRCbFFtJrymrC3aKtl0E66zE49MkobrObzH03uQyyFTvppoBqYOLNPz0WdMQkBfebl2QZCwZU0wOAwCn3sVoeSrpiMBujgKY6XvnYSONYMIB6PMcoxzNL8jhxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772421685; c=relaxed/simple;
-	bh=dsh5NpPkebd7L/Ve5saypA9YzY6XBYwSlaO7I1VaO+Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HbYZrlRsE9mFAxo7FUI2q5bE1zHseLWrsitSjUcNmMm15E/V5S89ijF3I4dOCVQp8Z4AaiDsUC1nyqoHDq0jT745ZxtQlMZCFN7SxuAEqdk1l8q7CGKtcx0pcCnZRPQZW2zOykmUMJscDqbSwFqffCd9Pwt1qrw1L88HgHWkTEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dev.snart.me; spf=pass smtp.mailfrom=dev.snart.me; dkim=pass (1024-bit key) header.d=dev.snart.me header.i=@dev.snart.me header.b=a9GR7E6k; arc=none smtp.client-ip=54.252.183.203
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dev.snart.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dev.snart.me
+	s=arc-20240116; t=1772427259; c=relaxed/simple;
+	bh=MlesWDEpK8cZ/e7HTVcQCK5YTuqIBztbJL3TQmyvbYw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Bd3fRrozcwFWds/WYcbcc7cTxsZ5a/tpJog6VPmZfFG6ZAGtSx69qz7366YaSOCB7+FLl5vZgradga77yrd30UBiczC7hSnZL7DfeSMaQyrxGWY+UahVHnddB4FumDWJlhF7Okg3OCfpQGEsmoFlZglbOj3GViWg3iJBwLl/yv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JW5dqJW7; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=dev.snart.me header.i=@dev.snart.me header.b="a9GR7E6k"
-Received: from embla.dev.snart.me (localhost [IPv6:::1])
-	by embla.dev.snart.me (Postfix) with ESMTP id 571D01CBC3;
-	Mon,  2 Mar 2026 03:21:16 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 embla.dev.snart.me 571D01CBC3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dev.snart.me; s=00;
-	t=1772421676; bh=dsh5NpPkebd7L/Ve5saypA9YzY6XBYwSlaO7I1VaO+Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9GR7E6kx5IQGKw6HjPTsuUv8br3+BW2TaUrEHSLdmtzqCNWt8X4feRUvCguJXmY4
-	 mhTLbEDyqINbsNg4/XC7opY8XHB7JHVyJr/ZNVorAtk27AzuC/l6Jvm0/3VvZI0ovZ
-	 MEaP/8Nlj4mq5sRDFXGIhXqwaub7DM9Q3c6w4U3c=
-Received: from maya.d.snart.me ([182.226.25.243])
-	by embla.dev.snart.me with ESMTPSA
-	id TNW0LCcCpWl8sAAA8KYfjw:T2
-	(envelope-from <dxdt@dev.snart.me>); Mon, 02 Mar 2026 03:21:16 +0000
-From: David Timber <dxdt@dev.snart.me>
-To: git@vger.kernel.org
-Cc: David Timber <dxdt@dev.snart.me>
-Subject: [PATCH v2 1/1] send-email: add client certificate options
-Date: Mon,  2 Mar 2026 12:16:41 +0900
-Message-ID: <20260302032048.260209-2-dxdt@dev.snart.me>
-X-Mailer: git-send-email 2.53.0.1.ga224b40d3f.dirty
-In-Reply-To: <20260302032048.260209-1-dxdt@dev.snart.me>
-References: <xmqqo6lb4fuy.fsf@gitster.g>
- <20260302032048.260209-1-dxdt@dev.snart.me>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JW5dqJW7"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2a3e79fe2b8so5740675ad.1
+        for <git@vger.kernel.org>; Sun, 01 Mar 2026 20:54:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772427257; x=1773032057; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uGkWYmvDmleDkDNeVswUAM2sdduAx1k9KVRcnA7TrEM=;
+        b=JW5dqJW7U5rmLZbz9FqfuiEaU6eZa8d0zSs69k9fPA1bLf822xcVGoeSaNk8Fh0gr5
+         6nizZ5u0laHQyhNjPKZg4bO/v2mTXVtvG55XMXrVUibevsRRpQQnahb1R3MfahjZc2Q3
+         Ufehlc9oW4MBXZVOKde70QYeDFsFJqcZlD+vNxnFp7uyNiWlJ4MobiEpCozzk0yNJuq+
+         HAaiVVukk1yHKiYtiKhehUaUv9mOwqKIyDRpVKC6+9Rs+5jcToe5HPa6e89fVFkZM+Il
+         y2Ae5OHb8VkWpTGI9CGH4Hw7ZvrpIn0FtLDlibD6mR2yeBt41/kLRG5hko8RF+pv3pJO
+         HsLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772427257; x=1773032057;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uGkWYmvDmleDkDNeVswUAM2sdduAx1k9KVRcnA7TrEM=;
+        b=Jhof6wn93fFSGOKesvGNYCULWv7djsQaU7xrvG/lxH2UzzLspNkRjtC7bOemp1Ly0G
+         6YZs/AjfWCjJiAQcwbJAl8dpjOq5zUeuWnopmrRTv5qaW4tUcpR/+qYevZEvffBrzHRY
+         oHZpmODQARgsyzLyaX1p7TKC25yj8ExZ8J4IQlL5l5gBML8Sxs1uh45zhggDNDxJ7kCU
+         A5Y1USmPh1nTBsGxMhnpcMasgzuLIb2db1oFsqvP+sk8fFtaqOu8oNeblpBOc53P7B3C
+         fBpOk/lwUQVKtVQIzsdXIgqRZjh+2IjgGZ7EkkUjUU9HMsjKIBHeGlMTZhkoJ2yiovkX
+         36dQ==
+X-Gm-Message-State: AOJu0YxPJC+prbPs/Hz5J3Cbj42+2NAOeRRF2+teb97XAezH53PoI+dQ
+	Y0IdpKnuTbLCWw5tOHNSLO72IurqDf8Azm4IgIvrhgIYgPyO22JUr163
+X-Gm-Gg: ATEYQzz16ey5PqVz4QDGkFG1tI7JEU0MUU9ft86dHaNusECx4v25ZVICsrd+ZDtLolH
+	uUDMbX/L5L71RMIKq3FDxgUOy+hYHCrzcyAkyiJu/PPb/qzJ+0QIoVcjvTP5puruFwvMNC0cO37
+	oput2rBEoD8QFEc70crLR9yJtQcjG5vbmPdy0VBn/rYerUebsf9GfRA3e27ZUgq4dj92/xw8h31
+	8oMBpEXdndIDrHIG4dKTQJZWBYsaJ3Z1OLcvvMZFgOxt5y7O/1AlI7LWZ6df1hPODb5w4rf3eYw
+	uHk1btesYnSU/h8RQ6WIcBAlOH+frFpPsnIfcLlZsWDvbIKO5lW76rXe3GVDlff4zXe2gKyzMOs
+	Dz1uwBXIze7e0kEzV4Myd500xuo9bJ0edETM5ZTmnN6eRvODpwodTgdDxiRomfHxQB7Iw2VE5cy
+	uFUgPt5uQ36nZvrxKJEaCBmWYcA6TY3Bia92M15DjMmuMgLbMPIsy8AGn/WgHQzGUvxfPjpDSOg
+	G7NUUBqvaI=
+X-Received: by 2002:a17:90b:3c09:b0:359:8d95:4a57 with SMTP id 98e67ed59e1d1-3598d954d03mr1425091a91.6.1772427257171;
+        Sun, 01 Mar 2026 20:54:17 -0800 (PST)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35982814773sm4241216a91.0.2026.03.01.20.54.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Mar 2026 20:54:16 -0800 (PST)
+Message-ID: <6d87ec49-6f24-42c5-86b2-6a4825607bb2@gmail.com>
+Date: Mon, 2 Mar 2026 12:54:13 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] repo: add the field path.toplevel
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net,
+ kumarayushjha123@gmail.com, jayatheerthkulkarni2005@gmail.com,
+ valusoutrik@gmail.com, pushkarkumarsingh1970@gmail.com
+References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
+ <20260228224252.72788-5-lucasseikioshiro@gmail.com>
+ <71e42a01-6077-48fc-876e-555431d1288f@gmail.com>
+ <9789E676-4DE0-4C4C-BCAC-5BD880A51CE1@gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <9789E676-4DE0-4C4C-BCAC-5BD880A51CE1@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-For SMTP servers that do "mutual certificate verification", the mail
-client is required to present its own TLS certificate as well. This
-patch adds --smtp-ssl-client-cert and --smtp-ssl-client-key for such
-servers.
+Hi Lucas
 
-The problem of which private key for the certificate is chosen arises
-when there are private keys in both the certificate and private key
-file. According to the documentation of IO::Socket::SSL(link supplied),
-the behaviour(the private key chosen) depends on the format of the
-certificate. In a nutshell,
+> I don't think it can be considered a low-level function, but I
+> agree that its name can be misleading.
 
-	- PKCS12: the key in the cert always takes the precedence
-	- PEM: if the key file is not given, it will "try" to read one
-	  from the cert PEM file
+Hummm...If a function is solely responsible for string concatenation and 
+resides in  like path.c, why isn't it a low level function?
 
-Many users may find this discrepancy unintuitive.
+I think the key issue lies in the fact that this function's 
+responsibilities are not quite appropriate, rather than merely the 
+name. Does a string buffer need to understand Git's path formatting 
+rules? It should only know how to append bytes, right? Maybe it would be 
+better suited as a domain-specific formatter like 'format_path_output()' 
+in a higher level module? I am quite uncertain about it.
 
-In terms of client certificate, git-send-email is implemented in a way
-that what's possible with perl's SSL library is exposed to the user as
-much as possible. In this instance, the user may choose to use a PEM
-file that contains both certificate and private key should be
-at their discretion despite the implications.
 
-Link: https://metacpan.org/pod/IO::Socket::SSL#SSL_cert_file-%7C-SSL_cert-%7C-SSL_key_file-%7C-SSL_key
-Link: https://lore.kernel.org/all/319bf98c-52df-4bf9-b157-e4bc2bf087d6@dev.snart.me/
+> In this case, no, it is defined in wrapper.h.
 
-Signed-off-by: David Timber <dxdt@dev.snart.me>
----
- Documentation/config/sendemail.adoc | 16 ++++++++++
- Documentation/git-send-email.adoc   | 19 ++++++++++++
- git-send-email.perl                 | 47 ++++++++++++++++++++++-------
- 3 files changed, 71 insertions(+), 11 deletions(-)
+Yes it is defined in wrapper.h. However in wrapper.c we have:
 
-diff --git a/Documentation/config/sendemail.adoc b/Documentation/config/sendemail.adoc
-index 90164c734d..6560ecc5ab 100644
---- a/Documentation/config/sendemail.adoc
-+++ b/Documentation/config/sendemail.adoc
-@@ -12,6 +12,22 @@ sendemail.smtpSSLCertPath::
- 	Path to ca-certificates (either a directory or a single file).
- 	Set it to an empty string to disable certificate verification.
- 
-+sendemail.smtpSSLClientCert::
-+	Path to the client certificate file to present if requested by the
-+	server. This is required when the server is set up to verify client
-+	certificates. If the corresponding private key is not included in the
-+	file, it must be supplied using `sendemail.smtpSSLClientKey` or the
-+	`--smtp-ssl-client-key` option.
-+
-+sendemail.smtpSSLClientKey::
-+	Path to the client private key file that corresponds to the client
-+	certificate. To avoid misconfiguration, this configuration must be used
-+	in conjunction with `sendemail.smtpSSLClientKey` or the
-+	`--smtp-ssl-client-cert` option. If the client key is included in the
-+	client certificate, the choice of private key depends on the format of
-+	the certificate. Visit https://metacpan.org/pod/IO::Socket::SSL for more
-+	details.
-+
- sendemail.<identity>.*::
- 	Identity-specific versions of the `sendemail.*` parameters
- 	found below, taking precedence over those when this
-diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
-index ebe8853e9f..ed9a0d3053 100644
---- a/Documentation/git-send-email.adoc
-+++ b/Documentation/git-send-email.adoc
-@@ -290,6 +290,25 @@ must be used for each option.
- 	variable, if set, or the backing SSL library's compiled-in default
- 	otherwise (which should be the best choice on most platforms).
- 
-+--smtp-ssl-client-cert <path>::
-+	Path to the client certificate file to present if requested by the
-+	server. This option is required when the server is set up to verify
-+	client certificates. If the corresponding private key is not included in
-+	the file, it must be supplied using the `sendemail.smtpSSLClientKey`
-+	configuration variable or the `--smtp-ssl-client-key` option. Defaults
-+	to the value of the `sendemail.smtpSSLClientCert` configuration
-+	variable, if set.
-+
-+--smtp-ssl-client-key <path>::
-+	Path to the client private key file that corresponds to the client
-+	certificate. To avoid misconfiguration, this option must be used in
-+	conjunction with the `sendemail.smtpSSLClientKey` configuration variable
-+	or the `--smtp-ssl-client-cert` option. If the client key is included in
-+	the client certificate, the choice of private key depends on the format
-+	of the certificate. Visit https://metacpan.org/pod/IO::Socket::SSL for
-+	more details. Defaults to the value of the `sendemail.smtpSSLClientKey`
-+	configuration variable, if set.
-+
- --smtp-user=<user>::
- 	Username for SMTP-AUTH. Default is the value of `sendemail.smtpUser`;
- 	if a username is not specified (with `--smtp-user` or `sendemail.smtpUser`),
-diff --git a/git-send-email.perl b/git-send-email.perl
-index cd4b316ddc..324fa0056c 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -66,6 +66,8 @@ sub usage {
-     --smtp-ssl-cert-path    <str>  * Path to ca-certificates (either directory or file).
-                                      Pass an empty string to disable certificate
-                                      verification.
-+    --smtp-ssl-client-cert  <str>  * Path to the client certificate file
-+    --smtp-ssl-client-key   <str>  * Path to the private key file for the client certificate
-     --smtp-domain           <str>  * The domain name sent to HELO/EHLO handshake
-     --smtp-auth             <str>  * Space-separated list of allowed AUTH mechanisms, or
-                                      "none" to disable authentication.
-@@ -279,6 +281,7 @@ sub do_edit {
- my ($to_cmd, $cc_cmd, $header_cmd);
- my ($smtp_server, $smtp_server_port, @smtp_server_options);
- my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
-+my ($smtp_ssl_client_cert, $smtp_ssl_client_key);
- my ($batch_size, $relogin_delay);
- my ($identity, $aliasfiletype, @alias_files, $smtp_domain, $smtp_auth);
- my ($imap_sent_folder);
-@@ -350,6 +353,8 @@ sub do_edit {
- my %config_path_settings = (
-     "aliasesfile" => \@alias_files,
-     "smtpsslcertpath" => \$smtp_ssl_cert_path,
-+    "smtpsslclientcert" => \$smtp_ssl_client_cert,
-+    "smtpsslclientkey" => \$smtp_ssl_client_key,
-     "mailmap.file" => \$mailmap_file,
-     "mailmap.blob" => \$mailmap_blob,
- );
-@@ -531,6 +536,8 @@ sub config_regexp {
- 		    "smtp-ssl" => sub { $smtp_encryption = 'ssl' },
- 		    "smtp-encryption=s" => \$smtp_encryption,
- 		    "smtp-ssl-cert-path=s" => \$smtp_ssl_cert_path,
-+		    "smtp-ssl-client-cert=s" => \$smtp_ssl_client_cert,
-+		    "smtp-ssl-client-key=s" => \$smtp_ssl_client_key,
- 		    "smtp-debug:i" => \$debug_net_smtp,
- 		    "smtp-domain:s" => \$smtp_domain,
- 		    "smtp-auth=s" => \$smtp_auth,
-@@ -1520,6 +1527,8 @@ sub handle_smtp_error {
- }
- 
- sub ssl_verify_params {
-+	my %ret = ();
-+
- 	eval {
- 		require IO::Socket::SSL;
- 		IO::Socket::SSL->import(qw/SSL_VERIFY_PEER SSL_VERIFY_NONE/);
-@@ -1531,20 +1540,36 @@ sub ssl_verify_params {
- 
- 	if (!defined $smtp_ssl_cert_path) {
- 		# use the OpenSSL defaults
--		return (SSL_verify_mode => SSL_VERIFY_PEER());
-+		$ret{SSL_verify_mode} = SSL_VERIFY_PEER();
-+	}
-+	else {
-+		if ($smtp_ssl_cert_path eq "") {
-+			$ret{SSL_verify_mode} = SSL_VERIFY_NONE();
-+		} elsif (-d $smtp_ssl_cert_path) {
-+			$ret{SSL_verify_mode} = SSL_VERIFY_PEER();
-+			$ret{SSL_ca_path} = $smtp_ssl_cert_path;
-+		} elsif (-f $smtp_ssl_cert_path) {
-+			$ret{SSL_verify_mode} = SSL_VERIFY_PEER();
-+			$ret{SSL_ca_file} = $smtp_ssl_cert_path;
-+		} else {
-+			die sprintf(__("CA path \"%s\" does not exist"), $smtp_ssl_cert_path);
-+		}
- 	}
- 
--	if ($smtp_ssl_cert_path eq "") {
--		return (SSL_verify_mode => SSL_VERIFY_NONE());
--	} elsif (-d $smtp_ssl_cert_path) {
--		return (SSL_verify_mode => SSL_VERIFY_PEER(),
--			SSL_ca_path => $smtp_ssl_cert_path);
--	} elsif (-f $smtp_ssl_cert_path) {
--		return (SSL_verify_mode => SSL_VERIFY_PEER(),
--			SSL_ca_file => $smtp_ssl_cert_path);
--	} else {
--		die sprintf(__("CA path \"%s\" does not exist"), $smtp_ssl_cert_path);
-+	if (defined $smtp_ssl_client_cert) {
-+		$ret{SSL_cert_file} = $smtp_ssl_client_cert;
- 	}
-+	if (defined $smtp_ssl_client_key) {
-+		if (!defined $smtp_ssl_client_cert) {
-+			# Accept the client key only when a certificate is given.
-+			# We die here because this case is a user error.
-+			die sprintf(__("Only client key \"%s\" specified"),
-+				    $smtp_ssl_client_key);
-+		}
-+		$ret{SSL_key_file} = $smtp_ssl_client_key;
-+	}
-+
-+	return %ret;
- }
- 
- sub file_name_is_absolute {
--- 
-2.53.0.1.ga224b40d3f.dirty
+char *xgetcwd(void)
+{
+	struct strbuf sb = STRBUF_INIT;
+	if (strbuf_getcwd(&sb))
+		die_errno(_("unable to get current working directory"));
+	return strbuf_detach(&sb, NULL);
+}
+
+and the for the stfbuf_getcwd(), in strbuf.c we have:
+
+int strbuf_getcwd(struct strbuf *sb)
+{
+	size_t oldalloc = sb->alloc;
+	size_t guessed_len = 128;
+
+	for (;; guessed_len *= 2) {
+		strbuf_grow(sb, guessed_len);
+		if (getcwd(sb->buf, sb->alloc)) {
+			strbuf_setlen(sb, strlen(sb->buf));
+			return 0;
+...
+
+Notice the getcwd() function, which is indeed a system call, which you 
+can check with 'man 2 getcwd' in terminal. Wrapping it in wrapper.c is 
+just providing a shortcut, right?
+
+But I don't think using system calls is inherently problematic. The 
+issue lies in where this xgetbuf() is placed:
+
+In builtin/rev-parse.c, the print_path() function is inside of 
+cmd_rev_parse(), which is like:
+
+int cmd_rev_parse(....){
+	for (i = 1; i < argc; i++){
+	...
+	if (....){
+		print_path(....)
+	}
+	...
+}
+
+And your print_path() implement was:
+
+> +static void print_path(const char *path, const char *prefix,
+> +		       enum path_format_type format, enum path_default_type def)
+>  {
+> +	struct strbuf sb = STRBUF_INIT;
+> +	strbuf_add_path(&sb, path, prefix, format, def);
+> +	puts(sb.buf);
+> +	strbuf_release(&sb);
+>  }
+
+So this system call is indeed invoked in the loop. Specifically, it gets 
+called every time 'git rev-parse' is invoked, and as far as I know it 
+should be a command used extensively in like shell scripts...?
+
+Maybe cache-up approach is more robust? For example in builtin/rev-parse.c:
+
+const char *cached_cwd = ...->original_cwd;
+if (!cached_cwd)
+	cached_cwd = xgetcwd();
+
+for (...) {
+	if (...) {
+		print_path_with_cwd(..., cached_cwd, ...);
+	}
+}
+
+
+> In this case, we need to add them to match the signature of
+> get_value_fn. Those values will be useful for all the path.*, but
+> if we start to add more than that I agree that we'll need to think
+> in a better solution.
+
+Yes indeed.
+
+> Thanks, it's also good to see more points of view. I'm also not
+> sure about it :-)
+
+Thank you for the patch again!
+
+Regards,
+
+Yuchen
 
