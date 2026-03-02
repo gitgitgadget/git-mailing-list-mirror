@@ -1,148 +1,157 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B3B366564
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 12:12:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0461E1A33
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 12:13:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772453535; cv=none; b=mW9SXsrfQicT+KDSFj6Eqe8V5Zwp5QxBd2FXW2H4dy0ogWLcTIQVmkCS18AaCPmeh7X1Ngl/NleslqXDLOddcnPZu9gUjOhhTrydX2IEBj332eRPIv0x0iucUctu+tskvIVLBzKRsRql4paKuWQhhDOFdx2PseRJ5l4ChjkOa/Y=
+	t=1772453594; cv=none; b=ndhmndklb7nUO0nnSmNr8StY7VI1nJU5gc2uhid/BbAeflVJiIhlvRfZiKp+z96cCHGEX57VYGhaffi95DC+a+9rm2xIDF5oURpIjHeILs5g6eyBoDAPYDdSOo9vAVwKZg+4wvyCEvbSdxNOi7490VmZCw/x0AmV8UwdiuHKF2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772453535; c=relaxed/simple;
-	bh=V5TfQj5PcqOVOg9ZFaBY3ptTe/RVJmTkhnC4fp6P2EA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C3uf7/u5eiZjlVSeauC3V69t85diK9nCUphnIaAxpvwt50LpCQNJB534c10nb+NFLWYvlR3uEVSfv8LPhaw1kgePwoXLpAX/An+c32MhYBDvBCFIjjQhc+iD9VLIQPYx0EB/diYZLZkz0rwwZ/TjCZTdzuh2R3qmdSElyAzzwmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PyIXUCFs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EADvfdRm; arc=none smtp.client-ip=202.12.124.147
+	s=arc-20240116; t=1772453594; c=relaxed/simple;
+	bh=KwEm5f/9PwEDp2SHnAQEDJAbSso5hrE8xfQzcdp5KTw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=u/qSo1iZniPfFudH51R9ke6h8mMMsXwu9Ra0O2vB/KJW/NLN+N6twM1Nhb4oFr9n++fBLASZAbj6sLaDNZgB5iTTru/pb0MY5RNLV3OVln++FzZdsGc66h1khAN8dLJDlvFDujQ0eyf4hVn2g+paNxFjojmFSfgvDTCDSGkcb54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fGD3EPTi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FsJGsJ6m; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PyIXUCFs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EADvfdRm"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id AD08A1D00224;
-	Mon,  2 Mar 2026 07:12:13 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Mon, 02 Mar 2026 07:12:14 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fGD3EPTi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FsJGsJ6m"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 68C187A0196;
+	Mon,  2 Mar 2026 07:13:12 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 02 Mar 2026 07:13:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772453533; x=1772539933; bh=jcN0jg4dya
-	h2dwhFZ0th45jBq5HWIK6gWM8Sid97tXw=; b=PyIXUCFsTsHpKNUJxhL8Y3kyUC
-	pc2hXdHo61SaiOiEFlZIdLby8Z5QGmXoh/7gvJTnVDwAt781Hjo0O/dnMMz5J82F
-	jv7zs1sg+uEwwxf1NQZ3LK2YRVmkrS5DFk1hYeVVvsFXThNR13JHHbZ0QQWc7cd7
-	SY85BykV7dyV02IrtkDE759I7F8hlaDyIvfNFVf8k4az3SOI4N7F8zR4M8/x7ril
-	OZXy6q/tRBO22mWHLj8h7zPIL/2a5JfK7/+CgcvhppKubku3lhn2uqOy5H7WbIht
-	a6y0q0+0TMwJjdEtreCUMW/1/aAR1i+SkM/ZWdYipZXY6LTcbZ8g623mABuw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1772453592; x=1772539992; bh=nfOrYyDjL7
+	miMeiMUkn7SOd+RqfLmWbNWkPWjZUiAJQ=; b=fGD3EPTiWIVbbQRLtirAOO01Om
+	TQNLwsIvFlMvORMkGlL2PRiBOVFeeleQiYy292vsYTwO0zNB3/0UtX/GN352wNEZ
+	822RNiY9vrrDySX0+yZPWewCOl701Qc8h4f7oM72y2M4YEGs7j/T0HOHz8hvYDY6
+	h3g/PWYmz/wu2udMlSLl4/r7MURfGrFtI27vz3dNVY59JE8EcflRjfNdgSK/EHXx
+	r8H4uvGcirqcPzadw23BJOVhAWV//8Ny67ywsf7lNfE0BZ9l6VW2pN4r/EG1Otw0
+	c67Tgd/aeGugm3gYHywyrgd7b0uDBEpG3CnLKheSU+m/DX5GPblgiA/hS14g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772453533; x=1772539933; bh=jcN0jg4dyah2dwhFZ0th45jBq5HWIK6gWM8
-	Sid97tXw=; b=EADvfdRmvOVLwBrjMEUFnl/FqRprQm/A0GuEk2jgtcZiElA86JA
-	cepaI9f7ZMQbltosWPAK8GUUn2JFlUyK5Zrc1T5CPEj24yfhjvAw30A5mEQ7sSX0
-	Kbp+PvFlurPzYmfcbICM6cekyLUonKed53wZBKStra8Cz5aIxVvhKZOGWFE7i3ol
-	uOheBnMA4rvyO6clcOXHgTjg9EeDJqempUTYDNChUAwCWmzbcizEyg/r1ji+Opr2
-	Mt3C+vaMZM05jtxWz6Pfjt7ku9h+AxP1KsfLjJ5Z+P/ZHrWDxjKVLXxeGbmQZtZG
-	Hrjdz6DGU0gsF/0Y/fshT+D65cVa9njSoDA==
-X-ME-Sender: <xms:nX6lafmajq8qUiTsmZwoedLNxaAhusgqvepX-t4d1eyn3GPXcSHhDA>
-    <xme:nX6laZuYrMV4-RSXDF5hhjr3qCh3aNY9hGNJowMqtK4L4YPFFlhvmfVRbZoYKMasQ
-    pz_iFMCMxPuERXrw99egDvJWAdbf_ARkiDf-ZGmaXr78LVBvdTylGw>
-X-ME-Received: <xmr:nX6lad_OjvcxKUvHFnyQAFYNT8V6xktnOgi0I36v20djx8CxbXc6cTj0FCJT2eUFuG2Cr-BSek9ud4Wo-ZbEnw-ViqLGCgb524lIFvy9rA>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1772453592; x=1772539992; bh=nfOrYyDjL7miMeiMUkn7SOd+RqfL
+	mWbNWkPWjZUiAJQ=; b=FsJGsJ6mffKxmxJU4bC6b/StDvg6rBFZ4/2AKB0aL8KP
+	scgh75SxJu1aidSc+ZYd6DhTh6NL4B9umtv3c/DwuY8b76dspSHZritS0ctWV3fk
+	6tJtVozsqHEVzV0A6ga47ZjH234BsKF9nrPc9eG23LXs3MzTckFT83zMJRcsEIVF
+	0spq3xv4gpZv5AeXMkJKOjRb9HEfyKjasK1i6GcMkV2nW8sssJzWxirhrNQrxQHt
+	HkqDx98bUaCUoBlAs7eJbVUGnfc/g6eZPX5YdBAs57VQ4T1VGA8odL1bDf/OMf/T
+	kZLO3mMZYn3aA29Aa9Pb1+HaUDVVi5wJ14SBB2GBag==
+X-ME-Sender: <xms:2H6laXhDZdVmKfGnnb2ur_vALkxc_4aUa60EZ-EKJrvWzl6fwOw-Ug>
+    <xme:2H6laaAp7_HjqYVWegz0sTzapHtWV5JMJd2ta0MX6cLiszhhOP72KR7253MYlUdjU
+    -IMWf9ZVTtFJKnr5Ayy6z6RGj8GncocwzvX3AayMZGIU3JQCfwi>
+X-ME-Received: <xmr:2H6laUtvAzaY1MlL13BJyiAOa9tZISxW6eFctMA4EMTEw7RYxm9OPbs4KXIFL8V0zQJdQOO3cwVRMkaGLnnijuj_N0Bo8bQCjR4UnmMRkA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheejieegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epfeefhfefhedugeehgfduudfgleelfedtueehgeekvdefudehvdeiffetgefgfeelnecu
-    ffhomhgrihhnpehprggtkhhosghjvggtthhshhhoohhkrdhsohenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggp
-    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlh
-    hssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehmshhmihhl
-    vgihsehgihhtlhgrsgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:nX6laTOZ31LY4bw3kBJSE6AUHbFCI0VSYzQFwnglyAUb24PYlvlmFA>
-    <xmx:nX6labHJ8dYrHe8_ItCr9M0SgDqxSbm_djvLJx0lpyvIejgxaOnRkA>
-    <xmx:nX6laRRAUDH_U9uSdo7oVPEgEVdCaBO8Uwvxh13-DuyHZoojLyVPRA>
-    <xmx:nX6laYuIZtl1z0bIOSvOyLnCbjH-EJBan4o45jCuqkPHkRqDqt5DPw>
-    <xmx:nX6laXj2Xp9hruuufLfGGu1B0TUMbej5nlhaSJRQYAif8N6IIwXJ5S2G>
+    gurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evueegkedtteeigeejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:2H6lafYNcuBkDDImGN-tOw7Gm1kLGhdojbkjKcEMk22YfpfSd8ubxQ>
+    <xmx:2H6laXVzqSWOof9e-D1PB_CqYd4GqIo_nJ1O9ARj8f7IxWx5mw6uSg>
+    <xmx:2H6laT4yVcrmyKa2R7jHheNcBQV2065aGnYR4ZGJ2_8UDAiOXfGYCQ>
+    <xmx:2H6laSjLJqLuoNO_LMUQPkDPitvCCJsbXyTEwFAyO4zBwLaZh6nRQg>
+    <xmx:2H6laXRQUS9EeO_fUu51FuKe6cfKqY3_t9X0o80zA7XmKXFo-w72VzLV>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 07:12:12 -0500 (EST)
+ 2 Mar 2026 07:13:11 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 120daea5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Mar 2026 12:12:10 +0000 (UTC)
-Date: Mon, 2 Mar 2026 13:12:07 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 66554ff4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Mar 2026 12:13:10 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] upload-pack: reduce lock contention when writing
- packfile data
-Message-ID: <aaV-l_NyWpkKDDp6@pks.im>
-References: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
- <20260227-pks-upload-pack-write-contention-v1-2-7166fe255704@pks.im>
- <20260227193758.GA2931515@coredump.intra.peff.net>
+Subject: [PATCH 0/8] history: introduce "split" subcommand
+Date: Mon, 02 Mar 2026 13:13:04 +0100
+Message-Id: <20260302-pks-history-split-v1-0-444fc987a324@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260227193758.GA2931515@coredump.intra.peff.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANB+pWkC/x2MQQqAIBAAvxJ7bsEKgvpKdNBaaylMXIlC/HvSZ
+ WAOMwmEApPAWCUIdLPw5Yo0dQXLrt1GyGtxaFXbqwL0h+DOEq/woviTI1rT6aFbbd8YDaXzgSw
+ //3Oac/4AXLGDQGMAAAA=
+X-Change-ID: 20260202-pks-history-split-fb3a93df61ba
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>
+X-Mailer: b4 0.14.3
 
-On Fri, Feb 27, 2026 at 02:37:58PM -0500, Jeff King wrote:
-> On Fri, Feb 27, 2026 at 12:23:01PM +0100, Patrick Steinhardt wrote:
-> 
-> > Extend our use of the buffering infrastructure so that we soak up bytes
-> > until the buffer is filled up at least 2/3rds of its capacity. The
-> > change is relatively simple to implement as we already know to flush the
-> > buffer in `create_pack_file()` after git-pack-objects(1) has finished.
-> 
-> We are relaying write() calls from pack-objects here, which is writing
-> to us in 8kb chunks (due to csum-file.c buffering). So most of our
-> writes will be 8k.
-> 
-> Rather than buffering in upload-pack, would it not be simpler to just
-> increase the write size from pack-objects? Then we do not have to worry
-> about disrupting upload-pack's keepalive timeouts. And as a bonus, if
-> you are worried about the system-wide number of calls, you will likewise
-> be reducing the number of read() and write() calls over the pipe between
-> pack-objects and upload-pack.
+Hi,
 
-We can do that. But we also have to keep in mind that downstream in the
-pipe may be a process that's not even git-pack-objects(1) in the first
-place because of "uploadpack.packObjectsHook". So maybe we should have a
-look at doing both.
+this patch series introduces `git history split` as an easy way to split
+up one commit into multiple commits. This subcommand has already been
+introduced in earlier versions of my git-history(1) patch series, but I
+eventually decided to evict them from this series so that we can rather
+focus more on basic decisions.
 
-> > Now git-upload-pack(1) already has the infrastructure in place to buffer
-> > some of the data it reads from git-pack-objects(1) before actually
-> > sending it out. We only use this infrastructure in very limited ways
-> > though, so we generally end up matching one read(3p) call with one
-> > write(3p) call. Even worse, when the sideband is enabled we end up
-> > matching one read with _two_ writes: one for the pkt-line length, and
-> > one for the packfile data.
-> 
-> Using writev() would be an easy-ish fix here, modulo portability
-> concerns (though of course it is easy to implement a fallback writev()
-> in terms of write()). Doing this:
+In any case, the current version of this patch series matches (to the
+best of my knowledge) the latest agreements on the mailing list around
+its behaviour. Most importantly:
 
-Right, I was also wondering about whether we might want to use writev(),
-but I didn't have the time yet to have a deeper look. I'll have a look
-at whether I can integrate your change in a platform-compatible way.
+  - It will ask for commit messages for both commits, not only the first
+    commit, which has been a bit of a discussion point.
 
-> Out of curiosity, how did you end up measuring? I first tried with
-> strace (without "-f") on the upload-pack process, but strace slowed it
-> enough that it ended up collecting multiple of pack-object's 8k write()
-> calls in a single read() call. ;) The "perf stat" above seemed to work
-> OK, though of course it's counting child processes, too.
+  - It is not possible to edit hunks. This results in a mode where
+    conflicts are not possible as the tree of the second commit will
+    always match the tree of the original commit. Conflict handling for
+    subsequent subcommands will be a bigger topic, as it probably
+    depends on support for first-class conflicts.
 
-I used strace for this. I didn't really dig into it too deep as I was
-rather busy handling the havoc that this issue caused :)
+  - We also update dependent branches, same as with the latest iteration
+    of `git history reword`.
 
-I'll send a v2 soonish, thanks!
+The patch series is built on top of 2cc7191751 (The 8th batch,
+2026-02-27) with aa/add-p-no-auto-advance at 417b181f99 (add-patch:
+allow interfile navigation when selecting hunks, 2026-02-14) merged into
+it.
+
+Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (8):
+      add-patch: split out header from "add-interactive.h"
+      add-patch: split out `struct interactive_options`
+      add-patch: remove dependency on "add-interactive" subsystem
+      add-patch: add support for in-memory index patching
+      add-patch: allow disabling editing of hunks
+      cache-tree: allow writing in-memory index as tree
+      builtin/history: split out extended function to create commits
+      builtin/history: implement "split" subcommand
+
+ Documentation/git-history.adoc |  62 ++++
+ add-interactive.c              | 177 ++--------
+ add-interactive.h              |  48 +--
+ add-patch.c                    | 363 ++++++++++++++++----
+ add-patch.h                    |  74 ++++
+ builtin/add.c                  |  26 +-
+ builtin/checkout.c             |   9 +-
+ builtin/commit.c               |  16 +-
+ builtin/history.c              | 317 +++++++++++++++--
+ builtin/reset.c                |  20 +-
+ builtin/stash.c                |  54 +--
+ cache-tree.c                   |   4 +-
+ cache-tree.h                   |   3 +-
+ commit.h                       |   2 +-
+ t/meson.build                  |   1 +
+ t/t3452-history-split.sh       | 757 +++++++++++++++++++++++++++++++++++++++++
+ 16 files changed, 1592 insertions(+), 341 deletions(-)
+
+
+---
+base-commit: caec355702b7a86dadec53344ba65ae33558cfa8
+change-id: 20260202-pks-history-split-fb3a93df61ba
+
