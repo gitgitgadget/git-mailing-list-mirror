@@ -1,91 +1,83 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73AE239E88
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 16:38:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD5F2EB5AF
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 16:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772469513; cv=none; b=ixKcTeg+prpQzgrhegjFPIMdK/ygaT5lOoIeBX3WLOPNrN4KAGrg700TBpnHJrqRFgCX2jKbw1TCkAX3BJ30kqFSKBQMDmrdBltGiPdmPdmWp5E/W3s9jMRrK/0AW1Lj3DHEiQ5D8T59+yGdx72uqDIHsFCLeGXwOCyTF27XuJQ=
+	t=1772469804; cv=none; b=iPhXwgi8q6mh4fd4gaWf4mcDxSjTwGj74NRH6tkl/wnRo19Tn8guPWz/B4Hq7wdghGhbrpDjt4ZdVQ6KBU+hlKBpPAI0zmL270qi8jAamLNEPvRiYdXwn53Ruj/xZbUJjtfgVSl1a/Y7X4BFPnLKJ6mHqKD5A+If/J4L641mrWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772469513; c=relaxed/simple;
-	bh=FI3Ca+iFXgf0pZSw9iBYiapjMe4F3KcCI08LnxJn8Sg=;
+	s=arc-20240116; t=1772469804; c=relaxed/simple;
+	bh=JxKomQeZCuO4fOML4ZQ4V+ZdoEoWRJwsvv8LxK4aFAA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iD0oT9KuAHJMt3hEwWnzG9HLXWntXpl9pYntTPbbQkrq8Oh+8YDsORf3R2rqIiWjIFSUC8koWGSH7Wi0Pd0ojKC1MHPnUtYas2oDK72D0HALmCciVaMGScrLqzm5FodcvxGYryi2EC7FvtN9egVu10/So34SWr41Fyl6HPWY0l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NUs0ZYsP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qCfBMyne; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=LGU5jnLnS9f99zLQGdODhjHZegQA22Qoh3gBzKo+fAHjKPDNeklzNtDqI9Twcw/dUn3PjkuaeMJAlWGhJawpSxEAkLqhCJAzb6HFihRddnNeConnm8N4XJqXrP7egWMsmUZOqF6200Bt5PmZ6Q/T1X4fK9kTg8EPcTuF3LIuKXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gz3DlxEI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kfFBdBES; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NUs0ZYsP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qCfBMyne"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gz3DlxEI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kfFBdBES"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2A1951D0004E;
-	Mon,  2 Mar 2026 11:38:32 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id ED7737A019E;
+	Mon,  2 Mar 2026 11:43:21 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 02 Mar 2026 11:38:32 -0500
+  by phl-compute-02.internal (MEProxy); Mon, 02 Mar 2026 11:43:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772469511; x=1772555911; bh=em7AhRzGpg
-	TAhnuoe2axi4GAuV4O79vTAjuplGDn7jc=; b=NUs0ZYsP/b+qEVZJ5rV+xspo8A
-	Q6qHTrcEatszhopB3ern+VzcgPWMYz9VdGJU/+ZN3GpFcRrtt7AmgN853KULbAkn
-	HW2Vc2aVOVIDOWsAu69BRmnOe6jzvSBE4HPqxG75vIXGTVJxiokDPai6wjuSr/05
-	sbqz2pyrC6ve6HywU/cSDFrF0RJAxLmuSBAaZPVI7WLiz2S4zKQP/Ikt5tnvUJO/
-	w0qr0faLIgRQ5Nszw8qB9FmsJ3VXzmZhekLPw3gCP58MG4F1a8QU1eZiWlGauVNl
-	nNHXm5KUELcGsTu6OwhF7R5IMoDkgaiLzUOLT5SNj8aYXV/dPzNTtrU+QIJA==
+	:subject:to:to; s=fm3; t=1772469801; x=1772556201; bh=wkq6m+F5EQ
+	W4411of3apkdeJj5nwXrrz/qUYAEGCw/c=; b=gz3DlxEIX4H74Ovw9WvP7Exsfc
+	jMQEnjM370mBx9586LnsqfvLwvAfaOaAlkIGqvxarSjKb83KYVituzR6vTajDzCL
+	1pK7+8+XfV1RsrjaZHcjUzv9Bab4kC1np4tceBjGElZNV24lPBbSefCxkBjpDLF7
+	G1uWpssfUo/bLoa4tNa2kwtgAVbreumWTPXiFgqjYJGKn0/1kHv8LbPuL6scKxlt
+	MPqitpSuaOt4yTjYwZFw/1cWnjERRrEwOMJjLIB/V/QEund1mHtIh+IC6CkvEhYw
+	T958Gf/W22oI7v941JbpcblGN5lwSozcppdzSKn5mRvO4ZvFW8ggul1lzmSw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772469511; x=1772555911; bh=em7AhRzGpgTAhnuoe2axi4GAuV4O79vTAju
-	plGDn7jc=; b=qCfBMynetgagGJCayXWtkKlUt5bkFk8Bq5BwSjLW3jfEVYciq/u
-	oa/5Mnr6QaLKZWUivcWVLaQukeZvN7REz4/XEz7YHPkLtQtBRDOchrOQNqmpu6Gm
-	d3Q2t9sVaG588bVUQ51Y9vimCdgfI8uBPcRFtt5yyLm3k+ZHkA9OhiAbA8xuw48A
-	0WLF9gN3g0Lj4U2ljmhT1NI0X4mtjNg9pKiB0phXUw6wPUqiCMTZ075ZDVLAWWbH
-	FHg6hNHQ7QW2BNWnwhH8lsQRAWGwCjwtFybVe5n1H0hEuZ36hiHL1sL7iQ5mwBM+
-	/aEQ1khjd5J8faNY7y989A+M/2REUkKj12g==
-X-ME-Sender: <xms:B72laXHVVi-oYm1_Y61j4luTpTPKBSSLsH4750RzNs9E6eiopgTLGg>
-    <xme:B72laW5HnCCmRfrrET1FiCWFShi0mKGsLEkq39ARtSAxOu1WBtxQ_kYa06CpEskJj
-    77Y10wiNZKYot944z7bdrTOXpYP-0cj413y3Zu2G2AaH5_1_-qHPA>
-X-ME-Received: <xmr:B72lacwSPQ_rqCUeDLsHkUEMk6PEN3Jkrw_OU_GUGHwvwfQqepcWRib7hFsd8imUersYsE0IGTAGsbIzQvdn-5rT01d3kwLTpw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekudejucetufdoteggodetrf
+	1772469801; x=1772556201; bh=wkq6m+F5EQW4411of3apkdeJj5nwXrrz/qU
+	YAEGCw/c=; b=kfFBdBESi8NFcNYZwomRMf8yUmJ9f0bRu7yHypOpoVm0b6i0XjW
+	22ucQ9rZiNUTyovdsQFwFtq2+09RKLayrzy+LmBK68ycLKh3eucmeqaGexdiZ64K
+	07xy6YllRfRi9A9qYzlG6sDjuoy9Tg3dXzyvXK3X3Qmlhn1NOTOW5qw91PaNcwdW
+	yzesQAMntTYR3i7mB7sJJS9ocXJzXTzn/fxF8ew/D8wcdO9HYfq/LQAxBxwS43jt
+	PUn8pr5exFsuvwHTKtninyzdFDgo9qy7pEuGmPgH6qpROv4RePNqKCFnOallxQSw
+	PBsh9oLzwlu4vXMByCz/E0gKcZ/Upq1+JSw==
+X-ME-Sender: <xms:Kb6laYUyTTfRvltL2AdPJN2wyISn5HSeNpwxIdAMgGYjZhOTak7YFw>
+    <xme:Kb6laUWEqLh2huOIfRgeUpaCtmDTbNy_WERmRj25dO6lwBlgryG3iV3N5kUjTgahh
+    vpV0KAKH5iY5Eq7uFCtBPGoKOFNWek2FBts0FxABv4oq9ilEO__Yg>
+X-ME-Received: <xmr:Kb6laffKkzZkRqeJNn5k94vRex6vffSzhnEPq4mnKlPPkZFZ3jTRekt297Mdc1XIsralKMgCWwZ57RVb9fYaAXvVR-7--UvbTQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehkuhhmrghrrgihuhhshhhjhhgruddvfeesghhmrghilhdrtghomhdprhgt
-    phhtthhopegrfedvtdehudehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepjh
-    grhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgt
-    phhtthhopehvrghluhhsohhuthhrihhksehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
-    hushhhkhgrrhhkuhhmrghrshhinhhghhduleejtdesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:B72laVP-gKW-ZJv53oBvvGxwnGtoX3v140iY9S1BIZyxqPFCuDEWMw>
-    <xmx:B72laSkLb0zo5fYDtcBA4gT_cy1CRCdgAc5hdq2UOrnh_9bZ928AuA>
-    <xmx:B72laaRMvDguiTiLgJuVmElic6gV6SyrXYmDxJELNPLZeyg4SPbsug>
-    <xmx:B72laRX2Pv1QTYfSG_wZlWCY5lkcG2FKZekF_YxHCtgUwqJASfUDMA>
-    <xmx:B72laSeHxO-zJqshz8gBFxhtr0oFjxNZlepoBUuCy_fRo6zb62DFuSMR>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeevhefhhfettddvtedukeeihffgud
+    fhueehuedviedtudekgeffkeejuefhueevveenucffohhmrghinhepmhgvthgrtghprghn
+    rdhorhhgpdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegugiguthesuggvvh
+    drshhnrghrthdrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Kb6laVXWjF11tja1vEWdhoL0I_WsV3GHPNPKsaTopHweDBQwx2shXw>
+    <xmx:Kb6laQeqthcYVffF7Ifaogh5lXu7_og_JX9xCcswQFclbsHX8i2GPQ>
+    <xmx:Kb6laZNvK2lzKa0Muv75VnCSv7vzWSajc_foJmrS3MSu74Ted3ACfA>
+    <xmx:Kb6laWihKpGHajRzwcnkUWnQgHcvBU723zmV0LbMa2dxAMchjzLV0A>
+    <xmx:Kb6laV9drzJtsatoqJyK3lgOqtdY9ny-ozr_yiYrufIUqMGiIdPgRbYJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 11:38:31 -0500 (EST)
+ 2 Mar 2026 11:43:21 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
-  kumarayushjha123@gmail.com,  a3205153416@gmail.com,
-  jayatheerthkulkarni2005@gmail.com,  valusoutrik@gmail.com,
-  pushkarkumarsingh1970@gmail.com
-Subject: Re: [PATCH 0/4] repo: add support for path-related fields
-In-Reply-To: <aaSusXil9nDHYGMR@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Sun, 1 Mar 2026 21:25:05 +0000")
-References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
-	<aaSusXil9nDHYGMR@fruit.crustytoothpaste.net>
-Date: Mon, 02 Mar 2026 08:38:29 -0800
-Message-ID: <xmqqbjh64262.fsf@gitster.g>
+To: David Timber <dxdt@dev.snart.me>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] send-email: add client certificate options
+In-Reply-To: <20260302032048.260209-2-dxdt@dev.snart.me> (David Timber's
+	message of "Mon, 2 Mar 2026 12:16:41 +0900")
+References: <xmqqo6lb4fuy.fsf@gitster.g>
+	<20260302032048.260209-1-dxdt@dev.snart.me>
+	<20260302032048.260209-2-dxdt@dev.snart.me>
+Date: Mon, 02 Mar 2026 08:43:20 -0800
+Message-ID: <xmqq7bru41xz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,13 +87,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+David Timber <dxdt@dev.snart.me> writes:
 
-> With `git rev-parse`, you can change `--path-format` on the command line
-> between options, so if you want both, you just request one thing, use
-> `--path-format`, and then request the other.  However, that can't be
-> done with `git repo` and `--path-format`.
+> For SMTP servers that do "mutual certificate verification", the mail
+> client is required to present its own TLS certificate as well. This
+> patch adds --smtp-ssl-client-cert and --smtp-ssl-client-key for such
+> servers.
+>
+> The problem of which private key for the certificate is chosen arises
+> when there are private keys in both the certificate and private key
+> file. According to the documentation of IO::Socket::SSL(link supplied),
+> the behaviour(the private key chosen) depends on the format of the
+> certificate. In a nutshell,
+>
+> 	- PKCS12: the key in the cert always takes the precedence
+> 	- PEM: if the key file is not given, it will "try" to read one
+> 	  from the cert PEM file
+>
+> Many users may find this discrepancy unintuitive.
+>
+> In terms of client certificate, git-send-email is implemented in a way
+> that what's possible with perl's SSL library is exposed to the user as
+> much as possible. In this instance, the user may choose to use a PEM
+> file that contains both certificate and private key should be
+> at their discretion despite the implications.
+>
+> Link: https://metacpan.org/pod/IO::Socket::SSL#SSL_cert_file-%7C-SSL_cert-%7C-SSL_key_file-%7C-SSL_key
+> Link: https://lore.kernel.org/all/319bf98c-52df-4bf9-b157-e4bc2bf087d6@dev.snart.me/
+>
+> Signed-off-by: David Timber <dxdt@dev.snart.me>
+> ---
+>  Documentation/config/sendemail.adoc | 16 ++++++++++
+>  Documentation/git-send-email.adoc   | 19 ++++++++++++
+>  git-send-email.perl                 | 47 ++++++++++++++++++++++-------
+>  3 files changed, 71 insertions(+), 11 deletions(-)
 
-Hmph, that is one advantage of that incremental option handling done
-by "rev-parse", which often is a source of confusion and complaints,
-though ;-)
+It's a lot of text but quite informative.  Will replace.
+
+Shall we declare victory and mark the topic for 'next' now?
+
+Thanks.
