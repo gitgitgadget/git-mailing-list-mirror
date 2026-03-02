@@ -1,87 +1,89 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190653382DC
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BE63112AD
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772477663; cv=none; b=beog3O9kpNrNzX9rOUfz0okhffgLvaCBveJZXFp0ZDYO/Lbg7N6rgicrdyn00pL/GyfAzEhUenI4v+/GzDvLJuQEb1BNROp4sSFjU2IqvgEskFcPPIEkSGqfnF9lF59JczhIWTyAh3eGI4k5micNdR/0sX9VyqgoIMFamVcH4SU=
+	t=1772477873; cv=none; b=EjqS2ssv8qvuR39ub5e7DmLfgJXAn/MPOzFB7y5EWRcI6IGe4wP9h/KT3TvpEW1PV7iEVB8xoQQMJP+irSyskPIdtzbB1QBxIQ78JDJEOErQeTPBwVRxw4yf4khlsPbgOwbcA6GN9woQuNxzjI8GYQJLgVxVuHWS6WTYIdCCLUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772477663; c=relaxed/simple;
-	bh=T6LrIb0+mTO+Shhw/GoaGDXKojikHW06QPSyiwdbY+w=;
+	s=arc-20240116; t=1772477873; c=relaxed/simple;
+	bh=aTIJA+FM8N2rmP6z4XIi212OoaI88kydP1onSI1kRtQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OvYXx5wWBXnnlFEwhyKCtTCTVpyDxx4otMYVGXtCEax340KAlJBLJ9NYXgT9r/CQPdY5FZh6yp37jM4thLt5XdOt0iJsOfDpWv4T2fhvXEtR6LFpS8hW+wfnGflztPSOdXRyr0JWj9rM6YWAqXKbkxhhtgqnsKDiQxTLYUWUOu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZctzMyEN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bcuu2QHp; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=WLd+1GTeYc9toDQERLYVU2mByOUVb6wizulzRDBD2/LHZffSeRwAdHqfOu2RIca9NP+6/czTDmruqNVilFbjyDT6zkcOC4B2N7uUxV9+R4tCDt6jlUGqbHFIs17CW0oF1E089ZILXTy7OJ5Xjsx9OO5fbbubUG5PMceIv8H3nQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JVxL+BWf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JPXWej3/; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZctzMyEN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bcuu2QHp"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6030CEC054F;
-	Mon,  2 Mar 2026 13:54:21 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Mon, 02 Mar 2026 13:54:21 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JVxL+BWf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JPXWej3/"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A1FDEEC0636;
+	Mon,  2 Mar 2026 13:57:51 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 02 Mar 2026 13:57:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772477661; x=1772564061; bh=jyZtim6hkC
-	eDI3cz8yl9UA9ESlo2jR7MoasQfxcX3yk=; b=ZctzMyENncv7mEk5hLubsI52BV
-	gC4RyC4BISWIv4aMe3PUdLo54NhmqlHvlkrtgOA4LaXXUjoN+hQTyz/te8tq7H/f
-	y0bxur74J46mG/VE3CO3/3yEOOViowaVYi/pX8rdR/cbTi/DfhVaaZAupaBZUwHr
-	1Q1XtoSd4Me8Iw6K/4Bn8pXFHtvd6XLJiVJsP/54os5AQAHR9P8jJ5JW+e+2Yvh+
-	bbGRuMSb0HbtJwIDG5gkdS5xVcAV4rAa5TNGm8oInBZqwY0cTXFDdVdkw41rJJHo
-	DuoSQyN4lwbaeO45xHjzFaUIHzLwPLqgoJ7GfcGoaJ0SwPouHo19JVZeftZA==
+	:subject:to:to; s=fm3; t=1772477871; x=1772564271; bh=aTIJA+FM8N
+	2rmP6z4XIi212OoaI88kydP1onSI1kRtQ=; b=JVxL+BWf958CDWqYU97MqcKjcm
+	qlpVB5uvkGEPTvJrh92o5qPOpNWCG/RORK7AoO/0L+Hu0k4b5euzDZeA9E44eDoK
+	5dHxfCfEYFur6pD1lNjTXJvummRQv6KqNhXWrQKFofK1HWwTNKmmBvkPJz58tTPS
+	kRF4s1cc2aj/2cnKnvPaQlXphMhuePBTJX1s7YhawdhhY2/NJ7p34qhs9Q0ee8hv
+	fI/cfoRBsoLquN8lqggOVm5oo5v+cgiHj7L6vAJGoxFoa9yAKyyzErx7wGQ3sv6M
+	Sn80RgKhmCX8BZZdxukxc0J816gKINxHVEnNw2uD2RhuNy9XlEBYloCk1LYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772477661; x=1772564061; bh=jyZtim6hkCeDI3cz8yl9UA9ESlo2jR7Moas
-	QfxcX3yk=; b=bcuu2QHpVS4pNNQZ01VcY04Y5W3I6JAQLYlKnz8Q1/zJ2ihmXD8
-	HlaHdzSYU0TenCkUjoXBG1eG7/i4SkNYgebR4IeYv6OjPjLvYd2ZMK1X+cVunFdq
-	xHfGNfeLX5Oam3kQnIZM1w7TYvizr6wQCaMdG5RYyBZXACqRKRMpmcHglCd8LY9W
-	6WpRC7vGQhkL5OUKr9FS8hLwEwLgK74aSijerVV7bnHYgeWHpG1VBQLk2YE2Etvu
-	emc13NLlyVYu7LD99UN3mRuXomm5bkkOG4V7YdVwSlcQFzjSXFKTB+zthbnPPfED
-	b7XDOLoqsU6+IxBPVjgZxm4uoJhn5sxOpSw==
-X-ME-Sender: <xms:3dylaSbDLe_sBzYZrMuplpmq5M1ovt1ycGM1QrOFmV5TMl4zhDdWag>
-    <xme:3dylacQhBeqM-yR95Do0JciGf2oFpUdpTSgJLXTiClvZaxUzSQrkNOb0FjGC27upM
-    q7yvvN9Ha2vTXLJCBo1rZZ6XiJh8MM2jTRkHwvp1pGNbE0XZjtd>
-X-ME-Received: <xmr:3dylaVQLSPyTv_2Ftr6qr4VJ5yeLrzRVYlv3TRJYbR8X8DIIj9GkwVHAgSRp1YB64UNzL3ymqgpzriL5pESD7dTe4g6rRXcILg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekgeehucetufdoteggodetrf
+	1772477871; x=1772564271; bh=aTIJA+FM8N2rmP6z4XIi212OoaI88kydP1o
+	nSI1kRtQ=; b=JPXWej3/5auEyOrc1FvKnT1ZJYaP7HQ7QYFutE/4cn8P3BDNjaY
+	MjfAPDaIvh/owlfFibL++GgqZZvS0o3C9s4aI7JJbF4OEs3zJYAqv1TThlRfx7Gj
+	M42YOM4FZmHw7reTCyu3SlJ216+xWk6PBjkiAQyw1YQEEq1xwac5AZyTpBql7FIW
+	sO6w/nZ6Dm8ObiVU5qqHEy67iVimYHOOxOhZGOoS95Eng0Y/jbh4QmK68Vo6gMNR
+	OIxYC1x85JRkOqLQO7eddV8op2kvG3LF8jpSXd1HpEvjRSuB5n77l56UTxcxgNOR
+	kzeQOFTzjFcVClG1NBj7KRFuv/xaz3sx9gw==
+X-ME-Sender: <xms:r92laRXSWteWTgHv50YMCUBVgj-v4n3NyPLTM3NduWISb-a_Y_d2Bg>
+    <xme:r92laQpML7qS2MjVcGJa7QRliqK1bqWyAO_cHQrGyKsmV51NHj38BUDehs54sQ-0o
+    7ym6onXmH1jHAWNeKNZSN5jUMhV2Cj3Be41M-FtUa-WxpY0COi8>
+X-ME-Received: <xmr:r92laTkaOR2PW7CZTLOhRa1Qp0_6oevVxULHcRJvgIxrXOz-5Tp7Y6cxiV7g0qYU0uv9P_muW5i7JPO7M5hs8fuWwWNoivwo-A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
-    grrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehp
-    shesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3dylaQR16_OdtQ0_x2tvJtoV3oX3TVeSLdcsU7EQshcGbdalxvZ1sQ>
-    <xmx:3dylaa4nKPMr-Vmw-zIILqYjVH4fik4Qbt5w92RVsFckuVKylUv34A>
-    <xmx:3dylac2SIxh_Ev4zXdZL3Gjh7FmsFCAGWWqqr_yGfDQ2nsUhpHftrg>
-    <xmx:3dylaVD3Pq4JYtrh0AgCq9-bthLYnr5jnz6KgKDfLFa0E9WKVato5A>
-    <xmx:3dylacHM3n6Zco_JUOsIgwSaUDQ1Vqg8_Rpd9SzSuCF6iPEHhjjvpmsw>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhg
+    lhgvrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopegrlhgrnhessghrrghithhhfigrihhtvgdruggvvhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:r92laQ1-VM68cZB4NB5DcDUO2p0UZkHoEe6UgzvfYrZrFByXwAkYlg>
+    <xmx:r92laQToc2XYOasM2zikPUfpi39RVapRUrCas4upjI6nkEVwJVeVlA>
+    <xmx:r92laZxfNZHZ88GKHakcA2gUiPKo0u9WKSiqlnFW_emV_VbfyXO3BA>
+    <xmx:r92laQAuM7b9JfdV0uI2jZUU6zk7iIagDKfAnnbHWS6EidJYtucLBg>
+    <xmx:r92laZ50-u-CTN2XpDa1ZZsDUKN4fYMTg_h_2ADs0gf8JVcvX2U8gIJq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 13:54:20 -0500 (EST)
+ 2 Mar 2026 13:57:50 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: Jeff King <peff@peff.net>,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org
-Subject: Re: Performance regression in "update" hooks
-In-Reply-To: <87wlzu5cug.fsf@collabora.com> (Adrian Ratiu's message of "Mon,
-	02 Mar 2026 20:02:31 +0200")
-References: <aaU5lZwEuR4OrxCl@pks.im>
-	<87bjh673o0.fsf@gentoo.mail-host-address-is-not-set>
-	<874imy7220.fsf@collabora.com> <aaWeSu-d1FMz_sW8@pks.im>
-	<20260302175052.GA28275@coredump.intra.peff.net>
-	<87wlzu5cug.fsf@collabora.com>
-Date: Mon, 02 Mar 2026 10:54:19 -0800
-Message-ID: <xmqq7bru12qs.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Alan Braithwaite via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  christian.couder@gmail.com,
+  jonathantanmy@google.com,  me@ttaylorr.com,  Alan Braithwaite
+ <alan@braithwaite.dev>
+Subject: Re: [PATCH] fetch, clone: add fetch.blobSizeLimit config
+In-Reply-To: <aaV6PLJCrpb2mQnq@pks.im> (Patrick Steinhardt's message of "Mon,
+	2 Mar 2026 12:53:32 +0100")
+References: <pull.2058.git.1772383499900.gitgitgadget@gmail.com>
+	<aaV6PLJCrpb2mQnq@pks.im>
+Date: Mon, 02 Mar 2026 10:57:49 -0800
+Message-ID: <xmqq342i12ky.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,30 +93,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On Mon, 02 Mar 2026, Jeff King <peff@peff.net> wrote:
->> On Mon, Mar 02, 2026 at 03:27:22PM +0100, Patrick Steinhardt wrote:
->>
->>> > > I don't have the benchmark setup and it might be easier for you to
->>> > > confirm?
->>> 
->>> All you need is a normal development infra and hyperfine. The
->>> benchmarking scripts in the repo I linked should then "just work" with
->>> the above invocation.
->>
->> Thanks, these were very cool and easy to use.
->>
->> Looking at the patch, my guess was that the problem is that we are now
->> setting up and tearing down the sideband muxer for each hook invocation.
->> This is expensive for the "update" hook, since it fires once per ref.
->
-> I independently root caused it and came up with (mostly) the same fix,
-> so this is a very good confirmation, thanks!
->
-> Please wait for my patch because it needs fixing it 3 places, for 3
-> hooks which spin up/down no-op async threads. :)
+> I'm not sure that we should make blob size limiting the default. The
+> problem with specifying a limit is that this is comparatively expensive
+> to compute on the server side: we have to look up each blob so that we
+> can determine its size. Unfortunately, such requests cannot (currently)
+> be optimized via for example bitmaps, or any other cache that we have.
+> ...
+> Another question to consider: is it really sensible to set this setting
+> globally? It is very much dependent on the forge that you're connecting
+> to, as forges may not even allow object filters at all, or only a subset
+> of them.
 
-Thanks for working on the problem report and coming to a fix so
-quickly.
+Both are good questions, but to affect "clone" you'd need either
+"git -c that.variable=setting clone" or have it in ~/.gitconfig no?
+
+As to this extra variable, it can already be done with existing
+remote.*.partialCloneFilter, it seems, so I do not know why we want
+to add it.
+
 
