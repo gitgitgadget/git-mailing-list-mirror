@@ -1,105 +1,125 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340633909B0
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 22:09:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772489358; cv=none; b=UPiQsoZy70/XlmyvMFdsJY3e/jqeQIs7+yThAPSorN6yMCX/GL0S6eTpTHUQmWc0pZesHw9KoGdXgrbU0Dzq0+vEcoqrTPB9mLf5XxYD04CLPfm3GYjsbuI6srAqETn/2Yo5hJgbc00OujZpQ/mdOEN4gc28F3nymzmpy8ySjPE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772489358; c=relaxed/simple;
-	bh=1aUcUmqxFPmej4yzGWwkfCw+zrk5uyRqucCiy0u5Fg8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qQdblyvL2BCHg3uvJ4McKHiXCsalLrt1pvMGVLNSuUz+Kk0DCNmadIob4jOAnDsLAcktMrTwt1KH25YtkXwJU++W6+GnNJwTPjZWEau48E2aXHCvB9lmMqSXprF/1GFTT8UVaI+BmIoVhvGZqJOL5a7ZfhbcBlGGgI+SWPq9IQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AwoxaEQs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JfzpN0ht; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5911A6802
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 22:09:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772489370; cv=pass; b=LueqntLzc8wx9VdIpHfcFa5Su4zbZtdIREXC6+IEpgmWrLmft7JNOLbcwqmUqzxUe++JOr0QFdUlSEf84fXOxkkJ9NPx0tVhxaBC9uuE/J5WqIEVF81uPDKGMqasN8FcykgFqF4GkQHS6kLwokZMJLAWChQEJwN3YJczwkJ8YlM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772489370; c=relaxed/simple;
+	bh=45w/OFEEj0jTmPZOUv7hDe2TLhVJWC6jTab7KB7NOl0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bxwFRoI11coSfN1lLIubcjFIj9pxjT7hMNzMrKzABhAWehq9rPAt2/itqkKJYSIy9S08tMGyUeAOt4Rj5+CiylM+n81MyYCKVFpHWwribb241zxXUV5apwEZNPM5s761/9d58EvlmOaewvvnAzwS5tP/j5iaXgdzZMMd8CMHXcw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EQIu9HUE; arc=pass smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AwoxaEQs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JfzpN0ht"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 70C3FEC00AF;
-	Mon,  2 Mar 2026 17:09:16 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 02 Mar 2026 17:09:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772489356; x=1772575756; bh=mD8NSMr7vs
-	BlxxedeGeqgnJwSxrN7l9PGV6l8oFb4Qk=; b=AwoxaEQsDgOEEPKLo4xGY05MF5
-	pKy4sXWebmM3+e2jSfpOL5EH3CbqXLpfvvoc/IGVwC9cRIAUywW89PnTWws8b8cj
-	NnPWe47Drb4EhlspBKekKEcz9LDszGFHnAAf0+Ds+xHHtGu8SRTnHrxnRmkzX4kX
-	t1SNOTwPuGlu3G9ZtkS9+8w6ViAaQ3icrOrM5aY26P1qBk9T0d0ADbMt695IgrW6
-	4XkRCIiDIWmEqC0W6EkOcTKiy8UJOQhd2RboRbzLab6Q6WOYrrAO/Z9pvXUhad9/
-	F6j4VtOL6nAyTOa7VZqzgjHmFIHV00CAbeffLjqc5VFHgI9CanoqfdZxyeyA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772489356; x=1772575756; bh=mD8NSMr7vsBlxxedeGeqgnJwSxrN7l9PGV6
-	l8oFb4Qk=; b=JfzpN0ht7yR6UXySgdjnZiPymifZib30w2b57+PtTDITkJIGeSj
-	fPsWNCqPCEbiuYObWljJ9xdxE0vrNWvLB617cKm2zsuR/Gh0F5quXiIkUmPnWBTl
-	TzuUqmOAGDOpU30cQLm/2NTtUrDRRAmR6VZjv16m08T2XRM4TG7i254mToeLxIIt
-	pd6KYdgMOoMITezZILcG0vW9JB9Jh6wMTqLWJalnrCcaIiKORSnKVRoaP7qYnKOU
-	O3lWReZByoF30OB/IAWKLveQHdjU6mRtvZPNfyx1PSolUouah/VBgmf/LalZQV+p
-	iPtQNYRfOHu8o48oLltxE+FPm+X5JRdRwiw==
-X-ME-Sender: <xms:jAqmaVIUiqQuHzpfZbTds6Kssxy9Q3zP5-A0qUnB6KYDaE7REcN3kQ>
-    <xme:jAqmaU2UFez78-cz6s7VLdaD9IKYzAv3eHrpdzpF4akM986JyR6B3bPd-9ho8lpLM
-    bMjuYrQr4CRaxVf4Y-0AW0i9yOjKMZaS3xM-2ZlGK4lDvw8wXTRaw>
-X-ME-Received: <xmr:jAqmaXitLK5_2WRa8SJSJQzunqD7XQERy4FxWxbBMWItA8BkSOLuNKxvQ6bLJxWWQq6AKF9MGQ0_FQ_DK-EYVRGgZkdaN4AqfA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekkeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
-    phhkshdrihhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhho
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:jAqmadUbbSus8ViCYdn03IWNJ4_m-dwWHfXr7LgMW8N7BMiDKCeqoA>
-    <xmx:jAqmaeUGSEkaKHBvZsCq3D0ClVRlamv0ZBcUJJWJ6c2iJjvkTbEzfw>
-    <xmx:jAqmaVjMKGqHXbQfgxWvMq0u-U9lgzoK5-DPnoO9gv1FFlBVkA4ncA>
-    <xmx:jAqmaRaIHppAlkIC6Y95RykezGz4mSzl5_4HmwYnR0itpltenfvyvA>
-    <xmx:jAqmaUtbxGXDh7vHj38bXnvxRrUzxhFgXcCVJRJv13qu-HOD85w2EO03>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 17:09:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  kristofferhaugsbakk@fastmail.com,
-  lucasseikioshiro@gmail.com
-Subject: Re: [PATCH v3 0/6] builtin/repo: include largest object information
-In-Reply-To: <20260302214526.2034279-1-jltobler@gmail.com> (Justin Tobler's
-	message of "Mon, 2 Mar 2026 15:45:20 -0600")
-References: <20260223174120.2356504-1-jltobler@gmail.com>
-	<20260302214526.2034279-1-jltobler@gmail.com>
-Date: Mon, 02 Mar 2026 14:09:14 -0800
-Message-ID: <xmqqqzq1yjcl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EQIu9HUE"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6726f320b54so3015053eaf.1
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 14:09:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772489368; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Q1P1XMSd3AZGXl0R3+hA0KlXF31sGY7L3wYdXJd/yJ+zvrFy1PrmdzKkXJaeoOrMpL
+         yOHgb+UHV9deWXsG772NFByKC8KqmOExr6Hg+8/nJKKQoWtZDahu4ahdY2WiruDi9LAh
+         vPL5z1NuRcz4BEx/CG9up+AtbCaVJHdtiXtz9UUWoi+0QlGsYZzIBM4A2mpzt73o33jk
+         7v9Sd1n2n/D6cVR9xM0bMZRXKEDWav9RNc3PK8XaSNmc90VbmO0LVC5NJnd8sIJwU7mw
+         dmpzATUXkxcSFPKVqaJVss1zY8bcQMGUXFoC7jvYcHoQ1NRFAVsGHcjm+Aly5IA3n89Q
+         uZTQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=45w/OFEEj0jTmPZOUv7hDe2TLhVJWC6jTab7KB7NOl0=;
+        fh=Jmd0cpIvL4GD8LbSvXfxvZVUUiDUY2dkYONYdrJRNf8=;
+        b=WNEuPFof61DCFJnh8/1GV9tNapFbA0WZtUEIkWiLGvG6VmumYxCTy3BThfBCJ+LB2w
+         6np9u3Yb5AfdV2xnDKPDFYnF7bWufDE4X7+LSFPsJcM27YextFZBEhB66B0ifLvuoUbI
+         HjiU9p0uE0MyCUJVa3LX7NC56HMsloYKwr685a+jTKbUtLZjSWRJWSFv6FY0Zck5rF4e
+         jzV6Ho2/OvhluJKHjimxwDW+7rPaEAf7N+Ltk5GYI4gntMIYzJ42AgX+G0GMlln4//3X
+         GIrw2lhM2aKnaIkUwd/0++gvhYJ7EDDjdTm+X9wBoLygyKSd2fIBtlwUwSNpRlg1QFwQ
+         0BKw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772489368; x=1773094168; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=45w/OFEEj0jTmPZOUv7hDe2TLhVJWC6jTab7KB7NOl0=;
+        b=EQIu9HUEYwwoth0Rs8wnRBbQEwWV9MEaaB7O6g0ywfR49gl8n+c6pLBxpcnmHylvgt
+         mESxYtrz5cX/GEbIAP6UyztjMq/sLOMjsXANcQ/VUnx/HiSGJj/r9/kPaxzmceR3owO0
+         lIz8gXl5yOlcImKPucXHrAuuSZKF0PpIqUYqa843vTs/cKn/ATosrC7Sp2Q67jbfPk+g
+         /Mbsf5fs2nvhFQjL8yxlPvwoa5sGtK170WQKiZ5By0o4JMi4kECQ/JT7uHAjl3QzG+sK
+         LohuHhQ7QN5ni+mTiqyzKVs7wBP89zfe5Pmm07Q8GO5prpogg5aP0jq05dFmF8dyA/VA
+         eQRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772489368; x=1773094168;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=45w/OFEEj0jTmPZOUv7hDe2TLhVJWC6jTab7KB7NOl0=;
+        b=YtJCXfTor5SATC0FyF3a+nObh52iWIl47Uc5EHKDaURTLKjSavgbVQ9qn0X0OlgBfT
+         0ZJN4tcO1VOjMZF2YBdoHUJfh90P4dv5oagtzge3Hqwn9QOhsLkhTPgIdN1trDtBMSy0
+         RpdyzaKxnU8F5OiK1wruGbCT/ecBgkyrxcSOWKzc0gKZOmZ+C20AXnS5ZVpUeBtrMIUS
+         nyCTq9IP5cb1L4gKluvMBn5SBOZM+qbINlAkt8/MI46Z1hdpMjDQq+Gm4ciILOOMl+c7
+         IXxpYVaCg1Dzmvwa5Dya2ihrH9MLWiH+5fSDWaeb3nl/ajNbxzWmDEvrK2MIMH3HRt1Q
+         naqg==
+X-Gm-Message-State: AOJu0Yx+yu3kFcUGGB8Qtz8I/H2L06cDeFBkje3u5NpEods61WaOZp1n
+	DGU/K+LwIl/qYtoP1PQ5YixNT9BCw77HVmZyFAVbntRPKRnOQQJ+ei7TTsN1gUZdVN3SCdQlFG2
+	sOmFvnjpdkLVtSq09xUofc01X0JJun6w=
+X-Gm-Gg: ATEYQzz/Z7edL5KFKiGWTozveSzwKV7Rind9WFPB+RwaxgmTOfQH2uN5gepJWK6eN8s
+	t0YrUiQ8BSAXw0V1ILdWbKrzwbh+XFZUWKolHztHlQHOP4vy5yAVJHPjbxOSYkI+aVF/vn8wkdC
+	m7GqZIVx1AeUIG7N/H2VyIl6gdZvgd99SjZH9ZkIDjA92rv7AhN2ZJpWiQlPBkk5IXFA5xdj1Ek
+	yy4SZh50ExkEYBzdDsIR4Ww6IbhsWOQNnYfGOqrx7BjGpXmwudJog9ovwH5WhVOaczAxIvXO6n+
+	Lu3s7g==
+X-Received: by 2002:a05:6820:3102:b0:679:e750:6c0e with SMTP id
+ 006d021491bc7-679fadbad18mr8402144eaf.8.1772489368657; Mon, 02 Mar 2026
+ 14:09:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260122152722.866341-1-nasser.grainawi@oss.qualcomm.com> <20260301025327.3845292-1-nasser.grainawi@oss.qualcomm.com>
+In-Reply-To: <20260301025327.3845292-1-nasser.grainawi@oss.qualcomm.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Mon, 2 Mar 2026 14:09:18 -0800
+X-Gm-Features: AaiRm53B1P93Sj_gnuUtffBl4E1ML8IE8_Mveqdkb56yjrCOXt-d0pe1_a4FQCs
+Message-ID: <CA+P7+xqC10D9a3zp7JO_yoK9Vjpg+xua7yH=fGXjApUYisTf4w@mail.gmail.com>
+Subject: Re: [PATCH v4] submodule: fetch missing objects from default remote
+To: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Justin Tobler <jltobler@gmail.com> writes:
+On Sat, Feb 28, 2026 at 6:53=E2=80=AFPM Nasser Grainawi
+<nasser.grainawi@oss.qualcomm.com> wrote:
+>
+> When be76c21282 (fetch: ensure submodule objects fetched, 2018-12-06)
+> added support for fetching a missing submodule object by id, it
+> hardcoded the remote name as "origin" and deferred anything more
+> complicated for a later patch. Implement the NEEDSWORK item to remove
+> the hardcoded assumption by adding and using a submodule helper subcmd
+> 'get-default-remote'. Fixing this lets 'git fetch --recurse-submodules'
+> succeed when the fetched commit(s) in the superproject trigger a
+> submodule fetch, and that submodule's default remote name is not
+> "origin".
+>
+> Add non-"origin" remote tests to t5526-fetch-submodules.sh and
+> t5572-pull-submodule.sh demonstrating this works as expected and add
+> dedicated tests for get-default-remote.
+>
+> Signed-off-by: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
+> ---
+> I removed Jacob Keller's Reviewed-By since there are more significant
+> edits to the tests in v4 that they haven't reviewed.
+>
+> v4 includes fixes for the issues Junio patched in seen and I confirmed
+> it merges cleanly to seen (with v3 reverted) as well as next and passes
+> tests.
+>
 
-> Changes from V2:
-> - When checking for largest objects, zero valued objects were not
->   recorded even if they were the "largest" object. In this version, if
->   an object ID has not been recorded yet, it is always added even if its
->   value is zero.
-> - Added some helper functions for printing keyvalue info to cut down on
->   duplicate code and hopefully make it a bit easier on the eyes.
-> - Moved the for-each loop that printed table OID annoations inside the
->   preceding if-block making it a bit easier to reason about.
+v4 looks good, thanks!
 
-The changes I see in the diff relative to the previous iteration all
-look sane to me.  Will replace.  Thanks.
+Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
