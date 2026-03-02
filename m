@@ -1,118 +1,134 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB72F31716B
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13612379EC6
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772476760; cv=none; b=DZpftwUI1pvyyTfpq3VJbVU0tMwPtKS/egRFCbNbAxHMUM3eDn1bAz0yZ59DtNTSPgVVW30u/a01T2Xauw472m74ac/mUolVB8Fy2ucfMw2XchzRWDqdoK3WkZRa7mMlTWAcCyDy6dZKC23fvaxWcE1DxlyaHqBYm1HjWGCB7qc=
+	t=1772477206; cv=none; b=WresztXhDS+zDeNg0FGzLisaGtVbHN+CkD69bN2R5+Wc9/9N54+RoBoGIQA5oIvnEevA7E1fCNrw4qPug5bPgDcsy2WwIDM/ULoAZj6oYZbtMR/J3cTwBuwfiXQ4PW+ENWMfuLi1Nyeimf9D6Gg3j5B8QWsmC6ZwztXVEiwLFOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772476760; c=relaxed/simple;
-	bh=DnZLTwzC9GqMIE3QQQTfrttvUgLWACVAkWemyPE9WgM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WBVmGhXzDhttwhNA2vNJx3wNbmJ/DotvbaVwT/fQCEEVrcR/6PmwL3tvNMxjtjAGj6+V/wwSBnJYoOLYsqYcYa47GGB5y0YNZ/mjtIeuT1Cgw5Su7/MwDjpkVcK/QhunVpcQPO0C948Ee6bBLARP2csCYGgw0GWwPZ7BYfvcjxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PaTvuSSd; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772477206; c=relaxed/simple;
+	bh=oYvLgNI5/zCinfBJyy7ByR4DyFKDzTabezvfPoYyqys=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KlKaTUlZ5w0aBbw8PylAG5oHkzTD0yyv82xiJQ8eJv3FR9IL1d4Va4+sWpPUfHj3uIMo4gmb5SQG9qmegVnehBEKjRJvdZItkseTZTCVUcj0wSulJY5+xeyHplgDOAjbbJkimeTVovsN45xr9ml/qCyxQ24HQzTp8A6ECjqt0jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TfXFgHa8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y3vQj+k1; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PaTvuSSd"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-899c3441177so79724286d6.0
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 10:39:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772476758; x=1773081558; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BXYAugtgDGWortFe6LFB43Q5tOnhmkK3xVn0RsoI1Hc=;
-        b=PaTvuSSd7U5RPOGSODzIrvNjzgcmLNghYU9YiI63m019XkuWPqkt0KCGhKtgyt8s0V
-         /fudCivKjpgcmr0KGF5GJHRybC74HWTK9yocEzTWt0UAyYKgcn1nosJ2qcJNfyR5VwK0
-         etJn3TrHeN+/Tv43ZpTcv2Z6anOuuTZambTibb7eDOuAEVkfkFW2BLM2i5S8vJt7/vu1
-         Nbq/XH3g7Ltq+SFtyTYFydFQrZgF3F4E9vlfHOf44iv4elXso/Qa9YU8b+7Jxsn5BRhL
-         SwwVrndSnda5WlhxB1/0JIdMyqzHopvQ9HphmIe8TZEZiGWsDWlfTGPk7Uhk2vhYKpBg
-         sblw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772476758; x=1773081558;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BXYAugtgDGWortFe6LFB43Q5tOnhmkK3xVn0RsoI1Hc=;
-        b=Aplph0KoJo3XVpHsPI0KiCgAy+Akp2z7sKBdAZwz5Aa52XlgcFirWdlRK+6ovbERJz
-         rjaN/KyB4TTMo8+yTR44Oo4LjG8U6CQWZA3rxIBeY137lz9vaE/Wnw6JOMBRnG3hB/PE
-         Lm/lnxc8x6+6NXacG9t4mbFCd2EXVxZKL65HoVScCCPDDL1Ui4LjT2es0oKhlkuslHWx
-         VmrA00qMHTGfuDH/PI4ShxvBrvbjUYwBB97+z3Ji+Do5CejPNi3cqLsJAUhJ9QuUhz2o
-         ONcVpVGk9+cpTIPSbDIXXqh27OAgVc+aPu0PBfbMD8VCIWBSKfC5sCpu5MOCyH9tk8Cw
-         lGtg==
-X-Gm-Message-State: AOJu0YzlM/0ZZBDJAHfW7yCDAYb07FEdfDOQ7Vzbrz0YZivMUeDiwF63
-	6aD71dUEKLdjSdThGbt8fT3mdcmkgnxIpHZn4phsOkrYQzlsXmJO/NM3
-X-Gm-Gg: ATEYQzyJz0V8ZEb2Y+v1Wzrc2OQYLgCywWqGOKYU/nyZ0hZr7hYkklB0oAbZTh85zal
-	6Wg+7EaINF+UvJqsN00h7lIPehr/J7BiQhNHbEQ3jOp0g+EjdtbXAr255CIlxC7GRmsqx6o/E8E
-	bPUPEDZKwHE5Uw0HSzbKBf/nsee46gHNK+RZf1qdC+EwGGEv/rUJZotHUH9t6wszhRpZapJffnB
-	Vcq+3felIPJzEN/N9IUdajjSFUOk4Fd59fj6jcvv7ByABjcb3670DgIkLr1rwlRUucqdIoTBVZn
-	2duGNI2zVCVViqQb71KAM52yAGvqdSbHy/e5VIiSRAh1Zk7rcXD7+kxlV7QnbkyI5yDNzHjLJgP
-	ROSUSqjAUTOqOuh/j/e84zuGYRSdQvssiL6uccBqwk8SiZSiu/OdGopdTT4fFd85zQT8BgYndGk
-	Vfkb8F/oB12ydHehdbsqrlMaQEJdSVkJkR8r6g///aXQDjUha4a2BpvS0Lh8dyq9xPfq50rg==
-X-Received: by 2002:a05:6214:5196:b0:895:1d2a:1718 with SMTP id 6a1803df08f44-899d1dbc101mr200383276d6.18.1772476757876;
-        Mon, 02 Mar 2026 10:39:17 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899ff659b75sm21146276d6.34.2026.03.02.10.39.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Mar 2026 10:39:17 -0800 (PST)
-Message-ID: <15eb8691-a55d-4edc-94fe-ac8a4b37b90c@gmail.com>
-Date: Mon, 2 Mar 2026 13:39:16 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TfXFgHa8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y3vQj+k1"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 440381400173;
+	Mon,  2 Mar 2026 13:46:31 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Mon, 02 Mar 2026 13:46:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772477191; x=1772563591; bh=P2v/lLz7h4
+	dnmFTkvxkTpCFi4+qtLMV+S09IXxp2iZg=; b=TfXFgHa848VyfucSk7Rh4cSKDP
+	XxZjLSv+7bk9i4vDu0FaAHJVrvH1b6q+40jxVT2ERinek8ZAy9fxEA+KXO67wxgo
+	dKgb3us0dvKkOAYDAeggjVaEWVhfEafqCq63JDcXTsi6vpovvRYA+Ym+AUgciN6D
+	9YiLSyb5uP9Tds2vWdIktAgDjVqBkm2Lt5noo+mDSOJYEhSt5i1Vc+4tlUx4KKlA
+	+tR9Y0VC2xYdDjFi22eTCKRnanz3P6mkwAxvrK+XjdZfMliNQXAz5vp9vWIJWBYX
+	is3qrBUNtLcO4aXppw0vGV0id8L3fHuAnnD5Scj+/JQ7OiYGv+hYq09tHwNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772477191; x=1772563591; bh=P2v/lLz7h4dnmFTkvxkTpCFi4+qtLMV+S09
+	IXxp2iZg=; b=Y3vQj+k1gTkt86AbPctzNU45+0xNsOJwYOhw+ho6OSbiTPwXCQ+
+	DrIF2vFi7I2QiL8yY3Fldx9C+zGkaNbw4/GIXDHmSBbyFyTxPJnlENryyZ6vnzwF
+	T8QCt0H1EEaWelWTUDeCrhIf9MTcdM3eJ/EBmG2l53M+t6+dkQ2ysx5/ThO1ru6t
+	tAVuFQngiPYU0oQ9qnYrG85JHVbh3e1WM84PrwGtJYKbIUwnv1gra/uQYXh7Milk
+	7SXd1nM9TQjm99pVJNAfL2n2ExGZOHZmeT+9jSQ1iUdgKCggI+KSVVbWhauRE7VP
+	KdMt2Suijltlk4vdiMEUHrHLKKcajGOGtEw==
+X-ME-Sender: <xms:B9ulaVeLOm0fkqRxNjrzxRv2WKW6XLakFDcII0YEo38hX2vX_PHsxw>
+    <xme:B9ulaaFkfhwdX3g_TeFQAS5Rls2GLw5xLqeA9t357UWwJUnC2BosdcVq4700j8Vij
+    L1uN_SZ1-JyoQYmSJRHUCl2Tds8cx09u0CQoMXpM6C9B8iQgQJnHw>
+X-ME-Received: <xmr:B9ulaW0RuLUncCSj_PoKcLlqiDaN9tSnEEEkqZWuHUS2LpLfrwmyXtRFbPdnebUr4Nz5IN_mOQu3f5l9ZdpejmcTCZDNNffyMA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekgeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprhdrshhiugguhhgrrhhthhdrshhhrhhimhgrlhhise
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopegrlhhgohhnvghllhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hjvghffhhhohhsthesmhhitghrohhsohhfthdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:B9ulaamDJNskhP7I0mPGm9JSt7K3ayK1hUjJCEyVjVJ8CNJjZMmZ8Q>
+    <xmx:B9ulae-htz_4CqR0Q8TmXTxeIOivEqlCrXm6Q6hFsveR3m42LWLL2g>
+    <xmx:B9ulaXoG_aqfjsbK085KbnqgWL856-fia6g5bDdrW1wurxPgVSTzvA>
+    <xmx:B9ulafmlPjwXJDKxto7S4q3mc73Dr-T4TJrOYLoAXz2GizZTcKwa2g>
+    <xmx:B9ulaeh-_yc1DbAOlPCHc6vqqheULh7nQ9lLWAq7tvfkBLNwwJudDAym>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Mar 2026 13:46:30 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Cc: git@vger.kernel.org,  algonell@gmail.com,  jeffhost@microsoft.com
+Subject: Re: [PATCH] t: fix "that that" typos in test comments
+In-Reply-To: <20260302164521.79148-1-r.siddharth.shrimali@gmail.com>
+	(Siddharth Shrimali's message of "Mon, 2 Mar 2026 22:15:21 +0530")
+References: <20260302164521.79148-1-r.siddharth.shrimali@gmail.com>
+Date: Mon, 02 Mar 2026 10:46:29 -0800
+Message-ID: <xmqqfr6i133u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] for-each-repo: work correctly in a worktree
-To: Jeff King <peff@peff.net>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, fastcat@gmail.com,
- Eric Sunshine <sunshine@sunshineco.com>, Patrick Steinhardt <ps@pks.im>,
- Phillip Wood <phillip.wood123@gmail.com>
-References: <pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
- <pull.2056.v3.git.1772465805.gitgitgadget@gmail.com>
- <2a6091095f120426fed554a08871f2b4dcd15282.1772465805.git.gitgitgadget@gmail.com>
- <20260302180601.GD28275@coredump.intra.peff.net>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260302180601.GD28275@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 3/2/2026 1:06 PM, Jeff King wrote:
-> On Mon, Mar 02, 2026 at 03:36:44PM +0000, Derrick Stolee via GitGitGadget wrote:
-> 
->> @@ -15,10 +16,11 @@ static const char * const for_each_repo_usage[] = {
->>  
->>  static int run_command_on_repo(const char *path, int argc, const char ** argv)
->>  {
->> -	int i;
->>  	struct child_process child = CHILD_PROCESS_INIT;
->>  	char *abspath = interpolate_path(path, 0);
->>  
->> +	clear_local_repo_env(&child.env);
->> +
->>  	child.git_cmd = 1;
->>  	strvec_pushl(&child.args, "-C", abspath, NULL);
-> 
-> The second part of the hunk here is as expected, but the first one looks
-> wrong. We didn't remove any references to "i", so either it was
-> redundant to start with (and the compiler should have complained), or
-> now we've broken compilation.
+Siddharth Shrimali <r.siddharth.shrimali@gmail.com> writes:
 
-You are correct. I did a --fixup here and it messed up the diff. I should
-have double-checked the commit-by-commit compilation and testing post-
-rebase.
+> diff --git a/t/lib-unicode-nfc-nfd.sh b/t/lib-unicode-nfc-nfd.sh
+> index aed0a4dd44..201ab9b24c 100755
+> --- a/t/lib-unicode-nfc-nfd.sh
+> +++ b/t/lib-unicode-nfc-nfd.sh
+> @@ -75,7 +75,7 @@ test_lazy_prereq UNICODE_NFD_PRESERVED '
+>  #
+>  # Note that I've used the canonical ordering of the
+>  # combining characters.  It is also possible to
+> -# swap them.  My testing shows that that non-standard
+> +# swap them.  My testing shows that non-standard
+>  # ordering also causes a collision in mkdir.  However,
 
-> Looks like the latter, but we recover when we switch to using pushv in
-> patch 4. So I think the declaration of "i" should move to that patch.
+While the original in this hunk clearly has unwanted "that" there
+and removing it is unambiguously the single right thing to do here,
+...
 
-Can do. Looks like a small v4 update _is_ required.
+>  # As a sanity check, ask Perl to parse our generated JSON and recursively
+> -# dump the resulting data in sorted order.  Confirm that that matches our
+> +# dump the resulting data in sorted order.  Confirm that it matches our
+>  # expectations.
 
-Thanks,
--Stolee
+... this does not fall into the same category, does it?  The
+phrasing may be a bit awkward, but it is not factually or
+gramatically wrong per-se.
 
+I think the next one also falls into the same category as this one.
+In fact, referring to that one arbitrary path chosen in the previous
+step as "that arbitrary path" (i.e., the original) may convey the
+intent more cleanly than the updated one "the arbitrary path".
+
+> diff --git a/t/t6416-recursive-corner-cases.sh b/t/t6416-recursive-corner-cases.sh
+> index ed20de8ea2..63de0fc6cb 100755
+> --- a/t/t6416-recursive-corner-cases.sh
+> +++ b/t/t6416-recursive-corner-cases.sh
+> @@ -775,7 +775,7 @@ test_expect_failure 'merge of D2 & E4 merges a2s & reports conflict for a/file'
+>  # it feels sound to say "B and C do not agree what the final pathname
+>  # should be, but we know this content was derived from the common A:a so we
+>  # use one path whose name is arbitrary in the virtual merge base X between
+> -# D and E" and then further let the rename detection to notice that that
+> +# D and E" and then further let the rename detection to notice that the
+>  # arbitrary path gets renamed between X-D to "newname" and X-E also to
+>  # "newname" to resolve it as both sides renaming it to the same new
+>  # name. It is akin to what we do at the content level, i.e. "B and C do not
