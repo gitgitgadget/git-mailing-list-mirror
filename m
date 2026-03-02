@@ -1,122 +1,92 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from newcloud.peff.net (unknown [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5E73161A3
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5451D335081
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772474898; cv=none; b=nvRfMr234S5lKngRFXpSwt61Zv+Tz9dQZbsq2FBZ71wzDW3HQRdqCiBTf1NksuDyS9EFB7+FlteExc8fdQpSUkOoADSB6CrkDUIWzq6SqIKCZgV+Kp4SliOCGN/HZ9vlFdye5sVMag8b6aUHF9H2hssBDn4SMzwpatBNDYxjjsc=
+	t=1772474947; cv=none; b=bicotOU+UjT8C+ljBeXOfDceLylDSHmYiSvl1kH+2aBGZ/6waCdZapwrAjnJ8IT33dRfzmb1GSsRw8Lk3kriHqSD5UXjoFF2AK8232YvLnxCBOCPb2D+I8fA7MdgsPi8PQeXkzxb3xRDpjOmAAY0AvrJyUq/i19/ypRlVzveTCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772474898; c=relaxed/simple;
-	bh=7Z8xMe9V/DW0ZAti+1aKXQNjVkzTAy/bWxD6xvXpAi4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IqT9wGbg1SFvWv8L4nHPYnU9HjYYKr4JfINfJEOJVK9gcc6h8QPDLArL1iYsCK4inmekF8t63ognnmicipH0d/xYQRxIWbAvcX33rXQOlHpiertm+U1ktfm9k5SsrCI1uKv5lOPStyuMtfaFgmhIrlLw48oa/2e2U2yiEvugeWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J6snuhdM; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772474947; c=relaxed/simple;
+	bh=mFV+v5tloArRsNhu1DTE/YyP0uatDTzc16nNJjLJ3WY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s+vzH356TPBu0lEqcHsaKO78JnG6r+jc58HfRIw7TEx5DCJ+hFL6Zgl9hSEPKVFiwBZ1kxf8Fn1GFyL58Z2/9VjEwUrowNjRy5H38uTPMwS0vOmqSP68fkkUvEJP9s2YXwy6bl5hRfphn5x/tBpXvFrCzT/oGwhQbV61q7NpgNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QSZv81/Y; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J6snuhdM"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2ae4d48dc2fso6220855ad.3
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 10:08:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772474897; x=1773079697; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RqE+Q38IRcWkBReYBUyxzHIU3qh0/GK4C60CwGdzE2c=;
-        b=J6snuhdMKLNi+Zf5ZSFii30IhOti8KiY17hENB1UQShYonpll8LMTSfRT1in4VbLir
-         30VjUMcP+e2wWToK4uHQagQM+Tv9BjC/O8v+VA7owVKe6vwZB+yvbL5QFyS0dwc3ufPA
-         zEY3VbASjr7cBtPddHb5PUXaVONbM3a/XgUAmCt/+kEVpjGZb1hrVFigjeh9K3hKW4lG
-         H0k8yftaYB+rL1j+LIHeh/eqS/eeLWdBppZhfan8lcPwAFz9qiYH2+O6URvwxaawi7JO
-         NYJmkqlWjZ++GCaVSWvfX1qDbiDhRKMRM5H4DVhncM4WuURxszglh8i2r8HhUl5hVzaw
-         BavQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772474897; x=1773079697;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RqE+Q38IRcWkBReYBUyxzHIU3qh0/GK4C60CwGdzE2c=;
-        b=p+oO+rEezppClAZlERtbF0js0cSK9R/OOEOoe6I/2MmUMopKn9KX1XzuNYFT+3C7qZ
-         Eulo1jj+ftg9L9Nh57iP/dtr/NK8slXcA3EO+yXudZaGAcauP2P8smcEHW9vSWx/xBwH
-         8FcquFqJUHf3FY/An/s5DruqPIOgjlnNxq5ZaEDAaOaPKgCs6qI4lyAWTogEJZfXwWOp
-         lmHCU/DZmPlmErh2jYXfcQpWuNZ4rLGEhHI4nSBF7CrhCbCgEHh3zFCu+lu2V1CsXxJm
-         OO9ZVuPx1rSdanYbKlnJGbVIdgSytNoWf/julQ1UZga5LJnmJ3cUJ2dXajRYvuLTUK1K
-         DOuw==
-X-Forwarded-Encrypted: i=1; AJvYcCUy4SK2GKEmdfgsf6jv3yAlBDnnJhTaUi8vepdQbAof8If3Qf2XTovQ9W83dEIOEQJ41LU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFvKjKpQn71NmHMuRIgXarfzyzwXAzcwsYZgIMJoq2HJ69Vtgu
-	cVwUtpvbtfO/zpYIWz9tHh6jQRW+Vp66kBzQFsXgPVqfzDMcg3mb7luA
-X-Gm-Gg: ATEYQzwFdQjQqkOC6TJ4JOUmL/uTSmeV2vACPVW4nyfT4re5vKF14lN5d7N0iO0t/kp
-	65mhg2r7Cd7QwikxouK4kQrDPIr7Obr8KKOaGFrbgkRrcaDi0W6GimFzjozSevZpsrP9VjOeBOc
-	EySyAOBf/NDaaeK7swwbsSn4L+jK9JgRolU8jBDCFF5n+IuiGXbJXE4pMhgCqujDMkQkqJ/xidi
-	gGTw3/Q8/5gq0N1ZabR5NyYhBUY47qY0S/+Uniar2RcPIPIIr0UrEwkqtWuMHHRCirSqAucQlhm
-	AGIUbHM331hNubmnET+78Q3fGtlp2F7ztvwDNvymRMAyY8VrY88/mPYiR0R1Rgqff4/It7l+4qT
-	SkfSW9tVM0eI6bDDI9rtpfjeWuKRUzhmUBR3JF7mV33+MKd/AH5rdJHgzN8Q8QZftku0AyZ7ZD+
-	LOiw5biTQvrRLzBRT8XaIxE1BHpV5MNYHdhDrMEuoZyx2OJz/XG61RBbuHIPDDTfTvEYIGiIKhX
-	bJx8iQ=
-X-Received: by 2002:a17:902:e806:b0:2ae:5a70:476b with SMTP id d9443c01a7336-2ae5a704bf1mr23143375ad.15.1772474896351;
-        Mon, 02 Mar 2026 10:08:16 -0800 (PST)
-Received: from ?IPV6:2401:4900:6336:2198:13bf:d9bb:7f7:8dd3? ([2401:4900:6336:2198:13bf:d9bb:7f7:8dd3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae4802645bsm56023595ad.12.2026.03.02.10.08.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Mar 2026 10:08:15 -0800 (PST)
-Message-ID: <96d93ef3-7843-4be7-925e-202888670373@gmail.com>
-Date: Mon, 2 Mar 2026 23:38:10 +0530
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QSZv81/Y"
+Received: (qmail 29308 invoked by uid 106); 2 Mar 2026 18:09:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=mFV+v5tloArRsNhu1DTE/YyP0uatDTzc16nNJjLJ3WY=; b=QSZv81/YSbWMyCkI1Kbbi4Jv1PxqdkI5NlFKiOZUKL/I2Zz2gkTrjc4/XR25F4adhp/ctHgISf48zAnepcy9fiySK/PMeUzEDu359+7VjvbgetWpoXEGVb5fbRjh5zw6NdER2pAyghsZr4VMJwIioi1Z3d9lVn7foLq1+V2txHt0OUwBx6r+8Bj42WXSI6v78KYmjIXi3SozO9YcKdugwvS72diGrw9O2Df3hCH+Mi6KdWt4mpBcjlKjcSyMKU7RV+WItV6YHzKzabNW9Bbybii+TvorNW7E221lDItiFSlNs5Zjk0OtOPBmT7DGKPFCCSH4km0BvIATDhEhC9wVdw==
+Received: from Unknown (HELO peff.net) (10.0.2.2)
+ by newcloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 02 Mar 2026 18:09:05 +0000
+Authentication-Results: newcloud.peff.net; auth=none
+Received: (qmail 333974 invoked by uid 111); 2 Mar 2026 18:09:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 02 Mar 2026 13:09:05 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 2 Mar 2026 13:09:04 -0500
+From: Jeff King <peff@peff.net>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, fastcat@gmail.com,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 2/2] for-each-repo: work correctly in a worktree
+Message-ID: <20260302180904.GF28275@coredump.intra.peff.net>
+References: <pull.2056.git.1771903950.gitgitgadget@gmail.com>
+ <pull.2056.v2.git.1771968924.gitgitgadget@gmail.com>
+ <4e3f4aa6cd36f779c6c1d6b4f30bb68ed807b9da.1771968924.git.gitgitgadget@gmail.com>
+ <xmqqv7flervq.fsf@gitster.g>
+ <eeebc30a-40bf-40ac-a16b-ca5e128c3c01@gmail.com>
+ <20260225131344.GA2139176@coredump.intra.peff.net>
+ <08c6e203-3444-45c7-9bc9-cc2590be30c3@gmail.com>
+ <20260227224238.GA2956443@coredump.intra.peff.net>
+ <cd9adbd9-b996-46da-b6a8-d2395be79a0f@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSOC RFC PATCH] builtin/repo: add path.in-worktree field
-To: Junio C Hamano <gitster@pobox.com>,
- Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: SoutrikDas <valusoutrik@gmail.com>, ayu.chandekar@gmail.com,
- christian.couder@gmail.com, git@vger.kernel.org, jltobler@gmail.com,
- karthik.188@gmail.com, siddharthasthana31@gmail.com
-References: <05C28DD8-251A-4990-BBB2-26C144CAD982@gmail.com>
- <20260226201643.5152-1-valusoutrik@gmail.com>
- <BEE3B56B-F8E0-43B5-95EA-8506A84CB2EA@gmail.com> <xmqqtsv3uoc4.fsf@gitster.g>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <xmqqtsv3uoc4.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cd9adbd9-b996-46da-b6a8-d2395be79a0f@gmail.com>
 
-Hi Junio,
+On Mon, Mar 02, 2026 at 10:31:48AM -0500, Derrick Stolee wrote:
 
-On 27/02/26 04:03, Junio C Hamano wrote:
-> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
-> Is https://git.github.io/SoC-2026-Microprojects/ the latest?  The
-> above URL points at one a few years old.
+> > I think you could make arguments either way about what should happen
+> > when spawning a command in another repo. But I'd really prefer for us to
+> > have a single spot to specify that policy, and not subtly-different
+> > behavior from different commands. So I'd really like to see this using
+> > that other function (or the logic from it factored out into a helper).
 > 
-> Anyway, this list however might want a bit of updating.
+> I agree that it would be best to have a single place.
 > 
->   * I personally feel that "run_command*() to internal call" is way
->     too involved for a microproject.  All the low-hanging frutis have
->     already been picked in this area, I think.  That is why this does
->     not appear in the list of microproject ideas in more recent
->     years.
+> I was looking at prepare_other_repo_env() and saw that it requires a
+> computed gitdir, which is not easy to compute. We want the child process
+> to perform that discovery based on the -C parameter.
 > 
->   * People seem to be finding more instances of "test -X" to replace
->     with test_path_is_* helpers, so that would be fine to keep for
->     now.
+> However, we can extract the existing environment clearing logic and use
+> that here. I'll give that a try and confirm that it passes the tests
+> that I prepared to fix the bugs in this version.
+
+Yeah, that was exactly the refactoring I had in mind. What you have in
+v3 looks good.
+
+> > Dropping GIT_CONFIG_* from the environment does make sense in general,
+> > but it doesn't actually happen with the patch above (because only
+> > GIT_CONFIG_COUNT is in the local_repo_env list; to find the others we'd
+> > have to actually enumerate the current environment).
 > 
->   * Ditto for "do not place git upstream of a pipe".
-> 
->   * "Do not use signed int for collection of flag bits" may have
->     outlived its usefulness, as it seems we are pushing more and more
->     uses of enum for collection of flag bits.
-> 
+> It has GIT_CONFIG (the local Git config file), GIT_CONFIG_COUNT, and
+> GIT_CONFIG_PARAMETERS. My patch was wrong because of the string, showing
+> the value in having tests to confirm the right behavior.
 
-Thank you for your suggestions. We've tried to tweak the micro-project
-page to remove the stale ones.
+Ah, I forgot about GIT_CONFIG (though it obviously would not match
+CONFIG_, even if we correctly said GIT_CONFIG_). It's mostly a
+historical oddity for git-config itself and can be ignored (other
+commands do not even look at it, and we'd never set it ourselves).
 
-   https://git.github.io/SoC-2026-Microprojects/
-
-Feel free to let us know if you have any further suggestions.
-
---
-Sivaraam
-
+-Peff
