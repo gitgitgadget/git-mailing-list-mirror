@@ -1,124 +1,91 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF8F25DB12
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 19:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921B125DB12
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 19:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772479064; cv=pass; b=U6sdB4FCdx4mM4tJ4eeEoh5KlnDxHj94GTIrllaexB46dkgW8++Kh5zgLE8LFS0hbc6eIL4FajUGyMKSBmsuB/3RZmO1HX0E1SWAD7RXygnADJM8+D+2AHDw5o/i0QtE68Of8mkkdikTGo34aH8DE3QMwwLMxwcuKiOdQ1adP7U=
+	t=1772479237; cv=pass; b=GFwcMp6GpxeXJsYLbeB1NzMD9cq+4HLdT7VggeqihzhyRIqtNeLGDG/lqyhkhY0ivFmKKmZfGI2i1hILCu/kPcnDK0BYd8usxhNAoh/TpdFNyJ2O/VCkAkp4dg+TuF58vz/4TYSKHlPEwlfx+59CMVqxpryyBUpIHn3Rw9wxBPY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772479064; c=relaxed/simple;
-	bh=upTs16uOvOvkIPI+tlo2RQZAt2rD3Sr0SArU8y1LLmI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sw7+eMd3bVt4SwAHqrDB8OvmFNOmyG/bY0vcnNdfxUGBbb6tTW9mhw1R1weETsQIOzjLniYF+lHJLfJq9RhVaHVJAd2P/ADvjlFTvNv3xjsOdpDSWSN9m6RjfAmsXQSwO0VaQCKZEL2GA/iEqQoJhLsJ1MoZrN3HXZGZ1E/TmN4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=kuOR1NFv; arc=pass smtp.client-ip=136.143.188.12
+	s=arc-20240116; t=1772479237; c=relaxed/simple;
+	bh=PlIhux+x86Wk+JEBE0HhswvyrwexmXSjqSnUpDuq+jI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OKNATnAkE950IH9TXh7td6uIAqXDmr0Py2rKVlePMOhnrnjL/r7MvWex+/STgQ+O8j8PoLTo3N2XApHLTIbTxZZnX/H3jhRhW1JoayxJrsCHlW7KD1vL0CZXomdeji14WQGKw/HXBmi0EpGqSmn8wzRqf7IDKqeyGP8ORU2vZK0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=YSt8mvfW; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="kuOR1NFv"
-ARC-Seal: i=1; a=rsa-sha256; t=1772479050; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="YSt8mvfW"
+ARC-Seal: i=1; a=rsa-sha256; t=1772479227; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=bt8GZENSx9gVzorVq7/SaivAxT44MmMr0SFvQR9r1RcFFJgHRSKDBF0WTll2chGINjj0LjNHJEhbmvca1BM8Azl200CAS1NquJ2PZ4OlH7L2fKiFHGVfWfRiSTI52BFdP+u86asvVxUgGEtfISurFQN5Wy8vUly7ug1XJo7WoVs=
+	b=JmzeNJSuIGJmnZiuq7Y+0W1+BNcPewjweiAFibLXQbMD2GS1wf2WJdrOlsmgm/DTh1NnS0ivgLrQ82gO4D2VtM5i5iDpLDVI5sYthaIumN/rwKC/6yCBtyCVu8tfow0tFT27Z05C2JUbpgy6cfXEuqSjnthU9MElNJAS2OKKrjw=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1772479050; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=iU7QAlOileT9rgF0t7lSLZs/fT3vSC74Q+68pgo3Hdk=; 
-	b=BZaD0MFttBdq7x7uH9DnROiMkUjKmIiYUSe+QwHA1zDmRnqnv590gQMq3DYPCp9SDGzlCrtEfw8N6hmwPLmoUSzOz/M4q+4Av8T61HzcwQS5NnodA2W5FsyD3Pq8rH4/5GjFJmXHjXmeIOcgai3Zk1EqRqBpJmIyn+WhdeXDDFI=
+	t=1772479227; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=MJQkkpadr6UuHmttdNjTr1SIrwbj+pPO4UGfGfaZ9B4=; 
+	b=W0VSYyWW0QQGhx44I4s28haK3/+ZdWhFHZXEOUsGMCJp7kRxfDC25jByGFT70krgDhB7JSHaSq+Pp2PqcNZd0RNdDsRBIdHCZSwQFSM0V0dUBtnWBd/IUJiXOlZzpdddH0oEhYX8TEAiuhtooTjruSw/8lbIqFGcYelcHwplDog=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772479050;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772479227;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=iU7QAlOileT9rgF0t7lSLZs/fT3vSC74Q+68pgo3Hdk=;
-	b=kuOR1NFvDNq/JdfWqdBkT9T72DAI0ih3f2XNPyHViuvjqdfpXmi1xgirGHgOYLBx
-	Gg4Yf87uUpdRvZ0pXgPX4gg4u0dwM72GXAnUk2wGlg0jifF0AZi1MsHhnA60ZuooIJe
-	a+UvnDoJ3sQKbiXWasREdvCiri9MuZSXKogiWzHM=
-Received: by mx.zohomail.com with SMTPS id 17724790493441007.5614475619844;
-	Mon, 2 Mar 2026 11:17:29 -0800 (PST)
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=MJQkkpadr6UuHmttdNjTr1SIrwbj+pPO4UGfGfaZ9B4=;
+	b=YSt8mvfW9+2LoI/DBdklxnlnuAWupTnCnkFRhGAASZ/Guz121gFOUqSmd98ptREE
+	ol7wDc2td00owHtHrfzs8OcXJd29RS0XV6SVgo8aAa9AONXhznuzebJRPsVqilx5JJM
+	JsH9Ep6p3E/MZhHrTT3InjztcOHmzl1TN5vKWG1E=
+Received: by mx.zohomail.com with SMTPS id 1772479225809287.9009812796214;
+	Mon, 2 Mar 2026 11:20:25 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Emily Shaffer <emilyshaffer@google.com>,
-	Jeff King <peff@peff.net>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH 1/1] builtin/receive-pack: avoid spinning no-op sideband async threads
-Date: Mon,  2 Mar 2026 21:17:04 +0200
-Message-ID: <20260302191704.1814567-2-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
-In-Reply-To: <20260302191704.1814567-1-adrian.ratiu@collabora.com>
-References: <20260302191704.1814567-1-adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2026, #11)
+In-Reply-To: <xmqqtsuyyrrc.fsf@gitster.g>
+References: <xmqq8qcdof3f.fsf@gitster.g> <aaVPY9b37zY8SLup@pks.im>
+ <xmqqtsuyyrrc.fsf@gitster.g>
+Date: Mon, 02 Mar 2026 21:20:23 +0200
+Message-ID: <87cy1mox6w.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ZohoMailClient: External
 
-Exit early if the hooks do not exist, to avoid spinning up/down
-sideband async threads which no-op.
+On Mon, 02 Mar 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>> On Fri, Feb 27, 2026 at 05:02:12PM -0800, Junio C Hamano wrote:
+>>> * ar/run-command-hook-take-2 (2026-01-28) 12 commits
+>>>   (merged to 'next' on 2026-02-22 at 4aa543f115)
+>>>  + receive-pack: convert receive hooks to hook API
+>>>  + receive-pack: convert update hooks to new API
+>>>  + run-command: poll child input in addition to output
+>>>  + hook: add jobs option
+>>>  + reference-transaction: use hook API instead of run-command
+>>>  + transport: convert pre-push to hook API
+>>>  + hook: allow separate std[out|err] streams
+>>>  + hook: convert 'post-rewrite' hook in sequencer.c to hook API
+>>>  + hook: provide stdin via callback
+>>>  + run-command: add stdin callback for parallelization
+>>>  + run-command: add helper for pp child states
+>>>  + t1800: add hook output stream tests
+>>>  (this branch is used by ar/config-hooks and ar/parallel-hooks.)
+>>> 
+>>>  Use the hook API to replace ad-hoc invocation of hook scripts via
+>>>  the run_command() API.
+>>> 
+>>>  Will merge to 'master'.
+>>>  source: <20260128213927.3026875-1-adrian.ratiu@collabora.com>
+>>
+>> It would be great if you could hold off merging this patch series for
+>> now. There's a rather steep performance regression in the "update" hook
+>> caused by this series, see also [1].
+>
+> Thanks.  I'll be expecting an incremental update for this.
 
-It is important to call the hook_exists() API provided by hook.[ch]
-because it covers both config-defined hooks and the "traditional"
-hooks from the hookdir. find_hook() only covers the hookdir hooks.
+Fix posted:
 
-The regression happened because the no-op async threads add some
-additional overhead which can be measured with the receive-refs test
-of the benchmarks suite [1].
-
-Reproduced using:
-cd benchmarks/receive-refs && \
-./run --revisions /path/to/git \
-fc148b146ad41be71a7852c4867f0773cbfe1ff9~,fc148b146ad41be71a7852c4867f0773cbfe1ff9 \
---parameter-list refformat reftable --parameter-list refcount 10000
-
-1: https://gitlab.com/gitlab-org/data-access/git/benchmarks
-
-Fixes: fc148b146ad4 ("receive-pack: convert update hooks to new API")
-Reported-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
----
- builtin/receive-pack.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 139a227e71..6376c191c7 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -934,6 +934,9 @@ static int run_receive_hook(struct command *commands,
- 	int saved_stderr = -1;
- 	int ret;
- 
-+	if (!hook_exists(the_repository, hook_name))
-+		return 0;
-+
- 	/* if there are no valid commands, don't invoke the hook at all. */
- 	while (iter && skip_broken && (iter->error_string || iter->did_not_exist))
- 		iter = iter->next;
-@@ -980,6 +983,9 @@ static int run_update_hook(struct command *cmd)
- 	int saved_stderr = -1;
- 	int code;
- 
-+	if (!hook_exists(the_repository, "update"))
-+		return 0;
-+
- 	strvec_pushl(&opt.args,
- 		     cmd->ref_name,
- 		     oid_to_hex(&cmd->old_oid),
-@@ -1674,6 +1680,9 @@ static void run_update_post_hook(struct command *commands)
- 	int sideband_async_started = 0;
- 	int saved_stderr = -1;
- 
-+	if (!hook_exists(the_repository, "post-update"))
-+		return;
-+
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (cmd->error_string || cmd->did_not_exist)
- 			continue;
--- 
-2.52.0.732.gb351b5166d.dirty
-
+https://lore.kernel.org/git/20260302191704.1814567-1-adrian.ratiu@collabora.com/T/#t
