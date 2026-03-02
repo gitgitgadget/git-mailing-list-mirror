@@ -1,62 +1,62 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794A739098E
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 21:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DAC390993
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 21:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772487934; cv=none; b=fxIbbXRayQd8zm1LVbpwl8TvHtkCUHfg9S8FCt3bLOfEeEPTj32taWDjFpmLDvbOO8eMvr1g69gCFC1ZQ5g2uOU7JDkWZ8qUs3vXJg0f3SxH9LkZT6nlFbG04VaFZrC+7pfJ02oBrqpLWLSO+jEBJEBEM7T2gbDc8T0QV4VHGzc=
+	t=1772487935; cv=none; b=e0NxCBOCncDS+VmTBPFmGfKY1gRUbNORAAGTqyLYwTKW0sV+3u2mn83p1k328ukW0J35OrJ6wXqpH8zkaJPjfLi1sHO1i9c4qOXqDCYYIcoQqYFefFIqjdvSZpnEfHD+5tG87rJrz5fApHcxWaNw5WRO0BJg7alXyeIzNMKZYAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772487934; c=relaxed/simple;
-	bh=AwiSKbGf+NuV10AJ9YSkmdh299qvBZYaWkfB75xHyVc=;
+	s=arc-20240116; t=1772487935; c=relaxed/simple;
+	bh=VBHzLZ7kfpVrE132Jj1OhcKTl0xRDCy6pexnwS8NiD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DqcfgSpG/8Kbyuu2eooeTl2LMWNoFo442VkQmN0h1wFxJIFSS6rnOPcB1qe13aGt96PIwCj6pq392URLs9+OeTILBOBd5pPUC+OD2Mibh/O2Kog3RNQue5l1g23tMcL4hKxLe/3SisQepARZxpQnVDUfimLDdnrydal6vozuzp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LjBozn9Y; arc=none smtp.client-ip=209.85.210.47
+	 MIME-Version; b=TZrJStM+463CYOQWillSsc51bDlWDwGhfrq6JJfCapxMEIlKD3vtd81Lhg9mS1YaBYk+0OayCvPDCuaoVQCQHMWyDEjwSn47rVBsTroTqv65D/5FfuSQkQKa0XKvwiaUiW+b3RGLrqAFstiycTptlLNdX827EJbYxf24bstQFcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RtaC1Gll; arc=none smtp.client-ip=209.85.161.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LjBozn9Y"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7d596a5be31so4118361a34.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RtaC1Gll"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-662fc35291eso3158450eaf.1
         for <git@vger.kernel.org>; Mon, 02 Mar 2026 13:45:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772487932; x=1773092732; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772487933; x=1773092733; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mUqBNHQQjpUjx0H5Lw2b7LYa8BeJzUdRUULEYPlwkhQ=;
-        b=LjBozn9YS0wyUj9elzRKYfrdciNOKFOqy88PmI//8b8K7iYLfjSnEgCb3e9YTADjFi
-         l2P4GtZASh1tLkNJy5H3QDDoQAqST4BkW6sbn3m8dtBHcgW2FhwWdAeLGS6G3CzwCSpV
-         tb78/IRB2o0h+q6W6yKOxGvd8ThlwhcfE6Aq63GTDVWJ/pgEdQz7Q0Lbl0LmLCnnwHuQ
-         GWmoQy1I1dF4XhIetJdzTwdXsO5sAbJuADOhlVON9PbOaE7chMSlo+7i/snDBHSJBVKM
-         /gOLCsLEGe4vM53DSryPSb6ROmm2o68yTFxsU+rYcHtzwwiLDB92qo0XysQjpF3qF85k
-         0nCA==
+        bh=hpvbGaIig9Q04uVNcPHpZDCSJH2tio+MTvkqq+VQ7QM=;
+        b=RtaC1GllIatv/mcwfqhR28ijkAENHcx7MxlXJ62oKrJHjekx74JyTr34zYGY70/lb9
+         x9yDPJxvUwTd0yV1c6V+axSc4XPe+UDV+8CbZeHzwcfQsJsf9LWav5vvTsa8RBBhza5I
+         qJl1x3wWm0EsHcGmhahs4grXkgBBHIKdpvJwASdOcKD2Thg+312gyBP/rn5Q/hVXSvEq
+         cu3VriZ8pP1WqwM/LQJTpKtPvxy2p+ILYd9O5UCjECTy7Dk5uxFcUNOOJyzIPvlK31aM
+         UI+I2P1vkxWoIrjiMngrfir3xSP8k6KxMgOi5ssR9PA+Sc3NxZFzlg6J50phicF39gi+
+         Phow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772487932; x=1773092732;
+        d=1e100.net; s=20230601; t=1772487933; x=1773092733;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=mUqBNHQQjpUjx0H5Lw2b7LYa8BeJzUdRUULEYPlwkhQ=;
-        b=bw5UDxYwUpVpNU9E3NZxBiFGWkl/SIolDAOqg9TIimNm+oewIcHLM0Z/YCtCEHpvWI
-         1NgleO9MpAhr34MMH5sTdXiBi3dfYJIH76UURdJ97JwCinNmTwahATofpVmRXpaMO6lC
-         m1C+7IphcUzQf+3R0wXiuubvu6D9t992MUNpX/F/FCHTQoP/FurMthCP1HehUPgeAJiB
-         o9OBZ4hRbEzaH3fIOFO4SVBHelNrCL+uGz40aHopmCg4sDHfPOK5rXZVayGt3pVrGRqx
-         pulhfAKxopO2vv4ZKVYFyG/4yp2OCs5xvJKGtZTswRxnrtc6yO3KZxDOcrxIA/5ssHBt
-         T2EQ==
-X-Gm-Message-State: AOJu0Yx4v0RwcIdVyteiP/wuHKEF9vDQKMjY9dSEyC/XkJtHW5HmFJcR
-	/6O8P6TBy7KXQHKpagUmNq2+8I3oajX6pVwDkBCijs21JYXYmK7li0wSu5Z76w==
-X-Gm-Gg: ATEYQzwSS/qQakVh0vcyqU0ruMZjdYF85mnzvcvNz2yuuQojxOmlvzSW6VzUeZy50AV
-	ZAgVaXeOcGFU1n2vU8fh7vASF4SYjVTlzJ06+tmezjcvRteYZAe1EUAEqQVPDVpOAqDISyV9IK4
-	jfa8KN6GK7f0OgM0Aar29qLgOA2MqQNGWn2x7oez15IQj9ee/nPkpSmpTnDJ8FR4uzRAKuQ19MI
-	6L56527czgWKXW+RAm5YP1WJlrR6wf7yWrmJi+Xpzbu6Sr4alZCo5q1LQqUwb3TU2pK79ZToUBW
-	c0zYoEwDFsFjNOjDwKXTK2xMuL2hNpxm7fd2cOgNEj4k4IXwYmd8WeChwks+Q8kFrcmFxPE1YWK
-	P7/nf2PFuoXrffUPDKZaJqtbT/iHqYHReX1eJJ/6wQ8qaDR1W4TAWYJ3JAspYslXxAiJb1tj1hL
-	OulWhimj1HTwWnmiBAatqiBrLC1bKsjL8=
-X-Received: by 2002:a05:6820:620:b0:659:9a49:8fb2 with SMTP id 006d021491bc7-679faf3b77bmr8041426eaf.43.1772487932015;
+        bh=hpvbGaIig9Q04uVNcPHpZDCSJH2tio+MTvkqq+VQ7QM=;
+        b=IP762hWksrye1vrLgMfmIxNSRtYZtwwgtCu9qYmvwnIvU454YD1vaTt0hIex0r2EsK
+         4nyjsjxC5bKbjTAVy5YDM1lo4PF6GuuWjNn9VDCcP9uS9X+jb2E6YuasptTGlwI2xYz2
+         nMH5KSLd5f5UV/QszANAHVFLW2s4vNdNuHWiUE1aclBNY0tZr9EAWf9ZJmJwon+5CPxG
+         WCsth84gbeTaEf2eLJnLCauS7ofXScRbSXzmIRQ8v9evHoUXnhxE0olrXNc09pVNXDxL
+         g/aytJ+8W/coZR60XtJtGE9non16Liumdm308Zy9TwACJBDeqgM6p1khuj7NbzZrI6Yt
+         mx9A==
+X-Gm-Message-State: AOJu0YwZAAEApqa9Ogrzs4St+GSDrXpYgOlVl/QLq8JChaVgUMBq8t6Z
+	PlOqo+3qkMQ4kC+HYphhKWtlAzRa8KQT9XleU7p+qaWiLCfroHw54Etxgfe9HQ==
+X-Gm-Gg: ATEYQzwope06LV9NkitruuG8nmyRUvVfAYwqF/NBwN+Khm/2o50UT1HubhXIU1i/tOj
+	/lbYZRdfWNQ3dFTd4/sp2aHyElNKd2uLk/lBeueizMGmo5+XlrvCbneR9D/+r4cbg0tidxdde69
+	ez+79QcluWTFaqVpqlqqoHmHux8ZrZ2IFGQ53zTfprTlvyFBmEwMTjEDrb1YDztPEQI8TFzBtkQ
+	6rdrM96MNIALG2+wRY6iY9JgOCB4rtVC5kHLVT3PnWm9oo461imVN0YJbI1hDOeZG+FrBXXGm8n
+	C3yaYiOSjjMBFjpGlZEex84nFvpjORD45wgsaGYbkvJpVRzA5pe1YX0iGCDUcGLBGtmyw2E6oma
+	rmbYK0vgPoBO6TcwQOulQ7FAmRMVvUYUAbyUCqoc9dTD6xQftt+GwUk0CMXrYnb3NJvefNgFr48
+	FpxQR+LT0GAj1Pbugotdhf69+dqVzBmGI=
+X-Received: by 2002:a05:6820:2913:b0:662:c16f:4774 with SMTP id 006d021491bc7-679faf2ca20mr8730400eaf.51.1772487932949;
         Mon, 02 Mar 2026 13:45:32 -0800 (PST)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679f2d84dacsm9775877eaf.9.2026.03.02.13.45.31
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679f2d84dacsm9775877eaf.9.2026.03.02.13.45.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 13:45:31 -0800 (PST)
+        Mon, 02 Mar 2026 13:45:32 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -64,9 +64,9 @@ Cc: ps@pks.im,
 	kristofferhaugsbakk@fastmail.com,
 	lucasseikioshiro@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 1/6] builtin/repo: update stats for each object
-Date: Mon,  2 Mar 2026 15:45:21 -0600
-Message-ID: <20260302214526.2034279-2-jltobler@gmail.com>
+Subject: [PATCH v3 2/6] builtin/repo: add helper for printing keyvalue output
+Date: Mon,  2 Mar 2026 15:45:22 -0600
+Message-ID: <20260302214526.2034279-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302214526.2034279-1-jltobler@gmail.com>
 References: <20260223174120.2356504-1-jltobler@gmail.com>
@@ -79,87 +79,107 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When walking reachable objects in the repository, `count_objects()`
-processes a set of objects and updates the `struct object_stats`. In
-preparation for more granular statistics being collected, update the
-`struct object_stats` for each individual object instead.
+The machine-parsable formats for the git-repo(1) "structure" subcommand
+print output in keyvalue pairs. Introduce the helper function
+`print_keyvalue()` to remove some code duplication and improve
+readability.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/repo.c | 53 +++++++++++++++++++++++---------------------------
- 1 file changed, 24 insertions(+), 29 deletions(-)
+ builtin/repo.c | 77 +++++++++++++++++++++++++++-----------------------
+ 1 file changed, 42 insertions(+), 35 deletions(-)
 
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 0ea045abc1..c7c9f0f497 100644
+index c7c9f0f497..782194cf4c 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -558,8 +558,6 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+@@ -446,44 +446,51 @@ static void stats_table_clear(struct stats_table *table)
+ 	string_list_clear(&table->rows, 1);
+ }
+ 
++static inline void print_keyvalue(const char *key, char key_delim, size_t value,
++				  char value_delim)
++{
++	printf("%s%c%" PRIuMAX "%c", key, key_delim, (uintmax_t)value,
++	       value_delim);
++}
++
+ static void structure_keyvalue_print(struct repo_structure *stats,
+ 				     char key_delim, char value_delim)
  {
- 	struct count_objects_data *data = cb_data;
- 	struct object_stats *stats = data->stats;
--	size_t inflated_total = 0;
--	size_t disk_total = 0;
- 	size_t object_count;
- 
- 	for (size_t i = 0; i < oids->nr; i++) {
-@@ -575,33 +573,30 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
- 						  OBJECT_INFO_QUICK) < 0)
- 			continue;
- 
--		inflated_total += inflated;
--		disk_total += disk;
--	}
+-	printf("references.branches.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->refs.branches, value_delim);
+-	printf("references.tags.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->refs.tags, value_delim);
+-	printf("references.remotes.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->refs.remotes, value_delim);
+-	printf("references.others.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->refs.others, value_delim);
 -
--	switch (type) {
--	case OBJ_TAG:
--		stats->type_counts.tags += oids->nr;
--		stats->inflated_sizes.tags += inflated_total;
--		stats->disk_sizes.tags += disk_total;
--		break;
--	case OBJ_COMMIT:
--		stats->type_counts.commits += oids->nr;
--		stats->inflated_sizes.commits += inflated_total;
--		stats->disk_sizes.commits += disk_total;
--		break;
--	case OBJ_TREE:
--		stats->type_counts.trees += oids->nr;
--		stats->inflated_sizes.trees += inflated_total;
--		stats->disk_sizes.trees += disk_total;
--		break;
--	case OBJ_BLOB:
--		stats->type_counts.blobs += oids->nr;
--		stats->inflated_sizes.blobs += inflated_total;
--		stats->disk_sizes.blobs += disk_total;
--		break;
--	default:
--		BUG("invalid object type");
-+		switch (type) {
-+		case OBJ_TAG:
-+			stats->type_counts.tags++;
-+			stats->inflated_sizes.tags += inflated;
-+			stats->disk_sizes.tags += disk;
-+			break;
-+		case OBJ_COMMIT:
-+			stats->type_counts.commits++;
-+			stats->inflated_sizes.commits += inflated;
-+			stats->disk_sizes.commits += disk;
-+			break;
-+		case OBJ_TREE:
-+			stats->type_counts.trees++;
-+			stats->inflated_sizes.trees += inflated;
-+			stats->disk_sizes.trees += disk;
-+			break;
-+		case OBJ_BLOB:
-+			stats->type_counts.blobs++;
-+			stats->inflated_sizes.blobs += inflated;
-+			stats->disk_sizes.blobs += disk;
-+			break;
-+		default:
-+			BUG("invalid object type");
-+		}
- 	}
+-	printf("objects.commits.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.type_counts.commits, value_delim);
+-	printf("objects.trees.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.type_counts.trees, value_delim);
+-	printf("objects.blobs.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.type_counts.blobs, value_delim);
+-	printf("objects.tags.count%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.type_counts.tags, value_delim);
+-
+-	printf("objects.commits.inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.inflated_sizes.commits, value_delim);
+-	printf("objects.trees.inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.inflated_sizes.trees, value_delim);
+-	printf("objects.blobs.inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.inflated_sizes.blobs, value_delim);
+-	printf("objects.tags.inflated_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.inflated_sizes.tags, value_delim);
+-
+-	printf("objects.commits.disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.disk_sizes.commits, value_delim);
+-	printf("objects.trees.disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.disk_sizes.trees, value_delim);
+-	printf("objects.blobs.disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.disk_sizes.blobs, value_delim);
+-	printf("objects.tags.disk_size%c%" PRIuMAX "%c", key_delim,
+-	       (uintmax_t)stats->objects.disk_sizes.tags, value_delim);
++	print_keyvalue("references.branches.count", key_delim,
++		       stats->refs.branches, value_delim);
++	print_keyvalue("references.tags.count", key_delim,
++		       stats->refs.tags, value_delim);
++	print_keyvalue("references.remotes.count", key_delim,
++		       stats->refs.remotes, value_delim);
++	print_keyvalue("references.others.count", key_delim,
++		       stats->refs.others, value_delim);
++
++	print_keyvalue("objects.commits.count", key_delim,
++		       stats->objects.type_counts.commits, value_delim);
++	print_keyvalue("objects.trees.count", key_delim,
++		       stats->objects.type_counts.trees, value_delim);
++	print_keyvalue("objects.blobs.count", key_delim,
++		       stats->objects.type_counts.blobs, value_delim);
++	print_keyvalue("objects.tags.count", key_delim,
++		       stats->objects.type_counts.tags, value_delim);
++
++	print_keyvalue("objects.commits.inflated_size", key_delim,
++		       stats->objects.inflated_sizes.commits, value_delim);
++	print_keyvalue("objects.trees.inflated_size", key_delim,
++		       stats->objects.inflated_sizes.trees, value_delim);
++	print_keyvalue("objects.blobs.inflated_size", key_delim,
++		       stats->objects.inflated_sizes.blobs, value_delim);
++	print_keyvalue("objects.tags.inflated_size", key_delim,
++		       stats->objects.inflated_sizes.tags, value_delim);
++
++	print_keyvalue("objects.commits.disk_size", key_delim,
++		       stats->objects.disk_sizes.commits, value_delim);
++	print_keyvalue("objects.trees.disk_size", key_delim,
++		       stats->objects.disk_sizes.trees, value_delim);
++	print_keyvalue("objects.blobs.disk_size", key_delim,
++		       stats->objects.disk_sizes.blobs, value_delim);
++	print_keyvalue("objects.tags.disk_size", key_delim,
++		       stats->objects.disk_sizes.tags, value_delim);
  
- 	object_count = get_total_object_values(&stats->type_counts);
+ 	fflush(stdout);
+ }
 -- 
 2.53.0
 
