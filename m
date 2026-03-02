@@ -1,130 +1,165 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5571E413237
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 16:11:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115EA3FD15F
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 16:26:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772467884; cv=none; b=DDC1NU9Hr/CZwZvGoA7nTiS/l8eHSLuDJ0DLhxFmONTfqrvFydQVqIiNljFgbBg2AxguAmr26ppRzANMMwlNi5eV6nmh98d03N10KXq6cFrihf4f85mtRPl1L0fRZ7GLJpBHarVPM1jBrvURwOg/ATiB2/kNJADUyYAPkUYkeDQ=
+	t=1772468799; cv=none; b=HGW1H0kS0XAMXuGkVKVZSFq3Dj6SlDVmTLEa2ManekZqcTHlFHXUCIPSjYiTIxhKcW/yThSXngaid4/gCEwmNQFu+4Q10oXxb6QJmhSlPFJw+fBSqvBcj1jxhjmkDNRSYI4kQOoVq94MQhXIw0FC0DZsD6u6B1+45OdmufPCda4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772467884; c=relaxed/simple;
-	bh=hwCHnNKp3pRddvqpce0ZPB+YCE+nKANT6ST8K34SaOQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K7093KIpXtBcZckcq7QBWvZVNE4mvtq2CopF5eOBZbRilQue33YQi9Jh1LehREOP1W15vAdD8lwhuPGzrOSNpvZ0Uw/63/x5ZIOPrq/F4Sb2onkfCH8plLe+/a2MOHwIKFJieo4y+7zsgff7Lhx490o42crpuX3zzgoVV+uHvBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IemNr8Ad; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772468799; c=relaxed/simple;
+	bh=KASDeSFnpOU7OPgpuUqOXDrYI7kCkJga2qc27wgWYbE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kW8Glt8k5ZYyjFxLOatZEBC01NIFW3UI1gNOTaDEB7jLWdjwRKqk10fEzRJWxw7L+1iDVvswgGCIVn4/OP3Xq1WjfNIeWeZhUj1G8kt4sSA+XUt0ZbmFsT55v8ZEGMNfQv3TVoLYz7Ei//lWGo3M06OQN4WtVYlbYvkuNEVe098=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KlF7tiJp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s7OlhNk4; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IemNr8Ad"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4838c15e3cbso41919295e9.3
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 08:11:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772467881; x=1773072681; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5SDnsTSlCUs+s5S6n/u+2apSoFTbpHcXKP0AzMm/fjs=;
-        b=IemNr8Adn4F5tH6XJsaB+trSmSvuB7mzlXoK0qEzFuBBOhjiY63TMrDDeBmOlUEsOl
-         8CQMiSh9tNcr7kyNkQ4JeNnus18bMPCBh82ouA3sMcJ/eTR73cDpuFk3utQvVCCYOsSC
-         BUD+7S/BrjDKUqeTgR06YR6BNug2bzgNfPdBKKUH7ZPnA1Ik1HH8XtYULeySkETWaYVo
-         B9tw7sgRt1ZXiPzpnj66trqSKkP5clHpGnfBb4du7GJ6y1AoZAeOby+xZUgmkwhVFneI
-         Vv9zFt8yviOlAY0aTmLFvUinHoANoCZ0r3/zFlKtdw71Ja3dLEjupjvOVtQXgKE2+jMg
-         d1tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772467881; x=1773072681;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5SDnsTSlCUs+s5S6n/u+2apSoFTbpHcXKP0AzMm/fjs=;
-        b=xBWL7+dPPcNTuFPyxXk6eljsUkHKDV2y+jRbuu7tR97X30JSRjCxYftW3cA/zcDd+U
-         5Mg6slXZn5gbnXi0biabYPqeBeFOHlSrg+ASluiLOwuX8kXB5HNI6EJ0JSRBVXGfE8aQ
-         LtzH62fsCPfE5rtTqWbhCyBvoK+aGbby3+jGANLVBddVO+aa2g5uhG8xd/o0TNByU++5
-         r020ZFf9EELBBRasxsno9Vd11YVrqUHZYz2PcwTeqM6thnuUHfH3snKoOvEibcZjwZAK
-         FCWYJGWpNp+SGoNeSndu7mLLRG+Qxvrx/+swJy9H9A7dwooODpmrBwHCW9kSkoPcAh5A
-         XjoQ==
-X-Gm-Message-State: AOJu0YxceN+z5UuPv7WcodtuH6PKKjBgnFWFz1SDXDGgGkZ0lI57OCg+
-	72uU/9Own+PgGbSk0AQIlXdQecWME5WCa1qh1ZVmnk63aaF8ygGS/oSbc/q1Ag==
-X-Gm-Gg: ATEYQzylDIinfuCNTZFQmmOGDtSVhQs8Y1LwZbSE/hCYj5Szk4VnJIvo8AN2W8IO8gz
-	4az8XwOlEmQMEsrOFdGIm8fMkpBk/LA1oP4eMOtmWlKZn4+fvcg2wBMoXKLsggQ2bG9wHhz3tUd
-	D+fEdOBOHaIa1KGpHV4b1lzQH7ZfZMbAd63WVD1l2a5Mm4J82Pmc/mL57xJNUm4sGX2AvOKE2ct
-	Z4uUeISTCfXFnLCPuqfQUGmSh2QJk+WE+g6gEANLDgbwEha/rWMgBm0RFRjVK90xmEpIbtAPyEt
-	wgPRlKf4ZkhMNEVmNfzfZH7CsS7edhn2e2HTi53n5XbVci4lcUGTBODnzIp9+0CMGFtiNqS3DlB
-	ScbRKQ1Pg42fpMNP+ayMtKvmwYKDPYKTmvs2FJV5ZTGnCzjUGPGe4lpHrRJRBYW3fnqYNsm1fxz
-	1qHnbxGkBE/zYGwRwdJTxLiq0AiLah0uRBXLg=
-X-Received: by 2002:a05:600c:4592:b0:480:52fd:d2e4 with SMTP id 5b1f17b1804b1-483c9b78c20mr242944295e9.0.1772467860186;
-        Mon, 02 Mar 2026 08:11:00 -0800 (PST)
-Received: from lorenzo-VM ([84.33.161.195])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd750701sm439917015e9.11.2026.03.02.08.10.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 08:10:59 -0800 (PST)
-Date: Mon, 2 Mar 2026 17:10:58 +0100
-From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KlF7tiJp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s7OlhNk4"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3F0097A01E2;
+	Mon,  2 Mar 2026 11:26:37 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 02 Mar 2026 11:26:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772468797; x=1772555197; bh=1i1yh2wHKr
+	ZBILtTgoO5ky3QnLvH0vPNr9iqvQWSBsQ=; b=KlF7tiJpHS+jtdpCJTY+ZV5zuY
+	IrL4pzT7dfE2x0AW7A2/eEjKWiEtiF4Rx9lt1ZKLOkLaCIseXUOmTRRWULM1kpAp
+	q/goEHOSxxmiXvH8sC9unzdcNXorbcXzeiBvl5gaXDAPeyzIowJ8XIWANlz3wkgR
+	eZrJ1y0qAqIq9DIN4VXIeuzyV2NPv/yAaXAw4BCfsX+r/m2defzrM751IEtymbyY
+	1QzVNqF3xQG2otvvgXzyRv4htETQNRXNuygQSq7IbkhAQsJrpZyVO1QmXDE1HxSN
+	x+vmmHhrYQwl9c4ASpPM5veRfJVw0f5YZHGmh7bvmeQ4reucnBDtrETReYAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772468797; x=1772555197; bh=1i1yh2wHKrZBILtTgoO5ky3QnLvH0vPNr9i
+	qvQWSBsQ=; b=s7OlhNk4RNDg3W+UU3DtQSsU3MuQk+43h4FMrYl6pRwJbeEJ9GO
+	dUS3LpGz7n6939umWejEN5iRkhCRwypl3wewdK2iIIehCMR89ZoiqnFJkRv4orid
+	Rx1ZtytatAaSHiRG4+rwBQkiGEdXEEzlnPt0LkPnXAIlEhrU+F2/kIGIB650JeZ3
+	S50jLlW2f4MBNL8vRQhR8J6oGmLQrQ/X2AS3/uJUYfSuTt545cIG27H03tD8jNk+
+	li4mFQpoRxF6pb7j8Ub8e801wym9XgeM311vUE4MNv5FLcK14ScXA2LM2//IzQ2W
+	wsZHBD0Sr9Y4NfbK9bIWCII4gH/SbqAiutg==
+X-ME-Sender: <xms:PbqlaT16FWjf4QmppAKT-wgxCcWcPnDcirlXuWy6qtKwWYDAg5y9gQ>
+    <xme:PbqlaZGaYpaw8t-YbeS5gPqv6cuuqyjT1AZ27yAXf9-MD4VRfbKUWv0E7zRKDLU3X
+    sdeGEmTDBS59SqdxZuEzHG18X5N6FcuNiNWTv7dgbzakDHNCN89nw>
+X-ME-Received: <xmr:PbqlaY4jcEinKd8hbwjWX7SSd_Mk-pMnU0yjrJRzzMvwNdssHM1YDFAThQqBuqV1XfbEXqjuNbKB7EfcJJPah8WIbgc4H7-gtw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekudehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeffieetueejveefheduvdejudffie
+    ejgeefhfdtvdekfeejjeehtdegfefgieejtdenucffohhmrghinhepghhithhhuhgsrdgt
+    ohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopegrfedvtdehudehfeegudeisehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    khgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:PbqlaXvFuFuKgZxZ9VAvDFXlEc-R0zRyVjIYA0aB4ix59v1QlXAJeQ>
+    <xmx:PbqlaR7NvXN6Bl7tOY4zujNXXOrIn4Ml0_GPOLOBk46Pf5QOVBY4vA>
+    <xmx:PbqlaaWXVzhgMyc_q3nGuSc11GE-E7Q4-kRBQDqb3GmLClnYmtgJ-w>
+    <xmx:Pbqlab_ikBkhfdj-I4DX4R8d0tl__YjVyz5n5KHqV2Lhj5pn2ORacw>
+    <xmx:PbqlaUYHAMujnBoHAZsnOPw5rnQBeCC6PtoC6kkX2YKmjqkCXB8G_e4Z>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Mar 2026 11:26:36 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC PATCH 3/3] doc: gitprotocol-pack: normalize inline code
- formatting
-Message-ID: <e0e4ea3d22d11d8d6b6e721228f1420cb8dfa612.1772467050.git.lorenzo.pegorari2002@gmail.com>
-References: <cover.1772467050.git.lorenzo.pegorari2002@gmail.com>
+Cc: Tian Yuchen <a3205153416@gmail.com>,  karthik.188@gmail.com
+Subject: Re: [PATCH v11] setup: improve error diagnosis for invalid .git files
+In-Reply-To: <xmqqpl5rumy0.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	26 Feb 2026 15:03:51 -0800")
+References: <20260222102928.377519-1-a3205153416@gmail.com>
+	<20260223074410.917523-1-a3205153416@gmail.com>
+	<xmqqpl5rumy0.fsf@gitster.g>
+Date: Mon, 02 Mar 2026 08:26:35 -0800
+Message-ID: <xmqqjyvu42pw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1772467050.git.lorenzo.pegorari2002@gmail.com>
+Content-Type: text/plain
 
-Uniform inline code usage for command and process names.
+Let's try again.
 
-Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
----
- Documentation/gitprotocol-pack.adoc | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Can folks equipped with knowledge and environment to debug breakages
+that hapepns only on Windows lend a hand to figure out what this
+patch gets wrong to help the topic move forward?
 
-diff --git a/Documentation/gitprotocol-pack.adoc b/Documentation/gitprotocol-pack.adoc
-index f4c9e024b0..63d3971037 100644
---- a/Documentation/gitprotocol-pack.adoc
-+++ b/Documentation/gitprotocol-pack.adoc
-@@ -117,7 +117,7 @@ process on the server side over the Git protocol is this:
- SSH Transport
- -------------
- 
--Initiating the upload-pack or receive-pack processes over SSH is
-+Initiating the 'upload-pack' or 'receive-pack' processes over SSH is
- executing the binary on the server via SSH remote execution.
- It is basically equivalent to running this:
- 
-@@ -131,7 +131,7 @@ two commands, or even just one of them.
- 
- In an ssh:// format URI, it's absolute in the URI, so the '/' after
- the host name (or port number) is sent as an argument, which is then
--read by the remote git-upload-pack exactly as is, so it's effectively
-+read by the remote `git-upload-pack` exactly as is, so it's effectively
- an absolute path in the remote filesystem.
- 
-        git clone ssh://user@example.com/project.git
-@@ -163,7 +163,7 @@ supports passing environment variables as an argument.
- 
- A few things to remember here:
- 
--- The "command name" is spelled with dash (e.g. git-upload-pack), but
-+- The "command name" is spelled with dash (e.g. `git-upload-pack`), but
-   this can be overridden by the client;
- 
- - The repository path is always quoted with single quotes.
-@@ -377,10 +377,10 @@ In multi_ack_detailed mode:
- 
- Without either multi_ack or multi_ack_detailed:
- 
-- * upload-pack sends "ACK obj-id" on the first common object it finds.
-+ * `upload-pack` sends "ACK obj-id" on the first common object it finds.
-    After that it says nothing until the client gives it a "done".
- 
-- * upload-pack sends "NAK" on a flush-pkt if no common object
-+ * `upload-pack` sends "NAK" on a flush-pkt if no common object
-    has been found yet.  If one has been found, and thus an ACK
-    was already sent, it's silent on the flush-pkt.
- 
--- 
-2.43.0
+Thanks.
 
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Tian Yuchen <a3205153416@gmail.com> writes:
+>
+>> 'read_gitfile_gently()' treats any non-regular file as
+>> 'READ_GITFILE_ERR_NOT_A_FILE' and fails to discern between 'ENOENT'
+>> and other stat failures. This flawed error reporting is noted by two
+>> 'NEEDSWORK' comments.
+>>
+>> Address these comments by introducing two new error codes:
+>> 'READ_GITFILE_ERR_MISSING'(which groups the "file missing" scenarios
+>> together) and 'READ_GITFILE_ERR_IS_A_DIR'.
+>>
+>> To preserve the original intent of the setup process:
+>> 1. Update 'read_gitfile_error_die()' to treat both 'IS_A_DIR' and
+>>    'MISSING' as no-ops, while continuing to call 'die()' on true
+>>    'NOT_A_FILE' errors to prevent security hazards (like FIFOs).
+>> 2. Unconditionally pass '&error_code' to 'read_gitfile_gently()'.
+>> 3. Only invoke 'is_git_directory()' when we explicitly receive
+>>    'READ_GITFILE_ERR_IS_A_DIR', avoiding redundant filesystem checks.
+>> 4. Correctly return 'GIT_DIR_INVALID_GITFILE' on unrecognized errors
+>>    when 'die_on_error' is false.
+>>
+>> Additionally, audit external callers of 'read_gitfile_gently()' in
+>> 'submodule.c' and 'worktree.c' to accommodate the refined error codes.
+>>
+>> Signed-off-by: Tian Yuchen <a3205153416@gmail.com>
+>> ---
+>>  setup.c                       | 45 ++++++++++++++------
+>>  setup.h                       |  2 +
+>>  submodule.c                   |  2 +-
+>>  t/meson.build                 |  1 +
+>>  t/t0009-git-dir-validation.sh | 77 +++++++++++++++++++++++++++++++++++
+>>  worktree.c                    |  6 ++-
+>>  6 files changed, 118 insertions(+), 15 deletions(-)
+>>  create mode 100755 t/t0009-git-dir-validation.sh
+>
+> Unfortunately this seems to break almost all the tests, not just the
+> test the patch adds, on Windows (which I almost know nothing about,
+> but I can observe that CI jobs die).
+>
+> https://github.com/git/git/actions/runs/22464017037 is a CI run that
+> merged this patch on top of the commit that corresponds to the tip
+> of 'next' as of today.  We can see "win test (N)" jobs dying all
+> over.  I cancelled the workflow before seeing everything die,
+> though.
+>
+> https://github.com/git/git/actions/runs/22464479533 is a CI run that
+> tests this patch applied directly on v2.53.0 in isolation.
+>
+> As I said, I do not know Windows well, so this may be a red-herring,
+> but in this CI run, we see "GIT_DIR=/dev/null git diff --no-index ..."
+> results in "fatal: error reading 'nul'":
+>
+>   https://github.com/git/git/actions/runs/22464479533/job/65067515458#step:5:95419
+>
+> which is an expected thing to happen, but we probably used to ignore
+> it as a non-error?
+>
+> For now, I'll kick this topic out of my tree to give other topics a
+> bit more test exposure so that we can notice new bugs in them (not
+> in this topic) that causes the tests fail.  With this topic in 'seen',
+> such bugs in other topics are all masked.
+>
+>
+>
+> Thanks.
