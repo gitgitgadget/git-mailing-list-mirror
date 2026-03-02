@@ -1,171 +1,185 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DF21A6816
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 21:38:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17845282F19
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 21:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772487496; cv=none; b=oQWWDkmV3SVPkqvg8bZRVasmSuKtcPPi+FklXBcRuURjyNg1AleN9o13XkUxEkbSrTtqfzWHxhw4HiBZw9c5fYigDBXCOwj5qQu3k0I7GU73bfdURqLszkBIyM0xPzEzuWYPWlv+4TL7tUnZh4c/lofjQh5qwH1fGPsU2wqVbOE=
+	t=1772487631; cv=none; b=Yf7AmXZDkaQzBfNojPdrC+VPvZDAuQwO8g4wApvwjvSPNa3JOWRjovFL8ix/vaQrn32lVGw6rRD7Hhxx1yumiNhjJj2NjRCSGTO6LD8etGbJp0MpWzy3TB8ZDxFE8fo0IUVKJPjEDD78n+9Kpnz89uplG+tljbGQEODeFq5Vp3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772487496; c=relaxed/simple;
-	bh=xxX1YCa2Zg4fzXkPx3/VGKA6+gd8hnvHF3jMahzBtvA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=MWbbB5ztMzEkoziOQwsVaKBucVfKisKXrmyjOQedJv0K32qZsPJRGeSkz/u4+vQozdgrGFolXLejHo5FJXuZA+busmf8BGLtNo4bYwNIhYjiVgCyuYeBXvKgHOJHnooGtIraDmm1notizu9fiW/DjYy4cVw+MebB8LViYKAVRF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=braithwaite.dev; spf=pass smtp.mailfrom=braithwaite.dev; dkim=pass (2048-bit key) header.d=braithwaite.dev header.i=@braithwaite.dev header.b=m6WLErfg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KYUZ2AoO; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=braithwaite.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=braithwaite.dev
+	s=arc-20240116; t=1772487631; c=relaxed/simple;
+	bh=GKaOn9oIPRSyzsYlDqKjefJE7MONc13h/Amqfv1VUOc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XRU7ItGB3hcI4aAchA5GIcf1lhFFhn4S0hVI/FY5MgKNcYg/4ELJWRX9HZrvpLG/BfSFq6d2KmjOeLVJItcs0G5Jw2eI0SWmUKmRsbmj19keDSyAUhJnc51Yypp/IeDkCrnoqY50LyVhVBLHLns9L1GCfSBlj3RUvrSiPyUufII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KNUNynVq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PXsVSjbO; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=braithwaite.dev header.i=@braithwaite.dev header.b="m6WLErfg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KYUZ2AoO"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BF00D7A01E8;
-	Mon,  2 Mar 2026 16:38:12 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-05.internal (MEProxy); Mon, 02 Mar 2026 16:38:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=braithwaite.dev;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1772487492; x=1772573892; bh=xxX1YCa2Zg4fzXkPx3/VGKA6+gd8hnvH
-	F3jMahzBtvA=; b=m6WLErfgGX7spkyBZC6Ew7mDIBKh5My9cD3R/4yBhf6Z0EtM
-	Kyon6CZAQnD7afqniKLT7FMvv7dnWaWKpSFLOSRnHuVkk81dHYIzcMOAOmo7iOsD
-	ZvNO+5JriaR5ZAj1OqEb2sMaDtMb6pq9B9hRLHVUR0TrnVkJlWqgh+HGEMLlROTS
-	l7OBHHm8KYGX4scD+kzgrq8TmMoJSi/6fXcw4nTeRtM7qsWcppraeuzISkXVOWGX
-	UMmVMWXpT6seUHuvAsMNJYWd2lKH2oyeCB/kvtEetEz0ivDPkngQHFvne8SqxD3v
-	t4psZ61qJ4IH40p5xFAZUeHMtVfCpntOxvQWlw==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KNUNynVq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PXsVSjbO"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 51410EC05DE;
+	Mon,  2 Mar 2026 16:40:29 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Mon, 02 Mar 2026 16:40:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772487629; x=1772574029; bh=WbhPkMSSIm
+	49i7XUqmMhiHOGc+7z3hJ/BhqN0b1mPVE=; b=KNUNynVq8EEEsyk8FVWaB4N8QQ
+	H1AiJEyCS+8bJ7TUiq9NBCHq/KAJI0Sv16jd9FTQofpAvsWGyn7kvDfEPMxUyMJT
+	pRofKg3mDAIIDhisKHSuziEUcTH4qxkon43si+Q95BOh4G8VmhAOG986bT0vAn2o
+	pGIZh4PJHgnE0PmWnTmf3mjKHQuL393YjkhyhPaJEw3THL6NE6DFIR/AMPaAAO+C
+	GgCiGogE5wnRpJO+qglTojyJuxEgY5uFwu0SgmRIdQ20/QrQ8g9SSMzuOyzDGZaU
+	CyKVCtc0w4U4Cqn6QA7dGDnCXrfQgPwxrKQaNPFPJ8XWecZO7GVBnnI89S8g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772487492; x=
-	1772573892; bh=xxX1YCa2Zg4fzXkPx3/VGKA6+gd8hnvHF3jMahzBtvA=; b=K
-	YUZ2AoOJvVydaJG57z/uWUbysz7aLX8EShIVaHsgoCP7xveya2ZVeF8kkFEYFWdB
-	Q60/j5Ti/IULN1ejrhIrrTRMpLO1zitKlfJuUDtk+vB3VxLm+G8tvONWPp+H7saD
-	NZQEZ3gsullR2E9KISIbKYYyYX+eU+iwNhM1749DvM3CpC3WBYVLX/T1ZRCIopss
-	5dri/ovQizPraP4LCN7i3kZ7bZn8M6HX8P/ON8UYOQqBoUNONeNCv35T15j+LyPQ
-	gYyltiTkodQXIAxlx+P2DuY+OJFvGW+ugjjdMxJB/yEjhxZ6HxOeNAKAhOpFp6e4
-	SJjSrWQcBNFvKGXiacVhA==
-X-ME-Sender: <xms:RAOmaYtbeO_MjPubwGHutiGA65DKufRxTeNwm4p4AeeIWE1CiE8qug>
-    <xme:RAOmaQSwMOKkIWibZriiMPxtyqwzANbbmtqSfczhGWCrHAMLSc_eEChLSm4NxH7dS
-    latFoSuOa9YWpHhxXW34SaBJbk6VDw6eRuboZgxzVa6qgSbXn9KSSE>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772487629; x=1772574029; bh=WbhPkMSSIm49i7XUqmMhiHOGc+7z3hJ/Bhq
+	N0b1mPVE=; b=PXsVSjbOQVpEkZBBZMOYkQqp8PkwNd7PPfy3qmk5eTCdxWiouKO
+	mIuYJ0bL0HFkyVAydLTdHHHx28xwxsp9GTQCOY9Ks3Jv7cUuW7/1J5UA/2dEAtyl
+	cBXzJ5jb7VuZGkgsAfTvQZxNKGPhavirDoIzBHXgYRk6Av7iZb+6cy7LLr2R66OH
+	clCzm/a9qK27cIBpmrw+2h+dEmQmM1QaK8DIcJLfNfFmuZjUghJdglG4/5Q6vx16
+	90L789P6UnmTpDQi6YhKAytxec4lu/QPKb7vU0Gd8BHQB6/ouESjGoJTR8TD6W+H
+	XfxecyjfTQJMofCfPkIW03rv71iPwnVxK0A==
+X-ME-Sender: <xms:zQOmaYOo0e6-MctpnoaT-5kLc_ur4rh_AV4BBk4VNJf6Y9q7XOwSUA>
+    <xme:zQOmaSqz3_aTbfGpUuF077_W_8xZwHaNqthoFbbiZmaHVwSi7oa9IRYHUwu084-dp
+    NgnF723Gk8Dgytym-GT_SQuXR4YLSJMOZscZlBrTrriO9f5N-rQQwY>
+X-ME-Received: <xmr:zQOmaZFfsvfDmA687ajX7PDsGKLSpGewY4Zz8V_uI6fsKkHye3Rn1dAfqEeyMxL8AuTagAiyvSrcNZp03OUz3SKhQmy-yWWKiw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekjeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedftehlrghn
-    uceurhgrihhthhifrghithgvfdcuoegrlhgrnhessghrrghithhhfigrihhtvgdruggvvh
-    eqnecuggftrfgrthhtvghrnhepvefgieeutedufeeijeeuleekleekveettdffiefhjeei
-    hffgkeduleduhfevjeeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomheprghlrghnsegsrhgrihhthhifrghithgvrdguvghvpdhnsggprhgtphht
-    thhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrd
-    gtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgv
-    thesghhmrghilhdrtghomhdprhgtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgoh
-    hoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:RAOmaaHq7jC-Cv-a81InUPwzAT8Z_hjcFQdUaS6eOk5sOPehN_YYLw>
-    <xmx:RAOmacD6ofVffb88SgNnZ8qfem2mseqhPd2pgfoTnZSX8g7JisHSCA>
-    <xmx:RAOmaSUY9Q00z7G3d1TpIHSaCTUe5EjvGjz0Oo-aCfBaiD_Mzynr6w>
-    <xmx:RAOmaYrldc8Z_U9HdDw7shuP1oz2Vkko5aPmoqh-QrRppRoJCnFO8Q>
-    <xmx:RAOmaQyQIHdcwtQKLo_-whyKhmdkmHLiTpLvlsoTAGuu6GzJ8gELWnNy>
-Feedback-ID: i1a914699:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3FCC31EA0070; Mon,  2 Mar 2026 16:38:12 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptefgjeehvdeivdelheevieevheetgefhudeihfekveffudeuhffffeetgeff
+    vddtnecuffhomhgrihhnpehrvggtvghivhgvqdhprggtkhdrtgifnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhksh
+    drihhmpdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdp
+    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:zQOmaXpmaHSOBRx62ndKgE2zcFMT3M1YqcVxHO8XAQQqTlF0w4Agig>
+    <xmx:zQOmaSYNcwcNRQDKWZfokZHVNhpGogfGs6UhwmCTq1hrkH8Z7hd-0g>
+    <xmx:zQOmaQXcBCy9yZdTExE1Rscgh5e-BJfOo6LH9OeehmXrF-7Gm1PKnA>
+    <xmx:zQOmab-iYlTE1ddlWA8TW1a1TG2Hso_tSHuWN1O3SlZwPqmH6kXy4w>
+    <xmx:zQOmaT9zYyvaI-hyqN0EZu2lo9iF2QHpeHLglHDYPXq9DIc1y2AeVr0B>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Mar 2026 16:40:28 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Emily Shaffer
+ <emilyshaffer@google.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/1] builtin/receive-pack: avoid spinning no-op sideband
+ async threads
+In-Reply-To: <20260302191704.1814567-2-adrian.ratiu@collabora.com> (Adrian
+	Ratiu's message of "Mon, 2 Mar 2026 21:17:04 +0200")
+References: <20260302191704.1814567-1-adrian.ratiu@collabora.com>
+	<20260302191704.1814567-2-adrian.ratiu@collabora.com>
+Date: Mon, 02 Mar 2026 13:40:27 -0800
+Message-ID: <xmqq4imxzz90.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AKwwuKWZdwNg
-Date: Mon, 02 Mar 2026 13:36:40 -0800
-From: "Alan Braithwaite" <alan@braithwaite.dev>
-To: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
-Cc: "Alan Braithwaite via GitGitGadget" <gitgitgadget@gmail.com>,
- git@vger.kernel.org, christian.couder@gmail.com, jonathantanmy@google.com,
- me@ttaylorr.com
-Message-Id: <a3e064fe-9f0d-448f-b034-4a95dcd3fe97@app.fastmail.com>
-In-Reply-To: <xmqq342i12ky.fsf@gitster.g>
-References: <pull.2058.git.1772383499900.gitgitgadget@gmail.com>
- <aaV6PLJCrpb2mQnq@pks.im> <xmqq342i12ky.fsf@gitster.g>
-Subject: Re: [PATCH] fetch, clone: add fetch.blobSizeLimit config
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Patrick, Peff, Junio =E2=80=94 thanks for taking the time to look at
-this.
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-Patrick wrote:
-> I'm not sure that we should make blob size limiting the
-> default.
+> @@ -980,6 +983,9 @@ static int run_update_hook(struct command *cmd)
+>  	int saved_stderr = -1;
+>  	int code;
+>  
+> +	if (!hook_exists(the_repository, "update"))
+> +		return 0;
+> +
+>  	strvec_pushl(&opt.args,
+>  		     cmd->ref_name,
+>  		     oid_to_hex(&cmd->old_oid),
 
-To clarify =E2=80=94 this is a user-opt-in config, not a default. You
-would only get partial clone behavior if you explicitly set
-fetch.blobSizeLimit in your gitconfig.
+Shouldn't we consolidate the two instances of hardcoded string
+"update" in this function by introducing
 
-Peff wrote:
-> We actually can do blob:limit filters with bitmaps. See
-> 84243da129 (pack-bitmap: implement BLOB_LIMIT filtering,
-> 2020-02-14).
+	static const char hook_name[] = "update";
 
-Good to know. I'm not positive, but my understanding is that
-this patch only touches client code, and the server sees an
-identical request to what `git clone --filter=3Dblob:limit=3D1m`
-already sends today. If that's correct, anyone can already
-impose that cost =E2=80=94 this patch just makes it easier to opt in.
+in the function scope and using it?
 
-> All that said, I'd be wary of turning on partial clones like
-> this by default.
+> @@ -1674,6 +1680,9 @@ static void run_update_post_hook(struct command *commands)
+>  	int sideband_async_started = 0;
+>  	int saved_stderr = -1;
+>  
+> +	if (!hook_exists(the_repository, "post-update"))
+> +		return;
+> +
+>  	for (cmd = commands; cmd; cmd = cmd->next) {
+>  		if (cmd->error_string || cmd->did_not_exist)
+>  			continue;
 
-That's fair. I'm not attached to getting this merged =E2=80=94 it was
-more exploratory to start a discussion.
+Ditto for "post-update".
 
-Junio wrote:
-> As to this extra variable, it can already be done with
-> existing remote.*.partialCloneFilter, it seems, so I do not
-> know why we want to add it.
+Will queue with the following change squashed in.
 
-I may not understand the config as well as you do, but my
-reading is that remote.*.partialCloneFilter requires a specific
-remote name and only takes effect on subsequent fetches from an
-already-registered promisor remote =E2=80=94 not the initial clone. You
-would also need remote.origin.promisor=3Dtrue set globally, which
-seems odd. If I'm understanding correctly, there is currently
-no way to say "all new clones should use a blob size filter"
-via config alone. But please correct me if I'm wrong.
+ builtin/receive-pack.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Separately =E2=80=94 is my understanding correct that partial clone
-with blob:limit works today without server-side changes,
-assuming uploadpack.allowFilter is enabled? If so, I'm happy
-to maintain this as a local client patch for my own workflow.
-
-Thanks again,
-Alan
-
-
-On Mon, Mar 2, 2026, at 10:57, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> I'm not sure that we should make blob size limiting the default. The
->> problem with specifying a limit is that this is comparatively expensi=
-ve
->> to compute on the server side: we have to look up each blob so that we
->> can determine its size. Unfortunately, such requests cannot (currentl=
-y)
->> be optimized via for example bitmaps, or any other cache that we have.
->> ...
->> Another question to consider: is it really sensible to set this setti=
-ng
->> globally? It is very much dependent on the forge that you're connecti=
-ng
->> to, as forges may not even allow object filters at all, or only a sub=
-set
->> of them.
->
-> Both are good questions, but to affect "clone" you'd need either
-> "git -c that.variable=3Dsetting clone" or have it in ~/.gitconfig no?
->
-> As to this extra variable, it can already be done with existing
-> remote.*.partialCloneFilter, it seems, so I do not know why we want
-> to add it.
+diff --git c/builtin/receive-pack.c w/builtin/receive-pack.c
+index 62c576c247..bf5d7e6dd0 100644
+--- c/builtin/receive-pack.c
++++ w/builtin/receive-pack.c
+@@ -977,13 +977,14 @@ static int run_receive_hook(struct command *commands,
+ 
+ static int run_update_hook(struct command *cmd)
+ {
++	static const char hook_name[] = "update";
+ 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	struct async sideband_async;
+ 	int sideband_async_started = 0;
+ 	int saved_stderr = -1;
+ 	int code;
+ 
+-	if (!hook_exists(the_repository, "update"))
++	if (!hook_exists(the_repository, hook_name))
+ 		return 0;
+ 
+ 	strvec_pushl(&opt.args,
+@@ -994,7 +995,7 @@ static int run_update_hook(struct command *cmd)
+ 
+ 	prepare_sideband_async(&sideband_async, &saved_stderr, &sideband_async_started);
+ 
+-	code = run_hooks_opt(the_repository, "update", &opt);
++	code = run_hooks_opt(the_repository, hook_name, &opt);
+ 
+ 	finish_sideband_async(&sideband_async, saved_stderr, sideband_async_started);
+ 
+@@ -1674,13 +1675,14 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 
+ static void run_update_post_hook(struct command *commands)
+ {
++	static const char hook_name[] = "post-update";
+ 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	struct async sideband_async;
+ 	struct command *cmd;
+ 	int sideband_async_started = 0;
+ 	int saved_stderr = -1;
+ 
+-	if (!hook_exists(the_repository, "post-update"))
++	if (!hook_exists(the_repository, hook_name))
+ 		return;
+ 
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+@@ -1693,7 +1695,7 @@ static void run_update_post_hook(struct command *commands)
+ 
+ 	prepare_sideband_async(&sideband_async, &saved_stderr, &sideband_async_started);
+ 
+-	run_hooks_opt(the_repository, "post-update", &opt);
++	run_hooks_opt(the_repository, hook_name, &opt);
+ 
+ 	finish_sideband_async(&sideband_async, saved_stderr, sideband_async_started);
+ }
