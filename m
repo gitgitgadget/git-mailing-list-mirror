@@ -1,138 +1,99 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from newcloud.peff.net (unknown [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AE233261F
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:11:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F671E22E9
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 18:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772475118; cv=none; b=cAEbpRk8J92Kq7f52a0mSRTJIMILykdhBN662zln1P+1BcM5T/wfG3KE6gzJrgF6aHqWFKDtgt9aFURUV+3DhcLRbgebeHz5MRXlmsXCh3SAo1mn/or9Y+rZO++mFRg/R7ewYnUJvCJ0hv8bCH4AI6pDvcsTGtDr04bCrfcUPvA=
+	t=1772475626; cv=none; b=rxNijrej4oRkaGb1G0duXUBs8J1el4OrCa1J/XbOwtMgFhUcVj9h62ng+ETDQ/dknhoK1tAVoaiiFBXVxt0Tbbvboh4C7t11dAr3thvpegLgUbcFAi7vVcNGUiLYjyIsWpiuKjv39WC3Pe7a34P5p/KDJddegQyirua9wC7S9l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772475118; c=relaxed/simple;
-	bh=XLdoh6BxPwHMgOk6M5EVcVK3edo+ge24oRKctlZPM4A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKRGl6sH9UPD5Ge5uqCM73wIG8Wl0eke/gE/U7Gu1KQKbl2LeuKJvEC3/kg0fVj3TEC/AYYyiE1QPdLM1xC3AQ2xZelgSyjkkmMT34iQ+F1bhDrcdqAXGO4o2DUppaWo93UemVAkGtl/8Fhf9qmyhNm459Yp45t7mcNYlF27F04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aKY+Oihz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G7j1lxjW; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772475626; c=relaxed/simple;
+	bh=e95EoaisB6pfkxw1qvialRuT8jrOf/SRPDnWapPzlyc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FnguKqq05uEjaLgeZGA+NKlGI/URCoaXQB5+BFATLvRzrnlok5rdk5+eTjpJVcbAgnn2DVF99M3g5GdzkKeGyDb9KLDEtDPIM3ugi6UJpDlHUjQRxr3nL1ZklZO5r0qf1nBJD0O34mDxaOiS1+3kLS/2mh9eO2aof3K1qedCZBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cSNhqCne; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aKY+Oihz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G7j1lxjW"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4375E140012A;
-	Mon,  2 Mar 2026 13:11:56 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 02 Mar 2026 13:11:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1772475116; x=
-	1772561516; bh=gCezoCLGPjhetxmravpXlYKB9wrjDy16PX0cYMFF090=; b=a
-	KY+OihzI7ByqRTQYvNV6zR6Qok30oLUelO0tNJE7Y0NLKtgz5RwW70dYCIOT1dhk
-	KWOkGZv+KkF9S0OvBFwwOMczAPXpIitJLZTEh4PeMxTMuWXbnSVKf8uEfxleT7eV
-	4UlFEY6OxomH0dZS57jtYTCpnA8ZqiNvoWkwWj2wuwz4lOqDwzjkEYnDARr2jYR4
-	aDtacFseS88kJOTUouYdF2zXK9ya6SljFv5JvUytGHrYfvIOJAofTF84Pc1n1tRl
-	U5ahIF/gr2HKlW3CoBfLUno0Mm1wvOXE1IFd+vmddovNdV2fAL++0464Rj44dHLW
-	pePZq12/C572/tsATyEZw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1772475116; x=1772561516; bh=g
-	CezoCLGPjhetxmravpXlYKB9wrjDy16PX0cYMFF090=; b=G7j1lxjW1S/Bj9mx8
-	IVNUhUhg/OelQ37sSayUOYX2zlrAH4X3AE6K4q5H6F2ZUIqr5A3e9y+YFDY3ddw5
-	nf+JP+2knLnhaBY1pdIL7/gC6x3UMiHbzFpRqkruTdFQKFdNnsKKC4YV2t6bNxli
-	+G1CqfLqBqPfyrTR8scCz3hRC33k8g7WU2u+gU2Kx4qlY0ZsUUn2/H3B1w2QVRmg
-	J0ng8VOW7FzigsW2wtyMD8b7MZ1W7vIAqQLKCudDzCBPvPJFQvrr7R2xwnxP9qmb
-	o0PS2Ss88oSpIw1f4b1YxuV5jpWUFjvu4wNz0wLAll2WvCRO6YfQECOsNjRpmTlU
-	Ix7pA==
-X-ME-Sender: <xms:7NKlaSNT0FEHmmagGYN8ym5JPmDuj0-SF_83ueVflk7dVgErmBfhVA>
-    <xme:7NKladi-dHZ4Ee40ygPjZqDvtx4olkrEuzhMQAxd3VaXVeA6hLMmY5SNlVMh7SgtQ
-    dQKRB0G1CB8phM5D9oMuD4re7G5IQ8FNXKPPhki53jv2w3fJ_x9>
-X-ME-Received: <xmr:7NKladuK8QWYo1fC975zDvB8ruqdcv3HmkPqvt4BdDvhNoBcaRsJf0ibFEKOdEBv56YGAC0Ru0Ug68rvH27x9QfvNT_FC9d-Dw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekfeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepgfdvfeethfekgfeihfehkeeiffeugeeuhedtheefkeetieffheeuhfdthffh
-    tddtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegt
-    rhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgthhifrggssehlihhn
-    uhigqdhmieekkhdrohhrghdprhgtphhtthhopehophhohhhorhgvlhesrhgvughhrghtrd
-    gtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffhesphgv
-    fhhfrdhnvghtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:7NKlaZji8aZNKlygQEMPEJk_X52ngERh0NRf90R4U2dcAAySt6wraA>
-    <xmx:7NKlabbiz3ZjA3KO1P02LhFEaSqJ16exX87jhi7suD3yi2B3lRxK7g>
-    <xmx:7NKlaQaD_QjZvVPTfjqnWBZV_5ti3Lw4kZqA-rLGYRlEQvLff_77pA>
-    <xmx:7NKlaYyW8CicURei8v1i1O2Fy8Pmat3AC4DNJP1aT7kJY6ysJS9KtQ>
-    <xmx:7NKlafZFY2PVMVAE30CO3IDE_wD-_g-laSAkylxXTqXVbqX5a_9Y7puM>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 13:11:55 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Ondrej Pohorelsky <opohorel@redhat.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Jeff King <peff@peff.net>,
-	"D.  Ben Knoble" <ben.knoble@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 3/3] sideband: conditional documentation fix
-Date: Mon,  2 Mar 2026 10:11:49 -0800
-Message-ID: <20260302181149.3502811-4-gitster@pobox.com>
-X-Mailer: git-send-email 2.53.0-549-g863838a955
-In-Reply-To: <20260302181149.3502811-1-gitster@pobox.com>
-References: <xmqqv7gcnwd4.fsf@gitster.g>
- <20260302181149.3502811-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cSNhqCne"
+Received: (qmail 29705 invoked by uid 106); 2 Mar 2026 18:20:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=e95EoaisB6pfkxw1qvialRuT8jrOf/SRPDnWapPzlyc=; b=cSNhqCne9+44UUe6NZpzIdFYmFOec21uyKiIhZw1zRFEAZ0tUZBG6l6cy1RJ24ZHMHk07d/nmBe0h/cIJV25xU6jhYz1022jOZ89sywC9FUQZTMmS7uRNyF3JH6dwmeTSes/6YP5QeIh+8jIchStvR0juvua3TFtjorQG5eY+HFbZ5a10ifPGX5AvykgLQMJfFGSXTKvzRTb9FBBGuJXVAWefb1lKCmPqhI5seAH39NV9gfFuBn0Ahx1xYA8UvxMAPQHy8WULGR79DQDrsbI3i+k0pDJQin8mPo8KNtWVnVVahwDXDhFxCtRWqNCXYm7V+ACgIsAgOqm10fzISWmdA==
+Received: from Unknown (HELO peff.net) (10.0.2.2)
+ by newcloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 02 Mar 2026 18:20:24 +0000
+Authentication-Results: newcloud.peff.net; auth=none
+Received: (qmail 334214 invoked by uid 111); 2 Mar 2026 18:20:24 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 02 Mar 2026 13:20:24 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 2 Mar 2026 13:20:23 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] upload-pack: reduce lock contention when writing
+ packfile data
+Message-ID: <20260302182023.GG28275@coredump.intra.peff.net>
+References: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
+ <20260227-pks-upload-pack-write-contention-v1-2-7166fe255704@pks.im>
+ <20260227193758.GA2931515@coredump.intra.peff.net>
+ <aaV-l_NyWpkKDDp6@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aaV-l_NyWpkKDDp6@pks.im>
 
-Duplicate a bit of text on either side of the ifdef/ifndef
-conditional documentation in order to avoid "sentence assembly" that
-does not fit well with translations, taking hint from the discussion
-on a recent topic.
+On Mon, Mar 02, 2026 at 01:12:07PM +0100, Patrick Steinhardt wrote:
 
-cf. https://lore.kernel.org/git/ff86f877-4b75-403d-a5a4-10ab528a9691@free.fr/
+> > Rather than buffering in upload-pack, would it not be simpler to just
+> > increase the write size from pack-objects? Then we do not have to worry
+> > about disrupting upload-pack's keepalive timeouts. And as a bonus, if
+> > you are worried about the system-wide number of calls, you will likewise
+> > be reducing the number of read() and write() calls over the pipe between
+> > pack-objects and upload-pack.
+> 
+> We can do that. But we also have to keep in mind that downstream in the
+> pipe may be a process that's not even git-pack-objects(1) in the first
+> place because of "uploadpack.packObjectsHook". So maybe we should have a
+> look at doing both.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/sideband.adoc | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+True, though I think that whatever is producing gobs of output from that
+hook should consider using a buffer size close to a pktline. In many
+cases it will be pack-objects itself (just wrapped with some extra
+magic), but I guess you may have some kind of caching layer at GitLab
+(we did at GitHub).
 
-diff --git a/Documentation/config/sideband.adoc b/Documentation/config/sideband.adoc
-index 85205477b7..ddba93393c 100644
---- a/Documentation/config/sideband.adoc
-+++ b/Documentation/config/sideband.adoc
-@@ -2,14 +2,15 @@ sideband.allowControlCharacters::
- ifdef::with-breaking-changes[]
- 	By default, control characters that are delivered via the sideband
- 	are masked, except ANSI color sequences. This prevents potentially
-+	unwanted ANSI escape sequences from being sent to the terminal.
- endif::with-breaking-changes[]
- ifndef::with-breaking-changes[]
- 	By default, no control characters delivered via the sideband
- 	are masked. This is unsafe and will change in Git v3.* to only
- 	allow ANSI color sequences by default, preventing potentially
-+	unwanted ANSI escape sequences from being sent to the terminal.
- endif::with-breaking-changes[]
--	unwanted ANSI escape sequences from being sent to the terminal. Use
--	this config setting to override this behavior (the value can be
-+	Use this config setting to override this behavior (the value can be
- 	a comma-separated list of the following keywords):
- +
- --
--- 
-2.53.0-549-g863838a955
+That is getting specialized enough that I don't feel too bad suggesting
+that authors of those tools should consider buffer sizes.
 
+As far as doing both, I'm not sure if it's worth it. My two concerns
+are:
+
+  1. It re-opens the question of whether upload-pack might stall waiting
+     to fill its buffer and fail to produce keepalives correctly.
+
+  2. I wonder if we could get some weird interactions between the two
+     buffer sizes. E.g., if pack-objects sends 50k bytes at a time, but
+     upload-pack wants to wait for 51k. So we read 50k then wait for the
+     next chunk. Either:
+
+       a. we read 50k again, pull off 13k of it to make a full pktline,
+          and then memcpy around the other 37k to await more data.
+	  There's a bunch of extra copying as our buffer sizes don't
+	  line up.
+
+       b. we read 13k (to fill up the pkt we're trying to send), send
+          that, and then the next read gets a partial read(). So we end
+	  up issuing more reads, although sometimes pack-objects might
+	  catch up and fill the pipe buffer, and we'd get a full packet
+	  in one go. But depending on the timing, I wonder if things
+	  could get choppy and we'd end up issuing a bunch of extra
+	  reads (and possibly extra writes on the pack-objects side if
+	  it's waiting on us to create more space in the pipe).
+
+-Peff
