@@ -1,56 +1,56 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B27366816
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 12:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C941E1A33
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 12:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772453610; cv=none; b=ZqMfwEXLA1TU+Xfw7Saoz9QQyLTU42y+wXnU9dfPNtkVC6QvjhzoJqxR8xzyM2Wm/8YzlC8lohH5XoxHW5RauaxWmt1Xxtb7wNC7P52chjQtHjoU6JUGxQVAmJAIKsCzErowZV7hIiMvE+6gU9363jnKWQ4CYQwr2rOHAqZcVfs=
+	t=1772453612; cv=none; b=Cfeu0tsizSRmSFwmYhuLFRij5n1w5AyWL0QcRDqrfLqAd2Qqn0Z/haE50TBuVlEKUh13OTIzKnHP0MZ70bVqQsLzAVjOe3T5KnZYZcLvZYv3pXAICtfioRCbddvY4fKyk1IOnj+kb5J7uKQb3I1ZZGyLfvBCSJOxlsBgWBERjG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772453610; c=relaxed/simple;
-	bh=S6lGjCCQUBOVu2MVrSfREcQxToi56FKmO3yZM4mbHjI=;
+	s=arc-20240116; t=1772453612; c=relaxed/simple;
+	bh=sJP23UHAC2km9JbbaYGx+Q+TuuOp9BhjS2v8VV7yH04=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sRyCPffsc3aUwOvj1Za9Qtvy4RJ5V1g2MtmUxH9gphSLBoXhp+r8JzrpE7YMNso/qEalf7f7KAsq0nBFbDB3RKNAVaHoHblanrf6QNx1NE8feFUdZkBc1JKUaJTK6wDuAxqV/8L8Zq1A7VD/iEmErfWfFNG5GDkewdz0d2iEQTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JFSMbiET; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DKT/pwYX; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=HR6TeExdCfjYzsgvk+cwwtNhZBRnTXBMUDJm5MKNXWIT8YToI3y4OIQJVrqgHKY9tH3AfF4gFzQY253PBwwsY3bEwnws+RnWuZfXOKtn1rsU4jp6/LtbVIwVQL0CtGWL5JssPUm16mpwge/Y95m9I9ODd6UE0UN1cNYz0pWifMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XjaZwRBn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5hEjlMdh; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JFSMbiET";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DKT/pwYX"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id EB0FC1D00135;
-	Mon,  2 Mar 2026 07:13:27 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XjaZwRBn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5hEjlMdh"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 12A7B7A015B;
+	Mon,  2 Mar 2026 07:13:31 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 02 Mar 2026 07:13:28 -0500
+  by phl-compute-05.internal (MEProxy); Mon, 02 Mar 2026 07:13:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772453607;
-	 x=1772540007; bh=00PAvj9w9rmviIVrF6FK7o00dQO1akon6rbqhxjMtsA=; b=
-	JFSMbiET+SKZEbtkDd0iJhQGs3XLmJr2/lx1NY6TnLOutz+u/HG3O2s9ARpy0/UO
-	ZbwjW0h95jjhu1NbzBgqZsovWhTs6mE3574HqlocVI6kAV1q/j/FHsjW2575k7yo
-	H4nn8XmHYeKq7edzC9VS+B06ftRL5bUVaMxVCcxvU+0bkD6F7+2/MGiuaCmBNN9w
-	mMfMbAia5HkfGcs+fn/RC1dHHTaxQqqXorPiyf70n0/5/ZZ7b08SGhVh0aUNf7mi
-	A4GAjFB3VDzmLGR7eMAn8AU8QworNZ8i8D1iqKcYZbfwBxDNMVmhcy6m3LI48k0T
-	fFu+Nj6ly4HAROuoiRq+Hw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772453610;
+	 x=1772540010; bh=POYcZxDnh5WONFILBv7VanBb+Nz85VgInh7S052kvDE=; b=
+	XjaZwRBnhbJLdtA3nOHwmO9uMUhxFGONooX1+LkUUGS4eYpvX2gUfmNbvWckuCN0
+	2SLruA391c+iK1Ja8CRaK33zkoashloFPcs/DOlzVyJNhLWPb0Ur69899SBH58wd
+	TXuaSe9EfQG0kCujtUrwGjfPnO5ql1eaHyLDguTSw4TSxjRaPk+mOYT+jUUkHlJs
+	tQlD1o1fKrHwkpK8rddfGXOQ4riivmiHk7mKIy6uAWed5W0Bi+ImRnw8b8vTBf5W
+	hbZ79mV5QrCTytZzCx1gabJ5Z/2URt+QXJsGLsUzuIz1kKb+QVVgZPa2s0mU9eRc
+	p2C2mRkMFI3HmSLX9B+1yA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772453607; x=
-	1772540007; bh=00PAvj9w9rmviIVrF6FK7o00dQO1akon6rbqhxjMtsA=; b=D
-	KT/pwYXKGG4MFfKTPHJxLSb4Xq+LUS5QEi+g8qEoeANnCuSyKBPlF4i12YJ6eHcs
-	1wpZBbt70l3HjtTiPuQ18F6C2obfIfEJI/slYR4jQf1AD6v+iQezc7e/gZgeCyT4
-	Aa06TPKoM2LYJunVFbPkLRf9iKmlnw+gXmBmN5ooxmJ9Pz/kwnhFBnfhq7ld6YPC
-	gZ3zrhFydbtL8taAVcSYAjuDd+nGNq9nkf04N7zEhfb89p/7ydI6c03RLDeHnOBQ
-	NwqpEUBXO1Awk8LZXUb0sBGg5A9KY3OKGcjgtfHCuUzJ10hy+M39Qrz0LSziiDK/
-	2rPzYMFCPacfDjsY6+U4Q==
-X-ME-Sender: <xms:536laUgPbiJC1Ge51lLHHUve3Rt_dL_mB_8QTis0RP9z0rni9pHBfQ>
-    <xme:536laTDRiumpP3QO-h5g7m-jYRbFU8x8GGLdThOI3gaQvvNNwrTVnlSL4CDm6GS9T
-    lJ-DtbYr9_o_oyGObdW9ksUY2wyrnoxcMFmvTyxZwxEWfHhZFBe25g>
-X-ME-Received: <xmr:536laZsnldRJ2QPT2UT8q6a5T-E_RcXS9ymv4yNILTfQ_zYa5JoB4fGoJV4TWHQ_aim00uzUInCgznEwsqxxs5X_f0fXYtuXc1siyIJYTg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheejieehucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772453610; x=
+	1772540010; bh=POYcZxDnh5WONFILBv7VanBb+Nz85VgInh7S052kvDE=; b=5
+	hEjlMdhbR+N/8bCg5lttyNb5GKBm0aXJC8pL7+FTuAxIffeFQx7LRtcLjKtjyWPu
+	qHHBgnpadBRLLs3MhYcryywR/y9Is0io3+81u+ZSlpiMMZ9jxVr7X7vdcp36scQS
+	0Jrd8MgZZRru069gey+t28A0qK16vdtZzUWDX9fl5wl7mxwOXea1+8LpeCusaUBv
+	s9N0MpGoiOnIcRUrjd+mok9dYLHUF+5UzIwM02wHrapYc6l9nGaBivb+UvSUxUBC
+	Ja9BlbLCVeUhj9TRlqBldh1IFT9B4U7FTf+4Ni71pQvgTv7fiO3Vd0vbMXzryKTz
+	3Q/TCEScjH1goE5fMD0Mw==
+X-ME-Sender: <xms:6n6laVwlMDmjPLcIrKVBrS6ceT--dFG3omCgCTxlBG_nUL1xWB0_zg>
+    <xme:6n6labQvdKxlxt-UzF5Ztja8uoLDngDw_XdEjWJ2dRm97Ao1LTfYXZe0jdGAEzFsl
+    OwO_6EI17E62miA1W1koeFlzLvN2bC9IJNt4jvClizR1Jgl7k3O0yk>
+X-ME-Received: <xmr:6n6lac_9jBZhGHU7d_tr0WMJeFTzCdddzw3HDoy_u0SIUAqc2A0AWl6U1gU3PLPXpQxP4x4-MLVc83685iBHbK_5UgmEn3iabt0iYb9Niw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheejieegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
@@ -58,22 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheejieehucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvg
-    hnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:536laQZo1Zk4xTG12iD3xO7xhzVYpK1JvMLejwtiJNO7JT7QyDUKcA>
-    <xmx:536laUUsoT6ROAil3CHnXtIlCM2KWVRuA7KpagSWJoZ6wBjX-3trEQ>
-    <xmx:536lac7CmbuNzUplpKROMffywqvbU57DPzqU6Eir1AxtTv89inwW7A>
-    <xmx:536laXi4-RrFMclM2Ix7p46wlHnpZsxnvWVYhrft9VVW3hJmnGZlAw>
-    <xmx:536lacS-5kdSrmdsRSZPuyvF-x441hIuZmwwdGThiqmo8vZoRv648hso>
+    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:6n6laSpUvuqK774hKzXL2QADCthci5eA_9hFgPtX-XPif4mqxU5s1A>
+    <xmx:6n6laZkPJt-QJ2nHQKoLGRK7ZJ4fkkJ-B1e3Ve401dD10TtEpQvGLg>
+    <xmx:6n6laZIF3OG_MxP65mKYOSskQI3U89iyH682WRumxgsEU_RxBydO0A>
+    <xmx:6n6laew93HEsCaUfbxbKO8MiZMfCDj5xA7iV0soqrTrV_QJP1eP6dA>
+    <xmx:6n6laRgWAT183NXOEwfcFkeOW84z3eKVrRoShHcrZYRA98aM0mPVNBsJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 07:13:27 -0500 (EST)
+ 2 Mar 2026 07:13:30 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1b133bb7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Mar 2026 12:13:26 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 10939eba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Mar 2026 12:13:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 02 Mar 2026 13:13:10 +0100
-Subject: [PATCH 6/8] cache-tree: allow writing in-memory index as tree
+Date: Mon, 02 Mar 2026 13:13:11 +0100
+Subject: [PATCH 7/8] builtin/history: split out extended function to create
+ commits
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,74 +83,133 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260302-pks-history-split-v1-6-444fc987a324@pks.im>
+Message-Id: <20260302-pks-history-split-v1-7-444fc987a324@pks.im>
 References: <20260302-pks-history-split-v1-0-444fc987a324@pks.im>
 In-Reply-To: <20260302-pks-history-split-v1-0-444fc987a324@pks.im>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>
 X-Mailer: b4 0.14.3
 
-The function `write_in_core_index_as_tree()` takes a repository and
-writes its index into a tree object. What this function cannot do though
-is to take an _arbitrary_ in-memory index.
+In the next commit we're about to introduce a new command that splits up
+a commit into two. Most of the logic will be shared with rewording
+commits, except that we also need to have control over the parents and
+the old/new trees.
 
-Introduce a new `struct index_state` parameter so that the caller can
-pass a different index than the one belonging to the repository. This
-will be used in a subsequent commit.
+Extract a new function `commit_tree_with_edited_message_ext()` to
+prepare for this commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/checkout.c | 3 ++-
- cache-tree.c       | 4 ++--
- cache-tree.h       | 3 ++-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ builtin/history.c | 67 +++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 40 insertions(+), 27 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index a8863277f2..f8b3a7b08c 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -891,7 +891,8 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 					   0);
- 			init_ui_merge_options(&o, the_repository);
- 			o.verbosity = 0;
--			work = write_in_core_index_as_tree(the_repository);
-+			work = write_in_core_index_as_tree(the_repository,
-+							   the_repository->index);
- 
- 			ret = reset_tree(new_tree,
- 					 opts, 1,
-diff --git a/cache-tree.c b/cache-tree.c
-index 16c3a36b48..60bcc07c3b 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -723,11 +723,11 @@ static int write_index_as_tree_internal(struct object_id *oid,
+diff --git a/builtin/history.c b/builtin/history.c
+index 1cf6c668cf..80726ce14b 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -83,10 +83,13 @@ static int fill_commit_message(struct repository *repo,
  	return 0;
  }
  
--struct tree* write_in_core_index_as_tree(struct repository *repo) {
-+struct tree *write_in_core_index_as_tree(struct repository *repo,
-+					 struct index_state *index_state) {
- 	struct object_id o;
- 	int was_valid, ret;
+-static int commit_tree_with_edited_message(struct repository *repo,
+-					   const char *action,
+-					   struct commit *original,
+-					   struct commit **out)
++static int commit_tree_with_edited_message_ext(struct repository *repo,
++					       const char *action,
++					       struct commit *commit_with_message,
++					       const struct commit_list *parents,
++					       const struct object_id *old_tree,
++					       const struct object_id *new_tree,
++					       struct commit **out)
+ {
+ 	const char *exclude_gpgsig[] = {
+ 		/* We reencode the message, so the encoding needs to be stripped. */
+@@ -100,44 +103,27 @@ static int commit_tree_with_edited_message(struct repository *repo,
+ 	struct commit_extra_header *original_extra_headers = NULL;
+ 	struct strbuf commit_message = STRBUF_INIT;
+ 	struct object_id rewritten_commit_oid;
+-	struct object_id original_tree_oid;
+-	struct object_id parent_tree_oid;
+ 	char *original_author = NULL;
+-	struct commit *parent;
+ 	size_t len;
+ 	int ret;
  
--	struct index_state *index_state	= repo->index;
- 	was_valid = index_state->cache_tree &&
- 		    cache_tree_fully_valid(index_state->cache_tree);
+-	original_tree_oid = repo_get_commit_tree(repo, original)->object.oid;
+-
+-	parent = original->parents ? original->parents->item : NULL;
+-	if (parent) {
+-		if (repo_parse_commit(repo, parent)) {
+-			ret = error(_("unable to parse parent commit %s"),
+-				    oid_to_hex(&parent->object.oid));
+-			goto out;
+-		}
+-
+-		parent_tree_oid = repo_get_commit_tree(repo, parent)->object.oid;
+-	} else {
+-		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
+-	}
+-
+ 	/* We retain authorship of the original commit. */
+-	original_message = repo_logmsg_reencode(repo, original, NULL, NULL);
++	original_message = repo_logmsg_reencode(repo, commit_with_message, NULL, NULL);
+ 	ptr = find_commit_header(original_message, "author", &len);
+ 	if (ptr)
+ 		original_author = xmemdupz(ptr, len);
+ 	find_commit_subject(original_message, &original_body);
  
-diff --git a/cache-tree.h b/cache-tree.h
-index b82c4963e7..f8bddae523 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -47,7 +47,8 @@ int cache_tree_verify(struct repository *, struct index_state *);
- #define WRITE_TREE_UNMERGED_INDEX (-2)
- #define WRITE_TREE_PREFIX_ERROR (-3)
+-	ret = fill_commit_message(repo, &parent_tree_oid, &original_tree_oid,
++	ret = fill_commit_message(repo, old_tree, new_tree,
+ 				  original_body, action, &commit_message);
+ 	if (ret < 0)
+ 		goto out;
  
--struct tree* write_in_core_index_as_tree(struct repository *repo);
-+struct tree *write_in_core_index_as_tree(struct repository *repo,
-+					 struct index_state *index_state);
- int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
- void prime_cache_tree(struct repository *, struct index_state *, struct tree *);
+-	original_extra_headers = read_commit_extra_headers(original, exclude_gpgsig);
++	original_extra_headers = read_commit_extra_headers(commit_with_message,
++							   exclude_gpgsig);
  
+-	ret = commit_tree_extended(commit_message.buf, commit_message.len, &original_tree_oid,
+-				   original->parents, &rewritten_commit_oid, original_author,
++	ret = commit_tree_extended(commit_message.buf, commit_message.len, new_tree,
++				   parents, &rewritten_commit_oid, original_author,
+ 				   NULL, NULL, original_extra_headers);
+ 	if (ret < 0)
+ 		goto out;
+@@ -151,6 +137,33 @@ static int commit_tree_with_edited_message(struct repository *repo,
+ 	return ret;
+ }
+ 
++static int commit_tree_with_edited_message(struct repository *repo,
++					   const char *action,
++					   struct commit *original,
++					   struct commit **out)
++{
++	struct object_id parent_tree_oid;
++	const struct object_id *tree_oid;
++	struct commit *parent;
++
++	tree_oid = &repo_get_commit_tree(repo, original)->object.oid;
++
++	parent = original->parents ? original->parents->item : NULL;
++	if (parent) {
++		if (repo_parse_commit(repo, parent)) {
++			return error(_("unable to parse parent commit %s"),
++				     oid_to_hex(&parent->object.oid));
++		}
++
++		parent_tree_oid = repo_get_commit_tree(repo, parent)->object.oid;
++	} else {
++		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
++	}
++
++	return commit_tree_with_edited_message_ext(repo, action, original, original->parents,
++						   &parent_tree_oid, tree_oid, out);
++}
++
+ enum ref_action {
+ 	REF_ACTION_DEFAULT,
+ 	REF_ACTION_BRANCHES,
 
 -- 
 2.53.0.697.g625c4fb2da.dirty
