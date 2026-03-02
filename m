@@ -1,205 +1,93 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7781379EFC
-	for <git@vger.kernel.org>; Mon,  2 Mar 2026 14:56:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772463399; cv=none; b=L3S/WUxb+fEfpVK44o7V38jEW3kTYodXaRh+OvbT8Y+Nr0/faUlNi5cGotTarW2XlgdKnSZib5SrNFqdsMclqkuL66ETjwzRbkPPM++xYAnw8P6VeyVqk2jxKarZi4DA1xT6efewYO4Pzey3Sg+dikNNhAOr80Vapr9zn4HVapY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772463399; c=relaxed/simple;
-	bh=ZGsiMQeGWG6B+AWBLstN0vqs13peKL2HnOlhJqicmos=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aj2LThO3SpuPJ5nKoFdUmfqrScrmtlubF8EEV2RZfd1njy3T3fsghgh3euZ8blJHgv9ccWZFdPmYISvjTdGJt1DpZPVY4E5ZrFaI+uIxLqJWdHggNVYACcyWRl/rZX+6YNR1hQPSzd+CTfpFPiMPZj4jjNC0EWRqxpNS1YJbJcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ETLnHGoR; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0580F407598
+	for <git@vger.kernel.org>; Mon,  2 Mar 2026 15:00:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772463644; cv=pass; b=H7F56I0oJ0+nN3z/VlbNjFeUCis0gT0EosTfO1H66kWj7vqe+3QTzPqlsyhYr//8C0kk+toM7Q+sRRCs0IRTD/cmKo6U9SgPY+FdrIM69MpxQoRtdE1cSu+9Njf/U3kKUsiXkZ6b9WToBTGH2RtnIGh2F6P8DoIMF+xFBTNC92g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772463644; c=relaxed/simple;
+	bh=Zn2gTBg8AcT0IqvHTrX5MB4qJX2oqYGE5EpUpRrXKOY=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=Rz7JTWrnStFoI3mr/OrYTrUq+dTVXR08eH5n0G+U2yPhut6mm9mQ8la/aJ889tsp0Bi2GbNQCB6wliSFb8XYLCdbFeMwoldp6rUe1RqLCSwtMBqrFbVAha4mJ2KhEx+84lrEToAsc63ktNooRD1WfPL722z/xuyHVXOavmVt5gk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=geBRcjRQ; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.beauty
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETLnHGoR"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-439b9cf8cb5so752276f8f.0
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 06:56:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772463396; x=1773068196; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=baRUV1ncOYgA3qBeQjb9KQo0SkJDLFM9yUBRWCfD2QQ=;
-        b=ETLnHGoR4Ry2RF/+jrhbHb4cFJFY4g6uE0YXYkQrKmN313flFIdnXQkVr5idMRKbgb
-         S0Wp663SwXqG10wWyrPkIMjJZdLazgjEs+nCQi2pkxmWiwui/nzqlr+JCS/5kM0qyo36
-         UZO9g/sl5LP4KnCZMSNQwg6CVwvgFdU1uegm3CqHGJiDDIJ9l8aHhWbvbzNpPSTXTAOK
-         riaeh3KaVGV54TtVE0CkRd8qdhq2OWlv36cFUm89PlOopqELfXQCfeyoRKaS6t+V09hu
-         NT/EbUGn1zXbxmAAqvH4Tb1g0A4scZcIvANEANhmS2EtKXGt33vL9NYgYiNjPJMvJ8rt
-         lDXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772463396; x=1773068196;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=baRUV1ncOYgA3qBeQjb9KQo0SkJDLFM9yUBRWCfD2QQ=;
-        b=KDGTvCQ8eWx4d1qwAOhmrmw4nBQpORx1WV5gO1gr5r+zY+g7GjyJYnVZ0KJUSbffqd
-         jjTtypClN7xnSccHOYnRgKOKsLoxmXqKosjjUkan+hqMvzNWlxxNhpCDVrtfxQ4FEv/f
-         lMFjCY0NMMRScm7mkjPLhnwaIhubYaOfr2BtNnlISSlYvc7/RMXRR3oI63Yr3+AcqwK9
-         x3u04/ojnDPUwOrAUevXTBGdPBdefxbfF9yaA8lXsHcutQPK1F7hTAJkYEFHmvFVcxdO
-         NYMiMWmZXG3fvr6KQ+XVBmdneW3M0BoYoGFzFdjvFbwVcs2pUULR/K3nLGUL4WUsqfaZ
-         oR7g==
-X-Forwarded-Encrypted: i=1; AJvYcCWwLTurtOC99emwwgr1eFwYsowSElZlHEMsFBrZ6XE87EDCL3Y1hqMKtjUflTeXfzjAoJ0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YynN3mK3ZTsnEnbwmzY76JbkuUJ30l1bGy2ar3LXhZwmHTKFkkz
-	nmp7wW57LtZlJPGOiTtw7lGKA3pUJHSf76qsy1iPDa/4+GGRmXU0IVm0
-X-Gm-Gg: ATEYQzxE0PPjiKx1nR45U7LNzRI0r9d9JGiPVxvMImCdjbzzJwAihTkGfzmX4E1Kqu6
-	bYYpZyH7/WpyOtbtCGd076jJPlGdhYfqdfg+TMZk25CLsetZyI2h5dQ8coz4R0V1C/jtcv9rHyG
-	1r/+HKhOwTdbHCB4aPKk6ID95V27euHoHLRTl5IAPTzmx+KJs9Xov3IcOFmoJdGIbWHn5LCjAG8
-	bOwZGdshd4l+Zlxqnh9RAYpHSg6lwjtyEZDA1PilE1ZHiClxKfB3rKtCW/H0GmRU26j7wsdoZHY
-	5Htl+2n1+1LJopQVT5qaKTbPFpO+z1w+AMxXYRitdl3jFOYORz5Mrxi5Qim0OajXH72Lu+gqoIB
-	sfK8k9rD0tVumBQgi1v9eSOv0U8GeRPuT7FMEyRmWZW+wlwgoyuCCENfZlpmbgKx2WsAMcm1/5K
-	kGUHErptwk6SqYHoRbfPuwIVrUM2kuPv/2tETJG9igTinWIN/BfHuHJ27IRnqRq1ugxot8mtuZ9
-	PVsOQ==
-X-Received: by 2002:a05:6000:40c8:b0:439:b7c9:2edc with SMTP id ffacd0b85a97d-439b7c93174mr5798688f8f.48.1772463395941;
-        Mon, 02 Mar 2026 06:56:35 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439ab6ebe56sm16783048f8f.15.2026.03.02.06.56.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Mar 2026 06:56:35 -0800 (PST)
-Message-ID: <dffc34a6-3a89-4535-9caf-95625a221797@gmail.com>
-Date: Mon, 2 Mar 2026 14:56:33 +0000
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="geBRcjRQ"
+ARC-Seal: i=1; a=rsa-sha256; t=1772463628; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=UJL9DGDMCrNPVXQbitz1uYyxNL8VIWTRHgLod7fhBfxPHAXXqt0KEHlMF9sbgN/1tih3DT25Z2Xvi0nV/IqS9lu08LXPa7QZJq941DjHAIyjpWM+by9HFnPXwvZtUYAuq9jYOUlFQbUtlMCEKzkOvX3SzsH95hBlNlhiY9QnbYQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1772463628; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=fzMT/tBTCf3LPEKzALWW6vUOQAMIZ+q/nf66gNsrJxY=; 
+	b=Y/DEXiAO0uQg4dq1EgXrJlDKyJ9vtBtzwUSK6vYAHOE/h7XzK9iokG9RyVNxVg9rcgQ2SDMkO+j8AFy3jTmkUrcoAASiJkt13M8k8JSXpnPkEDcJgMbmiNj9M06dRKF5RnPYmTc+P08sYS5Q7r7zvfOdsvE9nA8Y2plSMSj1IYw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=linux.beauty;
+	spf=pass  smtp.mailfrom=me@linux.beauty;
+	dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772463628;
+	s=zmail; d=linux.beauty; i=me@linux.beauty;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=fzMT/tBTCf3LPEKzALWW6vUOQAMIZ+q/nf66gNsrJxY=;
+	b=geBRcjRQmTxw4l+VoDs8TB66si5E/JQ6dwTrTxdUgdaX24Ch1NJb5a0Qi/ucWkqx
+	9oeTyLydfCT2+uWS43J8cWR05OFmVMGAO/PN30IoTQiA7cJUzeqxz6yq5JehVM484qf
+	JVPzcPSJpdin7e6nnGiFn5jdN/fucbWhFSaA0UEk=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 17724636271131022.8420982430209; Mon, 2 Mar 2026 07:00:27 -0800 (PST)
+Date: Mon, 02 Mar 2026 23:00:26 +0800
+From: Li Chen <me@linux.beauty>
+To: "Phillip Wood" <phillip.wood123@gmail.com>
+Cc: "git" <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>,
+	"Phillip Wood" <phillip.wood@dunelm.org.uk>,
+	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Message-ID: <19caf109a99.6c639fbf1370819.2681969272338930783@linux.beauty>
+In-Reply-To: <56b1b6b6-94c2-4a2f-b473-9b4d09d6f52e@gmail.com>
+References: <20260224070552.148591-1-me@linux.beauty>
+ <20260224070552.148591-2-me@linux.beauty> <56b1b6b6-94c2-4a2f-b473-9b4d09d6f52e@gmail.com>
+Subject: Re: [PATCH v7 1/5] interpret-trailers: factor trailer rewriting
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 4/5] commit, tag: parse --trailer with OPT_STRVEC
-To: Li Chen <me@linux.beauty>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <20260224070552.148591-1-me@linux.beauty>
- <20260224070552.148591-5-me@linux.beauty>
-Content-Language: en-US
-In-Reply-To: <20260224070552.148591-5-me@linux.beauty>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-Hi Li
+Hi Phillip,
 
-On 24/02/2026 07:05, Li Chen wrote:
-> Now that amend_file_with_trailers() expects raw trailer lines, do not
-> store argv-style "--trailer=<trailer>" strings in git commit and git
-> tag.
-> 
-> Parse --trailer using OPT_STRVEC so trailer_args contains only the
-> trailer value, and drop the temporary prefix stripping in
-> amend_file_with_trailers().
+ ---- On Mon, 02 Mar 2026 22:56:04 +0800  Phillip Wood <phillip.wood123@gmail.com> wrote --- 
+ > Hi Li
+ > 
+ > On 24/02/2026 07:05, Li Chen wrote:
+ > > Extract the trailer rewriting logic into a helper that appends to an
+ > > output strbuf.
+ > > 
+ > > Update interpret_trailers() to handle file I/O only: read input once,
+ > > call the helper, and write the buffered result.
+ > > 
+ > > This separation makes it easier to move the helper into trailer.c in the
+ > > next commit.
+ > 
+ > This is still missing my sign off c.f. 
+ > https://lore.kernel.org/f5152523-f7ff-4dee-a685-fb0b74cd6a56@gmail.com
+ > 
+ > > Signed-off-by: Li Chen <me@linux.beauty>
+ > > ---
+ > > v7:
+ > > Use strbuf_write() when emitting buffered output.
+ > 
+ > Also renamed "sb" to "input"
+ > 
+ > Apart from the missing sign off this all looks good.
+ 
+I sincerely apologize for that! I did check it during development, but somehow lost
+track in the end. I will definitely include your sign-off in the next version!
 
-This looks good. I'll stop here for today and look at the last patch 
-tomorrow
-
-Thanks
-
-Phillip
-
-> Signed-off-by: Li Chen <me@linux.beauty>
-> ---
-> v7:
-> New patch.
-> 
->   builtin/commit.c |  3 ++-
->   builtin/tag.c    |  4 ++--
->   trailer.c        | 21 +--------------------
->   trailer.h        |  4 ++--
->   4 files changed, 7 insertions(+), 25 deletions(-)
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 9e3a09d532..d9983230de 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1720,7 +1720,8 @@ int cmd_commit(int argc,
->   		OPT_STRING(0, "fixup", &fixup_message, N_("[(amend|reword):]commit"), N_("use autosquash formatted message to fixup or amend/reword specified commit")),
->   		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
->   		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
-> -		OPT_PASSTHRU_ARGV(0, "trailer", &trailer_args, N_("trailer"), N_("add custom trailer(s)"), PARSE_OPT_NONEG),
-> +		OPT_STRVEC(0, "trailer", &trailer_args, N_("trailer"),
-> +			   N_("add custom trailer(s)")),
->   		OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-by trailer")),
->   		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
->   		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index aeb04c487f..15aee1b03a 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -499,8 +499,8 @@ int cmd_tag(int argc,
->   		OPT_CALLBACK_F('m', "message", &msg, N_("message"),
->   			       N_("tag message"), PARSE_OPT_NONEG, parse_msg_arg),
->   		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
-> -		OPT_PASSTHRU_ARGV(0, "trailer", &trailer_args, N_("trailer"),
-> -				  N_("add custom trailer(s)"), PARSE_OPT_NONEG),
-> +		OPT_STRVEC(0, "trailer", &trailer_args, N_("trailer"),
-> +			   N_("add custom trailer(s)")),
->   		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of tag message")),
->   		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
->   		OPT_CLEANUP(&cleanup_arg),
-> diff --git a/trailer.c b/trailer.c
-> index 8e87d185d9..e85c6c9fbe 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -1342,40 +1342,21 @@ int amend_file_with_trailers(const char *path,
->   			     const struct strvec *trailer_args)
->   {
->   	struct strbuf buf = STRBUF_INIT;
-> -	struct strvec stripped_trailer_args = STRVEC_INIT;
->   	int ret = 0;
-> -	size_t i;
->   
->   	if (!trailer_args)
->   		BUG("amend_file_with_trailers called with NULL trailer_args");
->   	if (!trailer_args->nr)
->   		return 0;
->   
-> -	for (i = 0; i < trailer_args->nr; i++) {
-> -		const char *txt = trailer_args->v[i];
-> -
-> -		/*
-> -		 * Historically amend_file_with_trailers() passed its arguments
-> -		 * to "git interpret-trailers", which expected argv entries in
-> -		 * "--trailer=<trailer>" form. Continue to accept those for
-> -		 * existing callers, but pass only the value portion to the
-> -		 * in-process implementation.
-> -		 */
-> -		skip_prefix(txt, "--trailer=", &txt);
-> -		if (!*txt)
-> -			die(_("empty --trailer argument"));
-> -		strvec_push(&stripped_trailer_args, txt);
-> -	}
-> -
->   	if (strbuf_read_file(&buf, path, 0) < 0)
->   		ret = error_errno(_("could not read '%s'"), path);
->   	else
-> -		amend_strbuf_with_trailers(&buf, &stripped_trailer_args);
-> +		amend_strbuf_with_trailers(&buf, trailer_args);
->   
->   	if (!ret)
->   		ret = write_file_in_place(path, &buf);
->   
-> -	strvec_clear(&stripped_trailer_args);
->   	strbuf_release(&buf);
->   	return ret;
->   }
-> diff --git a/trailer.h b/trailer.h
-> index d05dab050b..e5bd355aad 100644
-> --- a/trailer.h
-> +++ b/trailer.h
-> @@ -209,8 +209,8 @@ void amend_strbuf_with_trailers(struct strbuf *buf,
->   /*
->    * Augment a file by appending trailers specified in trailer_args.
->    *
-> - * Each element of trailer_args should be an argv-style --trailer=<trailer>
-> - * option (i.e., including the --trailer= prefix).
-> + * Each element of trailer_args should be in the same format as the value
-> + * accepted by --trailer=<trailer> (i.e., without the --trailer= prefix).
->    *
->    * Returns 0 on success or a non-zero error code on failure.
->    */
-
+Regards,
+Li
