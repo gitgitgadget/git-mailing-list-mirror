@@ -1,199 +1,131 @@
-Received: from mail-24424.protonmail.ch (mail-24424.protonmail.ch [109.224.244.24])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346C44949FF
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 16:01:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39854D8DA7
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 16:21:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772553677; cv=none; b=frKFWF+llk2JehlDaoBwV32qLYK4DQjsYza9z1Y4yCFsbJeG3ZuVEtQF/6VYizLBYmWM/VEDZ9xHwNdpGIF7MZBpnPacpLL7LQjSjKrsaOZYJSOxHLeY5/KjeLJNGeRFzw+X+BaVhTzdEI2mvKDMtGTLaV2pPUg20hm6UAeqsoE=
+	t=1772554922; cv=none; b=VxtL8798MP3joa8bGoqoKgVuA7IMBVUwRhrUawLRDd8NiOsCGNaSC0EXvr1iKETTt2uDSymQ5bi3hgKtz4oXtx5c+T1JptgspCr8AqjtEZInsLg9/0hpugfSM3cq5+0hCH20FCTrr+2wyki75PmNjo/GuBBSjavo/pFDOlsLDjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772553677; c=relaxed/simple;
-	bh=4z5Ium0OjscgOIhTL0hBhSIG6pZc0S8PE0EnCO4HfWk=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=TzqvWa+Nyk9cYhr0+og31hrd6FiEdYR1h1gxta10Oo5f6E/4WGQhxBTDV9bUqcjMB0A8v13m400FBh5L7taoWY/2ZTyxJ4CvvIefvgEMs1Ro76O4L9zk81AyiZlaYm+D0aGZ/bUR7ViVgjZJlK/RGpy66Ev92yZJQYLnYJFuuqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=hQ9m1aXn; arc=none smtp.client-ip=109.224.244.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1772554922; c=relaxed/simple;
+	bh=5elSO2wSLculfbZCcED42Y3AgQTU56mxd+cmXvLtx8c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MFP8UFBxebBh5Kod1toPLZml+5YCKpKVc3zNmj8akyqf8YnmJiwDlqU6p5kTxDu4OmDlA1PkrtxUwd9X42eO60QylQ7AFN/SPMNa9qXFn4UAxGAPCtgtJqF0M959mkqxEptMMGPpAjCFi9agpdJMAN6YT4Om+c3Em95qzCJrKtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VrZheSQu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nvvr5cDQ; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="hQ9m1aXn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1772553668; x=1772812868;
-	bh=oeYZufhqua+BSo8bvhLUJiTOJFNgHk6Huk+CLwttLqo=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=hQ9m1aXnjMrwRyt90pXyT+7n0p63sEf8zzJra8Zmj9EJn6PQ/dWMRnhTdPBIlZDb2
-	 lzPN44CdzQVxf7hm/pYxMpBrDIKlaFesN8/Mj5XIU7wN/4HcV/HAw21FZ3POhLqQvh
-	 /h2/tgta6BgGtpNiezik5NTwiDGNKCHWwUlcwdfbrNnEKEc+CwQvTCDwJucfiKvJMh
-	 szPiAoxfYeorYZhZcaH0gYW4+19JbBRR5SM8cmbL5vXIklf9fwNG7f0uSC559ibJl/
-	 Tt/l7kbAUTCo3lNYIAkvoY3Vekon4vtSZutBi6V0NhlBwvmlzG+d7kLGUkoH8MC+yB
-	 ukA3KqPrlUrmA==
-Date: Tue, 03 Mar 2026 16:01:02 +0000
-To: git@vger.kernel.org
-From: Antoine Cousson <antoine.cousson@protonmail.com>
-Subject: git whatchanged --i-still-use-it
-Message-ID: <bhYbjxeZY0QZt48g6XVTVfyPo6vbv9yeYLsw9PgFdVKgye6Ue0cAPy_RkNTwAOYEANhHyD6QbaxZrWaPS4__jlTcAVKOaEjrDgAxQYKdYvE=@protonmail.com>
-Feedback-ID: 49647671:user:proton
-X-Pm-Message-ID: e4a37e63fbfb60fba8d09add8852bb5ffe636ee6
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VrZheSQu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nvvr5cDQ"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id B71E9EC055A;
+	Tue,  3 Mar 2026 11:21:56 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Tue, 03 Mar 2026 11:21:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772554916; x=1772641316; bh=LRmxflN/jS
+	PTavaeOA5HK/GskPZzcf5inf/QclX8xr8=; b=VrZheSQu1Iz5FaUTDINMtcvDAt
+	tCsUhEfLEXRQFEmUu9BVtVTs4ou+Uc8r40KbExhbDykBG1N5qAQSNigZPXMaklBC
+	FsnyRSPm57/JbOwGsUVMfcsCCdg3AYrLw0fDsPTja/Ukpc3VJCOq0KPaZR8014LT
+	C6HvPuGEcNz9sWMn6JgWGs2lJaaHbG9PwGUjH027PTN9m6v+/dff7IvN+BMZ61ST
+	rw93vmMgTlsBEG5f1DX/U6lw2h+vG08d4Y2NWKcvXKAeb7q4kcJJFYCsFy5a05rU
+	QyDoQAg9cAkegNnZySHYsKaxEHHkO5q/4Mx3v2fnXDRkEQu48kHOIwNbPokA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772554916; x=1772641316; bh=LRmxflN/jSPTavaeOA5HK/GskPZzcf5inf/
+	QclX8xr8=; b=nvvr5cDQmwosjrUxX4NjJcKAuFzFuH/pkpUVzB73Pwi6lIUAdil
+	6/pp04Kte2vhGOHgd9TF2EG2oiqxhzZrVFP+qO5nW1ZhvgwdnsRuteJF5vjmB9K1
+	qI6KPTViKtZuygQh47f1qVZzuD9nmmpublgDSROuyK4UKnYag9l/pO82VWYDXKke
+	75wv7JejEItX/XDjCYtesX7YCxyRXGM4AGzJRcmrJC8721OhjJE3YvfeL5Gezije
+	VD6jO2Ixnu+klPMZOLW7P4IKSSwnJmRb7vn9fV0Ae98Dxwr2SOKWQ8uKAjofDD5D
+	xdVs/VRx+yBTK6TcoH4MPceYeQx8NPiwDkA==
+X-ME-Sender: <xms:pAqnabm-6Qgmjw2fxvRNNSz45dZ1o_P9FLJbYgwfp8lSzcM_2lPfEQ>
+    <xme:pAqnaWRiPr9YcrKwwe8a1WBpYYa0uIony8pF6gVcnhoJAdSmIEepaPTuEF_w8Itqz
+    GtfdDF93AfwDVMkfuQMpnwICaVQzzkwpSl31mIeTCF7ai6CiYWO>
+X-ME-Received: <xmr:pAqnafDEoxrbwJJEDhqxiZJ-P6UlyZ7OHzxytAKb8rKI-yXU7UhWpXVZKmXO5uGkjXcR5QxvjYljRQKZOarH0VwhwzfJq6yNDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedutdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtd
+    dtheesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:pAqnadT9tBCNqDz7Ke7ZCNiR8t_L-XrqWBY9eRMgW_TbVi2Kbttgjg>
+    <xmx:pAqnadoG7vriO7WzPHoW-FPrVoTfI8EwLhP6q7u9J-ijGyrui2AORQ>
+    <xmx:pAqnafxHChmU-59XoCVBNVE-zfhIF_AgIWmuoBk3M55u3mIxgw5hEQ>
+    <xmx:pAqnaSIYMDhB052Dui-aWFiB7uHc1dYCqjNbu3y56s-1qmiyUICI3w>
+    <xmx:pAqnaaRxdYHu1vFnOkloqS9YeIUo_rjytGDT-6mEH3UAsQWJf8retRnb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Mar 2026 11:21:56 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] path: use the right datatype
+In-Reply-To: <20260302142138.712273-3-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Mon, 2 Mar 2026 19:51:37 +0530")
+References: <20260302142138.712273-1-jayatheerthkulkarni2005@gmail.com>
+	<20260302142138.712273-3-jayatheerthkulkarni2005@gmail.com>
+Date: Tue, 03 Mar 2026 08:21:54 -0800
+Message-ID: <xmqq4imwg9y5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------6f07a66bad4380ef3f0adb57fd56261dae8df283e62fb85d6004c155f06b8a17"; charset=utf-8
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------6f07a66bad4380ef3f0adb57fd56261dae8df283e62fb85d6004c155f06b8a17
-Content-Type: multipart/mixed;
-	boundary="18996026cc52b291_a09fc22aa417d7a9_c763f36c25de4e45"
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
+> The strlen() function returns a size_t
+> Storing this in a standard signed int is a bad practice
+> that invites overflow vulnerabilities if paths get absurdly long.
+>
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
+>  path.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/path.c b/path.c
+> index f613d8bbd1..56be5e1726 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -58,7 +58,7 @@ static void strbuf_cleanup_path(struct strbuf *sb)
+>  
+>  static int dir_prefix(const char *buf, const char *dir)
+>  {
+> -	int len = strlen(dir);
+> +	size_t len = strlen(dir);
+>  	return !strncmp(buf, dir, len) &&
+>  		(is_dir_sep(buf[len]) || buf[len] == '\0');
+>  }
 
---18996026cc52b291_a09fc22aa417d7a9_c763f36c25de4e45
-Content-Type: multipart/alternative;
-	boundary="18996026cc52d5f7_3ed73be4236253be_c763f36c25de4e45"
+Obviously correct.
 
+We also could tell it to return "bool" without disrupting much else,
+as this is a file-scope static function that are only used inside
+"if (...)" conditions without its return value stored in any
+variable, if we are interested in type kosherness.
 
---18996026cc52d5f7_3ed73be4236253be_c763f36c25de4e45
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+I have to wonder if it is easier to read if we used our standard
+helper functions, e.g.,
 
-Hello,=C2=A0
-Nice to meet you,
+        const char *tail;
 
-I would like=C2=A0to say that I still use `git whatchanged` I like the way w=
-e see the
-modified files instead of just `git log`
-And actually I never saw the message before today when I showed the command =
-to a
-friend of mine, will it be removed soon ?=C2=A0
-Is there any alternatives that are straight to the point without any args or
-something?
+        return (skip_prefix(buf, dir, &tail) &&
+		(!*tail || is_dir_sep(*tail)));
 
-In any cases, thanks for your amazing work,
+but probably not.
 
-Best regards
-Antoine Cousson
-
---18996026cc52d5f7_3ed73be4236253be_c763f36c25de4e45
-Content-Type: multipart/related;
-	boundary="18996026cc52f873_dd0eb59da2accfd3_c763f36c25de4e45"
-
-
---18996026cc52f873_dd0eb59da2accfd3_c763f36c25de4e45
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
-
-PGh0bWw+PGhlYWQ+PC9oZWFkPjxib2R5PkhlbGxvLCZuYnNwOzxkaXY+TmljZSB0byBtZWV0IHlv
-dSw8ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay11c2VyIj48L2Rpdj48YSB0
-YXJnZXQ9Il9ibGFuayIgaHJlZj0iaHR0cHM6Ly9wcm90b24ubWUvbWFpbC9ob21lIiByZWw9Im5v
-cmVmZXJyZXIiPjwvYT48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pkkgd291bGQgbGlrZSZuYnNw
-O3RvIHNheSB0aGF0IEkgc3RpbGwgdXNlIGBnaXQgd2hhdGNoYW5nZWRgIEkgbGlrZSB0aGUgd2F5
-IHdlIHNlZSB0aGUgbW9kaWZpZWQgZmlsZXMgaW5zdGVhZCBvZiBqdXN0IGBnaXQgbG9nYDwvZGl2
-PjxkaXY+QW5kIGFjdHVhbGx5IEkgbmV2ZXIgc2F3IHRoZSBtZXNzYWdlIGJlZm9yZSB0b2RheSB3
-aGVuIEkgc2hvd2VkIHRoZSBjb21tYW5kIHRvIGEgZnJpZW5kIG9mIG1pbmUsIHdpbGwgaXQgYmUg
-cmVtb3ZlZCBzb29uID8mbmJzcDs8L2Rpdj48ZGl2PklzIHRoZXJlIGFueSBhbHRlcm5hdGl2ZXMg
-dGhhdCBhcmUgc3RyYWlnaHQgdG8gdGhlIHBvaW50IHdpdGhvdXQgYW55IGFyZ3Mgb3Igc29tZXRo
-aW5nPzwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SW4gYW55IGNhc2VzLCB0aGFua3MgZm9yIHlv
-dXIgYW1hemluZyB3b3JrLDwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+QmVzdCByZWdhcmRzPC9k
-aXY+PGRpdj5BbnRvaW5lIENvdXNzb248L2Rpdj48L2JvZHk+PC9odG1sPg==
-
---18996026cc52f873_dd0eb59da2accfd3_c763f36c25de4e45--
-
---18996026cc52d5f7_3ed73be4236253be_c763f36c25de4e45--
-
---18996026cc52b291_a09fc22aa417d7a9_c763f36c25de4e45
-Content-Type: application/pgp-keys;
-	filename="publickey - antoine.cousson@protonmail.com - 0x675DB63B.asc";
-	name="publickey - antoine.cousson@protonmail.com - 0x675DB63B.asc"
-Content-Disposition: attachment;
-	filename="publickey - antoine.cousson@protonmail.com - 0x675DB63B.asc";
-	name="publickey - antoine.cousson@protonmail.com - 0x675DB63B.asc"
-Content-Transfer-Encoding: base64
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4c0ZOQkdLZkR5TUJFQURPb0Zi
-L1BuSGFDZkFtNWRBM0FOb09GaVdzd0lVWHV2VVhlc1dxMlArYmlpYlBCQVM0CkdTYlM2MzJWOExu
-S3Z0RkxJemVCMVVEOThqMnM3NEI1VXcrZ01TYzA2cEFGQk5pc1dtK2tSOGNBV1dvOXkxNVMKc2ZD
-RTFuVnJzeXBNalNKaW42NnN3UDU5dlVLUEJGUE9jTEdVL3VST3FPdGlkUDBTcDk2dUNFeGU2czM1
-U3FsNQpIT2F0QktVb1ZTVFp3VVF1QWI0TEpkZW5tMEdEVW01Q3hHMVphWnA0VmpITkNkWmFwK3BT
-QmVvUHRxRUJUNS9vClFOUzVxMVIweUZxbWo1aTd0U0RaK1NCUzFCY0JJOURHMTBIZVhVaktZRk5a
-OUlFTHVWNVBKL1k5bnNzWm5EdTUKM1ZRQ3craTIrYUV1TDFrYTNIbzg0UEZPaDVadTJiWktNaTFU
-VXJqVC81OGtEWG9FUWhwYS84NEFkeWlzQkR0TQpsQ1lDM09vS3dLRWRVNWZ5SjRkT1dPN0hLNEY5
-Ujc4K1JlempBeWwzVEpzS0tlM0xuQjhzckZrSlRuZ2tyT1VLCkEvdE80OFA4bkNMY1VrdjE3elc4
-VXlnM3B6YkYvQWR4U2Jaa0RSemYrLzBpczNQTjF3ZnQyajBQQStRL2h0ZmwKb1BqZFJrdmtlMGdL
-c3R5ZjNwcVF2dDRYem9OeWRBakR2eVkrNE5FQ2l0eHdMVFlmTVZwSVBUWUZzWkdmVFUxWQpvc3Ns
-RkZ0ZXNiTEE3UGoxZzNpcXFqMHFIYi91T0pKWG9reUNqUUY4Vk90RmpTd0FWektiMmdkYmY2ZHE2
-VUhSCndIU3VoeHdKU2JmdHFLRjRub1pnbExNTzNxZldkYUdUQVp5N0U2VFZ4cHFnMWtBUFFsQUs1
-SEhKbFFBUkFRQUIKelQ5aGJuUnZhVzVsTG1OdmRYTnpiMjVBY0hKdmRHOXViV0ZwYkM1amIyMGdQ
-R0Z1ZEc5cGJtVXVZMjkxYzNOdgpia0J3Y205MGIyNXRZV2xzTG1OdmJUN0N3WTBFRUFFSUFDQUZB
-bUtmRHlNR0N3a0hDQU1DQkJVSUNnSUVGZ0lCCkFBSVpBUUliQXdJZUFRQWhDUkRrTGpyWkllSzU2
-UlloQkdkZHRqdFMyZmMyZEVIaU91UXVPdGtoNHJucEpFa1AKLzNTL0ZhRStCcmZjb05Pd1AzL3Rl
-N2JYYWFvanR2QWNMb0tkVmMzV3lyMStKVFNERnc5bEdhWUkxUlRocGFzMAozdFNXeWFjY25yS2tX
-UHh5UGVzWUIyMlNvQWRGaVhZNEhUa21GeFIycWUvc3RDTnlORVJDaTRzTjZGSlFpd3gwCmliak1L
-NjMrOUR5SWE2QzZINStXeVg1SE1VRStGWEkrSUJjUVl0TmVyNXloUU9YSSs3b3k2K29IeDZqUklN
-OW4KNExELzJQQXhralN3ZHFDMjdheTZQVEx5ZlY2MjhrWWN2SjduMHpuMXJCSDZQYzRXbmJXMTZx
-VUVQQVdSa2pmYQpHMlByMmZxYk13TTlXNDVBTWZZa2lINjdld1g2SlFvRW80WlJiOHkxNU92bDdX
-K2p1VGV3cXBGQ29YZHRzTEhYCkpwT0J4S2FLVm5YK1IyVkJjN3lzeXM3T3pwSnhmd3hJTlF4a1RC
-VkZYZnU4S1hvYXhLKzY5ZThvUFhhVU5nYVQKR2gvemtoSnpaby9ockZSUDIxWEdsYUZoUm1yUmhX
-L1c1ZVNydlZ1T2FmL1FDLzBqblRXK2ZoVC91ZSs3VTRCVwo5d0trWVhVOElYaFN2WUNrOXpBNnQw
-N3FhUnNhWjBSVmo1SFNOTXJhV2FxQ0tGeTZMTFJRd0VrcWtCKysxTlhXCk1kUWpCV1ZjWGdMU2NY
-Z0tCOVZyVURLRzlGN0JBN1VMUEN2WTFMKzdDMEtBNWt5dVlBVVhKSG1oaFc0MGxSTmoKVUUyVmda
-OVY2N2FxREVNVkZMVXZBL1B0MVNwb2lrTjVrcHowbExrc3ZhZ296VVlGZTBPRFVNWms2Sm5WZDlC
-ZgplU1BDUWhBWnVpN3lCRGVLK3lBYk9aQXEvck8zS2tpVkZkazVaM0Vqc3NLV3pzRk5CR0tmRHlN
-QkVBQ1dSM2oxClJtWWowZ3pua1ZWRWxSNkE0M254M0dKcnRvd1RUZjBIY1ZIdFp2UGkwVERFREJF
-YUUyOWp2NUhCWU16aE10Z1kKU1VhZDJxcTNFTURKVnRXdFpxSENsRDBpeDNSQmh1VjNURDdITERH
-UitGV1Y2dG9yUFhPK0lYV1lLZEt6NU9pOApZelpCNkdpZ1I1TVVBVkovU1VsbUY3anhDSEVQdTFN
-Y2lyRHd0YVdHc0pSajhENUdyZWdldmFOZ0w3WHVyQk1yCnA5dXhIZ3pSS3ZicFlPVDIwSEw1eTRQ
-WTZ1TjkxYzU2dnJlVTh4b0pmdjVYdzNVK3Q1RkF2TytRR2lFYU81ZGcKSlVCa2NzMk53YWlOeEpG
-UEVEVUdWY1VwRTVaZkhHOWZmMjZJSW9kdmY3aFc3U2ZoZDVKTm05b3o5RVFlK090MQprMlFaTmcz
-Y0Nzd2kzKzZzTWxIY1V6MWhyeTZjM2tHbHoyV2poZHFidzhvTWowSkFOTlJ0TW9YSjhRbVhBSVBz
-CnEreExKY2JsbWlka2U0VnNJVEZPWDMxMHZ4aHAya045WWptSUE2QU9KYmpueTJieHlLSFNNS3pj
-eDlRTTRvOVIKZzIrNHZIbTh3a1NaN3RmVmFLQ01rYzA0MGpXekpLQmlYWitDSEEvZEhvcGF0SjFp
-Z0psc1dXYk9kcXdJNThiSApzNEhlb3F2RHMxYVRoTVI5WlRueW4xQmNKY1dadC9wN0Z2N1ZEaGpI
-dCtDSGNDU2trNlZTQUZubmVGdjNaUkFUCmRyMjBqTXAvbDd6LzZrcjJsN3ZmbE9pbTJyYkd4ZE5u
-RjczSVgwYTFwS2hjaGMwUVZ5emEzYXpJZWdjNHVBbFgKQ2hWZ3FCeE9RdzMvaXpxVFhNL1Jmek12
-Mkg5dTl1WUFvZTVJdndBUkFRQUJ3c0YyQkJnQkNBQUpCUUppbnc4agpBaHNNQUNFSkVPUXVPdGto
-NHJucEZpRUVaMTIyTzFMWjl6WjBRZUk2NUM0NjJTSGl1ZWwvdFEvK0xiYkZFdjdBClRYc1F6UEYr
-bk15SEFSNDRjbGc5WTFsZ0I1SDdrWTNSSW9pT1o4V2JHNHhocWV6WXhTaytyOUxNS3IyZ0hnVkMK
-UDRSWXovTG5zbTBwWGt2Sm0xYldXZk5GTlV3eThnRnY5c2QxVTNDTFZZUUVidElnd0ZBWWRWQ0Ni
-V0RQY1pXWAowbFdtSlNwZ21Ld2R2SEFsamZJL1BkOTZPN0N6V3JSenpEU3VMclZRWjdiTkRwMGhT
-TGhPYXp0SkoyR0V1c1F4CnpialByUERmTk9ZRGtjUjh0VjRBSEV3cE9YckJSWElmdFQrVFZheENL
-azJwdnFaR3hVSGZsTkNEWFhlV080N0cKVkMwVk15TWd2TFQySHo5dnVYRlNmRktDNHBDQWxzWjU3
-d1ZBbjVBSVhMQk1laytPWmsrTnNUMVBLK0lQN0FpVwpReGE2Z2orY29sWW5sOHNaSGZmNGxOaXdw
-QmgyeUdBYmY3Vmo4UWlXZVNyV01lTk8yZDZvZUxvTzc4eFJMRittCkRCbzdJdkc2Vk4rSkFSWWFs
-a2I2Tjl0MGxsc0NSdTVUYlhGMDg0cmI4dWZIQnR3dnhMYXR0U09ycnpCWHJjdWIKamtkQVlYaUdl
-dkJsR1B3VTVlZFg4anpISTBtTTVwanJjMnJpSHE5QXhnUTdDQThUTERCRXlsNzZXdmRnTE1EeQp1
-SWRlU3YycEluVlY0Y045MkFzNWNSSzVZNHc5YTlqNU1oWmMwczJ4aE0vc2pibkVYWFlIdkZwUnNE
-dFhCL0JBCjVYWUljaE9rZnJiSVJ0TEl0SFZyeklMTDV0cW8zNkpIbTVxYVRHaTlnQ1Q2QXZ1UmJE
-Y083VFhQczdRWXRnaHQKc2pUcU5HeE83eGl0cmRtbDVUbEd2VGxpdWVibEQ2NGVlV2M9Cj1obDQ4
-Ci0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0=
-
---18996026cc52b291_a09fc22aa417d7a9_c763f36c25de4e45--
-
---------6f07a66bad4380ef3f0adb57fd56261dae8df283e62fb85d6004c155f06b8a17
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsG5BAEBCgBtBYJppwWwCRDkLjrZIeK56UUUAAAAAAAcACBzYWx0QG5vdGF0
-aW9ucy5vcGVucGdwanMub3JnHGWP1VrPipUST53U8rYI/jezW35ER+59Li0H
-DA786dAWIQRnXbY7Utn3NnRB4jrkLjrZIeK56QAAKL8P/1Mo6qf+bmqupsYQ
-6h0trmYsybaNGf/+PEtJ4iqj8oDWA26Ar0/Kb8WIjLRy2GYQsHkJEkPadQ7K
-Fnnexu25RcUg7o4dC8Sfjgj6VmvOF1KYXilDm/aRLI/N9XcNL5ZjCciGR2qt
-hbDPbTVhANyLiL+ertOfW9hCgS3Od2y31o4zCvuyTD5OhHSgJ5sUjtvDXS2D
-59Upp9NcSwlY4eCzEqVy5EiE2Qio2+lEqkb8jYDVt7adoa4fEgXE2v9Fi0gg
-MEN9qoJB7hn1J/gNwMGty397pxYYCQpZNmoGuUOSGeM7NXCiW5OoV7SchAr8
-pkbkihBWhl8zEtNEt8rGCA9vXHkY3TiBGRkKqoHYwQ04ZFkg/sNQjcrc94jD
-MExESuFVxl3ilzK0zCX+Qomb9faWwHpEnSm7Ll3tB2gUfJnZ4JHJ2GdffwT1
-owDuD3nzAU6CtKRTxoSDnRtzTnP6E55cKx2yGHoatBUUsClStSXh2Yh/H0Dg
-zkGZ1ucgPXirx10UBM/1PZgRJtcQuZd0iCtfYQ9MoS+GjHsWFr+7skLeXT3i
-sg0CmmTJ09bnpBg0zIB7f4V3E2v6yYbfldk1FUAl8PBvW74HfV+5NhrHpi3A
-+FznGA7ctIvUGvl5qiFpmTeIieFJ4DkQy2fNJha48XYTP3+sgOoItwfwKmiT
-3bGeFC0L
-=totA
------END PGP SIGNATURE-----
-
-
---------6f07a66bad4380ef3f0adb57fd56261dae8df283e62fb85d6004c155f06b8a17--
-
+Thanks.
