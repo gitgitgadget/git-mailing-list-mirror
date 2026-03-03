@@ -1,100 +1,119 @@
-Received: from mail-24424.protonmail.ch (mail-24424.protonmail.ch [109.224.244.24])
+Received: from mail-106101.protonmail.ch (mail-106101.protonmail.ch [79.135.106.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86BB26E6FA
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 19:57:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BC1311C36
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 19:59:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772567825; cv=none; b=XaOzaFrAxOE8VzvLrVprU0Q0OIMtRZ6OQ3gKdI24s1axvM+DtDxswBwHxSGxGIiAg45fMJdk/aIP3IDsIaNsKp4SCvpQmXUelDO2imPsZxoWqotbHu0i6tI/AEjBnj5e/OuMCSQ0kH9aLPCDiVhHlJbmc0Ff8TjsZXeuWTWFwVs=
+	t=1772568001; cv=none; b=IzvqkgxeNfZiWYG2kdpU0pg5xoKO0FJAGNIuJpQSB73hTIUtkLirl+rOSM0FhnK538eV7JoWPfNUR/s31p83XO843ODjfPVCAx8cGecsSJ24Bp0VWkzKiO2LUCzEv9cyej4Ideq87hIAjgYgcaXRlQtc7Y3azGAN6snCp8VYKno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772567825; c=relaxed/simple;
-	bh=Gkn+VxLt+Ma1ntune3HjzuWbuSoXEwnqnHYnlsDZwZs=;
+	s=arc-20240116; t=1772568001; c=relaxed/simple;
+	bh=6d5Yz4L1HCpKmlzqdIpTqS/Na1LM5tX1YVI/TqefDo8=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TMbqqNDIme2qRiUym1IM1WH9dCqbcKUWHt4BgS2RVQBFoOhwCIfipWmHYgbQiNDQYUar9ghI6apijd88U1eS/6fnlllPXQ57IT02sHtdlz3SmjSfPvUQtKdiXR2a9Y/xlpekkBubiKuRoDquPtHAK1g6ONb0TlI3AmOK3AkRQO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=oyajPeYZ; arc=none smtp.client-ip=109.224.244.24
+	 MIME-Version:Content-Type; b=UTbB1zFExbQSqFS3aaTq3BUUw0fv/vHjIjeSfQoGprInxWRrpomVbKHfZqcclgwm8sJt8xl16pZYvq9u6xSdhUWdEJBsfBrAWaHvXNBrQq750S9gem21VwP4YrwBWaOr0aUhx8C7mgDTHGr1Zrrs4AlnVENo2oqxeazVQUtcQ2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=hnLKnGNf; arc=none smtp.client-ip=79.135.106.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="oyajPeYZ"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="hnLKnGNf"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1772567821; x=1772827021;
-	bh=bikiHfUbI7L4KMdwaGTD7L9Tt/UW1MAT940W73PqSEQ=;
+	s=protonmail3; t=1772567991; x=1772827191;
+	bh=dTl2lFBG/3EA5wCCuAo+dhcRBebkrNS48Q/WImw3c4M=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=oyajPeYZYH3RGJlmx5pKT29RTPORyIWxAWeQIcZck7mHheOD2JHjx/CIrEynJSSAe
-	 gLGO0Zjd255PnGQgu1GIwSyUgvMMJupA4kbjR+0xRHfG6MexDHONHOtnqMQXdcjQvj
-	 ReAMpkC175T24odT+H15PjU/Alvp+gem5y8BLfoGxzUbrH3yUoXU7n/INyZSA+pCM9
-	 nnv9dHHzDWolmfA/vagbYV8yD9nMUvw4BKc1AGxVxcHCS0s5lbURgAmEU4r6LwUMMJ
-	 2aB/PmJxUxc1a1w0qnQbfmf+fsLt2zrqKkRlu7QOzr/Xp/zYAaICePYRqIwKGVOofi
-	 PHPCnnrMjhGJA==
-Date: Tue, 03 Mar 2026 19:56:58 +0000
+	b=hnLKnGNf7X1QBequjNz22CzTjnGcVZLo/3XOGVrBJ97tl5NhRfS3wDSjxG5puWbHK
+	 LshL5C7j8laUFYBcXbb87soVsghaw3TxWzWbqooWISuxJKGmFmBvoto1gyE3a74s2V
+	 Tkct9JmEm2qaWro9D9Qej8CryVhRD628l+eROrZtWxQzLM5jBNFmp9VBpcSpQWvOJf
+	 veQ5yL3cJcNJD6rzdgX2s0qcgLBWXg8MCrZkMDGsuyjGtmc9F6HyHz6KGXQnmjDIrZ
+	 esCtBXP+/ZPjiw3qwp3gk1/dV9h/LdKbj4XfOOu/gzbwjaahKGRCUZEDuSZ7Y2b+PG
+	 M9BS9VF1fOG9A==
+Date: Tue, 03 Mar 2026 19:59:48 +0000
 To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 From: Antoine Cousson <antoine.cousson@protonmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: git whatchanged --i-still-use-it
-Message-ID: <kOjl5h30sXFnFJAzA1AbUTswK3k7xK-pSW6aos9GXIODTM9Qd5QK6AacNTZaDMV5OQRvAlymjdG2ME4d73YxGGDRzbVq6ZOPxhGn0G9gi2g=@protonmail.com>
-In-Reply-To: <1c20a804-8146-49a7-a476-01a9219d9350@app.fastmail.com>
-References: <bhYbjxeZY0QZt48g6XVTVfyPo6vbv9yeYLsw9PgFdVKgye6Ue0cAPy_RkNTwAOYEANhHyD6QbaxZrWaPS4__jlTcAVKOaEjrDgAxQYKdYvE=@protonmail.com> <xmqqpl5kdc3b.fsf@gitster.g> <1c20a804-8146-49a7-a476-01a9219d9350@app.fastmail.com>
+Message-ID: <Lpr4N2pjUo-rQblHYFaW6NRgLcAwtKbtzNpm6QjgLm7qsfYZRKM-OtLCWZ0BrEreOvvliXZAqT4RMZMfzXZOQJFr_QhElpJPPXpVMc-Z64I=@protonmail.com>
+In-Reply-To: <kOjl5h30sXFnFJAzA1AbUTswK3k7xK-pSW6aos9GXIODTM9Qd5QK6AacNTZaDMV5OQRvAlymjdG2ME4d73YxGGDRzbVq6ZOPxhGn0G9gi2g=@protonmail.com>
+References: <bhYbjxeZY0QZt48g6XVTVfyPo6vbv9yeYLsw9PgFdVKgye6Ue0cAPy_RkNTwAOYEANhHyD6QbaxZrWaPS4__jlTcAVKOaEjrDgAxQYKdYvE=@protonmail.com> <xmqqpl5kdc3b.fsf@gitster.g> <1c20a804-8146-49a7-a476-01a9219d9350@app.fastmail.com> <kOjl5h30sXFnFJAzA1AbUTswK3k7xK-pSW6aos9GXIODTM9Qd5QK6AacNTZaDMV5OQRvAlymjdG2ME4d73YxGGDRzbVq6ZOPxhGn0G9gi2g=@protonmail.com>
 Feedback-ID: 49647671:user:proton
-X-Pm-Message-ID: f19f601ad0b1d5ebf4a3cfe085091ffb5a4a11f4
+X-Pm-Message-ID: 25100b94ebbbb8e3eb77bef481dc16641622309a
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------93a1da1b0758e605036b6ea1dede4165b34344bbb7d70d7a43652b7a05564b28"; charset=utf-8
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------e5e5db186faef127ff29739e97da80b1932b788cfe30aea226f5ef10a58ab5b4"; charset=utf-8
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------93a1da1b0758e605036b6ea1dede4165b34344bbb7d70d7a43652b7a05564b28
-Content-Type: multipart/mixed;boundary=---------------------a51318db5406f41c20f644a3a2ef4595
+--------e5e5db186faef127ff29739e97da80b1932b788cfe30aea226f5ef10a58ab5b4
+Content-Type: multipart/mixed;boundary=---------------------be9a7603bae42495cd3b100303dac700
 
------------------------a51318db5406f41c20f644a3a2ef4595
+-----------------------be9a7603bae42495cd3b100303dac700
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain;charset=utf-8
 
-> Then perhaps you would like "git log --stat" even better?  Instead
-of meaningless pair of hexadecimal object names, you'd get a sense
-of the size of damage each commit causes to the codebase.
 
-I have tested "git log --stat" and I really liked the display, thanks for =
-the tips =
+Have a nice evening
+regards =
 
 
-I agree that i was not looking at the hexadecimal but more to the names of=
- the file, the visual representation og the changes and the numbers are gr=
-eat ! =
+Antoine
 
 
+Envoy=C3=A9 avec un e-mail s=C3=A9curis=C3=A9 Proton Mail.
 
+Le mardi 3 mars 2026 =C3=A0 8:56 PM, Antoine Cousson <antoine.cousson@prot=
+onmail.com> a =C3=A9crit=C2=A0:
 
-> Yes, on Git v2.51.1, Git 2.52 or higher.
-
-I am on v2.43.0 I will update thanks
-  =
-
-
-
-
-Le mardi 3 mars 2026 =C3=A0 7:17 PM, Kristoffer Haugsbakk <kristofferhaugs=
-bakk@fastmail.com> a =C3=A9crit=C2=A0:
-
-> On Tue, Mar 3, 2026, at 19:03, Junio C Hamano wrote:
-> >[snip]
-> > The command is going away.  You could
-> >
-> >   $ git config alias.whatchanged "log --raw --no-merges"
-> >
-> > if you really prefer the ugly hexadecimal gibberish, though.
+> > Then perhaps you would like "git log --stat" even better?  Instead
+> of meaningless pair of hexadecimal object names, you'd get a sense
+> of the size of damage each commit causes to the codebase.
 > =
 
 
-> Yes, on Git v2.51.1, Git 2.52 or higher.
+> I have tested "git log --stat" and I really liked the display, thanks fo=
+r the tips
+> I agree that i was not looking at the hexadecimal but more to the names =
+of the file, the visual representation og the changes and the numbers are =
+great !
 > =
 
 
------------------------a51318db5406f41c20f644a3a2ef4595
+> =
+
+
+> > Yes, on Git v2.51.1, Git 2.52 or higher.
+> =
+
+
+> I am on v2.43.0 I will update thanks
+> =
+
+
+> =
+
+
+> =
+
+
+> Le mardi 3 mars 2026 =C3=A0 7:17 PM, Kristoffer Haugsbakk <kristofferhau=
+gsbakk@fastmail.com> a =C3=A9crit :
+> =
+
+
+> > On Tue, Mar 3, 2026, at 19:03, Junio C Hamano wrote:
+> > >[snip]
+> > > The command is going away.  You could
+> > >
+> > >   $ git config alias.whatchanged "log --raw --no-merges"
+> > >
+> > > if you really prefer the ugly hexadecimal gibberish, though.
+> >
+> > Yes, on Git v2.51.1, Git 2.52 or higher.
+> >
+-----------------------be9a7603bae42495cd3b100303dac700
 Content-Type: application/pgp-keys; filename="publickey - antoine.cousson@protonmail.com - 0x675DB63B.asc"; name="publickey - antoine.cousson@protonmail.com - 0x675DB63B.asc"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - antoine.cousson@protonmail.com - 0x675DB63B.asc"; name="publickey - antoine.cousson@protonmail.com - 0x675DB63B.asc"
@@ -155,9 +174,9 @@ eQp1SWRlU3YycEluVlY0Y045MkFzNWNSSzVZNHc5YTlqNU1oWmMwczJ4aE0vc2pibkVYWFlIdkZw
 UnNEdFgKQi9CQTVYWUljaE9rZnJiSVJ0TEl0SFZyeklMTDV0cW8zNkpIbTVxYVRHaTlnQ1Q2QXZ1
 UmJEY083VFhQCnM3UVl0Z2h0c2pUcU5HeE83eGl0cmRtbDVUbEd2VGxpdWVibEQ2NGVlV2M9Cj1o
 bDQ4Ci0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
------------------------a51318db5406f41c20f644a3a2ef4595--
+-----------------------be9a7603bae42495cd3b100303dac700--
 
---------93a1da1b0758e605036b6ea1dede4165b34344bbb7d70d7a43652b7a05564b28
+--------e5e5db186faef127ff29739e97da80b1932b788cfe30aea226f5ef10a58ab5b4
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
@@ -165,24 +184,24 @@ Content-Disposition: attachment; filename="signature.asc"
 -----BEGIN PGP SIGNATURE-----
 Version: ProtonMail
 
-wsG5BAEBCgBtBYJppzz8CRDkLjrZIeK56UUUAAAAAAAcACBzYWx0QG5vdGF0
-aW9ucy5vcGVucGdwanMub3JnX50vhRey/WcUFR/kdCGTvYci3GT3VrUzeuWn
-vr9QgVUWIQRnXbY7Utn3NnRB4jrkLjrZIeK56QAAhN4P/37/7twEiyqoKDck
-rP3rxX/e4+54brQr19Q7f2VoI36f66FBMxPBeG9u4Qq1gPEriKeHC4rhTtuK
-fcbVHlm/5VLUWIRMr54AhYpGJ7cnTJp/1PntvL7RluM/O+lPP/hWUtsKz2L6
-IY4Nsb5RZQlA/1Vl2TAYbMA1hMTY6xyEdjgY2NtdJdTre+rcgIfheIfOzjEs
-ejkFZr8WfzbcDz8u5u4w1sRyV896lUwWU1z3HoRy871Wu8PHnr3H1xj+Xu6a
-+k9MtB/aCQIjourBpDbTiielT5aHnE4ip7XjtFXrZknHxb20RIqo1ODnqTLY
-0/dPX4DbeU22AySsuuT7MGnmw5P2YZGvzjH8lvoMyePc+1DW+oxlURlyfn1p
-N/FnA4E8r8oIaQrBlKmEIPwGT7g4tAG+K8lildneH05GIbYSc3QWT199VlK0
-VOp5PMQQ4LofUHF3h3ZatNk3G/jtZvWP8xVqiDVd3Vsqx4+J3nVKW14nRA27
-f6OT8yNidyl0oGlf0OnYaPnv+UDJuYU06EWDoTcW1cCwJm2lRYmPq7CUU6By
-LJ1Vk44zVqhf2V8E5KiI72pBTC0VICx4eWZbmqdzYVWFHyet8LSpZ1INfTya
-MAgUprO5y1dx1O80fdsgIibgN6mJzHgiI5abjpIowxH4fLKdCLgsXdU5nqIq
-geLCvwWU
-=el7o
+wsG5BAEBCgBtBYJppz2kCRDkLjrZIeK56UUUAAAAAAAcACBzYWx0QG5vdGF0
+aW9ucy5vcGVucGdwanMub3JnnR4AMvvimnVwAmOLbdYLYerFkKqB2wbRbTYj
+3hSVoDIWIQRnXbY7Utn3NnRB4jrkLjrZIeK56QAAaSUP/0Gja1fLF6dzQP35
+mTxYqOQn6Wf69kE4wXQvPKEzzsm2c8moZ7As3VhAQCW8hySu4lM2t6p98Odq
+cPB+v4duPzMw7qZ7RR5+mlP/yOQoXhPavcw59eYGeIZjqNf9t2J0R5PWZDJ5
+cjrMk+29MJe1mxs1B/GBupVUYlc5L2KW6TMK1m3dDGZ9Nkf3oV1cTjE10KP2
+F6L4EWwPvTCl8Qv2ZyzNC67838FfU3kPMc6USmx6XxIa8i0zwAlnq/j1kENQ
+b8xQYa9QgsPLk9BN00VQ2H40hJRCzrSe45j7bx37nHHDqqp1shim+JaaecUi
+RWdgoiYhpJx7fpuf2omV5u6rXtgjcGO4RRxueqgS7AKCXSerPHWu4VsZluIn
+STudrG+WQXT7A0PByFsgrZKa9JqyXLxTWylQIbeIHSZnWko7WDfH/X6C6PLT
+9bSzwx19NVY2jea78NqrJNRO/90lVzcegombiTA2XAC31sZ5T03oD7Hn8sa9
+3vxWw5AElpk4cpdaQdwqoQbpXQKJZRzXzHdYoFRlt+3u9AfIyW9IhWjhFqQn
+ED2R2ai34NVS1pRaXjC/Z/kHGJBH31k2efiEO//VLgwRorRqgmRDg2TidlC/
+wKOghcBkWawWy/60hlb+YGEq6NaeC5ETacVNOVHgfFucaW5S3Pr7QvslafvZ
+TCKOtM6+
+=ShUb
 -----END PGP SIGNATURE-----
 
 
---------93a1da1b0758e605036b6ea1dede4165b34344bbb7d70d7a43652b7a05564b28--
+--------e5e5db186faef127ff29739e97da80b1932b788cfe30aea226f5ef10a58ab5b4--
 
