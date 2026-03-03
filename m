@@ -1,95 +1,121 @@
-Received: from newcloud.peff.net (unknown [217.216.95.84])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D351F192E
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 13:35:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84F52EA468
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 13:42:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772544944; cv=none; b=rIpT4IkFAXJrLOtG4LL73y8IwCHIijblCLiaLbk3BIP021+pJTe6fw6W6OvVG7p8zEPH5whVkQMWEb8xaMY/J8KHn9LTHVXJzgsm92yvYd0+buv/nK+nPMbEo8r6GYezYKWWKXgteqavuZ+x8p/cqU+islcuWySZ6l6nbwYlEMk=
+	t=1772545350; cv=none; b=f8J8FohOIXWh4NkNWQOLTy7Ud1luxmXB8rbZ0/MDSc0LkGD3QfpH3XVLY7G9Y3k5un6WYjWeU3HYzZN0O9cXPzU0VxVvja1/TeSTeqNJO0xV9ElXKOqtbgRqH3msr/5RNqoJs/yHqUQOpwrHzLXIZ+NaV6VxYxs4xYGwtgWVFxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772544944; c=relaxed/simple;
-	bh=iva4iUyKW0jkLvfZzlHSNzqWtZIkIhj0OuIOjBo/uBk=;
+	s=arc-20240116; t=1772545350; c=relaxed/simple;
+	bh=1yjdljDSKZTS57K0qDol/iirfR4qivEobQxLuaMNi70=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aiKja2x5C8mrAZUXF4guIYUtO6e/hTumREzWsqMmiet7pn4L9yPRLlgvgLCoWh5+B+E7kzE9TDqv26+tzNTnt9mzJvTj2mCmHtXTASBJir5iTBrjxxXD1a149JVVeWz0RrZVbjWxuUpAO3SjxLmjTnlj1K3CmV0SzR47uasIs/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=IyAdG3Gf; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=T/chjXfs45/dQksR08vNB+3lc28xYbmw+tQ309QgFPMYB0KOKX0ReYWqsXEq/DScbYFX9flSc0vQ7foVxN1wN/mKekME+4873IlUmz9nPYU2yJ54NxGL264lR2uRGvIjsCGXvgaqWxU8nux9b6LOFUHf6twRxle2O9Q2GQtSbdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k50seQE+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=biInxgGR; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="IyAdG3Gf"
-Received: (qmail 47797 invoked by uid 106); 3 Mar 2026 13:35:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=iva4iUyKW0jkLvfZzlHSNzqWtZIkIhj0OuIOjBo/uBk=; b=IyAdG3GffjsRIhJa4yzLbp4KWmV++LU4tljN4bB3yrsechmrPw+qJOZZHPaG0S4OO5f9pVZ8O62PCrltomNAmNxAEd/QXOCZJm8TZpQ5KtY3WnJmE/8Cmcgtad0xCf3h663KQuqILC8QdkQGxuj1wpwnx6F2qlZKORyWO7ehuu8ZlMf1DSBXoqwF84mquUUlx7NzL07vaEuUgJqJ6u9BQuZwe4l3w403GVAOQJ5ueeu9SawBCNZtyxDr6TMnZ/9C0NErsvyNXCwo/kLKCxedcu83ZK6U1xBpqAC7l2CoM7FWBUYynpEIqzWH8Ti9efKXi5rHPeIrAPBK1pJgdTFxOw==
-Received: from Unknown (HELO peff.net) (10.0.2.2)
- by newcloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Mar 2026 13:35:41 +0000
-Authentication-Results: newcloud.peff.net; auth=none
-Received: (qmail 347996 invoked by uid 111); 3 Mar 2026 13:35:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Mar 2026 08:35:41 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 3 Mar 2026 08:35:40 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] upload-pack: reduce lock contention when writing
- packfile data
-Message-ID: <20260303133540.GA818878@coredump.intra.peff.net>
-References: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
- <20260227-pks-upload-pack-write-contention-v1-2-7166fe255704@pks.im>
- <20260227193758.GA2931515@coredump.intra.peff.net>
- <aaV-l_NyWpkKDDp6@pks.im>
- <20260302182023.GG28275@coredump.intra.peff.net>
- <aaaqgrmOBj-Ly1Vx@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k50seQE+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="biInxgGR"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0793FEC0551;
+	Tue,  3 Mar 2026 08:42:28 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Tue, 03 Mar 2026 08:42:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1772545348; x=1772631748; bh=48nQtPHM08
+	pIox73AIQoP9pHRhe+EMajLfgTZ9pKYdU=; b=k50seQE+lJxBKfkSZh5LVmT0Kl
+	O7XKo1emqPdO4qWlJnJI/CywrlZRgRpK5AejUmNs3icMY6ZnKM5h60pkhxl9grTj
+	RTdIYNrhzyNs2mGZ8HJ+b78kdmhBkb+JJNPirCYpqrlE/lv9F5d/LokvtQI4OWHA
+	3GXF8M/SfYpS+iOIF6+iJge6AQUo1TJRhsuXOOPiUlHouBwpLX65rimuYF3QNLli
+	mV/H+aPtYneHuiFqHhOTRpOJ4TKfMPkBJjaz3XgPUyONstZoKnPlz4LJRQlY32hL
+	WoRWRG3v9vHV5zOSJBRti9M7icsMe6AGzVgygG5EQ9uMlLwSUk0N7lZKwzMQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772545348; x=1772631748; bh=48nQtPHM08pIox73AIQoP9pHRhe+EMajLfg
+	TZ9pKYdU=; b=biInxgGRdvdEHVx/V/gaForSE4tUcaeOmzZpLMIfdr6YgxHfxbN
+	Ht08oQ5QwKMqR9gGhehNSd9yX2Cd/4TuN1sZ1I3fRCylEARivzRlbpxiyK9VUolI
+	GR6OROkgX2hVUJGbskVO5PxvyiIb4toc1MCzekllZ8DPp/1/jjR7uCUyjc4Ps/9v
+	Ip5jZ/c98wEnLBoBk0XZgtfX/ffK2VKehZ4d5OvmFtq2iLlqUeaa5cxxHSwtCIXZ
+	x7T1H9EFBBxakyBDLTcwS3jT1LTSKkGAcvMHwDtM17ie6Uv/5vtW9rMx8LqkNRxR
+	igY4bzQ8UauHn2oFrQohJlKe+lIc0dLzOYg==
+X-ME-Sender: <xms:Q-Wmac6iXjqVMB0Ajlik07VeXa3qOBxX-UDklRvyc5TFLyoAf9Cm2Q>
+    <xme:Q-WmaT4FDHPZoejE5tDhpwySnQBLkt3348-H8SXlLgwXMYydC7HdK546rhyjeUl0L
+    x3D3LY8Vmx93WkaXg33-5r0OsSzWEA3LmHqpVI8GDVyv7VYaKjm8w>
+X-ME-Received: <xmr:Q-WmaZHlRJbpb-nTJYZBUQuRJhDKjRe4pqC-7HATL0aei8Hb6MJANZppFCyZqdiyBHHygjhjQV1vih7yXEmTbvlpVqBBTbKQm2YZLIU49hTo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedtjeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrgihrghthh
+    gvvghrthhhkhhulhhkrghrnhhivddttdehsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:Q-WmacRNHGmpb-u_SAhsziSL077Vfe529bwDysIIqmeq2SPa5SLcgQ>
+    <xmx:Q-WmaSuyYcH7TtBGlsE862Uz32QcZ3EuInMhsD4Z5m1rXaokMCJ1CQ>
+    <xmx:Q-Wmabxp50OWHEzQ5EUMfQ80k_tzDJKXz43g_qpU6q9xKAWppqemCQ>
+    <xmx:Q-Wmac6fay9YVH8JH3crzMo-awzwHz47LX1liacFaUcbkAZz5dbrTw>
+    <xmx:ROWmaaqaxnD0nv0YJzrlVB0Jhe2FCNUQZ7X8_3G1CX3zQVNxscdXapOM>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Mar 2026 08:42:27 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f45e24b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Mar 2026 13:42:25 +0000 (UTC)
+Date: Tue, 3 Mar 2026 14:42:22 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] path: use the right datatype
+Message-ID: <aablPlaCY-TAoCi-@pks.im>
+References: <20260302142138.712273-1-jayatheerthkulkarni2005@gmail.com>
+ <20260302142138.712273-3-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aaaqgrmOBj-Ly1Vx@pks.im>
+In-Reply-To: <20260302142138.712273-3-jayatheerthkulkarni2005@gmail.com>
 
-On Tue, Mar 03, 2026 at 10:31:46AM +0100, Patrick Steinhardt wrote:
+On Mon, Mar 02, 2026 at 07:51:37PM +0530, K Jayatheerth wrote:
+> The strlen() function returns a size_t
 
-> > As far as doing both, I'm not sure if it's worth it. My two concerns
-> > are:
-> > 
-> >   1. It re-opens the question of whether upload-pack might stall waiting
-> >      to fill its buffer and fail to produce keepalives correctly.
+Micronit: missing punctuation.
+
+> Storing this in a standard signed int is a bad practice
+> that invites overflow vulnerabilities if paths get absurdly long.
 > 
-> I've got a patch for that. The problem can even trigger right now as we
-> already do buffer some of the data, and that may cause the keepalives to
-> be missed. But this only happens initially in our current
-> infrastructure, before we see the "PACK" signature, so it's unlikely to
-> be a problem in practice.
-
-I'm not sure what you mean by "this only happens initially" here. If it
-is: we can only miss keepalives in that time, then I think that is
-probably a real problem. The time we _most_ need keepalives is before we
-see the PACK signature, because that is when pack-objects is chewing on
-the input, looking for deltas, etc, and not producing any output.
-
-It is usually "solved" by pack-objects producing progress over stderr,
-but for "--quiet" fetches, it could produce nothing for a long time.
-
-But anyway, if you are fixing it either way, then I am happy. :)
-
-> We would likely hit this issue if we insist on the buffer being
-> completely filled before sending it out. But that's why I adapted the
-> logic to say that we send out once we've filled it at least 2/3rds of
-> the pktline limit. So in your case above we wouldn't face an issue as
-> we'd already send the first 50kB, as it is smaller than 2/3rds of the
-> maximum length (~42kB).
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
+>  path.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> That being said, you'll still be able to construct cases where we have
-> weird edge cases. For example if you consistently send one byte less
-> than 2/3rds of the capacity.
+> diff --git a/path.c b/path.c
+> index f613d8bbd1..56be5e1726 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -58,7 +58,7 @@ static void strbuf_cleanup_path(struct strbuf *sb)
+>  
+>  static int dir_prefix(const char *buf, const char *dir)
+>  {
+> -	int len = strlen(dir);
+> +	size_t len = strlen(dir);
+>  	return !strncmp(buf, dir, len) &&
+>  		(is_dir_sep(buf[len]) || buf[len] == '\0');
 
-Right, my numbers were just meant as examples. Whatever the values, it
-means that whatever is generating the pack data (pack-objects or
-otherwise) really wants to be in sync with how upload-pack is buffering.
-Or vice versa. If we just pass back whole chunks of what we read() in
-upload-pack, then that happens automatically.
+Makes sense. What's left out in the commit message is an explanation
+that this change is safe to do without any further changes. But judging
+by the diff it's used in contexts where we already expect a `size_t`
+anyway, so it is.
 
--Peff
+Patrick
