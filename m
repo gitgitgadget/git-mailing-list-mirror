@@ -1,125 +1,519 @@
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazolkn19010023.outbound.protection.outlook.com [52.103.66.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689A8367F50
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 14:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.66.23
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772546500; cv=fail; b=uN5HnI3kaJj1q3tLlFTngzMdl7bhTUJO1uwtLX+H/gtsNTObbYfNJzc1ZtXSjBUV2JC1UdCitvtePBf6W+fmTyELYTZs3Bb6vR6UGmG8WBlWnO37mzlrlaxKyXaPJCrqomYHAbG3OOVj4moPqBFIV2jNUtQTTUWLX9Bl+ob7lxk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772546500; c=relaxed/simple;
-	bh=5HzC/dQuRzWFYIQNqblqIhBJy05YMcy6k8jVAQD9BHQ=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=HXX33gYc2rV6mvbmeZJKMwkP7XCcpRHLCy8g65SHyZyEVbHJ1DIuO/9tfANh2y8PwuIWHLjJCsTgnw+kwaV18Xf1NwsxAaQgFaYK3aIbYB2XLn6fZLeWIk181v7d8X7+rCR6oMARFpF7Y2Jp9tjXPpiwkTKmQ1XCdeHaFHMyfB0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=JOVyt060; arc=fail smtp.client-ip=52.103.66.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC4A383C7A
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 14:07:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772546863; cv=none; b=BpifbI3kfAeVQUzSuHAvVZ7uP1Mi1g5U0N/GsyC1+NmKZiC8kxsI1Ryhoj8yKoABAyOyxc2zOytShaDZT6fc0ZtCCKDY7yGJUo4shEZrTNI1Kn3EDXGmcMUguz1pS1dXeZhqFy8FS1gmNjxvc3CFV7vIo8vcsof2L95EVfLaR30=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772546863; c=relaxed/simple;
+	bh=JnkPqSoOYBwcMHDEuMXgIqFwXqI3hGFZ0PtnvP1SGtw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=a8qKH9rST33QtSRKOFcLwbXUG83aKaIRw+fUjtj85Nu04OWXB/ZyAPrs3D0Zoa9mg9f/lfD2sTIjknJg0E7RG1fTis5Fh+sDmW/X40bc0I+jxsKMx82ZiTn9flCMCVhB0fhKXR97aXIn4+BIp8/goqygti7rSf3UMkU1HIIoL1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+iwDyT+; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="JOVyt060"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=prkn/qwuuYMpGlT1MiT2a7FyFfZDowH16YeFYGNkuVZjz+EU8SbWzlzYFGyWAqXf1qTVh6cwD/kqqk37wYDMSSxIcYWvV7M8KOmWNnwMnZ7UcYu9TORCenJctUJfzLDYeAu4yL8zoy8hQwh7aa5qo4X/lsd/GyzC9eHfQW7cJZCcIWvJ+jTukKYBdHEspkmMNM1tH7tl9jjdGr3EiRYVZvXMdE/pcfNQySOlERKl6gEhL9N4QaH6XC1eMrvCKzF2rqZn1oQtcqMlfy2hCfsAKxdjjnC1Ml86RNudNJPKJ80lubs7riHfXqUebkqkuPTy7UbI5Y0MFdJd5aUqJ4wHBg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5HzC/dQuRzWFYIQNqblqIhBJy05YMcy6k8jVAQD9BHQ=;
- b=L4VA3yEIqVKdAkCAKkr0gSKdaiX/BFKQ4m+j1s7QdTCZL4WXzFhUZRAuB8XPlOsrE5G4sHsrMcUG5N/oZ72CHBx1jsWnShpQpOWdHbmCO4rIzjCqDxVnzt54CHlIsbyArtzVehkeGs5W6mwZbNZ+G7lJ9TctGu1uQMceWhfUJUC3JE0/YQql09E/+zr4y7MxrU1f4qQBe95xVWYud7ICedxj3yOBh/MvUPKG1L4eyzDl1KFwpIB7uLFvV+ckOSXaYFQL2rL/yLwvurSygdh8Wsq6KWFM/O8VKRhljzyrfAyzP/+eV40GrRWBYPdWiLhkmlgylc8u0AGIDfC5yuX5uw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5HzC/dQuRzWFYIQNqblqIhBJy05YMcy6k8jVAQD9BHQ=;
- b=JOVyt060HwuBSBppTo4X6Ma3edZ8xcn1PygUZxzO/LXYPOe50gyS15eUJ86y8Qb04ICOZyhqkistm2vZ+wfJRnlVScYGB+HCDkWX+jjXN1de5dGmxPP0qx3GYJJaZ1Upa7DmdQWUgyW3YHFY5Zsa+h9pul3ia3lp9eVFqV0ovoOS3YgXDSAsWHGEvhaD/GUjQMVrATQYB17rYlSPt428NrddiFJ9GJcIgsicGlyC5Ed6jo/6ibj+qclPi/VV5wwiAs7ZMq+6HgHgcMN9rk/Bm4bCQJQ3hB7YoST3BHKoOb8CGF2NaP7Ra/ISiQhKobeygJqUd1GT04bsd7Bqu+zVUg==
-Received: from TYCPR01MB8293.jpnprd01.prod.outlook.com (2603:1096:400:159::8)
- by OS9PR01MB17027.jpnprd01.prod.outlook.com (2603:1096:604:407::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Tue, 3 Mar
- 2026 14:01:37 +0000
-Received: from TYCPR01MB8293.jpnprd01.prod.outlook.com
- ([fe80::3fd2:f9d:7cd1:c80b]) by TYCPR01MB8293.jpnprd01.prod.outlook.com
- ([fe80::3fd2:f9d:7cd1:c80b%6]) with mapi id 15.20.9654.022; Tue, 3 Mar 2026
- 14:01:36 +0000
-From: Klaus Ma <klaus1982.cn@hotmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: How to parallel coding/reviewing the same repo in shared dir
-Thread-Topic: How to parallel coding/reviewing the same repo in shared dir
-Thread-Index: AQHcqxX7R29PT8Eq7UmRZYW4GEMr4A==
-Date: Tue, 3 Mar 2026 14:01:36 +0000
-Message-ID:
- <TYCPR01MB8293D4E9A416FEA864C9906EB67FA@TYCPR01MB8293.jpnprd01.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYCPR01MB8293:EE_|OS9PR01MB17027:EE_
-x-ms-office365-filtering-correlation-id: 05874e6a-c635-48a4-df8e-08de792d622f
-x-ms-exchange-slblob-mailprops:
- 9qw5+ftluCCm9yoJ9fgtGwzhjjsJDn+qPqcmYeIILvYFaoJp0qYEuuPJuDEvmHk5R+fLlVW6TLU0Xk4MZtCvAzmY592VTY8Fmhuvk/luUlLkXPNjlG/ZFhrHL6TL1+7zCmFMNPCwWUtM4wHSGBd4CpltyL1LKyyRvOdzjy/K9bdneKtCPiubToaNM8kOsQcN9pA5dtpMIDMpeJq5YEmeza9H76nvBWYWa1lFFZdcCWt7THM2jNtuV4xGNDSFWGE690kRwk6SXaEZRZ6lTs2byk1cfe/NyceESYnKp32y43AsPkr4TOAlkEjGVtLkLftbgCfxTb8fXkyL6BE5ZNQQRYlmPne+WsfyIxieC7A7DGQxrKX3oOzsnKDs1VSuxLS/2VsRgOOK90Uc5CerenZUZXY9MTVpOkQm54KultVkl5H04VfhhCib5/8MHZPwkfF/jkCNR6O0AbUYphKiJB57goA5dv+s1YqTTIh6Woqq8lVIf9tj68VwSmtpwCxW5BG8OrL8hwA3YLRfn7aGN4l8lLcQbrkxHCglwtXFRfyPd6VeFT8ELrQ8QNTzeWHtfbX4o23ALwlig+Vxy1sckOVzhoMScUM6Udw0LSYpFP9ySUR/62TViI1jErbosrFXuZT1H4FS/Q7MpZ6ePJuOZn7tSauzqp2YdwUssPo1R3bGN0SoT6AsTh7r4x2Q45QANb4vLw3nPK9PFCM=
-x-microsoft-antispam:
- BCL:0;ARA:14566002|51005399006|15080799012|8062599012|8060799015|15030799006|31061999003|461199028|19110799012|40105399003|3412199025|440099028|102099032;
-x-microsoft-antispam-message-info:
- 8RzVZmNvDxuAo+b6BxDldGb3BxqlcPFgqTi1d1TZ/BX2Ok1DLpxWSjZvxq7IGg/uVsCda3NHbZ6S66Q04etolAStXX8PlhKhAtZOvQB3OU1MTTKyyiB/+ey1kfZa6UKk3QRoooWf9UU/NScDmA01G8+x12kCk9m26GHYukwlH9o0Nywit6ndDn1mNJYgQR04fZOyAbM40ngp8VfKHQcIsDl/hKQeLLjYaGyizUP9iUAAfaEbDpEy0qVbiscIZDGI6mCvplOOdepIEH3u3xm4P3tQ6aUloDAKReWd/MKq2aEw1dF0nu7xmlx+18uJLsvinSDH2w/Xml1hDMStzFBY/R06aI3q0n9hc6Um0WzF6e3xaneK/5nJQfHG25UMl9fmAEHDEfNy2oviuIeNoBmFYtT+xyQ+PDsrmZYiWpUtnbRlMT32OjoBYooz0Xlw1ryHI4nux49N1/tkbUPIbppu7LpomM3HNiP6E7KFm4Rwo60g+BM34o5Ga+bSWcFQKUm1oP0sENAWWJ4Mzzds2fu3+sMNsz96oSndeuF+pB3rTCr7QetbpzS+DNhckaE+LGxGocaVBs2rBXfVlJdKFEXwjnR62MCNe7sTh5dzR81R6lE7C/8Bg1nC4faTs4X/ZxcaJWQOfer5fNJIGZqqGQ32smRAc/jeheUlj1HELX4t53i/Jj03s8PlFt6fyK1yzWwG78kR8CkUVqWQ/5lOgcFwsZBkYNAbYdDf0dkJwpSIcHoI1mKM+QBuaQ336njMqjxhIr0JOTulN1zXuiNVagJ8jAzkeGZ6A8igX/Ghv8JkCX2yDzkDZL66X5tW93z8Y/o8ox5VBaUSoTa2CwLAKF++xwnPVkYc3Ik0bThgqOIG3o2281bzGoBDUOxcdv64Gswy9jkMaE0m2DDeFLIfpdWylgGKQ0Lm7c+OEndJubLN6nZ02aKJuy+Ucj4/eCoaizGb
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?gb2312?B?Q3hzODBWT3pUWnluY2FTSzc0RmZzRU5hQkRxQnRyT0FtZVFTc2c1NFNCdmho?=
- =?gb2312?B?TFZTOVdIVDFvb01DSEZldkFCY1pPK001NGpEeENLSHJQdHRhYWkwQnpYZVU4?=
- =?gb2312?B?QVEzdDM5NVUrL0xkRG1BOG9iS3Fxa1BUMUlTaDJsbUpucFVDaDV2V0ZrUG94?=
- =?gb2312?B?S0FpVytzZjE4MjhwajlpcFFyZlA0elhSZlZMWGhlSjB6WkxUcmNiVTdkWlF5?=
- =?gb2312?B?ZDErTWNsN0xwUWFrWnBkRVQ1QW5OM3ExeVdxVFhMWWNFeU1mRElTLy9Da0dE?=
- =?gb2312?B?bW9XT0V0SUNsS2RvWnZSeFlJd2pxdk5XSTlJdGNQNXdVWGRTSzBKOU4vWFEz?=
- =?gb2312?B?WG9HQ1cxNTRsbHdjNncvUlNzK1l1dW45R1VqRVY4SXBkWkJtbSs5bno0RnpC?=
- =?gb2312?B?WW15NytTb2d2d2xJaUZkQzEvQWZqcllZbEczYVB3Q2J2ZUZIcnlLaWptaFdm?=
- =?gb2312?B?VW81R2pxWld4SnZEYjhGQ2ZRVFRlM2ZyQks4ODBDbE55SkExdHVkanNhYmlO?=
- =?gb2312?B?ZjF1Z2lJOUlBeFg1RUQ0bGUyU3I2OGdYYmtVMHNNTlh1dVZIV1BtZkVlRnVJ?=
- =?gb2312?B?YlF2Rktld3pxWU93Qy9WaGQ2d0M0b0RkS0R1amZFZy9tRTQ5L3d3ZFM2M0x4?=
- =?gb2312?B?aDlXQXRudGRNUjhkcktjUjB3NTRkc3U2ckNISTQrN3RnSmE3eC9qNWZYVXEw?=
- =?gb2312?B?YXR4WGo2QmoyMThVNGQ0RTNpcnd1VEU5MzdXcWhSOWprOHdaQWM1WUtpRFJ0?=
- =?gb2312?B?YWpFZkROWWU1dDlkdWplblp0THA5blJOVG5EVkRpSDlpQkQ4UUlQUW8xbW9h?=
- =?gb2312?B?dExqMUh1c0FaUlE3c2lURThwa1ljaE5sWjVWK2gxaU1HZDRkN1ZXZkd1d0R4?=
- =?gb2312?B?by9CVTFQWlQ3eE03dmQ3SU5nWGRpL1RTQXJac0RLWUN0WXF6K1dWdnJ3aEdF?=
- =?gb2312?B?aHNSc2hoTHM4OVNPZThzelp4YU1scmdGV2NrWUE1R2JDdFB4VS9MRWdKY2Vj?=
- =?gb2312?B?L2JtNnBJVERIUEYrMFBzaXpnWGRzUnpvMEhZZXNhSGxjdTNsZWhkbTEwcjB0?=
- =?gb2312?B?NngwNGxneEF2aDdKSTBBNEtuNWxmb3JsRW9mSkoybDFGZ3ZJWE9HSFVZY0d6?=
- =?gb2312?B?V3Vtb245V3JLT2U0cFBxTTdwODc3OUxRcng3NlN0dkQvdjc5MEw5ckFDckhP?=
- =?gb2312?B?ZU5NZC9VRFB2a3dnVnNXUTV3QWxXWWdhSXY0MEVUOEpJQXI1c0IwWlFWbXp5?=
- =?gb2312?B?bFFYYUlQRUpJWmR3TlREd2pkbG82ckpoOG1LbzFlc0w1cjArT2NLeThVZ1ZB?=
- =?gb2312?B?WkRQSnVJRldkbkh3MkpZT1lIRWlUS0o1NmNZcVIyR3dpcVczdU5BSy9QclhW?=
- =?gb2312?B?NUlEamx0ZlI4bCttUXVTb1dXWTdYYmhjVXJ5OE0waFFmSE9MRVNlczI3aEg4?=
- =?gb2312?B?V1Q4QjBTMUdaaXZLQStSaVl5VHpHM3h0cEY1eWRjSXpia0FrK0ZPcFdIbFN0?=
- =?gb2312?B?cmRieXZqeFhoVWlhM0p3WTI2OFRMcHZvZm43ZzFleEtZUEhBSDZxUjlTcmNj?=
- =?gb2312?B?VTJSa3dlRlZuSlNOK0dFY1BiRWhhNGUwa0xaaHUvQ01pTkFWM2xQUjBDNXBM?=
- =?gb2312?B?QkNtZ2RCT2E5aXZrTWdDUy9RTk9nYjJQbXFhelgxd1N4TUVsOU81ejl3M1ox?=
- =?gb2312?B?cjRCOXRvZkJKSE92SU1iSmlGbUtKOU03SWxVZXhDTXlRWFNMK2w2bUtheDZP?=
- =?gb2312?B?TXZzUHdZNVpFTVB2Wm9tQ2RyUmxEZzlpamo3NzFkRDlsU1p0REh1bFkwM3Zo?=
- =?gb2312?B?L1JxYjhIV0Y1MUlDazBWN2ZkUEV1TXFwMkVrUXorTHdrSWVyTUdKbk5Dcm9o?=
- =?gb2312?B?MFBOSVh2WDY1eTc1YWVIblVubisyVzZsVVJoM3pZanpjTkE9PQ==?=
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+iwDyT+"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2ad4d639db3so26320155ad.0
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 06:07:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772546861; x=1773151661; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vbFi/Nls+spV3hVPjUGoP3KspHhgulTNjlnZjy6LeFE=;
+        b=b+iwDyT+N2YXOQAi1nk2Qsj78kZLu0yecvzL/6XI9SC6thZK3Z/u+EV09RSu+9lOSm
+         YCusLPyi06rxpR2B0nOFRn6BGNocLKlbdrlru48uTVv+eGzndrYrqecVDF0/sUpj4vVu
+         RJ4nseMwBSLZTWured4g6YmslPWAMu+sNdwl5yLNXfhXIFvEmMzS/HZxWD43xmSpyq/L
+         n73VO5VQId0HRxm9VPBCnY0vaqUgLgI32uOBkwcg3xCw85DoUJdRS4vqc5STU/JRxGj7
+         o28/YzPXp+rWMczPz7QhDkeD+69PLnDuiikfGgw4JQvXalWc+W6gn/s5QpIAx/AIZ8z6
+         Hltg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772546861; x=1773151661;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vbFi/Nls+spV3hVPjUGoP3KspHhgulTNjlnZjy6LeFE=;
+        b=qY9FvD7Aaj6vSPW1dLSOT7Cb6c2bdE+ZNjRjLEZ4+/FMkjRuHyxxnhorUumNfQCFlk
+         tTG1NApwFEGEbfi1nuEAYE/Rl/DP4sn/oB0tAQYvGkcjX2BCTtBvN/auSxSxzxVFjk9V
+         4XwX2mtGfK+dWsqsdmWCv1l1sNN5obSH6mgZc/xWyloFip1qOEFqh2LsQsgdqOKkRtoX
+         /Uoq9SpWle4PB/Q/8CMTcPJEvz/u/wPjDTe3xuW1aKBWiGOC3ZPLGViYKJ8Q+JlpUewT
+         jGDXinWFdiF3NPLo9Q/sCK6M5FNq5oMur06TiIsKL/npqJcoQzES3AZOHV7BxDdVhvzB
+         JuAg==
+X-Gm-Message-State: AOJu0Yy1DA24R4uoNgRgApak3Dq8woKwlsJPvZ6gsItlKgNJr9HgFlFG
+	AvFgZNnhuea0mml+qLNZwzIu2vNoIAqJZ3gzVHgHTM26wxzsP5eCdstxDXtVIQ68dHU=
+X-Gm-Gg: ATEYQzwcwb++iNPJkcigGfo8q64B8fSF0Yx6veVkKr81M/dvN9mqnndMrh9srHkzlE9
+	hBwT5+yjT35WIkXLwVyS7IdfwmtR9f5h8pXaFMcGKtanw69sT6ICw5puYQM2VdKsM+WKeHISMah
+	KCwEU26be5Jy/kjs2J7VCIG3g7YCLLZxCm4JE03SKgWdOenRuKyHGHedvD4STjhpKXKvtwgdVzU
+	2n826xXn494vLJcOsfO9eXvzYsgtZxnWiWln5qASwuXIqAM7mjg+C+D/aFdHAw5agBYQuWZRnPb
+	ZBcSVuPldVwMUBiRnVmDnGcmZ0a123j3JvNu1kZUNoOSXdaO7jVc+HteLSrbc3mYoacQV91jXS3
+	2ewkLLFzCN3rGlbqERG30hlgGxa4svex8B9QeCgM7QTusQSeDCYd/3t7mQZtO9cqRlIGKkwAY8R
+	Nx9CyM7NzEMgXUgjEmXBCj8O6ueXgGt2+ZtJtAFkJxOWw+7scDSrD8q7c=
+X-Received: by 2002:a17:903:2351:b0:2ae:4ebc:71d5 with SMTP id d9443c01a7336-2ae4ebc7353mr66142755ad.52.1772546860982;
+        Tue, 03 Mar 2026 06:07:40 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae4cd40e4dsm72673375ad.92.2026.03.03.06.07.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Mar 2026 06:07:39 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: git@vger.kernel.org
+Cc: lucasseikioshiro@gmail.com,
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	siddharthasthana31@gmail.com,
+	ayu.chandekar@gmail.com,
+	peff@peff.net,
+	gitster@pobox.com
+Subject: [RFC][GSoC 2026] Proposal: Improve the new git repo command
+Date: Tue,  3 Mar 2026 14:07:32 +0000
+Message-ID: <20260303140732.16886-1-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-9412-3-msonline-outlook-b83fc.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB8293.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 05874e6a-c635-48a4-df8e-08de792d622f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Mar 2026 14:01:36.0731
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9PR01MB17027
+Content-Transfer-Encoding: quoted-printable
 
-SGkgdGVhbSwKCkknbSB0cnlpbmcgdG8gdXNlIG11bHRpIGFnZW50cyB0byByZXZpZXcgY29kZSBv
-ciBjb2RpbmcgaW4gYSBkaXN0cmlidXRlZCBzeXN0ZW0uIElmIEkgY2xvbmUgdGhlIHJlcG8gdG8g
-bG9jYWwgZm9yIGVhY2ggdGFzaywgaXQnbGwgdGFrZSBsb25nIHRpbWUgZm9yIGEgbGFyZ2UgcmVw
-bzsgYnV0IGlmIEkgc2hhcmUgdGhlIHJlcG8gd2l0aCBzaGFyZWQgZmlsZXN5c3RlbSwgdGhlIHJl
-dmlld2VyIGFuZCBjb2RlciBtYXkgdXNlIGRpZmZlcmVudCBicmFuY2guCgpTbyBhcmUgdGhlcmUg
-YW55IHN1Z2dlc3Rpb25zIG9uIHRoYXQ/CgoKLS0tLQpEYSAoS2xhdXMpLCBNYSAowu207ykgfCBA
-azgyY24gfCBCZWlqaW5nLCBDaGluYQpGb3VuZGVyIG9mIFZvbGNhbm8vRmxhbWUsIFByaW5jaXBh
-bCBFbmcuIEAgTnZpZGlhCg==
+Hi Everyone,=0D
+I would like to share my proposal for "Improve the new git repo command" un=
+der GSoC 2026.=0D
+=0D
+The Doc version:=0D
+https://docs.google.com/document/d/1HM1HNQqUrGdqFdUppc02BTmPuwXC2ozCw9mLrba=
+VUHc/edit?usp=3Dsharing=0D
+=0D
+I'd appreciate any feedback on this.=0D
+=0D
+Thanks,=0D
+Pushkar=0D
+---------8<----------8<----------8<----------8<----------8<----------8<----=
+------8<----------8<=0D
+=0D
+GSoC 2026 @ Git | Pushkar Singh=0D
+Improve the new git repo command=0D
+---------------------------------------------------=0D
+=0D
+=0D
+Personal Information:=0D
+---------------------=0D
+Name: Pushkar Singh=0D
+E-mail: pushkarkumarsingh1970@gmail.com=0D
+=0D
+Education: XIM University, Bhubaneswar, Odisha, India=0D
+Year: II/III=0D
+Degree: Bachelors in Computer Engineering=0D
+=0D
+Time-Zone: UTC + 5:30 (IST)=0D
+=0D
+Personal page: https://pushkarscripts.com/=0D
+Blog: https://medium.com/@pushkarscripts/=0D
+GitHub: https://github.com/pushkarscripts/=0D
+=0D
+=0D
+Pre-GSOC:=0D
+---------=0D
+=0D
+I began exploring Git=E2=80=99s codebase by studying its documentation, =0D
+reviewing prior mailing list  discussions, and building Git =0D
+from source. =0D
+=0D
+I focused on understanding the test framework, patch submission=0D
+workflow using git send-email, versioned patch iteration, and =0D
+the review culture on the mailing list.=0D
+=0D
+After becoming familiar with the contribution process, I started=0D
+submitting patches.=0D
+=0D
+=0D
+Contributions to Git (Chronological Order):=0D
+-------------------------------------------=0D
+=0D
+* [PATCH v4] t1300: use test helpers instead of test builtins=0D
+    Status: Merged into master=0D
+    Thread: https://lore.kernel.org/git/20260104194812.15134-1-pushkarkumar=
+singh1970@gmail.com/t/#u=0D
+This patch is my first contribution to fulfill microproject =0D
+criteria. It replaces legacy test -f and test -h checks with=0D
+test_path_is_file and test_path_is_symlink in the test suite.=0D
+=0D
+* [PATCH v2] t1410: use test helpers in reflog rewind test=0D
+    Status: Merged into master=0D
+    Thread: https://lore.kernel.org/git/20260111191525.17087-1-pushkarkumar=
+singh1970@gmail.com/t/#u=0D
+Replaced raw file existence checks in the reflog rewind test=0D
+with test_path_is_file and test_path_is_missing. The subject=0D
+and commit message were refined in v2 following review feedback.=0D
+=0D
+* [PATCH] Documentation/config: fix replacement for --get-urlmatch=0D
+    Status: Merged into master=0D
+    Thread: https://lore.kernel.org/git/20260115110832.15315-1-pushkarkumar=
+singh1970@gmail.com/T/#u=0D
+    Related Bug Report: https://lore.kernel.org/git/CAGJzqs=3D0Zr2iqsTUZdjd=
+wpbtaS7kuBOf=3DE_XT=3DvbdfyNTKkjNQ@mail.gmail.com/t/#u=0D
+Corrected documentation that incorrectly suggested combining =0D
+--url with --all for --get-urlmatch. Verified the behavior =0D
+against the implementation and updated the documentation =0D
+accordingly.=0D
+=0D
+* [PATCH v4] subtree: validate --prefix against commit in split=0D
+    Status: Merged into master=0D
+    Thread: https://lore.kernel.org/git/20260203164815.68258-2-pushkarkumar=
+singh1970@gmail.com/T/#u=0D
+    Related Bug Report: https://lore.kernel.org/git/CAFePT4xDGegpEFuFemCXsH=
+890E2WXnG3JzUZeiLi9KW8D8beOg@mail.gmail.com/T/#u=0D
+Updated git subtree split to validate --prefix against the =0D
+specified commit rather than the working tree. The change =0D
+addresses a mailing list report where --prefix was incorrectly =0D
+validated against the current working directory instead of the=0D
+given revision. Added regression tests and revised the patch =0D
+across four versions following review and CI feedback before =0D
+integration into next.=0D
+=0D
+* [RFC] git repo info: expose repository paths=0D
+    Status: Under discussion=0D
+    Thread: https://lore.kernel.org/git/20260218183511.17195-1-pushkarkumar=
+singh1970@gmail.com/t/#mdd8548b634142f4916e2911f7025e736a4789a07=0D
+Proposed extending git repo info to expose additional repository=0D
+path-related values currently accessible via git rev-parse. =0D
+Initiated design discussion regarding path handling and output =0D
+format, incorporating feedback during iteration.=0D
+=0D
+* [PATCH v3] path: refactor normalize_path_copy_len for clarity=0D
+    Status: Merged into next=0D
+    Thread: https://lore.kernel.org/git/20260221110511.1592-2-pushkarkumars=
+ingh1970@gmail.com/t/#u=0D
+Proposed a refactor of normalize_path_copy_len to improve =0D
+clarity while preserving existing control flow. The discussion=0D
+focused on maintaining readability and minimizing structural =0D
+changes.=0D
+=0D
+Additional Participation:=0D
+=0D
+In addition to submitting patches, I have:=0D
+* Reviewed patches from other contributors=0D
+    (1) https://lore.kernel.org/git/20260202134657.15320-1-pushkarkumarsing=
+h1970@gmail.com/T/#u=0D
+    (2) https://lore.kernel.org/git/CALE2CrQFZngj6_NDuf0S=3D_-nDrrf6b6r=3DC=
+9jMyEVjwMqvh6J2w@mail.gmail.com/=0D
+    (3) https://lore.kernel.org/git/CALE2CrTuZkFm1R3Bb6gFmrN1trr88vdO_7Aw6y=
+cBYvFpWMEEtA@mail.gmail.com/T/#u=0D
+    (4) https://lore.kernel.org/git/CALE2CrSu-JW___Lav0SnLPfwxB8QCRYMKQgsfb=
+XCHrAQSEyDoA@mail.gmail.com/T/#u=0D
+    (5) https://lore.kernel.org/git/CALE2CrQTvHeu21yLXtRg=3DA6ak9AB_vvwPirQ=
+NFDjZ2AmhoTzTQ@mail.gmail.com/T/#u=0D
+    (6) https://lore.kernel.org/git/CALE2CrR_Xrei32pc_gJ16mArZPjZ-+bNWWFnsJ=
+3i+OGqbxwPcg@mail.gmail.com/T/#u=0D
+* Assisted in resolving a git rebase issue on the mailing list=0D
+    (1) https://lore.kernel.org/git/CALE2CrQ415Ewm_F-DLZu=3DJY2BTWofmGgorEO=
+a0D=3DUSr5d510SQ@mail.gmail.com/T/#madfc34c4334a7d62baa18b18e3c8fa83600f845=
+5=0D
+* Studied the original discussions on git repo=0D
+    (1) https://public-inbox.org/git/20250610152117.14826-1-lucasseikioshir=
+o@gmail.com/t/#u=0D
+    (2) https://lore.kernel.org/git/20251207190532.67107-1-lucasseikioshiro=
+@gmail.com/T/#u=0D
+    (3) https://lore.kernel.org/git/20260218211845.96009-1-lucasseikioshiro=
+@gmail.com/T/#u=0D
+    (4) https://lore.kernel.org/git/20260203221758.1164434-1-jltobler@gmail=
+.com/T/#u=0D
+* Examined the implementation in builtin/repo.c=0D
+=0D
+=0D
+The Plan=0D
+--------=0D
+=0D
+I plan to approach this project incrementally, following Git=E2=80=99s=0D
+review-driven workflow. I will introduce changes in small, =0D
+logically isolated patches to keep review manageable and avoid=0D
+unintended side effects.=0D
+=0D
+Extensions to git repo will be introduced incrementally and=0D
+only after review consensus on preceding changes.=0D
+=0D
+I will begin by focusing on foundational repository path keys,=0D
+as they provide immediate structural value and align closely=0D
+with existing rev-parse functionality.=0D
+=0D
+For each proposed key or enhancement, I will:=0D
+=0D
+  - Confirm exact behavioral parity with existing helpers.=0D
+  - Clarify semantics (absolute vs relative paths, edge cases)=0D
+    through mailing list discussion before finalizing behavior.=0D
+  - Introduce one key (or one tightly related group) per patch.=0D
+  - Add targeted tests covering:=0D
+        * bare repositories=0D
+        * linked worktrees=0D
+        * submodules=0D
+        * shallow clones=0D
+  - Update documentation accordingly.=0D
+=0D
+Bulk additions will be avoided. The goal is steady maturation,=0D
+not rapid feature expansion.=0D
+=0D
+=0D
+Path Key Expansion=0D
+------------------=0D
+=0D
+I will incrementally expose selected repository path values=0D
+currently accessible via:=0D
+=0D
+  - git rev-parse=0D
+  - git rev-parse --git-path=0D
+=0D
+The initial focus will be on a small set of foundational keys,=0D
+selected in coordination with maintainers, beginning with =0D
+path.git-dir and path.common-dir. Additional keys will only be=0D
+introduced after review consensus.=0D
+=0D
+Each key will be evaluated individually to ensure clarity,=0D
+necessity, and consistent semantics.=0D
+=0D
+=0D
+Optional: Category-Based Queries (If Aligned)=0D
+--------------------------------------------=0D
+=0D
+If maintainers consider it useful, I may introduce explicit,=0D
+deterministic grouped queries such as:=0D
+=0D
+  git repo info paths=0D
+=0D
+This will only be attempted after core path parity stabilizes,=0D
+and only if consensus exists. No implicit behavior will be added.=0D
+=0D
+=0D
+Architectural Considerations=0D
+----------------------------=0D
+=0D
+Since git repo info is intended as a plumbing command,=0D
+predictability and explicitness will be prioritized over=0D
+convenience defaults. The command should return only what=0D
+is explicitly requested, avoiding implicit behavior that=0D
+may affect scripts.=0D
+=0D
+Where appropriate, I will:=0D
+=0D
+  - Prefer explicit repository context over global state.=0D
+  - Avoid duplicating logic already implemented in rev-parse. =0D
+    Where possible, I'll reuse existing helper functions rather =0D
+    than reimplement path resolution logic.=0D
+  - Maintain stable and predictable output for users and tooling.=0D
+=0D
+Structural refactoring will only be undertaken when directly=0D
+relevant to git repo and supported through review discussion.=0D
+=0D
+=0D
+Timeline=0D
+--------=0D
+=0D
+The timeline below reflects Git=E2=80=99s iterative, review-driven workflow=
+.=0D
+Foundational improvements are prioritized to ensure meaningful=0D
+deliverables even if review cycles extend.=0D
+=0D
+=0D
+Pre-Coding Preparation (Before Official Start)=0D
+=0D
+- Continue participating in git repo discussions.=0D
+- Refine and narrow scope of path key expansion.=0D
+- Confirm semantics for absolute vs relative path handling.=0D
+- Define patch ordering to keep submissions small=0D
+  and logically independent.=0D
+=0D
+=0D
+Community Bonding Period (May)=0D
+=0D
+Primary objective: finalize scope and ordering.=0D
+=0D
+- Confirm priority list of path keys.=0D
+- Align on output stability expectations.=0D
+- Clarify whether category-based queries are desirable=0D
+  in this cycle or deferred.=0D
+- Identify architectural considerations relevant=0D
+  to builtin/repo.c.=0D
+=0D
+Implementation will follow once semantics are reasonably =0D
+aligned through mailing list discussion.=0D
+=0D
+=0D
+Phase 1 (Weeks 1=E2=80=934): Foundational Path Keys=0D
+=0D
+Objective: establish core path parity in git repo info=0D
+with essential rev-parse values.=0D
+=0D
+* Weeks 1=E2=80=932:=0D
+  - Submit path.git-dir=0D
+  - Submit path.common-dir=0D
+=0D
+  These foundational keys will be introduced early to=0D
+  validate semantics and stabilize output expectations.=0D
+=0D
+* Week 3:=0D
+  - Submit path.toplevel=0D
+  - Submit path.superproject-working-tree=0D
+=0D
+  These additions will extend coverage to working-tree=0D
+  and submodule-aware contexts.=0D
+=0D
+* Week 4:=0D
+  - Submit selected stable --git-path equivalents=0D
+    (e.g., path.index-file, path.objects-dir),=0D
+    introduced incrementally, one per patch.=0D
+=0D
+Each key will be submitted independently. Subsequent =0D
+patches will be sent after consensus on earlier changes=0D
+is reasonably established, enabling overlap between =0D
+submission and iteration.=0D
+=0D
+Midpoint Goal:=0D
+ Deliver foundational path keys that are either merged or=0D
+ in next, with consensus on semantics.=0D
+=0D
+=0D
+Phase 2 (Weeks 5=E2=80=938): Additional Path Keys & Refinement=0D
+=0D
+- Complete remaining agreed-upon --git-path parity keys.=0D
+- Address review-driven adjustments from Phase 1.=0D
+- Stabilize behaviour across edge-case environments.=0D
+=0D
+This phase intentionally allows time for review-driven=0D
+iteration without expanding scope.=0D
+=0D
+=0D
+Phase 3 (Weeks 9=E2=80=9310): Refinement and Stability=0D
+=0D
+- Improve tests for edge cases discovered during review.=0D
+- Revisit earlier patches if requested.=0D
+=0D
+=0D
+Final Weeks (Weeks 11=E2=80=9312): Consolidation=0D
+=0D
+- Finalize remaining review iterations.=0D
+- Refine or restructure patches if requested.=0D
+- Finalize documentation.=0D
+- Ensure CI stability and cross-platform behavior.=0D
+=0D
+No new features will be introduced during this period.=0D
+=0D
+=0D
+Prioritization Under Constraints=0D
+--------------------------------=0D
+=0D
+Given Git=E2=80=99s iterative review process, I have structured the=0D
+project so that foundational improvements are delivered first.=0D
+=0D
+If review cycles extend longer than anticipated, priority will be:=0D
+=0D
+1. Core path parity (path.git-dir, path.common-dir,=0D
+   path.toplevel, path.superproject-working-tree)=0D
+2. Additional agreed --git-path equivalents=0D
+3. Category-based queries=0D
+=0D
+This ordering ensures that the most architecturally meaningful=0D
+enhancements are completed even if optional improvements=0D
+must be deferred.=0D
+=0D
+=0D
+Post-GSoC Continuation=0D
+----------------------=0D
+=0D
+My involvement in Git is not limited to the GSoC period.=0D
+=0D
+After the coding phase, I intend to:=0D
+- Continue refining git repo through incremental improvements.=0D
+- Address follow-up review feedback or deferred enhancements.=0D
+- Participate in reviewing related patches where appropriate.=0D
+- Contribute to ongoing efforts around repository introspection=0D
+  and gradual libification.=0D
+=0D
+Over time, I hope to contribute not only through patches,=0D
+but also by helping new contributors navigate the mailing=0D
+list workflow and patch iteration process.=0D
+=0D
+If given the opportunity in the future, I would be glad to=0D
+support mentoring efforts and help the community grow further.=0D
+=0D
+=0D
+Availability=0D
+------------=0D
+=0D
+My end-semester examinations conclude on March 28.=0D
+Following this, I will not have academic obligations=0D
+during the GSoC coding period.=0D
+=0D
+The project is expected to fall within the 175=E2=80=93350 hour=0D
+range. I am prepared to commit at the higher end of this=0D
+range.=0D
+=0D
+During the official coding phase (approximately 12 weeks),=0D
+I will be available for 30=E2=80=9335 hours per week. This allows=0D
+for approximately 360=E2=80=93420 hours of focused development time,=0D
+comfortably covering the expected project scope.=0D
+=0D
+I will also remain active on the mailing list during the=0D
+community bonding period and will use that time to refine=0D
+design decisions and prepare patch sequencing.=0D
+=0D
+I do not anticipate any internships, travel, or major=0D
+commitments that would interfere with this schedule.=0D
+=0D
+=0D
+Blogging:=0D
+---------=0D
+=0D
+I have been writing technical articles on Medium for over a =0D
+year, primarily focused on Git workflows, developer tooling,=0D
+and lessons from working with real codebases.=0D
+=0D
+During the GSoC period, I plan to publish bi-weekly updates=0D
+documenting progress and mailing list discussions to maintain=0D
+transparency and assist future contributors.=0D
+=0D
+Medium: https://medium.com/@pushkarscripts=0D
+=0D
+=0D
+Risk Assessment and Mitigation=0D
+------------------------------=0D
+=0D
+1. Review Cycle Duration=0D
+=0D
+Given Git=E2=80=99s iterative mailing list workflow,=0D
+patches may require multiple revisions before acceptance.=0D
+=0D
+To mitigate this, I have structured the project so that =0D
+foundational path keys are delivered first.=0D
+=0D
+To reduce review friction, patches will be small, logically=0D
+isolated, and submitted only after validating behavior against=0D
+existing helpers.=0D
+=0D
+2. Scope Creep=0D
+=0D
+Expanding beyond agreed path parity work may =0D
+introduce unintended scope growth.=0D
+=0D
+Mitigation:=0D
+  Optional enhancements (categories and additional=0D
+  metrics) are explicitly deferred until foundational=0D
+  work stabilizes.=0D
+=0D
+3. Semantic Ambiguity=0D
+=0D
+Path-related behavior (absolute vs relative,=0D
+worktree interactions, submodules) may require=0D
+careful alignment.=0D
+=0D
+Mitigation:=0D
+  Semantics will be clarified during the bonding=0D
+  period and validated against existing helpers=0D
+  before implementation.=0D
+=0D
+---=0D
+=0D
+Thank you for your time and for reviewing this proposal.=0D
+I look forward to contributing further to the project =0D
+and continuing to learn through the review process.=0D
+=0D
+Regards,  =0D
+Pushkar Singh=0D
