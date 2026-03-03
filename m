@@ -1,76 +1,191 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E40035E943
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 12:48:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772542090; cv=pass; b=C5EK4MoCWnIamrmkeTZAahQS3DXXTtPhqbrtzFShmrp74Azekog5Vqp9BP0pPcTs1WHL0GrNjub9TgO4bpLXCsFh2VZ4lCtyESFo9+L/InF6ULexvQLLD9ALKApA7tecb+CkEACME208G7jFtsgSOpCLJtUspqpDFD4cFnSeT5w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772542090; c=relaxed/simple;
-	bh=uKo5pDGyW3oB/+dCHVtJC8LHIZEFumRaRdv5y6SMYQ8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=m1i0B/P4WvMY+/VDSOFfhxEHeNbeCC2hAlgpSRD6U3gqWHFZym1LTA0tw2LxzzWKF3fmsss/Asuur7fSya6jI/ZCHjiXOlx0AQ5bxem2v+YUB1K+oc8OP5pUfQhYiviUnBp14ccRvTuYb2fqHHCosK5XJS2azx5r2NtkpRCQQbw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=bq5S65Gy; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE2932D45C
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 13:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772544445; cv=none; b=eTPyFpD1tI1mdqEheKfE5CyUo8ylVA7V/6N5IwmF9CA/xczbzsvmOJwgaL8/rOx9hG1ckAuwGMo1AUr0JjrQ+vePBeSngQQe0hQxw3UO5R9VDpyaVQ9Kcm+wxFY2uyCe//3KH3YhIlKkcxIsE8L7iVdrnOH5fhBw3kGgk3pugIc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772544445; c=relaxed/simple;
+	bh=aPTKiw86EBhfLml3VE2Jz3+DSRkdL4Xvumy2FkqeznY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=feHoj0IPP9OARWTMF/14LSTkSWLBaVqRdjHbcumHXWbqPfAblYCMt3uKySvHEceOXV3nnZERXRTdub///wM+V8jsW8yzkgNSViSwxHGq1CdRnHNZnvDKBqthLO/E74S2vaL7EVLhPzpuYvb/IY8NcxrqWvJdmLxCrnN+KX6cUPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lDoOabdO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QDubZywW; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="bq5S65Gy"
-ARC-Seal: i=1; a=rsa-sha256; t=1772542077; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=eg5Mg1I28Z6b+lPNS/TdgFrWeTCcW6F4+qqMvNwxmBZBkekf0yiDL0EZDGVqcr09TpCyhCYijaOxx8irp0CU0eOQv826JRnD7lC0xoJkcx0BPiKNGSOVxNw9hJzwVjJYkybmKU3XLxXWDmqdahNNTtCdDeP6uuOABcPI7bGa1GQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1772542077; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=IbQ4D3T0HQtkx/0JsChVkYJhLLjqtmrLw1/UGBafFzY=; 
-	b=Y/axG9IuQzPFctaRe9EXrjAigZKFJTFT9n9Hlz+/mqZ+4ec5+jRspee9Cz0ktHfIgkPmJyUAtyMkzTJucUwX7EPoEXfZwUaFqppeCALc7sgdJMpb8WS6h+ICuQhPXOSclc92xyb4CiKsbr5e+2rR09t6172Hv9rXwa7JMgPEKfk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772542077;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=IbQ4D3T0HQtkx/0JsChVkYJhLLjqtmrLw1/UGBafFzY=;
-	b=bq5S65Gyoq33SeA+Nf38vX/+/pHBlKAIcHJmdBWeEANA/xhOJ3qwAEYTdmswAFYI
-	5MQMtAcuMWXscD1b219l6ZoOkgp/UUq5XIoFKhMQiKs3Pg5WDrrwnd9FJPLKaFDxJsp
-	fGT8ZJhhttOqeS3rMT6cmvgBnZxwpOK8boD8FUGQ=
-Received: by mx.zohomail.com with SMTPS id 1772542074750920.0980723375684;
-	Tue, 3 Mar 2026 04:47:54 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Emily Shaffer
- <emilyshaffer@google.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] builtin/receive-pack: avoid spinning no-op sideband
- async threads
-In-Reply-To: <xmqq4imxzz90.fsf@gitster.g>
-References: <20260302191704.1814567-1-adrian.ratiu@collabora.com>
- <20260302191704.1814567-2-adrian.ratiu@collabora.com>
- <xmqq4imxzz90.fsf@gitster.g>
-Date: Tue, 03 Mar 2026 14:47:50 +0200
-Message-ID: <87342hoz9l.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lDoOabdO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QDubZywW"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C8C80140014F;
+	Tue,  3 Mar 2026 08:27:22 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 03 Mar 2026 08:27:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1772544442; x=1772630842; bh=EsZ2o3A1fX
+	bVk+Y3/wbM8lpMULagb/CJbzODPE/rTa4=; b=lDoOabdOQAcweItnOUPseOI9Up
+	Fpk2ioMzzIWjoaOF5/50ofG0uE7Mc9GJKBZaygPM0dOPfiusfAcCORSNJc1u/qC3
+	ZrP+wtKyLhPLXriUzAxM7MT1y59/oz66A7z/ISA7Lvc9JbVY5UWV77POfjMt68M4
+	nAbAygs0YUtChwQ/aG8IpZhG7FCWD2WXa8YxpHxLTrAPvKG7MZJYb2bNN29YEAmY
+	zmM3JAdoSeAnr8akEY9XQHPoW7I+AM+mjUSj2H6vr8D0LuO03VbRubZfFNo0mzQb
+	88o0QRGspBwXxP3pRalK96WYv1ZC6wBLOb49hg8ccyGDqANQcEw7utXKknzA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772544442; x=1772630842; bh=EsZ2o3A1fXbVk+Y3/wbM8lpMULagb/CJbzO
+	DPE/rTa4=; b=QDubZywWy+F7bTZwHoXt1of4zXdV6XV20UnPFl6vQVLemf+zudB
+	XdoG2S+lTucop0+v5iOhROGlNuuD24HH10HbY/qx8Rs94fxuBoLiPwgrCVT9U32y
+	8KhT/YHB+Q0q60nOO4+qh78wi95BY+uSP2JcO8fzMeOHXrPZscj2idG4/BPc0lNh
+	W/66oI2ZUtLXuqRyOkJwqdngMTeNey+O8vgouP2NK4FyYD5SZE97GLBiahLOu6Vp
+	ntH5/0dWU52UxCaVBfO7QxU+TuAbniJYSLY5/q0ePmCkAnl+lsUR13ezRK9BckXo
+	kG1uks8OEUQ+9xAsXBLSmIk/R1eWRbFR8Fg==
+X-ME-Sender: <xms:uuGmabip0LQKeWVVg194ZL2Z3VihyEZISxXavhjlYdBkECbrj69YMA>
+    <xme:uuGmae55IJaXjhplvaMolUOFc88f5ahpJsosOM4ttwskd02VHVK9mAxQgeqMMTXRa
+    mNS-gWLufQg1HiNVlhkwUS-ycq5eNOyPB3COcf7ZG2liwBU88EG7OY>
+X-ME-Received: <xmr:uuGmaTZR2ocPD5N42H-Gh0_gZ4nwhuJuyBiIlgnBi_--fmKvDgLjebNAoC5wctrC69MCUy6bgBPkMIN95t3Pt8NM04ZUXIyVtsg1ooeVEfgf>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedtieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehl
+    uhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgr
+    ihhlrdgtohhm
+X-ME-Proxy: <xmx:uuGmaT5CVDSJFgXBEswrWA_OrfRz_ZZ4LVWfrbJQPAohxdRkA_rKgg>
+    <xmx:uuGmaWCloQVeVPsFukL0XgdHyLXiasbhT7X_7Kd8W8CkhEdyQAQQRA>
+    <xmx:uuGmaZcD5FgjzgJfLXBEVFbEvnucIikbvIvytCc3U68SRTZ2j4s5vg>
+    <xmx:uuGmaVJ5vEvGQ_iOUsk-uxWtbURvEptDI1EqU7KbIDTpHyhK-wTmHg>
+    <xmx:uuGmafKdhqXSbUNxuajm-SjthKhfzHn7s9wxtvUsQwmhmjalRE_AlSIZ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Mar 2026 08:27:21 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c8e5ca60 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Mar 2026 13:27:20 +0000 (UTC)
+Date: Tue, 3 Mar 2026 14:27:17 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	kristofferhaugsbakk@fastmail.com, lucasseikioshiro@gmail.com
+Subject: Re: [PATCH v3 2/6] builtin/repo: add helper for printing keyvalue
+ output
+Message-ID: <aabhtfWZG90YyhQ5@pks.im>
+References: <20260223174120.2356504-1-jltobler@gmail.com>
+ <20260302214526.2034279-1-jltobler@gmail.com>
+ <20260302214526.2034279-3-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260302214526.2034279-3-jltobler@gmail.com>
 
-On Mon, 02 Mar 2026, Junio C Hamano <gitster@pobox.com> wrote:
->> @@ -1674,6 +1680,9 @@ static void run_update_post_hook(struct command *commands)
->>  	int sideband_async_started = 0;
->>  	int saved_stderr = -1;
->>  
->> +	if (!hook_exists(the_repository, "post-update"))
->> +		return;
->> +
->>  	for (cmd = commands; cmd; cmd = cmd->next) {
->>  		if (cmd->error_string || cmd->did_not_exist)
->>  			continue;
->
-> Ditto for "post-update".
->
-> Will queue with the following change squashed in.
+On Mon, Mar 02, 2026 at 03:45:22PM -0600, Justin Tobler wrote:
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index c7c9f0f497..782194cf4c 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -446,44 +446,51 @@ static void stats_table_clear(struct stats_table *table)
+>  	string_list_clear(&table->rows, 1);
+>  }
+>  
+> +static inline void print_keyvalue(const char *key, char key_delim, size_t value,
+> +				  char value_delim)
+> +{
+> +	printf("%s%c%" PRIuMAX "%c", key, key_delim, (uintmax_t)value,
+> +	       value_delim);
+> +}
+> +
+>  static void structure_keyvalue_print(struct repo_structure *stats,
+>  				     char key_delim, char value_delim)
+>  {
+> -	printf("references.branches.count%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->refs.branches, value_delim);
+> -	printf("references.tags.count%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->refs.tags, value_delim);
+> -	printf("references.remotes.count%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->refs.remotes, value_delim);
+> -	printf("references.others.count%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->refs.others, value_delim);
+> -
+> -	printf("objects.commits.count%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.type_counts.commits, value_delim);
+> -	printf("objects.trees.count%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.type_counts.trees, value_delim);
+> -	printf("objects.blobs.count%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.type_counts.blobs, value_delim);
+> -	printf("objects.tags.count%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.type_counts.tags, value_delim);
+> -
+> -	printf("objects.commits.inflated_size%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.inflated_sizes.commits, value_delim);
+> -	printf("objects.trees.inflated_size%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.inflated_sizes.trees, value_delim);
+> -	printf("objects.blobs.inflated_size%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.inflated_sizes.blobs, value_delim);
+> -	printf("objects.tags.inflated_size%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.inflated_sizes.tags, value_delim);
+> -
+> -	printf("objects.commits.disk_size%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.disk_sizes.commits, value_delim);
+> -	printf("objects.trees.disk_size%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.disk_sizes.trees, value_delim);
+> -	printf("objects.blobs.disk_size%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.disk_sizes.blobs, value_delim);
+> -	printf("objects.tags.disk_size%c%" PRIuMAX "%c", key_delim,
+> -	       (uintmax_t)stats->objects.disk_sizes.tags, value_delim);
+> +	print_keyvalue("references.branches.count", key_delim,
+> +		       stats->refs.branches, value_delim);
+> +	print_keyvalue("references.tags.count", key_delim,
+> +		       stats->refs.tags, value_delim);
+> +	print_keyvalue("references.remotes.count", key_delim,
+> +		       stats->refs.remotes, value_delim);
+> +	print_keyvalue("references.others.count", key_delim,
+> +		       stats->refs.others, value_delim);
+> +
+> +	print_keyvalue("objects.commits.count", key_delim,
+> +		       stats->objects.type_counts.commits, value_delim);
+> +	print_keyvalue("objects.trees.count", key_delim,
+> +		       stats->objects.type_counts.trees, value_delim);
+> +	print_keyvalue("objects.blobs.count", key_delim,
+> +		       stats->objects.type_counts.blobs, value_delim);
+> +	print_keyvalue("objects.tags.count", key_delim,
+> +		       stats->objects.type_counts.tags, value_delim);
+> +
+> +	print_keyvalue("objects.commits.inflated_size", key_delim,
+> +		       stats->objects.inflated_sizes.commits, value_delim);
+> +	print_keyvalue("objects.trees.inflated_size", key_delim,
+> +		       stats->objects.inflated_sizes.trees, value_delim);
+> +	print_keyvalue("objects.blobs.inflated_size", key_delim,
+> +		       stats->objects.inflated_sizes.blobs, value_delim);
+> +	print_keyvalue("objects.tags.inflated_size", key_delim,
+> +		       stats->objects.inflated_sizes.tags, value_delim);
+> +
+> +	print_keyvalue("objects.commits.disk_size", key_delim,
+> +		       stats->objects.disk_sizes.commits, value_delim);
+> +	print_keyvalue("objects.trees.disk_size", key_delim,
+> +		       stats->objects.disk_sizes.trees, value_delim);
+> +	print_keyvalue("objects.blobs.disk_size", key_delim,
+> +		       stats->objects.disk_sizes.blobs, value_delim);
+> +	print_keyvalue("objects.tags.disk_size", key_delim,
+> +		       stats->objects.disk_sizes.tags, value_delim);
 
-Thank you Junio, much appreciated!
+It's still easy to miss any mismatch here, but I guess the result is
+definitely easier to read regardless of that.
+
+Thanks!
+
+Patrick
