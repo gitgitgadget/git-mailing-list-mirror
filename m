@@ -1,68 +1,68 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B5F2638BC
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 01:34:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BA26BFCE
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 01:35:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772501681; cv=none; b=ttvbya813nqSMA4Md7N4kIjOg0tg/GiGSSC4Amsz5XFdY/eY3hxrpp9vym3bTMP1AICJ63IUnabmdZFrDb5XwbWEKNlj4ZFjlkcGf9YeoJWZJknuSaKFvEIPV+wehFuYh9MJUrT+6LtoHSdghhbP9gvTHHIbDZ1BADbD7ArrmqA=
+	t=1772501710; cv=none; b=QC2qRuFobZgzFHeGUdnc+ukSzUM55RT8CVd9O1bhCnsX/h6zWszaGnGesNJ2Cz/Trm6MSr7cWQsup6A49n+4Ekk3xXAamT/knMCsgST/I13X4bW8mijW2fVYvb8e2b9YNQPmalZCOvymc/XxHnqz05XjrpiWfHS5xe3ZonStKcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772501681; c=relaxed/simple;
-	bh=jKMCcbPf+ZnYcPAUvGVCiegb2J1txfwMBfGGSYfT+14=;
+	s=arc-20240116; t=1772501710; c=relaxed/simple;
+	bh=maZqfRNZc6XJESVTZczEEV9EeIizJONWcaj1RQn5APk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=teQT8x4EGtuaxdXWZAFFdj81c3bPxwpjEjtOK6hSDjp6WYYzKBIojXaxyk5r2aYxWiSL6Mei7G4wlzm+V+r8nkKvj8sDXTSE+oFM2922R6FG2mTyhhqUsVXsVGCT4pq+OFBoV+7so700Pj9I4RxXK2klCuQUNrhZoOYHLy2SeUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=koo8zFuP; arc=none smtp.client-ip=209.85.128.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=BUmDctl0X1aSHXJBB9N6UWHK2kC9HYlH0zLVJ9vL2PyX6t9yvjoaByPzqS4wCZ72CzuErMSM8upojWeU6P3fFP2WWq3LoBeodP7JIRpvA0tguxEtjnKhdwlThnIZ9BM7CqOYXWvIC2h83Szq2Mh+gbOxXNmJPwbYxEW6fTiqLHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gxr8A4at; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="koo8zFuP"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-483a233819aso49093425e9.3
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 17:34:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gxr8A4at"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-439aeed8a5bso2191341f8f.3
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 17:35:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772501679; x=1773106479; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772501708; x=1773106508; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=L45csCIdgk+pONsGWqywJCvf1w9HGgY8wwhSLSgRFv8=;
-        b=koo8zFuPNkSIVF1AkhzZxWCs58wuQZwSvQqvuTB2Nmuv6TpSCVJZjua2Hp6tSqT+BJ
-         GDbwe5POuOxjemHYI1NxRO5+WvS3iqpS650Aiv0VvX3q/vRrtSQvGCBG+ArTLDDmmsy9
-         gH5FCNdg3t/TabVhtWJMs9mueOd5/edBj8ZebxBeNgKMCSxH+c/XUmo+CMcFvsQbJAYH
-         k/YyDFxO0R7MXl2ScsUV1ctgqADA+5txghngyOgV/GXtzZH1BR9kjEy3bka/Sm28QwTm
-         Up1Xp1+A/FEhlcBU2OX/TNiN6duEaEcpY7VIdNk3IA52cJv9fQ/z3xauz3AMThkP5uv0
-         qA5A==
+        bh=hiGb7z6ppacVuI7c4K9UqI9QEeRmB6oGzgbgpIBfpGU=;
+        b=Gxr8A4at+q1W1lMS8FuVOSGalKzytBePWKorQuaBWWWvxagCb26cA+Am52tQ6zOC3I
+         iXWOxutAAallyqfglg+tKR+0yYbYm30JfAWSyF60LB2Ra0ATLsfSbl6ZmbilRFirdaAA
+         jGw2PajHv/ALi1+iS3MhiJtI2OIIzjUhntRE2c5TNAvn083NcqY0hfzEpA9smk9Uxl0t
+         hhGvT67XU9/EtsaZpSNKqKOgtja/3qltiRadXx2XQUN53PuyIeQw4wb7zl61cFZ9dpeB
+         7EFZ3YkotRY0odwUgvX0RAA2lQ+761lMhbxSzmYZEw6cglD0lVr0U8xAUdQ2bgNXF4fC
+         8HqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772501679; x=1773106479;
+        d=1e100.net; s=20230601; t=1772501708; x=1773106508;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=L45csCIdgk+pONsGWqywJCvf1w9HGgY8wwhSLSgRFv8=;
-        b=a5mTOb9h1N2ax+khWFb3VsbCUI35Hhj0hPb8tmK/IQT/DdbllqvUOEjvTvHOW2hkDP
-         qV/qHuNhAu/iQjIx4oTOWdnk4gG+Zu14vSHkKRtL27ww+c43EFLxdIB5dxDhjKnhzvmB
-         j9LyBifTjuRQokx0FgxwJvmslT5850bLZY6BdJ/peQ03pMjE5qjtyTznl3pb5skSmpsA
-         HWnTIOQwGUkdNxg8a53n9fk1v83DRXg0Zrw95JRqaYBG96W33NtYCoMve1puOF3pwG3O
-         mvWn0ppqxMw2pr95Nw3gEwFso1TBiGvt0TMlhnuYbbHFSmj8+LBy0e5u89yTbpY3bKWO
-         2egA==
-X-Gm-Message-State: AOJu0YzwbBNb0JMzoM17x7UrGfvU2gKmkD9be/Hp4l4ct3GHWfGBRcqt
-	C8IzFGTtbdzawrZDuEsJ8RZWohdUhBhRYpxEkfoA4j9lrRsyOyiNEMyHu9z5Fw==
-X-Gm-Gg: ATEYQzyfuFRDl0r4npNsHtIi0I20fka7s011ddzDdHH34jZxYfP1yhfAISlZodu6S2l
-	Jk6OZLq3wCRmFTsoJxuvz/7XCsOlcRBK7hmoNPsJ0H9wqD6V9q82qz5A5+l1AXEqjioDe5U2XQS
-	EIdzWDYxG2e7KYPrmLeGasZOgNmPyhoy0CFJCnz+YlF9e6WqwmdGuhOVM+iD87Czj+1Q+iyFXQq
-	LquNh5CZ16pU+IuEi3ykazlchq08wXD5wTATeJqRPhguuGtE3898zkKGZbpsT+nAoFM+ESrAY6B
-	2KkRiTnIA4jAx/QBQhGRpWFuhKTrIkGxRy8vi9jKGFbMXHz+S32piNr/Eyid9Tbv+CUdT6s09sl
-	7/ZJnpS1QOR5CCtauwtEcSe9/hkLxa5OlXnPFrSM3A9cvXTa82QklGHWwX5+B7jEYyVJWvX5x2Q
-	mR4mgijzxJ8vD3sqZWuCWrZU1u7Z+f/oMVPcU=
-X-Received: by 2002:a05:600c:4f50:b0:477:6d96:b3e5 with SMTP id 5b1f17b1804b1-483c9bb8ef7mr264098895e9.7.1772501678605;
-        Mon, 02 Mar 2026 17:34:38 -0800 (PST)
+        bh=hiGb7z6ppacVuI7c4K9UqI9QEeRmB6oGzgbgpIBfpGU=;
+        b=PHIVwc5sHa9SNJXF99q9sE6QvHkXuPWLWmfO3Vfa2JyvyMlZS8Zo0aR9ulZ6WAhF0r
+         cWrRoP3pQpc9WGgpUj9i3W2lAhO5EzQy6S8JDhOhBkHsE4sVCT+0S/KDgeU3FKG6BsLy
+         PiGFnV9uhmSukBcX0jR6F1PNyJVPLG4YyX8FBBrHe5YE/Yw/fGdekoAf0U4fkbPDJNyW
+         vxXnO+5zYFsepW8hIapen8UVUiovvqkhbjQ4JDKKmyXonnE4NUeNL2XMbWBfqp1SxJMp
+         buVJ+zOvsfr6soR4Z6s0mL3gDUaKYsk7WHiI2i83UytoJzJwQWoVb0buLMCfriExDDUf
+         ry+w==
+X-Gm-Message-State: AOJu0YxCD/SBBOO4wq1Cu4ZUgUwKgzfPeWCw78l2qgSv0tNxybrWt/U5
+	3d0cQ4EqJ3+1xgJMeMIKmHEIZpw40AxGFqw2mGpWJFH1Edy2d9pTxaP9DWR0Vw==
+X-Gm-Gg: ATEYQzzGgH1D7EHznswE9oPsU0DaWkBJeLMCYlT3r2bhKSM21HWXn7/38HELiuYcsXu
+	jdvOw8yDuDc/n13xzCZ+Pt5SBV7IhhN/NsFu0cT9yJbvbXgenr7RlmJrgeV5ve0LYoqzSpIdCN1
+	fOv5RI4xEIdbV47/glJCxAD1TIrs5MB8EbG7JKLH5dO58EK4l4YMM7aRDa5EFcBoKNUWWV6lhIH
+	btlaopPMJSaOMasKOTbFn9rR1pqq/eJ9h43V5XN+84igPWdbv7OXz6Ww/6QTc/r3WPmJi/DVaMq
+	fK0bFNubdqEIKk2LuKWU/7Cb1TxhAhpQu8yelQpHM8VGxbA/7+20w9ga9D7D90EdS+jn1pHEs3a
+	IzPsHLu58mLI+fol8qY+juDmcv6iDs7xuB+nxTZW8G/24Paq3dcj50Mvx+JwjUCLYZqAtoXWAxS
+	1IQsBbaQK/yXTw5iOsO7cvLnmykfECK6Xu68k=
+X-Received: by 2002:a05:6000:178c:b0:439:b6f9:b426 with SMTP id ffacd0b85a97d-439b6f9b8bdmr10663825f8f.26.1772501707536;
+        Mon, 02 Mar 2026 17:35:07 -0800 (PST)
 Received: from lorenzo-VM ([84.33.161.195])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485135d0676sm3768475e9.29.2026.03.02.17.34.36
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439ad3daf89sm36356097f8f.20.2026.03.02.17.35.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 17:34:37 -0800 (PST)
-Date: Tue, 3 Mar 2026 02:34:35 +0100
+        Mon, 02 Mar 2026 17:35:07 -0800 (PST)
+Date: Tue, 3 Mar 2026 02:35:05 +0100
 From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC PATCH v2 1/3] doc: gitprotocol-pack: fix pronoun-antecedent
- agreement
-Message-ID: <0d679e5eb514f33aed92f7fba4843efc53e6c461.1772500189.git.lorenzo.pegorari2002@gmail.com>
+Subject: [GSoC PATCH v2 2/3] doc: gitprotocol-pack: improve paragraphs
+ structure
+Message-ID: <8a6b5d4c98bd239e66faaaaf5883cbb50f1f1802.1772500189.git.lorenzo.pegorari2002@gmail.com>
 References: <cover.1772467050.git.lorenzo.pegorari2002@gmail.com>
  <cover.1772500189.git.lorenzo.pegorari2002@gmail.com>
 Precedence: bulk
@@ -75,35 +75,29 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1772500189.git.lorenzo.pegorari2002@gmail.com>
 
-Fix "pronoun-antecedent agreement" errors.
+Logically separate the introductory sentence from the first transport
+description to improve readability and structural clarity.
 
 Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 ---
- Documentation/gitprotocol-pack.adoc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/gitprotocol-pack.adoc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/gitprotocol-pack.adoc b/Documentation/gitprotocol-pack.adoc
-index 837b691c89..9952fac188 100644
+index 9952fac188..f4c9e024b0 100644
 --- a/Documentation/gitprotocol-pack.adoc
 +++ b/Documentation/gitprotocol-pack.adoc
-@@ -65,7 +65,7 @@ Extra Parameters
- ----------------
- 
- The protocol provides a mechanism in which clients can send additional
--information in its first message to the server. These are called "Extra
-+information in their first message to the server. These are called "Extra
- Parameters", and are supported by the Git, SSH, and HTTP protocols.
- 
- Each Extra Parameter takes the form of `<key>=<value>` or `<key>`.
-@@ -277,7 +277,7 @@ out of what the server said it could do with the first 'want' line.
-   filter-request    =  PKT-LINE("filter" SP filter-spec)
- ----
- 
--Clients MUST send all the obj-ids it wants from the reference
-+Clients MUST send all the obj-ids they want from the reference
- discovery phase as 'want' lines. Clients MUST send at least one
- 'want' command in the request body. Clients MUST NOT mention an
- obj-id in a 'want' command which did not appear in the response
+@@ -47,7 +47,9 @@ process defined in this protocol is terminated.
+ Transports
+ ----------
+ There are three transports over which the packfile protocol is
+-initiated.  The Git transport is a simple, unauthenticated server that
++initiated.
++
++The Git transport is a simple, unauthenticated server that
+ takes the command (almost always 'upload-pack', though Git
+ servers can be configured to be globally writable, in which 'receive-
+ pack' initiation is also allowed) with which the client wishes to
 -- 
 2.43.0
 
