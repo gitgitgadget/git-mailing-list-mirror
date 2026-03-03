@@ -1,94 +1,133 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9D63822B6
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6543750B5
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:42:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772570459; cv=none; b=WKyJUyJHvEH7fiVTHS2YHdfwScqw7tU+v4FuWAXQWQ8bUmZ6w7StDq00ZtvPZTzG/ot6whpR2zy9t7MsEcfsABPMJL+GQKz2lzosGkFKAiyFkZxuazeLZaUStaBHzjzQdP4yTYVNCbsSTmFWUM4Llb81bcIURTzWW9DQpHI4UIE=
+	t=1772570546; cv=none; b=QHYFk8XyCnw8XeMU71cjN3jYqXywGeyKkhynRQQWAYRancWSqlmJqfL8ra6wHKbwEn2kyIAxyHxw/IRuORfXcN7nL1Xq1BC21wvBxL2TALzSv8SwD2kmLL0fRwIxyYHMeV+qKvuUAg6XVFa7LUsCLJBmnt49Vbihhl6dALiMFC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772570459; c=relaxed/simple;
-	bh=CgaD7XqRSIEpInDmXKl76YzOX8E2bf8u03+QhSKLOW8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=r5XLAUbgd5mcrieRVs39/1S26TvbAZSWcE2CeU6HZP2/zd6lcIbrGR9h9ea0KoB4jNxJgLftkSoVQHLGgbErkptTb/Lgx+frnacXgfW03A5iFYcZ1zC2oVgxD1gGNFBkoImkZI4zJ9NSg/X5gQ2AWXCa5uo6lqxlA7M3LwCwuQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VJAwUHok; arc=none smtp.client-ip=209.85.210.170
+	s=arc-20240116; t=1772570546; c=relaxed/simple;
+	bh=lcpW/M9QqK0FZgUBpgMtQklPNeiz2L40uac5KdBdYKs=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=NdNDBjaXFMKgPLymdap6yT5uvAREmzVYxlpgmKRL6AOg5OKQJi2rh69g1Um7XDuCGl8/NdPiMXtbIgIDEyuq53fXmdpt6PtGUcayi0OySaQsGQBW/yKOMEU0iHF5UmlVehOEXRjKmI+MfsLuPQPgjNZ5dYnAwXrPe7by1VEUXfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IT/HIc4/; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VJAwUHok"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82418b0178cso3549312b3a.1
-        for <git@vger.kernel.org>; Tue, 03 Mar 2026 12:40:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IT/HIc4/"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-439bc1a201fso155143f8f.2
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 12:42:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772570457; x=1773175257; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cfYByuGDPkY+4H1ykHJB+mPNRgJj1CKJd8ECfgUELrc=;
-        b=VJAwUHokFi8w4mxxmyD2VvDWpn6rJRaRf+9KQPhDwRZ+XgWcrLTuHuTC3cdCRincuY
-         4xQByFKXDMWiOiGIx7nOCdfzoG5N1XspsmvvfBFA+o/Mcc/1Bw2dnGUCZrO3GZI/+mzi
-         MgDRYf7BJKneaV5bJWGQ0XzWZkuULM80a0H6VzK0wmxuqMnGBEf85Jel70WZfT2KgVJe
-         kaab3jHQuVcl5tZlD2x80iCRntkg5BsAr+foT8aoDDbVPN4C9VsKWMV9EkxwQt7XP74M
-         tU37ZsMQ2zaASlNF3R5AyeceHPcx/mMuq7rlMrfVE3i/w+FX3+OKpAtiOj+kDf2NPVBL
-         AM9A==
+        d=gmail.com; s=20230601; t=1772570544; x=1773175344; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jB0NeMY1B8R0IDkgccf3YdMvvifX50R6O+rwVVhfzhw=;
+        b=IT/HIc4/4zglZDa98sufKuLeMWv72v8ipD0hGBABqpHHTxqchr+QzAwyrjUgjwDgSX
+         8Z/S+qmk1ny2oZtuPi5KOj7nnXU6AloeBtyaMGzeysoBSjhmwzUKvgvXlFSSv/fvmVGS
+         jJUzH5w4MDYHE/QiLKsBKjUSWYC2UyRris7K1/NcqBRw4nh5a1ZSKNsYsNCHBOyWsMM8
+         Y4nHfFi30Ot3WS6MalSzCPo7rXp4oPLAX70QDWIzjcdGI175AzYrKrdGSj/aNvZff+CA
+         PH/o8BmmprNRTy+1X5197QgddAVUhuGe4um7N4SdnizJ6MqXg8b8g6ySa8S3qsfa37Be
+         TiNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772570457; x=1773175257;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cfYByuGDPkY+4H1ykHJB+mPNRgJj1CKJd8ECfgUELrc=;
-        b=LsjXAyI3DkS+Wf9yqWdbI1od6OVN6jK2xQbjcF0yIS0LlnhqcjcT5H+RxkTvT/PeoY
-         HkKfaVs7X+4ws+2QG9hv+hQtXkbZojHh/ZFMWxgkoljbtSOGvGCaxdogXFHK5jYPzo3A
-         IyhZdwO8xPoHopq/yOaC40Ld2AGoHNUIpSZLqLUF9cfKeFE9bNT8eUfvgRULf9rz1Dve
-         yw2gC9GP2zBGEiOGzamgMrn+BhtRCA0tG1r6R3ADhXagklHvU02z/LBIE0O1406m77If
-         ywAb3gmugDp/zkM1oDeKlnMy/+4L0ESG9IBd1QCDh/91RCYhVCV94k4ldxoLaRNdJqfb
-         tgCw==
-X-Gm-Message-State: AOJu0YwgAq4P10cr5VdpZ42gXl2ZbbWddt+jkpYycG4vh9Ge3oBnw24y
-	QfJ3GKkK69LuqvCan+lG2IPmLu3SwqNAluK4IpG6DOIWjTu9h5ozkMPMS/KGcLcD410=
-X-Gm-Gg: ATEYQzx8b0cvUriLjWHXu5FZ+4gfP5n0+Q8sUBDyJPA3YZ+ZB/imrSpLxjpWcs3xKs0
-	oXX5pczrRgkQtHHlc9uKrztc2NDASZD900ZPsQpgCFeNvKrxHD7yBHx29aWJuki9X9yCXorjl+O
-	Dp482509vLcNONANLpa6+q8OHz9FgCg0xTvWsV5nYuQn3Q6r63i8DCWiVPQNllh5UiH/ZdwMe+7
-	gyGGww4U0pesGMoEqjqG4GbrMxXUH8g3FYG96K37jvF56frK2Bqb3V7ibhkXz7d6DWqWpMq+Pix
-	5j1h/MIiXrOxu6iL7XgWnXEa6IoXC9SawhPdJbPYJmj5oq7ZZcSAV3TvxMLiyV0pqTN6HTwgCRE
-	pd+NOaMb/V2pR7IRDATWmVHZEYjVIwGKtrtgx5m5dMCjKnqzCucdwZYAPHLZt+TJ4wPRyVx2b+K
-	/F54iQsSQt80HpzoCbc9kVXiHhBTYXUKmlyzGqckoqe09qI5JCVRLuSMpVsII+flVU3vkivA==
-X-Received: by 2002:a05:6a21:9cca:b0:38e:90ca:5a1d with SMTP id adf61e73a8af0-395c39f7babmr16173275637.11.1772570457358;
-        Tue, 03 Mar 2026 12:40:57 -0800 (PST)
-Received: from localhost.localdomain ([2401:4900:562e:3a88:890e:9f53:fad:871d])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa82c531sm15348524a12.24.2026.03.03.12.40.54
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 03 Mar 2026 12:40:56 -0800 (PST)
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+        d=1e100.net; s=20230601; t=1772570544; x=1773175344;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jB0NeMY1B8R0IDkgccf3YdMvvifX50R6O+rwVVhfzhw=;
+        b=Al31IYnKLIm/Kr1YciGFfL1R27s4SbtDVPq+s9VeANbGZJSigZwWzfyT23xqyKw7Xz
+         FTsmG0sZO5USkEiGsAFsTm3Njuz6OVZc6ZwmQC5nKA5GAXkaG18JHFamy9KBktJU3lAm
+         EsP4WRQ3ZrOT2Bn0cLBZThl9TLLq9nCe8zZbSNOJ+Jhw4nHtr5oCf2pe7XbAPgc06brJ
+         LDLaATrUzKDFelDCzUUjhatonIJaX8VrLVsYT0MBGgisAyQ2jYanN5vdsAzcaL5tvSXb
+         97FFSE48zT+x1Oixqu9sBZ6Uu2NBo3E693515X95BMdczXqbo3eNNECqOAPmzhSUsIo3
+         mCmQ==
+X-Gm-Message-State: AOJu0YxR5oMogg0czciDlqIkTCvYgBDxJWDHnEPt+D9Np8cMJsZWqHWU
+	ymghn45M2j2mc8DiSANbWf4oaWBLe8oe5Ikgcv6/gSiy4FZl7nfMgTgQl/ZoZnWq5k0=
+X-Gm-Gg: ATEYQzzQ3kXD0o5GHewokj3bjGK+MXj8M0lsZuGHNDabEPdN/YmnMccMJzNFjxex3BN
+	Lg+H7dGqxeVA8QzhEXakfMsbWrdUKjxLf8O1JGXvipK0zLOMKzJ9qMK+v4JKe57Go9xbSPLTfHw
+	TIHD+oS5FmduVO3S1MA96Yr0t4/SYTrZDmZLnuMbLRju4wrW+HHUrbxbimvahwnaJCHyiyzhHsu
+	PQ7tyJjyEg791dtHMaw4Y11jI0dHCFQJcQBPzzdtTEnyYdyPaU/uDqtDKS0/J0eqIewttpsT1o3
+	DzRi512Zwr1zE6PPueHDHfbH6kFgEqhPs3k2GstOYENs5SQS1y5APKCVVmesbjPULSkqfV50OTc
+	O/3zw+TUNZmUk1ceXQeqY9M8bMCIYVpo6MYnOq4ToGvA12adYLmtTYdXh/UtKINCOVseBp8RG3Z
+	FIXkxzpZ81Dyj+cAcXvrXofG2APnQ=
+X-Received: by 2002:a05:600c:8b56:b0:477:9fa8:bc99 with SMTP id 5b1f17b1804b1-483c9bba8cfmr166819415e9.4.1772570543361;
+        Tue, 03 Mar 2026 12:42:23 -0800 (PST)
+Received: from desktop ([194.127.199.104])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485178845b8sm13031875e9.1.2026.03.03.12.42.21
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Mar 2026 12:42:22 -0800 (PST)
+Date: Tue, 3 Mar 2026 20:42:20 +0000
+From: Matthew Hughes <matthewhughes934@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	r.siddharth.shrimali@gmail.com
-Subject: [PATCH v3 0/2] t3700: modernize and fix exit code suppression
-Date: Wed,  4 Mar 2026 02:10:27 +0530
-Message-ID: <20260303204029.52952-1-r.siddharth.shrimali@gmail.com>
-X-Mailer: git-send-email 2.51.2
+Subject: Crash on git log with -L and -G on file rename
+Message-ID: <aac-QdjY1ohAqgw_@desktop>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This is the third version to modernize t3700 and ensure git's 
-exit codes are not suppressed in pipelines.
+Hi,
 
-Changes in v3:
-- Split the series into two distinct patches as suggested by Junio.
-- Patch 1/2: Focuses strictly on breaking pipelines to expose git's
-  exit status and simplifying 'wc -l' logic.
-- Patch 2/2: Converts all remaining 'grep' and '! grep' calls to the
-  modern 'test_grep' and 'test_grep !' helpers.
-- Fixed trailer formatting in commit messages.
+I hit a crash (assertion error) running `git log` with both `-L` and `-G` under
+certain conditions. I've created script to reproduce the behaviour in a fresh
+git repo:
 
-Siddharth Shrimali (2):
-  t3700: avoid suppressing git's exit code
-  t3700: use test_grep helper for better diagnostics
+    #!/usr/bin/env bash
 
- t/t3700-add.sh | 49 +++++++++++++++++++++++++++++++------------------
- 1 file changed, 31 insertions(+), 18 deletions(-)
+    set -o errexit
 
--- 
-2.51.2
+    git init .
+    # Note: example is .rs file, but it should work with anything that -L understands
+    echo "fn my_func() {}" > file.rs
+    # 1. file named 'file.rs'
+    git add file.rs
+    git commit --message 'Add the file'
 
+    # 2. separate branch with the file renamed
+    git checkout -b some-branch
+    git mv file.rs new_file.rs
+    git commit --message 'Move the file'
+
+    git checkout -
+    git commit --allow-empty --message 'Some extra commit so we get a merge commit'
+    # 3. merge: one parent has file.rs, the other has new_file.rs
+    git merge --no-edit some-branch
+
+    # 4. post merge, move the file back
+    git mv new_file.rs file.rs
+    git commit --message 'Move the file back'
+
+    # 5. things go BOOM
+    git log -L:my_func:file.rs -G '.'
+
+I'm not sure if _every_ step in that script is necessary, but it's the simplest
+setup I could figure out to trigger the crash. Running that script I hit the
+error:
+
+    git: line-log.c:1056: process_diff_filepair: Assertion `pair->two->oid_valid' failed.
+    Aborted                    (core dumped) git log -L:my_func:file.rs -G '.'
+
+The backtrace shows that the failed assertion occurs under
+`process_ranges_merge_commit`, so maybe there's an issue with the file being
+renamed on both sides of the merge?
+
+The crash requires both flags to trigger, remove either and it will run fine.
+
+I've tested the above on the `git` from my system package manager on Arch
+Linux: git version 2.53.0, and one built from source at
+2cc71917514657b93014134350864f4849edfc83 (the version of 'master' checked out
+on my machine at the time). I don't think reproduction relies on any specific
+config since I've had it trigger with both `GIT_CONFIG_GLOBAL` and
+`GIT_CONFIG_SYSTEM` set to `/dev/null`
+
+Just for reference, I originally triggered the bug in the `rustfmt` repo[1]
+(checked-out at cebab3e99259be82ff069e5ae89e91855d79e534) running:
+
+    git log -G offset_left -L:format_trait:src/items.rs
+
+Link: github.com/rust-lang/rustfmt [1]
