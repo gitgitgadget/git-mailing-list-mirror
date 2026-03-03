@@ -1,111 +1,95 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D661366577
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 17:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B399370D52
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 17:58:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772560692; cv=none; b=LM6RUgc/QnJYsv86lR/zyb9Rc82W0i5xnkRI3doJAdyyDwmqItHiEXDpJOHX8MMalypK28AVG+wcmbF6Gkvd/ziRbI1to4+hgE7dUPh1HThf7V6tt4atL3GzDeuIHRjGNbDpYEvvV0F6X7ZLBfujbto3i+/XaPgW2AaUGxVAUTA=
+	t=1772560710; cv=none; b=ImPBZalTgRqC088Fq6rJvUmxmyo7sa3D56mhb38nMTHqvWMi30ydP1Db5Yux/2DQ6chWeiUBF4M+ra9MGzIbVz5hdKk6kKY1zmss17MTLmphFA4Ys+tTeX5rGFcivkbLl+LiiknF7vSpP0U4pyfzR7E/5L3OgA/ZRKpoLl1JVzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772560692; c=relaxed/simple;
-	bh=Ji2YkUN8SbNKlpwoyLXPKQSKwneS24bTkuot7O954yw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qv7X35KXlKl566cYJ0dPvj6AQ+JFdP5zudaS2rRLARyG8a/zgaCp8Yh2TcMTfJxARFtCxwe/h0blifwebBWR8YTwAEcPFWGS+vG+1tG27IL3tskjie0w5SLxIxqzMK9zHCqs0FqZzsqsOoeTn3bvBB68ZEDalq18i3tM2kjUlm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OYw8eXqg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lObx1Ro/; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772560710; c=relaxed/simple;
+	bh=r8HIWwkyXW4XY2f8Yt9C+2tW5Gyzcm0+/6ZyC/aketo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U+9wsv2q8Uzs9rThjndrE43sHu2/OGLcnNsjwP0TKCCGK4Aaj8Qfi5oImwGbsOJHoHZmxKN9TwS2OTgxDVOejcLYJthAPjWw7TrTGniGZTdgBhl17Zzq4KcD+UMx54ZjXL++lts+gpsD+hrq0z45/+2yHcJoK/nX0bE7pb1mwas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aOSKO+K8; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OYw8eXqg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lObx1Ro/"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id DB574EC027D;
-	Tue,  3 Mar 2026 12:58:10 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Mar 2026 12:58:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772560690; x=1772647090; bh=qv975Q5Cx6
-	MoSdbMzaaQBcYrRC7yTsoF5zYI0WhSv90=; b=OYw8eXqgrD7XdZ6ZSmqmmvBlXp
-	651QUUhl4gUX/Chz/hQb2CtijQBQM9jW3QxRSgqyUYZ+owT2bWZTGfASU3+vabxs
-	3FCgV8OY+RfrOogi+uWwrvF1NC/nqn+dvFL1U42kNO/xzb/CAwOTP9UVzAC74AUA
-	VS6ragDLAEsEyotrQzSqi8+fDLQegiX3gKuxP7R1Isk934BRBZKy3tMF+rTSF0cB
-	luDoPtH0UQbQapbJd57+GJGevQ7gaXAiE272Km/CM5L/ZBAUdan4hwRPzGEOkBeE
-	HpzQ/vHgaTGe8AoDP0zEJ54wRF8oUXvg07l7NvWy2gxubGANlEvgnTWsP2Ew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772560690; x=1772647090; bh=qv975Q5Cx6MoSdbMzaaQBcYrRC7yTsoF5zY
-	I0WhSv90=; b=lObx1Ro/Rq0mJxbgQcWU86BJNPFnVeqYAlH0FgI1aaNXRP3tWwh
-	Merec5HjvLNAF3bezcwM4yuJfpBeAOzhwMXvRex6tI8UzKH0gwFASd0qvGS1ItMD
-	Ki/V5evzZecrIPE+ASUg+FCdp3dLqnCEo0OVAvN33yqMoNlKUnrm/jVdFhIQQKoV
-	26ZrNx6yM7cvcIKaY+a28Kp9Xxl4Nyo4IMtb+6VP9uvOeYPLgOgF6TIh/g3AXv80
-	iAIpUOBz8n8/8tz4qXZslEX79JVZ7pLjaYd0KqqQKgTgWXZlmwhtdYk9wXsSqAqY
-	uIRiX+ohDVUN0bF7+RBnDagzi2qMEqcPj3w==
-X-ME-Sender: <xms:MiGnaeLf4j-BDSrUNa6HzQwqfzgy7znI_9kxqms4QagDsWg0oh4ewg>
-    <xme:MiGnaYZj5GeNl4_70bPohQeFJ_GGH4E-mmQtRSLaSoqHM8aRhJd0uNGwNBN-X4f_x
-    0tXdfXBkXSJRs9qaq-uie4e78wxB-nsIhcRZknh1LwLUgDqhbgfmw>
-X-ME-Received: <xmr:MiGnaQ-gdEzVWzC6lMbXobkgDqHNuGD_YWudUndKfgowKE2ZOFUD-bQPRE8qD2wZQAHU8MfALN58xQZQs6yY4FFqZt4sFxi0ew>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieduvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopegrlhgrnh
-    essghrrghithhhfigrihhtvgdruggvvhdprhgtphhtthhopehgihhtghhithhgrggughgv
-    thesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:MiGnaZYO-XN_epOFmyC7UBBytCNw6iZQ2N13Zuqq3mVWCsOaM8uKag>
-    <xmx:MiGnaUPOIvK3iHVrJi9bu9IwqGz2We2z9gSIwDYEpvYuDZmK6bkJoA>
-    <xmx:MiGnaVBkM_CJpPLG5-qJ1auxXzl1iLQQV4YgGeiYZ8De6lAgCbLtdQ>
-    <xmx:MiGnabLxm78bBIM-jvIBCu0em9vjY78qfz6jvB_Qd-lvkwLROq2d_w>
-    <xmx:MiGnaVABiSPPyt8f19ZzKiPs31AM33TUbnFAzDPxr00eyK7lm0T9NCPK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 12:58:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Alan Braithwaite <alan@braithwaite.dev>,
-  Alan Braithwaite <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,
-  christian.couder@gmail.com,
-  me@ttaylorr.com
-Subject: Re: [PATCH] fetch, clone: add fetch.blobSizeLimit config
-In-Reply-To: <aab5iICOAMrH2aQZ@pks.im> (Patrick Steinhardt's message of "Tue,
-	3 Mar 2026 16:08:56 +0100")
-References: <pull.2058.git.1772383499900.gitgitgadget@gmail.com>
-	<aaV6PLJCrpb2mQnq@pks.im> <xmqq342i12ky.fsf@gitster.g>
-	<a3e064fe-9f0d-448f-b034-4a95dcd3fe97@app.fastmail.com>
-	<aaaACBJVAZPypVtn@pks.im>
-	<d4e2aa7e-6c6e-43a5-96ad-848d9447d194@app.fastmail.com>
-	<aab5iICOAMrH2aQZ@pks.im>
-Date: Tue, 03 Mar 2026 09:58:09 -0800
-Message-ID: <xmqqtsuwdccu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aOSKO+K8"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-824b32875e7so2845285b3a.3
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 09:58:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772560708; x=1773165508; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=abhdcGoEY2L2V4ywgynT5Fln4kC5vgT5JICMjVbD9hs=;
+        b=aOSKO+K8eR+ejjRVYdhRs81+aB95wA0OPd6nNU5nBR3+GoVM1wqwRfv1E+SVBF3M/I
+         o7q7xJMOrQkWhxtaz/wqJoJAS6uwSE8aim6hp/LI8asn3iSIDLrMSg3fq1ShsQ1S5hr6
+         KVl6dJLPKIWD63elNDc7GXbfJWaEYTg+m4O2T/P9WjCceaaU9/UTV7pq3xNCCxsUAXBb
+         mUXARyuACiXUjj44ojZzHYwsJV40ltCSYQxcilm8Ok0MqtUplsg2cKdjzzmd5HK21j2H
+         haT26X8gix/rPfqIIlM2VypU6ivtp4KbrBDvk4lFFzMMyz5Awtyf++oiBR1uWbE4SAHo
+         Lz0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772560708; x=1773165508;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=abhdcGoEY2L2V4ywgynT5Fln4kC5vgT5JICMjVbD9hs=;
+        b=NDqJKkSFQjva6HrShQcY3DXQz6I6pam0XjLrR2LOPBdt/Eki68ebnauduZYy5uojQZ
+         bXf4I2moHHyuesUfQw6dvrtpz+LOF3l2p3b9EpuQPjaOSA31WOPOWw1+zoLVwev4S9xt
+         je7CraE/2XrpsxqP1l1xtz03y3zO3cfX/7grnDh5o1Aok7AI4A9Z3I8t2m/ELwNpwK+3
+         vMTQ5euKL40P69WcjxXCnVXP9nO3hptOFFeGWe6vZnEnpzrjpSLHOo3JqvHD7zAkMiOn
+         5hQcxIWrryGlhXbXrxlcGh2drEEtEiK4lUOUKb7wkVJ8WhpeEVIAJG43ckRWN6chZ6uk
+         n85Q==
+X-Gm-Message-State: AOJu0YxXTFcisfx+FswPYB7hWswxQzls8Kk5m2nio8gdMAjr48IWQUcR
+	GdwQ3+DEapXMaJfAny9ThX9O1Sz5KzjGt7itEkvc6XcTYPt5vxPSx4koMrkJdDmj1cU9lg==
+X-Gm-Gg: ATEYQzy7nqtZXO10GuB/UNq+/hYPahB7X/pObUf9ysPk8to681mEMPlQPp/GOy7JgN+
+	q1PHY8wWatv7anOFGBnWfMfTgaALDl8m5YH8suEKAWws0gWWGqVz9wCqZZ5lWjhJOeJ+Gg+9Wa+
+	h/OmiF6UcHQH/z9z4wyJZItliEonpBab/ActBXy94HaP8WmlQVEhKs7HWMd+Bg8HKa5ZQb1icFN
+	Ay4onAcsGtR33o2HfzqG4x/r8JmQvUF6o4AJq5xsCtJsFaOmczSMYXCxgiFWHEYnOwgIexYTgIR
+	YiHQZpTSoS+1D0M1NXknCXYxjmGR2eY0LW8HHs4R1sE3YsfjKNrC+vP7J+hf6f29C9i3LEqElu3
+	nmCzeHrjX5XjHMYMS1wBv7b9cIictJPz+fUN8aGMwoXzUhdS+tndJNPR1Q4o+9Cj0WCLfdLh5p3
+	q21tyTx9VzJKKBPSTTGs1iXro0Fxn/gnbL9dV+hxb1XP2nIYa4OzGUKb/XFBdsYng+hV5PKiXye
+	w9f8h6Ye38rQ1TKFdn53JQaxuZvJshH/cXibTKzvirGLcL8sUyHuUVCDmjKCwYBkXd7
+X-Received: by 2002:a05:6a00:368c:b0:7e8:43f5:bd4c with SMTP id d2e1a72fcca58-8274da2351amr16609001b3a.56.1772560708408;
+        Tue, 03 Mar 2026 09:58:28 -0800 (PST)
+Received: from ThinkPad-E14-Gen-6.. ([220.158.168.165])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8273a059e89sm16216764b3a.60.2026.03.03.09.58.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Mar 2026 09:58:28 -0800 (PST)
+From: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+Subject: [PATCH 1/2] t7412: fix typo 'submodue' in test_description
+Date: Tue,  3 Mar 2026 23:27:49 +0530
+Message-ID: <20260303175750.361563-1-ysinghcin@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Signed-off-by: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+---
+ t/t7412-submodule-absorbgitdirs.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> I think using something like "clone.<url>.defaultObjectFilter" would be
-> a more sensible design. The idea is that we'd only honor this filter on
-> the initial clone to basically be equivalent to `git clone --filter=`. I
-> don't think any subsequent fetches should be impacted at all, as turning
-> a full clone into a partial clone would need more consideration.
+diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
+index 0490499573..41ee035e3c 100755
+--- a/t/t7412-submodule-absorbgitdirs.sh
++++ b/t/t7412-submodule-absorbgitdirs.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='Test submodule absorbgitdirs
+ 
+-This test verifies that `git submodue absorbgitdirs` moves a submodules git
++This test verifies that `git submodule absorbgitdirs` moves a submodules git
+ directory into the superproject.
+ '
+ 
+-- 
+2.53.0.290.g4805bb9930
 
-Yup, I like this one.  Should <url> be giving a repository fully, or
-be some pattern that groups similar repositories together?  You
-would not be wanting to clone exactly the same repository so many
-times for a configuration variable to matter in general.
