@@ -1,240 +1,141 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8763976B7
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:11:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772568687; cv=pass; b=Uc0psYyW+cm49/fk9aWA9379iDjg8VP/WrsTWe7rJJEOiD3yjol2Z0qDAsTh8TCLgyWKaPfJ8wPcK8/2uIYK/sbZeQ5DqdG5PgADmYGeRbosFrvY5vq4Q6cUMpFjhdAOef0Td2TenC8jul/9UH3Jx1Txr8WK3lKDtuIWYX1bH8Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772568687; c=relaxed/simple;
-	bh=RilWaPy1vri29JoeRKSu+R1/vnoMNAl2A5cQoppW5w0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NSWaochaWAVffoonXTCBaGNsvLUlO8iQ7p99qljaUJvwAZ9/8Y1IO0RCvdEKMRmIW8AiCcgdlDVD51+68WzGiaxCwmiAAbPccLmt2sb/NIQ/3Bypf5+X0smUFHAMjlk9NK3al0nVO7Qlwr8PkKI2sqXsZ3QyvGpLOx/ayp4uxsI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ea3s/Ndr; arc=pass smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7D41D5160
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772570183; cv=none; b=N+vpQRHz/bx2KQCZGNIyK3Yk+fZaS9/bBOLX+AwIo8m0oI5Vb6FqHkJ2lspRwX7JjAPgpZj8BhkJiuqtZh2t5CJwSrLjKu5vaRfnEOeYOGdWZT3s8CA8Y7GMumzy4RSKegn8YF95QPBTRNzlwSXD46WC9g/1YZOQeWfXTEo08og=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772570183; c=relaxed/simple;
+	bh=R9I1xpbNQ1HYFMMYgHZCh9QDM2fe9RwW5SvEVSGrIh8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YltPzconi/6qBANmnjNdvzT8GNuavbVlg+jr2megnFNdx1QeXMSBEY5WEr5z9+FjSoPeCYzmjFM4RgyA/fYIAwcIcLEqorMElkAF+BrEDy/Y08uFGsvGmjEBEKeYagF0ss0NX21Ve1GaDtLeo5+XAEF9QgQ3c5bwk9ujZ7IaDgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nsh86XMf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=196bBJ33; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ea3s/Ndr"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-64ad9fabd08so5076561d50.2
-        for <git@vger.kernel.org>; Tue, 03 Mar 2026 12:11:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772568684; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SiSicK08x/nE1pLDTTULGf0suxFbDvBzHaES8RlaJ3np83bii7v2JTSI9zkZRJ5E11
-         JfMV4Y1Ol8gw/zy93HejRZ4WKfEvNf77FqPaOhh+64vuPSyps5MhMtIEHuVOXnINbzhy
-         N7Vba4/Q9pBsEJdaNm93nocmTfvi9Cny9T8oOlGofIZ1cTBbz1/jZU61qmE8+/mWce4X
-         bABXMw6EZZjvCl3pKd1lb9VjHhB6/HAt/B1r5dKG/kFlViMb/M9deT350RmR3iYCauzR
-         FOxIwKHaAKcXVQyTJpoA8Zk+Rhi6jPKZ2HBkq68MYBdO5TmCuYsbDcHZJ6DHhC8n3Pkc
-         ojKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qZNldSthFPzL8iE7//mEcENC1uRhLUgm3zIPeT/shbI=;
-        fh=48Fm+PP1hp60xpWNBz70JiKjDrmCDSeEPLJp27/iW+g=;
-        b=QR6zGjPFJKW+m4l2rRDHq+Na7qVD5gXZrmgdB0WzDEXzXpPttHVLad9ORRr4flde8B
-         /NQY4CTCmka42k3MTKvyNKQYbrpm9W22UIhPGaBZbvNaVcjn/ipSLxp6rNEHctlwOXHT
-         oQpMfmxtp3KbEXvhgJT6J6aPdZcEU4cN3E643GpMtkSs8kxZnefhNeuPya+XCEnu4otD
-         nUCul+4ygyK0YX84/Sx49ncx1vWfwJe92HDJMgBtbMpt8SmuqkPCRGGBGdc3bnnU5GTl
-         wQxL8sthjFKwrYbP739WiRmzAnIWZOmmWtjYnuIITsZu1r5sJpCEIXAI79fzQt4C1HlK
-         TN5w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772568684; x=1773173484; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qZNldSthFPzL8iE7//mEcENC1uRhLUgm3zIPeT/shbI=;
-        b=ea3s/NdrYZCrxPphy9NsnZXFXqif5B+Q1HG/ujfJ6dapmGQGAbsL4rO+1uR06HvkTC
-         ofwE8BWifEjQfPMTKnfRLsREiMVf0ASyavASePHzSgTB1w4lSWPqQ7s6ytFn6w8cvVVM
-         Oc9RAhAvoWLh7suvLUZZj86CiwPj2L5dVZI5gbPT8A+2n519XLfYWxSSBdVx0Y5DILsL
-         S8JcZS/zhHPM4sNKaJDKEunmMLN7UaOZ+3VCzrBoxTpu707ODFQap/aNYxJblh6+f2xT
-         5qZscSMJ2gKMS+KuFjnydYpMoArrdCdO4DpBPNMS+DnqXwI9aKYB8DmORMxGabRZipSf
-         NZFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772568684; x=1773173484;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qZNldSthFPzL8iE7//mEcENC1uRhLUgm3zIPeT/shbI=;
-        b=J44Nwh9kEMVpEeSR4zWoKOtqr+TEBsKUj3u3ZwsLoBzzDlW7CQzJqA74issrHgThqd
-         q8Vvb8yi7r+fRSpQ8DtzkQ1FEHU7QT6lOvQxOrmk60/3LW8Gdqsxo1yAlUAzYdi+FNj4
-         KIp5FO0JvWaaKk1AuVJuSGYfn0+jkpM3djvr3tkyy/1DJh4PivVLrpT8X1Tr9njlDd1L
-         EGUOKlKFovxnlzA1Hpybmm5c3aaCqQO8pPiIqFCQQE8hkdSK3dkyFKHCu8voqVei2M3F
-         o5NAtJ1WAU+cSyFTR98dZXTVt3Ms9gsOu1FodL/JYZ9lvsGR55bqnPU9vFuGSYjl5OQw
-         8AJg==
-X-Forwarded-Encrypted: i=1; AJvYcCWkJeOy4h+0emj+Q9qUBSPxZsuVss0TsE1Z+W/82oLz55sN6nnmewxfi57XiWVzKUss+zE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwB+by1FmxzrFrMbc2m4RYcrE8dvoEp38hZ5fZVTFQve2VCvwFB
-	rbv9CSbAPlBeXQcoYFS9UtJWpSuK7QGN03xSkgWDPCeI80HmP6VsMQcilPDU/jWSUrEuooFmPMX
-	A3CaMLYA5Sn8VrsWuZfsMQuOe01uJtnc=
-X-Gm-Gg: ATEYQzyovqSQdMhrHEWNMCi0dr2Bhib/cbKVmpffkPZO/NKPozLXJl23P7M8EOPJB5i
-	QxT3V9WexzncPx1V0IvTaEfp6hPapkaMZLFQP7UTsE0SwoWEitP3qQfQdpHnsU9w6At6Z6RUPNo
-	EkcjCTAqPdlPNzGIGGnfoOKcIgpp5xgKqidprFdSZf1s8zla1atlLYxXhluiSpYNoVTNZx0+npC
-	FIWeR9A4QjyIWk3XhH2fZH8uj53Is19UyrsFSt7c5tsf3cbaLWoq5mIhWrqgYY/GeTH+xRRHqw2
-	4DqOJyy3UbTtCig=
-X-Received: by 2002:a53:ee55:0:b0:64c:b81d:2cd0 with SMTP id
- 956f58d0204a3-64cc20862b8mr11729296d50.20.1772568684318; Tue, 03 Mar 2026
- 12:11:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nsh86XMf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="196bBJ33"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 99136EC053B;
+	Tue,  3 Mar 2026 15:36:21 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Tue, 03 Mar 2026 15:36:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772570181; x=1772656581; bh=6Oa/b3qhGq
+	QMcvogIuD6rb8F1BOQuEr11Ni8MYChu7E=; b=Nsh86XMfi3St0Hj1yJwTpATI4e
+	zAsvdlpoP7nOuZwmTmGgFb2yLy8+sGIewpzUXzJN2WKhCjI089GqOTheWwukyUhi
+	4p4JIA+aOb8enbUIOchMxKTLOAwiF88dnlGrvHAMHGabQ+7eGQRurt5gMnaG46Vl
+	stmwntpfxj30TiZXlLmVI9iY9jOUt6HQ+1A0Q8ir/otHA7KqY15QLOmrOUV68q8b
+	Cfvodo20phItqx4qyOGw4G5cK4CLVDKY3kqDpwrhSTOC1FdUH1Nkls8MlB2p0FkO
+	N2glesGvYUdbPtUyPWN8vYbAhNdN76LhjIs1eT5ACI1DNLT4IfgBpRxAEUqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772570181; x=1772656581; bh=6Oa/b3qhGqQMcvogIuD6rb8F1BOQuEr11Ni
+	8MYChu7E=; b=196bBJ33M/YntHDpTp3sN/0tRHLf4xB2EOBsaQCFQVmUkF8nHfT
+	xYj5+HYGXjddM/b3iy8CToqxn2qrLCjBqAEDG2ODjb/YULz955q4VkDXW44GMtcY
+	eReS3ObeXem0jDoUf/4vff847AoQP68FzJb0Lr6jdbpDpPTeeB3fu1+sVOzupIot
+	sokm5eiY5wVVCivUZwLiEmh8ZHnLNeV+vqMGFBQawzPzNcXdCKIVlu87L4P4I8cJ
+	OHHFG8vQMXFOU0oj9LcNrgXV5FljYNkBICWIaPltfRXOJ0w/HBsWM20ejtBMyCJ0
+	+kXU8YJrzgxfX2Mrzg82b5LjC1sh6XQjKdQ==
+X-ME-Sender: <xms:RUanaR1tWis1tUuKa5Q164o_qYUsir9a_Rq3Yqttgqi07O49u3tWJw>
+    <xme:RUanafFDc9NA_0hBJVWdtZLkTHpCzEWxe9bKMZPrX38QR0TGCKIT54-IGh-VbYbH0
+    CvjB0R2m28VOs6aFJeDwujBF-IAGdEZ_kt7mdkjX9XkdsRLyOgurU0>
+X-ME-Received: <xmr:RUanaW6BNKU5-3WMdX63n20WUVu-d4oN81RT9eVcgMTZLy62K_J_ETix9GbQ34Y7fPIWl2liO5-OJTD0uiMk_wwUFQy79qt03w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieduheeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepohhmrhhirdhsrghrihhgudefsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:RUanadv9KxJQVW-fGgGucd1r2lv6JEd0jPXgwAdtCmEA_j4KeYMoLw>
+    <xmx:RUanaf4N89-NLKPwHWxn6NQlJ_x-ayBOjowEksgfx7pNg_ebWplpig>
+    <xmx:RUanaQV3zTEU2xNExIJ4ceSrN4Uzj623OLBmwhUyMERGoAohzZoH8w>
+    <xmx:RUanaZ8-8WMCUvI_z4FPoYciXBfOCMyvgRLTHXmHoePBinJFKlcOKQ>
+    <xmx:RUanaWXrdfdTb-sfxeZuSJ3rgGs8vW4ygb1HyOLBBnLsao1T2uUhsNBL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Mar 2026 15:36:21 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Omri Sarig <omri.sarig13@gmail.com>
+Cc: Omri Sarig via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v3] doc: add information regarding external commands
+In-Reply-To: <CAP9es6uT4xE2+h6mCXgYVcibutVOah1xKyS8cKaV1u=VHBpLZw@mail.gmail.com>
+	(Omri Sarig's message of "Tue, 3 Mar 2026 21:11:13 +0100")
+References: <pull.2220.v2.git.git.1772557925670.gitgitgadget@gmail.com>
+	<pull.2220.v3.git.git.1772559813151.gitgitgadget@gmail.com>
+	<xmqqh5qwdaeh.fsf@gitster.g>
+	<CAP9es6uT4xE2+h6mCXgYVcibutVOah1xKyS8cKaV1u=VHBpLZw@mail.gmail.com>
+Date: Tue, 03 Mar 2026 12:36:19 -0800
+Message-ID: <xmqqy0k8bqgs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2220.v2.git.git.1772557925670.gitgitgadget@gmail.com>
- <pull.2220.v3.git.git.1772559813151.gitgitgadget@gmail.com> <xmqqh5qwdaeh.fsf@gitster.g>
-In-Reply-To: <xmqqh5qwdaeh.fsf@gitster.g>
-From: Omri Sarig <omri.sarig13@gmail.com>
-Date: Tue, 3 Mar 2026 21:11:13 +0100
-X-Gm-Features: AaiRm50LmFbounqxp_7qvzifomiSkcVBU1c46EuaLGRc1P2WaGbr-zP1jw8RXmE
-Message-ID: <CAP9es6uT4xE2+h6mCXgYVcibutVOah1xKyS8cKaV1u=VHBpLZw@mail.gmail.com>
-Subject: Re: [PATCH v3] doc: add information regarding external commands
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Omri Sarig via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Thanks for the help!
+Omri Sarig <omri.sarig13@gmail.com> writes:
 
-I fully understand this is something you can just do in a few minutes, so I
-really appreciate the support and the welcoming attitude.
+>> I am not sure what the last sentence wants to say, especially the
+>> "alias expansion" part.  Do you mean that your "git foo" alias (not
+>> just its expansion but its presence as a whole) is ignored if you
+>> have a "git-foo" program on your $PATH?
+>
+> This is exactly what I tried to write there.
+> Personally, I had expected aliases to take precedence over external commands,
+> so I was surprised to see that it is reversed (so the program "git-foo" runs
+> before Git looks for the alias "git foo"). I thought it'll make sense to
+> mention in the documentation, to save possible headaches for future developers.
+>
+> I'm not sure it's too much information, or should just be described better?
 
-On Tue, Mar 3, 2026 at 7:40=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Omri Sarig via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> Thanks.  Almost there.
->
-> The usual way to compose a log message of this project is to
->
->  - Give an observation on how the current system works in the
->    present tense (so no need to say "Currently X is Y", or
->    "Previously X was Y" to describe the state before your change;
->    just "X is Y" is enough), and discuss what you perceive as a
->    problem in it.
->
->  - Propose a solution (optional---often, problem description
->    trivially leads to an obvious solution in reader's minds).
->
->  - Give commands to somebody editing the codebase to "make it so",
->    instead of saying "This commit does X".
->
-> in this order.
+The latter.
 
-Understood, I'll fix accordingly.
+We hear "X takes precedence over Y" more often when we describe the
+relationship between commands and aliases.  I do not think we use
+verb "X precedes Y" in our documentation to indicate that
+relationship.  We do see the verb used for "X comes before Y" in
+many places in our documentation, though.
 
->
-> > From: Omri Sarig <omri.sarig13@gmail.com>
-> >
-> > Git supports running external commands in the user's PATH as if they
-> > were built-in commands (see execv_dashed_external in git.c).
-> >
-> > This feature was not fully documented in Git's user-facing
-> > documentation.
->
-> Your description of the problem above is excellent.
->
-> > This commit adds a short documentation of this feature, making it easie=
-r
-> > for users to discover and use.
->
-> There is nothing incorrect in the above, but we would write it more
-> like
->
->     Add a short documentation to describe how PATH is used to find a
->     custom subcommand.
->
-> > Signed-off-by: Omri Sarig <omri.sarig13@gmail.com>
->
-> > diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-> > index ce099e78b8..903d11c530 100644
-> > --- a/Documentation/git.adoc
-> > +++ b/Documentation/git.adoc
-> > @@ -487,6 +487,13 @@ System
-> >       `$HOMEDRIVE$HOMEPATH` if both `$HOMEDRIVE` and `$HOMEPATH` exist;
-> >       otherwise `$USERPROFILE` if `$USERPROFILE` exists.
-> >
-> > +`PATH`::
-> > +     When a user runs 'git <command>' that is not part of the core Git=
- programs
-> > +     (installed in GIT_EXEC_PATH), 'git-<command>' that is runnable by=
- the user
-> > +     in a directory on `$PATH` is invoked. Argument passed after the c=
-ommand
->
-> OK.
->
-> > +     name are passed as-is to the runnable program. These commands pre=
-cedes
-> > +     alias expansion.
->
-> We are not going to try running a program that is not runnable
-> anyway, so "the runnable program" -> "the program", probably?
+Here is my attempt.
 
-Completely agree, will fix.
+    ... Argument passed after the command name are passed as-is to
+    the program.  To execute `git <foo>`, `git` finds command
+    `<foo>` (either a core Git program found in 'GIT_EXEC_PATH', or
+    a custom one in a directory on 'PATH'), before trying `foo` as
+    an alias.
 
-> I am not sure what the last sentence wants to say, especially the
-> "alias expansion" part.  Do you mean that your "git foo" alias (not
-> just its expansion but its presence as a whole) is ignored if you
-> have a "git-foo" program on your $PATH?
-
-This is exactly what I tried to write there.
-Personally, I had expected aliases to take precedence over external command=
-s,
-so I was surprised to see that it is reversed (so the program "git-foo" run=
-s
-before Git looks for the alias "git foo"). I thought it'll make sense to
-mention in the documentation, to save possible headaches for future develop=
-ers.
-
-I'm not sure it's too much information, or should just be described better?
-
-Maybe adding a second paragraph with something like this can be clearer:
-
-    External commands precedes aliases. For example, running "git foo" will
-    execute "git-foo" from PATH; only if "git-foo" does not exist, will Git
-    look for the alias "foo".
-
-What do you think?
-
-> Speaking of "alias", I have always felt that it was suboptimal to
-> make users refer to "git help config" to find out about it.  I
-> wonder if "git help git" should be the first place users would look
-> for a help about them?
+>>  We divide Git into high level ("porcelain") commands and low level
+>> -("plumbing") commands.
+>> +("plumbing") commands.  For defining command aliases, see
+>> +linkgit:gitconfig[1] and look for descriptions of `alias.*`.
+>> +For installing custom "git" subcommands, see the description for
+>> +the 'PATH' environment variable in this manual.
+>>
+>>  High-level commands (porcelain)
+>>  -------------------------------
 >
-> We have "GIT COMMANDS" section in "git help git" that says "We
-> divide GIt into porcelain and plumbing" and then have two
-> subsections there that list commands that belong to these two
-> categories.  Perhaps leaving some breadcrumbs to redirect them would
-> be a good start, something like this?
+> I agree - that makes good sense to me too.
 >
->  Documentation/git.adoc | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git c/Documentation/git.adoc w/Documentation/git.adoc
-> index ce099e78b8..fb5b477eda 100644
-> --- c/Documentation/git.adoc
-> +++ w/Documentation/git.adoc
-> @@ -235,7 +235,10 @@ GIT COMMANDS
->  ------------
->
->  We divide Git into high level ("porcelain") commands and low level
-> -("plumbing") commands.
-> +("plumbing") commands.  For defining command aliases, see
-> +linkgit:gitconfig[1] and look for descriptions of `alias.*`.
-> +For installing custom "git" subcommands, see the description for
-> +the 'PATH' environment variable in this manual.
->
->  High-level commands (porcelain)
->  -------------------------------
+> Do you see it as belonging in the same commit, or in a subsequent commit?
 
-I agree - that makes good sense to me too.
+Totally outside of your topic.  Let's concentrate on the PATH thing
+and finish it first.
 
-Do you see it as belonging in the same commit, or in a subsequent commit? I=
-'m
-not fully clear about the rules for splitting such commits in the repo.
+Thanks.
 
-Thanks,
-With Kind Regards,
-Omri
