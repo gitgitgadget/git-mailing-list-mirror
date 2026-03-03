@@ -1,65 +1,65 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1CF49252E
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 15:33:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703A14949E7
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 15:34:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772552039; cv=none; b=joz0ieCZ6DZsnSBG5M/al7d5MIbSUqVVH1rFTaXN51n+6td8dVeQguV2M/RAWAN9fVTpK5bC2HOnm8dnE2R5tGJ99DX6+z0JzchA4QVVIf4twHvSt8Zm1xkkew/d1os7yOrze90kH890u769RRIUnvpWdij3YoN2krhmLjKoR8g=
+	t=1772552041; cv=none; b=Yu37Qs5J6XkpWQ22GpN+SblSiBItlrrfCKEloxbaS0O/NeAtkPi+UpOB9yYq0Xd2JNgoF2yexRaX/99SDRUygjabC0d9sDwb06ErQTQF3mjJ1to/IQvp/u1FmqtNGlEwAaAx+4nCnNBYwkApoigtG4ZC5u29seWNZPBAYcGTtQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772552039; c=relaxed/simple;
-	bh=h4WiV8zhi4vGveJqSTbW/Op9RnLE7i96DSZ3PHdHuZg=;
+	s=arc-20240116; t=1772552041; c=relaxed/simple;
+	bh=YosJL0K3PTX7DXBbQh64PY19+TANwjlXx5AsQvcROM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJcqeKk92//5cXJ6L666IfR/BxPm8vY7TMXCr7AjALlvQwcn282oMhiURmCy/cKXsRQxrYhmq3kt+GPVgh4Kn9Q0hNGn0Nh1RMhBQVxCYl0Dsg4D3pRliNHGmk64+DZphDhy5fzGmvUMUzZFZ8vxKenJWjJ1W/Q1F8h3lAlcJq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VG23gvAO; arc=none smtp.client-ip=209.85.128.177
+	 MIME-Version; b=Zm6Qmiez55FjMHGRKPOoUn/T1IT0N+WDCVkqt59Shqa29QZ36k3DfJ2T/N8pJlIzbRQTBdyvS5VHtwR5uYgxyrZfMi5WOGC3/+K8K83VDeA2FgwkG1W1mtmIJUndYT+dwv4Ahr+OLlv4lfhYhcJgHO2xn70JrF+EPYUS+P7gXiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AVS0TaDd; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VG23gvAO"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-798617c0ad5so31161627b3.1
-        for <git@vger.kernel.org>; Tue, 03 Mar 2026 07:33:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AVS0TaDd"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-78fc4425b6bso56543467b3.1
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 07:34:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772552037; x=1773156837; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772552039; x=1773156839; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zCrqa0zmelxHkxq0KXWB7MSnesC/Hyhmm4W/ctdYxE8=;
-        b=VG23gvAOBn3MIqlxirpF0mR4eEWL9p26q6J5IqsAmof6odVarT48cbvt6Su0kgKNbQ
-         1ofh/FmcwHdRyZnNi8JQnyWBt6K7ZHpCq3Mvz+NwYiCZMeDTBK4Li/eixCOoFpWgj/nn
-         ScWgfQZ8tb7wWnpDt2e5vKNzklvk41fmXxV/4yKn1Akal6fTzv6RJKEEe8J9rpDNdtKD
-         N8w3OZWAMbcviLK39lOuLf75PwvOPaaRDA4/l8KpKMORdd1N7vC9x4L+Qo2PZXNch/y0
-         fPZFNOGv0hG8LTWmgtM7T0umcBWYrIN/Hm9GKuFhN+I3rAEGEtJSTl3G0TM+z0zQOBmU
-         4cnQ==
+        bh=9pYlY6NRSmu3nkcDbdIkOVyPwHc0OhQwKW7MgZDv1G8=;
+        b=AVS0TaDdKdOjvaFEsqJTq/BS7mXy1lkMHcNYqQuDeBrGpgzMeBQ9oCfJogjPomzQnh
+         RbIPfYiTyJCDJhuiBW422EgzmFN7zTtGBIHvaTfdwXwg5G2E/35ddmKP/qiL5d5E1/t2
+         lYVNhPRetBE2ABW10gKoZ76aIunBLIyJu/7cdhehFqDmIDzmW3EC0NopC/KZwtHYCCSZ
+         Inm19HkeI55+BjVJXQaQasL3cwsr0OThxr0k/nMbzoF9u1Hpv8zheTggspoBdaiPVxeD
+         M9tcA5+Jn3jUV1n9TTKgoK8hFBrWauWLam3oS/WcpIu7TNOvhLCp8nLL9MtErG+0X0KL
+         dknQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772552037; x=1773156837;
+        d=1e100.net; s=20230601; t=1772552039; x=1773156839;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=zCrqa0zmelxHkxq0KXWB7MSnesC/Hyhmm4W/ctdYxE8=;
-        b=nv33iT6gG3qkkKvB28HD3ahCeBL0Q8j7iRw29elwsaS6F4x2+FQBMr5FpI3hHOPw/O
-         IJtDCrRliqgb6XD95rSVt/h1PVB1M8phQPcmTEz4ru/QR5Doc/xhTSZLCrr74digZsND
-         5k3/0vwr6drfplR7aXj2KhknXuGNcJFX/OJG/klkxYrwsyAxukO9br0uso+JhoYLKynT
-         r6OS6iCW6zd3MhUHv8QnUSNY/S8aIbO1ndUMjqGy7Dv++fYHhb24HK8TYgWz37eZEOBM
-         a29tqn/gQAnKoUFTwdWb+ayXeLCfFmGY7GsgAyMCTnZjN1TtLnyqXk7KBbvXfq+n1KYD
-         p0GA==
-X-Forwarded-Encrypted: i=1; AJvYcCWzsFjYabaM3Yi4DHjgWxh18taO0J5Z9p6RyTHbfIVe60pwPCgrFqalrBnprOPlWBd/no8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YytlE49Md8bcg2RlifWmiXKgTj8QllzEjoznIsx6zYr2jdzY1+d
-	hv4ZRKdfYe56jK6Jctwuhu0ByOAhf+oe+jGdupbx1TSlTfW5e/rI7s3l
-X-Gm-Gg: ATEYQzzyqzMg5XAAIsx49T8EqOU1Vu3qIzPhhRhk2Th398nbMs215vXNboms0Gtk/FT
-	sIQ76/1y1yqSpPBDbslwmqJjr0+AY6wST0y18TzPVZW6Ca1FP6c+NK6L5EnDrTva6vZGOjUeiU4
-	I/l+ZMppf+W6r34oefmzD873/cThGM96u+SV6SlkhXgXRcJ6iLKufY9xTbneqA0hPiCslZLzbiZ
-	pXApdjQXyefokZipfrwOp57YXjtsNYCebguZWwfeFvF+hso71nxUPSsfPsWoAWUPmQqJgBp0fiB
-	egDN4gU2YWKE3AAEEtJcDv6VP1QcR+qTY7yacZaShPmJ2PAD+ap4SiKmDp/9kM4QkaEwqQR/Zyo
-	jkBzdfIPVp98a/lsdOYXwOHFWLE9KogV1SQqj23ko3bsNwjZ4AF74O6j8U60n/SqMZx0WCyHbH+
-	0qniVU0ij32DUQbNR0QQhQ4c6ktlrzebithskPlaFvHuFwMgQn8NyAku0jvntiIB53/uKoYvVir
-	J/VBL+RMR7mRpQBJUBSs8vJl7KGsnd7GrbpD6EMboS4ZgDgLZDepucGnuJbebW5Nqqm2dHkBPWy
-	X0/fGEIkmXzapBbhi5TBBw==
-X-Received: by 2002:a05:690c:b9c:b0:797:d5f2:c64 with SMTP id 00721157ae682-7988546a097mr141392777b3.10.1772552037125;
-        Tue, 03 Mar 2026 07:33:57 -0800 (PST)
+        bh=9pYlY6NRSmu3nkcDbdIkOVyPwHc0OhQwKW7MgZDv1G8=;
+        b=YB/suLzK1yd+eCPyWKCVOEtZ9cqGCw+Y+bIBJXgv+2eCDkjr7F3Y+jOwCBHkuYoTVY
+         7xItyk/PIQRvIiVp7jUIt7IMMQB6MjPAYoMDIeaLVYhsywUlKzrZl4P3RON3Al52vDiS
+         Ec13oFDJD8gBUGOAhhx+JBzeuLBur8UszlCLNkkVcZ6McWZVUGFxQ0oT3buPNqUNJaeJ
+         cNBTaYu2uRrtigl1tKHgmGOy4z8vlLlXIcneFCmkT54d562if1cCIR8UdtqOdLPu7/Y7
+         vd5NxC/AoIObrt7EW4ZiQUhnQkt5zcQ7+Iyu/vVvi5VOYLYz1T9gmdzEruVYP1ZixP8l
+         EDNg==
+X-Forwarded-Encrypted: i=1; AJvYcCUlgolXL14lqEVo7QkOm9cgVT6YwUPhka1hgUJLiKBm1nHSLI1x+9eaCfnjrvn2M7OlOLo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwY0Br5KdevWyG28dzHlhH+80astkRxjVLjzGaS0wOz77G4Lp80
+	244gSdCbr72fj8/epNd4sZcjxCcbFxBQfQjHNdkzvamuC7Q1pw8tF+cL
+X-Gm-Gg: ATEYQzyofCB4Rsu2//+FPB6ryP4CTzt9t1M9itaaxsnsTDgN9lqYGAefhSZcHpoP3E2
+	EM6OkqSpaHhwcqc1sNn5WnJUukkH+3p0eKQbVvSn+Oyuwz2ehXWhzp2SJGVfN2Bh0s1GUEDSuib
+	/O/HUu+faNmkfXbWaEoFIFwjVZQsGrSVjtWki6B2RF0fTqPbRyTrAldzlvi1mPvXdjNWlriIotd
+	r7AT2mfSArjkxpTw+a1u676PSo+HcR8GFekxq9ZiiqEwbhKbixos3/8qks3Wbu6k8rsI5IsF/Gz
+	RDFLtnBU/VqC+SU0S+h21GNwmgc4a8h162S6QfnvHNT1OunAL1pcK4fuj9HhjJAxZY1QkXLnue5
+	eIg8PPEhG9hLUjBB8elJxcg8TNBUJs04o8XIk4My/Oe9OvcdW+3qUDC1v7va8Uwp+YaAEVU0aqp
+	Bfs/V05oJMSyFddM8Xa9r2u9FXL59Ymm1fLR78/aBAs/GI+AvB7yg1kLOs+1pjb9WKpI7/NCl5E
+	k2k/EvH0FHt3DPRJhWgj+s0G1K7VoOVHX3zVYJRja/rE724n44Yu0HTinRKGWSRXiQvK00Bd7x/
+	jjFYD4kF8b8=
+X-Received: by 2002:a05:690c:6f08:b0:797:e1fa:9898 with SMTP id 00721157ae682-79885591766mr160434207b3.42.1772552039191;
+        Tue, 03 Mar 2026 07:33:59 -0800 (PST)
 Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79876a8feacsm64364057b3.11.2026.03.03.07.33.55
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79876a8feacsm64364057b3.11.2026.03.03.07.33.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2026 07:33:56 -0800 (PST)
+        Tue, 03 Mar 2026 07:33:58 -0800 (PST)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	Git List <git@vger.kernel.org>
@@ -76,9 +76,9 @@ Cc: Jiang Xin <worldhello.net@gmail.com>,
 	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
 	Teng Long <dyroneteng@gmail.com>,
 	Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [PATCH v2 2/5] docs(l10n): add AGENTS.md with optimized update-pot instructions
-Date: Tue,  3 Mar 2026 23:33:29 +0800
-Message-ID: <5e23a45964fa86bf710d5e04396a574dc8882ef3.1772551123.git.worldhello.net@gmail.com>
+Subject: [PATCH v2 3/5] docs(l10n): add AI agent instructions for updating po/XX.po files
+Date: Tue,  3 Mar 2026 23:33:30 +0800
+Message-ID: <e8bf240c68f069fb7ee71b4e42a43f0798b51671.1772551123.git.worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.51.0.rc2
 In-Reply-To: <cover.1772551123.git.worldhello.net@gmail.com>
 References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com> <cover.1772551123.git.worldhello.net@gmail.com>
@@ -90,156 +90,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a new documentation file po/AGENTS.md that provides agent-specific
-instructions for generating or updating po/git.pot, separating them
-from the general po/README.md. This separation allows for more targeted
-optimization of AI agent workflows.
+Add a new section po/AGENTS.md to provide clear instructions for
+updating language-specific PO files. The improved documentation
+significantly reduces both model interaction rounds and execution time.
 
 Performance evaluation using the qwen model:
 
-    # Before: add the instruction to po/README.md; the prompt references
-    # po/README.md for execution
-    git-po-helper agent-test --runs=5 --agent=qwen update-pot \
-	--prompt="Update po/git.pot according to po/README.md"
+    # Before: instructions in po/README.md; custom prompt references it
+    git-po-helper agent-test --runs=5 --agent=qwen update-po \
+        --prompt="Update po/zh_CN.po according to po/README.md"
 
-    # After: add the instruction to po/AGENTS.md; use builtin prompt
-    # that references po/AGENTS.md for execution
-    git-po-helper agent-test --runs=5 --agent=qwen update-pot
+    # After: instructions in po/AGENTS.md; built-in prompt references it
+    git-po-helper agent-test --runs=5 --agent=qwen update-po
 
 Benchmark results (5-run average):
 
-Phase 1 - Optimizing po/README.md:
-
     | Metric      | Before  | After  | Improvement |
     |-------------|---------|--------|-------------|
-    | Turns:      | 17      | 5      | -71%        |
-    | Exec time   | 34s     | 14s    | -59%        |
-    | Turn range  | 3-36    | 3-7    |             |
-    | Time range  | 10s-59s | 9s-19s |             |
-
-Phase 2 - Adding po/AGENTS.md (further optimization):
-
-    | Metric      | Before  | After  | Improvement |
-    |-------------|---------|--------|-------------|
-    | Turns       | 17      | 3      | -82%        |
-    | Exec time   | 34s     | 8s     | -76%        |
-    | Turn range  | 3-36    | 3-3    |             |
-    | Time range  | 10s-59s | 6s-9s  |             |
-
-Separating agent-specific instructions into AGENTS.md provides:
-
-- More focused and concise instructions for AI agents
-- Cleaner README.md for human readers
-- Additional 11% reduction in turns and 17% in execution time
-- More consistent behavior (turn range reduced from 3-7 to 3-3)
+    | Turns:      | 22      | 4      | -82%        |
+    | Exec time   | 38s     | 9s     | -76%        |
+    | Turn range  | 17-39   | 3-9    |             |
+    | Time range  | 25s-68s | 7s-14s |             |
 
 This change makes agent workflows more efficient and reduces API costs
-by minimizing redundant LLM interactions.
+by minimizing redundant LLM interactions and file content checks.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 ---
- po/AGENTS.md | 92 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
- create mode 100644 po/AGENTS.md
+ po/AGENTS.md | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/po/AGENTS.md b/po/AGENTS.md
-new file mode 100644
-index 0000000000..1fcef9119a
---- /dev/null
+index 1fcef9119a..5eb1a606e1 100644
+--- a/po/AGENTS.md
 +++ b/po/AGENTS.md
-@@ -0,0 +1,92 @@
-+# Instructions for AI Agents
+@@ -72,6 +72,22 @@ The command will handle all necessary steps including file creation or
+ update automatically.
+ 
+ 
++### Task 2: Updating po/XX.po
 +
-+This file gives specific instructions for AI agents that perform
-+housekeeping tasks for Git l10n. Use of AI is optional; many successful
-+l10n teams work well without it.
++When asked to "update po/XX.po" or similar requests (where XX is a
++language code):
 +
-+The section "Housekeeping tasks for localization workflows" documents the
-+most commonly used housekeeping tasks.
++1. **Directly execute** the command `make po-update PO_FILE=po/XX.po`
++   without reading or checking the file content beforehand.
 +
++2. **Do not verify, translate, or review** the updated file after execution.
++   Simply run the command and consider the task complete.
 +
-+## Background knowledge for localization workflows
-+
-+Essential background for the workflows below; understand these concepts before
-+performing any housekeeping tasks in this document.
-+
-+### Language code and notation (XX, ll, ll\_CC)
-+
-+XX is a placeholder for the language code. The code is either `ll` (ISO 639)
-+or `ll_CC` (e.g. `de`, `zh_CN` for Simplified Chinese). It appears in the PO
-+file's header entry metadata (e.g. `"Language: zh_CN\n"`) and is typically used
-+as the filename: `po/XX.po`.
++The command will handle all necessary steps including generating
++"po/git.pot" and merging new translatable strings into "po/XX.po"
++automatically.
 +
 +
-+### Header Entry
-+
-+Every PO file (`po/XX.po`) contains a special entry called the "header entry"
-+at the beginning of the file. This entry has an empty `msgid` and contains
-+metadata about the translation in its `msgstr`:
-+
-+```po
-+msgid ""
-+msgstr ""
-+"Project-Id-Version: Git\n"
-+"Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
-+"POT-Creation-Date: 2026-02-14 13:38+0800\n"
-+"PO-Revision-Date: 2026-02-14 11:41+0800\n"
-+"Last-Translator: Teng Long <dyroneteng@gmail.com>\n"
-+"Language-Team: GitHub <https://github.com/dyrone/git/>\n"
-+"Language: zh_CN\n"
-+"MIME-Version: 1.0\n"
-+"Content-Type: text/plain; charset=UTF-8\n"
-+"Content-Transfer-Encoding: 8bit\n"
-+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-+"X-Generator: Gtranslator 42.0\n"
-+```
-+
-+**CRITICAL**: Do not modify the header's `msgstr` during translation. Extracted
-+files (e.g. `po/l10n-pending.po`) include this header; preserve it exactly.
-+
-+The header provides: translation metadata (translator, language, dates);
-+pluralization rules (`Plural-Forms`); encoding and MIME type; project/version.
-+
-+
-+## Housekeeping tasks for localization workflows
-+
-+This section describes housekeeping tasks listed in the introduction. Read
-+"Background knowledge for localization workflows" above before performing
-+any task.
-+
-+
-+### Task 1: Generating or updating po/git.pot
-+
-+When asked to "update po/git.pot" or similar requests:
-+
-+1. **Directly execute** the command `make po/git.pot` without checking
-+   if the file exists beforehand.
-+
-+2. **Do not verify** the generated file after execution. Simply run the
-+   command and consider the task complete.
-+
-+The command will handle all necessary steps including file creation or
-+update automatically.
-+
-+
-+## Human translators remain in control
-+
-+Git translation is human-driven; language team leaders and contributors are
-+responsible for:
-+
-+- Understanding technical context of Git commands and messages
-+- Making linguistic and cultural decisions for the target language
-+- Maintaining translation quality and consistency
-+- Ensuring translations follow Git l10n conventions and standards
-+- Building and maintaining language glossaries
-+- Reviewing and approving all changes before submission
-+
-+AI tools, if used, only accelerate routine tasks.
-+
-+AI-generated output should always be treated as rough drafts requiring human
-+review, editing, and approval by someone who understands both the technical
-+context and the target language.  The best results come from combining AI
-+efficiency with human judgment, cultural insight, and community engagement.
+ ## Human translators remain in control
+ 
+ Git translation is human-driven; language team leaders and contributors are
 -- 
 2.53.0.rc2.20.g532543fa46
 
