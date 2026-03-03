@@ -1,156 +1,108 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B1029D29F
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 06:30:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB131E230E
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 06:32:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772519441; cv=none; b=N0PuvZ8SMBLIVcP9mSm7CyBjf/Zf7kRqzJIXNgT5Jpi8lBnbuCZe67NpmsxbCo290NyK/+1dfinqlCjvxVPyl8cleItnqd7y5xhwe1pN53oneLQBXls0QOZcAgdCU9sEu4HNWSQYDRwswdwj9NlCvukoaS6gbjMS99gmfRFI0BI=
+	t=1772519581; cv=none; b=t2/3103VSwIoa/ZBY4aj61hyIbfu1rkgKH9M61TkNJoCCy7lsROoYYFxlwhW9LYndPIs65dkki013Z4MR2OOQD5J9VsPqTNW7aRaLH4+SGhlJwF53O1fMT/+tfRcI1KHpBIdC2TMSBMtrjurtl81lmRP4CsRuXqPgr5DSxaZeVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772519441; c=relaxed/simple;
-	bh=bC0M28E7V3vFzSNiBM2Zi/1V9r+Io3uIrwyOb84y+1U=;
+	s=arc-20240116; t=1772519581; c=relaxed/simple;
+	bh=kYfsePhoRmZDEkQDB2LmXD/jkWr4CCtgBx3Wtus7UPI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fFg4VF36qroAT/AVqRSh9CZLyCUfqaNNaZ+poHvgwUtBPW6m0/FHx2bodEO5uPgaU6MHwE7Df7GZPbEdarOy3tRSPNfOyNBEiB8oHxUZA8YLoWYMdab1CRd6rAt6tWrvu+e03zTUkoa1lM2xcfyHSrZv0jEOd8wOBQdnk5gND3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jdgJnwob; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EdpzNwU3; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=n4XPgOA3cEIReWkRYJivqw27xXUii10sFXucRfmIjQS/HjnZEglsmvGZb9A/X/jfqYBeA7XmwW6QURdjkEF8RxMj7L8LDvA4Kr+lYYEiiIrEjW2PuRRcVTx8o/Vd6AT7OkIOIlMvMaW4OhkK79Fu0680AFpxO9noIXr5SxqQMTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IzxK4Wrp; arc=none smtp.client-ip=209.85.160.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jdgJnwob";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EdpzNwU3"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4881F7A028A;
-	Tue,  3 Mar 2026 01:30:39 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 03 Mar 2026 01:30:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772519439;
-	 x=1772605839; bh=DxPXR04/rHJeBIMxecQQHcQuKFbwpQhIMK3Nx/BT7Wo=; b=
-	jdgJnwobZhactwnuP+BfOPVJdlAyeGj3Pza2l9B8/BejiVX+JDJnYmpC+5uHGcAq
-	uUNFnW2pwp7LbTr6PORnCKJ1dbEqMJKNZuUI7RxnHK55lb92r8LhahWI/l3aG18p
-	3JehalTqK6HI6EuNfvPwnNqFFvNl0dJoMgQPUUYKgV2+JXbtoykiao4Ng4kezr82
-	gYSg4Z9J9PEs9vbAxxj9RtwpcNSS6twSXsG+pzhFETB/zA1ge/aJudm58yq1V7aZ
-	0sYe1MhxpLKKb9yjRy1wQSihkPTjAHDDri/kbjqY6Zr2VPMYLvfygXvQnqEIMgm3
-	ysx+aa8lZUD/WPFn1BPBAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772519439; x=
-	1772605839; bh=DxPXR04/rHJeBIMxecQQHcQuKFbwpQhIMK3Nx/BT7Wo=; b=E
-	dpzNwU3lu44bvnr0JOSeo5R2bYpDURhjURN9l+gH0EABt6t0kCtU34vyT0OH/x3w
-	iT2M1VWx7jrOVJkxuZiylWZ+kKOQ+9Jbj5isWD2sqQzjyPe7Qt3QbATj7Ee4hFpU
-	zq8mROeIbnV9XCUh6VivMq7fiTpAFe6hTYVncU/M0IoGXAlz1eibRmA7cGaJkMgo
-	INjULF+hjAuMwjyy0j8OdHpjOSxkrUZHcah5oXuUgUkU82f9pTsCEOehgRzA4AjL
-	APVMm9lk4Nr+0P4TIC+6PCXFXIVv/KgF/C96sX2JcZ+3KkIgnAeG2Y+fmGthR6OY
-	eedSDaDIuFxmRWtGwNCZg==
-X-ME-Sender: <xms:DoCmaWmVrlM6FcC0N1FAOfhHJHhrQSSUAozaUN9aCOAX9YMS3MDRYQ>
-    <xme:DoCmaQH4K0X3FfUSM6W6b7P6G1ZpBOpXPxwMgfKW-Dn8HELd4KBcB4bK5zITEHFoc
-    pkDBm9zSuW4euXhJhWf1LhUWZmedSvxHyE4VosnmSXrYkjYBbizuB4>
-X-ME-Received: <xmr:DoCmaW5auV6oBZMYo5sDvhmYbRcl87nUqvz2Q1EGqvVfcEAwmU97zXbg5JKN84nTtDycb18xCOL2lKMpLxC7wCZensO_gcYeSJvr7oaiWNzC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheelkeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeortddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeekfedtudelveefveelvedufeelueduieehgfffteehkefgudduvdduffeikeejueen
-    ucffohhmrghinhepvgigrghmphhlvgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
-    peejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvth
-    esghhmrghilhdrtghomhdprhgtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgohho
-    ghhlvgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvges
-    thhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoheprghlrghnsegsrhgrihhthhifrghith
-    gvrdguvghvpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhl
-    rdgtohhm
-X-ME-Proxy: <xmx:DoCmaQnDQSyfI2zGjixfKz3dYLrm8rGR2na8TND4BEVVu7eggjhZNA>
-    <xmx:DoCmaTr1Os8OKuJmDJBucRO6gr0_tx7lbOn-nW266kV9PgoITC_J2g>
-    <xmx:DoCmaXvlMeSHSo7jik32X2Ww28HBdxl7JANQkFY1w8HVcXYciAN9wQ>
-    <xmx:DoCmaQGTqag5GvXV2Jw53bLUwF-ave-A1s8vXsIoCVB6L6rqLcmYyA>
-    <xmx:D4CmaSUpGHyYOfkz4OFzPOSg_ilDLxsiyFHAFSKJ6iZvk5gAALRneEBE>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 01:30:37 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 50b6b0ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Mar 2026 06:30:35 +0000 (UTC)
-Date: Tue, 3 Mar 2026 07:30:32 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Alan Braithwaite <alan@braithwaite.dev>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Alan Braithwaite via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, christian.couder@gmail.com,
-	jonathantanmy@google.com, me@ttaylorr.com
-Subject: Re: [PATCH] fetch, clone: add fetch.blobSizeLimit config
-Message-ID: <aaaACBJVAZPypVtn@pks.im>
-References: <pull.2058.git.1772383499900.gitgitgadget@gmail.com>
- <aaV6PLJCrpb2mQnq@pks.im>
- <xmqq342i12ky.fsf@gitster.g>
- <a3e064fe-9f0d-448f-b034-4a95dcd3fe97@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IzxK4Wrp"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-40427db1300so392416fac.0
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 22:32:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772519579; x=1773124379; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bgmJKvHwBU76Ic6gBjr+8ofemKksWFwFV2HtfAExN0A=;
+        b=IzxK4WrpVWXKDAbbJ4WEzwo9p/wABJoW3X4aWlzKZ7vMtxLkOHlpJL8nmf51+/fWZK
+         aoDA2XSLrSU3G9M4e6EM836SaTtyI22RsX3FdJZQEQB3W0Fddz5IqGXY7OM8wuDWFGyr
+         TSIwTBTRnhS0W0UuZkQrk/TWn/Li3gA3vuZol7uaqE0mSAsK/QRpckJ6HrCIfYu9waK6
+         vIiX/tx+1ebWIka6j70Ue4aLvIpvPME4CpfOH6ko+yKdyjjT8+JQD+JDP9LP7Mj5vDC0
+         ob547lkhFjAWFudYc0MqJonMbJiyFIn/lUyIvlmwfNTgCbfLOh6hTPtJD5AflqZfMY7k
+         NPng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772519579; x=1773124379;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bgmJKvHwBU76Ic6gBjr+8ofemKksWFwFV2HtfAExN0A=;
+        b=a37HQ+cvq635gWIebx+EF/MYa0UC/bWcOoAZ5iQae+ssOWbYXxCFF0emvPdUlV7jcS
+         BJdMHV57FJ4f4j0wq1tq8kaTtqa6hkfPTVqjSmI+Nv8hW5psug2U7ksoLAd3bgVSqsDQ
+         pKpMdtHwZdv4HkBNrfqeGUhX0o3kOFGT5HelDjHuuvBKMZovdgfkGxuJU8mWW1iXs367
+         68ZXzYFlF5Dgr7iLaqe83VoSoE6BNGRUtqXi0KUozXA0r1+rrzVfFkJxUFgjfidpwTpZ
+         qWFYlyfAOUFVNKoQ9tGHf7U77iUXMfSXessxK/u0VafJOe5RmDnB/swIgf8fGFhUp0LM
+         Kklg==
+X-Gm-Message-State: AOJu0Ywey/ieAZUuIa7+LHbkwJglcBs3ElA3+sgwW+KzCt86QpDoKi3G
+	plUWuX+c5rJ+dza0ox+fCNZWYv6I4gp/w9Iu9d2H/ttYoyCeya1D55CndemX/Q==
+X-Gm-Gg: ATEYQzxWFnSqnJJx5ZSQhYcmU9qFcLWc1cVd2h0/VhJ1KPdELVquHJS+Yk3le9qucVn
+	N4MlzvWBz+EZrWiB8xB05er6+EbxwORwz1upY3Cg9CLsSjDlGQHTC3PxQ5VQkqdo7m8NW882Hig
+	N5Obc3QulTr20GsUW0sxOdAp5fUY1UAv66PLVNs778gYTqMrSEavf9LUKuP5bQLq9XKoHkTFOX5
+	QCK5Qrkp5CLyy3VKTllgy+0W84u5D/VF2CkKFit/RZyrRHwFk5iIkfwbV7YtidWB7m0OcDDDHNP
+	ReNqPW0jW+p1+Z9b/6MUm8IoOjgmkvrq0H80MfFux2kIWc1JgdEjc7XKiVZT4Z5usHdNMmKm79a
+	lc0TVIiL+p/trrO2oOsx5U+cTEyhtEs/COwOtfSqpwVxLY2SkQ0cAMDoAVD/6q4NB2CeZhhzEav
+	GPmKXkfoGP4QbsbK48
+X-Received: by 2002:a05:6870:164b:b0:3fa:966:a859 with SMTP id 586e51a60fabf-41627053298mr7945185fac.42.1772519578567;
+        Mon, 02 Mar 2026 22:32:58 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4160cff1aacsm13391710fac.9.2026.03.02.22.32.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Mar 2026 22:32:57 -0800 (PST)
+Date: Tue, 3 Mar 2026 00:32:56 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] ci: unset GITLAB_FEATURES envvar to not bust xargs(1)
+ limits
+Message-ID: <aaZ_yngsx-CXAx0p@denethor>
+References: <20260302-pks-msvc-meson-xargs-v1-1-8e42abd879ce@pks.im>
+ <aaXArnhYbtX9gsUU@denethor>
+ <aaZ8nyJFjFqct2Ri@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a3e064fe-9f0d-448f-b034-4a95dcd3fe97@app.fastmail.com>
+In-Reply-To: <aaZ8nyJFjFqct2Ri@pks.im>
 
-On Mon, Mar 02, 2026 at 01:36:40PM -0800, Alan Braithwaite wrote:
-> Peff wrote:
-> > We actually can do blob:limit filters with bitmaps. See
-> > 84243da129 (pack-bitmap: implement BLOB_LIMIT filtering,
-> > 2020-02-14).
+On 26/03/03 07:15AM, Patrick Steinhardt wrote:
+> On Mon, Mar 02, 2026 at 11:11:52AM -0600, Justin Tobler wrote:
+> > On 26/03/02 12:55PM, Patrick Steinhardt wrote:
+> [snip]
+> > > The GITLAB_FEATURES environment variable makes up for roughly a third of
+> > > the complete environment. This variable is a comma-separated list of
+> > > features available for the GitLab instance, and seemingly it has been
+> > > growing over time as GitLab added more and more features.
+> > > 
+> > > Fix the issue by unsetting the environment variable in "ci/lib.sh". This
+> > > ensures that the environment variables are now smaller than the upper
+> > > limit on argument length again, and that in turn fixes the assert in
+> > > xargs(1).
+> > 
+> > So if we unset GITLAB_FEATURES, that puts us at 10987 bytes (17373 -
+> > 6386) which would be under the upper limit. Unsetting this environment
+> > variable seems like a reasonable means to mitigate this problem. Naive
+> > question: is the upper limit something we could increase for the
+> > environment?
 > 
-> Good to know. I'm not positive, but my understanding is that
-> this patch only touches client code, and the server sees an
-> identical request to what `git clone --filter=blob:limit=1m`
-> already sends today. If that's correct, anyone can already
-> impose that cost — this patch just makes it easier to opt in.
+> Unfortunately not. Under normal Linux systems you'd be able to do that,
+> but in MSYS2 the limits are hardcoded as far as I could see.
 
-Ah, right, that's something I forgot. I've seen too many performance
-issues recently with blob:limit fetches, so I jumped the gun.
+Ah ok, good to know. I was wondering if there would be value in trying
+to increase the headroom we have in case the overall size of the
+environment variables increases over time again, but it sounds like this
+wouldn't be possible. Hopefully we should be good though. :)
 
-> Junio wrote:
-> > As to this extra variable, it can already be done with
-> > existing remote.*.partialCloneFilter, it seems, so I do not
-> > know why we want to add it.
-> 
-> I may not understand the config as well as you do, but my
-> reading is that remote.*.partialCloneFilter requires a specific
-> remote name and only takes effect on subsequent fetches from an
-> already-registered promisor remote — not the initial clone. You
-> would also need remote.origin.promisor=true set globally, which
-> seems odd. If I'm understanding correctly, there is currently
-> no way to say "all new clones should use a blob size filter"
-> via config alone. But please correct me if I'm wrong.
-
-No, you're right about this one, and I think this is a sensible thing to
-want. But what I'd like to see is a bit more nuance, I guess:
-
-  - It should be possible to specify the configuration per URL. If you
-    know that git.example.com knows object filters you may want to turn
-    them on for that domain specifically. So the mechanism would work
-    similar to "url.<base>.insteadOf" or "http.<url>.*" settings.
-
-  - The infrastructure shouldn't cast any specific filter into stone.
-    Instead, it should be possible to specify a default filter.
-
-I'd assume that these settings should only impact the initial clone to
-use a default filter in case the cloned URL matches the configured URL.
-For existing repositories it shouldn't have any impact, as we should
-continue to respect the ".git/config" there when it comes to promisors
-and filters.
-
-> Separately — is my understanding correct that partial clone
-> with blob:limit works today without server-side changes,
-> assuming uploadpack.allowFilter is enabled? If so, I'm happy
-> to maintain this as a local client patch for my own workflow.
-
-Yes, blob:limit filters are supported by many forges nowadays.
-
-Patrick
+Thanks,
+-Justin
