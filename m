@@ -1,65 +1,65 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EB3390991
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 15:33:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1CF49252E
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 15:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772552036; cv=none; b=gd5YbBKHEAm60f5+AQhZPbbrjnURn0TVQb08bb3aI0b+BowS03bqGUFG4JGoBwYKqFj/PybxcpBkakPAD9t6PcYY1zWuatmAsYczkl2BSrxKm1KIrNtzHOkNG5X+qR3U1vUIxuxksmkB8s0cvmW390+tSySjLPlYTF9Dv1ltCjY=
+	t=1772552039; cv=none; b=joz0ieCZ6DZsnSBG5M/al7d5MIbSUqVVH1rFTaXN51n+6td8dVeQguV2M/RAWAN9fVTpK5bC2HOnm8dnE2R5tGJ99DX6+z0JzchA4QVVIf4twHvSt8Zm1xkkew/d1os7yOrze90kH890u769RRIUnvpWdij3YoN2krhmLjKoR8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772552036; c=relaxed/simple;
-	bh=71Rdse0Qp1mtEj9fdRfkw1pwianMxqEnxSXufkef2Ic=;
+	s=arc-20240116; t=1772552039; c=relaxed/simple;
+	bh=h4WiV8zhi4vGveJqSTbW/Op9RnLE7i96DSZ3PHdHuZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHhqBOQ7mqihZGPA6T8N2H8SHfKn0fPdjMIgWCKekw5Fm+GrKOFXsWZM41hq3F8x7qCGa1Upjn1PBzx6v2Q+DaUDT3wdXxui5Ql8KV49Wx/xKxs3Ent5CVvYIhl4aROizLUFLLo1agfAgQTL1ODjg8IzbdJF1XnbM4zYy+r28cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qd/htmN7; arc=none smtp.client-ip=209.85.128.170
+	 MIME-Version; b=dJcqeKk92//5cXJ6L666IfR/BxPm8vY7TMXCr7AjALlvQwcn282oMhiURmCy/cKXsRQxrYhmq3kt+GPVgh4Kn9Q0hNGn0Nh1RMhBQVxCYl0Dsg4D3pRliNHGmk64+DZphDhy5fzGmvUMUzZFZ8vxKenJWjJ1W/Q1F8h3lAlcJq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VG23gvAO; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qd/htmN7"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-79868cde1eeso62476617b3.2
-        for <git@vger.kernel.org>; Tue, 03 Mar 2026 07:33:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VG23gvAO"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-798617c0ad5so31161627b3.1
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 07:33:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772552034; x=1773156834; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772552037; x=1773156837; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=odbywylCmgjISVRRR32g7Kj32ZYpP1PVQBNt+bMjzUs=;
-        b=Qd/htmN7eepbO5xXLu1Mlgs0afdISCxcjmnnuYt/OIMhR29/Q2ScQtCXVpYoWoLjX1
-         Qdq7SocifFeYl4sOh+p9sGiGhV6kcLA+DVBGrUv/y7Gd+ttw/2FOQ7ZjVJlVPsd5M1YC
-         cKjX2qWxR6XxsWPGcBXtBpB4c7KtfeBl5a/Jy1muzWw7NNWZSc7gz2o0tVpDFfI4dBEZ
-         E3LF7zMAtrjPa1r3YV3O5OKGNYryPAUZA6BfFnq3mqjCfscvOiMtiEmVmDH+TBNhA6TR
-         c2Jg3e5F+7l972xXl5H/8F1lTV0bGqFbpi9ewF8yzrcOTRJ0+5KsN/kqUylYg2WzSV1x
-         iv9Q==
+        bh=zCrqa0zmelxHkxq0KXWB7MSnesC/Hyhmm4W/ctdYxE8=;
+        b=VG23gvAOBn3MIqlxirpF0mR4eEWL9p26q6J5IqsAmof6odVarT48cbvt6Su0kgKNbQ
+         1ofh/FmcwHdRyZnNi8JQnyWBt6K7ZHpCq3Mvz+NwYiCZMeDTBK4Li/eixCOoFpWgj/nn
+         ScWgfQZ8tb7wWnpDt2e5vKNzklvk41fmXxV/4yKn1Akal6fTzv6RJKEEe8J9rpDNdtKD
+         N8w3OZWAMbcviLK39lOuLf75PwvOPaaRDA4/l8KpKMORdd1N7vC9x4L+Qo2PZXNch/y0
+         fPZFNOGv0hG8LTWmgtM7T0umcBWYrIN/Hm9GKuFhN+I3rAEGEtJSTl3G0TM+z0zQOBmU
+         4cnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772552034; x=1773156834;
+        d=1e100.net; s=20230601; t=1772552037; x=1773156837;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=odbywylCmgjISVRRR32g7Kj32ZYpP1PVQBNt+bMjzUs=;
-        b=FvR5CazO4lw55zHa44tr/e6RkAHc19hBlHeWqtanqsgawb5Kzw+cJ4k61MtePigDTN
-         N4rt1ZYW4dUiGY1G6SEhwggMqOD4W5F9zz7gI/2VcR0qT4Dr1P9uycL9sB5WDAw/h0Ad
-         Z4eAF9nh014jWAxBb0MLxOUSXaBvtAx1o/uWjqq3lf1zIgAwEJhUZtF4p7J798BaBIJ7
-         j/hrWYjL132UeGnZIW/RCSaVvzEZRwjY/THxq62mCj+3F7tyINAIGqEmicFdTVfSAE9x
-         XeaUH71ilXf0U58wYfdUYMaN7qYiykLLY6ixDfNSUKG/0C0v857eoZacXldVLmrtxD27
-         ac/A==
-X-Forwarded-Encrypted: i=1; AJvYcCXfWMpKaLYuUiKmQtAm8VbbeFUTVDFnz5+cNGXn6rJzHkeHkOisCGfHReCQD+2+Php7fyA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YywzDfVv6Bj/bZuXTbVGGcZ9dhph05XVknXyMINZB5mdWMbi5bj
-	r7sMup5tuv3m4a+Wk4oLLU1SlK+BnP1VGUXYIs2szJg2c730BeYrUtIjcAz7N0Fp
-X-Gm-Gg: ATEYQzzH7xtRG8LPm2XTpU3XbjxoVwFKlhKepPfEnX4kHo78UlGpNWHBvloj6NACQQR
-	sbCfCjgvK9JkIi9+FtSJEuNt4/E0/PgPN6m7AsbkeyHKpyftN0WdwEVCy2oVf7Bsi3cocpg7Gjo
-	M5r6Q5cz/rElAcVJzqfxlNWlS83oINxiFuz9dA/9JTK6amosT8fWHxUNDV05fF5+WZi/8poDTLb
-	AIAgj3lNzZ+eZ5PEDj2D7cdvzGvh7CxG6ft7edFkK+JgzwF8BQs2m8iTvYs1ecRPFZDJU9F6p+B
-	52y3Tr48/UdIAAxJHgiKF/b7dvgi5DlWOZJgwgq4R0m2i4sGyabBhjRRKM6PoKmoCJeMba9b8VH
-	QM8p+muiW8UvWTfx+dCqpEmGDFs9BkL28/nU4/9+j1CSb0laKTR19PC7wkc4tJgTwnKknVfhOsB
-	HCNt4HVGbENkmUEPVLIm4BcCLusAGJMHkpL/UCMbJThz2CiAE+7YlF1tx25MllTVJAukvTQvjwa
-	iampw2pVkterNSXSn31nmlIhuqvNdEFK48NZ++dQsOwdAtMBi3HsFbNO1MdCGHtzKYeZUXsElsm
-	XvvTFIbZmAk=
-X-Received: by 2002:a05:690c:93:b0:798:6619:f1b7 with SMTP id 00721157ae682-79885475afbmr145315147b3.8.1772552034385;
-        Tue, 03 Mar 2026 07:33:54 -0800 (PST)
+        bh=zCrqa0zmelxHkxq0KXWB7MSnesC/Hyhmm4W/ctdYxE8=;
+        b=nv33iT6gG3qkkKvB28HD3ahCeBL0Q8j7iRw29elwsaS6F4x2+FQBMr5FpI3hHOPw/O
+         IJtDCrRliqgb6XD95rSVt/h1PVB1M8phQPcmTEz4ru/QR5Doc/xhTSZLCrr74digZsND
+         5k3/0vwr6drfplR7aXj2KhknXuGNcJFX/OJG/klkxYrwsyAxukO9br0uso+JhoYLKynT
+         r6OS6iCW6zd3MhUHv8QnUSNY/S8aIbO1ndUMjqGy7Dv++fYHhb24HK8TYgWz37eZEOBM
+         a29tqn/gQAnKoUFTwdWb+ayXeLCfFmGY7GsgAyMCTnZjN1TtLnyqXk7KBbvXfq+n1KYD
+         p0GA==
+X-Forwarded-Encrypted: i=1; AJvYcCWzsFjYabaM3Yi4DHjgWxh18taO0J5Z9p6RyTHbfIVe60pwPCgrFqalrBnprOPlWBd/no8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YytlE49Md8bcg2RlifWmiXKgTj8QllzEjoznIsx6zYr2jdzY1+d
+	hv4ZRKdfYe56jK6Jctwuhu0ByOAhf+oe+jGdupbx1TSlTfW5e/rI7s3l
+X-Gm-Gg: ATEYQzzyqzMg5XAAIsx49T8EqOU1Vu3qIzPhhRhk2Th398nbMs215vXNboms0Gtk/FT
+	sIQ76/1y1yqSpPBDbslwmqJjr0+AY6wST0y18TzPVZW6Ca1FP6c+NK6L5EnDrTva6vZGOjUeiU4
+	I/l+ZMppf+W6r34oefmzD873/cThGM96u+SV6SlkhXgXRcJ6iLKufY9xTbneqA0hPiCslZLzbiZ
+	pXApdjQXyefokZipfrwOp57YXjtsNYCebguZWwfeFvF+hso71nxUPSsfPsWoAWUPmQqJgBp0fiB
+	egDN4gU2YWKE3AAEEtJcDv6VP1QcR+qTY7yacZaShPmJ2PAD+ap4SiKmDp/9kM4QkaEwqQR/Zyo
+	jkBzdfIPVp98a/lsdOYXwOHFWLE9KogV1SQqj23ko3bsNwjZ4AF74O6j8U60n/SqMZx0WCyHbH+
+	0qniVU0ij32DUQbNR0QQhQ4c6ktlrzebithskPlaFvHuFwMgQn8NyAku0jvntiIB53/uKoYvVir
+	J/VBL+RMR7mRpQBJUBSs8vJl7KGsnd7GrbpD6EMboS4ZgDgLZDepucGnuJbebW5Nqqm2dHkBPWy
+	X0/fGEIkmXzapBbhi5TBBw==
+X-Received: by 2002:a05:690c:b9c:b0:797:d5f2:c64 with SMTP id 00721157ae682-7988546a097mr141392777b3.10.1772552037125;
+        Tue, 03 Mar 2026 07:33:57 -0800 (PST)
 Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79876a8feacsm64364057b3.11.2026.03.03.07.33.52
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79876a8feacsm64364057b3.11.2026.03.03.07.33.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2026 07:33:53 -0800 (PST)
+        Tue, 03 Mar 2026 07:33:56 -0800 (PST)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	Git List <git@vger.kernel.org>
@@ -76,9 +76,9 @@ Cc: Jiang Xin <worldhello.net@gmail.com>,
 	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
 	Teng Long <dyroneteng@gmail.com>,
 	Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [PATCH v2 1/5] l10n: add .gitattributes to simplify location filtering
-Date: Tue,  3 Mar 2026 23:33:28 +0800
-Message-ID: <ed04d37535991a1b0e27dc5bc20ec29942e8299e.1772551123.git.worldhello.net@gmail.com>
+Subject: [PATCH v2 2/5] docs(l10n): add AGENTS.md with optimized update-pot instructions
+Date: Tue,  3 Mar 2026 23:33:29 +0800
+Message-ID: <5e23a45964fa86bf710d5e04396a574dc8882ef3.1772551123.git.worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.51.0.rc2
 In-Reply-To: <cover.1772551123.git.worldhello.net@gmail.com>
 References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com> <cover.1772551123.git.worldhello.net@gmail.com>
@@ -90,171 +90,156 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-To simplify the location filtering process for l10n contributors when
-committing po/XX.po files, add the filter attributes for selected PO
-files to the repository. This ensures all contributors automatically
-get the same filter configuration without manual setup in
-.git/info/attributes.
+Add a new documentation file po/AGENTS.md that provides agent-specific
+instructions for generating or updating po/git.pot, separating them
+from the general po/README.md. This separation allows for more targeted
+optimization of AI agent workflows.
 
-The filter attribute is only applied to specific PO files that have
-been properly prepared. Files without the filter attribute fall into
-two categories:
+Performance evaluation using the qwen model:
 
-- Legacy files that lack maintenance and still contain location
-  comments that have not been cleaned up
-- Files whose formatting (such as line wrapping) differs from the
-  output of msgcat processing
+    # Before: add the instruction to po/README.md; the prompt references
+    # po/README.md for execution
+    git-po-helper agent-test --runs=5 --agent=qwen update-pot \
+	--prompt="Update po/git.pot according to po/README.md"
 
-To avoid discrepancies between the filtered blob in the index and the
-unfiltered working tree for these files, the filter attribute is not
-applied to them.
+    # After: add the instruction to po/AGENTS.md; use builtin prompt
+    # that references po/AGENTS.md for execution
+    git-po-helper agent-test --runs=5 --agent=qwen update-pot
 
-Contributors still need to manually define the filter drivers using
-git-config as documented in po/README.md.
+Benchmark results (5-run average):
 
-Additionally, po/README.md has been reorganized: the content of handling
-location-less PO file content has been moved from the "Updating a XX.po
-file" section to a separate "Preparing a XX.po file for commit" section.
-This prevents AI agents from introducing unrelated operations when
-updating PO files.
+Phase 1 - Optimizing po/README.md:
+
+    | Metric      | Before  | After  | Improvement |
+    |-------------|---------|--------|-------------|
+    | Turns:      | 17      | 5      | -71%        |
+    | Exec time   | 34s     | 14s    | -59%        |
+    | Turn range  | 3-36    | 3-7    |             |
+    | Time range  | 10s-59s | 9s-19s |             |
+
+Phase 2 - Adding po/AGENTS.md (further optimization):
+
+    | Metric      | Before  | After  | Improvement |
+    |-------------|---------|--------|-------------|
+    | Turns       | 17      | 3      | -82%        |
+    | Exec time   | 34s     | 8s     | -76%        |
+    | Turn range  | 3-36    | 3-3    |             |
+    | Time range  | 10s-59s | 6s-9s  |             |
+
+Separating agent-specific instructions into AGENTS.md provides:
+
+- More focused and concise instructions for AI agents
+- Cleaner README.md for human readers
+- Additional 11% reduction in turns and 17% in execution time
+- More consistent behavior (turn range reduced from 3-7 to 3-3)
+
+This change makes agent workflows more efficient and reduces API costs
+by minimizing redundant LLM interactions.
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 ---
- po/.gitattributes | 36 ++++++++++++++++++++++++
- po/README.md      | 70 +++++++++++++++++++++++++----------------------
- 2 files changed, 74 insertions(+), 32 deletions(-)
- create mode 100644 po/.gitattributes
+ po/AGENTS.md | 92 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 92 insertions(+)
+ create mode 100644 po/AGENTS.md
 
-diff --git a/po/.gitattributes b/po/.gitattributes
+diff --git a/po/AGENTS.md b/po/AGENTS.md
 new file mode 100644
-index 0000000000..7100b7050e
+index 0000000000..1fcef9119a
 --- /dev/null
-+++ b/po/.gitattributes
-@@ -0,0 +1,36 @@
-+# Git Attributes for PO Files
-+#
-+# This file configures Git filters to automatically strip location information
-+# from PO files when committing, producing cleaner diffs and saving repository
-+# space.
-+#
-+# Two filter types are used:
-+# 1. gettext-no-file-no-location: Strips both filenames and line numbers
-+#    (e.g., removes "#: main.c:123" entirely)
-+# 2. gettext-no-location: Preserves filenames but removes line numbers, which
-+#    requires gettext 0.20 or higher
-+#    (e.g., "#: main.c:123" becomes "#: main.c")
-+#
-+# See `po/README.md` for instructions on setting up the required filter drivers.
++++ b/po/AGENTS.md
+@@ -0,0 +1,92 @@
++# Instructions for AI Agents
 +
-+# Do not configure default attributes for `*.po` files, as this would cause
-+# differences between the filtered blob stored in the index and the unfiltered
-+# working tree version for legacy, unmaintained PO files.
++This file gives specific instructions for AI agents that perform
++housekeeping tasks for Git l10n. Use of AI is optional; many successful
++l10n teams work well without it.
 +
-+# Languages that strip both filenames and line numbers
-+bg.po	filter=gettext-no-file-no-location
-+de.po	filter=gettext-no-file-no-location
-+#es.po	filter=gettext-no-file-no-location
-+fr.po	filter=gettext-no-file-no-location
-+#ga.po	filter=gettext-no-file-no-location
-+#ru.po	filter=gettext-no-file-no-location
-+sv.po	filter=gettext-no-file-no-location
-+tr.po	filter=gettext-no-file-no-location
-+uk.po	filter=gettext-no-file-no-location
-+vi.po	filter=gettext-no-file-no-location
++The section "Housekeeping tasks for localization workflows" documents the
++most commonly used housekeeping tasks.
 +
-+# Languages that preserve filenames but strip line numbers
-+#ca.po	filter=gettext-no-location
-+id.po	filter=gettext-no-location
-+zh_CN.po	filter=gettext-no-location
-+zh_TW.po	filter=gettext-no-location
-diff --git a/po/README.md b/po/README.md
-index ec08aa24ad..79757d4c21 100644
---- a/po/README.md
-+++ b/po/README.md
-@@ -159,38 +159,6 @@ It will:
-   and these location lines will help translation tools to locate
-   translation context easily.
- 
--Once you are done testing the translation (see below), it's better
--to commit a location-less "po/XX.po" file to save repository space
--and make a user-friendly patch for review.
--
--To save a location-less "po/XX.po" automatically in repository, you
--can:
--
--First define a new attribute for "po/XX.po" by appending the following
--line in ".git/info/attributes":
--
--```
--/po/XX.po filter=gettext-no-location
--```
--
--Then define the driver for the "gettext-no-location" clean filter to
--strip out both filenames and locations from the contents as follows:
--
--```shell
--git config --global filter.gettext-no-location.clean \
--           "msgcat --no-location -"
--```
--
--For users who have gettext version 0.20 or higher, it is also possible
--to define a clean filter to preserve filenames but not locations:
--
--```shell
--git config --global filter.gettext-no-location.clean \
--           "msgcat --add-location=file -"
--```
--
--You're now ready to ask the l10n coordinator to pull from you.
--
- 
- ## Fuzzy translation
- 
-@@ -229,6 +197,44 @@ git-po-helper check-commits <rev-list-opts>
- ```
- 
- 
-+## Preparing a "XX.po" file for commit
 +
-+Once you are done testing the translation, it's better to commit a
-+location-less "po/XX.po" file to save repository space and make a
-+user-friendly patch for review.
++## Background knowledge for localization workflows
 +
-+To save a location-less "po/XX.po" automatically in repository, you
-+can:
++Essential background for the workflows below; understand these concepts before
++performing any housekeeping tasks in this document.
 +
-+First, check which filter is configured for your "po/XX.po" file:
++### Language code and notation (XX, ll, ll\_CC)
 +
-+```
-+git check-attr filter po/XX.po
++XX is a placeholder for the language code. The code is either `ll` (ISO 639)
++or `ll_CC` (e.g. `de`, `zh_CN` for Simplified Chinese). It appears in the PO
++file's header entry metadata (e.g. `"Language: zh_CN\n"`) and is typically used
++as the filename: `po/XX.po`.
++
++
++### Header Entry
++
++Every PO file (`po/XX.po`) contains a special entry called the "header entry"
++at the beginning of the file. This entry has an empty `msgid` and contains
++metadata about the translation in its `msgstr`:
++
++```po
++msgid ""
++msgstr ""
++"Project-Id-Version: Git\n"
++"Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
++"POT-Creation-Date: 2026-02-14 13:38+0800\n"
++"PO-Revision-Date: 2026-02-14 11:41+0800\n"
++"Last-Translator: Teng Long <dyroneteng@gmail.com>\n"
++"Language-Team: GitHub <https://github.com/dyrone/git/>\n"
++"Language: zh_CN\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=UTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++"Plural-Forms: nplurals=2; plural=(n != 1);\n"
++"X-Generator: Gtranslator 42.0\n"
 +```
 +
-+The filter configuration is defined in the "po/.gitattributes" file.
++**CRITICAL**: Do not modify the header's `msgstr` during translation. Extracted
++files (e.g. `po/l10n-pending.po`) include this header; preserve it exactly.
 +
-+Then define the driver for the filter. Most languages use the
-+"gettext-no-file-no-location" clean filter, which strips out both filenames and
-+locations from the comments. To set this up, run the following command:
-+
-+```shell
-+git config --global filter.gettext-no-file-no-location.clean \
-+           "msgcat --no-location -"
-+```
-+
-+Some languages use the "gettext-no-location" clean filter, which preserves
-+filenames but not locations. For these, install gettext version 0.20 or higher
-+and setup the driver as below:
-+
-+```shell
-+git config --global filter.gettext-no-location.clean \
-+           "msgcat --add-location=file -"
-+```
-+
-+You're now ready to ask the l10n coordinator to pull from you.
++The header provides: translation metadata (translator, language, dates);
++pluralization rules (`Plural-Forms`); encoding and MIME type; project/version.
 +
 +
- ## Marking strings for translation
- 
- (This is done by the core developers).
++## Housekeeping tasks for localization workflows
++
++This section describes housekeeping tasks listed in the introduction. Read
++"Background knowledge for localization workflows" above before performing
++any task.
++
++
++### Task 1: Generating or updating po/git.pot
++
++When asked to "update po/git.pot" or similar requests:
++
++1. **Directly execute** the command `make po/git.pot` without checking
++   if the file exists beforehand.
++
++2. **Do not verify** the generated file after execution. Simply run the
++   command and consider the task complete.
++
++The command will handle all necessary steps including file creation or
++update automatically.
++
++
++## Human translators remain in control
++
++Git translation is human-driven; language team leaders and contributors are
++responsible for:
++
++- Understanding technical context of Git commands and messages
++- Making linguistic and cultural decisions for the target language
++- Maintaining translation quality and consistency
++- Ensuring translations follow Git l10n conventions and standards
++- Building and maintaining language glossaries
++- Reviewing and approving all changes before submission
++
++AI tools, if used, only accelerate routine tasks.
++
++AI-generated output should always be treated as rough drafts requiring human
++review, editing, and approval by someone who understands both the technical
++context and the target language.  The best results come from combining AI
++efficiency with human judgment, cultural insight, and community engagement.
 -- 
 2.53.0.rc2.20.g532543fa46
 
