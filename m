@@ -1,69 +1,69 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BD93E5562
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 17:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A273ED5A3
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 17:32:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772559120; cv=none; b=McJE7K2PMpsPvN7pbQKcpeH7DnbI3uqm4POSPVVjw6sI9gaJkOi2hZbM7GZj9MvN6Iw2qBNMIYjFmorq5gh/eYZyNe6N11tHisNhpvfGnEr/kMEOIvoUnOGEN4DyqwxGopQ4D0/3qcKpGSukILWfIB+1tKOt6Ggp9DyF9OkxMzw=
+	t=1772559121; cv=none; b=fwYz86sLdiaDnId1PUIhlJem+7Ml0nA30ymgbBKEKJbf37Fa3UynU26Wj/y1PooM3KUp6NOIjs2VGVeA7RBWKxgng/63/N+k6NRvwNtY5w6jOblnHfSrNXXiU4Kz9OnRzE/scvrTNDcDboN+2pa5SdfiVfoJOa2VCnuMr2mIhU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772559120; c=relaxed/simple;
-	bh=nL/l8L9isnefRQJbrHLgTyQn96wA11x8KEEHRrthZnQ=;
+	s=arc-20240116; t=1772559121; c=relaxed/simple;
+	bh=Rzg+ZelmgS8pa8oZftXqT3BxmFvQyMr+eMZ2L3WIrMc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Xmh3JSXP7v50kYbuRJpRYjDjQ0zn5dRde/sNdVoHs+VR7lZVd7Ba0/BwRZngNi2k5Z7JyduIdL2cTve8qTyqKjQLBAmtCPDQetzSm2yfOazXhlp2odNJiDl/WNALYfiusferoLUOKrk9cIt1QYbNTVOIbN/woYRZ7xRK1oSHJyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WjrzdyKM; arc=none smtp.client-ip=209.85.219.49
+	 MIME-Version:To:Cc; b=JTZ4Jv72NFfGWjT+jsGtb91Lhicai5OuZqiUJkafdTIUMOfpTSWvx3+ZCoUdYjrTZKmUCaH4ZyZcP3f28kU1sEKDQ9pGj30U1UdraKUFFbIPtc6fZDkIzun2weMb8T/Gxx+ykeG5qwwUJphXE32mJkiZKypOeGUG0AZWaMsquQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=msMnMPCb; arc=none smtp.client-ip=209.85.222.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WjrzdyKM"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-89a0ecbc713so9422996d6.1
-        for <git@vger.kernel.org>; Tue, 03 Mar 2026 09:31:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="msMnMPCb"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8cb4136d865so791090985a.1
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 09:32:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772559118; x=1773163918; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772559119; x=1773163919; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/+d4Sv66rhjD5wiRebiqtbfSuBjUBTzMQir1i6glMjE=;
-        b=WjrzdyKMwZ6/khrDSvJY/Hlt+U5is+qSJ75FutncaJ0IGmy9onvPnupHe8/RVJAfsf
-         XZ61cHoMVzmbYFtCcCBf153MOHTYdx7v6Fye6LEMw3R327m1uhORhNtj6cjdps96nrAB
-         kOt3BaEyrRRpY3TVKUZnsEVzr/FI4H03DxRfaVKDMyvvmPjPAdEJJ4aCoTxulrpV1I8P
-         7OPHVetiS3V+FE91bqOL1jXZjUCb7sDGseBMKjGk5E9YLCnkCVEhyhirgHBL1LAXQDmu
-         U+d/jy9SObxv1cNLY8aiwO/WNCU1vZljIBdorLqQBY8To0a2CWg7Bmcxfv4dxx2ufHQ9
-         x99w==
+        bh=bCO01AbtfhqpwefCHjzLLuzPCZncjO9L2QDjZ8ZHyC4=;
+        b=msMnMPCb6xxpXX/8953ZiIVBhfVf7dxJ2SAd7JUPshjOQInoTCIwE0RG8EeiZg0MMZ
+         JsSiZlYtbN1V2rOqt3HcGch9Tzemq6cCzrls3NyP4WCrUw6+ulGjFFckFbIzNxzzqdVH
+         nmM6VsJvQqWdqtLQdq/Q45a+I8T8XFicefUZFMjtHnsDRRyyOfQzPblva2f+VlpF3sgQ
+         y/WydQNuyog5C0Ot0/MQNjccTBiB0qANGLN868T4zh7QeO3D+I78gvfgO0kf+fuQDv1w
+         +RAbOXEtpC16l1fNsv/VB35wn6cf/AMPugFnNDBkuqkhU06d3AoysAywXRMz/qGkc5yn
+         3/og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772559118; x=1773163918;
+        d=1e100.net; s=20230601; t=1772559119; x=1773163919;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/+d4Sv66rhjD5wiRebiqtbfSuBjUBTzMQir1i6glMjE=;
-        b=nssCCOijjChE02Uv8OSQWuRxTiZ9JsMP/8gnMUb3GLyeqcFBVJ+FTe3/fYFA4Hrgmh
-         qah/1Qc9mSv7O1HF6c2D655HNcAh5ngfK7AeTMlz3TELWttLk+P+ywH3u10wVuXCmoqv
-         0vYm31sbVcVUpBzqsJ+3yUvg1r9lqvZYxyzX+EERQkwldkFzP/xId+YtJjTVJZwsHFR8
-         D4YNYMvqk4Zkewd4j0WsOBVoSIfN2qOhteMeKZnyPLChkEJJOfmC0aCmYPcv0+LG4o17
-         R3b1tb7BNRbCv/0Z6k1tWjfspxHLps1GY9pZRwW2pv/Nt77PICHa+2riyWJXvWDOf24c
-         ElMA==
-X-Gm-Message-State: AOJu0Yx23S7NI1y+LrAKF9CXUZF8cjPYQbBkOYc+OFr5zlkna4+/7h9t
-	Ag+/HwHnhkvU0XMdtETyjitmeo1TMncGs9GHeOkllDZpBoRyL1mHitoH6pcqeA==
-X-Gm-Gg: ATEYQzxqJFjqOTYO4xHaKnvwvdBJ4jB9Q/nLb8o0bIl864wkjiA/NLQzoSYH3L7nazn
-	2kMz51gAx85Pj3nPfUJt72AYO3WmDZY/OLPdof3pLdK46VgCykV4s5zG30qFPQ6w+Yzf3SgCCt4
-	XmUxLWDTG3PCSwinvNg5JuTkMSx7evvrOVb01m2Cr+biI8NDdleyS7Lp0sbgrZLId+KPJ9yD+hS
-	UOV3PLAKQcsu+FHMei/DYAAjkom365Cozm7W4RuSNpnWGR3w4vBTp99J3U9qNpHAhpeBzYIVT2s
-	71CCqsPkMjIeBT0z4/gJBgaUzBfieW/e2i8yh4Ao6OHgmevjwcvJelbRSBVTqggdVwsEjTYSNBR
-	xZkxpLNjXMQ86suZmM7D+Zt/UA3vEEG866g1kKgbDDJwf57m6phShDt9sOL10ic6DkXShjPTaPF
-	XoKxh4N5ZaZMP7IcSEPCNSMv/1
-X-Received: by 2002:a05:6214:4109:b0:892:66bb:fdbb with SMTP id 6a1803df08f44-89a0a8b3f09mr33162686d6.23.1772559117784;
-        Tue, 03 Mar 2026 09:31:57 -0800 (PST)
+        bh=bCO01AbtfhqpwefCHjzLLuzPCZncjO9L2QDjZ8ZHyC4=;
+        b=t7/xRy5y1V16u1QB963jCjyAleOP8xbWsm56O9UbOw59Ms5DLeT3Ad0ZZWDkLJIWpQ
+         IfqrY2XP0LPh8ehYy1gkP9Y77ecAQ92NZv71wEEK4KWISPikztkFoEQwzJj6nP15cD5Z
+         b/5+yyAFhXVfzsoMYepWxsxgb6CEYTISyJmMD3bW2iPIvwN/igUmXWRO52VGPM/nHIAP
+         Wg+yTf8+yQhgahM7wzQUcAdt6OTgJBZu/vDRRZ00d6s6N9SrVFUHPGL+G5/rs4D9SLbx
+         7vyJAdNV1lL13NPNAQesoh4y3/4tFsnbmJ4niZ3/tamELB0015MomQLXhMSLh6BiLS9q
+         6ixA==
+X-Gm-Message-State: AOJu0Yw7JJBXBwP4l7Infw8YYtPuzd3dL6K6jzK/jJhDfMj6GfrsMG+C
+	N2fiMiMSZxg1nofQPNNJCgisXAGm5TpHG9mAGWvKRoeWQjIOde7ckFlUFERlIw==
+X-Gm-Gg: ATEYQzxmDzhzDPC7SmPQOHD3+FSPJ1cJnz+7oqO98gT7Hcy4zXr8PASrFDRu24hP6jx
+	jqlvuNehkOap7v04LonzKeUUfNgcmqyZ6HQI5nlZfL5VKifQmMt1HBuNiD8opaBH3C+n8LIewBz
+	3E9hLHoonz7f1S+NDTBIXUenUe+Pfhq1AFhSjLhLje0Ub5NyN2zFsmqvxPfZn2TAY1KW9whGHoT
+	Yrr+oUr2O5A/jTmqwoTj/QJ2aOzjFtDQDDStszE/JqYBgBTmZnEJ7Gyo+BoIjtiopZ1apczl6hi
+	IX0uFXzT6DY1aW0jqdFDVUugiej9I/72YEJcfO07oqJ/WV5P/PaZ2fkWW0kvNQVKazETj1TzIjT
+	sK+raXbVFSiWTDFHtEzZq3zyb6sFEsYRg6FuI+UuYvxTZhq9Ikfs2CpgLrF5SyZqXAMCMibdsie
+	1YCbVtE3Kq+Sz0fCeWoCqohCYA
+X-Received: by 2002:a05:620a:288c:b0:8ca:3c67:891c with SMTP id af79cd13be357-8cbc8e817ecmr2182101385a.71.1772559119010;
+        Tue, 03 Mar 2026 09:31:59 -0800 (PST)
 Received: from [127.0.0.1] ([20.161.28.103])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a0fbdbcb0sm14883666d6.45.2026.03.03.09.31.57
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf716207sm1672604085a.34.2026.03.03.09.31.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2026 09:31:57 -0800 (PST)
-Message-Id: <6e9d4f3029daa2c0068bb16939b943e7ac924222.1772559114.git.gitgitgadget@gmail.com>
+        Tue, 03 Mar 2026 09:31:58 -0800 (PST)
+Message-Id: <24398664c2009cc1fe94f8cebec145d062d96abd.1772559114.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2056.v4.git.1772559114.gitgitgadget@gmail.com>
 References: <pull.2056.v3.git.1772465805.gitgitgadget@gmail.com>
 	<pull.2056.v4.git.1772559114.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 03 Mar 2026 17:31:51 +0000
-Subject: [PATCH v4 1/4] for-each-repo: test outside of repo context
+Date: Tue, 03 Mar 2026 17:31:52 +0000
+Subject: [PATCH v4 2/4] run-command: extract sanitize_repo_env helper
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,90 +85,80 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The 'git for-each-repo' tool is frequently run outside of a repo context
-in the real world. For example, it powers background maintenance.
-Despite this typical case, we have not been testing it without a local
+The current prepare_other_repo_env() does two distinct things:
+
+ 1. Strip certain known environment variables that should be set by a
+    child process based on a different repository.
+
+ 2. Set the GIT_DIR variable to avoid repository discovery.
+
+The second item is valuable for child processes that operate on
+submodules, where the repo discovery could be mistaken for the parent
 repository.
 
-Update t0068 to stop creating a test repo and to use global config
-everywhere. This has some subtle changes to test across the file.
+In the next change, we will see an important case where only the first
+item is required as the GIT_DIR discovery should happen naturally from
+the '-C' parameter in the child process.
 
-This was noticed because an earlier attempt to remove the_repository
-from builtin/for-each-repo.c did not catch a segmentation fault since
-the passed 'repo' is NULL. This use of the_repository will need to stay
-until we have a better way to handle config queries outside of a repo
-context. Similar use still exists in builtin/config.c for the same
-reason.
-
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- t/t0068-for-each-repo.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ run-command.c |  7 ++++++-
+ run-command.h | 15 ++++++++++-----
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
-index f2f3e50031..512af34c82 100755
---- a/t/t0068-for-each-repo.sh
-+++ b/t/t0068-for-each-repo.sh
-@@ -2,6 +2,9 @@
+diff --git a/run-command.c b/run-command.c
+index e3e02475cc..89dbe62ab8 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1847,7 +1847,7 @@ int run_auto_maintenance(int quiet)
+ 	return run_command(&maint);
+ }
  
- test_description='git for-each-repo builtin'
+-void prepare_other_repo_env(struct strvec *env, const char *new_git_dir)
++void sanitize_repo_env(struct strvec *env)
+ {
+ 	const char * const *var;
  
-+# We need to test running 'git for-each-repo' outside of a repo context.
-+TEST_NO_CREATE_REPO=1
+@@ -1856,6 +1856,11 @@ void prepare_other_repo_env(struct strvec *env, const char *new_git_dir)
+ 		    strcmp(*var, CONFIG_COUNT_ENVIRONMENT))
+ 			strvec_push(env, *var);
+ 	}
++}
 +
- . ./test-lib.sh
++void prepare_other_repo_env(struct strvec *env, const char *new_git_dir)
++{
++	sanitize_repo_env(env);
+ 	strvec_pushf(env, "%s=%s", GIT_DIR_ENVIRONMENT, new_git_dir);
+ }
  
- test_expect_success 'run based on configured value' '
-@@ -10,9 +13,10 @@ test_expect_success 'run based on configured value' '
- 	git init three &&
- 	git init ~/four &&
- 	git -C two commit --allow-empty -m "DID NOT RUN" &&
--	git config run.key "$TRASH_DIRECTORY/one" &&
--	git config --add run.key "$TRASH_DIRECTORY/three" &&
--	git config --add run.key "~/four" &&
-+	git config --global run.key "$TRASH_DIRECTORY/one" &&
-+	git config --global --add run.key "$TRASH_DIRECTORY/three" &&
-+	git config --global --add run.key "~/four" &&
+diff --git a/run-command.h b/run-command.h
+index 0df25e445f..7e5a263ee6 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -509,13 +509,18 @@ struct run_process_parallel_opts
+  */
+ void run_processes_parallel(const struct run_process_parallel_opts *opts);
+ 
++/**
++ * Unset all local-repo GIT_* variables in env; see local_repo_env in
++ * environment.h. GIT_CONFIG_PARAMETERS and GIT_CONFIG_COUNT are preserved
++ * to pass -c and --config-env options from the parent process.
++ */
++void sanitize_repo_env(struct strvec *env);
 +
- 	git for-each-repo --config=run.key commit --allow-empty -m "ran" &&
- 	git -C one log -1 --pretty=format:%s >message &&
- 	grep ran message &&
-@@ -22,6 +26,7 @@ test_expect_success 'run based on configured value' '
- 	grep ran message &&
- 	git -C ~/four log -1 --pretty=format:%s >message &&
- 	grep ran message &&
-+
- 	git for-each-repo --config=run.key -- commit --allow-empty -m "ran again" &&
- 	git -C one log -1 --pretty=format:%s >message &&
- 	grep again message &&
-@@ -46,7 +51,7 @@ test_expect_success 'error on bad config keys' '
- '
- 
- test_expect_success 'error on NULL value for config keys' '
--	cat >>.git/config <<-\EOF &&
-+	cat >>.gitconfig <<-\EOF &&
- 	[empty]
- 		key
- 	EOF
-@@ -59,8 +64,8 @@ test_expect_success 'error on NULL value for config keys' '
- '
- 
- test_expect_success '--keep-going' '
--	git config keep.going non-existing &&
--	git config --add keep.going . &&
-+	git config --global keep.going non-existing &&
-+	git config --global --add keep.going one &&
- 
- 	test_must_fail git for-each-repo --config=keep.going \
- 		-- branch >out 2>err &&
-@@ -70,7 +75,7 @@ test_expect_success '--keep-going' '
- 	test_must_fail git for-each-repo --config=keep.going --keep-going \
- 		-- branch >out 2>err &&
- 	test_grep "cannot change to .*non-existing" err &&
--	git branch >expect &&
-+	git -C one branch >expect &&
- 	test_cmp expect out
- '
+ /**
+  * Convenience function which prepares env for a command to be run in a
+- * new repo. This adds all GIT_* environment variables to env with the
+- * exception of GIT_CONFIG_PARAMETERS and GIT_CONFIG_COUNT (which cause the
+- * corresponding environment variables to be unset in the subprocess) and adds
+- * an environment variable pointing to new_git_dir. See local_repo_env in
+- * environment.h for more information.
++ * new repo. This removes variables pointing to the local repository (using
++ * sanitize_repo_env() above), and adds an environment variable pointing to
++ * new_git_dir.
+  */
+ void prepare_other_repo_env(struct strvec *env, const char *new_git_dir);
  
 -- 
 gitgitgadget
