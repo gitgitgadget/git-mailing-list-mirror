@@ -1,141 +1,127 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7D41D5160
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:36:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CAA34C81E
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772570183; cv=none; b=N+vpQRHz/bx2KQCZGNIyK3Yk+fZaS9/bBOLX+AwIo8m0oI5Vb6FqHkJ2lspRwX7JjAPgpZj8BhkJiuqtZh2t5CJwSrLjKu5vaRfnEOeYOGdWZT3s8CA8Y7GMumzy4RSKegn8YF95QPBTRNzlwSXD46WC9g/1YZOQeWfXTEo08og=
+	t=1772570244; cv=none; b=pQBu2Ac4/JNer4PRT/aLIu20nSaW8FD4wuTqf71cC2aQh61wsdblMVty/ybXnWAM195ndERsIZXwYC47sXtZ7OPGr8Ypz0Vjzq+ED7cXPOyuYPbwP2zvO/32BRcZKwp6vE3hAC1LXAmC//QJzWRbvml548rCrAKrv5G/zHu7VWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772570183; c=relaxed/simple;
-	bh=R9I1xpbNQ1HYFMMYgHZCh9QDM2fe9RwW5SvEVSGrIh8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YltPzconi/6qBANmnjNdvzT8GNuavbVlg+jr2megnFNdx1QeXMSBEY5WEr5z9+FjSoPeCYzmjFM4RgyA/fYIAwcIcLEqorMElkAF+BrEDy/Y08uFGsvGmjEBEKeYagF0ss0NX21Ve1GaDtLeo5+XAEF9QgQ3c5bwk9ujZ7IaDgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nsh86XMf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=196bBJ33; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772570244; c=relaxed/simple;
+	bh=WpB2EcP68O63iL2P9hdv5B8k0qcG7Ut5pu5MrV6O+r8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Q95uzl/USRPqtUJGot0GzKa+mEMq8hdIx3H9xwghMKFbye5N2BRJxZqMi1e2Xbwt+qgHTurZws+lxN54+o1zPDhMJj0XZIHsZvCRFOcGCtOIGpE4TwAZPiahgbq5Qh6BC1XzHFy+HhEH1tsVfl4PuUhoi8z8NvK5LYSq6j1xGds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ZD8DAkE6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ybr3ayW+; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nsh86XMf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="196bBJ33"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 99136EC053B;
-	Tue,  3 Mar 2026 15:36:21 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 03 Mar 2026 15:36:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772570181; x=1772656581; bh=6Oa/b3qhGq
-	QMcvogIuD6rb8F1BOQuEr11Ni8MYChu7E=; b=Nsh86XMfi3St0Hj1yJwTpATI4e
-	zAsvdlpoP7nOuZwmTmGgFb2yLy8+sGIewpzUXzJN2WKhCjI089GqOTheWwukyUhi
-	4p4JIA+aOb8enbUIOchMxKTLOAwiF88dnlGrvHAMHGabQ+7eGQRurt5gMnaG46Vl
-	stmwntpfxj30TiZXlLmVI9iY9jOUt6HQ+1A0Q8ir/otHA7KqY15QLOmrOUV68q8b
-	Cfvodo20phItqx4qyOGw4G5cK4CLVDKY3kqDpwrhSTOC1FdUH1Nkls8MlB2p0FkO
-	N2glesGvYUdbPtUyPWN8vYbAhNdN76LhjIs1eT5ACI1DNLT4IfgBpRxAEUqA==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ZD8DAkE6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ybr3ayW+"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1700B1D00091;
+	Tue,  3 Mar 2026 15:37:20 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Mar 2026 15:37:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772570240;
+	 x=1772656640; bh=WwdLO7dWl3FlRCoeIm7dBqst2HUoPwK58r/ubHwAhGQ=; b=
+	ZD8DAkE6szAF3jnttwHMFxjQHFxCEZ0Au5xkkuWnRLORmJ/pEupX91IxJ2kM666H
+	6+v2wUH4PJWglEAwIRTUMUpYX/GtqZcWLqb3B9XK57xbn7vdo2a9lcYNDUkU9pfi
+	7zQb6IoBzofhncp0RuaQuZUk3byLaFZJEjAt2kDbmaoUfSi6mhm10OvAlVdTVJTe
+	T5RllXSYqyhJ5qwNby4xiy3YbwQZFiBsVaTEE/jLN/qmz+ZWEeBjfxS9OB9IsUUY
+	bdsGhmuh0TJ4PJuUHnZv0HYUYNXkkxpdFJbMWiSR7W+j0ZJcIdsLqyRtAJjKRXXv
+	AWpuJ3c5eYxdgVPiJXvbXg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772570181; x=1772656581; bh=6Oa/b3qhGqQMcvogIuD6rb8F1BOQuEr11Ni
-	8MYChu7E=; b=196bBJ33M/YntHDpTp3sN/0tRHLf4xB2EOBsaQCFQVmUkF8nHfT
-	xYj5+HYGXjddM/b3iy8CToqxn2qrLCjBqAEDG2ODjb/YULz955q4VkDXW44GMtcY
-	eReS3ObeXem0jDoUf/4vff847AoQP68FzJb0Lr6jdbpDpPTeeB3fu1+sVOzupIot
-	sokm5eiY5wVVCivUZwLiEmh8ZHnLNeV+vqMGFBQawzPzNcXdCKIVlu87L4P4I8cJ
-	OHHFG8vQMXFOU0oj9LcNrgXV5FljYNkBICWIaPltfRXOJ0w/HBsWM20ejtBMyCJ0
-	+kXU8YJrzgxfX2Mrzg82b5LjC1sh6XQjKdQ==
-X-ME-Sender: <xms:RUanaR1tWis1tUuKa5Q164o_qYUsir9a_Rq3Yqttgqi07O49u3tWJw>
-    <xme:RUanafFDc9NA_0hBJVWdtZLkTHpCzEWxe9bKMZPrX38QR0TGCKIT54-IGh-VbYbH0
-    CvjB0R2m28VOs6aFJeDwujBF-IAGdEZ_kt7mdkjX9XkdsRLyOgurU0>
-X-ME-Received: <xmr:RUanaW6BNKU5-3WMdX63n20WUVu-d4oN81RT9eVcgMTZLy62K_J_ETix9GbQ34Y7fPIWl2liO5-OJTD0uiMk_wwUFQy79qt03w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieduheeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772570240; x=
+	1772656640; bh=WwdLO7dWl3FlRCoeIm7dBqst2HUoPwK58r/ubHwAhGQ=; b=y
+	br3ayW+6FzOofYrB4oZMNck+1P61CGn4JmQ2WtBUITzDSJiGHydmdm6UaAbNluP2
+	8pp9i+IwWczB9w33kdamn87tFnORQfsf0Eij9nX0hmdx4WZA1+zRu9sRHeVfPCDc
+	DQ1ORelnTGlOGyF5JAC04t63ma2h/hLo4WlVR7xrVwLyUq7OkOk2mRvdek8QIxGw
+	E3HhIM7v/wivYO02E7BmoSzJC66Yd/2ur1aGWk9ON1w3c9ZhW7ED0+wGmoW+LZgn
+	iG/sDiUThn/fH8a6dwMvvgCEfcZ3g+KEvOOVn6pDaeiFEkxR3kYgM8v2ROfrJn4e
+	Th0Q0mH0wSXBv0pV3W3GQ==
+X-ME-Sender: <xms:gEanabALcK6OSv3rJ03aa-Gqj1-k2M-F2Kp0AeqghEcX_vN3GLH0T-c>
+    <xme:gEanacXtAzIWGl5GEb0GuK8b7dtUmi37uDKHVMb2ZrVqyuzMbzhfTue3txN52jQvc
+    rPWdQUD8v8r8g4AUK07BgSC0Hz4JBPsOeEcWQjzDnCpgzJy8MHULw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieduheejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepohhmrhhirdhsrghrihhgudefsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:RUanadv9KxJQVW-fGgGucd1r2lv6JEd0jPXgwAdtCmEA_j4KeYMoLw>
-    <xmx:RUanaf4N89-NLKPwHWxn6NQlJ_x-ayBOjowEksgfx7pNg_ebWplpig>
-    <xmx:RUanaQV3zTEU2xNExIJ4ceSrN4Uzj623OLBmwhUyMERGoAohzZoH8w>
-    <xmx:RUanaZ8-8WMCUvI_z4FPoYciXBfOCMyvgRLTHXmHoePBinJFKlcOKQ>
-    <xmx:RUanaWXrdfdTb-sfxeZuSJ3rgGs8vW4ygb1HyOLBBnLsao1T2uUhsNBL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 15:36:21 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Omri Sarig <omri.sarig13@gmail.com>
-Cc: Omri Sarig via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v3] doc: add information regarding external commands
-In-Reply-To: <CAP9es6uT4xE2+h6mCXgYVcibutVOah1xKyS8cKaV1u=VHBpLZw@mail.gmail.com>
-	(Omri Sarig's message of "Tue, 3 Mar 2026 21:11:13 +0100")
-References: <pull.2220.v2.git.git.1772557925670.gitgitgadget@gmail.com>
-	<pull.2220.v3.git.git.1772559813151.gitgitgadget@gmail.com>
-	<xmqqh5qwdaeh.fsf@gitster.g>
-	<CAP9es6uT4xE2+h6mCXgYVcibutVOah1xKyS8cKaV1u=VHBpLZw@mail.gmail.com>
-Date: Tue, 03 Mar 2026 12:36:19 -0800
-Message-ID: <xmqqy0k8bqgs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
+    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgv
+    lhhmrdhorhhgrdhukhdprhgtphhtthhopehmvgeslhhinhhugidrsggvrghuthihpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:gEanacoiEYfarPf13l9iiSYs_nrbnriOiKB3s9d0kVEVI8SGAAAl0w>
+    <xmx:gEanaeGZW3ROp_0ESf6C6VrHfjyIqqbM5ejqlJVEhUrYTUHRU6Yj8Q>
+    <xmx:gEanaUu-l1iUFYSbSAiWOvmR6KyYLlGbXCKq-MS2Fw1IRvb3mcla5A>
+    <xmx:gEanaYVO5J-mj6JNG0HvNPNdeS-STI4uXKS13HByzSzWKAnQ-yra8g>
+    <xmx:gEanaSxfHLwe1PSm7znOh6X_sSodzwtXAEjWuSwVhiKFOLUZiCrf6rwL>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 2D17B1EA006B; Tue,  3 Mar 2026 15:37:20 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: Am6sP3XKy-Q3
+Date: Tue, 03 Mar 2026 21:36:53 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Phillip Wood" <phillip.wood@dunelm.org.uk>, "Li Chen" <me@linux.beauty>,
+ git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>
+Message-Id: <22e1de8e-935d-4efa-9fa8-ef8d9b4ffc6a@app.fastmail.com>
+In-Reply-To: <824809c3-72ac-43fb-8a93-4f48e0727e6a@gmail.com>
+References: <20260224070552.148591-1-me@linux.beauty>
+ <20260224070552.148591-6-me@linux.beauty>
+ <824809c3-72ac-43fb-8a93-4f48e0727e6a@gmail.com>
+Subject: Re: [PATCH v7 5/5] rebase: support --trailer
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Omri Sarig <omri.sarig13@gmail.com> writes:
-
->> I am not sure what the last sentence wants to say, especially the
->> "alias expansion" part.  Do you mean that your "git foo" alias (not
->> just its expansion but its presence as a whole) is ignored if you
->> have a "git-foo" program on your $PATH?
->
-> This is exactly what I tried to write there.
-> Personally, I had expected aliases to take precedence over external commands,
-> so I was surprised to see that it is reversed (so the program "git-foo" runs
-> before Git looks for the alias "git foo"). I thought it'll make sense to
-> mention in the documentation, to save possible headaches for future developers.
->
-> I'm not sure it's too much information, or should just be described better?
-
-The latter.
-
-We hear "X takes precedence over Y" more often when we describe the
-relationship between commands and aliases.  I do not think we use
-verb "X precedes Y" in our documentation to indicate that
-relationship.  We do see the verb used for "X comes before Y" in
-many places in our documentation, though.
-
-Here is my attempt.
-
-    ... Argument passed after the command name are passed as-is to
-    the program.  To execute `git <foo>`, `git` finds command
-    `<foo>` (either a core Git program found in 'GIT_EXEC_PATH', or
-    a custom one in a directory on 'PATH'), before trying `foo` as
-    an alias.
-
->>  We divide Git into high level ("porcelain") commands and low level
->> -("plumbing") commands.
->> +("plumbing") commands.  For defining command aliases, see
->> +linkgit:gitconfig[1] and look for descriptions of `alias.*`.
->> +For installing custom "git" subcommands, see the description for
->> +the 'PATH' environment variable in this manual.
+On Tue, Mar 3, 2026, at 16:05, Phillip Wood wrote:
+>>[snip]
+>> diff --git a/sequencer.c b/sequencer.c
+>> index a3eb39bb25..a60c2a0cde 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> [...]
+>> @@ -2025,6 +2027,9 @@ static int append_squash_message(struct strbuf *buf, const char *body,
+>>   		if (opts->signoff)
+>>   			append_signoff(buf, 0, 0);
 >>
->>  High-level commands (porcelain)
->>  -------------------------------
+>> +		if (opts->trailer_args.nr)
+>> +			amend_strbuf_with_trailers(buf, &opts->trailer_args);
 >
-> I agree - that makes good sense to me too.
->
-> Do you see it as belonging in the same commit, or in a subsequent commit?
+> I wonder if it would be better to add the trailers before the signoff so
+> that "git rebase --signoff --trailer='Reviewed-by: ...'" adds the
+> "Reviewed-by:" trailer before the "Signed-off-by:" trailer.
 
-Totally outside of your topic.  Let's concentrate on the PATH thing
-and finish it first.
+Why is that? Is that because that is the practice in this project (and
+maybe others)?
 
-Thanks.
+I would expect it to act like however `--trailer` already acts on
+git-commit(1) and git-tag(1). I would have to test that.
 
+In any case these `--signoff` options are considered a historical
+mistake now (since they special-case one key).
+
+The logic for before/after and so on are supposed to be handled by the
+trailer config, it seems. But last I looked that was only for same-key
+trailers and duplicates. Not for logic like keeping your own signoff
+last.
+
+>[snip]
