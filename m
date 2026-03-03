@@ -1,484 +1,384 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5783A33F5A8
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 12:08:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772539740; cv=pass; b=iWun2lGHbunkj4Qbn8V8s1tSC83UzLBEE1AvBUzmKlWCk/xIQKEjafR/jedDkPr9kFr9Py8JIPMHZKcdM4hJ4r0sZp7Bqm0blCjyjugl9QiOCkcKwvS6O72qUR8bfz8TBA2ITVGLVFuQFYmQq5TaQyHyTOju9KcvkLGAl+TgeZM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772539740; c=relaxed/simple;
-	bh=dq/pSc2ER8h/4ItYxfgOWP1cpBH2HlZH120qcz8jFME=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cfYEBLhEZNp9Ambilz+02vNaSZZ8AzhmuGv1em3lvGTSw/SuSnmBA9sBbIvSBOP3EHB3bDE21sXyP0tJxIkzzwNPC7DsL7tzOcIVYDa+I85Rw05jwhGu08/GHcRndv3E0wD/xHIcQIvW5d2hxqfcOL62m9YBryXeP5hcaFkpbsg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gVkd57Qt; arc=pass smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF0B1A6825
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 12:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772539902; cv=none; b=FvAKE30GFCB69H0A6zpjBxRUTjbrDIc10ddmsgaNsTcIbhbhyBbSUwd366D4o3x4E3DxysxKuGKZqxvWrWnh14h7A4QIOxjNw9S8u/9jZf0AaBkUGqESUsFAKKGw+DUEk1gDKeMiUp65QbeN0tK+9Nn5sVI9qmk7FeHAq9n2U/0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772539902; c=relaxed/simple;
+	bh=kUSi9q0Br4VIzB9UsgRTRBi9gzS5NSOiECbpKsHR7i8=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=cLfHxdtt5BXHSoY1Ku4zJVBA8k25VqdqeylxfJj0CtmRvCxFtqta5zwW6U6bTz84anl4bIt/Qp/qVLzbLklkvuV4V3waEZADH5Q7TCNlaek57cJ50uUzritLuBXtj5reMORah4jm9DOsCs/BLwIg4u1wrDjnjSzizklxDEMVA4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bbRP1uMA; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gVkd57Qt"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-56a987683baso5528756e0c.2
-        for <git@vger.kernel.org>; Tue, 03 Mar 2026 04:08:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772539737; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SyM2MDcUXil1+SMQoSAA0k1e2rC+gwiygUASsUa0HTG9CN7Fiz4vurC21nwBFszHm4
-         lua6lhOvkDHSRa1jpNYZ4Uro23zGQYogX2vBkEOMMmBz/IyJdozWGOagspKP0dkjdJwB
-         hQWoECmaSgEwb3/C4hCkdM0Ms+2hMcglSmfNLzlMOiJQsXSjfThFwjRqw+FLC+tIojEh
-         E8ovnzlQ+nPg8TUipXP+redNTRqRmUPZN6M9K9mNqDts25UXZm7B9H4iHtnCgX/7v2IS
-         sTBi7UNkdk3WGalT21potfOrtf6bQjB7YttC9H1GUa6A9g8Jg7MLHUhfULsqOMfvu7ol
-         j/ww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=54mVHzTzRO8uyb1Ol3ubWNXbwtC2rojtCO8CHpAw/Hc=;
-        fh=/gGcX06DeFgoFEwRIaFTrJCIQtIJsBTv+VxT9QcwE7I=;
-        b=fsd7w6ekWn7Sq/+OIxOVlcpeL2mVdmoT3/RW1mJW5+A/QGaRGyvnDubBZwrCBkVVdC
-         6YNSKiMn0e4KhIkdD0jC1Z2HsMWrhnFIS999KUY02hasp1H9K9V/ItmaPm5I2dZUEKW3
-         9DKWoxvVR8qAugbXMoFr1eJYOX4YMEyG+ESRr5Yy3znAhhNjerNlPkNHZbjqRgnghiJP
-         UOJ7YGUKOvtZhRUz7a2v5DRdVauOl2KCFSlwA+pEavgzyoGfpWpDT8LgX2qdClAV9Jpf
-         4VWvFtTdmsbl3Vcx2Ul2XL8LhEXsWcasa0lDvhAlTk37MtqLek4bZfSWxPfATqWHytHU
-         NhHg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bbRP1uMA"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c635d5d594dso1028847a12.2
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 04:11:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772539737; x=1773144537; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=54mVHzTzRO8uyb1Ol3ubWNXbwtC2rojtCO8CHpAw/Hc=;
-        b=gVkd57QtUYU+o1datML79RjjkOM8QM72eDtmQnLg4F5rrjjbqmxETP/XBoAUglqFJA
-         HyHhOBY78qdzO7QrXu6tnW6z+BQj1Km8WgkpayDQDYzJpQH4QgUqu+cf+TByKvTadDvn
-         Cjr2kGIwt1CGUlHcyiY5tOX9EDlHHT1AXvz9kCsGaf1pbV0c/L/ADxIzmUmOh1XbCOXi
-         LRl0tkUfaQ09UVZLxCDbEjCCbp2O5Hoyx6NTlXdkStusMHAPLGEMaIaJEhPN+AJDmUSk
-         npJriWYdhpYYnsTkjY8k7jyWskK5nJK2OxJtfr2uIXHBla1Z4dr+58av0NmEPojdvXIS
-         oDnA==
+        d=gmail.com; s=20230601; t=1772539899; x=1773144699; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+1P4I0JO4lU8M8UixdxCQ0zLuoWmZxVdKHaTA3ZSYpM=;
+        b=bbRP1uMAOX6mUjASyg48Jh4qIpD2rAZo+gYMSxRp0jlqT+pMeeTQQ6xx8pwQpxo0se
+         boqCHI8gSDE4x4qPKAi3Lrj7WFrDa50fc3vp5hfaX+Y/pdZP5gOaMmlvnaIVaKUAEDOb
+         /MrTgsXwYtCXd3zuqhBYGbOQXfjDFAVIGM2FPf5//9aiDoRUbi/Dc1Q3xnsZxoJL3MrK
+         YBMGVMzFf3ZjHjkZ4/UTcI6ZSXK9MOs9ccHLshR9Lyc+/OoGsLYM3It06vz4ohE9YSuL
+         HftvzhoeJxKsamBgHOvtauRkloMtFm3XfeFV+zlbARPutijcSdF+A68uhuK4A0NiUcy9
+         oeAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772539737; x=1773144537;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=54mVHzTzRO8uyb1Ol3ubWNXbwtC2rojtCO8CHpAw/Hc=;
-        b=du1xUSh9LaCnwFYKhqzOITdFTje4wZNHca7wwybd1bL42K+mxsQybxre8cZn6anNhr
-         Xs7EcnK5tBCvuPlze6b+eS8GguboBQKzoSllEzGwQS2FMd2aUfoqP86XNWn8La1ybvb1
-         haQTTclAHIbT4At3OaYWCL/uWRnvunYTFZBMu+BQ7W43UXVJiSCVtsLmAfY2TRLoVbNS
-         HqaRI2prBTUraCRc+q9eQ6aokvzlIRZGBCYBqcafiFHryC8kaVOsvoeUQTYh568oe7iE
-         YD1vFRSWxnSjDan4vZUabKMtwVYS+UyCdNaXdYs6tijmZgtVT30jDpwaBmLaZ8juxiKK
-         AccQ==
-X-Gm-Message-State: AOJu0YzC3isg5z02AlmZFZHtYYpHbTpZBpfqNfiOnqVYsG13sur5NMbc
-	9238fLI0KvSiNULOPH1Q+1NMPa6xhO+EHSHL8sfoVzmK6SNpo1xT8GnATZKD/w7YlsB0FCoCw96
-	jk+Zdx41XESieiZ1Elr3QNktU0m8olC4=
-X-Gm-Gg: ATEYQzzCwc4HWL4/jxC6PICTO/3+eU9MBnstDEpwyC53SQMAHfpgGfOMweqAgmAfnv0
-	dCSUxrgwvZ+PDU53R7RuU6MrKk/qyveG8SQ4eM1g5aBQ5teo6QxS4o+Pk9R8lZj318czvDZDtlb
-	cYEjzolJywi/W7CvwcHnyIn3mCOMjXbkTonObsrCdVBOlC0sOzuzod1qNZBndJ+G6aEBde4XFJ+
-	mIhH2f1z/LxKPWJS18JFWNULT9RkksNFRPYpkdKrWnengRMnboSEzfekXpjolsFRzV2wp1Gse8p
-	aHji
-X-Received: by 2002:a05:6122:4d11:b0:567:5750:c438 with SMTP id
- 71dfb90a1353d-56aa09d3083mr7712389e0c.3.1772539737078; Tue, 03 Mar 2026
- 04:08:57 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772539899; x=1773144699;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+1P4I0JO4lU8M8UixdxCQ0zLuoWmZxVdKHaTA3ZSYpM=;
+        b=uswuL+q92SOv3tVdV6InGPFV2Tw1CX5cioh7aEaEJex+ZYJgDEoQuiHCemg5EMjteh
+         Yf4yHEjd2KUnMLEUz+B9gKugj2TH0Vs43Y8ZE6FM/NUA1ZKwbv+o+r3A4mYL552BV0bQ
+         BmBAWWvYn1QyuRr8S2ZdxZesB2wvW7c1uO1weptOwQIckBdLkZxpEg35YUcUJ11Fcu3i
+         U0vknh/l9NMd4tn4i+gKZTqawF+tUz4vWPcz3sh5rZ8xkdbXQpkzpYyq9RH+qR+1v0zy
+         VChahHxRcAkSTq/SNXYMNPK3Moyk7qe5P6z3JuykHNj6mF6QpuhjdSA0g390FaMk59/2
+         x+bA==
+X-Gm-Message-State: AOJu0YyHsAyhy/CpKsME70VjktdC3VINuuJhLSmWNs6QKUbembEnwlaC
+	76eT4ZLX3qNgpEO1WPyYrc/6EeMxNTWKX2/Om41Qozdf4r3D5AOWVGdPX/zTAg==
+X-Gm-Gg: ATEYQzzHgh9zM9bFNCRGYyQRG4dPDXeMLAgOIthsK01Qg9aFY/k4GEqaz1CmcOIiPwj
+	LEypVBa3MooS/7BSvRHf4dhAJuXQECa84ORJ4hrUhGo3PHi2E/ucg2as4SuuopOGQAvKx3wB5Vf
+	jY2nGmbJa1ivhd6qVBziG/Pc94W5PyTgZ4qsqyg1l4/sLn7/eM5Wlvzs/wpeunq/6nHcD4ugyPB
+	t7LCSKmg0VfHBkFdMXPYVlMpDvaKoJIgD8AKrSzvcpTYESrr6HcrIszIJ1QL+Wg+orAj9inKAfa
+	x9f6vF9jhK8BnHvzfN5HWaf2dsVcOdNr44gHqeVuL0XcytYxGkH/SAcjrh8JhKiKckNxjgZN7hA
+	/+V6v6SuuDEXgW8J6f4omFG/CR4MTed7d/nLHRgR3rh4ZN5fUrC48Xa4Jw6AVNCqGBm6qXJj6cA
+	yP5gTBe6nQ9OzojfkOfyDGeYLA0OHn5caoqhV62PC3fK+t5CFSLCaATW8RlSbmDuMR+NV09u1sR
+	oGTCSEvyAQL
+X-Received: by 2002:a05:6a00:a474:b0:821:84c3:845b with SMTP id d2e1a72fcca58-8274da89583mr7295761b3a.7.1772539899195;
+        Tue, 03 Mar 2026 04:11:39 -0800 (PST)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8273a010996sm15436139b3a.44.2026.03.03.04.11.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Mar 2026 04:11:38 -0800 (PST)
+Message-ID: <f19c95fd-756e-4890-b718-10ccf09c31fa@gmail.com>
+Date: Tue, 3 Mar 2026 20:11:35 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aaN5OPgoGANYlabu@Adekunles-MacBook-Air.local> <CAP8UFD1kzuP8sYKzTJkvf08OazrMzESQ+qZNW8=Qss3DDw=OeA@mail.gmail.com>
-In-Reply-To: <CAP8UFD1kzuP8sYKzTJkvf08OazrMzESQ+qZNW8=Qss3DDw=OeA@mail.gmail.com>
-From: Samuel Abraham <abrahamadekunle50@gmail.com>
-Date: Tue, 3 Mar 2026 13:08:57 +0100
-X-Gm-Features: AaiRm50SKMzQX3F-1lL1HMWXcsB8dDOjxJAp-UmobO20GoiCIi-9QeBzqqJz5K0
-Message-ID: <CADYq+fYf0+CYSs8j54WhhrE_=k+dtvznwWTcpX24f6wt4nL0ow@mail.gmail.com>
-Subject: Re: [GSoC] [Proposal]: Implement promisor remote fetch ordering
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Justin Tobler <jltobler@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: [GSoC][Draft Proposal v6] Refactoring in order to reduce Git's global
+ state
+From: Tian Yuchen <a3205153416@gmail.com>
+To: git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>,
+ Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Siddharth Asthana <siddharthasthana31@gmail.com>, phillip.wood@dunelm.org.uk
+References: <ab45758c-fbcf-42b2-96df-030eef8526c3@gmail.com>
+ <b98780d7-3aa9-4838-9234-290b1d72ffd7@gmail.com>
+ <5e5f07ec-72ba-46ee-812c-d6773a4bdbe7@gmail.com>
+ <0a944142-7c51-4143-af00-2a5798ea68af@gmail.com>
+Content-Language: en-US
+In-Reply-To: <0a944142-7c51-4143-af00-2a5798ea68af@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 3, 2026 at 10:27=E2=80=AFAM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi,
->
-> On Sun, Mar 1, 2026 at 12:27=E2=80=AFAM Abraham Samuel Adekunle
-> <abrahamadekunle50@gmail.com> wrote:
-> >
-> > Hello,
-> > This is my proposal for the project
-> > "Implement promisor remote fetch ordering" for the 2026 GSoC programme.
->
-> Thanks for being interested in Git and this project in particular.
+Hi all,
 
-Thank you.
+Here is the V6 Draft. Looking forward to hearing your feedback (ゝ∀･)
 
->
-> > Personal Bio:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > Full Name:  Abraham Samuel Adekunle
-> > Email: abrahamadekunle50@gmail.com
-> > GitHub: https://github.com/devdekunle
-> > Pronouns: he/him
-> >
-> > About Me:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > My name is Abraham Samuel Adekunle. I love to code, read and I am a
-> > harworker. In my free time I love to play games and listen to soothing
->
-> I guess: s/harworker/hardworker/
+Refactoring in order to reduce Git's global state
+=================================================
 
-Okay I will fix it
+PERSONAL INFORMATION
+--------------------
+Name: Tian Yuchen
+E-mail: a3205153416@gmail.com
+Phone number: +65 98740318
+Time-zone: UTC + 08:00
+Github: https://github.com/malon7782
 
->
-> > music and well, also shifting into diffuse thinking to gain a new
-> > perspective of whatever challenge I am trying to solve.
->
-> [...]
->
-> > Contributions to the Git Community:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > My first contribution to the Git community was during the contribution
-> > phase of the December 2024 Outreachy contribution phase where I first
-> > learned to send patches and had my first interactions with the Git code
-> > base. I did not make it through then but it was an opportunity to try
-> > again.
->
-> Nice that you are trying again.
+Education: NTU, Singapore
+Year: Year 1 semester 2
+Degree: Electrical and Electronic Engineering (EEE)
 
-Thank you :)
 
->
-> > Contributions to other Communities:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > I have contributed very sparingly to the Systemd project and also
-> > the Linux Kernel.
-> >
-> > Microproject:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > Link: https://lore.kernel.org/git/aV_IGCld5T_dBxTs@Adekunles-MacBook-Ai=
-r.local/
-> > Branch: aa/add-p-previous-decisions
-> > Status: Merged to master
-> > Commit ID: 8cafc305e22a59efb92472d4132616e24d3184c6
-> > Description:  "git add -p" and friends notes what the current status
-> >                of the hunk being shown is
-> >
-> > Other Contributions:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > 1.
-> > Link: https://lore.kernel.org/git/cover.1771066252.git.abrahamadekunle5=
-0@gmail.com/
-> > Branch: aa/add-p-no-auto-advance
-> > Status: Merged to next
-> > Description: "git add -p" learned a new mode that allows the user to
-> >               revisit a file that was already dealt with
-> >
-> > 2.
-> > Link: https://lore.kernel.org/git/aWZkEYHhcIhdAjkh@Adekunles-MacBook-Ai=
-r.local/
-> > Status: Stalled
-> > Description: the patch attempts to remove the use of the_repository
-> >              global variable in some builtins
->
-> It looks like you also have 2 contributions merged from October 2024
-> (when you applied for Outreachy). You can mention them too.
+PRE GSOC
+--------
+I have always held a deep passion for the open-source community. 
+Although I'm not a computer science major, I tinkered with open-source 
+projects long before college. I have solid hands-on experience in C 
+programming and system-level debugging.
 
-Okay I will do that.
+I use Ubuntu 24.04 on a daily basis, so I am proficient in using the 
+Linux command line and CLI tools.
 
->
-> > Project Overview and Objective:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-> > I have always wondered what happens in the background when I see these
-> > details on my screen in a "git fetch" process.
-> >
-> >         remote: Enumerating objects: 57, done.
-> >         remote: Counting objects: 100% (57/57), done.
-> >         remote: Compressing objects: 100% (12/12), done.
-> >         Receiving objects: 100% (57/57), 48.3 KiB | 512.00 KiB/s, done.
-> >         Resolving deltas: 100% (21/21), done.
-> >         remote: Total 57 (delta 21), reused 13 (delta 5), pack-reused 3=
-0
-> >         From https://example.com/me/repo
-> >         1a2b3c4..5d6e7f8  feature/xyz -> origin/feature/xyz
-> >
-> > And when I saw this project from the list of projects listed,
-> > I was endeared to it as it is an opportunity to work in an area of the
-> > that Git code base that will satisfy my curiousity while also being
->
-> s/curiousity/curiosity/
+I have contributed to the Git community by sending patches. Since my 
+first commit (17/1/2026), I have maintained a nearly daily contribution. 
+Here is the list of contributions I have made:
 
-Thanks
+* [PATCH v1] t1005: modernize "! test -f" to "test_path_is_missing"
 
->
-> > mentored by very best and most experienced Engineers there is.
-> >
-> > When a Git repository is configured with multiple promisor remotes,
-> > there is currently no mechanism to specify or optimize the order in
-> > which these remotes should be queried when fetching missing objects.
-> > Different remotes may have different performance characteristics
-> > such as characteristics, cost, or reliability which makes the
-> > fetching order an important consideration.
->
-> In which order are they currently queried?
+https://lore.kernel.org/git/20260117062515.319664-1-a3205153416@gmail.com/
+   This patch is my microproject, the first contribution I made to the 
+codebase.
+   [Graduated to 'master']
 
-In the order they appear in the config file, with promisor remote
-configured with the
-extensions.partialClone (most likely "origin") bring the last one tried.
+* [PATCH v2] t2203: avoid masking exit codes in git status
 
->
-> > The project aims to implement a fetch ordering mechanism for multiple
-> > promisor remotes by designing a flexible system that allows a server
-> > to dictate their preferred order to the client to ensure performance
-> > and cost management.
->
-> A part of the whole system that allows servers to advertise
-> information already exists and should be reused.
->
-> We use "advertise" instead of "dictate" because the client should be
-> able to decide.
+https://lore.kernel.org/git/20260118043537.338769-1-a3205153416@gmail.com/#t
 
-I will reword it. Thanks
+* [PATCH v2] symlinks: use unsigned int for flags
 
->
-> > Review of Previous Work:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-> > The project is part of the Large Object Promisor "LOP" effort
-> > documented in Documentatio/technical/large-object-promisor.adoc.
->
-> s/Documentatio/Documentation/
-> s/large-object-promisor/large-object-promisors/
+https://lore.kernel.org/git/20260120152219.398999-1-a3205153416@gmail.com/
+   [Merged to 'next']
 
-Thank you
+* [PATCH v4] t/perf/p3400: speed up setup using fast-import
 
->
-> > In a bid to better handle large objects, the promisor-remote
-> > capability was added to the Git protocol v2, as documented in
-> > the promisor-remote section of Documentation/gitprotocol-v2.adoc,
-> > which enables a protocol negotiation so that the server can advertise
-> > one or more promisor remotes and so that the client and server can
-> > discuss if the client could directly use a promisor remote the server
-> > is advertising and if an agreement is reached, the client would be
-> > able to get the large blobs directly from the promisor remote without
-> > the server acting as a relay between the client and the promisor remote=
- when
-> > fetching missing large blobs.
-> >
-> > The ground work for adding this capability to the v2 protocol was
-> > started by Christian Couder in [1], where if the "promisor.advertise"
-> > config is set to true, the server can then propagate its promisor remot=
-e
-> > configurations to the client over the v2 protocol during the negotiatio=
-n
-> > in the form
-> >
-> >         "promisor-remote=3Dname=3Dprom1,url=3Durl_encoded_value1;name=
-=3Dprom2,url=3Durl_encoded_value2"
-> >
-> > The client can then choose to accept some promisor remotes the server
-> > is advertising using the "All", "None", "KnownName" or "KnownUrl"
-> > configurations as values for the "promisor.acceptfromServer" config opt=
-ion.
-> >
-> > In [2], Christian added the option for a server to advertise more
-> > fields after the "name" and "url", such as "token" and
-> > "partialCloneFilter" for the client to use this additional information
-> > in deciding the remotes to use as its promisor remotes by comparing it
-> > with its local config information.
-> >
-> > This was implemented by adding the "promisor.sendFields" and "promisor.=
-checkFields"
-> > config values to the server and client respectively.
-> > For example, if "promisor.sendFields" is set to "partialCloneFilter", a=
-nd the
-> > server has the remote configured like so:
-> > [remote "foo"]
-> >         url =3D https://pr.test
-> >         partialCloneFilter =3D blob:none
-> >         token =3D "fake"
-> > then
-> > "name=3Dfoo,url=3Dhttps://pr.test,partialCloneFilter=3Dblob:none,token=
-=3Dfake"
-> > will be advertised by the server to the client who can then decide,
-> > using the "promisor.checkFields" setting, to check if the passed field
-> > matches certain conditions before deciding to use it.
-> >
-> > This work by Christian is very crucial to this project as I will take
-> > advantage of this and enable the advertisement of a "priority" field
-> > that the server can use to communicate with the client in deciding to
-> > use the server recommended fetch order or not.
-> >
-> > in [3] Christian also implemented the option "promisor.storeFields" whi=
-ch
-> > allowed the value of the configuration to be saved in the client's
-> > configuration file for use at a later time.
-> > As above, this option will also prove important when the server adverti=
-ses
-> > the "priority" field as it will allow the client decided to store it in=
- its
-> > config settings for that promisor remote, for later use when fetching
-> > the remaining blobs from the promisor remotes.
->
-> Yeah, this is about allowing the server to advertise priority
-> information, and the client to accept it or not, but this doesn't talk
-> much about how this information will be used to actually change the
-> fetch order.
->
-> It would be nice if this could talk about which order is currently
-> used. You might want to take a look at
-> Documentation/technical/partial-clone.adoc, especially the "Using many
-> promisor remotes" section.
+https://lore.kernel.org/git/20260130170123.642344-1-a3205153416@gmail.com/
+   [Will merge to 'master']
 
-Okay thank you. I will add that to the v2.
+* Re: [PATCH] [RFC] attr: use local repository state in read_attr
 
->
-> > High Level Approach to Project Execution:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > 1. Server Side Advertisement:
-> > -----------------------------
-> > As the server knows about the promisor remotes which hold the
-> > large object blobs,
->
-> First I would say "large blob objects" or just "large blobs" instead
-> of "large object blobs" if I wanted to talk about them.
+https://lore.kernel.org/git/cc2f400e-49c2-4de0-9c51-9a5c0294735e@gmail.com/
+   Code review. To verify the performance loss, I wrote a test script to
+   measure the time difference before and after the modification.
 
-Okay thank you
+* Re: Bug: git add :!x . exits with error when x is in .gitignore
 
->
-> Then it's true that the "promisor-remote" capability in protocol v2
-> was developed especially to help with large blobs and the LOP effort,
-> but this GSoC project could be useful for any partial clone that uses
-> multiple promisor remotes. So you could talk about "objects", not just
-> "large blobs".
+https://lore.kernel.org/git/1d560aa1-d452-47f5-aaf2-4cb1ccdab100@gmail.com/
+   Code review. Pointed out logical error.
 
-Okay Noted
+* [PATCH v11] setup: allow cwd/.git to be a symlink to a directory
 
->
-> > it could recommend the order in which these remotes
-> > could be queried by the client using a "priority=3D<value>" field of th=
-e
-> > promisor-remote capability in the Git v2 protocol, where <value> could
-> > be an integer between 1 and 65535, where the smallest integer indicates
-> > highest priority.
-> >
-> > This will be an optional feature which will be enabled by the server
-> > if it wants to recommend ordered fetching to the client via
-> > the "promisor.sendFields=3Dpriority" config option.
-> >
-> > Hence if the server advertises promisor remotes prom1 and prom2,
-> > it could be of the form
-> >         "promisor-remote=3Dname=3Dprom1,url=3Dhttps://prom1.com,priorit=
-y=3D10;name=3Dprom2,url=3Dhttps://prom2.com,priority=3D20",
-> > if the server is configured as:
-> > [remote "prom1"]
-> >          url =3D https://prom1.com
-> >          priority =3D 10
-> > [remote "prom2"]
-> >         url =3D https://prom2.com
-> >         priority =3D 20
-> >
-> > If the "promisor.sendFields" values does not include the "priority"
-> > field in its comma or space separated options, the field will not be
-> > advertised in the promisor-remote capability.
->
-> The issue is that right now "priority =3D 10" or "priority =3D 20" if the=
-y
-> were configured would change nothing in the order used to fetch from
-> promisor remotes. So the first thing to do (before having the server
-> send that and the client use it or not) is to actually introduce the
-> `remote.<name>.priority` config option and make it change the fetch
-> order. When that works, it makes sense to allow the server to
-> advertise it, and the client to accept it or not from the server.
+https://lore.kernel.org/git/20260220164512.216901-1-a3205153416@gmail.com/
+   [Under review]
+   After over half a month of discussions, repeated refactoring, and code
+   reviews, I delved deep into setup.c. I gained insights into Git's 
+design philosophy, and learned the art of striking a balance in 
+developer communication. It took me a large amount of time and effort to 
+thoroughly understand every line of the code. I often found myself 
+poring over the call chain of a single function well into the night.... 
+But I persevered until the end, and I believe my patience will see me 
+through even larger projects.
 
-Yes thank you.
-I will fix this in the v2
+* [PATCH v4 0/3] move encoding configs to repo_config_values()
 
->
-> > 2. Client Side Parsing:
-> > -----------------------
-> > The client can already use the "promisor.acceptFromServer" option to
-> > decide which promisor remotes it will accept, so this new field
-> > "priority" might not be significant at all in the deciding phase but wh=
-en
-> > fetching missing blobs from the accepted promisor remotes.
->
-> If that's what you mean, I agree that the priority advertised by a
-> server for a promisor remote is not likely to be a (good) criteria on
-> the client side to help decide if the client accepts to use the
-> promisor remote or not. You might want to reword the above paragraph
-> though as it's not easy to understand.
+https://lore.kernel.org/git/20260228190201.3684705-1-a3205153416@gmail.com/
+   [In progress]
+   A practice patch for working according to the workflow described in 
+this proposal.
 
-Okay
+* Re: [PATCH 4/4] repo: add the field path.toplevel
 
->
-> > Instead, if the client wants to use the server recommended "priority"
-> > later when fetching the missing blob from the accepted promisor remotes=
-,
-> > the "priority" field will be added to the "promisor.storeFields" config
-> > options so that the passed value can be saved to the client config.
->
-> Yeah, that's the most likely way the client would use it.
->
-> > If the client does not enable this option in the config, the "priority"
-> > field will not be saved in the local config and the fetching order will
-> > default to the local config order.
->
-> Right.
->
-> > A new config "promisor.honorServerFetchOrder" will be implemented
-> > on the client side to determine if the client will use the recommended
-> > server advertised promisor remote fetching order or not.
->
-> I don't think this is necessary. If the client doesn't want to use the
-> priority advertised by the server, it just needs to not add "priority"
-> to the "promisor.storeFields" config variable.
+https://lore.kernel.org/git/e6e7e272-4aec-461e-aebd-33ec0a324770@gmail.com/
+   Code review. Question unreasonable designs.
 
-Okay thank you
 
->
-> > This config can only be enabled if "promsior.acceptFromServer" is not
-> > "None".
-> >
-> > The options for this config value will be [true|false|local-first] wher=
-e
-> > "false" (default) ignores server priority and will rely on the current
-> > config order.
-> > "true" sorts candidate advertised remotes by priority in ascending
-> > order (smallest tried first).
-> > "local-first" will try remotes in local .git/config first in the order
-> > the promisors are placed in the config file  and then
-> > server advertised ones ordered by priority, if the object has not been
-> > found by now. This last values makes me feel somehow as all objects
->
-> s/values/value/
->
-> > could have been fetched already but I am just stating my thought proces=
-s.
->
-> I think we will likely not need something like this. The 3 different
-> possibilities could be configured this way:
->
-> - to rely on the order advertised by the server: just add "priority"
-> to "promisor.storeFields"
-> - to rely on local "priority" config: just add "priority =3D XXX" to
-> some/all "remote.<name>"
-> - to rely on the default order: add nothing
 
-Thank you for the guidance. I will fix all the changes in the v2
+ABOUT THE PROJECT
+-----------------
 
->
-> > Proposed Project Execution Timeline:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> This needs to take into account that the first step should be to
-> actually introduce the `remote.<name>.priority` config option and make
-> it change the fetch order.
+-- Synopsis
 
-Yes
-Thank you for the review.
+As far as I know, the Git community is actively working towards 
+'libification' - making Git's internal machinery reusable as a C 
+library. The extensive reliance on global state is a major roadblock to 
+this goal.
 
-Abraham
+Many core functions implicitly read environment variables and store them 
+in global static variables. This can cause several issues:
+
+   1. When Git is called multiple times within the same process, global 
+states can lead to memory leaks or incorrect behaviors.
+
+   2. Unit testing becomes difficult because the environment must be 
+artificially manipulated before calling functions.
+
+   3. Global variables prevent Git's core functions from being executed 
+safely in multi-threaded contexts. For example, When unexpected states 
+(e.g., a permission denied error when probing a directory), they often 
+rely on the global state to decide whether to call die(), which 
+internally calls exit(). It’s fine for a standalone CLI tool, but for a 
+linked C library used by a long-running multi-threaded server, a single 
+die() call will kill the entire host process. Structured status, instead 
+of fatal exits, should be returned.
+
+Take a look at this example from environment.c:
+
+     206 const char *get_commit_output_encoding(void)
+     207 {
+     208     return git_commit_encoding ? git_commit_encoding : "UTF-8";
+     209 }
+
+If Git is invoked as a C library by a multi-threaded server:
+- Thread A formats a commit for Repo A (using GBK);
+- Thread B concurrently formats a commit for Repo B (using UTF-8);
+
+Then they will race to read and overwrite the exact same global
+`git_commit_encoding` pointer, which is not what we expect. Therefore,
+we have to refactor these environment variables by moving them from
+global scope into a well-defined and encapsulated context.
+
+
+-- Approach
+
+The task at hand goes beyond simply repackaging the global variables 
+into the struct repository structure. Based on my recent experience 
+refactoring setup.c, I realized that libification requires careful 
+management of variable lifecycles and api boundaries:
+
+     [ Current ]
+     Core functions --------reads-------> Global variables (via getenv)
+                                          [Thread unsafe]
+
+     [ Target ]
+     Core functions ----passes context--> struct repository
+                                                 | owns
+                                                 v
+                                      struct repo_settings(lazy)
+
+		  	          struct repo_config_values (eager) [1]
+
+                                      other domain-specific structs
+
+Although the principle is simple, the scope of changes is extensive. The 
+following insights can serve as a guiding principle for it:
+
+   1. Identify isolated environment variables currently residing in the
+      global scope. Conduct a case-by-case analysis to map each variable
+      to its most appropriate existing home based on their lifecycles:
+
+     	Variables that are only parsed when needed will be safely mapped
+	to struct repo_settings.
+
+     	Variables parsed at startup (e.g., editor_program) must not be
+	moved to lazily parsed structs to ensure that invalid
+	configurations can trigger early failures before execution
+	proceeds too far, which is also for the sake of user experience.
+	(Phillip Wood points out that the struct repo_config_values()
+	can serve as a good home to these variables, though this
+	approach remains in its early stages and has not yet been fully
+	confirmed and implemented. [2])
+
+   2. Instead of blindly passing struct repository *repo down into every
+      single low-level library function, bubbling the dependency up is
+      the true goal. External callers of the functions must be carefully
+      audited to prevent regressions.
+
+   3. Safely remove the old global variables and macro definitions. Make
+      full use of Git's existing GitLab/GitHub CI and utilize local
+      Meson builds with AddressSanitizer enabled to ensure that the new
+      lifecycle introduces zero memory leaks. [3]
+
+
+Additionally, given the anticipated high volume of commits, we must 
+ensure each patch is independent and atomic [4], preventing any 
+user-untraceable or unexplainable bugs from occurring in the codebase at 
+any state.
+
+
+AVAILABILITY
+------------
+Fortunately, my summer vacation perfectly coincides with the GSoC work 
+period. I will treat this project as my primary focus, dedicating a 
+minimum of 35 hours per week. If needed, I can work a 9-to-5 schedule.
+
+I will have a significant head start to draft RFC patches before the
+official coding period even begins. Having this buffer period allows me
+to go through the rigorous code review process within the Git community
+with greater ease.
+
+
+TIMELINE & MILESTONES
+---------------------
+Considering the differences between this project and other projects on 
+the idea list, rather than hoarding massive changes, I will submit 
+3-to-5-patch series frequently to respect reviewers' time and maintain a 
+steady velocity.
+
+Below is the tentative schedule I have prepared for myself:
+
+* Community Bonding (May 1 - May 25): Planning & RFC
+   - May 1 - May 7: Wrap up university finals. Discuss and finalize the
+     prioritized list of subsystems with my mentor.
+   - May 8 - May 25: Categorize the targeted global variables and map out
+     their intended destinations (e.g., repo_settings vs 
+repo_config_values). Draft and submit
+     the initial RFC patch series.
+
+* Phase 1 (May 26 - July 10): Foundation
+   - Weeks 1-2: Plumb the context pointer ('struct repository *repo') 
+through call chains for simple variables (e.g., boolean flags or integer 
+configs).
+   - Weeks 3-4: Audit and update external callers to use the new API.
+   - Weeks 5-6: Submit the first major refactoring patch series. Address
+     mailing list feedback and resolve merge conflicts. (Midterm Evaluation)
+
+* Phase 2 (July 11 - August 18): Complex Migration & Cleanup
+   - Weeks 7-8: Refactor higher-complexity variables (e.g., path-related 
+globals).
+   - Weeks 9-10: Compile the codebase with AddressSanitizer and run the 
+full test suite to execute strict memory leak checks.
+   - Weeks 11-12: Remove unused global macro definitions and static 
+variables. Update internal documentation and write the final GSoC report.
+
+(The above is for reference only. Personally, I always finish tasks 
+faster than planned 😉)
+
+
+~$ git checkout HEAD@{postGSoC}
+-------------------------------
+This past month since joining the Git community has been the most 
+enjoyable month of my programming journey. To quote a close friend of 
+mine (who is applying for the Neovim GSoC project):
+
+   "Only fools chase trends; open source is the game for the brave."
+
+The words may be blunt, but the logic holds true. This statement surely
+resonates with me (and maybe many other GSoC contributors): our passion
+for code and open-source drives us forward.
+
+Even if I didn't make the cut, so what? ~$ git reset --hard...
+Just kidding. The Git codebase is far too interesting to abandon now.
+
+
+REFERENCE
+-------------------------------
+[1]
+
+https://lore.kernel.org/all/48821a3848bef25c13038be8377ad73e7c17a924.1771258573.git.belkid98@gmail.com/
+
+[2]
+
+https://lore.kernel.org/git/CAP8UFD2Q7gctwzGOe+rbgdXZSbDbV0dmM-cx4qt_d8nKi88=HA@mail.gmail.com/T/#t
+
+[3]
+
+https://lore.kernel.org/all/CAOLa=ZR=2B7yH+vtyiAPcCyU17yd2GZwonaj=JRo1f+LzSCoTg@mail.gmail.com/
+
+[4]
+
+https://lore.kernel.org/all/xmqqy0kp7wai.fsf@gitster.g/
+
+
+
+
+
+-------------------------------------------------------------------------
+Changes since V5:
+
+  - Once again, the diagram and approach sections emphasize 
+distinguishing variables across different life cycles.
+
+  - Modified the --Synopsis section. (issues with global variables)
+
+  - Included recent contributions and updated progress.
+
+  - Reference links has been added at the end to clarify the source of 
+my viewpoint/plan.
+
+Regards,
+
+Yuchen
