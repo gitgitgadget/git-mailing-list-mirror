@@ -1,108 +1,217 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB131E230E
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 06:32:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772519581; cv=none; b=t2/3103VSwIoa/ZBY4aj61hyIbfu1rkgKH9M61TkNJoCCy7lsROoYYFxlwhW9LYndPIs65dkki013Z4MR2OOQD5J9VsPqTNW7aRaLH4+SGhlJwF53O1fMT/+tfRcI1KHpBIdC2TMSBMtrjurtl81lmRP4CsRuXqPgr5DSxaZeVY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772519581; c=relaxed/simple;
-	bh=kYfsePhoRmZDEkQDB2LmXD/jkWr4CCtgBx3Wtus7UPI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n4XPgOA3cEIReWkRYJivqw27xXUii10sFXucRfmIjQS/HjnZEglsmvGZb9A/X/jfqYBeA7XmwW6QURdjkEF8RxMj7L8LDvA4Kr+lYYEiiIrEjW2PuRRcVTx8o/Vd6AT7OkIOIlMvMaW4OhkK79Fu0680AFpxO9noIXr5SxqQMTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IzxK4Wrp; arc=none smtp.client-ip=209.85.160.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516B3390984
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 07:24:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772522646; cv=pass; b=XRBIvSOiW3Q62YeIDJx8o5ruMytxZL05PceKYUBtrFPAY00TiglkR/R9OhkGjbrc39NlfaWF/sx6zZOiy9sLyQ1p0dx+wmF4Dbv0vJSZhI5E2h2QC9dS4ydoEgQooGBPkJBjGQiDf+/bAvXeceRQmV8bAoSeOj4xwWvjDypd2GM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772522646; c=relaxed/simple;
+	bh=0IYQEx8zp3cpXzeHzJAHTMvvkcBxLVMx+BdEq0ClAmM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qjzZt2qNhJEf9FTGNY6FwvoXfk8jGGzzxQTGnmqw3Lia0ova7wckbguSvF2G0t5cIL1DbCbzDxmvcyF1eMbRjN+RILjCvA5/PadsapXe9Z+VP6kYJHPIKmMpte+EbQpNmAXANhcfH2r1Y9Fg8ymt1yAYxX7Jh+J1T4eLn11BOzI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H7XXoCrE; arc=pass smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IzxK4Wrp"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-40427db1300so392416fac.0
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 22:32:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H7XXoCrE"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-50698970941so66278341cf.0
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 23:24:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772522644; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ioVTBBvWYe+VzNXj5DLfJi53n72WVbzZM7OS/p52wWdKiyQZsz1LgYryb7UqgTvH1e
+         PH6CnKuRA11OXXKGgVcCbJO0QfaNDW1yONleAfKXshb3BPtHjo8miq/p4Slb4Fed+em2
+         wAp4ryoxrt3NSqXdSWj0e6uw8GWa9k4ddj85mJ2kplyFwC2PiYKH7SL6Z7+8/apyavQz
+         1nZvZX9/GWS9EUq92fJUu6P1+CibycJp1WQgvJba9Z904HvA+TEWd7cMAMHm29sZv1vq
+         cC0NfO14TONOp3myvpu7poJog/ODBeHr/+paW9wg24H8FTrBTAWTRUqoWnWTh0p7yVI9
+         TxgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=noOhoVsENrhPfz5BWB0OqQ+nrrkBinGCSeZDw29qTKw=;
+        fh=XEO1H8+yKtQE7Mauub3AvytV/lMKxhrj0jHek6Exxaw=;
+        b=Pxn7ErpYOcuKLKCLmbH9i8SEDqQHLVAwGdj2NNN2lTjKZ27fZklbHs9N+SvV/PSUU8
+         qDme7pw8EGpVuiJvkT/Xg8lkd36j56+HR3A/VvYROqtgO8LYlF80PsXeTka/TDLu2bOb
+         kaPvYzi9RjlPh1d4AqbBzJm8EbFgo92QV+ZqV5uYv8Au/aPzPKzQd98TQRoYSmeetTVI
+         1/o5h0ZtoTmDRYRuK9nK52zWFaVp3VKZjB6vNjlJLJt3WpbQhrvQfVjFATlp5zL8DbSR
+         6AucVgH7hQGflJS131mLd0fm3ERwDSydcEOLX0YTo4yKxFtQlJ3wweutfA3m7m8y3rWC
+         siPQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772519579; x=1773124379; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bgmJKvHwBU76Ic6gBjr+8ofemKksWFwFV2HtfAExN0A=;
-        b=IzxK4WrpVWXKDAbbJ4WEzwo9p/wABJoW3X4aWlzKZ7vMtxLkOHlpJL8nmf51+/fWZK
-         aoDA2XSLrSU3G9M4e6EM836SaTtyI22RsX3FdJZQEQB3W0Fddz5IqGXY7OM8wuDWFGyr
-         TSIwTBTRnhS0W0UuZkQrk/TWn/Li3gA3vuZol7uaqE0mSAsK/QRpckJ6HrCIfYu9waK6
-         vIiX/tx+1ebWIka6j70Ue4aLvIpvPME4CpfOH6ko+yKdyjjT8+JQD+JDP9LP7Mj5vDC0
-         ob547lkhFjAWFudYc0MqJonMbJiyFIn/lUyIvlmwfNTgCbfLOh6hTPtJD5AflqZfMY7k
-         NPng==
+        d=gmail.com; s=20230601; t=1772522644; x=1773127444; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=noOhoVsENrhPfz5BWB0OqQ+nrrkBinGCSeZDw29qTKw=;
+        b=H7XXoCrEUXnE11HIFqJxHZatPeGG+E4XJ3yn6dWINEUYE+21619Wc4dXuQU+MW3k+7
+         vdBrEAtyiIK3keHRSVDpWq4GahHc10PE3ZVnIfdGFwubm6V7J32jg0M4fID3+I3lbQ6Y
+         LsGAap6CBu2fQSNA/vXKfNqzPfKY0raZPhkMgfN0jEE8+bM3nwDLuIDun1H2UIOrH4hG
+         gJiEA4rDIQ778wlbMLtmbAQ9fNUpjOWYtpoNtWfFljoUelskICV2BwQZ0igXkVNH5Wzk
+         zNtNtMNPoE8MqTsVN1w8MPkli8Mdhl6WAzUs05TldfzAB/hWUW5MBeTURJsQzabxaxQH
+         +uxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772519579; x=1773124379;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bgmJKvHwBU76Ic6gBjr+8ofemKksWFwFV2HtfAExN0A=;
-        b=a37HQ+cvq635gWIebx+EF/MYa0UC/bWcOoAZ5iQae+ssOWbYXxCFF0emvPdUlV7jcS
-         BJdMHV57FJ4f4j0wq1tq8kaTtqa6hkfPTVqjSmI+Nv8hW5psug2U7ksoLAd3bgVSqsDQ
-         pKpMdtHwZdv4HkBNrfqeGUhX0o3kOFGT5HelDjHuuvBKMZovdgfkGxuJU8mWW1iXs367
-         68ZXzYFlF5Dgr7iLaqe83VoSoE6BNGRUtqXi0KUozXA0r1+rrzVfFkJxUFgjfidpwTpZ
-         qWFYlyfAOUFVNKoQ9tGHf7U77iUXMfSXessxK/u0VafJOe5RmDnB/swIgf8fGFhUp0LM
-         Kklg==
-X-Gm-Message-State: AOJu0Ywey/ieAZUuIa7+LHbkwJglcBs3ElA3+sgwW+KzCt86QpDoKi3G
-	plUWuX+c5rJ+dza0ox+fCNZWYv6I4gp/w9Iu9d2H/ttYoyCeya1D55CndemX/Q==
-X-Gm-Gg: ATEYQzxWFnSqnJJx5ZSQhYcmU9qFcLWc1cVd2h0/VhJ1KPdELVquHJS+Yk3le9qucVn
-	N4MlzvWBz+EZrWiB8xB05er6+EbxwORwz1upY3Cg9CLsSjDlGQHTC3PxQ5VQkqdo7m8NW882Hig
-	N5Obc3QulTr20GsUW0sxOdAp5fUY1UAv66PLVNs778gYTqMrSEavf9LUKuP5bQLq9XKoHkTFOX5
-	QCK5Qrkp5CLyy3VKTllgy+0W84u5D/VF2CkKFit/RZyrRHwFk5iIkfwbV7YtidWB7m0OcDDDHNP
-	ReNqPW0jW+p1+Z9b/6MUm8IoOjgmkvrq0H80MfFux2kIWc1JgdEjc7XKiVZT4Z5usHdNMmKm79a
-	lc0TVIiL+p/trrO2oOsx5U+cTEyhtEs/COwOtfSqpwVxLY2SkQ0cAMDoAVD/6q4NB2CeZhhzEav
-	GPmKXkfoGP4QbsbK48
-X-Received: by 2002:a05:6870:164b:b0:3fa:966:a859 with SMTP id 586e51a60fabf-41627053298mr7945185fac.42.1772519578567;
-        Mon, 02 Mar 2026 22:32:58 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4160cff1aacsm13391710fac.9.2026.03.02.22.32.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 22:32:57 -0800 (PST)
-Date: Tue, 3 Mar 2026 00:32:56 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] ci: unset GITLAB_FEATURES envvar to not bust xargs(1)
- limits
-Message-ID: <aaZ_yngsx-CXAx0p@denethor>
-References: <20260302-pks-msvc-meson-xargs-v1-1-8e42abd879ce@pks.im>
- <aaXArnhYbtX9gsUU@denethor>
- <aaZ8nyJFjFqct2Ri@pks.im>
+        d=1e100.net; s=20230601; t=1772522644; x=1773127444;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=noOhoVsENrhPfz5BWB0OqQ+nrrkBinGCSeZDw29qTKw=;
+        b=j708YdnJG8RiKbEfKL8TCWTVPxiWQZISUHazg7OFD0PFyoVFhpX6FHuf0wpsldHmDJ
+         iPk9zkc19X091/l4WyaCPK5CYxmndvSj86Icy2aEycut0mK9CVY6o1eBmi7GBDHQwkfm
+         HdugUZp9zBDUgDWsarmLuDl6bKQdEffD3GrGPOZm/6WrujwlL5wbwtpWLksrqA15Vmbz
+         s4VBKa7dN25dLLY3S7n2Op2qEDvo1RMvGs8NYBl4NNKwMmRmq+r1fFDCY883E/a5nF4H
+         c7bNEQkKyPmpzOvXsa0ApWmOU0/mEFxGBWgX+kgDNgmvbREI55l5eelKTMIKqnq41PPA
+         xE2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXyxrjJNZGCtXdVJCiOVL/xIR2bLHaiFqQdOHsGX78zhxNyS0DtYKHl0a5LvM8ug6vYnkE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWJyFWg3Wjj3V/ocWzjhRWz4bObPK1ttjPmYCYkfU1ffqL854J
+	eu7QKtudlnxqokdqSBJj/KUboDzv+skA4RXQyBmurZuyDtOBycaz72NVfw/29zMhjpXCQqkVzl4
+	M3Ce3qRV+bCalc1ZPAqW1RNRopDUrd3Y=
+X-Gm-Gg: ATEYQzyGSfuRkokII8/AVK9TWClIzTyBE5f7EQN2WJm5b3GnwvTYN7XYElf44PwGB8m
+	vlUfsfVr+cH1V9BMLjmhA5c0JvL75QpLg2vUImRpiCZmoezBuuBUwPrML2veulc0oHopRCe0VGK
+	KebdoYmq4mokvh5bvRSsvOKcfkaufKh2NzrJVxHbQPJRDzJibI1z7jotHHQ7fpIWGbb7yeRMfO6
+	D3scWccYCtVseFuoZ/Ltvi6RIRa5vGanEJAp+xhQAqtT9qeqaAmqbbZdXYFmEV+Y7+ogvgrlosc
+	UviyaJQHh9pMcsAgzSMxrJWDaKsoWbA/bDYCAeNmEkACX9l4r/lAzH2ctRmZegY7omOuVxWy5a6
+	A/ioMcXgLR0xzNX2yeceutT5NYvydORxur+Ne
+X-Received: by 2002:ac8:574a:0:b0:4f1:83e3:c058 with SMTP id
+ d75a77b69052e-50752783584mr194698461cf.30.1772522643997; Mon, 02 Mar 2026
+ 23:24:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aaZ8nyJFjFqct2Ri@pks.im>
+References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
+ <aaSusXil9nDHYGMR@fruit.crustytoothpaste.net> <xmqqbjh64262.fsf@gitster.g>
+ <3983da40-bf2c-4665-a7d9-dfebaacb8bd3@gmail.com> <CA+rGoLfbzXqP1Tw+94jMmWcSGPoefMv5E_fvwriad-O5CUeKHQ@mail.gmail.com>
+ <108ccc9d-5777-4c84-9dad-c2d0f5dc2e42@gmail.com>
+In-Reply-To: <108ccc9d-5777-4c84-9dad-c2d0f5dc2e42@gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Tue, 3 Mar 2026 12:53:52 +0530
+X-Gm-Features: AaiRm50-2iB1eOyjOOxa0sUATibAskwctMlW77mX3ZrziEl8C4xGnC-M8GdeBpE
+Message-ID: <CA+rGoLc+ULYUZaDCdAHxuL8T-qyjJKTRJfSe6Muhb7c6d12e_w@mail.gmail.com>
+Subject: Re: [PATCH 0/4] repo: add support for path-related fields
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, 
+	kumarayushjha123@gmail.com, valusoutrik@gmail.com, 
+	pushkarkumarsingh1970@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 26/03/03 07:15AM, Patrick Steinhardt wrote:
-> On Mon, Mar 02, 2026 at 11:11:52AM -0600, Justin Tobler wrote:
-> > On 26/03/02 12:55PM, Patrick Steinhardt wrote:
-> [snip]
-> > > The GITLAB_FEATURES environment variable makes up for roughly a third of
-> > > the complete environment. This variable is a comma-separated list of
-> > > features available for the GitLab instance, and seemingly it has been
-> > > growing over time as GitLab added more and more features.
-> > > 
-> > > Fix the issue by unsetting the environment variable in "ci/lib.sh". This
-> > > ensures that the environment variables are now smaller than the upper
-> > > limit on argument length again, and that in turn fixes the assert in
-> > > xargs(1).
-> > 
-> > So if we unset GITLAB_FEATURES, that puts us at 10987 bytes (17373 -
-> > 6386) which would be under the upper limit. Unsetting this environment
-> > variable seems like a reasonable means to mitigate this problem. Naive
-> > question: is the upper limit something we could increase for the
-> > environment?
-> 
-> Unfortunately not. Under normal Linux systems you'd be able to do that,
-> but in MSYS2 the limits are hardcoded as far as I could see.
+On Tue, Mar 3, 2026 at 10:02=E2=80=AFAM Tian Yuchen <a3205153416@gmail.com>=
+ wrote:
+>
+> Hi JAYATHEERTH,
 
-Ah ok, good to know. I was wondering if there would be value in trying
-to increase the headroom we have in case the overall size of the
-environment variables increases over time again, but it sounds like this
-wouldn't be possible. Hopefully we should be good though. :)
+Hi Tian,
 
-Thanks,
--Justin
+>
+> > I see your point here.
+> > but wouldn't this effectively be the same as Ayush's suggestion, just
+> > with a different syntax?
+>
+> In my view, this issue is actually to choose the most suitable tool for
+> the job. After all, we don't want to use something like rev-parse, which
+> is riddled with *ancient* technical debt, nor do we want to write an
+> even more verbose parsing function from scratch for what you call
+> verbose user input, right?
+>
+
+I agree that it provides a clean and scalable mechanism,
+especially in terms of extensibility and per-field formatting without
+relying on global flags.
+
+To clarify my earlier comment: I wasn't arguing against ref-filter.
+In fact, I=E2=80=99m more inclined toward using the best tool for the job.
+My earlier point was mainly about behavioral similarity and how both
+belong to the same camp even though they might seem different.
+
+> If I'm not mistaken, using different parsing functions to parse input is
+> absolutely not just a matter of syntax differences. Instead, this will
+> directly result in differences in data structures.
+>
+> The reason I recommend this approach is because its implementation is
+> incredibly clear and concise. To achieve the functionality we desire,
+> all we need to do is add the following to the registry:
+>
+> [ATOM_PATH] =3D { "path", SOURCE_NONE, FIELD_STR, path_atom_parser }
+>
+> And the corresponding path_atom_parser().
+>
+> This approach also offers strong scalability: If one day I decide to add
+> a new feature like %(path:commondir,relative) output, all it would take
+> is adding a switch statement in the parser() function (along with a few
+> other minor tweaks).
+>
+> *I'm not saying this approach is better than the solution you've
+> discussed. I'm simply presenting a possible implementation for
+> reference. (=C2=B4=EF=BD=9E`)
+
+
+That is a detailed mail, thanks for taking time
+
+When I said similar
+I meant
+
+something like this:
+
+static const struct repo_info_field repo_info_field[] =3D {
+    { "layout.bare", get_layout_bare },
+    { "layout.shallow", get_layout_shallow },
+    { "object.format", get_object_format },
+    { "path.toplevel", get_path_toplevel },
+};
+
+This array contains all the keys
+You do not need to hardcode path.absolute.toplevel,
+path.relative.toplevel, etc., in the array...
+
+Instead,
+
+If the user asks for path.absolute.toplevel:
+You detect the absolute. middle part. strip it out to find the base
+key path.toplevel.
+You find path.toplevel in the aray, the array works with default
+values when entered --all
+
+/*
+ * Helper to parse the key variant.
+ * Takes "path.absolute.git-dir" -> returns "path.git-dir" and sets
+opts->format.
+ */
+static char *normalize_key(const char *raw_key, struct repo_info_opts *opts=
+)
+{
+    const char *suffix;
+
+    /* Check for "path.absolute." prefix */
+    if (skip_prefix(raw_key, "path.absolute.", &suffix)) {
+        opts->path_format =3D PATH_FORMAT_ABSOLUTE;
+        return xstrfmt("path.%s", suffix);
+    }
+
+    /* Check for "path.relative." prefix */
+    if (skip_prefix(raw_key, "path.relative.", &suffix)) {
+        opts->path_format =3D PATH_FORMAT_RELATIVE;
+        return xstrfmt("path.%s", suffix);
+    }
+
+    /* No variant found, return raw key as-is */
+    return xstrdup(raw_key);
+}
+
+Structurally, this mimics the ref-filter parsing phase almost exactly.
+Just as ref-filter splits a compound atom like %(refname:short) into an ide=
+ntity
+(refname) and a modifier (short) to populate the handler's state,
+normalize_key splits path.absolute.git-dir into the identity
+(path.git-dir) and the modifier (absolute).
+
+I just meant both the ideas are in the same camp just unrealized.
+
+What do you think?
+
+Regards
+- Jayatheerth
