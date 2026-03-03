@@ -1,149 +1,127 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6979A358D00
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 17:07:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772557654; cv=pass; b=KQY22YVdmnnQ4imI/nQBJ61oGQd9D54nhDR51poARjAfHdQhLN1sIP66bdWL1pIvmYoNRjYLXP3zHz+dpHGd4PuBSZdueZvy7i8JOrKc/hXLh2Nq5Z6RDa0ZQJcEWcC7gbXwBu2QM1tmJTBXP7Q+07HzlSMSOl0X1+faeaFbZgg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772557654; c=relaxed/simple;
-	bh=i2urB7k3z0juvoxha2sXTxvXo5wq9sS/Or8Tu/ZllS8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dWV/Sg2J46VAFPQPTTpH2SPHmmyqWWWUK4j4e/SQrPz2qXmD587fjUx/BZIel3KiJJGUEIPbNIfR2kDxi0vUd1rpLmB1ETb5JmAQnZNLsF7qHtsi1V0WnE/Win5ZvM4AhvaaXdJYm0kAiHB8AIwzfvSmGC0cWwd0Eaze7LXzMZY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T1bugc7h; arc=pass smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C803943D4F4
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 17:12:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772557930; cv=none; b=b5bY+f5DfXYvil7d2ac0y7NoeUS5mV4fwv4PprZR+0+xXxk50PEi1LWGF0TKJhu17OTQyjUSwb7LEJqNb18Crlf0Ptd4e2DmmUuKnC0JR8aXFKOqASp9MuKGluAHJ41ZFY5xoqWZk3/Xvl8Uk8fE0lgHkRROEnkOo/I21XPaPek=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772557930; c=relaxed/simple;
+	bh=WBjp9gYBe+hy3bhhxFfohAhxfHwf6ClPi5WLYdeZvDs=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ukUgBH5VmW9u89MpftesU7gs0YYluahZrrB/YfATOifiGvtzL3sJaoH4QN0dzaJj2/e88FQNsu8n30ju3W25FbqgTGiEpHQHmJM1SNgw8WNegJTaUOnakmynzdQpJXbMCxozbBbJmPXZFHt5qjH/BefGbq9Dm3EU/MVPW9GcV3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DdqKCCH5; arc=none smtp.client-ip=74.125.82.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T1bugc7h"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-7987531082aso56884297b3.3
-        for <git@vger.kernel.org>; Tue, 03 Mar 2026 09:07:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772557652; cv=none;
-        d=google.com; s=arc-20240605;
-        b=BSX3u03L/U4KQDEIoudqH4gSaYMu5ryuTwW2H83R4TG350FnUuUM1Jejfy+9gHYmw9
-         J/oE0MNf2Gusrs2CuhXM0cD3Scz1p+AJdTeJS+oQnVannz32mGuKHnwJWKcLRjddA18q
-         BJLxxEp+gH+KQrf/kaHVtXo8/xtDKgUHqlv0CRqQdZb5VU440aKO1OwwwdyA0ARl7LyV
-         qW7uGgJvJzv2UwntEVUV5lA8xXJOB6L8j0X/hEKcOTvDNUhLTRmsrlWlb45z9edfRQP4
-         kHLlemVFVns+HR9vV8IHreUWr8WAmkkihxPjJuBlhawxEyh48Fna0wgjfsCaJezeUG+P
-         An8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ltUC160UBPR+84SwhkdswE5Xt7wX/fH3I7Xn4g41vKQ=;
-        fh=4YFVeLm/heYb+JoCNJvZZfhh5UsF4v2f6VHePEKeFjo=;
-        b=C7IeCl6Mt4Z/ENAVrrIYgZ6JF6Aa9hjMj6QvlFWCgdStV9YMcxjNwtJPnQoQwuZvON
-         XvIrxEn5eTAIiFD2FPmwp9C8sie/ADD8aVwzsM95IYaXYmv+eoC5NUrBeuLlzFv/FkNE
-         LpraeTT5Rqf20NykPiJzh1hvRsJ80lQX0BperFGuqufBZc3JD6UhROJ/JBbFLyl/C9dI
-         Nyzeh2mJWRxS6cmkQEb3Imn7/VHDkMU5HK2vQ4OREyQoXRKWLw1BytdYEQ6ygKF9N9DF
-         tMDwXAk9zTFaEINVDRuawe6JjnTOx+NoEC/pjO2s9Q/kHRSmW1fIvpMu7iJ/gN3j6CTb
-         x5YA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DdqKCCH5"
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-2bdecd00ebdso72242eec.0
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 09:12:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772557652; x=1773162452; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772557927; x=1773162727; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ltUC160UBPR+84SwhkdswE5Xt7wX/fH3I7Xn4g41vKQ=;
-        b=T1bugc7htpcbSKC6YwTb4pKGTcgEmMxPo6Ysb8gMy1UmByGxBMKBP7f+1ZOVfMxt4T
-         V6uEQkMbRsPbzfzlZWncxWIop3uQycENI1JeoEdamVvpdn3GRUFNB7+v5faScPQ45/yz
-         gy3YfMkJP7/eX87RJdBdNwYNxxbxAURUlH4DUzeIZmLirG83M8X6RNYkvZzg98W/vHO3
-         nSFuxP3W1amBdEgYySck24wtM1iC3H8bC/L06PNJdsCpO1fGOEOLZyK/ofONA32ppfRx
-         Dlnn+Ib6YGBa5koXNq/Sqn/UBI4CZ7Ya1pZ7XLYP3U8jfaup/c4b9X7n9cBH+zb3J9sT
-         W0WA==
+        bh=lb4DLkrQ/OJiKw+TiCM+BxDWktnVtPL4ubf4CW0vdZ0=;
+        b=DdqKCCH5A2YSYQF6BRKeU0OreWhbyDf/zHIaUBnWMR43X5djWEmHm+/LweE8emAuS2
+         WaqKBAs+q6MLi+8pCAbNqIVxddmaFfobHmpo1jeiw1fK6bPyld/mmNhZqob4z6iSGnKR
+         jsLA822XFwWiVGQ19uW5OTCIw7PwhttujRcapAsoQ3tWOrvGPb3COxae8g1fHKQ2+UEp
+         cTmruAb9vM/07vh7litcNTLpZeEqIA9cXTNkBi23NylBc5RRwpiSJxyyAOatohKp4kZ7
+         id+UPXHO/hdlXcnrBxnNYtApu4+wyfQM1uzBSOEE3kYMd+f5am8N7Ijsr3wSHiXdo9ll
+         SZlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772557652; x=1773162452;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1772557927; x=1773162727;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ltUC160UBPR+84SwhkdswE5Xt7wX/fH3I7Xn4g41vKQ=;
-        b=lUbWpngyKApyX36AmA2PdSTrbc+5XHUzXmtMvlE6rt5ygDo0s6BlcW2kSX8k9LCQIs
-         9DuW0yCyyUjmlGpnmyKyQviXi5lw52IPDl183WO7aGPiNcLzp1PV/lVLSW/LNW1mLwej
-         dKdVEj/Mn98EbTQrqVZV8tBTxcslltKJWSNd8MWqKVxGIYaPFZUVCRfq2inBlZmyQnRU
-         7OilM9GcV2zoHuFd0a230rydm6nkopvJZAYodgwzh3M3buYUvu3HvDdV0ES7sJe4pbrj
-         Lqf3XTT8JMSEVLiLoDWtuW4gGBGkJgmIm9agC+WPYPRxaiq5MQzpJ3rKD1LuIFc/vnrR
-         QsfA==
-X-Forwarded-Encrypted: i=1; AJvYcCX8yc2XUPNRiPOwSttIBSxwGxHLxGMLPsNNTnKNgs0g2Vkz0wwiRxr0eQC+v6TMQ016qss=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjNwaOpW6+JJv6xIBQBcjZ2odefRSUXw5FezKvtnNu6fxV10ac
-	zZOS5+GLESLNyRfF3/6OS+/zQJJfAMKDawS4UKrdvrknZgrNDMhh9hv75y0pZXrphzkIt1sHZ9M
-	OQ30b/UTrioKStUYk9RGLEeswatW+XXA=
-X-Gm-Gg: ATEYQzwUK6ixbHC5CB40Y8yDm058HOqTHUplBiYAfRsM/te9qRg38U8vfRXYhbgC5pt
-	6ZkHLNTe+pFmA7cKDhRLZ2Hu7Ib0mj52qA7ydlB/XW/nShXfLgZin3FncG2yl+haOOEDdMc+Mgd
-	kw2OlWonqwlvNjVxgXGSBthb91s+iG/DfFr0pqCYRgnyeMJVJMSBTtaUBBhofVINalwyTqksa7Z
-	jduAWkYTF/WPzCe7Q4YT3JVIDWqvFB7HpI5I6/SObXmIRDCowRwvbnTdcbjbNQe3FK+zRhR5sFb
-	Zn5t
-X-Received: by 2002:a05:690c:6d03:b0:794:ecaf:c4b1 with SMTP id
- 00721157ae682-7988550a903mr156159587b3.25.1772557652161; Tue, 03 Mar 2026
- 09:07:32 -0800 (PST)
+        bh=lb4DLkrQ/OJiKw+TiCM+BxDWktnVtPL4ubf4CW0vdZ0=;
+        b=tG3GMrnQ4ZJHT5XM0Q1E4bdVcoQOHX1IxnLjvJ83VR3V3YohU9K0SOWfODUkvvStgX
+         tF4LqihEYuAlx/FBHPNnj8sr8Td5xeKkssXNDzucjLt2e3JjFhFYysWhCWERjGm9y48b
+         uJGY7t9S3oK1vxVAPga96BFAu8hK//pK4Q30fK1jyKvgYEpOCvzq2OuCibKZD5zJ3Cf/
+         5XGaaQO1IxZrfvqKSyM8C3/Qwyz/eimAVO472hFQKXZFhqOinFZKx2Xc5+3Npwck4+cb
+         vnRWavA6cCKQyhMm56N2woP2vVdszAsLodJSQwSdbmEl7UrbiAb4cZKifPP79DtoJoxX
+         FEvg==
+X-Gm-Message-State: AOJu0YxJpz5ZlajFi4jx7M2SMi4lnML2IMdtx6RpdWCDHCTOgrXg2Q1g
+	9o545pzaCmuSysPA90mlWO+VN5rgXHfbbBdYl84BfFS6xXP6aR/l0phCc/8Nuw==
+X-Gm-Gg: ATEYQzxZBQ/Etol9RJrZuzZapVhU5RZOZMtIaPNPYFJYFkq5pOJwUtL6TpgayJGguGG
+	MQFdYxATcTxiaF+Jjp7qggppDOChA+cBzKYnpi3giO84XgHf/wfptzQg7m+Tn44t8KefNhL3K7W
+	DEu7GJ2hn51d/T3WQbmalnbd77a7c9DpfrtnkN++ad8FlvqH/XA+OWr2xvrlBw9OcMpHnNQm5IR
+	W0/pkTDVgY5wcQqRPLEm7ubSfEKNMHaV7HWeioFEawzv0fZl/QwAztx7tJ7Yq/SGqoXeFiJQCQV
+	+Nflk4WTLAD9ifGUil1rUaRd7NZLUzJBNN+TB2n3/YlsOdFb/CpODMYx2sUI2XeM1dIrv9VqwLP
+	JwgMq2hveJANdepCd5aMeQsFb+cHswsih1XJo/7qlHjhU3zR7uWc2Ralu78UpjbWyj5QbWXZdd+
+	PKu5D3QGaxWKO/TLz3a3b1CTCY
+X-Received: by 2002:a05:693c:290c:b0:2ba:a1a5:b5b1 with SMTP id 5a478bee46e88-2bde1c0e7e2mr6514552eec.7.1772557927175;
+        Tue, 03 Mar 2026 09:12:07 -0800 (PST)
+Received: from [127.0.0.1] ([68.220.62.148])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bdd1f48c77sm15010321eec.26.2026.03.03.09.12.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Mar 2026 09:12:06 -0800 (PST)
+Message-Id: <pull.2220.v2.git.git.1772557925670.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2220.git.git.1772479907062.gitgitgadget@gmail.com>
+References: <pull.2220.git.git.1772479907062.gitgitgadget@gmail.com>
+From: "Omri Sarig via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 03 Mar 2026 17:12:05 +0000
+Subject: [PATCH v2] doc: add information regarding external commands
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2220.git.git.1772479907062.gitgitgadget@gmail.com> <xmqqqzq1x2lp.fsf@gitster.g>
-In-Reply-To: <xmqqqzq1x2lp.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Omri Sarig <omri.sarig13@gmail.com>,
+    Omri Sarig <omri.sarig13@gmail.com>
+
 From: Omri Sarig <omri.sarig13@gmail.com>
-Date: Tue, 3 Mar 2026 18:07:20 +0100
-X-Gm-Features: AaiRm51TuM2QwpIBTneDPCwSFqoYnGYIA29edfXWrtlSrJc1tbBxjf2xGCrgUYc
-Message-ID: <CAP9es6vwDccuY_NC+q=ua7u-cwORV4-eLhPf3dPDrBf+JkAT0Q@mail.gmail.com>
-Subject: Re: [PATCH] doc: add information regarding external commands
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Omri Sarig via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Thank you for the reply and review - a fixed patch V2 is incoming shortly.
+Git supports running external commands in the user's PATH as if they
+were built-in commands (see execv_dashed_external in git.c).
 
-On Mon, Mar 2, 2026 at 11:56=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Omri Sarig via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Omri Sarig <omri.sarig13@gmail.com>
-> >
-> > Git supports running external commands in the user's PATH as if they
-> > were built-in commands (see execv_dashed_external in git.c).
->
-> Correct.
->
-> > This feature was not documented in any of Git's user-facing
-> > documentation.
->
-> "Not documented in any" is a slight exaggeration.  See "git help
-> git" and look at description of "--list-cmds" option; "all commands
-> in $PATH that have git- prefix" is mentioned there.  Also "git help
-> help" talks about "--no-external-commands" that excludes "git-*"
-> commands found on $PATH from the listing, which implies these things
-> count as available commands.
->
-> Nevertheless, it is a good idea to make it more discoverable.
->
-> > This commit adds a short documentation of this feature, making it easie=
-r
-> > for users to discover and use.
->
-> I would have expected that under Environment Variables > System,
-> next to HOME, we would add an entry for PATH that says something
-> like:
->
->     When a user runs 'git <command>' that is not part of the core
->     Git programs (installed in GIT_EXEC_PATH), 'git-<command>' that
->     is runnable by the user in a directory on `$PATH` is invoked.
->
->
-> or something like that; I didn't expect us to add a dedicated
-> separate section for it.
+This feature was not fully documented in Git's user-facing
+documentation.
+This commit adds a short documentation of this feature, making it easier
+for users to discover and use.
 
-I've added this now as you suggest. I made it slightly more verbose (adding
-information about the arguments for the commands, and about it taking
-precedence over aliases). If you want it to be shorter again, let me know a=
-nd
-I'll remove this information.
+Signed-off-by: Omri Sarig <omri.sarig13@gmail.com>
+---
+    doc: Add information regarding external commands
 
->
-> Thanks.
->
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2220%2Fomrisarig13%2Fexternal-commands-documentation-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2220/omrisarig13/external-commands-documentation-v2
+Pull-Request: https://github.com/git/git/pull/2220
 
-With Kind Regards,
-Omri
+Range-diff vs v1:
+
+ 1:  b7e2b586c1 < -:  ---------- doc: add information regarding external commands
+ -:  ---------- > 1:  02841b66ea doc: add information regarding external commands
+
+
+ Documentation/git.adoc | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/Documentation/git.adoc b/Documentation/git.adoc
+index ce099e78b8..8bb3cb53f5 100644
+--- a/Documentation/git.adoc
++++ b/Documentation/git.adoc
+@@ -487,6 +487,13 @@ System
+ 	`$HOMEDRIVE$HOMEPATH` if both `$HOMEDRIVE` and `$HOMEPATH` exist;
+ 	otherwise `$USERPROFILE` if `$USERPROFILE` exists.
+ 
++`PATH`::
++	When a user runs 'git <command>' that is not part of the core Git programs
++	(installed in GIT_EXEC_PATH), 'git-<command>' that is runnable by the user
++	in a directory on `$PATH` is invoked. Argument passed after the command
++    name are passed as-is to the runnable program. These commands precedes
++	alias expansion.
++
+ The Git Repository
+ ~~~~~~~~~~~~~~~~~~
+ These environment variables apply to 'all' core Git commands. Nb: it
+
+base-commit: 2cc71917514657b93014134350864f4849edfc83
+-- 
+gitgitgadget
