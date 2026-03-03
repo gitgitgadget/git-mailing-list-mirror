@@ -1,148 +1,110 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39E026D4F9
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:50:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7425F3C2786
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 21:18:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772571016; cv=none; b=hCH/tuBKyivHuwun5vEXlpzjL1Qtky5Km678yUyEPFvWP8H/Wyz8woRv+5lrzg7yTUrc8XxksJteFW/m6NyfFPwpDAexFh12Trx0dYs51wr3ex++DCHAsb/yEVnSSYR7n41G1QVKui2fXWKzqlhwk+QjPxoEmw3+DkHJlJzrEFU=
+	t=1772572723; cv=none; b=ashhLc7IQdc5uM37J2XDoUySZy+Oze+uq4FFR+SECtQ7ygvoXjcWwyaxqqXmhOrBnsXncDAYJpYl1WSnDEnIMdX8WTkbyaz/Qaxz5OYFLSP7yBsDUjPNH0Zi/g41SfYPr2mY2FgA843BCB4JQWXFWg4zHpmJ53qNlsi//pbicAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772571016; c=relaxed/simple;
-	bh=CdWndIKedgMsB7uN8vHEyaP/S8xll0VFBktWpk+CWTo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jd+x0tX7V4bHxXIhURsd+/ZVEIEIkkwkwtoDPaKRLW/XluKnd15WYQuAMR53RGiqHpJ+g6DoNDfYzQwo37cEw8VHm1GFr4QMH13vn3/bBg+/N5pe+7JfjIqDZLxenc3SnXA7IhdoMZtrQK2ZZmN2hXXYLY8VjAUHDq9BUSusN1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=OlZNCUtv; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1772572723; c=relaxed/simple;
+	bh=+L9Bumhf6Bg9TmX7eBkhdtsd8qz6M/zrqICcdDx32wU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fnOSCjHC2/ZvU3WWotDH9EtF80rEy9l6gXcgP8oshXcarfAGOkIFq/tmVQHwjKmWFttfvTcxSwElk6PotjQSaqwebapA4HLbi2meRY04O1bE7RPZlioojJepXsVKbNjo2M9/tzwfXiuqlP+6WaZKEEmKuGwLFRzR1LcFDMFEgpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RAHtwxjL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nYUe6pJJ; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="OlZNCUtv"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id xWdyvVgUVWlIOxWdzvLviT; Tue, 03 Mar 2026 20:47:04 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1772570824; bh=pkKw3kXuHTJVo8UiuhW7nIauhPp/ukOosGFYPn8xPtE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=OlZNCUtv5Ox6B5NtX1In42Mh8osVCwZei5KgExjk6cZdDwACn5pIAW1Kp+Lac8Phn
-	 Uwe5hKU1aEzzAXA0dlYI/OjotQlzUj6/xMckNO49+pRHK7eAJCZAN644s/ouTNjAHK
-	 HA3aBNAGzrOzLc9t/Igzhe0RJrSnC6/ZObLJfDcIEL4n3I3IbReRcUai6ycRHJlm3n
-	 FaN05sW1op36yIO2B5sqx8GEOlYN++khJBZ7eCBs7GIs7FjBzSiiXvokiVt/3TVeLr
-	 qFIJpb7FewK7UTBvMXGbIG1dAZczkHoLqFMxYmLWqHDPWHDP0t8aKumq1OSHrZGdAh
-	 FZYRcgTm08NyQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=atcRCjZV c=1 sm=1 tr=0 ts=69a748c8
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=LPMzWrbQItpxuvcWF6YA:9
- a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <2e62dc94-b821-4815-8dd2-f806580d2027@ramsayjones.plus.com>
-Date: Tue, 3 Mar 2026 20:47:02 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RAHtwxjL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nYUe6pJJ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id A5434EC0592;
+	Tue,  3 Mar 2026 16:18:41 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 03 Mar 2026 16:18:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772572721; x=1772659121; bh=+L9Bumhf6B
+	g9TmX7eBkhdtsd8qz6M/zrqICcdDx32wU=; b=RAHtwxjLR8eRl/mrKgQoBQW0x6
+	CBO58t4+jDp8sfN8nIfkaEImFBKwm+/vHlcf9ucIdDcUj+SPQfGIE2/y3EzebpGs
+	Rt1PWe3x9CKKtLFj8SJpB9Ac9rSW60D7w7kjub33gsmih815toWbT17BdCmH9ozx
+	10FThiwebG9eu7+mBIDz0ja+QhC4J9jnUeyOnwVfCAoYmJ2ouPCTFQPxCz0NREP+
+	PkFe1rnplb4SPZJB3LMNECAOh8CwW3uio+ha6BERUiyPBBGIxSyzau5kFKgy68jG
+	90Vlz+1lWjuUq35PJDVxWjrgM/l0ip3a9ZAPb+j/j7rrVBlBIdrjKVQotC3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772572721; x=1772659121; bh=+L9Bumhf6Bg9TmX7eBkhdtsd8qz6M/zrqIC
+	cdDx32wU=; b=nYUe6pJJNau1CgO86MBOw5lxvmBfVVioev2wSVzJlWLnOm7pNgx
+	myfYLan73iv7x/WxOxL/3jOi660oSko02c+B69dROYXwNzYFJiY3uGc2m+CqgGGY
+	+2t4iz0eLZMV/13I3+kt/I5wjvIe2tnjJsK9sWHMzRgse2MyNHtS3SyshGuNgfSV
+	wy8QD5oBAu0X/FHgOX3GY9/ch6u1Xd+e/j9/iXHq/aiiO3YQoJXtxJktM0qvJuHm
+	FdG7q6uQlvM8Jb4aPF+TcbmM308npwu+80k9dKpuYL9iOcvxWoq3wNFzan1iIGYM
+	aCtUvKEy7s6i3TB5ShLzlsNRnQ+Ethbf9nQ==
+X-ME-Sender: <xms:MVCnaaWjif8CTjdKdoeoqjTTsUYs_KaflOgWWYKo-62rXnufq5l0mg>
+    <xme:MVCnaYEVXu6hj4wgF4ayNF3c3d0RDm6MWUPoI7Om72ZPB1dSUUwF4OM7WtNBcKd5A
+    309EOSK9yKHm2zq5XdsQeQ_9T_DRTwOjdiYl31vXfP05zl-4nKH86E>
+X-ME-Received: <xmr:MVCnaefKYutE2BYbc7QF2IT84j47s96JLmDLF4vqElsjpGtUI3scrHXkUO3Uv9onhCeLoZ-Cq86VtkAII9ulHiOzN-uZNV6vcg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieduieehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhn
+    vghlmhdrohhrghdruhhkpdhrtghpthhtohepmhgvsehlihhnuhigrdgsvggruhhthidprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:MVCnaRJITF6LBn_-pZf37QzK9RFlrBQNmxQDnOG-glkRVfyqi5ILdQ>
+    <xmx:MVCnabEjDBKBtjy2If42qUmx7XQLVdEx1f4YUDEkWcIkClCt71GMNA>
+    <xmx:MVCnacB52fOzLU7U0PflDrrliDOfEQWKfTVQuakk9SnlJ0fZTEg-Sg>
+    <xmx:MVCnaW-xvjyVgPBPknbh2zSbunChTQqIBie3lMaOTm9ANuPs2Bz5tA>
+    <xmx:MVCnaYe35iywNwEqclV66cp9cw3A_bQtuSkgVleyS7fbQzNh9FFZ-Vwy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Mar 2026 16:18:40 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,  "Li Chen"
+ <me@linux.beauty>,  git@vger.kernel.org
+Subject: Re: [PATCH v7 5/5] rebase: support --trailer
+In-Reply-To: <22e1de8e-935d-4efa-9fa8-ef8d9b4ffc6a@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Tue, 03 Mar 2026 21:36:53 +0100")
+References: <20260224070552.148591-1-me@linux.beauty>
+	<20260224070552.148591-6-me@linux.beauty>
+	<824809c3-72ac-43fb-8a93-4f48e0727e6a@gmail.com>
+	<22e1de8e-935d-4efa-9fa8-ef8d9b4ffc6a@app.fastmail.com>
+Date: Tue, 03 Mar 2026 13:18:39 -0800
+Message-ID: <xmqqqzq0boi8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] submodule: fetch missing objects from default remote
-To: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>, git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Jacob Keller <jacob.keller@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <20260301025327.3845292-1-nasser.grainawi@oss.qualcomm.com>
- <20260303200906.4118348-1-nasser.grainawi@oss.qualcomm.com>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <20260303200906.4118348-1-nasser.grainawi@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfCcgnAvq9szr53yxWvry+PsOaTkMUCjbyPsM3wa/52ZiMMRMGlDm4M/qqahKQM/7d23HNimCA+0D8wUv8sP0N+K6nUsu50gCovITOaHYmEYf5mKmUFV+
- 8Ij/tN3UR8iHpLKDvnCxygUJYkwo2eIhCR6FidTz3CkLYXv/ZpnsOJVtPlpSJL0WhDY2F8ibK8gObrvbwSiXMpHUHOBNmvEwK9Y=
+Content-Type: text/plain
 
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
+>> I wonder if it would be better to add the trailers before the signoff so
+>> that "git rebase --signoff --trailer='Reviewed-by: ...'" adds the
+>> "Reviewed-by:" trailer before the "Signed-off-by:" trailer.
+>
+> Why is that? Is that because that is the practice in this project (and
+> maybe others)?
 
-On 03/03/2026 8:09 pm, Nasser Grainawi wrote:
-> When be76c21282 (fetch: ensure submodule objects fetched, 2018-12-06)
-> added support for fetching a missing submodule object by id, it
-> hardcoded the remote name as "origin" and deferred anything more
-> complicated for a later patch. Implement the NEEDSWORK item to remove
-> the hardcoded assumption by adding and using a submodule helper subcmd
-> 'get-default-remote'. Fixing this lets 'git fetch --recurse-submodules'
-> succeed when the fetched commit(s) in the superproject trigger a
-> submodule fetch, and that submodule's default remote name is not
-> "origin".
-> 
-> Add non-"origin" remote tests to t5526-fetch-submodules.sh and
-> t5572-pull-submodule.sh demonstrating this works as expected and add
-> dedicated tests for get-default-remote.
-> 
-> Signed-off-by: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
-> Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
-> Fixes for test_when_finished usage within a subshell.
-> 
+I do not think it is a good idea for the above sample command, where
+we can argue that the intent of the user is to have sign-off and
+then reviewed-by, expressed in the order of options given.
 
-The 't5526-fetch-submodules.sh' test failed for me tonight. Having seen an
-earlier email about the test_when_finished failures I wasn't too surprised
-but, once I looked at the failure, it was obviously not the cause of this
-failure. Indeed, when I ran the test by hand, it passed ... :)
-
-It seems the 'seen' branch (@764d09c9ce) has this v5 version of the patch
-and (in this test anyway) has some flakiness:
-
-  $ cd t
-  $ ./t5526-fetch-submodules.sh --stress >out 2>&1
-  $ cat out
-  FAIL  4.1
-  FAIL  3.1
-  FAIL  5.1
-  OK    0.1 
-  OK    1.1
-  OK    6.1 
-  OK    7.1
-  OK    2.1 
-  Log(s) of failed test run(s):
-  Contents of '/home/ramsay/git/t/test-results/t5526-fetch-submodules.stress-3.out':
-  Initialized empty Git repository in /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stress-3/.git/
-  expecting success of 5526.1 'setup': 
-
-  ...
-
-  expecting success of 5526.44 'fetch new submodule commits on-demand outside standard refspec with custom remote name':
-
-  ...
-
-  + diff -u expect_fetch_custom actual_fetch_warnings_removed
-  --- expect_fetch_custom 2026-03-03 20:35:13.949600802 +0000
-  +++ actual_fetch_warnings_removed       2026-03-03 20:35:14.150601532 +0000
-  @@ -4,9 +4,9 @@
-   Fetching submodule sub1/subdir/deepsubmodule
-   Fetching submodule submodule
-   Fetching submodule submodule/subdir/deepsubmodule
-  -From /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stress-5/./sub1
-  - * branch            43c17d99ab9d4fcabf7107e36660b27113b54663 -> FETCH_HEAD
-  -Fetching submodule sub1/subdir/deepsubmodule
-   From /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stress-5/submodule
-    * branch            e38933e027ee8a2000f603124aa899302a09a51f -> FETCH_HEAD
-   Fetching submodule submodule/subdir/deepsubmodule
-  +From /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stress-5/./sub1
-  + * branch            43c17d99ab9d4fcabf7107e36660b27113b54663 -> FETCH_HEAD
-  +Fetching submodule sub1/subdir/deepsubmodule
-  error: last command exited with $?=1
-  not ok 44 - fetch new submodule commits on-demand outside standard refspec with custom remote name
-
-  ...
-
-  $ 
-
-From which I guess that the order of the output is somewhat unpredictable.
-
-Also, other test files in that patch didn't fail for me with 'make test', but it
-could be possible that they are also flaky. I didn't look.
-
-Thanks.
-
-ATB,
-Ramsay Jones
-
-
-
+If we want to control where the new trailers are added, perhaps we
+would need to match the --where option interpret-trailers has and
+let the configuration honored by that command take care of the
+ordering.
