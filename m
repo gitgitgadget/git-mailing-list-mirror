@@ -1,146 +1,158 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFF9377027
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 03:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772508471; cv=pass; b=nPqySoWyFyUq7YQXEX4AzbAASOzsdX3PuMLZzj4MJIjLkoI3XXAZZnLrof4+4cnK0yyM4JoMF988RQAPZcnUwy5rTFc8lpyCqWvrgRw5R/XJCr7o7rT2lsl+LFiIFaipoPG5ggdnro56GEfkMrcyX0fAZ5DeeZz7PpFZ1Q0/7XU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772508471; c=relaxed/simple;
-	bh=fNGiGu7iJxbnMa5GyI4w6jlzcW/6pyizMnUZK/qwIsY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q3TPguODwUKtBb/InJsC2az2kpcozy0JmBujAsvUko6HnYQoHA7dTIl6NbCZbUne6CQsDpuk5ww4becYxUzWq9uzdDGPY33uxpCqCQyqsI1IpAvF+EYBdwzfd8JfSmGQvd1M36aZNMvI1cKQr/WB5sza+wIF2d+v4BadZVwBaR8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T3dhmGRM; arc=pass smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E72F25DB1C
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 04:32:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772512358; cv=none; b=M/KfZsJm0henfCkw16m4fLZ9ONv00iIrmMlvsPvOvgRfvUUZcQ2cBWy25oXO5+LYvRQr/ujiX2rx3myMIspRHvc5JRarCjtYWoBueWFUw+Q1hqY1fpeygmNUFH3LrnGhHjBvCnw5NWhTJFImVED59ADX3DB4XXnHNjKlMw8Llx4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772512358; c=relaxed/simple;
+	bh=5H5r3VP+2B++uzOwDoAkrNA0b77bpE30gcvyhoS4rEM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TbqFEAa5ZPm50ZgmVdaGrH+OQfJ2zj6/o6ONqABaQaDI6TrKA9sGL+cM/G44UwIvENCPhgHs4r1e3n355sOJHF+7ZkkHxjs8VLP/ybIPvdwzPz0kmMy11/PAjU5G8m2z3nooOy1lKeOVosVpRQPRmesoZgL2P7k+20VtiH+Gsiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O7hGq+7L; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T3dhmGRM"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-389fa352b0eso74148041fa.1
-        for <git@vger.kernel.org>; Mon, 02 Mar 2026 19:27:50 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772508468; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NlnPO+Xi7dYHTatqYqa2qI5tb6kdkUI/Cd1EB9U4apKMbl/Jva6h+Ok/U8jzot/8eQ
-         bZwwwZE+P6Rvdg/dA0B/FD5BIyg3UE88TmOBsPZCiYkY0vvfCxgalNhTNlU7G6lsC8CE
-         xzPVMPKQQbGJA5f/nCWzmr44XjlnVcGJcC5LZYc5+CfFIMQRQz850WtPYQa2BoGXCT2s
-         IC7fDs5A+bg1RvmQOrjM96lKhC/jxBJLDczMzZA5fwJ1jddHL/5KYPut4mzdx2BY5d3J
-         FLdyOoSqxtJSU+kLxFmD5ickMExJQ9F17uF07aQOV/LrYiEi6qQTLoUmF2wHSC19bLyz
-         049Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=fNGiGu7iJxbnMa5GyI4w6jlzcW/6pyizMnUZK/qwIsY=;
-        fh=6HtJDVB824boFXmT3cWxiKIYXNf4ZEFPQG8ED0mEja8=;
-        b=PQCQIQF8SFcBoHFWRhp9T8qNYhQEC3b2hZ8v93XIMHlrEv5a6mz4KuMK/UPaRKWKg0
-         WQcVqeI03ZDBt3LNA50JdQWnJPgUzY8B4fZ7+b6u+y4lbpG7x7fphvKJr7N7mB3seccT
-         Ej6l+P43u2frOktvrCY+2FgdQiLjCFNiSETGG+gF3JCgyzh+t2zX+t/d3C59yfwOTqF9
-         USxzJxz5NqjY5uhPvrl8Q+Uj8aH+QpumFgNTFJBu1bgvTtuimDslK9jbP3ZMk7BX+Qz8
-         M1jwmcaGFq1XWBMZTupxMgW35m8BXoKVIbVCjsz9OzgPnLtpN4ah8zebrleFTNBDpMnD
-         g9pg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O7hGq+7L"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2a9633ef0d6so7464165ad.0
+        for <git@vger.kernel.org>; Mon, 02 Mar 2026 20:32:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772508468; x=1773113268; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fNGiGu7iJxbnMa5GyI4w6jlzcW/6pyizMnUZK/qwIsY=;
-        b=T3dhmGRMxaAsQG2ZKWqJMGkWx66pTDhR6f8x4om5rBPeSwCa5ulS/x8qcWQ8P4jkzM
-         lX9RpgnWS/LKX6p8IRtU6g2XpmuTMwmGbgEwIb0kbe/FkWpRScTeAbCqUieje4igBNtp
-         U4oss9B3D6Nh9mrV5k/aQihLRvDwBHpxEunXHiHABmseIR3SG+b/7EhQV8hJG79vlUv0
-         V5v5ngKZrLWw9ebhB0OhUnGxQrkjCpW4OjO8w7Fg0xQeC9K9TUk0RvG7IYYD+5zkK3Kg
-         SCIlz2z13fmx6i80ZtEEXk2sIt3ZZWZ8fRbdt7GUJzMSRYy2QA5tjVXbk3pVjqgKeT22
-         SJdQ==
+        d=gmail.com; s=20230601; t=1772512356; x=1773117156; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TfyBWYUDiS1UJ67IU0NHvQId1X+KyOb9RUssAqp/wlw=;
+        b=O7hGq+7Lhokwg2gqNcDQhgVjGhxlnjGAXywA0es/wnFygWC3Zip0JHB1Rd1NjUztZ/
+         nXl7pphY2b1woY4UqFiowiSKqtM6vybpI2s9EmPyP7EJ87q9idLVSGyhpxAKYbcArHSR
+         QAqrYT0iWSm616Rh+2Q5xVZMD/PP9U0BooiAMaPn4mtM/KSMvodBPHAgwJx5jcxACPbW
+         VP7XflQf3MaBflgAjIAD0L7ul+8Wu6OfikwhfA29UqF6uOmd9LStTdaU26UHP4DO+Lyj
+         lyZQ/uZDFzUQG+KoBjMKnpsq0CIfyEvhRnsD/oOVvI1w0FwxjPhb/KudtiAIqQSJKp+2
+         hQFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772508468; x=1773113268;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=fNGiGu7iJxbnMa5GyI4w6jlzcW/6pyizMnUZK/qwIsY=;
-        b=If5qbPsEOSRSAeWiHNQqiFzB/arTrhg2wwyIFeRiZxbJw5Rqtpo3gKEZZNe5LciAIh
-         XkX4sL5CgZqbvfi1DrhOkEmlwKvH14z8Uzcul7XZKCNZJfmTtnlxSRQMfrOlq1hXyMTM
-         p60/65yikU+mrVlZwihrXmz1c0e4KYvJIUjRBQKPp3sL8JGQNWCW8jnGBuirhkTIEAl3
-         Krl8bZToo9Ku9nZ2pSiWpkRu6qcD9L+ErQ68H9Ikj2ADJoaC94fKM28av8qTI9IFdWKe
-         tAVQ8M1WQBaYS1/voQNrw8BDYMXLXspOKKLFiSu+pmONuHk/KhVCNxh/J7Ljn1/KwMQR
-         paBg==
-X-Forwarded-Encrypted: i=1; AJvYcCWNl4nXqTXG12euVwoZ9wR7yFhHGqb7F6xThduQ00NhHYuhN3YQiUG3m0Gu2FNEsg9qOr4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDeaKVUE+gvwEYo3phPRjNcgszHot7ea8t2fQJejBsLZTeWwsZ
-	8MgZGs7GrOVpHW9wwr+AvtB8V1YD0QIqwYVjpyljmRy+3xLob8t/DEiODlQRhiZNyRG5v+BTfAr
-	gRG88uL6VUFpIwyp/bVoo5ZxuU6R/p24=
-X-Gm-Gg: ATEYQzwmupjjA/08hWhtsWldpRgmo/t07zS5fA18k3ZcItX8x5WqZNwOxtNKjZyPKj1
-	jB2l740vmQYvjfukqKN4nqsDUD/yFeqFKNRGI69ChvxJMZIOAvL1AdnHRXWeXtCUovcvuW5qaul
-	nJpLszlBWBUGPbsb2Q1HcW80HQHXCvDinnT1E3it0KibdT1POGd6KyKTX7Asc/t8lITXBoHU+Lx
-	vkAxXIFvSYZTo+Gz7TH9l7Ea86T9qUgEiAUjKFsgM8UzMk5kIBENxIoCMUbFwWJ957I5/omUAH/
-	tTVjMHJ+Vg==
-X-Received: by 2002:a2e:9595:0:b0:385:d162:bf3d with SMTP id
- 38308e7fff4ca-389ff118ca3mr73372661fa.4.1772508468149; Mon, 02 Mar 2026
- 19:27:48 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772512356; x=1773117156;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TfyBWYUDiS1UJ67IU0NHvQId1X+KyOb9RUssAqp/wlw=;
+        b=le+ncvZ15SYjKG62JKZred0sZrRHQ82lqo1uvR3Q/cOjMN5dOGg7KNRiSetVE0MXOx
+         T36AMTaeWwAO6UUpUx+9s14L2zKqxRAAMIk2fszRTfDog4KPOXg/XSy5CU0/7qHy+uZT
+         Thzsc6ptvnWK7F4KnIvCDp/2nYIB9m8jG9sUlYVCAmurKF7tdpScHnId0I1VHGKhyUuR
+         SHDYoHWdWe3US79EgsgSrYfdv3nVQkeU/4SuB84ItPYswGTS9DZ1Ae/dz5Fc+ZvriVy6
+         vk030MHCg4TBB5qVpBMYJNKsOyVv+SU6FT8DR5eIQiRdw1n856n1MdLKoCTw0vAk2+6x
+         r46Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXYgIeWwNpXL0I814BMb/rnEFVBtey/hwNjz/EjihlKcrihNlr2C2iZQ2/fwMoZ7RF2jW4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzx1367xD/jcDNqlj8AwkTNOpwvV5BgzKRMgwle6Rwe/HI84JQA
+	ceZXUHiKhnAyif9FmZ2QcEh0BOlvPso1GXWEmbRlU5ReQRIXMIJdYVL+
+X-Gm-Gg: ATEYQzwbl3Cq0KojHQhRewigJtQytYZkoNMfLmlfbxzW+UMidL9KYGy8U9GwhyEHmwP
+	0/gWE0GA6p5L7A129iiUYU6rI8sOgSoRUVTS9Pey1J9cc130DxTCMnQJpCjLFduH2tMvHX7BWvd
+	RCNsZ+kN8TCDI+Angk6pBjBTfzhgeYkYoXLb0VWzQfuoocLU4DkIM3HtgYTim+Ripc6cAdnWBom
+	Htlng7cAeXxdaxG7g0mnHYYIiBqzG1B+fKLW9qQ1I0xYtN+sVqqzHROl7ofd/ETa/OU8BmMtTjS
+	dh+GNG22OMSUaM5KUeFAGwwh5I7dJ65RMI5IJ3P0sG4j6cEy/AzqROHkPkhCIvHnNBAf1iTgDjr
+	JGjVI30W6QWgpXtpHYQabbklXh8E7864YUMZYephW+uoSs8XUHLfVIkCfbQNJGLbJucvdNWYnew
+	m/Alh0UNI+h5V23RjcQuiZOK/aPpFlbGBm8pqxd/rVConCpfVzsKWHwvnPO7nvwYHy2H89g10Je
+	s3jmowpxXBf
+X-Received: by 2002:a17:902:fc50:b0:2ae:464f:fe3e with SMTP id d9443c01a7336-2ae46500022mr55468225ad.5.1772512356429;
+        Mon, 02 Mar 2026 20:32:36 -0800 (PST)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae49bf44dfsm59584675ad.16.2026.03.02.20.32.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Mar 2026 20:32:36 -0800 (PST)
+Message-ID: <108ccc9d-5777-4c84-9dad-c2d0f5dc2e42@gmail.com>
+Date: Tue, 3 Mar 2026 12:32:32 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
- <CA+rGoLdTc2caDUsQedpegL+T4MqwwiA62uuDSFSawAT5vcPvWQ@mail.gmail.com>
- <CAFNBzOdCx=R3r9+m5eDyAykMAbmbcfpX3kPeEPjqXPYT-_89+g@mail.gmail.com> <B46AA932-28EF-4A2C-96B9-0F05D9641C1C@gmail.com>
-In-Reply-To: <B46AA932-28EF-4A2C-96B9-0F05D9641C1C@gmail.com>
-From: Ayush Jha <kumarayushjha123@gmail.com>
-Date: Tue, 3 Mar 2026 08:57:38 +0530
-X-Gm-Features: AaiRm52sGZ-Zs-5SzJfe4Wg_FHghDcXeI_XuP0CozNJEXceVcCWBr5Jh22iUHkY
-Message-ID: <CAFNBzOeDU3BGdZjP0edvcd6OZxrP0VgN=AHSYTFseoKdMdu70g@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 0/4] repo: add support for path-related fields
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>, git@vger.kernel.org, 
-	sandals@crustytoothpaste.net, a3205153416@gmail.com, valusoutrik@gmail.com, 
-	pushkarkumarsingh1970@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org,
+ kumarayushjha123@gmail.com, valusoutrik@gmail.com,
+ pushkarkumarsingh1970@gmail.com
+References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
+ <aaSusXil9nDHYGMR@fruit.crustytoothpaste.net> <xmqqbjh64262.fsf@gitster.g>
+ <3983da40-bf2c-4665-a7d9-dfebaacb8bd3@gmail.com>
+ <CA+rGoLfbzXqP1Tw+94jMmWcSGPoefMv5E_fvwriad-O5CUeKHQ@mail.gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <CA+rGoLfbzXqP1Tw+94jMmWcSGPoefMv5E_fvwriad-O5CUeKHQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Lucas,
+Hi JAYATHEERTH,
 
-I completely agree that having --all dump three variants of every path
-(default, relative, absolute) would be far too noisy and defeat the
-purpose of a clean metadata dump.
+> I see your point here.
+> but wouldn't this effectively be the same as Ayush's suggestion, just
+> with a different syntax?
 
-My thought is that the path.absolute.* and path.relative.* keys could
-be treated as "virtual" or computed keys.
+In my view, this issue is actually to choose the most suitable tool for 
+the job. After all, we don't want to use something like rev-parse, which 
+is riddled with *ancient* technical debt, nor do we want to write an 
+even more verbose parsing function from scratch for what you call 
+verbose user input, right?
 
-If a user runs --all, the command would only iterate over and print
-the base keys (e.g., path.toplevel, path.git-dir). The specific format
-variants would simply be hidden from the iteration list, much like how
-some APIs only return expensive or highly-specific fields if they are
-explicitly requested.
+If I'm not mistaken, using different parsing functions to parse input is 
+absolutely not just a matter of syntax differences. Instead, this will 
+directly result in differences in data structures.
 
-This way, --all stays perfectly clean and concise, but scripts that
-need mixed granular control can still invoke git repo info
-path.absolute.git-dir path.relative.toplevel in a single pass without
-relying on global state flags.
+In ref-filter.c, we can easily see how Git parses format modifiers.
 
-Do you think treating them as explicit-request-only fields strikes the
-right balance between a clean --all output and a stateless API?
+After the user input is parse by parse_ref_filter_atom(), it is then 
+passed to the atom_valid[] static registry, which is like;
 
-On Mon, Mar 2, 2026 at 1:25=E2=80=AFAM Lucas Seiki Oshiro
-<lucasseikioshiro@gmail.com> wrote:
->
->
-> > Hi Lucas,
->
-> Hi, Ayush!
->
-> > Thanks for sharing this series =E2=80=94 moving the path formatting log=
-ic into
-> > path.c makes a lot of sense and avoids duplication with rev-parse.
->
-> Yeah, but since git-repo-info was written as a better home for
-> some features currently in git-rev-parse, now we can think in
-> better solutions.
->
-> > For example, something along the lines of:
-> > path.toplevel
-> > path.absolute.toplevel
-> > path.relative.toplevel
->
-> I also thought about that, but what would happen with --all?
-> If --all returns both absolute and relative, then we would
-> have the third solution.
+static struct {
+	const char *name;
+	info_source source;
+	cmp_type cmp_type;
+	int (*parser)(struct ref_format *format, struct used_atom *atom,
+		      const char *arg, struct strbuf *err);
+} valid_atom[] = {
+	[ATOM_REFNAME] = { "refname", SOURCE_NONE, FIELD_STR, 
+refname_atom_parser },
+	[ATOM_OBJECTTYPE] = { "objecttype", SOURCE_OTHER, FIELD_STR, 
+objecttype_atom_parser },
+	[ATOM_OBJECTSIZE] = { "objectsize", SOURCE_OTHER, FIELD_ULONG, 
+objectsize_atom_parser },
+	[ATOM_OBJECTNAME] = { "objectname", SOURCE_OTHER, FIELD_STR, 
+oid_atom_parser },
+...
+
+As you can see, each mapping relationship points to a parsing function 
+(..._parser()). This parsing function is solely responsible for handling 
+the state arg, fundamentally resolving the issue of function 
+responsibility/naming confusion.
+
+The reason I recommend this approach is because its implementation is 
+incredibly clear and concise. To achieve the functionality we desire, 
+all we need to do is add the following to the registry:
+
+[ATOM_PATH] = { "path", SOURCE_NONE, FIELD_STR, path_atom_parser }
+
+And the corresponding path_atom_parser().
+
+This approach also offers strong scalability: If one day I decide to add 
+a new feature like %(path:commondir,relative) output, all it would take 
+is adding a switch statement in the parser() function (along with a few 
+other minor tweaks).
+
+*I'm not saying this approach is better than the solution you've 
+discussed. I'm simply presenting a possible implementation for 
+reference. (´～`)
+
+> Coming to user friendliness
+> I believe Junio has already raised an appropriate question.
+
+This isn't a case of “you can't have your cake and eat it too,” right? I 
+think user-friendliness can be achieved without compromising 
+maintainability, predictability, or high performance in this case.
+
+Regards,
+
+Yuchen
