@@ -1,229 +1,148 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53B523BF9B
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:43:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39E026D4F9
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772570590; cv=none; b=NkNuXEj/Vpf4Qlzr/pBJQXYiQeRN10+ms8FkT02y/Gcoat7+fSgfsfKi4PxhLjK32AMaEntWlgBhUJWUYUOg5yoOekmfbyd16fp3KutD6zznuz52SWg3/DVgCqALEh/PWyqDV8F73JVTZvjwSZ+3Fnajfn7UXFG6iKn+tsI6Fvg=
+	t=1772571016; cv=none; b=hCH/tuBKyivHuwun5vEXlpzjL1Qtky5Km678yUyEPFvWP8H/Wyz8woRv+5lrzg7yTUrc8XxksJteFW/m6NyfFPwpDAexFh12Trx0dYs51wr3ex++DCHAsb/yEVnSSYR7n41G1QVKui2fXWKzqlhwk+QjPxoEmw3+DkHJlJzrEFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772570590; c=relaxed/simple;
-	bh=CMhDADzky7ETnsyfeBwhejrqVqU/NON+a7b1hGLVb1I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGpl8mmWuzWP9moYDYyP5B+7RyvV5NTiax5Q8TWEmica3uPy94Hc5J5oXiyiXGsQw66NcOCnoHPNeRDMVSrXuRZcnF1JLr+aQFW+fK3bY8qEf8hdKMZfcQny8N7gXATpTD1fgc9he4u1qHTobXEGGQCU1SYMGEWNVoLgm8A5IPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eEf8Eobi; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772571016; c=relaxed/simple;
+	bh=CdWndIKedgMsB7uN8vHEyaP/S8xll0VFBktWpk+CWTo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jd+x0tX7V4bHxXIhURsd+/ZVEIEIkkwkwtoDPaKRLW/XluKnd15WYQuAMR53RGiqHpJ+g6DoNDfYzQwo37cEw8VHm1GFr4QMH13vn3/bBg+/N5pe+7JfjIqDZLxenc3SnXA7IhdoMZtrQK2ZZmN2hXXYLY8VjAUHDq9BUSusN1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=OlZNCUtv; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eEf8Eobi"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8274936d2c0so5963506b3a.3
-        for <git@vger.kernel.org>; Tue, 03 Mar 2026 12:43:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772570588; x=1773175388; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4PlRzTbxc74EYRHxirIyGgZiAhrGVoYWT9qVMpIEpi4=;
-        b=eEf8EobiLBNVttdP71/Kl1eOMZEMlPOPJQnYxp/6qNGboUSgxjrP/26LG5gJgmm+rq
-         A4jJHRtyyCnXfE+kTpPuaRkU6pe6fXWPkz7eO1JLSUGO/vctu6wRwJ9wXP4B42QfaPZH
-         GYhYmsa5rXW6XdJL9qbPjQElHUnyi0I8DzFssKBm+VF6FsRdV4hdl3gCn3LM8W8FEMje
-         1osJxI9HG6NFKbd3YqP1fUSMJdDb/tLr0isi26tsPfyYc6o1Qu5HNWFsJVYPGsm9kbSg
-         zTkiCqwNWzQYZnuQCJUiZLfMw0j/SjjQKDUGOLjufWY3uo6HUojmBO0QcJ9KAZ0Tjy2g
-         Vb7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772570588; x=1773175388;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=4PlRzTbxc74EYRHxirIyGgZiAhrGVoYWT9qVMpIEpi4=;
-        b=HEssuiUzQ+TcUtC9FdgU9rGXNfxuGOnDWJUobcu6FulFnsmMAkG/9vadZ3H5Sw15DP
-         IvLY+tLPpPFqKLkISrwiBHvxqU9ErEpBWDfdRXgVMmZj6GxVlJsIn7OYT42LSKjBg5QO
-         dQRffFAZbQG/msZo3r8/6a30DtIQ5RH4thloaKd/3fPqLZNfOoPDAHT9LnhHfVD3YJ3e
-         cxghIzVauKoj/YjC8CfNMwUG/y97E6+MnK+QPr5WiiXiPrKKsSUx7JXKJ9cbGhD6wrup
-         UAnwEfwYWKY7FDcbxKkm/b+/XMeOEyL6X+23EzHmQtXLGdfeHh6xp68VKkVrtHAmNPj8
-         X6Eg==
-X-Gm-Message-State: AOJu0YwKq6LoJdWbG4otl/4M/LcW2xVT/zRi+V/sOxRTPWSu/ubxBt4V
-	gPZjzaA53nnTBtpIS16U0sZL2s2i1gp0Zipr7KLrLKefYX3mQ4cBZTCsQ8dBmenoIY0=
-X-Gm-Gg: ATEYQzxOxIyGWCzRM6hVRWbkfBJDrSYexN3xK/54Kzf4asm0uOUCs8NyPf6VeJGFg4Y
-	JxWiiP4R+JSMauXK4m3CyfNQkkE7nyxR5+n9gny8WVWSMaCZtNNQWws9UnNEu6RBJOmH937VQmz
-	U8LN4Y3euU2233MCxkiV6g7Rf2JhrSLwJ6BiQbSUo7ZAEaufAqKM3CMM4o7JkraNQGhKFIpp9AN
-	s86M78ZHzWyeTjX+cVc0nzz6iKFyhqpAlu4HEauBoMwZifKgv7Z+Ojbkvok6nRCf7ZFMANPYL6E
-	wfPLtVynOkvSAVPr16PrF3tg9iqQ/LBqJqn1v+6tNXlpCy6/26/2eK3re9MwiM4JBAQzwrNZYeI
-	BnhvBd7iPBIzuHH8wCji2PrQ4lyVRRKcwiSsfr32CdJAAHWqYZpOe3NxsU3UKT9C2ba1EXup1zA
-	CGmV47wg2Pt+Ek3moDgri7ZD4Wt6ikuKp9zPa8DlFFptE5Jz6gqfC4iG/Kpe4zkLoP500atw==
-X-Received: by 2002:a05:6a21:170b:b0:38d:f56f:cdbd with SMTP id adf61e73a8af0-395c3a0c964mr17838903637.1.1772570587858;
-        Tue, 03 Mar 2026 12:43:07 -0800 (PST)
-Received: from localhost.localdomain ([2401:4900:562e:3a88:890e:9f53:fad:871d])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa82c531sm15348524a12.24.2026.03.03.12.43.06
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 03 Mar 2026 12:43:07 -0800 (PST)
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	r.siddharth.shrimali@gmail.com
-Subject: [PATCH v3 2/2] t3700: use test_grep helper for better diagnostics
-Date: Wed,  4 Mar 2026 02:10:29 +0530
-Message-ID: <20260303204029.52952-3-r.siddharth.shrimali@gmail.com>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20260303204029.52952-1-r.siddharth.shrimali@gmail.com>
-References: <20260303204029.52952-1-r.siddharth.shrimali@gmail.com>
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="OlZNCUtv"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id xWdyvVgUVWlIOxWdzvLviT; Tue, 03 Mar 2026 20:47:04 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1772570824; bh=pkKw3kXuHTJVo8UiuhW7nIauhPp/ukOosGFYPn8xPtE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=OlZNCUtv5Ox6B5NtX1In42Mh8osVCwZei5KgExjk6cZdDwACn5pIAW1Kp+Lac8Phn
+	 Uwe5hKU1aEzzAXA0dlYI/OjotQlzUj6/xMckNO49+pRHK7eAJCZAN644s/ouTNjAHK
+	 HA3aBNAGzrOzLc9t/Igzhe0RJrSnC6/ZObLJfDcIEL4n3I3IbReRcUai6ycRHJlm3n
+	 FaN05sW1op36yIO2B5sqx8GEOlYN++khJBZ7eCBs7GIs7FjBzSiiXvokiVt/3TVeLr
+	 qFIJpb7FewK7UTBvMXGbIG1dAZczkHoLqFMxYmLWqHDPWHDP0t8aKumq1OSHrZGdAh
+	 FZYRcgTm08NyQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=atcRCjZV c=1 sm=1 tr=0 ts=69a748c8
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=LPMzWrbQItpxuvcWF6YA:9
+ a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <2e62dc94-b821-4815-8dd2-f806580d2027@ramsayjones.plus.com>
+Date: Tue, 3 Mar 2026 20:47:02 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] submodule: fetch missing objects from default remote
+To: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>, git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Jacob Keller <jacob.keller@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <20260301025327.3845292-1-nasser.grainawi@oss.qualcomm.com>
+ <20260303200906.4118348-1-nasser.grainawi@oss.qualcomm.com>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <20260303200906.4118348-1-nasser.grainawi@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfCcgnAvq9szr53yxWvry+PsOaTkMUCjbyPsM3wa/52ZiMMRMGlDm4M/qqahKQM/7d23HNimCA+0D8wUv8sP0N+K6nUsu50gCovITOaHYmEYf5mKmUFV+
+ 8Ij/tN3UR8iHpLKDvnCxygUJYkwo2eIhCR6FidTz3CkLYXv/ZpnsOJVtPlpSJL0WhDY2F8ibK8gObrvbwSiXMpHUHOBNmvEwK9Y=
 
-Replace 'grep' and '! grep' invocations with 'test_grep' and
-'test_grep !'. This provides better debugging output if tests fail
-in the future, as 'test_grep' will automatically print the
-contents of the file when a check fails.
 
-While at it, update any remaining instances of 'grep' to 'test_grep'
-that were missed in the previous versions to ensure that the entire
-file is consistent with modern project style.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
----
- t/t3700-add.sh | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+On 03/03/2026 8:09 pm, Nasser Grainawi wrote:
+> When be76c21282 (fetch: ensure submodule objects fetched, 2018-12-06)
+> added support for fetching a missing submodule object by id, it
+> hardcoded the remote name as "origin" and deferred anything more
+> complicated for a later patch. Implement the NEEDSWORK item to remove
+> the hardcoded assumption by adding and using a submodule helper subcmd
+> 'get-default-remote'. Fixing this lets 'git fetch --recurse-submodules'
+> succeed when the fetched commit(s) in the superproject trigger a
+> submodule fetch, and that submodule's default remote name is not
+> "origin".
+> 
+> Add non-"origin" remote tests to t5526-fetch-submodules.sh and
+> t5572-pull-submodule.sh demonstrating this works as expected and add
+> dedicated tests for get-default-remote.
+> 
+> Signed-off-by: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
+> Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> Fixes for test_when_finished usage within a subshell.
+> 
 
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index c9ce2f758c..2947bf9a6b 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -39,7 +39,7 @@ test_expect_success 'Test with no pathspecs' '
- 
- test_expect_success 'Post-check that foo is in the index' '
- 	git ls-files foo >actual &&
--	grep foo actual
-+	test_grep foo actual
- '
- 
- test_expect_success 'Test that "git add -- -q" works' '
-@@ -141,7 +141,7 @@ test_expect_success 'error out when attempting to add ignored ones but add other
- 	git ls-files >files &&
- 	sed -n "/\\.ig/p" <files >actual &&
- 	test_must_be_empty actual &&
--	grep a.if files
-+	test_grep a.if files
- '
- 
- test_expect_success 'add ignored ones with -f' '
-@@ -197,8 +197,8 @@ test_expect_success 'git add with filemode=0, symlinks=0, and unmerged entries'
- 	echo new > symlink &&
- 	git add file symlink &&
- 	git ls-files --stage >actual &&
--	grep "^100755 .* 0	file$" actual &&
--	grep "^120000 .* 0	symlink$" actual
-+	test_grep "^100755 .* 0	file$" actual &&
-+	test_grep "^120000 .* 0	symlink$" actual
- '
- 
- test_expect_success 'git add with filemode=0, symlinks=0 prefers stage 2 over stage 1' '
-@@ -215,8 +215,8 @@ test_expect_success 'git add with filemode=0, symlinks=0 prefers stage 2 over st
- 	echo new > symlink &&
- 	git add file symlink &&
- 	git ls-files --stage >actual &&
--	grep "^100755 .* 0	file$" actual &&
--	grep "^120000 .* 0	symlink$" actual
-+	test_grep "^100755 .* 0	file$" actual &&
-+	test_grep "^120000 .* 0	symlink$" actual
- '
- 
- test_expect_success 'git add --refresh' '
-@@ -241,8 +241,8 @@ test_expect_success 'git add --refresh with pathspec' '
- 	test_must_be_empty actual &&
- 
- 	git diff-files --name-only >actual &&
--	! grep bar actual &&
--	grep baz actual
-+	test_grep ! bar actual &&
-+	test_grep baz actual
- '
- 
- test_expect_success 'git add --refresh correctly reports no match error' "
-@@ -258,7 +258,7 @@ test_expect_success POSIXPERM,SANITY 'git add should fail atomically upon an unr
- 	chmod 0 foo2 &&
- 	test_must_fail git add --verbose . &&
- 	git ls-files foo1 >actual &&
--	! grep foo1 actual
-+	test_grep ! foo1 actual
- '
- 
- rm -f foo2
-@@ -270,7 +270,7 @@ test_expect_success POSIXPERM,SANITY 'git add --ignore-errors' '
- 	chmod 0 foo2 &&
- 	test_must_fail git add --verbose --ignore-errors . &&
- 	git ls-files foo1 >actual &&
--	grep foo1 actual
-+	test_grep foo1 actual
- '
- 
- rm -f foo2
-@@ -283,7 +283,7 @@ test_expect_success POSIXPERM,SANITY 'git add (add.ignore-errors)' '
- 	chmod 0 foo2 &&
- 	test_must_fail git add --verbose . &&
- 	git ls-files foo1 >actual &&
--	grep foo1 actual
-+	test_grep foo1 actual
- '
- rm -f foo2
- 
-@@ -295,7 +295,7 @@ test_expect_success POSIXPERM,SANITY 'git add (add.ignore-errors = false)' '
- 	chmod 0 foo2 &&
- 	test_must_fail git add --verbose . &&
- 	git ls-files foo1 >actual &&
--	! grep foo1 actual
-+	test_grep ! foo1 actual
- '
- rm -f foo2
- 
-@@ -307,7 +307,7 @@ test_expect_success POSIXPERM,SANITY '--no-ignore-errors overrides config' '
- 	chmod 0 foo2 &&
- 	test_must_fail git add --verbose --no-ignore-errors . &&
- 	git ls-files foo1 >actual &&
--	! grep foo1 actual &&
-+	test_grep ! foo1 actual &&
- 	git config add.ignore-errors 0
- '
- rm -f foo2
-@@ -317,9 +317,9 @@ test_expect_success BSLASHPSPEC "git add 'fo\\[ou\\]bar' ignores foobar" '
- 	touch fo\[ou\]bar foobar &&
- 	git add '\''fo\[ou\]bar'\'' &&
- 	git ls-files fo\[ou\]bar >actual &&
--	grep -F fo\[ou\]bar actual &&
-+	test_grep -F fo\[ou\]bar actual &&
- 	git ls-files foobar >actual &&
--	! grep foobar actual
-+	test_grep ! foobar actual
- '
- 
- test_expect_success 'git add to resolve conflicts on otherwise ignored path' '
-@@ -337,7 +337,7 @@ test_expect_success 'git add to resolve conflicts on otherwise ignored path' '
- test_expect_success '"add non-existent" should fail' '
- 	test_must_fail git add non-existent &&
- 	git ls-files >actual &&
--	! grep "non-existent" actual
-+	test_grep ! "non-existent" actual
- '
- 
- test_expect_success 'git add -A on empty repo does not error out' '
-@@ -548,10 +548,10 @@ test_expect_success 'all statuses changed in folder if . is given' '
- 		git add -A &&
- 		git add --chmod=+x . &&
- 		git ls-files --stage >actual &&
--		! grep ^100644 actual &&
-+		test_grep ! ^100644 actual &&
- 		git add --chmod=-x . &&
- 		git ls-files --stage >actual &&
--		! grep ^100755 actual
-+		test_grep ! ^100755 actual
- 	)
- '
- 
--- 
-2.51.2
+The 't5526-fetch-submodules.sh' test failed for me tonight. Having seen an
+earlier email about the test_when_finished failures I wasn't too surprised
+but, once I looked at the failure, it was obviously not the cause of this
+failure. Indeed, when I ran the test by hand, it passed ... :)
+
+It seems the 'seen' branch (@764d09c9ce) has this v5 version of the patch
+and (in this test anyway) has some flakiness:
+
+  $ cd t
+  $ ./t5526-fetch-submodules.sh --stress >out 2>&1
+  $ cat out
+  FAIL  4.1
+  FAIL  3.1
+  FAIL  5.1
+  OK    0.1 
+  OK    1.1
+  OK    6.1 
+  OK    7.1
+  OK    2.1 
+  Log(s) of failed test run(s):
+  Contents of '/home/ramsay/git/t/test-results/t5526-fetch-submodules.stress-3.out':
+  Initialized empty Git repository in /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stress-3/.git/
+  expecting success of 5526.1 'setup': 
+
+  ...
+
+  expecting success of 5526.44 'fetch new submodule commits on-demand outside standard refspec with custom remote name':
+
+  ...
+
+  + diff -u expect_fetch_custom actual_fetch_warnings_removed
+  --- expect_fetch_custom 2026-03-03 20:35:13.949600802 +0000
+  +++ actual_fetch_warnings_removed       2026-03-03 20:35:14.150601532 +0000
+  @@ -4,9 +4,9 @@
+   Fetching submodule sub1/subdir/deepsubmodule
+   Fetching submodule submodule
+   Fetching submodule submodule/subdir/deepsubmodule
+  -From /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stress-5/./sub1
+  - * branch            43c17d99ab9d4fcabf7107e36660b27113b54663 -> FETCH_HEAD
+  -Fetching submodule sub1/subdir/deepsubmodule
+   From /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stress-5/submodule
+    * branch            e38933e027ee8a2000f603124aa899302a09a51f -> FETCH_HEAD
+   Fetching submodule submodule/subdir/deepsubmodule
+  +From /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stress-5/./sub1
+  + * branch            43c17d99ab9d4fcabf7107e36660b27113b54663 -> FETCH_HEAD
+  +Fetching submodule sub1/subdir/deepsubmodule
+  error: last command exited with $?=1
+  not ok 44 - fetch new submodule commits on-demand outside standard refspec with custom remote name
+
+  ...
+
+  $ 
+
+From which I guess that the order of the output is somewhat unpredictable.
+
+Also, other test files in that patch didn't fail for me with 'make test', but it
+could be possible that they are also flaky. I didn't look.
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
+
 
