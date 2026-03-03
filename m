@@ -1,82 +1,82 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84F52EA468
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 13:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9F82EA468
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 13:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772545350; cv=none; b=f8J8FohOIXWh4NkNWQOLTy7Ud1luxmXB8rbZ0/MDSc0LkGD3QfpH3XVLY7G9Y3k5un6WYjWeU3HYzZN0O9cXPzU0VxVvja1/TeSTeqNJO0xV9ElXKOqtbgRqH3msr/5RNqoJs/yHqUQOpwrHzLXIZ+NaV6VxYxs4xYGwtgWVFxE=
+	t=1772545353; cv=none; b=dx++3/E7E/xourKEyApbOHFlLo1N8E46Z4ObUehca+x7iAl1twtmui8C7rWn/vTYUAyq0YJWktAq/CJbv1yCHELD+aCuCxv2l4AG1E9od9rHaoylvculAlHI1WIsYgPlT+S+ucPgEr0ZOEsEtqGQOzBVHJjNU+4uJI+wlqftUBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772545350; c=relaxed/simple;
-	bh=1yjdljDSKZTS57K0qDol/iirfR4qivEobQxLuaMNi70=;
+	s=arc-20240116; t=1772545353; c=relaxed/simple;
+	bh=Qfj9yDReG1N1DtK5R/NHDVkYcZPmsirLAvFIttc6VJo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T/chjXfs45/dQksR08vNB+3lc28xYbmw+tQ309QgFPMYB0KOKX0ReYWqsXEq/DScbYFX9flSc0vQ7foVxN1wN/mKekME+4873IlUmz9nPYU2yJ54NxGL264lR2uRGvIjsCGXvgaqWxU8nux9b6LOFUHf6twRxle2O9Q2GQtSbdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k50seQE+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=biInxgGR; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=JYtzI8t549CYCBT8J36QCV6tVECgiHTfnR54kSGUMy6awlCiXO7xJ4yDHsTiz8Qt95YfKqMblNFRECfAzWB6BAvJJgnGQmanwkFoeQImctEXav5LoVWeVR3XL+YgYbxusPbIX7Ck76qF2ZvstGdrnU/KmEOpDkbJeOBW7DKlR3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FIotHqwn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5jx5uc2Q; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k50seQE+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="biInxgGR"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FIotHqwn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5jx5uc2Q"
 Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0793FEC0551;
-	Tue,  3 Mar 2026 08:42:28 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id DC8A6EC026F;
+	Tue,  3 Mar 2026 08:42:31 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Tue, 03 Mar 2026 08:42:28 -0500
+  by phl-compute-11.internal (MEProxy); Tue, 03 Mar 2026 08:42:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772545348; x=1772631748; bh=48nQtPHM08
-	pIox73AIQoP9pHRhe+EMajLfgTZ9pKYdU=; b=k50seQE+lJxBKfkSZh5LVmT0Kl
-	O7XKo1emqPdO4qWlJnJI/CywrlZRgRpK5AejUmNs3icMY6ZnKM5h60pkhxl9grTj
-	RTdIYNrhzyNs2mGZ8HJ+b78kdmhBkb+JJNPirCYpqrlE/lv9F5d/LokvtQI4OWHA
-	3GXF8M/SfYpS+iOIF6+iJge6AQUo1TJRhsuXOOPiUlHouBwpLX65rimuYF3QNLli
-	mV/H+aPtYneHuiFqHhOTRpOJ4TKfMPkBJjaz3XgPUyONstZoKnPlz4LJRQlY32hL
-	WoRWRG3v9vHV5zOSJBRti9M7icsMe6AGzVgygG5EQ9uMlLwSUk0N7lZKwzMQ==
+	:subject:to:to; s=fm1; t=1772545351; x=1772631751; bh=FxC+MDIibP
+	U3c9Mvc/fC3TlGadFIW4tB/4AcebJ60gM=; b=FIotHqwnlaGtPbZwdlPF7akOPH
+	3gGtHnspN44NmZ/YGDLR9pT+2QzzZVXo211KLfTj31fZcok11he1th0+P66nDlbG
+	6u+eHSgzbIksUm6En/DOs+fVigamA3pnlHxbcHHnKGIhGy/TvXIrACUx2qcjbFfV
+	lmGSqKY/rGRJChmrNs0pagHlU4RE0yuYcz+F05jKSF6ouMYpjTGsGUj5aKG8WkCn
+	FugVE8lvHC5umyuNLn6/isLRKfp2p0kB/982GhtzP8J5SUNmTPy1Ao/6m/iw2hdS
+	b6IdlWPUQNDOvGHxAzQ7dmyet4TR8DS10QtmpzeX2a8as1w3S+LPzM/Jaxlw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772545348; x=1772631748; bh=48nQtPHM08pIox73AIQoP9pHRhe+EMajLfg
-	TZ9pKYdU=; b=biInxgGRdvdEHVx/V/gaForSE4tUcaeOmzZpLMIfdr6YgxHfxbN
-	Ht08oQ5QwKMqR9gGhehNSd9yX2Cd/4TuN1sZ1I3fRCylEARivzRlbpxiyK9VUolI
-	GR6OROkgX2hVUJGbskVO5PxvyiIb4toc1MCzekllZ8DPp/1/jjR7uCUyjc4Ps/9v
-	Ip5jZ/c98wEnLBoBk0XZgtfX/ffK2VKehZ4d5OvmFtq2iLlqUeaa5cxxHSwtCIXZ
-	x7T1H9EFBBxakyBDLTcwS3jT1LTSKkGAcvMHwDtM17ie6Uv/5vtW9rMx8LqkNRxR
-	igY4bzQ8UauHn2oFrQohJlKe+lIc0dLzOYg==
-X-ME-Sender: <xms:Q-Wmac6iXjqVMB0Ajlik07VeXa3qOBxX-UDklRvyc5TFLyoAf9Cm2Q>
-    <xme:Q-WmaT4FDHPZoejE5tDhpwySnQBLkt3348-H8SXlLgwXMYydC7HdK546rhyjeUl0L
-    x3D3LY8Vmx93WkaXg33-5r0OsSzWEA3LmHqpVI8GDVyv7VYaKjm8w>
-X-ME-Received: <xmr:Q-WmaZHlRJbpb-nTJYZBUQuRJhDKjRe4pqC-7HATL0aei8Hb6MJANZppFCyZqdiyBHHygjhjQV1vih7yXEmTbvlpVqBBTbKQm2YZLIU49hTo>
+	1772545351; x=1772631751; bh=FxC+MDIibPU3c9Mvc/fC3TlGadFIW4tB/4A
+	cebJ60gM=; b=5jx5uc2QDipfAvQldvaacxcrNmJR/AElzCNMhOVJIxWqOP2q/Ek
+	JayAobMluf94sLmBUx+vbYgk0+pOvGDdNWTj7OWFgW1V98/fsjaW23Y7m7ZOxfWf
+	g/U9jaK/tuP6z58dTZxMnhs1OAKyCM20Qoin7KYyCVANRNBPag0MNmYGBurYqQYM
+	9aIvdW1ZOfFI5Uuo27PPTF41kh9KXyhyrWGTckxY8P89ye/9Dykd1iztK2XesW5R
+	qTEA0MBUJixhoz7fdk+rjLR7lMuRCvY4X6tZuXzdfCxHO5cLZ82Y5wpnbXUtMaOV
+	6M1H+dngXZndMSCVOiEPXa0FBh0tOOLMibw==
+X-ME-Sender: <xms:R-WmafZkecdHJpCfYnNGe6dZ0eUDJ5mivj5pXaIp7kOp7aPSONGwuQ>
+    <xme:R-WmaUagwD6Y4fZ8k3kqzUAfsIxmyU7K6gp-XVZchPUKPd-kIylKBilltAq1BacPz
+    9cN7XKBxWqK040BoPxoJk3idwbZtwxiMvEJqqXynGpY3rteMc-nqA>
+X-ME-Received: <xmr:R-WmafkX1HBkefDTZMhg6n9Mr3MVYXWqwz84pam7WYBKHm-Gr9DAXElRFb3JU59RAWdmq81PfrQgrdDwias0tPIwclzbRQWCejg7wymFFhgk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedtjeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
     ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrgihrghthh
     gvvghrthhhkhhulhhkrghrnhhivddttdehsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:Q-WmacRNHGmpb-u_SAhsziSL077Vfe529bwDysIIqmeq2SPa5SLcgQ>
-    <xmx:Q-WmaSuyYcH7TtBGlsE862Uz32QcZ3EuInMhsD4Z5m1rXaokMCJ1CQ>
-    <xmx:Q-Wmabxp50OWHEzQ5EUMfQ80k_tzDJKXz43g_qpU6q9xKAWppqemCQ>
-    <xmx:Q-Wmac6fay9YVH8JH3crzMo-awzwHz47LX1liacFaUcbkAZz5dbrTw>
-    <xmx:ROWmaaqaxnD0nv0YJzrlVB0Jhe2FCNUQZ7X8_3G1CX3zQVNxscdXapOM>
+X-ME-Proxy: <xmx:R-WmaQw0PsdxOx0g5gknjFoMbJZ23Xm5TZA381RMiplPVsbs34ovxA>
+    <xmx:R-WmadNuFQV9HUq5HsnZ6WaVW3jum_s-Nktf7wC2yK41G4ynmXbIRQ>
+    <xmx:R-WmaUStzS0-vkUEcbQulFxikmu63ggWfDzg-rmpNiFS8S1hvClHHg>
+    <xmx:R-WmabaQgtiMraO0V0-xUszhkquHVZAytbP9PpFSMu2txIBTbE7swA>
+    <xmx:R-WmaVI_iyeeLhkYPjQdJgxtvM2s2jjqA4Vb55cO6yhSfFoks9DXWdF3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 08:42:27 -0500 (EST)
+ 3 Mar 2026 08:42:31 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f45e24b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Mar 2026 13:42:25 +0000 (UTC)
-Date: Tue, 3 Mar 2026 14:42:22 +0100
+	by mail (OpenSMTPD) with ESMTPSA id ac14fc19 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Mar 2026 13:42:30 +0000 (UTC)
+Date: Tue, 3 Mar 2026 14:42:28 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] path: use the right datatype
-Message-ID: <aablPlaCY-TAoCi-@pks.im>
+Subject: Re: [PATCH 3/3] path: remove redundant function calls
+Message-ID: <aablRKlhQZUTct56@pks.im>
 References: <20260302142138.712273-1-jayatheerthkulkarni2005@gmail.com>
- <20260302142138.712273-3-jayatheerthkulkarni2005@gmail.com>
+ <20260302142138.712273-4-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,37 +85,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260302142138.712273-3-jayatheerthkulkarni2005@gmail.com>
+In-Reply-To: <20260302142138.712273-4-jayatheerthkulkarni2005@gmail.com>
 
-On Mon, Mar 02, 2026 at 07:51:37PM +0530, K Jayatheerth wrote:
-> The strlen() function returns a size_t
+On Mon, Mar 02, 2026 at 07:51:38PM +0530, K Jayatheerth wrote:
+> We fetch the exact same setting up to four times.
+> We fix this by evaluating it once, storing it in a local variable,
 
-Micronit: missing punctuation.
+Micronit: we typically write this as if instructing the code itself to
+change. So this would rather be something like "Fix this by storing it
+in a local variable.".
 
-> Storing this in a standard signed int is a bad practice
-> that invites overflow vulnerabilities if paths get absurdly long.
+> and referencing that variable.
 > 
 > Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 > ---
->  path.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  path.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 > 
 > diff --git a/path.c b/path.c
-> index f613d8bbd1..56be5e1726 100644
+> index 56be5e1726..5cd38b2a16 100644
 > --- a/path.c
 > +++ b/path.c
-> @@ -58,7 +58,7 @@ static void strbuf_cleanup_path(struct strbuf *sb)
->  
->  static int dir_prefix(const char *buf, const char *dir)
+> @@ -741,18 +741,18 @@ int calc_shared_perm(struct repository *repo,
+>  		     int mode)
 >  {
-> -	int len = strlen(dir);
-> +	size_t len = strlen(dir);
->  	return !strncmp(buf, dir, len) &&
->  		(is_dir_sep(buf[len]) || buf[len] == '\0');
+>  	int tweak;
+> -
+> -	if (repo_settings_get_shared_repository(repo) < 0)
+> -		tweak = -repo_settings_get_shared_repository(repo);
+> +	int shared_repo = repo_settings_get_shared_repository(repo);
+> +	if (shared_repo < 0)
+> +		tweak = -shared_repo;
+>  	else
+> -		tweak = repo_settings_get_shared_repository(repo);
+> +		tweak = shared_repo;
+>  
+>  	if (!(mode & S_IWUSR))
+>  		tweak &= ~0222;
+>  	if (mode & S_IXUSR)
+>  		/* Copy read bits to execute bits */
+>  		tweak |= (tweak & 0444) >> 2;
+> -	if (repo_settings_get_shared_repository(repo) < 0)
+> +	if (shared_repo < 0)
+>  		mode = (mode & ~0777) | tweak;
+>  	else
+>  		mode |= tweak;
 
-Makes sense. What's left out in the commit message is an explanation
-that this change is safe to do without any further changes. But judging
-by the diff it's used in contexts where we already expect a `size_t`
-anyway, so it is.
+I agree with the fix itself though. Probably doesn't matter much as we
+simply retrieve a value from the repo settings, but this also removes
+some mental overhead in my mind.
+
+Thanks!
 
 Patrick
