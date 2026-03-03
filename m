@@ -1,152 +1,115 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B8E17A300
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 06:11:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED16375AC1
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 06:16:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772518283; cv=none; b=fpNnA4RSzM0AGnwOZwXdymC6RwOx6N2FtKYbCvDqMgYD5Of9GEHCuFFqGEc4P9wfMfqVIuuzs1XNTNcbzmU/z6DPXzNIpSD36lB3bdpbYEEjyFLm4fKqQK/dnxFBDqfpopNiTirZsXlM5ivsd4m20S0ynRe843bNefFxLJM8Rok=
+	t=1772518566; cv=none; b=oXjTmfToz8d4rx6WsTrsI24zVnR5qIrAlG7WiEqM6qGiZSsVXMYjTl8/CFbTGOGW2V4u0L8ZEPOcnQHPLmaKOTtXAFueICT1y0+0X08BVgjZVnQUBWLZtPUxt6Req+BDTTUyMDMSaG3aQ1pv+Z13KUu7Q/Tgz53Z9OeOSog6R5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772518283; c=relaxed/simple;
-	bh=RCN4dWgwVGL6I0SdQynrGyi7nDpRXWJ4PZl/q1Uann8=;
+	s=arc-20240116; t=1772518566; c=relaxed/simple;
+	bh=Lv2Dm/2zDjRoIk4Ayd4goyO7QiORpDdhZsZe04VO2Rw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R/9oieuifaui+YfW0xpwmSRueSbRu17FOjHjGRpGXrNsUiMg/ZTF9ghghpT9QJ8rng9EKc27Aevm6mPq2VXV5+LmUoSyoJ4/KuSYH0Di1Cty2yqCeGY3/Z4g1bQGEHZFNNMCy5hALBv72t80PSZeoL2PKfstAB5a+s3LGRUGCwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F5PNRz+t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rRPwnbFl; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=DLCy82Bz4S18LGpOM0I7GdcvNXpxUfyOLcZQ5vKUVKjQ4lFONvsR//QEObcwYncLoUwPybzD8hfQhchIGe4Qsq8Ag+Z+op2qNagLMy+H4N5Xrtqusse7li14P4etmQm9dfAWW0TBgUW58fxK6XyrK6Zrf4mHbGrC3UP0h5HFOg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Sfissseg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nNw6SOmo; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F5PNRz+t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rRPwnbFl"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id B60B71D002B7;
-	Tue,  3 Mar 2026 01:11:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Sfissseg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nNw6SOmo"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5FEA87A02DA;
+	Tue,  3 Mar 2026 01:16:04 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Mar 2026 01:11:21 -0500
+  by phl-compute-06.internal (MEProxy); Tue, 03 Mar 2026 01:16:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772518280;
-	 x=1772604680; bh=L9l9uiLQF1KNZ4NF71KabnBABq+dCa3mKHgk111sc3Y=; b=
-	F5PNRz+tNVM6if0YTmYTvBbLal4BFrNlMCskPiQCRwOLRj3nfF6gR8WJoyrujbuR
-	Dc8Gi8ReFGZoG95fpFH5ZJZZrjTnMPPUsMtZqf8k+4VjBKQLx1MmNlIczGRQarFC
-	qHCY4nGT4uVRvUP8illHE2Y/lJBuTD9cNczbReCP5+HUGRA+dFwsPHTwk8SYYsB/
-	oX/YypzXRAjuJ8uFg24MuE4n2nCx45TYANqbduQxisdjmCc4TCp8COErNXIf8jCe
-	7LiMhvXhjVKNHvTHogqJoG5h5NNnca3tW6aSapH6Q3t05yKlgb0uRQX80hyAAcS/
-	K9uaydeG2pCTC/5hj3KacQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1772518564; x=1772604964; bh=ZQtI0oD6YG
+	nIpZ+OeCyO4imQXF6RhD03jo5azXuG2xg=; b=Sfissseg+771fa3nz6aHRTgWiM
+	4CFWGEKXpYwpkEB+W4PSEge5TqOMKKaolnQKe5ZXeutaSk7wKbI4fJHkqnIJQTfz
+	TdYH0TDyB8xcDRJpeC1Pu/+O94TnPbKCk4XHgmS7tA+/s5gnNOetQCEM342V7n8V
+	rNYKzjWyvvp60VxEO8R8OW0b872qlUlAkibXvUnAv5DNK5wlQuQwl/7o0EHqdHkf
+	k61mWioetjs6lBgKzJYatYeA/Qh6xkBPmPWCskrm6jULAC+HKIMuZhyKncqZ5tbs
+	202CZnBi5k35t72GkFGvZUBNfj6zCfCs2KlYAjfKxBrKl2uPEfsZK5sp3YzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772518280; x=
-	1772604680; bh=L9l9uiLQF1KNZ4NF71KabnBABq+dCa3mKHgk111sc3Y=; b=r
-	RPwnbFlEUhPA1xS6lEuE61zLm6rBc/LMZkr41LDdStygJK5Soh5sJr7s0q65DnrW
-	TgG+rYdHquK+n66XmmhxgkOvjuN11ZDPfQ1mAi63uLgumT5FkVLpYQd6chwkG4V9
-	bUOKQ506K6/Kn/oKZA5ZpMDZ0SGR/voZOCFG6muhomQabLclr5u+HFXrIskrCOmz
-	T4cYkbhz5kDOgBN/zohWxdt2tSDo2zL3cr0PQoG+80dA5qXOtR/7dkbEigXwIG1z
-	V9PCV7/9cIKHr/AO830IJKp4KZPMTkLLEjfgpcMGTmCt1rLIMJfcI/ufqXxYihDp
-	ioNUGDRyjw6aaAVtwCQlA==
-X-ME-Sender: <xms:iHumaQohYH2TWCmqIvCrkzyba9sytTOo11puKhmVn0ra7-qpWkBWXQ>
-    <xme:iHumadjzAfy32vpjYXriAGWo-6MRmeqF7H7lgliJp7Wfj9T7LUpvPDV552kmjtS5w
-    ECOq6MEUmxexJ9DPWL6wdK4dMgW5eGiaYFoa9pX93FeGugqP_eYcg>
-X-ME-Received: <xmr:iHumadh1G8yIpArfqbOiHaQdJN-VthwCXyaavLvoOshlfI8Wjmnr0JXmzl_RmfiJlDUMDdZ4xMtEKauNcDLZgNj1lfVUHu7doDKeL1PnRWQx>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheelkedvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772518564; x=1772604964; bh=ZQtI0oD6YGnIpZ+OeCyO4imQXF6RhD03jo5
+	azXuG2xg=; b=nNw6SOmoBonfn0EzpETVhBN86aX1fvP5OiSqkF145on8QCz4l6h
+	i/C6jR/dwFkxBHwqte3fmzqEdHOHNO3OYjMT4yxkusB849gmLjmRaeo68+68dIw7
+	a2RdMZTIVVMM0dnORPL4hIwOm9oiV3RI4WTgGehMp47Pz+UVqngxQAKFAjpyKGtP
+	GnDsJK3jb19On1TnPdJ5QQRFPxW5w3j6EWWvMNL8oclyj+kvDcc2fzsuc/DtRgP4
+	X7kcjob5jYSvVexZKjzIbEBHAB261AyDwPjznP7QHWTZRe83w0+yC+UqYpSw4Fov
+	y/QSckGs4di+45B8d7bq5M///64fI0fj12g==
+X-ME-Sender: <xms:pHymaVvk8XEdMTLpZJq5lcr58g0dMqYS5pgKwnzelz5aZFyOasGybA>
+    <xme:pHymaUecnx0cZeH9wpaVHkKPQutQ7WdHP0LQZw7I6FTGqmLplNvxlCXqc0zEeA2lW
+    HnKy-vl73S2QkTGQmHuymXZTd6wLiQld7vRkIRA_tryuyUZFdl_Rg>
+X-ME-Received: <xmr:pHymaWZKGtu8fD8xJaiBrunSsjZid3RVc5qSUyQgnHZMF76mR9Nk_azih4vUMev4aGdjn0oYHgj01khpF1-zjxcBic53EqxMaW-ER8IWGaZT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheelkeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsohhrrgdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:iHumaThnUgxC9BK41bppbz3ObDSMCsuy9qDDz_QLHFnslVI8MOdlaQ>
-    <xmx:iHumadL_hzSJ0kqxXTWqVJMootp0JrpiwihaKsg-AhC5gesvTZXkuQ>
-    <xmx:iHumaSHyUoP7gEQM7zRqdxexit6q0a25WQzjzIqf7vv4-0K6sgCweg>
-    <xmx:iHumaRQGgJrcciNw98y1arZ0mCyRbX2HJI3M1Ev6TpsaLyP8J2uNzA>
-    <xmx:iHumaTfvnWrkB__2CYCJRe8cDM2nd-8zq7kxNk5kir-AZINxc1q21SBJ>
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:pHymaXWa6xrAACzYW66UGkM45kEfSqUu6bZd_KuXINd944jZksuv3w>
+    <xmx:pHymaYhfuOaeLAIgZdTy8jX0BZfNzrFrgSjtIwR_TZ8392zEuCgXmA>
+    <xmx:pHymaVXITIFBLfs9ZSNIaKYjvXEF2Mu_fBmfb0ebdHEM55-eykGs3Q>
+    <xmx:pHymafNcnkkuZfzgXHnyBZrpKkxfqthsjogQndmDHAOVLPBECUTnIw>
+    <xmx:pHymaQdt_lIflB1NCBo3IO-UBnVDMnSiEERNAYsHELzhFjtjr3_f8RPm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 01:11:19 -0500 (EST)
+ 3 Mar 2026 01:16:03 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dd8c4036 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Mar 2026 06:11:17 +0000 (UTC)
-Date: Tue, 3 Mar 2026 07:11:05 +0100
+	by mail (OpenSMTPD) with ESMTPSA id e8f6650d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Mar 2026 06:16:02 +0000 (UTC)
+Date: Tue, 3 Mar 2026 07:15:59 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] builtin/receive-pack: avoid spinning no-op sideband
- async threads
-Message-ID: <aaZ7eXtUSWSS_igX@pks.im>
-References: <20260302191704.1814567-1-adrian.ratiu@collabora.com>
- <20260302191704.1814567-2-adrian.ratiu@collabora.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] ci: unset GITLAB_FEATURES envvar to not bust xargs(1)
+ limits
+Message-ID: <aaZ8nyJFjFqct2Ri@pks.im>
+References: <20260302-pks-msvc-meson-xargs-v1-1-8e42abd879ce@pks.im>
+ <aaXArnhYbtX9gsUU@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260302191704.1814567-2-adrian.ratiu@collabora.com>
+In-Reply-To: <aaXArnhYbtX9gsUU@denethor>
 
-On Mon, Mar 02, 2026 at 09:17:04PM +0200, Adrian Ratiu wrote:
-> Exit early if the hooks do not exist, to avoid spinning up/down
-> sideband async threads which no-op.
+On Mon, Mar 02, 2026 at 11:11:52AM -0600, Justin Tobler wrote:
+> On 26/03/02 12:55PM, Patrick Steinhardt wrote:
+[snip]
+> > The GITLAB_FEATURES environment variable makes up for roughly a third of
+> > the complete environment. This variable is a comma-separated list of
+> > features available for the GitLab instance, and seemingly it has been
+> > growing over time as GitLab added more and more features.
+> > 
+> > Fix the issue by unsetting the environment variable in "ci/lib.sh". This
+> > ensures that the environment variables are now smaller than the upper
+> > limit on argument length again, and that in turn fixes the assert in
+> > xargs(1).
 > 
-> It is important to call the hook_exists() API provided by hook.[ch]
-> because it covers both config-defined hooks and the "traditional"
-> hooks from the hookdir. find_hook() only covers the hookdir hooks.
+> So if we unset GITLAB_FEATURES, that puts us at 10987 bytes (17373 -
+> 6386) which would be under the upper limit. Unsetting this environment
+> variable seems like a reasonable means to mitigate this problem. Naive
+> question: is the upper limit something we could increase for the
+> environment?
 
-Just out of curiosity: will `find_hook()` eventually be removed? I saw
-that we still use it for the "proc-receive" hook in git-receive-pack(1)
-for example, which feels a bit fishy to me.
+Unfortunately not. Under normal Linux systems you'd be able to do that,
+but in MSYS2 the limits are hardcoded as far as I could see.
 
-In any case, if this is an oversight then this can be handled in a
-subsequent patch series, if you ask me.
-
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 139a227e71..6376c191c7 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -934,6 +934,9 @@ static int run_receive_hook(struct command *commands,
->  	int saved_stderr = -1;
->  	int ret;
->  
-> +	if (!hook_exists(the_repository, hook_name))
-> +		return 0;
-> +
->  	/* if there are no valid commands, don't invoke the hook at all. */
->  	while (iter && skip_broken && (iter->error_string || iter->did_not_exist))
->  		iter = iter->next;
-
-That fix is delightfully simple -- I was fearing for a deeper issue. I
-can confirm that this restores original performance:
-
-  Benchmark 1: receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9~)
-    Time (mean ± σ):     177.4 ms ±   3.0 ms    [User: 92.0 ms, System: 84.2 ms]
-    Range (min … max):   172.1 ms … 182.6 ms    15 runs
-
-  Benchmark 2: receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9)
-    Time (mean ± σ):     485.0 ms ±   7.1 ms    [User: 180.0 ms, System: 375.0 ms]
-    Range (min … max):   466.9 ms … 491.0 ms    10 runs
-
-  Benchmark 3: receive: many refs (refformat = reftable, refcount = 10000, revision = 005f3fbe07a20dd5f7dea57f6f46cd797387e56a)
-    Time (mean ± σ):     178.1 ms ±   2.4 ms    [User: 91.8 ms, System: 85.1 ms]
-    Range (min … max):   172.2 ms … 181.3 ms    15 runs
-
-  Summary
-    receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9~) ran
-      1.00 ± 0.02 times faster than receive: many refs (refformat = reftable, refcount = 10000, revision = 005f3fbe07a20dd5f7dea57f6f46cd797387e56a)
-      2.73 ± 0.06 times faster than receive: many refs (refformat = reftable, refcount = 10000, revision = fc148b146ad41be71a7852c4867f0773cbfe1ff9)
-
-And Bencher has already picked up those changes, too, and graphs have
-dropped back to previous levels. Awesome.
-
-Thanks a lot for the quick turnaround!
+Thanks!
 
 Patrick
