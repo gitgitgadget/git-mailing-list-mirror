@@ -1,165 +1,134 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEFC38C409
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 09:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3C3332EBB
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 09:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772530322; cv=none; b=G6GD635pNj8vMS5n8YD2AHraLSltyTuR9gx6Ix5SwL40NwBXIN2UVTiYwpKekmBKxz3voQBp9vvqxQm/mcpYV5ZJlSI8QLNdXBuS8k2PoOZU/M7+xrccpy7c9ICuunl4q+28345Wr22rqXL+bXE+kfMET8lTwJCXaOSznh9NW1Y=
+	t=1772531085; cv=none; b=XfznCFrqp5OuMEkm0BzFDVPpNJnbEc7JcVt3IkmBXIMX8RwC6i1lpWdbWvs4nDAnhGPT3HTBoFLL7sHe/bDk1mQ6h1FcKkP4c9Twf4+GG3rTLJuUOVEqR+WIKh4YZEecIf0H+3/HNz+FInuXyrCNspaV8HkqByipqSGBndEaf6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772530322; c=relaxed/simple;
-	bh=9f2Uc7veghoFQrnjhyPE2tU23W5uVbix6SGhkmee7Dg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H9nCAtxCFgTSMdP4oTi9rlCtjEk9tgw67HFzkPs2+lSqBfYigmFTjq6gr9eLOXEVhM18Px+HRFyciYAmuYneOWJBA8g0FCmFKAta05mictz2IcrEVzvrrD8CQ+MV3te7m2iwaKFWT6soj8dv+jIQWgcpSL+NHeOhyy4BHj2EnEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GuQFKsch; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rHDsslmf; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1772531085; c=relaxed/simple;
+	bh=/tVhURRoF/WtSLpoGpJPq+M1SRp5/knX2Q9l1bQPvCQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=LuD3c2FdUADFXCQiG9kWA2VlQbWLmjE1MKKrJKHbK32WSGZV+qY+YDnR82MMGNw+Ce5VEo2jxS03ps47k2te28aJaYJQXw5kmWo6pZf8bcQmej5WY5kP7cGo666Lq2COZCv326d6J4HgAo/orZhooTJRrE+yk0l2ADlowcVd/K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mc3D0G69; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EID5rmrs; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GuQFKsch";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rHDsslmf"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 30AC77A00A2;
-	Tue,  3 Mar 2026 04:31:58 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 03 Mar 2026 04:31:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772530317; x=1772616717; bh=lydgF2qwAk
-	krL3dHOlSPJqjjSTAfKqlfLbDlddFgcyQ=; b=GuQFKsch3uPWUWmQ3oBo8MPfZk
-	elnThjLY0S06XUXxg47mveq92jjw6JA/hJRUSpVGu59hKXOmPuo3ZAkm43cIxKwQ
-	T4eb14FtlnUgiLLqseYMu8TL92GWFJ+CkwQRSjRFKPw0BPdLnFx31C+/ONGFnuHk
-	FkltsxlhwRf6Ng3TCttiLcoPKYa/Qv+YkRD/jWp9IrrF4zc2T3dW6+aJXxQ64FZ7
-	mWEWbpngeBr+Xl7zc3y1ImfLjRZMe4DZNENa3UrrS+EVwO+n4iO2rDQcMNrpCfpg
-	fKgIc4t+faoZ0lQyiJivrwXW4sCSy/JIFrs27ZJHiKTxC0KEyyzPbm2SXZLw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mc3D0G69";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EID5rmrs"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 584467A002B;
+	Tue,  3 Mar 2026 04:44:43 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Mar 2026 04:44:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772531083;
+	 x=1772617483; bh=P8dlf8LbTul0Aa+z2Fj2kt/LIq92fYFVTcvV20vR3VM=; b=
+	mc3D0G69it6tngrbJBxCnIYneJ4cNUfMx5sjlL6sIDFNRJ/ZAGov+98VwvnUN5GA
+	D2QAIPU+J10eM5Q8kBmrGF7ZInFkzmf39I4uF1RY6t5frUy5CpmGsjFGaU1+VKek
+	Yoj3sYzUDa07bt7Eibc1A/T9JnSpRxlLmRN9Xs60XB3zHBzn5y1HxOv8uHO0P8+q
+	SQFKTYfpv0mti+cvrLZ3NLuC+Fx5S9u7ur4HOl3fJK6GP5LqVp081tsVHT/nmM3g
+	ZaCHjARaGuVFfLMND/TAritruFS/ppgnLag0JTYS+hQ+x8QoRpmHb5RdUwZTP9yx
+	lfigZcjYH3jB8yNNPFHxYg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772530317; x=1772616717; bh=lydgF2qwAkkrL3dHOlSPJqjjSTAfKqlfLbD
-	lddFgcyQ=; b=rHDsslmf08ifi4uBnDd1g5ve3OWR9urL4GrhFku0jCHXulcSlHM
-	E2kJt3m4Jev9EZZ055f8xe250SLZDWUPmocKxOMUKtdMQe+U3/1B7Qy5pBo6AWeV
-	DE2mxGzd+lLW2autRAXlvpM1mcKQAKc08itMr2dtncKn6iWV7IiF5VMoT5TnKLQh
-	/KUVscr/okp9GJoHf7iy99Dzj2aS1m+t4Il77Me9l4RyGKVjLrqd9VAkQn7cvirD
-	euBP5+qZiL/pP+cl9Zpkbs+N9NFFyWgb1EQGsCmujfJyPCd0Z0iUC3pYc8qmPMFQ
-	sGSpB70gmTrHTlrJBPEk8r1VVh9zIekSyUQ==
-X-ME-Sender: <xms:jaqmadmQHsAFKdO5yzgtX5jPxdgbvELFirUJI0kFO_yfQOWu4n5CYQ>
-    <xme:jaqmafuIXxR-0l4D3f0r_oJzyGx0S0HzNRdVpaua6283DdCYSCnN8czovzT7z-CMJ
-    TUJDyUNV8Y9iV21pNMEpBrRk4vMdhXiX4xvCTrs1vNa-nvxnnPfzw>
-X-ME-Received: <xmr:jaqmab9nNRapmxxYhkpk7ZoK2Lab6dR405qRgVPIL27k_VpZUgXTor4sO7GENDk43GeDW4miDEbx-Ezbm1gff6kF2kuH1Ly6nwSCZrswiaCo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedtvdefucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772531083; x=
+	1772617483; bh=P8dlf8LbTul0Aa+z2Fj2kt/LIq92fYFVTcvV20vR3VM=; b=E
+	ID5rmrsiuMa5mU62TnPd+7573ck6DxG+DHMq5BjT/uD0wlshTRyZAKG9DDZDFFNK
+	E7jh7oIPPhSTivLuw6IiAXhpjxpDp5RryBT2GihRi1XDtrRdY6gS3DAkWIb8IvaJ
+	D8wd1d/qKCrGJOp+o3uoNh0ftPsSpIaUzPP2DDtwKEKqflSphX4HekOLToiDjcqc
+	aYGTAZjN++03vOBeUW+MgS5r34Si5Ba47kxPSwxhbcUvFJ8c0OShYMhaf8E199dz
+	CAfL+STnRO/1T/FsJI5WzxO9S+nfEFfxScu0Sfk5Yj00eJDA1RCt+9UeA28ECUui
+	SDnb/sG7JXnzFPfQNZCLA==
+X-ME-Sender: <xms:i62maYoQuX2a808mvFUzCBK9VEfzI61xGCdLqxbxKQ_ugVwZfcz7VWQ>
+    <xme:i62maZfabpPz7doVzD-oELC8cm6TRyhoLI4d7hTwgNFHU9WX8LvpJ6CZjusms22jz
+    I2TGRmd56bb5VCtLQMXF7fYO3fGCUtF7lkoiltwCUJ5sZBNo9i_goE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedtvdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epfeefhfefhedugeehgfduudfgleelfedtueehgeekvdefudehvdeiffetgefgfeelnecu
-    ffhomhgrihhnpehprggtkhhosghjvggtthhshhhoohhkrdhsohenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggp
-    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlh
-    hssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehmshhmihhl
-    vgihsehgihhtlhgrsgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:jaqmaZPwpzt0njTJvFUeI0k3zEXxDpIGGe3216SLByk3uC8sHJnEHQ>
-    <xmx:jaqmaZE9P798gdbTu7ZU3hDsCtt4Z_whFi8u_uBznHsz9ThM8P2O1A>
-    <xmx:jaqmaXTW5cJ07uFKTHlU9buv_IyvmuTW07gRwnpcsdU2km4sczOU0A>
-    <xmx:jaqmaWvPsRtI4I3yweSRswoE58oI9nzQ4qqzbh2wMP7rTbKE7jzrbA>
-    <xmx:jaqmaYTNoktRj1Xqo_LCcKf7j56ZYGxZk-FO5cXCO2EK0IEKVM6GvsPX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 04:31:56 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id feb89600 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Mar 2026 09:31:54 +0000 (UTC)
-Date: Tue, 3 Mar 2026 10:31:46 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] upload-pack: reduce lock contention when writing
- packfile data
-Message-ID: <aaaqgrmOBj-Ly1Vx@pks.im>
-References: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
- <20260227-pks-upload-pack-write-contention-v1-2-7166fe255704@pks.im>
- <20260227193758.GA2931515@coredump.intra.peff.net>
- <aaV-l_NyWpkKDDp6@pks.im>
- <20260302182023.GG28275@coredump.intra.peff.net>
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
+    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeeipdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
+    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopegsvghnkhhnohgslhgvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepjhhonhgrthgrnhesjhhonhhtvghsrdhprghgvgdprhgtphht
+    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:i62maYUpeBzJvWnmgJ15hN2pbvKBvdUFzzfHYCf-oIYqpbndFO5V1A>
+    <xmx:i62maV6bAJUeN3O46QSoNA2IGA_3QdZc1z3K-EJSxGOKVe3VBBUiCw>
+    <xmx:i62maTpq9iE0wlM4EVcr1W8B7ACtmpQOr4GPJn-pLFFsMZSsnIAvXQ>
+    <xmx:i62maYl1A6Irdd5ACbBegWwCMSVkSt3Cqc3XatQ56ZuFHUOjqayl7w>
+    <xmx:i62maR3MUXUrdp7GPCzNBArB1UlgxgOhEMr1lNDvPy0mZCAJVRZJWkEz>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id E93B81EA006B; Tue,  3 Mar 2026 04:44:42 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260302182023.GG28275@coredump.intra.peff.net>
+X-ThreadId: AEXdV5rI5xcc
+Date: Tue, 03 Mar 2026 10:41:57 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Jonatan Holmgren" <jonatan@jontes.page>, git@vger.kernel.org
+Cc: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>,
+ "D . Ben Knoble" <benknoble@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Message-Id: <7dc9d03d-61e1-4bd9-8998-0423214d1ffe@app.fastmail.com>
+In-Reply-To: <20260226205339.1535482-2-jonatan@jontes.page>
+References: <3124b359-2929-4f3f-9ac6-793277fe422b@jontes.page>
+ <20260226205339.1535482-1-jonatan@jontes.page>
+ <20260226205339.1535482-2-jonatan@jontes.page>
+Subject: Re: [PATCH v2 1/3] doc: fix list continuation in alias subsection example
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 02, 2026 at 01:20:23PM -0500, Jeff King wrote:
-> On Mon, Mar 02, 2026 at 01:12:07PM +0100, Patrick Steinhardt wrote:
-> 
-> > > Rather than buffering in upload-pack, would it not be simpler to just
-> > > increase the write size from pack-objects? Then we do not have to worry
-> > > about disrupting upload-pack's keepalive timeouts. And as a bonus, if
-> > > you are worried about the system-wide number of calls, you will likewise
-> > > be reducing the number of read() and write() calls over the pipe between
-> > > pack-objects and upload-pack.
-> > 
-> > We can do that. But we also have to keep in mind that downstream in the
-> > pipe may be a process that's not even git-pack-objects(1) in the first
-> > place because of "uploadpack.packObjectsHook". So maybe we should have a
-> > look at doing both.
-> 
-> True, though I think that whatever is producing gobs of output from that
-> hook should consider using a buffer size close to a pktline. In many
-> cases it will be pack-objects itself (just wrapped with some extra
-> magic), but I guess you may have some kind of caching layer at GitLab
-> (we did at GitHub).
-> 
-> That is getting specialized enough that I don't feel too bad suggesting
-> that authors of those tools should consider buffer sizes.
-> 
-> As far as doing both, I'm not sure if it's worth it. My two concerns
-> are:
-> 
->   1. It re-opens the question of whether upload-pack might stall waiting
->      to fill its buffer and fail to produce keepalives correctly.
+On Thu, Feb 26, 2026, at 21:53, Jonatan Holmgren wrote:
+> The example showing the equivalence between alias.last and
+> alias.last.command was missing the list continuation marks (+
+> between the shell session block and the following prose, leaving
+> the paragraph detached from the list item in the rendered output.
+>
+> Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
+> ---
+>  Documentation/config/alias.adoc | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/config/alias.adoc b/Documentation/config/alias.adoc
+> index 115fdbb1e3..26949a0ccb 100644
+> --- a/Documentation/config/alias.adoc
+> +++ b/Documentation/config/alias.adoc
+> @@ -30,13 +30,14 @@ Examples:
+>  ----
+>  +
+>  With a Git alias defined, e.g.,
+> -
+> ++
+>      $ git config --global alias.last "cat-file commit HEAD"
+>      # Which is equivalent to
+>      $ git config --global alias.last.command "cat-file commit HEAD"
+> ++
+> +`git last` is equivalent to `git cat-file commit HEAD`.
+>
 
-I've got a patch for that. The problem can even trigger right now as we
-already do buffer some of the data, and that may cause the keepalives to
-be missed. But this only happens initially in our current
-infrastructure, before we see the "PACK" signature, so it's unlikely to
-be a problem in practice.
+Missing list continuation.
 
->   2. I wonder if we could get some weird interactions between the two
->      buffer sizes. E.g., if pack-objects sends 50k bytes at a time, but
->      upload-pack wants to wait for 51k. So we read 50k then wait for the
->      next chunk. Either:
-> 
->        a. we read 50k again, pull off 13k of it to make a full pktline,
->           and then memcpy around the other 37k to await more data.
-> 	  There's a bunch of extra copying as our buffer sizes don't
-> 	  line up.
-> 
->        b. we read 13k (to fill up the pkt we're trying to send), send
->           that, and then the next read gets a partial read(). So we end
-> 	  up issuing more reads, although sometimes pack-objects might
-> 	  catch up and fill the pipe buffer, and we'd get a full packet
-> 	  in one go. But depending on the timing, I wonder if things
-> 	  could get choppy and we'd end up issuing a bunch of extra
-> 	  reads (and possibly extra writes on the pack-objects side if
-> 	  it's waiting on us to create more space in the pipe).
-
-We would likely hit this issue if we insist on the buffer being
-completely filled before sending it out. But that's why I adapted the
-logic to say that we send out once we've filled it at least 2/3rds of
-the pktline limit. So in your case above we wouldn't face an issue as
-we'd already send the first 50kB, as it is smaller than 2/3rds of the
-maximum length (~42kB).
-
-That being said, you'll still be able to construct cases where we have
-weird edge cases. For example if you consistently send one byte less
-than 2/3rds of the capacity.
-
-Patrick
+> -`git last` is equivalent to `git cat-file commit HEAD`. To avoid
+> -confusion and troubles with script usage, aliases that
+> +To avoid confusion and troubles with script usage, aliases that
+>  hide existing Git commands are ignored except for deprecated
+>  commands.  Arguments are split by
+>  spaces, the usual shell quoting and escaping are supported.
+> --
+> 2.53.0
