@@ -1,372 +1,195 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56123382392
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 23:06:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772579208; cv=none; b=P7z+80vXmn4f1ycbPxQW+0wcUTqB7fZaggzGUa48l1qsFxslYw5EMWNaMTQCdvE87aPCmENOrWgqFN+jZGzaGfQOTpoupHO0O7y4vS2582dKkytqWfCpYaZrJaFGRC4DweACZVsh+DMopNPrkL6He3Z3vTFUhvMXlYEY8GIpaTA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772579208; c=relaxed/simple;
-	bh=JffFeabt56W8wlqgETA871bMamNCcjhWFWEOqstHSqA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mfsZ+0bAgS5nWzIfN7Jn1ZZZz7DhTbpeSoufH4pTb3F77WFGqD1IPnTj5FEJknAV8iT/41vfQYXpQCK26IMkEi7BPKKmohUMv+IYJGUreHi7V60kV+Om1tIxuBf07IM/bROp+rRbKTCPkDwLleX7EDA75yxq+G3Ku/Gtvlgz7rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MYin5+TN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gUqzlWuR; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCB3349B00
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 23:29:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.168.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772580566; cv=pass; b=ZOrXSVzxA085SAvbuWQORDfSLkV7RMMPrydknEWnWgCrFg6QnXKWTfTJNDA/iFXVSjaR6m/cHvT/nchKOB5MsXnoFDoG2LQU/eV6ryyDqnC1kWTgqp48nDyCOLGhy7z3r04NSOEUaqNA5GE3PTKSMSqYWNkjtJxkYxanIKDd694=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772580566; c=relaxed/simple;
+	bh=esJ+fS9HuZii79O6e1vhoaaRGpWGL4nlTUrOifrurgw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CFYiU8/iBYakENsCih+GxBtmj2b0gp62Cg6jyTB/SF+TaUptMX9iYpzmnGZoHgss6X8NK9SbRfYx08sO0noj+NB+sPktHKpsqgjhDZmoZ3w2r5rABCleQVzR87efyrjfmNwaEknOjWiWmuVvQj2vSpInWBnA2JVi3trsgk2CJE0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ihqSzk6k; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dB/e6Pa9; arc=pass smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MYin5+TN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gUqzlWuR"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A9A2B14001B4;
-	Tue,  3 Mar 2026 18:06:45 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Mar 2026 18:06:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772579205; x=1772665605; bh=BU25xNUK/i
-	PpR7aWpezT0473rTWAYYxebAwvZukkFic=; b=MYin5+TNYYzGLw9VD3WleVwgR4
-	dwGvWgoItBDeYnuSgjPhW7IsScl3D1GIQFE55VbXO9/SEcMYprC+b3H1hAWiT9Dz
-	S05hf12UqoNvswBBsghLxWQIqVzZRF8tt8OWdbgKT7LhOAxOJ4wEvS/bGRtBf/oH
-	VcxOPRLts/PeRh069XT989GQqjJW8yVj6h2+gIlC3liQBewK48ol1MIUjPo+M6Xa
-	nLOaDOzg2j59pjj/3CyWFhzpSeWIhvMbP3snyoyvWw0rfCf1c/FmxBJ0mmKXw1XO
-	LtjkRsU8estfiHCzrWqkVpU3zVbWEPgLdV/Rz67L8MJlNuxfZtvgF1GQZAWw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772579205; x=1772665605; bh=BU25xNUK/iPpR7aWpezT0473rTWAYYxebAw
-	vZukkFic=; b=gUqzlWuRQ9yAfQsz/LZt/kmnHp49ql2xdtyw5S7LyOtvx/RVfSw
-	ZiQ27n4hVpuzITp0cDNqBV7cZYVuIoSI7GEkJy8r0+7rKAuLHy9f36E4QWYLQUrI
-	uIqmrFPPy+jgXgRgUHakQraxdwrQACcaXvHPKqMMWBDJRvEKDMW4xQqgFNn3MtZp
-	B6wUzWskMMJJfcw57iUJjYrNmXiB34iTGzzSjp+/aaPJdkhuLRqZ1I7G0jh/00IX
-	bVTABbdAe/xmgBZwVuOHecvtxcYk3ekmqHwH3k2VbDC1DYP7GR6/wPKMWkvMKpxT
-	gF+/BfpTGbiytazyZb+vEhQhhcwb2LAWW2Q==
-X-ME-Sender: <xms:hWmnaWxiBbvhNUslbaabICkv5L2DHUFy4MDKJWTQsPOinQh2LaSnlQ>
-    <xme:hWmnaZSwdj7SDTrjSccS11M06Esk9-95FRUJ565q28jol7EjqF06saoCAVRpTt228
-    VNcfeanc3KhVLjgfFmdmHVs1LGzFkly8rD-zLwIRWoXPNxr4JeGug>
-X-ME-Received: <xmr:hWmnadU0iMnrt2jyD_ycWsdNMhILqQk487ti9bcvy-L1li84cmeekN4DJI0vjwXDIdqYrdfGxJ5WpeQeB40zb5DnSjGHkzfrWw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedukeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegthhgrnhgurhgrkhhrsehpmhdrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:hWmnabbq8XEoRyq-fKRjC4ExVgkkMozbDvNyNRdt6js6c6-Oy0dD4A>
-    <xmx:hWmnaT2p6b036DWopN3XhUm0nrzQYYUwAMjjKAmFJiERcGV_tkxvEg>
-    <xmx:hWmnadgqXAMBY_0WDEXeQth6C8jsiQu5WzX2zADBNpyzwja2uOamiA>
-    <xmx:hWmnaXZhx5PAF-TrhsYZ-7ugRdrBZu9WI31ywWQCm66ne6BCYHkivg>
-    <xmx:hWmnaYgHc7PQVMqmz1UQn1KGs0LswZ_1iqLDUHgHjSB00SHNFKiOPU8l>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 18:06:45 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Chandra Kethi-Reddy <chandrakr@pm.me>
-Subject: Re: [PATCH v3] add: support pre-add hook
-In-Reply-To: <pull.2045.v3.git.1772171692465.gitgitgadget@gmail.com> (Chandra
-	Kethi-Reddy via GitGitGadget's message of "Fri, 27 Feb 2026 05:54:52
-	+0000")
-References: <pull.2045.v2.git.1770822312474.gitgitgadget@gmail.com>
-	<pull.2045.v3.git.1772171692465.gitgitgadget@gmail.com>
-Date: Tue, 03 Mar 2026 15:06:43 -0800
-Message-ID: <xmqqy0k8a4xo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ihqSzk6k";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dB/e6Pa9"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 623HBJZh2786792
+	for <git@vger.kernel.org>; Tue, 3 Mar 2026 23:29:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2pEaDOQQ8erMx8snhDuJ4jZuS1rvv6+eOHTybgyW2Po=; b=ihqSzk6kiu1liMm/
+	ITINBSmsZd4x5cYwcXM1NEHn6A4x/BzekyJ8iPPukDybmq8GjOowOO4Y2PEQnnxz
+	EanU1OQP0NmKrdVA1yIK8B31+RnArMQyE6nRwyrlR+y6vcCrBHvJPOoQJdqT7K4w
+	orfn2Jm3NARx1jgZkgBxAqeKdnyeNe7UJiAFzCgJZpraUh566eojaKPRfNm2HZck
+	cGBdhkypQnpugB/tM3Xmydj1TB+288FNajV4hbxFHxzaGB/b7+GyK83a8dsllKMP
+	g/ATLns/V1vHX9no9dTcUo0pGtt3rDNQDZq9aanVZJ0YrCgda7BNQA+mjvHuLXeW
+	8auH4w==
+Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com [74.125.224.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cp3tvh85y-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 03 Mar 2026 23:29:24 +0000 (GMT)
+Received: by mail-yx1-f69.google.com with SMTP id 956f58d0204a3-64ca99235cdso9294449d50.1
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 15:29:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772580564; cv=none;
+        d=google.com; s=arc-20240605;
+        b=SK0MjCucxqNCibFr8KIl56W1SwOOR661CS+sgynHEvnNc2oVeuSDPgC8LH+rVB8XIC
+         aPBbDk+f7pyctkMjoxV8z6ZtsbnlP3ml8x4uzi8dKsELH9OwguD9ZLUVB58JfDFaCON0
+         uVo9mGM84dvMeJ7UUxeVFNhBI3YdFzzID0PlWQku0uxK1NCH/Mr6ojUP6oQ9lgsIepp+
+         5g+DZci1Dxgo/VS1FAWbncVhCfumORx7SfYds1/AlTFG9b0xCtG2cYejL8efXI3Pwnhm
+         JdsZD076lO9qPltiWIaBMz/Vj7ve+XQcaeJvm1rOQ7A8CT/Zb+Ub/qrtByg+AwSxsMBo
+         22MA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=2pEaDOQQ8erMx8snhDuJ4jZuS1rvv6+eOHTybgyW2Po=;
+        fh=34fN1F1Vi9HSO4eloA9+NrC7PJswblESbBKqTZRWYx4=;
+        b=PkRwi/vNpFQJwYBifIjsSwloLdftm2zCcjenrcSXioYm+TTAteGlyY1oqOOa07oKD0
+         /WPIW9Pg9FH7KecGroTapsJZLS4fa7V8Hc1bewfmNUOA6UGUuymrVNE9vUkG39/DTlUc
+         jynVWsnMh9iUp3UDKgi50ILDkk8/g2gZkceQEczB5J4VORcZqXJdzv5kFJ1d4KaDA32h
+         oDp0alTQxqYYESTzS4b1SW3kDHn/j4AHiYQodNrHJbhaHENFPRYWhADMxnc7r+yy+Xm7
+         o4XM7X95LQ7dkcvkPlCQ2BzTQY1WKKKSe/xioVy6g6pVgHKI3jAl/DU5Kg12ka+ERaQ/
+         OaWQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772580564; x=1773185364; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2pEaDOQQ8erMx8snhDuJ4jZuS1rvv6+eOHTybgyW2Po=;
+        b=dB/e6Pa92LcgmPcM5oG3DX5rzd8Rv3r3HoSPl2eSfyTZl7l3GRnVdmUE+/3XJ9jYsS
+         QwTatx6nCZ+kGklrjoJkGHHsog/jfUVeX7EXq/wbcJ0qgMs4L4QIszeI/pIc4SntPd1t
+         VAtnZo2955sbp7ty3lG1JeEckYqwlHBECCuxLJtOPp8Wvk3hoI5ucn7e+ZHFemcz9Tzd
+         pG2Q7d4uKguDaHnkZHe4CjriAAVD4Wkc37b4U+G9wbeNqSZvTPQcPC9M2rcW3updH0FV
+         /npV1yyhg7AxSldwFifrGrCjDREYSKPAUpIQJ2XLZR/qCaV92JQKOx/jUm6f9Pg7OPAD
+         pXXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772580564; x=1773185364;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2pEaDOQQ8erMx8snhDuJ4jZuS1rvv6+eOHTybgyW2Po=;
+        b=mbqUHPqKEp1Q75UFvDr8Ti/C7RVzOfwFthDlVmkIkRCs2ScQki1wdOoBZre4tP1pqw
+         /d5ySDpLu/pYqr9fCsNPgvrO0x4mtBnTu3+tUL6wymbR7Lp76anhnceMYnT9It+5EBsi
+         d7sI12/Tb3uIByuYIBdB3GacQn1hrczvzvP1aac8O6z5Ze03slaD6JBOllhZ0q5A+FD6
+         FEchTl75VHwrsu/r5KATduF7ZuVDfbqLQfkJeOK7VNPKNztKHtLEfIq8emqLs31Phf2X
+         /ydnEgJoMWd8DNhW9Uo1IH0Asu5t6fsRr7FnWdXsUgXcilzs2IU9P8Ord7hDjMOd3SZg
+         Uirw==
+X-Forwarded-Encrypted: i=1; AJvYcCUQJgJGdoqdE3OcGisy6AiPcsKE7ZQdAOGHolxZqMdf3xz4S93oj5i4a32shBe/N1w5mN0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyMKKrJB8vrMbxuo5M6TUa+imhdj/75Bp3wzMMqlK2a0taRgvjJ
+	z73VbKPfmZ+C+9FhhmxcSNf9ZNtGUDTfWYJpKJDWLrE+7yHuzZiSALTvY2hzDSoPv27cYct98GF
+	gsVbkQ+z6qKKtkK6M87mQeCpDMkGjcyX+3cJrk1nzcpqOwvuJTJmNuTAJtHaX1hN17WNfRzq0m9
+	D+ThFZzahJx1aii/YlzlFrBbXlzjZH7Q==
+X-Gm-Gg: ATEYQzxLFLbdL7NWX2TgF8I2flPKcBNM9885YTrp/XbEAMI166Q/8ZpsOwPC6u84VPz
+	LeIxWsStrdAxhG6+8Wa+KCpQ5mAV7W6sAVMXp+4eAqTlr5tchU8tJt1L151xek1Az2Qlp/zALdH
+	FTDVcEUePs2R00MJEvZhTYmndMPDTQaeMQdFQi+fqgB7GVRQrt7HhzRjDXNQsT2A9RcbgQ8nRWR
+	rsMmAo=
+X-Received: by 2002:a05:690e:1a52:b0:649:c7dd:d2f7 with SMTP id 956f58d0204a3-64cfa0561a4mr141962d50.87.1772580563949;
+        Tue, 03 Mar 2026 15:29:23 -0800 (PST)
+X-Received: by 2002:a05:690e:1a52:b0:649:c7dd:d2f7 with SMTP id
+ 956f58d0204a3-64cfa0561a4mr141951d50.87.1772580563588; Tue, 03 Mar 2026
+ 15:29:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260301025327.3845292-1-nasser.grainawi@oss.qualcomm.com>
+ <20260303200906.4118348-1-nasser.grainawi@oss.qualcomm.com>
+ <2e62dc94-b821-4815-8dd2-f806580d2027@ramsayjones.plus.com> <xmqqms0obo5s.fsf@gitster.g>
+In-Reply-To: <xmqqms0obo5s.fsf@gitster.g>
+From: Nasser Grainawi <nasser.grainawi@oss.qualcomm.com>
+Date: Tue, 3 Mar 2026 16:29:13 -0700
+X-Gm-Features: AaiRm52eTgW_Pd9goEq8H3Nkcd6EZBPrFpqtpGwOnnOZYFqSTzAj9tIdNHvjeyA
+Message-ID: <CAFcKa=_Ovs8bZmx8K4VFYKgV-_sDTWMsaCmQCC8J0LAEGTg9vA@mail.gmail.com>
+Subject: Re: [PATCH v5] submodule: fetch missing objects from default remote
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+        "D. Ben Knoble" <ben.knoble@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDE5MyBTYWx0ZWRfX1I0uuJ6J5Iu2
+ rNokaUcyowey4J2NxRYIQoYGRhGIX/on4/VWbMMb1w4JoByY3i77iygkcihCrkcqM3ZwZtj+8qp
+ BMTuMukIo+KZ+C7NWnkjcPnjEyLofRbaDQXLhRgp9gY7jXUeETs4dv6vunxRSmrUNivtjjvTTQY
+ yCsxz72hhBoXNyDq/vYWHJeaOZF9CaOGJtSibGuOXp/tPhF1mzhL8h8xg26Ka5rgt3ztdWBFiQZ
+ 1HWRLvWrQgACIsACH15qMnzKrjWObqisZilaekP4hVxgrlWpfT4gMyGdRueqniCFcluqocm7XNW
+ jBliCt2+IFSZJATUK2uJ5IZWyPw90oJ0q7aeGJX52a1LJNUGrSWmDLW86FffsbMeC6QJGuRUIQT
+ J0vox7vMqlHqqrEVFvFjm+VGjsasNPvUsH//GqoSQsdqiwQC1qFu7ohWVGKZNXn+lDNXRflr95S
+ l5kB6tRuwkUiDOCiSjg==
+X-Authority-Analysis: v=2.4 cv=VYv6/Vp9 c=1 sm=1 tr=0 ts=69a76ed4 cx=c_pps
+ a=J+5FMm3BkXb42VdG8aMU9w==:117 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=YMgV9FUhrdKAYTUUvYB2:22 a=ybZZDoGAAAAA:8 a=EBOSESyhAAAA:8
+ a=Drkh5fC5HhFBoS8f7C8A:9 a=QEXdDO2ut3YA:10 a=Epx66wHExT0cjJnnR-oj:22
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-Proofpoint-GUID: 31sqmlnqJvQUPDYszaoB-bef1JT3ZMR1
+X-Proofpoint-ORIG-GUID: 31sqmlnqJvQUPDYszaoB-bef1JT3ZMR1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-03_03,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 lowpriorityscore=0 suspectscore=0 bulkscore=0 adultscore=0
+ spamscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603030193
 
-"Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> "git add" has no hook that lets users inspect what is about to be
-> staged. Users who want to reject certain paths or content must
-> wrap the command in a shell alias or wait for pre-commit, which
-> fires too late to prevent staging.
-
-I do not think the above would convince readers that "preventing to
-add" is a worthy goal in the first place.  If you "git add foo" by
-mistake and wish you had this hook to prevent 'foo' from getting
-added ever, you can easily "git reset foo" to undo it.
-
-> Introduce a "pre-add" hook that runs after "git add" computes the
-> new index state but before committing it to disk. The hook
-> receives two positional arguments:
+On Tue, Mar 3, 2026 at 2:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
->   $1 -- index path used by this invocation (may not exist yet)
->   $2 -- lockfile path containing proposed staged index state
-
-OK, perhaps.
-
-> While the lockfile is active the current index path remains readable
-> and unchanged, so a seperate copy is unnecessary. 
-
-Unless readers may think that it is needed to make a separate copy
-in order to prevent "git add" from happening, and I am not sure why
-we would expect readers to do so, this is not something we need to
-say here, is it, even thought it might not be telling any lies?
-
-What is more important would be to tell readers that these two index
-files are meant to be read-only and hooks are not expected to modify
-them.
-
-> Hook authors can
-> inspect the computed result with ordinary tools:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 >
->   GIT_INDEX_FILE="$2" git diff --cached --name-only HEAD
+> >   + diff -u expect_fetch_custom actual_fetch_warnings_removed
+> >   --- expect_fetch_custom 2026-03-03 20:35:13.949600802 +0000
+> >   +++ actual_fetch_warnings_removed       2026-03-03 20:35:14.150601532=
+ +0000
+> >   @@ -4,9 +4,9 @@
+> >    Fetching submodule sub1/subdir/deepsubmodule
+> >    Fetching submodule submodule
+> >    Fetching submodule submodule/subdir/deepsubmodule
+> >   -From /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stres=
+s-5/./sub1
+> >   - * branch            43c17d99ab9d4fcabf7107e36660b27113b54663 -> FET=
+CH_HEAD
+> >   -Fetching submodule sub1/subdir/deepsubmodule
+> >    From /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stres=
+s-5/submodule
+> >     * branch            e38933e027ee8a2000f603124aa899302a09a51f -> FET=
+CH_HEAD
+> >    Fetching submodule submodule/subdir/deepsubmodule
+> >   +From /home/ramsay/git/t/trash directory.t5526-fetch-submodules.stres=
+s-5/./sub1
+> >   + * branch            43c17d99ab9d4fcabf7107e36660b27113b54663 -> FET=
+CH_HEAD
+> >   +Fetching submodule sub1/subdir/deepsubmodule
+> >   error: last command exited with $?=3D1
+> >   not ok 44 - fetch new submodule commits on-demand outside standard re=
+fspec with custom remote name
+> >
+> >   ...
+> >
+> >   $
+> >
+> > From which I guess that the order of the output is somewhat unpredictab=
+le.
+> >
+> > Also, other test files in that patch didn't fail for me with 'make test=
+', but it
+> > could be possible that they are also flaky. I didn't look.
 >
-> without needing to interpret pathspec or mode flags as the proposed
-> index already reflects their effect.
-
-Good.
-
-> At the finish label, write_locked_index() writes the proposed index
-> to the lockfile without COMMIT_LOCK so commit_lock_file() can be
-> called seperately after the hook runs. However, do_write_locked_index()
-> unconditionally fires post-index-change after every write, and ...
-
-Are these implementation details really needed to be described here
-for future developers to understand what this change was while they
-read the "git log -p" output and find this commit?
-
-> the
-> existing test suite (t7113) asserts that index.lock does not exist when
-> that hook fires. Tying the hook to COMMIT_LOCK would suppress it for
-> other callers that depend on it after a non-committed write (e.g.,
-> prepare_to_commit() in builtin/commit.c). A new SKIP_INDEX_CHANGE_HOOK
-> flag lets builtin/add.c suppress the automatic notification on just this
-> call, then emit post-index-change manually after commit_lock_file()
-> publishes the new index. If the hook rejects, rollback_lock_file()
-> discards the lockfile and the original index is left unchanged. When
-> no hook is installed the existing write_locked_index(COMMIT_LOCK |
-> SKIP_IF_UNCHANGED) path is taken.
-
-IOW, what does it help the reader to read the above wall of text?
-
-> The hook gate checks cache_changed regardless of exit_status so that
-> mixed-result adds (e.g., a tracked modification combined with an
-> ignored path) still run the hook when index content changes.
+> Ah, looks like the command tries to fetch from multiple places in
+> parallel and it is up to the luck which one reports its result
+> first?  We probably do not want such a "human readable progress
+> output should look exactly like this" test.
 >
-> The hook is bypassed with "--no-verify" and is not invoked for
-> --interactive, --patch, --edit, or --dry-run, nor by "git commit -a"
-> which stages through its own code path.
->
-> Signed-off-by: Chandra Kethi-Reddy <chandrakr@pm.me>
-> ---
->     
->  Documentation/git-add.adoc  |  11 +-
->  Documentation/githooks.adoc |  30 ++++
->  builtin/add.c               |  47 +++++-
->  read-cache-ll.h             |   1 +
->  read-cache.c                |  13 +-
->  t/meson.build               |   1 +
->  t/t3706-pre-add-hook.sh     | 289 ++++++++++++++++++++++++++++++++++++
->  7 files changed, 381 insertions(+), 11 deletions(-)
->  create mode 100755 t/t3706-pre-add-hook.sh
->
-> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
-> index 6192daeb03..b47751acca 100644
-> --- a/Documentation/git-add.adoc
-> +++ b/Documentation/git-add.adoc
-> @@ -10,7 +10,7 @@ SYNOPSIS
->  [synopsis]
->  git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
->  	[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
-> -	[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
-> +	[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize] [--no-verify]
+> Thanks for reporting.
 
-Avoid making the line that is already overly long even worse.
-
-> @@ -42,6 +42,10 @@ use the `--force` option to add ignored files. If you specify the exact
->  filename of an ignored file, `git add` will fail with a list of ignored
->  files. Otherwise it will silently ignore the file.
->  
-> +A `pre-add` hook can be run to inspect or reject the proposed index update
-> +after `git add` computes staging and writes it to the index lockfile,
-> +but before writing it to the final index. See linkgit:githooks[5].
-
-I think the above (as with everything else you wrote in the patch,
-including a part of the proposed commit log message) stresses too
-much more on the implementation detail than what would help your
-intended readers.  How about writing it more like this?
-
-    The `pre-add` hook, if exists, is run with a temporary index
-    file that shows the result of proposed `git add` to inspect.  By
-    exiting with non-zero status, the hook can reject the proposed
-    changes.  If the hook exits with zero status, this temporary
-    index file will become the final result.
-
-The readers do not have to know 'lockfile' or 'final index'.  They
-would want to know how to accept or reject the proposed result.
-
-Or we can leave all the details to linkgit:githooks[5] and say
-only something like this
-
-    A `pre-add` hook can be used to reject `git add`; see
-    linkgit:githooks[5].
-
-and nothing else.
-
-> diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
-> index 056553788d..657e14d306 100644
-> --- a/Documentation/githooks.adoc
-> +++ b/Documentation/githooks.adoc
-> @@ -94,6 +94,36 @@ and is invoked after the patch is applied and a commit is made.
->  This hook is meant primarily for notification, and cannot affect
->  the outcome of `git am`.
->  
-> +pre-add
-> +~~~~~~~
-> +
-> +This hook is invoked by linkgit:git-add[1], and can be bypassed with the
-> +`--no-verify` option. It is not invoked for `--interactive`, `--patch`,
-> +`--edit`, or `--dry-run`.
-> +
-> +It takes two parameters: the path to the index file for this invocation
-
-Elsewhere you called these two files "arguments" but here you say
-"parameters".  Let's be consistent.
-
-> +of `git add`, and the path to the lockfile containing the proposed
-> +index after staging. It does not read from standard input. If no index
-> +exists yet, the first parameter names a path that does not exist and
-> +should be treated as an empty index.
-> +
-> +The hook is invoked after the index has been updated in memory and
-> +written to the lockfile, but before it is committed to the final index
-> +path. Exiting with a non-zero status causes `git add` to reject the
-> +proposed state, roll back the lockfile, and leave the index unchanged.
-> +Exiting with zero status allows the index update to be committed.
-
-Good write-up.
-
-> +Git does not set `GIT_INDEX_FILE` for this hook. 
-
-I am not sure what the point of mentioning GIT_INDEX_FILE here.  If
-the user did
-
-    $ GIT_INDEX_FILE=.git/alt-index git add files...
-
-the "git" process has the environment variable in place, pointing at
-the file as _the_ index file to add to.  We do not unset and
-unexport the environment variable before invoking the hook, do we?
-We simply do not do anything special or strange.  It makes it less
-confusing if we refrain from saying "we do not do this unusual thing
-or that special thing", doesn't it?
-
-> Hook authors may
-> +set `GIT_INDEX_FILE="$1"` to inspect current index state and
-> +`GIT_INDEX_FILE="$2"` to inspect proposed index state.
-
-Explaining this one does make sense.  "current" -> "the current"
-and "proposed" -> "the proposed", I think.
-
-Somewhere around here, it would be necessary to say that these two
-files should be treated as read-only by this hook.
-
-> +	int run_pre_add = 0;
-> +	char *orig_index_path = NULL;
->  
->  	repo_config(repo, add_config, NULL);
->  
-> @@ -576,6 +582,11 @@ int cmd_add(int argc,
->  		string_list_clear(&only_match_skip_worktree, 0);
->  	}
->  
-> +	if (!show_only && !no_verify && find_hook(repo, "pre-add")) {
-> +		run_pre_add = 1;
-> +		orig_index_path = absolute_pathdup(repo_get_index_file(repo));
-> +	}
-> +
->  	transaction = odb_transaction_begin(repo->objects);
->  
->  	ps_matched = xcalloc(pathspec.nr, 1);
-> @@ -587,8 +598,10 @@ int cmd_add(int argc,
->  						  include_sparse, flags);
->  
->  	if (take_worktree_changes && !add_renormalize && !ignore_add_errors &&
-> -	    report_path_error(ps_matched, &pathspec))
-> +	    report_path_error(ps_matched, &pathspec)) {
-> +		free(orig_index_path);
->  		exit(128);
-> +	}
-
-Hmph, we are not releasing ps_matched or transaction and nothing is
-leaking (the on-stack variables do hold references to these
-resources).  I do not see much point in releasing orig_index_path
-here.
-
-> @@ -598,9 +611,35 @@ int cmd_add(int argc,
->  	odb_transaction_commit(transaction);
->  
->  finish:
-> -	if (write_locked_index(repo->index, &lock_file,
-> -			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
-> -		die(_("unable to write new index file"));
-> +	if (run_pre_add && repo->index->cache_changed) {
-> +		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-> +
-> +		if (write_locked_index(repo->index, &lock_file,
-> +				SKIP_INDEX_CHANGE_HOOK))
-> +			die(_("unable to write proposed index"));
-
-As we _may_ allow the pre-add hook to reject it, we do not know if
-the index has changed.  So delaying the post-index-change hook until
-we know for sure that we will commit to the index change does make
-perfect sense.
-
-> +		strvec_push(&opt.args, orig_index_path);
-> +		strvec_push(&opt.args, get_lock_file_path(&lock_file));
-> +		if (run_hooks_opt(repo, "pre-add", &opt)) {
-> +			rollback_lock_file(&lock_file); /* hook rejected */
-> +			exit_status = 1;
-
-And then we ask the new hook, which may reject the update, in which
-case we leave here.  Otherwise ...
-
-> +		} else if (commit_lock_file(&lock_file)) {
-> +			die(_("unable to write new index file"));
-> +		} else {
-
-... we commit the index file to the final place and then invoke the
-post-index-change hook ourselves, as we told write_locked_index()
-not to do that earlier.  Makes sense.
-
-> +			run_hooks_l(repo, "post-index-change",
-> +				    repo->index->updated_workdir ? "1" : "0",
-> +				    repo->index->updated_skipworktree ? "1" : "0",
-> +				    NULL);
-> +		}
-> +		repo->index->updated_workdir = 0;
-> +		repo->index->updated_skipworktree = 0;
-
-Doesn't these two belong to the "run post-index-change hook" block?
-I think all the contents in the final "else {}" block that you
-copied from do_write_locked_index() should be refactored into a
-small helper function and called from here and also from
-do_write_locked_index().  Otherwise, you'll be forced to maintain
-the details of what needs to happen when running "post-index-change"
-at multiple places and they must be kept in sync.
-
-> +	} else {
-> +		if (write_locked_index(repo->index, &lock_file,
-> +				       COMMIT_LOCK | SKIP_IF_UNCHANGED))
-> +			die(_("unable to write new index file"));
-> +	}
-> +
-> +	free(orig_index_path);
->  
->  	free(ps_matched);
->  	dir_clear(&dir);
+Yes, thank you. I'll drop that part of the test and just keep the
+GIT_TRACE check.
