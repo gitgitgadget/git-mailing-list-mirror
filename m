@@ -1,127 +1,94 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CAA34C81E
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9D63822B6
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 20:40:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772570244; cv=none; b=pQBu2Ac4/JNer4PRT/aLIu20nSaW8FD4wuTqf71cC2aQh61wsdblMVty/ybXnWAM195ndERsIZXwYC47sXtZ7OPGr8Ypz0Vjzq+ED7cXPOyuYPbwP2zvO/32BRcZKwp6vE3hAC1LXAmC//QJzWRbvml548rCrAKrv5G/zHu7VWM=
+	t=1772570459; cv=none; b=WKyJUyJHvEH7fiVTHS2YHdfwScqw7tU+v4FuWAXQWQ8bUmZ6w7StDq00ZtvPZTzG/ot6whpR2zy9t7MsEcfsABPMJL+GQKz2lzosGkFKAiyFkZxuazeLZaUStaBHzjzQdP4yTYVNCbsSTmFWUM4Llb81bcIURTzWW9DQpHI4UIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772570244; c=relaxed/simple;
-	bh=WpB2EcP68O63iL2P9hdv5B8k0qcG7Ut5pu5MrV6O+r8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Q95uzl/USRPqtUJGot0GzKa+mEMq8hdIx3H9xwghMKFbye5N2BRJxZqMi1e2Xbwt+qgHTurZws+lxN54+o1zPDhMJj0XZIHsZvCRFOcGCtOIGpE4TwAZPiahgbq5Qh6BC1XzHFy+HhEH1tsVfl4PuUhoi8z8NvK5LYSq6j1xGds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ZD8DAkE6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ybr3ayW+; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1772570459; c=relaxed/simple;
+	bh=CgaD7XqRSIEpInDmXKl76YzOX8E2bf8u03+QhSKLOW8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=r5XLAUbgd5mcrieRVs39/1S26TvbAZSWcE2CeU6HZP2/zd6lcIbrGR9h9ea0KoB4jNxJgLftkSoVQHLGgbErkptTb/Lgx+frnacXgfW03A5iFYcZ1zC2oVgxD1gGNFBkoImkZI4zJ9NSg/X5gQ2AWXCa5uo6lqxlA7M3LwCwuQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VJAwUHok; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ZD8DAkE6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ybr3ayW+"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1700B1D00091;
-	Tue,  3 Mar 2026 15:37:20 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Mar 2026 15:37:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772570240;
-	 x=1772656640; bh=WwdLO7dWl3FlRCoeIm7dBqst2HUoPwK58r/ubHwAhGQ=; b=
-	ZD8DAkE6szAF3jnttwHMFxjQHFxCEZ0Au5xkkuWnRLORmJ/pEupX91IxJ2kM666H
-	6+v2wUH4PJWglEAwIRTUMUpYX/GtqZcWLqb3B9XK57xbn7vdo2a9lcYNDUkU9pfi
-	7zQb6IoBzofhncp0RuaQuZUk3byLaFZJEjAt2kDbmaoUfSi6mhm10OvAlVdTVJTe
-	T5RllXSYqyhJ5qwNby4xiy3YbwQZFiBsVaTEE/jLN/qmz+ZWEeBjfxS9OB9IsUUY
-	bdsGhmuh0TJ4PJuUHnZv0HYUYNXkkxpdFJbMWiSR7W+j0ZJcIdsLqyRtAJjKRXXv
-	AWpuJ3c5eYxdgVPiJXvbXg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772570240; x=
-	1772656640; bh=WwdLO7dWl3FlRCoeIm7dBqst2HUoPwK58r/ubHwAhGQ=; b=y
-	br3ayW+6FzOofYrB4oZMNck+1P61CGn4JmQ2WtBUITzDSJiGHydmdm6UaAbNluP2
-	8pp9i+IwWczB9w33kdamn87tFnORQfsf0Eij9nX0hmdx4WZA1+zRu9sRHeVfPCDc
-	DQ1ORelnTGlOGyF5JAC04t63ma2h/hLo4WlVR7xrVwLyUq7OkOk2mRvdek8QIxGw
-	E3HhIM7v/wivYO02E7BmoSzJC66Yd/2ur1aGWk9ON1w3c9ZhW7ED0+wGmoW+LZgn
-	iG/sDiUThn/fH8a6dwMvvgCEfcZ3g+KEvOOVn6pDaeiFEkxR3kYgM8v2ROfrJn4e
-	Th0Q0mH0wSXBv0pV3W3GQ==
-X-ME-Sender: <xms:gEanabALcK6OSv3rJ03aa-Gqj1-k2M-F2Kp0AeqghEcX_vN3GLH0T-c>
-    <xme:gEanacXtAzIWGl5GEb0GuK8b7dtUmi37uDKHVMb2ZrVqyuzMbzhfTue3txN52jQvc
-    rPWdQUD8v8r8g4AUK07BgSC0Hz4JBPsOeEcWQjzDnCpgzJy8MHULw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieduheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
-    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgv
-    lhhmrdhorhhgrdhukhdprhgtphhtthhopehmvgeslhhinhhugidrsggvrghuthihpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:gEanacoiEYfarPf13l9iiSYs_nrbnriOiKB3s9d0kVEVI8SGAAAl0w>
-    <xmx:gEanaeGZW3ROp_0ESf6C6VrHfjyIqqbM5ejqlJVEhUrYTUHRU6Yj8Q>
-    <xmx:gEanaUu-l1iUFYSbSAiWOvmR6KyYLlGbXCKq-MS2Fw1IRvb3mcla5A>
-    <xmx:gEanaYVO5J-mj6JNG0HvNPNdeS-STI4uXKS13HByzSzWKAnQ-yra8g>
-    <xmx:gEanaSxfHLwe1PSm7znOh6X_sSodzwtXAEjWuSwVhiKFOLUZiCrf6rwL>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 2D17B1EA006B; Tue,  3 Mar 2026 15:37:20 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VJAwUHok"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82418b0178cso3549312b3a.1
+        for <git@vger.kernel.org>; Tue, 03 Mar 2026 12:40:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772570457; x=1773175257; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cfYByuGDPkY+4H1ykHJB+mPNRgJj1CKJd8ECfgUELrc=;
+        b=VJAwUHokFi8w4mxxmyD2VvDWpn6rJRaRf+9KQPhDwRZ+XgWcrLTuHuTC3cdCRincuY
+         4xQByFKXDMWiOiGIx7nOCdfzoG5N1XspsmvvfBFA+o/Mcc/1Bw2dnGUCZrO3GZI/+mzi
+         MgDRYf7BJKneaV5bJWGQ0XzWZkuULM80a0H6VzK0wmxuqMnGBEf85Jel70WZfT2KgVJe
+         kaab3jHQuVcl5tZlD2x80iCRntkg5BsAr+foT8aoDDbVPN4C9VsKWMV9EkxwQt7XP74M
+         tU37ZsMQ2zaASlNF3R5AyeceHPcx/mMuq7rlMrfVE3i/w+FX3+OKpAtiOj+kDf2NPVBL
+         AM9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772570457; x=1773175257;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cfYByuGDPkY+4H1ykHJB+mPNRgJj1CKJd8ECfgUELrc=;
+        b=LsjXAyI3DkS+Wf9yqWdbI1od6OVN6jK2xQbjcF0yIS0LlnhqcjcT5H+RxkTvT/PeoY
+         HkKfaVs7X+4ws+2QG9hv+hQtXkbZojHh/ZFMWxgkoljbtSOGvGCaxdogXFHK5jYPzo3A
+         IyhZdwO8xPoHopq/yOaC40Ld2AGoHNUIpSZLqLUF9cfKeFE9bNT8eUfvgRULf9rz1Dve
+         yw2gC9GP2zBGEiOGzamgMrn+BhtRCA0tG1r6R3ADhXagklHvU02z/LBIE0O1406m77If
+         ywAb3gmugDp/zkM1oDeKlnMy/+4L0ESG9IBd1QCDh/91RCYhVCV94k4ldxoLaRNdJqfb
+         tgCw==
+X-Gm-Message-State: AOJu0YwgAq4P10cr5VdpZ42gXl2ZbbWddt+jkpYycG4vh9Ge3oBnw24y
+	QfJ3GKkK69LuqvCan+lG2IPmLu3SwqNAluK4IpG6DOIWjTu9h5ozkMPMS/KGcLcD410=
+X-Gm-Gg: ATEYQzx8b0cvUriLjWHXu5FZ+4gfP5n0+Q8sUBDyJPA3YZ+ZB/imrSpLxjpWcs3xKs0
+	oXX5pczrRgkQtHHlc9uKrztc2NDASZD900ZPsQpgCFeNvKrxHD7yBHx29aWJuki9X9yCXorjl+O
+	Dp482509vLcNONANLpa6+q8OHz9FgCg0xTvWsV5nYuQn3Q6r63i8DCWiVPQNllh5UiH/ZdwMe+7
+	gyGGww4U0pesGMoEqjqG4GbrMxXUH8g3FYG96K37jvF56frK2Bqb3V7ibhkXz7d6DWqWpMq+Pix
+	5j1h/MIiXrOxu6iL7XgWnXEa6IoXC9SawhPdJbPYJmj5oq7ZZcSAV3TvxMLiyV0pqTN6HTwgCRE
+	pd+NOaMb/V2pR7IRDATWmVHZEYjVIwGKtrtgx5m5dMCjKnqzCucdwZYAPHLZt+TJ4wPRyVx2b+K
+	/F54iQsSQt80HpzoCbc9kVXiHhBTYXUKmlyzGqckoqe09qI5JCVRLuSMpVsII+flVU3vkivA==
+X-Received: by 2002:a05:6a21:9cca:b0:38e:90ca:5a1d with SMTP id adf61e73a8af0-395c39f7babmr16173275637.11.1772570457358;
+        Tue, 03 Mar 2026 12:40:57 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:562e:3a88:890e:9f53:fad:871d])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa82c531sm15348524a12.24.2026.03.03.12.40.54
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 03 Mar 2026 12:40:56 -0800 (PST)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	r.siddharth.shrimali@gmail.com
+Subject: [PATCH v3 0/2] t3700: modernize and fix exit code suppression
+Date: Wed,  4 Mar 2026 02:10:27 +0530
+Message-ID: <20260303204029.52952-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Am6sP3XKy-Q3
-Date: Tue, 03 Mar 2026 21:36:53 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>, "Li Chen" <me@linux.beauty>,
- git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>
-Message-Id: <22e1de8e-935d-4efa-9fa8-ef8d9b4ffc6a@app.fastmail.com>
-In-Reply-To: <824809c3-72ac-43fb-8a93-4f48e0727e6a@gmail.com>
-References: <20260224070552.148591-1-me@linux.beauty>
- <20260224070552.148591-6-me@linux.beauty>
- <824809c3-72ac-43fb-8a93-4f48e0727e6a@gmail.com>
-Subject: Re: [PATCH v7 5/5] rebase: support --trailer
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 3, 2026, at 16:05, Phillip Wood wrote:
->>[snip]
->> diff --git a/sequencer.c b/sequencer.c
->> index a3eb39bb25..a60c2a0cde 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> [...]
->> @@ -2025,6 +2027,9 @@ static int append_squash_message(struct strbuf *buf, const char *body,
->>   		if (opts->signoff)
->>   			append_signoff(buf, 0, 0);
->>
->> +		if (opts->trailer_args.nr)
->> +			amend_strbuf_with_trailers(buf, &opts->trailer_args);
->
-> I wonder if it would be better to add the trailers before the signoff so
-> that "git rebase --signoff --trailer='Reviewed-by: ...'" adds the
-> "Reviewed-by:" trailer before the "Signed-off-by:" trailer.
+This is the third version to modernize t3700 and ensure git's 
+exit codes are not suppressed in pipelines.
 
-Why is that? Is that because that is the practice in this project (and
-maybe others)?
+Changes in v3:
+- Split the series into two distinct patches as suggested by Junio.
+- Patch 1/2: Focuses strictly on breaking pipelines to expose git's
+  exit status and simplifying 'wc -l' logic.
+- Patch 2/2: Converts all remaining 'grep' and '! grep' calls to the
+  modern 'test_grep' and 'test_grep !' helpers.
+- Fixed trailer formatting in commit messages.
 
-I would expect it to act like however `--trailer` already acts on
-git-commit(1) and git-tag(1). I would have to test that.
+Siddharth Shrimali (2):
+  t3700: avoid suppressing git's exit code
+  t3700: use test_grep helper for better diagnostics
 
-In any case these `--signoff` options are considered a historical
-mistake now (since they special-case one key).
+ t/t3700-add.sh | 49 +++++++++++++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 18 deletions(-)
 
-The logic for before/after and so on are supposed to be handled by the
-trailer config, it seems. But last I looked that was only for same-key
-trailers and duplicates. Not for logic like keeping your own signoff
-last.
+-- 
+2.51.2
 
->[snip]
