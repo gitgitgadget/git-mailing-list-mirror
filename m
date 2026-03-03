@@ -1,81 +1,81 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375DA47DD4D
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 15:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF1A48123A
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 15:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772550040; cv=none; b=cNcCY1TCSeNIsqLeYULz9T/wo6QjXHeokZBTznTqOexRF0kFjsG1Hitd0qOs0hhqRhJX0+qNsH4hUCdlZUsyfWUlfokj4b1m9mwfAaKz4n7cxSKCyF/r1nOsbPyYabLvP1fsGsFkGGCKi09jOScyC61wvw6yOSdP1j2RPSz44oY=
+	t=1772550043; cv=none; b=Jun50Td04iZ5aM9HfYUouvTtSaAp4jEOyOOMWOlGQ260Rld5Vw2bqGKs8XRr0U4wXBVCi3vHpTA39AlbDvnpJShZpak3Ey9ViRhsbXXDX57qYtM7k3LBDL9v/LnFid2dVp3Jc/j4SF5FGrLs440mxArr0RMaw3T77YIs+8QXCZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772550040; c=relaxed/simple;
-	bh=9BOXPdn4QY3jyR/2GhSrQaYI31pASAg2AyoF/RHaO28=;
+	s=arc-20240116; t=1772550043; c=relaxed/simple;
+	bh=BLutqVKwaDlhvYYKvGUt5V8wXhArvrQkzAdTaz08mGg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JnDTwGc76SOXP8PQKA25Evie5gDShzkvW8FG9EgkWWxVPWZbs4HZO6y6eu4bRHaZFxJnrq09/AXfEJT63rl7Lf7f83UnLg35qEHY3wlGxnJNjtzO3D8jMggrZJA+cPM2nhj1BwNgGjDTzXEgK2fD0BTdCY0ueZVEVwe/YLeIXXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=edNvAxLR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ohf311JT; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=doN0dgHdv97wrW0ACHF98XhhhUaFlc/pmE8m6sng67qosOHKKPZRvSUWmoY+rqPw53ZgxY4CG10eAzQTcWOcC+fI5KX9OLS+wGtrVHzjtttaxnX/ahpGV9RmE9I7Tx7A/CpBKyY/ZboZwG4oKqGeZPIOuWJj9ZsX/GrJfkrWknI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FrMk4zxB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U3syV7X6; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="edNvAxLR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ohf311JT"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 80033EC053B;
-	Tue,  3 Mar 2026 10:00:38 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FrMk4zxB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U3syV7X6"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id AD58EEC05C3;
+	Tue,  3 Mar 2026 10:00:41 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Tue, 03 Mar 2026 10:00:38 -0500
+  by phl-compute-01.internal (MEProxy); Tue, 03 Mar 2026 10:00:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772550038;
-	 x=1772636438; bh=IcA5PAytsUFn0ATCULuhnQ7fVdhTw4GhW3Xvnqu4oH0=; b=
-	edNvAxLRuEAo/+xUj+yBuB9LglFHnWX/ftHrq2lXdcgYOCbii76Lrc212KUzGE8l
-	gE30+TKR9MbwxwDdgOnmFDQMlUUMVD3RJYlhHFD4CVryLqQCKTMQUYQWbHAqpMFp
-	lviW/rYXpbMDKdodLyDavlsik/0n5JgBmgz02MXqOt9grsrkPsXy6tWXb4HZKAb5
-	MUENAFDWY9Hkg8/LJOHwNhG9k/LisEOHkp3irusqx44DvfL3sYbaPAv2TRCnwbcT
-	QfioeVqaSpH6vtoxVMnpm74W/Pl49/aMUtTnGh0eCJT+eC4NvdisX82LSk0SypR/
-	4zKeZjmAdOXRins0pJL75Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772550041;
+	 x=1772636441; bh=+Hk3fbUsTH8EbY1W0m925cekOXAIFlbRS3fvg5tUSW4=; b=
+	FrMk4zxBSPiTb+sYBx9alme+ElLSNpovaJ2dJNgX6HhkQcS1rFVsMh8CUQKNL/hN
+	03mFPjZTmDa2mVOjx03LwqpiLCyL4xNGyBUTxAl+SVE9/RKcHav6c7zIsXome9Jb
+	gM4fcQe37Co/WNFnTMvhMkHP7J2RXyDP6hogVaawlAS2sdaOCn4+aA79Gn1VMbX9
+	9rnCLaKSBYm3rLCqkD+9MplYKqYuDZBOQbYZuJ2DWCFtaUEbA+wzYPzfDsbYIhta
+	BTIiTe48tzlpAvpCkytRCUSoTA12bADaxYiPWibOH7XbZyGiRbMqpYvwc2hbVkWg
+	S1R8+ha+Io/hQyLJ5Awseg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772550038; x=
-	1772636438; bh=IcA5PAytsUFn0ATCULuhnQ7fVdhTw4GhW3Xvnqu4oH0=; b=O
-	hf311JTicltlSeYD0oMOwFKs6ve1BxPJ6+9OcdYtIGFE4A+I4FybvE8+azBKNmYj
-	0UJ1X1YvRD7ZJsM3NsnNDvLDucUb8SzzYULdjCSY28QJPvWQAAgY6P0f/2QQTOFn
-	WPM36J6DqdLFutLku3qkCkjwLLiU9Vi3rlPgS97Yd2cRV/qboZkWnkSDRIAPwCJ0
-	WnusOEZENVos8kzof1uDrY8jTaoZRlffrv4xY92u8Qb1rJ1G6kknYiPpnzc8MdNt
-	4qv5Pd9tqupRgNgpybPu9CWAkhVri2C9nPjhBBzsMBtdKlAjyEIMpbjNmM2Bj431
-	AcrO3pAPLs9V0k3M2yuYw==
-X-ME-Sender: <xms:lvemaTEEEP2J0MJY0457AxTJBwsF7qBVMkVaIXq6pkokGWZXo0pVqQ>
-    <xme:lvemaXWP8OFKAaC3umBe_-rjngxexwnYTT6a6_dW8N2orFTNPsEGHmDJTjuLHCqNb
-    KNt24gsWnQH-8V5pgGAImsqaj7kY0uDb9TSMpUULCuWgMH1UxR-jw>
-X-ME-Received: <xmr:lvemaaJAFni2YMw56u0lkpgvmKacv2JLgpq3gFQ81CIKlvcD_raIkYv2T33W8xjpfj_qGXqzYMzADluKe9xhlkLWDbqPQDsrDYiSDk8oi13c>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772550041; x=
+	1772636441; bh=+Hk3fbUsTH8EbY1W0m925cekOXAIFlbRS3fvg5tUSW4=; b=U
+	3syV7X6hiOeE3DOw1tviTqGQRjgmtteYiZYxlc/UCByJ/vLdWPGJ/5op+DkkU2zP
+	7rDXC+tFinOWk5XG+Pp5CHdoP618jDUHJ8Y7l9CnoIymjhK0URiSk6taMPH1Iq5e
+	klR2K70Au1G6RW85YBwkefFX3dg6xBZ1/E5HDJB/Gu6YUC9x8ioPNPqWeCHvxKqB
+	bFUk7iEsKhBQ/USGzQyFj2+E2w1DnNNRywAis0ipnxzVs5rXRZzqiv7HiQJuEDsD
+	qx2V7/NyLclgVehTLbXY2zuQ9B6aYv/u3I1cHK+e4jdC7YLSWMIaOedXdctd5D1d
+	kLxt/fljpmh41RT4YRxwg==
+X-ME-Sender: <xms:mfemae7j4AABTr-UgorIDkhvgJ5Y_Rxwh2VNz7E5O2ERxdbC0NzhPQ>
+    <xme:mfemae6gH1Mu7lP61jPzfcUFS26B2UEk0Y2qw8ZGWmzol7khsh2HBbcBlk7Tomcz5
+    ibMf0NFrlvl0hEwrIsUb9j6UP-rx3v0mBUx-wPv7dwuUO_wKNrQnQ>
+X-ME-Received: <xmr:mfemaSdnX_xNjFQyI7BnP1j0ofTsq3pAT6dBF0UhT8A78OHUE-AK2sLxeQiL-MK2ipgbmjSlCCaBwSd3B4F3a_rv4vzEMh5ybAkV9GNVKGx->
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedtkeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeefhfeugeelheefjeektdffhedvhfdvteefgfdtudffudevveetgeeuuedtkefhgeen
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
-    htthhopehmshhmihhlvgihsehgihhtlhgrsgdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:lvemaf8eAwqRPM7128J6UpFMiGivYo2rVu41P2imE5IMoLbZro1AjQ>
-    <xmx:lvemaVKCgnPIcuqXv9qfVAJLqgDRxm4fsWMLAddKavr8bvcfPZo89w>
-    <xmx:lvemacl21f2juak0ipYwJh0sktlZfndHKLgjEcNnkb5NVROy6zcY3w>
-    <xmx:lvemaRM90zPE3TwabD2X2nnW5ghiFg8aQIQK2NUCbrXQuuJV4USO4g>
-    <xmx:lvemaSijc0lxfGzk3sg-p4QNAlpOYF2rzmW_g_Ssg-pwZlnkv-It5gp5>
+    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhhsmhhilhgvhiesghhith
+    hlrggsrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhp
+    rghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:mfemaaADYO6dZvYPWKy5HCA5mDGfffmpywuWaIStIWcWWHrUx5XZbw>
+    <xmx:mfemad-A5IbUtD2fWN_sh0og-0Lnf9ILAljvVS-r_AABJDgLTBdDew>
+    <xmx:mfemadKGPTnwMMw_cU-IXTwQqw-dYMKw0UD9yL-qxFaNyAiGmDqVJw>
+    <xmx:mfemaegm1pOEKFsqDWI0hkLFLrJK9_IGhl7VLmdcSxV6ZgMeZUZ2cw>
+    <xmx:mfemafVzI5tBrHa9FtaPu_KriDAbxvLhIYeChm7KB-NUYHeqHxiOPaGR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 10:00:37 -0500 (EST)
+ 3 Mar 2026 10:00:40 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 894e9e97 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Mar 2026 15:00:37 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 28b68554 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Mar 2026 15:00:39 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 03 Mar 2026 16:00:18 +0100
-Subject: [PATCH v2 03/10] upload-pack: reduce lock contention when writing
- packfile data
+Date: Tue, 03 Mar 2026 16:00:19 +0100
+Subject: [PATCH v2 04/10] git-compat-util: introduce
+ `cast_size_t_to_ssize_t()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,8 +83,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260303-pks-upload-pack-write-contention-v2-3-7321830f08fe@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260303-pks-upload-pack-write-contention-v2-4-7321830f08fe@pks.im>
 References: <20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im>
 In-Reply-To: <20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im>
 To: git@vger.kernel.org
@@ -93,83 +93,33 @@ Cc: Matt Smiley <msmiley@gitlab.com>,
  Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.3
 
-In our production systems we have recently observed write contention in
-git-upload-pack(1). The system in question was consistently streaming
-packfiles at a rate of dozens of gigabits per second, but curiously the
-system was neither bottlenecked on CPU, memory or IOPS.
+Introduce a new helper function `cast_size_t_to_ssize_t()`. This
+function will be used in the next commit.
 
-We eventually discovered that Git was spending 80% of its time in
-`pipe_write()`, out of which almost all of the time was spent in the
-`ep_poll_callback` function in the kernel. Quoting the reporter:
-
-  This infrastructure is part of an event notification queue designed to
-  allow for multiple producers to emit events, but that concurrency
-  safety is guarded by 3 layers of locking. The layer we're hitting
-  contention in uses a simple reader/writer lock mode (a.k.a. shared
-  versus exclusive mode), where producers need shared-mode (read mode),
-  and various other actions use exclusive (write) mode.
-
-The system in question generates workloads where we have hundreds of
-git-upload-pack(1) processes active at the same point in time. These
-processes end up contending around those locks, and the consequence is
-that the Git processes stall.
-
-Now git-upload-pack(1) already has the infrastructure in place to buffer
-some of the data it reads from git-pack-objects(1) before actually
-sending it out. We only use this infrastructure in very limited ways
-though, so we generally end up matching one read(3p) call with one
-write(3p) call. Even worse, when the sideband is enabled we end up
-matching one read with _two_ writes: one for the pkt-line length, and
-one for the packfile data.
-
-Extend our use of the buffering infrastructure so that we soak up bytes
-until the buffer is filled up at least 2/3rds of its capacity. The
-change is relatively simple to implement as we already know to flush the
-buffer in `create_pack_file()` after git-pack-objects(1) has finished.
-
-This significantly reduces the number of write(3p) syscalls we need to
-do. Before this change, cloning the Linux repository resulted in around
-400,000 write(3p) syscalls. With the buffering in place we only do
-around 130,000 syscalls.
-
-Now we could of course go even further and make sure that we always fill
-up the whole buffer. But this might cause an increase in read(3p)
-syscalls, and some tests show that this only reduces the number of
-write(3p) syscalls from 130,000 to 100,000. So overall this doesn't seem
-worth it.
-
-Note that the issue could also be fixed by adapting the write buffer
-that we use in the downstream git-pack-objects(1) command, and such a
-change would have roughly the same result. But the command that
-generates the packfile data may not always be git-pack-objects(1) as it
-can be changed via "uploadpack.packObjectsHook", so such a fix would
-only help in _some_ cases. Regardless of that, we'll also adapt the
-write buffer size of git-pack-objects(1) in a subsequent commit.
-
-Helped-by: Matt Smiley <msmiley@gitlab.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- upload-pack.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ git-compat-util.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 04521e57c9..1b1c81ea63 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -276,6 +276,13 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
- 		}
- 	}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index bebcf9f698..c6af04cd7a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -665,6 +665,14 @@ static inline int cast_size_t_to_int(size_t a)
+ 	return (int)a;
+ }
  
-+	/*
-+	 * Make sure that we buffer some data before sending it to the client.
-+	 * This significantly reduces the number of write(3p) syscalls.
-+	 */
-+	if (readsz && os->used < (sizeof(os->buffer) * 2 / 3))
-+		return readsz;
++static inline ssize_t cast_size_t_to_ssize_t(size_t a)
++{
++	if (a > maximum_signed_value_of_type(ssize_t))
++		die("number too large to represent as ssize_t on this platform: %"PRIuMAX,
++		    (uintmax_t)a);
++	return (ssize_t)a;
++}
 +
- 	if (os->used > 1) {
- 		send_client_data(1, os->buffer, os->used - 1, use_sideband);
- 		os->buffer[0] = os->buffer[os->used - 1];
+ static inline uint64_t u64_mult(uint64_t a, uint64_t b)
+ {
+ 	if (unsigned_mult_overflows(a, b))
 
 -- 
 2.53.0.697.g625c4fb2da.dirty
