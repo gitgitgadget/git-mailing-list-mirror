@@ -1,132 +1,110 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0639479B
-	for <git@vger.kernel.org>; Tue,  3 Mar 2026 18:41:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772563284; cv=pass; b=M+wVHbUZ64GUXFDZp1KCDtRgPeT27VoLZ7zF/i1xZeQIrUWtDY5ZWaVWL2DonVge1Ctr8I5uZF3hTdsGLDH0SxSX43gLLdNaOrnJ8I9z6jtb4ACL8MoUBO51z6WhEOeQJs6UuDL3OkXvBXt+y7Q2Eqn/IBdll9So2C/ST0gvV3c=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772563284; c=relaxed/simple;
-	bh=sN0QYknk3aCV81Bhla3xN4p266StktBxg8x+iiwLi+A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PMXsxXoxKil3pyfGqnbicN0V4sqgT0r9Cgc9V3ksCWj43X/oRuUBGI6RMqsfcINqFQFwM+ga5zmWZDlDIx38G04+QxgDkB8vkGYfBIBBjTQTVLOrAgbPcvryNG9W6Bu8PVH6nD4ISlrDh7n/jZi0aWEpvKz8QPvSDL2Zfqx6tPY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ahn7nNxL; arc=pass smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCAD3A5E65
+	for <git@vger.kernel.org>; Tue,  3 Mar 2026 18:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772563389; cv=none; b=Z5bi+xAIy+UZPPEAi+EEaQeHe/19iQsN5WOHXnh3MSC1ILZA6FF8HkQD8nmrHekhw7CAEBBtLJVYWovOBlymwmE8VrtofAiOCsWbjD/jXv1Mum3PRMt31Hydarzw9XE5psoq4yOQpjOAtfA3NjEO5nMfqbs5q+lJ/lupKPSqHlc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772563389; c=relaxed/simple;
+	bh=E8EMGbk8zik3PfGOe7wJmz6jynEKZRuTojY4bZJ28qs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iE6Gqk1GXuGUcvEiqUTBHwziOpJ/poWseYfPU0vOHjslwhmdUcj8aCxQcwzpBCcErhnxwFKQJzOdqKuEwuplH3tD4IHlVnZz9saNG0BJLjHt/DdsDTzZO37kgJ+d1BIOurw7yMsVDPCN045Ym+oOFNT31zWfr9BaFQOcAz6aAwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q+iJxaRo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fgnGNE5+; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ahn7nNxL"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-82748095963so2999510b3a.2
-        for <git@vger.kernel.org>; Tue, 03 Mar 2026 10:41:22 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772563282; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Ea8IYfwDpxOBWZE+gVmc2/8B+laz3+KHvmsW+eX8IVlM6V6D+EWW+rNAmP9FLVPirC
-         qB633zSmNtx+VU4KFI/btNTDNla/DEytHzNPUtO9UOc0KwcS3IYNUGQoKVKOacM/t2fd
-         vXyxKRR5VKWpk3Ggs5u8UsxeA/2jcYG3I/+HmD32M2uIHRAQ/OHgRWFbF0yn8ONI0E1y
-         3FmqfV14QQxASKh7WfwEghk9aOeWo8Wq0efrPpKrmSWLoI3iB3uDBWNjElfAhP1zfrbW
-         AG7k/85ElgvFhzirJeVFCK61LNHOL4irBY59hWwJeW/NS/dM2/5BCaX49LZc2XDvjqzp
-         FLfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=kLvLsZ4OPtrftUKQHAMOrR7p+SIWK0MeqCLcQJAD8e0=;
-        fh=7C13Yara6diLW3o1hgquesR7ciM/ftgxAeePVQ59NFA=;
-        b=c3GkxaKwQBXJ/QcFFj3IvN7tZVl1tlTThMk9BaO5CUuclw2mU2v/s1wJcUhzRWeaQv
-         lXAkUeiiuM97kLfIFSJCjmtQTMbi+EDU/p+VXQwN+5GkBjgR/RJfnyWAdTWrA6VeeWPv
-         yjDS6qeGCQSrkVeZS68Kmm0ETbNaUCbwHo5n8hoUy9oHisZTiSVpYqgkc61lCl2U2w5m
-         6nHYGL6qbvJSStMwii4aUVOSQGEoLUfFFowHLp0S95FzsH1Rb8BsoI/Od3pveXAwvyGW
-         Z0b02VPh6LSJlr9b11Bn36kyvkx/iSaQK6Y61kOXWwIyWWRJPPSyySYr7pIzW4cMBBzU
-         wAjQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772563282; x=1773168082; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kLvLsZ4OPtrftUKQHAMOrR7p+SIWK0MeqCLcQJAD8e0=;
-        b=ahn7nNxLwSqvd+FG/ksbiMgkR00Ks/mJi3yInTFr7IqZkKlxwCUSX6tlrcNXo8YBr+
-         ahkpzdYW6tpY0gyOGCr2qpmjYajMFi1vou124v0F+7v+S8etqXLaNRTzhJAuidvq+upa
-         gObmkqN3K8z42WAiul8NUOe+bNn0F3Znyo4qs+Bl4uaMR7qjpG3bbJb1gvCng6jj0Dz+
-         bBgLVYcRxVzeb4L3hVX3voz1v1clB8AqU3HP4rKWJcxFjdhAbfv2beiTMKwz9Sv51aK/
-         UT6HgGncP9jPchz/ftKubSNuDonN41HWXLpqIZxZMEAn+eCS7AZe0jlQ4skhC+y6W6oz
-         mYnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772563282; x=1773168082;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=kLvLsZ4OPtrftUKQHAMOrR7p+SIWK0MeqCLcQJAD8e0=;
-        b=r613+bnAGhjX91qGQovqv+kWwtxUO68hOMioz2RXPQRnF02Z//N5TGRb7tKEVvIShp
-         4R/AHftnpBg1AvHrE+9hZfBeDrnan2Wfb/mWizqFDbycFNp/y3ABdhysf+M1wHV1bR5J
-         GYvNVjOAvIgCfdTh++uz8ihytEJdHvnikLpG9ooPhpl3cWXyrvelXC2lUeXYAHg2JIrV
-         aVliILY3Z6m13CmYLMzgdZ7GFlmQQ2sRgH9pKuAzGjUkMdz2okVt1WwtQ6HDkvQKY96C
-         4BdNL+IuQUkKU8ayQo0A/O2M4q6THiNoZmr03ptcwKcoVhu9ZCAkd4Ib2lXNBLq+B1YL
-         e53A==
-X-Gm-Message-State: AOJu0YxXQ2Ntj95qcVPFD1vQoN3t3AzUbwQfuhstk2YIuyZK/Winn/gF
-	WDj1gaOa05o12AzQ7hIzYeokwIW2vxTcdLClU3/5RMlgM5uA3+WI/m1uIY9/gXouW4KKItmc13W
-	+A0pYFC2YVkIVnHdVcRKd0s/wb6DBgRk=
-X-Gm-Gg: ATEYQzw7jzHyr2/VcuzJ6wcW1Ct/FAF1zngHqUwtY29ho1Ilg7a1alq52rcKKGRS96y
-	+uyxcH867H928e4+28EYxzY2i2usd5J6FpDEAMqb166/qZ9WDNYX6epCsoRpW26UAGAVCF3dUpx
-	fbMnKus/ucOM7OrG+TIZHpHD7A8Hiq1DnKknwx5BBiWPhPpKkj1B8r/oozntCHU5XEGijhEohwW
-	ZFx7rM1o5hGmhc8rgcqqnzmbkD4EU5MHVCYWyYQM8CSK8M9ZjWGTt3x69XHa2AkPfOW2BV2SIPU
-	SRU/UakwoE/evL6YgZyjTUCN2JWPkRvmRmNCp2nemSEvaQri0GEVgP4Ne44wAlxTaEToJfh0pUi
-	Q/JQVU7FtKCdA87/pN5hGL/aXXn4jBhKn4neFrg==
-X-Received: by 2002:a17:90b:3f88:b0:359:855f:ff96 with SMTP id
- 98e67ed59e1d1-35985600096mr11388687a91.17.1772563282391; Tue, 03 Mar 2026
- 10:41:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q+iJxaRo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fgnGNE5+"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id AE51DEC05B9;
+	Tue,  3 Mar 2026 13:43:05 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 03 Mar 2026 13:43:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772563385; x=1772649785; bh=ZUiaFxINbD
+	nTk05GY0RQXM6Gyy1HqnldydRMpiZNbvY=; b=Q+iJxaRoe/j2ZEJxi03qNzDl8z
+	FO9SME/NR4EA4dx2vT5+RbFLpV3wp+fqd1xWgAE4osCrgXcYDSVHqDvlg//jThxi
+	s9rWnywFmHsB2ia/I/nXNeGhrXOmTtwKtyKQLfbhbgHsk/gphZW1XYKX+FF7shy8
+	SLfOZKj7ON3QjPBzc3eDrbF81Xhb/bo436GpGDvimtBt9+VVqDvU0Xr3xIruoNFc
+	TQS1UqkexzlaNvnTCNZv5Caazslh4TTG9qEPZ3DssyoPplLAy+tbG9izWmyZPvaR
+	r7QjUshMRBrczpQokESRv1WXW8AaOC6cBYLKOeAeHx9bmH02cX2gjCaDVefg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772563385; x=1772649785; bh=ZUiaFxINbDnTk05GY0RQXM6Gyy1HqnldydR
+	MpiZNbvY=; b=fgnGNE5+imzMsZEwVMhKguzI01u3s6Eenq890zRVi72BwpRB0Pl
+	YwV698YeAZn/dpyb9JRUHE/QMvBxoInxyBhpxg27DzP4X+F8VWPDK/QnqK7VUjYp
+	VoKXThVfa7kLGqfCgpZQZyQ8KhTM5lp7HeDB4QI4ipFTqPm1LtVuwRbVJLTVakYE
+	TeMeuEdgLYhD3tOYD73ySa4JL6CQ9DMEZAJlNssvlrS4iki4xtTb3B/TlofhzZ2v
+	gRSmTy/PC7s0e0s0epWK/5J7C3qADxsrLNtCJbtY41gTAcey7znNSevEdchK1V9e
+	1+w0IItKA09CgvfI+Uh/IXpOL9VoZqKjZrQ==
+X-ME-Sender: <xms:uSunaelpK6lzzFqnhbRv8Zv3Ndl1TmUUKP-sDBU2WL5tdNPAu0Z-zA>
+    <xme:uSunadRlQWsKDekYwxixCETiGTr_10kMpj5zKOg1d9IS-qK71rdYCklMZOPIVXsQg
+    YBLtx3ZwCh-nN2ESerRsDn-XCi-jXZDqJzrJhnk5ShoSfFtsWVNHQ>
+X-ME-Received: <xmr:uSunaaDbQlid3MVhdHErmOfDiZ_d6yl0tTV4nVt6jjEMfWSWwL0-UN9FUsQF0XQStFyxfMLtqtlZqv1AHXqYq4zmZDrpzR1CIg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedufeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:uSunacTGE8ase4DE81HD6aKnqpCWGVetGcObnh0peQVb-hj_FlBUwg>
+    <xmx:uSunaQo1Ebq35g9mrFGNEBj4YXF8hQBTv0DWXZyhV4wGI3_Yc5r4_w>
+    <xmx:uSunaWwSxErelMyGTeDIjsDpC1r1tFIZxEu4KBF9x8TWJ2wbN1bfAQ>
+    <xmx:uSunadLpaw93dl8oyWJJ8-yqeBkPz-ODRYA86Tk-SBmZ7RG5aozeWg>
+    <xmx:uSunaRQhpSSxeLPAQAHeq82u7s6k6Pvq1PjMBKBjoypO4wVoVvtj2SC8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Mar 2026 13:43:05 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2026, #01)
+In-Reply-To: <5526480d-ae9e-45e4-b8d2-c853e01af296@gmail.com> (Derrick
+	Stolee's message of "Tue, 3 Mar 2026 13:10:54 -0500")
+References: <xmqqbjh5fvsn.fsf@gitster.g>
+	<5526480d-ae9e-45e4-b8d2-c853e01af296@gmail.com>
+Date: Tue, 03 Mar 2026 10:43:03 -0800
+Message-ID: <xmqqcy1kdaa0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260302-pks-history-split-v1-0-444fc987a324@pks.im>
-In-Reply-To: <20260302-pks-history-split-v1-0-444fc987a324@pks.im>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 3 Mar 2026 13:41:09 -0500
-X-Gm-Features: AaiRm532WW3v-G1DGm__2c9Trn2L2v0d8ExPqBLDJKIfkHSM26wsTd07Y9Q4W9o
-Message-ID: <CALnO6CDMF1G2AFMDXu=xhCv5XcgKm_-JXY2RvLc4TsD9Kh-K6Q@mail.gmail.com>
-Subject: Re: [PATCH 0/8] history: introduce "split" subcommand
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Mar 2, 2026 at 7:15=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> Hi,
->
-> this patch series introduces `git history split` as an easy way to split
-> up one commit into multiple commits.
+Derrick Stolee <stolee@gmail.com> writes:
 
-Exciting news, thanks!
+> On 3/2/2026 10:15 PM, Junio C Hamano wrote:
+>
+>> * ds/for-each-repo-w-worktree (2026-03-02) 4 commits
+>>  - for-each-repo: simplify passing of parameters
+>>  - for-each-repo: work correctly in a worktree
+>>  - run-command: extract clear_local_repo_env helper
+>>  - for-each-repo: test outside of repo context
+>> 
+>>  "git for-each-repo" started from a secondary worktree did not work
+>>  as expected, which has been corrected.
+>> 
+>>  Will merge to 'next'?
+>>  source: <pull.2056.v3.git.1772465805.gitgitgadget@gmail.com>
+>
+> I just posted v4 with some final polish [1].
 
-> This subcommand has already been
-> introduced in earlier versions of my git-history(1) patch series, but I
-> eventually decided to evict them from this series so that we can rather
-> focus more on basic decisions.
->
-> In any case, the current version of this patch series matches (to the
-> best of my knowledge) the latest agreements on the mailing list around
-> its behaviour. Most importantly:
->
->   - It will ask for commit messages for both commits, not only the first
->     commit, which has been a bit of a discussion point.
->
->   - It is not possible to edit hunks. This results in a mode where
->     conflicts are not possible as the tree of the second commit will
->     always match the tree of the original commit. Conflict handling for
->     subsequent subcommands will be a bigger topic, as it probably
->     depends on support for first-class conflicts.
->
->   - We also update dependent branches, same as with the latest iteration
->     of `git history reword`.
-
-Matches my memory. I think the dependent branches bit should probably
-depend on the same --update-refs option, so I'll expect to see that
-(not sure why we'd make any other choice ;).
-
---=20
-D. Ben Knoble
+Yup, I saw it and it made sense (including the chocie of where 'int
+i' is removed).  Queued.
+'
+Thanks.
