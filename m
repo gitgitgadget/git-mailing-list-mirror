@@ -1,79 +1,80 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9446F38756E
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 08:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135FE34F48F
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 08:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772612630; cv=none; b=haXhFqHdFmZjo5qCZc6wmu4V8RgMSo4lGoBSuw/v//SCDaoYtKzalOFuoEEUd0lwRgPQ+dFXX0rHnh2cgNMcRuUNjA9oW5NjxWWfi5wgEdAMOi2FEOcSuNE8etHCbdnxiOL3MrHlz3WCzxYbMvppIDGU1U7vQ35zzyv7qaU45k4=
+	t=1772612632; cv=none; b=rVbATRw5ij4BEPown/MRepqPJpnXIbo6DHMV8NWiyjZsIkKA+HD8HQ/TSvVjho1EmUzttDumCDF/6Fqqt7cCfFBwe8eyS8NY9oA2aGuUhuV+Xssb+oIxpfzg/FsutXSueF2nGoYjmSSnAZH/nijJT8HG2u0fTUeh6Xw7zEFeWV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772612630; c=relaxed/simple;
-	bh=LezNXxeLyhR2R/Pjm7qIZ0T8715ThbkiYVCb7GD83RM=;
+	s=arc-20240116; t=1772612632; c=relaxed/simple;
+	bh=N2LV1RfG03f+2FqKLDLQn2mvgOuWkTUixzZpwqDwD8s=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NrkijeCOmeYkPFpJcmucmHeu/eYEfbjHbA8sTIIf3+YS7PKNi5IwvT/x8bC8XknZraNoIKvnF66Iq6ynzQVqSor1oTeJovjBu3w4NcHvorlU+TXT9xksfZd+p6woM7z2HcZtAqaUKtkk+TVq6QgrhzcpJ9FDWQ0FrPfU19X0RrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kF/5N9/Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s9bjGquQ; arc=none smtp.client-ip=103.168.172.152
+	 In-Reply-To:To:Cc; b=cCkuDr/GKfEomhlO6XrxAmpPqC9xi/Po5FW6fTQqt6SSadDe4QF+vsWmqNQZ75z8A4roZdOXU8ODVo1CfwLx+46QwA6fFntEWP9xzeaDKFWP/YUJCI6JkzP0KBAmLI5e6juhU7v3CT9ZqqJhp1lj8zCrj/udUJofJayt+jn/jTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iv00LciO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rGPLFlCc; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kF/5N9/Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s9bjGquQ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8D9BD1400229
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 03:23:47 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iv00LciO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rGPLFlCc"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 414201400224
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 03:23:50 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 04 Mar 2026 03:23:47 -0500
+  by phl-compute-04.internal (MEProxy); Wed, 04 Mar 2026 03:23:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772612627;
-	 x=1772699027; bh=lYYoVVja0+4vJbq10Cuyw4TfSeNqFk1XVM+6e9iky8M=; b=
-	kF/5N9/Z+hX6EiberWu4VZ3RkS2RXAb3VevJB7L/Zq5vxIimA4LN9Ro7gZSY5E2V
-	dQm5A5igxQHh3kDXJcdWSia5m/6zzi1PRAAwttxTEIwkeNuJv1tYilELEnWBLxkb
-	gxQcmGyun+U1DEE8KH2J4OfbXaXiyhZlC/3rpfHd5DofL2x88ErJY618lcsPd6Zf
-	TkbfI2CHbR5Efdjes4HfR/XdK0dO4OS9H2OV4y4k0LRUEYaMZgRkIiqf2uwLUmKI
-	S5qnXKjhWA9uJvGuD27eAn+Pb3zoXC2k9WIHbDtCYbAmtXMA0x+oJuLbwkQPUzY6
-	XZFXZnj6L3OKlrglxujQFA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772612630;
+	 x=1772699030; bh=KBnvxM6I1VkxnmELLChCEzJ5CVXIs2rf5D7tZS+1noA=; b=
+	iv00LciOuk4sph65pHRISb3kO+f15GmGuCc3RC781ZuUhkbbbsOqvJ13PTMkEqjH
+	DxosGozVd7qKU8kF6b7D7nOozy7kfhQxgTWlan/rnE89elfwQOSMz+B/tz/WSJV5
+	vQTpodJTdY8HBM2bUgqJMUCJy54hzeeAxsaUu2Ds5bi6TiVs78sCStPVqirjjIki
+	uxy9p/B2D3GDLLvPXje4TsY/DM6hQQ0G4geZDnTEzSzLSbHt28skn9SsFL8vuzmA
+	M4KOUEOW1wJ/l9Pps0z+ZjTmEkelhXLlsNe9chICdjqqHX4TbGkvtfWQV5BEkXLp
+	7pg35Qd24WtNi3oKioU/yg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772612627; x=
-	1772699027; bh=lYYoVVja0+4vJbq10Cuyw4TfSeNqFk1XVM+6e9iky8M=; b=s
-	9bjGquQLU0gK2MoOFsMCgW9X/HWTv5TX6kdOg2n/MuKDy4XYfbNLYDScM0Dhxd75
-	ix8Wwfxm2BW6P1XZ/JyA5KkZKvD+fwrJ/LoVmM9ekBdg0bF8O2SspKEDdTG/hrI2
-	B0WL6rEy+/fdgk0qR2G7FyFpX2XQS/ENycZpuCXXUICtcvRGl9PDP0AA1RW6AHyk
-	kjd1XFDsKfczcDM/VYquKorvceI3v0OsTMV5ylDpzhHuwWw+Hop9LQv10aezKt2c
-	gtGQqIaiDOqicdPtPWgrM7AKqpekQU4MYZ4vJmcAiTDZAVYdux5vYAB8nbR5HzdY
-	cay0r3GaNcJvm1brD8wdA==
-X-ME-Sender: <xms:E-ynadqpIFWJX2Qjykt8uUP-E-aBj6hOt4LwPKSf7vgcf6uQf9_mNA>
-    <xme:E-ynaWlCGt8Fv4kWADlicL7AuBIz_NR9n_j3_-iS52ZcS8N88Yv9uVcuXEgcUkr0M
-    KtvXR6PCfYykNF7ZG65nnl9T5MKnFFZbvII8JYnZXrfrVDJJo2E7g>
-X-ME-Received: <xmr:E-ynaf0Hx1jtX5Wh5Xd-UAZ9auU-gAR0jqS7nAGET28yuVJVhj77IVdrmI9kSiZw-z4Wlev-mTN7--db7wupjvCpsBIYZDt6SQng3N7oBUz1Og>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772612630; x=
+	1772699030; bh=KBnvxM6I1VkxnmELLChCEzJ5CVXIs2rf5D7tZS+1noA=; b=r
+	GPLFlCca1OmqetYri2G/Lh2RV3adcVF8MNJbUCxOp7tAB5JFfnMZCZDQCFn8Uq5Z
+	L/UK0ZsNglq8Ow7kHuRVosmpkCOURTxk9zFCtxssMgDRVCho+ahQpjflbnlBMndU
+	ElY1YAFE0pr89Xu8ElExgOUqle409yocHdgUxr0fV3eHgRNc8izA8UYrZgfVWwU1
+	Mx66YuNl9O9Was+Jim7ngHYn1DM7R3rdEMX0bjTixsLbw56jDkDoaw5nxftfhmUW
+	RMMjkv1qFBPFtce+9170LnXWA/NzhwSQMzGXYY+4HDQDgmKniPJCQvXMfG/cLue8
+	N44yWIpXBd+CYTezwoSNQ==
+X-ME-Sender: <xms:FuynaZJ4fAGgqjgtcaptd8tHanpYQxE5kT4jg7v2t7KoIY-jHwKsZA>
+    <xme:FuynaXLtDLXzxnCpTGTSg6Yts62qVQRVdIb86OiIHTKmb9P5dMAly4Wm8MKPY0atC
+    S5WvUeTedbVg_W3m9d2AIS1szECKsp65wZvGP4iq8DWovdz6Q>
+X-ME-Received: <xmr:FuynabEGY91V_3CulJ0LJELFgA-p0VYry4GO-RAD8A9ZagDj23x3rfRTrLl-yMR1y-PKryVqhq3bqKpkyAXpbcYk_10xEK0FjID24WwgRN1Nqw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedvleelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:E-ynaeA1ncmIEXtkyt68p8ohFBmUNNydSvicZrwBBytPmf9CiDpqtA>
-    <xmx:E-ynacwl_KErPmLNaH9KuBtlFK3DPX1D0iwuzYSI0RGNsCM_dwWQxw>
-    <xmx:E-ynaclMDATwCCyINrGa6OtSvic-NBODpH05PshvOJb5Pl7_MP6k0Q>
-    <xmx:E-ynaRFRhOzuGkTh9EgKJHVHbr1RPa_a1BIMJbezTLjod22zZN9dcw>
-    <xmx:E-ynaVK9yjYpSUGBJ2Kl1_8puYlBL29NbcwzHiBGwYAb0aTokN3iBkU1>
+    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
+    dmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefr
+    rghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrg
+    htthgvrhhnpefgleejleekveetgffhudejhfetgfdtfefhiedvgeehfefhteetgeeitedv
+    hfegveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhmrghkrdhinhenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:FuynacnUfYV1Kb2bd1uE2Sf3t_KkzWde4wxzJ_gw1hoiXdSNjRrduQ>
+    <xmx:FuynaYIctxygd_bEQOzUMAsviGLSkecz67ss5wv6ghGyvHY-ARSJBA>
+    <xmx:Fuynadb4atA_n-RRHeZgLJ-vnNzqaH0TEWNAHTsSLGmvPCoZa4DpZg>
+    <xmx:FuynaabW96o5PDtONfEYdr14AZWaYwEM2fTbk78lFIrgpG7prbHvyA>
+    <xmx:Fuynafi9231lxs-hw1GsHhyDVnKhsQa1LCXaEcUUmzlofWOnPvh2x7Sy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 4 Mar 2026 03:23:46 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 4 Mar 2026 03:23:49 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 54342030 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id b5b33c23 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 4 Mar 2026 08:23:46 +0000 (UTC)
+	Wed, 4 Mar 2026 08:23:48 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 04 Mar 2026 09:23:00 +0100
-Subject: [PATCH RFC 1/2] INSTALL: recommend Meson instead of autoconf
+Date: Wed, 04 Mar 2026 09:23:01 +0100
+Subject: [PATCH RFC 2/2] Makefile: deprecate autoconf build infrastructure
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,45 +83,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260304-pks-autoconf-deprecation-v1-1-f5b611b13138@pks.im>
+Message-Id: <20260304-pks-autoconf-deprecation-v1-2-f5b611b13138@pks.im>
 References: <20260304-pks-autoconf-deprecation-v1-0-f5b611b13138@pks.im>
 In-Reply-To: <20260304-pks-autoconf-deprecation-v1-0-f5b611b13138@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-We're about to deprecate our autoconf build infrastructure, but we still
-mention it as part of our "INSTALL" file. Switch over to recommend Meson
-instead.
+Git currently ships with three-and-a-half build systems:
+
+  - Our plain Makefile.
+
+  - Meson, which has been introduced rather recently.
+
+  - CMake, which is part of "contrib/" and used for Git for Windows
+    development.
+
+  - autoconf, which only counts as half a build system as it is
+    integrated with our Makefile.
+
+Out of these, the autoconf infrastructure is probably by far the most
+unloved one. Its syntax is arcane, it has bugs, and it is generally not
+recommended to use it. This has led to a rather long discussion [1],
+where the project had general consensus that this infrastructure is not
+exactly loved and that it'd rather want to get rid of it in the long
+term.
+
+This discussion eventually led to the addition of Meson as a modern
+replacement that can cover the autoconfiguration part of our autoconf
+infrastructure. Meson has by now been around for a bit and has generally
+stabilized over the last couple releases. With the recent addition of
+support for gitk and git-gui it should now support all features that are
+required by distributions to use it. In fact, some distributions like
+Gentoo use Meson already, and GitLab uses Meson for its production
+builds of Git. So it should overall be ready for distributions to use.
+
+Deprecate the autoconf infrastructure so that we error out by default
+with a hint what packagers are expected to use instead. This behaviour
+can be overridden by passing "--disable-autoconf-deprecation", so that
+distros have time to adapt to the change. Furthermore, packagers are
+told to send us an email in case they cannot use neither the Makefile,
+nor the Meson build system, with a hint why that is.
+
+Note that the date for removal is set to Git 2.55 for now. As the change
+is generally not user-facing but rather packager-facing it is not
+considered to be a breaking change. That being said, depending on the
+feedback we get from packagers we may adjust the timeline to match their
+reality.
+
+[1]: https://lore.kernel.org/git/GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com/
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- INSTALL | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ configure.ac | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/INSTALL b/INSTALL
-index 54d7528f9e..a8b4c7f1b4 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -17,13 +17,12 @@ The beginning of the Makefile documents many variables that affect the way
- git is built.  You can override them either from the command line, or in a
- config.mak file.
+diff --git a/configure.ac b/configure.ac
+index cfb50112bf..d7e221f62d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -148,6 +148,38 @@ AC_CONFIG_SRCDIR([git.c])
  
--Alternatively you can use autoconf generated ./configure script to
--set up install paths (via config.mak.autogen), so you can write instead
-+Alternatively you can use Meson to autoconfigure your system and set up install
-+paths, so you can write instead
+ config_file=config.mak.autogen
+ config_in=config.mak.in
++#
++# Deprecation warning for the autoconf build system
++AC_ARG_ENABLE([autoconf-deprecation],
++  AS_HELP_STRING([--disable-autoconf-deprecation],
++                 [allow use of the deprecated autoconf build system (use Make or Meson instead)]),
++  [autoconf_deprecation=$enableval],
++  [autoconf_deprecation=yes])
++
++AS_IF([test "x$autoconf_deprecation" = "xyes"],
++  [AC_MSG_ERROR([The autoconf build system is deprecated and will be removed in
++Git 2.55. The autoconf infrastructure had been generally neglected for a long
++time: it is missing features exposed by our Makefile and has bugs that went
++unfixed, and its use has generally been discouraged.
++
++Alternatively, you can either use the Makefile directly, or use Meson in case
++you depend on autoconfiguration for your system:
++
++  meson setup build
++  meson compile -C build
++  meson install -C build
++
++To override this error and proceed anyway, re-run with:
++
++  ./configure --disable-autoconf-deprecation
++
++Please note that the autoconf infrastructure will be removed soon, and at this
++point the workaround will stop working. If you have strong reasons why you can
++use neither the Makefile nor Meson, then please send us an email to tell us
++about your specific use case.
++])])
++
++AC_MSG_WARN([The autoconf build system is deprecated. Continuing anyway at your own risk.])
  
--	$ make configure ;# as yourself
--	$ ./configure --prefix=/usr ;# as yourself
--	$ make all doc ;# as yourself
--	# make install install-doc install-html;# as root
-+	$ meson setup build -Dprefix=/usr ;# as yourself
-+	$ meson compile -C build ;# as yourself
-+	# meson install -C build ;# as root
+ GIT_CONF_SUBST([AUTOCONFIGURED], [YesPlease])
  
- If you're willing to trade off (much) longer build time for a later
- faster git you can also do a profile feedback build with
 
 -- 
 2.53.0.697.g625c4fb2da.dirty
