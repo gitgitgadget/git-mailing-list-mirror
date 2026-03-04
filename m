@@ -1,264 +1,108 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E6936309D
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:01:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A87B3DBD64
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:01:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772661685; cv=none; b=aFXCAXU2X2QQeKUZurBKp7ODQBI9cR7a76cEU5/JMOsnGx2r1NrW4oHuB4Q1iqLxe2fgG1qWFU6o+oKUdbZhkddSES6/HzWyloln0bUFqMk9ElcDqpf5DH74HjcgDEcIOnY5JAS6WW9HDdDFnIWdjCTActyGgm58fY3W5xsCqNU=
+	t=1772661700; cv=none; b=ahqYYaTu8zHS21bGbKvZrN7mJVmiW14rcmAnlxQncjxclJmFz5O5HEMnXEAXrL1kNgh5gHTjoZGJstyJj99zpcz8E0qD0UFx7OEvyGu+/HcD40UfDmVg25MFDKz3a1rAwzISMg887H+k9pqrCMNESGDbxMKmWkWFw1DC1mI9pCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772661685; c=relaxed/simple;
-	bh=U/VjxlQNmjrBb3tnWaIVUPyeH+u6KcvRDv010Ff6VSE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eEU79BESU9ixeabV1E+/fgQ1z5v3MOQSRkte84DDiVMKSx1DFPLJ865lL+x7PH80nV69y3GltIp6YzK3aMCttWbuIqJcNUnVIK6r+QOBR+XtUtzibesaZSLpv3l8zxA0Xw2SbNf3/DlLNQ7jmNOfMisMy9blAB4y5Mxu6O7rbMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cILAyA5z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o4r/WZGh; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772661700; c=relaxed/simple;
+	bh=y5TphRucES/bVdbQyrCcW+Y9tIA57epiIQMMfiK+7lI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GR3OaJl13ENrnvBmF6HsxkvTsVgKHhXHFRs/wjuQHvOVNo6spXabhGNAuoCEZccIdHn+vCJygq9E0rvTfW0Cp/iKb5+8yq646hIXgCkijfCczfaO4eZC7YdX3R2Bf6+TubEPbnAcT6kR3BXwsaflx5FwOp6qhzuaepBgqh0ZiII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BXk4WHpX; arc=none smtp.client-ip=209.85.167.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cILAyA5z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o4r/WZGh"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A39C17A0277;
-	Wed,  4 Mar 2026 17:01:20 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 04 Mar 2026 17:01:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772661680; x=1772748080; bh=2p0f0jHr6r
-	p1qT7qyMQcue4E6hCY8aAqKYVOpWWUpkU=; b=cILAyA5zQBZYxJRZ4FRqkouWUL
-	+aqjtsQq6TKi6xQZtuJvTsaF8uhdpRTvLVX7hyyQIciHCFNPHYKNI9EmdVzjmxDD
-	dFg9fwfVROc1f4N3gv07TKhyDHse5gS2PgLUfvC5OJsBtYmBwQlppMFzh+8hqBfL
-	9lkLLfWUgMMCyLb0pb6bnrwpK7qlLSZEPlyW5c9x2Y594+9oNNgusck12I0nqUdq
-	IBR9fQQ9dPYB9c8MfuoFSQcxP08S03Z2GIkWKiZgDUoVYY/Z5SJ7lTeIS9CMYQWN
-	vsmRZGb1tFsiCV8+DMjf7PuzICsTdc3WnH7B4Nj0JYYoOrR4tpCiGf+IitBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772661680; x=1772748080; bh=2p0f0jHr6rp1qT7qyMQcue4E6hCY8aAqKYV
-	OpWWUpkU=; b=o4r/WZGhycP0A8M/UGtsYJbF2h8AlPAEGcM+Rp7wCpnmKnZscPu
-	ShWniRQmsgleETtsaYhv33OD8+iy2RixMtcehblJ/MJga+SPdS+xpphbQxpo0B1A
-	ZockboYhmOP3Uu7I3uP2L4l5LaM9yLfDCHRfcD65u07fcEHWpXQRz429do+Yd/qx
-	eB+n5bPyUODrfZt8dOGyYvmIn6NIv+quiYsdtqziqxfn5vFxRX4gqY2j8zQqOlfO
-	VvPLkDAEUh7VAlLuu5LcjS7WSe+dyEOCYGCPTlYFjy0Ccu0l0B3VinjnaXV3jwxV
-	cxhOpoWWODmmyHiA1IhLnsR/axku9D5dylg==
-X-ME-Sender: <xms:r6uoaYa1-Vug-KBRBPLXfXUL7kGdXqi3uE6PGFvLSFzvCbwPKxvfWg>
-    <xme:r6uoaXHvYQXx4gxWGhm-Qvxk-ppLKUjrL2oCAruyDVu8iIJgmxN5v0k6Qb5JSplXY
-    8Ktd7SNm_IKZAKMsiZeTiiKakLUBnTgEqp4Zv4_jLuRhqx1cTQ2>
-X-ME-Received: <xmr:r6uoaczTwUrqTrQIRm5ck9hAi3StIdzIeJzBtXEHDwNAt-kZx7YOFvQ3CCfsnHlzIc1qOxThP8oF204AORBJ2SM6Cf3EFr8F2g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhephefgtdehkeetueeigffgvdfhieeuheduffekveejhfduveekjeeifeegheej
-    jeelnecuffhomhgrihhnpehnohhnshhtohhpthhoohhlshdrtghomhdpghhnuhdrohhrgh
-    dpohhpvghnghhrohhuphdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtph
-    htthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hmshhmihhlvgihsehgihhtlhgrsgdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegt
-    rhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:r6uoaZnlzQT5TB6XSCJqC6Fy9fwZlYsyAfK3AV15z9XGnnAhMAwpFw>
-    <xmx:r6uoaVkHdMWphyTO6vdH_cNPozOQADOlBM1ZrlMe9Uh94qjmKObGew>
-    <xmx:r6uoabw1PdTwCY1wcTxkiJh6UPV4Mn-5msU4zibBKV5iRlH-lbwYDA>
-    <xmx:r6uoaao_r_s1BYINOgPC3FxinGTv7qt7Ap95AwJtlnNSWoYyIP7Jkw>
-    <xmx:sKuoabqSARyC01BGuwCQuby8-APw9g6j1Sg4GSMzcEGghItSzrKEeRQz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 17:01:19 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BXk4WHpX"
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-4648448e387so5047092b6e.1
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 14:01:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772661696; x=1773266496; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DlV7zdeteLhXtiEvhq5F0pfRZ0JS3sqjrb0REHO3l6Y=;
+        b=BXk4WHpXC3DqR3SzN+EGsrKpTqFgH41TMe/EYTG2NnG68qbBfrNwiR3WqClWgnZE9k
+         4rvdHUoYQ24wSnB69Fl/S+szEBwxyvegUJ9cK51anHnhHIkJAMF7aUdShi6XCtCYmfma
+         lTUn4dRoeF5UCE/3VjKYYnX9N02DQ61GdKkqBTCJ2qZmB2yaVtw+XBlMfFC3frTmVNmu
+         DtoxsczNQS19a6UT+EuR7IBEKOseU401juLPPZz/dlCxTuhPP5ooqkA1aLvt/IW41pte
+         7kQECaV/APMvIf1OyZovRgvey/nwBy9nYLLb4xp3/ke+3LrtNpeadOCyF6/rDRwRu/9/
+         vTAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772661696; x=1773266496;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DlV7zdeteLhXtiEvhq5F0pfRZ0JS3sqjrb0REHO3l6Y=;
+        b=VzxpbI0bgwGC48XNF7LJjJVUMOea5XNYjX1COAxwHckxwgatSCLJJf6mXzKkTfr06g
+         Ybf1QnPbVqvuSUhB0/9AKhVXAjt8Cwk8DRk7fJ7E8EYmBEhl3VE3flY5DVSy+2Ypz+pQ
+         d4QVX3bklCNuUgg10b9mwRit/IATt4sqvuwhnb1Qsn7qp8jykzhgPFy2SnSFNJgd38ds
+         xeSoAgJXd7NNqOrFporyXal+Ln7YIw8VWyVy4/ZBo/tWgNMhvjX+UEu+Z4t+7auFhWuF
+         1VSa+A5awmaG6xFp7q+hKTizA2Ve898Ev0zZh15vqd0d1iWPQm5hz7UfVGx/V7g2h5cC
+         zAzA==
+X-Gm-Message-State: AOJu0YyJheFaXOal6fW0SW8zlv+6ghxqjACvPuvm6FTAo9FgUXnJHbat
+	DpRtgxwSHblYZ9wdlkf1K5c9OSNErl/9n3cHi+fJVKEVci1CUMPPufNA
+X-Gm-Gg: ATEYQzxhXYs7y95COXOkVX8Wj976nC2ypJEpMSIKN/pclMIvnaejwOafkC8/GnDw6mj
+	44kz2eySjqCrRqMzlc76OLRvAJM2zTdRXXxm8IEonZfH/JPg2DoxlynOHiuZeAHmoBXNGp4vDYN
+	CO/46B4d7epoCuHcWXBCN3+RhHLIsRdmG/x9zcVorT6a2yvdLxy/XzCow2IXRu2PhyQVFlwSTYw
+	0aAKfSYl40pCUc8TK328Egvkr6nrXnRjTB7rd6+A/q0uowBkLkftRbKOdDLTmMn6rAlQIkJTF8G
+	iqg03i4C/jozBCU2VasSaBgiXtL3GRwse3S7XUCILwjKSfrpxELuSk0oUcCW3BvsW90QILa26z+
+	Dsy+Ljn4SI5YkXubRn7ql355HYsujJluF7RlJ9RcagKLaUF7d9BFWV1ntMajRkEHj8jVjpQZ2sH
+	kR9nvQZTP5+jE3FaJhr3Ww0X8sfGg=
+X-Received: by 2002:a05:6808:e8e:b0:450:ca65:ef60 with SMTP id 5614622812f47-4651acd205fmr1774215b6e.39.1772661696199;
+        Wed, 04 Mar 2026 14:01:36 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-464bb3ab302sm12375172b6e.7.2026.03.04.14.01.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 14:01:35 -0800 (PST)
+Date: Wed, 4 Mar 2026 16:01:32 -0600
+From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Matt Smiley <msmiley@gitlab.com>,  "brian m.
- carlson" <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 05/10] compat/posix: introduce writev(3p) wrapper
-In-Reply-To: <20260303-pks-upload-pack-write-contention-v2-5-7321830f08fe@pks.im>
-	(Patrick Steinhardt's message of "Tue, 03 Mar 2026 16:00:20 +0100")
-References: <20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im>
-	<20260303-pks-upload-pack-write-contention-v2-5-7321830f08fe@pks.im>
-Date: Wed, 04 Mar 2026 14:01:18 -0800
-Message-ID: <xmqqseaf5k5t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 17/17] odb/source: make `begin_transaction()` function
+ pluggable
+Message-ID: <aaiqJlmFgi92a0iC@denethor>
+References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
+ <20260223-b4-pks-odb-source-pluggable-v1-17-253bac1db598@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-17-253bac1db598@pks.im>
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> In a subsequent commit we're going to add the first caller to
-> writev(3p). Introduce a compatibility wrapper for this syscall that we
-> can use on systems that don't have this syscall.
->
-> The syscall exists on modern Unixes like Linux and macOS, and seemingly
-> even for NonStop according to [1]. It doesn't seem to exist on Windows
-> though.
-
-
-
->
-> [1]: http://nonstoptools.com/manuals/OSS-SystemCalls.pdf
-> [2]: https://www.gnu.org/software/gnulib/manual/html_node/writev.html
->
+On 26/02/23 05:18PM, Patrick Steinhardt wrote:
+> Introduce a new callback function in `struct odb_source` to make the
+> function pluggable.
+> 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  Makefile         |  4 ++++
->  compat/posix.h   | 14 ++++++++++++++
->  compat/writev.c  | 29 +++++++++++++++++++++++++++++
->  config.mak.uname |  2 ++
->  meson.build      |  1 +
->  5 files changed, 50 insertions(+)
->
-> diff --git a/Makefile b/Makefile
-> index 7f37ad8f58..cb95ff2daf 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2021,6 +2021,10 @@ ifdef NO_PREAD
->  	COMPAT_CFLAGS += -DNO_PREAD
->  	COMPAT_OBJS += compat/pread.o
->  endif
-> +ifdef NO_WRITEV
-> +	COMPAT_CFLAGS += -DNO_WRITEV
-> +	COMPAT_OBJS += compat/writev.o
-> +endif
->  ifdef NO_FAST_WORKING_DIRECTORY
->  	BASIC_CFLAGS += -DNO_FAST_WORKING_DIRECTORY
->  endif
-> diff --git a/compat/posix.h b/compat/posix.h
-> index 245386fa4a..3c611d2736 100644
-> --- a/compat/posix.h
-> +++ b/compat/posix.h
-> @@ -137,6 +137,9 @@
->  #include <sys/socket.h>
->  #include <sys/ioctl.h>
->  #include <sys/statvfs.h>
-> +#ifndef NO_WRITEV
-> +#include <sys/uio.h>
-> +#endif
->  #include <termios.h>
->  #ifndef NO_SYS_SELECT_H
->  #include <sys/select.h>
-> @@ -323,6 +326,17 @@ int git_lstat(const char *, struct stat *);
->  ssize_t git_pread(int fd, void *buf, size_t count, off_t offset);
->  #endif
->  
-> +#ifdef NO_WRITEV
-> +#define writev git_writev
-> +#define iovec git_iovec
-> +struct git_iovec {
-> +	void *iov_base;
-> +	size_t iov_len;
-> +};
-> +
-> +ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt);
-> +#endif
-> +
->  #ifdef NO_SETENV
->  #define setenv gitsetenv
->  int gitsetenv(const char *, const char *, int);
-> diff --git a/compat/writev.c b/compat/writev.c
-> new file mode 100644
-> index 0000000000..b77e534d5d
-> --- /dev/null
-> +++ b/compat/writev.c
-> @@ -0,0 +1,29 @@
-> +#include "../git-compat-util.h"
-> +#include "../wrapper.h"
-> +
-> +ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt)
-> +{
-> +	size_t total_written = 0;
-> +
-> +	for (int i = 0; i < iovcnt; i++) {
-> +		const char *bytes = iov[i].iov_base;
-> +		size_t iovec_written = 0;
-> +
-> +		while (iovec_written < iov[i].iov_len) {
-> +			ssize_t bytes_written = xwrite(fd, bytes + iovec_written,
-> +						       iov[i].iov_len - iovec_written);
-> +			if (bytes_written < 0) {
-> +				if (total_written)
-> +					goto out;
-> +				return bytes_written;
-> +			}
-> +			if (!bytes_written)
-> +				goto out;
-> +			iovec_written += bytes_written;
-> +			total_written += bytes_written;
-> +		}
-> +	}
-> +
-> +out:
-> +	return cast_size_t_to_ssize_t(total_written);
-> +}
-
-Because we do not check the accumulation of bytes_written in the two
-accumulator variables inside the inner loop, it is very possible for
-total_written to wraparound size_t and end up below the largest
-value possible to be stored in ssize_t type.
-
-IOW, the cast_size_t_to_ssize_t() introduced in the previous step is
-pointless, isn't it?
-
-According to [*1*], the real
-
-    ssize_t writev(int fd, const struct iovec *iov, int iovcnt)
-
-is supposed to report error with errno set to EINVAL when the sum of
-iov_len member of the iov[] array elements exceed half of the
-maximum size_t.
-
-       EINVAL The sum of the iov_len values overflows an ssize_t value.
-
-So instead of dying with cast_size_t_to_ssize_t(), we probably would
-want the check done in a more stupid and straight-forward way?
-Adding up iov[i].iov_len while the addition would not wraparound in
-each and every step, and return error with EINVAL before attempting
-even a single call to xwrite(), and then have the above double loop
-that does not care about integer wraparound at all, and return
-total_written with simple cast to (ssize_t)?
-
-
-[Reference]
-
- *1* https://pubs.opengroup.org/onlinepubs/9799919799/functions/writev.html
-
-
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 5feb582558..ccb3f71881 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -459,6 +459,7 @@ ifeq ($(uname_S),Windows)
->  	SANE_TOOL_PATH ?= $(msvc_bin_dir_msys)
->  	HAVE_ALLOCA_H = YesPlease
->  	NO_PREAD = YesPlease
-> +	NO_WRITEV = YesPlease
->  	NEEDS_CRYPTO_WITH_SSL = YesPlease
->  	NO_LIBGEN_H = YesPlease
->  	NO_POLL = YesPlease
-> @@ -674,6 +675,7 @@ ifeq ($(uname_S),MINGW)
->  	pathsep = ;
->  	HAVE_ALLOCA_H = YesPlease
->  	NO_PREAD = YesPlease
-> +	NO_WRITEV = YesPlease
->  	NEEDS_CRYPTO_WITH_SSL = YesPlease
->  	NO_LIBGEN_H = YesPlease
->  	NO_POLL = YesPlease
-> diff --git a/meson.build b/meson.build
-> index 762e2d0fc0..63514b6b84 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1409,6 +1409,7 @@ checkfuncs = {
->    'initgroups' : [],
->    'strtoumax' : ['strtoumax.c', 'strtoimax.c'],
->    'pread' : ['pread.c'],
-> +  'writev' : ['writev.c'],
+>  odb/source-files.c | 11 +++++++++++
+>  odb/source.h       | 27 +++++++++++++++++++++++++++
+>  2 files changed, 38 insertions(+)
+> 
+> diff --git a/odb/source-files.c b/odb/source-files.c
+> index c32cd67b26..14cb9adeca 100644
+> --- a/odb/source-files.c
+> +++ b/odb/source-files.c
+> @@ -122,6 +122,16 @@ static int odb_source_files_write_object_stream(struct odb_source *source,
+>  	return odb_source_loose_write_stream(source, stream, len, oid);
 >  }
 >  
->  if host_machine.system() == 'windows'
+> +static int odb_source_files_begin_transaction(struct odb_source *source,
+> +					      struct odb_transaction **out)
+> +{
+> +	struct odb_transaction *tx = odb_transaction_files_begin(source);
+
+For a given ODB source, I would always expect that the resulting
+transaction would always be of the same source type. This makes me think
+that the underlying logic to handle transactions should also live along
+side the concrete ODB source implementation. Doesn't have to be a part
+of this series, but maybe in the future we should just merge
+odb_transaction_files_begin() into here.
+
+-Justin
