@@ -1,130 +1,143 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C97F3845D5
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:11:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772662297; cv=none; b=Wplfm2Ph9Dd6i9aUzZhREN6d5JHUubwoyGrd5/nUEhjQ9fMgPY2XIizhdMtOqczsFggprD9RejaPuTnL/sPLHoiBJsgzSzkGarAiywESG4TtyRSPBk+TYGPoNcqRaTcLpcvKvOct6fEGwtUWT4c2iPnuEzstMuw5DQ67wKgOX7w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772662297; c=relaxed/simple;
-	bh=CgR7cNu4Ff+pqlSNEnwQ4SvzsFpD/7jTg2KKGtVj4VM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XDxZLyFCFoM45OCpa7IOBB9CCe1B1HrWh+AGYaaDFt6ZP9UMpcqGRSyorpRiEIYdZU09Gt9VpUIbCqdgCy0uUL7nf3WNj/INlaPCswzDL400OUkhS5+SgAzxTQ5231Vm1AaAJp3pAp0IDBfqpMBnLQUOCapVSVVqLLLvVPbcs2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kIcucqj0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ODQgL3RE; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kIcucqj0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ODQgL3RE"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 88D107A000F;
-	Wed,  4 Mar 2026 17:11:33 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Wed, 04 Mar 2026 17:11:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772662293; x=1772748693; bh=qV8aFISFxx
-	iYHqB9y3u4ifC/l9pGMaRl4MICkbtY/GM=; b=kIcucqj0wrsW8yc23+ISnETusV
-	WKjXX8vj2epSSlUHtqkeLl8JUw/VY+wO8zl/bBhDPaFgUZ5oj3VgS+tHGNOI9i5k
-	EqsbN2GTyMXo3lQuEH2pePSND/Y2ViviGJiPk59tvEDzlm/DYtxFrfMtgGNC0q0r
-	alvDZiw6Lgy1Wyw+psJZTA5+0w5ErzW81WyOSZbBjPAhBIkWkfevNPHQppQisVXv
-	yr2uX8LviT25C4C0gNqpD1WJU501B2N6Qluk+t+Dy7PookU89H/CNzKfQi3TFy6e
-	ibr0kFrhGJrRWJjoze1alfV5SqV1JIbv+sK0d5TFeJ2XIFKDO6QczlKMPKNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772662293; x=1772748693; bh=qV8aFISFxxiYHqB9y3u4ifC/l9pGMaRl4MI
-	CkbtY/GM=; b=ODQgL3RE9VghfQkAhxYAE/kupg5/ICkuLgD00ki+8XrBjP5Xcfj
-	HFVbE7o1wjpc4bMAUhKZ+6RKx45xc7LjSSa/KLOq5U1DSi6F67YbW2TbJMp6Zaa1
-	ZE3KuchCzFcBiRd+Gx90VndKDKqwP4VSEmxzn83mHZVFuGBkVccx+8a55SxoucVP
-	jIhS3lozFik3TqRdJA/09yQm5JmO0HPbGzzRSfGuSJFVS+f6PECzvtz0p9ptZZf6
-	iOMkV2Njt8lWqq+oFmXJ4JJ/Br/StiK+ayZOxU82X0F1rAigfizd6lRk1XfOBzGU
-	/2efTJ+TfJjo68yulYpBsQpFoQLi18s1uug==
-X-ME-Sender: <xms:Fa6oaWaLccOqn0KSVlIlH1W1ngWdgA1Axs6XaW8MAFhhtP9MAzmEpg>
-    <xme:Fa6oadE_Dyjol1DKJJRoRoyUmtcL2pe5IDqbCeWbAn05UZRkQ7G3kHeGd5JQ7Xuoe
-    WjPhjIIQmAJU6mXHgz5xPgg3QmAelruMDf_Eh8AYewKPHe_Cl89>
-X-ME-Received: <xmr:Fa6oaaxMQx1d3FwNF6Ul632qEA_wfkI8anvXRy8F7ybwq2-YpaakVZoB2Z_7jyPiOkp_H8hlL10BXqrRlEPWhpEcxMUof8gqSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegieeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhsmhhilhgvhiesghhithhl
-    rggsrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Fa6oafmcB6dgJroJmtcHUNacE0Uh1upSHVXkzsXLfPCa5eRFR_8BPg>
-    <xmx:Fa6oaTlbR_90pSvJY_W-IqTE2riQb2bkve0QvRNEgNh0DAYoMTFTaA>
-    <xmx:Fa6oaRwsE-OVM4xXRzFJxFcyMTsHT5jq4e9Aq5pxSW2upgkP-QkVgw>
-    <xmx:Fa6oaYpmo-gjqbyg8vRFOVo3zaAFq5X9hkynvnz9m8jo0tHn07-0PA>
-    <xmx:Fa6oaZrbVGSjQKVoL4nBc4Y3jSCU1cm5t1OrcW0wQFjQwU-meR3IYUgN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 17:11:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Matt Smiley <msmiley@gitlab.com>,  "brian m.
- carlson" <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 08/10] csum-file: introduce `hashfd_ext()`
-In-Reply-To: <20260303-pks-upload-pack-write-contention-v2-8-7321830f08fe@pks.im>
-	(Patrick Steinhardt's message of "Tue, 03 Mar 2026 16:00:23 +0100")
-References: <20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im>
-	<20260303-pks-upload-pack-write-contention-v2-8-7321830f08fe@pks.im>
-Date: Wed, 04 Mar 2026 14:11:31 -0800
-Message-ID: <xmqqjyvr5jos.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5343845A3
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:22:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772662931; cv=pass; b=PRut320t3obyVTuFzBvrOZO89GaOd9o+z5glkpPLQDG5snasd3bqV6mJ2jne1amrzYMiqaNIcRA5/omzta0HeMH7IfIftlwgnIOQ8njKqMjWsj9ZMMLLeDjw/Uoj/FXs4KkNt2+v6+YfqPXgOtepbRLBYOUxHdillQ0h5daxOlw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772662931; c=relaxed/simple;
+	bh=JotfHUJh46vDLc6zh6C3t9G8hXb0vWHtAyRd98buvkM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nFzlESXndfIZaL6NNIsYQlcKJ/Bze8nrOfnv3uLZ8npxsgi9hihuFP7yCM5l1wPyHGUBO3HrWq7BTK1QmJuWQzt3zmyrYuVvXDIDuk/fZL5BAPXMZ3YvPceVpCjTefcADphWzJkDp6NKzQlwPnbTAt7AED5fB2rlnCaZn+XgVzo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-2be0629f76eso210318eec.3
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 14:22:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772662928; cv=none;
+        d=google.com; s=arc-20240605;
+        b=QzYDuZoIxJgI9R+TIsUFSD3wTvLGyOu/+0beMmqNT5Pqn4FCkIHDH2JDC9DdG8JlpC
+         clF/x6PSOq9hGsWzstRmcQewNL88lmRYiKt5IJIx2Ser9Q/jkOpGmKxUijx6FFjhW4+6
+         Tba5wkx5jAUGXPHTIG73qZOxCMDpIsCPp37H+RBcuPfp05pydboZqURXYSA+tiXsTsVH
+         Nw34yLLQMW28fFmtk5kta9q3jMHS11VSF+AWvzkhrZdi83hCd610g2rspSYmo8srz4dY
+         wQIEZD261fsLXIYbd0eNaiq/xqsBlIy90BxgDxmZB2o9UEsZ3vOz6TbJlTlthB1dKCr7
+         8Zkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=vmB6fOfopA7i1HKd0d1jIIPbajyVG3MiptVvYubB8dE=;
+        fh=Ztm/fZIVVYTzKYjvntEj9uci1eICp2ux/8l9vTu7Srk=;
+        b=fbFrCMTCIHq7MbXi3KocO5Ti4E0jr8Nz+oMNzxN4b4ukkHjBzmq2t+iIdZHK77o6sq
+         TiorBaUeR4E9InQIhqISyN5eg9m6M/FKb70jjoCPYIrhEHnNiT5/d9RO/XJ5fuEgnq5I
+         XsgmYxQ36HAPwN06MNXDm4ioLJVHpJPEfjD6Sv01dTcWlkH5IQCRaKVEfz7C5UyFpFct
+         pKl1NyMQTFi0Srymh/FqKDchZU8KGEhhOphKJWfp00+uhpMe3wA89NshunbhdtJMMP0P
+         B7gyElkTRE6rLOy3PW25xgjylLMlHoTIuM44fgo4slpelEhHtcdbOCw0tbBb0w+gJ7Go
+         xqOA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772662928; x=1773267728;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vmB6fOfopA7i1HKd0d1jIIPbajyVG3MiptVvYubB8dE=;
+        b=IkrWWpH2nd8gz3mUN10njN5i9gmMWeqdAyPCq6xAVHPdOkYIcvcK5A5CzUoernWUdS
+         SpUXAD4GQwrGBO3OHsGBpD0ejoDG5WVmEdC2jC7tOeeac7YoHsgfNs4CitZ1JtKofye5
+         sTvn4jj3kb9qbse9BeBf018CMwCmvA3JZyZPv6dQ/YGfMq0P/ytgjMzeogICqGL6mr5n
+         oRKNFto4zrjbTtZbmxADmOF7X+3AklWr7+tp28HYfm/dcHfWRU7fpv7A7bfJCayfG3Vr
+         6YQa6pffRSaURcWUTCco9Yx5fpBQkDL0QHoccl/DUjN99wQGXj2NYaYivpm9AHN6wjcb
+         WrFQ==
+X-Gm-Message-State: AOJu0Yw+YqpfoL0ikDM4uAft1F83K9jIy8w6RyNfIM6ty3hDcJ/zk5yY
+	6vupMvKDGmczcbBG6puoMmhiVVpfUwHhIO5eDF2W1NTMqYHALPv5vx6Uw5NQgG2JqAN0LNSuqqO
+	8MnbLvZse+NASeyVofl4mMzFBhg+BP+0=
+X-Gm-Gg: ATEYQzyXEZ+WgCHoWDsbS/LyAbqmpwUfMW17LDnNKk2IespBL7gdJI4NL5UxaKp55iX
+	rmfTbne0+C1kBHhppikv7OdyGP0CPMX/gJyIq6jOtHhYZtGaTnk9fzNW/UQB/slqIvfFFk6d8eh
+	wf/f69dlKFvrEG/PoJpBtIuic7rl0hBAnVpsbaXn13esjRk5hXY/zEvh54j3qFU0VkfO7bNNrR1
+	IiGmmKRh4dCoF/TC3HmfHonM94ngWfDYdGOW8YRDQdSY2YLbX+S7cZ3udQtw7yvpyXnfYZtibhT
+	o7CXqYVsuL5daheOLyMwN1scCNMw/7cYo/q4+ePiOA==
+X-Received: by 2002:a05:7300:72d1:b0:2bd:a3fa:9bdc with SMTP id
+ 5a478bee46e88-2be311dbe2fmr715290eec.5.1772662928518; Wed, 04 Mar 2026
+ 14:22:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260304121955.73794-1-francescopaparatto@gmail.com>
+In-Reply-To: <20260304121955.73794-1-francescopaparatto@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 4 Mar 2026 17:21:56 -0500
+X-Gm-Features: AaiRm53slNlxDs2Hg0LRAyWjyR7W4pZNZTwvOaWQUQA9WZnYHQTV0KBtMIN0TIQ
+Message-ID: <CAPig+cTHyB2sbBOELPb2=B5sU69OzSPU0JVn0p=2qMp=0=8vEg@mail.gmail.com>
+Subject: Re: [PATCH] t3310: avoid hiding failures from rev-parse in command substitutions
+To: Francesco Paparatto <francescopaparatto@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Wed, Mar 4, 2026 at 7:20=E2=80=AFAM Francesco Paparatto
+<francescopaparatto@gmail.com> wrote:
+> Running `git` commands inside command substitutions like
+>
+>     test "$(git rev-parse A)" =3D "$(git rev-parse B)"
+>
+> can hide failures from the `git` invocations. Extract the
+> `rev-parse` calls into variables so failures are not ignored.
 
-> -static struct hashfile *hashfd_internal(const struct git_hash_algo *algop,
-> -					int fd, const char *name,
-> -					struct progress *tp,
-> -					size_t buffer_len)
-> +struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
-> +			    int fd, const char *name,
-> +			    const struct hashfd_options *opts)
+Okay, surfacing failures of `git` invocations is a laudable goal. However..=
+.
 
-What does _ext stand for?
+> Signed-off-by: Francesco Paparatto <francescopaparatto@gmail.com>
+> ---
+> diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-=
+manual-resolve.sh
+> @@ -227,7 +227,8 @@ test_expect_success 'merge z into m (=3D=3D y) with d=
+efault ("manual") resolver =3D> C
+> -       test "$(git rev-parse refs/notes/m)" =3D "$(cat pre_merge_y)"
+> +       m=3D$(git rev-parse refs/notes/m) &&
+> +       test "$m" =3D "$(cat pre_merge_y)"
+>  '
 
-More seriously, this essentially chooses to pick two parameters
-hashfd_internal() takes and put them in a struct, which would give
-us a clear upgrade path to add more to the structure without having
-to change the function signature.  But what is the criteria used to
-choose these two among 5 parameters the original function takes?
+...a failure exposed by `test` is not very developer-friendly since it
+doesn't give any indication about what went wrong. Since the pre-merge
+value of "y" (and also "z" in subsequent tests) is already in a file,
+we can make the failure mode much more helpful by using `test_cmp
+<expect> <actual>` which will show both the expected and actual values
+when they don't match. Thus, the above transformation would be better
+stated along these lines:
 
-Specifically, I am wondering if fd and algop should be part of the
-structure, as these would be exactly the same for repeated calls to
-this function to write to a single stream.
+    git rev-parse refs/notes/m >actual &&
+    test_cmp pre_merge_y actual
 
-> +struct hashfd_options {
-> +	/*
-> +	 * Throughput progress that counts the number of bytes that have been
-> +	 * hashed.
-> +	 */
-> +	struct progress *progress;
-> +
-> +	/* The length of the buffer that shall be used read read data. */
-> +	size_t buffer_len;
-> +};
-> +
-> +struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
-> +			    int fd, const char *name,
-> +			    const struct hashfd_options *opts);
->  struct hashfile *hashfd(const struct git_hash_algo *algop,
->  			int fd, const char *name);
->  struct hashfile *hashfd_check(const struct git_hash_algo *algop,
+The same comment applies to other changes in this patch.
+
+> @@ -569,13 +580,17 @@ EOF
+>         # Refs are unchanged
+> -       test "$(git rev-parse refs/notes/m)" =3D "$(git rev-parse refs/no=
+tes/w)" &&
+> -       test "$(git rev-parse refs/notes/y)" =3D "$(git rev-parse NOTES_M=
+ERGE_PARTIAL^1)" &&
+> -       test "$(git rev-parse refs/notes/m)" !=3D "$(git rev-parse NOTES_=
+MERGE_PARTIAL^1)" &&
+> +       m=3D$(git rev-parse refs/notes/m) &&
+> +       w=3D$(git rev-parse refs/notes/w) &&
+> +       y=3D$(git rev-parse refs/notes/y) &&
+> +       p1=3D$(git rev-parse NOTES_MERGE_PARTIAL^1) &&
+> +       test "$m" =3D "$w" &&
+> +       test "$y" =3D "$p1" &&
+> +       test "$m" !=3D "$p1" &&
+
+In this case we can do even better by taking advantage of
+`test_cmp_rev`, which would allow you to express the above more simply
+along these lines:
+
+    test_cmp_rev refs/notes/m rev-parse refs/notes/w &&
+    test_cmp_rev refs/notes/y NOTES_MERGE_PARTIAL^1 &&
+    test_cmp_rev ! refs/notes/m NOTES_MERGE_PARTIAL^1 &&
+
+Note the "!" for negation in the third line.
+
+The same comment applies to other changes in this patch.
