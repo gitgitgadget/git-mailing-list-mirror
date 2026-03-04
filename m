@@ -1,53 +1,53 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47643368BD
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 05:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29F73368BD
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 05:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772601387; cv=none; b=REeKxq2ePO8gKSWX1rsKuEqslIWbgElpf4IHsReeiRn+7iViYmsHEPIOc8NPQbREHvz6xm9vJ6b1wZo62TeUGitI6P6ck1yKhfgExq0dnjWrLEqVDKx+1dxqriNwH+358UUVktw42xS9tVzX+5llOJOK/c9AxJk/Wv79DYpMqAo=
+	t=1772601391; cv=none; b=TS1FvRKBSvbbDAnx5MEXcLAUZX6UtuJnE/oe6/9iI30fY1viElAOzTGlSwRj0Wb7B8fXZp1bFp4i0iJcIQfQl6qXnyLpTWuBj8hlebDVQkoP8RbWSLbouZKWxRamjtLAjke3+Nv/6n3iEGgWivZWqAOBY8kHvAg3J8ForD6DsvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772601387; c=relaxed/simple;
-	bh=dbwt++jBAEtLihNgRndV6yMGDTPp+I+xY0SUIzvDtfY=;
+	s=arc-20240116; t=1772601391; c=relaxed/simple;
+	bh=iXKDOZ5naDRuRYhfW5n5cgzklrVpS9hlGfW7fjUOm/M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=trCybrEP9wl5zxRCvX2ZMyRMq5+39qerbOw6YHW3WD/Q7u6wx0FlnJd8SVSNPsBq/T3i6vQ6pNpHzH/H3ErR4kb+135opk7HT7N6XR35nYpRhgiE5p2METn8JdKeJfsz4BdPWI2RzxmY1BkVMbfFhfq59yHDbGlrNwEluDAxP7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DKy+rzib; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SKQL+HcK; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=IowKea5CU9vleW4qTNb4flCVpCJqnOKJxGwtT/uAyHhgdE85phofGrdhh9pE8i2O27rt3DW5lDIsDJgyDG24TwjNXQ0H6vt+tAojKE1nA3djHkR7ADG5Tivj8RNGIh1RdnJmcAT3q/iKDjWS8iPxqtvD55vvgr9C7XKuoGXEfLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PuGTtkdO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PmUFJR0L; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DKy+rzib";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SKQL+HcK"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id D902F1D00239;
-	Wed,  4 Mar 2026 00:16:24 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PuGTtkdO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PmUFJR0L"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1E2271D0019D;
+	Wed,  4 Mar 2026 00:16:30 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 04 Mar 2026 00:16:24 -0500
+  by phl-compute-06.internal (MEProxy); Wed, 04 Mar 2026 00:16:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772601384; x=1772687784; bh=auni0uXA/i
-	MH+LoLsHEQgpa5LzTALS7vX1l4vJk89G4=; b=DKy+rzibgZaa65s1efeSSheNX7
-	Nr9D/cifTPBCK0J7XQyUcdE5V1XTpiwPU+T0c/07MW+P8S/A2xa1fipEisMItixY
-	nAeCMDC8naq8iuFCjVQ8nSAuxCujWbrgkVvRITvyfdM47Iwrg2gXsaASvJKhPuIg
-	nyPbIQOX5gzaZaHdt0Ts924j2uRw8zSuD+ExCHKBkU9XNtLIbVAfZALKmr85S/lv
-	N3pU/O482yCI2I9Rp85OcwXo+6qAh3qJsH1pc+03Ul8w3flqwNtK5q22myy+JL6f
-	KtwPCGAxIPiMLltStzNhL1xRHy1T1SYo5nFRNxJquBEOGAKUK1v8LOpjhmTQ==
+	:subject:to:to; s=fm1; t=1772601389; x=1772687789; bh=YfmUx21hEa
+	SnArtPSWOxeye0dRR8mYS9q47wpBoZB1c=; b=PuGTtkdOWezJZzA/6Jr+oDSQeK
+	ziEZsmCG4p38dra/AG4JAFmXfOrWsCgbFuAvoBiW6FJmh4mA1bMQut6LQ789yB8L
+	lxzH+9p4rBluMgCLR7ZjL5WGbTfPLkOUMgltCtsMd+WZWHQb+tT/1vPpoO177Jwy
+	gLC6G9FGbFkznmIZd/2BelyeHoymzosHIcfJgFhgNvBpSDueWR7FGPkgT3s1x5C8
+	3qP6dsRGqWZ6vg0FLzF6L/oACTZPa8DGw5UFzHV/ScPNgmNMVLSXgoQ6z9RRzthO
+	fxZ4zYGsTtK1QsesP6p8KpbUpfV88RoALrrJF9g4agv/Qlm630dZQZhigpiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772601384; x=1772687784; bh=auni0uXA/iMH+LoLsHEQgpa5LzTALS7vX1l
-	4vJk89G4=; b=SKQL+HcKDW/wb1HkyKzXVw3/m9i/jG0VwaNmHA/kAJzb6BSZADn
-	TP8cxLa9+w4Kzk3X0HfSC+8AWr8vqKKZeIx5jOo4D4Eue8c8OpXERwovGwwUn/xn
-	vFV6raSMFvCnM4tBJ2j/A/1BpwQG2c4ozAmUj2g1hfONh5Phc6NeXbhSjCv2I7IZ
-	7g9f03HlPNZUYFkNWfqTOVoIQUDTosRFiXqjU/xg/aRqhR8uflfzMAJN5d2lci9m
-	OH9JZ3MTBc89UCCesR9qS67y2u26OSmtb/GqlQl1Rq7NSmRz++v6Tftp41aJRKGA
-	vQWwqy+HRDjECeIbNI2rjJu0ucrisNGMzEA==
-X-ME-Sender: <xms:KMCnad9HvYFTnmM_lXnWN8Kf6FtBW6vaT18JuoI1MpJLvKcMwFPmHg>
-    <xme:KMCnaZLrj6HdgORIA8jPkzjO2Lvp6gXqTBRLC4onmjUhkqWg6KMaNnh4fJ9737YL3
-    ituQ-TGW0twgElP6Df7FNxbYgVHRiMaCk0VD5jKmiffA3qxvXFbod0>
-X-ME-Received: <xmr:KMCnaYaBAhNX95Gc0uewEoVBgU03Kg3n_Dx4jqnvpot0uHx75RT5H2kgUKOnxvn2QIXcD6NLKcoBQfcm9qgBwn6qP0cIzOD6Brfp7DK2sKlvaA>
+	1772601389; x=1772687789; bh=YfmUx21hEaSnArtPSWOxeye0dRR8mYS9q47
+	wpBoZB1c=; b=PmUFJR0LBd/vIX+CPe4+OkfEVKKG3euT+Q/rizZDVtqDmU3D/8M
+	9EuJWFZXrj3OCHTq0ivuFphYrxTbhFnE6wajzMMsUIblDEAPEIXdMLkyDTiSYSh6
+	xH0i/Fg/PwC+VPOoy0M5y2+KAnHV6jfaeJMns7n9oY3mjvcbc/g+V6ngyW1iaANL
+	Kv1UVjuaQ8poE0lHnepMDUGPXU+l48H32YDb443hFPsQue3AWsz1Jn6q33jjIbx0
+	g+MG+cw5E3rFhIQtvAaF1hGWlchUwFV2SitQjB4AAZAIRRe719vv2vXzXtKBkII2
+	1ph8SdB1rslgDGnI24udtDZoNnrgGWm2oIw==
+X-ME-Sender: <xms:LcCnaXpp9XxfECUg5uvD-lFExyFQ_h3-vqj2Utbe0ny23xa8mEjrQg>
+    <xme:LcCnaZF8i2tgrSwL47f4pOmHvnzBwDsKdHpjoDhA6WJ_DpWqSwFJbGxvsJmnTTLcw
+    6Oap42y00A0LMsB6XockfzQxu4n9WOwG1_6CQx2KLx37GbxSkIicA>
+X-ME-Received: <xmr:LcCnaRlYeOSA0sVvPq5rsATRGJw5NLCPQI5m_dO1iGqlc9nBi9KrL9_SxHDCWpPW2xmPfJWyk7FHT2H--cKsiKWlaYQuL-bCunHllG9stzAEvA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedvieduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
@@ -55,27 +55,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedvieduucetufdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
     ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopeihshhinhhghhgtihhnsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohephihsihhnghhhtghinhesghhmrghilhdrtghomhdprhgtphhtthhope
     hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:KMCnabINwtyTUsUnCHykCK3p8HYHnzj44eTZ-JRNXKIkyYM0ck9YrQ>
-    <xmx:KMCnaWA8Z70kKrb92uG5n96q5vMl6NSksYoDL1TYtY8yAYnpV-N5wg>
-    <xmx:KMCnaQp2RFh4fWqJfYro4QRS0wV1jBKvb_vIdCHqM3Seu88tAHDwXA>
-    <xmx:KMCnaRhIPgLmx4QDkvVYGdKyW-hp2S1MkYy4pa4rNJbV3-AVFaO6cQ>
-    <xmx:KMCnaVIArwPujXfZKBZ8ji1YONYYNB9fnHxatJM4SO5pYE9Cy7zGRaoU>
+X-ME-Proxy: <xmx:LcCnaUl8OjRp3xV0n1tK0iXA8yE9ld8juzn0ftnd1aP3PLWuM-IzyQ>
+    <xmx:LcCnaav8PRR3jWzdAvs6JBFYKuripIdXo100EuZOppVydCrbuRcx2g>
+    <xmx:LcCnafm3m5GsJXyiMihwc3mPcd6sL-V7_0m3dcRlLHPZTLa167wHPg>
+    <xmx:LcCnadsU9tv3Od7OKTOnlupqbBshxryCmr0XBi-UpuUt3QKtC69mag>
+    <xmx:LcCnaREmC_fxILKSIy5V4ZzdWJj2FgJgs0jDCXYpuF5K61g6zXfBtqtf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 00:16:23 -0500 (EST)
+ 4 Mar 2026 00:16:29 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7f62ea37 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 4 Mar 2026 05:16:22 +0000 (UTC)
-Date: Wed, 4 Mar 2026 06:16:18 +0100
+	by mail (OpenSMTPD) with ESMTPSA id d365a634 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 4 Mar 2026 05:16:28 +0000 (UTC)
+Date: Wed, 4 Mar 2026 06:16:25 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 1/2] t7412: fix typo 'submodue' in test_description
-Message-ID: <aafAIqqq1PdzmQW3@pks.im>
+Subject: Re: [PATCH 2/2] t7412: modernize path checks to use test helper
+ functions
+Message-ID: <aafAKc41y4CdZmUt@pks.im>
 References: <20260303175750.361563-1-ysinghcin@gmail.com>
+ <20260303175750.361563-2-ysinghcin@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,36 +86,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260303175750.361563-1-ysinghcin@gmail.com>
+In-Reply-To: <20260303175750.361563-2-ysinghcin@gmail.com>
 
-On Tue, Mar 03, 2026 at 11:27:49PM +0530, Yuvraj Singh Chauhan wrote:
+On Tue, Mar 03, 2026 at 11:27:50PM +0530, Yuvraj Singh Chauhan wrote:
+> Replace 11 raw 'test -f', 'test -d', and '! test -e' calls with the
 
-One micro nit, not worth rerolling over: I think in general we prefer to
-have at least a sentence in the commit message body, even if it repeats
-most of what the subject has already said.
+This explicit number of course made me verify that you didn't miscount,
+and you indeed didn't :)
 
-At least for me it makes the review a bit easier, as the subject of the
-message will be gone at the time I start writing a reply during the
-review.
-
-> Signed-off-by: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
-> ---
->  t/t7412-submodule-absorbgitdirs.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> corresponding test library helpers:
 > 
+>   - 'test -f' -> 'test_path_is_file'
+>   - 'test -d' -> 'test_path_is_dir'
+>   - '! test -e' -> 'test_path_is_missing'
+> 
+> These helpers emit a descriptive message on failure, 
+> making failing tests easier to diagnose than the silent 
+> pass/fail of the raw shell primitives.
+
+Yup, the reasoning is sound.
+
+By the way, you have trailing whitespace in the commit message. I guess
+it'll get stripped when Junio applies the patch anyway, but maybe
+something to watch out for in the future.
+
 > diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
-> index 0490499573..41ee035e3c 100755
+> index 41ee035e3c..cdc7f59e12 100755
 > --- a/t/t7412-submodule-absorbgitdirs.sh
 > +++ b/t/t7412-submodule-absorbgitdirs.sh
-> @@ -2,7 +2,7 @@
->  
->  test_description='Test submodule absorbgitdirs
->  
-> -This test verifies that `git submodue absorbgitdirs` moves a submodules git
-> +This test verifies that `git submodule absorbgitdirs` moves a submodules git
->  directory into the superproject.
->  '
 
-An obvious fix indeed.
+The changes all look obviously correct to me. Thanks!
 
 Patrick
