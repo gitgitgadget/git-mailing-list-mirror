@@ -1,122 +1,127 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-10631.protonmail.ch (mail-10631.protonmail.ch [79.135.106.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A63426E6FA
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 13:06:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCF9286D5D
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 13:32:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.31
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772629593; cv=none; b=aAVF0U5DGP3q80xHN+Qa0pECzvU6hFrl4y09Rc/B9jCT7zKswVQ/bEr+4uiwU5FUaMZGsWrVJ2fvxaBK7SI2HyenJqhX00/Iuu8UEHq/uqOXOa5V9bOCm95IkMcxHh0btPZZF/iaa0YUYBztOBxZio1dHE5GAAgU14Np4GJs8Dk=
+	t=1772631154; cv=none; b=fqGzMYoxu2Q1mp9OxFERm7AMZCHZFsFlqSfdH7k0CqG/G8v7Dnz4y9To9rbsF20PSW50IhEPs1My0svIPWVLS6RmIM4e8k+ycIhsRJd/ylTsfGKOInjAvbfNSMa7rQgFfqbJ16zgQFsuUP5usaZq7zK/ys2Q1312ySOuOLJt+Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772629593; c=relaxed/simple;
-	bh=7zbLgTANy+79X0kW047Gal8gSMAcu6o+zZKNOTts0RI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZuhEGKrzxcmCsb8H78akPxvez63XWVpHhQUH8m7U4lkKrLwURf6lbx1p1dKWx1q065KU9oJd2tPY1jB46VfVVlDIKQ13CE7WBH1+IXspc7ZnF0AyU8GaOFjCDP4OkGyNLQonbo3AdFwAP5JiPX75FgJ+utdJWAmjriqIIwY6y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a7g2PSZ6; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772631154; c=relaxed/simple;
+	bh=ML2oB8StrV8RhliGQ3szp6/lIf5f0qfKnZeEJuajKHg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XQxtnvHmaX37cNvYEWZxQxoEsuAv4VMsUI0i355x29bVBQBaXSp/rckIps1ZieHhk7ajty8EYKzZlnMWRuK74VF6vqAf69XV/2b3DPARR9Ymoy5X34h07c/Lx52WgATnakvMFkeUioLDv7MGtpzko12RUfilZg1lJ7w9knYOADg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=RRELwikh; arc=none smtp.client-ip=79.135.106.31
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a7g2PSZ6"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-823c56765fdso3512925b3a.1
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 05:06:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772629590; x=1773234390; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mBEp70jCT53PxwJBSxH0Jh4XGBrt9i519bBlbX8ofm8=;
-        b=a7g2PSZ66jdYaPiZgFqXvCfZnwqAyYEu0SFA2f6BTGTA4Bftvjp9kUOagLZr42a8YV
-         4wUXvDlcQRB1VyQ8p0hNcjUp4E4/kAgziOTyAP8YBc8IqVlPzTMbc9SqCbCUWE5E8Qjb
-         qYHDNuc26rWyirwQTAH+tb5IHXTFbTXB59o6CuK0nAtP0kOO65hIeWV81kapyn90bDTM
-         sXpi7u6E2Dk7lA3+99Vhh7G83SMLuiEz5IT4dHrv9nRwTNr3H2Xn8qQdqHFHtZM0RJvy
-         WQ4PgoOHi0nKw36gF6VMNCnNDR3e55czbDzTY9PdqqTnhTqFGBiq0PoDiGIZcDrBZx9Q
-         yZaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772629590; x=1773234390;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=mBEp70jCT53PxwJBSxH0Jh4XGBrt9i519bBlbX8ofm8=;
-        b=F9dDHEVTIKR6KuJcg6qaw9CfClPHKbCjI31CkI469KeqJmXdQGb7C0pEpbuMpZ8mul
-         JpojQ0q58E9znpX1g7ZTshrvt+XwtsyHf8ADJueaOGq/fteBVaWkOSoBkKGT/dhd67bC
-         wzTZk2yTn3L1cS98OzsxmVab6LTohofwF4Q6fenfq8Hhg3SIZ4oxQQevhFjKUsijGn3T
-         9gm/zpd3QZjgzwnXOGy2J2ntSx5Qp9rTMrMeKoh94dUHEdXFI9DYZ1kodyokuItaEDN2
-         0biKnE6rsH9zD9xvVaOiNvJQlUd4THCaxI8etmZCTW/t8nGEFfqDcU0Ba7hPaihpYkvq
-         0bPw==
-X-Gm-Message-State: AOJu0YxQAZ+c5NrfaCvJwRe2I1SlCS+t7XU0hbaHEou/eC4QmR6Fnnnx
-	LLnpyVHIVpv+DTiyZ8UTcpqJg6voIUe7wMlcG6/MPpzvSATWwse5WvggWiIfSnuT
-X-Gm-Gg: ATEYQzzptYsNTd8WnwafGPJ8COhlhOueYAoMi1IGuuIxy8eyQpHylmRkreTaXw48z8Q
-	BOj2UNn/qqj1mjlLB9HxrDrVxRnp8fIDbHzR6IzH3vWNKWwzDyDSpPnEdgXjjz8I71Sp8DqBMTz
-	9TJwKpsl+4Ob+wYSy5dq8CP4GPm/GdGDMKFKMkylLjjVoO1TPFS4uYR2j9TbKK/CYVeOAleCAgO
-	PgnJt4cAOO1fr55T1fNJKgS5eC123RacpiW7CqXbwFSKyxTxOrBOZ9GMV4OGi7VffvVUQJkBwJX
-	NS4L1aaGpd6lNbW9Hjyu7UqI7lpMHx4kGIWPCX/E/nbO69GQko9HESq8x+47PZnGL8gETXiGVbA
-	WPhioIZz7rRdElUTt0DJGGHyAbsHuWgw3BPrMQGNsi91DluQiQb0pC2WAAXsK0iUfHiIvu/kHfi
-	6TOzm3E16ghAIgUc/TXTQS+9uDSMw9IP+fInIvyNCNtkMWfB5grSoyW7bYG44Pe4E5XcT3dckJe
-	dG6Tt36XhF8WeRmG8lHljCJlBTvHpg2tqPpfiiExrw=
-X-Received: by 2002:a05:6300:8948:b0:38d:f745:4d5f with SMTP id adf61e73a8af0-3982df04bcdmr1856067637.24.1772629589617;
-        Wed, 04 Mar 2026 05:06:29 -0800 (PST)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa3756dbsm16473717a12.0.2026.03.04.05.06.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 05:06:29 -0800 (PST)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: jayatheerthkulkarni2005@gmail.com
-Cc: git@vger.kernel.org
-Subject: [PATCH v2 3/3] path: remove redundant function calls
-Date: Wed,  4 Mar 2026 18:35:02 +0530
-Message-ID: <20260304130502.8475-4-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260304130502.8475-1-jayatheerthkulkarni2005@gmail.com>
-References: <20260302142138.712273-1-jayatheerthkulkarni2005@gmail.com>
- <20260304130502.8475-1-jayatheerthkulkarni2005@gmail.com>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="RRELwikh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1772631142; x=1772890342;
+	bh=qBQpUhic7lnyI+fz/5AqqsyFsaIoFuy3WihvJKHrTT0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=RRELwikhXFdqyVWqNyOEeDKp2QB194tVpvjUdhDRe9GM2Ll18iNRdV1XqkJE4lb8N
+	 2gquK88Ap1qO266IznFUN8xf0JwApyjFzflclMPpxBJpkZ6kZ3wlmqYRvWEYe29hna
+	 IcnqivjNacVx34LxYZelApHQbHBFtWNe5hMwvLN4uKOVJKdADe0SteNnBR+bW2jVyz
+	 5QoUK8ulwqOKNHV5rP3xCMWdB6kft3u82GsSPUP7QfBlqYj4CVbFALKLVwauzaxs33
+	 hR3Sla2n1d12jhIX7IYO4IN/rSg0I36YqzeKCsN25/HtDwNL7OBFrwy9dDYoytL2vb
+	 2ZC1ZgqLjg2pw==
+Date: Wed, 04 Mar 2026 13:32:20 +0000
+To: Johannes Sixt <j6t@kdbg.org>
+From: GitHub Chris Idema <github_chris_idema@proton.me>
+Cc: Chris Idema via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v4] git-gui: shift tabstops to account for the first column of context diffs
+Message-ID: <Hf23ZjoLMdkhr77C9rfhukpwi1zKpjyEwhMPfsqHbL4Cqruu8WRHHeFrX7mtPzxbmV3uyEgK5yXDBxUUVparcHo0f3PSipKEfTipswpYC68=@proton.me>
+In-Reply-To: <191b6fe4-e273-4ecd-9b73-725c2dff4306@kdbg.org>
+References: <pull.2179.v3.git.git.1769595640008.gitgitgadget@gmail.com> <pull.2179.v4.git.git.1769684944593.gitgitgadget@gmail.com> <191b6fe4-e273-4ecd-9b73-725c2dff4306@kdbg.org>
+Feedback-ID: 177675452:user:proton
+X-Pm-Message-ID: a90a1071fc8f7bd86de9dc2863447a9f923ba3f1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-repo_settings_get_shared_repository() is invoked multiple times in
-calc_shared_perm(). While the function internally caches the value,
-repeated calls still add unnecessary noise.
+Any updates? I see it hasn't been merged yet.
 
-Store the result in a local variable and reuse it instead. This makes
-it explicit that the value is expected to remain constant and avoids
-repeated calls in the same scope.
+Chris Idema
 
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
- path.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+-------- Original Message --------
+On Thursday, 01/29/26 at 22:36 Johannes Sixt <j6t@kdbg.org> wrote:
+Am 29.01.26 um 12:09 schrieb Chris Idema via GitGitGadget:
+> From: Chris Idema <github_chris_idema@proton.me>
+>
+> When reviewing a file before staging you want its content aligned using
+> gui.tabsize. The prefixing of lines with +, - or space characters should
+> not change this alignment. In gitk this is done correctly. In Git Gui not=
+.
+>
+> Signed-off-by: Chris Idema <github_chris_idema@proton.me>
+> ---
 
-diff --git a/path.c b/path.c
-index 56be5e1726..5cd38b2a16 100644
---- a/path.c
-+++ b/path.c
-@@ -741,18 +741,18 @@ int calc_shared_perm(struct repository *repo,
- 		     int mode)
- {
- 	int tweak;
--
--	if (repo_settings_get_shared_repository(repo) < 0)
--		tweak = -repo_settings_get_shared_repository(repo);
-+	int shared_repo = repo_settings_get_shared_repository(repo);
-+	if (shared_repo < 0)
-+		tweak = -shared_repo;
- 	else
--		tweak = repo_settings_get_shared_repository(repo);
-+		tweak = shared_repo;
- 
- 	if (!(mode & S_IWUSR))
- 		tweak &= ~0222;
- 	if (mode & S_IXUSR)
- 		/* Copy read bits to execute bits */
- 		tweak |= (tweak & 0444) >> 2;
--	if (repo_settings_get_shared_repository(repo) < 0)
-+	if (shared_repo < 0)
- 		mode = (mode & ~0777) | tweak;
- 	else
- 		mode |= tweak;
--- 
-2.53.0
+>
+>  git-gui/lib/diff.tcl | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+> index 442737ba4f..8be1a613fb 100644
+> --- a/git-gui/lib/diff.tcl
+> +++ b/git-gui/lib/diff.tcl
+> @@ -385,6 +385,8 @@ proc read_diff {fd conflict_size cont_info} {
+>  =09=09#
+>  =09=09if {[string match {@@@ *} $line]} {
+>  =09=09=09set is_3way_diff 1
+> +=09=09=09apply_tab_size 2
+> +=09=09} elseif {[string match {@@ *} $line]} {
+>  =09=09=09apply_tab_size 1
+>  =09=09}
+>
+Just "else" without a condition would have been sufficient, but we can
+do it this way as well.
+
+I've rewritten the commit message like so:
+
+    git-gui: shift tabstops to account for the first column of patch text
+
+    When reviewing a change before staging, it is desirable to see text aft=
+er
+    tabstops aligned the same way as in the text editor. However, since the=
+re
+    is always an additional character in column one in patch text ('+', '-'=
+,
+    or space), the alignment is broken if text before the first tab charact=
+er
+    is just long enough to push the stop to the next tab position.
+
+    Commit a43c5f51a4b1 (git-gui: add configurable tab size to the diff vie=
+w,
+    2012-02-12) added infrastructure that manipulates the tabstop positions
+    of the Tk text widget. However, it does so only when a 3-way diff is
+    shown and only so that it takes into account the one additional markup =
+at
+    the beginning of lines. This only achieved that alignment does not get
+    worse for 3-way diffs compared to regular patch text, but left misalign=
+ed
+    text in regular patch text unmodified.
+
+    Use and modify this infrastructure to shift tabstops by one position fo=
+r
+    regular patch text and two positions for 3-way diffs. Existing code
+    already resets the tabstops to an unshifted position when contents of
+    untracked files are displayed.
+
+    Signed-off-by: Chris Idema <github_chris_idema@proton.me>
+    [j6t: extend commit message]
+    Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+
+In particular there was no bug; this is a new feature.
+
+Thanks,
+-- Hannes
+
 
