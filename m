@@ -1,167 +1,240 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85B133D6F9
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 16:57:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D7C35B653
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 16:57:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772643452; cv=none; b=dpoGxMm62cW0SXeJ0CNoqx6hKwrQqYvkHm5yzauhme+2ytD56UlcWE2GSIPO1dKwm+pB43lvKrVH0L4Gp0rekpn/df81rf4iQB6nJmumMuUHicF2MJgv+/LifOZpsWPN4Mv/eIgUOqPNbBab+8tJUJrsCDIWb3HNi6wrEOtFMcQ=
+	t=1772643472; cv=none; b=CBRy5Vc8UkG4aRb3L9qZGfNz2vA7NDpLMU3seRHzhLvisBC6jcvKRsS+C6D+JekPwhc9cftncJVq+8OPmLFQ9ZVOPpZ6BpJs/OGxXUyK07c7quENIeFvvzGJP7OumwvV/1ZDHt9PpiMu4OlrBKyWc/gLSi+U/N9/gay48PtDx10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772643452; c=relaxed/simple;
-	bh=vrnujjlEZ/6K9ceS1ghErwqVCfosDHml+W9fWcpCupE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=upuFIMNIdA6aDPyK8ywkzAtW8vQo8su8a+qWYdGiGUb2fcjifndpdfUm5YJwdxtXxNRPes4x0QpN4Vc5wKQOlvYOZP9xclQ5S1TTPNsDdXCg18S7QFNZNg8I4XvmbE2oDRAQxZWL4AlwZIe31fy4h5Z7xzCeY8tiIRH9vH/6UKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AEVr/C4F; arc=none smtp.client-ip=209.85.167.182
+	s=arc-20240116; t=1772643472; c=relaxed/simple;
+	bh=Q4L9jQoT/Wyj7JXVxtFmd9PoPWiF1ChiNir+6KR+yAw=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=q9V4B1fAak4pDJYa8vELJuWMJZhmsVR4RFUBWGxqca0aDhqnSP+kSZ7a/rpCnclsN8JwORB/tBEDyIzBKbl02MkjWm4Q+TgbVSYReounKks0n28a4zXLCTOc5ITnRsIqooesHMJ6tgaD2damZmHU9h6D4Y+dskr7KnlOcbXNEpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c6StnG+R; arc=none smtp.client-ip=74.125.82.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AEVr/C4F"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-463a0e14b4cso3011165b6e.1
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 08:57:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c6StnG+R"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2be27fa54feso2555236eec.0
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 08:57:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772643449; x=1773248249; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IZuYCo9V/sHZKw1lRDgPC6efsMehU0SqDheW+YgRQZI=;
-        b=AEVr/C4F+qaHwP7zCRIYGMNKNC+jr8KLtJ4RQKcaYN1tKjmfQpefzXO1F8CQXsPrTt
-         PFWBSKIYv9YCKfnM8TLDfOvAM+V2b2rNSeJq9YdXrFK1D4aBVWI3A5JsJsvvhgGQTnw7
-         7pnxE5P5rvA21jeee8lWpQwMqMnt+1EUGE2u6p2++guJMl8rJISiWQnBIErG9zxcCl9I
-         rkbGtiXSc8+yXGnUeUWusrvRZFDnH+vEJaPMEJFpRzvhnN1vrbVHvWNDqFB8IwH+3ZBU
-         194djv7GZy+1TayUncIS50iBTzbJHnFyV2a4nmNS1fssSoawtSzofZpvbnieB6XFOLPY
-         GLDQ==
+        d=gmail.com; s=20230601; t=1772643470; x=1773248270; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2mJ5Wa3JrYeErdPS5rcvuwTe3dSuNNwyXJoPZ9kOFiM=;
+        b=c6StnG+RnGjy8SghgZaBL7Eb6QEM5eJxTUFISBHZD/SMD3rAoqMar/iv3p2KJF8k89
+         hBFSCVdSDdhAibDcisNd4NAaI9oe+EbOHofTmdyL66a/3UAFnd+LoYnVvwUI20ku8fkW
+         DcEwjY/oAgbY2LoFfyDvfVA5oN+qaL2iecFK+53ol2iAt9P13K1wa5muYjbiwK0EH9bf
+         r776DZZQUyK+nsW69i0IZukK3Casg6WZEfBgBtaWZjtzPaYJbvUE3FP5Tyx39MIjJqM1
+         cTzSK/2Q/lwGDd1aG/x/GVac8lEV05P0BT4WVsPKT3XEN9DKn5uuueRFZbpM4BWYu2gG
+         jknA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772643449; x=1773248249;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IZuYCo9V/sHZKw1lRDgPC6efsMehU0SqDheW+YgRQZI=;
-        b=fR2dGccn4LIgEoxlR1EENnnWStk1S5kK9a0k99T+dDYqIHva57NkT0y4kk70qLqunH
-         yr+6rjdJ5IbDfrLD0WsL/1qLnWEKZ/6fnAsAPnXSqmrdVQ0HTK7074E/Xpp0uhIEjaQr
-         8u7waFDaghtE7EhggR34/g+NnoOmEjOJamKazuAz1XxLyrX2Hxa/RFL3qJdgyKaE0+FG
-         LSF+QZiVhFLrBX+i/0bwO/Y+cwBwJQ4FgeR+K5e3zIuprm/jRL8vwcWsJUSkpjULp/KI
-         poBivZ1hN5Zd5QD0EiZVn8zkX5jQuCj4q9XAjJ+wG+vqlzqJH6abRChLpd0zz2q9zAQK
-         FbWw==
-X-Gm-Message-State: AOJu0Ywqa8UHb6wDwLjIRLs41x+55f+ZH/NJarnTXm0k+Tl5fYqCOjO/
-	T8GNd+rKrJIGjvjdQW27I13nXZOHuWOhVVqBFiMLcdYGzMnJp4rKOMJcaBly1w==
-X-Gm-Gg: ATEYQzxFYNNtfFyRFIePRtupASJxfOuG+kspmQRFsHwCa8D3dzd6u2XBZJpBVPggWWw
-	Yt8iugDcNtREIZGj1knSD0qkcgX/eeg8WSU2dLjk9NyYO5GC8PLrJOd7yK7Xt9VCsZC38lKoa8V
-	TrTwGQQoAESYlUBBZcusiaaHMxJwe3QAwUmWELA0cQU4y0ulxV05IxYrIzFDikdKP5MCEgdKK9W
-	zQMPG92Ondms1NyhoyZJxQ5jJGZKKWwGdvFh23NNs2cmW8pbZjHhZWVtjLmxfYEc2N7sHXe/upn
-	7F5ZfeaOT2WChVvMmCBtQ+lp2DzhYYX5QdnZq6LiWT70PVcQVZwz7Go+z2Gq+GiDNh13xvC4xPv
-	Xu5PSr+1bJjqG36wg0lznJ5vtwx7pRLh944tcm4iM8Wp0yEMgZ2TVtE5n1mR8gQC7kZP38MGl59
-	04Lx4xSR2vpC6Gvhkg
-X-Received: by 2002:a05:6808:4f6c:b0:463:f569:360b with SMTP id 5614622812f47-4651ad62a1cmr1306056b6e.56.1772643449616;
-        Wed, 04 Mar 2026 08:57:29 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-464bb3ab3e5sm11949575b6e.6.2026.03.04.08.57.29
+        d=1e100.net; s=20230601; t=1772643470; x=1773248270;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2mJ5Wa3JrYeErdPS5rcvuwTe3dSuNNwyXJoPZ9kOFiM=;
+        b=P4/nGsf1/MFiMVFRarDB8CTfiYzj3JKH2o249Zhdx1NWYhySvQaoYul0pQzY+ad1Sz
+         myPKvB1dOQYtfnro0eGUuVCR463Iwr4M/Slrh9we2hGt2+A5hnBekkBjxooML1DdR4r9
+         QKqPf3erlGN0WqU0YYeR0yI3ocIEFreB6wyhp78TO8kKojgUpbA/29UMmV7II1Fg0VcN
+         aQ7INk0rFq6lUNBKFLOGhUTrL0JLR+B3pTxDbuRpbwde8wq/zombby+Y00bVTWqVMvvV
+         Oc7kGUDN9GSd1hwpCHY2PrGw6CFlFuwjZ5tJjf25NKnncG7nGHUKXtDesiRyg3UVjPDE
+         meBQ==
+X-Gm-Message-State: AOJu0Ywx5bGQOZ0uSBbcfCyzx4EsTiLT2Dg4qU6BQHuTEcx83XRb5rvH
+	swM5ZazqTWqMCMHaX89gjt6pqFvhXon0u8OCsX5NfD79jUC54nI7C4/ngF1tcg==
+X-Gm-Gg: ATEYQzx9FB3n7+CMlrlC961dr8J4CWfXTTGViO3spLI8sgRC9xX4/J1KwcAZv0+pjim
+	DAPJ/Vyw9ZM8HNUMtLXtjcUXy6tXJ2RQow6KsEYyAVIQ4QlaRcpGuOv0IdB7Hn1T/qRiJnygYr8
+	wI71DsKBHKIt6Gm/o30SvHrIybfGPLA2F/tzi0OdZbjZAK/w+pMe//Dg2orWdA3VmSoowoMPbxq
+	LQJB0aHivmpU8d9nFQCm0TY94R2d+sc+vbPy033ZV+widM1TxvQMRV37/2fNJWfeYekpCs5dmac
+	G8jlN0r0lfk7jub3y6+EpGfoDLmPZKPMvXyXxwPZWFUU+ALxKkXiCMfI4h3LjkSveJV7Mp9WNgy
+	OeZTDPcIxtnSUALldnu4HNn+fGlChZ3aL6dl7AweHNTYIVChB3TjWqyg3IHdJ1XC6Rm9xrbFpmq
+	tfsIFpyUsolVPPdiXaUL3sy26veOc=
+X-Received: by 2002:a05:693c:3013:b0:2bd:b4d6:d9b0 with SMTP id 5a478bee46e88-2be30db32afmr1069997eec.0.1772643469776;
+        Wed, 04 Mar 2026 08:57:49 -0800 (PST)
+Received: from [127.0.0.1] ([172.184.210.171])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be0cc8517dsm8093079eec.30.2026.03.04.08.57.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 08:57:29 -0800 (PST)
-Date: Wed, 4 Mar 2026 10:57:26 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 02/17] odb: introduce "files" source
-Message-ID: <aahbTN_lFx1Jhy7U@denethor>
-References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
- <20260223-b4-pks-odb-source-pluggable-v1-2-253bac1db598@pks.im>
+        Wed, 04 Mar 2026 08:57:49 -0800 (PST)
+Message-Id: <pull.2224.git.git.1772643468305.gitgitgadget@gmail.com>
+From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 04 Mar 2026 16:57:48 +0000
+Subject: [PATCH] promisor-remote: prevent lazy-fetch recursion in child fetch
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-2-253bac1db598@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Paul Tarjan <github@paulisageek.com>,
+    Paul Tarjan <github@paulisageek.com>
 
-On 26/02/23 05:17PM, Patrick Steinhardt wrote:
-> Introduce a new "files" object database source. This source encapsulates
-> access to both loose object files and the packfile store, similar to how
-> the "files" backend for refs encapsulates access to loose refs and the
-> packed-refs file.
+From: Paul Tarjan <github@paulisageek.com>
 
-Makes sense.
+fetch_objects() spawns a child `git fetch` to lazily fill in missing
+objects. That child's index-pack, when it receives a thin pack
+containing a REF_DELTA against a still-missing base, explicitly
+calls promisor_remote_get_direct() — which is fetch_objects() again.
+If the base is truly unavailable (e.g. because many refs in the
+local store point at objects that have been garbage-collected on the
+server), each recursive lazy-fetch can trigger another, leading to
+unbounded recursion with runaway disk and process consumption.
 
-> Note that for now the "files" source is still a direct member of a
-> `struct odb_source`. This architecture will be reversed in the next
-> commit so that the files source contains a `struct odb_source`.
+The GIT_NO_LAZY_FETCH guard (introduced by e6d5479e7a (git: add
+--no-lazy-fetch option, 2021-08-31)) already exists at the top of
+fetch_objects(); the missing piece is propagating it into the child
+fetch's environment. Add that propagation so the child's
+index-pack, if it encounters a REF_DELTA against a missing base,
+hits the guard and fails fast instead of recursing.
 
-Ok so for now all ODB operations are going to reach directly into the
-contained "files" source.
+Depth-1 lazy fetch (the whole point of fetch_objects()) is
+unaffected: only the child and its descendants see the variable.
+With negotiationAlgorithm=noop the client advertises no "have"
+lines, so a well-behaved server sends requested objects
+un-deltified or deltified only against objects in the same pack;
+the child's index-pack should never need a depth-2 fetch. If it
+does, the server response was broken or the local store is already
+corrupt, and further fetching would not help.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> diff --git a/odb/source-files.h b/odb/source-files.h
-> new file mode 100644
-> index 0000000000..0b8bf773ca
-> --- /dev/null
-> +++ b/odb/source-files.h
-> @@ -0,0 +1,24 @@
-> +#ifndef ODB_SOURCE_FILES_H
-> +#define ODB_SOURCE_FILES_H
-> +
-> +struct odb_source_loose;
-> +struct odb_source;
-> +struct packfile_store;
-> +
-> +/*
-> + * The files object database source uses a combination of loose objects and
-> + * packfiles. It is the default backend used by Git to store objects.
-> + */
-> +struct odb_source_files {
-> +	struct odb_source *source;
+This is the same bug shape that 3a1ea94a49 (commit-graph.c: no lazy
+fetch in lookup_commit_in_graph(), 2022-07-01) addressed at a
+different entry point.
 
-I don't think we use this anywhere yet, but I suspect this is the
-placeholder for the "base" ODB source.
+Add a test that verifies the child fetch environment contains
+GIT_NO_LAZY_FETCH=1 via a reference-transaction hook, and that
+only one fetch subprocess is spawned.
 
-> +	struct odb_source_loose *loose;
-> +	struct packfile_store *packed;
+Cc: Jonathan Tan <jonathantanmy@google.com>
+Cc: Han Xin <hanxin.hx@bytedance.com>
+Cc: Jeff Hostetler <jeffhostetler@github.com>
+Cc: Christian Couder <christian.couder@gmail.com>
+Signed-off-by: Paul Tarjan <github@paulisageek.com>
+---
+    promisor-remote: prevent recursive lazy-fetch during index-pack
+    
+    fetch_objects() in promisor-remote.c spawns a child git fetch to lazily
+    fill missing objects. That child's index-pack --fix-thin, when it hits a
+    REF_DELTA against a still-missing base, calls
+    promisor_remote_get_direct() — which is fetch_objects() again. Unbounded
+    recursion.
+    
+    We hit this in production: 276 GB of promisor packs written in 90
+    minutes against a 100 GB monorepo with ~61K stale prefetch refs pointing
+    at GC'd commits. Every thin pack picked a bad delta base, and the
+    recursion fanned out until the mount filled.
+    
+    The fix is one line: propagate GIT_NO_LAZY_FETCH=1 into the child
+    fetch's environment. The guard already exists at the top of
+    fetch_objects() (added by e6d5479e7a, 2021); nothing was setting it in
+    the child. This is the same bug shape that Han Xin's 3a1ea94a49 (2022)
+    closed at lookup_commit_in_graph().
+    
+    Depth-1 lazy fetch (the whole point of fetch_objects()) is unaffected —
+    only the child and its descendants see the variable. With
+    negotiationAlgorithm=noop the client advertises no "have" lines, so a
+    well-behaved server sends objects un-deltified or deltified only against
+    objects in the same pack. A depth-2 fetch would not help; if the server
+    sends broken thin packs, recursing just makes it worse.
 
-So with this patch we are really just moving odb_source_loose and
-packfile_store into `struct odb_source_files`. Most of the other changes
-are just fallout from this structural change.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2224%2Fptarjan%2Fclaude%2Ffix-lazy-fetch-recursion-KP9Hl-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2224/ptarjan/claude/fix-lazy-fetch-recursion-KP9Hl-v1
+Pull-Request: https://github.com/git/git/pull/2224
 
-> +};
-> +
-> +/* Allocate and initialize a new object source. */
-> +struct odb_source_files *odb_source_files_new(struct odb_source *source);
-> +
-> +/* Free the object source and release all associated resources. */
-> +void odb_source_files_free(struct odb_source_files *files);
-> +
-> +#endif
-[snip]
-> diff --git a/odb/source.h b/odb/source.h
-> index 391d6d1e38..1c34265189 100644
-> --- a/odb/source.h
-> +++ b/odb/source.h
-> @@ -1,6 +1,8 @@
->  #ifndef ODB_SOURCE_H
->  #define ODB_SOURCE_H
->  
-> +#include "odb/source-files.h"
-> +
->  /*
->   * The source is the part of the object database that stores the actual
->   * objects. It thus encapsulates the logic to read and write the specific
-> @@ -19,11 +21,8 @@ struct odb_source {
->  	/* Object database that owns this object source. */
->  	struct object_database *odb;
->  
-> -	/* Private state for loose objects. */
-> -	struct odb_source_loose *loose;
-> -
-> -	/* Should only be accessed directly by packfile.c and midx.c. */
+ promisor-remote.c                           |  7 +++
+ t/meson.build                               |  1 +
+ t/t0412-promisor-no-lazy-fetch-recursion.sh | 49 +++++++++++++++++++++
+ 3 files changed, 57 insertions(+)
+ create mode 100755 t/t0412-promisor-no-lazy-fetch-recursion.sh
 
-Is there any value to keeping this comment around?
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 96fa215b06..35c7aab93d 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -42,6 +42,13 @@ static int fetch_objects(struct repository *repo,
+ 	child.in = -1;
+ 	if (repo != the_repository)
+ 		prepare_other_repo_env(&child.env, repo->gitdir);
++	/*
++	 * Prevent the child's index-pack from recursing back into
++	 * fetch_objects() when resolving REF_DELTA bases it does not
++	 * have.  With noop negotiation the server should never need
++	 * to send such deltas, so a depth-2 fetch would not help.
++	 */
++	strvec_pushf(&child.env, "%s=1", NO_LAZY_FETCH_ENVIRONMENT);
+ 	strvec_pushl(&child.args, "-c", "fetch.negotiationAlgorithm=noop",
+ 		     "fetch", remote_name, "--no-tags",
+ 		     "--no-write-fetch-head", "--recurse-submodules=no",
+diff --git a/t/meson.build b/t/meson.build
+index e5174ee575..0499533dff 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -141,6 +141,7 @@ integration_tests = [
+   't0303-credential-external.sh',
+   't0410-partial-clone.sh',
+   't0411-clone-from-partial.sh',
++  't0412-promisor-no-lazy-fetch-recursion.sh',
+   't0450-txt-doc-vs-help.sh',
+   't0500-progress-display.sh',
+   't0600-reffiles-backend.sh',
+diff --git a/t/t0412-promisor-no-lazy-fetch-recursion.sh b/t/t0412-promisor-no-lazy-fetch-recursion.sh
+new file mode 100755
+index 0000000000..ec203543d4
+--- /dev/null
++++ b/t/t0412-promisor-no-lazy-fetch-recursion.sh
+@@ -0,0 +1,49 @@
++#!/bin/sh
++
++test_description='promisor-remote: no recursive lazy-fetch
++
++Verify that fetch_objects() sets GIT_NO_LAZY_FETCH=1 in the child
++fetch environment, so that index-pack cannot recurse back into
++fetch_objects() when resolving REF_DELTA bases.
++'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_create_repo server &&
++	test_commit -C server foo &&
++	git -C server repack -a -d --write-bitmap-index &&
++
++	git clone "file://$(pwd)/server" client &&
++	HASH=$(git -C client rev-parse foo) &&
++	rm -rf client/.git/objects/* &&
++
++	git -C client config core.repositoryformatversion 1 &&
++	git -C client config extensions.partialclone "origin"
++'
++
++test_expect_success 'lazy-fetch spawns only one fetch subprocess' '
++	GIT_TRACE="$(pwd)/trace" git -C client cat-file -p "$HASH" &&
++
++	grep "git fetch" trace >fetches &&
++	test_line_count = 1 fetches
++'
++
++test_expect_success 'child of lazy-fetch has GIT_NO_LAZY_FETCH=1' '
++	rm -rf client/.git/objects/* &&
++
++	# Install a reference-transaction hook to record the env var
++	# as seen by processes inside the child fetch.
++	test_hook -C client reference-transaction <<-\EOF &&
++	echo "$GIT_NO_LAZY_FETCH" >>../env-in-child
++	EOF
++
++	rm -f env-in-child &&
++	git -C client cat-file -p "$HASH" &&
++
++	# The hook runs inside the child fetch, which should have
++	# GIT_NO_LAZY_FETCH=1 in its environment.
++	grep "^1$" env-in-child
++'
++
++test_done
 
-> -	struct packfile_store *packfiles;
-> +	/* The backend used to store objects. */
-> +	struct odb_source_files *files;
-
-For now we store a direct reference to the "files" ODB source, but I
-assume in the future this won't be the case and instead will cast the
-"base" ODB source into its concrete type as needed.
-
--Justin
+base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
+-- 
+gitgitgadget
