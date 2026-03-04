@@ -1,107 +1,132 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5536FC3
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 18:10:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04F03D75C4
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 18:15:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772647854; cv=none; b=pNB0PYd6iCQFx8yqpR1OwTfKL3hKafUKZJUn0c04WLOE5H9lTZF3hYDP/d4z/0tYnNZ2sdJZuq3qojCmpOWmS3Z1loVxw+kEOZhyQOc77C1P0PwNUHhYDJJ9AqsaWnNXrhlDvh0NPjeOPDy94GH+GlfxkBcIDNk3HrxGjb0UFHc=
+	t=1772648133; cv=none; b=RAItGq4g701cJYR72znqJ92ZPkmsoo0VA5k5xvsCvOCLAmvhsGAuTP8FzCXr32ECsGoN4j8og1zl3In4ulUXJawvUT012tmjmK3ZFrjqle+nkV2hTt4PJOy/oauXKTr0AvFKH+lkET2slXrKPVT9s7gSIwiZ7j46ikpTDuRl+H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772647854; c=relaxed/simple;
-	bh=RjEhWi5W3WnlbfUR0CSEprI2mltaHXPyHE+j957xQZk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ruKAd/L4n+obYh50hmIRpy3pyfrJz/aN0lpa/7nKcjUU1F7UnFLDhhIRJZ2BiNIcXjRb+DL+7w6YMus2wnHL68Wyza980IRGco3xGHVEZImF9DoOsKHx2WyybQsL+990EopmMwx3KDYTwh0IZLhj60DsnniY2rrkUSL49PJbOl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HQqVr6ku; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uS5hJmap; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772648133; c=relaxed/simple;
+	bh=kZCKYWKyg9DS8EoHsGaWFGh2Wl0poRQmQmTdw+w1+EA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=c4n9LW2ItcZHkA06PUzCBHQJ2yWag3wirtjwFgPwe4z6xjoryRsTWoCKCoh7EwbRiEdjKKO1vPwKJG01V7BqQSXjRwad5E7GAOV4Ihg+feqGu8YzS3gsD4QEZPz1Ak1RzTD9eDeatIWS1ZEwIHEKCXImWu2XYwfPtwbkynr8Jyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bkk6YNcH; arc=none smtp.client-ip=74.125.82.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HQqVr6ku";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uS5hJmap"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 356947A0230;
-	Wed,  4 Mar 2026 13:10:52 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 04 Mar 2026 13:10:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772647852; x=1772734252; bh=iJ9fCd0ZWf
-	ilXYQndZ8/12Zk+c0XGkyZVMofBXXG/Lw=; b=HQqVr6ku46aonQCX+d8tvwbYpT
-	iW1AdjYlFGfZBzNcATEZAz9UW7FTJ88l+yeB/HdUfgroX7CU+CqUKThXXufPOE1X
-	tFjqaJzkgLotn3Yqf4xECuWJxcBlCC0Ixsgy91i1glwUkQhvcVO+tHyQaHXx3sHu
-	mgDjNnS2QZu/LyjDMTe1aREfeRAAkFh8xNmTBwV//OSCC3PHhfaKV8cbfJyc0Rst
-	XD8yV9Oguq0xp3O90ohk2pHHjYZW3jgHgMbmqMFytp0hknogwpCjrNugc7fTyGum
-	IfSSXLwqh5jYTj+i4QE3gWAHltXlK9CyNPm6T8lFTOMtnMizOQwx4DgVrEpA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772647852; x=1772734252; bh=iJ9fCd0ZWfilXYQndZ8/12Zk+c0XGkyZVMo
-	fBXXG/Lw=; b=uS5hJmapH/zhcDJfOOzQkgmVOOXzhLLWDAllutSx234CAvaw+E0
-	g9ggmfJRC7c8ycmXXRaWnnVR9HE+CudTjho5cT6ZmNiNVjYq6HzU9/+onJyddIdD
-	8SuW2HGbv8iTVfEHux4wsmpVy0QjTCgYA5J5H0MEZhF8ugpDqx3ae0xYHiBhNxVl
-	km5mnqwJCicJfkMaVmlgf7MAixPiohRohwgRw6zkFM23M0Yt9FazbteOVE7brGDg
-	StpInJANC/7zb+aN9SdaA2gibVsZ3lezIdvUEn0na/pXhFgenzI+YW3ed0GKkhKs
-	Hs6k+OwLvCfP6JPNEvfVvtGAC+g0hG9IqtQ==
-X-ME-Sender: <xms:rHWoaf2Z_GkcKKqmd1NB5aD1kJUm1qqTJSfEKh6XF135bci8wBZewg>
-    <xme:rHWoaVjW9B_GDYBtCQpLgfUXn91Bq9FUY3FYE_KD5uRN2iEmMvgrIqH1ErFdrijMC
-    xxKidVHznofRisJrBvV3YGwhOlzNSYiuUL1mBfIBOE776epkYK88j4>
-X-ME-Received: <xmr:rHWoadRbcLGehiYmiZAcHERnQQA87cbBuhSAn8uux_3ln_oiKujQdYn2ZHtZCGXvAvQLNZTy4-xMu-6fiBHBkqeRoSwnSpWN8A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegudekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:rHWoaegUkueUZhOyMYsv_nlWCzHa9rpLNhLEALcS_fIUhqhPSc2XgA>
-    <xmx:rHWoaV7SPLgpFPFiTiM29e39QSVIRF_W9V5N5o2ZA9lw6bv3yGm8Hw>
-    <xmx:rHWoaTCHH5SqQR9EaQgH1RpSiRANPmB_6vV8IsGDRpsv5sUsuAY4QA>
-    <xmx:rHWoaUa59BLIYBNg8T8xuiXZ280NdoEUh0eyD6-PnkIKyLeVXXZlvg>
-    <xmx:rHWoaVpQ0r7KgSE5kF3I6yX_1HGl-a3o5za2-g3NmI619is9nSMyTOVO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 13:10:52 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH RFC 0/2] Makefile: deprecate autoconf build infrastructure
-In-Reply-To: <20260304-pks-autoconf-deprecation-v1-0-f5b611b13138@pks.im>
-	(Patrick Steinhardt's message of "Wed, 04 Mar 2026 09:22:59 +0100")
-References: <20260304-pks-autoconf-deprecation-v1-0-f5b611b13138@pks.im>
-Date: Wed, 04 Mar 2026 10:10:50 -0800
-Message-ID: <xmqq8qc78nyt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bkk6YNcH"
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-2bdd40d3c61so5890200eec.1
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 10:15:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772648129; x=1773252929; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UmuwVlSNcYGN0z2yoU7zYYEc5mUkisvlkjXgXsRAv7A=;
+        b=bkk6YNcHUTyLX7MElGq7YiEJucgcHSQaT8O7mYGuITWqzr2raStxAmL1xivZ/qW7L4
+         RPoYz/L4sW8wuoOX5ocXqTDJEzE9oG/bAz8+1oHozqgiQ/crwTvdU+V/uTiiQjoIfXHl
+         5JyhpeHCcVwXxqBUKYoTHLKcCIyYikO5HN5eNQJ8Ta5aZHbxlo0raf85CdIfLmfsvKp4
+         hskEwTjYR2p131AhX71Tt/EUJA62QmJPxqwhKt9bP18WeE3EvE6tzODRgYsD+ox3oouo
+         KUuWzTiYDQT5yHFEADfvfT+sDdL/AxvTwYVd6+Z5LUnP1Uy46bmnSqy8mTG4Z1+WpnLh
+         D09Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772648129; x=1773252929;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UmuwVlSNcYGN0z2yoU7zYYEc5mUkisvlkjXgXsRAv7A=;
+        b=ecA4TMp8x5lgI2eMVKS0LsfrQbhYrRAgt/2juJj0hFJslI4eYev/df7wBQGuuz9zD1
+         2Iv6OCv9D3dP7zofroRM6pQfDw0NOrMgG7cNhywAAH/U8oVUMp4loOqtZlc7A3xuB9NM
+         MIgexnN1T1CsFHxDpzPZRxANCtqK1AubGr9JqmqS9b3lTyRsfMx1n+lf2T24Xqbs62V4
+         zeNxr1XR8GRE6poHvh0fWmYBIlgM3iLm3hla+AR8zFMNKwnPjdXCWICj8G/YgefDiedE
+         oRX4h6OC2LVz6hwTIFew/eQhgnDZFU+GlSoIAFG1gB6xNzYOcZFYFzhntdpYXxLWM1ii
+         9PQA==
+X-Gm-Message-State: AOJu0YxnsHcfmHyKtDT0o1DCjJRjGSMam1tpYhG4lW8WmQkehMb01d9W
+	ZTpfXNulRf6OgnE0AVdfEehOWQf/gk83DQguaHbEH1Hjpiu3cX7/dzjo9hzrGQ==
+X-Gm-Gg: ATEYQzx7SCkcc8fC637zXVQv0XSxDW/QZEVT55iTiBffgCVEVwMHjk7s50YTfXwo4WB
+	ZKzrQEuGxpMCUWeGEoEWmfifjkBLtWSsbRLrVWIp5fTfmDY5S24QBBhGCHiXJoDsQYodYprC574
+	jgrh1Xz9TfsMjSkh61K8Mh2r1uSnWwCkLsuscytxdaG1hB1nrGmntt+sIdbzmSTzddVF3F20426
+	up5kB+RbZ9Bd5TqlQnPKsS7k2QMTg7iKAtfkVz6/QItZ5fTrQRanvsEJ/t3Yo8MCsCl4g6umFdz
+	lmrjP2Qp6lFsXcTFQJRdnkt5wojEg69Sl2z9Hv6pclaUV6LhSpNuNuNpEuoYdrcdGXTOSS02iSw
+	p+6mN9g48+vmSiGv3JMVbL7xSagRGZ1LCdeJ7gOoDVA23o/deKK+W7A51ILhn2kEoqCRf3CGaGG
+	YEOExFEgJZMu8qImDdCaUU6+cHPQ==
+X-Received: by 2002:a05:7300:ef97:b0:2ba:6c38:c79e with SMTP id 5a478bee46e88-2be311bce57mr974302eec.28.1772648128985;
+        Wed, 04 Mar 2026 10:15:28 -0800 (PST)
+Received: from [127.0.0.1] ([57.154.172.168])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bdd1e02f95sm15466177eec.13.2026.03.04.10.15.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 10:15:28 -0800 (PST)
+Message-Id: <4d4dec8fa161926e6f6ac822aff0db35353705eb.1772648125.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2147.v8.git.git.1772648125.gitgitgadget@gmail.com>
+References: <pull.2147.v7.git.git.1772065643.gitgitgadget@gmail.com>
+	<pull.2147.v8.git.git.1772648125.gitgitgadget@gmail.com>
+From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 04 Mar 2026 18:15:14 +0000
+Subject: [PATCH v8 01/12] fsmonitor: fix khash memory leak in do_handle_client
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Paul Tarjan <paul@paultarjan.com>,
+    Paul Tarjan <github@paulisageek.com>,
+    Paul Tarjan <github@paulisageek.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Paul Tarjan <github@paulisageek.com>
 
-> roundabout 1.5 years ago we had a long discussion that eventually led to
-> a rough consensus that we'd rather want to get rid of our autoconf build
-> infrastucture. This eventually led to the introduction of Meson to cover
-> this use case, which has stabilized for quite a while by now.
->
-> This patch series thus starts the deprecation period of the autoconf
-> build infrastructure. Target for removal is Git 2.55 for now, but I'm
-> very open for discussions here. I also assume that depending on feedback
-> from packagers we may need to adapt the timeline.
+The `shown` kh_str_t was freed with kh_release_str() at a point in
+the code only reachable in the non-trivial response path.  When the
+client receives a trivial response, the code jumps to the `cleanup`
+label, skipping the kh_release_str() call entirely and leaking the
+hash table.
 
-I do not consider autoconf a thing on its own; rather it is a mere
-extension to Makefile based build, isn't it?  So the declaration to
-say "we favor meson over autoconf" makes little sense, at least to
-me.
+Fix this by initializing `shown` to NULL and moving the cleanup to the
+`cleanup` label using kh_destroy_str(), which is safe to call on NULL.
+This ensures the hash table is freed regardless of which code path is
+taken.
 
-Asking which between Makefile and Meson should be the "primary"
-build environment is a different story, and the question does make
-sense, even though my answer may be different from yours ;-)
+Signed-off-by: Paul Tarjan <github@paulisageek.com>
+---
+ builtin/fsmonitor--daemon.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 242c594646..bc4571938c 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -671,7 +671,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 	const struct fsmonitor_batch *batch;
+ 	struct fsmonitor_batch *remainder = NULL;
+ 	intmax_t count = 0, duplicates = 0;
+-	kh_str_t *shown;
++	kh_str_t *shown = NULL;
+ 	int hash_ret;
+ 	int do_trivial = 0;
+ 	int do_flush = 0;
+@@ -909,8 +909,6 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 		total_response_len += payload.len;
+ 	}
+ 
+-	kh_release_str(shown);
+-
+ 	pthread_mutex_lock(&state->main_lock);
+ 
+ 	if (token_data->client_ref_count > 0)
+@@ -954,6 +952,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
+ 
+ cleanup:
++	kh_destroy_str(shown);
+ 	strbuf_release(&response_token);
+ 	strbuf_release(&requested_token_id);
+ 	strbuf_release(&payload);
+-- 
+gitgitgadget
+
