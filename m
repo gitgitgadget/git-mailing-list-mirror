@@ -1,187 +1,137 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135FE34F48F
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 08:23:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5D6373C16
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 09:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772612632; cv=none; b=rVbATRw5ij4BEPown/MRepqPJpnXIbo6DHMV8NWiyjZsIkKA+HD8HQ/TSvVjho1EmUzttDumCDF/6Fqqt7cCfFBwe8eyS8NY9oA2aGuUhuV+Xssb+oIxpfzg/FsutXSueF2nGoYjmSSnAZH/nijJT8HG2u0fTUeh6Xw7zEFeWV8=
+	t=1772617801; cv=none; b=sKMFv2L/7O7zGPIT4vz0nsh5wxcn4aLu0d98UmI091d+hDO9u2s+q1Y1lRhZEfhZW8o7MlgerAVirUhN2K7I1zgSCrjh6z4Up+MN1Tf7iXhS9NtyC+Fml3iIXbIy7Rf01xo0iVsPK4M1CPvaAOa8u4AOxyZzDOtV/zyFeUb4Hv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772612632; c=relaxed/simple;
-	bh=N2LV1RfG03f+2FqKLDLQn2mvgOuWkTUixzZpwqDwD8s=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cCkuDr/GKfEomhlO6XrxAmpPqC9xi/Po5FW6fTQqt6SSadDe4QF+vsWmqNQZ75z8A4roZdOXU8ODVo1CfwLx+46QwA6fFntEWP9xzeaDKFWP/YUJCI6JkzP0KBAmLI5e6juhU7v3CT9ZqqJhp1lj8zCrj/udUJofJayt+jn/jTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iv00LciO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rGPLFlCc; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1772617801; c=relaxed/simple;
+	bh=EFCmE6LL71dyRTLh1/C1LyaL8KRT4tk5qg0Anr1WoDI=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=rChFn8jRQccAhN6wnXZOavkSBk3WTHYY0YKdFQNDzPrY7fsfqx52MmVcP9WC00kyE/GxhS9eyvf+LSvrQHxRg7uSx8SM/Z4TfQZPvjOJAMddDj7g5yUZVBwwDwROgyzdtSZ0GkvnvvCBodvMhvPs8uptPrVIUXkx1w8NANAwpS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H6of2L/5; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iv00LciO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rGPLFlCc"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 414201400224
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 03:23:50 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 04 Mar 2026 03:23:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772612630;
-	 x=1772699030; bh=KBnvxM6I1VkxnmELLChCEzJ5CVXIs2rf5D7tZS+1noA=; b=
-	iv00LciOuk4sph65pHRISb3kO+f15GmGuCc3RC781ZuUhkbbbsOqvJ13PTMkEqjH
-	DxosGozVd7qKU8kF6b7D7nOozy7kfhQxgTWlan/rnE89elfwQOSMz+B/tz/WSJV5
-	vQTpodJTdY8HBM2bUgqJMUCJy54hzeeAxsaUu2Ds5bi6TiVs78sCStPVqirjjIki
-	uxy9p/B2D3GDLLvPXje4TsY/DM6hQQ0G4geZDnTEzSzLSbHt28skn9SsFL8vuzmA
-	M4KOUEOW1wJ/l9Pps0z+ZjTmEkelhXLlsNe9chICdjqqHX4TbGkvtfWQV5BEkXLp
-	7pg35Qd24WtNi3oKioU/yg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772612630; x=
-	1772699030; bh=KBnvxM6I1VkxnmELLChCEzJ5CVXIs2rf5D7tZS+1noA=; b=r
-	GPLFlCca1OmqetYri2G/Lh2RV3adcVF8MNJbUCxOp7tAB5JFfnMZCZDQCFn8Uq5Z
-	L/UK0ZsNglq8Ow7kHuRVosmpkCOURTxk9zFCtxssMgDRVCho+ahQpjflbnlBMndU
-	ElY1YAFE0pr89Xu8ElExgOUqle409yocHdgUxr0fV3eHgRNc8izA8UYrZgfVWwU1
-	Mx66YuNl9O9Was+Jim7ngHYn1DM7R3rdEMX0bjTixsLbw56jDkDoaw5nxftfhmUW
-	RMMjkv1qFBPFtce+9170LnXWA/NzhwSQMzGXYY+4HDQDgmKniPJCQvXMfG/cLue8
-	N44yWIpXBd+CYTezwoSNQ==
-X-ME-Sender: <xms:FuynaZJ4fAGgqjgtcaptd8tHanpYQxE5kT4jg7v2t7KoIY-jHwKsZA>
-    <xme:FuynaXLtDLXzxnCpTGTSg6Yts62qVQRVdIb86OiIHTKmb9P5dMAly4Wm8MKPY0atC
-    S5WvUeTedbVg_W3m9d2AIS1szECKsp65wZvGP4iq8DWovdz6Q>
-X-ME-Received: <xmr:FuynabEGY91V_3CulJ0LJELFgA-p0VYry4GO-RAD8A9ZagDj23x3rfRTrLl-yMR1y-PKryVqhq3bqKpkyAXpbcYk_10xEK0FjID24WwgRN1Nqw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedvleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
-    dmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefr
-    rghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrg
-    htthgvrhhnpefgleejleekveetgffhudejhfetgfdtfefhiedvgeehfefhteetgeeitedv
-    hfegveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhmrghkrdhinhenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:FuynacnUfYV1Kb2bd1uE2Sf3t_KkzWde4wxzJ_gw1hoiXdSNjRrduQ>
-    <xmx:FuynaYIctxygd_bEQOzUMAsviGLSkecz67ss5wv6ghGyvHY-ARSJBA>
-    <xmx:Fuynadb4atA_n-RRHeZgLJ-vnNzqaH0TEWNAHTsSLGmvPCoZa4DpZg>
-    <xmx:FuynaabW96o5PDtONfEYdr14AZWaYwEM2fTbk78lFIrgpG7prbHvyA>
-    <xmx:Fuynafi9231lxs-hw1GsHhyDVnKhsQa1LCXaEcUUmzlofWOnPvh2x7Sy>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 4 Mar 2026 03:23:49 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b5b33c23 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 4 Mar 2026 08:23:48 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 04 Mar 2026 09:23:01 +0100
-Subject: [PATCH RFC 2/2] Makefile: deprecate autoconf build infrastructure
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H6of2L/5"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-797ab169454so65383057b3.3
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 01:50:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772617799; x=1773222599; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fAtyVv3fFzwZVxsynh/38FI/gugP0ZorxiloyNtQZpk=;
+        b=H6of2L/58PvRJjMdlOZmSgBkgT4yfYhFDLKoZlr1fYSaS3FQfZusWDFuHebc0bUWae
+         qKU4B5T+NXvjwIrxkrWgHV4e2mSiPJErhjgbNjR+u1KGljXAkLontCK4/ApRH9QU6imP
+         4A0AfxmFjyj4eFYq3dpzmWHmxxMfDCH/D6x4nNRDLPbAXfADjLyhGm5Dghfh5ofF4ySt
+         CHfCPtyynwf6xiEIhMS5jihcuRzvcuOLFV4F5Z5aJX23S6pjyYspXNnSLxZ5wNx7et0+
+         MU90muhl1SiOGwhwOOOwejZW8gQg4jFup2xs6uEyvXZGzn9mZpfXBYnrl4W2HLxyiGaV
+         oIfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772617799; x=1773222599;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fAtyVv3fFzwZVxsynh/38FI/gugP0ZorxiloyNtQZpk=;
+        b=TF2fTiQxgM94aUT030/PSD6AZU/P5928FZW1sHnPiid0havBnjl+Ai/0G3j2YmHxDI
+         wmfVvalNiC3F+h1dn9auejPpfbEoy5sC2/jEz5c4hvH5FJlW+LeNQVmtgylMiTSCwBLu
+         DyHuqX+m0JaKowDkkaiUGfPdvaNvseRRFQcJpPsHRm9/zNTlchYB1JhhdqmwBF+4V2JR
+         2zNoxzw1tkY/JrM/M2slc/uQSQAWtwxgMR1ZS2bmwlZgv4UZa9hG6qtUlb3c7Hkx+qxK
+         4RRIppiEtUkS1e5XYS1VJpRjt3sWmu5tuwN6z1N/H0EkT5rpiJOfxTxxhWRxsd6Ym2nC
+         KB1A==
+X-Forwarded-Encrypted: i=1; AJvYcCUwjSdUhjjdc7FBZ+O79vlGJzu0xID+sIsTwQ/XFMj4oy8W1xBA9qWdJS4xTCz0WxicuJQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyokbypiA8NllqHoSrGxy+71w5YKQO24tZkeBjKG+LqDWyooktU
+	W0MkHxjZ/zpKg6vZORCXXDIReNFcAiYFGkTgRXiRVl/NL2hl135Wwnykc/ufVQ==
+X-Gm-Gg: ATEYQzxgBQs5r8TymK/HqUvM5wOd+B/IfW01Eg9M8zPX7iL5YmsojCeCAvbMvgoB1/l
+	09u73ZHSAYk7GNBZPihHQUQRCskzYdNLT7DUqjjPZLpAdm7uyQv0e+VrfH3fWy7mkT2floOPxw3
+	y7OO6l9howLE9yoIUjxw/IS9csletLn3GzSTTRH3CZr0y7CfDom6U7oRbD+x80nSl6XOFarQ2gH
+	9NLls3Ft2+3qTOhGHWBe7X0OTyL9U89zXURO9WZ8Kwui6I1Q3DCEeeqHjkfpr5mKXOorD5XKjzs
+	PxKwnj1ThsaKbRfdOh0IRTfyhiOYDUm647sMLxTUXDnfoM68kuOI4W2O4YlAdGrftN7Ihmhi6Yj
+	0+qwpXO9MJFlCfC2goCpm96l3C4U6lZh8Jqou1wSv/4p243kOsn8NEpB1Z1fpaHMk2M8Zt4ByR0
+	xeNegqTSXncMgNvRMPn0u/OMOyhPjYEfMAJJLrX+fTgqZvNEj22e2LG5cFKlF0u9sgIT3znz2GY
+	GtmJBdPbxrrj4NG3HaLoRzsYG/YDb2TDmQ8jHlBmKm6Cw==
+X-Received: by 2002:a81:a607:0:b0:798:6542:30f6 with SMTP id 00721157ae682-798c6ca5609mr8616017b3.37.1772617799311;
+        Wed, 04 Mar 2026 01:49:59 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:90eb:5600:9d3d:68c9:abaa:c459])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79876bf8103sm73907207b3.27.2026.03.04.01.49.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Mar 2026 01:49:58 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260304-pks-autoconf-deprecation-v1-2-f5b611b13138@pks.im>
-References: <20260304-pks-autoconf-deprecation-v1-0-f5b611b13138@pks.im>
-In-Reply-To: <20260304-pks-autoconf-deprecation-v1-0-f5b611b13138@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.3
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v3] add: support pre-add hook
+Date: Wed, 4 Mar 2026 04:49:47 -0500
+Message-Id: <33EBA399-2D24-48C7-AA1B-EBADF5E520D4@gmail.com>
+References: <xmqqy0k8a4xo.fsf@gitster.g>
+Cc: Chandra Kethi-Reddy via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Chandra Kethi-Reddy <chandrakr@pm.me>
+In-Reply-To: <xmqqy0k8a4xo.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (21F90)
 
-Git currently ships with three-and-a-half build systems:
 
-  - Our plain Makefile.
+> Le 3 mars 2026 =C3=A0 18:06, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
+it :
+>=20
+> =EF=BB=BF"Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>=20
+>> "git add" has no hook that lets users inspect what is about to be
+>> staged. Users who want to reject certain paths or content must
+>> wrap the command in a shell alias or wait for pre-commit, which
+>> fires too late to prevent staging.
+>=20
+> I do not think the above would convince readers that "preventing to
+> add" is a worthy goal in the first place.  If you "git add foo" by
+> mistake and wish you had this hook to prevent 'foo' from getting
+> added ever, you can easily "git reset foo" to undo it.
 
-  - Meson, which has been introduced rather recently.
+It=E2=80=99s also not clear to me how the proposed hook could inspect =E2=80=
+=9Cgit add A B=E2=80=9D and reject A but permit B, but maybe that=E2=80=99s a=
+ non-goals.=20
 
-  - CMake, which is part of "contrib/" and used for Git for Windows
-    development.
+>> diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
+>> index 056553788d..657e14d306 100644
+>> --- a/Documentation/githooks.adoc
+>> +++ b/Documentation/githooks.adoc
+>> @@ -94,6 +94,36 @@ and is invoked after the patch is applied and a commit=
+ is made.
+>> This hook is meant primarily for notification, and cannot affect
+>> the outcome of `git am`.
+>>=20
+>> +pre-add
+>> +~~~~~~~
+>> +
+>> +This hook is invoked by linkgit:git-add[1], and can be bypassed with the=
 
-  - autoconf, which only counts as half a build system as it is
-    integrated with our Makefile.
+>> +`--no-verify` option. It is not invoked for `--interactive`, `--patch`,
+>> +`--edit`, or `--dry-run`.
+>> +
+>> +It takes two parameters: the path to the index file for this invocation
+>=20
+> Elsewhere you called these two files "arguments" but here you say
+> "parameters".  Let's be consistent.
+>=20
+>> +of `git add`, and the path to the lockfile containing the proposed
+>> +index after staging. It does not read from standard input. If no index
+>> +exists yet, the first parameter names a path that does not exist and
+>> +should be treated as an empty index.
 
-Out of these, the autoconf infrastructure is probably by far the most
-unloved one. Its syntax is arcane, it has bugs, and it is generally not
-recommended to use it. This has led to a rather long discussion [1],
-where the project had general consensus that this infrastructure is not
-exactly loved and that it'd rather want to get rid of it in the long
-term.
+Saying =E2=80=9Cit [the hook] does not read from standard in=E2=80=9D feels p=
+roscriptive rather than descriptive. Why couldn=E2=80=99t I write a short sc=
+ript that asked for confirmation of the paths being added via stdin?
 
-This discussion eventually led to the addition of Meson as a modern
-replacement that can cover the autoconfiguration part of our autoconf
-infrastructure. Meson has by now been around for a bit and has generally
-stabilized over the last couple releases. With the recent addition of
-support for gitk and git-gui it should now support all features that are
-required by distributions to use it. In fact, some distributions like
-Gentoo use Meson already, and GitLab uses Meson for its production
-builds of Git. So it should overall be ready for distributions to use.
-
-Deprecate the autoconf infrastructure so that we error out by default
-with a hint what packagers are expected to use instead. This behaviour
-can be overridden by passing "--disable-autoconf-deprecation", so that
-distros have time to adapt to the change. Furthermore, packagers are
-told to send us an email in case they cannot use neither the Makefile,
-nor the Meson build system, with a hint why that is.
-
-Note that the date for removal is set to Git 2.55 for now. As the change
-is generally not user-facing but rather packager-facing it is not
-considered to be a breaking change. That being said, depending on the
-feedback we get from packagers we may adjust the timeline to match their
-reality.
-
-[1]: https://lore.kernel.org/git/GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com/
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- configure.ac | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
-
-diff --git a/configure.ac b/configure.ac
-index cfb50112bf..d7e221f62d 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -148,6 +148,38 @@ AC_CONFIG_SRCDIR([git.c])
- 
- config_file=config.mak.autogen
- config_in=config.mak.in
-+#
-+# Deprecation warning for the autoconf build system
-+AC_ARG_ENABLE([autoconf-deprecation],
-+  AS_HELP_STRING([--disable-autoconf-deprecation],
-+                 [allow use of the deprecated autoconf build system (use Make or Meson instead)]),
-+  [autoconf_deprecation=$enableval],
-+  [autoconf_deprecation=yes])
-+
-+AS_IF([test "x$autoconf_deprecation" = "xyes"],
-+  [AC_MSG_ERROR([The autoconf build system is deprecated and will be removed in
-+Git 2.55. The autoconf infrastructure had been generally neglected for a long
-+time: it is missing features exposed by our Makefile and has bugs that went
-+unfixed, and its use has generally been discouraged.
-+
-+Alternatively, you can either use the Makefile directly, or use Meson in case
-+you depend on autoconfiguration for your system:
-+
-+  meson setup build
-+  meson compile -C build
-+  meson install -C build
-+
-+To override this error and proceed anyway, re-run with:
-+
-+  ./configure --disable-autoconf-deprecation
-+
-+Please note that the autoconf infrastructure will be removed soon, and at this
-+point the workaround will stop working. If you have strong reasons why you can
-+use neither the Makefile nor Meson, then please send us an email to tell us
-+about your specific use case.
-+])])
-+
-+AC_MSG_WARN([The autoconf build system is deprecated. Continuing anyway at your own risk.])
- 
- GIT_CONF_SUBST([AUTOCONFIGURED], [YesPlease])
- 
-
--- 
-2.53.0.697.g625c4fb2da.dirty
-
+Or perhaps we mean that Git does not write anything to the hook=E2=80=99s st=
+din=E2=80=A6 at which point I wonder if Junio=E2=80=99s =E2=80=9Clet=E2=80=99=
+s not mention that we don=E2=80=99t do this unusual thing=E2=80=9D applies? I=
+ haven=E2=80=99t looked at how the rest of our documentation describes hooks=
+ that aren=E2=80=99t fed input via stdin.=20=
