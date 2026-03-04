@@ -1,226 +1,376 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DB33321D8
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 12:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB3B3A872F
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 12:25:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772626802; cv=none; b=YvPrpdfD6OAII+E5amH05BDH8mOEMjSH+AVPfY/ubec4BgAQYulv3zaLTvGeOTmXnC7dcslgnFy7/Zyc9KirNFMkquQ4fY4ZZNb/YOY59wpqagBVSB/s8nJ5IoYw7wWSuFx4u857yjO1pHtv4VsobGoMtondmwC3pPQ8W+V5x2M=
+	t=1772627137; cv=none; b=aoagMavG7xIhzU6FEXD8xmiE8VtIL5pWp8GHgmYmR6ilxD6o1CDIqp25dnasqA5XwPqIrgs08//kH+9+Zacdfh9RDyZqoKv0TMaivxmWkDKZ9WQ4Gbku6Ee42tdjD1c4mFsTmTWkHIov7ECjGEkMOQVwFnMCO8v3DWIDIBdrufM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772626802; c=relaxed/simple;
-	bh=RGsTLmt2wobuUzVxDz/NSn0TPDwz5psFXtoqqGYH+Hw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tp3A9UbUHBMWXQNBgyuMv344b6kOky3Ea2NOFhNMMHRa8SMzms+Uv5lgafImTPr1Mle6ARlBiRt53PVyI4HJW52IVAaoIo6iPqlsbGEPvlY4O4Ig+l/+EPNEU7WO8GqKJREnSzYAsf63NT0+1sZg6rWpN2rgXD2FEgTclAjoNoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e9zGYNmC; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1772627137; c=relaxed/simple;
+	bh=95jzqMyRavP9g8OC5SO+gJe53Mtcbp7LyUHby+zC2l0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=fo4DvIjgzY2qiWikML4e5Uu8PbelKBYVm5hBcknFdVbnnuxTLERrWcVbBC0hG+cNv2FdR+4sxOpxSi6FgOLIpIbG/yO9dYuk6vK5lwCKHoCyAK3o/q7s5ox2u8lvUEfBm9jvC0gHYBnHOsPqQCi5MeBHX6iTnB1Q/1rlRoqmw58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WsifaaLS; arc=none smtp.client-ip=209.85.160.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e9zGYNmC"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-48372efa020so59737385e9.2
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 04:20:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WsifaaLS"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-503347dea84so74182811cf.3
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 04:25:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772626799; x=1773231599; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XTngy680fvx+CLwgwUVFcRJnFyxMi7V3kfQ3CrM1jXg=;
-        b=e9zGYNmC3+A8GhrAcMcCOAxLhSk7u6jjKhf6CcxN7nEsTlbCruWj4faZPCE7S2ws6w
-         6fqznGKWnCAT2XY0N/X1G48qV45yXILAY+AdO3CFLop8aYFUlLkyVubfNnSWxyC4kjp7
-         PUvCMzSvXyjrPd1+DWmbS8vSjupACJwygGrtBhuIkFGRpeIoS9PKR5/o2UERACpgzGC2
-         vJteYyO+Wp5fKbc501cOqb3e9VH4WubQUt/IqoH74DN2HSzXCB2IG+9YcX5sFfZo5cNd
-         cCfNETpKGouVetev0hTAJ9n1+OMXXl9IsU1dyhrpHLrJZ6dp/AhOyxmVMU7m157fwQ4y
-         sLbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772626799; x=1773231599;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772627132; x=1773231932; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XTngy680fvx+CLwgwUVFcRJnFyxMi7V3kfQ3CrM1jXg=;
-        b=bmZRh6QkSteXsG5IRoSEFfJRId3aw68N3oR0RY4jjlAtYOpfblsjp6OERIOmjEqJmm
-         1cj7slaTfbXl2y7a3Rv1F1yk/Y7WdlZbgupCd7mNdZ3o55rCYLgr73Dvj7buDzQJamhe
-         FjaAr2iyYVRbt0l7NKxEw3uGsa6T7kPhOdxjDZgd4zJrS3nBEzHSB//RygEHofOZiEfQ
-         cWOBPZM0Dl8/uFGMftn2A9Wpdnh62AKyQ0+qnquuhGSGuwsTQt9xmnSVxw7BLPL2hT86
-         kBU3ZzU2OIcJqD/1zqNXLrG8G+o+ESucab+MB5TVw5h3GpcnKzFzQ+vCmz5EIh0E5G3n
-         Il6g==
-X-Gm-Message-State: AOJu0YwNUQY14UiNuX/JaYm9KJhNdNfWkrfcq2omtrI3pylQyF11eaFA
-	ZfoUOezeVmkMOan2LEcwVL+zr4j/iVll4HrzZJq/3ib4vN5k9KXSCTQ8urjjezI=
-X-Gm-Gg: ATEYQzzCCTWldoeadrRf5XfudMeOxd/rxmewIuAE6V7JURJyXTA3YaEqAqB31cKZUAb
-	l4FreG7Uvtzgcgny6vG8Vl1OJ3P6dhdPe2w8hClfE7R+pxJokjdZIJtGKJmKJKgMyC4NSN/UkSN
-	wuhkXV2StJVwVNu+aHdfUTO3bvFFvHRJwPqziu38iAUPnv87NvmcLqsu8Nxx6hCh//zJQs/SAFY
-	gRVe8MlSwtClmd498+dVoQ/LfzwuxTUvv6nkQ2dRI3B1kuXMf3uW6789JQawiUBIBu3eMvrJP2L
-	nXVtGOq6ucHi+3/eJH2T7neS1dWVdmg+p3YnhhXkSB64moCxYDlEsUNEphompwg1vu3NjVpRMib
-	54INaa5nSL9bH5QHdyyR62jWIjdWUko7x2X8BKzmz4e7bKyTwMoD4yI2/AH7M4umI8OOPRYzmE7
-	lemFfu4R0l1BlT2mejhLKi8QLJHNEjpaJQQ85nFTq4k8lxfyTHQgxet5X39ybDvjKz5wVbBBrai
-	eMqxMxbEpdTgCUDc/GStu83vO9f88FGQw==
-X-Received: by 2002:a05:600c:64ce:b0:47e:e807:a05a with SMTP id 5b1f17b1804b1-485198b32b8mr26436405e9.33.1772626798789;
-        Wed, 04 Mar 2026 04:19:58 -0800 (PST)
-Received: from Mac.lan (93-35-138-59.ip55.fastwebnet.it. [93.35.138.59])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439b1b97927sm27892038f8f.28.2026.03.04.04.19.58
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 04 Mar 2026 04:19:58 -0800 (PST)
-From: Francesco Paparatto <francescopaparatto@gmail.com>
-To: git@vger.kernel.org
-Cc: Francesco Paparatto <francescopaparatto@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t3310: avoid hiding failures from rev-parse in command substitutions
-Date: Wed,  4 Mar 2026 13:19:55 +0100
-Message-ID: <20260304121955.73794-1-francescopaparatto@gmail.com>
-X-Mailer: git-send-email 2.52.0
+        bh=rFq3ZisNUIvDNiSk1VPsXbnrC+fTSwLnTZAn5EOqwqs=;
+        b=WsifaaLSguNkr5YXfVwx0A401nHdeCmQx6R07Di7LU9ge6rq08OFQ3suDX5CnhhPi+
+         H3BnwzkqW1hMqmjigGvesP53YUoNc9IGAYyZ7lKjBLDcSaEOPZH7xoIImz1iUEKBhr8K
+         JK6PaLmKVvqCxfWoN3YP+E9ZfPpmtdkS17LXbq24Eg1mLE09KXaHZSjO7Mur7z9QkuSR
+         G2hNAuu5HIB6C/54uPNMiNJR44/jpyOTXSfjP0nXhtQjg3pmuNpyE+k5NF9DS1+tkm2d
+         4RVzA5RJAnAJzfweM/iKBZ8NnCSZL9rIuDsrF97+M10Y1kB5e89f/+0VLawxbnRcXIUn
+         PFZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772627132; x=1773231932;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=rFq3ZisNUIvDNiSk1VPsXbnrC+fTSwLnTZAn5EOqwqs=;
+        b=n2fznpUdFRChSaNLIHhS6GajRTah3iK0f8mQYfW5ZaYIZWQCLtA3VfRonoebnHZK0S
+         6dHPwKoRQQVnGwupAWlBzatbwwVJcKfnDtQaN1bM+nmRi7TnzE6oQ9D4x2BELH4q5lZF
+         0ZEvE1Kqh4NjFkdW9oxGdMmgKg2WYpxdzDBkl2gyVXzKme0JfWX7FkkCcV+zRhXRHZlx
+         4t68Djwg4qCqZL1fUpYk8d5rTGS/FkiopBePp50D271CNwcy/1s2jU+LycCbNfEbKw7R
+         h3ny1YzcmpC0fhSu0O0lf4Q/UnhspsRAHdAWAewUZpjTbGRerPlKEMyZDcPgtcMRUOgp
+         zZ6g==
+X-Gm-Message-State: AOJu0YyRyOb68mPaqcGJeLO8bOEM5dt/KLpuATUROYaIVCd+gO1iv2/J
+	AMFN0vQ+bpIm5kiytA3e/uohJN6LGYATpcm9LRrb7/i7SL5VB06nduceYi0LEg==
+X-Gm-Gg: ATEYQzz55gPUxSSu59MJyTLtXuCE9CG7P0go6sWRRiRhwI9V1UfRYPRezbPxgDzAwRZ
+	+RqMfz9znF6dyjcZUCvxxhexnPbM9h4Bg9MwkRGTg1UCcjmBvedzOnDI9KxtXdQ7rKMgW8IYCNE
+	utYpwXQZuYFvYe5Onrpp+ANb55ZUJJzeGiZJYoUYeBn3+XRfnH8xuXEBP18QqpxqWHpQm46GP56
+	BCUW2/DIhdkPInJOFK/aJSqSj15bCf0NOgkdcCa8fzoPAHZMcknI10qum0fL1sJffmc3Pnenx9N
+	3bbCEXfR9LV9UDGajiz+7TV7QFKjPF4/hy0eZ862JzsVfv414dJoWipytz2CjhNBZdRQb/alKy4
+	SNQsWW2FBLMY730SoQKo4fHZYT/9gWfmpEWc6vA9Bu9et4RSHRIv0FD/ZIhWt9JjgHEGLDz3ZAy
+	r3005aL/PqzNjS4QPPJXBa9L7M
+X-Received: by 2002:a05:622a:1883:b0:506:1d7a:7250 with SMTP id d75a77b69052e-508db3d666amr19646941cf.66.1772627132447;
+        Wed, 04 Mar 2026 04:25:32 -0800 (PST)
+Received: from [127.0.0.1] ([4.227.135.148])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50744afa7d7sm153313601cf.32.2026.03.04.04.25.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 04:25:31 -0800 (PST)
+Message-Id: <pull.2138.v31.git.git.1772627131.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v30.git.git.1772102022.gitgitgadget@gmail.com>
+References: <pull.2138.v30.git.git.1772102022.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 04 Mar 2026 12:25:29 +0000
+Subject: [PATCH v31 0/2] status: add status.compareBranches config for multiple branch comparisons
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-Running `git` commands inside command substitutions like
+cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
+ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
+cc: Ben Knoble ben.knoble@gmail.com cc: "Kristoffer Haugsbakk"
+kristofferhaugsbakk@fastmail.com cc: Phillip Wood phillip.wood123@gmail.com
+cc: Nico Williams nico@cryptonector.com cc: Patrick Steinhardt ps@pks.im cc:
+Jeff King peff@peff.net
 
-    test "$(git rev-parse A)" = "$(git rev-parse B)"
+Harald Nordgren (2):
+  refactor format_branch_comparison in preparation
+  status: add status.compareBranches config for multiple branch
+    comparisons
 
-can hide failures from the `git` invocations. Extract the
-`rev-parse` calls into variables so failures are not ignored.
+ Documentation/config/status.adoc |  25 +++
+ remote.c                         | 178 ++++++++++++----
+ t/t6040-tracking-info.sh         | 354 +++++++++++++++++++++++++++++++
+ 3 files changed, 520 insertions(+), 37 deletions(-)
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Francesco Paparatto <francescopaparatto@gmail.com>
----
- t/t3310-notes-merge-manual-resolve.sh | 54 ++++++++++++++++++---------
- 1 file changed, 36 insertions(+), 18 deletions(-)
 
-diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
-index f0054b0a39..92a5951331 100755
---- a/t/t3310-notes-merge-manual-resolve.sh
-+++ b/t/t3310-notes-merge-manual-resolve.sh
-@@ -227,7 +227,8 @@ test_expect_success 'merge z into m (== y) with default ("manual") resolver => C
- 	# Verify that current notes tree (pre-merge) has not changed (m == y)
- 	verify_notes y &&
- 	verify_notes m &&
--	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
-+	m=$(git rev-parse refs/notes/m) &&
-+	test "$m" = "$(cat pre_merge_y)"
- '
- 
- cat <<EOF | sort >expect_notes_z
-@@ -375,8 +376,10 @@ EOF
- 	git notes merge --commit &&
- 	notes_merge_files_gone &&
- 	# Merge commit has pre-merge y and pre-merge z as parents
--	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
--	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
-+	m1=$(git rev-parse refs/notes/m^1) &&
-+	m2=$(git rev-parse refs/notes/m^2) &&
-+	test "$m1" = "$(cat pre_merge_y)" &&
-+	test "$m2" = "$(cat pre_merge_z)" &&
- 	# Merge commit mentions the notes refs merged
- 	git log -1 --format=%B refs/notes/m > merge_commit_msg &&
- 	grep -q refs/notes/m merge_commit_msg &&
-@@ -428,14 +431,16 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
- 	# Verify that current notes tree (pre-merge) has not changed (m == y)
- 	verify_notes y &&
- 	verify_notes m &&
--	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
-+	m=$(git rev-parse refs/notes/m) &&
-+	test "$m" = "$(cat pre_merge_y)"
- '
- 
- test_expect_success 'abort notes merge' '
- 	git notes merge --abort &&
- 	notes_merge_files_gone &&
- 	# m has not moved (still == y)
--	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)" &&
-+	m=$(git rev-parse refs/notes/m) &&
-+	test "$m" = "$(cat pre_merge_y)" &&
- 	# Verify that other notes refs has not changed (w, x, y and z)
- 	verify_notes w &&
- 	verify_notes x &&
-@@ -460,7 +465,8 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
- 	# Verify that current notes tree (pre-merge) has not changed (m == y)
- 	verify_notes y &&
- 	verify_notes m &&
--	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
-+	m=$(git rev-parse refs/notes/m) &&
-+	test "$m" = "$(cat pre_merge_y)"
- '
- 
- cat <<EOF | sort >expect_notes_m
-@@ -500,8 +506,10 @@ EOF
- 	git notes merge --commit &&
- 	notes_merge_files_gone &&
- 	# Merge commit has pre-merge y and pre-merge z as parents
--	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
--	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
-+	m1=$(git rev-parse refs/notes/m^1) &&
-+	m2=$(git rev-parse refs/notes/m^2) &&
-+	test "$m1" = "$(cat pre_merge_y)" &&
-+	test "$m2" = "$(cat pre_merge_z)" &&
- 	# Merge commit mentions the notes refs merged
- 	git log -1 --format=%B refs/notes/m > merge_commit_msg &&
- 	grep -q refs/notes/m merge_commit_msg &&
-@@ -539,7 +547,8 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
- 	# Verify that current notes tree (pre-merge) has not changed (m == y)
- 	verify_notes y &&
- 	verify_notes m &&
--	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
-+	m=$(git rev-parse refs/notes/m) &&
-+	test "$m" = "$(cat pre_merge_y)"
- '
- 
- cp expect_notes_w expect_notes_m
-@@ -548,7 +557,9 @@ cp expect_log_w expect_log_m
- test_expect_success 'reset notes ref m to somewhere else (w)' '
- 	git update-ref refs/notes/m refs/notes/w &&
- 	verify_notes m &&
--	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
-+	m=$(git rev-parse refs/notes/m) &&
-+	w=$(git rev-parse refs/notes/w) &&
-+	test "$m" = "$w"
- '
- 
- test_expect_success 'fail to finalize conflicting merge if underlying ref has moved in the meantime (m != NOTES_MERGE_PARTIAL^1)' '
-@@ -569,13 +580,17 @@ EOF
- 	test_path_is_file .git/NOTES_MERGE_WORKTREE/$commit_sha3 &&
- 	test_path_is_file .git/NOTES_MERGE_WORKTREE/$commit_sha4 &&
- 	# Refs are unchanged
--	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)" &&
--	test "$(git rev-parse refs/notes/y)" = "$(git rev-parse NOTES_MERGE_PARTIAL^1)" &&
--	test "$(git rev-parse refs/notes/m)" != "$(git rev-parse NOTES_MERGE_PARTIAL^1)" &&
-+	m=$(git rev-parse refs/notes/m) &&
-+	w=$(git rev-parse refs/notes/w) &&
-+	y=$(git rev-parse refs/notes/y) &&
-+	p1=$(git rev-parse NOTES_MERGE_PARTIAL^1) &&
-+	test "$m" = "$w" &&
-+	test "$y" = "$p1" &&
-+	test "$m" != "$p1" &&
- 	# Mention refs/notes/m, and its current and expected value in output
- 	test_grep -q "refs/notes/m" output &&
--	test_grep -q "$(git rev-parse refs/notes/m)" output &&
--	test_grep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output &&
-+	test_grep -q "$m" output &&
-+	test_grep -q "$p1" output &&
- 	# Verify that other notes refs has not changed (w, x, y and z)
- 	verify_notes w &&
- 	verify_notes x &&
-@@ -587,7 +602,9 @@ test_expect_success 'resolve situation by aborting the notes merge' '
- 	git notes merge --abort &&
- 	notes_merge_files_gone &&
- 	# m has not moved (still == w)
--	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)" &&
-+	m=$(git rev-parse refs/notes/m) &&
-+	w=$(git rev-parse refs/notes/w) &&
-+	test "$m" = "$w" &&
- 	# Verify that other notes refs has not changed (w, x, y and z)
- 	verify_notes w &&
- 	verify_notes x &&
-@@ -606,8 +623,9 @@ test_expect_success 'switch cwd before committing notes merge' '
- 	test_must_fail git notes merge refs/notes/other &&
- 	(
- 		cd .git/NOTES_MERGE_WORKTREE &&
--		echo "foo" > $(git rev-parse HEAD) &&
--		echo "bar" >> $(git rev-parse HEAD) &&
-+		oid=$(git rev-parse HEAD) &&
-+		echo "foo" >"$oid" &&
-+		echo "bar" >>"$oid" &&
- 		git notes merge --commit
- 	) &&
- 	git notes show HEAD > actual_notes &&
+base-commit: 50d063e335afd5828fbb9de2f2b2fb44fd884d2b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v31
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v31
+Pull-Request: https://github.com/git/git/pull/2138
+
+Range-diff vs v30:
+
+ 1:  7f517b8c7f = 1:  320c1ce55a refactor format_branch_comparison in preparation
+ 2:  501bd40294 ! 2:  f07ccb278c status: add status.compareBranches config for multiple branch comparisons
+     @@ Documentation/config/status.adoc: status.aheadBehind::
+      +If not set, the default behavior is equivalent to `@{upstream}`, which
+      +compares against the configured upstream tracking branch.
+      ++
+     ++The entries are shown in the order they appear in the configuration.
+     ++Duplicate entries that resolve to the same ref are suppressed after
+     ++their first occurrence, so `@{push} @{upstream} @{push}` shows at
+     ++most two comparisons.  When `@{upstream}` and `@{push}` resolve to
+     ++the same remote-tracking branch, only one comparison is shown.
+     +++
+      +Example:
+      ++
+      +----
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+       '
+       
+      +test_expect_success 'status tracking origin/main shows only main' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout b4 &&
+     -+		git status >../actual
+     -+	) &&
+     ++	git -C test checkout b4 &&
+     ++	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch b4
+      +	Your branch is ahead of ${SQ}origin/main${SQ} by 2 commits.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status --no-ahead-behind tracking origin/main shows only main' '
+     -+	(
+     -+		cd test &&
+     -+		git checkout b4 &&
+     -+		git status --no-ahead-behind >../actual
+     -+	) &&
+     ++	git -C test checkout b4 &&
+     ++	git -C test status --no-ahead-behind >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch b4
+      +	Your branch and ${SQ}origin/main${SQ} refer to different commits.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	test_cmp expect actual
+      +'
+      +
+     -+test_expect_success 'status.compareBranches from upstream has no duplicates' '
+     ++test_expect_success 'status.compareBranches deduplicates when upstream and push are the same' '
+      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+      +	git -C test checkout main &&
+      +	git -C test status >actual &&
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	test_cmp expect actual
+      +'
+      +
+     -+test_expect_success 'status.compareBranches shows ahead of both upstream and push branch' '
+     ++test_expect_success 'status.compareBranches with only upstream shows only upstream' '
+     ++	test_config -C test status.compareBranches "@{upstream}" &&
+     ++	git -C test checkout main &&
+     ++	git -C test status >actual &&
+     ++	cat >expect <<-EOF &&
+     ++	On branch main
+     ++	Your branch is up to date with ${SQ}origin/main${SQ}.
+     ++
+     ++	nothing to commit, working tree clean
+     ++	EOF
+     ++	test_cmp expect actual
+     ++'
+     ++
+     ++test_expect_success 'status.compareBranches with only push shows only push' '
+      +	test_config -C test push.default current &&
+     -+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	test_config -C test status.compareBranches "@{push}" &&
+      +	git -C test checkout -b feature2 origin/main &&
+      +	git -C test push origin HEAD &&
+      +	(cd test && advance work) &&
+      +	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature2
+     ++	Your branch is ahead of ${SQ}origin/feature2${SQ} by 1 commit.
+     ++	  (use "git push" to publish your local commits)
+     ++
+     ++	nothing to commit, working tree clean
+     ++	EOF
+     ++	test_cmp expect actual
+     ++'
+     ++
+     ++test_expect_success 'status.compareBranches shows ahead of both upstream and push branch' '
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout -b feature3 origin/main &&
+     ++	git -C test push origin HEAD &&
+     ++	(cd test && advance work) &&
+     ++	git -C test status >actual &&
+     ++	cat >expect <<-EOF &&
+     ++	On branch feature3
+      +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
+      +
+     -+	Your branch is ahead of ${SQ}origin/feature2${SQ} by 1 commit.
+     ++	Your branch is ahead of ${SQ}origin/feature3${SQ} by 1 commit.
+      +	  (use "git push" to publish your local commits)
+      +
+      +	nothing to commit, working tree clean
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +test_expect_success 'checkout with status.compareBranches shows both branches' '
+      +	test_config -C test push.default current &&
+      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     -+	git -C test checkout feature2 >actual &&
+     ++	git -C test checkout feature3 >actual &&
+      +	cat >expect <<-EOF &&
+      +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
+      +
+     -+	Your branch is ahead of ${SQ}origin/feature2${SQ} by 1 commit.
+     ++	Your branch is ahead of ${SQ}origin/feature3${SQ} by 1 commit.
+      +	  (use "git push" to publish your local commits)
+      +	EOF
+      +	test_cmp expect actual
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	test_cmp expect actual
+      +'
+      +
+     ++test_expect_success 'status.compareBranches deduplicates repeated specifiers' '
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test status.compareBranches "@{push} @{upstream} @{push}" &&
+     ++	git -C test checkout -b feature7 upstream/main &&
+     ++	git -C test push origin &&
+     ++	(cd test && advance work) &&
+     ++	git -C test status >actual &&
+     ++	cat >expect <<-EOF &&
+     ++	On branch feature7
+     ++	Your branch is ahead of ${SQ}origin/feature7${SQ} by 1 commit.
+     ++	  (use "git push" to publish your local commits)
+     ++
+     ++	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
+     ++
+     ++	nothing to commit, working tree clean
+     ++	EOF
+     ++	test_cmp expect actual
+     ++'
+     ++
+      +test_expect_success 'status.compareBranches with diverged push branch' '
+      +	test_config -C test push.default current &&
+      +	test_config -C test remote.pushDefault origin &&
+      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     -+	git -C test checkout -b feature7 upstream/main &&
+     -+	(cd test && advance work71) &&
+     ++	git -C test checkout -b feature8 upstream/main &&
+     ++	(cd test && advance work81) &&
+      +	git -C test push origin &&
+      +	git -C test reset --hard upstream/main &&
+     -+	(cd test && advance work72) &&
+     ++	(cd test && advance work82) &&
+      +	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+     -+	On branch feature7
+     ++	On branch feature8
+      +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
+      +
+     -+	Your branch and ${SQ}origin/feature7${SQ} have diverged,
+     ++	Your branch and ${SQ}origin/feature8${SQ} have diverged,
+      +	and have 1 and 1 different commits each, respectively.
+      +
+      +	nothing to commit, working tree clean
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	test_config -C test push.default current &&
+      +	test_config -C test remote.pushDefault origin &&
+      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     -+	git -C test checkout -b feature8 upstream/main &&
+     ++	git -C test checkout -b feature9 upstream/main &&
+      +	git -C test push origin &&
+      +	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+     -+	On branch feature8
+     ++	On branch feature9
+      +	Your branch is up to date with ${SQ}upstream/main${SQ}.
+      +
+     -+	Your branch is up to date with ${SQ}origin/feature8${SQ}.
+     ++	Your branch is up to date with ${SQ}origin/feature9${SQ}.
+      +
+      +	nothing to commit, working tree clean
+      +	EOF
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	test_config -C test push.default current &&
+      +	test_config -C test remote.pushDefault origin &&
+      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     -+	git -C test checkout feature8 >actual &&
+     ++	git -C test checkout feature9 >actual &&
+      +	git -C test push origin &&
+      +	git -C test status --no-ahead-behind >actual &&
+      +	cat >expect <<-EOF &&
+     -+	On branch feature8
+     ++	On branch feature9
+      +	Your branch is up to date with ${SQ}upstream/main${SQ}.
+      +
+     -+	Your branch is up to date with ${SQ}origin/feature8${SQ}.
+     ++	Your branch is up to date with ${SQ}origin/feature9${SQ}.
+      +
+      +	nothing to commit, working tree clean
+      +	EOF
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	test_config -C test push.default current &&
+      +	test_config -C test remote.pushDefault origin &&
+      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     -+	git -C test checkout feature8 >actual &&
+     ++	git -C test checkout feature9 >actual &&
+      +	cat >expect <<-EOF &&
+      +	Your branch is up to date with ${SQ}upstream/main${SQ}.
+      +
+     -+	Your branch is up to date with ${SQ}origin/feature8${SQ}.
+     ++	Your branch is up to date with ${SQ}origin/feature9${SQ}.
+      +	EOF
+      +	test_cmp expect actual
+      +'
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +	git -C test checkout -b ahead upstream/main &&
+      +	(cd test && advance work) &&
+      +	git -C test push upstream HEAD &&
+     -+	git -C test checkout -b feature9 upstream/main &&
+     ++	git -C test checkout -b feature10 upstream/main &&
+      +	git -C test push origin &&
+      +	git -C test branch --set-upstream-to upstream/ahead &&
+      +	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+     -+	On branch feature9
+     ++	On branch feature10
+      +	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
+      +	  (use "git pull" to update your local branch)
+      +
+     -+	Your branch is up to date with ${SQ}origin/feature9${SQ}.
+     ++	Your branch is up to date with ${SQ}origin/feature10${SQ}.
+      +
+      +	nothing to commit, working tree clean
+      +	EOF
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +'
+      +
+      +test_expect_success 'status.compareBranches with remapped push refspec' '
+     -+	test_config -C test remote.origin.push refs/heads/feature10:refs/heads/remapped &&
+     ++	test_config -C test remote.origin.push refs/heads/feature11:refs/heads/remapped &&
+      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     -+	git -C test checkout -b feature10 origin/main &&
+     ++	git -C test checkout -b feature11 origin/main &&
+      +	git -C test push &&
+      +	(cd test && advance work) &&
+      +	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+     -+	On branch feature10
+     ++	On branch feature11
+      +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
+      +
+      +	Your branch is ahead of ${SQ}origin/remapped${SQ} by 1 commit.
+     @@ t/t6040-tracking-info.sh: test_expect_success '--set-upstream-to @{-1}' '
+      +
+      +test_expect_success 'status.compareBranches with remapped push and upstream remote' '
+      +	test_config -C test remote.pushDefault origin &&
+     -+	test_config -C test remote.origin.push refs/heads/feature11:refs/heads/remapped &&
+     ++	test_config -C test remote.origin.push refs/heads/feature12:refs/heads/remapped &&
+      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     -+	git -C test checkout -b feature11 upstream/main &&
+     ++	git -C test checkout -b feature12 upstream/main &&
+      +	git -C test push origin &&
+      +	(cd test && advance work) &&
+      +	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+     -+	On branch feature11
+     ++	On branch feature12
+      +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
+      +
+      +	Your branch is ahead of ${SQ}origin/remapped${SQ} by 1 commit.
+
 -- 
-2.52.0
-
+gitgitgadget
