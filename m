@@ -1,108 +1,146 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A87B3DBD64
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:01:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EE329994B
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:05:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772661700; cv=none; b=ahqYYaTu8zHS21bGbKvZrN7mJVmiW14rcmAnlxQncjxclJmFz5O5HEMnXEAXrL1kNgh5gHTjoZGJstyJj99zpcz8E0qD0UFx7OEvyGu+/HcD40UfDmVg25MFDKz3a1rAwzISMg887H+k9pqrCMNESGDbxMKmWkWFw1DC1mI9pCI=
+	t=1772661912; cv=none; b=ltd/nMhBwzgIDDMcUin1hVdil00sisyXl/hyBnYJc0BIufy5O5vpDU3HsgBw7ajimQ1BexqATdzrlknGMB5R5ar1YjjWcon2lacYzPWRsOcaIZoXsUmgZ0Gee+iP27FubY7he9xg7+PZdzkib80tiF+5PlLdxmwzObJg/whW4G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772661700; c=relaxed/simple;
-	bh=y5TphRucES/bVdbQyrCcW+Y9tIA57epiIQMMfiK+7lI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GR3OaJl13ENrnvBmF6HsxkvTsVgKHhXHFRs/wjuQHvOVNo6spXabhGNAuoCEZccIdHn+vCJygq9E0rvTfW0Cp/iKb5+8yq646hIXgCkijfCczfaO4eZC7YdX3R2Bf6+TubEPbnAcT6kR3BXwsaflx5FwOp6qhzuaepBgqh0ZiII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BXk4WHpX; arc=none smtp.client-ip=209.85.167.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772661912; c=relaxed/simple;
+	bh=M4uqAx3xrqe3wkB8DcbLwtiMM2G0Ff6lNFVtRZVynug=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TPadlyiGEOn6fqUaGEKpivnamCtdOF6g8om//mbtD1pLbv7YojgIyfUYYRXvsMdAb+z/EEV5PNYgPamMFcweIPCkk+cSImV9W92+iNb+y6m4XgmC0WjQflfY1A0z84lUiKWVVOlAOYr+zxkS8j7pmspTRfebtrBvlfWVSv8UWHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q68tYBGu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O3Mk9bLl; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BXk4WHpX"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-4648448e387so5047092b6e.1
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 14:01:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772661696; x=1773266496; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DlV7zdeteLhXtiEvhq5F0pfRZ0JS3sqjrb0REHO3l6Y=;
-        b=BXk4WHpXC3DqR3SzN+EGsrKpTqFgH41TMe/EYTG2NnG68qbBfrNwiR3WqClWgnZE9k
-         4rvdHUoYQ24wSnB69Fl/S+szEBwxyvegUJ9cK51anHnhHIkJAMF7aUdShi6XCtCYmfma
-         lTUn4dRoeF5UCE/3VjKYYnX9N02DQ61GdKkqBTCJ2qZmB2yaVtw+XBlMfFC3frTmVNmu
-         DtoxsczNQS19a6UT+EuR7IBEKOseU401juLPPZz/dlCxTuhPP5ooqkA1aLvt/IW41pte
-         7kQECaV/APMvIf1OyZovRgvey/nwBy9nYLLb4xp3/ke+3LrtNpeadOCyF6/rDRwRu/9/
-         vTAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772661696; x=1773266496;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DlV7zdeteLhXtiEvhq5F0pfRZ0JS3sqjrb0REHO3l6Y=;
-        b=VzxpbI0bgwGC48XNF7LJjJVUMOea5XNYjX1COAxwHckxwgatSCLJJf6mXzKkTfr06g
-         Ybf1QnPbVqvuSUhB0/9AKhVXAjt8Cwk8DRk7fJ7E8EYmBEhl3VE3flY5DVSy+2Ypz+pQ
-         d4QVX3bklCNuUgg10b9mwRit/IATt4sqvuwhnb1Qsn7qp8jykzhgPFy2SnSFNJgd38ds
-         xeSoAgJXd7NNqOrFporyXal+Ln7YIw8VWyVy4/ZBo/tWgNMhvjX+UEu+Z4t+7auFhWuF
-         1VSa+A5awmaG6xFp7q+hKTizA2Ve898Ev0zZh15vqd0d1iWPQm5hz7UfVGx/V7g2h5cC
-         zAzA==
-X-Gm-Message-State: AOJu0YyJheFaXOal6fW0SW8zlv+6ghxqjACvPuvm6FTAo9FgUXnJHbat
-	DpRtgxwSHblYZ9wdlkf1K5c9OSNErl/9n3cHi+fJVKEVci1CUMPPufNA
-X-Gm-Gg: ATEYQzxhXYs7y95COXOkVX8Wj976nC2ypJEpMSIKN/pclMIvnaejwOafkC8/GnDw6mj
-	44kz2eySjqCrRqMzlc76OLRvAJM2zTdRXXxm8IEonZfH/JPg2DoxlynOHiuZeAHmoBXNGp4vDYN
-	CO/46B4d7epoCuHcWXBCN3+RhHLIsRdmG/x9zcVorT6a2yvdLxy/XzCow2IXRu2PhyQVFlwSTYw
-	0aAKfSYl40pCUc8TK328Egvkr6nrXnRjTB7rd6+A/q0uowBkLkftRbKOdDLTmMn6rAlQIkJTF8G
-	iqg03i4C/jozBCU2VasSaBgiXtL3GRwse3S7XUCILwjKSfrpxELuSk0oUcCW3BvsW90QILa26z+
-	Dsy+Ljn4SI5YkXubRn7ql355HYsujJluF7RlJ9RcagKLaUF7d9BFWV1ntMajRkEHj8jVjpQZ2sH
-	kR9nvQZTP5+jE3FaJhr3Ww0X8sfGg=
-X-Received: by 2002:a05:6808:e8e:b0:450:ca65:ef60 with SMTP id 5614622812f47-4651acd205fmr1774215b6e.39.1772661696199;
-        Wed, 04 Mar 2026 14:01:36 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-464bb3ab302sm12375172b6e.7.2026.03.04.14.01.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 14:01:35 -0800 (PST)
-Date: Wed, 4 Mar 2026 16:01:32 -0600
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q68tYBGu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O3Mk9bLl"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id B6D7D1D00043;
+	Wed,  4 Mar 2026 17:05:07 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Wed, 04 Mar 2026 17:05:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772661907; x=1772748307; bh=MDWTvqZwZa
+	isyPLNd69rX4Qe7kJBnbiyt4RDKp9eV/s=; b=Q68tYBGuKAYt7Qk5RfnPOttFg2
+	SbUmGv3t9hNektwvFUy1wPr+R4wEh4vmez8qBg/NFctgA+i+Zb0ejD1AqXbMJFZZ
+	RoV2nZOxz+yoU/zOOentIbSFx7SvWzVv+Fi2RW+GrkDez/dpNBW+5ecRZgWI8f5+
+	55vp0LSWsYXf27aYw/xKlsG6660sf+TeomDV0nHW3er3Cqbaz/rSJWylCum4JkZC
+	NmT6DPQaGVfPKyHWfUEg/90U2qnInd1EcIfiFAiufuKd90flD5l5Aw/Qol0aNKo5
+	awjAmNSzWBnwmVa9san0H+8Ftcb47bObx4i59AZSrl+hM/eSh7GK8zUgGJZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772661907; x=1772748307; bh=MDWTvqZwZaisyPLNd69rX4Qe7kJBnbiyt4R
+	DKp9eV/s=; b=O3Mk9bLlhORZyDYzFGEm2e/AZLSHdLYXjFGaAvgX1HddCgrThta
+	e+dAx/Nf/9Qnxz47lS4PNZbBsUEeH4QpJRo+wocRLbSDqZRz/v8dE0VMC+i3rQ9k
+	2iI+jY9BtvfJAZhcwk3HXLBbFqNt5P/4rcpjGF5LdCdCuZHzdFIlaGunthexTZpl
+	hlbXjbWZKK59WvYw8gnwjSED1BuuYegFNZVg9uUUniWzwbxecnwX9x9//mYOiud3
+	jEbiu3SLLaPwJtl7Geokb5sSG7yY1rYXv4wi6vHW+SSKb3IrkBkK8d1ObmdIHeYD
+	625XjjozJsup0M/BYydXRb08PGCivhzVC5Q==
+X-ME-Sender: <xms:k6yoaQRJqnyIa0XX-ND881osLglUK1FyyRnXW944Eaz79OFHL9qLjw>
+    <xme:k6yoaRfwO9FknqCWEAR6flfpulpJNRB-PnQdgO6ximYzu42MuC9Lk1Lc0681ttf_Q
+    9_UN4lIq0NETyKkqygFJMiuBpsFS6LlkvTkJEBdtrWcKW1YuWlv>
+X-ME-Received: <xmr:k6yoaXo-MYB9txW__4ObPjIx2hxA1vYzoqwSRSsnwMVf207r5MdTC5XGs67LhemkPg3N9wyYUMsGogyEheSt-pMBII6xHIuD2g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegieehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhsmhhilhgvhiesghhithhl
+    rggsrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
+    hsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:k6yoaa-lfhvDWuIpJDHOshqDI4LrFoaLTwCOv5TsHE4U6CfUVGIZEQ>
+    <xmx:k6yoabeUkWMpo7hFcU4RESyJJR7OQznX8marWV1MljdqF-zoa44Few>
+    <xmx:k6yoacLafIpaw-DXck96HjGXjrdeD_hanLCEjVac69Pn5VbxcV3rbA>
+    <xmx:k6yoaTjnkxjKIEW6O99jHkS2bPUT55UwRqpr6ZhNShmPpaUXpP5zAQ>
+    <xmx:k6yoaWhK_kxxudvwTC-4fmj71mYKzL4j2xZofwV8DZ7Zs5RAS-YjPU7->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Mar 2026 17:05:06 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 17/17] odb/source: make `begin_transaction()` function
- pluggable
-Message-ID: <aaiqJlmFgi92a0iC@denethor>
-References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
- <20260223-b4-pks-odb-source-pluggable-v1-17-253bac1db598@pks.im>
+Cc: git@vger.kernel.org,  Matt Smiley <msmiley@gitlab.com>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 07/10] sideband: use writev(3p) to send pktlines
+In-Reply-To: <20260303-pks-upload-pack-write-contention-v2-7-7321830f08fe@pks.im>
+	(Patrick Steinhardt's message of "Tue, 03 Mar 2026 16:00:22 +0100")
+References: <20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im>
+	<20260303-pks-upload-pack-write-contention-v2-7-7321830f08fe@pks.im>
+Date: Wed, 04 Mar 2026 14:05:05 -0800
+Message-ID: <xmqqo6l35jzi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-17-253bac1db598@pks.im>
+Content-Type: text/plain
 
-On 26/02/23 05:18PM, Patrick Steinhardt wrote:
-> Introduce a new callback function in `struct odb_source` to make the
-> function pluggable.
-> 
+Patrick Steinhardt <ps@pks.im> writes:
+
+> Every pktline that we send out via `send_sideband()` currently requires
+> two syscalls: one to write the pktline's length, and one to send its
+> data. This typically isn't all that much of a problem, but under extreme
+> load the syscalls may cause contention in the kernel.
+>
+> Refactor the code to instead use the newly introduced writev(3p) infra
+> so that we can send out the data with a single syscall. This reduces the
+> number of syscalls from around 133,000 calls to write(3p) to around
+> 67,000 calls to writev(3p).
+>
+> Suggested-by: Jeff King <peff@peff.net>
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  odb/source-files.c | 11 +++++++++++
->  odb/source.h       | 27 +++++++++++++++++++++++++++
->  2 files changed, 38 insertions(+)
-> 
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index c32cd67b26..14cb9adeca 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> @@ -122,6 +122,16 @@ static int odb_source_files_write_object_stream(struct odb_source *source,
->  	return odb_source_loose_write_stream(source, stream, len, oid);
->  }
+>  sideband.c | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
+
+Quite straight-forward.  Looking good.
+
+> diff --git a/sideband.c b/sideband.c
+> index ea7c25211e..1ed6614eaf 100644
+> --- a/sideband.c
+> +++ b/sideband.c
+> @@ -264,6 +264,7 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
+>  	const char *p = data;
 >  
-> +static int odb_source_files_begin_transaction(struct odb_source *source,
-> +					      struct odb_transaction **out)
-> +{
-> +	struct odb_transaction *tx = odb_transaction_files_begin(source);
-
-For a given ODB source, I would always expect that the resulting
-transaction would always be of the same source type. This makes me think
-that the underlying logic to handle transactions should also live along
-side the concrete ODB source implementation. Doesn't have to be a part
-of this series, but maybe in the future we should just merge
-odb_transaction_files_begin() into here.
-
--Justin
+>  	while (sz) {
+> +		struct iovec iov[2];
+>  		unsigned n;
+>  		char hdr[5];
+>  
+> @@ -273,12 +274,19 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
+>  		if (0 <= band) {
+>  			xsnprintf(hdr, sizeof(hdr), "%04x", n + 5);
+>  			hdr[4] = band;
+> -			write_or_die(fd, hdr, 5);
+> +			iov[0].iov_base = hdr;
+> +			iov[0].iov_len = 5;
+>  		} else {
+>  			xsnprintf(hdr, sizeof(hdr), "%04x", n + 4);
+> -			write_or_die(fd, hdr, 4);
+> +			iov[0].iov_base = hdr;
+> +			iov[0].iov_len = 4;
+>  		}
+> -		write_or_die(fd, p, n);
+> +
+> +		iov[1].iov_base = (void *) p;
+> +		iov[1].iov_len = n;
+> +
+> +		writev_or_die(fd, iov, ARRAY_SIZE(iov));
+> +
+>  		p += n;
+>  		sz -= n;
+>  	}
