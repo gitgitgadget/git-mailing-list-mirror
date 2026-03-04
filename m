@@ -1,161 +1,178 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69FC3845AF
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 20:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF9D3612EE
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 20:54:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772657466; cv=none; b=Ew+Vvdh4SKSzphJBYAXO48mgHD2Lta75JMncFyJFmH3j32JxXzq5s28KoYPVUQpz0G4MyJDwVTgE1jYBhnHB8/U3C4jJ8ha1ygtkEt3qCieM75GMEfBP1uuNcde/7CB5q/evp8g0SygGiJi+ppovHGrSnbCJgt/uNej5IsPxedk=
+	t=1772657688; cv=none; b=XHd+ZSmEQLZu6W7J2DuLpNEwKCXtiTqa7ts2BqRXUagyhan2JYdqixrzHnKkMG+7haQPydNKfmbt/Q8pBxgVD40jmTvEvRdA2LW96prbI9czHFCxXsK/ihRYq362K4ClkQ8BVaHJwFKHfXbrHkL6TSmedX5acCggJ85eR475JRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772657466; c=relaxed/simple;
-	bh=QIItLzjNFUCNPUDHrJJYGUpA5VqXKzaLyzxd6Ux7J3k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U5ShiKCkWLB5NHCHspm7VL3T6Vrd0Do6W6nO3F/j0om/gjPduwnO/j8rx9EWrrwiEqgR96Obzkrvo1ka09wY7WwOaBrHVNQq1c5/yPerQv895et8sCHCyhEfGZ1D4U7W9lOXoCvxoaTrGa9aBjGx6FZF1lw/E96LlgCHh1AsOvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VvtJeGt/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xNQkwBpu; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772657688; c=relaxed/simple;
+	bh=SausFkvCUFunYq/fbLQVz96ud3qIXxbXUueN8SnygQA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W3TOs5/4qQQbRvAW+Nwa2FE+n8T//D49KUg1R1RE4+B1olzW/wo3hCnZ7vuuN7zJZ5Qd2hoEb0QWUktcK4T4ZYlazFS/xsEcrAAvS2Es/8+mxLX9Jjw5MCM1KSfluKKHrWM8TmXt70M1GT0Y9/yAeOeb/tMJsWtiHRcvovEa25A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I/RvfTho; arc=none smtp.client-ip=209.85.160.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VvtJeGt/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xNQkwBpu"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 646BA1D00237;
-	Wed,  4 Mar 2026 15:51:02 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 04 Mar 2026 15:51:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772657462; x=1772743862; bh=qPBzA/oC6x
-	GDRdXMyFQomRp5YN6a7tLBRuE101JMFFU=; b=VvtJeGt/nm097q+/NmB4thsxwU
-	PDEikTYRPTdIhsvx7sqKpgVgUQ9MmwEuhlTN+BrYkJgAXHESeUNmvPmamFhyBqXf
-	G1Z+iHkxJU8DIF6sV6deEqpvLuunODjiwegpHz/yPIzQVqC+oqaClEjGPUz7qjRN
-	8+vIJfA30xE8Jr9HMgEr7L3N6EIYqNXPZByJ1QUX/sx50iAd2+gOX2PFwYkML5Zh
-	cCp1a86HwcVlcf8E8GclEnb+XAse1WLNyHFt/IL2diJlXHLEt5vMakuuEyK9Tw1B
-	hxt0jSEYhEvcN1RSsFEuXRB3z3FI91MYWFolWRMuMvDQBna9aLes5eEurQ9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772657462; x=1772743862; bh=qPBzA/oC6xGDRdXMyFQomRp5YN6a7tLBRuE
-	101JMFFU=; b=xNQkwBpuqApsduDAvQIAQ6rTgg0D+InsmH1zCRHUR2wUodDTewj
-	M9mM5i/I0/6gnoYqBWmvWOTSqa0fB8QSCDTP9h4fnc4vWGdf1cXXae7EXrCOpVfo
-	66HjlACfDSJPp6Zc/fJnVLrOgN0tHuym/4SSPAM5XR8iwMyIPfhFTHrw0OWSJqKf
-	GEtGOyam1wbgxvlV/b6neaw/2/3N+7Px4RXpwPkonw2U9hBhLUhs+U5cPQ2T9wkZ
-	f9Kvd8V/x/ekb/Gn/gD0WB4fjKru756UwS1OxPdcgOTz1ttyXr10nGgC7vZi+2Sg
-	ILaH7Xo1zX9/jF4zLCj9oF3XROqeLH9QqOw==
-X-ME-Sender: <xms:NpuoaXKCjArSLPXuElx46Z4RfmCS35qivLPZTUa7HCk9arJ7gLdPkg>
-    <xme:Npuoae03j8-7DBOayxrPU8VIRhkR0jRe_C0amdXCP5fOWK6ZOUfTkivj6VZmSr4WY
-    vJrPz7p6JCA2yXUxuh-4mijGhNY7Vkf6vOov3HB6MCNNzayj1ix>
-X-ME-Received: <xmr:NpuoaZgYeWnZmRfcEeUBIF3JfrYxzT5yKpLHebVkvuu7OKEYzSQdBrfHeoznDZeQKM0z7qrqaCi8uTLX72WHJ75J5XCu-_VSKg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeghedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehpshesphhkshdrihhmpdhrtghpthhtohepphgruhhlsehprghulhhtrghrjhgrnhdrtg
-    homhdprhgtphhtthhopehgihhthhhusgesphgruhhlihhsrghgvggvkhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:NpuoaXV4tRSjtm_RGVPuSDxF7PCD7MsBLP8wIL6P50qI1Vm8DiPB3A>
-    <xmx:NpuoaQU3z8PO9iXxPXwXyM9vYD6i5GavSeOfgv1OEV3rO9xKDVRtdA>
-    <xmx:NpuoafgJdSh1Wqc3zAStFGSwoCdVIjgy8M-whQ88OUWwLPuFsOikpw>
-    <xmx:NpuoaTaFcq_q8iwoFPFBgqbMpwZiMRWo2VQEwriCcIVj-XpghyiZAw>
-    <xmx:NpuoaVSExaiYtNI7Rk0Ff-j87uF98WFxGzuYpPjE9J7ATawF3vCMpydt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 15:51:01 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Paul Tarjan
- <paul@paultarjan.com>,  Paul Tarjan <github@paulisageek.com>
-Subject: Re: [PATCH v8 08/12] run-command: add close_fd_above_stderr option
-In-Reply-To: <29a6461915ce9d2abedb29e475d589bb8d24934a.1772648125.git.gitgitgadget@gmail.com>
-	(Paul Tarjan via GitGitGadget's message of "Wed, 04 Mar 2026 18:15:21
-	+0000")
-References: <pull.2147.v7.git.git.1772065643.gitgitgadget@gmail.com>
-	<pull.2147.v8.git.git.1772648125.gitgitgadget@gmail.com>
-	<29a6461915ce9d2abedb29e475d589bb8d24934a.1772648125.git.gitgitgadget@gmail.com>
-Date: Wed, 04 Mar 2026 12:51:00 -0800
-Message-ID: <xmqq8qc771zf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I/RvfTho"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-40f1a1f77a6so1601999fac.2
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 12:54:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772657686; x=1773262486; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=D0oPwPaN27BWXdf9AwGiE3O89DirLMr8u8QmXzqdS6Q=;
+        b=I/RvfThoa1cI6w29P6eK6T513Y9/WYQRx5aCgQqDMWxiCa1HUzAK7BQ/9DJeb8mzTa
+         a20mC9VcboZ36u2oYEyJLzr4h99EJLxqlAfIV3KScOkVlZx8WTvedG2OhQVZ4hlbOR7k
+         03nYBEaXefeSEyyu96cU+XWmb9eHeic/PRgOJpslR4eCqmvaHT2qmaqDafw5v460GeSy
+         9N44Dwpd1mOIcmms0gCq1PCTYwj5iU+tW3yV6NddWnV1egra1v8DYlvnt3eOLgNpDzKD
+         qunloXoLXOY5I4oSRn2GJUkhZjVvfWjfzCBwaVhMf88faFhTi7E/vdlEiD6IowLLQhwB
+         h2PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772657686; x=1773262486;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=D0oPwPaN27BWXdf9AwGiE3O89DirLMr8u8QmXzqdS6Q=;
+        b=RYydk1D2RCCzB6VUMFLrIKefIxNCdrdP4+PsE+hmlOs380x66ouNgH0rJlenPUmuC2
+         Kr96kbWeypVr+hpVAcrYIlZ6X24M7jOYfl/6jQ3xSxKGvYwviBDsH0muqio07FX3IFXk
+         QC6cn7mAOw/kJgAqOj5hAZ0AHwCczYTPgTbdgVXNjdRaLvhk8ta9fRlLrEM0XjBvU0cg
+         YfsfD+tM12uv2ccQRIIHyf9x1dyMyBzjEaijuPZcG5FLL0+ohEpic4Z43nQOasZCuWUQ
+         n7lMoPqNNraLRX5I1Uf5QS1TUMF7En3ZOC8bj6/J3+h4LgtXl2FPB7nfIaD/A+9SzSdv
+         aX4w==
+X-Gm-Message-State: AOJu0Yy+79u2YQsylJqQvMcMt/cAwjjO8nUMqMTSitX5sFGCIf60aRmj
+	Tr7FKZOYKhnoaACr00WG7L4km1I03qxcCH2fpC7VjcUKSR+CrQaWqYP9
+X-Gm-Gg: ATEYQzyl5AO/R4IH0evrUkS0XuYufUfErp7M3OPGuCX8Nt9uYsZYDTa1kC2r4cxgOvE
+	7pDqlkoHNz6a1cJJwnGYcYFrUjG9lhoKzQ8NZFYYkW3pdKQmKIpJ150ANL+Y57KMB61bYSlB9Ud
+	FDDzu0BaEtIBTVKC+9e4DSOIt02qho600A8wi3oxX/orsApHJ8em5fQkQ6ehxvEtJaLiLvVdaGm
+	TvpnzX1pwwj+Fesfa3Hm2qdNp5MHetWMl3wqqB3RKoBHaA5bEIaDihD95APf4wQRUWt/vWeTE3I
+	Y/+Lt3jb6oWXyrOtBJq8UjjCqAumFVN5WAGbVZAFE0sX87AJ+J6biGZEYqCHPBQj7e6FeNohdSF
+	nIJRyPAr1S66XWKC5G8Byjv/v124+tWRvpws4oXE/IqnyYu/9652KWdI+IBqIipFFLQ6V0cmtoE
+	AtsdSyzDfKUe8a2Tvu
+X-Received: by 2002:a05:6870:b3e7:b0:3f5:694f:9362 with SMTP id 586e51a60fabf-416aba7fe43mr2088261fac.29.1772657686117;
+        Wed, 04 Mar 2026 12:54:46 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4160d2cf00fsm18082589fac.20.2026.03.04.12.54.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 12:54:45 -0800 (PST)
+Date: Wed, 4 Mar 2026 14:54:45 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 06/17] odb/source: make `free()` function pluggable
+Message-ID: <aaiaNHaLPhYSK-oK@denethor>
+References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
+ <20260223-b4-pks-odb-source-pluggable-v1-6-253bac1db598@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-6-253bac1db598@pks.im>
 
-"Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Paul Tarjan <github@paulisageek.com>
->
-> Add a new option to struct child_process that closes file descriptors
-> 3 and above in the child after forking but before exec.  Without this,
-> long-running child processes inherit pipe endpoints and other
-> descriptors from the parent environment.
->
-> The upper bound for the fd scan comes from sysconf(_SC_OPEN_MAX),
-> capped at 4096 to avoid excessive iteration when the limit is set
-> very high.
->
-> Signed-off-by: Paul Tarjan <github@paulisageek.com>
+On 26/02/23 05:17PM, Patrick Steinhardt wrote:
+> Introduce a new callback function in `struct odb_source` to make the
+> function pluggable.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  run-command.c | 11 +++++++++++
->  run-command.h |  9 +++++++++
->  2 files changed, 20 insertions(+)
->
-> diff --git a/run-command.c b/run-command.c
-> index e3e02475cc..cbadcf5ff8 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -832,6 +832,17 @@ fail_pipe:
->  			child_close(cmd->out);
->  		}
+>  odb/source-files.c | 7 ++++---
+>  odb/source-files.h | 3 ---
+>  odb/source.c       | 4 +---
+>  odb/source.h       | 6 ++++++
+>  4 files changed, 11 insertions(+), 9 deletions(-)
+> 
+> diff --git a/odb/source-files.c b/odb/source-files.c
+> index 7496e1d9f8..65d7805c5a 100644
+> --- a/odb/source-files.c
+> +++ b/odb/source-files.c
+> @@ -18,10 +18,9 @@ static void odb_source_files_reparent(const char *name UNUSED,
+>  	files->base.path = path;
+>  }
 >  
-> +		if (cmd->close_fd_above_stderr) {
-> +			long max_fd = sysconf(_SC_OPEN_MAX);
-> +			int fd;
-> +			if (max_fd < 0 || max_fd > 4096)
-> +				max_fd = 4096;
-> +			for (fd = 3; fd < max_fd; fd++) {
-> +				if (fd != child_notifier)
-> +					close(fd);
-> +			}
-> +		}
-> +
->  		if (cmd->dir && chdir(cmd->dir))
->  			child_die(CHILD_ERR_CHDIR);
+> -void odb_source_files_free(struct odb_source_files *files)
+> +static void odb_source_files_free(struct odb_source *source)
+>  {
+> -	if (!files)
+> -		return;
+> +	struct odb_source_files *files = odb_source_files_downcast(source);
 
-The need for this particular "close file descriptors other than the
-standard ones" may be common enough that I do not mind to have it
-inside "run-command.c", but I wonder if a generic callback function
-to call here in the child between fork and exec that the caller can
-supply would be a good thing to have.  Then, any caller who may want
-to set close_fd_above_stderr could instead prepare a callback that
-does the body of the above if statement themselves.
+Now each callback will be responsible for downcasting to the concrete
+type. Looks good.
 
-> diff --git a/run-command.h b/run-command.h
-> index 0df25e445f..a1aa1b1069 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -141,6 +141,15 @@ struct child_process {
->  	unsigned stdout_to_stderr:1;
->  	unsigned clean_on_exit:1;
->  	unsigned wait_after_clean:1;
+>  	chdir_notify_unregister(NULL, odb_source_files_reparent, files);
+>  	odb_source_loose_free(files->loose);
+>  	packfile_store_free(files->packed);
+> @@ -40,6 +39,8 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+>  	files->loose = odb_source_loose_new(&files->base);
+>  	files->packed = packfile_store_new(&files->base);
+>  
+> +	files->base.free = odb_source_files_free;
+
+Callback is registered.
+
 > +
-> +	/**
-> +	 * Close file descriptors 3 and above in the child after forking
-> +	 * but before exec.  This prevents the long-running child from
-> +	 * inheriting pipe endpoints or other descriptors from the parent
-> +	 * environment (e.g., the test harness).
+>  	/*
+>  	 * Ideally, we would only ever store absolute paths in the source. This
+>  	 * is not (yet) possible though because we access and assume relative
+> diff --git a/odb/source-files.h b/odb/source-files.h
+> index 803fa995fb..23a3b4e04b 100644
+> --- a/odb/source-files.h
+> +++ b/odb/source-files.h
+> @@ -21,9 +21,6 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+>  					      const char *path,
+>  					      bool local);
+>  
+> -/* Free the object source and release all associated resources. */
+> -void odb_source_files_free(struct odb_source_files *files);
+
+The forward header is no longer needed as this function becomes an
+internal detail of how the "files" source is impelmented.
+
+> -
+>  /*
+>   * Cast the given object database source to the files backend. This will cause
+>   * a BUG in case the source doesn't use this backend.
+> diff --git a/odb/source.c b/odb/source.c
+> index c7dcc528f6..7993dcbd65 100644
+> --- a/odb/source.c
+> +++ b/odb/source.c
+> @@ -25,11 +25,9 @@ void odb_source_init(struct odb_source *source,
+>  
+>  void odb_source_free(struct odb_source *source)
+>  {
+> -	struct odb_source_files *files;
+>  	if (!source)
+>  		return;
+> -	files = odb_source_files_downcast(source);
+> -	odb_source_files_free(files);
+> +	source->free(source);
+
+Freeing the source can now be gone generically for different sources.
+Nice. :)
+
+>  }
+>  
+>  void odb_source_release(struct odb_source *source)
+> diff --git a/odb/source.h b/odb/source.h
+> index a1f2f8fdb1..f84da59ef0 100644
+> --- a/odb/source.h
+> +++ b/odb/source.h
+> @@ -52,6 +52,12 @@ struct odb_source {
+>  	 * the current working directory.
+>  	 */
+>  	char *path;
+> +
+> +	/*
+> +	 * This callback is expected to free the underlying object database source and
+> +	 * all associated resources. The function will never be called with a NULL pointer.
 > +	 */
-> +	unsigned close_fd_above_stderr:1;
-> +
->  	void (*clean_on_exit_handler)(struct child_process *process);
->  };
+> +	void (*free)(struct odb_source *source);
+
+Looks good.
+
+-Justin
