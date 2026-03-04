@@ -1,84 +1,85 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEEE3542E1
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 07:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739F73264F8
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 07:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772610173; cv=none; b=WN70BwowgMrjBDUYdfacJf/di56eRP3xv9q/TWeBuo27RyDTaswM4AcH3ikSl4puSwAprUKvgDHxg/NNHVhfMCtK7TMkEBUJUmhDJOXlnJdoawXTuDwkxJj7Sy+1AwXc0T9gmxqOI+u9DQbNKp+S/8Qp9bx3ayjFAMgdCpPtGP4=
+	t=1772610178; cv=none; b=F3QxISLq3hOa9Jr9IjZQy5mYqOB1bs55XGvq6xvg81WHqlPlyYYg+3le3L36vIrF/tQCk/aYddpAl7pO9+74IPO08rWdiE7fiOLyNZiM2Qint/+VCN71W4jCFkA7i+0OCtFO6GEjeJkM8YpYyowfUaI9+0WxCon43vLB2KaYhpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772610173; c=relaxed/simple;
-	bh=O+26+DyLlfdW0CXuBMZ0qHq+3kTd21O3gHAWG7YIgo4=;
+	s=arc-20240116; t=1772610178; c=relaxed/simple;
+	bh=tI/WU1kHVDILhvjc5sDty5JJ59JZ8VSAu0aWsproHGE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GezO4rjfp2jVRW3VTXNqvuSv2HdCWLJw+THiUEbDvuF7T+gNoNmayOFSbXkl2CqYClXIsEnvRsi/iXP6kyC3BhGrknF5ZYdWSdFPTnqO2mQFycerAkHlxiHf/Vucokz67pUUCMuor/JYGlwvnf7VQ10gGdb4vqgYBu8/qYGna8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dT2yOzHH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3dPieYs0; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=s+ZXpRGO+qAU3Lxp1wEz6iGfIbzRF82KceSLgfO0K7E+vgfeHEyp+T0maoRZ83MinPWIdDfzKRhKtzjILtoLGXN1X1+9Wet0va0Pakzm7an0G64O78xBBM+coe+n08x2xBO4KICu50oi+f6LymE6invL6AkHIYFwm4+Ire0hLj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fWU0AdTL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pnwbP6SQ; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dT2yOzHH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3dPieYs0"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fWU0AdTL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pnwbP6SQ"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id D6C1CEC007B;
-	Wed,  4 Mar 2026 02:42:51 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id CCE6AEC00C3;
+	Wed,  4 Mar 2026 02:42:56 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 04 Mar 2026 02:42:51 -0500
+  by phl-compute-04.internal (MEProxy); Wed, 04 Mar 2026 02:42:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772610171; x=1772696571; bh=P9sstkdjQZ
-	/b5W12QDqsPvwrXLzE8SNg0MfULVjSc4Q=; b=dT2yOzHH/5OA+Tklatlvwn4BOK
-	kO0hLU0L7f8OQQcAXsCCQGh7DSdgiMIFHJXL7cLBxDw6UFKXP6O8ZaUn/gVP4RYS
-	b97ENJ4vbMHkJ5wAEbHEzcMZG18DKI0w2D3BidTrbB9ZfcdnVMO9RuUzAQolEjp0
-	bcvot2AahyIdM5kceZQsUiOPoVyiOHI12eiA+mxU8KG10EHjlZG3ewpHdLjXKA+m
-	m6ISA3OGMEoSBcXxNdH9hFlPG8durrfm4dgCr+Al/bNWE7KIvkpIuieHSE4Cm/z1
-	hyNL8HlinRXRDoHTFtnqT5qTDAkpyPX2tbXrEMMc6fEse0BstdRZYLuHw3Tw==
+	:subject:to:to; s=fm1; t=1772610176; x=1772696576; bh=fEcV7hoFzG
+	qT9NaB2sPrBQ+VMT7O86hH4cwJSkq3Yy4=; b=fWU0AdTL4JHifJi8CdMZKRW7iL
+	1+ovO1tLi72jikVIoMirhbAcTPUmAxBZDWTl3/lZjEmSzks0xZ5CPhaLY4m0xJnC
+	xyBpj4nJkC+zwC8KKt2JaIXfnEXFywTfKrcFQej9CbdAKehRNZfieQ2+OEiuScON
+	fhbvdfa9DBTNtWV5QTw5ONszzYvSF7DVWprYN7FP7xHOpEhOtITg31w90a8Oj/hu
+	zYElpjRUm3pLAzTsN/xDn7KqEyCCheHUBzI6ooRsOGAWewXk2HFRCyKu6pTAMQa3
+	TJNTMBkYlgitKqI0WDKJn3+0qYTeuns7rzplt3s11or9OzfgnQpTHNs+fYrg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772610171; x=1772696571; bh=P9sstkdjQZ/b5W12QDqsPvwrXLzE8SNg0Mf
-	ULVjSc4Q=; b=3dPieYs0TEQguBEPYbTCPFUrj2h5jQADBfvfEFikUde5t/B27nu
-	aGCULE9T6pt1579QVyJL6fEKZCHUFdBOnQJ62/QAcecz4dBDYj5QtE/P2wxP7hOY
-	M/MV1pXHcPM9dmgqMdGoKF50Hs4hC0y8LpZ/4jVLBNdxyjjrFEe87tI9DCw5dlrP
-	v4BtYbmoCwZ0ei7vjXgI2gvc95tgrQco6JJU4J97X6lkE5S5xET2KaR07DZPAVPn
-	TTxtNs3shRSJF83dF4J1axJqK2GfvLBADKglXGqt7yuoDjfqWJZyTD9m4niX6+Si
-	/MvfdzQGAr77fa/n1WjPw5Ib3cEl78Gk1pw==
-X-ME-Sender: <xms:e-KnaS9mpXjLG2-7DwrvfZoIfemkrEcgYAVeyMrgUUfKd5nvDdl13Q>
-    <xme:e-KnaaKzYJ-F9jmXKTjfR1nILV3zXpdrdsZvHV35xsvWzNDte3sNLejBdVH4bsMu0
-    TjXVoDp-C2Poa1f3tpCwG-MtJ5GR1mDUP3nBBJ8rcQQuIfNcszu4A>
-X-ME-Received: <xmr:e-KnaVYQZgee2mIlS6ipcVLPR1_w46uEspw6cDoiJufKRhEtAKV54l26x5nHehc9QP7QtHshxKkNiduPmQwxr30FB2kOcgpIOAyDIy9_7DWW7g>
+	1772610176; x=1772696576; bh=fEcV7hoFzGqT9NaB2sPrBQ+VMT7O86hH4cw
+	JSkq3Yy4=; b=pnwbP6SQkuYT17em3TMNUXmVt3yM5ZL/5F2f3Pm9Ta/kz4bm6FX
+	Yx5foBNCrHcA7ZO+16f7UCEdzvqHYopXDxH/5BDWtDDsyAkbCHRHSHOyPKybFyU3
+	HH1fRPxPuH5HiesvZFDONwkjk2qKHiCQTPFkavLUgXKPugxS0yq05O7NFJMTIS0X
+	WZ9maA16bjIoSMIvL2kOS1LTqO3DL/KNbX/ZVkTKFtEZuOGzPMhSprx64AxPZ1MR
+	xTSz8DoYXZ1Cz2rOIioJr0MEM7wMeEbWAKFAUx3d0bugsr9BwS6LFEjL+6jVuQjS
+	/f0SVRQvq0DBUFjqjfkTXfN0wZ4h+XOjXsA==
+X-ME-Sender: <xms:gOKnacnJYX4j69-CSAF6AlOYtBDfLBHFFuORNWaedkVwAwlFz78fTw>
+    <xme:gOKnaTR4C7Bs-GzsGBlZNqT1gl09m68cgVpWVC8ApbFe1CVbRZx4TtI5dSsulxGG3
+    Ivrb3J1paVgCUM0PeiRLYQe_H-F96IFEVhlDmTRiNy99U0UtcuZ3A>
+X-ME-Received: <xmr:gOKnaYDuTl9AzBqCAHqldrHjNRB05BljSIEF31Hs3qCu_nzWymDbns8C4oBgadCkNcXKAWBEeh3_fQPQlXXSQC_0hOEu3pNVOdIfPzp0_CmGNw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedvleduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhthhhusgesphgruhhl
-    ihhsrghgvggvkhdrtghomh
-X-ME-Proxy: <xmx:e-KnaUK8NGXMbkLyMVum6kbxuG3C8j8VP44BeOzLl5GQ17wnYoY04Q>
-    <xmx:e-KnabDv0Ktm70N0n6RVi5xcAUeiyslm3urvBsTm37wZEI_qd1NGPg>
-    <xmx:e-KnaRqvH4ApDm_5M41Glf7DjjgMd484aI6Wpj4WdDzZgJrkro6Iww>
-    <xmx:e-KnaejzmWpEmL7R_221ZiOAratYh9Ov7HDmkY12Y84W6cQtlPwqOw>
-    <xmx:e-KnadkiJSArJ_rYLzVO9BxcVp3N8V8jgjRQSW8Hs_GT726YJmPau9Bq>
+    ohepghhithhhuhgssehprghulhhishgrghgvvghkrdgtohhmpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:gOKnaSQQrUUN0-v68edWuQqLtdHhkxuSnYSwsNisahoU1TxbG30tOQ>
+    <xmx:gOKnaeqywarqfPfre2TBppI5RsgcCaOtTRnKsUIThKvYFBlcdL6_7A>
+    <xmx:gOKnaczqgKFqh5RVR9yOdO6JFaAGjtW6xnQ0uXsnNaPoGP0zoJFSkw>
+    <xmx:gOKnabJKumBxRK--W1ulvKWnjXKuzuMzeasxNrs6E70hXNEIM9jj4w>
+    <xmx:gOKnaUsFnpc_MgKXlxvkOx7nz-Tp4OtgTbFghrpN1gCN3kzhf6bgfbdA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 02:42:50 -0500 (EST)
+ 4 Mar 2026 02:42:55 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2cc54d84 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 4 Mar 2026 07:42:50 +0000 (UTC)
-Date: Wed, 4 Mar 2026 08:42:48 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 8f0d31ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 4 Mar 2026 07:42:55 +0000 (UTC)
+Date: Wed, 4 Mar 2026 08:42:53 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Paul Tarjan <github@paulisageek.com>
-Subject: Re: [PATCH v7 03/10] compat/win32: add pthread_cond_timedwait
-Message-ID: <aafieD42pMaYsnRw@pks.im>
+Subject: Re: [PATCH v7 04/10] fsmonitor: use pthread_cond_timedwait for
+ cookie wait
+Message-ID: <aafifU-befdZW4O0@pks.im>
 References: <pull.2147.v6.git.git.1772050636.gitgitgadget@gmail.com>
  <pull.2147.v7.git.git.1772065643.gitgitgadget@gmail.com>
- <d2c5ca09396e020adb717055d82f50de7c1b7431.1772065643.git.gitgitgadget@gmail.com>
+ <0a586709524f36c189cc32159b643a49abdbd51c.1772065643.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,59 +88,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d2c5ca09396e020adb717055d82f50de7c1b7431.1772065643.git.gitgitgadget@gmail.com>
+In-Reply-To: <0a586709524f36c189cc32159b643a49abdbd51c.1772065643.git.gitgitgadget@gmail.com>
 
-On Thu, Feb 26, 2026 at 12:27:16AM +0000, Paul Tarjan via GitGitGadget wrote:
-> diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-> index 7e93146963..538ef92d9d 100644
-> --- a/compat/win32/pthread.c
-> +++ b/compat/win32/pthread.c
-> @@ -66,3 +66,29 @@ int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex)
->  		return err_win_to_posix(GetLastError());
->  	return 0;
->  }
-> +
-> +int pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex,
-> +			   const struct timespec *abstime)
-> +{
-> +	struct timeval now;
-> +	long long now_ms, deadline_ms;
-> +	DWORD timeout_ms;
-> +
-> +	gettimeofday(&now, NULL);
-> +	now_ms = (long long)now.tv_sec * 1000 + now.tv_usec / 1000;
-> +	deadline_ms = (long long)abstime->tv_sec * 1000 +
-> +		      abstime->tv_nsec / 1000000;
-> +
-> +	if (deadline_ms <= now_ms)
-> +		timeout_ms = 0;
+On Thu, Feb 26, 2026 at 12:27:17AM +0000, Paul Tarjan via GitGitGadget wrote:
+> From: Paul Tarjan <github@paulisageek.com>
+> 
+> The cookie wait in with_lock__wait_for_cookie() uses an infinite
+> pthread_cond_wait() loop.  The existing comment notes the desire
+> to switch to pthread_cond_timedwait(), but the routine was not
+> available in git thread-utils.
+> 
+> On certain container or overlay filesystems, inotify watches may
+> succeed but events are never delivered.  In this case the daemon
+> would hang indefinitely waiting for the cookie event, which in
+> turn causes the client to hang.
+> 
+> Replace the infinite wait with a one-second timeout using
+> pthread_cond_timedwait().  If the timeout fires, report an
+> error and let the client proceed with a trivial (full-scan)
+> response rather than blocking forever.
 
-According to pthread_cond_timedwait(3p) we should return an error in
-thas case:
-
-  The  pthread_cond_timedwait()  function  shall be equivalent to
-  pthread_cond_wait(), except that an error is returned if the absolute
-  time specified by abstime passes (that is, system time equals or
-  exceeds abstime) before the condition cond is signaled or broadcasted,
-  or if the absolute  time  specified  by abstime  has  already  been
-  passed at the time of the call.
-
-So I guess it's safe to return ETIMEDOUT directly here?
-
-> +	else
-> +		timeout_ms = (DWORD)(deadline_ms - now_ms);
-> +
-> +	if (SleepConditionVariableCS(cond, mutex, timeout_ms) == 0) {
-
-The function returns a BOOL, so comparing with `== 0` is misleading. I
-see that this is following the pattern of `pthread_cond_wait()` though,
-so I guess it's okayish.
-
-> +		DWORD err = GetLastError();
-> +		if (err == ERROR_TIMEOUT)
-> +			return ETIMEDOUT;
-> +		return err_win_to_posix(err);
-
-Wouldn't it make sense to extend `err_win_to_posix()` instead?
+One thing that I'd be happy to learn about is why specifically you have
+chosen one second as a timeout value. Are we sure this is always enough
+on a loaded system?
 
 Patrick
