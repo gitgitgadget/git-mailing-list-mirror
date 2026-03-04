@@ -1,85 +1,85 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739F73264F8
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 07:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A553309DB5
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 07:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772610178; cv=none; b=F3QxISLq3hOa9Jr9IjZQy5mYqOB1bs55XGvq6xvg81WHqlPlyYYg+3le3L36vIrF/tQCk/aYddpAl7pO9+74IPO08rWdiE7fiOLyNZiM2Qint/+VCN71W4jCFkA7i+0OCtFO6GEjeJkM8YpYyowfUaI9+0WxCon43vLB2KaYhpg=
+	t=1772610183; cv=none; b=UTXKcZzTO9aIHHayVPma+LkNlVMDYJvAunLWJPN68dB/Bxf6Q/B1aj2OMDili2yyPspcF3YpvmegZY/yRkbcVFW40uxTEFjS4pKvHrGQMmrnf7rUim4H9NMSurfda1MzZHme+I6zTHhx5tqd8xtjeRck9dOBVWiWu+IFnLmd+uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772610178; c=relaxed/simple;
-	bh=tI/WU1kHVDILhvjc5sDty5JJ59JZ8VSAu0aWsproHGE=;
+	s=arc-20240116; t=1772610183; c=relaxed/simple;
+	bh=EGvvYIVxFiAByy/zxivrkXYB3jCToY4gymISKzU1EcM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s+ZXpRGO+qAU3Lxp1wEz6iGfIbzRF82KceSLgfO0K7E+vgfeHEyp+T0maoRZ83MinPWIdDfzKRhKtzjILtoLGXN1X1+9Wet0va0Pakzm7an0G64O78xBBM+coe+n08x2xBO4KICu50oi+f6LymE6invL6AkHIYFwm4+Ire0hLj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fWU0AdTL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pnwbP6SQ; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=DKp2a+g3+ycETYH7B0I2bSnuqzfVeHTK7Fyahh2mcHBlN61hqZfUaTRg1WZcLHM0X1daL66RsprxYpWos+Z6KyJlhkekCxwspjY5HAg9H+3LHfnw9Gm+KwV8GyiU02pFoUKKFFdVd8Xq/Yp1f8GgPdh6ZE0R4Si2MYiobse4p7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e7XG7voB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ahKQCwt2; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fWU0AdTL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pnwbP6SQ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id CCE6AEC00C3;
-	Wed,  4 Mar 2026 02:42:56 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e7XG7voB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ahKQCwt2"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CEE601400191;
+	Wed,  4 Mar 2026 02:43:01 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 04 Mar 2026 02:42:56 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 04 Mar 2026 02:43:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772610176; x=1772696576; bh=fEcV7hoFzG
-	qT9NaB2sPrBQ+VMT7O86hH4cwJSkq3Yy4=; b=fWU0AdTL4JHifJi8CdMZKRW7iL
-	1+ovO1tLi72jikVIoMirhbAcTPUmAxBZDWTl3/lZjEmSzks0xZ5CPhaLY4m0xJnC
-	xyBpj4nJkC+zwC8KKt2JaIXfnEXFywTfKrcFQej9CbdAKehRNZfieQ2+OEiuScON
-	fhbvdfa9DBTNtWV5QTw5ONszzYvSF7DVWprYN7FP7xHOpEhOtITg31w90a8Oj/hu
-	zYElpjRUm3pLAzTsN/xDn7KqEyCCheHUBzI6ooRsOGAWewXk2HFRCyKu6pTAMQa3
-	TJNTMBkYlgitKqI0WDKJn3+0qYTeuns7rzplt3s11or9OzfgnQpTHNs+fYrg==
+	:subject:to:to; s=fm1; t=1772610181; x=1772696581; bh=fHfMS+H37Q
+	JGGsCaMCNMHob5/9J043l49mHevagNJCc=; b=e7XG7voB2a+SDiEAl6NeKDXLHd
+	sZo4KjZ1loSEMgCq1n5y0jzSfnw8ppgxWPYK+oFw3r1Zb4Vqyc8z5SSVwYKkviI3
+	XInYoIU3n2T9vgrfBr/T7W7KhgLuazpOcLhd+xj+TIkVY+ZxP4NoBYMA6UQRrG5Z
+	ujYg7YQUyQXpVMkR8RXGafvngT+pkFkQpI2j6fef5B2quPSjBhNZnRPzVOp+LRsM
+	MSDx7kdBKk12pXFpfxHHsUIIoHSI417d1bU0HhaIQEjbcems380h7FVoOGwxTdp+
+	xALYunN0G/FFbJWOGDtKWUVoI8tprV8iEQtEvnWgrLtRwubU42lwHl2Fe9Wg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772610176; x=1772696576; bh=fEcV7hoFzGqT9NaB2sPrBQ+VMT7O86hH4cw
-	JSkq3Yy4=; b=pnwbP6SQkuYT17em3TMNUXmVt3yM5ZL/5F2f3Pm9Ta/kz4bm6FX
-	Yx5foBNCrHcA7ZO+16f7UCEdzvqHYopXDxH/5BDWtDDsyAkbCHRHSHOyPKybFyU3
-	HH1fRPxPuH5HiesvZFDONwkjk2qKHiCQTPFkavLUgXKPugxS0yq05O7NFJMTIS0X
-	WZ9maA16bjIoSMIvL2kOS1LTqO3DL/KNbX/ZVkTKFtEZuOGzPMhSprx64AxPZ1MR
-	xTSz8DoYXZ1Cz2rOIioJr0MEM7wMeEbWAKFAUx3d0bugsr9BwS6LFEjL+6jVuQjS
-	/f0SVRQvq0DBUFjqjfkTXfN0wZ4h+XOjXsA==
-X-ME-Sender: <xms:gOKnacnJYX4j69-CSAF6AlOYtBDfLBHFFuORNWaedkVwAwlFz78fTw>
-    <xme:gOKnaTR4C7Bs-GzsGBlZNqT1gl09m68cgVpWVC8ApbFe1CVbRZx4TtI5dSsulxGG3
-    Ivrb3J1paVgCUM0PeiRLYQe_H-F96IFEVhlDmTRiNy99U0UtcuZ3A>
-X-ME-Received: <xmr:gOKnaYDuTl9AzBqCAHqldrHjNRB05BljSIEF31Hs3qCu_nzWymDbns8C4oBgadCkNcXKAWBEeh3_fQPQlXXSQC_0hOEu3pNVOdIfPzp0_CmGNw>
+	1772610181; x=1772696581; bh=fHfMS+H37QJGGsCaMCNMHob5/9J043l49mH
+	evagNJCc=; b=ahKQCwt2ry24o4+RIQJ7XnSvSnvfxHQNPm+Ihf09dgzjV2dvARt
+	6CVtmYPHTSzaC/uMnnqAs67pn+kKIprHIJ/6hdN28s3WwAhdgtJHXS2c6jnuvYGB
+	mjkH1tzYAPhWn3FHUWEG4ugtxDHY/kkHB+KwB9qPihHapfyZtQqy7XhCqUdtwxP8
+	qFn/gMzkrouJfXK8RHONBzCO/Pep6oYDp5i2Y8sNe8lHo0Dkck6dxopthnCaBvTT
+	dXnVlFx9qIaHPm16fPjgII9hb4NvqvcqgFCBO0zMkRhN62cRI4qPlxalxfnW/+sE
+	2IXoc5VGLulMvR3RKmIbUPdYByWHDAi2KWA==
+X-ME-Sender: <xms:heKnafYcf_Wf7bfL7HCU3H_zHynMkHMZ2NkkrvtIZsitLT4k5kMaNQ>
+    <xme:heKnaV1QvnPYHYqItLND3sBZIaXVpjN8e8qYOzEmcxXZsC5aIkhP37XpbxE3Bzvvt
+    IP8HGMux2DIbXfm6ke5a-7rylTO5oakpJ45zvVQngrfkXXpzV-fmg>
+X-ME-Received: <xmr:heKnafXNdTSsoFK8b-ut_iiSnrD8TQ2QjuZUunsoQdL4IXxsoff6LazOSL0I0ofe5eqOMvt3yZj-2FP0_sWIQCL4xvz_Xqpoe0I_GX7ufP_8sg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedvleduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhhuhgssehprghulhhishgrghgvvghkrdgtohhmpdhrtghpthhtohepghhith
-    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:gOKnaSQQrUUN0-v68edWuQqLtdHhkxuSnYSwsNisahoU1TxbG30tOQ>
-    <xmx:gOKnaeqywarqfPfre2TBppI5RsgcCaOtTRnKsUIThKvYFBlcdL6_7A>
-    <xmx:gOKnaczqgKFqh5RVR9yOdO6JFaAGjtW6xnQ0uXsnNaPoGP0zoJFSkw>
-    <xmx:gOKnabJKumBxRK--W1ulvKWnjXKuzuMzeasxNrs6E70hXNEIM9jj4w>
-    <xmx:gOKnaUsFnpc_MgKXlxvkOx7nz-Tp4OtgTbFghrpN1gCN3kzhf6bgfbdA>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhith
+    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhthhhusgesphgruhhl
+    ihhsrghgvggvkhdrtghomh
+X-ME-Proxy: <xmx:heKnafVS2WnEwX1xF_tF6qiddA_T-fYVkknxSy4Zf3CQjDEUBZv2kQ>
+    <xmx:heKnaefrTawH-qUHGj0dnyTNaeCxmC4caJa_WfUIrY-eRTySAAAz9w>
+    <xmx:heKnaYV8pDTPHrRo-Sz3Zgt56XC8OjrB3HBsKdBi9bLrmsZA2yGucg>
+    <xmx:heKnaXeMV8ADE_ety61ourFL60dk8jVYHMQvfp-FywYL3pdOsdfyJQ>
+    <xmx:heKnaWSewsqE8vhGCP_GSJpeesfSvXL9dkxhAWuD9GfeBFbBRAfQDtID>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 02:42:55 -0500 (EST)
+ 4 Mar 2026 02:43:00 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8f0d31ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 4 Mar 2026 07:42:55 +0000 (UTC)
-Date: Wed, 4 Mar 2026 08:42:53 +0100
+	by mail (OpenSMTPD) with ESMTPSA id f2dea1b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 4 Mar 2026 07:43:00 +0000 (UTC)
+Date: Wed, 4 Mar 2026 08:42:57 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Paul Tarjan <github@paulisageek.com>
-Subject: Re: [PATCH v7 04/10] fsmonitor: use pthread_cond_timedwait for
- cookie wait
-Message-ID: <aafifU-befdZW4O0@pks.im>
+Subject: Re: [PATCH v7 05/10] fsmonitor: deduplicate IPC path logic for Unix
+ platforms
+Message-ID: <aafigc1QiysIByhM@pks.im>
 References: <pull.2147.v6.git.git.1772050636.gitgitgadget@gmail.com>
  <pull.2147.v7.git.git.1772065643.gitgitgadget@gmail.com>
- <0a586709524f36c189cc32159b643a49abdbd51c.1772065643.git.gitgitgadget@gmail.com>
+ <037ae2a03f8576a73feb889cd61220ba69d97fea.1772065643.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,28 +88,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0a586709524f36c189cc32159b643a49abdbd51c.1772065643.git.gitgitgadget@gmail.com>
+In-Reply-To: <037ae2a03f8576a73feb889cd61220ba69d97fea.1772065643.git.gitgitgadget@gmail.com>
 
-On Thu, Feb 26, 2026 at 12:27:17AM +0000, Paul Tarjan via GitGitGadget wrote:
+On Thu, Feb 26, 2026 at 12:27:18AM +0000, Paul Tarjan via GitGitGadget wrote:
 > From: Paul Tarjan <github@paulisageek.com>
-> 
-> The cookie wait in with_lock__wait_for_cookie() uses an infinite
-> pthread_cond_wait() loop.  The existing comment notes the desire
-> to switch to pthread_cond_timedwait(), but the routine was not
-> available in git thread-utils.
-> 
-> On certain container or overlay filesystems, inotify watches may
-> succeed but events are never delivered.  In this case the daemon
-> would hang indefinitely waiting for the cookie event, which in
-> turn causes the client to hang.
-> 
-> Replace the infinite wait with a one-second timeout using
-> pthread_cond_timedwait().  If the timeout fires, report an
-> error and let the client proceed with a trivial (full-scan)
-> response rather than blocking forever.
 
-One thing that I'd be happy to learn about is why specifically you have
-chosen one second as a timeout value. Are we sure this is always enough
-on a loaded system?
+Nit: we're not exactly deduplicating just yet, but are rather preparing
+for that as there is no second implementation using this yet.
+
+> diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc-unix.c
+> similarity index 96%
+> rename from compat/fsmonitor/fsm-ipc-darwin.c
+> rename to compat/fsmonitor/fsm-ipc-unix.c
+> index fe149a1b37..d34a6419bc 100644
+> --- a/compat/fsmonitor/fsm-ipc-darwin.c
+> +++ b/compat/fsmonitor/fsm-ipc-unix.c
+> @@ -27,13 +27,15 @@ const char *fsmonitor_ipc__get_path(struct repository *r)
+>  	if (ipc_path)
+>  		return ipc_path;
+>  
+> -
+>  	/* By default the socket file is created in the .git directory */
+>  	if (fsmonitor__is_fs_remote(r->gitdir) < 1) {
+>  		ipc_path = fsmonitor_ipc__get_default_path();
+>  		return ipc_path;
+>  	}
+>  
+> +	if (!r->worktree)
+> +		BUG("repository has no worktree");
+> +
+>  	git_SHA1_Init(&sha1ctx);
+>  	git_SHA1_Update(&sha1ctx, r->worktree, strlen(r->worktree));
+>  	git_SHA1_Final(hash, &sha1ctx);
+
+I think these while-at-it changes should be removed from this commit.
 
 Patrick
