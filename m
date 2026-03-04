@@ -1,75 +1,79 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897A03E0C79
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 18:17:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119F81E1E04
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 18:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772648277; cv=none; b=EDKPU47pp/lxIaEq+NqAB3EmPCBOUtZwq3SjsPpr5nQOT5OK8F2mI65/m6VBvnbAP/Uf8vS3wUip9Nq2tPk8eLEnAR9d3ij38uQeaUzeycV56Fu4L2y7smFBtCil0jltQ5f/HnXi57rkViCST25C02BUoYNyn72o6FTUeCuIo9s=
+	t=1772648461; cv=none; b=jxHVCt/c07E0O5B0Pd4C8lo0uD55QJ4V5+l5zElKtwX6tfRL/TCN8WRACMxupw71cg2oQtfIpON8fnJAvMJNAMheGwgDGGmm1rxljA2mvX504wDdw0l49KR326NLe5MpCZdBJM2zIeCKK+YeP/qB+wNfNo9WnfnGqpwb3U+GXXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772648277; c=relaxed/simple;
-	bh=hZV0uhFPXXf+eWP3hpCKX2OsLVxr/qGaOEQ7MzZtjsc=;
+	s=arc-20240116; t=1772648461; c=relaxed/simple;
+	bh=gy+r4sVjPWmZi6DUYjU7SbFUnxDmYaXOOK/eVnJLYys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKxrFkMoi2afRRMrdmhlCeM6bjtnVboWZRfcBTp0mXeHL2kTMgUKHnLv0BcfKDwSNvC6NZApUerMc9eNf2iIxXu+YcYCDJITG+kgVxV7DiY8eKymAft3GWMui5ufah5kSJevEqpcwslCBlrXRVmTaMVCSAKVxREExMQi8AyUC6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LlVvmLkM; arc=none smtp.client-ip=209.85.214.180
+	 MIME-Version; b=sOnvm6DFuIdbGdJVjgacNOW/CxFAxrlEeXsa9cyM7yqlWauIgUsfsX3AiU0Irvua/jlkQ6dJuNkSU9LgUjFDHlJtTl9+6L8lSFQ8UAhA339x1bTL9ILfrYSZ516ESg0viciDjT2hgDIbNNC8X5RfkOwnmZY07vch8AHmUGEFypg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qoq1pv9e; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LlVvmLkM"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2adff872068so35383485ad.1
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 10:17:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qoq1pv9e"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-824adc96ad2so6946457b3a.3
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 10:20:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772648276; x=1773253076; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772648459; x=1773253259; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hZV0uhFPXXf+eWP3hpCKX2OsLVxr/qGaOEQ7MzZtjsc=;
-        b=LlVvmLkMKlI6QtE/wn4Iuwtj2xqL+zkTuRZUneXlsdjsZSObVDv1ttLdwCFFoFX6+2
-         Ds2SPCrET8UJ5zGGWygA1RrURlb1au/6Q87kw5yAXQGdfjszBN2BRNrTWp3dy4yoidtv
-         n0x7SiSBCrnff/DtuYcndB44yxc0PkzH/l9ZSJS2SvzktsZiKfLDJRtGtj5WUIwrk4Tj
-         XiO4VwcyA+IloczcdrQ8wJ7KKsQeTg1u3YOGQj6LnrtYHvCsSnqUEjH1oU9DVHMFCX5g
-         IVrG58or0M/Xie6oNhKCYEvoknXIcsQYmAQxOf3m5DFBRQESEnoY0p5eocudlTPmMCWW
-         74aA==
+        bh=6qyK4bTDxzWdwT9wpB/DmZn9OZ+ziQBhEzBeVVdE0Sc=;
+        b=Qoq1pv9elArzPgtY/ytqyPFS5db8zrfC9g5zZhbrPhsokqGJi33ukwEVxpA/J2Skkr
+         h4nQshQLzHWgWWe6TW+ZsqeR5V4vRhUP32vPOnzy6q62hOzTEovb6fW/3nmLHSwbJ0B8
+         qDbezuUPCDPrMINPwA95G4dX38glO42RBILNv1Z92bLfxBuomMJ8+n5YA+scb8C/1VU4
+         zr+YPuMeMtDmzjNTfUpy0KOUMiYMrLQa8EFkjcyr9W475BiFmluzqUfL3iHDxcr0Fhkv
+         yA9qGKmEPRQh3RPSMX3sd5VAVc7yPYlZGNRc1SfquGur0WES7TWCXsvj+qlCWfCQa0ut
+         BxvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772648276; x=1773253076;
+        d=1e100.net; s=20230601; t=1772648459; x=1773253259;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hZV0uhFPXXf+eWP3hpCKX2OsLVxr/qGaOEQ7MzZtjsc=;
-        b=FDHUf0e8PKFoxqdxPokQkNWx8xXPT9bf9DPMFDbW/tuyLdFnpOQDo/7lEmTWUDwomp
-         uDXEjF8xhvTzFJp9Vc/e+DT0PbmJepW+5h0HOmibJjty+0QmaXe7VFUIJo05mBdvuVDc
-         ordBhDNafP/KkUFNH4cNtGDUzVSu6r9chEifK4bCS4ZTcIPuUS33vF6H55+A2eRH8bKA
-         Fa0vFB12+d6dzkS6UMekYW0kzGkHR5mYqam3TbEu2ENV6yHDPYCTiFkwgyK98+xQntkl
-         /T1WVDjrV6O5tQxdWwxAcxXh1GrjiaTJwZOMQsW0cIE3oqq3EWwAozPFK3MzwpbpxQCa
-         gJnA==
-X-Gm-Message-State: AOJu0YzkXFCrplnIu8DEg53ccwjHQA5Xelybwdxvtfkrhf5DOdcmXUl0
-	qU2E6puzAsIU/qU/mNCUcThtq1XwPEn4xxlvs3SiC6dap0zCE2jtpD3HQ7kXug==
-X-Gm-Gg: ATEYQzzVtBxSppCU4AKszdeqe2Hp1pEiKGKQ+LqbyVTT6aYQ5nKyZlYBjNCHqa1898n
-	w9z5f3MnjEde+q8Gmu8gZVbcvL2N00mo4zx8AGmSit5jP0WBauHz6z55t+t/0AV3RBkIYvECbsE
-	49W8DjqY7X9zPTdACi5KJNN/enLNhtUWi9iq8H9078g62SL9hWsE7wcEEmQ5s8Hyoj1I5uFVzv3
-	MnMEib2lKn6VHsDakPm7cIGut5iLwOYBm7Px22pW3gkj1sC/c8/mqdtbwSeLz84QKDg9xEoYpG5
-	yC1wEDXwS1FyoExF8NLgVduFn+6wjGJrDOD+kbXUnIvBXHPFx6RlEZA7ye+mwtvkLgjT+b/psjS
-	jfXkqKH6e8pXMYwA9DoWKlY6MQPKIAIkx4ozqACvJwdTthesYX79Til6FfdonQtGIjA05voqXId
-	JaWkEbmPYu6dkPGgL68CV+MfW9zUq6UMBDJG+Kp3UVGiG6xbC3ho3lclmC74EJcXz3Br81kxbTC
-	qFoJmrblQ==
-X-Received: by 2002:a17:902:e5c2:b0:2ae:3e4a:3cb8 with SMTP id d9443c01a7336-2ae6ab75d62mr31879975ad.53.1772648275506;
-        Wed, 04 Mar 2026 10:17:55 -0800 (PST)
+        bh=6qyK4bTDxzWdwT9wpB/DmZn9OZ+ziQBhEzBeVVdE0Sc=;
+        b=n+3Vk+7yO1R/sYHfG2MfC729fibXFhuNWfXQ/6061hR/9LcdPAkMsJH1xiHuvRPzDG
+         tWvMTg3y57mWk8fbhOSWYqACG6BopnYI7nbCH3Yy4Y40DrlY70UIUT8zi1P2219RelD/
+         PslgC8timyzcJCgZcyJeTXK1mfFdn58pJdTfXDa9/YbKbC8s57c3bHVabC90CmEl6NHM
+         yT9hD6/FCuRfy7o2JvsE0qpw2m3OYbB3fS+MMPv+vEVR61mYMiICJAxBs9gJeZMSi1UR
+         Ryyoa7ftgEGilmfRJAtPyQdAGZ+Xg9raVIJeYiQKsI2lteohaSliX0O+ml2txgC75VLe
+         lUtw==
+X-Gm-Message-State: AOJu0YwQFOQIJAscskbvuAKiGPT2A/rtWBYdeqCnobPEpFPd3mApZ53f
+	Nx+cCdBS93yqoJ0bdUHVzl19+N1nlNwI/1ODJnMasre4pwAMxYr9houEFw6jIA==
+X-Gm-Gg: ATEYQzynVE0X1wqLKYn1UIIelXdW6ELn48HrjVQSYglJI+dCmP0OHe/l7Ie7vmVLx6D
+	82GrCsciV0h2x4h12DA3NlGWKS0y5/z/LqmcCOficMEfjT1xBIV5g1B08un48Hcysr8tCLDDAEg
+	wC53M16EFnbYSfiW32LVrxlIsY9eD5C41GHiFO+VLcbKzekugz9AGP5XvnPO+5TDj7RtmiUUZWT
+	TQujJMk0g97/BOtzHk1AHbiLNZ6ifkzVsZnu8IQoecA8j0ijHlj/yhleX2FgI5SIBneBMVkrRJC
+	kqS7Z4HyuBjatkxxNh/HtaG/z/sAHlXGewf66W70XOxP1ZsZ6W6d8AhH0tHmXvR5SZuHFqy4TTC
+	j+954S60wzNAwzU3a0U28tz/k50ORVYWVRZcQw9zJWpcLwHDaoFjvoz5Y/MOEHAHkl0QaoMpamI
+	0XFhFLunMqa8g2jQQRWAP0Hc38t4SSHWMLpzbMB2yxkWI4M+wd8NNhuldb9NhblOBOoStFAs2r/
+	NGvPOaF7g==
+X-Received: by 2002:a05:6a00:1407:b0:827:4372:dd15 with SMTP id d2e1a72fcca58-82972c6bcf1mr2843473b3a.40.1772648459146;
+        Wed, 04 Mar 2026 10:20:59 -0800 (PST)
 Received: from localhost.localdomain (d75-158-111-22.abhsia.telus.net. [75.158.111.22])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae4cd40e4dsm105026405ad.92.2026.03.04.10.17.54
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82976924148sm1768672b3a.2.2026.03.04.10.20.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 10:17:55 -0800 (PST)
+        Wed, 04 Mar 2026 10:20:58 -0800 (PST)
 Sender: Paul Tarjan <ptarjan@gmail.com>
 From: Paul Tarjan <paul@paultarjan.com>
 X-Google-Original-From: Paul Tarjan <github@paulisageek.com>
 To: git@vger.kernel.org
-Cc: ps@pks.im,
-	paul@paultarjan.com
-Subject: Re: [PATCH v7 10/10] fsmonitor: close inherited file descriptors and detach in daemon
-Date: Wed,  4 Mar 2026 11:17:53 -0700
-Message-ID: <20260304181753.25787-1-github@paulisageek.com>
+Cc: gitster@pobox.com,
+	paul@paultarjan.com,
+	jonathantanmy@google.com,
+	hanxin.hx@bytedance.com,
+	jeffhostetler@github.com,
+	christian.couder@gmail.com
+Subject: Re: [PATCH] promisor-remote: prevent lazy-fetch recursion in child fetch
+Date: Wed,  4 Mar 2026 11:20:57 -0700
+Message-ID: <20260304182057.26463-1-github@paulisageek.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <aafilb7FnvWBTQ0J@pks.im>
-References: <aafilb7FnvWBTQ0J@pks.im>
+In-Reply-To: <xmqqikbb8pbd.fsf@gitster.g>
+References: <xmqqikbb8pbd.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,43 +82,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 4, 2026, Patrick Steinhardt wrote:
-> Hm. We already have related logic in `daemonize()`. Should we maybe
-> reuse that function, and potentially expand it to handle closing all FDs
-> up to the maximum file descriptor?
+On Tue, Mar 4, 2026, Junio C Hamano wrote:
+> I would suggest dropping these CC: lines from the proposed log
+> message.  As far as I can see, they do not have their intended
+> effect; [*1*] does not show any of these folks listed on Cc:
 
-daemonize() does a double-fork with setsid, which is the classic Unix
-daemon pattern. But fsmonitor uses start_bg_command(), which forks the
-daemon and waits for it to signal readiness over IPC. If we called
-daemonize() inside the child, start_bg_command() would lose track of
-the PID.
+Done, moved them to the PR description for GitGitGadget to pick up.
 
-So instead we just use setsid() to detach from the terminal, and
-close_fd_above_stderr in run-command to close inherited FDs before exec.
+> I also do not see much point in duplicating
+> most of what appears in the proposed log message here after the
+> three dash line, but that is a separate story.
 
-> This feels like a "while-at-it" change to me. Should it maybe be moved
-> into a separate commit?
+Cleaned up the PR description to avoid the duplication.
 
-Done. Split the 30-second stop timeout into its own commit (patch 10,
-"fsmonitor: add timeout to daemon stop command").
+> Hmph, do we really need an entirely new test script file dedicated
+> for this single liner change, instead of adding to some existing
+> test script that already covers related topics (like promisors and
+> lazy fetches from them)?
 
-> Might make sense to reorder commits a bit so that the fix comes first.
-> In that case we wouldn't ever have to introduce the timeouts in the
-> first place.
-
-Done. Reordered in v8 so run-command and daemon detach come before
-the test commit. The meson timeout never appears now.
-
-> This change feels unrelated and is not mentioned in the commit message.
-
---start-timeout=10 is now in the tests commit (patch 11) and documented
-in that commit message.
-
-> I thought with our call to setsid() we're not part of the same process
-> group anymore. So why is this change here still needed?
-
-setsid() runs inside the daemon after it's already been forked. The
-set -m in the test is about the shell putting `git pull &` into its own
-process group. Without it, the background job inherits the test
-shell's pgid and `wait` stalls. Moved to the tests commit (patch 11)
-with a note in the commit message explaining why it's still needed.
+Moved the test into t0411-clone-from-partial.sh, which already has
+the other lazy-fetch tests. Dropped the separate t0412 file and the
+meson.build entry.
