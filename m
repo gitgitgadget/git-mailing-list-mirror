@@ -1,54 +1,54 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EE329994B
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:05:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C97F3845D5
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:11:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772661912; cv=none; b=ltd/nMhBwzgIDDMcUin1hVdil00sisyXl/hyBnYJc0BIufy5O5vpDU3HsgBw7ajimQ1BexqATdzrlknGMB5R5ar1YjjWcon2lacYzPWRsOcaIZoXsUmgZ0Gee+iP27FubY7he9xg7+PZdzkib80tiF+5PlLdxmwzObJg/whW4G4=
+	t=1772662297; cv=none; b=Wplfm2Ph9Dd6i9aUzZhREN6d5JHUubwoyGrd5/nUEhjQ9fMgPY2XIizhdMtOqczsFggprD9RejaPuTnL/sPLHoiBJsgzSzkGarAiywESG4TtyRSPBk+TYGPoNcqRaTcLpcvKvOct6fEGwtUWT4c2iPnuEzstMuw5DQ67wKgOX7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772661912; c=relaxed/simple;
-	bh=M4uqAx3xrqe3wkB8DcbLwtiMM2G0Ff6lNFVtRZVynug=;
+	s=arc-20240116; t=1772662297; c=relaxed/simple;
+	bh=CgR7cNu4Ff+pqlSNEnwQ4SvzsFpD/7jTg2KKGtVj4VM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TPadlyiGEOn6fqUaGEKpivnamCtdOF6g8om//mbtD1pLbv7YojgIyfUYYRXvsMdAb+z/EEV5PNYgPamMFcweIPCkk+cSImV9W92+iNb+y6m4XgmC0WjQflfY1A0z84lUiKWVVOlAOYr+zxkS8j7pmspTRfebtrBvlfWVSv8UWHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q68tYBGu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O3Mk9bLl; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=XDxZLyFCFoM45OCpa7IOBB9CCe1B1HrWh+AGYaaDFt6ZP9UMpcqGRSyorpRiEIYdZU09Gt9VpUIbCqdgCy0uUL7nf3WNj/INlaPCswzDL400OUkhS5+SgAzxTQ5231Vm1AaAJp3pAp0IDBfqpMBnLQUOCapVSVVqLLLvVPbcs2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kIcucqj0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ODQgL3RE; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q68tYBGu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O3Mk9bLl"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kIcucqj0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ODQgL3RE"
 Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id B6D7D1D00043;
-	Wed,  4 Mar 2026 17:05:07 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Wed, 04 Mar 2026 17:05:07 -0500
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 88D107A000F;
+	Wed,  4 Mar 2026 17:11:33 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Wed, 04 Mar 2026 17:11:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772661907; x=1772748307; bh=MDWTvqZwZa
-	isyPLNd69rX4Qe7kJBnbiyt4RDKp9eV/s=; b=Q68tYBGuKAYt7Qk5RfnPOttFg2
-	SbUmGv3t9hNektwvFUy1wPr+R4wEh4vmez8qBg/NFctgA+i+Zb0ejD1AqXbMJFZZ
-	RoV2nZOxz+yoU/zOOentIbSFx7SvWzVv+Fi2RW+GrkDez/dpNBW+5ecRZgWI8f5+
-	55vp0LSWsYXf27aYw/xKlsG6660sf+TeomDV0nHW3er3Cqbaz/rSJWylCum4JkZC
-	NmT6DPQaGVfPKyHWfUEg/90U2qnInd1EcIfiFAiufuKd90flD5l5Aw/Qol0aNKo5
-	awjAmNSzWBnwmVa9san0H+8Ftcb47bObx4i59AZSrl+hM/eSh7GK8zUgGJZw==
+	:subject:to:to; s=fm3; t=1772662293; x=1772748693; bh=qV8aFISFxx
+	iYHqB9y3u4ifC/l9pGMaRl4MICkbtY/GM=; b=kIcucqj0wrsW8yc23+ISnETusV
+	WKjXX8vj2epSSlUHtqkeLl8JUw/VY+wO8zl/bBhDPaFgUZ5oj3VgS+tHGNOI9i5k
+	EqsbN2GTyMXo3lQuEH2pePSND/Y2ViviGJiPk59tvEDzlm/DYtxFrfMtgGNC0q0r
+	alvDZiw6Lgy1Wyw+psJZTA5+0w5ErzW81WyOSZbBjPAhBIkWkfevNPHQppQisVXv
+	yr2uX8LviT25C4C0gNqpD1WJU501B2N6Qluk+t+Dy7PookU89H/CNzKfQi3TFy6e
+	ibr0kFrhGJrRWJjoze1alfV5SqV1JIbv+sK0d5TFeJ2XIFKDO6QczlKMPKNg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772661907; x=1772748307; bh=MDWTvqZwZaisyPLNd69rX4Qe7kJBnbiyt4R
-	DKp9eV/s=; b=O3Mk9bLlhORZyDYzFGEm2e/AZLSHdLYXjFGaAvgX1HddCgrThta
-	e+dAx/Nf/9Qnxz47lS4PNZbBsUEeH4QpJRo+wocRLbSDqZRz/v8dE0VMC+i3rQ9k
-	2iI+jY9BtvfJAZhcwk3HXLBbFqNt5P/4rcpjGF5LdCdCuZHzdFIlaGunthexTZpl
-	hlbXjbWZKK59WvYw8gnwjSED1BuuYegFNZVg9uUUniWzwbxecnwX9x9//mYOiud3
-	jEbiu3SLLaPwJtl7Geokb5sSG7yY1rYXv4wi6vHW+SSKb3IrkBkK8d1ObmdIHeYD
-	625XjjozJsup0M/BYydXRb08PGCivhzVC5Q==
-X-ME-Sender: <xms:k6yoaQRJqnyIa0XX-ND881osLglUK1FyyRnXW944Eaz79OFHL9qLjw>
-    <xme:k6yoaRfwO9FknqCWEAR6flfpulpJNRB-PnQdgO6ximYzu42MuC9Lk1Lc0681ttf_Q
-    9_UN4lIq0NETyKkqygFJMiuBpsFS6LlkvTkJEBdtrWcKW1YuWlv>
-X-ME-Received: <xmr:k6yoaXo-MYB9txW__4ObPjIx2hxA1vYzoqwSRSsnwMVf207r5MdTC5XGs67LhemkPg3N9wyYUMsGogyEheSt-pMBII6xHIuD2g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegieehucetufdoteggodetrf
+	1772662293; x=1772748693; bh=qV8aFISFxxiYHqB9y3u4ifC/l9pGMaRl4MI
+	CkbtY/GM=; b=ODQgL3RE9VghfQkAhxYAE/kupg5/ICkuLgD00ki+8XrBjP5Xcfj
+	HFVbE7o1wjpc4bMAUhKZ+6RKx45xc7LjSSa/KLOq5U1DSi6F67YbW2TbJMp6Zaa1
+	ZE3KuchCzFcBiRd+Gx90VndKDKqwP4VSEmxzn83mHZVFuGBkVccx+8a55SxoucVP
+	jIhS3lozFik3TqRdJA/09yQm5JmO0HPbGzzRSfGuSJFVS+f6PECzvtz0p9ptZZf6
+	iOMkV2Njt8lWqq+oFmXJ4JJ/Br/StiK+ayZOxU82X0F1rAigfizd6lRk1XfOBzGU
+	/2efTJ+TfJjo68yulYpBsQpFoQLi18s1uug==
+X-ME-Sender: <xms:Fa6oaWaLccOqn0KSVlIlH1W1ngWdgA1Axs6XaW8MAFhhtP9MAzmEpg>
+    <xme:Fa6oadE_Dyjol1DKJJRoRoyUmtcL2pe5IDqbCeWbAn05UZRkQ7G3kHeGd5JQ7Xuoe
+    WjPhjIIQmAJU6mXHgz5xPgg3QmAelruMDf_Eh8AYewKPHe_Cl89>
+X-ME-Received: <xmr:Fa6oaaxMQx1d3FwNF6Ul632qEA_wfkI8anvXRy8F7ybwq2-YpaakVZoB2Z_7jyPiOkp_H8hlL10BXqrRlEPWhpEcxMUof8gqSA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegieeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -61,25 +61,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegieehucetufdote
     rggsrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
     hsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
     pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:k6yoaa-lfhvDWuIpJDHOshqDI4LrFoaLTwCOv5TsHE4U6CfUVGIZEQ>
-    <xmx:k6yoabeUkWMpo7hFcU4RESyJJR7OQznX8marWV1MljdqF-zoa44Few>
-    <xmx:k6yoacLafIpaw-DXck96HjGXjrdeD_hanLCEjVac69Pn5VbxcV3rbA>
-    <xmx:k6yoaTjnkxjKIEW6O99jHkS2bPUT55UwRqpr6ZhNShmPpaUXpP5zAQ>
-    <xmx:k6yoaWhK_kxxudvwTC-4fmj71mYKzL4j2xZofwV8DZ7Zs5RAS-YjPU7->
+X-ME-Proxy: <xmx:Fa6oafmcB6dgJroJmtcHUNacE0Uh1upSHVXkzsXLfPCa5eRFR_8BPg>
+    <xmx:Fa6oaTlbR_90pSvJY_W-IqTE2riQb2bkve0QvRNEgNh0DAYoMTFTaA>
+    <xmx:Fa6oaRwsE-OVM4xXRzFJxFcyMTsHT5jq4e9Aq5pxSW2upgkP-QkVgw>
+    <xmx:Fa6oaYpmo-gjqbyg8vRFOVo3zaAFq5X9hkynvnz9m8jo0tHn07-0PA>
+    <xmx:Fa6oaZrbVGSjQKVoL4nBc4Y3jSCU1cm5t1OrcW0wQFjQwU-meR3IYUgN>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 17:05:06 -0500 (EST)
+ 4 Mar 2026 17:11:32 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org,  Matt Smiley <msmiley@gitlab.com>,  "brian m.
  carlson" <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 07/10] sideband: use writev(3p) to send pktlines
-In-Reply-To: <20260303-pks-upload-pack-write-contention-v2-7-7321830f08fe@pks.im>
-	(Patrick Steinhardt's message of "Tue, 03 Mar 2026 16:00:22 +0100")
+Subject: Re: [PATCH v2 08/10] csum-file: introduce `hashfd_ext()`
+In-Reply-To: <20260303-pks-upload-pack-write-contention-v2-8-7321830f08fe@pks.im>
+	(Patrick Steinhardt's message of "Tue, 03 Mar 2026 16:00:23 +0100")
 References: <20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im>
-	<20260303-pks-upload-pack-write-contention-v2-7-7321830f08fe@pks.im>
-Date: Wed, 04 Mar 2026 14:05:05 -0800
-Message-ID: <xmqqo6l35jzi.fsf@gitster.g>
+	<20260303-pks-upload-pack-write-contention-v2-8-7321830f08fe@pks.im>
+Date: Wed, 04 Mar 2026 14:11:31 -0800
+Message-ID: <xmqqjyvr5jos.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,56 +91,40 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Every pktline that we send out via `send_sideband()` currently requires
-> two syscalls: one to write the pktline's length, and one to send its
-> data. This typically isn't all that much of a problem, but under extreme
-> load the syscalls may cause contention in the kernel.
->
-> Refactor the code to instead use the newly introduced writev(3p) infra
-> so that we can send out the data with a single syscall. This reduces the
-> number of syscalls from around 133,000 calls to write(3p) to around
-> 67,000 calls to writev(3p).
->
-> Suggested-by: Jeff King <peff@peff.net>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  sideband.c | 14 +++++++++++---
->  1 file changed, 11 insertions(+), 3 deletions(-)
+> -static struct hashfile *hashfd_internal(const struct git_hash_algo *algop,
+> -					int fd, const char *name,
+> -					struct progress *tp,
+> -					size_t buffer_len)
+> +struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
+> +			    int fd, const char *name,
+> +			    const struct hashfd_options *opts)
 
-Quite straight-forward.  Looking good.
+What does _ext stand for?
 
-> diff --git a/sideband.c b/sideband.c
-> index ea7c25211e..1ed6614eaf 100644
-> --- a/sideband.c
-> +++ b/sideband.c
-> @@ -264,6 +264,7 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
->  	const char *p = data;
->  
->  	while (sz) {
-> +		struct iovec iov[2];
->  		unsigned n;
->  		char hdr[5];
->  
-> @@ -273,12 +274,19 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
->  		if (0 <= band) {
->  			xsnprintf(hdr, sizeof(hdr), "%04x", n + 5);
->  			hdr[4] = band;
-> -			write_or_die(fd, hdr, 5);
-> +			iov[0].iov_base = hdr;
-> +			iov[0].iov_len = 5;
->  		} else {
->  			xsnprintf(hdr, sizeof(hdr), "%04x", n + 4);
-> -			write_or_die(fd, hdr, 4);
-> +			iov[0].iov_base = hdr;
-> +			iov[0].iov_len = 4;
->  		}
-> -		write_or_die(fd, p, n);
+More seriously, this essentially chooses to pick two parameters
+hashfd_internal() takes and put them in a struct, which would give
+us a clear upgrade path to add more to the structure without having
+to change the function signature.  But what is the criteria used to
+choose these two among 5 parameters the original function takes?
+
+Specifically, I am wondering if fd and algop should be part of the
+structure, as these would be exactly the same for repeated calls to
+this function to write to a single stream.
+
+> +struct hashfd_options {
+> +	/*
+> +	 * Throughput progress that counts the number of bytes that have been
+> +	 * hashed.
+> +	 */
+> +	struct progress *progress;
 > +
-> +		iov[1].iov_base = (void *) p;
-> +		iov[1].iov_len = n;
+> +	/* The length of the buffer that shall be used read read data. */
+> +	size_t buffer_len;
+> +};
 > +
-> +		writev_or_die(fd, iov, ARRAY_SIZE(iov));
-> +
->  		p += n;
->  		sz -= n;
->  	}
+> +struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
+> +			    int fd, const char *name,
+> +			    const struct hashfd_options *opts);
+>  struct hashfile *hashfd(const struct git_hash_algo *algop,
+>  			int fd, const char *name);
+>  struct hashfile *hashfd_check(const struct git_hash_algo *algop,
