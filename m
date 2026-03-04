@@ -1,129 +1,167 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5454118BC3B
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 16:53:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85B133D6F9
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 16:57:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772643239; cv=none; b=RAR9LfK2kwGc7Vnb7ILwdD1YkM+dBldu5j86F0/5MLy5T2UEyuDwaC1qKF2M09gVsZWYvnZHcatZFei5OdC7wHuYuyIBHaXFKnZJFogDxBB4wajIRDCE4AK6Gs99//r9flqA9DFPH+YI5f9872YISFwFR5XBdtDiI3WvkesdpXs=
+	t=1772643452; cv=none; b=dpoGxMm62cW0SXeJ0CNoqx6hKwrQqYvkHm5yzauhme+2ytD56UlcWE2GSIPO1dKwm+pB43lvKrVH0L4Gp0rekpn/df81rf4iQB6nJmumMuUHicF2MJgv+/LifOZpsWPN4Mv/eIgUOqPNbBab+8tJUJrsCDIWb3HNi6wrEOtFMcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772643239; c=relaxed/simple;
-	bh=U1LZngNjKmHP+s3gLYzfb5/9iuv39FZuMmnzMGY019k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T01YMCt/RTGB6j0lIBDi4q48s9kb4rToDTSUwM+4zWJrlvvl+xyZ+bp8bStm2R9ZBDjhSyZefKom2cdcW/j6tTpm6V/cDkggbQMn86t6ZeNZsppnB2oKHOJwdXYnrGrXdJbiQtiALOvGaJl6o6DglktAqxBYX94ZB1Z/2WE2ROU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HVk+T00I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VaeNckD/; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772643452; c=relaxed/simple;
+	bh=vrnujjlEZ/6K9ceS1ghErwqVCfosDHml+W9fWcpCupE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=upuFIMNIdA6aDPyK8ywkzAtW8vQo8su8a+qWYdGiGUb2fcjifndpdfUm5YJwdxtXxNRPes4x0QpN4Vc5wKQOlvYOZP9xclQ5S1TTPNsDdXCg18S7QFNZNg8I4XvmbE2oDRAQxZWL4AlwZIe31fy4h5Z7xzCeY8tiIRH9vH/6UKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AEVr/C4F; arc=none smtp.client-ip=209.85.167.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HVk+T00I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VaeNckD/"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5E8311D0022E;
-	Wed,  4 Mar 2026 11:53:57 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 04 Mar 2026 11:53:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772643236; x=1772729636; bh=YZJ7rIz9yK
-	mU9RtgIRJ/dA9ccJsURWJefQK8NMPRgn8=; b=HVk+T00IfhvoOjiHsp8Q/Cw1r7
-	TagGcHdNCvxF6yScT72ybvpMHU2xto+uppnRs9gB1qpahPSATv7FrMxn2hcluBP6
-	/W2Uxypr5fcpbpCXWIGsquq8Y0h4ed8m9jUnsii1Q2VaVzd1uuvB1v2sb/mMjSRC
-	szX3FE3z9BUV1eTCIw5wfDZNc9aDSPV+2mggxNG/c6mIYOPm/ygjX9GWliC0713Q
-	UK2LSwcnPcPfjhLBiDqbLWNqGi+a6uEAgztFIbFBY14ovx7eTajIVQAHiXRc94Mu
-	huwWGtnE/2NpAOQZDjSolGJgzB9ivDxQ6GXO+gqXSY6//22dFBEfUoguIhOA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772643236; x=1772729636; bh=YZJ7rIz9yKmU9RtgIRJ/dA9ccJsURWJefQK
-	8NMPRgn8=; b=VaeNckD/ZWJFgY+DcmfFX511O/aK9Rx0wu7vikKS443LNKgFju4
-	B3z6Dg97SUQuZENbqc6g590kE7kuK9s331Z4DaOvAQ2oRTTzhXNlfYeDTNkbyDSw
-	mx8C9PnLUS3MurW3qhWQDczSKEUnq5s2GGVQbLfa0co+tRIHl97miWfWBO+TTZsL
-	Qb33lecI1HRThM4c+6pTNQpf0/cPyBlmtIj9ev37FDknXtVrEsOWx94EyErs3Qp1
-	dWSP1JuuRY+/1VDDKUYGD0KIFElbXD2QHPLr+mHWyVybEi5jgpkdilaEc2bEqg/a
-	GrcM+K65W/pdRfXCJB24RCEn1GpagnaK/jQ==
-X-ME-Sender: <xms:pGOoaViH9pTN-vOVDKhTti5ye08gbI4UyiWG-syJ0KncBbhUT3BYiw>
-    <xme:pGOoaScLdEjHVsyP8YxOTYkjFUK8Q5cZs-EAkAT7t-EW0xyCOyP-3LINuf7EYlI-z
-    Dm3hVwgzoKx3ipJbtSB2C4opD8ZNuA4NUTd0bfEjrwzInyk-EjyBA>
-X-ME-Received: <xmr:pGOoaVg5TxmyXp3YvXyvcX8LPzHcjMumSaD4SAYN7jmJnibfttnZjhk9VlKx4On_LdA4Cuamegb5TiU8kigXwGiVqL_5dZI01w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegtdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprgefvddtheduheefgeduieesghhmrghilhdrtghomh
-    dprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrg
-    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghs
-    rdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:pGOoaaxJ1oday7LXA5aP7RyWUNcyF0kcOncaTFVdt0Zu8XtPiuhtDA>
-    <xmx:pGOoaRMFLv6Q8SxczxQFudsvSmX2MokewbI_6Vrkymjc6hix5TNXeg>
-    <xmx:pGOoabWxs8fhtb_OYfXbNXfTFSrqXZlHvMGVdUWEistC5w3C2OteHQ>
-    <xmx:pGOoaV1M1UCEqK91AkCMHL6m9bC3vXDmbg1BhyLXNYyumuGr9yzcNQ>
-    <xmx:pGOoafBBiE0B0Fvh6zuCy-v6OgTy_9ARPXz4R0wRRtSwII2d5JIKzpXv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 11:53:56 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,
-  karthik.188@gmail.com,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v11] setup: improve error diagnosis for invalid .git files
-In-Reply-To: <99c6a437-3fc3-4d9a-9465-4c47a9777776@gmail.com> (Tian Yuchen's
-	message of "Wed, 4 Mar 2026 19:03:05 +0800")
-References: <20260222102928.377519-1-a3205153416@gmail.com>
-	<20260223074410.917523-1-a3205153416@gmail.com>
-	<xmqqpl5rumy0.fsf@gitster.g> <xmqqjyvu42pw.fsf@gitster.g>
-	<460f00d5-97b4-4a6c-be45-6f60a17cd33e@gmail.com>
-	<xmqqo6l49mrt.fsf@gitster.g>
-	<99c6a437-3fc3-4d9a-9465-4c47a9777776@gmail.com>
-Date: Wed, 04 Mar 2026 08:53:54 -0800
-Message-ID: <xmqqfr6fa63h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AEVr/C4F"
+Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-463a0e14b4cso3011165b6e.1
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 08:57:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772643449; x=1773248249; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IZuYCo9V/sHZKw1lRDgPC6efsMehU0SqDheW+YgRQZI=;
+        b=AEVr/C4F+qaHwP7zCRIYGMNKNC+jr8KLtJ4RQKcaYN1tKjmfQpefzXO1F8CQXsPrTt
+         PFWBSKIYv9YCKfnM8TLDfOvAM+V2b2rNSeJq9YdXrFK1D4aBVWI3A5JsJsvvhgGQTnw7
+         7pnxE5P5rvA21jeee8lWpQwMqMnt+1EUGE2u6p2++guJMl8rJISiWQnBIErG9zxcCl9I
+         rkbGtiXSc8+yXGnUeUWusrvRZFDnH+vEJaPMEJFpRzvhnN1vrbVHvWNDqFB8IwH+3ZBU
+         194djv7GZy+1TayUncIS50iBTzbJHnFyV2a4nmNS1fssSoawtSzofZpvbnieB6XFOLPY
+         GLDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772643449; x=1773248249;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IZuYCo9V/sHZKw1lRDgPC6efsMehU0SqDheW+YgRQZI=;
+        b=fR2dGccn4LIgEoxlR1EENnnWStk1S5kK9a0k99T+dDYqIHva57NkT0y4kk70qLqunH
+         yr+6rjdJ5IbDfrLD0WsL/1qLnWEKZ/6fnAsAPnXSqmrdVQ0HTK7074E/Xpp0uhIEjaQr
+         8u7waFDaghtE7EhggR34/g+NnoOmEjOJamKazuAz1XxLyrX2Hxa/RFL3qJdgyKaE0+FG
+         LSF+QZiVhFLrBX+i/0bwO/Y+cwBwJQ4FgeR+K5e3zIuprm/jRL8vwcWsJUSkpjULp/KI
+         poBivZ1hN5Zd5QD0EiZVn8zkX5jQuCj4q9XAjJ+wG+vqlzqJH6abRChLpd0zz2q9zAQK
+         FbWw==
+X-Gm-Message-State: AOJu0Ywqa8UHb6wDwLjIRLs41x+55f+ZH/NJarnTXm0k+Tl5fYqCOjO/
+	T8GNd+rKrJIGjvjdQW27I13nXZOHuWOhVVqBFiMLcdYGzMnJp4rKOMJcaBly1w==
+X-Gm-Gg: ATEYQzxFYNNtfFyRFIePRtupASJxfOuG+kspmQRFsHwCa8D3dzd6u2XBZJpBVPggWWw
+	Yt8iugDcNtREIZGj1knSD0qkcgX/eeg8WSU2dLjk9NyYO5GC8PLrJOd7yK7Xt9VCsZC38lKoa8V
+	TrTwGQQoAESYlUBBZcusiaaHMxJwe3QAwUmWELA0cQU4y0ulxV05IxYrIzFDikdKP5MCEgdKK9W
+	zQMPG92Ondms1NyhoyZJxQ5jJGZKKWwGdvFh23NNs2cmW8pbZjHhZWVtjLmxfYEc2N7sHXe/upn
+	7F5ZfeaOT2WChVvMmCBtQ+lp2DzhYYX5QdnZq6LiWT70PVcQVZwz7Go+z2Gq+GiDNh13xvC4xPv
+	Xu5PSr+1bJjqG36wg0lznJ5vtwx7pRLh944tcm4iM8Wp0yEMgZ2TVtE5n1mR8gQC7kZP38MGl59
+	04Lx4xSR2vpC6Gvhkg
+X-Received: by 2002:a05:6808:4f6c:b0:463:f569:360b with SMTP id 5614622812f47-4651ad62a1cmr1306056b6e.56.1772643449616;
+        Wed, 04 Mar 2026 08:57:29 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-464bb3ab3e5sm11949575b6e.6.2026.03.04.08.57.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 08:57:29 -0800 (PST)
+Date: Wed, 4 Mar 2026 10:57:26 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/17] odb: introduce "files" source
+Message-ID: <aahbTN_lFx1Jhy7U@denethor>
+References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
+ <20260223-b4-pks-odb-source-pluggable-v1-2-253bac1db598@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-2-253bac1db598@pks.im>
 
-Tian Yuchen <a3205153416@gmail.com> writes:
+On 26/02/23 05:17PM, Patrick Steinhardt wrote:
+> Introduce a new "files" object database source. This source encapsulates
+> access to both loose object files and the packfile store, similar to how
+> the "files" backend for refs encapsulates access to loose refs and the
+> packed-refs file.
 
-> Hi Junio and Phillip,
->
-> Thanks for the detailed reply!
->
-> After reading through your discussion, I believe the most crucial point is:
->
->> "We were given an invalid GIT_DIR, we are not doing
->> discovery, hence we are operating without a repository"
->
-> If I understand correctly, the expected behavior should be: when a user 
-> explicitly passes 'GIT_DIR=/dev/null git diff', Git should no longer 
-> need to "search" or "guess" anything. Instead, if it's a trash file (or 
-> something similar) rather a repository, Git should simply act as if no 
-> repository exists. Is that correct?
+Makes sense.
 
-That is one of the things.  The broken test highlighted that
-GIT_DIR_EXPLICIT case needs more thought than what we have discussed
-so far, but there may be other cases that we need to also think
-about.  See what different cases are in the big switch statement in
-setup_git_directory_gently().
+> Note that for now the "files" source is still a direct member of a
+> `struct odb_source`. This architecture will be reversed in the next
+> commit so that the files source contains a `struct odb_source`.
 
-> So what I'm doing next is:
->
->> All calls to read_gitfile_gently(path, NULL) need to be
->> audited and then we need to decide which ones to leave lenient, and
->> which ones are OK to tighten together with the call used during the
->> repository discovery.
->
-> Will be working on it in the next few days.
+Ok so for now all ODB operations are going to reach directly into the
+contained "files" source.
 
-Thanks.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+[snip]
+> diff --git a/odb/source-files.h b/odb/source-files.h
+> new file mode 100644
+> index 0000000000..0b8bf773ca
+> --- /dev/null
+> +++ b/odb/source-files.h
+> @@ -0,0 +1,24 @@
+> +#ifndef ODB_SOURCE_FILES_H
+> +#define ODB_SOURCE_FILES_H
+> +
+> +struct odb_source_loose;
+> +struct odb_source;
+> +struct packfile_store;
+> +
+> +/*
+> + * The files object database source uses a combination of loose objects and
+> + * packfiles. It is the default backend used by Git to store objects.
+> + */
+> +struct odb_source_files {
+> +	struct odb_source *source;
+
+I don't think we use this anywhere yet, but I suspect this is the
+placeholder for the "base" ODB source.
+
+> +	struct odb_source_loose *loose;
+> +	struct packfile_store *packed;
+
+So with this patch we are really just moving odb_source_loose and
+packfile_store into `struct odb_source_files`. Most of the other changes
+are just fallout from this structural change.
+
+> +};
+> +
+> +/* Allocate and initialize a new object source. */
+> +struct odb_source_files *odb_source_files_new(struct odb_source *source);
+> +
+> +/* Free the object source and release all associated resources. */
+> +void odb_source_files_free(struct odb_source_files *files);
+> +
+> +#endif
+[snip]
+> diff --git a/odb/source.h b/odb/source.h
+> index 391d6d1e38..1c34265189 100644
+> --- a/odb/source.h
+> +++ b/odb/source.h
+> @@ -1,6 +1,8 @@
+>  #ifndef ODB_SOURCE_H
+>  #define ODB_SOURCE_H
+>  
+> +#include "odb/source-files.h"
+> +
+>  /*
+>   * The source is the part of the object database that stores the actual
+>   * objects. It thus encapsulates the logic to read and write the specific
+> @@ -19,11 +21,8 @@ struct odb_source {
+>  	/* Object database that owns this object source. */
+>  	struct object_database *odb;
+>  
+> -	/* Private state for loose objects. */
+> -	struct odb_source_loose *loose;
+> -
+> -	/* Should only be accessed directly by packfile.c and midx.c. */
+
+Is there any value to keeping this comment around?
+
+> -	struct packfile_store *packfiles;
+> +	/* The backend used to store objects. */
+> +	struct odb_source_files *files;
+
+For now we store a direct reference to the "files" ODB source, but I
+assume in the future this won't be the case and instead will cast the
+"base" ODB source into its concrete type as needed.
+
+-Justin
