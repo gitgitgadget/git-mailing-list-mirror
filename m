@@ -1,69 +1,70 @@
-Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C2D3DEAF6
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 18:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB763DEAC7
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 18:15:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772648148; cv=none; b=jZOb/s27yVe+lYjqdm9PKa/L9gqp4h/hsswXL4KgQWgZL38oFeZzyvERuUyMhh1Kos7Hl7xVMAV/7F/gvhHuzWFIqd0UeDXRVBuQ6cZQoKDAwYElkopGOFXp+tnTBsutJS31ybJ/77++gy78InK5ITJlxHhVURuTVymE3sBqPyU=
+	t=1772648149; cv=none; b=i5zdIF3y8LIr5fI2U+P20hKIrKW6bRXERM1IQiTh8NIITbwm46uPqcBfHNKMyYd6fBBDSOSpDq4nfGwU4+/MEVLUyYxxdEOcjcS/akf8L2348Ze1AJakk/MkR0WGZFBAwXm4JBjd3DA12S8AyT6Tw24saVn8aSFE9Eqa+wn0sEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772648148; c=relaxed/simple;
-	bh=UccY8KkQmmzRVJjPmUNw0+5cfcnWQd4PGNhkKpKIa64=;
+	s=arc-20240116; t=1772648149; c=relaxed/simple;
+	bh=Q0d/Ef20dtkIcmHwRxMxOenO8jPGAB86/tXyNZ1E4aY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OrzCz1py8T3ObiuN0HsG9TaT08uQ+ThD4tv0+EHobpP5ymUlRUOCzQ3tEiAoMK6Mg5hITMRwCSOhj19jb39xVm1Dm5B5O04V/eq9Zzvd5yuH3rFuDNYt5w7n4Cq2jft7Xau0rGNUlemK2UATSFgrJA/iwzY21wUdwzT2jhYcOyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W6xoRpQy; arc=none smtp.client-ip=74.125.82.178
+	 MIME-Version:To:Cc; b=Awh26z+eSoeZ1WLpDgSJocqlmmzJnVgZONFDYN1/9t0oc1z8r1/2GfPbX4m5wOTjrY4DStOsMCezTn9k0/9s/3bvHp0/xU7jxsJtBdWMtXzRckJ4NUMRoaBDnjkvlbu6cyrIUqypg/JyNewxiBEF8laWO59ZPThHZ/fajutfhNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HLGi2Vk5; arc=none smtp.client-ip=74.125.82.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W6xoRpQy"
-Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-2be19f05d7dso6155129eec.1
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 10:15:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HLGi2Vk5"
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2bdcf5970cdso4201180eec.0
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 10:15:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772648144; x=1773252944; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772648146; x=1773252946; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YGZZpQUs2JU6feqN07JnIijdY7YhuFyGOr34QG2qB8A=;
-        b=W6xoRpQy42gh6KyQvyR31htqpz9zY4LHQCJlHroBOxDpPzHN3CYzgm3rijK/ka3Pr1
-         hyPXO3yynQPAR6MBwQxE9PSTo9/nWJDOlVWU704xgVWwdXgyNW+477zM06BO0RfCDBr0
-         I5mE1kdImzfzCaRkI1j/gbHRxAjUd8fFCzBNwR6C4B4BNxwnHGpxfzh6WWFHzQIf1mnz
-         KeLlcfidWhyUyoELKepzkeZ1I8DSv308DLwOLHNR1NrJhXi7WEmTfJYs9JCYZ22K1j3F
-         1w7yXHyV2qzM4jiH7HW82z0s0FGkLtQrxywtmT3dlwRkEWvbOysHPQELgnC8tfZidCId
-         sQvw==
+        bh=a+Mc1QEWcey+40oZe1Jt9GSTSctxikuciu1qFE2Rp4A=;
+        b=HLGi2Vk51g/0eGGpAs/j2T5TV3N7oc0G/7XmO2Yp/ePEq9ueX6m9r77I6Fg57v/B2c
+         0i7zeeY0hULqfc1PO/f0n0BFgp7IRsb+m27OoESBsEpQ1MHmZwElyMvkc7N1Xh8XK1EW
+         8e2IXiKRLJTn0bqaUYFCjvN3MWq/aUicyhBoc6hhGE6HpaBsX01yITrNwE62AWEC4ELS
+         kOo/Xzx9v6wNtiJZCun1/ZmUJM6rB8xDQ7XHmo7KFzLfI8OljpPy9mzDqCwWxk95dHZX
+         TrWT/kCLl2dRCWf8HfK47Zw1LAbRS7CqQlBTG7EZjwoLcHvUI2SXtkljRGR5qUHfbJuY
+         AoYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772648144; x=1773252944;
+        d=1e100.net; s=20230601; t=1772648146; x=1773252946;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=YGZZpQUs2JU6feqN07JnIijdY7YhuFyGOr34QG2qB8A=;
-        b=IBE+zRG4srgKB5q11uwiSzTvCJZ9KTkHNnHrWcUryl/GYXIc3CiXNSXAOavtx340Ch
-         CIbLu0r8/qJ/nii1TOJbkgqTGBZPMCZGFpM98Q+FO9PyGEZaEMbQbN5yTBNgkTXmR0yO
-         k0kXJp+IFJC32Gm/eu7qEONSV8ZVCCwNh1OrMfInGaSBQOZDxGMoDxlEQyxicu978Zbh
-         qAEv2OgYQAzX3QFnnC0tR++QLfgDuMjJbws51Ttgy2TtVNPSI1VWdoOfC/R//XNi+gAQ
-         FfGyMBpolmnSVGlo+oWvc6dzuQRStMeKmRMFrrRFRU6d7DUh17S0hlbPyVY4/x0j+QRH
-         QiaA==
-X-Gm-Message-State: AOJu0Yyry4SYXOnTzCveTTsBU4OogUTrlamesBGH/Pvs9mkWRHkUQL8b
-	cJkKhvHdaMQldeQ3Cm/yFu5wL5ZVQt9Q7hfC9+GSPZQ9WYCRdvfCg/Ax/YAYvBaq
-X-Gm-Gg: ATEYQzzTTGHuAaKyzD7t4NSTGTiYywDIdi6/mLjrsJJ+ACDI1GRcN8wUwFYe86ogrep
-	qeCsnTXwY+Wxiua2TuVV2d/44OdjRqZMKDBwhYAmaG9IpKo7KDR18gy1iVtrWEVQIRyQPxFpvzA
-	n4F1JeLjDpUt7hqJA1ex+Ub0orx9lGht+HYySfqPnBFq6PvVjcoAwzSP95lfkRV2RhBi9gIrLRo
-	K4knThQ0XaukuPr4G3HJl+T/+flqy1cw79eaTGm4VQgO4jsW761VzkIPrYxYm2HCo6LSYs36qa9
-	bGxx0JEcsEg1WSEvm2Uykbx+ZhZ9EjG0OmA0U105YxPa6V3PZfhI3zwtOzLCw/TCV33NTbtS2vJ
-	sBCbHJFGVZuq1NDXkthGjHkbN4I5kngYm5s7IuD0ulgfx6ZLw970WJkis6ZsmhuHDr4StaIXR6h
-	idCR25mqQeAGEGYgbXeDYtdy8Qcc5qcPHWDdjG
-X-Received: by 2002:a05:7300:ef97:b0:2bd:fff8:c7ea with SMTP id 5a478bee46e88-2be311d2377mr1170465eec.38.1772648144375;
-        Wed, 04 Mar 2026 10:15:44 -0800 (PST)
+        bh=a+Mc1QEWcey+40oZe1Jt9GSTSctxikuciu1qFE2Rp4A=;
+        b=d8jpEBqmHRyT76Jh+czrVRGHFwRSV97I5qv7iTco/OrYP5YcniQa5LaUuQNordrDr4
+         Qi2vAnDPo1k2sVRiRTIj9jn+p0GqFI6iyOJYEzyIuDpjkcXaBzZeIZyCqEm3QPsipFzz
+         b7p7Xdh39c4exfrqC2EJUaQK6Hp78ELYr+gB3TEZrq8MrBhqoI9g/+41INNvCaOSIjUj
+         kRWzb95RmxHjzSavbUWSaBRsiBgTBf4M4J0LJimlOuuYiodTXPkYx0Gnc+rBOB0HcXWE
+         HrB13n3/IT2ZsgB4nc7Yppzc683IRWxZS3B1hc61jjKEfl5bM2eJPNlfCXiHK1qCrEdS
+         Lx8w==
+X-Gm-Message-State: AOJu0YwSZ8NPcvrAHll3K3arlSRQC7Vf012h1x/zfoD4uq/FsiY4P4Xb
+	kcxCYCY5DniuQUPf1hjK4UdhV+yJdNBqcw9pnYfQWIiMjzAk6HAuU0k8lhSHMavJ
+X-Gm-Gg: ATEYQzwzKCh05boL3RnbdVgcmUtkTpk+F8u35RfUU27D0/GBu+9LBSakOdSF4sQYOKK
+	1yxO8rqZR+3P9CnMDOZ408bLdZ4KZnjp8QaXwfV5b5XEvBMEmgf+C3wf9ynmxDtyuOog/3LitCf
+	PE9qxFuNNhisLfo0oigbv0MZEUwg9aO9a1OPOPuJEsVO5mKqFMhLGkulW3pWg2KORU8HF1ZlT+P
+	+oykQn9LZIh4sb5mYGjp17tJFZjobVJwpqTFDAXhYBmhCQsBrFg277Ymj9HxX3QIibvJQd1R+Ov
+	2kKtNyJml+X53kKneP/RNB/Dudj4VQwmrzIPG2tDUDFTwdkAMwymFsCI+H0p3reWSrJbSU6Y9E6
+	FryiLUviF7hZqLxs9CiXCWQ9I0Xk0url5UjogCotQrcrvz+1Ga/7iZZzqXF8JZYRGm0oG/JRLrW
+	lRy9rwA8tBHbpIGgX4hzsRI01xMQ==
+X-Received: by 2002:a05:7301:9f06:b0:2be:1bd3:a0de with SMTP id 5a478bee46e88-2be3121c128mr1057725eec.19.1772648145710;
+        Wed, 04 Mar 2026 10:15:45 -0800 (PST)
 Received: from [127.0.0.1] ([57.154.172.168])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be09bc9ec4sm8841182eec.24.2026.03.04.10.15.43
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be1ce921dasm5031789eec.10.2026.03.04.10.15.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 10:15:43 -0800 (PST)
-Message-Id: <76b171ab5c3d367e8f8fd825a7e296c399d26a95.1772648125.git.gitgitgadget@gmail.com>
+        Wed, 04 Mar 2026 10:15:45 -0800 (PST)
+Message-Id: <6c36c9e11e8d3ab55bb1bb34e3cff8c2fc118011.1772648125.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2147.v8.git.git.1772648125.gitgitgadget@gmail.com>
 References: <pull.2147.v7.git.git.1772065643.gitgitgadget@gmail.com>
 	<pull.2147.v8.git.git.1772648125.gitgitgadget@gmail.com>
 From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 04 Mar 2026 18:15:24 +0000
-Subject: [PATCH v8 11/12] fsmonitor: add tests for Linux
+Date: Wed, 04 Mar 2026 18:15:25 +0000
+Subject: [PATCH v8 12/12] fsmonitor: convert shown khash to strset in
+ do_handle_client
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,186 +82,89 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Paul Tarjan <github@paulisageek.com>
 
-Add a smoke test that verifies the filesystem actually delivers
-inotify events to the daemon.  On some configurations (e.g.,
-overlayfs with older kernels), inotify watches succeed but events
-are never delivered.  The daemon cookie wait will time out, but
-every subsequent test would fail.  Skip the entire test file early
-when this is detected.
+Replace the khash-based string set used for deduplicating pathnames
+in do_handle_client() with a strset, which provides a cleaner
+interface for the same purpose.
 
-Add a test that exercises rapid nested directory creation to verify
-the daemon correctly handles the EEXIST race between recursive scan
-and queued inotify events.  When IN_MASK_CREATE is available and a
-directory watch is added during recursive registration, the kernel
-may also deliver a queued IN_CREATE event for the same directory.
-The second inotify_add_watch() returns EEXIST, which must be treated
-as harmless.  An earlier version of the listener crashed in this
-scenario.
+Since the paths are interned strings from the batch data, use
+strdup_strings=0 to avoid unnecessary copies.
 
-Reduce --start-timeout from the default 60 seconds to 10 seconds so
-that tests fail promptly when the daemon cannot start.
-
-Harden the test helpers to work in environments without procps
-(e.g., Fedora CI): fall back to reading /proc/$pid/stat for the
-process group ID when ps is unavailable, guard stop_git() against
-an empty pgid, and redirect stderr from kill to /dev/null to avoid
-noise when processes have already exited.
-
-Use set -m to enable job control in the submodule-pull test so that
-the background git pull gets its own process group, preventing the
-shell wait from blocking on the daemon.  setsid() in the previous
-commit detaches the daemon itself, but the intermediate git pull
-process still needs its own process group for the test shell to
-manage it correctly.
-
+Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Paul Tarjan <github@paulisageek.com>
 ---
- t/t7527-builtin-fsmonitor.sh | 89 +++++++++++++++++++++++++++++++++---
- 1 file changed, 82 insertions(+), 7 deletions(-)
+ builtin/fsmonitor--daemon.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 409cd0cd12..774da5ac60 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -10,9 +10,58 @@ then
- 	test_done
- fi
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 53d8ad1f0d..f920cf3a82 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -16,7 +16,7 @@
+ #include "fsmonitor--daemon.h"
  
-+# Verify that the filesystem delivers events to the daemon.
-+# On some configurations (e.g., overlayfs with older kernels),
-+# inotify watches succeed but events are never delivered.  The
-+# cookie wait will time out and the daemon logs a trace message.
-+#
-+# Use "timeout" (if available) to guard each step against hangs.
-+maybe_timeout () {
-+	if type timeout >/dev/null 2>&1
-+	then
-+		timeout "$@"
-+	else
-+		shift
-+		"$@"
-+	fi
-+}
-+verify_fsmonitor_works () {
-+	git init test_fsmonitor_smoke || return 1
-+
-+	GIT_TRACE_FSMONITOR="$PWD/smoke.trace" &&
-+	export GIT_TRACE_FSMONITOR &&
-+	maybe_timeout 30 \
-+		git -C test_fsmonitor_smoke fsmonitor--daemon start \
-+			--start-timeout=10
-+	ret=$?
-+	unset GIT_TRACE_FSMONITOR
-+	if test $ret -ne 0
-+	then
-+		rm -rf test_fsmonitor_smoke smoke.trace
-+		return 1
-+	fi
-+
-+	maybe_timeout 10 \
-+		test-tool -C test_fsmonitor_smoke fsmonitor-client query \
-+			--token 0 >/dev/null 2>&1
-+	maybe_timeout 5 \
-+		git -C test_fsmonitor_smoke fsmonitor--daemon stop 2>/dev/null
-+	! grep -q "cookie_wait timed out" "$PWD/smoke.trace" 2>/dev/null
-+	ret=$?
-+	rm -rf test_fsmonitor_smoke smoke.trace
-+	return $ret
-+}
-+
-+if ! verify_fsmonitor_works
-+then
-+	skip_all="filesystem does not deliver fsmonitor events (container/overlayfs?)"
-+	test_done
-+fi
-+
- stop_daemon_delete_repo () {
- 	r=$1 &&
--	test_might_fail git -C $r fsmonitor--daemon stop &&
-+	test_might_fail maybe_timeout 30 \
-+		git -C $r fsmonitor--daemon stop 2>/dev/null
- 	rm -rf $1
+ #include "simple-ipc.h"
+-#include "khash.h"
++#include "strmap.h"
+ #include "run-command.h"
+ #include "trace.h"
+ #include "trace2.h"
+@@ -674,8 +674,6 @@ static int fsmonitor_parse_client_token(const char *buf_token,
+ 	return 0;
  }
  
-@@ -67,7 +116,7 @@ start_daemon () {
- 			export GIT_TEST_FSMONITOR_TOKEN
- 		fi &&
+-KHASH_INIT(str, const char *, int, 0, kh_str_hash_func, kh_str_hash_equal)
+-
+ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 			    const char *command,
+ 			    ipc_server_reply_cb *reply,
+@@ -692,8 +690,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 	const struct fsmonitor_batch *batch;
+ 	struct fsmonitor_batch *remainder = NULL;
+ 	intmax_t count = 0, duplicates = 0;
+-	kh_str_t *shown = NULL;
+-	int hash_ret;
++	struct strset shown = STRSET_INIT;
+ 	int do_trivial = 0;
+ 	int do_flush = 0;
+ 	int do_cookie = 0;
+@@ -882,14 +879,14 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 	 * so walk the batch list backwards from the current head back
+ 	 * to the batch (sequence number) they named.
+ 	 *
+-	 * We use khash to de-dup the list of pathnames.
++	 * We use a strset to de-dup the list of pathnames.
+ 	 *
+ 	 * NEEDSWORK: each batch contains a list of interned strings,
+ 	 * so we only need to do pointer comparisons here to build the
+ 	 * hash table.  Currently, we're still comparing the string
+ 	 * values.
+ 	 */
+-	shown = kh_init_str();
++	strset_init_with_options(&shown, NULL, 0);
+ 	for (batch = batch_head;
+ 	     batch && batch->batch_seq_nr > requested_oldest_seq_nr;
+ 	     batch = batch->next) {
+@@ -899,11 +896,9 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 			const char *s = batch->interned_paths[k];
+ 			size_t s_len;
  
--		git $r fsmonitor--daemon start &&
-+		git $r fsmonitor--daemon start --start-timeout=10 &&
- 		git $r fsmonitor--daemon status
- 	)
- }
-@@ -520,6 +569,28 @@ test_expect_success 'directory changes to a file' '
- 	grep "^event: dir1$" .git/trace
- '
+-			if (kh_get_str(shown, s) != kh_end(shown))
++			if (!strset_add(&shown, s))
+ 				duplicates++;
+ 			else {
+-				kh_put_str(shown, s, &hash_ret);
+-
+ 				trace_printf_key(&trace_fsmonitor,
+ 						 "send[%"PRIuMAX"]: %s",
+ 						 count, s);
+@@ -973,7 +968,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
  
-+test_expect_success 'rapid nested directory creation' '
-+	test_when_finished "git fsmonitor--daemon stop; rm -rf rapid" &&
-+
-+	start_daemon --tf "$PWD/.git/trace" &&
-+
-+	# Rapidly create nested directories to exercise race conditions
-+	# where directory watches may be added concurrently during
-+	# event processing and recursive scanning.
-+	for i in $(test_seq 1 20)
-+	do
-+		mkdir -p "rapid/nested/dir$i/subdir/deep" || return 1
-+	done &&
-+
-+	# Give the daemon time to process all events
-+	sleep 1 &&
-+
-+	test-tool fsmonitor-client query --token 0 &&
-+
-+	# Verify daemon is still running (did not crash)
-+	git fsmonitor--daemon status
-+'
-+
- # The next few test cases exercise the token-resync code.  When filesystem
- # drops events (because of filesystem velocity or because the daemon isn't
- # polling fast enough), we need to discard the cached data (relative to the
-@@ -910,7 +981,10 @@ test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
- start_git_in_background () {
- 	git "$@" &
- 	git_pid=$!
--	git_pgid=$(ps -o pgid= -p $git_pid)
-+	git_pgid=$(ps -o pgid= -p $git_pid 2>/dev/null ||
-+		awk '{print $5}' /proc/$git_pid/stat 2>/dev/null) &&
-+	git_pgid="${git_pgid## }" &&
-+	git_pgid="${git_pgid%% }"
- 	nr_tries_left=10
- 	while true
- 	do
-@@ -921,15 +995,16 @@ start_git_in_background () {
- 		fi
- 		sleep 1
- 		nr_tries_left=$(($nr_tries_left - 1))
--	done >/dev/null 2>&1 &
-+	done >/dev/null 2>&1 3>&- 4>&- 5>&- 6>&- 7>&- &
- 	watchdog_pid=$!
- 	wait $git_pid
- }
- 
- stop_git () {
--	while kill -0 -- -$git_pgid
-+	test -n "$git_pgid" || return 0
-+	while kill -0 -- -$git_pgid 2>/dev/null
- 	do
--		kill -- -$git_pgid
-+		kill -- -$git_pgid 2>/dev/null
- 		sleep 1
- 	done
- }
-@@ -944,7 +1019,7 @@ stop_watchdog () {
- 
- test_expect_success !MINGW "submodule implicitly starts daemon by pull" '
- 	test_atexit "stop_watchdog" &&
--	test_when_finished "stop_git; rm -rf cloned super sub" &&
-+	test_when_finished "set +m; stop_git; rm -rf cloned super sub" &&
- 
- 	create_super super &&
- 	create_sub sub &&
+ cleanup:
+-	kh_destroy_str(shown);
++	strset_clear(&shown);
+ 	strbuf_release(&response_token);
+ 	strbuf_release(&requested_token_id);
+ 	strbuf_release(&payload);
 -- 
 gitgitgadget
-
