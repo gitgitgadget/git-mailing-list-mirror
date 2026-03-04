@@ -1,137 +1,129 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5D6373C16
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 09:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0463A4515
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 10:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772617801; cv=none; b=sKMFv2L/7O7zGPIT4vz0nsh5wxcn4aLu0d98UmI091d+hDO9u2s+q1Y1lRhZEfhZW8o7MlgerAVirUhN2K7I1zgSCrjh6z4Up+MN1Tf7iXhS9NtyC+Fml3iIXbIy7Rf01xo0iVsPK4M1CPvaAOa8u4AOxyZzDOtV/zyFeUb4Hv8=
+	t=1772620234; cv=none; b=Lrk3ZkFtBoQnKZpOBLcRcvlC9UlL+VGaO0rhpWUD/OjSE3U7wJdl/bvtkHo+99ky09Zn/Vl++VHVMgnPJ3IkKEs8KUUSIQ3uCeRR91JIbbiffLDbx5yuGAs6z/QmOby8BsNZdmEMoeLJhKpHz8YteypnQpsC+q7zs97dz3oO1LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772617801; c=relaxed/simple;
-	bh=EFCmE6LL71dyRTLh1/C1LyaL8KRT4tk5qg0Anr1WoDI=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=rChFn8jRQccAhN6wnXZOavkSBk3WTHYY0YKdFQNDzPrY7fsfqx52MmVcP9WC00kyE/GxhS9eyvf+LSvrQHxRg7uSx8SM/Z4TfQZPvjOJAMddDj7g5yUZVBwwDwROgyzdtSZ0GkvnvvCBodvMhvPs8uptPrVIUXkx1w8NANAwpS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H6of2L/5; arc=none smtp.client-ip=209.85.128.169
+	s=arc-20240116; t=1772620234; c=relaxed/simple;
+	bh=la+rgTbSwP8F7pF3NO/CvNawry5eCy7+HXoJ1+982Wo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TGs0WF8lRzKHeHmBlQVBJfrq3qSt5Xtw9iq4ulugElxWIaWMXWlm5IxB9ul/frFQkMyATlkt6ba+mSH8jeN4JRZeCclgkUzsc1/p6CBWPEsN0lzsbEYYYZ0uYnpzjGOce5qAyoXC4P3igZznUWQS7DJdLUvbnamvkFL+fw743bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FvAsyE5a; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H6of2L/5"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-797ab169454so65383057b3.3
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 01:50:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FvAsyE5a"
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-3870778358aso80593841fa.1
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 02:30:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772617799; x=1773222599; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fAtyVv3fFzwZVxsynh/38FI/gugP0ZorxiloyNtQZpk=;
-        b=H6of2L/58PvRJjMdlOZmSgBkgT4yfYhFDLKoZlr1fYSaS3FQfZusWDFuHebc0bUWae
-         qKU4B5T+NXvjwIrxkrWgHV4e2mSiPJErhjgbNjR+u1KGljXAkLontCK4/ApRH9QU6imP
-         4A0AfxmFjyj4eFYq3dpzmWHmxxMfDCH/D6x4nNRDLPbAXfADjLyhGm5Dghfh5ofF4ySt
-         CHfCPtyynwf6xiEIhMS5jihcuRzvcuOLFV4F5Z5aJX23S6pjyYspXNnSLxZ5wNx7et0+
-         MU90muhl1SiOGwhwOOOwejZW8gQg4jFup2xs6uEyvXZGzn9mZpfXBYnrl4W2HLxyiGaV
-         oIfA==
+        d=gmail.com; s=20230601; t=1772620231; x=1773225031; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z3YjFHRW4DaXXlALrlBiKWpJSmq+UajUcIk6XgLyhJ0=;
+        b=FvAsyE5ayfz/S1xOSLeVukzS6kMCbwKmYi7RcHNYmP9jE0XCia+HSID7EOatYxA3Ca
+         5fdteDhd4PV9g+eVjLhil3FgPYrR4Yz74JQhj+FFuY7YdoFoI0aGJdHv7t/MR2aDJLcR
+         IX6zdkiqesGWVVoW2qxm1Vcdi1ybW0RpB2qho9fifuBsFLrazySIdku+R2dwgmGAwZo/
+         aNGuUpaDiPyQ9ssuixrp5iaYOAbYENQdxpkIEd+qlwVwUFB9XmqmI+EP4SXQA55tNgL1
+         yeBm3sQBy2UhVSRpZfUVB6taxg+bh2FGglCVDjj2yV44u2IRrScrJmoWQwQpOOeurLJG
+         aDWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772617799; x=1773222599;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fAtyVv3fFzwZVxsynh/38FI/gugP0ZorxiloyNtQZpk=;
-        b=TF2fTiQxgM94aUT030/PSD6AZU/P5928FZW1sHnPiid0havBnjl+Ai/0G3j2YmHxDI
-         wmfVvalNiC3F+h1dn9auejPpfbEoy5sC2/jEz5c4hvH5FJlW+LeNQVmtgylMiTSCwBLu
-         DyHuqX+m0JaKowDkkaiUGfPdvaNvseRRFQcJpPsHRm9/zNTlchYB1JhhdqmwBF+4V2JR
-         2zNoxzw1tkY/JrM/M2slc/uQSQAWtwxgMR1ZS2bmwlZgv4UZa9hG6qtUlb3c7Hkx+qxK
-         4RRIppiEtUkS1e5XYS1VJpRjt3sWmu5tuwN6z1N/H0EkT5rpiJOfxTxxhWRxsd6Ym2nC
-         KB1A==
-X-Forwarded-Encrypted: i=1; AJvYcCUwjSdUhjjdc7FBZ+O79vlGJzu0xID+sIsTwQ/XFMj4oy8W1xBA9qWdJS4xTCz0WxicuJQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyokbypiA8NllqHoSrGxy+71w5YKQO24tZkeBjKG+LqDWyooktU
-	W0MkHxjZ/zpKg6vZORCXXDIReNFcAiYFGkTgRXiRVl/NL2hl135Wwnykc/ufVQ==
-X-Gm-Gg: ATEYQzxgBQs5r8TymK/HqUvM5wOd+B/IfW01Eg9M8zPX7iL5YmsojCeCAvbMvgoB1/l
-	09u73ZHSAYk7GNBZPihHQUQRCskzYdNLT7DUqjjPZLpAdm7uyQv0e+VrfH3fWy7mkT2floOPxw3
-	y7OO6l9howLE9yoIUjxw/IS9csletLn3GzSTTRH3CZr0y7CfDom6U7oRbD+x80nSl6XOFarQ2gH
-	9NLls3Ft2+3qTOhGHWBe7X0OTyL9U89zXURO9WZ8Kwui6I1Q3DCEeeqHjkfpr5mKXOorD5XKjzs
-	PxKwnj1ThsaKbRfdOh0IRTfyhiOYDUm647sMLxTUXDnfoM68kuOI4W2O4YlAdGrftN7Ihmhi6Yj
-	0+qwpXO9MJFlCfC2goCpm96l3C4U6lZh8Jqou1wSv/4p243kOsn8NEpB1Z1fpaHMk2M8Zt4ByR0
-	xeNegqTSXncMgNvRMPn0u/OMOyhPjYEfMAJJLrX+fTgqZvNEj22e2LG5cFKlF0u9sgIT3znz2GY
-	GtmJBdPbxrrj4NG3HaLoRzsYG/YDb2TDmQ8jHlBmKm6Cw==
-X-Received: by 2002:a81:a607:0:b0:798:6542:30f6 with SMTP id 00721157ae682-798c6ca5609mr8616017b3.37.1772617799311;
-        Wed, 04 Mar 2026 01:49:59 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:90eb:5600:9d3d:68c9:abaa:c459])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79876bf8103sm73907207b3.27.2026.03.04.01.49.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Mar 2026 01:49:58 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20230601; t=1772620231; x=1773225031;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=z3YjFHRW4DaXXlALrlBiKWpJSmq+UajUcIk6XgLyhJ0=;
+        b=UV3KBB72Tbc2TqO0xVoceK7wWwDnXSkErhs8cmEetvIWE8mf77orx0WQRpdc/j3m5Y
+         vjTAOsULbCCLAe+1bDrABOwsphfCnVi1QfjwQOVj9jrEhDwb6stAYkZTl9lXSTRgNF2H
+         MxdQq/A7sHaET7959V7jquad2uCtHxaZsUom2K8eBi5eOp63fXskRMAXmyouLpyavD7J
+         EpuAvW/PcTuC4o0ZFpVsjMs0x0csFQ7r7paztMzvJKSwll8xmG9xu4FBw6pNrDKhFvGY
+         /t6pI7XGj640+lhaBciu0NzfHcMzggvo8huFkFyf5HBYb3uplbUD9MIPoOctuoFHazDK
+         5hCw==
+X-Gm-Message-State: AOJu0Yz8YPbT6BxYfyR3dp09mso89lFRnD1OgrwQVyvSD3BtKPJLyee8
+	FZlxqVWij6VAa18rzpPRrdhmZYIIfTSoTbgU0F1pESpmwMhVzM3DNsIjy+g5lQ==
+X-Gm-Gg: ATEYQzyNYrPnwZQ23BX2CWCAfFASpgURO5+/m3Zq+9PRvR3vnmozQguYQFLwrMqB4qQ
+	Jogo/C9tuHhca9u8HT8vu8dVt5TuigGsGN/pLRr+pj6eGmkF3Dw8RLz8opOdHv8qLYVS0Y55Ctm
+	h6rMFikHQMYQmZBIcA9DOOO4QBS0rG+uQ1cPylXL6gdqLZKVEuBWwdSMV3biWCDfpAd1kK0P9bx
+	li+BuUzrq1dLJ5D2MszzMzVkFp6L5bTip9PKnfvzOCmvrA6vQKk1JuJEa1rUGC6gdR7WAErUFOX
+	Jv80MlaaOb3tOsiUpf7mj/b/WmuBtJqaJZc19EQk/H0BH4aHhNt8vYNdKiP7ZZtFCe7PmbYz1We
+	tl/QM/Qd00q5S/MK7V+eNELKGduEV2Yq9OqmbNnkLmlp/d/TtKqkP/s8ilOJXt3HoTsGmeEi+g0
+	BIaWjLrmnA2ymuYkUL835+uu/qKrXgYEhlykzzl6ccoa7AzPRAC+woOvaB7NkwGSgSr8CmfHLHQ
+	uEyS2bHaePHRA==
+X-Received: by 2002:a05:651c:995:b0:389:f5b4:46cc with SMTP id 38308e7fff4ca-38a2c564858mr13042701fa.4.1772620230742;
+        Wed, 04 Mar 2026 02:30:30 -0800 (PST)
+Received: from Mac.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a1273cf021sm706544e87.4.2026.03.04.02.30.29
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 04 Mar 2026 02:30:30 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com
+Subject: Re: [PATCH v30 0/2] status: add status.compareBranches config for multiple branch comparisons
+Date: Wed,  4 Mar 2026 11:30:29 +0100
+Message-ID: <20260304103029.8273-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqq1pi1wzzh.fsf@gitster.g>
+References: <xmqq1pi1wzzh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v3] add: support pre-add hook
-Date: Wed, 4 Mar 2026 04:49:47 -0500
-Message-Id: <33EBA399-2D24-48C7-AA1B-EBADF5E520D4@gmail.com>
-References: <xmqqy0k8a4xo.fsf@gitster.g>
-Cc: Chandra Kethi-Reddy via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Chandra Kethi-Reddy <chandrakr@pm.me>
-In-Reply-To: <xmqqy0k8a4xo.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+> The above two uses ( cd test && git $command ) to do what it can do
+> with "git -C test $command", but the rest of the script seems to
+> mostly stick to the latter.  Want to be a bit more consistent?
+
+Good point, will fix!
+
+> We see only one because... @{upstream} and @{push} are both
+> origin/main and we can dedupe and there is no extra advice needed?
+> If @{push} were missing and only @{upstream} existed, we would also
+> see just one, so this test feels a bit under-explained.
+
+Renaming this this now to clarify that it tests deduplicating. Also added
+two new tests, for when reach of @{push} and @{upstream} are used alone.
+
+> One thing the "advance" function does is to call "test_tick" to
+> increment the mock timestamp, but the incremented mock timestamp
+> would not survive beyond the end of a subshell.  Not that it matters
+> too much to have commits with the same timestamp in these tests, as
+> long as things are made more reproducible by use of the "advance"
+> function.
+
+Yeah, it's not great when used with subshells, I ended up differentiting
+commits only by name like 'advance work2' because as you say, otherwise
+they will get the same commit hash.
+
+> I also am curious what should [jc: ditto] happen when @{upstream}
+> and @{push} point at the same origin/main and our current branch is
+> ahead by 1 commit.  The pull side would say "you are ahead of
+> origin/main" and stop wile the push side would say the same thing
+> with advice to push it out for publishing?  Or should they get
+> deduped?
+
+Jumping in altough the question was not directed to me:
+
+When behind and ahead of the same branch we show the "diverged" message,
+and since only one line is shown when deduped I think it works in a logical
+way.
+
+> So td;lr is that the tests in this step mostly look great.  It is
+> just the semantics of "dedup" is a bit unclear, without a test that
+> makes it clear (like the "@{push} @{upstream} @{push}" one), and
+> perhaps a bit more documentation how having multiple tokens on the
+> status.compareBranches variable affects the output.  A (n easier)
+> half of that additional documentation could be as small as the
+> following, but I didn't attempt to deal with the "dedup" part.
+
+Will add documentation for the depuping and a new test case.
 
 
-> Le 3 mars 2026 =C3=A0 18:06, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
-it :
->=20
-> =EF=BB=BF"Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->=20
->> "git add" has no hook that lets users inspect what is about to be
->> staged. Users who want to reject certain paths or content must
->> wrap the command in a shell alias or wait for pre-commit, which
->> fires too late to prevent staging.
->=20
-> I do not think the above would convince readers that "preventing to
-> add" is a worthy goal in the first place.  If you "git add foo" by
-> mistake and wish you had this hook to prevent 'foo' from getting
-> added ever, you can easily "git reset foo" to undo it.
-
-It=E2=80=99s also not clear to me how the proposed hook could inspect =E2=80=
-=9Cgit add A B=E2=80=9D and reject A but permit B, but maybe that=E2=80=99s a=
- non-goals.=20
-
->> diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
->> index 056553788d..657e14d306 100644
->> --- a/Documentation/githooks.adoc
->> +++ b/Documentation/githooks.adoc
->> @@ -94,6 +94,36 @@ and is invoked after the patch is applied and a commit=
- is made.
->> This hook is meant primarily for notification, and cannot affect
->> the outcome of `git am`.
->>=20
->> +pre-add
->> +~~~~~~~
->> +
->> +This hook is invoked by linkgit:git-add[1], and can be bypassed with the=
-
->> +`--no-verify` option. It is not invoked for `--interactive`, `--patch`,
->> +`--edit`, or `--dry-run`.
->> +
->> +It takes two parameters: the path to the index file for this invocation
->=20
-> Elsewhere you called these two files "arguments" but here you say
-> "parameters".  Let's be consistent.
->=20
->> +of `git add`, and the path to the lockfile containing the proposed
->> +index after staging. It does not read from standard input. If no index
->> +exists yet, the first parameter names a path that does not exist and
->> +should be treated as an empty index.
-
-Saying =E2=80=9Cit [the hook] does not read from standard in=E2=80=9D feels p=
-roscriptive rather than descriptive. Why couldn=E2=80=99t I write a short sc=
-ript that asked for confirmation of the paths being added via stdin?
-
-Or perhaps we mean that Git does not write anything to the hook=E2=80=99s st=
-din=E2=80=A6 at which point I wonder if Junio=E2=80=99s =E2=80=9Clet=E2=80=99=
-s not mention that we don=E2=80=99t do this unusual thing=E2=80=9D applies? I=
- haven=E2=80=99t looked at how the rest of our documentation describes hooks=
- that aren=E2=80=99t fed input via stdin.=20=
+Harald
