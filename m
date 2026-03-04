@@ -1,79 +1,95 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448833C6A46
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 17:41:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E8C13DDAE
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 18:06:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772646106; cv=none; b=RkRx5KDW/2/VntG++FkK8SVYVTlF+T7dpqxfvmNfoYu9w5DFoY9hlE3B645xdZdDIqsUD+Rrea97Pc6/2lYbinrW5rtA0fOPR8/E9DjrNokTblz96IxjCzTaYBDHpEVvbD4pWm4yITMWO78Qip+fL+yj3GYT/CcDwDaP8wpa4MU=
+	t=1772647605; cv=none; b=jqa4xbqp05mcTUBnxJvw4+yI0xTXfNUMSTJ/8L14ieHaByvsf/Hkr42kdl9P0zsHpRjP5l2ML69UGvNLwCYT7shsKq2+EMgmKZWhJB+I+gJJFBBYQeMRNy/wXXIZzQIBmjE4ZIQR1WB1g+G2QklnWCLmtTrJp2uDafPkqEe0sAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772646106; c=relaxed/simple;
-	bh=0wKRf04B0oDEjJMxS4UdSpsTW3FZu39TAw4eZLsK8E8=;
-	h=From:MIME-Version:Content-Type:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID; b=OQha/+bXtbJqoELWbDz7/hg5Kah3/HONSgqtmjTw9q51g5balNv4+y0NVTzOf81veHYx8+fOEBid9S0XmLr5Ou7ErG5WIClu8Js3SbAgWEIpjXd90bF0aoYRLjyRwTNdDkq/XeTBNndETZzJ/RtYRpyacS3YV6bQ7ld5vae7qh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=few0PlOI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j1kck9g6; arc=none smtp.client-ip=202.12.124.148
+	s=arc-20240116; t=1772647605; c=relaxed/simple;
+	bh=eAZ49GO9b6q+j2rdG9kc5ob2v7R+xKl/YuidHVVi1J4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pL+fqMYLXIY8xcKcgli8sDhMbCOIxrd02WyU2ZIMYKPsDHe7L0oHtKyE6Cp/w+o2lwydKswI+Y9g53V8dJMwnkzn+q03YIqCC9p6uBiD8cryN60JU0MRCkUKlAjM0GNlmWrjhh8CI1m9GEcO9Qwmhz2Oo+5ucMKraTE7sJdDAMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CZDyDEHW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HixFczXW; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="few0PlOI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j1kck9g6"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CZDyDEHW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HixFczXW"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 563351D00061;
-	Wed,  4 Mar 2026 12:41:44 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A73CF7A01E2;
+	Wed,  4 Mar 2026 13:06:42 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 04 Mar 2026 12:41:44 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 04 Mar 2026 13:06:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1772646104;
-	 x=1772732504; bh=agfMCm7zZplSqpaihMIxqk74+/zLeIAU2kAh4fuVzzc=; b=
-	few0PlOIBt2X185wD/0v38lDRoY9HQqD53f+QLlOWPoh2/Ow6DaT/kOOL9hWpWVx
-	1fkt/jpgvTb3TDwg1ujljUN8aAN3Wr+0MBFs91BOMb2Kc9K/4Wvu8f5GDy02AB96
-	hvWHSMZso2poncCZ/+Zsxu8bFDlajuTyrWdQuGrZfZ776TSAuS6+cDGyAnyzvact
-	0PCcIBp1Vgcm++XMN9EYakDQzrsFSc1Sr1YSU5lNsKbO+Ht07aAF6ZaZ/t0vVCz9
-	LCOUHVJr6SGFmhp1Ha4GhKQPmX3pCdO5VQOtsE4Jx3t+pWtH3i53EjDlO+TYT4kM
-	Asibo/0esHQuqA3mf1DWbA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1772647602;
+	 x=1772734002; bh=/nKVJrVYiqOgdxlCgHt7MzACG/AXuhn9/qJhfGBO2tk=; b=
+	CZDyDEHWFfYM+KhoBytgcjYW7Tt08qspxp/bd9OxJgrjf1WrViobMgJ61G8nV6vx
+	M3oD3hbnBN6ULG8tRfIC+RMWVXHx5onqy8lLEKe0gZ9js96YxcwV5fUNSOHkEYbF
+	MEAv1o0LTAn2uUY+OTWsSzYA6/j+ol3IqXS6ymY9H0YPeezqruRi5dp2xl1O+Bqb
+	Eeh14jm88ALY0Za9dSX4338iho8e5cwKAdTBMmb5hQ66nVVx/4svCTx4xQ37OYkf
+	JQpy1Zy4DtC6fhEbr5Kar0zU8TEg763czlTMFjYLIMX+Z6TL0CXTvq08PZ089ybs
+	CFvt0lIOgYbvwBQY6rEtBg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772646104; x=
-	1772732504; bh=agfMCm7zZplSqpaihMIxqk74+/zLeIAU2kAh4fuVzzc=; b=j
-	1kck9g6xTgAmmklqrDeDS6ZBH26yOjDSf0CHp4MXcRSSK5SAx1bFgbSMdrp9UhmB
-	hUbLkGq0MhUAxrOx4y+pZ9JYPEJhr/Qy+G3xg4CU0UuWZNWKxoNvwbfQ0MW+kcyl
-	WjObnaY39FcRMvKo1QybqkpKx6QN53DusZ7nLQZTHHT1ZRUUpOLfD2CZ9cbbkie0
-	V50sYtuh2WbaSHObA0QoSMF5YtgZlW7UVvjiOxAwD+rsYHySYswf7lMRwHcagS4v
-	ulNVoD8lLDd8O3LEssd5b9y9Kjf/LexzQ1oRRg7EMJlYvz+4jlHMd9fEauYSTVD/
-	0A5fWdsQCePnFpISP3vvQ==
-X-ME-Sender: <xms:126oaWKU_6lEhVzI32DanSQ7DYvxxkiTG2gmTnU8BK6Wzi-sf_YqnA>
-    <xme:126oaQY-SMaih0NCQr-uGjkJpGiurpd9_7fTQB79a-G7T1P3ai3iriBHtZ9mPdZSH
-    Xtj1crou2SeNOVDkTcBP95mTzLEHkw9erO2UFJLmj1VT-wCdkwR>
-X-ME-Received: <xmr:126oaY-oR6H5vxfH9Z3myX2IgkexBD1j3tr8hTqVidoeEyLFmhbGowldQueTSwDJz9q0x9DL3yn_fhOR6RCPKw3kw4SBBjnTTg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegudefucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772647602; x=
+	1772734002; bh=/nKVJrVYiqOgdxlCgHt7MzACG/AXuhn9/qJhfGBO2tk=; b=H
+	ixFczXWHVT1kAUlLM9cdRcBO/si0Fk12aTCQHKNh6KnOjNbmxSGROFUwjU202Bf/
+	q5CPv7is4Z165Xm352oLQEv3TXr3n3T1Ys518mkR00D20cJqhncZh4rx0QD0VIzP
+	/hU8qfmL8XPC9wSLGjxqS9EuyeCqg8zkYAhBkjZ5j9ZB9bbUVJTqD4bsaL9Fh9eT
+	Voe3TWfCqq14Bdv+80Y0rtIogLpz7CNOG6wggzWWzKGk3E4egeUjrjp6Y9zX4uM5
+	uoLCAB5V/U39jlSS9OcC1DZ00k4zrI98mboHbwWSqZRpyz5hr7u4aECORCkK1BhI
+	PKBDxxMPvGe13SN0fV0CQ==
+X-ME-Sender: <xms:snSoaeZl9O5n1hKtuD9KeZiaezteSzbCmhjGKeAaCqxk6_MIblEaeg>
+    <xme:snSoaVFIFa2c-Nb_wjJ2-H8zZyo3YQLh1fO1fAVUkOe058TLGQSvuZJ0lh0DQKNqh
+    oeXNACjrg8L9Ko8d_Io0Usmvi-c4qNbRlm9v6daEUXcz7pqP3gv8A>
+X-ME-Received: <xmr:snSoaSzrdwJOfdyer5ByAXA8_K8EgUOGZ3J7ovrWJQSteb3QY9NEisiasEswrzH7yg38UkSSMkSgxNpChLxisALIkutzCeDL8Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfggtgfgvfevufgjfhffkfgfsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
     ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeetuddulefhgfeludefieduudehleeihedtffefkeehheetvdetffelkedu
-    hfeikeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhthhhusgesphgruhhlihhsrg
-    hgvggvkhdrtghomhdprhgtphhtthhopehhrghngihinhdrhhigsegshihtvggurghntggv
-    rdgtohhmpdhrtghpthhtohepjhgvfhhfhhhoshhtvghtlhgvrhesghhithhhuhgsrdgtoh
-    hmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:126oaRatdgE8WBbc-7ZcDrF3gwCblL0AU85zaDSa0U9jPsWRgQXh9w>
-    <xmx:126oacNKBitmRTQNPWhjmh7Q-apC6pRggyXh29V7qx0Ltb_qACFbVQ>
-    <xmx:126oadBm6lCcxm06JM0PXi6-djkRwDqhcFbz5AvfCl1UKpuIs6aJUw>
-    <xmx:126oaTICx6fbg5g0RcHOG-s3XLjCeHCCTeoMWdUsZ1ka7fOFwFsavQ>
-    <xmx:2G6oaU-iQWFM2gnDQbDWyA1JT4MbIS06O6Vlptz2KtER-pWw-pf-rOvp>
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegrfedvtdehudehfeegudeisehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkh
+    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgv
+    shdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:snSoaXkZ1qI9T2ab3mUfM4fixCEghrtmDLywNyctiN0o08SmlCuL4A>
+    <xmx:snSoabldDYBgGeeXxPZC45KiQ2enzStAScTFstAb-5xpHuzU9OUuyQ>
+    <xmx:snSoaZw8oev8E-K9ILKlSmtDsu2vVMMRtJvZI5cwZwutEhgrnFhBgQ>
+    <xmx:snSoaQpt82VjzUzpbTICxdGkIlye7ZN6zQkfK3Iuzu4O1JdygHKN0w>
+    <xmx:snSoaS0i0rk25SxN3vo_SX-6oM1qlr1Ogw4vmFeHwf6IHtKqoshVrpzB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 12:41:43 -0500 (EST)
+ 4 Mar 2026 13:06:42 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,
+  karthik.188@gmail.com,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v11] setup: improve error diagnosis for invalid .git files
+In-Reply-To: <fc2aaed9-ecc3-4efa-bdef-e6ac951c1d5b@gmail.com> (Tian Yuchen's
+	message of "Thu, 5 Mar 2026 01:35:11 +0800")
+References: <20260222102928.377519-1-a3205153416@gmail.com>
+	<20260223074410.917523-1-a3205153416@gmail.com>
+	<xmqqpl5rumy0.fsf@gitster.g> <xmqqjyvu42pw.fsf@gitster.g>
+	<460f00d5-97b4-4a6c-be45-6f60a17cd33e@gmail.com>
+	<xmqqo6l49mrt.fsf@gitster.g>
+	<99c6a437-3fc3-4d9a-9465-4c47a9777776@gmail.com>
+	<xmqqfr6fa63h.fsf@gitster.g>
+	<fc2aaed9-ecc3-4efa-bdef-e6ac951c1d5b@gmail.com>
+Date: Wed, 04 Mar 2026 10:06:40 -0800
+Message-ID: <xmqqcy1j8o5r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,213 +98,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-To: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Paul Tarjan <github@paulisageek.com>,
-    Han Xin <hanxin.hx@bytedance.com>,
-    Jeff Hostetler <jeffhostetler@github.com>,
-    Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] promisor-remote: prevent lazy-fetch recursion in child
- fetch
-In-Reply-To: <pull.2224.git.git.1772643468305.gitgitgadget@gmail.com> (Paul
-	Tarjan via GitGitGadget's message of "Wed, 04 Mar 2026 16:57:48
-	+0000")
-References: <pull.2224.git.git.1772643468305.gitgitgadget@gmail.com>
-Date: Wed, 04 Mar 2026 09:41:42 -0800
-Message-ID: <xmqqikbb8pbd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
 
-"Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Tian Yuchen <a3205153416@gmail.com> writes:
 
-> From: Paul Tarjan <github@paulisageek.com>
->
-> fetch_objects() spawns a child `git fetch` to lazily fill in missing
-> objects. That child's index-pack, when it receives a thin pack
-> containing a REF_DELTA against a still-missing base, explicitly
-> calls promisor_remote_get_direct() — which is fetch_objects() again.
-> If the base is truly unavailable (e.g. because many refs in the
-> local store point at objects that have been garbage-collected on the
-> server), each recursive lazy-fetch can trigger another, leading to
-> unbounded recursion with runaway disk and process consumption.
->
-> The GIT_NO_LAZY_FETCH guard (introduced by e6d5479e7a (git: add
-> --no-lazy-fetch option, 2021-08-31)) already exists at the top of
-> fetch_objects(); the missing piece is propagating it into the child
-> fetch's environment. Add that propagation so the child's
-> index-pack, if it encounters a REF_DELTA against a missing base,
-> hits the guard and fails fast instead of recursing.
->
-> Depth-1 lazy fetch (the whole point of fetch_objects()) is
-> unaffected: only the child and its descendants see the variable.
-> With negotiationAlgorithm=noop the client advertises no "have"
-> lines, so a well-behaved server sends requested objects
-> un-deltified or deltified only against objects in the same pack;
-> the child's index-pack should never need a depth-2 fetch. If it
-> does, the server response was broken or the local store is already
-> corrupt, and further fetching would not help.
->
-> This is the same bug shape that 3a1ea94a49 (commit-graph.c: no lazy
-> fetch in lookup_commit_in_graph(), 2022-07-01) addressed at a
-> different entry point.
->
-> Add a test that verifies the child fetch environment contains
-> GIT_NO_LAZY_FETCH=1 via a reference-transaction hook, and that
-> only one fetch subprocess is spawned.
->
-> Cc: Jonathan Tan <jonathantanmy@google.com>
-> Cc: Han Xin <hanxin.hx@bytedance.com>
-> Cc: Jeff Hostetler <jeffhostetler@github.com>
-> Cc: Christian Couder <christian.couder@gmail.com>
+> Unfortunately, looking back now, my implementation barely qualifies as 
+> “functional” and actually undermines the purpose of setup_git..() 
+> itself. It's a mess — I rushed into it without properly reviewing the 
+> context (like how other cases are handled) :(((
 
-I would suggest dropping these CC: lines from the proposed log
-message.  As far as I can see, they do not have their intended
-effect; [*1*] does not show any of these folks listed on Cc:
+v12 does work differently from what we have been aiming for, but I
+find that it arguably is a much safer approach.
 
-*1* https://lore.kernel.org/git/pull.2224.git.git.1772643468305.gitgitgadget@gmail.com/
+Even though the updated read_gitfile_gently() returns finer-grained
+READ_GITFILE_ERR_* codes than the original, read_gitfile_error_die()
+does not change behaviour from the original.  Any caller that use
+read_gitfile(path), which is read_gitfile_gently(path, NULL), like
+the setup_explicit_git_dir() codepath we have been looking at lately,
+lets read_gitfile_error_die() react to the error code, which is to
+behave exactly as what the code did before this patch.
 
-I am not a GitGitGadget user, but I think ...
+So, I dunno.  After all, these two NEEDSWORK comments have been with
+us for quite some time, and reminded us that we may want to consider
+if we need to do anything differently.  I do not think we mind if we
+conclude negatively, taking "no, it is of dubious value to tighten
+error checking in these code paths" as an answer to these NEEDSWORK
+comments.  v12 is slightly less defeatest than that stance in that
+we are only allowing the callers that care about what kind of errors
+they are getting and and want to decide how to react to them, while
+keeping the default error behaviour the same for those who do not
+ask with &error_code what kind of errors we saw.
 
-> Signed-off-by: Paul Tarjan <github@paulisageek.com>
-> ---
->     promisor-remote: prevent recursive lazy-fetch during index-pack
->     
->     fetch_objects() in promisor-remote.c spawns a child git fetch to lazily
->     fill missing objects. That child's index-pack --fix-thin, when it hits a
->     REF_DELTA against a still-missing base, calls
->     promisor_remote_get_direct() — which is fetch_objects() again. Unbounded
->     recursion.
->     
->     We hit this in production: 276 GB of promisor packs written in 90
->     minutes against a 100 GB monorepo with ~61K stale prefetch refs pointing
->     at GC'd commits. Every thin pack picked a bad delta base, and the
->     recursion fanned out until the mount filled.
->     
->     The fix is one line: propagate GIT_NO_LAZY_FETCH=1 into the child
->     fetch's environment. The guard already exists at the top of
->     fetch_objects() (added by e6d5479e7a, 2021); nothing was setting it in
->     the child. This is the same bug shape that Han Xin's 3a1ea94a49 (2022)
->     closed at lookup_commit_in_graph().
->     
->     Depth-1 lazy fetch (the whole point of fetch_objects()) is unaffected —
->     only the child and its descendants see the variable. With
->     negotiationAlgorithm=noop the client advertises no "have" lines, so a
->     well-behaved server sends objects un-deltified or deltified only against
->     objects in the same pack. A depth-2 fetch would not help; if the server
->     sends broken thin packs, recursing just makes it worse.
+The patch makes the behaviour change for callers that pass an
+&error_code pointer to read_gitfile_gently() and act on the returned
+error code itself, like the discovery code path.  As long as these
+callers are audited and adjusted as necessary, we have very little
+risk of regression.
 
-... once I heard that the tool expects list of folks to CC: on this
-side, i.e., not in the proposed commit log message, but in the pull
-request description.  I also do not see much point in duplicating
-most of what appears in the proposed log message here after the
-three dash line, but that is a separate story.
+I won't be doing a full audit in this message, but just to give
+taste of what is expected ...
 
-This is totally an unrelated tangent, but perhaps we'd need a
-best-practice document/guide for GitGitGadget users, that covers at
-least the following two things?
+$ git grep -n -e 'read_gitfile_gently('
 
- * The pull-request message appear under three-dash in the e-mailed
-   patch, where additional information that are not meant to become
-   part of the log message goes.  You do not want to duplicate your
-   commit log message there.
+builtin/init-db.c:212:		p = read_gitfile_gently(git_dir, &err);
 
- * Do not write Cc: trailers in your commit log message, as
-   GitGitGadget does not pay attention to them.  If you want to
-   specify whom to Cc: your patches, write these in your
-   pull-request message instead, which GitGitGadget does pay
-   attention to.
+This caller gives &err but it never looks at what is in it after the
+call returns, so there shouldn't be any behaviour change.
 
-> diff --git a/promisor-remote.c b/promisor-remote.c
-> index 96fa215b06..35c7aab93d 100644
-> --- a/promisor-remote.c
-> +++ b/promisor-remote.c
-> @@ -42,6 +42,13 @@ static int fetch_objects(struct repository *repo,
->  	child.in = -1;
->  	if (repo != the_repository)
->  		prepare_other_repo_env(&child.env, repo->gitdir);
-> +	/*
-> +	 * Prevent the child's index-pack from recursing back into
-> +	 * fetch_objects() when resolving REF_DELTA bases it does not
-> +	 * have.  With noop negotiation the server should never need
-> +	 * to send such deltas, so a depth-2 fetch would not help.
-> +	 */
-> +	strvec_pushf(&child.env, "%s=1", NO_LAZY_FETCH_ENVIRONMENT);
->  	strvec_pushl(&child.args, "-c", "fetch.negotiationAlgorithm=noop",
->  		     "fetch", remote_name, "--no-tags",
->  		     "--no-write-fetch-head", "--recurse-submodules=no",
+setup.c:465:	if (read_gitfile_gently(path->buf, &gitfile_error) || is_git_directory(path->buf))
 
-Looks good.
+This is followed by 
 
-> diff --git a/t/meson.build b/t/meson.build
-> index e5174ee575..0499533dff 100644
-> --- a/t/meson.build
-> +++ b/t/meson.build
-> @@ -141,6 +141,7 @@ integration_tests = [
->    't0303-credential-external.sh',
->    't0410-partial-clone.sh',
->    't0411-clone-from-partial.sh',
-> +  't0412-promisor-no-lazy-fetch-recursion.sh',
+		ret = 1;
+        if (gitfile_error == READ_GITFILE_ERR_OPEN_FAILED ||
+            gitfile_error == READ_GITFILE_ERR_READ_FAILED)
+                ret = 1;
 
-Hmph, do we really need an entirely new test script file dedicated
-for this single liner change, instead of adding to some existing
-test script that already covers related topics (like promisors and
-lazy fetches from them)?
+I do not offhand know if this list of "error codes that should
+result in returning 1 from this function" needs to be tweaked to
+adjust for the change in this patch.
 
->    't0450-txt-doc-vs-help.sh',
->    't0500-progress-display.sh',
->    't0600-reffiles-backend.sh',
-> diff --git a/t/t0412-promisor-no-lazy-fetch-recursion.sh b/t/t0412-promisor-no-lazy-fetch-recursion.sh
-> new file mode 100755
-> index 0000000000..ec203543d4
-> --- /dev/null
-> +++ b/t/t0412-promisor-no-lazy-fetch-recursion.sh
-> @@ -0,0 +1,49 @@
-> +#!/bin/sh
-> +
-> +test_description='promisor-remote: no recursive lazy-fetch
-> +
-> +Verify that fetch_objects() sets GIT_NO_LAZY_FETCH=1 in the child
-> +fetch environment, so that index-pack cannot recurse back into
-> +fetch_objects() when resolving REF_DELTA bases.
-> +'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup' '
-> +	test_create_repo server &&
-> +	test_commit -C server foo &&
-> +	git -C server repack -a -d --write-bitmap-index &&
-> +
-> +	git clone "file://$(pwd)/server" client &&
-> +	HASH=$(git -C client rev-parse foo) &&
-> +	rm -rf client/.git/objects/* &&
-> +
-> +	git -C client config core.repositoryformatversion 1 &&
-> +	git -C client config extensions.partialclone "origin"
-> +'
-> +
-> +test_expect_success 'lazy-fetch spawns only one fetch subprocess' '
-> +	GIT_TRACE="$(pwd)/trace" git -C client cat-file -p "$HASH" &&
-> +
-> +	grep "git fetch" trace >fetches &&
-> +	test_line_count = 1 fetches
-> +'
-> +
-> +test_expect_success 'child of lazy-fetch has GIT_NO_LAZY_FETCH=1' '
-> +	rm -rf client/.git/objects/* &&
-> +
-> +	# Install a reference-transaction hook to record the env var
-> +	# as seen by processes inside the child fetch.
-> +	test_hook -C client reference-transaction <<-\EOF &&
-> +	echo "$GIT_NO_LAZY_FETCH" >>../env-in-child
-> +	EOF
-> +
-> +	rm -f env-in-child &&
-> +	git -C client cat-file -p "$HASH" &&
-> +
-> +	# The hook runs inside the child fetch, which should have
-> +	# GIT_NO_LAZY_FETCH=1 in its environment.
-> +	grep "^1$" env-in-child
-> +'
-> +
-> +test_done
->
-> base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
+worktree.c:390:	path = xstrdup_or_null(read_gitfile_gently(wt_path.buf, &err));
+
+This is followed by code that reacts to path being NULL and shows
+the contents of err in an error message.  Should be benign.
+
+Thanks.
+
