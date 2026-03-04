@@ -1,127 +1,135 @@
-Received: from mail-10631.protonmail.ch (mail-10631.protonmail.ch [79.135.106.31])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCF9286D5D
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 13:32:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.31
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B112238C1B
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 14:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772631154; cv=none; b=fqGzMYoxu2Q1mp9OxFERm7AMZCHZFsFlqSfdH7k0CqG/G8v7Dnz4y9To9rbsF20PSW50IhEPs1My0svIPWVLS6RmIM4e8k+ycIhsRJd/ylTsfGKOInjAvbfNSMa7rQgFfqbJ16zgQFsuUP5usaZq7zK/ys2Q1312ySOuOLJt+Yo=
+	t=1772632931; cv=none; b=LENPm1DEeF/2mJ8j5qiAhwZcPkOEPEyEoWAblpFEIQK5ls1hcQoOMmNQtRYNrZXi8OhTxrCRq5G4WBQ/dflQnesavg85vmdthIqNo0J8bpne6MWovODjtXZ3CTTOLXnVO7XvR9mN8+/+Q/QIsj2dxB1iWXKDETfYMbXiPULCQPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772631154; c=relaxed/simple;
-	bh=ML2oB8StrV8RhliGQ3szp6/lIf5f0qfKnZeEJuajKHg=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XQxtnvHmaX37cNvYEWZxQxoEsuAv4VMsUI0i355x29bVBQBaXSp/rckIps1ZieHhk7ajty8EYKzZlnMWRuK74VF6vqAf69XV/2b3DPARR9Ymoy5X34h07c/Lx52WgATnakvMFkeUioLDv7MGtpzko12RUfilZg1lJ7w9knYOADg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=RRELwikh; arc=none smtp.client-ip=79.135.106.31
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1772632931; c=relaxed/simple;
+	bh=epErQ980KlUcDXj3fP1s8hgaxWc9vPBFngg7/O3eetA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=LgZ5pXj/1zoP2hDtkMaueJCrYmvTMlM3X6hEMmrdfi6vRbX/HPiuR5J2PEG5grzCLPq4aAQ7ri4ECLexSmG/nIzC1Tt4zJc6GU5xZvWFjwhAExjR3LDXGNbn7Qy97mYdJ7EtJ13TvCW00qVjgqLioZf7TNa00faIhb+FN0WTxgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=EaVRYMOw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gAX1KT8E; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="RRELwikh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1772631142; x=1772890342;
-	bh=qBQpUhic7lnyI+fz/5AqqsyFsaIoFuy3WihvJKHrTT0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=RRELwikhXFdqyVWqNyOEeDKp2QB194tVpvjUdhDRe9GM2Ll18iNRdV1XqkJE4lb8N
-	 2gquK88Ap1qO266IznFUN8xf0JwApyjFzflclMPpxBJpkZ6kZ3wlmqYRvWEYe29hna
-	 IcnqivjNacVx34LxYZelApHQbHBFtWNe5hMwvLN4uKOVJKdADe0SteNnBR+bW2jVyz
-	 5QoUK8ulwqOKNHV5rP3xCMWdB6kft3u82GsSPUP7QfBlqYj4CVbFALKLVwauzaxs33
-	 hR3Sla2n1d12jhIX7IYO4IN/rSg0I36YqzeKCsN25/HtDwNL7OBFrwy9dDYoytL2vb
-	 2ZC1ZgqLjg2pw==
-Date: Wed, 04 Mar 2026 13:32:20 +0000
-To: Johannes Sixt <j6t@kdbg.org>
-From: GitHub Chris Idema <github_chris_idema@proton.me>
-Cc: Chris Idema via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v4] git-gui: shift tabstops to account for the first column of context diffs
-Message-ID: <Hf23ZjoLMdkhr77C9rfhukpwi1zKpjyEwhMPfsqHbL4Cqruu8WRHHeFrX7mtPzxbmV3uyEgK5yXDBxUUVparcHo0f3PSipKEfTipswpYC68=@proton.me>
-In-Reply-To: <191b6fe4-e273-4ecd-9b73-725c2dff4306@kdbg.org>
-References: <pull.2179.v3.git.git.1769595640008.gitgitgadget@gmail.com> <pull.2179.v4.git.git.1769684944593.gitgitgadget@gmail.com> <191b6fe4-e273-4ecd-9b73-725c2dff4306@kdbg.org>
-Feedback-ID: 177675452:user:proton
-X-Pm-Message-ID: a90a1071fc8f7bd86de9dc2863447a9f923ba3f1
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="EaVRYMOw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gAX1KT8E"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 36591EC05F3;
+	Wed,  4 Mar 2026 09:02:09 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Wed, 04 Mar 2026 09:02:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772632929;
+	 x=1772719329; bh=jgWJM9fXsQSsh29RxOyo2jNcmmyhfnfPRS1wY4xnRDo=; b=
+	EaVRYMOw/yAMt2R/HxUEznczdV7Thh2mYamhhCqdwlt9+TAa/vIjouvgJxdbRLLL
+	kOa359qbtNK9CM0UO2IQdUHUbzQIfMkMuedKDmyvcobOJcy10JJHXVL+TMzqfS+B
+	wF44fvbtXqvLbTGFerjgNtXGzeyIF9/rqGIi4Cwmx6Ob4cbTRwIGbmOPMfAULxC2
+	mYOmtobk1ot+gt9PfpQY5B7mSdpopcJH87V3JmyvbfcG9p2ugpgTDQiK26E7KpC4
+	R98qIEVO64XKfNhwEeBGZiZUzVC91RRQMhTa7DquJC1kfm0utJKaOwlpFk7wJ6n0
+	ga/3hg9G/0UYf6TlAFtpUA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772632929; x=
+	1772719329; bh=jgWJM9fXsQSsh29RxOyo2jNcmmyhfnfPRS1wY4xnRDo=; b=g
+	AX1KT8EIobCdKUyhJorslhxsn3JLC3wfutFh11ZqiKevmJrfY1eegWl0eV9tWk6L
+	eJPuI0fyO+HIOyAx/w5uEAcyDn46sN7/BFb/ePbuogcThK5G0tRwU4gs5gWu6YHW
+	18ZOEuEFXxZscLkcpeUGNAbvfClc78+ZrCIwZ4DXxC8hNBkl9B3qSfxi0sActkx7
+	v6Cz+RJOTJ9QDnXm/wxK9JElbkubQO+x78li0J/F/VXarFEUUZ1t0e2A/5PwItnR
+	tlPlaZeWil9/QZjI3f7eqqVi3ee7kFFMmbA6I46S0fCZNdvPBMm5bYBMlJcUD5Wz
+	TSfTs14sC2gXtrIt2sU+Q==
+X-ME-Sender: <xms:YTuoaWdkfhq4GK7TA7dI1o3ims8BzG44YMijKKeJkaxuT9w0g9SDyCQ>
+    <xme:YTuoabAdiJKCxLkqrR6zZ9UQ8QAu3fUWgaR2mLZtNDX0PALZ1GefwnRaocRwEu3Ra
+    JN4s4lSFtWK1aThrXNXnCRtuIxeEiqlgDG8RmtejvCFLzRKLf4iBA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieefieejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeekpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopegtlhgruhhsrdhstghhnhgvihguvghrsegv
+    fhhitghouggvrdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    sgifihhllhhirghmshdrvghnghesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdif
+    ohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:YTuoaTwRchjhTRFijgJ_6_cgAoLPAXfSI_GdpvpMI3x5pu2q_4dnbw>
+    <xmx:YTuoaVRcRkR0JluK22dlnxasEwPp601mL-irpWEfwq7l3lj6M2exKw>
+    <xmx:YTuoaT9Wl2atL2nxRjyylPNrOs-61p0HMpbI3Ag6tT4x6YZjIprjzA>
+    <xmx:YTuoabtQuKplNbpZ0SWfipyO-7_o-SK13CnHz7lo0fHR-denPsWlCw>
+    <xmx:YTuoafdfhoIPXnw7y95EcfF0rYeQli7iuMUG8TvkwruKuWFe6kur0tZH>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id E535F1EA006B; Wed,  4 Mar 2026 09:02:08 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: AvjKe73Q8VX3
+Date: Wed, 04 Mar 2026 15:01:48 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: gitgitgadget@gmail.com, git@vger.kernel.org
+Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>,
+ "Brandon Williams" <bwilliams.eng@gmail.com>,
+ "Phillip Wood" <phillip.wood123@gmail.com>,
+ "Claus Schneider" <claus.schneider@eficode.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+Message-Id: <faf8622b-b960-4f58-add7-28b5e081afb3@app.fastmail.com>
+In-Reply-To: 
+ <8bfaa14d44e224c5f8a3cfe1a0c55e9ca9415a98.1770384180.git.gitgitgadget@gmail.com>
+References: <pull.1987.v3.git.1768376879.gitgitgadget@gmail.com>
+ <pull.1987.v4.git.1770384180.gitgitgadget@gmail.com>
+ <8bfaa14d44e224c5f8a3cfe1a0c55e9ca9415a98.1770384180.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v4 5/5] Documentation: update add --force option + ignore=all
+ config
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Any updates? I see it hasn't been merged yet.
-
-Chris Idema
-
--------- Original Message --------
-On Thursday, 01/29/26 at 22:36 Johannes Sixt <j6t@kdbg.org> wrote:
-Am 29.01.26 um 12:09 schrieb Chris Idema via GitGitGadget:
-> From: Chris Idema <github_chris_idema@proton.me>
+On Fri, Feb 6, 2026, at 14:23, Claus Schneider(Eficode) via GitGitGadget=
+ wrote:
+> From: "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
 >
-> When reviewing a file before staging you want its content aligned using
-> gui.tabsize. The prefixing of lines with +, - or space characters should
-> not change this alignment. In gitk this is done correctly. In Git Gui not=
-.
+> - git-add.adoc: Update the --force documentation for submodule behavio=
+ur
+>   to be added even the given configuration ignore=3Dall.
+> - gitmodules.adoc and config/submodule.adoc: The submodule config
+>   ignore=3Dall now need --force in order to update the index.
 >
-> Signed-off-by: Chris Idema <github_chris_idema@proton.me>
-> ---
+> Signed-off-by: Claus Schneider(Eficode) <claus.schneider@eficode.com>
+>[snip]
+>  	all;; The submodule will never be considered modified (but will
+>  	    nonetheless show up in the output of status and commit when it h=
+as
+> -	    been staged).
+> +	    been staged). Add `(new commits)` can be overruled using the
+> +	    `git add --force <submodule.path>`.
+> +		The setting affects `status`, `update-index`, `diff` and `log`(due
+
+This is in `next` but: should be a space: =E2=80=9C`log` (due=E2=80=9D.
+
+> +		to underlaying `diff`).
+
+s/underlaying/underlying/ ?
 
 >
->  git-gui/lib/diff.tcl | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-> index 442737ba4f..8be1a613fb 100644
-> --- a/git-gui/lib/diff.tcl
-> +++ b/git-gui/lib/diff.tcl
-> @@ -385,6 +385,8 @@ proc read_diff {fd conflict_size cont_info} {
->  =09=09#
->  =09=09if {[string match {@@@ *} $line]} {
->  =09=09=09set is_3way_diff 1
-> +=09=09=09apply_tab_size 2
-> +=09=09} elseif {[string match {@@ *} $line]} {
->  =09=09=09apply_tab_size 1
->  =09=09}
->
-Just "else" without a condition would have been sufficient, but we can
-do it this way as well.
-
-I've rewritten the commit message like so:
-
-    git-gui: shift tabstops to account for the first column of patch text
-
-    When reviewing a change before staging, it is desirable to see text aft=
-er
-    tabstops aligned the same way as in the text editor. However, since the=
-re
-    is always an additional character in column one in patch text ('+', '-'=
-,
-    or space), the alignment is broken if text before the first tab charact=
-er
-    is just long enough to push the stop to the next tab position.
-
-    Commit a43c5f51a4b1 (git-gui: add configurable tab size to the diff vie=
-w,
-    2012-02-12) added infrastructure that manipulates the tabstop positions
-    of the Tk text widget. However, it does so only when a 3-way diff is
-    shown and only so that it takes into account the one additional markup =
-at
-    the beginning of lines. This only achieved that alignment does not get
-    worse for 3-way diffs compared to regular patch text, but left misalign=
-ed
-    text in regular patch text unmodified.
-
-    Use and modify this infrastructure to shift tabstops by one position fo=
-r
-    regular patch text and two positions for 3-way diffs. Existing code
-    already resets the tabstops to an unshifted position when contents of
-    untracked files are displayed.
-
-    Signed-off-by: Chris Idema <github_chris_idema@proton.me>
-    [j6t: extend commit message]
-    Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-
-In particular there was no bug; this is a new feature.
-
-Thanks,
--- Hannes
-
-
+>  	dirty;; All changes to the submodule's work tree will be ignored, on=
+ly
+>  	    committed differences between the `HEAD` of the submodule and its
+> --
+> gitgitgadget
