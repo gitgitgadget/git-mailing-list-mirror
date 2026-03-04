@@ -1,133 +1,98 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC39A3845BF
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 21:02:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E42836404A
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 21:03:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772658156; cv=none; b=dLtLJ8XX7ZJxfCWvc5Jx9m3lwiaFfSP6JaVdQvJXe7PGpP+7sa8aBXQv1BOp6SrkieNh7LGllqC8cGl52h45JaeFUiX9vl/SiXE59bqpR5MDKVanl9Z51SYPz9Nh5KYMWxkCgJfDVgcPSW/4RyZI0/j42fYUU2/udcuClL6B+kg=
+	t=1772658209; cv=none; b=bTwEoIjU+ZQoxrgBa/z/LH6007QZHodlI+hUXj9712UXlHM58sRrMDzz+JBO2Y1ImfqV/hmrEEtAIUl171Ex9iiHmgpxFxr1mA7sYtGKRIL/XI1oj3E/HFXt3uqsi2N/Tf2XMPJJmJoIxbSWNgko8FOdNRhaoace8e/UOPVyXHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772658156; c=relaxed/simple;
-	bh=54NSvh29m7wiLgCJJiMk1V98rvyRdSWos/Na35echTE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PfyAy2Hu+qroxiza/ndWKIWvRE5wiIpYaT659t4dubOQpisUrwjt3AXmfgfOyF06qfZfAlJeIp9vukaKQX3C+lIeukwB8VgQNF7npk4iJUcm1vHLi+ycA7iSaCbstKmrOBxJxohZZM1K8twMi6g4rZxJWsVhRd5rrFXJec/o6Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XExOYooy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4DncaDfe; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772658209; c=relaxed/simple;
+	bh=s9xOBR+0GiVvcQ2qJmQ+No/EMgZm+xr1wn7+lh/HNJ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S9OgWvCS1MGxk3zFJqz5Xt4OEF4q2YjpyPqVAiMoIokejnawRMUpM8/9yWXKbY4Q7jzg7tobJInGCW7gCfrwrLgS1GjZRuu8tqX4sm7S4MUdwTi4qbVY9d1zz0Z3h79Q+4BDOWMH4XRiw5W6lSoTQd5yfv4acr76fCym8F4Tq64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fVd+OLST; arc=none smtp.client-ip=209.85.160.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XExOYooy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4DncaDfe"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 208701D00052;
-	Wed,  4 Mar 2026 16:02:33 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 04 Mar 2026 16:02:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772658152; x=1772744552; bh=A4s8c2ViL6
-	Z/H8H8HMa4mXy+5oJGFCAbA6hizSP22RI=; b=XExOYooynUFUwT1uA5P8Tbi+Oc
-	JEFqUtnZKyfhFxAPnxpV31S5gQ6S3E+GLr50hlvI0TKZ+lYd0mHr1D0Efg6mO4Nj
-	Uoo0VhbGdO5j1FBn00HJtski6WoVWxrc2hueV9W2Q+pxgoGdO8Y0/WlDLO/q+kMB
-	dZuXVLhoE1YDEi16SIf9WWUvZ3eyUbkSwAzVuZMPEnSSfYz8bMC/tHCTc3DzrCtt
-	9xtQ65/0yAFvaGMVhsHGc7I9vKxPlys1kBk83D+6PMJrj1nuY45e0YXUJhTfA/7v
-	jfUUul0c9u/XhJe6gp9eWEN7wGG31hQmsM3uW80FGt2RICZ8tzog935GzMsA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772658152; x=1772744552; bh=A4s8c2ViL6Z/H8H8HMa4mXy+5oJGFCAbA6h
-	izSP22RI=; b=4DncaDfevtSge+NVf9QXdyRASZQtQyjgFwkdS6f2j/MMUFJdoRV
-	ghirjuX7BjqfCprQTlvCkWLPb+azOvuNevhOr0WPD94NN/tKwe0QXC++QYOhPutX
-	pNEhIUFjA8LIcR/2NfiV4m5jiWOMvh07LVOJb5JXiLqNmnM+TBbMCvPSqjfmLSAe
-	hK/WmUIUF1+ReT7IQqPIACkZv1X2sBYxVB60Ywd5iLI1oqc/WKwUHigVlmH7xtEw
-	wjtGhaS6apgnTREOkwJ5ZQLXYtADpw/OAs0C/Herzi2+uaGjOXgykx3w9sU9mFlR
-	+3GwZPSRqlrUHmFxdMiDfC5ufNROyqecL4Q==
-X-ME-Sender: <xms:6J2oaSCKe5QMUSHKGxAP5GzK_3hnRjc_ZJsd1Z54vX53Z0vHg6wO9w>
-    <xme:6J2oaQPRo0Pddk7dqhAt2EO4HtzFMrdabmulqJEIJnKVWi_kbEooEGueqlh7kKeed
-    048n7FDhvwyZtg2d2ofJA74X7nD8t3RFy3v_mtRLz-lOsCjPW4BTec>
-X-ME-Received: <xmr:6J2oafYKEIwd23r7JMs2tF047s_4cQWdVP0NS4YwNN30EwpHrB7OUbwtg8jEymJIIk_iUTsFEKQTZPG_feoleRfi-PO_bHGpNA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegheefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehmrghtthhhvgifhhhughhhvghsleefgeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehmmhhonhhtrghl
-    sghosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:6J2oaXseY1_xmCXdU-uSK77PvHyoEpaHmk0zWrd7XEHkyh1SqLX19w>
-    <xmx:6J2oaZNLcNRCIjARuRz6ctqX-gNYCUPYl4lLyU-YdhnAhgQJu0GJOA>
-    <xmx:6J2oaW5eagw9E3VcMjzVETeVhRZAXO8ywDPA1q3oe_F8DsYPadkZBw>
-    <xmx:6J2oaXR_kVkXvvscGNFJVN6cFYeyn9DEcD1ZpE9O0WODCilfcA01Nw>
-    <xmx:6J2oaXkFwo70H-htlA4aDP7WpgGU4gCH4YWz5Hc7XxkdmKvpNtp3-4xS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Mar 2026 16:02:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Matthew Hughes <matthewhughes934@gmail.com>,
-  SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,  Michael Montalbo
- <mmontalbo@gmail.com>
-Subject: Re: [PATCH v2 2/2] log: reject pickaxe options when combined with -L
-In-Reply-To: <81cb521401210bfbcd05f8201f75e93bccfba712.1772652091.git.gitgitgadget@gmail.com>
-	(Michael Montalbo via GitGitGadget's message of "Wed, 04 Mar 2026
-	19:21:31 +0000")
-References: <pull.2061.git.1772651484.gitgitgadget@gmail.com>
-	<pull.2061.v2.git.1772652091.gitgitgadget@gmail.com>
-	<81cb521401210bfbcd05f8201f75e93bccfba712.1772652091.git.gitgitgadget@gmail.com>
-Date: Wed, 04 Mar 2026 13:02:31 -0800
-Message-ID: <xmqq4imv71g8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fVd+OLST"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-40ede943bf0so1449939fac.2
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 13:03:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772658207; x=1773263007; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9SEhRwHAWyLzzQNfRYT54xGRyMbx78lkvS82K+QuaCw=;
+        b=fVd+OLSTPyPBWyLFcP1Pg3V+aUsjoaxgUpTGN8dxz1LruuEsJt8CXDUgvdDH3EZ/nN
+         wtdDqkaCcvBhYAGfFScQEdlYsVoqziRDsqPOeinfLQn2MZvwycCx3E69oaPBnM9Kn71L
+         4Km0Ov3f1lSMjyL8IfojoAGg1g/eGZHAHG2blDxsUoa4t680yCh2+H2Re8LLr5tZUQd4
+         Meh7GBgldkkoEUPEBqo7VMHd+xGgcidQQE7FqgeKL/rPhyaZEC1cBXNn1+9sT/dISGLl
+         v9Lamfj5AP1sKDSfEvH3tGIQxjLY49qsw1H5oMFOpKgLQdmn0KZf7tyiqJwX7N3fqoq+
+         MQVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772658207; x=1773263007;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9SEhRwHAWyLzzQNfRYT54xGRyMbx78lkvS82K+QuaCw=;
+        b=oGojOzf/0c3OonC7PP0DXkt1v5zvmrMNNqYWzt7EgGhDx4dt1HVsQ3Un88+2asCW6M
+         vh6Qi4HkI72+BMASlIFdcnzfNLuaKOPbOJMda/xrs5EmDbI1ZH0nGZuRZnrSbcFchtn7
+         mg4gAOINfFwLeWd0Lyl5werE4q2xceOt4d0Bhd28NtUe7Bpjjwc3jO09HVGs7eeYwBVl
+         suj97RY7/EWrNVgOgrVpyxolYlq8tyfiGuXwh4w/XBdM/GTCsd7DrCp0o1Qy9lD4jsGl
+         PizkCdP3yg6JXQAx1g9+aUP2atOAk0xzYxWYWkM6oZODKDlKwhXNXaBkJ5EsiY56ygDM
+         JRbA==
+X-Gm-Message-State: AOJu0YzyhPhmE4O1Pa/KcVD4kL0NyyQ11xQAGC676QU+Xnvf+jujbss9
+	rx9kzllzdawf4I/R8kXvnjO9iFmW/pKE9e/hRYJpHrH544iaFSivfUghkhX5KA==
+X-Gm-Gg: ATEYQzxPRtaFJlI07SB+G8O+E3IkXWmnlQIIB8Mo7DLHpSAMbEbkTAm1+jnjWMlML/V
+	Ha7e6H3jbU9ecx7dBdUPalN2rlgvrmvc+00u6iL6sBruvZi2xFaOZ0q6tVtuwY64kF6TXNJtGtv
+	l9FHJeZ/GZlYRE1eAsog/6DAxCboz+5J9TXkMkzVAwh3hJvvBfLTKCuGEiGg+XMkQzvGb4205Hd
+	HDo85E3aYM59mePNcr9Qso5B1zYUJZWujORw/aAaz5Uq/uIDCsVhkC2XWg8bewO3KpEhmQp7gjE
+	Iw9qfblHAbmb9mjghVoh2vSOEwvV1zRfj4ou8PN3RS3hqcMBxTghrrw4XA/vyhCSuppZLUGoS9p
+	BkdVsqlubNF7bRKNu2NFsosisgMzPUP7S9q3QMFdb07RyPOsMph6yMMv/jTwkczByoduY/18DVa
+	cnj/7MKXknhEa9awbO
+X-Received: by 2002:a05:6871:69b1:b0:409:dd35:2a51 with SMTP id 586e51a60fabf-416ab6947c9mr2036512fac.16.1772658207114;
+        Wed, 04 Mar 2026 13:03:27 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4160cf9b24dsm19036454fac.7.2026.03.04.13.03.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 13:03:26 -0800 (PST)
+Date: Wed, 4 Mar 2026 15:03:26 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 08/17] odb/source: make `close()` function pluggable
+Message-ID: <aaidbdpkpH7tfn9x@denethor>
+References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
+ <20260223-b4-pks-odb-source-pluggable-v1-8-253bac1db598@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-8-253bac1db598@pks.im>
 
-"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Michael Montalbo <mmontalbo@gmail.com>
->
-> The previous commit fixed a crash when -G, -S, or --find-object was
-> used together with -L and rename detection.  However, these options
-> still have no effect on -L output: line-log uses its own
-> commit-filtering logic in line_log_filter() and never consults the
-> pickaxe machinery.  Rather than silently ignoring these options, reject
-> the combination with a clear error message.
->
-> This replaces the known-breakage tests from the previous commit with
-> tests that verify the rejection for all three options.  A future series
-> could teach line-log to honor these options and remove this restriction.
->
-> Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+On 26/02/23 05:17PM, Patrick Steinhardt wrote:
+> Introduce a new callback function in `struct odb_source` to make the
+> function pluggable.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  builtin/log.c       |  4 ++++
->  t/t4211-line-log.sh | 52 ++++++++-------------------------------------
->  2 files changed, 13 insertions(+), 43 deletions(-)
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 5c9a8ef363..44e2399d59 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -317,6 +317,10 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
->  	if (rev->line_level_traverse && rev->prune_data.nr)
->  		die(_("-L<range>:<file> cannot be used with pathspec"));
->  
-> +	if (rev->line_level_traverse &&
-> +	    (rev->diffopt.pickaxe_opts & DIFF_PICKAXE_KINDS_MASK))
-> +		die(_("-L does not yet support -G, -S, or --find-object"));
+[snip]
+> +/*
+> + * Close the object database source without releasing he underlying data. The
+> + * source can still be used going forward, but it first needs to be reopened.
+> + * This can be useful to reduce resource usage.
+> + */
+> +static inline void odb_source_close(struct odb_source *source)
+> +{
+> +	source->close(source);
+> +}
 
-I do not think "-L" meant to work well with these features to begin
-with, and I've never used -L with any other options (-L does not
-even work with --stat), so I personally do not mind this change.
+Just to be safe, should we BUG()/ASSERT() in case the provide source is
+NULL? Or do we expect the calling pattern to always provide an actual
+source?
 
-But if this is in place, would we still need [1/2]?
+-Justin
