@@ -1,80 +1,80 @@
 Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EDD32AAD1
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251D237189C
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 22:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772663610; cv=pass; b=nBbmcqhdZGg4Ee9oPA5FF0GVmky8783c3bZTboAI/486413iiaGjC1ohjNNqV0W41OW6Erij/xqyIZNqXXET3KT/ST+LXWlBLkDJqcMAuLqLR1EDJsNdDW8ujlNRrT7zp52aDIiHL63blfXJhwm0gOtccY64PwfSSl34khWQg6I=
+	t=1772663803; cv=pass; b=COM8gIEOI4r3wgXnx9F8QniQ3nIvjhnpYyMacRpkEjAostZPJ3UNt63rtkWV1OvO/Do5prxwgYbGPio2ABRVMMgogUMJP7EZURbminOTtdJzY19cV3sAmFwL5TwGZqNTxeHqXYm8+/YMBwDmme5dAX6SCsg2KneUFUzDG1AM8fQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772663610; c=relaxed/simple;
-	bh=0HI8J3Tstf1U8Xx2RywqemuXaE7nLTiT6fICBQrtQa4=;
+	s=arc-20240116; t=1772663803; c=relaxed/simple;
+	bh=GXXfJgRUgzOib0V06NYtwD4Bkml7O7ftoqzPNFOYFA8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S20WpeGzeKCOpK/KGQauVWYhc/jdMfDWJv43KE/agYPkoKq1wuJJL+dhPK8fF3VPVIqxevv4J45SBK6KoFdm1bqU5RvVc+9ykjouzdmNew1iYCdLtw/HeXUWPEYU3Lb4XA26spw3GR7OFbLTvy5Sxk22J151IRQyYYlw+2l5cjg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jqcpetQg; arc=pass smtp.client-ip=209.85.210.52
+	 To:Cc:Content-Type; b=kgZ1huae/by9WbT4QEaEJjk3wx28hEOogj7CL7EHsMQ5CzLCymxB6KGbPE8K45Mw/9FmtZTXPNc0T4IT7TwJ6nyR0aLwBeeEDBY4oh/+tGgHaV/Cx0zWNeefJWAMuNiR4CsLZB65qpE+0VbdtrHcGjTKDOh3BlwCzUEHAMgYJ7s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xywnzpbl; arc=pass smtp.client-ip=209.85.210.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jqcpetQg"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7d19d3c7208so5614784a34.0
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 14:33:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772663608; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xywnzpbl"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7d598f60eeaso5345134a34.2
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 14:36:41 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772663801; cv=none;
         d=google.com; s=arc-20240605;
-        b=H9A01oS37LUVM0e1zto84pcUPHAPvrJJDt6NyVwodKevryIHAkE7PfmaElW3cza+cs
-         F3rzWz88u8VKzjpD20mGno9Z8c14LDWGZn6ZaxHda19gz7okoFZV0Ft4aGJPSBGas7d+
-         vmlrQm1Twa0trXRcTTPHFDe7DNKEy7cRzf8X58GODlztb1ZRN2UnmgXKwBREBF2es3Z7
-         /eR+w5eDLV+aFdq0aglGeuBsivrDNEbrXkhv+p9h1QIhw4my55XVlyUNWAg99TRxxNQj
-         j2/dycYkVlGSsgaz9ZWgodCK2iUFP7g94opXcGJo8Pjz9T4vENm+tMvYETateymHDaBh
-         q7TQ==
+        b=eIcc7ZKNpM21k6b+YcvbW9mrs0oif4qUxD9hfVKDD2vtk1g4w8isB4whRNxGnuaACV
+         ETeE8oszhU5K4emynImamJpSgZ29wPpU+YdLsj/vt8rKgt+QqSaXkeA2Limxd0RRCASk
+         Z1hAj90ZmXljcxblAh5tlBzezvfjl7adVBlJUSxCCgUp3xvGI5i3M4Ybze90BBMq8X3K
+         drOIb0PL9eZz2Tx8fIPqJmrYASa98yeJhEUCn3Y1CMBrBge4KcBgwn63svjhjv9wBRx6
+         LDHDjBkz4Tg23kpSDh/vHwfXU4hASo8o7kS6SYka+L1TbJVrx/I0uiGeriEzdws+0ntN
+         WQYg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=7K3EqitUmCLZM39SQyM5aG5LVrKeWRLt1opA7V8DjCM=;
-        fh=AHs5cLYEAPP7Y0+AgekVHS/Kr37aZi4o0czZyPEFgYw=;
-        b=QjzlDolUS3sj/QU76IacjnG6Vp5OYnv8H9pRhNJ9JbvgzNl12MhsMs1OH2yODR8LcJ
-         MlHeJopUoXUEfow/8mWtI2xLceHpNXFJF9f4IXt3ya3RZNd0PTYVjv1SO6Fj2m9Rm6ga
-         7/Whx5EQD85+VJozOq3xXdyj0iqg7oylIDLy/qNGcmJHeJYVCEXHKza6QYTvMQ4jqh6S
-         50kgyWpALwO3kvlpW11DZgv5vd012et5Iv+KYCbqAttDljy8fB8uCh55/RhAuVGj7hzc
-         cullBnKf2dCsBDUXc8LO4Fjk7e1UeTLoWdgAkutopMkkx6BUPytNDQHjzf2aRETq+ko0
-         6kyQ==;
+        bh=pCnLz36897D2jP21ueVaY8fAiguXsPyvelSN5s1lHsk=;
+        fh=lYzdD1C88LCoHtxzMjf8YOQ3Xd6danXerg6eqOtvWlg=;
+        b=X0Pa5fqdPvieCiqT6nmaetQCbJvh4/nwoNSaYxiFmeG+Jna/ArJGvb3RtBtiMC6I95
+         ZPqJEE3GH25E5pl8IMLIt7+F1CebK72TPNI3NNtD9R03OEte0b5bzH/ri/pezeCAuuTm
+         RQGBsQjBVSsuKKyTED402+wZBvI701BRbs0wN2w870iQ2vZ0sOWB/TRqTLHUHHajvz6h
+         bl2GQf3LbwrnrxASVVGdV9p4XbhntQYy0tXdJy+DRiBFKOIV2/ByYRE9iuxYj5j8t8wQ
+         TewjH2kPbXSZjvCL+/5Kq5SXGMzQVeVeJc0kXdnoGZ8+1lp8I2Zgjrz/zb4BijScZpMr
+         fYAA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772663608; x=1773268408; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772663801; x=1773268601; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7K3EqitUmCLZM39SQyM5aG5LVrKeWRLt1opA7V8DjCM=;
-        b=jqcpetQgkKOlrTIpmELAm37kz7TQN+a3bJrXzC+oxR8V2Vlt9LZGQHzETUQF1j9178
-         3NGCehadMEyLAEtpopjt9XaYISwEbim48+YzKrcWE1pBjA+k66t4fzAPI3M11KlmEhru
-         7a9MgdO04aRNkZqsfOyYd7DrpiBiFm1ELWMq8AnnnkspBiQwII1Oe5aD1pS6R6232gvQ
-         ucLWd4WVErQEgqbvvgk1D20fz3AIStcrvVoUvzD2jBBhbbd6HDB6PdTi0vWUlDsZcm5V
-         JCcFp9hyfmmBv998Xc7O9isjKKz6s7cBeG9SlFv9gjhkIRUF9z4n4UUHqjJEhFPCKOBq
-         QPOA==
+        bh=pCnLz36897D2jP21ueVaY8fAiguXsPyvelSN5s1lHsk=;
+        b=XywnzpbleTgR9ctzCOoS/DrlOfBp0YtoZTq47Nh9CvesAGSiJykfhzTaAiK6hUEvRW
+         H8pkJpAgY+0Bt4gR5mtZQ0+G79PZIbkDjtiqD5ZzmO8KPYGHgiADAIkTImS2qQFIQV1o
+         XXONErJviKo+u02fQ1cuNGsi2xJKStevyuETgExd3a9+D+8MUIA3+sqLPyl6KlES0EF0
+         38qS6WMgKnfWiXpvZm39dQTuGYnXhTqLO9q7R8xZQ0ZcbEVO9RIf0m6mzxOF0aEksuKR
+         MUAmQLqzajIoSQk6+iiSuggO99pO3nJqHaVPs9w40NmLbvEQCbUKLhtKXjzmK1knPRgP
+         EC2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772663608; x=1773268408;
+        d=1e100.net; s=20230601; t=1772663801; x=1773268601;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=7K3EqitUmCLZM39SQyM5aG5LVrKeWRLt1opA7V8DjCM=;
-        b=NtuvYQaUf8U8G4JPPdG1JlA0uqvw53eUeVRKnI49ALZbQNjLBdkL5v/mByNei3numf
-         zeqspGF7FyVGxYALAy+BImbEZIQO2UOyfZs/E51cPoUMZh0I4PZijFcICDCYh3196hxy
-         qnIrEjFK3+8FeMoMRU6t5NBICYDGHP7GQiyNwoGJLFCKi68cTXZ1hfdr2NzMrJ3yvBh1
-         xZWPYvR81P5j1Z3eShc1nwSVJcORKHnoEPJEtWJNkSvOoQQuJVe9UC+OuUYjCzGNeLu0
-         6kz1IXkZqv7sDkWOqxmt9KNOupdYxdbq0lPnr3e3c3jwOXcXEkV9JE5oB1w82HZSx63Q
-         xtSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVOcPpnOzK71a0wDSuBfa/GHrvbSGrWbcgU5qE2ZgjKn6acYGZFSIxCniJKTlL0+0IJkH8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzody0UlfFHSAgAIELC8qBEVgW7c/KoHII38ago8OC7xwOWbzFA
-	IpHY8VWRzqCo+BucCmyZa7phXcC/puU/1rp/VhTQ88GMM0eZR4h7IyHQUWoit7gbP4gDXoHs/5q
-	X2Qr4LLvjn2PHArRbTcl2816s3rlHx+o=
-X-Gm-Gg: ATEYQzy2gyn5OvHc4CqWD0RBYs5UbqI3sQbyOHxmgGjDHlmzi/ABL9I0KYpUq32G42J
-	Vq8hMHyUYeNZxARNoym0kJobeSVae267iJjF3Hq9rcxCD5i9w+1hmGWqhxfpBYvcRUtNl3u8uyx
-	Z0cqXiV7fpyCsejxeS9b+SojDWw4RKB7jh1+ptdnMQeFD3d2kSaV7T8DqiR4Z7mzoMMKekhdJPY
-	GUfHQQA1LK0D4mTvEJ6Fe5+SYaEJTSgNDgMsS8NZnmi1qFHK3sAEqvtYOndubxLbZ3aSvBKtEKw
-	1HhZNZ8Xo+RmrKFdwqwN3J5vpkcUaY2zvNYYP8us5/6bL9SQbC7E
-X-Received: by 2002:a05:6830:449e:b0:79c:f9ff:43e with SMTP id
- 46e09a7af769-7d6da1fcdf0mr2576116a34.28.1772663607864; Wed, 04 Mar 2026
- 14:33:27 -0800 (PST)
+        bh=pCnLz36897D2jP21ueVaY8fAiguXsPyvelSN5s1lHsk=;
+        b=wiyho6/zhCQ3VHiWifgGc1ir/REDc6S6zZS30cijh1vHSGOr/pubgBgDQ/b4oXE3dv
+         WACjOPkEM3bPSoBcihF5z8LfrcTQlK4fs0zBh+FUQ7m3uIBvKsRUY7i4kLjeVFNFUtD/
+         RVcpzgQdQa9D9IU/IwIR49PcsnYwRHXxpNPNRSdAPNPoO1Hy3puZmxbOoc6ptTf6Gb6+
+         2hrxlbk4GqHM1TJkEWzdMGwde98/gmCAKdX7BOhetdS4V4hCwmSEtJDUeNY61q4q/TMe
+         sQaj8my6Wt4oyMA6+1kwJPrZ0mGhMC4D38CW59mxNAvqowvy6ACdKSVh0ekFlWTXMl0w
+         HqoA==
+X-Forwarded-Encrypted: i=1; AJvYcCVlbk9feFt9yzFlWcHQJuxl8Q6wOP9cNzPEOPOXnmnTri5r6zafm1IMcpy1cjT2fjacdxA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBDuUYc0xOa2vtq3PB2EDcHX2edrKwaeli/XZ82bAEUa+a362+
+	aK68+f/6jTf0EiJ8DJuFgaWOSYVrZQAgxiutfvexlc9wIdqbG8n27AkVteTf6MLqikPlPkuKFCf
+	qeCKsjYcndErZD9kfK5+r6RmHCx2+GqI=
+X-Gm-Gg: ATEYQzzfcmSkTW6op/N2hgUrv6VGs6GKbAbCNcHXLZ2GCL1wcxVOi7pRexNeG/KjWRu
+	oWMWDluv8sZL70lffKTOb0gozFczpfVPv0emK+ABEyTeo30aqNfK3mhtm+aqJzX7czAAU+kiUEo
+	ZbUFXMNleo5/K4zbw+V1T/msotscKwe8lkbzx1sY2ssceXExRVBvAjiE8iYDdRBFFu/V7RPXZfS
+	8AP/GSwAyKejfvJygfMUIGHjZhSgyy7/bjfB/4mjC1phGDv9WmPZtorolfKcGhs1RIEMq6yQvMG
+	gWHVpON3OCUUwooxbJXhFtC9sGWKd9hUc7mrHzz0aA==
+X-Received: by 2002:a05:6830:3905:b0:7d4:90db:f69a with SMTP id
+ 46e09a7af769-7d6da1f0750mr1952208a34.35.1772663801149; Wed, 04 Mar 2026
+ 14:36:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,65 +82,69 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2061.git.1772651484.gitgitgadget@gmail.com>
- <6e97d88993dbab4070ac0aa999f70564368f47b1.1772651484.git.gitgitgadget@gmail.com>
- <xmqqh5qv74a9.fsf@gitster.g>
-In-Reply-To: <xmqqh5qv74a9.fsf@gitster.g>
+ <pull.2061.v2.git.1772652091.gitgitgadget@gmail.com> <81cb521401210bfbcd05f8201f75e93bccfba712.1772652091.git.gitgitgadget@gmail.com>
+ <xmqq4imv71g8.fsf@gitster.g>
+In-Reply-To: <xmqq4imv71g8.fsf@gitster.g>
 From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Wed, 4 Mar 2026 14:33:15 -0800
-X-Gm-Features: AaiRm53hEJCyxmkiq5VKWZhQ9kda0BcbCvJ24vdvVzDVvWOfThSu9vLL_wiqDAQ
-Message-ID: <CAC2QwmKh1DFXfDVKDv1xdj7-AqswgEPSDDXcgTn6dLLgQ9ALKw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] line-log: fix crash when combined with pickaxe options
+Date: Wed, 4 Mar 2026 14:36:30 -0800
+X-Gm-Features: AaiRm52xkBcvrhGtmODmHOMkIoh4kN2VQrJRRDy9hceaIk-GTXZ24kQ5S5c61GY
+Message-ID: <CAC2Qwm+2pjMk=XFq0cU0Pt1tWkqDy_tOKMtP0jF6JArFX0jmOg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] log: reject pickaxe options when combined with -L
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	Matthew Hughes <matthewhughes934@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 4, 2026 at 12:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Wed, Mar 4, 2026 at 1:02=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
 > "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
 > > From: Michael Montalbo <mmontalbo@gmail.com>
 > >
-> > queue_diffs() calls diffcore_std() to detect renames so that line-level
-> > history can follow files across renames.  When pickaxe options are
-> > present on the command line (-G and -S to filter by text pattern,
-> > --find-object to filter by object identity), diffcore_std() also runs
-> > diffcore_pickaxe(), which may discard diff pairs that are relevant for
-> > rename detection.  Losing those pairs breaks rename following.
+> > The previous commit fixed a crash when -G, -S, or --find-object was
+> > used together with -L and rename detection.  However, these options
+> > still have no effect on -L output: line-log uses its own
+> > commit-filtering logic in line_log_filter() and never consults the
+> > pickaxe machinery.  Rather than silently ignoring these options, reject
+> > the combination with a clear error message.
+> >
+> > This replaces the known-breakage tests from the previous commit with
+> > tests that verify the rejection for all three options.  A future series
+> > could teach line-log to honor these options and remove this restriction=
+.
+> >
+> > Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+> > ---
+> >  builtin/log.c       |  4 ++++
+> >  t/t4211-line-log.sh | 52 ++++++++-------------------------------------
+> >  2 files changed, 13 insertions(+), 43 deletions(-)
+> >
+> > diff --git a/builtin/log.c b/builtin/log.c
+> > index 5c9a8ef363..44e2399d59 100644
+> > --- a/builtin/log.c
+> > +++ b/builtin/log.c
+> > @@ -317,6 +317,10 @@ static void cmd_log_init_finish(int argc, const ch=
+ar **argv, const char *prefix,
+> >       if (rev->line_level_traverse && rev->prune_data.nr)
+> >               die(_("-L<range>:<file> cannot be used with pathspec"));
+> >
+> > +     if (rev->line_level_traverse &&
+> > +         (rev->diffopt.pickaxe_opts & DIFF_PICKAXE_KINDS_MASK))
+> > +             die(_("-L does not yet support -G, -S, or --find-object")=
+);
 >
-> Shouldn't that be solved not by omitting the necessary call to
-> diffcore_std(), but by using the "--pickaxe-all" option?
+> I do not think "-L" meant to work well with these features to begin
+> with, and I've never used -L with any other options (-L does not
+> even work with --stat), so I personally do not mind this change.
 >
+> But if this is in place, would we still need [1/2]?
 
-I looked into --pickaxe-all but my understanding is that it
-only preserves pairs when at least one pair matches the pattern.
-For a pure rename commit with no content change, I believe
--G "pattern" would find zero matches, and even with --pickaxe-all
-the entire queue would still get discarded, losing the rename
-pair. Just in case I tested this to confirm and it still hits
-the same assertion failure. I could be wrong about my
-understanding of the intent though.
+I went back and forth on whether to keep [1/2]. My main reason
+for keeping it was as future-proofing if someone removes the die()
+to implement support for these features working together.
 
-> > Note that this only fixes the crash.  The -G, -S, and --find-object
-> > options still have no effect on -L output because line-log uses its
-> > own commit-filtering logic that bypasses the normal pickaxe pipeline.
->
-> I do not know exactly what -L really wants to do, but from the look
-> at a patch like this, it smells like it is abusing the diffcore
-> machinery.  If it wants to follow the rename history for individual
-> paths, even if the end-user's top-level command line option included
-> pickaxe or other fancy diffcore options, should it be *reusing* the
-> diff_options struct, prepared from the end-user request?  Shouldn't
-> it rather be using its own diffopt crafted for that rename tracking
-> purpose, I have to wonder.
->
-
-Yes I think that makes more sense. I can update v3 to follow the
-pattern in blame.c::find_rename(), building a private diff_options
-inside queue_diffs().
-
-> Thanks.
-
-Thank you for the review.
+However, I can easily see the argument that whoever does that work
+would likely rework queue_diffs() anyway and it's simpler to drop it.
+Happy to do so if it's not worth the churn.
