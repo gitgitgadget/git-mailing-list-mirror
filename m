@@ -1,122 +1,133 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6373330B2F
-	for <git@vger.kernel.org>; Wed,  4 Mar 2026 21:34:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F013439A045
+	for <git@vger.kernel.org>; Wed,  4 Mar 2026 21:43:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772660044; cv=none; b=cpD72jWxhAeaKqfMpvIVDonUL2XIGhXxVVbwhdqroNjsbGTvy7ULVXhr2zFPiNKDP2uX1c8/UsCH4TcDhe46RnMyUpUUzrmksJ/LNXjE1GfrXBJyoy4kwfcAPi7XUUnFsPrMhFaq0eES+nII0zxjldbhSR0V2/kUl8BBbrtwRxE=
+	t=1772660601; cv=none; b=GICNXMo89IPH7X/v0tDPxDCf4OVkJiYJowo0Nc/TKdaeBpMmeALzMskbrAsw9AbObqLUgpqzf40U6h+Rt3jXYXx7HIywD1ASOqNtnWL4dIvscfIFIEOf+B3J06DbkXh+0mAtwCdjxBbGBl9BogEwl6l707WMLpFX7bxs4QHIb/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772660044; c=relaxed/simple;
-	bh=PVTJAILondB45ObUIB7/+vk9m2cSoYTWIYab2nQxA6c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k9U6TLlKrVNckFf1zNEPQywrpYO3FhEMAvOnG/lSNOnEyNlt/FygRxjZcUNX5M6McvEULNW90TQ75QBzhOudUC0w6kP2dmdd8/50/DtkQBlkTMqG2XDe2EPO5iOp5KuJ7e3CVf8rmjYVTdm1+VA4nQpeoTg9XZKfy/kVIaR7890=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i2/kqMXL; arc=none smtp.client-ip=209.85.161.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772660601; c=relaxed/simple;
+	bh=oAJvYWyE8HWDK9YRSAWLZOrq3CMBFFTAihVo5GI3KXE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=H41IEmDlutkw4jFavT4nJ5P+/jusXN+sNMT57TEFDTP4fzogaSdkrmWNTWc6wiKBAlEi8Dmo7j7l18mrFamGNyPnskuDvkFMuSF5JWuznVqJQNWZtBJoawM+gqprCwHVHzOafn/7b1T5YaPmJtbCaYQGms0pgQFPYMJRRPGsMc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hBMpEmBm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lGhcNcv0; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i2/kqMXL"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-679f23befd6so3428331eaf.1
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 13:34:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772660041; x=1773264841; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=foNWWZZCr11z8jMB3/07djdRjBsNETN8aSTXEe/P9LE=;
-        b=i2/kqMXL1py9yHeX1U4nO2JtVstUj4zbEywl9gmAQ003yg8SDM3R0m0XZ557X+W3ko
-         tc5ZT+fkRiAfFde52UTPENvTDfqk8jZvSNXu7+ZknTQ5TK7p9sLwopwgOie3SM36XaTc
-         vqqhhDMSEwsq8N0RlWZFPFIrxxfEqFWbBUxaPnShpd0NfUrp8CpYh3CfvNMxwljfQpQ6
-         SvSWkFudCSviDdQfPG9F65jUvsD16oVAfOkXxAqN/oA17stPZG/zoiV7nZaqkr5hojIT
-         cmHYMnzuEquuuqivbnUZ1BtFJ0XcpVhkEon8lYJU/NhMcMe0lvnt7GdgwOlMHfcAufi2
-         GaLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772660041; x=1773264841;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=foNWWZZCr11z8jMB3/07djdRjBsNETN8aSTXEe/P9LE=;
-        b=J8/oc+wmPjQBu+bOY+O6QlH3P7LmPeI9X4bOTyTCYXOanI7DC43X/UZ4FWnC8nTYzU
-         gcoQjuQ2FpjgR1LOixqQSZ0Bk0TX9xA6zl58kddgx6MHzfZRkAn3Y3zEiFQSw2wRZNDy
-         fhLrPQ/Xiy6mhRav5YMEJPHeFrcxItSvGPiLFaXYs9YgGL+B2ZobcXjDN/y7yMg9UTLr
-         bQDmH5oEk6rO99Iju0Dt8qRgXXia/7GUxqqA+/GlfhgBDUvh4Dk2bOJuEiUfNmEp1ABZ
-         UuPjpjN6HQTZhu3K7ylPZhvDNMaZ31sshu52q4Y/vs60KQuGx1lKqSVzq2ocNe+5bw3q
-         nYMA==
-X-Gm-Message-State: AOJu0Yy4s2e2BhHDNqxhg1GMnXAFRZ2BhVOtRmKo4yTr6HrDMSkevNgr
-	Kmx/afKsc51XNnYsXMEnPylZoqcF2iKDP3oW8l/98ZutyJVhsIrvDZTq
-X-Gm-Gg: ATEYQzyhQi9v6VNgHGELUsWA96fLPOpuft7b/nyrGVRosBwIQ16g2zxPvNdfbUMAr0V
-	BYi6fY9p0qchvTFbN210uW3/8yixObGy0s20tyTANri4oXWZ2Xz/9HbaIeDEZU+3crlDokNT2QK
-	qcqgxKgwmgvjMGtBUNjFblFObVlcAm21XLMhuMPhRR4ikKyfhUu3mop4uEOx7HWAvwHybn1/iW+
-	fKewane2ew4Qk3TpksCEAWZa4eYZ/ebSXbZtcdxtCTVJ0I9pQTH7Kjx2hugsPQYCMD6MAFpTMyW
-	moN2umyCry+avPhUzMayTtRizleVk0DaolN/LiqE3dUaz8CW427NGXoVz5VcEZkppnd4EuaGJZ7
-	CfSNpxJ0r0i5JdFmzub0yg24LhvWinjV1coZtHYFJnAzrotn/Nxo+zemNDFGES5n+3P86TM2V4l
-	BpDmN+XGB8/awldE1c
-X-Received: by 2002:a4a:e84b:0:b0:67a:405:7ffc with SMTP id 006d021491bc7-67b176e7238mr2136062eaf.5.1772660041641;
-        Wed, 04 Mar 2026 13:34:01 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679f2d856d2sm13250661eaf.10.2026.03.04.13.34.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 13:34:01 -0800 (PST)
-Date: Wed, 4 Mar 2026 15:33:58 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 09/17] odb/source: make `read_object_info()` function
- pluggable
-Message-ID: <aaifSxpeDb2oqPhD@denethor>
-References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
- <20260223-b4-pks-odb-source-pluggable-v1-9-253bac1db598@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hBMpEmBm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lGhcNcv0"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DB88D7A0136;
+	Wed,  4 Mar 2026 16:43:18 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 04 Mar 2026 16:43:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772660598; x=1772746998; bh=6t/jtLTp4I
+	zJJCetfhPjNk6oTJP9t69k0UaujQCNu6c=; b=hBMpEmBmOwanHjy8nyiAUzn29+
+	DZ3aA3OppN8dluQUXsaDyqVM5J3zUB8ZWRVxGtVvZ7vlKS1RTpvyKPjQWak9GzA5
+	mgl9dpFruHdM+vQPvn48x5bCdslwuI2SliyF+pwDpgE2apRRdVlCTu6osGTQQ6Uv
+	ZrKY93Yhf2ekA+LZO/xekdXnIvDRagRNmDZ9VuxEy/R8lX/Kdkof3CUUQfHKc3TU
+	a+J3mkaRVmwShhlFCrRnJnqioTn0Yo8qyCISXQIB7dDbfR2xT+0+D/oHqICWg1YH
+	nWq44AFWx8dbct8ZqublN4IetOOyqi9MYciNyk7+YeZlkdLYgp/irjEY+zZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772660598; x=1772746998; bh=6t/jtLTp4IzJJCetfhPjNk6oTJP9t69k0Ua
+	ujQCNu6c=; b=lGhcNcv07/jxMywPaob+cHA3wgGa2dlkTfOxOfB5IeRPuncpPYV
+	0Q3igvJkUJvm0+xk5vNbu+zNGUnpQB5JuJvG+pQZraDlIGOPgEDuX3Mxj6uyY6ey
+	ZEhy4YCJycXWKLZZi5emiVC5G71mEKRuaDWnPyGw04swb/3IVjl5lssziCi6k4NI
+	nqLuTDAmS4NZkbnuTAPWKuvm8DICFAjWnYLArezoyUfO+ZkF+ZN+delzXV9ORnyH
+	Ci+HfRo5/CVWCOyabJUfaIKG1y6qBMBRV9KaJWO6zpi6RXXwRxWfg1XCoMouI3js
+	1tfhSrKdJ0LC1LrLt8hlTPn6Cah6c77T1jg==
+X-ME-Sender: <xms:dqeoaf1bLU0S9NUjMObUQWDxviOIxMctX6QmdK2X5X5anC6PTpVgcQ>
+    <xme:dqeoaVE5YDPb4k6ZNFRjSff8BP5KktBUeMfVCEsEKzoQpyTltAQS93uaBgBNSmNbn
+    v9al3fU5rpu5OtLYC_PPGrl_a292YiQj21RAX3onz4TmoUZCsPN9A>
+X-ME-Received: <xmr:dqeoaU47DdZM_e_Ax7slwNExp-W8qB5y3yW03wyCJT1hDX-CR56OxIIGTELMQWY0S44rvbYgQ4c-vJVKos3KMfCOZSu7mpQYZg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieegieduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkuh
+    hfohhrihhjihelkeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:dqeoaTti8i95ORlorQ50U99PCUB4hYGjG_hpgZ6xsElp6WacH_Cjxg>
+    <xmx:dqeoad4KGpTE_eABaJF6AT35ogKmzeYin12C8K4IWSugV4e36LHkkg>
+    <xmx:dqeoaWViGEyDJ_wx8_OO9SHmsMmKzKRSaIJ0DrddUn33oKVJBwMhKw>
+    <xmx:dqeoaX-2zyHIdBLwE-xISoh24DpFF0VB4EdbhziwEk1UGnTH759Fqw>
+    <xmx:dqeoaQZPQCc5HmMrd7Iu3x-JSadbkAdDarQ8NlHD9o7qW5hl9CEyBzLl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Mar 2026 16:43:18 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Seyi Kuforiji <kuforiji98@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 3/5] list-objects-filter: use
+ oidmap_clear_with_free() for cleanup
+In-Reply-To: <xmqqcy1j72y7.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	04 Mar 2026 12:30:08 -0800")
+References: <20260227234213.17633-1-kuforiji98@gmail.com>
+	<20260302200018.75731-1-kuforiji98@gmail.com>
+	<20260302200018.75731-4-kuforiji98@gmail.com>
+	<xmqq7brtyids.fsf@gitster.g> <aafX6qva_badx_RM@pks.im>
+	<xmqqjyvra9xg.fsf@gitster.g>
+	<CAGedMte09S1FE2nX5SnamzqZyMGfme-kL0skZ+e+st-b2HbQMA@mail.gmail.com>
+	<xmqqcy1j72y7.fsf@gitster.g>
+Date: Wed, 04 Mar 2026 13:43:17 -0800
+Message-ID: <xmqqzf4n5kzu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-9-253bac1db598@pks.im>
+Content-Type: text/plain
 
-On 26/02/23 05:18PM, Patrick Steinhardt wrote:
-> Introduce a new callback function in `struct odb_source` to make the
-> function pluggable.
-> 
-> Note that this function is a bit less straight-forward to convert
-> compared to the other functions. The reason here is that the logic to
-> read an object is:
-> 
->   1. We try to read the object. If it exists we return it.
-> 
->   2. If the object does not exist we reprepare the object database
->      source.
-> 
->   3. We then try reading the object info a second time in case the
->      reprepare caused it to appear.
-> 
-> The second read is only supposed to happen for the packfile store
-> though, as reading loose objects is not impacted by repreparing the
-> object database.
-> 
-> Ideally, we'd just move this whole logic into the ODB source. But that's
-> not easily possible because we try to avoid the reprepare unless really
-> required, which is after we have found out that no other ODB source
-> contains the object, either. So the logic spans across multiple ODB
-> sources, and consequently we cannot move it into an individual source.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ok, I think gives a bit more context around one of my question in a
-previous patch. So IIUC, when reading objects, that the object could
-have been repacked and thus no longer discoverable from the current Git
-process. We could just reprepare the ODB source immediately, but it
-could be that the object exists in another ODB source so we should check
-other sources first. Only if the object can't be found in other sources,
-then we should attempt to reprepare the ODB sources in search of the
-object.
+> Seyi Kuforiji <kuforiji98@gmail.com> writes:
+>
+>> On Wed, 4 Mar 2026 at 16:31, Junio C Hamano <gitster@pobox.com> wrote:
+>>>
+>>> Patrick Steinhardt <ps@pks.im> writes:
+>>>
+>>> > Agreed. But I think with the current status quo I'd rather drop this
+>>> > patch though as it may otherwise make the reader scratch their head why
+>>> > we do the exercise in the first place.
+>>>
+>>> I do not think too strongly either way myself, but you may be right.
+>>>
+>>> Unless we are dropping the "we optionally let you free the shell"
+>>> traditional interface, it is of questionable value to use the new
+>>> interface.
+>>>
+>>> Thanks.
+>>>
+>>
+>> Hello
+>>
+>> Thank you so much for the reviews.
+>>
+>> I'll send a new version dropping the [PATCH 3/5].
+>
+> I thought that Patrick wants to see only [1/5] and [2/5], discarding
+> the rest (i.e. 3/5, 4/5, and 5/5).  If that is the plan, I do not
+> think we need any resend.
 
-> Instead, introduce a new flag `OBJECT_INFO_SECOND_READ` that tells the
-> backend that we already tried to look up the object once, and that this
-> time around the ODB source should try to find any new objects that may
-> have surfaced due to an on-disk change.
+Ah, in https://lore.kernel.org/git/aafX5CmP82WYFyIb@pks.im/ he wants
+the callback to be renamed, so we do need a new iteration (v3).  I
+still think that if you are to drop [3/5], then [4/5] and [5/5]
+should also be dropped, leaving only the first two patches.
 
-Ok, now that the "files" ODB source combines the loose and packed
-sources, we need a way to differentiate between first and second time
-reads to void reading loose objects again. Makes sense.
+Thanks.
 
--Justin
