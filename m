@@ -1,82 +1,81 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90C0368284
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560BB368274
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:35:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772753700; cv=none; b=TqRHTSzXIEWH960JveVLBP2Cz18JUXMddqD2HOVwODaPhAMsnA1tguZcH50E1Cj3L9kt/EGqr/2psPpLpbsQ9NOxpufuamLOvhIJP1bjKgJUBqHnSBjaHqh5rLcm1N/75vl33BzxvXq/DkuBC8yJIFJuugo5ncwRl5mi1jGame0=
+	t=1772753701; cv=none; b=aRZkcyw6+D+ZU5jkvMw0VftOUq1nE016VDDeua9O7D5f2lfBmDRDbtQfi2VFj4zbkGhYU6Wf9aOiO7/fbiYPyZT2oNlwV/G42S3OohGxjFCVUB4ekZS+bH8EvW6e3JyrVBD0aHac+ybUZ7H9+W1lieqHBdH1xIHkWVsgndZc6fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772753700; c=relaxed/simple;
-	bh=58ngq1S+o9n3s6Ao9ivTDk9u7nVpqwBmnaganzDGaD4=;
+	s=arc-20240116; t=1772753701; c=relaxed/simple;
+	bh=StuLTcIQjPAvyy7ZdiSO5Cj0mWd4J66O6vmUXKFDpI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UYPyenrkcxkodt36zWC/VKZtRdUaifFEqkwT7C6V3Uo682BBoS863fHe6lXPWtGHf6i1LUurn94WfjgU8Y/DNUTrbJlcC5iUZeZRktOzPvZorYtXjpZAPzFZj86un6pJ7Fim2ns145S7488WeYO+BSN9xLWbpEVBo/iACLejhnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lbi56TOA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aUWFqWEC; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version; b=tuhjJtH0k8m4WmaJBtlqDLftdrZE9wvMwwMsyvbIjDjVdMQqwovWerWhKJrwE6TPFsBcYlgneBeyV8LQvoH0e4uz30usJOQA/SdkM5GW48w3yCsavYJnYzaB1uPhbXHipQ47kYeVsLmEySeaeiDHV8fw9Pdc6B7E68Kznz0v9hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VcLf9EAg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nZfu+ApK; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lbi56TOA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aUWFqWEC"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 443691400216;
-	Thu,  5 Mar 2026 18:34:58 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 05 Mar 2026 18:34:58 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VcLf9EAg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nZfu+ApK"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A96A8EC0582;
+	Thu,  5 Mar 2026 18:34:59 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 05 Mar 2026 18:34:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1772753698; x=
-	1772840098; bh=2uHr3v7cDAcq72Eav44zM4n2KxqI88aTqSjZLAb395A=; b=L
-	bi56TOAlNBSDzPQPkqauFGYy7JVNZnozVFp+DYajdu4aAT5kQsA/DOob/o6tY6n0
-	uepWqyNNPvoTE6mkHDAduxh7roPwmDjGKoJJBtON+SnHYM8yfEnFzOjz7dXBr9wl
-	I++q16JT2U5CCkV3OK/h3CcpTC+PPbWAfEL6OSUqiZ7ahxBp/38Xck0fypslVefD
-	JcHi65rz+7ZhWvtqlt6n45goHUj2EJS9alMg5yLdxLQmW/WxWgTAq3BV6Scb5KWb
-	Wc/Pg1nDpF/UmhZOqXsYRmXpc/L9LgCQp4oimU/Sl3FOkLDZcnLaTef4JVzZJg2N
-	9UZibqKoVoKIGaZu1RJzA==
+	:reply-to:subject:subject:to:to; s=fm3; t=1772753699; x=
+	1772840099; bh=nDHpS0YEag8VOG7Jg0CbBuciFVoIe5cnHURHQrFV/pY=; b=V
+	cLf9EAgYKfwZ413f/lK9JHjj46uMToBk8VCHY0sidQ8ntIU9gnRZlNap1hWkxcmS
+	kMInenVqpsz492sWW6DPLAkCtwKdeZnHzuLcABAUTL1gXaQmYwu2yyHnC74aAnJ9
+	s3sksYc5tp8qw6G6Nn0LPdT2Ix4q6rIK99hDgF8p/J6+OkmRd006+a8QTuKpKzLj
+	viCNLRulWP4ovTJuwxcYOA/T9hLeHlnKGsKhvlCBi91QUmliIWc0DRR+OrxGvrsJ
+	fg9umGk8uASQJxb9CYrH4c6hKaXg9jDwkztJI7AiruMVk62Qt1lP5QzQKlfJYbPT
+	/GEyPjVOtmfbY6kNUAMBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1772753698; x=1772840098; bh=2
-	uHr3v7cDAcq72Eav44zM4n2KxqI88aTqSjZLAb395A=; b=aUWFqWECTbeK2W+qW
-	DddxlykXdNXQiUM+9Io4AaAfo4IfBM5DfBpj5SVTYwR+sAtuOBnLaW+v18SazHDP
-	PC+bumWUNyJrbu7mh7wAjyELhTsCBA/mUVnE7PH79NrP29dCYzLkFDSSoq+dnF4s
-	N1VIIXeAaRUhHWQ08BfguL0J8dsPzzX8PG79+oB5VcngI8v2m132IQkFs5SynKKM
-	bul3zZYfuEb2AdOjU59vYs+j0znIVh66jf0HGI5NMmgVOG6exOvsmGQ+lDOHyR40
-	dETyVIhzR+1QZPA3rxg4DJqLWUFVfZiesteOPWzl7qZrUu49QP8ti6fJyDCBqcce
-	bzC4g==
-X-ME-Sender: <xms:IROqaUStkA-CDol2iXMebLnP9v12k-6dNAHoL4AA8L6DJ92KDwqkjQ>
-    <xme:IROqaYyeI7Kx0LCNW-N_tMdRHJUiqNY8rQSLJNgv_-Qd3XvyDsJlB5tVzBAQ3nm3t
-    1NtXPZLy2ENo6CbQaPTn84nimeHTICKzSoxcAwt5hoOBJxdf_aRkw>
-X-ME-Received: <xmr:IROqaW1XltgwK5FVEf4LYabyN-JjVYSmIrEhY3u0-DOR-nSftjXJPjYFxPvdQNy6bUpGx1AfbOvLin1JNRtiqHdvwcSZJqwmrg>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1772753699; x=1772840099; bh=n
+	DHpS0YEag8VOG7Jg0CbBuciFVoIe5cnHURHQrFV/pY=; b=nZfu+ApKv3Zt7UGxG
+	ylJapO3kp4LIHME6Q/zST1SXnKpzrHRlUIIdHXhTPjpMsnyaNjCTj5huN7r7U+aj
+	d7ykL68sicYsZ4kJYI1GH2IQDYPlBg4gKn/U/oQNHaI5tgxwv0snu6izapOP56iH
+	a/psYbIrMG8v27MnqHeSXiud2RaoHVA5gtzSmmnKL8No1fbjkBlGc6/zhNA1kPti
+	gj/4wcYIslffOkMYJGNLg1DBsr6mZ0lZwRIinWIAzs9PJT0ftyajh2dgevDZXue/
+	TLBHjoOpz3dfZwJuVz74uZAFZHV0jpFBf2aTFh1PI4hkfKYV24Ut21bYa+GnwDrO
+	Bk5Ww==
+X-ME-Sender: <xms:IxOqaQX1_aDvrSPjF38daIfgoHzIoeUnjXjCUJtDisjbUmUmsH3Rww>
+    <xme:IxOqacDIsZ78AaEyjkBvNWaXosKQjR3rYMwffsz9aDy84agkthURdN_oMMtrd7EIW
+    CNQiFpc2Cpv3RpkMlLjIZT_a-ZocdmdVJPFzuQFX9LM0kMoJU5J>
+X-ME-Received: <xmr:IxOqaRwCjRF7Lk_QnWyRdQknPgq-F5r_ZEFPH4D8S5AE2L3agNTdIMaoq1bYlaqWoQ0lBKOlnuAhiaFdhqCWZf-6e2N1OJF1EQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieejjeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepvdfflefhueetgfektedthfduleffudetleefieeulefhvdduieeukefhtddv
-    udeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgt
-    phhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:IROqaW41K0L9aKJnM4dgDyX4qjlXEB0Ssc98Z-2iQ1bVCQQ53u0tow>
-    <xmx:IhOqaZXJD1EPVo459e8eGZJe48G9icvBDOrjovmTTKKmkrvDx8t_YA>
-    <xmx:IhOqaVAAxwxG7IF174r_ar0gxi6pgxeniyC6-qRIkifjGiS8UmPmIA>
-    <xmx:IhOqaY4Vrmwhcmv_zxrHbFRUvE3EIXrxWkxdy2fBatVA3FBQUp54Gg>
-    <xmx:IhOqab8-b863dIlVVyCn_I67l1paP7r0jUVBiwmpCJo9-nQZc1ltfWt6>
+    htvghrnhepteelfffhgfelgffgfeehteefvefgveejveegvdefveegveetleekvdefffeh
+    hfehnecuffhomhgrihhnpeifihhkihhpvgguihgrrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidr
+    tghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgv
+    shdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:IxOqaZCRiUsvyrCznQphHpWY30KkYCqwSsau9msI8eoIc8ejbrwJrg>
+    <xmx:IxOqaebVez3tDiJebX-lJNnR65b-3QLh9cJdoULmjTFsRltkxbeavg>
+    <xmx:IxOqaRg4gB6uoUBjbzZrO48UR9jrlMQZU7_sqHel5OigK2CwTtlv5Q>
+    <xmx:IxOqaQ588CKEHQfndaWDtdry8FbE61BhijS-rmgqsbmo1wrh9htn7Q>
+    <xmx:IxOqaWkAtoszmORDjKnmc6lSPD-96qSMuz-jZNF0E2S5QPu_zaUbvMd3>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 18:34:57 -0500 (EST)
+ 5 Mar 2026 18:34:59 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v5 2/7] sideband: introduce an "escape hatch" to allow control characters
-Date: Thu,  5 Mar 2026 15:34:47 -0800
-Message-ID: <20260305233452.3727126-3-gitster@pobox.com>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v5 3/7] sideband: do allow ANSI color sequences by default
+Date: Thu,  5 Mar 2026 15:34:48 -0800
+Message-ID: <20260305233452.3727126-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.53.0-629-g0c401728ca
 In-Reply-To: <20260305233452.3727126-1-gitster@pobox.com>
 References: <pull.1853.v4.git.1770113882.gitgitgadget@gmail.com>
@@ -91,105 +90,196 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The preceding commit fixed the vulnerability whereas sideband messages
-(that are under the control of the remote server) could contain ANSI
-escape sequences that would be sent to the terminal verbatim.
+The preceding two commits introduced special handling of the sideband
+channel to neutralize ANSI escape sequences before sending the payload
+to the terminal, and `sideband.allowControlCharacters` to override that
+behavior.
 
-However, this fix may not be desirable under all circumstances, e.g.
-when remote servers deliberately add coloring to their messages to
-increase their urgency.
+However, as reported by brian m. carlson, some `pre-receive` hooks that
+are actively used in practice want to color their messages and therefore
+rely on the fact that Git passes them through to the terminal, even
+though they have no way to determine whether the receiving side can
+actually handle Escape sequences (think e.g. about the practice
+recommended by Git that third-party applications wishing to use Git
+functionality parse the output of Git commands).
 
-To help with those use cases, give users a way to opt-out of the
-protections: `sideband.allowControlCharacters`.
+In contrast to other ANSI escape sequences, it is highly unlikely that
+coloring sequences can be essential tools in attack vectors that mislead
+Git users e.g. by hiding crucial information.
 
-Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
+Therefore we can have both: Continue to allow ANSI coloring sequences to
+be passed to the terminal by default, and neutralize all other ANSI
+Escape sequences.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config.adoc           |  2 ++
- Documentation/config/sideband.adoc  |  5 +++++
- sideband.c                          | 10 ++++++++++
- t/t5409-colorize-remote-messages.sh |  8 +++++++-
- 4 files changed, 24 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/config/sideband.adoc
+ Documentation/config/sideband.adoc  | 18 ++++++--
+ sideband.c                          | 66 +++++++++++++++++++++++++++--
+ t/t5409-colorize-remote-messages.sh | 16 ++++++-
+ 3 files changed, 91 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/config.adoc b/Documentation/config.adoc
-index 62eebe7c54..dcea3c0c15 100644
---- a/Documentation/config.adoc
-+++ b/Documentation/config.adoc
-@@ -523,6 +523,8 @@ include::config/sequencer.adoc[]
- 
- include::config/showbranch.adoc[]
- 
-+include::config/sideband.adoc[]
-+
- include::config/sparse.adoc[]
- 
- include::config/splitindex.adoc[]
 diff --git a/Documentation/config/sideband.adoc b/Documentation/config/sideband.adoc
-new file mode 100644
-index 0000000000..3fb5045cd7
---- /dev/null
+index 3fb5045cd7..b55c73726f 100644
+--- a/Documentation/config/sideband.adoc
 +++ b/Documentation/config/sideband.adoc
-@@ -0,0 +1,5 @@
-+sideband.allowControlCharacters::
-+	By default, control characters that are delivered via the sideband
-+	are masked, to prevent potentially unwanted ANSI escape sequences
-+	from being sent to the terminal. Use this config setting to override
-+	this behavior.
+@@ -1,5 +1,17 @@
+ sideband.allowControlCharacters::
+ 	By default, control characters that are delivered via the sideband
+-	are masked, to prevent potentially unwanted ANSI escape sequences
+-	from being sent to the terminal. Use this config setting to override
+-	this behavior.
++	are masked, except ANSI color sequences. This prevents potentially
++	unwanted ANSI escape sequences from being sent to the terminal. Use
++	this config setting to override this behavior:
+++
++--
++	`default`::
++	`color`::
++		Allow ANSI color sequences, line feeds and horizontal tabs,
++		but mask all other control characters. This is the default.
++	`false`::
++		Mask all control characters other than line feeds and
++		horizontal tabs.
++	`true`::
++		Allow all control characters to be sent to the terminal.
++--
 diff --git a/sideband.c b/sideband.c
-index c1bbadccac..682f1cbbed 100644
+index 682f1cbbed..eeba6fa2ca 100644
 --- a/sideband.c
 +++ b/sideband.c
-@@ -26,6 +26,8 @@ static struct keyword_entry keywords[] = {
+@@ -26,7 +26,12 @@ static struct keyword_entry keywords[] = {
  	{ "error",	GIT_COLOR_BOLD_RED },
  };
  
-+static int allow_control_characters;
-+
+-static int allow_control_characters;
++static enum {
++	ALLOW_NO_CONTROL_CHARACTERS  = 0,
++	ALLOW_ANSI_COLOR_SEQUENCES   = 1<<0,
++	ALLOW_DEFAULT_ANSI_SEQUENCES = ALLOW_ANSI_COLOR_SEQUENCES,
++	ALLOW_ALL_CONTROL_CHARACTERS = 1<<1,
++} allow_control_characters = ALLOW_ANSI_COLOR_SEQUENCES;
+ 
  /* Returns a color setting (GIT_COLOR_NEVER, etc). */
  static enum git_colorbool use_sideband_colors(void)
- {
-@@ -39,6 +41,9 @@ static enum git_colorbool use_sideband_colors(void)
+@@ -41,8 +46,26 @@ static enum git_colorbool use_sideband_colors(void)
  	if (use_sideband_colors_cached != GIT_COLOR_UNKNOWN)
  		return use_sideband_colors_cached;
  
-+	repo_config_get_bool(the_repository, "sideband.allowcontrolcharacters",
-+			    &allow_control_characters);
-+
+-	repo_config_get_bool(the_repository, "sideband.allowcontrolcharacters",
+-			    &allow_control_characters);
++	switch (repo_config_get_maybe_bool(the_repository, "sideband.allowcontrolcharacters", &i)) {
++	case 0: /* Boolean value */
++		allow_control_characters = i ? ALLOW_ALL_CONTROL_CHARACTERS :
++			ALLOW_NO_CONTROL_CHARACTERS;
++		break;
++	case -1: /* non-Boolean value */
++		if (repo_config_get_string_tmp(the_repository, "sideband.allowcontrolcharacters",
++					      &value))
++			; /* huh? `get_maybe_bool()` returned -1 */
++		else if (!strcmp(value, "default"))
++			allow_control_characters = ALLOW_DEFAULT_ANSI_SEQUENCES;
++		else if (!strcmp(value, "color"))
++			allow_control_characters = ALLOW_ANSI_COLOR_SEQUENCES;
++		else
++			warning(_("unrecognized value for `sideband."
++				  "allowControlCharacters`: '%s'"), value);
++		break;
++	default:
++		break; /* not configured */
++	}
+ 
  	if (!repo_config_get_string_tmp(the_repository, key, &value))
  		use_sideband_colors_cached = git_config_colorbool(key, value);
- 	else if (!repo_config_get_string_tmp(the_repository, "color.ui", &value))
-@@ -68,6 +73,11 @@ void list_config_color_sideband_slots(struct string_list *list, const char *pref
+@@ -71,9 +94,41 @@ void list_config_color_sideband_slots(struct string_list *list, const char *pref
+ 		list_config_item(list, prefix, keywords[i].keyword);
+ }
  
- static void strbuf_add_sanitized(struct strbuf *dest, const char *src, int n)
- {
-+	if (allow_control_characters) {
-+		strbuf_add(dest, src, n);
-+		return;
++static int handle_ansi_color_sequence(struct strbuf *dest, const char *src, int n)
++{
++	int i;
++
++	/*
++	 * Valid ANSI color sequences are of the form
++	 *
++	 * ESC [ [<n> [; <n>]*] m
++	 *
++	 * These are part of the Select Graphic Rendition sequences which
++	 * contain more than just color sequences, for more details see
++	 * https://en.wikipedia.org/wiki/ANSI_escape_code#SGR.
++	 */
++
++	if (allow_control_characters != ALLOW_ANSI_COLOR_SEQUENCES ||
++	    n < 3 || src[0] != '\x1b' || src[1] != '[')
++		return 0;
++
++	for (i = 2; i < n; i++) {
++		if (src[i] == 'm') {
++			strbuf_add(dest, src, i + 1);
++			return i;
++		}
++		if (!isdigit(src[i]) && src[i] != ';')
++			break;
 +	}
 +
- 	strbuf_grow(dest, n);
++	return 0;
++}
++
+ static void strbuf_add_sanitized(struct strbuf *dest, const char *src, int n)
+ {
+-	if (allow_control_characters) {
++	int i;
++
++	if (allow_control_characters == ALLOW_ALL_CONTROL_CHARACTERS) {
+ 		strbuf_add(dest, src, n);
+ 		return;
+ 	}
+@@ -82,6 +137,9 @@ static void strbuf_add_sanitized(struct strbuf *dest, const char *src, int n)
  	for (; n && *src; src++, n--) {
  		if (!iscntrl(*src) || *src == '\t' || *src == '\n') {
+ 			strbuf_addch(dest, *src);
++		} else if ((i = handle_ansi_color_sequence(dest, src, n))) {
++			src += i;
++			n -= i;
+ 		} else {
+ 			strbuf_addch(dest, '^');
+ 			strbuf_addch(dest, *src == 0x7f ? '?' : 0x40 + *src);
 diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-index aa5b570571..9caee9a07f 100755
+index 9caee9a07f..e5092d3b42 100755
 --- a/t/t5409-colorize-remote-messages.sh
 +++ b/t/t5409-colorize-remote-messages.sh
-@@ -105,9 +105,15 @@ test_expect_success 'disallow (color) control sequences in sideband' '
+@@ -100,7 +100,7 @@ test_expect_success 'fallback to color.ui' '
+ 
+ test_expect_success 'disallow (color) control sequences in sideband' '
+ 	write_script .git/color-me-surprised <<-\EOF &&
+-	printf "error: Have you \\033[31mread\\033[m this?\\n" >&2
++	printf "error: Have you \\033[31mread\\033[m this?\\a\\n" >&2
+ 	exec "$@"
  	EOF
  	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
- 	test_commit need-at-least-one-commit &&
-+
+@@ -108,12 +108,24 @@ test_expect_success 'disallow (color) control sequences in sideband' '
+ 
  	git clone --no-local . throw-away 2>stderr &&
  	test_decode_color <stderr >decoded &&
--	test_grep ! RED decoded
-+	test_grep ! RED decoded &&
++	test_grep RED decoded &&
++	test_grep "\\^G" stderr &&
++	tr -dc "\\007" <stderr >actual &&
++	test_must_be_empty actual &&
 +
 +	rm -rf throw-away &&
-+	git -c sideband.allowControlCharacters clone --no-local . throw-away 2>stderr &&
++	git -c sideband.allowControlCharacters=false \
++		clone --no-local . throw-away 2>stderr &&
 +	test_decode_color <stderr >decoded &&
-+	test_grep RED decoded
+ 	test_grep ! RED decoded &&
++	test_grep "\\^G" stderr &&
+ 
+ 	rm -rf throw-away &&
+ 	git -c sideband.allowControlCharacters clone --no-local . throw-away 2>stderr &&
+ 	test_decode_color <stderr >decoded &&
+-	test_grep RED decoded
++	test_grep RED decoded &&
++	tr -dc "\\007" <stderr >actual &&
++	test_file_not_empty actual
  '
  
  test_done
