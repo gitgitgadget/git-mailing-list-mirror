@@ -1,97 +1,122 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9902D9ECD
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 19:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7F52DE70D
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 19:38:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772739382; cv=none; b=tR9Ykn52sXn9c1TtSJmeellPOwlwBXpQmYo+ScAFD+saxajCR57LoKEaaBKGt95mxSWNiLemZrHlK3Gy2LXTmAF5bOwny9xpxeASexZ/UQmk2UY1V7d9bCskhwNWM+gL4YtDDfD9IzYUN2uIbDImVKcUwwnXcNotaw7+sOvbKL8=
+	t=1772739529; cv=none; b=DcQ3kvX475eD6MyRS+B+LpAjkE1+A9uqxtfJwtgeRJnNaa42OSCw0mfgmZNcvDjC1NzovKM8AIX6OQFNgMXn98odo4gKVWMpB2dRFzP0clDLux9QNbGwgLcolXsKyZZlQEbjg7LZMMiuq5EMTOUVYiRIXQH7TcJtmF0o6sKLo7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772739382; c=relaxed/simple;
-	bh=QuzyvEmc7n4gDDLFqMgo8gRpJoiwVNuD5ELlkejkzLc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tBlIe3VD7ElqrWqFL5FfVvuUN6ijLcO97N1Qn5ibP4s7S6yezyr3WBt9GS1Nx9wABbkQuLjVZ3mLwlaSfS1sWffT/BIDC8qAror3KUKcRHoju1XX8cx6SrSU694KBi/7dhYnIrHXS7cci5BE5XEPqmFypRbnaL2t9ciSOp2HGlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZIDZ/ArP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5XuEqE5N; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772739529; c=relaxed/simple;
+	bh=TX/5IhvaNZqP2JDR6sZOqkIYQdQmZuGXWkLyKSzs6Js=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=o4NB04KlscspBlZhRzCNCl7Uynxda8V1xUUR+qVoypgBDMmCp7MNvtGFnlsWcbjOnO5Pu55l60OA7qa1cVPrA3l0HQdpDHwR4lw1rfKT75u+34S8tVfMUWbLC3P8cSzC2wioCylHDdvhnCUn3UxzuEG9NjuVnfszMxRO3SIlRtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AQ/nfSbp; arc=none smtp.client-ip=209.85.167.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZIDZ/ArP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5XuEqE5N"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4323FEC0640;
-	Thu,  5 Mar 2026 14:36:20 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Thu, 05 Mar 2026 14:36:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772739380; x=1772825780; bh=AbLLWJWotT
-	bB63dWj+P/ttbx2iid08JNhzmbEZZo0HQ=; b=ZIDZ/ArPIYAUA7jEvLEP2o9tQP
-	stKYdY3RQhtuWQhcgzBBWyxoAHZNrfM8Da8wpnTKPqCWNWh5d0FFJKRGcgFt3T6N
-	tSpnTvEgMuX48fG83fm3GHZIkhgVp1z891FiQw/IwWp+XHmJ6TIlmK2HXhXtMYcr
-	IKSy3POQHHsdHfu6/XfcTViqDuNXz7MiSFTP4Me6UAOgtInX/NoDfMxu7JEScsTk
-	Mci2ub/mJyRq/Zp7zDMg3MlluNoZfVbQa6YwdLuqO4u36sRLVBHlTa5MK6Ib/zS2
-	EzlR2cOwyciL01vI/ErsCCUlUNqRtoD9Z73RIrFpj3/maryhBg+xntVgHIAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772739380; x=1772825780; bh=AbLLWJWotTbB63dWj+P/ttbx2iid08JNhzm
-	bEZZo0HQ=; b=5XuEqE5Nz6r3DXJxsPi3h+4AxphtWhDwkCb2k8kpzgY3PsyCZVh
-	zxTZIvBUz3VJ/H2Tz0UCxGXFQyiLgbwzqfQ7ppLqlXkWHN9+1JzpYr8Im7Uo151U
-	oepSidKQfWpOP/419Kz+jXuDBdeBCt4T/xWOO8Pl8msuBfm6f2oVcyjEBnAYiKB5
-	thMsusDK6RScTT+P3Q6efe5grGI4iaLvMRmUr/9XCzs54khqrth4jZ1B766/d7m8
-	nDVsifeQmQvuHDjDfDVIde4C7r4N98Pq1+Ufi5BP1sm6UtSDNH+Lr+eW6jvRtw9v
-	9BXH25Udqbq08L/Vb83DdROXZwhR7lr8TDA==
-X-ME-Sender: <xms:NNupae9L9OdadHhR77bmsTxg-Z6LErLMr8igL-kopW2WOrU_zFdZtg>
-    <xme:NNupaWIGYzPxT6wCKy_0iV3IADlDgb5uj7XeTtf3f7FwNZOPQluN22DJRdAYQ1DRY
-    yk3m0XS6oJ1iuV95Vb2YpEiUsnKkIZtvARTmL4DJ8lC2tJnCKNN4A>
-X-ME-Received: <xmr:NNupaRbMu-u3zexuo3obM44_LEBl7zZyGvlkAcM_1j_1wYmF2-h-tFN27U-lgpEyxSDObSEToKNDhR66YxVr8n5UTYQ7ZjTwiw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieejvdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtd
-    dtheesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:NNupaQItZDkn1eSTjA7XWysaWh6YHYn2Ndyha318o17to7R62VzyBQ>
-    <xmx:NNupaXBxUBTT2slFLfdFxHWJVi7YgNU6NGpvJI9wMhQUmm33ZwjnPA>
-    <xmx:NNupadpt_KlLBEAHFpUpxGTN76XPM4er4WdtplqxIlFvYE1NZHwHtw>
-    <xmx:NNupaair9-mPsrwORKfj-VYpU8OLkG-o13TdmT8kM8qmwp9u6B2tjQ>
-    <xmx:NNupaSK_kXWgMMKgo-K0hDgsDFaSpYI0ZLBBXmQMjg5NlCcSUumAtxZx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 14:36:19 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] clean up a few things
-In-Reply-To: <20260305125332.27600-1-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Thu, 5 Mar 2026 18:23:29 +0530")
-References: <20260304130502.8475-1-jayatheerthkulkarni2005@gmail.com>
-	<20260305125332.27600-1-jayatheerthkulkarni2005@gmail.com>
-Date: Thu, 05 Mar 2026 11:36:18 -0800
-Message-ID: <xmqqms0m2hn1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AQ/nfSbp"
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-464bc03efd8so4974054b6e.2
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 11:38:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772739527; x=1773344327; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1p1bqwZfHz0SmvMoAWqk4aO3k7sIRGQlQkfxAnv3wRE=;
+        b=AQ/nfSbpIa4xNCFBVp3IYIy0OL1n1KI2BginnAhaupH+TxbmNFRvq5HqUc0HV7nC+N
+         izNUdFtmdotejAIqzrSV5JiThUOHf3P/JOaOqQic8HaJE4TM3SDgnYSE7acH//Nys0Kv
+         3lfJudeBV4FCNK6m5uHJ/ZTC17l3rI3HNBq1w8dpQyF9tIqcfEFoEz1zHcLkO/eOkbii
+         WKPY8w4xPLH38kYfYFDeE0C/NrSiyWE5tEBkWPWIkQLpPjEqPE+WOPZ1wg53tImkQwOx
+         Fbbpd2z/qd8F7y00JnbcXQ9dPqFjn+xKZrawYJrf/mXSF7evOpKg6nO9EHGoOz4uIR9s
+         kucA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772739527; x=1773344327;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1p1bqwZfHz0SmvMoAWqk4aO3k7sIRGQlQkfxAnv3wRE=;
+        b=gzD2JoL/vzWxvR/bqCRb+ZcQ99aA/cmdMU8vGyUEKxyskNhV9zYlGEsvJQuxJKao3V
+         5IeNgaZjOdPTKmNnGEKkX83DaP21lZYLK6QZhr6wGQ2tWhnWyQonlvPSwZog4hCSSxZr
+         ud2B2c1XH6BA8Ji7ACHuYO4aMeTjKWeuyFH1/NMLrNs4IR/ta6hFXX8zTndyQKbwUEb5
+         ulWLxaKOgP74315PuZvyO4+ON/ViKVpKfANtMgV73PrRN4n931uI35FWIsk0//RV2sjz
+         qhj1b+XkO53Eb0N8n/GDOodRrjGYC6nlgQJDmir3w7wYwCJuf00+OUohM66PNZ4UKr/S
+         Kf5w==
+X-Gm-Message-State: AOJu0YwXxp1PzatyBcKunmj3x8ZVm62TLcRziplgC/0t7hOSs6trTgz5
+	C74OhYXDuyPCcB7gUncS1vZ/Yc3mEFcC4URDr4xX/widf+whsHqZ7B46w6dG9Q==
+X-Gm-Gg: ATEYQzzjKyNiP1+SEme9C11ZmHBnpXl6pHfnqBQOPjuVoJIFWMGgRuFRbC0cFq3Kbx7
+	00AZ5OZfawAUlLkmKmwWE8H9/wYrHqk4DvyO0YgeSFMRTQrDNn+XSDddwxsJOaM/AwteKGP/JN3
+	/a3C3hIhHCovnoQ+rtwUcnUl0dyMkI/FOUgsNiIuWJgcKUxctlxzt5WB9038SMluC7EhP4V5ULU
+	rRR5UFToPMhR9cjgKgrqAq6HIsfxc4HqFbb30+Frm1Qc6+9t23hWMBEiVVAB32wxHG8vOTOB5uz
+	307JimCgB2xqZ/P49ns1e9S/+9TJ6gp4yet1NJR92tyMkkJMhwLYcQ5+PRLDKUqAFNeuSe/+KA3
+	mHVsoKX8aBmCsEFrHtVS/ytIe1MSOFZrUjWdrCd5cMGAHE3E9Us+cM7pJROdwNRs63fR1dO7CPV
+	ezh+SqDVoHpLFowRe919nYXqxQuIPBxy4=
+X-Received: by 2002:a05:6808:23c4:b0:45e:dbf9:61c7 with SMTP id 5614622812f47-466d8736002mr517375b6e.46.1772739527121;
+        Thu, 05 Mar 2026 11:38:47 -0800 (PST)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4160d26d9absm22446864fac.16.2026.03.05.11.38.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Mar 2026 11:38:46 -0800 (PST)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH] Documentation: extend guidance for submitting patches
+Date: Thu,  5 Mar 2026 13:38:36 -0600
+Message-ID: <20260305193836.973122-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.53.0.381.g628a66ccf6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+Before submitting patches on the mailing list, it is often a good idea
+to check for previous related discussions or if similar work is already
+in progress. This enables better coordination amongst contributors and
+could avoid duplicating work.
 
-> Changes since v2:
->  - Update commit message of patch 2.
+Additionally, it is often recommended to give reviewers some time to
+reply to a patch series before sending new versions. This helps collect
+broader feedback and reduces unnecessary churn from rapid rerolls.
 
-Hmph, they look identical to me, and more importantly, the previous
-round has already been merged to 'next'.
+Document this guidance in "Documentation/SubmittingPatches" accordingly.
 
-Thanks.
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ Documentation/SubmittingPatches | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index e270ccbe85..5acd692ad7 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -38,10 +38,23 @@ they have no obligation to help you (i.e. you ask them for help,
+ you don't demand).  +git log -p {litdd} _$area_you_are_modifying_+ would
+ help you find out who they are.
+ 
++It is also a good idea to check whether your topic has been discussed
++previously on the mailing list, or whether similar work is already in
++progress.  Prior discussions may contain useful context, design
++considerations, or earlier attempts at solving the same problem. Being
++aware of such discussions can help you avoid duplicating work and may
++allow you to coordinate with other contributors working in the same
++area.
++
+ . You get comments and suggestions for improvements.  You may even get
+   them in an "on top of your change" patch form.  You are expected to
+   respond to them with "Reply-All" on the mailing list, while taking
+   them into account while preparing an updated set of patches.
+++
++It is often beneficial to allow some time for reviewers to provide
++feedback before sending a new version, rather than sending an updated
++series immediately after receiving a review. This helps collect broader
++input and avoids unnecessary churn from many rapid iterations.
+ 
+ . Polish, refine, and re-send your patches to the list and to the people
+   who spent their time to improve your patch.  Go back to step (2).
+
+base-commit: 628a66ccf68d141d57d06e100c3514a54b31d6b7
+-- 
+2.53.0.381.g628a66ccf6
+
