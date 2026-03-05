@@ -1,124 +1,123 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BEB366558
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:20:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772752823; cv=pass; b=cDB+T1iz7YfCMrG1Ur9E7iHh6LBJD7nKv/5iLN38HAy2GPHgY6V/5vKSRY14+DXOupS23Uf1HpMdvTQ5M2EiNkdXlL0/oivB8ZUeqisXkMW3tYqYbtOqhVLL06t0L4z0N2ArDVYeqoaGXaxqmfiVcOJR0JSy0mKJdOp9V+bWXxg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772752823; c=relaxed/simple;
-	bh=ttFV3GA/eIYnme5U6NmLKea/U4Gcjp7d9MoO4pq9R+M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZkTDxj3tNEKqsbJHdOXJl66zvdhwYycvW7qQPs97zMLE3xn4/ITJvAnu8NyU8VjyQSgqSDLC1Y2lmagUOYGBuZc1i9OYMBXkkHH2TSfFyyhLgP8TKCyPTFhvj2IKDhshbJDHJ9okAZR7CTJi6BFP91oz203OO9FJT8iv95vdxvE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MtgUt6RU; arc=pass smtp.client-ip=209.85.161.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24F734A3BF
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772753575; cv=none; b=IYAuOdYnskYOx+3NfwL+xlm8i4cLdOAALPDLYUItoVPMRBCcWeMnTNszBo93Xv5bSuee0iIakNdGJNOqOuCtiYbq7Dc7B6sOJ9JyMjSiudRVr7VhynOBgaE78JZimtBTI6HYR1D7NxdYptpjtT9C8jlN8y23eB1dOgOMrfTXLG0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772753575; c=relaxed/simple;
+	bh=Zdr5B3e1SgdWXpn1nAjypqXDVm5b/6R1eNvxAbzcLU0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tbRGjb2U5YB32DvZU/zQMlB36UI05WTkQZfLjK3oaGuuVIKZ6CvOBU86AQpbZocVd/f0+PbHXVlzSyNuiFpqjwYqaDU1GIewgjXl3kUW8IfTcTIbZYGVUyWzJC9sPYoSvI7YIQSlHXvnrEUQpYN9RsJhz9FPQs8zqjTPclss5BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FngCFCG7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bHlOMXEz; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MtgUt6RU"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-67a02dcc450so4697337eaf.2
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 15:20:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772752821; cv=none;
-        d=google.com; s=arc-20240605;
-        b=kkILRXajJQVg8SXMsPt0pDxQN7pKCilW6hoc7QLN9RjJujEbc6B1ghHQqJn2PaBAcu
-         UpxkEB7Piwr3ahxxMDAgOAqumn4+dKjwEZNB+Pk5HQpVI5mFgCcsnZBASAkorUEIVFVF
-         6Y/zFRuB9ZsQnQNjVJ+HVCSg065ndzQPEfPOBky5/tSgmUTzDr00tNtIQ5zWj9UXnp3p
-         LyvFUi/L+Q7SbgwKFQuXNRuk6yzNGsk8+xp+ZX5ZIDvqz+DANr8vXzCR3bw9caSjTWnv
-         sY3Jaj7nWAOLmGeTfeXYa0pSUy0fdU2l5vhZ2KRqH1fjArlDWGshaC3TXDe7MSaGmLgV
-         OIRg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=PK+SyWkb0G8WjhqooA0SbYUkg3iQDH3KKdazAIRUc9Y=;
-        fh=BlokmVLgx8CRL8s9ttZFF/rEzt3qOXF+IDpsOh/L9Zg=;
-        b=EEhfEaVkuE/DHKZPe5vnuWLzeQYOyDzp7VBo8jD3VFmwmRKR5ERKT/OQZh3jQhE0iM
-         zls6q8Pv6JgJTLJM5cEAubRlB+/nEOf8ozxunReU438BhACcPU8VP0iGKc+dCp0JRLxS
-         JWy3tz5vbRv1ZAnzETU5mzBrG+XwJ7Pi6RqzRA6Wxzy2uhLEQQyhRhzwemAsuL8+j3CR
-         hRR6YJq0osj7ULIbOGUwSv4eLTjkszCtieXNxtn4uqMMl/ShNn1/67lXKFReh9Lf8Xen
-         Fc8ax+L4k+7VPCdRXSvEbLBKexrEI39xsCv4kJUA5Eg/f2o1kp9LAre2n6rSuIkD530Z
-         3viw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772752821; x=1773357621; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PK+SyWkb0G8WjhqooA0SbYUkg3iQDH3KKdazAIRUc9Y=;
-        b=MtgUt6RUnx8lFzB/EGisslaIqpNTJtUw5RExF10q8ovWbZG5b7NfwABWYuEONgTHcx
-         IbLhyFSLXY+M86i/xhgdopk3mgAZTKjOQ8usHIfnDjTVNjtgBbHuvH7LEmn00u2MYleB
-         0oWotSctpCOomzKSoVlBcokAlq0xewdFZSDMrgeuEB9yKf9nRwp74b28Qx4relT2Y47P
-         hE2aDFmDj5bRAUaxLUXi7nJ9ZvSKtLjepKu3Hfj+SZi1ia1O1FTNdwze2E1kmEuunHa1
-         9QOMpbTsQkBs70eGIjWvu+iIkNxMN4zeOVS2jjnyV+aSPevi/Myylp8zezIIP01Ws1Lc
-         iZtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772752821; x=1773357621;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PK+SyWkb0G8WjhqooA0SbYUkg3iQDH3KKdazAIRUc9Y=;
-        b=vOM98fsPGziDmEfDVZqcBdl2nxUSJyon5OxQJjtCe5q2Kcqe9/VhWSmV34EqcidZY5
-         A08ziWjFzSuet1+862cxEKA18JFhGfjwzL+6bNraF1TKtSRvB4147fNEdnXT5/J6DWvn
-         nl0RssBPvLALEMAjanjV2CZDf4v0GR3VD7nQL99+YmlwifdwoTHvZDFeBOCdwS23b4lJ
-         KGAPJtNMIm7aURSm1an1WlalHQTULhUFJwxeGwjvVhKUKeh+2kL7s7zw+TkVz2+ZBzB4
-         hpJEgGggOQ4P/RD/Wd3Uz3jGG0tCxEByf5pJax3YZ0uVLDW4IuXL7kM2PMOSDoQMwRbY
-         Xn1g==
-X-Forwarded-Encrypted: i=1; AJvYcCXBX/AxJJo1tF9ryhQFhBszkXGMYyrDu+PSpLQmSXi2JbWRPB6ARel5CHG3JslwWjLEXlM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoctQ9j7dhAnwkIRAGTEbDbO8Roc2GPTzXt1MqoKYwWLou0JOH
-	bAoR9Xw+P+WqRQhrzvEqsnTZLYhRRK0JWfYGWV+uEvk6PfyKU9E2dbvQq6W64oGdkNgu9d2ge+6
-	RInhEcNJ40ilv2WCLNLjQPeDSE5SYlC/p/w==
-X-Gm-Gg: ATEYQzzibyzlNh7ZZdlDSpTPOzvdQ83A8sl0tw4dRSVg2hqxEy//c4yVrIB6p8awofO
-	Pc9FB05haBfFRW0uN5b8X+PsMu7hUy8RC0XNtAjxVjYnrdwS32dST5Ab0PJj8ozV+oFIvdx2Cp1
-	rf5dE/Q1FJwwXdoLMrXHO9RkjoFrorrpo88OfM5Pi2TrJv9jD230R7BJTj6QDH6HPUucqoxEwTH
-	l+sb2BUB4mztsfVNpHMdR4VGFm94tfk2dB9/r0w9dt2YqxMBChx1Krg2W51LLXWkh5hjw3QSYTm
-	Twdg6Q==
-X-Received: by 2002:a05:6820:f025:b0:662:bfe5:92f1 with SMTP id
- 006d021491bc7-67b9bd55d49mr168414eaf.65.1772752820908; Thu, 05 Mar 2026
- 15:20:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FngCFCG7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bHlOMXEz"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0C53E14001AE;
+	Thu,  5 Mar 2026 18:32:53 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 05 Mar 2026 18:32:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772753573; x=1772839973; bh=0baKDWYHUo
+	Vj9qka/683AxJ/TGylDMLHeoSlJ0jT2qU=; b=FngCFCG7WGmcrgDJnqIeJ6qSYz
+	XNjJev84Rg4VFi0DdshBmlmxrHNSWLXS91vIqN8FE0bB1/me2Z0gPAUpKFmtuFRk
+	+DEGi1MWAINFtoj4uuGArxpWF9lgtQYsHrp2EgcacraKaeQSDttMGOQP8LO5vd27
+	B2C5RkpbQAV7mKsXHjxGckM5vHX4xFYjVFJeDQ9xqV8CHdV3jSS2pMRpuDBIT5Bc
+	IcMgqJk9HRq2wdYLg4PjR5uY0HATfX+ClrwAxUnU7fnhP1rlzgqwzz7bUcrNrLGW
+	D5b3Gh1jm+vICaYlnJ3FlZwWqpkmVJxpyIy8giMq3zaZIF28R5+mdfKltBgg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772753573; x=1772839973; bh=0baKDWYHUoVj9qka/683AxJ/TGylDMLHeoS
+	lJ0jT2qU=; b=bHlOMXEzpUZGE/ZW9pozdZwZGISmIKj4+ro7QVRtIi0H47rZAZg
+	H7DzVcr9Esyxz9KKRStffvE4cQrmsE7ZQzL5vN+Oy1cv610h+kv/KmRo18hiHQmG
+	rDDLumqRjFaJ5ZwDNsnKz14P3LOSkrWq6W95H4tKgl5HSRCSEBi1WFLxXAahWh12
+	/TaeNKm2/XNimudrLuzC3urYB7bIILsfnLBGjm1NNiNSLnZXBfW7SwQgCCTal+w+
+	JgheoEg2baKt6vtD2H9Gam3EwFFQ4wrcEOYsMeqSiyfBCFQEqOuAf6+90pFsmrH7
+	pcVxvY2TjOzTRm4OvUHKbrcUm2d2Qgj03Yw==
+X-ME-Sender: <xms:pBKqaeJSWDuSi4fIDHjUveLcSfdz145hPVrKujvoBt9X-BjXHSe7Sw>
+    <xme:pBKqadlNPLWq_ZAeLZCCUqqOrJaKnQwBXN4S5U5jrZjicPhCD-74luQUHvWOewSmM
+    i7anIpfNJ9J_tu6eqnveU593S-tukhPvPo_kOYNHscJTx-u40tr>
+X-ME-Received: <xmr:pBKqacEjKH8_Qxl9ikQ-YCnKwRsdwPTIKvMqFC2xr83KGbf8erksfZ_IUjXgKcnCixeBn9uYeLMK9jCVdRC_i8hk8Fl1qBnlBw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieejjeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepledtgeehgeetvdehgeevgedvudekvdelffegvdeuueefheegledvfedtudef
+    ieelnecuffhomhgrihhnpehprhhothhonhdrmhgvpdhgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
+    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuth
+    dprhgtphhtthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:pBKqadEi7XAToOaAyQxqKATXBs8YnhAvBRWlA1xi4KhZKlWFC_5rCw>
+    <xmx:pBKqaZMUTeMDMih3rJD3DOQybMmNXbdqMdW4Z_r9O8V1ZLUK-BRV5w>
+    <xmx:pBKqacFVY4TX1LFHhyczmVQFyx6lJjJVZbGS6f9OaRu2q3wVJuTMYA>
+    <xmx:pBKqaQPzFXeuakDrgtr5E3Gp7CkokKmRby8yTFkTJxE40NV8acyLvA>
+    <xmx:pRKqaWu321nHhGDKZPSHEQfMXRTo-mjlXjymOim6IGY-p7MBIjuH5A0E>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Mar 2026 18:32:52 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] docs: add hydroxide as an option for ProtonMail users
+In-Reply-To: <MAUPR01MB1154679A7F8FF4B926A1F41E8B87DA@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Thu, 5 Mar 2026 17:58:24 +0530")
+References: <MAUPR01MB115461E9C238F9952EEB1C38BB871A@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
+	<MAUPR01MB1154679A7F8FF4B926A1F41E8B87DA@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
+Date: Thu, 05 Mar 2026 15:32:51 -0800
+Message-ID: <xmqqms0l26os.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260305230315.GA2354983@coredump.intra.peff.net> <20260305230956.GB2901305@coredump.intra.peff.net>
-In-Reply-To: <20260305230956.GB2901305@coredump.intra.peff.net>
-From: Jacob Keller <jacob.keller@gmail.com>
-Date: Thu, 5 Mar 2026 15:20:11 -0800
-X-Gm-Features: AaiRm53s-QHcQiklnoA-WNi1WBC_7kKZkKhevJL7IIQSmCHAQ5GfjpSYSVYqMhQ
-Message-ID: <CA+P7+xryAanTArTc+iVkuHGSZXWZpUYjtHuu-umi15UDzpYFRg@mail.gmail.com>
-Subject: Re: [PATCH 2/4] check_connected(): fix leak of pack-index mmap
-To: Jeff King <peff@peff.net>
-Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Mar 5, 2026 at 3:10=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> Since c6807a40dc (clone: open a shortcut for connectivity check,
-> 2013-05-26), we may open a one-off packed_git struct to check what's in
-> the pack we just received. At the end of the function we throw away the
-> struct (rather than linking it into the repository struct as usual).
->
-> We used to leak the struct until dd4143e7bf (connected.c: free the
-> "struct packed_git", 2022-11-08), which calls free(). But that's not
-> sufficient; inside the struct we'll have mmap'd the pack idx data from
-> disk, which needs an munmap() call.
->
-> Building with SANITIZE=3Dleak doesn't detect this, because we are leaking
-> our own mmap(), and it only finds heap allocations from malloc(). But if
-> we use our compat mmap implementation like this:
->
->   make NO_MMAP=3DMapsBecomeMallocs SANITIZE=3Dleak
->
-> then LSan will notice the leak, because now it's a regular heap buffer
-> allocated by malloc().
->
-> We can fix it by calling close_pack(), which will free any associated
-> memory. Note that we need to check for NULL ourselves; unlike free(), it
-> is not safe to pass a NULL pointer to close_pack().
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+Aditya Garg <gargaditya08@live.com> writes:
 
-Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
+> I just realised the From in this email is showing "Your Name"
+> instead of my name. It was due to a mistake in my .gitconfig. Do I
+> have to resend this?
+
+With in-body header "From:" overriding that bogosity with the real
+author, it shouldn't be necessary, but I do not recall seeing the
+patch nor (more importantly) a discussion on it.
+
+> On 01/03/26 12:35 pm, Your Name wrote:
+>> From: Aditya Garg <gargaditya08@live.com>
+>> 
+>> Hydroxide is a very popular third party client for ProtonMail free
+>> accounts. Recently the project was resurrected and now it works
+>> properly. Add it as an option for using with send-email.
+>> 
+>> Signed-off-by: Aditya Garg <gargaditya08@live.com>
+>> ---
+>>  Documentation/git-send-email.adoc | 1 +
+>>  1 file changed, 1 insertion(+)
+>> 
+>> diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
+>> index 741f748614..724c9d5e9b 100644
+>> --- a/Documentation/git-send-email.adoc
+>> +++ b/Documentation/git-send-email.adoc
+>> @@ -646,6 +646,7 @@ customer of Proton Mail, you can use
+>>  https://proton.me/mail/bridge[Proton Mail Bridge]
+>>  officially provided by Proton Mail to create a local SMTP server for sending
+>>  emails. For both free and paid users, community maintained projects like
+>> +https://github.com/emersion/hydroxide[hydroxide] and
+>>  https://github.com/AdityaGarg8/git-credential-email[git-protonmail] can be
+>>  used.
+>>  
