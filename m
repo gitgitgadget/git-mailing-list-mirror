@@ -1,266 +1,105 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E4E1E0E14
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 01:16:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4154225791
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 01:16:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772673401; cv=none; b=r2QbYGHxBO/LcA2sjge+iknYq2+xI6cw2ZtCg8XraJeqayPcF+tO2pBmunlPlEFw2tDF2m7qFzBxPsF4wvo720fzcQq23yw+LOog012KT21neWST/iBshOauIfjrp4D0ZMr4GEVdF4ghlClTebCwrrqSf7wwZsFdfr8JmigyGxk=
+	t=1772673402; cv=none; b=PQIUhDkxkHt6vN7WtW+i/tfOCdHrsOSpZxUrpe0podS5smypWBBDzIGbJTC2Jgb/bMauz1CvlILNcCy4bunTCB495wsCH+GoqEux62gQQl6xZLTmSDvvxMuz9JyXlggvlAxOyfW/1VJ8YaQ3QSRUOlaBRyephql2qBTBPJPODU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772673401; c=relaxed/simple;
-	bh=UccY8KkQmmzRVJjPmUNw0+5cfcnWQd4PGNhkKpKIa64=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=XzvJ7XFdZgy/XLGEx9cqXwwD4NJ5ZBOVcVNf+Easz2QAnuHVMs0WUmwtPklO/mVnFP2sbVifDOvSGp+U8bN6q4CvHDVKMKM6/NLwIJkgrP21LE2k3LnKXb+dxy0oXejmL6Rfn3DAbYQAWlLaqAqsSM9+NshfoGh6dQfh/S7xY+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VYw5IrzF; arc=none smtp.client-ip=209.85.222.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772673402; c=relaxed/simple;
+	bh=fmO4NoWxV6wSMxr61Wb0fBrpFwwO0Sm4nZkCTVtLhto=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HLRuJDJORvKNMj0YFUmVfNnyKvxX6+OMGs7YTL8hILbvA3yQMQSUIjFs4GvxxTh7gfS6zuk84sFS9Renhg+N8490NSBGwVYjlsuBf4wuZy19iCxJw8+4Jjk6qzxYAIW8sH91yGDlKrwlvwoOiXsa1h6C0a5laKnW351nTrUrLiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ev8zie60; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VYw5IrzF"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8cbae8f69cbso765997685a.0
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 17:16:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772673398; x=1773278198; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YGZZpQUs2JU6feqN07JnIijdY7YhuFyGOr34QG2qB8A=;
-        b=VYw5IrzFEeMZLPUxGbmyXCzJpuVoc29ukNwloF7Q7kzmF9wwZVQfmlVJvvQzoky1Qr
-         0CNebY/AyqkIJF2zX49Td5xeNIxwCpHxxc/jHteYNc0JmCabEip/fux3e1MrQujEVBMQ
-         JYSjQYhBNr0Fcnb6ibXk7eS7wt/nohcNajnfQB+CZ1+6zQqKFd/cHWgSz2ta4ObDZ704
-         a5dshgSmZ9c6nnIs9JGhjKlG+GqoJ4dgUYhQQ+kyiqxXselgHILsON3NIWZwogZv9z7V
-         k+1w6KjjjNsdhNqiG5vGX19Zu8lQ7THAZEd5pPX7450lq63POyMRlkp1d8qyzjyzEyZ9
-         6dog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772673398; x=1773278198;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YGZZpQUs2JU6feqN07JnIijdY7YhuFyGOr34QG2qB8A=;
-        b=RuTAz9dNNsUbz3LJpGLRG91H/3JEBwNSDDja32garaVlxEziQIg6+R0MOCFn83S9yw
-         1OhUFcMVGv2pcqPYs51xhgRHmaO7gFUIydXEy4TcfozNZYkk6tksmHr7C2Qb/r8nOvgK
-         SoAp73P+aptJa+tPXC02vrWZd7ukXum/d07IqIBT6bncGue5t65zxecgidIbi52YneBo
-         7k0A6UR8fPoKXE2RPhIs69EP3PFjkdThXaCGRwZXlTVdpUPciG/4L+/3IVL9fpVwHxke
-         4RH0+dSvuRmwKcCuvdV6SzmuZ7TipIxKzy5bTrWKyaCVdct1sUlB7AwUnyM/JbcyzC8s
-         T+Mg==
-X-Gm-Message-State: AOJu0YyC+FZvj3nVG32H7BVZVzMYynUV8UCUfYVsbCA2dMbimXnQkrd+
-	JNqtluHNKZSv0JSC7dniUKYv0ajkBW99Cj39eJf9JJhN0v2CdVrHzmT5qR0Sk1uJ
-X-Gm-Gg: ATEYQzwP+0Np1oRBNklJ+KYbvmHPSZfA4bKp7jcVT3C2hxXSP7LywtLtJow54o2M/ur
-	g9Oj7Hk3Q0Onh/U6Xt90RXaP1crhJGT/qnbHFNwGpslvm9/voocqPrdKnQh6VG6GVllXWqQmfCB
-	SITHh4CDu/iIWdjZbnVk6wm5I2wQQNzerXVFcSiBucmOCCwwSMuRr8eUFpyUDzyOnsfcuK3kObb
-	cM70nyEhcp+RS+6liyuWTE34H2ZS1RHCzZesdbP90a1IEctloUGGQW3sUf7hMAhsihFqiCFLZrE
-	u0PRfMM19PwIRlUxLNpdryWB99m73UE4WxfFQo0IlmWCxR5x2ElXL0X8sEU3gKUJ4wXJIyShyL9
-	AHmYeEdjr9dP17ux1CetoskrvO3IyyJV7Lfk277PUQIn2GBtEvjPh+WzX6zC4UEw222oHue2C33
-	CDctWAUpL8NgM5kgFJahjHRp8=
-X-Received: by 2002:a05:620a:28c6:b0:8ca:3715:eea5 with SMTP id af79cd13be357-8cd6343ac58mr74293785a.14.1772673398455;
-        Wed, 04 Mar 2026 17:16:38 -0800 (PST)
-Received: from [127.0.0.1] ([51.8.152.229])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf652bb6sm1889467685a.4.2026.03.04.17.16.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 17:16:37 -0800 (PST)
-Message-Id: <27d55600071d3479ffe2447ad36a5715d7eb2521.1772673378.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2147.v10.git.git.1772673378.gitgitgadget@gmail.com>
-References: <pull.2147.v9.git.git.1772671920.gitgitgadget@gmail.com>
-	<pull.2147.v10.git.git.1772673378.gitgitgadget@gmail.com>
-From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 05 Mar 2026 01:16:17 +0000
-Subject: [PATCH v10 11/12] fsmonitor: add tests for Linux
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ev8zie60"
+Received: (qmail 1858 invoked by uid 106); 5 Mar 2026 01:16:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=fmO4NoWxV6wSMxr61Wb0fBrpFwwO0Sm4nZkCTVtLhto=; b=Ev8zie609duAifn3UEFGDH/zq47TnXHLd07QSHQbMDS6Ots6aclw7ePoha1/Ropf91noSjTPQd2qsEK0ruAHOc1oXn9ooQDfg6toAtAljPC9uc53T9seDehdF9jOk3dBN7kzOzQL+Y/mp053C7UCbdMfOPl5PLeBZZTtXGRoBoMhJIwfrfqh0TmvMshijT0wmARbxvxWCk/YxrYF7Ryi7/zRS+AKfdkG9xtpLv4ECGYyfmupnXF14CTnfwQnX2pkpIdop58CF4VAnWCUFvvboiRYH8bj7LqvdeGcvBf4433igO5/YkCKO2h/9P09qq+IGPxbDWKPdNEF6+FC2vcfOw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Mar 2026 01:16:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 376273 invoked by uid 111); 5 Mar 2026 01:16:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Mar 2026 20:16:40 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 4 Mar 2026 20:16:38 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Matt Smiley <msmiley@gitlab.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 03/10] upload-pack: reduce lock contention when
+ writing packfile data
+Message-ID: <20260305011638.GC4943@coredump.intra.peff.net>
+References: <20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im>
+ <20260303-pks-upload-pack-write-contention-v2-3-7321830f08fe@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Paul Tarjan <paul@paultarjan.com>,
-    Paul Tarjan <github@paulisageek.com>,
-    Paul Tarjan <github@paulisageek.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260303-pks-upload-pack-write-contention-v2-3-7321830f08fe@pks.im>
 
-From: Paul Tarjan <github@paulisageek.com>
+On Tue, Mar 03, 2026 at 04:00:18PM +0100, Patrick Steinhardt wrote:
 
-Add a smoke test that verifies the filesystem actually delivers
-inotify events to the daemon.  On some configurations (e.g.,
-overlayfs with older kernels), inotify watches succeed but events
-are never delivered.  The daemon cookie wait will time out, but
-every subsequent test would fail.  Skip the entire test file early
-when this is detected.
+> Extend our use of the buffering infrastructure so that we soak up bytes
+> until the buffer is filled up at least 2/3rds of its capacity. The
+> change is relatively simple to implement as we already know to flush the
+> buffer in `create_pack_file()` after git-pack-objects(1) has finished.
 
-Add a test that exercises rapid nested directory creation to verify
-the daemon correctly handles the EEXIST race between recursive scan
-and queued inotify events.  When IN_MASK_CREATE is available and a
-directory watch is added during recursive registration, the kernel
-may also deliver a queued IN_CREATE event for the same directory.
-The second inotify_add_watch() returns EEXIST, which must be treated
-as harmless.  An earlier version of the listener crashed in this
-scenario.
+This 2/3rds feels kind of arbitrary. Isn't our best bet to try to fill
+pkt-lines? Later you say:
 
-Reduce --start-timeout from the default 60 seconds to 10 seconds so
-that tests fail promptly when the daemon cannot start.
+> Now we could of course go even further and make sure that we always fill
+> up the whole buffer. But this might cause an increase in read(3p)
+> syscalls, and some tests show that this only reduces the number of
+> write(3p) syscalls from 130,000 to 100,000. So overall this doesn't seem
+> worth it.
 
-Harden the test helpers to work in environments without procps
-(e.g., Fedora CI): fall back to reading /proc/$pid/stat for the
-process group ID when ps is unavailable, guard stop_git() against
-an empty pgid, and redirect stderr from kill to /dev/null to avoid
-noise when processes have already exited.
+But I am not clear how it increases the number of read() calls. I guess
+you are concerned that we'll get 50k, and then do a read for the
+remaining 14k, and then read 50k, and then 14k, and so on. But I'm
+unconvinced that 2/3 is really any better here, as it depends on the
+buffering patterns of the upstream writer. They could be writing 1 byte
+less than 2/3, and we'd wait to buffer, then read half their next
+packet, write it, then read the second of of their next packet, wait to
+buffer, and so on.
 
-Use set -m to enable job control in the submodule-pull test so that
-the background git pull gets its own process group, preventing the
-shell wait from blocking on the daemon.  setsid() in the previous
-commit detaches the daemon itself, but the intermediate git pull
-process still needs its own process group for the test shell to
-manage it correctly.
+Even just doing:
 
-Signed-off-by: Paul Tarjan <github@paulisageek.com>
----
- t/t7527-builtin-fsmonitor.sh | 89 +++++++++++++++++++++++++++++++++---
- 1 file changed, 82 insertions(+), 7 deletions(-)
+  git clone --upload-pack='strace -e write git-upload-pack' --bare --no-local . foo.git
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 409cd0cd12..774da5ac60 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -10,9 +10,58 @@ then
- 	test_done
- fi
- 
-+# Verify that the filesystem delivers events to the daemon.
-+# On some configurations (e.g., overlayfs with older kernels),
-+# inotify watches succeed but events are never delivered.  The
-+# cookie wait will time out and the daemon logs a trace message.
-+#
-+# Use "timeout" (if available) to guard each step against hangs.
-+maybe_timeout () {
-+	if type timeout >/dev/null 2>&1
-+	then
-+		timeout "$@"
-+	else
-+		shift
-+		"$@"
-+	fi
-+}
-+verify_fsmonitor_works () {
-+	git init test_fsmonitor_smoke || return 1
-+
-+	GIT_TRACE_FSMONITOR="$PWD/smoke.trace" &&
-+	export GIT_TRACE_FSMONITOR &&
-+	maybe_timeout 30 \
-+		git -C test_fsmonitor_smoke fsmonitor--daemon start \
-+			--start-timeout=10
-+	ret=$?
-+	unset GIT_TRACE_FSMONITOR
-+	if test $ret -ne 0
-+	then
-+		rm -rf test_fsmonitor_smoke smoke.trace
-+		return 1
-+	fi
-+
-+	maybe_timeout 10 \
-+		test-tool -C test_fsmonitor_smoke fsmonitor-client query \
-+			--token 0 >/dev/null 2>&1
-+	maybe_timeout 5 \
-+		git -C test_fsmonitor_smoke fsmonitor--daemon stop 2>/dev/null
-+	! grep -q "cookie_wait timed out" "$PWD/smoke.trace" 2>/dev/null
-+	ret=$?
-+	rm -rf test_fsmonitor_smoke smoke.trace
-+	return $ret
-+}
-+
-+if ! verify_fsmonitor_works
-+then
-+	skip_all="filesystem does not deliver fsmonitor events (container/overlayfs?)"
-+	test_done
-+fi
-+
- stop_daemon_delete_repo () {
- 	r=$1 &&
--	test_might_fail git -C $r fsmonitor--daemon stop &&
-+	test_might_fail maybe_timeout 30 \
-+		git -C $r fsmonitor--daemon stop 2>/dev/null
- 	rm -rf $1
- }
- 
-@@ -67,7 +116,7 @@ start_daemon () {
- 			export GIT_TEST_FSMONITOR_TOKEN
- 		fi &&
- 
--		git $r fsmonitor--daemon start &&
-+		git $r fsmonitor--daemon start --start-timeout=10 &&
- 		git $r fsmonitor--daemon status
- 	)
- }
-@@ -520,6 +569,28 @@ test_expect_success 'directory changes to a file' '
- 	grep "^event: dir1$" .git/trace
- '
- 
-+test_expect_success 'rapid nested directory creation' '
-+	test_when_finished "git fsmonitor--daemon stop; rm -rf rapid" &&
-+
-+	start_daemon --tf "$PWD/.git/trace" &&
-+
-+	# Rapidly create nested directories to exercise race conditions
-+	# where directory watches may be added concurrently during
-+	# event processing and recursive scanning.
-+	for i in $(test_seq 1 20)
-+	do
-+		mkdir -p "rapid/nested/dir$i/subdir/deep" || return 1
-+	done &&
-+
-+	# Give the daemon time to process all events
-+	sleep 1 &&
-+
-+	test-tool fsmonitor-client query --token 0 &&
-+
-+	# Verify daemon is still running (did not crash)
-+	git fsmonitor--daemon status
-+'
-+
- # The next few test cases exercise the token-resync code.  When filesystem
- # drops events (because of filesystem velocity or because the daemon isn't
- # polling fast enough), we need to discard the cached data (relative to the
-@@ -910,7 +981,10 @@ test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
- start_git_in_background () {
- 	git "$@" &
- 	git_pid=$!
--	git_pgid=$(ps -o pgid= -p $git_pid)
-+	git_pgid=$(ps -o pgid= -p $git_pid 2>/dev/null ||
-+		awk '{print $5}' /proc/$git_pid/stat 2>/dev/null) &&
-+	git_pgid="${git_pgid## }" &&
-+	git_pgid="${git_pgid%% }"
- 	nr_tries_left=10
- 	while true
- 	do
-@@ -921,15 +995,16 @@ start_git_in_background () {
- 		fi
- 		sleep 1
- 		nr_tries_left=$(($nr_tries_left - 1))
--	done >/dev/null 2>&1 &
-+	done >/dev/null 2>&1 3>&- 4>&- 5>&- 6>&- 7>&- &
- 	watchdog_pid=$!
- 	wait $git_pid
- }
- 
- stop_git () {
--	while kill -0 -- -$git_pgid
-+	test -n "$git_pgid" || return 0
-+	while kill -0 -- -$git_pgid 2>/dev/null
- 	do
--		kill -- -$git_pgid
-+		kill -- -$git_pgid 2>/dev/null
- 		sleep 1
- 	done
- }
-@@ -944,7 +1019,7 @@ stop_watchdog () {
- 
- test_expect_success !MINGW "submodule implicitly starts daemon by pull" '
- 	test_atexit "stop_watchdog" &&
--	test_when_finished "stop_git; rm -rf cloned super sub" &&
-+	test_when_finished "set +m; stop_git; rm -rf cloned super sub" &&
- 
- 	create_super super &&
- 	create_sub sub &&
--- 
-gitgitgadget
+with this patch (and not the later one to increase the buffer size of
+pack-objects), I see an interesting flip-flop between packets of size
+65515 and 61461. But we never send a single full-size one, even though
+pack-objects should be outpacing us (because we're slowed by running
+under strace). That's probably an OK loss of efficiency in practice, but
+it's very dependent on pack-objects buffering.
 
+I'm still a little bit negative on the whole concept of buffering in
+upload-pack, just because the interactions between buffering layers can
+be so subtle. But I guess I'm not really making any argument that I
+didn't make in v1, and you kept this in v2, so I suppose you are not
+swayed by it. ;)
+
+
+If we are going to buffer in upload-pack, there is an obvious
+optimization that I didn't see in your series. When we send a keepalive,
+we should just send whatever we have in os->buffer (even if it is
+nothing).  If we are wasting 5 bytes of pkt-line header and a write()
+call to send the keepalive, we may as well send what data we do have.
+
+I don't know how much it would help in practice, though. Most keepalives
+will come before the pack data starts, as once pack-objects starts
+producing data, it tends to do so pretty consistently. And of course we
+can't send os->buffer before we see the PACK header, because the whole
+point is to buffer the early bit waiting for packfile uris.
+
+So it might not be worth adding.
+
+-Peff
