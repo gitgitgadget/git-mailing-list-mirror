@@ -1,123 +1,106 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F157728C037
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 07:41:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772696481; cv=pass; b=pQ04pa4yg2+4czjVb4INLrv4gFqdAfLR96EHkMcv/vwOSxUn36jfP4fZJFuEeQO7u+cC95NzWPtqJbhJM1YmjRVdZGRd37zb9iPnQBX0Wfd88yqxxiog1y0/PRVPP6QqQRiN/lVVawYjlak8dV5xmOp3UGr/V2LgjsMTsFxQGVo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772696481; c=relaxed/simple;
-	bh=v4ZJKJ2sSg4Ydndq7p9LjXJJlLEcoxTrW2D3EacEXOk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Wc9lnge7xhm19MEtlK95Ov6wHqrIxf09EFF7ZQt8RDZPHwvutrKxUqxYU/VgYBo/bAt9m+IFaM/G2JZQhLG/m5d/1wKkvQlVpBuZMoYiMGQN/6Y/09XRddxGQz6xbFsWW2ZZkPVtp3yYvfvkWLHnSovf0Pj5Sg/keblX0z81v7I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e9zVjUPk; arc=pass smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2650A1862
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 08:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772700224; cv=none; b=AoqEyEp+6bnw8iqFwb6lzvvtDOrjjBSz4fUABTyILZw952TkoXsayUX2wH1GlvujZ03wmYkZqcYjImNTOC96UwAA0XsC46cfbqyy9+g28lJfF4hOQF5GbPoQ8urhRptHFQRqJNgc7YEIignj752nDUF8sF42sG/R8qYvJKP7dZQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772700224; c=relaxed/simple;
+	bh=rR6kLjBb83s6uIGqKHWBIvydhFwM3wjaaeKuGvPAWWY=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=TggNLJc2P3AX1wi9u9eexdJOG0dzp8u6C8gx4YQsKhZQW84JtifUdZcx2e276bZ20ky+iNGgXdpLfMY5Xm4zJMKWKxeHAgJIH05ASQNuLB5njefW7SsJ+FMjrg7aIWYo/uXxUhV6Ay2zIxPKpkqt4m/E+DSH9tf2znJrYe7gE3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RKc//gPf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UyoPdGOF; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e9zVjUPk"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-65fb991d7eeso10358889a12.0
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 23:41:19 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772696478; cv=none;
-        d=google.com; s=arc-20240605;
-        b=WN98DNG8Dn0MWGQKzqG3376jIOCY+ID+bUQjpp6n0N6KUuSN4yMj0sFKZxogVJswPR
-         +JhG5RTPkAjWad4WqEK7kwpGy7zppimMxGz8POyYZLaozsewe9Z5/2ZonWh1kRX2gEhN
-         qMUgC5x1BazkyOfvGzsz/NSIF6vbRTSvpNOc03nIsETY5/XWCOhKmQIap/XfoW+TYfPo
-         k6NTJ73mR01YcAadsy3AoGO1tnYKCV3ihTTI7zE+BJybEfQpMm+5aAb9SjjeJkyHpVzu
-         K3WToViF3iHD0gjaq+Uj7Kzr0SeUdtXaoxXFeY1shrdUmeE3XjES6vUCP8bkEERDoz/F
-         lA9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=EQSuN8dFFf4I/eusiDmcXrdmzjFUwJoohYkMVIq0o4g=;
-        fh=trV3wso+Fg+3zq7fWygINWeUce3OIH/xNFBQHLchsNY=;
-        b=FmLs2QVJuI6TZypaaevGYXei96czl9l+5GZxT6v6QRCgw7qN6+DfIcVV+fkNy9j6Zj
-         FwaJk7lXutxYXDQZ2Y0U23D0X1uJmKrv1uzwqzDAJAu+cWmDAijTjL8X1o2D7dxmZTCl
-         1F3aJKRIyf4T8iDlJ/4qbvzCG66TunmjJkWdCwnTW02H5uAwc+Wu0VPUAPUVz1z03/xE
-         FTxBnxbuqjhhNkfk68SaqUSk4NAJ9cmabKcim4JAtbPwpQbdmhJGgxGMSOviUV2Ky8oC
-         skfOOvhqfktKEWUtceKS6cNeDVO4GI6E8aAQ75Ov+CgKyzdNUnihajx6KIcH0UiUyb+A
-         vPbA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772696478; x=1773301278; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EQSuN8dFFf4I/eusiDmcXrdmzjFUwJoohYkMVIq0o4g=;
-        b=e9zVjUPkVYC6Mb+YYPTPAHBbAjA/onpSAFDA9vckVtbBFmYhCw5QsO9TsnTdFg7RgK
-         zIrONG8jNrLygAwXFD875iZm2f2wsisCzp3buLdKUoGtwIUk1BOJINYb3n1XYKcxfGuu
-         vpkBKYr4n2fSAeEHeVWjNuxkdNx3DLm2zxKg0e9vy43TmIiWmlMnunj04Mo2FD6a/1U/
-         e6Pwi/XrnMc573eJIxJqv9jxmmU/iz1kn25UCnLzq1Lmc+o57AKyumTbTaFVzmNgAuHD
-         qclmMhR5Pf356p5PAXN1kgZUAOfhq4OmxyvYdmkykhJtczpvW8m6KGs4gKBQ/3yF4R25
-         HIuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772696478; x=1773301278;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=EQSuN8dFFf4I/eusiDmcXrdmzjFUwJoohYkMVIq0o4g=;
-        b=AL3TyhheaCYGp3NXIjIwvTboBiiYgyP+Gscs3ynwa7aIyig//4J2FqZrapd2gc9hb8
-         8VGkyQZjynB3UpMJMME3AjtKv3qRKl+bcYJHrSKDhoqcspE+890fxhG5wKYJy8W0Rttk
-         5npAJ7Cj06CXXi5y3+D0slL3iT7eOsKU3MlbuByiRdgMGltW5MATBEG8TK9YHOLZxSde
-         c9K7Tm0sf5A7OHVEt4+bvYx1NMSDCRaUHr50mw/tX2c/HcA3XgRDzoSCik8uYgt7yNV5
-         tBWGILhQPj+BYmJFdbd9RT13kyaDT8WIkW4+T5kUV1aS07iF0eNbialznBOUN07V0yh1
-         w2xg==
-X-Gm-Message-State: AOJu0Yw/Cw3TzFIGi4vWPlUrFZnbMbv3YKhx3K9Xq0VQQlE3otOlnsef
-	WXcSpBy+OjQRtDY0/evikCAEqv86lKOqn+wA34+FZ2vWztmzVaN34OhITEssUf8w7feVCqmaE+r
-	jOCjNKQVxy5k2oeoQOi8qC3Web/Gw+y7riA==
-X-Gm-Gg: ATEYQzx+Jry9I5RsYPywKYNlTYWLPA8EXz+2oaGPPIeDRHDhHPBT+H7VprQIlUyKlxh
-	VuEOw6gSG3yKNtLedJoyjmz0f59YD5PpQ5MKaCSKY95E83lAcnbH0l+AIuuQMQDAdJcASlf4HoJ
-	BSi83Fohou20GC9OZ946EAuOEKqdXJnmMaKOvsAM8nPd++0RyWrWwy+QnpUjCfUzPuCldYghs/A
-	Nq8gT5Dq2Di+4zWj/ajolWjb0fEBD8Wo6I/Fufk2btPAq+9+Zf5O5jsDphH+dLDXsQVBDAHST+L
-	GoBWd6yX
-X-Received: by 2002:a05:6402:51d4:b0:65c:972:7073 with SMTP id
- 4fb4d7f45d1cf-660f02c4ee8mr2759744a12.28.1772696478248; Wed, 04 Mar 2026
- 23:41:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RKc//gPf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UyoPdGOF"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 33B5D1D001A1;
+	Thu,  5 Mar 2026 03:43:41 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Thu, 05 Mar 2026 03:43:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772700221;
+	 x=1772786621; bh=6d0E3YghWbrSuBYWbU2/N/pF/FCxnJIQVhwplcaY7JI=; b=
+	RKc//gPfWytmfW3LVFbkzzLUw/xSkBsJsa/S598IvsKdPpmg1ag6Aj2OzbPlJF8y
+	Z39bdfs1CDXroR24QPJma98uUxpneHvSJvi3unSDyDsdm1gO+BXFcu/Cufabx20k
+	OZWDmAgZjIFLLqgQDb3gS1l0rrPiYgjFgaKNig5vjZTtzBUeQPlYx1yzWxId1Gnb
+	V8/1IogQXhqjanyYCQAPAHBM3IfkCiEvc8tGBYppRaHkCHyo7WDv2XfQYPRQurv/
+	h0A1ZOIQ8TffPm4PMvirgX+MNq2ywEnbnF76myuWYX23fv3jaZMlax52B+XRkTgu
+	EMifGI7C9OdtPwlOS3ndcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1772700221; x=1772786621; bh=6
+	d0E3YghWbrSuBYWbU2/N/pF/FCxnJIQVhwplcaY7JI=; b=UyoPdGOFcNqJdzgcD
+	Kes4o4inIJfIKjdCL3oMc+YAAwck9mIaPYNd+wIDQ8HD6wXx1whHsWFh4ak6k5hL
+	xrrj82uyIg/h5JuXEiiUYf2M9r6vMGrKGEx5rnMeyp4GwIsteaoS4wKYOawFr7Fg
+	woi8LFee8aU0Rp1z9ytpLtC7jKMkg1EF8HC6sR+8ZdJ9A+W4HMzgSLVGVIFsNHif
+	4bDdE30TbuM6OdsxHlC+XBS+4UpEAytU5ItExFAkFGB7q+nZpPVl4Rb99LFXypQY
+	2QD5MdJCZDB19IJ2mj2qjELAhDwHvrRlSMJAeYKxmDWt1Tux48KW3AJTbjVscLmi
+	DuDmg==
+X-ME-Sender: <xms:PUKpacdmM2H5UeoHIpemUGRZ0QRcDYoLhN6axnXXlgz4Tbbv7zvnyaA>
+    <xme:PUKpaZBgPL6R0y2b3kNv995QlIqqEvCzl6Ttutd9BKXLEJV7L752TLbm7_Zbb3k_X
+    BfKdc3jTlE0qVmx5sn8dNTpFZehley7z0b0TMtqTMXEEPzTR5UZEYk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieehleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtjeertd
+    ertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
+    ftrfgrthhtvghrnhepvdeigedtgfetgefhffetteeludevheetfeekffehheefieehudek
+    veelveffhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrgh
+X-ME-Proxy: <xmx:PUKpabINUUKcUSdJ82h7UTPY0FCzx4k4qd5erJ0iP8EH8Z0VRnQqIQ>
+    <xmx:PUKpadEJwzJVLE62Ahd0CqNl-brjMzJEoyjwBNSGph6royuiUJMYNA>
+    <xmx:PUKpabRxTwybFwCoM7q-edD2ZN4jXBqV02qyEqSbiQw0yok0wmiqTg>
+    <xmx:PUKpaRENgyU4Ug_og2tmTUqSYirhbyOTNGROQMC-4YMYYANph_CwDA>
+    <xmx:PUKpaeyFukTmR9CHGMGKl86y5moomo_ub5Xa_-MiqjFNpB3a8vjtlv3F>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 9AFF51EA006B; Thu,  5 Mar 2026 03:43:41 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAM+g_Nt8vZX4NxPvddJxNvSRgdMWQaLg2O9xzAU1pTHa=Et-gw@mail.gmail.com>
- <264862d1-0f83-4d0b-be11-d8e479c7d8da@kdbg.org>
-In-Reply-To: <264862d1-0f83-4d0b-be11-d8e479c7d8da@kdbg.org>
-From: Norbert Kiesel <nkiesel@gmail.com>
-Date: Wed, 4 Mar 2026 23:41:06 -0800
-X-Gm-Features: AaiRm50JuhLeh10UzftxOsAiZWws81B6v8nxM3dDOPJXpCV8a8EQsepnK3kb7Vc
-Message-ID: <CAM+g_Nsw52JysCsv-FVznh-RAPxYm0kA=Kj2o+KVB5uZpGA0qg@mail.gmail.com>
-Subject: Re: Feature request: support listing worktrees sorted by creation time
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Date: Thu, 05 Mar 2026 09:43:21 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <aa5c1999-24b5-4ddb-84e2-f5ccab4fa6ee@app.fastmail.com>
+In-Reply-To: <xmqqzf4n3zun.fsf@gitster.g>
+References: <xmqqzf4n3zun.fsf@gitster.g>
+Subject: en/merge-ort-almost-wo-the-repository
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-My understanding is that the timestamp of the base worktree
-directories is updated whenever a new file is created in that
-directory, and thus this will not preserve the worktree creation time.
-Therefore, I would like to have an explicit creation timestamp in the
-worktree metadata.
+On Thu, Mar 5, 2026, at 01:05, Junio C Hamano wrote:
+> * en/merge-ort-almost-wo-the-repository (2026-02-19) 6 commits
+>   (merged to 'next' on 2026-02-26 at 4c07a66173)
+>  + replay: prevent the_repository from coming back
+>  + merge-ort: prevent the_repository from coming back
+>  + merge-ort: replace the_hash_algo with opt->repo->hash_algo
+>  + merge-ort: replace the_repository with opt->repo
+>  + merge-ort: pass repository to write_tree()
+>  + merge,diff: remove the_repository check before prefetching blobs
+>
+>  Mark the marge-ort codebase to prevent more uses of the_repository
+>  from getting added.
+>   cf. <143ab1c8-9f07-4df7-8200-69b5a78a0351@gmail.com>
+>  cf. <aZ12rYYwbh1fvrnE@pks.im>
+>  source: <pull.2048.v3.git.1771718393.gitgitgadget@gmail.com>
 
+s/marge/merge/
 
-On Wed, Mar 4, 2026 at 11:35=E2=80=AFPM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 05.03.26 um 08:14 schrieb Norbert Kiesel:
-> > I have multiple repos with more than 20 worktrees, and sometimes
-> > forget the name of a recently added worktree. Therefore it would
-> > really be nice if I could use something like =E2=80=98git worktree list
-> > =E2=80=94created=E2=80=99 to list them by their creation timestamp. Is =
-that something
-> > that makes sense to you as well? I could also create a pull request
-> > for this if you would like it.
-> I don't think this is warranted as a feature for a special-purpose
-> use-case. Assuming you don't have spaces in your worktree directory names=
-,
->
->   git worktree list | cut -d' ' -f1 | xargs ls -ldtr
->
-> lists the worktree directories by modification time. The last is the one
-> that was modified most recently. That should help your memory.
->
-> -- Hannes
->
+For RelNotes.
