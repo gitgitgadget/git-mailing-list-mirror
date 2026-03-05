@@ -1,57 +1,61 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011037.outbound.protection.outlook.com [52.103.67.37])
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011028.outbound.protection.outlook.com [52.103.68.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBF838839C
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 12:06:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294D51B4257
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 12:28:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.28
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772712397; cv=fail; b=tNM087ghFDsbHx0PWja7cXVYBs2/gkutQijqgxnaY19ORq8h0ZRovSe0VTnIKqe8yh+Mw68j9Q8ogwGJp7J9DemBXj7mEzsfwWSjtvaatwk9sR7avSE+C75REFGMdvT7xm8AEn7ZCZyGnhSgDbjg4I0FNSH9xOV8c6Opq74RKYk=
+	t=1772713712; cv=fail; b=aLMcH3whpelHITTtqojA9RR78uYQY6esf2Joohk3uOdulPctN7d2BGct2TI+wo4EkPnr0nkLtguzQrHlE9eSaHrLOoj/TVNb0B2B7UGXny89TXk+1jiCamqZPvsyjPF/dSr80xXY/AZ+7mjkgLl3L7laeDOFu07pLyq+dB9Mc+s=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772712397; c=relaxed/simple;
-	bh=fx+q8QNVXvb7OO6Beif5O/lFL5e0jzdYJ0RijcfJcEw=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=trNr1TK7PD3nIeVTxR0stftLi52TTQ7rAHLCUYtj2gjuuB/pZaeSQN0PoWB3awc5tfuSrNhrTWgMdkKDpVQcGVhFHM5wz8ztCwRyiGHLcV5wHop3RuNlUGyqHp2XzR1bf2VGSM08dFtwLB72iwOB1810SrYK2lTsLGPL9f3vb9g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=oCdvAwzj; arc=fail smtp.client-ip=52.103.67.37
+	s=arc-20240116; t=1772713712; c=relaxed/simple;
+	bh=zzmcHcFeXpfnLV9wtVSAaatVPRWlPIsY6yEoGYnQWAc=;
+	h=Message-ID:Date:Subject:From:To:Cc:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=XDrp2afuceddDunKiZUgDIIizBDzQzeN4A1HCAy8yrXbvfDaXuy/rERpontD1uGaiaowWOrH/ly2wTmN5QAuAngwx0XXV2fuh8+YQ6Pwk49dZ2wWpmIpXLlbwYXHx69tzBZ83rzqq6XNMJo+zD3dYiqCsTaqZmKnmEzZVoXrqlU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=UpebIJVh; arc=fail smtp.client-ip=52.103.68.28
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="oCdvAwzj"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="UpebIJVh"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Xn6/Aja9ikyfswhp+aQGGlbmP6SJuLg2p0q4Hya6FGcDmCNO/ldekpqcFdPy4PVFvTQOGrai7pHZ6UNy1CfEHw0z27lLZAHHc9UVHk4BHJ+QuB+M2+V4WF2L/4hVfJ3DlNYAL5Zv/Oh2GXHExYiPbPz9ZDVADi6tSu6NWyYGHYpU4p05IPKxScpsq3IXZ5+qu8s3AjjE6tNyZOR64GKVGZKvTm/aB3dt4DW+w8UUV0cHsfup9cHEUDi/P9W6tSqfNTAtrWwH4mVbJHIytu/9v7/OVYlcmFTKjs9PjmA8i/sjWAycaBLwz2TrlvuOPH9MHN7bSj3Z7M12CnruBILuAA==
+ b=n+WDNcmBu7OcBXq1CvtVVr4slG5aVnUIRAoiL78tmCOloFt22+iYbeMvpi1+sEDBTt6BWhcBHEC6Kf/UYdjsgy68qxbjT+7DK9aKed5o8q1au/LZLnmh8eS/NeSmBqlTN3LOqtcV2O8RJp5zA+6UTTOs8voHotj6pFla8jB9ln5NMQEx3ZggXKbV/rUUSy0pU2zqU8ua9NoqM+FbHJMg/hsW0ohj1OpzfSgOMQ8yOdfaN2xiE0+Ky393ngNhILMlwCc8zAj8FskuavrYCBWNp/LugaGf2yGsIjoINCGC0IbUWjlrSWRXI5CqtWLGvND4o9B4gJS0bpjnLeyLq+M/RA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=24okU2f0mNewvk5ks7UzVivQUlDMJ+SqgRfNhKzsyOY=;
- b=kNcrfwzAOde2+7UMZpzeHHa6HACJkicrko9ypYS3TlPUbIh/WzP54JiXllBl2JpY+aKdeVZAopUCBYtHhbSnPwDO/ZYHo3zvjjhA6fUYtVx+v4Qv/caoegkpOnSyTpd2AJ72WuC0IhN6rbqSflE0ij5SBY+Hrcov2hXUL6/1ElJC5c+Dv50fXsjaw+Xc1qKNnG6DaTpT2WYmFve7YPThM6ftYZhxotwXC7vWbmK6Bwf+ZUlUA0zJQKqWeeUKPyEKdv0rAgh5VpJF2jmTdoBM52Y5wAL4F4lg2ZzKhM8JHIDn1e7dBjVxemiyaM2iCbNSCgxQlJ44bYBiRN+x9Rie1Q==
+ bh=eU4nlYGkUwhLGIQt25L8yQTklULVVJBE/mc6ZrtQGuI=;
+ b=VBf/dGUGS+busNZroa5qrYnoH8x2tUGRS867/AamtxBwoC4FvcF9ICHkIJT9sGWDW5XfudEHIujXwDfL1ckW4dRrIRpN9bF3ZQ0XToRO2XvAJp6ktf3oIr/SXYa1QuxR9Vpc8ta8WNbmGlbNkqrPJjlzw4ajdBq9UrTiO4DnRHKUz3DGxwev+OTkDYm+Z2dTrFlmDgiv2cM1JxmJpHQa6SCYvqqBj8AZcFt8UJdaVInPbftSbiRFRF2NzaCI8t2UKND+rdLE5EH/k7wm5rrbix6iji6T2HLx7JDf7qmHiuwkpCD4ZdQekM4qbfJrrUzCrR9VjQpaQvMSuqA1PncrEQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=24okU2f0mNewvk5ks7UzVivQUlDMJ+SqgRfNhKzsyOY=;
- b=oCdvAwzjn3KwLpZdLrEjXc7pr9puG55/9zOcHgPjPvmUdqHkHI+cww4F6B/woAYMG3GbWyIubPQepJ4sPDdhXsbge+446ApRjmIETEuXC/iZSO/p+cC2rKSOy9I95TK2Ji44Yh47fYHmu7D5qnhsclDLoggq5DAmBB/rX85QoqvK5o2e1JZ8eDYvMvLCDegOPKvE0MyBhq6WoN1pDlrtwZch3+aV0CY6VHGQOh7BvFh9MUeLSkstNaWuce+NVT1mv0xN0Dr9jJNVmCX3qTzqbqYTJpuyeZLDrrdmhkT5gG0YtqBCXg4maaxpI0RVCfHHikVuWFdQ5TI/Wlgg1IMh9A==
+ bh=eU4nlYGkUwhLGIQt25L8yQTklULVVJBE/mc6ZrtQGuI=;
+ b=UpebIJVhfH4Sm4+dw+uzA/RJWH7KJXcsKhcWIcSGcH9bTLxwEzHqKRELsJoy3JNpOaJFkCH51Vdxka0lUFOxjsFTw+64FkzzwsUAc+oSYFYmqD5XSUpzfx1uRKLsBHc6aklqmgogvgfudyhk4BdB9lgx/K+p+gTa01WqlODTkqrDH+na+7h1qJVvTqd3regEInmX1pI0M0qYK4xhEzPM2ypB1yCU8JPKI/AytahYO5JhEdyS0PLGEARwFXak1SyifgY3r9VR0ylrBwEWImyZ78c3+0Y6XuQwjynAGH8w9so/M4ANPWnxFPtz92/53JZ1ahLUyHJBQYdqcES6hoVlmQ==
 Received: from MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:19c::18) by MA0PR01MB7818.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:2c::8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.17; Thu, 5 Mar
- 2026 12:06:33 +0000
+ (2603:1096:a01:19c::18) by PNZPR01MB10409.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:244::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.18; Thu, 5 Mar
+ 2026 12:28:27 +0000
 Received: from MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::1fed:9b0b:69b:9295]) by MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::1fed:9b0b:69b:9295%6]) with mapi id 15.20.9678.017; Thu, 5 Mar 2026
- 12:06:33 +0000
+ 12:28:27 +0000
+Message-ID:
+ <MAUPR01MB1154679A7F8FF4B926A1F41E8B87DA@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
+Date: Thu, 5 Mar 2026 17:58:24 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs: add hydroxide as an option for ProtonMail users
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: [PATCH] send-email: pass smtp hostname and port to Authen::SASL
-Date: Thu,  5 Mar 2026 12:06:21 +0000
-Message-ID:
- <MAUPR01MB11546AED093D8641767AACEFCB87DA@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.52.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PNYP287CA0095.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:2b8::8) To MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
+References: <MAUPR01MB115461E9C238F9952EEB1C38BB871A@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
+Content-Language: en-US
+In-Reply-To: <MAUPR01MB115461E9C238F9952EEB1C38BB871A@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN4PR01CA0093.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:2af::11) To MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:a01:19c::18)
 X-Microsoft-Original-Message-ID:
- <20260305120621.20988-1-gargaditya08@live.com>
+ <d147283c-b70c-4208-85c5-f837fb78055d@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,91 +64,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MAUPR01MB11546:EE_|MA0PR01MB7818:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6ec5c14d-e54b-43f8-8447-08de7aafa46a
+X-MS-TrafficTypeDiagnostic: MAUPR01MB11546:EE_|PNZPR01MB10409:EE_
+X-MS-Office365-Filtering-Correlation-Id: 028364c8-790b-4407-35ac-08de7ab2b37d
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5062599005|5072599009|23021999003|461199028|25031999004|51005399006|15080799012|8060799015|19110799012|19061999003|40105399003|3412199025|440099028|10035399007;
+	BCL:0;ARA:14566002|8060799015|15080799012|19110799012|23021999003|5072599009|461199028|25031999004|51005399006|6090799003|10035399007|440099028|3412199025|12091999003|40105399003;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?zlALoSmx+xp//6JbDdzKjpBm7DB4U6fKVt3nOPhUCvqp+VGrnNAEIOjhuWdz?=
- =?us-ascii?Q?PS6DX/RbJuXXdVWRm2L/j+RFlN1KiHr8SOV9c4lXGDEG1gtqCK+NCUjFuiY1?=
- =?us-ascii?Q?n9pLlFiAgTro6t/5vnSUYSrE+IV5UbBic4wWFtG48NvihMMoTftgIDLTXA83?=
- =?us-ascii?Q?W8MN4Lb5fdr/Nj+jNkRs8t+FtM+CP8VBRU6riLvUpHf1xSiV9FrEVrXEBEHG?=
- =?us-ascii?Q?hsfRK946N/z4PMkrFhR52rznnJJY8xeA50zlN00gllplSBqOtCkHeKaExZ/U?=
- =?us-ascii?Q?YsePtpkohUS41DIcVaA7pjiEjiXhFfykE35+MAZMVxkxzk4Kmt8nqcctEWos?=
- =?us-ascii?Q?8++TpOzMCSbQUoR/ipt8OGQuDEcVrqWP9AT25QNjvzNNvzbmmDm+GKtNpQoo?=
- =?us-ascii?Q?EPH2GcNQWOftkNfrJ3plEqzAL10oPhDlF014GeGtbwTeg71CnkSRB9C/sOHu?=
- =?us-ascii?Q?fFDJ6ju4nzwVz/L1RpHCWbFi7E32KEcwDMyqAxVzCKSwvZ37IgWJcPTKcteV?=
- =?us-ascii?Q?JCcR2xyhYbgYNPDn1Zby6UNUERXmM9EZOTUEPJHEI6LT6PFu80tKsMQL+gde?=
- =?us-ascii?Q?6cs6UYppTha9x2hi6NXpg638FztRq5Lq0xt4loLCpgu3MBSU4EE96QMBR+mW?=
- =?us-ascii?Q?xk5mtIUGKqY2muCNSFcKInnrIDRIW1QcrBfNib31usiLP/QGs2X7iF1ZGiF5?=
- =?us-ascii?Q?XE+TCM8WtBtrmb/0IMc3YEcPp3Y4qrIf8Vc/IWApTa5fUhfCHCEbEr82AS1W?=
- =?us-ascii?Q?AirnJumXWiYccwdmukPFMIGamokhPhzP5aBlYZcIc9Vn9rCZpnZjyXNT3EyD?=
- =?us-ascii?Q?leWSwKcy5hWWNd0MKsKCTcEBUb+RRb9ohwP2raRwQER0E4fqPmJW260nHezq?=
- =?us-ascii?Q?CLPxgI0hqKQKXNWVbKOonTw7DP3ccNeJsUDHO8C95QTsh+38FfQwbZ2V0Ymp?=
- =?us-ascii?Q?Ced7YvFMCAVWGNdaThViy90QzX3MuxQIGxzAw5+2U5wnZKK+p2YaAuOvwyqo?=
- =?us-ascii?Q?JyeLiMCS+/g1Hg4iYVh8I9i6oQ=3D=3D?=
+	=?utf-8?B?bjUwTTIvOTgzcEdVeXo4WS9DMEtNWGZ1OFZiaTllOHRSRVovbmZDbzJzRXhN?=
+ =?utf-8?B?YnlvSUNFb2lrMldzN0h2NkgyTjRBY3VpMTAvSmYxWWNNUS9CdFFMN0k2ajJJ?=
+ =?utf-8?B?eXpXUkoxSm0xb0ljUStQZ1ZZb0plOWFvZ0VRakRvd0RNRkFXOEdBQ3FtZk9p?=
+ =?utf-8?B?b0VOZVdOVVlqVFE4TGRrYjV6U1I4WFR0azRvYW1tWGNOd1o3cWpIUkgzbmpl?=
+ =?utf-8?B?cEE4VWVhSm55M3MwZjJuNGVUYnN5UWt0WFNoM1J2QjdWdllkY3A4eHhKQ2I2?=
+ =?utf-8?B?cVlEK09pcEtkYklBUVBZM2I4TXh0YU42aFpTZWo1ZmtGcXI1N3RoMkRGRy9N?=
+ =?utf-8?B?Z2JycXZnZUlBczFleWFpYUxIRU5Ndkh6ZVFzaUtWL1BpdHcwcWVyY3BKM3BW?=
+ =?utf-8?B?YWpPK0F5QkEyNjhYcThrVlYzd1IyN3BFQkxLdmtrTjZ2ek1IYXJkN0JUWmFy?=
+ =?utf-8?B?VDFHUzFGZWlWN0dwakFjdmV0TDdUaXR3K1JBLzJQUzZISmlpUEMyRkkzaVNp?=
+ =?utf-8?B?UDd3QU8xSmN2aWVhSkVoVVg2RDd1NkFFNDA5SE9sTUhkWmdnQzdjNzlJdk9V?=
+ =?utf-8?B?YXNta1hiaVdnVGJhVVBSUjJYZ2N6UmdMaTJyeVhDRU1pdFI1QXpva3AzeEgw?=
+ =?utf-8?B?bWlYaTJZa3V3YzVlL3V2Q1ViblJBRzdoTDhWUlJUVlRUbWdNb0s4VjcyNTVD?=
+ =?utf-8?B?N2VWay9zTnIyS3F5eXg5M1Znd240OTI3N2hXUXNLTGJaQ0xqSlZzL1VRcm12?=
+ =?utf-8?B?WjBBS2h4NUVHa2ErYXVHbGZ1b1dyeVRrQ3Y0c3ZldmFqVC9BNU5LeDVKUTJ5?=
+ =?utf-8?B?TEdzNER6MVZNVVRIV1VPQkFKVFYxOHQ1TU82WmRwQUxCdnVSQVV4YzBCZGg2?=
+ =?utf-8?B?dWdXbWNydlhJZ2FCM0plbnd1WUpJYzNvZHVTV2ZpMFBaMDRsMEdmUndPWmtP?=
+ =?utf-8?B?T1NuQVVVeHY0RExZNUdZMldlcFoyYlNkQTNDOEFUS05uUE1CRm9DVnVONGdN?=
+ =?utf-8?B?cnpKbFFzK1hGbzcyNysvMUNuSTEySWYwVEk3c0xsUjRNY0dDL3hHMUJ2YW50?=
+ =?utf-8?B?TWp2TFJTakR4S3RxdGhxQXJmUFh2VTF3eTRBWVVLekVCcFBzMHNoZ2k0cFEy?=
+ =?utf-8?B?UnV1VjhhcjdRbEdvOE9BTTFmWmk2bGF3Tjl3MG9IaWpKbVRJK2NVWWQzM21S?=
+ =?utf-8?B?TU9ZQzFjQzlpaXJPMVdWYy9WdmgveFoyL3NPcDNXSDZuUWdmYTVWamEwMEQ1?=
+ =?utf-8?B?UG5rQzE3OWtFM1ZnVTNYSU1QdkZjVlYyT0Z6eXVzSWRLTUlpVEgyYUVtZytJ?=
+ =?utf-8?B?YjBlbTc5ZUhNVzBFelZJVWZlN3ZYaFFQZVlzUDhSaEEyblhEaldDMFRJQTRC?=
+ =?utf-8?B?anh6cE1DN1h5TXc9PQ==?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?cyfu2MyJIbpr9vu3lcXlUgHJ+bOhA7WORw1Ml8SanMh+eLJVNfHVVZZtcrhe?=
- =?us-ascii?Q?xWc2a/U61kDo8ICA1zxtzJmRn7INvbbgegDl6/BFtrJBHHLzuc95L1jmw1X2?=
- =?us-ascii?Q?3dKh34HFlKEwy0IlWO9q6sTLVujR/1Jp2iOnOO2oBeYT7U5VNeLPtaf3Nccd?=
- =?us-ascii?Q?SietaWlIeJPX2ZzJKfxqPrDnzHUqcq3dQzyJAsSEQt7NEFT/J+29Fgvg7p5X?=
- =?us-ascii?Q?g4BPNWPNHBXxQ6rS4Vm8qhEtxDQ5bcw9OoVQvmwdLZOIXA1l72ubnk7Sd5jJ?=
- =?us-ascii?Q?gl78kDg8gZ6Yj3e//k/HIg+mu9mUZk6WSxAvnfKDpn947SoMlk9kF8+ONKFu?=
- =?us-ascii?Q?2ipGra9QMWhORsq7nLVgRXNvYGmKBC+w/yIAPFhvfAP56MWZjWpoM4vxf4cj?=
- =?us-ascii?Q?KqzoXPv3+Ep5OB2skcwTB9nmtBwcInPPLKbTCzDLHdFjMDDIo8kdWA8vzA6O?=
- =?us-ascii?Q?yA9GQM+4JMMjzZFGSN155NuPpd9uCUuhHDuX+QyI1auF9x0QKBmlfAM7/Dd+?=
- =?us-ascii?Q?RD6PzaalS9m2VWg89aAA+hy0YSo7VVNzfpPsYYBi12nbSFMHBZjsC5gXCYVA?=
- =?us-ascii?Q?d2Cp5A3k+hluKTwe8HtAVvOSPbxC6+g9KuFJxmH0gOqJpACKZNW2vyBWX8nt?=
- =?us-ascii?Q?XbbDemtbWpPEVI9d/UcQtxZ61iE0Q0Q7bzp5XC70weARGqnhn1d/iGPKewAM?=
- =?us-ascii?Q?J2yxnKXWEg/5HGxulP7yKhfPIbAAGIN7IK5PIvVP9rXqAUzeqrMsfHhwNhOr?=
- =?us-ascii?Q?Wbl+wwFkYpzjMP88Pxb4UEdCVuuZJYsST+ELPsvYc0Zc4urNN+I/9Itnzzna?=
- =?us-ascii?Q?shlzmdZjRZ1trJWVhilvkopEVcN+cpy+zv2Om8bASwuUIgK8jfC8raZBTzya?=
- =?us-ascii?Q?QD9DQWJByRaKf3zKCz8wWWvWeNTCqjZHChGYCyhnBs4rsBoC8oMBldUGo7pO?=
- =?us-ascii?Q?FjvNyp3jfkc/rpdk1NWrZhTNHJlJImga/JPZ9vx1U8CDXzqhJdxm4m5d/Dym?=
- =?us-ascii?Q?+JOh4GnxcZfckyUwQBkSq5IUBZgjJHckeZaAu0lPq54TrQP3d3O2vTA//TqN?=
- =?us-ascii?Q?H9P0lDTSivuIF1j8VQM5EXEALURmFu/EZ315e9Iwb6lf8J5aBwJyQs6O1qvZ?=
- =?us-ascii?Q?doZWz734+MsLSqxNBwt+hyRgtOvnCPZm0aPDi9meg5U4AOYIXYun+NN75W0j?=
- =?us-ascii?Q?GA8kS/1Vw11tgarqnNV+f/Mpw8+RmYLgr5nzC4qAjuLtt6n3k6+VfNO9VBbw?=
- =?us-ascii?Q?E8t/ICnHvO2Eyl931OPW7Pmp/qYMDPjS9afTTA/UdWN5dQojVquuQPqpZEQf?=
- =?us-ascii?Q?+L5P/I0gxbUHG+nD2H3CV1O7lCiB3li5QVar4XYPHhgK2m2Y+Ixlt97wA4AV?=
- =?us-ascii?Q?2Op2E5Dz18vdOOnx9FO8jFj3yJvq?=
+	=?utf-8?B?NlhzdWZlaFZtRFlpeXdPWkpnd1l1ZHZjWU5YajlIcFFWVlpGemQzYWZtcUNC?=
+ =?utf-8?B?ajF2TjkrV01iZ01yLzZ5RDBVL3pUUFVIaG5JaVRhYlhkYS9tbHpadzJqWWM2?=
+ =?utf-8?B?TzNaSnRyS20xcE5vZEJQUDB3aWZoWUhCWXJGWnBEYmVMamd4eHA3elJtVndS?=
+ =?utf-8?B?Q2NlMzNybXJXaC9RbzYraXdQWndrZWMvV2lYaUNOV0Q2SHEvcGFPOVlGdEg2?=
+ =?utf-8?B?QlpudTJNMzZnT0hmeXVXUUViZyttRDR5U1ZROW16UHp6WkhxMmZpT3VFTnFt?=
+ =?utf-8?B?cTNtb1pmdCtjRFpxdE1QQzh6K3JRU1FsdTBSMCtRQkNHOGhkV1RXcUxUVGd1?=
+ =?utf-8?B?anVyc3JzdGZxMWd4WnE3K290NE9jZm9lT3htektwMy9FSVNMMDExRmV0d0JF?=
+ =?utf-8?B?RjdaczhRcXZTRkJOd0NzVVEzS1l0OFN3bFAxdU9qaEVyeDFUWFg0R3JReE5I?=
+ =?utf-8?B?ZjdyR09tR0Y3dHVOWVZya2JQNlRQeURpMzlvTzkxZy9GQWZNUlZPK212QklP?=
+ =?utf-8?B?bkwxOE5VWEtoTlZyZEZPSEZYTXF4TEhacmJxTTFIMEpPdGEycUtjN0JTY2wz?=
+ =?utf-8?B?d3Z6c3lJeVhWamg2Z1BGdXR0b2ZURmRwQzNuV2tPdDJHN1Bjek9PRUV6Mit3?=
+ =?utf-8?B?eEFNbnkrYi9OTjlrRUhPNGRhRVYybG9IMHg1eHFGazg2K0dqcnU5dWQ5aUhC?=
+ =?utf-8?B?ZHljMzI3QmpxYjNyNlpLcUJsQmJQbzk4QjZQUEJ0TXJNbm1tSEVYSzlWOG9C?=
+ =?utf-8?B?dUt3NnVuU0p5STJJaDB3QU1UaklUbzFnNVkyd253ZitRUXBVbTRhbnIwaDVa?=
+ =?utf-8?B?dlFVSE9iaTdJZDE4aHMvTUlVK0pkSXpVdk9PaWRGaEwrODlUMXU3Z0FiOGND?=
+ =?utf-8?B?SnNnL25rRHM2ZzhVZFBsZkpmbFhFenF3VjZRYW1OeG9PcHBLS0VUYk1BQVZh?=
+ =?utf-8?B?MWNhaDBWNm9ZckNYWDBVK0xpaG52SlA3WUxLSEhETkE5ZjlRVDJkbkhjTXpl?=
+ =?utf-8?B?dlVCZ2pJM0JGOEdjLzMwUXlDcngvdEgvVVY2UnpoRUsxNDY4R0JEREpha2Uv?=
+ =?utf-8?B?VWZXSFFhOXF4VDhtWnhuSDg3NFMrRElDNTRtSzJnbnBpSmR6S3FyODRNRGZX?=
+ =?utf-8?B?eDhwdXpXMGJiRUZIbEEreldmT0w1bWJnaXZVekZrZjE0QUJDK1l4UE82dFdt?=
+ =?utf-8?B?blhKVlRqQ2xaWW1kSmFGN2tzeGlsa1JiZFFObE9aRk1qOURxZHd4cGthTWdu?=
+ =?utf-8?B?Y3NTTmtGUnFJUVBTcWM3VndQelBPWTFpV09DL1BVWjVVQ2QveXc1ZVpqZFRY?=
+ =?utf-8?B?RHAvZEplaVZGWGRYS1IvTEQ1RFp3Mk44bDFuMDJEZzNEeXU2T0hvMkl3NDJu?=
+ =?utf-8?B?blIrREZNRC9iWU00cmNLTE1Dand6MklEQktyVlJ4dnJLTlg1M1kxRzdQb0Q4?=
+ =?utf-8?B?NWR6N2VIUHlXSUNjK2xNL29rMjIyVUFFUUV5eVNYVzlqdWxuRm16ankySHhP?=
+ =?utf-8?B?YmRKYjhDajdmaUhxMXdNdW95QitxSGIzL3V4d1JRVGMycjAwaUp2SDVNMGhq?=
+ =?utf-8?B?NXV2TXVlN1FORnEvQWV1aWVySDIrRkdaNkJKVWRyRXY2Znp0R3lxRWtYZ1BX?=
+ =?utf-8?B?dHhtWVRtcDUxVWZRaGdncW5OTVBIcDRrUTlVaURiUVFXN1c5b09vMjZaN1dL?=
+ =?utf-8?B?QXdTVGhrNkZabU9kSUNIZ2c0bmxCdVRjVjV4YTlhQkx5U2dSVXc1NXBJc1N0?=
+ =?utf-8?B?eVZpeEFRajJvR0lCR25zOW1GY0FEWVV2S0YyalJVLytSUHRqTlgvclBqKzZy?=
+ =?utf-8?B?SHpnTnU1WlUyK2VNVHZCWkFRQXJQVUp5NVF2cDdJMmZoZEFNU1JSQjFNMVhQ?=
+ =?utf-8?B?L1NZbjFEaHU2a1JCYzFzQmpQUjVsZTR3em1qQ2xzaEg5YSthNWttcHdIaWZZ?=
+ =?utf-8?Q?hhuoj6WLOUyjqMlAwtLXaX3/nx0oE5Zs?=
 X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-63b91.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6ec5c14d-e54b-43f8-8447-08de7aafa46a
+X-MS-Exchange-CrossTenant-Network-Message-Id: 028364c8-790b-4407-35ac-08de7ab2b37d
 X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2026 12:06:33.1895
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2026 12:28:26.9959
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB7818
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNZPR01MB10409
 
-Starting from version 2.2000, Authen::SASL supports passing the SMTP
-server hostname and port to the OAUTHBEARER string passed via SMTP AUTH.
-Add support for the same in git-send-email.
+I just realised the From in this email is showing "Your Name" instead of my name. It was due to a mistake in my .gitconfig. Do I have to resend this?
 
-Link: https://metacpan.org/pod/Authen::SASL::Perl::OAUTHBEARER
-
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
----
- git-send-email.perl | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index eed5420882..0ac4d634e8 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1474,6 +1474,8 @@ sub smtp_auth_maybe {
- 						user     => $cred->{'username'},
- 						pass     => $cred->{'password'},
- 						authname => $cred->{'username'},
-+						host     => $smtp_server,
-+						(defined $smtp_server_port ? (port => $smtp_server_port) : ()),
- 					}
- 				);
- 				$result = $smtp->auth($sasl);
--- 
-2.52.0
+On 01/03/26 12:35 pm, Your Name wrote:
+> From: Aditya Garg <gargaditya08@live.com>
+> 
+> Hydroxide is a very popular third party client for ProtonMail free
+> accounts. Recently the project was resurrected and now it works
+> properly. Add it as an option for using with send-email.
+> 
+> Signed-off-by: Aditya Garg <gargaditya08@live.com>
+> ---
+>  Documentation/git-send-email.adoc | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
+> index 741f748614..724c9d5e9b 100644
+> --- a/Documentation/git-send-email.adoc
+> +++ b/Documentation/git-send-email.adoc
+> @@ -646,6 +646,7 @@ customer of Proton Mail, you can use
+>  https://proton.me/mail/bridge[Proton Mail Bridge]
+>  officially provided by Proton Mail to create a local SMTP server for sending
+>  emails. For both free and paid users, community maintained projects like
+> +https://github.com/emersion/hydroxide[hydroxide] and
+>  https://github.com/AdityaGarg8/git-credential-email[git-protonmail] can be
+>  used.
+>  
 
