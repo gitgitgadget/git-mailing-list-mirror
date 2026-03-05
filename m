@@ -1,111 +1,230 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C711E86E
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 22:49:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772750984; cv=pass; b=oLzTGM+3fPiJEP4XvWyZebpL+2v6miG79e7by4KLXL60DshGCLnLFkQ7mkIhIQb4KxTFrkvzdTh3Wj1cqwyU80N1RGdUV5DE42C8AL2tpPKkkdFkQWXEe5gi8pLAAF1WkdLFNIt8+4pwT11J9TbLxY2DJOk8pEsLZytZE3dlzxc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772750984; c=relaxed/simple;
-	bh=W4ya7flV37ZKiqCSx0SXyuOAYT9Sowb0ZxzSTXRrBMc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eKGuS+zkdeXp3DKjc8WbHGkfzOuXtVlVmE4lm4FxSYWlegCh2H6BFSPVLvsSZrB3Srgelnty+4M5LTlluXCZ8DbNSpUh9fOKZ6Tmzh77N/zZINEEcHf9jHHIncmT8J0A/lv/DcZORQyW7qgEbuCoYhm9p5fQ92hXoX0ozGuRt0g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FIKw+SJF; arc=pass smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E06D34CFDE
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 22:51:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772751109; cv=none; b=gUNCEBSEarbebHslNoTPNkz17N7TUP4lPltgDIArQCiIwCLs30gSCmkwI2wv1os3xCSzIoUc2WRJfXyRF++lOacBp7uHmGgrm4FVnJ3bkEvGsn8zAHGgUmA1NPhDosj/VOtM2jYfSVY7NaHd9gwfEmvW+oTStE3+yV2QzsqCkC8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772751109; c=relaxed/simple;
+	bh=uZL2RQLesxZi/uPD9LkbPdd8TBWslXRIpCd9znudziE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZXuauzzVconEUHx+tn6dhRnIA7oqSvVrWGoy/9gMRCJucUtglc2zxTFxZ7lhH+LY06Ewtn8wJIIxHSJQeUQDMpCHqKWiveTy7+acKnSlda+2NmcbxqnfN9YnBMiRBDhTrfdx87YuLDpPthl6mNhlX6RuhsJK2BbeOefAHf+Cclc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DsSKzWVX; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FIKw+SJF"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-507373bffd9so75140641cf.2
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 14:49:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772750982; cv=none;
-        d=google.com; s=arc-20240605;
-        b=c22DU5dU7dOs5AcrDNfnD3pevZFcK3hhi7L8jQDuuc0wZglS9ptNSEvrKvSB4vDim+
-         1XqCMfzW15vSxCz42vdjIXXmCGHVG0ZPgl53khhW2JurVMpB9bVZTqnuS9hBFrXeFKP6
-         zG3qt0nEQQCQ/bsQSLPUXahp9BcCszO7v06UaB2yZ5nIhNZ3XzqC4u4qSVp2iNThKeRG
-         pm/cQTcwwtf8pBt8FVEgFS1elwJQTiCJ90PEFl5S5K3w/jwhXbxF6A898umH6RldubC0
-         7LAMXNPoF3xHq+uqn9fKgSBAZL5gk77GS9o98iGR+PhZFGIQR/ZCtqGJKa1d4VNrn/ZQ
-         s8Yg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=W4ya7flV37ZKiqCSx0SXyuOAYT9Sowb0ZxzSTXRrBMc=;
-        fh=PabIZDesja4kX5BbQRWr9Otn87xEbPZ2gK7uz53JPxU=;
-        b=MSVwkzvjFNy8afk2OfFq2H76k2Xi0SKE9gR7/WKhlX66e2JgHg2z4Qbkv/hkjmCB0+
-         5su4Fd1HmYCOljVDlYFtctpBDKs8heewJzzIsSOYTNfXRUpGFF3t+xyV+RYAREK3XEaZ
-         6wZxYUkrbc/0Odm7BJiD6tcnaUFAI11+oV2iMlt83dcQXQ2LRDHCKBXtg/Wt757cjfVk
-         kO4Yr8C+bnBGaCsp/9kkSC0TC10Fe2E2tCYd2PYqatMumx6nOqFmZjZjbROfeKMS3I/6
-         IZuWkTHdNSqufMJzH4oJcJZ7K3BEJcEaAHtfMVYI5mgOKdm5T7RcAfjaaQXdFLs/bDAu
-         44aw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DsSKzWVX"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-439bcec8613so3518768f8f.3
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 14:51:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772750982; x=1773355782; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=W4ya7flV37ZKiqCSx0SXyuOAYT9Sowb0ZxzSTXRrBMc=;
-        b=FIKw+SJFWUNKN2iiZWbFb+kSnPyk1fb6Q+JTXgtMY+sI9rtFKXZoITsm+jvIu6tmhV
-         9zpXFAFB+UkKvzK1dUX3M3mYnj3cM6HJunf9xT1zRbUYhd+vPxEeEmWvLWUPyZZRgjZo
-         SAtjYvbmo+Vq6VuE2wCD0A1PAikfJIvGcN2lljRMbqziY+Usj61PYYPBdM8St3m/xTqs
-         BpHN+ElgPPrGtra4DIlNsFnYFZjYY4WdDa7+15FhmDmETzR8Gs07rY4l3v6BoxtNpdVz
-         zi+0itxxzOAP6C4jC8BFjzPVSId3MqzWyLIHCKPq6CvMSfyFhaPOjv20kALk8dpYFWFr
-         +z+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772750982; x=1773355782;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772751106; x=1773355906; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=W4ya7flV37ZKiqCSx0SXyuOAYT9Sowb0ZxzSTXRrBMc=;
-        b=UoNGYZe0wvl+9jDfLmqe/ZU0XpipndGL8HbFfhq8rkYh+rmvMPmb57DafDDbBMLF9k
-         y1fqZMmE7SqCPgYtzqoptBHDOp+88qxiJri02AVPTe2sUMELF9U5S6DBOz/J4/XchuND
-         tfOfvGYoxErzqQlI/NqqeInRAzKHalJqkYSMNXEyNd1tOogiyAjv5sGM/V4yI6QVO0hD
-         2D5veIdPmqpd1dan6sZ1e9EltCLCk9cddmXjEzzjL2uXoSnYgSYvvriGsSuPEDkYuYup
-         1Jw4gIdOIzTbdFYDxpNwwAvXzQ2qP8SRGk8nlKhb4OsLeY/OJhkAjb6mK0chbh8J+2Tc
-         9aSg==
-X-Forwarded-Encrypted: i=1; AJvYcCU4F8z1u/Sgddoy+NFkNBP6g+QJkSGwwVyAX58guOPS9EKD9+PSz8o2mRyEIoF8DFhnTgY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy0FbyAWQxXBPSU4V5Pn7yo72sXB//1nsTXbBw1nTLrGX4i+Y7s
-	XoJYY37l4AutsEz+qPINDMSXRqLLAQz2H0HqljwKi+Tap19rkKysrnYLesmvbULgdt2FbRsNLlq
-	iaWG0csMSi55c4tZnIWa0d/WP/MqjNg==
-X-Gm-Gg: ATEYQzwSm/OM6pRWklnfz+xcH2yo1OhNxoZYvPu9PBXmUqKdMOYUf+ZtlhXmyWqhB2R
-	0j6G3LeDft3Urui6Wuo7OwgF1hN64s1uw2gCDM4dI3mapN1w93iNZqJkIU+S5uPRZ60WpA2usbG
-	PgcrZGLYTa9dq6p1T2f4EqrYvEP9Qs311rYN6nnIxHfp/OxbPUkTDI3843gmSLpRbY4aOiNxD1t
-	z5kAdo4Rsl/EWWOOPZZM/j/wt5OVbz+ESYuwIHBu0IYTVZCaIfUqJ1wecH/GtBf+QocQjkEQBt7
-	fmUqq4JFKFURKFxI9bbvfV6ms+GhfD46SohZ
-X-Received: by 2002:a05:622a:1388:b0:501:3d11:18cb with SMTP id
- d75a77b69052e-508f4979e01mr880541cf.73.1772750982310; Thu, 05 Mar 2026
- 14:49:42 -0800 (PST)
+        bh=A4R+3nnMU37yb7zrO/rFIl+UNcGRliv+NEQECAUElxI=;
+        b=DsSKzWVXJSYtv9uQJJy7ohdZFk0Qp6lQKjowFIq4rn1uyhpJRU55gFLzyt73Q/FMMN
+         viadDJvd82i8XnfeetO4g0sA/bhk7RXpojh2COgw6JLVUo0mStlV67WnWDFmYKzbqnWm
+         2qirCia2Jr89KPQKkMn9tNBWcjJ1cI78V/9cmvBXa4aDPh791igc0DmWTI869pxt/GAp
+         IAHWkA3uZ+Q9RYeWSlOjho1ZplbgeAD+40w/YQ+2hnSYeCsEpc8nbYF1WFAQsT4oKR6E
+         tbE9h231FOzRyblUfHIlDYOBnqzO2Jud/iocbJbvZWy1Fh6eFDGZmSJ+AZm1siIBWdFp
+         JFSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772751106; x=1773355906;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=A4R+3nnMU37yb7zrO/rFIl+UNcGRliv+NEQECAUElxI=;
+        b=sFuGvXd224zzpbctdZ8bG+sOGQVTfAssDo1JzXeSpEtIEHiQHZHyyL6Ln1kK4CpZpg
+         h0w3CS2u+5yJKhGUWwBFadp5d3eIEdsNN0dZBju8djrYKD5ZWN4/X+DXLLg5qtFJ0OyU
+         826ryr6C6wXDXwRYKPJ4A8tCXfHA5Td5ImM/zAmH8M0ONdY0ESzL5Hwb2IqO8I5p1hhh
+         SC8AZBrw1V2oiDgV7v2UF6WZkBXqd9Tfu/H9Isb5UoNHs9D6PrxxrZTutlmuqelJ2rzS
+         O+zqCtArOBU1jElk4jxr38CcGsYa2pAx4tLgnJAJHyKS2hU61n4RHv42hpJrDLFNfybN
+         WhSg==
+X-Gm-Message-State: AOJu0YzXEfmRMzPH5AYTvCM248RckgtnHCAnoA6emaPel2oNva9UnRyz
+	dMnBgljtlax+wkiFmphdvpkQiTrX8Kw6CiklU0OhsDleUe17Bz9Bm5+nQLNkGIo=
+X-Gm-Gg: ATEYQzztfeWslIzrW9CHFx80h9IPKb1Qs3uZ3yOvuRJr9VI0oyFukB1x4qtgOQ/Jep0
+	8EozWhLB2aNn/2dfY+J814kAa0iphtr8rN5biqmI4AsGmybE94+UDRA6TBc9hXse+8NGcaJ/9bE
+	aFIbZlFGBasNLJIKMyi7LrFVjCz/aSt672Yc94kiKDv0ISgEgN6kTL+zPiV7b2NAYiXgy/Ch1x7
+	vvzEDWgsOkp8P6B8G8wYZOSAzm5aBup3IOdIGWMxS9eVs+IWu1aDn50zVDPKk47epNYnMsaggbU
+	QfH8zSR/XjUhkxdaFYZ7/WHMHiGdYFWpD/Zt6qQckjJIv0VWc9Ds9zTeygD1JJaDtt7znTT7yTq
+	HJWbaHDz2QjEzPyVitR18lL2b+D6Sd2GgydprHLjpszgBFxOucFTSNzYE7ZzNAsxt5EarjdudK0
+	sfKIUzgEQr5CGAbdx5x+x7rJe/phpJGhgIwgjwP8alFe0JmibdH8jWBPemSKlG7u6Bb0CvQk3a/
+	F8HrMeP7WHz59bGi092wCu4TpzD7K1d5A==
+X-Received: by 2002:a5d:584c:0:b0:439:ac53:a94d with SMTP id ffacd0b85a97d-439da6694dcmr6793f8f.29.1772751105774;
+        Thu, 05 Mar 2026 14:51:45 -0800 (PST)
+Received: from Mac.lan (93-35-138-48.ip55.fastwebnet.it. [93.35.138.48])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439c6129017sm18515450f8f.31.2026.03.05.14.51.44
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 05 Mar 2026 14:51:45 -0800 (PST)
+From: Francesco Paparatto <francescopaparatto@gmail.com>
+To: francescopaparatto@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	sunshine@sunshineco.com
+Subject: [PATCH v3] t3310: avoid hiding failures from rev-parse in command substitutions
+Date: Thu,  5 Mar 2026 23:51:28 +0100
+Message-ID: <20260305225128.54283-1-francescopaparatto@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <CAEaT9_-h2MEshMHoyoW9kWQgt_EfQJXcxWSn+cXTSL4mKME=5w@mail.gmail.com>
+References: <CAEaT9_-h2MEshMHoyoW9kWQgt_EfQJXcxWSn+cXTSL4mKME=5w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPig+cTHyB2sbBOELPb2=B5sU69OzSPU0JVn0p=2qMp=0=8vEg@mail.gmail.com>
- <20260305090602.22436-1-francescopaparatto@gmail.com> <xmqq5x7a3x9w.fsf@gitster.g>
- <CAPig+cTsYWVg0nrU7kMakOKQaqFSo=i_nZ=_YuCJK_hq5gdZPQ@mail.gmail.com>
-In-Reply-To: <CAPig+cTsYWVg0nrU7kMakOKQaqFSo=i_nZ=_YuCJK_hq5gdZPQ@mail.gmail.com>
-From: Francesco Paparatto <francescopaparatto@gmail.com>
-Date: Thu, 5 Mar 2026 23:49:31 +0100
-X-Gm-Features: AaiRm53UbD4lK3xWpTX39n_kndKwgj0umvrQufITIdqicEbIH553-rm_8RxSSF8
-Message-ID: <CAEaT9__LELMsCVZoY57+JZ8S0AtcE4n=K2W-rqjJhz2UDPiUBA@mail.gmail.com>
-Subject: Re: [PATCH v2] t3310: avoid hiding failures from rev-parse in command substitutions
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Running `git` commands inside command substitutions like
 
-> What Junio probably means is that you appear to have based v2 atop v1,
-> but instead you should squash v1 and v2 into a single patch, and send
-> that as v3 so that when the patch is finally accepted into his tree,
-> it will appear to have been perfect from the start (because v1 and v2
-> will only exist in the mailing list archive, not in the Git project
-> history).
+    test "$(git rev-parse A)" = "$(git rev-parse B)"
 
-Sorry about that, and thanks for the clarification.
+can hide failures from the `git` invocations and provide little
+diagnostic information when `test` fails.
 
-I've squashed the changes and rerolled the patch based on your
-suggestions. I've just sent v3 to the list.
+Use `test_cmp` when comparing against a stored expected value so
+mismatches show both expected and actual output. Use `test_cmp_rev`
+when comparing two revisions. These helpers produce clearer failure
+output, making it easier to understand what went wrong.
 
-Thanks,
-Francesco
+Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Francesco Paparatto <francescopaparatto@gmail.com>
+---
+ t/t3310-notes-merge-manual-resolve.sh | 48 +++++++++++++++++----------
+ 1 file changed, 30 insertions(+), 18 deletions(-)
+
+diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
+index f0054b0a39..64c0a753ff 100755
+--- a/t/t3310-notes-merge-manual-resolve.sh
++++ b/t/t3310-notes-merge-manual-resolve.sh
+@@ -227,7 +227,8 @@ test_expect_success 'merge z into m (== y) with default ("manual") resolver => C
+ 	# Verify that current notes tree (pre-merge) has not changed (m == y)
+ 	verify_notes y &&
+ 	verify_notes m &&
+-	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
++	git rev-parse refs/notes/m >actual &&
++	test_cmp pre_merge_y actual
+ '
+ 
+ cat <<EOF | sort >expect_notes_z
+@@ -375,8 +376,10 @@ EOF
+ 	git notes merge --commit &&
+ 	notes_merge_files_gone &&
+ 	# Merge commit has pre-merge y and pre-merge z as parents
+-	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
+-	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
++	git rev-parse refs/notes/m^1 >actual &&
++	test_cmp pre_merge_y actual &&
++	git rev-parse refs/notes/m^2 >actual &&
++	test_cmp pre_merge_z actual &&
+ 	# Merge commit mentions the notes refs merged
+ 	git log -1 --format=%B refs/notes/m > merge_commit_msg &&
+ 	grep -q refs/notes/m merge_commit_msg &&
+@@ -428,14 +431,16 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
+ 	# Verify that current notes tree (pre-merge) has not changed (m == y)
+ 	verify_notes y &&
+ 	verify_notes m &&
+-	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
++	git rev-parse refs/notes/m >actual &&
++	test_cmp pre_merge_y actual
+ '
+ 
+ test_expect_success 'abort notes merge' '
+ 	git notes merge --abort &&
+ 	notes_merge_files_gone &&
+ 	# m has not moved (still == y)
+-	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)" &&
++	git rev-parse refs/notes/m >actual &&
++	test_cmp pre_merge_y actual &&
+ 	# Verify that other notes refs has not changed (w, x, y and z)
+ 	verify_notes w &&
+ 	verify_notes x &&
+@@ -460,7 +465,8 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
+ 	# Verify that current notes tree (pre-merge) has not changed (m == y)
+ 	verify_notes y &&
+ 	verify_notes m &&
+-	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
++	git rev-parse refs/notes/m >actual &&
++	test_cmp pre_merge_y actual
+ '
+ 
+ cat <<EOF | sort >expect_notes_m
+@@ -500,8 +506,10 @@ EOF
+ 	git notes merge --commit &&
+ 	notes_merge_files_gone &&
+ 	# Merge commit has pre-merge y and pre-merge z as parents
+-	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
+-	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
++	git rev-parse refs/notes/m^1 >actual &&
++	test_cmp pre_merge_y actual &&
++	git rev-parse refs/notes/m^2 >actual &&
++	test_cmp pre_merge_z actual &&
+ 	# Merge commit mentions the notes refs merged
+ 	git log -1 --format=%B refs/notes/m > merge_commit_msg &&
+ 	grep -q refs/notes/m merge_commit_msg &&
+@@ -539,7 +547,8 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
+ 	# Verify that current notes tree (pre-merge) has not changed (m == y)
+ 	verify_notes y &&
+ 	verify_notes m &&
+-	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
++	git rev-parse refs/notes/m >actual &&
++	test_cmp pre_merge_y actual
+ '
+ 
+ cp expect_notes_w expect_notes_m
+@@ -548,7 +557,7 @@ cp expect_log_w expect_log_m
+ test_expect_success 'reset notes ref m to somewhere else (w)' '
+ 	git update-ref refs/notes/m refs/notes/w &&
+ 	verify_notes m &&
+-	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
++	test_cmp_rev refs/notes/m refs/notes/w
+ '
+ 
+ test_expect_success 'fail to finalize conflicting merge if underlying ref has moved in the meantime (m != NOTES_MERGE_PARTIAL^1)' '
+@@ -569,13 +578,15 @@ EOF
+ 	test_path_is_file .git/NOTES_MERGE_WORKTREE/$commit_sha3 &&
+ 	test_path_is_file .git/NOTES_MERGE_WORKTREE/$commit_sha4 &&
+ 	# Refs are unchanged
+-	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)" &&
+-	test "$(git rev-parse refs/notes/y)" = "$(git rev-parse NOTES_MERGE_PARTIAL^1)" &&
+-	test "$(git rev-parse refs/notes/m)" != "$(git rev-parse NOTES_MERGE_PARTIAL^1)" &&
++	test_cmp_rev refs/notes/m refs/notes/w &&
++	test_cmp_rev refs/notes/y NOTES_MERGE_PARTIAL^1 &&
++	test_cmp_rev ! refs/notes/m NOTES_MERGE_PARTIAL^1 &&
+ 	# Mention refs/notes/m, and its current and expected value in output
+ 	test_grep -q "refs/notes/m" output &&
+-	test_grep -q "$(git rev-parse refs/notes/m)" output &&
+-	test_grep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output &&
++	git rev-parse refs/notes/m >actual &&
++	test_grep -q "$(cat actual)" output &&
++	git rev-parse NOTES_MERGE_PARTIAL^1 >actual &&
++	test_grep -q "$(cat actual)" output &&
+ 	# Verify that other notes refs has not changed (w, x, y and z)
+ 	verify_notes w &&
+ 	verify_notes x &&
+@@ -587,7 +598,7 @@ test_expect_success 'resolve situation by aborting the notes merge' '
+ 	git notes merge --abort &&
+ 	notes_merge_files_gone &&
+ 	# m has not moved (still == w)
+-	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)" &&
++	test_cmp_rev refs/notes/m refs/notes/w &&
+ 	# Verify that other notes refs has not changed (w, x, y and z)
+ 	verify_notes w &&
+ 	verify_notes x &&
+@@ -606,8 +617,9 @@ test_expect_success 'switch cwd before committing notes merge' '
+ 	test_must_fail git notes merge refs/notes/other &&
+ 	(
+ 		cd .git/NOTES_MERGE_WORKTREE &&
+-		echo "foo" > $(git rev-parse HEAD) &&
+-		echo "bar" >> $(git rev-parse HEAD) &&
++		oid=$(git rev-parse HEAD) &&
++		echo "foo" >"$oid" &&
++		echo "bar" >>"$oid" &&
+ 		git notes merge --commit
+ 	) &&
+ 	git notes show HEAD > actual_notes &&
+-- 
+2.52.0
+
