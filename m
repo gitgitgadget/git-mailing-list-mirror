@@ -1,110 +1,153 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099F6221F20
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B483644BD
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:08:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772751983; cv=none; b=gNz8kBTBvvplQ/H4y8dcw9t8uf6/WE37ZvAi1I7VGZQMiVLjlcc1lPw19mHwhCUcyGmMJ5BgAgZ9xLdjmEFBMiw334UzS1twXnXa5zpVfuDmWC54YDCNA8suylcQxwr9cU7RI9XSHHOOcr/Ln2h8oJ31FGgeaWMMw7HgmbwxDKA=
+	t=1772752137; cv=none; b=uzW0FClrxfSuKIizpltW9bgOwg0oIhyjpCudUZAN07qhn4SGsgGI03Oly9fMyRZ1VAJXEmC+ZERCGumMoQ+ozj7/OT56wQoOviptSik2YjVmK/Pxv0u6rNotPdxgot9PyxjL28gj6dlONFmSYcd5lYzIfD2TSOw89O9ZxfjbJ1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772751983; c=relaxed/simple;
-	bh=2E9SPnjGZjmOVoWWt9sVX5z2ufi/A9nwQLrvpwVu1c8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KhBE8ZTwpxJXA492eJ2ZkPbVsEwg3D0ggwguzin1mYA2GoI25kqlNeyrMg2Jag0eJlCpQ3UEQiS2BCBF50HyP5mg93ToJ5m/7pxtlIlulthg7XQehqUQeL4KnpMie6ao/KkBLEvMl1fozygsSn6ZDDQfAbqy/Gru+P2lszoPGlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BIg6heay; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nyFu2RJu; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772752137; c=relaxed/simple;
+	bh=LQdRp0fmwDdoi8lyW9DJv1X//qnbw5bNE+72H/ObXNA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ozV3y4mdG2UrISY5rHTlyh2OJIPQ/V17Lh8cbfq2aGLMEQLixuLzidkKRimoIxYl3q4E9hfXVpCs7D8LWUfbyx5F84Qb3QQr97SWuYICTcvTxfA8eY7Qq4PomrIoB15oLuYgxoPsvnSyfA9jiZqVpye2zE6Tt4vt1n2B8LHZ6D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=T6zqxBBE; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BIg6heay";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nyFu2RJu"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 40F5AEC022F;
-	Thu,  5 Mar 2026 18:06:21 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 05 Mar 2026 18:06:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772751981; x=1772838381; bh=SnMAj5DPUc
-	V5Sf0tZhwN3pvTHONS6wJdULeMKp5Ombk=; b=BIg6heay1BHKgSdxq6/TV8wToj
-	WiLXsq+MPwhouFxfb+2UPRuxQhpIXTMpoSxmMNl7qWQw3Uv447YhZKsIF693Ug00
-	N6yg7tbV9o1MC7a868fZVTI3OSwWTbtrrZZWy29BklbVqYwC6hShYPzaglVOTcXb
-	PjM8FT8Q+EtYZLnYd+E5mOk70R7zYuWQ7QXVlb0vHeauBmx/M9/p2LNz3JfP8Xvk
-	IN3QBF0+uaoVP8fw5QzbGRZRv53DGoeAgtT/OqzuDO1z2TkIpE2a0Shd9O56QjGR
-	xP/5wxw9UKMj+x/0I/fSYQRyh49E4ZuzZ9686+n1/cqSi1lSGsM3ztODlAHQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772751981; x=1772838381; bh=SnMAj5DPUcV5Sf0tZhwN3pvTHONS6wJdULe
-	MKp5Ombk=; b=nyFu2RJutIl9SyYEBoXbv1YQiT3wip+rI2QIWZtCxo7PijQ2KFQ
-	zGw84lfTTVvbw5SVAQvtS0oTFhKmiRO8TxAm4/qkQVjyrpC83bM3JmtrPNYGDPHR
-	irGG7SbvWJuQMoeBY5ipzuJxQGZxlykDyPgbYeTdd8VGHEaplCwYxhk250XYqSIs
-	zUAhyOFETuIpBFwM4/iz+ck13eu699y0lJdvh0bWQgpJ6HBswbmoDl5s5xaGFAJY
-	10jrgN83JaKAD1A3enauayqzYUXUM6h4uWfhCJ7Z/dO0MNCH8wnEcwWdM5RChoPO
-	sOrPxQ9ihJyfazXjtlkbmvfTGdKqSM06djA==
-X-ME-Sender: <xms:bQyqac4KndPGdpraekDTdepJJs59VZ4yPTvA0JEWGSWqM7IbDw1hVw>
-    <xme:bQyqaU5uqS7F6VKvdqo6pJkeEHqmMVFG2M4wJeXSs0Cf-xeqziFHqbjgy2MDMOOzQ
-    7jc4S_UPXa4QNqwWhpsnGYNOhrOhD_3Tm-TUfcQkizEsDzGKNX1qtw>
-X-ME-Received: <xmr:bQyqaQcZENkciSh6I0wdxHXzq-HhuAoe-n4banLLWoOVYo-ucZiEzMPHJelXEmnPH4rdj0ylWGzZGzFoA5VbOMyjQnnE5VYd3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieejieekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
-    homhdprhgtphhtthhopehfrhgrnhgtvghstghophgrphgrrhgrthhtohesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bQyqaQAA69-qGzlVGHI-cKnR7j0klZTxsl10cNzc0Hs74YKk7V02MA>
-    <xmx:bQyqab81UCakvVeOtfBjmCyVzqA-rzdPzRh3NpkwOl0AH7zLiyIDDw>
-    <xmx:bQyqaTLKGt1jrCVbD3FX6mzYTAivn833IxO0Oddf7LwjaMCc4158Cw>
-    <xmx:bQyqacgWFIDEbfXwMZ2ZINjiz6lbUC9auAro1V_oltEGCsKfax-CrQ>
-    <xmx:bQyqaUJ-c7gEpfZKmWpb8EF2334RTxqD6cEm9NxwblMLiXJMOLjT0byq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 18:06:20 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Francesco Paparatto <francescopaparatto@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2] t3310: avoid hiding failures from rev-parse in
- command substitutions
-In-Reply-To: <CAPig+cTsYWVg0nrU7kMakOKQaqFSo=i_nZ=_YuCJK_hq5gdZPQ@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 5 Mar 2026 17:34:21 -0500")
-References: <CAPig+cTHyB2sbBOELPb2=B5sU69OzSPU0JVn0p=2qMp=0=8vEg@mail.gmail.com>
-	<20260305090602.22436-1-francescopaparatto@gmail.com>
-	<xmqq5x7a3x9w.fsf@gitster.g>
-	<CAPig+cTsYWVg0nrU7kMakOKQaqFSo=i_nZ=_YuCJK_hq5gdZPQ@mail.gmail.com>
-Date: Thu, 05 Mar 2026 15:06:19 -0800
-Message-ID: <xmqqv7f927x0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="T6zqxBBE"
+Received: (qmail 2671 invoked by uid 106); 5 Mar 2026 23:08:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=LQdRp0fmwDdoi8lyW9DJv1X//qnbw5bNE+72H/ObXNA=; b=T6zqxBBEQ/HM4wtV4C9+eNm27D6cbgJJFhtUBpt4g6sUJXrDTw+Q2LfIAFz1UsR1TSJL31UMSRgjUIf0BhRWw6dLa0pups3oAzPyanEE4WetrGObpeuJ0tWDi6qbiSnaz07Zos6DdJFa6H0yDUJLv4Imv+5h90HkseoU/eY8wc/AMUADv3DuRZk/MXoTeWij6MTHraOgR4ierqzdn/nAhmtecB3EnUFQbw0DOr1EQWiHZClMDj7IsNqtWtP8AMAyiwV18vBldLNvfE80unkEt59rgMJ7G7xRBxSXyqP1+N1FJqMxqzv94G+HUDIHuWQt0GrRm7oR8hSlgfQTmvEKjQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Mar 2026 23:08:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 393470 invoked by uid 111); 5 Mar 2026 23:08:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Mar 2026 18:08:57 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 5 Mar 2026 18:08:54 -0500
+From: Jeff King <peff@peff.net>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: git@vger.kernel.org
+Subject: [PATCH 1/4] check_connected(): delay opening new_pack
+Message-ID: <20260305230854.GA2901305@coredump.intra.peff.net>
+References: <20260305230315.GA2354983@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260305230315.GA2354983@coredump.intra.peff.net>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+In check_connected(), if the transport tells us we got a single packfile
+that has already been verified as self-contained and connected, then we
+can skip checking connectivity for any tips that are mentioned in that
+pack. This goes back to c6807a40dc (clone: open a shortcut for
+connectivity check, 2013-05-26).
 
->> > diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
->> > index 92a5951331..64c0a753ff 100755
->>
->> On top of what commit is this patch designed to apply?
->
-> What Junio probably means is that you appear to have based v2 atop v1,
-> but instead you should squash v1 and v2 into a single patch, and send
-> that as v3 so that when the patch is finally accepted into his tree,
-> it will appear to have been perfect from the start (because v1 and v2
-> will only exist in the mailing list archive, not in the Git project
-> history).
+We don't need to open that pack until we are about to start sending oids
+to our child rev-list process, since that's when we check whether they
+are in the self-contained pack. Let's push the opening of that pack
+further down in the function. That saves us from having to clean it up
+when we leave the function early (and by the time have opened the
+rev-list process, we never leave the function early, since we have to
+clean up the child process).
 
-No.  The v1 and this one touch separate areas and can go
-independently.  The thing I had trouble with was that this did not
-apply to either on top of v1 (which by the way is already in 'next')
-nor on top of 'master'.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+One thing I noticed here is that for a clone with a single
+self-contained pack, we could probably skip running rev-list entirely. I
+don't know if it matters much, though, as a noop rev-list process is not
+that expensive compared to the cost of a clone. And in the worst case,
+it would involve calling find_pack_entry() on each proposed ref tip an
+extra time only to find that at least one does need to be sent. Though
+that is also not very expensive.
+
+I left it out of this series, though it would involve moving the
+new_pack opening up above the start_command() invocation again.
+
+I also wondered if this whole thing out to be written to avoid a one-off 
+packed_git in the first place, like:
+
+  - call reprepare_packed_git() to re-scan objects/pack
+
+  - find the pack by name in the packed_git list
+
+  - don't clean it up; it's owned by the repository struct now
+
+But that's a somewhat bigger change, and I'm not sure it really buys us
+that much.
+
+ connected.c | 33 +++++++++++++++------------------
+ 1 file changed, 15 insertions(+), 18 deletions(-)
+
+diff --git a/connected.c b/connected.c
+index 79403108dd..530357de54 100644
+--- a/connected.c
++++ b/connected.c
+@@ -45,20 +45,6 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 		return err;
+ 	}
+ 
+-	if (transport && transport->smart_options &&
+-	    transport->smart_options->self_contained_and_connected &&
+-	    transport->pack_lockfiles.nr == 1 &&
+-	    strip_suffix(transport->pack_lockfiles.items[0].string,
+-			 ".keep", &base_len)) {
+-		struct strbuf idx_file = STRBUF_INIT;
+-		strbuf_add(&idx_file, transport->pack_lockfiles.items[0].string,
+-			   base_len);
+-		strbuf_addstr(&idx_file, ".idx");
+-		new_pack = add_packed_git(the_repository, idx_file.buf,
+-					  idx_file.len, 1);
+-		strbuf_release(&idx_file);
+-	}
+-
+ 	if (repo_has_promisor_remote(the_repository)) {
+ 		/*
+ 		 * For partial clones, we don't want to have to do a regular
+@@ -90,7 +76,6 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ promisor_pack_found:
+ 			;
+ 		} while ((oid = fn(cb_data)) != NULL);
+-		free(new_pack);
+ 		return 0;
+ 	}
+ 
+@@ -127,15 +112,27 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 	else
+ 		rev_list.no_stderr = opt->quiet;
+ 
+-	if (start_command(&rev_list)) {
+-		free(new_pack);
++	if (start_command(&rev_list))
+ 		return error(_("Could not run 'git rev-list'"));
+-	}
+ 
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 
+ 	rev_list_in = xfdopen(rev_list.in, "w");
+ 
++	if (transport && transport->smart_options &&
++	    transport->smart_options->self_contained_and_connected &&
++	    transport->pack_lockfiles.nr == 1 &&
++	    strip_suffix(transport->pack_lockfiles.items[0].string,
++			 ".keep", &base_len)) {
++		struct strbuf idx_file = STRBUF_INIT;
++		strbuf_add(&idx_file, transport->pack_lockfiles.items[0].string,
++			   base_len);
++		strbuf_addstr(&idx_file, ".idx");
++		new_pack = add_packed_git(the_repository, idx_file.buf,
++					  idx_file.len, 1);
++		strbuf_release(&idx_file);
++	}
++
+ 	do {
+ 		/*
+ 		 * If index-pack already checked that:
+-- 
+2.53.0.786.g466665faa3
+
