@@ -1,53 +1,53 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9149460
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 13:23:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6E29460
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 13:23:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772717001; cv=none; b=s7qRYdVwqHBb5tH7Jeehe/Je6QFqgXDBoyY80Nh+j4qD1lDMhMKavCsVylyu/9QfggUhNA8JfngRUQfPe3rKQXL8VyozsKQD8V72NE5PYD5tS3tahjVyMMarSlhtpRfGHvqt8oSS/ktsh4F4rxmsjM6/m94vJe1mVOwaMgUKBfg=
+	t=1772717007; cv=none; b=ev7WPgo8ov6RiRRbo9zQJuTDfchbKtbYvnI2C2f9nhE0EOWnrnxC+Tt0CU7VJoxe3AXyTnaLVabezqbpHyvW8fTTQfadVNTBWx81jcOu6U8m4P9KwiC/m5wAl00kj4qPv1xxO06jWHYWhCgkFJUc1SWm7feYFMZblI/acbTlZDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772717001; c=relaxed/simple;
-	bh=0bWHayZcyaAFm70ePrApGuuo9K01+Gbgl3AhE62ZhUA=;
+	s=arc-20240116; t=1772717007; c=relaxed/simple;
+	bh=nj3lIF2reBEO23k/d1utF29urEL+So8tdsSUG/p9w00=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n+urflvSw6cQxBjpcbVQFvgiWQj/q4KspAVShxgnYPJLM5eHzPIiC8wjC24SffzPyuCdlfYE+pUX29yXUKjUJ8dJZsvDb0mIh5b8SlvJyHB+g597o6u5YNEvKeyR13/BvnH3zXiGXJgD9RdZR/vD34JTxGdQAX14desL1s5+GW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zq7lVnda; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5jFfXdgL; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=XSfCTvoIdfM5kCvr8PlMJKowvn2WlaKBbcLUyuy6OdBOVrI33J0AQdxAeTrX68u5AW3t2RqAspzdMCITmxQNo9/ggNtOg0UWv6N4eZ+tzKQ3DWXCX7QabaYiDquixqTBipx55T336dn7osqdCbcaV9nthXnRub2bGn2/cX1mIV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SwVvJQcc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gOnxGvlO; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zq7lVnda";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5jFfXdgL"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0AC427A01D3;
-	Thu,  5 Mar 2026 08:23:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SwVvJQcc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gOnxGvlO"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 28A001D0019B;
+	Thu,  5 Mar 2026 08:23:25 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 05 Mar 2026 08:23:20 -0500
+  by phl-compute-10.internal (MEProxy); Thu, 05 Mar 2026 08:23:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772716999; x=1772803399; bh=Coa9LtZIpa
-	m/lAeT3VlkE61KVDp3VBaqATKMuv34YsM=; b=Zq7lVnda90Q48BZ3uRyXkC5Riv
-	2F1WP1IVCCaqMwXJsZcSmQ9DtomVv5bMVmqS/DaWhWYkA30ls/iVl/aV2Zvk66sB
-	8r+L9EWZ9eC9ykbGXkAujN3aQU0wnvb3NGpmg2PjQdTiH7SaJf1O/1hV9jY13wMm
-	UwNB8+Lkcc+jLMnQj4r3pnZ5pFz8AWJwbuBB6zBTbjnCMlJmxh18dAOw4KOGhqF6
-	qaVpUAtq4306cdQZcmnt18RZMfdByVYTJHBqEc/6TEqNOi5671JyuDC2JcM8BFRF
-	8kOjYER34WgjFDGtwMxds/GttUX3oUCDoPeMWtqevpWEyHUPLgfrzUAesUgQ==
+	:subject:to:to; s=fm1; t=1772717005; x=1772803405; bh=feDuI8NBW/
+	aqT9hd1UM/T6nF27XpBQnilThFPp7Rn5Y=; b=SwVvJQccvI3OfoKddEPO8Q1GsM
+	TQ5ifs5VvGw3c0GwIo8XeNUk2eedNdQmcJMalhduaG43sCjYItUvEVs6UVAciduy
+	PwvpNH7mf9eUOawLPYsnviL1aNaYgtAoPH5VmP/CViR3IffjtHj0owTCuPJvnuhv
+	bS/t0MJwS01gwDwNceC9OCf4sWElZnkYPDyO6AfvHhZJWx5YF6UQsPpONh0FDrfL
+	sDNy3Oy1mAuRw0JzUHijOXEDOHlzmnPifjaJMo58vxnwpc3dN1e0wVUSd65kdi++
+	7u6J9+pq7U5MMJ2NCDXx5lECpQpF7B40r2IBTAyv+T8nK24VvfzVcJ4eiaag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772716999; x=1772803399; bh=Coa9LtZIpam/lAeT3VlkE61KVDp3VBaqATK
-	Muv34YsM=; b=5jFfXdgLz1YPPhMbg5ZpoQVEgqjTM70/yKmWi4s5wlNRjqtU8My
-	7DjB6MIoEaGpPheKcS4iqYEJ45qYs73B5MEqBTZ+qQEr5Go10MkjpE1EZTcsXtuH
-	o3SHAGicaHP0flkp1G7B7QhdRurZJLCBtOOQ9zVWhRT6VAxBI8SofP9i+kHptfYn
-	f3G+gan8rt4VOLOEgynEVxprA94u2/pQkNwAW2u7PPV2jViJmDl/CjoHNADJICT/
-	BVAMsvKRIqamOspAGD37FSQI9cNytPrzc7jez4DoZsmJnTU1FUPEcYeHm1fWKnk6
-	OxMKUFUOqK1uyUHdarw1r1Ob+uk0g0dqoZg==
-X-ME-Sender: <xms:x4OpaQoB_pjTndSuUGzZNXM2YIsjjQMbwik1Bzb3GCGScKDySvgVPQ>
-    <xme:x4OpacoM4dJXr-1WpViKJ3--ZHZBAtOkDnMFd50zRCfBuTsGfw_tT2U-3TXH_Olmy
-    LwUttcjGxPUQWf7ZlatDL404qW4V401uzc6p38g-aK_2ucYOw>
-X-ME-Received: <xmr:x4OpaS3k0CUE-BYlaSJuhsM7KAB2U23wqy2oZiSCIyo8wKxvxgcDb7Pu-5I-oX8BtlQUKX3HF0mMYknpISpLuOWR-XXWXgqRKlYgGgAiyXTC>
+	1772717005; x=1772803405; bh=feDuI8NBW/aqT9hd1UM/T6nF27XpBQnilTh
+	FPp7Rn5Y=; b=gOnxGvlOS+whDudDcKf1Y0VwgTgR+zlLKQfxFpf+qf+tzF9NavY
+	k/q88smz+JEzeKqD1Q9XxJxf1G8jhAPuMR27lAFiEaQoBLa1OTlYE8fbiXxv1sb8
+	FNrkrGQfPiQ6QMKBpXaBEF5T4KO5y6YAu3NPhWzYGAVgy4AWnPGx/Udkrs3hqofy
+	4aq/eeeHKSgPDiOLHE70HPKkhVeMNZOAnQuPte1RtRG40AbCr0cFttGNO3UzEdW/
+	eg4xKxc7RT2FFLhEFKZrP1PIIogQ16pGTGgodeeri+9SKtOfiB5WBeoNdMdKRsTw
+	U0E9c1cn9nzRCer2084/ZJ8ILl7JWIop1vQ==
+X-ME-Sender: <xms:zIOpadAhb0mbge0isI3flfwouy9CiKayM-lMPD6MstOIfHYwFQAeIA>
+    <xme:zIOpaRjlBYHYZXnLIp8du1oyLQtD83Gj7PtBVxX-8vndnPunDO7HHsl247g4YnJam
+    EzAAE3j3xboLhfn62HFsCFraP0ydi8QgbirgEBsPMnK-ykmsEnjBw>
+X-ME-Received: <xmr:zIOpaWMRv3G51IRshXRltGbHEjlg8i2NKlnLk7Ep8-TmpzR9qbRq0j-OmILzIZBMCMCmRiooiqDZtdSCuIyCSnjFL6siHUMEiaQlGCTm3Sc0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeigeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeigeelucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:x4OpaTDeR07GChY5BHr7Wx2UooJPw7GR4bVcdIClvqglJ3NP3lV7mA>
-    <xmx:x4OpaSc4P0RYBV5mR-jYkWauWSc3A8PG2JVOCdRhwecZLkFLJ5Bc4g>
-    <xmx:x4OpaQje6Q6QYa8xmzSmIfKv3TRI41onKlG1z0xq1tqEfSd1f65I9Q>
-    <xmx:x4OpaSpsA_JwjW6MqwKxfTkO75937_J-jqURDnhWoXSPJcWOmZXeNg>
-    <xmx:x4OpaaZ8oJGmKibltatrIVjbAQFFoDBh7b0rOQsx1LX1Pl-r5hwpjC5z>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
+    gvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:zIOpaS6iFyH1vyyxK_f3FaGLGMqwpmIj13Dsy-Ktid95lvkrX--Vxg>
+    <xmx:zIOpaU3f86JtRxWUaARSFcBvNeZrkjyUhUsedRAYJ_3qJoZ9h5FEaA>
+    <xmx:zIOpaTYtCbuqiuXyCe006EB92mf4vnZa5jy5z3_t96MoUIJ1ZbyOAw>
+    <xmx:zIOpacB24z4b5irmqI1f3Ypk51Ub_5GdaMaFoeHUib3NXDl5aHdh8w>
+    <xmx:zYOpacy5lxU_dwdXnpYe2E1O85mIHhq3ZHHL6Ul8X4j6XszV52gXC3KW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 08:23:19 -0500 (EST)
+ 5 Mar 2026 08:23:24 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 02f044db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Mar 2026 13:23:18 +0000 (UTC)
-Date: Thu, 5 Mar 2026 14:23:16 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 07d143af (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 5 Mar 2026 13:23:23 +0000 (UTC)
+Date: Thu, 5 Mar 2026 14:23:20 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 02/17] odb: introduce "files" source
-Message-ID: <aamDxB-s7WW0Mq9H@pks.im>
+Subject: Re: [PATCH 03/17] odb: embed base source in the "files" backend
+Message-ID: <aamDyLxTYQdh9igw@pks.im>
 References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
- <20260223-b4-pks-odb-source-pluggable-v1-2-253bac1db598@pks.im>
- <aahbTN_lFx1Jhy7U@denethor>
+ <20260223-b4-pks-odb-source-pluggable-v1-3-253bac1db598@pks.im>
+ <aahkh1ICViKjP6Il@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,27 +86,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aahbTN_lFx1Jhy7U@denethor>
+In-Reply-To: <aahkh1ICViKjP6Il@denethor>
 
-On Wed, Mar 04, 2026 at 10:57:26AM -0600, Justin Tobler wrote:
+On Wed, Mar 04, 2026 at 11:40:47AM -0600, Justin Tobler wrote:
 > On 26/02/23 05:17PM, Patrick Steinhardt wrote:
+> > diff --git a/odb/source-files.h b/odb/source-files.h
+> > index 0b8bf773ca..58753d40de 100644
+> > --- a/odb/source-files.h
+> > +++ b/odb/source-files.h
+> > @@ -10,15 +11,26 @@ struct packfile_store;
+> >   * packfiles. It is the default backend used by Git to store objects.
+> >   */
+> >  struct odb_source_files {
+> > -	struct odb_source *source;
+> > +	struct odb_source base;
+> 
+> Out of curiousity, was there any reason to the reference ODB source in
+> the prior patch? Seems like we could have just added it here.
+
+Good question. The reason why I stored this pointer in the preceding
+commit is mostly to demonstrate that we're actually using the source
+that's passed to `db_source_files_new()`. I didn't want to have to
+change the signature of that function in this commit again.
+
+So the field was unused indeed, but intentionally so.
+
+> >  	struct odb_source_loose *loose;
+> >  	struct packfile_store *packed;
+> >  };
+> >  
+> >  /* Allocate and initialize a new object source. */
+> > -struct odb_source_files *odb_source_files_new(struct odb_source *source);
+> > +struct odb_source_files *odb_source_files_new(struct object_database *odb,
+> > +					      const char *path,
+> > +					      bool local);
+> >  
+> >  /* Free the object source and release all associated resources. */
+> >  void odb_source_files_free(struct odb_source_files *files);
+> >  
+> > +/*
+> > + * Cast the given object database source to the files backend. This will cause
+> > + * a BUG in case the source doesn't use this backend.
+> > + */
+> 
+> In the commit message you mention that eventually
+> `odb_source_files_downcast()` will BUG() if the source doesn't use the
+> backend. But, it doesn't appear to do this yet. Should we still have
+> this comment?
+
+Good point, let me move this into the patch that introduces this.
+
 > > diff --git a/odb/source.h b/odb/source.h
-> > index 391d6d1e38..1c34265189 100644
+> > index 1c34265189..e6698b73a3 100644
 > > --- a/odb/source.h
 > > +++ b/odb/source.h
-> > @@ -19,11 +21,8 @@ struct odb_source {
-> >  	/* Object database that owns this object source. */
-> >  	struct object_database *odb;
+> > @@ -53,7 +48,31 @@ struct odb_source *odb_source_new(struct object_database *odb,
+> >  				  const char *path,
+> >  				  bool local);
 > >  
-> > -	/* Private state for loose objects. */
-> > -	struct odb_source_loose *loose;
-> > -
-> > -	/* Should only be accessed directly by packfile.c and midx.c. */
+> > -/* Free the object database source, releasing all associated resources. */
+> > +/*
+> > + * Initialize the source for the given object database located at `path`.
+> > + * `local` indicates whether or not the source is the local and thus primary
+> > + * object source of the object database.
+> > + *
+> > + * This function is only supposed to be called by specific object source
+> > + * implementations.
+> > + */
+> > +void odb_source_init(struct odb_source *source,
+> > +		     struct object_database *odb,
+> > +		     const char *path,
+> > +		     bool local);
+> > +
+> > +/*
+> > + * Free the object database source, releasing all associated resources and
+> > + * freeing the structure itself.
+> > + */
+> >  void odb_source_free(struct odb_source *source);
+> >  
+> > +/*
+> > + * Release the object database source, releasing all associated resources.
+> > + *
+> > + * This function is only supposed to be called by specific object source
+> > + * implementations.
+> > + */
+> > +void odb_source_release(struct odb_source *source);
 > 
-> Is there any value to keeping this comment around?
+> From a naming perspective, I do find the odb_source_new() vs
+> odb_source_init() and odb_source_free() vs odb_source_release()
+> interfaces to be tad bit confusing. I understand that odb_source_init()
+> and odb_source_release() and only intended for use by the concrete ODB
+> source implementations to facilitate initializing/freeing the base ODB
+> source. The comments also do help clarify this, but I think it is still
+> rather easy to get them mixed up when reading.
+> 
+> Maybe we could rename them to odb_base_source_init() and
+> odb_base_source_free()?
 
-I don't think so. With this series it becomes clear that all of the info
-in the sources become private implementation details, and future patch
-series will double down on that even further.
+I think for `odb_source_free()` it's a definitive no. This will be the
+way to free any source, not only the base, and this will become clear in
+a subsequent patch.
+
+For `odb_source_init()` you have a better point though, as it really
+only cares about initializing the base object. But I think it's still
+sensible to keep the name as it _does_ act on `struct odb_source`, and
+it would be the only instance where we have the "base" infix.
 
 Patrick
