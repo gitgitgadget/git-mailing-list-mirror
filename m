@@ -1,82 +1,88 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B12327EFEE
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 19:17:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CC3238C1B
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 19:23:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772738265; cv=none; b=PdrrUSq6Nlyf7ILOuM9YrnsdQJCBu4sDaZW9pkDpirPBZP0nkb0UfOt3BOrmLZ/PqeBWWnPRwpC+ZQI04Ec2W5pbuaweBOjFIl+eDPv/SMWdYHdERlJqKwyvtE0JE3E85oLG6u9Qq7DA8ASo8sqoVhAlgKfQbo/NV0rlVX8yGGY=
+	t=1772738584; cv=none; b=FjW9xouZFBTLzd5sGI+MeuDopc3zrVP/DZ91CE3fErV3R2R1qzpaKk2kx1Q9hIg6BpgWu9aYOkIkyuWaGd6G/kLahDA/33Bh4LxfkzkLpDtxsWp/G8utsc8Sx18PNIzyoMnIWXbEe+eXwqBclx+OYUdugeSJUQDv5mLgfm1U/Ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772738265; c=relaxed/simple;
-	bh=D8+rJyianV9XgFwip1ltNw06qLB3CYQQLklfWFM0+Jk=;
+	s=arc-20240116; t=1772738584; c=relaxed/simple;
+	bh=52T18nlfH4v8cHQI4X3wkA8BcEuHS1wwW1KzFSasmKc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t0+rPHgf1i1mBU2pj3nxv5r2BciF4S5W1ZjgcETmQgnQmaCIYJDsyxTS2m5nKDH281sQM2NFITAK69ZTPMLaU5FPE0Owx0C2E6Uwz73xJpUPUkupSxCW8jmEnNDvGbR5CsRxGBUfepd28snWTtPlapbMs3y21TeJL/wnKI/pMRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AUUpZc0g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IzGS5mv0; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=GMBc4uCBkjGVKiDLogWrblXyyHUoCbf2ns58C8J6MAGlnRMjbIp8vlSpXkIbc3Wbk8w70uJCcqp+ETNVAdy6E8VXvomVo87VooO2LP/boLpuBF73nGAaTw9fLm/WlhhCi6UwyRcvZVFR94apUU6mHQsACqruEeNBDmAxs82L98g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Pe7YRJd9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oDkUyCWH; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AUUpZc0g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IzGS5mv0"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id DE8E8EC060B;
-	Thu,  5 Mar 2026 14:17:43 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Pe7YRJd9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oDkUyCWH"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CB42A14001D3;
+	Thu,  5 Mar 2026 14:23:02 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 05 Mar 2026 14:17:43 -0500
+  by phl-compute-08.internal (MEProxy); Thu, 05 Mar 2026 14:23:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772738263; x=1772824663; bh=UKIVPiRn3b
-	rNouiXBd6D+3c9/nVYODQ8QV9CKiu/EAo=; b=AUUpZc0geN7+GC0cGApqJtBEvm
-	8HUXLTuS7nwBeuvQMrZV45mgMUp1hDGu3mCpwTfxzwjnlRCsG6pGNla25A/vARkn
-	itKmtMXDFfkzhyq7t0SjgMmVq9T6w7tsIWV9KCUFFn7C9h4z9eo7/npsD7wiExZC
-	up/DjOHmVRDNR9JZ424ULNkJ6sbW/FL6naIK4vmRUvK4X0VSbxjsxUYIrvhsUaks
-	Q++8peOZy19ESn0xEMGfXB9GNfnxqthciDrA6y4i7lP6es9z79waOJSDqO5o7BJH
-	yCyNoDhS5vyr2U4DbPvV8RFvSaAuiRahGt1iKzF3VrjzsfmWHU1WSW1wgPZQ==
+	:subject:to:to; s=fm3; t=1772738582; x=1772824982; bh=52T18nlfH4
+	v8cHQI4X3wkA8BcEuHS1wwW1KzFSasmKc=; b=Pe7YRJd9xFO9pzuah27NkzhtrS
+	dl1wktXx652hhFYl11ZwpDjW1B+QOnxCqHzL/ZP8IkUQHfmqHryWouQiMA5YMre0
+	+dPI2RCf2puo1KtlrBpN0t+mdN35CLZlGsWS6zUeS7XxQUwyyX8p+7fNluqD0a6T
+	1c/BUkzTCkq/nvvWhZxxO/H9ZSEZ0H2Zo9zngl8oxXx1tcHcIZ12TLw1idBVdh4O
+	j3TB3jDvsC9VDrS3RIKM2Xm4LRY18NIGhkrEGEGOpgKadgNBjuzJkmlcnXGegnbo
+	fvQhzd+noIrtjAXXdjmEX5a27PNJprttkUzsydKEyIgTLi5P5KaI/NIu0omA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772738263; x=1772824663; bh=UKIVPiRn3brNouiXBd6D+3c9/nVYODQ8QV9
-	CKiu/EAo=; b=IzGS5mv0XcC26Hi3wczCAk+mvfGdAbTz2eMW6lqzxsEDe9YclOi
-	iFHG9CokEHPgA+L5/qCoPJ9Yu6lpWYaYhjs3mLtns8jf9idAeAL+UlFsqvWyXj2b
-	qXltqkAKv6cFtEgII89i4oMtymb4d6LPc9nqUYMXPv3vlHYUqtEloeyOlxchVWfn
-	wLOhdcJLYR7lcKO6R6LlDkgMQQSiGAtep3Nc0qkCD2rp9VAh2WJs5GpgujxC+hea
-	YPEQ7P8lTep1tk3tAcOFtJUelgPf7FNi8LYhFPi1LlpVWkitDJ/b2xYKd++VbDSd
-	ZAZMoAMfi/IyPg5Cyy5pLR7XbqB40Ah47Kg==
-X-ME-Sender: <xms:19apad1aBm0IR-NzeXR16qfRlsu16GSmyXx9TOcF-FA5kwfvp68CMA>
-    <xme:19apabH-Qe7kKx7fpEbkmPniUb1GegDiFprkt1NnIUWzxCPfnFT7NEjx0O426-Ar3
-    eAwKSjq7N0mtDntzYEQQK9U-jzjr7RD5KP5D2B5uVD3fP5abmnOKtY>
-X-ME-Received: <xmr:19apaS6FAnTRrwJVh4fnfCMLGhHH8jk6i9hlh-3o_vLogbWbLVfVqvVYS557MYN0baIWEpgVySeGKGWtd2FTmuTAWLj-D-HEfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieejvddtucetufdoteggodetrf
+	1772738582; x=1772824982; bh=52T18nlfH4v8cHQI4X3wkA8BcEuHS1wwW1K
+	zFSasmKc=; b=oDkUyCWH9sUTvBtLYOBUy1r1TWgLsoNQXgNxaGcfygENoV0jJwF
+	Nd4THAnx5sCwCShM15ei/+eBBTFmqC2rTeOTrFbd7aEFmM363EEB1P0kNYpJjb4/
+	j1B3Nk7FYg7BjWAT5hvdb9OIYWVrIS5EVGZSgNwK51YsBtpmPXcVj3wJbtSVfZ/C
+	jhcu+2iEqxUZRuXfANBvDzy9j7Mp95rM6TXk9C78hKillJSlgqOUqvFIoFmL71n2
+	y+bNDguTTw31+0OdprBJMDx+gmUw2lqe1RK2TOEYzhZk4vhDJphXqi/PGJYtavje
+	isEMibmuc2UbjDmVDdXGrCw3gfkxXQB7E2g==
+X-ME-Sender: <xms:FtipaYmajXZy-LTyCJb_hi6AJVMZEqLLHLC8jG4ZWBxMyWugW1HNnA>
+    <xme:FtipaaHmO_ZH3H_my4hxlqSuwpE8WNMXKHewy4X7UNknhm8rwmLTddSdc83EfrEK3
+    JXDYNo7Eky6PdxFE7jB66abDjxe5PUBlSViTxzizNSzqICKZhdG_g>
+X-ME-Received: <xmr:FtipaY60Zc7fcACnr4Xx4PnY0PxzBlUp2ZAKlnpsMIFx3b7-SoM5CrfDB_ApKhMwzP89JuZVAW1uhQJ54mjxqHy6xx69LPPqvA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieejvddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhufhhorhhijhhileeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
-    shesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:19apaZsWQizRZa9HmFUhQ7vjCXbb32uIrXDqimpdsZMvDpY1FiMUuw>
-    <xmx:19apab4XmCbPTlg05nnlSflOYgEAmSetLNvsah6-j76G-t9242Ittw>
-    <xmx:19apacUd1QkYxO8hIKho2HORVRBjn1K8IOi-wzoDT40WiHEHKkSzTg>
-    <xmx:19apaV--A3hzQbBDhPtukP1hndZgq5MZXUhvyipxex0a0vTspCWSOQ>
-    <xmx:19apaeawIJsgvXdKjGV_arpeEEjw6HDRk_iA3ZdqAaSvowHHnTs1KTlv>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
+    grrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhp
+    rdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrghnughrrghkrh
+    esphhmrdhmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:FtipaaniHGfY5RmHbyPHEIpdV6h6T0u_8DYintGaWL8OUMZWufTdVw>
+    <xmx:FtipaVoscaQIXD6NnXPU1Axu9OvIK_jPlivgmkGfzq8dCvQpEnrEaQ>
+    <xmx:FtipaRseTvNzR8hE3MRXyohyc7BTUg4GzQrzapdmMiiOgnDTTZL6uA>
+    <xmx:FtipaSFvDWZsLr3U-c2DkVe7U7g1edMYbFjv33bBgYUe83PA9IUtMw>
+    <xmx:FtipaTiSjLFpMmcJRpaixpDiFzaBTg7KRwT9W3oCEUJWFuoxW508iGsf>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 14:17:43 -0500 (EST)
+ 5 Mar 2026 14:23:02 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Seyi Kuforiji <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v3 0/2] oidmap: migrate cleanup to oidmap_clear_with_free()
-In-Reply-To: <20260305100526.102130-1-kuforiji98@gmail.com> (Seyi Kuforiji's
-	message of "Thu, 5 Mar 2026 11:05:24 +0100")
-References: <20260302200018.75731-1-kuforiji98@gmail.com>
-	<20260305100526.102130-1-kuforiji98@gmail.com>
-Date: Thu, 05 Mar 2026 11:17:42 -0800
-Message-ID: <xmqq1phy3x2h.fsf@gitster.g>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: Chandra Kethi-Reddy via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Chandra Kethi-Reddy <chandrakr@pm.me>
+Subject: Re: [PATCH v5] add: support pre-add hook
+In-Reply-To: <87o6l2xuku.fsf@collabora.com> (Adrian Ratiu's message of "Thu,
+	05 Mar 2026 15:41:05 +0200")
+References: <pull.2045.v4.git.1772710566599.gitgitgadget@gmail.com>
+	<pull.2045.v5.git.1772714253412.gitgitgadget@gmail.com>
+	<87o6l2xuku.fsf@collabora.com>
+Date: Thu, 05 Mar 2026 11:23:01 -0800
+Message-ID: <xmqqwlzq2i96.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,36 +92,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Seyi Kuforiji <kuforiji98@gmail.com> writes:
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-> Range-diff against v2:
-> 1:  1d544ef7d2 = 1:  a050491441 oidmap: make entry cleanup explicit in oidmap_clear
-> 2:  f2c3a699bd ! 2:  b592d765e3 builtin/rev-list: migrate missing_objects cleanup to oidmap_clear_with_free()
->     @@ builtin/rev-list.c: static int arg_print_omitted; /* print objects omitted by fi
->       	unsigned type;
->       };
->      +
->     -+static void free_missing_objects_entry(void *e)
->     ++static void missing_objects_map_entry_free(void *e)
->      +{
->      +	struct missing_objects_map_entry *entry =
->      +		container_of(e, struct missing_objects_map_entry, entry);
->     @@ builtin/rev-list.c: int cmd_rev_list(int argc,
->       		}
->       
->      -		oidmap_clear(&missing_objects, true);
->     -+		oidmap_clear_with_free(&missing_objects, free_missing_objects_entry);
->     ++		oidmap_clear_with_free(&missing_objects, missing_objects_map_entry_free);
->       	}
->       
->       	stop_progress(&progress);
-> 3:  a4e426bcca < -:  ---------- list-objects-filter: use oidmap_clear_with_free() for cleanup
-> 4:  4116e5491d < -:  ---------- odb: use oidmap_clear_with_free() to release replace_map entries
-> 5:  ad1f776a19 < -:  ---------- sequencer: use oidmap_clear_with_free() for string_entry cleanup
 
-I think these cover everything Patrick pointed out, and I agree with
-what these remaining two patches do.  Will queue.
+> The turnaround in minutes between v4 -> v5 is also surprising.
+> Please give humans a chance to review & respond, at least a couple of
+> days between resvisions. :)
 
-Let me mark the topic for 'next'.
-
-Thanks.
+As we saw Patrick did in another thread, I often take such a short
+turnaround as a bad sign that the humans are not paying enough
+attention to what they are sending out on the authoring side, i.e.,
+the new iterations are probably outpacing not just reviewers but the
+authors ;-)
