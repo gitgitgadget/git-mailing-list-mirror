@@ -1,201 +1,217 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62358366043
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:16:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E3E36654D
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.174
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772752607; cv=pass; b=b3jcKe2NRE80qJ+jIia6gKc7iCNNrcCahb4p8rO5viaMZ5JUqQ32pnphb61lmqXPsHSByoBGyRRLTDe7XdJSwtYjO8QKG4QHfY30HSMoDY5xCTW48i/4RMHxZSSKjBXLtNcYw+9fJMoezTASwyHBWmBy/atK/2ryEHKKQt7VLno=
+	t=1772752705; cv=pass; b=ExbTUfLgpKP9LNMTbJW03NagCfXcJABlgIEf+Q+m5ZdkjVkq538KkJyvioQxRjtTObpgTin5xDJr1xzfnHAM5KcCoJcyIRzNT4rgNUzqTJfzaQhCAWakSzD0V7zH/WFDY6dPTzanMPR/uSSOL6boF4PvcPMR3xBymSs0radwew8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772752607; c=relaxed/simple;
-	bh=AeCFjVXpLbbNIb8CTsP0Z5vjPQmkwP1iq3GDHUHrmlw=;
+	s=arc-20240116; t=1772752705; c=relaxed/simple;
+	bh=csVxpwtC/d4U7xVWcqeRVpt9eUu7/erqA8rmZdQV/K4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=V01MZ6oQxN15Zx699GgnyAOZDxYJrQaRtStb3/aHphdqVXX4NeLz+5jz25E5amW38aljwU2RPIQZhPySSWxjGamWH+1BMf5BOiKTnfYLpHmRS/KxKTbFuX8KYEYzIltjrQAQlVy8Kc1fnGnTVu0/6bRno0Rgo31h9PKNLmVdFtE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G4yr2AD5; arc=pass smtp.client-ip=209.85.161.51
+	 To:Cc:Content-Type; b=diF72DUdQ1MNw5qKJ5koysulWXBYFT+vjGMpkhUF9sGwpbDnbhonc5ri9f7LxxHMqw5iiu3FQoLpwX2LoPBwBA+pQXFX5owlHe/Cbv9vQZX7AAhtdNtpQ1u4Z65TYmHjz25Fc1QnlIpneZrYVIBgWweLfPTd9S4oGvhCX4Zosww=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L07GbKze; arc=pass smtp.client-ip=209.85.167.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G4yr2AD5"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-6759a5576f5so6035291eaf.2
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 15:16:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772752605; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L07GbKze"
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-45f015a3259so3488722b6e.2
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 15:18:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772752703; cv=none;
         d=google.com; s=arc-20240605;
-        b=ElPZSa7TF8Mq0zjofw5lH+YP2RfrLrosdSdY8miHolDD8BXvl2onKH/UY7AGi8lqwP
-         x3b+Nr2Fdz6H+x23t6jnGYn7p5BFFQaJxk7qstgpWh36o0Ef1J5GVlddv9wEmsdvuo9T
-         hhVnPUHyKKFlYL1ePf/HrPT5srFSf+rQ7+8numgML3G1NvrAjvKCLMuj+iMHLCFCx8ut
-         UONwoFxn1h+eSRrW2r4Rzs1uDK3vc922Dby927JsYLleOpjR+SlnJsKFFoGWiii0Z++B
-         ZLMYbhO1gTZtZPAZdZFlE/q7bMjheqEONzIXbfP2FDMH0QI1p4T7qOefeBM4rPGX8vEk
-         aMcA==
+        b=Y3Pqp3M9aWqC+C3lcJWLGoaTIsVTlJy+3asLLBI7II48ELDoH4f3VfqrTMO83tdPI5
+         QzvadmK0sLifNiJhT7fVqVmLwfLpKmijv/TXhDQEQgJiNWGGliA/t+i0oXDpCdTK0iG8
+         tCedFwgCwz+ZyU/5nJKPDsG2x1gdj/gsvLv1lBheodUv5mpind0zgcTVdTnAcl/o6ZZQ
+         v9t0NpWlLgVwoXDBOrOCbXqr7IlZOHYl6PrwDs5/nwOrJPi3n8l/a4K5QZFpb7JxZ10D
+         hCV8EsfpIuS0jYjbhMO4OUxegPVO6515jaLDls7dDN1NdYo6tfPJBtbr/1ySKxCqf9Gl
+         0UQA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=vPjjLFpQA/I670v+wyJ7DcSo6eaokVqHtIzSlUFHejE=;
-        fh=QdKQB88OiOFVFHDP5V/X6bCh1fS8U4BKZcf/TQxiYm4=;
-        b=c3QG77O/v9We3ex8Taa69XNJ8pyp1GGMMz/kVaToHG2lg55QDOqGoXTYK632OwhMa4
-         qKHhzThLFTRd/cAFTwtXMm/A18ltedDcSsd5PzeGxnRheuKoSom3YDilPHwrZ0pbmsZS
-         XNBN2qncpLSFp9Oli9AK0mw1wbBCz9gUEghBjwhyyIC2iz0MG4H0sbiVX1doOfnpdYAo
-         W9hlX5bpsYl9l5u6MAMEn9Efohy6WbMYMccxfkWeqgRLcwOFUCFjo3tHE/hEh3R9yq/n
-         ILHF3CVieg59GQZc7zMjWgN0me2OYCOUwbd1W3c9htjYRuQBPJotS2ZdanKQU5a0zYnM
-         68oQ==;
+        bh=D09eyc1pAL/fhBTdZtv9AcnhIfchv+j+R0FpA2YUvjU=;
+        fh=g5BSHSkfG2U7m/p2p8OgcJkygM7fmNPSpQr5IWGN6k0=;
+        b=P2ZlcalNXGes1XKZZ4eQ9tsa93fwnZCZgN3kNxRbltmjMC5f+Ralgl97+e0HUnk9A4
+         as3UBM9BVACL7R1Px4njwxPiHsOptdWLLrHCkZgpNcU53Gt+QvbU/l8a0AJXZnx5+SdC
+         SKddN9CzkcY/n6lJ2ycVP0QBh/RfLlep6HRpkDiBJA6CWhKATZutKF0DLuceGRy3zluL
+         NQROJt0F2FU2WTlC2qVIVOSXUcth0bvVEYBX8FM0ueovAoOmtyphQ2vwmwawefpIh/f+
+         dv7oY0onzkguLDZTz8r3KI7GYhjK6Xs/Eh63fnkB9hIIArAsduEwpVoHL75X8hgZl3O0
+         Yinw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772752605; x=1773357405; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772752703; x=1773357503; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vPjjLFpQA/I670v+wyJ7DcSo6eaokVqHtIzSlUFHejE=;
-        b=G4yr2AD5/JbRupHTStTxM0iP3RH9kKmSXa2NuLWKrc8TSXlS6TE68wtuaNXmmUVhf2
-         1o1UbZn9XyMWxgPk4RD1D/cHoufEwxtuUfRvhgEK2jQHJjXkz7cAjkkCQkkutnCQrIUX
-         bVvtR12415n9a/cDOHy/dDk87gK+yI3TaLw7OhfzYM2GXVLSW5FOKLcNe/IyUVi2nsP6
-         t/L3k+l2OEaHl9uFhFr3WFkyFFdzstSedW7j3CjSoS/caU27krLsDfPoFhtPbOC4FtDp
-         +iyY4ICDTd/HGTCV4iKixu3AHfopgZUqHzxH63VEZiTuCJ0eYjcf+MeuoPwXLWplTGnP
-         9aNg==
+        bh=D09eyc1pAL/fhBTdZtv9AcnhIfchv+j+R0FpA2YUvjU=;
+        b=L07GbKzeGTa5Egq0WFpjzvrv8Zrz3rY06OTI9+Jzf9mb36LSx/xMWGe+JIudfuQiAP
+         qA0iEZqlFIAKSl0sv+dya8qAeLmDvzQivYrfKHH6zuwwdqjemTqfRHBvl7ClUGEk9Z+m
+         xlT0/f/TyC0oMVs8seY1hDsNZzCoBy7mSThwCorduGsEhKCWsL5XrvUbYBIkboKFvRrz
+         MV+ZdvGMGvzUxqMh39aRlH3Fn0k758ux6x4EAOUGH53n4m/+aha9ySa3Vd0cURBnyMeg
+         SybzJSX7hhhamvCKbyO4E7vlztD8Qon/RjqfonqACJ4/qaUDw7o6ORQauxPapNHuu954
+         V/jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772752605; x=1773357405;
+        d=1e100.net; s=20230601; t=1772752703; x=1773357503;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=vPjjLFpQA/I670v+wyJ7DcSo6eaokVqHtIzSlUFHejE=;
-        b=CKVDWbvyH/xvDP7u0Q4GMStk5kTGOq4Zhd8a59eegBEpwqIe2Vh96jg9M+xpgLCyXl
-         wnWcSI858yxQIoqtXZC4SOHNje+OFL8z7fZKRZ8OPxjVX7MqW/aYsBo91e0+mtLFAweo
-         +3ht7+hVtdxKT2lmajLAEVMAnmMl9G86NNfXF11fV76zQTU0/hmhPaorZ/Sn57CjGsv3
-         ZEZwkCsMZPMEUb9KAYDxQnnij95DBaumHxYyMsp55Tg5bntLuBfsNzo7bNKLe2jIrDns
-         l9OvSSDtf/MsaXuMnauY0NKTQLE4IlIWy0nY9hmsAJSVam62NSs+TLyQaP3AaVKUsN63
-         BWNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXBWvN1du3rYyUugxA7fuR1ZrT1+jI9hGoJGI770lHg94G4CB50oP4upr6q+ptfJsytpfU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRCbPes6W+wwUzhGuf6fZ6hrzV2gtG7xp4ZPmlduZgKZzqaS81
-	nXoP6kauNkwZvKXCak/tRaOuD4bzCrJiRx6lFu9gs2TCfRIGl2Wnkkaac8DOY4GOAaCzb+skxCY
-	XI5aiU669CWdiZBN3+PycpUvmX22Z1WblAQ==
-X-Gm-Gg: ATEYQzyIg7pmgOgu3D6wutKsL4tNC9VH7EkUTdjojHWKOahmvoBRBdioCpRQ52atKNV
-	uz0QfCDrhPGoFkOfPrdz/L+OZRYTkf38izGDDD0xN2pnklwwhfJHiGUEr+bQPf+lmLcBBMpgRi+
-	rWHneNrQP3DWIKtMyjH20mqCL+2/rWKZ2gqLV6tk5kAxqMEPNPezoo6WULSoYo2KMHYiaSe5ACV
-	rEOwjwCTzPGkk3OzHOI6OlhrPdKy+0s2QmHKdS9RtITsS4LcAm4Z6UYzSdxIqZ6tqjnSlE+3yIU
-	MKXYog==
-X-Received: by 2002:a05:6820:f07:b0:67a:608:8dff with SMTP id
- 006d021491bc7-67b9bd49544mr169851eaf.61.1772752605280; Thu, 05 Mar 2026
- 15:16:45 -0800 (PST)
+        bh=D09eyc1pAL/fhBTdZtv9AcnhIfchv+j+R0FpA2YUvjU=;
+        b=IoS+TpIbvWxUNxFnTMYgS6RU0EM77bdwZEc2TekYNtnwgBenXVCDoK4mKBZ9DSYW3+
+         BMA94aaOztLqs4vG7whedmcu06KLlp7W20BfaTxAQtUvA68EtoJwv1w8FeNDAz+o/Ku+
+         OxHJwXodylNsMhXvUCZ7RfxID3pub+eWOV4R5lF5ZS1EbhrcXsC8JMwQ4tUqevA9Byni
+         E/92mG2v5LMfo31mlLVzsbRjJySkFa3NnYmsjAAOwq9MHdSm82N1rHv1j4ggxJr07o/D
+         Di+Y++3lvl/HAFaRw5h4Fy+wW9UpYOjaY4VHQVklOVkgIousRs9+A/eJp6zw9NxYTCmA
+         X5dw==
+X-Forwarded-Encrypted: i=1; AJvYcCXLTNF5BHgs15kBo5R9mjEfnqA644NtrbufZjpsxhkJFuHgPEzQWD+6jpuqcp7Yi4DBrek=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzHVaG9twsF/EBAFxZKylnDmCic+Lx2lPFYlhXnsE54xGF770q
+	vHhZH3TIRPB6AYBy/9IXisNvl27xeMQ563cqKAmePwnabFEm0LVyBTKpLVADuZpcVONuLtRJrns
+	yPsz112Uldwfv/B5aVZi7vja/zhPXlto=
+X-Gm-Gg: ATEYQzxyy5wfsxaTiBBtNq1rnHCCqVHCuOXBKBHi3atau+rP4rRZi6E4yN8Qt/zu57+
+	0G/LOLdKmQFqp+K71sWJuZ8LC8A0YfEcUphuvMoi/p1IatJ0KPrgVFWFgHcmiM3fSkpy8Z0jMNP
+	P3O7RU1oSYHPJXDkI/zIe6iuk2B9rx6l94riOt4seblMtGluNj5v2p/OkKyRPO2uB47sQQAlr0O
+	WQ3TBYqDOKHQF+vfBfk2TY6v4Y2OUl+NgZubKf4mG+sC+S/2QvAJ45JGsuCtARhGnDXdUVnFWPd
+	PJ4Zkw==
+X-Received: by 2002:a05:6820:4987:b0:67a:2305:5e4f with SMTP id
+ 006d021491bc7-67b9bc6c990mr162105eaf.13.1772752703131; Thu, 05 Mar 2026
+ 15:18:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <b9fa930e-7d5e-47f1-8896-1997cf7c0cdb@intel.com> <20260305220214.GB736322@coredump.intra.peff.net>
-In-Reply-To: <20260305220214.GB736322@coredump.intra.peff.net>
+References: <20260305230315.GA2354983@coredump.intra.peff.net> <20260305230854.GA2901305@coredump.intra.peff.net>
+In-Reply-To: <20260305230854.GA2901305@coredump.intra.peff.net>
 From: Jacob Keller <jacob.keller@gmail.com>
-Date: Thu, 5 Mar 2026 15:16:35 -0800
-X-Gm-Features: AaiRm51vswMAJWEE8X53PWDOXWcQZK8uDRb024r-ENWDgZDVmEYj8xVQYnqsPkc
-Message-ID: <CA+P7+xp7HTykrBdr8WKb__M3Hj09-WQ6HRrTb9ZiHbWV1U=GhA@mail.gmail.com>
-Subject: Re: memory leak when cloning a repository
+Date: Thu, 5 Mar 2026 15:18:12 -0800
+X-Gm-Features: AaiRm52PopAySBEy623wWVlGbynUx2qzHfZkRyRgYjL1YdE8pXrMR8--7l0oHQo
+Message-ID: <CA+P7+xqaCtqTwa3FTCkXyAVt0wX=EW_T1fr_u84w9Dm8XhJBow@mail.gmail.com>
+Subject: Re: [PATCH 1/4] check_connected(): delay opening new_pack
 To: Jeff King <peff@peff.net>
 Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 5, 2026 at 2:02=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+On Thu, Mar 5, 2026 at 3:08=E2=80=AFPM Jeff King <peff@peff.net> wrote:
 >
-> On Thu, Mar 05, 2026 at 12:51:17PM -0800, Jacob Keller wrote:
+> In check_connected(), if the transport tells us we got a single packfile
+> that has already been verified as self-contained and connected, then we
+> can skip checking connectivity for any tips that are mentioned in that
+> pack. This goes back to c6807a40dc (clone: open a shortcut for
+> connectivity check, 2013-05-26).
 >
-> > I tried digging into why this leak occurs but so far I don't have a goo=
-d idea.
-> >
-> > This happens when running on next: 7842e34a6654 ("Sync with 'master'")
+> We don't need to open that pack until we are about to start sending oids
+> to our child rev-list process, since that's when we check whether they
+> are in the self-contained pack. Let's push the opening of that pack
+> further down in the function. That saves us from having to clean it up
+> when we leave the function early (and by the time have opened the
+> rev-list process, we never leave the function early, since we have to
+> clean up the child process).
 >
-> I can reproduce it on master. This seems to fix it:
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> One thing I noticed here is that for a clone with a single
+> self-contained pack, we could probably skip running rev-list entirely. I
+> don't know if it matters much, though, as a noop rev-list process is not
+> that expensive compared to the cost of a clone. And in the worst case,
+> it would involve calling find_pack_entry() on each proposed ref tip an
+> extra time only to find that at least one does need to be sent. Though
+> that is also not very expensive.
+>
+> I left it out of this series, though it would involve moving the
+> new_pack opening up above the start_command() invocation again.
+>
+> I also wondered if this whole thing out to be written to avoid a one-off
+> packed_git in the first place, like:
+>
+>   - call reprepare_packed_git() to re-scan objects/pack
+>
+>   - find the pack by name in the packed_git list
+>
+>   - don't clean it up; it's owned by the repository struct now
+>
+> But that's a somewhat bigger change, and I'm not sure it really buys us
+> that much.
+
+I agree, this seems like the best low hanging fruit improvement to
+avoid the unnecessary cleanup.
+
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+
+>
+>  connected.c | 33 +++++++++++++++------------------
+>  1 file changed, 15 insertions(+), 18 deletions(-)
 >
 > diff --git a/connected.c b/connected.c
-> index 79403108dd..e0f8ff38cb 100644
+> index 79403108dd..530357de54 100644
 > --- a/connected.c
 > +++ b/connected.c
-> @@ -90,6 +90,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+> @@ -45,20 +45,6 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+>                 return err;
+>         }
+>
+> -       if (transport && transport->smart_options &&
+> -           transport->smart_options->self_contained_and_connected &&
+> -           transport->pack_lockfiles.nr =3D=3D 1 &&
+> -           strip_suffix(transport->pack_lockfiles.items[0].string,
+> -                        ".keep", &base_len)) {
+> -               struct strbuf idx_file =3D STRBUF_INIT;
+> -               strbuf_add(&idx_file, transport->pack_lockfiles.items[0].=
+string,
+> -                          base_len);
+> -               strbuf_addstr(&idx_file, ".idx");
+> -               new_pack =3D add_packed_git(the_repository, idx_file.buf,
+> -                                         idx_file.len, 1);
+> -               strbuf_release(&idx_file);
+> -       }
+> -
+>         if (repo_has_promisor_remote(the_repository)) {
+>                 /*
+>                  * For partial clones, we don't want to have to do a regu=
+lar
+> @@ -90,7 +76,6 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
 >  promisor_pack_found:
 >                         ;
 >                 } while ((oid =3D fn(cb_data)) !=3D NULL);
-> +               close_pack(new_pack);
->                 free(new_pack);
+> -               free(new_pack);
 >                 return 0;
 >         }
-> @@ -128,6 +129,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+>
+> @@ -127,15 +112,27 @@ int check_connected(oid_iterate_fn fn, void *cb_dat=
+a,
+>         else
 >                 rev_list.no_stderr =3D opt->quiet;
 >
->         if (start_command(&rev_list)) {
-> +               close_pack(new_pack);
->                 free(new_pack);
+> -       if (start_command(&rev_list)) {
+> -               free(new_pack);
+> +       if (start_command(&rev_list))
 >                 return error(_("Could not run 'git rev-list'"));
->         }
-> @@ -162,6 +164,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->                 err =3D error_errno(_("failed to close rev-list's stdin")=
-);
+> -       }
 >
->         sigchain_pop(SIGPIPE);
-> +       close_pack(new_pack);
->         free(new_pack);
->         return finish_command(&rev_list) || err;
->  }
+>         sigchain_push(SIGPIPE, SIG_IGN);
 >
+>         rev_list_in =3D xfdopen(rev_list.in, "w");
 >
-> I think this has been leaky forever, but it's usually leaking a single
-> mmap, so nobody notices. But I noticed something odd about your trace:
+> +       if (transport && transport->smart_options &&
+> +           transport->smart_options->self_contained_and_connected &&
+> +           transport->pack_lockfiles.nr =3D=3D 1 &&
+> +           strip_suffix(transport->pack_lockfiles.items[0].string,
+> +                        ".keep", &base_len)) {
+> +               struct strbuf idx_file =3D STRBUF_INIT;
+> +               strbuf_add(&idx_file, transport->pack_lockfiles.items[0].=
+string,
+> +                          base_len);
+> +               strbuf_addstr(&idx_file, ".idx");
+> +               new_pack =3D add_packed_git(the_repository, idx_file.buf,
+> +                                         idx_file.len, 1);
+> +               strbuf_release(&idx_file);
+> +       }
+> +
+>         do {
+>                 /*
+>                  * If index-pack already checked that:
+> --
+> 2.53.0.786.g466665faa3
 >
-
-Wow thanks for the quick response. I tried looking at this but I
-wasn't sure where it was correct to put the pack and I was having
-trouble tracking the storage of the mmap through the compat_mmap.
-
-Yea, we're leaking but its not a huge deal if the program is about to
-exit generally.
-
-> > Direct leak of 27168 byte(s) in 1 object(s) allocated from:
-> >     #0 0x7f0e100e6f2b in malloc (/lib64/libasan.so.8+0xe6f2b) (BuildId:=
- 25975f766867e9e604dc5a71a8befeaed3301942)
-> >     #1 0x00000122ab77 in git_mmap ../compat/mmap.c:15
-> >     #2 0x000001169466 in xmmap_gently ../wrapper.c:884
-> >     #3 0x00000116959b in xmmap ../wrapper.c:907
-> >     #4 0x000000d168fd in check_packed_git_idx ../packfile.c:179
-> >     #5 0x000000d16cce in open_pack_index ../packfile.c:282
-> >     #6 0x000000d25273 in find_pack_entry_one ../packfile.c:2078
-> >     #7 0x00000099f969 in check_connected ../connected.c:148
->
-> We're in the compat git_mmap, which implies you're building with
-> NO_MMAP. We turn that on automatically when building with ASan (so that
-> we can detect single-byte overflows even when mmap would round up to a
-> page boundary). But as a side effect, the "mmap" for index and pack data
-> is done with a heap-allocated buffer. So now ASan/LSan will notice and
-> complain about it.
->
-> We usually disable leak-checking for our ASan builds, so we wouldn't run
-> the tests with the compat mmap. And our leak-checking builds use LSan,
-> which doesn't set NO_MMAP. But if you combine them with:
->
->   make SANITIZE=3Daddress,leak
->
-
-Right. I built with meson and set the option to build with
--fsanitize=3Daddress. I might have set leak too I am not certain. I was
-not aware of the NO_MMAP.
-
-> or even just build with:
->
->   make NO_MMAP=3DMallocHarder SANITIZE=3Dleak
->
-> then the leak will be reported. I guess maybe you're building with
-> SANITIZE=3Daddress, but then running the result independently, without
-> setting ASAN_OPTIONS=3Ddetect_leaks=3D0.
->
-
-Ya, I don't have that set. The only options I have is (as of recently)
-to set LSAN_OPTIONS=3Dexit_code=3D0 to avoid changing the exit code on a
-leak detection (after many hours wondering why my bash completion was
-failing due to the leak I reported a while ago...)
-
-> Anyway, I think the solution is probably something like the patch above,
-> though probably it needs to cover the case where new_pack is NULL.
->
-
-I can double check that later today. Its low priority, but I do think
-it is important to avoid leaks since code can be refactored into
-library status over time where a leak becomes more problematic.
-
-> -Peff
 >
