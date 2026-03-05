@@ -1,232 +1,169 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A9C1EB5CE
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 10:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72B515A85A
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 10:58:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772707862; cv=pass; b=Qtw7t0ApA1wA8dzN5XJ1eqoEl53V+HWgqZW7cJTbxDkns8dKYJGwUAPbX8TEJ1gedp7qeQSWxrSvZWCb/GjLz7GKpVPeAwQHYD3ayVBR9fdEcDZhrWPjS2LE9EQTc9LeBJaHAeo1TLyhuqDcmb+W3hpmTIXbjTELjc4cafZp1Uk=
+	t=1772708315; cv=pass; b=VD0WcZq4/hYIbIcXpetp06vhJmttT5mCWUvX/6+Cok8D1Ad22HRZnJx+fPhoz2/a98snXvK0t/eV7/irrK9406FSgtH37WcdN45N+2qGp0Fb7kyDzmhCWuX4AB5ScOHvYBmsyAAraqhXwp0KILe50HPbE+Z8PGboFCbSYZJR6RE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772707862; c=relaxed/simple;
-	bh=nQi6TBRmzx3W0h2dAmzfUXqxIzr58/YaMNarc5UXnK0=;
+	s=arc-20240116; t=1772708315; c=relaxed/simple;
+	bh=Oj7nz8/fqIDE6nc2m3+uVoq8h63GVrG/vZU0unspHWU=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=fHgkjU16Uylbcs9OJzOqadfGmqvdQJpLjtZU3Stttppf7QJJv6CknI3jgyTbgkAT9uYQI0qefypsiYNElDDxagNxEZNqctPFj4fYiSwptpTBhR9wgEUZRU7jJeM/1IUV/+mI93BflFkVUGBRYVzaYfoEER7e8SbxcFiFz/9IleE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e1Y92eeL; arc=pass smtp.client-ip=209.85.217.53
+	 To:Content-Type; b=IE6qQapk7MqBXbR3jLHZz2UAZVlRznVQNORcZ0v8ZkC+l3JHP416WcwHAKbdDesKx8kDRJkRhuWgOJDw81vV9LF598a2Qb9mLFEZQpJ7Rfa+lA2bvTvQ/Rkgvj1wmQVGShEbWHNtqMDdfywyLtq++ygCmKfOqQ5W77sRwJelB7w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cUV20ALO; arc=pass smtp.client-ip=209.85.217.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e1Y92eeL"
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-5ffbcfbcec4so357505137.3
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 02:51:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772707860; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cUV20ALO"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-5fded42aa7cso5363576137.0
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 02:58:33 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772708313; cv=none;
         d=google.com; s=arc-20240605;
-        b=W7o1KGr7DtZvIOSYv/GR3DKfpypL2T9PDvIl+cXeHGyhrlK/l8CASHSZCyMWbBZjmi
-         6W4K/H/6NBNdR1Q216pRpTwarI3ld82cIH+TWxYiIMWO3Bgd4alpYljT70/Io4neWi6r
-         lHhx8thnF0BYMT2UiEWYHn0f2tD+Rco8QdEiQo0ykZ+KC/xNMZoLEre5B6zeCUTlaqv9
-         6Fvv80KQuH2X6GRrhVosY1ZlHJKqfTGrUc0svO+gOs56uUOWFRr1599wJRw/ypk7cKgj
-         xwBb53e9JLIEJXummWVzRJwK2WZ1ld78TqfRKpsv7He1XsSq+LwMejiPI5SkWuouOmuR
-         eKFg==
+        b=DR4YQ5dZQpKwPUjxErwoZOgSbSh93OUSJtxwAJkvtrmLQojre0KqndDXu05mKhEoqS
+         U8yI5wNAL3kaTZVO4q2Sx01tcjdKvCCY1+252ADwpgAD6XlYSVS9FMW+iAesq3fO/4Pe
+         3rtMstmlOHEXZzA2BOoHMLvg7qX3JPNO11FVuCIXDK62gc2SIPvySgikN27YebbS/+fR
+         J+zMLiFNcdXnnX44Mt0U70vu84BttK6ujo4LqnOjFeFZ8cFz2H7xTG4pMFIJVH6T5DNz
+         C/ZWMI3f4CV9rO1gxswXWVSALN7mtqH4/fndPJxsh8KIkJjeKJ4A0OhYZTILqk42sNfZ
+         a+2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :dkim-signature;
-        bh=XMdN/phtf7ZkxDxrSvmmjKf/gK3scFeu3REJobDsZLY=;
-        fh=3F0DqTjVZJX4fD/FR6LBV+E5v5O/RWGlC+T2dh0nIyA=;
-        b=ja451HWDSqGPQsR/aRVZKOAkIiByVeXgsJRu/tu+b9ZbkBZlfFoZTe6oQGbQypn0xM
-         4JI0ZetFePzy5/5XzSwUhALQEC5Mpo6LtwYqUHK+GT74yOyC1KqkBQwXkbvZINbPTSXl
-         aSwQjGA3eHHkcjt8ZGF2wD9aLFSet+zwZVdjdnU9sVwDnKSbP4n1OFE1hmAy6jJ0GAbh
-         GqMqsdYaGwbSSD06K/XHpjNUAAlaAGpj1tocRhM/4EeeZMcSV4zfd9ROSUMK9vvsTdR9
-         NxbgU827wutqNCtHzJq7ML0ShqpNl1fGPgil9lql1onF86m1dOsCX+WTLUnlQKS5IsLp
-         Cv1g==;
+        bh=bqcEGhmfJ6n/rEHQ7eWnYcv5wrj6zhrtqOdS0IpdNCY=;
+        fh=He30I8peZ6oO10lQnWoKCp6PzvrQX9CIGGZqnUeJH4U=;
+        b=EzlWqW3XvTXeMpYv0ErngeeT0cL4cwd1kco5XmD2hwcgA/XPo9HDclq6EnDsGhDUCk
+         rWUYMvmyVAQ3X9qZA7GhDgCdTHg8UR7T8SAwPHAbf3FeikVM7ZUh7p22LuIQZQuF3GXv
+         Cutk2ex8wzDi3+Jk182jHEGTXVpPvG9LpUTSTU1fmTu6MqMy7BfyJ4jMo5KWj9FdJK+F
+         MnrGY1+6BWMZ4MK9y4Br6TIzFmMjuD0pQh0iWgI+5ie2ZcMFqJKcT1k5DI5Hkath7bIU
+         yzzZlNwLBdoSx063rFwOgjYYgpmKQWxO6jiIWTaFsj9IHeqncprmFyWAHjzCvOgwKJ7c
+         NqZQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772707860; x=1773312660; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772708313; x=1773313113; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=XMdN/phtf7ZkxDxrSvmmjKf/gK3scFeu3REJobDsZLY=;
-        b=e1Y92eeLArAOOa1nJcs48+1vXibBe35hXjXurEgK2WGXv4OnxNhffXMhNUS2X62c3O
-         9ZO+t4fMdto9HctDwXO7tBspoItq9x/63MZLqdOBeUGKn8Jb6t+SqtDIYdoPQAfo83R8
-         ds7psoClipbkPjxgFY2ndBBjgLQxpKwx5djKZngRL3vUd1jBr7rMzGcBHcjpby2F5Ehv
-         oRm35zEosIQndofx8W4TjvoYOA6NtBgnWoBgisWooVwzNRoXl1cpczlmvxjwVQ8BovFG
-         OQbY0hcDqMug+ALXZFAuVeyTCfekd+9SNZcWwKLbcBpEXvi4JRUBBS+rMN3Nh38Zc9Jr
-         2J0g==
+        bh=bqcEGhmfJ6n/rEHQ7eWnYcv5wrj6zhrtqOdS0IpdNCY=;
+        b=cUV20ALOqIkGLFWh+eBFxcX8Dnp1zSFxCgmS1Dg5uUFLNnrtWafIdR6tgSZ8Ie00qF
+         4WhySWp0Q5RA6eybLFeWeQeh//E9AlqItaMTYZMOv7JKyf78nZfaOjeJAJMeXTNeekSi
+         nNKRs51LBItdCmWOI080NqCtuFIs0bKRxUHXvwLF1uY2QglpQgaAxXK+51v5UavkW9ci
+         66vCXPhaRhlyrATNM1+w1j5g7mfyntJXUh0soOHPvoyzlfI7mnRKWubpyc+l/1JRAPQD
+         enCMoqsI2jn9oN5aIC3Htaee31kTZY0D3JUVTaYmXWN8DG90kRm/MGhj4ccve9iXPdcJ
+         O20w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772707860; x=1773312660;
+        d=1e100.net; s=20230601; t=1772708313; x=1773313113;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XMdN/phtf7ZkxDxrSvmmjKf/gK3scFeu3REJobDsZLY=;
-        b=BZpTPuI2V/c/cYCkEh0V3ye1hGSi2/Ojh8KDsk+Ih8J4jRfBTHFCCQT9usTHIM8xEq
-         Au+L9+l2hoy/TXKD/HBrP0xv/zpEgwKF68s5QU1BG7g28/uo9DMeyTajpp1qSQof9sjT
-         TuS5d6H+2uLqTTKu1Oyk4D7CA5mJHSpYjIUXp5cexywURKYxwTPsr14Da4Yp6nzlhVZA
-         slner6cxQSJbZYAB367oCv0rjkpn4lwXMHCXp+iLhcHWFG0Z0PXnct8VHyp7E+2biqQs
-         GN/BWtN4QLbulIfAmfrtX8VMrv6U56xxnONHR9+1lkqepJreBRQ/P8ddVqfLD60dDbct
-         9NnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXah3gnQ6yNoUHYcrveyW47mCRfSoFsW/KsKPIUn5Tnk85ViHGV84lXBldxskEpDa5xKz0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4PU7G0miIwiWiHRd8aEE2Oi1iNnkZAWFGezYjTBN539zyR5rl
-	SV9QuWgkGmlKOhBJcSuL+ISbUXywU9DGFLfFKmnrLEJagA65CRI2i8+QOTUMVEqcrJvtrg5rFbi
-	pEs1s8V8mdaLPdn05in+cHiyWjMLVMLoBGKtW
-X-Gm-Gg: ATEYQzzjbMR0CBuj7hNAxwL0SLobr1rZwcnPEw34LHvc6LiW+e++EpUQLP4oVxeDz+0
-	YTEcZ3OQQ2dQlWktPBOlnQpWZRd0XJ3e3PGzEw5czuTb8naF0Fn51P8J5FuYiDo2IEhBThTIsYh
-	WiEiu3XQjMnn0xkAXJEa0vD5aOy411hzy7ZjWDBw92EcyiowJp2PdDig9RBd/nuEl9cf5nS9gPm
-	EdiWKGphIQJtqYO3aEmFi1uoF4HnU4IARVyV7wMFuGEirkeDIEPCc1Tbfy7xne04ScNsH+KVYwh
-	HNDyu1O8FsRaRlWO2/myBeJKim6H5+BgvjeXks/awlVgqxu5NMo=
-X-Received: by 2002:a05:6102:508b:b0:5fe:43e:63d3 with SMTP id
- ada2fe7eead31-5ffab2a0332mr1921121137.41.1772707860075; Thu, 05 Mar 2026
- 02:51:00 -0800 (PST)
+        bh=bqcEGhmfJ6n/rEHQ7eWnYcv5wrj6zhrtqOdS0IpdNCY=;
+        b=XttN48IArBe4mfNu3VfLm2ixy0RmodKSet/eNGG+R+IzKWag784o0Bw7VqJXRge+l3
+         kPW5yms6XZ6m0MgnE8keQrpD2xMLIYAhha1iEytcnq22Wit8JvYq7/bPMmybB6iBOs4Q
+         VU9BN2FfYXlq41hwPoY0LBiTz4yp/6HuW+H7qKdaGcVnDmFgrFiDJpLy+og8JVt+qDfS
+         pBvx3Ptiq05QnTYSUycDee9rR6UZRw7RBYF1I38T+7Ys/7UX0JKTVd1yRpm3mBQjr0Wd
+         EKQCCihZyx56JueupgwmEqPt0q9vsB8gk4nh9uxSSD16EogU44+3aUHZnFfykFsUOGvJ
+         Pzuw==
+X-Forwarded-Encrypted: i=1; AJvYcCUtebHXxOei+4U9fLa/SB0Lb/PvaXix5EmcUnt9k4nVIscWn1IJH8Ys0TygKwiSGqgoIL0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXM7z88QHO7RCtP9BCN1Lqu1Q1+KgkkkF1NdiQ6PchP2DDnzWS
+	Q1RA7jqXnJGebopQfiUp+EyX78nclN/zx4kqmUMBcEmVkflebfx92kFhZ3owMR5J+m7jdeqt2VK
+	5zQnp9nzd0az3c183Dtxrk+ARwqI1YfE=
+X-Gm-Gg: ATEYQzyNB65vXyw9fiADj+Eov2OgNh6RAIu+illL06+ELtqDaeYRcuCiTVNvuzEJIZM
+	uByKk0IeU7DdxdUYjQRjlB/pvhaDpcr7eD0nly6C1XaKhhlDy3MioSzbqQfQ2++iJluvCx8FsV1
+	vmHHJUQX6xv9yTyM+eg5nyLd08eAbDmzkqC7CV8IsVaXT9oFG6iGJ8TG6DclCsifX+4ySkSeJHT
+	HNkKJQfY5XZYsiJm0YhNlftdPe3KQk4Dwkm6TH3ipAxaXfi0A/MFBhoiLa3UH08oXeJ3X+kJoHs
+	1Zexr9x/KdQr4TzGnCs//6rbuUTRTvJLQoufL+9h8/KoiP9ya4k=
+X-Received: by 2002:a05:6102:4421:b0:5ff:d71e:c5fd with SMTP id
+ ada2fe7eead31-5ffd71ed09amr93910137.2.1772708312861; Thu, 05 Mar 2026
+ 02:58:32 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 5 Mar 2026 02:50:57 -0800
+ HTTPREST; Thu, 5 Mar 2026 10:58:32 +0000
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 5 Mar 2026 02:50:57 -0800
+ HTTPREST; Thu, 5 Mar 2026 10:58:32 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-5-253bac1db598@pks.im>
-References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im> <20260223-b4-pks-odb-source-pluggable-v1-5-253bac1db598@pks.im>
+In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-8-253bac1db598@pks.im>
+References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im> <20260223-b4-pks-odb-source-pluggable-v1-8-253bac1db598@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 5 Mar 2026 02:50:57 -0800
-X-Gm-Features: AaiRm50ja__RDTLidss_6-CgfazIcKnn4q_-9yAaswVwP9JZyWerc7DZ-y4ZH50
-Message-ID: <CAOLa=ZR3cQjgdzF9_hRHSW6iO3p0qzduBBvO4-yTnc-1P-oFpg@mail.gmail.com>
-Subject: Re: [PATCH 05/17] odb/source: introduce source type for robustness
+Date: Thu, 5 Mar 2026 10:58:32 +0000
+X-Gm-Features: AaiRm53WW_68S_z5045fpwhvRPyzNSHjibEiLUATC3pA6UBxS93cdtN7_U3uF9M
+Message-ID: <CAOLa=ZRucajqkGeiHM8fvSm2WJFStoBARSC9MH2W02Qw8-7JyA@mail.gmail.com>
+Subject: Re: [PATCH 08/17] odb/source: make `close()` function pluggable
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000004a72b5064c44b6a3"
+Content-Type: multipart/mixed; boundary="000000000000476b95064c44d1c8"
 
---0000000000004a72b5064c44b6a3
+--000000000000476b95064c44d1c8
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> When a caller holds a `struct odb_source`, they have no way of telling
-> what type the source is. This doesn't really cause any problems in the
-> current status quo as we only have a single type anyway, "files". But
-> going forward we expect to add more types, and if so it will become
-> necessary to tell the sources apart.
->
-> Introduce a new enum to cover this use case and assert that the given
-> source actually matches the target source when performing the downcast.
->
-
-So this is what I was talking about in a previous commit, nice to see.
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb/source-files.c |  2 +-
->  odb/source-files.h |  2 ++
->  odb/source.c       |  2 ++
->  odb/source.h       | 16 ++++++++++++++++
->  4 files changed, 21 insertions(+), 1 deletion(-)
->
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index df0ea9ee62..7496e1d9f8 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> @@ -36,7 +36,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
->  	struct odb_source_files *files;
->
->  	CALLOC_ARRAY(files, 1);
-> -	odb_source_init(&files->base, odb, path, local);
-> +	odb_source_init(&files->base, odb, ODB_SOURCE_FILES, path, local);
->  	files->loose = odb_source_loose_new(&files->base);
->  	files->packed = packfile_store_new(&files->base);
->
-> diff --git a/odb/source-files.h b/odb/source-files.h
-> index 58753d40de..803fa995fb 100644
-> --- a/odb/source-files.h
-> +++ b/odb/source-files.h
-> @@ -30,6 +30,8 @@ void odb_source_files_free(struct odb_source_files *files);
->   */
->  static inline struct odb_source_files *odb_source_files_downcast(struct odb_source *source)
->  {
-> +	if (source->type != ODB_SOURCE_FILES)
-> +		BUG("trying to downcast source of type '%d' to files", source->type);
->  	return container_of(source, struct odb_source_files, base);
->  }
->
-> diff --git a/odb/source.c b/odb/source.c
-> index d8b2176a94..c7dcc528f6 100644
-> --- a/odb/source.c
-> +++ b/odb/source.c
-> @@ -13,10 +13,12 @@ struct odb_source *odb_source_new(struct object_database *odb,
->
->  void odb_source_init(struct odb_source *source,
->  		     struct object_database *odb,
-> +		     enum odb_source_type type,
->  		     const char *path,
->  		     bool local)
->  {
->  	source->odb = odb;
-> +	source->type = type;
->  	source->local = local;
->  	source->path = xstrdup(path);
->  }
 > diff --git a/odb/source.h b/odb/source.h
-> index e6698b73a3..a1f2f8fdb1 100644
+> index 2f8132f9e1..7af4900ab4 100644
 > --- a/odb/source.h
 > +++ b/odb/source.h
-> @@ -1,6 +1,18 @@
->  #ifndef ODB_SOURCE_H
->  #define ODB_SOURCE_H
+> @@ -59,6 +59,14 @@ struct odb_source {
+>  	 */
+>  	void (*free)(struct odb_source *source);
 >
-> +enum odb_source_type {
 > +	/*
-> +	 * The "unknown" type, which should never be in use. This is type
-
-Nit: s/is//
-
-> +	 * mostly exists to catch cases where the type field remains zeroed
-> +	 * out.
+> +	 * This callback is expected to close any open resources, like for
+> +	 * example file descriptors or connections. The source is expected to
+> +	 * still be usable after it has been closed. Closed resources may need
+> +	 * to be reopened in that case.
 > +	 */
-> +	ODB_SOURCE_UNKNOWN,
-> +
-> +	/* The "files" backend that uses loose objects and packfiles. */
-> +	ODB_SOURCE_FILES,
-> +};
-> +
->  /*
->   * The source is the part of the object database that stores the actual
->   * objects. It thus encapsulates the logic to read and write the specific
-> @@ -19,6 +31,9 @@ struct odb_source {
->  	/* Object database that owns this object source. */
->  	struct object_database *odb;
->
-> +	/* The type used by this source. */
-> +	enum odb_source_type type;
+
+Nit: here we say 'may' need to be reopened...
+
+> +	void (*close)(struct odb_source *source);
 > +
 >  	/*
->  	 * Figure out whether this is the local source of the owning
->  	 * repository, which would typically be its ".git/objects" directory.
-> @@ -58,6 +73,7 @@ struct odb_source *odb_source_new(struct object_database *odb,
+>  	 * This callback is expected to clear underlying caches of the object
+>  	 * database source. The function is called when the repository has for
+> @@ -104,6 +112,16 @@ void odb_source_free(struct odb_source *source);
 >   */
->  void odb_source_init(struct odb_source *source,
->  		     struct object_database *odb,
-> +		     enum odb_source_type type,
->  		     const char *path,
->  		     bool local);
+>  void odb_source_release(struct odb_source *source);
 >
+> +/*
+> + * Close the object database source without releasing he underlying data. The
+> + * source can still be used going forward, but it first needs to be reopened.
+> + * This can be useful to reduce resource usage.
+> + */
+
+Here, we're more explicit that it does need to be reopened. I like the
+latter better, this way, sources which don't need to be re-opened can
+simply do a no-op. But this makes the expectation on the user side more clear.
+
+> +static inline void odb_source_close(struct odb_source *source)
+> +{
+> +	source->close(source);
+> +}
+> +
+>  /*
+>   * Reprepare the object database source and clear any caches. Depending on the
+>   * backend used this may have the effect that concurrently-written objects
 >
 > --
 > 2.53.0.536.g309c995771.dirty
 
---0000000000004a72b5064c44b6a3
+--000000000000476b95064c44d1c8
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: ba6fc5626caa0e60_0.1
+X-Attachment-Id: 1b33e356400a8e5e_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tcFlBOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNXluQy8wY0k3RytOR1VMcS9CbGVQdDF4RUVGNHI1VApTdCtVR1hlTEhN
-WTB2T0tLQnZTZU9JdXBMY1ZJT3UyRW9vOHRLdFVGN2R0ZWFZbVFiZ2tsZjVPYS8vSlJlUjlyCkZ2
-MG43K1RZVG9uL0t6d2dRd1dPcWYyQXBhQWNaaEphaXpFdFBmNktQR2UvWlhiNVBDRFhCbjBBelpj
-MVRUemQKcTR0SS9xMVlXQlZqMnpvWHZxNjVONjNXM213U2ZKMGtjVFNEdVpaQnVXV1AzUE51ZldM
-ZldkVllKdFh2c3c5OQoyamc0cWtYWG44YUlZN1hxNnk3RkkxOGE4aVdvc0liN3dGNjhaLytBUG9z
-MityQVB5OGU3RUgyTXJ0M1EvcW1wCnc4MlI5WFRFY3pva2R2R3JFVXNMOCt6SjlUUGNpMUV3ZXpw
-R1I1ajhJNldWeVA0TkYvbzEva0NidStXT2c4SU0KV2xveEQyUmgyb3h5OWxqci9aeUx0dVgyWm5J
-STJKUkhsSnoxYXJFQURxcnNWOTVoSmdPZnFBRW1HdHlqWHQ5TgpxWUdLUmpXMVJJVE5TbzRjaXF5
-WW8wZm1WRXIwVFU1c25YNDFnN2FMVWdsR21uc0NLc2xEQWJBS0ZkWDZ6Ymk4CkFQVG1XZ09oa0NB
-TldNa3ltUWlpNll1OGhpMStyYWEyY0NGR1BLWT0KPU5sRHMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tcFlkWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMFhvQy85bmpjUkpVRlQ1QWwxMUd6QUs0UTVtWGtsNQpLMzNGRGFLSmFT
+aTdGems4QVVteXJMdGZveWJPT0c5ZngyQytSb1FnNmRaY0VieElxVGRWMG9CYkFKVktTUDhGCmhq
+eDBKdGNVMkxBY2dRV2txQ3pYR21abUNqbFBkblA2T2RQQ2lSR3JnSjBUdWlNOE9waC9RTTFUdWg4
+c05nbFkKQkdSS2RhaU1uZXJEQmdScS92bjhQbkRYVzQ4SVNjUHdzR2RzS3lwemUxbmN2bjV6WWNh
+NW55ckJTd2hNUWhRdAorQjRnYlJOemZFY3B0NzFFZnBEdmdVT3lVdWJvRWZSUGlnYSsyTG8waWR2
+akJEREYrVGZmVWJqM0pmUWdrZW1TCnRCcEFIS25iVFdiTHJ4MG1WTjFUWmVWMkZlUmQ3dnhrWVZ3
+dlVjTVJKdndoR1FsYU9kS29LdHNWSmh3QzhBZ1IKa2ZPb0o1dGUvKzR6dlZQZjdjVDErdms4WVJm
+Sll0TjRUYnA3WSticmJtQlNqQ0krSlFFbkxSOStuQjlTR2Z2ZQp4M2ZLM2IwNWFES0x4cTFjQ3pO
+NnBaMHBjSlJmd1lJQ1JSRGhHTXN3bmJVQTh6VWtvaUdaYmlDdkxmOWpSNlVxCkJ5cWFyQ2FVNUQ3
+Z21DQ3NldzhsT1d2NGZlVlJTZGJSNzJvQkJSWT0KPUNzclUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000004a72b5064c44b6a3--
+--000000000000476b95064c44d1c8--
