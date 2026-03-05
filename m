@@ -1,69 +1,70 @@
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D147F30EF84
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 06:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F29310763
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 06:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772693737; cv=none; b=Lrx6qbUH6VeERpe+spvTJsd3IqTVyRu6v9/dE7Y1aluy1UYna9Q41HV0MVjZTPctivZn0hcuDheMNl2G6oMEMiGVBA3fgWMk2x3uN2byg1TOwulGblBLCt9EucQp+s2PdH4kFAaX/Vuc3suNYVKXhfnx8fBk0el4CsCUOw9kJTc=
+	t=1772693738; cv=none; b=KFEYOhqgzGKp/JjlrqNZgiG0SBhfXMwzHYScQwY1Za/6gA9G5QicB0Ft42JZMXZeD52INTvBmjznY2ci7ARnn2U9lw1RgFkF28s093zaqRw8b2QckOrkt2INYDnfVTwGQqpExxFdZKKxz4tQhLR/R85ouJFAWutLIu9C+18qBBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772693737; c=relaxed/simple;
-	bh=okdl+0uUaqS6blDRN4er+hR3UqeoFu6NWPRmZZPDXeM=;
+	s=arc-20240116; t=1772693738; c=relaxed/simple;
+	bh=iWHi/Iy6Jg9VFB2Ce9XDASiFMpsfM1rNBVIoij/oyeI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JdzMCtPnWP+ExpSdsPJK5CWwfuFMs2RJRoqOc5kV1gLNNyaCsgbNY+E6mK2gaK88MQ84qF7VqLJNphqajD1Zmcw7pUJTd/6FatVO248X9bJiI2q3oAih/7FnfUZJvAf3glP/NYETVkhYFTrc/kxL7+CEvsqLcPWTPVXXraA79SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kfl7aAEC; arc=none smtp.client-ip=74.125.82.182
+	 MIME-Version:To:Cc; b=YYzsC0RdFk2D2QsW5U677Jg710KQeJ1Pj0eHC+zA81MvoAB79kzzLO9wYhWl/HUta+1Xk1nmdCZcsvSwO1EowYPpDg4uIhoiSRTaikTmhfgS8+nsvi6/85b88nm6eP5yO1tRIsLf9zLAYBWevm58x/YeY8gFvD8mlUkXsPwwjBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GOVROQ0k; arc=none smtp.client-ip=74.125.82.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kfl7aAEC"
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2be36d8495eso695039eec.1
-        for <git@vger.kernel.org>; Wed, 04 Mar 2026 22:55:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GOVROQ0k"
+Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2bdecd00ebdso4563549eec.0
+        for <git@vger.kernel.org>; Wed, 04 Mar 2026 22:55:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772693734; x=1773298534; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772693736; x=1773298536; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PffDS7jGun3N+EJo+Gp9zmhN5XDrSZ0tZDgx/HswZFE=;
-        b=kfl7aAEC2u9ApUx7K0+RSgzkN6ao9lCmlTJOEPHmNz32NPd3PojFsf3Z8L49Pdt1N+
-         FrSzCya+v0X8/gIGAh8KgrV94lBuhCBGDNqAO2Fr1G0/jTiPK/C3KpNP5aN2AV2OrFs7
-         +Estga8aUVpmY7xzrN4519Mv2bwcvydPMGA/+eGd18xER1AKln9+nZYmQcuUmSO+BAVZ
-         REuUWILwHvF8iYTWtLQbTdPVAEEVHdihLBaiuV7PXUtFGoeV2lqToEYzkJ1QABMdDeui
-         nUw3NjJSNAu/uIm/7+hgyORMvOcoZOCaxY305kroMjRWLny8Np4NXQcD7OvjJSAZdjUW
-         z9iw==
+        bh=S+XccA/xUBXw7BUScvs447In5YHY/qkuIiroMUtuxbE=;
+        b=GOVROQ0kGiBqhhymXU4Uxfv6JOvRQPX1TgUdSK9fv85r0A04/Qr9RCgO0umkYxq4iY
+         ikR/tqi610fEXhNiZQ+4bTq9F/A7q4+Jhz+TIBP6yPjH0VcCLDlqvoGBJTfsfN0DeiDt
+         Ogmen0Ieo8O0KjHpyGrRGQI2hVTsnL6Xb99VkKtDRd0K8L0uPqJLVhA2SANNvj3e65Rm
+         qmLbw865oNfnN21Sy2+uSjGTKrbO45+zy7v3RE17+CW5p/fNA4P4PUq9wGSUKGtNPeIY
+         FhbQRWhtgXwAuYoApcaY0TjmjCibn/F8uHohlmvwJnYK0epBjD+0LA0daoJ4ihxaUUeF
+         0fhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772693734; x=1773298534;
+        d=1e100.net; s=20230601; t=1772693736; x=1773298536;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=PffDS7jGun3N+EJo+Gp9zmhN5XDrSZ0tZDgx/HswZFE=;
-        b=LumHeK99C7yE/jUIImjR0MM9QZgg8himnXUeDRP8dpf4Si7GIf6cqMXKNc02IeeMS4
-         5LPVFuckBMLdYLOYCWz+zO0ubxzBeTc5tPbmv2D8vIya/nNaLnXEFOBrZNw62OhYYVCR
-         BOX62WSgy+HKOA21zA3rK3bISkyGHD2zwmZJxl5qctj0lWwd8iiwJoKE0jLGCXTAlVGZ
-         e+EagqIP4pg97lTcb5mmUp6k5ohdaLC594bR1Jmng8rFwOXbcLnwSWnruNm8r78+Ntja
-         PA1aPT3PXnPKBY3FmGDOC6uaUkGHBzUEb9ynmuN8h5xF2CU1mN7Hm0+cP/FzaN8kvnFL
-         Tnow==
-X-Gm-Message-State: AOJu0YyHTXcugbYDw/QpLN6Muxw+K7IVLH/s0tUUiSvcR9QkO6y3Jc3k
-	QwTgwc3Zhxd+MQG6n+rWKpDdT1tFRAm0pOzoTQOmvkJGCbkp7giOVIpRPRfrTA==
-X-Gm-Gg: ATEYQzyoewxfJLOM0SNBwpPlf1emhwcF2slm9macqOowh0uoScPIgiigKCd9qhuL7cA
-	nv5wWP+a2ngUzhgU4LVnZQR8O+YCvj+YFZzpMZSKKMIEluCzusV3/ANCNiMUgOAoMC/+IIqtN/R
-	2z6dCevhDzHiHJrGXzwIzLlRKkB3OVrjSXtDFInD8wbZMfLUNaqrg5nR4q1pGYJ6ZqaexXnh668
-	z91ku46K1VICuDptC5/8xHH1RtUDIgZR+a9rSrje+mTSow05D1FoXGR83MXceZXgSTKhoPvAwK0
-	0HAg02UpvXbmv2AuXDjrODTvaHSKasTNzXTgHALJwRCyQyl3OeHR7Z0ArlgNtseUmCJ0iXr9x43
-	t9Wbn1Kf/hkrGrlhDUScw9kYQIOOJp55Y3+XYWsxDITHOkyCHfWeWzmZjIhIsr10XfZO5pNKp3D
-	vbfSaCCsk+O2PW/pkW2DrR+X+9OA==
-X-Received: by 2002:a05:693c:4098:b0:2ba:76e1:39fe with SMTP id 5a478bee46e88-2be3e2a66e1mr350207eec.6.1772693734487;
-        Wed, 04 Mar 2026 22:55:34 -0800 (PST)
+        bh=S+XccA/xUBXw7BUScvs447In5YHY/qkuIiroMUtuxbE=;
+        b=GiislVF7mDfGb6kAPmLbJifGUOskKtNN9tWdZId7WbYwQL0QftvDeMf0Kw8cZYc4ed
+         pfPICilSOakXCPM/cMBEayyV1LRRsJJ2v50P5WU7I6euPbL/KeHht3NpDBg2T3O4Xfoy
+         YBqjErHigBQkkiANyYauYnjZIAjJlGfa7fyw9ATKWYvrOVH7GoJtbHQTFOdg+TcMScf1
+         qfdeqYBXdA9um3X+CY9foioM0X/dwJ3Sks2F+GtbfAiHd9CR53yJPxPNWMuty8INAuCj
+         KIUPDdvAFKE1yJoOnWOcjNbRPPbwRIcE1K6h6hpQpnJwCpg7KUsyWN7DqbV/6NiXVUKT
+         l0IA==
+X-Gm-Message-State: AOJu0YxyztTj4Tu8VohRvC/Bhmz1TaK3VLotrzi16SD5ojJ6WLzXjBZL
+	mqyYFLz4vKRGk3QJtWoELTQ+n6bONySvHMnoWoVlNI7VZMCLu5Ru3JCchD+nxw==
+X-Gm-Gg: ATEYQzzvP78RZOvCA+ieLHnQwEHY7tQnN/0D3/OWzdWRNT9Z1o2VUubEzNjNIivCgQ1
+	wRHAXYtzo/FuAfSHa6ODOKxFHegk12h0ag1p/D+vhohqX22E5U5CRlJOdNFGwE+SLqsrVui2zoV
+	rak4dE7/XBzgxU1+oUjU7GBszf1dBHhT5QPfHJEUjFEaZoYLlYvsA1Nbr8DHtB467aIw58NmWP2
+	VumJAIaERL9KJPVfN+Ki87BmsvL5tjaB4zjFaoLmT4qbIzwuuUh8Z8vlMQ9Nte/re9ytdJLt/0U
+	oW5wpcJFtdS92w3MEkaYDAODS0VOS5K2Y9R2hLwntr61mPKTZKzdvnoyA9w6B4aUraRgOjIch3o
+	19qOuj+3+S2G58lpda9+x+sRYgpgfHCWftQv6+SdHvuXRUZbuBOd9c13o8K6I8EGfKY3XqxVr4B
+	wh4PDCoKZQrSQoigHmUx7ac5+u3w==
+X-Received: by 2002:a05:7301:408d:b0:2ba:a1a5:b5b1 with SMTP id 5a478bee46e88-2be30fdbf5emr1765085eec.7.1772693735971;
+        Wed, 04 Mar 2026 22:55:35 -0800 (PST)
 Received: from [127.0.0.1] ([52.190.182.112])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be1ce921dasm6057997eec.10.2026.03.04.22.55.32
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bdd1e02f95sm16611035eec.13.2026.03.04.22.55.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 22:55:33 -0800 (PST)
-Message-Id: <50f5b4676e531c944ea40eaad265b14c2467a808.1772693712.git.gitgitgadget@gmail.com>
+        Wed, 04 Mar 2026 22:55:35 -0800 (PST)
+Message-Id: <057b3098bcbea0302877bab0abbb9f9a21194f40.1772693712.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2147.v11.git.git.1772693712.gitgitgadget@gmail.com>
 References: <pull.2147.v10.git.git.1772673378.gitgitgadget@gmail.com>
 	<pull.2147.v11.git.git.1772693712.gitgitgadget@gmail.com>
 From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 05 Mar 2026 06:55:08 +0000
-Subject: [PATCH v11 08/12] run-command: add close_fd_above_stderr option
+Date: Thu, 05 Mar 2026 06:55:09 +0000
+Subject: [PATCH v11 09/12] fsmonitor: close inherited file descriptors and
+ detach in daemon
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,68 +82,87 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Paul Tarjan <github@paulisageek.com>
 
-Add a close_fd_above_stderr flag to struct child_process.  When set,
-the child closes file descriptors 3 and above between fork and exec
-(skipping the child-notifier pipe), capped at sysconf(_SC_OPEN_MAX)
-or 4096, whichever is smaller.  This prevents the child from
-inheriting pipe endpoints or other descriptors from the parent
-environment (e.g., the test harness).
+When the fsmonitor daemon is spawned as a background process, it may
+inherit file descriptors from its parent that it does not need.  In
+particular, when the test harness or a CI system captures output through
+pipes, the daemon can inherit duplicated pipe endpoints.  If the daemon
+holds these open, the parent process never sees EOF and may appear to
+hang.
+
+Set close_fd_above_stderr on the child process at both daemon startup
+paths: the explicit "fsmonitor--daemon start" command and the implicit
+spawn triggered by fsmonitor-ipc when a client finds no running daemon.
+Also suppress stdout and stderr on the implicit spawn path to prevent
+the background daemon from writing to the client's terminal.
+
+Additionally, call setsid() when the daemon starts with --detach to
+create a new session and process group.  This prevents the daemon
+from being part of the spawning shell's process group, which could
+cause the shell's "wait" to block until the daemon exits.
 
 Signed-off-by: Paul Tarjan <github@paulisageek.com>
 ---
- run-command.c | 12 ++++++++++++
- run-command.h |  9 +++++++++
- 2 files changed, 21 insertions(+)
+ builtin/fsmonitor--daemon.c | 16 ++++++++++++++--
+ fsmonitor-ipc.c             |  3 +++
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index e3e02475cc..f4361906c9 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -546,6 +546,7 @@ static void atfork_parent(struct atfork_state *as)
- 		"restoring signal mask");
- #endif
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index c8ec7b722e..b2a816dc3f 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1439,7 +1439,7 @@ done:
+ 	return err;
  }
-+
- #endif /* GIT_WINDOWS_NATIVE */
  
- static inline void set_cloexec(int fd)
-@@ -832,6 +833,17 @@ fail_pipe:
- 			child_close(cmd->out);
- 		}
+-static int try_to_run_foreground_daemon(int detach_console MAYBE_UNUSED)
++static int try_to_run_foreground_daemon(int detach_console)
+ {
+ 	/*
+ 	 * Technically, we don't need to probe for an existing daemon
+@@ -1459,10 +1459,21 @@ static int try_to_run_foreground_daemon(int detach_console MAYBE_UNUSED)
+ 		fflush(stderr);
+ 	}
  
-+		if (cmd->close_fd_above_stderr) {
-+			long max_fd = sysconf(_SC_OPEN_MAX);
-+			int fd;
-+			if (max_fd < 0 || max_fd > 4096)
-+				max_fd = 4096;
-+			for (fd = 3; fd < max_fd; fd++) {
-+				if (fd != child_notifier)
-+					close(fd);
-+			}
-+		}
-+
- 		if (cmd->dir && chdir(cmd->dir))
- 			child_die(CHILD_ERR_CHDIR);
++	if (detach_console) {
+ #ifdef GIT_WINDOWS_NATIVE
+-	if (detach_console)
+ 		FreeConsole();
++#else
++		/*
++		 * Create a new session so that the daemon is detached
++		 * from the parent's process group.  This prevents
++		 * shells with job control (e.g. bash with "set -m")
++		 * from waiting on the daemon when they wait for a
++		 * foreground command that implicitly spawned it.
++		 */
++		if (setsid() == -1)
++			warning_errno(_("setsid failed"));
+ #endif
++	}
  
-diff --git a/run-command.h b/run-command.h
-index 0df25e445f..fdaa01e140 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -141,6 +141,15 @@ struct child_process {
- 	unsigned stdout_to_stderr:1;
- 	unsigned clean_on_exit:1;
- 	unsigned wait_after_clean:1;
-+
-+	/**
-+	 * Close file descriptors 3 and above in the child after forking
-+	 * but before exec.  This prevents the child from inheriting
-+	 * pipe endpoints or other descriptors from the parent
-+	 * environment (e.g., the test harness).
-+	 */
-+	unsigned close_fd_above_stderr:1;
-+
- 	void (*clean_on_exit_handler)(struct child_process *process);
- };
+ 	return !!fsmonitor_run_daemon();
+ }
+@@ -1525,6 +1536,7 @@ static int try_to_start_background_daemon(void)
+ 	cp.no_stdin = 1;
+ 	cp.no_stdout = 1;
+ 	cp.no_stderr = 1;
++	cp.close_fd_above_stderr = 1;
+ 
+ 	sbgr = start_bg_command(&cp, bg_wait_cb, NULL,
+ 				fsmonitor__start_timeout_sec);
+diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
+index f1b1631111..6112d13064 100644
+--- a/fsmonitor-ipc.c
++++ b/fsmonitor-ipc.c
+@@ -61,6 +61,9 @@ static int spawn_daemon(void)
+ 
+ 	cmd.git_cmd = 1;
+ 	cmd.no_stdin = 1;
++	cmd.no_stdout = 1;
++	cmd.no_stderr = 1;
++	cmd.close_fd_above_stderr = 1;
+ 	cmd.trace2_child_class = "fsmonitor";
+ 	strvec_pushl(&cmd.args, "fsmonitor--daemon", "start", NULL);
  
 -- 
 gitgitgadget
