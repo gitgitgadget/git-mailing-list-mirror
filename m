@@ -1,169 +1,730 @@
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011028.outbound.protection.outlook.com [52.103.68.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294D51B4257
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 12:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.28
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772713712; cv=fail; b=aLMcH3whpelHITTtqojA9RR78uYQY6esf2Joohk3uOdulPctN7d2BGct2TI+wo4EkPnr0nkLtguzQrHlE9eSaHrLOoj/TVNb0B2B7UGXny89TXk+1jiCamqZPvsyjPF/dSr80xXY/AZ+7mjkgLl3L7laeDOFu07pLyq+dB9Mc+s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772713712; c=relaxed/simple;
-	bh=zzmcHcFeXpfnLV9wtVSAaatVPRWlPIsY6yEoGYnQWAc=;
-	h=Message-ID:Date:Subject:From:To:Cc:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=XDrp2afuceddDunKiZUgDIIizBDzQzeN4A1HCAy8yrXbvfDaXuy/rERpontD1uGaiaowWOrH/ly2wTmN5QAuAngwx0XXV2fuh8+YQ6Pwk49dZ2wWpmIpXLlbwYXHx69tzBZ83rzqq6XNMJo+zD3dYiqCsTaqZmKnmEzZVoXrqlU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=UpebIJVh; arc=fail smtp.client-ip=52.103.68.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C36439E172
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 12:37:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772714260; cv=none; b=O371Rk+x8iYUHgXIbJJ9PylD+2CBeVeJBbQa8leJZOUFvXN19EeJmmAyfttCeyRP7zUFixnR3xf7CueqP76NBj0JH3Vh1lvNnN2+v/io3VskuDtw5PSNr2O1m2Mkzlp9uOd0yE9EtYZ+eJo4ytkYdhURt030agq5AoY3hw5YIQM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772714260; c=relaxed/simple;
+	bh=R4ys6k0nAJuMcoL89T1XoLFCP6BebzXz7OvtDXOG5Xg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=tpEhEWVeCoZCldAxRPu2Z8aR4tysltq063urb7w6gaf9vKkzsE0+qGmPdEk9h9v/MOOazy/+NzBRJHlGTJoFzg2gydLTpawHjJ4Jmve1q/OWW25E2IGrt4YMEgLzuNG8d0xhTdXGtwOul5PZD1wUK38Xpyn/57k07qfcUWoDu6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JVOPguI+; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="UpebIJVh"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=n+WDNcmBu7OcBXq1CvtVVr4slG5aVnUIRAoiL78tmCOloFt22+iYbeMvpi1+sEDBTt6BWhcBHEC6Kf/UYdjsgy68qxbjT+7DK9aKed5o8q1au/LZLnmh8eS/NeSmBqlTN3LOqtcV2O8RJp5zA+6UTTOs8voHotj6pFla8jB9ln5NMQEx3ZggXKbV/rUUSy0pU2zqU8ua9NoqM+FbHJMg/hsW0ohj1OpzfSgOMQ8yOdfaN2xiE0+Ky393ngNhILMlwCc8zAj8FskuavrYCBWNp/LugaGf2yGsIjoINCGC0IbUWjlrSWRXI5CqtWLGvND4o9B4gJS0bpjnLeyLq+M/RA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eU4nlYGkUwhLGIQt25L8yQTklULVVJBE/mc6ZrtQGuI=;
- b=VBf/dGUGS+busNZroa5qrYnoH8x2tUGRS867/AamtxBwoC4FvcF9ICHkIJT9sGWDW5XfudEHIujXwDfL1ckW4dRrIRpN9bF3ZQ0XToRO2XvAJp6ktf3oIr/SXYa1QuxR9Vpc8ta8WNbmGlbNkqrPJjlzw4ajdBq9UrTiO4DnRHKUz3DGxwev+OTkDYm+Z2dTrFlmDgiv2cM1JxmJpHQa6SCYvqqBj8AZcFt8UJdaVInPbftSbiRFRF2NzaCI8t2UKND+rdLE5EH/k7wm5rrbix6iji6T2HLx7JDf7qmHiuwkpCD4ZdQekM4qbfJrrUzCrR9VjQpaQvMSuqA1PncrEQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eU4nlYGkUwhLGIQt25L8yQTklULVVJBE/mc6ZrtQGuI=;
- b=UpebIJVhfH4Sm4+dw+uzA/RJWH7KJXcsKhcWIcSGcH9bTLxwEzHqKRELsJoy3JNpOaJFkCH51Vdxka0lUFOxjsFTw+64FkzzwsUAc+oSYFYmqD5XSUpzfx1uRKLsBHc6aklqmgogvgfudyhk4BdB9lgx/K+p+gTa01WqlODTkqrDH+na+7h1qJVvTqd3regEInmX1pI0M0qYK4xhEzPM2ypB1yCU8JPKI/AytahYO5JhEdyS0PLGEARwFXak1SyifgY3r9VR0ylrBwEWImyZ78c3+0Y6XuQwjynAGH8w9so/M4ANPWnxFPtz92/53JZ1ahLUyHJBQYdqcES6hoVlmQ==
-Received: from MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:19c::18) by PNZPR01MB10409.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:244::5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.18; Thu, 5 Mar
- 2026 12:28:27 +0000
-Received: from MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::1fed:9b0b:69b:9295]) by MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::1fed:9b0b:69b:9295%6]) with mapi id 15.20.9678.017; Thu, 5 Mar 2026
- 12:28:27 +0000
-Message-ID:
- <MAUPR01MB1154679A7F8FF4B926A1F41E8B87DA@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 5 Mar 2026 17:58:24 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: add hydroxide as an option for ProtonMail users
-From: Aditya Garg <gargaditya08@live.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <MAUPR01MB115461E9C238F9952EEB1C38BB871A@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
-Content-Language: en-US
-In-Reply-To: <MAUPR01MB115461E9C238F9952EEB1C38BB871A@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JVOPguI+"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c7377119453so831869a12.1
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 04:37:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772714255; x=1773319055; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8YYaJ+PanpKWDs7E3Ken0KAEXVfCBuzPH3BL7mgMqpY=;
+        b=JVOPguI+m/1x5ELl2XbTzuZIewCfwkY0q4SjbbhvqzVRsPM2CE3GWLUvUMUzuEy/cN
+         c3TDTxvyEpRw3XuUPFeuhrrJqMzxtTzPXICZpDUQ74vCrpGcEIWKxTiXvBVKC5Bvv13h
+         LO9Chr68u0zzvShrDgfd2r4mjbr92tgmzwbJ4gyKUwPVU8GPz2P8GqDfoPp23jWhNGir
+         jJqDSgW7u/zQuDqqsTsQUjHbdN/C7lGzofl/Q52kmygIK+0R0CAX1I4pP/c1C3vWK8Jr
+         bj2tVNMGChFVpj+2Fd2vHYPDOKiO01Pl2N689dH/WgcC7I0gzzepUYQHQXzilKleYUCN
+         dMWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772714255; x=1773319055;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=8YYaJ+PanpKWDs7E3Ken0KAEXVfCBuzPH3BL7mgMqpY=;
+        b=gChsFWA3ZAmjlYvsP13Igf7wz/PDTt5weWs0H6J7xZBPjnBKYLoe18wlNBYwRLaQMO
+         HTg7qmbAdD2Bl5T75evYaKtJ8LgBTtyJQqJf0lgcOS7oDG4UE5/liVbM6SaIsG+XiSK3
+         yJAElFBSY7nYAyhOfbqCzucUJhBa5u246dKteckcjgW46emYE0XczozHQxYjWgA0mFef
+         87xtr+0Hhr9YotFfXNBAslhRvmjvjT2zf4dDnHJuakUWPlRwXN3nv8MWw8GlI+PPHUwi
+         B4lR+o1xCoh0/vwAHZrg4K4JQsj7vzPymJMG7EZThLcoFL46Apb31fczxG3TN7sNOZfy
+         KsCQ==
+X-Gm-Message-State: AOJu0YxzO+G864eoNoGpzL1KhwsOZJvweCyFdfMv7PUWjSxu4aCwId1+
+	32lGC53jlGZmY+JGe75EnnkIgEHkIRzgeBEq1WTlgtmAMGH+aHgp5PVal8jXjg==
+X-Gm-Gg: ATEYQzy/DsbRn20MWQJzxcTv+EUieVRe0T4wdDz9SUkYYMW+802KM3m2/yVsxxnvMhi
+	wiNWWihgnpeNwlKXx3ZNcxUXoW2mtjcSL8sUjNVMunxi23P7FfbNUB/nUSyypc66PHXgsFTLfEf
+	yJZlSBPljTfPTWtloo60vaPOuo5mHW1p4CVq+w/04awEUQU8oAnTxjqdWhyHtycmObkZlbWFjKT
+	wflM295UeNDEbRSpbhP8+kXWhnV54KCV5UY8s5Icfg3RomRcRxyJYnG4Qrb+t+MxObZ1ijZ8dxe
+	K3F2411qp4+uUdFJlcp2UHG1adspE/q02jQt4bvKP6bFTt7yXyVtODKiZEcoCn91gYnwdqu6vAz
+	fE6D6y7MSNcpoZ5LEdhlJqwP9IVMV45YKWYD1A3OmGrXI+phrvGbBXy3i7DhfYPeC16GsW3gDsh
+	vWcUgOu/zKa6K9Nrt7C1DgEw==
+X-Received: by 2002:a17:903:2f8b:b0:2ae:3bb2:a8cb with SMTP id d9443c01a7336-2ae6ab1ff0bmr59226435ad.40.1772714254842;
+        Thu, 05 Mar 2026 04:37:34 -0800 (PST)
+Received: from [127.0.0.1] ([4.155.99.40])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6b416bsm228480685ad.61.2026.03.05.04.37.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Mar 2026 04:37:34 -0800 (PST)
+Message-Id: <pull.2045.v5.git.1772714253412.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2045.v4.git.1772710566599.gitgitgadget@gmail.com>
+References: <pull.2045.v4.git.1772710566599.gitgitgadget@gmail.com>
+From: "Chandra Kethi-Reddy via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 05 Mar 2026 12:37:33 +0000
+Subject: [PATCH v5] add: support pre-add hook
+Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN4PR01CA0093.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:2af::11) To MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:19c::18)
-X-Microsoft-Original-Message-ID:
- <d147283c-b70c-4208-85c5-f837fb78055d@live.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MAUPR01MB11546:EE_|PNZPR01MB10409:EE_
-X-MS-Office365-Filtering-Correlation-Id: 028364c8-790b-4407-35ac-08de7ab2b37d
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|8060799015|15080799012|19110799012|23021999003|5072599009|461199028|25031999004|51005399006|6090799003|10035399007|440099028|3412199025|12091999003|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?bjUwTTIvOTgzcEdVeXo4WS9DMEtNWGZ1OFZiaTllOHRSRVovbmZDbzJzRXhN?=
- =?utf-8?B?YnlvSUNFb2lrMldzN0h2NkgyTjRBY3VpMTAvSmYxWWNNUS9CdFFMN0k2ajJJ?=
- =?utf-8?B?eXpXUkoxSm0xb0ljUStQZ1ZZb0plOWFvZ0VRakRvd0RNRkFXOEdBQ3FtZk9p?=
- =?utf-8?B?b0VOZVdOVVlqVFE4TGRrYjV6U1I4WFR0azRvYW1tWGNOd1o3cWpIUkgzbmpl?=
- =?utf-8?B?cEE4VWVhSm55M3MwZjJuNGVUYnN5UWt0WFNoM1J2QjdWdllkY3A4eHhKQ2I2?=
- =?utf-8?B?cVlEK09pcEtkYklBUVBZM2I4TXh0YU42aFpTZWo1ZmtGcXI1N3RoMkRGRy9N?=
- =?utf-8?B?Z2JycXZnZUlBczFleWFpYUxIRU5Ndkh6ZVFzaUtWL1BpdHcwcWVyY3BKM3BW?=
- =?utf-8?B?YWpPK0F5QkEyNjhYcThrVlYzd1IyN3BFQkxLdmtrTjZ2ek1IYXJkN0JUWmFy?=
- =?utf-8?B?VDFHUzFGZWlWN0dwakFjdmV0TDdUaXR3K1JBLzJQUzZISmlpUEMyRkkzaVNp?=
- =?utf-8?B?UDd3QU8xSmN2aWVhSkVoVVg2RDd1NkFFNDA5SE9sTUhkWmdnQzdjNzlJdk9V?=
- =?utf-8?B?YXNta1hiaVdnVGJhVVBSUjJYZ2N6UmdMaTJyeVhDRU1pdFI1QXpva3AzeEgw?=
- =?utf-8?B?bWlYaTJZa3V3YzVlL3V2Q1ViblJBRzdoTDhWUlJUVlRUbWdNb0s4VjcyNTVD?=
- =?utf-8?B?N2VWay9zTnIyS3F5eXg5M1Znd240OTI3N2hXUXNLTGJaQ0xqSlZzL1VRcm12?=
- =?utf-8?B?WjBBS2h4NUVHa2ErYXVHbGZ1b1dyeVRrQ3Y0c3ZldmFqVC9BNU5LeDVKUTJ5?=
- =?utf-8?B?TEdzNER6MVZNVVRIV1VPQkFKVFYxOHQ1TU82WmRwQUxCdnVSQVV4YzBCZGg2?=
- =?utf-8?B?dWdXbWNydlhJZ2FCM0plbnd1WUpJYzNvZHVTV2ZpMFBaMDRsMEdmUndPWmtP?=
- =?utf-8?B?T1NuQVVVeHY0RExZNUdZMldlcFoyYlNkQTNDOEFUS05uUE1CRm9DVnVONGdN?=
- =?utf-8?B?cnpKbFFzK1hGbzcyNysvMUNuSTEySWYwVEk3c0xsUjRNY0dDL3hHMUJ2YW50?=
- =?utf-8?B?TWp2TFJTakR4S3RxdGhxQXJmUFh2VTF3eTRBWVVLekVCcFBzMHNoZ2k0cFEy?=
- =?utf-8?B?UnV1VjhhcjdRbEdvOE9BTTFmWmk2bGF3Tjl3MG9IaWpKbVRJK2NVWWQzM21S?=
- =?utf-8?B?TU9ZQzFjQzlpaXJPMVdWYy9WdmgveFoyL3NPcDNXSDZuUWdmYTVWamEwMEQ1?=
- =?utf-8?B?UG5rQzE3OWtFM1ZnVTNYSU1QdkZjVlYyT0Z6eXVzSWRLTUlpVEgyYUVtZytJ?=
- =?utf-8?B?YjBlbTc5ZUhNVzBFelZJVWZlN3ZYaFFQZVlzUDhSaEEyblhEaldDMFRJQTRC?=
- =?utf-8?B?anh6cE1DN1h5TXc9PQ==?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NlhzdWZlaFZtRFlpeXdPWkpnd1l1ZHZjWU5YajlIcFFWVlpGemQzYWZtcUNC?=
- =?utf-8?B?ajF2TjkrV01iZ01yLzZ5RDBVL3pUUFVIaG5JaVRhYlhkYS9tbHpadzJqWWM2?=
- =?utf-8?B?TzNaSnRyS20xcE5vZEJQUDB3aWZoWUhCWXJGWnBEYmVMamd4eHA3elJtVndS?=
- =?utf-8?B?Q2NlMzNybXJXaC9RbzYraXdQWndrZWMvV2lYaUNOV0Q2SHEvcGFPOVlGdEg2?=
- =?utf-8?B?QlpudTJNMzZnT0hmeXVXUUViZyttRDR5U1ZROW16UHp6WkhxMmZpT3VFTnFt?=
- =?utf-8?B?cTNtb1pmdCtjRFpxdE1QQzh6K3JRU1FsdTBSMCtRQkNHOGhkV1RXcUxUVGd1?=
- =?utf-8?B?anVyc3JzdGZxMWd4WnE3K290NE9jZm9lT3htektwMy9FSVNMMDExRmV0d0JF?=
- =?utf-8?B?RjdaczhRcXZTRkJOd0NzVVEzS1l0OFN3bFAxdU9qaEVyeDFUWFg0R3JReE5I?=
- =?utf-8?B?ZjdyR09tR0Y3dHVOWVZya2JQNlRQeURpMzlvTzkxZy9GQWZNUlZPK212QklP?=
- =?utf-8?B?bkwxOE5VWEtoTlZyZEZPSEZYTXF4TEhacmJxTTFIMEpPdGEycUtjN0JTY2wz?=
- =?utf-8?B?d3Z6c3lJeVhWamg2Z1BGdXR0b2ZURmRwQzNuV2tPdDJHN1Bjek9PRUV6Mit3?=
- =?utf-8?B?eEFNbnkrYi9OTjlrRUhPNGRhRVYybG9IMHg1eHFGazg2K0dqcnU5dWQ5aUhC?=
- =?utf-8?B?ZHljMzI3QmpxYjNyNlpLcUJsQmJQbzk4QjZQUEJ0TXJNbm1tSEVYSzlWOG9C?=
- =?utf-8?B?dUt3NnVuU0p5STJJaDB3QU1UaklUbzFnNVkyd253ZitRUXBVbTRhbnIwaDVa?=
- =?utf-8?B?dlFVSE9iaTdJZDE4aHMvTUlVK0pkSXpVdk9PaWRGaEwrODlUMXU3Z0FiOGND?=
- =?utf-8?B?SnNnL25rRHM2ZzhVZFBsZkpmbFhFenF3VjZRYW1OeG9PcHBLS0VUYk1BQVZh?=
- =?utf-8?B?MWNhaDBWNm9ZckNYWDBVK0xpaG52SlA3WUxLSEhETkE5ZjlRVDJkbkhjTXpl?=
- =?utf-8?B?dlVCZ2pJM0JGOEdjLzMwUXlDcngvdEgvVVY2UnpoRUsxNDY4R0JEREpha2Uv?=
- =?utf-8?B?VWZXSFFhOXF4VDhtWnhuSDg3NFMrRElDNTRtSzJnbnBpSmR6S3FyODRNRGZX?=
- =?utf-8?B?eDhwdXpXMGJiRUZIbEEreldmT0w1bWJnaXZVekZrZjE0QUJDK1l4UE82dFdt?=
- =?utf-8?B?blhKVlRqQ2xaWW1kSmFGN2tzeGlsa1JiZFFObE9aRk1qOURxZHd4cGthTWdu?=
- =?utf-8?B?Y3NTTmtGUnFJUVBTcWM3VndQelBPWTFpV09DL1BVWjVVQ2QveXc1ZVpqZFRY?=
- =?utf-8?B?RHAvZEplaVZGWGRYS1IvTEQ1RFp3Mk44bDFuMDJEZzNEeXU2T0hvMkl3NDJu?=
- =?utf-8?B?blIrREZNRC9iWU00cmNLTE1Dand6MklEQktyVlJ4dnJLTlg1M1kxRzdQb0Q4?=
- =?utf-8?B?NWR6N2VIUHlXSUNjK2xNL29rMjIyVUFFUUV5eVNYVzlqdWxuRm16ankySHhP?=
- =?utf-8?B?YmRKYjhDajdmaUhxMXdNdW95QitxSGIzL3V4d1JRVGMycjAwaUp2SDVNMGhq?=
- =?utf-8?B?NXV2TXVlN1FORnEvQWV1aWVySDIrRkdaNkJKVWRyRXY2Znp0R3lxRWtYZ1BX?=
- =?utf-8?B?dHhtWVRtcDUxVWZRaGdncW5OTVBIcDRrUTlVaURiUVFXN1c5b09vMjZaN1dL?=
- =?utf-8?B?QXdTVGhrNkZabU9kSUNIZ2c0bmxCdVRjVjV4YTlhQkx5U2dSVXc1NXBJc1N0?=
- =?utf-8?B?eVZpeEFRajJvR0lCR25zOW1GY0FEWVV2S0YyalJVLytSUHRqTlgvclBqKzZy?=
- =?utf-8?B?SHpnTnU1WlUyK2VNVHZCWkFRQXJQVUp5NVF2cDdJMmZoZEFNU1JSQjFNMVhQ?=
- =?utf-8?B?L1NZbjFEaHU2a1JCYzFzQmpQUjVsZTR3em1qQ2xzaEg5YSthNWttcHdIaWZZ?=
- =?utf-8?Q?hhuoj6WLOUyjqMlAwtLXaX3/nx0oE5Zs?=
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-63b91.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 028364c8-790b-4407-35ac-08de7ab2b37d
-X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2026 12:28:26.9959
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNZPR01MB10409
+To: git@vger.kernel.org
+Cc: Ben Knoble <ben.knoble@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Adrian Ratiu <adrian.ratiu@collabora.com>,
+    Chandra Kethi-Reddy <chandrakr@pm.me>,
+    Chandra Kethi-Reddy <chandrakr@pm.me>
 
-I just realised the From in this email is showing "Your Name" instead of my name. It was due to a mistake in my .gitconfig. Do I have to resend this?
+From: Chandra Kethi-Reddy <chandrakr@pm.me>
 
-On 01/03/26 12:35 pm, Your Name wrote:
-> From: Aditya Garg <gargaditya08@live.com>
-> 
-> Hydroxide is a very popular third party client for ProtonMail free
-> accounts. Recently the project was resurrected and now it works
-> properly. Add it as an option for using with send-email.
-> 
-> Signed-off-by: Aditya Garg <gargaditya08@live.com>
-> ---
->  Documentation/git-send-email.adoc | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
-> index 741f748614..724c9d5e9b 100644
-> --- a/Documentation/git-send-email.adoc
-> +++ b/Documentation/git-send-email.adoc
-> @@ -646,6 +646,7 @@ customer of Proton Mail, you can use
->  https://proton.me/mail/bridge[Proton Mail Bridge]
->  officially provided by Proton Mail to create a local SMTP server for sending
->  emails. For both free and paid users, community maintained projects like
-> +https://github.com/emersion/hydroxide[hydroxide] and
->  https://github.com/AdityaGarg8/git-credential-email[git-protonmail] can be
->  used.
->  
+"git add" has no hook that lets users inspect what is about to be
+staged. Users who want to reject certain paths or content must
+wrap the command in a shell alias or wait for pre-commit, which
+fires too late to prevent staging.
 
+Introduce a "pre-add" hook so that users can inspect or reject
+proposed index updates at staging time.
+
+  $1 -- index path used by this invocation (may not exist yet)
+  $2 -- lockfile path containing proposed staged index state
+
+Hook authors can inspect the result with ordinary Git commands:
+
+  GIT_INDEX_FILE="$2" git diff --cached --name-only HEAD
+
+Both files should be treated as read-only. Exiting with non-zero
+status rejects the update and leaves the index unchanged.
+
+The hook accepts or rejects the entire proposed update. Per-path
+filtering is not supported.
+
+The hook is bypassed with "--no-verify" and is not invoked for
+--interactive, --patch, --edit, or --dry-run, nor by "git commit -a"
+which stages through its own code path.
+
+Signed-off-by: Chandra Kethi-Reddy <chandrakr@pm.me>
+---
+    add: support pre-add hook
+    
+    
+    Summary
+    =======
+    
+     * v5 switches from find_hook() to hook_exists() for early hook
+       detection so hooks configured via core.hooksPath are discovered
+     * Add a tests exercises config-based hook discovery
+     * Fixed Windows CI failures with correct path formatting in the
+       relevant test
+    
+    
+    Notes
+    =====
+    
+     * This design intentionally trades ODB prevention for correctness of
+       hook inputs: blobs may already be written to object storage when the
+       hook runs, but hook rejection still leaves the on-disk index
+       unchanged
+     * AI Disclosure: Codex and Claude Code CLI were used to assist
+       drafting. All tests, code, and docs were committed by hand.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2045%2Fshatachandra%2Fpre-add-hooks-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2045/shatachandra/pre-add-hooks-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/2045
+
+Range-diff vs v4:
+
+ 1:  9383395bb0 ! 1:  fc58c4cba2 add: support pre-add hook
+     @@ builtin/add.c: int cmd_add(int argc,
+       		string_list_clear(&only_match_skip_worktree, 0);
+       	}
+       
+     -+	if (!show_only && !no_verify && find_hook(repo, "pre-add")) {
+     ++	if (!show_only && !no_verify && hook_exists(repo, "pre-add")) {
+      +		run_pre_add = 1;
+      +		orig_index_path = absolute_pathdup(repo_get_index_file(repo));
+      +	}
+     @@ t/t3706-pre-add-hook.sh (new)
+      +	git commit -m "initial"
+      +'
+      +
+     ++test_expect_success 'hook found via core.hooksPath' '
+     ++	test_when_finished "git reset --hard &&
+     ++			    rm -rf custom-hooks &&
+     ++			    git config --unset core.hooksPath" &&
+     ++	mkdir custom-hooks &&
+     ++	write_script custom-hooks/pre-add <<-\EOF &&
+     ++	echo invoked >hook-ran
+     ++	EOF
+     ++	git config core.hooksPath custom-hooks &&
+     ++	echo changed >>file &&
+     ++	git add file &&
+     ++	test_path_is_file hook-ran &&
+     ++	rm -f hook-ran
+     ++'
+     ++
+      +test_expect_success 'hook receives index-path and lockfile-path arguments' '
+      +	test_when_finished "git reset --hard &&
+      +			    rm -f staged expect-count arg-count arg-one arg-two \
+     @@ t/t3706-pre-add-hook.sh (new)
+      +	EOF
+      +	echo changed >>file &&
+      +	GIT_INDEX_FILE=alt-index git add file &&
+     -+	echo "$PWD/alt-index" >expect-index &&
+     ++	test-tool path-utils absolute_path alt-index >expect-index &&
+      +	test_cmp expect-index arg-one &&
+     -+	echo "$PWD/alt-index.lock" >expect-lockpath &&
+     ++	test-tool path-utils absolute_path alt-index.lock >expect-lockpath &&
+      +	test_cmp expect-lockpath arg-two
+      +'
+      +
+
+
+ Documentation/git-add.adoc  |  10 +-
+ Documentation/githooks.adoc |  30 ++++
+ builtin/add.c               |  38 ++++-
+ read-cache-ll.h             |   3 +
+ read-cache.c                |   9 +-
+ t/meson.build               |   1 +
+ t/t3706-pre-add-hook.sh     | 304 ++++++++++++++++++++++++++++++++++++
+ 7 files changed, 388 insertions(+), 7 deletions(-)
+ create mode 100755 t/t3706-pre-add-hook.sh
+
+diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+index 6192daeb03..a3ff4ced83 100644
+--- a/Documentation/git-add.adoc
++++ b/Documentation/git-add.adoc
+@@ -11,7 +11,7 @@ SYNOPSIS
+ git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+ 	[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
+ 	[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
+-	[--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
++	[--no-verify] [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+ 	[--] [<pathspec>...]
+ 
+ DESCRIPTION
+@@ -42,10 +42,11 @@ use the `--force` option to add ignored files. If you specify the exact
+ filename of an ignored file, `git add` will fail with a list of ignored
+ files. Otherwise it will silently ignore the file.
+ 
++A `pre-add` hook can be used to reject `git add` (see linkgit:githooks[5]).
++
+ Please see linkgit:git-commit[1] for alternative ways to add content to a
+ commit.
+ 
+-
+ OPTIONS
+ -------
+ `<pathspec>...`::
+@@ -163,6 +164,10 @@ for `git add --no-all <pathspec>...`, i.e. ignored removed files.
+ 	Don't add the file(s), but only refresh their stat()
+ 	information in the index.
+ 
++`--no-verify`::
++	Bypass the `pre-add` hook if it exists. See linkgit:githooks[5] for
++	more information about hooks.
++
+ `--ignore-errors`::
+ 	If some files could not be added because of errors indexing
+ 	them, do not abort the operation, but continue adding the
+@@ -451,6 +456,7 @@ linkgit:git-reset[1]
+ linkgit:git-mv[1]
+ linkgit:git-commit[1]
+ linkgit:git-update-index[1]
++linkgit:githooks[5]
+ 
+ GIT
+ ---
+diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
+index 056553788d..90945a590e 100644
+--- a/Documentation/githooks.adoc
++++ b/Documentation/githooks.adoc
+@@ -94,6 +94,36 @@ and is invoked after the patch is applied and a commit is made.
+ This hook is meant primarily for notification, and cannot affect
+ the outcome of `git am`.
+ 
++pre-add
++~~~~~~~
++
++This hook is invoked by linkgit:git-add[1], and can be bypassed with the
++`--no-verify` option. It is not invoked for `--interactive`, `--patch`,
++`--edit`, or `--dry-run`.
++
++It takes two arguments: the path to the index file for this invocation
++of `git add`, and the path to the lockfile containing the proposed
++index after staging. If no index exists yet, the first argument names
++a path that does not exist and should be treated as an empty index.
++
++The hook is invoked after the index has been updated in memory and
++written to the lockfile, but before it is committed to the final index
++path. Exiting with a non-zero status causes `git add` to reject the
++proposed state, roll back the lockfile, and leave the index unchanged.
++Exiting with zero status allows the index update to be committed. The
++hook accepts or rejects the entire proposed update; per-path filtering
++is not supported. Both files should be treated as read-only by the hook.
++
++Hook authors may set `GIT_INDEX_FILE="$1"` to inspect the current index
++state and `GIT_INDEX_FILE="$2"` to inspect the proposed index state.
++
++This hook can be used to prevent staging of files based on names, content,
++or sizes (e.g., to block `.env` files, secret keys, or large files).
++
++This hook is not invoked by `git commit -a` or `git commit --include`
++which still can run the `pre-commit` hook, providing a control point at
++commit time.
++
+ pre-commit
+ ~~~~~~~~~~
+ 
+diff --git a/builtin/add.c b/builtin/add.c
+index 32709794b3..f35994ff0f 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -25,6 +25,8 @@
+ #include "strvec.h"
+ #include "submodule.h"
+ #include "add-interactive.h"
++#include "hook.h"
++#include "abspath.h"
+ 
+ static const char * const builtin_add_usage[] = {
+ 	N_("git add [<options>] [--] <pathspec>..."),
+@@ -36,6 +38,7 @@ static int take_worktree_changes;
+ static int add_renormalize;
+ static int pathspec_file_nul;
+ static int include_sparse;
++static int no_verify;
+ static const char *pathspec_from_file;
+ 
+ static int chmod_pathspec(struct repository *repo,
+@@ -271,6 +274,7 @@ static struct option builtin_add_options[] = {
+ 	OPT_BOOL( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
+ 	OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
+ 	OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
++	OPT_BOOL( 0 , "no-verify", &no_verify, N_("bypass pre-add hook")),
+ 	OPT_BOOL(0, "sparse", &include_sparse, N_("allow updating entries outside of the sparse-checkout cone")),
+ 	OPT_STRING(0, "chmod", &chmod_arg, "(+|-)x",
+ 		   N_("override the executable bit of the listed files")),
+@@ -391,6 +395,8 @@ int cmd_add(int argc,
+ 	char *ps_matched = NULL;
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	struct odb_transaction *transaction;
++	int run_pre_add = 0;
++	char *orig_index_path = NULL;
+ 
+ 	repo_config(repo, add_config, NULL);
+ 
+@@ -576,6 +582,11 @@ int cmd_add(int argc,
+ 		string_list_clear(&only_match_skip_worktree, 0);
+ 	}
+ 
++	if (!show_only && !no_verify && hook_exists(repo, "pre-add")) {
++		run_pre_add = 1;
++		orig_index_path = absolute_pathdup(repo_get_index_file(repo));
++	}
++
+ 	transaction = odb_transaction_begin(repo->objects);
+ 
+ 	ps_matched = xcalloc(pathspec.nr, 1);
+@@ -598,9 +609,30 @@ int cmd_add(int argc,
+ 	odb_transaction_commit(transaction);
+ 
+ finish:
+-	if (write_locked_index(repo->index, &lock_file,
+-			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+-		die(_("unable to write new index file"));
++	if (run_pre_add && repo->index->cache_changed) {
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++
++		if (write_locked_index(repo->index, &lock_file,
++				SKIP_INDEX_CHANGE_HOOK))
++			die(_("unable to write proposed index"));
++
++		strvec_push(&opt.args, orig_index_path);
++		strvec_push(&opt.args, get_lock_file_path(&lock_file));
++		if (run_hooks_opt(repo, "pre-add", &opt)) {
++			rollback_lock_file(&lock_file); /* hook rejected */
++			exit_status = 1;
++		} else if (commit_lock_file(&lock_file)) {
++			die(_("unable to write new index file"));
++		} else {
++			emit_post_index_change(repo->index);
++		}
++	} else {
++		if (write_locked_index(repo->index, &lock_file,
++				       COMMIT_LOCK | SKIP_IF_UNCHANGED))
++			die(_("unable to write new index file"));
++	}
++
++	free(orig_index_path);
+ 
+ 	free(ps_matched);
+ 	dir_clear(&dir);
+diff --git a/read-cache-ll.h b/read-cache-ll.h
+index 71b49d9af4..eed1d74d99 100644
+--- a/read-cache-ll.h
++++ b/read-cache-ll.h
+@@ -284,6 +284,9 @@ int is_index_unborn(struct index_state *);
+ /* For use with `write_locked_index()`. */
+ #define COMMIT_LOCK		(1 << 0)
+ #define SKIP_IF_UNCHANGED	(1 << 1)
++#define SKIP_INDEX_CHANGE_HOOK	(1 << 2)
++
++void emit_post_index_change(struct index_state *istate);
+ 
+ /*
+  * Write the index while holding an already-taken lock. Close the lock,
+diff --git a/read-cache.c b/read-cache.c
+index 0c07c3aef7..dfe8d8e4d7 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3161,13 +3161,18 @@ static int do_write_locked_index(struct index_state *istate,
+ 	else
+ 		ret = close_lock_file_gently(lock);
+ 
++	if (!(flags & SKIP_INDEX_CHANGE_HOOK))
++		emit_post_index_change(istate);
++	return ret;
++}
++
++void emit_post_index_change(struct index_state *istate)
++{
+ 	run_hooks_l(the_repository, "post-index-change",
+ 		    istate->updated_workdir ? "1" : "0",
+ 		    istate->updated_skipworktree ? "1" : "0", NULL);
+ 	istate->updated_workdir = 0;
+ 	istate->updated_skipworktree = 0;
+-
+-	return ret;
+ }
+ 
+ static int write_split_index(struct index_state *istate,
+diff --git a/t/meson.build b/t/meson.build
+index f80e366cff..2419a9adbb 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -415,6 +415,7 @@ integration_tests = [
+   't3703-add-magic-pathspec.sh',
+   't3704-add-pathspec-file.sh',
+   't3705-add-sparse-checkout.sh',
++  't3706-pre-add-hook.sh',
+   't3800-mktag.sh',
+   't3900-i18n-commit.sh',
+   't3901-i18n-patch.sh',
+diff --git a/t/t3706-pre-add-hook.sh b/t/t3706-pre-add-hook.sh
+new file mode 100755
+index 0000000000..352b79e5d6
+--- /dev/null
++++ b/t/t3706-pre-add-hook.sh
+@@ -0,0 +1,304 @@
++#!/bin/sh
++
++test_description='pre-add hook tests
++
++These tests run git add with and without pre-add hooks to ensure functionality. Largely derived from t7503 (pre-commit and pre-merge-commit hooks) and t5571 (pre-push hooks).'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++test_expect_success 'with no hook' '
++	test_when_finished "rm -f actual" &&
++	echo content >file &&
++	git add file &&
++	test_path_is_missing actual
++'
++
++test_expect_success POSIXPERM 'with non-executable hook' '
++	test_when_finished "rm -f actual" &&
++	test_hook pre-add <<-\EOF &&
++	echo should-not-run >>actual
++	exit 1
++	EOF
++	chmod -x .git/hooks/pre-add &&
++
++	echo content >file &&
++	git add file &&
++	test_path_is_missing actual
++'
++
++test_expect_success '--no-verify with no hook' '
++	echo content >file &&
++	git add --no-verify file &&
++	test_path_is_missing actual
++'
++
++test_expect_success 'with succeeding hook' '
++	test_when_finished "rm -f actual expected" &&
++	echo "pre-add" >expected &&
++	test_hook pre-add <<-\EOF &&
++	echo pre-add >>actual
++	EOF
++
++	echo content >file &&
++	git add file &&
++	test_cmp expected actual
++'
++
++test_expect_success 'with failing hook' '
++	test_when_finished "rm -f actual" &&
++	test_hook pre-add <<-\EOF &&
++	echo pre-add-rejected >>actual
++	exit 1
++	EOF
++
++	echo content >file &&
++	test_must_fail git add file
++'
++
++test_expect_success '--no-verify with failing hook' '
++	test_when_finished "rm -f actual" &&
++	test_hook pre-add <<-\EOF &&
++	echo should-not-run >>actual
++	exit 1
++	EOF
++
++	echo content >file &&
++	git add --no-verify file &&
++	test_path_is_missing actual
++'
++
++test_expect_success 'setup for path-based tests' '
++	git add file &&
++	git commit -m "initial"
++'
++
++test_expect_success 'hook found via core.hooksPath' '
++	test_when_finished "git reset --hard &&
++			    rm -rf custom-hooks &&
++			    git config --unset core.hooksPath" &&
++	mkdir custom-hooks &&
++	write_script custom-hooks/pre-add <<-\EOF &&
++	echo invoked >hook-ran
++	EOF
++	git config core.hooksPath custom-hooks &&
++	echo changed >>file &&
++	git add file &&
++	test_path_is_file hook-ran &&
++	rm -f hook-ran
++'
++
++test_expect_success 'hook receives index-path and lockfile-path arguments' '
++	test_when_finished "git reset --hard &&
++			    rm -f staged expect-count arg-count arg-one arg-two \
++			    expect-index expect-lockpath" &&
++	echo staged >staged &&
++	cat >expect-count <<-\EOF &&
++	2
++	EOF
++	test_hook pre-add <<-\EOF &&
++	echo "$#" >arg-count &&
++	echo "$1" >arg-one &&
++	echo "$2" >arg-two &&
++	test "$1" != "$2" &&
++	test -r "$2"
++	EOF
++	git add staged &&
++	test_cmp expect-count arg-count &&
++	printf "%s/index\n" "$(git rev-parse --absolute-git-dir)" >expect-index &&
++	test_cmp expect-index arg-one &&
++	sed "s/$/.lock/" expect-index >expect-lockpath &&
++	test_cmp expect-lockpath arg-two
++'
++
++test_expect_success 'hook rejection leaves final index unchanged' '
++	test_when_finished "git reset --hard && rm -f reject index.before" &&
++	cp .git/index index.before &&
++	test_hook pre-add <<-\EOF &&
++	exit 1
++	EOF
++	echo reject >reject &&
++	test_must_fail git add reject &&
++	test_cmp_bin index.before .git/index &&
++	test_path_is_missing .git/index.lock
++'
++
++test_expect_success 'missing pre-existing index path treated as empty' '
++	test_when_finished "git reset --hard &&
++			    rm -f newfile arg-one after.raw after expect-index" &&
++	rm -f .git/index &&
++	test_hook pre-add <<-\EOF &&
++	echo "$1" >arg-one &&
++	test ! -e "$1" &&
++	GIT_INDEX_FILE="$2" git diff --cached --name-only HEAD >after.raw &&
++	sort after.raw >after
++	EOF
++	echo newfile >newfile &&
++	git add newfile &&
++	printf "%s/index\n" "$(git rev-parse --absolute-git-dir)" >expect-index &&
++	test_cmp expect-index arg-one &&
++	grep "^newfile$" after &&
++	grep "^file$" after
++'
++
++test_expect_success 'hook respects GIT_INDEX_FILE' '
++	test_when_finished "git reset --hard &&
++			    rm -f arg-one arg-two expect-index expect-lockpath \
++			    alt-index alt-index.lock" &&
++	test_hook pre-add <<-\EOF &&
++	echo "$1" >arg-one &&
++	echo "$2" >arg-two
++	EOF
++	echo changed >>file &&
++	GIT_INDEX_FILE=alt-index git add file &&
++	test-tool path-utils absolute_path alt-index >expect-index &&
++	test_cmp expect-index arg-one &&
++	test-tool path-utils absolute_path alt-index.lock >expect-lockpath &&
++	test_cmp expect-lockpath arg-two
++'
++
++test_expect_success 'setup for mixed-result tests' '
++	echo "*.ignored" >.gitignore &&
++	git add .gitignore &&
++	git commit -m "add gitignore"
++'
++
++test_expect_success 'mixed-result add invokes pre-add hook' '
++	test_when_finished "git reset --hard &&
++			    rm -f bad.ignored index.before hook-ran proposed" &&
++	echo changed >>file &&
++	echo ignored >bad.ignored &&
++	cp .git/index index.before &&
++	test_hook pre-add <<-\EOF &&
++	GIT_INDEX_FILE="$2" git diff --cached --name-only HEAD >proposed &&
++	grep "^file$" proposed &&
++	echo invoked >hook-ran &&
++	exit 1
++	EOF
++	test_must_fail git add file bad.ignored &&
++	test_path_is_file hook-ran &&
++	test_cmp_bin index.before .git/index &&
++	test_path_is_missing .git/index.lock
++'
++
++test_expect_success 'mixed-result add stages tracked update on approve' '
++	test_when_finished "git reset --hard &&
++			    rm -f bad.ignored hook-ran staged proposed" &&
++	echo changed >>file &&
++	echo ignored >bad.ignored &&
++	test_hook pre-add <<-\EOF &&
++	GIT_INDEX_FILE="$2" git diff --cached --name-only HEAD >proposed &&
++	grep "^file$" proposed &&
++	echo invoked >hook-ran
++	EOF
++	test_must_fail git add file bad.ignored &&
++	test_path_is_file hook-ran &&
++	git diff --cached --name-only HEAD >staged &&
++	grep "^file$" staged &&
++	test_path_is_missing .git/index.lock
++'
++
++test_expect_success 'post-index-change fires after pre-add approval' '
++	test_when_finished "git reset --hard &&
++			    rm -f hook-order expect lockfile-present" &&
++	test_hook pre-add <<-\EOF &&
++	echo pre >>hook-order
++	EOF
++	test_hook post-index-change <<-\EOF &&
++	if test -f ".git/index.lock"
++	then
++		echo locked >lockfile-present
++	fi
++	echo post >>hook-order
++	EOF
++	echo updated >>file &&
++	git add file &&
++	cat >expect <<-\EOF &&
++	pre
++	post
++	EOF
++	test_cmp expect hook-order &&
++	test_path_is_missing lockfile-present
++'
++
++test_expect_success 'post-index-change is suppressed on pre-add rejection' '
++	test_when_finished "git reset --hard &&
++			    rm -f index.before hook-order expect" &&
++	cp .git/index index.before &&
++	test_hook pre-add <<-\EOF &&
++	echo pre >>hook-order &&
++	exit 1
++	EOF
++	test_hook post-index-change <<-\EOF &&
++	echo post >>hook-order
++	EOF
++	echo reject >>file &&
++	test_must_fail git add file &&
++	echo pre >expect &&
++	test_cmp expect hook-order &&
++	test_cmp_bin index.before .git/index &&
++	test_path_is_missing .git/index.lock
++'
++
++test_expect_success '--dry-run does not invoke hook' '
++	test_when_finished "rm -f hook-ran dry" &&
++	test_hook pre-add <<-\EOF &&
++	echo invoked >hook-ran
++	EOF
++	echo dry >dry &&
++	git add --dry-run dry &&
++	test_path_is_missing hook-ran
++'
++
++test_expect_success 'hook runs for git add -u' '
++	test_when_finished "git reset --hard && rm -f hook-ran" &&
++	test_hook pre-add <<-\EOF &&
++	echo invoked >hook-ran
++	EOF
++	echo changed >>file &&
++	git add -u &&
++	test_path_is_file hook-ran
++'
++
++test_expect_success 'hook example: block .env files' '
++	test_when_finished "git reset --hard &&
++			    rm -f .env safe.txt new-paths" &&
++	test_hook pre-add <<-\EOF &&
++	GIT_INDEX_FILE="$2" git diff --cached --name-only HEAD >new-paths &&
++	while read path
++	do
++		case "$path" in
++		*.env)
++			echo "error: $path must not be staged" >&2
++			exit 1
++			;;
++		esac
++	done <new-paths
++	EOF
++	echo "DB_PASS=secret" >.env &&
++	test_must_fail git add .env &&
++	echo "safe content" >safe.txt &&
++	git add safe.txt
++'
++
++test_expect_success 'hook example: block secrets in content' '
++	test_when_finished "git reset --hard && rm -f config.txt secret" &&
++	test_hook pre-add <<-\EOF &&
++	GIT_INDEX_FILE="$2" git diff --cached HEAD >secret &&
++	if grep -q "API_KEY=" secret ||
++	   grep -q "SECRET_KEY=" secret ||
++	   grep -q "PRIVATE_KEY=" secret
++	then
++		echo "error: staged content contains secrets" >&2
++		exit 1
++	fi
++	EOF
++	echo "API_KEY=sksksk-live-12345" >config.txt &&
++	test_must_fail git add config.txt &&
++	echo "LOG_LEVEL=debug" >config.txt &&
++	git add config.txt
++'
++
++test_done
+
+base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
+-- 
+gitgitgadget
