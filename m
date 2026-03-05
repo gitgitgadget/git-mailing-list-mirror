@@ -1,116 +1,120 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC0D3009C8
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 21:27:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10AB28C869
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 21:35:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772746060; cv=none; b=CKK4bTAxhZQa7mB853LYmviLBruea1bOfSv0nuSpXXNTOUk9hmzB0kNbHJlexRbNayshcslmEtZPqOW5dux211mboRfJ2j1z7lQyyJTQssP2qVgg72g8+ZjrjYKsIY5MaaPDv2HlkvBAomNpgm8hp94W1C4gXkvDe5rV0G0eQ2o=
+	t=1772746541; cv=none; b=RL2cRusrm2czclm7POgdTgMMB6CEuW83cq1S3haGkZcgBRMBBjLWbLWF0xDgUbbvyXhtzqsRax9JhrhISkKeBo3m1c9iqx2QaFfQQcifHd4OHe37kFl2WH8JAx/d6enPQOMrzZ2bks9f64pflUT8dkRfl+Gs2MsiJGycSfuxYI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772746060; c=relaxed/simple;
-	bh=cpWQNKlRlskZJhW/+n4iPPfrUGQhbZmfxUNzGMCO5AY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uuyq4WtxrL0JjRZleu8MgpMwzq3V5tidDzu+o61Uooc+vMzF5FSod5s5cNku8bVWq+cJ7tJqVG6gkYGz4zE6cf5EgVCoYPn4uNByY1GP/7yi2VvSYw0fGHzXiwl9Ln/TKmf/zDNWb93hJEOEDaoiPT1W5Wu3maTMzutnoz2V+uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a6as6vrp; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772746541; c=relaxed/simple;
+	bh=oGGjv6TlSqF6OvDE+4Lo0jhrWCQgJ0AMu6BvXghmDu0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ssCfiQah+frPyfeD0F0ICTrbjV1O2dE6YfVFuSMDR3In6wiB1hOaC0uUdx46qEzqai5otvF1GPAgGqnA8oTclRpIAU7NQg9KrhtQDvgXeNlNo1aTcNN0aJ8z/9nwrtzlWRwCVrjctRtdDX4kK/MdwzV0CnxtAE0wkuYXD0O8Up4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cdcOUgsP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4bgFtvkj; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a6as6vrp"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4638e238094so4826726b6e.3
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 13:27:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772746058; x=1773350858; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sBiksY2hiF7l8LwJyoOhgkyYRXzzNpET0pS9b1kLMwo=;
-        b=a6as6vrpNdlwZbB4q18amkBwJ+au4f9H5zisMZ9H/p0/yCjY/urx7guQes6rB5pr8E
-         e3dDc0bAqEMsuJcnwV1K0hmsKiXlYlFrtXBU0Wzg21Ap8ahYdvQHj2vGLj+LmOk9ivfb
-         pDQ7fAzEz6x/CBYnfSqYGQpr3J2ASfWwco5HmjodjlXavUXa9LqQ/we0YMETsHHL9PbZ
-         9o7baaLSwqmdNxaaJapzzVW3cMCchfNaI55b+Vi2/RRvcA9PJJ6+afbyCPV5NHpb0ucC
-         f3t9BpUwlptjZUPEWoSxRYlKa+P/z1EOFA6eUYmTxJFN2UDB+lUMnzcqE4MIu6my6peR
-         57Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772746058; x=1773350858;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sBiksY2hiF7l8LwJyoOhgkyYRXzzNpET0pS9b1kLMwo=;
-        b=pAScLmmZm7yV5489YR0C4Y5gWIqIyhZmi7f5D+qcmcSrjIEuGo8coaFCe2nIzGPtaV
-         5lDCDaqrRoCUQMzUUqn2DzlT3pwlpg9ReP9hJZTZagTu6Ku6YrkfG9XSu9cFxsbKkDb6
-         Km+9JiB7f7WEHZHT+bcHdXMzGHssyQxTLSe76o5n4XNkCXbTFyzYRzv1hIQ9uNG+M8ix
-         /6wkZUSxdGTV3LJzXxOQh6JGhTRW6XxNXFGZCWGEEEwnmb1klfMBjd7uH+xRUsR/4f+P
-         imIx69MU06osenFcuj6ZrwhH7CjlyXPd8rfFULjRilFsb3qP+Auklxkyer8rw5lG8ME8
-         h2gg==
-X-Gm-Message-State: AOJu0Yxf1KQbhrKHgOgKMLejp6aQW+BTDAGuBG17laxG77wRH42DBIuW
-	Cn0fPvX8d4XbUJSBkyWHMjo61QcucJdm331OsToJYG2foD/ASddpwa+m6g6WGQ==
-X-Gm-Gg: ATEYQzydAZK6H5Pl2D+0AniVLA+GQS2jP1dKdlnY715IpHJ0PNPvvYzwfrxE7Egutml
-	9GNeZYwwmZ7IHY6b8XRp/xm7ZDPZovOzTqUyBsYzaFgVXBrG+jswxfM3UlOz9gGdDtwByKVTx/X
-	hahfItl/8vvAy3ffcZbTVpwmn1Z138UOPQy0OAbPtC4MCdwqyRuXfCrLT4FCu+G166ZniZ62iaI
-	VJp4X53wM/T4QtoWX8gxOysXPklOif8mRn/7dfDa8AsS0NA3NE8Jymbf4Xnjqi33G0o753vsNUm
-	U/izZnXHDyITYsbeDA793/jmN7/YUzDFaaNRD5sTJcm4ROHbx6XlgwExv51f8VCv09bQJlAQ+tr
-	txn1NrP9NfbaEmbdN9NehvWCjjI62XWqzCtWXglonYHLhl9+WgbZBn9QuLb2qzTFmgIgsj9kYrs
-	fstbWQqYyqBHTDe0eYYXW3w8QLk6U=
-X-Received: by 2002:a05:6808:e88:b0:45f:131b:db4e with SMTP id 5614622812f47-4651ab6e770mr3987771b6e.5.1772746057843;
-        Thu, 05 Mar 2026 13:27:37 -0800 (PST)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-464bb35290fsm14202718b6e.4.2026.03.05.13.27.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2026 13:27:37 -0800 (PST)
-Date: Thu, 5 Mar 2026 15:27:34 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cdcOUgsP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4bgFtvkj"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 056DEEC0582;
+	Thu,  5 Mar 2026 16:35:36 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Thu, 05 Mar 2026 16:35:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772746536; x=1772832936; bh=KvYM89Kujq
+	606Ru0nxmEPxso2tHGRrLP/PBkgJPf0bw=; b=cdcOUgsPv4Li9MCDG9bDTvrnl0
+	aVeCVmNADM5fMsYoEn3Ifc9VQZ7P4i0LUMSGlXTjulnTHEQQWvU1tt9PPkDhLhEa
+	u4G5COSxu5v6gwJ3m1/ESRiKX+X6R0OZImq9cp/G5BwGeVqaOFpW6gTtMDCP8tWH
+	/pQCaSt0YfkLF5w7SIiyjV8bS0eKIp7RHSsRPmhjMiW0yJOwNEsNzK/4buupA2Dk
+	M0wIWhXe+l6NfLH5lhwQYMjwIJ7nfSk/dCtQu/TxjWiwVPsOzdUQHPmoCzz8w/Mp
+	bR18nsK9TmkBsQ3enqnbTqO/23abipMMy9IwW71WBh6Za+IgKNC//+COObjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772746536; x=1772832936; bh=KvYM89Kujq606Ru0nxmEPxso2tHGRrLP/PB
+	kgJPf0bw=; b=4bgFtvkjQNpmHYhdyN1si1YiSKdHSKGP9aINU8aQ0nAQSDnJvhs
+	NBuCE8+mZhl2njkysGeZKMBAOJ4tF00Eu+qjZrKjs4Qz19zvv2YMGV1DoIbShxQ+
+	KBr1PYlXpcfJ3DnzJ9z+1e5ptTNpaVC4AZSPREHiVMjrZ6d4s7oCE7Xj/R/iD6ZB
+	5Sgih2F+NFuxmJummaQoHTzEdB3VsczD2O1te1el+qJ7Ak/KDT3btqef/NyBLuxx
+	K0QLi4H7ksvYmdUeQsSPJ6moOUKbQhUuHOVYpiq7OF0pqwyb0SGZamIiAbswpQcf
+	6t03+Ip5CSmJgmV/a8kHsT6mBsWhG7JnuQg==
+X-ME-Sender: <xms:J_epacvmyOYnBtj997tlFyoBjCgRrQfPlmvDDopvX38cXvmcw-fZtw>
+    <xme:J_epaQdnN_PjO0n7LB4ZVfcU1DgCUM0NqExautKOYxoOj12A_o63kHv1AitUJDmm4
+    NxuCQ9Kr6AWpNgOPRp6D9BcOevR2X5i8nfgrWCeEaXIetf_ZGH8nHI>
+X-ME-Received: <xmr:J_epacw1hc_jkHwLxqWwU9tzB05YaEicV6rEqu6kmpFwzW4m1b6ij-jJqLHs9UIpZXhqLJbq0FDumwhme3My1i2beRF8ckyiVA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieejgeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
+    phhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:J_epaeE9PWOuy8TnZUU2sBqJQ8OvEFQCdgju1fomnEhOfM-N3LPShw>
+    <xmx:J_epaYy0WB3zxMDX7JfFMjB5xPM4z_PynZhoROQcIFcfHjUf8XL2hQ>
+    <xmx:J_epaXv1oFguoLJMXfEBYdEmxoaJKVqdnzlRHExYbVI-1xQzHzVm1A>
+    <xmx:J_epad0aZNhKgFmv6bc3xGTnE0AgmunSESAjtk1vKNVxFundwLGAFw>
+    <xmx:KPepaQQTTePSnCDhMRQ_h1wY9MKlP8LjQwSls45UPYm7H5ZLb5YuSn-H>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Mar 2026 16:35:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
 Subject: Re: [PATCH] Documentation: extend guidance for submitting patches
-Message-ID: <aan0FUBE1LwrFc4y@denethor>
+In-Reply-To: <aan0FUBE1LwrFc4y@denethor> (Justin Tobler's message of "Thu, 5
+	Mar 2026 15:27:34 -0600")
 References: <20260305193836.973122-1-jltobler@gmail.com>
- <xmqqikba2evz.fsf@gitster.g>
+	<xmqqikba2evz.fsf@gitster.g> <aan0FUBE1LwrFc4y@denethor>
+Date: Thu, 05 Mar 2026 13:35:33 -0800
+Message-ID: <xmqqzf4m0xju.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqikba2evz.fsf@gitster.g>
+Content-Type: text/plain
 
-On 26/03/05 12:35PM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > Before submitting patches on the mailing list, it is often a good idea
-> > to check for previous related discussions or if similar work is already
-> > in progress. This enables better coordination amongst contributors and
-> > could avoid duplicating work.
-> >
-> > Additionally, it is often recommended to give reviewers some time to
-> > reply to a patch series before sending new versions. This helps collect
-> > broader feedback and reduces unnecessary churn from rapid rerolls.
-> >
-> > Document this guidance in "Documentation/SubmittingPatches" accordingly.
-> >
-> > Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> > ---
-> >  Documentation/SubmittingPatches | 13 +++++++++++++
-> >  1 file changed, 13 insertions(+)
-> 
-> What's written in these two new paragraphs are all agreeable, but is
-> the first addition in the right place with correct mark-up?
-> 
-> This whole section is a sequence of bullet points that shows "a
-> typical life cycle of a patch series".  The first bullet point
-> starts with "You come up with an itch." and the second one is "You
-> send the patches", whose end part is what we see in the pre-context
-> of the patch, ending with "help you find out who they are."
-> 
-> If the new paragraph is meant as yet another paragraph to elaborate
-> on that second bullet point, wouldn't we need that "a line with only
-> a single '+' on it" before it, instead of a blank line, and the last
-> line of the first new paragraph should not be such a "single '+'"
-> line but a plain vanilla blank line?
+Justin Tobler <jltobler@gmail.com> writes:
 
-Ah yes apologies. The first addition to start with a line prefixed with
-'+' intead of a blank line. I do believe it does already end with a
-blank line though. I'll correct in the next version.
+> Ah yes apologies. The first addition to start with a line prefixed with
+> '+' intead of a blank line. I do believe it does already end with a
+> blank line though. I'll correct in the next version.
 
-Thanks,
--Justin
+I have the following queued on top.  If there is nothing else, I
+can just squash it in.
+
+Subject: [PATCH] SQUASH??? mark-up fix
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/SubmittingPatches | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 5acd692ad7..359f5fb74e 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -37,7 +37,7 @@ most likely to be knowledgeable enough to help you, but
+ they have no obligation to help you (i.e. you ask them for help,
+ you don't demand).  +git log -p {litdd} _$area_you_are_modifying_+ would
+ help you find out who they are.
+-
+++
+ It is also a good idea to check whether your topic has been discussed
+ previously on the mailing list, or whether similar work is already in
+ progress.  Prior discussions may contain useful context, design
+-- 
+2.53.0-621-g5d45fffb26
+
