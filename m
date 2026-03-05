@@ -1,118 +1,122 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D72339A066
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 12:40:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644C12989B0
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 12:54:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772714413; cv=none; b=X9Kn4GtURdMBUa8x51sxyvKhE9i9pMaoaWB7uyZPWL4Z8blJnkYyBgLVUmiHrNuiPl1adIq1SI3J/nn7X0AuwUAocap0eVirDUbhNwejABJx6dGr9DNmi0JZncxvklSTgSJNeO4wf0ygsg1tZkUEDvL9BpqZQ7YWYRtsTZdZqto=
+	t=1772715261; cv=none; b=lsh7n5oyZkKNv33TtcSaEaiM0r++odh8XLtwH+6z8Xan4dw2zLFx9jcTyHzT+0pPkKySJVODH6Bpzo5evzRoVzshrG9e0CPXoejXhiZBr/iRBl6eFGXnU3vawxsHvVgfoKWTox6ltT+odJdBsXV4DIiNACOnL1wFI48n9nGhdGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772714413; c=relaxed/simple;
-	bh=w/tpZUb7Tr1O6/8Ko5xh7GMcIjQhFQUuG5L9oQ4+NF8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VM8mLD5WSfF2+74+rnIUP+9Eh85/5xMEaE4/TtMMwck4ndAeYBYMYeo8KzFkZ99qIYM/vnnHGvVM9/mOazbz9GREtg2VjT9FaBhybaN5+C0Kz/B+N4ta69jbjKJk5GdhFrQw/M845WN+SODacFrsUAjmfAN/YIv6/G9hbu293o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FIOb1LpR; arc=none smtp.client-ip=209.85.210.182
+	s=arc-20240116; t=1772715261; c=relaxed/simple;
+	bh=Dj4gdRFzh0hOy7XcuosANh9NJEsSaBxVv96LiSaLzTo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d3HFphHlD5MYDLhvbBy0EEkAxZoJGBn9DcJ9tNsDsh1qvx2ENuS9EA6qr4IALnjyPRe3UVd47ppZhBspHRBPxPU0vwkThh7/5YR+IWPAr18XfLmjlgbsSmfiTc+5419nqQjNEYusKbmP3E3T6mhwlnAwEjK6+76IFMwsHzBTPBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AVF8UzWj; arc=none smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FIOb1LpR"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-82980ceb244so164585b3a.3
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 04:40:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AVF8UzWj"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c7393536e53so157461a12.2
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 04:54:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772714412; x=1773319212; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pjWcfsMuu4sSMsqyDdIS6b9mr9JIn8YM+J+SViSb2q0=;
-        b=FIOb1LpRjrdt4ylWnTzru0fLz/+s+Xs5FU9B5UZVKsaDIKyyUZUbgfgNb79B55vQZZ
-         Bg0CvZ4xWrPnwX3qXQQe82vYRjNzOGJ0f924yCj2tFWmK1zDLaqaP1DDXq1WAN1b6+TR
-         XhsbllaB7gCpOXDdF0goJAi/yhzLq5CC+md28KfLRH5JuoTJHlCRRBVFZgUolwoDeTLR
-         QS3nQUEXZtyAv3d/BaRaFVoL4crmlZCadtP4GW+IJLWZg14yRwPSFmnKXco5UunFzbTL
-         KY+iKofkAlCDsNiT53H6lnanRWJQdIOkqGlGVdTn2BXuwLgvy7X/5DSKm/CE+Q7aqgsV
-         GSGw==
+        d=gmail.com; s=20230601; t=1772715259; x=1773320059; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vKj30UY7GTp/yySEtikodVMIdykfH/VRNpvdw0oIRRk=;
+        b=AVF8UzWjdKfgoN795FFP0VmDFieFjmx+pP99LfomB4ZocABzXI5zhbrlteM841J/fn
+         nAtw7MhVNcPNQy3SVW+n1FdKtN4eiC1v2FCPr7g4snTcrToJC4r4jQK1DRuPx5OmTjif
+         EjYUYlg3ysT6Z3PPHTMgrZlCr/IfKi25hkioxHpJZbfA5mp3reE1ZBj37B2SMPNRphTO
+         oBdhSyLakyMjCTuTVWTWnDc1SRdwSy3QgTOE6sF2iuzbUoiNJICmgC/31frLZpc1yO1i
+         AwqG27KMUTxDyJtF9U9oON/h65mKD/YQgYt8AfrVpxSzOF776uWd9GAuQZV0JWk1Y2uT
+         3rZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772714412; x=1773319212;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pjWcfsMuu4sSMsqyDdIS6b9mr9JIn8YM+J+SViSb2q0=;
-        b=kZdfA36+ByANwi3YOkynXY9qpCoNg5N6glfkdZ43WAq7uyeyWnA9vIUu284w3uVW8a
-         J/B6IN+A5EEkWVt4nmS2k+64iaUvmyOxlH2vCyY4g68HH/Gbxo/45EZ1bpVTQG2aGlpi
-         ZR0Z9PuqMclbfkdj3mqRwjGAUch/BKGnPPMjp2gp74T2WtAv+AKqaKNys80vACG8s9Fu
-         uPR33iLruzRi63AZK34KFppkCKKkIfeXHkB0z5AWkl/ylJNd4LNK+oBL1/YWhT3iLJXI
-         BISYkHpn8U2CVIFTmR6B4j1feWpIQ3zSPHUrNoEluqyIvu8AkYjgZkw4pkYX1sKzmEEj
-         rygg==
-X-Forwarded-Encrypted: i=1; AJvYcCWKSPtvHOqavQ6vhQCw7rEuX77KlrCPT9WGOvDFrLYpE8CVj73Vj+uF85WZCT1+sV2jsws=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIA1u6hNXIw1t3ggLK5WQACw8We1GELYYDmi8+FgbhPr9DbB8Z
-	khYTJOuc11ws5vKfxFeAf1uJTF/10MHUVj4KJPOVeicFWvvk8qiygNgR
-X-Gm-Gg: ATEYQzy2oU1j0xbo5Mv2FDQ9SOACOsamG9vjlUMfUiVWZhyVKq21zIWeWGsggB3lIeP
-	ChePn+83zJksttHT0GSdQToHA8l2rFTsCSFXssFBzOBTftEilSAnWNSSddOo/7MIH9QsKGDVZXn
-	5BhZc6Ymrk4E7cOs7bvsTkJN4NHqyY+7a7/fVCvnUAff3uPsDRiPVv3Ah8DwKvtqXSvkK4bTOy0
-	ZWQqlOHr26F5ijZ6RRXUWY6wDWvrgRFVn6gFLMfs9Rk/QMZA7w3boQQ9MoyTTAO9d7EWYy516o3
-	0q7nBaoEvhsXaHV7ORo+dbTSwomrRfm52T++2MlEv8BVivfbH0aYSRfHt0ECzo74CLFf/Pm7LAe
-	3EPLr7SugVNsZpL6tJhtlRps9KIVdHiKUE2ChMFdgeD1C5qpaf6+yq4ZAp6gx9Wc9X4gKj9cWtv
-	jE8jiq2rMXT2FCE127PERirWtIKxcUnYX8QlnThocExTvwGEdHMtn0LgAuozu9e8zde5AldWDIT
-	H7bQMzwUKLi
-X-Received: by 2002:a17:902:d50e:b0:2ae:4e2b:f55e with SMTP id d9443c01a7336-2ae6aad6861mr42583835ad.4.1772714411567;
-        Thu, 05 Mar 2026 04:40:11 -0800 (PST)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6bb5b2sm231365175ad.69.2026.03.05.04.40.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Mar 2026 04:40:11 -0800 (PST)
-Message-ID: <a5e41bd1-af10-49cd-85dc-8e668f1d8970@gmail.com>
-Date: Thu, 5 Mar 2026 20:40:08 +0800
+        d=1e100.net; s=20230601; t=1772715259; x=1773320059;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vKj30UY7GTp/yySEtikodVMIdykfH/VRNpvdw0oIRRk=;
+        b=vTWBPlfyQIM09B8fIASBBJc9H3OjJo84GUhB2OiT/yjSg5ONLrtpEmjpIhciDUja8t
+         MWRI/UEOGDR3bnWW8f2WnfxSZIf2hLYLA7ynUUu/8P1kZgiBr7AqiY6imvO9CZADnJYf
+         Jw/JpWismb+xQeZl2aqdhFtePZICrQD/LLDf9BIdpqSykO9+2dmX7alVDeqn4ymbmntR
+         /1vf/Vm09qmEBJtLCwgRC1709vfVCf7SqYyiJ6DofC3VZD7DCrQ5uMV8VpdSdYpe5IRk
+         OQ2PJ1VoMGyeg3sx9KiFXIax773eCLAWQrgolvi1eMVSJGEM8sln6iHht8JRQVFc3aHw
+         hUNQ==
+X-Gm-Message-State: AOJu0YwAwtjEQEqFKiMLvNmxJnBe2Xnkr2xFINNppSkANmOA4jNT9N2j
+	B4R7LLyiIX589zOA54q8CbtCgA9hYMcJBv8RRYLepnD4Je9qUTCoSOPNRU+prsY0D4k=
+X-Gm-Gg: ATEYQzyVGU7PFkoN/yem7ZRal9vF89tOz5ynFw4oL+9B052o0WbQUS27+y9MIaN2fdZ
+	RNHuW9ARPWAW7SDiDJzd9BTeap/jZmam81j/6V9CIKVKEivN2h6XCmPHpAAFHubGQnjyDoi1CYv
+	+gw8D4h2pfpvRR9NuToHYSuN1qHitAxhMKxep9cfSphLeZpmET/s8DiyYpqEexxzSPt81eaA76Y
+	bQwRY6EBCgb9/DghDGxYo8858uhR/bR0tKV3hFL7tweQZvWMMz72sO9KYq3URFlko+tAkXJoOy6
+	V88eBZIv2vXIei1zjMgju+gTX+3k1FQfg+ZCXD83N7afnI8fMm7n5exui7dD3ZNCQWi9wfO3c5s
+	jkXU+TbXgzcDRFE/Z/WhHtcvFRokzauPJPwGgnccdWBO1xDjsMqW2dSRlxw3Zh1SIJOCfs0UMCs
+	4oQFXWGn8AZSol4Qzh2jdXuJ73cSz5kjLFuu/oWG6fNtWxbBsPUF67uTltWHDrPJx9CBvhrw==
+X-Received: by 2002:a17:902:cf07:b0:2ae:6192:8da4 with SMTP id d9443c01a7336-2ae6aa0fd9bmr62480645ad.2.1772715259356;
+        Thu, 05 Mar 2026 04:54:19 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:79db:400:2c86:b232:da48:a029])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb5c3b01sm238972465ad.31.2026.03.05.04.54.15
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 05 Mar 2026 04:54:18 -0800 (PST)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: avarab@gmail.com,
+	normalperson@yhbt.net,
+	peff@peff.net,
+	gitster@pobox.com,
+	r.siddharth.shrimali@gmail.com
+Subject: [PATCH] t9123: use test_when_finished for cleanup
+Date: Thu,  5 Mar 2026 18:24:08 +0530
+Message-ID: <20260305125408.16958-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11] setup: improve error diagnosis for invalid .git files
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
- karthik.188@gmail.com, Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20260222102928.377519-1-a3205153416@gmail.com>
- <20260223074410.917523-1-a3205153416@gmail.com> <xmqqpl5rumy0.fsf@gitster.g>
- <xmqqjyvu42pw.fsf@gitster.g> <460f00d5-97b4-4a6c-be45-6f60a17cd33e@gmail.com>
- <xmqqo6l49mrt.fsf@gitster.g> <99c6a437-3fc3-4d9a-9465-4c47a9777776@gmail.com>
- <xmqqfr6fa63h.fsf@gitster.g> <fc2aaed9-ecc3-4efa-bdef-e6ac951c1d5b@gmail.com>
- <xmqqcy1j8o5r.fsf@gitster.g> <00f6d468-7d00-4edc-886d-723322420539@gmail.com>
- <xmqqbjh35hvv.fsf@gitster.g>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <xmqqbjh35hvv.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 3/5/26 06:50, Junio C Hamano wrote:
-> Tian Yuchen <a3205153416@gmail.com> writes:
-> 
->> Maybe, but my main concern was that adding 'die()' in
->> 'setup_git_directory_gently_1()' might not be the best choice.
->> Considering the implementations of the preceding functions, I though
->> locating 'die()' in 'setup_explicit_git_dir()' might be a better choice?
-> 
-> You may be right.  I didn't take a careful enough look to comment.
-> 
->> By the way, I noticed there's a '(read_gitfile(path))' macro that
->> expands to 'read_gitfile(path, NULL)'. I was planning to pass
->> 'error_code' here, essentially moving the logic from the original
->> 'setup_git_directory_gently_1()' to this location, where the former
->> would only be responsible for returning the error status... The changes
->> would be a bit too extensive if I did it that way.
-> 
-> True.  It would be a lot more invasive change.  I do not know if it
-> is worth our time _right_ _now_, or if it is better to be left for
-> future iterations.
+Move the setup logic into a 'test_expect_success' block.
+This ensures that the code is properly tracked by the test harness.
 
-I will hold off on any further iterations and leave v12 as is, unless 
-you or others spot any specific details in it that still need tweaking.
+Additionally, we use the 'test_when_finished' helper at the start of
+the block to ensure that the 'import' directory is removed even if the
+test fails.
+This is cleaner than the previous manual 'rm -rf import' approach.
 
-Thank you so much for the patience and guidance throughout this entire 
-series! I really learned a lot from it.
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+---
+I have kept the SVN setup and the Git SVN initialization in separate
+blocks for clarity. Would you prefer these to be combined into a 
+single setup block?
 
-Regards,
+ t/t9123-git-svn-rebuild-with-rewriteroot.sh | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-Yuchen
+diff --git a/t/t9123-git-svn-rebuild-with-rewriteroot.sh b/t/t9123-git-svn-rebuild-with-rewriteroot.sh
+index ead404589e..8fa5940abe 100755
+--- a/t/t9123-git-svn-rebuild-with-rewriteroot.sh
++++ b/t/t9123-git-svn-rebuild-with-rewriteroot.sh
+@@ -7,12 +7,15 @@ test_description='git svn respects rewriteRoot during rebuild'
+ 
+ . ./lib-git-svn.sh
+ 
+-mkdir import
+-(cd import
+-	touch foo
+-	svn_cmd import -m 'import for git svn' . "$svnrepo" >/dev/null
+-)
+-rm -rf import
++test_expect_success 'setup svn repository' '
++	test_when_finished "rm -rf import" &&
++	mkdir import &&
++	(
++		cd import &&
++		touch foo &&
++		svn_cmd import -m "import for git svn" . "$svnrepo" >/dev/null
++	)
++	'
+ 
+ test_expect_success 'init, fetch and checkout repository' '
+ 	git svn init --rewrite-root=http://invalid.invalid/ "$svnrepo" &&
+-- 
+2.51.2
+
