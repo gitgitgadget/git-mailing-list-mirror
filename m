@@ -1,83 +1,84 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D727B235063
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 13:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2841F19C54E
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 13:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772717011; cv=none; b=CPhERNPPKJNj3EM34FYkKXPoJtKoZ5sviqCoGx122dOSj/rmEM3i7dMGhohLWx3HHzO6FM/FaceNct+a4a9ublfA4kSguBDDUbIix/M8Bw6Hf2i4BwBXWqApQ3ZzbgjlPduGQa5WrbSidQLQ6naVlsuQdebwJ/HFaWmB7Yw5th4=
+	t=1772717017; cv=none; b=NYGlSnGJ2QUN7t+I26mm6Yc3cYOB7vNV87vZ717Jy/NgxeJk5zhlzknasu1YUZYEgVw+NYUKleqBa28JSFjjZg68FJfUaq/J0sr0Hygi8ppuZycUn8D2fFwVyeQMyY90xNNb9m1GC/bD4nkPv2IPGv3SNe9YL2cQzPT36puHg0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772717011; c=relaxed/simple;
-	bh=wM7rzTanBO6Esu108tS7q9UmfPGMrAZLevsampbLGmA=;
+	s=arc-20240116; t=1772717017; c=relaxed/simple;
+	bh=rMDzyhRu1jDMK8YGHsXEYSrN0kNWi+ZtX+2vPVrxB8s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H3uSZqW8TBUX6fqqKT9/o5YgK+gSRzkYmwgWNzBPmlj4th5Bx+X84GS8EQhDtIpeAplWPFAd2vlRnRaiKfvsL5I4V5as4Y86sTZDY7QvXxlPgS2en1k7AkV30iP/klW/vJrb5AUsyNEJOBPJCBtXCyYjcNimJFjCUA9QVubrMH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Yp79yF8D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0xSI5e8n; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=rfQiUjrrR/zaCwrcR0tY6fd2Fp06GGAnbTT7S+lKbu91FllfGWclNUFcT9TuWYnMPL353gX53q4l8WSQFFzxWzVBNyivYmdm0IfPPsQZrppzeVK+lsFhEDiC5FUBC+bv6DqJ4eNyKwQgQGpj69etOwB3n6xS9YzO0iuuSxwNzuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=osX9LcPc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y4htIbW1; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Yp79yF8D";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0xSI5e8n"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 51ECB7A01AE;
-	Thu,  5 Mar 2026 08:23:30 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="osX9LcPc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y4htIbW1"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 76DDF7A01AE;
+	Thu,  5 Mar 2026 08:23:35 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 05 Mar 2026 08:23:30 -0500
+  by phl-compute-04.internal (MEProxy); Thu, 05 Mar 2026 08:23:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772717010; x=1772803410; bh=BsjnKiGSCR
-	NJwySLlUemtZn9rHF3OZ3tb61riNpcq2E=; b=Yp79yF8DlW3hqoOdhLa0Omka3S
-	CLaSVjxAHCOc6CXUo9K20J64SnSUOHifN9PN1AbGdCI9Aq1VjcxljBgIg39e8uu0
-	43X6WOV2G8Pzz9T6i3nT4dfPsukFBLlUdOFhXe4TC+PE0WCLAtu5LYU1wla9/SBq
-	9PWD7L+x0wpGBYc0j0/J5Tg0kXb9UA4DROdyLjnMSyvZOClU9EuSeKojcy0h8Jhu
-	yQQfjt6ov+qIba//QL55eV7EMiHOlxi4Ey7/i2Tgdmg9N8N68H56h+uRSWJEYSjp
-	LIhzl/eX4AuHprGwY+F+r/rtHyekkeCPam5gtjdSI55UBK2PQZzSDMlkXC2A==
+	:subject:to:to; s=fm1; t=1772717015; x=1772803415; bh=EzEqbtShXx
+	cmoZwKrTJuu3VUJexnfDaMv/20EhHxqYE=; b=osX9LcPcdp5XrEZb730B82a2xQ
+	2VzMfKb5zqbsP/T2OniFHXG3i76vVJ/XcvUVI29lF2Sx6X5lc6080fL1ahkN9azO
+	C+IcAANaRP25Vr+UQ0tWN7eGUFdqsm4FhMVHR/Uijrz6AxcUtyohqoN5MO5Y7aEZ
+	FV5+AnIaMaUtY7jWqUg6uGMlCKgIjAorf9f2g7R6BgF1snqFmT8N7jbTjutfDHVK
+	ytdwoguVwVuVxoSpjpqX5cwtDWvGSfyHBTTwXEhzcS3wdSrjFBvBs6rNT83Mb/9x
+	vuCNostz9iSGccaL2fla1s6qGxBjN52PNVUEoqy5IC9ujQasLk4v7kMGrZTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772717010; x=1772803410; bh=BsjnKiGSCRNJwySLlUemtZn9rHF3OZ3tb61
-	riNpcq2E=; b=0xSI5e8nb3AqlzPGXfT8tHaKirca1kThgMYYwZVal/k6rnNz53G
-	ANWGoC+4voXOJkVcYbc95wpdf34kX1akuqNVIUov+xDmBBDHqyPzvUA1yD+7RaCw
-	ygFogXMcDvAFTpx7TdXB20cjocR6xkqGn2C7GYoQo9/X3BHyVM2e2cUjV2+Jn3++
-	PTC65qQjoKbxUYpWwo6roC9hgiFbXAIzHLAvNVpf46PHUA2H5y9JOV0Otytj6OuK
-	UCsN8FxsieRh+dS/6f58kEySPkvoS4Lqza0W+wmN+k0oJg5NOhRj1oOm464N4Gml
-	loAg1GfR4icsFW76CsW+SYNgojOp8vczNJw==
-X-ME-Sender: <xms:0oOpaRqFJBPCmcWF9z8rL8ojYB8f0tJJ-iid7P6bZxarYiYmd51MSA>
-    <xme:0oOpaZqnrQ59gSFUVrQaMMUKcD_2IL-HGTINYv1An_YF8Lhha_gMzpFaEbClSboJH
-    TTCSqLEgL2JXSkG-Nu0DLZUTGs9LBlFcHRp1Q6HNAFOZpiMLRne>
-X-ME-Received: <xmr:0oOpab2uxYYSIaWGq0vhstIRxnas9wJkOt1wOBM_hsMsaxtOeKn2_PunbCXwK4oYNNUyYBv3yxAYfXkwm3VH6wW6Xs2CFvgr2A8TRQSxR4q4>
+	1772717015; x=1772803415; bh=EzEqbtShXxcmoZwKrTJuu3VUJexnfDaMv/2
+	0EhHxqYE=; b=y4htIbW1EEKJIfoBxxRZscU3SPwrVCwe8N8TLWn7ddwp6lnONKd
+	n9soccQVCj7s2sGBjgXmchZb8q8pa+u/ZSCDNGp379ba/TsCWk5p6PH92+D6soHD
+	G2VNuCefqmReijpJGNzW0bhAnQc4CsIgsxzt3Tbv3sxyOyddR59mOu0AFO/C7dkx
+	AwO1eXD8989eF8kzppIJBV7I+hcpzsxjd+vq5eQufgBVjx9mthLEKfREHH4n4Ia+
+	kUe1Pj3rP5hhZre4deU3YVlE6QkzjHyPeUGRmOWTjg4GkqHzJluymt93obe0i2Wd
+	mLNVmgWRybilzElZ3NSJwfn8cRj1T9OeSRw==
+X-ME-Sender: <xms:14OpaTUAM0pjALGqSgf27xI-gZ4lH8vXlTe9wAQ_1P4jdcAZFD3naA>
+    <xme:14OpaRlUVmnU5MZ4zBS5e66aB40duFE3uwPIHfny88FotPL9xGzGUptPBOEtmtWWa
+    VTimrzBXSdHNSuVCu-gHQBHzgRrORI2uiQLj3saO9R9-3Snyo8pbQ>
+X-ME-Received: <xmr:14OpadA6pdLBg_pJ3pjHPY9qa_cdwphzuvQ5kLYXcw8CnxOFSAFviTYaWlyd-DDDsnB7yHScatTmrcrxAmq4Dv16NU41dH4xRFR2asJD-82V>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeigeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:0oOpaYB9PyGOmYqwFSMNgffZ8sImgcWdccvxmQKUNIrbgTiKgYClEg>
-    <xmx:0oOpaTftj84-rGldGuzpavRqv-2hvp3ajwcCi6fBxk_PGx0jCuYgOA>
-    <xmx:0oOpadhVs0Ayd_liSfH-tnD_wV20JjMQOMrSeyHCTA12_F8QbM_gcQ>
-    <xmx:0oOpabpPMPqL5fgfT70NYDdGn8574_ZOrZ4g38ZMwS-LbW_nqAPutg>
-    <xmx:0oOpaQ6eFQCuYq9U6_cgGlbJ0iqL2QwO5tRvCsbSQjEcTSY0nP--LxtQ>
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:14OpaZczy-KWfCd55QJGFozwPPFfbNOQKSb7hxt6p96J9IiROMkl_Q>
+    <xmx:14OpaQIf2YtasfrKCbY-N51zGIuyGN4BYbXirJYPbz5nDnYRt8RRpQ>
+    <xmx:14OpaUfrvYyfTVLbaX3c5U8Rxg6Pt2_6M_kveBSwBjcOoXCSnGonrw>
+    <xmx:14Opaf2pR-HjeeAMYC1VsUH38fsz6KcKCvGP8vohrR0h38sRKmxcaQ>
+    <xmx:14OpaYE2tFyryu33VK8NkLb2zMZPXExcSX5cKmKKHggdpwfuruqStwP0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 08:23:29 -0500 (EST)
+ 5 Mar 2026 08:23:34 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e71aa001 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Mar 2026 13:23:28 +0000 (UTC)
-Date: Thu, 5 Mar 2026 14:23:25 +0100
+	by mail (OpenSMTPD) with ESMTPSA id be6de9da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 5 Mar 2026 13:23:33 +0000 (UTC)
+Date: Thu, 5 Mar 2026 14:23:31 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 03/17] odb: embed base source in the "files" backend
-Message-ID: <aamDzR_8oTaqRlhT@pks.im>
+Subject: Re: [PATCH 04/17] odb: move reparenting logic into respective
+ subsystems
+Message-ID: <aamD0yUNTb0r2JQZ@pks.im>
 References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
- <20260223-b4-pks-odb-source-pluggable-v1-3-253bac1db598@pks.im>
- <CAOLa=ZSY8WE_BiWF0TZpV1-bf6p3z8zV4F_o4xo-V1ZC5ZiQLA@mail.gmail.com>
+ <20260223-b4-pks-odb-source-pluggable-v1-4-253bac1db598@pks.im>
+ <aaiSFpWY0YQ6XQcM@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,58 +87,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSY8WE_BiWF0TZpV1-bf6p3z8zV4F_o4xo-V1ZC5ZiQLA@mail.gmail.com>
+In-Reply-To: <aaiSFpWY0YQ6XQcM@denethor>
 
-On Thu, Mar 05, 2026 at 10:45:07AM +0000, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > Refactor our "files" object database source to do the same and embed the
-> > `struct odb_source` in the `struct odb_source_files`.
-> >
-> > There are still a bunch of sites in our code base where we do have to
-> > access internals of the "files" backend. The intent is that those will
-> > go away over time, but this will certainly take a while. Meanwhile,
-> > provide a `odb_source_files_downcast()` function that can convert a
-> > generic source into a "files" source.
-> >
-> > As we only have a single source the downcast succeeds unconditionally
-> > for now. Eventually though the intent is to make the cast `BUG()` in
-> > case the caller requests to downcast a non-"files" backend to a "files"
-> > backend.
-> >
+On Wed, Mar 04, 2026 at 02:39:57PM -0600, Justin Tobler wrote:
+> On 26/02/23 05:17PM, Patrick Steinhardt wrote:
+> > The primary object database source may be initialized with a relative
+> > path. When reparenting the process to a different working directory we
 > 
-> Do we also plan to add read/write permissions check within the downcast
-> logic? Similar to the refs DB? Doesn't have to be in this patch, just
-> curious if that is something we plan to include.
+> I find the wording here a bit confusing. Maybe something like this would
+> be a bit clearer:
+> 
+>   When the process changes its current working directory...
 
-I didn't plan to. I guess we could have such a check eventually though
-to for example keep somebody from writing to secondary ODB sources. I
-don't have anything cooking here though.
+Yup, this reads clearer indeed.
 
-> > diff --git a/odb/source.c b/odb/source.c
-> > index 9d7fd19f45..d8b2176a94 100644
-> > --- a/odb/source.c
-> > +++ b/odb/source.c
-> > @@ -1,5 +1,6 @@
+> > diff --git a/odb/source-files.c b/odb/source-files.c
+> > index a43a197157..df0ea9ee62 100644
+> > --- a/odb/source-files.c
+> > +++ b/odb/source-files.c
+> > @@ -1,13 +1,28 @@
 > >  #include "git-compat-util.h"
+> > +#include "abspath.h"
+> > +#include "chdir-notify.h"
 > >  #include "object-file.h"
-> > +#include "odb/source-files.h"
 > >  #include "odb/source.h"
+> >  #include "odb/source-files.h"
 > >  #include "packfile.h"
-> >
-> > @@ -7,20 +8,31 @@ struct odb_source *odb_source_new(struct object_database *odb,
-> >  				  const char *path,
-> >  				  bool local)
-> >  {
-> > -	struct odb_source *source;
-> > +	return &odb_source_files_new(odb, path, local)->base;
-> > +}
-> >
+> >  
+> > +static void odb_source_files_reparent(const char *name UNUSED,
+> > +				      const char *old_cwd,
+> > +				      const char *new_cwd,
+> > +				      void *cb_data)
+> > +{
+> > +	struct odb_source_files *files = cb_data;
+> > +	char *path = reparent_relative_path(old_cwd, new_cwd,
+> > +					    files->base.path);
+> > +	free(files->base.path);
+> > +	files->base.path = path;
 > 
-> Since we only have one source right now (files), we directly call the
-> internals of that source, I guess once we add more this would be more
-> modular.
+> I do find it a bit curious that we consider the "path" to be specific to
+> the "files" backend, but still track it as part of the "base" ODB
+> source. I suspect this will eventually change though?
 
-Yeah. This will eventually be handled via a new object storage
-extension, similar to how we do this for the reference backends.
+Yeah, this will change eventually, but it's going to take a while to get
+there. I plan to drop the "path" pointer from the base completely, as
+other sources may not even have a path in the first place. But that
+first requires us to address all instances where we directly access the
+path
+
+> > +}
+> > +
+> >  void odb_source_files_free(struct odb_source_files *files)
+> >  {
+> >  	if (!files)
+> >  		return;
+> > +	chdir_notify_unregister(NULL, odb_source_files_reparent, files);
+> >  	odb_source_loose_free(files->loose);
+> >  	packfile_store_free(files->packed);
+> >  	odb_source_release(&files->base);
+> > @@ -25,5 +40,13 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+> >  	files->loose = odb_source_loose_new(&files->base);
+> >  	files->packed = packfile_store_new(&files->base);
+> >  
+> > +	/*
+> > +	 * Ideally, we would only ever store absolute paths in the source. This
+> > +	 * is not (yet) possible though because we access and assume relative
+> > +	 * paths in the primary ODB source in some user-facing functionality.
+> > +	 */
+> 
+> Should this be a NEEDSWORK comment? Or do we expect it to remain this
+> way for the forseeable future?
+
+Once we are able to drop the `struct odb_source::path` field it should
+become feasible. So I don't think we should add a NEEDSWORK comment now,
+as it might mislead fellow developers to think it's already doable and
+can be worked on right away.
 
 Patrick
