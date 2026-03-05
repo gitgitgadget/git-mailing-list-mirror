@@ -1,122 +1,201 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEE43644CB
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772752458; cv=none; b=saMBoeRAh3w1h1aBn3Aq5riu2Bm9CxrDylmfUPpZj0H8MlymInypYKwGobABXKOsCfBJy69cY/tVPpZa+k1ZvLy/c6bULL1XqHtwS9dg7uLVe38R3lzmA7fLR03i48cEBalXiKhtyQGdHbP08b1xCfrnFTE1b1C01ZlC2tvcNDs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772752458; c=relaxed/simple;
-	bh=FcaLupnc5YsKVT6KddhisJGmktsj7M53LeJLoGRLpVI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Q4mZ+vvW4hg7wGyKJMZ3HHdak21P8nOY5GvbyJcIR5kwrnivOKKD5odum4zUAiHGEK2Za7Og4Acxb6WovR0PxUz02ouKxCj3IcSJxwzd93uwNOpshgtcdluU8LQ1upRo7SkIAT9hTq7oFCUWOrLwfCpha8BIAK0NImMDdLam83M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UnLbIk9h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NKZNAZaO; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62358366043
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:16:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772752607; cv=pass; b=b3jcKe2NRE80qJ+jIia6gKc7iCNNrcCahb4p8rO5viaMZ5JUqQ32pnphb61lmqXPsHSByoBGyRRLTDe7XdJSwtYjO8QKG4QHfY30HSMoDY5xCTW48i/4RMHxZSSKjBXLtNcYw+9fJMoezTASwyHBWmBy/atK/2ryEHKKQt7VLno=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772752607; c=relaxed/simple;
+	bh=AeCFjVXpLbbNIb8CTsP0Z5vjPQmkwP1iq3GDHUHrmlw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V01MZ6oQxN15Zx699GgnyAOZDxYJrQaRtStb3/aHphdqVXX4NeLz+5jz25E5amW38aljwU2RPIQZhPySSWxjGamWH+1BMf5BOiKTnfYLpHmRS/KxKTbFuX8KYEYzIltjrQAQlVy8Kc1fnGnTVu0/6bRno0Rgo31h9PKNLmVdFtE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G4yr2AD5; arc=pass smtp.client-ip=209.85.161.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UnLbIk9h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NKZNAZaO"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E78DC14001FA;
-	Thu,  5 Mar 2026 18:14:15 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 05 Mar 2026 18:14:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772752455; x=1772838855; bh=tOee7JBXHh
-	MXnNUHUpYelYxpTwHEJA8GlhYlDui1Ptk=; b=UnLbIk9h5UhTRevJ7huGBYJY4x
-	g0ShTXnxq5Hd0Guo4tootdOeDKFxt/1tkHtRb6gd6MVBDPhjo2kMn1TE4oQBZYTw
-	7+dX+jxb/aqijMvCbdG01vGRWAoLsNPBku0neqsgKiJVagETg5ezqxPQR6fTu9aT
-	+dJ3VhuExG2anjLLMOZQj3t9PUMcISxh3EegmsRDJPexQSL20dtinzuz0DtjRoZt
-	b+BUq82f5xLtuNo8svhwsmAh7P/QZmNcD2j7Yshhl0vP/NTRJqO67iJ0RMBd8p1e
-	IiXcUGF8DJbkL8MKqx8Co1K6N1XaJPa1fzMQy7z2iAGJZp0Nv9rrqmPNaqEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772752455; x=1772838855; bh=tOee7JBXHhMXnNUHUpYelYxpTwHEJA8GlhY
-	lDui1Ptk=; b=NKZNAZaOKPRIKtgkRvuBfsYRlnpD/R8/anrgG1p0QDVh3TgKVGH
-	8BbAXVrSseahvemhFfgaiuQVvdF0wc9O6d89kr9dmFHP0YB39z8MMnoOf7hDBz7K
-	wSYRjEjUG1aq8B2AyA69qadfrATVqEJHhKUxlpECOO4ChubGkt4ihrfAECtvGv5K
-	Sv8kUSkNSnhejmUYatDo9Y/fFC6TeDJbdSr1WxnXgX03chORFMSOEMRYLkCbzPrs
-	FMX7JzWh7aNUHwqtB3T/JYFxcc4Jn2mr/aaBJuaY/wrCokenVdF3b+cr8VqP+X7g
-	nW9q4xtBeA65ztBxwpotPLtIrRnVKmvPuHQ==
-X-ME-Sender: <xms:Rw6qaZfDFqKdL0TTXLqSYeHPqbJUnmLF42o8HbNHtO6vIDRFr6sc-Q>
-    <xme:Rw6qaeOxzRtv5Hq4yxAoT-QJAXNSZ4fHv1YJpCiXVmDjBiDUGMaJ20Q-R49tNj-Z8
-    HsrLzooKJI4e4YSdo_Cmb-61607bn31OtLzyq9xFfGhpmr4H0wKpw>
-X-ME-Received: <xmr:Rw6qaXi9lOl9wJqXUOE0qd3WQJi6Lh6IyRDXxF50whcWJltnOEaM92IpBqjD5L_FMrPpyvLVL8wnCTyw4ysBmQASVZ7rkqyDZA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieejieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
-    homhdprhgtphhtthhopehfrhgrnhgtvghstghophgrphgrrhgrthhtohesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Rw6qaR2KTqpGT-vcXojr5Wn3UKH89FiWMI2DKI52PBeZjc482gEm1A>
-    <xmx:Rw6qaRgShDnzqu73ZI4H3EOSVRJdsxGxvZYd2O4sD5iqCcpUte9znw>
-    <xmx:Rw6qaReSM_I1iabHpGboIMnsf-ZU1P0HMhbe6CmvkZKs7rLAowH4FA>
-    <xmx:Rw6qaUnxVJzT_lTQudNlZuJHtBFw4j7aR81Az305jLTCWV-yC2WSyg>
-    <xmx:Rw6qafQH_dbn9Npx4coEc7eJzcDA4wVrrBV1_MfOg08LOIlFt_nNBwUa>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 18:14:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Francesco Paparatto <francescopaparatto@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2] t3310: avoid hiding failures from rev-parse in
- command substitutions
-In-Reply-To: <xmqqv7f927x0.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	05 Mar 2026 15:06:19 -0800")
-References: <CAPig+cTHyB2sbBOELPb2=B5sU69OzSPU0JVn0p=2qMp=0=8vEg@mail.gmail.com>
-	<20260305090602.22436-1-francescopaparatto@gmail.com>
-	<xmqq5x7a3x9w.fsf@gitster.g>
-	<CAPig+cTsYWVg0nrU7kMakOKQaqFSo=i_nZ=_YuCJK_hq5gdZPQ@mail.gmail.com>
-	<xmqqv7f927x0.fsf@gitster.g>
-Date: Thu, 05 Mar 2026 15:14:14 -0800
-Message-ID: <xmqqqzpx27jt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G4yr2AD5"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-6759a5576f5so6035291eaf.2
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 15:16:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772752605; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ElPZSa7TF8Mq0zjofw5lH+YP2RfrLrosdSdY8miHolDD8BXvl2onKH/UY7AGi8lqwP
+         x3b+Nr2Fdz6H+x23t6jnGYn7p5BFFQaJxk7qstgpWh36o0Ef1J5GVlddv9wEmsdvuo9T
+         hhVnPUHyKKFlYL1ePf/HrPT5srFSf+rQ7+8numgML3G1NvrAjvKCLMuj+iMHLCFCx8ut
+         UONwoFxn1h+eSRrW2r4Rzs1uDK3vc922Dby927JsYLleOpjR+SlnJsKFFoGWiii0Z++B
+         ZLMYbhO1gTZtZPAZdZFlE/q7bMjheqEONzIXbfP2FDMH0QI1p4T7qOefeBM4rPGX8vEk
+         aMcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vPjjLFpQA/I670v+wyJ7DcSo6eaokVqHtIzSlUFHejE=;
+        fh=QdKQB88OiOFVFHDP5V/X6bCh1fS8U4BKZcf/TQxiYm4=;
+        b=c3QG77O/v9We3ex8Taa69XNJ8pyp1GGMMz/kVaToHG2lg55QDOqGoXTYK632OwhMa4
+         qKHhzThLFTRd/cAFTwtXMm/A18ltedDcSsd5PzeGxnRheuKoSom3YDilPHwrZ0pbmsZS
+         XNBN2qncpLSFp9Oli9AK0mw1wbBCz9gUEghBjwhyyIC2iz0MG4H0sbiVX1doOfnpdYAo
+         W9hlX5bpsYl9l5u6MAMEn9Efohy6WbMYMccxfkWeqgRLcwOFUCFjo3tHE/hEh3R9yq/n
+         ILHF3CVieg59GQZc7zMjWgN0me2OYCOUwbd1W3c9htjYRuQBPJotS2ZdanKQU5a0zYnM
+         68oQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772752605; x=1773357405; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vPjjLFpQA/I670v+wyJ7DcSo6eaokVqHtIzSlUFHejE=;
+        b=G4yr2AD5/JbRupHTStTxM0iP3RH9kKmSXa2NuLWKrc8TSXlS6TE68wtuaNXmmUVhf2
+         1o1UbZn9XyMWxgPk4RD1D/cHoufEwxtuUfRvhgEK2jQHJjXkz7cAjkkCQkkutnCQrIUX
+         bVvtR12415n9a/cDOHy/dDk87gK+yI3TaLw7OhfzYM2GXVLSW5FOKLcNe/IyUVi2nsP6
+         t/L3k+l2OEaHl9uFhFr3WFkyFFdzstSedW7j3CjSoS/caU27krLsDfPoFhtPbOC4FtDp
+         +iyY4ICDTd/HGTCV4iKixu3AHfopgZUqHzxH63VEZiTuCJ0eYjcf+MeuoPwXLWplTGnP
+         9aNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772752605; x=1773357405;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vPjjLFpQA/I670v+wyJ7DcSo6eaokVqHtIzSlUFHejE=;
+        b=CKVDWbvyH/xvDP7u0Q4GMStk5kTGOq4Zhd8a59eegBEpwqIe2Vh96jg9M+xpgLCyXl
+         wnWcSI858yxQIoqtXZC4SOHNje+OFL8z7fZKRZ8OPxjVX7MqW/aYsBo91e0+mtLFAweo
+         +3ht7+hVtdxKT2lmajLAEVMAnmMl9G86NNfXF11fV76zQTU0/hmhPaorZ/Sn57CjGsv3
+         ZEZwkCsMZPMEUb9KAYDxQnnij95DBaumHxYyMsp55Tg5bntLuBfsNzo7bNKLe2jIrDns
+         l9OvSSDtf/MsaXuMnauY0NKTQLE4IlIWy0nY9hmsAJSVam62NSs+TLyQaP3AaVKUsN63
+         BWNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXBWvN1du3rYyUugxA7fuR1ZrT1+jI9hGoJGI770lHg94G4CB50oP4upr6q+ptfJsytpfU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwRCbPes6W+wwUzhGuf6fZ6hrzV2gtG7xp4ZPmlduZgKZzqaS81
+	nXoP6kauNkwZvKXCak/tRaOuD4bzCrJiRx6lFu9gs2TCfRIGl2Wnkkaac8DOY4GOAaCzb+skxCY
+	XI5aiU669CWdiZBN3+PycpUvmX22Z1WblAQ==
+X-Gm-Gg: ATEYQzyIg7pmgOgu3D6wutKsL4tNC9VH7EkUTdjojHWKOahmvoBRBdioCpRQ52atKNV
+	uz0QfCDrhPGoFkOfPrdz/L+OZRYTkf38izGDDD0xN2pnklwwhfJHiGUEr+bQPf+lmLcBBMpgRi+
+	rWHneNrQP3DWIKtMyjH20mqCL+2/rWKZ2gqLV6tk5kAxqMEPNPezoo6WULSoYo2KMHYiaSe5ACV
+	rEOwjwCTzPGkk3OzHOI6OlhrPdKy+0s2QmHKdS9RtITsS4LcAm4Z6UYzSdxIqZ6tqjnSlE+3yIU
+	MKXYog==
+X-Received: by 2002:a05:6820:f07:b0:67a:608:8dff with SMTP id
+ 006d021491bc7-67b9bd49544mr169851eaf.61.1772752605280; Thu, 05 Mar 2026
+ 15:16:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <b9fa930e-7d5e-47f1-8896-1997cf7c0cdb@intel.com> <20260305220214.GB736322@coredump.intra.peff.net>
+In-Reply-To: <20260305220214.GB736322@coredump.intra.peff.net>
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Thu, 5 Mar 2026 15:16:35 -0800
+X-Gm-Features: AaiRm51vswMAJWEE8X53PWDOXWcQZK8uDRb024r-ENWDgZDVmEYj8xVQYnqsPkc
+Message-ID: <CA+P7+xp7HTykrBdr8WKb__M3Hj09-WQ6HRrTb9ZiHbWV1U=GhA@mail.gmail.com>
+Subject: Re: memory leak when cloning a repository
+To: Jeff King <peff@peff.net>
+Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+On Thu, Mar 5, 2026 at 2:02=E2=80=AFPM Jeff King <peff@peff.net> wrote:
 >
->>> > diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
->>> > index 92a5951331..64c0a753ff 100755
->>>
->>> On top of what commit is this patch designed to apply?
->>
->> What Junio probably means is that you appear to have based v2 atop v1,
->> but instead you should squash v1 and v2 into a single patch, and send
->> that as v3 so that when the patch is finally accepted into his tree,
->> it will appear to have been perfect from the start (because v1 and v2
->> will only exist in the mailing list archive, not in the Git project
->> history).
+> On Thu, Mar 05, 2026 at 12:51:17PM -0800, Jacob Keller wrote:
 >
-> No.  The v1 and this one touch separate areas and can go
-> independently.  The thing I had trouble with was that this did not
-> apply to either on top of v1 (which by the way is already in 'next')
-> nor on top of 'master'.
+> > I tried digging into why this leak occurs but so far I don't have a goo=
+d idea.
+> >
+> > This happens when running on next: 7842e34a6654 ("Sync with 'master'")
+>
+> I can reproduce it on master. This seems to fix it:
+>
+> diff --git a/connected.c b/connected.c
+> index 79403108dd..e0f8ff38cb 100644
+> --- a/connected.c
+> +++ b/connected.c
+> @@ -90,6 +90,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+>  promisor_pack_found:
+>                         ;
+>                 } while ((oid =3D fn(cb_data)) !=3D NULL);
+> +               close_pack(new_pack);
+>                 free(new_pack);
+>                 return 0;
+>         }
+> @@ -128,6 +129,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+>                 rev_list.no_stderr =3D opt->quiet;
+>
+>         if (start_command(&rev_list)) {
+> +               close_pack(new_pack);
+>                 free(new_pack);
+>                 return error(_("Could not run 'git rev-list'"));
+>         }
+> @@ -162,6 +164,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+>                 err =3D error_errno(_("failed to close rev-list's stdin")=
+);
+>
+>         sigchain_pop(SIGPIPE);
+> +       close_pack(new_pack);
+>         free(new_pack);
+>         return finish_command(&rev_list) || err;
+>  }
+>
+>
+> I think this has been leaky forever, but it's usually leaking a single
+> mmap, so nobody notices. But I noticed something odd about your trace:
+>
 
-Ah, sorry, no.  I was utterly confused.  Somehow I mixed two
-unrelated patches on this same t3310 script.  What went to 'next'
-was the other unrelated one, and I did not even take the v1 of this
-topic.
+Wow thanks for the quick response. I tried looking at this but I
+wasn't sure where it was correct to put the pack and I was having
+trouble tracking the storage of the mmap through the compat_mmap.
 
-I'll look at v3 now.
+Yea, we're leaking but its not a huge deal if the program is about to
+exit generally.
 
-Sorry for the confusion, and thanks for helping.
+> > Direct leak of 27168 byte(s) in 1 object(s) allocated from:
+> >     #0 0x7f0e100e6f2b in malloc (/lib64/libasan.so.8+0xe6f2b) (BuildId:=
+ 25975f766867e9e604dc5a71a8befeaed3301942)
+> >     #1 0x00000122ab77 in git_mmap ../compat/mmap.c:15
+> >     #2 0x000001169466 in xmmap_gently ../wrapper.c:884
+> >     #3 0x00000116959b in xmmap ../wrapper.c:907
+> >     #4 0x000000d168fd in check_packed_git_idx ../packfile.c:179
+> >     #5 0x000000d16cce in open_pack_index ../packfile.c:282
+> >     #6 0x000000d25273 in find_pack_entry_one ../packfile.c:2078
+> >     #7 0x00000099f969 in check_connected ../connected.c:148
+>
+> We're in the compat git_mmap, which implies you're building with
+> NO_MMAP. We turn that on automatically when building with ASan (so that
+> we can detect single-byte overflows even when mmap would round up to a
+> page boundary). But as a side effect, the "mmap" for index and pack data
+> is done with a heap-allocated buffer. So now ASan/LSan will notice and
+> complain about it.
+>
+> We usually disable leak-checking for our ASan builds, so we wouldn't run
+> the tests with the compat mmap. And our leak-checking builds use LSan,
+> which doesn't set NO_MMAP. But if you combine them with:
+>
+>   make SANITIZE=3Daddress,leak
+>
+
+Right. I built with meson and set the option to build with
+-fsanitize=3Daddress. I might have set leak too I am not certain. I was
+not aware of the NO_MMAP.
+
+> or even just build with:
+>
+>   make NO_MMAP=3DMallocHarder SANITIZE=3Dleak
+>
+> then the leak will be reported. I guess maybe you're building with
+> SANITIZE=3Daddress, but then running the result independently, without
+> setting ASAN_OPTIONS=3Ddetect_leaks=3D0.
+>
+
+Ya, I don't have that set. The only options I have is (as of recently)
+to set LSAN_OPTIONS=3Dexit_code=3D0 to avoid changing the exit code on a
+leak detection (after many hours wondering why my bash completion was
+failing due to the leak I reported a while ago...)
+
+> Anyway, I think the solution is probably something like the patch above,
+> though probably it needs to cover the case where new_pack is NULL.
+>
+
+I can double check that later today. Its low priority, but I do think
+it is important to avoid leaks since code can be refactored into
+library status over time where a leak becomes more problematic.
+
+> -Peff
+>
