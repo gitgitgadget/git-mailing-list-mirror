@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B483644BD
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339983644BD
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772752137; cv=none; b=uzW0FClrxfSuKIizpltW9bgOwg0oIhyjpCudUZAN07qhn4SGsgGI03Oly9fMyRZ1VAJXEmC+ZERCGumMoQ+ozj7/OT56wQoOviptSik2YjVmK/Pxv0u6rNotPdxgot9PyxjL28gj6dlONFmSYcd5lYzIfD2TSOw89O9ZxfjbJ1w=
+	t=1772752199; cv=none; b=mrM48bBC9qcwBwAOC10MO+zr8O+rqK7iznvP2dydXpBQs70BkubScEWc787Ovl1qx9+xuCoFPSGlMAT3hAHr90jTZnIQgQmo6xIg7PMwp4mvS5qjDRjJPfYLUEXHzfkt7lx5Tiflqb0qE4Ljeda2gwxFgYK3gAvzsufq+eoLe0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772752137; c=relaxed/simple;
-	bh=LQdRp0fmwDdoi8lyW9DJv1X//qnbw5bNE+72H/ObXNA=;
+	s=arc-20240116; t=1772752199; c=relaxed/simple;
+	bh=9ciUT0Lhe4XgUgUlsTWZvHlNBQAnSu1jmAJrffK/OCI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ozV3y4mdG2UrISY5rHTlyh2OJIPQ/V17Lh8cbfq2aGLMEQLixuLzidkKRimoIxYl3q4E9hfXVpCs7D8LWUfbyx5F84Qb3QQr97SWuYICTcvTxfA8eY7Qq4PomrIoB15oLuYgxoPsvnSyfA9jiZqVpye2zE6Tt4vt1n2B8LHZ6D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=T6zqxBBE; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=idWe5gg/51i2zoWEwp1t4teldx9HtGsTUGohZO1FgxrOvhSxo+5RMOBX/ZhVu8XH47TWEwKdgNpkBGlBn1kt949xHVO25faKAcJfUhSr/uEj512GAItyg6ovWyEMXV68Au9kIRYg1glKMkXkAUmLGh3sKomvY4mqcJxheREzDYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QU/8epuG; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="T6zqxBBE"
-Received: (qmail 2671 invoked by uid 106); 5 Mar 2026 23:08:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=LQdRp0fmwDdoi8lyW9DJv1X//qnbw5bNE+72H/ObXNA=; b=T6zqxBBEQ/HM4wtV4C9+eNm27D6cbgJJFhtUBpt4g6sUJXrDTw+Q2LfIAFz1UsR1TSJL31UMSRgjUIf0BhRWw6dLa0pups3oAzPyanEE4WetrGObpeuJ0tWDi6qbiSnaz07Zos6DdJFa6H0yDUJLv4Imv+5h90HkseoU/eY8wc/AMUADv3DuRZk/MXoTeWij6MTHraOgR4ierqzdn/nAhmtecB3EnUFQbw0DOr1EQWiHZClMDj7IsNqtWtP8AMAyiwV18vBldLNvfE80unkEt59rgMJ7G7xRBxSXyqP1+N1FJqMxqzv94G+HUDIHuWQt0GrRm7oR8hSlgfQTmvEKjQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QU/8epuG"
+Received: (qmail 2679 invoked by uid 106); 5 Mar 2026 23:09:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=9ciUT0Lhe4XgUgUlsTWZvHlNBQAnSu1jmAJrffK/OCI=; b=QU/8epuGVPt4Umy4RS+Geoy7HhjtGZfraAFtm7r/rIXFzrN19jS10LClGkDE6DTziMQV50O1F+YFGEtth2VsOT7ou+CBpzKXXLDnt4mBmRP5MLmDfwO0TgOsw5vx4sZ9k0dt1FvQvTS65Z5VqproiZuSabN9J+PkIPyrNNQLOQMXFz5hdyyJZdvqzxgh1O7vjxGdDYSXu28cQHf6xe+/39DoWxdG6P+Rp1uzZOnUnjEcSHmoTqxXNmGzCTswPhWCGAHB10UZ6n/ESuyBeNtLGBB6joPXJPSf/ERL4BkaIGoLvOIr5OmGHHGhiowmMRgrsaJreyAv6Myo0JQ6N6oLyQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Mar 2026 23:08:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Mar 2026 23:09:57 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 393470 invoked by uid 111); 5 Mar 2026 23:08:57 -0000
+Received: (qmail 393490 invoked by uid 111); 5 Mar 2026 23:09:59 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Mar 2026 18:08:57 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Mar 2026 18:09:59 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 5 Mar 2026 18:08:54 -0500
+Date: Thu, 5 Mar 2026 18:09:56 -0500
 From: Jeff King <peff@peff.net>
 To: Jacob Keller <jacob.e.keller@intel.com>
 Cc: git@vger.kernel.org
-Subject: [PATCH 1/4] check_connected(): delay opening new_pack
-Message-ID: <20260305230854.GA2901305@coredump.intra.peff.net>
+Subject: [PATCH 2/4] check_connected(): fix leak of pack-index mmap
+Message-ID: <20260305230956.GB2901305@coredump.intra.peff.net>
 References: <20260305230315.GA2354983@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -42,112 +42,49 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20260305230315.GA2354983@coredump.intra.peff.net>
 
-In check_connected(), if the transport tells us we got a single packfile
-that has already been verified as self-contained and connected, then we
-can skip checking connectivity for any tips that are mentioned in that
-pack. This goes back to c6807a40dc (clone: open a shortcut for
-connectivity check, 2013-05-26).
+Since c6807a40dc (clone: open a shortcut for connectivity check,
+2013-05-26), we may open a one-off packed_git struct to check what's in
+the pack we just received. At the end of the function we throw away the
+struct (rather than linking it into the repository struct as usual).
 
-We don't need to open that pack until we are about to start sending oids
-to our child rev-list process, since that's when we check whether they
-are in the self-contained pack. Let's push the opening of that pack
-further down in the function. That saves us from having to clean it up
-when we leave the function early (and by the time have opened the
-rev-list process, we never leave the function early, since we have to
-clean up the child process).
+We used to leak the struct until dd4143e7bf (connected.c: free the
+"struct packed_git", 2022-11-08), which calls free(). But that's not
+sufficient; inside the struct we'll have mmap'd the pack idx data from
+disk, which needs an munmap() call.
+
+Building with SANITIZE=leak doesn't detect this, because we are leaking
+our own mmap(), and it only finds heap allocations from malloc(). But if
+we use our compat mmap implementation like this:
+
+  make NO_MMAP=MapsBecomeMallocs SANITIZE=leak
+
+then LSan will notice the leak, because now it's a regular heap buffer
+allocated by malloc().
+
+We can fix it by calling close_pack(), which will free any associated
+memory. Note that we need to check for NULL ourselves; unlike free(), it
+is not safe to pass a NULL pointer to close_pack().
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-One thing I noticed here is that for a clone with a single
-self-contained pack, we could probably skip running rev-list entirely. I
-don't know if it matters much, though, as a noop rev-list process is not
-that expensive compared to the cost of a clone. And in the worst case,
-it would involve calling find_pack_entry() on each proposed ref tip an
-extra time only to find that at least one does need to be sent. Though
-that is also not very expensive.
-
-I left it out of this series, though it would involve moving the
-new_pack opening up above the start_command() invocation again.
-
-I also wondered if this whole thing out to be written to avoid a one-off 
-packed_git in the first place, like:
-
-  - call reprepare_packed_git() to re-scan objects/pack
-
-  - find the pack by name in the packed_git list
-
-  - don't clean it up; it's owned by the repository struct now
-
-But that's a somewhat bigger change, and I'm not sure it really buys us
-that much.
-
- connected.c | 33 +++++++++++++++------------------
- 1 file changed, 15 insertions(+), 18 deletions(-)
+ connected.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/connected.c b/connected.c
-index 79403108dd..530357de54 100644
+index 530357de54..6718503649 100644
 --- a/connected.c
 +++ b/connected.c
-@@ -45,20 +45,6 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 		return err;
- 	}
+@@ -159,6 +159,9 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 		err = error_errno(_("failed to close rev-list's stdin"));
  
--	if (transport && transport->smart_options &&
--	    transport->smart_options->self_contained_and_connected &&
--	    transport->pack_lockfiles.nr == 1 &&
--	    strip_suffix(transport->pack_lockfiles.items[0].string,
--			 ".keep", &base_len)) {
--		struct strbuf idx_file = STRBUF_INIT;
--		strbuf_add(&idx_file, transport->pack_lockfiles.items[0].string,
--			   base_len);
--		strbuf_addstr(&idx_file, ".idx");
--		new_pack = add_packed_git(the_repository, idx_file.buf,
--					  idx_file.len, 1);
--		strbuf_release(&idx_file);
--	}
--
- 	if (repo_has_promisor_remote(the_repository)) {
- 		/*
- 		 * For partial clones, we don't want to have to do a regular
-@@ -90,7 +76,6 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- promisor_pack_found:
- 			;
- 		} while ((oid = fn(cb_data)) != NULL);
--		free(new_pack);
- 		return 0;
- 	}
- 
-@@ -127,15 +112,27 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 	else
- 		rev_list.no_stderr = opt->quiet;
- 
--	if (start_command(&rev_list)) {
--		free(new_pack);
-+	if (start_command(&rev_list))
- 		return error(_("Could not run 'git rev-list'"));
--	}
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
- 	rev_list_in = xfdopen(rev_list.in, "w");
- 
-+	if (transport && transport->smart_options &&
-+	    transport->smart_options->self_contained_and_connected &&
-+	    transport->pack_lockfiles.nr == 1 &&
-+	    strip_suffix(transport->pack_lockfiles.items[0].string,
-+			 ".keep", &base_len)) {
-+		struct strbuf idx_file = STRBUF_INIT;
-+		strbuf_add(&idx_file, transport->pack_lockfiles.items[0].string,
-+			   base_len);
-+		strbuf_addstr(&idx_file, ".idx");
-+		new_pack = add_packed_git(the_repository, idx_file.buf,
-+					  idx_file.len, 1);
-+		strbuf_release(&idx_file);
+ 	sigchain_pop(SIGPIPE);
+-	free(new_pack);
++	if (new_pack) {
++		close_pack(new_pack);
++		free(new_pack);
 +	}
-+
- 	do {
- 		/*
- 		 * If index-pack already checked that:
+ 	return finish_command(&rev_list) || err;
+ }
 -- 
 2.53.0.786.g466665faa3
 
