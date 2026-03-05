@@ -1,218 +1,175 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90532368277
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:35:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772753707; cv=none; b=j4wJmKPxzTKsVgXgVlYh4wLd9Q+SB5od6x+zIEX+fAHEimQzgdRb8jAqt4Gq6kakoHT8QZdnavTSBWDaH7BMBHPI49vWyqjFB29+9A1B4+xqExJUE5Py3IZRbV9qT6qGNQy1CIbRRv5j40mo+ObJTHqKboJF/wZV1NyNbEqCQlg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772753707; c=relaxed/simple;
-	bh=zu55jb/g1iC9RU2rKQ+SmPHfPJano58oZtbEOGYI64M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkRWVlKlLwvRfBfy8E12KxlN2BVA5V+H6OsVdNUrejE1MAbKQpV9mn5LIn0YVMHc6S8f7HEl8f2hQNdia5mZv0eaRc/GH0VfrMJRDH4Rq84leFL1twQqjKumReZx2N/N8MQbvnSvvB/BCvX5ppwMyhT9FyU1U8WbDz+JzC2FZNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iZvbLaSy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kl6khw3S; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694F035AC23
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 23:37:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772753830; cv=pass; b=rkkNJ6Ic/Wm5HE7rE4TVW2Arn1sZ/7VsepTAmZPGtgDFS3tlzZ9qS5IVXYKECdoV1gq2JaYmiH5RRus8GU5cC3bDZ46ONCa0eYBKQhH2ZogphPIqvKFJnSwEmdwnbV6cFVoDIbeVJubtrHVOTT6gLBSEWTzsxhOcB3D7J26OcNs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772753830; c=relaxed/simple;
+	bh=5hNxaNgWFp7Zjcf8LNRhgys0oi3gRC1RZmnp8lhXZt4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=McRFFREvRg9RC0yxqsHvxg8DC72T2bdU6rk/bqhmng2OyWHJbJcmTtzWRXUbULwfu6ESXaGarHnzLE8l++plhr7b2oUVHj7OW3adtD6lltwOSUdmsZO+Fk1Gzz6tgQBh8H96ThsaE0MlOhwY3PFs0t2rk9UY5EOTyhTjP/1fuos=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TDEAT3OE; arc=pass smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iZvbLaSy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kl6khw3S"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 032C014001FE;
-	Thu,  5 Mar 2026 18:35:06 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 05 Mar 2026 18:35:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1772753705; x=
-	1772840105; bh=iozVWp0whK1PaPBp5MAWuEeMVEIf3agDK1OO7zZWiI8=; b=i
-	ZvbLaSyXkbEVIOwApQEzpu48mdj/2OVbGv7hhxHs8rjaQx7IkTvzRo96LGeGual/
-	gJaeVuSN8ZrAH/P3fYLoUqX3IeAmJ9sZ1uZ9/IwXTCtcw0MdUoc1nwdmP3fOjd0u
-	czGUhWtdc6FC8Ya97SUf/rh/gUqqptM1V3/L+p5kAw95ZdXY7KbG22Ny2mQkz96Z
-	2LN9P9ZPP6HL/w+lVlHy27O0OyEtdhGZq5O/SFjN2c6h5+LHd0OR7Vx/YT0AIHFQ
-	ju6rhrxPku5/MvaS71goyd22jfZSDs8tmUYmnLe4oZV6H7DlJywfvSjyE/ih/TCY
-	CQs6GJVC87iGWSRvTfGmg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1772753705; x=1772840105; bh=i
-	ozVWp0whK1PaPBp5MAWuEeMVEIf3agDK1OO7zZWiI8=; b=kl6khw3SC7VUooorI
-	kNJ0lPDJurgy3ZvARJz8lIyiuKtkcG6kSmD6DlqW9T3Ck/TNMX35K6yhUFKgcN2h
-	MRfqhXKsuPmN82vPahWW4wQ2AQuGy/GnJb8rhI6rpnhPbOSheFTpF4IjuSQUeCYc
-	hjcvI8ZLtt9QjJ22U4tNfIaEXLzBAti4uLCkR2XFuDHth9iO9HTJF6cKU8gQaPwO
-	c92HuiHVGAHmkEuoYLljGEy4K7TQIt/yfRjFWEyS9vf+/lm+XoU+WN/SC7ad7xEX
-	8F36OrXCcr+/xPq3QbmefunVG2/L1aRXFcykE6pDkitw1nW2vpDn+hOpirIT434t
-	ibW8w==
-X-ME-Sender: <xms:KROqaXFxLRv41wEOQW7ItDqHg0dwGwap7EgwROjB9sgxVMY5Ogt0nA>
-    <xme:KROqabzKQqrsYI0zLu8-Zv8ZuybTMBFxQAwkqcTjIhCK6FCfoxd65eKB5LSqDvmtn
-    LCEz0HJF0thXl8epFyAAZqSaP06YXRsKyAyXrXSs0rfC_j756rECA>
-X-ME-Received: <xmr:KROqaWhCY6Lb60RfqmLsgaYuvDlEPS_XOCL7h5awvPxCPJXIE1os7T2wuY6YkW8R8I5CIUrbhX8h7Y0r-yTK9kdSn7G9pzFehA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieejjeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepvdfflefhueetgfektedthfduleffudetleefieeulefhvdduieeukefhtddv
-    udeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:KROqaew5l6L3IhOaVHwlJTXHzundgLVybkwFhw2R5jSj05Rp_Tmljw>
-    <xmx:KROqaRItX5BEha2jcZ90Wko4qZqL2HqY9UOS2CBibnwkiaWkSbA10g>
-    <xmx:KROqadTdLS4DTi11OauVRmpxPvXU9s2qhz_TjEMMbaM1JqEOjFjVLw>
-    <xmx:KROqaRr1FqRdkfxqBEeaRExWRn-KRhvlJASYNa7wDwFCQ0YQQzdGQQ>
-    <xmx:KROqaWWnN00co_ibgPa16Kir_ALgWnw6dXLzySqD0L1t7TiVJbQoMGrQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 18:35:05 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v5 7/7] sideband: delay sanitizing by default to Git v3.0
-Date: Thu,  5 Mar 2026 15:34:52 -0800
-Message-ID: <20260305233452.3727126-8-gitster@pobox.com>
-X-Mailer: git-send-email 2.53.0-629-g0c401728ca
-In-Reply-To: <20260305233452.3727126-1-gitster@pobox.com>
-References: <pull.1853.v4.git.1770113882.gitgitgadget@gmail.com>
- <20260305233452.3727126-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TDEAT3OE"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b9358dd7f79so377124966b.1
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 15:37:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772753828; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jb3Vc9OvXhkgLgb5a5mJSvVo6Bj9a6RbX7Rln01AR4vb7ErJdClZUr7oAnw27iTl6j
+         MmBdGW/0AUx0zXHxOh7iViC0VBcJaCVo3KbrUNIICcv+Pljgc+d99T1+kRjrXCxLfYW9
+         t2frzYtY9HNVficBARDA5g2+cegP984OS0C/g8+UrrpEYuZFIQE/Jg/6YW9H4nzi8hQh
+         byD0OURUEOyTSRJL0ufN88kw/f6T8TCHABFWqt87XCjT8vapi3Vu0P4rSaCEC6OensOl
+         v1q4pSnP0CgSkJ9SjInHvfpingTDcVj0j1HG/b8b6e8ZPFzz4NL4dyDWdUsBVu7PQBRL
+         dr2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=8Gzl5hUiOEzhVQTL22xn8EDBavrAIZcg3HL5e8Gc1Wo=;
+        fh=VHDmUbx8fjkdN75VWN5CTjkglZBzVlasQgJGlwhruOQ=;
+        b=ZaoDbDV0vGFBBMJWtNiz8wyQIolWkDuPjryPywDzt33hfRf9IhCuhenrzLLzM2HmRY
+         kMA+0xtiaypUJQ2gL75qy0pLVk+LR2gjf68eYQqIeNtxhTRI9V9bqjkkhn37AXGSk0PK
+         17t4meNVlUeblc/yoaG0WVv9nxbdT47W4OybuIa80DB4YntG6qBJ37VkC90mTY+7LNfu
+         IxvQIqp1dDkdExjl/8vrLDmqETPSti34EoZE+LOohQl9msVb4Fa65sKlKWoKBjmh4fCd
+         3QBm0dH6Aa9k73avLujRZ5xwAm/prNDFtzrVb/aS4+2P8aXBaFk2mhAM35Pa6ukZC8O1
+         MceQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772753828; x=1773358628; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8Gzl5hUiOEzhVQTL22xn8EDBavrAIZcg3HL5e8Gc1Wo=;
+        b=TDEAT3OEZJMzQd4HLDdJjdabkgQ+fGFpx92l1CExPeIrzPxydOlt0ULkKwY4mui2RH
+         ybv9r/DYnu7mi9pw4VmxJUK4ii1LrI9ZK9Q5+d9mwcZBjosQRnPZY6swBVwU8sxUhElJ
+         6eHK9ox7hs3ol5J0atTMiQdfGbuG/SWOoTuwoTFZ/Mn/CmIBC0ztdq2tpA6mJ68NfHIf
+         GLinYmKPTBNAy4fB9SHxlXzwjRo6d4OT70rgdPI2O3vuli0i0RrpNnZEk6oh9iuUwjZc
+         MFjRICWwuh76DrHclly8PkBI1ASwullcl3GhRAsnCVJtHTq2SpkjTyyEllikFfcmrnY+
+         ZGPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772753828; x=1773358628;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=8Gzl5hUiOEzhVQTL22xn8EDBavrAIZcg3HL5e8Gc1Wo=;
+        b=EGLXCxVT05dwx5SsSdCjE/x6jcRhKyAH9DfiZyXTd8jyiLfZhAVrtobN86jLtomcEJ
+         xX3FfFnx1ZAC0l6H4UuU1pPZVkBCtJO8GeJ8704KoAuk7mb1bZ/bUiM/8NymNu+CrVeX
+         XD6rUVgsSzC5j/U+RsLmzBwQS95EbQY22dvIFbl8yXG0X+JHnAvcVhIUCiIK2DCEJkjB
+         GDk6t1fXhr8KN5hAa2PRR8PVgRLznbvncY7OkNk/0OIJHkWBj2lA9CwKaoA5NvEYrZhP
+         pkeGBE9Z3yAzXVLg/zPCoo1vMEn9+Xr+RTBBLse+fUTOTg/J1EGgBs8K0ZuyrifmW0i0
+         2aJw==
+X-Gm-Message-State: AOJu0YzT4xtOjHWU7O5QfF/fwiO8UAlKoenRfUXqawELwozdddfHRaJB
+	GEAD/BIWziDo/f3dzZPOVV21nxOEUnEuY3K6MM6aKPHqzTvfCYKOOwM7+24AEdSibTjYZMGsGM+
+	KnQ0JIbnxLDk4gS2senWSkqalW40jJOUOvs92
+X-Gm-Gg: ATEYQzxpf7YISiecfSHMEwMQ6R3iprybOYXaQt6x+LSpiQ+Drdq55HqPT/QXlOT2W9b
+	AIc33nLAoJzCWgbbsLK5fCdSBZGkWKG9IUjGdjX8Voqn5//0akx8E6oMa14M+sq/bbUsXv9aTsV
+	j+kerbu75Y2MP+fAND2HI4uzDiryRyFogDD9s/hBnOKBj2lv9xA8WfUQrMHcvV2MkUojvSuKznl
+	Yfqe0ItknHVSKZJQiNR69oTQOFgzO/vksTK1XuzHTp5iVAQpg6zCfnyyKGf7v9Abzp6q4Xz9IrV
+	MczPiYN6
+X-Received: by 2002:a17:906:6a06:b0:b87:117f:b6f9 with SMTP id
+ a640c23a62f3a-b942da4b05emr3317666b.8.1772753827463; Thu, 05 Mar 2026
+ 15:37:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAM+g_Nt8vZX4NxPvddJxNvSRgdMWQaLg2O9xzAU1pTHa=Et-gw@mail.gmail.com>
+ <xmqqqzpy46n5.fsf@gitster.g>
+In-Reply-To: <xmqqqzpy46n5.fsf@gitster.g>
+From: Norbert Kiesel <nkiesel@gmail.com>
+Date: Thu, 5 Mar 2026 15:36:55 -0800
+X-Gm-Features: AaiRm524m5gKnrsvqsy5ljUFayVEUwHBwBYAMUdGMVYEDTR-Ou9ydlOOhNedOAU
+Message-ID: <CAM+g_NsX5jdjbhtLznxJ=ZRtJ4ShEAzTHzkjgnidyDr-a2r=kw@mail.gmail.com>
+Subject: Re: Feature request: support listing worktrees sorted by creation time
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Wrote a Zsh script that uses the "directory create time" but when a
+worktree is moved then that will be updated. So would still like to
+have `git worktree add` store the current timestamp somewhere.
 
-The sideband sanitization patches allow ANSI color sequences through
-by default, preserving compatibility with pre-receive hooks that
-provide colored output during `git push`.
+```zsh
+#!/bin/zsh
+# List git worktrees with creation timestamps, sorted oldest to newest
 
-Even so, there is concern that changing any default behavior in a
-minor release may have unforeseen consequences. To accommodate this,
-defer the secure-by-default behavior to Git v3.0, where breaking
-changes are expected.
+wt_path=3D"" branch=3D""
+typeset -a ts_arr wt_arr br_arr
 
-This gives users and tooling time to prepare, while committing to
-address CVE-2024-52005 in Git v3.0.
+flush() {
+    [[ -z $wt_path ]] && return
+    local epoch=3D$(stat -f '%B' "$wt_path" 2>/dev/null)
+    ts_arr+=3D("${epoch:-0}")
+    wt_arr+=3D("$wt_path")
+    br_arr+=3D("${branch:-(detached)}")
+    wt_path=3D"" branch=3D""
+}
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-[jc: adjusted for the removal of 'default' value]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/sideband.adoc  | 12 ++++++++++--
- sideband.c                          |  6 +++++-
- t/t5409-colorize-remote-messages.sh | 18 +++++++++++++-----
- 3 files changed, 28 insertions(+), 8 deletions(-)
+while IFS=3D read -r line; do
+    case $line in
+        worktree\ *)  flush; wt_path=3D${line#worktree } ;;
+        branch\ *)    branch=3D${line#branch refs/heads/} ;;
+        detached)     branch=3D"(detached)" ;;
+        "")           flush ;;
+    esac
+done < <(git worktree list --porcelain)
+flush
 
-diff --git a/Documentation/config/sideband.adoc b/Documentation/config/sideband.adoc
-index 96fade7f5f..ddba93393c 100644
---- a/Documentation/config/sideband.adoc
-+++ b/Documentation/config/sideband.adoc
-@@ -1,8 +1,16 @@
- sideband.allowControlCharacters::
-+ifdef::with-breaking-changes[]
- 	By default, control characters that are delivered via the sideband
- 	are masked, except ANSI color sequences. This prevents potentially
--	unwanted ANSI escape sequences from being sent to the terminal. Use
--	this config setting to override this behavior (the value can be
-+	unwanted ANSI escape sequences from being sent to the terminal.
-+endif::with-breaking-changes[]
-+ifndef::with-breaking-changes[]
-+	By default, no control characters delivered via the sideband
-+	are masked. This is unsafe and will change in Git v3.* to only
-+	allow ANSI color sequences by default, preventing potentially
-+	unwanted ANSI escape sequences from being sent to the terminal.
-+endif::with-breaking-changes[]
-+	Use this config setting to override this behavior (the value can be
- 	a comma-separated list of the following keywords):
- +
- --
-diff --git a/sideband.c b/sideband.c
-index 04282a568e..5fb60e52bf 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -34,7 +34,11 @@ static enum {
- 	ALLOW_ANSI_CURSOR_MOVEMENTS   = 1<<1,
- 	ALLOW_ANSI_ERASE              = 1<<2,
- 	ALLOW_ALL_CONTROL_CHARACTERS  = 1<<3,
--	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ANSI_COLOR_SEQUENCES
-+#ifdef WITH_BREAKING_CHANGES
-+	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ANSI_COLOR_SEQUENCES,
-+#else
-+	ALLOW_DEFAULT_ANSI_SEQUENCES  = ALLOW_ALL_CONTROL_CHARACTERS,
-+#endif
- } allow_control_characters = ALLOW_CONTROL_SEQUENCES_UNSET;
- 
- static inline int skip_prefix_in_csv(const char *value, const char *prefix,
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-index 3010913bb1..07cbc62736 100755
---- a/t/t5409-colorize-remote-messages.sh
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -98,6 +98,13 @@ test_expect_success 'fallback to color.ui' '
- 	grep "<BOLD;RED>error<RESET>: error" decoded
- '
- 
-+if test_have_prereq WITH_BREAKING_CHANGES
-+then
-+	TURN_ON_SANITIZING=already.turned=on
-+else
-+	TURN_ON_SANITIZING=sideband.allowControlCharacters=color
-+fi
-+
- test_expect_success 'disallow (color) control sequences in sideband' '
- 	write_script .git/color-me-surprised <<-\EOF &&
- 	printf "error: Have you \\033[31mread\\033[m this?\\a\\n" >&2
-@@ -106,7 +113,7 @@ test_expect_success 'disallow (color) control sequences in sideband' '
- 	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
- 	test_commit need-at-least-one-commit &&
- 
--	git clone --no-local . throw-away 2>stderr &&
-+	git -c $TURN_ON_SANITIZING clone --no-local . throw-away 2>stderr &&
- 	test_decode_color <stderr >decoded &&
- 	test_grep RED decoded &&
- 	test_grep "\\^G" stderr &&
-@@ -138,7 +145,7 @@ test_decode_csi() {
- 	}'
- }
- 
--test_expect_success 'control sequences in sideband allowed by default' '
-+test_expect_success 'control sequences in sideband allowed by default (in Git v3.8)' '
- 	write_script .git/color-me-surprised <<-\EOF &&
- 	printf "error: \\033[31mcolor\\033[m\\033[Goverwrite\\033[Gerase\\033[K\\033?25l\\n" >&2
- 	exec "$@"
-@@ -147,7 +154,7 @@ test_expect_success 'control sequences in sideband allowed by default' '
- 	test_commit need-at-least-one-commit-at-least &&
- 
- 	rm -rf throw-away &&
--	git clone --no-local . throw-away 2>stderr &&
-+	git -c $TURN_ON_SANITIZING clone --no-local . throw-away 2>stderr &&
- 	test_decode_color <stderr >color-decoded &&
- 	test_decode_csi <color-decoded >decoded &&
- 	test_grep ! "CSI \\[K" decoded &&
-@@ -175,14 +182,15 @@ test_expect_success 'allow all control sequences for a specific URL' '
- 	test_commit one-more-please &&
- 
- 	rm -rf throw-away &&
--	git clone --no-local . throw-away 2>stderr &&
-+	git -c $TURN_ON_SANITIZING clone --no-local . throw-away 2>stderr &&
- 	test_decode_color <stderr >color-decoded &&
- 	test_decode_csi <color-decoded >decoded &&
- 	test_grep ! "CSI \\[K" decoded &&
- 	test_grep "\\^\\[\\[K" decoded &&
- 
- 	rm -rf throw-away &&
--	git -c "sideband.file://.allowControlCharacters=true" \
-+	git -c sideband.allowControlCharacters=false \
-+		-c "sideband.file://.allowControlCharacters=true" \
- 		clone --no-local "file://$PWD" throw-away 2>stderr &&
- 	test_decode_color <stderr >color-decoded &&
- 	test_decode_csi <color-decoded >decoded &&
--- 
-2.53.0-629-gb58d2f6a3e
+# Find max branch width for column alignment
+integer max_br=3D0
+for br in "${br_arr[@]}"; do
+    (( ${#br} > max_br )) && max_br=3D${#br}
+done
 
+# Print first entry (main worktree) always first
+printf "%s  %-${max_br}s  %s\n" "$(date -r "${ts_arr[1]}"
++"%Y-%m-%d")" "${br_arr[1]}" "${wt_arr[1]}"
+
+# Collect remaining entries prefixed with epoch for numeric sort
+typeset -a rest_lines
+for (( i=3D2; i<=3D${#ts_arr}; i++ )); do
+    rest_lines+=3D("${ts_arr[$i]}  $(printf "%-${max_br}s  %s"
+"${br_arr[$i]}" "${wt_arr[$i]}")")
+done
+
+# Sort numerically by epoch, then replace epoch with formatted date
+(( ${#rest_lines} > 0 )) && print -l "${(on)rest_lines[@]}" | while
+IFS=3D read -r line; do
+    epoch=3D${line%% *}
+    printf "%s  %s\n" "$(date -r "$epoch" +"%Y-%m-%d")" "${line#*  }"
+done
+```
+
+On Thu, Mar 5, 2026 at 7:50=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Norbert Kiesel <nkiesel@gmail.com> writes:
+>
+> > I have multiple repos with more than 20 worktrees, and sometimes
+> > forget the name of a recently added worktree. Therefore it would
+> > really be nice if I could use something like =E2=80=98git worktree list
+> > =E2=80=94created=E2=80=99 to list them by their creation timestamp. Is =
+that something
+> > that makes sense to you as well? I could also create a pull request
+> > for this if you would like it.
+>
+> I do not think we have any _record_ of when each of these worktrees
+> was created, so this is not a realistic request.
+>
+> The output from "git worktree list" may be more than 20 lines, but
+> isn't your terminal taller than 20 lines ;-)?
+>
+> Since very early days of Git, we have created .git/description file
+> that is not used very much (I think it is shown in gitweb).  Perhaps
+> worktree should have an equivalent in per-worktree part of their
+> .git/ directory and "git worktree list --verbose" can use its
+> contents in addition to the additional pieces information it already
+> shows, or something like that, perhaps?
