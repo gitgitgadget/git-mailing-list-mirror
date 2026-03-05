@@ -1,155 +1,120 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61690384248
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 11:13:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772709208; cv=pass; b=HxWshPawx/mt5IZ8uvdj7/oUNrobMK+AIAfHVwKtfsfu5MegWtIhH2PKlNBZHQLMbFNeN8DGuAWdwfCYz0yvrEnDk7xlNrB+HObfwf8UBlNkXkyMquKM8Ye/EsT7vT4TC5Ji70/2mpVl4a98X7fhjDgwV2cOFzZzFWR10/7245A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772709208; c=relaxed/simple;
-	bh=LzAT7CwQL25fjKmu3YrSTWDXR8eUP33eFVSUD1VKiLQ=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=o0mlTDzOt3nN8jpPWKfvaYoAGyVOU+Pkv6qkIRhnbUslwSnNqu0LyTEqqQsalvJSPXkPxaAmAIIGNxRAIu7KnLIKlRGznu7TsdIU7A+YITOBuLBSgnh1vm1CcOVdht/lshi99LgEbuKfDoCHGw5yJfAqVuxcLUAWelgCene0ZKk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JIc8mh5u; arc=pass smtp.client-ip=209.85.217.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129415477E
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 11:20:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772709630; cv=none; b=Xuv3AVrs/7zWqDTs0QdjRkuQAtBUEXK05THoOjLaQJs719Jli8WMjhHAvqDnqO6HYFUHPhRU5E6Oiy6ZZIfuTVHqui+y1Bf4RnA3IkaUfPr+wN49cb2JKXO4UbeQVMw5bw3zU+SkgDUFkviF+fEBz9JrGIzRj6E/zaKiHAVN7w4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772709630; c=relaxed/simple;
+	bh=Fps7NKHAocHk9miTXmO4N2eFNurl6BpII0nofVfyNAs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=H0Hzr74F7q64atYeKx23SC5t4QbWsLlbFhcmes1i7IettlHf3Y3SPTJ9Ez6kppNBkF2Vys/rxUGPM3nru/MEHli+nRKXzuFCDS5yz48BDfGjX9tlznn7djrymkFCrrdJ+edz3OkAbSKOrZP8IGTVowuDuZjb4D6NUTM/T0Uydi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oBclvuvL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XAHZrhS2; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIc8mh5u"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-5ff05af29b4so2824905137.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 03:13:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772709205; cv=none;
-        d=google.com; s=arc-20240605;
-        b=RXSVdMRVLbZw2DtEWtXz72EnIysK4Q+7m5sRQT/2V7wwPUC1k9J5nTifoGjdgwlevp
-         odIvGZMARp8Qv0NuseNzkJkZAs5NHPAL89/YEjbekmdOWSfErl2qmH6JUnR6Hfcp6J5r
-         a7XNxV8Ua94PeBJv02t6MKRPh51PlXD8Ee5ftSdWaONCJG2yvfNqifb3w9QYBPAOIT10
-         EaXpqqQ9xawOPyjk8b4JpsIXs7i1PTl1KsLyoX1ensAVL5xtvthX5fwH8LGj2M0Fhy24
-         k1YNcOFniimeBc4cjyB39/7DlnslJUrYmxnWreZJw8k1G6feDGIoZ6RPFbxY3B+SBTOb
-         moNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=KqnpVzuxPmOUCnGuBN0USuCXk42iHSygQe/WQIZr23k=;
-        fh=sIKThXvWqWvyT141nKwH9vBDdqfZdKKWnxvoBPuhnK4=;
-        b=HzX8jVu1VJ/Dmg6w4NzVhlsdNluk7cZ9rxqTw23wyc6NxxL+0RK85LsucjPRfG8Ejt
-         K2EhdX0K50OiqI4ts122rykqxrmrWpyGOX8BQImdHz0n1DKnbOL7jYVzAPDZhg7rWbVf
-         m7LLnkh/qjl0qGR0pe72p9c1Wyb5PGWh6dRWTj/K7wdL2t4m5nqZbC5lDaqdnrM3p1pP
-         x88i7XBoNTOURMPW6+uUiiENtQnWQ7Y9phwzBEAH+2asv5SHaSkYkUwO2rWzxj4Xc0pz
-         NJOvPj2LA4OOG4VAkhzqWxmgt8mRA9k7gtANcBDg2FhzLQn5dQzocGLhl1Dynyc8v8Gs
-         54QA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772709205; x=1773314005; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KqnpVzuxPmOUCnGuBN0USuCXk42iHSygQe/WQIZr23k=;
-        b=JIc8mh5uk+raA9/gQ25PirgGkAs6yoULhNoG2p7Yz0mQdTnRgeUTKSumbnjUUHsvaY
-         Xts0IngHXbOkvgvbQgpxrCUJgI7CakV6psfZgzlKOTcaNNNWCXl6iyV1WpP4vr7ySWRd
-         ESisMWGBCLES4GW3Ke+KzfaM3/V2Y8qFcs4Ty/qXMc921np9IYM8OeYsdbZTI9w3DjC6
-         Ma7ToISC0Jy5n1cbrDn7MojbBx6hNs7e83pmiaIziKcbkYCW+zM2H9Hd8HU7Ubrg1HGn
-         tjGxBmKA/nHEPT4g58F9pNnD67HGBvPDMvyPV7BjOWxErnuAFAmGct26+A25Djcaf1b1
-         +Msw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772709205; x=1773314005;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KqnpVzuxPmOUCnGuBN0USuCXk42iHSygQe/WQIZr23k=;
-        b=JUhx6B5t/+FWyg1yNq9lGs3SlIgLxh+tWEdjsoN7C1S2+n2W3Bc3/5uTcviMoc83OG
-         ox9R3UBaav9p98KkeP+ReBP1J1Q83mfZp0tSPNJPh98B+JpldxnUZTldafDS+djBiYXk
-         i2Bgc80CZm0rJ+f5HtWri6grzvDehHVEHGdPnKz6n9YyhxrA3t9+0Yz5pzgl3TzCGXIU
-         Vr96PS27d7UBygK5UraQCwcnAavA3P35w6oYPWMTERJjen58HLCFEjXlQt8ChrNNjPQb
-         5UgyFh8trLPG0y5POYql+4eacg6qgs9nIkyTT2r+CJmBCXOOGW7SF0h5odX3dIB34/48
-         bcqg==
-X-Forwarded-Encrypted: i=1; AJvYcCXmKauo7E2JyQHNht1uwB9/ICjluMCM/jLAkX+tJvItZpJxPACsdWTtDVxZi76Yct3cr7w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDdajJE3f/iR5k/Lf44qZXI1zppWNzH9ajWz/n1hc9MlJ0YRRZ
-	Vd8nzOymnnoFf0nJ8X+CtH/Fe/iGKNLX2QTLewY4A7LngUmeDw2au+vxu3UrZISLrjXUq1/5GKl
-	UfqDN8bXniCp+3mLLjGld7A6VQ+hB1PJTR8BR
-X-Gm-Gg: ATEYQzwUXG35OAxtruWC5fbriNO8DI4g0LRpgW64wtPGVBDdsbj1kX1YFMwB4prMYJC
-	jJ4JMrM1JyOUbhvwiovp49TwWo0dRjcy8erwevGEb8+bg7yWtvkHqaHlY0cue00KFopNFfDNSHF
-	iJEaelZo//Izoc/NmzaezfCVkJbW37vhoUxLJSHFCrky5w5ZNy1oiw3qsEhfpwmDlT4V4O8ddOI
-	+JzaPLNcLZwB2NjWy5PY7oO5MdPpaTg9nIWrwN1D6ODmQLm9QNV51O10RmDNVlcc53yzPQVuFvX
-	oH/AR6XrOnUs2lUbdo8L0cLNyksOONE1oc4akj8d
-X-Received: by 2002:a05:6102:a4a:b0:5f5:3d46:e601 with SMTP id
- ada2fe7eead31-5ffaaf0baa8mr1976066137.24.1772709205343; Thu, 05 Mar 2026
- 03:13:25 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 5 Mar 2026 11:13:24 +0000
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 5 Mar 2026 11:13:24 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-10-253bac1db598@pks.im>
-References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im> <20260223-b4-pks-odb-source-pluggable-v1-10-253bac1db598@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oBclvuvL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XAHZrhS2"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 161427A02EE
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 06:20:28 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Thu, 05 Mar 2026 06:20:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1772709627; x=1772796027; bh=oPI23WW2QV
+	V9DHc2m1yX4eScqZFuutskT1bfYfpfb4M=; b=oBclvuvL4oIIuGs59P+zBxGwgQ
+	AU9bSGWmBZMSzBREytVA6mYG6SAAvfZGjjfi/9G+4uuMpOM95T3+LRy54ghQ//xO
+	Zin/RaBbYyx43P5GsvtWmWUAFe983eJy0gS/DLQs09+zGiuiVHaglt1PW/MggCEq
+	8qNp8Kf1j3s+pXkotqbnqINt9bDEaBsX5RVj2VTUmPLIQSO+USY9p3K05vgTNW3C
+	WRkBDhD5BZ45XR95cFuG/+uaWxR4WK02Kinjw3MgDG8shvgYcQW6gNs8mOv6cjvE
+	9OCAGgRupiGfEWR8QDRiKLjN8BccshC1b8AWVytF5aTI9oagBvUEPhGFHZvQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1772709627; x=1772796027; bh=oPI23WW2QVV9DHc2m1yX4eScqZFu
+	utskT1bfYfpfb4M=; b=XAHZrhS2XGYCjHJo8CdCnlA38WyqIVlBerSH3CF9Mzbq
+	RJAukKv+mRRDWWYpzO8QwolWSCyYg8crjbVnwIisiYckbXvmSXOUwVugBX9kZyRa
+	QIh7WBxdnVGBvvWzOZRb4M8OYoGFkGNofyseg+JDrlTzrlYBV0OFykJPqW2OJIru
+	HaqvskmRoTd5lXT0Qn80MTquY1LdP5yyVb0CN69uOit2qiZoWG38kVAGGv8M5n6v
+	bCbD2+SFjIRZ5cI0mZj/TB4jb2XccgzAvGSkFqESeOCrNirOLK8TarVp5YkywWVh
+	tWTgR6n/QTlVsxjhpTwWNCIYsrBAPyL2MFu//Zdhog==
+X-ME-Sender: <xms:-2apadjaHHBhyhHgmkXX6ZYZHuCtBc8oLzKaBLdEwYcTdVLbgz5bOA>
+    <xme:-2apaY9Sp14vollbYF9Ji1c_81BDUdxn7zOhj2IaXHFoCx5ZV5NINNxenOC6pcZv1
+    ZWTuiXGZA1vzW_KxHmSB-T8y4L7u64Jvrgjilr01JMdvhH5WSXk>
+X-ME-Received: <xmr:-2apaSsMYTsedmPCRPfTCFXTTDzxinESGehtj-qjFGub1Or5ZWuymMdbN7J1us3499X4TUClfBwp8t5s-nmAzOBJ6XBtb7jr815PwLRxu9XC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeivdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhufffkfggtgfgvfevofesthejredtre
+    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetieegjeeuheeuudfgveelfeevhe
+    euhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:-2apaXZRWmNSMBAQZknXm4nNRq1EulYCauh36qb-eg7GusmumgEwKw>
+    <xmx:-2apaaqokYCJghOIOwuK1rUXmiakn-jmdX6NgC8r3n0vR64wXCz1XA>
+    <xmx:-2apaU958EVrxDxJFjUPYqTTNaxXtsrOIIOL58Am5yw9-gVN6UKIFw>
+    <xmx:-2apaR-qMzrPfKop_-iUZMn3Xsc0gB7aXF3cdtuYT9Qi12XbiXFCnQ>
+    <xmx:-2apaRlMgMe_SUn1Pw5OjhU9Dfm4oElJun826nB7YUki9z2Kq-c_nNon>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Thu, 5 Mar 2026 06:20:27 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 97d04264 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Thu, 5 Mar 2026 11:20:25 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/3] gitlab-ci: update to macOS 15 images
+Date: Thu, 05 Mar 2026 12:20:20 +0100
+Message-Id: <20260305-pks-gitlab-ci-macos-16-v1-0-ce8da0ff29c2@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 5 Mar 2026 11:13:24 +0000
-X-Gm-Features: AaiRm53PsoJrcMKfDmggsfBwm49aSdKp_r4r8eULJGNC9ywseE1aQTg8nxhJTIs
-Message-ID: <CAOLa=ZT256atEES+7-8q9tDPzW5h=L-ApWuHF1udUVFQ9QrCFA@mail.gmail.com>
-Subject: Re: [PATCH 10/17] odb/source: make `read_object_stream()` function pluggable
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000007996d1064c4506d1"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPRmqWkC/x3MSwqAMAwA0atI1gZqlaJeRVzUmtbgl0ZEEO9uc
+ fkWMw8IRSaBNnsg0sXC+5ZQ5Bm4yW6BkMdk0EobVaoKj1kw8LnYAR3jat0uWBikpjZ68ERaGUj
+ xEcnz/Y+7/n0/D6smSGgAAAA=
+X-Change-ID: 20260304-pks-gitlab-ci-macos-16-e9862bfee206
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.14.3
 
---0000000000007996d1064c4506d1
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Patrick Steinhardt <ps@pks.im> writes:
+this isn't anything urgent, I'm simply trying to stay ahead of the
+upcoming deprecation.
 
-> Introduce a new callback function in `struct odb_source` to make the
-> function pluggable.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb/source-files.c | 12 ++++++++++++
->  odb/source.h       | 23 +++++++++++++++++++++++
->  odb/streaming.c    |  9 ++-------
->  3 files changed, 37 insertions(+), 7 deletions(-)
->
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index f2969a1214..b50a1f5492 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> @@ -55,6 +55,17 @@ static int odb_source_files_read_object_info(struct odb_source *source,
->  	return -1;
->  }
->
-> +static int odb_source_files_read_object_stream(struct odb_read_stream **out,
-> +					       struct odb_source *source,
-> +					       const struct object_id *oid)
-> +{
-> +	struct odb_source_files *files = odb_source_files_downcast(source);
-> +	if (!packfile_store_read_object_stream(out, files->packed, oid) ||
-> +	    !odb_source_loose_read_object_stream(out, source, oid))
-> +		return 0;
-> +	return -1;
+The update uncovers the issue with broken iconv that we have already
+fixed in d0cec08d70 (utf8.c: prepare workaround for iconv under macOS
+14/15, 2026-01-12). But for now we had only wired up this workaround for
+our Makefile, not yet for Meson. So the first two patches wire up this
+fix for Meson, too.
 
-Same issue here regarding loss of error code propagation.
+Thanks!
 
-[snip]
+Patrick
 
-The patch looks good otherwise.
+---
+Patrick Steinhardt (3):
+      meson: simplify iconv-emits-BOM check
+      meson: detect broken iconv that requires ICONV_RESTART_RESET
+      gitlab-ci: update to macOS 15 images
 
---0000000000007996d1064c4506d1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: c3b3efb9c94f21e1_0.1
+ .gitlab-ci.yml |  6 ++---
+ meson.build    | 80 +++++++++++++++++++++++++++++++++-------------------------
+ 2 files changed, 48 insertions(+), 38 deletions(-)
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tcFpWSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1menZZREFDa096ZDhEME1nTVZYM2RXRDdpd3NISTQ4ZApuaXNpdllMTkdH
-aEdpNWwzN0pMQUxRODBLRU45aERoUEE0Y2FvTjhyRXJVNGt6VEVYU05BV0ZDZmx1eUxzNTB4ClFO
-SFVFbEdBMFRkb1RoeDZoQ3JsU2VIMGVZTWJUV0FTQmlLY25YRStQUnlDS2VWNEVaOG5rcGREd3BZ
-YUJpSGIKWTZ3UW9JajV4d2ordkZwc0RpZ3N1UWFzR1loa3NKbDZ3bFVIcVZ4QzdvOUdVZTh2VytE
-TWZMeWU0UjExUm41VQpucWxFekFja0gzUndLVTRnUmQwOW1rK0ZONVd1ZnM0TWZHWEdWVXhmSGV2
-WGVEMklWL01xbG1iVTVkTDBUZlRICmwwemowUUVCVzlYYytYUEQvcWhWV0ZNVmVRc004N1B0aC9Z
-TFZYOXYwTTVma0dJeVM4ZmNjTlh4OTZSQlZueFkKZGRMWkZoZUp3Q3NaY3hCMzEySUh2ekRxWUNw
-SUJYblFYZDFIVVBJREY3ZEc2cGdvRlBZK3dhMmkrek0zQmpkRwpLbnp2b3FDVExOOGxjTnI1U3U4
-NTNqSGRPYnNRTi9XVyt2SVc3YWFXa2xMVGdwYzNOM01xbUMzeHlwUUwyK3N4CnlCUzNSRE4yVFF1
-QjFsWlY1cUd6WEs2aVk1NEpQQ3N2ZFJaTVNqcz0KPW5WVnoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000007996d1064c4506d1--
+
+---
+base-commit: c1485ce6c89b3d33d32bd5e940432d30885afdcc
+change-id: 20260304-pks-gitlab-ci-macos-16-e9862bfee206
+
