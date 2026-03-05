@@ -1,69 +1,69 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9905B39E6C5
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 12:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68683A0B34
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 12:54:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772715279; cv=none; b=DeENlnhDYwCrAKgaMpmJOxCEUdJ0kknGQhJ5JM42ig9M7GeQn4CPI7t/BbyX0D/yAdDwNbBn9IJgHKZevpfInQcROhoVx/JfYvAzmzd2p8RNR3Naj2mJ45i6nzXKo0Hh2rRo9gAD0CM4PJXT6whtLAo/4Mtpm3jXNQ10mB3dH0o=
+	t=1772715282; cv=none; b=Jjd5c8ielaVsPd2tJz3fNdtGYaDLvcokLEg2PK8zKkd9nCl1u4LR3ljjcN8w214NI3YXCBj494hqcfTeNG08w6eygU4kPAaY+8lI7jL9W5Zf7qPu/PAswg9C2QGTTgYZYTTIEHiZk8MHtccVeiJgVy64tdscE0cqIFB3XGkJbP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772715279; c=relaxed/simple;
-	bh=tnUwt57+t07TzjXX2EiyZ/WmjFgyEVVDKWyOXqXe5bc=;
+	s=arc-20240116; t=1772715282; c=relaxed/simple;
+	bh=7zbLgTANy+79X0kW047Gal8gSMAcu6o+zZKNOTts0RI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlC0pwLXcz5MbSiNTbjcKso2X1/0w/c1fzvrUeLkyG1D/a1tyg05x8Epw37a+h1R/2ZvC1fvfpD/YYogTdTzh5/T0i5jypE3N2SArGsz3bwVJmYAYwhzu9NiliOPbf3N/MSdsnmnpMv9MCaVPo98ziqTjOtDtVukG2cqdfA9FKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iH+7ip94; arc=none smtp.client-ip=209.85.210.180
+	 MIME-Version; b=C783MvMIA9urD6m8LIlQBAL5dya5HQGr9S1PAoUvrYi+tkm28tzIN5WV1JAlfuuBdWx8QcVPPd3NqQPZ2giAMci6K1mtzstnARqqCehNkiHAsn6QEN2OHYkm2QkE7ZTOb7ZgR7M7KdStKIzzreYZLO1r+H2gKZGPLcYrgf4zHHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fD0ooEnw; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iH+7ip94"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8273e0fb87aso4505356b3a.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 04:54:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fD0ooEnw"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8297310ce0aso1125808b3a.2
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 04:54:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772715277; x=1773320077; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772715281; x=1773320081; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LzJnlgdPCXzHRkBzHFluJrX2uo8AIhSoz8jt2+gQMkE=;
-        b=iH+7ip941q16dUSkOHYyfxTwjFrTFR/WXUP2R1WskaynHPpZlKseNCkafabxe07SZy
-         597KKBIcVlUoWalQg1ouxdANWJoulKWrwP41781otJKCAYScCQ88jusK/t++40e1H+d8
-         tFqRf7as3l7KVxzzqsIRCFaH1fvZyJQMb5xZlgaQM8//r8zRDd2e+liSDY3Uutpd3yxW
-         0oYhofqi/D9bmJTTfuYjaT5HInxtr3L/YKUedUT+zr2omNKFGZrWO2CloEEN8IPEAAiL
-         pB/92iXvddnXH6rGmIHyIpmBx0Jd7O9R7mgB/PCe9YGDyCuYpTpzGo7vGk+s4SaUkI12
-         kmsQ==
+        bh=mBEp70jCT53PxwJBSxH0Jh4XGBrt9i519bBlbX8ofm8=;
+        b=fD0ooEnwF0QSEKo7pcF4azRR8FJjCJxnir9PeSfur48Py5vHG6HoHy6qnBf5FrWRQU
+         GOCPt/WLac0qHfjrGA8AnULv/aIm+7zJFHkvqDLxz5AycHWCaOMIMq4u7WsC61dC5Yqw
+         4ZmVPVageHVOCEu7hKqVL5g38dfrElg9HvInVTqyuzWVqhN2fTpIpzDHYQEMhSqnW7+T
+         pmj9KH3oNBRsriLnsHQ2CcPWmL55y+PG8QikMt/i2NY8cC3lqz+EoSYkFU8C11vg6QRR
+         mQyrGJnqBpQaWOUQAV8HqGXjT/ma2On6ewcMTObnR7lXpuTrARp9VwaExm9KssQ65G1j
+         BQdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772715277; x=1773320077;
+        d=1e100.net; s=20230601; t=1772715281; x=1773320081;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=LzJnlgdPCXzHRkBzHFluJrX2uo8AIhSoz8jt2+gQMkE=;
-        b=EsIi+ftdFE5S1kmDwn3EYWkgM9hfHDolznKAOlMET7LV54TiBraPIPNCnzFJZIrg/9
-         xyQyOSUzMWbbdruovKhcxTFwqCKAIlhoTOen8CvV2XKURdtWoFW2ndkygqspNdAzLDUI
-         fqardcW2M8NdJT1K0O92WA5puUA4zp8ubxxay5ZSMaJYsoOc1m6o07lNOYq5B9VWOJCQ
-         pHcrri+pl1ExjrXfRNW10B3iey6Jj+h5QiAeReJbp0Krm80wStghn5ELdb6K7Psm0baf
-         f0WxuAzv8diXwbBCWuZeDu2y6SwxacDBJZrasf38R0/ghqpvcYqguJqTwBHPnN3R8jcS
-         4uaw==
-X-Gm-Message-State: AOJu0YxEOBB1hEokffqdlY1HBJlHiS+tw1jaNPWmiPzIlk15OiqzAiMj
-	upzYFFts1QXrp88CCM39Or4EAG7wTh01mth9NoR9C5bdTzxfQnMnn30BVJGX/YHt
-X-Gm-Gg: ATEYQzzDNg0yjil3PE5Y4xunyWEXZbRgGRKJ8j2ccXVYuIt1Q4lzTee4fJ/bLsXbZsg
-	vcMZRLY7ZBhZhtasN12DUhwzLOZgvrct5746qADbpL1j/7k/wJZOIJL33U7DlAn6YRVE12jB1H8
-	d+xHx4XqS9qAqTZ+vntTqVeGSmtBq3q+9Rp0efXcG8TnRnXktlG0rOfdHRR2ELpVL5kXXLNlEDN
-	cW0N381Yw9CKxgjTCyN3Kd8nmgIdc22Lu/Ytyk1f/LqafEiXC1XwstycbGoGOJNsQqDomUyhIhe
-	louVdCI/Vl5cfOapPQHUv5hdVex+mSuxxoroQaHn03/W9mZdx5jptcKsjY8iuCuMDaIQZdIZoQe
-	LDTHr/l7/yhzPyBUygPoVQ2NPRAyranJgL9kOTklHqqjcVqOowa/JMUznaGtSqMD/L7FSF/ETUV
-	dp+07ZMS4xXWemdC8X3nJ8CpoL+8Z8gEuLEkW9ZrezIa8blM/0Gkg7jnEoNJpE22QUfEVIsPCQE
-	1zMOf6Ubbioa5yVSTLidWzi0xNnVCpV
-X-Received: by 2002:a05:6a20:5681:b0:35d:3f07:ba34 with SMTP id adf61e73a8af0-3982df0cb34mr5260609637.31.1772715276891;
-        Thu, 05 Mar 2026 04:54:36 -0800 (PST)
+        bh=mBEp70jCT53PxwJBSxH0Jh4XGBrt9i519bBlbX8ofm8=;
+        b=MyDFjSArijbHJzXzT64MBSUul6FHqvqaQ/le6RUsrcxMepMWNlkpsTov4IsxlQz/VX
+         OgkyskFZE0npQtwfPIjqD0Pj/266KKYUPReqbDMae2JkyJ6sO5PwdssF9KynjjWuxx+O
+         hqDnzLT6Gt8PUgcrBdlC6OgIOGZSL/rLDhC+A1L01ZMViuIQusEY5aIRlbn9YsI9Xn8K
+         0D21PM2oKeQB4i0NCij5xBMqaPKvm0aGKQZyVZePOdDgpUQ0JkwaJyb3sF4ggSUOd2rH
+         rgFhMR7z43vNhF7uA9CzxcI9h8lSYf3+OZNlAOCB0w0PTq7RNeXblNdZ1VspzM/KFk1Z
+         ebDg==
+X-Gm-Message-State: AOJu0YzZRW0mySnL1Subhf5JU6FZnWe//X2lR53KBjAqCUDGKp3ixuHe
+	KRLp/2Z5bKGDMA139c7ZOmwKX+bFhZ+VBal8HQZurOv8LIixQJBHqRDL
+X-Gm-Gg: ATEYQzySWqmNQNuVhuRh29vwAK9VGdzS3kn1ujvs+rbm6M74RK9B81VQQFvHxMbvvTT
+	BKPjnRzNtqRJcheYEBiu6GSzOYLBM/3YF/16e6rdA/0UYo5pFb/M7J0VwuZB+Q2PUziSWjM1B8n
+	fpS8ZSbzkzOJeUmN9o5dQ07FU//DnMpwQO0E8buL7mqsAIvYWhrAjRF1C6nt66bxCTLLlFirp6W
+	o6M45OlOSr3PkYtCHAS/9Jvg0hBEoD7KmDuBK+vNWGHDGp1ebmd4TOpuXeZF0pAw2E3G7I6m+2D
+	WbhGKLq0EBXxkhy0zJGVMjqWA1cV9m2jsUmQlq3NEgWOk78KZJwnzyV2jQcp28OWn2szGSaWe14
+	5kj421F+6a2L9f0YQnU6chJE/R56f73W+T2CtWPbhHatgLe3Li0Ar8++xPoozUDFxPh8VecFR8t
+	ooEj4QOPXdHoEHp6/dTNER6VGZftGEGR9M1GRGOgn49csG+myo88xr/MYY+jCd2vTl/TTHNPOkA
+	lu7H16O6kaKehCSN3/UDSCNqkhizyyC
+X-Received: by 2002:a05:6a20:a103:b0:334:a681:389c with SMTP id adf61e73a8af0-3982ddb93f7mr5874164637.15.1772715281007;
+        Thu, 05 Mar 2026 04:54:41 -0800 (PST)
 Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c738b823b76sm2578190a12.9.2026.03.05.04.54.34
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c738b823b76sm2578190a12.9.2026.03.05.04.54.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2026 04:54:36 -0800 (PST)
+        Thu, 05 Mar 2026 04:54:40 -0800 (PST)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 To: jayatheerthkulkarni2005@gmail.com
 Cc: git@vger.kernel.org
-Subject: [PATCH v3 2/3] path: use size_t for dir_prefix length
-Date: Thu,  5 Mar 2026 18:23:31 +0530
-Message-ID: <20260305125332.27600-3-jayatheerthkulkarni2005@gmail.com>
+Subject: [PATCH v3 3/3] path: remove redundant function calls
+Date: Thu,  5 Mar 2026 18:23:32 +0530
+Message-ID: <20260305125332.27600-4-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260305125332.27600-1-jayatheerthkulkarni2005@gmail.com>
 References: <20260304130502.8475-1-jayatheerthkulkarni2005@gmail.com>
@@ -76,33 +76,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The strlen() function returns a size_t. Storing this in a standard
-signed int is a bad practice that invites overflow vulnerabilities if
-paths get absurdly long.
+repo_settings_get_shared_repository() is invoked multiple times in
+calc_shared_perm(). While the function internally caches the value,
+repeated calls still add unnecessary noise.
 
-Switch the variable to size_t. This is safe to do because 'len' is
-strictly used as an argument to strncmp() (which expects size_t) and
-as a positive array index, involving no signed arithmetic that could
-rely on negative values.
+Store the result in a local variable and reuse it instead. This makes
+it explicit that the value is expected to remain constant and avoids
+repeated calls in the same scope.
 
 Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
- path.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ path.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/path.c b/path.c
-index f613d8bbd1..56be5e1726 100644
+index 56be5e1726..5cd38b2a16 100644
 --- a/path.c
 +++ b/path.c
-@@ -58,7 +58,7 @@ static void strbuf_cleanup_path(struct strbuf *sb)
- 
- static int dir_prefix(const char *buf, const char *dir)
+@@ -741,18 +741,18 @@ int calc_shared_perm(struct repository *repo,
+ 		     int mode)
  {
--	int len = strlen(dir);
-+	size_t len = strlen(dir);
- 	return !strncmp(buf, dir, len) &&
- 		(is_dir_sep(buf[len]) || buf[len] == '\0');
- }
+ 	int tweak;
+-
+-	if (repo_settings_get_shared_repository(repo) < 0)
+-		tweak = -repo_settings_get_shared_repository(repo);
++	int shared_repo = repo_settings_get_shared_repository(repo);
++	if (shared_repo < 0)
++		tweak = -shared_repo;
+ 	else
+-		tweak = repo_settings_get_shared_repository(repo);
++		tweak = shared_repo;
+ 
+ 	if (!(mode & S_IWUSR))
+ 		tweak &= ~0222;
+ 	if (mode & S_IXUSR)
+ 		/* Copy read bits to execute bits */
+ 		tweak |= (tweak & 0444) >> 2;
+-	if (repo_settings_get_shared_repository(repo) < 0)
++	if (shared_repo < 0)
+ 		mode = (mode & ~0777) | tweak;
+ 	else
+ 		mode |= tweak;
 -- 
 2.53.0
 
