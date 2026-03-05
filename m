@@ -1,82 +1,81 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C86175A79
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 14:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D374246BD5
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 14:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772720390; cv=none; b=TbcngZ9SaUGNiSA2yifuNwTXAwN72BbBWEffdFiVQ6iO9WSzrLLx+MNB8dpchqsKWil2d81SasfSTnW1qXwGUhbdUPiwI1EbAknh8e4KPCnzx6F5JlPG0mRn14llpT54qWbiA05yH2aPOi30mMgKQWAjQd3NPEcnPrZNiLbObb0=
+	t=1772720393; cv=none; b=lB0rAUTr6B8KonGPfzaKhDXjLL5KdvcmbaonnzeLk0EiE7KSlBocdsbpyf+vNz1gW4Jf74y3znBRQ/WednrXrTJGKwr9swpjOia5+LzRfxFoZrftalDiPMBRAnm4IRdKMAYqpLGbNrW+dxb1O7gQEOEiu+klZOIx8ASTft0L02Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772720390; c=relaxed/simple;
-	bh=iKXZIRTKwBaOhLMulTCC7rlUeBgF/kBQzS7g16v3Xc4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=KRue4JXJhl2YNEEaaaNI3Ai9pW8lpadLiYyH8P4x/GdX/WjaPFj05KPmV/XdLYab8HfkeaMrMahKzwgiwedCzS8howuSn9lnS91TBmZIs77BTxuIGd7XsfDxowIkRKCngqwT5L60IITBvG7oFM+IzvGtVK40HlKZP7PbOAzDqoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=STCu0O+g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ri7KnSYj; arc=none smtp.client-ip=202.12.124.151
+	s=arc-20240116; t=1772720393; c=relaxed/simple;
+	bh=mb6lBkrh5FcciXv580oy0uacW64xhwXbK8It/tzrin4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=c3CdFflOGC/2S2IHmCJYz68hjNzBDnZSp5uxOdB+jioux+mbTix1GG4tjhe4fAK8ZTAflQtUWE03eYmePf6KK5Afprgw/orjjQgThu8eCHXZEbgBvtgLKts7lMDO4anuYdNAQgCGsmSdnvCXv4edY4x6dkF86gShKvjdC4Ghun8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DZ38ePri; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gbpiLKgA; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="STCu0O+g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ri7KnSYj"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DZ38ePri";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gbpiLKgA"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 303B31D00159;
-	Thu,  5 Mar 2026 09:19:48 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id D8B111D0012B;
+	Thu,  5 Mar 2026 09:19:50 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 05 Mar 2026 09:19:48 -0500
+  by phl-compute-01.internal (MEProxy); Thu, 05 Mar 2026 09:19:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1772720388;
-	 x=1772806788; bh=aR3FfWW8e3/x8seZpWONw2UF2kolvBtxwF6tzC01SyI=; b=
-	STCu0O+gZNhsJPWZ9m8FD4BiqHmS1OGIzPc7oofDxwvLapfqOA2rqVm8nYNidUb3
-	jSDMQELabyn2XzeFux27SJVYh7KCRi34/iy5Nj6wJAafs7TSDqVzTag2ibJc1NJV
-	KJe8zDzJvFilVj+L889lk04wDh7q81BDra99GTXSPdl0qzj+ey7iLHRDy+nd2+CZ
-	T7oO8gIi2t4EGC5K+rCv/mpSADxfXzB3uOfbrEllZ1aPfgEYOmi6ht5p0oj6WGh8
-	+/95WipKtvbPXyGwLhVEDGvZ3UDNgaMd7d7/tlT2VtWEaLEFpLh/twmTnttFhS6m
-	yr9ysb1mklcubAjSlHsifQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1772720390;
+	 x=1772806790; bh=w0g3nyyzwrLuhlbL4p1JVdt/xd2hrOTfu8Uq54c8XCo=; b=
+	DZ38ePriXuJdAocPCEoMw+f4OEk+VdoM1q7r8PGsVPJViPG/0blNB7TW0fgkTLy0
+	TRYrFWfRFZwK/jt6PVQ7kbsLh8D/Wxv+xtEm2oUSPoy9e5B4WEZkzIpAjQ0MM7zp
+	Z4/ud8ctbTIXkX+dSHzl1IAXll6pUYlhE6uYFUKjY/fzKgBiWAut9gADr5YJvg1/
+	LCWVGovp6adkUw1EHL0og4n/FR7PEL11zLsipnN3UbNo2q8/fJa0lj0nCHRsfYgr
+	/xzCnCffzcKPy8MU6Ba+M+WKZzuYa+zjTJcgthgYa63Yuon7rFU6xpapjH9h7QwF
+	vyKsn8ouHGD0s281wvfV2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772720388; x=
-	1772806788; bh=aR3FfWW8e3/x8seZpWONw2UF2kolvBtxwF6tzC01SyI=; b=r
-	i7KnSYjIxzuSrDBljhgJQe5L6TYxmvjOznLSh5RVKI2lMDMcsxBA6UmtYiKlGukV
-	NhnKvngl06TNuyx5uhNaliTemYyp2isFn52edDUDq1uN7KcVrMA5O51U9lpYLgqM
-	8sEUTAlMWOgZG4S2uM9EcoI+djGTd+iYBpgsokeJhkAE8opkgTrkzoPRNLy8jj3D
-	e4VQAZAYt44W3A1AnDGcX2rO+s+vaWYGwnx0LTr/pjWdGwJ8atBLJLpRKqvWnLzR
-	2Ek0tvKZ5tGyL4Zc0LCqB9XJUxvMSi5RpAvIxhkDzCMuNZp7O5Bmhukky/9ff47y
-	NWgh6xlu0Uqru+lJlQpfA==
-X-ME-Sender: <xms:A5GpaaAZFTLLqBvYx9oV1TUqL3Rl9Y2jFtbPD9ZKjIAlRuW86nao1g>
-    <xme:A5GpabhpsAr22opEp2YzcPspkd36pczkmWxsWk6nTN7go43vLhdBOFL3v5wRpO0Pj
-    bYmMX_wp9L6ZpWcBky0sqlAtXr-pgaZ5F19VwTwy8S7V-xD-Swv>
-X-ME-Received: <xmr:A5GpaSlhon-qxMdb4J7VS-uOFTewoNCbl1OUrOUWidpWK9zk8sjfirx1p0AKzA_Y2RIFyoqnR61ODB6s3mlyQK8GuJLAyWKM59SFturkqoCb>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772720390; x=
+	1772806790; bh=w0g3nyyzwrLuhlbL4p1JVdt/xd2hrOTfu8Uq54c8XCo=; b=g
+	bpiLKgAVWYV+i2mw/4xRGkyG60mcuqmc3zh+w3t9EtBrr6OmY3l8+Nn3gjxay1MK
+	jYcYzjnuncmbz1T0+xqsmaFcq32IFr9yZ84FLTH/e9oehICtKPk34O66S4Y5YzIj
+	4P7GvI/1xb+aBl18pTAaF/a3v+sFsis0y5ba+kRJ7ccQYAJwF0i8xNNYwmrsK6ve
+	Pb2TSCwPvHWd3Z8m5ep31G2G3YSW12HWT8A8HMQuuuPkVVvlPm5iFEDsh+zCG90Z
+	33J4qhabsnCsouDYnUsoNII2El/P++chu1cFC9a05+Q0Pd3N4Dd/TGJzImWGA2GD
+	yxxcpa/8J6j+zj6xyw94A==
+X-ME-Sender: <xms:BpGpabyYJvPV3dy5EbDSeMF0KcwjZRE1lBzVDQC-0cxqNlU3g6IXEw>
+    <xme:BpGpaaSwJm3PaUZEgfzcg-KKyitjSsPBO5mwIUaQSa_4tJW39b_LCTQQrFwZyb7HF
+    k6-EZ6T9PBjuBJk_5EWk-DxTYGJALG_YcnwTEso0GJNgvzhpyI>
+X-ME-Received: <xmr:BpGpaaWbRrkKJ-mypKC_LFZdRQ4DJXkV2C9PM3kO66aMS-3o9cQIEmUkEOQbaYrtU8UM33TQrJkJELbMWG-gwqC75IkZETTVNG4JYn8B9xZ2>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeiiedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvieeuffejhfekleeutddvgeethfeukeehlefhgeelffeugeevfeduhfeuteeggfen
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdgtvdefqdhmvghsohhnrdgsuhhilhgune
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehp
-    khhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:A5GpaXpCWjQg7b7yRKCXWVi6MQ3qPWQdCxLPY7ZzKgw9ubDI4YCC7g>
-    <xmx:A5GpabEf4SOCIc58H6hSCrL8qns6YJnvL87wrl73gSFEtYHE0IdOzA>
-    <xmx:A5GpaTzSFY3s-vLFKJlx1iFaC0T5TVzhDk8wST_F5mXy5X7ww6SLPA>
-    <xmx:A5GpaQp_Zwwu4XXXybQt3NbSvA2E4gDyqMmTTcznr1L88peWVMXVSQ>
-    <xmx:BJGpaaE00gvkVaPjomy1oA9RinAUwhfgQMr8hkZWMbGaOcr6enBLlC2d>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlth
+    hosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:BpGpaUaRIr6KDwVtIbv9HLktofIikz71Dpbb12hsHJU2-uBRRKbdtQ>
+    <xmx:BpGpaY30BVFqEjFl0eWMTKAPk8vTp9PNAJwop1NUalBWUgMqMJNh_Q>
+    <xmx:BpGpaegb0t8DNtu209899fI7akghQvIvsZHEORE9DofBROC-lgzOlA>
+    <xmx:BpGpaUZlU4P9Y9wQ301zUTwshNB1CXwLBWDT4EN0JL09IlewFCAgEw>
+    <xmx:BpGpaZDS0xVu524ARo1nZg3Chnt5nFLlFGT9EphekAsbTQRUETD4hi5b>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 09:19:46 -0500 (EST)
+ 5 Mar 2026 09:19:49 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b553a47f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Mar 2026 14:19:46 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4ea7425b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 5 Mar 2026 14:19:48 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 00/17] odb: make object database sources pluggable
-Date: Thu, 05 Mar 2026 15:19:40 +0100
-Message-Id: <20260305-b4-pks-odb-source-pluggable-v2-0-3290bfd1f444@pks.im>
+Date: Thu, 05 Mar 2026 15:19:41 +0100
+Subject: [PATCH v2 01/17] odb: split `struct odb_source` into separate
+ header
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,250 +84,264 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPyQqWkC/33NwQ6CMAzG8VchPVuzFaboyfcwHNio0IiMbEI0h
- Hd34t3j/0vz6wKRg3CEc7ZA4Fmi+CEF7TJwXT20jNKkBlJ0UJoU2gLHe0TfWIx+Co5x7Ke2rW3
- PaNyRCjLK5q6EJIyBb/La9GuVupP49OG9PZv1d/25RPlfd9aokExua6cba07lJZ3u5QHVuq4f4
- UCqhsMAAAA=
-X-Change-ID: 20260120-b4-pks-odb-source-pluggable-5c724250b3c8
-In-Reply-To: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
-References: <20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im>
+Message-Id: <20260305-b4-pks-odb-source-pluggable-v2-1-3290bfd1f444@pks.im>
+References: <20260305-b4-pks-odb-source-pluggable-v2-0-3290bfd1f444@pks.im>
+In-Reply-To: <20260305-b4-pks-odb-source-pluggable-v2-0-3290bfd1f444@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>, 
  Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+Subsequent commits will expand the `struct odb_source` to become a
+generic interface for accessing an object database source. As part of
+these refactorings we'll add a set of function pointers that will
+significantly expand the structure overall.
 
-this patch series finally makes the object database source pluggable.
-This is done by moving backend-specific logics into callback functions
-that are part of `struct odb_source` and providing thin wrappers that
-call those functions.
+Prepare for this by splitting out the `struct odb_source` into a
+separate header. This keeps the high-level object database interface
+detached from the low-level object database sources.
 
-To set expectations: this is only a start, there is still functionality
-missing that needs to be made pluggable. Most importantly:
-
-  - Counting of objects.
-
-  - Abbreviating object IDs and finding ambiguous objects.
-
-  - Consistency checks.
-
-  - Optimizing the object database.
-
-  - Generating packfiles.
-
-These will all happen in later patch series. That being said, with this
-patch series one already gets a lot of the basic functionality, and it's
-almost possible to do local workflows. Only "almost" though because we
-rely on abbreviating object IDs in a lot of places, but once that part
-is implemented in a subsequent patch series you can indeed work locally
-with an alternate backend.
-
-Furthermore, what I didn't include as part of this patch series just yet
-is the introduction of the "objectStorage" extension. I mostly wanted to
-focus on the mostly-trivial parts without introducing any change in
-behaviour.
-
-This series is based on top of 7c02d39fc2 (The 6th batch, 2026-02-20)
-with the following two series merged into it:
-
-  - ps/odb-for-each-object at 3565faf28c (odb: drop unused
-    `for_each_{loose,packed}_object()` functions, 2026-01-26)
-
-  - ps/object-info-bits-cleanup at 732ec9b17b (odb: convert
-    `odb_has_object()` flags into an enum, 2026-02-12)
-
-Changes in v2:
-  - Fix mismerge in the base of this patch series.
-  - Adjust several comments and improve commit messages a bit.
-  - Link to v1: https://lore.kernel.org/r/20260223-b4-pks-odb-source-pluggable-v1-0-253bac1db598@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (17):
-      odb: split `struct odb_source` into separate header
-      odb: introduce "files" source
-      odb: embed base source in the "files" backend
-      odb: move reparenting logic into respective subsystems
-      odb/source: introduce source type for robustness
-      odb/source: make `free()` function pluggable
-      odb/source: make `reprepare()` function pluggable
-      odb/source: make `close()` function pluggable
-      odb/source: make `read_object_info()` function pluggable
-      odb/source: make `read_object_stream()` function pluggable
-      odb/source: make `for_each_object()` function pluggable
-      odb/source: make `freshen_object()` function pluggable
-      odb/source: make `write_object()` function pluggable
-      odb/source: make `write_object_stream()` function pluggable
-      odb/source: make `read_alternates()` function pluggable
-      odb/source: make `write_alternate()` function pluggable
-      odb/source: make `begin_transaction()` function pluggable
+ Makefile     |  1 +
+ meson.build  |  1 +
+ odb.c        | 25 -------------------------
+ odb.h        | 45 +--------------------------------------------
+ odb/source.c | 28 ++++++++++++++++++++++++++++
+ odb/source.h | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 91 insertions(+), 69 deletions(-)
 
- Makefile               |   2 +
- builtin/cat-file.c     |   3 +-
- builtin/fast-import.c  |  12 +-
- builtin/grep.c         |   6 +-
- builtin/index-pack.c   |   8 +-
- builtin/pack-objects.c |  13 +-
- commit-graph.c         |   6 +-
- http.c                 |   3 +-
- loose.c                |  23 ++-
- meson.build            |   2 +
- midx.c                 |  26 +--
- object-file.c          |  38 ++--
- odb.c                  | 191 +++-----------------
- odb.h                  |  86 +--------
- odb/source-files.c     | 239 +++++++++++++++++++++++++
- odb/source-files.h     |  35 ++++
- odb/source.c           |  38 ++++
- odb/source.h           | 468 +++++++++++++++++++++++++++++++++++++++++++++++++
- odb/streaming.c        |   8 +-
- packfile.c             |  36 ++--
- packfile.h             |   7 +-
- tmp-objdir.c           |  42 ++---
- tmp-objdir.h           |  15 --
- 23 files changed, 953 insertions(+), 354 deletions(-)
+diff --git a/Makefile b/Makefile
+index 47ed9fa7fd..116358e484 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1214,6 +1214,7 @@ LIB_OBJS += object-file.o
+ LIB_OBJS += object-name.o
+ LIB_OBJS += object.o
+ LIB_OBJS += odb.o
++LIB_OBJS += odb/source.o
+ LIB_OBJS += odb/streaming.o
+ LIB_OBJS += oid-array.o
+ LIB_OBJS += oidmap.o
+diff --git a/meson.build b/meson.build
+index 3a1d12caa4..1018af17c3 100644
+--- a/meson.build
++++ b/meson.build
+@@ -397,6 +397,7 @@ libgit_sources = [
+   'object-name.c',
+   'object.c',
+   'odb.c',
++  'odb/source.c',
+   'odb/streaming.c',
+   'oid-array.c',
+   'oidmap.c',
+diff --git a/odb.c b/odb.c
+index 776de5356c..d318482d47 100644
+--- a/odb.c
++++ b/odb.c
+@@ -217,23 +217,6 @@ static void odb_source_read_alternates(struct odb_source *source,
+ 	free(path);
+ }
+ 
+-
+-static struct odb_source *odb_source_new(struct object_database *odb,
+-					 const char *path,
+-					 bool local)
+-{
+-	struct odb_source *source;
+-
+-	CALLOC_ARRAY(source, 1);
+-	source->odb = odb;
+-	source->local = local;
+-	source->path = xstrdup(path);
+-	source->loose = odb_source_loose_new(source);
+-	source->packfiles = packfile_store_new(source);
+-
+-	return source;
+-}
+-
+ static struct odb_source *odb_add_alternate_recursively(struct object_database *odb,
+ 							const char *source,
+ 							int depth)
+@@ -373,14 +356,6 @@ struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
+ 	return source->next;
+ }
+ 
+-static void odb_source_free(struct odb_source *source)
+-{
+-	free(source->path);
+-	odb_source_loose_free(source->loose);
+-	packfile_store_free(source->packfiles);
+-	free(source);
+-}
+-
+ void odb_restore_primary_source(struct object_database *odb,
+ 				struct odb_source *restore_source,
+ 				const char *old_path)
+diff --git a/odb.h b/odb.h
+index 68b8ec2289..e13b5b7c44 100644
+--- a/odb.h
++++ b/odb.h
+@@ -3,6 +3,7 @@
+ 
+ #include "hashmap.h"
+ #include "object.h"
++#include "odb/source.h"
+ #include "oidset.h"
+ #include "oidmap.h"
+ #include "string-list.h"
+@@ -30,50 +31,6 @@ extern int fetch_if_missing;
+  */
+ char *compute_alternate_path(const char *path, struct strbuf *err);
+ 
+-/*
+- * The source is the part of the object database that stores the actual
+- * objects. It thus encapsulates the logic to read and write the specific
+- * on-disk format. An object database can have multiple sources:
+- *
+- *   - The primary source, which is typically located in "$GIT_DIR/objects".
+- *     This is where new objects are usually written to.
+- *
+- *   - Alternate sources, which are configured via "objects/info/alternates" or
+- *     via the GIT_ALTERNATE_OBJECT_DIRECTORIES environment variable. These
+- *     alternate sources are only used to read objects.
+- */
+-struct odb_source {
+-	struct odb_source *next;
+-
+-	/* Object database that owns this object source. */
+-	struct object_database *odb;
+-
+-	/* Private state for loose objects. */
+-	struct odb_source_loose *loose;
+-
+-	/* Should only be accessed directly by packfile.c and midx.c. */
+-	struct packfile_store *packfiles;
+-
+-	/*
+-	 * Figure out whether this is the local source of the owning
+-	 * repository, which would typically be its ".git/objects" directory.
+-	 * This local object directory is usually where objects would be
+-	 * written to.
+-	 */
+-	bool local;
+-
+-	/*
+-	 * This object store is ephemeral, so there is no need to fsync.
+-	 */
+-	int will_destroy;
+-
+-	/*
+-	 * Path to the source. If this is a relative path, it is relative to
+-	 * the current working directory.
+-	 */
+-	char *path;
+-};
+-
+ struct packed_git;
+ struct packfile_store;
+ struct cached_object_entry;
+diff --git a/odb/source.c b/odb/source.c
+new file mode 100644
+index 0000000000..7fc89806f9
+--- /dev/null
++++ b/odb/source.c
+@@ -0,0 +1,28 @@
++#include "git-compat-util.h"
++#include "object-file.h"
++#include "odb/source.h"
++#include "packfile.h"
++
++struct odb_source *odb_source_new(struct object_database *odb,
++				  const char *path,
++				  bool local)
++{
++	struct odb_source *source;
++
++	CALLOC_ARRAY(source, 1);
++	source->odb = odb;
++	source->local = local;
++	source->path = xstrdup(path);
++	source->loose = odb_source_loose_new(source);
++	source->packfiles = packfile_store_new(source);
++
++	return source;
++}
++
++void odb_source_free(struct odb_source *source)
++{
++	free(source->path);
++	odb_source_loose_free(source->loose);
++	packfile_store_free(source->packfiles);
++	free(source);
++}
+diff --git a/odb/source.h b/odb/source.h
+new file mode 100644
+index 0000000000..391d6d1e38
+--- /dev/null
++++ b/odb/source.h
+@@ -0,0 +1,60 @@
++#ifndef ODB_SOURCE_H
++#define ODB_SOURCE_H
++
++/*
++ * The source is the part of the object database that stores the actual
++ * objects. It thus encapsulates the logic to read and write the specific
++ * on-disk format. An object database can have multiple sources:
++ *
++ *   - The primary source, which is typically located in "$GIT_DIR/objects".
++ *     This is where new objects are usually written to.
++ *
++ *   - Alternate sources, which are configured via "objects/info/alternates" or
++ *     via the GIT_ALTERNATE_OBJECT_DIRECTORIES environment variable. These
++ *     alternate sources are only used to read objects.
++ */
++struct odb_source {
++	struct odb_source *next;
++
++	/* Object database that owns this object source. */
++	struct object_database *odb;
++
++	/* Private state for loose objects. */
++	struct odb_source_loose *loose;
++
++	/* Should only be accessed directly by packfile.c and midx.c. */
++	struct packfile_store *packfiles;
++
++	/*
++	 * Figure out whether this is the local source of the owning
++	 * repository, which would typically be its ".git/objects" directory.
++	 * This local object directory is usually where objects would be
++	 * written to.
++	 */
++	bool local;
++
++	/*
++	 * This object store is ephemeral, so there is no need to fsync.
++	 */
++	int will_destroy;
++
++	/*
++	 * Path to the source. If this is a relative path, it is relative to
++	 * the current working directory.
++	 */
++	char *path;
++};
++
++/*
++ * Allocate and initialize a new source for the given object database located
++ * at `path`. `local` indicates whether or not the source is the local and thus
++ * primary object source of the object database.
++ */
++struct odb_source *odb_source_new(struct object_database *odb,
++				  const char *path,
++				  bool local);
++
++/* Free the object database source, releasing all associated resources. */
++void odb_source_free(struct odb_source *source);
++
++#endif
 
-Range-diff versus v1:
-
- 1:  28258657d5 =  1:  6dd89d5721 odb: split `struct odb_source` into separate header
- 2:  38fa6650e7 =  2:  aaf6175ad7 odb: introduce "files" source
- 3:  bbdfe087d3 !  3:  1188bc969a odb: embed base source in the "files" backend
-    @@ odb/source-files.h: struct packfile_store;
-      void odb_source_files_free(struct odb_source_files *files);
-      
-     +/*
-    -+ * Cast the given object database source to the files backend. This will cause
-    -+ * a BUG in case the source doesn't use this backend.
-    ++ * Cast the given object database source to the files backend.
-     + */
-     +static inline struct odb_source_files *odb_source_files_downcast(struct odb_source *source)
-     +{
- 4:  1f545a0b28 !  4:  a5deca0da9 odb: move reparenting logic into respective subsystems
-    @@ Commit message
-         odb: move reparenting logic into respective subsystems
-     
-         The primary object database source may be initialized with a relative
-    -    path. When reparenting the process to a different working directory we
-    -    thus have to update this path and have it point to the same path, but
-    +    path. When the process changes its current working directory we thus
-    +    have to update this path and have it point to the same path, but
-         relative to the new working directory.
-     
-         This logic is handled in the object database layer. It consists of three
- 5:  f3f0f3daeb !  5:  defb03a1b9 odb/source: introduce source type for robustness
-    @@ odb/source-files.c: struct odb_source_files *odb_source_files_new(struct object_
-      
-     
-      ## odb/source-files.h ##
-    -@@ odb/source-files.h: void odb_source_files_free(struct odb_source_files *files);
-    +@@ odb/source-files.h: struct odb_source_files *odb_source_files_new(struct object_database *odb,
-    + void odb_source_files_free(struct odb_source_files *files);
-    + 
-    + /*
-    +- * Cast the given object database source to the files backend.
-    ++ * Cast the given object database source to the files backend. This will cause
-    ++ * a BUG in case the source doesn't use this backend.
-       */
-      static inline struct odb_source_files *odb_source_files_downcast(struct odb_source *source)
-      {
-    @@ odb/source.h
-      
-     +enum odb_source_type {
-     +	/*
-    -+	 * The "unknown" type, which should never be in use. This is type
-    -+	 * mostly exists to catch cases where the type field remains zeroed
-    -+	 * out.
-    ++	 * The "unknown" type, which should never be in use. This type mostly
-    ++	 * exists to catch cases where the type field remains zeroed out.
-     +	 */
-     +	ODB_SOURCE_UNKNOWN,
-     +
- 6:  c86a03bf7c =  6:  df5c9e7584 odb/source: make `free()` function pluggable
- 7:  b1645d0de0 =  7:  6787995a2c odb/source: make `reprepare()` function pluggable
- 8:  e873c4f32c =  8:  9942876dbe odb/source: make `close()` function pluggable
- 9:  0ccf994441 !  9:  9902f4561b odb/source: make `read_object_info()` function pluggable
-    @@ Commit message
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## object-file.c ##
-    -@@ object-file.c: static int read_object_info_from_path(struct odb_source *source,
-    - int odb_source_loose_read_object_info(struct odb_source *source,
-    - 				      const struct object_id *oid,
-    - 				      struct object_info *oi,
-    --				      unsigned flags)
-    -+				      enum object_info_flags flags)
-    +@@ object-file.c: int odb_source_loose_read_object_info(struct odb_source *source,
-    + 				      enum object_info_flags flags)
-      {
-      	static struct strbuf buf = STRBUF_INIT;
-     +
-10:  f98a8adfed = 10:  99299ed03e odb/source: make `read_object_stream()` function pluggable
-11:  b8a9b9fe16 ! 11:  274a6020ab odb/source: make `for_each_object()` function pluggable
-    @@ odb/source.h: struct odb_source {
-     +	 * valid to yield the same object multiple time. A non-zero exit code
-     +	 * from the object callback shall abort iteration.
-     +	 *
-    -+	 * The optional `oi` structure shall be populated similar to how an individual
-    -+	 * call to `odb_source_read_object_info()` would have behaved. If the caller
-    -+	 * passes a `NULL` pointer then the object itself shall not be read.
-    ++	 * The optional `request` structure should serve as a template for
-    ++	 * looking up object info for every individual iterated object. It
-    ++	 * should not be modified directly and should instead be copied into a
-    ++	 * separate `struct object_info` that gets passed to the callback. If
-    ++	 * the caller passes a `NULL` pointer then the object itself shall not
-    ++	 * be read.
-     +	 *
-     +	 * The callback is expected to return a negative error code in case the
-     +	 * iteration has failed to read all objects, 0 otherwise. When the
-    @@ odb/source.h: static inline int odb_source_read_object_stream(struct odb_read_st
-     + * callback function aborts iteration. There is no guarantee that objects
-     + * are only iterated over once.
-     + *
-    -+ * The optional `oi` structure shall be populated similar to how an individual
-    -+ * call to `odb_source_read_object_info()` would have behaved. If the caller
-    -+ * passes a `NULL` pointer then the object itself shall not be read.
-    ++ * The optional `request` structure serves as a template for retrieving the
-    ++ * object info for each indvidual iterated object and will be populated as if
-    ++ * `odb_source_read_object_info()` was called on the object. It will not be
-    ++ * modified, the callback will instead be invoked with a separate `struct
-    ++ * object_info` for every object. Object info will not be read when passing a
-    ++ * `NULL` pointer.
-     + *
-     + * The flags is a bitfield of `ODB_FOR_EACH_OBJECT_*` flags. Not all flags may
-     + * apply to a specific backend, so whether or not they are honored is defined
-12:  406826905d = 12:  abc1bc6f81 odb/source: make `freshen_object()` function pluggable
-13:  59a3678799 ! 13:  9a995ff455 odb/source: make `write_object()` function pluggable
-    @@ odb/source.h
-     +
-      enum odb_source_type {
-      	/*
-    - 	 * The "unknown" type, which should never be in use. This is type
-    + 	 * The "unknown" type, which should never be in use. This type mostly
-     @@ odb/source.h: struct odb_source {
-      	 */
-      	int (*freshen_object)(struct odb_source *source,
-14:  e5c47518ef = 14:  8c938de272 odb/source: make `write_object_stream()` function pluggable
-15:  ca0e6dfb1a ! 15:  16a826e24c odb/source: make `read_alternates()` function pluggable
-    @@ odb/source.h: struct odb_source {
-     +	 * This callback is expected to read the list of alternate object
-     +	 * database sources connected to it and write them into the `strvec`.
-     +	 *
-    -+	 * The format is expected to follow the "objectStorage" extension
-    -+	 * format with `(backend://)?payload` syntax. If the payload contains
-    -+	 * paths, these paths must be resolved to absolute paths.
-    ++	 * The result is expected to be paths to the alternates. All paths must
-    ++	 * be resolved to absolute paths.
-     +	 *
-     +	 * The callback is expected to return 0 on success, a negative error
-     +	 * code otherwise.
-16:  7e36a7ec8f = 16:  2f6bf3aedc odb/source: make `write_alternate()` function pluggable
-17:  dc918d3fc5 = 17:  118b442202 odb/source: make `begin_transaction()` function pluggable
-
----
-base-commit: b1af291b4adf1c433ad2b79f0390f7d6b516a964
-change-id: 20260120-b4-pks-odb-source-pluggable-5c724250b3c8
+-- 
+2.53.0.797.g7842e34a66.dirty
 
