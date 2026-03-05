@@ -1,113 +1,184 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADDC3A7F64
-	for <git@vger.kernel.org>; Thu,  5 Mar 2026 14:27:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D068A223702
+	for <git@vger.kernel.org>; Thu,  5 Mar 2026 14:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772720853; cv=none; b=iIxV3cEtIUsbgCaQ7acSwJArBYJZ5T7BhKA6cuGK5utiPUXa57xeHLUHmP/DkN+AmIgvLzoc6GPyi+xuqS36NPYQksH1V/Hp37KHwwed6QTTAH0qVr/dUPsAJ6M8rMxxaWCino9UxqsBI6UL6HHcGGEhNWO2mweVVfV2odbu5fs=
+	t=1772721489; cv=none; b=YTAnaOyBC58C92z4yZ/b4dMd0X73ekjiR6jEVOSKE8M52mjuJexfFFF0LLyku0NZOowqWGjf/PoT0hUO/V+B+rzkTgS/7sTpsUOfGh+Vhji/atAljJKWFFhzfEazWIxupzFgBx+9zlCblXrVYBQ5A7tgR0/Mh/BWcijcf5P8ixo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772720853; c=relaxed/simple;
-	bh=Vtz6eZBgf39azTVYo9NewWMP+yXzt2Jdji7nn0TVWb0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qo3POhns/pPOiRQJ1FWY73XgtAeTpxpe5z2HhSe618ANVxgobHEojvswgISFYk/8iOiLLQW/4SZLf1xm79VkFygvWpoMRqXZPzACWXHMD2f8UaPcb6k23snTsqhmqGE0wDhpJ/wrTW+zJkSBb7ux/rhziOtJEGdS7h7zEQKqDXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VPC/M15U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Aze2R2Sy; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1772721489; c=relaxed/simple;
+	bh=iaOZM38lpqIKGnMpaSu6JgU5fmwV3BaB9PdVX+zsANQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=vChryi/g/ZZAAJHKUwOiUjTJ5rcTQ5sBmMCICxolaNyzmxiAk9xmm2ixHufwLeISnEO7HiI9ZxowBssL0x729B0/mLV60eD2io1bMoGRx5U8O36H47aay1HJU+Ac9xCG6eMo2jaUVbgP16EriM0I/PpOrDccv6+c00ohgmoNHVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XDF+00LJ; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VPC/M15U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Aze2R2Sy"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 23D907A02A8;
-	Thu,  5 Mar 2026 09:27:32 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Thu, 05 Mar 2026 09:27:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1772720851; x=1772807251; bh=KEIHYmoHKb
-	RU6IumTmvR67hj9qQglCqAHffhCkhuAb0=; b=VPC/M15UWWwRitXbRPUGO1RU2w
-	ZyIAnsmKljXjDM9gD/D5z5uEm+SqhhBCtQ8x1jWpI8yKLLHzCiZ361mI/8klDm8d
-	htf/Kl9zQkYSqdx1uQeAKVQ+29r+HhDzY417DOInEvvlKLXJToSX+ZquWWgsCfOZ
-	8bQUBHMtxvfUqeB9dFEOXitSOkYY2AQG/J2+7vmO/iV4aweQrHtKmMAo91Ni4MEH
-	IMHFVF28TpGGb3oArX5FOOBsuMw5lm9M+Leh29NM+KiROfeVFn+g77RpmGoLVSSg
-	bwU/HtIUluFmOtMdvZjDeyUMuYk7/CMFd5e/xwPNh34PzM5DPcOnIKR/3HYw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772720851; x=1772807251; bh=KEIHYmoHKbRU6IumTmvR67hj9qQglCqAHff
-	hCkhuAb0=; b=Aze2R2Sy899eblinXUlJt9m99Vf2jBj0Y2/Edch6CldHk3XjOux
-	WSlvHMcASpmV9IbdLy3I91wdjngM48x1kii5/ZJjhYe5JxTDotpQcuZKru0bPWAz
-	Hyz+UpQ1ZIoxQ68uL1yJpBziZXjKaH7zQadDjG3TPJHJszsCbYzlrrQvDutUZcwk
-	6vmteivc9CJAY6mf5qJrX7QSXnX7nhJ47pJexkrY9rbycGBWdNe5ixA85lTqphdK
-	IX9MOAYWzB+WK1GkRH3d+u3Mdo9T1CdnpB/NNlR6dIGx2Cuov7QfyLjTyZgJbfUt
-	TUVADjuf6oFdToU/m7B8bkjwD9oPMnYy9pA==
-X-ME-Sender: <xms:05KpaXB0FFI6v62ehDDxqF4Yy1k8aOHbg9zIVvhmLdyHX0QqdOv2Qg>
-    <xme:05Kpadsp2_7G-S5wlREX_TZ_93d8DpnazDkaYn8XdxEEf2kd5rD5DoxPDXmwshMDn
-    HZJqKOZm6yloP2LkDN2_HsirZc_jwWgJf_uSsQ8QADFqGQszjc3>
-X-ME-Received: <xmr:05KpaUbdqRI7gJ9ypQU4iJ0fcPALRliT02fsbCFWd4qZDO9ShQSyyk5R9zYHn2B45bkWwvgh3lwTqvAKDb0wf-vEQcsBfNfSqqFaUmE8N3MN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeiiedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkuhhfohhrih
-    hjihelkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:05KpaYWYbimVaG-1-1KEQ7PZJCBCygwUJqezbXSi59LvJQ2n-5aa4w>
-    <xmx:05KpaQ5aUo-Cs8oGajOPdi0UuI9BWu4UQNMSDEpK8ZyfDPFAZCGU8Q>
-    <xmx:05KpabiedQff3a6XFpOuYFdy61Gqk5sGC2ZOqbKrsZXHflhIbtcREw>
-    <xmx:05KpaffbH238ytYLoWzJMU1FToWessbUsLioU7i2cZgmlNxCAMXTpA>
-    <xmx:05KpaUTIAiKS1PJiAqtSiJpmmRdYJtvHrrHXnvA4985ZQKD6iveCoZMA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 09:27:31 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ba6c0aa3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Mar 2026 14:27:29 +0000 (UTC)
-Date: Thu, 5 Mar 2026 15:27:26 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Seyi Kuforiji <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] oidmap: migrate cleanup to
- oidmap_clear_with_free()
-Message-ID: <aamSznHdv4g97R6C@pks.im>
-References: <20260302200018.75731-1-kuforiji98@gmail.com>
- <20260305100526.102130-1-kuforiji98@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XDF+00LJ"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4807068eacbso68203275e9.2
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 06:38:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772721486; x=1773326286; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CyVuksSTgiiXixQ4gf6L8JICu7Q4dF+F0SaXFKDKpPI=;
+        b=XDF+00LJp9S7sHaqVEX1GezKAMDljKejxvxE8YP98QMztc4az99At3EP48noJmD/jg
+         c/j6cZVCwV5qkILmPEJvy675P8bVBsY8jLS8poptBtcwU0yE80UFPGrXbeI9QEij9B5t
+         RMNWOGIxZVanDJwyDBQVqrql7/z1mtut9XPY2Tou7iRiTzcf93eQPCmkuFeROxlhuAdb
+         qbMRVcsRTdkmLhI+sA68ekeVfwiy2yW3D75hU+EMWIVDVyHSJyseS21j1dWLkNnhcUSN
+         kSjPkKHPauurE7vPa+2TeDAK+nnK91YUyNRKTAGtNEVrdBjLnM33hWhKjz48apsYJGBc
+         6W8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772721486; x=1773326286;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CyVuksSTgiiXixQ4gf6L8JICu7Q4dF+F0SaXFKDKpPI=;
+        b=DSUsARLAx2Niu+u+jM/GqGkJVCnvRXACP4q2iwl3jc+ZFBJeCwa7WPplfVq5a13sba
+         nXYmiVu5+gIX3eKozQ2pWSXVbd+gNSMLgXrogseAp6MO1rTXKyEmxLZm3OtNF9GcY7+I
+         2S5KuujwDD8DD9144qT6sEWI1IIwAZiuEB996MCCz64a/s0T58KXSrO0FgwL6niRkrKk
+         FzllRhowgSaekZohTPrMhy1SPRkzmuXLEq0XCIVlYC+hMgZYJSN2Pd9DY+0sj5UmuJJd
+         aERcb0SO8xXcGR8sGOfaboE0njdazVwGlm70MEQi3Y7Y1oceA17gjDTCvTQWbZGOUCcf
+         QiJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXke9tU8ioa9kesWe9sqfRQe2v7F3u9gcHY3eQEeabdIvcm3Vc48h8YxzIcpqOqyxsQyPE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwNtdfWMXHDQAeiPz839oxmXD5qldkQShLNSpxzSBABFXIwmzXB
+	XaLw8ntN2COmLLtjV7UKQvVPfgqD4+9kAawBntnDxX0qAfxwg2k0IgDk
+X-Gm-Gg: ATEYQzywQ2GVaqzTyW7sGHVKWloh1bw9AUzoJOoEJjMQQx1xJarOdtM5mcoXQH+axw0
+	QyfIBbh12F+GI/b9VJbPZCJEntZ9YhG+aw+1VwtgR1veoAnjaAmg58+LOx65Tbzw1CWHaaoLFSY
+	CuwsKye3OF0OohY9WDYKZaIPW4/trCfPZyc855u9fJn4S4bblEVl2RMKD35MVT3sbtNqlqd8QZi
+	fPtEosc4m+lkGSoTmrM1y/1cs37682Ua3gZjuvcY5TPVsH0VY0/uCYUw0MOJ4uhAoYdiawTX0o0
+	VnS+M042rep1xi/QhQte8cK1yEWaEvVNw5UZDdK5DGRnTUtUCgtNNwSA6gKSK4f81Wd/DwqHqmr
+	aWyhLh7uUsSgu+3flfpzFwl4h/I5fMuuHNDBTuSqXRwVZX4EBUi6jBSG9V1O2By8NU53BJqpIw/
+	aEbMGgKW49vIGgpIiKly5xX/c9T17LAOliOIJ8OePRNN6GwFV/vxppMcqYhEa908NHyavXnoH5a
+	DNkFNnw6X4=
+X-Received: by 2002:a05:600c:190e:b0:47e:e970:b4e4 with SMTP id 5b1f17b1804b1-485198c1000mr107949225e9.29.1772721485805;
+        Thu, 05 Mar 2026 06:38:05 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:1785:c801:fc8b:3720:4a41:644? ([2a0a:ef40:1785:c801:fc8b:3720:4a41:644])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4851fb33815sm94370565e9.12.2026.03.05.06.37.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Mar 2026 06:38:05 -0800 (PST)
+Message-ID: <98531f78-cf04-4e64-ac7c-6a13e52aee54@gmail.com>
+Date: Thu, 5 Mar 2026 14:37:46 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260305100526.102130-1-kuforiji98@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] add: support pre-add hook
+To: Chandra Kethi-Reddy via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Ben Knoble <ben.knoble@gmail.com>,
+ Adrian Ratiu <adrian.ratiu@collabora.com>,
+ Chandra Kethi-Reddy <chandrakr@pm.me>
+References: <pull.2045.v4.git.1772710566599.gitgitgadget@gmail.com>
+ <pull.2045.v5.git.1772714253412.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.2045.v5.git.1772714253412.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 05, 2026 at 11:05:24AM +0100, Seyi Kuforiji wrote:
-> Hi,
+On 05/03/2026 12:37, Chandra Kethi-Reddy via GitGitGadget wrote:
 > 
-> This series replaces oidmap_clear(map, 1) with
-> oidmap_clear_with_free() and introduces explicit free callbacks
-> at the remaining call sites.
-> 
-> The old boolean-based API implicitly assumed plain free(),
-> which obscures ownership semantics and does not work well
-> when oidmap_entry is embedded inside larger structures.
-> The callback-based API makes cleanup explicit and type-safe,
-> and avoids relying on hidden assumptions about allocation.
-> 
-> This is used in subsequent commits to adequately cleanup all
-> usage site.
-> 
-> Changes in v3:
->  - rename funtion to meet guidlines
->  - drop [PATCH 3/5]
+> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+> index 6192daeb03..a3ff4ced83 100644
+> --- a/Documentation/git-add.adoc
+> +++ b/Documentation/git-add.adoc
+> [...]   
+> @@ -42,10 +42,11 @@ use the `--force` option to add ignored files. If you specify the exact
+>   filename of an ignored file, `git add` will fail with a list of ignored
+>   files. Otherwise it will silently ignore the file.
+>   
+> +A `pre-add` hook can be used to reject `git add` (see linkgit:githooks[5]).
 
-Thanks, this version looks good to me!
+git-commit.adoc has a separate section for HOOKS, perhaps we should do 
+the same here. It would be clearer to say the that the proposed changes 
+are rejected rather than `git add` itself.
 
-Patrick
+> diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
+> index 056553788d..90945a590e 100644
+> --- a/Documentation/githooks.adoc
+> +++ b/Documentation/githooks.adoc
+> @@ -94,6 +94,36 @@ and is invoked after the patch is applied and a commit is made.
+>   This hook is meant primarily for notification, and cannot affect
+>   the outcome of `git am`.
+>   
+> +pre-add
+> +~~~~~~~
+> +
+> +This hook is invoked by linkgit:git-add[1], and can be bypassed with the
+> +`--no-verify` option. It is not invoked for `--interactive`, `--patch`,
+> +`--edit`, or `--dry-run`.
+
+I'm struggling to see how it is helpful to the user for "git add 
+--dry-run $path" to succeed when "git add $path" will be rejected by the 
+"pre-add" hook.
+
+The other options all use "git apply" to apply a diff to the index so 
+they could apply the patch to a temporary index which is then passed to 
+the "pre-add" hook. If the hook fails the user should be given the 
+option to re-edit the patch or re-select the hunks so that their work is 
+not wasted.
+
+To me this hook would be much more useful if it also checked changes 
+staged by "git commit" - it is still staging changes after all.
+
+> +It takes two arguments: the path to the index file for this invocation
+> +of `git add`, and the path to the lockfile containing the proposed
+
+Calling it a lockfile is rather confusing - it is just second index file 
+that contains the changes that would be staged.
+
+> +index after staging. If no index exists yet, the first argument names
+> +a path that does not exist and should be treated as an empty index.
+> +
+> +The hook is invoked after the index has been updated in memory and
+> +written to the lockfile, but before it is committed to the final index
+> +path. Exiting with a non-zero status causes `git add` to reject the
+> +proposed state, roll back the lockfile, and leave the index unchanged.
+> +Exiting with zero status allows the index update to be committed. The
+> +hook accepts or rejects the entire proposed update; per-path filtering
+> +is not supported. Both files should be treated as read-only by the hook.
+
+If we don't enforce them being read-only people will write hooks that 
+update them just as they do for "pre-commit" hooks. Once they start 
+relying on that they will complain if we stop supporting it. If we lock 
+both index files before running the hook I think that will prevent the 
+hook from being able to update them.
+
+> +Hook authors may set `GIT_INDEX_FILE="$1"` to inspect the current index
+> +state and `GIT_INDEX_FILE="$2"` to inspect the proposed index state.
+
+We should be explicit that the proposed index state contains all the 
+changes that would be committed so staging changes incrementally will 
+check them multiple times.
+
+> +This hook can be used to prevent staging of files based on names, content,
+> +or sizes (e.g., to block `.env` files, secret keys, or large files).
+> +
+> +This hook is not invoked by `git commit -a` or `git commit --include`
+
+I would be more accurate to say that it is not invoked by `git commit` 
+at all as there are several ways of staging changes including `git 
+commit $path`. We should also be explicit that in order to ensure that 
+all staged changes are checked the checks in the "pre-add" hook must be 
+duplicated by the "pre-commit" hook.
+
+> +which still can run the `pre-commit` hook, providing a control point at
+> +commit time.
+
+While I've commented on the documentation, I think it is really the 
+design that needs working on. I like the idea of giving feedback earlier 
+when staging changes rather than waiting for the user to run "git 
+commit" but I think we need a more coherent approach to when the hook is 
+run.
+
+Thanks
+
+Phillip
+
