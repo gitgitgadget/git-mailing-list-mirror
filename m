@@ -1,478 +1,220 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D137371D00
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 06:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772780120; cv=none; b=OSF2OQrMLNe2euS2Qur33RSQr/imJEmzxMUONnR6WXlpiXB6eb4HCAO3B4/7hEiVPjGrNt1YB5ZcTeerY70U/AlLYAfjV9VWi6qw4zaU09JGHebYQn8Xp8ZToVw5EadXY8T5Q2xj2AJ1IXqrl+MFMSdQvmLg3BJp+Y2CeLHthPU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772780120; c=relaxed/simple;
-	bh=C4PRAI6VCEG83vCXNwsutJtk/CCsmkN0B92cPQrNOiU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=NJE0DA6aFCVRWts2bQG15+QzXOzba0jYKYZQnkKv9kJSIkZ5TAqrkavn/R3RYc+bnPdpBtaItILlOUQP2TYCh5WEuzy28qdOiaGI4k+SG6VoYfT906kNq65BGKxkVqZXdRWgcJo4B+WvThCzSRiCqEIUxHtT22Ty3JTUhldFVXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=leFCh4bT; arc=none smtp.client-ip=209.85.160.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853F81F4C96
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 09:17:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772788657; cv=fail; b=rUma5tMgfs98rlOb1MjyJug7jkgk4u/xmd1Me63dIBXcYJhWgStcMRJM6PRGw4VcyIIT14hC0rytDEJqLR70Kzrqb5LyzQAefcAHy0z7cn3dnWgC2D3CjZANdFJzSFtFhWeXRb81SazGECbGKF3wNWKp1EyrLFzOV2fgWTs0Etc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772788657; c=relaxed/simple;
+	bh=cKe66tctDAeE5FS2g6DiR62gbO1r/HSf8j3jYUAZ2Ww=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=YuibJ66VuVQ2Cfk7buFWNOMskBI+unW6WbXDBN74RqigIGKoXb0180oRPrsz++tJPgyBU+j4UN7VyIy8rhmyjDRIOIDavxZ+3VjyrK8YioHnKqUXQpr+VfR8Np0Fbymj8PKHY6n2em/E0x1jSymQPkVmBCH7bcyoIWfjaPxifaQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TsHu2gFT; arc=fail smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="leFCh4bT"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-4152698e745so1541890fac.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 22:55:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772780117; x=1773384917; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eRgFXJc8JNcdBefR+L2ZamevrVZ9j2t7oCk3rvxCoZQ=;
-        b=leFCh4bTiXR2+80XCT8hpyWFpj3JrSEGDIu+TYtSxx335BvUgbW7EWR52P0CmskAcI
-         kW26kELiP7ZpzPlIM2pO1dNTSCurFws5j6cwfjATxShNse4KihzVnElWVxwosZT5n2ab
-         h04cAHZ8iWeHa7T6CxSSb3Zw9HEo0WxUP2/Q7tymarHYYqkUmITll1tF6VIsOS6UEaEg
-         Cy/OqBoN6y8R5O1yWldqMteJlmf3LFGE6K+HenWIisQMAkcrghefnhvmURi/CGLdIu9y
-         nyvDnCKsqFEZOdorhsCO0nPEy/E3YGvR2oO3SCHUX+2nUp203KY2Ydobzdk3sR7mgP/R
-         SHmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772780117; x=1773384917;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=eRgFXJc8JNcdBefR+L2ZamevrVZ9j2t7oCk3rvxCoZQ=;
-        b=gdmoUfZRLzWGpzpneH/vQjHkB77P/4SGjRJzX/2ObVY0C2oSNOSrzMv4SsVCnY+B3G
-         ipRuRgFeNS1TNKEKoKIMjxuzi0I6iApXdJXrP/APwD7jtfE2gq+kyonuhxsbzS3E9cAL
-         rX3EIWtrbFAbcUaII0o8eAErisunLzOOl7vXXTbDj+sfDi44r8ggr3DrlOsJyI+r5uqT
-         Yp+I3kf3+T6gUOQtvvFkjxcNTMRiAnlVP5TtoOYTa0HyIEH3fB+y+m5lldsK6UbGV/jE
-         IEnV/EdxhYKEl+7Fe9Pn5lbW15DIePGqmtvdt2OCNZ3MR2cN5+pApaiZJdOGgrgwZb7Y
-         qR3A==
-X-Gm-Message-State: AOJu0Yy1DD4t0LrenxPtJS/qsfmLHs/qlyrJcpEItjg2npnosa/Ykk9V
-	johyDI84D8Oerpb0K/tx5nLzYcoja+UWCAMMbex0jdRncfok6IWW30/3BmYdgA==
-X-Gm-Gg: ATEYQzy0LHDzx3dMqYxjOsxDuNnwH+71I30o24fcoZTEbprHSPBoEsT455ZHXSrD2wz
-	u3kM5RukNAuwB/nsFV6TyuXZ05U62MA98cbM7Vu8rU3nTWdi0nq+qklqid9dw1ID9TPAmLPNnCJ
-	DpOAqRk3miAtMyJ4PhSwW4WGcN42J/Ud7BDsd413wV1OgMBDBH+IEFZP1bGvlECARYOfbJKGwtU
-	QMe88gxpqcE9OTVzvtjmwoY2FbRMLvQ7iiMBd16QZ7dobQzv3dcFolEIJ3j/XL4kMb2Pe/i0Svx
-	IoYISRUVTMtyHpfF7YBaazcfr4smKSAQTokr6qFp7g+FAuhHHmII8zDp2YXwgKyQlbKhD1Xewcl
-	WkDjN4rTm/00nqKkHNFPv3eCtF5N1r/0BhP0Ts1+GouOgD5h14VLvSba6VyUVAW4ShAJY2juNZ1
-	CUXEWYnMEhsFVRzeUndSv7DcZ0
-X-Received: by 2002:a05:6870:41c1:b0:415:e735:f044 with SMTP id 586e51a60fabf-416e43fad52mr818978fac.45.1772780116734;
-        Thu, 05 Mar 2026 22:55:16 -0800 (PST)
-Received: from [127.0.0.1] ([52.154.131.96])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-416e65b1be6sm728098fac.7.2026.03.05.22.55.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2026 22:55:15 -0800 (PST)
-Message-Id: <pull.2058.v3.git.1772780113400.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2058.v2.git.1772672251281.gitgitgadget@gmail.com>
-References: <pull.2058.v2.git.1772672251281.gitgitgadget@gmail.com>
-From: "Alan Braithwaite via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 06 Mar 2026 06:55:13 +0000
-Subject: [PATCH v3] clone: add clone.<url>.defaultObjectFilter config
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TsHu2gFT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1772788655; x=1804324655;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=cKe66tctDAeE5FS2g6DiR62gbO1r/HSf8j3jYUAZ2Ww=;
+  b=TsHu2gFTsQKePvBaS6an22j/3rkL8dRvjfuCf3lY07hs1m4VsDGDiDGy
+   HYOJMY05BYejDgIJrTxVeIz8AK4PV6+AlY1s4D1MA8WSoyW1fz+7oTg8l
+   Odvy0szD3s+B91H04FnUYdId0q52VnIYxdij0mqQ/k9rfD2M2RYp5eDCP
+   DzwEofyNcH0hQ0p0xlRzR1nmQw1nYp2p/m4Z/W/eoOLy9D6fEUuos8C9w
+   n+kZnhg2hdhcGJ8o003MbRoFK7LyIwo8Eb4OT8fAU78tt/ez4AI3CFmDi
+   RK0bt2Z2oG00m2VgI1UnTpu++FLg1Hq7K0rjrkXt78kLDsVpaP/OGx6BO
+   g==;
+X-CSE-ConnectionGUID: IsMbR9OXQW6v4JH9HD42+w==
+X-CSE-MsgGUID: x5Bvf1ncS+OLYB5B56voTA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11720"; a="84977539"
+X-IronPort-AV: E=Sophos;i="6.23,104,1770624000"; 
+   d="scan'208";a="84977539"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2026 01:17:34 -0800
+X-CSE-ConnectionGUID: H1TnWSodQWifNZRv6UWpww==
+X-CSE-MsgGUID: bVU/bQCySYC4krjpA54O1g==
+X-ExtLoop1: 1
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2026 01:17:35 -0800
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Fri, 6 Mar 2026 01:17:34 -0800
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Fri, 6 Mar 2026 01:17:34 -0800
+Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.43) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Fri, 6 Mar 2026 01:17:34 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=aHRg2hSqiak2fHSIeipRyhSnIcx5vgZo8V9w8CiiHvGesz3c6F7A4kwZ/jv3Z0m5+t8C67URGVyupRz55bPwMoTk7t9A5UUkBrIGegwTPq7c9gLU+Cx+XPx97voMwtUewwAOBP1NTAYXXjOotjTk+sTv+vbq+M07p4xbw9kjmMsPJ5DoSo9Lh9SQK9Az8LfUVW51yiuo1d5SQiIG9salrS+6OoN+nrU4rLVTtHB6lW/Ht29+cuPxPhXJyu6XR/xb2ccn9q6fegOmThzT+4v0f05SxHswQW2JQ8u0wMk+dKytrt7QH1By08rCE59OKC2STBnwDTVsWy+015JIBfatkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ntnjQw4ul0BSI/CfKOOGRuP3V9Pfc62Z9XQGbkuKXRY=;
+ b=hGljkB1QOSbxlhhQy41g6KoCGXynUTnMcDZZTYQNsesSpirmuxhoNwxf43Dn8AYLo+mPNOk1J5IAjKvfkKMkrzJbjKheDvUV8RrPE1b3qkPX08b1cnXelsqesKUMnidpJiYxaC6OCxfvomdWB54avYB3EE5I/HCWCZdn+joUjiT+N7ErYcKRVitwRUUHF6GxSZkSJBe7oLXlw6TqNKn02I3y7+DJFEpzd0x1tLx1NNDKUk1gorK2UW3qK7O19k7BDraU2fFOwC81I+Wtg77lnTHvo49MQgU0iVu85b/CkGTFanzqmGt0ko4aAAgs1/9pQf8IkieT1qMSaC42hjilig==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS0PR11MB7579.namprd11.prod.outlook.com (2603:10b6:8:14d::5) by
+ CYYPR11MB8388.namprd11.prod.outlook.com (2603:10b6:930:c2::6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9700.5; Fri, 6 Mar 2026 09:17:27 +0000
+Received: from DS0PR11MB7579.namprd11.prod.outlook.com
+ ([fe80::4199:4cb5:cf88:e79e]) by DS0PR11MB7579.namprd11.prod.outlook.com
+ ([fe80::4199:4cb5:cf88:e79e%5]) with mapi id 15.20.9678.017; Fri, 6 Mar 2026
+ 09:17:27 +0000
+Message-ID: <796110ee-d795-4445-9d82-7026370a88cf@intel.com>
+Date: Fri, 6 Mar 2026 01:17:24 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] Makefile: turn on NO_MMAP when building with LSan
+To: Jeff King <peff@peff.net>
+CC: <git@vger.kernel.org>
+References: <20260305230315.GA2354983@coredump.intra.peff.net>
+ <20260305231305.GD2901305@coredump.intra.peff.net>
+From: Jacob Keller <jacob.e.keller@intel.com>
+Content-Language: en-US
+In-Reply-To: <20260305231305.GD2901305@coredump.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR03CA0192.namprd03.prod.outlook.com
+ (2603:10b6:303:b8::17) To DS0PR11MB7579.namprd11.prod.outlook.com
+ (2603:10b6:8:14d::5)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-    christian.couder@gmail.com,
-    jonathantanmy@google.com,
-    me@ttaylorr.com,
-    gitster@pobox.com,
-    Jeff King <peff@peff.net>,
-    Alan Braithwaite <alan@braithwaite.dev>,
-    Alan Braithwaite <alan@braithwaite.dev>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7579:EE_|CYYPR11MB8388:EE_
+X-MS-Office365-Filtering-Correlation-Id: 084064c1-4350-412f-90d1-08de7b612f3b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info: CHxmxWrL/H9SCJbBm87xNJ2Q7eJO0AL3y80s1YENx4ckr/cuaxe+Rl0bFJnFkU3V2vwce7JcqDog1JWRpWSx9MKJI0e17wWfMFUwR6ufna8aP7KsI2yiy1QaOyk76zcp1YP1GHV4b1snWW6W25Tg4UFXr1WvfawcdUN+6cTHMXix9xTLRBiQhj19430te+pmhJMMe4fQwTSL3xp7gbQq3nW3i9fLchM6MS3hPFqG+trlVpqTqN8HiDbpYy+qTpLkI2u2/wWhtMArdHInV353deo+e1eK2or15B54UlZQNIKx+99lbIQrtqNQVkUHl5By+yZiOLb3zeoR9HSPAB+dykPXgxBWcKShqeD9ubXQvSD/npF2mJS06RPgHbCS8zOfqluun+JApCFBeocAsYW8S464osYehsL1hM+OA0lEF3lNt5M4CsQFymlpY57FhUFUij/EFf+AsONFwVZpZqd0MjjUyNcwYOh4/dClO9/nWuAt0xTkvjjTz5mAa0q1B/ekyqomLw1fIiKXNGML0mBkE7kp7/baYwP+j3M8FYkaglprHpwqlO+uw9Zv6OybwfoxcorBNWBMFSGfLw+T8UmkjXQ6V9uMdJIp+m7W7YWTi2xOrq+ZUhyB4/jdz2jawR+HPiBVk1NVbR57buJ0nmqpV/zgocMj/GGJKDD9yDvLCzZQ6T6V1iZyBpq1Ke9Mb47rSQ7Pto6diVNdabq0tWIsrMXFBwPTjgLF8LGKN/S1FIU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB7579.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aFdFVGFWUi81b0RZWFdsL2lmVWtOVVUxckFBRTFVclFTL2ZrbVcwa0tBMEth?=
+ =?utf-8?B?ZXBqek5QNTk1bHZUZHBoKzg4aFh5dmZvZnJZeVFnNTZ2V0VyM2poNjBneVV2?=
+ =?utf-8?B?cnNIUGlncUFlRmV3TGFwUkdqVEZ5dWRYRXR6VmQyR1QzMC9YZHRxUHpXUzNT?=
+ =?utf-8?B?OS8rYkd6R0lETmI5UmQwQUwyb2F5SVFaN1pCbGo0dS9Ob3VmS0ZyNXJONGtp?=
+ =?utf-8?B?NnpkSnJCQ1ZlK3NVY2xEY0NMM2tYdlM0SzViR240ZXg0UlNmcGg2cS8wblhI?=
+ =?utf-8?B?OGw4azFuSll2MGNGSElsMkp3TTI1b2x6bThvWllQMlRjSXdlQ2xoTExQUVpY?=
+ =?utf-8?B?Y3dxL0RIOXlkcmVRYi81eTZURm1DZFJQQUg4aU5nUW9OTkdxQjR2MEwvcU9X?=
+ =?utf-8?B?SkVJL3VEY2VjenEzdkVUSm5WUEc5c0NPZHh5V1dpVnVxVkd5NGpHS2hKL0pF?=
+ =?utf-8?B?M1RnNVdOMWdyZUkyZi9WdUJNL1kzbDY0SU9QTEEza0FXWCs2d0xBQmM4MFlG?=
+ =?utf-8?B?NjFUeWJMcjd4SlIwNmp3NXFvT3h6UDVGZUx4ZllrLzdRWVZraE13alJqNy9Z?=
+ =?utf-8?B?R2F1dDErdXY2OGJ6NGZtd3phZlF2MzRITm5mV3VIMmR5RFF5WG1LTXdIeDdB?=
+ =?utf-8?B?Si9hczZWYjJVbjRnNTd1YWpYaWw0Q211c0loZStyMXhaUncrQkFNU2lXRUx2?=
+ =?utf-8?B?SmJMWWVCd1A4YmVkT2t1cmJPTWVkUVo1Sjlzd3B5NlFLREhxUzlzLzRvY3dm?=
+ =?utf-8?B?cUlRcFRjd01Kdmc4YzNPZXV2V21xYVo2ektqVXNLN0JOL2NJV2ZzRGVYdjhZ?=
+ =?utf-8?B?YnBFdUJVUi9OdldEV1ZOQXZJZWVpUEp1c2Y3NnYxZmduUzFxeEt1QmRadnZz?=
+ =?utf-8?B?dkFQa1hHUUUzN1VXY3dFMTJuV24vQm5YbmNRa01VSUkxeUhWeHMvWnZ3c2JH?=
+ =?utf-8?B?K01NSm5tQmgxVnJDWDVBd1ZSamRoSi9QenRLck5XUFJxM2xNc2NCN0dBY3M4?=
+ =?utf-8?B?Sk8zVFRTejF0OVNZQ3I2OTJsbitCMEtqb3N2Mnkwc3E2bFUvN2kyOVJ6RWd6?=
+ =?utf-8?B?MEhVM2hRdjE5Y0d5anBGUVhnSnByYmo0a0dBNXMzNVl3eTZBd1QremtDUmJ0?=
+ =?utf-8?B?NnpzZjUwVXJ1N01KejdrUU1OWmN3dWFVODFUdUF6L2JGSlFKT0xqVEQ3NTlZ?=
+ =?utf-8?B?Tjk2UkRLb3hPeml3ZXFDR3Fxalo0N0U4em1TWm1mVVpIcExveHRvN3EzUW0r?=
+ =?utf-8?B?UUxNZ2w5RTZLYmJFTmlQSUxzNGp0OHJZck02NlRNWFRmODFiN0JYWXZyQUR3?=
+ =?utf-8?B?SytzODVlYmpsYTMwOEU4aXdKWWN1VmRlZ01FY21TZ2dVZlZ4MEMzNjNrTGJB?=
+ =?utf-8?B?Q3pYck9oMEMrTFdLNWJDVGVkQ1dLU2ltUjF3UE9pNWJFc1ZycS9qSUZCbkc2?=
+ =?utf-8?B?cWJMK0xoZlArMmtiMHNRV2t1ZExyTS9MODdEUXFPYmxPL2szRHBZVFFBZGJq?=
+ =?utf-8?B?R0pKclRlVmF3M0g0b1M5SnREaUFPM0RzKzNaSDVndEJJUlFKZXdwWmU3dFdP?=
+ =?utf-8?B?V0JHUzZnNFFJTHh5d0dlOVgxZU5OWmZtSUNqc05YVDQ0M2dZTmFwVWdoa3k2?=
+ =?utf-8?B?SWw3S3puMHVxTkxscGtZYUoyRCthblRNMjczUTFqa2VGLzM3ZVYrcjNQaVVH?=
+ =?utf-8?B?QStPUUxmM0pYYXpVc2w5N25jN2RsNDFuSkhWcFBtWlRXTlFtaXZpc1hMNVZM?=
+ =?utf-8?B?S21PTE9TeEsrTE9uMHdOUE5ycitORy9CM2x4Rm9CSWVaN2VzcWZwVENQMmla?=
+ =?utf-8?B?Sm1kaGNnMFI1bVFlbVo1Y28yQ2dhaHU4aTRKdVhBbXNrSkE0SWtKUWtCRVVh?=
+ =?utf-8?B?WmdaWExvMGNxVFMwVkRzY1dlR0tGT2VoYmIyRVRXK211bjM0eC9TeDA1Qk1P?=
+ =?utf-8?B?MTFaTjZyemhPalZhWHBYV2JKUXRHMmtDRmVja1hWNVN5N2FEVWFJNG5uTHVp?=
+ =?utf-8?B?RXZ1Ky80czZqNy92cTFxK29nbTlRNTVIN0ViSmNMVTNtbXd2N3liYStyY0ow?=
+ =?utf-8?B?VHhjNmd2ZC9SZkVrYURCV0RNZU5SRlNVTTdJZkJrZm42Y0tCYnZHR2dkYk1P?=
+ =?utf-8?B?MUVSRGJBNEhNUkJNTGppZzRKKzkvNnFWSzl1eU04YVY1R2RjWFlHQk41M3B3?=
+ =?utf-8?B?RWtqdnNDSmlxTDMrVlFuNmlkbHVxVUlXek5ieGw0cjQraXpucHNpODhVMnls?=
+ =?utf-8?B?V3J3MzZiWmVnYStIdlpJMHdEV3BNLzVVUmZ3bnB3MEJHME9wVE54MXd4ejI0?=
+ =?utf-8?B?TW5mYW9PR09NdGNEWFJGOWRxell0UndiNWtMSTc2em9KWERDRExvZz09?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 084064c1-4350-412f-90d1-08de7b612f3b
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7579.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2026 09:17:26.9867
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BziYuVZ8vKSWPnEd5rmM8NAgBiSidBDVL23dWQjn1k/7WD8iMYE+2ppCbOm4JM6TFYzTJAsWzvVvWhIjICZQBZ/quaqD7mROTSjYH1OLl3Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR11MB8388
+X-OriginatorOrg: intel.com
 
-From: Alan Braithwaite <alan@braithwaite.dev>
+On 3/5/2026 3:13 PM, Jeff King wrote:
+> The past few commits fixed some cases where we leak memory allocated by
+> mmap(). Building with SANITIZE=leak doesn't detect these because it
+> covers only heap buffers allocated by malloc().
+> 
+> But if we build with NO_MMAP, our compat mmap() implementation will
+> allocate a heap buffer and pread() into it. And thus Lsan will detect
+> these leaks for free.
+> 
+> Using NO_MMAP is less performant, of course, since we have to use extra
+> memory and read in the whole file, rather than faulting in pages from
+> disk. But LSan builds are already slow, and this doesn't make them
+> measurably worse. Getting extra coverage for our leak-checking is worth
+> it.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Makefile | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Makefile b/Makefile
+> index f3264d0a37..4cf1afd395 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1600,6 +1600,7 @@ BASIC_CFLAGS += -DSHA1DC_FORCE_ALIGNED_ACCESS
+>  endif
+>  ifneq ($(filter leak,$(SANITIZERS)),)
+>  BASIC_CFLAGS += -O0
+> +NO_MMAP = CatchMapLeaks
+>  SANITIZE_LEAK = YesCompiledWithIt
+>  endif
+>  ifneq ($(filter address,$(SANITIZERS)),)
 
-Add a new configuration option that lets users specify a default
-partial clone filter per URL pattern.  When cloning a repository
-whose URL matches a configured pattern, git-clone automatically
-applies the filter, equivalent to passing --filter on the command
-line.
+Should this patch also affect the meson.build?
 
-    [clone "https://github.com/"]
-        defaultObjectFilter = blob:limit=5m
+There is the following in meson.build:
 
-    [clone "https://internal.corp.com/large-project/"]
-        defaultObjectFilter = blob:none
+if host_machine.system() == 'windows'
+  libgit_c_args += '-DUSE_WIN32_MMAP'
+else
+  checkfuncs += {
+    # provided by compat/mingw.c.
+    'unsetenv' : ['unsetenv.c'],
+    # provided by compat/mingw.c.
+    'getpagesize' : [],
+  }
 
-URL matching uses the existing urlmatch_config_entry() infrastructure,
-following the same rules as http.<url>.* — you can match a domain,
-a namespace path, or a specific project, and the most specific match
-wins.
+  if get_option('b_sanitize').contains('address')
+    libgit_c_args += '-DNO_MMAP'
+    libgit_sources += 'compat/mmap.c'
+  else
+    checkfuncs += { 'mmap': ['mmap.c'] }
+  endif
+endif
 
-The config only affects the initial clone.  Once the clone completes,
-the filter is recorded in remote.<name>.partialCloneFilter, so
-subsequent fetches inherit it automatically.  An explicit --filter
-flag on the command line takes precedence.
+This probably needs to also check if it contains leak, no?
 
-Only the URL-qualified form (clone.<url>.defaultObjectFilter) is
-honored; a bare clone.defaultObjectFilter without a URL subsection
-is ignored.
+Also I think this might be somewhat less flexible than Make since you
+can't forcibly enable mmap even with sanitizers enabled. I suppose thats
+not a big deal since enabling sanitizers already has a high cost.
 
-Signed-off-by: Alan Braithwaite <alan@braithwaite.dev>
----
-    fetch, clone: add fetch.blobSizeLimit config
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2058%2Fabraithwaite%2Falan%2Ffetch-blob-size-limit-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2058/abraithwaite/alan/fetch-blob-size-limit-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2058
-
-Range-diff vs v2:
-
- 1:  4a73edd2e8 ! 1:  5408412f2a clone: add clone.<url>.defaultObjectFilter config
-     @@ Documentation/config/clone.adoc: endif::[]
-       	linkgit:git-rev-list[1]) and `--recurse-submodules` is used, also apply
-       	the filter to submodules.
-      +
-     ++`clone.defaultObjectFilter`::
-      +`clone.<url>.defaultObjectFilter`::
-      +	When set to a filter spec string (e.g., `blob:limit=1m`,
-      +	`blob:none`, `tree:0`), linkgit:git-clone[1] will automatically
-     -+	use `--filter=<value>` when the clone URL matches `<url>`.
-     ++	use `--filter=<value>` to enable partial clone behavior.
-      +	Objects matching the filter are excluded from the initial
-      +	transfer and lazily fetched on demand (e.g., during checkout).
-      +	Subsequent fetches inherit the filter via the per-remote config
-      +	that is written during the clone.
-      ++
-     -+The URL matching follows the same rules as `http.<url>.*` (see
-     -+linkgit:git-config[1]).  The most specific URL match wins.  You can
-     -+match a complete domain, a namespace, or a specific project:
-     ++The bare `clone.defaultObjectFilter` applies to all clones.  The
-     ++URL-qualified form `clone.<url>.defaultObjectFilter` restricts the
-     ++setting to clones whose URL matches `<url>`, following the same
-     ++rules as `http.<url>.*` (see linkgit:git-config[1]).  The most
-     ++specific URL match wins.  You can match a domain, a namespace, or a
-     ++specific project:
-      ++
-      +----
-     ++[clone]
-     ++    defaultObjectFilter = blob:limit=1m
-     ++
-      +[clone "https://github.com/"]
-      +    defaultObjectFilter = blob:limit=5m
-      +
-     @@ builtin/clone.c: static int git_clone_config(const char *k, const char *v,
-       	return git_default_config(k, v, ctx, cb);
-       }
-       
-     -+struct clone_filter_data {
-     -+	char *default_object_filter;
-     -+};
-     -+
-      +static int clone_filter_collect(const char *var, const char *value,
-      +				const struct config_context *ctx UNUSED,
-      +				void *cb)
-      +{
-     -+	struct clone_filter_data *data = cb;
-     ++	char **filter_spec_p = cb;
-      +
-      +	if (!strcmp(var, "clone.defaultobjectfilter")) {
-     -+		free(data->default_object_filter);
-     -+		data->default_object_filter = xstrdup(value);
-     ++		if (!value)
-     ++			return config_error_nonbool(var);
-     ++		free(*filter_spec_p);
-     ++		*filter_spec_p = xstrdup(value);
-      +	}
-      +	return 0;
-      +}
-      +
-      +/*
-     -+ * Look up clone.<url>.defaultObjectFilter using the urlmatch
-     -+ * infrastructure.  Only URL-qualified forms are supported; a bare
-     -+ * clone.defaultObjectFilter (without a URL) is ignored.
-     ++ * Look up clone.defaultObjectFilter or clone.<url>.defaultObjectFilter
-     ++ * using the urlmatch infrastructure.  A URL-qualified entry that matches
-     ++ * the clone URL takes precedence over the bare form, following the same
-     ++ * rules as http.<url>.* configuration variables.
-      + */
-      +static char *get_default_object_filter(const char *url)
-      +{
-      +	struct urlmatch_config config = URLMATCH_CONFIG_INIT;
-     -+	struct clone_filter_data data = { 0 };
-     -+	struct string_list_item *item;
-     ++	char *filter_spec = NULL;
-      +	char *normalized_url;
-      +
-      +	config.section = "clone";
-      +	config.key = "defaultobjectfilter";
-      +	config.collect_fn = clone_filter_collect;
-     -+	config.cascade_fn = git_clone_config;
-     -+	config.cb = &data;
-     ++	config.cb = &filter_spec;
-      +
-      +	normalized_url = url_normalize(url, &config.url);
-      +
-      +	repo_config(the_repository, urlmatch_config_entry, &config);
-      +	free(normalized_url);
-     -+
-     -+	/*
-     -+	 * Reject the bare form clone.defaultObjectFilter (no URL
-     -+	 * subsection).  urlmatch stores the best match in vars with
-     -+	 * hostmatch_len == 0 for non-URL-qualified entries; discard
-     -+	 * the result if that is what we got.
-     -+	 */
-     -+	item = string_list_lookup(&config.vars, "defaultobjectfilter");
-     -+	if (item) {
-     -+		const struct urlmatch_item *m = item->util;
-     -+		if (!m->hostmatch_len && !m->pathmatch_len) {
-     -+			FREE_AND_NULL(data.default_object_filter);
-     -+		}
-     -+	}
-     -+
-      +	urlmatch_config_release(&config);
-      +
-     -+	return data.default_object_filter;
-     ++	return filter_spec;
-      +}
-      +
-       static int write_one_config(const char *key, const char *value,
-     @@ t/t5616-partial-clone.sh: test_expect_success 'after fetching descendants of non
-      +	test_must_fail git -C default-filter-url-nomatch config --local remote.origin.promisor
-      +'
-      +
-     -+test_expect_success 'bare clone.defaultObjectFilter without URL is ignored' '
-     ++test_expect_success 'bare clone.defaultObjectFilter applies to all clones' '
-      +	git -c clone.defaultObjectFilter=blob:none \
-      +		clone "file://$(pwd)/default-filter-srv.bare" default-filter-bare-key &&
-      +
-     -+	test_must_fail git -C default-filter-bare-key config --local remote.origin.promisor
-     ++	test "$(git -C default-filter-bare-key config --local remote.origin.promisor)" = "true" &&
-     ++	test "$(git -C default-filter-bare-key config --local remote.origin.partialclonefilter)" = "blob:none"
-     ++'
-     ++
-     ++test_expect_success 'URL-specific clone.defaultObjectFilter overrides bare form' '
-     ++	SERVER_URL="file://$(pwd)/default-filter-srv.bare" &&
-     ++	git \
-     ++		-c clone.defaultObjectFilter=blob:limit=1k \
-     ++		-c "clone.$SERVER_URL.defaultObjectFilter=blob:none" \
-     ++		clone "$SERVER_URL" default-filter-url-over-bare &&
-     ++
-     ++	test "$(git -C default-filter-url-over-bare config --local remote.origin.partialclonefilter)" = "blob:none"
-      +'
-       
-       . "$TEST_DIRECTORY"/lib-httpd.sh
-
-
- Documentation/config/clone.adoc | 33 +++++++++++++
- builtin/clone.c                 | 50 ++++++++++++++++++++
- t/t5616-partial-clone.sh        | 84 +++++++++++++++++++++++++++++++++
- 3 files changed, 167 insertions(+)
-
-diff --git a/Documentation/config/clone.adoc b/Documentation/config/clone.adoc
-index 0a10efd174..7ef6321be2 100644
---- a/Documentation/config/clone.adoc
-+++ b/Documentation/config/clone.adoc
-@@ -21,3 +21,36 @@ endif::[]
- 	If a partial clone filter is provided (see `--filter` in
- 	linkgit:git-rev-list[1]) and `--recurse-submodules` is used, also apply
- 	the filter to submodules.
-+
-+`clone.defaultObjectFilter`::
-+`clone.<url>.defaultObjectFilter`::
-+	When set to a filter spec string (e.g., `blob:limit=1m`,
-+	`blob:none`, `tree:0`), linkgit:git-clone[1] will automatically
-+	use `--filter=<value>` to enable partial clone behavior.
-+	Objects matching the filter are excluded from the initial
-+	transfer and lazily fetched on demand (e.g., during checkout).
-+	Subsequent fetches inherit the filter via the per-remote config
-+	that is written during the clone.
-++
-+The bare `clone.defaultObjectFilter` applies to all clones.  The
-+URL-qualified form `clone.<url>.defaultObjectFilter` restricts the
-+setting to clones whose URL matches `<url>`, following the same
-+rules as `http.<url>.*` (see linkgit:git-config[1]).  The most
-+specific URL match wins.  You can match a domain, a namespace, or a
-+specific project:
-++
-+----
-+[clone]
-+    defaultObjectFilter = blob:limit=1m
-+
-+[clone "https://github.com/"]
-+    defaultObjectFilter = blob:limit=5m
-+
-+[clone "https://internal.corp.com/large-project/"]
-+    defaultObjectFilter = blob:none
-+----
-++
-+An explicit `--filter` option on the command line takes precedence
-+over this config.  Only affects the initial clone; it has no effect
-+on later fetches into an existing repository.  If the server does
-+not support object filtering, the setting is silently ignored.
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 45d8fa0eed..b549191707 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -44,6 +44,7 @@
- #include "path.h"
- #include "pkt-line.h"
- #include "list-objects-filter-options.h"
-+#include "urlmatch.h"
- #include "hook.h"
- #include "bundle.h"
- #include "bundle-uri.h"
-@@ -757,6 +758,47 @@ static int git_clone_config(const char *k, const char *v,
- 	return git_default_config(k, v, ctx, cb);
- }
- 
-+static int clone_filter_collect(const char *var, const char *value,
-+				const struct config_context *ctx UNUSED,
-+				void *cb)
-+{
-+	char **filter_spec_p = cb;
-+
-+	if (!strcmp(var, "clone.defaultobjectfilter")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		free(*filter_spec_p);
-+		*filter_spec_p = xstrdup(value);
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Look up clone.defaultObjectFilter or clone.<url>.defaultObjectFilter
-+ * using the urlmatch infrastructure.  A URL-qualified entry that matches
-+ * the clone URL takes precedence over the bare form, following the same
-+ * rules as http.<url>.* configuration variables.
-+ */
-+static char *get_default_object_filter(const char *url)
-+{
-+	struct urlmatch_config config = URLMATCH_CONFIG_INIT;
-+	char *filter_spec = NULL;
-+	char *normalized_url;
-+
-+	config.section = "clone";
-+	config.key = "defaultobjectfilter";
-+	config.collect_fn = clone_filter_collect;
-+	config.cb = &filter_spec;
-+
-+	normalized_url = url_normalize(url, &config.url);
-+
-+	repo_config(the_repository, urlmatch_config_entry, &config);
-+	free(normalized_url);
-+	urlmatch_config_release(&config);
-+
-+	return filter_spec;
-+}
-+
- static int write_one_config(const char *key, const char *value,
- 			    const struct config_context *ctx,
- 			    void *data)
-@@ -1057,6 +1099,14 @@ int cmd_clone(int argc,
- 	} else
- 		die(_("repository '%s' does not exist"), repo_name);
- 
-+	if (!filter_options.choice) {
-+		char *config_filter = get_default_object_filter(repo);
-+		if (config_filter) {
-+			parse_list_objects_filter(&filter_options, config_filter);
-+			free(config_filter);
-+		}
-+	}
-+
- 	/* no need to be strict, transport_set_option() will validate it again */
- 	if (option_depth && atoi(option_depth) < 1)
- 		die(_("depth %s is not a positive number"), option_depth);
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 1e354e057f..a4bfdb329e 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -722,6 +722,90 @@ test_expect_success 'after fetching descendants of non-promisor commits, gc work
- 	git -C partial gc --prune=now
- '
- 
-+# Test clone.<url>.defaultObjectFilter config
-+
-+test_expect_success 'setup for clone.defaultObjectFilter tests' '
-+	git init default-filter-src &&
-+	echo "small" >default-filter-src/small.txt &&
-+	dd if=/dev/zero of=default-filter-src/large.bin bs=1024 count=100 2>/dev/null &&
-+	git -C default-filter-src add . &&
-+	git -C default-filter-src commit -m "initial" &&
-+
-+	git clone --bare "file://$(pwd)/default-filter-src" default-filter-srv.bare &&
-+	git -C default-filter-srv.bare config --local uploadpack.allowfilter 1 &&
-+	git -C default-filter-srv.bare config --local uploadpack.allowanysha1inwant 1
-+'
-+
-+test_expect_success 'clone with clone.<url>.defaultObjectFilter applies filter' '
-+	SERVER_URL="file://$(pwd)/default-filter-srv.bare" &&
-+	git -c "clone.$SERVER_URL.defaultObjectFilter=blob:limit=1k" clone \
-+		"$SERVER_URL" default-filter-clone &&
-+
-+	test "$(git -C default-filter-clone config --local remote.origin.promisor)" = "true" &&
-+	test "$(git -C default-filter-clone config --local remote.origin.partialclonefilter)" = "blob:limit=1024"
-+'
-+
-+test_expect_success 'clone with --filter overrides clone.<url>.defaultObjectFilter' '
-+	SERVER_URL="file://$(pwd)/default-filter-srv.bare" &&
-+	git -c "clone.$SERVER_URL.defaultObjectFilter=blob:limit=1k" \
-+		clone --filter=blob:none "$SERVER_URL" default-filter-override &&
-+
-+	test "$(git -C default-filter-override config --local remote.origin.partialclonefilter)" = "blob:none"
-+'
-+
-+test_expect_success 'clone with clone.<url>.defaultObjectFilter=blob:none works' '
-+	SERVER_URL="file://$(pwd)/default-filter-srv.bare" &&
-+	git -c "clone.$SERVER_URL.defaultObjectFilter=blob:none" clone \
-+		"$SERVER_URL" default-filter-blobnone &&
-+
-+	test "$(git -C default-filter-blobnone config --local remote.origin.promisor)" = "true" &&
-+	test "$(git -C default-filter-blobnone config --local remote.origin.partialclonefilter)" = "blob:none"
-+'
-+
-+test_expect_success 'clone.<url>.defaultObjectFilter with tree:0 works' '
-+	SERVER_URL="file://$(pwd)/default-filter-srv.bare" &&
-+	git -c "clone.$SERVER_URL.defaultObjectFilter=tree:0" clone \
-+		"$SERVER_URL" default-filter-tree0 &&
-+
-+	test "$(git -C default-filter-tree0 config --local remote.origin.promisor)" = "true" &&
-+	test "$(git -C default-filter-tree0 config --local remote.origin.partialclonefilter)" = "tree:0"
-+'
-+
-+test_expect_success 'most specific URL match wins for clone.defaultObjectFilter' '
-+	SERVER_URL="file://$(pwd)/default-filter-srv.bare" &&
-+	git \
-+		-c "clone.file://.defaultObjectFilter=blob:limit=1k" \
-+		-c "clone.$SERVER_URL.defaultObjectFilter=blob:none" \
-+		clone "$SERVER_URL" default-filter-url-specific &&
-+
-+	test "$(git -C default-filter-url-specific config --local remote.origin.partialclonefilter)" = "blob:none"
-+'
-+
-+test_expect_success 'non-matching URL does not apply clone.defaultObjectFilter' '
-+	git \
-+		-c "clone.https://other.example.com/.defaultObjectFilter=blob:none" \
-+		clone "file://$(pwd)/default-filter-srv.bare" default-filter-url-nomatch &&
-+
-+	test_must_fail git -C default-filter-url-nomatch config --local remote.origin.promisor
-+'
-+
-+test_expect_success 'bare clone.defaultObjectFilter applies to all clones' '
-+	git -c clone.defaultObjectFilter=blob:none \
-+		clone "file://$(pwd)/default-filter-srv.bare" default-filter-bare-key &&
-+
-+	test "$(git -C default-filter-bare-key config --local remote.origin.promisor)" = "true" &&
-+	test "$(git -C default-filter-bare-key config --local remote.origin.partialclonefilter)" = "blob:none"
-+'
-+
-+test_expect_success 'URL-specific clone.defaultObjectFilter overrides bare form' '
-+	SERVER_URL="file://$(pwd)/default-filter-srv.bare" &&
-+	git \
-+		-c clone.defaultObjectFilter=blob:limit=1k \
-+		-c "clone.$SERVER_URL.defaultObjectFilter=blob:none" \
-+		clone "$SERVER_URL" default-filter-url-over-bare &&
-+
-+	test "$(git -C default-filter-url-over-bare config --local remote.origin.partialclonefilter)" = "blob:none"
-+'
- 
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
-
-base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
--- 
-gitgitgadget
+Thanks,
+Jake
