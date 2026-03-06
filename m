@@ -1,733 +1,561 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0852F6565
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 14:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4FF34D391
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 15:16:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772808961; cv=none; b=F7OpNQzZO7zgI7ynMigIYtY7RPhSHLk7FfcnYrMvZB1BcElchaOoGGwGoT71alzkg2r9dSVG8x4ceNkm/2R2LOYLJinCDm8SggyfKIbZxk+9W38Nns27eap8ADjF8JpNufxi7/VpNR+hNqlCyK/TaUkfio4PgUlZNU3n2vCVxcY=
+	t=1772810221; cv=none; b=MWhYphoLVtE0BMg75nQJ553hk/qS/rgaRpOC3bsKSuliDUZxt1DsFcUCdKbjvRhhS63JZcxYGPxslgv8bVicIFfOR0f7oYIMEuN4QI5YHUQ93g0v7DnO22zkMDNWXKERjcTxLWzOnXWRxn+WVjpGiWEOOtTQ6fuxkTjXLxq7yNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772808961; c=relaxed/simple;
-	bh=wYpxyuq1HLs2msyzrIXjkWXv3rYVzUvguEIBHho9/uk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=k5lFpY3R5xV57qaHMQBQF8d+5o5/k+IE6alJiZKCx3UfUQHUprIrWt3Zhg7wqssGzcIgEo/99PaFOr2E9A15uHrKr3j0p4JPXW1B3OxutLqOLnpnWuH5vfkfFhrgbVF8cmbVb+820MyUaOs7BdmyJP08qbYCfF6CHnnmNucVUPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kCyOPQsY; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1772810221; c=relaxed/simple;
+	bh=+aooBVOy8AKGgM/HywkDxy3qjOgtoeIZtXcQhrcr3b4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LE3DkpJMbJWmdAwPkecQAsESC+DvrTenRLPWdlzhayODys8BMo+XCw86y0yUeJrhyvAmqqbgaNea4ijQx8qy/Xt7G7xwPyNWWs3p6TzY2ir4cxaJie/szf3au5qHDoNPR5wnRnrhZn0UPLrw0jSLwKOkf2Cu+V0gJhcXztxhr+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kOovMVjV; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kCyOPQsY"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-439c4bde55cso2469497f8f.1
-        for <git@vger.kernel.org>; Fri, 06 Mar 2026 06:55:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kOovMVjV"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2ae41544dcfso70744345ad.1
+        for <git@vger.kernel.org>; Fri, 06 Mar 2026 07:16:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772808958; x=1773413758; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7UutZgFKDh6n1LdHE9RBDvwi/RkvSYorzTP7Sgk5LDQ=;
-        b=kCyOPQsY1ZligpgFCBNI9w45GTVvf6PUbqFZsmN/SiaorFm8BtHOUqa2hgsLKKhsn5
-         JW3L95dO4y7ySifYs5kzHFjYLFueLn70FXRta4Osp1cs49Qmk3upcyWCBODPDFL4dYMQ
-         4jR0giVhEA8tplmQpeDRFsGwARrlplmlyEdzsbRmjwCQoyra3iA3rMP67JVcvSOTpSi5
-         f0LpWCLnTTxs+2zmUSuuWSXnIMEd0DPZTQwk41RkMT/VXCJxE1eZ7JIbKwMndGKcSWn1
-         r1LLrwQ2gQV8CayMsA1a/kUU5Tf9wL6YpaefdiLmq4kKQej6XpXZRjtAhDVbSuFF/r8K
-         OkQg==
+        d=gmail.com; s=20230601; t=1772810219; x=1773415019; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+62uUPwXW5Y80xElBWkExBGvR+I2Pd4/lU5i6FconJA=;
+        b=kOovMVjVk8A5aM4C2J2nQq3RN3IhC4aoreNMmHSi2g2gNOo7MYcDypmRPag6cXDZkE
+         zi6mqCJwL4+mCyhbqKDNVK48bpc5ob7HH5FSFQoUkH4rjRMat/OHCoZTiKHN912EX5d/
+         9G47JP3YKzyfvoc2mhVR4uiQSNbOlltjFWpVde0Lhv2jQinzoyoSbqOsCCNaqkc81Hpu
+         Rk8jUdfEQhX3erXoDmo/a/jOFqIZ0rVoWCU6DDAZmchCYUIA718q1f/8k+tzksIakrEm
+         gTWhzgWzdnvHekDGf3aamphglgY016/ikNML1426ymNxLdIm6PbOtFpmoiSLljB0SSHH
+         Uk2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772808958; x=1773413758;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7UutZgFKDh6n1LdHE9RBDvwi/RkvSYorzTP7Sgk5LDQ=;
-        b=pdhGp/1F8rHSrGUxZWeOvpYETyExM8pbHVAOOPajmoDOjE/0kgCttnJc1f9OoyWsCk
-         eU7Vc52KQsnQmuLDl70KWKqf2fgK0Mb+/wwHE7mIXtjw3sy7a1/26djYnaU/5a2cR5Gh
-         +N8B05RXSgT42lcLiwHI6CyvfNVPiN8kd3odD+oglmM1Jc7lxmGVKwTJx6oewk4MXt9a
-         Cuc1Pr8X/ucNI1be4Ibeaj3dYd8bzBtEM44nKvwOEtcaffPQFCe2XveADn/xk/6zGX2w
-         gAXeKoWJMSq3tTAHjEiNdqh5TUUqgdHDhH5LahBh3UMUZPhjMASSjG+ud2+srNWzQQI1
-         B6EQ==
-X-Gm-Message-State: AOJu0YwTn6cwMXS1dHviaPr1LoqGHi8POXTMrujADE+Ezj6ffKGZPiZW
-	cQWYVy7A/+urB3pAAToUzcxXRhZChimsoC3sSQ4hDRoVbH5dkjI8khzW
-X-Gm-Gg: ATEYQzxume0bj8b2kXAEM9Avky2JBGBZuF0n3GCWrQSwZMcHQ1tyRmnevEg9e57Uw23
-	9c9mo9M5fAMLS2V3+T1F8taxcysQXQgtaRbaKE++Ps5qygGbSO4cXX2PbqqD2Vdlq8lb/Ov4BKi
-	LCR4siOYaDeoRT/fA5MlYXCWH/lQuNVQtE8ejQXD7XiH/sVZuae4gN86Wi2xBthyhCS5p3guvbv
-	mj4LlFdubYB3tt96Wd5kExhGxttKz/pF9sZ/3UU/R8A+CrRqBt0pKjbTtdfgir9h0wfwpVZjWQI
-	OG3AVs9CVF9BvXRcKFqEdodUtdWZ+9XVVmcfM/pSeYsXM1AfkbcY/uT5yAvIfRzD7u7wOpl+b9a
-	k6T4KDz5um/c1w5TZd9pVgQQsi/oiEDy7X+6FTuUZK/QOHNlC++V8J5d3GPtmVBIjCdra3ti4n9
-	5H2QzBWaDMJM8Rn1uYi4EuuN9LaAKlH/aJ3bf/Rl4Wy3rElW+mMD8UjjM2V1NDSLfn0khCRr6IH
-	d12+A==
-X-Received: by 2002:a05:6000:2410:b0:439:c510:f97a with SMTP id ffacd0b85a97d-439da36a704mr4320436f8f.48.1772808957800;
-        Fri, 06 Mar 2026 06:55:57 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439dae49177sm4460643f8f.35.2026.03.06.06.55.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Mar 2026 06:55:57 -0800 (PST)
-Message-ID: <8a37a357-5a3b-4ca1-9949-6b2f28d3f208@gmail.com>
-Date: Fri, 6 Mar 2026 14:55:48 +0000
+        d=1e100.net; s=20230601; t=1772810219; x=1773415019;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+62uUPwXW5Y80xElBWkExBGvR+I2Pd4/lU5i6FconJA=;
+        b=C1n7qdLAZR8QtbfT6hkxVUvZwrbSUjU4/FvrNIVjNbi8qURRBOeNWPNLQORf26oBDp
+         k530P9S0EjMc3GZ/COHYu/kxY/UXGQjbv2Pn+EcRGt27H5+7QPWhqDuvyAuYI6QVFgLK
+         LdaRip5b0uAAV7oxPHdioea7R5kS/lQj/McdcJJRRB3YQf1fxS2tnu3JpzLdZGOCyDCb
+         LCy10d4vSXfMb4WbabIH+mBvgJEAbwdqCUj60XobeEph69hS+9TwDxokzQT7JFPuayDv
+         5m+9JzuzI5oxPfqfQ+aLe+Ld8qFZQw/7zmdAjmAZAY1ky97qibfVa+quD/M/m1+uWmty
+         myVw==
+X-Gm-Message-State: AOJu0YwI4qtu2cbBjEGHo8LIApca8WXkABx54bTWqlkh2Rc7ckVGC4Sj
+	yqkdlB/iI1rnRSGwjmtRIRkEN0M8zMh8I0rGE+Re0TbLnuOHi5t749dnj9CXMw==
+X-Gm-Gg: ATEYQzxBpMyfB2YFO+6uasVSWDnV31CWnnXVXCyLw1mvBbiHS297qqJI60LwkktneVB
+	4h3fN4P0Q64ggjcpLDRwX5LOmXXurqI79WTCRl8zXvW1x9I/YfUMMO9BWkjPtzisR5bTP+6K2U2
+	P5q06MUQ0bzVdagXMIsJV8cgHB6pK+fy2mY8Cc25LSD1fgu7c0fkF/UUf6F0fzrDpp2npfswNWZ
+	0XzcmumoNLJ5xYFjDXPBwvJbae1bvvAZ+GHCmEz9mBxqrNzv03RAvcluC45I3VeFwPV+YGA7lIy
+	0AkJU5qJuQgLSVkDQVwch/h+Rm0GZSFRRanDRwSgsDLPHNukqWFOh+PkF6RPbuGSQZT8gwt6g1D
+	P/JGPkOnDDq8vq8wFE6AY8X9h6/AcHuNiYSQSUPnjvsn0O1stItJbHOBFbTI0RQhuj3lZl1l6Ev
+	hBk0XM2yUxw1Scnh8L1NvPzyDnLn+VSnltkrLEsijDVg==
+X-Received: by 2002:a17:902:d48b:b0:2ae:5b64:12e6 with SMTP id d9443c01a7336-2ae82448f5amr27911825ad.38.1772810218178;
+        Fri, 06 Mar 2026 07:16:58 -0800 (PST)
+Received: from Shreyansh-PC ([2401:4900:88eb:2b10:225:d760:8e0b:13ca])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83f8cfb0sm32133395ad.67.2026.03.06.07.16.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Mar 2026 07:16:57 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com
+Subject: =?UTF-8?q?=5BGSOC=5D=5BPROPOSAL=5D=3A=20Refactoring=20in=20order=20to=20reduce=20Git=E2=80=99s=20global=20state?=
+Date: Fri,  6 Mar 2026 20:27:33 +0530
+Message-ID: <20260306151605.29330-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 0/5] rebase: support --trailer
-To: Li Chen <me@linux.beauty>, phillipwood <phillip.wood@dunelm.org.uk>
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <20260224070552.148591-1-me@linux.beauty>
- <dbaf6ea5-8a08-42c0-8184-16dcf40207dd@gmail.com>
- <19cbe42b2cd.bb6e3883730656.6495265672263159010@linux.beauty>
-Content-Language: en-US
-In-Reply-To: <19cbe42b2cd.bb6e3883730656.6495265672263159010@linux.beauty>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Li
+Hello all,
 
-On 05/03/2026 13:49, Li Chen wrote:
->   >
->   > This all looks pretty good. The main thing I think we want to change is
->   > sharing the code that creates the temporary file in patch 3. I've push a
->   > version that does that and fixes my other small comments to
->   > https://github.com/phillipwood/git/commits/refs/heads/rebase-trailers-v8
->   > The range diff is below. If you're happy I can post that as a hopefully
->   > final v8. Of course if you want to work on it yourself you're very
->   > welcome to do that.
-> 
-> These changes all look good to me! Thank you very much for your patience and work! Please help
-> post this as v8.
+This is my first draft of GSoC 2026 proposal for the project
+'Refactoring in order to reduce Git’s global state'.
 
-I've just posted v8, thanks for all your work on these patches
+Doc version can be read at:
+https://docs.google.com/document/d/16MRNUv6dJi6vtNvI5Ro0WmHf20dRRBHjFLpmhAuaUOA/edit?usp=sharing
 
-Phillip
+Any feedback or suggestions would be greatly appreciated.
 
-> Regards,
-> Li
-> 
->   >
->   > 1:  b2685e34c22 ! 1:  0d08b361995 interpret-trailers: factor trailer rewriting
->   >      @@ Commit message
->   >           This separation makes it easier to move the helper into trailer.c in the
->   >           next commit.
->   >
->   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->   >           Signed-off-by: Li Chen <me@linux.beauty>
->   >
->   >        ## builtin/interpret-trailers.c ##
->   >       @@ builtin/interpret-trailers.c: static void read_input_file(struct strbuf *sb, const char *file)
->   > -:  ----------- > 2:  5a4d03ab375 interpret-trailers: refactor create_in_place_tempfile()
->   > 2:  1bac3025045 ! 3:  ab7e232a95d trailer: move process_trailers to trailer.h
->   >      @@ Metadata
->   >       Author: Li Chen <me@linux.beauty>
->   >
->   >        ## Commit message ##
->   >      -    trailer: move process_trailers to trailer.h
->   >      -
->   >      -    Move process_trailers() from builtin/interpret-trailers.c into trailer.c
->   >      -    and expose it via trailer.h.
->   >      -
->   >      -    This lets other call sites reuse the same trailer rewriting logic.
->   >      +    trailer: libify a couple of functions
->   >      +
->   >      +    Move create_in_place_tempfile() and process_trailers() from
->   >      +    builtin/interpret-trailers.c into trailer.c and expose it via trailer.h.
->   >      +
->   >      +    This reverts most of ae0ec2e0e0b (trailer: move interpret_trailers()
->   >      +    to interpret-trailers.c, 2024-03-01) and lets other call sites reuse
->   >      +    the same trailer rewriting logic.
->   >
->   >           Signed-off-by: Li Chen <me@linux.beauty>
->   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->   >
->   >        ## builtin/interpret-trailers.c ##
->   >      +@@ builtin/interpret-trailers.c: static int parse_opt_parse(const struct option *opt, const char *arg,
->   >      +     return 0;
->   >      + }
->   >      +
->   >      +-
->   >      +-static struct tempfile *create_in_place_tempfile(const char *file)
->   >      +-{
->   >      +-    struct tempfile *tempfile = NULL;
->   >      +-    struct stat st;
->   >      +-    struct strbuf filename_template = STRBUF_INIT;
->   >      +-    const char *tail;
->   >      +-
->   >      +-    if (stat(file, &st)) {
->   >      +-        error_errno(_("could not stat %s"), file);
->   >      +-        return NULL;
->   >      +-    }
->   >      +-    if (!S_ISREG(st.st_mode)) {
->   >      +-        error(_("file %s is not a regular file"), file);
->   >      +-        return NULL;
->   >      +-    }
->   >      +-    if (!(st.st_mode & S_IWUSR)) {
->   >      +-        error(_("file %s is not writable by user"), file);
->   >      +-        return NULL;
->   >      +-    }
->   >      +-    /* Create temporary file in the same directory as the original */
->   >      +-    tail = find_last_dir_sep(file);
->   >      +-    if (tail)
->   >      +-        strbuf_add(&filename_template, file, tail - file + 1);
->   >      +-    strbuf_addstr(&filename_template, "git-interpret-trailers-XXXXXX");
->   >      +-
->   >      +-    tempfile = mks_tempfile_m(filename_template.buf, st.st_mode);
->   >      +-
->   >      +-    strbuf_release(&filename_template);
->   >      +-
->   >      +-    return tempfile;
->   >      +-}
->   >      +-
->   >      + static void read_input_file(struct strbuf *sb, const char *file)
->   >      + {
->   >      +     if (file) {
->   >       @@ builtin/interpret-trailers.c: static void read_input_file(struct strbuf *sb, const char *file)
->   >            strbuf_complete_line(sb);
->   >        }
->   >      @@ builtin/interpret-trailers.c: static void read_input_file(struct strbuf *sb, con
->   >        static void interpret_trailers(const struct process_trailer_options *opts,
->   >                           struct list_head *new_trailer_head,
->   >                           const char *file)
->   >      +@@ builtin/interpret-trailers.c: static void interpret_trailers(const struct process_trailer_options *opts,
->   >      +     read_input_file(&input, file);
->   >      +
->   >      +     if (opts->in_place) {
->   >      +-        tempfile = create_in_place_tempfile(file);
->   >      ++        tempfile = trailer_create_in_place_tempfile(file);
->   >      +         if (!tempfile)
->   >      +             die(NULL);
->   >      +         fd = tempfile->fd;
->   >
->   >        ## trailer.c ##
->   >      +@@
->   >      + #include "commit.h"
->   >      + #include "trailer.h"
->   >      + #include "list.h"
->   >      ++#include "tempfile.h"
->   >      ++
->   >      + /*
->   >      +  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
->   >      +  */
->   >      +@@ trailer.c: void trailer_iterator_release(struct trailer_iterator *iter)
->   >      +     strbuf_release(&iter->key);
->   >      + }
->   >      +
->   >      ++struct tempfile *trailer_create_in_place_tempfile(const char *file)
->   >      ++{
->   >      ++    struct tempfile *tempfile = NULL;
->   >      ++    struct stat st;
->   >      ++    struct strbuf filename_template = STRBUF_INIT;
->   >      ++    const char *tail;
->   >      ++
->   >      ++    if (stat(file, &st)) {
->   >      ++        error_errno(_("could not stat %s"), file);
->   >      ++        return NULL;
->   >      ++    }
->   >      ++    if (!S_ISREG(st.st_mode)) {
->   >      ++        error(_("file %s is not a regular file"), file);
->   >      ++        return NULL;
->   >      ++    }
->   >      ++    if (!(st.st_mode & S_IWUSR)) {
->   >      ++        error(_("file %s is not writable by user"), file);
->   >      ++        return NULL;
->   >      ++    }
->   >      ++    /* Create temporary file in the same directory as the original */
->   >      ++    tail = find_last_dir_sep(file);
->   >      ++    if (tail)
->   >      ++        strbuf_add(&filename_template, file, tail - file + 1);
->   >      ++    strbuf_addstr(&filename_template, "git-interpret-trailers-XXXXXX");
->   >      ++
->   >      ++    tempfile = mks_tempfile_m(filename_template.buf, st.st_mode);
->   >      ++
->   >      ++    strbuf_release(&filename_template);
->   >      ++
->   >      ++    return tempfile;
->   >      ++}
->   >      ++
->   >      + int amend_file_with_trailers(const char *path, const struct strvec *trailer_args)
->   >      + {
->   >      +     struct child_process run_trailer = CHILD_PROCESS_INIT;
->   >       @@ trailer.c: int amend_file_with_trailers(const char *path, const struct strvec *trailer_args
->   >            strvec_pushv(&run_trailer.args, trailer_args->v);
->   >            return run_command(&run_trailer);
->   >      @@ trailer.h: void trailer_iterator_release(struct trailer_iterator *iter);
->   >         */
->   >        int amend_file_with_trailers(const char *path, const struct strvec *trailer_args);
->   >
->   >      ++/*
->   >      ++ * Create a tempfile ""git-interpret-trailers-XXXXXX" in the same
->   >      ++ * directory as file.
->   >      ++ */
->   >      ++struct tempfile *trailer_create_in_place_tempfile(const char *file);
->   >      ++
->   >      ++/*
->   >      ++ * Rewrite the contents of input by processing its trailer block according to
->   >      ++ * opts and (optionally) appending trailers from new_trailer_head.
->   >      ++ *
->   >      ++ * The rewritten message is appended to out (callers should strbuf_reset()
->   >      ++ * first if needed).
->   >      ++ */
->   >       +void process_trailers(const struct process_trailer_options *opts,
->   >       +              struct list_head *new_trailer_head,
->   >       +              struct strbuf *input, struct strbuf *out);
->   > 3:  3114f0dbb57 ! 4:  1f24917eb64 trailer: append trailers without fork/exec
->   >      @@ Commit message
->   >
->   >           Update amend_file_with_trailers() to use the in-process helper and
->   >           rewrite the target file via tempfile+rename, preserving the previous
->   >      -    in-place semantics.
->   >      +    in-place semantics. As the trailers are no longer added in a separate
->   >      +    process and trailer_config_init() die()s on missing config values it
->   >      +    is called early on in cmd_commit() and cmd_tag() so that they die()
->   >      +    early before writing the message file. The trailer arguments are now
->   >      +    also sanity checked.
->   >
->   >           Keep existing callers unchanged by continuing to accept argv-style
->   >           --trailer=<trailer> entries and stripping the prefix before feeding the
->   >           in-process implementation.
->   >
->   >           Signed-off-by: Li Chen <me@linux.beauty>
->   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->   >      -
->   >      - ## builtin/interpret-trailers.c ##
->   >      -@@ builtin/interpret-trailers.c: static void interpret_trailers(const struct process_trailer_options *opts,
->   >      -     struct strbuf out = STRBUF_INIT;
->   >      -     FILE *outfile = stdout;
->   >      -
->   >      --    trailer_config_init();
->   >      --
->   >      -     read_input_file(&input, file);
->   >      -
->   >      -     if (opts->in_place)
->   >      -@@ builtin/interpret-trailers.c: int cmd_interpret_trailers(int argc,
->   >      -             git_interpret_trailers_usage,
->   >      -             options);
->   >      -
->   >      -+    trailer_config_init();
->   >      -+
->   >      -     if (argc) {
->   >      -         int i;
->   >      -         for (i = 0; i < argc; i++)
->   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->   >      +
->   >      + ## builtin/commit.c ##
->   >      +@@ builtin/commit.c: int cmd_commit(int argc,
->   >      +     argc = parse_and_validate_options(argc, argv, builtin_commit_options,
->   >      +                       builtin_commit_usage,
->   >      +                       prefix, current_head, &s);
->   >      ++    if (trailer_args.nr)
->   >      ++        trailer_config_init();
->   >      ++
->   >      +     if (verbose == -1)
->   >      +         verbose = (config_commit_verbose < 0) ? 0 : config_commit_verbose;
->   >      +
->   >      +
->   >      + ## builtin/tag.c ##
->   >      +@@ builtin/tag.c: int cmd_tag(int argc,
->   >      +     if (cmdmode == 'l')
->   >      +         setup_auto_pager("tag", 1);
->   >      +
->   >      ++    if (trailer_args.nr)
->   >      ++        trailer_config_init();
->   >      ++
->   >      +     if (opt.sign == -1)
->   >      +         opt.sign = cmdmode ? 0 : config_sign_tag > 0;
->   >      +
->   >
->   >        ## trailer.c ##
->   >       @@
->   >        #include "string-list.h"
->   >        #include "run-command.h"
->   >        #include "commit.h"
->   >       +#include "strvec.h"
->   >      -+#include "tempfile.h"
->   >        #include "trailer.h"
->   >        #include "list.h"
->   >      -+
->   >      - /*
->   >      -  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
->   >      -  */
->   >      + #include "tempfile.h"
->   >       @@ trailer.c: void parse_trailers_from_command_line_args(struct list_head *arg_head,
->   >            free(cl_separators);
->   >        }
->   >
->   >      -+void validate_trailer_args(const struct strvec *cli_args)
->   >      ++int validate_trailer_args(const struct strvec *cli_args)
->   >       +{
->   >       +    char *cl_separators;
->   >      ++    int ret = 0;
->   >       +
->   >       +    trailer_config_init();
->   >       +
->   >      @@ trailer.c: void parse_trailers_from_command_line_args(struct list_head *arg_head
->   >       +        const char *txt = cli_args->v[i];
->   >       +        ssize_t separator_pos;
->   >       +
->   >      -+        if (!*txt)
->   >      -+            die(_("empty --trailer argument"));
->   >      -+
->   >      ++        if (!*txt) {
->   >      ++            ret = error(_("empty --trailer argument"));
->   >      ++            goto out;
->   >      ++        }
->   >       +        separator_pos = find_separator(txt, cl_separators);
->   >      -+        if (separator_pos == 0)
->   >      -+            die(_("invalid trailer '%s': missing key before separator"),
->   >      -+                txt);
->   >      ++        if (separator_pos == 0) {
->   >      ++            ret = error(_("invalid trailer '%s': missing key before separator"),
->   >      ++                    txt);
->   >      ++            goto out;
->   >      ++        }
->   >       +    }
->   >      -+
->   >      ++out:
->   >       +    free(cl_separators);
->   >      ++    return ret;
->   >       +}
->   >       +
->   >        static const char *next_line(const char *str)
->   >        {
->   >            const char *nl = strchrnul(str, '\n');
->   >      -@@ trailer.c: void trailer_iterator_release(struct trailer_iterator *iter)
->   >      -     strbuf_release(&iter->key);
->   >      +@@ trailer.c: struct tempfile *trailer_create_in_place_tempfile(const char *file)
->   >      +     return tempfile;
->   >        }
->   >
->   >       -int amend_file_with_trailers(const char *path, const struct strvec *trailer_args)
->   >      @@ trailer.c: void trailer_iterator_release(struct trailer_iterator *iter)
->   >       -             path, NULL);
->   >       -    strvec_pushv(&run_trailer.args, trailer_args->v);
->   >       -    return run_command(&run_trailer);
->   >      -+static void new_trailer_items_clear(struct list_head *items)
->   >      -+{
->   >      -+    while (!list_empty(items)) {
->   >      -+        struct new_trailer_item *item =
->   >      -+            list_first_entry(items, struct new_trailer_item, list);
->   >      -+        list_del(&item->list);
->   >      -+        free(item);
->   >      -+    }
->   >      -+}
->   >      -+
->   >      -+void amend_strbuf_with_trailers(struct strbuf *buf,
->   >      ++int amend_strbuf_with_trailers(struct strbuf *buf,
->   >       +                const struct strvec *trailer_args)
->   >       +{
->   >       +    struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
->   >       +    LIST_HEAD(new_trailer_head);
->   >       +    struct strbuf out = STRBUF_INIT;
->   >       +    size_t i;
->   >      ++    int ret = 0;
->   >       +
->   >       +    opts.no_divider = 1;
->   >       +
->   >       +    for (i = 0; i < trailer_args->nr; i++) {
->   >       +        const char *text = trailer_args->v[i];
->   >       +        struct new_trailer_item *item;
->   >       +
->   >      -+        if (!*text)
->   >      -+            die(_("empty --trailer argument"));
->   >      ++        if (!*text) {
->   >      ++            ret = error(_("empty --trailer argument"));
->   >      ++            goto out;
->   >      ++        }
->   >       +        item = xcalloc(1, sizeof(*item));
->   >      -+        item->text = text;
->   >      ++        item->text = xstrdup(text);
->   >       +        list_add_tail(&item->list, &new_trailer_head);
->   >       +    }
->   >       +
->   >      -+    trailer_config_init();
->   >       +    process_trailers(&opts, &new_trailer_head, buf, &out);
->   >       +
->   >       +    strbuf_swap(buf, &out);
->   >      ++out:
->   >       +    strbuf_release(&out);
->   >      ++    free_trailers(&new_trailer_head);
->   >       +
->   >      -+    new_trailer_items_clear(&new_trailer_head);
->   >      ++    return ret;
->   >       +}
->   >       +
->   >       +static int write_file_in_place(const char *path, const struct strbuf *buf)
->   >       +{
->   >      -+    struct stat st;
->   >      -+    struct strbuf filename_template = STRBUF_INIT;
->   >      -+    const char *tail;
->   >      -+    struct tempfile *tempfile;
->   >      -+    FILE *outfile;
->   >      -+
->   >      -+    if (stat(path, &st))
->   >      -+        return error_errno(_("could not stat %s"), path);
->   >      -+    if (!S_ISREG(st.st_mode))
->   >      -+        return error(_("file %s is not a regular file"), path);
->   >      -+    if (!(st.st_mode & S_IWUSR))
->   >      -+        return error(_("file %s is not writable by user"), path);
->   >      -+
->   >      -+    /* Create temporary file in the same directory as the original */
->   >      -+    tail = strrchr(path, '/');
->   >      -+    if (tail)
->   >      -+        strbuf_add(&filename_template, path, tail - path + 1);
->   >      -+    strbuf_addstr(&filename_template, "git-interpret-trailers-XXXXXX");
->   >      -+
->   >      -+    tempfile = mks_tempfile_sm(filename_template.buf, 0, st.st_mode);
->   >      -+    strbuf_release(&filename_template);
->   >      ++    struct tempfile *tempfile = trailer_create_in_place_tempfile(path);
->   >       +    if (!tempfile)
->   >      -+        return error_errno(_("could not create temporary file"));
->   >      -+
->   >      -+    outfile = fdopen_tempfile(tempfile, "w");
->   >      -+    if (!outfile) {
->   >      -+        int saved_errno = errno;
->   >      -+        delete_tempfile(&tempfile);
->   >      -+        errno = saved_errno;
->   >      -+        return error_errno(_("could not open temporary file"));
->   >      -+    }
->   >      -+
->   >      -+    if (buf->len && fwrite(buf->buf, 1, buf->len, outfile) < buf->len) {
->   >      -+        int saved_errno = errno;
->   >      -+        delete_tempfile(&tempfile);
->   >      -+        errno = saved_errno;
->   >      ++        return -1;
->   >      ++
->   >      ++    if (write_in_full(tempfile->fd, buf->buf, buf->len) < 0)
->   >       +        return error_errno(_("could not write to temporary file"));
->   >      -+    }
->   >       +
->   >       +    if (rename_tempfile(&tempfile, path))
->   >       +        return error_errno(_("could not rename temporary file to %s"), path);
->   >      @@ trailer.c: void trailer_iterator_release(struct trailer_iterator *iter)
->   >       +         * in-process implementation.
->   >       +         */
->   >       +        skip_prefix(txt, "--trailer=", &txt);
->   >      -+        if (!*txt)
->   >      -+            die(_("empty --trailer argument"));
->   >      ++        if (!*txt) {
->   >      ++            ret = error(_("empty --trailer argument"));
->   >      ++            goto out;
->   >      ++        }
->   >       +        strvec_push(&stripped_trailer_args, txt);
->   >       +    }
->   >       +
->   >      ++    if (validate_trailer_args(&stripped_trailer_args)) {
->   >      ++        ret = -1;
->   >      ++        goto out;
->   >      ++    }
->   >       +    if (strbuf_read_file(&buf, path, 0) < 0)
->   >       +        ret = error_errno(_("could not read '%s'"), path);
->   >       +    else
->   >       +        amend_strbuf_with_trailers(&buf, &stripped_trailer_args);
->   >       +
->   >       +    if (!ret)
->   >       +        ret = write_file_in_place(path, &buf);
->   >      -+
->   >      ++out:
->   >       +    strvec_clear(&stripped_trailer_args);
->   >       +    strbuf_release(&buf);
->   >       +    return ret;
->   >      @@ trailer.h: void parse_trailers_from_config(struct list_head *config_head);
->   >        void parse_trailers_from_command_line_args(struct list_head *arg_head,
->   >                               struct list_head *new_trailer_head);
->   >
->   >      -+void validate_trailer_args(const struct strvec *cli_args);
->   >      ++int validate_trailer_args(const struct strvec *cli_args);
->   >       +
->   >        void process_trailers_lists(struct list_head *head,
->   >                        struct list_head *arg_head);
->   >      @@ trailer.h: int trailer_iterator_advance(struct trailer_iterator *iter);
->   >       + * Each element of trailer_args should be in the same format as the value
->   >       + * accepted by --trailer=<trailer> (i.e., without the --trailer= prefix).
->   >       + */
->   >      -+void amend_strbuf_with_trailers(struct strbuf *buf,
->   >      ++int amend_strbuf_with_trailers(struct strbuf *buf,
->   >       +                const struct strvec *trailer_args);
->   >       +
->   >       +/*
->   >      @@ trailer.h: int trailer_iterator_advance(struct trailer_iterator *iter);
->   >         */
->   >        int amend_file_with_trailers(const char *path, const struct strvec *trailer_args);
->   >
->   >      -+/*
->   >      -+ * Rewrite the contents of input by processing its trailer block according to
->   >      -+ * opts and (optionally) appending trailers from new_trailer_head.
->   >      -+ *
->   >      -+ * The rewritten message is appended to out (callers should strbuf_reset()
->   >      -+ * first if needed).
->   >      -+ */
->   >      - void process_trailers(const struct process_trailer_options *opts,
->   >      -               struct list_head *new_trailer_head,
->   >      -               struct strbuf *input, struct strbuf *out);
->   > 4:  147595a9317 ! 5:  3c1fa9e8579 commit, tag: parse --trailer with OPT_STRVEC
->   >      @@ Commit message
->   >           amend_file_with_trailers().
->   >
->   >           Signed-off-by: Li Chen <me@linux.beauty>
->   >
->   >        ## builtin/commit.c ##
->   >       @@ builtin/commit.c: int cmd_commit(int argc,
->   >      @@ trailer.c: int amend_file_with_trailers(const char *path,
->   >       -         * in-process implementation.
->   >       -         */
->   >       -        skip_prefix(txt, "--trailer=", &txt);
->   >      --        if (!*txt)
->   >      --            die(_("empty --trailer argument"));
->   >      +-        if (!*txt) {
->   >      +-            ret = error(_("empty --trailer argument"));
->   >      +-            goto out;
->   >      +-        }
->   >       -        strvec_push(&stripped_trailer_args, txt);
->   >       -    }
->   >       -
->   >      +-    if (validate_trailer_args(&stripped_trailer_args)) {
->   >      ++    if (validate_trailer_args(trailer_args)) {
->   >      +         ret = -1;
->   >      +         goto out;
->   >      +     }
->   >            if (strbuf_read_file(&buf, path, 0) < 0)
->   >                ret = error_errno(_("could not read '%s'"), path);
->   >            else
->   >      @@ trailer.c: int amend_file_with_trailers(const char *path,
->   >
->   >            if (!ret)
->   >                ret = write_file_in_place(path, &buf);
->   >      -
->   >      + out:
->   >       -    strvec_clear(&stripped_trailer_args);
->   >            strbuf_release(&buf);
->   >            return ret;
->   >        }
->   >
->   >        ## trailer.h ##
->   >      -@@ trailer.h: void amend_strbuf_with_trailers(struct strbuf *buf,
->   >      +@@ trailer.h: int amend_strbuf_with_trailers(struct strbuf *buf,
->   >        /*
->   >         * Augment a file by appending trailers specified in trailer_args.
->   >         *
->   > 5:  864cf5f8eb6 ! 6:  99654d80547 rebase: support --trailer
->   >      @@ Commit message
->   >           non-interactive and interactive rebases.
->   >
->   >           Signed-off-by: Li Chen <me@linux.beauty>
->   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->   >
->   >        ## Documentation/git-rebase.adoc ##
->   >       @@ Documentation/git-rebase.adoc: See also INCOMPATIBLE OPTIONS below.
->   >      @@ Documentation/git-rebase.adoc: See also INCOMPATIBLE OPTIONS below.
->   >       +--trailer=<trailer>::
->   >       +    Append the given trailer to every rebased commit message, processed
->   >       +    via linkgit:git-interpret-trailers[1]. This option implies
->   >      -+    `--force-rebase` so that fast-forwarded commits are also rewritten.
->   >      ++    `--force-rebase`.
->   >       ++
->   >       +See also INCOMPATIBLE OPTIONS below.
->   >       +
->   >        -i::
->   >        --interactive::
->   >            Make a list of the commits which are about to be rebased.  Let the
->   >      +@@ Documentation/git-rebase.adoc: are incompatible with the following options:
->   >      +  * --[no-]reapply-cherry-picks when used without --keep-base
->   >      +  * --update-refs
->   >      +  * --root when used without --onto
->   >      ++ * --trailer
->   >      +
->   >      + In addition, the following pairs of options are incompatible:
->   >      +
->   >
->   >        ## builtin/rebase.c ##
->   >       @@
->   >      @@ builtin/rebase.c: int cmd_rebase(int argc,
->   >                         builtin_rebase_usage, 0);
->   >
->   >       +    if (options.trailer_args.nr) {
->   >      -+        validate_trailer_args(&options.trailer_args);
->   >      ++        if (validate_trailer_args(&options.trailer_args))
->   >      ++            die(NULL);
->   >       +        options.flags |= REBASE_FORCE;
->   >       +    }
->   >       +
->   >      @@ sequencer.c: void replay_opts_release(struct replay_opts *opts)
->   >            free(opts->ctx);
->   >        }
->   >       @@ sequencer.c: static int append_squash_message(struct strbuf *buf, const char *body,
->   >      +     if (is_fixup_flag(command, flag) && !seen_squash(ctx)) {
->   >      +         /*
->   >      +          * We're replacing the commit message so we need to
->   >      +-         * append the Signed-off-by: trailer if the user
->   >      +-         * requested '--signoff'.
->   >      ++         * append any trailers if the user requested
->   >      ++         * '--signoff' or '--trailer'.
->   >      +          */
->   >                if (opts->signoff)
->   >                    append_signoff(buf, 0, 0);
->   >
->   >      @@ sequencer.c: static int do_pick_commit(struct repository *r,
->   >            if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
->   >                res = -1;
->   >            else if (!opts->strategy ||
->   >      +@@ sequencer.c: static void read_strategy_opts(struct replay_opts *opts, struct strbuf *buf)
->   >      +     parse_strategy_opts(opts, buf->buf);
->   >      + }
->   >      +
->   >      ++static int read_trailers(struct replay_opts *opts, struct strbuf *buf)
->   >      ++{
->   >      ++    ssize_t len;
->   >      ++
->   >      ++    strbuf_reset(buf);
->   >      ++    len = strbuf_read_file(buf, rebase_path_trailer(), 0);
->   >      ++    if (len > 0) {
->   >      ++        char *p = buf->buf, *nl;
->   >      ++
->   >      ++        trailer_config_init();
->   >      ++
->   >      ++        while ((nl = strchr(p, '\n'))) {
->   >      ++            *nl = '\0';
->   >      ++            if (!*p)
->   >      ++                return error(_("trailers file contains empty line"));
->   >      ++            strvec_push(&opts->trailer_args, p);
->   >      ++            p = nl + 1;
->   >      ++        }
->   >      ++    } else if (!len) {
->   >      ++        return error(_("trailers file is empty"));
->   >      ++    } else if (errno != ENOENT) {
->   >      ++        return error(_("cannot read trailers files"));
->   >      ++    }
->   >      ++
->   >      ++    return 0;
->   >      ++}
->   >      ++
->   >      + static int read_populate_opts(struct replay_opts *opts)
->   >      + {
->   >      +     struct replay_ctx *ctx = opts->ctx;
->   >       @@ sequencer.c: static int read_populate_opts(struct replay_opts *opts)
->   >      +             opts->keep_redundant_commits = 1;
->   >
->   >                read_strategy_opts(opts, &buf);
->   >      ++
->   >      ++        if (read_trailers(opts, &buf)) {
->   >      ++            ret = -1;
->   >      ++            goto done_rebase_i;
->   >      ++        }
->   >                strbuf_reset(&buf);
->   >      -+        if (strbuf_read_file(&buf, rebase_path_trailer(), 0) >= 0) {
->   >      -+            char *p = buf.buf, *nl;
->   >      -+
->   >      -+            while ((nl = strchr(p, '\n'))) {
->   >      -+                *nl = '\0';
->   >      -+                if (!*p)
->   >      -+                    BUG("rebase-merge/trailer has an empty line");
->   >      -+                strvec_push(&opts->trailer_args, p);
->   >      -+                p = nl + 1;
->   >      -+            }
->   >      -+            strbuf_reset(&buf);
->   >      -+        }
->   >
->   >                if (read_oneliner(&ctx->current_fixups,
->   >      -                   rebase_path_current_fixups(),
->   >       @@ sequencer.c: int write_basic_state(struct replay_opts *opts, const char *head_name,
->   >                write_file(rebase_path_reschedule_failed_exec(), "%s", "");
->   >            else
->   >
->   >
-> 
+Thanks for reading.
+---
 
+Refactoring in order to reduce Git's global state
+
+Personal Information:
+---------------------
+
+Name: Shreyansh Paliwal
+Email: Shreyanshpaliwalcmsmn@gmail.com
+Alternate Email: Shreyansh.01014803123@it.mait.ac.in
+Mobile No.: +91-9335120023
+
+Education: GGSIPU, New Delhi, India
+Year: III / IV
+Degree: Bachelor of Technology in Information Technology
+
+Github: https://github.com/shreyp135
+Time-zone: UTC +5:30 (IST)
+
+About Me:
+---------
+
+I am Shreyansh Paliwal, a pre-final year undergraduate student at Guru
+Gobind Singh Indraprastha University, New Delhi, India. I am a technology
+enthusiast, who began programming in 2018 with Java as my first language
+and later transitioned to C/C++ in 2023 as my primary focus. I enjoy
+exploring new technologies and programming languages, and I have developed
+solid experience building applications using TypeScript, React.js, Node.js,
+and AWS. I actively participate in technical events and have organized
+multiple hackathons, tech-fests, and related activities at my college as
+the SIG-Head of IOSD, a tech-focused student community.
+
+I started using Git in 2023, which is also when I made my first open-source
+contribution to the Git project. I was a winner of Augtoberfest 2024, an
+open-source competition organized by C4GT India. Over the past several
+months, I have been involved with the Git project, studying the codebase,
+submitting patches, and incorporating review feedback. I am motivated to
+improve the experience of Git for end users, and this project is an
+excellent opportunity to continue that work.
+
+Overview:
+---------
+
+Git relies heavily on global state for managing environment variables and
+configuration data. In particular, many parts of the codebase depend on the
+global struct repository instance, the_repository, which represents the
+currently active repository. Instead of passing a repository instance
+explicitly, several internal functions implicitly rely on this global
+object. Additionally, various configuration derived values and
+environment-related variables such as the_hash_algo, default_abbrev, and
+comment_line_str are stored globally, most of them defined in
+environment.c.
+
+This design assumes that only one repository is active within a process at
+a time. As a result, the repository state becomes shared across the entire
+process, weakening isolation and making behavior implicitly dependent on
+global context. Such global dependencies make the code harder to reason
+about, test, and maintain, and can introduce subtle bugs when operations
+interact with multiple repositories. They also limit long-term goals such
+as safely supporting multiple repositories within a single process and
+continuing Git’s ongoing libification efforts.
+
+To address these issues, global environment and configuration state should
+be refactored into better-scoped contexts. Repository-specific data can be
+moved into struct repository or related structures, while
+subsystem-specific state should be localized appropriately. Passing
+repository instances explicitly through function interfaces will improve
+modularity, reduce hidden dependencies, and make the codebase easier to
+maintain while moving Git closer to supporting multiple repositories safely
+within a single process.
+
+The difficulty of this project is medium, and it is estimated to take 175
+to 350 hours.
+
+Pre-GSOC:
+---------
+
+I first explored the Git codebase in December 2023, when I submitted a
+small patch fixing the wording of an error message that I noticed while
+browsing the source code. At that time I had recently started using Git and
+GitHub for version control in my projects, which sparked my curiosity about
+how Git works internally.
+
+A few months ago, when I had some free time from college, I decided to
+start contributing to Git more actively. I built Git from source, read
+parts of the documentation, and familiarized myself with the mailing list
+workflow. While going through the documentation, I noticed a few
+inconsistencies in the MyFirstContribution page and submitted patches to
+fix them. I also completed a microproject involving a test cleanup, and
+later worked on adding a warning for a quiet fallback.
+
+During this process, I attempted to remove the usage of the_repository from
+a file. However, after discussion on the mailing list, Phillip pointed out
+that the change was not particularly useful in that context and could
+introduce segfaults that would not justify the effort for builtin code.
+Based on this feedback, I dropped that attempt and instead focused on
+understanding the broader global state refactoring effort. To better
+understand the project area, I studied previous patches and blog posts by
+Ayush Chandekar and Olamide Bello, followed discussions on the mailing
+list, and explored parts of the codebase such as the wt-status and worktree
+subsystems. This helped me understand the ongoing effort to reduce Git’s
+reliance on global state and motivated me to work further in this area.
+
+The following is a list of my contributions, ordered from earliest to most
+recent:
+
+Patches for Git:
+----------------
+
+* test-lib-functions.sh: fix test_grep fail message wording
+        Status: Merged into master
+        Mailing List: https://lore.kernel.org/git/20231203171956.771-1-shreyanshpaliwalcmsmn@gmail.com/
+        Merge Commit: 37e8d795bed7b93d3f12bcdd3fbb86dfe57921e6
+        Log: This was my first patch to Git in 2023. While browsing the
+                 source code and past issues, I noticed that even after
+                 the test_i18ngrep function was deprecated, an error message
+                 referring to test_grep was left behind. I updated the
+                 wording to correctly reference test_i18ngrep.
+
+* doc: MyFirstContribution: fix missing dependencies and clarify build steps
+        Status: Merged into master
+        Mailing List: https://lore.kernel.org/git/20260112195625.391821-1-shreyanshpaliwalcmsmn@gmail.com/
+        Merge Commit: 81021871eaa8b16a892b9c8791a0c905ab26e342
+        Log: While getting familiar with the codebase, I followed the
+                 MyFirstContribution documentation and encountered a few
+                 issues. Some include headers were missing, the synopsis
+                 format was incorrect, and the explanation for -j$(nproc)
+                 was absent. I submitted fixes to improve the clarity and
+                 correctness of the documentation.
+
+* t5500: simplify test implementation and fix git exit code suppression (Microproject)
+        Status: Merged into master
+        Mailing List: https://lore.kernel.org/git/20260121130012.888299-1-shreyanshpaliwalcmsmn@gmail.com/
+        Merge Commit: a824421d3644f39bfa8dfc75876db8ed1c7bcdbf
+        Log: This was completed as a microproject for GSoC. Instead of 
+                constructing the pack protocol using a complex combination
+                of here-docs and echo commands, the patch captures command
+                outputs beforehand and uses the test-tool pkt-line pack
+                helper to construct the protocol input in a temporary file
+                before feeding it to git upload-pack.
+
+* show-index: add warning and wrap error messages with gettext
+        Status: Merged into master
+        Mailing List: https://lore.kernel.org/git/20260130153603.290196-1-shreyanshpaliwalcmsmn@gmail.com/
+        Merge Commit: ea39808a22714b8f61b9472de7ef467ced15efea,
+                227e2cc4e1415c4aeadceef527dd33e478ad5ec3
+        Log: While exploring the code, I noticed a TODO comment suggesting
+                automatic hash detection. After discussion on the mailing
+                list, it was concluded that there was no future-proof
+                approach to implement this until a new index file format
+                came into use. Instead, an explicit warning was added rather
+                than silently falling back to SHA-1. Additionally, several
+                error messages were missing gettext wrapping, which was also
+                fixed.
+
+* wt-status: reduce reliance on global state
+        Status: Merged into seen
+        Mailing List: https://lore.kernel.org/git/20260218175654.66004-1-shreyanshpaliwalcmsmn@gmail.com/
+        Merge Commit: a7cd24de0b3b679c16ae3ee8215af06aeea1e6a3,
+                9d0d2ba217f3ceefb0315b556f012edb598b9724,
+                4631e22f925fa2af8d8548af97ee2215be101409
+        Log: This has been the most significant patch series in my journey
+                so far. It began with a suggestion from Phillip to clean up
+                some the_repository usages in wt-status.c. I extended the
+                effort to remove all usages of the_repository and
+                the_hash_algo from the file. During review discussions, it
+                was suggested that some worktree API cleanup should happen
+                first, particularly regarding the representation of worktrees
+                as NULL. Some related changes were later moved to a separate
+                series, after which this refactoring proceeded.
+
+* worktree: change representation and usage of primary worktree
+        Status: Continued by Phillip Wood [1]
+        Mailing List: https://lore.kernel.org/git/20260213120529.15475-1-shreyanshpaliwalcmsmn@gmail.com/
+        Log: This worktree API cleanup series started while I was working
+                on wt-status. The intention was to modify the representation
+                of the current worktree so that struct worktree would not be
+                NULL. During discussion, Phillip clarified that NULL actually
+                represents the current worktree rather than the primary
+                worktree. Since Phillip already had a patch based on the right
+                logic, he continued the series and it was eventually merged
+                into master.
+
+* tree-diff: remove the usage of the_hash_algo global
+        Status: Merged into master
+        Mailing List: https://lore.kernel.org/git/20260220175331.1250726-1-shreyanshpaliwalcmsmn@gmail.com/
+        Merge Commit: 1e50d839f8592daf364778298a61670c4b998654
+        Log: This was a straightforward patch that removed the remaining
+                usages of the global the_hash_algo in tree-diff.c by using the
+                repository’s local instance instead.
+
+* send-email: UTF-8 encoding in subject line
+        Status: Merged into seen
+        Mailing List: https://lore.kernel.org/git/20260228112210.270273-1-shreyanshpaliwalcmsmn@gmail.com/
+        Merge Commit: c52f085a477c8eece87821c5bbc035e5a900eb12
+        Log: This patch was motivated by an issue I personally encountered
+                while sending a GSoC discussion email [2]. Initially the
+                change only modified the wording of the prompt, but after
+                discussion on the mailing list it was extended to include
+                proper validation to prevent invalid charset encodings from
+                being used in git send-email and to reduce confusion.
+
+* Remove global state from editor.c
+        Status: Waiting for further feedback
+        Mailing List: https://lore.kernel.org/git/20260301105228.1738388-1-shreyanshpaliwalcmsmn@gmail.com/
+        Log: This was based on my doubt on localizing editor_program in
+                editor.c [2]. The patch received mixed feedback from
+                contributors and is currently awaiting additional guidance
+                from mentor and/or maintainer regarding the appropriate
+                direction.
+
+Patches for git.github.io:
+--------------------------
+
+* SoC-2026-ideas: Remove an extra backtick
+        Status: merged into master
+        PR Link: https://github.com/git/git.github.io/pull/831
+        Merge Commit: c1e4aa87a54430953eaa7355061139fdf1ff6796
+        Log: Minor Typo fix.
+
+* rn-132: fixed 2 typos
+        Status: merged into master
+        PR Link: https://github.com/git/git.github.io/pull/832
+        Merge Commit: 92876114d855d472ce2e0e5337e72a4b97b81681
+        Log: Fixed typos in Git Rev News Edition 132.
+
+I have also been involved in additional discussions on the Git mailing
+list [3][4][5][6].
+
+History / Background:
+--------------------
+
+Efforts to reduce Git’s reliance on global state started when several Git
+subsystems began moving toward libification, where Git’s internal
+functionality could be reused as a library. Early examples of this
+direction include major patch series such as the libification of git
+mailinfo by Junio [7] and git apply by Christian [8]. These large patch
+series exposed the limitations of relying on process-wide global state and
+highlighted the need for better encapsulation of repository-related data.
+
+One important step in this direction was the introduction of struct
+repository, through refactoring work by Stefan Beller [9] and Brandon
+Williams [10]. The motivation behind this structure was to centralize
+repository-related state instead of relying on scattered global variables.
+This change improved code clarity and made it easier to reason about Git’s
+internal behavior. It also laid the groundwork for future improvements such
+as safer multithreading and the possibility of handling submodules within
+the same process. Later, additional refactoring work by Patrick further
+removed reliance on the global the_repository in config [11] and path [12]
+subsystems. As part of this work, several variables were consolidated into
+environment.c from config.c so that environment-related state could be
+managed in a single location [13]. The macro #define
+USE_THE_REPOSITORY_VARIABLE was also introduced to help transition code
+away from implicit global repository access [14].
+
+This project area was further explored during GSoC 2025 by Ayush Chandekar
+[15], who continued removing usages of the_repository across different parts
+of the codebase and relocated several global configuration variables (such as
+core_preload_index and merge_log_config) into repository-scoped structures.
+More recently, Olamide Bello, during the Outreachy program, made significant
+progress in improving how configuration values are stored [16] [17]. His work
+introduced a new structure, repo_config_values, which stores repository
+specific configuration values, linked to struct repository. This allows
+configuration values to be associated with a specific repository instance
+rather than stored globally. Along with this, a private structure
+config_values_private was added to support initialization and internal
+handling of these values. During discussions around these changes, an
+important design consideration also emerged, moving global variables directly
+into repository structures or introducing lazy loading helpers can lead to
+user experience regressions if configuration errors are detected later.
+
+These efforts collectively form the foundation of the ongoing work to
+gradually remove Git’s reliance on global state and move toward a more
+modular, repository-scoped architecture.
+
+Proposed Plan:
+-------------
+
+I started exploring the codebase by browsing relevant files and identifying
+global variables by temporarily removing the USE_THE_REPOSITORY_VARIABLE
+macro. My primary focus was on core library files rather than builtin code
+[18]. Through this exploration, I observed that a large number of files still
+depend on the_repository.
+
+To tackle this project systematically, I propose classifying these files into
+two categories:
+
+1. Files using the_repository or the_hash_algo where a repository instance
+   already exists: These files rely on global variables even though a
+   struct repository instance is available somewhere in the call stack. In
+   such cases, the refactor primarily involves passing the repository
+   instance through the function call stack and replacing the global
+   usages. In some cases, a repository instance may not be directly
+   available in the file itself. In those situations, I will trace the
+   callers and propagate repository instances from higher levels in the call
+   hierarchy. Examples of such files include, alias.c, archive*.c,
+   walker.c, xdiff-interface.c. These cases generally require localized
+   refactoring and are good candidates for incremental patches.
+
+2. Files relying on other global variables defined in environment.c: Some
+   files rely on additional global variables which are parsed and accessed
+   through environment.c. In these cases, there is no existing
+   repository-scoped instance, which makes refactoring slightly more
+   technical. Examples include, wt-status.c (default_abbrev,
+   comment_line_str), apply.c (has_symlink, ignore_case,
+   trust_executable_bit, apply_default_whitespace,
+   apply_default_ignorewhitespace). For such variables, I plan to evaluate
+   whether they should be moved into a repository-scoped structure (e.g.,
+   repo_settings, repo_config_values), or they should instead be localized
+   and passed explicitly where needed. The appropriate approach will depend
+   on how widely the variable is used and whether it logically fits in the
+   multi-repository standpoint.
+
+I plan to begin with the first category, addressing straightforward
+refactors file by file. In parallel, I will analyze and work on specific
+groups of global variables from the second category, designing appropriate
+repository-scoped replacements.
+
+The end goal is to remove reliance on global state and eventually eliminate
+the USE_THE_REPOSITORY_VARIABLE macro from these files.
+
+Project Timeline:
+----------------
+
+* Community Bonding (Until May 24):
+        - Discuss the project direction and design approaches with mentors.
+        - Identify and prioritize two main areas of work:
+                + files that rely on the_repository.
+                + global variables defined in environment.c.
+        - Study the previous patches by Olamide Bello and Ayush in depth and
+                 also discuss with them about their approaches and challenges.
+        - Interact with all the people involved in this work to better
+                 understand design decisions and potential pitfalls.
+        - Experiment with small RFC patches, if needed to validate approaches.
+
+* Coding period (May 25 - August 16):
+        - Review the work done by Olamide Bello on moving values parsed by
+                 git_default_config() into the repo_config_values structure and
+                 identify any remaining tasks.
+        - Complete remaining cleanup or refactoring related to the worktree API,
+                 if left any [19].
+        - Identify straightforward refactors to remove usages of the_repository
+                 in files such as xdiff-interface.c, archive*.c, fsmonitor*.c etc.
+        - Work file by file with the goal of eliminating
+                 #define USE_THE_REPOSITORY_VARIABLE by replacing global usages
+                 with explicit repository instances.
+        - Concurrently maintain at least two parallel patch series:
+                + Small / straightforward refactors and replacements like
+                         the_hash_algo or the_repostitory.
+                + Larger structural refactors involving globals such as
+                         DEFAULT_ABBREV, comment_line_str etc.
+        - Publish weekly or biweekly blog updates documenting progress and design
+                 decisions.
+
+* Final week (august 17 - august 24):
+        - Address any remaining tasks or pending patches.
+        - Recieve final feedback from mentors and reviewers.
+        - Prepare a detailed report summarizing the work completed during the project.
+
+Blogging:
+---------
+
+I believe blogging is an important part of any open-source project. It
+helps others understand the ongoing work and also enables the contributor
+to develop a deeper understanding and keep a better track of their own
+progress. I experienced this firsthand, early in my journey I was unsure
+about various aspects, but reading the blogs of Ayush and Olamide Bello
+gave me valuable insight into the contributor perspective and their overall
+work.
+
+With the goal of helping future contributors in a similar way, I plan to
+document my journey and project progress through regular blog posts. I will
+publish updates on a weekly or biweekly basis, depending on the amount of
+meaningful progress made. I have set up my blogging area on Medium, and my
+posts will be available at [20].
+
+
+Availability:
+-------------
+
+The main coding period runs from June to August. Most of June and July
+coincide with my summer vacation, which allows me to dedicate significant
+time to the project. My final exams are scheduled for May and will last
+approximately one week, but they will be completed before the coding period
+begins and should not affect my availability.
+
+During June and July, I will be able to dedicate around 40 hours per week to
+the project. In August, when my regular semester resumes, I expect to
+contribute approximately 25–30 hours per week.
+
+I do not have any other exams, internships, or planned vacations during the
+coding period. Apart from this project, I have no other major commitments
+for the summer.
+
+I will keep the community regularly updated on my progress throughout the
+project. My primary mode of communication will be email, and I will also be
+available for calls or meetings if/when required. My preferred availability
+window is 13:00–19:00 UTC.
+
+Post GSoC:
+----------
+
+Being part of the Git community and contributing to the codebase has been a
+very valuable experience for me. The process of understanding Git’s internals,
+submitting patches, and receiving feedback on the mailing list has helped me
+grow significantly as a developer. The feeling of working on code that is used
+by millions of developers and companies around the world is very rewarding.
+
+I plan to remain involved with the Git community even after GSoC by continuing
+to contribute patches, review code, and participate in discussions to help make
+Git better for end users. The work on refactoring Git’s global state is part of
+a long-term effort, and I would love to continue working on it beyond the GSoC
+timeline.
+
+I would also be happy to mentor, co-mentor, or volunteer in the future to help
+new and upcoming contributors whenever I get the chance. I see GSoC as the
+starting point of a long-term relationship with the Git community.
+
+Closing & Appreciation:
+-----------------------
+
+I would like to thank the Git community for the excellent documentation and the
+welcoming environment. I am also grateful for the patience and guidance shown
+in the feedback and discussions on the mailing list by Junio, Phillip, Karthik,
+Ben, and others, which have helped me improve my understanding and contributions.
+
+I also read blogs and proposals by Ayush, Lucas, Kousik Sanagavarapu, and Olamide
+Bello, which provided valuable insights and helped shape my approach to contributing.
+
+Thank you for reviewing my proposal :)
+
+References:
+-----------
+
+[1]- https://lore.kernel.org/git/cover.1771511192.git.phillip.wood@dunelm.org.uk/
+
+[2]- https://lore.kernel.org/git/20260304145823.189440-1-shreyanshpaliwalcmsmn@gmail.com/T/#m65b9b4547036991a7b7f3c861b9663428891f588
+
+[3]- https://lore.kernel.org/git/20260114143238.536312-1-shreyanshpaliwalcmsmn@gmail.com/
+
+[4]- https://lore.kernel.org/git/20260115211609.17420-1-shreyanshpaliwalcmsmn@gmail.com/
+
+[5]- https://lore.kernel.org/git/20260204111343.71975-1-shreyanshpaliwalcmsmn@gmail.com/
+
+[6]- https://lore.kernel.org/git/20260205131132.44282-1-shreyanshpaliwalcmsmn@gmail.com/
+
+[7]- https://lore.kernel.org/git/1444778207-859-1-git-send-email-gitster@pobox.com/
+
+[8]- https://lore.kernel.org/git/20160511131745.2914-1-chriscool@tuxfamily.org/
+
+[9]- https://lore.kernel.org/git/20180205235508.216277-1-sbeller@google.com/
+
+[10]- https://lore.kernel.org/git/20170531214417.38857-1-bmwill@google.com/
+
+[11]- https://lore.kernel.org/git/cover.1715339393.git.ps@pks.im/
+
+[12]- https://lore.kernel.org/git/20250206-b4-pks-path-drop-the-repository-v1-16-4e77f0313206@pks.im/
+
+[13]- https://lore.kernel.org/git/20250717-pks-config-wo-the-repository-v1-20-d888e4a17de1@pks.im/
+
+[14]- https://lore.kernel.org/git/cover.1718347699.git.ps@pks.im/
+
+[15]- https://ayu-ch.github.io/2025/08/29/gsoc-final-report.html
+
+[16]- https://cloobtech.hashnode.dev/week-5-and-6-design-reviews-rfcs-and-refining-the-path-forward
+
+[17]- https://lore.kernel.org/all/cover.1771258573.git.belkid98@gmail.com/
+
+[18]- https://lore.kernel.org/git/7b5dd0c4-0ca0-458e-89db-621a70dac9ae@gmail.com/
+
+[19]- https://lore.kernel.org/git/20260217163909.55094-1-shreyanshpaliwalcmsmn@gmail.com/
+
+[20]- https://medium.com/@shreyanshpaliwal18
