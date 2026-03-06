@@ -1,159 +1,108 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3381D5141
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 05:05:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772773530; cv=none; b=NbvWwVJs2BvEtxUifOegs0sTFKA2Nwm/e/Rf15SwYpxTCFwdO7MwPsg/E3RjfvjYlXIoDsNcG7Szf473+OvXWfaftBR7u2/I5+EgGBPPI5d6ORw/gqEkj/gr0Eq0bx0m19mX732eVj7Y2dG8abeFhsv98PdmpUdv3rEY0M3S1TQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772773530; c=relaxed/simple;
-	bh=APP8HWq+09WnMT0tS+GCMeOFeSnngcql4dNgnYXuL6M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ufy/xGQE/878zWIYLdfoRD1/aUVRiW3Xt40Rix/glc2wCD2jSfGwnpxeP4E3+DcwrxgR74pURt8Q6XoujkscNiVozvO4ptC6vaRW8/2bb8+uX9IK8xEt+B8mWo46yO/fH3asPEoExYgihEFATao+BKtyzPXxKpdF0DsLDH1s5gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FzzyMIOq; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7A2330B09
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 05:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772773859; cv=pass; b=kVA/ZY1x05u9hOQ8wj9XnX7gyIgmfpf2UylJU8I5iN+uP1HeKqVGfFGXpmxJyL0zlugDZ9hOoZS8bqIbwVToNLw/QjlzjqDH7cDJv1rzK5v1rIALh3kHNff61FmPG3+I7XJclqzJ8jdkiF1YAtTXyEb44h/UxAgoc84CqdRAL68=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772773859; c=relaxed/simple;
+	bh=auf1yLYEbLKish4BXHUmrUAEs78XFQv0P5cG1Nb9fpY=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=pFD35rG3OVkRxUGY+YFjZ1KUdq7kXuf0cMOJJeixXc16O2dRAPLy8M60ky5XIIgzPSS8xrIPISrgmD1Tg/Z0jFclv6JnNpI9dLAecokD3uYPZM7bPovJE/Q1maJD3RbCohMQIKM9O1c5zclW3uLUw/dxybFA6DCK6ClWXn/f7ho=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mXB76HSN; arc=pass smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FzzyMIOq"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ae505619baso31389185ad.2
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 21:05:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mXB76HSN"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b93695f7cdcso1159657666b.3
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 21:10:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772773856; cv=none;
+        d=google.com; s=arc-20240605;
+        b=OtCWksa3i0iX0WBDTg2YtaUCg5qsG5SrHS2qTvYL05PeNQ1sfGsZ+dZx7OAuiPPOA9
+         drc7tNvpLcd6doD0YOqPf95LIYz1Ro6unkatriCiAvZiZr8Zi76wxt3HXRr7/1WnMLVo
+         6YdYslDbdDOgx6JyZWPVO5c2lZfsU6/WmzAM/edr2xRMbsTcG3Z9beRD4eNP6D7A2elY
+         88YyXdMbjuvIbwDLg/YtZV+J/Mk6T74l7l9yFCLXJ3HHUiOlWfIJNsHQ3/io8RKp60vk
+         VT+Yf4MeNtSWkmL8P7tXw7bRk6NVlcVvLsBKAKbDoX910OnJhliMX/aYgM5/ekUpzNcl
+         QDVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=auf1yLYEbLKish4BXHUmrUAEs78XFQv0P5cG1Nb9fpY=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=O41Ooo/uxCxM0Zn3Yb/Cipej5H1I09wIxmyPzWClCWh/t312YtDR/pAgnku891AXOl
+         LQ7sqIsMp7hw85Ky3vXtibh/VLlNhYaWOmQVzU6DCuPSEFxE4kf0/7qRZT8XV/keVbei
+         pRai9MgMSzhVP6UzRtMs3RsEG0jgyqw0mzHoFbrqstsjE2HMsNHXC6uR2UrqkWhuK0PH
+         j1RYm0cvbhK1KTYUiC6SMCp16JGLvJHDWjigqSfOOZddbwlgjAkpE+Zpm580zpIkKqUR
+         Rv4iYjvPRrm68joBtHALYqWTogAyeqcOdLyc35gP/AHUGckKzHLEsQFVZV7Cy+UfPg6Z
+         EDJQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772773529; x=1773378329; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bGJ+878oQ57zf09WuRPWlWukg5DtQXg6VyBQj1l1eME=;
-        b=FzzyMIOqtaCMglPaNYhZc6WwZPZdXAuFBHEzA9ovG2GgD8Lnb/UnvVzP4UyFD2nKvr
-         G6mpFYnRB/b6akQuCTOVB8x+12EWkTJWVEmRdtZ9rbBClD9mOPsXDRjMgp6Pme1n7Rkw
-         APz2fMVhqP9WiQB9NfF2mdVqJwJpYvnPabrC5g/6jtHp/oGiULnAkiPxWELi8Zf330Jb
-         Izbgv2NBHgksqS/hje5nV5+F+/JzcpI/aodab7xM2rBml9hOK3HaWXW4ibKlX22ZCzP1
-         jpPgYSxUsNVk2sundeV6Pn+KHZr/sSDabjtxSuwfkK5MotOyZ6INCKhTfU66olDCsmX4
-         7ucg==
+        d=gmail.com; s=20230601; t=1772773856; x=1773378656; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=auf1yLYEbLKish4BXHUmrUAEs78XFQv0P5cG1Nb9fpY=;
+        b=mXB76HSN/eRQ80SrkQSrsC+LKqHAsA8LYojNWkcotwSgvG6F/kC2ypcLsfbzYuyc4T
+         vYVj71fERY4eN4xFMX/JR5CR24z+8+CS/98xMrglYmwI9Bys0V5dAE9X5h79hJLS6JH4
+         FQRK78twvgwhIIjAp2SxNiitsQLO9A+X9o0qsJ+6+UivDpqbVrP8xVmM8mVfPGhid1i5
+         GYdK6SBTjA4Stnpli4DCoXsmiNUf0w2WFjYbEyycD0cH/eN4slvpj576QrBjA29CO4nN
+         B3I8SQJizwybD82UTpF3m012Wqwkws/SVGYx/AU0dzrSojsAGgOLQoJJyMt+GpATgNjg
+         YvmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772773529; x=1773378329;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bGJ+878oQ57zf09WuRPWlWukg5DtQXg6VyBQj1l1eME=;
-        b=okdI52ynEsyxLj81vZOqUinfgecUuwJSNravHKW3N/pxLc2Cmcx9PRKz987mclGrO9
-         wfh5fqcRFARse7eRda6JjWbkXzmIyRZtBhph5XZKxmHxhAKQMoUlPAd1C0ESxZKxqEfN
-         T0teu+88jRUu8w9irgWAA1M7K0S5yOghfFADrwHs+wcfQH4q2AW5Gth/asoVANi1wNsY
-         baSHP6UI34apk3/m3BU+xQuTnEUwFodGBHTiOGo1aC+Xs04ZmPq3MSW5RC8DCEme+jzp
-         y+3LuGeZiOU1BciYdE4qCrXDV9w5I3VDALiwjFnWQ5TH2Ji+8EHpJ49xlhQe0t6ldQ6M
-         8bMw==
-X-Forwarded-Encrypted: i=1; AJvYcCXog1KN0eg+FmgVRGUUlPGmUJXaZxx5R4u9flZGqpat6B2eQHN8Bcg8px6lu/+WJlvIPwE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YznNhfUvnK3yPf5D8QENqzA6d27LzXizVrLLEHCd/BhtW96xL1S
-	y8qClC9XxzCu4kc+qivMXJxaBc/wG4g2N/K9beYmrZt4wwtAlREDns7A
-X-Gm-Gg: ATEYQzxqHE9Bxg1TgBp7IJo4uPZ8JtR+ETtIpsPBXwqwUlZ0xWg+BSFK95gUh2I0Gce
-	I3jnq2+gYamfYvl/C7xajRdDtOYQZ/VASYrvO8DNBxlzJOzGc0+8xZ4cV3j5irD+iFSM8I5eGE3
-	28+Hm66vEQ+G0h74qoQ6xhiiiNEu3EWq8weuKHgONN2FlETaP6oKCDoGUTworWMydTtbH4CQS7S
-	xSqlMMhHTOLOitqwThWtXEnHKiC3JgSi/sfuGJWDqPb/btU+0FcT2PMHmVnY3cigLujaTwD1zb6
-	JkDNhwvgOulzywXlGTt4SL3NHQhy6Ff3n8Y/poJgqtSx32Iv/TIs96baLkVKceS2sr+LfHphVAp
-	pXynuPAUXcFUa42fhmr5XR4Kr2Kn0Fvr5o7wAKjImw9eK3U86tktzFw3VwzTn/xZaMKxhIL5bMQ
-	WJtCfEg7Y12j+tGWec/M1IaQBImg2R3erMqTLoHOe5YcYgKI03FQ+8tmPhraIZvmDCbxPOC19gX
-	jYMPr2dYGkb+odLQE4Xb4iwWlf0KzXcrMKK
-X-Received: by 2002:a17:903:1a0f:b0:2ae:5a7c:286 with SMTP id d9443c01a7336-2ae823feab0mr10959815ad.4.1772773528822;
-        Thu, 05 Mar 2026 21:05:28 -0800 (PST)
-Received: from ?IPV6:2401:4900:862d:bb67:1c20:bec7:1904:ead0? ([2401:4900:862d:bb67:1c20:bec7:1904:ead0])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83d85a2asm6125565ad.0.2026.03.05.21.05.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Mar 2026 21:05:28 -0800 (PST)
-Message-ID: <31384cd8-6739-40dd-a963-ce1597921969@gmail.com>
-Date: Fri, 6 Mar 2026 10:35:21 +0530
+        d=1e100.net; s=20230601; t=1772773856; x=1773378656;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=auf1yLYEbLKish4BXHUmrUAEs78XFQv0P5cG1Nb9fpY=;
+        b=fUeeHJlBuYJMADAUaE/86bZY4hW7lvHgKHfVzqtW+40D6K1CERfKyiJVHT3CsYTvIS
+         4hkUgXBmIvEiW+DZPLEXpo6xSJKo5nwRhWBDoV9pYQqvxKI/lUTW9B9q0N0nQSoJAuS/
+         hfz18oJwttMeHkExwWCqzyVzOgxgfAvi5I3bjtQPN970FzUgxS09c+GeKWT/w//f+pnA
+         ODEzkP6t8MhRHVY39Zt1tjVp6zpcjIsyi5EKJ6fh/QlozJYiJ9LNu1SuYbB58DErT3Oy
+         w0Ai/qxd2EKGzgwfCtPonFdOf6Ojfac6UzUmq2njcmSBPKg1HIj+d7OX+hil6VuzkPjC
+         LTxQ==
+X-Gm-Message-State: AOJu0Yw3+jwVIePzi9+y6cV53O7irDZVC7TrMggYke8/3ZecLszB70EV
+	49+upXzQGm3Or0mlEnx8CMNkQxzQSm+Kyi1QXCBanur+tAFxH6qxNi5jWIc3URSVzQIO87HuBAE
+	KtY1Xg++9eWWGJ1bHSlFePXpvSZs/6QXwa97ne1kZ
+X-Gm-Gg: ATEYQzwtvNx8gQVpo7VOF3GHI27Ey51ywF2VLy2CLJRBndKP9e2DyPB7PSaCzLOqW/J
+	SL+SsnjUNyappEheGVyNSc5VZ2tdnoFB8uXT+GeFUCr5x6d7VpxAKL2nu/FO7sWLo8e/RUEsYlu
+	pgahhlM6wRbsBFxBkDKvYqXbUfIxR2Eipqp/mtCA8NX03mDYu5xXIa1Mskov9DicuULCGTNyt3t
+	YaAfQr8Pnibtj//A5zKlb2lj1UzYxCqS1Je7c/nFbw9thHhoa7y0OG8AaR62r8FgYkxU5l81Bzb
+	ivvFq1bhiWyEu5CRaLrKRqGIRW9BtNzu7wmHXX7hXRxytDCSevfpfdC5+EHga38jMAqQk3X6/t4
+	7KWveew==
+X-Received: by 2002:a17:907:e8e:b0:b94:1f00:1ffc with SMTP id
+ a640c23a62f3a-b942dfaa0c5mr38782866b.35.1772773855852; Thu, 05 Mar 2026
+ 21:10:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] replay: add --revert mode to reverse commit
- changes
-Content-Language: en-GB
-To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk,
- karthik.188@gmail.com, johannes.schindelin@gmx.de
-References: <20251202201611.22137-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-3-siddharthasthana31@gmail.com>
- <87tsvbe2sm.fsf@iotcl.com>
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <87tsvbe2sm.fsf@iotcl.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Mansi Singh <mansimaanu8627@gmail.com>
+Date: Thu, 5 Mar 2026 21:10:44 -0800
+X-Gm-Features: AaiRm53Ithk1unqId6QAOGslQTPlLXQFXkspqD9x1Wx4Q0xewcRYJQhSnJgZthQ
+Message-ID: <CAO_P5U2f4MD-URre+4ocC=YQ570hr03pZHDk1jvuSOKx4aLOCA@mail.gmail.com>
+Subject: [GSoC] Discussion: git repo structure enhancements
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Hi,
 
+I am planning to apply for GSoC 2026 for the "Improve the new git repo
+command" project, focusing specifically on extending git repo
+structure with metrics from git-sizer. The ideas page mentions this as
+a potential improvement.
+Before drafting a full proposal, I wanted to confirm:
+1. Is this direction still desired, or is it already being worked on
+by someone?
+2. Which git-sizer metrics does the community consider most valuable
+to add first?
+3. Should new structure tests go in t1900-repo-info.sh or a separate
+t1901-repo-structure.sh?
 
-On 20/02/26 23:05, Toon Claes wrote:
-> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
-> 
->> Add a `--revert <branch>` mode to git replay that undoes the changes
->> introduced by the specified commits. Like --onto and --advance, --revert
->> is a standalone mode: it takes a branch argument and updates that branch
->> with the newly created revert commits.
->>
->> At GitLab, we need this in Gitaly for reverting commits directly on bare
->> repositories without requiring a working tree checkout.
->>
->> The approach is the same as sequencer.c's do_pick_commit() -- cherry-pick
->> and revert are just the same three-way merge with swapped arguments:
->>
->>    - Cherry-pick: merge(ancestor=parent, ours=current, theirs=commit)
->>    - Revert: merge(ancestor=commit, ours=current, theirs=parent)
->>
->> We swap the base and pickme trees passed to merge_incore_nonrecursive()
->> to reverse the diff direction.
->>
->> Revert commit messages follow the usual git revert conventions: prefixed
->> with "Revert" (or "Reapply" when reverting a revert), and including
->> "This reverts commit <hash>.". The author is set to the current user
->> rather than preserving the original author, matching git revert behavior.
->>
->> Helped-by: Christian Couder <christian.couder@gmail.com>
->> Helped-by: Patrick Steinhardt <ps@pks.im>
->> Helped-by: Elijah Newren <newren@gmail.com>
->> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
->> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->> Helped-by: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
->> ---
->>   Documentation/git-replay.adoc |  37 +++++++-
->>   builtin/replay.c              |  25 ++++--
->>   replay.c                      | 162 ++++++++++++++++++++++++----------
->>   replay.h                      |  11 ++-
->>   t/t3650-replay-basics.sh      | 107 ++++++++++++++++++++--
->>   5 files changed, 277 insertions(+), 65 deletions(-)
->>
->> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
->> index 8d696ce3ab..ffdf790278 100644
->> --- a/Documentation/git-replay.adoc
->> +++ b/Documentation/git-replay.adoc
->> @@ -9,7 +9,7 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
->>   SYNOPSIS
->>   --------
->>   [verse]
->> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) [--ref-action[=<mode>]] <revision-range>
->> +(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch> | --revert <branch>) [--ref-action[=<mode>]] <revision-range>...
-> 
-> The modes `--onto`, `--advance` and `--revert` seem to be extremely
-> different from each other. So I'm starting to wonder whether it won't
-> make more sense to instead create subcommands instead of options for
-> these. Maybe something like:
+My contributions so far:
+- t7605 microproject: https://github.com/gitgitgadget/git/pull/2050
+- Variable shadow fix in repo.c: https://github.com/gitgitgadget/git/pull/2062
+- Structure tests: https://github.com/gitgitgadget/git/pull/2064
 
-
-Agree the interface could be cleaner as subcommands. I think Christian's 
-suggestion to do this separate series after --revert lands make sense -- 
-we would get real-world usage feedback first, and it avoids scope creep 
-here.
-
-
-> 
->      git replay revert --base=<branch> <revision-range>
->      git replay pick --base=<branch> <revision-range>
->      git replay replay --base=<branch> <revision-range>
-> 
-> 
-
+Thanks,
+Mansi Singh
