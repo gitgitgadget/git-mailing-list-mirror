@@ -1,118 +1,114 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E563325716
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 01:47:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772761676; cv=pass; b=X/yJQCdCzywDFZB7rrkUmxpvBm1z/jH3cuNQ9rxbl/Kjxanwi5C6lJ4Fl0MtzmG+uIZrl4cJFyW5saZ6WIkNs2fglXbGxK5cYMLJef6vh9DyiEHw6rwwt0ej1Z3epGMcRQ+jvMzX29qmifryGBDekxvIeP/ZXbd5eyh8GT+p1wQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772761676; c=relaxed/simple;
-	bh=aXTGJgHwpbJNFIS25oMZQJxYMErEse//6lU5cgAzDvM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sIi+IR9amaNBoamwBxqUgFyNpHHUw3r3Vl/BaBOu5ehXBG0d0O4LI02N8Lw1bLogKS5BW4lnISKp4hKORnl8M5Lr0yN1exwSEnMrkxP5Y1RPjowOHUNdWYyaz3Q7A98qHVRG+IHoFBUSYhYoC8eOVRvLtF3AwaGdOw0LUUEomZM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OBw8YgjP; arc=pass smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B5335943
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 01:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772761735; cv=none; b=EIDDZdi/vOeygzsnZb7yO6u6oGfs2yPNoB3D39IHxiTbb1268d3y/RaaVHxGeSOzFi1rNNo6izKqA3jaiqA1NS0pxEB/9++WuOREtgJCJxuYg7Ug5Z+tDTktLfJnR2T/aZa4OXZ7cde2a4CXpCmbAswhErA7EVwS0e3VG0d6RVY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772761735; c=relaxed/simple;
+	bh=Z06aL6TKbVaoHnKr08aFFWBKcJcpRZ/jdT69hel0G8Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iHfyzW43kmo4q+eaRJOHZZiqH+FKvTiKKcFIdYkWaH839eY4XX0vbxPGxsTvkhYlnUC6TlJM9bQkC9IS1g+sXX3rMlXMH9edQGHEMp9WZkbMKjYJ1XvIDl/Mbo2v4QPBJQY6dGUPGYaPmEgGzEJ23pyiG3hpXVFrOe+dCJWAMQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SlhNm9ai; arc=none smtp.client-ip=209.85.160.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OBw8YgjP"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-89a00e8dc04so47979026d6.0
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 17:47:52 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772761671; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Am5rQeO8/cYtsh0CPJ0Hc/ftCFimBrlIzA7PZImhMCgFTPigOY5Hq5bFVYgzs5XGaH
-         G4Bjgkw02p1eCyWlr6j0pfwg61rDJgn8U+i16g4VaSHzJHJQqAmhxkdkS4bJk9Kak3KQ
-         qo7fzbAhC5QtFnO1I6vYUQORnEdNxIKqAbPfJB4Dg491i8jjXN8y2twrBRQYpr1yewz1
-         361Y6f+/uYZhROTaTBLTXUKTDMZZCyFc1QhfeqkSrog4s3gBWIcf0LuAg2W00nHlo46R
-         gCT/K+Nyjo2MK9Pr4zJ5RBPwuNzKyKMnsD9/PkXvT1x9qJo/GX34rvMvYBqD7ea/7EQb
-         hQsA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=G0iXQguEX2i7xqT1NZOWl33IuTGao4m8aSd9H0vXgZQ=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=Ai4ICIssO4Ewnf/U6r19aWVoQvJDOwesL04IsMyNdAt39bGQIGmVPFXXh5+ZnaMS3H
-         ajwuDzCspLnNkd5KompP+2bjL09tCnEP1+6A2+fLLcUG1nvFCJV4lPSPVl6RMFyB7s0z
-         VoJjV6HcZ1pZRNEQO/B/SMWeiBT9JLl2FK7un/5NvX0AM/Tdghm47TXHvyo/8azOoiX9
-         ygAA0f2/eRW0xv4LWUeQ/NlVJwzNx427gs9G/XbzaQFfu68injv3nKUeaA4rNF8Fi+3t
-         syAFD2Zk+llV/LYkTBHXbsOqTabc4MmXY5nW8Ea/aTAekbSp3jbxGsJHyopIAT6ThzxT
-         64JQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SlhNm9ai"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-40efc77933fso2510592fac.3
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 17:48:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772761671; x=1773366471; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G0iXQguEX2i7xqT1NZOWl33IuTGao4m8aSd9H0vXgZQ=;
-        b=OBw8YgjPBZl5bIHFoex3k1NN2ctvYYoJE+/Xe86eBWSO6ZGvaGh9iWdEm6xruG+FFr
-         xy+YXlQlXPs1B5aKicXiUJ0UNNl/Qczt4nHSVgA507hWA0AJFj1dMFCWahETYfmO+rQa
-         B+rO4elsC63lNCE09YY/zR+B1OkNGvjKhCOpZdHBuZeV3j9dIYZl8nlIDUoUb+njltW4
-         mvT9RoE+tLUTScjMFL8CXg4Yhp6Qg7RaifzSo8Toh4EBbeo6VpfvGKEcxLqh/oH9j79q
-         EqowhEEDqgw3RohZnmXMtKmIAMqHU1V5O3wf7pn5midAgCyUrEH3k7YIfzUiIsGaxYqe
-         gByQ==
+        d=gmail.com; s=20230601; t=1772761733; x=1773366533; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=DwvI/ZXnjNycecXNakiF13Fi2/2AG0IaH+wlEt25U/U=;
+        b=SlhNm9ai/FxxpT/S0zkou41pHYQaVrkKHVjpEqu1YEtsgBq9DbSlGtDHDhbku0FGZN
+         LQ5fRvf3PQ9YTPwAVCjhu8k4O4oIDUPqH3EJptPz3MKxFqk5EfzQ5ofIDx1QQHEES66r
+         ULxpzEEcjJrFHLgtpKhrL+gzBp/gOSpnoRutlpEAUgjkcCibSYISxTyJYfipmmE6nYBn
+         u3C2xP2JnnKy1oD0Ct91oGxhweZOChfUNTk3MJJDw9bsArz0/hGsjuxpM2/QXsX9Zq2M
+         Ov1ZfyDbthvYcQqu6O7tYdeEWJw2q9uBJnRn2BSVPreU4z0mdJLJBt8YZHmLt6SU4JHU
+         Dp0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772761671; x=1773366471;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=G0iXQguEX2i7xqT1NZOWl33IuTGao4m8aSd9H0vXgZQ=;
-        b=V2Mp8KUOYsu4tlaAasOfmq5ILlkcCp+IDDZ55/bwOT47uwayc3/JMDMVMllA6ZmglO
-         opadLEf4+Bpw5AhR8YCOV16ZniJzVuXeamvRjrWqjDSQ24Vr5ynLneziMGIoqCmwRcbI
-         d1ZsLoQgNZ3N7uEkt+z+hawsLM9/mePT0y2md0NWqBubmBs5xAUPuNgIe08ndedRdoma
-         ntuAEDFzjL2JRcPB8GSIlkOuuTcyflPpfC8N6zEkvfBrr56uiflecR/XVm3+gBnnXa7F
-         3CFv/uDbLLxnERoC8xvSEkDsmljhvIbrYrRv0AwLCTK6D4anaqpcCXGRXOJ8dgQEkw2b
-         wKnQ==
-X-Gm-Message-State: AOJu0Yw2hi1myiHi/sS6xFHZQcu0V0HqgUpswrcE1rHMUXev+AqUfOOe
-	ZRqzmBNP/MgvACfjQxz6Z6wWhvHcsIwR/D2hgyo10K1we6CbMlTYJRtqwdxudXL13J0bvEGrQor
-	vjPjlMPS7FW1K3Jy+IGyg2q3DjhUgAvznYGgSBQY=
-X-Gm-Gg: ATEYQzzZ2cBlU98U4a6HHH4xotBgO5ifTFHiy5wYg4isfzqFo/DsbU39/pz1uODBTi9
-	h7llhapOBMqiEMpsGrdSB6TY17463+5SpRDxKBShBKJC8R2tcGUHkzr5FbiZ3MRTA6yPtBnHG3G
-	bYb6tjnNIGcTeqKvFxFavikO2RsVQQLdDUKIiXAUr0ykNisH8S5SiIJFlbp+c4Tlqcfar6Fi+8t
-	CKgCnLvJ+5LQAHxxgciGCu6L0n5O3piI1REPmuYNNPx8BbnsaKz8SC0CladxGLlTTXTaVM522hW
-	JiqB1T7HomtMjDPfNhjvMeLjC5S4FqWgO9QFOgQvWeRmp5iV23elJpBvnqzmkeIDmGhsZKueHBn
-	tlHi8fE6VrIGDm4QJ77KlL+uLrOkl2bZAHejA
-X-Received: by 2002:a05:622a:1304:b0:501:147a:a215 with SMTP id
- d75a77b69052e-508f497972dmr6821381cf.73.1772761671122; Thu, 05 Mar 2026
- 17:47:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772761733; x=1773366533;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DwvI/ZXnjNycecXNakiF13Fi2/2AG0IaH+wlEt25U/U=;
+        b=G982saz01LVFgKH1wrMqob2GD95Swpja+u1PxkEZMNU2q+WxGnAh/ro/YUjSpIdonq
+         6rYRFf3bGbunMyeNa37vwRIdbDcNsTsU988tTWijVMc4a0uJoNsuRbGSn0gnpdzLywMA
+         14Iq4nBnxZ2v+qbo9uxdR6j7Mk6QczRvJ5/ADesccB92wVxVCCTJ4HCk/A0zmXN4o+4Q
+         hLvGkbAjYiULIboXR1q+SFbqGyBVjVeaDsQXkO6aeKc2zkxXhvgzO1dAeHCAxj0QSBxe
+         LBbew+E/F+VvLnn8sBLLCpoULP0nfQ5IxpIc4EVRKEo1yx9gy8VHawPLy+tTjuAln7o+
+         tTdg==
+X-Gm-Message-State: AOJu0Yw1yolDAJVahVLiodqzCXc2G2pcCn/hB5kvcrQIvVLNDy6AtM9B
+	8JOpiB3NmWB0jGmfU766B/AOBSzM5eCqyjH91vACHlsavaqVCmcj4hrqlKraLg==
+X-Gm-Gg: ATEYQzwO8eHAMSxowXhy0c+D9P3mhA9kHyB8cvUciwcOw/uSuOZfh/ss8zzGZ2fA9Dp
+	PdmDo2bG8EQF/yK2Ymb33L/hKIIMIMDbh4VpMbJ4WkY0LtfBZWVO6SdDMkJ1mgdl6deQZXtuhXN
+	G+lPHKR7+PwiKokzII2BRVff0vm2Dxd62Xm5yjy7j3Nsgicatb3zAUyBcDqlqfKtyvNqDqEhJzF
+	i4FTho83DM5C7YFDcBm6TGXvvI8Y8QoRV0dPFI/etGeH4CJLDLCNPRry2HCZwNaZNgF1mJ7FtIn
+	gar1uggf1+Cyko2vi6yc+OdUCKUWPWEOpFO4Ssn4fpgzLNUcuYZWNqYQwV9Td2/35hBuW6qx+iU
+	1fjlZiu2S3N7Ja7U9i43KU02UQxtzGcRPbiVADR/2ZX/xQsVMSO9iV/miorY2sewS6Gcq3ShOpw
+	hQdB7u9D0pIgsbW652
+X-Received: by 2002:a05:6870:d3c3:b0:403:f7ad:ad7c with SMTP id 586e51a60fabf-416e44f3916mr375651fac.54.1772761732874;
+        Thu, 05 Mar 2026 17:48:52 -0800 (PST)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-416e688d5cdsm167614fac.20.2026.03.05.17.48.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Mar 2026 17:48:52 -0800 (PST)
+Date: Thu, 5 Mar 2026 19:48:49 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] Documentation: extend guidance for submitting patches
+Message-ID: <aaowCeEMjpztZpti@denethor>
+References: <20260305193836.973122-1-jltobler@gmail.com>
+ <be9cbba2-883a-4ef8-838e-0941b75eee6f@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260304130502.8475-1-jayatheerthkulkarni2005@gmail.com>
- <20260305125332.27600-1-jayatheerthkulkarni2005@gmail.com> <xmqqms0m2hn1.fsf@gitster.g>
-In-Reply-To: <xmqqms0m2hn1.fsf@gitster.g>
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Date: Fri, 6 Mar 2026 07:17:40 +0530
-X-Gm-Features: AaiRm50_NPCH7mQQPkLy07WNZfszfSKKiNCZkagE3cqA8Islkg5fONiCrM6Phlk
-Message-ID: <CA+rGoLfpyiKjLMOOHBoGoQAO2eLraejRGgpEpMGqP7+=VDQSkQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] clean up a few things
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <be9cbba2-883a-4ef8-838e-0941b75eee6f@app.fastmail.com>
 
-On Fri, Mar 6, 2026 at 1:06=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
->
-> > Changes since v2:
-> >  - Update commit message of patch 2.
->
-> Hmph, they look identical to me, and more importantly, the previous
+On 26/03/05 11:27PM, Kristoffer Haugsbakk wrote:
+> On Thu, Mar 5, 2026, at 20:38, Justin Tobler wrote:
+> > +It is also a good idea to check whether your topic has been discussed
+> > +previously on the mailing list,
+> 
+> This is at the start of the document. “The mailing list” footnote
+> (git-ml) does not get mentioned until line 535.
+> 
+> Although there is the initial mention of `MyFirstContribution` which
+> prominently features the address at the start.
 
-The only change was the words "a standard signed int" -> "an int variable"
-"overflow vulnerabilities" -> "bugs due to integer wraparound"
+We also mention "the list" several times in the surround bullet points
+prior to the footnote too. If we think it matters I can move the
+footnote up.
 
+> > or whether similar work is already in
+> > +progress.  Prior discussions may contain useful context, design
+> > +considerations, or earlier attempts at solving the same problem. Being
+> > +aware of such discussions can help you avoid duplicating work and may
+> > +allow you to coordinate with other contributors working in the same
+> > +area.
+> > +
+> 
+> This seems useful to cite. It seems less useful for people who go to the
+> effort of reading this file themselves. They presumably care enough to
+> try to get the procedural steps correct. It’s difficult to imagine that
+> they either think that their idea has to be unique or that there isn’t a
+> history.
 
-> round has already been merged to 'next'.
->
+Ya, I agree that most folks who feel inclined to read this document
+proactively would likely also lookup previous/on-going mailing list
+discussions. I do think this would be useful though to include so we can
+point contributors this direction when needed.
 
-Whoops, I didn't check the what's cooking chart,
-Thanks for the info Junio ;-)
-
-Regards
-- Jayatheerth
+Thanks,
+-Justin
