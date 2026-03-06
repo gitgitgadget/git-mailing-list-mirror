@@ -1,207 +1,172 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E851225A34
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 22:14:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772835283; cv=pass; b=l0SSLWJNEtcUJSB1QGL1XsjhKB/idtA2aUVIgUr/JoKQ17D9yil42G9FoiaR5GdgCP4m8V6fUNajNnconG49T0WXgsZtXphB86GWWWcpKESsqFG4XoVN3zh7x3RrTotyWvhAjVsaCyBOtTx34EEhvFDwvKlM+Bcnjpyy3M6toPc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772835283; c=relaxed/simple;
-	bh=Iyleq5YRsYrXvtTPOoYsyczTX6ALfQgBCikqaGNhKPo=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=n0HVZa6mqC+OKVCWmhKaI7/V5JE4NpCpHjO25LbdwyQhDwhVekpOViq8YPbTeSVkzBjIFj6jOuKzdZhfRLN8Eu5VDOocL9PsXmJkcOBAiHC48tOfEKesdbCWMj4ta5nnDOgA/BGTO+KjfYApRj8a94tUjNnYqmSx3+ikbN3naC4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f/vphKWN; arc=pass smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1061256C8B
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 22:18:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772835501; cv=none; b=MVOU1kssTzY8ByWFUyDUYtYwKn0xJxtDKoBKOsF7XfBPRavpTRdobwQHeETEOhJd7lh6UjNOfk4dA2XMI2/hwIhRXhs1jeZRjnT8k20TkaGibVZF4d/b1HW6p1Fw+LxUzkMy/2PnquG/4NH3ckiwi7cvyDH8Tk5dSsWv2OwwhJg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772835501; c=relaxed/simple;
+	bh=dywQoiHNUrSYWiGs7LUqZGxFGBQO5mL8gYNKnkIYj5o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QY60dKI1CdCOcMbyjctmiyNRKNSedg3T+qOJM5cXZr/4P0O1H2TgOK8RK2N7FmEmCof2XN+DDj+mscOw7n1ZOL3Itg3PfOTSmdgD1eM1NGQyr/337D7GXcD8S+fs2BqpJZHLVHSC//Tkuu+ZJ6VBtRLzNXZh1NDSzKAZziQ1Rt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ze9+mfks; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=urpNnaod; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f/vphKWN"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-b6ce6d1d3dcso3505603a12.3
-        for <git@vger.kernel.org>; Fri, 06 Mar 2026 14:14:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772835280; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ivgektN9FUVCxHwnmHhkovbUNEBZzPmreATWzR7uOLoxCo4ap2lE/jiwaZzIWSao5G
-         xBrjV4nPMsEVYUIBc6x/Q8Mp0h7jgOmBfq9l6I50MlOKjNZWMTEUsQCmR7XEgAvUTv34
-         3ZkAUZleeMPkei/bJ/eNxi3s8Dm004RI70OuhK0aAvxsjIFwLGyxP7q1wQUgkl9GaE4r
-         9QGc/I8Y5S8vXN6SVA4lp4RdTqh1nMLBYeVue+QvWHA8f1khk/NFvYaO+vLpz9WdIzjT
-         nKhiTTTON4bUmbDIkPodnuQrfo2alKPErl2kRDA2Uh6179yfQwfvWV6KPK4FZRdf5652
-         7zqg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=gFL1is1RQEB4+jEbs7HTvyvytbBoIO3SgcB96QvZJwA=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=gjTG3wWb3mY7yz+bujmv85VFXQ4PVur9p1ZsfxolV6aZfu/IkDcRiZfLi84WY/ybHB
-         UCaiYRryN9VSNMdnaffQYglQIKTh2QLvRiTxhnyGYKVVwzTAp/ohz21qtktqYAopss6H
-         HcLuxFBgCeBR8C/LuQUcoZGM0NRPfCDEX2D+BfdDSFfIYGXGCyoJeSxv24uQJzT0oxOE
-         /6BgQTWrLsTS/eVwMz8WvV3wu+GU6q6cF/wJ64rZBpPRMyub7u85043r4EYYU6uR1RlS
-         vCzoMTF3k+KCwjuiXh7hndTBnLKUD44vBD0RwOXfpaEC4zOxYWbG+J4JCwtPOneTlYB9
-         tStA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772835280; x=1773440080; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=gFL1is1RQEB4+jEbs7HTvyvytbBoIO3SgcB96QvZJwA=;
-        b=f/vphKWNv70X0byfXF8rwA66/OLK4FjI4Z5SqVVyvgoQDD1Uh2ZknyAYHgK6Q+ecZu
-         +4KlYjM/ojty5D3wwtE1QBLdDjQBQaHvG1NzQlyFgELAwI7qbvaNc/zVyhiTdgv6FLik
-         5jrjPi26TE0sm1Z7t2xPCnA0xi3YRgZbCHAGEOVgA4kD5yFyqDCeT2I7yoe69fmCROwC
-         rSqkulY14/wJ/M1aV274pZQ8SBw3SX6MC+4nNitw/ESVZl8UR91dMxaLXyxfSxLSs55T
-         TiHQ6T39D4N7i0rATi3H7OzrtTNnUKZ2ra/HA2K+bMfV7vJbe5uga8OGUYvbDe2e2+rR
-         0hqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772835280; x=1773440080;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gFL1is1RQEB4+jEbs7HTvyvytbBoIO3SgcB96QvZJwA=;
-        b=YovUYrmu6fSH25zUpJZA8hHy+3VqFeHy6kvWkG+U+0nmr9rHYG3jfmwc96mz+TgEeP
-         WCf77c91Rjr7gcJUF8hAYf+jOuVaSf9CqGhl0iOik7aNhsoHiwcl2iCXeIVQDL9fw2M6
-         udvIvpXdreG/pmPWlqwOzGWWjgV6AzjbmI/03es04TEFs9eYcJzeWUFabslhKu3i9nw9
-         bF7lZe9u0UHAttH4R5TQeFufKHo7TYRp0IULQ2hW2CeuKQDguzSv7/6rTmgrpUh2OUn1
-         GV21X+dQoX3Rp8UynE8dOYY6iABX8l7UV0zfusDGGtdCjPeLuAndIRSPPXZp619gh7k8
-         A3PA==
-X-Gm-Message-State: AOJu0YxwMWp1FI9itI5t7ukkq+ij0xeHdVvVmWBfcWt35e420pKXmjcp
-	b2zuKgLnHluAeznDtgQ5O6ii4YoavlEBPkLzJhFB3YK4Qh+UHO9hY7ikB8l7HeNYUNCnaafW6yD
-	mqecFy9imvemJFss8EwyE0GKMhGh74VM5uZAOFPrigQ==
-X-Gm-Gg: ATEYQzygF7jh8HKJBnzcZXsRMODosyaILE+Rad7DIGEWZDj2lyYNeJ/mOAPh29uC9Kq
-	byTenuA0N36YvKyyFN+hkn0npYW/rivEiTb/9xbP8NA1ITMvEAgnWt5JEMPxGMXSnz61CTAxBUO
-	INrbrAAIoPsDQKRPlaKSac3zcabE2A/ZvepRKjta4mhesQZUdl2heZLZhgWuG6Wewq/IqR0d8v9
-	fd9ZBRl1ZfDmp8G0TR6DByfJ6PpjF1VyYwb5IOfZSFFYPMj70EgZX3e/XAelZekYlKo5R99ZVd/
-	CUpS85u72pAAiGXNcPkUjtllsA339EomEp0hNhEkv1pjkb8TQL2YbK+xCc/mJFivCzLi
-X-Received: by 2002:a05:6a20:43ac:b0:35d:d477:a7f3 with SMTP id
- adf61e73a8af0-39858fdbb32mr3696338637.20.1772835280350; Fri, 06 Mar 2026
- 14:14:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ze9+mfks";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="urpNnaod"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4C5761400144;
+	Fri,  6 Mar 2026 17:18:19 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Fri, 06 Mar 2026 17:18:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1772835499;
+	 x=1772921899; bh=nVc98sE+iCLBSKkLVk7tbxVOfHfjB8Rl6idks8xVmOc=; b=
+	Ze9+mfksQ6Heqrs/clK8kVFLMM8GY3UbipbpMV57O1FN6d57+zJ/FS5gwcyaCUPl
+	OohIbO8g3kI0RVQtm5zXXPmPu+cSpqAKWQbbpG+fITEOa4wDWyIq5WKdVuxGPW+W
+	mIEKXCIU4c9e5z3dVnyq9YIPZy6nXyOxczdEc4cFbHgP0n9ttJSjXRyqmQowHYjp
+	P2Hxz5qywa7IXN5CFfMvhnaGLQzq7NUvXQwEsTUxtpAlMPb+ABjs8E9Tde/XvU/i
+	m4ZrV9ODKf1pbvKOK9pJQL/4YVpV7QppJNGXgy1R85GY5ZtEO8q3ryCAoxZ8u+0X
+	F64dJAKNoKP9AYNv7L3USA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772835499; x=
+	1772921899; bh=nVc98sE+iCLBSKkLVk7tbxVOfHfjB8Rl6idks8xVmOc=; b=u
+	rpNnaod1aV9gtr5ByFbL966fAss/V6KjhrIyelesCWocgKAIw856olH7smAPoaL5
+	3BuL+gxL74iOkzek2lOGeYMa8uXe5qDQ5n43XTcL+gpXg7p0InzXVjeJaPj5BxIo
+	XJI9mn1FOgTGQZynCFME8H+6kXTeiSliUHq8L7L+fEUyIQZIq0EtoNFavkpCuPrP
+	8UnCBHzBZ+rYoWNuMQP6qs7VzOCxQwFxFWjh8kLDd5UHYRMW/AEU+/ZgYrBHvJln
+	PJixi87XT57JpR+5wr4VWaZZwbZxoZPWjGORAiXKTl6luEvlIJ4dJGLcS6a4IWGL
+	DBOhVsb46DAC2fs61Fglw==
+X-ME-Sender: <xms:qlKraYVVi9xV5Rv5X9eLS-6ZC3Idd4SyA2e_8SoMQ1dWcksnXC7thQ>
+    <xme:qlKraYQga7aatM3ub2oJx851DLAzYeg6aoAGefg0_Wp4Gi-ePoKg3HPJiHiyhOxWx
+    I-I-W0yhYBjoZEmIN-Kqzxj0XmN9AI14YvRQfWQ752h87F1v2nImg>
+X-ME-Received: <xmr:qlKraY1x-IxPN8bwWXPt-Rly3YQYPAgyihZRm56m0qDwtC8Qhf3PjyPIQv5FdRrmmQeOmly1EuSkj0KSaMDwNHio9RUmD_AEvA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtgeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeekffekiedvhfejkeehhfegteeilefgvdelveejtdetuddtledtffeuuddu
+    kedtudenucffohhmrghinhepghhithhhuhgsrdgtohhmpdgtohhrphdrtghomhdpuhhrlh
+    drqdihohhupdhthhgvmhhoshhtshhpvggtihhfihgtuhhrlhhmrghttghhfihinhhsrdih
+    ohhupdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
+    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhish
+    htihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhonhgrthhh
+    rghnthgrnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihloh
+    hrrhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
+    shgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoh
+    eprghlrghnsegsrhgrihhthhifrghithgvrdguvghv
+X-ME-Proxy: <xmx:q1KraQff5ovAz-DjUDzgqeQIRooak5WUdHEmVkpSMlSWYXoIX2cZSA>
+    <xmx:q1KraYO3I4MUQz9H3P1-7qC4ep7-Elh8VvcRk_B7HAm0meFmWKKmUw>
+    <xmx:q1KracU9mUe4gaAFKyLlPftLsvyAIwDZzZwdyboaWl5-AKHBddCkxQ>
+    <xmx:q1KraYxbzLOZbA4M4srUtmH6yYG04YZp90HaOwPknmMnHFhxVLidCg>
+    <xmx:q1Kraes1DHfFntX2isloEke-d95bBjROoYJCn35WwBd3Wxv5_3Ppumrs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Mar 2026 17:18:18 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Alan Braithwaite via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  christian.couder@gmail.com,
+  jonathantanmy@google.com,  me@ttaylorr.com,  Jeff King <peff@peff.net>,
+  "brian m. carlson" <sandals@crustytoothpaste.net>,  Alan Braithwaite
+ <alan@braithwaite.dev>
+Subject: Re: [PATCH v4] clone: add clone.<url>.defaultObjectFilter config
+In-Reply-To: <pull.2058.v4.git.1772833649843.gitgitgadget@gmail.com> (Alan
+	Braithwaite via GitGitGadget's message of "Fri, 06 Mar 2026 21:47:29
+	+0000")
+References: <pull.2058.v3.git.1772780113400.gitgitgadget@gmail.com>
+	<pull.2058.v4.git.1772833649843.gitgitgadget@gmail.com>
+Date: Fri, 06 Mar 2026 14:18:17 -0800
+Message-ID: <xmqqfr6cy53q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Mike Banon <mikebdp2@gmail.com>
-Date: Sat, 7 Mar 2026 01:14:28 +0300
-X-Gm-Features: AaiRm51tj6b1m2rj3Hykd1BrA8dFQqqEQ7Z-GoNrurVkex4n5TZNZqlqDAz7eCs
-Message-ID: <CAK7947msLiGgrYTcg1m3ew+bP0F+VNbRaTy=ZW7zkkHh69bN0Q@mail.gmail.com>
-Subject: [PATCH] clone, progress: add --no-turtle-speed option to abort slow clones
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-When cloning large repositories from a website with multiple Git servers,
-the client may be directed to a "turtle-slow" server, causing the transfer
-to proceed at an unusably slow speed. This can lead to stalled downloads,
-particularly problematic for automated scripts that clone many
-repositories. This option makes Git abort the clone if the download rate
-falls below 128 KiB/s while receiving objects, typically catching slow
-servers early in the transfer, enabling scripts to retry the clone until
-they obtain a fast connection.
+"Alan Braithwaite via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Signed-off-by: Mike Banon <mikebdp2@gmail.com>
+> From: Alan Braithwaite <alan@braithwaite.dev>
+>
+> Add a new configuration option that lets users specify a default
+> partial clone filter per URL pattern.  When cloning a repository
+> whose URL matches a configured pattern, git-clone automatically
+> applies the filter, equivalent to passing --filter on the command
+> line.
+>
+>     [clone "https://github.com/"]
+>         defaultObjectFilter = blob:limit=5m
+>
+>     [clone "https://internal.corp.com/large-project/"]
+>         defaultObjectFilter = blob:none
+>
+> URL matching uses the existing urlmatch_config_entry() infrastructure,
+> following the same rules as http.<url>.* — you can match a domain,
+> a namespace path, or a specific project, and the most specific match
+> wins.
+>
+> The config only affects the initial clone.  Once the clone completes,
+> the filter is recorded in remote.<name>.partialCloneFilter, so
+> subsequent fetches inherit it automatically.  An explicit --filter
+> flag on the command line takes precedence.
+>
+> Only the URL-qualified form (clone.<url>.defaultObjectFilter) is
+> honored; a bare clone.defaultObjectFilter without a URL subsection
+> is ignored.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index fba3c9c508..a9ed2c193d 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -94,6 +94,13 @@ static int recurse_submodules_cb(const struct option *opt,
-     return 0;
- }
+Is this still valid?  It is inconsistent with the updated
+documentation where both clone.defaultObjectFilter and
+clone.<url>.defaultObjectFilter are listed.
 
-+static int set_turtle_speed_env(const struct option *opt UNUSED,
-+                const char *arg UNUSED, int unset UNUSED)
-+{
-+    setenv(NO_TURTLE_SPEED_ENVIRONMENT, "1", 1);
-+    return 0;
-+}
-+
- static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
- {
-     static const char *suffix[] = { "/.git", "", ".git/.git", ".git" };
-@@ -946,6 +953,16 @@ int cmd_clone(int argc,
-             .callback = recurse_submodules_cb,
-             .defval = (intptr_t)".",
-         },
-+        {
-+            .type = OPTION_CALLBACK,
-+            .long_name = "no-turtle-speed",
-+            .value = NULL,
-+            .argh = NULL,
-+            .help = N_("abort clone if speed drops below 128 KiB/s"),
-+            .flags = PARSE_OPT_NOARG,
-+            .callback = set_turtle_speed_env,
-+            .defval = 0,
-+        },
-         OPT_ALIAS(0, "recursive", "recurse-submodules"),
-         OPT_INTEGER('j', "jobs", &max_jobs,
-                 N_("number of submodules cloned in parallel")),
-diff --git a/environment.h b/environment.h
-index 123a71cdc8..cb316cf321 100644
---- a/environment.h
-+++ b/environment.h
-@@ -24,6 +24,7 @@
- #define NO_REPLACE_OBJECTS_ENVIRONMENT "GIT_NO_REPLACE_OBJECTS"
- #define GIT_REPLACE_REF_BASE_ENVIRONMENT "GIT_REPLACE_REF_BASE"
- #define NO_LAZY_FETCH_ENVIRONMENT "GIT_NO_LAZY_FETCH"
-+#define NO_TURTLE_SPEED_ENVIRONMENT "GIT_NO_TURTLE_SPEED"
- #define GITATTRIBUTES_FILE ".gitattributes"
- #define INFOATTRIBUTES_FILE "info/attributes"
- #define ATTRIBUTE_MACRO_PREFIX "[attr]"
-diff --git a/git.c b/git.c
-index 744cb6527e..d0c4909fef 100644
---- a/git.c
-+++ b/git.c
-@@ -40,9 +40,9 @@ const char git_usage_string[] =
-     N_("git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n"
-        "           [--exec-path[=<path>]] [--html-path] [--man-path]
-[--info-path]\n"
-        "           [-p | --paginate | -P | --no-pager]
-[--no-replace-objects] [--no-lazy-fetch]\n"
--       "           [--no-optional-locks] [--no-advice] [--bare]
-[--git-dir=<path>]\n"
--       "           [--work-tree=<path>] [--namespace=<name>]
-[--config-env=<name>=<envvar>]\n"
--       "           <command> [<args>]");
-+       "           [--no-turtle-speed] [--no-optional-locks]
-[--no-advice] [--bare]\n"
-+       "           [--git-dir=<path>] [--work-tree=<path>]
-[--namespace=<name>]\n"
-+       "           [--config-env=<name>=<envvar>] <command> [<args>]");
+These iterations of patches may require a bit more careful
+proofreading before getting sent to the mailing list for others to
+comment on, I suspect?
 
- const char git_more_info_string[] =
-     N_("'git help -a' and 'git help -g' list available subcommands and some\n"
-@@ -206,6 +206,10 @@ static int handle_options(const char ***argv, int
-*argc, int *envchanged)
-             setenv(NO_LAZY_FETCH_ENVIRONMENT, "1", 1);
-             if (envchanged)
-                 *envchanged = 1;
-+        } else if (!strcmp(cmd, "--no-turtle-speed")) {
-+            setenv(NO_TURTLE_SPEED_ENVIRONMENT, "1", 1);
-+            if (envchanged)
-+                *envchanged = 1;
-         } else if (!strcmp(cmd, "--no-replace-objects")) {
-             disable_replace_refs();
-             setenv(NO_REPLACE_OBJECTS_ENVIRONMENT, "1", 1);
-diff --git a/progress.c b/progress.c
-index 8315bdc3d4..b30c9f11d3 100644
---- a/progress.c
-+++ b/progress.c
-@@ -195,6 +195,7 @@ void display_throughput(struct progress *progress,
-uint64_t total)
-     struct throughput *tp;
-     uint64_t now_ns;
-     unsigned int misecs, count, rate;
-+    const char *turtle_env = getenv(NO_TURTLE_SPEED_ENVIRONMENT);
+> Signed-off-by: Alan Braithwaite <alan@braithwaite.dev>
+> ---
+> ...
+> +`clone.defaultObjectFilter`::
+> +`clone.<url>.defaultObjectFilter`::
+> +	When set to a filter spec string (e.g., `blob:limit=1m`,
+> +	`blob:none`, `tree:0`), linkgit:git-clone[1] will automatically
+> +	use `--filter=<value>` to enable partial clone behavior.
+> +	Objects matching the filter are excluded from the initial
+> +	transfer and lazily fetched on demand (e.g., during checkout).
+> +	Subsequent fetches inherit the filter via the per-remote config
+> +	that is written during the clone.
+> ++
+> +The bare `clone.defaultObjectFilter` applies to all clones.  The
+> +URL-qualified form `clone.<url>.defaultObjectFilter` restricts the
+> +setting to clones whose URL matches `<url>`, following the same
+> +rules as `http.<url>.*` (see linkgit:git-config[1]).  The most
+> +specific URL match wins.  You can match a domain, a namespace, or a
+> +specific project:
 
-     if (!progress)
-         return;
-@@ -245,6 +246,13 @@ void display_throughput(struct progress
-*progress, uint64_t total)
-     tp->last_misecs[tp->idx] = misecs;
-     tp->idx = (tp->idx + 1) % TP_IDX_MAX;
 
-+    if (turtle_env &&
-+        *turtle_env == '1' &&
-+        rate < 128 &&
-+        progress->title &&
-+        strstr(progress->title, "Receiving objects"))
-+        die(_("stopping due to a <128 KiB/s turtle speed: %u KiB/s"), rate);
-+
-     throughput_string(&tp->display, total, rate);
-     if (progress->last_value != -1 && progress_update)
-         display(progress, progress->last_value, NULL);
+In the test script we see a handful of lines like these
+
+> +	test "$(git -C default-filter-blobnone config --local remote.origin.promisor)" = "true" &&
+> +	test "$(git -C default-filter-blobnone config --local remote.origin.partialclonefilter)" = "blob:none"
+
+added.  They may have been written to mimick an existing line in a
+test elsewhere, but see efforts by others like
+
+    https://lore.kernel.org/git/20260305225128.54283-1-francescopaparatto@gmail.com/
+
+Thanks.
