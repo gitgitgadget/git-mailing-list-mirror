@@ -1,148 +1,118 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD79256C6C
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 01:45:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E563325716
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 01:47:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772761503; cv=pass; b=Lvqb3sMcs1nQkpC0emJ2F+wh3Cp0bNrMry0cfvw81ZL7GGl4ZLvSp/xvSvgqDaJLvecrJMIcMb2dHrOmFwwQvdmpDk6kuoEM/NPrOb8Z+hGvs3I+bl9065vnPrOAGyi00BIGW/Nh38wW1HyWihlJpKC1DiMOeFN8SV7AjL2IcGg=
+	t=1772761676; cv=pass; b=X/yJQCdCzywDFZB7rrkUmxpvBm1z/jH3cuNQ9rxbl/Kjxanwi5C6lJ4Fl0MtzmG+uIZrl4cJFyW5saZ6WIkNs2fglXbGxK5cYMLJef6vh9DyiEHw6rwwt0ej1Z3epGMcRQ+jvMzX29qmifryGBDekxvIeP/ZXbd5eyh8GT+p1wQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772761503; c=relaxed/simple;
-	bh=4u9hJfbm8+tRhmsGacLFA8iOD1FhEUaGRBbrid+kSMQ=;
+	s=arc-20240116; t=1772761676; c=relaxed/simple;
+	bh=aXTGJgHwpbJNFIS25oMZQJxYMErEse//6lU5cgAzDvM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=VwoRqwl1u6FjLK0jfHwNst/m9N4uram74xMWXMUZcNiSMnp7edbpJBT8qkD+8Ustj3qMyEBjcXHc7t2CqW/af7G4oB6UCoX+125YI8oD5ZGthF/l5cUlUHmcVSvMHqdRa0dgcTGdcR8dOc0/aUvtcY+twTMlnWMiOLBaSZtR/vM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j9hW2Jaa; arc=pass smtp.client-ip=209.85.208.53
+	 To:Cc:Content-Type; b=sIi+IR9amaNBoamwBxqUgFyNpHHUw3r3Vl/BaBOu5ehXBG0d0O4LI02N8Lw1bLogKS5BW4lnISKp4hKORnl8M5Lr0yN1exwSEnMrkxP5Y1RPjowOHUNdWYyaz3Q7A98qHVRG+IHoFBUSYhYoC8eOVRvLtF3AwaGdOw0LUUEomZM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OBw8YgjP; arc=pass smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j9hW2Jaa"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-660bdba9390so5022027a12.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 17:45:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772761500; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OBw8YgjP"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-89a00e8dc04so47979026d6.0
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 17:47:52 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772761671; cv=none;
         d=google.com; s=arc-20240605;
-        b=WoR/2/xSqLAIoGW/+Jd7bZSxDBdBmLio5xx4I3zNzhsFft4ioqfInZo05bTAIyaWIk
-         jWBga7MKbOY4Cunw43Vfy+L0Rc9TWTOAPcJ2j188qUs+UkT0zVHGOALPI3VTvmNxhu26
-         jz4THmS207nT+rnFxSuLLpDt8ONh262MuAqCwbHGudPn552Dr/cehLySfSc8aSIFjVvW
-         SuaNAajgN+KBv1ONOmPLsxmaCo9vqPSjyKe6CtPAbfj7b3LjNracmef/lTb/px17dbik
-         4orXhStGmlS6ZZj5CSdvi9NhBXhkiehd5AVHuhXrfj9V62gAKUODPwdcluDpb9hhgxCc
-         GmPA==
+        b=Am5rQeO8/cYtsh0CPJ0Hc/ftCFimBrlIzA7PZImhMCgFTPigOY5Hq5bFVYgzs5XGaH
+         G4Bjgkw02p1eCyWlr6j0pfwg61rDJgn8U+i16g4VaSHzJHJQqAmhxkdkS4bJk9Kak3KQ
+         qo7fzbAhC5QtFnO1I6vYUQORnEdNxIKqAbPfJB4Dg491i8jjXN8y2twrBRQYpr1yewz1
+         361Y6f+/uYZhROTaTBLTXUKTDMZZCyFc1QhfeqkSrog4s3gBWIcf0LuAg2W00nHlo46R
+         gCT/K+Nyjo2MK9Pr4zJ5RBPwuNzKyKMnsD9/PkXvT1x9qJo/GX34rvMvYBqD7ea/7EQb
+         hQsA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=Y1zkm39UVRNTrgW9xgD2ppcOoQViRvg0MDQfppZe0kc=;
-        fh=PNVXveT8tss7yeC21DLmmEj3x+FdBfvjx3sb48AYYz8=;
-        b=gA7M9ta+YA8PF8FGThf3n3Laht7J2tpSOTYWlp7Wb8USzP4Lz4DvtgZTMjgUm46W2o
-         4cR2e9IvRbPBWO7Kj7Ed2xVqc24Pi6jD9FPHgtDZJ2FRV9GNoVatRz/4RswX9KRbRACE
-         WFCnZLZ5NhPaP8LOG0RGExjFC4seOCgvGfstBe0VjhEQVHobadC5QKeRhf1FVIsLivvm
-         mLL8587V8p3ktCNHVTyQRw8GbX8OWSHav8DLC4Ens1f0ZEOEq9eX6fESsw6uhtdXWeWE
-         +K2iDGGacgoFPTj6hklUKJS07Mw1xRFeDJxxDRuGmqK1SkDPt5fnF/vpNG/DEHuI7xKu
-         d4mg==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=G0iXQguEX2i7xqT1NZOWl33IuTGao4m8aSd9H0vXgZQ=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=Ai4ICIssO4Ewnf/U6r19aWVoQvJDOwesL04IsMyNdAt39bGQIGmVPFXXh5+ZnaMS3H
+         ajwuDzCspLnNkd5KompP+2bjL09tCnEP1+6A2+fLLcUG1nvFCJV4lPSPVl6RMFyB7s0z
+         VoJjV6HcZ1pZRNEQO/B/SMWeiBT9JLl2FK7un/5NvX0AM/Tdghm47TXHvyo/8azOoiX9
+         ygAA0f2/eRW0xv4LWUeQ/NlVJwzNx427gs9G/XbzaQFfu68injv3nKUeaA4rNF8Fi+3t
+         syAFD2Zk+llV/LYkTBHXbsOqTabc4MmXY5nW8Ea/aTAekbSp3jbxGsJHyopIAT6ThzxT
+         64JQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772761500; x=1773366300; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y1zkm39UVRNTrgW9xgD2ppcOoQViRvg0MDQfppZe0kc=;
-        b=j9hW2Jaa9IcOrWb4VFa/i4CQBzGvCQt0aFYX0hWv8ZXtE1JnON1Gr05ILPQwyWMr7T
-         y0dF8W9cWFMvAb3A6zNTlQ577/qtSd0S/9Rm+8BlBeYlubIEODx25hyIFs9UJI/RUd83
-         UMp5G7bCEmpmUrcPODRy3VoG2eFBcJh8fYsdoCEO/iajIT5QyqaB/S2PU4TRwcKidPNP
-         ZdFxpc/DnlmY0Nr9ZcyrlahmefFsaywJC+Ot1lVNHmpg4cFQnfOKHAKTTa3ni7Cf7VWI
-         NluqVJlN0TIrSAuaAbBy9uM1RVHdGaW0V9jSjUQYC5/7GO833al9cEk6t19ugr9K++MQ
-         UVDA==
+        d=gmail.com; s=20230601; t=1772761671; x=1773366471; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G0iXQguEX2i7xqT1NZOWl33IuTGao4m8aSd9H0vXgZQ=;
+        b=OBw8YgjPBZl5bIHFoex3k1NN2ctvYYoJE+/Xe86eBWSO6ZGvaGh9iWdEm6xruG+FFr
+         xy+YXlQlXPs1B5aKicXiUJ0UNNl/Qczt4nHSVgA507hWA0AJFj1dMFCWahETYfmO+rQa
+         B+rO4elsC63lNCE09YY/zR+B1OkNGvjKhCOpZdHBuZeV3j9dIYZl8nlIDUoUb+njltW4
+         mvT9RoE+tLUTScjMFL8CXg4Yhp6Qg7RaifzSo8Toh4EBbeo6VpfvGKEcxLqh/oH9j79q
+         EqowhEEDqgw3RohZnmXMtKmIAMqHU1V5O3wf7pn5midAgCyUrEH3k7YIfzUiIsGaxYqe
+         gByQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772761500; x=1773366300;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y1zkm39UVRNTrgW9xgD2ppcOoQViRvg0MDQfppZe0kc=;
-        b=h3bnm+O3FxYq6KmS5tpgw9YD0NldBm/g9iqmtXKhFMvkbgXSJbKWngF3YRF7wS4y5W
-         1HNXr9WakuLYzoOg4vxu+3fFeOVSmGJDdf3yvKEJuN3UWo/VvVuLizLX2xNidyApRcL5
-         fIGWZA+9LZ9o42xbDIXN+sYJyiWEB9voOqqP76VkBvyxiwW9k9gSIYzeAnm53Nz0LsSE
-         rfvnyEGvUAD1ySzUIfHRiUPSDIW4jGX01ECXe5GuHGyYXOe6lpSgRq3xKPotZ8TRBr7X
-         vsXZ1HfYOLdy2Gj5hP/hZ6ctYXQx9RDCLv4PLb5FOI7xyeCytT7qKuGHKbHP/5nU637W
-         fykw==
-X-Forwarded-Encrypted: i=1; AJvYcCV4QBsH5t8vXYCfVetym7EmjjvPQ/eKeGvffTdis9YBFXD6O94PAo0p+l1eFnD8cuekZXM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywt0DOTWhRuj5txctI5qV2OJyRp/ed+wNN6iw/Mc4FeAE2KlTJ1
-	sRR6OjBjlBWfMiwPVay0GBBW0GZRC3M81nZOLPwO81RRgLD6rjq2cYEDImIS/LDXEyKy5wCLUz0
-	BEPDm63ggP0/0xQA4jw69dKMWqOUMz/g=
-X-Gm-Gg: ATEYQzzzvmDloTyG+OqYGed6wjLJHAoPZqpILyC0jEeRcqX3byew/hnTuSAiauW75CM
-	vjd5y+IqWfrzhBwtRqXquD2KvKWNii0CuaJEXkAJRj2r+6ZZSOg728+47DBY0IvyuMpv4X194xk
-	/GIKIQyfQbcew9U/aD/C96bDT056jnN+tkPuGkXo8evDI5DGNtKtLtpdpQVJWtOC3o87D6yw66G
-	xhSfC549c0bUiBMCE7RLW4QZf8EiYBdrVOOCwjuuOTyqmsMLaBaz151za5r+83S93/M/DJCPVqj
-	/AESA5oVaIqTk+KFboNjv//zm36QZmHaDAxTCZQFH1tKsKcv5kQqdUPdMalv3E8HxIfw86x96ZQ
-	NWVEtv+GAWOjBPJpjabBWi9fV
-X-Received: by 2002:a05:6402:13d4:b0:661:85be:6082 with SMTP id
- 4fb4d7f45d1cf-6619d45c764mr207309a12.5.1772761500230; Thu, 05 Mar 2026
- 17:45:00 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772761671; x=1773366471;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=G0iXQguEX2i7xqT1NZOWl33IuTGao4m8aSd9H0vXgZQ=;
+        b=V2Mp8KUOYsu4tlaAasOfmq5ILlkcCp+IDDZ55/bwOT47uwayc3/JMDMVMllA6ZmglO
+         opadLEf4+Bpw5AhR8YCOV16ZniJzVuXeamvRjrWqjDSQ24Vr5ynLneziMGIoqCmwRcbI
+         d1ZsLoQgNZ3N7uEkt+z+hawsLM9/mePT0y2md0NWqBubmBs5xAUPuNgIe08ndedRdoma
+         ntuAEDFzjL2JRcPB8GSIlkOuuTcyflPpfC8N6zEkvfBrr56uiflecR/XVm3+gBnnXa7F
+         3CFv/uDbLLxnERoC8xvSEkDsmljhvIbrYrRv0AwLCTK6D4anaqpcCXGRXOJ8dgQEkw2b
+         wKnQ==
+X-Gm-Message-State: AOJu0Yw2hi1myiHi/sS6xFHZQcu0V0HqgUpswrcE1rHMUXev+AqUfOOe
+	ZRqzmBNP/MgvACfjQxz6Z6wWhvHcsIwR/D2hgyo10K1we6CbMlTYJRtqwdxudXL13J0bvEGrQor
+	vjPjlMPS7FW1K3Jy+IGyg2q3DjhUgAvznYGgSBQY=
+X-Gm-Gg: ATEYQzzZ2cBlU98U4a6HHH4xotBgO5ifTFHiy5wYg4isfzqFo/DsbU39/pz1uODBTi9
+	h7llhapOBMqiEMpsGrdSB6TY17463+5SpRDxKBShBKJC8R2tcGUHkzr5FbiZ3MRTA6yPtBnHG3G
+	bYb6tjnNIGcTeqKvFxFavikO2RsVQQLdDUKIiXAUr0ykNisH8S5SiIJFlbp+c4Tlqcfar6Fi+8t
+	CKgCnLvJ+5LQAHxxgciGCu6L0n5O3piI1REPmuYNNPx8BbnsaKz8SC0CladxGLlTTXTaVM522hW
+	JiqB1T7HomtMjDPfNhjvMeLjC5S4FqWgO9QFOgQvWeRmp5iV23elJpBvnqzmkeIDmGhsZKueHBn
+	tlHi8fE6VrIGDm4QJ77KlL+uLrOkl2bZAHejA
+X-Received: by 2002:a05:622a:1304:b0:501:147a:a215 with SMTP id
+ d75a77b69052e-508f497972dmr6821381cf.73.1772761671122; Thu, 05 Mar 2026
+ 17:47:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAAaskFBp+A9pOhd8O6owd6k0cDj66ipXrqH2Hj_c7j3d=HM10Q@mail.gmail.com>
- <CAAaskFANnrqTAjQOHhAgzES9=S+y7w9u-LMWbRbi8FayVdvzFw@mail.gmail.com> <aaosmo1Iluc5KeZw@fruit.crustytoothpaste.net>
-In-Reply-To: <aaosmo1Iluc5KeZw@fruit.crustytoothpaste.net>
-From: Ivan Ivanov <qmastery16@gmail.com>
-Date: Fri, 6 Mar 2026 04:44:48 +0300
-X-Gm-Features: AaiRm52uM506wL2bzMmjupqAuTfCtYwjNJu6qWpMk6EgUpgjwvdVapBMLMmvESE
-Message-ID: <CAAaskFC=tpuS-saP9t5Kp0+i6qTHe29x-dGkanyAzz-xaq_HDA@mail.gmail.com>
-Subject: Re: Test "t0300-credentials" is failing on Arch/Artix: asks to enter
- the Username/Password in an infinite loop
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Ivan Ivanov <qmastery16@gmail.com>, 
-	git@vger.kernel.org
+References: <20260304130502.8475-1-jayatheerthkulkarni2005@gmail.com>
+ <20260305125332.27600-1-jayatheerthkulkarni2005@gmail.com> <xmqqms0m2hn1.fsf@gitster.g>
+In-Reply-To: <xmqqms0m2hn1.fsf@gitster.g>
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Date: Fri, 6 Mar 2026 07:17:40 +0530
+X-Gm-Features: AaiRm50_NPCH7mQQPkLy07WNZfszfSKKiNCZkagE3cqA8Islkg5fONiCrM6Phlk
+Message-ID: <CA+rGoLfpyiKjLMOOHBoGoQAO2eLraejRGgpEpMGqP7+=VDQSkQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] clean up a few things
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi there Brian! Here are my git version --build-options (taken from a
-version packaged at Artix, however I assume it to have the same
-options as on https://gitea.artixlinux.org/packages/git that I am
-still building atm)
+On Fri, Mar 6, 2026 at 1:06=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+>
+> > Changes since v2:
+> >  - Update commit message of patch 2.
+>
+> Hmph, they look identical to me, and more importantly, the previous
 
-git version 2.53.0 cpu: x86_64 built from commit:
-67ad42147a7acc2af6074753ebd03d904476118f sizeof-long: 8 sizeof-size_t:
-8 shell-path: /bin/sh rust: enabled gettext: enabled libcurl: 8.18.0
-OpenSSL: OpenSSL 3.6.1 27 Jan 2026 zlib-ng: 2.3.2 SHA-1: SHA1_DC
-SHA-256: SHA256_BLK default-ref-format: files default-hash: sha1
+The only change was the words "a standard signed int" -> "an int variable"
+"overflow vulnerabilities" -> "bugs due to integer wraparound"
 
-As of my shell, it is a GNU bash --version 5.3.9(1)-release
-(x86_64-pc-linux-gnu)
 
-> any configuration options you're using to build?
+> round has already been merged to 'next'.
+>
 
-At the moment - just "makepkg ./PKGBUILD --check --noextract
---noprepare -f" (these flags in order to get straight to the check()
-stage). Btw right now I got a somewhat similar-by-appearance error at
-test t5003, however if I press Enter two times then it gets further
-instead of an infinite loop:
+Whoops, I didn't check the what's cooking chart,
+Thanks for the info Junio ;-)
 
-Username for 'http://127.0.0.1:5003':
-Password for 'http://127.0.0.1:5003':
-
-Here are the contents of a related .out file for this t5003 . Please
-note that not so long ago I did chmod -R 755 on this
-/dev/shm/git-test/ just in case, so I am not sure why this is failing
-
-ok 81 - remote archive does not work with protocol v1
-expecting success of 5003.82 'archive remote http repository':
-    git archive --remote="$HTTPD_URL/auth/smart/bare.git" \
-        --output=remote-http.zip HEAD &&
-    test_cmp_bin d.zip remote-http.zip
-
-fatal: cannot exec '/dev/shm/git-test/trash
-directory.t5003-archive-zip/askpass': Permission denied
-
-fatal: cannot exec '/dev/shm/git-test/trash
-directory.t5003-archive-zip/askpass': Permission denied
-fatal: cannot exec '/dev/shm/git-test/trash
-directory.t5003-archive-zip/askpass': Permission denied
-fatal: Authentication failed for 'http://127.0.0.1:5003/auth/smart/bare.git/'
-not ok 82 - archive remote http repository
-#
-#        git archive --remote="$HTTPD_URL/auth/smart/bare.git" \
-#            --output=remote-http.zip HEAD &&
-#        test_cmp_bin d.zip remote-http.zip
-#
-
-# failed 1 among 82 test(s)
-1..82
+Regards
+- Jayatheerth
