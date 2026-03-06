@@ -1,98 +1,119 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC882ED870
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 21:07:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9411F4615
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 21:17:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772831245; cv=none; b=KTRGUwAt6nKUXqC6259ghcuLbxv+bFMBaF0rJ/DLnU1JoQOVkOzlTy6bCEUjnoSWDZfn+UrKzrB4/R49TJou5iJ09aQRicVOAgjpMuhRbFBoDE+XGoM1yL4S3F+xRlHwJ6jXjr5LUuWGTzFLjdxCLHKHal2wyfU+pe4zgN2AS9o=
+	t=1772831849; cv=none; b=IvNzxo0t7HRKqZz8zNSqG255ZCQZpZArf12lmhSzEsUgkbSZMC2FOqDAzPj/KqwsJufhkXRaN5hMVhnFisBWOILu8Gz/F0UBgy/cndrdwDreSuuSrNKCF3OQHiiZlSY6SpCFgWbf9mWFbIWh/4Tdtd2uXYO4Thu9FgRIcWye5NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772831245; c=relaxed/simple;
-	bh=OH0+3CUE8JatGSWgo0UdBINAcU5s52a1meqDFLDwR/8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cfi/l2moizbvehMLt92M0qEoB1bakGj13jKsm7vj12wdKdtHko5LiFbMC9ZAyrYH0Xch0AgQJuySs6+BzPOyT3qthBQNlnh/5dS9+gYQDJGe5hN6lIowU84z9KBE/pxoQQ1Tgsa52tG1cvPNIUcdv871+j6wEb2ii7epsbKnniw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EIM28LH0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a2+jxpmq; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772831849; c=relaxed/simple;
+	bh=DaDul8fj5cQwUUXsia8LcKBPOoxILm/WdTR60A9rI+k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iIH/JmoFZrTmsxdkNOiRl54WF4MHvfdVC62MqTtfmhQs7NKUmsv41+KmwQLSqhWsmaAwv/W2B5AE5z1kbhcCypdObeQ/TSs4PUiqOc90xIA/3kDJ4SpZOkmCOGIYRI8z7gA4kBRMkc7zfXhV4HB9y/AKajybh2298xo5fDXfAy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=D/Oio+ON; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EIM28LH0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a2+jxpmq"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8DA72EC053B;
-	Fri,  6 Mar 2026 16:07:23 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 06 Mar 2026 16:07:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772831243; x=1772917643; bh=rQ5ohroSl6
-	/PXQGtdfuT+3T5SClx2N9iwNp4d+h1ASg=; b=EIM28LH0d3vPqRtnyLwFZfCUnK
-	pwvjnpQ8Oc4eNwupjrJjxq/OcNljWJ9UylKDylN+scKCNKZgiVSbl0RqsbNTGV0n
-	Rm+E3LC+laiWP3Iz7aLqdcKh5TH/J4IkrccQxg981Y+2/ojQqzu1dkY4YQQGTJmP
-	ZX/MKfeEMqG6BnpRTx0B8/vzsz599stbUTcQn0+UzQ9UjAnf8uGFXdgHOiU9CyEG
-	jLWPoa+EgywgCpVjGGTKzwYf/fIwMxfJQVAFU2i+BHx4GIrH+XAKh7FOj0zlc6tb
-	4DuDQWak2DmsOeBkrHX8en6n83WznGiuSqgvCvhQ4rIFctxiHceupSD64eZg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772831243; x=1772917643; bh=rQ5ohroSl6/PXQGtdfuT+3T5SClx2N9iwNp
-	4d+h1ASg=; b=a2+jxpmqdF4J9otXg65YSpa5tWxi7FRpvPUkpkL4/DBfAHdS2oB
-	N88Jxfwkd94ikiaQbKhQj/19apLpl/hY/c8GvEQTXEGhYNVW87znUnTxf8EdI7Wm
-	CC9ApVyJ0CR/0/nDJ7+oDNTnvwGyM9bZzzw3NzdXWDetz3W7yAAnia3fnC/c13mx
-	hu0rjb8VloJPKbHsI+LrT4IDoxpb+BydNYl5I3sewZIA2RMuHgB9py0BM/E1dLQl
-	XujkXD4zYLdAsgJrP3NKQc86qfrHX+srKT13qEjdAoRI5SXlekJwJypm1l6cB+Ov
-	QlTb31tlVzrl4uxxZzp5minRwk32bzxfnuw==
-X-ME-Sender: <xms:C0KraRs-Sh8hxRP_ntYBsfrDOia68JYwMEVXugCxelJGgSumEoTfvw>
-    <xme:C0KraRd0exTHG16BvK8b1vHow_CG7fkwH96pOuX5DdpkupXsO-UWdr9h07a41lEQ9
-    v2RugzN0xgeOEcfrZdmTTlRGaH8x28y6eEnpEecp9U9o1u7rYy3E5A>
-X-ME-Received: <xmr:C0KraZwl-wev2TmcUMyycAgFOocGv14gjgleUKZOYSg8qTadlSHnw6fTD0eUmac98-Fu_SjgHLcYwOpkiLuGiMNiMOXH6TbUAA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtfeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhilhgrshesugihrghlohhgrdgtohhmpdhrtghpth
-    htohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:C0KraXE5qdZVmvM5uvbQzzdQmDttHsJ0hfWH1kNCJPvzMncYMVS_bg>
-    <xmx:C0KradwwFg-o6EYMcQbnnav6h7fBLdAV0F0ittq8aCnzq_NS07THuA>
-    <xmx:C0KraYvDvn3N8KV0n9BXNTLZlyq1gOZG-SkSxggn8lEnk6aukEaifw>
-    <xmx:C0Kraa0390P_zGZTG0yRKbPQ2-k530nLPdNuXQZq1y_dTZQI720wKQ>
-    <xmx:C0Krafg75b7fjGBL9QvDSipeydPAtB8Ivmd1WeoTORBqxlztVATeJtgd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Mar 2026 16:07:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Silas Poulson <silas@dyalog.com>
-Cc: gitgitgadget@gmail.com,  git@vger.kernel.org
-Subject: Re: [PATCH] Fix typo in MaintNotes regarding versioning scheme
-In-Reply-To: <882432fe-30f5-46c5-9efa-5b8a047283b6@dyalog.com> (Silas
-	Poulson's message of "Fri, 6 Mar 2026 15:14:14 +0000")
-References: <pull.2209.git.git.1771774770368.gitgitgadget@gmail.com>
-	<882432fe-30f5-46c5-9efa-5b8a047283b6@dyalog.com>
-Date: Fri, 06 Mar 2026 13:07:21 -0800
-Message-ID: <xmqqfr6czmye.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="D/Oio+ON"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1772831846;
+	bh=DaDul8fj5cQwUUXsia8LcKBPOoxILm/WdTR60A9rI+k=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=D/Oio+ONnmDIFIJOkU3yKmF/NvRWExwkb8DAZfCU7LJQKCsn4vPv7Dsaxj2EL82GB
+	 fRW82HGDOanF5XTbixACdprwEwnLBDOYODYuLrzJihLW+g6ldyjo7R1TXtLqEDKtuw
+	 6C6FmQi5AF7esFmisU9DC9Y0jgm3FGSiuE2DoNDAmj8HZ/i4D1RGDSihx4E3UgTN8o
+	 mW1TZDdNRSKaCS+CY9PStRbSwrhCO6s5qQH0ex11j2AifUjIEJEvzTv33wJ1lsxjdq
+	 YM0iAjE8i7DtYVFR3aTdHcIm7BFd/8B2l+WZeU9eHCAgiHJ7VFNNNNHBeaGXJkvsM7
+	 gHYV5OBNOZXAlbPpSV4SjvaSu39fFhY21TeD1kD8WUf1+pWt7ClGTJvqMfqZWPXF0P
+	 QN5H+/tUkiAoxrfk89w0b752/J7OmY9LBag4KzllyAboTQOTTFvj8+1GMoYS5d9zJy
+	 bjgSoQXubjckNu9RvcYgMN5AI3gfumDeQM/X9T3Vt+Htaw9GxRr
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:941e:963:e525:3a6c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BA0B020112;
+	Fri,  6 Mar 2026 21:17:26 +0000 (UTC)
+Date: Fri, 6 Mar 2026 21:17:25 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ivan Ivanov <qmastery16@gmail.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: Test "t0300-credentials" is failing on Arch/Artix: asks to enter
+ the Username/Password in an infinite loop
+Message-ID: <aatEZfGPkZTVT4uJ@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ivan Ivanov <qmastery16@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+References: <CAAaskFBp+A9pOhd8O6owd6k0cDj66ipXrqH2Hj_c7j3d=HM10Q@mail.gmail.com>
+ <CAAaskFANnrqTAjQOHhAgzES9=S+y7w9u-LMWbRbi8FayVdvzFw@mail.gmail.com>
+ <aaosmo1Iluc5KeZw@fruit.crustytoothpaste.net>
+ <CAAaskFC=tpuS-saP9t5Kp0+i6qTHe29x-dGkanyAzz-xaq_HDA@mail.gmail.com>
+ <aao1DF3lXfHTMH30@fruit.crustytoothpaste.net>
+ <CAAaskFC0WETe7NaEfznW-h53Huee2sLLAQYWBA3moLpeULhtcA@mail.gmail.com>
+ <20260306043821.GA3465674@coredump.intra.peff.net>
+ <CAAaskFD7wmtqppatb5T5GMTviieR0Ttk9y4+c3khuF3bZBfE=g@mail.gmail.com>
+ <20260306160131.GA3577004@coredump.intra.peff.net>
+ <CAAaskFBNBEiPW4tLRtPQqkntHFpDTgjwrx8Lqg-qax1Cb_mEhQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="WiEH5bQJAZXx/AwL"
+Content-Disposition: inline
+In-Reply-To: <CAAaskFBNBEiPW4tLRtPQqkntHFpDTgjwrx8Lqg-qax1Cb_mEhQ@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Silas Poulson <silas@dyalog.com> writes:
 
-> I'm aware this is a very minor change, but it would be good to not let 
-> this fall through the cracks.
+--WiEH5bQJAZXx/AwL
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for noticing a typo.
+On 2026-03-06 at 17:36:35, Ivan Ivanov wrote:
+> Sounds reasonable, but - if there is only an issue with askpass and
+> everything else is fine, couldn't we just execute askpass from its
+> origin - instead of copying it to the destination ./git-test/
+> directory?
 
-Will update before the next issue is sent to the mailing list.  No
-point in changing it before that.
+We actually do generate and run quite a few scripts in the testsuite
+(`git grep write_script`).  All of these will be generated in the trash
+directory we create for each test and some of them contain dynamic
+components that cannot be generated before the testsuite is run.
+
+It may be, for whatever reason, that only those tests happen to
+malfunction in this case, but we're not willing to do the testing and
+maintenance required to guarantee that the testsuite works in a noexec
+environment.  There are some cases where we accept patches to deal with
+uncommon cases (for instance, I send in patches to fix the testsuite
+with zsh in sh mode from time to time), but I think this is a case where
+we fully expect things to be very broken (at least I do) and the amount
+of effort required to fix it would be substantial.
+
+I am sympathetic to the downsides of noexec temporary directories
+because I've worked on systems where `/tmp` was noexec, but we assume
+that most people on Unix systems have at least a home directory where
+they can execute things (if for no other reason than the customary
+`~/bin` directory).
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--WiEH5bQJAZXx/AwL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaatEZAAKCRB8DEliiIei
+gXQmAQDsRHNSK2G5FCoCagBTkVsEFEnp+26pHw5egInYEVt60AEAhq/eVwqtdUi8
+E7bvguDEp3Ns+amO6ShQ2lLMuVVb/wM=
+=Tp9s
+-----END PGP SIGNATURE-----
+
+--WiEH5bQJAZXx/AwL--
