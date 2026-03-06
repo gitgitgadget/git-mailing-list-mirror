@@ -1,67 +1,67 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EB31DFE22
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 05:01:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3381D5141
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 05:05:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772773264; cv=none; b=N0lfTIVmjtbz0hy6rLWFz7ZQx+WZds1XHldAnrnTwBTcn95/MDBMfGc4VzkSAUM2rw5H8IklMQIPs2X84CbOqR6egHXGJcIaXMgMIkusPg7SmV9ESPt9OiIiu78gKe39q0/6/yfdOagBFMCTzZxqaPzw7Wc2qfXy4aq39nJNiTE=
+	t=1772773530; cv=none; b=NbvWwVJs2BvEtxUifOegs0sTFKA2Nwm/e/Rf15SwYpxTCFwdO7MwPsg/E3RjfvjYlXIoDsNcG7Szf473+OvXWfaftBR7u2/I5+EgGBPPI5d6ORw/gqEkj/gr0Eq0bx0m19mX732eVj7Y2dG8abeFhsv98PdmpUdv3rEY0M3S1TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772773264; c=relaxed/simple;
-	bh=Zuug1pr+j9Ta2QiC3PS/9G/p3RSwJkoS1zNsE3gREdA=;
+	s=arc-20240116; t=1772773530; c=relaxed/simple;
+	bh=APP8HWq+09WnMT0tS+GCMeOFeSnngcql4dNgnYXuL6M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RNjnF6enMjXviPiyhOteKyoP5CU5HorKANEFluv1zCJTIM+Y8kElNV7Bn+Q4a94WJB7tgfnXWTj2Ux/laP9DqF44BCBziFUIDIuYNG408tFCIybC9fYI6Fo0KHCb9cok/dN+kVAHzsH7LxbpCU25TGUfLwWoqxA8XMw5iL5TrW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YrdSi3/v; arc=none smtp.client-ip=209.85.216.44
+	 In-Reply-To:Content-Type; b=Ufy/xGQE/878zWIYLdfoRD1/aUVRiW3Xt40Rix/glc2wCD2jSfGwnpxeP4E3+DcwrxgR74pURt8Q6XoujkscNiVozvO4ptC6vaRW8/2bb8+uX9IK8xEt+B8mWo46yO/fH3asPEoExYgihEFATao+BKtyzPXxKpdF0DsLDH1s5gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FzzyMIOq; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YrdSi3/v"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3598c1ad542so3212488a91.0
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 21:01:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FzzyMIOq"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ae505619baso31389185ad.2
+        for <git@vger.kernel.org>; Thu, 05 Mar 2026 21:05:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772773262; x=1773378062; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772773529; x=1773378329; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=R9+nRn1r4oUlQbeLuSLrnYFrK0gjLCObILJ2pfRtQF0=;
-        b=YrdSi3/v91Zmj4ReOPoGrE7aCFFEziJB2bnXzCOLx12llV2ujpasiY4Z5+0G9F7hKb
-         qKzdLtEOTK2MJ0Lu72JSdgyp8stVib6Pn7j0hNlta+XAxnsTyJEy2uWSvFAnf+FechJx
-         F+Ay17onZxMpsYDUe7utsSsYyZN0TeheTbYKImaVCxdI6WezylgctGzQ6FQRDtio0F7e
-         qj6KfTngxN1IerfB7wSK72YP4ZZ84iA0jV6BT2h8xbBd3SHcODPx/d3CIYuDqC7XiKc+
-         6mvCYtdQjhNDwSV92oQAxpFBa4/4ce41iOnNIxik0706LB6ZFq3jkbdfFYVFUBUlbJFu
-         kZOQ==
+        bh=bGJ+878oQ57zf09WuRPWlWukg5DtQXg6VyBQj1l1eME=;
+        b=FzzyMIOqtaCMglPaNYhZc6WwZPZdXAuFBHEzA9ovG2GgD8Lnb/UnvVzP4UyFD2nKvr
+         G6mpFYnRB/b6akQuCTOVB8x+12EWkTJWVEmRdtZ9rbBClD9mOPsXDRjMgp6Pme1n7Rkw
+         APz2fMVhqP9WiQB9NfF2mdVqJwJpYvnPabrC5g/6jtHp/oGiULnAkiPxWELi8Zf330Jb
+         Izbgv2NBHgksqS/hje5nV5+F+/JzcpI/aodab7xM2rBml9hOK3HaWXW4ibKlX22ZCzP1
+         jpPgYSxUsNVk2sundeV6Pn+KHZr/sSDabjtxSuwfkK5MotOyZ6INCKhTfU66olDCsmX4
+         7ucg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772773262; x=1773378062;
+        d=1e100.net; s=20230601; t=1772773529; x=1773378329;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=R9+nRn1r4oUlQbeLuSLrnYFrK0gjLCObILJ2pfRtQF0=;
-        b=QPLepCjM/YivAgYjbp79N81DCvC0RTMAPzTNYLAEwNBic5umefQesGC3gCZML+NJc8
-         pBMvTJjTqk97qkJeJV6YWmR1ry0pbZRjCgsOAtcLPGGFJ4z7peG+KBld7S9RH2qs0LU4
-         W/0qn6N9ryz4RameMtbMOKczV75Ldedjy9rgzwNepzKuDvBSUC5yP6hms72o7fqmAGG5
-         P778YhL+tuzur1RchLWBcWazh39Dwg7+mEooPKtcq0HtEcSnlHF5xwu7bkKI6N9NYnsH
-         NoF2UrjFWpGTwGa25cSDwTur5Xm81jBh7tqGYWIXbEzLtjtqavSgQtwqFcNP+/u1XAno
-         C2RQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV6Lqqma8BGuNlBboTuwB5aAQq/S9ub4OGq0LH6/oZrXG2cr6OJiv144ixin2VcPkv7ETU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyyb3HJariPeO17QP3BZaM81aoNBMU8Dlk2gdNAdqNndY3WMwHT
-	EsZgSpNtKnYdHc8Og5SjSj2jZpD2mVXYWj1pybQHPWn7WZ455selObyB
-X-Gm-Gg: ATEYQzyErgMBBXKrbW7H+1YR32czyAbFhofE6XR5rMQqglQP9V0QbDPAVya+yjxy45M
-	Ng+QyK8Wz6E5HM5215/AQwD4+3IiQ0bzW/cP7nTE6iwRUSVXVN3Rnnulvj9H7vbGq/28mCWG1XI
-	JbivquQWdvy+6Jca0Q1JiUmBSP/KhMeRtn+3Jf5BeBBgxZo8GxU+vuYON1F/FYRXQlDDnfEFydc
-	R8NuuHDuYPq/ijANklteQFOV8YMA0aiXqzDvtloLMxEQE2decA2C3ylUgJD3miMdNG5tEHn0Abw
-	aYg6knTD2nLf9CrrrCicjXRr5PEch79EiJlPh2iTLXfXvMJHW0Di2SdmFMJBQLt2lT1M008jTFf
-	k5lMY3ScURkOC6rOVzPXOq+dn5I3qyh61DD0ztmCckUpoOfpefdjjOB+5IkFu0Di8B9wdTOiJWG
-	H+h4nZFtU2iE+/080yD3KhpKQHkIizMdgD56K4bMvNJfAvwcek2SNgL/jHgpd/qym3IP74e7Dws
-	ChLnyV35nH/uXTHMe8cjzgSgkthrtpDruvT
-X-Received: by 2002:a17:90b:57cf:b0:358:ee5f:9c04 with SMTP id 98e67ed59e1d1-359be38e449mr872237a91.30.1772773262352;
-        Thu, 05 Mar 2026 21:01:02 -0800 (PST)
+        bh=bGJ+878oQ57zf09WuRPWlWukg5DtQXg6VyBQj1l1eME=;
+        b=okdI52ynEsyxLj81vZOqUinfgecUuwJSNravHKW3N/pxLc2Cmcx9PRKz987mclGrO9
+         wfh5fqcRFARse7eRda6JjWbkXzmIyRZtBhph5XZKxmHxhAKQMoUlPAd1C0ESxZKxqEfN
+         T0teu+88jRUu8w9irgWAA1M7K0S5yOghfFADrwHs+wcfQH4q2AW5Gth/asoVANi1wNsY
+         baSHP6UI34apk3/m3BU+xQuTnEUwFodGBHTiOGo1aC+Xs04ZmPq3MSW5RC8DCEme+jzp
+         y+3LuGeZiOU1BciYdE4qCrXDV9w5I3VDALiwjFnWQ5TH2Ji+8EHpJ49xlhQe0t6ldQ6M
+         8bMw==
+X-Forwarded-Encrypted: i=1; AJvYcCXog1KN0eg+FmgVRGUUlPGmUJXaZxx5R4u9flZGqpat6B2eQHN8Bcg8px6lu/+WJlvIPwE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YznNhfUvnK3yPf5D8QENqzA6d27LzXizVrLLEHCd/BhtW96xL1S
+	y8qClC9XxzCu4kc+qivMXJxaBc/wG4g2N/K9beYmrZt4wwtAlREDns7A
+X-Gm-Gg: ATEYQzxqHE9Bxg1TgBp7IJo4uPZ8JtR+ETtIpsPBXwqwUlZ0xWg+BSFK95gUh2I0Gce
+	I3jnq2+gYamfYvl/C7xajRdDtOYQZ/VASYrvO8DNBxlzJOzGc0+8xZ4cV3j5irD+iFSM8I5eGE3
+	28+Hm66vEQ+G0h74qoQ6xhiiiNEu3EWq8weuKHgONN2FlETaP6oKCDoGUTworWMydTtbH4CQS7S
+	xSqlMMhHTOLOitqwThWtXEnHKiC3JgSi/sfuGJWDqPb/btU+0FcT2PMHmVnY3cigLujaTwD1zb6
+	JkDNhwvgOulzywXlGTt4SL3NHQhy6Ff3n8Y/poJgqtSx32Iv/TIs96baLkVKceS2sr+LfHphVAp
+	pXynuPAUXcFUa42fhmr5XR4Kr2Kn0Fvr5o7wAKjImw9eK3U86tktzFw3VwzTn/xZaMKxhIL5bMQ
+	WJtCfEg7Y12j+tGWec/M1IaQBImg2R3erMqTLoHOe5YcYgKI03FQ+8tmPhraIZvmDCbxPOC19gX
+	jYMPr2dYGkb+odLQE4Xb4iwWlf0KzXcrMKK
+X-Received: by 2002:a17:903:1a0f:b0:2ae:5a7c:286 with SMTP id d9443c01a7336-2ae823feab0mr10959815ad.4.1772773528822;
+        Thu, 05 Mar 2026 21:05:28 -0800 (PST)
 Received: from ?IPV6:2401:4900:862d:bb67:1c20:bec7:1904:ead0? ([2401:4900:862d:bb67:1c20:bec7:1904:ead0])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359b2e0e1aasm4830044a91.15.2026.03.05.21.00.55
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83d85a2asm6125565ad.0.2026.03.05.21.05.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Mar 2026 21:00:59 -0800 (PST)
-Message-ID: <bb2a9b1f-5cdd-4c4e-91dc-a631beb009bb@gmail.com>
-Date: Fri, 6 Mar 2026 10:30:54 +0530
+        Thu, 05 Mar 2026 21:05:28 -0800 (PST)
+Message-ID: <31384cd8-6739-40dd-a963-ce1597921969@gmail.com>
+Date: Fri, 6 Mar 2026 10:35:21 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,198 +69,91 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] sequencer: extract revert message formatting into
- shared function
+Subject: Re: [PATCH v3 2/2] replay: add --revert mode to reverse commit
+ changes
 Content-Language: en-GB
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
 Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, karthik.188@gmail.com, johannes.schindelin@gmx.de,
- toon@iotcl.com
+ gitster@pobox.com, phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk,
+ karthik.188@gmail.com, johannes.schindelin@gmx.de
 References: <20251202201611.22137-1-siddharthasthana31@gmail.com>
  <20260218234215.89326-1-siddharthasthana31@gmail.com>
- <20260218234215.89326-2-siddharthasthana31@gmail.com>
- <c2048ddf-ced4-425d-af6e-14e9442e9d99@gmail.com>
+ <20260218234215.89326-3-siddharthasthana31@gmail.com>
+ <87tsvbe2sm.fsf@iotcl.com>
 From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <c2048ddf-ced4-425d-af6e-14e9442e9d99@gmail.com>
+In-Reply-To: <87tsvbe2sm.fsf@iotcl.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 
 
-On 26/02/26 19:57, Phillip Wood wrote:
-> Hi Siddharth
+On 20/02/26 23:05, Toon Claes wrote:
+> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
 > 
-> On 18/02/2026 23:42, Siddharth Asthana wrote:
->> The logic for formatting revert commit messages (handling "Revert" and
->> "Reapply" cases) is currently duplicated between sequencer.c and will be
->> needed by builtin/replay.c.
+>> Add a `--revert <branch>` mode to git replay that undoes the changes
+>> introduced by the specified commits. Like --onto and --advance, --revert
+>> is a standalone mode: it takes a branch argument and updates that branch
+>> with the newly created revert commits.
 >>
->> Extract this logic into a new sequencer_format_revert_header() function
->> that can be shared. The function handles both regular reverts ("Revert
->> "<subject>"") and revert-of-revert cases ("Reapply "<subject>"").
->> When an oid is provided, the function appends the full commit hash and
->> period; otherwise the caller should append the commit reference.
+>> At GitLab, we need this in Gitaly for reverting commits directly on bare
+>> repositories without requiring a working tree checkout.
 >>
->> Update do_pick_commit() to use the new helper, eliminating code
->> duplication while preserving the special handling for 
->> commit_use_reference.
+>> The approach is the same as sequencer.c's do_pick_commit() -- cherry-pick
+>> and revert are just the same three-way merge with swapped arguments:
+>>
+>>    - Cherry-pick: merge(ancestor=parent, ours=current, theirs=commit)
+>>    - Revert: merge(ancestor=commit, ours=current, theirs=parent)
+>>
+>> We swap the base and pickme trees passed to merge_incore_nonrecursive()
+>> to reverse the diff direction.
+>>
+>> Revert commit messages follow the usual git revert conventions: prefixed
+>> with "Revert" (or "Reapply" when reverting a revert), and including
+>> "This reverts commit <hash>.". The author is set to the current user
+>> rather than preserving the original author, matching git revert behavior.
+>>
+>> Helped-by: Christian Couder <christian.couder@gmail.com>
+>> Helped-by: Patrick Steinhardt <ps@pks.im>
+>> Helped-by: Elijah Newren <newren@gmail.com>
+>> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+>> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>> Helped-by: Junio C Hamano <gitster@pobox.com>
+>> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+>> ---
+>>   Documentation/git-replay.adoc |  37 +++++++-
+>>   builtin/replay.c              |  25 ++++--
+>>   replay.c                      | 162 ++++++++++++++++++++++++----------
+>>   replay.h                      |  11 ++-
+>>   t/t3650-replay-basics.sh      | 107 ++++++++++++++++++++--
+>>   5 files changed, 277 insertions(+), 65 deletions(-)
+>>
+>> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+>> index 8d696ce3ab..ffdf790278 100644
+>> --- a/Documentation/git-replay.adoc
+>> +++ b/Documentation/git-replay.adoc
+>> @@ -9,7 +9,7 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
+>>   SYNOPSIS
+>>   --------
+>>   [verse]
+>> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) [--ref-action[=<mode>]] <revision-range>
+>> +(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch> | --revert <branch>) [--ref-action[=<mode>]] <revision-range>...
 > 
-> I agree with the other comments that this ends up being a bit awkward, I 
-> think
-> something like the diff below which moves all of the revert message 
-> formatting
-> into a helper function would be a better approach. Note that I've also 
-> added a
-> repository argument to refer_to_commit(). You might want to do that in a
-> separate commit, but I think it is worth doing if we're adding more 
-> callers.
-> I've also just used a bool for the use_commit_reference flag, if we want 
-> to add
-> more flags in the future we can convert it to an unsigned int when we do 
-> that.
+> The modes `--onto`, `--advance` and `--revert` seem to be extremely
+> different from each other. So I'm starting to wonder whether it won't
+> make more sense to instead create subcommands instead of options for
+> these. Maybe something like:
 
-Thanks, this is much cleaner. Moving refer_to_commit() and the 
-merge-parent handling into the same function gets rid of the awkward 
-NULL oid path that Toon and Junio pointed out.
 
-I will split the refer_to_commit() signature change (adding struct 
-repository *r) into a preparatory commit as you suggested, then have the 
-second commit introduce the full sequencer_format_revert_message() helper.
-
-For replay, I will call it with use_commit_reference=false -- that gives 
-the full OID through refer_to_commit() directly, no special causing needed.
+Agree the interface could be cleaner as subcommands. I think Christian's 
+suggestion to do this separate series after --revert lands make sense -- 
+we would get real-world usage feedback first, and it avoids scope creep 
+here.
 
 
 > 
-> Thanks
+>      git replay revert --base=<branch> <revision-range>
+>      git replay pick --base=<branch> <revision-range>
+>      git replay replay --base=<branch> <revision-range>
 > 
-> Phillip
-> 
-> 
-> ---- 8< ----
-> diff --git a/sequencer.c b/sequencer.c
-> index a3eb39bb252..30f6da6f959 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2198,21 +2198,55 @@ static int should_edit(struct replay_opts *opts) {
->       return opts->edit;
->   }
-> 
-> -static void refer_to_commit(struct replay_opts *opts,
-> -                struct strbuf *msgbuf, struct commit *commit)
-> +static void refer_to_commit(struct repository*r, struct strbuf *msgbuf,
-> +        const struct commit *commit, bool use_commit_reference)
->   {
-> -    if (opts->commit_use_reference) {
-> +    if (use_commit_reference) {
->           struct pretty_print_context ctx = {
->               .abbrev = DEFAULT_ABBREV,
->               .date_mode.type = DATE_SHORT,
->           };
-> -        repo_format_commit_message(the_repository, commit,
-> +        repo_format_commit_message(r, commit,
->                          "%h (%s, %ad)", msgbuf, &ctx);
->       } else {
->           strbuf_addstr(msgbuf, oid_to_hex(&commit->object.oid));
->       }
->   }
-> 
-> +void sequencer_format_revert_message(struct repository *r, const char 
-> *subject,
-> +            const struct commit *commit, const struct commit *parent,
-> +            bool use_commit_reference, struct strbuf *message)
-> +{
-> +    const char *orig_subject;
-> +
-> +    if (use_commit_reference) {
-> +            strbuf_commented_addf(message, comment_line_str,
-> +                "*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-> +        } else if (skip_prefix(subject, "Revert \"", &orig_subject) &&
-> +               /*
-> +                * We don't touch pre-existing repeated reverts, because
-> +                * theoretically these can be nested arbitrarily deeply,
-> +                * thus requiring excessive complexity to deal with.
-> +                */
-> +               !starts_with(orig_subject, "Revert \"")) {
-> +            strbuf_addstr(message, "Reapply \"");
-> +            strbuf_addstr(message, orig_subject);
-> +            strbuf_addstr(message, "\n");
-> +        } else {
-> +            strbuf_addstr(message, "Revert \"");
-> +            strbuf_addstr(message, subject);
-> +            strbuf_addstr(message, "\"\n");
-> +        }
-> +        strbuf_addstr(message, "\nThis reverts commit ");
-> +        refer_to_commit(r, message, commit, use_commit_reference);
-> +
-> +        if (commit->parents && commit->parents->next) {
-> +            strbuf_addstr(message, ", reversing\nchanges made to ");
-> +            refer_to_commit(r, message, parent, use_commit_reference);
-> +        }
-> +        strbuf_addstr(message, ".\n");
-> +}
-> +
->   static const char *sequencer_reflog_action(struct replay_opts *opts)
->   {
->       if (!opts->reflog_action) {
-> @@ -2356,38 +2390,13 @@ static int do_pick_commit(struct repository *r,
->        */
-> 
->       if (command == TODO_REVERT) {
-> -        const char *orig_subject;
-> -
->           base = commit;
->           base_label = msg.label;
->           next = parent;
->           next_label = msg.parent_label;
-> -        if (opts->commit_use_reference) {
-> -            strbuf_commented_addf(&ctx->message, comment_line_str,
-> -                "*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-> -        } else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
-> -               /*
-> -                * We don't touch pre-existing repeated reverts, because
-> -                * theoretically these can be nested arbitrarily deeply,
-> -                * thus requiring excessive complexity to deal with.
-> -                */
-> -               !starts_with(orig_subject, "Revert \"")) {
-> -            strbuf_addstr(&ctx->message, "Reapply \"");
-> -            strbuf_addstr(&ctx->message, orig_subject);
-> -            strbuf_addstr(&ctx->message, "\n");
-> -        } else {
-> -            strbuf_addstr(&ctx->message, "Revert \"");
-> -            strbuf_addstr(&ctx->message, msg.subject);
-> -            strbuf_addstr(&ctx->message, "\"\n");
-> -        }
-> -        strbuf_addstr(&ctx->message, "\nThis reverts commit ");
-> -        refer_to_commit(opts, &ctx->message, commit);
-> -
-> -        if (commit->parents && commit->parents->next) {
-> -            strbuf_addstr(&ctx->message, ", reversing\nchanges made to ");
-> -            refer_to_commit(opts, &ctx->message, parent);
-> -        }
-> -        strbuf_addstr(&ctx->message, ".\n");
-> +        sequencer_format_revert_message(r,msg.subject, commit, parent,
-> +                        opts->commit_use_reference,
-> +                        &ctx->message);
->       } else {
->           const char *p;
-> 
-> diff --git a/sequencer.h b/sequencer.h
-> index 719684c8a9f..a61ec6d81d4 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -271,4 +271,8 @@ int sequencer_determine_whence(struct repository *r, 
-> enum commit_whence *whence)
->    */
->   int sequencer_get_update_refs_state(const char *wt_dir, struct 
-> string_list *refs);
-> 
-> +void sequencer_format_revert_message(struct repository *r, const char 
-> *subject,
-> +                     const struct commit *commit, const struct commit 
-> *parent,
-> +                     bool use_commit_reference, struct strbuf *message);
-> +
->   #endif /* SEQUENCER_H */
 > 
 
