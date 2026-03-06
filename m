@@ -1,53 +1,53 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764332EBBA4
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 21:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7C42F0C79
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 21:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772830893; cv=none; b=U096vkDJsnJhktt966n0QeP5x4xlA6rmZcFavyim4qyn4qxZT58RqSBxfI2R6ODtWKZ4Qb4wi2Jmu0nu+x7rstCTnSaoScQcZAg3Dw8msrUb40rJ2MwiZ9xE7+9n8dOAovH772oOCn+am7c/OKt2ERhtvQrXGTwtDjKz6rnXbVg=
+	t=1772831091; cv=none; b=HqUQbkXE2KDQqb6FQHplDSS/pggAiP+TknQtu8MjASqLJ+0uwJ74Nz1OlFLX49PciaKpuRcHcmEtrKpAGlXiporlN46fcblG4/8DCC5aIhLvpFkDclaDY2DqANSbYIEm5J4DItIgUfTk9qA75sEJzs8MsoJfXwUEBYK2o8oIKTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772830893; c=relaxed/simple;
-	bh=4Tf4F+lYTjuXV9RLWnuhY9m1hXULai2LS1e50QPgQGY=;
+	s=arc-20240116; t=1772831091; c=relaxed/simple;
+	bh=i6a2pBuXGes63eU6FU5yjkhgc8MfbpL7LUfmfSZ+n88=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZLrl2EjFTILWk8JnpWW48e7KFR0p61jeG/fPcqJdK82yJXrPBqa/O0Jis/JBI1zS502GMe/gUywKimFlhhbhH5SInPXNFGlkBZDaoRTUBnLwllvPhME1XwL1dTWn9LqYOndjdmi5/AaX5h/Gy2ppODOEnXzZ4gIC5Acvx/al2Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FT25723Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V3R2/Bm8; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=IKtgpN6w1XZaEjScn9Nlc8cUV+hUfuEXi9EUFH1OrynYt0bZb3yM4mo2i4fSEvVDUwXTy/bC+bcm+fPkTNA2W0bO81EfKpqyoJgJsy1eAUX9jHRd3Dif+83/hxVLUG9wX6gD1MKQY//yNe6FXjtGTCzCPiYHuoU4fHlyLWdlQhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cpOFeDll; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MawrqNE7; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FT25723Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V3R2/Bm8"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B8EF014000CE;
-	Fri,  6 Mar 2026 16:01:30 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 06 Mar 2026 16:01:30 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cpOFeDll";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MawrqNE7"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B150D1400205;
+	Fri,  6 Mar 2026 16:04:48 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 06 Mar 2026 16:04:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772830890; x=1772917290; bh=kMbnPp2P/N
-	t/74N9GluvNXpttaYoIBf1KZfz/1ORTqs=; b=FT25723Y3pda9/sglftSXA2Ch5
-	JQz5IN+ATCSB1TvZqXU6kTl4sVNxDwDTwDIVV2c0Z1m4ROSQSCMq/ftGKVX8g/Bw
-	GC15LzqSxpxKSBphnuAo+ydR493nC9b6F9gURBf1L+ScMBzxXGKZz+ZmAuSXQ7x5
-	ZJENdW5v3wlJoRLIGbvJai4zxVd23s72lYWh7EcadPq5MYhyq9XLNi57/Z2Ke7Z4
-	HipMqdHiODOzp9+MarQf/0x3Ov9hSK43hTm1iAM8Me52Gu1gZjUejvsgq9qcnd5w
-	mFIfdbS575sCqtYezRvcT22zwfTAu88d4qtItx73klw5rjNQ1hhGylo42WPg==
+	:subject:to:to; s=fm3; t=1772831088; x=1772917488; bh=6F64q9+5cV
+	QQYh6wsSWkv2TJX4W+QpN34kQOymhUy34=; b=cpOFeDll6Xl+LLUi6GocmkWjmd
+	UyUX8BlX3xBc6Xda8qxkvIW8NHiusWYG+t1GRZ5zQnpHVzI+9zdomAfRRvU82F2+
+	0Vv1GL9fQ2vwXfhhsk7vYYFGbojF2QAnDD7evFFU/r/3Vn/rDsrAgKS2oiQetOgi
+	Eg4JvPT7BdMpEs+MGWHi30TzWbOa+5QPwBiDziFmB8HSbkcvuL58/wYgW0TpGWMH
+	XagH7ID0eLgyQXREqxXUsplp4LVkGUOz7N0J/YpCVqozIDMMpck4vBQWugPuG80+
+	ohoYEeK8q9oFiiS9zUEOr/Pb7uxNBtKoa6MDQrYJmrg4v+u0a4UIZTEL1u2Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772830890; x=1772917290; bh=kMbnPp2P/Nt/74N9GluvNXpttaYoIBf1KZf
-	z/1ORTqs=; b=V3R2/Bm8kCJAwHYv8USl/rdaIko3Vb55yD8eT8jnvmBIdrMNUvi
-	erZGl4iy85gIohnodieKgQHnYmoQiFSdPNCOtoO8NrJZiV2KVhAdACHmi0QJW5fH
-	kYoop6hs57JwRKq0D3IDGBuMRWcAFrlQRf2EaUWfID229RY+y908BRSl/O7UuYXv
-	DektceY4okERb4LoKYH5dY031C4ccrQU+lZKf8nfgy9ZSYjAlKPDWdskueNdZEL6
-	GxILq5mrMFEJXM+9I5Me9JPV57y09FAT7yZfW8Zx2ASXl5IbcH5fWeG7th+PF9QW
-	P3uk+z5ocFVkcTbbIcaaotgRezKFeQ50Jwg==
-X-ME-Sender: <xms:qkCraUCrhvW1mYkUq_45VCyGGcVWcGxYqzlNZHaXDQPyNklQ0Z5NJA>
-    <xme:qkCradZQXwLTYIAWNQ9TsYDeyUh_taqCI7FebPKoNWy7em1cJ9TxqNAisEjIZXjx3
-    lw_yhYIyKLJSx3pYRlS3JxfhhbqrEBjPEgmwd-NC9Kju7XgLBTCx2k>
-X-ME-Received: <xmr:qkCraf5BkGHCYkjSjJJidBDgH6WD_jiT2mD5Pr6Hhst1SUadyTRlWjfUcZCK7NZ8dk16ahFbkNDsZp3amt67UuRylYLdj_R9FQ>
+	1772831088; x=1772917488; bh=6F64q9+5cVQQYh6wsSWkv2TJX4W+QpN34kQ
+	OymhUy34=; b=MawrqNE73y3AtnB8nyVZdfrR4yhVloEc7vaZuounYezNq97McGK
+	aqsLfOw/Fv74ts3EIbLEwTAArhNR6ADEYKdpHoNoDeIR5qmbd1jfXXGQ90NDDsoA
+	Fs35sULvYdcaMK8wnoIU6s4WP0XQzCpzwoAkFDcsTcyv3DRsIeZjx+PuLi0G3lrr
+	eQ7yE9Yg+WtZ7W64vlzzVUp96cWTobQ7z3T8HWYcTKOrChfQSZsFfQ95iTXuhR37
+	9kIKeL8rkaDMpaVevurWPN7u+bhx0K981/rdpKnOd0MvdE9WQYxEJcJJJR3ocMbs
+	XzaY3op6bJsbz9kW7KUuBD4P23+Y2dMwvcQ==
+X-ME-Sender: <xms:cEGraRkegsCzOesFCRJN3GCZqQds0lgaqajeqLuECNYHOvbzmxazHQ>
+    <xme:cEGraWK2ai9ad-Z2pa9sqNGHeqKKZKZlKmR6VP-LD-iZvXOvyFyI8TnGx3KknSjci
+    fYA-KAXPjcz75upIUgTnmQ6spVO80BHWTkpTiQjOFtjFgj8JXyRuA>
+X-ME-Received: <xmr:cEGrae6CGZVGbiQXqGNIqaejaK8nl6T8wOjfFMb-NXW_80Gf4aTFHP3dgb4ufDD_KYO4V-DgY36Ack779kyDIzIBhyo9NKU9gQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtfedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -55,31 +55,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtfedvucetufdote
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehpshesphhkshdrihhmpdhrtghpthhtohephihorghnnhdrvhgrlhgvrhhisegtvggrrd
-    hfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qkCraWZ3f8Uy36HgJmL_y8mYJ8NQNQp5y_03mUsDmdYnfVr6aJyAuA>
-    <xmx:qkCraWg3qVd-qh_rDoCRnnDowDQGrhpScmk85QQQQhboyyyC17XZiQ>
-    <xmx:qkCraf9gsKIOLa1PI75xfkvK-rhAjrfSJfygmQJE-HpxMbuGOd8rTA>
-    <xmx:qkCraZqui59r4b-ClKicdNqEiuMRCdjyRm983ke9S3UkSuGW6ZYddw>
-    <xmx:qkCrad27jFuNmPsk_FHifZoFs2ElCyJ4iiO_eCdfIHi-NnvREMj9Dpo6>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepmhgvsehlihhnuhigrdgsvggruhhthidprhgtphhtthhopehkrhhishhtohhffh
+    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehphhhi
+    lhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:cEGraS2yFg7VOJZDnToMlsTzDxC8I8M7VHaImsrv56P4RX5NElYtog>
+    <xmx:cEGracfBQrkEIVKTKTqodp6PtxgOb7uqW40EGtKBd8RyDu7J9JWiAg>
+    <xmx:cEGraQdQxw8CQ-J7MoTt0EW0jNxj3ysl5If58WFoJlzRddsLFaU4fw>
+    <xmx:cEGrafw4e412uBUsexqHNdn-hn73kuFdJ7UcLQFoq-y2IkH5vtn5ig>
+    <xmx:cEGraUpgFlyTE2Cc6NS_BQHNH-cJSg5m3cAlsM0UcM6e6AXdC5W5X_tc>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Mar 2026 16:01:29 -0500 (EST)
+ 6 Mar 2026 16:04:47 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Yoann Valeri via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Yoann Valeri
- <yoann.valeri@cea.fr>
-Subject: Re: [PATCH v3 0/3] branch: add prefixes to new branch names
-In-Reply-To: <pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com> (Yoann
-	Valeri via GitGitGadget's message of "Fri, 06 Mar 2026 13:14:29
-	+0000")
-References: <pull.2202.v2.git.git.1772207333.gitgitgadget@gmail.com>
-	<pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com>
-Date: Fri, 06 Mar 2026 13:01:28 -0800
-Message-ID: <xmqqseaczn87.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>,  Li Chen <me@linux.beauty>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v8 1/6] interpret-trailers: factor trailer rewriting
+In-Reply-To: <0d08b361995f4d117b3c80a7e403c1a821d10a5f.1772808594.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Fri, 6 Mar 2026 14:53:27 +0000")
+References: <20260224070552.148591-1-me@linux.beauty>
+	<cover.1772808594.git.phillip.wood@dunelm.org.uk>
+	<0d08b361995f4d117b3c80a7e403c1a821d10a5f.1772808594.git.phillip.wood@dunelm.org.uk>
+Date: Fri, 06 Mar 2026 13:04:46 -0800
+Message-ID: <xmqqo6l0zn2p.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,36 +92,122 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Yoann Valeri via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> This PR adds a way to add prefixes to a new branch being created. The goal
-> is mostly to ease the developer process of creating new branches by adding
-> shortcuts that can be set either with a command-line option or with
-> configuration parameter. This is useful especially when you have to do
-> similar backports on multiple branches, removing a bit of the need for
-> finding names or typing the names over and over again.
+> From: Li Chen <me@linux.beauty>
 >
-> Changes since v1:
+> Extract the trailer rewriting logic into a helper that appends to an
+> output strbuf.
 >
->  * Added a '--no-prefix' option to git branch
+> Update interpret_trailers() to handle file I/O only: read input once,
+> call the helper, and write the buffered result.
 >
-> Changes since v2:
+> This separation makes it easier to move the helper into trailer.c in the
+> next commit.
 >
->  * Changed the PR structure, with 3 patches:
->    * first patch adds the '--name-prefix' option
->    * second adds the 'branch.namePrefix' configuration parameter
->    * third adds the '--no-name-prefix' option
->  * Those patches only target 'git branch' now
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Signed-off-by: Li Chen <me@linux.beauty>
+> ---
 
-I haven't read the actual patches, but the first step that adds
-"--name-prefix" should also support "--no-name-prefix" at the same
-time, with or without patches 2 and 3.  Doing so would allow users
-with an alias
+If "Li wrote it and signed it off, Phillip is relaying" is what is
+happening, the sign-offs are in reverse order.  If "Li incorporated
+what Phillip wrote earlier in his larger work", then the sign-offs
+may be fine, but it would be necessary to hint that that is what
+happened in the proposed log message.  I cannot quite tell which is
+the case.
 
-    [alias] bn = branch --name-prefix=blah
-
-, who want to almost always add "blah" to their branches, to defeat
-the prefix in rare occasions with
-
-    $ git bn --no-name-prefix foo
-
+>  builtin/interpret-trailers.c | 57 ++++++++++++++++++++----------------
+>  1 file changed, 32 insertions(+), 25 deletions(-)
+>
+> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+> index 41b0750e5af..69f9d67ec0e 100644
+> --- a/builtin/interpret-trailers.c
+> +++ b/builtin/interpret-trailers.c
+> @@ -136,32 +136,21 @@ static void read_input_file(struct strbuf *sb, const char *file)
+>  	strbuf_complete_line(sb);
+>  }
+>  
+> -static void interpret_trailers(const struct process_trailer_options *opts,
+> -			       struct list_head *new_trailer_head,
+> -			       const char *file)
+> +static void process_trailers(const struct process_trailer_options *opts,
+> +			     struct list_head *new_trailer_head,
+> +			     struct strbuf *input, struct strbuf *out)
+>  {
+>  	LIST_HEAD(head);
+> -	struct strbuf sb = STRBUF_INIT;
+> -	struct strbuf trailer_block_sb = STRBUF_INIT;
+>  	struct trailer_block *trailer_block;
+> -	FILE *outfile = stdout;
+> -
+> -	trailer_config_init();
+> -
+> -	read_input_file(&sb, file);
+> -
+> -	if (opts->in_place)
+> -		outfile = create_in_place_tempfile(file);
+> -
+> -	trailer_block = parse_trailers(opts, sb.buf, &head);
+> +
+> +	trailer_block = parse_trailers(opts, input->buf, &head);
+>  
+>  	/* Print the lines before the trailer block */
+>  	if (!opts->only_trailers)
+> -		fwrite(sb.buf, 1, trailer_block_start(trailer_block), outfile);
+> +		strbuf_add(out, input->buf, trailer_block_start(trailer_block));
+>  
+>  	if (!opts->only_trailers && !blank_line_before_trailer_block(trailer_block))
+> -		fprintf(outfile, "\n");
+> -
+> +		strbuf_addch(out, '\n');
+>  
+>  	if (!opts->only_input) {
+>  		LIST_HEAD(config_head);
+> @@ -173,22 +162,40 @@ static void interpret_trailers(const struct process_trailer_options *opts,
+>  	}
+>  
+>  	/* Print trailer block. */
+> -	format_trailers(opts, &head, &trailer_block_sb);
+> +	format_trailers(opts, &head, out);
+>  	free_trailers(&head);
+> -	fwrite(trailer_block_sb.buf, 1, trailer_block_sb.len, outfile);
+> -	strbuf_release(&trailer_block_sb);
+>  
+>  	/* Print the lines after the trailer block as is. */
+>  	if (!opts->only_trailers)
+> -		fwrite(sb.buf + trailer_block_end(trailer_block), 1,
+> -		       sb.len - trailer_block_end(trailer_block), outfile);
+> +		strbuf_add(out, input->buf + trailer_block_end(trailer_block),
+> +			   input->len - trailer_block_end(trailer_block));
+>  	trailer_block_release(trailer_block);
+> -
+> +}
+> +
+> +static void interpret_trailers(const struct process_trailer_options *opts,
+> +			       struct list_head *new_trailer_head,
+> +			       const char *file)
+> +{
+> +	struct strbuf input = STRBUF_INIT;
+> +	struct strbuf out = STRBUF_INIT;
+> +	FILE *outfile = stdout;
+> +
+> +	trailer_config_init();
+> +
+> +	read_input_file(&input, file);
+> +
+> +	if (opts->in_place)
+> +		outfile = create_in_place_tempfile(file);
+> +
+> +	process_trailers(opts, new_trailer_head, &input, &out);
+> +
+> +	strbuf_write(&out, outfile);
+>  	if (opts->in_place)
+>  		if (rename_tempfile(&trailers_tempfile, file))
+>  			die_errno(_("could not rename temporary file to %s"), file);
+>  
+> -	strbuf_release(&sb);
+> +	strbuf_release(&input);
+> +	strbuf_release(&out);
+>  }
+>  
+>  int cmd_interpret_trailers(int argc,
