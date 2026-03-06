@@ -1,135 +1,123 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3AA35E95F
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 23:25:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993EF35BDBA
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 23:29:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772839510; cv=none; b=FtVUd+CC8lcVQT/cloDxKqfN6gWaOyEGQgY1mOVTmcWrsjcjBdo74qSPQkoBu3UaopCxMv1g76fc4DOqQ9XDvJLBx8oOs8tvW7UM5LzjlDG5BUnNOn3vcpuqyBCGwVWPrfe4R5NG5I25RRsjk+oAjjVKxkFECTm7cnp3rijVYuc=
+	t=1772839790; cv=none; b=d/T5dke1nRmvnzLRQAeY0a/aqYGje0Ef4SU234OGEFR9R8FmfiXapR8ZZ3FT5CYvZKCkEN3rezGZPtA3fDZxy8jVYK1mKD4yMm66hwpXec5skE25ZQuI60lXRg9l4w97NGbKt5ivOJ3zI5Zh+haBQEP8LRpElFBRUs5XZbHwm+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772839510; c=relaxed/simple;
-	bh=BrdAxDJM+tstKS/Xrv9HgXzVZx23ivBKQeeXkEm7Qqo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JvavWrSW0/bSNvjOI+xKAUuXETQm+3CterF1weZWURtB2dwhmGYq/50F43LUDEJYpQMxExH4iWXotQU8HFaPQ6XDLPPp4jHRmRWARCIVoszo7tbclVHDF3g15DYeg8L7yIkuOSS5g8dKI/Ux6DVIwsBWU9uFD5R8KAaziEr9JWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=XFTySKev; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1772839790; c=relaxed/simple;
+	bh=eBjbodowFoFMi8Q0iXUQsqmPkfUM5oK7RIJlVBP0MZ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NNd23j67qHmFn2J8HnooUZ+LIxZfSZg3zrDPSVGMyAUpNVOGaxIA1g/1oMFAK7xKIgmNBwVi8dwZsCCAFVqEp76gwTMaR/zLAvOX7znw1Dp1hY+SG7eoFHydvmVQRHRiLgFULjdln4q3MKlXFMoiC73Nkov4pdi4sW6veNUFaTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kgtbsqup; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="XFTySKev"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id yeXXvqlXjWlIOyeXYvhyP0; Fri, 06 Mar 2026 23:25:05 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1772839505; bh=pQe2HVAfOKF5J9phdZV4/wQXw8HtHmdxXPYtLA0BDF4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=XFTySKevAadW6CeMFY6+Gu0oS8g6fjQekgNJGvSET+4vPFHM7rlRekBMms2982cfU
-	 6PEVavN8CgA+UH8IF4FOHnnObjzEMvMcXm0KF6S6lhO3rfO0a8VheKdZZjOYa8JcRT
-	 m19T6TZd0piIF34INvHMtz/XiM68Ro57R3sY2sVZ0WaCLBpIIteZRncZuSGggjMMMq
-	 Jir6gExJ00d1Emc1sqHzWEAd4CT1LlJbGLG3SqRdX8T3cRuPaHyhE9nboNw4lmOrbN
-	 e4k0EeQnw++QXuLfyoRclPDrDS79DaCagvHXyUdB7M8j/bE9mAf8CZfGC+JBZDTO3B
-	 wMLNGQXch4nsg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=atcRCjZV c=1 sm=1 tr=0 ts=69ab6251
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=k4n9109sd3l8oj97RxIA:9 a=QEXdDO2ut3YA:10
- a=7KQvLkYc767Ca53Ssl81:22 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <c3ae9ff6-8577-48de-8473-9ec8d22ebc71@ramsayjones.plus.com>
-Date: Fri, 6 Mar 2026 23:25:03 +0000
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kgtbsqup"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1772839787;
+	bh=eBjbodowFoFMi8Q0iXUQsqmPkfUM5oK7RIJlVBP0MZ8=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=kgtbsqupVqtYVNvDz96ruIhvmYR6aw219d8E7ICd5flV89YoS/dvcZHkospB6gEaC
+	 ZKwdMYg8hDwnN1OUf4/crNuF+/n45v2FDY3RKd1vhLSQNLS2eRtZGNOdCfzdmIIpGl
+	 VJ6QgkxvnKKn9E+WCpJOFzn6wxkMbkTiyYTd4W0GtZwYKEVDz9od11hCK4dwVktkD7
+	 irDAHRbzVzab/Pkrb9PsVqky8x3/oTQKrN0DSJFx3incUEmfsIyJkFr8apT4s+pjsg
+	 lxXs/DqUgeDu14+7avafxQFiBu1oKjNRwG1Z+UGSxohiXszqFVAsayL3l6hANZ4YKI
+	 oDFB6on3tw78HHvnkt3iiKgsCI2GKAQsPEAWAefNgtQMwhO05wlbQNbitCUkVmjdez
+	 grBFJPNQtvX6o0sycw3CmNjzfrXnwOOjgTUewEeZAo3aRO0EHn0S3d7tVlw0DvTTZ6
+	 Hz0s1gOm03Vgb1mvY8LoDNpQNP7MNrImc68o/1cnlCtbvKD/QxW
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ffb:2fcd:f6c3:a675])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 906ED2006D;
+	Fri,  6 Mar 2026 23:29:47 +0000 (UTC)
+Date: Fri, 6 Mar 2026 23:29:46 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Mike Banon <mikebdp2@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] clone, progress: add --no-turtle-speed option to abort
+ slow clones
+Message-ID: <aatjasMiPIeT0s27@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Mike Banon <mikebdp2@gmail.com>, git@vger.kernel.org
+References: <CAK7947msLiGgrYTcg1m3ew+bP0F+VNbRaTy=ZW7zkkHh69bN0Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] plugging some mmap() leaks
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <b9fa930e-7d5e-47f1-8896-1997cf7c0cdb@intel.com>
- <20260305220214.GB736322@coredump.intra.peff.net>
- <20260305230315.GA2354983@coredump.intra.peff.net>
- <9137fd66-9ac3-42ff-a892-1b6f20b49972@ramsayjones.plus.com>
- <xmqq5x78249v.fsf@gitster.g>
- <c3e66e36-cba0-49d3-b2a6-d65367f4be0f@ramsayjones.plus.com>
- <xmqqjyvoy5p2.fsf@gitster.g>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqqjyvoy5p2.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfGWmx2DOl/WturaBBtdKGgAptBNaNUNi+nwOvUBK7oWN0wi23hZRGeJyH52+5qPotCbOpUEDWrPgNb3qr7/YPoUsg0U7IhNh1xsZYFT6SqE88EbQEfLW
- 1IjWVg+y/px1vbsbW6eraQ5s9cbfAj/M67qms/46zXSc/xSkXJPWsnHxoGaIGTDxOawZq/ALrSwK3MY2PXF9tndyRNzBNSDH1xU=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="hc8wDc4KlR9SAcz8"
+Content-Disposition: inline
+In-Reply-To: <CAK7947msLiGgrYTcg1m3ew+bP0F+VNbRaTy=ZW7zkkHh69bN0Q@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
+--hc8wDc4KlR9SAcz8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 06/03/2026 10:05 pm, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->> On 06/03/2026 6:37 pm, Junio C Hamano wrote:
->>> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
->>>
->>>> When compiling with the NO_MMAP build variable set, the built-in
->>>> 'git_mmap()' and 'git_munmap()' compatability routines use simple
->>>> memory allocation and file I/O to emulate the required behaviour.
->>>> The current implementation is vunerable to the "double-delete" bug
->>>> (where the pointer returned by malloc() is passed to free() two or
->>>> more times), should the mapped memory block address be passed to
->>>> munmap() multiple times.
->>>
->>> Sorry if I am missing something glaringly obvious, but quite
->>> honestly I am confused.  Wouldn't it be a bug to call munmap() again
->>> on the same region of memory obtained from mmap() and then already
->>> unmapped by calling munmap()?
->>
->> Yes. The (second) call to munmap() with the (already unmapped) memory
->> region would return -1 with errno set to EINVAL.
->>
->> The emulation layer does not detect this situation and simply calls
->> free() on the given pointer. Hence the 'double-delete' bug.
->>
->>> Or can the emulation layer cause such a second free() even if the
->>> munmap() is done once and only once per memory region obtained from
->>> a single mmap()?
->>
->> No. If you only git_munmap() once for a given memory region, everything
->> is fine.
-> 
-> Hmph.  You make it sound as if we have some code that calls munmap()
-> on something that we are not sure if we have unmapped just in case,
-> trusting that it won't crash us and instead give us EINVAL, and that
-> is very much deliberate?  Unless we have such a code, bending over
-> backwards to track what has already been unmapped and return -1 with
-> EINVAL from munmap() for a second call is of dubious value, no?  I
-> still must be missing something...
+On 2026-03-06 at 22:14:28, Mike Banon wrote:
+> When cloning large repositories from a website with multiple Git servers,
+> the client may be directed to a "turtle-slow" server, causing the transfer
+> to proceed at an unusably slow speed. This can lead to stalled downloads,
+> particularly problematic for automated scripts that clone many
+> repositories. This option makes Git abort the clone if the download rate
+> falls below 128 KiB/s while receiving objects, typically catching slow
+> servers early in the transfer, enabling scripts to retry the clone until
+> they obtain a fast connection.
 
-Sorry to confuse you, I'm not trying to, honest! :)
+I'm not aware of any servers that this option would be useful for, but
+I'm willing to assume for the sake of argument that some exist with this
+design.  I don't think it's a very good design, but I admit that there
+are many things on the Internet that are poorly designed.
 
-First, forget that patch. It was not meant to be applied by anyone to
-anything. It was just to (hopefully) support the explanation (to Jeff
-specifically) of a bug which happened to me long ago.
+I think it would be more helpful to provide an option
+`--min-speed=3D128KiB` or something.  Assuming Git is still around in a
+decade, we might consider 10 MiB/s to be absurdly slow then and an
+option that hard-coded the slow speed would be decidedly less useful.
+Many users might have different speeds that would be more tailored to
+their environment even now.
 
-In particular, valgrind demonstrated a bug, which has probably been fixed
-in the intervening years, which directly implied that some code called
-munmap() on a memory region which had already been unmapped.
+I also think that the word "turtle" in this context might be poorly
+understood by people who are not native English speakers.  I agree that
+turtles are typically thought of as slow creatures, but they may
+epitomize other traits in other languages or cultures (such as wisdom or
+longevity[0]) that might not bring to mind slowness.
 
-Given that this was on cygwin and, at that time, was built with NO_MMAP,
-this meant that free() was called twice on the same malloc()ed memory.
-(Indeed this is what valgrind reported).
+In addition, I would think we'd want to update the manual page as well.
+My guess is that CI would have caught the fact that the option was not
+present in the manual page.
 
-If you look at the (currently 31) calls to munmap(), only one seems to look
-at the return (in refs/packed-backend.c:183). So, calling munmap() twice
-on the same memory region will probably go unnoticed when NO_MMAP is not
-set. I have no idea why munmap() was called twice on the same memory region,
-since I didn't track down the code responsible.
+I didn't give extensive review to the design, but I would think passing
+an option to the child process or using some sort of option message
+(such as in the HTTP helper) would be better than passing an environment
+variable if that's possible.  If it's not, perhaps the commit message
+could explain why that wouldn't work.
 
-It was just an FYI about a _potential_ lurking bug when using the mmap compat
-routines.
+[0] https://en.wikipedia.org/wiki/Cultural_depictions_of_turtles
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Have I cleared that up, or confused you more. :)
+--hc8wDc4KlR9SAcz8
+Content-Type: application/pgp-signature; name="signature.asc"
 
-ATB,
-Ramsay Jones
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.9 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaatjaQAKCRB8DEliiIei
+gfY4AQCJzGmpyewC52dsvn4nnvTeWxe0fwP1YTkhiRJ1LGcj2QEA/cCNTx08gLAc
+aPkpD7iIecYLXk7dt5jHjxt0/KApjAk=
+=enw8
+-----END PGP SIGNATURE-----
 
+--hc8wDc4KlR9SAcz8--
