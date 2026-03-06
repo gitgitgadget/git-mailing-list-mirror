@@ -1,511 +1,733 @@
 Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB4B3AE6E9
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 14:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0852F6565
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 14:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772808866; cv=none; b=CgrQfPhLOXRy2MFelEwXZXO6rQEsnLuMBLRlqqj/JqpuG65FAUDUOi7bCaYNDUoEGGx5ou2peMnqfwvbXbtONQCWn/PTXB0oNfSkMgXlxSfrI54zKUbYYc+CmcRrZARRjt5hHdq2NhM2QJUKW4q1Q/eOQqK5GF9enILwsNpI9IU=
+	t=1772808961; cv=none; b=F7OpNQzZO7zgI7ynMigIYtY7RPhSHLk7FfcnYrMvZB1BcElchaOoGGwGoT71alzkg2r9dSVG8x4ceNkm/2R2LOYLJinCDm8SggyfKIbZxk+9W38Nns27eap8ADjF8JpNufxi7/VpNR+hNqlCyK/TaUkfio4PgUlZNU3n2vCVxcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772808866; c=relaxed/simple;
-	bh=WHd7Su3R+FknU78UZYE3P/mx3KLgzMXhbEDct7gSFQo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRWg7LAvfjG0PehjwkVzifIMYSe5BvmZJzx6QAY37KzTBBcNkwTCEAq2PYKLebDif9WNzngkSPlVEPaPHU/klBfdESs0pF8Kc3BCbdgbbG1UjQDqMOQXUIEzu2dFhr4hp2urBC78rzEqbu4fjZlqc/y4AHeNtG/k+LwS9+0hOy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EUL0ffJR; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1772808961; c=relaxed/simple;
+	bh=wYpxyuq1HLs2msyzrIXjkWXv3rYVzUvguEIBHho9/uk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=k5lFpY3R5xV57qaHMQBQF8d+5o5/k+IE6alJiZKCx3UfUQHUprIrWt3Zhg7wqssGzcIgEo/99PaFOr2E9A15uHrKr3j0p4JPXW1B3OxutLqOLnpnWuH5vfkfFhrgbVF8cmbVb+820MyUaOs7BdmyJP08qbYCfF6CHnnmNucVUPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kCyOPQsY; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EUL0ffJR"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-439ac15f35fso5960685f8f.0
-        for <git@vger.kernel.org>; Fri, 06 Mar 2026 06:54:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kCyOPQsY"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-439c4bde55cso2469497f8f.1
+        for <git@vger.kernel.org>; Fri, 06 Mar 2026 06:55:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772808863; x=1773413663; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MdjyO0TNPKpPFopumSypg4FeXK4J7Bh5xHIK/TEkaLA=;
-        b=EUL0ffJRujZomAgmxyUpvbh+K0n+1OpEgIRHUeBj6li68XyBW8+xRftRE4hvV4KKFc
-         /gBXedv5wz6nj1t7zN5E10gxYesnX47mDf+U1R1dpngg80sBx0zojbjBpUiLbJ8OraJE
-         aFOtM2mc57q7IrVgumX2W+iZewA83OHjut5eC6PZG3nZqFlwNXzzNbi2FWql8SMx+Ivo
-         CqmZP0rqDjsbBAewYkjU3o89soeFOj8AsMM5VqU3nKqitHrOsoWZYgSmwuIFvuMI8OlB
-         TXehy43oGpxFKO6q6xqAcD9wjtyWeBhbMbtpao6GtS+FBAiwM72fBQ4ZbOugvDwfLjWR
-         PFhg==
+        d=gmail.com; s=20230601; t=1772808958; x=1773413758; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7UutZgFKDh6n1LdHE9RBDvwi/RkvSYorzTP7Sgk5LDQ=;
+        b=kCyOPQsY1ZligpgFCBNI9w45GTVvf6PUbqFZsmN/SiaorFm8BtHOUqa2hgsLKKhsn5
+         JW3L95dO4y7ySifYs5kzHFjYLFueLn70FXRta4Osp1cs49Qmk3upcyWCBODPDFL4dYMQ
+         4jR0giVhEA8tplmQpeDRFsGwARrlplmlyEdzsbRmjwCQoyra3iA3rMP67JVcvSOTpSi5
+         f0LpWCLnTTxs+2zmUSuuWSXnIMEd0DPZTQwk41RkMT/VXCJxE1eZ7JIbKwMndGKcSWn1
+         r1LLrwQ2gQV8CayMsA1a/kUU5Tf9wL6YpaefdiLmq4kKQej6XpXZRjtAhDVbSuFF/r8K
+         OkQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772808863; x=1773413663;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MdjyO0TNPKpPFopumSypg4FeXK4J7Bh5xHIK/TEkaLA=;
-        b=HnObjVriSY27LYPcv5NM0dkPPftX4cHiwwWa61ol321WTX9uMA7DuLgk8BuLPujaBO
-         qtrNe2Og+4Mn5sBL24Yx+wHV1BsC+vpz01M8ieIa1tzgk9qRzlHuilt0S0p4H037wSWM
-         ReKV2fG1VGV8Q0HhpmYH741+LyggmVr4H9Yj039RRRnuSE1ddTM/OE7PGQSX1tcid8Lj
-         h11MBEasuW9h7oXne7IRCP1+2rCQ5wYxEN3n/SaO3Kvbb+Kmm2f5gyOySO6awWjDU2r3
-         H4xX0zZJafBQ2/gIsCtIy0DtyzHOVYZIQcPLv+LelnHEf9HoKRIJSjS4zETQ5m0TIM6z
-         mLQg==
-X-Gm-Message-State: AOJu0YxtAQCgcVfi6jkPNkuHd3tr3vqAzgF2McVSob6IKGyBYsiJcTQC
-	lmUjF9mf4MDvi6nXpCd4zZhV7FvrafUEhOK9eKfYYacOG3oGeCHQ44agvrOTcA==
-X-Gm-Gg: ATEYQzxigXe8GTf//wc4vDjaLtcVreQP8Lb6F+P86k2Xe4Ytm1P6BFRAkS0TXmeRUsF
-	GbnPVCvvybfPF+pK2SnyEA2GNM9x90NNnwmwPpM6Rcr2a/znSyZQfoDJ39xgxK7nzggOxaD3jXH
-	ooOoxRikT3cA1Y36hmUDKLCSUGN967wJ6isJmGxA8A4+I7u146lxADPaagqek6ukFnunQ67uI9x
-	Uni+O6RCLUe7f0Tv4TPPetV6CjtbXu+NBWbuxzYfh2kJTZgIIMBAN8POIyQ9T4Gt7fnvv8I4C14
-	NPn+Y6aZc+z/DqweNLgkixEdNtNsn01gQHTiuy4IE9fH0vcw+VP+m/EVGHuFL4RDjOmRUrYLema
-	63F+CHvzDQUrmwcuC4eZhmOVHFIBJTtqQJivNBd/Wjw9Rt1nP1CeY4J1++rvZHvHVMcI6HcwmVX
-	RHOv9pAPFVjJQpVP9Tbogbp7Nr/FQ=
-X-Received: by 2002:a05:6000:4301:b0:439:afd8:6230 with SMTP id ffacd0b85a97d-439da65315amr4118446f8f.58.1772808862820;
-        Fri, 06 Mar 2026 06:54:22 -0800 (PST)
-Received: from berwick ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439dad1cb7csm4278563f8f.0.2026.03.06.06.54.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 06:54:22 -0800 (PST)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>,
-	Li Chen <me@linux.beauty>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v8 6/6] rebase: support --trailer
-Date: Fri,  6 Mar 2026 14:53:32 +0000
-Message-ID: <99654d805471188695c0ccf400a485db16e51dd4.1772808594.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.52.0.362.g884e03848a9
-In-Reply-To: <cover.1772808594.git.phillip.wood@dunelm.org.uk>
-References: <20260224070552.148591-1-me@linux.beauty> <cover.1772808594.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunlem.org.uk>
+        d=1e100.net; s=20230601; t=1772808958; x=1773413758;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7UutZgFKDh6n1LdHE9RBDvwi/RkvSYorzTP7Sgk5LDQ=;
+        b=pdhGp/1F8rHSrGUxZWeOvpYETyExM8pbHVAOOPajmoDOjE/0kgCttnJc1f9OoyWsCk
+         eU7Vc52KQsnQmuLDl70KWKqf2fgK0Mb+/wwHE7mIXtjw3sy7a1/26djYnaU/5a2cR5Gh
+         +N8B05RXSgT42lcLiwHI6CyvfNVPiN8kd3odD+oglmM1Jc7lxmGVKwTJx6oewk4MXt9a
+         Cuc1Pr8X/ucNI1be4Ibeaj3dYd8bzBtEM44nKvwOEtcaffPQFCe2XveADn/xk/6zGX2w
+         gAXeKoWJMSq3tTAHjEiNdqh5TUUqgdHDhH5LahBh3UMUZPhjMASSjG+ud2+srNWzQQI1
+         B6EQ==
+X-Gm-Message-State: AOJu0YwTn6cwMXS1dHviaPr1LoqGHi8POXTMrujADE+Ezj6ffKGZPiZW
+	cQWYVy7A/+urB3pAAToUzcxXRhZChimsoC3sSQ4hDRoVbH5dkjI8khzW
+X-Gm-Gg: ATEYQzxume0bj8b2kXAEM9Avky2JBGBZuF0n3GCWrQSwZMcHQ1tyRmnevEg9e57Uw23
+	9c9mo9M5fAMLS2V3+T1F8taxcysQXQgtaRbaKE++Ps5qygGbSO4cXX2PbqqD2Vdlq8lb/Ov4BKi
+	LCR4siOYaDeoRT/fA5MlYXCWH/lQuNVQtE8ejQXD7XiH/sVZuae4gN86Wi2xBthyhCS5p3guvbv
+	mj4LlFdubYB3tt96Wd5kExhGxttKz/pF9sZ/3UU/R8A+CrRqBt0pKjbTtdfgir9h0wfwpVZjWQI
+	OG3AVs9CVF9BvXRcKFqEdodUtdWZ+9XVVmcfM/pSeYsXM1AfkbcY/uT5yAvIfRzD7u7wOpl+b9a
+	k6T4KDz5um/c1w5TZd9pVgQQsi/oiEDy7X+6FTuUZK/QOHNlC++V8J5d3GPtmVBIjCdra3ti4n9
+	5H2QzBWaDMJM8Rn1uYi4EuuN9LaAKlH/aJ3bf/Rl4Wy3rElW+mMD8UjjM2V1NDSLfn0khCRr6IH
+	d12+A==
+X-Received: by 2002:a05:6000:2410:b0:439:c510:f97a with SMTP id ffacd0b85a97d-439da36a704mr4320436f8f.48.1772808957800;
+        Fri, 06 Mar 2026 06:55:57 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439dae49177sm4460643f8f.35.2026.03.06.06.55.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Mar 2026 06:55:57 -0800 (PST)
+Message-ID: <8a37a357-5a3b-4ca1-9949-6b2f28d3f208@gmail.com>
+Date: Fri, 6 Mar 2026 14:55:48 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 0/5] rebase: support --trailer
+To: Li Chen <me@linux.beauty>, phillipwood <phillip.wood@dunelm.org.uk>
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <20260224070552.148591-1-me@linux.beauty>
+ <dbaf6ea5-8a08-42c0-8184-16dcf40207dd@gmail.com>
+ <19cbe42b2cd.bb6e3883730656.6495265672263159010@linux.beauty>
+Content-Language: en-US
+In-Reply-To: <19cbe42b2cd.bb6e3883730656.6495265672263159010@linux.beauty>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Li Chen <me@linux.beauty>
+Hi Li
 
-Add a new --trailer=<trailer> option to git rebase to append trailer
-lines to each rewritten commit message (merge backend only).
+On 05/03/2026 13:49, Li Chen wrote:
+>   >
+>   > This all looks pretty good. The main thing I think we want to change is
+>   > sharing the code that creates the temporary file in patch 3. I've push a
+>   > version that does that and fixes my other small comments to
+>   > https://github.com/phillipwood/git/commits/refs/heads/rebase-trailers-v8
+>   > The range diff is below. If you're happy I can post that as a hopefully
+>   > final v8. Of course if you want to work on it yourself you're very
+>   > welcome to do that.
+> 
+> These changes all look good to me! Thank you very much for your patience and work! Please help
+> post this as v8.
 
-Because the apply backend does not provide a commit-message filter,
-reject --trailer when --apply is in effect and require the merge backend
-instead.
+I've just posted v8, thanks for all your work on these patches
 
-This option implies --force-rebase so that fast-forwarded commits are
-also rewritten. Validate trailer arguments early to avoid starting an
-interactive rebase with invalid input.
+Phillip
 
-Add integration tests covering error paths and trailer insertion across
-non-interactive and interactive rebases.
-
-Signed-off-by: Li Chen <me@linux.beauty>
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- Documentation/git-rebase.adoc |   8 ++
- builtin/rebase.c              |  19 +++++
- sequencer.c                   |  52 +++++++++++-
- sequencer.h                   |   3 +
- t/meson.build                 |   1 +
- t/t3440-rebase-trailer.sh     | 147 ++++++++++++++++++++++++++++++++++
- 6 files changed, 228 insertions(+), 2 deletions(-)
- create mode 100755 t/t3440-rebase-trailer.sh
-
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index e177808004f..f6c22d15989 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -497,6 +497,13 @@ See also INCOMPATIBLE OPTIONS below.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-+--trailer=<trailer>::
-+	Append the given trailer to every rebased commit message, processed
-+	via linkgit:git-interpret-trailers[1]. This option implies
-+	`--force-rebase`.
-++
-+See also INCOMPATIBLE OPTIONS below.
-+
- -i::
- --interactive::
- 	Make a list of the commits which are about to be rebased.  Let the
-@@ -653,6 +660,7 @@ are incompatible with the following options:
-  * --[no-]reapply-cherry-picks when used without --keep-base
-  * --update-refs
-  * --root when used without --onto
-+ * --trailer
- 
- In addition, the following pairs of options are incompatible:
- 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index c487e109077..fe25d2ad4bc 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -36,6 +36,7 @@
- #include "reset.h"
- #include "trace2.h"
- #include "hook.h"
-+#include "trailer.h"
- 
- static char const * const builtin_rebase_usage[] = {
- 	N_("git rebase [-i] [options] [--exec <cmd>] "
-@@ -113,6 +114,7 @@ struct rebase_options {
- 	enum action action;
- 	char *reflog_action;
- 	int signoff;
-+	struct strvec trailer_args;
- 	int allow_rerere_autoupdate;
- 	int keep_empty;
- 	int autosquash;
-@@ -143,6 +145,7 @@ struct rebase_options {
- 		.flags = REBASE_NO_QUIET, 		\
- 		.git_am_opts = STRVEC_INIT,		\
- 		.exec = STRING_LIST_INIT_NODUP,		\
-+		.trailer_args = STRVEC_INIT,		\
- 		.git_format_patch_opt = STRBUF_INIT,	\
- 		.fork_point = -1,			\
- 		.reapply_cherry_picks = -1,             \
-@@ -166,6 +169,7 @@ static void rebase_options_release(struct rebase_options *opts)
- 	free(opts->strategy);
- 	string_list_clear(&opts->strategy_opts, 0);
- 	strbuf_release(&opts->git_format_patch_opt);
-+	strvec_clear(&opts->trailer_args);
- }
- 
- static struct replay_opts get_replay_opts(const struct rebase_options *opts)
-@@ -177,6 +181,10 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
- 	sequencer_init_config(&replay);
- 
- 	replay.signoff = opts->signoff;
-+
-+	for (size_t i = 0; i < opts->trailer_args.nr; i++)
-+		strvec_push(&replay.trailer_args, opts->trailer_args.v[i]);
-+
- 	replay.allow_ff = !(opts->flags & REBASE_FORCE);
- 	if (opts->allow_rerere_autoupdate)
- 		replay.allow_rerere_auto = opts->allow_rerere_autoupdate;
-@@ -1132,6 +1140,8 @@ int cmd_rebase(int argc,
- 			.flags = PARSE_OPT_NOARG,
- 			.defval = REBASE_DIFFSTAT,
- 		},
-+		OPT_STRVEC(0, "trailer", &options.trailer_args, N_("trailer"),
-+			   N_("add custom trailer(s)")),
- 		OPT_BOOL(0, "signoff", &options.signoff,
- 			 N_("add a Signed-off-by trailer to each commit")),
- 		OPT_BOOL(0, "committer-date-is-author-date",
-@@ -1285,6 +1295,12 @@ int cmd_rebase(int argc,
- 			     builtin_rebase_options,
- 			     builtin_rebase_usage, 0);
- 
-+	if (options.trailer_args.nr) {
-+		if (validate_trailer_args(&options.trailer_args))
-+			die(NULL);
-+		options.flags |= REBASE_FORCE;
-+	}
-+
- 	if (preserve_merges_selected)
- 		die(_("--preserve-merges was replaced by --rebase-merges\n"
- 			"Note: Your `pull.rebase` configuration may also be set to 'preserve',\n"
-@@ -1542,6 +1558,9 @@ int cmd_rebase(int argc,
- 	if (options.root && !options.onto_name)
- 		imply_merge(&options, "--root without --onto");
- 
-+	if (options.trailer_args.nr)
-+		imply_merge(&options, "--trailer");
-+
- 	if (isatty(2) && options.flags & REBASE_NO_QUIET)
- 		strbuf_addstr(&options.git_format_patch_opt, " --progress");
- 
-diff --git a/sequencer.c b/sequencer.c
-index a3eb39bb252..a2d72ce8b3b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -209,6 +209,7 @@ static GIT_PATH_FUNC(rebase_path_reschedule_failed_exec, "rebase-merge/reschedul
- static GIT_PATH_FUNC(rebase_path_no_reschedule_failed_exec, "rebase-merge/no-reschedule-failed-exec")
- static GIT_PATH_FUNC(rebase_path_drop_redundant_commits, "rebase-merge/drop_redundant_commits")
- static GIT_PATH_FUNC(rebase_path_keep_redundant_commits, "rebase-merge/keep_redundant_commits")
-+static GIT_PATH_FUNC(rebase_path_trailer, "rebase-merge/trailer")
- 
- /*
-  * A 'struct replay_ctx' represents the private state of the sequencer.
-@@ -420,6 +421,7 @@ void replay_opts_release(struct replay_opts *opts)
- 	if (opts->revs)
- 		release_revisions(opts->revs);
- 	free(opts->revs);
-+	strvec_clear(&opts->trailer_args);
- 	replay_ctx_release(ctx);
- 	free(opts->ctx);
- }
-@@ -2019,12 +2021,15 @@ static int append_squash_message(struct strbuf *buf, const char *body,
- 	if (is_fixup_flag(command, flag) && !seen_squash(ctx)) {
- 		/*
- 		 * We're replacing the commit message so we need to
--		 * append the Signed-off-by: trailer if the user
--		 * requested '--signoff'.
-+		 * append any trailers if the user requested
-+		 * '--signoff' or '--trailer'.
- 		 */
- 		if (opts->signoff)
- 			append_signoff(buf, 0, 0);
- 
-+		if (opts->trailer_args.nr)
-+			amend_strbuf_with_trailers(buf, &opts->trailer_args);
-+
- 		if ((command == TODO_FIXUP) &&
- 		    (flag & TODO_REPLACE_FIXUP_MSG) &&
- 		    (file_exists(rebase_path_fixup_msg()) ||
-@@ -2443,6 +2448,9 @@ static int do_pick_commit(struct repository *r,
- 	if (opts->signoff && !is_fixup(command))
- 		append_signoff(&ctx->message, 0, 0);
- 
-+	if (opts->trailer_args.nr && !is_fixup(command))
-+		amend_strbuf_with_trailers(&ctx->message, &opts->trailer_args);
-+
- 	if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
- 		res = -1;
- 	else if (!opts->strategy ||
-@@ -3172,6 +3180,33 @@ static void read_strategy_opts(struct replay_opts *opts, struct strbuf *buf)
- 	parse_strategy_opts(opts, buf->buf);
- }
- 
-+static int read_trailers(struct replay_opts *opts, struct strbuf *buf)
-+{
-+	ssize_t len;
-+
-+	strbuf_reset(buf);
-+	len = strbuf_read_file(buf, rebase_path_trailer(), 0);
-+	if (len > 0) {
-+		char *p = buf->buf, *nl;
-+
-+		trailer_config_init();
-+
-+		while ((nl = strchr(p, '\n'))) {
-+			*nl = '\0';
-+			if (!*p)
-+				return error(_("trailers file contains empty line"));
-+			strvec_push(&opts->trailer_args, p);
-+			p = nl + 1;
-+		}
-+	} else if (!len) {
-+		return error(_("trailers file is empty"));
-+	} else if (errno != ENOENT) {
-+		return error(_("cannot read trailers files"));
-+	}
-+
-+	return 0;
-+}
-+
- static int read_populate_opts(struct replay_opts *opts)
- {
- 	struct replay_ctx *ctx = opts->ctx;
-@@ -3233,6 +3268,11 @@ static int read_populate_opts(struct replay_opts *opts)
- 			opts->keep_redundant_commits = 1;
- 
- 		read_strategy_opts(opts, &buf);
-+
-+		if (read_trailers(opts, &buf)) {
-+			ret = -1;
-+			goto done_rebase_i;
-+		}
- 		strbuf_reset(&buf);
- 
- 		if (read_oneliner(&ctx->current_fixups,
-@@ -3328,6 +3368,14 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
- 		write_file(rebase_path_reschedule_failed_exec(), "%s", "");
- 	else
- 		write_file(rebase_path_no_reschedule_failed_exec(), "%s", "");
-+	if (opts->trailer_args.nr) {
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		for (size_t i = 0; i < opts->trailer_args.nr; i++)
-+			strbuf_addf(&buf, "%s\n", opts->trailer_args.v[i]);
-+		write_file(rebase_path_trailer(), "%s", buf.buf);
-+		strbuf_release(&buf);
-+	}
- 
- 	return 0;
- }
-diff --git a/sequencer.h b/sequencer.h
-index 719684c8a9f..bea20da085f 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -57,6 +57,8 @@ struct replay_opts {
- 	int ignore_date;
- 	int commit_use_reference;
- 
-+	struct strvec trailer_args;
-+
- 	int mainline;
- 
- 	char *gpg_sign;
-@@ -84,6 +86,7 @@ struct replay_opts {
- #define REPLAY_OPTS_INIT {			\
- 	.edit = -1,				\
- 	.action = -1,				\
-+	.trailer_args = STRVEC_INIT,		\
- 	.xopts = STRVEC_INIT,			\
- 	.ctx = replay_ctx_new(),		\
- }
-diff --git a/t/meson.build b/t/meson.build
-index 6d91470ebc1..3e0bb631af8 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -390,6 +390,7 @@ integration_tests = [
-   't3436-rebase-more-options.sh',
-   't3437-rebase-fixup-options.sh',
-   't3438-rebase-broken-files.sh',
-+  't3440-rebase-trailer.sh',
-   't3450-history.sh',
-   't3451-history-reword.sh',
-   't3500-cherry.sh',
-diff --git a/t/t3440-rebase-trailer.sh b/t/t3440-rebase-trailer.sh
-new file mode 100755
-index 00000000000..8b475795660
---- /dev/null
-+++ b/t/t3440-rebase-trailer.sh
-@@ -0,0 +1,147 @@
-+#!/bin/sh
-+#
-+
-+test_description='git rebase --trailer integration tests
-+We verify that --trailer works with the merge backend,
-+and that it is rejected early when the apply backend is requested.'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-rebase.sh # test_commit_message, helpers
-+
-+REVIEWED_BY_TRAILER="Reviewed-by: Dev <dev@example.com>"
-+SP=" "
-+
-+test_expect_success 'setup repo with a small history' '
-+	git commit --allow-empty -m "Initial empty commit" &&
-+	test_commit first file a &&
-+	test_commit second file &&
-+	git checkout -b conflict-branch first &&
-+	test_commit file-2 file-2 &&
-+	test_commit conflict file &&
-+	test_commit third file &&
-+	git checkout main
-+'
-+
-+test_expect_success 'apply backend is rejected with --trailer' '
-+	git checkout -B apply-backend third &&
-+	test_expect_code 128 \
-+		git rebase --apply --trailer "$REVIEWED_BY_TRAILER" HEAD^ 2>err &&
-+	test_grep "fatal: --trailer requires the merge backend" err
-+'
-+
-+test_expect_success 'reject empty --trailer argument' '
-+	git checkout -B empty-trailer third &&
-+	test_expect_code 128 git rebase --trailer "" HEAD^ 2>err &&
-+	test_grep "empty --trailer" err
-+'
-+
-+test_expect_success 'reject trailer with missing key before separator' '
-+	git checkout -B missing-key third &&
-+	test_expect_code 128 git rebase --trailer ": no-key" HEAD^ 2>err &&
-+	test_grep "missing key before separator" err
-+'
-+
-+test_expect_success 'allow trailer with missing value after separator' '
-+	git checkout -B missing-value third &&
-+	git rebase --trailer "Acked-by:" HEAD^ &&
-+	test_commit_message HEAD <<-EOF
-+	third
-+
-+	Acked-by:${SP}
-+	EOF
-+'
-+
-+test_expect_success 'CLI trailer duplicates allowed; replace policy keeps last' '
-+	git checkout -B replace-policy third &&
-+	git -c trailer.Bug.ifexists=replace -c trailer.Bug.ifmissing=add \
-+		rebase --trailer "Bug: 123" --trailer "Bug: 456" HEAD^ &&
-+	test_commit_message HEAD <<-EOF
-+	third
-+
-+	Bug: 456
-+	EOF
-+'
-+
-+test_expect_success 'multiple Signed-off-by trailers all preserved' '
-+	git checkout -B multiple-signoff third &&
-+	git rebase --trailer "Signed-off-by: Dev A <a@example.com>" \
-+		--trailer "Signed-off-by: Dev B <b@example.com>" HEAD^ &&
-+	test_commit_message HEAD <<-EOF
-+	third
-+
-+	Signed-off-by: Dev A <a@example.com>
-+	Signed-off-by: Dev B <b@example.com>
-+	EOF
-+'
-+
-+test_expect_success 'rebase --trailer adds trailer after conflicts' '
-+	git checkout -B trailer-conflict third &&
-+	test_commit fourth file &&
-+	test_must_fail git rebase --trailer "$REVIEWED_BY_TRAILER" second &&
-+	git checkout --theirs file &&
-+	git add file &&
-+	git rebase --continue &&
-+	test_commit_message HEAD <<-EOF &&
-+	fourth
-+
-+	$REVIEWED_BY_TRAILER
-+	EOF
-+	test_commit_message HEAD^ <<-EOF
-+	third
-+
-+	$REVIEWED_BY_TRAILER
-+	EOF
-+'
-+
-+test_expect_success '--trailer handles fixup commands in todo list' '
-+	git checkout -B fixup-trailer third &&
-+	test_commit fixup-base base &&
-+	test_commit fixup-second second &&
-+	cat >todo <<-\EOF &&
-+	pick fixup-base fixup-base
-+	fixup fixup-second fixup-second
-+	EOF
-+	(
-+		set_replace_editor todo &&
-+		git rebase -i --trailer "$REVIEWED_BY_TRAILER" HEAD~2
-+	) &&
-+	test_commit_message HEAD <<-EOF &&
-+	fixup-base
-+
-+	$REVIEWED_BY_TRAILER
-+	EOF
-+	git reset --hard fixup-second &&
-+	cat >todo <<-\EOF &&
-+	pick fixup-base fixup-base
-+	fixup -C fixup-second fixup-second
-+	EOF
-+	(
-+		set_replace_editor todo &&
-+		git rebase -i --trailer "$REVIEWED_BY_TRAILER" HEAD~2
-+	) &&
-+	test_commit_message HEAD <<-EOF
-+	fixup-second
-+
-+	$REVIEWED_BY_TRAILER
-+	EOF
-+'
-+
-+test_expect_success 'rebase --root honors trailer.<name>.key' '
-+	git checkout -B root-trailer first &&
-+	git -c trailer.review.key=Reviewed-by rebase --root \
-+		--trailer=review="Dev <dev@example.com>" &&
-+	test_commit_message HEAD <<-EOF &&
-+	first
-+
-+	Reviewed-by: Dev <dev@example.com>
-+	EOF
-+	test_commit_message HEAD^ <<-EOF
-+	Initial empty commit
-+
-+	Reviewed-by: Dev <dev@example.com>
-+	EOF
-+'
-+test_done
--- 
-2.52.0.362.g884e03848a9
+> Regards,
+> Li
+> 
+>   >
+>   > 1:  b2685e34c22 ! 1:  0d08b361995 interpret-trailers: factor trailer rewriting
+>   >      @@ Commit message
+>   >           This separation makes it easier to move the helper into trailer.c in the
+>   >           next commit.
+>   >
+>   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>   >           Signed-off-by: Li Chen <me@linux.beauty>
+>   >
+>   >        ## builtin/interpret-trailers.c ##
+>   >       @@ builtin/interpret-trailers.c: static void read_input_file(struct strbuf *sb, const char *file)
+>   > -:  ----------- > 2:  5a4d03ab375 interpret-trailers: refactor create_in_place_tempfile()
+>   > 2:  1bac3025045 ! 3:  ab7e232a95d trailer: move process_trailers to trailer.h
+>   >      @@ Metadata
+>   >       Author: Li Chen <me@linux.beauty>
+>   >
+>   >        ## Commit message ##
+>   >      -    trailer: move process_trailers to trailer.h
+>   >      -
+>   >      -    Move process_trailers() from builtin/interpret-trailers.c into trailer.c
+>   >      -    and expose it via trailer.h.
+>   >      -
+>   >      -    This lets other call sites reuse the same trailer rewriting logic.
+>   >      +    trailer: libify a couple of functions
+>   >      +
+>   >      +    Move create_in_place_tempfile() and process_trailers() from
+>   >      +    builtin/interpret-trailers.c into trailer.c and expose it via trailer.h.
+>   >      +
+>   >      +    This reverts most of ae0ec2e0e0b (trailer: move interpret_trailers()
+>   >      +    to interpret-trailers.c, 2024-03-01) and lets other call sites reuse
+>   >      +    the same trailer rewriting logic.
+>   >
+>   >           Signed-off-by: Li Chen <me@linux.beauty>
+>   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>   >
+>   >        ## builtin/interpret-trailers.c ##
+>   >      +@@ builtin/interpret-trailers.c: static int parse_opt_parse(const struct option *opt, const char *arg,
+>   >      +     return 0;
+>   >      + }
+>   >      +
+>   >      +-
+>   >      +-static struct tempfile *create_in_place_tempfile(const char *file)
+>   >      +-{
+>   >      +-    struct tempfile *tempfile = NULL;
+>   >      +-    struct stat st;
+>   >      +-    struct strbuf filename_template = STRBUF_INIT;
+>   >      +-    const char *tail;
+>   >      +-
+>   >      +-    if (stat(file, &st)) {
+>   >      +-        error_errno(_("could not stat %s"), file);
+>   >      +-        return NULL;
+>   >      +-    }
+>   >      +-    if (!S_ISREG(st.st_mode)) {
+>   >      +-        error(_("file %s is not a regular file"), file);
+>   >      +-        return NULL;
+>   >      +-    }
+>   >      +-    if (!(st.st_mode & S_IWUSR)) {
+>   >      +-        error(_("file %s is not writable by user"), file);
+>   >      +-        return NULL;
+>   >      +-    }
+>   >      +-    /* Create temporary file in the same directory as the original */
+>   >      +-    tail = find_last_dir_sep(file);
+>   >      +-    if (tail)
+>   >      +-        strbuf_add(&filename_template, file, tail - file + 1);
+>   >      +-    strbuf_addstr(&filename_template, "git-interpret-trailers-XXXXXX");
+>   >      +-
+>   >      +-    tempfile = mks_tempfile_m(filename_template.buf, st.st_mode);
+>   >      +-
+>   >      +-    strbuf_release(&filename_template);
+>   >      +-
+>   >      +-    return tempfile;
+>   >      +-}
+>   >      +-
+>   >      + static void read_input_file(struct strbuf *sb, const char *file)
+>   >      + {
+>   >      +     if (file) {
+>   >       @@ builtin/interpret-trailers.c: static void read_input_file(struct strbuf *sb, const char *file)
+>   >            strbuf_complete_line(sb);
+>   >        }
+>   >      @@ builtin/interpret-trailers.c: static void read_input_file(struct strbuf *sb, con
+>   >        static void interpret_trailers(const struct process_trailer_options *opts,
+>   >                           struct list_head *new_trailer_head,
+>   >                           const char *file)
+>   >      +@@ builtin/interpret-trailers.c: static void interpret_trailers(const struct process_trailer_options *opts,
+>   >      +     read_input_file(&input, file);
+>   >      +
+>   >      +     if (opts->in_place) {
+>   >      +-        tempfile = create_in_place_tempfile(file);
+>   >      ++        tempfile = trailer_create_in_place_tempfile(file);
+>   >      +         if (!tempfile)
+>   >      +             die(NULL);
+>   >      +         fd = tempfile->fd;
+>   >
+>   >        ## trailer.c ##
+>   >      +@@
+>   >      + #include "commit.h"
+>   >      + #include "trailer.h"
+>   >      + #include "list.h"
+>   >      ++#include "tempfile.h"
+>   >      ++
+>   >      + /*
+>   >      +  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+>   >      +  */
+>   >      +@@ trailer.c: void trailer_iterator_release(struct trailer_iterator *iter)
+>   >      +     strbuf_release(&iter->key);
+>   >      + }
+>   >      +
+>   >      ++struct tempfile *trailer_create_in_place_tempfile(const char *file)
+>   >      ++{
+>   >      ++    struct tempfile *tempfile = NULL;
+>   >      ++    struct stat st;
+>   >      ++    struct strbuf filename_template = STRBUF_INIT;
+>   >      ++    const char *tail;
+>   >      ++
+>   >      ++    if (stat(file, &st)) {
+>   >      ++        error_errno(_("could not stat %s"), file);
+>   >      ++        return NULL;
+>   >      ++    }
+>   >      ++    if (!S_ISREG(st.st_mode)) {
+>   >      ++        error(_("file %s is not a regular file"), file);
+>   >      ++        return NULL;
+>   >      ++    }
+>   >      ++    if (!(st.st_mode & S_IWUSR)) {
+>   >      ++        error(_("file %s is not writable by user"), file);
+>   >      ++        return NULL;
+>   >      ++    }
+>   >      ++    /* Create temporary file in the same directory as the original */
+>   >      ++    tail = find_last_dir_sep(file);
+>   >      ++    if (tail)
+>   >      ++        strbuf_add(&filename_template, file, tail - file + 1);
+>   >      ++    strbuf_addstr(&filename_template, "git-interpret-trailers-XXXXXX");
+>   >      ++
+>   >      ++    tempfile = mks_tempfile_m(filename_template.buf, st.st_mode);
+>   >      ++
+>   >      ++    strbuf_release(&filename_template);
+>   >      ++
+>   >      ++    return tempfile;
+>   >      ++}
+>   >      ++
+>   >      + int amend_file_with_trailers(const char *path, const struct strvec *trailer_args)
+>   >      + {
+>   >      +     struct child_process run_trailer = CHILD_PROCESS_INIT;
+>   >       @@ trailer.c: int amend_file_with_trailers(const char *path, const struct strvec *trailer_args
+>   >            strvec_pushv(&run_trailer.args, trailer_args->v);
+>   >            return run_command(&run_trailer);
+>   >      @@ trailer.h: void trailer_iterator_release(struct trailer_iterator *iter);
+>   >         */
+>   >        int amend_file_with_trailers(const char *path, const struct strvec *trailer_args);
+>   >
+>   >      ++/*
+>   >      ++ * Create a tempfile ""git-interpret-trailers-XXXXXX" in the same
+>   >      ++ * directory as file.
+>   >      ++ */
+>   >      ++struct tempfile *trailer_create_in_place_tempfile(const char *file);
+>   >      ++
+>   >      ++/*
+>   >      ++ * Rewrite the contents of input by processing its trailer block according to
+>   >      ++ * opts and (optionally) appending trailers from new_trailer_head.
+>   >      ++ *
+>   >      ++ * The rewritten message is appended to out (callers should strbuf_reset()
+>   >      ++ * first if needed).
+>   >      ++ */
+>   >       +void process_trailers(const struct process_trailer_options *opts,
+>   >       +              struct list_head *new_trailer_head,
+>   >       +              struct strbuf *input, struct strbuf *out);
+>   > 3:  3114f0dbb57 ! 4:  1f24917eb64 trailer: append trailers without fork/exec
+>   >      @@ Commit message
+>   >
+>   >           Update amend_file_with_trailers() to use the in-process helper and
+>   >           rewrite the target file via tempfile+rename, preserving the previous
+>   >      -    in-place semantics.
+>   >      +    in-place semantics. As the trailers are no longer added in a separate
+>   >      +    process and trailer_config_init() die()s on missing config values it
+>   >      +    is called early on in cmd_commit() and cmd_tag() so that they die()
+>   >      +    early before writing the message file. The trailer arguments are now
+>   >      +    also sanity checked.
+>   >
+>   >           Keep existing callers unchanged by continuing to accept argv-style
+>   >           --trailer=<trailer> entries and stripping the prefix before feeding the
+>   >           in-process implementation.
+>   >
+>   >           Signed-off-by: Li Chen <me@linux.beauty>
+>   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>   >      -
+>   >      - ## builtin/interpret-trailers.c ##
+>   >      -@@ builtin/interpret-trailers.c: static void interpret_trailers(const struct process_trailer_options *opts,
+>   >      -     struct strbuf out = STRBUF_INIT;
+>   >      -     FILE *outfile = stdout;
+>   >      -
+>   >      --    trailer_config_init();
+>   >      --
+>   >      -     read_input_file(&input, file);
+>   >      -
+>   >      -     if (opts->in_place)
+>   >      -@@ builtin/interpret-trailers.c: int cmd_interpret_trailers(int argc,
+>   >      -             git_interpret_trailers_usage,
+>   >      -             options);
+>   >      -
+>   >      -+    trailer_config_init();
+>   >      -+
+>   >      -     if (argc) {
+>   >      -         int i;
+>   >      -         for (i = 0; i < argc; i++)
+>   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>   >      +
+>   >      + ## builtin/commit.c ##
+>   >      +@@ builtin/commit.c: int cmd_commit(int argc,
+>   >      +     argc = parse_and_validate_options(argc, argv, builtin_commit_options,
+>   >      +                       builtin_commit_usage,
+>   >      +                       prefix, current_head, &s);
+>   >      ++    if (trailer_args.nr)
+>   >      ++        trailer_config_init();
+>   >      ++
+>   >      +     if (verbose == -1)
+>   >      +         verbose = (config_commit_verbose < 0) ? 0 : config_commit_verbose;
+>   >      +
+>   >      +
+>   >      + ## builtin/tag.c ##
+>   >      +@@ builtin/tag.c: int cmd_tag(int argc,
+>   >      +     if (cmdmode == 'l')
+>   >      +         setup_auto_pager("tag", 1);
+>   >      +
+>   >      ++    if (trailer_args.nr)
+>   >      ++        trailer_config_init();
+>   >      ++
+>   >      +     if (opt.sign == -1)
+>   >      +         opt.sign = cmdmode ? 0 : config_sign_tag > 0;
+>   >      +
+>   >
+>   >        ## trailer.c ##
+>   >       @@
+>   >        #include "string-list.h"
+>   >        #include "run-command.h"
+>   >        #include "commit.h"
+>   >       +#include "strvec.h"
+>   >      -+#include "tempfile.h"
+>   >        #include "trailer.h"
+>   >        #include "list.h"
+>   >      -+
+>   >      - /*
+>   >      -  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+>   >      -  */
+>   >      + #include "tempfile.h"
+>   >       @@ trailer.c: void parse_trailers_from_command_line_args(struct list_head *arg_head,
+>   >            free(cl_separators);
+>   >        }
+>   >
+>   >      -+void validate_trailer_args(const struct strvec *cli_args)
+>   >      ++int validate_trailer_args(const struct strvec *cli_args)
+>   >       +{
+>   >       +    char *cl_separators;
+>   >      ++    int ret = 0;
+>   >       +
+>   >       +    trailer_config_init();
+>   >       +
+>   >      @@ trailer.c: void parse_trailers_from_command_line_args(struct list_head *arg_head
+>   >       +        const char *txt = cli_args->v[i];
+>   >       +        ssize_t separator_pos;
+>   >       +
+>   >      -+        if (!*txt)
+>   >      -+            die(_("empty --trailer argument"));
+>   >      -+
+>   >      ++        if (!*txt) {
+>   >      ++            ret = error(_("empty --trailer argument"));
+>   >      ++            goto out;
+>   >      ++        }
+>   >       +        separator_pos = find_separator(txt, cl_separators);
+>   >      -+        if (separator_pos == 0)
+>   >      -+            die(_("invalid trailer '%s': missing key before separator"),
+>   >      -+                txt);
+>   >      ++        if (separator_pos == 0) {
+>   >      ++            ret = error(_("invalid trailer '%s': missing key before separator"),
+>   >      ++                    txt);
+>   >      ++            goto out;
+>   >      ++        }
+>   >       +    }
+>   >      -+
+>   >      ++out:
+>   >       +    free(cl_separators);
+>   >      ++    return ret;
+>   >       +}
+>   >       +
+>   >        static const char *next_line(const char *str)
+>   >        {
+>   >            const char *nl = strchrnul(str, '\n');
+>   >      -@@ trailer.c: void trailer_iterator_release(struct trailer_iterator *iter)
+>   >      -     strbuf_release(&iter->key);
+>   >      +@@ trailer.c: struct tempfile *trailer_create_in_place_tempfile(const char *file)
+>   >      +     return tempfile;
+>   >        }
+>   >
+>   >       -int amend_file_with_trailers(const char *path, const struct strvec *trailer_args)
+>   >      @@ trailer.c: void trailer_iterator_release(struct trailer_iterator *iter)
+>   >       -             path, NULL);
+>   >       -    strvec_pushv(&run_trailer.args, trailer_args->v);
+>   >       -    return run_command(&run_trailer);
+>   >      -+static void new_trailer_items_clear(struct list_head *items)
+>   >      -+{
+>   >      -+    while (!list_empty(items)) {
+>   >      -+        struct new_trailer_item *item =
+>   >      -+            list_first_entry(items, struct new_trailer_item, list);
+>   >      -+        list_del(&item->list);
+>   >      -+        free(item);
+>   >      -+    }
+>   >      -+}
+>   >      -+
+>   >      -+void amend_strbuf_with_trailers(struct strbuf *buf,
+>   >      ++int amend_strbuf_with_trailers(struct strbuf *buf,
+>   >       +                const struct strvec *trailer_args)
+>   >       +{
+>   >       +    struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
+>   >       +    LIST_HEAD(new_trailer_head);
+>   >       +    struct strbuf out = STRBUF_INIT;
+>   >       +    size_t i;
+>   >      ++    int ret = 0;
+>   >       +
+>   >       +    opts.no_divider = 1;
+>   >       +
+>   >       +    for (i = 0; i < trailer_args->nr; i++) {
+>   >       +        const char *text = trailer_args->v[i];
+>   >       +        struct new_trailer_item *item;
+>   >       +
+>   >      -+        if (!*text)
+>   >      -+            die(_("empty --trailer argument"));
+>   >      ++        if (!*text) {
+>   >      ++            ret = error(_("empty --trailer argument"));
+>   >      ++            goto out;
+>   >      ++        }
+>   >       +        item = xcalloc(1, sizeof(*item));
+>   >      -+        item->text = text;
+>   >      ++        item->text = xstrdup(text);
+>   >       +        list_add_tail(&item->list, &new_trailer_head);
+>   >       +    }
+>   >       +
+>   >      -+    trailer_config_init();
+>   >       +    process_trailers(&opts, &new_trailer_head, buf, &out);
+>   >       +
+>   >       +    strbuf_swap(buf, &out);
+>   >      ++out:
+>   >       +    strbuf_release(&out);
+>   >      ++    free_trailers(&new_trailer_head);
+>   >       +
+>   >      -+    new_trailer_items_clear(&new_trailer_head);
+>   >      ++    return ret;
+>   >       +}
+>   >       +
+>   >       +static int write_file_in_place(const char *path, const struct strbuf *buf)
+>   >       +{
+>   >      -+    struct stat st;
+>   >      -+    struct strbuf filename_template = STRBUF_INIT;
+>   >      -+    const char *tail;
+>   >      -+    struct tempfile *tempfile;
+>   >      -+    FILE *outfile;
+>   >      -+
+>   >      -+    if (stat(path, &st))
+>   >      -+        return error_errno(_("could not stat %s"), path);
+>   >      -+    if (!S_ISREG(st.st_mode))
+>   >      -+        return error(_("file %s is not a regular file"), path);
+>   >      -+    if (!(st.st_mode & S_IWUSR))
+>   >      -+        return error(_("file %s is not writable by user"), path);
+>   >      -+
+>   >      -+    /* Create temporary file in the same directory as the original */
+>   >      -+    tail = strrchr(path, '/');
+>   >      -+    if (tail)
+>   >      -+        strbuf_add(&filename_template, path, tail - path + 1);
+>   >      -+    strbuf_addstr(&filename_template, "git-interpret-trailers-XXXXXX");
+>   >      -+
+>   >      -+    tempfile = mks_tempfile_sm(filename_template.buf, 0, st.st_mode);
+>   >      -+    strbuf_release(&filename_template);
+>   >      ++    struct tempfile *tempfile = trailer_create_in_place_tempfile(path);
+>   >       +    if (!tempfile)
+>   >      -+        return error_errno(_("could not create temporary file"));
+>   >      -+
+>   >      -+    outfile = fdopen_tempfile(tempfile, "w");
+>   >      -+    if (!outfile) {
+>   >      -+        int saved_errno = errno;
+>   >      -+        delete_tempfile(&tempfile);
+>   >      -+        errno = saved_errno;
+>   >      -+        return error_errno(_("could not open temporary file"));
+>   >      -+    }
+>   >      -+
+>   >      -+    if (buf->len && fwrite(buf->buf, 1, buf->len, outfile) < buf->len) {
+>   >      -+        int saved_errno = errno;
+>   >      -+        delete_tempfile(&tempfile);
+>   >      -+        errno = saved_errno;
+>   >      ++        return -1;
+>   >      ++
+>   >      ++    if (write_in_full(tempfile->fd, buf->buf, buf->len) < 0)
+>   >       +        return error_errno(_("could not write to temporary file"));
+>   >      -+    }
+>   >       +
+>   >       +    if (rename_tempfile(&tempfile, path))
+>   >       +        return error_errno(_("could not rename temporary file to %s"), path);
+>   >      @@ trailer.c: void trailer_iterator_release(struct trailer_iterator *iter)
+>   >       +         * in-process implementation.
+>   >       +         */
+>   >       +        skip_prefix(txt, "--trailer=", &txt);
+>   >      -+        if (!*txt)
+>   >      -+            die(_("empty --trailer argument"));
+>   >      ++        if (!*txt) {
+>   >      ++            ret = error(_("empty --trailer argument"));
+>   >      ++            goto out;
+>   >      ++        }
+>   >       +        strvec_push(&stripped_trailer_args, txt);
+>   >       +    }
+>   >       +
+>   >      ++    if (validate_trailer_args(&stripped_trailer_args)) {
+>   >      ++        ret = -1;
+>   >      ++        goto out;
+>   >      ++    }
+>   >       +    if (strbuf_read_file(&buf, path, 0) < 0)
+>   >       +        ret = error_errno(_("could not read '%s'"), path);
+>   >       +    else
+>   >       +        amend_strbuf_with_trailers(&buf, &stripped_trailer_args);
+>   >       +
+>   >       +    if (!ret)
+>   >       +        ret = write_file_in_place(path, &buf);
+>   >      -+
+>   >      ++out:
+>   >       +    strvec_clear(&stripped_trailer_args);
+>   >       +    strbuf_release(&buf);
+>   >       +    return ret;
+>   >      @@ trailer.h: void parse_trailers_from_config(struct list_head *config_head);
+>   >        void parse_trailers_from_command_line_args(struct list_head *arg_head,
+>   >                               struct list_head *new_trailer_head);
+>   >
+>   >      -+void validate_trailer_args(const struct strvec *cli_args);
+>   >      ++int validate_trailer_args(const struct strvec *cli_args);
+>   >       +
+>   >        void process_trailers_lists(struct list_head *head,
+>   >                        struct list_head *arg_head);
+>   >      @@ trailer.h: int trailer_iterator_advance(struct trailer_iterator *iter);
+>   >       + * Each element of trailer_args should be in the same format as the value
+>   >       + * accepted by --trailer=<trailer> (i.e., without the --trailer= prefix).
+>   >       + */
+>   >      -+void amend_strbuf_with_trailers(struct strbuf *buf,
+>   >      ++int amend_strbuf_with_trailers(struct strbuf *buf,
+>   >       +                const struct strvec *trailer_args);
+>   >       +
+>   >       +/*
+>   >      @@ trailer.h: int trailer_iterator_advance(struct trailer_iterator *iter);
+>   >         */
+>   >        int amend_file_with_trailers(const char *path, const struct strvec *trailer_args);
+>   >
+>   >      -+/*
+>   >      -+ * Rewrite the contents of input by processing its trailer block according to
+>   >      -+ * opts and (optionally) appending trailers from new_trailer_head.
+>   >      -+ *
+>   >      -+ * The rewritten message is appended to out (callers should strbuf_reset()
+>   >      -+ * first if needed).
+>   >      -+ */
+>   >      - void process_trailers(const struct process_trailer_options *opts,
+>   >      -               struct list_head *new_trailer_head,
+>   >      -               struct strbuf *input, struct strbuf *out);
+>   > 4:  147595a9317 ! 5:  3c1fa9e8579 commit, tag: parse --trailer with OPT_STRVEC
+>   >      @@ Commit message
+>   >           amend_file_with_trailers().
+>   >
+>   >           Signed-off-by: Li Chen <me@linux.beauty>
+>   >
+>   >        ## builtin/commit.c ##
+>   >       @@ builtin/commit.c: int cmd_commit(int argc,
+>   >      @@ trailer.c: int amend_file_with_trailers(const char *path,
+>   >       -         * in-process implementation.
+>   >       -         */
+>   >       -        skip_prefix(txt, "--trailer=", &txt);
+>   >      --        if (!*txt)
+>   >      --            die(_("empty --trailer argument"));
+>   >      +-        if (!*txt) {
+>   >      +-            ret = error(_("empty --trailer argument"));
+>   >      +-            goto out;
+>   >      +-        }
+>   >       -        strvec_push(&stripped_trailer_args, txt);
+>   >       -    }
+>   >       -
+>   >      +-    if (validate_trailer_args(&stripped_trailer_args)) {
+>   >      ++    if (validate_trailer_args(trailer_args)) {
+>   >      +         ret = -1;
+>   >      +         goto out;
+>   >      +     }
+>   >            if (strbuf_read_file(&buf, path, 0) < 0)
+>   >                ret = error_errno(_("could not read '%s'"), path);
+>   >            else
+>   >      @@ trailer.c: int amend_file_with_trailers(const char *path,
+>   >
+>   >            if (!ret)
+>   >                ret = write_file_in_place(path, &buf);
+>   >      -
+>   >      + out:
+>   >       -    strvec_clear(&stripped_trailer_args);
+>   >            strbuf_release(&buf);
+>   >            return ret;
+>   >        }
+>   >
+>   >        ## trailer.h ##
+>   >      -@@ trailer.h: void amend_strbuf_with_trailers(struct strbuf *buf,
+>   >      +@@ trailer.h: int amend_strbuf_with_trailers(struct strbuf *buf,
+>   >        /*
+>   >         * Augment a file by appending trailers specified in trailer_args.
+>   >         *
+>   > 5:  864cf5f8eb6 ! 6:  99654d80547 rebase: support --trailer
+>   >      @@ Commit message
+>   >           non-interactive and interactive rebases.
+>   >
+>   >           Signed-off-by: Li Chen <me@linux.beauty>
+>   >      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>   >
+>   >        ## Documentation/git-rebase.adoc ##
+>   >       @@ Documentation/git-rebase.adoc: See also INCOMPATIBLE OPTIONS below.
+>   >      @@ Documentation/git-rebase.adoc: See also INCOMPATIBLE OPTIONS below.
+>   >       +--trailer=<trailer>::
+>   >       +    Append the given trailer to every rebased commit message, processed
+>   >       +    via linkgit:git-interpret-trailers[1]. This option implies
+>   >      -+    `--force-rebase` so that fast-forwarded commits are also rewritten.
+>   >      ++    `--force-rebase`.
+>   >       ++
+>   >       +See also INCOMPATIBLE OPTIONS below.
+>   >       +
+>   >        -i::
+>   >        --interactive::
+>   >            Make a list of the commits which are about to be rebased.  Let the
+>   >      +@@ Documentation/git-rebase.adoc: are incompatible with the following options:
+>   >      +  * --[no-]reapply-cherry-picks when used without --keep-base
+>   >      +  * --update-refs
+>   >      +  * --root when used without --onto
+>   >      ++ * --trailer
+>   >      +
+>   >      + In addition, the following pairs of options are incompatible:
+>   >      +
+>   >
+>   >        ## builtin/rebase.c ##
+>   >       @@
+>   >      @@ builtin/rebase.c: int cmd_rebase(int argc,
+>   >                         builtin_rebase_usage, 0);
+>   >
+>   >       +    if (options.trailer_args.nr) {
+>   >      -+        validate_trailer_args(&options.trailer_args);
+>   >      ++        if (validate_trailer_args(&options.trailer_args))
+>   >      ++            die(NULL);
+>   >       +        options.flags |= REBASE_FORCE;
+>   >       +    }
+>   >       +
+>   >      @@ sequencer.c: void replay_opts_release(struct replay_opts *opts)
+>   >            free(opts->ctx);
+>   >        }
+>   >       @@ sequencer.c: static int append_squash_message(struct strbuf *buf, const char *body,
+>   >      +     if (is_fixup_flag(command, flag) && !seen_squash(ctx)) {
+>   >      +         /*
+>   >      +          * We're replacing the commit message so we need to
+>   >      +-         * append the Signed-off-by: trailer if the user
+>   >      +-         * requested '--signoff'.
+>   >      ++         * append any trailers if the user requested
+>   >      ++         * '--signoff' or '--trailer'.
+>   >      +          */
+>   >                if (opts->signoff)
+>   >                    append_signoff(buf, 0, 0);
+>   >
+>   >      @@ sequencer.c: static int do_pick_commit(struct repository *r,
+>   >            if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
+>   >                res = -1;
+>   >            else if (!opts->strategy ||
+>   >      +@@ sequencer.c: static void read_strategy_opts(struct replay_opts *opts, struct strbuf *buf)
+>   >      +     parse_strategy_opts(opts, buf->buf);
+>   >      + }
+>   >      +
+>   >      ++static int read_trailers(struct replay_opts *opts, struct strbuf *buf)
+>   >      ++{
+>   >      ++    ssize_t len;
+>   >      ++
+>   >      ++    strbuf_reset(buf);
+>   >      ++    len = strbuf_read_file(buf, rebase_path_trailer(), 0);
+>   >      ++    if (len > 0) {
+>   >      ++        char *p = buf->buf, *nl;
+>   >      ++
+>   >      ++        trailer_config_init();
+>   >      ++
+>   >      ++        while ((nl = strchr(p, '\n'))) {
+>   >      ++            *nl = '\0';
+>   >      ++            if (!*p)
+>   >      ++                return error(_("trailers file contains empty line"));
+>   >      ++            strvec_push(&opts->trailer_args, p);
+>   >      ++            p = nl + 1;
+>   >      ++        }
+>   >      ++    } else if (!len) {
+>   >      ++        return error(_("trailers file is empty"));
+>   >      ++    } else if (errno != ENOENT) {
+>   >      ++        return error(_("cannot read trailers files"));
+>   >      ++    }
+>   >      ++
+>   >      ++    return 0;
+>   >      ++}
+>   >      ++
+>   >      + static int read_populate_opts(struct replay_opts *opts)
+>   >      + {
+>   >      +     struct replay_ctx *ctx = opts->ctx;
+>   >       @@ sequencer.c: static int read_populate_opts(struct replay_opts *opts)
+>   >      +             opts->keep_redundant_commits = 1;
+>   >
+>   >                read_strategy_opts(opts, &buf);
+>   >      ++
+>   >      ++        if (read_trailers(opts, &buf)) {
+>   >      ++            ret = -1;
+>   >      ++            goto done_rebase_i;
+>   >      ++        }
+>   >                strbuf_reset(&buf);
+>   >      -+        if (strbuf_read_file(&buf, rebase_path_trailer(), 0) >= 0) {
+>   >      -+            char *p = buf.buf, *nl;
+>   >      -+
+>   >      -+            while ((nl = strchr(p, '\n'))) {
+>   >      -+                *nl = '\0';
+>   >      -+                if (!*p)
+>   >      -+                    BUG("rebase-merge/trailer has an empty line");
+>   >      -+                strvec_push(&opts->trailer_args, p);
+>   >      -+                p = nl + 1;
+>   >      -+            }
+>   >      -+            strbuf_reset(&buf);
+>   >      -+        }
+>   >
+>   >                if (read_oneliner(&ctx->current_fixups,
+>   >      -                   rebase_path_current_fixups(),
+>   >       @@ sequencer.c: int write_basic_state(struct replay_opts *opts, const char *head_name,
+>   >                write_file(rebase_path_reschedule_failed_exec(), "%s", "");
+>   >            else
+>   >
+>   >
+> 
 
