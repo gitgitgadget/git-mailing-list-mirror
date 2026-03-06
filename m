@@ -1,82 +1,86 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F8154654
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 22:33:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA943563C2
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 22:36:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772836398; cv=none; b=Gv9ixgkzpfIybtE7yirEhV/QH7aGvnhHmeu5Pfw2weWgpJ4qevlj2Mv89/NMXVKVVY9CUbGiqw1p+UEP3xJx5NlnQmqje9iZpstdJDNB7VRjsz6SJbo9B2CzTC7EAAEaPNPIrQkVGHHhNl5B1SbR+HyHd45Hm/7UYB8r43Lk/G4=
+	t=1772836592; cv=none; b=tDGiqZvjed/wcA4C74xgZERe9D3W7sLtxgZc09JSjpdkvVhyO62qQxPKNM0NbBj3Ix1tsVUs/F2WFCFkuUe2hGxo5gETeVUYWek6rQaKCKfOozvJvtmxyL/ERDP27ZMH/daHQ5m2MYOlxA8N4Jxn0o0cvxLlGdVrwdK2WJkQ3I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772836398; c=relaxed/simple;
-	bh=o4LfwepyG9gtVLjltkr5aDy3pQiR2KjphtuRWUisAag=;
+	s=arc-20240116; t=1772836592; c=relaxed/simple;
+	bh=jXtyTR3YTqgRTnGITPSjj3nWkPFQr/eUW1vKuPgjs34=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bb/gtdeobgz8y/w7AYoW4zjkUOTN9safOgl0xXiyt8QM/+pf4FpGg5OL9ojp7+24RTvS2LXZX3oBCtXvkDFEwFtQ9xeWf6uaQheu/WVpxi3234I8uTZsuObwfGhsrPJQ6QrYQEU5IFUucmCMrnv2iNiJgPblMxCqT9eU4p424r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MWZMv50R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4vuca0MD; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=KA+WqsZXQvhm+RI+lGMMKjzpHGGgDxYyTm1ork5AkAEr1AkhmC4KthCNs8x3fcqbDBU8Y/PYye8b062z471Smp51+dx0l7SMnMrkeYwlIEscPDeHWMD6xasewUa44JEZNEprrmBUP0SmwGkZYgSfcdHtucm2UBPvqz6zDiSGjTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jrueiejo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=6EjUpCHc; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MWZMv50R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4vuca0MD"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jrueiejo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="6EjUpCHc"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 66694EC053B;
-	Fri,  6 Mar 2026 17:33:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 06 Mar 2026 17:33:16 -0500
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C4272140013E;
+	Fri,  6 Mar 2026 17:36:30 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 06 Mar 2026 17:36:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772836396; x=1772922796; bh=AZRlCkXolL
-	STeq3jJqTG2i/WDezRuemNwCMhNNu22Tg=; b=MWZMv50RDLMqMwk6D4Y39BWXwm
-	Mu2QVZiw665G4g48cL5BISlUvvPoxkPBfnRNw91NhWwiPeP4PaFvJh/v7rIVCC+5
-	jnCQhZCrnrVhUeKvc2vtG4cihXuHB2yJjAHeFUIS95JhXH07Viwtyp6XnAd8wuWi
-	mvA5kU+aUkyT/1cvqYj2tKDKH/iBz2nHYiM2L6m+4KkaA7uQskLWl8x8Z29ErUlS
-	sew2WCW+X6ITxZ6BjRoJB9GNOfNZ0hgf5bJ9U/KPE5/ZLwOqqmJ9w/zz8FteCMGO
-	203wZZj54OaeX9PyxveFnBtuOS33NzA/Z3P57jYbVBc1BOnXD7mAK2JeLboA==
+	:subject:to:to; s=fm3; t=1772836590; x=1772922990; bh=YqW0/WGnUP
+	dMYrdd8cQXgAcm9nJHg4il8Y10qRYsPlk=; b=Jrueiejoh5QLmjlddyYyODdyje
+	4hskxC4Respl4ugly/A7IL277H2NdVusbs8+HH086uM3x446AjjkIvOf8bBu28dJ
+	FHNrYExmI0g4CTbiySBCcuLNtcbljtilTYobJZbDGYVf4yjo4sXGk+m6gDHgowOb
+	TQJHjrtdBZYD6WoKsmyxC2EIGB4RMFe4Do19eCnPdQWG3w2L8GxAg1rirflSjzfV
+	YiZ9a4yMSmpMyfqtMxa3WjNO9ozbv8d36XfKAes9rGQkjBc3mKblEG7aEyOH3gxU
+	/wdgnKwcVeDYv6ThTKh83amljJNpGzrnCB8PTD8+vklpr12+7+cXt/l7suHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772836396; x=1772922796; bh=AZRlCkXolLSTeq3jJqTG2i/WDezRuemNwCM
-	hNNu22Tg=; b=4vuca0MDuzTlnI9iY++7yLKDmoAcE7VJg/fJT9nq++bktuO/oIX
-	77ZiUyG+CMTBuYa2jOBh5mysaxDCa4L4YUVnUtUrNwOMubyes7VAFSgZV0GTynAn
-	fcwh6j5Hx6O5FI1elA2lQOJuA3VGjuiU932pk10dK3XGyCd1zW4bwdT1LzFulMIs
-	LMohR8Ia32I6Z7IIeKKMdknF5haBHBbNW8S3KXKHoY5JZYYMh4Q8zPmarsB/YFg/
-	tkU0hSH2hZU0STrzAIvviLaa7fObIGhogUbwIZNTF1RugslQCmtd4fzZhyVpNfAx
-	UEK3V7ySwJfE4fc50YAwsAbxnAP4+S4ehyA==
-X-ME-Sender: <xms:LFaraVP66-vKINqZ2v3rnh7i1l_f7eciS1chLgc27R64SIYVgHQJcA>
-    <xme:LFarae_nEpjcNfdthg8KD2V_1A-Pcgcz5afUo-hgJxHnntUnYUcsaldhDNqzWzly-
-    78WrWvN116eS3L5865rGEHKpitADXxI0i5NllZCodujbikg-iBPZQ>
-X-ME-Received: <xmr:LFaraZSIqzwrL7M7KqgvxHE7Wdel3zg7eqJRPcS-YoO8pG-INBJyxZDiLNlk198sJcx3qeumjrxX_wHGfyUfnBBMttf7p3dgBA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtheduucetufdoteggodetrf
+	1772836590; x=1772922990; bh=YqW0/WGnUPdMYrdd8cQXgAcm9nJHg4il8Y1
+	0qRYsPlk=; b=6EjUpCHcadaRl1RYxGD2ErRxsn/LEpeoBonP/t6/LvYp81fewOZ
+	855xGb3XK73Ch3YHa8m90WszWGTsw2S55zlMxuhXIvXiftZ1+bN3SgO2Fh/dRe8r
+	JsivcWQrNSZTPGfTnxviPbD7MWn0cTh3tsgqdCkXsE9SfMlZP432M+MJh/BD9i++
+	2t3wshfZuWdgrW+poAq0m7yMyz2dY4jxiUkgJgKfvyASVc5+TKauXe1tk0Oh3BNj
+	oGnphx1bN3kekR3mAVe2cSg9HE63WnxdHpbLj3ju6edA2Mh6VP8l+7tgxe+nrjmZ
+	qw3+5JxtoYdGn4lJtDF9ph0ORxFhdxhsc/Q==
+X-ME-Sender: <xms:7laraV-1JIB3pk8MoC9MWw4i2SmtwE75SG9iz4nsAawRpatdBjI8TQ>
+    <xme:7laradbUmRf6A66OBG1QWgbexJ60rhh7NEp-GGbPt-Ri462WF62N1-F7iaDt2beSw
+    Yv6Gmt-iGK3DkGQVMMdLF9suR2Skn7zR5eIK2eGqG_qXSD464pSkg>
+X-ME-Received: <xmr:7larac09w1O3sXpg_nSz7u6j0Ldh-E9MceDNlYt3ZISNzWJCsTGZOK6c9abJv63i-S1IN64Df0EsmAKWy1CpD07_XE7KVfOxOw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedthedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
-    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:LFaraQktTgsF2fhwOzCihisEHWpv0AV_p-JAGrCluka11iL5ZE34Kw>
-    <xmx:LFaraZR4TAxx4puMmwE75My46fw_OtnK2O9E55IPLwahYme__KAi1Q>
-    <xmx:LFaraeOc6r_xvKOaK3EFCOmzWtiJjA6QLNpOc4nOWnMB_MpZrTJVMw>
-    <xmx:LFaraSXSB4Pjh3U8qR0OYHaz4H3jX4ap2UvaJGiMIpLIzuLZvq1_gQ>
-    <xmx:LFaraeSzlagyQVyQ456Jv4991a5MPEBrpWweZVtBQ9yuFTBhi_Y4HxPI>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
+    phhkshdrihhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhho
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:7laraQbukLYCDOONB5tVqcjbh40Exu-p-uiaBM3BI5FqJU5ndunEQQ>
+    <xmx:7laracKLjPncFAARHdgovJ4zuBcGWJvlMTTzzuVJVEcseXBnRWpe5g>
+    <xmx:7laraXHsbygAKvL-T2NhhVeY8nLwzERoeqfYj-j6BpELiI5noZVB4A>
+    <xmx:7larabuoScox6XAxiqwVTi009Dle7ZVhP6_ZbP1SNzt1NVAutM-wgQ>
+    <xmx:7laraWi2Dz7mDBGoTf8ZhT4UnMBKeFIq61D5MHCnu0rKWuiWe4yCRs_E>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Mar 2026 17:33:15 -0500 (EST)
+ 6 Mar 2026 17:36:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 0/5] format-patch: add cover-letter-format option
-In-Reply-To: <cover.1772232373.git.mroik@delayed.space> (Mirko Faina's message
-	of "Fri, 27 Feb 2026 23:48:10 +0100")
-References: <cover.1772196510.git.mroik@delayed.space>
-	<cover.1772232373.git.mroik@delayed.space>
-Date: Fri, 06 Mar 2026 14:33:14 -0800
-Message-ID: <xmqq7broy4et.fsf@gitster.g>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  kristofferhaugsbakk@fastmail.com,
+  lucasseikioshiro@gmail.com
+Subject: Re: [PATCH v3 0/6] builtin/repo: include largest object information
+In-Reply-To: <xmqqqzq1yjcl.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	02 Mar 2026 14:09:14 -0800")
+References: <20260223174120.2356504-1-jltobler@gmail.com>
+	<20260302214526.2034279-1-jltobler@gmail.com>
+	<xmqqqzq1yjcl.fsf@gitster.g>
+Date: Fri, 06 Mar 2026 14:36:29 -0800
+Message-ID: <xmqq342cy49e.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,23 +90,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Mirko Faina <mroik@delayed.space> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I've reconciled the formats between the command line option and the
-> configuration variable. Changes are reflected in the documentation and
-> the tests.
+> Justin Tobler <jltobler@gmail.com> writes:
 >
-> Thank you for the review
+>> Changes from V2:
+>> - When checking for largest objects, zero valued objects were not
+>>   recorded even if they were the "largest" object. In this version, if
+>>   an object ID has not been recorded yet, it is always added even if its
+>>   value is zero.
+>> - Added some helper functions for printing keyvalue info to cut down on
+>>   duplicate code and hopefully make it a bit easier on the eyes.
+>> - Moved the for-each loop that printed table OID annoations inside the
+>>   preceding if-block making it a bit easier to reason about.
 >
-> [1/5] pretty.c: add %(count) and %(total) placeholders (Mirko Faina)
-> [2/5] format-patch: move cover letter summary generation (Mirko Faina)
-> [3/5] format-patch: add ability to use alt cover format (Mirko Faina)
-> [4/5] format-patch: add commitListFormat config (Mirko Faina)
-> [5/5] docs: add usage for the cover-letter fmt feature (Mirko Faina)
+> The changes I see in the diff relative to the previous iteration all
+> look sane to me.  Will replace.  Thanks.
 
-How do people find this latest round, which unfortunately haven't
-seen any reactions to?  The earlier rounds have good discussions and
-I do not think this round misses anything discovered and discussed
-so far.  Shall we declare victory and mark the topic for 'next'?
+It seems that no further review comments are coming and new
+iterations are not happening on this topic, so shall we declare
+victory and mark the topic for 'next' now?
 
 Thanks.
