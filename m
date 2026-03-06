@@ -1,157 +1,167 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A994C33556D
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 02:20:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772763607; cv=pass; b=tcILbHDr95dRXLPDnmnPbduYNY+OLwSMjWB41Rh6hAFXRMnrIzKP2Yhn7Bn7e/QfG8TPUznXuwUhacI1jdqAucq0+0IgTOfepnfj8lssGDqAUdylLIitJJZbCXvVohhnPFUl3GQZn7FkxkJCb8MgEJpdX6304pIzBp2bQWinCQg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772763607; c=relaxed/simple;
-	bh=rzSd5cekBZYtifepF9w2RtGgohPFfU2Jxqqki5kqxuk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=RX6AByVHzLeaiAO7ekg15d7NPrY6ieIezh1L5Hm55JNNXg6Wst2ruJsrb10ei60mIgebPOC1tXHbdfseKkWa7luEthO7D/MT1mej4X+Niio0Ssw+8Hja5m33C7Q2WpWeabo2pFoqPxgl2hlElD1kMmcwX4ir4IB7dsRDe1XzzgI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XFM3/0Y3; arc=pass smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDCC315D46
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 02:20:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772763635; cv=none; b=gbSadNqZweqTFSylWdFZjkMEVxvRypDHYTwp8YBJuT9+dQuC3FgFBcKMEUeaQqBaETdZqnP/mflUwVmyu6ESlR4NYmFTbGT1zerAyqW8O4jgeSx3Px0RXYcZST5Vm81CaTKKPm3Hs+ijcMMldNfhCS1QrkqtmQfJ/N/W7ApL6+Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772763635; c=relaxed/simple;
+	bh=PfCP1Aqo4cspQGMDRE4bYQH4Vt0ce0TIWAqAdBgyVEY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=TiSYecktXh2hH+Zi4cLRmbVcV4Mq+SBcQe351AOFj/7pjuAyzs/r9kuNU0QCQF1B7/zBuvu0FqPD7N7EXOYdj+7iEvxBoYvApRwFtGW6oMf7ksoan49aCxgQbBu5I9/tf2MKQjvSRoviP5xPyth3V79rz/zb/tOUlGkyuU4XZZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=qLGfRDmi; arc=none smtp.client-ip=185.70.43.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XFM3/0Y3"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6610bd5f322so3884756a12.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 18:20:04 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772763602; cv=none;
-        d=google.com; s=arc-20240605;
-        b=hl+OWlSv2+kLPRF5Dht0OIFbJM77uJJgpI2wmihc4uPfg+VN2ctbySuAB7owJxJiNd
-         qigmKY2ikHGWPIocIYPqJ6f+2FFk/42x/oLtpbw86bzbx0hjw6fTiY5AOGUjQq9/nmW2
-         NuIqtsjOMwiqpJPCHvC+f+ZpsfGn635ZA+QEcGhELcVc7y+mHNefAjo06WwHhnzcetfR
-         +EEfcSlRilZdAHZF9XBcGlk20jY/m2TrNimNeonxAWf/u3GkT2hoa2njODFasZCZlAPP
-         3b8+cSMMh5ZcGQIli8izaw+HA65f10U7DYVUFNXIDMdEKrU6aFBQQXKtl0nRfMM5kTIH
-         a/HA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4GFeMiyOnus08fTFMxiamevqDOwMKWMLNnIMUSG7Im8=;
-        fh=jMc30gLc/3HbAXTNv+LNb0oaOvMomeqB0RBKIFqlclw=;
-        b=gNHEKLwcdbDuXBx6rjjFzLzDcfOWBL0oeSubb0fgp8w4AptyqxpALoiUL7k8EmV8cs
-         BMB5CStMtnxch5jMxplUrgLNbGjrHmSmxlW6etuVjH5wcNEIuouR/mZPKOlQ2H17fZSm
-         0RhlG50WMMd5oEfea8jqDlrN95hQjc0ZQDXh8ugV7fzRFYPfdN7rk1iwwSvvKYJRSL5X
-         KwszS5+BCVsnDD+4giJE0GxT61ZmxpGH0U7JXziMPWtFui7WN8kCRKs1R0NLGFpsaM3X
-         KXXv52brFFOwK7TB3ePuig9NtzUXV7SNxdX4/nVemSbj92F/Z1lBJzeDTS4qonpghiqi
-         y7PA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772763602; x=1773368402; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4GFeMiyOnus08fTFMxiamevqDOwMKWMLNnIMUSG7Im8=;
-        b=XFM3/0Y3fbjXE++Bn6IJ0otN280ruKHO9rSvIImTDJguK4MeixmCq35/7dDARXAwhC
-         HJX/5xcBEOYFhfBQ32hVvhhbXhMmE6dxhwCVYG//r1inmiDDHI+3IFeNsVUdRnaGBvs+
-         E0lzFtNwkPgJyCgc7fRRP63oI+JV5QF9RKZydBn6bQHEnK+v7jQ+bf0iIr+cNz00n1dA
-         HOSKc1HmBQXNZnttby2zGmDCi2NHu8Vdl6jA8258rM7/g6GGh3mrfMPMl6CTp+KnV3m9
-         DV9ubKFk75AYeAxwrZjb+/e+s8x+tFW5tZGzxONS/1RWfuP3nMMPzlzfAEhQVLmWpqu2
-         sKVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772763602; x=1773368402;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=4GFeMiyOnus08fTFMxiamevqDOwMKWMLNnIMUSG7Im8=;
-        b=ka+QNI/FCRFKJoBaH6mbRq+gyONot7Baizwijnw5D23WpnJ18gO7tzqJIxEmkxDq0R
-         FhqfI3x3WluRU9Mlc2wZ++o5J0O/L19d09JssUYR3R49j717F6RO5Z+N2JCM1Yn8+KWJ
-         b9fw6oEw7qjK15sWYHEU1OUXzVWdgYsHyFsGQLJK6egCRqZHGsjHVml0c2+wkP5IfoCY
-         tAtuwjpbt8UDD4Iijhb3sjAOZvytztgNsmBj6N5pht62YpF92/u7ZWj+0mFCSjqLF0MZ
-         HCE2U90oOEOAk3DlBCXUF7kkC5we9gFpKmp2/SL7F2XNvFc6/vlxcxRZMJTW+OHkrC3F
-         1dKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWzNUMjxX26E/JsTLcvNHuAT6qp5Vi+GWLfzrmGm7xxVPTMrC+aEuGySi2ezJ9Oc2G9efY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkseXhlgMwrESCqDLFeyy7SuVfbT/zsFFzcGZzriI7oadxu8ca
-	jYLb6Ryu72FuWpLxTNuhdQjyKKnnKcQrzb/x2Fio9NuDglmgcd9SMMV29LorXMZD7O4sxmVJHUB
-	M/3HwQDbU0rIF31ILa3yL8p11jW88sx6+luZSzhY=
-X-Gm-Gg: ATEYQzx0C0Ru8+ADUtroxPOXStSA1n/8ezNhg+V2QFhS6d4FG7hdVflI7JuE5NKi3Uk
-	ZOfmcnUCJ3U7SH8lMb0VgKEO1LyvcDVPfNEYPuFRYJzm/mmBSzirFIfDc3U1aVlzCIrc08E71RS
-	kMP5ReDRoOW+IGqbbYG2UOEItABxes0+URFBgi6NYIZVeIo116oPadxIZQ9g4bmNnMgv3Xt6jaV
-	gapZrJx12AAnHUpFK89UdusJ+9uxBGyPGfFIUtZual5BolXBZ8fCkhjuozzaLPEKqcBoG9NhX+P
-	pcZ+msxSjgH9cxN2R9Lb7qxBaMQLhAWc8kNMUjO79NPw7Xty+iI1w2wPMRIbcprR1l2jzd4GJlR
-	aKdUslkPyNXF+t0h6EaqVXvVif5lTasDBvlE=
-X-Received: by 2002:a05:6402:5191:b0:660:a4ad:1685 with SMTP id
- 4fb4d7f45d1cf-6619d4e3905mr177801a12.18.1772763602501; Thu, 05 Mar 2026
- 18:20:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="qLGfRDmi"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1772763631; x=1773022831;
+	bh=PfCP1Aqo4cspQGMDRE4bYQH4Vt0ce0TIWAqAdBgyVEY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=qLGfRDmiGucp17BMB52jp5wszotgQVR2UGS1DIblVeUMuZ/A7rE4mQE4Z/cow6RAE
+	 XssExBYmTefbk7rBuug5Cmlmos00fMGWghrxtN/qDQET12nkxRJpHoLFk+U2ELo9Tg
+	 KWeOEvSVZv0Cd/0fMH3stwxlbh4ICFs/vn7gVxA99EjevdmwN6XPniab8cKNAHzRkQ
+	 E2NuikpkLCb77H4XhbfnSq8YSliNyoLUNcIESojqdgCpb7dQeZNMzOPlvP5w5hkvoi
+	 4Z10BKsNOl35kSAKPoQ/6u4L5a182Uet1CWTFlPQyHXRXkuK6/LQEkMIVJq1/Gmcn8
+	 2obAvmZAgodEw==
+Date: Fri, 06 Mar 2026 02:20:25 +0000
+To: Junio C Hamano <gitster@pobox.com>
+From: Chandra <Chandrakr@pm.me>
+Cc: Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org, Ben Knoble <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5] add: support pre-add hook
+Message-ID: <Mas-XsZDLQf822y8cXTnllJLDJcd9vU8jRd7i4tj-7pCw90hurfkTos1piH-zF-g9A-IPM2sIZoXac1MB2yHn9oU-nX9kaLeuI9bXWp3Fbw=@pm.me>
+In-Reply-To: <xmqqwlzq2i96.fsf@gitster.g>
+References: <pull.2045.v4.git.1772710566599.gitgitgadget@gmail.com> <pull.2045.v5.git.1772714253412.gitgitgadget@gmail.com> <87o6l2xuku.fsf@collabora.com> <xmqqwlzq2i96.fsf@gitster.g>
+Feedback-ID: 10057713:user:proton
+X-Pm-Message-ID: e698c07c0edf220140866bb213218660757098b4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAAaskFBp+A9pOhd8O6owd6k0cDj66ipXrqH2Hj_c7j3d=HM10Q@mail.gmail.com>
- <CAAaskFANnrqTAjQOHhAgzES9=S+y7w9u-LMWbRbi8FayVdvzFw@mail.gmail.com>
- <aaosmo1Iluc5KeZw@fruit.crustytoothpaste.net> <CAAaskFC=tpuS-saP9t5Kp0+i6qTHe29x-dGkanyAzz-xaq_HDA@mail.gmail.com>
- <aao1DF3lXfHTMH30@fruit.crustytoothpaste.net> <CAAaskFC0WETe7NaEfznW-h53Huee2sLLAQYWBA3moLpeULhtcA@mail.gmail.com>
-In-Reply-To: <CAAaskFC0WETe7NaEfznW-h53Huee2sLLAQYWBA3moLpeULhtcA@mail.gmail.com>
-From: Ivan Ivanov <qmastery16@gmail.com>
-Date: Fri, 6 Mar 2026 05:19:50 +0300
-X-Gm-Features: AaiRm51iXMnDJY4GnqDkyMEvEnoeuTQsqbDfkGRmi-7FaTSVWY1rOJYjtGSLGMU
-Message-ID: <CAAaskFCNCE9tgoYOLQYJRjxreFjyw0jpvBkxADXJtwHYRx50rQ@mail.gmail.com>
-Subject: Re: Test "t0300-credentials" is failing on Arch/Artix: asks to enter
- the Username/Password in an infinite loop
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Ivan Ivanov <qmastery16@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-I.e. test 5564 "t5564-http-proxy.out" output may be interesting:
-(during that I got asked "Password for
-'http://proxuser@127.0.0.1:5564" on a prompt, after pressing enter the
-tests continued to the next ones)
+Thanks all for the thorough review. I took some time to sit with the feedba=
+ck and review how pre-commit and pre-push handles these cases.
 
-not ok 5 - clone can prompt for proxy password
-#
-#        test_when_finished "rm -rf clone" &&
-#        test_config_global http.proxy http://proxuser@$HTTPD_DEST &&
-#        set_askpass nobody proxpass &&
-#        GIT_TRACE_CURL=3D$PWD/trace git clone $HTTPD_URL/smart/repo.git cl=
-one &&
-#        expect_askpass pass proxuser
-#
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-checking prerequisite: SOCKS_PROXY
+> git-commit.adoc has a seperate section for HOOKS
+> It would be clearer to say that the proposed changes are rejected
 
-mkdir -p "$TRASH_DIRECTORY/prereq-test-dir-SOCKS_PROXY" &&
-(
-    cd "$TRASH_DIRECTORY/prereq-test-dir-SOCKS_PROXY" &&
-    test_have_prereq PERL &&
-    start_socks "$TRASH_DIRECTORY/%30.sock"
+Agreed. I can add that.
 
-)
-prerequisite SOCKS_PROXY ok
-expecting success of 5564.6 'clone via Unix socket':
-    test_when_finished "rm -rf clone" &&
-    test_config_global http.proxy "socks4://localhost$PWD/%2530.sock" && {
-        {
-            GIT_TRACE_CURL=3D$PWD/trace \
-            GIT_TRACE_CURL_COMPONENTS=3Dsocks \
-            git clone "$HTTPD_URL/smart/repo.git" clone 2>err &&
-            grep -i "SOCKS4 request granted" trace
-        } ||
-        old_libcurl_error err
-    }
+> I'm struggling to see how it is helpful to the user for "git add
+> --dry-run $path" to succeed when "git add $path" will be rejected
 
-=3D=3D Info: [SOCKS] SOCKS4 request granted.
+The --dry-run on commit also skips the pre-commit hook (builtin/commit.c re=
+turns early at the dry_run check before run_commit_hook is reached). Pre-ad=
+d follows the same convention. As I understand it, --dry-run answers what w=
+ould be staged without side effects, including hooks.
 
-On Fri, Mar 6, 2026 at 5:14=E2=80=AFAM Ivan Ivanov <qmastery16@gmail.com> w=
-rote:
->
-> Brian, thank you very much for checking my logs: indeed, unfortunately
-> my system is Arch-based so we can't compare it directly with
-> Debian/rules. Thank you for an idea about /dev/shm , although I would
-> like to clarify that while it *might* be what is failing this
-> particular test - the causes of failure at .out files are different as
-> we could see by the prior 0300/0301/0302 and some future tests (could
-> share more logs if needed). But the external appearance of these
-> errors (Username/Password prompts) is similar to a user and that may
-> indicate some common pattern between the problems, i.e. maybe there is
-> some extra shell precaution needed on some systems (although I'm a bit
-> puzzled why my distro's packager seemingly didn't have such an issue).
-> I am still trying to build with skipping as few tests as possible, at
-> the moment I have to skip the following: t0300 t0301 t0302 t5003 t5411
-> t5540 t5541 t5550 t5551 t5559 t5563 t5564 (adding them to
-> GIT_SKIP_TESTS one-by-one, maybe there'd be more)
+I can see the argument for running the hook during --dry-run so users can p=
+review rejections. After all, git push --dry-run runs the pre-push hook. If=
+ the consensus is that pre-add should diverge from pre-commit here and foll=
+ow pre-push, I'm happy to add that, but I think it would be better for cons=
+istent --dry-run hooking to be a separate patch series applied to both add =
+and commit.
+
+> The other options all use "git apply" to apply a diff to the index
+> so they could apply the patch to a temporary index which is then
+> passed to the "pre-add" hook. If the hook fails the user should be
+> given the option to re-edit the patch or re-select the hunks so
+> that their work is not wasted.
+
+pre-commit has the same gap as `git commit --interactive` and `git commit -=
+-patch` run interactive staging and then the pre-commit hook runs on the re=
+sult. If the hook rejects, the user's interactive selections are lost with =
+no re-edit prompt.
+
+I think it's a good idea to add retry/re-edit UX for --interactive and --pa=
+tch, but it would be new behavior. IMO, it makes sense to keep v1 of pre-ad=
+d consistent with how pre-commit works today, and do a follow-up series for=
+ re-edit support in both hooks.
+
+> To me this hook would be much more useful if it also checked
+> changes staged by "git commit"
+
+This is essentially asking pre-add to become a universal pre-staging hook, =
+which I was fully in favor of earlier in this conversation. However, that i=
+s a much larger scope than intended for this patch series, as each of the g=
+it commit staging integrations have their own codepaths in prepare_index().=
+ The pre-commit hook already covers the commit-time check, and the default =
+pre-applypatch hook runs pre-commit for the same reason. I'm open to these =
+changes, but I don't think it makes sense within the scope of this patch se=
+ries.
+
+> Calling it a lockfile is rather confusing
+
+While it is literally the file created by the lock_file API, I can see the =
+point that hook authors may not care about the locking mechanism more than =
+they care that it's the proposed index.=20
+
+> If we don't enforce them being read-only people will write hooks
+> that update them just as they do for "pre-commit" hooks.
+
+True, while the documentation says it should be treated as read-only, there=
+'s no enforcement here. On the other hand, if users are doing this for pre-=
+commit, maybe it's better they're not read-only because there are use cases=
+ for that affordance? I'm not sure about whether to actually force it to be=
+ read-only or to allow users to do what they do with pre-commit hooks.
+
+> We should be explicit that the proposed index state contains all
+> the changes that would be committed so staging changes
+> incrementally will check them multiple times.
+
+Yes.=20
+
+> I would be more accurate to say that it is not invoked by=20
+> `git commit` at all
+
+Also yes.
+
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+
+> Maybe add a test or two which define the pre-add hook via configs
+
+I see now that what I thought was a redundant codepath test earlier was act=
+ually not.
+
+The hook.<name>.event / hook.<name>.command config infrastructure is in `ne=
+xt` but hasn't graduated to `master` yet. I'll write that test once ar/conf=
+ig-hooks lands in `master` but I'm sure functionally it will work because o=
+f the switch you suggested from find_hook() to hook_exists().=20
+
+> The turnaround in minutes between v4 -> v5 is also surprising.
+
+Understood. I can wait for more review feedback before sending new updates.=
+=20
+
+I will note that I personally handtype every line of test, code, and docs t=
+hat I commit although I use Claude and Codex for assistance and recommendat=
+ions. They have been invaluable aids since this is my first contribution an=
+d I don't have extensive experience with git internals. I'm sure I make mis=
+takes due to being a neophyte here (and frankly I wouldn't claim C or shell=
+ in the top 5 languages I'm skilled/experienced with). I believe AI Disclos=
+ure is an ethical requirement, particularly in an open-source code base lik=
+e this, in spite of reputational risks. If it induces reviewers to be more =
+stringent, that is good, because it reduces the likelihood of mistakes pass=
+ing through.
+
+I am grateful for everyone's feedback. I believe this change is needed and =
+will help a lot of users (including myself) who currently use weird workaro=
+unds like aliases to shell scripts. Pushback is essential for quality and s=
+urfacing opportunities for improvement. Thank you for the time spent review=
+ing these changes.
+
+Chandra Kethi-Reddy
+@archonphronesis:matrix.org
+
+Sent with Proton Mail secure email.
+
