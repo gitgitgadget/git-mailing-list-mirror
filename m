@@ -1,101 +1,114 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A342369960
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 12:47:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772801259; cv=pass; b=Y9fyYOnsueN7SJtZn19YvTR40dPm/5pImUl9tBxLqrKU3hRuCZy0LAUm2MTZd45yiOV+oaW5KrsMt548B8rFZ5d3Cvrj9+ZL+yrYLXb2dA6P6Z/XYiGqhaN0oJoNZBPTljs9NlET5KxVD5qwKNzFLoyXSa6bArGopz0M2Lh1dDo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772801259; c=relaxed/simple;
-	bh=oKIkYR6qMN4wbXPMOuWaFRKCenzaiBZN7Vt9Dq3p6jM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=g1h420KwZM8ooAtgGtVwi5w0Wpq2t5w4IN5GjQjaNgEZUji8ISIa+JNIhfzcUXR5Ozcbp7rnJ2/7iIXv+FK48XbA/8Gb+LilLiJTy5U7nnh1bwYRZjKJN8Sru5hMZvg+hbzM4nG72TX50LUK8QSi8wJoRfcfnMFMCspX08BdF8w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LrMR7hcX; arc=pass smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB618390209
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 12:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772801938; cv=none; b=auG8dTbM1pPdwCTtPQw6lL2hljZ/dHTTJ1ZFo5kpMLccnFjWCD7E0aDLYk37jN17Uodn6rfY1fQa3PTtDk8jl0OoZabisMsbhNiC4jGf+Nwprem90aCWICAVxKz7sDSsr+LmBMTeFfh0BdzEz4ijfUt6PFp8qnZR4FVLNFSc6fg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772801938; c=relaxed/simple;
+	bh=icrZwyhn7Mo2861teiWhfo7Ed/l8Y9V4uLgQPprdy/s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nv0986X9N9sY41zu7CR7fkjRVUhZJi3sFllfqHfqQ1WFM3NPUlp0GRHUpcakfQbhxSI9a8KmV7tQPKoW25BlmP3usxbqmD4Ak1/WJTl77319Dhp4Cjtc7ODTni/7fO8hkRwqYmIWKo57QEEcyzFrQ/Gjf5uUjF7JkQcWdzIHyV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=LbHhRzAw; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LrMR7hcX"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b941bb3e23cso218170166b.0
-        for <git@vger.kernel.org>; Fri, 06 Mar 2026 04:47:38 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772801257; cv=none;
-        d=google.com; s=arc-20240605;
-        b=esdFPgb5FyuHzcL2RtfUlpC0KmhPtAjjW/jM2QkLRWvC8gNI37WGmAY8fvNqzhgEQS
-         sxFfxGTofD95VLgs5VVNWZeoZg8a6LeEXY4UdsnHfGiegRAh3dk9BB/d973xSMk/Jtz+
-         VrlzuSS45y8PEjCgZrMxlLPqI2240zLdvjg1nMJAJCy0/TfIqEzZE8PoOVqD2VmrVLN8
-         mY+jfXwL6TWUQVY/lfJv3WdYqNB5cVCHLpfPg5vUbzdnPwzG07eKZFwnRh8fFj85cbwt
-         dZUEK0PhRQXWYaUrx9OUfLwuDYomhV5IVN9OrtanSnMOwyw8H513t76Xm2lMKWMeNNqr
-         mhIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=oKIkYR6qMN4wbXPMOuWaFRKCenzaiBZN7Vt9Dq3p6jM=;
-        fh=QC0gDPjx8fferjDb62QVYwcf4OJdXTzinsMeJnVrRZg=;
-        b=UCo/S3kzB1aoqkegWl5LzQm847pUl9HXWMvVxtOxqvmHs1jRdbsnXojOwVXmZOSLzR
-         1lIidDOxxD5nYwjaQV05+p9nIl1s0dWDs5461LsJRgj7pyciBiJDNwN22RxD9HoiFGWj
-         vBDnRiF0CS7V8B3NhPrb3SSl9uyiuQN4Ua4sS4+BuVNx+U9hA1lyqV1GicqV3vsF8Iu1
-         PaYdFBukfF/FS4zVQkeY8/S7tl3HmIGFIuvZDZLQHu0HxgJKhdjs4XkPiuQtg5cndQer
-         8unaRHhrr6fyMs4RVP6vInPDDDmRvYlcm+0velEZ4xNEiLHe13DkkG5q7GGnKIICrdP7
-         EG2g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772801257; x=1773406057; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oKIkYR6qMN4wbXPMOuWaFRKCenzaiBZN7Vt9Dq3p6jM=;
-        b=LrMR7hcXm3Ue6FXx3WDRGw0p/9LqF4DxZ+SGFDE75iH/PBM/Rqv1Pax302cqHc1DuS
-         Dz3N2GUodWgA1CGfMXEwVjXhAroqDwpn376N2kWeg++tIDY7khJ3i2umMyfzqjjCXTlp
-         JaZwLRUv8YFP7sDjuLYgjYQaZsx69hWyg5ge5JpqI9EhUnj7pDFqPDFSh2DchMFjInNK
-         SqOm2+UadEkytgYtpDARr5b77206Do/iK2PaOblTnfWlZrvYSYUD6dcQU85nEkKKY69O
-         Iw+SUd7v/uoDmH5MqD5mkUnmwR4WKvuLbDn4//egC4YFoB365ZxDQAkmDsOABJMhyCQV
-         wVZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772801257; x=1773406057;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oKIkYR6qMN4wbXPMOuWaFRKCenzaiBZN7Vt9Dq3p6jM=;
-        b=ds0/hHG7eLoATlFwIvgx5iqm1eWBMofCbSfonP2jxHgKnm9qlYCPv0+golu2jhXf+T
-         pMuTSSpfUperNeD/GZG1aHbgJidpjvkrcZbAOC2zgdUOPjpw3gYA2gK1shFrGykMq7Kg
-         V6fJCBwPezKARHuv/j8Mt+bNAU8gvj0ROLBjJ1Q2OlFN5B4km3DAXWhKArMvgQQbfBQP
-         I2d3VBiQURp7y7QzXvtxZSNpEkIWdUi4vDG0qTZuF2mgd7P/fKXSK43SeslPEqHo9zuC
-         JbUcMWl2+KB5MlNS5XcmOKRCOEr8swpmRdJzb6iD6rFbU4KZ8bxiBINFYjAYdcJe5s6z
-         TNmw==
-X-Forwarded-Encrypted: i=1; AJvYcCW72VNhTkTiwjWFg2GVDRbRy8xmYMs5w/lIBwGKW2ywVfizKxkc4qm4txH20X4eS0mtjv0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFRO2UPUxISehK0HKR72Ax5e7xN71QWrCH0x11RN4wxfhAJX//
-	6Q13/CJpoiJoQy6UosF2SL+rlO0iob0dV6ZTsKuHrkTajrlYZ+bzHLdxxpvHqzUhEsExLwdz51A
-	+E8/9FF/85upQGR3tsZRA2GhSiMipCY8=
-X-Gm-Gg: ATEYQzy9wcIEdT13AxmKnkqZfNLpdsqxUnZffVzlWwiu7ZYEZgj4gpOJNCyR2GJHiDU
-	xMVqb4z10Lk/fkhAMXMcKqIGcd6fxINHbOo61aDBqF5lD2cJb0nvfg9QLW/XSP7GsnqyCJUr1JL
-	bdGkHjE3I62j1Vfu116GPo3d56ExkOxgh2Ff02kZqoEMSI/J/XOy/8A5LVyet7iNi11qtYcvwtK
-	mHZDMtjTZwAhQvCjsKAnisBgwaQsPki7BqSra6StRvvNTAtHJxcAf0uGfcDPjcgfKS/BJeGnwyB
-	oElkp4dw381CjQYiWSA=
-X-Received: by 2002:a17:907:7b84:b0:b93:7255:2d5 with SMTP id
- a640c23a62f3a-b942da4aed7mr122778866b.7.1772801256455; Fri, 06 Mar 2026
- 04:47:36 -0800 (PST)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LbHhRzAw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1772801936;
+	bh=icrZwyhn7Mo2861teiWhfo7Ed/l8Y9V4uLgQPprdy/s=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=LbHhRzAw1NSPlf/Eb29ShuXO1oWd/FlFTalHQotyuiLIBAf8/fgOGzaARSO1/R/bH
+	 BsVDaJz88HYS1tm8s4AFmfLWAA+EqtqGpHk7qlUaSzTshCb0QgU6ebK2ehE43wm6gr
+	 U2aPZq2NRs5s3c1OvpJC/8n4O6EkRQRk212xlksZIbjORs72pOHV7cpckTLZZH0vhu
+	 d8SeGEOzpSSNiOUTqyoA4x+ESas+N23akuewg/2neIA9rJoYBY2S6tQgQxRnzHN2B0
+	 wrw4vH3mkd5Kq7QpDCfysd9G5zijuF+1fT7fz54V6MXRbv+mctbiOIr/vTrvl/L5f1
+	 0mYk41V2ZmJw4BpzyIun1uxaEauG/xHfZulTxhZfd3zFzgyStZkDfC6yBLs8gkgVry
+	 VeIHfhisQOYlGd+88frpcVCnmTbcCNcFmNgWx1jt/SnYiRzzCvKvKQnCkip1hDz/DE
+	 oM67GXPKbrYrpvZVu7BWSpm6LzvkxAdNrL1JEzEPF1VGLq+B3G5
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:941e:963:e525:3a6c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1424B20112;
+	Fri,  6 Mar 2026 12:58:56 +0000 (UTC)
+Date: Fri, 6 Mar 2026 12:58:54 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH] Documentation: extend guidance for submitting patches
+Message-ID: <aarPjlYv0H10rNKJ@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org, ps@pks.im
+References: <20260305193836.973122-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Arsh Srivastava <arshsrivastava695@gmail.com>
-Date: Fri, 6 Mar 2026 18:17:25 +0530
-X-Gm-Features: AaiRm53KV3ZLb1Nm3gwIjNQs6NgH2ARaQlWCu1dR2fzA-lGP89fBcFGFD5tleYg
-Message-ID: <CAE8w91savQsmZQ4_6eRz+Jzse+Oapw2sHnW546SZjBB=_91g7Q@mail.gmail.com>
-Subject: [GSoC] [Microproject] Added advice for files which are >50 mb
-To: gitster@pobox.com, gitgitgadget@gmail.com, git@vger.kernel.org
-Cc: chriscool@tuxfamily.org, nasamuffin@google.com, steadmon@google.com, 
-	rsbecker@nexbridge.com, christian.couder@gmail.com, code@khaugsbakk.name, 
-	snaury@gmail.com, l.s.r@web.de, mhagger@alum.mit.edu, tim.henigan@gmail.com, 
-	bobbypowers@gmail.com, Jens.Lehmann@web.de, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mt/NbzfiuhPOiArl"
+Content-Disposition: inline
+In-Reply-To: <20260305193836.973122-1-jltobler@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-git's advice currently has no restriction for adding files of size >50
-mb which allows people to add multiple lines of code without any
-restriction making testing of code and PR reviews very difficult.
 
-Proposed solution :-
-> Add an advice which checks peoples git size and push the message so that it doesn't make the code reviews messy.
+--mt/NbzfiuhPOiArl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off by : Arsh Srivastava <arshsrivastava695@gmail.com>
+On 2026-03-05 at 19:38:36, Justin Tobler wrote:
+> +It is also a good idea to check whether your topic has been discussed
+> +previously on the mailing list, or whether similar work is already in
+> +progress.  Prior discussions may contain useful context, design
+> +considerations, or earlier attempts at solving the same problem. Being
+> +aware of such discussions can help you avoid duplicating work and may
+> +allow you to coordinate with other contributors working in the same
+> +area.
 
-PR link is :- https://github.com/git/git/pull/2221
+This seems reasonable.  We've had cases of patch series that have
+stalled due to a minor issue and someone wanting to send a patch may
+find that they really could fix that minor issue on top of the existing
+patch and have their problem solved.  Or at least, they might be
+inclined to not get stuck in the same way.
+
+I try to do this anyway, but it's much easier on forge-style systems
+than it is on a mailing list, so mentioning it may help refresh people's
+memories.
+
+You could, if you wanted to, link to `{gitml}` after the phrase =E2=80=9Cthe
+mailing list,=E2=80=9D which might help folks find the right location.  Or =
+you
+could link to the https://lore.kernel.org/git/ archives instead via a
+footnote.
+
+> +It is often beneficial to allow some time for reviewers to provide
+> +feedback before sending a new version, rather than sending an updated
+> +series immediately after receiving a review. This helps collect broader
+> +input and avoids unnecessary churn from many rapid iterations.
+
+I think this is a good idea, too.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--mt/NbzfiuhPOiArl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaarPjgAKCRB8DEliiIei
+gXL6AP4xv2UCqL8ckPgYthDwjNqqjHyRr6nVLdaLHsvCJRvvOgD9GbFohloYNkRn
+8PWAiTqYPV+n/sM4D/7L01T2AA6UZwU=
+=Fd5S
+-----END PGP SIGNATURE-----
+
+--mt/NbzfiuhPOiArl--
