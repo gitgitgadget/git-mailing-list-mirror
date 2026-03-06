@@ -1,108 +1,135 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7A2330B09
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 05:10:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772773859; cv=pass; b=kVA/ZY1x05u9hOQ8wj9XnX7gyIgmfpf2UylJU8I5iN+uP1HeKqVGfFGXpmxJyL0zlugDZ9hOoZS8bqIbwVToNLw/QjlzjqDH7cDJv1rzK5v1rIALh3kHNff61FmPG3+I7XJclqzJ8jdkiF1YAtTXyEb44h/UxAgoc84CqdRAL68=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772773859; c=relaxed/simple;
-	bh=auf1yLYEbLKish4BXHUmrUAEs78XFQv0P5cG1Nb9fpY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=pFD35rG3OVkRxUGY+YFjZ1KUdq7kXuf0cMOJJeixXc16O2dRAPLy8M60ky5XIIgzPSS8xrIPISrgmD1Tg/Z0jFclv6JnNpI9dLAecokD3uYPZM7bPovJE/Q1maJD3RbCohMQIKM9O1c5zclW3uLUw/dxybFA6DCK6ClWXn/f7ho=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mXB76HSN; arc=pass smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A9119C54E
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 05:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772774320; cv=none; b=naVt/sYAWxocHmZxMrWzrtRW51Tid894gaB5KuWJ8l06CtrYIZGxgDfKP0ycxiNnJDXx+Ppa3Fh0EMsAjpO4Gi0XAPyUziwLEKWSwm3h2qsBfmN6/FraVuQhQfzpshQ0VnywuAYqRhmxneB0cInwvjiLH2iGo2BMfUvqoi+grt0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772774320; c=relaxed/simple;
+	bh=Ys9CG4tOcRod4kIWA/Rs0UeZCvOvH1RTjd5iYNUQL4w=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:Subject:
+	 Content-Type; b=pOlGNkmGucyqxDWUy5+Bc8/gQ9NtxJvmu87rlOHAM7cpj6xoz5gV+KegrmsBsf40kgRKOelB1e/WF8F05K+iB26XT878T5H0MDw8u4FFzg5/Qel35PDTR39ajw50L9P3o/yVFwz1Ty11Z/lPyC9arhIfbQGr9ZFx+KgiD/HqVnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wolfgangfaust.com; spf=pass smtp.mailfrom=wolfgangfaust.com; dkim=pass (2048-bit key) header.d=wolfgangfaust.com header.i=@wolfgangfaust.com header.b=BBlCsqoW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SdXxXP4n; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wolfgangfaust.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wolfgangfaust.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mXB76HSN"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b93695f7cdcso1159657666b.3
-        for <git@vger.kernel.org>; Thu, 05 Mar 2026 21:10:57 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772773856; cv=none;
-        d=google.com; s=arc-20240605;
-        b=OtCWksa3i0iX0WBDTg2YtaUCg5qsG5SrHS2qTvYL05PeNQ1sfGsZ+dZx7OAuiPPOA9
-         drc7tNvpLcd6doD0YOqPf95LIYz1Ro6unkatriCiAvZiZr8Zi76wxt3HXRr7/1WnMLVo
-         6YdYslDbdDOgx6JyZWPVO5c2lZfsU6/WmzAM/edr2xRMbsTcG3Z9beRD4eNP6D7A2elY
-         88YyXdMbjuvIbwDLg/YtZV+J/Mk6T74l7l9yFCLXJ3HHUiOlWfIJNsHQ3/io8RKp60vk
-         VT+Yf4MeNtSWkmL8P7tXw7bRk6NVlcVvLsBKAKbDoX910OnJhliMX/aYgM5/ekUpzNcl
-         QDVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=auf1yLYEbLKish4BXHUmrUAEs78XFQv0P5cG1Nb9fpY=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=O41Ooo/uxCxM0Zn3Yb/Cipej5H1I09wIxmyPzWClCWh/t312YtDR/pAgnku891AXOl
-         LQ7sqIsMp7hw85Ky3vXtibh/VLlNhYaWOmQVzU6DCuPSEFxE4kf0/7qRZT8XV/keVbei
-         pRai9MgMSzhVP6UzRtMs3RsEG0jgyqw0mzHoFbrqstsjE2HMsNHXC6uR2UrqkWhuK0PH
-         j1RYm0cvbhK1KTYUiC6SMCp16JGLvJHDWjigqSfOOZddbwlgjAkpE+Zpm580zpIkKqUR
-         Rv4iYjvPRrm68joBtHALYqWTogAyeqcOdLyc35gP/AHUGckKzHLEsQFVZV7Cy+UfPg6Z
-         EDJQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772773856; x=1773378656; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=auf1yLYEbLKish4BXHUmrUAEs78XFQv0P5cG1Nb9fpY=;
-        b=mXB76HSN/eRQ80SrkQSrsC+LKqHAsA8LYojNWkcotwSgvG6F/kC2ypcLsfbzYuyc4T
-         vYVj71fERY4eN4xFMX/JR5CR24z+8+CS/98xMrglYmwI9Bys0V5dAE9X5h79hJLS6JH4
-         FQRK78twvgwhIIjAp2SxNiitsQLO9A+X9o0qsJ+6+UivDpqbVrP8xVmM8mVfPGhid1i5
-         GYdK6SBTjA4Stnpli4DCoXsmiNUf0w2WFjYbEyycD0cH/eN4slvpj576QrBjA29CO4nN
-         B3I8SQJizwybD82UTpF3m012Wqwkws/SVGYx/AU0dzrSojsAGgOLQoJJyMt+GpATgNjg
-         YvmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772773856; x=1773378656;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=auf1yLYEbLKish4BXHUmrUAEs78XFQv0P5cG1Nb9fpY=;
-        b=fUeeHJlBuYJMADAUaE/86bZY4hW7lvHgKHfVzqtW+40D6K1CERfKyiJVHT3CsYTvIS
-         4hkUgXBmIvEiW+DZPLEXpo6xSJKo5nwRhWBDoV9pYQqvxKI/lUTW9B9q0N0nQSoJAuS/
-         hfz18oJwttMeHkExwWCqzyVzOgxgfAvi5I3bjtQPN970FzUgxS09c+GeKWT/w//f+pnA
-         ODEzkP6t8MhRHVY39Zt1tjVp6zpcjIsyi5EKJ6fh/QlozJYiJ9LNu1SuYbB58DErT3Oy
-         w0Ai/qxd2EKGzgwfCtPonFdOf6Ojfac6UzUmq2njcmSBPKg1HIj+d7OX+hil6VuzkPjC
-         LTxQ==
-X-Gm-Message-State: AOJu0Yw3+jwVIePzi9+y6cV53O7irDZVC7TrMggYke8/3ZecLszB70EV
-	49+upXzQGm3Or0mlEnx8CMNkQxzQSm+Kyi1QXCBanur+tAFxH6qxNi5jWIc3URSVzQIO87HuBAE
-	KtY1Xg++9eWWGJ1bHSlFePXpvSZs/6QXwa97ne1kZ
-X-Gm-Gg: ATEYQzwtvNx8gQVpo7VOF3GHI27Ey51ywF2VLy2CLJRBndKP9e2DyPB7PSaCzLOqW/J
-	SL+SsnjUNyappEheGVyNSc5VZ2tdnoFB8uXT+GeFUCr5x6d7VpxAKL2nu/FO7sWLo8e/RUEsYlu
-	pgahhlM6wRbsBFxBkDKvYqXbUfIxR2Eipqp/mtCA8NX03mDYu5xXIa1Mskov9DicuULCGTNyt3t
-	YaAfQr8Pnibtj//A5zKlb2lj1UzYxCqS1Je7c/nFbw9thHhoa7y0OG8AaR62r8FgYkxU5l81Bzb
-	ivvFq1bhiWyEu5CRaLrKRqGIRW9BtNzu7wmHXX7hXRxytDCSevfpfdC5+EHga38jMAqQk3X6/t4
-	7KWveew==
-X-Received: by 2002:a17:907:e8e:b0:b94:1f00:1ffc with SMTP id
- a640c23a62f3a-b942dfaa0c5mr38782866b.35.1772773855852; Thu, 05 Mar 2026
- 21:10:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=wolfgangfaust.com header.i=@wolfgangfaust.com header.b="BBlCsqoW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SdXxXP4n"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E93A114001F6;
+	Fri,  6 Mar 2026 00:18:36 -0500 (EST)
+Received: from phl-imap-08 ([10.202.2.84])
+  by phl-compute-01.internal (MEProxy); Fri, 06 Mar 2026 00:18:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	wolfgangfaust.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm1; t=1772774316; x=1772860716; bh=0wRMlz9qMIupqn/nJMlmV
+	uCNbQFpWJ1+dIeBWh+041I=; b=BBlCsqoWqNQg5Z+4gxx5UifK4boIt5jchHJfl
+	ifcpfOTu90b3HQV090PdrYzhaG5BrsKD9pMgjYsAHZ6KNjKM5ps0ZBmCjbndj3BB
+	NOB0l97VrFLfBklXIYdt2ByXrEXZTXb8qqppQr51zl0FI4B+dytqK3lmrZqs+6rN
+	QpfaITSCEmW9lnT9NyB699T9KjEMcQVf509IP0kZ7euSN52twS1Xx0OpsMlwDGTZ
+	I1PxnTpHUSJ0eJxqiuUa91deia4JdlcvYYR7S7tcIrKKwAti3Bq4swjDoBwiUfKc
+	PPIo6jvWLbwr9Cjiy4ge/o5pcZENa7cRDGOS2iIy0ncWKa2sA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1772774316; x=1772860716; bh=0
+	wRMlz9qMIupqn/nJMlmVuCNbQFpWJ1+dIeBWh+041I=; b=SdXxXP4nNw9lYxy5J
+	STn31sKqRzQC87X0/UROJokOk78+pcCT6Ys7xKXJHxzJOjrdn3KtlbcrAPqpoCPs
+	AJZewUo2xDx9mQ4axGCuZVjXFsI7XEYfZDzthcAjBV5H0ofsw6XprnlxhFrsvBhI
+	E+YZXezr/AOGL78N5zXwK/HdPsYCgHINS3a4UCTFk8FkrReFLOcykrlNEVu2iGwr
+	IU3S2vBNzVBeCCHJwK2A5rC7xg6YUaolrYajUF+8ttI/uPK/NXa6r1VL7BXX2bZG
+	KEZdSJ8Em3GlAD37dyxCtPileJK98we0FI14CFBr81FnlBsHCfp19A5vzRCQQ6pn
+	7L+PQ==
+X-ME-Sender: <xms:rGOqac3oK_JZHt38uNE7nodei5YS2-WRmKimsjm6GdsglMr8cD8SaQ>
+    <xme:rGOqaR4hZc79ldbSgbSINz4dCbqatJWD2qaNowoxSRlfOc4Bs1WnN6Xhhl9aQvO8l
+    LRsFZJ8tOhszJ4uDQoXvIXu8GN_cTjTwOC5yia2ANvICDb2dD8ULA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieekgeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjgfutgfgsehtjeertd
+    ertddtnecuhfhrohhmpedfhgholhhfghgrnhhgucfhrghushhtfdcuoegtohhnthhrihgs
+    qdhgihhtseifohhlfhhgrghnghhfrghushhtrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    evfeekudduleetheefkeeiieejfeeljedtleellefgieeijeevvdejleehjeekheenucff
+    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomheptghonhhtrhhisgdqghhithesfiholhhfghgrnhhgfhgr
+    uhhsthdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtg
+    hpthhtohepsghirhhgvghrrdhsphesghhmrghilhdrtghomhdprhgtphhtthhopehjieht
+    sehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepmhgrrhgtnhgrrhgtseigihhplhhinhhkrdgtohhmpdhrtghpthht
+    ohepmhgvseihrggurghvphhrrghthihushhhrdgtohhm
+X-ME-Proxy: <xmx:rGOqaeao5AR9hKElE13g3vhv1PDeOW8mdN2tt1c5B5q32ryDOT5IHA>
+    <xmx:rGOqaS64wzIXKssSA9Ic4TnLnuZb7j9o9IVge_yxyWrTth9P5STibQ>
+    <xmx:rGOqaZB8TFjzvol05ElSk8zdOhb7Cpnc0WqO0frbNcgqb7US9t3Xqg>
+    <xmx:rGOqaQfDNgmBJhIYdJXA6wAhkCf_ECRrahdGgHFq8WEIfTTVK-dlQw>
+    <xmx:rGOqad5fkqlMSHyykscffSNKgoeQf2YXV3mJUMsk0YEszCEey0HuQziR>
+Feedback-ID: ifd814412:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 5BBE52CE0072; Fri,  6 Mar 2026 00:18:36 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Mansi Singh <mansimaanu8627@gmail.com>
-Date: Thu, 5 Mar 2026 21:10:44 -0800
-X-Gm-Features: AaiRm53Ithk1unqId6QAOGslQTPlLXQFXkspqD9x1Wx4Q0xewcRYJQhSnJgZthQ
-Message-ID: <CAO_P5U2f4MD-URre+4ocC=YQ570hr03pZHDk1jvuSOKx4aLOCA@mail.gmail.com>
-Subject: [GSoC] Discussion: git repo structure enhancements
+Date: Thu, 05 Mar 2026 21:15:56 -0800
+From: "Wolfgang Faust" <contrib-git@wolfgangfaust.com>
 To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc: "Johannes Sixt" <j6t@kdbg.org>,
+ "Birger Skogeng Pedersen" <birger.sp@gmail.com>,
+ "Pratyush Yadav" <me@yadavpratyush.com>,
+ "Marc Branchaud" <marcnarc@xiplink.com>
+Message-Id: <091e68fa-428d-48b0-bf7d-42b01660d6eb@app.fastmail.com>
+In-Reply-To: <493aa11d-21db-e759-6be3-2c6b8f287a0b@kdbg.org>
+Subject: [PATCH 0/4] run auto maintenance in git-gui
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Hi,
+Resurrecting the 2019 conversation "git-gui: disable the "loose objects
+popup" dialog?":
+<https://lore.kernel.org/git/CAGr--=K15nUcnsJWOP87uMMjeQmTgAeO_6hnr12k2zuNQjNyBw@mail.gmail.com/t/#u>
 
-I am planning to apply for GSoC 2026 for the "Improve the new git repo
-command" project, focusing specifically on extending git repo
-structure with metrics from git-sizer. The ideas page mentions this as
-a potential improvement.
-Before drafting a full proposal, I wanted to confirm:
-1. Is this direction still desired, or is it already being worked on
-by someone?
-2. Which git-sizer metrics does the community consider most valuable
-to add first?
-3. Should new structure tests go in t1900-repo-info.sh or a separate
-t1901-repo-structure.sh?
+The consensus there seems to be that git's auto maintenance is now
+good enough and if git-gui implemented the same behavior as `git commit`
+then the "repository currently has approximately %i loose objects"
+dialog would no longer be necessary. This patch series implements that.
 
-My contributions so far:
-- t7605 microproject: https://github.com/gitgitgadget/git/pull/2050
-- Variable shadow fix in repo.c: https://github.com/gitgitgadget/git/pull/2062
-- Structure tests: https://github.com/gitgitgadget/git/pull/2064
+Wolfgang Faust (4):
+  git-gui: run auto maintenance on commit
+  git-gui: remove hint_gc dialog
+  git-gui: remove "Compress Database" feature
+  scalar: remove obsolete gui.GCWarning setting
 
-Thanks,
-Mansi Singh
+ Documentation/config/gui.adoc |  5 -----
+ Documentation/scalar.adoc     |  6 ------
+ git-gui/git-gui.sh            |  6 ------
+ git-gui/lib/commit.tcl        |  6 ++++++
+ git-gui/lib/database.tcl      | 40 -----------------------------------
+ git-gui/po/bg.po              | 22 -------------------
+ git-gui/po/de.po              | 27 -----------------------
+ git-gui/po/el.po              | 27 -----------------------
+ git-gui/po/fr.po              | 28 ------------------------
+ git-gui/po/hu.po              | 27 -----------------------
+ git-gui/po/it.po              | 26 -----------------------
+ git-gui/po/ja.po              | 26 -----------------------
+ git-gui/po/nb.po              | 27 -----------------------
+ git-gui/po/pt_br.po           | 27 -----------------------
+ git-gui/po/pt_pt.po           | 27 -----------------------
+ git-gui/po/ru.po              | 20 ------------------
+ git-gui/po/sv.po              | 27 -----------------------
+ git-gui/po/vi.po              | 27 -----------------------
+ git-gui/po/zh_cn.po           | 26 -----------------------
+ scalar.c                      |  1 -
+ t/t9210-scalar.sh             | 20 +++++++++---------
+ 21 files changed, 16 insertions(+), 432 deletions(-)
+
+
+base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
+-- 
+2.52.0
+
