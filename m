@@ -1,155 +1,124 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC929480342
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 20:54:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764332EBBA4
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 21:01:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772830460; cv=none; b=u36rwTHYiKioUl4JBgOYly0oeg4qc+3dgduZk2ucV1HRLEXqJFQlcEBzGe+nCxeVCNfpXyu5ER66hA9UqvJjLg7lT5updE2x0ANsxmvIA5bmf7/QSGGFerdjvWYNv1Dgkgj2LGnLoKxuolojovY9gmVWfXMWJu1thYlbE9dsqlI=
+	t=1772830893; cv=none; b=U096vkDJsnJhktt966n0QeP5x4xlA6rmZcFavyim4qyn4qxZT58RqSBxfI2R6ODtWKZ4Qb4wi2Jmu0nu+x7rstCTnSaoScQcZAg3Dw8msrUb40rJ2MwiZ9xE7+9n8dOAovH772oOCn+am7c/OKt2ERhtvQrXGTwtDjKz6rnXbVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772830460; c=relaxed/simple;
-	bh=JDSaQeg+SPBusjknYgXMlNZkySi/X4asSpbcZ5PYrdU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dFLpBMfzYLTc5f5OVnDvNszyEgqUpSRLtQiMDOAPnj6aVkPDpXB5809QUlM7xvdOjSxkWfRyyp8FMjIn2M8O2UJsBQP2FOhfaESpdI/w9CnkFH0ytaUQoQQBHDgKdDJ+xrIDv2nd3mWbvnaOSeE/nOSVNIqVMvh5x8G8HGWX3fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=j57rlB1r; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1772830893; c=relaxed/simple;
+	bh=4Tf4F+lYTjuXV9RLWnuhY9m1hXULai2LS1e50QPgQGY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZLrl2EjFTILWk8JnpWW48e7KFR0p61jeG/fPcqJdK82yJXrPBqa/O0Jis/JBI1zS502GMe/gUywKimFlhhbhH5SInPXNFGlkBZDaoRTUBnLwllvPhME1XwL1dTWn9LqYOndjdmi5/AaX5h/Gy2ppODOEnXzZ4gIC5Acvx/al2Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FT25723Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V3R2/Bm8; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="j57rlB1r"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1772830458;
-	bh=JDSaQeg+SPBusjknYgXMlNZkySi/X4asSpbcZ5PYrdU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=j57rlB1rovg/034LukQ6QD82XlBAnQWaksSBZHVpPlZVPZCNIOLNVP06rqJv43TFw
-	 7HMPkjyCZBQ7Aqmdutokhl93opVEmvbuD+L3pjpeZ/SOnq5Sk0RS7t2Ovc6oyS6QDi
-	 OVWR2FnDqXhgxzHq3hBB8NsaLCc9OUtsmu9nnZ7KsgRJZ01S/fxK6ZGyP6D2HEnzCo
-	 +LbB40OiNUZNVyCcD+6APf7hBdDJbZVy2VX5EbIrsYvpMhE/lH/k6wbPPVQcPe6AZ8
-	 531q85ouG0XLDqtdM56TC31H1Ch5rvSCzAY6Pt4zRV/Ytx+ZBVaUgTZf7bx76iaNCU
-	 D3v09+XjvM3sQ0KLK2pSsB+d/OSpXQ1V1fINZmYS15h8tI7zyGC/dUYQ42QUWDDGMC
-	 NkWr5KfGcbG623Ir652sMyiAgiCaq9njddy3DWo2amqjPc5pIJ611v6U3BMQSRmSyL
-	 divP4xB511UvmpeEd6WuEaR+MaIEdfE8r8FYRjjaR3jwSpp3hfD
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:941e:963:e525:3a6c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 22F0E20112;
-	Fri,  6 Mar 2026 20:54:18 +0000 (UTC)
-Date: Fri, 6 Mar 2026 20:54:16 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: "R. Diez" <rdiez-2006@rd10.de>
-Cc: git@vger.kernel.org
-Subject: Re: git-fetch takes forever on a slow network link. Can parallel
- mode help?
-Message-ID: <aas--JZ-CCWN-o7O@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"R. Diez" <rdiez-2006@rd10.de>, git@vger.kernel.org
-References: <5c7c975e-2541-47e1-b789-fee1fdb77d2a@rd10.de>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FT25723Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V3R2/Bm8"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B8EF014000CE;
+	Fri,  6 Mar 2026 16:01:30 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Fri, 06 Mar 2026 16:01:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772830890; x=1772917290; bh=kMbnPp2P/N
+	t/74N9GluvNXpttaYoIBf1KZfz/1ORTqs=; b=FT25723Y3pda9/sglftSXA2Ch5
+	JQz5IN+ATCSB1TvZqXU6kTl4sVNxDwDTwDIVV2c0Z1m4ROSQSCMq/ftGKVX8g/Bw
+	GC15LzqSxpxKSBphnuAo+ydR493nC9b6F9gURBf1L+ScMBzxXGKZz+ZmAuSXQ7x5
+	ZJENdW5v3wlJoRLIGbvJai4zxVd23s72lYWh7EcadPq5MYhyq9XLNi57/Z2Ke7Z4
+	HipMqdHiODOzp9+MarQf/0x3Ov9hSK43hTm1iAM8Me52Gu1gZjUejvsgq9qcnd5w
+	mFIfdbS575sCqtYezRvcT22zwfTAu88d4qtItx73klw5rjNQ1hhGylo42WPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772830890; x=1772917290; bh=kMbnPp2P/Nt/74N9GluvNXpttaYoIBf1KZf
+	z/1ORTqs=; b=V3R2/Bm8kCJAwHYv8USl/rdaIko3Vb55yD8eT8jnvmBIdrMNUvi
+	erZGl4iy85gIohnodieKgQHnYmoQiFSdPNCOtoO8NrJZiV2KVhAdACHmi0QJW5fH
+	kYoop6hs57JwRKq0D3IDGBuMRWcAFrlQRf2EaUWfID229RY+y908BRSl/O7UuYXv
+	DektceY4okERb4LoKYH5dY031C4ccrQU+lZKf8nfgy9ZSYjAlKPDWdskueNdZEL6
+	GxILq5mrMFEJXM+9I5Me9JPV57y09FAT7yZfW8Zx2ASXl5IbcH5fWeG7th+PF9QW
+	P3uk+z5ocFVkcTbbIcaaotgRezKFeQ50Jwg==
+X-ME-Sender: <xms:qkCraUCrhvW1mYkUq_45VCyGGcVWcGxYqzlNZHaXDQPyNklQ0Z5NJA>
+    <xme:qkCradZQXwLTYIAWNQ9TsYDeyUh_taqCI7FebPKoNWy7em1cJ9TxqNAisEjIZXjx3
+    lw_yhYIyKLJSx3pYRlS3JxfhhbqrEBjPEgmwd-NC9Kju7XgLBTCx2k>
+X-ME-Received: <xmr:qkCraf5BkGHCYkjSjJJidBDgH6WD_jiT2mD5Pr6Hhst1SUadyTRlWjfUcZCK7NZ8dk16ahFbkNDsZp3amt67UuRylYLdj_R9FQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtfedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpshesphhkshdrihhmpdhrtghpthhtohephihorghnnhdrvhgrlhgvrhhisegtvggrrd
+    hfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:qkCraWZ3f8Uy36HgJmL_y8mYJ8NQNQp5y_03mUsDmdYnfVr6aJyAuA>
+    <xmx:qkCraWg3qVd-qh_rDoCRnnDowDQGrhpScmk85QQQQhboyyyC17XZiQ>
+    <xmx:qkCraf9gsKIOLa1PI75xfkvK-rhAjrfSJfygmQJE-HpxMbuGOd8rTA>
+    <xmx:qkCraZqui59r4b-ClKicdNqEiuMRCdjyRm983ke9S3UkSuGW6ZYddw>
+    <xmx:qkCrad27jFuNmPsk_FHifZoFs2ElCyJ4iiO_eCdfIHi-NnvREMj9Dpo6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Mar 2026 16:01:29 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Yoann Valeri via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Yoann Valeri
+ <yoann.valeri@cea.fr>
+Subject: Re: [PATCH v3 0/3] branch: add prefixes to new branch names
+In-Reply-To: <pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com> (Yoann
+	Valeri via GitGitGadget's message of "Fri, 06 Mar 2026 13:14:29
+	+0000")
+References: <pull.2202.v2.git.git.1772207333.gitgitgadget@gmail.com>
+	<pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com>
+Date: Fri, 06 Mar 2026 13:01:28 -0800
+Message-ID: <xmqqseaczn87.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="foCTAbiDah/96tt7"
-Content-Disposition: inline
-In-Reply-To: <5c7c975e-2541-47e1-b789-fee1fdb77d2a@rd10.de>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"Yoann Valeri via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---foCTAbiDah/96tt7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This PR adds a way to add prefixes to a new branch being created. The goal
+> is mostly to ease the developer process of creating new branches by adding
+> shortcuts that can be set either with a command-line option or with
+> configuration parameter. This is useful especially when you have to do
+> similar backports on multiple branches, removing a bit of the need for
+> finding names or typing the names over and over again.
+>
+> Changes since v1:
+>
+>  * Added a '--no-prefix' option to git branch
+>
+> Changes since v2:
+>
+>  * Changed the PR structure, with 3 patches:
+>    * first patch adds the '--name-prefix' option
+>    * second adds the 'branch.namePrefix' configuration parameter
+>    * third adds the '--no-name-prefix' option
+>  * Those patches only target 'git branch' now
 
-On 2026-03-06 at 20:13:58, R. Diez wrote:
-> Hi all:
+I haven't read the actual patches, but the first step that adds
+"--name-prefix" should also support "--no-name-prefix" at the same
+time, with or without patches 2 and 3.  Doing so would allow users
+with an alias
 
-Hey,
+    [alias] bn = branch --name-prefix=blah
 
-> I have an SMB/CIFS connection to a file server over a slow link of about =
-1 Mbps download, and a faster upload of about 10 Mbps.
->=20
-> My smallish Git repository has its single origin on that file server. Unf=
-ortunately, I cannot set up any sort of Git server on the remote host.
->=20
-> git fetch takes a long time. If the repository is up to date, it takes ab=
-out 25 seconds to realise that there is nothing to do.
->=20
-> If there are changes to download, it can take half an hour, even if the n=
-ew commit history is rather small.
->=20
-> The network link is slow, but not that slow. I wonder what may be causing=
- the long delays.
->=20
-> The first question is: how come it takes so long to determine that nothin=
-g has changed? Does git-fetch need to download a biggish file every time?
+, who want to almost always add "blah" to their branches, to defeat
+the prefix in rare occasions with
 
-1 Mbps is considered extremely slow for a modern disk.  A floppy disk
-was 250 kbps[0], so your speed is about four times that of a floppy
-disk.  Hard disks in 1998 were about 10 MB/s[1], so about 80 times that
-speed.  That's definitely a big part of the problem.
+    $ git bn --no-name-prefix foo
 
-Since this is presumably a bare repository, Git will first read the
-remote references to determine what's available, so if you're using the
-default files backend, it will read each of the refs, which may involve
-many small network requests.  This performance could be improved with
-`git pack-refs` or by converting to the reftable backend, which will
-open fewer files.  reftable also uses some simple compression for ref
-names, which will help as well, but it requires a relatively recent Git.
-`git refs migrate` can be used to convert to reftable if you like.
-
-Once Git knows what the remote repository's refs are, it will need to
-walk the history to find out what it does and doesn't have.  If there
-are many lines of development, then Git will do more work; if there is
-just one main branch to fetch, then there will be less.  This will
-involve opening every loose commit or tag object or reading every packed
-commit or tag object in the history path to determine what needs to be
-copied.  If there's nothing to copy, then Git can determine that from
-the refs and won't walk any history or copy any objects.
-
-If you _do_ have to transfer data, I'm not sure whether having the data
-packed or loose will be more efficient in your case due to the slow
-speed.  You can try packing the repository with `git gc` and see how
-that affects future transfers.  If latency is the cost, then packing
-will almost certainly be more efficient.
-
-You can also see how long various operations take by using
-`GIT_TRACE2=3D1`, which will give some detailed timing information that
-will help you see what the expensive parts are.
-
-If you have some trace output showing timings, we can advise on what you
-might do to help us address performance.
-
-> However, the git-fetch documentation does not clearly state whether the p=
-arallel mode only helps if you have multiple remotes and/or multiple submod=
-ules. In my case, I just have a single repository with a single origin and =
-no submodules.
-
-Parallel mode does not help with a single remote.  All the data for a
-single remote comes in one job.
-
-[0] https://stackoverflow.com/questions/52841124/how-fast-could-you-read-wr=
-ite-to-floppy-disks-both-3-1-4-and-5-1-2
-[1] https://goughlui.com/the-hard-disk-corner/hard-drive-performance-over-t=
-he-years/
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---foCTAbiDah/96tt7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaas++AAKCRB8DEliiIei
-gfb5AP9D8/0lxerOexBXt8GXT8TaQ86nxfWRwGKUw6dLiMTgJgEA3UEpkkZUonUv
-7Kav/dF6nRSyxJ/5tDJyTUpo9thvRg0=
-=wBTl
------END PGP SIGNATURE-----
-
---foCTAbiDah/96tt7--
