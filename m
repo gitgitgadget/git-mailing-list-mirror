@@ -1,89 +1,106 @@
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [46.38.247.119])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EA5423A68
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 20:20:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.38.247.119
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D54480342
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 20:54:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772828406; cv=none; b=Ort7afHJ5jftcbg1+xBsfq0FAagOmmThhUGuARJHRr0iPf7IsO2fHGzj9OXwNIoulrAW0ogdX/LvKc52DL9ZEIBLSSdsECwlPuWn6VTcOxoxGNhJmJBNaIGfsrqtJE1v2oNRKil4PY3WkgOxOYBta8QIHKAgJDPaVpvYZ4vQxCo=
+	t=1772830448; cv=none; b=HnKs6NZwCYm1v+kMGfoD/36U24tNdwD5/bXAL3JoYr/CuaUhW8rX9xhRk3ErhrqYu11AOZ7NRZaVv8Jvp0f+Q0BOEvpl8piaVmnXyl8Nw9AEGn2Wht+OJLBlsSaPTCZHkhGuoGlXSx3krBsQ29cEMP5l+JNS+FMkUAG6P87H64Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772828406; c=relaxed/simple;
-	bh=hQde50MpUIsGPP9yl+WhkpsgLTUTj5+rucwmFbd0EIg=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=PtmVWstLqHHFJThbnDi+InZT2xKLrMQSU6CRpRU9iiqg25eX8sHqaLad3D6hzAaXKrkwOTHQIV7f/uGR5MbyE8oU8cpcsVVf1Ob98DMql7C4nCKuDMxkqKwJ9WuxJNSCmu/ToiKQHzvknHnd5y3mRyznXmQnMedACDNuWIC2JCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de; spf=pass smtp.mailfrom=rd10.de; dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b=HUvxxIa1; arc=none smtp.client-ip=46.38.247.119
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rd10.de
+	s=arc-20240116; t=1772830448; c=relaxed/simple;
+	bh=SimSezPDUX3sWC+meBWBAnslS8/egIYa67DAQbmHWxU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=iDbuxPp9iR/6b1d/Ve78Qw3HCh61iUmjXQgH46a8PSa9s2q0eTImSuXGl+Wd4xlQMdzroo/NMGKEvrrmA0oz6HancRFJofEkQnDSG8dtB5uubrgw82ll9pQc+z+h1/3Z2lL3sbJbfK8lMoJTswqsLlYIWmSZSYTf++5tALg8KtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nrSyNH1S; arc=none smtp.client-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b="HUvxxIa1"
-Received: from mors-relay-8404.netcup.net (localhost [127.0.0.1])
-	by mors-relay-8404.netcup.net (Postfix) with ESMTPS id 4fSHfw2GvVz87WW
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 21:14:00 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rd10.de; s=key2;
-	t=1772828040; bh=hQde50MpUIsGPP9yl+WhkpsgLTUTj5+rucwmFbd0EIg=;
-	h=Date:To:From:Subject:From;
-	b=HUvxxIa1oXzICT3b7eYBb/R3qEoSWYtyZ8S/9Newhz6UIPIPwCslbRleNKUPw23lb
-	 uZeSBGznBb3AK6oRcWWtNhcMCfWriyL1P36ydUSPQPuAH3HmXaaUkWyf4Y1n4fFrsC
-	 YHnEtoZZ4X0SWmciH1JscYanOxFTyoMxPRrbWb0IyIh5hUvVMLqwjAlMdD4p14QPwP
-	 w6Fb8lwUwTxyGYgaalSsxPDyrONgBDBO4W3souzwXruI2Cn8ZQibc8wobecfgqGt10
-	 VAiImWot8r5iFk/ev6m0DTOyTyUToYdlA9k9mW+ravrn9IpHzyzeZHd3V/wxkdlimS
-	 Vs7fvujKdfBrA==
-Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
-	by mors-relay-8404.netcup.net (Postfix) with ESMTPS id 4fSHfw1bG7z4xJM
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 21:14:00 +0100 (CET)
-Received: from mx2eb1.netcup.net (unknown [10.243.12.53])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4fSHfv6v5Qz8sbF
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 21:13:59 +0100 (CET)
-Received: from [IPV6:2a02:3102:8e00:2a0:cfe0:41f5:8011:938c] (dynamic-2a02-3102-8e00-02a0-cfe0-41f5-8011-938c.310.pool.telefonica.de [IPv6:2a02:3102:8e00:2a0:cfe0:41f5:8011:938c])
-	by mx2eb1.netcup.net (Postfix) with ESMTPSA id 4AB25100809
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 21:13:59 +0100 (CET)
-Authentication-Results: mx2eb1;
-        spf=pass (sender IP is 2a02:3102:8e00:2a0:cfe0:41f5:8011:938c) smtp.mailfrom=rdiez-2006@rd10.de smtp.helo=[IPV6:2a02:3102:8e00:2a0:cfe0:41f5:8011:938c]
-Received-SPF: pass (mx2eb1: connection is authenticated)
-Message-ID: <5c7c975e-2541-47e1-b789-fee1fdb77d2a@rd10.de>
-Date: Fri, 6 Mar 2026 21:13:58 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nrSyNH1S"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-415b23dd6e5so1803127fac.3
+        for <git@vger.kernel.org>; Fri, 06 Mar 2026 12:54:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772830445; x=1773435245; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=imne22hxy8MEPoK1faX4yqNl5eOW77+XOAOfx/LPR1c=;
+        b=nrSyNH1Sl1Bi/ICBQNBXtTIkCGO6Qxq3FfpY/22ai9yi1VjWc1zm8Vw1PLU+nRX3rb
+         bxabOYYR9CAtZI3L/n8UKNz36n8fY74gh7gHbKDzNvx5RI87SFEyS9PMLEpTi/JLM5S/
+         H0W/LfpQRCDlNvS5KveFAFjfdgI7kTWanlIbyjm4ww0W/ml6b+4FFmWgXoCL3ZSNNopK
+         2UAqbPCL0wZEccDHaRmiroTkyGqpkAr/JQb1y/xkt7LuwBQqBVnX59DuHsFukSgT4/2/
+         NrMOxj6Aq3rA13dBF2u5Bi7eU9AkUTABa+p2AL2vGUS6fjKYULqyW7kpZvAKymLDCvBc
+         +ksQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772830446; x=1773435246;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=imne22hxy8MEPoK1faX4yqNl5eOW77+XOAOfx/LPR1c=;
+        b=QWsU0GR/K3Ea84O2UxDDqBQu5beXsqJ3MoEv6auZNn5XOhvtMxV9abHkgi+Khy4W6f
+         w9lt50xQ8uisLwxMHhpuN/2c5J61izMU2QJgjAv7H15sX3trUkEYQi/Isp5p5JREtBQG
+         ZGoOjxSINC0WfTqOEOzvqrbfblTGuCpMeMC8/5iAc17qhu66zQHfV92wS5pDDuvP3YQB
+         X1Df0pyssDiIrs55btZ0uB3ZXk8zvFarhbEYjEdGHIZLxUQsUn1XAwA190CMgkQkRC5z
+         /smJ0vzdThoswToXWbNUwXMaEHIxhyNfd1KzjjdKcqA/66ZeSlUO/cqp+cxh5UZ1en67
+         mQHA==
+X-Gm-Message-State: AOJu0YwUIBjXzgrnJV+F2TUmoTHeWeCU0+yCx6opScotR+jVxpfOxGt8
+	pjTs7/62waxP+iXi4lhZSeS8EYXz+iDkos9pbbgleGDACGoIPpNqnQvRCcB+Xg==
+X-Gm-Gg: ATEYQzyLa2zCUsbkOv63kXant3F3Bn4zc9bgjgrBzBRiHL0Ogwq45/Zdo5F6FTWWvy/
+	fh78qc+1uBX9qj4DTFq4h6fVIj2R1hPraFXdB6ik048CyXxJsySVRGx6vBADx/CFKG51L02J3+z
+	WlCP5nBFGGDr8rI+UmgnB3rkd2luyadM5H2X/F/8bXO4ZbN44saqaslXQ5jhaRVoVGwraVc38ls
+	zhpY0kc1ApIB/yRjzL1bP9yuKdJv0I7sX9MCycUvdVHRnQl8nKN0tYUscC8msctXIyw1v/rRhqj
+	dcwOycBfLI29jEIegkaihfIXZ3VEE7vxsxtGxacgs0uPKwwLuKUJ66ynKKt4QAfP7OaGKRtk/GH
+	nlBksbkAhkxAKwT3U4aAKjnFqNljXHUBXirHmcI+Q+kqnl7yL5z7/XRA6RWsiMAbntyX4v59PNC
+	CWV0C0mOMUPoSw9xaGzY0aSfXDdtoP/xw=
+X-Received: by 2002:a05:6870:718d:b0:36d:287c:694f with SMTP id 586e51a60fabf-416e448ac1dmr2119544fac.30.1772830445630;
+        Fri, 06 Mar 2026 12:54:05 -0800 (PST)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-416e688d5cdsm2278014fac.20.2026.03.06.12.54.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Mar 2026 12:54:05 -0800 (PST)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net,
+	christian.couder@gmail.com,
+	ps@pks.im,
+	gister@pobox.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v2 1/3] commit: remove unused forward declaration
+Date: Fri,  6 Mar 2026 14:53:57 -0600
+Message-ID: <20260306205359.1723254-2-jltobler@gmail.com>
+X-Mailer: git-send-email 2.53.0.381.g628a66ccf6
+In-Reply-To: <20260306205359.1723254-1-jltobler@gmail.com>
+References: <20260223194146.3476768-1-jltobler@gmail.com>
+ <20260306205359.1723254-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-From: "R. Diez" <rdiez-2006@rd10.de>
-Content-Language: en-GB
-Subject: git-fetch takes forever on a slow network link. Can parallel mode
- help?
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-PPP-Message-ID: <177282803948.1519843.7694705620482563965@mx2eb1.netcup.net>
-X-Rspamd-Server: rspamd-worker-8404
-X-Rspamd-Queue-Id: 4AB25100809
-X-NC-CID: 3Lz5N2I5mdmjinvF+8Kg+aWPXwBhmRQw9Uf0hRUE
+Content-Transfer-Encoding: 8bit
 
-Hi all:
+In 6206089cbd (commit: write commits for both hashes, 2023-10-01),
+`sign_with_header()` was removed, but its forward declaration in
+"commit.h" was left. Remove the unused declaration.
 
-I have an SMB/CIFS connection to a file server over a slow link of about 1 Mbps download, and a faster upload of about 10 Mbps.
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ commit.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-My smallish Git repository has its single origin on that file server. Unfortunately, I cannot set up any sort of Git server on the remote host.
+diff --git a/commit.h b/commit.h
+index 1635de418b..f0c38cb444 100644
+--- a/commit.h
++++ b/commit.h
+@@ -390,8 +390,6 @@ LAST_ARG_MUST_BE_NULL
+ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		    int *invoked_hook, const char *name, ...);
+ 
+-/* Sign a commit or tag buffer, storing the result in a header. */
+-int sign_with_header(struct strbuf *buf, const char *keyid);
+ /* Parse the signature out of a header. */
+ int parse_buffer_signed_by_header(const char *buffer,
+ 				  unsigned long size,
+-- 
+2.53.0.381.g628a66ccf6
 
-git fetch takes a long time. If the repository is up to date, it takes about 25 seconds to realise that there is nothing to do.
-
-If there are changes to download, it can take half an hour, even if the new commit history is rather small.
-
-The network link is slow, but not that slow. I wonder what may be causing the long delays.
-
-The first question is: how come it takes so long to determine that nothing has changed? Does git-fetch need to download a biggish file every time?
-
-Perhaps latency is more of an issue than bandwidth. I saw that git-fetch can work in parallel with --jobs=n . Doing parallel requests may help against round trip latency.
-
-However, the git-fetch documentation does not clearly state whether the parallel mode only helps if you have multiple remotes and/or multiple submodules. In my case, I just have a single repository with a single origin and no submodules.
-
-Adding --jobs=10 does not help in the 25-second case with no new commits to download.
-
-Does anybody have any ideas about how to improve performance in this scenario?
-
-Thanks in advance,
-   rdiez
