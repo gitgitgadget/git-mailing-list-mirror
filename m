@@ -1,166 +1,105 @@
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011012.outbound.protection.outlook.com [52.101.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC532DC35C
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 11:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772795435; cv=fail; b=jND+huEXeQsuHXN2wulA56iHXKe+yFEPt94ia7GlJiJ9GKjKr1rP42Klfh2TEnz41uz5G4HN68YdBajcpbsHnmuMYv95rR7XM29CaOyjRvicElN1sPGFU+tTrYdmKSmfzin1znH2Zot90AsuWcr/K8DJLU6AkWbRz2uCiay0KA0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772795435; c=relaxed/simple;
-	bh=LijMKHqZD0XtTs5HU2CcFPW3pexy/WFMilZdWAJZJw8=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=rukDg3req2akTfDCF9aCtBOCZ5TynQNVnrZ6Lb4TRCTqjVsWjpGqhq41Y7mHvBUDH8rzrpSLYt2vCwIyUNQTOTMqPAQqYhybn7VXGdSCmdhsniOiTkJNt9WAJ4D/9691DrJ9kCQPIiU5vdeHWu2AWiL7DyuHO3hNbSczRHZ6wEE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mt.com; spf=fail smtp.mailfrom=mt.com; dkim=pass (2048-bit key) header.d=mt.com header.i=@mt.com header.b=Pte88aJN; arc=fail smtp.client-ip=52.101.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mt.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=mt.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE5F318EDF
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 12:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772800196; cv=none; b=JQfDTy52lA+EB6ZksuBgO4653c5iqA0BEnMI1UZ8yA8a5W1we/g/EWpjxJtGDKKxJEeqXBtVmfM2HtEu+1PK+xabbVDEPPh3GliiyINBa8IZLRDeyTXKqtTVAf4asGzfla7GKPTCteAX6g4X+GXbLBUn5Ox9eXcrudqHLpZhv1E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772800196; c=relaxed/simple;
+	bh=L+Fkr05aNJLCYulaHc1KByoVhiGqPo00DQuUhM/vS0M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GNMlrtxUWuYqyjSHjz/c41/AhhoymdIq10T6MaGSGnSe5sj7lPKoe3A6RPK+wr3resYuSoIJYNbmF5QI2ZCYHtSrwPFN1Vi5iF16Lx4IV4nGR1ki92fmJmZPct1UXqKHzVyVAUCxFhuzgqpMj5xeZ1iDfzLlJoZRuMvZ3i2Cbwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L5B0X96x; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mt.com header.i=@mt.com header.b="Pte88aJN"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fqFFHjZoFCWAWp0Bt6G6vE63PGuVvMEJdw1ZbuqnlhB3wM3xfE142nPSCfR9jEFSpQj4DvqNp9jf04+8I+APGAVw2cUQnM5hTrO7XagLDKTwZJN9306PGxw+r7qdlt03PdcYp8+xY2wEAsEX4/9+AyTD1OqiS+1YoOPOQdpIIofSS5YJ0meZ/Rra+/uXhS97O2qdW7JnJJoE07IxJ4Td/o+Bsw5bwMFipX9aKO23StonISM313gxecyIKeiU32B/tiZWWKbjzVuSBjos+Ef4H3UnpOpElOaMhpcri81GLtdb7yG80wDYNoW3mz9cREesZ7thq/PG7tESLhmE8VQ/bQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BPOkgXqeHU97sd2/GkKbWwFrbA2mPn336ZclCtc2ktU=;
- b=w3Rt0pjtHGLoYoC+0ntRhyAqEr45xu7FYQciu8LBjjh3sh0A8e7hRb8qZjt7jjn9z33zc2iWzHlfmpbBLdCusTswUeK775Rnh1NG/ezNKB37ynN61tA34jwkJRWSPX/qim6L9Nf2PexJivUfAeYQBIPuv70QqpLnRkk8ElNLC5RovAKH3wiACDNYmq4kdA9tGlRwqcBtXo+vOgQASZLR0VY+XkJM1qCAGpiLx7c7FFOd8KPQY3IXyOL+Y699F2keh0xdVYhLgS3rGSD26f1dmxN4supEm7AiFTUAK1w4CrZETckNdImfHWom95+VQFbM4s8msfGmGcZXiy6Wq0P1eA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=mt.com; dmarc=pass action=none header.from=mt.com; dkim=pass
- header.d=mt.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mt.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BPOkgXqeHU97sd2/GkKbWwFrbA2mPn336ZclCtc2ktU=;
- b=Pte88aJNRliKjPel0P4P6WA1/Vd4lNgNSXc6HlG8UEkVbnMgrIrih5M7U3qFccGudxHFtHhQC0JKlQFdiri2JucDkRBJschAf5sB9hzgSRMg0YFiDXsC4oZtpnkLE3Re1rB9EdWS0YNRf5SjvRpmFP953Tp6CUYiJLLDqaSdqK3aggLbZXwAgLx+alx4iXZ2kL4HJpMbanKnvYP3zprikBQ6yW4hylkL6Yc6dzQwdHLi5py7rwFdtqdiE5iGDq6stEUWwx8hcI1GLhONIn4AFhH5meh6dUyW56xeWq8PiJsejOrGLv0II5w4JLPO17rXMHT5Yyr9r4CIhFTvc3gUYQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=mt.com;
-Received: from VE1PR03MB5855.eurprd03.prod.outlook.com (2603:10a6:803:115::19)
- by AS8PR03MB7572.eurprd03.prod.outlook.com (2603:10a6:20b:34b::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Fri, 6 Mar
- 2026 11:10:29 +0000
-Received: from VE1PR03MB5855.eurprd03.prod.outlook.com
- ([fe80::fe74:7ea8:49dc:da3]) by VE1PR03MB5855.eurprd03.prod.outlook.com
- ([fe80::fe74:7ea8:49dc:da3%5]) with mapi id 15.20.9654.022; Fri, 6 Mar 2026
- 11:10:29 +0000
-From: Adrian Friedli <adrian.friedli@mt.com>
-To: git@vger.kernel.org
-Cc: Adrian Friedli <adrian.friedli@mt.com>
-Subject: [PATCH] builtin/clone: fix segfault when using --revision on some servers
-Date: Fri,  6 Mar 2026 12:10:01 +0100
-Message-ID: <20260306111001.261916-1-adrian.friedli@mt.com>
-X-Mailer: git-send-email 2.53.0.394.g500c12b044
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ZR0P278CA0097.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:23::12) To VE1PR03MB5855.eurprd03.prod.outlook.com
- (2603:10a6:803:115::19)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L5B0X96x"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-59b672f8ec4so3432363e87.1
+        for <git@vger.kernel.org>; Fri, 06 Mar 2026 04:29:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772800193; x=1773404993; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7t4w/zruDW8a68XscTC42w2HCOEf7jJAXJos2MgJ448=;
+        b=L5B0X96xVdxWlhoPGJZyWLet/yrdLWrU4mOHGM6eUfFHoIleoTNeMGX9rhsLoI8xmj
+         4cWyFW4PRNvGflCSMlbHYfgGopXltdESYiYpJeMoUyqLCfSDv1V/IR5FjswXTnR1eQiq
+         Kwcj9KGly/VKX/Feb7Ms0D8fAaYW07M329qBDBAfsySN2T3U+ITsTx0pKg1KUrxdZ9Jx
+         IVj3iFQA4jInszEpef2WBsmFd1rpWbZk9GF5C4Jx+PMt08Tu366xsiUp6aSkrCJ2SOlZ
+         Xn9iYTEFmg/qwHPKpeMxmoCrRcuYdHJnQWTja4H49ywjSPZlJ53EbbNTJJX7Aoy8t2Zw
+         DY6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772800193; x=1773404993;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7t4w/zruDW8a68XscTC42w2HCOEf7jJAXJos2MgJ448=;
+        b=hH7Rxi5rGIddQFFgTNX7CoHug/XkFDb6qQlCOFukIERti1zlKhvQTf67kykbwf/tpV
+         idvwtx5rBrS+Akqb3FfoAx1X7EkLMQ6htgs6nQXdrZnXOSiYuVZ98YnweEWaE9qticxV
+         /Wz0jNZFNSMsDioE+mbMO+Kncit7q7DpOqPnz/JJvPZrCo1DPsHgQ4gr9tyA3UE//+nX
+         xnLxx4K+n66Q2V4k7xOZhwOqp2h7YAvr/TCRrMhhw+gd5hsTpN9lAB83Ejk6eMQG6no8
+         c1IAlIeLv86YoQEuo5ZWf8QvNR17PL8Q5uZX4bLQEScCbj+6rK61y+xt8ZI95kx4Dqor
+         460g==
+X-Forwarded-Encrypted: i=1; AJvYcCWsLJuNR/9kl9tR5pxOkoGYk09GIhkshxaMB3o6zEg32kYEMl2W82RR5ETWyRF2pxCUsks=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwoYxnkaJ3LfzcD4BufuMMw43HckqUbCHL8p67QCV3uE4RniPHf
+	64r5VxWunAIDTNuyeNxm23T6DtTv05LheDStU8Av4cI0jJzIyfpKddHa
+X-Gm-Gg: ATEYQzwJAtv1O0b4EWM4/LzETWE+8GhyRQcEKNU82ajTXltRGB4u+7Lbz6fbsGg0h8N
+	jvkbTRxCmk8q0Vo4DrOTYERlWfHvcddPKIPnHfusyslTR5q0O/IMY6Ql4yo4GnIhEsSbF4Kntbc
+	pnn3zoCc22gVH+vMcTPjWJp/VOoDAqahF+U1B5nIkMMdgYfdvu4Q6++dNhRTxzqsnYgcWJixYVf
+	gmq6d2KDfido1IZe1Q3UJOHZP8dwXPyP2ur06+cRHLndh81waOJd1IofudAWIA+k73fxbfZL02O
+	z06hYecdPpzH5s3OGrl4ZUIM0EGXfAnsWkgb+vgWQ6o+yflRNmPVGzmdacSF/NzMKxT1ouVQajP
+	oDFZCAo0vtg5GwgxFWWDqyrPGYIhLE+acU4FDPuPCkLAHdQ5rD9qRaCzMrp7ozgK2wuU0lSy11z
+	o6utv8f36/J4wTj+vkpWR3zcv9iS3geqlZ1AyFaU+0rOpfMEGrjQUDbi7+6eBiNN4B+vTeB16VF
+	KpOIpLIVzShJ/CUBEGW7q9xuFFESaqO
+X-Received: by 2002:a05:6512:1295:b0:59e:62d0:2ad3 with SMTP id 2adb3069b0e04-5a13cd1314amr739833e87.43.1772800192763;
+        Fri, 06 Mar 2026 04:29:52 -0800 (PST)
+Received: from localhost ([2001:2043:be0a:d700:f4f7:caf2:a9bc:c43e])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a13d01cbfasm317526e87.14.2026.03.06.04.29.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Mar 2026 04:29:52 -0800 (PST)
+Date: Fri, 6 Mar 2026 13:29:50 +0100
+From: erik88 <erik88@gmail.com>
+To: Mirko Faina <mroik@delayed.space>
+Cc: Aron Sigfridsson <aron.sigfridsson@gmail.com>, git@vger.kernel.org
+Subject: Re: Git reference git stash
+Message-ID: <aarHnK-oPHlx_hCw@Eriks-MacBook-Pro.local>
+References: <CAB0c_PjtTs8dWJCoUnQfCUM_YOaK3e3FcZfCgWjTOLcNWj-6nA@mail.gmail.com>
+ <aao1hFwJYpJymY3o@exploit>
+ <aao7uLxQ0ir0m6s2@exploit>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VE1PR03MB5855:EE_|AS8PR03MB7572:EE_
-X-MS-Office365-Filtering-Correlation-Id: f903ddc5-41b5-45ef-e40f-08de7b70fa20
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|19092799006|376014;
-X-Microsoft-Antispam-Message-Info:
-	pAFNX0bWCh86mVldgk729hm1z0j/jgZq2dAQDzFAoqZ7qWyv+5PGm3FvbGRZc35u8CvZU94u94PDZ0nAEaNIgrXYsLowz/e/7QNqf0kJ8MqJk8SoDR2/kNSG6ACR+cOwqTPsZEmzKOYaAp8DF56OD7xECU9ClbKClEEstfG0cu5vFOTupDFaNFXnLjvSEp3xB6MzvCPlImF5SbhOZIngYOenwGM6V+xVHydGiWgQqq0mOV+RZUcB6FwwLW0VUF/wMtDyYfHoAKlJ04ty9WHMHYIULflIeNtAlaVtOh/b955BLiQnhaFWsXpz/uiTi+qSf3iW8m6cT8jBRRZyYa8xRi5+hp6oN1fVMRUCTAij+/gXKHts8rLNJhwde4DSgv72oNlaNRtNeiPhWQLjfrxllkA79V3/w/aEQQzL3omBsvc8RbFqDiPXU/RK+oFJJeTcytJ7bR2MDO5SrTRdtRS1Qp7GDci2FlzNtPMssbx1zA2pOKGMwQSgBmBD59OFeSsf/F6sL7vivMdfSzmhUn7rymEUqw1LvQWEeM+nfTCKWHOS+SiOk+y0HCGoG6Df/Vcah9ED2YZm6PmltK14Ym10rBIu4hk52DFeNbbHLCj+I2d7okxTmi+MxJ5TsqrgMyEk3NXD0bMVt42irs4Gl7it89crkn0hZtutA48a7JxbPOQPjLIYvlJ7TmjFH92S9fmKBEpTGiD1MlehqpfCN74Ot7jkZlywtXgEfC/Zmnz58QE=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VE1PR03MB5855.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(19092799006)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?wKaAWn7hGzqrFLgIL1eFpJNyiZxK1Zid5wh7h6FLL0ClwwJhtQLWU4IOjBnB?=
- =?us-ascii?Q?u0pJPERf16d19hpnbSj40FC2MaCW1n/NPda7yQcnbSQRXp3QXSFwPspjMVVZ?=
- =?us-ascii?Q?QjATZID8J/0aVPAL5hFMnaCiggztofL6AArUdJqcEG0xcKQ+JPzqU62tV+Ip?=
- =?us-ascii?Q?RjUvGi2UafBk8TiN0LJBktNYLHEAFzuggrO6kLb79qnJiYRAZMgqjQgfhZBM?=
- =?us-ascii?Q?0Zcm4hexGD98TTA2Zqv2p2hRvuXDc4qvBaNEbB6mkvY51FqVdiIqenbqFPcr?=
- =?us-ascii?Q?y48gx4Dfk01VfWucNdwACoKVgo4bbbUA7/j2R7BeGiIscijf6Pfb2VZwJyNd?=
- =?us-ascii?Q?je+vIyVkycPgKICntqMUnVd3IZuLQX3GgEXs2NJXdVStytFkEBMZMya/TA85?=
- =?us-ascii?Q?G5eB1M10VX+3JZd9QPanl0UnBBLiscb5t2Os8sZ9C3xWPCdnaEKk3l++vx0G?=
- =?us-ascii?Q?ZSo/gjcRSMZD1mNnfgXapnF0WvEe61385FyXXKj+xhhHU+VgTRuo0LzWAJTl?=
- =?us-ascii?Q?XUKlvPuQs5d2OxyqchCm3B7DZ8ncnyvVuLiU5Db//Cbb7sLK4dLGB3+dd+WV?=
- =?us-ascii?Q?CZmVCQuRdUdhoZ33apECFdLWaQ0cgqOtq6YVOzTZFur4oWPy0Y2fjeVHmpkL?=
- =?us-ascii?Q?30bIVO2RtfFR3vGMrkzVKlBA69fAInjVqX4ZyB4nA1ZeRM3Fsii1mkR+1COD?=
- =?us-ascii?Q?Pr/yons8eoXg7l27WnEwXqjDcPEXt2BsKn3L0UXUnxbTPyePcEk1zziY2wer?=
- =?us-ascii?Q?meKqaM6ovSxxlxr+HuFY6+HTpRzQ9/FUfc822rmwHEH3lD2h4F33vodbKLZo?=
- =?us-ascii?Q?u6NXFkPIOLS8J/B89qcoC3l5PeWyzlS0ZdVO2n7wKRTPppuhGmdzazQkivC8?=
- =?us-ascii?Q?Lx+uSOOuhbTLlK/d4YoxUc/ygiardttQjpJlACZRwoa+2BDwMnhJsKRwj7rB?=
- =?us-ascii?Q?bMx9yWiCOQxR+nP+07oJ+PgItgqQZq2ai6rN23TAg6lZf2l7QH4upPsfUgNq?=
- =?us-ascii?Q?0H5X5y69VRsIJ0UHu/RaEvrc+h/vlErI3kNzMqvGvBYaapRw1ghFL1dQLG6K?=
- =?us-ascii?Q?Wbi8fZMQ2Qs8moZFMyxmdlS3hR+SrPQSKc3ob5nosOb9z//u8GA7ORTCbWTE?=
- =?us-ascii?Q?do/j/r9D6gCGNI+EV9Rmq2MbxlID/cD5kcQUTg9m+B1PeaubCop15JHw3TD5?=
- =?us-ascii?Q?T8A5hXd6nVY+3+hfLuvU25433IHL7m77TKgCDZFN0sufdG20uCl76IEPMZ4n?=
- =?us-ascii?Q?cVMaO1LGId9/8MFGlq+Qi1lTbVXZ+MZWlbS6qeT6p61EAhWo2vb6NljBoITO?=
- =?us-ascii?Q?Akp0DoF4SIhJ+tblMa+D+FqWBk66VjXY5ukgNU916UwVIfsls2m4c5lOsWpF?=
- =?us-ascii?Q?fv+ebtv+Ea8/uxDXRqlzxr9WnEMkRZ6J6ntf8uXugepU894xRr8pU+qxNjPY?=
- =?us-ascii?Q?blENFf6O2fQWmajPNv9Pb52jmcAMMAG60DH7S2phXabfcnA54ilxiM7EslDp?=
- =?us-ascii?Q?24aXrkm+/2WRxMAuW4Z1tqWZnZkYodIXk48yOjFyGTcjLMdiysY+cyanzLPk?=
- =?us-ascii?Q?MutKGpO7I8ffPDqPz2xdpwAmtw0fkAXAR5S88T6Jd9pJ4yD9JagnWIXoRNoI?=
- =?us-ascii?Q?fL7G91mf5C1YFyH1eQw815RxEMhhGPCzComFa+DSlxc0rFrI0B89Cm4JCKvF?=
- =?us-ascii?Q?kBNauXDQ9GYWzU2lcXAHd563YZUW0tqIbqqBn6jeR1XCUWy05iPAW7tb2ZWZ?=
- =?us-ascii?Q?KDDT4NogqA=3D=3D?=
-X-OriginatorOrg: mt.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f903ddc5-41b5-45ef-e40f-08de7b70fa20
-X-MS-Exchange-CrossTenant-AuthSource: VE1PR03MB5855.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2026 11:10:29.7195
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: fb4c0aee-6cd2-482f-a1a5-717e7c02496b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 34n9Azg/TrOnt8MAfyI1fvEUlHue42H7viTP9noEGTMSLaH65VpPYP064PDYjeICbW0RlkVq+yXnWx0htUjDHA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR03MB7572
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aao7uLxQ0ir0m6s2@exploit>
 
-Fix a segfault when a server advertises more refs than requested when
-using the --revision argument.
+On 26/03/06 03:31AM, Mirko Faina wrote:
+> 
+> Looking at the docs for other commands that use pathspec, it doesn't
+> look like any of them explicitly say if it's toplevel or relative
+> neither. I suppose the author thought it was obvious which one it was,
+> besides, it can be easily checked just by trying out the command.
+> 
 
-In the good case the server respects
-`transport_ls_refs_options.ref_prefixes` and in `cmd_clone()` the linked
-list `refs` returned by `transport_get_remote_refs()` only contains a
-single item, which is the ref requested with the --revision argument.
-Both `remote_head` returned by `find_ref_by_name()` and
-`remote_head_points_at` returned by `guess_remote_head()` are NULL. The
-guard in `update_remote_refs()` skips a the affected code because
-`remote_head_points_at` is NULL.
+Pretty sure git stash push is the only one which does pathspec
 
-In the bad case the server ignores
-`transport_ls_refs_options.ref_prefixes` and in `cmd_clone()` the linked
-list `refs` returned by `transport_get_remote_refs()` contains many
-items, amongst others "HEAD". `remote_head` returned by
-`find_ref_by_name()` is not NULL and `remote_head_points_at` returned by
-`guess_remote_head()` is not NULL but its field `peer_ref` is NULL.
-Because `remote_head_points_at` is not NULL the guard in
-`update_remote_refs()` does not skip the affected code and
-`remote_head_points_at->peer_ref->name` is accessed, which causes a
-segfault later on.
+    git stash -h
+    usage: git stash list [<log-options>]
+       ...
+       or: git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]
+                     [-u | --include-untracked] [-a | --all] [(-m | --m
+                     [--pathspec-from-file=<file> [--pathspec-file-nul]
+                     [--] [<pathspec>...]]
 
-Extend the guard in `update_remote_refs()` to also skip the block of
-code if `remote_head_points_at->peer_ref` is NULL.
+and pretty sure it's relative.
 
-Signed-off-by: Adrian Friedli <adrian.friedli@mt.com>
----
-The segfault can be reproduced by e.g.
+Sadly, git stash list does not allow a pathspec, despite the
+[<log-options>]. But if you want you can do
 
-git clone --revision=refs/heads/main \
-https://dev.azure.com/public-git/sample/_git/sample
+    git log stash [<log-options>] [--] [<pathspec>]
 
- builtin/clone.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index fba3c9c508..09219791da 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -557,7 +557,7 @@ static void update_remote_refs(const struct ref *refs,
- 			write_followtags(refs, msg);
- 	}
- 
--	if (remote_head_points_at && !option_bare) {
-+	if (remote_head_points_at && remote_head_points_at->peer_ref && !option_bare) {
- 		struct strbuf head_ref = STRBUF_INIT;
- 		strbuf_addstr(&head_ref, branch_top);
- 		strbuf_addstr(&head_ref, "HEAD");
--- 
-2.53.0.394.g500c12b044
-
+instead, which is handy sometimes.
