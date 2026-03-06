@@ -1,43 +1,43 @@
 Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC281382366
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 23:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0CE3803F9
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 23:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772840106; cv=none; b=Xde7LWbsvjXe/mw8CVaCWv4g1q1ARmJ6KPSSRbt8LMlfr/978f4qu4gFEYYr5HBMnS+877pQN3m8UYoVeMzjBvqbmhTXKHlU32GXWESM+T1XEqjb6QBSmQd/hYqiauHzC2pc9BkDbc4MKX3+x0dDcQX2C35FokhTCygH4oxkyBs=
+	t=1772840108; cv=none; b=BDLwMosUw9Qp33km9fFbgc6njyEBVd3Ep3jaGqH9zgoE7Olels+stb8YpJhtmfO17w5UKnyMUKAyPS9CdzBXFUU+GIX/XQrn/p2Ag375yJhlpGi9LVMKDtGgg91P6q4LFSG4NHYyW1lbnYqnKbxl06yX3pQRkhDxMacTcXcuaF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772840106; c=relaxed/simple;
-	bh=kkt8COIur+Dmnw95xJKJ0wlhXxKdxg2l9OE7Gvau2kw=;
+	s=arc-20240116; t=1772840108; c=relaxed/simple;
+	bh=e518wa2Ec+kmRTyyQjb26AmBrYLdpF+RC4x9UbgcB5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fKtsABgE7V9yOwalZbpYhdn5MHv8wTLeWH+H+abR1wx5XEBdbh6QFYeCzSBbWuwRQbOL/PGe2uRDdcJ2BtikGb7x53nxpXl1Y0nIU53i87vXMk/iB4OL1xLsgVinM9xGluqkUlYot027pKnEqdWTpFg62VTN8OgWT3RkZVNk7gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=a3J7ssIk; arc=none smtp.client-ip=195.231.85.169
+	 MIME-Version; b=PEuLWQQS10w+La3EfNGG824jbCpeXRrakTdM0CB3e1NVpgTOfNlddwnQgfBasU4zNrci58L8Rc53iJqn3ZsWQagOe3ftAXU8eu5xDiT1viENtXVW51RNmKQB5elPDMyCFCFaAOlcmymOiTsVF8dWqjWWS+le7rxooUqc8d9juIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=a5+E7FRj; arc=none smtp.client-ip=195.231.85.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="a3J7ssIk"
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="a5+E7FRj"
 From: Mirko Faina <mroik@delayed.space>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1772840102;
+	s=dkim; t=1772840103;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=LnlzTjWfbTi10fzfAg7pl6NUPiGVQPhq0fUMLcZvmXg=;
-	b=a3J7ssIkswnqBXzPnC0tdlHgLGNyu3RdI3KldDU5PduJJLAVPMBBIUHJ5z6yxNhF+82VEa
-	YlVj46zwuoslKpcfUyfK48jUNYZHMacXn1aLxZdXwIhkk3v/f997B6X4//7e56H5yHqIbk
-	VniWQfJ7uyP/sb04rdbCvtWRwRoMUvb5vHju1dBvZ3VX6rPTFJ+FDa9S+trX0/Pji3Nq3i
-	Aao/G1UotfAfw6Hm3GVdzi3GJ24Q93nIc1Y5eh07Wf/iG1S7U32S/rnGJXWVwDMEEFZ0H1
-	9V5TURKbyYbEALA9CjmE79ii8fO/1iWbbFJtJ6uhy9H63ycbprEoRaq9N+PyjA==
+	bh=ogXz1UUTtZZCzXSEOJeRpOlc+weSPgv/sAcYuS19vRw=;
+	b=a5+E7FRjDq6Ssv/K9A8eEFoOFKgYif0YFGIGPfOU84Xuc98YV2/v9swNHKQvf3S/2tgGw/
+	MVyEtcN5qrwW1gDcEE0IxS5DZ+8OZCZyIiLG+abqOhP8gHyXmCKhALN78rh0HxpFGk2Uvl
+	Wvyw9gf2xQTza/XQevqrmDMwMpm736B7BRMnZ0o8cDDbCj3ahnxZOAVgCIUWna3mkGMtxr
+	A+Qf3jcwhUVBiLC2kiWqqwnPRO9SC09eHdI/+Hcazqk1cv4szgV1uDtrmbVX4nZLEOpeh4
+	ugVTDUopQLa/g+Gc05OIERhVWF5oRA6YkjI3U1Py9iYe1CdVou/qtgkiUMNhdw==
 Authentication-Results: mail.delayed.space;
 	auth=pass smtp.mailfrom=mroik@delayed.space
 To: git@vger.kernel.org
 Cc: Mirko Faina <mroik@delayed.space>,
 	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>
-Subject: [PATCH v7 1/5] pretty.c: add %(count) and %(total) placeholders
-Date: Sat,  7 Mar 2026 00:34:40 +0100
-Message-ID: <cfed3bddf66ed2fab1f4da896759de1ba086578f.1772839973.git.mroik@delayed.space>
+Subject: [PATCH v7 2/5] format-patch: move cover letter summary generation
+Date: Sat,  7 Mar 2026 00:34:41 +0100
+Message-ID: <dc131c756520a0982d1d6f733dff48a464900ea5.1772839973.git.mroik@delayed.space>
 In-Reply-To: <cover.1772839973.git.mroik@delayed.space>
 References: <cover.1772837832.git.mroik@delayed.space> <cover.1772839973.git.mroik@delayed.space>
 Precedence: bulk
@@ -46,54 +46,74 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1528; i=mroik@delayed.space; h=from:subject:message-id; bh=kkt8COIur+Dmnw95xJKJ0wlhXxKdxg2l9OE7Gvau2kw=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpq2R/ZUMWO0zRb09eZYFzdhswjCa12Co/GLFf9 7lwFYd7Q/WJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaatkfwAKCRBIeX6hnBm+ 0RPdD/9T8McCXlPjS+DvTe9nsPLjmRq7DAYDpGp9JKP3p1Xqla4MzcsCUUVv4qY8MgCpctRjiu6 TG80KrRLRuqdRSQpcZoII8B/7beypHOpkh/VqpO7eWsr7kpa91bUpIixcHGpz5PyZ6wg6+ITdSV Cw6BUdadkqaUbGxBofeTmyMAvKwu8diXEhV8NOXky8nDy18PgvEXc3zILYl76nsGjIIVWt+CRtT PVL2L/PbjtjOOg4F2gdtCTp3xBcjwy7ltaXem0npnqe/sQnQkJ4IwqioMVPMIHLAyVY4rca+RIP lA1BDGMnz7vnogNdxwfwiKnVD3/09PBxrz7jO3oD9FozjzpMQONnFhBW1TRqRHYxFfDn7a9sZlU Ppns4ZDDQqaomF34QioEiWaaiS1ItCv05kz/ilxqDW1BrfGoATObhGCpE5Be1CAcg2n1wsonSBJ pyUypYwRnPJmd0afiy3E13FsGvBINnV1bUbETMM3RvRgulpneaZgOhZ8Tr+tu+i09WAFCsL+kYG BdirpttK+MOFocWNVtA3t2MTbWv89pP8xrcm2XY17MkiXHAtn9/K1sqdj8v7oU2VXUY7A8NbDMM 9UVVkNGuIxRu4ITTII4E3piCnP11BcgcJyll4Xtf8eUpvbp5HhL9wWEiVh1XTe4lAdwjSyUxSUE S0yL/7hWk
- nXWkJg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1958; i=mroik@delayed.space; h=from:subject:message-id; bh=e518wa2Ec+kmRTyyQjb26AmBrYLdpF+RC4x9UbgcB5g=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpq2R/8tAGkkcDjy0LLm0jyTDpxZ1I/Irp8FtSi e1x8mzX/8qJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaatkfwAKCRBIeX6hnBm+ 0Vq8D/wMBnHRdF2DeGllLFdwmaaP0OjY3K4LOrxBIoZ1ogwH1GOEolQhr+GtC0A/yyZ3APFW5+v 8xII/cBpCp+NWUhswzFS35OyANQkAZrrmlo6QllmVrJAyb0s2DMG+Ixa1xKaoOa5NtsWmRc3TkX r8KngTCNsww4PEXY0SQqQ5NWW13qWk+j7H7hNdbi6AzH0h4wRsUuBfTP7Nz8QZYiRbP2rcYRxQ+ /ltvs2ASxXNzAAFNnR87X/TYwn2LUW1xcn5rIddV/Hut5ozBmNChIv1jRv/Cxd8o9oY33rO8fkV zB1Ci6MPxHviLqlSZmaRK4YnOnSnm3VF53KxNF9IWU9wf1Z4C/fGRdz81L/WAWQ5Vw64/4viswt /EbwDniZBhpWi5sbjC490dtBf4ZZ3QjU2AwkQBmp5ynLqkUpdPM6YdeYEyXyvYiDgjuAE2XDHQB 9wWiP8CRTfPLT1cv0ubBUtvhWx7agCmCNSoFphY5V5eWxrCbQ+QMNgtNmNDd5pKmyRKk3aqRHAg jzpTbZDe+7Z0k3i/X4Gqcz3pc8Tdd9uVVKbwwjpUO1a4/gToWDEFcozsWCn/KvYnGnHqRuzmTQS GpoX7mCpKzWkFmITIZsovYeNk2th8iTQJ/tNHqhBIfn7hAaoEs4tO3YgJ+u43VbdV/3miLLJneG 2B+BArz19
+ BkQhsw==
 X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
 Content-Transfer-Encoding: 8bit
 X-Spamd-Bar: -----
 
-In many commands we can customize the output through the "--format" or
-the "--pretty" options. This patch adds two new placeholders used mainly
-when there's a range of commits that we want to show.
+As of now format-patch allows generation of a template cover letter for
+patch series through "--cover-letter".
 
-Currently these two placeholders are not usable as they're coupled with
-the rev_info->nr and rev_info->total fields, fields that are used only
-by the format-patch numbered email subjects.
-
-Teach repo_format_commit_message() the %(count) and %(total)
-placeholders.
+Move shortlog summary code generation to its own function. This is done
+in preparation to other patches where we enable the user to format the
+commit list using thier own format string.
 
 Signed-off-by: Mirko Faina <mroik@delayed.space>
 ---
- pretty.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ builtin/log.c | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index e0646bbc5d..e29bb8b877 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1549,6 +1549,21 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	if (!commit->object.parsed)
- 		parse_object(the_repository, &commit->object.oid);
+diff --git a/builtin/log.c b/builtin/log.c
+index 5c9a8ef363..0d12272031 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1324,6 +1324,25 @@ static void get_notes_args(struct strvec *arg, struct rev_info *rev)
+ 	}
+ }
  
-+	if (starts_with(placeholder, "(count)")) {
-+		if (!c->pretty_ctx->rev)
-+			die(_("this format specifier can't be used with this command"));
-+		strbuf_addf(sb, "%0*d", decimal_width(c->pretty_ctx->rev->total),
-+			    c->pretty_ctx->rev->nr);
-+		return 7;
-+	}
++static void generate_shortlog_cover_letter(struct shortlog *log,
++					   struct rev_info *rev,
++					   struct commit **list,
++					   int nr)
++{
++	shortlog_init(log);
++	log->wrap_lines = 1;
++	log->wrap = MAIL_DEFAULT_WRAP;
++	log->in1 = 2;
++	log->in2 = 4;
++	log->file = rev->diffopt.file;
++	log->groups = SHORTLOG_GROUP_AUTHOR;
++	shortlog_finish_setup(log);
++	for (int i = 0; i < nr; i++)
++		shortlog_add_commit(log, list[i]);
 +
-+	if (starts_with(placeholder, "(total)")) {
-+		if (!c->pretty_ctx->rev)
-+			die(_("this format specifier can't be used with this command"));
-+		strbuf_addf(sb, "%d", c->pretty_ctx->rev->total);
-+		return 7;
-+	}
++	shortlog_output(log);
++}
 +
- 	switch (placeholder[0]) {
- 	case 'H':		/* commit hash */
- 		strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_COMMIT));
+ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+ 			      struct commit *origin,
+ 			      int nr, struct commit **list,
+@@ -1377,18 +1396,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+ 	free(pp.after_subject);
+ 	strbuf_release(&sb);
+ 
+-	shortlog_init(&log);
+-	log.wrap_lines = 1;
+-	log.wrap = MAIL_DEFAULT_WRAP;
+-	log.in1 = 2;
+-	log.in2 = 4;
+-	log.file = rev->diffopt.file;
+-	log.groups = SHORTLOG_GROUP_AUTHOR;
+-	shortlog_finish_setup(&log);
+-	for (i = 0; i < nr; i++)
+-		shortlog_add_commit(&log, list[i]);
+-
+-	shortlog_output(&log);
++	generate_shortlog_cover_letter(&log, rev, list, nr);
+ 
+ 	/* We can only do diffstat with a unique reference point */
+ 	if (origin)
 -- 
 2.53.0.5.gbe7197aef5
 
