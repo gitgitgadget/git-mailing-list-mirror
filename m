@@ -1,119 +1,111 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD809366DB7
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 22:59:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123E933A02B
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 23:03:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772837948; cv=none; b=qj5SkV2lVLBKyyhlH53FkkAlyhMZRlV4Url6fqVLQFDvqQlyJKXpp3cegaeZnP+yyjOFm3aM7O1OKRRzuov9IZFOoLf3DzoYxiZV44vA+XWGkyw/v1xPS81UWHstBMEQTzmb3yWEeHWjYatE8KmAaCZxBGHOo+EZN+cEmtAvVn8=
+	t=1772838195; cv=none; b=YT5cCTpPGZVW5Q075PdHgcfTOynMjbBQFgk/5yq39ZXvHMq+dSXhCe6+2hbaR7yKsuB8b46tfLs0FAxNVHk9RWgymOQ1mvxFNGQaaLiZ1Uf45k+HzbqXcC8xyYi2+e/rWI4aSDB5Er0c8A9w0gu2rKsIEnaZKA9Wua6+yVBQUrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772837948; c=relaxed/simple;
-	bh=PXirJdir/PPjIba97KosW0qWoEwe+LhtGSwvyAfUMVU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYz1Op7AeVkFIo+oMsPIIJO9henlaEjJ6FNLvLOhOMn08E2M3/gaAjydDmXwE/P/NDIgjtQt2lqv4tvapwsCulkyRhDFv31keFOPxeUPQJR0sOZ2frG5WDl6hRqKceSxEiYn+pHI1aHHE6zkhXw+Ixdgi4D+mD8FEhmbIEgX8IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=LOfExP4B; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1772838195; c=relaxed/simple;
+	bh=TulhTw5S7mZX1Y2ZxsFRL2evtdBKAWKRcdMGXYBfCJ8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Hl3P88nMH5cRAJX3a6FZ8nulwrwof8W+8P3v4pErWuhDgfA9fJwToSHNtLbe2FzwJ/UW/NYqVJ0kSm6lFlp3SnH2yRIW6y3Irff+BEQrwQU3tZ3Spzlyo0IboBB4m2mdZK8QQbDog6eHWRO8Jb7TD2QPym7FxTO7MvD46bfmxeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EFsvVWIn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aDDno4Gz; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="LOfExP4B"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1772837943;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8CY2kxmRyS/gEJIf6cwbrxf6Cu/ceRExm7it3Vyc9yM=;
-	b=LOfExP4BWzFD9vq7HTsKJs/1squX1P9RFK91QPSmsFu2kMKEFmzQlGYtqADKG+nFAUKlUJ
-	QEJJ2JHGEw1fbHoGa3RcQT+geFfz0SRr2gP6SmMKh/R68HZWjQBysP0rZFded1dYBThUCU
-	15srjTq9wSMcEApl3kv3MzIkiNMSqC/BaY38E7Q9m5pF6IxieCZ3QRZvvEEHwb2sHpjePO
-	VxwIVdDwYGaRhlwtQTNeo6jYjJSXHBDHWLmwy5prxACRPgqcHAOKqlx8GD6NVD590id7uk
-	w+V/9eifkbWLfNP+VHnbyQWvxSAgzHB1950BKxdvXf9zIY58XHkF6x7fsyxrjg==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH v6 5/5] docs: add usage for the cover-letter fmt feature
-Date: Fri,  6 Mar 2026 23:58:48 +0100
-Message-ID: <1a4ba6dc338e82df1d58c277031d3ec2ec2ccf83.1772837832.git.mroik@delayed.space>
-In-Reply-To: <cover.1772837832.git.mroik@delayed.space>
-References: <cover.1772232373.git.mroik@delayed.space> <cover.1772837832.git.mroik@delayed.space>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EFsvVWIn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aDDno4Gz"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 30F6AEC0107;
+	Fri,  6 Mar 2026 18:03:13 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 06 Mar 2026 18:03:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772838193; x=1772924593; bh=tHfEWOVzj8
+	Oda1KFRguLGkxcVajFnA0QEjLTMsA6Z+g=; b=EFsvVWIntY5CLDuSN4CC5sy7jF
+	YPVXCTjWEQNj2vi9fvyn11eRKMxa5hfcV96Ed2jTp3JJjdlo3dlvTBUGZ1VNdkAI
+	k3/d17zn6hslZFQ6tp0JRSBcFxHby2WlCkKZUjVex3NIppZW/A0R51OfthUFRY2I
+	8qqQMRRTcIG8tIP9eTfmSqHCpT14wJCl1z8fgaYLOBktS2xGwY3HrzWam4F+j03U
+	QUX27JjuJRC+BgEZYIkMzPUpu+Ow1xXqcrR1+hjyeCAQRpJf2oInVdZfCYmb5+M1
+	tW7U0uX0pTF1T5iKIuqnCSWwICFWQnKzaJUpdY8AGfD2KKaoXblKC2JDmqTg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772838193; x=1772924593; bh=tHfEWOVzj8Oda1KFRguLGkxcVajFnA0QEjL
+	TMsA6Z+g=; b=aDDno4GzCQAPTQN2uH32yrVoyqVh4OuZNsIBemB24ckfrEHCoFM
+	K+y9TphghF+GjZ5UIGiy7P9nBxn8fiGF+Yk7+WYmut6GQESRRNHnQ6Gdp6P93wIM
+	G8KAcnAnt5/EogITZ+rZs/rfFIRJCqTYGSFJGol3OsEtNPGzL1wRnXe5WAe5prV0
+	mK8hHCpmihgKc2ShXFgj192PgoRlRp5xwUJtbg7c/clgk4ETvgy5XxGdtaMK2hr+
+	CQtL0OxjMP43qhTJVT74s6V08sQIP+ahxKIErRSrABzSSBFGQkgDRBsuwz7f0AgE
+	6rxDzk0of2sHeab3yKjaB1KUL3lx4VrcIIg==
+X-ME-Sender: <xms:MV2radiVqUc1mOOjVkR_M20jrxni0z81n9lna6MNtuOoiG8KvJKJ0Q>
+    <xme:MV2raZCdI7aPdmHGOR7AVpebHcmnxnrbJmu5gTOPC6vMtWsrMFZK1_r-tp7Kg-ORZ
+    1xUvZByHBltxDL7ZYFDNO7Z7ZtbmylKyJtaG-lYEcnDIQCO4Ah9_7I>
+X-ME-Received: <xmr:MV2raSGEYxvL7XOYxLp7bJr84eHCawI9omN3ChN5VUJZ3VhrwYK7RxeE0JyI08silm6o1c1awMkbuBezW_prHijIDwy2WBOwQg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtheejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:MV2raRL2oFf-DC-D0Uxd2WoTi0TmtpUKWi1nVWLj5ic9kg4XjvVB9Q>
+    <xmx:MV2raWkndg7J2rtpbW4rRV_N4cGzEyAQpmTrEyyqFu-Un98CkQtM-w>
+    <xmx:MV2raZRrGQHTXMm39vhkFThgrnBgEIwELWklEBoWaR0zRbsj33vF-Q>
+    <xmx:MV2raYLZ1FoG8CiIGXLnainHZ2rrE-Y9c-8DZgezX1DRN0DRKRyybA>
+    <xmx:MV2raZm9R4kNL2G1U5YxJcRlYpLWiBS0otRdjqBvlm2EaLqMOhxvY1tu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Mar 2026 18:03:12 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 00/10] Xdiff cleanup part 3
+In-Reply-To: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com> (Ezekiel
+	Newren via GitGitGadget's message of "Fri, 02 Jan 2026 18:52:14
+	+0000")
+References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+Date: Fri, 06 Mar 2026 15:03:11 -0800
+Message-ID: <xmqqy0k4wogg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2594; i=mroik@delayed.space; h=from:subject:message-id; bh=PXirJdir/PPjIba97KosW0qWoEwe+LhtGSwvyAfUMVU=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpq1v9RMOS+5NJhMhnNzjem8pcjkKytbKMU5qvP 5/6iezCtgmJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaatb/QAKCRBIeX6hnBm+ 0ZY3D/9rQjv8EwdZ7FBpryZzbb0E2hbb4nuTY55ZSGcTPigSG395Y9l+ZE83g4vYMJUk4MFyiJu GJpRRQ1bhJIUM8UNwFIBc3LFvl2/zUFMLYRoDUyCkFpaHa/2vroQIetWFwF2rHvsYv9T9kImtP4 /IdI6NSq8MwL/X/gtElYxHCCyvGC7tZdxcIlAz4ynZXkyuKh8tRE14b4Zn20XCNPixNZUkIZbL2 EGmrc25+/B52XPtTnHF8nSamC8QfsRWjg8EXGYwH+M91c9LiiL79CzDVoxqJ5kX+KfI5cixZhFD C8vYNgoh/9qGrROwpwZzrI3y8G44H1rEEo8E0oPvONnTKZ3k0UBAiTx5EFxLaf+gx5UgeTj4mxx 8ngPXyliJMJG+3ThKHIA3q/OTmYJyzCAQn0LO04KkdjYPLYEzTtxHg/sMsrnuTZ3N5WjbDaVvVL Bm3PksXUJyJ8wEuHdhgsSYnXTWHWiX6SlURwZw11X5TiJHjpjLZ50EFn4yfEdEH43eKpS2Io6K7 DBpjFf96qaPgAxtTjIr1mhJ17VdidrZbYot5krJi5iX9FAQyCiEMUGfLxKcdLoUDXRQRulQ++CA JiSp2C/2St2UuHLt1JRoJDI9s2aJK3zsm6vxQKNEAaHtLL0G0xtd4PU/IeECN8/Er9X09IRdGKi XUZi8+ZiN
- grfqAA==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: -----
+Content-Type: text/plain
 
-Document the new "--cover-letter-format" option in format-patch and its
-related config variable "format.commitListFormat".
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
- Documentation/config/format.adoc    |  6 ++++++
- Documentation/git-format-patch.adoc | 11 +++++++++++
- 2 files changed, 17 insertions(+)
+> Patch series summary:
+>
+>  * patch 1: Introduce the ivec type
+>  * patch 2: Create the function xdl_do_classic_diff()
+>  * patches 3-4: generic cleanup
+>  * patches 5-8: convert from dstart/dend (in xdfile_t) to
+>    delta_start/delta_end (in xdfenv_t)
+>  * patches 9-10: move xdl_cleanup_records(), and related, from xprepare.c to
+>    xdiffi.c
 
-diff --git a/Documentation/config/format.adoc b/Documentation/config/format.adoc
-index ab0710e86a..151e574052 100644
---- a/Documentation/config/format.adoc
-+++ b/Documentation/config/format.adoc
-@@ -101,6 +101,12 @@ format.coverLetter::
- 	generate a cover-letter only when there's more than one patch.
- 	Default is false.
- 
-+format.commitListFormat::
-+	A format string that specifies how to generate the commit list of a
-+	cover-letter when format-patch is invoked. This config is coupled with
-+	the `--cover-letter-format` format-patch option command and they both
-+	accept the same values. Default is `shortlog`.
-+
- format.outputDirectory::
- 	Set a custom directory to store the resulting files instead of the
- 	current working directory. All directory components will be created.
-diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-index 9a7807ca71..42d2633860 100644
---- a/Documentation/git-format-patch.adoc
-+++ b/Documentation/git-format-patch.adoc
-@@ -24,6 +24,7 @@ SYNOPSIS
- 		   [(--reroll-count|-v) <n>]
- 		   [--to=<email>] [--cc=<email>]
- 		   [--[no-]cover-letter] [--quiet]
-+		   [--cover-letter-format=<format-spec>]
- 		   [--[no-]encode-email-headers]
- 		   [--no-notes | --notes[=<ref>]]
- 		   [--interdiff=<previous>]
-@@ -321,6 +322,15 @@ feeding the result to `git send-email`.
- 	containing the branch description, shortlog and the overall diffstat.  You can
- 	fill in a description in the file before sending it out.
- 
-+--cover-letter-format=<format-spec>::
-+	Specify the format in which to generate the commit list of the
-+	patch series. This option is available if the user wants to use
-+	an alternative to the default `shortlog` format. The accepted
-+	values for format-spec are "shortlog" or a format string
-+	prefixed with `log:`.
-+	e.g. `log: %s (%an)`
-+	This option is relevant only if a cover letter is generated.
-+
- --encode-email-headers::
- --no-encode-email-headers::
- 	Encode email headers that have non-ASCII characters with
-@@ -452,6 +462,7 @@ with configuration variables.
- 	signOff = true
- 	outputDirectory = <directory>
- 	coverLetter = auto
-+	commitListFormat = shortlog
- 	coverFromDescription = auto
- ------------
- 
--- 
-2.53.0.5.g1a4ba6dc33
+Is this topic still viable?
 
+We had to stop merging this series to the integration branches as
+another topic <cover.1769424529.git.phillip.wood@dunelm.org.uk> with
+smaller footprint was making conflicting clean-up.  Since the other
+topic was merged at 5465d368 (Merge branch 'pw/xdiff-cleanups',
+2026-02-20) a few weeks ago, we may want to resurrect this topic by
+rebasing on top of a more recent 'master' branch.
+
+Thanks.
