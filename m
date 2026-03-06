@@ -1,41 +1,67 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB56934E745
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 18:00:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF2D3B8934
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 18:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772820056; cv=none; b=cToHAdh64fiQ9e/N8G7z4ZOtkR2GBD7p6D3Ipg9ftDv5DvLNhzl/CwRqHYMstrzQvvYn9fElYADJvp8GMpxZNcu8v0lOIAy2ce8nRVXquhdc31RZy9BMpgM+kS5advn/qBJIAPJRGZlDzu/iAvmz8jQuQKHYJc5dA/EptAJaEGk=
+	t=1772820143; cv=none; b=Jk2j17RyLIqq0lCWZvLSFurwwLKkUIBgutUn5rr1jlGUdwjpJkdn4Urn/K71T209gq85xs1eqlvIYewsvc9IEf61adpb1D/rfX9SLAubqsExmPmZ+eQH2YXEtoraOpt+8806nV+ZEm+UE8FkViEe6Fia5fTKiPOZB/vJ/+mOyaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772820056; c=relaxed/simple;
-	bh=YTJ8rK9wYC4eWq4t5hNG4sIXq7J+4IeJc/fAGml42Ts=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RLtedxmm/2miJ0kvj3pdElS2bU8UwEye7FBoEtbH10hHBfGPvdvHaOa2fXw9FcHnb+muGcDEVAP0er+ck3cLq26l/nOJJVdv3xEN7xQVAmqEB16/Ohv469pG3ttaQh8VEtjeErvCgN0lehnBXrvaWw9vb2LkKHJi+NfZ2u6xb7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Ob4S3qMC; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1772820143; c=relaxed/simple;
+	bh=quuVgXTVzdNsXyCh4vPFuslxwbmiUa7+q8LiWW4gDqk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=V7US1RZHIEy2OGajpN5EFPh2XbboVrmPWvPnUGVEfT8PC7CyRwii+FLRqyw6qzh4dDF+GpPH8GijWGDUeQaSM4+STBnUWz5xoetX7C8+95jjT1v2DWTs7KHc4dwWBSwq6AgUgPO7cjWMWQlyRQHbjjehS+rbtd3MupCUMb2QUY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jnSni/3G; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Ob4S3qMC"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id yZTmvpOOxWlIOyZTnvh32G; Fri, 06 Mar 2026 18:00:51 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1772820051; bh=zNqv31ECLu11kCUK45oDtILh/t6w3fOIvpk86IesQIs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Ob4S3qMC9RBuMM8dXlhubQncgvJfPZDdZsLBN+N5OWKdvJPz41THNegv6Wmr34SqW
-	 0siircn4acYDbPnfm6r1I5PnHGcTRZW8I7BJULCLLpqq3qj/hiOapVs+dsdgC+FLLZ
-	 tGJER5RSujoUdhfBRiFgB4juGxr6fpHuFafLhQYmzImqyWygRK+64BMypYU+6ggEu5
-	 nLYljqf9yep567BB8LF9hoH4ffYYI9O5NVid2ZIqpw+AIin2NvfrV9pLX0srjn7TlL
-	 bhEYgpdCuUB7PYJjUla8a+yT/pNxzO1m3ZzsqrdnCn36c6AzrI7pzvWJjb6MDY8kyR
-	 2eC1cxbAKIZWg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=atcRCjZV c=1 sm=1 tr=0 ts=69ab1653
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EKwWsC6efcy-cWEmJCQA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <d5a22245-662b-4caa-9ed6-0e981f9e0d37@ramsayjones.plus.com>
-Date: Fri, 6 Mar 2026 18:00:50 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jnSni/3G"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2ae3bd422d2so1663075ad.2
+        for <git@vger.kernel.org>; Fri, 06 Mar 2026 10:02:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772820142; x=1773424942; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=F7/uEWW4dz5LEYNopqBtFNp0nZOvaYac3O501QStSOc=;
+        b=jnSni/3G2Bxx16bubIqNVt77zeTItnD8zBafzNE+xhZvGAXqcZ94MXCo7mdT4SfiCU
+         Y7qtEnrlyFrQAIHA6Pf89UNUh5XD+V+HhYuJTA0Mfbu61LPGtDOiviDgn/JR8xTHM6Jm
+         VjjOz2zIMDKhskOb2to/n56LcYfSbqjvv4fm5V9dNZNKTo2DgVoflmDfEmUqjWSQpQdQ
+         WvPiX5JmsCKiTsVCgdo9MhnwpXzrXqTq+52orFLBR9hhPd9qq2jGwUq6IBJMhDZH1nLT
+         KBasj7waMXTwjF2Urc1QX52gTFKDvNm8wJoA2oS89qtfmSNamnqz5CqLIOuSKsLkVWt8
+         kvzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772820142; x=1773424942;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F7/uEWW4dz5LEYNopqBtFNp0nZOvaYac3O501QStSOc=;
+        b=B/Tprnl2hVyj0BtgYHF15Dyi0DDpDykEyfRrJdKcUn4us0ZTfuc8/sWV+JAzdPskUQ
+         GSvBc7U1awsxAjRpi1vlKmLiNLYRUmxqbMo3j9hdP9dJ0YbTEUm0z5Mu41vM1UmjVcIC
+         XWDsT9C4BRfs4swwhgpNk7INJRXUV7ILPbPfG5Ay1U3yVAjtEq5u4tVawTgEXKML2CvU
+         1wGPkbebZWDfoYfc+MarQphlp5FB8jvx2ycdHTXEx/qeNsOa0Gu4gtwyBhBGHGxzMqN2
+         ryUDYLLQ9oZTbUgxcb00syou4RBQWDBO3dNF4PYR4J/sBap4xtU8o9kVjFSTO8UxdH7F
+         sGSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUohlUY2eDxw8eYDVGs4vETyQ/oRgtwnoX7iRPPiJTLIDVUN4R4u4OIH2akhgxZw4vIUGE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3TAlSWaVjFUPA9xOdrSjP59dc07kPB/30aeBcf/P6qrTIvdJe
+	xnlMy+hS3T+NyvcZEyyV3zvpexzaLnqM793Y4MfNbNoWll9w+LOW0aBsxzBDBQ==
+X-Gm-Gg: ATEYQzzoznUNee+/Qum8ajYhnz8K3R9PN+sdJqS6321YSqFZL7Hu/kj7dRp47+7RsGq
+	lzlM6yRqver+5W1F30YXVKLFGBqvp6oR8lHMSH2Vsjy5bJzaE230PSMve37IVWufIPlOVNZfy8P
+	/P92mKdlNo52Mc+uPSnXED9798mpzZ019iaYRU4pOXk2R7oaui60Duc33H/laCzyFqomWDvSxxa
+	Pq5JXZyOw2UMnsYH5PurK38uabimT2kdkJpVicKsHmWCaoKlwbwf04KqWZsUlkY/HMk85NnKShH
+	rjmi1S/D41hjfGQ+BAfxEKC3jPrJ4e4fQwCuiZFv1NM0IfFxl34BU5eFjoSlazLA0Cba6WDeWr2
+	czt/xYrXxi5sfmT2jAAj41/um3AKAGs8nX5S7zNCrrN3jFhEVNFan3MOUPIgbkpMI3agw9qVpBS
+	LrcI/irdCnFkHO0jOM/0tKOGmup82BZBD8STS1vr1kgj8K78gbdIyFyIV7FwjW8o6SNE3irUcjB
+	f49v7a+wDgp
+X-Received: by 2002:a17:902:c94a:b0:2ae:4999:218f with SMTP id d9443c01a7336-2ae824163ffmr26234735ad.2.1772820141475;
+        Fri, 06 Mar 2026 10:02:21 -0800 (PST)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83e57afesm26565185ad.6.2026.03.06.10.02.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Mar 2026 10:02:21 -0800 (PST)
+Message-ID: <24f40e5a-a5fd-49ec-86e7-921b44e4abd9@gmail.com>
+Date: Sat, 7 Mar 2026 02:02:18 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,44 +69,192 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/4] meson: turn on NO_MMAP when building with LSan
-To: Jeff King <peff@peff.net>, Jacob Keller <jacob.e.keller@intel.com>
-Cc: git@vger.kernel.org
-References: <20260305230315.GA2354983@coredump.intra.peff.net>
- <20260305231305.GD2901305@coredump.intra.peff.net>
- <796110ee-d795-4445-9d82-7026370a88cf@intel.com>
- <20260306162513.GB3483423@coredump.intra.peff.net>
+Subject: Re: [PATCH] Refactor 'trust_executable_bit' to repository-scoped
+ setting
+To: drona <dronarajgyawali@gmail.com>, git@vger.kernel.org
+References: <20260301190017.53539-1-dronarajgyawali@gmail.com>
 Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <20260306162513.GB3483423@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfONjWSScHXDZ79If8TaHnQKIQirePW740NDCXVNcIyAjk04sFtZHFrgyzzSzBVu1hUegSEiAxEwCQziYo5krFN0K580sNPdsv7yeF3x/uz1BVcQ7/w/1
- f9YZOW+O2iswGtidEWtK3WAfUGojI95S2e14J7j8aOmO14l4/Clb1gBgorvhmUWoZ1ZLCpl6PQpCx8RtZISs0ws9VkkGw0H1uUs=
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <20260301190017.53539-1-dronarajgyawali@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi drona,
 
+On 3/2/26 02:59, drona wrote:
 
-On 06/03/2026 4:25 pm, Jeff King wrote:
-> On Fri, Mar 06, 2026 at 01:17:24AM -0800, Jacob Keller wrote:
+> This patch moves 'trust_executable_bit' into 'struct repo_settings', making
+> it a repository-scoped configuration. All references in files have been updated to use
+> 'the_repository->settings.trust_executable_bit'.
+
+The original intent of this patch should be sound.
+
+> Why this is a good candidate:
+> - It's a self-contained global variable that only affects file mode logic.
+> - Low risk: changes only impact mode calculations and related apply/update
+>    operations.
+> - Makes Git codebase more maintainable and prepares for future multi-repo
+>    support.
 > 
-[snip]
-
->> Also I think this might be somewhat less flexible than Make since you
->> can't forcibly enable mmap even with sanitizers enabled. I suppose thats
->> not a big deal since enabling sanitizers already has a high cost.
+> - Manual sanity check with a test repo confirms executable bits behave correctly.
 > 
-> I don't pay much attention to the meson support, but yeah, it looks like
-> there's no equivalent to tweak the NO_MMAP knob independently there. I
-> doubt anybody is clamoring for it.
+> Signed-off-by: Dorna Raj Gyawali <dronarajgyawali@gmail.com>
+> ---
+>   apply.c                |  4 ++--
+>   builtin/update-index.c |  2 +-
+>   diff-lib.c             | 10 +++++-----
+>   environment.c          |  3 +--
+>   environment.h          |  1 -
+>   read-cache.c           | 10 +++++-----
+>   read-cache.h           | 11 +++++++----
+>   repo-settings.h        |  6 +++++-
+>   8 files changed, 26 insertions(+), 21 deletions(-)
+> 
+> diff --git a/apply.c b/apply.c
+> index d044c95d50..2bcb22a4bc 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -3838,8 +3838,8 @@ static int check_preimage(struct apply_state *state,
+>   		if (*ce && !(*ce)->ce_mode)
+>   			BUG("ce_mode == 0 for path '%s'", old_name);
+>   
+> -		if (trust_executable_bit || !S_ISREG(st->st_mode))
+> -			st_mode = ce_mode_from_stat(*ce, st->st_mode);
+> +		if (the_repository->settings.trust_executable_bit  || !S_ISREG(st->st_mode))
+> +			st_mode = ce_mode_from_stat(the_repository, *ce, st->st_mode);
+>   		else if (*ce)
+>   			st_mode = (*ce)->ce_mode;
+>   		else
 
-Ignoring old Cygwin, IRIX, IRIX64, Minix, Nonstop and OS/390 set NO_MMAP
-in the config.mak.uname file. I suspect none of them are using meson to
-build git, so it shouldn't be an issue. (although I don't quite know why
-I suspect that!).
+You can run git diff --check before committing. There's an extra space 
+here.
 
-[NOTE that NO_MMAP is not set in GIT-BUILD-OPTIONS, so ...]
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index 8a5907767b..7917bd286f 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -293,7 +293,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
+>   	ce->ce_flags = create_ce_flags(0);
+>   	ce->ce_namelen = len;
+>   	fill_stat_cache_info(the_repository->index, ce, st);
+> -	ce->ce_mode = ce_mode_from_stat(old, st->st_mode);
+> +	ce->ce_mode = ce_mode_from_stat(the_repository, old, st->st_mode);
+>   
+>   	if (index_path(the_repository->index, &ce->oid, path, st,
+>   		       info_only ? 0 : INDEX_WRITE_OBJECT)) {
+> diff --git a/diff-lib.c b/diff-lib.c
+> index ae91027a02..894358c8b0 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -160,7 +160,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+>   
+>   			changed = check_removed(ce, &st);
+>   			if (!changed)
+> -				wt_mode = ce_mode_from_stat(ce, st.st_mode);
+> +				wt_mode = ce_mode_from_stat(the_repository, ce, st.st_mode);
+>   			else {
+>   				if (changed < 0) {
+>   					perror(ce->name);
+> @@ -193,7 +193,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+>   					num_compare_stages++;
+>   					oidcpy(&dpath->parent[stage - 2].oid,
+>   					       &nce->oid);
+> -					dpath->parent[stage-2].mode = ce_mode_from_stat(nce, mode);
+> +					dpath->parent[stage-2].mode = ce_mode_from_stat(the_repository,nce, mode);
+>   					dpath->parent[stage-2].status =
+>   						DIFF_STATUS_MODIFIED;
+>   				}
+> @@ -262,7 +262,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+>   				continue;
+>   			} else if (revs->diffopt.ita_invisible_in_index &&
+>   				   ce_intent_to_add(ce)) {
+> -				newmode = ce_mode_from_stat(ce, st.st_mode);
+> +				newmode = ce_mode_from_stat(the_repository, ce, st.st_mode);
+>   				diff_addremove(&revs->diffopt, '+', newmode,
+>   					       null_oid(the_hash_algo), 0, ce->name, 0);
+>   				continue;
+> @@ -270,7 +270,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+>   
+>   			changed = match_stat_with_submodule(&revs->diffopt, ce, &st,
+>   							    ce_option, &dirty_submodule);
+> -			newmode = ce_mode_from_stat(ce, st.st_mode);
+> +			newmode = ce_mode_from_stat(the_repository, ce, st.st_mode);
+>   		}
+>   
+>   		if (!changed && !dirty_submodule) {
+> @@ -338,7 +338,7 @@ static int get_stat_data(const struct cache_entry *ce,
+>   		changed = match_stat_with_submodule(diffopt, ce, &st,
+>   						    0, dirty_submodule);
+>   		if (changed) {
+> -			mode = ce_mode_from_stat(ce, st.st_mode);
+> +			mode = ce_mode_from_stat(the_repository, ce, st.st_mode);
+>   			oid = null_oid(the_hash_algo);
+>   		}
+>   	}
+> diff --git a/environment.c b/environment.c
+> index 0026eb2274..861ef084dc 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -41,7 +41,6 @@
+>   static int pack_compression_seen;
+>   static int zlib_compression_seen;
+>   
+> -int trust_executable_bit = 1;
+>   int trust_ctime = 1;
+>   int check_stat = 1;
+>   int has_symlinks = 1;
 
-ATB,
-Ramsay Jones
+But the_repository itself is a global variable, isn't it?
+
+If you understand what “removing global variables” means, you should 
+grasp the direction we're heading:
+
+	passing global variables -> passing context
+
+For example, in
+
+ > @@ -160,7 +160,7 @@ void run_diff_files(struct rev_info *revs, 
+unsigned int option)
+ >
+ >   			changed = check_removed(ce, &st);
+ >   			if (!changed)
+ > -				wt_mode = ce_mode_from_stat(ce, st.st_mode);
+ > +				wt_mode = ce_mode_from_stat(the_repository, ce, st.st_mode);
+				perror(ce->name);
+
+A more appropriate of passing value could be something like:
+
+wt_mode = ce_mode_from_stat(revs->repo, ce, st.st_mode)
+
+> @@ -306,7 +305,7 @@ int git_default_core_config(const char *var, const char *value,
+>   {
+>   	/* This needs a better name */
+>   	if (!strcmp(var, "core.filemode")) {
+> -		trust_executable_bit = git_config_bool(var, value);
+> +		the_repository->settings.trust_executable_bit = git_config_bool(var, value);
+>   		return 0;
+>   	}
+>   	if (!strcmp(var, "core.trustctime")) {
+
+I didn't think it through, but my gut tells me there might be some weird 
+variable overwriting issues here.
+
+But more importantly, I feel that the changes here somewhat undermine 
+lazy loading behavior. Variables in repo_settings are lazy-loaded, 
+meaning you cannot read their values via actions like 
+repo->settings.trust_executable_bit because they are not loaded until 
+needed. The function prepare_repo_settings(repo) should be called to 
+load the values.
+
+However, the change here appears to manually assign a value during the 
+global config parsing phase. I believe this is incorrect.
+
+For more information you can look through 
+https://lore.kernel.org/all/48821a3848bef25c13038be8377ad73e7c17a924.1771258573.git.belkid98@gmail.com/
+
+Regards,
+
+Yuchen
+
 
 
