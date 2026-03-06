@@ -1,99 +1,127 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696C233C188
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 18:55:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C21123D2AB
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 19:33:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772823325; cv=none; b=VgbXpl5rSaObLjmWMZMMs0GmUPr7vTU6zlcad+XXlaXuVX9mNbOVin6o21xgw8K8ao7SFXeh57LZj6t1A/Y4iIKuLBS6lXhBExceVx15Z37TTW+1DxswQlONgyTypB6CHC+Lc2MjrZktZbjUM3RR1Ad2KPW0o6bravWunI8ONHo=
+	t=1772825594; cv=none; b=GfpU3+feGzCtYyaQnjUwlg5gdxz1fC/RQqn20eRvvDjaQgwUXdk81xBbQLQFhHKL/RBSJYruzXbOArcZKFA1+fPvnUfN6jV24uXdt9CjZN192k4mMeO/C7OwAFf07WnOyr2TGX1DilGfXMQZGvdcla2+pNfaK8+WN4ANF/oilUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772823325; c=relaxed/simple;
-	bh=KtTglE3ij3v9fVihtWKBOfwMblm3/8YfZL6maK3fmd4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AKoAD1DqQnrKy0tykMGHFwX7BjpOzDeNWwU6yWUeeDqiMgJ/xEMc6NlbNhTIOsc52ivmLTw1/crrbWkMwv+pcEihNzHFAXs6mSgez7ij95RgrWaP1eb+Zh2SkplUa8guT1ERrXKfVx8A+MBgMeVU8VACPrk4/5cC1SG1NKNfJPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=W2eg25N0; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1772825594; c=relaxed/simple;
+	bh=fkB9SsyAHttJ5hHRsZn2Xq2FHLPRaB9ImZIaQLB38SY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rmE+K2E3onWQuE4MLWo3BmKZ0gI5jtSp4bQtibvXiGuifFVJj2vq6oDhMBPzDhUd4Y6BMY83c82S4/6QyyYuwoW7RIuQqVSjJJ2H+KAd5XZ/oiEEbghTxCL1LaZxmXVpd0gW3AwNYJ/LSy3aPAJLZSc9U6AlRP1lCPk3HAeIlT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LAjI9IUi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pDvmKvBt; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="W2eg25N0"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id yaKVvpZWUWlIOyaKWvhBWL; Fri, 06 Mar 2026 18:55:20 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1772823320; bh=Kh596J6KuAB5y7wAeoVcNPC8Ftab9OtS15umzQOyzkE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=W2eg25N0itxNZtayBUK4yCbKRSamXb5o5andoODun3H+7vswrHh7fIvsSNlJUHciJ
-	 0/+/glKASJR28/7e0VlsloUyxStZ5gtk9XAheoGzo9l9YRz03luGrhokVMtaKB9HOk
-	 mxET0vHkytnAoGMoi1m+9GIq013bSX/IFZYyesqQ2FcmVNe9ZJk0b2+BPqtcZgwpmW
-	 bwuqHw02nhzlZ56i+Jq20xDgtnKcS5hy3iMhSJqk1I6/mtT9EBz5NIfSPkZ524oXR7
-	 s4l7tDEq2e8PpteYH3E85M14bQlcsAKKxU8VQgrvmUXBSupNAxnZC14Les6hGk/Wtv
-	 Rilb9Ixwi1DUw==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=atcRCjZV c=1 sm=1 tr=0 ts=69ab2318
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=pLag_ZRrtG5cnYjjjQgA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <c3e66e36-cba0-49d3-b2a6-d65367f4be0f@ramsayjones.plus.com>
-Date: Fri, 6 Mar 2026 18:55:18 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LAjI9IUi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pDvmKvBt"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A0A4C1400112;
+	Fri,  6 Mar 2026 14:33:12 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 06 Mar 2026 14:33:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772825592; x=1772911992; bh=grtusCNxII
+	OOdSUe2dmsFM3c4xfOQRizIQwNuKHsaeI=; b=LAjI9IUivINWd3LKtENAHnaGB4
+	b10RiPjiiDj8/h2mlhjwiIld5Oq4ul0Z9dcd+w6GYEmr1YJ1vVd2S89sIWhlLWt4
+	B3u630fEqG4ekz25tkYhnyUCDO9UH7fLKven0nDyWOw/MAJ5Ka4nb8gD/2Uhn055
+	eXhgTOrmiKplQ0iHrjevIbXFRBY/89S9WSUkD09kFwinpi2w63t9aqbSyxSe5QIo
+	vJhA9TMIdmQjBuvoFfBfB3DojBewm5NdkTCB5hraaR4vKHec/Jz4o0dICsBrdliI
+	ablzDiRSyXBElEiSTSeu/k8m1IG2sjpLqY4J7+zjTWIFDBiCDLIwntHnOauw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772825592; x=1772911992; bh=grtusCNxIIOOdSUe2dmsFM3c4xfOQRizIQw
+	NuKHsaeI=; b=pDvmKvBtl30kldTWF8BeZ9DWNSgwguTHr1xnaPe2sQkG6nHE9az
+	7Knr7UEbB5jGN6loIISv4mmYbD8Zw2RVV68hqHwLHuCQ/Rbffc7KGhow0IUe7AkD
+	KC43Sz9UxIQtyFF0xaPHvlMqmHSYYNIFOV1GRPV+vGEskJZiOoxPSPbPVlryni+z
+	PALcZFAMwN5hSt4gUzAkRkrwGUTZMf0pBbq5pt0yP9TPfDsKvYtdWqU05jCNVSyT
+	YBePT5qw/Faxmh5Dj7qltU0A4qZ8cD08rXNacxTLAnXrmNxS5jTiOfsE4jB1UGZM
+	M1KQtpXtlE4ez2reEfYz/meBbvyDGPQBDBQ==
+X-ME-Sender: <xms:9yuraXI29-IYKfFh5cYADYXnHhWtce8uxkE529XLHjgYHlpn9mlZKg>
+    <xme:9yuradt6-P1qDbW35nKoOlJ7ceYWjndWahJFw7TJxlcHxU2RLSwLqkwekrYIdYp1r
+    c90c4x2slylhh8jBxX0uAwRR5CUALwCORBYerX5h7bIxc0rnn4Y5O4>
+X-ME-Received: <xmr:9yuraTXmLhSyDg6kYdCbgixzbf9lJc9zfPTb-cq7pas1-drmHGq8LFmMU7ymYc6wH_NQhphVGd1-kxt_o6vOHa-qol4hpbVhgA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
+    hsthgvrdhnvghtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghr
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprh
+    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheprghlrghnsegsrhgr
+    ihhthhifrghithgvrdguvghvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:9yuraQhYNPdebn_eoPMknu348tcH27cL2VRrKfbez6NyjulxfE-2dA>
+    <xmx:9yuraTrbQOEa87zmA5AhijL9vgjFL-WO7Fy7Oo34DmDGmQkshjqgUQ>
+    <xmx:9yuraeEpraSkhJ4iKasdP1BKv42t-P6a0FQGpDHdKJ6-TKXiHs8stw>
+    <xmx:9yuraQ73zTNBzvJcKnqIeC82dWaN8h2ZaHvrXEazG09Md0zQTZz9PQ>
+    <xmx:-CuraQgSHC3EGaQjl-eOvxiVbPoqUnSPsccTj-BcwIxWUbehrMQWe1Eq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Mar 2026 14:33:11 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Alan Braithwaite via GitGitGadget <gitgitgadget@gmail.com>,
+    git@vger.kernel.org,
+    ps@pks.im,
+    christian.couder@gmail.com,
+    me@ttaylorr.com,
+    Jeff King <peff@peff.net>,
+    Alan Braithwaite <alan@braithwaite.dev>
+Subject: Re: [PATCH v3] clone: add clone.<url>.defaultObjectFilter config
+In-Reply-To: <aaqu44_sDJYcftWd@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Fri, 6 Mar 2026 10:39:31 +0000")
+References: <pull.2058.v2.git.1772672251281.gitgitgadget@gmail.com>
+	<pull.2058.v3.git.1772780113400.gitgitgadget@gmail.com>
+	<aaqu44_sDJYcftWd@fruit.crustytoothpaste.net>
+Date: Fri, 06 Mar 2026 11:33:10 -0800
+Message-ID: <xmqq1phw21op.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] plugging some mmap() leaks
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <b9fa930e-7d5e-47f1-8896-1997cf7c0cdb@intel.com>
- <20260305220214.GB736322@coredump.intra.peff.net>
- <20260305230315.GA2354983@coredump.intra.peff.net>
- <9137fd66-9ac3-42ff-a892-1b6f20b49972@ramsayjones.plus.com>
- <xmqq5x78249v.fsf@gitster.g>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqq5x78249v.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfBw2UhwXVGCW2K10xvHOhMjjx6W64R6HNmPNjxiLC0Epcx8irf8f7PD3np+xWpjgrB5Um0syHoiUCFlXwdsH50OUJMofZUD5pfxNz1GdvbO73X6fD7K7
- 8VgCCPi8c++/cJ3Fz/4CuM9d6kQMQK5SmxvhoxK1LCA6jPMaIuc0RJJJFzi7nj4rz67n33+VzwPYme/YSf8h4IzGu1cQVylEahU=
+Content-Type: text/plain
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
+> We've historically not implemented default filtering for clones because
+> it makes it hard to reason about the behaviour of the clone command.
+> For instance, if I have a script that clones a repository, it almost
+> certainly expects a full clone unless it requested something else.
+> ...
+> We've traditionally placed this kind of customizable configuration into
+> `scalar` instead, which is designed to be configurable and set options
+> for large repositories that would want to control clone and fetch
+> options.
 
-On 06/03/2026 6:37 pm, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->> When compiling with the NO_MMAP build variable set, the built-in
->> 'git_mmap()' and 'git_munmap()' compatability routines use simple
->> memory allocation and file I/O to emulate the required behaviour.
->> The current implementation is vunerable to the "double-delete" bug
->> (where the pointer returned by malloc() is passed to free() two or
->> more times), should the mapped memory block address be passed to
->> munmap() multiple times.
-> 
-> Sorry if I am missing something glaringly obvious, but quite
-> honestly I am confused.  Wouldn't it be a bug to call munmap() again
-> on the same region of memory obtained from mmap() and then already
-> unmapped by calling munmap()?
+Hmph, my knee-jerk reaction to the early part of your message was
+"oh, but isn't clone a Porcelain (admittedly without corresponding
+plumbing) whose defaults and end-user experiences are meant to be
+updated from time to time to help users?" but I didn't realize that
+we have another class, which is "scalar", these days that we can add
+these settings to.  I do not have objections to add something to
+"scalar", but I personally feel that the configuration for clone is
+such a bad thing to have.
 
-Yes. The (second) call to munmap() with the (already unmapped) memory
-region would return -1 with errno set to EINVAL.
-
-The emulation layer does not detect this situation and simply calls
-free() on the given pointer. Hence the 'double-delete' bug.
-
-> Or can the emulation layer cause such a second free() even if the
-> munmap() is done once and only once per memory region obtained from
-> a single mmap()?
-
-No. If you only git_munmap() once for a given memory region, everything
-is fine.
+Do we have a way to defeat the configured filter to say "no
+filtering, we want everything" from the command line?  If not, that
+needs to be addressed, if we were to add this configuration.
 
 Thanks.
-
-ATB,
-Ramsay Jones
-
 
