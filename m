@@ -1,43 +1,43 @@
 Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB7935F606
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 22:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC493612E7
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 22:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772837946; cv=none; b=ia+VT3jKjHyG+B0wgULk3rKEqJX+ESPhEVC/cP0sWYZ16Bokdlk7HLGhXYFQEhvEmZV2DKEWgM6avD99nh0H/6on2dJtUfhofE6/tSpZoSalA7YUv0qWX8wMFKgY2bEDWzoxQZvM9sgQDI1vaqOSs+mLDvFvMlhlh3D/SQ7mpiQ=
+	t=1772837946; cv=none; b=LBrru4/neaForYyOKh8RIWW0mZMMn1QKKf8ZtB+jzMnT3BO+tEm0yDAvL5JrhYXuFDBrL6b/MWyaVeY/vUhW0lAmvvpYi+HSV62jWnzP1MhAnUxh81RJemJWT+JeQjDeuTLCvtx+9ITirdk3vc8FCDoQHcs3b6Ne3sJuC8sQLfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772837946; c=relaxed/simple;
-	bh=Ux+hLSwOtIBXFg1U3kgEIaD/YoPkbv0s0f7ueiFpLF4=;
+	bh=/O+NEqE24zFqiHS+Z6mhN1GFQ+sOl8fq0xrR+Da3j3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBamTAeko51qi07iX10vg2ZLXYnq94YrC4+IAdT04ze2MogTC9EtPJgBVEwy1w8Kq3BMdgqf6ZMhixFMx51O08ZsU0Lg5G4ei7m4pEonvasvxPj5L1Tx1O3gD4JDtAxUnjBaTtLLDDFBb6SQpNCDF2Xtd9RfZsCVNlpx0XH9rcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=U4C5++Fl; arc=none smtp.client-ip=195.231.85.169
+	 MIME-Version; b=PJrNnFPWhFayqAK6D3pNqbNzqR0/n2EDA3hWhnzq8at2M0gxD1MI7bvWumDPyrNHBvnIhYg1Pga07FVKTs5AUSXxH7k+enqCxZQ0pihdI5MzMnwDC905vwaVJ3+yAOq/yrP54kXqS11C/BYtgDEUMwZ2aKSpfpweq8LZ7oOCLfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=fZMAZppS; arc=none smtp.client-ip=195.231.85.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="U4C5++Fl"
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="fZMAZppS"
 From: Mirko Faina <mroik@delayed.space>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1772837942;
+	s=dkim; t=1772837943;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=EXW+PM8yqDY784bW0Z2rijGxX96IE7dedIK+Knq6cP4=;
-	b=U4C5++FlnudgxxH3NEhVvfvxkyq0M2FFUatT2E8zViPhjDNHhP+devwR8GopRM8TlmHFBX
-	tWanYCgOSNtG+Y+4hl1hZbDobZHeKZgJqWhfa8Fn7V3cp61+sZQkJQEVaSFgH2/jw58Gvz
-	AYZBFLf5+gSdwnkQEBvyhKqiD2zGlJpba4o/gnavQPh5aqGp/ZkRpt78PANXZkLtXt7TYA
-	zy4eqHKmoV+o596U3UuTVoPkwNjZVj4DeZm10OanB4SCSg9ebzvQoKXMx3pkZsV2EwQfvx
-	QWpVFRLx7s4Pqh4T2P/MfHRLPdJM3UQZ+4DeLg08NrftnUGo5UhDwHO5iH13gg==
+	bh=128HolsTTq5HcuoU/zfGb1214KYhJErWdWpOFTwCp9s=;
+	b=fZMAZppSiE8XGyYj/1700pGyKYTG20Nb9RWye39nM5PYQwjszH6CsdWSRA75jK9BziDWL7
+	WeTpUmSKlbpT3EFjQzO2ILOlMcfFZDvGN3S9OPnE7ucPG7w/bER1d2k1f5BrIRBPbGlZ/c
+	e5olZ07J7X7VNSXn+TuiuidQAxGbscWwyrik0R5i4vz6JA5D3Kw/J2lSOWa45tulRfU1e1
+	R8YVzlrdMi7R+Ytce/90xo3s9tKB9gYjVhLsfTGPdkDYDyju/1BfC+pglMfgA+bhPz4oij
+	yBmJ4Zr+vPSl8f755BcHSLuqXUUg4MgiWp0tUU6oclJuJccdJH+2u3suvTUSwg==
 Authentication-Results: mail.delayed.space;
 	auth=pass smtp.mailfrom=mroik@delayed.space
 To: git@vger.kernel.org
 Cc: Mirko Faina <mroik@delayed.space>,
 	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>
-Subject: [PATCH v6 3/5] format-patch: add ability to use alt cover format
-Date: Fri,  6 Mar 2026 23:58:46 +0100
-Message-ID: <316c9e76ee49d73aff75b63299c970e9f55f79b6.1772837832.git.mroik@delayed.space>
+Subject: [PATCH v6 4/5] format-patch: add commitListFormat config
+Date: Fri,  6 Mar 2026 23:58:47 +0100
+Message-ID: <c522f47e5b574c0c889c40284c71c36158b6bb6e.1772837832.git.mroik@delayed.space>
 In-Reply-To: <cover.1772837832.git.mroik@delayed.space>
 References: <cover.1772232373.git.mroik@delayed.space> <cover.1772837832.git.mroik@delayed.space>
 Precedence: bulk
@@ -46,210 +46,156 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7428; i=mroik@delayed.space; h=from:subject:message-id; bh=Ux+hLSwOtIBXFg1U3kgEIaD/YoPkbv0s0f7ueiFpLF4=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpq1v9m1FnKLvdbxszJYXtjABfp5h6u0z8/2lmo v33OQ0Pr1KJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaatb/QAKCRBIeX6hnBm+ 0XY/EACYWA7ZG/VCgX8B4GCZijispF6J355ZA7DdP370JJwTkA10sErDAdSCO8ekAqk921PalqR WRSYLaq/iojdK2n3l/K40shbD8w/3d6CpF9VHNC5KYHUL6swRlsZDR22Is58y6m6Vf5uOqYGLl6 WSvUE1v7j9SramPJNsoPLUpTH5HQ7yCXjsnPG84yJ5uNkskSyujVzMNTGjjOpjWcfb1nqy3offs UnWPoQL1/vGRkW71JrGLZaXU2U34SAArhzTLnJNG7IyzeXiMvR5ZCA6GLZNuzrxnzZbi5p6DOBN KYQGOc5s0H4LgCmL1Y2BL/gPHQGluuUKZHlRAk/jAeG1VsO2QAPaobZtsqddznljgb2kWrYq1J9 UhK4g2I2FmA5dG/kMhCh1f3of2BDygjPOtefRBd5f7yy9CvWJ44n1zuGqikfJbGi7EWvuHQnFpd 9di9Y+Jb1pneOvvezoZzO2VCHc2IW22QQeX+ejTehuAPw3nd9mSWxvAHOjqdNwUKINLL1Nkyrs7 okQSK24IZBl5QGmrapNTfrTpOPuhT/GMfPc+6AhskkIKj0m9pM9khmDbF2jMDv17i7obb3RE0GK GkFNBNMfxBJhcL4/XwHZQ/x096y9y+2T1TI45+RGSevlEXpBw8kU3Ejl653PlU6MzFuxI8+6W+Q 3RXl6U/eR
- Uupb5w==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5929; i=mroik@delayed.space; h=from:subject:message-id; bh=/O+NEqE24zFqiHS+Z6mhN1GFQ+sOl8fq0xrR+Da3j3k=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpq1v9R7/phtr7TIQiNa02nDq2/DquR6Nz89Job KWVOd4uh1aJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaatb/QAKCRBIeX6hnBm+ 0YoID/4/1HiIfKNf3z3hB7T2cOBiPVie8rkuj1NJriG93ub0s8Uc13S4Tl+OFcpi+WN4l46BiFF pnPJvw27Q36yWIAAmhILIzowOTksEUWVVmLPwBFoNxhWOockEtDAs0yYI69Hz5Obza1y71CAviL a1uXj0XBmakUj7gbBCshKXzSVJlTSTZkKH68iqUbzBjX9CJEpPVzQEMXAGfZhc5hkIsspY2nxha x86Zx/ikvo+hNi6sf/CP4zTif6Tkdh7j/YT/oHxC2OVrrtxTAEMWOUKDhmyYt/yolFAQSM0988O vDuPZHErqHLngF4GVHU6XBsOcVCu4SPwtAMBgYIzQkZHErR1wWGidPybnfDHIiaMNRd7J7uUpO0 DB0M9KabEx4SKoS39GzBt1TfsnQAKPUnufWdZzTZhus2nLUB9h2VmFENvKrpB0JcQ4dTZ6EnfWn RQmzC5/F17ajaksVt5GzTS14SP0XM5vvlAHgR8PF9yEt98qS+vdDKx6v0F9c4abc4dW/fHC2SwE /OTg0Lnzbj3wgKYEw7xt47dutx6lI+qG954+aanLBUO6A/0CKM7q50STA6Cr9/YyOVJRsZ5MteL KaAc5h+eMWGQ/dxomYidMY2M+8G5DcpmSrP2cltLu0CA8y4CwCARqA0J4P4f1BRczwO2U06SfOo ZRS6kuL1p
+ ZTLwMg==
 X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
 Content-Transfer-Encoding: 8bit
 X-Spamd-Bar: -----
 
-Often when sending patch series there's a need to clarify to the
-reviewer what's the purpose of said series, since it might be difficult
-to understand it from reading the commits messages one by one.
+Using "--cover-letter" we can tell format-patch to generate a cover
+letter, in this cover letter there's a list of commits included in the
+patch series and the format is specified by the "--cover-letter-format"
+option. Would be useful if this format could be configured from the
+config file instead of always needing to pass it from the command line.
 
-"git format-patch" provides the useful "--cover-letter" flag to declare
-if we want it to generate a template for us to use. By default it will
-generate a "git shortlog" of the changes, which developers find less
-useful than they'd like, mainly because the shortlog groups commits by
-author, and gives no obvious chronological order.
+Teach format-patch how to read the format spec for the cover letter from
+the config files. The variable it should look for is called
+format.commitListFormat.
 
-Give format-patch the ability to specify an alternative format spec
-through the "--cover-letter-format" option. This option either takes
-"shortlog", which is the current format, or a format spec prefixed with
-"log:".
+Possible values:
+  - commitListFormat is set but no string is passed: it will default to
+    "[%(count)/%(total)] %s"
 
-Example:
-    git format-patch --cover-letter \
-        --cover-letter-format="log:[%(count)/%(total)] %s (%an)" HEAD~3
+  - if a string is passed: will use it as a format spec. Note that this
+    is either "shortlog" or a format spec prefixed by "log:"
+    e.g."log:%s (%an)"
 
-    [1/3] this is a commit summary (Mirko Faina)
-    [2/3] this is another commit summary (Mirko Faina)
-    ...
+  - if commitListFormat is not set: it will default to the shortlog
+    format.
 
 Signed-off-by: Mirko Faina <mroik@delayed.space>
 ---
- builtin/log.c           | 40 +++++++++++++++++++++++++++++++---
- t/t4014-format-patch.sh | 48 +++++++++++++++++++++++++++++++++++++++++
- t/t9902-completion.sh   |  1 +
- 3 files changed, 86 insertions(+), 3 deletions(-)
+ builtin/log.c           | 21 ++++++++++++++++
+ t/t4014-format-patch.sh | 53 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 74 insertions(+)
 
 diff --git a/builtin/log.c b/builtin/log.c
-index 0d12272031..95e5d9755f 100644
+index 95e5d9755f..5fec0ddaf9 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -1343,13 +1343,36 @@ static void generate_shortlog_cover_letter(struct shortlog *log,
- 	shortlog_output(log);
+@@ -886,6 +886,7 @@ struct format_config {
+ 	char *signature;
+ 	char *signature_file;
+ 	enum cover_setting config_cover_letter;
++	char *fmt_cover_letter_commit_list;
+ 	char *config_output_directory;
+ 	enum cover_from_description cover_from_description_mode;
+ 	int show_notes;
+@@ -930,6 +931,7 @@ static void format_config_release(struct format_config *cfg)
+ 	string_list_clear(&cfg->extra_cc, 0);
+ 	strbuf_release(&cfg->sprefix);
+ 	free(cfg->fmt_patch_suffix);
++	free(cfg->fmt_cover_letter_commit_list);
  }
  
-+static void generate_commit_list_cover(FILE *cover_file, const char *format,
-+				       struct commit **list, int n)
-+{
-+	struct strbuf commit_line = STRBUF_INIT;
-+	struct pretty_print_context ctx = {0};
-+	struct rev_info rev = REV_INFO_INIT;
+ static enum cover_from_description parse_cover_from_description(const char *arg)
+@@ -1052,6 +1054,19 @@ static int git_format_config(const char *var, const char *value,
+ 		cfg->config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
+ 		return 0;
+ 	}
++	if (!strcmp(var, "format.commitlistformat")) {
++		struct strbuf tmp = STRBUF_INIT;
++		strbuf_init(&tmp, 0);
++		if (value)
++			strbuf_addstr(&tmp, value);
++		else
++			strbuf_addstr(&tmp, "log:[%(count)/%(total)] %s");
 +
-+	strbuf_init(&commit_line, 0);
-+	rev.total = n;
-+	ctx.rev = &rev;
-+	for (int i = n - 1; i >= 0; i--) {
-+		rev.nr = n - i;
-+		repo_format_commit_message(the_repository, list[i], format,
-+				&commit_line, &ctx);
-+		fprintf(cover_file, "%s\n", commit_line.buf);
-+		strbuf_reset(&commit_line);
++		FREE_AND_NULL(cfg->fmt_cover_letter_commit_list);
++		git_config_string(&cfg->fmt_cover_letter_commit_list, var, tmp.buf);
++		strbuf_release(&tmp);
++		return 0;
 +	}
-+	fprintf(cover_file, "\n");
-+
-+	strbuf_release(&commit_line);
-+}
-+
- static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 			      struct commit *origin,
- 			      int nr, struct commit **list,
- 			      const char *description_file,
- 			      const char *branch_name,
- 			      int quiet,
--			      const struct format_config *cfg)
-+			      const struct format_config *cfg,
-+			      const char *format)
- {
- 	const char *committer;
- 	struct shortlog log;
-@@ -1396,7 +1419,12 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 	free(pp.after_subject);
- 	strbuf_release(&sb);
- 
--	generate_shortlog_cover_letter(&log, rev, list, nr);
-+	if (skip_prefix(format, "log:", &format))
-+		generate_commit_list_cover(rev->diffopt.file, format, list, nr);
-+	else if (!strcmp(format, "shortlog"))
-+		generate_shortlog_cover_letter(&log, rev, list, nr);
-+	else
-+		die(_("'%s' is not a valid format string"), format);
- 
- 	/* We can only do diffstat with a unique reference point */
- 	if (origin)
-@@ -1914,6 +1942,7 @@ int cmd_format_patch(int argc,
- 	int just_numbers = 0;
- 	int ignore_if_in_upstream = 0;
- 	int cover_letter = -1;
-+	const char *cover_letter_fmt = NULL;
- 	int boundary_count = 0;
- 	int no_binary_diff = 0;
- 	int zero_commit = 0;
-@@ -1960,6 +1989,8 @@ int cmd_format_patch(int argc,
- 			    N_("print patches to standard out")),
- 		OPT_BOOL(0, "cover-letter", &cover_letter,
- 			    N_("generate a cover letter")),
-+		OPT_STRING(0, "cover-letter-format", &cover_letter_fmt, N_("format-spec"),
-+			    N_("format spec used for the commit list in the cover letter")),
- 		OPT_BOOL(0, "numbered-files", &just_numbers,
- 			    N_("use simple number sequence for output file names")),
- 		OPT_STRING(0, "suffix", &fmt_patch_suffix, N_("sfx"),
-@@ -2297,6 +2328,7 @@ int cmd_format_patch(int argc,
- 		/* nothing to do */
+ 	if (!strcmp(var, "format.outputdirectory")) {
+ 		FREE_AND_NULL(cfg->config_output_directory);
+ 		return git_config_string(&cfg->config_output_directory, var, value);
+@@ -2329,6 +2344,12 @@ int cmd_format_patch(int argc,
  		goto done;
  	total = list.nr;
+ 
++	if (!cover_letter_fmt) {
++		cover_letter_fmt = cfg.fmt_cover_letter_commit_list;
++		if (!cover_letter_fmt)
++			cover_letter_fmt = "shortlog";
++	}
 +
  	if (cover_letter == -1) {
  		if (cfg.config_cover_letter == COVER_AUTO)
  			cover_letter = (total > 1);
-@@ -2383,12 +2415,14 @@ int cmd_format_patch(int argc,
- 	}
- 	rev.numbered_files = just_numbers;
- 	rev.patch_suffix = fmt_patch_suffix;
-+
- 	if (cover_letter) {
- 		if (cfg.thread)
- 			gen_message_id(&rev, "cover");
- 		make_cover_letter(&rev, !!output_directory,
- 				  origin, list.nr, list.items,
--				  description_file, branch_name, quiet, &cfg);
-+				  description_file, branch_name, quiet, &cfg,
-+				  cover_letter_fmt);
- 		print_bases(&bases, rev.diffopt.file);
- 		print_signature(signature, rev.diffopt.file);
- 		total++;
 diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 21d6d0cd9e..458da80721 100755
+index 458da80721..4891389a53 100755
 --- a/t/t4014-format-patch.sh
 +++ b/t/t4014-format-patch.sh
-@@ -380,6 +380,54 @@ test_expect_success 'filename limit applies only to basename' '
- 	done
+@@ -428,6 +428,59 @@ test_expect_success 'cover letter no format' '
+ 	test_line_count = 1 result
  '
  
-+test_expect_success 'cover letter with subject, author and count' '
-+	rm -rf patches &&
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_when_finished "rm -rf patches result test_file" &&
-+	touch test_file &&
-+	git add test_file &&
-+	git commit -m "This is a subject" &&
-+	git format-patch --cover-letter \
-+	--cover-letter-format="log:[%(count)/%(total)] %s (%an)" -o patches HEAD~1 &&
-+	grep "^\[1/1\] This is a subject (A U Thor)$" patches/0000-cover-letter.patch >result &&
++test_expect_success 'cover letter config with count, subject and author' '
++	test_when_finished "rm -rf patches result" &&
++	test_when_finished "git config unset format.coverletter" &&
++	test_when_finished "git config unset format.commitlistformat" &&
++	git config set format.coverletter true &&
++	git config set format.commitlistformat "log:[%(count)/%(total)] %s (%an)" &&
++	git format-patch -o patches HEAD~2 &&
++	grep -E "^[[[:digit:]]+/[[:digit:]]+] .* \(A U Thor\)" patches/0000-cover-letter.patch >result &&
++	test_line_count = 2 result
++'
++
++test_expect_success 'cover letter config with count and author' '
++	test_when_finished "rm -rf patches result" &&
++	test_when_finished "git config unset format.coverletter" &&
++	test_when_finished "git config unset format.commitlistformat" &&
++	git config set format.coverletter true &&
++	git config set format.commitlistformat "log:[%(count)/%(total)] (%an)" &&
++	git format-patch -o patches HEAD~2 &&
++	grep -E "^[[[:digit:]]+/[[:digit:]]+] \(A U Thor\)" patches/0000-cover-letter.patch >result &&
++	test_line_count = 2 result
++'
++
++test_expect_success 'cover letter config commitlistformat set but no format' '
++	test_when_finished "rm -rf patches result" &&
++	test_when_finished "git config unset format.coverletter" &&
++	test_when_finished "git config unset format.commitlistformat" &&
++	git config set format.coverletter true &&
++	printf "\tcommitlistformat" >> .git/config &&
++	git format-patch -o patches HEAD~2 &&
++	grep -E "^[[[:digit:]]+/[[:digit:]]+] .*" patches/0000-cover-letter.patch >result &&
++	test_line_count = 2 result
++'
++
++test_expect_success 'cover letter config commitlistformat set to shortlog' '
++	test_when_finished "rm -rf patches result" &&
++	test_when_finished "git config unset format.coverletter" &&
++	test_when_finished "git config unset format.commitlistformat" &&
++	git config set format.coverletter true &&
++	git config set format.commitlistformat shortlog &&
++	git format-patch -o patches HEAD~2 &&
++	grep -E "^A U Thor \([[:digit:]]+\)" patches/0000-cover-letter.patch >result &&
 +	test_line_count = 1 result
 +'
 +
-+test_expected_success 'cover letter with author and count' '
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_when_finished "rm -rf patches result test_file" &&
-+	touch test_file &&
-+	git add test_file &&
-+	git commit -m "This is a subject" &&
-+	git format-patch --cover-letter \
-+	--cover-letter-format="log:[%(count)/%(total)] %an" -o patches HEAD~1 &&
-+	grep "^\[1/1\] A U Thor$" patches/0000-cover-letter.patch >result &&
-+	test_line_count = 1 result
-+'
-+
-+test_expect_success 'cover letter shortlog' '
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_when_finished "rm -rf patches result test_file" &&
-+	touch test_file &&
-+	git add test_file &&
-+	git commit -m "This is a subject" &&
-+	git format-patch --cover-letter --cover-letter-format=shortlog \
-+	-o patches HEAD~1 &&
-+	sed -n -e "/^A U Thor/p;" patches/0000-cover-letter.patch >result &&
-+	test_line_count = 1 result
-+'
-+
-+test_expect_success 'cover letter no format' '
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_when_finished "rm -rf patches result test_file" &&
-+	touch test_file &&
-+	git add test_file &&
-+	git commit -m "This is a subject" &&
-+	git format-patch --cover-letter -o patches HEAD~1 &&
-+	sed -n -e "/^A U Thor/p;" patches/0000-cover-letter.patch >result &&
++test_expect_success 'cover letter config commitlistformat not set' '
++	test_when_finished "rm -rf patches result" &&
++	test_when_finished "git config unset format.coverletter" &&
++	git config set format.coverletter true &&
++	git format-patch -o patches HEAD~2 &&
++	grep -E "^A U Thor \([[:digit:]]+\)" patches/0000-cover-letter.patch >result &&
 +	test_line_count = 1 result
 +'
 +
  test_expect_success 'reroll count' '
  	rm -fr patches &&
  	git format-patch -o patches --cover-letter --reroll-count 4 main..side >list &&
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 964e1f1569..4f760a7468 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2774,6 +2774,7 @@ test_expect_success PERL 'send-email' '
- 	test_completion "git send-email --cov" <<-\EOF &&
- 	--cover-from-description=Z
- 	--cover-letter Z
-+	--cover-letter-format=Z
- 	EOF
- 	test_completion "git send-email --val" <<-\EOF &&
- 	--validate Z
 -- 
 2.53.0.5.g1a4ba6dc33
 
