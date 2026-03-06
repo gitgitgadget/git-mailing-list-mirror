@@ -1,69 +1,69 @@
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
+Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2B8386C1B
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 13:14:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE4B21D3F3
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 13:14:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772802879; cv=none; b=DSF89M4a/vWRR44Y3+ODChfLMxQdG7swTdjEGi3V6mIhFfINoSGNqtOksk2siF0oie30Q6lTwBb3IJ6bAqoz5jYjeIO1AfD2jShCaYYRAYsS+glSt6jCBnpqgPFH0bZFwU0BYQclfBtn+TjzdnbS3h6AtaybqLptE/Rz9yiH5Gk=
+	t=1772802881; cv=none; b=Cxep7TGNVVINC6hkV1vt5KZlsRVGwrsEz9qbHY/6my0JjqHl2cZKcxQ4lVKP2Ym2IfCXapcyoPiD4pz9oIepVJ7tvjJE+oCFh6wtH4icAj/b3v/V7uTHowhCoPcC0/rrhmvjEy+NwgWfy0Yi2dTFZEhT0naQOnOG+aeLnH2GLe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772802879; c=relaxed/simple;
-	bh=bJXlbMgoPJF793ZlSZRJmvi1OR/P/EjV4WeprcObcvY=;
+	s=arc-20240116; t=1772802881; c=relaxed/simple;
+	bh=JG/j3BkR8PPIL54auul/F8CNdvtoK6LjPYLDTZ485Ig=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=m+yANxOzOIevRi0wDY9Bb1zHbjImHUf1fduxJplWkvBmgMg+OA3Elud9IPeOZ0rQhxTFYE4WvhtrYTh/SdPXV8AT3d2x4HXfkjaN4JwFud2RFpJGAVhysgvgpqVVvVSrnCp4n2tmdT9BQ6QhU0erVM/NZALxUHXaBIwsPbjQKx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wn1UTKRu; arc=none smtp.client-ip=74.125.82.179
+	 MIME-Version:To:Cc; b=qgCfti/prc1rYcixClNnpcmOXxjSq3+08IFxHF/CEoIr/yjg9gRDLkxHZswx90yy01wWS9r9aWzCeqAHLKMWomY0ByWtRJ2pZg2bEh9hWzgNQHGd9YUqxpDEZLUyqbPe9uTbsJ8YD4gQg2yjUHPSwefCZfeA75SvlO5H+SNsmmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TavBrYu2; arc=none smtp.client-ip=74.125.82.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wn1UTKRu"
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-2ba895adfeaso8035606eec.0
-        for <git@vger.kernel.org>; Fri, 06 Mar 2026 05:14:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TavBrYu2"
+Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-12713e56abdso5702224c88.1
+        for <git@vger.kernel.org>; Fri, 06 Mar 2026 05:14:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772802877; x=1773407677; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772802878; x=1773407678; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=25E520+5q9uUJnBEiFA37I2c5EMJ903vOkJPxzEUJSI=;
-        b=Wn1UTKRu0AXXbFs6S2xXM+3HMEkmeke1rNcMZuq8qgyptcIqt8lXg6K7AnZhXX8Muz
-         38+d6RwPJ83AlPFFZvcpoFK+2jZUfBlAoC/lAdSa23NQQU2s+fzTCFpjvGkE1eYLicfw
-         gtC6XyTwUni89cUj/R8zUsZUjrA9HyHXbpToBOAamuXqo4Qp5rDGJ/FYhFF3MQCv/utt
-         KdaNtDUk9pnbw7NG5aWzoq6fBJVv0ieJybTIZ+66ZGT/Ok5i1yY9yxI/Sr6CXkWuFslN
-         tt6mhFYlvZOrTLOVDtH4tBoRliTsYIfqORMwyEbFD5cktN8YGeOzzijo9xoXHI2f0XwK
-         9Gjg==
+        bh=G8LOrLJj5m0UjkWvfqZjSLNnhMVvWy7eMm6xSBxNUbc=;
+        b=TavBrYu2NSQ5/wJXfo1OdpxIiblBM5Pr1kNjhshSShoqP8LAbmTwqfR6Q+8Ic+t7W0
+         3Zuu1dutDxSh0BIzarT6i6f03h9SVGiszj7drXVExS6kWU8zdbVHevUOk4u+KM4iZM4u
+         4vlZO7N8dauZ6gCcXYucNiaG1FCucDqe/Wc8JCvTTx/UbUzkIJ46CEaZjlSnsONN8J9E
+         hajN88tDzFC0aZK7T8rOMcfXE9Kbw3BCA8BvVSQaL16huI6n34Zf10+Y6IjXo7SRvb82
+         gYzqBdremHvYBokMzYuoV2Wy9EwZz6sHssYiNfohLTzGSYR7seHBCNICX0K6qAzXPdNX
+         +naA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772802877; x=1773407677;
+        d=1e100.net; s=20230601; t=1772802878; x=1773407678;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=25E520+5q9uUJnBEiFA37I2c5EMJ903vOkJPxzEUJSI=;
-        b=TqQ/7jPOV+izntykhLixk2M3syW7HM/Tec8f7+XajwTL8WjDEUFf5KF75Ra6joLn41
-         xOvWzjcJ9R5ZP8pxDksTmQ4Y40oFK+XyvTnCFcjQIDR3nRnQOxhKpzqo5/NDvOMA2ZUz
-         hAnyyIjFveFxtzA9Ax3EKrHUaGksJe1KDDGTAYhwndEQk6pj/h+ZtRabuf+R63ApGBU8
-         nWdTkiITZm/E7ooBUDDW2q3rUxhgIXrYxnBO3KC8RWsJ4Ve4PpX1nrioCGzezrNOAuZM
-         j748UoAYDX+1BNjZAcYl+jIH/XVCXrjG2YOF7njzSFRoArZD39112pj4fB7BNZLIJNYo
-         JNIA==
-X-Gm-Message-State: AOJu0YwotNzc1du6YxIteBily1H04KJOmQIHFU0aP1yQA5EsYcIYbYoh
-	x6TpzKFnaGGNSApOXO5eIAmy305MnSYBd4m/d6dZxG0y3g5w5noMFoWkPCdp4w==
-X-Gm-Gg: ATEYQzz4onFKttdml8hvLwDol2ELDPMHWlB8vtPDgX6iRDznUiOCacWiTJoSR2icMm/
-	Va+kHtvNt69wKQruo/2kpmXdFl6uwo0aXoOWdlKjqAtsbFVJ+NtQOaOj0qrkwESWf5DbGjVQI+4
-	lICyxlfPr0fKphjjKRgY5WyvYLjFa2dS9NK/wlDi319X7uVgBWBK46lNtjkHH+Ena+0tD623Ra9
-	54jmAfP25slH06dbUFkrqMJbB5RN81XDaUFe+Xn+AoLURTtgqs4aeBGeOpGZzivHMULH/X+EOwN
-	5emyXnBND9JvajK3aiBOCoUmdS/q2SvMVdYzolhvcvrrauu7n41Jg9cSuitIGFrA89f2tmQtXdd
-	8KiXeciuzRzsh/WVjtrq/1W0uf1yG6WwP4+HYFlNVjmzWhvLJ7ds4Ijg1rAvezr75YMccqYGatr
-	09d9MUt3z/g54XKk2PEGpoBO8d5Q==
-X-Received: by 2002:a05:693c:2b0a:b0:2ba:6854:8d4d with SMTP id 5a478bee46e88-2be4e02748bmr761110eec.20.1772802876875;
-        Fri, 06 Mar 2026 05:14:36 -0800 (PST)
+        bh=G8LOrLJj5m0UjkWvfqZjSLNnhMVvWy7eMm6xSBxNUbc=;
+        b=H7ErRK1DisZkXstTzK/7xcjfuhmk82YSSi7XJfH+Jx8LJc8YD1XG1xaFf+hcr78kZT
+         pk7UxvwLI8tKhHVg4KVBEMadFtH/zJ66rSNcz9PnwuG5Z3nmoNH4KUOznSADs9zHn+fC
+         +dTemweat/bkpowHVTcMTIWSwkKM1EyKwhY4Halis9yVFY6sXsPzLXmhot5JbAusK5Af
+         I6xpcDbcKDRWLmyMoq2nxStafMBSe3GUdF4pZXoW4AwDRq0lD+veP6BTd4DuX3UdJ1O6
+         jSGqtjapRwuYgq2hPjrwp5bygIi/NBUaOHwrBqNQGPvMFctPnD5EnLMzUhGODwAt9DAJ
+         gZhQ==
+X-Gm-Message-State: AOJu0YwA9ma31ZYOimZ/ymcmvpfCVwZ+qi+oDtdUoqgp8ndLblMp+Hjy
+	bgy1uCfzURZKduSRBpAp0fI8LOIgpQe4HMQh96EEFsPE6yvvYWpanMIi1m1y6A==
+X-Gm-Gg: ATEYQzzp/PMoBarwLs6OgYCQZbAhXcsyQpnfCWycECTcfUu3d10XVgcYpXIfxOhkLyr
+	WKcaCmFpintob85TfJ+Zo8pQY6BA/gi5f2r/gf9ghatQWKB376Xz3v4wD1NLo1/eSpul3Xx3QUc
+	lDM3X/P8UaFJVD4n138hzIixVObDCYkgUeWlJrEbvajECq4CaH1S1zL7say3fd3ve/mNwkhvAUM
+	/RZsY86lZFr/RPti5TBrpbljXeFnRdf/Umnsmbb6i3+YyqcCImdU520dnpUZmJZg8N+Jx2mDYKE
+	HT+0G3fxH8UdR3T1ya8zt+uJdunOYepWCTRXEfnNwyGSmQZaCCe9OTmcZ+OB/foasO3MDtBv+2D
+	FlKYGyWjthLf6udCnR18hWqg4Nrm77NJRFmkOPRi+mRkpxgJlri7GCNIkABKkAR1wTpvnf3gJT1
+	e+4+1nG0ZyrTrSoznTszXMIiTT8NnagLfb2zUA
+X-Received: by 2002:a05:7022:2227:b0:123:36f3:2d2f with SMTP id a92af1059eb24-128bc031fc8mr2698565c88.26.1772802878358;
+        Fri, 06 Mar 2026 05:14:38 -0800 (PST)
 Received: from [127.0.0.1] ([20.171.125.130])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be4f82bc72sm1118067eec.13.2026.03.06.05.14.35
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be4f670062sm1170101eec.0.2026.03.06.05.14.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 05:14:36 -0800 (PST)
-Message-Id: <d51f71708ceb0263c8e10b6d7915f7a426c88f2e.1772802872.git.gitgitgadget@gmail.com>
+        Fri, 06 Mar 2026 05:14:37 -0800 (PST)
+Message-Id: <8f45374007fddfa4cc81e536ae6e095b0d67d5e6.1772802872.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com>
 References: <pull.2202.v2.git.git.1772207333.gitgitgadget@gmail.com>
 	<pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com>
 From: "VALERI Yoann via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 06 Mar 2026 13:14:31 +0000
-Subject: [PATCH v3 2/3] branch: add 'branch.namePrefix' config param
+Date: Fri, 06 Mar 2026 13:14:32 +0000
+Subject: [PATCH v3 3/3] branch: add '--no-name-prefix' option
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,89 +82,82 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: VALERI Yoann <yoann.valeri@cea.fr>
 
-This patch adds a new configuration parameter for the branch creation
-feature: 'branch.namePrefix'. It corresponds to the '--name-prefix'
-option of 'git branch' made as configuration parameter, and behaves
-exactly like it.
-
+This patch adds the '--no-name-prefix' option to prevent adding any
+prefix to the branch being created, whether through the '--name-prefix'
+option or the 'branch.namePrefix' configuration parameter.
 Signed-off-by: VALERI Yoann <yoann.valeri@cea.fr>
 ---
- Documentation/config/branch.adoc |  5 +++++
- branch.c                         | 18 +++++++++++-------
- t/t3200-branch.sh                | 12 ++++++++++++
- 3 files changed, 28 insertions(+), 7 deletions(-)
+ builtin/branch.c  | 9 ++++++---
+ t/t3200-branch.sh | 8 ++++++--
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config/branch.adoc b/Documentation/config/branch.adoc
-index a4db9fa5c8..202c9048b4 100644
---- a/Documentation/config/branch.adoc
-+++ b/Documentation/config/branch.adoc
-@@ -35,6 +35,11 @@ This option defaults to `never`.
- 	value of this variable will be used as the default.
- 	See linkgit:git-for-each-ref[1] field names for valid values.
- 
-+`branch.namePrefix`::
-+	When a new branch is created with `git branch`, use the provided value as
-+	prefix for its name. Can be '@{current}' to use the current branch's name
-+	as prefix.
-+
- `branch.<name>.remote`::
- 	When on branch _<name>_, it tells `git fetch` and `git push`
- 	which remote to fetch from or push to.  The remote to push to
-diff --git a/branch.c b/branch.c
-index c24d7ce823..5fb7280d47 100644
---- a/branch.c
-+++ b/branch.c
-@@ -368,18 +368,22 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
- void add_branch_prefix(const char *name_prefix,
- 					   const char *current_branch, struct strbuf *buf)
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 58631913c7..204d7865d1 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -713,7 +713,8 @@ int cmd_branch(int argc,
  {
--	int value = 0;
-+	char *config_prefix = NULL;
+ 	/* possible actions */
+ 	int delete = 0, rename = 0, copy = 0, list = 0,
+-	    unset_upstream = 0, show_current = 0, edit_description = 0;
++	    unset_upstream = 0, show_current = 0, edit_description = 0,
++		no_name_prefix = 0;
+ 	const char *new_upstream = NULL;
+ 	int noncreate_actions = 0;
+ 	/* possible options */
+@@ -777,7 +778,8 @@ int cmd_branch(int argc,
+ 		OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
+ 		OPT_BOOL(0, "recurse-submodules", &recurse_submodules_explicit, N_("recurse through submodules")),
+ 		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
+-		OPT_STRING(0, "name-prefix", &name_prefix, N_("name"), N_("prefix for the branch to create")),
++		OPT_STRING_F(0, "name-prefix", &name_prefix, N_("name"), N_("prefix for the branch to create"), PARSE_OPT_NONEG),
++		OPT_BOOL(0, "no-name-prefix", &no_name_prefix, N_("do not use any prefix for the branch to create")),
+ 		OPT_END(),
+ 	};
  
--	if (!name_prefix)
--		return;
-+	if (!name_prefix) {
-+		if (repo_config_get_string(the_repository, "branch.namePrefix",
-+								   &config_prefix))
-+			return;
+@@ -1006,7 +1008,8 @@ int cmd_branch(int argc,
+ 		if (track == BRANCH_TRACK_OVERRIDE)
+ 			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead"));
  
--	if (name_prefix[0] != '@') {
--		strbuf_addstr(buf, name_prefix);
--		return;
-+		name_prefix = config_prefix;
- 	}
+-		add_branch_prefix(name_prefix, start_name, &new_branch_name);
++		if (!no_name_prefix)
++			add_branch_prefix(name_prefix, start_name, &new_branch_name);
+ 		strbuf_addstr(&new_branch_name, branch_name);
  
--	if (strcmp(name_prefix, "@{current}") == 0)
-+	if (name_prefix[0] != '@')
-+		strbuf_addstr(buf, name_prefix);
-+	else if (strcmp(name_prefix, "@{current}") == 0)
- 		strbuf_addstr(buf, current_branch);
-+
-+    free(config_prefix);
- }
- 
- /*
+ 		if (recurse_submodules)
 diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 550989a2bb..847a8355cf 100755
+index 847a8355cf..cbaa45330f 100755
 --- a/t/t3200-branch.sh
 +++ b/t/t3200-branch.sh
-@@ -1734,4 +1734,16 @@ test_expect_success 'create branch with --name-prefix' '
- 	git branch -D blob-with-prefix-with-prefix
+@@ -1725,13 +1725,15 @@ test_expect_success 'create branch with --name-prefix' '
+ 	git switch blob-with-prefix &&
+ 	git branch --name-prefix "@{current}" -- -with-prefix &&
+ 	test_must_fail git branch --name-prefix "@{current}" -- -with-prefix &&
++	git branch --name-prefix "blob" --no-name-prefix branch-with-no-prefix &&
+ 	test_ref_exists refs/heads/branch-with-prefix &&
+ 	test_ref_exists refs/heads/main-with-prefix &&
+ 	test_ref_exists refs/heads/blob-with-prefix &&
+ 	test_ref_exists refs/heads/blob-with-prefix-with-prefix &&
++	test_ref_exists refs/heads/branch-with-no-prefix &&
+ 	git checkout main &&
+ 	git branch -D branch-with-prefix main-with-prefix blob-with-prefix &&
+-	git branch -D blob-with-prefix-with-prefix
++	git branch -D blob-with-prefix-with-prefix branch-with-no-prefix
  '
  
-+test_expect_success 'create branch with config prefix' '
-+	test_config branch.namePrefix blob &&
-+	git branch -- -with-prefix &&
-+	test_must_fail git branch -- -with-prefix &&
-+	test_config branch.namePrefix "@{current}" &&
-+	git checkout main &&
-+	git branch -- -with-prefix &&
-+	test_ref_exists refs/heads/blob-with-prefix &&
-+	test_ref_exists refs/heads/main-with-prefix &&
-+	git branch -D blob-with-prefix main-with-prefix
-+'
-+
+ test_expect_success 'create branch with config prefix' '
+@@ -1741,9 +1743,11 @@ test_expect_success 'create branch with config prefix' '
+ 	test_config branch.namePrefix "@{current}" &&
+ 	git checkout main &&
+ 	git branch -- -with-prefix &&
++	git branch --no-name-prefix branch-with-no-prefix &&
+ 	test_ref_exists refs/heads/blob-with-prefix &&
+ 	test_ref_exists refs/heads/main-with-prefix &&
+-	git branch -D blob-with-prefix main-with-prefix
++	test_ref_exists refs/heads/branch-with-no-prefix &&
++	git branch -D blob-with-prefix main-with-prefix branch-with-no-prefix
+ '
+ 
  test_done
 -- 
 gitgitgadget
-
