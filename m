@@ -1,86 +1,85 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C44E1D5CFE
-	for <git@vger.kernel.org>; Fri,  6 Mar 2026 18:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695631D5CFE
+	for <git@vger.kernel.org>; Fri,  6 Mar 2026 18:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772820739; cv=none; b=CekkyG98tVAuThkoLNgYukfeWNOaxyC6wZ06Qy+CQI9t0L1YOxV1USB75cXzbfkbz/kEpkPqeQmSQPpdsSY/V/THyy95HEA59IvV7p76VEM4idHB/4W7qvCVMO+9aX787oh0LlOJk1/7N3CtPkMJxZDy3eJSj43KePK7yextYIo=
+	t=1772822240; cv=none; b=fQtFJb+0v09T3ngY1zqMNG8QibrEFclsc0dSOAzO1Txh8TpDxz1NQ2k65aBhsOY31LDczdZyjdUaSC6ZoYHdjcd69aCjRPcXMk2TEEVS1WCs3ErD3f8MHCiNo106biITCjHN5Y+nxp1PkO75yE8ee8M1zSTHbezR534rOhINz3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772820739; c=relaxed/simple;
-	bh=V1XzUtU4teSNVVPTvA6o0TLjNchpkjL2dPtYFteCalM=;
+	s=arc-20240116; t=1772822240; c=relaxed/simple;
+	bh=oLFNcTeb/7Ll/j8NcsoTMy4UaY20Cb1g5DplgcbTqKY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WsXh9dhUYzhV4Fn3v+XoNcp6WJ0rTOXXB7x8etNWdFQHSm21aSTkqmcwJnShAUtdgcLlySgKC/uaR50yVvqE7h1ldxOos0OAderK2pLOw1c1pyIU7SlCS0qt0DdvzBaHES1kmdtvfQSQrz7Qvh8mm52QkDUnJeVSZcJy0q1zGaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OA5pFo8W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UbvEiGgd; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=nM1JKJ5lEoEYQFI+/xOR76W0+Pa6ZzhmPdW/nXYZ2wHhF1egar7BiejmAocjZexql3TEkUEebv9wlK1JS8y58jJeGIhSpso6JgZhxgOrb3a5Gj7K45xzDzFh3IT6oUQJltJI0pDtZwzLYdAvQOE6RL3pTNBGawdBGyDppa6UOc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JZfgG8t4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gDD59L4I; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OA5pFo8W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UbvEiGgd"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7D3671400199;
-	Fri,  6 Mar 2026 13:12:16 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 06 Mar 2026 13:12:16 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JZfgG8t4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gDD59L4I"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B9DDE14001E4;
+	Fri,  6 Mar 2026 13:37:18 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Fri, 06 Mar 2026 13:37:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772820736; x=1772907136; bh=ybt5lcexs1
-	E56QLhdRz6w0+4f0A0BKvCVOyOqzJkU8M=; b=OA5pFo8WQJbH0uSvpxzHwoymFx
-	gJ7JCTyz/yqxsiCOfEGEkNB3u1aE4zj8jPKuTdm/FlqsbfzIq+OPWb1G+WPitGHm
-	wF/sfwLZS4sgpHpfwkzmj3JfaB39olPMr2nHrPpaGobu1wa0FrSr6Mli/GyTB/9A
-	dqYnFs1fK87RiLKLL6WihXbomRlGajDsjz/6sW7j+jIIx2P5irPbSmKMKNrp2xzf
-	9hJS0PWD+fmaFGtsbENH1ReDMqryeNWNbpVIl4Hh3GUU1HBUPes4msuZ/Xd72cIE
-	ceZDWGoRD0bp1khiFoeD7E/sWDBucK32joU5cY2nlS3xLokZXVpVTfhd2HEA==
+	:subject:to:to; s=fm3; t=1772822238; x=1772908638; bh=YpgDWIrbtV
+	ay3JlfLK0qdYOd1fazLZqkX9MWF02kUmo=; b=JZfgG8t4zXuff+6T5ybm7d+tou
+	DAToDVH/9UDEJKY5zPriXJiALkWbznFCiZgsmf0fIKJtSG7IcIJFbbV6F0BWf099
+	1O8PXUeF4as3OBs0WU/rV3GikDLRaSoOcpvwkwqXhywNlAVe+NE61aLmXZHfrV/U
+	udjDthNijrJqc0gtIzOUh2Yd7vNyvzeXpoY7/HcQssUJCCp1S0UWqs0Olypt7GaK
+	xqk1rlmeeNX2qQGVh8oUEhY6dVS8ALGpoGyBa+41y0fTJsFxzPNzIWioLtGQwW3B
+	L0yQKHuE5W2xCBeJPVyy7DE5MAfIr6DvOE/OpagjmsDcLiDA8c48nTIDEs2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772820736; x=1772907136; bh=ybt5lcexs1E56QLhdRz6w0+4f0A0BKvCVOy
-	OqzJkU8M=; b=UbvEiGgdc2anqIr0hAubMzEDANTFe/M261Q/q2bvS/et/BomG6b
-	Z1yJbqTeNIdiE/ioamXc9bqHEkS3oVo6clDIUcSQRcP+mL6d0SAPhK4oJszuc2mW
-	o+UAh5cmi2RIbqwhPPY5XRxxC+gb7CKuBPrqneiotjS/b6IFt4jmTqDJhawo9nrJ
-	qZSkzwKBbb+8zxkwtHz2svl9CYCoOOzL9WROMHexyQtyj+BBChd7Qz7da0YQOOMJ
-	fZzaA9Io4nvPiSC6EguTd0z5AQz89a/Ao8rZzavvRXCwi+P3AAyBgtHeGw/29WMk
-	mkMNXqejy1Djc/lmOy2Jb5PBYC7ZrMNGPaA==
-X-ME-Sender: <xms:_xiradtKtdQcD8FLLgbw7ca_Prz882Q0loe9bOh6MfZCgrhx7EAGOQ>
-    <xme:_xiraYulI12T1hT9D15qyZSbbzimiociFF8nxwdbZqb4Ei1U7VQv_1N88xg6LM66B
-    0umsx1-83Zp1bgLoV_fOzk1Ik3EHe-fW2YON2J2zNoz6OxLyfR0LQ>
-X-ME-Received: <xmr:_xiraTA6UMBIoJwjQ7GLIJQlyYschOjxz02nFOMGkaNMHkVORP7cpK6B6FmR_EugfgrT_GTRv23Z670GxIHRmk7T1Le597-EpQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieelleekucetufdoteggodetrf
+	1772822238; x=1772908638; bh=YpgDWIrbtVay3JlfLK0qdYOd1fazLZqkX9M
+	WF02kUmo=; b=gDD59L4ICJEN1b0+CPrZ1J/xhINApOrwojFld4G7qzjMWyok03o
+	xQAPQk+FWMgc41Ne9D3gi0evaF0WfYcdaBs4he9QfmwwWNzIgfHFQIrh0gkY057b
+	CDMDB5HHLZ+z3b//jK54VhBp7QaTFt6R5t0HYmHqVyCaMdwPV6BeZWdU+T7M+pJk
+	RmxJ9ARnMI6G2mwPMm9KTZlMyZEp+reHiPs4ej/oYuI8ZmcVnZvlAolbF6KBge5D
+	TBKaMX1g+cpVXahEW0gwx1ssS76eHlbBPUYlt5DdqVhPDDcR+1msx+8dUWOLe4JS
+	6UPqSsUyQDcDb98Tz2541dnIDK5t6rZJ9Ug==
+X-ME-Sender: <xms:3h6raZb1mycYmHXN0whR6aAWQ1T80wgc0bc0A1nu95inJdGj5ZbA8A>
+    <xme:3h6raeNidE_IvERRRaqHrrGJ89oBiNIJwn4o385L-bCYf5xcMVNNBMPI-jA_neP8z
+    U7yEUKIJOAtsKc-M-8ryMS_8aekJiOLgmfbk8pyBAq0NcD3FaxcRg>
+X-ME-Received: <xmr:3h6raWZC6xVN6qM65EqfkHx7DCK6u4wfXXepc3NQsgKyp_4E5bP8u0StuRWqhbZF7Vayyseg3Y7onvpnP94u-X1UhCT5kVbetg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedttdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdr
-    fihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_xiraaNUX8n3fv8rZjniYMNrpiowf4nNHe7pCK6M3nF7cjWR3sV8Lw>
-    <xmx:_xiracxPmgvKJDg58LtC4FjJv4hC6a7vHo9Zm0BMjjtjqDPjr3fayg>
-    <xmx:_xiraaWhwl7gXhT2q0YR8k6AiOsEMBf57rMOEOGdEYACJmnmgBjDEw>
-    <xmx:_xiraeNsD8T7mS0ZUEUIXNMviBdU5Cu5WqYf6bjC2YuX1Rn22QkyMw>
-    <xmx:ABmraQXXuUYAp8gpMFnbEKvLpBf_Jduz9P-XuWgQEPkS9ixL5o7AiYZv>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplh
+    hushdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:3h6raU03cavr5WUZoUXq6v0v-jt3HDU24_pNrS_gZ2c06RpsXjzbDQ>
+    <xmx:3h6raUfNyv_ZAYtnAl9Xc24ISGHjCoBKP_H0By0dRan3HmnhjW5LKw>
+    <xmx:3h6radEXaAg-dQINoDHxOCIx89B6iyAc5ROQsastU8FkDjqLGMbBCQ>
+    <xmx:3h6rad18du9yQ_f4K9lDhAkJ4xeLSrOtuc__PfMUrkQI4jS6LxGPFw>
+    <xmx:3h6rafXFTbCgIqOE7C29VWdvxtsPKRVFQlf5LiXVzxOdedIYzXJUnxT5>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Mar 2026 13:12:15 -0500 (EST)
+ 6 Mar 2026 13:37:17 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  me@ttaylorr.com,
-  phillip.wood123@gmail.com,  ps@pks.im
-Subject: Re: [RFC PATCH 1/2] remote: move remote group resolution to remote.c
-In-Reply-To: <20260305223248.170785-2-usmanakinyemi202@gmail.com> (Usman
-	Akinyemi's message of "Fri, 6 Mar 2026 04:02:47 +0530")
-References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
-	<20260305223248.170785-2-usmanakinyemi202@gmail.com>
-Date: Fri, 06 Mar 2026 10:12:14 -0800
-Message-ID: <xmqqcy1g25fl.fsf@gitster.g>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/4] plugging some mmap() leaks
+In-Reply-To: <9137fd66-9ac3-42ff-a892-1b6f20b49972@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Fri, 6 Mar 2026 04:37:49 +0000")
+References: <b9fa930e-7d5e-47f1-8896-1997cf7c0cdb@intel.com>
+	<20260305220214.GB736322@coredump.intra.peff.net>
+	<20260305230315.GA2354983@coredump.intra.peff.net>
+	<9137fd66-9ac3-42ff-a892-1b6f20b49972@ramsayjones.plus.com>
+Date: Fri, 06 Mar 2026 10:37:16 -0800
+Message-ID: <xmqq5x78249v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,37 +89,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> diff --git a/remote.h b/remote.h
-> index fc052945ee..fa38f951a2 100644
-> --- a/remote.h
-> +++ b/remote.h
-> @@ -347,6 +347,18 @@ int branch_has_merge_config(struct branch *branch);
->  
->  int branch_merge_matches(struct branch *, int n, const char *);
->  
-> +/* list of the remote in a group as configured */
-> +struct remote_group_data {
-> +	const char *name;
-> +	struct string_list *list;
-> +};
-> +
-> +int get_remote_group(const char *key, const char *value,
-> +			    const struct config_context *ctx UNUSED,
-> +			    void *priv);
+> When compiling with the NO_MMAP build variable set, the built-in
+> 'git_mmap()' and 'git_munmap()' compatability routines use simple
+> memory allocation and file I/O to emulate the required behaviour.
+> The current implementation is vunerable to the "double-delete" bug
+> (where the pointer returned by malloc() is passed to free() two or
+> more times), should the mapped memory block address be passed to
+> munmap() multiple times.
 
-It is dubious to carry UNUESD over to an external declaration in a
-public header file, unless it is a "static inline" definition that
-comes with the implementation.
+Sorry if I am missing something glaringly obvious, but quite
+honestly I am confused.  Wouldn't it be a bug to call munmap() again
+on the same region of memory obtained from mmap() and then already
+unmapped by calling munmap()?
 
-Other than that, move looks correct and it is generally a good idea.
-
-When moving functions and types that have been private to the
-implementation of a subsystem to public namespace, we need to be
-careful to consider if the names of these things are specific
-enough.  With "remote_group" in them, they are all good as-is in
-this case, and can go public without giving them "better" names.
-
-Thanks.
+Or can the emulation layer cause such a second free() even if the
+munmap() is done once and only once per memory region obtained from
+a single mmap()?
 
