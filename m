@@ -1,119 +1,116 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7BD12CD8B
-	for <git@vger.kernel.org>; Sat,  7 Mar 2026 21:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772920378; cv=pass; b=GBB5MDTg5daMhutXEthPCSVR1mcshGzxFIMPyVvdqmMVYhnLchCKjlERaL6CaD1NI4L0dibByrzNcQ5KnDDnvu//LPeclu6LHS98bqVz3+R0vY0luLMLmGiDQobb22MDhs7t3pcC4+tQqiM5vFI2B80uGizY/3+DPfKuvJN8hME=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772920378; c=relaxed/simple;
-	bh=POppObKhmb69yPbH7uti7DlHjKlXgYejPF/AThhBAOo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=rfIsKNM1+iKmIA7cPihY8k6WYN82hGuJYzPOjc7HnWpdrNY9w3HQDaWJN40M+KfX72Kei8a/aKa4AtZv7/oM8Uuor91WAatHZRnH0bw2AahTLuKig9ggRje553gF1JJnDTHf/kF+eSTypWQXtIFufHWxEZ5N0uBa7+dIMRvEwh8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jnPSZdES; arc=pass smtp.client-ip=209.85.210.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B35946A
+	for <git@vger.kernel.org>; Sat,  7 Mar 2026 22:01:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772920920; cv=none; b=G7epRRnABd5n1Vlms9R05j/jyjSqzEn7TGebbVQ81IXqU2BdEXkQ/IDw5+2Wb/cBYabs166ocfOwLS5ODXEd2LQR/iozW1rAVLnIQCMmZLkyDTNHL/LIBkfEqa6s2/7MQswK5Pak0qkjwQgpL8meIuYhj7D0091ArP03WZR2It0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772920920; c=relaxed/simple;
+	bh=i09kh+Bxb/wn/20bXL+6DOBkAfXFh0og7xPMhoyeo9Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pnvuy9TixU2WWd1rNsCdSBiLdK1DtQLsidtttWdpXuawi44fEJjeLSK1LHm/ZEbReWneK17VegZyY6Ktajci5JBRdl8zhdxEyo+W8ZjdWzuKWm/Ttar7AY+HhiyeqvmFnXCc7bFjfFDttr+K/FBk/nSrRye55qCt1QR5Kfy7NPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SL1rLFaK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BVQNh0LP; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jnPSZdES"
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7d4c3896e32so5700882a34.0
-        for <git@vger.kernel.org>; Sat, 07 Mar 2026 13:52:57 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772920376; cv=none;
-        d=google.com; s=arc-20240605;
-        b=KcVae5dDP8iyt7uAzIq2pyGyTunrnhlZ/FXdBdobSDLT0PgKRILNlGlCvTcE/fnzIY
-         +qBYIOG6Fv3RQQnv4d3qzH8Ouf4eohi2ynYOYRI1owRC04uln/bIqCDBJ3363Q6JlRu7
-         W+Oh04FBDRgRTpgXkOGgBYI10ygfjnth4iABBB3sHECICwlEeaJokc2KGuFUbHLonQkG
-         cOJSltkp+3AyMse0MRNrER/XaSmswwimU7Bv0+ztzU5tebl8R1AXbYN+0PSQGtEJZU7b
-         /QV7lK28DEUVipqpwEZil+NRk6EjYeY0NJZwbuTAh5HGEw7dfq9Cmw/fRdgNlkQTiRbl
-         PmXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=POppObKhmb69yPbH7uti7DlHjKlXgYejPF/AThhBAOo=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=BoLbMYIxpkI/slgwanzCm6Kfj6P+OpMuJ42n4uqGEBF1REGifIH6WxfOyHmmoQFog7
-         XzGVOOX25SHys1tDNax0W95tTvi4JhHLqGMxlfX49jjEmBwfEeS6jlGWY6qQmzqblDUN
-         WgKjaKBaY2WB5bDD5xsD9ZulFvL++0/hBc7bE9t3RCQtTaPAoIia7sztc0cV3+KgNYwM
-         SfrRVjWT1AygBggvxhNV7FQIDC1G2tdtTe8YbfeCW5vfkXD/zX5BfcgY0x+mdP3uuWAa
-         wJmGuHMNds0qq64xzG8/g9ly4/2XQUDf6BhUMLPgUnWB2LemSdipwtXOXdSjGLC/UEDm
-         +9Qg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772920376; x=1773525176; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=POppObKhmb69yPbH7uti7DlHjKlXgYejPF/AThhBAOo=;
-        b=jnPSZdESbmxTEE2PQbR+RDkxU67pIa233bcbuI30AvhpKcuXF5VtMOOZFSn2P63U0/
-         +DTnPfGVvryjxkjf6G+PWuR+GNgs+ho8IXW5LNBd7CLfYwEzNdZb2lynn5oA9wK55X05
-         e/HEdlezPPsJ3Y2rh6OpFavfe8YYhJOLxucpAvV1bc7/4BXdu1elUPf19hIwjScIiItx
-         kguHGL2in2Iw9aZVwT0j+h0gYk4/k6gc7Dp1yQJe/hwJdjBGFIIZtsfW4Y1V62pl0DTe
-         I5i7NMGSpjXcoE+vz+5SA34psabhne2m2ALTWg2ViVazO5i+3SBbqbdzXUCBn611IKD9
-         WnIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772920376; x=1773525176;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=POppObKhmb69yPbH7uti7DlHjKlXgYejPF/AThhBAOo=;
-        b=NPv3eaX4ureTBfMqVeHfrRN0QgNVD+dBy1FNpzCCNrHwf349P4Ilmv3HPqWgDvi+QS
-         tSHlb6/UUJC6IxgH36wfEwA6Hcbr+LNX+RZWMdyjRaS6483QpaeJ3a/T3oce9mdPZ2ky
-         qdpBp1WFR4TaTfdjeaK/7EtYrmvXmXULu9t9IyUwfOBNxfYF6uVwu9pS9dZII2n7TXf/
-         yU2vZ4LEO6zNcYHJsmxuJmnjSPodCkjkksw04UREWXb15lDpZd0VXU0dD2mlY8qGP7uW
-         du0CqlWZNjqR1iqkADV1wQiBAq44GAKakZreaEZB7Ub4xWEXSzQbt/5QOUsr/Toi+ZXR
-         7VxA==
-X-Gm-Message-State: AOJu0Yxh6TdDD/W3HqH1luGj0apPXmGRyV6OBVHaQ/8ZGZvBPXphHteg
-	z3LnI6Ew625JLKCHwGxG1IlYjbUctrJimGsBs+8E28ROFE7Qk0CUnY0XjpkZEKiUzCFDU3EwCc+
-	PqqpmIC3d9PM6PI455EtDU4T9Zuergqv+uCI+5Yk=
-X-Gm-Gg: ATEYQzzixV0eeiuYT6VejfADumGyTxfROggYyM03oVKy70n6i+mBk21/OsIDgsdUiFj
-	pqrWgFjtxz/p6prQ1/q9PBR02MKcOUorXjKij5gs2NPeOKEXIqwk3Ee5VPVF7WYBZZhvSSDf3JM
-	SNm0k7w4IHRssX+0MuYnYhvViz2uU9XG+cxGhvqZmu2MPvdV7OrG7QlDHbTzKFS7sfEs5Dw926F
-	XkZlMRJsM3ckWXQNQ8C3uacW2jydQJouOL8xgVsrf9PS5q4JLevBuNEODNv4uyf+Jh/60dz+vKX
-	ugl1kf0=
-X-Received: by 2002:a05:6830:6189:b0:7b0:826e:4002 with SMTP id
- 46e09a7af769-7d727003ee8mr4196073a34.20.1772920376428; Sat, 07 Mar 2026
- 13:52:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SL1rLFaK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BVQNh0LP"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 248FC140008E;
+	Sat,  7 Mar 2026 17:01:57 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sat, 07 Mar 2026 17:01:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772920917; x=1773007317; bh=WQvdaMBfeZ
+	l1lg4PRi1UgQq2FdjXsJ+88L53NC60seU=; b=SL1rLFaKnrLJSJFmnxDMF3USod
+	8bdxcjSdJGFHVI40ulPAWbqxp8XP2m9FSFTNiuWy+5TThrS/Vj6BBkm4oiHGkvS9
+	Sw/3g42CHjqNYnKoaYZKhjLaRBg9pkoRtX6oDvQ8ycT9lNBn6lCrZlIUxaa+bVd6
+	IRLBQnDpx0aautAETx6j7IVt9VcmQ7S9slYKz/BRJYh6anSui7gm0atSxhcByLSb
+	cF7G3kZbOY0aneJMIBF14eLGeWIGE7TbqChtGiBaGJVX7pH+GRSyOR7DaxB567Ow
+	MVPPFNIniU9hUrC8jmNKI2NhHcRoWgqyiUbiqjh511Q/QRatAgI1bHEG6pNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772920917; x=1773007317; bh=WQvdaMBfeZl1lg4PRi1UgQq2FdjXsJ+88L5
+	3NC60seU=; b=BVQNh0LPwc3B56ONxC3rBWYl6I6pbvLQV5TmtoRs8w0Pw3Jird/
+	QAfTVzx78jjHQC5Y2v9VwOPGd+22Y/u7JxG9+btnDLtoCi9mFA6dObTkV5Rdgmsh
+	zIuN/QRdWqyTpomCVqwf0U6hiuSIXMhjzTpIMVFxCBQLd5WvRiB+aCRQOqkuRd8b
+	w9/hwuicuRv8nhxZ3q9VuHtJ7+I9EBLD2b71zHlHoRYT3oJ4Ihqiuns3SB8ujhLv
+	Fn/Qh7iez4EiCZdtDNKKiRAu/Tjr1wYaFm7eW8uEu2cS/oXQ4sxFoooZ5xF8SGww
+	dJTluWBdhN09HIEQ3XUYe6BYv+9XHHcfHyw==
+X-ME-Sender: <xms:VKCsaekHnYfFCOEr5e7YOiJEhqkjhuGjgp1KVB5ZFMcUhIyS2rVvoA>
+    <xme:VKCsaYG4kSr8oSVmObi3_GLAsRwla7qvz6oyR-Df8Z0b8G4L7gHAMdlRuThuDT7Wh
+    YtA7mrpfafXVOeMsfhskzgur4nhe2IAWHidHDVCh-uV44u6xxSyFg>
+X-ME-Received: <xmr:VKCsae5Q_-uVUyKQTqlZiadZGRKtRYfLfP1iZPiiBWdL4k7xGj3hbfxS4WMkDlQU8rz6y0WCdxtQfcdRZnjk60D7mSWUBJnwqQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeefgeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjiehtsehk
+    uggsghdrohhrghdprhgtphhtthhopegtohhnthhrihgsqdhgihhtseifohhlfhhgrghngh
+    hfrghushhtrdgtohhmpdhrtghpthhtohepsghirhhgvghrrdhsphesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehmvgeshigruggrvhhprhgrthihuhhshhdrtghomhdprhgtphhtth
+    hopehmrghrtghnrghrtgesgihiphhlihhnkhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:VKCsaYm3gmzqUSh7UrtZFFL-LTYF0dh8qMy0LbgCrFAe-Cz_tK8x0w>
+    <xmx:VKCsaboPjuw8J0v6iO85JNyXdOvXlxez2LQvtW57Vu4cpfncL7RGag>
+    <xmx:VKCsafstY3h03Czy3gLe2jQEDPfo8aYvlGXbQrBGLNCzQvs8q11Fnw>
+    <xmx:VKCsaYFxyN7yDMVgih7bOk77Ckk0dnAHVDvcbmvjkoVR9vKHLu7IhQ>
+    <xmx:VaCsaWuVSBELV3MdcyhKN-bBzsxkN_Vo2p2XHCfMwvCqJAa116r5JYEq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 7 Mar 2026 17:01:56 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Wolfgang Faust <contrib-git@wolfgangfaust.com>,  Birger Skogeng Pedersen
+ <birger.sp@gmail.com>,  Pratyush Yadav <me@yadavpratyush.com>,  Marc
+ Branchaud <marcnarc@xiplink.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/4] run auto maintenance in git-gui
+In-Reply-To: <e17f094f-f869-4cc9-b59c-091b7e61a021@kdbg.org> (Johannes Sixt's
+	message of "Sat, 7 Mar 2026 12:32:45 +0100")
+References: <091e68fa-428d-48b0-bf7d-42b01660d6eb@app.fastmail.com>
+	<e17f094f-f869-4cc9-b59c-091b7e61a021@kdbg.org>
+Date: Sat, 07 Mar 2026 14:01:55 -0800
+Message-ID: <xmqqms0jti24.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADCPJ26F633ftXb_pJrotQNrYCUNXCpBDDP12bBNtkGwudCqqA@mail.gmail.com>
-In-Reply-To: <CADCPJ26F633ftXb_pJrotQNrYCUNXCpBDDP12bBNtkGwudCqqA@mail.gmail.com>
-From: Dana Escoli <dana.escoli.2@gmail.com>
-Date: Sat, 7 Mar 2026 18:52:44 -0300
-X-Gm-Features: AaiRm50AMNKfjyX05NGrAy-qusuqPNbxBxFYnyl52LGDS1mxoHVgdSZkFmfmqic
-Message-ID: <CADCPJ26LU9kXNH04mPk_+u6Y=m-eSEH6ifHzHWN5tkM=pGpwJA@mail.gmail.com>
-Subject: Fwd: Issue with 'git add --patch' after editor closes
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi everyone.
-Maybe you can help me.
-The issue: I'm using the bash.exe from the Git installation in Windows
-10 (git version 2.48.1.windows.1), and when I close the editor after
-editing the hunk, the command line doesn't echo the keyboard inputs
-anymore. Even ctrl+C doesn't respond; but, with ctrl+Z I see that it's
-taking the inputs, but there seems to be a single quote at the
-beginning, messing everything up:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-'2/20) Stage this hunk [y,n,q,a,d,K,j,J,g,/,s,e,p,?]? Only one letter
-is expected, got 'n
+> However, the consequences for users need to be considered. You replace
+> the custom implementation of `git gc` with `git maintenance run --auto`.
+> The latter CAN do a lot more than the former. It turns out, that Git GUI
+> already calls into `git maintance` indirectly via `git merge` and `git
+> fetch`. So, users who set gui.gcwarning to false (myself included) were
+> already prone to occasional inadvertent cleanups.
+>
+> So, users that are hurt by this new change are those where all these
+> conditions are true:
+> ...
+> How many could this be? Not many, I guess. The conservative safe
+> approach would be to treat gui.gcwarning=false as an indication that
+> automatic cleanup is not desired.
 
-(2/20) Stage this hunk [y,n,q,a,d,K,j,J,g,/,s,e,p,?]?
+Hmph, if you are _declining_ to see the warning, isn't it a sign
+that you are getting these warnings and got annoyed enough to find
+out about the settings and turned it to "false" to squelch?  And if
+we make pruning more aggressive, wouldn't gui.gcwarning explicitly
+set to false be a sign that you'd be more likely to be in the
+affected poulation?
 
-In this example I typed "n" (it didn't appear in the console), then
-pressed enter, and after nothing happened, I pressed ctrl+Z and got
-those two lines (notice the single quote before the "n", and the one
-at the beginning of the line) and the 'git add' finished.
-
-Now, if I use the git-bash.exe this doesn't happen. It works fine. But
-I'm using it from Intellij's terminal, and git-bash opens its own
-independent window.
-I tried with notepad and notepad++ with the same result.
-Also tried from cmd with the same result, so I think Intellij has nothing to do.
-
-Any idea why this is happening and how to solve it?
-Thanks.
-Dana
