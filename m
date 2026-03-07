@@ -1,150 +1,146 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0145D1A682D
-	for <git@vger.kernel.org>; Sat,  7 Mar 2026 05:35:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772861715; cv=none; b=KsGA8ZCL+XDVOmfN5yw0H6wQaeeb1VMKnUNQeoZWAbm/X0ucw+jjTB9NufMIDjVojC/5gnarOdnK0jDIycv9KC59hN7hoT/znaiSbNyvwFsv3PYovQBXzM1QUQBue9Jy5zQn7M7BwVY1AEZOr9z4RsOE+Mf4ATQIE5RIY8EVdPA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772861715; c=relaxed/simple;
-	bh=A9sBiDBuyCK45aI6TVOafUs9x2WYQby7Xz0XydCjc30=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mIxzPRZ8rlxwZ9sQUSkKAEUB3tEX3HBOL+AdWWrZNfd2V6QzptiwNe56KMp3+3ghLodKGdWkTPtYw/mA7/No8sti23iE4c8AfH67Aahp7U1FwkZ6YyOW40JB9q0pxA5OVwaIl8TmBLda3E/QaFl3U83ybGiPzazdZ19ocf2avHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vvx5/2GA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RprUWW7i; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vvx5/2GA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RprUWW7i"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1751A1400109;
-	Sat,  7 Mar 2026 00:35:11 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Sat, 07 Mar 2026 00:35:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772861711; x=1772948111; bh=r9nyBobkX6
-	dVzSGLWNdUgCn2Lj4nejqtaukFXu6OlJc=; b=Vvx5/2GASINQ1TMTYDcCDIR1h/
-	RDR7C3xkpwLj0RLkgMZj2q6eA4BJ4CZoUc2omHdYeCP4taS1k8umsc3MdK9EL1UY
-	e80qD7wES+ruJgF9DCey7ooHqSoYtEZfGUPxpq261/VXGdp2tp0Iy29+5KJ74wUb
-	AhzSeIhjOL9o+W75uZIyEi1EUIFpYbaeqK0Yaqad0F1/nS9e8AHmUzSZCkRzn+DC
-	M6IuIVfIIn3M4Msg8S64NTEB4jg0ESjIGW+9Cz+ROWRbPnTWZMfMcvshPXWkmWGj
-	C5PNHVGi4Ou663/OQP6zIeWeS1tS8rSJzdr99+8M9k7wMKrtEMd91NMS4esQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772861711; x=1772948111; bh=r9nyBobkX6dVzSGLWNdUgCn2Lj4nejqtauk
-	FXu6OlJc=; b=RprUWW7iUdok1GZzapLqVcL5tUwN1fMmnsPvEsHp6/n5BAkwhKg
-	FjVhSJtttva2XO4Dyk6OR6JqeGT96a756PUOSLNo+yuFP72gl5aV4Vi747UpFDFm
-	l8M60i7lqDuUsmuuveWA6+It7F1bm2PMKly+JBE0HNSyCc7bmuM8qLbZS2TdvDn2
-	TMJkSgIYUPWaK5PtkgWBmiC8DxHoTVUUksdQMRYR3w1LE3F8aP4j4+XgQX3JUvpV
-	SZiwIyFytB4rcSVUlGpi7t/grzSSGdxt/ZGG4aUUeltAS5NUGQGU7c+bCKqVmCLP
-	cG5gmZf+QRQVtzsp2d+blpgiN6tcDVq+a3g==
-X-ME-Sender: <xms:DrmraS-woigsH2GtitKoqSruCTFAsi1zKCcOdZZLDZFKIUxWcIkMwg>
-    <xme:DrmraZkkEMCkYQlxk6h--W0TSWdPxw76lTieS4lHaTiyG1lqsaS3WVJ-hl48OC4ER
-    lsTPl3agLkMcR1FVCpjZ4rhryRUjsZdYzdyJJfF34ItTn3Oo9OBxQ>
-X-ME-Received: <xmr:DrmraQWe31UlWEFJuZFrg1U7ntEDr7v0iAJhf-2LhpsnLZ_teSR3-e-nycx6iv3AbJePZaHdPZhsHs8HrTQ1CduBY54DKoNUeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedufeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhephefhvdfhkeehieeukedugfeljeetuedugfdukeetvdethfelhffhgfefvdfh
-    feeknecuffhomhgrihhnpehmrghpphgvugdrihhtnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvthdprhgtphhtthhopehjrggtohgsrdgvrdhkvghllhgvrhesihhn
-    thgvlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:DrmraWHwawBlr-0gk1fnSXAWUkGMoBhsRgusPRTWHU4t3_ybn4Pzbw>
-    <xmx:DrmraUc8bhR7LRnmJu_sm2IdRoIdOmE3FgBWxdxItKtoIvrNTyCAcw>
-    <xmx:DrmrafLNh-RL4wMIdb2KciUlHCbuojZ1V32ZNlEuzSaIcDhKvZXR3A>
-    <xmx:DrmraRFkK15VZItve7JU3x0TRToBI123lQGIllprQ9UiL39AYb7yNw>
-    <xmx:D7mraXhWEYsE7aFEPB9BaZQKdLBIrxiAXG_ikb2LqFateDC-L3XfhE_c>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Mar 2026 00:35:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Jacob Keller <jacob.e.keller@intel.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 3.5/4] object-file: fix mmap() leak in
- odb_source_loose_read_object_stream()
-In-Reply-To: <20260307022459.GA693632@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 6 Mar 2026 21:24:59 -0500")
-References: <20260305230315.GA2354983@coredump.intra.peff.net>
-	<20260305231305.GD2901305@coredump.intra.peff.net>
-	<xmqqqzpwv3t7.fsf@gitster.g>
-	<20260307022459.GA693632@coredump.intra.peff.net>
-Date: Fri, 06 Mar 2026 21:35:08 -0800
-Message-ID: <xmqqv7f8td6b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5736336896
+	for <git@vger.kernel.org>; Sat,  7 Mar 2026 06:29:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772864987; cv=pass; b=R4rFh3+eM0SzhrkpdfEN8FUBID63xvKblNe6djW3kVsX2SF8t4fI1F1zgWrtGT7WalOYI9bAwMy2tYz31o4gi3JUO2Q8dXsMY8OXE23tA03dcUXdh7JrU+efHHJ3+RniqUMzEY9+iGOcJIPQWvEmAWvHPFZHDUcMuLmbx6/zf6M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772864987; c=relaxed/simple;
+	bh=ik+bB3/SV/W8X4UIzXuFxpyQaiWNhjwDlGECwbJe2uw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Txc+v4qW56Z1e+ed8hueZRgKFdBSG69YzHCf0nPURjTUoR6+pQsXRuKcwyA6/vi3xfEsX2I2g6AAcvPWo9SF3/VbyW4hXw6lABJlU4EaxP4fM344FE+bb/8dAeXRUXGZIx+pUdJ+DStoqnDRhCkQKS2GFODX/PliUTd1fY2egUE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2be0629f76eso287029eec.3
+        for <git@vger.kernel.org>; Fri, 06 Mar 2026 22:29:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772864985; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lZD3m53EviPaq8Q0yYpd5fLoOitH9ibr0Mh1Scq9IKOsnxMLli4zipCnMdwk0pAZnS
+         XnV21ywlwyAFURu+MPzINyDrDZvDiU9ff4rYEfhmwmX9oqMb+h+HmWSy/cMC5z/lFFqY
+         L+ZbpwLg7dRfSrSy7TXMB+HjJRszZV3z82b6nkhdGi6vVkzLxvKxx569c2zJHDvfemBz
+         Jk6wWuIWzfCUIPvg9GWyTp1Dwfc6c/3VbpFn3rQUvEZO+uWFbiB1JY2Wjj4ionuTCIQX
+         p4PW59C2RG2/QDzPXgZbXBLV8+/wMm4exFwEOZ+T9g1iYVXOTSAGirHa+fHWUPl1oooN
+         xiWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=G+RQ6fxvUfXGcheX+oVH5tvVh0vY1Qzd1IeipouupLU=;
+        fh=GDTtk06GWx+BcnnbItsaTxolHfAv1a87i96qChTRwYk=;
+        b=N5O+fmPA3afj0aHG/ULuXC6qSI18/Cyli4Ss6C87jQx9Ah7MCDonKAR1wIRB6cJDTC
+         CbJXVj42pzVDXboPVi++em3XxM/zyBiajlNzyrFPw8EGmkM3Hqt4IC//s77CT/k+FGyb
+         gihzsEcUCrE8V269FNYIRyoiXXgLWTcJ55hDBgtsNl2mpC2uSDmpoXbN48+vDCRW5aTm
+         mux5QQUTBBXJlo2haX/Rd4G7yAyeqBMP4k0zjAnoT+RavAKz/60f1DlZhrlXq5CDNvtF
+         GjC9k+JWWSjMcVX6BUOhjTTTnSTnFw32XBSb6rwxCVr7zTXFU1+AM1LvEjAZNoodtK3E
+         3xGA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772864985; x=1773469785;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=G+RQ6fxvUfXGcheX+oVH5tvVh0vY1Qzd1IeipouupLU=;
+        b=r24PSUhrcShthWRszljV2bEOktscQQVJtrHez2S3gskXgEu9UCkOvoFWHi5tO1Wd3T
+         /Mbk4AK42UGkM4Zw+WLPuiSOGBQqlBhZuEuev0ZgtijXf5g7DVZyHOyBZV3gGpU1q785
+         y1JuFG2KvPOTegf+HJtyU2Xt0WZWTD+qNAqFAgGT0QowKG6xv6ngtjJED+l5Fw2wBSH8
+         OXeWFrYQTHV7R5iZfpxySDckVL2P1DFFqJdt3RO149vf1uW4O1tsRmfuyqa7t7X9/Lob
+         tR3+PezKyFxbphisQcyPM0eq6q9c0Pp7eOFOh2cS0Br2RVJIHfiiSjN3a+4ItXWTIgGo
+         dgAw==
+X-Gm-Message-State: AOJu0YweotmhgVLowPXktuzMNpfIgwKmLik6PHRjBdhXcOmx5rFGbvGM
+	5mqV6kT7qZqX4/kAKH44WaGkA2vVMOaHYOxqw2LgkigO0nHK/TYXZ9eTI4NqMGxQWKjqdd5IhhR
+	NodRQ6Eux7XOWoheE0hQflhKKWjobnkw=
+X-Gm-Gg: ATEYQzyp7OLD2bMaCCsO85lzn+/ONvdpUggp8cqib20GGu+uQ0CR/s9A6E4594ngOHI
+	PpWYj+QuvA2ziF+AJqZUOz/BdockFbAsycNctHQmcAZvkH+d2C6C6RcaWnM26IElUVF5Wjp/Ysd
+	CM1P5dnYbM3CkuasmZuL2aPVOCsqx0hJtQUIn4VPZsdKJj9cl59KQ5Zlr9ymWkYF4X9Tmf/o7rp
+	a067tYMK7Hyb0NYzqCc/ohWH4stbd42k+xliR0mXNsmxtzarS7nAbnDCym64lHdt2fzbpfE6GxS
+	mi4sBEPIVvuOJlSElxJAUBJQMwx5Damgb8R5x2xO
+X-Received: by 2002:a05:7300:cd90:b0:2be:1f56:ed0d with SMTP id
+ 5a478bee46e88-2be4e09d96dmr870113eec.6.1772864984742; Fri, 06 Mar 2026
+ 22:29:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAEaT9_-h2MEshMHoyoW9kWQgt_EfQJXcxWSn+cXTSL4mKME=5w@mail.gmail.com>
+ <20260305225128.54283-1-francescopaparatto@gmail.com>
+In-Reply-To: <20260305225128.54283-1-francescopaparatto@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 7 Mar 2026 01:29:29 -0500
+X-Gm-Features: AaiRm51p65MHW0HyGUmE9zNxQI0BqI_JBGfEa3I_K4Yr7dMnazXr28xmxp6chVQ
+Message-ID: <CAPig+cQWCK48GJEnGX7bP6exu847WR8HU3Y8sna525w6NEhmmw@mail.gmail.com>
+Subject: Re: [PATCH v3] t3310: avoid hiding failures from rev-parse in command substitutions
+To: Francesco Paparatto <francescopaparatto@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
-
-> Subject: object-file: fix mmap() leak in odb_source_loose_read_object_stream()
+On Thu, Mar 5, 2026 at 5:51=E2=80=AFPM Francesco Paparatto
+<francescopaparatto@gmail.com> wrote:
+> Running `git` commands inside command substitutions like
 >
-> We mmap() a loose object file, storing the result in the local variable
-> "mapped", which is eventually assigned into our stream struct as
-> "st.mapped". If we hit an error, we jump to an error label which does:
+>     test "$(git rev-parse A)" =3D "$(git rev-parse B)"
 >
->   munmap(st.mapped, st.mapsize);
+> can hide failures from the `git` invocations and provide little
+> diagnostic information when `test` fails.
 >
-> to clean up. But this is wrong; we don't assign st.mapped until the end
-> of the function, after all of the "goto error" jumps. So this munmap()
-> is never cleaning up anything (st.mapped is always NULL, because we
-> initialize the struct with calloc).
+> Use `test_cmp` when comparing against a stored expected value so
+> mismatches show both expected and actual output. Use `test_cmp_rev`
+> when comparing two revisions. These helpers produce clearer failure
+> output, making it easier to understand what went wrong.
 >
-> Instead, we should feed the local variable to munmap().
->
-> This leak is due to 595296e124 (streaming: allocate stream inside the
-> backend-specific logic, 2025-11-23), which introduced the local
-> variable. Before that, we assigned the mmap result directly into
-> st.mapped. It was probably switched there so that we do not have to
-> allocate/free the struct when the map operation fails (e.g., because we
-> don't have the loose object). Before that commit, the struct was passed
-> in from the caller, so there was no allocation at all.
-
-Makes sense.  Thanks for finding and fixing the issue so quickly.
-
-
->
-> You can see the leak in the test suite by building with:
->
->   make SANITIZE=leak NO_MMAP=1 CC=clang
->
-> and running t1060. We need NO_MMAP so that the mmap() is backed by an
-> actual malloc(), which allows LSan to detect it. And the leak seems not
-> to be detected when compiling with gcc, probably due to some internal
-> compiler decisions about how the stack memory is written.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Francesco Paparatto <francescopaparatto@gmail.com>
 > ---
->  object-file.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/object-file.c b/object-file.c
-> index 3094140055..ab2fb9c4eb 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -2197,7 +2197,7 @@ int odb_source_loose_read_object_stream(struct odb_read_stream **out,
->  	return 0;
->  error:
->  	git_inflate_end(&st->z);
-> -	munmap(st->mapped, st->mapsize);
-> +	munmap(mapped, mapsize);
->  	free(st);
->  	return -1;
->  }
+
+Thank you. This version looks much better and addresses my review
+comments on the previous round. I do have one actionable
+recommendation and one subjective comment, though...
+
+> diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-=
+manual-resolve.sh
+> @@ -569,13 +578,15 @@ EOF
+>         test_grep -q "refs/notes/m" output &&
+> -       test_grep -q "$(git rev-parse refs/notes/m)" output &&
+> -       test_grep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output &&
+> +       git rev-parse refs/notes/m >actual &&
+> +       test_grep -q "$(cat actual)" output &&
+> +       git rev-parse NOTES_MERGE_PARTIAL^1 >actual &&
+> +       test_grep -q "$(cat actual)" output &&
+
+Storing the output of git-rev-parse in a file only to read it back out
+of that file a moment later is unnecessarily roundabout. It would
+instead be cleaner to do it this way:
+
+    oid=3D$(git rev-parse refs/notes/m) &&
+    test_grep -q "$oid" output &&
+    oid=3D$(git rev-parse NOTES_MERGE_PARTIAL^1) &&
+    test_grep -q "$oid" output &&
+
+Unlike this original in which git-rev-parse's exit code was lost due
+to being embedded in the test_grep invocation, this rewrite is safe
+because the exit code of git-rev-parse becomes the exit code of the
+variable assignment, thus correctly aborts the test (due to the
+&&-chain) if git-rev-parse fails.
+
+> @@ -606,8 +617,9 @@ test_expect_success 'switch cwd before committing not=
+es merge' '
+>         test_must_fail git notes merge refs/notes/other &&
+>         (
+>                 cd .git/NOTES_MERGE_WORKTREE &&
+> -               echo "foo" > $(git rev-parse HEAD) &&
+> -               echo "bar" >> $(git rev-parse HEAD) &&
+> +               oid=3D$(git rev-parse HEAD) &&
+> +               echo "foo" >"$oid" &&
+> +               echo "bar" >>"$oid" &&
+
+This is purely subjective and you don't have to take the suggestion,
+but although yours is a faithful rewrite (which is good), I probably
+would have simplified this to:
+
+    oid=3D$(git rev-parse HEAD) &&
+    test_write_lines foo bar >"$oid" &&
