@@ -1,192 +1,212 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E910527F75C
-	for <git@vger.kernel.org>; Sat,  7 Mar 2026 01:04:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7588314E2F2
+	for <git@vger.kernel.org>; Sat,  7 Mar 2026 01:14:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772845499; cv=none; b=pBELaYGMeDMGr9TnCZJKIsYQP9r7xx7xzWQhQJio2DgGAd9U83C91HmZO56ZsPI0c/X7GGUncY2k64oZgxPFwueRRE7oHA0dRk+yJbhLB51hCzPsl9B6oKMz3LiS3Dw28O550BDA2lM1rUF2NnzZw1vBv4j1PrlnhDjF5+e7/bs=
+	t=1772846073; cv=none; b=Abho71KgGc1HHp104IQTiJboRbo50f3kSWawTj0zBbBxMUV1ZFvdHNfGMQGol1nHGGfa0C4TXe+9mClVGjPagZ2nukgmFXJig/YU2Hh0yT4SFdmS9CU9NrJYOZxnnM3Bfs/VLE1JghllhPhtGaFjzZuXkY/Qf4THFjL5u0FI0fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772845499; c=relaxed/simple;
-	bh=4GcS2dlOrJyrDRlrHJf6AIY5I3dpYhTuERtEVQaozZE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=DtR8kCfilqBpVfecgfMERjAz5C3wAtCdeFBXRWh+hcdcVfldP6md6oQE536aAv173sVt/DqBot/jRu63jwLTUVeN30MKoHvbZke5WUeiTm7zWeGPDkh7e2VCj3QcLv76kmaMrrvdkeClmc/Kdf71ldluZkzcrXbPzv4fvTKPuoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=braithwaite.dev; spf=pass smtp.mailfrom=braithwaite.dev; dkim=pass (2048-bit key) header.d=braithwaite.dev header.i=@braithwaite.dev header.b=YQOn3+vv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=An78INY9; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=braithwaite.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=braithwaite.dev
+	s=arc-20240116; t=1772846073; c=relaxed/simple;
+	bh=u7ImXuDrzVEMf3WwV16GWTFTm8NZWap5DyuUHFWC2+Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dDfmaTR/9Rm5jxH1EFOYkRpctgxq1Qoy1nIrhFLLrOvVwrCtWnHPp0acIW4wXDty8haDrz2CvByyTbo6lW9b1n88zzHHvp4jHRBboEuJysYyZm6LLaIQIVETTM4F63ImVCAeTkqaiO89QGRYdZM+X1ZByAbTbnsri8EtayjkJfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ArrfUhKb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TrpQqhld; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=braithwaite.dev header.i=@braithwaite.dev header.b="YQOn3+vv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="An78INY9"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ArrfUhKb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TrpQqhld"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1253014001A4;
-	Fri,  6 Mar 2026 20:04:57 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-05.internal (MEProxy); Fri, 06 Mar 2026 20:04:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=braithwaite.dev;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1772845497; x=1772931897; bh=GXhFJhSQoSYRcgUq/Y2Clva+MtsHQLFx
-	BO+yU5Vvsrc=; b=YQOn3+vv7OETrMQ9lJUl0fI8BlE/duHiZ8UNjx/kd2P6V4AY
-	rXxU1QMBSgVYCcaqfZKoXhQxLNuvBsqrgC3Mtyx/FSQTRh0c677pjKXr50eQeTZz
-	hKa2O27qQvvFb3GEj0B03GpIdCOV+RXXrbWe8RqDkDbr1/9sQIOR0C9+7c4WP/oC
-	Q+qOS41yM6wHMF6LSzCnRot2827fNJkp+nXu99l2NHvFQfKCh6z69frj+TsCmuXi
-	sAjlMbaPqqeBZtBEsylslVLCjAooqSn4GgXe2Xosx5TD7YEGZaJEDmch2vKX11ym
-	7duNBXHGquagwSUlqpZb4YMdlrQmHLaLx/jymw==
+	by mailfout.phl.internal (Postfix) with ESMTP id B6042EC05B3;
+	Fri,  6 Mar 2026 20:14:30 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Fri, 06 Mar 2026 20:14:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772846070; x=1772932470; bh=tO1Pgs0rW5
+	6MsbTdQxvpBKzsRdZHGVFam9vgB01s2oA=; b=ArrfUhKb8mUbstakqOpP9/cgDM
+	e2k0NtWbLNFm2WOXCDvKijp2VjtYAJOuAlNvqQL24oYG3wRmeTyrr/sNQ4iR21jb
+	Q86kJwK+CgVIjivRkDzOBNghshR0CmjtaLvTufJzX3mhEZ53h/Bjc6elkTS2K7rL
+	XN/9oUUpTURCZhsIKPD24IZIz4kvI9lliRRHvN76f7xVX1Zi+7lD36cG4g67Pk5J
+	iCizlKmN4xdJlqmUYC/zuX56DYkqSY9laS9Ij3xPj1cbHvxXRFUsP8jSpy7mn7u+
+	5mwrOndgrFAiuczFrfk77ybdawJnrLn7dIw0+lUNr3Y5G8NPh5YbHQMCdpXg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772845497; x=
-	1772931897; bh=GXhFJhSQoSYRcgUq/Y2Clva+MtsHQLFxBO+yU5Vvsrc=; b=A
-	n78INY9pQJnnC0v0kHNDNNO3QgVRBTrWYPSrmxuO7pZRNGJnHnYe5H5Hlyl76f2B
-	uILEVaDCcDj2hzbNLvbKyiuTNPJhNNqcFy6tzcSDCsvUJjjCkGi7NA9tOpipOqAM
-	mVP8CK6rnn1zoWqyifRw7gM3QvsvR/hQoAKGyyASgQXX/pSn7dNBcehnKU4iL3sW
-	zKSmKFLq2SoK1fsoeUKLQIRVyfuLqK3/WNdDdPCQnADk+Cm6wJtqVp7KwJEfDFVT
-	LNPxkX8oaEeZE7un0IfDm9D1FA7fXXHjn9bOwoLHy9tlRaCWnaJFdL6xMAFbwLTy
-	Incr/Yl51l3DBvLTbnQvw==
-X-ME-Sender: <xms:uHmrac00NdjjecrzeIKHreZ_F7YgxwcVHYlxYY2tm7qxqvuXnKh8MA>
-    <xme:uHmraR59oio-SumtdP7DlwE37qpq8q6pIPrwpq0Xb7_RZ4XKS-SGnArno3ZhJpSB4
-    _fZ_VlIUFErBCOlKetfC1LF4oXrjOeS76WNRtp7oxEBu1V76rVDF-0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtkeefucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772846070; x=1772932470; bh=tO1Pgs0rW56MsbTdQxvpBKzsRdZHGVFam9v
+	gB01s2oA=; b=TrpQqhldUAObFDDkkwSThOxbPp7fufYthDX4Y+af+r/wlajwQFI
+	D5LNDFziUo1UfRu2n9D9C1XtYGsSNFfZ786fY/DuqdXXHRbI0IPbuUzREjWiw9h5
+	dLqm0umgUPIP8ebq+bn0GH5T1PNDJsU1MJiZ5K1QWv+Su25XOM3OzTJH2X+wXLy/
+	Ri+yJDtEP4/wd1aaP6rO5MwRufjL9K8RPXvYty/nfhCSYScUmnIk12bD2Gq3YR+n
+	91zwsa84nk6RpFjaAVGJvWI9CGgj1vxzWPybj7h3ffXcZyEWDvtqNXPKuSL3Wlnn
+	jx7UnBn/Y4keFKFYhBsuZxs25QlSQ+82Rig==
+X-ME-Sender: <xms:9nuraYQt7YnCaILbnBN85mTZJr2vXTON5Blbs0Eohb2O5kZteeU1Xg>
+    <xme:9nuracrfvVl5anGkb1srinXiqD4TGNeyST9f-8iy9N-s_eTe1GoI2kkN-19LJDMyi
+    mRBhxGqfS7HOzQTGvniNLV8l7FI5WFXqDFdt83S2BxGDCf1qRXY9g>
+X-ME-Received: <xmr:9nuraeJXMupB3Pihs69U-mMQ6xaKVbeJlcSPeX9KiZDbXGU6c1g7QNiZHG0n6w8zBLBKSImdZsQFMmZXtHrrm8Zlt2zFaSSLeQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtkeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedftehlrghn
-    uceurhgrihhthhifrghithgvfdcuoegrlhgrnhessghrrghithhhfigrihhtvgdruggvvh
-    eqnecuggftrfgrthhtvghrnheptddutdeffeffkeejjeehtddtgeffhfekjefhgfdvjefg
-    uddvleeijeehfedtkefgnecuffhomhgrihhnpehgihhthhhusgdrtghomhdptghorhhprd
-    gtohhmpdhurhhlrddqhihouhdpthhhvghmohhsthhsphgvtghifhhitghurhhlmhgrthgt
-    hhifihhnshdrhihouhdpkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomheprghlrghnsegsrhgrihhthhifrghithgvrdgu
-    vghvpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthho
-    pegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:uHmraRPfqMvtWhVOHuOwIQcvYnWoveq2FW44ArBxUxS0YkgN9dSTyw>
-    <xmx:uHmraUp7hR0N6TS8yHriJ5U3BnE8qx6yaHeB8J0gLyArYyTu2GE3Lg>
-    <xmx:uHmraefOhprHaSfWEm9RzmDAdryHxQ_ZYmEMAOSpV-0ndgu7e4Shtg>
-    <xmx:uHmraSQCi0pDHPqdvXnoyCkNB8FHkoFXRAlwuWhjekTYzOT-4J-Z3Q>
-    <xmx:uXmraY8eGe6aqPACuraa57nvSkckmTik0bSY8wkuIAMI_9iXuWpdZ8Lu>
-Feedback-ID: i1a914699:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 9E16B1EA006B; Fri,  6 Mar 2026 20:04:56 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepueektdefgfekgedvvdekfeeiudeftdfgtdeukefgjefhjefhieduvdehvefg
+    feevnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpmhhmrghprdgtfienucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhgrtghosgdrvgdr
+    khgvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:9nuraXqhXXj23GlLGabijydxpLj7xtVmKBWngbuD2S7OHZImlIMgJA>
+    <xmx:9nuraewZfzzOtrXJDvwfeI6l775ySAB0k37rlLGJe83Cg5lH-daiWg>
+    <xmx:9nuraTNr9IT73ETCT9N8BIE-crNKwSX_2EbgH1TfvjvFNAcc4poR0A>
+    <xmx:9nurab6-npc3ABnrRrUtKNYzuovQYeEwyC8nhWkrNX5tZNGw7iuD5Q>
+    <xmx:9nuraVEg2iBr3aueHE0W-LcIFFbBIVIAiXAVLJHOyJP1FGRucpsQCiGL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Mar 2026 20:14:30 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Jacob Keller <jacob.e.keller@intel.com>,  git@vger.kernel.org,
+    Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 4/4] Makefile: turn on NO_MMAP when building with LSan
+In-Reply-To: <20260305231305.GD2901305@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 5 Mar 2026 18:13:05 -0500")
+References: <20260305230315.GA2354983@coredump.intra.peff.net>
+	<20260305231305.GD2901305@coredump.intra.peff.net>
+Date: Fri, 06 Mar 2026 17:14:28 -0800
+Message-ID: <xmqqqzpwv3t7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AItb9aa6r_v7
-Date: Fri, 06 Mar 2026 17:04:36 -0800
-From: "Alan Braithwaite" <alan@braithwaite.dev>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>,
- christian.couder@gmail.com, me@ttaylorr.com, "Jeff King" <peff@peff.net>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-Message-Id: <01215e9c-c110-4860-a285-7f09bc6596e5@app.fastmail.com>
-In-Reply-To: <xmqqfr6cy53q.fsf@gitster.g>
-References: <pull.2058.v3.git.1772780113400.gitgitgadget@gmail.com>
- <pull.2058.v4.git.1772833649843.gitgitgadget@gmail.com>
- <xmqqfr6cy53q.fsf@gitster.g>
-Subject: Re: [PATCH v4] clone: add clone.<url>.defaultObjectFilter config
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Thanks for the careful review, Junio.  You're right on both
-counts.  The stale commit message and the test style were
-sloppy oversights that I should have caught before resubmitting.
+Jeff King <peff@peff.net> writes:
 
-I'll be more disciplined about reviewing the full diff
-(including the commit message) against the actual behavior for
-future patches.  Thanks for helping out on my first patch.
+> @@ -1600,6 +1600,7 @@ BASIC_CFLAGS += -DSHA1DC_FORCE_ALIGNED_ACCESS
+>  endif
+>  ifneq ($(filter leak,$(SANITIZERS)),)
+>  BASIC_CFLAGS += -O0
+> +NO_MMAP = CatchMapLeaks
+>  SANITIZE_LEAK = YesCompiledWithIt
+>  endif
+>  ifneq ($(filter address,$(SANITIZERS)),)
 
-The updated incoming patch addresses both issues: the commit
-message now accurately describes the bare and URL-qualified
-forms, and all tests use the test_cmp pattern.  I'll be
-submitting what I think should be the final version shortly,
-but I'm happy to continue iterating if anything else looks
-concerning.
+And of course, this "breaks" the leaks job at CI without being the
+true culprit.
 
-Thanks,
-- Alan
+    https://github.com/git/git/actions/runs/22786105918/job/66103114142
 
-On Fri, Mar 6, 2026, at 14:18, Junio C Hamano wrote:
-> "Alan Braithwaite via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Alan Braithwaite <alan@braithwaite.dev>
->>
->> Add a new configuration option that lets users specify a default
->> partial clone filter per URL pattern.  When cloning a repository
->> whose URL matches a configured pattern, git-clone automatically
->> applies the filter, equivalent to passing --filter on the command
->> line.
->>
->>     [clone "https://github.com/"]
->>         defaultObjectFilter =3D blob:limit=3D5m
->>
->>     [clone "https://internal.corp.com/large-project/"]
->>         defaultObjectFilter =3D blob:none
->>
->> URL matching uses the existing urlmatch_config_entry() infrastructure,
->> following the same rules as http.<url>.* =E2=80=94 you can match a do=
-main,
->> a namespace path, or a specific project, and the most specific match
->> wins.
->>
->> The config only affects the initial clone.  Once the clone completes,
->> the filter is recorded in remote.<name>.partialCloneFilter, so
->> subsequent fetches inherit it automatically.  An explicit --filter
->> flag on the command line takes precedence.
->>
->> Only the URL-qualified form (clone.<url>.defaultObjectFilter) is
->> honored; a bare clone.defaultObjectFilter without a URL subsection
->> is ignored.
->
-> Is this still valid?  It is inconsistent with the updated
-> documentation where both clone.defaultObjectFilter and
-> clone.<url>.defaultObjectFilter are listed.
->
-> These iterations of patches may require a bit more careful
-> proofreading before getting sent to the mailing list for others to
-> comment on, I suspect?
->
->> Signed-off-by: Alan Braithwaite <alan@braithwaite.dev>
->> ---
->> ...
->> +`clone.defaultObjectFilter`::
->> +`clone.<url>.defaultObjectFilter`::
->> +	When set to a filter spec string (e.g., `blob:limit=3D1m`,
->> +	`blob:none`, `tree:0`), linkgit:git-clone[1] will automatically
->> +	use `--filter=3D<value>` to enable partial clone behavior.
->> +	Objects matching the filter are excluded from the initial
->> +	transfer and lazily fetched on demand (e.g., during checkout).
->> +	Subsequent fetches inherit the filter via the per-remote config
->> +	that is written during the clone.
->> ++
->> +The bare `clone.defaultObjectFilter` applies to all clones.  The
->> +URL-qualified form `clone.<url>.defaultObjectFilter` restricts the
->> +setting to clones whose URL matches `<url>`, following the same
->> +rules as `http.<url>.*` (see linkgit:git-config[1]).  The most
->> +specific URL match wins.  You can match a domain, a namespace, or a
->> +specific project:
->
->
-> In the test script we see a handful of lines like these
->
->> +	test "$(git -C default-filter-blobnone config --local remote.origin=
-.promisor)" =3D "true" &&
->> +	test "$(git -C default-filter-blobnone config --local remote.origin=
-.partialclonefilter)" =3D "blob:none"
->
-> added.  They may have been written to mimick an existing line in a
-> test elsewhere, but see efforts by others like
->
->    =20
-> https://lore.kernel.org/git/20260305225128.54283-1-francescopaparatto@=
-gmail.com/
->
-> Thanks.
+My bisection between v2.52.0 and v2.53.0 with the following
+
+    $ git bisect start v2.53.0 v2.52.0
+    $ git bisect run sh :doit
+
+where :doit has the shell script attached at the end of this message
+blames this commit.  I didn't dig further than that.
+
+commit 4c89d31494bff4bde6079a0e0821f1437e37d07b
+Author: Patrick Steinhardt <ps@pks.im>
+Date:   Sun Nov 23 19:59:37 2025 +0100
+
+    streaming: rely on object sources to create object stream
+    
+    When creating an object stream we first look up the object info and, if
+    it's present, we call into the respective backend that contains the
+    object to create a new stream for it.
+    
+    This has the consequence that, for loose object source, we basically
+    iterate through the object sources twice: we first discover that the
+    file exists as a loose object in the first place by iterating through
+    all sources. And, once we have discovered it, we again walk through all
+    sources to try and map the object. The same issue will eventually also
+    surface once the packfile store becomes per-object-source.
+    
+    Furthermore, it feels rather pointless to first look up the object only
+    to then try and read it.
+    
+    Refactor the logic to be centered around sources instead. Instead of
+    first reading the object, we immediately ask the source to create the
+    object stream for us. If the object exists we get stream, otherwise
+    we'll try the next source.
+    
+    Like this we only have to iterate through sources once. But even more
+    importantly, this change also helps us to make the whole logic
+    pluggable. The object read stream subsystem does not need to be aware of
+    the different source backends anymore, but eventually it'll only have to
+    call the source's callback function.
+    
+    Note that at the current point in time we aren't fully there yet:
+    
+      - The packfile store still sits on the object database level and is
+        thus agnostic of the sources.
+    
+      - We still have to call into both the packfile store and the loose
+        object source.
+    
+    But both of these issues will soon be addressed.
+    
+    This refactoring results in a slight change to semantics: previously, it
+    was `odb_read_object_info_extended()` that picked the source for us, and
+    it would have favored packed (non-deltified) objects over loose objects.
+    And while we still favor packed over loose objects for a single source
+    with the new logic, we'll now favor a loose object from an earlier
+    source over a packed object from a later source.
+    
+    Ultimately this shouldn't matter though: the stream doesn't indicate to
+    the caller which source it is from and whether it was created from a
+    packed or loose object, so such details are opaque to the caller. And
+    other than that we should be able to assume that two objects with the
+    same object ID should refer to the same content, so the streamed data
+    would be the same, too.
+    
+    Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+ streaming.c | 65 +++++++++++++++++++++++--------------------------------------
+ 1 file changed, 24 insertions(+), 41 deletions(-)
+
+
+---- >8 ----
+
+#!/bin/sh
+
+git apply -3 <"$0" || {
+	git reset --hard
+	exit 125
+}
+
+(
+	export SANITIZE=leak GIT_TEST_PASSING_SANITIZE_LEAK=true 
+	make NO_MMAP=CatchMapLeaks CC=clang &&
+	cd t && sh t1060-object-corruption.sh
+)
+
+status=$?
+
+make distclean
+git reset --hard
+
+exit $status
+
+diff --git i/compat/mmap.c w/compat/mmap.c
+index 2fe1c7732e..1a118711f7 100644
+--- i/compat/mmap.c
++++ w/compat/mmap.c
+@@ -38,7 +38,7 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
+ 	return start;
+ }
+ 
+-int git_munmap(void *start, size_t length)
++int git_munmap(void *start, size_t length UNUSED)
+ {
+ 	free(start);
+ 	return 0;
