@@ -1,64 +1,68 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B40204F93
-	for <git@vger.kernel.org>; Sat,  7 Mar 2026 01:02:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0B58248B
+	for <git@vger.kernel.org>; Sat,  7 Mar 2026 01:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772845342; cv=none; b=nalUT3P+6//PgFkPp1flhSEzf7wSo8TmimV9LZ70PakEYUb0V0AU22ZrNELEEIYyWKM6kZk0ZAwnGdrfoJwE3HRJtc4PJivohiZ4wATouEsfMr/2jZp1govoy+zkjZa61TYaevgx4uxqkO6KrIXishLqf139xJjkt/UeHvYm288=
+	t=1772845345; cv=none; b=lM+ktfdrSvLJ8Svj5DohETbk7TAfeKIIdJg9AwkVXYn1xNbE5ESb5vhBJpiAh0qt34EJGDCQsw7M8BED2kDupJEgzuMFSK0BDqalfKg7pPmYrp7iMJ9qB1kxkeWUINuW/Y+xmwO1S2dtXe6a6YmGFZkCetpdso7fRKOKKvDGPHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772845342; c=relaxed/simple;
-	bh=4kP57Rq9pVkYBnVnR4qX5UuW/yEQi6A6WByPS6grll0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=QbYURV2i/1gksbkiKA995Qms82wCqgkRs0BSQvhrzqh8oSgBn5Zp5htPEVgnuzDWY9KXfTehrGCHusP8J5rgBGhM2/SQWRYvXkzN4GZnZed7pkZmo8rSFg72dfeRXgUlHVNXM9OzWTkGwmLAIqchtk+YyJuPdf/5qnK0jhqOwa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b5g4aMQZ; arc=none smtp.client-ip=209.85.167.177
+	s=arc-20240116; t=1772845345; c=relaxed/simple;
+	bh=9Up/Yr3QwQ6eQCGWlx5UVNqr2appgbSFQoYhRFMaJDc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ELTLFDIqDTnWyzOWZwnu0EaF9m5/jFBAZONSDvShA1WfD2BCzzwWxYOuvPh/t0bE+GYRMMoQTd89XvsNMixG9k0Rwf/EHOmCyvZrfUG42mad0LSk8K2iP38GsLoSFeo1MJ3wi9wuerKBG+DfO2eMf+EyQKfPdOm8EvW1mjI2rLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OjLNu0rI; arc=none smtp.client-ip=209.85.167.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b5g4aMQZ"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-4648447e29bso3890331b6e.0
-        for <git@vger.kernel.org>; Fri, 06 Mar 2026 17:02:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OjLNu0rI"
+Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-46391e91e16so6776211b6e.3
+        for <git@vger.kernel.org>; Fri, 06 Mar 2026 17:02:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772845340; x=1773450140; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772845342; x=1773450142; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=eDiO2zRsyamit2sqWC3iu8kkTvAIp5Yzjs5q9beMnjg=;
-        b=b5g4aMQZdjJFCSzAPwl8BXq7nyECA2rRw7Cytm+TK+crwLPEWZB1Mk9ARD2B+Duyw/
-         gc0iZm4mfkFyENRhlZnJ/Cp6rk6/qqu97CxgSh8DXCsPNXE+/2PHosAUd6fmiMWf9Vf2
-         IqJ+zaXKN/UlJKScBhHP7yMUbH1DQa27pMNcZw7CfDMFDamO7ZBlxPnvoTuRiH+E/whN
-         y5Monu5o83sT8NHdY/6tTU+2McPCz99mUaYKJNJ2TNbx9LnuJ8eVYGZhLdcKCdPrsn9Y
-         MHgULNgVJ7CGBh5vuDgQaLuOzWACWTfVTIuSiNvwquPxicp80OBF5tlFVTRJx/mQArRf
-         cGVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772845340; x=1773450140;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eDiO2zRsyamit2sqWC3iu8kkTvAIp5Yzjs5q9beMnjg=;
-        b=rz7qxb9OzMEE0ExAk3T/V1871+UVnDq/k5Ffy16RPrfUD7nU9YXHs5Hw4hYVhpP9iB
-         /Xq9wldRv8aKi+PHLY7hGKmksjrv28fIx4zH7T0Z506mltxsk1H5meeL2n5MT+PYnk4d
-         4slweuPN+ar62rCpra2QhYPb2gfGdRS//tFnHADdqu1qj2lr6UvuoZ8cLOcsOXfMur2P
-         Okzia0DnQ55QDTD5aCMxuBPySrujrM7XnAS5SyGvVGWgFxV5v/81qU7NJ3+ins8KLQib
-         KPDzRHBD7fVqZNmhh0zVD2ewQ46OsXcaVwg+89kLHcfTX/QI3sImtz8G4c+Acg8M9ajA
-         bFXQ==
-X-Gm-Message-State: AOJu0YzlNAM60KxCVf2hBg40lzju3XH17/O/i0u8Mqoqgzpoa+AaRyer
-	9/LIkAn379vq7Xd2hhu6Lo+MbXg0+4mjvtHsglU1x3pOxF8HGjJKWQZWoPI9WA==
-X-Gm-Gg: ATEYQzye97E8E+jzOEOM+9FLl1upHmoHHR+wDJ17+GUh5SQWHS/0ibCD27Vdw1wluVW
-	CdZl++PrAceGHaakOnxfaUqWrly4s84QTlwMwOacrmZITmVZBrczmhDb6Ps7Jfr3AGDH3V6LZf9
-	Rwkivy7AYDwvkQg3UU5okdMpwfmt8zMZ1fr24FvNQpaawyzm83pa08/y8X7waBfJNiVrbpYONod
-	TgeclNUjp6cD/8dCjz7M5BItbmzg9r+P9+L1eKIr3tHFzpH7dvcmI7lzUXbpalI5KQoYfeyn7sG
-	jHwFaqL8fMKlOaHYJa+gsqXNWnubQ40ftiTPKoW6FZz8Y67SeF1HN+ahqc3ZkWFAh4xmW1SIUo6
-	54hXQYLZOW3bSDS1MKTXDHlVIPvA4ZU8Rfp9fJ7SbSgjzV1Omuyy6dBhkEM1tcS95yLnsjyxrvI
-	Ups2pmQPYGxxd6G0+3yMpjl1EthLRCLoMLezvSAA==
-X-Received: by 2002:a05:6808:2228:b0:45c:9b88:d368 with SMTP id 5614622812f47-466dcbadd86mr2125258b6e.39.1772845339656;
-        Fri, 06 Mar 2026 17:02:19 -0800 (PST)
+        bh=DHDZoIrrzZADP7L9tMHhTCctXoZzttfbLJqcm2w5LOU=;
+        b=OjLNu0rIGPZc5WNFQCultf83We5F3WJSscrW8ESLsUW22xRjjowIeXJpGZaIWy2mwg
+         q5M0vREXuoggClmI4cNp8eV+GfN3ADUo/TfsdPcgvUZqJONoGXzI8T3M++kdNcZs18yY
+         uC4nUaRlRgDxtEg333onR5rcEIwpjYcZqiR81RJ9He5tdZTIgvI/8BMIn75+/AUScek8
+         EHxf8pU4wm7tbLRpWEESR21PLuifRd4SC7iNput8GJzzPPIOOblVwodjEv5jJWH0mh+v
+         tVLpTVbrh82vFWd/WN1WyMQHunsItypJcmS5azKjaZfXBJCPZwDuMnpncLLaEFgIBmu4
+         bVdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772845342; x=1773450142;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=DHDZoIrrzZADP7L9tMHhTCctXoZzttfbLJqcm2w5LOU=;
+        b=HnErKiXGSBUwxwnh4fE3U9oXq560B3bdDeFl8F/W0W7PjWydO4gC/FtSpclkNpwlBQ
+         p3Jd3/LMcOqLVr9Hr6hwMalG9dqdspmect3WYzBT4achVhyzZJQxTyD0Qbi7gTONkS2r
+         B6ArzCkfSBBs/LoLqYFZbseSn3C+OJxVszTWXn3woQxJBo5FuovKqjHikmFeTP5DpnM1
+         SfFubGWfFKXoAHpB1y1NtMm35oPTpSHhtF86+XwY6oiRHpNiR00vjJNn4EtXCMRIJZnc
+         Q6VDonc1/GZcOol0ZK2gvMMVPAbsM5o9PMsZ0wKobSZ4PfVcC/5qOiPFvZj6Xrrk0rWP
+         oYbQ==
+X-Gm-Message-State: AOJu0YzvqHlQMfkIx5mfkU9RKcUqd6UigOUGUhAq5n/+JTFgygpvzZ+U
+	ndOH5tSqW3V4+NMi+a0kZfGknDSSmWlFZlnk0iUBA/ClSwAlyKyEJZf5+O26lQ==
+X-Gm-Gg: ATEYQzy3OA1uAqUPnRFYEAPpJVsr/HFG+YqX5T5XZiLfqj88/VFoVMCnCaJtZgFGKn2
+	b9zTlHLOlMted5js17+6AR8IX0nrL72Od1faFwCLHHqccvwcVq9Y8fMkSX1VG0dqUGWEr7fHYL/
+	9DgXbHTQs1tsDbnGgJSl/vVnYI1t8z4jGH9Q+ZZUlVS/ALj2+tTjOzoYH0dlk7TXvdR1adgfVys
+	pZc4SQ73mENQE+I4ApjZY35zljVDG3VJWJriAkQqpIggN4xu/QanP3NTyil4ZhEOCVLARZCw59/
+	YlR2Vlgdy4U1lMd3QbZUDz9lYTODKc0dAZ38IRxsv/O3pGJqYI3K40QXYJ3a71Y9ZryZ2XWH2F+
+	bPSjXoQ3GZFYI0+mKCH24j7Nm9DlCfFfXYpm0GzxWh6lbH5WtWEBC2HtS1IfTt6Ph16RQmTnE4B
+	iERupKO6yDnfyblLp3x4v9Uaca0tc=
+X-Received: by 2002:a05:6808:c1e7:b0:45f:131b:db33 with SMTP id 5614622812f47-466dc9ea77cmr2572902b6e.4.1772845342571;
+        Fri, 06 Mar 2026 17:02:22 -0800 (PST)
 Received: from [127.0.0.1] ([172.212.169.147])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-466df93ce67sm1723033b6e.1.2026.03.06.17.02.18
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-466df93e85fsm1677873b6e.2.2026.03.06.17.02.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 17:02:19 -0800 (PST)
-Message-Id: <pull.2065.git.1772845338.gitgitgadget@gmail.com>
+        Fri, 06 Mar 2026 17:02:21 -0800 (PST)
+Message-Id: <e7b8cc2c78b0e67420a46dae8fd444dfe925a6ec.1772845338.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2065.git.1772845338.gitgitgadget@gmail.com>
+References: <pull.2065.git.1772845338.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 07 Mar 2026 01:02:14 +0000
-Subject: [PATCH 0/4] line-log: route -L output through the standard diff pipeline
+Date: Sat, 07 Mar 2026 01:02:15 +0000
+Subject: [PATCH 1/4] line-log: fix crash when combined with pickaxe options
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,102 +73,137 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Michael Montalbo <mmontalbo@gmail.com>
+Cc: Michael Montalbo <mmontalbo@gmail.com>,
+    Michael Montalbo <mmontalbo@gmail.com>
 
-git log -L has bypassed the standard diff pipeline since its introduction,
-using dump_diff_hacky() to hand-roll diff output. A NEEDSWORK comment has
-acknowledged this from the start. This series removes dump_diff_hacky() and
-routes -L output through builtin_diff() / fn_out_consume(), so that diff
-formatting options like --word-diff, --color-moved, -w, and pickaxe options
-(-S, -G) work with -L.
+From: Michael Montalbo <mmontalbo@gmail.com>
 
-This replaces my earlier series "line-log: fix -L with pickaxe options" [1].
-Patch 1 is the crash fix from that series (unchanged). Patch 2/2 from that
-series (rejecting -S/-G) is dropped because this series makes those options
-work instead of rejecting them.
+queue_diffs() passes the caller's diff_options, which may carry
+user-specified pickaxe state, to diff_tree_oid() and diffcore_std()
+when detecting renames for line-level history tracking.  When pickaxe
+options are present on the command line (-G and -S to filter by text
+pattern, --find-object to filter by object identity), diffcore_std()
+also runs diffcore_pickaxe(), which may discard diff pairs that are
+relevant for rename detection.  Losing those pairs breaks rename
+following.
 
-[1]
-https://lore.kernel.org/git/pull.2061.git.1772651484.gitgitgadget@gmail.com/
+Before a2bb801f6a (line-log: avoid unnecessary full tree diffs,
+2019-08-21), this silently truncated history at rename boundaries.
+That commit moved filter_diffs_for_paths() inside the rename-
+detection block, so it only runs when diff_might_be_rename() returns
+true.  When pickaxe discards a rename pair, the rename goes
+undetected, and a deletion pair at a subsequent commit passes
+through uncleaned, reaching process_diff_filepair() with an invalid
+filespec and triggering an assertion failure.
 
-Patch 1 fixes a crash when combining -L with pickaxe options and a rename.
+Fix this by building a private diff_options for the rename-detection
+path inside queue_diffs(), following the same pattern used by blame's
+find_rename().  This isolates the rename machinery from unrelated
+user-specified options.
 
-Patch 2 is the core change: callback wrappers filter xdiff's output to
-tracked line ranges, and line ranges are carried on diff_filepair so each
-file's ranges travel with its filepair through the pipeline. diffcore_std()
-runs at output time, so pickaxe, --orderfile, and --diff-filter also work.
+Reported-by: Matthew Hughes <matthewhughes934@gmail.com>
+Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+---
+ line-log.c          | 22 ++++++++++++++++----
+ t/t4211-line-log.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+), 4 deletions(-)
 
-Patch 3 adds tests covering the newly-working options.
-
-Patch 4 updates documentation.
-
-User-visible output change: -L output now includes index lines, new file
-mode headers, and funcname context in @@ headers that were previously
-missing. Tools parsing -L output may need to handle these additional lines.
-
-Known limitations not addressed in this series:
-
- * line_log_print() still calls show_log() and diff_flush() directly,
-   bypassing log_tree_diff_flush(). The early return in log_tree_commit()
-   (and its associated NEEDSWORK about no_free not being restored) is
-   pre-existing. Restructuring -L to flow through log_tree_diff_flush() is a
-   larger change that would affect separator and header logic; it is left
-   for a follow-up.
-
- * Non-patch diff formats (--raw, --numstat, --stat, etc.) remain
-   unimplemented for -L.
-
-Michael Montalbo (4): line-log: fix crash when combined with pickaxe options
-line-log: route -L output through the standard diff pipeline t4211: add
-tests for -L with standard diff options doc: note that -L supports patch
-formatting and pickaxe options
-
-Michael Montalbo (4):
-  line-log: fix crash when combined with pickaxe options
-  line-log: route -L output through the standard diff pipeline
-  t4211: add tests for -L with standard diff options
-  doc: note that -L supports patch formatting and pickaxe options
-
- Documentation/line-range-options.adoc         |   4 +
- diff.c                                        | 279 +++++++++++++-
- diffcore.h                                    |  16 +
- line-log.c                                    | 196 ++--------
- line-log.h                                    |  14 +-
- revision.c                                    |   2 +
- t/t4211-line-log.sh                           | 342 +++++++++++++++++-
- t/t4211/sha1/expect.beginning-of-file         |   4 +
- t/t4211/sha1/expect.end-of-file               |  11 +-
- t/t4211/sha1/expect.move-support-f            |   5 +
- t/t4211/sha1/expect.multiple                  |  10 +-
- t/t4211/sha1/expect.multiple-overlapping      |   7 +
- t/t4211/sha1/expect.multiple-superset         |   7 +
- t/t4211/sha1/expect.no-assertion-error        |  12 +-
- t/t4211/sha1/expect.parallel-change-f-to-main |   7 +
- t/t4211/sha1/expect.simple-f                  |   4 +
- t/t4211/sha1/expect.simple-f-to-main          |   5 +
- t/t4211/sha1/expect.simple-main               |  11 +-
- t/t4211/sha1/expect.simple-main-to-end        |  11 +-
- t/t4211/sha1/expect.two-ranges                |  10 +-
- t/t4211/sha1/expect.vanishes-early            |  10 +-
- t/t4211/sha256/expect.beginning-of-file       |   4 +
- t/t4211/sha256/expect.end-of-file             |  11 +-
- t/t4211/sha256/expect.move-support-f          |   5 +
- t/t4211/sha256/expect.multiple                |  10 +-
- t/t4211/sha256/expect.multiple-overlapping    |   7 +
- t/t4211/sha256/expect.multiple-superset       |   7 +
- t/t4211/sha256/expect.no-assertion-error      |  12 +-
- .../sha256/expect.parallel-change-f-to-main   |   7 +
- t/t4211/sha256/expect.simple-f                |   4 +
- t/t4211/sha256/expect.simple-f-to-main        |   5 +
- t/t4211/sha256/expect.simple-main             |  11 +-
- t/t4211/sha256/expect.simple-main-to-end      |  11 +-
- t/t4211/sha256/expect.two-ranges              |  10 +-
- t/t4211/sha256/expect.vanishes-early          |  10 +-
- 35 files changed, 864 insertions(+), 217 deletions(-)
-
-
-base-commit: 7b2bccb0d58d4f24705bf985de1f4612e4cf06e5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2065%2Fmmontalbo%2Fspike-xdiff-line-range-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2065/mmontalbo/spike-xdiff-line-range-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2065
+diff --git a/line-log.c b/line-log.c
+index eeaf68454e..9d12ece181 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -858,15 +858,29 @@ static void queue_diffs(struct line_log_data *range,
+ 	diff_queue_clear(&diff_queued_diff);
+ 	diff_tree_oid(parent_tree_oid, tree_oid, "", opt);
+ 	if (opt->detect_rename && diff_might_be_rename()) {
++		struct diff_options rename_opts;
++
++		/*
++		 * Build a private diff_options for rename detection so
++		 * that any user-specified options on the original opts
++		 * (e.g. pickaxe) cannot discard diff pairs needed for
++		 * rename tracking.  Similar to blame's find_rename().
++		 */
++		repo_diff_setup(opt->repo, &rename_opts);
++		rename_opts.flags.recursive = 1;
++		rename_opts.detect_rename = opt->detect_rename;
++		rename_opts.rename_score = opt->rename_score;
++		rename_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
++		diff_setup_done(&rename_opts);
++
+ 		/* must look at the full tree diff to detect renames */
+-		clear_pathspec(&opt->pathspec);
+ 		diff_queue_clear(&diff_queued_diff);
+-
+-		diff_tree_oid(parent_tree_oid, tree_oid, "", opt);
++		diff_tree_oid(parent_tree_oid, tree_oid, "", &rename_opts);
+ 
+ 		filter_diffs_for_paths(range, 1);
+-		diffcore_std(opt);
++		diffcore_std(&rename_opts);
+ 		filter_diffs_for_paths(range, 0);
++		diff_free(&rename_opts);
+ 	}
+ 	move_diff_queue(queue, &diff_queued_diff);
+ }
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index 0a7c3ca42f..7acc38f72d 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -367,4 +367,53 @@ test_expect_success 'show line-log with graph' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'setup for -L with -G/-S/--find-object and a merge with rename' '
++	git checkout --orphan pickaxe-rename &&
++	git reset --hard &&
++
++	echo content >file &&
++	git add file &&
++	git commit -m "add file" &&
++
++	git checkout -b pickaxe-rename-side &&
++	git mv file renamed-file &&
++	git commit -m "rename file" &&
++
++	git checkout pickaxe-rename &&
++	git commit --allow-empty -m "diverge" &&
++	git merge --no-edit pickaxe-rename-side &&
++
++	git mv renamed-file file &&
++	git commit -m "rename back"
++'
++
++test_expect_success '-L -G does not crash with merge and rename' '
++	git log --format="%s" --no-patch -L 1,1:file -G "." >actual
++'
++
++test_expect_success '-L -S does not crash with merge and rename' '
++	git log --format="%s" --no-patch -L 1,1:file -S content >actual
++'
++
++test_expect_success '-L --find-object does not crash with merge and rename' '
++	git log --format="%s" --no-patch -L 1,1:file \
++		--find-object=$(git rev-parse HEAD:file) >actual
++'
++
++test_expect_failure '-L -G should filter commits by pattern' '
++	git log --format="%s" --no-patch -L 1,1:file -G "nomatch" >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_failure '-L -S should filter commits by pattern' '
++	git log --format="%s" --no-patch -L 1,1:file -S "nomatch" >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_failure '-L --find-object should filter commits by object' '
++	git log --format="%s" --no-patch -L 1,1:file \
++		--find-object=$ZERO_OID >actual &&
++	test_must_be_empty actual
++'
++
+ test_done
 -- 
 gitgitgadget
+
