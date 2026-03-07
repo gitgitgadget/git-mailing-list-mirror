@@ -1,89 +1,92 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0DA1A6826
-	for <git@vger.kernel.org>; Sat,  7 Mar 2026 01:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727541B4156
+	for <git@vger.kernel.org>; Sat,  7 Mar 2026 01:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772846128; cv=none; b=NGvVP/AH9IdRby+OuvvRkrDzQrJba1CHFAECejYMXzbs+2woZo+1RsRq1snk7DxKA3pnlG+F/JivOxtL18b8tZsPFCeInd7zUQyc3nNuUczfV19bK297uLIxhIvqqRRtU4MPU5rKf98Byw+DFZympPDfCmlmbFAvWWq6sNz5PA8=
+	t=1772846942; cv=none; b=GajU0DjqIGD5ShCo6Q8kPAwUeXNea7e1nab0YUM6qR0rp5M4y8RvctDZuB30koKLMe9flG50cPpshXTRGaH3IU8L/1llVRqTpLd2S0mso+Ln1HofD3Sdib1gNiME40hGgBOZZBes+n1Pwa3Ar1/YZ763vR3xlNeyjfPR3qefesA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772846128; c=relaxed/simple;
-	bh=t8hZUH08107d7PeRkDa93ngFSfKwYxJiU1YJioKMt/g=;
+	s=arc-20240116; t=1772846942; c=relaxed/simple;
+	bh=ttRK42Bf2hRKBfoL2uQYXIn67/nwaqNPPD5rOQN0MlA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fmdVr+PlEih0oAAIWfTuSz0GICowkqDMjNFy+pOiAJhH9KFSCZwiDLZFCQbSr/580NpVcCmsKuBC8UlHzrXxIv5kn2Dip6AwNXQIcFCp/GPuZngCPbUGfefuf90buzpQ3C1w2LmHcIsz1yHH+sxQ9gtJG438Qi5gYew0yiJN1NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bt58i93g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b2s3AkA3; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=ruCZz0qEvI2XvDOqWWNgIwbqH2nP3fRoBOXkRRavKUvc45tiN2xxhxKCL/7Br93YQlBb14Ce+k6J714wNEmlR2vOYW39SEhBlKEHhF5CtneGjTzCsbmO6hofLwHJ3h1W4XSM0v1GaHBANS6p7CLLIhuzxf/oMiXIJr7q+h8Ri4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FF4QFnyT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bo3onS5R; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bt58i93g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b2s3AkA3"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 545D6EC08E0;
-	Fri,  6 Mar 2026 20:15:26 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 06 Mar 2026 20:15:26 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FF4QFnyT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bo3onS5R"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id B286CEC00AE;
+	Fri,  6 Mar 2026 20:29:00 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Fri, 06 Mar 2026 20:29:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772846126; x=1772932526; bh=1TFxBTs093
-	Ka5Vuu6nt23W/yPRlf+CekBkQor1x1qmU=; b=bt58i93g27iE68DOQxUOUMtlQP
-	3ny/Y0ElIvpfPFdaroyxCHglh9wByfQSjdnMHc/YS1rnGvQomxM3pP4j3kTXnixl
-	84qdnfTpB0N0t+OhG3FvAqSxdmrCWPx3VQ62wSgaWhbVbf56v3V6naGu6fZUUGs7
-	hXG60yg9eLgSlRsjtdjMa1XjXDLNHDggSH2cLjraVYzoHM/i3N5OCS81c0Lnsazi
-	JK642l6zgCyXvaAVnKWoU8Q1lAvi0OweieTiJrPJEnj/iaGdi0aJvBhkfA2GOYTJ
-	oVBSTieowRPedzayBDLUZk3s7ruvSymrtmKW/CnrGzHl0mYNJtw+hMS1VUpw==
+	:subject:to:to; s=fm3; t=1772846940; x=1772933340; bh=eDeq3YjPsA
+	/Q+gkfhE2M+kyO1XR+KVeBQ/c2Ux7xGXc=; b=FF4QFnyTKTpmqxrtcwrVjzxcS3
+	gTEK4girGGwxBra04nY7PbUIy5UEekJmbxnl7rZySugfftX9wN8QNzhxei72Ffya
+	4pLOZyv+y7S3kli5shO+dgY8svm0KqoOwpezRUe8fWBlJjwgH34l28EUCQytIjQT
+	aH9lPcVnlYqjsXa4z3yX1N497zEzyzPyasiTXqwhBsDlY2vgRxXj6rz7j+Ajmcb7
+	/BPWmlfzbA5VGSwiCgqbK2Oak2Kfrg2WZuvfcAvII+BX+3kD2Xeq0fxKBCmyBOM8
+	Bqr5Jihfzs94PiknCrPOGnGdXFvI7/DjfNT2qgHwGpJ1o9GCUx4mPp+ZvnKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772846126; x=1772932526; bh=1TFxBTs093Ka5Vuu6nt23W/yPRlf+CekBkQ
-	or1x1qmU=; b=b2s3AkA3VvYgUYsJF7iscc5t9aysD056OVqu5yzPhlIEEV5aPYx
-	Pddrpr9e3gi42xKPCLFjwSfAZ+0z7oxPBKxzL+NZwfSbk7jcihdHlYInvJk4QM+F
-	hkWE4Tgo36WA44RuegDn4N3aaGynn/qV6NtpGYDU1uiOJO8/Ie37o42re7080ioc
-	SM5eUalVeILTVpgaArvq49NDMmwnQ6IcFDHIwKZI0ixUweCfk0VAV7M8W3XlHU6w
-	PDUTvM9Hc812qjLPjYY4acPJXA5JsKBo3cbiK0MF8SJCqtRgEx74Tpkoe3YZ6Zok
-	tpXfGaMCaca+X1ZL3uJjMD8TzqS3VLTIt7g==
-X-ME-Sender: <xms:LXyraZY_7J9T3NiQs5qAkkrRfMhQV0epVwgHDzSCsg2T-e60LHjkjg>
-    <xme:LXyraePkH-Syt0dESM7kPVv_9haKVhskrNXyvXo2xFvHlyT6zy5QCX0DWD8_8g64f
-    rvFTkukPS9Bki5g1RaCStWiL81oXMrmvpvvGVKNWcvu2C92smnG8g>
-X-ME-Received: <xmr:LXyraWacvVEUsD8Ng5nMY5DvJqK_vEESMZDY8O7WJvnyi_nvGRmOr3qOPgd-s_1p3syhC5GByAs7Zw1RRyBi8uBwUXDvdIGDCQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtkeegucetufdoteggodetrf
+	1772846940; x=1772933340; bh=eDeq3YjPsA/Q+gkfhE2M+kyO1XR+KVeBQ/c
+	2Ux7xGXc=; b=bo3onS5RkNW6uIl81vnW/VEBBUNI04Twv7pTCBFi6+m0AVM110Z
+	2Ud4UUqsWMfwm5FQfHr10ag1K3ybUYIBXIlCul27GdRh8Uy08mlwpbbaqT/DLswy
+	bavCjoBVXtUNV1iupHopCHAq0z/NRSHYwCOAftjoLAw3YsOARdLoxZ2jJf44KD34
+	YUYFzavGNsE5O2svbRz/tMWMGKHatA7ulR3fdIttcTi0BUBPlSmtvjPlCj6dp4k5
+	aaon2tqKha79CyMtJkzNCk7rTWMmiBYCcakiHm6CYuQqkwsTQTn6qa8gUKCygYx/
+	tvs58Kqk3mqdimRhcJo1cxK79nwQgllnKSg==
+X-ME-Sender: <xms:XH-raY1a3TrtmAjwsFGD_Brpu7l9f9FhAFznYBH85nYr32WnTRT6Tg>
+    <xme:XH-raVocSuKfbcSuMh-33aNP3I66NUu_bX_lO2KLzRHT-t61F3nXGTGDRgzJJtudJ
+    rN7CwEbHvnyraYrGBnRXWYZeTtEPGdpVBe8juP5NjQmiBwNStkTAw>
+X-ME-Received: <xmr:XH-raUjDHKWoENkqV2XrjWuCWlhbiGqhHDpV7rhuEZm2kvbaF85fpEq9gIVgV9JhUIYGQeMKdwat9RjfYM0c1rZnGwjWe6xkow>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtkeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplh
-    hushdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:LXyraU2J3RiOWXGBiIMQMFdI_Nufxov3F274tdnxfyBdJSlq1WJHBw>
-    <xmx:LXyraUe3lYCf1OuAHXYHWWpflb3fOYNRrVZ4MwRCLdP3QBB9r5MYoA>
-    <xmx:LXyradG5CeWotnN-124wp1nk1k-izXQFLljhxuxFeue6_wkv4zMrSA>
-    <xmx:LXyrad121G_UASyx5Ap4npU1h2v8XDgLex0Ivbkc2qT6kfWtX1Xjyw>
-    <xmx:LnyrafWPcSpYLZpLExW3zV6GQ_bK7Wks1qF7laERD8B2IBsHoMcWT9qr>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehmmhhonhhtrghlsghosehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehtrhesth
+    hhohhmrghsrhgrshhtrdgthhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:XH-raR-Lnqg3giE4795duFyny4IctbkgA8CDL655HvyWdTcm6FC6TA>
+    <xmx:XH-raQVGk-CWGlA6QKZVyz1ykcU4DlSDKrBtQZnMBcM_54M2-Nl8Yw>
+    <xmx:XH-raVAE2-PBdvut-MHIJ21YWaXBGKZvzGhgN8-mZZBcPHCyqvX4dw>
+    <xmx:XH-raVGy5-wrzX_WW1TglDzTdKovwsrJFGFzNMpVgd-45rEfDCzkpw>
+    <xmx:XH-raeYmqKsuXFFOzjQU-UwZMzbSJXH0e-NQxY_1iFUfOruRXx6is4VQ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Mar 2026 20:15:25 -0500 (EST)
+ 6 Mar 2026 20:28:59 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/4] plugging some mmap() leaks
-In-Reply-To: <c3ae9ff6-8577-48de-8473-9ec8d22ebc71@ramsayjones.plus.com>
-	(Ramsay Jones's message of "Fri, 6 Mar 2026 23:25:03 +0000")
-References: <b9fa930e-7d5e-47f1-8896-1997cf7c0cdb@intel.com>
-	<20260305220214.GB736322@coredump.intra.peff.net>
-	<20260305230315.GA2354983@coredump.intra.peff.net>
-	<9137fd66-9ac3-42ff-a892-1b6f20b49972@ramsayjones.plus.com>
-	<xmqq5x78249v.fsf@gitster.g>
-	<c3e66e36-cba0-49d3-b2a6-d65367f4be0f@ramsayjones.plus.com>
-	<xmqqjyvoy5p2.fsf@gitster.g>
-	<c3ae9ff6-8577-48de-8473-9ec8d22ebc71@ramsayjones.plus.com>
-Date: Fri, 06 Mar 2026 17:15:24 -0800
-Message-ID: <xmqqms0kv3rn.fsf@gitster.g>
+To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>,
+    Elijah Newren <newren@gmail.com>,
+    SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+    Jeff King <peff@peff.net>,
+    Thomas Rast <tr@thomasrast.ch>,
+    Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/4] line-log: route -L output through the standard diff
+ pipeline
+In-Reply-To: <pull.2065.git.1772845338.gitgitgadget@gmail.com> (Michael
+	Montalbo via GitGitGadget's message of "Sat, 07 Mar 2026 01:02:14
+	+0000")
+References: <pull.2065.git.1772845338.gitgitgadget@gmail.com>
+Date: Fri, 06 Mar 2026 17:28:58 -0800
+Message-ID: <xmqqcy1gv351.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,17 +96,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> If you look at the (currently 31) calls to munmap(), only one seems to look
-> at the return (in refs/packed-backend.c:183). So, calling munmap() twice
-> on the same memory region will probably go unnoticed when NO_MMAP is not
-> set. I have no idea why munmap() was called twice on the same memory region,
-> since I didn't track down the code responsible.
->
-> It was just an FYI about a _potential_ lurking bug when using the mmap compat
-> routines.
->
-> Have I cleared that up, or confused you more. :)
+> git log -L has bypassed the standard diff pipeline since its introduction,
+> using dump_diff_hacky() to hand-roll diff output. A NEEDSWORK comment has
+> acknowledged this from the start. This series removes dump_diff_hacky() and
+> routes -L output through builtin_diff() / fn_out_consume(), so that diff
+> formatting options like --word-diff, --color-moved, -w, and pickaxe options
+> (-S, -G) work with -L.
 
-Oh, absolutely.  Thanks.
+Exciting.
+
+> User-visible output change: -L output now includes index lines, new file
+> mode headers, and funcname context in @@ headers that were previously
+> missing. Tools parsing -L output may need to handle these additional lines.
+>
+> Known limitations not addressed in this series:
+>
+>  * line_log_print() still calls show_log() and diff_flush() directly,
+>    bypassing log_tree_diff_flush(). The early return in log_tree_commit()
+>    (and its associated NEEDSWORK about no_free not being restored) is
+>    pre-existing. Restructuring -L to flow through log_tree_diff_flush() is a
+>    larger change that would affect separator and header logic; it is left
+>    for a follow-up.
+
+OK.  Previously all the output routines were hand-rolled, but this
+reduces the extent of deviation---as long as we are moving in the
+right direction, it is a good idea to find a good place to stop and
+leave the rest for later.
+
+>  * Non-patch diff formats (--raw, --numstat, --stat, etc.) remain
+>    unimplemented for -L.
+
+It would not hurt if these are omitted.
+
+> Michael Montalbo (4): line-log: fix crash when combined with pickaxe options
+> line-log: route -L output through the standard diff pipeline t4211: add
+> tests for -L with standard diff options doc: note that -L supports patch
+> formatting and pickaxe options
+
+I am not sure what this bloc is, but it looks like a reflowed
+version of the list of commits below?
+
+> Michael Montalbo (4):
+>   line-log: fix crash when combined with pickaxe options
+>   line-log: route -L output through the standard diff pipeline
+>   t4211: add tests for -L with standard diff options
+>   doc: note that -L supports patch formatting and pickaxe options
+
+Let me throw in a handful of names found in the output of "git
+shortlog --no-merges -s -n line-log.[ch]" on the Cc: line to solicit
+help.
+.
+
