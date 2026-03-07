@@ -1,128 +1,119 @@
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.61.103])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0FF3290B7
-	for <git@vger.kernel.org>; Sat,  7 Mar 2026 21:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.68.61.103
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772918904; cv=none; b=mUJKf65ECXI9IvXEv+LyvAagYZQos4p+29fK+dxwJ7wi3gU95bqfEs74Inn8x0+5icI4BOHbQAMCxxDv8YHtHb4EtHkQzVxyaj+w/Vjfob4dfX2mVAVnQPod8kD/nrRdrlDK0e16IOezRe/B+CwxG7EThcqpeu/KP4MzDXD8WFA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772918904; c=relaxed/simple;
-	bh=GLvQl+EkWOwEZZmNM2ZlX7gP0PkIMyfwrCe6grPMYBM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=Uea9Qkwc3GL0coraJTgRFv2Q84wDZaWG8KQcyzaTABjptrjECeTK4KsuMFDw+ocnieRUcSZOhH4jo8NyUQQCHDDU+fmsgbCaAZHFJzQkP5aThMrnHqNdO0maoYldGOe0lMiq6M6aWUgYkQTcbLaqVhWCEM/qmsgiMnWgwjeKY/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de; spf=pass smtp.mailfrom=rd10.de; dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b=NuZqcLQ3; arc=none smtp.client-ip=188.68.61.103
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rd10.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7BD12CD8B
+	for <git@vger.kernel.org>; Sat,  7 Mar 2026 21:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772920378; cv=pass; b=GBB5MDTg5daMhutXEthPCSVR1mcshGzxFIMPyVvdqmMVYhnLchCKjlERaL6CaD1NI4L0dibByrzNcQ5KnDDnvu//LPeclu6LHS98bqVz3+R0vY0luLMLmGiDQobb22MDhs7t3pcC4+tQqiM5vFI2B80uGizY/3+DPfKuvJN8hME=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772920378; c=relaxed/simple;
+	bh=POppObKhmb69yPbH7uti7DlHjKlXgYejPF/AThhBAOo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=rfIsKNM1+iKmIA7cPihY8k6WYN82hGuJYzPOjc7HnWpdrNY9w3HQDaWJN40M+KfX72Kei8a/aKa4AtZv7/oM8Uuor91WAatHZRnH0bw2AahTLuKig9ggRje553gF1JJnDTHf/kF+eSTypWQXtIFufHWxEZ5N0uBa7+dIMRvEwh8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jnPSZdES; arc=pass smtp.client-ip=209.85.210.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b="NuZqcLQ3"
-Received: from mors-relay-8403.netcup.net (localhost [127.0.0.1])
-	by mors-relay-8403.netcup.net (Postfix) with ESMTPS id 4fSxG41LLjz86qk;
-	Sat,  7 Mar 2026 22:28:12 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rd10.de; s=key2;
-	t=1772918892; bh=GLvQl+EkWOwEZZmNM2ZlX7gP0PkIMyfwrCe6grPMYBM=;
-	h=Date:Subject:To:References:From:Cc:In-Reply-To:From;
-	b=NuZqcLQ3f6x2W8jF7l98FMGTeqgN2OFAJH14F5Dlob1udc3G9mphWiYDJDKpnxOpH
-	 +kQ9/9FXZSQZVXV4h6KFHpSM0Wa5Z302/jsO8x0AOMr/T0GGZ9+bcISkt5DWHh6BVu
-	 tXFxYYx6MeGD54EEs4WAog0iWX8GMXb1NZzrkH13mAoklmGlo9obAKAt5gNzjs1mDB
-	 E6zHG4V40u4yRuHlSFrjEG28XLNqCdqeuIGsbrZ2aeZfA2Y2AS8UEK+KnUCzu28zIM
-	 bYTdcOI3MeNUQVLa10BjqIVRc0yzKjGl9XGGydnGjrVxKypNwgUPEVZfMGjZcQCLGD
-	 iEDNI76utse3Q==
-Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
-	by mors-relay-8403.netcup.net (Postfix) with ESMTPS id 4fSxG40g2Qz86qK;
-	Sat,  7 Mar 2026 22:28:12 +0100 (CET)
-Received: from mx2eb1.netcup.net (unknown [10.243.12.53])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4fSxG34st1z8sgT;
-	Sat,  7 Mar 2026 22:28:11 +0100 (CET)
-Received: from [IPV6:2a02:3102:8e00:2a0:34a6:9fd8:dbc8:23b1] (dynamic-2a02-3102-8e00-02a0-34a6-9fd8-dbc8-23b1.310.pool.telefonica.de [IPv6:2a02:3102:8e00:2a0:34a6:9fd8:dbc8:23b1])
-	by mx2eb1.netcup.net (Postfix) with ESMTPSA id 248981001C1;
-	Sat,  7 Mar 2026 22:28:11 +0100 (CET)
-Authentication-Results: mx2eb1;
-        spf=pass (sender IP is 2a02:3102:8e00:2a0:34a6:9fd8:dbc8:23b1) smtp.mailfrom=rdiez-2006@rd10.de smtp.helo=[IPV6:2a02:3102:8e00:2a0:34a6:9fd8:dbc8:23b1]
-Received-SPF: pass (mx2eb1: connection is authenticated)
-Message-ID: <1d6a8eec-20b3-4d6e-83f1-d18b7a3c0145@rd10.de>
-Date: Sat, 7 Mar 2026 22:28:10 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jnPSZdES"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7d4c3896e32so5700882a34.0
+        for <git@vger.kernel.org>; Sat, 07 Mar 2026 13:52:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772920376; cv=none;
+        d=google.com; s=arc-20240605;
+        b=KcVae5dDP8iyt7uAzIq2pyGyTunrnhlZ/FXdBdobSDLT0PgKRILNlGlCvTcE/fnzIY
+         +qBYIOG6Fv3RQQnv4d3qzH8Ouf4eohi2ynYOYRI1owRC04uln/bIqCDBJ3363Q6JlRu7
+         W+Oh04FBDRgRTpgXkOGgBYI10ygfjnth4iABBB3sHECICwlEeaJokc2KGuFUbHLonQkG
+         cOJSltkp+3AyMse0MRNrER/XaSmswwimU7Bv0+ztzU5tebl8R1AXbYN+0PSQGtEJZU7b
+         /QV7lK28DEUVipqpwEZil+NRk6EjYeY0NJZwbuTAh5HGEw7dfq9Cmw/fRdgNlkQTiRbl
+         PmXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=POppObKhmb69yPbH7uti7DlHjKlXgYejPF/AThhBAOo=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=BoLbMYIxpkI/slgwanzCm6Kfj6P+OpMuJ42n4uqGEBF1REGifIH6WxfOyHmmoQFog7
+         XzGVOOX25SHys1tDNax0W95tTvi4JhHLqGMxlfX49jjEmBwfEeS6jlGWY6qQmzqblDUN
+         WgKjaKBaY2WB5bDD5xsD9ZulFvL++0/hBc7bE9t3RCQtTaPAoIia7sztc0cV3+KgNYwM
+         SfrRVjWT1AygBggvxhNV7FQIDC1G2tdtTe8YbfeCW5vfkXD/zX5BfcgY0x+mdP3uuWAa
+         wJmGuHMNds0qq64xzG8/g9ly4/2XQUDf6BhUMLPgUnWB2LemSdipwtXOXdSjGLC/UEDm
+         +9Qg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772920376; x=1773525176; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=POppObKhmb69yPbH7uti7DlHjKlXgYejPF/AThhBAOo=;
+        b=jnPSZdESbmxTEE2PQbR+RDkxU67pIa233bcbuI30AvhpKcuXF5VtMOOZFSn2P63U0/
+         +DTnPfGVvryjxkjf6G+PWuR+GNgs+ho8IXW5LNBd7CLfYwEzNdZb2lynn5oA9wK55X05
+         e/HEdlezPPsJ3Y2rh6OpFavfe8YYhJOLxucpAvV1bc7/4BXdu1elUPf19hIwjScIiItx
+         kguHGL2in2Iw9aZVwT0j+h0gYk4/k6gc7Dp1yQJe/hwJdjBGFIIZtsfW4Y1V62pl0DTe
+         I5i7NMGSpjXcoE+vz+5SA34psabhne2m2ALTWg2ViVazO5i+3SBbqbdzXUCBn611IKD9
+         WnIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772920376; x=1773525176;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=POppObKhmb69yPbH7uti7DlHjKlXgYejPF/AThhBAOo=;
+        b=NPv3eaX4ureTBfMqVeHfrRN0QgNVD+dBy1FNpzCCNrHwf349P4Ilmv3HPqWgDvi+QS
+         tSHlb6/UUJC6IxgH36wfEwA6Hcbr+LNX+RZWMdyjRaS6483QpaeJ3a/T3oce9mdPZ2ky
+         qdpBp1WFR4TaTfdjeaK/7EtYrmvXmXULu9t9IyUwfOBNxfYF6uVwu9pS9dZII2n7TXf/
+         yU2vZ4LEO6zNcYHJsmxuJmnjSPodCkjkksw04UREWXb15lDpZd0VXU0dD2mlY8qGP7uW
+         du0CqlWZNjqR1iqkADV1wQiBAq44GAKakZreaEZB7Ub4xWEXSzQbt/5QOUsr/Toi+ZXR
+         7VxA==
+X-Gm-Message-State: AOJu0Yxh6TdDD/W3HqH1luGj0apPXmGRyV6OBVHaQ/8ZGZvBPXphHteg
+	z3LnI6Ew625JLKCHwGxG1IlYjbUctrJimGsBs+8E28ROFE7Qk0CUnY0XjpkZEKiUzCFDU3EwCc+
+	PqqpmIC3d9PM6PI455EtDU4T9Zuergqv+uCI+5Yk=
+X-Gm-Gg: ATEYQzzixV0eeiuYT6VejfADumGyTxfROggYyM03oVKy70n6i+mBk21/OsIDgsdUiFj
+	pqrWgFjtxz/p6prQ1/q9PBR02MKcOUorXjKij5gs2NPeOKEXIqwk3Ee5VPVF7WYBZZhvSSDf3JM
+	SNm0k7w4IHRssX+0MuYnYhvViz2uU9XG+cxGhvqZmu2MPvdV7OrG7QlDHbTzKFS7sfEs5Dw926F
+	XkZlMRJsM3ckWXQNQ8C3uacW2jydQJouOL8xgVsrf9PS5q4JLevBuNEODNv4uyf+Jh/60dz+vKX
+	ugl1kf0=
+X-Received: by 2002:a05:6830:6189:b0:7b0:826e:4002 with SMTP id
+ 46e09a7af769-7d727003ee8mr4196073a34.20.1772920376428; Sat, 07 Mar 2026
+ 13:52:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: git-fetch takes forever on a slow network link. Can parallel mode
- help?
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <5c7c975e-2541-47e1-b789-fee1fdb77d2a@rd10.de>
- <aas--JZ-CCWN-o7O@fruit.crustytoothpaste.net>
-From: "R. Diez" <rdiez-2006@rd10.de>
-Content-Language: en-GB
-Cc: git@vger.kernel.org
-In-Reply-To: <aas--JZ-CCWN-o7O@fruit.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-PPP-Message-ID: 
- <177291889131.1948229.10869311190857129225@mx2eb1.netcup.net>
-X-Rspamd-Server: rspamd-worker-8404
-X-Rspamd-Queue-Id: 248981001C1
-X-NC-CID: b0KRs7yIJWyHWaOPvq3uzZLhFkislrEPrRWYr9oT
+References: <CADCPJ26F633ftXb_pJrotQNrYCUNXCpBDDP12bBNtkGwudCqqA@mail.gmail.com>
+In-Reply-To: <CADCPJ26F633ftXb_pJrotQNrYCUNXCpBDDP12bBNtkGwudCqqA@mail.gmail.com>
+From: Dana Escoli <dana.escoli.2@gmail.com>
+Date: Sat, 7 Mar 2026 18:52:44 -0300
+X-Gm-Features: AaiRm50AMNKfjyX05NGrAy-qusuqPNbxBxFYnyl52LGDS1mxoHVgdSZkFmfmqic
+Message-ID: <CADCPJ26LU9kXNH04mPk_+u6Y=m-eSEH6ifHzHWN5tkM=pGpwJA@mail.gmail.com>
+Subject: Fwd: Issue with 'git add --patch' after editor closes
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hallo Brian:
+Hi everyone.
+Maybe you can help me.
+The issue: I'm using the bash.exe from the Git installation in Windows
+10 (git version 2.48.1.windows.1), and when I close the editor after
+editing the hunk, the command line doesn't echo the keyboard inputs
+anymore. Even ctrl+C doesn't respond; but, with ctrl+Z I see that it's
+taking the inputs, but there seems to be a single quote at the
+beginning, messing everything up:
 
-First of all, thanks for your quick feedback.
+'2/20) Stage this hunk [y,n,q,a,d,K,j,J,g,/,s,e,p,?]? Only one letter
+is expected, got 'n
 
+(2/20) Stage this hunk [y,n,q,a,d,K,j,J,g,/,s,e,p,?]?
 
-> Since this is presumably a bare repository,
+In this example I typed "n" (it didn't appear in the console), then
+pressed enter, and after nothing happened, I pressed ctrl+Z and got
+those two lines (notice the single quote before the "n", and the one
+at the beginning of the line) and the 'git add' finished.
 
-Yes, the remote repository is bare.
+Now, if I use the git-bash.exe this doesn't happen. It works fine. But
+I'm using it from Intellij's terminal, and git-bash opens its own
+independent window.
+I tried with notepad and notepad++ with the same result.
+Also tried from cmd with the same result, so I think Intellij has nothing to do.
 
-
-> [...]
-> This performance could be improved with `git pack-refs`
-
-After looking around, it turns out that the documentation of "git gc" says that "packing refs" is one of the things it already does.
-
-I'll check when it was the last time I did a "git gc" on the remote bare repository, when I'm there again.
-
-
-> or by converting to the reftable backend, which will open fewer files.
-
-The documentation states: "reftable for the reftable format. This format is experimental and its internals are subject to change.". I am not ready to risk it yet on my precious Git repository. 8-)
-
-
-> [...]
-> You can also see how long various operations take by using
-> `GIT_TRACE2=1`, which will give some detailed timing information that
-> will help you see what the expensive parts are.
-
-That didn't help much. Most of the time (23.7 from 24 seconds) is spent in a single child process:
-child_start[0] 'git-upload-pack '\''/home/rdiez/MountPoints/blah/blah'\'''
-
-The log talks about "upload pack", but I gather this is actually a download operation. It wouldn't be the first confusing item in Git. Or have I got it wrong?
-
-I added "export GIT_TRACE_PACKET=true", and then I got a more useful breakdown:
-
-This takes around 13 seconds:
-
-   pkt-line.c:85           packet:  upload-pack< 0000
-
-I don't know what 0000 means. All other similar "upload-pack" lines have a hash there.
-
-About 2 seconds are spent here:
-
-  pkt-line.c:85           packet:  upload-pack> [some hash]  HEAD symref-target:refs/heads/master
-  pkt-line.c:85           packet:  upload-pack> [some hash]  refs/heads/master
-
-7 seconds are spent with "upload-pack" and "fetch" operations, mainly for single "refs/tags". I'll check whether that improves after the next "git gc" on the server.
-
-
->> However, the git-fetch documentation does not clearly state whether the parallel mode only helps if you have multiple remotes and/or multiple submodules. In my case, I just have a single repository with a single origin and no submodules.
-> 
-> Parallel mode does not help with a single remote.  All the data for a single remote comes in one job.
-
-Is this due to a simple implementation in Git? Could Git download such "refs/tags" files in parallel?
-
-Best regards,
-   rdiez
+Any idea why this is happening and how to solve it?
+Thanks.
+Dana
