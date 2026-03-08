@@ -1,113 +1,182 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5EF31353C
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 20:11:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1E833D4E8
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 20:57:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773000687; cv=none; b=C5csPK+GGe5xTYvrp9HlvVjZvSYN7xM7du2qJYC7emlJaiQFl9Ogwj+r4YTbBTzHczPd6Zysj6MbVFLQw/7QJvpzL2cOUp7IIVYUZg1BNYPaPjefpdFIyLdK58oMGga1Gvb7BqOjsGlLtEc/nCfazCrjPukuTYXEBm2C8W3a8Ug=
+	t=1773003430; cv=none; b=eJBn2wUQFJhAqqJLCQvAbR107f6kxFBqG0jY3YwXq9nnJwpCa0mO6/iux81oEDnN0P2XTWYsLH+LTvvS+8lZk20K0+c3vMGQThicWbp+DrI8fyyJZ37Kug1QsuyIMp2HCX/0vt4aWPkpGcwXtdxn377MDdsOQnoR1xSoXAj48Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773000687; c=relaxed/simple;
-	bh=nIbsquxKrczYJXv069deMbhRp9udP0w/M4FT8pZhLuQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=D1JtjPXynjPRyke742uwLuZTdkbS5EuCXyswS9bqvTTJs2uZs/pwZUp5q4xwjX5l+jMHMNfZZOEjgMKl4Gd2UckjtbWd9VGaOXrMVpFA19Xis3YZp/6OOsZHybkilG/mKgKUvnLikh5wP87aWMmBUUwy7SdaGpU90M2GfheoIZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RXjy9oEt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dncz1iLZ; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773003430; c=relaxed/simple;
+	bh=QvhFbDKX5iKohscekjFpw0GJu20NKP1nyDN4IFJqyjk=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=E1lUhLSeXoIEMsLfDH+Pf6QiAuuBgEwLmkAJU++rr8sT5lavPdTda0kN4JnkCdPvcdNiG06D0Un0xJhB8rGGU7/UL89svtefQZtcME8G4jNvpCp9nP/UFncPo6kjWGIl+Uuxzg+iVXWThfDRFObxTlpjU4pYn4ONbbw9UzTo7/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hqYKqINS; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RXjy9oEt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dncz1iLZ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2C041140002C;
-	Sun,  8 Mar 2026 16:11:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sun, 08 Mar 2026 16:11:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773000684; x=1773087084; bh=Rar28FtA9D
-	6xxQCN4p/qV7rI9jWuhNvyWV/+VVKXwDM=; b=RXjy9oEtaIAGbq75DIEAxdWe7l
-	adJ5muDbWEAIbvVvtr7QWNT35DTytUC1gZTEcEMr1Gitcvnxj1L8VS4LrhxMt4Ki
-	8Ioy385pKaHFzUtcKgDc6IOJjgng2A1hKEz9rSEQq6xA1Em/JwNvA81OnIpW9doA
-	PbgnekoE47zma6G3xGw2d8MGDX0H0OfbvzhokyIpXBVlgaiPWHU3qWnfVMpavx6n
-	m2QWxrdQoggw+LZkScVVkxPZ/arqmISuedB0dPBk5wBufNhwZOQjlkWxiaIOdiQz
-	SsLkzkT0SmXcf17Xyv1ZneAmvZaNH5VuRenQQX4zxY3go2Cp2RBdAEbjrAIA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773000684; x=1773087084; bh=Rar28FtA9D6xxQCN4p/qV7rI9jWuhNvyWV/
-	+VVKXwDM=; b=Dncz1iLZH4TFEzPYuvZm/GQEDqAvX9oewm/h1iN6u/Drs+kYFzM
-	rKWkFtm3SrsjrVgc6ACwugo1WrucT338KGE67RFpjkCzpZZhOjHHvnJkoBeYeC85
-	QYph+CWfeRMmR4nJ6sLdyk3heZ3T119GI2kGu31jfxa6xB43I5rhMAYWM/4JkUu5
-	4+wFStnVei8CP9gKu7FC3vS9mR3CzVDRxVkjeGSR9FhTYMjSSiOXftiZ8U0lDpIT
-	ng+S2WHVePfHIBcsXNp64ReO+XWstvhxHjsASrAtT762VdusmY6JZhhYG3OxIBTS
-	57fXIn3+6pLEMElUK3PMOBPbi7eA1lY+7HQ==
-X-ME-Sender: <xms:7Netacm9JrMc5WD3-2ID_HOncQtgoNM1YwutQRUXqvl4XZmGz502Vw>
-    <xme:7NetaTRcHwvOgTPojDTwBfwLsZXzC3EGBu5apw_4TQMRdHzn5VBO9apOVSB1lAxL9
-    M0hboyUed_crpiIzLbn9JOHRLLhgJwHoiV7jWmixyH-G1jndnhUBA>
-X-ME-Received: <xmr:7NetaYACnzWdO_XvNcnzF5xAr7ovsjx4UT3QbTXO61ofCSUgrDjMM8gn3dUIw1S4xGE2XgMlF7ewM1Oc-NBndd9hPtSvRpo2yQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeiuddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeefleessggr
-    rhhrohhithdrshhhpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7NetaSSUvef_JFEoSbvy8ogcvPA72fw4ZfubpnoLgIh62AKNyvB0bA>
-    <xmx:7NetaermYTJxIi2Ksw6i1iwyADOHf7m78FWAeDP7bK_lXXMRCW_m-A>
-    <xmx:7NetacwObz9OxGZOyh8E5NArGeHAy_boxOzJQ8w8e3EWQsjNs2FyUg>
-    <xmx:7NetabKed8OedA9x-B5l2v-0l3wNqPadGVDXF4mcK_OIejufPRQdVA>
-    <xmx:7NetaaN04RTkQnGrCkp4Czm8b4qvE82l8hiz_rzIvV6DA4SuRxVcSUKA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Mar 2026 16:11:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jiamu Sun <39@barroit.sh>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/5] parseopt: add subcommand autocorrection
-In-Reply-To: <SY0P300MB08019805A8304105FA805EB1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-	(Jiamu Sun's message of "Sun, 8 Mar 2026 21:17:20 +0900")
-References: <SY0P300MB08019805A8304105FA805EB1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-Date: Sun, 08 Mar 2026 13:11:22 -0700
-Message-ID: <xmqqo6ky9j4l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hqYKqINS"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-798527f822cso108037387b3.3
+        for <git@vger.kernel.org>; Sun, 08 Mar 2026 13:57:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773003428; x=1773608228; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2lxrK78kRu7vmhzVkTkKbEw4Rk/DDi42XY1/gY//fgY=;
+        b=hqYKqINSohXZRUURRAdIiQ1sC4oORnyTqHMLJpxN7mwafuREqwn5dCF1cNaOomwqs2
+         VqLoZrnusGB9EtZOI27N6rDk8gOZn+l9Rl/AXdCktQNkF9RK9l9p6/UYTHfOyMJl9hez
+         qZe6c+db/UDhy6mXpXG5/tjDPiytLaPF/Sk4xrojecCVDd/o/yle/MrG3tdV6ecHVbwa
+         8CURwftUBo3lXhIzf/csUbOwUcNIAjUxsKcIdrkm7UT/xoCkiA5RvFK1M3vWMkQrKmYl
+         /+Vo/yvZZzwmywDESpccyIvL2LV3imZ6my9/tA624OyKyV5meYrMR2Jz6A5Dr9WB1TW0
+         2POg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773003428; x=1773608228;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2lxrK78kRu7vmhzVkTkKbEw4Rk/DDi42XY1/gY//fgY=;
+        b=JgPs43dlgjUHpVR+NKKBJ9EcsP1vOPalbGg13u1118b/m9c5+mx7omEHARIoQaM5sO
+         p8YXRijabUve1I51Bo+2eP0QgcaB6ChFfD9vA4u8athy22cIBs/kYF3+p4zp5dhPjMnX
+         1GIhk4ZWiL8HjY3Sx7JMal+1ey2Y1emyfut0uVRwA8pL9hI1fIccgsI8LuL23TwMHymK
+         VfYBUNpjGeKKjCREBU64OEyuzquNPYgrkQH/V7uUer8WyH0HNcpfuReFpB3MtCNWvbsg
+         BwjOLIIA578/8NWfH2dsF3Zsxl3GhWJUgJoeyTeyEqMLdBFh5wzzZr9nw8r9aig8k9Zz
+         0SmA==
+X-Gm-Message-State: AOJu0YxDh46dkQNkaMonVtGfXI5XCg4nCLgV/g7sdT2IxbFaD+Gdw56n
+	/kwtum7Ax+oHsUVwF/UV2wwVvVes5Ma0rR0HBGrRaCMGxzro0pa391lahXuP0w==
+X-Gm-Gg: ATEYQzwy6BgMDUpZhuhVtyMEWRnRowWIUexIR8XwcMJE3JOX39Q/+z8W4L8K+c8HDwk
+	MTagZezCm0KlFKCSJo2coMFKz8hQN1ALtnQ5fot940dwimBFBr90pPcBPiRMelp8fdF7zJwvz4n
+	mo0FKjOPNJO+RiQGwBnXTSl26a7vvncSQAAgWxYfGhNK0MLnVo13CMsM9d5KiWxNt33tDtP8nXM
+	eA05BaH0ay10UGlEb+FaKnV3cjYvgwsd4jN87+KiSPraMP5+MrJXE6sojpASKM+fw06ox3xeaDU
+	SZkwJsh5OCSHyERLVEryVKvxiyBC1HK2pbpjiOSowysu/2X4k4fLc9l+38rmAIYkrz/GJ+3ogvI
+	ABNFeV5MkMkveDxBe/zksR54oWHFOKrPs1APYJkGTvSX0jlxiNOdZpwPG0AZmV2n/q8HUgrAzMA
+	NacV8S0KEW+klPLIm2kamAOaBnTcBf0nRoolJx8dlgAMQIhIPUZ8L0VlAssXnmZRuBzCWSSByDg
+	MfxrOaPxpfFwAHuhxKJ22oFySJHc8O5BD0qr9TY
+X-Received: by 2002:a05:690c:102:b0:798:3a6:3f4 with SMTP id 00721157ae682-798dd741b73mr85730867b3.43.1773003428196;
+        Sun, 08 Mar 2026 13:57:08 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90eb:5600:1c70:d059:42e3:6010])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-798dec8f455sm37019897b3.8.2026.03.08.13.57.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 08 Mar 2026 13:57:07 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] quiltimport: fix backslash expansion in patch subjects
+Date: Sun, 8 Mar 2026 16:56:57 -0400
+Message-Id: <92EC21F4-52E1-4FE8-A1B8-5878D6CC654C@gmail.com>
+References: <20260308165531.40655-1-sashal@kernel.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <20260308165531.40655-1-sashal@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+X-Mailer: iPhone Mail (21F90)
 
-Jiamu Sun <39@barroit.sh> writes:
 
-> Git currently provides auto-correction for builtins and aliases, but
-> lacks this functionality for subcommands parsed via the parse-options
-> API. Subcommands are also commands, and typos will occur, too. Like:
->
-> 	git remote add-rul
->
-> So, this series introduces subcommand auto-correction.
->
-> Currently, builtins with mandatory subcommands enable autocorrection by
-> default. However, those using PARSE_OPT_SUBCOMMAND_OPTIONAL skip it to
-> avoid treating valid unknown arguments as mistyped subcommands.
+> Le 8 mars 2026 =C3=A0 13:01, Sasha Levin <sashal@kernel.org> a =C3=A9crit :=
 
-This is a bit confusing as it describes the behavior introduced by
-this series rather than the state of the codebase before these
-patches.  Since subcommand autocorrection doesn't exist yet, it
-would be clearer to phrase this as describing your implementation
-choices. Perhaps:
+>=20
+> =EF=BB=BFecho interprets backslash sequences, so a patch with "\0" in its
+> subject has that expanded into a NUL byte, which git commit-tree
+> rejects.
 
-    By default, this implementation enables autocorrection for
-    builtins with mandatory subcommands. However, for those using
-    PARSE_OPT_SUBCOMMAND_OPTIONAL, autocorrection is skipped to
-    avoid misinterpreting legitimate unknown arguments as mistyped
-    subcommands.
+Echo _shouldn=E2=80=99t_ do that without flags like -e depending on your imp=
+lementation, but I wouldn=E2=80=99t put it past echo ;) hence my preference f=
+or printf in scripts.
 
-or something, perhaps?
+More interestingly, though: do the patch-names or subjects being adjusted be=
+low contain such a sequence? They look like user input, so possibly (and we c=
+an=E2=80=99t be sure they don=E2=80=99t).
+
+It might be nice to say more about what =E2=80=9Crejects=E2=80=9D means (err=
+ors confusingly? Truncates user input?), but otherwise I expect this is reas=
+onable.
+
+> Use printf '%s\n' instead, which doesn't interpret the string.
+>=20
+> Also quote $tmp_dir to handle paths with spaces.
+>=20
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+> git-quiltimport.sh | 10 +++++-----
+> 1 file changed, 5 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/git-quiltimport.sh b/git-quiltimport.sh
+> index eb34cda409..38302d28c9 100755
+> --- a/git-quiltimport.sh
+> +++ b/git-quiltimport.sh
+> @@ -79,7 +79,7 @@ tmp_info=3D"$tmp_dir/info"
+> # Find the initial commit
+> commit=3D$(git rev-parse HEAD)
+>=20
+> -mkdir $tmp_dir || exit 2
+> +mkdir "$tmp_dir" || exit 2
+
+We prefer to leave such =E2=80=9Cwhile at it=E2=80=9D changes in separate pa=
+tches, so perhaps a preliminary cleanup =E2=80=9Cquote variable expansions t=
+o handle whitespace=E2=80=9D or some such step would help?
+
+(I didn=E2=80=99t look past the context to see if tmp_dir may have whitespac=
+e or shell meta characters.)
+
+> while read patch_name level garbage <&3
+> do
+>    case "$patch_name" in ''|'#'*) continue;; esac
+> @@ -101,7 +101,7 @@ do
+>        echo "$patch_name doesn't exist. Skipping."
+>        continue
+>    fi
+> -    echo $patch_name
+> +    printf '%s\n' "$patch_name"
+
+Does this go to commit-tree? Or just protecting the output for the user=E2=80=
+=99s terminal?
+
+>    git mailinfo $MAILINFO_OPT "$tmp_msg" "$tmp_patch" \
+>        <"$QUILT_PATCHES/$patch_name" >"$tmp_info" || exit 3
+>    test -s "$tmp_patch" || {
+> @@ -142,14 +142,14 @@ do
+>    SUBJECT=3D$(sed -ne 's/Subject: //p' "$tmp_info")
+>    export GIT_AUTHOR_DATE SUBJECT
+>    if [ -z "$SUBJECT" ] ; then
+> -        SUBJECT=3D$(echo $patch_name | sed -e 's/.patch$//')
+> +        SUBJECT=3D$(printf '%s' "$patch_name" | sed -e 's/.patch$//')
+
+Interesting. I think POSIX sh  supports the ${x#suffix} expansion, which cou=
+ld avoid sed. I think it unlikely the =E2=80=9C.=E2=80=9D in the RE is inten=
+ded to match any character rather than a literal dot. But should be done a s=
+eparate patch and could be left for another series if you wanted (assuming m=
+y memory of supported expansions is correct).
+
+Importantly, this does get fed to commit-tree below=E2=80=A6
+
+>    fi
+>=20
+>    if [ -z "$dry_run" ] ; then
+>        git apply --index -C1 ${level:+"$level"} "$tmp_patch" &&
+>        tree=3D$(git write-tree) &&
+> -        commit=3D$( { echo "$SUBJECT"; echo; cat "$tmp_msg"; } | git comm=
+it-tree $tree -p $commit) &&
+> +        commit=3D$( { printf '%s\n' "$SUBJECT"; echo; cat "$tmp_msg"; } |=
+ git commit-tree $tree -p $commit) &&
+>        git update-ref -m "quiltimport: $patch_name" HEAD $commit || exit 4=
+
+>    fi
+
+=E2=80=A6 so may need protected as described. Neat.=20
+
+> done 3<"$QUILT_SERIES"
+> -rm -rf $tmp_dir || exit 5
+> +rm -rf "$tmp_dir" || exit 5
+
+Ditto for cleanup.=20
+
+> base-commit: 795c338de725e13bd361214c6b768019fc45a2c1
+> --
+> 2.51.0
+
+Thanks=
