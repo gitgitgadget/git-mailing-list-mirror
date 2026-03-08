@@ -1,155 +1,282 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E254A3603F9
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 09:57:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFA836C5AE
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 11:40:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772963833; cv=none; b=aOZ/bjcrN0OGrzkdYMxEZLKlT7riZ6b1s8DCA6Cmj7IWDenVvXgh95T79Yyvj+HYw84YLDAy1UTv8Im56dtif59e+eKbQt2RKee/u6+/bUR25gZKd7D+1uTzbeIlpNrCgJtO4dip+qBVd9DXswiaQ7tUa1USHZCLXknXq0E6EqM=
+	t=1772970042; cv=none; b=uJ1C6iD/LYxsWH1LcPjY3YMtgFIawyIAedflmY8Lf7641X/KtNKYlX63zQ/PdHWSZZPvsWLgmgTW/ewLIWO14OulwIDWK3QJnuq78MWk5q9TIrEqklArV7Ib7atWiaH81INxDSLkSZr3LxNw1QcLLONOpKISOihLkrMGlaenuZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772963833; c=relaxed/simple;
-	bh=kSLJpLACbGd/qEotb1KdJXz8R11Sia4xA1xBLMFvd58=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=LbiSQn8uLlmn/hqq+Hb6AxPhUbhHScvvm1Y/9OWnRsdcAFIvqdACZ3B64LnoC2Ue/O97G6Rh/+6LOBIkotucmFb7ZWsV1NELwI/8WPC4XDJvwFj4K/qIG45adfuKTIsVjXg0+eCuRzjrtZCzhjYDAPFLwoo0P+rYQUEioTAe8AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=EndDHxfp; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1772970042; c=relaxed/simple;
+	bh=5944vVnX8ao/oMyxgW6h5WoTtqYtka797X6hy7FA2Nc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=MW9cevzQpeP7qvInX2oLSvy92ZS5Ac+OHC/ZNrLw3+Rf6Jq08dLGonwyO1ghORSk0gjah6m3UNj+8PchvQCraVpZ5Us4PkJqZJrL78JLAtlmuxlu3yeosUUMXILqWyXqboqX5diOBfyyEdzyusP1YLiZwevdj88Ov+0qgElFBKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cPIRsEyz; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="EndDHxfp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1772963823; x=1773568623; i=l.s.r@web.de;
-	bh=Oxny1Hz2Kqp1VvcP28mKLzXoFhTGNdBwMZhxlnjMc60=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:From:
-	 Subject:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=EndDHxfpo61d7TbiTMk/4/fhWtW6R+d+oO7X/14AlPi+ijtSvl0IoyxVxNfN4h4S
-	 zsOf1huLCIIAQy43Pss7+qYhbDS6nq7FCxtMnSd5xwBh7SviXrRkVA1tKsh31T06p
-	 WdC3U78O1n57sQTlb+cdlK8NDdQLflLj76epcR4lbC2YmZ9od3YKabazHQhtd7rz6
-	 DIzhIEITBdOJUs58Rerq2Q1UFZo0PrDPmc/2POTZeIBBjpTMtqAIzQ4Gfyi5mKY8J
-	 MrAEaEfkCQ8EZ9CvoipFhoA9ficEx0C5NVUImfeLP2qQWlOTvI3qJ9U6+9VzlJKos
-	 O9QvaKAFlE9+vZq/CA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mm9Zc-1vHLfa47NI-00amlP; Sun, 08
- Mar 2026 10:57:03 +0100
-Message-ID: <b0b8633f-be95-48eb-8244-d0e3f1a7be72@web.de>
-Date: Sun, 8 Mar 2026 10:57:02 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cPIRsEyz"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-483abed83b6so87936405e9.0
+        for <git@vger.kernel.org>; Sun, 08 Mar 2026 04:40:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772970039; x=1773574839; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KGZWlVBk5aZEakbXfF6jvCRzOfBFyE3tVsSkExk/1j4=;
+        b=cPIRsEyzshUzHqfhiqkwEGZ3Shrp0FeA/NQZx2ePO9dTtUeyZefoxXWvszVLN4NSuy
+         C0Ba+EbCRvUzvR2MInpoZ2ZuYQD197gvF9PIQSRBBtu84UotB2HC6zFqstMq3lvpb291
+         e4mMtKlPdeEbQQwNs4RnPC+/TT041x1FsHhvGFgKLFAlvzmMv2floZp541+3DwMRDXCo
+         Hsc62THBROJaV1UeWD/t8JTSogGNBFWuT7ZiQmlQUhQ9jvrG/f9c+gnyWO8zdJcRGPSx
+         i/CAWpS8NddrAML6GNs0vGLdsXtv9tbTi/5xKXUQjuPOPplVWa12+iDp1t6t8/govYJX
+         BMyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772970039; x=1773574839;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=KGZWlVBk5aZEakbXfF6jvCRzOfBFyE3tVsSkExk/1j4=;
+        b=nBq/Bh8doqhus4OdGvQk36byMjZmAGxjYsqFiG/AHthEl+/zNyOIj7g+vPxZ4w52pt
+         SEyCgxrQ5/HlueW8vFcQHxNslg0n6ZbzNoMGg3U8ubDv+84swHREIrqfvO6vhto5OTiG
+         k9BldSWf+rth82F/yDdDL0+1ve/SL/Ad/B5CW/oTWThFp/QzkHOKMEPC5amnBjy/eZyH
+         VoG8lj1fG7czStjb23cSc2v3oquPq5CVy7ykoWkCVkU1R7t53YrX7Uh82It8pKadQ/T8
+         p9Lu6rMz1aZPRVzfEIni0uLEUfSvVOWtIeNw+D/FccPLqeYsKqg9afx+IjL5QzqfQh8e
+         1H4A==
+X-Gm-Message-State: AOJu0YzNVzNQiu6TD4XLZ0hfkOUwl/TsCe7Ex97FYhfgpZMoCaBdgvYn
+	m6KCyd1BOOUxpS0lioMf6/lYuZOb0C/gbiy3SYNbCE1jTunnEQRNAp2jxBMldg==
+X-Gm-Gg: ATEYQzzD4lPZOaRzQqSor2MhX7M0d4ASEgwT+RZB96gJtEnzkPj89E3ZyoBLESTdh0M
+	AYPdJCuupbQOMrBapqqHChm/mcnxSm8DDy/UtGV9PEdoLrPfcvbnx+SSUMwq9YeTIPwOT1K6s2Y
+	VDAQLXhQo5nEyz3pIaAqU1JxOKPI/2CvQtS2QaL7eQygJN/Xycm+67xD/pYo1kS3/QTgdmoLyzG
+	C2aiFUvBhg9MnDoRICMOeRH7LIbL8bBZDCdbB8hPgAaasWnsCQPibMuFwMG4SXz7L+rRwF677xw
+	rbQWDXXFG4eqtHCkQBUefXB3XN2sxnm0Tir7FvX8Ni2a8vao8g1wns3+TG7TQu6vbflBRcDLLUr
+	nEPD/wouq6hBbSA6pRvl06+YmcwYphHF7F6p+ppaGTRDuk6jDGMRQypVUEw5b2u8PdfXvRgv3R7
+	rxh/J7lZ7qLq+uqho9/RY=
+X-Received: by 2002:a05:600c:a12:b0:482:df17:bbbc with SMTP id 5b1f17b1804b1-48526969710mr125181725e9.20.1772970039222;
+        Sun, 08 Mar 2026 04:40:39 -0700 (PDT)
+Received: from gmail.com ([159.146.43.38])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485245dbcffsm63278375e9.18.2026.03.08.04.40.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Mar 2026 04:40:38 -0700 (PDT)
+Date: Sun, 8 Mar 2026 14:40:35 +0300
+From: Burak Kaan =?utf-8?Q?Kara=C3=A7ay?= <bkkaracay@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com, karthik.188@gmail.com, jltobler@gmail.com, 
+	ayu.chandekar@gmail.com, siddharthasthana31@gmail.com
+Subject: [GSoC Draft Proposal] Refactoring in order to reduce Git's global
+ state
+Message-ID: <aa1cn0_ATfh-uRE4@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] history: initialize rev_info in cmd_history_reword()
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:/AMY2L273fyGbLV+0pX7fX8RLH+n7mLpqzmzVOXCduqgf6gOjiJ
- CrCOCswA1pC2xhGpHMGTf4zXnwy/x1R8XVqHb2DSOA35C3QlRPRudpXrgc32KH5Snudji2E
- 0IcS2JGcb7e5INS2VCfXDAE4UtB6suVvBhx8PSI+KXsqUxi3vZxb3GoZ5n3O0hfetwByKWk
- vEAQRR9tBI7g6+HY9Muhw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:AE7ItLAD+Us=;dLojBanEnnjgW2roFA1b4VFbfdj
- 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
- ONIdGI6MdMU6E/TiNQ5oFoX53PMIUV7NtjSK+g
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-git history reword expects a single valid revision argument and errors
-out if it doesn't get it.  In that case the struct rev_info passed to
-release_revisions() for cleanup is still uninitialized, which can result
-in attempts to free(3) random pointers.  Avoid that by initializing the
-structure.
+=================================================
+Refactoring in order to reduce Git’s global state
+=================================================
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- builtin/history.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Personal Info:
+--------------
 
-diff --git a/builtin/history.c b/builtin/history.c
-index 1cf6c668cf..88822a184f 100644
-=2D-- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -425,7 +425,7 @@ static int cmd_history_reword(int argc,
- 	};
- 	struct strbuf reflog_msg =3D STRBUF_INIT;
- 	struct commit *original, *rewritten;
--	struct rev_info revs;
-+	struct rev_info revs =3D { 0 };
- 	int ret;
-=20
- 	argc =3D parse_options(argc, argv, prefix, options, usage, 0);
-=2D-=20
-2.53.0
+Name: Burak Kaan Karaçay (he/him)
+Email: bkkaracay@gmail.com 
+Education: UG Sophomore, Marmara University
+GitHub: https://github.com/bkkaracay
+Timezone: UTC+3 (Istanbul, Turkey)
+
+
+My Patches:
+-----------
+
++ (Microproject) t2003: modernize path existence checks using test
+helpers
+   - Thread:
+     https://lore.kernel.org/git/20260208202809.270523-1-bkkaracay@gmail.com/T/
+   - Thread v2:
+     https://lore.kernel.org/git/20260209112444.1268765-1-bkkaracay@gmail.com/T/
+   - Status: Merged to master
+   - Commit Hash: 168d575719d944759964e004d17a3282b0f883d5
+
++ [PATCH 0/2] mailmap: reduce global state
+   - Thread:
+     https://lore.kernel.org/git/20260219125954.3539324-1-bkkaracay@gmail.com/T/
+   - Status: Merged to master
+   - Commit Hash: 2d843a2d3d6c2d5e7861e6aa99743d15d36746b9
+
+
+Relevant Experience:
+--------------------
+
+I am currently developing my own programming language as a hobby
+project, writing a zero-dependency interpreter for it in C. While it is
+still a work in progress, I have completed the core front-end pipeline.
+Building this project has given me practical experience with C
+programming, data structures and modular software architecture.
+
++ To support potential future multithreading, I avoided global variables
+in my own project. Instead, I pass state via local contexts.
+
++ I implemented an arena allocator (memory pool) to reduce malloc system
+call overhead, prevent memory fragmentation and ensure cache locality.
+
++ I used techniques like string interning and Pratt parsing.
+
+My project is available on my GitHub profile [1]. If you would like to
+take a look at the code, 'src/main.c' is a good starting point.
+
+
+Project Abstract:
+-----------------
+
+Git was originally designed as a short-lived CLI tool, where relying on
+global variables was highly practical. Over time, the need to embed Git
+into other projects and applications emerged. Today, these global
+variables are a huge roadblock to the libification of git, as they make
+it impossible to properly handle multiple repositories within a single
+process or safely support multi-threading.
+
+This project aims to reduce this reliance by migrating global variables
+from 'environment.c' into appropriate locations. This effort will
+support the libification goal and modernize Git's internal structure.
+
+
+Technical Approach:
+-------------------
+
+The core challenge of this project is choosing the correct parsing
+strategy more than relocating globals. The codebase currently offers two
+migration strategies for global state removal.
+
+Currently, globals are loaded eagerly via 'repo_config()'. The modern
+'repo_config_values()' API provides a safe and straightforward way to
+eagerly load variables and reduce global count. However, eager-loading
+parses all configurations upfront, including unnecessary ones. Users may
+encounter fatal configuration errors that are entirely unrelated to the
+command they are executing [2].
+
+On the contrary, lazy-loading postpones the parsing process until the
+variable is strictly required, preventing unrelated configuration
+errors. However, it is significantly trickier to migrate. If a
+misformatted configuration triggers a 'die()' in the middle of the
+execution, it risks causing data corruption. Moreover, lazy-loading
+changes the timing of error reporting and struggles to replicate
+eager-loading behavior when multiple configuration keys affect a single
+variable [3].
+
+If lazy-loading is considered safe for variable, git provides two APIs
+depending on the performance requirements:
+
+   * The 'repo_config_get*' function set is suitable for variables
+   * accessed infrequently because of underlying string hashing costs. It
+   * is important to use this API to not bloat the 'struct repo_settings'
+   * [2].
+   
+   * For frequently accessed variables, caching them within 'struct
+   * repo_settings' is preferred, as it amortizes hash costs and provides
+   * direct memory access speed.
+
+There is no silver bullet solution for migrating globals. Because
+transitioning these variables require a deep understanding about the
+codebase, communication with mentors and the community is essential.
+
+
+About Gentle Reading:
+---------------------
+
+Current config readers rely on 'die()' to handle error cases. While
+pragmatic for cli-tools, fatal exits are unacceptable for a library, as
+they will crash the host process. Building upon Derrick Stolee's recent
+introduction of gentle parsing functions [4], I propose implementing
+'_maybe' variants for core configuration readers. Since removing all
+'die()' calls is inevitable for libification, sooner or later config
+readers will be purged from 'die()' calls. Utilizing the gentle
+functions for newly migrated global variables will reduce the future
+amount of work.
+
+Applying this gentle API to widely used functions risks creating
+unreviewable patches and merge conflicts. To solve this, I plan to use a
+function wrapper approach, similar to the strategy used in early
+the_repository migrations [5]. However, the_repository changes are more
+mechanical work compared to the gentle transition. In complex call
+stacks, a gentle transition risks causing a regression or a scope creep.
+Utilizing the "normal" config helpers will be helpful in these
+conditions.
+
+Another possible roadblock in the transition is the magic numbers in
+error reporting. Some of the functions in Git use -1 and 1 to inform
+callers about two different error cases or situations. Introducing a
+third hard-coded number to tell callers to stop the Git process for a
+misformatted config would be a poor design choice. Furthermore, adopting
+a standardized error structure like enum git_error_code is a step toward
+git's ongoing libification efforts, as it enables external callers
+consuming the API to handle errors programmatically.
+
+
+Availability:
+-------------
+
+I plan to dedicate 40+ hours per week to this project during my active
+coding period. However, I want to be completely transparent about my
+university's academic calendar to set realistic expectations.
+
+In Turkey, the university summer break begins in July and ends in late
+September. During May and June, my schedule will be heavily occupied by
+final exams and major group project deadlines. For this reason, my
+availability during these two months will be limited to around 10-15
+hours per week. I will use this time to stay active on the mailing list,
+participate in architectural discussions and submit smaller, preparatory
+patches.
+
+To ensure the highest quality of work, I propose utilizing GSoC's
+officially supported flexible timeline. I am completely free during
+July, August, and September (with no summer school or internships).
+During these three months, I will dedicate 40+ hours per week entirely
+to git.
+
+
+Community Bonding (May 1 - May 24):
+- Analyze environment.c and create a detailed mitigation plan for each
+   variable.
+- Discuss the plan with mentors to identify potential roadblocks or edge
+   cases.
+- Submit a patch about 'enum git_error_code' to start community
+   discussion.
+- Set up a blog to share bi-weekly updates throughout the project.
+
+Phase 1 (May 25 - June 28):
+- Introduce the '_maybe' versions of the config readers and write tests
+   for them.
+- Begin mitigating "low-hanging" globals. To avoid wasting time while
+   waiting for reviews, start drafting subsequent patches concurrently.
+- Publish the first progress reports on the blog.
+
+Phase 2 (June 29 - September 15):
+- Discuss globals with mentors where mitigations might cause behavioral
+   changes.
+- Shift focus to the more complex cases, specifically those involving
+   eager-lazy or '_maybe' transitions.
+- Continue publishing regular blog updates.
+
+Phase 3 (September 16 - September 30):
+- Act as a buffer period to respond to final feedback on patches
+   currently under review.
+- Complete the final project report and publish it on the blog.
+
+References:
+-----------
+
+[1] https://github.com/bkkaracay/caret
+[2] https://lore.kernel.org/git/xmqq1pk3lmu3.fsf@gitster.g/
+[3] https://lore.kernel.org/git/23428022-ab13-4a3e-90ed-ff91ef93f051@gmail.com/
+[4] https://lore.kernel.org/all/pull.2044.v3.git.1771849615.gitgitgadget@gmail.com/
+[5] https://lore.kernel.org/git/20260109213021.2546-2-l.s.r@web.de/
+
+---
+
+Thanks to everyone for their time and guidance. I'm really excited about
+the possibility of working on this project, and any feedback to make
+this proposal better is deeply appreciated.
