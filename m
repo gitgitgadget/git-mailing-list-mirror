@@ -1,96 +1,111 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D16421D3F3
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 04:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68B41E260C
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 06:02:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772944445; cv=none; b=HCpocmyZl6l0zU7gL/Xr4FYy6DPKokiC/3QkfySqmg64gTyUi5ng5MJBJVNu6v9jzFteyGEsxv6GumIsQM63OiDvoxeecMbi08ToMuMW9nApGPZsQTE+JM5Iq8WNxfNlUzOK1u/EgAgc354SQy2He7r0m9SZs8DlGI8CMH/EV1s=
+	t=1772949780; cv=none; b=A1alDyL+r93FdbJC+w0XQcQbTfU294cQbGoPpK1AlLFIWP16pgN7/nImbNUqwRzjLCY3GftuL/UNcRmBwWfKqI85svOBEwySwUs/jvV4Z7zseGeY1N5qWkTXmPH476Gaj/7GDV9A/oA/uuwmtEkrnx0Mhzhg7H1mUF+363zgbto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772944445; c=relaxed/simple;
-	bh=srRPCujEvswkiUOILSK+K8jkAjGK1MM7hulVfl70KJM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ih+4XnRglSTXm8Ua3f4gFU+Ez3f4hCKHvEQRSM1Fuz21CrJ5mGhxRSqDFkD/RnvC24xOonakUCX+9B3g+mbfJvrwvNklZID74GSNLzmpbbC0FLZgcq6eZNig+IzcE8MNs9eqceog3XiDEFsAfPOpbA/drBVjHHBkVbWgdRdRrL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jhy2DYMo; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772949780; c=relaxed/simple;
+	bh=t80i8cRYR+qtMBoDwEuSQmYuplpDjaG9ReBfPE/bYEI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JaBaFGH87CQG0c/BV4ssZOQwgkBHrMVl0R7RiI0ixczgSP3/0diMYez7K4k2Cfu614h/4Edamflcd8gSZosMvCyKoQkxwnUwg1zrERyj13Y+pvcs7cRb9vasUDHPrM0zfWFho7MZqyBYLAcBtg+8YTpohmYCEG4A5j9pYRA7JH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jmIMzTD4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EdUgcGep; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jhy2DYMo"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c70c38515d3so1781465a12.0
-        for <git@vger.kernel.org>; Sat, 07 Mar 2026 20:34:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772944443; x=1773549243; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jCiyeLaAGvszm0d2cfx+shUan1WifUZlHlFqR/nwqu4=;
-        b=Jhy2DYMovH9rmBxq+ayrcm0SQj9pGvBKiVjC1GORa/p+/XIT26O7tZBr08nKjo1njC
-         mo4Wb3BXtu3VtuXQdWAP1aT14Gby7yj5/KwxxZvldRcmjfzSs357A6/QK6wx8tZ8CuKd
-         66D129j9YkGHG8t/1uwuH5dRKB6prHSY3mfY/rYfKIRvauA9YYvX1G/S8mnPdpoxYEXb
-         FXGxnbEdKDYXHUT1q0rRSuUUIhwLPTwjCfozWMDEkvrv+ozWvBgIeFGAJGi7+fyNci0a
-         JwZcgnGODrW53CoPpr5zWo5Y+hpB0VBF19f8oFRHIhU/2CyqVfjTKFlSFIrvWlc/L4gS
-         c2xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772944443; x=1773549243;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jCiyeLaAGvszm0d2cfx+shUan1WifUZlHlFqR/nwqu4=;
-        b=dKMROgFwx+g+KyR8n0AiNfa5PC6srpcgj45W9v3md4javUiTjZS7EggbzSqAyUHWT7
-         LGC2NaL0Zh+b7eCYxxpFZzpHn1imehFdeCJa5R1EW0pxA1pbXYehwm3J1t1CFzUTT+io
-         5QTLWH66f1Gc3AUUF3YLSOENk3BrKZIE2UVaS6n9ZWMKDu++iv5i8In99ipc1jzd9nxj
-         Hsiuouqdl09kFa+XyvORYJJCK0IRQJ6lmQUPNL6sAexjAWjmaBsfflbAay8inV5nNLY+
-         JrSS1K5LPiIOItAqShp2mGDJp8yS3PYCaBytz8cbmDiUwiOosMIPB09fbfjnlMF9Sy0L
-         qjTw==
-X-Gm-Message-State: AOJu0YyUjXWiw2dth0yLbbWMyUdLg0FBjv9zZYQQDdBELuP7mVRI0VSi
-	JPTpQBydVheGgufHd5k8GiL2vzvO/xakx+O3MNu5RYh/CWXYCXMaP13bPnvo/Iqz
-X-Gm-Gg: ATEYQzwRfhZ4oPDG/my1+MF79j4V8f9TP5Cr9jqHGpoWIHXEvrfDrtICloQiDEcDYrT
-	yBR6rEOrRYVC5YB4uM5czjKOz6gcmtQ+vLbm3TPVlLSx/4H+w1fO1GOV0wcJTlF/gkvYP6ofswm
-	Rb2tp6Sp5HVDlx58MfhkQwMhRmToZmDAJZN2PccSeGRuplKW65GpyxEhtmDCyHU88c0dTGR+7uG
-	ximMcRXlzfKrl+mnyGkqDKbrKgfFxJ32kXxitNiZSmGXYT5zSXgNlZ/QYvMUQwhRGai/cBtrExG
-	M5QSssVoQVeXFHki9UjkLSmLXAuTG36mppQlHguxMSgtHRCtvm0EhGSRfSbfsUU5OtfXUcsGFxZ
-	ouY1tZ25rLoXMKhjqyLpeeeNVSmdNOloG/pFQrd+q76iyv2WGu6Q6KUSk9gk0To52rCw4GZpr0+
-	UO/on0VXOtk8dpPZLac93xFdjctOFpHeIs4klqX+XFPvHOrpJjogV98igDbUoGGh04n1wp4K4Bl
-	8t+iM+FXwSgCDi3jDfCXR38
-X-Received: by 2002:a17:902:e742:b0:2ae:63fd:6d6a with SMTP id d9443c01a7336-2ae8249d4f1mr45803985ad.7.1772944443103;
-        Sat, 07 Mar 2026 20:34:03 -0800 (PST)
-Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83eada11sm67259555ad.38.2026.03.07.20.34.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Mar 2026 20:34:02 -0800 (PST)
-From: Tian Yuchen <a3205153416@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Tian Yuchen <a3205153416@gmail.com>
-Subject: [PATCH] .mailmap: update email address for Tian Yuchen
-Date: Sun,  8 Mar 2026 12:33:44 +0800
-Message-ID: <20260308043344.77986-1-a3205153416@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jmIMzTD4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EdUgcGep"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D98C71400010;
+	Sun,  8 Mar 2026 01:02:57 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sun, 08 Mar 2026 01:02:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1772949777; x=1773036177; bh=t80i8cRYR+
+	qtMBoDwEuSQmYuplpDjaG9ReBfPE/bYEI=; b=jmIMzTD4qbWE2j6pSPXHYlXm9a
+	Mva0WqyqvvxJct+7xOmj8z8ofzEwpKVrXj2HmOqhJYfOsfUd+wGcYc3f4WtbQkeC
+	5QRaF3etmypmJSgvpOaDz8s4hFDdyaGHEZOxM3SK5HxvWEZk2u3pvNxiilAhnOA5
+	iAoRjlBycl4umv9kFE0Lp6HfIxchDuBImnKH+Q00fJks1qw6AsKzcOEGd6Ob3Gdz
+	tapxfZWwpJNR3Yeg7KVllEk/ZdhB+OAkSDku6RukCk2F2en5t2Kh54tgadrUJdNb
+	Aoh1E/6NqpSR6KjrNoR4voGKnXjSi8tmMX0/T6vh325xAcWGi+a8iorK9D5g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772949777; x=1773036177; bh=t80i8cRYR+qtMBoDwEuSQmYuplpDjaG9ReB
+	fPE/bYEI=; b=EdUgcGepKP9nhA8CBSAzDC6gEbASGW0JcYBGd/PkUepaXcWkrsv
+	bwSO70GFumyfuioxO8cO+l41xs9MaeAWbGFn0btjQpeWSSzKW5Iz//uFw5bIkWgn
+	cLI6NfV8IV0BJ7kj61U+VJrjm/+nVGXZT48FebWTJAMm5tSoCRmYXPzY8LR8bijR
+	ouVuLt/qXJicj5PjsUmQDxUZMrNoRhd9oNt+1Y9uwu5zsWxaHDlBR4eTbtvZ3mIR
+	kmABPEJwelXuFlQtORt8rFwXqWjaM0FluVG6ll5f3E4if99RtlUdxBa+iC8WkvC+
+	YOq+1ipujPEXAWxzFwxF1SKLN5XoKBme4ug==
+X-ME-Sender: <xms:ERGtaS7zi919T8dJIGqwDL01NCCvSJP4JjJxu22hXwnfuE-rWQYIMA>
+    <xme:ERGtaeLiRyK8HO_GFlAx0OoB8OtZXNHSgB42UWy2ncYKa60H6Iq761MDTpKaOllNa
+    uLCntzAV9gPHy3EBocHgJ7nP9I_NuSSabmkEqEk0s-lVQAxdr7tJQ>
+X-ME-Received: <xmr:ERGtaTuCDj43ePaP0wMkvXjVbOwWSRVBAwWhOhxlHbdA3Cpfqx5Gv9IWGqCv5BeKfi9zP9-MZfb_0JU2KwZqk18goyQ8pFYdzw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeegfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjiehtsehk
+    uggsghdrohhrghdprhgtphhtthhopegtohhnthhrihgsqdhgihhtseifohhlfhhgrghngh
+    hfrghushhtrdgtohhmpdhrtghpthhtohepsghirhhgvghrrdhsphesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehmvgeshigruggrvhhprhgrthihuhhshhdrtghomhdprhgtphhtth
+    hopehmrghrtghnrghrtgesgihiphhlihhnkhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:ERGtaVLjQTwiTOvP3ARwNywREXLsFocnA_D_mbjeBYk-6-ZBm5IxXw>
+    <xmx:ERGtaU9Kls3lnDLFqfelgLUbrHc0TXkqM7Z8J6HjKA6ZMAAO5VcBOQ>
+    <xmx:ERGtaWz94eTOcub1ym-OKoI6l7W0LaQ1guYviLc1OcrnZSCrejZP0A>
+    <xmx:ERGtaZ5KUjm08j05jDnY16Q1-s9qkxn62yXANt8rBz2ip2FsUSd1TA>
+    <xmx:ERGtaVzKVIVlwVwM45CtivgG-ryZqIQfVqotwmi9OTbgwmBQsRGcaRje>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 8 Mar 2026 01:02:57 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Wolfgang Faust <contrib-git@wolfgangfaust.com>,  Birger Skogeng Pedersen
+ <birger.sp@gmail.com>,  Pratyush Yadav <me@yadavpratyush.com>,  Marc
+ Branchaud <marcnarc@xiplink.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/4] run auto maintenance in git-gui
+In-Reply-To: <40ccd060-e6f7-4130-a25e-3c2f65df8eb7@kdbg.org> (Johannes Sixt's
+	message of "Sat, 7 Mar 2026 23:37:56 +0100")
+References: <091e68fa-428d-48b0-bf7d-42b01660d6eb@app.fastmail.com>
+	<e17f094f-f869-4cc9-b59c-091b7e61a021@kdbg.org>
+	<xmqqms0jti24.fsf@gitster.g>
+	<40ccd060-e6f7-4130-a25e-3c2f65df8eb7@kdbg.org>
+Date: Sat, 07 Mar 2026 22:02:55 -0800
+Message-ID: <xmqqikb6uacw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Map my old Gmail address to my new custom address in .mailmap.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Signed-off-by: Tian Yuchen <a3205153416@gmail.com>
----
- .mailmap | 1 +
- 1 file changed, 1 insertion(+)
+> The option does not only control whether or not a warning appears, but
+> also whether garbage collection happens or not. When it is set to false,
+> then in addition to squelching the warning, garbage collection does
+> *not* happen.
 
-diff --git a/.mailmap b/.mailmap
-index 8a39e93bf8..c2e3939beb 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -283,6 +283,7 @@ Thomas Ackermann <th.acker@arcor.de> <th.acker66@arcor.de>
- Thomas Rast <tr@thomasrast.ch> <trast@student.ethz.ch>
- Thomas Rast <tr@thomasrast.ch> <trast@inf.ethz.ch>
- Thomas Rast <tr@thomasrast.ch> <trast@google.com>
-+Tian Yuchen <cat@malon.dev> <a3205153416@gmail.com>
- Timo Hirvonen <tihirvon@gmail.com> <tihirvon@ee.oulu.fi>
- Toby Allsopp <Toby.Allsopp@navman.co.nz> <toby.allsopp@navman.co.nz>
- Tom Grennan <tmgrennan@gmail.com> <tgrennan@redback.com>
--- 
-2.43.0
+Ah, OK, now what you said makes perfect sense.
 
+> I think so, too. For this reason, my implied suggestion was to protect
+> the new call of `git maintenance` with a check whether gui.gcwarning is
+> enabled. Then we don't make anything worse for those who have it disabled.
+
+Good.
+
+Thanks.
