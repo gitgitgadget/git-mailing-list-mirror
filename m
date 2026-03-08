@@ -1,52 +1,52 @@
 Received: from SY8PR01CU002.outbound.protection.outlook.com (mail-australiaeastazolkn19010019.outbound.protection.outlook.com [52.103.72.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CA428469A
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 23:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480571862
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 23:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.19
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773011845; cv=fail; b=J+qVNUoxSDVHcyME8zi6u16nBxXaNfxfAhXHnqxn/IXPZenJFYczzRh0i+RqAj3K+Q+uNWgp/nqBDmBreiX1wNllkJ+KEY0w97aRJ3A89gIbTv94uyOD0LNYRx5Z8aQBpOcOT5Tyr77j2LSWrLzf5pMurvhniwHHY2wam5+Du40=
+	t=1773011846; cv=fail; b=ou0PdrExjiYpG8rDWdBDooNRPRO8xQpomTpJcTqdlRro1M6NjTN1NS1crEw4h/M2VZnsGk8Kak75taL8rsyQf/i8pwODI+hlCVdRjLJhimmBjCgK1++k3qlHlezcwtNOHlps0PvFZxh/yHLGFZ8vRVJhWpRt9VaQLNltnwM7Z28=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773011845; c=relaxed/simple;
-	bh=kQdqwTFbHVuCmR9V+Gpaylop7KEQtxLlAknPc3OVqL0=;
+	s=arc-20240116; t=1773011846; c=relaxed/simple;
+	bh=Q21q7eXi1Zd/Ui3a9xJi/tfkz8tH96VLJ9zUDHYzeeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=qylGUenqclCHBBLB1CniusSE/rpDuN2b0CO/Psg5fIgBUsvEGJhxqSERbc89xwra12YeSHJYdxDhYHgkFm6eaf2NQHOvtWe9ApgaU3AqdrqOo2TuD7WsJ0/46TD7/6wRyTvrSbrfrThVLjbirnqBD47qFi9IJNo7SQ1QO8sXB+A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=JgAQFkHr; arc=fail smtp.client-ip=52.103.72.19
+	 Content-Type:MIME-Version; b=lCIjIAaJ+1HGndtNRUxaMWJpVY3Ug109b7z6AwGspO7zZjRKIOq1RQ0dWDAsN7PLebyjQzwrb4lCvOUop0g1GTPMTuJTFZ754EO4icqqj28z5BUrlfs1vpm4l+IxjOkGl72UsvN1t6mh3nB2rJMp4BnyxhsMsXM1ah325hr+geE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=nhpbsL/b; arc=fail smtp.client-ip=52.103.72.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="JgAQFkHr"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="nhpbsL/b"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Djzskoagc3M9X7hRsBnHlQdqbPOsg8/4I6yUHB0v3ZF9HvsqqfPUmTYN0UCJsAyuSoFjHgkjGm59Svnc0dYpM7wjAMXrEY4sGEWbpDNcF124I7/jfv2z3yY1j3liQ0d5kk19Zt40yxg3CgIM7o9B4UjUU4tPShwLrCO3xVxk8d6JGTF6r8gUfrJz2BTZXsmEkfrmj1IxQDH2AN7dgeP9q8YL+s0g4ldLnvjVmjiIGrc7rtAhPgS3bdzn1X7W2of6GIr7JDg9HE++eCWhIOmXCWggre1uhcsoiaykU0sqBJNKw/mQiVwvYV79o7LKZh35SMMyWbtz1mNqNtb1WcLHFA==
+ b=UxECZo4ovYFaYGQs21HI/E12RdCRhQ09GXkNzhKkJTfzFcAQgN1p4zXVdEG5h3rYIL1NzMcvtNpMxc+kg9FVa+ctot8Fu1kk+kaHX8gfmDCJ2DG1RmvZTGb6Js6Zj/uXTmAJm1W3ehk16EauoAV6liolSyz2ncUC5NgINPsiN+7R77QX2NPGsETdpUnJsvcVRsfsAnuq9luDRWulbT2UZnWjLvOGUii60PhVdQDy62n+L/6ZNUyNvgQDz67JHMINf9sAE+Lzl+x9h0cWI4Ar8MVJfatSjkupPeXhkqayINW/6B61tyjIBRyxQZI4jsDIYKSc/DCUc+2NZ3l1khmGwA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VM55LwZfmNWWkkCokseA5XSO7EyQUZpvmmg3TSU9Ido=;
- b=VIIwzzYnbg7WrQDtbpUjEQuqO269X0PVT50EhTcq7RhegLAs7iWyxZKEYbZ+QkUMpakVtKjc4mIP/z8Ar4/19oo+baVgEd9/DoNBGg4+nz/Unt9zOPSqE2zXJcQDmCwLc4gNwesQjl0vfgrqfpUT4n7ad6NcDaQljgfhgVi3ACl1L9ng5lymHlrimPSenmPz/LP61ajkDoF7zZe696teTlRufCRMChOlkrUAgrfF5aj65A/NMseJ3wg+Rglr7HqhHtpLQzBKJPIby5VEegXECNB2giC1lKLkZ/cg4fUtUj1HfzejcO61FWJA3bcc1dbRmx0B+t9JuEO3pu4YoaCd2w==
+ bh=BfW0LkeKnayHadoAWJOuHEJV8o/zraURU/B07/drje8=;
+ b=SpJOeS0YuUeTy3pT9B5rYtbihDGOy4CJHOfUbdDcou7YutrP31LzDYfx0M8wLl872SixK+wdNzx1lgx+3ardiDKA4+2pKE0CltXASTHI3BUvjg6kjA6q5Lm+iq2YJZ66EzKabRjg9RXEzqRboRaRzM9/+tAXb+OymTFAxSSqdGAqeVO/ZGADNOb5kOeA6UMdHMZGRoigxVip3Sjv2O5xivvXwoBG7CvMLBI2N4MLWPVwW3B4OmrWZ9ZnGSWAf82RFUW2W1Uk8lUGwLPureqdR8aCEO4QSRBD5hSGvKZ+4/gV5HTzBGP2ZMD3p96jHniMgRpJ8wbYitHG1KR70JU+UA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VM55LwZfmNWWkkCokseA5XSO7EyQUZpvmmg3TSU9Ido=;
- b=JgAQFkHr2yZ69NC7Mi/HRowBJYJvVq/DkW5kJAcZGb/MTp2hvYhMz31CSO0YzV7pmMREZp4ZB0pvYUug8MGpP38jdhqKY35aZEg+iYM9IxeyhnBpfBoZHH3STV6+hlptAUYbyu0K28TvYTthUosTMDjZkN2RuixsnexZpSR+HGovF340IqhQHjUcnA+nNC/F2apk8Qiyo5mXHUryQsbrcUySLogPoMcNtN2RBmN/KcMpGeVuELD6AxER7kbM0HfeO5docuJlcQcfpxE8z8gzlAZlmhIyX3brDZa9udYmgzeFa0+8iURtvGPrNRot2ktqp2V9oeYNWEL2X8sHJhCglg==
+ bh=BfW0LkeKnayHadoAWJOuHEJV8o/zraURU/B07/drje8=;
+ b=nhpbsL/bWn5mJELT9By0PB/Sp6k3IL6ybRurpmyCb0nzOKUjp3lXDDr+hgK6PIZ6GVOnWxdFh178tJSobkGQEazy/xXu6SBNFfa3UzlGyOaEAj6LkMDqsT4imJ3A6qoT+qS31Bfn2CMuOhvZY5LlvhGsTmqvNaj0L/yDqxUyM+/h5ri1Leb92/E/9J2rSehU876NEyuSvPL9kZ8heMU4O6IEx0u6LDkbkqbevdWDfq+czsQ3KYJ9BCZPjYdYXpXa0E8h3CBb4hJMNbqS0YIOgVOLui9GKX64LV66qze88Z2Zrkg7NmNBKvcKvZAoNkoMnoV2bRI2e3H9md0MWXzwYw==
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
  by ME0P300MB0653.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:22d::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Sun, 8 Mar
- 2026 23:17:19 +0000
+ 2026 23:17:21 +0000
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9700.009; Sun, 8 Mar 2026
- 23:17:19 +0000
+ 23:17:21 +0000
 From: Jiamu Sun <39@barroit.sh>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jiamu Sun <39@barroit.sh>
-Subject: [PATCH v2 3/5] parseopt: autocorrect mistyped subcommands
-Date: Mon,  9 Mar 2026 08:16:57 +0900
+Subject: [PATCH v2 4/5] parseopt: enable subcommand autocorrect for remote and notes
+Date: Mon,  9 Mar 2026 08:16:58 +0900
 Message-ID:
- <SY0P300MB0801FB07C6D570E19243A99DCE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB08016D8AAA50C3DBB83FF794CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <SY0P300MB08013E35DCA8FC31B0662125CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
 References: <SY0P300MB08019805A8304105FA805EB1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
@@ -56,7 +56,7 @@ Content-Type: text/plain
 X-ClientProxiedBy: DS2PEPF00004555.namprd21.prod.outlook.com
  (2603:10b6:f:fc00::50a) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:10:27f::21)
-X-Microsoft-Original-Message-ID: <20260308231659.2354924-4-39@barroit.sh>
+X-Microsoft-Original-Message-ID: <20260308231659.2354924-5-39@barroit.sh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,59 +67,59 @@ Sender: Jiamu Sun <sunjiamu@outlook.com>
 X-MS-Exchange-MessageSentRepresentingType: 2
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|ME0P300MB0653:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7900c266-b5e6-463f-0e23-08de7d68d805
+X-MS-Office365-Filtering-Correlation-Id: cb4c0d01-f98e-41bf-21b9-08de7d68d964
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|461199028|19110799012|51005399006|41001999006|8060799015|25031999004|23021999003|15080799012|12121999013|3412199025|440099028|40105399003|1710799026;
+	BCL:0;ARA:14566002|5072599009|461199028|19110799012|51005399006|41001999006|8060799015|25031999004|23021999003|15080799012|10092599007|3412199025|440099028|40105399003|1710799026;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?GhdPjuFC28ke4nTbIkG8ue14FW55jKOsKYs0aqbotGhHehMCb2bgh6HSTP2w?=
- =?us-ascii?Q?aYlx6amyoPxTrIJfEl6PmaVvmktELjCjBsY2hAK7My3HUvcr6ARjWipApii/?=
- =?us-ascii?Q?cUErLwAtEoT5eMZrJ8ZtFB/+RlUF+r3d80+xgxpcoUuAP1fAuvEh5Lmqs/3Z?=
- =?us-ascii?Q?U8eYp2SZu5dvMYgzQyOkqz7yYxeMZebKlPfmVIQj28c62YcUxO4Vj5lqxu/g?=
- =?us-ascii?Q?PZsrIPbkhXni47kSpjTtUttF6p3k4pj+ZaGjtDcsJZF8puz2BDmlmiw9hW7i?=
- =?us-ascii?Q?Wtrk0FBk9TYuDIGRyLhPAiG1E5isB5bkNKxznuSjy48cLPASKbrnEfgPXh0y?=
- =?us-ascii?Q?/HnrL+zpyMeI1hXgXckYOiNZzZEC2O3dJ0JSCLI6yDSm8qbQszsgHb/3Bh8Z?=
- =?us-ascii?Q?2TRjnT/66ga8avIZGpe4FWNmFt4tFiKBlJquNSFH1AC6BHxzwkMWXMVeMk0u?=
- =?us-ascii?Q?rj3dbsRFey0xMIl3i22K/E6fOrnfuH2KK0X3yWOlVe1H8DXN5XU6iBwUgKbD?=
- =?us-ascii?Q?OlYZj1C4DH1Z8PVx92gUhYtvH+WPwQjE0rsE7uKgT9t+eGi4s+MoYwLm5EVi?=
- =?us-ascii?Q?YJbyJlT/LR44NEFk/VXjifBtv31J0VTwfIhdGiSLP3bknCl/ZnkEX5jzXyCk?=
- =?us-ascii?Q?+yHE0AZhnBREKidelWNEaMWuFkCERJu54ZkPgqOdOd6raPV2YL2ykb2q0qeW?=
- =?us-ascii?Q?rEtjuES1sQJr6iQvHR0072DwZIF3/pxx2BZ61pOERZMRZFfmyMRKfsDghJnB?=
- =?us-ascii?Q?wzJ1O0H2L7DFdTXEdwQAAwhgZ14mnLGRLAIHa3CS+e6lqy1pSefLRCncbT4T?=
- =?us-ascii?Q?71fKb0nFJIVspN1ZGYOgqMRgv7G4RAR1jwpEVz/yzQ0YYHrl1FeUrvWDuPUM?=
- =?us-ascii?Q?L94m/WV9AoYDM8Yh1NgNOJPbWI52qMAjIQo6fgdBEKZaYdSXs2Is8LfuHLNa?=
- =?us-ascii?Q?rxiWpLjgHOQ+cQxkd1+8+gnxrjLL7qYBLYl57X7YJ3VdNOyZzN+nhEY8w4Je?=
- =?us-ascii?Q?2TYUwZCFCTruTBYkWszmnZJAlMUuUQ6vYg3SCmA86LzaARQ=3D?=
+	=?us-ascii?Q?lJEc2bBKM/A4ZNUXHcsS+tlrNkhd4IsxLzotsJiq3MnRHmnPCyNTR27kG/Ha?=
+ =?us-ascii?Q?ItqKCnl0RbWeXD0Q7AhDtOgOI0jBWVFcMKlq67dA5bX6rTurUwWVGSvOCxrA?=
+ =?us-ascii?Q?2tcq5c+I1yE0Ha/TDdi66xoL14/GrVGVsTL2+GvtC1KGVcymDGVWQ2gYsDEu?=
+ =?us-ascii?Q?FeaCEzfNeFJLF15mhxf5QcSK6DE41jdJASBZT6XVvETwby7nM8gfiEC/JvnE?=
+ =?us-ascii?Q?v21BgHwyh0IaHaoP4VKH0YpaUdaIRI8ZObOUXdNSkcPoKgtrXycTWWp4TeIp?=
+ =?us-ascii?Q?XfVB5P9Ts2bqUTUx/36gxZICVOeoTvtcDySjCYX8d3ACxfI7s7lm5+KPHUz9?=
+ =?us-ascii?Q?PpQyrasDmIo5CjQ+qnz0hL4hITzzFhL7d4wwdsMRDWOfO0FA66xLDN3o7EIi?=
+ =?us-ascii?Q?wLR72SYDHXApFutBU3HzqrvuIbOcROOpAmAD4xxRsqYw34totJi2RiVOUqPT?=
+ =?us-ascii?Q?HJTFCFl3gzkF238MHEtKzzGo6bhmiH2d8pREsAiAsSs8O1VScGET6WZBpRyf?=
+ =?us-ascii?Q?/h1wWKz5a3xtsLIkWKtHu4i9+wdH1+wY8jhkJb6ECVWjX7J046IsXVnqAULd?=
+ =?us-ascii?Q?Ho0kGU+TlVjkxXKS7pqnIjQRT1mNiArH/xtE7/Xa3aHYS+tlI9sALWXDIZHW?=
+ =?us-ascii?Q?aNGa353ZPa/5VshWb5G9m88++ilEEG+htPNYoS61F8McasXsQ1u2iTgUr1fQ?=
+ =?us-ascii?Q?Ua246Sb9NvxHVDgeukmVd23UyGUL/Qx8jIICbTBPrRhh3p2bF7a6GuB2ds91?=
+ =?us-ascii?Q?oTorts3DAfWOQ7hHlo0sNZplPCb1Z4hoIeWWCBfdutVflE97cm1mz7w/KYYQ?=
+ =?us-ascii?Q?VVNHefDr/5moPimBeBci70e1WYzFok9/3CYp1JGOh6zqUdEYRKThzGZMZLsM?=
+ =?us-ascii?Q?/X7ACCBbgzKLnZ7kddTHxv/D/d4jkkd0+URHUak9qdG06N5b8wb3Orrxinms?=
+ =?us-ascii?Q?iUHrvPcdc46h0QPAHg+3vqPyENrRqTVxAVEtDZN9ZGzFYN9Vy1XcQcVHVe4i?=
+ =?us-ascii?Q?MBplFRZ38I1B8zcJcSpenEhxWdWC2fVfSk4rUKSZc9l8VEg=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?SEDA9n/6+w19ENvDRCxjMXoGovo3++jylOrW8TuX2Za1PSyu4Sz3kkpe9QKa?=
- =?us-ascii?Q?z+8GPS09PpcLYcsZ61IsiXCHl/VYTFbW8i5p8WD7mWwpIWMM4Yo62qdB8iZX?=
- =?us-ascii?Q?hvESVklaHHxMr+k88D8WglDjZk8tiVorG+QCLP1/zY8s+Jkp2kxkf58rmfzI?=
- =?us-ascii?Q?R/2bg1TxlTUkXTNQq6JpeQ91Q5+KdWnlgHeyWnLzPfiH0PsA0lRg41jkfc7c?=
- =?us-ascii?Q?ArL3tkF/6PsUeS+B8imATK5sIrykC+g0jRoZL83RXJsPF3hcyC69lEQyNdg0?=
- =?us-ascii?Q?YEZHo7HrQUhWSiJzyGlj0nSAZGqckMbYVm6WfHeAsAEFNFmlNkizeKYWYI/b?=
- =?us-ascii?Q?/GgEMRzBpMuVAmScgUPLRGZoXUkfEZJxToOGOB5jeAf4e/EEuSvv3irQj1DC?=
- =?us-ascii?Q?hKkx+9XWzyHdr7fiPxU9PVaQIzizBxYTGv0dqXRjHG+Ld+jPL4lL/dxQg1Zo?=
- =?us-ascii?Q?oeJkbn+wR8ghKnemD1ykv2+FGY17wsse3P2j7OdPCRLcuLYRTXfcI1Mr2U0l?=
- =?us-ascii?Q?aDQrsa2BKptGLedgQ7I8Rc7O0go4Rnz9PbQ5bZqjjVLZaQ3gh7wDatcq3hmK?=
- =?us-ascii?Q?mgj2J7yIpBTVuG5zFQQjswHcDJCe7MmvsmCCZeMveWZyqFSVytUqdsKF3P1u?=
- =?us-ascii?Q?Ut8msU6NgLTUEpBnR+/mpaAVj63biK7+oLyt+VI2wL3CuIyf76Gg7Hau1cvk?=
- =?us-ascii?Q?NXZ6sF3HoOxeN/AoqmRJbJqmoDf+5g4IMaDMzYmhzITMiZMFiw43BEYWII/2?=
- =?us-ascii?Q?fY7Uchza2+2kQQn5G1XZakpeFZGcc0KzTgljJcrIzV2NdPhRc3TrytuQLf9p?=
- =?us-ascii?Q?vBjntOwW2DBW3G+SSIovUcrfB7BvIr27vyINAtAOuB35zrwn9PCpWmHjmcd5?=
- =?us-ascii?Q?dBRlLjelwa+Ur5Qp4TE4I4RDxqa+y05MR/hINpROQlgQXheU0GHK5oDMrfk/?=
- =?us-ascii?Q?yi4ACYdUHZo8Wi6u/LyfWupMC/KGL6/kHmR5xC52lhv2bSXsGPFhMpyeOn2F?=
- =?us-ascii?Q?rclapmttHI6LA5EJ3oCJ2cMjvzgOczVuWkP+0wdSXq8grzr0Gnxk91654+6h?=
- =?us-ascii?Q?00WLXahgAjIcPU3y7gxRyNTZ1CydAdVYPz0CiR7WHj7454VLsWluVcw66ds0?=
- =?us-ascii?Q?uuIDNPCVZMXUgRk5A0GzpDvkDwxfqxRPnfYlpKzsGd5A9VuMYc/JE3B0JdMb?=
- =?us-ascii?Q?oydVHu8lP0MZ/DlZxtvMK8SyEZU1QfRdfPweqQVV3SMfCk+D+MGwxL0PcGJ8?=
- =?us-ascii?Q?nrR/kAhXIX10qX85pKpePvusaRxKS+VUZt882hgU3F7I/6NpYywszJNI+9+r?=
- =?us-ascii?Q?NT8XO/2E6jvvgtz0jFyMAiAuBdYev20dB+uSjfRFpcFw3HoN0NBgFkecY4Wh?=
- =?us-ascii?Q?k7b7bEINbopziX/ML8VIXzcPshaS?=
+	=?us-ascii?Q?ELPziSYF7HbH6DCjjIzLnfICncEdY1/rIdf2YcEKjM1EfBDRQEpRCQ9erz44?=
+ =?us-ascii?Q?w05z2XX6Y4WBO7NAb6TAJ55OHuPPyMuCX58wyOn0bWDnOM5ROds0b5GfKf1c?=
+ =?us-ascii?Q?7DU+QSaDywmL6VFojGUEdnaYLmwbl/8OvnDPq0/tl3rF0LP+xesH8LsPm+gY?=
+ =?us-ascii?Q?k7j8PFfCUpNDpbInIMJKV2Rz6JpDfJQSdidO9Sj0kQdbpqlT9w1RQmyN2Ggy?=
+ =?us-ascii?Q?FjOjIz0ESrqXc/hSOuZmO6Spz/7tIzyfna6jJ2GJLKqJI716tEsUi2nZ1Sxr?=
+ =?us-ascii?Q?WH/As6i5KcX8TKkzW23DhQLUY0WYKjTI8Q6Hwu6r3Jmkf+dT5vmOPpXi9TWS?=
+ =?us-ascii?Q?PzJjQ8uY338Cy2YL4uwmnC3cL/X9LWfiVJ9BXb4SwiVE1mKZzVp19VGTmzDe?=
+ =?us-ascii?Q?WIBCvP8lXnKWf7B5T305fDfSlMv5PIQEs4S45wktIrFW1UsrgSd2qL1rjBXz?=
+ =?us-ascii?Q?8q6UpYlRsQgpISNdKPG3hvc4rpBjpA/PuhKxyOyh+ScblcKcPcZu9PVps8GY?=
+ =?us-ascii?Q?47tM6+BzRQ+wjfSwMcVW5madNwWHhYXq+Njdk7DNtXFEzH90OgHGOz9UjlCV?=
+ =?us-ascii?Q?hp3mq6wjFw4ghRrAD0Z5tLp+3lyMPmygYuYYiv45/d4iWEHexWc9pqdP3qWF?=
+ =?us-ascii?Q?P0qM8hEjjnmVzdBcRJ6wXaWNubwgTpS6SI8ItAFnCg4xMhGoTMmGZagBF4bc?=
+ =?us-ascii?Q?W/bjEzgYp3jCBTqp8OQntEuP02nOlHEm0aP2/G4B6e5LC+ymBJX6dmkWy4pb?=
+ =?us-ascii?Q?LKPi6mx3lCyR4Gi/idez7FcsO+f2LdXSjUvvTBZuw8CSK47RGYw7ASo/O5Bi?=
+ =?us-ascii?Q?cSCQsbGSiYAVCO+TmGepRWRGh7O6uiXl2JAE11t7i75xj2/WQbhQ0dXVJiAr?=
+ =?us-ascii?Q?mxHJauwA1e8w7oHCLL8q59CQVv3GqFMXLxggt7YE3ALs113a1Gq7Ei07DQll?=
+ =?us-ascii?Q?bNbbCtLRmPmjSopOtfAvS0UUxkDQuxySjhpl6HQ/lcz5u/RBB8DhEcHqKRgw?=
+ =?us-ascii?Q?b1VHII2EZTfgfqxJ+C27fbQHwr3BE3tiT4eVJe9J+t7MwLwWUxNrWnWCqGd+?=
+ =?us-ascii?Q?jQPWiLUke0Gh82yTAhjvBxQjjsMHpL88S+ej02meH88qgSLKgg02JqOU5OMa?=
+ =?us-ascii?Q?2rmADY6UgKOnW/ttKyVPcpzzDbCaVwYjWJDLHn2uCIxA9mvecer5Y6pizmEF?=
+ =?us-ascii?Q?SwUynVdxufyVOWYh8OAvApNqxGRnxJJORvnEFnOCAJAMuaXkJCvQ7Goaa5E+?=
+ =?us-ascii?Q?mJm19vE+I+OvkCZWoc32AvOfpcQ+vfeFxXqFcSZLMRR6WtoY2n2LfrW4SVeG?=
+ =?us-ascii?Q?/3kI5cI2/QAVONjucywiNp81BLwMOwgTYIfj6/tM3VysLQfMbsnnUvwH1x9K?=
+ =?us-ascii?Q?84ow76ynWL9zz2FEwFZZ3U4u7GdJ?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7900c266-b5e6-463f-0e23-08de7d68d805
+X-MS-Exchange-CrossTenant-Network-Message-Id: cb4c0d01-f98e-41bf-21b9-08de7d68d964
 X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2026 23:17:19.1203
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2026 23:17:21.3532
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -127,128 +127,112 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME0P300MB0653
 
-Enable autocorrection for mandatory subcommands parsed through
-parse-options.
+Add PARSE_OPT_SUBCOMMAND_AUTOCORR to enable autocorrection for
+subcommands parsed with PARSE_OPT_SUBCOMMAND_OPTIONAL.
 
-AUTOCORR_HINTONLY is equivalent to AUTOCORR_NEVER here, because builtins
-have a limited number of subcommands. They are currently small enough.
-Therefore, displaying all subcommands via usage_with_options() is
-good enough. This keeps the autocorrection handling simple, too.
+Use it for git-remote and git-notes, so mistyped subcommands can be
+automatically corrected, and builtin entry points no longer need
+to handle missing subcommand error path themselves.
 
-Also, use a dynamic threshold for similar_enough(), which can yield more
-accurate typo correction results. Although subcommands are often short,
-they can still vary across builtins. And a fixed threshold won't do
-better on both short and long subcommands at the same time.
+This is safe for these two builtins, because they either resolve to a
+single subcommand or take no subcommand at all. This means that if the
+subcommand parser encounters an unknown argument, it must be a mistyped
+subcommand.
 
 Signed-off-by: Jiamu Sun <39@barroit.sh>
 ---
-Changes in v2:
-  - Minor rewording in the commit message regarding AUTOCORR_HINTONLY.
+ builtin/notes.c  | 10 +++-------
+ builtin/remote.c | 12 ++++--------
+ parse-options.c  | 16 +++++++++-------
+ parse-options.h  |  1 +
+ 4 files changed, 17 insertions(+), 22 deletions(-)
 
- parse-options.c | 76 +++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 74 insertions(+), 2 deletions(-)
-
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 9af602bdd7b4..087eb898a441 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -1149,14 +1149,10 @@ int cmd_notes(int argc,
+ 
+ 	repo_config(the_repository, git_default_config, NULL);
+ 	argc = parse_options(argc, argv, prefix, options, git_notes_usage,
+-			     PARSE_OPT_SUBCOMMAND_OPTIONAL);
+-	if (!fn) {
+-		if (argc) {
+-			error(_("unknown subcommand: `%s'"), argv[0]);
+-			usage_with_options(git_notes_usage, options);
+-		}
++			     PARSE_OPT_SUBCOMMAND_OPTIONAL |
++			     PARSE_OPT_SUBCOMMAND_AUTOCORR);
++	if (!fn)
+ 		fn = list;
+-	}
+ 
+ 	if (override_notes_ref) {
+ 		struct strbuf sb = STRBUF_INIT;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index ace390c671d6..d1d6244a662a 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1949,15 +1949,11 @@ int cmd_remote(int argc,
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options, builtin_remote_usage,
+-			     PARSE_OPT_SUBCOMMAND_OPTIONAL);
++			     PARSE_OPT_SUBCOMMAND_OPTIONAL |
++			     PARSE_OPT_SUBCOMMAND_AUTOCORR);
+ 
+-	if (fn) {
++	if (fn)
+ 		return !!fn(argc, argv, prefix, repo);
+-	} else {
+-		if (argc) {
+-			error(_("unknown subcommand: `%s'"), argv[0]);
+-			usage_with_options(builtin_remote_usage, options);
+-		}
++	else
+ 		return !!show_all();
+-	}
+ }
 diff --git a/parse-options.c b/parse-options.c
-index 6bb0c5697099..cbbb04b9997a 100644
+index cbbb04b9997a..b7c818e818fe 100644
 --- a/parse-options.c
 +++ b/parse-options.c
-@@ -6,6 +6,8 @@
- #include "strbuf.h"
- #include "string-list.h"
- #include "utf8.h"
-+#include "autocorrect.h"
-+#include "levenshtein.h"
+@@ -691,14 +691,16 @@ static enum parse_opt_result handle_subcommand(struct parse_opt_ctx_t *ctx,
+ 	if (!err)
+ 		return PARSE_OPT_SUBCOMMAND;
  
- static int disallow_abbreviated_options;
- 
-@@ -621,6 +623,64 @@ static int parse_subcommand(const char *arg, const struct option *options)
- 	return -1;
- }
- 
-+static void find_subcommands(struct string_list *list,
-+			     const struct option *options)
-+{
-+	for (; options->type != OPTION_END; options++) {
-+		if (options->type == OPTION_SUBCOMMAND)
-+			string_list_append(list, options->long_name);
-+	}
-+}
-+
-+static int similar_enough(const char *cmd, unsigned int dist)
-+{
-+	size_t len = strlen(cmd);
-+	unsigned int threshold = len < 3 ? 1 : len < 6 ? 3 : 6;
-+
-+	return dist < threshold;
-+}
-+
-+static const char *autocorrect_subcmd(const char *cmd,
-+				      struct string_list *cmds)
-+{
-+	struct autocorr autocorr = { 0 };
-+
-+	autocorr_resolve(&autocorr);
-+
-+	if (autocorr.mode == AUTOCORR_NEVER ||
-+	    autocorr.mode == AUTOCORR_HINTONLY)
-+		return NULL;
-+
-+	unsigned int min = -1;
-+	unsigned int ties = 0;
-+	struct string_list_item *cand;
-+	struct string_list_item *best = NULL;
-+
-+	for_each_string_list_item(cand, cmds) {
-+		unsigned int dist = levenshtein(cmd, cand->string, 0, 2, 1, 3);
-+
-+		if (dist < min) {
-+			min = dist;
-+			best = cand;
-+			ties = 0;
-+
-+		} else if (dist == min) {
-+			ties++;
-+		}
-+	}
-+
-+	if (ties == 0 && similar_enough(cmd, min)) {
-+		fprintf_ln(stderr,
-+			   _("WARNING: You called a subcommand named '%s', which does not exist."),
-+			   cmd);
-+
-+		autocorr_prompt_or_delay(&autocorr, best->string);
-+		return best->string;
-+	}
-+
-+	return NULL;
-+}
-+
- static enum parse_opt_result handle_subcommand(struct parse_opt_ctx_t *ctx,
- 					       const char *arg,
- 					       const struct option *options,
-@@ -640,8 +700,20 @@ static enum parse_opt_result handle_subcommand(struct parse_opt_ctx_t *ctx,
- 	if (ctx->flags & PARSE_OPT_SUBCOMMAND_OPTIONAL)
+-	/*
+-	 * arg is neither a short or long option nor a subcommand.  Since this
+-	 * command has a default operation mode, we have to treat this arg and
+-	 * all remaining args as args meant to that default operation mode.
+-	 * So we are done parsing.
+-	 */
+-	if (ctx->flags & PARSE_OPT_SUBCOMMAND_OPTIONAL)
++	if (ctx->flags & PARSE_OPT_SUBCOMMAND_OPTIONAL &&
++	    !(ctx->flags & PARSE_OPT_SUBCOMMAND_AUTOCORR)) {
++		/*
++		 * arg is neither a short or long option nor a subcommand.
++		 * Since this command has a default operation mode, we have to
++		 * treat this arg and all remaining args as args meant to that
++		 * default operation mode.  So we are done parsing.
++		 */
  		return PARSE_OPT_DONE;
- 
--	error(_("unknown subcommand: `%s'"), arg);
--	usage_with_options(usagestr, options);
-+	struct string_list cmds = STRING_LIST_INIT_NODUP;
-+
-+	find_subcommands(&cmds, options);
-+
-+	const char *cmd = autocorrect_subcmd(arg, &cmds);
-+
-+	if (!cmd) {
-+		error(_("unknown subcommand: `%s'"), arg);
-+		usage_with_options(usagestr, options);
 +	}
-+
-+	string_list_clear(&cmds, 0);
-+	parse_subcommand(cmd, options);
-+	return PARSE_OPT_SUBCOMMAND;
- }
  
- static void check_typos(const char *arg, const struct option *options)
+ 	struct string_list cmds = STRING_LIST_INIT_NODUP;
+ 
+diff --git a/parse-options.h b/parse-options.h
+index 706de9729f6b..f29ac337893c 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -40,6 +40,7 @@ enum parse_opt_flags {
+ 	PARSE_OPT_ONE_SHOT = 1 << 5,
+ 	PARSE_OPT_SHELL_EVAL = 1 << 6,
+ 	PARSE_OPT_SUBCOMMAND_OPTIONAL = 1 << 7,
++	PARSE_OPT_SUBCOMMAND_AUTOCORR = 1 << 8,
+ };
+ 
+ enum parse_opt_option_flags {
 -- 
 2.53.0
 
