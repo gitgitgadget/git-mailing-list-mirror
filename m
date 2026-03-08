@@ -1,73 +1,71 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92D730F95E
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 18:04:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B100B33E348
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 18:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772993061; cv=none; b=U9GPHokmXJtU6mjDDQo8VsFk1iwxaqEUj7gHiksRkWfXvdo7w8hwn7TrRJPaXAhYLWa+pLDoqoK3pOVRX3OAt5/QHZ9CYzrvPj3aVcxSUBB8EhLZ4rpDuuAofkr5FZ0DjtgnaMRNtcZmufZYgNzOSAwU8EkOr49AAPQzEqH79L4=
+	t=1772994287; cv=none; b=lULlYxmaNC/nFeeCPUlqaGg+4uDCoWLwA2EnJ9ANZH1UrBJ8rZINd6JgDzvFA8fymZPDZqkpGhndKWI0G0Tt4zXT8NWcPrDk8iSkgFQcPehihxgdQGbJBQ0HIElwhSjg8OUmZn8C7SDZgetAky/m2gc6BSlbRWugN4jllk+lQ4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772993061; c=relaxed/simple;
-	bh=w4j82fP9z70KNoGWOH7SNvUN8d6tewamEWKkq5DWep0=;
+	s=arc-20240116; t=1772994287; c=relaxed/simple;
+	bh=TlYp/c0Gvz85hnYQswaVYTcZtICMFHGlXO1Xj9je/5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZziVy3kBZ8E0KSZ3u1kdnH6Gcc/eoZ2t6nSwXk6ahMaglkOYC5HOlkliqHusFyXm4jhWfF1U+dXrl6EuBplXdUI77t7RdSYJC3Wxbwy7mIe+GOlbEPL6H3qyKqrjULMKQRoRRlmrWKcKPAhLPO/vH6/uI6UT5oK80Cza2TmzjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eZ+A4ImW; arc=none smtp.client-ip=209.85.215.171
+	 MIME-Version; b=OHR74ZqfqOTV0ycCPvZ9DaLYMhqih4in+S/thaxnWJy+Nnxj+rPmDu5NhJIGaffhkUjRB70pa2+FeUjHFTGl46ubvcPxeccHz9DwwXRpRcga3pc7wTZrB+KgmxB01vZWfyNXtDsYrzSDM5EcU3y/k/aDHzuES6Es3MT/NkDbNGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NiAMHg3s; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eZ+A4ImW"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c7377119453so1996678a12.1
-        for <git@vger.kernel.org>; Sun, 08 Mar 2026 11:04:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NiAMHg3s"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-824c9da9928so6140523b3a.3
+        for <git@vger.kernel.org>; Sun, 08 Mar 2026 11:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772993060; x=1773597860; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772994286; x=1773599086; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2pOfqTtoECIBI2dnf+RSfaKx4s28mS9z7INyIm2Q/pQ=;
-        b=eZ+A4ImWm0eX/hiJviJ2CDTpj+H6J0TEKDQ6gDq7VaswjHoDmVxjTpmKYkhjRIHW5c
-         biHpscTjXhuivmRI1dOPTKNFbLUBH0v4Nzkqp471eLYvLknvEuMpHNkUodMh7Eq+YtK0
-         J64QLliAwLLiVH3fdM9ISqbT65ICQ0iffdetVTxHyiXeMCFTotS7Gu+e2trcs6/5grKU
-         yemPbRZxSj37llzrEi/rtBuzgTQc0qcRRIhKyD8B8+k13GWS/H0CTe4CKC9FZgd/I9cR
-         MH79PV0ovaS+j8SdWOHRDYJ0HvCMWEt69UJbBKTE2kn3D84PQ/BP1fSV39Vnwaa/Aco9
-         yhYA==
+        bh=PFlY7Q9W4a/u1Q4BiqG9vKb6BZtM5DP9agDJRyrt/bQ=;
+        b=NiAMHg3saUujp2/jUx3xBcW+LE3gxqKErguCGk7d46TwApamAeeDWM56r9mUF2afRc
+         wJgRxch/rxECrxpNAL1JhjqssACDpwNDSKCCamUKGSqpU/HJQg7Mz7Ueo3azyWCSWK3D
+         AJCb575fMvbZWEZK/uyQch3u5DAHPlk9P2gO6cerLrfCT6QSrmheQ40l3pIwuGhLwgz+
+         1zelmORZglKblz6dpvFmkztDdPfOMvejPdnFMwHcOVz+TyAjLqNAnXg7ZL3zBqBrzo5n
+         wT2Jb/5qhv+yd42JCQbNcN4V+VrMNaAoife1ImOv5AMsa/fqlvLCf2nE4XB5MMfv1pGG
+         GyYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772993060; x=1773597860;
+        d=1e100.net; s=20230601; t=1772994286; x=1773599086;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=2pOfqTtoECIBI2dnf+RSfaKx4s28mS9z7INyIm2Q/pQ=;
-        b=JTsGqlvahOR2rU0kmr2L6gpHET3maF1WnntytPdfy/ks5obzIzUDtQbBLbpOCX9o67
-         v5jtcVTwY1MbQUVoncAwrsvv9ODFp/GsrjPNfwNUVf1xtltkgii4m0ngj9U54A5gjisv
-         1HNrN29kbQEmUyVPfOdY0/R704Xs4ab94RiHTl1zbB09Lb77uZkQBCPLMvAx2OCa3KHx
-         zGPsED0akWSI0H7W07/2UmEVInB4J/Tw+HDv6LQpPdRM9JClD86YpXU/P3+2CHUp360e
-         6WrHXF1ot0XiWBT51HSlcDp+g8s30HUrrEOATIO1J5atvsjRIPBWFhA5L8PR1n8xsp+Z
-         Uoog==
-X-Gm-Message-State: AOJu0YwROj8Hf05IxNAQx+SmWHDXdCJouHtyd8Wo7RoJOKGc4/ZTwTww
-	DzyYnLR/NLvIqGKLgqsDrAx7GEvVP00GDn2j9tgSCmI5UfCaoDijdWcrgxPPaA==
-X-Gm-Gg: ATEYQzwWZTd5aULJLPNYFcQ32fWfyhKB7QDTNi7geF4DN+x6lI9jnTaHLDsaykoW0ed
-	p+7NiFhFCIjgS++VhMPvk8zpvkBSL0y4dbyZu7lhYI679tSdJpVg2Fyjx+CHJ0TYJNltt216KL8
-	ceZLXHzuYqzgUMo7BlCcLS597ycBPMeo4h32+8eSw7S/ZBfmqsacv2fPVZEix0xWn1TlMLu1Q7X
-	GU3Cq5xN+QrdDopNrA+OnvWBkyYxn2BG3Ux7WH18c0uIsac7pnMxBCyBQqdm9yIMBlDquvPDngU
-	48wUtSPMV/6dCGtasfe6w7JN+LoBTShl/HhX35T2aekYtmVdxgIkZATmqWwj2ZOpOPk34TKgfzZ
-	OTsx9mDTHNjaIFPip/HToRhuZhTzCDC50nDgO9yE21TYwEm6XGattUQqpRD7gg6EEMd0w7QJBS3
-	fgSD/BwG6I84lv2K192djCYpmG0SqQi217/UW4hiPU8u01HIw6nRSYzvc=
-X-Received: by 2002:a05:6a21:3e0d:b0:398:6b9a:675f with SMTP id adf61e73a8af0-3986b9b92c6mr5136969637.63.1772993059737;
-        Sun, 08 Mar 2026 11:04:19 -0700 (PDT)
-Received: from d ([49.43.41.251])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a4636a92sm7835541b3a.1.2026.03.08.11.04.16
+        bh=PFlY7Q9W4a/u1Q4BiqG9vKb6BZtM5DP9agDJRyrt/bQ=;
+        b=OfLpNdTNE+GlTZ0auQOBsCG+YUrjR8AuGFZ1QcAdQyh9KKDDWRGj+v6fDIP4OYh48D
+         LhPuDkAa7CtrIgxb0M8anWg6Ko3U72QcLRB9wPZx+k9j4XSc5ayFO+j4sV0enOZv/qAo
+         DVsvbeHhY6E3paLSFOWgA0H08rTOU4qe+g2rUcDgoMRkFBxevL+CJzJaIT16wd+LWfw9
+         3j5WbL2sib6ax1Lpn1hfPpbw3mRgs9um757FpaEB3jNZLiliBH9rIWBMOzA1JuUnPAUN
+         dtKQnQq3kdsBG5UQYycNBa9mN6/FjexyoxinMY2zj/UxwXuSU8gmaqV+DEQLNJeGj2Fe
+         y50Q==
+X-Gm-Message-State: AOJu0Yx36iGrxVwxt11BJPo1KqbCtTan4Nfw9LoB6u4B/vJlaJObH0Vq
+	h1TNItZvDj9RMYoCiiWcaHWzU4AYnBMkBXuNOQlQUl7T0PPHUADx/8CJzmJZBHp6
+X-Gm-Gg: ATEYQzwR1/ZxCi8nOlPdMnN4WSOFBeUECDBRPaTWLYikQF+06n94XMHqX4W8IbFIp1t
+	qp6mOl5Wpeie+2s/5/puBb157E20mHWuVKddA+EmvopzwC9uSgHZkJz+BHr3+0K/7GSlMWem0us
+	XdK2rtqJEcMZUaI9xCsgiiXe8JvmM9DsRWDtP0QA37av1GcYzgVMcJF0L2sKkdJm8nqPYHhTHgX
+	cMtPECUzei8Lbass3itVAcXEEGyKBuL+SwVNjaFSYvs/kJIuqIyJ8ux572DDEKL2m134orDQJJ/
+	1SmSru4gdpfWFBV0iPh/y+UUIgDIDDsozRzM7P05iikGiOFXVgeMJPmF5a8x/sH7LnvcQq2ZNMS
+	IOuEMoX4utzGl6Eeypme5pC2G0YOgKE/mThBpdD3jdf9d5NMIkBkghDWSi0kQ3wX89AQ+R3OK9m
+	09GXKgwhGJx87G4orPE9cjVWX/fq+g15c=
+X-Received: by 2002:a05:6a21:4846:b0:398:6ea8:21d2 with SMTP id adf61e73a8af0-3986ea82cb2mr4839445637.19.1772994285803;
+        Sun, 08 Mar 2026 11:24:45 -0700 (PDT)
+Received: from dorna-OEM.. ([103.152.144.28])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c739e199993sm6913827a12.34.2026.03.08.11.24.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Mar 2026 11:04:19 -0700 (PDT)
-From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+        Sun, 08 Mar 2026 11:24:45 -0700 (PDT)
+From: drona <dronarajgyawali@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	peff@peff.net,
-	Deveshi Dwivedi <deveshigurgaon@gmail.com>
-Subject: [PATCH v1 2/2] list-objects-filter-options: avoid strbuf_split_str()
-Date: Sun,  8 Mar 2026 18:03:59 +0000
-Message-ID: <20260308180359.31188-3-deveshigurgaon@gmail.com>
-X-Mailer: git-send-email 2.52.0.230.gd8af7cadaa
-In-Reply-To: <20260308180359.31188-1-deveshigurgaon@gmail.com>
-References: <20260308180359.31188-1-deveshigurgaon@gmail.com>
+Cc: Dorna Raj Gyawali <dronarajgyawali@gmail.com>
+Subject: [PATCH] Make 'trust_executable_bit' repository-scoped
+Date: Mon,  9 Mar 2026 00:09:21 +0545
+Message-ID: <20260308182424.31349-1-dronarajgyawali@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260301190017.53539-1-dronarajgyawali@gmail.com>
+References: <20260301190017.53539-1-dronarajgyawali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,112 +74,101 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-parse_combine_filter() splits a combine: filter spec at '+' using
-strbuf_split_str(), which yields an array of strbufs with the
-delimiter left at the end of each non-final piece.  The code then
-mutates each non-final piece to strip the trailing '+' before parsing.
+From: Dorna Raj Gyawali <dronarajgyawali@gmail.com>
 
-Allocating an array of strbufs is unnecessary.  The function processes
-one sub-spec at a time and does not use strbuf editing on the pieces.
-The two helpers it calls, has_reserved_character() and
-parse_combine_subfilter(), only read the string content of the strbuf
-they receive.
+- Moved 'trust_executable_bit' from a global variable to
+  struct repo_settings.
+- Updated all calls to ce_mode_from_stat() to pass the repository.
+- Updated environment.c to set the repository's trust_executable_bit
+  when reading core.filemode.
+- Fixed apply.c, update-index.c, diff-lib.c, and read-cache.c to
+  reference the_repository->settings.trust_executable_bit.
+- Added prepare_repo_settings() call in diff-lib.c to ensure repo
+  settings are loaded.
 
-Walk the input string directly with strchr() to find each '+'.  Copy
-each sub-spec into a temporary buffer and strip the '+' only when
-another sub-spec follows.  Change the helpers to take const char *
-instead of struct strbuf *.
+This change makes executable-bit handling repository-scoped and
+prepares the code for multi-repo support.
 
-Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Signed-off-by: Dorna Raj Gyawali <dronarajgyawali@gmail.com>
 ---
- list-objects-filter-options.c | 40 +++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ apply.c       | 2 +-
+ diff-lib.c    | 9 +++++----
+ environment.c | 1 +
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index 7f3e7b8f50..f536085a7c 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -125,9 +125,9 @@ int gently_parse_list_objects_filter(
- static const char *RESERVED_NON_WS = "~`!@#$^&*()[]{}\\;'\",<>?";
+diff --git a/apply.c b/apply.c
+index f9fd7b0030..1677ddca15 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3838,7 +3838,7 @@ static int check_preimage(struct apply_state *state,
+ 		if (*ce && !(*ce)->ce_mode)
+ 			BUG("ce_mode == 0 for path '%s'", old_name);
  
- static int has_reserved_character(
--	struct strbuf *sub_spec, struct strbuf *errbuf)
-+	const char *sub_spec, struct strbuf *errbuf)
+-		if (the_repository->settings.trust_executable_bit  || !S_ISREG(st->st_mode))
++		if (the_repository->settings.trust_executable_bit || !S_ISREG(st->st_mode))
+ 			st_mode = ce_mode_from_stat(the_repository, *ce, st->st_mode);
+ 		else if (*ce)
+ 			st_mode = (*ce)->ce_mode;
+diff --git a/diff-lib.c b/diff-lib.c
+index 894358c8b0..276efef407 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -108,6 +108,7 @@ static int match_stat_with_submodule(struct diff_options *diffopt,
+ 
+ void run_diff_files(struct rev_info *revs, unsigned int option)
  {
--	const char *c = sub_spec->buf;
-+	const char *c = sub_spec;
- 	while (*c) {
- 		if (*c <= ' ' || strchr(RESERVED_NON_WS, *c)) {
- 			strbuf_addf(
-@@ -144,7 +144,7 @@ static int has_reserved_character(
++	prepare_repo_settings(revs->repo);
+ 	int entries, i;
+ 	int diff_unmerged_stage = revs->max_count;
+ 	unsigned ce_option = ((option & DIFF_RACY_IS_MODIFIED)
+@@ -160,7 +161,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
  
- static int parse_combine_subfilter(
- 	struct list_objects_filter_options *filter_options,
--	struct strbuf *subspec,
-+	const char *subspec,
- 	struct strbuf *errbuf)
- {
- 	size_t new_index = filter_options->sub_nr;
-@@ -155,7 +155,7 @@ static int parse_combine_subfilter(
- 		      filter_options->sub_alloc);
- 	list_objects_filter_init(&filter_options->sub[new_index]);
+ 			changed = check_removed(ce, &st);
+ 			if (!changed)
+-				wt_mode = ce_mode_from_stat(the_repository, ce, st.st_mode);
++				wt_mode = ce_mode_from_stat(revs->repo, ce, st.st_mode);
+ 			else {
+ 				if (changed < 0) {
+ 					perror(ce->name);
+@@ -193,7 +194,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+ 					num_compare_stages++;
+ 					oidcpy(&dpath->parent[stage - 2].oid,
+ 					       &nce->oid);
+-					dpath->parent[stage-2].mode = ce_mode_from_stat(the_repository,nce, mode);
++					dpath->parent[stage-2].mode = ce_mode_from_stat(revs->repo, nce, mode);
+ 					dpath->parent[stage-2].status =
+ 						DIFF_STATUS_MODIFIED;
+ 				}
+@@ -262,7 +263,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+ 				continue;
+ 			} else if (revs->diffopt.ita_invisible_in_index &&
+ 				   ce_intent_to_add(ce)) {
+-				newmode = ce_mode_from_stat(the_repository, ce, st.st_mode);
++				newmode = ce_mode_from_stat(revs->repo, ce, st.st_mode);
+ 				diff_addremove(&revs->diffopt, '+', newmode,
+ 					       null_oid(the_hash_algo), 0, ce->name, 0);
+ 				continue;
+@@ -270,7 +271,7 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
  
--	decoded = url_percent_decode(subspec->buf);
-+	decoded = url_percent_decode(subspec);
+ 			changed = match_stat_with_submodule(&revs->diffopt, ce, &st,
+ 							    ce_option, &dirty_submodule);
+-			newmode = ce_mode_from_stat(the_repository, ce, st.st_mode);
++			newmode = ce_mode_from_stat(revs->repo, ce, st.st_mode);
+ 		}
  
- 	result = has_reserved_character(subspec, errbuf);
- 	if (result)
-@@ -182,34 +182,34 @@ static int parse_combine_filter(
- 	const char *arg,
- 	struct strbuf *errbuf)
- {
--	struct strbuf **subspecs = strbuf_split_str(arg, '+', 0);
--	size_t sub;
-+	const char *p = arg;
- 	int result = 0;
+ 		if (!changed && !dirty_submodule) {
+diff --git a/environment.c b/environment.c
+index 591683ce8c..9d12c5fa56 100644
+--- a/environment.c
++++ b/environment.c
+@@ -304,6 +304,7 @@ int git_default_core_config(const char *var, const char *value,
  
--	if (!subspecs[0]) {
-+	if (!*p) {
- 		strbuf_addstr(errbuf, _("expected something after combine:"));
- 		result = 1;
- 		goto cleanup;
+ 	/* This needs a better name */
+ 	if (!strcmp(var, "core.filemode")) {
++		prepare_repo_settings(the_repository);
+ 		the_repository->settings.trust_executable_bit = git_config_bool(var, value);
+ 		return 0;
  	}
- 
--	for (sub = 0; subspecs[sub] && !result; sub++) {
--		if (subspecs[sub + 1]) {
--			/*
--			 * This is not the last subspec. Remove trailing "+" so
--			 * we can parse it.
--			 */
--			size_t last = subspecs[sub]->len - 1;
--			assert(subspecs[sub]->buf[last] == '+');
--			strbuf_remove(subspecs[sub], last, 1);
--		}
--		result = parse_combine_subfilter(
--			filter_options, subspecs[sub], errbuf);
-+	while (*p && !result) {
-+		const char *sep = strchr(p, '+');
-+		size_t len = sep ? (size_t)(sep - p + 1) : strlen(p);
-+		char *sub = xmemdupz(p, len);
-+
-+		/* strip '+' separator, but only when more sub-specs follow */
-+		if (sep && *(sep + 1))
-+			sub[len - 1] = '\0';
-+
-+		result = parse_combine_subfilter(filter_options, sub, errbuf);
-+		free(sub);
-+		if (!sep)
-+			break;
-+		p = sep + 1;
- 	}
- 
- 	filter_options->choice = LOFC_COMBINE;
- 
- cleanup:
--	strbuf_list_free(subspecs);
- 	if (result)
- 		list_objects_filter_release(filter_options);
- 	return result;
 -- 
-2.52.0.230.gd8af7cadaa
+2.43.0
 
