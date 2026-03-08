@@ -1,115 +1,123 @@
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2364318EF6
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 04:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772943196; cv=pass; b=ESEw8SX9HCeBIM933Zmlqv9nvOXybvOjGGtdofNioccGvGh+U0SY4/wPw5wubeiVIV26k/zWhkjfW/mcxcxZD9xZ/h1wln9qeIZMKpbdki5h29Qk4volv9jM2FhBl4b1W2Jt37ubjlsrMJImfONiQ8QRwrPLTVUsCRMH4WpPooc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772943196; c=relaxed/simple;
-	bh=LDP/ukFA5FnvHw1oYVh9Gy+FBdTSzs4ML2m8dl7KIjY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=opQFnEz4zN7NdTq4fCzK2+wI5vnRF4MdVzD81EVS25ssgjFeluIXQp/JoeVWJkD01OBpd7hCL19Kc9vA8QodvBoCTfoODXhQL3gMf0KYJWSeRj/twok4PAtdK9kC7SjB1tykPUATl++BX0aI+PYCj2pCmuiOYe2H1Wekd1SHl3g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9C21531C1
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 04:31:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772944321; cv=none; b=mzt/z1xwADbt3dcUOk6PEdP+Bcu+PTWvnFcDe64RIiQZk7n8Mk5IwDnNP7Sfz0FA78pEtXQ6+RNF0vGCqmEpKSafBnZOBNEqRBA2SUm3HjaATnEELFPhBaiZ2LtJUej4wEMLcZh0BJHf9ueOMesK8VQdmB3/6yCYTsCd5j/U76k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772944321; c=relaxed/simple;
+	bh=X0vI9C4IbSxKH9DW1b6H6nSrLpR1poLB5f6UEfK5Y10=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sHj/XgdfQuK6KWO6ocBbAxGKr2+guJf08loY5HSwoQA0CNTchsgkIiIObgb/RMhravQkle9QRzupmEOg1OaiBMl6XurzoThy9ta6QEkzfIFPAlcC/fvoEr74uNes6mT7SwCMZaRjZyjKyBTddiVKiYkhweCf9Xoky2HY5JATaNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Us+8YvSP; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2be054479baso523285eec.2
-        for <git@vger.kernel.org>; Sat, 07 Mar 2026 20:13:15 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772943195; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ZAlKL4hO353tdD3pw1vXMIHW42bJG9ymu73CrPHKZHEDVnrP/6gAjkR44rASnjDsM4
-         v1dHk4K5jEt846DqSA38Gs3ribKhfTtQG3pVJIrw7p90c6KYEXXFqpW5mOYmHYw6sMOY
-         I0LNEbT4RZAWeF78O5Fgsu7F6khi3sVknaij4YRW7KqDxvbbu6vYL+hc8+asjyFxYoAV
-         Vqye1MoKZszhwuEGpY2lKLvq+9m/Dzw8a80zlo8LsnD8o6ULmbFWScb8qzjkOKbEJn47
-         vy/IvoUzSTtW9HrQQNsooGdDOslQovWI4EzZl+CegxHu5RF9xYDlcXnMa8jvGTdgU3sP
-         wspA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=FXVoT7NFuUoDsR7e76po/gG7IduZdwesht1VqFwYKME=;
-        fh=GDTtk06GWx+BcnnbItsaTxolHfAv1a87i96qChTRwYk=;
-        b=AmQBWV7+SgLqTA/9rDA17rw/MLnNqDpVCkpI5XEYeB6QI0jMQehXoiyvJC/tPjuIww
-         2DD6EuF37b/4eXLO6YV1gd1KLxrlfRW6Ifgenu8UZsfGsvzjd1+7b1f7IrGB2wIbaEiy
-         My48ezhuoybCpul/+njAoII6+UbFJPC4S0KzXXj+MmIUPezTvpX0Lhli/uWwdKE5v3cr
-         /700HeeK56KKq8NFSIACxd0w3O0+nGr966AASgqR7GmPcmZZgS/WoWsdbcfjcCnaKIWJ
-         GL0gC51LV/GEgVBnshlDcAagGsiUV68e5H9VKi2olSiiXWpZNZFsl6ZMqXPvKVInLC4M
-         VLaQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Us+8YvSP"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2ad2b375e58so14534305ad.3
+        for <git@vger.kernel.org>; Sat, 07 Mar 2026 20:31:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772944319; x=1773549119; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p1tQn5k9Dxdi+97QGZI9s8RdWSX6XzmCB2gR17SLsS8=;
+        b=Us+8YvSP2J8Wci0ADpcqRPjeK/13WBQP9IHswIx8tO1dR9XGt3jPn9sqCkPxza+HRb
+         p+c7jzAiVUzqc92pTFy7SvixNRebqXDiZ4hcb0qaKFjFKMu+OMPMjJaT48na5oN0GKWR
+         jjRdopEc6VKa665F5rLh5sfT2+zg4OAycuYTWUwVcNxBDfC+Tg/eFIyYCnQoG/+whmLN
+         kdbEEXuFEqnMd4ZEwyfdWO/7T7ibqAURErd21DmGvzfCpACabw7C5IHMI49lpdYPoJ3c
+         9i68jLGsHdzExL+AfJUdUI3Tk5eUOxLQmIDh6FdDzVJCN+L9iVF9sWifT71UFVcqjm24
+         zMdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772943195; x=1773547995;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=FXVoT7NFuUoDsR7e76po/gG7IduZdwesht1VqFwYKME=;
-        b=ZeTlM8pc3Rmw1S1q4ztkW02fLwsCZCY5tYrmkPgBATdP/RqbsWxc3XYlcRyTSCEEOs
-         e2VLJYDCH1vnNMkZyyUDVkbx5SwkCZpFczm36Bux7YMq5Huz7xgQIXYWI5ghtQICTTa0
-         nuWQOqD/cH/QL2PeX0VES+q8592z8YN0bFimu5THV1UfL9xSvC1mOEfrbdjbpJKd8+Hh
-         A4+fMF29uI4dB3A5xupDJt/C9OJKAmyJ9IFZZKC1hBPO0ZW5Mf8IH0UbGnyMH1kKmO8f
-         Cm/wKaWRdAvvSLe8j+4tgr6Vk7kuzPmmbOGn6uX4Yan7tZ59fLOOMvIdpp/H3NAQvyy+
-         kP5w==
-X-Gm-Message-State: AOJu0YwPOEVk3c3p8bBtGHayqGoqKEtdW41O2xxpqwZU43AU1ns0Ma2X
-	0jrhgG3nJe403gxoDAQPZ+n/+KdSUNEhdMx8L1iJXX94zd2oviAsWub0offgFaDVXqduFcD1D5X
-	vZhK4mzqkdw5OhDpaApRFPmbfvGrZh/w=
-X-Gm-Gg: ATEYQzzdAyapVfwzeJ3TI37Vk+PxkoGWu0kiSgd9wS/DbiJBIG0shvnBSjUyFgKO+Ru
-	I39w6QyduBxxVNQqhQxlvl4hTmeieAQusE/z+C6Vj/eYKWG9KhNCNYfH9vJJgsEOai4qzLaQGAK
-	YjyZS8E1vHku3ZmV0m74PVis2JYphHTpMHaW0yDbPfA7cG75Nrkd198S00q/vWWzfNpAzuynEWP
-	lUhBsKkrEGsp5L+0UJ8zriSTIm66pZ3FeYDObuqH8JTqfVLdnJaPDZwUr7dWFhVND6OvtJm8xLY
-	YA9t3uWWuCuIx+p2sO+X43idq+ajneNz68kLQGb6hCCs1cVhP4Ay
-X-Received: by 2002:a05:7300:dc93:b0:2be:681:91b2 with SMTP id
- 5a478bee46e88-2be4e04a8f7mr1589056eec.6.1772943194738; Sat, 07 Mar 2026
- 20:13:14 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772944319; x=1773549119;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p1tQn5k9Dxdi+97QGZI9s8RdWSX6XzmCB2gR17SLsS8=;
+        b=o4ThEUJu2VzGtfCRoMEByUp8DAAZXmccfUP0SQkHxpWqqLzvgF6V/9JhXnIsrTy32p
+         sj2gLcEDCs/17+7wf9YPpjwE4JUAdrNTpSbmx8vaofPhweKEKETJ9k6qwanyVICo2zRy
+         qaQCM1RwVHMWCqKEt96srEfkrabMEZ4xjxEFEgU/xBXEf50Nyr7bKLJkiXpAQJr5IOrl
+         O7dHteZD6Msk50U6+LcErFkRdiwi/xVheubGZWkoOoe7bw36AfHy4yNyh7hPpXTfqpVB
+         Fa202nV0c3LI/8pdxLs6mEZXVQuq1mwqYwXBDRfslSVLseBtr6XDifX54NHKbmY4VpY0
+         pC0w==
+X-Gm-Message-State: AOJu0YwyfhvdF17Buwtrv+27V52+HOROYXqPi9fWjwe8or9oatuKUJZQ
+	RvoFyDoLHnwLBQZg+T/mExieXHL8ZZqZHxzPYKKLOZLS7guTGvAjqiSKTPiSJVLY
+X-Gm-Gg: ATEYQzz44GSFhubRtN83N61IoccU3dTEazs1zeVpXlXF07eoPmewR645Y1ku1liC2Rx
+	Ww6fJPUemeIxiXXaCAdLUAc0DflZFFUVdj8aYyeNUVV4gN7dOhlULxtorUpmYjqZcJnxfV+ua3k
+	LzapS3GbYzktHWm9zAE1c9IB9TPXR1/qO+PrmPx7z+F57wAfzxPJrSqKrVYI6hRmh9sxwhJGtHe
+	kixgFwqbr534MEpr6Bo+wux03zq+0jtvB8JeOPaotnMBI6BuGG05anxusAvO9NXWCqWBRYI9/2X
+	COcSu2t2eqQpXbcaSrxSnDP2y+phOq5BiLGh7+m7xz24WoC27hQZALfLJYH06piV0beJ9N/b3zV
+	B+L9JjjL85CBucdyAO80XT1qIlVtbH2WUVvUYyuqElPL98foyYVNdNqNk9teDWh3Oz760dmKPgR
+	3sxJCAfX/0pNuxET5Ew0kHrVV2lGwaeYwkUSunoIc3BNKwnGTwsLDpdCQnVBT+kVxEv7lC1ELok
+	fvY4vebqTqyT1J2xS2A/Q9A
+X-Received: by 2002:a17:903:2441:b0:2ae:464f:fe3e with SMTP id d9443c01a7336-2ae8245cd68mr48905315ad.5.1772944319132;
+        Sat, 07 Mar 2026 20:31:59 -0800 (PST)
+Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83e5774bsm93246965ad.11.2026.03.07.20.31.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Mar 2026 20:31:58 -0800 (PST)
+From: Tian Yuchen <a3205153416@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Tian Yuchen <a3205153416@gmail.com>
+Subject: [PATCH] patch-ids: achieve const correctness in patch_id_neq()
+Date: Sun,  8 Mar 2026 12:31:31 +0800
+Message-ID: <20260308043131.77782-1-a3205153416@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260305225128.54283-1-francescopaparatto@gmail.com> <20260307103631.89829-1-francescopaparatto@gmail.com>
-In-Reply-To: <20260307103631.89829-1-francescopaparatto@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sat, 7 Mar 2026 23:13:00 -0500
-X-Gm-Features: AaiRm50kst9zTunWAQzWCgawS-kpzRE15eRrfB2u-RENVdFZTWPwHnvbUEGyU6Q
-Message-ID: <CAPig+cTmRGBjV=yG4PvyyvFOgTZ0zK4GtkiO1xGSm1+OeM4ScQ@mail.gmail.com>
-Subject: Re: [PATCH v4] t3310: avoid hiding failures from rev-parse in command substitutions
-To: Francesco Paparatto <francescopaparatto@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Mar 7, 2026 at 5:36=E2=80=AFAM Francesco Paparatto
-<francescopaparatto@gmail.com> wrote:
-> Running `git` commands inside command substitutions like
->
->     test "$(git rev-parse A)" =3D "$(git rev-parse B)"
->
-> can hide failures from the `git` invocations and provide little
-> diagnostic information when `test` fails.
->
-> Use `test_cmp` when comparing against a stored expected value so
-> mismatches show both expected and actual output. Use `test_cmp_rev`
-> when comparing two revisions. These helpers produce clearer failure
-> output, making it easier to understand what went wrong.
->
-> Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Francesco Paparatto <francescopaparatto@gmail.com>
-> ---
-> @@ -569,13 +578,15 @@ EOF
-> -       test_grep -q "$(git rev-parse refs/notes/m)" output &&
-> -       test_grep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output &&
-> +       oid=3D$(git rev-parse refs/notes/m) &&
-> +       test_grep -q "$oid" output &&
-> +       oid=3D$(git rev-parse NOTES_MERGE_PARTIAL^1) &&
-> +       test_grep -q "$oid" output &&
-> @@ -606,8 +617,8 @@ test_expect_success 'switch cwd before committing not=
-es merge' '
-> -               echo "foo" > $(git rev-parse HEAD) &&
-> -               echo "bar" >> $(git rev-parse HEAD) &&
-> +               oid=3D$(git rev-parse HEAD) &&
-> +               test_write_lines foo bar >"$oid" &&
+The implementation of the 'contain_of' macro in 'patch_id_neq()' is:
 
-Thank you, this version (v4) looks good; it addresses all my review
-comments. For what it's worth:
+	#define container_of(ptr, type, member) \
+		((type *) ((char *)(ptr) - offsetof(type, member)))
 
-    Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+Here, 'type' is passed as a raw type with no const information.
+Consequently, const correctness cannot be guaranteed here, resulting
+in an eight-year-long NEEDSWORK comment.
+
+Use explicit casting (struct object_id *) to ensure const correctness.
+
+Signed-off-by: Tian Yuchen <a3205153416@gmail.com>
+---
+ patch-ids.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/patch-ids.c b/patch-ids.c
+index a5683b462c..e2d29e9dbb 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -41,19 +41,18 @@ static int patch_id_neq(const void *cmpfn_data,
+ 			const struct hashmap_entry *entry_or_key,
+ 			const void *keydata UNUSED)
+ {
+-	/* NEEDSWORK: const correctness? */
+-	struct diff_options *opt = (void *)cmpfn_data;
+-	struct patch_id *a, *b;
++	struct diff_options *opt = (struct diff_options *)cmpfn_data;
++	const struct patch_id *a, *b;
+ 
+-	a = container_of(eptr, struct patch_id, ent);
+-	b = container_of(entry_or_key, struct patch_id, ent);
++	a = container_of(eptr, const struct patch_id, ent);
++	b = container_of(entry_or_key, const struct patch_id, ent);
+ 
+ 	if (is_null_oid(&a->patch_id) &&
+-	    commit_patch_id(a->commit, opt, &a->patch_id, 0))
++	    commit_patch_id(a->commit, opt, (struct object_id *)&a->patch_id, 0))
+ 		return error("Could not get patch ID for %s",
+ 			oid_to_hex(&a->commit->object.oid));
+ 	if (is_null_oid(&b->patch_id) &&
+-	    commit_patch_id(b->commit, opt, &b->patch_id, 0))
++	    commit_patch_id(b->commit, opt, (struct object_id *)&b->patch_id, 0))
+ 		return error("Could not get patch ID for %s",
+ 			oid_to_hex(&b->commit->object.oid));
+ 	return !oideq(&a->patch_id, &b->patch_id);
+-- 
+2.43.0
+
