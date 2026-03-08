@@ -1,68 +1,69 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B100B33E348
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 18:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10722262FFC
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 18:34:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772994287; cv=none; b=lULlYxmaNC/nFeeCPUlqaGg+4uDCoWLwA2EnJ9ANZH1UrBJ8rZINd6JgDzvFA8fymZPDZqkpGhndKWI0G0Tt4zXT8NWcPrDk8iSkgFQcPehihxgdQGbJBQ0HIElwhSjg8OUmZn8C7SDZgetAky/m2gc6BSlbRWugN4jllk+lQ4k=
+	t=1772994873; cv=none; b=tq28r2OC9VMpcZFVxgLnKmTGE3rgkUVkufGjxnVBCIX8LkJNKhK7vU4ERfq1KGds7KL66Jak1Yad72jgRVDZzhh5/HfdFn56wG/GQK09Lc/dFcd/Zhpz02nIAUWFOtYlZXUkwYJ4BHKpYw1D9qxOdTO3qq/bOHRKaCfnJcxL/vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772994287; c=relaxed/simple;
+	s=arc-20240116; t=1772994873; c=relaxed/simple;
 	bh=TlYp/c0Gvz85hnYQswaVYTcZtICMFHGlXO1Xj9je/5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHR74ZqfqOTV0ycCPvZ9DaLYMhqih4in+S/thaxnWJy+Nnxj+rPmDu5NhJIGaffhkUjRB70pa2+FeUjHFTGl46ubvcPxeccHz9DwwXRpRcga3pc7wTZrB+KgmxB01vZWfyNXtDsYrzSDM5EcU3y/k/aDHzuES6Es3MT/NkDbNGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NiAMHg3s; arc=none smtp.client-ip=209.85.210.176
+	 MIME-Version; b=M95ptHIwTbXfeWVSB/06pk16daRopgMinFRm+ka9dKst80s0KAvDA10N8Dx9GSqcLGHYeFnJf9I30BPBLVhL6OE/OOQlJdHe/nYiaLmne4pxpHvgUwMM8kpKq87rRg2lBPE4oU5LpyzPHDNWLrm3UrIc0EDvrYq4YhLwmuHA7aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SVePX9L6; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NiAMHg3s"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-824c9da9928so6140523b3a.3
-        for <git@vger.kernel.org>; Sun, 08 Mar 2026 11:24:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SVePX9L6"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-354a18c48b5so9738043a91.1
+        for <git@vger.kernel.org>; Sun, 08 Mar 2026 11:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772994286; x=1773599086; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772994871; x=1773599671; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
         bh=PFlY7Q9W4a/u1Q4BiqG9vKb6BZtM5DP9agDJRyrt/bQ=;
-        b=NiAMHg3saUujp2/jUx3xBcW+LE3gxqKErguCGk7d46TwApamAeeDWM56r9mUF2afRc
-         wJgRxch/rxECrxpNAL1JhjqssACDpwNDSKCCamUKGSqpU/HJQg7Mz7Ueo3azyWCSWK3D
-         AJCb575fMvbZWEZK/uyQch3u5DAHPlk9P2gO6cerLrfCT6QSrmheQ40l3pIwuGhLwgz+
-         1zelmORZglKblz6dpvFmkztDdPfOMvejPdnFMwHcOVz+TyAjLqNAnXg7ZL3zBqBrzo5n
-         wT2Jb/5qhv+yd42JCQbNcN4V+VrMNaAoife1ImOv5AMsa/fqlvLCf2nE4XB5MMfv1pGG
-         GyYg==
+        b=SVePX9L6+faBxoF5BhTaPMv8+2zMrM+qRWVfqpRq9Et7iBHbpn7yjARYuv4Z6llNFV
+         idWhrgnrv9R9gSgfBCUQvEWMGT7OwQuW+zCxf28LddVi3lg8iNceZwiGdGzIA2qQsDVK
+         ovFZ6fF0ufV8e+zkIhnI+r78UdHuHyZ3L7rMAX+xSJOVTmDzDh95jp+nUgLjjFjZdMSt
+         8L2a28f6bpfjBKCW0eDIp6C+mqShCOpYVZwzyeCzwp3093bvv9BFLHPdtyIIAujOrrfq
+         teVLBpgoBq7MMfXZWHpsUVaY18NQnYKcjgb/1F0hzuxwU5Wu3l+NOCg3MlHvCEWpU/FA
+         J23w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772994286; x=1773599086;
+        d=1e100.net; s=20230601; t=1772994871; x=1773599671;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
         bh=PFlY7Q9W4a/u1Q4BiqG9vKb6BZtM5DP9agDJRyrt/bQ=;
-        b=OfLpNdTNE+GlTZ0auQOBsCG+YUrjR8AuGFZ1QcAdQyh9KKDDWRGj+v6fDIP4OYh48D
-         LhPuDkAa7CtrIgxb0M8anWg6Ko3U72QcLRB9wPZx+k9j4XSc5ayFO+j4sV0enOZv/qAo
-         DVsvbeHhY6E3paLSFOWgA0H08rTOU4qe+g2rUcDgoMRkFBxevL+CJzJaIT16wd+LWfw9
-         3j5WbL2sib6ax1Lpn1hfPpbw3mRgs9um757FpaEB3jNZLiliBH9rIWBMOzA1JuUnPAUN
-         dtKQnQq3kdsBG5UQYycNBa9mN6/FjexyoxinMY2zj/UxwXuSU8gmaqV+DEQLNJeGj2Fe
-         y50Q==
-X-Gm-Message-State: AOJu0Yx36iGrxVwxt11BJPo1KqbCtTan4Nfw9LoB6u4B/vJlaJObH0Vq
-	h1TNItZvDj9RMYoCiiWcaHWzU4AYnBMkBXuNOQlQUl7T0PPHUADx/8CJzmJZBHp6
-X-Gm-Gg: ATEYQzwR1/ZxCi8nOlPdMnN4WSOFBeUECDBRPaTWLYikQF+06n94XMHqX4W8IbFIp1t
-	qp6mOl5Wpeie+2s/5/puBb157E20mHWuVKddA+EmvopzwC9uSgHZkJz+BHr3+0K/7GSlMWem0us
-	XdK2rtqJEcMZUaI9xCsgiiXe8JvmM9DsRWDtP0QA37av1GcYzgVMcJF0L2sKkdJm8nqPYHhTHgX
-	cMtPECUzei8Lbass3itVAcXEEGyKBuL+SwVNjaFSYvs/kJIuqIyJ8ux572DDEKL2m134orDQJJ/
-	1SmSru4gdpfWFBV0iPh/y+UUIgDIDDsozRzM7P05iikGiOFXVgeMJPmF5a8x/sH7LnvcQq2ZNMS
-	IOuEMoX4utzGl6Eeypme5pC2G0YOgKE/mThBpdD3jdf9d5NMIkBkghDWSi0kQ3wX89AQ+R3OK9m
-	09GXKgwhGJx87G4orPE9cjVWX/fq+g15c=
-X-Received: by 2002:a05:6a21:4846:b0:398:6ea8:21d2 with SMTP id adf61e73a8af0-3986ea82cb2mr4839445637.19.1772994285803;
-        Sun, 08 Mar 2026 11:24:45 -0700 (PDT)
-Received: from dorna-OEM.. ([103.152.144.28])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c739e199993sm6913827a12.34.2026.03.08.11.24.43
+        b=LKO93D/XHk7I7cwgQkhpxOfPwcBohBbAsG2oT+1l6oQ+JRERYKAi6DyZtxQvNjhM78
+         Y+oSmOfIgsb74Oy8L+0WndQ+4XiEC36uJ0y6kd0GxD4EcqO+dYkUkRJhEahVa4LqWzva
+         9xbd7cZ+KIhxwBZLdTcokBrLm1X4I1tZniHVvslai+i2Y/NLDjsbOh3Bozhd4rWaEnoV
+         NcjHf2E7R24OjJLIl4nyzCADJ+XVYfRLqjFzM+08nXe7k5yLPmzW3SgqEpbIfOqJyKjx
+         45ANFnAxQqvTaB76Ntnfn4jS89FPgVxgPY1VtkGRikN64lLOOGPl6YoPH16UPrTLCLEk
+         n+3Q==
+X-Gm-Message-State: AOJu0YxRs4iCW4Rd375PwsEYforGrt3JoLfdImFCFG+z/x4rcw5Zj9gB
+	CdPDHsSo/tYvnzr4TorAHQ9ehNumr3QqW9KP3r139yDxmrQy8HSmspQqKb2dDY96
+X-Gm-Gg: ATEYQzzxIOErkl0lnpqn97HF6B5z6THSd6S8pdRsoKTwOrdO5Shduf8eoR23QHQKw6C
+	AGb6EEFNq/sg0cJJ2H3Jr/RPcV22Evr+4kbfcLFXDH9e3Xb0OfvIhl9zuFuyvmF//vGEfTemm9n
+	XV+ETkBOijuuK3MXOuuaxLA3GdYtaBhUJ8lqA7Gd8j4pBlcEN5NNOvvP/kDOIghQMjL+6WsKLrj
+	/rkntDcYHzwiP36DeMqOuHQdt1zhe0+DmU86YsNCwmu60zDzHWkO1pcQi5vx/FfRXTIaYZP+HNK
+	XVwlv/nUkTE78ERH1R3KcEtzWzZgrPz5T1cBcZP8Xu8vrdjNpB0cLZgA4e0ova9OtSRGpe3aKxf
+	Z85Jug2FYFL1TIJtgeTALJ0DB6DHNJfjzhLNM230ape6FraERwystV9YaXUeJt2KlycI4IB/63o
+	WPdkm8RPTPgTs2PSjX+makLNUuFlro5eA=
+X-Received: by 2002:a17:90a:e7ca:b0:359:8e1c:53e with SMTP id 98e67ed59e1d1-359be34a6demr7628454a91.31.1772994871190;
+        Sun, 08 Mar 2026 11:34:31 -0700 (PDT)
+Received: from dorna-OEM.. ([103.152.144.18])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359b2d392basm14885554a91.3.2026.03.08.11.34.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Mar 2026 11:24:45 -0700 (PDT)
+        Sun, 08 Mar 2026 11:34:30 -0700 (PDT)
 From: drona <dronarajgyawali@gmail.com>
 To: git@vger.kernel.org
-Cc: Dorna Raj Gyawali <dronarajgyawali@gmail.com>
-Subject: [PATCH] Make 'trust_executable_bit' repository-scoped
-Date: Mon,  9 Mar 2026 00:09:21 +0545
-Message-ID: <20260308182424.31349-1-dronarajgyawali@gmail.com>
+Cc: 24f40e5a-a5fd-49ec-86e7-921b44e4abd9@gmail.com,
+	Dorna Raj Gyawali <dronarajgyawali@gmail.com>
+Subject: [PATCH] [PATCH v2] Make 'trust_executable_bit' repository-scoped
+Date: Mon,  9 Mar 2026 00:19:21 +0545
+Message-ID: <20260308183421.31700-1-dronarajgyawali@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260301190017.53539-1-dronarajgyawali@gmail.com>
 References: <20260301190017.53539-1-dronarajgyawali@gmail.com>
