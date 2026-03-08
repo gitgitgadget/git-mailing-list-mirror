@@ -1,131 +1,86 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5337BB640
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 14:42:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F03828750A
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 15:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772980968; cv=none; b=MHVytfmWBe2bJ4/6gh0pzIe0rbvADnRQVEkHuSt0hjGVHKGovBFZtkgCtnNsAvFevIeE0b/1G4hM8eiqXPWi6ZdDu4/9cptB5mPaAu1+PhFWI/utHy5MCNIPBJw2OYZmXQstDfDBFY2vmkkiPEIDNRnUhtOLSpHqILaLJfKDAGQ=
+	t=1772982144; cv=none; b=EAPOzGsE0ddH3ET7vb5Xr6liio6uHUxhuU9uUcoVrOZXCp3E730P4Kpgnv+HzQkwj6sK92KShNcLArIfwut3vcbO2auz7UIL49qhhQif+yqQlNvmEJ+1MTL7rM8HVnpG8A60wF1TJxsffFb8VGIvGryK/WHI0u1pKyQgPdMZvOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772980968; c=relaxed/simple;
-	bh=QWayofmct6f+8oEPu8vtXNVnpH4jm4JHSJLGvV8ty80=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MHqAGwJfxwhEQGBPQdxKQBdKVwP8PlcRd8W2jo7pZpB+qQuxN+WCNDsaOthyW5HOO9xFActcF9Ul9vrhoZgL8dFxLv7jA6zjRBruZOCsAXczVF/1RZEn2qNBmmbVi7Y1BoeKaTWMQh0BVmk3N9uc6S0aYGXso0wPCZgHvaIDguM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fdQr7SyR; arc=none smtp.client-ip=209.85.215.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772982144; c=relaxed/simple;
+	bh=C76/+NB5PTpBwnt8gslgzJQeowQ8fpCI/5zx2dVVQFM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=lNUppeYlno9ZJDTUBv8dK/VAkYXG+ZbehcdbDcmqjdmVQeptVSDn+f2S0BAQbNk3GHQ9AV3UtWGH5VMav1IMieV++Ahqu5DRDglva4v8Ni2uHmjEktgWxQwL2KYHSKBK0dR8JMYFIPuWZyri4tueNLG2tLVKPTD04PV0ED3ODPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=s6TsHGlV; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=f6zHxEeP; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fdQr7SyR"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c738fcba660so566761a12.3
-        for <git@vger.kernel.org>; Sun, 08 Mar 2026 07:42:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772980967; x=1773585767; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=02V2Fj3V+tu7C06/AMo1l1d0iTDs9lpoVSMxvHbOkmc=;
-        b=fdQr7SyROw2FqbfpTzAgJ7p28Xl4IDuA5BmSjQMgRVyawAC0zDBHslJ17Olw45AOqi
-         VHbmN/rmQgiWxP8lHYAYUtYouDyaIFxdhoNSgo0Ji4naXVmp4dzfK8ggrqqdqqekmzKl
-         cKJvx0aBK9ltPte2NQDo3vp6VPkZYkDKCbNzLAv0OJ0AZMrDOeRVAiYyX1roZK3jRkV0
-         hjXS7KSC5rf4F4RIwpJy6X/+auSdUQtm65127fBtZJrX2QxI3S1gAhFoTsXQlxJFejZo
-         r9UXpmk2ly4Bp8HtYaRl8tbjdBaGdnj4i8Bb2ADkPF93VLYlLAAEk4rS33t8QvD0OVLA
-         C87A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772980967; x=1773585767;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=02V2Fj3V+tu7C06/AMo1l1d0iTDs9lpoVSMxvHbOkmc=;
-        b=MsRotlFNs40Iuy1VNdFdEyShfuMd6XVcmraeNdXYsThoqohEO7EQAWr4tFSa8OtzHm
-         CW6oBstiDdt5s5qaSU7OTrtL8Qd4k8ldmI+ZfiZ/JS96gfvqzNgP6B219DDD8GPaYiV2
-         7a3fiH/WuBzG34BJzN+E9u900/ULZMTMZ6Jy84Ve13SUiIz8HSfTLzev4yeEMihQEqAS
-         lX40gQ0dsaVhU+HMnEOt5I2supq5/iCxJe31nG/ayVIJxfOA6b68d+wB20qpUgiFqqaR
-         aYcr3W70TbomkbLFkYjCqMaclbDT/BNUoVF8A1t/w/lEHSMNHsAy+aqG+u0lCIkgQwAf
-         +xpw==
-X-Gm-Message-State: AOJu0Yx9bVRplqtZo215k3eeGrFOsBbm4D5I1A8SaZtfnek+BXqFSO5r
-	CkIsUpYPzQAitn8Xyx4lmuFWNj0owLkdk5yeXA93j/cHTfi25uckWE6servW/CrM
-X-Gm-Gg: ATEYQzwavKSKATDcwr/FreDXAgfrB6jGS/avyGDUilgyMH8wsrfrNb0LeDEuaDwZTaZ
-	qDwdQ6uPJBNuAfhonc4B3aIn/SBIqKY8m0z91mebejBcD/4VpuoCESMC2GFlNYabmSXQyKpRbWc
-	k2twRhJMrfOsA39cocFtBJeeAZ1IJixrtW+F9fIJnk6smuTW7VBHOwa8exlxjvUKM9e76gWfIbc
-	xduh9OaJvVGKP1zlsCvVIX8idpiJ8ycgKIfplTLFHF08QyK4meuIOvb3055dnfEJ+mjXBuAPSVG
-	CdiAnDKbpfpHEteZpZtu4c6tWtw9W9OnCcQGIThDtOdLsGN08cdxn2I6T0l+5bn/XNOyQqOOWwp
-	FKC0HCK4le2fn4sU7moSZdwrDTAqfWOTuonN0ycwMgyJimd34oOnOW6LWXvPElQChMIA4wqfaPU
-	U91o/vgWbGeXHwnMaV3uWU/oulIF01WwZ8QrvP7mPgzrL5dEXqWfm80zo7FmzcXZ6GWsZLjySLp
-	Kqz2BSCrweM
-X-Received: by 2002:a05:6a20:a103:b0:398:84d9:64ef with SMTP id adf61e73a8af0-39884d973cemr1116471637.2.1772980966603;
-        Sun, 08 Mar 2026 07:42:46 -0700 (PDT)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c739e0c7427sm6838201a12.9.2026.03.08.07.42.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Mar 2026 07:42:46 -0700 (PDT)
-Message-ID: <1a1ed5c6-8843-4bd5-9f57-187ef39497c3@gmail.com>
-Date: Sun, 8 Mar 2026 22:42:43 +0800
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="s6TsHGlV";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="f6zHxEeP"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=s6TsHGlVg9s7RYJbk6Z/uNv0vCW2LUBAHg35r0JnLaRli+HlNyltpxZvzLCw6Sh9EVtYrFBj1tbgOeJkK+W3NTAgdVrakhMv0Da9b2hjBcNika4ZxCAIg5+/hImXXrADHcEZ8QgiMxkd990+dMWG/levXeh78GYY76u0kVYvMiOlyv6EfPNcWgqG5TW0HvjXu2U7rNZpg6n2VC4IQMh4CP8fEE6HDoTAtNTzLgGqf5VDBOMblpmoZEpiwEbNPUZGAbb5OYiQOx3Daf57kuOMw7qPL2D2MoRfZkBnwz1yMAWAlF1BNXGNYAYJQ0rhOEwpoWl39Pw5I7c/MpgQy7BRMA==; s=purelymail1; d=malon.dev; v=1; bh=C76/+NB5PTpBwnt8gslgzJQeowQ8fpCI/5zx2dVVQFM=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=f6zHxEePsrMYCsEMOn+mcKnUpzKT9vWhUNeXNPFyQv0prXssAs2eKkN56/jDL9NhB5jrEL5RyIQ8i17LXQIyX2mwcWpZRKsFafHWYwnhcMWlLO0WwLTrz9cJW7zgrQPJena19WaV8WtTU41sQ5hw+/SL5HFCTviRF3ItdwQl74+GujPClS7GAT71oT9QfH935WQ8yD9kNafA9R5KUGcWO98IMSxbPhE0uo9vn/J/vrhEqRgF7zYJeqU6dKfA1Vo6UXtwwcyf77JTnb5R7v59yxHQzHfAepGIRexfYPRpHFs8+SSHadsA3jVzeBy6EGE2rhWLJVuB0ti+2hEWW0r1Ig==; s=purelymail1; d=purelymail.com; v=1; bh=C76/+NB5PTpBwnt8gslgzJQeowQ8fpCI/5zx2dVVQFM=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 787998619;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Sun, 08 Mar 2026 15:02:19 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Tian Yuchen <cat@malon.dev>
+Subject: [PATCH v2] patch-ids: document intentional const-casting in patch_id_neq()
+Date: Sun,  8 Mar 2026 23:02:03 +0800
+Message-ID: <20260308150203.86299-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260308043131.77782-1-a3205153416@gmail.com>
+References: <20260308043131.77782-1-a3205153416@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] patch-ids: achieve const correctness in patch_id_neq()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20260308043131.77782-1-a3205153416@gmail.com>
- <xmqqseaasuph.fsf@gitster.g>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <xmqqseaasuph.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-Hi Junio,
+The hashmap API requires the comparison function to take const pointers.
+However, patch_id_neq() uses lazy evaluation to compute patch IDs on
+demand.
 
-On 3/8/26 14:26, Junio C Hamano wrote:
+Pre-calculating all patch IDs to achieve true const correctness would
+introduce an unacceptable performance penalty.
 
-> The fact that `patch_id_neq` receives `const struct hashmap_entry *`
-> parameters--which is a requirement of the `hashmap` API--is what is
-> clashing with our lazy initialization here. The original code
-> handled this by casting to a non-const `struct patch_id *` right at
-> the beginning (via `container_of`). While this also "drops" the
-> constness, the original is at least more honest about the fact that
-> `a` and `b` will be modified.
+Remove the eight-year-old "NEEDSWORK" comment and formally document
+this intentional design trade-off.
 
-Oops, This is something I hadn't considered before. I admit I didn't 
-think things through carefully enough.
+Signed-off-by: Tian Yuchen <cat@malon.dev>
+---
+ patch-ids.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-So, we actually find ourselves in this dilemma:
+diff --git a/patch-ids.c b/patch-ids.c
+index a5683b462c..35e6a974f1 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -41,7 +41,15 @@ static int patch_id_neq(const void *cmpfn_data,
+ =09=09=09const struct hashmap_entry *entry_or_key,
+ =09=09=09const void *keydata UNUSED)
+ {
+-=09/* NEEDSWORK: const correctness? */
++=09/*
++=09 * We drop the 'const' modifier here intentionally.
++=09 *
++=09 * The hashmap API requires us to treat the entries as const.
++=09 * However, to avoid performance regression, we lazily compute
++=09 * the patch IDs inside this comparison function. This fundamentally
++=09 * requires us to mutate the 'struct patch_id'. Therefore, we use
++=09 * container_of() to cast away the constness from the hashmap_entry.
++=09 */
+ =09struct diff_options *opt =3D (void *)cmpfn_data;
+ =09struct patch_id *a, *b;
+=20
+--=20
+2.43.0
 
-  - The Hashmap API specification mandates that input parameters should 
-be const *in principle*.
-
-  - The lazy loading mechanism requires us to write the results into 
-memory; otherwise, there will be significant performance loss.
-
-Am I correct?
-
-I find that maintaining the current approach seems the most reasonable 
-option. Computing all patch ids before putting objects into the hashmap 
-appears to be a move that affects everything else and is not worth the 
-effort. On the contrary, slightly breaking the Hashmap API conventions 
-seems to be a more *cost-effective* approach...
-
-Or perhaps it would be more reasonable to slightly modify this NEEDSWORK 
-flag here?
-
-Will send the next patch shortly.
-
-> If we truly wanted to achieve const-correctness here, we would
-> likely need to avoid lazy initialization within the comparison
-> function altogether, pre-calculating the full patch ID before it's
-> needed for comparison. The NEEDSWORK comment should remain until a
-> more fundamental solution is found, or if we should just admit that
-> the current lazy evaluation pattern is what we want and document
-> that (i.e., add a comment to justify why we strip away the constness
-> here). As it stands, this patch doesn't "ensure" const correctness;
-> it just masks the violation with an explicit cast at the location
-> the pointer is used.
-
-Regards,
-
-Yuchen
