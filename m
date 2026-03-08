@@ -1,192 +1,155 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B788E24A044
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 07:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E254A3603F9
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 09:57:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772953583; cv=none; b=V98svcPQjFh2ZJ3sjD1QREPYKZ65xYKyxinMxMGMIqxLo4KSW9CNCzlKmrAsF/3BxaTpoVdBK1WsPDLPCMVBFz1eqUmGrBkzI2hYHmqv3YQXX1/NVPdm8eEJ6S+Y8lCrNkvBeeiX0JsHQLnKox6PZt2fiQZQZBd+KjrXUNIcslg=
+	t=1772963833; cv=none; b=aOZ/bjcrN0OGrzkdYMxEZLKlT7riZ6b1s8DCA6Cmj7IWDenVvXgh95T79Yyvj+HYw84YLDAy1UTv8Im56dtif59e+eKbQt2RKee/u6+/bUR25gZKd7D+1uTzbeIlpNrCgJtO4dip+qBVd9DXswiaQ7tUa1USHZCLXknXq0E6EqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772953583; c=relaxed/simple;
-	bh=eNzXeaoGB8Fd1aG7WWjV+ER0j+WdZP2DzJivvef4wkc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IF2ob6kZgtPLIrXWt+mjIZXzT9nei4+2FvvgqBrAOUc+UQsIx1pX8KM37tVSMZpnJjmk2lCaKxdbW3uF/c5c9FJVd9dg5mEzq4PkXeFupHONafWNkupRKjfETiBv/LSk6R52hb1cd91X/9ok6eD4xKAKlcyYxEYTrEIEGaHnBcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QrQCW1GV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sltz3LHY; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1772963833; c=relaxed/simple;
+	bh=kSLJpLACbGd/qEotb1KdJXz8R11Sia4xA1xBLMFvd58=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=LbiSQn8uLlmn/hqq+Hb6AxPhUbhHScvvm1Y/9OWnRsdcAFIvqdACZ3B64LnoC2Ue/O97G6Rh/+6LOBIkotucmFb7ZWsV1NELwI/8WPC4XDJvwFj4K/qIG45adfuKTIsVjXg0+eCuRzjrtZCzhjYDAPFLwoo0P+rYQUEioTAe8AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=EndDHxfp; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QrQCW1GV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sltz3LHY"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8BEC0EC0554;
-	Sun,  8 Mar 2026 03:06:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sun, 08 Mar 2026 03:06:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1772953580; x=1773039980; bh=rEcoA7R9qP
-	cfSnsiWP08LGp3IE29HYh+WzhFIVMjylc=; b=QrQCW1GVIdo1YcxyJK4brfiXW2
-	nezn3TZsK+Na75r2/repRlX0QALYOF9pVfjxf4Sy4YYm+2cvdOfHVFJMrvxm74bW
-	PMfxvC7FpqH8wWQnQSghL3MJqp71RxCVd+d6Jd8ca06RKiVqYng1N2mm4/Z5gAZZ
-	2arcDTH6l6s6zBUSmZe71wQ8sMHiPJxmDUMznflcFo7+JD/FjjJ1rYgdv892Rq16
-	6bdeZQToqYwhhHqDiJZCnz0N9KnGXN1IYKv3SuEufUCXuR+xfjmuuY8R1ZrVWCNU
-	lNaqKTzFroXjrldHizpQPJBIx/3NRHJtQuHWMQgcvNUg0MExTXMGGhOYN8og==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772953580; x=1773039980; bh=rEcoA7R9qPcfSnsiWP08LGp3IE29HYh+Wzh
-	FIVMjylc=; b=sltz3LHYMZ79vkytjTnYeFVOQg2q9dUZmkWq/YRVSy6YXcXdttE
-	Jh5OU24sJOiKeXORCYUeYNDUCpozvlK3rL6p6s8LdArb5EUVrDzJn/PiCUKMGzYr
-	nG9y4o8wNaSQFUCvhD4SJYPivrPWZUWFmZ9gEHe7B0aSd03Rs+9rYYka6ILtOUvz
-	IHadtQD9gMDqSx+T75k9DU9PR31HoTZeZMafz4q6xCllkqKmV2HRf25KMqSUbshO
-	L66HfL7OrOzsxmDYleR85ctL+jIfs86kZhCJHCjHR79RLJLz9iSxyZA4QYtWIFzs
-	0KY+TVTFWNvb3PkiYeKQXFM1CNJILGz86qA==
-X-ME-Sender: <xms:7B-taTb-OP_GTm4LcULx8VrAr06PzpuF4ZO-jmWLeNOwbv2NZH6d4Q>
-    <xme:7B-tad5Tg7DVfWjRBZa6iIpeLjfCrcYf9vFIcsvpzOyWlr9FWY_Krhjx61-WIcOzi
-    qaUxIfW3MVI9FmxMtpsR1fhvBiqe0tRKXsVNWm0F8KO__vnoADcdw>
-X-ME-Received: <xmr:7B-tacZTjX8y5f5BGX513ywv2ZWtT-xCAvYqDzZc-x303LDh1zL4hpOptQgZVtcx3N5EKbe5b9Cp6ykJ2On0cuLN11G8jDo3yw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeghedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehpshesphhkshdrihhmpdhrtghpthhtohephihorghnnhdrvhgrlhgvrhhisegtvggrrd
-    hfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7B-taUhMDmxBAljbZxUBGSfwXOQipOrMBh5OlHb0nWZOTEsDZlIgRQ>
-    <xmx:7B-taV-E-6D7LOW5_P1HIqTQZcXzWYPlLN6XA51CeW17zqE--Hn3vw>
-    <xmx:7B-taXr-0UO9LN4O8G-0RjI3EyI-dKvdA1Wb3cm87hlMz68D7XqraA>
-    <xmx:7B-taVU39OZljQfN4SXL2EwYIed2amukT6ywDkL83plwOltw-SxXyg>
-    <xmx:7B-taXHJakGeEt7_6b5OIPq0p4dpeRYMkNjE026u3A45TMAVMEydbSEq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Mar 2026 03:06:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "VALERI Yoann via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Yoann Valeri
- <yoann.valeri@cea.fr>
-Subject: Re: [PATCH v3 1/3] branch: add '--name-prefix' option
-In-Reply-To: <6cbb950d8bc3b647d7fff72a72f938ee369b552c.1772802872.git.gitgitgadget@gmail.com>
-	(VALERI Yoann via GitGitGadget's message of "Fri, 06 Mar 2026 13:14:30
-	+0000")
-References: <pull.2202.v2.git.git.1772207333.gitgitgadget@gmail.com>
-	<pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com>
-	<6cbb950d8bc3b647d7fff72a72f938ee369b552c.1772802872.git.gitgitgadget@gmail.com>
-Date: Sat, 07 Mar 2026 23:06:18 -0800
-Message-ID: <xmqq4imqls0l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="EndDHxfp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1772963823; x=1773568623; i=l.s.r@web.de;
+	bh=Oxny1Hz2Kqp1VvcP28mKLzXoFhTGNdBwMZhxlnjMc60=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:From:
+	 Subject:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=EndDHxfpo61d7TbiTMk/4/fhWtW6R+d+oO7X/14AlPi+ijtSvl0IoyxVxNfN4h4S
+	 zsOf1huLCIIAQy43Pss7+qYhbDS6nq7FCxtMnSd5xwBh7SviXrRkVA1tKsh31T06p
+	 WdC3U78O1n57sQTlb+cdlK8NDdQLflLj76epcR4lbC2YmZ9od3YKabazHQhtd7rz6
+	 DIzhIEITBdOJUs58Rerq2Q1UFZo0PrDPmc/2POTZeIBBjpTMtqAIzQ4Gfyi5mKY8J
+	 MrAEaEfkCQ8EZ9CvoipFhoA9ficEx0C5NVUImfeLP2qQWlOTvI3qJ9U6+9VzlJKos
+	 O9QvaKAFlE9+vZq/CA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mm9Zc-1vHLfa47NI-00amlP; Sun, 08
+ Mar 2026 10:57:03 +0100
+Message-ID: <b0b8633f-be95-48eb-8244-d0e3f1a7be72@web.de>
+Date: Sun, 8 Mar 2026 10:57:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] history: initialize rev_info in cmd_history_reword()
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:/AMY2L273fyGbLV+0pX7fX8RLH+n7mLpqzmzVOXCduqgf6gOjiJ
+ CrCOCswA1pC2xhGpHMGTf4zXnwy/x1R8XVqHb2DSOA35C3QlRPRudpXrgc32KH5Snudji2E
+ 0IcS2JGcb7e5INS2VCfXDAE4UtB6suVvBhx8PSI+KXsqUxi3vZxb3GoZ5n3O0hfetwByKWk
+ vEAQRR9tBI7g6+HY9Muhw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:AE7ItLAD+Us=;dLojBanEnnjgW2roFA1b4VFbfdj
+ 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
+ ONIdGI6MdMU6E/TiNQ5oFoX53PMIUV7NtjSK+g
 
-"VALERI Yoann via GitGitGadget" <gitgitgadget@gmail.com> writes:
+git history reword expects a single valid revision argument and errors
+out if it doesn't get it.  In that case the struct rev_info passed to
+release_revisions() for cleanup is still uninitialized, which can result
+in attempts to free(3) random pointers.  Avoid that by initializing the
+structure.
 
-> diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-> index c0afddc424..00967fa758 100644
-> --- a/Documentation/git-branch.adoc
-> +++ b/Documentation/git-branch.adoc
-> @@ -17,7 +17,8 @@ git branch [--color[=<when>] | --no-color] [--show-current]
->  	   [(-r|--remotes) | (-a|--all)]
->  	   [--list] [<pattern>...]
->  git branch [--track[=(direct|inherit)] | --no-track] [-f]
-> -	   [--recurse-submodules] <branch-name> [<start-point>]
-> +	   [--recurse-submodules] [--name-prefix=<token>]
-> +           <branch-name> [<start-point>]
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/history.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The indentation of the last line seems a bit off; the previous line
-uses leading HT both in the original and in the updated version, but
-the last line uses SP indent.
-
-> @@ -64,6 +65,10 @@ Note that this will create the new branch, but it will not switch the
->  working tree to it; use `git switch <new-branch>` to switch to the
->  new branch.
->  
-> +With a `--name-prefix` option, you can add a prefix to the branch to create.
-> +This can either a simple name, or a token. Currently, only '@{current}' is
-> +managed as token, and will use the current branch name as prefix.
-
-"can either" -> "can either be".
-"managed" -> "supported".
-
-> @@ -319,6 +324,10 @@ superproject's "origin/main", but tracks the submodule's "origin/main".
->  	and the object it points at.  _<format>_ is the same as
->  	that of linkgit:git-for-each-ref[1].
->  
-> +`--name-prefix <token>`::
-> +	A string that will be used as prefix to the name of the new branch to
-> +        create. Can be '@{current}' to use the current branch's name.
-> +
->  _<branch-name>_::
->  	The name of the branch to create or delete.
->  	The new branch name must pass all checks defined by
-> diff --git a/branch.c b/branch.c
-> index 243db7d0fc..c24d7ce823 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -365,6 +365,23 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
->  	return 0;
->  }
->  
-> +void add_branch_prefix(const char *name_prefix,
-> +					   const char *current_branch, struct strbuf *buf)
-
-Overly deep indentation here.  Our tab-width is always 8, and you
-would align the first "const char" on these two lines.
-
-> +{
-> +	int value = 0;
-
-Unused variable?
-
-> +	if (!name_prefix)
-> +		return;
-> +
-> +	if (name_prefix[0] != '@') {
-> +		strbuf_addstr(buf, name_prefix);
-> +		return;
-> +	}
-> +
-> +	if (strcmp(name_prefix, "@{current}") == 0)
-> +		strbuf_addstr(buf, current_branch);
-> +}
-
-What happens when we need to support more than the @{current}?  Will
-this function grow more parameters and the callers need to prepare
-more parameters, even if only one of them may be picked by this
-function?  That does not smell like a sound way to make things
-maintainable.
-
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index c577b5d20f..58631913c7 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> ...
-> +		add_branch_prefix(name_prefix, start_name, &new_branch_name);
-
-
-Here, `start_name` is passed as `current_branch` to `add_branch_prefix`.
-However, `start_name` is the `<start-point>` (e.g., another branch,
-a tag, or a commit). If the user runs:
-
-    $ git branch --name-prefix=@{current} new-branch other-branch
-
-the prefix will be `other-branch` instead of the *current* branch
-name as advertised in the documentation.  It _may_ be how the
-feature was intended to work, but then the name "current" and the
-way the documentation describes the token are both misleading.
-
-> +			create_branch(the_repository, new_branch_name.buf, start_name,
-> +						  force, 0, reflog, quiet, track, 0);
-
-Overly deep indentation.
+diff --git a/builtin/history.c b/builtin/history.c
+index 1cf6c668cf..88822a184f 100644
+=2D-- a/builtin/history.c
++++ b/builtin/history.c
+@@ -425,7 +425,7 @@ static int cmd_history_reword(int argc,
+ 	};
+ 	struct strbuf reflog_msg =3D STRBUF_INIT;
+ 	struct commit *original, *rewritten;
+-	struct rev_info revs;
++	struct rev_info revs =3D { 0 };
+ 	int ret;
+=20
+ 	argc =3D parse_options(argc, argv, prefix, options, usage, 0);
+=2D-=20
+2.53.0
