@@ -1,111 +1,228 @@
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3D81EEE6
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 00:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB1D257848
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 01:45:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772929757; cv=none; b=K+ZGWpv2+rFZ4UCNKAdkGI5xLo/iF/9wUx7BYrSmjevugScoEbeQdSETxl42PqdTeqTGUeAjqm8e81bE9XQJ/1EoI17iywpJHYXuJQIwKRnFPLmcvgReVu5pPWtyH9d4hyMG+Y64e5ERwASpEVyUtxh+Bc/u8IEiSg1FYYVLYGk=
+	t=1772934302; cv=none; b=Asa3pejFEL0mcSXVyTIWCm4ViLSRRNJlgDvLZNpk8o9iqphqsvr7zy9QG9njOAMlZa11SBg0WmZONrZUu+Qh7D7lbWoNUJ7JHrpT7pdtjs69dLEeB82oMs50K8d5jj56+jwAb95JD5XiFyYRCruaX5UPeciC0hOZVxsjuvu+VDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772929757; c=relaxed/simple;
-	bh=n1qL5cJBNr3LalPWx3J8JmbMiQdNfLr+942oA07sRlw=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=PUQjWGydFjh5okpaMhrmsS9jvfQFb8j/IE7Z7THZqIkrHbgs8N2wtS7wGncIjC7Qxphn30DPVmca2rW8025oI+1p/H8CxYEQor/7b5whxpJ5QwGhDJdVqL0yC6QJBnTeZSCBtJ6oP2aM+Xa/06PJKlXJqarRHVhgNbRgehVFCgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TOaFKzCK; arc=none smtp.client-ip=74.125.82.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772934302; c=relaxed/simple;
+	bh=syFyty2iQOv3n/TGrqZhRrOPHV71/wCSYWWMPlekZ8k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h8xZfeHnm2/pMb2Gcr65UF3XtKTeYKp30b7FDzAchAb/PUrOwBxTAzen/M7AP2WV5ngNzgqg/Ye9j541fMWS46vGpsmVaHla6ZLS+pqEqTTT39Yt3pRUaxX5Bcqk0HuPap80XpQKLB+phg7RQaIQwiSzx708jZpAnQTdd6jyHck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=W37zRReP; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOaFKzCK"
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-127380532eeso7091751c88.1
-        for <git@vger.kernel.org>; Sat, 07 Mar 2026 16:29:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772929756; x=1773534556; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UOaaKkhn08uO8fOgyAajO2hEpDBuqooHZn3uA2Y//p0=;
-        b=TOaFKzCKcGo2be82ZmeXur96B36+ml/VqD23rE0Ve3p772xQNXSE79xhvKTAeqG4Ll
-         7zBE6MdkDkCjPpptvvLMoik8heswxb11cE5P4kY5IExM9RMPNwB7ysmF09wnlkxYCsxT
-         hy793yuGSmIXW1h7MFoLSW0FbitQ7izUU4u+oLlOms5i4O3C3y1wToNGCCxWtB57sT4B
-         O3bNb9RLVoAsG4mdIkI1LjwbdomYnhAj3S2GeDhpdQFpnok3F1txBw/y3gpKljlYwP7t
-         icmwHwRJvrlHtugWgLDUo++stUhSEoIVbd94aSQKptniyAe6yypC80/f80WpO2pz2WLd
-         81Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772929756; x=1773534556;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UOaaKkhn08uO8fOgyAajO2hEpDBuqooHZn3uA2Y//p0=;
-        b=F3A4OwM96VrHrb21XzLJpFagQgxPdxtXLPNTbEKAHuQzE5TayCgcGcErNqfYhM6zMJ
-         k4Wh2dLaxtXBL0hwqCWriOwt3pfGYfTnbHm6IBnbrUonHGVhHT2ygVZi07u7mv5rwxFT
-         lMob+kLWoeDA+y51r2A92jGtAdgIruBQyr7dzTLSPpCcKcbE8c6D4ROaRAziQeTLvmxx
-         8jEg5cjqL2viToLaPjpjMwXh5pr+unyqZhvmUW8dctgol8KHuM4wF9a50zgO312VjzJj
-         5DWfn2peikbtzHIVbzxQBQh21zfEDs7W658F9sFNhfln0bO0dVTjr35jHE8/t2Lw/Ykm
-         NFDA==
-X-Gm-Message-State: AOJu0YwbW+/E/T9c28VshNW7RkY6mcR32PZ0wod0FcvVyXXU5l2WTuol
-	d77+ZzcowlsKgO9yHJ24XMOP/wO+LbK6r2aUnd/igTQtvte+FYUevmxK
-X-Gm-Gg: ATEYQzzMdM9Z+K9/PmYorauwINxenj4AetpI9tlKLWxNl5l4KHMtxrefth/imO0zVP0
-	y1rBoia6EZiAz2CEk9vIgH+tUBQP5xaX4+FVuXfNgzJwXxlhkSxXy2DJZN5Crl/swADtUPAXuCN
-	4RIVamLlnUKunWX+SzILQFv5fRjG8qL0ZXpqvjV1QKsBKEnnyPwXUriC9K5CVWXpRffRSlnOCBn
-	56KBaVFbsS0cET9jcn+bK/gpIjZV58EAoprObeGsxUep+e629kCY2JMiwlkD0UhP96pGryg6mIH
-	nt1DEGsZo6toPc8GGXAGlaoG7rXxQCvtuI5JXu0FuiT9dmBuSGISH8hmXkQDKiVO30u8THx/FXd
-	KmSyQ0wbSv1af/c0mQrbIdrEFO0PI2oYpV+GoOqxO+rHa7KTQfjIpFlEn5bMpLT7GjB8U+OhPrz
-	abN+GG2PVFJUBzgfwi+VXVzlTlH7K/bzMLfCzE/RnZiEDdRSAyY9m1
-X-Received: by 2002:a05:7022:f81:b0:11d:f440:b743 with SMTP id a92af1059eb24-128c2d8fb25mr2796302c88.7.1772929755774;
-        Sat, 07 Mar 2026 16:29:15 -0800 (PST)
-Received: from smtpclient.apple ([177.33.87.130])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-128c3f4351bsm4134965c88.11.2026.03.07.16.29.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 07 Mar 2026 16:29:15 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="W37zRReP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1772934293;
+	bh=syFyty2iQOv3n/TGrqZhRrOPHV71/wCSYWWMPlekZ8k=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=W37zRRePCXia+2ZZiyH3H9Tsm4oIqkDF6SlRX/4zjAsWgZ8h6MGdEXp3LLaDjF/yU
+	 ZTilbKjBeu3e7tlHq8bAqFTb0Z1Ege3VV3VOe5ismVbnu5wck8nH3boS+OyBhsqpTY
+	 /2aq28eGYhnnWSeczltG2AwK+6G337KtiI7poRoOW6V8OdJX0tSZHEVb6RKj6K5sK9
+	 yPiK3kcfANioFZmh0msnMWNBxFTzRE2S8dMlcq80HfE8cj7VFKe1kO+IeITHkgccZx
+	 El5eQblH4HG4QDur7VDiAil4b5SiIozD+7prbxVxXLLRmJyMdbDNQnMBCDNetAJbg8
+	 FEVJLaEzj0Z6NAHkK2gqB8B9AdDP6Wy2XITiYnXethAjIr9suTBjevciCdPuiL22jq
+	 nNinHuIT2SyqfApHtfcRq7TuF++NyXSSilbmks/wTCkYxwwoV00uls11DJFeVt1L6s
+	 zqtAQdcU+SoDgQcNztY3YMwtaL1k8ZRc2CFy4D625fs9rrMycZ+
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:6b61:697a:7d33:f7c5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9079220109;
+	Sun,  8 Mar 2026 01:44:53 +0000 (UTC)
+Date: Sun, 8 Mar 2026 01:44:52 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: "R. Diez" <rdiez-2006@rd10.de>
+Cc: git@vger.kernel.org
+Subject: Re: git-fetch takes forever on a slow network link. Can parallel
+ mode help?
+Message-ID: <aazUlMBj_IK41Ss2@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	"R. Diez" <rdiez-2006@rd10.de>, git@vger.kernel.org
+References: <5c7c975e-2541-47e1-b789-fee1fdb77d2a@rd10.de>
+ <aas--JZ-CCWN-o7O@fruit.crustytoothpaste.net>
+ <1d6a8eec-20b3-4d6e-83f1-d18b7a3c0145@rd10.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH 0/4] repo: add support for path-related fields
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <aaSusXil9nDHYGMR@fruit.crustytoothpaste.net>
-Date: Sat, 7 Mar 2026 21:29:00 -0300
-Cc: git@vger.kernel.org,
- kumarayushjha123@gmail.com,
- a3205153416@gmail.com,
- jayatheerthkulkarni2005@gmail.com,
- valusoutrik@gmail.com,
- pushkarkumarsingh1970@gmail.com,
- jtobler@github.com,
- karthik nayak <karthik.188@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-Content-Transfer-Encoding: 7bit
-Message-Id: <041DCF2E-75FB-4B0A-9128-FDBB1A6DAC3C@gmail.com>
-References: <20260228224252.72788-1-lucasseikioshiro@gmail.com>
- <aaSusXil9nDHYGMR@fruit.crustytoothpaste.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-Mailer: Apple Mail (2.3864.400.21)
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="uKeRy4/5CPS3/4Ye"
+Content-Disposition: inline
+In-Reply-To: <1d6a8eec-20b3-4d6e-83f1-d18b7a3c0145@rd10.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-> I think you should provide both.  I originally added this for things
-> like `--git-common-dir`, which Git LFS would really like to have as an
-> absolute path in the way that Git canonicalizes it, as well as
-> potentially a relative path.
+--uKeRy4/5CPS3/4Ye
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for your input, brian!
+On 2026-03-07 at 21:28:10, R. Diez wrote:
+> Hallo Brian:
 
-> With `git rev-parse`, you can change `--path-format` on the command line
-> between options, so if you want both, you just request one thing, use
-> `--path-format`, and then request the other.  However, that can't be
-> done with `git repo` and `--path-format`.
+Hey,
 
-It makes sense. If we use the key format suggested by Ayush [1]
-we could retrieve both values with something like
+> > This performance could be improved with `git pack-refs`
+>=20
+> After looking around, it turns out that the documentation of "git gc" say=
+s that "packing refs" is one of the things it already does.
+>=20
+> I'll check when it was the last time I did a "git gc" on the remote bare =
+repository, when I'm there again.
 
-   $ git repo info path.git-dir.absolute path.git-dir.relative
+Yes, this is part of a gc.  However, packing refs is much lighter than a
+full GC and will therefore be much faster to complete.
 
-I'll stop by now. Since many people are interested in contributing to
-git-repo-info in GSoC, I'll leave this decision to the person who will
-work on it, if there is one.
+> > or by converting to the reftable backend, which will open fewer files.
+>=20
+> The documentation states: "reftable for the reftable format. This format =
+is experimental and its internals are subject to change.". I am not ready t=
+o risk it yet on my precious Git repository. 8-)
 
-[1] B46AA932-28EF-4A2C-96B9-0F05D9641C1C@gmail.com
+It will be the default on Git 3.0 and it's in use on major forges.  I
+also use it on several of my development repositories.  It's stable and
+functional.  I'll try to send a patch to fix that text.
 
+I would definitely recommend at the very least Git 2.51 for this and
+ideally the latest stable version, 2.53.  Git has had a lot of work on
+this format to improve performance and stability over the past few
+releases.
+
+> That didn't help much. Most of the time (23.7 from 24 seconds) is spent i=
+n a single child process:
+> child_start[0] 'git-upload-pack '\''/home/rdiez/MountPoints/blah/blah'\'''
+>=20
+> The log talks about "upload pack", but I gather this is actually a downlo=
+ad operation. It wouldn't be the first confusing item in Git. Or have I got=
+ it wrong?
+
+upload-pack refers to what's happening on the server.  If you contact a
+Git server over something like HTTPS or SSH, then it will use
+git-upload-pack to send data to you (a fetch or clone from your
+perspective) or git-receive-pack to receive data from you (a push from
+your perspective).
+
+When you perform a local fetch, upload-pack is spawned in the remote
+repository to serve data.
+
+> I added "export GIT_TRACE_PACKET=3Dtrue", and then I got a more useful br=
+eakdown:
+>=20
+> This takes around 13 seconds:
+>=20
+>   pkt-line.c:85           packet:  upload-pack< 0000
+
+Is it just that line that takes 13 seconds or is the listing of
+references altogether that takes 13 seconds?  That particular line
+should not take 13 seconds because it's literally just writing and
+flushing 4 bytes.
+
+It would be helpful if you can to include the entire trace output so we
+can see and analyze it ourselves.  It's very hard to analyze data from
+the different sections in isolation if one is not intimately familiar
+with the protocol.
+
+> I don't know what 0000 means. All other similar "upload-pack" lines have =
+a hash there.
+
+Git uses a pkt-line format where each line or chunk of data is preceded
+by the total length of the data (including the length itself) encoded as
+four hex characters.  So a single byte of data with the value A plus a
+newline would be `0006A\n` (four bytes for the length, plus two bytes of
+data).  The special code 0000 is a flush packet and means that the end
+of a command or a section has been reached.  That's how Git knows the
+advertisement has finished.
+
+`GIT_TRACE_PACKET` does not normally print the pkt-line unless it's a
+flush (0000) packet or a delimiter (0001) packet, since it would just be
+noise.
+
+> About 2 seconds are spent here:
+>=20
+>  pkt-line.c:85           packet:  upload-pack> [some hash]  HEAD symref-t=
+arget:refs/heads/master
+>  pkt-line.c:85           packet:  upload-pack> [some hash]  refs/heads/ma=
+ster
+
+That's sending references, which is expected.
+
+> 7 seconds are spent with "upload-pack" and "fetch" operations, mainly for=
+ single "refs/tags". I'll check whether that improves after the next "git g=
+c" on the server.
+
+Okay, this is helpful.  You probably have the `peel` capability, which
+means that when you have a tag, you get a line like this:
+
+    4a76996b9c60ca3f21e644d78e1e5089a06c6fb3 refs/tags/v0.1.0 peeled:b4c993=
+704e90881bec9c217749be813c70ae2bb6
+
+That `peeled` directive tells us what object the tag points to, but it
+means that the tag object has to be opened and read, which makes things
+much more expensive.  Unfortunately, there's no way to turn that
+capability off, since Git doesn't usually have capability control
+options for the protocol.
+
+_However_, if you pack references with `git pack-refs` or you use
+reftable, then Git will store the references both peeled and unpeeled,
+so it doesn't need to compute that.  reftable is better because _all_
+tags are stored both peeled and unpeeled, but as long as you're writing
+new references into a files-style repository, the new references are
+unpacked (and therefore contain no peeling information).  reftable is
+also a binary format which means that it's smaller than a packed-refs
+file and since your read speed is the limiting factor, that should make
+reads faster.
+
+> > > However, the git-fetch documentation does not clearly state whether t=
+he parallel mode only helps if you have multiple remotes and/or multiple su=
+bmodules. In my case, I just have a single repository with a single origin =
+and no submodules.
+> >=20
+> > Parallel mode does not help with a single remote.  All the data for a s=
+ingle remote comes in one job.
+>=20
+> Is this due to a simple implementation in Git? Could Git download such "r=
+efs/tags" files in parallel?
+
+Git is already downloading them as efficiently as possible.  The
+protocol has both sides advertise the references (branches, tags, etc.)
+that they have and then, in a fetch or clone, the client sends a list of
+what it has and what it wants, and the two sides negotiate to come to an
+agreement on what needs to be sent.  This shared understanding includes
+_all_ of the objects necessary for everything the client wants but
+doesn't have, and then those are all sent as part of one pack.
+
+Parallelization would not help here because the limiting factor is the
+speed of the connection (and in your case, literally the speed of
+reading data off the file system).  A different design with
+parallelization might work if one had a very fast connection and the
+speed of deltification and compression were slower than enough to max
+out the connection, but that point is around 50 MB/s in a typical
+situation and that wouldn't matter here because the server component is
+on the same file systems as well.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--uKeRy4/5CPS3/4Ye
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.9 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaazUkwAKCRB8DEliiIei
+geCHAP9kAZMTfPCO9CQv+rngijPifHbFHdPvzH+bNtOEBW7rZQEA+3krgHgMlc2g
+EuV+edbsC6GV+G9pb86SBOka0vpKnAI=
+=gzI9
+-----END PGP SIGNATURE-----
+
+--uKeRy4/5CPS3/4Ye--
