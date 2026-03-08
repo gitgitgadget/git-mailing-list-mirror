@@ -1,68 +1,68 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9C21531C1
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 04:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D16421D3F3
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 04:34:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772944321; cv=none; b=mzt/z1xwADbt3dcUOk6PEdP+Bcu+PTWvnFcDe64RIiQZk7n8Mk5IwDnNP7Sfz0FA78pEtXQ6+RNF0vGCqmEpKSafBnZOBNEqRBA2SUm3HjaATnEELFPhBaiZ2LtJUej4wEMLcZh0BJHf9ueOMesK8VQdmB3/6yCYTsCd5j/U76k=
+	t=1772944445; cv=none; b=HCpocmyZl6l0zU7gL/Xr4FYy6DPKokiC/3QkfySqmg64gTyUi5ng5MJBJVNu6v9jzFteyGEsxv6GumIsQM63OiDvoxeecMbi08ToMuMW9nApGPZsQTE+JM5Iq8WNxfNlUzOK1u/EgAgc354SQy2He7r0m9SZs8DlGI8CMH/EV1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772944321; c=relaxed/simple;
-	bh=X0vI9C4IbSxKH9DW1b6H6nSrLpR1poLB5f6UEfK5Y10=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sHj/XgdfQuK6KWO6ocBbAxGKr2+guJf08loY5HSwoQA0CNTchsgkIiIObgb/RMhravQkle9QRzupmEOg1OaiBMl6XurzoThy9ta6QEkzfIFPAlcC/fvoEr74uNes6mT7SwCMZaRjZyjKyBTddiVKiYkhweCf9Xoky2HY5JATaNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Us+8YvSP; arc=none smtp.client-ip=209.85.214.173
+	s=arc-20240116; t=1772944445; c=relaxed/simple;
+	bh=srRPCujEvswkiUOILSK+K8jkAjGK1MM7hulVfl70KJM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ih+4XnRglSTXm8Ua3f4gFU+Ez3f4hCKHvEQRSM1Fuz21CrJ5mGhxRSqDFkD/RnvC24xOonakUCX+9B3g+mbfJvrwvNklZID74GSNLzmpbbC0FLZgcq6eZNig+IzcE8MNs9eqceog3XiDEFsAfPOpbA/drBVjHHBkVbWgdRdRrL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jhy2DYMo; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Us+8YvSP"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2ad2b375e58so14534305ad.3
-        for <git@vger.kernel.org>; Sat, 07 Mar 2026 20:31:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jhy2DYMo"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c70c38515d3so1781465a12.0
+        for <git@vger.kernel.org>; Sat, 07 Mar 2026 20:34:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772944319; x=1773549119; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772944443; x=1773549243; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=p1tQn5k9Dxdi+97QGZI9s8RdWSX6XzmCB2gR17SLsS8=;
-        b=Us+8YvSP2J8Wci0ADpcqRPjeK/13WBQP9IHswIx8tO1dR9XGt3jPn9sqCkPxza+HRb
-         p+c7jzAiVUzqc92pTFy7SvixNRebqXDiZ4hcb0qaKFjFKMu+OMPMjJaT48na5oN0GKWR
-         jjRdopEc6VKa665F5rLh5sfT2+zg4OAycuYTWUwVcNxBDfC+Tg/eFIyYCnQoG/+whmLN
-         kdbEEXuFEqnMd4ZEwyfdWO/7T7ibqAURErd21DmGvzfCpACabw7C5IHMI49lpdYPoJ3c
-         9i68jLGsHdzExL+AfJUdUI3Tk5eUOxLQmIDh6FdDzVJCN+L9iVF9sWifT71UFVcqjm24
-         zMdA==
+        bh=jCiyeLaAGvszm0d2cfx+shUan1WifUZlHlFqR/nwqu4=;
+        b=Jhy2DYMovH9rmBxq+ayrcm0SQj9pGvBKiVjC1GORa/p+/XIT26O7tZBr08nKjo1njC
+         mo4Wb3BXtu3VtuXQdWAP1aT14Gby7yj5/KwxxZvldRcmjfzSs357A6/QK6wx8tZ8CuKd
+         66D129j9YkGHG8t/1uwuH5dRKB6prHSY3mfY/rYfKIRvauA9YYvX1G/S8mnPdpoxYEXb
+         FXGxnbEdKDYXHUT1q0rRSuUUIhwLPTwjCfozWMDEkvrv+ozWvBgIeFGAJGi7+fyNci0a
+         JwZcgnGODrW53CoPpr5zWo5Y+hpB0VBF19f8oFRHIhU/2CyqVfjTKFlSFIrvWlc/L4gS
+         c2xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772944319; x=1773549119;
+        d=1e100.net; s=20230601; t=1772944443; x=1773549243;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p1tQn5k9Dxdi+97QGZI9s8RdWSX6XzmCB2gR17SLsS8=;
-        b=o4ThEUJu2VzGtfCRoMEByUp8DAAZXmccfUP0SQkHxpWqqLzvgF6V/9JhXnIsrTy32p
-         sj2gLcEDCs/17+7wf9YPpjwE4JUAdrNTpSbmx8vaofPhweKEKETJ9k6qwanyVICo2zRy
-         qaQCM1RwVHMWCqKEt96srEfkrabMEZ4xjxEFEgU/xBXEf50Nyr7bKLJkiXpAQJr5IOrl
-         O7dHteZD6Msk50U6+LcErFkRdiwi/xVheubGZWkoOoe7bw36AfHy4yNyh7hPpXTfqpVB
-         Fa202nV0c3LI/8pdxLs6mEZXVQuq1mwqYwXBDRfslSVLseBtr6XDifX54NHKbmY4VpY0
-         pC0w==
-X-Gm-Message-State: AOJu0YwyfhvdF17Buwtrv+27V52+HOROYXqPi9fWjwe8or9oatuKUJZQ
-	RvoFyDoLHnwLBQZg+T/mExieXHL8ZZqZHxzPYKKLOZLS7guTGvAjqiSKTPiSJVLY
-X-Gm-Gg: ATEYQzz44GSFhubRtN83N61IoccU3dTEazs1zeVpXlXF07eoPmewR645Y1ku1liC2Rx
-	Ww6fJPUemeIxiXXaCAdLUAc0DflZFFUVdj8aYyeNUVV4gN7dOhlULxtorUpmYjqZcJnxfV+ua3k
-	LzapS3GbYzktHWm9zAE1c9IB9TPXR1/qO+PrmPx7z+F57wAfzxPJrSqKrVYI6hRmh9sxwhJGtHe
-	kixgFwqbr534MEpr6Bo+wux03zq+0jtvB8JeOPaotnMBI6BuGG05anxusAvO9NXWCqWBRYI9/2X
-	COcSu2t2eqQpXbcaSrxSnDP2y+phOq5BiLGh7+m7xz24WoC27hQZALfLJYH06piV0beJ9N/b3zV
-	B+L9JjjL85CBucdyAO80XT1qIlVtbH2WUVvUYyuqElPL98foyYVNdNqNk9teDWh3Oz760dmKPgR
-	3sxJCAfX/0pNuxET5Ew0kHrVV2lGwaeYwkUSunoIc3BNKwnGTwsLDpdCQnVBT+kVxEv7lC1ELok
-	fvY4vebqTqyT1J2xS2A/Q9A
-X-Received: by 2002:a17:903:2441:b0:2ae:464f:fe3e with SMTP id d9443c01a7336-2ae8245cd68mr48905315ad.5.1772944319132;
-        Sat, 07 Mar 2026 20:31:59 -0800 (PST)
+        bh=jCiyeLaAGvszm0d2cfx+shUan1WifUZlHlFqR/nwqu4=;
+        b=dKMROgFwx+g+KyR8n0AiNfa5PC6srpcgj45W9v3md4javUiTjZS7EggbzSqAyUHWT7
+         LGC2NaL0Zh+b7eCYxxpFZzpHn1imehFdeCJa5R1EW0pxA1pbXYehwm3J1t1CFzUTT+io
+         5QTLWH66f1Gc3AUUF3YLSOENk3BrKZIE2UVaS6n9ZWMKDu++iv5i8In99ipc1jzd9nxj
+         Hsiuouqdl09kFa+XyvORYJJCK0IRQJ6lmQUPNL6sAexjAWjmaBsfflbAay8inV5nNLY+
+         JrSS1K5LPiIOItAqShp2mGDJp8yS3PYCaBytz8cbmDiUwiOosMIPB09fbfjnlMF9Sy0L
+         qjTw==
+X-Gm-Message-State: AOJu0YyUjXWiw2dth0yLbbWMyUdLg0FBjv9zZYQQDdBELuP7mVRI0VSi
+	JPTpQBydVheGgufHd5k8GiL2vzvO/xakx+O3MNu5RYh/CWXYCXMaP13bPnvo/Iqz
+X-Gm-Gg: ATEYQzwRfhZ4oPDG/my1+MF79j4V8f9TP5Cr9jqHGpoWIHXEvrfDrtICloQiDEcDYrT
+	yBR6rEOrRYVC5YB4uM5czjKOz6gcmtQ+vLbm3TPVlLSx/4H+w1fO1GOV0wcJTlF/gkvYP6ofswm
+	Rb2tp6Sp5HVDlx58MfhkQwMhRmToZmDAJZN2PccSeGRuplKW65GpyxEhtmDCyHU88c0dTGR+7uG
+	ximMcRXlzfKrl+mnyGkqDKbrKgfFxJ32kXxitNiZSmGXYT5zSXgNlZ/QYvMUQwhRGai/cBtrExG
+	M5QSssVoQVeXFHki9UjkLSmLXAuTG36mppQlHguxMSgtHRCtvm0EhGSRfSbfsUU5OtfXUcsGFxZ
+	ouY1tZ25rLoXMKhjqyLpeeeNVSmdNOloG/pFQrd+q76iyv2WGu6Q6KUSk9gk0To52rCw4GZpr0+
+	UO/on0VXOtk8dpPZLac93xFdjctOFpHeIs4klqX+XFPvHOrpJjogV98igDbUoGGh04n1wp4K4Bl
+	8t+iM+FXwSgCDi3jDfCXR38
+X-Received: by 2002:a17:902:e742:b0:2ae:63fd:6d6a with SMTP id d9443c01a7336-2ae8249d4f1mr45803985ad.7.1772944443103;
+        Sat, 07 Mar 2026 20:34:03 -0800 (PST)
 Received: from malon-Yoga-14sARE-2020.. ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83e5774bsm93246965ad.11.2026.03.07.20.31.57
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83eada11sm67259555ad.38.2026.03.07.20.34.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Mar 2026 20:31:58 -0800 (PST)
+        Sat, 07 Mar 2026 20:34:02 -0800 (PST)
 From: Tian Yuchen <a3205153416@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	Tian Yuchen <a3205153416@gmail.com>
-Subject: [PATCH] patch-ids: achieve const correctness in patch_id_neq()
-Date: Sun,  8 Mar 2026 12:31:31 +0800
-Message-ID: <20260308043131.77782-1-a3205153416@gmail.com>
+Subject: [PATCH] .mailmap: update email address for Tian Yuchen
+Date: Sun,  8 Mar 2026 12:33:44 +0800
+Message-ID: <20260308043344.77986-1-a3205153416@gmail.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -72,52 +72,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The implementation of the 'contain_of' macro in 'patch_id_neq()' is:
-
-	#define container_of(ptr, type, member) \
-		((type *) ((char *)(ptr) - offsetof(type, member)))
-
-Here, 'type' is passed as a raw type with no const information.
-Consequently, const correctness cannot be guaranteed here, resulting
-in an eight-year-long NEEDSWORK comment.
-
-Use explicit casting (struct object_id *) to ensure const correctness.
+Map my old Gmail address to my new custom address in .mailmap.
 
 Signed-off-by: Tian Yuchen <a3205153416@gmail.com>
 ---
- patch-ids.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ .mailmap | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/patch-ids.c b/patch-ids.c
-index a5683b462c..e2d29e9dbb 100644
---- a/patch-ids.c
-+++ b/patch-ids.c
-@@ -41,19 +41,18 @@ static int patch_id_neq(const void *cmpfn_data,
- 			const struct hashmap_entry *entry_or_key,
- 			const void *keydata UNUSED)
- {
--	/* NEEDSWORK: const correctness? */
--	struct diff_options *opt = (void *)cmpfn_data;
--	struct patch_id *a, *b;
-+	struct diff_options *opt = (struct diff_options *)cmpfn_data;
-+	const struct patch_id *a, *b;
- 
--	a = container_of(eptr, struct patch_id, ent);
--	b = container_of(entry_or_key, struct patch_id, ent);
-+	a = container_of(eptr, const struct patch_id, ent);
-+	b = container_of(entry_or_key, const struct patch_id, ent);
- 
- 	if (is_null_oid(&a->patch_id) &&
--	    commit_patch_id(a->commit, opt, &a->patch_id, 0))
-+	    commit_patch_id(a->commit, opt, (struct object_id *)&a->patch_id, 0))
- 		return error("Could not get patch ID for %s",
- 			oid_to_hex(&a->commit->object.oid));
- 	if (is_null_oid(&b->patch_id) &&
--	    commit_patch_id(b->commit, opt, &b->patch_id, 0))
-+	    commit_patch_id(b->commit, opt, (struct object_id *)&b->patch_id, 0))
- 		return error("Could not get patch ID for %s",
- 			oid_to_hex(&b->commit->object.oid));
- 	return !oideq(&a->patch_id, &b->patch_id);
+diff --git a/.mailmap b/.mailmap
+index 8a39e93bf8..c2e3939beb 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -283,6 +283,7 @@ Thomas Ackermann <th.acker@arcor.de> <th.acker66@arcor.de>
+ Thomas Rast <tr@thomasrast.ch> <trast@student.ethz.ch>
+ Thomas Rast <tr@thomasrast.ch> <trast@inf.ethz.ch>
+ Thomas Rast <tr@thomasrast.ch> <trast@google.com>
++Tian Yuchen <cat@malon.dev> <a3205153416@gmail.com>
+ Timo Hirvonen <tihirvon@gmail.com> <tihirvon@ee.oulu.fi>
+ Toby Allsopp <Toby.Allsopp@navman.co.nz> <toby.allsopp@navman.co.nz>
+ Tom Grennan <tmgrennan@gmail.com> <tgrennan@redback.com>
 -- 
 2.43.0
 
