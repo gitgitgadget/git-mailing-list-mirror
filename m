@@ -1,182 +1,175 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.162])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1E833D4E8
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 20:57:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47687288B1
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 21:08:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.68.63.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773003430; cv=none; b=eJBn2wUQFJhAqqJLCQvAbR107f6kxFBqG0jY3YwXq9nnJwpCa0mO6/iux81oEDnN0P2XTWYsLH+LTvvS+8lZk20K0+c3vMGQThicWbp+DrI8fyyJZ37Kug1QsuyIMp2HCX/0vt4aWPkpGcwXtdxn377MDdsOQnoR1xSoXAj48Jw=
+	t=1773004135; cv=none; b=hyJvEOSpJEh1idhMmwQmYUMAWirTNQm0Jihh6Ltz9z6xOkSFmgrV0AiKnTqgHvgpVK7uJK7O03UpZXu5U6w6/Vd+jdhudFPbxV3dQRVNV8ux6oJl1JhZF5gY235HucZCjg1JmEhJ62cZ1jI3U3sLLp4oVwzXibqtT6Wqk8KhkuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773003430; c=relaxed/simple;
-	bh=QvhFbDKX5iKohscekjFpw0GJu20NKP1nyDN4IFJqyjk=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=E1lUhLSeXoIEMsLfDH+Pf6QiAuuBgEwLmkAJU++rr8sT5lavPdTda0kN4JnkCdPvcdNiG06D0Un0xJhB8rGGU7/UL89svtefQZtcME8G4jNvpCp9nP/UFncPo6kjWGIl+Uuxzg+iVXWThfDRFObxTlpjU4pYn4ONbbw9UzTo7/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hqYKqINS; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773004135; c=relaxed/simple;
+	bh=xDzdSCZ0fzqVeTpCLR6NOtDWjlLLqz/lMP4gXKLDiyE=;
+	h=Message-ID:Date:MIME-Version:Subject:References:From:Cc:To:
+	 In-Reply-To:Content-Type; b=Vt5txaXiRb9+aoio9UHZ2qAnzC5i+8Wz009KKjEZw7dazcvBzxsidgFi4161AsqCR7NadK1X4tFs2lAZlwV6bdnKdlQBTMRvtDAMAFIIviXPMrA+aVpT61BJoZol/NLcZgF9myQ4kfnyN/Vxuyp8Kc52xXzQei3kiuI0g6vfJGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de; spf=pass smtp.mailfrom=rd10.de; dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b=JKdyeyII; arc=none smtp.client-ip=188.68.63.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rd10.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hqYKqINS"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-798527f822cso108037387b3.3
-        for <git@vger.kernel.org>; Sun, 08 Mar 2026 13:57:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773003428; x=1773608228; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2lxrK78kRu7vmhzVkTkKbEw4Rk/DDi42XY1/gY//fgY=;
-        b=hqYKqINSohXZRUURRAdIiQ1sC4oORnyTqHMLJpxN7mwafuREqwn5dCF1cNaOomwqs2
-         VqLoZrnusGB9EtZOI27N6rDk8gOZn+l9Rl/AXdCktQNkF9RK9l9p6/UYTHfOyMJl9hez
-         qZe6c+db/UDhy6mXpXG5/tjDPiytLaPF/Sk4xrojecCVDd/o/yle/MrG3tdV6ecHVbwa
-         8CURwftUBo3lXhIzf/csUbOwUcNIAjUxsKcIdrkm7UT/xoCkiA5RvFK1M3vWMkQrKmYl
-         /+Vo/yvZZzwmywDESpccyIvL2LV3imZ6my9/tA624OyKyV5meYrMR2Jz6A5Dr9WB1TW0
-         2POg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773003428; x=1773608228;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2lxrK78kRu7vmhzVkTkKbEw4Rk/DDi42XY1/gY//fgY=;
-        b=JgPs43dlgjUHpVR+NKKBJ9EcsP1vOPalbGg13u1118b/m9c5+mx7omEHARIoQaM5sO
-         p8YXRijabUve1I51Bo+2eP0QgcaB6ChFfD9vA4u8athy22cIBs/kYF3+p4zp5dhPjMnX
-         1GIhk4ZWiL8HjY3Sx7JMal+1ey2Y1emyfut0uVRwA8pL9hI1fIccgsI8LuL23TwMHymK
-         VfYBUNpjGeKKjCREBU64OEyuzquNPYgrkQH/V7uUer8WyH0HNcpfuReFpB3MtCNWvbsg
-         BwjOLIIA578/8NWfH2dsF3Zsxl3GhWJUgJoeyTeyEqMLdBFh5wzzZr9nw8r9aig8k9Zz
-         0SmA==
-X-Gm-Message-State: AOJu0YxDh46dkQNkaMonVtGfXI5XCg4nCLgV/g7sdT2IxbFaD+Gdw56n
-	/kwtum7Ax+oHsUVwF/UV2wwVvVes5Ma0rR0HBGrRaCMGxzro0pa391lahXuP0w==
-X-Gm-Gg: ATEYQzwy6BgMDUpZhuhVtyMEWRnRowWIUexIR8XwcMJE3JOX39Q/+z8W4L8K+c8HDwk
-	MTagZezCm0KlFKCSJo2coMFKz8hQN1ALtnQ5fot940dwimBFBr90pPcBPiRMelp8fdF7zJwvz4n
-	mo0FKjOPNJO+RiQGwBnXTSl26a7vvncSQAAgWxYfGhNK0MLnVo13CMsM9d5KiWxNt33tDtP8nXM
-	eA05BaH0ay10UGlEb+FaKnV3cjYvgwsd4jN87+KiSPraMP5+MrJXE6sojpASKM+fw06ox3xeaDU
-	SZkwJsh5OCSHyERLVEryVKvxiyBC1HK2pbpjiOSowysu/2X4k4fLc9l+38rmAIYkrz/GJ+3ogvI
-	ABNFeV5MkMkveDxBe/zksR54oWHFOKrPs1APYJkGTvSX0jlxiNOdZpwPG0AZmV2n/q8HUgrAzMA
-	NacV8S0KEW+klPLIm2kamAOaBnTcBf0nRoolJx8dlgAMQIhIPUZ8L0VlAssXnmZRuBzCWSSByDg
-	MfxrOaPxpfFwAHuhxKJ22oFySJHc8O5BD0qr9TY
-X-Received: by 2002:a05:690c:102:b0:798:3a6:3f4 with SMTP id 00721157ae682-798dd741b73mr85730867b3.43.1773003428196;
-        Sun, 08 Mar 2026 13:57:08 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90eb:5600:1c70:d059:42e3:6010])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-798dec8f455sm37019897b3.8.2026.03.08.13.57.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Mar 2026 13:57:07 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b="JKdyeyII"
+Received: from mors-relay-8201.netcup.net (localhost [127.0.0.1])
+	by mors-relay-8201.netcup.net (Postfix) with ESMTPS id 4fTXn66l0Rz448W;
+	Sun,  8 Mar 2026 22:08:42 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rd10.de; s=key2;
+	t=1773004122; bh=xDzdSCZ0fzqVeTpCLR6NOtDWjlLLqz/lMP4gXKLDiyE=;
+	h=Date:Subject:References:From:Cc:To:In-Reply-To:From;
+	b=JKdyeyIID4QmLYv2KEMtIkpUFd/mz/ubuVjKR1H25pe1uGj9ise8r4nHLebPYlFf8
+	 XJyaZJENRjYWrk85fhw/ZcfwJM5evsF/ba0jnJpc+l5rLJb+u98Fvc2fbed0fqx1F5
+	 W0nFGJvNWXUtjaY+wF4Gv2asilnOyZ+FbmL47Mwcw7hUcBua1QDL13YxNj0rSX8Bwc
+	 A2gLlI7zSuecrBFD+FVYvAtCzgvJopFfavYXJmAQsW/djbgltq/zwUSFkiXlt69uVI
+	 lg666Pc43nNJp4PbgxgiqjCJZKLDdfHVbPGLw/+G6hnzw5x8CPyD072kApMIB4hqu5
+	 rPBRuAVexGpew==
+Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
+	by mors-relay-8201.netcup.net (Postfix) with ESMTPS id 4fTXn661vrz448T;
+	Sun,  8 Mar 2026 22:08:42 +0100 (CET)
+Received: from mx2eb1.netcup.net (unknown [10.243.12.53])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4fTXn63YDbz8svC;
+	Sun,  8 Mar 2026 22:08:42 +0100 (CET)
+Received: from [IPV6:2a02:3102:8e00:2a0:8ecc:2276:9230:1c82] (dynamic-2a02-3102-8e00-02a0-8ecc-2276-9230-1c82.310.pool.telefonica.de [IPv6:2a02:3102:8e00:2a0:8ecc:2276:9230:1c82])
+	by mx2eb1.netcup.net (Postfix) with ESMTPSA id DCAF11001C1;
+	Sun,  8 Mar 2026 22:08:41 +0100 (CET)
+Authentication-Results: mx2eb1;
+        spf=pass (sender IP is 2a02:3102:8e00:2a0:8ecc:2276:9230:1c82) smtp.mailfrom=rdiez-2006@rd10.de smtp.helo=[IPV6:2a02:3102:8e00:2a0:8ecc:2276:9230:1c82]
+Received-SPF: pass (mx2eb1: connection is authenticated)
+Message-ID: <0ebf757b-eab5-424a-a58b-e654b1a2942e@rd10.de>
+Date: Sun, 8 Mar 2026 22:08:41 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] quiltimport: fix backslash expansion in patch subjects
-Date: Sun, 8 Mar 2026 16:56:57 -0400
-Message-Id: <92EC21F4-52E1-4FE8-A1B8-5878D6CC654C@gmail.com>
-References: <20260308165531.40655-1-sashal@kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: git-fetch takes forever on a slow network link. Can parallel mode
+ help?
+References: <5c7c975e-2541-47e1-b789-fee1fdb77d2a@rd10.de>
+ <aas--JZ-CCWN-o7O@fruit.crustytoothpaste.net>
+ <1d6a8eec-20b3-4d6e-83f1-d18b7a3c0145@rd10.de>
+ <aazUlMBj_IK41Ss2@fruit.crustytoothpaste.net>
+From: "R. Diez" <rdiez-2006@rd10.de>
+Content-Language: en-GB
 Cc: git@vger.kernel.org
-In-Reply-To: <20260308165531.40655-1-sashal@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
-X-Mailer: iPhone Mail (21F90)
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+In-Reply-To: <aazUlMBj_IK41Ss2@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-PPP-Message-ID: <177300412208.1859243.2037433060864120031@mx2eb1.netcup.net>
+X-Rspamd-Server: rspamd-worker-8404
+X-Rspamd-Queue-Id: DCAF11001C1
+X-NC-CID: 4tD3ZBAKF8pRUfcyDn8rNVmUE7h068BClE8CTOGM
+
+Hi again:
+
+>> The log talks about "upload pack", but I gather this is actually a download operation. It wouldn't be the first confusing item in Git. Or have I got it wrong?
+> 
+> upload-pack refers to what's happening on the server.  If you contact a
+> Git server over something like HTTPS or SSH, then it will use
+> git-upload-pack to send data to you (a fetch or clone from your
+> perspective) or git-receive-pack to receive data from you (a push from
+> your perspective).
+> 
+> When you perform a local fetch, upload-pack is spawned in the remote
+> repository to serve data.
+
+My client computer has an SMB/CIFS connection to the remote file server. That means the client has mounted the file share with "mount.cifs", so in this scenario nothing is happening on the server, as the connection is not HTTPS or SSH. No process will be spawned on the remote server.
+
+That is the reason why I am getting confused. From my point of view, my client computer is not "uploading" anything when doing a "git pull".
+
+But I guess Git is designed for all scenarios and will probably not use the correct terminology in my case.
+
+In case it helps, I am using Git version 2.53.0.
 
 
-> Le 8 mars 2026 =C3=A0 13:01, Sasha Levin <sashal@kernel.org> a =C3=A9crit :=
+>> I added "export GIT_TRACE_PACKET=true", and then I got a more useful breakdown:
+>>
+>> This takes around 13 seconds:
+>>
+>>    pkt-line.c:85           packet:  upload-pack< 0000
+> 
+> Is it just that line that takes 13 seconds or is the listing of
+> references altogether that takes 13 seconds?  That particular line
+> should not take 13 seconds because it's literally just writing and
+> flushing 4 bytes.
+> 
+> It would be helpful if you can to include the entire trace output so we
+> can see and analyze it ourselves.  It's very hard to analyze data from
+> the different sections in isolation if one is not intimately familiar
+> with the protocol.
 
->=20
-> =EF=BB=BFecho interprets backslash sequences, so a patch with "\0" in its
-> subject has that expanded into a NUL byte, which git commit-tree
-> rejects.
+The log does not really say which operation is taking how long. It does not say when the listing of references starts or finishes, which files it is reading and how many bytes it is reading from each file, or whether the files are read sequentially or in parallel.
 
-Echo _shouldn=E2=80=99t_ do that without flags like -e depending on your imp=
-lementation, but I wouldn=E2=80=99t put it past echo ;) hence my preference f=
-or printf in scripts.
+Thanks for your feedback. I know it is hard to help without the whole log, but I would have to ask for permission to upload a log with file paths, hashes and tag names. Or clean them all manually.
 
-More interestingly, though: do the patch-names or subjects being adjusted be=
-low contain such a sequence? They look like user input, so possibly (and we c=
-an=E2=80=99t be sure they don=E2=80=99t).
 
-It might be nice to say more about what =E2=80=9Crejects=E2=80=9D means (err=
-ors confusingly? Truncates user input?), but otherwise I expect this is reas=
-onable.
+>> 7 seconds are spent with "upload-pack" and "fetch" operations, mainly for single "refs/tags". I'll check whether that improves after the next "git gc" on the server.
+> 
+> Okay, this is helpful.  You probably have the `peel` capability, which
+> means that when you have a tag, you get a line like this:
+> 
+>      4a76996b9c60ca3f21e644d78e1e5089a06c6fb3 refs/tags/v0.1.0 peeled:b4c993704e90881bec9c217749be813c70ae2bb6
 
-> Use printf '%s\n' instead, which doesn't interpret the string.
->=20
-> Also quote $tmp_dir to handle paths with spaces.
->=20
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
-> git-quiltimport.sh | 10 +++++-----
-> 1 file changed, 5 insertions(+), 5 deletions(-)
->=20
-> diff --git a/git-quiltimport.sh b/git-quiltimport.sh
-> index eb34cda409..38302d28c9 100755
-> --- a/git-quiltimport.sh
-> +++ b/git-quiltimport.sh
-> @@ -79,7 +79,7 @@ tmp_info=3D"$tmp_dir/info"
-> # Find the initial commit
-> commit=3D$(git rev-parse HEAD)
->=20
-> -mkdir $tmp_dir || exit 2
-> +mkdir "$tmp_dir" || exit 2
+Yes, that is the case.
 
-We prefer to leave such =E2=80=9Cwhile at it=E2=80=9D changes in separate pa=
-tches, so perhaps a preliminary cleanup =E2=80=9Cquote variable expansions t=
-o handle whitespace=E2=80=9D or some such step would help?
 
-(I didn=E2=80=99t look past the context to see if tmp_dir may have whitespac=
-e or shell meta characters.)
+> That `peeled` directive tells us what object the tag points to, but it
+> means that the tag object has to be opened and read, which makes things
+> much more expensive.  Unfortunately, there's no way to turn that
+> capability off, since Git doesn't usually have capability control
+> options for the protocol.
 
-> while read patch_name level garbage <&3
-> do
->    case "$patch_name" in ''|'#'*) continue;; esac
-> @@ -101,7 +101,7 @@ do
->        echo "$patch_name doesn't exist. Skipping."
->        continue
->    fi
-> -    echo $patch_name
-> +    printf '%s\n' "$patch_name"
+OK, but there is no protocol here, Git is accessing the files over the mount.
 
-Does this go to commit-tree? Or just protecting the output for the user=E2=80=
-=99s terminal?
 
->    git mailinfo $MAILINFO_OPT "$tmp_msg" "$tmp_patch" \
->        <"$QUILT_PATCHES/$patch_name" >"$tmp_info" || exit 3
->    test -s "$tmp_patch" || {
-> @@ -142,14 +142,14 @@ do
->    SUBJECT=3D$(sed -ne 's/Subject: //p' "$tmp_info")
->    export GIT_AUTHOR_DATE SUBJECT
->    if [ -z "$SUBJECT" ] ; then
-> -        SUBJECT=3D$(echo $patch_name | sed -e 's/.patch$//')
-> +        SUBJECT=3D$(printf '%s' "$patch_name" | sed -e 's/.patch$//')
+> _However_, if you pack references with `git pack-refs` or you use
+> [...]
 
-Interesting. I think POSIX sh  supports the ${x#suffix} expansion, which cou=
-ld avoid sed. I think it unlikely the =E2=80=9C.=E2=80=9D in the RE is inten=
-ded to match any character rather than a literal dot. But should be done a s=
-eparate patch and could be left for another series if you wanted (assuming m=
-y memory of supported expansions is correct).
+OK, I'll try with "git gc" on the remote server the next time I can.
 
-Importantly, this does get fed to commit-tree below=E2=80=A6
 
->    fi
->=20
->    if [ -z "$dry_run" ] ; then
->        git apply --index -C1 ${level:+"$level"} "$tmp_patch" &&
->        tree=3D$(git write-tree) &&
-> -        commit=3D$( { echo "$SUBJECT"; echo; cat "$tmp_msg"; } | git comm=
-it-tree $tree -p $commit) &&
-> +        commit=3D$( { printf '%s\n' "$SUBJECT"; echo; cat "$tmp_msg"; } |=
- git commit-tree $tree -p $commit) &&
->        git update-ref -m "quiltimport: $patch_name" HEAD $commit || exit 4=
+> Git is already downloading them as efficiently as possible.  The
+> protocol has both sides advertise the references (branches, tags, etc.)
+> that they have and then, in a fetch or clone, the client sends a list of
+> what it has and what it wants, and the two sides negotiate to come to an
+> agreement on what needs to be sent.  This shared understanding includes
+> _all_ of the objects necessary for everything the client wants but
+> doesn't have, and then those are all sent as part of one pack.
+> 
+> Parallelization would not help here because the limiting factor is the
+> speed of the connection (and in your case, literally the speed of
+> reading data off the file system).
+> [...]
 
->    fi
+I don't think that is the case. Git is accessing the remote repository over a mount (a file share), so there is no protocol or negotiation, although I am guessing it is happening virtually with the current Git implementation.
 
-=E2=80=A6 so may need protected as described. Neat.=20
+If I understand it correctly, without "packed references", Git will have to access a number of small files on the remote server. Even with packet references, there will probably still be a few small files to access, in addition to some biggish packed references file.
 
-> done 3<"$QUILT_SERIES"
-> -rm -rf $tmp_dir || exit 5
-> +rm -rf "$tmp_dir" || exit 5
+In the past, on rotational hard disks, issuing many such read requests in parallel wasn't beneficial to performance, because of the disk head seek times. That is, jumping around would thrash the disk instead of increasing performance.
 
-Ditto for cleanup.=20
+But that is not true anymore with SSDs, and especially with file mounts over a network connection with a high latency. In that scenario, issuing parallel requests (with multiple threads or async I/O) should actually increase performance.
 
-> base-commit: 795c338de725e13bd361214c6b768019fc45a2c1
-> --
-> 2.51.0
+Is my reasoning correct?
 
-Thanks=
+
+Another question: Would it help if I only fetched the 'master' branch? Something like "git fetch origin master". Most of the time, I am only interested in the main branch.
+
+I am guessing that "git fetch" will download all other branches by default, because of this:
+
+[remote "origin"]
+fetch = +refs/heads/*:refs/remotes/origin/*
+
+I read the "git fetch" documentation, but I didn't understand whether it will fetch by default everything or just the current branch.
+
+Thanks again,
+  rdiez
