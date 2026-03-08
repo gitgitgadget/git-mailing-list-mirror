@@ -1,86 +1,100 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F03828750A
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 15:02:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B9D35F17A
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 16:55:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772982144; cv=none; b=EAPOzGsE0ddH3ET7vb5Xr6liio6uHUxhuU9uUcoVrOZXCp3E730P4Kpgnv+HzQkwj6sK92KShNcLArIfwut3vcbO2auz7UIL49qhhQif+yqQlNvmEJ+1MTL7rM8HVnpG8A60wF1TJxsffFb8VGIvGryK/WHI0u1pKyQgPdMZvOU=
+	t=1772988935; cv=none; b=pA1FByy0H/PMkZKCN0cXCs1Qgq2vOLjjI4bAqNo78c72nNC6kl0uNMdLbXjWNPgIijZozmbvFZnKgdFeldA3L6cGIe3c98S8oQpkhfXwyNwMOFxJyqJOYreK5/1xPORZrPQxzXeBtgews9Juscku/57melymW9u5mg2iXVD13As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772982144; c=relaxed/simple;
-	bh=C76/+NB5PTpBwnt8gslgzJQeowQ8fpCI/5zx2dVVQFM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lNUppeYlno9ZJDTUBv8dK/VAkYXG+ZbehcdbDcmqjdmVQeptVSDn+f2S0BAQbNk3GHQ9AV3UtWGH5VMav1IMieV++Ahqu5DRDglva4v8Ni2uHmjEktgWxQwL2KYHSKBK0dR8JMYFIPuWZyri4tueNLG2tLVKPTD04PV0ED3ODPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=s6TsHGlV; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=f6zHxEeP; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1772988935; c=relaxed/simple;
+	bh=I3vvXkzCKBUuSzGeBelcWOoqP3kRb6bQbYiyjXA9VC0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SPUxcGRzs2Mx6x234umNXJUPLZ7Q2D58y4jWo8wnIMkoMuKSzdHyyUwaqCaAmpUkktvcG/bfGAjDlc5wO0Im/UidmndtMrNg9UBk0A8e/SIS6dvWG0GL8YdNwZe8cMIrdHkqZBtLowM4v8D7h/0gwz6cHqKgJ3dpKqUdsoKzIrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tLVGE5gR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="s6TsHGlV";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="f6zHxEeP"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=s6TsHGlVg9s7RYJbk6Z/uNv0vCW2LUBAHg35r0JnLaRli+HlNyltpxZvzLCw6Sh9EVtYrFBj1tbgOeJkK+W3NTAgdVrakhMv0Da9b2hjBcNika4ZxCAIg5+/hImXXrADHcEZ8QgiMxkd990+dMWG/levXeh78GYY76u0kVYvMiOlyv6EfPNcWgqG5TW0HvjXu2U7rNZpg6n2VC4IQMh4CP8fEE6HDoTAtNTzLgGqf5VDBOMblpmoZEpiwEbNPUZGAbb5OYiQOx3Daf57kuOMw7qPL2D2MoRfZkBnwz1yMAWAlF1BNXGNYAYJQ0rhOEwpoWl39Pw5I7c/MpgQy7BRMA==; s=purelymail1; d=malon.dev; v=1; bh=C76/+NB5PTpBwnt8gslgzJQeowQ8fpCI/5zx2dVVQFM=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=f6zHxEePsrMYCsEMOn+mcKnUpzKT9vWhUNeXNPFyQv0prXssAs2eKkN56/jDL9NhB5jrEL5RyIQ8i17LXQIyX2mwcWpZRKsFafHWYwnhcMWlLO0WwLTrz9cJW7zgrQPJena19WaV8WtTU41sQ5hw+/SL5HFCTviRF3ItdwQl74+GujPClS7GAT71oT9QfH935WQ8yD9kNafA9R5KUGcWO98IMSxbPhE0uo9vn/J/vrhEqRgF7zYJeqU6dKfA1Vo6UXtwwcyf77JTnb5R7v59yxHQzHfAepGIRexfYPRpHFs8+SSHadsA3jVzeBy6EGE2rhWLJVuB0ti+2hEWW0r1Ig==; s=purelymail1; d=purelymail.com; v=1; bh=C76/+NB5PTpBwnt8gslgzJQeowQ8fpCI/5zx2dVVQFM=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 787998619;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sun, 08 Mar 2026 15:02:19 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tLVGE5gR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62006C116C6;
+	Sun,  8 Mar 2026 16:55:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772988934;
+	bh=I3vvXkzCKBUuSzGeBelcWOoqP3kRb6bQbYiyjXA9VC0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=tLVGE5gR462al5n2vIztdG7h7BxDNIqU07E3H4fSKPbONaBpHQrKlTlFTlWYveDct
+	 QNiFXft7uqAn5bwNfQjLqVqTn5p9iohr07MpJH1EH03m+mcPl7k9ZzT+apIgrJ4kGT
+	 z+O19wmU7NRsIpmTj0hLmoiBCG7llnY09AcM8XGNdghGeEBUkkzDgJ16U7OBa1Hgl1
+	 IhcbEPTcZ4ACH0gmG//cvJEiqbwY4b7riBEzAr4/F5Vj1IWsbU45HOWigIRdyhvX97
+	 gBm4tAzO8CMXucRaLrlqnmCOcpLlgjRrz2ge0ruOss6fACLfHpVOD5XA9VQ9XXe8j4
+	 Tuw6BunUjAs0Q==
+From: Sasha Levin <sashal@kernel.org>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Tian Yuchen <cat@malon.dev>
-Subject: [PATCH v2] patch-ids: document intentional const-casting in patch_id_neq()
-Date: Sun,  8 Mar 2026 23:02:03 +0800
-Message-ID: <20260308150203.86299-1-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260308043131.77782-1-a3205153416@gmail.com>
-References: <20260308043131.77782-1-a3205153416@gmail.com>
+Cc: Sasha Levin <sashal@kernel.org>
+Subject: [PATCH] quiltimport: fix backslash expansion in patch subjects
+Date: Sun,  8 Mar 2026 12:55:31 -0400
+Message-ID: <20260308165531.40655-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The hashmap API requires the comparison function to take const pointers.
-However, patch_id_neq() uses lazy evaluation to compute patch IDs on
-demand.
+echo interprets backslash sequences, so a patch with "\0" in its
+subject has that expanded into a NUL byte, which git commit-tree
+rejects.
 
-Pre-calculating all patch IDs to achieve true const correctness would
-introduce an unacceptable performance penalty.
+Use printf '%s\n' instead, which doesn't interpret the string.
 
-Remove the eight-year-old "NEEDSWORK" comment and formally document
-this intentional design trade-off.
+Also quote $tmp_dir to handle paths with spaces.
 
-Signed-off-by: Tian Yuchen <cat@malon.dev>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- patch-ids.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ git-quiltimport.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/patch-ids.c b/patch-ids.c
-index a5683b462c..35e6a974f1 100644
---- a/patch-ids.c
-+++ b/patch-ids.c
-@@ -41,7 +41,15 @@ static int patch_id_neq(const void *cmpfn_data,
- =09=09=09const struct hashmap_entry *entry_or_key,
- =09=09=09const void *keydata UNUSED)
- {
--=09/* NEEDSWORK: const correctness? */
-+=09/*
-+=09 * We drop the 'const' modifier here intentionally.
-+=09 *
-+=09 * The hashmap API requires us to treat the entries as const.
-+=09 * However, to avoid performance regression, we lazily compute
-+=09 * the patch IDs inside this comparison function. This fundamentally
-+=09 * requires us to mutate the 'struct patch_id'. Therefore, we use
-+=09 * container_of() to cast away the constness from the hashmap_entry.
-+=09 */
- =09struct diff_options *opt =3D (void *)cmpfn_data;
- =09struct patch_id *a, *b;
-=20
---=20
-2.43.0
+diff --git a/git-quiltimport.sh b/git-quiltimport.sh
+index eb34cda409..38302d28c9 100755
+--- a/git-quiltimport.sh
++++ b/git-quiltimport.sh
+@@ -79,7 +79,7 @@ tmp_info="$tmp_dir/info"
+ # Find the initial commit
+ commit=$(git rev-parse HEAD)
+ 
+-mkdir $tmp_dir || exit 2
++mkdir "$tmp_dir" || exit 2
+ while read patch_name level garbage <&3
+ do
+ 	case "$patch_name" in ''|'#'*) continue;; esac
+@@ -101,7 +101,7 @@ do
+ 		echo "$patch_name doesn't exist. Skipping."
+ 		continue
+ 	fi
+-	echo $patch_name
++	printf '%s\n' "$patch_name"
+ 	git mailinfo $MAILINFO_OPT "$tmp_msg" "$tmp_patch" \
+ 		<"$QUILT_PATCHES/$patch_name" >"$tmp_info" || exit 3
+ 	test -s "$tmp_patch" || {
+@@ -142,14 +142,14 @@ do
+ 	SUBJECT=$(sed -ne 's/Subject: //p' "$tmp_info")
+ 	export GIT_AUTHOR_DATE SUBJECT
+ 	if [ -z "$SUBJECT" ] ; then
+-		SUBJECT=$(echo $patch_name | sed -e 's/.patch$//')
++		SUBJECT=$(printf '%s' "$patch_name" | sed -e 's/.patch$//')
+ 	fi
+ 
+ 	if [ -z "$dry_run" ] ; then
+ 		git apply --index -C1 ${level:+"$level"} "$tmp_patch" &&
+ 		tree=$(git write-tree) &&
+-		commit=$( { echo "$SUBJECT"; echo; cat "$tmp_msg"; } | git commit-tree $tree -p $commit) &&
++		commit=$( { printf '%s\n' "$SUBJECT"; echo; cat "$tmp_msg"; } | git commit-tree $tree -p $commit) &&
+ 		git update-ref -m "quiltimport: $patch_name" HEAD $commit || exit 4
+ 	fi
+ done 3<"$QUILT_SERIES"
+-rm -rf $tmp_dir || exit 5
++rm -rf "$tmp_dir" || exit 5
+
+base-commit: 795c338de725e13bd361214c6b768019fc45a2c1
+-- 
+2.51.0
 
