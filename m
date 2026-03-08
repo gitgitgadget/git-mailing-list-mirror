@@ -1,69 +1,69 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10722262FFC
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 18:34:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB0C33344C
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 18:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772994873; cv=none; b=tq28r2OC9VMpcZFVxgLnKmTGE3rgkUVkufGjxnVBCIX8LkJNKhK7vU4ERfq1KGds7KL66Jak1Yad72jgRVDZzhh5/HfdFn56wG/GQK09Lc/dFcd/Zhpz02nIAUWFOtYlZXUkwYJ4BHKpYw1D9qxOdTO3qq/bOHRKaCfnJcxL/vE=
+	t=1772995088; cv=none; b=FxNd1mhd+3PYJJubslTxJAdaOmkzOTCbcsDIT8mmC8xp1i/j5LWl+Hg9kkxz+lxdoeLimRIW2I747yVLZxaPPyVYHkkvTqbBjcXaXJFNwYmZSjgQcPHNSci8ZmpcVb87bRq7VdOYgN/Rru1ZnUYzfU/k65ktD7/ovGzMOuWUR3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772994873; c=relaxed/simple;
+	s=arc-20240116; t=1772995088; c=relaxed/simple;
 	bh=TlYp/c0Gvz85hnYQswaVYTcZtICMFHGlXO1Xj9je/5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M95ptHIwTbXfeWVSB/06pk16daRopgMinFRm+ka9dKst80s0KAvDA10N8Dx9GSqcLGHYeFnJf9I30BPBLVhL6OE/OOQlJdHe/nYiaLmne4pxpHvgUwMM8kpKq87rRg2lBPE4oU5LpyzPHDNWLrm3UrIc0EDvrYq4YhLwmuHA7aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SVePX9L6; arc=none smtp.client-ip=209.85.216.44
+	 MIME-Version; b=JI6ue5O3pyekjTsayzFFJo9TWc8lMJKRE7ux96eEvlzOZz1Ghbj/1YKvswq6ElMtwLaIyj6D5MHKdFZ3HpnVmVcU9Zo651BKTry/yyzLQqy0BcF6XdksJUMCd0gvR69FbTMJCoSp4oj+P89l0Xlv93vwuUN+Xhx/9RGKR0kH0QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UpbqGeYg; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SVePX9L6"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-354a18c48b5so9738043a91.1
-        for <git@vger.kernel.org>; Sun, 08 Mar 2026 11:34:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UpbqGeYg"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-358ed696623so4505814a91.0
+        for <git@vger.kernel.org>; Sun, 08 Mar 2026 11:38:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772994871; x=1773599671; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772995086; x=1773599886; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
         bh=PFlY7Q9W4a/u1Q4BiqG9vKb6BZtM5DP9agDJRyrt/bQ=;
-        b=SVePX9L6+faBxoF5BhTaPMv8+2zMrM+qRWVfqpRq9Et7iBHbpn7yjARYuv4Z6llNFV
-         idWhrgnrv9R9gSgfBCUQvEWMGT7OwQuW+zCxf28LddVi3lg8iNceZwiGdGzIA2qQsDVK
-         ovFZ6fF0ufV8e+zkIhnI+r78UdHuHyZ3L7rMAX+xSJOVTmDzDh95jp+nUgLjjFjZdMSt
-         8L2a28f6bpfjBKCW0eDIp6C+mqShCOpYVZwzyeCzwp3093bvv9BFLHPdtyIIAujOrrfq
-         teVLBpgoBq7MMfXZWHpsUVaY18NQnYKcjgb/1F0hzuxwU5Wu3l+NOCg3MlHvCEWpU/FA
-         J23w==
+        b=UpbqGeYgDBlux/aj4GcduIYhF/Ty5pimvuoAOw3CEUQWtqUBEbEdi7Z+7yXLHH2H7t
+         F3U0YacfU9imA/rUC1+fOV9t8Xy32Hw8+xadMvmSv//BmQdwDOhz7XNgAM1CNCDy9WXj
+         /pN1wwX9siB/LHdm0DVxik0BTng+U/l9woLTtWVI0iF/DihN2G8YVVIeHreWsE/miF/w
+         Bguwfq/EHhAjPLNRmdRFmWqFmdgX5VMYPXTjAXUi16spczOLutamtAJYDhmXQ2EjDl/T
+         0TwERs/h47Y3ejIOEuvp/wq9rbyinAvw/qcIKjwer15/IbaW1VKKlewKpks7yv8kCoQz
+         cwVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772994871; x=1773599671;
+        d=1e100.net; s=20230601; t=1772995086; x=1773599886;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
         bh=PFlY7Q9W4a/u1Q4BiqG9vKb6BZtM5DP9agDJRyrt/bQ=;
-        b=LKO93D/XHk7I7cwgQkhpxOfPwcBohBbAsG2oT+1l6oQ+JRERYKAi6DyZtxQvNjhM78
-         Y+oSmOfIgsb74Oy8L+0WndQ+4XiEC36uJ0y6kd0GxD4EcqO+dYkUkRJhEahVa4LqWzva
-         9xbd7cZ+KIhxwBZLdTcokBrLm1X4I1tZniHVvslai+i2Y/NLDjsbOh3Bozhd4rWaEnoV
-         NcjHf2E7R24OjJLIl4nyzCADJ+XVYfRLqjFzM+08nXe7k5yLPmzW3SgqEpbIfOqJyKjx
-         45ANFnAxQqvTaB76Ntnfn4jS89FPgVxgPY1VtkGRikN64lLOOGPl6YoPH16UPrTLCLEk
-         n+3Q==
-X-Gm-Message-State: AOJu0YxRs4iCW4Rd375PwsEYforGrt3JoLfdImFCFG+z/x4rcw5Zj9gB
-	CdPDHsSo/tYvnzr4TorAHQ9ehNumr3QqW9KP3r139yDxmrQy8HSmspQqKb2dDY96
-X-Gm-Gg: ATEYQzzxIOErkl0lnpqn97HF6B5z6THSd6S8pdRsoKTwOrdO5Shduf8eoR23QHQKw6C
-	AGb6EEFNq/sg0cJJ2H3Jr/RPcV22Evr+4kbfcLFXDH9e3Xb0OfvIhl9zuFuyvmF//vGEfTemm9n
-	XV+ETkBOijuuK3MXOuuaxLA3GdYtaBhUJ8lqA7Gd8j4pBlcEN5NNOvvP/kDOIghQMjL+6WsKLrj
-	/rkntDcYHzwiP36DeMqOuHQdt1zhe0+DmU86YsNCwmu60zDzHWkO1pcQi5vx/FfRXTIaYZP+HNK
-	XVwlv/nUkTE78ERH1R3KcEtzWzZgrPz5T1cBcZP8Xu8vrdjNpB0cLZgA4e0ova9OtSRGpe3aKxf
-	Z85Jug2FYFL1TIJtgeTALJ0DB6DHNJfjzhLNM230ape6FraERwystV9YaXUeJt2KlycI4IB/63o
-	WPdkm8RPTPgTs2PSjX+makLNUuFlro5eA=
-X-Received: by 2002:a17:90a:e7ca:b0:359:8e1c:53e with SMTP id 98e67ed59e1d1-359be34a6demr7628454a91.31.1772994871190;
-        Sun, 08 Mar 2026 11:34:31 -0700 (PDT)
+        b=cyyOvkCaNCOk3v70GoLqCmyAqzWuxLznf2Joey97WHZqV1HC77nrZYyPOQUzct3sYZ
+         swszYRW9yX1vekEMpT8syFSCxHqJ2eLtV6sZKpYKF1HqKPUXdGAYbmLexQE1SWrY3a/H
+         WsFgGF+qsykXm9dg71HNlvYwlF3rjR3p4Um0MSnDffBCqT2ecbD595BH3AapfXfRt3Q6
+         I+oiAV/tPmY25alnjeUgDbzkU93Pu/OMaRDEi4ju8hizK7L1gF/HCZ6obkFpWDyxMaXO
+         P91k3Andm38P4/BjANzeXfR7kxgpTsR+jr/6aoa2xjBpL7a06qUBmAaufaFmVSqHeJR2
+         Nezg==
+X-Gm-Message-State: AOJu0YxhccdP5gsDE4cKNMnTX5/ExtjZmFPqwioWCUkEjh4cumjc0D+j
+	D2qQ6nAR5ojB7wAe5JAMjb38zgbfLrT8pq37uwbrrTGW81U2rdPC+nIjcKRZdaNC
+X-Gm-Gg: ATEYQzx/+qx9+/lrQN6J9SEkgJziZWVMkwNNSYDq1ZV+U3jY/Rjvygz0f7ybh1atE62
+	nJt2MLLDJXQZD7S/WnKJmTSKyt73cviH1g96Bk5dP9xTdh6ctwRlQ9PLb4/lBXpxiM/38ZZFbmV
+	B3GAT2/HnjmZ3zYW7zbRmq2xqg5J5qpJ4rBEezkmz8jfU9QSa3lOUiEdqdOmnT8jWIgsm5wcUaf
+	HNcQOKBWc+mtXFBBiEJL/ekjQjkufXNh2ExdB0VOkPTR96Hr8u2ssvpUZ30Nz3S0eAEvAgOLDvs
+	caWd8194vqmCmGkJoH6u5QLMBr/OAwWqO06NcwStrfEV2XTTiriBw6QPcKYcK4JsA2nEQ+Sk1vc
+	rHnrZpJirt858mC4pZPP/6jimNfmvU6MDuPaDNNwPf8IfO2Q8NUo6XQbzDUHwf76rP8efUBMzxx
+	iFiadUhjOyhvJSRzsO2r9j1h6wXoMgq3v/lpblq26M8A==
+X-Received: by 2002:a17:903:11c4:b0:2ae:47f9:de12 with SMTP id d9443c01a7336-2ae8251b8famr92042175ad.46.1772995086136;
+        Sun, 08 Mar 2026 11:38:06 -0700 (PDT)
 Received: from dorna-OEM.. ([103.152.144.18])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359b2d392basm14885554a91.3.2026.03.08.11.34.28
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83f74e7bsm86000495ad.46.2026.03.08.11.38.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Mar 2026 11:34:30 -0700 (PDT)
+        Sun, 08 Mar 2026 11:38:05 -0700 (PDT)
 From: drona <dronarajgyawali@gmail.com>
 To: git@vger.kernel.org
 Cc: 24f40e5a-a5fd-49ec-86e7-921b44e4abd9@gmail.com,
 	Dorna Raj Gyawali <dronarajgyawali@gmail.com>
-Subject: [PATCH] [PATCH v2] Make 'trust_executable_bit' repository-scoped
-Date: Mon,  9 Mar 2026 00:19:21 +0545
-Message-ID: <20260308183421.31700-1-dronarajgyawali@gmail.com>
+Subject: [PATCH v2] Make 'trust_executable_bit' repository-scoped
+Date: Mon,  9 Mar 2026 00:22:56 +0545
+Message-ID: <20260308183756.31860-1-dronarajgyawali@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260301190017.53539-1-dronarajgyawali@gmail.com>
 References: <20260301190017.53539-1-dronarajgyawali@gmail.com>
