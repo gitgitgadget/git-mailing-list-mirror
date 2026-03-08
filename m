@@ -1,195 +1,131 @@
-Received: from MEUPR01CU001.outbound.protection.outlook.com (mail-australiasoutheastazolkn19010012.outbound.protection.outlook.com [52.103.73.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E987325705
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 12:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.73.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772972283; cv=fail; b=Q8QN15WOEAARAh6H9KJ22PP95kTBTz1Mq9d9WuJRufAwPe5mwn2X066j1J5QTlt0haqIm7SD8b4+S85y5Y5CFqXPz8wcyyG0WSbeQ7MqO1nlH6Z5yElDjEICRDfwN6xvoHf6a/Tle2HzmagAbem/ndJHnXtZBeDZdVCnD+RJ/C4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772972283; c=relaxed/simple;
-	bh=rgUca4tMBRhJrobBus/rgrgK9qgrT5Tu1tXIF6s4xLs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=n6rg/AmgiuAYYoCWg27I4hLQVZ+QLQIX20HAVUfJLkq4M8FduSbAieDyvt9fY5SsAgry44iaFNoJpHeMjpd2f3r4vjsgrBtRpJNVmD1Xg8q532rH8M4uIyTQ6i4UEQV55yzyEcKJBk2GlmyxrBhOZG6NeQ4fCkN1pQ9yJdTdXRo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=DvBR5zI9; arc=fail smtp.client-ip=52.103.73.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5337BB640
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 14:42:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772980968; cv=none; b=MHVytfmWBe2bJ4/6gh0pzIe0rbvADnRQVEkHuSt0hjGVHKGovBFZtkgCtnNsAvFevIeE0b/1G4hM8eiqXPWi6ZdDu4/9cptB5mPaAu1+PhFWI/utHy5MCNIPBJw2OYZmXQstDfDBFY2vmkkiPEIDNRnUhtOLSpHqILaLJfKDAGQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772980968; c=relaxed/simple;
+	bh=QWayofmct6f+8oEPu8vtXNVnpH4jm4JHSJLGvV8ty80=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MHqAGwJfxwhEQGBPQdxKQBdKVwP8PlcRd8W2jo7pZpB+qQuxN+WCNDsaOthyW5HOO9xFActcF9Ul9vrhoZgL8dFxLv7jA6zjRBruZOCsAXczVF/1RZEn2qNBmmbVi7Y1BoeKaTWMQh0BVmk3N9uc6S0aYGXso0wPCZgHvaIDguM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fdQr7SyR; arc=none smtp.client-ip=209.85.215.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="DvBR5zI9"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gpSjrptUe5XMYjn65kxf1UpDx6y15Ecrkxkxuo49wFKRiJVXpGbqGFP7VdjzEl/Yw7+QLoSQMrr4F+j1wKoBWbY2PXCq93/+LC8eLFFECg/LDn36q0PuhA/AxYPgZ1zbwbQERoiNdQapntiFxdpn9tDCDju5xblYF3vgvyd5kfklSZATO9ZLoqQkYlJ6xfO5y+3mTXEjK36zqKlyc8pBmV1yYIpKagRNGHuRk0DkcKKiNeISBv1ZkPS+nHuZuLvyQIWkykW0iHs3IGjxuFrXUf0Of78GDzD220gSf3nMiffcj+mX+TgqUYwG/U8OIkz1OgKOc/df9TwMQxW7np/hew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/7zXNH0u//3TxO5XQ5LwcC9IqH60M+pPAuKqjaHaNTo=;
- b=JSYbpmetvgYOrvFP3/Mus9nncGu1vr+QNTfAzSMJ+0uJQgLP2V0OHOBpBFh26yOfO+QW9k8VOr99bPB0SfbNmiIMIilXaPSHNp1WEmco9QEaITERCNDjmvqh/tOiMVCD1klbrK/G1BuMaRzOOyF2i4hyz8QkVOENpDC6xw7ljW7Zc4XTATvgEVw+jr4/HWdqgM8WTVCOSZuv24hbkJO7jwhdpVbZpjWvTCr+eSLNqCpmxN3KgsbXy0al22x3sMLLFdjzWEOgLJXoF9vl3cSZSh08i/P6MW48yusiSRJlZeEN1+tOxRCQIOSMEOQBReRHZSbXHVKFVQJ3xXRvDvV3YA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/7zXNH0u//3TxO5XQ5LwcC9IqH60M+pPAuKqjaHaNTo=;
- b=DvBR5zI9fFOd4mlbsWNJBK9C1dYRXvox8twV3+1/r9J1+3BVZMS/7F8q7wTvxVprbOaJTUoKsCOnfm0SoV5gWnZKZrhWIFfr/r5YXWpvF81P14+2cPP6AUc09x/5XY2UTBS4IuOX2hgeHO8LObEfIRRXPA4X/PTS+36/V887kkghB8re+QmaU+iGiZ7Y/8mmW4SwdAcPDA6eAC3tMAvBnLmvdqPnBY49C3cHXUtuXrU6jrW/55lsA9cbilsSB8kGP00JsEPheN6eMvUFoBfZvNWhhRITPllmi0tVA5AmgGAyYdwpEIH0/F8iCTYVt14l3KgutD1DBcEw5pWlGX999g==
-Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
- by SY8P300MB0080.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:25f::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.9; Sun, 8 Mar
- 2026 12:17:57 +0000
-Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9700.009; Sun, 8 Mar 2026
- 12:17:57 +0000
-From: Jiamu Sun <39@barroit.sh>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jiamu Sun <39@barroit.sh>
-Subject: [PATCH 5/5] help: add tests for subcommand autocorrection
-Date: Sun,  8 Mar 2026 21:17:25 +0900
-Message-ID:
- <SY0P300MB08015B9BA815B2C4F6CDC639CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <SY0P300MB08019805A8304105FA805EB1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-References: <SY0P300MB08019805A8304105FA805EB1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BYAPR07CA0050.namprd07.prod.outlook.com
- (2603:10b6:a03:60::27) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:10:27f::21)
-X-Microsoft-Original-Message-ID: <20260308121725.2333643-6-39@barroit.sh>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fdQr7SyR"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c738fcba660so566761a12.3
+        for <git@vger.kernel.org>; Sun, 08 Mar 2026 07:42:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772980967; x=1773585767; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=02V2Fj3V+tu7C06/AMo1l1d0iTDs9lpoVSMxvHbOkmc=;
+        b=fdQr7SyROw2FqbfpTzAgJ7p28Xl4IDuA5BmSjQMgRVyawAC0zDBHslJ17Olw45AOqi
+         VHbmN/rmQgiWxP8lHYAYUtYouDyaIFxdhoNSgo0Ji4naXVmp4dzfK8ggrqqdqqekmzKl
+         cKJvx0aBK9ltPte2NQDo3vp6VPkZYkDKCbNzLAv0OJ0AZMrDOeRVAiYyX1roZK3jRkV0
+         hjXS7KSC5rf4F4RIwpJy6X/+auSdUQtm65127fBtZJrX2QxI3S1gAhFoTsXQlxJFejZo
+         r9UXpmk2ly4Bp8HtYaRl8tbjdBaGdnj4i8Bb2ADkPF93VLYlLAAEk4rS33t8QvD0OVLA
+         C87A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772980967; x=1773585767;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=02V2Fj3V+tu7C06/AMo1l1d0iTDs9lpoVSMxvHbOkmc=;
+        b=MsRotlFNs40Iuy1VNdFdEyShfuMd6XVcmraeNdXYsThoqohEO7EQAWr4tFSa8OtzHm
+         CW6oBstiDdt5s5qaSU7OTrtL8Qd4k8ldmI+ZfiZ/JS96gfvqzNgP6B219DDD8GPaYiV2
+         7a3fiH/WuBzG34BJzN+E9u900/ULZMTMZ6Jy84Ve13SUiIz8HSfTLzev4yeEMihQEqAS
+         lX40gQ0dsaVhU+HMnEOt5I2supq5/iCxJe31nG/ayVIJxfOA6b68d+wB20qpUgiFqqaR
+         aYcr3W70TbomkbLFkYjCqMaclbDT/BNUoVF8A1t/w/lEHSMNHsAy+aqG+u0lCIkgQwAf
+         +xpw==
+X-Gm-Message-State: AOJu0Yx9bVRplqtZo215k3eeGrFOsBbm4D5I1A8SaZtfnek+BXqFSO5r
+	CkIsUpYPzQAitn8Xyx4lmuFWNj0owLkdk5yeXA93j/cHTfi25uckWE6servW/CrM
+X-Gm-Gg: ATEYQzwavKSKATDcwr/FreDXAgfrB6jGS/avyGDUilgyMH8wsrfrNb0LeDEuaDwZTaZ
+	qDwdQ6uPJBNuAfhonc4B3aIn/SBIqKY8m0z91mebejBcD/4VpuoCESMC2GFlNYabmSXQyKpRbWc
+	k2twRhJMrfOsA39cocFtBJeeAZ1IJixrtW+F9fIJnk6smuTW7VBHOwa8exlxjvUKM9e76gWfIbc
+	xduh9OaJvVGKP1zlsCvVIX8idpiJ8ycgKIfplTLFHF08QyK4meuIOvb3055dnfEJ+mjXBuAPSVG
+	CdiAnDKbpfpHEteZpZtu4c6tWtw9W9OnCcQGIThDtOdLsGN08cdxn2I6T0l+5bn/XNOyQqOOWwp
+	FKC0HCK4le2fn4sU7moSZdwrDTAqfWOTuonN0ycwMgyJimd34oOnOW6LWXvPElQChMIA4wqfaPU
+	U91o/vgWbGeXHwnMaV3uWU/oulIF01WwZ8QrvP7mPgzrL5dEXqWfm80zo7FmzcXZ6GWsZLjySLp
+	Kqz2BSCrweM
+X-Received: by 2002:a05:6a20:a103:b0:398:84d9:64ef with SMTP id adf61e73a8af0-39884d973cemr1116471637.2.1772980966603;
+        Sun, 08 Mar 2026 07:42:46 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c739e0c7427sm6838201a12.9.2026.03.08.07.42.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 08 Mar 2026 07:42:46 -0700 (PDT)
+Message-ID: <1a1ed5c6-8843-4bd5-9f57-187ef39497c3@gmail.com>
+Date: Sun, 8 Mar 2026 22:42:43 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Sender: Jiamu Sun <sunjiamu@outlook.com>
-X-MS-Exchange-MessageSentRepresentingType: 2
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY8P300MB0080:EE_
-X-MS-Office365-Filtering-Correlation-Id: 955501f8-2b9f-47b4-81b5-08de7d0cbb9d
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|25031999004|51005399006|15080799012|23021999003|19110799012|8060799015|461199028|5072599009|40105399003|3412199025|440099028|1710799026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?PKatlrXz0/NUEN2EAmeSFHHu9drWSVZdqg+M9piqJBlACWvyZJSsgy49D31j?=
- =?us-ascii?Q?Zq7Nnwh88WDn3j0GVYHD6y2ugNrZn07zrzrmO3FGbfKkvzNo3DKCua+Al8lg?=
- =?us-ascii?Q?yU3yNs346QnCvxrtNjcwXAW0NWyOJMyvpUhMaA/V/Z9KNEn4xuaQZWJS9YiE?=
- =?us-ascii?Q?iigfM+/T1rsNCinhZl4Bg4TWC7uBAsgEvJMADKruX5U/mOxPgS1kL1VmvSmg?=
- =?us-ascii?Q?175hBPppT+g36R+UCGdox6QnzTgfqtMPb7CwsmxTAf3vfbPtUTlbvEJa7pxo?=
- =?us-ascii?Q?64b0UPcb2B3ZcaNGKes96twCqfVTLX724JKeVWIcpnWAD/BqNN0AIb80VdHI?=
- =?us-ascii?Q?Oa6suPsAQuzl+Wt9n7bkkPmoWn/f/5HnbL4VPz1+d+N2pnv3HeaU9VS+usb5?=
- =?us-ascii?Q?zkzq2mhAI2TA1pRW9k1BYZVAWYy+gWEZeaV6vFkOS4ZO6JVxiOwNYUiAna4m?=
- =?us-ascii?Q?ggiVvOpJZZneGGGKIHrOGL1Q5dmUIw7RyX8kY7++JyW+29Ssdod5YFHNA6sa?=
- =?us-ascii?Q?bAgx6IPqGFUWPTq3bbbZA0MOFrxoFLQJQCVWBg+D1mqA6UAFvx6WD6Q/iwwY?=
- =?us-ascii?Q?6kC9F39LqLqN9eMIr32/x7z9rXdZ2/vXJXh+fj2Pbmxsvy3mGTFmUNeZNbDb?=
- =?us-ascii?Q?7/rr+5/Bt2SncwRRKJV2Nqw92rnQelEi65eal1082rS0vVfvL+082nhbiw2t?=
- =?us-ascii?Q?IXkBaa3WSMJs5ZjI8JuP8SLNXGSO8VoRRpp5VXnrZDJ1fOQsVHhufNebT/nA?=
- =?us-ascii?Q?CJsncThWU4yUswFJ+3vz3ZWCZKW2qquDYlpeHWjjc+RV2E1CsKIDmFATgPQs?=
- =?us-ascii?Q?sUtDqxvIqmv+1Fat8Av7+oQ8A1/rkxwtUxAm/mplF4TEIh9l6qFMPdF5KMIh?=
- =?us-ascii?Q?m4zEfxdO/xK/0LbTG72yfZL6o1Av4QABfzi8LdoVUSLTosmziBxPQMr6mV6q?=
- =?us-ascii?Q?zoXVx7dLKGyTDtR4zTZkrQ=3D=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?bR4tB47CTg0ZOFeSWnkkpZAiWwKR9YBxTaf+JX3rzcPQ0SCspjE6VMJU59wM?=
- =?us-ascii?Q?EkPH6CWeMu5l3ytIqeF5HofoqZ51kksh8K/ZnnW2TgxZYQ2nvQoBu58eoLbm?=
- =?us-ascii?Q?SY9XIoH3XFwxnoM7SZXTJlehSVdPKbEsF2QRm1506aICbgCYbkj79cca1CKJ?=
- =?us-ascii?Q?uTgG6mvQBksnDsVY1LeLCm0HBqLTHtiszF/wy4slbeCNQQoCLgYr09oj5KV8?=
- =?us-ascii?Q?m6ky5+C7VfAorMS9QVkdrgsA9Jg0LKuZQeNDW+STsqxLMuttAjl4Z3qKXCX4?=
- =?us-ascii?Q?EwEiudGFGTdgGl26YMZy6tnpdPYfqnFJMHUU3FVqcfaxg+/3UjhCsbS6UyDx?=
- =?us-ascii?Q?1ZW73oFH2xmoZBEXsgnaMVhiEkLSiDlr2mHazFMnJt2mWi+982LByQW9eCjx?=
- =?us-ascii?Q?Nh32arJKlv0ovAC/jnP2G5q4B0DiW3xBYD35Tr7wHM3/bUbi6RdJWCfl5imf?=
- =?us-ascii?Q?91Lpac+4Eygt0bZkbS2U5c5lBpyvNuYVaK/KvGXGLZBXqRgSb9m49bL+5ydV?=
- =?us-ascii?Q?MYBkIInais9bLhUW/mS0A+MUQ5Dui2b/PdBkorunYus3SvUiWfnr2Dw2G+7t?=
- =?us-ascii?Q?NDPOHeleKIT96UlrrOo0EuVMkfqQAZRPHplYNCPSitr1ari3wiMrjkDO604K?=
- =?us-ascii?Q?1zehNRtrCW7o8CFxZm5x52QmIPCn+jHJsMFP7E1sJbEKZ7LCAqE5WvqU7+4Y?=
- =?us-ascii?Q?AsNM0Q4hc9zWEq47sdPXlLbXsnzO4TGJTtKGA9xhwnRr4qWkP/75AdX3uPyd?=
- =?us-ascii?Q?+Z2DXqwXmKw8jCL7uNAiOEovzZLpFWU49BKtGk6m1t5rZlUQAWhCHwYZpp+W?=
- =?us-ascii?Q?J4z+kIb1+zlDH7JDXN/g8zp5vkof3yrpzC8mdDM6tX5hd11RB3eKRN9WKa0a?=
- =?us-ascii?Q?DcOIG0aJQoS2L96Hb5IWDee66SOvkWdbFmqTYIjzEJuReL4XJFTDGwT7c9Vy?=
- =?us-ascii?Q?ZkeTiwlrhPdV428/ubgGbCI9DZPXQ3k+NYD3cctyMBAN6tPsLFHgaHtluOdX?=
- =?us-ascii?Q?JSXewGBPm1L38O+fK3/f/HYmlS73c5wbKqmhe1Wrmk+5vsdB1U29/8Cm2GET?=
- =?us-ascii?Q?HUHIgeyEPfq3SQXjdM17sKRSIgtdgjwhdunjKyvjXEIJXQdscmbriXD8Iejp?=
- =?us-ascii?Q?q7fInBFoHhDGPAJiV1mWpBTxn4OXpYO2TAynZUY6KU7wqKhGuKXvMZ/M7jGI?=
- =?us-ascii?Q?EiEuyJr3tsqfyP7cb3ipqKNu+PpDYyZzmwiAjXBlJUEwo4i/uCTVtQLs9pCp?=
- =?us-ascii?Q?IVvR6NrPmY1wAs1E91ZE2TXQyHha0W+fvAEBQEqhWu4g6YPJaxpvIT/4E0qw?=
- =?us-ascii?Q?mjsbIW7w/PXXyDMVRPGtCUQ2Y2JrRgPd/RFCLw+Pg0ZfCZnTUkM/OcWowj3k?=
- =?us-ascii?Q?bQO+ppE37pVrmGOaft7Q+qUzR16G?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 955501f8-2b9f-47b4-81b5-08de7d0cbb9d
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2026 12:17:57.7369
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0080
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] patch-ids: achieve const correctness in patch_id_neq()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <20260308043131.77782-1-a3205153416@gmail.com>
+ <xmqqseaasuph.fsf@gitster.g>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <xmqqseaasuph.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-These tests cover default behavior (help.autocorrect is unset), no
-correction, immediate correction, delayed correction, and rejection
-when the typo is too dissimilar.
+Hi Junio,
 
-Signed-off-by: Jiamu Sun <39@barroit.sh>
----
- t/t9004-autocorrect-subcommand.sh | 49 +++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
- create mode 100755 t/t9004-autocorrect-subcommand.sh
+On 3/8/26 14:26, Junio C Hamano wrote:
 
-diff --git a/t/t9004-autocorrect-subcommand.sh b/t/t9004-autocorrect-subcommand.sh
-new file mode 100755
-index 000000000000..760760c8851a
---- /dev/null
-+++ b/t/t9004-autocorrect-subcommand.sh
-@@ -0,0 +1,49 @@
-+#!/bin/sh
-+
-+test_description='subcommand auto-correction test
-+
-+Test autocorrection for subcommands with different
-+help.autocorrect mode.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' "
-+	echo '^error: unknown subcommand: ' >grep_unknown
-+"
-+
-+test_expect_success 'default is not to autocorrect' '
-+	test_must_fail git worktree lsit 2>actual &&
-+	head -n1 actual >first && test_grep -f grep_unknown first
-+'
-+
-+for mode in false no off 0 show never; do
-+	test_expect_success "'$mode' disables autocorrection" "
-+		test_config help.autocorrect $mode &&
-+
-+		test_must_fail git worktree lsit 2>actual &&
-+		head -n1 actual >first && test_grep -f grep_unknown first
-+	"
-+done
-+
-+for mode in -39 immediate 1; do
-+	test_expect_success "autocorrect immediately with '$mode'" - <<-EOT
-+		test_config help.autocorrect $mode &&
-+
-+		git worktree lsit 2>actual &&
-+		test_grep "you meant 'list'\.$" actual
-+	EOT
-+done
-+
-+test_expect_success 'delay path is executed' - <<-\EOT
-+	test_config help.autocorrect 2 &&
-+
-+	git worktree lsit 2>actual &&
-+	test_grep '^Continuing in 0.2 seconds, ' actual
-+EOT
-+
-+test_expect_success 'deny if too dissimilar' - <<-\EOT
-+	test_must_fail git remote rensnr 2>actual &&
-+	head -n1 actual >first && test_grep -f grep_unknown first
-+EOT
-+
-+test_done
--- 
-2.53.0
+> The fact that `patch_id_neq` receives `const struct hashmap_entry *`
+> parameters--which is a requirement of the `hashmap` API--is what is
+> clashing with our lazy initialization here. The original code
+> handled this by casting to a non-const `struct patch_id *` right at
+> the beginning (via `container_of`). While this also "drops" the
+> constness, the original is at least more honest about the fact that
+> `a` and `b` will be modified.
 
+Oops, This is something I hadn't considered before. I admit I didn't 
+think things through carefully enough.
+
+So, we actually find ourselves in this dilemma:
+
+  - The Hashmap API specification mandates that input parameters should 
+be const *in principle*.
+
+  - The lazy loading mechanism requires us to write the results into 
+memory; otherwise, there will be significant performance loss.
+
+Am I correct?
+
+I find that maintaining the current approach seems the most reasonable 
+option. Computing all patch ids before putting objects into the hashmap 
+appears to be a move that affects everything else and is not worth the 
+effort. On the contrary, slightly breaking the Hashmap API conventions 
+seems to be a more *cost-effective* approach...
+
+Or perhaps it would be more reasonable to slightly modify this NEEDSWORK 
+flag here?
+
+Will send the next patch shortly.
+
+> If we truly wanted to achieve const-correctness here, we would
+> likely need to avoid lazy initialization within the comparison
+> function altogether, pre-calculating the full patch ID before it's
+> needed for comparison. The NEEDSWORK comment should remain until a
+> more fundamental solution is found, or if we should just admit that
+> the current lazy evaluation pattern is what we want and document
+> that (i.e., add a comment to justify why we strip away the constness
+> here). As it stands, this patch doesn't "ensure" const correctness;
+> it just masks the violation with an explicit cast at the location
+> the pointer is used.
+
+Regards,
+
+Yuchen
