@@ -1,216 +1,167 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44FF35AC09
-	for <git@vger.kernel.org>; Sun,  8 Mar 2026 23:40:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E078835BDBE
+	for <git@vger.kernel.org>; Sun,  8 Mar 2026 23:41:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773013248; cv=none; b=ro/mYWuwjm3BegNO7TlGRIh+M7yBopqX7rsP/LzxfjCGgXH3ZIK4N22brR9aA5rNTjio4FinNzWxaC83Cf0JubKlFAjeS7B7wUY4fAiaJ6hL/zbmA1FDU/MQsHu1T9ZJ6yeHE2lfC2l4DnKX+nmSySoEgEeXRmTxpzVXOQ4VZHM=
+	t=1773013283; cv=none; b=FNhtLPIfqtecrSXB9mrBequyL7RPMiZrzzE9DCy33sB/e0WM9QUyj0RtRVHDn4vkKoW6k8xXG5OYh+h9m4o+Hv6a3XyQoS1pl/7tg9tbghHRwpHN1Np2CcvngKD+ztFptaDmiV4juKSIgh/8vDfkruPf23rZulcmjlzypnma+4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773013248; c=relaxed/simple;
-	bh=Ka6KxbXTSQXo+S1UOa6J8fKq4/7GttqsXbB3texjSjU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BNS5UIPlEbV/z3+p3p/8jXO7IVAkpqDHj7XLUGPHA6FQDlyptPQeqxlIZh6j8ab/hcymYkqeIxEqhpA8dSqchXf2IIKzfX2++qKjoDq3XPwOZSh2Sqm+MLSYWin8JTwrij60fXaVjpGUbD6TLJIdaVCQnxvLUXxEa6gXxg6kkBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OoJYM3Pb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AUfT593c; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773013283; c=relaxed/simple;
+	bh=LBS3HFtjqRcl0TWRuKQVJn6XzNHlVIHsm0YFQYT+qd0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tlUJQu9+MQLcN+LxVSLWwRmqLXDxnjt4Eo5qAne0mbLzM29btYqhgiR7DDT5O+LiBhomUcSZReVAZ3LRKJkuIiRX6XU4HWgp0reHnUTH4dYXgI3+WnYHSEBTyWX9RGPCIn7+nWXVneAzfU2KWZE4PCksIqVwj1i24S6+hdvETcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rBkIo+S1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OoJYM3Pb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AUfT593c"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EAB3614001CB;
-	Sun,  8 Mar 2026 19:40:45 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Sun, 08 Mar 2026 19:40:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773013245; x=1773099645; bh=ibztBGacFB
-	LHDUaZngWDUs8EZNrcM2vHBJ2zDnUquy0=; b=OoJYM3PbvdvfL34jBYem7K3jMB
-	WbWJy9zlNAmNSt5f6d7bZvO8Iyd+BBLfpwhLy6wLIVhFbuojBaTZGmQ92RNXrGhk
-	K+gXz/PGpEak10LuBunjMo8Pw6Q30T2yu6P2Hr3aD4nHCAJP/rlJLAeAyYGYNSAh
-	aBJz1cX6MhkU2larbzr9NP8PDM+fQrtG1bA5YnH8jRzoQxCJV9CXJLFzDmsskwU0
-	wcahz8eueVmTv8u5PCnq8ye2HRmNuidjc4ajLQvN+StJsv/EnsV8uPknqU8ZKh6Q
-	yt6k5VycWRzhsXYZSbYmSSnOzJ6JwGMFUMMjGAzH7nj9xH8FnYdKnzvKskdg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773013245; x=1773099645; bh=ibztBGacFBLHDUaZngWDUs8EZNrcM2vHBJ2
-	zDnUquy0=; b=AUfT593cLBLpangM5UOYNFvRhAGnex2/OWlXKr+X0YXjmb3IS50
-	Rebpsx1cBIm07OXd/b6NwzaU3h2c+Vfudlv/Qot7bXcCk7+zmbOXz5z9epFcxcIL
-	g0hrfH0rvagqfjLYD4dKl09rWkRzqZgwHVGHNqUD2oDHPS4R6L86PhZ4MrneoFgx
-	BSGyn9IkjaL7I8sbNGL7xR/kOqNbOG4a0qe3C6cpb4m4z1Irnq8gAkIrBXTXmaTk
-	Ohl5K6CQaarSvY5pkT3NuV8lTKkK9kxVb0oxuN9La3vHkuRvZbtj76GHlFc5QiiT
-	t9lU4vsrTNj1P/qiwGuC/Xi6kJnUpNacC+Q==
-X-ME-Sender: <xms:_QiuaUBtgd2pHjQfEpWhq2lcOAXOYiw29jt690xqOymTu577zdYxOQ>
-    <xme:_Qiuad_7FIETyusjDDGDDKShY_AfgD_aan_jxKU32qJOUpT4FreWPlXosi041HDsV
-    hHTXDFH2OVlIltXhRpTu0AIn17A-BeYeydrcJBALBLM87otEsOevw>
-X-ME-Received: <xmr:_QiuaU-gS5i9SLElkwPZESSWiRoAHf2KEd2dIEhFmxvuLD7BifEingLRGgYNpuPfaVpVEyfo5DeHh6emMSlDpIXZ09T1aL6p7A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeiheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeefleessggr
-    rhhrohhithdrshhhpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_QiuaUe_2P3CiCqdA-CPwHmZiEK1NNuWcbXCTP7X5NU6JXdK3uicbg>
-    <xmx:_QiuadG2-CKqZWrv3oJRqNrwp2e2YOECrndclLnTRnqrHUafnfqPGA>
-    <xmx:_QiuaSceYykd3_0WFr6gtK1D3o4WTMOJbqzvCAY9sp5uOKc0ssQlGg>
-    <xmx:_QiuaXHqEbiM949nENusYnDLm_efyQs7BOlgmDkXtLufObtMsQG4gw>
-    <xmx:_Qiuae4YyBIethfx2ssScTyRuxq_kNrHwFjtt33nUMsdT5xGWW_ImX35>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Mar 2026 19:40:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jiamu Sun <39@barroit.sh>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rBkIo+S1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975C4C116C6;
+	Sun,  8 Mar 2026 23:41:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773013282;
+	bh=LBS3HFtjqRcl0TWRuKQVJn6XzNHlVIHsm0YFQYT+qd0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rBkIo+S1DKQmcYMvptle4zL8fkwOczW+npRKsGWIzZgvSNlPG79RQF1NJEhuf4ECS
+	 n69EPWgRdIhQGdAEv3iGGBDdEV3SgLER8Z5nmlqCrZ5wfDI//HheBsDJflCxRRgk1s
+	 jvtVwbTj/V/9085KrShM2I+pn2kz4fxtHz6IjxGYliw4L61gEN/8BJSUtYUmC5WQB0
+	 +wBxEaMgAzs4GlZBQDAr+L0cx6YnGDJbxk8Hl02wcGOwtI8jC5eJNIpEYd4m+mKLzW
+	 dCYiwFwm5AGC86x/gsaoRyo3cQGYC1nmBMBg7/VACZfxbzmEaMZwO63MDdr49oqs49
+	 tU/3MQtVqEIOQ==
+Date: Sun, 8 Mar 2026 19:41:21 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Ben Knoble <ben.knoble@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/5] parseopt: extract subcommand handling from
- parse_options_step()
-In-Reply-To: <SY0P300MB0801422323C4C4185B9617A1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-	(Jiamu Sun's message of "Sun, 8 Mar 2026 21:17:21 +0900")
-References: <SY0P300MB08019805A8304105FA805EB1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-	<SY0P300MB0801422323C4C4185B9617A1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-Date: Sun, 08 Mar 2026 16:40:44 -0700
-Message-ID: <xmqq1phtao03.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: [PATCH] quiltimport: fix backslash expansion in patch subjects
+Message-ID: <aa4JIWrkgNAPnXA5@laps>
+References: <20260308165531.40655-1-sashal@kernel.org>
+ <92EC21F4-52E1-4FE8-A1B8-5878D6CC654C@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <92EC21F4-52E1-4FE8-A1B8-5878D6CC654C@gmail.com>
 
-Jiamu Sun <39@barroit.sh> writes:
+Thanks for the review Ben! I'll send a v2 based on your review.
 
-> -static enum parse_opt_result parse_subcommand(const char *arg,
-> -					      const struct option *options)
+More explanation below:
 
-So, this function used to return either PARSE_OPT_SUBCOMMAND or
-PARSE_OPT_UNKNOWN, and the caller (in an "switch ()" statement in
-the parse_options_step() we see below) expected only these two.  We
-now instead ...
+On Sun, Mar 08, 2026 at 04:56:57PM -0400, Ben Knoble wrote:
+>> Le 8 mars 2026 à 13:01, Sasha Levin <sashal@kernel.org> a écrit :
+>>
+>> ﻿echo interprets backslash sequences, so a patch with "\0" in its
+>> subject has that expanded into a NUL byte, which git commit-tree
+>> rejects.
+>
+>Echo _shouldn’t_ do that without flags like -e depending on your implementation, but I wouldn’t put it past echo ;) hence my preference for printf in scripts.
 
-> +static int parse_subcommand(const char *arg, const struct option *options)
+Right, this is just dash being "funny" and interprets backslash sequences in
+echo by default.
 
-... make it return either 0 (success - we found a subcommand) or -1
-(failure - we did not).  The updated caller does use the return
-value in "if ()" condition to return early when we found a
-subcommand successfully, which is a lot more straight-forward than
-the original "switch()".  The original is even worse in that it
-enumerates other PARSE_OPT_* values that are possible at the time of
-writing it, instead of catching everything else with "default:",
-which makes the switch() statement a maintenance burden.  Getting
-rid of that switch and clarifying that there are only two possible
-outcome from this function alone is a good enough justification to
-have this clean-up patch.  Very well done.
+sasha@laps:~$ dash -c 'echo "hello \0 world"' | xxd
+00000000: 6865 6c6c 6f20 0020 776f 726c 640a       hello . world.
+sasha@laps:~$ bash -c 'echo "hello \0 world"' | xxd
+00000000: 6865 6c6c 6f20 5c30 2077 6f72 6c64 0a    hello \0 world.
 
+>More interestingly, though: do the patch-names or subjects being adjusted below contain such a sequence? They look like user input, so possibly (and we can’t be sure they don’t).
 
-Editing the hunk to show only the postimage reveals that the new
-implementation has CodingGuidelines violation ...
+Yes, this was hit in practice. A patch in the Linux kernel stable queue was
+titled "selftests: tc_actions: don't dump 2MB of \0 to stdout". The literal \0
+in the subject caused git-quiltimport to abort mid-import under dash.
 
->  {
-> +	for (; options->type != OPTION_END; options++) {
-> +		if (options->type != OPTION_SUBCOMMAND ||
-> +		    strcmp(options->long_name, arg))
-> +			continue;
->  
-> +		parse_opt_subcommand_fn **opt_val = options->value;
+>It might be nice to say more about what “rejects” means (errors confusingly? Truncates user input?), but otherwise I expect this is reasonable.
 
-... here.  Move the variable definition up in the block introduced
-by the for(;;) statement, perhaps?
+commit_tree_extended() in commit.c does:
 
-> +		*opt_val = options->subcommand_fn;
-> +
-> +		return 0;
-> +	}
-> +
-> +	return -1;
-> +}
-> +
+     if (memchr(msg, '\0', msg_len))
+         return error("a NUL byte in commit log message not allowed.");
 
+So commit-tree errors out, which triggers the "|| exit 4" in the script and
+aborts the entire quiltimport. Everything after the offending patch in the
+series is silently lost. I'll add it to the commit message.
 
-And the part of the caller of parse_subcommand() that used to be the
-switch() statement in the parse_options_step() is now extracted into
-yet another helper function here.
+>> Use printf '%s\n' instead, which doesn't interpret the string.
+>>
+>> Also quote $tmp_dir to handle paths with spaces.
+>>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>> git-quiltimport.sh | 10 +++++-----
+>> 1 file changed, 5 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/git-quiltimport.sh b/git-quiltimport.sh
+>> index eb34cda409..38302d28c9 100755
+>> --- a/git-quiltimport.sh
+>> +++ b/git-quiltimport.sh
+>> @@ -79,7 +79,7 @@ tmp_info="$tmp_dir/info"
+>> # Find the initial commit
+>> commit=$(git rev-parse HEAD)
+>>
+>> -mkdir $tmp_dir || exit 2
+>> +mkdir "$tmp_dir" || exit 2
+>
+>We prefer to leave such “while at it” changes in separate patches, so perhaps a preliminary cleanup “quote variable expansions to handle whitespace” or some such step would help?
+>
+>(I didn’t look past the context to see if tmp_dir may have whitespace or shell meta characters.)
 
-> +static enum parse_opt_result handle_subcommand(struct parse_opt_ctx_t *ctx,
-> +					       const char *arg,
-> +					       const struct option *options,
-> +					       const char * const usagestr[])
-> +{
-> +	int err = parse_subcommand(arg, options);
-> +
-> +	if (!err)
-> +		return PARSE_OPT_SUBCOMMAND;
-> +
-> +	/*
-> +	 * arg is neither a short or long option nor a subcommand.  Since this
-> +	 * command has a default operation mode, we have to treat this arg and
-> +	 * all remaining args as args meant to that default operation mode.
-> +	 * So we are done parsing.
-> +	 */
+Will do: I'll split the $tmp_dir quoting into a preliminary cleanup patch.
 
-Thanks to being a small helper function, we lost two levels of
-indentation which made this comment a lot more readable with
-reflowing the lines ;-)
+>> while read patch_name level garbage <&3
+>> do
+>>    case "$patch_name" in ''|'#'*) continue;; esac
+>> @@ -101,7 +101,7 @@ do
+>>        echo "$patch_name doesn't exist. Skipping."
+>>        continue
+>>    fi
+>> -    echo $patch_name
+>> +    printf '%s\n' "$patch_name"
+>
+>Does this go to commit-tree? Or just protecting the output for the user’s terminal?
 
-> +	if (ctx->flags & PARSE_OPT_SUBCOMMAND_OPTIONAL)
-> +		return PARSE_OPT_DONE;
-> +
-> +	error(_("unknown subcommand: `%s'"), arg);
-> +	usage_with_options(usagestr, options);
->  }
+Just terminal output. It doesn't feed into commit-tree, but under dash a patch
+name with backslash sequences would still produce garbled output, so worth
+fixing alongside.
 
-It is clear that there is no unintended behaviour change around this
-helper function and parse_subcommand().  Very nice.
+>>    git mailinfo $MAILINFO_OPT "$tmp_msg" "$tmp_patch" \
+>>        <"$QUILT_PATCHES/$patch_name" >"$tmp_info" || exit 3
+>>    test -s "$tmp_patch" || {
+>> @@ -142,14 +142,14 @@ do
+>>    SUBJECT=$(sed -ne 's/Subject: //p' "$tmp_info")
+>>    export GIT_AUTHOR_DATE SUBJECT
+>>    if [ -z "$SUBJECT" ] ; then
+>> -        SUBJECT=$(echo $patch_name | sed -e 's/.patch$//')
+>> +        SUBJECT=$(printf '%s' "$patch_name" | sed -e 's/.patch$//')
+>
+>Interesting. I think POSIX sh  supports the ${x#suffix} expansion, which could avoid sed. I think it unlikely the “.” in the RE is intended to match any character rather than a literal dot. But should be done a separate patch and could be left for another series if you wanted (assuming my memory of supported expansions is correct).
+>
+>Importantly, this does get fed to commit-tree below…
 
-> @@ -990,37 +1016,16 @@ enum parse_opt_result parse_options_step(struct parse_opt_ctx_t *ctx,
->  		if (*arg != '-' || !arg[1]) {
->  			if (parse_nodash_opt(ctx, arg, options) == 0)
->  				continue;
-> +
->  			if (!ctx->has_subcommands) {
->  				if (ctx->flags & PARSE_OPT_STOP_AT_NON_OPTION)
->  					return PARSE_OPT_NON_OPTION;
->  				ctx->out[ctx->cpidx++] = ctx->argv[0];
->  				continue;
-> +
-> +			} else {
-> +				return handle_subcommand(ctx, arg,
-> +							 options, usagestr);
->  			}
->  		}
+Good catch! ${patch_name%.patch} is POSIX and already used throughout git's
+shell scripts.
 
-Editing the hunk to only show the postimage shows us that the blank
-line at the end of the "if ()" block is funny.  Drop it.  Or even
-better, as the block either returns or continues anyway, lose the
-"else" block, perhaps?  Which will make the above read like so:
+>>    fi
+>>
+>>    if [ -z "$dry_run" ] ; then
+>>        git apply --index -C1 ${level:+"$level"} "$tmp_patch" &&
+>>        tree=$(git write-tree) &&
+>> -        commit=$( { echo "$SUBJECT"; echo; cat "$tmp_msg"; } | git commit-tree $tree -p $commit) &&
+>> +        commit=$( { printf '%s\n' "$SUBJECT"; echo; cat "$tmp_msg"; } | git commit-tree $tree -p $commit) &&
+>>        git update-ref -m "quiltimport: $patch_name" HEAD $commit || exit 4
+>>    fi
+>
+>… so may need protected as described. Neat.
+>
+>> done 3<"$QUILT_SERIES"
+>> -rm -rf $tmp_dir || exit 5
+>> +rm -rf "$tmp_dir" || exit 5
+>
+>Ditto for cleanup.
 
-			if (!ctx->has_subcommands) {
-				if (ctx->flags & PARSE_OPT_STOP_AT_NON_OPTION)
-                                	return PARSE_OPT_NON_OPTION;
-				ctx->out[ctx->cpidx++] = ctx->argv[0];
-				continue;
-			}
+ack!
 
-                        return has_subcommands(ctx, arg, options, usagestr);
-
-or swapping the logic the other way around, i.e.,
-
-			if (ctx->has_subcommands)
-				return has_subcommands(ctx, arg,
-						       options, usagestr);
-
-                        if (ctx->flags & PARSE_OPT_STOP_AT_NON_OPTION)
-                                return PARSE_OPT_NON_OPTION;
-
-                        ctx->out[ctx->cpidx++] = ctx->argv[0];
-                        continue;
-
-may make the result even easier to read, perhaps?
+-- 
+Thanks,
+Sasha
