@@ -1,166 +1,206 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD70C3BA24D
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 13:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773063501; cv=none; b=ShORgXoVceav4QBUj8hSr2gFFnuaCBu/7BUhhBv9EIUm3XArKSIHGxnlDZ8MEUh5moI6nfXIzwjwghZtRnzR6sx5CgM6xxcEnIf5Ju2CkKO81WKMhnLZ2AfUEurrynYxjBCzaU+iR7Gjc6q/dHfxMfrSHRuz56LLiUCQvW5oxPQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773063501; c=relaxed/simple;
-	bh=EIOULMQkc8nQxvz92ux7v56Ivp+befdbqqNXiNIs46U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mvA5nAd7FqdzZ+ovbljynjOPnCrft+mzD6nhWjkunoAebS+Y7H2KONCXIQpEBmwvOdRGYWfFwGCdsXRGwStNzA1L4mPaj/v4ZU6E6eAlA81tfTj0NYOzBhc7cU7wTow2rKMDBlFuIKaYn7SfEfTLdMemj9P2AJu7HLVNgA2SIqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I6jvOrCP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KlpRTNsH; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDA638E10B
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 13:38:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773063535; cv=pass; b=WKZnIVpXo4svOGQNCRBcehAAnhTO6YAWkaODdGd+aIoUyAceZddJI4wOqKUKjXepph3mLwwLgkx+7smm07qyuWfqq0yv1por4ywvQ9eV4MprKgRj1u4cMIdBsZxdzhmSy3KvF4MayBgr3aOE3getrvJMv5kwYc28dz0XBEzod0Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773063535; c=relaxed/simple;
+	bh=c0SkI4o7W7G2BLyCprFUQd+fWNx2rhQb6KToBRz7hKE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Y6O0N1zvosBwEb5GKpixOCUIMyEG0E1YsllHwdiKu1Lo+fv+IDkEWohu/7u9OpEXBbYrJKc2S0pRdpVD3QMuC3rjZnvBFS4rhLHSrRIHTHwy833ggo0EKu5PFVY+EYH2xanEmeoPfbpjJaHwL9Lp09diqKdzyRBfHXGjX7ltl38=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=hWcye/XN; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I6jvOrCP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KlpRTNsH"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id EFA6AEC02E6;
-	Mon,  9 Mar 2026 09:38:18 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Mar 2026 09:38:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1773063498;
-	 x=1773149898; bh=jdsMbipkp+ARclz5gpqB5PsrgQgxTBFnhS/VQ0hGtOo=; b=
-	I6jvOrCPysheINYCZDTelQRO7s8O9Y7sapHimjqF/AMr1uXYE5nCcj18XBP3Jdr8
-	xnmitfuVQrIC33binwWyoZSGQY/ABQFZCxQwDred6xzEff0TZlXZpV/gWv7cnZIu
-	QbYr3GNVN8wbWok341Jq3qBty2cwz2YUvo6ftT0A/+bwbouNZB2VsF2Qutt6Kia6
-	M4tYD1r1GQz/v/kz3eXJ1B3j4vlQst1JQnZklsUXNuARRDyS/vafBLAJ3HczoLvA
-	/6tvVfC3Qd8x3Ov165SqP57JY5nJWLlKZ7QwKEpZpfPFEEzg2O8DbNyq/moE0a79
-	FWG0hsmtU8yJpdHzdjIeQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773063498; x=
-	1773149898; bh=jdsMbipkp+ARclz5gpqB5PsrgQgxTBFnhS/VQ0hGtOo=; b=K
-	lpRTNsHD9s0kKOMy0KTjuethKfGlztz6/3sq+IZWsjaHqjhOrcpTefghZB6ypgrr
-	GToTTYhZqAnR6kxBD+bQrVVmZNLUswrUmiT6a0DOJj+ncGqIwrmFa9EiUvRas+At
-	ho9Cm+kdC7+8ljCT/asAbDTA5LJUZS5gCDaNw6TM+TKiSSiKnH4SoGi2KqI/QN+Y
-	MXwcoGF6MQXIMMoZpsxARrn36Bu9nTYqsYoXjtOw00yrrzsILINmkEm7nUQdrShX
-	sRiTQO/yyTYOzoEasVgm0chzY66bcp76UeOUBlqv9P8fGptXuCPvV88cmOk6E6kY
-	9eEagUkb1qvecdmKY9PMg==
-X-ME-Sender: <xms:Ss2uaUWOYtTcxM4pNtfB5P9lMckcIRT470rfBGxAL2sSBJBV38lZ0g>
-    <xme:Ss2uaa2VMvajsSTefRkGs_KMZWpDW771407txmbRxFHTFq2Hh_7SAvm5GZvbRyMqU
-    HS7mP1lQoNwsAep_KZISK-TexJ_I7n30XdDXhlvvKhdiuV9tMAcy8E>
-X-ME-Received: <xmr:Ss2uaaoEwzIQjhmLUHuSOJMmmc8mOsi8HmwQj-vmGDRkm9O0ZZBY_RFRvVRi-LETVInV3JroAzM97Hub6OkbTRnBV8fkwdTOqg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeekvdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhp
-    rdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Ss2uaZUmoRqz8SMkioQiaBxh87MCoeOJDoZTvDCfHv31dAK6BJ0PXA>
-    <xmx:Ss2uadYfWC5p3NIEvsibZdWYfoXm78MkPSzTq687MOoh9SYMgbA7Sw>
-    <xmx:Ss2uaecxtSduP7jBPQABcdgAGebuePv9Road6DixNP0BlQ2xdk7O8A>
-    <xmx:Ss2uaf0kynma0XwpUMe0Ds-6XdIAyhxPRWN-8zihax4Jpn3SZYUlZA>
-    <xmx:Ss2uaQeNMEd6y4WyjdGrxLK4zp4ywPlDb8GtgHC4bXDWAYXuxI-x8vbk>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Mar 2026 09:38:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  me@ttaylorr.com,
-  phillip.wood123@gmail.com,  ps@pks.im
-Subject: Re: [RFC PATCH 2/2] push: support pushing to a remote group
-In-Reply-To: <CAPSxiM_KVU7rE49=omWUwaYS-u_J6eQPDgTRjPop1gj6BM1qKQ@mail.gmail.com>
-	(Usman Akinyemi's message of "Mon, 9 Mar 2026 06:26:49 +0530")
-References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
-	<20260305223248.170785-3-usmanakinyemi202@gmail.com>
-	<xmqq4imsv13x.fsf@gitster.g>
-	<CAPSxiM_KVU7rE49=omWUwaYS-u_J6eQPDgTRjPop1gj6BM1qKQ@mail.gmail.com>
-Date: Mon, 09 Mar 2026 06:38:16 -0700
-Message-ID: <xmqqzf4h6s3b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="hWcye/XN"
+ARC-Seal: i=1; a=rsa-sha256; t=1773063515; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=f4J32pdiMLP2q7MnjrnOjYK6BPWR9X3R9+Zqo4GWeaP1idPNxQvRcjvLc/nwqTbzscf8FK0iwS1vCrYR2B3LESowYgOEnM2OxUIYPPhliqKiqH0aNJ3lVTk61QaaXoFjjLOgi7EJlwzKiZ26mGRbfJNx0j5fI888vZnMPHhayX4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1773063515; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=b5D73cNB3fv5JB/dOhoTUm707VcUqkGJ8774kr+d1L8=; 
+	b=P1ii0jj1j7T517ZKnZ+rLepW9/1K5qUAlzEVPC4bLLNahDEI94donvpfHk0kg+o6Cf12XKgijbEEFXsfmyqtkxabFh+DcW+tW66cy2Ef83s8NECKGc0Ez/PRgqc7xQyCbOFJ3lmmo6f6cKSkMEsayhzTn6VN0qWmge9jigmd4uo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773063515;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=b5D73cNB3fv5JB/dOhoTUm707VcUqkGJ8774kr+d1L8=;
+	b=hWcye/XNcpb8FDkKerI8WKKSfECrVVf8x8s+eFwUQrnOMfl+4nbVd2V/Emz/Ti69
+	ENbwn3mBkX45E3eI9le+BCo7biLk1oIYIhbsKQddWbs4pBvGdRZ2YVBBtD/Qkm+vxP4
+	v1esOj22qw+sWVyrYXxDPcpN2rJ24KHQebwECMaM=
+Received: by mx.zohomail.com with SMTPS id 1773063513213700.355870378674;
+	Mon, 9 Mar 2026 06:38:33 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v3 2/9] config: add a repo_config_get_uint() helper
+Date: Mon,  9 Mar 2026 15:37:32 +0200
+Message-ID: <20260309133739.294555-3-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
+In-Reply-To: <20260309133739.294555-1-adrian.ratiu@collabora.com>
+References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
+ <20260309133739.294555-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+Next commits add a 'hook.jobs' config option of type 'unsigned int',
+so add a helper to parse it since the API only supports int and ulong.
 
-> Also, in the cover letter, I asked some questions. I think you might
-> have missed it.
->
-> Quoting here again:
-> "
->   - push.default = simple interacts poorly with group pushes when the
->     current branch has no upstream set, since setup_default_push_refspecs()
->     will die on the first remote that is not the upstream. Users should
->     use push.default = current or explicit refspecs for group pushes.
->     It is worth discussing whether the group push path should automatically
->     imply push.default = current, or whether a clear error message
->     directing the user to configure this would be sufficient.
->
->   - force-with-lease semantics across a group push are currently
->     unmodified — the same CAS constraints are forwarded to every remote
->     in the group. Whether this is the right behaviour or whether
->     per-remote lease tracking is needed is an open question.
-> "
->
-> I will want feedback on this also.
+An alternative is to make 'hook.jobs' an 'int' or parse it as an 'int'
+then cast it to unsigned, however it's better to use proper helpers for
+the type. Using 'ulong' is another option which already has helpers, but
+it's a bit excessive in size for just the jobs number.
 
-Quite honestly, I do not have strong opinions on either of these
-points, primarily because the answer would become self evident if we
-follow a simple general principle to explain this feature to end
-users, which is:
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+ config.c | 28 ++++++++++++++++++++++++++++
+ config.h | 13 +++++++++++++
+ parse.c  |  9 +++++++++
+ parse.h  |  1 +
+ 4 files changed, 51 insertions(+)
 
-When you have N remotes r1, r2, ..., rN, and a remote group G that
-expands (possibly recursively) to these N remotes, then for any and
-all values of $options and $args, this command invocation
-
-    $ git push $options G $args
-
-should mean exactly the same thing as
-
-    $ git push $options r1 $args
-    $ git push $options r2 $args
-    ...
-    $ git push $options rN $args
-
-So the answer to the first one would be:
-
-    "git push r1" (without any other parameters) may work while "git
-    push r2" (the same, wihtout any other parameters) may fail,
-    depending on how the push.default is set and on what branch you
-    run these two pushes.  "git push G" should behave the same way.
-    There is nothing extra fancy needs to be done.  If the user
-    wants to push to these N remotes as a whole in an identical way
-    by using remote group G, they are the one who is responsible to
-    make this sequences of pushes "git push r1; git push r2; ..."
-    make sense.
-
-The answer to the second one would be derived the same way.  If
-$options includes the "--force-with-lease=<commit>", then the
-command should behave as if copies of the command that pushes to
-these N remotes, "git push --force-with-lease=<commit> r$i", are
-invoked.  If <commit> is not given (which is not a recommended even
-for pushes to a single remote, because with background fetching,
-guesses based on the remote-tracking branches are never be
-reliable), the command may guess what commit to expect on the remote
-the same way as if these N independent pushes are made without using
-group feature (which of course may make different guesses for each
-remote, if their remote-tracking branches are pointing at different
-commits).
-
-
-
+diff --git a/config.c b/config.c
+index 156f2a24fa..a1b92fe083 100644
+--- a/config.c
++++ b/config.c
+@@ -1212,6 +1212,15 @@ int git_config_int(const char *name, const char *value,
+ 	return ret;
+ }
+ 
++unsigned int git_config_uint(const char *name, const char *value,
++			     const struct key_value_info *kvi)
++{
++	unsigned int ret;
++	if (!git_parse_uint(value, &ret))
++		die_bad_number(name, value, kvi);
++	return ret;
++}
++
+ int64_t git_config_int64(const char *name, const char *value,
+ 			 const struct key_value_info *kvi)
+ {
+@@ -1907,6 +1916,18 @@ int git_configset_get_int(struct config_set *set, const char *key, int *dest)
+ 		return 1;
+ }
+ 
++int git_configset_get_uint(struct config_set *set, const char *key, unsigned int *dest)
++{
++	const char *value;
++	struct key_value_info kvi;
++
++	if (!git_configset_get_value(set, key, &value, &kvi)) {
++		*dest = git_config_uint(key, value, &kvi);
++		return 0;
++	} else
++		return 1;
++}
++
+ int git_configset_get_ulong(struct config_set *set, const char *key, unsigned long *dest)
+ {
+ 	const char *value;
+@@ -2356,6 +2377,13 @@ int repo_config_get_int(struct repository *repo,
+ 	return git_configset_get_int(repo->config, key, dest);
+ }
+ 
++int repo_config_get_uint(struct repository *repo,
++			 const char *key, unsigned int *dest)
++{
++	git_config_check_init(repo);
++	return git_configset_get_uint(repo->config, key, dest);
++}
++
+ int repo_config_get_ulong(struct repository *repo,
+ 			  const char *key, unsigned long *dest)
+ {
+diff --git a/config.h b/config.h
+index ba426a960a..bf47fb3afc 100644
+--- a/config.h
++++ b/config.h
+@@ -267,6 +267,12 @@ int git_config_int(const char *, const char *, const struct key_value_info *);
+ int64_t git_config_int64(const char *, const char *,
+ 			 const struct key_value_info *);
+ 
++/**
++ * Identical to `git_config_int`, but for unsigned ints.
++ */
++unsigned int git_config_uint(const char *, const char *,
++			     const struct key_value_info *);
++
+ /**
+  * Identical to `git_config_int`, but for unsigned longs.
+  */
+@@ -560,6 +566,7 @@ int git_configset_get_value(struct config_set *cs, const char *key,
+ 
+ int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
+ int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
++int git_configset_get_uint(struct config_set *cs, const char *key, unsigned int *dest);
+ int git_configset_get_ulong(struct config_set *cs, const char *key, unsigned long *dest);
+ int git_configset_get_bool(struct config_set *cs, const char *key, int *dest);
+ int git_configset_get_bool_or_int(struct config_set *cs, const char *key, int *is_bool, int *dest);
+@@ -650,6 +657,12 @@ int repo_config_get_string_tmp(struct repository *r,
+  */
+ int repo_config_get_int(struct repository *r, const char *key, int *dest);
+ 
++/**
++ * Similar to `repo_config_get_int` but for unsigned ints.
++ */
++int repo_config_get_uint(struct repository *r,
++			 const char *key, unsigned int *dest);
++
+ /**
+  * Similar to `repo_config_get_int` but for unsigned longs.
+  */
+diff --git a/parse.c b/parse.c
+index 48313571aa..d77f28046a 100644
+--- a/parse.c
++++ b/parse.c
+@@ -107,6 +107,15 @@ int git_parse_int64(const char *value, int64_t *ret)
+ 	return 1;
+ }
+ 
++int git_parse_uint(const char *value, unsigned int *ret)
++{
++	uintmax_t tmp;
++	if (!git_parse_unsigned(value, &tmp, maximum_unsigned_value_of_type(unsigned int)))
++		return 0;
++	*ret = tmp;
++	return 1;
++}
++
+ int git_parse_ulong(const char *value, unsigned long *ret)
+ {
+ 	uintmax_t tmp;
+diff --git a/parse.h b/parse.h
+index ea32de9a91..a6dd37c4cb 100644
+--- a/parse.h
++++ b/parse.h
+@@ -5,6 +5,7 @@ int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
+ int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
+ int git_parse_ssize_t(const char *, ssize_t *);
+ int git_parse_ulong(const char *, unsigned long *);
++int git_parse_uint(const char *value, unsigned int *ret);
+ int git_parse_int(const char *value, int *ret);
+ int git_parse_int64(const char *value, int64_t *ret);
+ int git_parse_double(const char *value, double *ret);
+-- 
+2.52.0.732.gb351b5166d.dirty
 
