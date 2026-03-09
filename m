@@ -1,130 +1,133 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FC53446A5
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 22:14:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773094488; cv=pass; b=GrODrbFu8ynmhu0Ur1OWQFL2raGlSn5lp3UwZBp0oUmcaH9QbBCYlrxdGDUJ1FlmlEQiv2A1kLE4iPk3s1UQA8erAr8ZlwSIxnDCRAvVDe12tQSmkKZS7GP8mk94KEofabbb/GgMjZMYL4ZQSGXsiaPmqa9glxRMcAuaT/uhJps=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773094488; c=relaxed/simple;
-	bh=WEp6Qia8T7xfSLUSL1USGxCHP7Nj/LehuihwcWjeBIM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nbWc9mqvChr1GdSw+OdMls7t/KxMj3LpVdhklcrrgL5QZKUmGpMFGtJ2mZ7NBOZfEl01XYXN63hf+ZOCF8MEo+CJPY7renp4tDjghsZ2wo2OyM0AZAbX+ihkSRVa2BgH+/b+YfNTAcG3tjrdPurMECYrFPQuXZaqY9XAsp8usug=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eHQnAikf; arc=pass smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776DE29AAF7
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 22:15:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773094509; cv=none; b=ucbKERTiTGZrYNKB81pJQDUOoqUpbO85YpHgpFoQePwh4K80Z7fSD7Q8Msr/Xv9w1KLZmPKpv+Z1I/5TgPXOggileFPNgOUdJGW/DG4vus+NsCFZIdPzUVASDfjynqU8VDcgDGtZAHaqAR9E0iU2x6JfRjJTgv1YaLhsvF6TXD8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773094509; c=relaxed/simple;
+	bh=DxwN7EIqvMTU6MBe25bl+3avFAqobIjpzodnB7pA77o=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZdfinktIbpFYcMxy4GgFRGANPtMjAy5gNL9SpkqwIIgJ9+bq+PIoMXcZ41R3UOz5mhf6/6DDXHY/w8qQuy0j0KErZe7UPdYeBp2ps0xIGyvzG2yFiEPUqL8YhhJ0g1WakDd1fKq4aEsqHqOojRGoaMrwHiX7d40i3tUWvlPm/SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IJCnVp2L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=co//IcSW; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eHQnAikf"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3598e065d8dso4119177a91.2
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 15:14:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773094487; cv=none;
-        d=google.com; s=arc-20240605;
-        b=axr9rbmrtHfd1s7YnoKsWRTvqXMewqt9UqE1cFCrJgqMoHn+C+FiKABVHNXjy/pPRq
-         dn5yEI4zEzmBC1wjKnFAXSteJNgk78DYoYoc4HnCLf9YQjK2hAmL2hcttTc+ST5W6PyD
-         jGfENwJYFiudiq1nvTdmnDDW0OdwZcO9bnMIqRrvGEOz1dez7o0Z02LDfh+Q5++UwiAS
-         HNrEfdRY1EyjNApUnVzzxIi8Emtb7tulIUwpQmT8EQAitkTT3IbmFzLHmoCwDOZAmuwM
-         hGsGa4YL3DNNQ1+84ws656TU8RWQN/nEbPi48aWiCW0IoFD0sGf0CXp3YkbcbR+bq0Jz
-         Qm/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=WEp6Qia8T7xfSLUSL1USGxCHP7Nj/LehuihwcWjeBIM=;
-        fh=rg6xByg/zLyX4Alt3KuoGv8Yy8uxn7jh/BxXzYI5/Gw=;
-        b=faxtE1An5/ffHlD1Bll30kweAy706Paia48WlgAMUc7VOkdsOI84k29qwF7p2QXXl1
-         GXK2C5kKZ6GcG8zuk4pWaEXJXBjT5D6eZGUy5IIDk2d+dqQHhJ6XRABCFUi6VRayBYFS
-         0FxIW9NNV9nOndYwQA+qbtSDLXVor0qFUPknlMEnE25Uk7YUeokOlOnnTBG0fJrc7afO
-         U7NEvvIFmKExyzfTZWY65yL4oHIvM6XjUliPbjBKJ5U2D8Hh/1jNFXfyO2C/lUdSFQi+
-         NrBBgz/sIFKO2LtwENLkMC7WaDnpNILecJSnNdnSe2JNSy9eZVP1ZD3TO/8w3OFBcr14
-         TSyA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773094487; x=1773699287; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WEp6Qia8T7xfSLUSL1USGxCHP7Nj/LehuihwcWjeBIM=;
-        b=eHQnAikf8DuSyMeMLok9sFGe9FAkqsPGENdPQ77E7BhWTrK74vp5RwrwSMAypYGfBK
-         jkpUV+P0iVsao1zbZy3stJ7G4ntF8hEi05gPGvFNlzAV67U7Zt0IBT8G3NnNQN+vee3c
-         qfz9UZrO8K382DqlLsyBMAqjFSoBNwDxEh1wcO8yfuyqYvV+m5PiTwyqw6mk8QkG4gfT
-         SbM5jT6wLGdKqxu3Q8cLxWvigFi122e3cH411kovQB/IjOVGukvsuqOPkRuJBsXBs4ER
-         /jmzNxc8Yy0LYpmLBkbB4m4xP1/mQ7qbNmKSr5Sne5syWQsRRnw5d4RD0Htp6qgKZxIN
-         CnXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773094487; x=1773699287;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=WEp6Qia8T7xfSLUSL1USGxCHP7Nj/LehuihwcWjeBIM=;
-        b=tQSagvqg37jF9Ety7yKfiaofFR2cHLjWMSeVAW3qlbmzxwzSlT+6dPLdXRqC/MCWmF
-         c874iscrI3Mp0HKxEjWXgkzjbmT1FcGllmE6N8e57C00mkAK14MAgY8QjdmF242xCESM
-         P603mnBmqc5UuIUjUsR9MQRrcw2YPf4hVJWwxsUNYoTGRtix5JF9d9iOG1tYK5MrSfTD
-         1h4gh1PA6scQ84k1Vsyoz8qDZATKW0kcWat6rmkdnl1vq2wEsRYh4lFuM5VOMtL8EgZp
-         lBrN2jciaba7Hj91Ut8qARhnm1oe6AstDVYqwlolo2v1JnGIBq6cNL4WPMR57MRPMh0b
-         Y/vA==
-X-Gm-Message-State: AOJu0YwusWQI6uBnuSLmb7Cw87GheNjw/C/km9lcWG0NjQsQSRN9Qwtx
-	pFSaicVvlXL4kSR1iPRkcaq9pl1xq+uNagIpaUzFkbPXAHTVwHVM+tDUQo7KicolZC/+PeNpRKz
-	RplLtY/DFzqPosLEKUQdIJHovy2ekqIA=
-X-Gm-Gg: ATEYQzwOC0vwHgmxGHse+tEVx5NgMLUjQx/lSsiVhlvMhEaYTsQiJqTfzLFOvGlloQB
-	WVlun51zdHFZN+ZdIyebuBz1YCWa8iJ3bfpuFluOIGTHwqM4NIXQt78mJL/2sgBecMddv/rH6a5
-	er/B8YTv4FsIloyGXCTvOPvuD88UtrAtd5TChjLoF8xJ6KjN7XBtDyopHUpGbvlp++42/koEl4d
-	PcU0aQOUEsiVL0TCfXkZLwvmoQgdPa50utYkAOCsTGj2DpFtRuI2vM8DkONK9ZO5YZJAFrorr/Y
-	4RlH1k2nUSvOA8Rsq3aUV5t+QK0JP2DFnSna402gHbgsfQE9riDZUt251e2+4i1d9qKbuv0DZYR
-	++XjSsfI6eLlumWLl9FCp790N9Fo=
-X-Received: by 2002:a17:90b:1fcf:b0:359:1130:1042 with SMTP id
- 98e67ed59e1d1-359be34e415mr10293879a91.23.1773094486817; Mon, 09 Mar 2026
- 15:14:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IJCnVp2L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="co//IcSW"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C62BB14001CF;
+	Mon,  9 Mar 2026 18:15:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Mon, 09 Mar 2026 18:15:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1773094506; x=1773180906; bh=GpRQP8dZaLD7C3wmir/D6srqQokiaBEY
+	0GRqNNmqTuI=; b=IJCnVp2LbY2kQxLZVTxANWWTMVTi31DYJjd43h3SyhiqSTd0
+	ndQOeNXNtoYvQuDLE6KDe+jY+T98OPeICkg9gKOD7sW78nsmRTCT+qw/eXoolRtT
+	KxKW6kJCkSZoTfMGpkfWrCiV21zssv971JdxixUIVfdnPcCg29Uc0Mxshqwk1tEy
+	sd0dT7QbeMRFwjauprZpCwB2jH3FUowc/N3cPiFWx3yewSebEqhLsEVjKZWAZ2w0
+	gM4Pi1DpY3zeKgYUWV7ixinIHEPV0BLE0n5ivs9YWb9ObhJMJgs4OjyUTuZXO06a
+	80up0Nr3z27pVT0uWYAT++c6nqLvB4+BCLwEYQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773094506; x=
+	1773180906; bh=GpRQP8dZaLD7C3wmir/D6srqQokiaBEY0GRqNNmqTuI=; b=c
+	o//IcSWJUtgYzQqg4iilx3EMYJ7FwZ62Q1yHdulgOGFcio2QFHl/xih0wMglonXZ
+	s/ON+C1R85PlOLih0n6nESwRJIGzrPCpiCrzde6iAedsz4wMz6IPI8b2y4c9iVnp
+	k/ZQARCt0Ab4ELVKiIFGDk50qcssPKSGKPEHdDyXjg9gSrHbCiQ19/PpfqpyFTD2
+	YVqrPDISWJ/mpLPIcj15sGGX2C13tP6ENpgDaSi68tJnQd7PZ8/pvNltLHRi+h1I
+	Es79M3RF1f4fKkjaRts9j5SkeAMWVAvCQy9CVzMhYcrKrJSR97CkxfhkWyCjFkVJ
+	z9hxtruJmwwjWdw8G6Rkw==
+X-ME-Sender: <xms:akavaZ3Z309ON1CNjCEBwWL9wQKFqZZVgx2otGJdch5ZafMNLtGPmg>
+    <xme:akavaWFVIrs5PHdo87-7iWD9XevRgUac9gnuXx4EeirbUb2831GjvI-WkDj9ZMEVt
+    oynHOfDEXnoB4HB0fpRJNpQZYr7IU9yWRBD45gCbLdkwzpXNzTh>
+X-ME-Received: <xmr:akavaXh2CI7Vh5TK1ubSJHCbwtpAcTziqFd1DQMBnTP5rpMYNXtnrys4QKOEoitcDEK_epD1MDgVvQDNCL6dgin8Rpjhniqt-A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeelfedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnhepiefgieeggffhtdelveehueejleekhedtte
+    dtgeffueetlefgudeuieekveefhfeknecuffhomhgrihhnpehkvghrnhgvlhdrohhrghen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
+    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:akavaR-KhIKVbraYBdcWD1diJ8M_lsngjPO27XOO-JBJzzhqK_Esew>
+    <xmx:akavaeom4cZWMrIqKXTqFj9V9G_iG9J0X0pk1O3oPgUHvKZaHPJiyA>
+    <xmx:akavaQ-5I2DZjK2LracekSGQjZ4zCtlfus_vk0A1lfKRULFv5i9LMg>
+    <xmx:akavaSX44X50C5GBGJJsMSxEhkmtmkihhqzMgjwD__BYVCyuLuFHOg>
+    <xmx:akavaVP6erurOzG94PuFIMqp8QhuuL6ndP-WoF0Cd3sfOjeYeGpaEr6I>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Mar 2026 18:15:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] SubmittingPatches: spell out "replace fully to pretend to
+ be perfect"
+Date: Mon, 09 Mar 2026 15:15:05 -0700
+Message-ID: <xmqq34283b12.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <032a7767-2350-4312-a7b1-75080519c72a@nutanix.com>
-In-Reply-To: <032a7767-2350-4312-a7b1-75080519c72a@nutanix.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 9 Mar 2026 18:14:33 -0400
-X-Gm-Features: AaiRm50u0QhSN5MJl0DsGPEtWY2Aw4vmPYVI94VL6fmAL10b3u2AUoZbfTZE5nk
-Message-ID: <CALnO6CCR1BioeC_eYCBt9BCrFS63L6f_5p2nTk=Z9eOAj3hW1A@mail.gmail.com>
-Subject: Re: Option for "git submodule foreach" to also run on the parent git?
-To: Florian Schmidt <flosch@nutanix.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Mar 9, 2026 at 8:56=E2=80=AFAM Florian Schmidt <flosch@nutanix.com>=
- wrote:
->
-> Hey everyone,
->
-> would there be an appetite for a new option to "git submodule foreach"
-> to run the foreach command on the parent git repo as well?
->
-> I occasionally use "git submodule foreach", for example, to make dev
-> branches on all the submodules if I expect to touch them all during a
-> dev cycle. Even if I don't need them on all submodule, once I'm done
-> with everything, I might run something like "git submodule foreach 'git
-> branch -d <foo> || :'" for easy cleanup.
->
-> In either case, I likely also want to run the same command on the parent
-> git. That's easily achieved by just running it manually one more time,
-> and I'm sure it's not hard to make a git alias for that either. But I
-> wonder whether the workflow is common enough that there's interest in
-> adding a command-line option for that? I'd be happy to have a look in
-> that case.
->
-> Also, tangentially related, "|| :" works, but what about a command line
-> option to continue on non-zero return values and not abort?
->
-> Cheers,
-> Florian
+It unfortunately is a recurring theme that new developers tend to
+pile more "fixup" patches on top of the already reviewed patches,
+making the topic longer and keeping the history of all wrong turns,
+which interests nobody in the larger picture.  Even picking a narrow
+search in the list archive for "pretend to be a perfect " substring,
+we find these:
 
-This is not particularly general-purpose, but don't we have
-submodule.recurse (-> switch, checkout) and
-submodule.propagateBranches to make this kind of branching workflow
-easier?
+    https://lore.kernel.org/git/xmqqk29bsz2o.fsf@gitster.mtv.corp.google.com/
+    https://lore.kernel.org/git/xmqqd0ds5ysq.fsf@gitster-ct.c.googlers.com/
+    https://lore.kernel.org/git/xmqqr173faez.fsf@gitster.g/
 
---=20
-D. Ben Knoble
+The SubmittingPatches guide does talk about going incremental once a
+topic hits the 'next' branch, but it does not say much about how a
+new iteration of the topic should be prepared before that happens,
+and it does not mention that the developers are encouraged to seize
+the opportunity to pretend to be perfect with a full replacement set
+of patches.
+
+Add a new paragraph to stress on this in the section that describes
+the life-cycle of a patch series.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ cf. https://lore.kernel.org/git/xmqqo6kw3bjp.fsf@gitster.g/
+
+ Documentation/SubmittingPatches | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
+index e270ccbe85..f6ec8a3dde 100644
+--- c/Documentation/SubmittingPatches
++++ w/Documentation/SubmittingPatches
+@@ -43,6 +43,18 @@ help you find out who they are.
+   respond to them with "Reply-All" on the mailing list, while taking
+   them into account while preparing an updated set of patches.
+ 
++. These early update iterations are expected to be full replacements,
++  not incremental updates on top of what you posted already.  If you
++  are correcting mistakes you made in the previous iteration that a
++  reviewer noticed and pointed out in their review, you _fix_ that
++  mistake by rewriting your history (e.g., by using "git rebase -i")
++  to pretend that you never made the mistake in the first place.  IOW,
++  this is a chance to pretend to be a perfect developer, and you are
++  expected to take advantage of that.  In the larger picture, nobody
++  is interested in your earlier mistakes.  Just present a logical
++  progression made by a perfect developer who makes no mistakes while
++  working on the topic.
++
+ . Polish, refine, and re-send your patches to the list and to the people
+   who spent their time to improve your patch.  Go back to step (2).
+ 
