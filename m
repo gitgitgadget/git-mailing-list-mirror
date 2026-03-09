@@ -1,88 +1,83 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F7C358388
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 07:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A55256C84
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 09:20:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773040422; cv=none; b=MfXC/X+vTFJTgiY32uBpu4U56Eg4ISJF5rOqPbVkaAD/0boIFvw+E0OwKT1lSUK5g2O3ZQ4PPhEGEoqNvQDust4bCKVBkdifjLRWIxR5k2bueyInZIxR3k/aDbzwdqOt/KowFhR7Fdf1g2Yo8DBvmm4GS1f0D02QQA5qkRrHe1Q=
+	t=1773048057; cv=none; b=qopxFy+qnVTGuOxuonEdz1L10DmbzZXJ7wfe8h13T/A7thf+h6JAp2oPGj5a5jWRvq+tkiarUKhLwp9Lj+PgE3I/3l4LVldfkA01PB9RMVRwOtZsPKYZGXXk1MY5vpKu5ieHrqb7XYK2ZnZGUUyfTEB7ya51WFn5Y4JafR2x/O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773040422; c=relaxed/simple;
-	bh=aqTLuo6oCbuerjFzTYbZpdtbrsgiCWEnyfI/XgCNqUM=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=DxG7jrYQ5q+KeHt7vCPOoYFtmbs42Dr0GPc4Qus77rIck4lUK96hM3Q+yCBxm3vfhzKwmvzpzf44ht1qatAD4E2IEiUpTn2Dqy6J3dtmdAetEMHSM0f4sicZxgNIDfDbbBj1u5s7fjvEQbbCSo1IGfyWzlzVdr59PfuAam4wcWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=SDjVHkgI; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=T1x21w5i; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1773048057; c=relaxed/simple;
+	bh=uyd65+0be2O+2LYoU/56KCR0XLpkTT2IZC1gvlRAaMA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=VV7hDm9dsyHBA9YC9dkO80U2P/Sswk3/FptIsP89/NstHANk1pnSqGWJIBKOvlANSPlme6Z2cat9okvOmogSn6aLPSyojdkbMuslgP9I1x/Y0rG54EnHK42Xx0BWnrv8BDSbVH79SdRqyia29hjhXOZ9/8AVofM7X6zWRoRJFPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fx11RSMb; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="SDjVHkgI";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="T1x21w5i"
-DKIM-Signature: a=rsa-sha256; b=SDjVHkgIF3lu+aQBtl6c6fUlZi9RlrEwblG9vbRxTeVOUkCkatuXkoOEu2qzl+rmdMaTqN7JzUOFrgupTLMSt3zrhO8I1+u+FMkIJ58Ijf14UKImZbFnD1KIvSkEl2EIhrSJdv3EhlkwJ5HU+GfPoTKKwxChAhnDEVd4XkxGJXX/ZCwB4HJ+HJuIxQG9Yl7HZCRN+MWFVuNhzPrR9RcCJJZ9QlJkcU9COq1sN9vZtsxWgrSzdACFhWtrxEQf2E6I1PmPdZOlO0ZbAO3+FTjNFBFReVaN/DbSBHfc2SDUW75epNedWO1isrVqZf5ZhpKWIIRROzIJrIgjARxzNmNVbg==; s=purelymail1; d=malon.dev; v=1; bh=aqTLuo6oCbuerjFzTYbZpdtbrsgiCWEnyfI/XgCNqUM=; h=Received:Date:From:To:Subject;
-DKIM-Signature: a=rsa-sha256; b=T1x21w5iu+VVgivZ3C32npb9eR+l3m7NRmaMWLYwWqFiZAEs/I9l2UHjXqLoea4o7+1x7kWQRzHue5madeQCaUUtf7U+aNWS+x1pkGVfmuw06jAGeYJGnZVKgGsiJFLutQ3mbk5sZwE+Ml/mDTubuQ1Msoo5aW3KFcrQYirUXdLsMXT8YR2BIPO+zRPnJI0UPDSlFDmlMSkPWr8jejYsKUC+CJ3FHJMiR1qEPNKNrP7qW7sf6epptahKViQj1Dvz62eXJcnW5XTwA3WwnrO/ChH+8Gnxr77ZpLz6HuDdVjwyJ9cG22a7VYz0ubmrzFXQFFc5HVBx12uk3xI2a+vuxQ==; s=purelymail1; d=purelymail.com; v=1; bh=aqTLuo6oCbuerjFzTYbZpdtbrsgiCWEnyfI/XgCNqUM=; h=Feedback-ID:Received:Date:From:To:Subject;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPA id 1092770464;
-          Mon, 09 Mar 2026 07:13:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fx11RSMb"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-38a3225d59fso39321831fa.0
+        for <git@vger.kernel.org>; Mon, 09 Mar 2026 02:20:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773048054; x=1773652854; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uyd65+0be2O+2LYoU/56KCR0XLpkTT2IZC1gvlRAaMA=;
+        b=Fx11RSMbt2l+lJRWDtkx4X5xUNRPlP/MZWqQxDNmHkznJZeX3bsIape96m4AA8Hp+f
+         x4nvKvOPAtryPxpLi9U6STFsq2PSNcE3GNKyp2nMf2HeSiYAN8NyJyCnDtVgdlspgIdZ
+         +BqW2aunYIo8wRVb9MS7Oeob5E4f08BKV8CQ4waO7LwpA2MW2W6s4OK9Eh32mwLxJjdw
+         weDTNfhI8RVNWVk96TsvsYHKEUjOEU+Qx49np+i7OsXH3lS67O2gm1Yse9Vow3V2AkZQ
+         LLeNN4Spb56AYYvFPcyDidj1xujJhIQ285p33A2UOyJJjGrDNws6bqwXrhwtc4/RGkmr
+         zwSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773048054; x=1773652854;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=uyd65+0be2O+2LYoU/56KCR0XLpkTT2IZC1gvlRAaMA=;
+        b=vgudGqiWzJy1aKpQRzlIhiURtDhiz7D1ocQeyRZ+UO23j+uDG16ZErElWxhCEstH/v
+         ZbtDTecWSAHDwbqMrBGCUiv8vam7Aud+HR59gERFNHE5lRumK3aoS4lSxyHtMNCK4Gx8
+         o44MTLofS+nWfxf8BOo534gQfaubqQ/xX+FY80198ECdcrW+hJbLrlwch26I3Q611Rrd
+         ATsGBtWPtJFYA2ApzRzQ4oVFZeE4ItiJn9KvlBZ2ZnGjt0mQxBPNHjB9XHSjlo7CWrbL
+         p07oANHan9ct7AWj9eVGH9eKkFkZJoO893AkghZxDZ1IgrZUKsxM+p1wYCcEj9g9s7CF
+         4nyw==
+X-Gm-Message-State: AOJu0YyafRJQhQaFwn6I0iytUxnuP2v50F+lxSyGxHYlVghLRxNHRQac
+	gnacTIz2is1dqvrGnqqQJT/jMBZVQD2VQffKpGx86qG4BbnecRjIKOAq
+X-Gm-Gg: ATEYQzy3mqnI7eWNJ6BZsukpZRntYzPFHVRLKmWhuYd4i2aCcLnpT/cYwC3/CJ9EeCU
+	eQNVB88Us/Wg4YAdV9ojQ9pEQVoN4Krz0rfKwMtskK7qljPCDCVlNmjP/kUAezpbU98/cpQrQHG
+	3qEJtzwVuZ1OeM2128pGvKTgQG2uVe9dGfjuA0NxwwXs7Htk9b0lDt9oAeRJrMwM3q9v0Yg3wrH
+	rhG85mOafUWtiMSI8iQFkFyiIBajDzu3dVzvajh71SNvawDw3mCxqdTNxeR2Hz76UnpzcOZfqrX
+	qf19FqcTjtBNhz4QZFzoX+zP4O0Xe9jCAbRGUsshHqvUoX8hkJFpM/B1OteHuzSfMvP7IGPIfAX
+	EHnBFkHEIPC8RUDXwUTGoBQyWH2HfE0VfVTZXg9jitz36oabaBnzcHmWfv6zLn8fYHs3yMOX1K6
+	TiMkTLdzcBwHqvnat5guJZTM6TUJQ0HrGj3YUGdYHrLlA4CyztB2z3KpRDQ1afL3HflnRp17/SK
+	t1SX6BbMn/WPQ==
+X-Received: by 2002:a05:651c:211e:b0:383:5c1b:4968 with SMTP id 38308e7fff4ca-38a40a1c8b7mr39071841fa.3.1773048053762;
+        Mon, 09 Mar 2026 02:20:53 -0700 (PDT)
+Received: from Mac.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38a420305ccsm14707921fa.31.2026.03.09.02.20.52
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 09 Mar 2026 02:20:53 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com
+Subject: Re: [PATCH v31 0/2] status: add status.compareBranches config for multiple branch comparisons
+Date: Mon,  9 Mar 2026 10:20:52 +0100
+Message-ID: <20260309092052.79051-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqq5x7ba5jf.fsf@gitster.g>
+References: <xmqq5x7ba5jf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 09 Mar 2026 15:13:34 +0800
-From: cat@malon.dev
-To: drona <dronarajgyawali@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-Subject: Re: [PATCH v2] Make 'trust_executable_bit' repository-scoped
-In-Reply-To: <f03d40072ab106d1a0a7852718d42f56@purelymail.com>
-References: <20260301190017.53539-1-dronarajgyawali@gmail.com>
- <20260308183756.31860-1-dronarajgyawali@gmail.com>
- <f03d40072ab106d1a0a7852718d42f56@purelymail.com>
-User-Agent: Purely Mail via Roundcube/1.6.11
-Message-ID: <6e3d373f2f41232ca9015c39ae0ea67d@purelymail.com>
-X-Sender: cat@malon.dev
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-> Hi drona,
-> 
-> Thanks for the update! Just a quick heads-up: it looks like
-> you forgot to CC Junio (gitster@pobox.com) on this iteration.
-> Additionally, I think it's a good practice to respond to
-> reviews before sending new patches. What do you think?
-> 
->>  	if (!strcmp(var, "core.filemode")) {
->> +		prepare_repo_settings(the_repository);
->>  		the_repository->settings.trust_executable_bit = 
->> git_config_bool(var, value);
->>  		return 0;
->>  	}
-> 
-> Regarding the code, calling 'prepare_repo_settings()' inside
-> 'git_default_core_config()' defeats the purpose of lazy-loading,
-> doesn't it?
-> 
-> if (!strcmp(var, "core.filemode")) {
-> 	prepare_repo_settings(the_repository);
-> 	the_repository->settings.trust_executable_bit = git_config_bool(var, 
-> value);
-> 	return 0;
-> }
-> 
-> I think the standard practice is to drop the variable from
-> 'environment.c' completely and read it directly inside
-> 'repo-settings.c: prepare_repo_settings()' using
-> 'repo_config_get_bool()'.
-> 
-> Regards,
-> 
-> Yuchen
+Thanks for all your help here! Is there anything you need from me now?
 
-I accidentally clicked the wrong option and didn't select Reply All.
 
-I'll CC Junio on this message.
-
-Regards,
-
-Yuchen
+Harald
