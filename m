@@ -1,290 +1,160 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D62A2472A5
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 00:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044AC175A96
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 00:57:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773017709; cv=pass; b=BJEwaTM59dPUAmW2LEe++0KJvnpR7wAr1gA67bLWE6lz2ck3SvY9Qp6ITfDM8/PYmhlihbB1rsJHM6eJ5gQFEYN2W4oqHNNx4BKFDKlFq05Tpwbl2y/+rKoCmFZkOrVnZhthGMscs361NsuqIvwI9PmKDpLQzXTnr2yejrfgvTo=
+	t=1773017823; cv=pass; b=OmHPNUcslgTNQYUwNCyHVUXVjJwaHjaj4XnnQtxzZMUbibQ0YTTsulAmwy6cFEMEPzsY8T1i/mQb0KxunLz3anUfGq8G5AWGo7Bt01QprmJXrZVlLzj1NeKYMHUYEdCHa/O9Vb0iwQ5tgPMPCZ/kTuxS0S46VI7xBmLatTYljLs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773017709; c=relaxed/simple;
-	bh=o+8zFzZy87GBKMlXkdq07D343JqkRfRPpXVqk5COkgo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAJKLfB3/ulSKL9WmfNil9PKuCBEZKIoUuHPT+cSupyKWDtrGvBwm8C3LSASEBkdV0lTxiN34zmymaib+gtHpyq+HPLLZYU8oE+6MhRvSB+/h96CJCtgz/1qa9A0Q4+mnmeYQN3IybO85o5go6YHqpzdZD/7wAynUN3p0ga4kdo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Fwpd/qgX; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1773017823; c=relaxed/simple;
+	bh=gPQLQecXhkQ6+HPwd9+8iAccujt+B0PfuCBzFAdnRek=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hlwZDbhkFbV3aJNpW5L/wCh+WpJ7USYPrtOrHB2YNXFLmGKz/EBKktjrS2bzSSztJ2SyP5eJRgZjbp9JyDiqEkSva5hyLmhyf4PKBuq5OzxcSQ8mlihKRkw8bXoOB8Eyo6ZrXIZ9PwZ5UWQYbFI+cDxi1BEQncmrD/CvPp491uI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ntVogsVs; arc=pass smtp.client-ip=209.85.217.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Fwpd/qgX"
-ARC-Seal: i=1; a=rsa-sha256; t=1773017695; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=V01WDgwmmSuGaHvGjv/sxxuG+SieTGm9VkLH5yUk4lde+iYhAfAQiIGcaT2IMAf4XF++WUHDGnmsjRVPr6RgOOWI8LOUSmb4P+92ycIbB5jdbENPxl5wXHu8ZMtwCX+JoClm4iCN+4+uJyf2q014dUA1Q1ie/9fcO609YR6wuN0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1773017695; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=y7jfAKHJrciP0VfV4LagB/sZrCdnrR6uk3Q7ZlQibn4=; 
-	b=CtLgnPP9E1/38p/PAsWGar13fhWOcjoyZ54BTubnnEHuE0NQRP/8YgtdCLJYeVUuDVkbkuxamiMUvHMdwb7vNO9/RQHWMWF3fbpDolHr/LWSyU3nUzLgkz978fg3aFNDkV1Wz8MLVYXM0Lx9J8h+HQLSKHBN0GjOOQXSW6ms4bs=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773017695;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=y7jfAKHJrciP0VfV4LagB/sZrCdnrR6uk3Q7ZlQibn4=;
-	b=Fwpd/qgXczGXiZyi3scEQ4Rn3qGM6qFj8mRayJsr0809lbTyLMkZpczNoLyEyyo3
-	nJFM2y6TZpkzLotzA0C87Pbo/SsYvDcQgEl9bWThMjXe2xxK7WKJDTtEXKefdIsefLQ
-	hWRasKxVNR/aQMT5Kc9DCnY+bgx7F/eD8heeReY0=
-Received: by mx.zohomail.com with SMTPS id 1773017694093629.7443894165325;
-	Sun, 8 Mar 2026 17:54:54 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH 10/10] hook: show disabled hooks in "git hook list"
-Date: Mon,  9 Mar 2026 02:54:16 +0200
-Message-ID: <20260309005416.2760030-11-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
-In-Reply-To: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
-References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ntVogsVs"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-5ffe9a5b052so1420097137.0
+        for <git@vger.kernel.org>; Sun, 08 Mar 2026 17:57:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773017821; cv=none;
+        d=google.com; s=arc-20240605;
+        b=EjOhTjjboorP6vNiuY1FDSvMBgVE8puEYxwueYirOVuX7fvL6Zp7tCNHnzIxn1hM4N
+         ZmuzuJ1f4Fi4NUYTvxnJK4A0/hTX/Al7h3oFQvwF1qzPuK1e8wEDWd0HGwQdTzZuyjTo
+         n9dlvQyNxih/lT7FWVEzegF9ghmBOhvL6wEaw3cqpd6oQ26ltJ7jNzDJECjDijXvV9hV
+         kWGb3FJhv4yk/FhhSPhL8pAAVN5W10yDwS1dQbqwcz1hvuLXDLN5kMU3oRMgS6p8sr+D
+         QlYx5L/US8X9GsgDHKIGqiNgzJ8f+MQexWp+t4hyYsjHxZOeY7lLb1zwaFbHqr4amEku
+         LZRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=2r5vz9N2nu2YOQMUTCPbM2t/Sub++RFWohVCvcnQBQs=;
+        fh=l9w/CK7gb8pPgxsIND20cpOgEiDBd+vkaJjFjHCeOFg=;
+        b=HGS/AiRaTEe/+G6a5zYLrFdl/dBewVzGlMyVbVZ+qcL2XqoyGNQYzt5mNf8sBHVKv3
+         uwe81FChL3wc8Po2+1zfYruiWRzfY31kISNyqd7bF4zOi8cyZz6f/+0Du8jU7FjA5tNk
+         fEHzV/49PMXgkTOWve2l17iCCcxpr7TR6Fqkl7R7cXy8DHSm2cSfAh50KCN8TDoYxTV0
+         skSIgscXEhwWBkvt/rNNWwBc5mVMeq0Jz+bH6bu5YGPpCT+iz7Te+xIgl+4LfYH5wU1i
+         zhw5Lcc3yvuGLjhC4l1KUZTPirsBRMuMOmyd1L5SI/q0h9OvRTXgQWdG1alcLekmsrvJ
+         4LMA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773017821; x=1773622621; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2r5vz9N2nu2YOQMUTCPbM2t/Sub++RFWohVCvcnQBQs=;
+        b=ntVogsVsN5mfe3NZGMuzuV4E1Q5TjzUkKTMcXIhk7Ew1hZuxd6w0KQaMsD36Iv+cJ4
+         oImdhyP44ivOC8dugCRIwEbJPheAMlVzh4Kj/4onx+NCdNEeL1C5Zjk1hbohY1adjUWi
+         MpzLN/E2mxSRYZ9PgrrqoHYksmNRNrKG4uHE5+2GQ21GEnQAkdvY19Ygc3XuN17m90Ys
+         YEBuEiqyMU63xUIOSl9wCGb67MIbEdnuLPFwGi0nckp2hqtcwVwWjp/8HVad5xDddL2i
+         Ccj4BTYMUmLO5VMJzxJ5pXbDw2F2VWPXxR+CG+t1U7dmcWSy0GTBBhm4A2xewAXHUQhF
+         D6vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773017821; x=1773622621;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2r5vz9N2nu2YOQMUTCPbM2t/Sub++RFWohVCvcnQBQs=;
+        b=reHe5/OKV5jzmsSSfQDXR7gKoIuIp94NynI2Xs5URaifh6WiRHTMo/IqXlhEm2g3xZ
+         Zb6RhNU9EGMNzSkQtkdA8JH7RsN7EjOZ4I73m0C7CKPkLP9GW2ddENtR9UEFXwm1KZJf
+         fGGvrAUQmol1RAe6wt3Kw4v/uvGrQE7BNlaAIyMIJK1xz8RZtUzfrnJUG+2ZDFl3zRHi
+         ublDZ38wjXYccJr3pGk5SQ50bl/9ZZpgwSVzmnfEQZYfViOElw/xzJtFP/S2L6tLXk2F
+         8IwM7MVjLISmV87+rCo+gW/Kg9UCg5yQ0Y6cs1DhOOsuAgWzJzqk2wXT6fAgix9vKaEa
+         QRRg==
+X-Gm-Message-State: AOJu0Yy0O8GQoy5rq7etJ1ZbU3pocfTLTKLIXQu2JAobPcX1aT9mFn1f
+	gbEoCOdbqtFwEtcRg6aYKa0cvn4qIVJqlGmreV8h2c+FTPKyDrx0nz0Kd6qhoR+FZCT6hZdG90z
+	CNrDcjE0a3k8U8wfqoFKyHhuWEnWt3rI=
+X-Gm-Gg: ATEYQzyHrwvWbmG+OVyn+SwVhKCm9mPyTyUpDdGOz59STpxEzFlXFYelp/WF9U7S5tz
+	5gfb7Fio1TpD9xV4pQxlE+1mNFB06WhM3Pr0g3cgjGJ8rIanF159jIrJU9orJrQpOhlxaQ8O4wH
+	cz/TpGrfI7UwIAayhjfW812+fro7kXHqDLtHv5b2NU1cNcoIqLeLeibZOWVv3FHysNq9yvl6xf0
+	GuHZrVSTW7B1eRZYIZom1uDZbv0HxAznR4c5raqP0z2w+XEKBrgwfP5CR5Oglbfus+xI9Hid4yL
+	hrBBbMSrubd/mzl6Qrj68FWpZyI7Byu22rEF3SM=
+X-Received: by 2002:a05:6102:c86:b0:5ff:a606:3cfc with SMTP id
+ ada2fe7eead31-5ffe61248dfmr4441345137.21.1773017820989; Sun, 08 Mar 2026
+ 17:57:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
+ <20260305223248.170785-3-usmanakinyemi202@gmail.com> <xmqq4imsv13x.fsf@gitster.g>
+In-Reply-To: <xmqq4imsv13x.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 9 Mar 2026 06:26:49 +0530
+X-Gm-Features: AaiRm516gxaVEQ-J5XQTWBQOj_mo8-gauBKvpkoTGm6-JbzczSOsutiL8rC8QmE
+Message-ID: <CAPSxiM_KVU7rE49=omWUwaYS-u_J6eQPDgTRjPop1gj6BM1qKQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] push: support pushing to a remote group
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, me@ttaylorr.com, 
+	phillip.wood123@gmail.com, ps@pks.im
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Disabled hooks were filtered out of the cache entirely, making them
-invisible to "git hook list". Keep them in the cache with a new
-"disabled" flag which is propagated to the respective struct hook.
+>
+> The basic idea to use "remote" (the default remote cannot be multiple)
+> vs "remote_group" (the command line gave which remotes to talk with)
+> sounds good.
+>
+> But I started wondering what happens when the command line gave a
+> single remote to talk with.  Probably we want a code that does
+>
+>         if (remote_group has only one remote)
+>                 remote =3D take the sole remote from the remote_group;
+Make sense.
+>
+> here before we continue.  Or the other way around and we handle the
+> "default remote cannot be multiple" case as a special case, e.g.
+>
+>         if (remote) {
+>                 create remote_group with a single member "remote";
+>                 remote =3D NULL;
+>         }
+>
+> and then we do not have to do ...
+>
+> > +     /*
+> > +      * set_refspecs and mirror detection must not use `remote`
+> > +      * when it may be NULL (group path). For the single-remote case,
+> > +      * handle them here. For the group case they are handled
+> > +      * per-remote inside the loop below.
+> > +      */
+>
+> ... "handle them here because single-remote is special" at all, no?
+>
+> I would prefer to avoid "X must be done for each remote in the
+> remote-group, but Y can be done only once", as future developers
+> will get it wrong when they add their own Z and consider which side
+> Z falls into.  The code structure that removes special case would
+> help by making sure that a singleton case is special only because
+> the loop over remote_group runs once, and otherwise there is nothing
+> special goes on.
 
-"git hook list" now shows disabled hooks annotated with "(disabled)"
-in the config order. With --show-scope, it looks like:
+Yeah, that is a good design and makes sense. Thanks.
 
-$ git hook list --show-scope pre-commit
-linter (global)
-no-leaks (local, disabled)
-hook from hookdir
+Also, in the cover letter, I asked some questions. I think you might
+have missed it.
 
-A disabled hook without a command issues a warning instead of the
-fatal "hook.X.command must be configured" error. We could also throw
-an error, however it seemd a bit excessive to me in this case.
+Quoting here again:
+"
+  - push.default =3D simple interacts poorly with group pushes when the
+    current branch has no upstream set, since setup_default_push_refspecs()
+    will die on the first remote that is not the upstream. Users should
+    use push.default =3D current or explicit refspecs for group pushes.
+    It is worth discussing whether the group push path should automatically
+    imply push.default =3D current, or whether a clear error message
+    directing the user to configure this would be sufficient.
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
----
- builtin/hook.c  | 18 ++++++++++-------
- hook.c          | 54 +++++++++++++++++++++++++++++++++----------------
- hook.h          |  1 +
- t/t1800-hook.sh | 33 +++++++++++++++++++++++++++---
- 4 files changed, 79 insertions(+), 27 deletions(-)
+  - force-with-lease semantics across a group push are currently
+    unmodified =E2=80=94 the same CAS constraints are forwarded to every re=
+mote
+    in the group. Whether this is the right behaviour or whether
+    per-remote lease tracking is needed is an open question.
+"
 
-diff --git a/builtin/hook.c b/builtin/hook.c
-index c806640361..ff446948fa 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -72,16 +72,20 @@ static int list(int argc, const char **argv, const char *prefix,
- 		case HOOK_TRADITIONAL:
- 			printf("%s%c", _("hook from hookdir"), line_terminator);
- 			break;
--		case HOOK_CONFIGURED:
--			if (show_scope)
--				printf("%s (%s)%c",
--				       h->u.configured.friendly_name,
--				       config_scope_name(h->u.configured.scope),
-+		case HOOK_CONFIGURED: {
-+			const char *name = h->u.configured.friendly_name;
-+			const char *scope = show_scope ?
-+				config_scope_name(h->u.configured.scope) : NULL;
-+			if (scope)
-+				printf("%s (%s%s)%c", name, scope,
-+				       h->u.configured.disabled ? ", disabled" : "",
- 				       line_terminator);
-+			else if (h->u.configured.disabled)
-+				printf("%s (disabled)%c", name, line_terminator);
- 			else
--				printf("%s%c", h->u.configured.friendly_name,
--				       line_terminator);
-+				printf("%s%c", name, line_terminator);
- 			break;
-+		}
- 		default:
- 			BUG("unknown hook kind");
- 		}
-diff --git a/hook.c b/hook.c
-index 2c03baeaac..4f4f060156 100644
---- a/hook.c
-+++ b/hook.c
-@@ -119,6 +119,7 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
- struct hook_config_cache_entry {
- 	char *command;
- 	enum config_scope scope;
-+	int disabled;
- };
- 
- /*
-@@ -217,8 +218,10 @@ static int hook_config_lookup_all(const char *key, const char *value,
-  * every item's string is the hook's friendly-name and its util pointer is
-  * a hook_config_cache_entry. All strings are owned by the map.
-  *
-- * Disabled hooks and hooks missing a command are already filtered out at
-- * parse time, so callers can iterate the list directly.
-+ * Disabled hooks are kept in the cache with entry->disabled set, so that
-+ * "git hook list" can display them. Hooks missing a command are filtered
-+ * out at build time; if a disabled hook has no command it is silently
-+ * skipped rather than triggering a fatal error.
-  */
- void hook_cache_clear(struct hook_config_cache *cache)
- {
-@@ -268,21 +271,26 @@ static void build_hook_config_map(struct repository *r,
- 			struct hook_config_cache_entry *entry;
- 			char *command;
- 
--			/* filter out disabled hooks */
--			if (unsorted_string_list_lookup(&cb_data.disabled_hooks,
--							hname))
--				continue;
-+			int is_disabled =
-+				!!unsorted_string_list_lookup(
-+					&cb_data.disabled_hooks, hname);
- 
- 			command = strmap_get(&cb_data.commands, hname);
--			if (!command)
--				die(_("'hook.%s.command' must be configured or "
--				      "'hook.%s.event' must be removed;"
--				      " aborting."), hname, hname);
-+			if (!command) {
-+				if (is_disabled)
-+					warning(_("disabled hook '%s' has no "
-+						  "command configured"), hname);
-+				else
-+					die(_("'hook.%s.command' must be configured or "
-+					      "'hook.%s.event' must be removed;"
-+					      " aborting."), hname, hname);
-+			}
- 
- 			/* util stores a cache entry; owned by the cache. */
- 			CALLOC_ARRAY(entry, 1);
--			entry->command = xstrdup(command);
-+			entry->command = command ? xstrdup(command) : NULL;
- 			entry->scope = scope;
-+			entry->disabled = is_disabled;
- 			string_list_append(hooks, hname)->util = entry;
- 		}
- 
-@@ -362,8 +370,10 @@ static void list_hooks_add_configured(struct repository *r,
- 
- 		hook->kind = HOOK_CONFIGURED;
- 		hook->u.configured.friendly_name = xstrdup(friendly_name);
--		hook->u.configured.command = xstrdup(entry->command);
-+		hook->u.configured.command =
-+			entry->command ? xstrdup(entry->command) : NULL;
- 		hook->u.configured.scope = entry->scope;
-+		hook->u.configured.disabled = entry->disabled;
- 
- 		string_list_append(list, friendly_name)->util = hook;
- 	}
-@@ -401,7 +411,16 @@ struct string_list *list_hooks(struct repository *r, const char *hookname,
- int hook_exists(struct repository *r, const char *name)
- {
- 	struct string_list *hooks = list_hooks(r, name, NULL);
--	int exists = hooks->nr > 0;
-+	int exists = 0;
-+
-+	for (size_t i = 0; i < hooks->nr; i++) {
-+		struct hook *h = hooks->items[i].util;
-+		if (h->kind == HOOK_TRADITIONAL ||
-+		    !h->u.configured.disabled) {
-+			exists = 1;
-+			break;
-+		}
-+	}
- 	string_list_clear_func(hooks, hook_free);
- 	free(hooks);
- 	return exists;
-@@ -416,10 +435,11 @@ static int pick_next_hook(struct child_process *cp,
- 	struct string_list *hook_list = hook_cb->hook_command_list;
- 	struct hook *h;
- 
--	if (hook_cb->hook_to_run_index >= hook_list->nr)
--		return 0;
--
--	h = hook_list->items[hook_cb->hook_to_run_index++].util;
-+	do {
-+		if (hook_cb->hook_to_run_index >= hook_list->nr)
-+			return 0;
-+		h = hook_list->items[hook_cb->hook_to_run_index++].util;
-+	} while (h->kind == HOOK_CONFIGURED && h->u.configured.disabled);
- 
- 	cp->no_stdin = 1;
- 	strvec_pushv(&cp->env, hook_cb->options->env.v);
-diff --git a/hook.h b/hook.h
-index 0d711ed21a..0432df963f 100644
---- a/hook.h
-+++ b/hook.h
-@@ -31,6 +31,7 @@ struct hook {
- 			const char *friendly_name;
- 			const char *command;
- 			enum config_scope scope;
-+			int disabled;
- 		} configured;
- 	} u;
- 
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index aed07575e3..cbf7d2bf80 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -357,7 +357,15 @@ test_expect_success 'disabled hook is not run' '
- 	test_must_be_empty actual
- '
- 
--test_expect_success 'disabled hook does not appear in git hook list' '
-+test_expect_success 'disabled hook with no command warns' '
-+	test_config hook.nocommand.event "pre-commit" &&
-+	test_config hook.nocommand.enabled false &&
-+
-+	git hook list pre-commit 2>actual &&
-+	test_grep "disabled hook.*nocommand.*no command configured" actual
-+'
-+
-+test_expect_success 'disabled hook appears as disabled in git hook list' '
- 	test_config hook.active.event "pre-commit" &&
- 	test_config hook.active.command "echo active" &&
- 	test_config hook.inactive.event "pre-commit" &&
-@@ -365,8 +373,27 @@ test_expect_success 'disabled hook does not appear in git hook list' '
- 	test_config hook.inactive.enabled false &&
- 
- 	git hook list pre-commit >actual &&
--	test_grep "active" actual &&
--	test_grep ! "inactive" actual
-+	test_grep "^active$" actual &&
-+	test_grep "^inactive (disabled)$" actual
-+'
-+
-+test_expect_success 'disabled hook shows scope with --show-scope' '
-+	test_config hook.myhook.event "pre-commit" &&
-+	test_config hook.myhook.command "echo hi" &&
-+	test_config hook.myhook.enabled false &&
-+
-+	git hook list --show-scope pre-commit >actual &&
-+	test_grep "myhook (local, disabled)" actual
-+'
-+
-+test_expect_success 'disabled configured hook is not reported as existing by hook_exists' '
-+	test_when_finished "rm -f git-bugreport-hook-exists-test.txt" &&
-+	test_config hook.linter.event "pre-commit" &&
-+	test_config hook.linter.command "echo lint" &&
-+	test_config hook.linter.enabled false &&
-+
-+	git bugreport -s hook-exists-test &&
-+	test_grep ! "pre-commit" git-bugreport-hook-exists-test.txt
- '
- 
- test_expect_success 'globally disabled hook can be re-enabled locally' '
--- 
-2.52.0.732.gb351b5166d.dirty
+I will want feedback on this also.
 
+Thanks
