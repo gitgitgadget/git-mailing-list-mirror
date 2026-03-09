@@ -1,109 +1,104 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFFD3BE178
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 15:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FA2274641
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 15:10:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773069006; cv=none; b=FnxzfBoT0D/9DQYpJHF/NCO5Z92al2MIpxTAPI8LgS2IYp+Z//f2LEiLlaBT+ZU6U/n+gpOyDuPM9RsdpdReB4PRSv+wgHR8VWXTzA4sBj0nVrdCvETBJrhuXzUmzqlVKTB9izcvu7GBmgQifIQcQXNqtZYSSqTT/8KH5veYDj8=
+	t=1773069059; cv=none; b=goFNiCxJ24d3qZXAk5/q33i/vXJQM8R7Vz4IQSTJZYc+fSv/2KFMIBupPpjKVtdIpMyc6IqcCM6/LVGTC5DKPk9VU3zmxN0lNjl4knGPZkhOKS89XbPfZ5YkUWtG+LEnKMbfGmkapLFf8SynP74oYlcl3uIT8uZLKuELsi6mLi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773069006; c=relaxed/simple;
-	bh=bVsE8toEI3NeZO+jEiSxVILrW4NBRnT9Wo2QcLZHwmI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=B4xdAjWzZENOaF/p+cArFhxpBPIeZygvuf1Yylu2iVvJn1KL+jTYzQ00M5Ic0kNR+PnuTJGYvA+c6GHRhq/BLO3opk0CHhYhGtUole/4py/lEjQU/PpBqHzaqlzoMqzxC6h7Vp4iPKL7HyJsL3yGsfydP8Np/ZPKsKynvEahTIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FxovymQN; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773069059; c=relaxed/simple;
+	bh=KA5GezrrFLFjohq/VCrhvudOaK174mpmiIz1PzG6qf8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=o3y7CX2RigqCZTmmlTPAzARahcvfivlTQNj6FiHAdyAALpKW5nMDivRXgR9FTZsxP/EfkFVYGSWpk7dAKynF5XTkpyBsMD84rzU9PmSEKFeMtkIoBuXBsmkfqsS1pZZIOaB1BF+todvk7u8nd2vcqN1bj1vUQ9Frd+ENC75b6XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZMjqVmoy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A2d3pb/I; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FxovymQN"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-48374014a77so140405735e9.3
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 08:10:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773069004; x=1773673804; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=B8vl12ZT8U2TrMr9gVF0mbBgbLM1HsRdEyWLcpEUAjs=;
-        b=FxovymQNFqkHf93KaAC8i/ToJX1d4ez/h4M5zTuFVRBem6OZHDyAEpB+6s6MOXdVTG
-         fLvxGOJ247V0/9xa2HsA7/VOvzjK9dBk0piEK1ihT6z1ZWD5p7RqjQHhoHs6rR0k3qVQ
-         iQtNrWONjLFWYluuP3qHNZ8R5vSMC0qW+GCoxpgUw0bGGGpDBhdqA5sX5vrM9DCde5kj
-         WDRI/LYrWSDcBu0Ix7UT0Ras1+P3XBor6M/1WANugTCtgbtmowMfJk2x7vlTA0gRR7lV
-         Vb+Wh6LD5INnAuOQo8CeDC3wpvrANifSp9xBQX5w11PdfDjFxJPhzWebWZmWlgS7dEnx
-         UEgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773069004; x=1773673804;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B8vl12ZT8U2TrMr9gVF0mbBgbLM1HsRdEyWLcpEUAjs=;
-        b=O64iDyfpbSE9bcT72lE2cnOcaEZqRqItpzA4PbHYVf2ZMDeDHfI2hxj3HPEepPuus/
-         1di+1ecwRaOBrtHdIar1a7vYsHaJXrzcTNajQDZCRZO1QNq544A+nBWnooZDnvkVBl4a
-         8TUEoAe8GVkz0aq+Aefvo91ySbILWR8EYlog20S0We7ipgMKQIf5KXl3ph3K3/DBwqUQ
-         37linOz3AQjKsTpTGS2rpM0tYSiPSbDTQtCHeUI1yY3YOuQMN3ZtCqKk2NhkkaQlfs63
-         E5DeD30YQ0G1DOCajJQMjPwFMwfVlAIYs65cbUL8yaVt+Yw3dw97jCCs7+jI9CEEvp93
-         giVg==
-X-Gm-Message-State: AOJu0Yz1P1/zzuz0BkJtZpMx7IiPAjqtIZxRaR/49wFrWE2k9D5Jthah
-	h6t6RtZr0HAk8iQxSgVNyevk3a/SMJcgxcqPYMtWPSqPsz0bNcU8NAMHKi6VybhBktQ=
-X-Gm-Gg: ATEYQzxdCfw6Afrjc8BKZyMgM92A2Phl4ibmODnflXaqMTaHNfoREPA9RyHJxRdEon2
-	NbnDeFrzZk8887WBIegy8lakSAPG+R4Y7G0py0la+kofs03de6ySKAZiCEaB00lsh+tmvE+k6bB
-	v/XmNp4B95AhZln9gtrWa3GUCsTN9XV9ODTWOMdn8hyDxQtDiYbSY1BmMRhcl0u8kTnL5PRmBUZ
-	WUhlhxM7l3Pcr9zBBOnggs7PtjH1smFeAcNbXzsYoBWtF1GR0rS/yvYUaDP14LMqIxNowYtn2PT
-	3w39aU5A3AYda/zVNp+oKMbuqD8ThSo5SNFj9syjK/5mkaTjSBfGOYUOQkn5/h7MJpMrNXyC1c2
-	WDlIp0AL71k1MHSIZGwzLaEu5mQP0t4WUIR0nMLTGbDlwtU5X4fzEJF7ioRghrHXVoeWu57FM72
-	82Yh00PwPQNk8QFgKUSPp/gALqTnf84/tCKV/3MIDE1+pPRUpAhCgPmZe2FQYcNnMCYjHFfqWTm
-	+AH0CzRthJk/4Q1dXPufUTEMKJrnScF36UJIeqg87qbQKrV56KiUUIPag0=
-X-Received: by 2002:a05:600c:3b01:b0:485:353f:c651 with SMTP id 5b1f17b1804b1-485353fc9b9mr88781895e9.22.1773069003109;
-        Mon, 09 Mar 2026 08:10:03 -0700 (PDT)
-Received: from farblopa.localdomain ([84.126.0.122])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4852e38c013sm383554185e9.8.2026.03.09.08.10.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 08:10:02 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: git@vger.kernel.org
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>
-Subject: [GSoC PATCH] t9200: use helpers to replace test -f <path> and test -d <path>
-Date: Mon,  9 Mar 2026 16:09:35 +0100
-Message-ID: <20260309150935.578465-1-pabloosabaterr@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZMjqVmoy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A2d3pb/I"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id EBEF1EC0596;
+	Mon,  9 Mar 2026 11:10:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 09 Mar 2026 11:10:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773069057; x=1773155457; bh=Dr1y3DYje4
+	rTNMkbh0yohuVpwwutgVt6ONLJcdTbb6w=; b=ZMjqVmoyfspCnqc3mxH+aoIZ6O
+	NzUsQbqWfBm9V6C050YbhyJtFPV+gkEZQheU3OsxyZTaYL9bsG8Csbv6RR2RnbXF
+	y2FzSt+2VXfEYbwdRiwvoNFMyGXde3YFf6IOpP2+AJ1EVUXMsLGKSdCcA01guM1h
+	zIVsCaot0H0kAMsCoo64e78DnMgL+RUYLSrGDYHTt0cIjAF9rNAMUIl4QYzoUphO
+	ow9CgZkkBX6LXmU3wTQVvqQgYXKPT8+9yS+mCQAk/vOxXpwgIDadRjdJy7smSEIF
+	4H+zGLZgkP+scM/eUMEKpLuqK0rsxcQX892fqbOTmxMHIfgTBFY5KxbclyIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773069057; x=1773155457; bh=Dr1y3DYje4rTNMkbh0yohuVpwwutgVt6ONL
+	JcdTbb6w=; b=A2d3pb/I7e+Hspmt0W9PgG8Z/bg8ZHTeOUft8RQrnQEXgTt5EhE
+	hKEs4NU1PkiZY+SM/blnPl00hHgp8IwyOIQJ+uTE6ica0xEW1oIMTt6YrPloF0m8
+	6wlYpkHxbH2UHo4f8RtaQlKwWGY51Sf/Y3DRXK/QeHmxN9hBJ/pPso1KSiCdxH6i
+	CbmHXK304nBKDpb/GmSB3SiFNOQWixsZVUpks/Xi+yTUXJgyWLS4TM7n4HNCP6sY
+	BpfHTmE+tVc1ZmEdogsGOh6iVOSR3PsoSwnejAsue+ynXeNofMexKmJOy3H4b1kn
+	PKfIJ8+LFzKt+4CLZIvZ8Bz0vEzwhL/BPBQ==
+X-ME-Sender: <xms:AeOuaQM7KmbzbLN9xvzYxr6vpLK9pHejTWBL_rwVj5J4P5lqq2rK2A>
+    <xme:AeOuad-S8tQowNomZcVDwiaKxap_E7nseYa2nKB8_EzbF6Ll2kyvgqNpYRIktBviy
+    T98VFsMy5sW7JvCjK2UkY-ubqZI7fI041IreQlAXThTX1Zaf9jB1A>
+X-ME-Received: <xmr:AeOuacTwutC3TeoIFlGkeKbubX5Yzq-o9ng56f75F_BIhYeJ8gFgq21SiTjV-IMjbRJ4ymRrI_G4orckHNOJzTHDF6aZi9X0fA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeekgeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:AeOuaXmpuJmQ3RDEFDvibKKWFZu624PnhBP8YXwf7W3kh7j00Tpvww>
+    <xmx:AeOuaUQUsDIEtGjXA_eU1kkbKzltBKSjYEHOLiLgmJkwrbzyYhBz1A>
+    <xmx:AeOuadMGdLyPuPC6NKm3jIrjFI3rrCqlp-eEg5vK7ny_8mDyvv4Fdg>
+    <xmx:AeOuaVWN90eitim0r427rTksG7Y9U3AKOwoyLILyHFiegffn5CYZ3A>
+    <xmx:AeOuafwz5dTMYLqt8KqnqCl5wuIHX5mhcO2w7vKVa1h2nRGdO_OaP2Pn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Mar 2026 11:10:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: git@vger.kernel.org,  gitgitgadget@gmail.com
+Subject: Re: [PATCH v31 0/2] status: add status.compareBranches config for
+ multiple branch comparisons
+In-Reply-To: <20260309092052.79051-1-haraldnordgren@gmail.com> (Harald
+	Nordgren's message of "Mon, 9 Mar 2026 10:20:52 +0100")
+References: <xmqq5x7ba5jf.fsf@gitster.g>
+	<20260309092052.79051-1-haraldnordgren@gmail.com>
+Date: Mon, 09 Mar 2026 08:10:56 -0700
+Message-ID: <xmqqwlzl598f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Replaced 'test -f' and 'test -d' with 'test_path_is_file' and 'test_path_is_dir'
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-I've used 'git grep "test -f" t/t9*.sh' to find a file without the fix done as specified on the microproject information
-I've done '9*' because the ones I've found first had already fix patches.
-I've taken as example another patch sent 't4131' from Junio C Hamano https://lore.kernel.org/git/xmqq1rpodn25.fsf@gitster.c.googlers.com/#r
+> Thanks for all your help here! Is there anything you need from me now?
 
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
----
- t/t9200-git-cvsexportcommit.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thanks for all the work.  If you haven't heard any breakages from
+others, and if you haven't found any breakages yourself, there is
+nothing we need from you right at this moment.
 
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-index a44eabf0d8..4507e8e6db 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -31,7 +31,7 @@ export CVSROOT CVSWORK GIT_DIR
- rm -rf "$CVSROOT" "$CVSWORK"
- 
- cvs init &&
--test -d "$CVSROOT" &&
-+test_path_is_dir "$CVSROOT" &&
- cvs -Q co -d "$CVSWORK" . &&
- echo >empty &&
- git add empty &&
-@@ -303,7 +303,7 @@ test_expect_success 're-commit a removed filename which remains in CVS attic' '
- 	git commit -m "Added attic_gremlin" &&
- 	git cvsexportcommit -w "$CVSWORK" -c HEAD &&
- 	(cd "$CVSWORK" && cvs -Q update -d) &&
--	test -f "$CVSWORK/attic_gremlin"
-+	test_path_is_file "$CVSWORK/attic_gremlin"
- '
- 
- # the state of the CVS sandbox may be indeterminate for ' space'
--- 
-2.43.0
+The patch series is cooking in 'next' and unless people find
+something glaringly wrong, will be merged down to 'master' later
+(after which, people might still find something wrong in it, of
+course---any breakages and regressions need to be handled no matter
+anyway ;-).
 
