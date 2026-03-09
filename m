@@ -1,112 +1,166 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0EF257855
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 13:33:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773063215; cv=pass; b=aLc3I69p2TCPnfzhqE+BrWu8RIR3ZbFUcR0L9XcE+pUEYQle1vHP/nNsKCzOvMg87WsDvH2S/DolxDd06fSlEocKHpQBnNMAOytjFFVW7R+l1DKny/+puNVR19a2QaE/MS6OcFBIM3qW46aw0cq9LGjh3exGrsTYxE5LUrMLHvY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773063215; c=relaxed/simple;
-	bh=tDyxEG8SXmSihmATQth2z3RhvhjfsJpmcDJ3iay19wM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lcK9QgmioIJCVrQhx5e9lJC5xatwuXHkMkLPUpsaFiayPkNzuBR0g1SntSvLNoZ5tJPrMIerhl/auRVAlfy7oRm84BK+sY9KQ2o+zNpJJAAZxY4j8DFZugvG7d9Epxp3elynPIj6Qsvj2h6rJsFi2yOQ4DzzMqFYX8ilhFd12sg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WYQGG/3f; arc=pass smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD70C3BA24D
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 13:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773063501; cv=none; b=ShORgXoVceav4QBUj8hSr2gFFnuaCBu/7BUhhBv9EIUm3XArKSIHGxnlDZ8MEUh5moI6nfXIzwjwghZtRnzR6sx5CgM6xxcEnIf5Ju2CkKO81WKMhnLZ2AfUEurrynYxjBCzaU+iR7Gjc6q/dHfxMfrSHRuz56LLiUCQvW5oxPQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773063501; c=relaxed/simple;
+	bh=EIOULMQkc8nQxvz92ux7v56Ivp+befdbqqNXiNIs46U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mvA5nAd7FqdzZ+ovbljynjOPnCrft+mzD6nhWjkunoAebS+Y7H2KONCXIQpEBmwvOdRGYWfFwGCdsXRGwStNzA1L4mPaj/v4ZU6E6eAlA81tfTj0NYOzBhc7cU7wTow2rKMDBlFuIKaYn7SfEfTLdMemj9P2AJu7HLVNgA2SIqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I6jvOrCP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KlpRTNsH; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WYQGG/3f"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-89a0d53f3d1so71739596d6.3
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 06:33:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773063213; cv=none;
-        d=google.com; s=arc-20240605;
-        b=L1G3QH2U1jVu9bGKm3+EDfG2hxFU1Etvq5T9QPSJXFJFwRysmiNmFFVuM/lvnir5Ej
-         byL+idp0MiFESdKlPeM2cSwqvLSpxP0ZD8NDYhZdMoGkpcx4nK5OzeyamdHtZfsU15Lo
-         T/uF65rMU3eFpd6+zNBSojDS1dOxyeAzzRTevHvm0nnq3EblyaPhJkhf1RU1BKKbYdkl
-         2DfHwEgw5+ewTpey5y2fAL5aZYum0cjvK0Rb9Ts+u8XZfKj04t4BO0Uz5PGePLzbsSPT
-         HImlxIFiIkbraGBm9/3C+D2PuPa2sr/ic1ZzoseW9/yt47vrQKYPc9iVST+kaq3r2VL7
-         NDMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=tDyxEG8SXmSihmATQth2z3RhvhjfsJpmcDJ3iay19wM=;
-        fh=Vo072L8BMjweoMsmdogjl/jSR2e+/XnSezO6fFsSQE8=;
-        b=G+1/TToonZVoirM9g+wmhpQBTY1HMnK+iz+jBI22jvot6phur/mk9fkC6yOmRm4fyg
-         wxsvoHoWAYz7FfVk4UyIKBN2GkI4y7/oJePSuF2OEejnthDOzBzdLJC55jvvsSIh2dbq
-         Avf7/JhEYhi5nTsKGOjHGvcwWLyZm0wjPkUzVfb2AOBmrwq0I+qStID8NlWllpp0hWGg
-         b77FjF1QPJKm16c/serjSs97err03ZFl4FE0hHH7UkbPW4ETgW17QqdasR4749jZ91pC
-         vBSXy2dFLRMXvYcI744usE4lrrNg2CD/CpK2X1qVw/5AjHfKnDgy0gIZu9feUt4BUNiK
-         c6qQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773063213; x=1773668013; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=tDyxEG8SXmSihmATQth2z3RhvhjfsJpmcDJ3iay19wM=;
-        b=WYQGG/3fkZB0Bs1MmunKYOBY3QyjxSzdzxvdfwtN5uMeXtRDMO+3rS6c5CGe23VzMt
-         VDR7Faxbf8kE0VmZbUrI5gbQcF1AzmIHmYSCub0qvq6UMylgWPOH0NxOLHLdMgPJS+xy
-         AGfKFsxUlXMZMG1wepLZQWaK5iYEdWAKlnTRIYZu9gX23TvSZBxTlb1i+KVkMbCoqRmA
-         Rs4XDEokYaME/6mkxypY7ed8v8I8ElVXvt7AVd9kUmTVSYA2ssOi3sw9t9zTT9zCAnkj
-         k8P+lyNfCZUtYsUDrJgq4+3++wI17KdJ6CGTySYRBIarRcRfSdbGoG6wSUJrV+AUAVqa
-         VYnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773063213; x=1773668013;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tDyxEG8SXmSihmATQth2z3RhvhjfsJpmcDJ3iay19wM=;
-        b=H59nBLvscsvj0wbs2aDlqjwYEvE83qh8ynUYeIrZ9gVlMNQFpJCBQwZa3f8ZUd0ovf
-         p96vpJXS5jYBrGnGFT2waawRF1PzJGzW0oagD7mOicFkr+mvg6rp6SB09vGh+uzhKjn8
-         18F1o1CccKxgQ3ywHWPKYGnc8MTp/9cr71lU8ZOe9UzBZp6g0djeDuh4iuHZS/gextvw
-         ZxNZwF/9BjOVxh8X0aBmAHRch7qBRArUz3RJaGA9tisYIRifSa7DvxZBddBz0n8vMtGb
-         zKGziJpesN1JUP3j7PcOQN8BVuAONLeBEPjDq01i11rViIZrjHUwidUv7zXIt0uOjzZu
-         npGA==
-X-Forwarded-Encrypted: i=1; AJvYcCX+rtEH3HhpH6K9oMWwvimH00t0tsCS1GKIke+vmIbEpNWG/fOV1m4JSwK6749a4nP7/DE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzdy6VzSYClee25fKSPzyb3FIh+i6nbxlrgUFAIK9/Rrd+1TMC9
-	BrOH9VYacGC6Xmba0YUE6d7KpkN3Re2wvXdL0224OBF+xl2cgSF78QGWs0vMSmQ0tIhPPpD+s9M
-	jllsLlJNQPJ2ZcU8ptYIXPBkxXd+ZUfWe857Y3tI=
-X-Gm-Gg: ATEYQzxrSBFcVxqDlF07ysOp2ojYwuxqV4iXVE6fhksHvQp3PvfpeWG5A336vx3boMk
-	MWP/OU5t8ee2MW0mOnCeFLRoMo9no74dhXMrYDdMOWrmXPybG8QotRZ/rNGedFLuwUsqNKySoww
-	C7xpAgNo/NFGpFU4L1vivv0mYO5p6F8uetvLlT5Q+8/uji8DA3Kjfvr3Bxp3KDFZ2wOn+sFcIHp
-	uf/lNktWq/NtAG/VekWb6dcuqaSauXsIg+N7q4nkNnULTIkJk04xC+YtxJMRRABzoiF5NiuYbRc
-	fU2QaBg=
-X-Received: by 2002:a05:6214:528e:b0:89a:2f:2ff6 with SMTP id
- 6a1803df08f44-89a30c2b963mr155608206d6.65.1773063212760; Mon, 09 Mar 2026
- 06:33:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I6jvOrCP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KlpRTNsH"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id EFA6AEC02E6;
+	Mon,  9 Mar 2026 09:38:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 09 Mar 2026 09:38:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773063498;
+	 x=1773149898; bh=jdsMbipkp+ARclz5gpqB5PsrgQgxTBFnhS/VQ0hGtOo=; b=
+	I6jvOrCPysheINYCZDTelQRO7s8O9Y7sapHimjqF/AMr1uXYE5nCcj18XBP3Jdr8
+	xnmitfuVQrIC33binwWyoZSGQY/ABQFZCxQwDred6xzEff0TZlXZpV/gWv7cnZIu
+	QbYr3GNVN8wbWok341Jq3qBty2cwz2YUvo6ftT0A/+bwbouNZB2VsF2Qutt6Kia6
+	M4tYD1r1GQz/v/kz3eXJ1B3j4vlQst1JQnZklsUXNuARRDyS/vafBLAJ3HczoLvA
+	/6tvVfC3Qd8x3Ov165SqP57JY5nJWLlKZ7QwKEpZpfPFEEzg2O8DbNyq/moE0a79
+	FWG0hsmtU8yJpdHzdjIeQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773063498; x=
+	1773149898; bh=jdsMbipkp+ARclz5gpqB5PsrgQgxTBFnhS/VQ0hGtOo=; b=K
+	lpRTNsHD9s0kKOMy0KTjuethKfGlztz6/3sq+IZWsjaHqjhOrcpTefghZB6ypgrr
+	GToTTYhZqAnR6kxBD+bQrVVmZNLUswrUmiT6a0DOJj+ncGqIwrmFa9EiUvRas+At
+	ho9Cm+kdC7+8ljCT/asAbDTA5LJUZS5gCDaNw6TM+TKiSSiKnH4SoGi2KqI/QN+Y
+	MXwcoGF6MQXIMMoZpsxARrn36Bu9nTYqsYoXjtOw00yrrzsILINmkEm7nUQdrShX
+	sRiTQO/yyTYOzoEasVgm0chzY66bcp76UeOUBlqv9P8fGptXuCPvV88cmOk6E6kY
+	9eEagUkb1qvecdmKY9PMg==
+X-ME-Sender: <xms:Ss2uaUWOYtTcxM4pNtfB5P9lMckcIRT470rfBGxAL2sSBJBV38lZ0g>
+    <xme:Ss2uaa2VMvajsSTefRkGs_KMZWpDW771407txmbRxFHTFq2Hh_7SAvm5GZvbRyMqU
+    HS7mP1lQoNwsAep_KZISK-TexJ_I7n30XdDXhlvvKhdiuV9tMAcy8E>
+X-ME-Received: <xmr:Ss2uaaoEwzIQjhmLUHuSOJMmmc8mOsi8HmwQj-vmGDRkm9O0ZZBY_RFRvVRi-LETVInV3JroAzM97Hub6OkbTRnBV8fkwdTOqg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeekvdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhp
+    rdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Ss2uaZUmoRqz8SMkioQiaBxh87MCoeOJDoZTvDCfHv31dAK6BJ0PXA>
+    <xmx:Ss2uadYfWC5p3NIEvsibZdWYfoXm78MkPSzTq687MOoh9SYMgbA7Sw>
+    <xmx:Ss2uaecxtSduP7jBPQABcdgAGebuePv9Road6DixNP0BlQ2xdk7O8A>
+    <xmx:Ss2uaf0kynma0XwpUMe0Ds-6XdIAyhxPRWN-8zihax4Jpn3SZYUlZA>
+    <xmx:Ss2uaQeNMEd6y4WyjdGrxLK4zp4ywPlDb8GtgHC4bXDWAYXuxI-x8vbk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Mar 2026 09:38:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  me@ttaylorr.com,
+  phillip.wood123@gmail.com,  ps@pks.im
+Subject: Re: [RFC PATCH 2/2] push: support pushing to a remote group
+In-Reply-To: <CAPSxiM_KVU7rE49=omWUwaYS-u_J6eQPDgTRjPop1gj6BM1qKQ@mail.gmail.com>
+	(Usman Akinyemi's message of "Mon, 9 Mar 2026 06:26:49 +0530")
+References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
+	<20260305223248.170785-3-usmanakinyemi202@gmail.com>
+	<xmqq4imsv13x.fsf@gitster.g>
+	<CAPSxiM_KVU7rE49=omWUwaYS-u_J6eQPDgTRjPop1gj6BM1qKQ@mail.gmail.com>
+Date: Mon, 09 Mar 2026 06:38:16 -0700
+Message-ID: <xmqqzf4h6s3b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260301190017.53539-1-dronarajgyawali@gmail.com>
- <20260308183756.31860-1-dronarajgyawali@gmail.com> <f03d40072ab106d1a0a7852718d42f56@purelymail.com>
- <6e3d373f2f41232ca9015c39ae0ea67d@purelymail.com>
-In-Reply-To: <6e3d373f2f41232ca9015c39ae0ea67d@purelymail.com>
-From: Dronaraj Gyawali <dronarajgyawali@gmail.com>
-Date: Mon, 9 Mar 2026 19:18:19 +0545
-X-Gm-Features: AaiRm525ciQhi72bTon8NVX7lrtAaNdV_xx9nzmJ-CJTpjbVij3vlhCE53S5qys
-Message-ID: <CAJtK1FMzbX7dO9y7hM_6_DbLpwbeYHnrg7WLjAghGX6UDVDmJw@mail.gmail.com>
-Subject: Re: [PATCH v2] Make 'trust_executable_bit' repository-scoped
-To: cat@malon.dev
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi Yuchen,
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-Thanks for the review and for pointing that out.
+> Also, in the cover letter, I asked some questions. I think you might
+> have missed it.
+>
+> Quoting here again:
+> "
+>   - push.default = simple interacts poorly with group pushes when the
+>     current branch has no upstream set, since setup_default_push_refspecs()
+>     will die on the first remote that is not the upstream. Users should
+>     use push.default = current or explicit refspecs for group pushes.
+>     It is worth discussing whether the group push path should automatically
+>     imply push.default = current, or whether a clear error message
+>     directing the user to configure this would be sufficient.
+>
+>   - force-with-lease semantics across a group push are currently
+>     unmodified — the same CAS constraints are forwarded to every remote
+>     in the group. Whether this is the right behaviour or whether
+>     per-remote lease tracking is needed is an open question.
+> "
+>
+> I will want feedback on this also.
 
-You're right that calling prepare_repo_settings() inside
-git_default_core_config() defeats the purpose of lazy loading. I'll
-update the patch accordingly by removing the handling from
-environment.c and reading core.filemode directly in repo-settings.c
-using repo_config_get_bool().
+Quite honestly, I do not have strong opinions on either of these
+points, primarily because the answer would become self evident if we
+follow a simple general principle to explain this feature to end
+users, which is:
 
-Also, I'm new to contributing to Git, so thank you for the guidance
-and patience while I learn.
+When you have N remotes r1, r2, ..., rN, and a remote group G that
+expands (possibly recursively) to these N remotes, then for any and
+all values of $options and $args, this command invocation
 
-Thanks again for the help.
+    $ git push $options G $args
 
-Regards,
-Drona
+should mean exactly the same thing as
+
+    $ git push $options r1 $args
+    $ git push $options r2 $args
+    ...
+    $ git push $options rN $args
+
+So the answer to the first one would be:
+
+    "git push r1" (without any other parameters) may work while "git
+    push r2" (the same, wihtout any other parameters) may fail,
+    depending on how the push.default is set and on what branch you
+    run these two pushes.  "git push G" should behave the same way.
+    There is nothing extra fancy needs to be done.  If the user
+    wants to push to these N remotes as a whole in an identical way
+    by using remote group G, they are the one who is responsible to
+    make this sequences of pushes "git push r1; git push r2; ..."
+    make sense.
+
+The answer to the second one would be derived the same way.  If
+$options includes the "--force-with-lease=<commit>", then the
+command should behave as if copies of the command that pushes to
+these N remotes, "git push --force-with-lease=<commit> r$i", are
+invoked.  If <commit> is not given (which is not a recommended even
+for pushes to a single remote, because with background fetching,
+guesses based on the remote-tracking branches are never be
+reliable), the command may guess what commit to expect on the remote
+the same way as if these N independent pushes are made without using
+group feature (which of course may make different guesses for each
+remote, if their remote-tracking branches are pointing at different
+commits).
+
+
+
+
