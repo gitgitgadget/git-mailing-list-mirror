@@ -1,123 +1,93 @@
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E673C2D
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 03:23:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEDB2367D1
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 06:39:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773026618; cv=none; b=aaToAuURjZOth0nLeZ+r2WWoP70qb39+NWVs/Y7XfBff0KfQt0erD2Snb41HHx8YGYN6HKH5Rb93+N/dXDq/po6tL/TB4I1Zn3Hs0w6KI1yc42HDNUjJKIguBbtodHacMuV4603EQRiY9fMRABPZFBUySJWusSQ7eXAICHdteNQ=
+	t=1773038376; cv=none; b=cVz6x6XIU0jkn4Q2HQ86vyzWrLzQiKVPf4HjIxoHqxYJLoAXcrlqjuQxxydyYzN4BB+W01y57P3+ZeQQ7Q1ibu8gODJxEP5ccmz7BSKd/PfyXsZzHhWpvQeLCFQMa+dOpKP9uodchSLqNfYieVr925JbjoUwHIT246n2SS5oHZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773026618; c=relaxed/simple;
-	bh=j/GZgAi+I+hcO4iatj9QHqFyuKZZN4iK33tZw07IIMQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Zt/1i5hB6n/8J8JbEVyS0XAwlWuKM3+oxfv/6hF+tLMXzimQJe1bQG+3+C4Fhy3/u3W45El813x5uChVFQf4CBbUekIOLN2Woc9ICtLFtMz/Ru6RQdcXyK/NqTcSOZ918eVGrr3xm4+neWy0QHJfBb9di9ehoijpWDpAq45Xg9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lmQe1mVq; arc=none smtp.client-ip=74.125.82.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773038376; c=relaxed/simple;
+	bh=yHHMcyLGDuFDU5eSW8a3auF11AnePOamLa1maBtpb+M=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=REoTiPpsfitreSQKsGyQlcmUsAftZhZAcOlwj9tftecjtcDJHVugFPmmT1cWeL8/t7Rn+xB5JPeGbIELJGDCkU9yuGQOt6YCgy4M0z9UHb2m6lw6iJau+T+MmoRT+51V81QsEQKgPSIvzaBSUz6oT3+233HgZ/O4wjYgoCPnOGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=Oxh+CBN5; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=DV3Zt6ek; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lmQe1mVq"
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-128d2e3082eso2143315c88.0
-        for <git@vger.kernel.org>; Sun, 08 Mar 2026 20:23:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773026617; x=1773631417; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=01Xj8xFDOfJPt7XwjpWAygGHBW4rdkBTmlzt+mLP7lM=;
-        b=lmQe1mVqKF1NIii4+rU6orYrC9FkMDXaRHN+SdDc22v68pXo8dGXhX2If0nyUvkyxJ
-         pa8pj5YoP7zOVyRotxAltD7fGq2ZzjPQpualK5KmGHsMrYD7Sx6ga9RpVygO5g2DroPF
-         lgbj/lyWdDpnu7vT4HEh4WI3KI5qKBZ0AlBj17DCSEnNffL3DY92kVfglj3yDg2ogV4S
-         pIhAM5dkRUnl9NZFeal66fQVY70L4qNV/MUSinjL6UK7ixen5UuaNI2jwLZT8dQlNTdn
-         Bf4ebykcOgHTB6B7vHxGOfHR/8Rm0gBwsC/JmRyQ78+s6RS8kHbzoe4+99lOxZRj9PjN
-         BBTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773026617; x=1773631417;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=01Xj8xFDOfJPt7XwjpWAygGHBW4rdkBTmlzt+mLP7lM=;
-        b=w8sLnNl7GlZQHzNGbQjoApDXEMKHdq15dBIApy6ZRi+FHwKCpc9KKGf0/rxW86PUHC
-         +voAaWyrLzxAbKqL7/tbomMQ5p3z4E9dPF58bpM5Ux3OUbucNTRuAxHX9zByghsbRHrB
-         HFqfsk0JDUW/14sacrw+ebGj3ot390Z8N6K1pITdHTKB/1U3b7EpoUWPfRt1cHYhRL7S
-         uIppRjuL3LLry2/jO6ZtfkRbUMntx4nTkSwfz99747euB1tnHjHcZLr+z9rsd7tdIexR
-         OISxTsSQWi8pvi9ENjvsTd/8pZQFdILJuplZj02f7mJiB1S7iXBJeRU738AuE8BdBotx
-         0yhQ==
-X-Gm-Message-State: AOJu0YwQZkQlopXtNCebrJugM8DtE6Z8Ze2rE2SuKeeGCErMSqxVlpGf
-	KOhfjWIC1GT9F+hA7shU5OW5fcE6CZ/FRbyyzXPSzUwwNI7Cfv1pu1IkOiTaag==
-X-Gm-Gg: ATEYQzxusr5A+GiimLw/Kxhzj0/KN6bLXlDTnwnBamGGv8SrCY+iR0NQ3SeeNIaYg8c
-	xN1yxaArbhESPIT23XDhEbuTu91JYRUOniT9815rql4NTXtmdAUUQ08v1R7HvdlRlxgHP97bdA+
-	AkpEjYbSrOFLFdEq9ey7nZH6zHQ3ZY2/D1OeU6d8df2rbbbcTwlFN81w3aa67l721sVosyaUcXU
-	O2479Wq+dzEk5Da2I+jZV6l4B+xun9hf+1i93R6WmjB1TXRJPS0ZicRPF0chKuPF1RS41UfHFA/
-	DVgqoSloYvM81Z6rvbpstqMy3vNCnytjDOI3JVNskLmuMwz7J//38aWT7thPiJ3PvdDtmS/yZbg
-	SX7jgnf1BPKp77a/aUshLaharVDHxFu4DkXzFhe9VWUiMubwTprJ1+WR/LtAEKOUGTXC2GYHdD5
-	XM3RK3Sq5FgOdZLiiSfkx4vDyY
-X-Received: by 2002:a05:7022:faa:b0:123:34e8:aec2 with SMTP id a92af1059eb24-128c2d90a07mr4124650c88.1.1773026616711;
-        Sun, 08 Mar 2026 20:23:36 -0700 (PDT)
-Received: from localhost.localdomain ([2601:646:8081:3770::36e5])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-128c3d7a2aesm6948998c88.7.2026.03.08.20.23.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Mar 2026 20:23:36 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: git@vger.kernel.org
-Cc: Collin Funk <collin.funk1@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] dir: avoid -Wdiscarded-qualifiers in remove_path()
-Date: Sun,  8 Mar 2026 20:23:06 -0700
-Message-ID: <3ad40c3d0762c2e8c14792dfb68cba9f63a883a3.1773026586.git.collin.funk1@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="Oxh+CBN5";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="DV3Zt6ek"
+DKIM-Signature: a=rsa-sha256; b=Oxh+CBN5lW62oQRgLsLBRQG9OWAQKBIkwvqC1/k7jlTID5rKxcNLWcs0diGGEZorwRkO8RaVYtwGHPnCnbaVIIJ3GGtzc5udkWxbe/5cip1FDYk4SoNlZVq5Pr8CDdR2E76GJIvQz4Kp8sSs0jV8DE8qMGWT5m3NQv7m25d3codZ4m9xjAhH3BQzavZpKMt90CnF3mEytWnwuZluAYYZ0D9V+vsJQujE/yxgi7sBwewp1v6c7RZFNELIevs7b90P8Hd10dDEvIAb0JUq9m9rx6L48SUZX4kLFr/d2MEINsXnCpWV+nztaq3slRBtl1S3OrrQGp0SndufElHdx2RtKA==; s=purelymail1; d=malon.dev; v=1; bh=yHHMcyLGDuFDU5eSW8a3auF11AnePOamLa1maBtpb+M=; h=Received:Date:From:To:Subject;
+DKIM-Signature: a=rsa-sha256; b=DV3Zt6ekScl2L64EIlaLW8r1ji+GDXY3v5v2/+w5juVppdKpLMtByMdBmoRj+/3JJtpp48Z8lin4iyMiPLe7qyU9si4zm5YmqbFqodaHIgrX8MgV8H1fJTF1Y8V6sW6H8AaV1KqZX7y9PGXuZn0vIS9RI4mBhRAWR9oRQT7abm5pBbaedhMFqwgkRTk8AbnF2PkEn/j1q8rayS8xxPWS1fH3qzdZPherjXEsp1P8VdEoknc/NyPtuJhX2Jid/Ts+XsU1x0vnrPg5AUcuRZH+9j3/d2TRZBd9KWi/8uZdFYRC+qVMzGhlmwzgh80ebCIyEqvVHO7L96JJ4HZOWBw5Ag==; s=purelymail1; d=purelymail.com; v=1; bh=yHHMcyLGDuFDU5eSW8a3auF11AnePOamLa1maBtpb+M=; h=Feedback-ID:Received:Date:From:To:Subject;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPA id -1366529355;
+          Mon, 09 Mar 2026 06:39:25 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Mon, 09 Mar 2026 14:39:25 +0800
+From: cat@malon.dev
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Kevin Willford <Kevin.Willford@microsoft.com>
+Subject: Re: [PATCH v2] patch-ids: document intentional const-casting in
+ patch_id_neq()
+In-Reply-To: <xmqqh5qp97bd.fsf@gitster.g>
+References: <20260308043131.77782-1-a3205153416@gmail.com>
+ <20260308150203.86299-1-cat@malon.dev> <xmqqh5qp97bd.fsf@gitster.g>
+User-Agent: Purely Mail via Roundcube/1.6.11
+Message-ID: <4d93dbf55e141460989f21edad24440d@purelymail.com>
+X-Sender: cat@malon.dev
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
 
-When building with glibc-2.43 there is the following warning:
+Hi Junio,
 
-    dir.c:3526:15: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
-     3526 |         slash = strrchr(name, '/');
-          |               ^
+> Is that a "performance regression", I have to wonder?  We would
+> regress relative to what by doing what?
+> 
+> Is the lazy evaluation avoiding unnecessary work?
+> 
+> If we are going to pass _all_ the objects in the hashmap to this
+> comparator function eventually _anyway_, then the total cost of
+> computing patch IDs to all of them in the hashmap would not change
+> with or without lazy computation, but if we are currently getting
+> away without having to compute for all, but only computing for the
+> ones we pass to this function, then lazy evaluation is clearly a
+> win.  I do not offhand know which of the above two is the case, but
+> we need to know that before we can touch the NEEDSWORK comment, I
+> think.
+> 
+> The lazy computation comes from b3dfeebb (rebase: avoid computing
+> unnecessary patch IDs, 2016-07-29), even though the "const
+> correctness?" comment is a bit newer than that.
+> 
+> So it seems that we indeed are avoiding unnecessary work without
+> this patch.  We'd encounter "performance regression" only if we stop
+> avoiding unnecessary work, so I am afraid that the phrasing used in
+> the patch is somewhat confusing.
 
-In this case we use a non-const pointer to get the last slash of the
-unwritable file name, and then use it again to write in the strdup'd
-file name.
+You're right. Avoiding unnecessary work is indeed a more fundamental
+reason than preventing performance regression.
 
-We can avoid this warning and make the code a bit more clear by using a
-separate variable to access the original argument and it's strdup'd
-copy.
+>     Even though eptr and entry_or_key are const, we want to lazily
+>     compute their .patch_id members; see b3dfeebb (rebase: avoid
+>     computing unnecessary patch IDs, 2016-07-29), so cast the
+>     constness away with container_of().
+> 
+> or something, perhaps?
+> 
+>>  	struct diff_options *opt = (void *)cmpfn_data;
+>>  	struct patch_id *a, *b;
 
-Signed-off-by: Collin Funk <collin.funk1@gmail.com>
----
- dir.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+I will incorporate your suggested phrasing and reference to the 
+historical
+commit in v3.
 
-diff --git a/dir.c b/dir.c
-index 026d8516a9..fcb8f6dd2a 100644
---- a/dir.c
-+++ b/dir.c
-@@ -3518,15 +3518,15 @@ int get_sparse_checkout_patterns(struct pattern_list *pl)
- 
- int remove_path(const char *name)
- {
--	char *slash;
-+	const char *last;
- 
- 	if (unlink(name) && !is_missing_file_error(errno))
- 		return -1;
- 
--	slash = strrchr(name, '/');
--	if (slash) {
-+	last = strrchr(name, '/');
-+	if (last) {
- 		char *dirs = xstrdup(name);
--		slash = dirs + (slash - name);
-+		char *slash = dirs + (last - name);
- 		do {
- 			*slash = '\0';
- 			if (startup_info->original_cwd &&
--- 
-2.53.0
+Regards,
 
+Yuchen
