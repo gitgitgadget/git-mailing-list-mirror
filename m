@@ -1,39 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4997723EA90
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 19:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9D13ED11D
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 19:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773084363; cv=none; b=mYfe2hcvgl7wiLp5tZfkkwR6AUCFuzslUpXrXXKfMQliFUhVxmmYwVNolVOWoNsb1qlCJdm1L8wy338GcAzX5xHb3cUz7/LmSi39p1AbnIurDXhAMgR99MJzXnEWWXBK+i3I06J1r/EQPIBbXeiE8IZJ4eBNndm4jotiy7DiAgU=
+	t=1773084607; cv=none; b=IRwV6LV0LPoBMO3gaUzmtUg0RRy2F+BXXSKKVD10xpjbxsEtnwf4JxkbNjCX49uxLaBcsEKFNOQaBAPNRGvqnLMJwdFIb3Rr3fRHp3ZLii15ObiwnEM5HYwIZb0TSDIGcsYj107PhqmC6mgn3ycIQ3o5WSOu8GpnqRXxSWjINPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773084363; c=relaxed/simple;
-	bh=8K5YfrawnpyB3UtvWigSvN9O+TWP6ivkWMTfiFyRVEc=;
+	s=arc-20240116; t=1773084607; c=relaxed/simple;
+	bh=fMh1vuH73gfKNnVRWcoauPsiWGJlQ03T+Ykim5xM8ng=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SXRHWKlz0bEPlBsiEViXlmymwymDwaYScEh+zLjcWtHs2B5MdgPWCSUtjqosqnXIhAuFftAYr7UIpw3TjBB4jR0QVGc+cxBGh5pUoGl8JDqXLeNLSDBc3MrMMFPGrS/Y5QtgPW75GTkszMzDLB5b3xblrTKtkTEXS3yTYM8kT8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VpRb404f; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yvx00hRcbNWfkDouIAS0eDkHeBxTeyw8auSPLZrPB4hXlAOUiSTn8HItFWGHRX7f5FYewapekofUfCV3WCsC7+TfREhC96Wswk8FD/Zz5GzmpMo+dq48qza7hGqDW52NlnEdtbu6cCpEtxtcH64SsjpyP1rFIL5BVtZcOrVbdz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YN8XVN2i; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VpRb404f"
-Received: (qmail 49790 invoked by uid 106); 9 Mar 2026 19:26:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8K5YfrawnpyB3UtvWigSvN9O+TWP6ivkWMTfiFyRVEc=; b=VpRb404frfJeqQhTeYDUWr7QafFB7H46nZOB/7eVCxsJhSoCbNHou/6ngpAmSLIrS4Z5E9VUUy1L8cHb8yr6aYYQo9wX/Sgy85cTgVC1ArJqDdOXXQ5IQR6dRRvPO3Vzs8/CdZBMbrwh79my5WaBnUGrf0vMtMTjdOV2ylOqhV7k5rFo5RVS+peBAQaF7WS9gTWB2C8BwDJsZ0YgMNjRshMmydV7DR6LqnkzpuYbw0qqQUZVQR4c2Bf3DwzbR8G7KCNjAdvQLVPmvWm/UYmcqhOMeHw3d72nXr1Ua9jSud9833ZMUYZXmWgU9D6kfMAZgAXD7mi4d6+JAfW6C0BbQQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YN8XVN2i"
+Received: (qmail 49843 invoked by uid 106); 9 Mar 2026 19:30:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=fMh1vuH73gfKNnVRWcoauPsiWGJlQ03T+Ykim5xM8ng=; b=YN8XVN2iYVL+5noyxyeGqenN2OUdr/xUrs0tcIyZ/ty9OTGiosMpFFkD6wWoxlLWc4deuwS2js/EAA8vG+O5BB9vVWm5xySzu5dSasdw4NlMwHYrkm8+eAB2cE+QepenqkwdsCqulY54Hv7iN//eD+e7EQ25uZUCAKQ78z8t6z7hh0eKJ4cDydZomYfrQWkfziw/K21lX3yPAAHhvfWorpeXQZhlz3/E2i7oeYMizDswG+RUlwYBXQatsAkuvWXvJIPXp/xpyGcW6MRED5suTMHTjBRgcws+P0RjoFdMxU99E7t8uw8U33QabqTSgxG6teQ4C0SoL6fzMjG9Q3RG6Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Mar 2026 19:26:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Mar 2026 19:30:04 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 458315 invoked by uid 111); 9 Mar 2026 19:26:02 -0000
+Received: (qmail 458347 invoked by uid 111); 9 Mar 2026 19:30:04 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Mar 2026 15:26:02 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Mar 2026 15:30:04 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 9 Mar 2026 15:26:00 -0400
+Date: Mon, 9 Mar 2026 15:30:01 -0400
 From: Jeff King <peff@peff.net>
-To: Deveshi Dwivedi <deveshigurgaon@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: coccinelle to catch pass-by-value?, was: [PATCH v1 1/2] worktree: do
- not pass strbuf by value
-Message-ID: <20260309192600.GC309867@coredump.intra.peff.net>
-References: <20260308180359.31188-1-deveshigurgaon@gmail.com>
- <20260308180359.31188-2-deveshigurgaon@gmail.com>
+To: Florian Schmidt <flosch@nutanix.com>
+Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+Subject: Re: Option for "git submodule foreach" to also run on the parent git?
+Message-ID: <20260309193001.GD309867@coredump.intra.peff.net>
+References: <032a7767-2350-4312-a7b1-75080519c72a@nutanix.com>
+ <xmqqsea9591f.fsf@gitster.g>
+ <66419a04-67b0-4b60-bf23-078cf92b2c04@nutanix.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,42 +43,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260308180359.31188-2-deveshigurgaon@gmail.com>
+In-Reply-To: <66419a04-67b0-4b60-bf23-078cf92b2c04@nutanix.com>
 
-On Sun, Mar 08, 2026 at 06:03:58PM +0000, Deveshi Dwivedi wrote:
+On Mon, Mar 09, 2026 at 05:43:14PM +0000, Florian Schmidt wrote:
 
-> The function only needs the string values, not the strbuf machinery.
-> Switch it to take const char * and update all callers to pass .buf.
+> > but at that
+> > point, wouldn't it be simpler to explain what you are doing as
+> > 
+> >      do-this . ;# do it here
+> >      git submodule foreach do-this ;# do it there all over
+> 
+> That's basically what's I'm doing. I figured instead of doing "foo && git
+> submodule foreach foo", a "git submodule foreach --also-parent foo" would be
+> marginally neater. But I don't feel strongly about it.
 
-Nice catch. I wonder if we can get the compiler or other static analysis
-to complain about this mistake. The best I could come up with is:
+These days we also have git-for-each-repo. It is primarily about running
+a command in a set of otherwise unrelated repos. But I wonder if:
 
-diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.cocci
-index 5f06105df6..665f56d070 100644
---- a/contrib/coccinelle/strbuf.cocci
-+++ b/contrib/coccinelle/strbuf.cocci
-@@ -60,3 +60,10 @@ expression E1, E2;
- @@
- - strbuf_addstr(E1, real_path(E2));
- + strbuf_add_real_path(E1, E2);
-+
-+@@
-+expression F, ARG1, ARG2;
-+struct strbuf SB;
-+@@
-+- F(ARG1, SB, ARG2)
-++ F(ARG1, &SB, ARG2)
+  git for-each-repo --submodules do-this
 
-It rewrites a non-pointer argument into a pointer. That's not enough to
-actually make the code work, but it would alert a developer that they
-needed to follow-through on the rest of it. Or maybe it would just
-confuse them without further hints.
+would be a natural fit as an alternative to "git submodule foreach"? And
+then you can imagine a "--current" option to discover the current repo
+and include it in the list. And then:
 
-I think there may be a way to get coccinelle to just emit an error
-message describing the situation, but it relies on python extensions,
-which I'm not sure we currently require.
+  git for-each-repo --submodules --current do-this
 
-Anyway, your patch is obviously good and anything further we do would
-want to come on top of it.
+would do what you want.
+
+I dunno. I do not have any need for this myself, but just thinking out
+loud.
 
 -Peff
