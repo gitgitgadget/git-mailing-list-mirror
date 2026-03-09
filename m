@@ -1,76 +1,81 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776DE29AAF7
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 22:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4983938E134
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 22:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773094509; cv=none; b=ucbKERTiTGZrYNKB81pJQDUOoqUpbO85YpHgpFoQePwh4K80Z7fSD7Q8Msr/Xv9w1KLZmPKpv+Z1I/5TgPXOggileFPNgOUdJGW/DG4vus+NsCFZIdPzUVASDfjynqU8VDcgDGtZAHaqAR9E0iU2x6JfRjJTgv1YaLhsvF6TXD8=
+	t=1773094631; cv=none; b=qTUe8KkmUuRkQEkNXz7TyKZ8B7akNzk+6z2CeovQeA5dMnFOa4cE6LgAisFrsmFR2YascOMv6KSI5J4Q2O4/xKD9aFs7NjBdnm87Zr9X99d4ym+MXR9hdASA3UlByspgETcq53HIHYa+sCdsBA7HlKsNtn/+UcA//lMuc1dGpSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773094509; c=relaxed/simple;
-	bh=DxwN7EIqvMTU6MBe25bl+3avFAqobIjpzodnB7pA77o=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZdfinktIbpFYcMxy4GgFRGANPtMjAy5gNL9SpkqwIIgJ9+bq+PIoMXcZ41R3UOz5mhf6/6DDXHY/w8qQuy0j0KErZe7UPdYeBp2ps0xIGyvzG2yFiEPUqL8YhhJ0g1WakDd1fKq4aEsqHqOojRGoaMrwHiX7d40i3tUWvlPm/SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IJCnVp2L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=co//IcSW; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1773094631; c=relaxed/simple;
+	bh=+grwfisPPOsP5eBHowrgkZgaYBwSTt1KvBxHuqjlfS0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JkiJOPDJtjoxQgLQkTYZOnjlDkwxXA0ZIRkmx/jye1x1ynpHbPjqURvU7EY1HRod4o2NbBr7uaCpdFB2Yl/dR97Wts9salL3OpQtY5kzUI5BZ/tko8iKGoRghskKem+kpH+uLr+4OnSAVKhAPChCSjckhEVC17iPWemJqWBQauQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HAZpd0n9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PaBrrlwb; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IJCnVp2L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="co//IcSW"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C62BB14001CF;
-	Mon,  9 Mar 2026 18:15:06 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Mon, 09 Mar 2026 18:15:06 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HAZpd0n9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PaBrrlwb"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 55B9A14001B6;
+	Mon,  9 Mar 2026 18:17:09 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 09 Mar 2026 18:17:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1773094506; x=1773180906; bh=GpRQP8dZaLD7C3wmir/D6srqQokiaBEY
-	0GRqNNmqTuI=; b=IJCnVp2LbY2kQxLZVTxANWWTMVTi31DYJjd43h3SyhiqSTd0
-	ndQOeNXNtoYvQuDLE6KDe+jY+T98OPeICkg9gKOD7sW78nsmRTCT+qw/eXoolRtT
-	KxKW6kJCkSZoTfMGpkfWrCiV21zssv971JdxixUIVfdnPcCg29Uc0Mxshqwk1tEy
-	sd0dT7QbeMRFwjauprZpCwB2jH3FUowc/N3cPiFWx3yewSebEqhLsEVjKZWAZ2w0
-	gM4Pi1DpY3zeKgYUWV7ixinIHEPV0BLE0n5ivs9YWb9ObhJMJgs4OjyUTuZXO06a
-	80up0Nr3z27pVT0uWYAT++c6nqLvB4+BCLwEYQ==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773094629; x=1773181029; bh=K/uQtTI0eu
+	d131BSGpbzYRJFOwyN+JPnKWxu6BjaaZ4=; b=HAZpd0n9AMk37YEVg6jQtZqEEV
+	yGVSVLJY1hfTjxE5GdqRT7CZoOphxqAG9uPHLyOJy4WrK1+9vMCxwQfyGLoTRJzM
+	Uej9z/PAHjJaRuSJ7F/G0/NTxd5fgncum9+xU60eZiM0ESSGWwt75E8ky4Ornzoy
+	YFmi4jZr6AKU522AHpAKivNmCWC8FG7znMyTZaXLbxAX/Nax2eW/vXH0eWdxXiN3
+	9z2Zb96KlRprFbALLNk4vRIV38NdMe92RevEeXzTVOecneL6b20NvTZfgxSKvBo7
+	fxd7kWArgUUVpSq4SpiB1rQvBj8RYt370HUDqhpOLo1p+/EYu/k1EW43do7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773094506; x=
-	1773180906; bh=GpRQP8dZaLD7C3wmir/D6srqQokiaBEY0GRqNNmqTuI=; b=c
-	o//IcSWJUtgYzQqg4iilx3EMYJ7FwZ62Q1yHdulgOGFcio2QFHl/xih0wMglonXZ
-	s/ON+C1R85PlOLih0n6nESwRJIGzrPCpiCrzde6iAedsz4wMz6IPI8b2y4c9iVnp
-	k/ZQARCt0Ab4ELVKiIFGDk50qcssPKSGKPEHdDyXjg9gSrHbCiQ19/PpfqpyFTD2
-	YVqrPDISWJ/mpLPIcj15sGGX2C13tP6ENpgDaSi68tJnQd7PZ8/pvNltLHRi+h1I
-	Es79M3RF1f4fKkjaRts9j5SkeAMWVAvCQy9CVzMhYcrKrJSR97CkxfhkWyCjFkVJ
-	z9hxtruJmwwjWdw8G6Rkw==
-X-ME-Sender: <xms:akavaZ3Z309ON1CNjCEBwWL9wQKFqZZVgx2otGJdch5ZafMNLtGPmg>
-    <xme:akavaWFVIrs5PHdo87-7iWD9XevRgUac9gnuXx4EeirbUb2831GjvI-WkDj9ZMEVt
-    oynHOfDEXnoB4HB0fpRJNpQZYr7IU9yWRBD45gCbLdkwzpXNzTh>
-X-ME-Received: <xmr:akavaXh2CI7Vh5TK1ubSJHCbwtpAcTziqFd1DQMBnTP5rpMYNXtnrys4QKOEoitcDEK_epD1MDgVvQDNCL6dgin8Rpjhniqt-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeelfedtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773094629; x=1773181029; bh=K/uQtTI0eud131BSGpbzYRJFOwyN+JPnKWx
+	u6BjaaZ4=; b=PaBrrlwbQn1Y/DJ6e/OCbTgncnq7NEQ+iGxTgbJaXgYx/p/pGn6
+	Fhu4f/KXI/6hTqrPng5Ci/veC01TTeXpPbB0Hwn5NPDc3khHYe1yjAwcF2LncAFH
+	eKHUj5yHw9URCIMN3N2OVUIcK5I0zYH/UOI5EuvtWO02qDwhEqGISGbMxlhya02s
+	cv2F1+7GBTYxRWYXsZsePfyZOZSEqsv5isdZTMrR9US+i0Rx1mTmKwvfaFDSQH1u
+	x1Hq8/2quTKbV8aO1q76vhsKlIBZfXtSiI4rItVnoVIcRwtPmR2VysKjIg994RNi
+	CwnmAxzu9YUp/NRmCcaLosZ2Zx4aTveRhlw==
+X-ME-Sender: <xms:5UavabA-OvZdaoelBF32j-4OWj4KFNAxqr2ACvQ13AAUe24G8z2KBg>
+    <xme:5UavaY_IMEcuhLTl8JW6P-ol_GMVqfXnqyxEMj4Tsf8stOy6NZiWs25TsQr9uRB8l
+    XTt7ooZDQPIP9EDudZowt9JkMFReuud_y3nPthcGfyy6Vx9OV_bww>
+X-ME-Received: <xmr:5UavaT_nRz7S46U5PWm76qm46XI1ng6hYGYb8C6vgr7s3mohngOCIAquwJcd6gbO6VA5tMoUheMyKXTHeDZcf2QwWLsr6du-wQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeelfeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnhepiefgieeggffhtdelveehueejleekhedtte
-    dtgeffueetlefgudeuieekveefhfeknecuffhomhgrihhnpehkvghrnhgvlhdrohhrghen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:akavaR-KhIKVbraYBdcWD1diJ8M_lsngjPO27XOO-JBJzzhqK_Esew>
-    <xmx:akavaeom4cZWMrIqKXTqFj9V9G_iG9J0X0pk1O3oPgUHvKZaHPJiyA>
-    <xmx:akavaQ-5I2DZjK2LracekSGQjZ4zCtlfus_vk0A1lfKRULFv5i9LMg>
-    <xmx:akavaSX44X50C5GBGJJsMSxEhkmtmkihhqzMgjwD__BYVCyuLuFHOg>
-    <xmx:akavaVP6erurOzG94PuFIMqp8QhuuL6ndP-WoF0Cd3sfOjeYeGpaEr6I>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrghtsehm
+    rghlohhnrdguvghvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:5UavaXeTPtfbpD-3ZGr3iXit9AgfFLyUtJsAI5tn_-cCU1fpBZuAhw>
+    <xmx:5UavaUEvN2waAUTwE3XWIX53MyozYuGlBmvvjmIjrk-5mG0J5W4e7Q>
+    <xmx:5UavadcFcaDXIx-Cboa2jS2yvzdrM6lst7EtMX4niBDqd4VKW0MGRg>
+    <xmx:5UavaWGwZR06l3QLixCCfDX3ES38N4pWkm4UDqYiE1Kv_jauvutzpA>
+    <xmx:5UavaVKD7pxRRboBaScReojA8NdNmnh_Gn9pqThS91DcwN7UZ_bwFkIm>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Mar 2026 18:15:06 -0400 (EDT)
+ 9 Mar 2026 18:17:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] SubmittingPatches: spell out "replace fully to pretend to
- be perfect"
-Date: Mon, 09 Mar 2026 15:15:05 -0700
-Message-ID: <xmqq34283b12.fsf@gitster.g>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v1] diff: document -U without <n> as using default context
+In-Reply-To: <20260309172719.125419-1-cat@malon.dev> (Tian Yuchen's message of
+	"Tue, 10 Mar 2026 01:27:19 +0800")
+References: <xmqqh5qswo45.fsf@gitster.g>
+	<20260309172719.125419-1-cat@malon.dev>
+Date: Mon, 09 Mar 2026 15:17:07 -0700
+Message-ID: <xmqqwlzk1wd8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,54 +85,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-It unfortunately is a recurring theme that new developers tend to
-pile more "fixup" patches on top of the already reviewed patches,
-making the topic longer and keeping the history of all wrong turns,
-which interests nobody in the larger picture.  Even picking a narrow
-search in the list archive for "pretend to be a perfect " substring,
-we find these:
+Tian Yuchen <cat@malon.dev> writes:
 
-    https://lore.kernel.org/git/xmqqk29bsz2o.fsf@gitster.mtv.corp.google.com/
-    https://lore.kernel.org/git/xmqqd0ds5ysq.fsf@gitster-ct.c.googlers.com/
-    https://lore.kernel.org/git/xmqqr173faez.fsf@gitster.g/
+> The documentation for '-U<n>' implies that the numeric value '<n>' is
+> mandatory. However, the command line parser has historically accepted
+> '-U' without a number.
+>
+> Strictly requiring a number for '-U' would break existing tests
+> (e.g., in 't4013') and likely disrupt user scripts relying on this
+> undocumented behavior.
+>
+> Since we are retaining this fallback behavior for backward compatibility,
+> update the documentation to explicitly state that '<n>' can be omitted
+> for the short option '-U'.
+>
+> Signed-off-by: Tian Yuchen <cat@malon.dev>
+> ---
+>  Documentation/diff-context-options.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-The SubmittingPatches guide does talk about going incremental once a
-topic hits the 'next' branch, but it does not say much about how a
-new iteration of the topic should be prepared before that happens,
-and it does not mention that the developers are encouraged to seize
-the opportunity to pretend to be perfect with a full replacement set
-of patches.
+I am moderately nagative.
 
-Add a new paragraph to stress on this in the section that describes
-the life-cycle of a patch series.
+It is not like we are _encouraging_ users to omit <n> from -U<n>,
+but it is not errored out only due to a bug.  Who would the new text
+help?  Users would wonder why <n> is not optional in --unified=<n>,
+the other way to spell the same thing.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- cf. https://lore.kernel.org/git/xmqqo6kw3bjp.fsf@gitster.g/
+If we want to be explicit, we should probably do this instead:
 
- Documentation/SubmittingPatches | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+    `-U<n>`::
+    `--unified=<n>`::
+            Generate diffs with _<n>_ lines of context. Defaults to `diff.context`
+            or 3 if the config option is unset (`-U` without '<n>' is accepted
+            as a silent synonym for `-p` due to a historical accident).
 
-diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
-index e270ccbe85..f6ec8a3dde 100644
---- c/Documentation/SubmittingPatches
-+++ w/Documentation/SubmittingPatches
-@@ -43,6 +43,18 @@ help you find out who they are.
-   respond to them with "Reply-All" on the mailing list, while taking
-   them into account while preparing an updated set of patches.
- 
-+. These early update iterations are expected to be full replacements,
-+  not incremental updates on top of what you posted already.  If you
-+  are correcting mistakes you made in the previous iteration that a
-+  reviewer noticed and pointed out in their review, you _fix_ that
-+  mistake by rewriting your history (e.g., by using "git rebase -i")
-+  to pretend that you never made the mistake in the first place.  IOW,
-+  this is a chance to pretend to be a perfect developer, and you are
-+  expected to take advantage of that.  In the larger picture, nobody
-+  is interested in your earlier mistakes.  Just present a logical
-+  progression made by a perfect developer who makes no mistakes while
-+  working on the topic.
-+
- . Polish, refine, and re-send your patches to the list and to the people
-   who spent their time to improve your patch.  Go back to step (2).
- 
+which would tell readers what happens when '<n>' is omitted and why
+we allow such an inconsistency.
+
