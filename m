@@ -1,78 +1,128 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0342E285072
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 17:27:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322822EFDA6
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 17:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773077275; cv=none; b=eH+bR3j4FvLuR+jw0ymSuIlKl0/p/UZiTeebbQrCN0bwPWqJmyN4a7IDSGmWl5eg7onKnECZqmDR14hy2epkgYxChhvxW81UgxqlMI4KA879Po53SowLfujJSFJHmnJQAujSyCNPz9B+zxIz3CSilJCttSIM3wHKWJAkTAUQc1M=
+	t=1773077809; cv=none; b=Aav9kTN09kLqKTRXVGVRw6JqYqf4ldt/efSN0ajOZLxvSmJ/ySLnh1J4sMvbBSIojTmYLjvKjRDVuhdO0y4HgGdivjAqlkjhD71XswvMPPVY7QLmqiwPGQvOWcKkL8Cm31ZTII75VEhNgtVSfm4+/WPd2C0HFG06LVXrmb0A9O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773077275; c=relaxed/simple;
-	bh=dHgNG91rH4HCt8pGXrThUteaOfjahZ5Jmi88q8aQSWg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=spPzPhuNnLUCzhdaj727n3pPNoInrTM5nKdojWVqlnIJW8/Jwm+xT7acYTFol+5A4I/ZKx1AYdGXDMxtY+b3aJn6kTCjbxo1wy//WzyHLpS/Gg2c8N+p3PgkqIGxhvEs6AtnhsX0tmUPTnvhLWNmEXgwMWrD/vzennbXr4RsIiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=HGEGQJyw; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=dO6R5VwK; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1773077809; c=relaxed/simple;
+	bh=la4AWZW92cRdWyDM6haGBSZMbaIpOq4Y1dWmZs8fyEU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DMVZDqopiX6pjXwQqY7p7305rWpaSJUQC1MPtG5aqQ6UDnd8FTghkMU3ud3PXooZASdMemIOcRoLBCyKqGq3kONkR2H+u9EAGoDdemZ8iH3fGWnXiav5hWh3DhPRoJPogVup1XNiwDuB3oaCkF/AOB9mv6BG2vKgaiW5p8Nbz94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K0iRx6GB; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="HGEGQJyw";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="dO6R5VwK"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=HGEGQJywNn5MNpincEMELiKshLQrX3b2z06nEQEG8e/THG7q/l/ifHqmgVk6cIQxozw4TDvLe4AEoh5dLD6vaYG5ibaWAlZh6uzBQ2BDpHMLeoo5Ba/bbaR6nkewKuoydM/dYgnNA+XX+JDDtGq91mtzRw/Fb9zI5TDQ7sCXuzpc8fNaBMlyrKwQIPhjGPeJJo4pg4sCJBJrEI1mw0fJY6dM7UI0DCV8BXsaz34lFJPBRxIH3u0s+/nGCwcKfa9hnnNaqbAaYX15/OMSlEoZO5BWIvmdQuvx80T79t9P8DW89d1R6OU5NOEJaRaS/O3bQCpRBJhfb7ySiqFuIYC7lg==; s=purelymail1; d=malon.dev; v=1; bh=dHgNG91rH4HCt8pGXrThUteaOfjahZ5Jmi88q8aQSWg=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=dO6R5VwKkbgoFFIx6y9f02AIpeE8xV7ch0XhBMoJj97rFXjHGtq0d0INi92M+dFfP79RoJ74zhkdF8Okct53tuGby0fvLMBlbvItXqTu37WbbDxlJ0U39t3+H55pojS5qkRMjFWjmOjYOvlThlkXM86+L5+rzyo4bwQ3GD6cMGfaHwDsmGV7RlHY+pu8VZT28NCWOcqwm0Qz4bbi2Wo5tQKjLvEeDEPyLbbqehFTtVSMwvOIFD9yE3jlR/DNysC45Enc168bbs0cPtNEA92OZN3jGUkOABNruztEuhMzpKY6Y4IeYjbepuk0gdWkkiJvpuNRtQMRAgl0cFACbWX3ew==; s=purelymail1; d=purelymail.com; v=1; bh=dHgNG91rH4HCt8pGXrThUteaOfjahZ5Jmi88q8aQSWg=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1848533520;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 09 Mar 2026 17:27:51 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K0iRx6GB"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c7384f5a9cdso2118777a12.0
+        for <git@vger.kernel.org>; Mon, 09 Mar 2026 10:36:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773077807; x=1773682607; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nEdOwJ89oUbutPXQHZenzRn5U+8pMtOq0WvKDfWhANI=;
+        b=K0iRx6GBAWfwD6Tv2NZmz3Z13UWYbUMGuxma39YRqBQcoO1RIPgSogGa7k79tD96qr
+         imB3gs0bn/YugtgwkyubkfxZku/7nPBDGkI18tFFZOsdfO83/kiO7XnzxSKesLCxDCX8
+         a2oW2ZxXR70a1zWavMaHku0S6hpthN0Y5nB9PQP6SVGsIDyd6Hg552D+HRcfQnXE5klA
+         XyrE5aDGv9GAOPvcSi6yjaQVm/iJ/Yd9uBYsy0B0oHRZQKRgNY2PTU90UAL655+LVfqi
+         gbSec34WK7gNteRJSRUs0Uk5pxw5AsYAbBrEEPXX5uOeeoNrlDBZaa4eRWIqTcNJZf/5
+         nalw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773077807; x=1773682607;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nEdOwJ89oUbutPXQHZenzRn5U+8pMtOq0WvKDfWhANI=;
+        b=UKQTb1uSl7Bpjrn8yzlor6PTpZnw0P2r5fZ5Dp5ON2DoQPQXp5seLB463eCbcr1W+S
+         WxufT0mBCbpB7WZA81PMKhYuTp7TcTUSHE1VcMz+oPRJNoUigDSyz5q0cH9xW/0PFWEi
+         +IGH4u6hEhU6P+HCvGqgZnE7UduMfj5u8L61QdC5yvuxYnlxwFaEkkQTfbW7qe93woq5
+         OlsJpWYZZH4gaArqKThZ8qeYQo9nEEz+XX92WnwkmVJMVbGlROE1ZpzEFOr0lr0fOP/Y
+         pHO4UvvnCbE1WiFnhOYpC2k7W4eI6q9Fqnh75vAO8PXrHJRE27VRqx8q3ZY0KO/rhWtF
+         mnbA==
+X-Gm-Message-State: AOJu0YxTW+8PGoMTWbm26I5A8SzNMqCorrR6QvJTrZsJ9X7ykrMptGZU
+	Zz2fhvIhSVvNG/u7wrkRBOMuaQYg+wU8UTBmUkXn6eg2DwtFSeqziiqHOZ6+aQ==
+X-Gm-Gg: ATEYQzw/tB2g0pHs+vsAU3+0JjTMwvBHw+vZFRkPzZBNaKDoc0vhefHy2nPh1pJm7VF
+	1RKtBV9ExK7QXrWct+CqcZtZIBvIh2OgapRlk9eygBVHxm8hom0GUnAWMneSisTbxGvFn+ysHPy
+	5lKfezyfm+WslVt7C8lsdcfzwQsCGvo8clVUTa0FVGRjYQEEWm7kxzqZ+39CgGIOyvQkaIzjX/l
+	p7V+R2w6jTxkqhzq82bfYatgISjrOl5yZIomPfd4+Ke+g7XQDGxjMHbaRwHSegbIKXYORVqVgh/
+	K+arUNi8scYNdv97/3FwA4gs4cmoM9jJDU7sCwaj56rf5FmNtnBu8gvGk2b7jcgXfFIWZMMnKWw
+	EfbEPEimU6bUtrcbS/n88kG0EomtUVu+YKRZHh3JXyJ/bW//d3AIjVA1tiADEO+Rb6XF979vqN2
+	/GZb4c/LZPc0uu2F0hOoyReIUF3swTrUDsad0zbiA8Xwz4JHLibILb+RXZGqNGie9apiyFFi0=
+X-Received: by 2002:a17:902:e552:b0:2a0:fe9f:1884 with SMTP id d9443c01a7336-2ae8249e5ecmr110743555ad.55.1773077806809;
+        Mon, 09 Mar 2026 10:36:46 -0700 (PDT)
+Received: from localhost.localdomain ([115.244.141.202])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83fb3cc3sm118674805ad.73.2026.03.09.10.36.45
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 09 Mar 2026 10:36:46 -0700 (PDT)
+From: PRASHANT S BISHT <prashantjee2025@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Tian Yuchen <cat@malon.dev>
-Subject: [PATCH v1] diff: document -U without <n> as using default context
-Date: Tue, 10 Mar 2026 01:27:19 +0800
-Message-ID: <20260309172719.125419-1-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <xmqqh5qswo45.fsf@gitster.g>
-References: <xmqqh5qswo45.fsf@gitster.g>
+Cc: PRASHANT S BISHT <prashantjee2025@gmail.com>
+Subject: [PATCH] t0004: replace test -e with test_path_exists
+Date: Mon,  9 Mar 2026 23:06:35 +0530
+Message-ID: <20260309173635.29683-1-prashantjee2025@gmail.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The documentation for '-U<n>' implies that the numeric value '<n>' is
-mandatory. However, the command line parser has historically accepted
-'-U' without a number.
+Replace old-style path existence checks with the modern test_path_exists
+helper function that provides clearer diagnostic messages on failure.
+When test -e fails, the output gives no indication of what went wrong.
 
-Strictly requiring a number for '-U' would break existing tests
-(e.g., in 't4013') and likely disrupt user scripts relying on this
-undocumented behavior.
+These instances were found using:
 
-Since we are retaining this fallback behavior for backward compatibility,
-update the documentation to explicitly state that '<n>' can be omitted
-for the short option '-U'.
+  git grep "test -[efd]" t/ | grep -v "if test"
 
-Signed-off-by: Tian Yuchen <cat@malon.dev>
+as suggested in the microproject ideas.
 ---
- Documentation/diff-context-options.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t0004-unwritable.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/diff-context-options.adoc b/Documentation/diff-c=
-ontext-options.adoc
-index e161260358..655496ec3a 100644
---- a/Documentation/diff-context-options.adoc
-+++ b/Documentation/diff-context-options.adoc
-@@ -1,4 +1,4 @@
--`-U<n>`::
-+`-U[<n>]`::
- `--unified=3D<n>`::
- =09Generate diffs with _<n>_ lines of context. Defaults to `diff.context`
- =09or 3 if the config option is unset.
---=20
-2.43.0
+diff --git a/t/t0004-unwritable.sh b/t/t0004-unwritable.sh
+index 3bdafbae0f..2a9fc781b6 100755
+--- a/t/t0004-unwritable.sh
++++ b/t/t0004-unwritable.sh
+@@ -21,7 +21,7 @@ test_expect_success POSIXPERM,SANITY 'write-tree should notice unwritable reposi
+ 	test_must_fail git write-tree 2>out.write-tree
+ '
+ 
+-test_lazy_prereq WRITE_TREE_OUT 'test -e "$TRASH_DIRECTORY"/out.write-tree'
++test_lazy_prereq WRITE_TREE_OUT 'test_path_exists "$TRASH_DIRECTORY/out.write-tree"'
+ test_expect_success WRITE_TREE_OUT 'write-tree output on unwritable repository' '
+ 	cat >expect <<-\EOF &&
+ 	error: insufficient permission for adding an object to repository database .git/objects
+@@ -36,7 +36,7 @@ test_expect_success POSIXPERM,SANITY 'commit should notice unwritable repository
+ 	test_must_fail git commit -m second 2>out.commit
+ '
+ 
+-test_lazy_prereq COMMIT_OUT 'test -e "$TRASH_DIRECTORY"/out.commit'
++test_lazy_prereq COMMIT_OUT 'test_path_exists "$TRASH_DIRECTORY/out.commit"'
+ test_expect_success COMMIT_OUT 'commit output on unwritable repository' '
+ 	cat >expect <<-\EOF &&
+ 	error: insufficient permission for adding an object to repository database .git/objects
+@@ -52,7 +52,7 @@ test_expect_success POSIXPERM,SANITY 'update-index should notice unwritable repo
+ 	test_must_fail git update-index file 2>out.update-index
+ '
+ 
+-test_lazy_prereq UPDATE_INDEX_OUT 'test -e "$TRASH_DIRECTORY"/out.update-index'
++test_lazy_prereq UPDATE_INDEX_OUT 'test_path_exists "$TRASH_DIRECTORY/out.update-index"'
+ test_expect_success UPDATE_INDEX_OUT 'update-index output on unwritable repository' '
+ 	cat >expect <<-\EOF &&
+ 	error: insufficient permission for adding an object to repository database .git/objects
+@@ -69,7 +69,7 @@ test_expect_success POSIXPERM,SANITY 'add should notice unwritable repository' '
+ 	test_must_fail git add file 2>out.add
+ '
+ 
+-test_lazy_prereq ADD_OUT 'test -e "$TRASH_DIRECTORY"/out.add'
++test_lazy_prereq ADD_OUT 'test_path_exists "$TRASH_DIRECTORY/out.add"'
+ test_expect_success ADD_OUT 'add output on unwritable repository' '
+ 	cat >expect <<-\EOF &&
+ 	error: insufficient permission for adding an object to repository database .git/objects
+-- 
+2.50.1 (Apple Git-155)
 
