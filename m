@@ -1,115 +1,105 @@
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [185.244.194.184])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CE833F8BC
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 21:08:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.244.194.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52A5349AF5
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 21:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773090524; cv=none; b=gUbOm5rAaNdn/GdZFz96bdwYfHaj7OaoKhF4uQc3yN3/gmhYiFtoQZnvgt8uZgjGfVyGK7Eja0vcTzIQknFj4aaiOHdlpI1CembGv/aFg90xYMe9N4rg3sf2GaFBtMqk7mpF/NApLJP9vqr2Rp+2OMC8fDYOObTY1Qd51lQPSqA=
+	t=1773090853; cv=none; b=RGbDv5Ghicg6FM2DP9BDIee64RaOrLPWDynuLrMFX5HTnvUjGNbDHYHf81QfisI5+2t6KapAcffrQbJ3wYAP1ODe72kapYvsoyMRvYQyfTeDgXiQ2s9hciUiHlU5juldavP99jVN5lQc38hSf2yEDqYgD4DjWh69tEho6OCywj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773090524; c=relaxed/simple;
-	bh=6beAHrkO22CBqbpuhQAUNHKiGLhXIFW19J2P1hGXq5c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=ADY0vI70Owm1/kN2A+vrEXBOSNVnPfvUzP8luJoGmB01rg1TVoqxBzR/DdVT9LKe1+F5bRYVnJ6p6hm2HY3HN5eyCUdasOcxu3cFzWxg5/MmA6AD2uUC0NOGaAcsasCaUNMc7aLg+KVzefM2316OwkbDgqftcd3K8ElvzIDDNM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de; spf=pass smtp.mailfrom=rd10.de; dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b=A8EKZ+uU; arc=none smtp.client-ip=185.244.194.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rd10.de
+	s=arc-20240116; t=1773090853; c=relaxed/simple;
+	bh=jZ9EWQdE1uhdmL+8WYlpIe4GsxBp1qiqQk9BLO+c9fQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=k604vqThY7ROhHf8s2Km1tY3PWUQ+W1vQuIQEk+Q0QwZp1U4IX0O+CuWCOxUZhJ4/+RN8gTLopS0jUDkt+uh983Acf9TlEKDlFazZ/cITZXBCbyyxbP+40cIh/Fh78gO1BTdZUtJbXR84PFSbYkIpOu/4+rD1g3jKFz+CHZMSxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=egPdXJO4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vLmD2y1H; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b="A8EKZ+uU"
-Received: from relay01-mors.netcup.net (localhost [127.0.0.1])
-	by relay01-mors.netcup.net (Postfix) with ESMTPS id 4fV8kT0BhFz965y;
-	Mon,  9 Mar 2026 22:08:33 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rd10.de; s=key2;
-	t=1773090513; bh=6beAHrkO22CBqbpuhQAUNHKiGLhXIFW19J2P1hGXq5c=;
-	h=Date:Subject:To:References:From:Cc:In-Reply-To:From;
-	b=A8EKZ+uUZiq+rAyYyvhqCCfIuF2/N/icZFos4q3d9nGF3Zh8TpZfD8AE5lzV4zPb6
-	 ir97NT67I6hVfz0VF95UibHp9Uvphjau0xDZLor7g4CVsDMBs5QFAbLUAH4WdgqZH4
-	 MfPOeqbbtwOE8c8y8nvERjtL9R1vt9rVO5pLnFA0BulsuMzSDN0W3I4YZwKwznOD4o
-	 zUUO/dgNSMrW/YZd4uq1r+wa8oR1CWFG8ShAqMK8jvdULSp3Uq8vU532AsV4ULQLJu
-	 +kICD55Efy/JpR6MiiB40B7Z5dVgM/dTXd406Jl5H7ArIroXkRT1XSqifZywXlUM+V
-	 NVVNlqznWDNzg==
-Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
-	by relay01-mors.netcup.net (Postfix) with ESMTPS id 4fV8kS6cFNz7wmJ;
-	Mon,  9 Mar 2026 22:08:32 +0100 (CET)
-Received: from mx2eb1.netcup.net (unknown [10.243.12.53])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4fV8kS3zDhz8sZw;
-	Mon,  9 Mar 2026 22:08:32 +0100 (CET)
-Received: from [IPV6:2a02:3102:8e00:2a0:aca7:3084:e561:51e9] (dynamic-2a02-3102-8e00-02a0-aca7-3084-e561-51e9.310.pool.telefonica.de [IPv6:2a02:3102:8e00:2a0:aca7:3084:e561:51e9])
-	by mx2eb1.netcup.net (Postfix) with ESMTPSA id E771B10020E;
-	Mon,  9 Mar 2026 22:08:31 +0100 (CET)
-Authentication-Results: mx2eb1;
-        spf=pass (sender IP is 2a02:3102:8e00:2a0:aca7:3084:e561:51e9) smtp.mailfrom=rdiez-2006@rd10.de smtp.helo=[IPV6:2a02:3102:8e00:2a0:aca7:3084:e561:51e9]
-Received-SPF: pass (mx2eb1: connection is authenticated)
-Message-ID: <3ed2d803-5df9-44f4-9427-958d28aa1c46@rd10.de>
-Date: Mon, 9 Mar 2026 22:08:31 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="egPdXJO4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vLmD2y1H"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id E18B1EC0166;
+	Mon,  9 Mar 2026 17:14:11 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 09 Mar 2026 17:14:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773090851; x=1773177251; bh=ACuq8UH95Y
+	Mw+8Ib0DmOjFLfXvMyBerDYtnCz5z1dGY=; b=egPdXJO4RZlBaqGyVc3sIbEQfy
+	hbPNvjzNCzepNFeU/xdFQ2g7uT229uTAmig04Rh8ELkkpfKZjAF20NDfujxjViCL
+	AlL3fmiyNSa5RGA711AlYNzMcn3i898euWbhLHIMVBo0eW/Bgr2d7+0gT1KQSv7A
+	zB6Qfuw2gJ1R8IH9BN+lEZiu2iZEAgmBdlh7D8r6JnDdvzz824EmIiyeqfsyofbP
+	raFQ12FW8ax7SEy2op6FrqJPgJwfbdn0o4DMu/fVXaGYtlSQs3WcpWGeX1tHpUmg
+	mhCU463FfgugPsVgTAiSconRsbbIM+ZEMXlsxIMC62Js9Xx1UzqnwqgXdF/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773090851; x=1773177251; bh=ACuq8UH95YMw+8Ib0DmOjFLfXvMyBerDYtn
+	Cz5z1dGY=; b=vLmD2y1HKDb2yFCHgnN1RAuxUU++XxFPH0uBOe2tYhe0cELatoa
+	2iMRFatIrlRUYWb577fGbtVRr2yi6r0gwjEfvx/kocC841i3KWtyiWsrCu1j2KxC
+	yMb+cx5hwQqECTzzzqlCZl0ygPw0YVKVMbpxKgFOxwcs0vSfmvXJmVZhcGJwEICs
+	yO34DIn6uJUy9m79veI/oPf1Z7d3QlbOv+mJ9sIPqE7uN6Xfey6U0VW4jdX1PRME
+	ZwB4ZZ/R9D0M7PGXKeQDUVJ4+KKrsm5JD1NbbxHhM4cMyEajkNC8y7/2prpzZHK1
+	OGbAmAWflV9/RzgoglOsp4Og22AsWWGZ68Q==
+X-ME-Sender: <xms:IzivaZ6mwd7Juf8UhrojcWH4zEWYB_Ul891IpBXKK9SvI3OunSHNtQ>
+    <xme:IzivaeXcnyM6mGd9rGxVz-elEcXyNWH7PBQ4Gi231ctB_mTY70_P9vhi_s2rM_meO
+    V29iztURh3y6ffnbGQ5ZludjQeJIYRFlgr51nktjcT0dEdW0MNT>
+X-ME-Received: <xmr:Izivad3TIDmDJ336RQ1_3fDiJo0DFydjKBjmgYz1pTXJJFxMGlyrzTzC-P5ecGKHxFQ4xKzSvcS4nLtFLQRNsh5wzGTdsKoH5Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeludekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprhgrshhh
+    rghnthhjvggvvddtvdehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:Izivab1G2a_aNLqDhxWpBh3F4EC0Ek1K69D7BNL2-4YX7hB3ozHtxw>
+    <xmx:IzivaQ9orptUqHx10xzo6UaitBDIf4OpLMBRO2GcqH4laDxdqbmTnQ>
+    <xmx:IzivaY1JJfV8pGhABYBNdWV9vL2R7m1T8BGU3n1Z5T2EXJnmqdi5ug>
+    <xmx:Izivad8IxGJp0X6V7QFIE71KrWxSyHWJ7Cm0PlPuy5kj8HJILSKjTQ>
+    <xmx:IzivaWW3ZzNrfARWmvcQz24sn8ZzLadwilgebDSPOO4nd6_95a_iSis->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Mar 2026 17:14:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: PRASHANT S BISHT <prashantjee2025@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] t0004: replace test -e with test_path_exists
+In-Reply-To: <20260309173635.29683-1-prashantjee2025@gmail.com> (PRASHANT
+	S. BISHT's message of "Mon, 9 Mar 2026 23:06:35 +0530")
+References: <20260309173635.29683-1-prashantjee2025@gmail.com>
+Date: Mon, 09 Mar 2026 14:14:10 -0700
+Message-ID: <xmqq4imo4sf1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: git-fetch takes forever on a slow network link. Can parallel mode
- help?
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <5c7c975e-2541-47e1-b789-fee1fdb77d2a@rd10.de>
- <aas--JZ-CCWN-o7O@fruit.crustytoothpaste.net>
- <1d6a8eec-20b3-4d6e-83f1-d18b7a3c0145@rd10.de>
- <aazUlMBj_IK41Ss2@fruit.crustytoothpaste.net>
- <0ebf757b-eab5-424a-a58b-e654b1a2942e@rd10.de>
- <aa39obsSbk9R1mqu@fruit.crustytoothpaste.net>
-From: "R. Diez" <rdiez-2006@rd10.de>
-Content-Language: en-GB
-Cc: git@vger.kernel.org
-In-Reply-To: <aa39obsSbk9R1mqu@fruit.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-PPP-Message-ID: <177309051213.2045051.9228806234835421797@mx2eb1.netcup.net>
-X-Rspamd-Server: rspamd-worker-8404
-X-Rspamd-Queue-Id: E771B10020E
-X-NC-CID: J4uMBDgf91MHDepDc2g1A5K1C4GU38Gqlblga0G9
+Content-Type: text/plain
 
+PRASHANT S BISHT <prashantjee2025@gmail.com> writes:
 
-First of all, thanks for the information about upload-pack etc.
+> -test_lazy_prereq WRITE_TREE_OUT 'test -e "$TRASH_DIRECTORY"/out.write-tree'
+> +test_lazy_prereq WRITE_TREE_OUT 'test_path_exists "$TRASH_DIRECTORY/out.write-tree"'
 
-> [...]
-> the fact is that the file system is much lower latency and much> faster than the network connection over which data is being sent, so
-> that's the case that Git optimizes for.
+I suspect this is utterly wrong.  As you wrote in the proposed log
+message, test_path_exists is *NOT* about checking if the path
+exists.  It rather is about *expecting* for the path to exist, and
+fail *LOUDLY* if it does not.
 
-I wouldn't say that reading sequentially is "optimising". It is just the limitation of a simple implementation. Like I said, with modern SSDs, issuing requests in parallel will be faster even on a local filesystem. That would be a real optimisation then.
-
-Some elderly Unix tools like GNU Make realised long time ago that parallel operation is the way to go. Git itself has realised too, so that it can now work in parallel in certain cases (multiple remote repositories, multiple submodules). So old Unix tools don't count as an excuse!
-
-I think we should clearly point out this deficiency. Git must not be perfect, but I would rather know the limitations upfront. At the very least, that would help me make decisions faster, like investing in some sort of a Git server instead of trying to optimise the SMB/CIFS mount.
-
-And who knows, maybe someone will see this post in the future and decide to implement parallel file operations (async I/O) inside upload-pack and the like.
-
-
-> rsync would also perform poorly in your case because it's again
-> optimized for sending less data over the network than it receives from
-> the file system.  Similarly with tar over a network pipe.
-
-rsync would probably look at the file dates and sizes and not transfer everything. There are even some parallel rsync variants designed to overcome high network latencies.
-
-But I don't think rsync is worth the effort for me. I'll just wait a while longer every now and then.
-
-
-There is one more thing I am curious about. Git does not document how it uses SSH (or at least I couldn't find it in the standard end-user documentation). Git cannot launch a process on the target host over SSH, unless Git is already installed on the remote system. After all, the local system may have a different architecture (like AMD vs ARM), so you cannot copy a binary across. And I haven't seen the requirement that Git must be installed on the remote host when connecting over SSH. In that case, I would have probably seen somewhere a version compatibility table between client and server.
-
-So Git must be accessing files over SSH using the standard SSH file transfer operations. I am guessing that the same latency problem will apply here too, because uploads and downloads over SSH will also be sequential. Is my reasoning correct?
-
-Or does Git attempt to find out whether there is a Git on the other side? What happens if there isn't then?
-
-
-> [...]
-> A `git fetch origin` with that configuration will fetch every branch and
-> every tag that points into one of those branches.
-
-OK, thanks. It turns out my repository has no branches at all, so that wouldn't help me anyway.
-
-Best regards,
-   rdiez
+You need to _think_ if we want a LOUD failure when somebody checks
+if a path exists and conditionally skip setting a test prerequisite
+when the path does not exist.  The original code is trying to be
+quiet, as the check is done not because existence of the checked
+path is good and lack of it is a test failure.  Lack of the path is
+expected on places where the prerequisite is not set, and that by
+itself is not a test failure that you want a LOUD report about.
 
