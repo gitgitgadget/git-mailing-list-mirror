@@ -1,54 +1,54 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627CB366053
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 20:14:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A002B33C1AD
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 20:27:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773087274; cv=none; b=lQicvFmf43t9Tv2tc4QHf5MYGQVtLuXthg8QSZEP7s1YytlGwolSEDnYra5RatxPa3rgn7CFH5BArETvNfop5Jp7Z5nHqYZ1/WX+cX915VEX6CipB/oD7SyK0k0Wcuf9B1Em0Bo4U5KLBoxyD9rYzR1fGbznoP2WUTAy34DF8LQ=
+	t=1773088079; cv=none; b=bnIKR8U8f/xsnnE72PScCg1T9d7xxnCXXOFlwvpKeB6vS1RiLBgKTeUCUMOmNoLjq3zLHf4v2YaEaGvAeN6JjeLWc/0fa84ipE2ZtzpVME5Oc7TChxuaz3JQswyYNQZOSWsoFmc6woDSpVeRx6d4BiCjZko7AXm4W1hcYOf9NPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773087274; c=relaxed/simple;
-	bh=js6F6wNfLB+toUonhn676MHQhpW9yPoWFA1efqU+WaQ=;
+	s=arc-20240116; t=1773088079; c=relaxed/simple;
+	bh=aTdL+hElhCaCn5ebecBDoBRdmaiPdoxSg+c47C5CMJI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t9O7gvYz+Bsrxyrz9pQp/OBCD4gaPjGnuP7fwxZ4x/UsylEmqzf0U9daYuiwB56EGUFnh9HXiUN+MzdBG41bQ/WU3Kk9nnEeGNrVVQ7TR6h61zqAVf6kSZ4FrTJiAgiSjs9H/vGH+SVldCEvYplRRVoQGhKwfnPfWAp8lOZPWsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G20u9zoI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kFuiEMF1; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=Z2pyQsbkMIv4+TTXs8fpgkT51HUaOrX/j1UCyXpnN/flagHVJf6girJoVfHXaNZ1E3lYuN7CNobGo7+hvZ4o/YI6Hu16U+S3s1aDxcZyNWGI7hz6aAObyuPoruPQo5JE0xJG001+3L1e/+cj1W2v6fp18qvrqksrnyCKg9nTtaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KsuiHYHs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VRWiFqUh; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G20u9zoI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kFuiEMF1"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KsuiHYHs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VRWiFqUh"
 Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8C66F1400012;
-	Mon,  9 Mar 2026 16:14:31 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id C84C7EC0ADA;
+	Mon,  9 Mar 2026 16:27:56 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 09 Mar 2026 16:14:31 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 09 Mar 2026 16:27:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773087271; x=1773173671; bh=muzfkIfuun
-	9WyTf61zmewi26jPmig3r+Bu0EgFucAag=; b=G20u9zoIInUm742WeYmU8dGhbb
-	FVXQI54TEzksIG3KBR+kuu5ZdZVg1vwQwN/CQfdhKYq3d6+pITCyvzYL4RzANyYA
-	zqjhQ7576BE5yXdA6MZqxWySmx+P94+yyJgYI8OCGrTJauTBsbxmVztkhdrEh5Cn
-	Jmx6JhTIb7AtK+lMCgTAq+2hIJlkPBY/lZ/qhCeKbb5meJJEyl9l65R3z+V9PxXh
-	uzi+3wdkgPUgSsmXllZ+Uq9UGrQVAuseeHwuINff1VN97wcXbCKdiOvI8TIPifnu
-	cdeXYo/OX1BABxbLyIWO7PDLYNSy/2nfqXSplWMQdXJWM/0dx3BU7AQ7LUDA==
+	:subject:to:to; s=fm3; t=1773088076; x=1773174476; bh=aTdL+hElhC
+	aCn5ebecBDoBRdmaiPdoxSg+c47C5CMJI=; b=KsuiHYHs/OrLTe6TAAVX8kMko5
+	LaGuN4NNlm96S72am8jwvHJNSFkxuy/74uHALR/1+74h7OsML9oAkDL1WZ6gqeGq
+	0m2VFHVJCi7DGkLwN2hCDPTqJMNZjea3e6UlgWXlOUE/VxEEOMY5R65vWUYR5qPZ
+	H3uNvHwoHoBHIrBQfQebE6AvU1UGjvlMCsz4sCVSm/cTl10ufOrIxpyi4hSLcpNC
+	A7ydQgBCHK2HpzuGnZu5Sg4QL3f0AstC+i5O3Wj9xvQMOnfd0mBEhsJT3NZfJYsv
+	LYaKQsp78BiBRIW5IABybZvUsUxZjfChIfSbpjyMcIevyvW34/vRokfVLD8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773087271; x=1773173671; bh=muzfkIfuun9WyTf61zmewi26jPmig3r+Bu0
-	EgFucAag=; b=kFuiEMF17FGIwSYHlGZLpdrSLVDZ15iIXN8oH93HJbLQ2mR1ow9
-	8fMaIsEyGEO17DFZ+IvNYUnrWgemd8k80PgjZgQN4F8pVFcbIRdzwAOC76HdWvXV
-	FUIG9R1VPFSAPAPyA2n0GTX9g9MtwoXCDS3HtRZe0dVRM6a3btoHaAYrX7YBwo2N
-	ujJ27HR0hx9RNQti7/X/V8xn33KHg2iocdAoa0xwkgyyEKePG7EeoJrJi+STcW4y
-	Ls+4SXKt9eLd4RguOvbficRlD/LjN6HlyJrWhkQsjitBPyp7P6xx+N1ofs6OYF/o
-	UAdkOB8xc4NcGmhd2TsDNZC+irEXc5Wt6HQ==
-X-ME-Sender: <xms:JiqvaUeBtQv4rtIqMnRTbHEiZjplauSfPh3uuJQbDjPt-M69a83ppg>
-    <xme:JiqvaZ4WU8XIwfdCPGwAmGqM5Y3F4n4AtvZLkmHFyvprb8Dq49Qidq5wktRyR9VEx
-    bekg4_60s0iRNE5YysZduLJYAHFRpJnAWxQHdDIkO8r5Oi1ws3v5Q>
-X-ME-Received: <xmr:JiqvafXvHdFwckIAX9CHOTZcQiF__p97iKXMaG6W8ie94_6YqL9VL5RxqqT-xPWv0BJ0jgdil22oCqQ4WwrSQ-xKQAp2_g_0Eg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeltdeiucetufdoteggodetrf
+	1773088076; x=1773174476; bh=aTdL+hElhCaCn5ebecBDoBRdmaiPdoxSg+c
+	47C5CMJI=; b=VRWiFqUhBiuS7Pse0ByFQxJrpzVhkQFWG0TkXOA/NUGEn9bFWzI
+	rUIRla+WSo/K36bDYVvLVz8pdM3et0O5MO1Ir6a22E9JAJgHz/+vaF9fV7tgAKwj
+	QsVcl3pjZKAzh77bHD7wGrLjHfbN1rPvn2WrFCTYqDdQ0qyR3CGzCHluIaiMJ6Lg
+	A7gyTD35RYWnnyImIIxbYj7CsVY5uv/xbPje272BOhQwNozdDbsyp3qqZDGHp/dY
+	PPwvklFbEAdUyP48UK1R1H/x/egA7Lv2xGT1MN7RM6WnqLRsK0som6rqaD6YnMIV
+	b+raxEKRwv7ZT1DBjPjPNrWugeyQIyveqFw==
+X-ME-Sender: <xms:TC2vaSID3eGe0e9a1PhAn7Y5M5ulLmeRLJjIXHQE44A9WCU-3MkHlg>
+    <xme:TC2vad0itBI-JHpcLVQtZCNQXqogoNFyaSY4BFkdbF22pb1zcwvjt9qjO2zDkxN67
+    DkDTJ5nNJ78lENh_J17FCcDLi_iX_OEZAuHUB1KuZ33Vmfy11fybg>
+X-ME-Received: <xmr:TC2vacjAhOANR2pV0r29NX9Wkh9q14GhDJh0d_58t0FC-j5a8fbqN0JJwXYXdSNCrTLKQWuKhNPJvS-t79XStHxBKSTOkfRxRg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeltdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -62,14 +62,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeltdeiucetufdote
     epphhssehpkhhsrdhimhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
     thhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
     hm
-X-ME-Proxy: <xmx:JiqvaQ65Hn9uBV2it6zEK_67uj5Yeq-TD2aETepLa5UGr_9dkhDrDA>
-    <xmx:JyqvaSoutd2tCGKcD42RYWpgS-4TWWZNoImeeTzb92RCtsJ7KOvRRw>
-    <xmx:JyqvabmChre2BG1NafxuqMucU4EI3OBs3yK3KaOI23aOXbJd_NXhvA>
-    <xmx:JyqvaWNVTPzm0U6x1UanrjJai4V_V5mNiE2ALeYrl1_7En4FnPDehA>
-    <xmx:JyqvaRUt7IYiGtHKAYm86x904v6CFiXFLQ2xkaJSf31n6nyC0PiQz46y>
+X-ME-Proxy: <xmx:TC2vaeU0B-ov7gtOl2s5eGVYnzFraMxWE7KGiMy00JidZHgSCgwPPw>
+    <xmx:TC2vabUSKd711hhCcITXYyxwhx5Z87rj15Jo-nlUXEq3Si0zPkFM8w>
+    <xmx:TC2vaeizV0JyGRk7YiA4kpXszbPdTaejt6XWJ1pCFNQmmtFctSwxww>
+    <xmx:TC2vaWaA4iJ3ZtnDqa9Q9uZUUVvAc0lydr1y2_JE7QM1pWggOWaRrw>
+    <xmx:TC2vaeiI0-0XZe9wcJ_57YDgIrcbc1FXrn2EHVCKFw62aP5ttRPqcR28>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Mar 2026 16:14:30 -0400 (EDT)
+ 9 Mar 2026 16:27:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Patrick
@@ -80,8 +80,8 @@ Subject: Re: [PATCH 00/10] config-hook cleanups and two small 'git hook
 In-Reply-To: <20260309005416.2760030-1-adrian.ratiu@collabora.com> (Adrian
 	Ratiu's message of "Mon, 9 Mar 2026 02:54:06 +0200")
 References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
-Date: Mon, 09 Mar 2026 13:14:29 -0700
-Message-ID: <xmqq1phs69qy.fsf@gitster.g>
+Date: Mon, 09 Mar 2026 13:27:54 -0700
+Message-ID: <xmqqsea84uk5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,6 +93,8 @@ Content-Type: text/plain
 
 Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
+> Hello everyone,
+>
 > As promised I've spun-off v3 of the config series [1] into its own standalone
 > patch series after v2 landed in next.
 >
@@ -102,35 +104,25 @@ Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 > 1. The ability to show the config scope (--show-scope).
 > 2. The ability to show which hooks are disabled.
 
-OK.
+This is a very pleasant series to read. Thank you for spinning these
+cleanups and new features off into their own series. It makes the
+evolution of the hook-config work much easier to follow.
 
-> This is based on next because the config hooks support is only in next.
+The overall progression from general cleanups to the more involved
+cache refactoring and finally the new features is logical and well-
+executed.
 
-Not advisable, as doing so would take your topic hostage of _all_
-other topics in 'next', and it will _never_ happen for all of them,
-including the merge commit that merged them into 'next', to be
-merged to 'master'.
+I may have a few comments on the later patches, but the early parts
+look already very promising.
 
-After learning from the output of
+[PATCH 1/10] to [PATCH 4/10]
+These look solid and correctly address the style and naming nits
+raised in previous rounds. Moving unsorted_string_list_remove() to
+string-list.[ch] is a good call as it's a generally useful utility.
 
-    $ git log --first-parent --oneline master..'seen^{/^### match next}' |
-      grep ar/
+[PATCH 5/10] hook: replace hook_list_clear() -> string_list_clear_func()
+Appreciative of this change; using the standard string_list API
+makes the code more idiomatic. Stashing the data_free pointer in
+struct hook is a clean way to handle the internal callback data.
 
-that ar/config-hooks and ar/run-command-hook-take-2 are the two
-topic that may be relevant to the config-hook topic in 'next', and
-knowing that ar/config-hooks fully contains the other topic, I
-instead did the following to prepare a base:
-
-    $ git checkout -b ar/config-hook-cleanups master
-    $ git merge ar/config-hooks
-
-and then applied these 10 patches.  That way, ar/config-hooks can
-graduate in due course, and then this topic can follow, without
-waiting for other random things in 'next'.
-
-> I have pushed the branch to Github [2] and provided a clean CI run [3].
->
-> Big thank-you's to all who contributed to this up to now,
-> Adrian
-
-Thanks.  Queued.
+Thanks.
