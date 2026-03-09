@@ -1,83 +1,85 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B9B3D6CC3
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 14:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DD73D9042
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 15:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773068401; cv=none; b=LI7EzDLaJkFao9LAqG2xIJ7fQxfhSlNoK6UvP/tXrk18gIqMuJbd2PEBGaSqYFjT9Zp/VTiBsxzNGKN2Nxob8c2eoa/LaLQP8y+LvU68DIZr5kzPI3leUeR7id0JUUwOKyF49ZDJVGt39i2/r2cIa82q3Db0pxrOE9O4X38Q7Lg=
+	t=1773068842; cv=none; b=F9Y6n56p+oanuZjlHm4lvZu+yO1YOPDhMkpdeNN7KYIXlSfbZwHwVhMhrwzLvMmCbkBeWfRE9gcUWscnMASIOySI+Dyi2HveOHMYEjbY5hqFgBkSzUxM2ccYuPlJEcXKwGr8PLbBjWGgCp8Fa27XHXrMK66b+eytxDkMngPvqUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773068401; c=relaxed/simple;
-	bh=0HhxJ1vdDGxbj1ftgThmzKZjWGOGIH5KMGYUpl4jgOE=;
+	s=arc-20240116; t=1773068842; c=relaxed/simple;
+	bh=Y2sa/uyNVFRvnQI/8YE6Cec1zfJsZl9FixgwU/7P98Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IjNUhe535T4bXrEJSzKRFpj8GCI2VUiAyLdkC/CPfibWlRbTPVRSc7V9Mer/rxzRJ93xAgJKH07zPF8k5j4ZBMzsKWLBwGOFKeVOGlCktPnPWuPeDA+YJORRgV945ZD/pcroPrMyMT5TG/6Dr/tBxItgQqWC8Hzl6tosPp0i3Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QfJwnrAe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SFDwAmLf; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=PiRF0/yWOaqvDWMixlUwQiuuIM8cY9NblgtvJcMCrcELvlWJtuvbo3syyjkVa1e2Ei3Yh2PE+2RS1z+D0yJsCTnB/0By6TO2K/A7trx62aOKgdgqJqJPg9v7c7nZycuftICeLoT+DHU0vGs3o0uP0BzF7NTTm5xF1JvoFCjLnSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FnEFKKwX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=macEjanX; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QfJwnrAe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SFDwAmLf"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FnEFKKwX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="macEjanX"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id DD026EC0654;
-	Mon,  9 Mar 2026 10:59:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 09 Mar 2026 10:59:58 -0400
+	by mailfout.phl.internal (Postfix) with ESMTP id 0C337EC05BA;
+	Mon,  9 Mar 2026 11:07:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 09 Mar 2026 11:07:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1773068398;
-	 x=1773154798; bh=+LMdWTTbnVBPZqiwlyr8qSNIlgQvhJZDnnLKISofDTw=; b=
-	QfJwnrAePH7Wc79cJekZvk8oa4pH5kPIMWRmSQJGvIn0SA9eW85PB5n3ve7pPdgQ
-	yfWa2c/HC6EVN1VMBChsu2ChUCFEiXySBSFzRbyM3k40ZSbGrfWxdDeV9IICk7Qa
-	hLCihs1yVPi6Z1y8uhMtUx/1IlIV72+3zT4PD5fMZ3ydIr0l0mYlWJTa9ZnoLlbr
-	uTsC+RC3MALWqTUFTOvadkfkDLn5lduTxuFPrUL25aPZ4JGGXnb12EzVoAKl/0dt
-	7I2Y5Z6/7EH37baQjrLAKgqI5GLlcbdmYH60qnA6eimAxKWi5f836NgG4lnfkxPx
-	0NIVPwbZPI0FpbwKdzKMbg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773068840; x=1773155240; bh=5FP+XOfk2N
+	6XSqQoxutRTLn0rk5aOehqo3t0oYG1qKQ=; b=FnEFKKwXTyeEA7Em2jUpz5fU1T
+	WVQf6UhF2nBiH+5fOSp3jZJ+BIKv1U3/sZVIPr9CbcqLOEdkgKXRQstrdLH5M8l4
+	3mI/BPPzwgAQlB9YBDKIUrjL1LWTOmp0U222lobO0nw+iOGe5nNa9xDZqYftkA4Q
+	daopWPQ/DFHJceoqfabgLDywlsfXPOAhPVwT4nKTpzwRIIzvZJOoXPvd+AYY6rX5
+	OMfDwPvtsKhlVyMHzc6i6nWGo7zysaWCV9+d/Re2Zb9FsrqBTuI9GTH9oo4NTfG1
+	APY3dCQogD7cnKsN6HfkVCBUW/VaIuRQBuwW1IroKY4WFt6Pe7ekXesgBONw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773068398; x=
-	1773154798; bh=+LMdWTTbnVBPZqiwlyr8qSNIlgQvhJZDnnLKISofDTw=; b=S
-	FDwAmLfoCLZYmeKUQ6cz9sFNMxjQTcD5FIeZ9L9jHwfnFl8I5qDPOO4KL9DcduUj
-	QA7jCzdYpsbz1dYP8HKON0U317lX+1bhz0UHv2NiIQFD5ljbF1RdB8/Wxs90227n
-	KSYFwoQgGbW2rYkclLX7mxulBOTGAFI5aTz9Rqvk6ua0Y0On2jLgHdzZYgZxvAPX
-	G7jgfFLpwuHn1XNtuA8wQdf9ddGwbhAL/Z9lmvqnJ7HDKpkl4KJKoH+uXx6voAzE
-	tPNVaIg0PoGvOQ9uNQV4fH25oRoNCDNGRea4hOvqdK3aOPBzTe0xXnAsDwnIpWR0
-	EPpZeC7V66FZAls3ALawA==
-X-ME-Sender: <xms:buCuaXMGil8I0an2e_JnsNROMLss5-kJ0kaRTZ42hqgqiqdcCHgiaw>
-    <xme:buCuaZYIZg1Xln-iCr0aipDi7BdmnAkLgqPmOBpRfuEtT0iHHCXeLT_e96mhjAfl0
-    NCatmN7JNxdODQd8sdBIdnlnZxxZUU4zgj_02JHIEBy8d8FXMx9>
-X-ME-Received: <xmr:buCuaTp07pLX7-wQD2xX9wuNuazPnOnefaZjJ_gYJLZB0S17-dekd8C15sKokIu0ijrxbLiDHoJ9MF4OrsmVf2Hzc-JrmFDfPQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeekgedvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773068840; x=1773155240; bh=5FP+XOfk2N6XSqQoxutRTLn0rk5aOehqo3t
+	0oYG1qKQ=; b=macEjanXFtzjdcvx+lWitPlYHVB8mgO1+15PrVGz9fLfFKBXe21
+	Y6i0KThLhKOqIIf1lOqSaT2aZJAd20m6yA7usB2T58Lt+lDXg/7tlaYcv0gic3gE
+	KWp3Fo9TDClcfcKY1mmgdHOpYkZF+nhReC/gzONn0ur+ECoAGWfruXikGjlu59bc
+	Ix/XiyspqSZFw3/OOAwgiUHzeeD1Zy1JpweMvTfDezdrEZg1DoZTlYk8ZYFTJeir
+	B0/w54Ugf4VO1ZlQNlV6+8lZ0VbbSy9mykEeoxkRO8ZfU8OFFZAiL80UDc3gUTjg
+	qo9gDzyNBM41IzpaNVWlItwjbzYur5VVpXw==
+X-ME-Sender: <xms:J-KuaTqlEYrUR4QdNF9bRGC2DTeyWS81XsyBUCUa_WbXwTlmj6XGWw>
+    <xme:J-KuaUo2nKRt0BVJypgnHHxYGFrz3GZ1uSnYUkiD65qN591biib0Vczuhly97PX24
+    GK9WB9zycnJeh3GoEteff_vDx3tJh-HyyHNDy7Qhi5i8X43KBho>
+X-ME-Received: <xmr:J-KuaVOnaxVEGZzwrdElcEJ72af8FsFLIMqU77Wp0PH_Xxpa0IJEOsdmYQOJNp94ezWKpxLz0zjFjai6WcfhtwSigMAvLzQF0w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeekgeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:buCuaVYcNibg-_O_pRkZ__eVbbT4JWueuRJmU6ot3tavYdfBO7FOFQ>
-    <xmx:buCuaTTQKAATEBIR8aaVyc9sXajKkKBp0VGD6l6Wn4ENYO8ZTvuMrg>
-    <xmx:buCuaU7f8M7KazrufHs2nh-pR2916m44E97oxmWxWYOJqsvvtH5xyA>
-    <xmx:buCuaQwy6nJ4TaCbRsfaDtwD6kLQYiQL5hzBXHA-lTYfGL1XILfD5Q>
-    <xmx:buCuaVYK5oVhCTKQM11uOnrvgfgcVRq5-URueOwTtuz6R7oY7odml5HT>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigf
+    efkeevteevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdho
+    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptggrthesmhgrlhhonhdruggvvhdprhgtphhtthhope
+    gurhhonhgrrhgrjhhghigrfigrlhhisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:J-KuaVzezuoR9DBloQq10VgJv_JXnr0zVgQ0oAYrd1Sr7pUX9kM1NQ>
+    <xmx:J-KuaeuK7Ec4QiRBB0MFGx9vlRwvsKvyUCHO7ZX7bt5-_JuZVnCL0A>
+    <xmx:J-Kuae6VwE02WqLMclcieIY1f_SgV5mu74vnlbPD9Dq36oKk5hV6nQ>
+    <xmx:J-KuadS9BkWPf4RFCP1EVKxMmdGae3RQSLHr3yhLtKoXmsYxRnIVJQ>
+    <xmx:KOKuabccKWQX3vQC2TEmUpol87Bq5j0zT9Wc2rChXPOIr94fhjTgwEpN>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Mar 2026 10:59:58 -0400 (EDT)
+ 9 Mar 2026 11:07:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] bloom: remove a misleading const qualifier
-In-Reply-To: <ab59807b36213a51245965fa46c1770de10bcd2c.1773024911.git.collin.funk1@gmail.com>
-	(Collin Funk's message of "Sun, 8 Mar 2026 19:55:11 -0700")
-References: <ab59807b36213a51245965fa46c1770de10bcd2c.1773024911.git.collin.funk1@gmail.com>
-Date: Mon, 09 Mar 2026 07:59:57 -0700
-Message-ID: <xmqq7brl6ob6.fsf@gitster.g>
+To: cat@malon.dev
+Cc: drona <dronarajgyawali@gmail.com>,  Git <git@vger.kernel.org>
+Subject: Re: [PATCH v2] Make 'trust_executable_bit' repository-scoped
+In-Reply-To: <6e3d373f2f41232ca9015c39ae0ea67d@purelymail.com>
+	(cat@malon.dev's message of "Mon, 09 Mar 2026 15:13:34 +0800")
+References: <20260301190017.53539-1-dronarajgyawali@gmail.com>
+	<20260308183756.31860-1-dronarajgyawali@gmail.com>
+	<f03d40072ab106d1a0a7852718d42f56@purelymail.com>
+	<6e3d373f2f41232ca9015c39ae0ea67d@purelymail.com>
+Date: Mon, 09 Mar 2026 08:07:18 -0700
+Message-ID: <xmqq1pht6nyx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,49 +87,56 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Collin Funk <collin.funk1@gmail.com> writes:
+cat@malon.dev writes:
 
-> When building with glibc-2.43 there is the following warning:
->
->     bloom.c: In function ‘get_or_compute_bloom_filter’:
->     bloom.c:515:52: warning: initialization discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
->       515 |                                 char *last_slash = strrchr(path, '/');
->           |                                                    ^~~~~~~
->
-> In this case, we always write through "path" through the "last_slash"
-> pointer. Therefore, the const qualifier on "path" is misleading and we
-> can just remove it.
+>> Hi drona,
+>> 
+>> Thanks for the update! Just a quick heads-up: it looks like
+>> you forgot to CC Junio (gitster@pobox.com) on this iteration.
 
-Right.  Thanks.
+No strong need to Cc the maintainer when the patch is not ready to
+be applied, even though it may be nice.  I'll be seeing it either
+way as I rarely look at my mailbox and use the mailing list archive
+at lore.kernel.org my primary source of Git patches anyway.
 
+There were discussions on pros and cons moving global recipients of
+configuration values into a dynamically allocated strucrure, which
+can change when they are parsed and when bad values in them result
+in warnings, depending on the way the change is done, and excellent
+pieces of advice have been given by Phillip Wood.  If anything, a
+change like this should ask for input from him.
 
-> Signed-off-by: Collin Funk <collin.funk1@gmail.com>
-> ---
->  bloom.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/bloom.c b/bloom.c
-> index 77a6fddf72..a805ac0c29 100644
-> --- a/bloom.c
-> +++ b/bloom.c
-> @@ -501,7 +501,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
->  		struct hashmap_iter iter;
->  
->  		for (i = 0; i < diff_queued_diff.nr; i++) {
-> -			const char *path = diff_queued_diff.queue[i]->two->path;
-> +			char *path = diff_queued_diff.queue[i]->two->path;
->  
->  			/*
->  			 * Add each leading directory of the changed file, i.e. for
-> @@ -523,7 +523,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
->  					free(e);
->  
->  				if (!last_slash)
-> -					last_slash = (char*)path;
-> +					last_slash = path;
->  				*last_slash = '\0';
->  
->  			} while (*path);
+>> Additionally, I think it's a good practice to respond to
+>> reviews before sending new patches.
+
+Absolutely.
+
+>>>  	if (!strcmp(var, "core.filemode")) {
+>>> +		prepare_repo_settings(the_repository);
+>>>  		the_repository->settings.trust_executable_bit = 
+>>> git_config_bool(var, value);
+>>>  		return 0;
+>>>  	}
+>> 
+>> Regarding the code, calling 'prepare_repo_settings()' inside
+>> 'git_default_core_config()' defeats the purpose of lazy-loading,
+>> doesn't it?
+>> 
+>> if (!strcmp(var, "core.filemode")) {
+>> 	prepare_repo_settings(the_repository);
+>> 	the_repository->settings.trust_executable_bit = git_config_bool(var, 
+>> value);
+>> 	return 0;
+>> }
+>> 
+>> I think the standard practice is to drop the variable from
+>> 'environment.c' completely and read it directly inside
+>> 'repo-settings.c: prepare_repo_settings()' using
+>> 'repo_config_get_bool()'.
+
+This "v2" applies to a mythical codebase where trust_executable_bit
+is somehow a member in the settings structure, which I do not think
+we have.
+
