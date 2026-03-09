@@ -1,124 +1,89 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7774CB5B
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 19:06:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773083202; cv=pass; b=ef9A/yFcBablioNFc0yBY6zYMNo/DjMhjyBqZUjzaOQz0s9XUpFzY9U6Ik2uMWlRHsX2eHo2g5V5tpOidHlXQe5VYZTn1D7deLauN64uXsSTucJ9y6frDEn0x6pF82Rx7I9R6gdlkIu5Gm14yGMr+wvSyxqFzBAW3s3AKMYRbv0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773083202; c=relaxed/simple;
-	bh=202Udm+1ufHUVRzfEvzn2+qpPJ/D1sdRDlUfy1vtAGw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PAM+udTjFrxEpen/b0/4kqJb5dxwBk/E2f9vTBlrXVPo01jYonEYckCWje+KgOOU56XNvRLTqA6fDCW6u692BcYmfFXV9F27cyzyhj+Ss3Xh80OJZYEMqsubIYXsXYkjwmw0D+grhT4HbQDpdLclb/Vqj+FPpGAGt+DPZm7VHGM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D9z0Vd95; arc=pass smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964134CB5B
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 19:08:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773083306; cv=none; b=GkayZZAaURBSB9hp5081Re1lxHfAaueg/WUTRJ7FSFb0pceZhU5CCuEA2MYsLT8ROQoGKTNI+jaCB7m5ZFoGcKfNOXQoQUoOimHL0dgqD726yINtj+bmbWVpw8Ad2WsLne1vzeb7v06sidJ81SXUzqBUN+nKLydsftut/4NNiZw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773083306; c=relaxed/simple;
+	bh=MNfGV6C6EFzJW1xzt0MupOnPdCAGCKbzi8HN3+ZRJsw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hyR2SDdR/3ONYmxo67yYF8gspoXPnmC1uixYvAC1M3CzddVTo8gWgMyLe0Kk7orEfDX2P71a4/nB+E5unjInG6fdf+oI2d7uZuKCt/RLHhA/v1yqXe/X0K7SLAg7swWFF2d9gYGjPOWoSqdjYxfmAf8l7XvX4ZN4fYS4BjWMAw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QwORIXV3; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D9z0Vd95"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-59dea72099eso6678098e87.0
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 12:06:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773083198; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lj/kMxtqIJIynFYe/KPLw6IPLL+NuLmDLqNQKmRebt4C0bXYqdj5IcdgWH8Vv6lzvO
-         s7g4PK/qYh4Zlw7dd8FcQEo3eWDNNJflbOXAvtyCYEf1NzCCetOLkJW2q9dfeGhhz9yB
-         1bWLYAZoCjQvHRbisBWV2URo7EgQRQuzJNBDAtLnQWhiiVOfvqgTYVuqKt4KPVbu2880
-         4wEOScepwUkXH3bCzDEFGpSbaBsGXRUCaP0f1sk9CFk+KPn0xK5K9U4OxSpLnKCBdpvK
-         c0uUgW8MmbR8tHB2Ov9S4ZZ9/mIwZwV05SKWCt8ZRjfFdGJQIZMTgScCNeaQbpBwnhP0
-         3kbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=WDw7f5t4/nW6Zvg+03yG5eapB2hC0y8652oSdDf2fhU=;
-        fh=/KbF3blna99f92j2uzmZ7Fv8LrZ1rK4qObUTyG8qel8=;
-        b=CRotzYuui6+YRVm4nG25cv8yzJvHjE6DC7o2P720kvxKldpyX5ukcmejACj9B+TRKX
-         O47ECNDdNMd4OtOdZxOsVq5onB95RFg0xOqlojxMrcojmAaJnCXmFiJjZpGRpTbufpC4
-         w9Phod7T7hc3WTEDkClboW2UND96oYCzBTeOcD9QO6RjyH4GWWmyvjvpVk9f004nVqED
-         9vmZop/ciUToZiNjjUvxs1avyHrx8sKmvRzQkYLY4MxQOr5MbG5SsrR/w+EUvg1EbdGP
-         bOmIKEnSD4mRTGBJvCMAh9g6EHAepWUEFXJicyj3ixuZNSsbjkQsg1C9uXBJ1ybEIrKL
-         lXKQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773083198; x=1773687998; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WDw7f5t4/nW6Zvg+03yG5eapB2hC0y8652oSdDf2fhU=;
-        b=D9z0Vd95qAiz1lBrMapp7xT1zGy+K79tj9b1wJFs4tSeg6HxmTMEtkRWDcDg/ZXnKR
-         96k34RZjRN1C8NesYmDmsHN1MoecOcKi/7vlpAX4wriQ4x6Hgf2NuZYzNeERUq57JuXF
-         ftM3Z00W8+py+8t1mujtTJcgBEuFA9Zv17L3iXxdZl+ZO4TIbJSJ8P5CK0Fh7mot6TYJ
-         zLE7Z0EReT4/whjz/kJ6qzqLs/tHdUDd3x8LHKKz56s/JW5iwcXQcOWZx8y9eDXbToEJ
-         qlmnYde7gBRFe98wMM4HqHctFRZ0fwFWpiZu3XDTWXfK9oawKcNPqe0t9z1zMolhGIoX
-         qNUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773083198; x=1773687998;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=WDw7f5t4/nW6Zvg+03yG5eapB2hC0y8652oSdDf2fhU=;
-        b=LL9IehVEZPh59gP62dNWG4o5kI7UP10OlIfSOW/Drf1aOxUXYAlbqATZnrFHEbVGim
-         YJ2rJhFvHCpgBxdXL2UtkvHfHrfMaHRo/YK35ItvI0PsrVow+DYTTLhmzEf/NpxXg5du
-         SvMsCMWTkruOyAyUqfc3DkEZJ6Itxg605sn5hOOSH3IFJTs0C0lu1FFxwnqjPdLzd/qo
-         mDyUrEzef71Zm9HDrEzSRdxm03ixXOv33u1sZq9Qb6+S4zYb12mDKajjZr/gfXoUf7ne
-         cQRGms/Xbsg9qMHDHGE67CoIecj5vkMkKyYscc3VvhdIYoo3qcwKfQ4SsaUG6VFgjWla
-         fTrw==
-X-Forwarded-Encrypted: i=1; AJvYcCUJluFb1J4rQb21st4ibe1Jew3cofhkm8VpfGJ7rsKmzGr3xWElnRoyYYE/ZfcwyAJ8A5M=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwXURkMU61reuq27eiCrdbAZDoSwRiG8j1UNUx0wpepmfP0TnWv
-	opK4dpviFcdISuEjMUvkajhcnLLnVNPqQgaUSXwbFzceiG/RNSTArssNfN5w7qt2Y6YDAGBvfl+
-	j80+z5Zfyt2jzQpfrXZKoNdi+CKHDmck9greT
-X-Gm-Gg: ATEYQzxFp+xlX9j0s1j6wXO97M7qAPzGscgL75NOm0e8qoutpRHOjRNEBNDs8V/njrI
-	Mv+/P0iQDFTpudKR3+YHuHNqm9PLcCd10qXw8Zk0Lcmz9h+MtsXxRKkYmiQ+tW9jSW9bTQICOBK
-	ZgVL2leSP2YcBvXtkOFgwSLBcNeoc4919ZpBGpJw21xSTJhU9xrtYZSZSlXCOZijhcJ1RLHtSvB
-	bYA8x0hYVHuYgOquh8/RJVY6i6D5TN8uryspjI24VXRzrktY43FK2Qo+6dEDoKmwFB3ftApDBVW
-	980ibcU=
-X-Received: by 2002:ac2:5584:0:b0:5a1:3134:923f with SMTP id
- 2adb3069b0e04-5a13ccfba8cmr2875031e87.40.1773083198187; Mon, 09 Mar 2026
- 12:06:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QwORIXV3"
+Received: (qmail 49690 invoked by uid 106); 9 Mar 2026 19:08:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=MNfGV6C6EFzJW1xzt0MupOnPdCAGCKbzi8HN3+ZRJsw=; b=QwORIXV3+6G+X7JCjYj5lsEHnGIjzrysIuruWKeB/Iug8IsYlpu00Uy0qDtnR1XZ+d5KyV7RrFR+syjnwpL3g/5peaLhf7izDa/j3YLEin27Y3eQbmPY4crRLySejj82MNRo7y/fTXOWc+MEK882G+5RKWD82dV/vlY2WCSGu5ZDfOWAEnzm1uEOMQsef4AztlAi+l+gDnS8TwKP1gozSvHAZFsx8Hg7TniKjYXbym/BexBhiSIAtB90+0UVz5wyGMQabj2FYt4FOhxHIW2gHAmR7dqgx+POo2hczeuflDczToUxQRI0zmBacfAIQz5hlOMIkYyPtSrN5uE1zWnAVQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Mar 2026 19:08:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 458127 invoked by uid 111); 9 Mar 2026 19:08:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Mar 2026 15:08:26 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 9 Mar 2026 15:08:23 -0400
+From: Jeff King <peff@peff.net>
+To: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v1 2/2] list-objects-filter-options: avoid
+ strbuf_split_str()
+Message-ID: <20260309190823.GB309867@coredump.intra.peff.net>
+References: <20260308180359.31188-1-deveshigurgaon@gmail.com>
+ <20260308180359.31188-3-deveshigurgaon@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com> <xmqqy0k4wogg.fsf@gitster.g>
-In-Reply-To: <xmqqy0k4wogg.fsf@gitster.g>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Mon, 9 Mar 2026 13:06:26 -0600
-X-Gm-Features: AaiRm521s2oR82p7W7DYy1ISms-G8qJw12TeFzkMM7yYnBXsONOdhglZ_cneM6o
-Message-ID: <CAH=ZcbBVSqUG89n65MBpN+HMCmmjzmADGaVnuEJn_cYN0SYknw@mail.gmail.com>
-Subject: Re: [PATCH 00/10] Xdiff cleanup part 3
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260308180359.31188-3-deveshigurgaon@gmail.com>
 
-On Fri, Mar 6, 2026 at 4:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Patch series summary:
-> >
-> >  * patch 1: Introduce the ivec type
-> >  * patch 2: Create the function xdl_do_classic_diff()
-> >  * patches 3-4: generic cleanup
-> >  * patches 5-8: convert from dstart/dend (in xdfile_t) to
-> >    delta_start/delta_end (in xdfenv_t)
-> >  * patches 9-10: move xdl_cleanup_records(), and related, from xprepare=
-.c to
-> >    xdiffi.c
->
-> Is this topic still viable?
->
-> We had to stop merging this series to the integration branches as
-> another topic <cover.1769424529.git.phillip.wood@dunelm.org.uk> with
-> smaller footprint was making conflicting clean-up.  Since the other
-> topic was merged at 5465d368 (Merge branch 'pw/xdiff-cleanups',
-> 2026-02-20) a few weeks ago, we may want to resurrect this topic by
-> rebasing on top of a more recent 'master' branch.
->
-> Thanks.
+On Sun, Mar 08, 2026 at 06:03:59PM +0000, Deveshi Dwivedi wrote:
 
-I plan on rebasing on top of master with lots of changes. v2 will be
-quite different from v1.
+> +	while (*p && !result) {
+> +		const char *sep = strchr(p, '+');
+> +		size_t len = sep ? (size_t)(sep - p + 1) : strlen(p);
+> +		char *sub = xmemdupz(p, len);
+
+The cast to size_t made me look twice to see if something tricky was
+going on. We don't usually bother explicitly casting from a ptrdiff_t
+into a size_t.
+
+However, might this all be simpler with strchrnul? Something like:
+
+  const char *end = strchrnul(p, '+');
+  char *sub = xmemdupz(p, end - p);
+
+  ...parse sub...
+
+  if (!*end)
+	break; /* found NUL at end of string */
+  p = end + 1;
+
+Notice I cut off the "+" when we find it, because I think...
+
+> +		/* strip '+' separator, but only when more sub-specs follow */
+> +		if (sep && *(sep + 1))
+> +			sub[len - 1] = '\0';
+
+...this is wrong. I know you are matching what the current code does,
+but it does not match the documentation, and does not actually make any
+sense in practice.
+
+
+Other than that, this looks nice, and I am happy to see more
+strbuf_split() calls going away.
+
+I think you could in theory drop the xmemdupz() here, too, and feed the
+ptr/len combo into parse_combine_subfilter(), which then percent-decodes
+into a newly allocated buffer. But it is probably not worth trying to
+squeeze out one extra allocation here. It is not like people have huge
+lists of combined filters; we'd expect to see a couple at most.
+
+-Peff
