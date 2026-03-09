@@ -1,132 +1,130 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3C84219F8
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 22:03:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773093843; cv=none; b=HsfIHDUiD3Pyf7LMkAYKXxpAtlPw4dATNbfZQ7RoGtn0gX2S63QQPP5Y2mk6QaVW+w8lPmif+quBqsMtxBuuTH2JdYMoAVbjAh1BfxOwvxMIPvg0mDFIgG985aIiMT+lnE8pjUKsH9VyFPEBbe9bZXqIYU664kkTBh2u53aTsVM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773093843; c=relaxed/simple;
-	bh=+iLdN8jt77e1hIGE3F9YNFD9F1LGwEnCT+vMxIchUwU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FMY3Tl1HPjVjowXKfy6REIOzJvhL1fU++ND9L21gbC7QjjDa1oyWV+ZcH/jePd//LPQsfv59JS690Zsk9zdLlW3uY/w9tEGs1g9o/P67DADHtmaqpxj2hrs71tgvRHzN0YAE+iskG9Fzftg8ujWfj5bUhOB1wlNeXQHh0yekwH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mhx0TxdN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ld6/fHhU; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FC53446A5
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 22:14:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773094488; cv=pass; b=GrODrbFu8ynmhu0Ur1OWQFL2raGlSn5lp3UwZBp0oUmcaH9QbBCYlrxdGDUJ1FlmlEQiv2A1kLE4iPk3s1UQA8erAr8ZlwSIxnDCRAvVDe12tQSmkKZS7GP8mk94KEofabbb/GgMjZMYL4ZQSGXsiaPmqa9glxRMcAuaT/uhJps=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773094488; c=relaxed/simple;
+	bh=WEp6Qia8T7xfSLUSL1USGxCHP7Nj/LehuihwcWjeBIM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nbWc9mqvChr1GdSw+OdMls7t/KxMj3LpVdhklcrrgL5QZKUmGpMFGtJ2mZ7NBOZfEl01XYXN63hf+ZOCF8MEo+CJPY7renp4tDjghsZ2wo2OyM0AZAbX+ihkSRVa2BgH+/b+YfNTAcG3tjrdPurMECYrFPQuXZaqY9XAsp8usug=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eHQnAikf; arc=pass smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mhx0TxdN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ld6/fHhU"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9ACC9EC05FD;
-	Mon,  9 Mar 2026 18:03:55 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Mar 2026 18:03:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773093835; x=1773180235; bh=J/m32oFz3H
-	H1JzZ9OGHKPJlizCg6PWO4/AHOJBYmsCw=; b=Mhx0TxdN4hE+ecS6Ks1pcfKrJ2
-	Zkrlke2RY2ztifOcZ0M/0yyZKgFSe5wc3sYAcQ3U2aOgRjjTEsyzZnpFdPF6Gr+0
-	N1ScZffLFoVQ6SbcsfgQHeCZYLFbbJ991taGw7dnolHNeRu1Uar9kjk+Jw2OkiGF
-	W9qr7hRNkcXft3b2qkPIu6S/HPrzoHyvqUX8kzTDUN7VyNCNrgRNkLHpsyPNkTD8
-	/xRZMGBEOtTQJ0R8EOX+4WWzsN5cAB54N+9eyCSdFhS19fDFdkdWyb6QlHK6j7L8
-	tpO9O4oJ18WEn9sxbEky3Ia2oY2FYomr+uLBt+4Quj/o3t9qgY89Li3LdaDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773093835; x=1773180235; bh=J/m32oFz3HH1JzZ9OGHKPJlizCg6PWO4/AH
-	OJBYmsCw=; b=ld6/fHhU4gq6ZlAwd7dJwzqE6ZvmyeW9f3RnMVOdiJxe3KtGX9u
-	YxWPZMDve0EZWvhmGjJpGpCr2ZsuZpgFk40wDQerBZ8n3TBB8f+m9Nw7lEbadhav
-	RxfR/8m2XR39BZYNBaHu/dfiFEK5iKQkIV5GtdjoGHOc5kH7w98Je2Q3mKHDFvXo
-	UYk9JnR1S0xrBezwk0adbsO8/7otanehiwq1kCop7e5FO/1B8Wq9MxsUggYKF9mu
-	6jXPXjVzGBcg7yC1DPxt4RIcUXvr7uYWL/Kz3DfNUA1JPMDLrcsupj32NikEp2Uu
-	geBesFFtcBqhcfpYaB9xa1MG3QyhGf7s7qQ==
-X-ME-Sender: <xms:y0OvaeS85IUxpZXmUq5Yg_6s2kqhs1yRsAz2dcln9-8EOmMAUA3EXA>
-    <xme:y0OvaeVSM8ylqSUb5626YbmGokVf3-feJpl1UGyPAnTuRb4UtkD8MxyUCXtc1XY9C
-    Ui59DwqN_4JrmFBT_UAR0TGwS5s4i3Ts0F6F9FaRu2N_9oTkjVyRo4>
-X-ME-Received: <xmr:y0OvaYYXkOiJ5ekw0d2gKyAdHyfYPndrm-z2ldfOa9qAnSwawNmEsxr6iUbuMMuNs5AUxYWDkc5zTuwLmueH0qxRNC1JwEyNJQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeelvdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrg
-    htsehmrghlohhnrdguvghvpdhrtghpthhtohepughrohhnrghrrghjghihrgifrghlihes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:y0Ovac2dRQsuloAxwT5fJWevkml_19QrDiACQFiihob-uEeqIfIZGg>
-    <xmx:y0OvaSis_OV33nwMMxrOf9poQMBl0Xvqq9HGFyLAcOl9PP29ETYGOA>
-    <xmx:y0OvaYZQDNwTqHmzuF_O7L1zUmg3WrIDpmHaDzJpW922n8BdbdUaZw>
-    <xmx:y0OvaaSTS0zGtzVvFC8UfEVQluWLTFcTCIMknH6zWUZguXUVFWEJMw>
-    <xmx:y0OvaRgRDysc0KnKccyn_3JoKlEsHfFMee1jNI6HOkFiJUADBrbboOFY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Mar 2026 18:03:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: Dronaraj Gyawali <dronarajgyawali@gmail.com>,  Git <git@vger.kernel.org>
-Subject: Re: [PATCH v2] Make 'trust_executable_bit' repository-scoped
-In-Reply-To: <615caf83-71be-43a6-bcb0-3a0c5e14d699@malon.dev> (Tian Yuchen's
-	message of "Tue, 10 Mar 2026 00:23:17 +0800")
-References: <20260301190017.53539-1-dronarajgyawali@gmail.com>
-	<20260308183756.31860-1-dronarajgyawali@gmail.com>
-	<f03d40072ab106d1a0a7852718d42f56@purelymail.com>
-	<6e3d373f2f41232ca9015c39ae0ea67d@purelymail.com>
-	<CAJtK1FMzbX7dO9y7hM_6_DbLpwbeYHnrg7WLjAghGX6UDVDmJw@mail.gmail.com>
-	<615caf83-71be-43a6-bcb0-3a0c5e14d699@malon.dev>
-Date: Mon, 09 Mar 2026 15:03:54 -0700
-Message-ID: <xmqqo6kw3bjp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eHQnAikf"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3598e065d8dso4119177a91.2
+        for <git@vger.kernel.org>; Mon, 09 Mar 2026 15:14:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773094487; cv=none;
+        d=google.com; s=arc-20240605;
+        b=axr9rbmrtHfd1s7YnoKsWRTvqXMewqt9UqE1cFCrJgqMoHn+C+FiKABVHNXjy/pPRq
+         dn5yEI4zEzmBC1wjKnFAXSteJNgk78DYoYoc4HnCLf9YQjK2hAmL2hcttTc+ST5W6PyD
+         jGfENwJYFiudiq1nvTdmnDDW0OdwZcO9bnMIqRrvGEOz1dez7o0Z02LDfh+Q5++UwiAS
+         HNrEfdRY1EyjNApUnVzzxIi8Emtb7tulIUwpQmT8EQAitkTT3IbmFzLHmoCwDOZAmuwM
+         hGsGa4YL3DNNQ1+84ws656TU8RWQN/nEbPi48aWiCW0IoFD0sGf0CXp3YkbcbR+bq0Jz
+         Qm/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=WEp6Qia8T7xfSLUSL1USGxCHP7Nj/LehuihwcWjeBIM=;
+        fh=rg6xByg/zLyX4Alt3KuoGv8Yy8uxn7jh/BxXzYI5/Gw=;
+        b=faxtE1An5/ffHlD1Bll30kweAy706Paia48WlgAMUc7VOkdsOI84k29qwF7p2QXXl1
+         GXK2C5kKZ6GcG8zuk4pWaEXJXBjT5D6eZGUy5IIDk2d+dqQHhJ6XRABCFUi6VRayBYFS
+         0FxIW9NNV9nOndYwQA+qbtSDLXVor0qFUPknlMEnE25Uk7YUeokOlOnnTBG0fJrc7afO
+         U7NEvvIFmKExyzfTZWY65yL4oHIvM6XjUliPbjBKJ5U2D8Hh/1jNFXfyO2C/lUdSFQi+
+         NrBBgz/sIFKO2LtwENLkMC7WaDnpNILecJSnNdnSe2JNSy9eZVP1ZD3TO/8w3OFBcr14
+         TSyA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773094487; x=1773699287; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WEp6Qia8T7xfSLUSL1USGxCHP7Nj/LehuihwcWjeBIM=;
+        b=eHQnAikf8DuSyMeMLok9sFGe9FAkqsPGENdPQ77E7BhWTrK74vp5RwrwSMAypYGfBK
+         jkpUV+P0iVsao1zbZy3stJ7G4ntF8hEi05gPGvFNlzAV67U7Zt0IBT8G3NnNQN+vee3c
+         qfz9UZrO8K382DqlLsyBMAqjFSoBNwDxEh1wcO8yfuyqYvV+m5PiTwyqw6mk8QkG4gfT
+         SbM5jT6wLGdKqxu3Q8cLxWvigFi122e3cH411kovQB/IjOVGukvsuqOPkRuJBsXBs4ER
+         /jmzNxc8Yy0LYpmLBkbB4m4xP1/mQ7qbNmKSr5Sne5syWQsRRnw5d4RD0Htp6qgKZxIN
+         CnXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773094487; x=1773699287;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=WEp6Qia8T7xfSLUSL1USGxCHP7Nj/LehuihwcWjeBIM=;
+        b=tQSagvqg37jF9Ety7yKfiaofFR2cHLjWMSeVAW3qlbmzxwzSlT+6dPLdXRqC/MCWmF
+         c874iscrI3Mp0HKxEjWXgkzjbmT1FcGllmE6N8e57C00mkAK14MAgY8QjdmF242xCESM
+         P603mnBmqc5UuIUjUsR9MQRrcw2YPf4hVJWwxsUNYoTGRtix5JF9d9iOG1tYK5MrSfTD
+         1h4gh1PA6scQ84k1Vsyoz8qDZATKW0kcWat6rmkdnl1vq2wEsRYh4lFuM5VOMtL8EgZp
+         lBrN2jciaba7Hj91Ut8qARhnm1oe6AstDVYqwlolo2v1JnGIBq6cNL4WPMR57MRPMh0b
+         Y/vA==
+X-Gm-Message-State: AOJu0YwusWQI6uBnuSLmb7Cw87GheNjw/C/km9lcWG0NjQsQSRN9Qwtx
+	pFSaicVvlXL4kSR1iPRkcaq9pl1xq+uNagIpaUzFkbPXAHTVwHVM+tDUQo7KicolZC/+PeNpRKz
+	RplLtY/DFzqPosLEKUQdIJHovy2ekqIA=
+X-Gm-Gg: ATEYQzwOC0vwHgmxGHse+tEVx5NgMLUjQx/lSsiVhlvMhEaYTsQiJqTfzLFOvGlloQB
+	WVlun51zdHFZN+ZdIyebuBz1YCWa8iJ3bfpuFluOIGTHwqM4NIXQt78mJL/2sgBecMddv/rH6a5
+	er/B8YTv4FsIloyGXCTvOPvuD88UtrAtd5TChjLoF8xJ6KjN7XBtDyopHUpGbvlp++42/koEl4d
+	PcU0aQOUEsiVL0TCfXkZLwvmoQgdPa50utYkAOCsTGj2DpFtRuI2vM8DkONK9ZO5YZJAFrorr/Y
+	4RlH1k2nUSvOA8Rsq3aUV5t+QK0JP2DFnSna402gHbgsfQE9riDZUt251e2+4i1d9qKbuv0DZYR
+	++XjSsfI6eLlumWLl9FCp790N9Fo=
+X-Received: by 2002:a17:90b:1fcf:b0:359:1130:1042 with SMTP id
+ 98e67ed59e1d1-359be34e415mr10293879a91.23.1773094486817; Mon, 09 Mar 2026
+ 15:14:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <032a7767-2350-4312-a7b1-75080519c72a@nutanix.com>
+In-Reply-To: <032a7767-2350-4312-a7b1-75080519c72a@nutanix.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 9 Mar 2026 18:14:33 -0400
+X-Gm-Features: AaiRm50u0QhSN5MJl0DsGPEtWY2Aw4vmPYVI94VL6fmAL10b3u2AUoZbfTZE5nk
+Message-ID: <CALnO6CCR1BioeC_eYCBt9BCrFS63L6f_5p2nTk=Z9eOAj3hW1A@mail.gmail.com>
+Subject: Re: Option for "git submodule foreach" to also run on the parent git?
+To: Florian Schmidt <flosch@nutanix.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tian Yuchen <cat@malon.dev> writes:
+On Mon, Mar 9, 2026 at 8:56=E2=80=AFAM Florian Schmidt <flosch@nutanix.com>=
+ wrote:
+>
+> Hey everyone,
+>
+> would there be an appetite for a new option to "git submodule foreach"
+> to run the foreach command on the parent git repo as well?
+>
+> I occasionally use "git submodule foreach", for example, to make dev
+> branches on all the submodules if I expect to touch them all during a
+> dev cycle. Even if I don't need them on all submodule, once I'm done
+> with everything, I might run something like "git submodule foreach 'git
+> branch -d <foo> || :'" for easy cleanup.
+>
+> In either case, I likely also want to run the same command on the parent
+> git. That's easily achieved by just running it manually one more time,
+> and I'm sure it's not hard to make a git alias for that either. But I
+> wonder whether the workflow is common enough that there's interest in
+> adding a command-line option for that? I'd be happy to have a look in
+> that case.
+>
+> Also, tangentially related, "|| :" works, but what about a command line
+> option to continue on non-zero return values and not abort?
+>
+> Cheers,
+> Florian
 
-> Hi drona,
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
->  > There were discussions on pros and cons moving global recipients of
->  > configuration values into a dynamically allocated strucrure...
->  > and excellent pieces of advice have been given by Phillip Wood.
->  > If anything, a change like this should ask for input from him.
->
-> That makes sense. I think you should CC him whenever you've thoroughly 
-> polished the patch or when you encounter unresolved issues.
->
->  > This "v2" applies to a mythical codebase where trust_executable_bit
->  > is somehow a member in the settings structure, which I do not think
->  > we have.
->
-> Given Junio's observation, it seems this iteration is targeting an 
-> incorrect or non-existent codebase structure.
->
-> I'll hold off on further reviews of the specific implementation details
-> until the base codebase issue is sorted out and the structural design
-> (incorporating Phillip's previous advice) is settled.
+This is not particularly general-purpose, but don't we have
+submodule.recurse (-> switch, checkout) and
+submodule.propagateBranches to make this kind of branching workflow
+easier?
 
-I think what the author called v2 was actually [2/N] where the
-previous version was treated as [1/N] of the same series.  The line
-I noticed was strange in my response is probably correcting what the
-previous one did, which is not what we want to see.  It probably is
-similar to https://lore.kernel.org/git/xmqqh5qxzzzn.fsf@gitster.g/
-
-We prefer the patch authors to pretend to be a perfect developer who
-never made any mistakes while writing their series.
-
-This unfortunately is a recurring theme among new developers.
-
-https://lore.kernel.org/git/xmqqk29bsz2o.fsf@gitster.mtv.corp.google.com/
-https://lore.kernel.org/git/xmqqd0ds5ysq.fsf@gitster-ct.c.googlers.com/
-https://lore.kernel.org/git/xmqqr173faez.fsf@gitster.g/
+--=20
+D. Ben Knoble
