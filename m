@@ -1,89 +1,90 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC0735CB81
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 18:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6633C14A4CC
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 19:01:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773081954; cv=none; b=rm60ewmg0yxoaJ8XZ4OrPO2HZepxM/H3dNG3VvjJSFqJIEi6fkWjMIaZpNWrQ4YR+5gCcAhrPmUf8/a0WnB3rHABCQspqO1jfKs7Ck9vniHYmm0tILd0eQ3Cvsj9ZTSgiF0WFM3dJU+7DTsycxz2CXG/dGZWphL6qVwcDL+UDhM=
+	t=1773082882; cv=none; b=UkJNhFT8hGhDuUpgL2P1OAQ/3I6u5o9MLHRW9BtQbzVUsIFlGmRnDa9f7nb+D96BCNN1A/MUFz0ouOLo1+Qynk/yy5DYDI6oROT0q189lpFzJdk5Ka2DDuX+5gZH88FC6Y+fxXaA05n+/MrEUj94epAJQQ9W26zYdjR3hMit+gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773081954; c=relaxed/simple;
-	bh=SsZ8nLmSk/1kx5qMeQruq5XwHVABtKhsZqha+AIQuk8=;
+	s=arc-20240116; t=1773082882; c=relaxed/simple;
+	bh=feWJtIYBthcWlOyEoQGZ+xI5XSufMPJ4okowmaen3gk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O30FE8X8rSTw9DrPj63UDKYmg2nnr8UAUz/RaLDlvYYLrtkimOTCZ97eqNa12024e9HFsXG5nKMeqhXKfKHA97h9WUNVmojjll/KFll0RE2+Wh1JMvdQ1985KTWdOAj19YA6HhY2uo9GP1HyLvn2KoDNr3cEY6eeI8zMSApsQRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A49x6J3W; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=AQ83OpOVLMsHc7p6QPQQltK1nVh3NWWJ3QDSEzixf4srVQ4Gx4nlqnjjCyLV2Qi1qgRD/kET9cOm9+Kr1Ea7wnHIwv9uhBQuwttj9qSXq0CcGOihzBfxbfG5AAsSpxjH6GKGBdpOAvSTNApr9TvxUPqBiPqfJVGwGb3Na2Uvy9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ap4hFJ1L; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A49x6J3W"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c73a5473bbdso773061a12.2
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 11:45:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773081953; x=1773686753; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SsZ8nLmSk/1kx5qMeQruq5XwHVABtKhsZqha+AIQuk8=;
-        b=A49x6J3WjCCC2zW400+6q6R7gdqCaoxgWWoNRKsfhzdktp9FcsG5h3HMjJWgkxzT+C
-         tS0R7jbwvoi7GsRgWlvMPbekDMy2rxNBLLRQST+m8ULF49jBYftBGASWAsh4UmgN90Pq
-         xYd2qbO506Q7dXhgwBuoP0zEUouBw2YU6CYPKscdh6noBXffBiaAnGcBBoFwbPXdDsaU
-         yyZJJOQos5WCc7pQpw6wN8rLmZkW89Jb19ySlxYm8EhlwSDd8gMhbNyJfZoBaJIBxTX+
-         6qF+cS1YQ7tA65+9DIZggA2rlVzgQqBr9WCk/f2niP4UIqQ7fBbMkAnvdkaip8g3KHqa
-         XVsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773081953; x=1773686753;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SsZ8nLmSk/1kx5qMeQruq5XwHVABtKhsZqha+AIQuk8=;
-        b=Q8j/3spoYSeS26kYIh5qclIxkGktvBB9u8ot9Zzk/Da0Q3nKJXx8hh4bTZe6GlCrhG
-         FR6E/Kx9pIq1Ki4tCEfPTMHTWWQc6yIfy9k4kPLEGnOEn3VQLYZNkTDX4Rrdgo1l5IlZ
-         cLh/rS/q9BbcuNpTe5oJU2gUkji1QIqmXpB7UDOmwy5sE2Y/KGDMy/yjL29hI1mv5E4H
-         mKlleQ+uQcP3nCuDrlhIzouvtenFvukXLGgQugGhL8ZXaSEBGjJYlcY3FYvmaoy37WVV
-         qWoiI14RBbGU3wYdjdN43RtYbqlG34XPEXjquMHwbVKmQQ2xsFfHm3img9S7gPSu0Ldq
-         AfSw==
-X-Gm-Message-State: AOJu0YyqMOBXB4ksaAeuulOKf6xoLmVeePjSJKmjeFZGnf9pLQaI1kz0
-	BV4P9IZNQ/dIHFHRlXJWdKfWmfrv2bGsSbcEXHHwCUrQ31P+ycozZfrB
-X-Gm-Gg: ATEYQzzPIa9ziNXNMmiyNp4wMxSugRzqmKKnWcu44hz6OdyKRu8JhUgl95Psiy7p+uD
-	fmSSLlGY0mHmcaEw6TWsok9aiw/+zssNe3Kqv2+iE8lLVjC6zlM3ZRDqDil6iMDz13hoMhfzX0o
-	SZs7T8tzjFyirXyjzwb5efBmNV0UyqhDIqTCftLn7WyX1Cb+poHE0TDpMiuLzkxkpJ6o/i5Ma3j
-	TDc62YL2BIPX5sfpIgq8kBsONNxHeyOolN4A09/iD0yo2hUWNxmvyi3FRPX+GzK7s4i0G/TC0/g
-	MKNt3arGwW7FtFPh5Ancyp2Vb+3tbmOnxFZ0wB1zl5HOskvUIvLBvR5sV2Y5HuQQiD3ua2d1DmI
-	vQzWHjH3rIBbrtXXDz2utKcQaFFWUbbMCxrkD8moSBAu9yRBEt7XLMrct7Z2sWYVVllTT6+W6B7
-	3M8TvPqK4qLT2JLDVF8FNNhJvwaPClYJGNscNur5ZuApXvtfv6ZUfFK2u9KkmZzsbRWHdQWfrCc
-	T+YpT+PSdvS0UhJgBn3p46sR0G+jwdwk1djDZHngwBYA7RqQKoblUA=
-X-Received: by 2002:a05:6a21:3988:b0:398:8f38:441a with SMTP id adf61e73a8af0-3988f384c93mr4284327637.0.1773081952645;
-        Mon, 09 Mar 2026 11:45:52 -0700 (PDT)
-Received: from ThinkPad-E14-Gen-6 ([220.158.168.165])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c739e16cebbsm9600602a12.16.2026.03.09.11.45.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 11:45:52 -0700 (PDT)
-Date: Tue, 10 Mar 2026 00:15:46 +0530
-From: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [QUESTION] Improving disk space recovery for partial clones
- (GSoC 2026)
-Message-ID: <aa8VWlv7dosrrRwv@ThinkPad-E14-Gen-6>
-References: <aa65h6Z_TrpJbmkj@ThinkPad-E14-Gen-6>
- <CAP8UFD3sicsPd903FU8bsj2B_4Q1DE1xB+--OxryY_jhL=sHdw@mail.gmail.com>
- <aa7XkqhcG6Kb6IhN@ThinkPad-E14-Gen-6>
- <CAP8UFD2iM-z7F_FeDkP5v=1OAJhS2AcFsgPnicvHNFMUcmxbpQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ap4hFJ1L"
+Received: (qmail 49635 invoked by uid 106); 9 Mar 2026 19:01:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=feWJtIYBthcWlOyEoQGZ+xI5XSufMPJ4okowmaen3gk=; b=Ap4hFJ1Lf2kJ6r0rbLC9IrFfGh2KzNMrjnTrSKsMiTISZ7UQywK/WzHqZxGC5b7j8MqMwxwNVV5pbDMb8fiktVEFfv/iQkZb3ZLkYY9E4RRzqKfWi3pLpnWyBGSPukidqnj0mwARXRGPsFTi8i7k3RTuAkYcYgrS8Jkkmlcm9UTnZz69aOYqIMap8ALSKEye0JSGIn6oa0tSVQIApyRiWKGch4nFb60WkMKm6B0Jh0Kiwe0D7ZE9sRsWPAhGlbPDprUME4a3sFUITDbWNh1G2d8o+x4rZ3DqIibz09indkzO9YjhB4R4L3ccTz3kVOiRzuq9WIwkQ8SAUG6MjJQL5A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Mar 2026 19:01:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 458023 invoked by uid 111); 9 Mar 2026 19:01:14 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Mar 2026 15:01:14 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 9 Mar 2026 15:01:12 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Deveshi Dwivedi <deveshigurgaon@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v1 2/2] list-objects-filter-options: avoid
+ strbuf_split_str()
+Message-ID: <20260309190112.GA309867@coredump.intra.peff.net>
+References: <20260308180359.31188-1-deveshigurgaon@gmail.com>
+ <20260308180359.31188-3-deveshigurgaon@gmail.com>
+ <xmqqjyvl57yv.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD2iM-z7F_FeDkP5v=1OAJhS2AcFsgPnicvHNFMUcmxbpQ@mail.gmail.com>
+In-Reply-To: <xmqqjyvl57yv.fsf@gitster.g>
 
-I have been studying the different commands and how they work, I will put together
-my understanding in a pros and cons list for each command and send it asap.
+On Mon, Mar 09, 2026 at 08:38:16AM -0700, Junio C Hamano wrote:
 
-Also the contributor application period starts March 16 and ends on the March 31.
-Can I complete my proposal for community review in between that period as well? or
-should I rush to write a draft version before that.
+> > +	while (*p && !result) {
+> > +		const char *sep = strchr(p, '+');
+> > +		size_t len = sep ? (size_t)(sep - p + 1) : strlen(p);
+> > +		char *sub = xmemdupz(p, len);
+> > +
+> > +		/* strip '+' separator, but only when more sub-specs follow */
+> > +		if (sep && *(sep + 1))
+> > +			sub[len - 1] = '\0';
+> > +
+> > +		result = parse_combine_subfilter(filter_options, sub, errbuf);
+> > +		free(sub);
+> > +		if (!sep)
+> > +			break;
+> > +		p = sep + 1;
+> >  	}
+> 
+> Hmph, would this loop handle a trailing '+' the same way as before,
+> e.g., "combine:tree:2+"?  The original would have split the string
+> into ["tree:2+", ""] and the last call to parse_combine_subfilter()
+> would have been made with an empty string.  The new code does not
+> make that last call with an empty string.  Perhaps the differences
+> do not matter?  I dunno.
 
-sincerely,
-Yuvraj
+I think the original was wrong in its parsing. The first entry should be
+"tree:2", without the trailing "+". And that would almost always result
+in rejecting the string, because the "+" doesn't make any sense for most
+filters. The exception is:
+
+  blob=$(echo foo | git hash-object -w --stdin)
+  git tag foo+ $blob
+  git rev-list --filter=combine:sparse:oid=foo+
+
+which happens to work. But it is wrong according to the documentation,
+which says that "+" needs to be escaped if you want it passed along to
+the sub-filter.
+
+So flagging a trailing "+" as an error would probably be OK, and match
+what happens now. But quietly ignoring it is perhaps friendlier (or less
+friendly, if you think it might let a typo'd input go unnoticed).
+
+-Peff
