@@ -1,160 +1,115 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112FA2C237C
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 23:27:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B889F399012
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 23:30:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773098857; cv=none; b=sR6k1709yL96AvD8vzV/hekMcQ0mgQ6FTk7VD0PA2Nh+xU1TdjNgjj/+S7D6ywNSLRtOE5Lxg8rcJZot1P+pNDOZX1v8xpHlFyMbABKvVYBOUIJJkd88Osgmu6+oV4qZ9nLZ0gh4cYsQ3ya+VOka8uJhfxoxHixw4ouOgfOjQ78=
+	t=1773099013; cv=none; b=YXEbN3gP7IObchjPB9Cm2houAKE6rjhs05l7GYqtBXhKNvg7WJExVqSSKt+CnTwa4+p4msZS47nT1FPJA1LFaEvCUJgHrQ13NRNIMJ41zpXCn+/CWf5zN9bAsxEFufcdPpJB26WkFG+cXMz/xXS8MalXTWLr1O/KE5Ah34DOA20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773098857; c=relaxed/simple;
-	bh=Ii7Pyppl1KIXnDxErmK1ANwDlJuuroIz8MCot78hFG0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gSi8hMHnTUg3yKFR/0f9M7qroHau2SR83HkV4KNJOA+eKC/93cbPUtdTzbLaaHOpA2hdbonuYmQUUA48/PKB+/NhtFTv9ohuQYyf6/XyryOXBDPtjSSBz03Tb7ky3b5p0N9etlPa6UNolIdPTmcHGGI586c1E0NE0UNG2pbizJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=hX8Ex+od; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1773099013; c=relaxed/simple;
+	bh=j4nKrT388FJEY1rQispd8DrY/k1y5SaNfSku+V0KnJo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=V6bhxPyz2iGRgyGtp6ckeSVH10sh8QtknxAXCDLi9yfKZnfKzzeAobQA6nipc2EM0L/g/yqyRh2qU2seo1voEOZW5o/s55t44hoaycQM9eZcpxbUhEXIewn6SbIyDZ3sYx2UBstSvx6G9Olp2sXLzQnh6TtXbqBlEr9vYV2hGrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JUA2J0PY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s7NPX3gM; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="hX8Ex+od"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1773098846;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=v1mWrPBGj80BOmEx5xpKHIloDj9kiKJFeMe4lbR9eNs=;
-	b=hX8Ex+odesq3iiIY+2dEVem5J8zXa5s6QFhaO+o3RT3K0jS8asvwzmTKaQQX5brJ2TZk6M
-	w1rc0l41oOCK/xNacpZr4stPiOfkRY4PqdF2WkBPFqlPsHImg3IzTlxPvCOnFCiEw3QGzQ
-	kJzkf5B+TfqjDWGAZHx+NSq49C+z/9WQ+gV5CcRHiAgr102yRm+O9IbYt4zbVgj31QXRCA
-	Cnqin8KwGj2h2PSJswgGq0wCJt8vvIj/GhPMClIBQ6liONsYCPVVQ+Ns6y5Lv70C75z2x1
-	lncTR+qIrKH5+TaESKU2IyKa+tZ89t7QC82Twc+d0lu9wWpdhLyW9CmhaZkYJA==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>
-Subject: [PATCH] apply.c: fix -p argument parsing
-Date: Tue, 10 Mar 2026 00:26:58 +0100
-Message-ID: <20260309232700.553168-1-mroik@delayed.space>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JUA2J0PY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s7NPX3gM"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1FBD1EC00AB;
+	Mon,  9 Mar 2026 19:30:12 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 09 Mar 2026 19:30:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773099012; x=1773185412; bh=AjkpZUQRJo
+	ets3Mzmb46qiY8A19J1FLKZLg0we8V8D0=; b=JUA2J0PYltdQx6xqaLv0G2n+MH
+	lPpNXbtO4vLyIT0Dy3ysxI0Lt2KsaUWrA+VXBrTiBl7mzkhFizVzhNQyrvkeyn9B
+	vSlFOhxKG149HgAL4Xs5DIP+UoMnqW+eSsx7M8OfF/aJj8lybk5QbCGf+OSkSjJH
+	nRnABrW3OIqazPkq93Nc3yGjt3JYTWUN9+7ALLihmRu1VbMqm2r6Lga93PaHIcct
+	uqEsvslt2mqUD1gxXWGxaTJ8NYRvVhAUSNlVlJa28OWkF7w6NjfrlK60fRSGerWk
+	AxLXCEKedHCzm7sfDW2R7flt+GnGYN4DDq9+ctVM98FNlisMFUB9VZyOQWCA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773099012; x=1773185412; bh=AjkpZUQRJoets3Mzmb46qiY8A19J1FLKZLg
+	0we8V8D0=; b=s7NPX3gMNA4S5ZuGhemE7DZeyr+P0yiqwduj9Hqers1Azh+JMn2
+	8VE8USVLNwr0YSsWzLcxMTcbHWkJKgaGPRL8JtmmUl4Rcl7nmypbkSgmQZJcjAx8
+	le3KeV3lDylpOzAxAkihKnjIOSMmjO71aNu6qW4scMp0kRQxsjUOX9ReN+O+YGme
+	kwgHJML1+KaTxiP3eLAzsMkTfmrkYfdo3fZFpYCOGb9kXXSn+wd9WQQ3vW+7kRKi
+	295vwNm6YJ6I5/4QTsw/GDPoRi/1+diRf6IYSnnuIjju78xiFW2tp8wMLSsz38+u
+	kicREG4ChequyYIUM5WeLplZhKK9oBTEPCQ==
+X-ME-Sender: <xms:BFivafnIAR8BFCHjytahJJDdPEU2-Kv0bl8viBLK-GqUMtOu-vtqcQ>
+    <xme:BFivaWiJT_lCC9VNRY2qBjct5o_Gh8ng9B2SVu1CgJXckp76mTJcgUJdO_mtnvGX-
+    wDKffoXE_UHfNl93rmTZvAOxZyNJnVWU6nob_1sRB9X5IN-Oh0qAHU>
+X-ME-Received: <xmr:BFivafdL9MC9nHMgp8GAwWFiVKFeYFHoDWXSPK5bZrbjkJ5hn6uEItuVK3f8ttGgqXpYmt2ehcXWzhWN8IpVW3c-5bE1ygohPw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeelgeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprgefvddtheduheefgeduieesghhmrghilhdrtghomh
+    dprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrg
+    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghs
+    rdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:BFivaeix5cG2znfFTzSkLmc1b6_VcQcojr_jwuMGyPwW74IZSe51dA>
+    <xmx:BFivafz--ISew2gvpkUm304EazSLfeifS2PTrRBuXtjhXRtcFYwskw>
+    <xmx:BFivaSMYm3q6_Qewb2t2a68-12GED8oiHW0MY4RsLpfwED2xFN_xYQ>
+    <xmx:BFivaYUvBTRFtx06G7J1hdRgc0JjbRQ4P2ZMaWUHMcs4kFi9DlYkwg>
+    <xmx:BFivafCbJr5cyLq3aXD3zPZ_FJKH64riTdV-xEM9mmRSapqQaS30za1q>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Mar 2026 19:30:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,
+  karthik.188@gmail.com,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v11] setup: improve error diagnosis for invalid .git files
+In-Reply-To: <a5e41bd1-af10-49cd-85dc-8e668f1d8970@gmail.com> (Tian Yuchen's
+	message of "Thu, 5 Mar 2026 20:40:08 +0800")
+References: <20260222102928.377519-1-a3205153416@gmail.com>
+	<20260223074410.917523-1-a3205153416@gmail.com>
+	<xmqqpl5rumy0.fsf@gitster.g> <xmqqjyvu42pw.fsf@gitster.g>
+	<460f00d5-97b4-4a6c-be45-6f60a17cd33e@gmail.com>
+	<xmqqo6l49mrt.fsf@gitster.g>
+	<99c6a437-3fc3-4d9a-9465-4c47a9777776@gmail.com>
+	<xmqqfr6fa63h.fsf@gitster.g>
+	<fc2aaed9-ecc3-4efa-bdef-e6ac951c1d5b@gmail.com>
+	<xmqqcy1j8o5r.fsf@gitster.g>
+	<00f6d468-7d00-4edc-886d-723322420539@gmail.com>
+	<xmqqbjh35hvv.fsf@gitster.g>
+	<a5e41bd1-af10-49cd-85dc-8e668f1d8970@gmail.com>
+Date: Mon, 09 Mar 2026 16:30:10 -0700
+Message-ID: <xmqqcy1c1szh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: -
+Content-Type: text/plain
 
-"git apply" has an option -p that takes an integer as its argument.
-Unfortunately the function apply_option_parse_p() in charge of parsing
-this argument uses atoi() to convert from string to integer, which
-allows a non-digit after the number (e.g. "1q") to be silently ignored.
-As a consequence, an argument that does not begin with a digit silently
-becomes a zero. Despite this command working fine when a non-positive
-argument is passed, it might be useful for the end user to know that
-their input contains non-digits that might've been unintended.
+Tian Yuchen <a3205153416@gmail.com> writes:
 
-Replace atoi() with strtol_i() to catch malformed inputs.
+>> True.  It would be a lot more invasive change.  I do not know if it
+>> is worth our time _right_ _now_, or if it is better to be left for
+>> future iterations.
+>
+> I will hold off on any further iterations and leave v12 as is, unless 
+> you or others spot any specific details in it that still need tweaking.
+>
+> Thank you so much for the patience and guidance throughout this entire 
+> series! I really learned a lot from it.
 
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
-Unlike [1], this argument doesn't overwrite an argument initialized to a
-default value. Instead state->p_value_known is used instead to see if
-the p_value should be used.
-
-[1] https://lore.kernel.org/git/xmqq5y181fx0.fsf_-_@gitster.g/
-
- apply.c               |  3 ++-
- t/meson.build         |  1 +
- t/t4142-apply-args.sh | 31 +++++++++++++++++++++++++++++++
- t/t4142/patch         | 16 ++++++++++++++++
- 4 files changed, 50 insertions(+), 1 deletion(-)
- create mode 100755 t/t4142-apply-args.sh
- create mode 100644 t/t4142/patch
-
-diff --git a/apply.c b/apply.c
-index b6dd1066a0..b6c9e40700 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4981,7 +4981,8 @@ static int apply_option_parse_p(const struct option *opt,
- 
- 	BUG_ON_OPT_NEG(unset);
- 
--	state->p_value = atoi(arg);
-+	if (strtol_i(arg, 10, &state->p_value) < 0 || state->p_value < 0)
-+		die("<num> has to be non negative an integer");
- 	state->p_value_known = 1;
- 	return 0;
- }
-diff --git a/t/meson.build b/t/meson.build
-index 106c68df3d..d26df707cb 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -547,6 +547,7 @@ integration_tests = [
-   't4139-apply-escape.sh',
-   't4140-apply-ita.sh',
-   't4141-apply-too-large.sh',
-+  't4142-apply-args.sh',
-   't4150-am.sh',
-   't4151-am-abort.sh',
-   't4152-am-subjects.sh',
-diff --git a/t/t4142-apply-args.sh b/t/t4142-apply-args.sh
-new file mode 100755
-index 0000000000..6fe73289f2
---- /dev/null
-+++ b/t/t4142-apply-args.sh
-@@ -0,0 +1,31 @@
-+#!/bin/bash
-+
-+test_description='git apply test for various malformed arguments
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	git commit --allow-empty -m "Initial commit"
-+'
-+
-+test_expect_success 'git apply -p 1 patch' '
-+	test_when_finished "rm -rf result t" &&
-+	git apply -p 1 $TEST_DIRECTORY/t4142/patch &&
-+	ls -l >result &&
-+	test_line_count = 3 result
-+'
-+
-+test_expect_success 'git apply -p malformed patch' '
-+	test_must_fail git apply -p malformed $TEST_DIRECTORY/t4142/patch
-+'
-+
-+test_expect_success 'git apply -p 2q patch' '
-+	test_must_fail git apply -p 2q $TEST_DIRECTORY/t4142/patch
-+'
-+
-+test_expect_success 'git apply -p -1 patch' '
-+	test_must_fail git apply -p -1 $TEST_DIRECTORY/t4142/patch
-+'
-+
-+test_done
-diff --git a/t/t4142/patch b/t/t4142/patch
-new file mode 100644
-index 0000000000..c4511bb708
---- /dev/null
-+++ b/t/t4142/patch
-@@ -0,0 +1,16 @@
-+From 90ad11d5b2d437e82d4d992f72fb44c2227798b5 Mon Sep 17 00:00:00 2001
-+From: Mroik <mroik@delayed.space>
-+Date: Mon, 9 Mar 2026 23:25:00 +0100
-+Subject: [PATCH] Test
-+
-+---
-+ t/test/test | 0
-+ 1 file changed, 0 insertions(+), 0 deletions(-)
-+ create mode 100644 t/test/test
-+
-+diff --git a/t/test/test b/t/test/test
-+new file mode 100644
-+index 0000000000..e69de29bb2
-+-- 
-+2.53.0.851.ga537e3e6e9
-+
--- 
-2.53.0.851.ga537e3e6e9
-
+Sounds good.  Let me mark the topic for 'next'.
