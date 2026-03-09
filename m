@@ -1,81 +1,84 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F7C18027
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 00:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E891465B4
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 00:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773014693; cv=none; b=Y/Lfms0EgsnN7XGgDG+u10KTuVXgb4uuNSmT893he0YY7PhKmBzxz4tdUKy43vgbU1Z1GOzQAQ4/WR0B1zlOm5Ae4g9CVAWYiXc3IGQP2fD5I5YcA/oI+Kfbe1MYmFgLUUfTgQbY2yxlPqkfkfSdNd9YXVXqsf6rtBxVbgu6fnk=
+	t=1773015994; cv=none; b=kiZuAT2ZUXmu7SvFXduXW6CqJadoFt6ZO31ZNFl6hqxTkPujIvTuhm+emOCscLAnLBO+jI0pQZSQSZ5SLWAjWh9VAcpH29Su5D1gGti6vqbaKg0rh0jYoPcAT6uyGYXG4rBoz6vvg08oRGIsYduXU2RPyOU5rZlprMtJ891fU8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773014693; c=relaxed/simple;
-	bh=Pf+2+H+q1Nv/8Zm+Z9+XYTVlyQQZ7wiWIEbczilgMpY=;
+	s=arc-20240116; t=1773015994; c=relaxed/simple;
+	bh=asnpgS9vLytxoQ2zCJ6zu/CgnWB+1Z8a0vtfQfewmr0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h6FzHF9R/K/nMSz4rR7SDMF37zFIyGjEBtqAW+REu/ovUhQKoJuyf9vvIaCEGu5MiPfed70q/fqEzFHTfqhZaIHz20CnWVx+5xC2tuXb29cMqjADtPpyXJxbmhcevVwdac7yqdH9j1XMXvFTOdwDWFyhokJmOD3w9q9saenn+vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TMpoJm+I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sm49zHMo; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=DMr4OtS8oKascGkarynJm4OxiF3hGC9fWh3oeryQwalzcbpV+yzt8BDbKiJ+khVgjZG+iOl6XkhVbjFZ10MXg9F++z/U/T/cHvAibs4wsYZwX09v2/98UR4xaNeH08E2MqKTOc10OMlh9TOnRAcJ0rxyI8JmccfKceuKXFO6rko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xj2+yviV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DgoLXibs; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TMpoJm+I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sm49zHMo"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xj2+yviV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DgoLXibs"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C81B67A013B;
-	Sun,  8 Mar 2026 20:04:51 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1ACFB7A00F4;
+	Sun,  8 Mar 2026 20:26:32 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 08 Mar 2026 20:04:52 -0400
+  by phl-compute-05.internal (MEProxy); Sun, 08 Mar 2026 20:26:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773014691; x=1773101091; bh=BUk053woQo
-	AaVmPG2Bn1oYz3RdldeTN0ac9DgTaR6ys=; b=TMpoJm+IbJUoHBPnrnjzDNkrdK
-	cywFKenBPi/GAsD1u52//qUidquEB+L0giEaxyMCmdsHklcMoo/Yx5SmNsHucaz8
-	TqMcZY9Fx+jMvj8DVzUnEHZVjR3tonNAIZ/8iCR7v1fQQ7dMaJ/vLzl5A8VTuwE8
-	8j5kwnXDsZUIs05HD8DCtpkXgxGZGAGBX9Bg4qc3FFq6Lp0aYCQ8b4TBorjDc6pp
-	mgo7xXcXT5n+/H69RaGfVsrNpnlPMkKaZCSJTJ5UtXGbWwPp7qa8treRICq1tFSJ
-	ouuLEVJsZ1ePtZiNLYB2PCbzDYN2dN2DMORKDMVcXl+aMEJaNVl/1qNYvOTw==
+	:subject:to:to; s=fm3; t=1773015991; x=1773102391; bh=7jenjrD5M9
+	uZemBhuO3WFsFpRqDYiqAF5hIKM05tIDM=; b=Xj2+yviVfPl+IXj6g2g40NM7wz
+	AqSGokNoEVlJkb1Ka2jFrEXA6ZQi5H9tEUxvcOia27qPMZ4d4FO86pF3+8j/0JID
+	xcrmV9Hx/jiUlDMgVIQh6DBywWotXjptLeSjIme9lvV++zbl4pW4tTAPFKuhuOzw
+	p/BG6Vxq/w/FeLvUJtRjLJQqm2b5m2U734l+VtGZ5sIinCSPVkEqpAHTK0+s0iQg
+	XdpwAlYzwgKWljbaDRXJ/Au7dU2EUMopl0Sv3MTzUpXIYG8Q9FH+FSipNy/kqqCI
+	xXy5Xh2KX+0qjLLbKv1n4/CRt0GpakkV/8vUZJPZw+vj0It1uftxXj40aIDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773014691; x=1773101091; bh=BUk053woQoAaVmPG2Bn1oYz3RdldeTN0ac9
-	DgTaR6ys=; b=Sm49zHMor+HRw5fknfVCRqmOZVr/UaM7+SJtmmL53gK9G8G3diY
-	9nCpTWFWnKgzfxA5eOAZRUbcpM437y4joJXyd8jBVkpJ5ZtM5BWvp+M3RpVQsQAu
-	tekZF/TkwcgmVxFR7m1faH3LVZeWGrqb0VePLwI61WVZ6s9lL+pOTpiuD6M3t06V
-	gffQZycxnKtNBbnQNy175MpJeOsDFmaK4Khj8h5mRsV0swRPeoOEtM8tseKlrTca
-	aq2Yn+p1e9c8T3ay0ToU/cqmL4ZCjgqoffAw+c0jvkoybSMpkgd9/+G6EjSX5qOz
-	B1dUZlTWLYo4nJQlYhazmENigwZEKTvwV1Q==
-X-ME-Sender: <xms:ow6uaV3THbQKjI9kuMSDpFlogmBrdHXEWMgm0QRcSz_X4-UbYcv2Rw>
-    <xme:ow6uaTiEJq6_NDYCtZ6UFP9Kelm5gBFlQ-pouu6T_ay7M_zUoHAuDCT9_kGCunz84
-    A99RxhhjtorH328Du5iY3Dj8nS9cqncIiP6p3ziVb76mcnerjNyOcQ>
-X-ME-Received: <xmr:ow6uaTSkTmm0Bye8ZVg9IM_Mdlc4qAGcKh5w8DxJBcCG1U1ErBdNbI-A99W8h63MTMwiuB8kQ1p164rNwpFzvjfLaV9OArKUOw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeiiedtucetufdoteggodetrf
+	1773015991; x=1773102391; bh=7jenjrD5M9uZemBhuO3WFsFpRqDYiqAF5hI
+	KM05tIDM=; b=DgoLXibsoFv2RTnN/csOrbyBm7W/08bZohxWayrLXyYpqE/9bCc
+	/A25FNihRjlASPr/kx64N865pK67FHQFQnFADrQGv4xvH6VKCrBGkN+kMoxgXoog
+	laqPe4ZwzYzJcmINcBTWE2LuLT59bwCVj8ZNt4PmtwzURrPCBZQGU1BaNk90MNcE
+	Zs5eXMGoQ8ELCv8w6NzzudEk3NcRV4HQe/3KYfolC4F1ORNHTKort1wCeVTPVBfb
+	Z78+qKSkitYUWg+heYNePBCeHDvn99tM+CgbZrGKFqIr8ZD/cLRWLjeMeSyMbQd5
+	yuuZSAdtuUlxpMlGEVBHPPs/niixVlBJjXg==
+X-ME-Sender: <xms:txOuaXg7QhM4Qxvy3YXSWNXaPR_p3gh5cLk_-wZOomEPYdg41LkBVg>
+    <xme:txOuaekvKwX3GFkUfEwzoihdGBUWRKFATvOIONGElmTi7pQdJ53rVMU9P4n0EhZ_5
+    5kBrnW4lMD5BvVE6D3ZMNv2hORPuzIFol4M7uIYuOqyytuyFIs0gg>
+X-ME-Received: <xmr:txOuaTrKWhIHCWpQ6BUaWowMNmfvHSaYfb0xWG20ZhT8jc90kD0siD33EohB57xsvUIMSb_DFFkbdO035bNN4TBQqbMw8fcJnQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeiieegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeefleessggr
-    rhhrohhithdrshhhpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ow6uacglvd6jrH39iLa0Bowp7QSpBq03cQzPQxHkgsQ5A_14iYOczA>
-    <xmx:ow6uab5BPHV8tsVoCADPKp7U-gtjLDauAyIfsch_z7HnRRWGn5ZrWw>
-    <xmx:ow6uaRAzcndomuAlzMKzZVEUuKoMK-73vt9ZRnuI8lp8u7_XT03JNA>
-    <xmx:ow6uaaYnE9bwZmMKo8cg-eazP8s65H3ZmMlOfPhiazvY6XUZZGXaDg>
-    <xmx:ow6uaSdUp-BCUUOrhN8SMB8deXZ9wz42Rto3pgR5Eb0lv264zcwTTnGS>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptggrthesmhgrlhhonhdruggvvhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgvvhhinhdrfihi
+    lhhlfhhorhgusehmihgtrhhoshhofhhtrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:txOuaXFsEcndNeOTi8-pgiMdFVh7sZ6-2KFEMkGn-q-wNkdlnNfDng>
+    <xmx:txOuafz_mogDTCb0mxIJ3YwfXJ6tpDQ13uFHr20xhSzz-n1ZDJbIow>
+    <xmx:txOuacp5NngUWGoWPcrLqtYN3-7VLMDI5QoRw9Q4h8BMttOtULhoOQ>
+    <xmx:txOuaZg9Aq6JFh4D6SawxdFSweudRe4sZZxPcfc03L5vakT6wDV4dg>
+    <xmx:txOuaSnnWpZ_K6mM7gmecVd5V-GZTKKNZvCDwwXku9xYHZLNEr_rd47a>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Mar 2026 20:04:51 -0400 (EDT)
+ 8 Mar 2026 20:26:31 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jiamu Sun <39@barroit.sh>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/5] parseopt: autocorrect mistyped subcommands
-In-Reply-To: <SY0P300MB08010BFD00AA7C73503D8B92CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-	(Jiamu Sun's message of "Sun, 8 Mar 2026 21:17:23 +0900")
-References: <SY0P300MB08019805A8304105FA805EB1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-	<SY0P300MB08010BFD00AA7C73503D8B92CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-Date: Sun, 08 Mar 2026 17:04:49 -0700
-Message-ID: <xmqqo6kx98bi.fsf@gitster.g>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org, Kevin Willford <Kevin.Willford@microsoft.com>
+Subject: Re: [PATCH v2] patch-ids: document intentional const-casting in
+ patch_id_neq()
+In-Reply-To: <20260308150203.86299-1-cat@malon.dev> (Tian Yuchen's message of
+	"Sun, 8 Mar 2026 23:02:03 +0800")
+References: <20260308043131.77782-1-a3205153416@gmail.com>
+	<20260308150203.86299-1-cat@malon.dev>
+Date: Sun, 08 Mar 2026 17:26:30 -0700
+Message-ID: <xmqqh5qp97bd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,26 +88,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jiamu Sun <39@barroit.sh> writes:
+Tian Yuchen <cat@malon.dev> writes:
 
-> +static const char *autocorrect_subcmd(const char *cmd,
-> +				      struct string_list *cmds)
-> +{
-> +	struct autocorr autocorr = { 0 };
-> +
-> +	autocorr_resolve(&autocorr);
-> +
-> +	if (autocorr.mode == AUTOCORR_NEVER ||
-> +	    autocorr.mode == AUTOCORR_HINTONLY)
-> +		return NULL;
-> +
-> +	unsigned int min = -1;
-> +	unsigned int ties = 0;
-> +	struct string_list_item *cand;
-> +	struct string_list_item *best = NULL;
+> +	/*
+> +	 * We drop the 'const' modifier here intentionally.
+> +	 *
+> +	 * The hashmap API requires us to treat the entries as const.
+> +	 * However, to avoid performance regression, we lazily compute
+> +	 * the patch IDs inside this comparison function. This fundamentally
+> +	 * requires us to mutate the 'struct patch_id'. Therefore, we use
+> +	 * container_of() to cast away the constness from the hashmap_entry.
+> +	 */
 
-CodingGuidelines: -Wdeclaration-after-statement is here.
+Is that a "performance regression", I have to wonder?  We would
+regress relative to what by doing what?
 
-Using "-1" as "the maximum value this unsigned type can represent"
-is somewhat misleading.  Can't we avoid that?
+Is the lazy evaluation avoiding unnecessary work?
 
+If we are going to pass _all_ the objects in the hashmap to this
+comparator function eventually _anyway_, then the total cost of
+computing patch IDs to all of them in the hashmap would not change
+with or without lazy computation, but if we are currently getting
+away without having to compute for all, but only computing for the
+ones we pass to this function, then lazy evaluation is clearly a
+win.  I do not offhand know which of the above two is the case, but
+we need to know that before we can touch the NEEDSWORK comment, I
+think.
+
+The lazy computation comes from b3dfeebb (rebase: avoid computing
+unnecessary patch IDs, 2016-07-29), even though the "const
+correctness?" comment is a bit newer than that.
+
+So it seems that we indeed are avoiding unnecessary work without
+this patch.  We'd encounter "performance regression" only if we stop
+avoiding unnecessary work, so I am afraid that the phrasing used in
+the patch is somewhat confusing.
+
+    Even though eptr and entry_or_key are const, we want to lazily
+    compute their .patch_id members; see b3dfeebb (rebase: avoid
+    computing unnecessary patch IDs, 2016-07-29), so cast the
+    constness away with container_of().
+
+or something, perhaps?
+
+>  	struct diff_options *opt = (void *)cmpfn_data;
+>  	struct patch_id *a, *b;
