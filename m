@@ -1,110 +1,77 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9EA3B5846
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 16:04:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6283E0C6B
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 16:23:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773072251; cv=none; b=DfoU9Q5hDhtRGkt3q9u9iS0tclv4kJeAQX6gRLIF51UDwA6NofI6/G8d1/m+j2dYX+RCxpfmJpGeId42KVp/dswqEXRF8f1936H8CDEcCKPnqHKgwxeQl31WCSgA4BE37wCV9im6+fH5BhheTalS7Bxl3s9wYR6kYImHrU+kfw8=
+	t=1773073405; cv=none; b=V/+MIqRbPZk3Lj4fUE886R/B5THMWNiKyGhrsH1satAK+eVd8e+agmSnnWJAmy7+P9JGMPITBNUgkVfuynd6WajuQoI0LrT+D+HONPQYonOxSJpC58731DHK8mQgoMcpOurg2PlMauoxLyxu/ERCp/tKEk+MweG887tCRO7Ov3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773072251; c=relaxed/simple;
-	bh=90GuY+6PWUTKeWqSZBG/5+c93ovDXhprzc5wUtMcuM4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sd7wXDZVcRyyMRfdaQPxo2VEQgxvSfSrWJ5gJ1Vk3ds1t4Ov0ca+zo/WjWlsfp67Av665PfC7Jjm0NoyWXWMm3Huc09Q3SJgZlCZ+1FQVyI7p6B8OZP9ncBVozYkzp3WNf1d3Bjbg4m0FaPS4GC0saFlBYj0dhw7jgCfizuGmHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iuC0XUtv; arc=none smtp.client-ip=209.85.210.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773073405; c=relaxed/simple;
+	bh=uUjUHwHeuR16RTlor2JqLyBl4iDAVWRwzD06kavd8Gk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MSNjl3koyRxBRNtEpJtiGNdbo6vvyuv1mp1ow2WrOB9huKo/e/78sJDTa6TMvMsV66S2M3PBP0Gbe6iPWBpIWezbt2/NzF3IoFQVp7rgtSiFlY1YJDWBrPSQNalg/VaC1r9TKPEznh5cLbRUats38q7MyUlUE4ayBS4q+1EuAlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=XJ6GH1A6; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=XfNkZDZ8; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iuC0XUtv"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7d73ccee442so1836218a34.1
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 09:04:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773072248; x=1773677048; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=E43cYBwomQj5YnfkdzNlhm2RhX4PrNlWn+pa/XKNGII=;
-        b=iuC0XUtv97wxfX0lpzcDUQUHSVtXF0rFR3Z3redkrAcUbNUyoNB1YzlRMwuZwOHvsI
-         WbKXOUpfnKQBTPSISK1xPxh5i10BuhZ6VImJ5UGqf72e4vvYjew/OHVp3lw1+S7xuAvG
-         DNYiLvuZbk0eM/ioAtG/2kXpKbcgb/vGfvjuBSIA1Yz5JIgJHlUihKqYtJh+Un1nmNZY
-         izIoGA7dm907BX8wtosjX6LOrd5z65M3lVQuGe+OwCyOCCEFWTiQtqO9dFxjLTpsctPT
-         jp6vhx5UlN8iH2c7Y7nHVuvhUzIeKhKFfW2V2vgz5/wILSC/BobWQdtESgqeU7NC6lrW
-         7DSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773072248; x=1773677048;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E43cYBwomQj5YnfkdzNlhm2RhX4PrNlWn+pa/XKNGII=;
-        b=P6dqyXKd+FW1kehvGthVnlhAbei6T7jIRNl68COh15Nm2wtcVI1XDHVSguorsuz6zH
-         U5mJ63hz6DUgIWRRSUS44+QeuN1V2Nr+sz/eH0+MSXP4oHL9yqskIGtgOF+ZxuYI0e6R
-         ERIU+2gHou9Bzpk4Fwj949QUe38EzShvfdr5NbnXpCorV2Nwrk/6pDPIUl4d/m7Gd/GY
-         OhNmiMu0QYJ40juFirbisR5mM66Ga8HrRYFhCHfXhYD8mF8Od3+3432zQkHCc9Jb/ygM
-         G9LaFTcNnwMaPtGd+mRbqkPdjLb9gb7m34YSVxMDVL6IImGh83K9FvIBwWiGLKGVEH/l
-         BxQQ==
-X-Gm-Message-State: AOJu0YxOqMqMaaC78UuJstWnYIPiP6gpF6le8J2S19onhnY+hkqcPl5s
-	nvtKlzsO17pdvvzzXDIV5kQy4q/CBGFAJRYGSnyfOXYz5MzIIG6DDWwZV2xQ0Q==
-X-Gm-Gg: ATEYQzxUt7OyaaxWJPmG5sNN9vCgvOO5Sl87b2YGtefuoq3pWjg0ZJ+0U8NBuxlvmqQ
-	rC1W/9dTib3bE89Jy7OTIVT8PSEcMUAbOIjyTgQzuiTNndRurrJRF3OOHvTKJD3mzRRqqzL+BT1
-	jqLhiBKdHUP9zD3MeNvT4vXGON2vTQi2InE5W6l5q8i8SI+0sfOWyd+e2MmBmu8NLPnWHeZpeMu
-	fVw+NI2o9URhrmGDUp/pnaX2q6IR/Eqv4TA/WxK5dhsaV5d494la/ZtCnmqUhzgDJDy30TC4xcf
-	JtxPVjiFGBvJwQaN5SWWXvBybyNRV5h1YWU2zHtScyv20cNqKB2jvodX1U+12LuBj2dPJ+lRw5P
-	Ikn9hF58JkstsKMA7Y5wo8ji2zn1ObtskXfqTTxwPQ9U9JIyl0FesnfxtFnlgyvnwLL6eJUD1q3
-	pxTsMGsq69BvTc6PRJ
-X-Received: by 2002:a05:6830:4112:b0:7d7:48c8:5ac4 with SMTP id 46e09a7af769-7d748c85dc6mr3083584a34.30.1773072247483;
-        Mon, 09 Mar 2026 09:04:07 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d73b7b60aasm4498350a34.13.2026.03.09.09.04.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 09:04:07 -0700 (PDT)
-Date: Mon, 9 Mar 2026 11:04:06 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/3] gitlab-ci: update to macOS 15 images
-Message-ID: <aa7vS85brBpd9R1X@denethor>
-References: <20260305-pks-gitlab-ci-macos-16-v1-0-ce8da0ff29c2@pks.im>
- <20260305-pks-gitlab-ci-macos-16-v1-3-ce8da0ff29c2@pks.im>
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="XJ6GH1A6";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="XfNkZDZ8"
+DKIM-Signature: a=rsa-sha256; b=XJ6GH1A6jhpqDReu+L++oS5Kn3Yqz5iWU0IMyjyL6GPZ2mYj4F8sW/Aiep/t/guC2u/hH6d5aUQSi2tV3Z1SYy81G71qsuC6xPYQ4DjFtSmn/3XBNxyD4ec4rLBgps5V8O3LYed3Xy5bm9XOd4VY4kntKX87PfCs9Ub/vIwWZoDwdUX9YwSKPDro3F7ox5peBvtrLJPwgAoQI1Xl5kdY3tIglnQU6LDvjmJoYmEa/VwZVzv4NRMEAofHG09/2gn5VbTWMGqniVgLm3xxCe8NoMHQUm0IXfcWv51EpPl8gbTkeERsT9Q5fyY6QDvRM9DBkLeipz1CGcjbw7q5n6Zeqw==; s=purelymail1; d=malon.dev; v=1; bh=uUjUHwHeuR16RTlor2JqLyBl4iDAVWRwzD06kavd8Gk=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=XfNkZDZ8iyGF2XsrctatL4PYzYaFskeqJth6AfHSstQxe2/OElqHvpdh0d0EU8DAzVzVbit+8fPO2FNRIBL6jvqDXd+jd+AF6Ko2/GnWjFXZH2WytZbDmhY+/Jf2VV9r6w9vxhFXpivRReIm7k3DghoJSLQgOJOUuSHUqvto1/TK6+zSofmj/C4qfGTe8nfmO4FMHFYc45JUQrRVtdqQ9/Gy++KFWlanVhPEF6g9dO/2nuhGAz6h6nrNdOTZUA6fFthIQl1GEB4eIRiS6t9NG76cqxol9vQ1mH/jhjq277Mrsind7XSEFR/f+/xiC71+GeR310SWGg7C1C8LMyLjvA==; s=purelymail1; d=purelymail.com; v=1; bh=uUjUHwHeuR16RTlor2JqLyBl4iDAVWRwzD06kavd8Gk=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1541362721;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 09 Mar 2026 16:23:20 +0000 (UTC)
+Message-ID: <615caf83-71be-43a6-bcb0-3a0c5e14d699@malon.dev>
+Date: Tue, 10 Mar 2026 00:23:17 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260305-pks-gitlab-ci-macos-16-v1-3-ce8da0ff29c2@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] Make 'trust_executable_bit' repository-scoped
+Content-Language: en-US
+To: Dronaraj Gyawali <dronarajgyawali@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+References: <20260301190017.53539-1-dronarajgyawali@gmail.com>
+ <20260308183756.31860-1-dronarajgyawali@gmail.com>
+ <f03d40072ab106d1a0a7852718d42f56@purelymail.com>
+ <6e3d373f2f41232ca9015c39ae0ea67d@purelymail.com>
+ <CAJtK1FMzbX7dO9y7hM_6_DbLpwbeYHnrg7WLjAghGX6UDVDmJw@mail.gmail.com>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <CAJtK1FMzbX7dO9y7hM_6_DbLpwbeYHnrg7WLjAghGX6UDVDmJw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 26/03/05 12:20PM, Patrick Steinhardt wrote:
-> The macos-14-xcode-15 images for GitLab's macOS runners have been
-> deprecated. Update to macOS 15, which is our current stable version.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  .gitlab-ci.yml | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-> index 71b8a6e642..83ec786c5a 100644
-> --- a/.gitlab-ci.yml
-> +++ b/.gitlab-ci.yml
-> @@ -101,13 +101,13 @@ test:osx:
->    parallel:
->      matrix:
->        - jobname: osx-clang
-> -        image: macos-14-xcode-15
-> +        image: macos-15-xcode-16
->          CC: clang
->        - jobname: osx-reftable
-> -        image: macos-14-xcode-15
-> +        image: macos-15-xcode-16
->          CC: clang
->        - jobname: osx-meson
-> -        image: macos-14-xcode-15
-> +        image: macos-15-xcode-16
->          CC: clang
->    artifacts:
->      paths:
+Hi drona,
 
-This patch looks good.
+Junio C Hamano <gitster@pobox.com> writes:
 
--Justin
+ > There were discussions on pros and cons moving global recipients of
+ > configuration values into a dynamically allocated strucrure...
+ > and excellent pieces of advice have been given by Phillip Wood.
+ > If anything, a change like this should ask for input from him.
+
+That makes sense. I think you should CC him whenever you've thoroughly 
+polished the patch or when you encounter unresolved issues.
+
+ > This "v2" applies to a mythical codebase where trust_executable_bit
+ > is somehow a member in the settings structure, which I do not think
+ > we have.
+
+Given Junio's observation, it seems this iteration is targeting an 
+incorrect or non-existent codebase structure.
+
+I'll hold off on further reviews of the specific implementation details
+until the base codebase issue is sorted out and the structural design
+(incorporating Phillip's previous advice) is settled.
+
+Looking forward to the updated version!
+
+Thanks,
+
+Yuchen
