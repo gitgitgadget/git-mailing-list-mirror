@@ -1,145 +1,102 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E143D7D7E
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 15:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773070700; cv=none; b=QPgcW8IYsuBgkLrlipwyhrhJ0S+yoJkhdp06GWxKturZaYb1wEZ9dMFZNFhe4H+5jiraHhN1ulk8uj3AY73XioC0gEv6iQu6pGwCvi8heMNeILhIpUbTPhC5JH06QYhlCZZS7UbaiTtVG/42UXVoY+DD5Lzafd7x1COig4FC2t0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773070700; c=relaxed/simple;
-	bh=nF9ttViR1MO+4TsYn7qE+DvVYDbFTqAA4TdHy7acwEA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jnZC1QPSmnbE+9ruOgGflX+Tj9s6lcqDLSt/e4vf8mYFN/A8Y7PZPdlhSV18Zpv49C156oCnWXhCTXj340BqwGugLjcB9iOYIFYCOpdphTyFzpJem1gQPlaCqesdXKUDNyEwfxlVK6JmGkEZ5+x1pHaV7USxpVUYBJz2v3wHCyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iBOnvXtN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rVJIZ7YP; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698623D1CAD
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 15:39:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773070779; cv=pass; b=hgeJMbmX/GdAlBaCAXKKemXOTKXKjJkiGezv6jd1meCEzu61dlJ9+pL5/btGLWRHWBz/zlWUcU6317czXs9lPJ4wkxF5GJZ6hJIvqUCbUqj2QfnffWwertI389DIEE5IOO8HXAkmauYzKIZrf6PQNv6Sz9LLrQe9dbHbhwjAuzE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773070779; c=relaxed/simple;
+	bh=U2TOpYXGmEt0uLpn4tvzjUIrI3aDCX2UqoUY9noPI/Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N3ZsCV6hGBzZiHbUzjOVmwosOghcxE7VsJ6gMj1EfjKM6swIYyFIKJqV+dYTqc54jU1/+2c2YD6DH6/sMrcYeuOBOxOODTxFESZeXErMIs/PwOyoZf1cpj1ukieNTNPD1QOOkM1UyHO8hOLHdW+8iVUehFJxwRfj3MhJF7c2Dbo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bp7+dNud; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iBOnvXtN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rVJIZ7YP"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AA5EE140010F;
-	Mon,  9 Mar 2026 11:38:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 09 Mar 2026 11:38:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773070698; x=1773157098; bh=oTkdYvpd/h
-	oXmW/8lQwxMr85Q1ShsXzykegtd2Ty4pc=; b=iBOnvXtNdzl6wqgu1+4o+uzv2i
-	VAVU9fQwPwEcxvKToN8aJyfqebPcyfUfFspUNwEesF3stAcdk3lf0uqaWBbPf/0w
-	tHdsiNfl+im8CFs6S+vPxMFyEe8y2UjaugZQKXdny4uqGitNWLMZ/lfGvE9aST16
-	GFFv11IndgI9dxtMRgEbYrRWJCOtDrZL9M7WMug+4dYKELn2g6vFDR2hrSEfKJzl
-	u+4a3P3XzfJO40aThJvLTUvVwpWY2efw1F0eTZubAJI9DlxwRWGVUNNYlS0HrgK9
-	KxC6MMh0e6je6UKPO5XI3yyWBrtK+ADRFVnQU9hbwE8m2gaRyKKZKDEgqgZg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773070698; x=1773157098; bh=oTkdYvpd/hoXmW/8lQwxMr85Q1ShsXzykeg
-	td2Ty4pc=; b=rVJIZ7YPDt0qmLb6XdPxm8dTmEtRE3L4fpvpkhncrNwPpFM/SDL
-	T5fk1inHLURw2Nt9/4F/9OxZt0Z+nKj6b/g76RYMdQ3lRc5l2/RUCdqyrQm/k384
-	f0gO6eSNs2BpTpnIp3O0X66w87u2POn4tY5QMOFHhOEXBOZM4g5/cXEIACnb5DZw
-	DyxYZ4sY8xQMroCTjzhpc8CHfyXhPhN+z/BRs7FcwUjV94qaq6Z6TK8uA0kiyl2U
-	xxqNQdlOCE9rIzQpl4tEOjOmP7nT4Htp2x4+N1M9o0u3yu5gO6GYSMuvZPgN/gZc
-	jpf9X5IPbZTV7mFbymrfjxcuKAAuWLyja/g==
-X-ME-Sender: <xms:aumuaZwnU32w32aOtc-Ao-30yzuaRjYz6sa-dQ8kjTPH61iHHULPjA>
-    <xme:aumuaQTG_EBi_DAkuM9K02N_-IgN1zo3rB8uckPSk51MiUTByw9_ax5ih544zdAe4
-    HMmQF2x_Kvyn7diZU8wDfw9tF0R5lsN-UZIlKpGNKGeJhFOY2763w>
-X-ME-Received: <xmr:aumuaYX1ITeAkes9dmyOu4MHTTqEDMCBEVU7AXO1eJQOgjer1lgjENrEJR5TSJjFSMghMBEtvn32C8CCJSB5Apd5Wkr0HFrHDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeekhedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeguvghvvghs
-    hhhighhurhhgrghonhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:aumuaaYVx4GcpImOSTw99NIUb6dhGUx-kkKEtl3S7eNwV91GlXiTqQ>
-    <xmx:aumuaW2RgLWLmcNoybOYKdm2qwoDu5ZQ_xwVT2R3aWC5wb6ToxpA0w>
-    <xmx:aumuaUgneK9U6_-vm7GEaO0fjYQ2QU3uqsUruoILz-kQHzNY6QPIKw>
-    <xmx:aumuaSZ9vtc0cRzjlCMncbfu4JkZEbCxyPlm_tXYtYZAz1WkUXMFoA>
-    <xmx:aumuaaRoPAzfWFZLN3o5MWTBOhumHsb0fMxBnd6ScOI6jLn7HuC6eEgY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Mar 2026 11:38:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Deveshi Dwivedi <deveshigurgaon@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net
-Subject: Re: [PATCH v1 2/2] list-objects-filter-options: avoid
- strbuf_split_str()
-In-Reply-To: <20260308180359.31188-3-deveshigurgaon@gmail.com> (Deveshi
-	Dwivedi's message of "Sun, 8 Mar 2026 18:03:59 +0000")
-References: <20260308180359.31188-1-deveshigurgaon@gmail.com>
-	<20260308180359.31188-3-deveshigurgaon@gmail.com>
-Date: Mon, 09 Mar 2026 08:38:16 -0700
-Message-ID: <xmqqjyvl57yv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bp7+dNud"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7985ce90542so113167547b3.0
+        for <git@vger.kernel.org>; Mon, 09 Mar 2026 08:39:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773070777; cv=none;
+        d=google.com; s=arc-20240605;
+        b=aT/OorTTfg8YvNrANDeVXSpdY8g0S2iwSTF/pRHGFaBHu4x3sMVgQv7P0r8uJlf3pZ
+         lszWibMKBEpG9Xb0jNkgPwQqSgztjkWpO+WcNq9uCYXxKPI27OsbACO6SKmBpx3owjI2
+         WBbUuf721wdZ1X1Uudq2kZTksiOBVVjZTezZa0d94G22k81Ji1VseEPOm4Yd+qB1DBz1
+         O1/e2n2FO0D53gpbD56ZhfevAD/XZcYfYrb5WN2+2+gGE0lsjxTGuYdswuVFyyQq6rVq
+         jMc02g6aIopWLxr0x66TsKYst7U5dVWQhD0gKajBd3qOKtmg0CJNJ872UqEAVvsnFxFQ
+         Cjzw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=U2TOpYXGmEt0uLpn4tvzjUIrI3aDCX2UqoUY9noPI/Y=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=G47ZysfDBzuW2oxzsZB4nymJG41TWCt4e7lSjwKcBinhVAdNTVwkNI6lQ6xBTRbc6R
+         dy1q18JWaZIkaUzKeOevvohQHVqC/GlYI6krN9XLAr31gasm/YzKFYEfw9evb5NBSnIp
+         2Rqbd9vQTQgSqlN8iFjYqLb8N2ZL5TyRXc/dSAVdjKusdHLr3cjSAvuqXdcccfX4PybV
+         YG+zMvQy7CW/wS3q4ES5lZi4bVxDchPlyrNdEe879dGCFYHZjthcwCJ8kO3XEc43E7Wo
+         yiwzSLX9ooj2270CzhxHp6ieAK8/XIKRDbpQrX+AkHfQJXanFyX0z5Pu4rT6k8RXfjjj
+         Ql2g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773070777; x=1773675577; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=U2TOpYXGmEt0uLpn4tvzjUIrI3aDCX2UqoUY9noPI/Y=;
+        b=Bp7+dNudkbxewKmtzOArBEn5IKA7P1oo9TWHRfSnu8M15ko4UKUxjWxCcsxlQsNZ10
+         RZc+N+Qngd+i1JC4VdexjQytAKpJ5Z1LUVxFWtdmOLbiZauTOt7yRZw/AJT5QvcM4p2L
+         RJPSCtI7zRScqcnP1ezNlKQLpxAgrruwQeAiTb8OAgCB4Bpsh8mQpJegfjUhDK89lEvN
+         92m2pJ4hAvj5+jzPKB1zNwVRoH8DQZRLVmD6dfEf3iN80TVgdD+WkCyJk8L4B3ND+/j7
+         0+clkNdVYococQUG2+UCuVztr2U88hp2mZnYXc9OibDGtjXEuf7gyZyP95pYyO2hivtT
+         LMGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773070777; x=1773675577;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U2TOpYXGmEt0uLpn4tvzjUIrI3aDCX2UqoUY9noPI/Y=;
+        b=gIZoAWjh1thiUIfkoZIHHuGe0wmFsk02BB3QHXrpWy3iRVyNd5r4NDV1BXrHzEOlx9
+         Sv7QaUCqBRqp0jGo1o0vOSiuqAddw0p5srDRXVgF5udCElQ38Tv5LMkvXwg+sLGeYECX
+         2HrrruV/BYIGGxzk7QGiTmi11RY3+7tvqGe3PQk9SVzSh2JwLTdXqQee4ILnnCQkrSMf
+         4yHbXHmaoL3aH58rvMktUnO2sZ9vSlasO0oiQjtvu/wr4UXCcnbIhVrdu5FwckG9xiui
+         eeaRtEYq0MPDHzAXXDXgYldGp4PArC8XrNRbh9l+1wONoeWcvKRD4+Gvz0WduGUAJWnL
+         8DcQ==
+X-Gm-Message-State: AOJu0YxO+60OHxPo1Oj8ofUhiu0PsG4QqLa3i7d3WllhLfOIMFLMp7zS
+	TIjDoEx+xETR+dmgfFxDX34WvaxnXvMYsIGWoKcID61Pd7+06skXvYbvgkZEWZS3L+vY7pQ/T13
+	wRMPXrfS06mzsmPLEVwd1SZqya8OhLBw4c5+xN0KhUQ==
+X-Gm-Gg: ATEYQzy4TMK+ehJ7StoaAWeikGnS9/VHecZrJ9lMyZ3oAcXH7IEydOV4gCc5XkRbkpi
+	rpv1NrxGTHB4Y9gpA6WkD1r1YLkQ04Bfe93bMggakZCrFMFAdABK7hCEmw5hkkLz6dv2jt871KL
+	YZSYTAFkaZ4ehJVQ0LBkLZ6UbYuIYDEE0aAQhxFtHoki5i1oQy2wdhi5Aq4SvdWHNLBqGxYnuEn
+	qCgPrdcycHjJfW1Uk2je/5UsLjz6Jn0oB5z4TR2kwqGdbplQUfIeVscev6Bl8yBwIRH5H4bR4mN
+	XjnxUujH6GD0/SGM8cqj0FbhrJ/jZZP9VP9jBFEneY6Bfm2DJJceJF4SAwhYPNnVvU2K0z8RWBG
+	vfXMu09ysjFq4NM7Yk9MsbhU=
+X-Received: by 2002:a05:690c:38a:b0:796:6e88:30da with SMTP id
+ 00721157ae682-798dd6d9336mr116839937b3.15.1773070777413; Mon, 09 Mar 2026
+ 08:39:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260309150935.578465-1-pabloosabaterr@gmail.com> <xmqqo6kx58si.fsf@gitster.g>
+In-Reply-To: <xmqqo6kx58si.fsf@gitster.g>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Mon, 9 Mar 2026 16:39:22 +0100
+X-Gm-Features: AaiRm52qLZX00jOJRAnL2D7g9ZPS4QSOrb5UzYE1ksZtXItDvS5RZc-vblFxC1s
+Message-ID: <CAN5EUNQzbr50JZ4DPpyWRLjx0Wgki1rFHm=OPEiD2LjeQ52ytg@mail.gmail.com>
+Subject: Re: [GSoC PATCH] t9200: use helpers to replace test -f <path> and
+ test -d <path>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Deveshi Dwivedi <deveshigurgaon@gmail.com> writes:
+> After studying Documentation/{SubmittingPatches,CodingGuidelines},
+> use the list archive to find what instructions GSoC participant
+> candidates have received regarding the proposed log messages in
+> their microproject submissions.
 
-> parse_combine_filter() splits a combine: filter spec at '+' using
-> strbuf_split_str(), which yields an array of strbufs with the
-> delimiter left at the end of each non-final piece.  The code then
-> mutates each non-final piece to strip the trailing '+' before parsing.
->
-> Allocating an array of strbufs is unnecessary.  The function processes
-> one sub-spec at a time and does not use strbuf editing on the pieces.
-> The two helpers it calls, has_reserved_character() and
-> parse_combine_subfilter(), only read the string content of the strbuf
-> they receive.
->
-> Walk the input string directly with strchr() to find each '+'.  Copy
-> each sub-spec into a temporary buffer and strip the '+' only when
-> another sub-spec follows.  Change the helpers to take const char *
-> instead of struct strbuf *.
+Thanks for the feedback, I'll work on that right now, once done I'll send a v2.
 
-Makes sense.  Instead of finding '+' and making many small copies
-piecemeal, you could make a single copy of "const char *arg" once,
-walk that string using strchr() looking for the next '+', and
-replace '+' with '\0' before processing the current piece and
-iterate, which may reduce the need for many small allocations and
-deallocations, but I do not know if it is worth it.  Benchmarking
-it would not yield measurable difference, I suspect.
-
-> +	while (*p && !result) {
-> +		const char *sep = strchr(p, '+');
-> +		size_t len = sep ? (size_t)(sep - p + 1) : strlen(p);
-> +		char *sub = xmemdupz(p, len);
-> +
-> +		/* strip '+' separator, but only when more sub-specs follow */
-> +		if (sep && *(sep + 1))
-> +			sub[len - 1] = '\0';
-> +
-> +		result = parse_combine_subfilter(filter_options, sub, errbuf);
-> +		free(sub);
-> +		if (!sep)
-> +			break;
-> +		p = sep + 1;
->  	}
-
-Hmph, would this loop handle a trailing '+' the same way as before,
-e.g., "combine:tree:2+"?  The original would have split the string
-into ["tree:2+", ""] and the last call to parse_combine_subfilter()
-would have been made with an empty string.  The new code does not
-make that last call with an empty string.  Perhaps the differences
-do not matter?  I dunno.
-
-Other than that, nice to see one fewer use of "splitting into an
-array of strbuf" pattern.
-
-Thanks.
-
-
-
+Pablo
