@@ -1,127 +1,78 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45E53E717E
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 17:12:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0342E285072
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 17:27:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773076345; cv=none; b=u+NqtoOngHanUIQBNrBAfcjxSafkdFhz0cy4Oy87F/Ozn43+3L4I2ccbxudzTNw0Rk8GbW3Ds24jT2iDEUZjsnQji2dKBQrg5zBfyxhR/ybt1OdfeUN+dnthSB/e6bnbdoh2NVd4wzUhvswc3M+zjw2ij6HHfdoGQ23AHfqWwmo=
+	t=1773077275; cv=none; b=eH+bR3j4FvLuR+jw0ymSuIlKl0/p/UZiTeebbQrCN0bwPWqJmyN4a7IDSGmWl5eg7onKnECZqmDR14hy2epkgYxChhvxW81UgxqlMI4KA879Po53SowLfujJSFJHmnJQAujSyCNPz9B+zxIz3CSilJCttSIM3wHKWJAkTAUQc1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773076345; c=relaxed/simple;
-	bh=pcHEEakSadLLB/aL+vGhcdjg/XjK4nTOv42AwfqB2gE=;
+	s=arc-20240116; t=1773077275; c=relaxed/simple;
+	bh=dHgNG91rH4HCt8pGXrThUteaOfjahZ5Jmi88q8aQSWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMQrMGbddjQSjsn6RGCx+PxlNRvt+XHfxYvlIG1AbLzCY0yvtSs69H1BtGdh/n1IYQTAAcQzHshrd34YIT9bABlhVjvAk5MtWjLWVen43hjc4hy3Y4EaGTHuM/4WY7Knmy6VVqhli92i50ONdJWEbSNAxOHd2KtthBpO0I+VtPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JywKIENG; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=spPzPhuNnLUCzhdaj727n3pPNoInrTM5nKdojWVqlnIJW8/Jwm+xT7acYTFol+5A4I/ZKx1AYdGXDMxtY+b3aJn6kTCjbxo1wy//WzyHLpS/Gg2c8N+p3PgkqIGxhvEs6AtnhsX0tmUPTnvhLWNmEXgwMWrD/vzennbXr4RsIiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=HGEGQJyw; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=dO6R5VwK; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JywKIENG"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2a7a9b8ed69so131371895ad.2
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 10:12:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773076344; x=1773681144; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/IijtGVRXF7++a41ZtVUwUCvlGaRb63Awlk9TvTqvts=;
-        b=JywKIENG1yeH4VqF9QkDV9IkGs/GHMNJqpSC+DdAIO8h7uCkd1lDZ9Mb55g7fbZlCG
-         FFMBoe8B+Q7jN/uzxPaZMM1nmxKfu9DhSRflL4C7b87NTqh5gi9YWfy/mnu/IIdUw9JA
-         stihqFg+8W+H3cQJx/XSF8It6BqIuR8nwhOTLUzzBzwIohUfKR7Y2IefL8RPzjNBdlqJ
-         QzrNIssWI4Xs2ecXDCc5f96hLiedrXWEjg64MW1bgDEWn0r/BtZyyKRv6oAibVnOHoVj
-         +De8nKCBw+2m5bFenruSuZaEmXa8PZ5LSSiVePNvlfKfZX7p9EPwtsZgHfnvghxi70BE
-         MbHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773076344; x=1773681144;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/IijtGVRXF7++a41ZtVUwUCvlGaRb63Awlk9TvTqvts=;
-        b=Ik1KAPTF8nEXYNnPfLGct1AzwEmIwXNq2drjOjBJ5ty2+QPf4jj8sV0AjDtY1yZmJ5
-         quvoKUEm+MWMFBEVSB+HbjF1IZ2CDn+XeCJTbrAAI+ANPeUjuDZe90t+LyEJ5qimwBnb
-         D/CBY+Blfmbh7Tr77gtvn+yQgFKL5PtWviHQiHehNYp4v1dQmvi7xu4kPDg4oR4ssYqj
-         JtZOhzZUDXZ7pNtFCMu/DTwEFzGTfzgyU854+/L/u8bG26Acr16ih9bgnaQ5RyEh/kXI
-         GpgcxGOIkdeqrLRibbPG5GqhQpmjU0/UOpRoBvPA7jSf3oY1Oq93CMiGtN4gHH2ZduI1
-         TV1A==
-X-Gm-Message-State: AOJu0YxuK/38fMsWTo/t1lSGfPRZofUy7ov4O4/09gfY7ZnkInByLEZK
-	BKHFCmZBfKd/HifTsCZILwgiyy5MNH7MgIy9artevpTr8MPiSi71tO+k2e2xSkXB
-X-Gm-Gg: ATEYQzz2PYz63SehZgT+XwEhXV1HmzS8FiPJQte8OxOm/rk/QPEc5yHiU6Xl8wlkM1F
-	gdSimR78/COFaJZXOgLda3Ny0lIu8nZEKrdvgT4RwhRSnfUVML8MnXWBfEXrs2DsNHQqk6ArlJN
-	8BVTAsIJXpFwkEGU5fcUR9g4vM4lut+uOXmkGf2m4KQu143zFZDhRW43S6/nc87haX6XcOE2dTF
-	a1popzfA3cQSq41qXK0768LoSeShXCsIwtlvGGopYBt8wUsYcESE/X/fZ1McKYoenwZfo3967Vx
-	bakyNPMT0ssI+ro4sb9CxLhU491J2i5XUx5Im/K2YKWqwft7wjyL0UVnFSvDCXELIdjj9uB8fLR
-	dblEjLkXV4qhW2tbVv4yM1AS4Ay2d5jWfaSsvAcqv0wCbPJuiXTmuwt+8+gbiGXig3LlIBrQfr5
-	NVwVcSYvy3GOMgVHijgBfC6Lrd6FevBQ==
-X-Received: by 2002:a17:903:1ac5:b0:2ae:4908:de22 with SMTP id d9443c01a7336-2ae824611ecmr121062055ad.47.1773076343553;
-        Mon, 09 Mar 2026 10:12:23 -0700 (PDT)
-Received: from dorna-OEM.. ([111.119.49.49])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83e584aesm118469805ad.3.2026.03.09.10.12.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 10:12:23 -0700 (PDT)
-From: drona <dronarajgyawali@gmail.com>
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="HGEGQJyw";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="dO6R5VwK"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=HGEGQJywNn5MNpincEMELiKshLQrX3b2z06nEQEG8e/THG7q/l/ifHqmgVk6cIQxozw4TDvLe4AEoh5dLD6vaYG5ibaWAlZh6uzBQ2BDpHMLeoo5Ba/bbaR6nkewKuoydM/dYgnNA+XX+JDDtGq91mtzRw/Fb9zI5TDQ7sCXuzpc8fNaBMlyrKwQIPhjGPeJJo4pg4sCJBJrEI1mw0fJY6dM7UI0DCV8BXsaz34lFJPBRxIH3u0s+/nGCwcKfa9hnnNaqbAaYX15/OMSlEoZO5BWIvmdQuvx80T79t9P8DW89d1R6OU5NOEJaRaS/O3bQCpRBJhfb7ySiqFuIYC7lg==; s=purelymail1; d=malon.dev; v=1; bh=dHgNG91rH4HCt8pGXrThUteaOfjahZ5Jmi88q8aQSWg=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=dO6R5VwKkbgoFFIx6y9f02AIpeE8xV7ch0XhBMoJj97rFXjHGtq0d0INi92M+dFfP79RoJ74zhkdF8Okct53tuGby0fvLMBlbvItXqTu37WbbDxlJ0U39t3+H55pojS5qkRMjFWjmOjYOvlThlkXM86+L5+rzyo4bwQ3GD6cMGfaHwDsmGV7RlHY+pu8VZT28NCWOcqwm0Qz4bbi2Wo5tQKjLvEeDEPyLbbqehFTtVSMwvOIFD9yE3jlR/DNysC45Enc168bbs0cPtNEA92OZN3jGUkOABNruztEuhMzpKY6Y4IeYjbepuk0gdWkkiJvpuNRtQMRAgl0cFACbWX3ew==; s=purelymail1; d=purelymail.com; v=1; bh=dHgNG91rH4HCt8pGXrThUteaOfjahZ5Jmi88q8aQSWg=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1848533520;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 09 Mar 2026 17:27:51 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
-	Dorna Raj Gyawali <dronarajgyawali@gmail.com>
-Subject: [PATCH 3/3] repo-settings: lazy-load core.filemode in prepare_repo_settings
-Date: Mon,  9 Mar 2026 22:57:16 +0545
-Message-ID: <20260309171216.13339-2-dronarajgyawali@gmail.com>
+	Tian Yuchen <cat@malon.dev>
+Subject: [PATCH v1] diff: document -U without <n> as using default context
+Date: Tue, 10 Mar 2026 01:27:19 +0800
+Message-ID: <20260309172719.125419-1-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260309171216.13339-1-dronarajgyawali@gmail.com>
-References: <20260309171216.13339-1-dronarajgyawali@gmail.com>
+In-Reply-To: <xmqqh5qswo45.fsf@gitster.g>
+References: <xmqqh5qswo45.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-From: Dorna Raj Gyawali <dronarajgyawali@gmail.com>
+The documentation for '-U<n>' implies that the numeric value '<n>' is
+mandatory. However, the command line parser has historically accepted
+'-U' without a number.
 
-- Removed direct handling of core.filemode from environment.c.
-- Moved trust_executable_bit assignment to prepare_repo_settings() in repo-settings.c
-  using repo_config_get_bool().
-- Updated all references in apply.c, update-index.c, diff-lib.c, and read-cache.c
-  to use the_repository->settings.trust_executable_bit.
-- Ensures repository-scoped settings and preserves lazy-loading semantics.
-- No changes needed in git_default_core_config().
+Strictly requiring a number for '-U' would break existing tests
+(e.g., in 't4013') and likely disrupt user scripts relying on this
+undocumented behavior.
 
-Signed-off-by: Dorna Raj Gyawali <dronarajgyawali@gmail.com>
+Since we are retaining this fallback behavior for backward compatibility,
+update the documentation to explicitly state that '<n>' can be omitted
+for the short option '-U'.
+
+Signed-off-by: Tian Yuchen <cat@malon.dev>
 ---
- environment.c   | 6 ------
- repo-settings.c | 3 +++
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ Documentation/diff-context-options.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/environment.c b/environment.c
-index 9d12c5fa56..efec0758b7 100644
---- a/environment.c
-+++ b/environment.c
-@@ -302,12 +302,6 @@ int git_default_core_config(const char *var, const char *value,
- {
- 	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
--	/* This needs a better name */
--	if (!strcmp(var, "core.filemode")) {
--		prepare_repo_settings(the_repository);
--		the_repository->settings.trust_executable_bit = git_config_bool(var, value);
--		return 0;
--	}
- 	if (!strcmp(var, "core.trustctime")) {
- 		trust_ctime = git_config_bool(var, value);
- 		return 0;
-diff --git a/repo-settings.c b/repo-settings.c
-index 208e09ff17..0e44825a18 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -85,6 +85,9 @@ void prepare_repo_settings(struct repository *r)
- 		      r->settings.pack_use_bitmap_boundary_traversal);
- 	repo_cfg_bool(r, "core.usereplacerefs", &r->settings.read_replace_refs, 1);
- 
-+	/* Lazy-load core.filemode here */
-+	repo_cfg_bool(r, "core.filemode", &r->settings.trust_executable_bit, 1);
-+
- 	/*
- 	 * The GIT_TEST_MULTI_PACK_INDEX variable is special in that
- 	 * either it *or* the config sets
--- 
+diff --git a/Documentation/diff-context-options.adoc b/Documentation/diff-c=
+ontext-options.adoc
+index e161260358..655496ec3a 100644
+--- a/Documentation/diff-context-options.adoc
++++ b/Documentation/diff-context-options.adoc
+@@ -1,4 +1,4 @@
+-`-U<n>`::
++`-U[<n>]`::
+ `--unified=3D<n>`::
+ =09Generate diffs with _<n>_ lines of context. Defaults to `diff.context`
+ =09or 3 if the config option is unset.
+--=20
 2.43.0
 
