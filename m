@@ -1,111 +1,109 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5993AA1B1
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 14:22:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773066138; cv=none; b=NEZiVz+HgCtDWeQaYrw53ex/tZ7JDqXq7d7XxIKw62Zkb3bLKrlrZW+7IszVQXdCUZK6NZlf7NZGaDDjFn2MemoqA63EawIGYT91Xhrnm4CsmLsh9hQMamtR2qiTXCNQjbvhZ9x1tRBcndzC0ASprZing0+Qbl9sufZSKjVV3T0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773066138; c=relaxed/simple;
-	bh=QPOdDtSU5FvJPV9PVTjLlsjJIl2ofiAeeIhfl86UtlM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V7OkbnCr0JdsPLP4vcQWu2N0JTPhH6MzjGJ9q4uzFAkcdrDGaI/FJXlgdM9oNZpeM9o4ewL7oDJ/laTBoG1+bGGxNhUxu6H4VY5Gm4ZYftu6lp37GBzv8E6DfRm3rjEe3J1fgHflDJtmSVHx3elRQC83O9YJpMJARvU7qszpWs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=McWcOMyq; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB97D3C3C00
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 14:42:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773067361; cv=pass; b=aIdUwHGYDusYFjg4rCjGcoDZ2XkwVvBoxUVVpV92ckuOYwspXT5lpPB7bPdhFR8uieN8YJMnIUp6OBMOCj21KvD74d/ZX3EqyTHwtsVp5e31tT3jMaARPPms5kqOWQlMgH/Kmq8TefGwAR7JOUoNQAEujp9jwBihh/6JqWWOms4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773067361; c=relaxed/simple;
+	bh=OOPjTbPic0ZNoChxWOxpJzN/Rch8nRIO7OF3mF4onCM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DxRwJfNAKUIq5HAKHAuDt8hBL3KacxxG6NCi/yUELG0TR0wfOrn+QlZBO6PCmro3sCUl8ZDEZRzE1JlglzIPWAs727H8HhhbBQ2G3Isg8rRZB/JqP73VzVsQXYMzguZ9FoT0DUNbLOUcIAR1V3QSfk7CYE2V/RQcIEhjk6iQ4Cs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FYsZD9nn; arc=pass smtp.client-ip=209.85.160.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="McWcOMyq"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-35990245493so5216035a91.2
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 07:22:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FYsZD9nn"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-414ffb4c0a0so5590366fac.2
+        for <git@vger.kernel.org>; Mon, 09 Mar 2026 07:42:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773067359; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lD/iRjR7GEbJTSvV9lJI9v9aA/YV/zBgmyGAAmtrBTi4E6QNqBoRRMZackYtEKKcrb
+         RTK49GaI53xHHI4VU09Gkw9y4HIL8FXuRHp11aufB1CvZjWez3IDIrD0Qc07a2ZatoYI
+         CHUD27wx4HjtzTiQ14AZ7RmO7+heavuKWfQBWacHgMOGtpuzKC/F9+KUrpQn+QDqtKC3
+         WwpG4mNMgJOW89VGW+ibHmH0N8Px8qaI/+wNWJxUrf3atUoOE0b8Jmmlg8z0L+RfPA/1
+         HkkEgCTyuX+tO/iq2rmimWo3EMY/g5C7cdQ0wtZFlRe5+8ysRpj36zE5WdooZHKKfbE+
+         eN+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=VK142yIWhyF4leurslkkYWU06eEt/Ym6uK9MNJRP0MY=;
+        fh=fGgCEE5tBeqgln+k45XSP6I/6lW8+BXSuYNSyQGl36w=;
+        b=jX1uGGhjk8UPazB1qyLeaYVrWF5IXIk97HSzD1CG8p5f6DN7tYlO1vXjjIqB8oyfZd
+         2X2U2kxiTQa21A8QRnin3twCQaggGwTWqCBoxfREmOUek+l+o/uS9iDZsHwX+IiKY8F8
+         Ysdc3/SxZXg7RRpPstql8rTTEA7xwRKIeiwMLc5YoTvgXKMFhq8wW2IL+YdI1R+E5Rz6
+         zMaL238HpACuy8Xc7g+Y2izzXH41TROAEayHuf1iEapfqp/6BB6CW67d3rC8rNceqQc+
+         G5rPuJilsJ9pCb6f2ADW+8vm7khNpOZBvSMcVVNTNcVXjupyODCO9Qhm/3JlC5BfxKFr
+         FqCw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773066136; x=1773670936; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QWnAmlfpWTIqaKE8yG34lhiLgyfJx3vYh1ABgoGSAqU=;
-        b=McWcOMyqMm3vm0ljW7WsAWDhFyZDEQhw4ncsT3NwMlmpgAVZGghLC0kUj81+pr+ztU
-         6m3XcWjAmLNkNceCw6xDXtlOssb6C+FyFOUChLKC6nr6fRJZ6ivMz46gArCaiLJzW1zm
-         ij6kh58EDoAUFSdivz+l8JfeT8TziSmYQgO/pJk80DmnE7zxByijy+ErYNqeE2O+TR5j
-         VTY0G1oth5EK1U3t7CvDnNoy2nemGAXiNH3hcFEJxvyuRy0jzAcQO2rShkViE1JgT8qD
-         4CHEOfJssICwfjwPi9WS1bRTQvFAFb8ysD1cpl0F25+QCCvkqjvTHGo1UCpUA1vo+2F4
-         p69A==
+        d=gmail.com; s=20230601; t=1773067359; x=1773672159; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VK142yIWhyF4leurslkkYWU06eEt/Ym6uK9MNJRP0MY=;
+        b=FYsZD9nnKD+7+QR/pwH0Fcf3gSs5iGNxgQdJqqEEBlBdqlhUpQPCTLX5F5bsKvusaU
+         h8a5yyYuBMwEevgiURT4DiM/czgUeY0yEJL0J9+KlWfL4oVNcQ6r8S+5ptovMGPY4KEl
+         yCA3Cf3pPk58QoQABNKIYEVLlO97Wdb4CLrOrs1KZzeFSa/P9hEztz5eDT86TNzgk0cN
+         p9kFieS6JtbFJiwNRn4BV84BbFymFK6Ubka1bxbtMXTjhs4TG/PIO+iSsAd20fJtoWjZ
+         FOVf7qWguBXM1hGTW9HNRYWr5PaeZIigM1Ct7WRCofKJyYBFh9WJvvxeXEZm6O5QMFhF
+         eeAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773066136; x=1773670936;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QWnAmlfpWTIqaKE8yG34lhiLgyfJx3vYh1ABgoGSAqU=;
-        b=OZgl2IC99M+whICcQRv2RFdergtirN+AGNxwpkM2KUpc6Btp4FphqFuYhf2DYn6TgV
-         K3N/Uy34jruLCvsbaefZuJpoX13L+YE9ADwsa3tbznG1I1oSxIsW1qmEVrI3OgGi72I3
-         3hHngj3e5BjMNJfNzi92UJ3NM+FRUjEHyCeKIiZQNPHmBKdhqqeR5r3UIdpew/08YtpX
-         Akcd9EJgU2sVP+GW6/RaTwMh6dg7HkHUoEadsAeHhAXwjoVF5PEnHckDze7DiRBiC8dc
-         Y4CkfoQsWi8R9OLANhTZJWQOplDrRzX716nBwvMMmfYqeVaAo0jZ14Wq5wXhU34+UFB2
-         z21Q==
-X-Gm-Message-State: AOJu0YzruukWV3j7iVZKOT0vMEuS/zAwLXOMDuKpyPVP5vOEaLu9b130
-	E+Fq+ZtxGwG22qgd4ZI2l0172dUMnBAHCIXbSEmoLMSzEpyC12i9oStMBAPz01SA7J0wCA==
-X-Gm-Gg: ATEYQzxDf1x0XoqV/oqpF94c4OAkZXvYM1RxNNVZXDzqsRfka4PdT8rcp0GDYiGzv0m
-	IFQNjgd7Ly+XHrwI+yVDthXxZ6pLNbUI8n3w7om4dq5CsBqqqH5JyqE6AmK6KmQqF0CQw7d7g8X
-	Fe/WNsjgeCFRjQ8NOIMJfNZWVv9fCWuKMDIQZFn70FtfHtzFmIMcOMJCbczo8g6mf24+kj4cDYj
-	ESqT+nVsKjfhB1ZnrZE2EzwCDu190khJTJG4KFWrgS20YO8Mk3iHAA/yg0JxYIkFIk6CG8TkA2b
-	98f83bJ5S2gzZMU4k6PGJwuZrxoQJuM+LTV/5P6pAB+aqADMU19MpGtpEFn2PyEssZi8doqsi+w
-	Osu1otFmh1fQpDkdARJeE7SUQNHukESoBnpYPqf90SYXcmyHr9ojjXJDfd0KXF5sgL0e/gE3OMT
-	aUVg6EUSSBTPwtZvsIhM5rLFbKX4hK3r+/BNQvYAwunCk6FclluYm+3ElzjRGvzihYz4Xozspe9
-	hqGGmHIR5ef/Y6cUkGkGop0nKywaOGX9J2qqaPPXVlGGC7vEFnd5/g=
-X-Received: by 2002:a17:903:2287:b0:2ad:cf11:5048 with SMTP id d9443c01a7336-2ae823a302bmr119348075ad.22.1773066136144;
-        Mon, 09 Mar 2026 07:22:16 -0700 (PDT)
-Received: from ThinkPad-E14-Gen-6 ([220.158.168.165])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83e78d48sm124081475ad.22.2026.03.09.07.22.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 07:22:15 -0700 (PDT)
-Date: Mon, 9 Mar 2026 19:52:10 +0530
-From: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [QUESTION] Improving disk space recovery for partial clones
- (GSoC 2026)
-Message-ID: <aa7XkqhcG6Kb6IhN@ThinkPad-E14-Gen-6>
-References: <aa65h6Z_TrpJbmkj@ThinkPad-E14-Gen-6>
- <CAP8UFD3sicsPd903FU8bsj2B_4Q1DE1xB+--OxryY_jhL=sHdw@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1773067359; x=1773672159;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VK142yIWhyF4leurslkkYWU06eEt/Ym6uK9MNJRP0MY=;
+        b=SAcy3VCCwbeHazypAwOTk8Q4dWGMJWIKnM57gkDaLKcsOYMnvE3vwRpaTSS4bOWyBr
+         /m9TjU/ardiXJlcFxB3h2yHDN49DHjOcFqVTB/i60QXo/xE6yw3QJhgeqj/MaU5M1MHS
+         kHgmIn2q5q37GThBMOjv0JLKg1BOvvEIRcfzCDgD5195IHs05L2z835o0jRcpCd4c9gT
+         FRY6eLIlzXf/sxcsSR8ZJCyKRG/MryMp4idL3YrZPE2RGHo37JpA+zZTLLzPkQAV0gaO
+         TqNdsOmsucBNXPZkr7EUKwlf8tMzF7gJivOFozMN7DHsqOT2RrtSkUJ/BoUxR/aAfYrq
+         uxNg==
+X-Gm-Message-State: AOJu0YwyhZyNIT/E2wWwbIlNHFsf/xj2OktrWk1NegwRRx0AoX4PCT4H
+	SRGUU4sRtOcJB34odAeJrf50NZA0qxCeAUqP5mo1nr/9sf/CB3bsRBJgCpRZKLDYIx6aLcHn0Km
+	LNtVw31v7Gt0B3TdT2Ns6lPCPGFMNCKY=
+X-Gm-Gg: ATEYQzzpjZGw2TrNUfLoX3MGEGdcvJ24hHz+JGOTHHatRVVFnzUsPBX89De/10xEk4L
+	awicEzMnfWtNJEwCI4ZUzSf1+T6LRUGdsYVq3aeH0HAr7k8AenYT4OtQhKj61aFXxBrVtFuG4PN
+	kDSCRmDv1fy9nW++eEWqFkJATrVmlSnXUwygM/6Z+31V47wGNSGw6qFDXB3fsegAdxuphWivMou
+	dqTs34aBzTfBRrXit1xwsboxQVEW8pPVIObRn7/CatxD9EXPuSP3ovqzfPb8GcO7xCuxAxtDONK
+	Rjrj5a6Ma4LC2vx0+O7S/ouIgWA0wcn3wdWlgRkfskS5BoVONlwEq0Gf/Pn1rVw4aCyjAA34CVM
+	Vp24=
+X-Received: by 2002:a05:6870:b254:b0:417:1fce:805f with SMTP id
+ 586e51a60fabf-4171fcea4b7mr2852649fac.22.1773067358787; Mon, 09 Mar 2026
+ 07:42:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD3sicsPd903FU8bsj2B_4Q1DE1xB+--OxryY_jhL=sHdw@mail.gmail.com>
+References: <20260306151605.29330-1-shreyanshpaliwalcmsmn@gmail.com> <20260307200926.149273-1-shreyanshpaliwalcmsmn@gmail.com>
+In-Reply-To: <20260307200926.149273-1-shreyanshpaliwalcmsmn@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 9 Mar 2026 15:42:26 +0100
+X-Gm-Features: AaiRm50JVpV_fLJzB8BKbYERAc-6oZS9PdEdVfoYqDTovphNQvh-_JF2ZoerFew
+Message-ID: <CAP8UFD3=FdwyX66gGaLg01VU+Euw=fV8s4gPPOXEXDFn+11yRg@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BGSOC=5D=5BPROPOSAL_v2=5D=3A_Refactoring_in_order_to_red?=
+	=?UTF-8?Q?uce_Git=E2=80=99s_global_state?=
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, jltobler@gmail.com, 
+	ayu.chandekar@gmail.com, siddharthasthana31@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 09, 2026 at 02:46:06PM +0100, Christian Couder wrote:
-> Hi Yuvraj,
-> 
-> On Mon, Mar 9, 2026 at 1:14 PM Yuvraj Singh Chauhan <ysinghcin@gmail.com> wrote:
-> >
-> > Hi,
-> >
-> > I'm interested in working on the "Improve disk space recovery for partial clones" project.
-> > I am studying the codebase, particularly promisor-remote.c, builtin/backfill.c,
-> > and the partial clone documentation.
-> 
-> Thanks for your interest in Git and this project.
-> 
-> > I have a question to clarify the scope and direction of the project.
-> > The project description mentions that git-backfill vs git-gc vs
-> > git-repack vs git-maintenance is still undecided.
-> > Has there been any recent discussion or consensus on this?
-> > I want to make sure my proposal aligns with the community's direction.
-> 
-> I don't think that there is a consensus on this. It seems to me that
-> someone said that git-backfill was likely not the best command for
-> this, but I don't remember where and when this happened. It could have
-> been in a private discussion.
-> 
-> Best.
+Hi Shreyansh,
 
-So should I understand the all the different ways and create a document for the command
-I think would be a good fit and why. And then the community can give their opinion on it?
+On Sat, Mar 7, 2026 at 9:09=E2=80=AFPM Shreyansh Paliwal
+<shreyanshpaliwalcmsmn@gmail.com> wrote:
 
-sincerely,
-Yuvraj
+> Changes in v2:
+>  - Added links in the 'About Me' section and updated reference numbering.
+>  - Rephrased and revised the 'Pre-GSoC', 'History' and 'Proposed Plan' se=
+ctions.
+>  - Updated patch statuses and changed some wordings.
+
+Thanks. Your proposal looks good to me now.
