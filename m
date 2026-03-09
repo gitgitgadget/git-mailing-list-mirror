@@ -1,136 +1,121 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F463CB2E1
-	for <git@vger.kernel.org>; Mon,  9 Mar 2026 13:40:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06463B585E
+	for <git@vger.kernel.org>; Mon,  9 Mar 2026 13:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773063671; cv=pass; b=D7IIp8f/KCy09yVUn84qLKhZt1yjd8/29jWcVq/Bzdf2VuQ1dfkTcWgXFdSu3TuUnznt8cTmRuPfJLQqE4MHXC45iOMYoMgXgyEv/6tUv+AWhbSMIIsK2EiG3maUf4BefqimSNBQ4kL8X5H3SvAe635olFYbl32B68uUb3z9gHU=
+	t=1773063982; cv=pass; b=TFeM8K+cHroI0o27coZMQmUdHny2u8mCAVnhKUubiNmDyVttVrhF7s1dV/WdPRKgXX4tgCAy1p3k5E15wE+hG6oVwQDjdV/uADFAyGkWLJ5XuIuTQFHudqco+WaTxBvbL5JzoeBS/+/NYPhsKKTpX30tOe0bK1XxeVjXDjYCjc0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773063671; c=relaxed/simple;
-	bh=yaLpePfudIylC4WIIADkVzEKZmpk++95OSBoBhr4Cac=;
+	s=arc-20240116; t=1773063982; c=relaxed/simple;
+	bh=ylzFnDAZuB0OdRuSbPxwyxD9UfIjWWl1LGkpNjKjqfc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UujgaxbxfltqILMLBCr4z1HQTPGssj5XqSceUwoI7xPVVOL0BQBTcnbuahsb3vYKiDjWcClCv42JQOItPK4wmEeF9kjsOJMRQBS+5uF1QpyXh0eZCc9pRPWOvH2w+q17AvBKsPW22rbgDJ8UUkBWrO+PBw5Woej+HXLoxMlabew=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RzbQyrfr; arc=pass smtp.client-ip=209.85.210.42
+	 To:Cc:Content-Type; b=pGFPVq4OPnkd1zMS5yjuuMft+7RSsOCYA0RHl+s42d/xFt23hM+xhK/JXF103aXH9lpQRUr1+J7BKphTjwMdwgLfTaMVBnc/zVOAElewfAUG607msXV/1i0j5N3uZRPjbyBMsKRMy3DLGFiTyLPAnrZh4krHw9kepxbriNIV5+Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dPCCqWad; arc=pass smtp.client-ip=209.85.160.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RzbQyrfr"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7d756f2a06dso181825a34.1
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 06:40:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773063654; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dPCCqWad"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-4094b31a037so4466223fac.1
+        for <git@vger.kernel.org>; Mon, 09 Mar 2026 06:46:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773063979; cv=none;
         d=google.com; s=arc-20240605;
-        b=TXeLfEHar216eu2i2mlQEEe7cZ/GDaSSpA/0CcPRJv00wk/nMK8fOYiLlayPxs5tSv
-         h80jLb6aSelltAF0WIbDmTZLmGFoa8U3trR6mndw7PuxvSxqOzC3qC9gPa5zY2YQQFgm
-         CdoJA+GtZ+BO/EtoJEpeLq0yNE9Jy5YxhTPl3Qz8jkWupjVjHSROqydWWm12wPFLeTWq
-         fEBLWJh1FrYyqFWDmz5FgpQYfdcAAuZWvvd2AfntuFgKLoL8gCz+6UfW3owIxdB0IGOy
-         hah13nuHCj3dQiNiTktEFXsJ1Z94tqEte0tkGkFL/B660FmdP0DDdW5Z73OPGiwrypOM
-         GPhQ==
+        b=TLK3oFs9vEUbhFvLPQZOnHdc9w51yNImrXtnKMBbrpL4AJfHY0UaakPVnYdZ5rgxel
+         BNomLU7wKlEYGnqcf2aDjzsXsn2aCTb0kMpbCD7XiRlnTVRFfuaPECiUzpqdP/KW2LAB
+         LbFpqwlyozMJa2K9aUYnjZrwkJqA0oGkjz+0ONGBUFCl6lGkPuLBQ0GZKSiSESbQG4j+
+         DkyvPr66QZ6moCT4Qay+HTIP1dfX2o2JNsMU+rNQoFUmzWUbsRpNjXGtW0UsV6c+9yYt
+         VsxDCV8aG+nEgfE+7qBXdDX5AaNK8x5tZZ693aSq20usRVG8wce7JWEsOiJabUbTXRZd
+         f7rQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=SzyOxLhYUBSiTnsxIAFmN5qlyAk7o8/hyZ3RIq8waEY=;
-        fh=asi59c9VfdKo4Rf1HsCg02tSuyGwUhLZilakXMs8gTs=;
-        b=boXUX4Fp7m5xLXvKd1Cp4o+EwUHbs+qG+g5mEoCS4nxKnVPLwKw3XxJzhylKMFcSQq
-         /quYVq8T4Fds1dI5Wa+salBnKfWnBVn1ESsu+yx5ySMDd0yClQWCf/1iSCfVzN1q+q5D
-         PJGwx9enBzpiDEdDmexCPgupeSqpoMthndX+HW8v2bbuDxwcZS6+fqUGzCkfq+x0THHw
-         S9uXzFa4NIlf9o1IkrwYNWsgkfzUldgDOlDZjkGld58fcD2PeFkA80iAOenSAT7zvdDg
-         oEkJO5pUG0AxzZYFeNLtpiyXz15n2CwyJXr8spoUPCcUzAk7OaE20qIPVmlHJZVD4coJ
-         7zHA==;
+        bh=ylzFnDAZuB0OdRuSbPxwyxD9UfIjWWl1LGkpNjKjqfc=;
+        fh=/plLnf0iYB2jUKmKx5zzdFfzrLcMAzuIidbw4Nsw5bM=;
+        b=k4zy8mN3dDHd2TqLQUFB2Nri6HUhiFE3xrIneHOOyVwkwVmejxPHewFS29SrpDUZCk
+         EKsFNEbnCLzYTWiPuJ81WdbYLqBjVC0yh+yesBnjBZXS7ONIwuaqiHQ+fKDmQAo5Zblo
+         G7ACWtmKX+cXUNciMvHTN0u/E807QI4fGD2R5jjh1FdVSKABYAjpn1pNKGioG9fcsmpW
+         TZMfRqh6AtsCSkIsjuqGEZExJUvLICQXq6aVMAfuwqEk2dTI5xiqmQb4JwytFkIkUphv
+         VtEC3zdT815U1z8I+m3qq/G9DDkuX2R3gNcrHZuQkTtTMyLsQMizXOaDIuN1xd0nVYt7
+         0MPg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773063654; x=1773668454; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773063979; x=1773668779; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SzyOxLhYUBSiTnsxIAFmN5qlyAk7o8/hyZ3RIq8waEY=;
-        b=RzbQyrfrLPOZohSpTEClpSHPHh6MvC8a77VqAVdElVjZjn/fEnudBm0vtTPH5F+yVy
-         WXYuPRPMCHJnvJCJ/8WvG/JcXa2AiCrWWVSOTM29byPs+BiA5HzlNJrhAu1WZ8K/6EiT
-         T7pbZhbxPTdYycVWMZ0M6OhtemKISuk0aKxIPwlrsc47zb74G+Dz05eay4kVxH6YDiHL
-         LCPRAUHiFRNn/LNNxhXkG/yyj+JTsKe1iKfR26HPMWIp9GzTxT1cU+i3n+VZZFohmZs/
-         xEJaCdA5Psi+y7Kq09rn4HJydwr+yc/xgYn2/uLy3t4qrg5ki4jCzYy4hUALbQE3FvIE
-         W0IQ==
+        bh=ylzFnDAZuB0OdRuSbPxwyxD9UfIjWWl1LGkpNjKjqfc=;
+        b=dPCCqWadIbbL7nJvS5dm/HS3FGsclj3ivuFE+Feb8p9gRCRg1cmo0PWVvy7I5Hz38d
+         Gd7Yf7bH9M1SDooBB5ssHnxQonjq+SgLakIrt+5kYhgnTLC9lXLuEmK9wvvS9PPm5pBf
+         TPl/XIFA9gR6NgBrsArWPZzdnX0QA323sOMZJRVlS/2/3jppk5k77QOSNGEc9MIguC4m
+         bOJrHY1LaOpNqh9iIUS10Cdppa7T6fhCtLYl2vY7LtMDMe4CYlGsJBTxWYnUXKQ1qYs4
+         XVpSQ9XQPDDQDvqvMUnWac0OF9uTxq0vVLiOKwR0rprxqDgxRVJPrYmjhC7i1OYP7R8k
+         cyUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773063654; x=1773668454;
+        d=1e100.net; s=20230601; t=1773063979; x=1773668779;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=SzyOxLhYUBSiTnsxIAFmN5qlyAk7o8/hyZ3RIq8waEY=;
-        b=oeK8x5RqcVUkNIcWrZ83WWG9TxPpMLV701KFQcJ4/j99tXaZKPRL1YGrSTD8JUgwtF
-         kfiDWkHdN/psfxKdQKVi0/1IhYEkCXUcjTy4xR9Poas2LWXw0wj4nVDLtAxtzmB1pi07
-         JtfTTK4b8gKCerF90fkclwHEL9S8uNhY+R80GhSdTXQiversuQWQIy5cK7G4Ifz0IqA8
-         QkZuv/pXEzYF8ZKVFMMqGwAxwe6GqFR1zO/bb1W8Hepfpr+l4lq73kniNZf4bkS9PJH0
-         Z7DrJzhahtmwRIqdyPTqiHrmxOZrzopyMLIapDJZwhyYhNngBNndgSSh+5w2DZlt+S2D
-         g0Vw==
-X-Gm-Message-State: AOJu0Yyp67Ikrf9k4ng8N9IwaxqVD/0eOHstgmhtDEdJ0Npd91Bth9+X
-	kKw+w2nA1/tH2uT9QeqFterQQRvd1mgt1bni+PjW6c/V6IHi0ekEymfY9abk6A6L/XMCEpSR2kU
-	0+19O0LKpDeIqBvzdo1N17bwPjL5NkxYznKKt
-X-Gm-Gg: ATEYQzy74WmGL2+yohlSAeGfXAzmKky1NBSZQ2Kq7iSnsPMpZmD5xuncgJIHOjIoayW
-	jU5BCoGNverdg/j8xbRhz3fvIJGwC8jTDEK6REoPIF2YFVkOWMOGPVG862yn9dqRtt9wNwv8KQH
-	XB/sHOl/FdK/OqrGLVWHaKJbux5wzWBV43YynniBzc+R+Bpq3u6uBVT4TLQI8Q2I7rtAL+WXLXq
-	tiLDTISr9KPpE6kJoEeXYx6VJ/9ZsAWM0TChxeuu/nXEHYEU+qEt6IbcwH0Z9vaNzWTBK3pEWYV
-	Bao3Y6Z1SICozHXNYjGKKEEEXkhu+r8t0m1u9mYXK+KltnJbEyKFKJW3mvnYm3Wdnc1M
-X-Received: by 2002:a9d:6acc:0:b0:7d7:49bc:2dae with SMTP id
- 46e09a7af769-7d749bc2f3bmr1567107a34.17.1773063654458; Mon, 09 Mar 2026
- 06:40:54 -0700 (PDT)
+        bh=ylzFnDAZuB0OdRuSbPxwyxD9UfIjWWl1LGkpNjKjqfc=;
+        b=a1W/cYVoBR1jea3MeJXiTlF2P6btYfYpygCHykKkE9aIb77v2ktpK4YP/3f2iHcM/V
+         HWW3bT7KrnI+3Q3X0tiIHy+AiRw8YZNWVLYfQQ7gzIl/v3WBExWMDAFlHza+XpL0NBYS
+         B9DDYgITTsb0B5LfCT6eKH9OCK0eUTsVsDg7BjVrdZUIZ5gxbhN6js2N/X5v80PXbME6
+         R30vHFXmIMs/lbD+ry45GLRRGYTmsbKBlmE1/6AovJOOsWbF13T6k2nSLM/KQ5seD630
+         8Jgcv1KHgASGI++Ulm6aQPVaUoDfhb6R1dOqNpxQuTliDFzUvTei0ntNVNazJTYBfrw4
+         qZGQ==
+X-Gm-Message-State: AOJu0YwtDZBApbNW7drSTSHbiVkgxkE0PltESIZqnbusxxrLXwh9lg/G
+	D7KCYmsATVMMz4dNMy2qdOVoeR58GzjHS5r5e/G+YJ1MgYy2l9Jprs3LJOZVNWN9Utm/vcoUoup
+	Vy8r0sfVXNIcrcvXG2HW190+uu45cplU=
+X-Gm-Gg: ATEYQzwwIeNctYMdBJHfepHpL/0BXvofBq7Oepkmapt2quW1m7Qyh5gVlMwsm7zoijt
+	qOkudfOJIGidAM6/UCgS4B9HvZbQAr2knYLGZSbfpHbE6Of6jw9Vk+4sadLwk6XJJqnPkon42ql
+	7Q4br2vlGUmMApjO/GyxuWlH8PYhaPRkAvDL2foqkgSza3FK8AAW+qeu9tHOO/ad79tMGXKQ11D
+	N11XnHSHbmn6qbZBfh+FcCC+xHoq1OC5WNWVO/IHTCVbX8m7oU+cmpVBNJJ5t9VvwTljVSBcMIe
+	J/n4BPZIAG4thtYJVq7uXZgGc4nW9VnfqbgTM0SkC225zr21N7gMOK2xcBkljG2MXLcE
+X-Received: by 2002:a05:6870:478f:b0:409:8169:b413 with SMTP id
+ 586e51a60fabf-416e3eba247mr6241348fac.13.1773063979510; Mon, 09 Mar 2026
+ 06:46:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aavvwfZllMWUwIl3@lorenzo-VM>
-In-Reply-To: <aavvwfZllMWUwIl3@lorenzo-VM>
+References: <aa65h6Z_TrpJbmkj@ThinkPad-E14-Gen-6>
+In-Reply-To: <aa65h6Z_TrpJbmkj@ThinkPad-E14-Gen-6>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 9 Mar 2026 14:40:42 +0100
-X-Gm-Features: AaiRm50Ucl2XINmfOlN3hPBH4ug4qFjTmQDn3u4tO6B8z0KcuI3j67ajVExsZw4
-Message-ID: <CAP8UFD1cQHUzxu0cWjVWBfBWh8qOy2+oOb0rwo5CmgJ2qKRFDA@mail.gmail.com>
-Subject: Re: [GSoC] extensions.partialClone and promisor remote fetch order
-To: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Justin Tobler <jltobler@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Date: Mon, 9 Mar 2026 14:46:06 +0100
+X-Gm-Features: AaiRm53lw_v14-AipbSP5s-OPZP_YTLGMUmQ88LPHEdU9eUVulzu5_5Cxv8J6Xg
+Message-ID: <CAP8UFD3sicsPd903FU8bsj2B_4Q1DE1xB+--OxryY_jhL=sHdw@mail.gmail.com>
+Subject: Re: [QUESTION] Improving disk space recovery for partial clones (GSoC 2026)
+To: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Lorenzo,
+Hi Yuvraj,
 
-On Sat, Mar 7, 2026 at 10:28=E2=80=AFAM Lorenzo Pegorari
-<lorenzo.pegorari2002@gmail.com> wrote:
+On Mon, Mar 9, 2026 at 1:14=E2=80=AFPM Yuvraj Singh Chauhan <ysinghcin@gmai=
+l.com> wrote:
 >
-> Hi everyone. In the past weeks I deeply studied the documentation
-> regarding the GSoC'26 idea "Implement promisor remote fetch ordering". I
-> am preparing a proposal that is as detailed as possible, and that tries
-> to answer to as many questions as possible. I am also experimenting a
-> lot with multiple promisor remotes configurations, and creating some
-> examples that I will showcase in my proposal.
+> Hi,
+>
+> I'm interested in working on the "Improve disk space recovery for partial=
+ clones" project.
+> I am studying the codebase, particularly promisor-remote.c, builtin/backf=
+ill.c,
+> and the partial clone documentation.
 
 Thanks for your interest in Git and this project.
 
-> I have a question regarding the interaction between the config
-> "extensions.partialClone" and a possible fetch ordering mechanism:
->  * from my understanding, and from my personal tests, it looks like
->    "extensions.partialClone" is not essential when working with multiple
->    promisor remotes. Having these promisor remotes setted up with
->    "remote.<name>.promisor" and "remote.<name>.partialCloneFilter" seems
->    sufficient. In this case, the promisor remotes will be tried one
->    after the other, in the order in which they appear in the config.
->  * if "extensions.partialClone" is present, then the promisor remote
->    configured using the "extensions.partialClone" config var will be the
->    last one tried when fetching an object.
->
-> 1. is what I explained correct?
+> I have a question to clarify the scope and direction of the project.
+> The project description mentions that git-backfill vs git-gc vs
+> git-repack vs git-maintenance is still undecided.
+> Has there been any recent discussion or consensus on this?
+> I want to make sure my proposal aligns with the community's direction.
 
-Yes, I think so. The "Using many promisor remotes" section of
-"Documentation/technical/partial-clone.adoc" seems to agree with what
-you say.
+I don't think that there is a consensus on this. It seems to me that
+someone said that git-backfill was likely not the best command for
+this, but I don't remember where and when this happened. It could have
+been in a private discussion.
 
-> 2. when the fetch ordering mechanism will be added, this config var will
->    not be useful anymore. How should it be handled? It probably can't
->    just be removed, so the fetch ordering mechanism should be flexible
->    enough to handle a situation where "extensions.partialClone" is
->    present, correct?
-
-Yes, for backward compatibility, it's better to have things work as
-they used to when the new ordering mechanism is not used.
+Best.
