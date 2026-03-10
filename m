@@ -1,125 +1,130 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82362336EF8
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 22:13:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE7D38D693
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 22:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773180820; cv=none; b=MYVkMKI/LfgLNbBfACt4CDDBKMYDyFL6KrSgsMohAXoegYV7sOnyBimas8iVjMmIjNxHKnJRccD9N5MLMN+1vMsofFkP6lIRdWmATOfnp2bPD1d/Wp+Ir7AQs8ZTvVcn4apeAg47sld87UzYODweOHDcuSVgr+sQiPel1G90D18=
+	t=1773180884; cv=none; b=qYuCPz4S6/Hy6b1e3svbvaYSOORRTRsk0Pi6jGpXikJ2l3WwJlbAjdE2LfnDMBtAjiIKXiSXamvH0/Bxq8WRw/QQPwRQiw56Hxw4/aAArF3QGYnyinAWO/oHF5Bd/c/lZFZuKKkEowdBCRuYZjYgiqK1FQPlIt/fPpiA85oX5Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773180820; c=relaxed/simple;
-	bh=O6+jGfobTivruWVGsgEGHEBUSIt+OrD8Y3JxlGbvwdw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rPNrbT7etzy09daW75CbzKqNvO0VcG+j01tjjZ8OqzzUEXS1Pj5mcDLzuSGOR9vA5QabhaSZ0CCW0R9bnAUX0gAt89Z0dxC5htJC4mccaKCzltVebfvvbOLb7WZGzpVWVYam2O0O3Qh6M5GCa+pvBW1zzRk1H1JTh8P7eBE5+II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MeAGqAaD; arc=none smtp.client-ip=209.85.210.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773180884; c=relaxed/simple;
+	bh=I9GF/n/7CbRooUail5R59zF538yxPVjcfJusgRb1p2o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RTF6cBiUSZDVO9WJ3PkkXRt5NzN594ZsqPQ20d6fTGRPN9iGeZ0PFHWvvuHlQmGINlaG8KAt+jkasTQHarW3fNzdREMK38tQCvxo5fag+3I93AZjlSeHmvp9UdVOay+rrwk1DukgYyNyaJHjQhUQttuHy4LTZZsYHVK7suEoY54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IjZN+LuZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k5fmaihZ; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MeAGqAaD"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7d74a59262fso2625757a34.0
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 15:13:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773180818; x=1773785618; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wR7rD/zgate4yKShfnnQ5iik+J1XQyIP6CXjqhDsPYM=;
-        b=MeAGqAaDcD8rhM2XBKQm9pgwEPf1gceu9MtIXanL3JtvX8JLRvUPCrJhs1avzsPr5P
-         5obPuwKQ0WkVm5rdb27u42uKd0sIEXAz2g+S/UGvC+Pr6xnD7/E1W8bdfEpQI7Ic1NuT
-         LHD903R/M8Lhodf0DLzZV7asUe+VLA7iNylS+HU0TgMOFZuIWFjxyc47V0HkSC30PI1b
-         VFmpQX9SxKQE8h74Wld02nQU+dnqMhI5TcrtAoOoHh3S1/dnOyzB61htQMBveqzhUnf4
-         7r+nymJ72FFejWRHbyh+rvmiOKRtF8lUy9Ft6h0ptq0dhsfpx4Kbc4uNKkSDDOljHAHc
-         8EIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773180818; x=1773785618;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wR7rD/zgate4yKShfnnQ5iik+J1XQyIP6CXjqhDsPYM=;
-        b=iP17sy+jdUY53hB/Qg9vcHcqW342A07a05BuuPYZmaCOB0XySdVSc8XMWMp31pGKge
-         7M7BMteVD6B13lIqQ7e69im1m7GE08Y+mSOhzS+4pW9rs++KLsL7J4EAXdWkLoWNBlJ6
-         wSQZ+hkmYjCq+ofJo2A2PwTfb7VhJz1ZNbOiUWl2vWe7k9n3ac3HWzs7DmzW/VP2f0w7
-         7yjMMqjrGoSVRtQ/309REXT2n3tkaqTiFBS+WhDHeBZNhjjntt8sOPrCsvX+gUtdxi/G
-         4D3btqnJTCX0caFZmVb8hc6S18pQwCHYAvLpJPR0O/02m/HsanNcC3FroOQve3ukSswb
-         UOBg==
-X-Gm-Message-State: AOJu0Yw179YxOFB79BJzYZ26YzPf+7wGczfZysb5FrWKhg2rwLrFu8Q6
-	PsFNOer8Li+d9y9zCnYUBrHxZ14T7/4jQrBkcfJ89efELBXFZwNNBFaA
-X-Gm-Gg: ATEYQzxbapeMycRS7uq7K5zye+8nWYP9NBk2dNkYMcnwFvn5LLXCScYBwPbWEbyfxCG
-	QPhRMkzkjJLAiaBzZCjZaejLuOFerY884JqTjUME1vRgaXbjjSOEJ1Wu6+HqAsl50j9BPkKPiBH
-	KBOW0Gwkw7RfiFdWzhNta7p2c/BY1YxMpyUkADvfkafaN1PXs2B3oZ7JzwH+49wOWpCbm4uMBwz
-	OR7h4pD2zScuEKLseEY3mO4Vypn5GDJe4sWxHipgpPnoqw8zliEiRrV+6RmjXYJLnN7RfTHhDq+
-	OLKq4NGJQJ4hh611F9rU5f31iralhsfxL8As0HhEVZMqeUsnkUxzCrLn0hC3S5tgLEyKk1qT4al
-	GFPqiwnLhcZ1Aqwg/JmHES8dtRl2831KxVpIiUzVQhaw70vkvuGRx5Eo3GGZTnF0aXBOrrKCXUt
-	9YZUU+cHFHB7IHyr+6
-X-Received: by 2002:a05:6830:2589:b0:7d7:5d69:819d with SMTP id 46e09a7af769-7d76a81cd60mr373627a34.34.1773180818248;
-        Tue, 10 Mar 2026 15:13:38 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d76aec4c8bsm268967a34.25.2026.03.10.15.13.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2026 15:13:37 -0700 (PDT)
-Date: Tue, 10 Mar 2026 17:13:34 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, 
-	christian.couder@gmail.com, ps@pks.im
-Subject: Re: [PATCH v3 0/3] fast-import: add mode to re-sign invalid commit
- signatures
-Message-ID: <abCTTaYCQIub_xjW@denethor>
-References: <20260306205359.1723254-1-jltobler@gmail.com>
- <20260310201116.1130160-1-jltobler@gmail.com>
- <xmqqv7f3s93l.fsf@gitster.g>
- <abCFKEHxu7OZr9bm@denethor>
- <xmqqqzprs7o3.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IjZN+LuZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k5fmaihZ"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1A36CEC063C;
+	Tue, 10 Mar 2026 18:14:42 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Tue, 10 Mar 2026 18:14:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773180882; x=1773267282; bh=NO+pJmpYe9
+	gGBDSSGB/q9CbiqPhhRAmo1kTE/IbgGyA=; b=IjZN+LuZEw4PXywu2sQhlP+FcB
+	k5CdAwewq6lO4vmcOnKWEBsniUlmG+7EYRZlw8iLBLWzC7iwCZUrHI+bNdbXaap6
+	ri3ibYCa1V/VyH8rWKRjWTxAgOlT9gpdNM6oi7OHTarywHjb0VGOWCAq+IvUGEaq
+	T3+0H4Z5lK5T5o/xAz6qHC/l9ajSsmbcPwdxci4DQ0T7T+aN4g4jSi6zdECPy7Ye
+	sAoKmhXEb4Xj9WMWQun/vC1jIRtdV4pIqCDx6sT6NK5HIYF9YzS9mT/IO0Iwhf36
+	tROR2v+TRCC1RfpZAYtOoonR0ZVgT+yRaplpjJamcLlY1Pe3crd0sIl/xing==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773180882; x=1773267282; bh=NO+pJmpYe9gGBDSSGB/q9CbiqPhhRAmo1kT
+	E/IbgGyA=; b=k5fmaihZLu5pLpxWKVqFbp2WAIwLPfL7BIIGqDflvLn6o4RnR2z
+	fclOvNAXtMHOT/KI3pzTcR4+e1FnbGZlwsMowrQFxXzAoxOkFOQc/iGppoqoJo08
+	A0oA1XREoH+22qU23CxF5SNLWjMjjfp6pHKwfgQ9ulFc4Fndv+2mmlYX9VoVtz8v
+	MpGl5FQIn4Dvskt2M+aB6DrisYIbnGpyC+xWGDUYKiZaoXJTboPqgTT4ksUV4KeF
+	ju21fObb0kLswJ39T+9Kv0S5skbgGs9B8swn3RAnCZfGyYanD8Pp48eiCyKlXxf1
+	ZFMLO+Fz8p69OHU+yeCGJ4auyigy4O7maDw==
+X-ME-Sender: <xms:0ZewaTeSXoTOf385INc3Ww263xdaRVcOVWUhFTZNc6Alq95h0El48Q>
+    <xme:0ZewaQNshDMUcF5Iyp2uJ4mbYvsm0ulJ6-_gyh_poAbPHn1N83WInu1j87Ga_947X
+    DlWKwLBKLZ5ObP_0CiTDyYPxAp0JGaWElMIQLrlbrPenr-5iYAvnA>
+X-ME-Received: <xmr:0ZewaRi9GoMbPt2JdSCmy7ts-i8nZoMjM9IeuJJmaEq3yPBafea33glPNx1f1gVK3dtvCFWR2h9Kvb1wWoFyIYEqVjM_sV_58g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedvudelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
+    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:0ZewaT0hhtNICGTfzV8oOzW331YKrmnhPNiOei2bbAytPCDkjhWBbg>
+    <xmx:0ZewabgqdslkftxcM8qpzzYrlNjQIEOxj2fBHKFFsa2-dLvxPsO_1g>
+    <xmx:0ZewaTfO5zGc8vmu2P5-IehEPU3OKBCgO3po8dAfLPPimPGwCxI1Yw>
+    <xmx:0ZewaelKl9cyXMYiyNNVGWDQSC8ng5_BR1jjzxfByM5Ho5eq9SzTZQ>
+    <xmx:0pewachOYHxqnoLGqkSIUdJ_EQUCPghCGBpFRGr3DWwx9LZx08b987Wy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Mar 2026 18:14:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 3/5] format-patch: add ability to use alt cover format
+In-Reply-To: <316c9e76ee49d73aff75b63299c970e9f55f79b6.1772837832.git.mroik@delayed.space>
+	(Mirko Faina's message of "Fri, 6 Mar 2026 23:58:46 +0100")
+References: <cover.1772232373.git.mroik@delayed.space>
+	<cover.1772837832.git.mroik@delayed.space>
+	<316c9e76ee49d73aff75b63299c970e9f55f79b6.1772837832.git.mroik@delayed.space>
+Date: Tue, 10 Mar 2026 15:14:40 -0700
+Message-ID: <xmqqldfzs567.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqqzprs7o3.fsf@gitster.g>
+Content-Type: text/plain
 
-On 26/03/10 02:20PM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > From my perspective, "re-sign" implies that the signature was previously
-> > signed, but we are now going to sign it again. Indeed, the resulting
-> > commit signing is functionally the same as if the object never had a
-> > previous signature though. Also, "if-invalid" already implies that the
-> > object is signed, but its signature is invalid. So it could be argued
-> > that "re-sign" is already redundant.
-> 
-> Yup.  if-invalid part indeed was why I thought "re-" was redundant.
-> 
-> Also, if a project is redoing its history with such a bulk
-> operation, I wonder if it _still_ makes sense to tie this re-signing
-> to the --signed-{tags,commits} option.  Adding signature to commits
-> that were not signed is not covered well with the
-> "--signed-commits=<mode>" option.
+Mirko Faina <mroik@delayed.space> writes:
 
-Ya, the --signed-{tags,commits} option is really only intended to
-specify how already signed objects should be handled. Adding a mode to
-sign unsigned objects likely wouldn't fit well. I do think this
-"re-signing" mode still makes sense though since it is limited to
-the subset of objects that were previously signed and the signature
-invalid.
+> +static void generate_commit_list_cover(FILE *cover_file, const char *format,
+> +				       struct commit **list, int n)
+> +{
+> +	struct strbuf commit_line = STRBUF_INIT;
+> +	struct pretty_print_context ctx = {0};
+> +	struct rev_info rev = REV_INFO_INIT;
+> +
+> +	strbuf_init(&commit_line, 0);
 
-> A project may have required that all commits and tags to be signed,
-> in which case "--signed-*=sign-if-invalid" would create a new
-> history with everything freshly signed, but if the original history
-> has signed and unsigned commits, and if they want to sign all the
-> objects while rewriting their history, they may find it more handy
-> if we let them do --signed-commits=strip-if-invalid --sign-commits
-> i.e., drop the invalid ones and make sure all commits are signed.
+We don't need this, when the struct is already initialized at the
+definition a few lines above, do we?
 
-This certainly seems like a reasonable use case, but if we want to
-support leaving previously unsigned objects unsigned too,
-`--signed-commits=strip-if-invalid --signed-commits` wouldn't be
-granular enough. My thinking is that users may want such targeted object
-re-signing when bulk rewriting history via tools such as
-git-filter-repo. I do think that it could make sense to still add a
-separate `--signed-commits` option in the future though that targets the
-remaining unsigned objects.
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index 21d6d0cd9e..458da80721 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -380,6 +380,54 @@ test_expect_success 'filename limit applies only to basename' '
+>  	done
+>  '
+>  
+> +test_expect_success 'cover letter with subject, author and count' '
+> +	rm -rf patches &&
+> +	test_when_finished "git reset --hard HEAD~1" &&
+> +	test_when_finished "rm -rf patches result test_file" &&
+> +	touch test_file &&
+> +	git add test_file &&
+> +	git commit -m "This is a subject" &&
+> +	git format-patch --cover-letter \
+> +	--cover-letter-format="log:[%(count)/%(total)] %s (%an)" -o patches HEAD~1 &&
+> +	grep "^\[1/1\] This is a subject (A U Thor)$" patches/0000-cover-letter.patch >result &&
+> +	test_line_count = 1 result
+> +'
+> +
+> +test_expected_success 'cover letter with author and count' '
 
-Thanks,
--Justin
+Has this test been run successfully?  It is unsual that only one
+among several you are adding has this typo.
+
+
