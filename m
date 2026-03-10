@@ -1,88 +1,88 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFC7321445
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16F140DFD5
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773162596; cv=none; b=iH70KMI+y0qKxBYK2gaF+3xI3WeLCDfhICXkvPSW9KDLZApOOa1OnzVG8JKy4cVJqxxASawYHZk27mXwLhfBUB1Y3bGak+ktZS+LaF5AsZtNn9poW86Oq9ff8znkW9XYVL8kZODMIl0iQCMoDNShBlzZg4iAaGeHJLrTLmz2vCQ=
+	t=1773162695; cv=none; b=jUOquAIpDR3eVRnVP19iXhq5zz2FUGn/idIeV+aRfCWS5hxlcVpOCdrVuxFO/tv40ytlMM9RYVVZZVVMB4c4Y0MLAVh4TrKrXm9gRM/LnoC9LboML4vHf7pFZmM2W/W1U8AFwry2lTdOo6Vh2NGlzJ5xrILw+6B1w4Aukjariis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773162596; c=relaxed/simple;
-	bh=rtIaKgL6sFO1mx2V0RwNhriQR8IJa6Y4d8wTHdzVAFY=;
+	s=arc-20240116; t=1773162695; c=relaxed/simple;
+	bh=16J+RftFUxO1QfsaK48/dftyUdYzaBJmPqgycUe0o08=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=niEAPGG94nBdO9WEwo45BU4Sh7BTqE718H3PFKNLl0xw9kytSsPh+XwGvzRQs57czhMMztF16secOD6YBacQl0UUV6mT1VDclHIjRFQVis3v5BGAhYCUx6sNickx/qEg2iaT+zde490lG62ljFA32AszHq5pAUjid+7DeO74Cug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DgsxmLRL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C/icPmi6; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=smrdfgJ/kxtpfFhqOMjB9GpiGsp2yM5uyZ/5jClcvzRWrhjZ6MxQx+Pd+X9hHRWDOLjmTAddeHgOgpjz+q58VNqRsv/PS5fTkMb5K5s8nrIypT+EVy2kohtX6QLf71bGnqez3Tt4f89kp8K54L+ggYkODV3JJI8klwisqwVD56g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bmdv5+SY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eCuZ309L; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DgsxmLRL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C/icPmi6"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 575E9EC0FC9;
-	Tue, 10 Mar 2026 13:09:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 10 Mar 2026 13:09:53 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bmdv5+SY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eCuZ309L"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 01302EC05A6;
+	Tue, 10 Mar 2026 13:11:34 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Tue, 10 Mar 2026 13:11:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773162593; x=1773248993; bh=n1Q8lYif39
-	GxSxKAZhj61supeawQ1gtR9c+Ui8k0lhM=; b=DgsxmLRLqb6RiLbz40duCFhzqa
-	CbC1+5HMTujdZEZX9A4UXK/lOp09Akvh6Vo6rYzEBM7gJ9qOU4WHcvxWSKbvc/hY
-	C3cXMBXYmvDEad154/aCP2XPVdjhUc4dFW396JVf7l0QtKOPbUILsNCgcszIv+kR
-	hl9FVGOCBdVOQ7jyG+m7xbzD+eD011jA8kqkINklFO9W1LiLmw9HOjLvGhV/rita
-	IIrcWY8a7+5Hk/cNFKRigFu1jYeegCC0QFVWWFh5jmGsZAm/N/fGBfjSBnCtbzvq
-	zYv15BjLnwqsCV+3o0mrzgFLvEHHITzhBE1LoOvwJZAHDTmez1AO6QPFUTSA==
+	:subject:to:to; s=fm3; t=1773162693; x=1773249093; bh=3hCFqk4aDe
+	egqfKMmeuPTTP1dEBfJChHR4VYFpBMnK0=; b=bmdv5+SYKamD0S71C6ub4YSqaq
+	Uq+Y2dkB+5ePPIKUD5rjbj2pU6EcHLO4OZo6LT29SSxBxFRLU/JS+gaEo0ImC6MN
+	XsjMAqcKG8mpKoDd21/RMZN+Zvi1vmARhoTf8gGNSd5wPwi/cpQJt29TE/RfLosg
+	nraslIIurmVILTMjoKDtdZIvJrHz1FcoSz75td3d04GhU+YQlnHZEmvD9hGZ+qkn
+	knUhm621RbfJxZrKLPJu4V8p5gs1HiQIIVvGgqPa9ShXS0ObWJHEvUMI0aXM/tIQ
+	4TcXO1+DRbmrdSY2rcXEBzL7JV7OYkr3wjXHHFwz1fy7mj7DF7U38qCPPW4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773162593; x=1773248993; bh=n1Q8lYif39GxSxKAZhj61supeawQ1gtR9c+
-	Ui8k0lhM=; b=C/icPmi6+fX1ya1g4sH9ZcKkDtcFb8gLVF3RGyTanMdDOZqXUsd
-	RK9Ki9e/MeN78SwOgghIwBfIcrrKjyKIztQxnK5ZWOd/uBwM4mAcVQrnx2WDg4ot
-	xPBqSfIlXu2XsVjJH34w/ur0nVeNpVcALaTtzVCy+dRpKIBtGxa4XbnUR97rqB8m
-	fFzTPPi3zRseOwiy17l2OfFFkJ82G8ZJfg0+ggJsatbbA2d7fZt89kvmFvGFPZDJ
-	HWpzpNlnokl+/vIO/h5x45tsbctskx3EMZCBWH5l9Wwr1579fQYHUYlSRogBauqA
-	jvAutyDF1qTUF9VwXOQITm28dMV5JbPKzmw==
-X-ME-Sender: <xms:YVCwaWk29PHCCWrCuQMuK31mJk0-R6xxeigmNOvwR2cJUZ5vVn21qw>
-    <xme:YVCwaQGFd6O8uuPmD_46bweBQ-XJ7dSzgKzhSJMysqm_0b_bklDsnQpJ5912e8Ose
-    but6qQiZbfiS66zbKzK-ZzLMTFEOj-dYWpFE54CM8hpWPVeKztE_2M>
-X-ME-Received: <xmr:YVCwaW5jkmG-AbrLbMCVNxq0pxxuVIMHekTAcOZXVyJ3sr5vJhKGufHShyo23-8ErJFq2dTesLPrF-ZxaBGQlqcuTNASEIdMvQ>
+	1773162693; x=1773249093; bh=3hCFqk4aDeegqfKMmeuPTTP1dEBfJChHR4V
+	YFpBMnK0=; b=eCuZ309Lbff5VA6YDmd7JD2EALirvfpN/UtTw8MiC1FlmjLhkBi
+	BxHSx1wLQ+P1z4xt5cBozVIceWob+iDOHqKUQcqor2ootWqDJP9Z1DmApoG6fZA+
+	F4JZnP0Baziv/TePmVRYZBsK7/1kmhASWQmOI9ojGPRhSqFhnZfSnBPINa6ni+uQ
+	cL4dcqHHWzn28ozezWqqRwBZt9gXurHP2gA2jblJUqvdPrJv9WFreKbqiTAxix4p
+	wsxcqfJnboVLUA+Q1pd9SMKhjk6GX8hAMtJpPZKTG03bs4xiwqJRti6QWaZxxSEc
+	KRm8ouZH5c86sJalmBg++tJH3MstYLls2WA==
+X-ME-Sender: <xms:xVCwabbocIhrCtTtRFNozRSCF6hq1EvBhj_EpHhkCmThWi0mPm5xWQ>
+    <xme:xVCwacqdvONGG1nIzYr9iDKrWjLSsRGhFdCrRqbAvDsDgSdulnFPGvfPLqnEjfPz1
+    sPZDezkdkriqRQ0CXC4ujJalxTt8l6XbvgZ1sHxnrgNMsiaOQ3beI8>
+X-ME-Received: <xmr:xVCwaQOHjvpuykatfmW2MX9qOLNrr-804nJz3pe_JrVb9RR6e8-UkCmsLB8ECepmeBbkod5uzs0p6q46kI32gyf6d1uwTcVCpg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduheekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhsmhhilhgvhiesghhithhl
-    rggsrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
-    pehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:YVCwaQmYwKzbZ7YK9FCK8t3-KQpmfagV6kUCrGLdI6tmjXbrto2BmA>
-    <xmx:YVCwaTqmmdTIDi4-UA1n3wg8SGXjFSnt6pHh16W3d6DSNHXbgFs28Q>
-    <xmx:YVCwaXtCiWx8yxGVUB2Hhxj7FCt1oA9PPJPrpeh69IkpRDb4EG69cA>
-    <xmx:YVCwaQEsau-KIFHTexkqSstpAildqrrzU6aVEcexc_d6oZlFfstYnA>
-    <xmx:YVCwaTa8WQIUEUwJW3ODpPJyVD1cOf4K8YkES7NwtPvKm2yKSBi6QGXS>
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehmshhmihhlvgihsehgihhtlhgrsgdrtghomhdprhgtphhtthhopehsrg
+    hnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehp
+    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xVCwaXqcb1v_nKu5039Ji0p9U3ZkM5v2MXReHTwGmzarU7rh6aCGCg>
+    <xmx:xVCwaVcQSInBxiVeXtt8m-6lhKFFpku08TDff8OpT6G-Kzv-k5Q-sQ>
+    <xmx:xVCwadR-3gb0SbuVzkcLRliSjMc54kHARGx9vDl_lWp-NEcmxj5qeg>
+    <xmx:xVCwaebT-An192DIXzfIpo64sQ8TzOnXb55onMO5Gb83HDN1wrgcgA>
+    <xmx:xVCwaZ9-kUQCjrLVCOtlqBMp9n1VgohIsvP5YU_2KU93X4HI3WlP5KIF>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 13:09:52 -0400 (EDT)
+ 10 Mar 2026 13:11:33 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org,  Matt Smiley <msmiley@gitlab.com>,  "brian m.
  carlson" <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>,
   Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 03/10] upload-pack: prefer flushing data over sending
- keepalive
-In-Reply-To: <20260310-pks-upload-pack-write-contention-v3-3-8bc97aa3e267@pks.im>
-	(Patrick Steinhardt's message of "Tue, 10 Mar 2026 14:24:59 +0100")
-References: <20260310-pks-upload-pack-write-contention-v3-0-8bc97aa3e267@pks.im>
-	<20260310-pks-upload-pack-write-contention-v3-3-8bc97aa3e267@pks.im>
-Date: Tue, 10 Mar 2026 10:09:51 -0700
-Message-ID: <xmqq5x73wqzk.fsf@gitster.g>
+Subject: Re: [PATCH v3 00/10] upload-pack: reduce lock contention when
+ writing packfile data
+In-Reply-To: <20260310-pks-upload-pack-write-contention-v3-0-8bc97aa3e267@pks.im>
+	(Patrick Steinhardt's message of "Tue, 10 Mar 2026 14:24:56 +0100")
+References: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
+	<20260310-pks-upload-pack-write-contention-v3-0-8bc97aa3e267@pks.im>
+Date: Tue, 10 Mar 2026 10:11:32 -0700
+Message-ID: <xmqq1phrwqwr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,78 +94,14 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> When using the sideband in git-upload-pack(1) we know to send out
-> keepalive packets in case generating the pack takes too long. These
-> keepalives take the form of a simple empty pktline.
->
-> In the preceding commit we have adapted git-upload-pack(1) to buffer
-> data more aggressively before sending it to the client. This creates an
-> obvious optimization opportunity: when we hit the keepalive timeout
-> while we still hold on to some buffered data, then it makes more sense
-> to flush out the data instead of sending the empty keepalive packet.
->
-> This is overall not going to be a significant win. Most keepalives will
-> come before the pack data starts, and once pack-objects starts producing
-> data, it tends to do so pretty consistently. And of course we can't send
-> data before we see the PACK header, because the whole point is to buffer
-> the early bit waiting for packfile URIs. But the optimization is easy
-> enough to realize.
->
-> Do so and flush out data instead of sending an empty pktline. While at
-> it, drop the useless
+> Changes in v3:
+>   - Fix handling of `iov_len` overflows in writev(3p) wrapper.
+>   - Add another patch that causes us to flush out data instead of
+>     sending a 0005 keepalive packet.
+>   - Link to v2: https://lore.kernel.org/r/20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im
 
-Useless what?
+Except for the tail part of the proposed log message of [PATCH 03/10]
+that I couldn't understand, all the differences since v2 looked
+sensible to me.
 
-> Suggested-by: Jeff King <peff@peff.net>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  upload-pack.c | 21 +++++++++++++++------
->  1 file changed, 15 insertions(+), 6 deletions(-)
->
-> diff --git a/upload-pack.c b/upload-pack.c
-> index f6f380a601..7a165d226d 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -466,18 +466,27 @@ static void create_pack_file(struct upload_pack_data *pack_data,
->  		}
->  
->  		/*
-> -		 * We hit the keepalive timeout without saying anything; send
-> -		 * an empty message on the data sideband just to let the other
-> -		 * side know we're still working on it, but don't have any data
-> -		 * yet.
-> +		 * We hit the keepalive timeout without saying anything. If we
-> +		 * have pending data we flush it out to the caller now.
-> +		 * Otherwise, we send an empty message on the data sideband
-> +		 * just to let the other side know we're still working on it,
-> +		 * but don't have any data yet.
->  		 *
->  		 * If we don't have a sideband channel, there's no room in the
->  		 * protocol to say anything, so those clients are just out of
->  		 * luck.
->  		 */
->  		if (!ret && pack_data->use_sideband) {
-> -			static const char buf[] = "0005\1";
-> -			write_or_die(1, buf, 5);
-> +			if (output_state->packfile_started && output_state->used > 1) {
-> +				send_client_data(1, output_state->buffer, output_state->used - 1,
-> +						 pack_data->use_sideband);
-> +				output_state->buffer[0] = output_state->buffer[output_state->used - 1];
-> +				output_state->used = 1;
-> +			} else {
-> +				static const char buf[] = "0005\1";
-> +				write_or_die(1, buf, 5);
-> +			}
-> +
-
-OK.  The new part of the comment, "If we have pending data, flush
-it", is what the new code is doing (i.e., flush all the bytes before
-the final byte, and make the buffer hold only that final byte we
-kept for ourselves).  Otherwise we give a keepalive packet (i.e., 0
-byte thrown at the sideband #1) as before.
-
-OK.
-
->  			last_sent_ms = now_ms;
->  		}
->  	}
+Thanks.  Will replace.
