@@ -1,112 +1,162 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211E9279DCA
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 21:06:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773176789; cv=none; b=c1mvDIhsnCQLQSneT46ZRo0mTWtU2NNMisU7S59zXqOK6fAWtv2zPoYo8VoPOXrX1slsbd5JX9ac9zN5Qwp+M54wfCqMACnmagBaCN5WchURksVLdq/26t1xNvuSgEm9tCkVwM0oM4lmS+ay8dCrJGjY/VmALYeuKzuvOtE424U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773176789; c=relaxed/simple;
-	bh=uznGXqNRbT41UQZpPDV86ZGLHG05U5gwxQnt5eXdAPc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bG8FqtFNXrsN9faP7288qWe0LGx6uyrU0Flg/w5HTPC2c3EormKLP7ThSv+3yNf6FiVouj9xTdDCoZ4050lFYl3GtiFRnzdQVXOo7lI9N2G07Yqj1jnQzdjNrj8G2XIY9VxB3/TKrn3hfbvF3sLlXOhhWNiLZq/GUz9SkgyVkt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D2QIrnNm; arc=none smtp.client-ip=209.85.210.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2101279DCA
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 21:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773177028; cv=pass; b=Mur0YAaxuVssDhPM8uEDFEyd3fRFdg4Gd96S6LtsfQJdjxF0lsUDSQ9MnnSYEl+IhV/7AQfltGilRNOqZfuAw3BFq/K0LNZYkKlAe8Hiu66mWqtR6sGQ2iWbhP+mW3pe2YzS2ebmXkdqVWOjAqxZ8uwXjPaFxfgpXLVAN7QW/6E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773177028; c=relaxed/simple;
+	bh=/D8LXRmXW9C7mig88RMPATqhtldMmO1sa3TMrRvQqds=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=scnT3OdWIagTTI7ZCexdiWbXH2CAdJ+22HNQreBYoaGQkc+uXHDxbZmrnKCb/WUIqjnocv6J8cviDHPvErqUoYw29kAYZygzIE5D7G6340D2lfmKQPdNm5RGeYRvsJEaMdjJBp09A5MsMLVA7F3sg8+KDgkWqTEQqzqew/ik8uE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=eficode.com; spf=pass smtp.mailfrom=eficode.com; dkim=pass (2048-bit key) header.d=eficode.com header.i=@eficode.com header.b=hiF1ynXC; arc=pass smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=eficode.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eficode.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D2QIrnNm"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7d749f99691so1459455a34.3
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 14:06:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=eficode.com header.i=@eficode.com header.b="hiF1ynXC"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b9382e59c0eso1181574766b.0
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 14:10:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773177025; cv=none;
+        d=google.com; s=arc-20240605;
+        b=AWIb/Q7niiI+Dd4bwU0fNH3yR+SFQmFCb6DNCJduBfIvUOwgb9c2rnjpaKGKCmhRdw
+         VoDiW3XoO1UYSK7V3PO60We58j/Dl50TS/nB9JINRaNyHMe7uM3mdQesE8S9SKb1jc1u
+         tprivjxWap134NkMyxTRN+J+SGmQqmV3Yxex5ZFAEhpWuE6QWDXaGBFSxVjfE3ZaFXDt
+         0LXsGGM+cMbgHVsmm5Pwni4TB8I6MVBw14+oeaXq4XpcdkOIDnNNT/VF3e8qeg9eDLHd
+         nQToXOHZAwahTp829E34Il03Y5ujq3ih3zeeixdDHnQOQvSSZeEMQjVuWQTUeCWR6UAr
+         Uc7Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Oi/L8eWgfYVsU5dtnZ+R6UCvPXaUF6X8iSq+togJWm8=;
+        fh=w/yrzUbetl6J0dfbam5kAn5kC/AsNvbVmDc2uExMv3k=;
+        b=RXcFTeFMyBMQg8rttsiTCTlcMHJ3QeKCZE2Cq6/H6ltQjVTl5lVYn62BDCcoagM8hG
+         hxr2x05ue4u5LuC4y4ZRQpSlqkbts/2lB1s8YIlslrnqeb4mchwV7yxrNYsxgci53OQi
+         CFxQYkxnamoFUme0jJes56qz/xALQIPhvz0dgL8zO6nlTa5Fk8Gv0OnxE8R3fAx3heo8
+         rvBUJpaHtuSuEDD6xDBfzo59Skg9hnkEyah8Uu/q64dkqDaa+Kcoj5+SjWI/2KE0XssI
+         g4i6j2Py3ozq5qLmoD6dCAz2c33W1DC70e4u4R8fTr3XUWV8s2MPr8vVI8VGGBfch/rH
+         II/A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773176787; x=1773781587; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SNtkKoqiK1APE+xhZN16bF8/MsTHtKVcRurMzaKEI2s=;
-        b=D2QIrnNmVcDwOp8t6c20324bWtzAzxUMCWvMT5bPkShcGp1oC4D9PxPNDxj1WY7CXJ
-         I2TQpEHTGyNr43id6V+2RuNOMWTmxitg4OUZdf/tQwQL/IgUAmstUi8ZRKTf5z+Otq97
-         FvA5yeQNiChEhPmKa8yDIoT495sNuvIyakkC15hpqAPzD0Lj/fPoexfQiqJk5vSEQyX+
-         IEgwyNa1xyAcSyoq5Ol5UUkPVMc/d0ca3WAZtl7T15o6lDwSg2yq+XGULhRYmgCwAPrw
-         BtX13OQwah070x0FHPGg2m4uUS7lHnPvEuUlTblJlkoti0dqSD+zr6W77mLiLMTdcYxI
-         QDLw==
+        d=eficode.com; s=google; t=1773177025; x=1773781825; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Oi/L8eWgfYVsU5dtnZ+R6UCvPXaUF6X8iSq+togJWm8=;
+        b=hiF1ynXCMHyk+J6tdMJ8GO8TqP1HqVpGdWsaK/YgEhOcAH4zlyALhfr0kPMIAnB4vQ
+         vvdXDNCgqG6qjaQrCn6aaHROdEb6pXw5FNCM26QZaXUTayFVfToPJtf+U1zBphn9f6nS
+         xwc2MM+vK6lSOYE2vWdcoaiUUMdY5jPYS4iP2AqfQLQzmZOUgpmFVb08ujwruMmq58r6
+         oIZgtMbrvLprScgWghqw8o80kUIJELz3K36mcKrEFsQcMmqe3e3s629vg0kH1dg8nIir
+         hB+D1/yc5dvgVf6ODwfAVnkxtCdym/3GJ7Dy5pIgsflSoihiNTxGTUVyN5vViXtMsUVn
+         VjTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773176787; x=1773781587;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SNtkKoqiK1APE+xhZN16bF8/MsTHtKVcRurMzaKEI2s=;
-        b=NEPOceEJMqJDYvLvRg2wxGFuHc+0dm9TCfu7B5YsZ3rHyBLylPeF5DRKw/ikJyW41Z
-         0KB6w0wctdkcjx0wNrsSc0PCxOpOQC4oPqyHNOOelIrJMbAuIe9DYojvTzPoyyQhORFn
-         K1LaL+FxzKpyja5LEJPvC8sU8dGx18c3b40MeQ3RjRoM4UEkZ5JnXogsBk9TBcG3O8zz
-         xLTFTuKvsDBfRbvicJBb/LIuWWnEqrfCGVCTPAgiwRqH/oGyEK1fiLGCFToCg35NE293
-         CQPMSzlKJyMu5uSRRl6gMNovn6Rvzy43ZZjA2dbQSPVrq1VQj1UiFQ6jD490sKnG5qbD
-         wP6w==
-X-Gm-Message-State: AOJu0YwFTwAap1mj9+A5rJsle13kzusfBis29QGljdCw54Z04mtw+2XK
-	btTFSpnnKy1e4FKO61HCdAClQjgZ7rrKkXk+zAhNeZO7vNWnsUUUNi4s
-X-Gm-Gg: ATEYQzxYbzhfByeilPNABni8icwwGyw1i3ovE6ak7HJoCUZ8j90c6lRZ+s0K1bmOraT
-	6sADW3Ivgiqyt0L9W9RTVn5Hbv286F3kv3gjYw1iNXSpbZk5+9fLnwW1RzghPJ6vslXig979xAa
-	OL3LktIKhxX1rc/41r4iSXSAlXMGCmT5B+6hQYhQu3XbeUfqLTuGCziDJyauOSF5IRoTdRVoNMF
-	BX7B5KbeqLMCUL8+t+7aEp+X7WrS1I5hseKDOfiShowArU4hX1N/PAtljEoUccW39bve43F4361
-	1iixV7OSx/ogbT1CVb2slo5+laUX7vbuKUKvPjPb1I3eqbUFsVsS5CQ4yETtwatUq0Nekl0pKoC
-	bhG5uivij1jZMhEHcafhkGc+Xd8/bcK4iZHjNKcP532j7m1uYFQfyJR3DeMIvr6I5WNlgWs726K
-	24eCY3dkDXV1Y2Rq4V
-X-Received: by 2002:a05:6830:3893:b0:7c5:2e2a:d386 with SMTP id 46e09a7af769-7d76a75dabemr219755a34.21.1773176787008;
-        Tue, 10 Mar 2026 14:06:27 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d76ac328a1sm209582a34.6.2026.03.10.14.06.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2026 14:06:26 -0700 (PDT)
-Date: Tue, 10 Mar 2026 16:06:23 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, 
-	christian.couder@gmail.com, ps@pks.im
-Subject: Re: [PATCH v3 0/3] fast-import: add mode to re-sign invalid commit
- signatures
-Message-ID: <abCFKEHxu7OZr9bm@denethor>
-References: <20260306205359.1723254-1-jltobler@gmail.com>
- <20260310201116.1130160-1-jltobler@gmail.com>
- <xmqqv7f3s93l.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1773177025; x=1773781825;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Oi/L8eWgfYVsU5dtnZ+R6UCvPXaUF6X8iSq+togJWm8=;
+        b=JR8LB76jYFJDk5nx8WFlbFHIA+gxRyJevfnSkV4a9Hb5RMZlDdmhccEG5TsCnF++48
+         9Nnxgg4buAV+qI5UA4s5SraFtv8OCcIaTvQPGptB3Rq8QbIatc7HXVJNpL9zVdKH7yya
+         4tL+S1/+fPjVYVk6lHby6ADBLUFfgCdkTlDJVks8hqeqzzQjR1LhJ2arjXpF9JkCIxFK
+         01Yi4TvEss1VCrciAP0L4uY8/qO661aHJNEOLSKuYZSrnQFxXd+4IQ9l6uhIE2FFlEbs
+         Z2y3cO2lspJbSuQtK1AHY1DG0/TOr3Ugzofayqs5RYUly6CcWjU/Uzp6B/nlgwxVyW2w
+         C8mQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVh8QOusGhh8aqUclElSLAp6YdapTYr7dmeKdBNaEMrcVx+QVmQosRJtsv7uAOPG/1HWHQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNxKaGBuWCOy38NNzh6AmsreLOC+jyW5wiPD6JM36UqZ0/7iwW
+	v2Hnkj36Gy4a90HKYYoG/pHrpgp6NN+bR/TzyTEj/KxRSaOJlpUQvLjkzuaWZKNIhyPoZDkp6xw
+	U5hlIDLDLFrFZG9sK8gW2PVxYSNqknYqOtwGLQbfe
+X-Gm-Gg: ATEYQzzWw4bPSbQh4vNw1jMnnIhd5WgkNwgsmWpPr7mCeaGTanxeJfocgqTlkezCe1U
+	hGE9HCopbFPq4asTJcP7gqq9M0oimxBbigARRrkKthVhYHY1m0jJ7TJDZHrGKTXFNe+ZxuzaQgf
+	0Uy0Ws548hzM2XJB1NAW67OC+PQLsi8kgnqy2+zWnSCGOqnHf+U2dJYQccgup0dMiBXquA2Xikj
+	iBAYPOUmXWnGabTq/OkvzjFpTt4HQ+AdSayy7d4ryU2wkv5EftouolGubzSvOnKRQNYf9lXFTBP
+	dMRxSIW+LXMHxg1pqUPBjSqLP+1D7sUT2F2blu+DRP1joZ8jPwn/D5AC3Vwhl6g3UxgquuHJdqS
+	v/xC+fMfKdDuszj2f7w==
+X-Received: by 2002:a17:907:1c06:b0:b96:f0c9:821 with SMTP id
+ a640c23a62f3a-b972e1dd2aemr2571666b.25.1773177025093; Tue, 10 Mar 2026
+ 14:10:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv7f3s93l.fsf@gitster.g>
+References: <pull.1987.v3.git.1768376879.gitgitgadget@gmail.com>
+ <pull.1987.v4.git.1770384180.gitgitgadget@gmail.com> <8bfaa14d44e224c5f8a3cfe1a0c55e9ca9415a98.1770384180.git.gitgitgadget@gmail.com>
+ <faf8622b-b960-4f58-add7-28b5e081afb3@app.fastmail.com> <CA+GP4brEROn5jhmtjW7gwk87hi8T23voyG+LEx-ypwUE0Q5F=w@mail.gmail.com>
+In-Reply-To: <CA+GP4brEROn5jhmtjW7gwk87hi8T23voyG+LEx-ypwUE0Q5F=w@mail.gmail.com>
+From: Claus Schneider <claus.schneider@eficode.com>
+Date: Tue, 10 Mar 2026 22:10:14 +0100
+X-Gm-Features: AaiRm53qwkVWY8XKTjbzDEugeTIAW3y3YDBF2d0kuxPqCICrOC6bgvizRXH5t4g
+Message-ID: <CA+GP4bqf6=Lv3esMxorhbn6J9AMT-A4cEyhgpnm8iLUd+Myz0Q@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] Documentation: update add --force option +
+ ignore=all config
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: gitgitgadget@gmail.com, git@vger.kernel.org, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, Brandon Williams <bwilliams.eng@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 26/03/10 01:49PM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > With c20f112e51 (fast-import: add 'strip-if-invalid' mode to
-> > --signed-commits=<mode>, 2025-11-17), it became possible to remove
-> > invalid signatures from commits via git-fast-import(1) while maintaining
-> > valid commit signatures. Building upon this functionality, a user may
-> > want to re-sign these invalid commit signatures. This series introduces
-> > the `re-sign-if-invalid` mode to do so accordingly.
-> 
-> I know that this "re-sign" used to be "resign", and the update is
-> indeed a replacement, but I wonder if we can just say "sign"?
-> 
-> When we see a signature on an object we are rewriting, we either
-> "strip" it, or we "sign" it (afresh).  It is not like we are
-> retaining the old signature, and signing on top of it.  We are
-> discarding the old one so there is no difference from signing the
-> object that never had a signature, no?
+Hi Kristoffer,
 
-From my perspective, "re-sign" implies that the signature was previously
-signed, but we are now going to sign it again. Indeed, the resulting
-commit signing is functionally the same as if the object never had a
-previous signature though. Also, "if-invalid" already implies that the
-object is signed, but its signature is invalid. So it could be argued
-that "re-sign" is already redundant.
+I am unsure about submitting these fixes now, as the patch appears to
+have already been merged.
 
-Ultimately, I don't feel super strongly, but I can send another version
-that changes this option to "sign-if-invalid". It's probably a bit
-simpler this way too. I guess the enum value would need to be changed to
-"SIGN_SIGN_IF_INVALID"? Or maybe just "SIGN_IF_INVALID"?
+I could add it as a 6th patch, and merging would still work fine
+instead of amending the 5th patch - please let me know what is the
+best way to proceed
 
-Thanks,
--Justin
+Best regards,
+Claus Schneider
+
+On Tue, Mar 10, 2026 at 10:04=E2=80=AFPM Claus Schneider
+<claus.schneider@eficode.com> wrote:
+>
+> Hi ..
+>
+> Thanks .. I will fix both.
+>
+> Br
+> Claus Schneider
+>
+> On Wed, Mar 4, 2026 at 3:02=E2=80=AFPM Kristoffer Haugsbakk
+> <kristofferhaugsbakk@fastmail.com> wrote:
+> >
+> > On Fri, Feb 6, 2026, at 14:23, Claus Schneider(Eficode) via GitGitGadge=
+t wrote:
+> > > From: "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
+> > >
+> > > - git-add.adoc: Update the --force documentation for submodule behavi=
+our
+> > >   to be added even the given configuration ignore=3Dall.
+> > > - gitmodules.adoc and config/submodule.adoc: The submodule config
+> > >   ignore=3Dall now need --force in order to update the index.
+> > >
+> > > Signed-off-by: Claus Schneider(Eficode) <claus.schneider@eficode.com>
+> > >[snip]
+> > >       all;; The submodule will never be considered modified (but will
+> > >           nonetheless show up in the output of status and commit when=
+ it has
+> > > -         been staged).
+> > > +         been staged). Add `(new commits)` can be overruled using th=
+e
+> > > +         `git add --force <submodule.path>`.
+> > > +             The setting affects `status`, `update-index`, `diff` an=
+d `log`(due
+> >
+> > This is in `next` but: should be a space: =E2=80=9C`log` (due=E2=80=9D.
+> >
+> > > +             to underlaying `diff`).
+> >
+> > s/underlaying/underlying/ ?
+> >
+> > >
+> > >       dirty;; All changes to the submodule's work tree will be ignore=
+d, only
+> > >           committed differences between the `HEAD` of the submodule a=
+nd its
+> > > --
+> > > gitgitgadget
