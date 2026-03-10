@@ -1,118 +1,118 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365CE39DBD2
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:35:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DDF3A3E6C
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:36:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773149702; cv=none; b=EL5el7QZfPjh+t4HZvFDJ6EEpgIfpUQ5pucUnWCaPjLDvN9/Ms1WWPu5P3TNXtz36I09XMbauAHxeYWy3cj4PYCT9udoBVb2Jq/ZsCHSXGTWYBJh0w7UmSUShyu1yBPkJAi+UC0DqzOpnSPDzr33v0ymrAaQdS58sOu9HmtjQTc=
+	t=1773149775; cv=none; b=GFmJOyGJEycFG53+uaupVOWf3gocnI4tC1p9/nkRcpx3rxUVnDkOrzebulXyhdWvYsIy3LQ+1qTkS2kcBY4BrCHJ22Bc81CEkxLWOpu+CelQ0vFBVMmp1dP10fJnTpecZhakD/AYTRvRdvTptwVwZHLqfz5Y5vSn7NJVvR+2un4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773149702; c=relaxed/simple;
-	bh=8d1Rtm241vlGEXyFu9r2k5SKidIuYmADYJggHtg8nLM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYWBpIPIb9QGmmoqA9gG8tL1Sx3Fsp1AEtIoZQAo5D8OpVH8Mpjwh6vUqeOdPX4g4I1Xa2AZRZYV+01akgoGI2axRqfbhRNO6dTRzdFUKWeNGBFCZZyXcmFk6u8AL7nfPdnVCFpfJ+0o3suHcKUZOTOc5HGP48O60kI+wE5h4tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ce5Msu1R; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773149775; c=relaxed/simple;
+	bh=xiXDlOd8I6NNruFffFqRmai9RtnzhPvz5bQpRs9Hatw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EYhqdpSjmsxNNXOo6ScfFoAfLzyRi1dCsuTAiwCq5fQEdkJM51HwtdFWFYrNlPXWX89i7xo/XZAgIKma7B3mnkkMkvRDnU89t2BdMpFi9j+BX8ZpwsXNS+ICk1jS3plOGvLNJh4F+dFeSD/co2LZAS7b8TWAZH9ViKmXDCPRRcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BFQ42YQD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=phJ7UOFn; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ce5Msu1R"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ae505619baso56695225ad.2
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 06:35:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773149700; x=1773754500; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q49lZQ6U3vqCaT9BK21E/DcIBk4wFgK+mLHTUtTwDZE=;
-        b=Ce5Msu1RwwNJ8+7wvCWxmEhqToxqE7s4oD+LnBeYd/NvDV5N89g9e7nDKBlrKgnGwf
-         1YQLDgCcqBa+Zdv/3iLMXwy9wVvv9URgZxay7Q9GS0CXi0UC9eCtElT6lpbjizZmkVn9
-         LJAYe7QBBVPNNABCmEkQzGyggI/WW9+mhdXUiXKstsHjVWbzn9y1iaHPg4+rGMas/Aci
-         Zpc+XGqi6f4ogz+Of1il66kkOQFTVw/FPVrCDAqU9/u5I6tToLNaBHUwvL4E8FDab05M
-         LxMLEqgYNMsQiJsA6qSd9heS0rhInvMEiEnwl/SuvvXP6RN8EMvLvn2XMPGZh194Ab/S
-         TGxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773149700; x=1773754500;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=q49lZQ6U3vqCaT9BK21E/DcIBk4wFgK+mLHTUtTwDZE=;
-        b=dtbzQncxn44LGokol1mC8UEBnZ2WGlkaNbIRidMN4xteO7vKnXU98TBaNKNp/2B/bb
-         3Ros4YlKW4/P7Jkhh/idkbcUL72Dj1mmDNz+NmIoJjz/tDsG7n6tBkoNf4tJoywZd/TD
-         n9mz8PJcgaA0CJcQBU8V6+YnD79L3u0wKjszoQZH0eodMQbu43NFks6ROZYm3fpsxTfP
-         BKcdeg9UivVXJj1io/sS4dSrxc0kVEbdD69H1PVFOZRxubb8CwzU9PaqJVhz+Puh3K2b
-         tqkZ0+SGr+rz/DiUl2p8EDXvD0Fcf1R9/4mg1AhVTxlrK6mXN+T3eWGHQPyKOcfZ/9Qa
-         heZA==
-X-Gm-Message-State: AOJu0Yy1AAiJiqsKXzcyzc5CJXJ8AXJTbjRd/B+nmUSWseA99sd/m6d6
-	UKVR679K7cbN5+982Y+dxTryovJ5oNaLs39gP+NBCm3o8FMvvwlf7nmB
-X-Gm-Gg: ATEYQzysaPzHliMJFYsk04ECEhWH1dVYPtEI82GEzphF06RZaAjfNoXf5vMtRh1BmVh
-	7kSaP4mI+5yh79CVDCXxOWSDeIq7RyegXWMdZogcl14G6bDlF3bijwta9dAoRFi5L0BPC7KDDkU
-	3A3tSinKm77WnUmRtfhNhJ1YfWw0zojTyPxZZmx7CA/LlUILEJe1Tbp8Hrdnvf55N9Li5u/RYwj
-	4jxl0pdmvl5D9ZQHAkZFsT/7LGKfF1Kn3MqBpA4usYOzPOVycQFB7tP3PvYVKS5016rv3eslRaJ
-	qrBgeVTPdZrwLh4vAbRv3dS7yrNQhMyOvld2uqaIQyXp8Ky8C5IeBCi/2hQTe1yRBKs93+mHx0i
-	sjV2ecdxW4O41PuCMXouYu2yFXRzQvnK9vTeHP2edHwA57wXRWnoy6ZCqBdwb9wMRsoxrE6ti5Y
-	NAcjz3ZR8qjDFzXNoeJerw9NiNNhKirtDFffncE9gZJrPTQWbHtzse1bdPoKrbSTJpeyKtacSyC
-	TFW3KADzn11eV7hG0UsxEnSvR6KDULr
-X-Received: by 2002:a17:902:ea02:b0:2aa:e387:b83b with SMTP id d9443c01a7336-2ae825006femr144136295ad.43.1773149700419;
-        Tue, 10 Mar 2026 06:35:00 -0700 (PDT)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83e9b9c6sm173315835ad.29.2026.03.10.06.34.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2026 06:34:59 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: gitgitgadget@gmail.com
-Cc: git@vger.kernel.org,
-	mansimaanu8627@gmail.com
-Subject: Re: [PATCH] t1900: add tests for git repo structure subcommand
-Date: Tue, 10 Mar 2026 19:04:35 +0530
-Message-ID: <20260310133435.42995-1-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <pull.2066.git.1773112159662.gitgitgadget@gmail.com>
-References: <pull.2066.git.1773112159662.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BFQ42YQD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="phJ7UOFn"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 83A7EEC061C;
+	Tue, 10 Mar 2026 09:36:13 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 10 Mar 2026 09:36:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773149773; x=1773236173; bh=TvwT2tfTuK
+	t99fqrIzGa5ZLWNvRGe0NciNobzo/+Cbg=; b=BFQ42YQDvkgYZSlksibxJ7UZBt
+	Kitbf/3tug5N5IOEurcemFqkk9azNDVEnV7Ejxb0yWdIQgfhMGGBFt9tLIjD5ajt
+	ZOeeTlU+alUvsRuOz9/tdO9N4z8JpY+RkXqCFltCxclN3EfG9m5ZpqwNnBvSqWGv
+	qSu4vUbw3K4k4UOU4aHPS/FVZl8JrtCg/7Ss7vitQc7lu31hwFj1brYsa71NgCqV
+	dyWzc/GiGOBTwpwptAhdPtr8Z7s5j8iNpiTZ91p9jGVgbNqRygUIWZI+7gsgmHEr
+	CfYILsMMLBixnDh7VJAdJKTsUIBdQIJvl7q4cW4hPhMLW/mLVqDHI7Z/LOGw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773149773; x=1773236173; bh=TvwT2tfTuKt99fqrIzGa5ZLWNvRGe0NciNo
+	bzo/+Cbg=; b=phJ7UOFnnItX2uEP4OyygownhMsZQD+4qBiaOCaWKWwZdjaL8ee
+	VAiyudAjRbMl7Tmtpge063r7Z40Lq+9iOem0wR6FXNOO5LtO865C1pI2ambtnUA2
+	8K/1U1NktfKSaXGN+IMap3QrSuIX1S4rDrcq4nnaGtQPYLu4B8owwUwOyg0xui0S
+	zJTrKUUFd6I12GlUhxICc64i4aisXpyb8i9zdZD4OripBJBEamq0162txRmit5eD
+	iiRIHTHFsHw4RcGF5CmNEoyhRvZ84R5AnBJVzHOR+rhN6VKDkmtKKKe0sp4HsXDt
+	0Fd3ufiLMGd/OZFy+Vfbeg5Xdfz78YC31bg==
+X-ME-Sender: <xms:TR6waa_-uWOOkZsK47i6cDbEJS-2sy3EZs5u6wi6RrTATY-LYRKyJw>
+    <xme:TR6waRmRgzfPXC2ypUfHAixRdoxAZ7hKfwQbP9zFx0ouLwk0T5or0dG3c97ZeuqiM
+    JWqu91gQc4EZ2T5kZT1NsYo6ylgATTtTAMWgW2dAT3isCwYAPjxHg>
+X-ME-Received: <xmr:TR6waYXQf-vUkL-O_tn2QSJDhZBVcYIhPG86BY8C9bfLgIYA42CUDOHTNBMIvgNu5yabvArryN04tmo7UDbyAAcYHPfQ4aKPSw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduudehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprg
+    hrshhhshhrihhvrghsthgrvhgrtddtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:TR6waeFwADEeBOCWrK-ipy6E-JgjPTWZKyy4r6zSSOWTp8F-j5A_6A>
+    <xmx:TR6wacfyG6WK92YLcFTVSOvaMCEbsgxcDDvYf-TF0DCqX0sidN5ZLw>
+    <xmx:TR6waXKCdc6aqJP9wrresJObrBpsNtPuScNPDQF3ZkXjVC5g_9C5AA>
+    <xmx:TR6waZE-jO6NClEiRKcuZNnGJ2UCODxMgl6_yCi_AoPFwFBQKkvHSQ>
+    <xmx:TR6waVVWP-cv-EyKOikW7wLHFUj9FpfpNo7F4K0HTCXGdOyF92xhmXN2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Mar 2026 09:36:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Arsh Srivastava via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Arsh Srivastava <arshsrivastava00@gmail.com>
+Subject: Re: [PATCH 0/5] Advice on checkout dirty files
+In-Reply-To: <5f100fe0-d601-4ee3-adb9-a2458203d10d@gmail.com> (Phillip Wood's
+	message of "Tue, 10 Mar 2026 10:33:13 +0000")
+References: <pull.2233.git.git.1773132678.gitgitgadget@gmail.com>
+	<5f100fe0-d601-4ee3-adb9-a2458203d10d@gmail.com>
+Date: Tue, 10 Mar 2026 06:36:11 -0700
+Message-ID: <xmqqzf4fx0vo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> From: Mansi Singh <mansimaanu8627@gmail.com>
-> 
-> The t1900 test file covers git repo info thoroughly but has
-> no tests for the git repo structure subcommand. Add basic
-> tests to verify that:
-> 
-> - git repo structure succeeds and produces no stderr output
-> - git repo structure --format=keyvalue outputs expected keys
-> - git repo structure --format=nul succeeds
-> - git repo structure rejects an unknown format
-> 
-> Signed-off-by: Mansi Singh <mansimaanu8627@gmail.com>
-> ---
->     t1900: add tests for git repo structure subcommand
-> 
->     Add tests for the git repo structure subcommand in t1900-repo-info.sh.
->     The tests verify that git repo structure outputs the expected fields
->     (commits, trees, blobs, tags) in both default and key-value formats.
-> 
->     Signed-off-by: Mansi Singh mansimaanu8627@gmail.com
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2066%2FMansiSingh17%2Frepo-add-structure-tests-v3-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2066/MansiSingh17/repo-add-structure-tests-v3-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2066
-> 
->  t/t1900-repo-info.sh | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-> 
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
+> If the intent is for the user to carry over the changes to the new 
+> branch then recommending "git checkout -m" might be more convenient 
+> rather than having to stash, checkout and unstash as three separate steps.
 
-Hi,
+I personally would not recommend pushing "-m" to new people without
+explaining its ramifications, though.
 
-The very next file in t/
-i.e t1901.. is about repo structure
+If "git stash pop" fails while a commit different from the original
+is checked out, the working tree will get conflicts for you to
+resolve, and that is the same as "git checkout -m".  But the
+conflict may turn out to be too complex that you might not be able
+to cleanly resolve.
 
-You might wanna check that out
-because I find most of these to be redundant
+With a "git stash pop" that gets interrupted by a conflict, the
+stash entry is not removed from the stash, so there is a clean
+recourse to "git reset --hard" away the conflict and attempting to
+unstash (either to the same commit or to a different base).
 
-Regards
-- Jayatheerth
+With "git checkout -m", on the other hand, there is no such
+recourse.  The conflicted working tree with the unmerged index is
+all you get, and you get only a single chance to resolve it
+correctly.
+
+So...
+
