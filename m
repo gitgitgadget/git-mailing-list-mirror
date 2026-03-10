@@ -1,149 +1,149 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10843C5538
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:44:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE4B3B47D9
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773164691; cv=none; b=Tn1e31kLSF75Uy1d2ZgWgbIXEOgHCTXczSXe9n1IydqrhjTafBd2AGXHbFmCXvs9NICqboziR0okuNizrVb+EGe1sxkTDnJpaFx0wdIJF0HORJ72092suc7/MKw6Qgb1QLLqmZRzKg+Kc7i/liGjCXqFC46a2vbQwS4RMj2dlvU=
+	t=1773164738; cv=none; b=SH8sIHZWVQ36NmRneFHFHGfGAFBewhjzX6x+DM33owJdHikgCRgG6oPquN3bbcIe/3Y/5/t1jCtHeltTHOPvrL/M/deMXLdUL2/F4ijuiKjSihzZDjgTUQUXvW3JMwvQ79etr/q6J1giKW9QMpKpgfXI+jUbYKd+aIDFRUi5u9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773164691; c=relaxed/simple;
-	bh=cvBfxtAqiFmE2+MkilGDZL8mIVvXJODLXhwLjyTyVhU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R1Pd0n9ru/OFuWHed8tgH+pGkXTN8B2p2+jCWCADefGDrlWaC5Sx1FtM5xgS+umA3j1c4h+j7Krp1FmHh3AiYVmdcSg9r6QwslgJMeaJ+u+V/CDrx6jIVmRc5AYDnthcQZ157cUe1EPSSNd2YNzRxi7RPNz1yx1voLCFRI0xcqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VnPfAVye; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773164738; c=relaxed/simple;
+	bh=PXBPwV925f9l55QKh+uK7Z9lnMMFjApEJeKCtzM+gWg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IphnRgEXyZGeHW/OsJrRPF7z2X4KaXV0u8FTeiA/4lHWn+jWyqGq6lLGKNE7iRwPTS/B5ZFoEGVVvQiOA+FkUZqik4VDTEg6Uj0m0BnkYcJJOifcuiyxSJsElFk2QO5PNQicoI8V8MCO1hLmtSelBSldwxKCwSFC8D0i8l0NFQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HNm2FDk6; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VnPfAVye"
-Received: (qmail 62112 invoked by uid 106); 10 Mar 2026 17:44:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=cvBfxtAqiFmE2+MkilGDZL8mIVvXJODLXhwLjyTyVhU=; b=VnPfAVye0FerTKwDaIiiZr2m+EeX9lHNWfkiKB61fVO1X41hVnWQbxCNxCjtiBlw2p1/I7fw+dLy35WT2ig5dpPaUXSqxpO90F07f6t1xIWCZ5xG0y4cgHGQdjupwq0K4VT7EGQenxU/5Xl/NxZbzyYffmh/+7B0NF7emWM8dWkd0Y8yBDiWkfTySLdJZZPmrnjXbZPUbYKNp2ezdN0GsBhjDlKRC+OvEfuulusRjxK70kG3Z4mm5VM/tq+yMXq1rg03Ya3mn9opyXp0TC1ZtXKN6ILQgqJ9qwHpLp0f+Pu1qg891zjFu1rR1FbOc7nDjjV5bwRK2dhIawersSaZGA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 10 Mar 2026 17:44:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 474966 invoked by uid 111); 10 Mar 2026 17:44:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Mar 2026 13:44:49 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 10 Mar 2026 13:44:47 -0400
-From: Jeff King <peff@peff.net>
-To: Vaidas Pilkauskas via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
-Subject: Re: [PATCH v5 3/4] remote-curl: introduce show_http_message_fatal()
- helper
-Message-ID: <20260310174447.GA589835@coredump.intra.peff.net>
-References: <pull.2008.v4.git.1771423748.gitgitgadget@gmail.com>
- <pull.2008.v5.git.1771856405.gitgitgadget@gmail.com>
- <973703e9ddedb67daa946208ef7edb9eb50425a7.1771856405.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNm2FDk6"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8298fad2063so3096923b3a.3
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 10:45:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773164736; x=1773769536; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p2q2cKYNvSyN9HCrY2Mhjbx6WPVAaoaX0Et/hTET2Y0=;
+        b=HNm2FDk6gD2sGz5FPtvNRbZr11z1TCsJAUsH8z0lPZdBMtckXJcfrKFnktKGbzkz+c
+         Uh9L+N6OaXbVGycRxbF2HHXrGt4KAtj/WVdes9R+piDaYf6nwAJRY4h63nVXkErl/w6x
+         huB1SrXjuPHFw7lCduAmh36bmumj7MUFPS2uD0GCYiaC0w1F5bFLHhyXA+HIuoMFqDxd
+         8M2iw6BpLAYsIOI9GLrU7vr8uqn0juqsTqFr0T6tZi91E52lj6HeaCe7/o9RrVgfS9mN
+         6MITWum9Z3aEOhWAIgYZavjf9IOb7ZYSKIlcEqyheuV5h5Sp+IP9NxT7MKkhxgAmfBRW
+         56/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773164736; x=1773769536;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=p2q2cKYNvSyN9HCrY2Mhjbx6WPVAaoaX0Et/hTET2Y0=;
+        b=Mj2PJ7L1RKmz5ClEE5yYSP+VS0KOxs3cdzX3dEMfsKx0cDVRDA6ZEnQHYXWvepTSh7
+         wjy5Mt1aZzzfdnfpLAiLd4/PLrzqPnF3a8c0fZWKWP/kyUa9c4VhLb9JkKheilIv6lC3
+         Y2KSQwKEc+pz5BFVKKVa/STVnDcEnPBmHmCcdAty6VoHaCE11BUQf7+KjhKZsKm3EmUP
+         CWrznMFZzfYJIG4k0y6efmUdrQDclAxUbTIo3uwpeRWMejZFxBO8lGdUSKvswqPRBlv1
+         lQppSC2YaFyYQmscO+/cyKFYUwA4h5Hm7EeNm7dEPOev6PnYN7JvAQGj9ylzuCZF5Q/Z
+         C0Rg==
+X-Gm-Message-State: AOJu0YyDjgI7Qp0i+3MKy6QJOfIVUgu0s14x9DyT5jZoPCSuL5CEc9m8
+	0m8b0HNnrShW4rYFk8q8JTOHaQnEW5jRDFxFikeBLaODTD9J6T+fTCaIeH9dNA==
+X-Gm-Gg: ATEYQzzjOk/LN26oBZvynebOJhaz3OuBZeVmAGe2wu6wLvCV/N0pRI3nSojCKWCq8BK
+	LaeLVvLm5Mvz1FXhIS0mCK+/gUY0adjlOqbyw/fe/FG9njSxyH8RJWSEb8r7Q+S1+tp07yvSUrS
+	ZUVR998yTlGohnDRDfNUqtdMTO6oOWly9wmO7ysGmd+5JjyW7wr70oFf13mHSSDWY4sOCOFl5M/
+	uxaDGMFEXvXq05MzaDROWFWzZrhVBJTfBB2ri6gfmTh807lrKucd7UhscgUmSfAF5TXT12leVgx
+	8jmLJ9LVhbLdo1dFso7m6yQ+8wJzkgzDKTWau8pD+khpXdtMMjAeNmn0tSJkc2aXONrQ8vbQYGZ
+	3GV5yX47Qu8it0CpiK5FibaFClcMsBb4qn/ekEcv3gEhoY3RXmX4GNsGsdS4OTvZLL1JdIqKCMe
+	TXgnaLOiW0wU2Xa5Qvfd1vrHKlefiHg8Pl5KE6wEh1OLo=
+X-Received: by 2002:a05:6a00:4b53:b0:821:853f:b9c3 with SMTP id d2e1a72fcca58-829a30c203emr13907094b3a.58.1773164736252;
+        Tue, 10 Mar 2026 10:45:36 -0700 (PDT)
+Received: from Shreyansh-PC ([2401:4900:88eb:2b10:af62:6ac0:52fa:9f8a])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a48676besm13414023b3a.40.2026.03.10.10.45.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2026 10:45:35 -0700 (PDT)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	lucasseikioshiro@gmail.com,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [GSOC][PATCH v2 0/2] Remove global state from editor.c
+Date: Tue, 10 Mar 2026 23:10:47 +0530
+Message-ID: <20260310174519.676851-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260301105228.1738388-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260301105228.1738388-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <973703e9ddedb67daa946208ef7edb9eb50425a7.1771856405.git.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Feb 23, 2026 at 02:20:04PM +0000, Vaidas Pilkauskas via GitGitGadget wrote:
+This series reduces reliance on global states. Mainly there
+are two such global states in editor.c,
 
-> From: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
-> 
-> Several code paths in remote-curl.c follow the same pattern of calling
-> show_http_message() to display server error messages followed by die()
-> to terminate with an error. This duplication makes the code more verbose
-> and harder to maintain.
-> 
-> Introduce a new show_http_message_fatal() helper function that combines
-> these two operations. This function:
-> 
-> 1. Displays any HTTP error message from the server via show_http_message()
-> 2. Calls die() with the provided error message
-> 3. Returns NORETURN to help the compiler with control flow analysis
-> 
-> Refactor existing call sites in remote-curl.c to use this new helper,
-> reducing code duplication and improving readability. This pattern will
-> also be used by upcoming HTTP 429 rate limiting support.
+* editor_program: defined in environment.c and populated during config
+  parsing, but only used by editor.c via git_editor().
 
-I'm unconvinced that this actually makes things simpler. It doesn't save
-any lines, the show_http_message() becomes less flexible, and we now
-encode die-logic like the numeric code for exit() in the curl code.
+* the_repository: used in git_sequence_editor() to read the sequence.editor
+  configuration.
 
-> +static NORETURN void show_http_message_fatal(struct strbuf *type, struct strbuf *charset,
-> +				    struct strbuf *msg, const char *fmt, ...)
->  {
->  	const char *p, *eol;
-> +	va_list ap;
-> +	report_fn die_message_routine = get_die_message_routine();
+In patch 1/2, localize editor_program to editor.c by introducing a helper
+that allows git_default_core_config() to continue initializing the value
+during initial config parsing.
 
-If we got the die_routine here and not the die_message_routine, we
-wouldn't have to exit() ourselves. But sadly there is not a
-get_die_routine() helper yet, so we'd have to add one.
+In patch 2/2, remove the remaining use of the_repository in editor.c by
+passing struct repository through git_sequence_editor() and its
+callers. With this change, editor.c no longer requires
+'USE_THE_REPOSITORY_VARIABLE' and 'environment.h' include.
 
->  	/*
->  	 * We only show text/plain parts, as other types are likely
->  	 * to be ugly to look at on the user's terminal.
->  	 */
->  	if (strcmp(type->buf, "text/plain"))
-> -		return -1;
-> +		goto out;
->  	if (charset->len)
->  		strbuf_reencode(msg, charset->buf, get_log_output_encoding());
->  
->  	strbuf_trim(msg);
->  	if (!msg->len)
-> -		return -1;
-> +		goto out;
->  
->  	p = msg->buf;
->  	do {
+Shreyansh Paliwal (2):
+  editor: make editor_program local to editor.c
+  editor: remove the_repository usage
 
-OK, we jump to the end since now we have to make sure to hit the exit
-bits.
+ builtin/var.c        |  2 +-
+ editor.c             | 19 ++++++++++++-------
+ editor.h             |  6 ++++--
+ environment.c        |  5 ++---
+ environment.h        |  1 -
+ rebase-interactive.c |  2 +-
+ 6 files changed, 20 insertions(+), 15 deletions(-)
 
-> @@ -391,7 +393,16 @@ static int show_http_message(struct strbuf *type, struct strbuf *charset,
->  		fprintf(stderr, "remote: %.*s\n", (int)(eol - p), p);
->  		p = eol + 1;
->  	} while(*eol);
-> -	return 0;
-> +
-> +out:
-> +	strbuf_release(type);
-> +	strbuf_release(charset);
-> +	strbuf_release(msg);
+---
+Changes in v2:
+ - removed 'environment.h' dependency from editor.c as well.
 
-This cleanup seems pointless. These strbufs came from the caller, so
-they are not our responsibility to release. But also, we're about to
-call die(), so there is no need to clean them up.
+Range-diff against v1:
+-:  ---------- > 1:  6f8b82fed5 editor: make editor_program local to editor.c
+1:  f9ef18b77a ! 2:  5b858c7e98 editor: remove the_repository usage
+    @@ Commit message
+           local repository instance, so pass it down the caller.
 
-> +	va_start(ap, fmt);
-> +	die_message_routine(fmt, ap);
-> +	va_end(ap);
-> +	exit(128);
+         With no remaining global states in editor.c remove '#define
+    -    USE_THE_REPOSITORY_VARIABLE'. This removes another dependency on
+    -    the_repository and keeps editor code consistent with the ongoing effort to
+    -    reduce global state.
+    +    USE_THE_REPOSITORY_VARIABLE' and drop the dependency on 'environment.h'.
+    +    This removes another dependency on the_repository and keeps editor code
+    +    consistent with the ongoing effort to reduce global state.
 
-This part is the advertised change for the function, which looks correct.
+         Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 
->  static int get_protocol_http_header(enum protocol_version version,
-> @@ -518,21 +529,21 @@ static struct discovery *discover_refs(const char *service, int for_push)
->  	case HTTP_OK:
->  		break;
->  	case HTTP_MISSING_TARGET:
-> -		show_http_message(&type, &charset, &buffer);
-> -		die(_("repository '%s' not found"),
-> -		    transport_anonymize_url(url.buf));
-> +		show_http_message_fatal(&type, &charset, &buffer,
-> +					_("repository '%s' not found"),
-> +					transport_anonymize_url(url.buf));
+    @@ editor.c
+      #include "git-compat-util.h"
+      #include "abspath.h"
+      #include "advice.h"
+    + #include "config.h"
+    + #include "editor.h"
+    +-#include "environment.h"
+    + #include "gettext.h"
+    + #include "pager.h"
+    + #include "path.h"
+     @@ editor.c: const char *git_editor(void)
+      	return editor;
+      }
+--
+2.53.0
 
-So this is what the refactoring bought us: we trade 3 lines for 3 lines.  ;)
-
-If we could roll in policy decisions like anonymizing the URL, or
-showing the curl_errorstr, I think it might be worth it. But we can't do
-that easily because they are varargs for the %s format.
-
-IMHO we should just drop this patch, and patch 4 should do the usual
-show_http_message() and die().
-
--Peff
