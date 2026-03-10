@@ -1,202 +1,135 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366F81B6D1A
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:45:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4A33D6477
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:51:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773164748; cv=none; b=Xr7sl6bDFbOtuP9VXtXOsucaSryBb/59nW1NL1y2GPdw+AqTEFcA65Xjn+4sTRNsM0hDVDm/FanXJasuA592MZ+chM3YrY6qKaQmyc1IrLhU22lH9lb3EXeN1A6Ho3q4BRFZgj738g8xPO3ZYvpap8BlKZ3mtqLhNmFG92ZBWTA=
+	t=1773165097; cv=none; b=sdveDo+kD6Ri0YMcCAH3lsryM4CWD2MFCBVgC7nR13pgN/pyKYwrj0/eXolcCLrP+d62GdsmUca/WujlfWalsXl+VXal5cOXGr2ua5Lxvszq5bhcRChauZl4zJsoW3m/mz5+2//xqkUPiilnC5/5SpQGD5OOL75+AascgGZSdB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773164748; c=relaxed/simple;
-	bh=TxGCI+kAiDS0IH1uuJvkZ8apyFKiPCUJmcHAgowbLiU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OD/MvH00n8SVRJ5oR1nLKFkV4h1oVQBF/vdqGS13BJxLqxPofKGUu02izNzbVjZGs00JPeiSs5x+ZgKXKzTZZ5kQLvs5YBwlStqXK3FSIjco9tGUv77VzrUaP14x95Zxa8PBlzA/NVNv9djbCitF6JpNdUzgMp6eh2gKVlBpP44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hoYwUGlR; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773165097; c=relaxed/simple;
+	bh=5H2S/veUaTV/uxwzUSVVqq/90W1p8xX3ueS77I2lvok=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=f6hV5siZd9hCctVgE7wPvtgGvd0w0laN2cjiialDSGxoFWGkEYvxLlCsxoPJUUecBwH6csu5rQefOe8wksxoUE7vLkye27BQHa0nANPLsl6kYETxD4R01+YryH7bu4k/iNlIwNxkWa2+ADWSZJgSPEENsM6QCuTwTB59IiPTPEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fH2hkre3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j9JZKwdM; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hoYwUGlR"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-82990763921so4986583b3a.1
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 10:45:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773164746; x=1773769546; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mcxJzPmV6TwE4gSd6ebOC4SjAnerwkmLJIP3+BGhTgQ=;
-        b=hoYwUGlRVS1pNN+c428vh4Ne7IKVoE3sGwmx4dz5PFzDGvRMqGDVGktANAuvV/eHA7
-         HwAXx2RsqQaph61syh5GtaH2j4byikog2q2+TblRTcHi67yNE/yho3erL3zj/v+nvyBA
-         Aq2WZslAv+oRDdAMGktFIygxQfBWz6eCBTYqmGuKJuJQ22oYvd8HnYDG5E60YLJ8U7IG
-         TQHPvBkRRcCPmbXk4S4LnJbWZ5o7pkuL0ON6aNBRrPn8PIRbXU+iEN4CKAuJxz423INW
-         lkSLutTuulqmL3IUTK/cq9kcZrLthL5C6VHHSUYlvtHHDqYuPP62kyiolZfwheYCVUhY
-         kuTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773164746; x=1773769546;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=mcxJzPmV6TwE4gSd6ebOC4SjAnerwkmLJIP3+BGhTgQ=;
-        b=tCdb5ilDal+/WAsWfNA8OK9+dmU26Z0qTJY25kc6ePYRSpWtUim14MLkjIiZdAJpf/
-         KXKvEGCj3NdITsL5PWoCUeLdyaVv1vDc0Ep2HjKg2K0P1uPaJtPi6V/kbbk056VfcKpO
-         gnpwxRNvD67stZIlIuEmCGUbILQ9a+hlMJ1IfnhAo25RRzQCtCeN9YF/vqbk8VBAMoH2
-         3EhAKpXTuj2EtuR0dtlHRcqlC6CK9bCH4W3qUPKs8qTmmURQ7j5weHyjP3v9iUvQ6ZGu
-         pknfjhtoiyBJodPr08B8WFM19YKCmAOSmARKNMsbXO31qe9XgIF1xgUSrKjd1ZdRHHlB
-         OTiQ==
-X-Gm-Message-State: AOJu0YxcdTzi/mDijGAWR7dZ2dnhGkdLr9xhfch9aG5cnIsYJyJz7Xza
-	V+XusntEeDgmagXiW0L0PR/mcd68/Gm8Cq6y4Ky5DeZ6lndglbhBc0OlBKzwwQ==
-X-Gm-Gg: ATEYQzyhlrsMwshhQAtxR2z103oIuUdXru268w5jnOpMR//5ju54B3FzZ957U3lCjhu
-	dv046jq/Zw6KrsYfDtpFpRs/oDPEOZT+8xcSwI11IGS/L0AeYnDwscjcvArjAWe5vSiZkG2GhOK
-	Dt5borr894hA+a7dDGXsOgzAAfhL8C4Y57VRH03aR9Kgtlt6mUgauNG/Rm38fNaZxCZrzGfpi3c
-	bcbsTmFlcuKax5khntI0X3Jg2zi0xwWUGP3ZjoGD7TdkZCbswr9+UvT5A0WDFmn+2MGZzvLt613
-	veaFynDW8NwtT1t8erkjcKfj7xd+OamU26U2wk3uiK3YWlNKSJJjAIu1S+YQ7KZL8FydaHj2rAG
-	8XRBg9spvY9dcxYhPzbHwY1yw0CK+ed3JrXGY0GB/EfZreN42x0pMbIKeJ1bf0HuP67/On79HCQ
-	IZTEWYHkZQsGJ7IJRUiw6onkG3dCM9i9+8hMB87D8OXKY=
-X-Received: by 2002:a05:6a00:21d6:b0:823:d2c:b156 with SMTP id d2e1a72fcca58-829a2de2fc3mr14434105b3a.5.1773164746240;
-        Tue, 10 Mar 2026 10:45:46 -0700 (PDT)
-Received: from Shreyansh-PC ([2401:4900:88eb:2b10:af62:6ac0:52fa:9f8a])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a48676besm13414023b3a.40.2026.03.10.10.45.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2026 10:45:45 -0700 (PDT)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	christian.couder@gmail.com,
-	karthik.188@gmail.com,
-	jltobler@gmail.com,
-	ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com,
-	lucasseikioshiro@gmail.com,
-	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [GSOC][PATCH v2 2/2] editor: remove the_repository usage
-Date: Tue, 10 Mar 2026 23:10:49 +0530
-Message-ID: <20260310174519.676851-3-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260310174519.676851-1-shreyanshpaliwalcmsmn@gmail.com>
-References: <20260301105228.1738388-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260310174519.676851-1-shreyanshpaliwalcmsmn@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fH2hkre3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j9JZKwdM"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B4C5A140016A;
+	Tue, 10 Mar 2026 13:51:34 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 10 Mar 2026 13:51:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773165094; x=1773251494; bh=p2IcLx9Ra8
+	WgqtalRjcX05ycWDja9xHNH7l00mcbVvc=; b=fH2hkre3xCQ1J/GPUSj01oz27Q
+	EEbvUaNIyu8nQnWfGysBWznuPlxTJxB8nld8tnjtndJ7FGaWPkTNONZioOBHdjWK
+	bEo/LMM2Ik0YxqDbDkA+EXl9TB5nf4ugJvnzRCrEFLf/refggRFePdDfypgSWC8K
+	yF4Usf5mxDcUuf4eNoh5GXvr/9PyoJYXALrYWdPpECHWFXGP0fB83G9xSInE4J8s
+	FR4EVHhrSBBZapJBS373KiOOupdgyoPzNkf4QI1fvTxITPs6gT3ngQ8re2B+nl03
+	bHGqW1AfZx0H9vLjKD09mUTm06P8D2/CdqeBrWBHL4X0UpTYuWIFf+mHYSLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773165094; x=1773251494; bh=p2IcLx9Ra8WgqtalRjcX05ycWDja9xHNH7l
+	00mcbVvc=; b=j9JZKwdMvZvom3FLbQUbRw64CPB1SDf9afe52YLz42sOTKm2ZH+
+	tRz5xKbJPUaxZvWGGnicCeO/fwKYAC3/Y8tjTwJUZVMHc+5ynJdwszMK3IFoN25f
+	5NDN1vd0ZubnEeXwHxaiZgfrP1bwCKPfHKPZe1VE+PQp1catnIEMmuVSqpVT4pMX
+	RtzVywtUkPxUeOwgmsUeAgnLuRywQSrIFrpmexO/+26N0BVoIIsIPtQ7E16PMfnZ
+	AqzxEJhyQ/EQEVQvt7t2kAa+txuYlmlsDJ+NLTU/eMjKZplcxMhAZ+TtOsJxGVtD
+	50lKnBhJF6KbPNl1HZzpL/uit4b/qKCBCeA==
+X-ME-Sender: <xms:JlqwaSJdI06ptmAQckyRY7di835vdE61FOuyZCpZZw4bkgWKAzWX6g>
+    <xme:JlqwaRkr5RM6Gq_KHvpqgNEcRj3Nn6F6GeEfAEh7PoQe8caP757VyUwFGmbJYMtNw
+    QdK0Qw8KSfkYvc990fCVQ0DxMHbdkc7uaXnCl5GAFW64KprY3JUDvA>
+X-ME-Received: <xmr:JlqwaQHY1frjRj7uhn0GLhmQY-_nJ_DBJkD2wB4nukjRVoxtfYCRgA1jp5MBEoeTMpBrgHe2JmQTEB0tO7tmrqjnocxp5I77Pw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduieeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:JlqwaRFi1NTYI7wq44hJPFieh-pCvxSG0CXSJh4fcoI8lFtlkJ79hA>
+    <xmx:JlqwadOClv4w0opxiw_4a6BlPw98D85jPFTO58Ci642OqG23cLqz6w>
+    <xmx:JlqwaQHHtD5_Cgrj58LBRo2-fr-waahhfaVJ0q-8d6zU_XWFRPMAwg>
+    <xmx:JlqwaUOrgt7FwLY3TC6WYkQhtYPkG3updB4EXs3TyGQOV-C2RCReEA>
+    <xmx:JlqwaZsZOTJMb3cuIYMKZuiRQzVyBmdQTPnIChCrXDfsv70b-k5jyYDK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Mar 2026 13:51:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 5/6] odb/source: introduce generic object counting
+In-Reply-To: <20260310-b4-pks-odb-source-count-objects-v1-5-109e07d425f4@pks.im>
+	(Patrick Steinhardt's message of "Tue, 10 Mar 2026 16:18:25 +0100")
+References: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
+	<20260310-b4-pks-odb-source-count-objects-v1-5-109e07d425f4@pks.im>
+Date: Tue, 10 Mar 2026 10:51:33 -0700
+Message-ID: <xmqqfr67vahm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-git_sequence_editor() reads sequence.editor using the_repository. Pass
-struct repository through the callers instead of relying on the global
-state. It is called from,
+Patrick Steinhardt <ps@pks.im> writes:
 
-- builtin/var.c: Mostly the_repository is used in all the functions and
-  there is no proper local access to a repository, so pass the_repository.
+> +static int odb_source_files_count_objects(struct odb_source *source,
+> +					  enum odb_count_objects_flags flags,
+> +					  unsigned long *out)
+> +{
+> +	struct odb_source_files *files = odb_source_files_downcast(source);
+> +	unsigned long count;
+> +	int ret;
+> +
+> +	ret = packfile_store_count_objects(files->packed, flags, &count);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	if (!(flags & ODB_COUNT_OBJECTS_APPROXIMATE)) {
+> +		unsigned long loose_count;
+> +
+> +		ret = odb_source_loose_count_objects(source, flags, &loose_count);
+> +		if (ret < 0)
+> +			goto out;
+> +
+> +		count += loose_count;
+> +	}
+> +
+> +	*out = count;
+> +	ret = 0;
+> +
+> +out:
+> +	return ret;
+> +}
 
-- editor.c: The caller is inside launch_sequence_editor() function which is
-  called from rebase-interactive.c:edit_todo_list(), which does have a
-  local repository instance, so pass it down the caller.
+The design to assume that the majority of objects should be in the
+packfiles and the number of loose objects can be ignored when we are
+getting approximation is inherited from the world before this
+series, I think, which is a valid choice for this series to make.
 
-With no remaining global states in editor.c remove '#define
-USE_THE_REPOSITORY_VARIABLE' and drop the dependency on 'environment.h'.
-This removes another dependency on the_repository and keeps editor code
-consistent with the ongoing effort to reduce global state.
+As your "get an approximate count of loose objects" counts a single
+shared fully, instead of punting as soon as the limit is hit, we
+could ask that function and add it in when the APPROXIMATE flag is
+passed, and get a bit more accurate number cheaply even when we are
+approximating.  I am not sure what the pros and cons of doing so
+myself, but you may already have thought about it and rejected it,
+perhaps?
 
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
----
- builtin/var.c        |  2 +-
- editor.c             | 11 ++++-------
- editor.h             |  4 ++--
- rebase-interactive.c |  2 +-
- 4 files changed, 8 insertions(+), 11 deletions(-)
-
-diff --git a/builtin/var.c b/builtin/var.c
-index cc3a43cde2..7da263b129 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -38,7 +38,7 @@ static char *editor(int ident_flag UNUSED)
-
- static char *sequence_editor(int ident_flag UNUSED)
- {
--	return xstrdup_or_null(git_sequence_editor());
-+	return xstrdup_or_null(git_sequence_editor(the_repository));
- }
-
- static char *pager(int ident_flag UNUSED)
-diff --git a/editor.c b/editor.c
-index b509d23f3b..b78c8a687f 100644
---- a/editor.c
-+++ b/editor.c
-@@ -1,11 +1,8 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "advice.h"
- #include "config.h"
- #include "editor.h"
--#include "environment.h"
- #include "gettext.h"
- #include "pager.h"
- #include "path.h"
-@@ -53,12 +50,12 @@ const char *git_editor(void)
- 	return editor;
- }
-
--const char *git_sequence_editor(void)
-+const char *git_sequence_editor(struct repository *r)
- {
- 	const char *editor = getenv("GIT_SEQUENCE_EDITOR");
-
- 	if (!editor)
--		repo_config_get_string_tmp(the_repository, "sequence.editor", &editor);
-+		repo_config_get_string_tmp(r, "sequence.editor", &editor);
- 	if (!editor)
- 		editor = git_editor();
-
-@@ -138,9 +135,9 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
- }
-
- int launch_sequence_editor(const char *path, struct strbuf *buffer,
--			   const char *const *env)
-+			   const char *const *env, struct repository *r)
- {
--	return launch_specified_editor(git_sequence_editor(), path, buffer, env);
-+	return launch_specified_editor(git_sequence_editor(r), path, buffer, env);
- }
-
- int strbuf_edit_interactively(struct repository *r,
-diff --git a/editor.h b/editor.h
-index ced29046f8..bcd0cebc85 100644
---- a/editor.h
-+++ b/editor.h
-@@ -5,7 +5,7 @@ struct repository;
- struct strbuf;
-
- const char *git_editor(void);
--const char *git_sequence_editor(void);
-+const char *git_sequence_editor(struct repository *r);
- int is_terminal_dumb(void);
-
- int set_editor_program(const char *var, const char *value);
-@@ -21,7 +21,7 @@ int launch_editor(const char *path, struct strbuf *buffer,
- 		  const char *const *env);
-
- int launch_sequence_editor(const char *path, struct strbuf *buffer,
--			   const char *const *env);
-+			   const char *const *env, struct repository *r);
-
- /*
-  * In contrast to `launch_editor()`, this function writes out the contents
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index 809f76a87b..405ef353af 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -132,7 +132,7 @@ int edit_todo_list(struct repository *r, struct replay_opts *opts,
- 				    (flags | TODO_LIST_APPEND_TODO_HELP) & ~TODO_LIST_SHORTEN_IDS) < 0)
- 		return error(_("could not write '%s'."), rebase_path_todo_backup());
-
--	if (launch_sequence_editor(todo_file, &new_todo->buf, NULL))
-+	if (launch_sequence_editor(todo_file, &new_todo->buf, NULL, r))
- 		return -2;
-
- 	strbuf_stripspace(&new_todo->buf, comment_line_str);
---
-2.53.0
+Thanks for a pleasant read.
+Queued.
 
