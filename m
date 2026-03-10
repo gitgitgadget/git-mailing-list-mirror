@@ -1,208 +1,150 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63106397E82
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 12:35:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773146105; cv=pass; b=PC2DS64fPST8jXYb6fZPbx4N1bbda8ZkbbykZDYCJ4LwD/Xj0K1xs76TOgqInHrC4rYj6ShfS9vvnnoXmQ0caQJ7ZchGecxj990qG/aMoqkGvHTh6TwGisj+V79OtU02RSqL4uUceR8zAwLcgTB2nB0w2OROv0Pu14umrdulfNA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773146105; c=relaxed/simple;
-	bh=l9D/33boRmy6Dwf7Bl3WB3tdUpmCER2AZXaOJy82blA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QMOdhFuDMvmTIMg99cUgx98lz0Cnazx+Y0wgeyO3vxxp0k+WyFI/bv54jpox1D4UZv8/qrLZHc23IVox5wnF1g23pNSrbPAjhjUE90WUC4KagruXh/w92eiJrzlJ8aPrygnsYB/tCuFs6+xKU9gLD0wCjQb1m/zcMecgOZVJmjM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W/tqVt5P; arc=pass smtp.client-ip=209.85.217.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0492C3A3827
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 12:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773146519; cv=none; b=gqO/8DpebHd8z9gGh+iTA1UZDLammIOJnF5MUnh0tjEQERc6bfg51Os7/CLc3w7FSKcsYXGY7Pa+VTHRPo+LAKLFdBqVqxD7tqxe9VL59CeeC9n8mbVzHmOGwb5byyZHH7fYdxPT3dEJZzA0WjCfxEhYdQleKcvgyM84I3MFBCw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773146519; c=relaxed/simple;
+	bh=OmRJX1MlC9+9amw7z64W5Zd5OnzozTweegSHGQGPnLs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D2DenpHzY5FTUhw80Sx+TpZ68vEm7E9SF759sB9SZIY5yYBzyz6ecaq6aa/eTiNJBQFTcWiFdKwFdq60F40Sg6JruTXxuGR0d6YI2il/RNFeewvVPaYZWQJqkqeSab+WDjFttzIcKCQ1QnM/TvuLGO6Hdmi1JXJGkuDpFpayOSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dclM/OJ/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rpJxtAyK; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W/tqVt5P"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-5ffca37e8cdso3024299137.2
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 05:35:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773146103; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NJBLhezwTtr+YDTOE8v2gcAyqs2Ka1kQwbpisRNG+G3UwxmUX6PzbilrDi9FistQ+v
-         uJDkCB9LljVSEYdyPLjg1ReiZ21XAFDnJrXaZSbqHOWWl3W+6c/29zmkZjktWFOFv/7y
-         aD/wpTEz83kgh/HZYhBZnprOdPPXb0DcMh9yrJUWuzT5HgYOLeCBhWRzXJT1menPwc3t
-         /2PsyDD01LJkth746OUrAdrT1Of6VRdbrBCyGdsC/wfz+TsZODTgE2YY1NQ8tRRe3qd5
-         jD5dPOCFLAnUX7MfWGpD+Un2ekZ9jimmOFSePRLg16HWVa2eUoN79wLgboRFYIQdFv02
-         ys1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=y1v4OrQ3xD6zxWeLfT3wp6JfxZqssvPJ514ts2fk/WY=;
-        fh=dMlx1G9Tbn8/FKsKaRMrcrS/ucwCNJvYdFPXbKm7eR0=;
-        b=cMNOC9WsyQiT+wzxQqK+wrZN2afFaEh2ETsB6wrXTl5lQ2mApwT7Pm1LvB17nBVn9Z
-         He79/TZPAaO746rQxdZQGEYpkaDBRyX3MGD2wSFdzHzYtDSLZfS+tq3iJtUakmGkvH23
-         EAaxidCnMwxMGPv0opbpjrtSJZjJwMF/Oo+XwgUDWYL4JT8zdzvFjsRNb6Ym8kGTtgyv
-         kEhpmWHH6/ceIN9+8bIXc/N9d/7BPbHYXQCI8je07QkZE7mAIVLig71mDTrE890Hz7tP
-         K3oTLRuv063ko5xo0spoxZRSuYp5CwW4qJAyAqhF6TMMUXPv9tsnL1KoArbeLWwiru4P
-         zJoQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773146103; x=1773750903; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=y1v4OrQ3xD6zxWeLfT3wp6JfxZqssvPJ514ts2fk/WY=;
-        b=W/tqVt5Pji26LLkVcZn5y6nzOR4efRp4WqPeAY7UpFDecWK0W1kijC3Wq10zBFXCcY
-         zLEX+REceQhyGqOuu/deqF9JjZI246MrbtzLcNggy4i6V50JLARILFdCw9UzBsmUA/6k
-         WXikDQLpNgs87xt3lbIT4iFDK60DgfH1eexvZXu10vlX7weJDjyUwOrkyY2qPs8E1Qr8
-         TKAX2Q+qDdf+Zyk/VF/GF81cSRre6UbUjkEkqNckC4KAJn3e2Brn+mpmw2swC67/QJVT
-         Reb5wFGdcVjyAMGCFAoN+/bq+qzBhTGLyVHZVNsvTvnPHZ3Hn7Z8sb2uqUxRj0eGDUGH
-         saUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773146103; x=1773750903;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=y1v4OrQ3xD6zxWeLfT3wp6JfxZqssvPJ514ts2fk/WY=;
-        b=umlHKVYmNl5dXLQSYIWJzcOjHNB2EQCRGgrLR8jztU/2x9ZpkYlfKDwAQhZNgHMbrL
-         Tm24dyikA86pNS+H/383saNdC+NxSPP3zjL3Nnt/+RA4gVHFsjXq5a1rqRmwjDbp05BM
-         8CMAhUFkC8Or0eASaPWk97hrdhnVRR6ZpK4HZvwgyEd235m8H9yxsvGmljM7icf7Ya9b
-         dxsulrT9vB8+PcjFnczvD4B+WJONeZj7CxgEhTL8srfgsexyghVUUmUZp55gNIltme79
-         Hlk2+FFUgQX/K3gDkaVdY6IRlq0JYGBcEpBbA5S5C542NhHLqjwPMAccLmdDreB8wLOp
-         Ao9w==
-X-Forwarded-Encrypted: i=1; AJvYcCVG77RywQA9vEaXhuhE9Pk83T1XQ2iiXjoyB8auXns7i/V4Jj2C+4gj9UFA7Tda4Nuh150=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFhQ8LtwqR0TU5HzadzBSxXVO/6LAZtBJ4eWI7YpXGZGHZzuSe
-	3Y4aWeoECRLSZcr5ybt+l6YRlEBnGVNDpvdaoxkSdPvYUlqbYdJx5qiStXWNSFK5YaOz/gx/akM
-	djpLPKTrlAedCB2W0eW1Fxl1kNL83Fq/p8X/+
-X-Gm-Gg: ATEYQzykIi0tdQ1ffzzxB+iYY4S4eu5QxmyGfOJC+1qebZdpo/Ofohm3/bULEn4RVcB
-	af5OwMmg44QOVtSVu/9TnhCZBLIzSbtL8zY4JB11a170cPSYSDrtqgrtzOCm8hL2VqvPMDT3spa
-	oTcHM6RWEqaFT1TO31pCWzkhOH73RYHCXivIFRIVU8Nhz165CefgOhCc7zgGLRckxz//G4t5KGK
-	kjBSbBr2ROAu+Tlqz7ftDGMtlGYOZfpe2eU2fEq3pAzRqtZp8k/65wKi45jg0gNKNLWAoLZu4uK
-	OiS7ducZyjw/TRvKCy9w+YkiX/xLzkiLC0QTxMp2Wg==
-X-Received: by 2002:a05:6102:b0d:b0:5ee:a76a:8513 with SMTP id
- ada2fe7eead31-5ffe6217b99mr7329853137.33.1773146103214; Tue, 10 Mar 2026
- 05:35:03 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Mar 2026 05:35:02 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Mar 2026 05:35:02 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
-References: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dclM/OJ/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rpJxtAyK"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2A96AEC08E0;
+	Tue, 10 Mar 2026 08:41:57 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 10 Mar 2026 08:41:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773146517; x=1773232917; bh=pjYaN5MAfz
+	y3dP0BZh83kKzurihB5vOHl2C/qalA9lE=; b=dclM/OJ/8/anJ+M+Owzh1hE4E7
+	YPmIDC6KTNUe4SFPCqMrdWon1thYPi4jA1qLuM5BsOqgP9s/Kh0StrPa0atFIOxM
+	FKth1v2ptnTtgHUUkX5v1avdtbW0WJOmu1SttkJkIMD5CUyeERELorGAtirjBTOd
+	OeedO+2sShy7Wdaah1/F4HiJ8i4dg0EjsTq4/2IHBL78OiQuAZTdyC5W1pqq9Sg1
+	2LZOjbFtgZT9JOCZx1zFXuAztN19W7riLQffje1FGsCdkFkJOLIT7342TIg8es9o
+	06LBggb1H3JC+2uZih3AjZToIsSyUb5dQ1PUv6Sb7zWi867Jo4FWtsQPtSEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773146517; x=1773232917; bh=pjYaN5MAfzy3dP0BZh83kKzurihB5vOHl2C
+	/qalA9lE=; b=rpJxtAyKqTA1W6BX3V7jvwMpIvUKnlq2rl6CPo2PbtcyfaqhikC
+	P/lJdjDUgiiVp2PPlTJFjxjiJUJOeiDpMwKu40rOseFpY+TvoDLj0hWK1m9IqTNQ
+	EjUZh/SCQcVOsZHETHhZBj4EVrAwanIgQVRy+wVqQdY+9pcSyp8VnbXqXPN/2I0W
+	2a2MkoBhoMgKEuN6aBgL4gDGOSNG8kPY9RUSuWdS28yBqgU6uhdasscEB1v2kss2
+	1XIfYNfLHA7UksKeDvJdAQV34uADog6Y6W7dOTfts/3olDIO9jJaMe86OnXMlr/r
+	+XCeD3cRgAOCxBqy4z1hah7BJqoQ5vrb0Pg==
+X-ME-Sender: <xms:lRGwafCDPbbL8eAm6wAWHfZnUBUNtfSE2-AiDAfTbaeV1Fd5fScqHA>
+    <xme:lRGwaciNKQFGKzgTWogui_--uNUtqLGQr4_GqcTKd2_Aeokho5Yx_86xdhDBTwuL8
+    L6nhUdsuze_f9ZTIick1fI8-D2HGxpYrWD73seLoYJfSAu09dLx5w>
+X-ME-Received: <xmr:lRGwafkbXWbgGp8Z6EVgXqWj5PhJZq6O4dvtwGjGXw12pw1GwrbBwMuJuGdfcRXBJ8lWS0cphdoS4L2gNfq26gAkI-uCs80Lran2P3u1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedutdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhonhgrthgrnhesjhhonhhtvghsrdhp
+    rghgvgdprhgtphhtthhopehrrdhsihguughhrghrthhhrdhshhhrihhmrghlihesghhmrg
+    hilhdrtghomh
+X-ME-Proxy: <xmx:lRGwaQqtcs0AEoJgWLmPpyl-KtBtDvhpXbgwzUOBjU_i5q32ZIu7YQ>
+    <xmx:lRGwaQHfw1-jYJsDXyzQ7VQNf71thorLAuF2dx2VNu9ZJms6LuF8hQ>
+    <xmx:lRGwaUwnQ4KbCaR7FwPOkg1_U_a2gby5QS2fmPqIZgBDMdByDnzTHQ>
+    <xmx:lRGwadoW4XUpFQKfKZL28Dlf4UJoMYR8cJdoyzY8DLSwahDmXuB40w>
+    <xmx:lRGwaa2L2aQ-pabaJEQBx0OvXIen7qlDgLc9MLG-9SwQqtNT0oa9TWU2>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Mar 2026 08:41:56 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 031e8c8b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Mar 2026 12:41:54 +0000 (UTC)
+Date: Tue, 10 Mar 2026 13:41:51 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, jonatan@jontes.page
+Subject: Re: [PATCH] builtin/help.c: move strbuf out of help loops
+Message-ID: <abARj_VI9n2nB_xT@pks.im>
+References: <20260310070328.29836-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 10 Mar 2026 05:35:02 -0700
-X-Gm-Features: AaiRm52iJ0Q9UVGDQKU2vW6Y4Etxt6xCVmj93IH2ew1qxIWKynQ5DzgV3SJ_FNY
-Message-ID: <CAOLa=ZTTjvSv04QPtHiUEvDfJMfKYks=5PscZxH15SLkBmoCDg@mail.gmail.com>
-Subject: Re: [PATCH] merge-file: fix BUG when --object-id is used in a worktree
-To: Mathias Rav <m@git.strova.dk>, git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, John Cai <johncai86@gmail.com>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="0000000000009e1435064caabf50"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260310070328.29836-1-r.siddharth.shrimali@gmail.com>
 
---0000000000009e1435064caabf50
-Content-Type: text/plain; charset="UTF-8"
-
-"Mathias Rav" <m@git.strova.dk> writes:
-
-> The `--object-id` option was added in commit e1068f0ad4
-> ("merge-file: add an option to process object IDs", 2023-11-01)
-> together with a call to setup_git_directory() to avoid crashing
-> when run outside a repository.
->
-> However, the call to setup_git_directory() is redundant when run inside
-> a repository, as merge-file runs with RUN_SETUP_GENTLY, so the
-> repository has already been set up. The redundant call is harmless when
-> worktrees are not used, but when run inside a worktree, the
-> repo_set_gitdir() function ends up being called twice.
->
-> Calling repo_set_gitdir() used to be silently accepted, but commit
-> 2816b748e5 ("odb: handle changing a repository's commondir", 2025-11-19)
-> changed this to a BUG in repository.c with the error message:
-> "cannot reinitialize an already-initialized object directory".
->
-> Guard the call to setup_git_directory() behind a repo pointer check,
-> to ensure that we continue to give the correct "not a git repo" error
-> whilst avoiding the BUG when running inside a worktree.
->
-
-Well explained. Additionally you may want to clarify that you're talking
-about a linked worktree. Since the dir initialized by 'git-init(1)' or
-'git-clone(1)' is also a worktree (AKA main worktree).
-
-> Signed-off-by: Mathias Rav <m@git.strova.dk>
+On Tue, Mar 10, 2026 at 12:33:28PM +0530, Siddharth Shrimali wrote:
+> In list_config_help(), a strbuf was being initialized and released
+> inside two separate loops. This caused unnecessary memory allocation
+> and deallocation on every iteration.
+> 
+> Move the strbuf declaration to the top of the function and use
+> strbuf_reset() inside the loops to reuse the same buffer. Similarly
+> release() the buffer at the end of the function to free the memory.
+> This improves performance by avoiding repeated heap pressure by reducing
+> the number of allocations.
+> 
+> This also fixes a minor memory leak when the SHOW_CONFIG_HUMAN case
+> triggers a continue.
+> 
+> Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 > ---
->  builtin/merge-file.c  | 4 ++--
->  t/t6403-merge-file.sh | 9 +++++++++
->  2 files changed, 11 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-> index 46775d0c79..a8768c6e0c 100644
-> --- a/builtin/merge-file.c
-> +++ b/builtin/merge-file.c
-> @@ -60,7 +60,7 @@ static int diff_algorithm_cb(const struct option *opt,
->  int cmd_merge_file(int argc,
->  		   const char **argv,
->  		   const char *prefix,
-> -		   struct repository *repo UNUSED)
-> +		   struct repository *repo)
->  {
->  	const char *names[3] = { 0 };
->  	mmfile_t mmfs[3] = { 0 };
-> @@ -110,7 +110,7 @@ int cmd_merge_file(int argc,
->  			return error_errno("failed to redirect stderr to /dev/null");
+>  builtin/help.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/builtin/help.c b/builtin/help.c
+> index 86a3d03a9b..07398b430e 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -134,10 +134,10 @@ static void list_config_help(enum show_config_type type)
+>  	struct string_list keys = STRING_LIST_INIT_DUP;
+>  	struct string_list keys_uniq = STRING_LIST_INIT_DUP;
+>  	struct string_list_item *item;
+> +	struct strbuf sb = STRBUF_INIT;
+>  
+>  	for (p = config_name_list; *p; p++) {
+>  		const char *var = *p;
+> -		struct strbuf sb = STRBUF_INIT;
+>  
+>  		for (e = slot_expansions; e->prefix; e++) {
+>  
+
+What's missing from the context here is that the next line already knows
+to `strbuf_reset()`. You could do a trick and drop the empty newline
+here while at it, as that would then make the reset call visible.
+
+> @@ -149,7 +149,6 @@ static void list_config_help(enum show_config_type type)
+>  				break;
+>  			}
+>  		}
+> -		strbuf_release(&sb);
+>  		if (!e->prefix)
+>  			string_list_append(&keys, var);
 >  	}
->
-> -	if (object_id)
-> +	if (object_id && !repo)
->  		setup_git_directory();
->
+> @@ -161,10 +160,10 @@ static void list_config_help(enum show_config_type type)
+>  
+>  	string_list_sort(&keys);
+>  	for (size_t i = 0; i < keys.nr; i++) {
+> +		strbuf_reset(&sb);
 
-Nit: but would be nice to also add a comment here.
+Our coding style says that statements should come after variable
+declarations.
 
->  	for (i = 0; i < 3; i++) {
-> diff --git a/t/t6403-merge-file.sh b/t/t6403-merge-file.sh
-> index 06ab4d7aed..60cc43775f 100755
-> --- a/t/t6403-merge-file.sh
-> +++ b/t/t6403-merge-file.sh
-> @@ -506,6 +506,15 @@ test_expect_success '--object-id fails without repository' '
->  	grep "not a git repository" err
->  '
->
-> +test_expect_success 'run inside worktree with --object-id' '
-> +	empty="$(test_oid empty_blob)" &&
-> +	git worktree add work &&
-> +	(cd work && git merge-file --object-id $empty $empty $empty) >actual &&
-> +	git worktree remove work &&
-> +	git merge-file --object-id $empty $empty $empty >expected &&
-> +	test_cmp actual expected
-> +'
-> +
->  test_expect_success 'merging C files with "myers" diff algorithm creates some spurious conflicts' '
->  	cat >expect.c <<-\EOF &&
->  	int g(size_t u)
-> --
-> 2.53.0
+Other than that this patch looks good to me, thanks!
 
-Looks good otherwise.
-
-- Karthik
-
---0000000000009e1435064caabf50
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: ad58357bbad9dbd_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1td0QvQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNnIyREFDTm96UVR4QWdtUWNsRW9iam1iTFBIWllnUAo0Q0krSVh0aUth
-YlVXYnRnMXJDT3BGelRCU2ZxbE52MFBTWHdZQ2s1UGgzZUt6azF0aEZhTTM1Tlg2cFJLR2VVCmdK
-SXhhUEZjM0EwRmFqY1pzVEt2R0ZVb3J6MlZTVm82Z1dmR0thaEdqVXBWL2dONkxCK21PaHJLSWt6
-VTVNS0QKaEI0MFd1WWZhOEZ5NVFKaUw2WHk4ZGdMZ0NLWCtab2wrTjRtVlpLdGVCeVZpVlBhMkR0
-RzdYcGZaMjlab2s2Sgpqb2FnKzltZW9qK0F0aU5mcUdGRHgzYjQ2RC94czcwTExUdlNXUnNoZGhI
-WllyZ0VEbUJja0VoVWJEd3hrVXAzClFMcDI1S0NvVU1sU2Nuc000WE1kVjVET085VWNWM29oQWVs
-V29UQ0l6bkZJRW9IVjFGdjc2cVpISXhEM3h2bUoKMlJ3eWJldkxUUHlldEhnOTYrWGQ5SnNEK0FU
-ZnRpc296QkJWakJmSkIxR1dKRHpiRHdYcHk3Q051MktGM1dNdApGK1BNV2UrTmx4TzBZT2FwYVRP
-TWw5NS9wZUlzYkxHNUplWWVTTURXbjBjZzA3VHBtTjdUZVVCQWJmTDFwaGJiCis0V1ltUVhJYjlU
-QjVaNjRSZk9McVN2UWl1Y0FFQXVkSUxRcG1ncz0KPXlkWEUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000009e1435064caabf50--
+Patrick
