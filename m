@@ -1,137 +1,214 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4835E38E5D0
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 03:09:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008D41DF755
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 03:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773112163; cv=none; b=DWG+extQNz3vaug4bj+TDOKHrhV+06ALePegWB3XIY9LwWT/8pE/CgThKJaTXSbyU7VqMEU1xMcJJHeFxUbC0nhe6z8zsdHO1m5652R/SWVQ2rrIbqnUOx+43ibVeWqrnigOPTBv+t/U/D7y6tcOkou/TiCDd3PQkNQkaO4hcWE=
+	t=1773113506; cv=none; b=b5ud9/xaiiXU6xhYdbpGHZ/rfB7nHN/lIRk4e1lH8sKfP1wl2TSSSqFBB/CCEqXTYEbxvR5IMjTWsxjiAHx0fujl3Zr5W118qvNs3AKc/Yswe/Ih2R2M6hzM91S7AvFxjshQDythLdmxnFP+shQ+AdZ3XYbaZrr9wQ5svJxgxRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773112163; c=relaxed/simple;
-	bh=ut3PRF23q+5xJbtESuvsErn8NecOnkD51O3qC5VkCEs=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=TD61khlDFaxeSLn64MizB+eU7OYK8CAqz0sbQXnf9uumc8gbhjid7eLsZuCHTzN5MmJD1HpcF/UrXfa8OqUbjglR4v4Yweu+CCKVsUEfweMX13s9AlG7q5i0DBVV6O4dEzwQLy9b3NF4fbg9aFKrjYG0CsdXQfiAAl43kv8sA4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DsXYNr7C; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773113506; c=relaxed/simple;
+	bh=lnYhYr+YLejpV+oJabV+1T/DpHnI9eUzMOt7HyxF3jA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Eko1QPpulXAMRc6AhHsvETgm88+luQlYeuaalQZSeGLllPmZGR3DYuyKecm5TcUOYWNDdS08I1dqpbspA4AlDJ74Q2F3pwT/29hl9bRZWpa9lU5Ip4P7XoB2yM2UK2/grQ/vP488PXBuzd35fQOeUlV0ErpQEyQVIaurwVR3KD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IbhosHNP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BL7pfMJ9; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DsXYNr7C"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-899fbf92bdbso119808606d6.0
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 20:09:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773112160; x=1773716960; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=it/jAkv1s+tfwB90WhP7pF49MIDjzkLsNyVKYmnNyy4=;
-        b=DsXYNr7C3FvLOdLK8cH5cUfKT4tYWq11zFdDx67vlVfgq/RXza8/YoaEGxaq67F7f7
-         b5ht4iXwPFKXV3gpR5lzPdtliyccaI26J5rLx7aECCq/UFa2/ZubdxsLe8LXvSxIAz4N
-         yHLUeGRPE69KvgDZYRWXRYFwNjWPpZj7fqJ8RqC8vGwUVLr6+Ydt9U18xkZhc6kK3AW4
-         AIXABS4SmNvyhZHXWxCBsIUe2ir7T13GDCQUme1EYkQfd2ieFghfjplpAggr2bVpK3F2
-         ZSQwjqwTq9aXsObW64rMyp7LqA4Q/5P/CIVocP+hRSBrp3gArb+uSBpniEn+EADERk/k
-         xm+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773112160; x=1773716960;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=it/jAkv1s+tfwB90WhP7pF49MIDjzkLsNyVKYmnNyy4=;
-        b=DF+We92oNC27cd5AfQLI3VZDAtoPL0HW6Kdy9Pz8Izv7xtWZLhuqM5GeG92NY/hAot
-         aOLj0YJQOo1f2nNtwhCWxLGK3BpzbErt77OiHDV/ijwwiSSsxJkbCSIBz1LN+1DpDuNv
-         opjFVEMFRJyLTNhG8Dr/9aL04WN14B0i8tSv6T3rSsx1e+LfILt8KVmlyYfaw9/r7f2E
-         qXfa2pPFY6hzhs96MGx/+R4DSEql7389rPpB9afZTKy9nuHgbiFnGbw3L4h34A0+5l75
-         3hjO3sVsmsF1x3sdJ3BfiSErni8JHJCweAzgUTHZYghPaRDQ6AaVJITp6r1RCg67LrwD
-         Xqqg==
-X-Gm-Message-State: AOJu0YwekzpnMaYmne8T7JNi/FLs+W38BTaVppzy6kWR1pUNMG8Ozi4D
-	nHQAZtFM+651EDhXLg+Sot+E/SnufyCR+l7THNfucAxDbuzOOOjdcGFfblhvsA==
-X-Gm-Gg: ATEYQzx4j4laugdrz9AN5uYUPsyFJ6UTXfvDbeu1Qmp3DmGrfLWcqO6Minm4PiCmsi7
-	aPo5d+1i+xGyC5aWr7EFKuxU/c/tgV4JvwFiCP/cKVy0qBztF9mOkZYOmmluZVWGy9tKGK9ihOo
-	eO+4SNNLz0V0ZvZPZ4oAslLxuiUEl3CDTwa5H72jxYluZpbmO1hNIn33XkKqzQ09VqaTaDEDIyE
-	kMTTwSo39lRcmoHnRaDJUmiwL3tlIonmHjrQcMKrvmuCxKhcetX3JPXDZfFNze9jEhhx39L6za3
-	Y/Pk62ih/UjWe5Urs3oj+H37DPt05P3zyQFtiURgdJDLWCml3Jf8wJgKfgFGsycQ3Q2vgflHG6X
-	QxpRFzQBTY9uav8UvIqMTbLxOgM0l2V9ZrX67jxYQKOGHhmtTVxEeB4qfD/Kf9NGkutPuzNjWLb
-	ya9ktM6PdTaKi95FvbjLj1EUU=
-X-Received: by 2002:a05:6214:262c:b0:89a:e5f:d536 with SMTP id 6a1803df08f44-89a30b06e13mr206254466d6.63.1773112160528;
-        Mon, 09 Mar 2026 20:09:20 -0700 (PDT)
-Received: from [127.0.0.1] ([9.234.151.19])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a57c2c482sm10441266d6.42.2026.03.09.20.09.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 20:09:20 -0700 (PDT)
-Message-Id: <pull.2066.git.1773112159662.gitgitgadget@gmail.com>
-From: "Mansi Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Mar 2026 03:09:19 +0000
-Subject: [PATCH] t1900: add tests for git repo structure subcommand
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IbhosHNP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BL7pfMJ9"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 282021D00192;
+	Mon,  9 Mar 2026 23:31:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 09 Mar 2026 23:31:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773113503; x=1773199903; bh=5C0cS+dWmd
+	SuxkPA7q/sktpn41V2qeXKeFAQlxBOQ/c=; b=IbhosHNPBkR8OkeL1c0uGWch8V
+	wzzLshjisHInmKfTgIqXX0/FX7+iWZe19XvIldbyc1e9B0cVCrAzlFfAYn4hA1E9
+	ppnnDhUu9nhuNdEYkK1PH1Y8UpXo+/jXx1ubUjH0AeyQ+4pwh0zuVPBMztxdeecO
+	VU6ZLFsKGKSGUtLNcpf9NaCiIjYmbiAlnR8qZnTifIX5kdGj21HK3J5p87rTyFm6
+	i/iYhBQPLDrb1GE1sRa2XtD11OJfCtNKu+VdmUX/C8Q+BmL/fQkSbe/FujnKkurR
+	rKiR5JPBjRSVTTepPVjkGthJiCo37o6SZUiivCcmCWJZDLy8YARZo22CG4wQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773113503; x=1773199903; bh=5C0cS+dWmdSuxkPA7q/sktpn41V2qeXKeFA
+	QlxBOQ/c=; b=BL7pfMJ9MPA7krxPa/u4ia8hFb2rfBzBQY3ztwPmrzZe+QJiOLv
+	OIwwii3xp2TlN/BBDisJ5g+NAMdqdVAoS+Hnc83Vk0VqaTPmuHw5I/VKjrIilJsl
+	o50EI1o2RICN5KQGKL7RD3OMClIr6aB70JsCUf7uTz3VJmTLdqTrmo3fUiOh1XSk
+	mPjXJBHWMbDP1JYliKVfv/j8FEf7PhTCb2zlAKb5ZcsStC8m3ijYg1FOYlEb3RZ6
+	vAVDc06A6+siuY4zcEYoNVFNpjzjolSrSUx2IjzPi37KesgukiwBfbK0vmz1e/yj
+	mCk1w8raC50U2JIyRQN6gSQt3w4+sTxMCPQ==
+X-ME-Sender: <xms:n5CvaV9kIVTDgSoShzjslh7NjieYCTp2oY_CqIu5wQ9qcITK6RPtOw>
+    <xme:n5CvaRIOy22Zbi2qh78OrR-pIfb-E4g0nTP_V9QY907vbO0QWGkYpLcvfKH_AZaX2
+    FP7jIhcbO0rQHRYYaP0n0auM4o9ys69SaUL3ufIFqQI9YoHmdV75A>
+X-ME-Received: <xmr:n5CvaQYyL_cHUDXa5fMATgzD-K3KafOI5gp3wm8cG3sayk3qhflDMKqw9dRrTN7YPTuLDg4Q0Ob5o3yDs7N770QHHwKJATXN9g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeelleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
+    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:n5CvaTI0XODcldOKmyStHN_zDI5c9J2oxHcUdnAvEkghSvGR9wc8lQ>
+    <xmx:n5CvaeCgoEIY0xhMepCq62-iYk_l8V6tLVtP_UqnuDuNdm9_jmA5ow>
+    <xmx:n5CvaYpA_0cIUIt1H8iYBTk3HAIha28XCsNc_e_a_Ac90Qri63cS7A>
+    <xmx:n5CvaZiAtZStWhQNC2r3N2U1YapId8Wp8W5_L9oLFtyrxRoQvlXubQ>
+    <xmx:n5CvaT2mo8ccY6ueC-036COvR8qUFDEIT0SHdFN_k4A33DNLCNIv7DFR>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Mar 2026 23:31:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] apply.c: fix -p argument parsing
+In-Reply-To: <20260310005408.2022216-1-mroik@delayed.space> (Mirko Faina's
+	message of "Tue, 10 Mar 2026 01:54:07 +0100")
+References: <20260309232700.553168-1-mroik@delayed.space>
+	<20260310005408.2022216-1-mroik@delayed.space>
+Date: Mon, 09 Mar 2026 20:31:42 -0700
+Message-ID: <xmqqwlzkxsv5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Mansi Singh <mansimaanu8627@gmail.com>,
-    Mansi Singh <mansimaanu8627@gmail.com>
+Content-Type: text/plain
 
-From: Mansi Singh <mansimaanu8627@gmail.com>
+Mirko Faina <mroik@delayed.space> writes:
 
-The t1900 test file covers git repo info thoroughly but has
-no tests for the git repo structure subcommand. Add basic
-tests to verify that:
+> "git apply" has an option -p that takes an integer as its argument.
+> Unfortunately the function apply_option_parse_p() in charge of parsing
+> this argument uses atoi() to convert from string to integer, which
+> allows a non-digit after the number (e.g. "1q") to be silently ignored.
+> As a consequence, an argument that does not begin with a digit silently
+> becomes a zero. Despite this command working fine when a non-positive
+> argument is passed, it might be useful for the end user to know that
+> their input contains non-digits that might've been unintended.
+>
+> Replace atoi() with strtol_i() to catch malformed inputs.
+>
+> Signed-off-by: Mirko Faina <mroik@delayed.space>
+> ---
 
-- git repo structure succeeds and produces no stderr output
-- git repo structure --format=keyvalue outputs expected keys
-- git repo structure --format=nul succeeds
-- git repo structure rejects an unknown format
+>  apply.c                 |  3 ++-
+>  t/t4103-apply-binary.sh | 19 +++++++++++++++++++
+>  t/t4103/patch           | 16 ++++++++++++++++
+>  3 files changed, 37 insertions(+), 1 deletion(-)
+>  create mode 100644 t/t4103/patch
 
-Signed-off-by: Mansi Singh <mansimaanu8627@gmail.com>
----
-    t1900: add tests for git repo structure subcommand
-    
-    Add tests for the git repo structure subcommand in t1900-repo-info.sh.
-    The tests verify that git repo structure outputs the expected fields
-    (commits, trees, blobs, tags) in both default and key-value formats.
-    
-    Signed-off-by: Mansi Singh mansimaanu8627@gmail.com
+Curious.  It is true that we need to parse the p_value correctly
+even when we are applying a binary patch, but the problem is not
+limited to binary patches, is it?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2066%2FMansiSingh17%2Frepo-add-structure-tests-v3-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2066/MansiSingh17/repo-add-structure-tests-v3-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2066
+> diff --git a/apply.c b/apply.c
+> index b6dd1066a0..61df3bdcd0 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -4981,7 +4981,8 @@ static int apply_option_parse_p(const struct option *opt,
+>  
+>  	BUG_ON_OPT_NEG(unset);
+>  
+> -	state->p_value = atoi(arg);
+> +	if (strtol_i(arg, 10, &state->p_value) < 0 || state->p_value < 0)
+> +		die("<num> has to be a non-negative integer");
+>  	state->p_value_known = 1;
+>  	return 0;
+>  }
 
- t/t1900-repo-info.sh | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Sounds sensible.
 
-diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index a9eb07abe8..b63d404075 100755
---- a/t/t1900-repo-info.sh
-+++ b/t/t1900-repo-info.sh
-@@ -149,4 +149,26 @@ test_expect_success 'git repo info --keys uses lines as its default output forma
- 	test_cmp expect actual
- '
- 
-+
-+test_expect_success 'git repo structure succeeds' '
-+	git repo structure >actual 2>stderr &&
-+	test_must_be_empty stderr
-+'
-+
-+test_expect_success 'git repo structure --format=lines succeeds' '
-+	git repo structure --format=lines >actual &&
-+	grep "references.branches.count=" actual &&
-+	grep "objects.commits.count=" actual
-+'
-+
-+test_expect_success 'git repo structure --format=nul succeeds' '
-+	git repo structure --format=nul >actual
-+'
-+
-+test_expect_success 'git repo structure rejects unknown format' '
-+	echo "fatal: invalid format ${SQ}foo${SQ}" >expect &&
-+	test_must_fail git repo structure --format=foo 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+I briefly wondered if it would have negative fallouts to change the
+type of .p_value member to "unsigned int" and use strtol_ui() to
+parse it, but the amount of work this part of the code needs to do
+does not change that much, so such a change is of dubious value.
+It looks like the above draws the line at the right place to stop.
 
-base-commit: d181b9354cf85b44455ce3ca9e6af0b9559e0ae2
--- 
-gitgitgadget
+Great execution.
+
+> diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
+> index 8e302a5a57..d9dc884946 100755
+> --- a/t/t4103-apply-binary.sh
+> +++ b/t/t4103-apply-binary.sh
+> @@ -53,6 +53,25 @@ test_expect_success 'setup' '
+>  	)
+>  '
+>  
+> +test_expect_success 'git apply -p 1 patch' '
+> +	test_when_finished "rm -rf result t" &&
+> +	git apply -p 1 $TEST_DIRECTORY/t4103/patch &&
+> +	ls -l | sed -e "/[[:space:]]t$/!d" >result &&
+> +	test_line_count = 1 result
+> +'
+
+Is this saying "in the directory there must be only a single file
+whose name is t?"  Wouldn't it be more readable and direct to do
+something like
+
+	test_path_is_dir t
+
+or is there something more subtle going on here?
+
+> +test_expect_success 'git apply -p malformed patch' '
+> +	test_must_fail git apply -p malformed $TEST_DIRECTORY/t4103/patch
+> +'
+>
+> +test_expect_success 'git apply -p 2q patch' '
+> +	test_must_fail git apply -p 2q $TEST_DIRECTORY/t4103/patch
+> +'
+
+If this did not fail and patch gets applied with some p_value that
+happens to be used when we fail to parse the number, then ...
+
+> +test_expect_success 'git apply -p -1 patch' '
+> +	test_must_fail git apply -p -1 $TEST_DIRECTORY/t4103/patch
+> +'
+
+... it would not be clear why this step fails.  Perhaps with that
+same "unable to parse" p_value was used and this tried to create the
+same file as the previous step already created, or we detected parse
+failure.  We cannot tell.
+
+It probably is a good idea to prepare for the worst by doing
+something silly like
+
+	test_when_finished "rm -f t/test/test test/test test" &&
+
+at the beginning of each of these tests so that we would clean up
+whatever we could leave behind?  I dunno.
+
+>  test_expect_success 'stat binary diff -- should not fail.' \
+>  	'git checkout main &&
+>  	 git apply --stat --summary B.diff'
+> diff --git a/t/t4103/patch b/t/t4103/patch
+> new file mode 100644
+> index 0000000000..c4511bb708
+> --- /dev/null
+> +++ b/t/t4103/patch
+> @@ -0,0 +1,16 @@
+> +From 90ad11d5b2d437e82d4d992f72fb44c2227798b5 Mon Sep 17 00:00:00 2001
+> +From: Mroik <mroik@delayed.space>
+> +Date: Mon, 9 Mar 2026 23:25:00 +0100
+> +Subject: [PATCH] Test
+> +
+> +---
+> + t/test/test | 0
+> + 1 file changed, 0 insertions(+), 0 deletions(-)
+> + create mode 100644 t/test/test
+> +
+> +diff --git a/t/test/test b/t/test/test
+> +new file mode 100644
+> +index 0000000000..e69de29bb2
+> +-- 
+> +2.53.0.851.ga537e3e6e9
+> +
