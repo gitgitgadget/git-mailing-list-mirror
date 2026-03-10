@@ -1,189 +1,126 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B62397E72
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:25:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D163A6B94
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773149132; cv=none; b=orIDDOmLYAWNSsTrbANSwsQ1WXnT7yCOa5eEA2d5ZOeMZkY5aozagrttwfMOFQ4oaEW04DaKS5eTN/qV7/D38IQjNJdqSVs5xFKatuQKJd94OcfNktDqattCdsi34odpoAb7VW8H3rp9k7iP2u+BaEYLBvEHrPNBOzRmjnJli2E=
+	t=1773149342; cv=none; b=GvR7uU5viU4QBQ/DZjDJcmCiY9/lGgusqNR4Q5YER1OSekA9wJe20glYWcfUiEzIcvMlKCz53aNlPOyaMBXHRWUJbQtNXIpy8uQvBLMwW9I4h/KPce87Xz1AfCjh8BRCfrSL2Nbi6o4nHVKDQqihHFEdMi/XRh+qooVYpv6oXaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773149132; c=relaxed/simple;
-	bh=odjX/y0h2/pWaKDUsobDpw3q5DN595EnKbZrtGaVk+E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EOX6AmBfLWPqR+cKGpj4lHf75Yxv08ep+U069pUV5dnXXCxUFiQmhp9LM1p702/AWprzrsPypxHrE28MmwIUKTKBNCE19ofBe5+2tCP63utW4iv8U2zEbXXbV2AJgQCN/K1UI/aMwZi+gLvxmCNdj0FtW1kdWLNFZWS7QpCTXXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JfkF6Slm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oWJP+RVc; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773149342; c=relaxed/simple;
+	bh=mZ+p5i6DkRvEuwOGcDLNRh2sVmBWaE+fePZLSyudKa4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=OyEFdkgjYfe03opIZPb+srb3vgVoP42APwcpzJwmqRAn02BYpR6SsmNWGNoBP7gJUH+qFaqKGiDsA0XBpblqONHigc7NgkRDXwGFciWNA8Im/E8JfELF18Tcc3MUoRf2e8O5kpy6NHN7m0g1y4+TNoHIf/bi1dd2P8jgpVKipPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ds3zSCbe; arc=none smtp.client-ip=74.125.82.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JfkF6Slm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oWJP+RVc"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id DF9CFEC0B0A;
-	Tue, 10 Mar 2026 09:25:30 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 10 Mar 2026 09:25:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773149130;
-	 x=1773235530; bh=aZHbn1JxWv8qaEToX6nz1Vc4FTg4w4xAMuHDsfvILok=; b=
-	JfkF6Slm4ILuklG6rf7sD3oIbeWyKA9cJMl6+tSGKfh8uY9r+7Y5wuPSX3wW5YbS
-	4As0q1J8cet2UL9XzqOxk8HyuQLK7rmwSjjmrOUrr+qU6Nr/nitNftZ6L6dUIVA7
-	d/rgmOi1e7/nwlDVGPIbP8KZKA5EP5m1F9DmEyaHHxF8e6wtJp5Mq3/2jKo9EUVY
-	7D4SHaUDfvnkc46bsecTDQDr1Fs1g+5/wG2soDboa496KPTndVOcYhgpCX2G5xom
-	MXKkuvR0D66HplX0FLMXt9cPO9oZoL4ZnWVonJ7/hbtsR8TWM2gZsbXZQQIyXGv4
-	MIKdo59o+rLvHxoGSsMpuA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773149130; x=
-	1773235530; bh=aZHbn1JxWv8qaEToX6nz1Vc4FTg4w4xAMuHDsfvILok=; b=o
-	WJP+RVcEykgeYht2bvsBtDfWlhrkmbWfGSjputpoHxe5eQBiDh7Ytw9+vbjg+6HG
-	Lxe98anqTLFHvAaeeO9+Q419GXXbaT9oPHSK3CwSht89pB/4WNPF3bE4taHf0aGG
-	J9VRw9G23NfBZmJFbm4ZEwHK7+IQjQpq+L+YNNugBAqrxjOlIEVZWAjJugI/NIXm
-	xWnXMVK89diQkvfl5WHapNW/4KwW1sQ5OQ3Pj62/FLCqx2TTfMXYgHmQ30Uhmu5I
-	xS7dpK9b+u3ji2PPXa7ySKvMc7o3wiPXhJntCjNUs6oOmvSDZ7GCqwv3FT5d8T7l
-	mDQBCGlndhKYDlH+F3EtA==
-X-ME-Sender: <xms:yhuwaUZqYvGrqrlBxzF0Q_CTVhpM8ErfA6mWWYSERAiC5FLi-DhDYQ>
-    <xme:yhuwaWQKF_qGe7igHy-4z0CSojkT7Vtd1yr_ozZPsaxzgh0BE5mH5n2sTembzgt0x
-    fxrpqAzQMs8uDC3z7ROrZhxmZMuRiylFQVFpp58jH9vqBUMd1Xm8Xg>
-X-ME-Received: <xmr:yhuwaXTXZx5Y5yhFj8n1aZrN14LUDw5LyBca4vqhBiOKfwXeso6Ze5JZ5QWPGrVVWtYrAB3lFRLwkS8gBWR_HMXZYJkxLSNe9CSgKqBi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduudefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
-    htthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
-    hopehmshhmihhlvgihsehgihhtlhgrsgdrtghomh
-X-ME-Proxy: <xmx:yhuwaaQeWvryKUzpyfCEalGKTGciukUSi4ocbKbjvETY6AozcljBBw>
-    <xmx:yhuwac4gLDxxXE25-EHax-6wBK_nVy6bxQMDkpSxQEJYFckh-LtQvg>
-    <xmx:yhuwaW1lJyrbOwwceZTWuA3WalWrEIno1T-7uHBgcvz4m3wIXDDdpA>
-    <xmx:yhuwaXBlm7RZEQ3je7Syy01rQDUfCKs-5zBXBSfQeFM3RmZFkrU_zQ>
-    <xmx:yhuwaSzeqtw8ZsENB43G_pBo73GdvGFH2_ltj0tAp_EGiSqtoqhdK-09>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 09:25:29 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0a1697dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Mar 2026 13:25:29 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 10 Mar 2026 14:25:06 +0100
-Subject: [PATCH v3 10/10] builtin/pack-objects: reduce lock contention when
- writing packfile data
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ds3zSCbe"
+Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-2be06c02f66so52889eec.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 06:29:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773149340; x=1773754140; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oOVTjIk7rkX3il//wwXhzyJ6mK8Un7DWQHuTVTKlJqk=;
+        b=ds3zSCbeA5G0oz9JYhvisdjbVJlPwA95zTq/bncjGFz2K/v1vz4zdioWqLcGGZDB7e
+         HmiryUfnIsj15mDFdhHwc2L3F9G4MXD9H0mClnX7q4q4KI2HKNAODm3vzTuey5nHz2dc
+         OHxf0ztbvDMdvrbU2ydvjHJszt2aWY8ugKLpOoMpdAgiZq22msIoVEjq3zYKfP09RY6v
+         PVrsstbckft/X2J9HdxkqqeuNeMH2hqKXPu9+RD9Ce1FRLfwE3WfwyrBb7fhuhMzJ+ZK
+         7wT0saH1vAU0IgYm+CNS3VvUrR6obWqOLf2K/4ehT5YdnkjHoRJoD7NqFzoPLkm3F/Ru
+         L7Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773149340; x=1773754140;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=oOVTjIk7rkX3il//wwXhzyJ6mK8Un7DWQHuTVTKlJqk=;
+        b=PmPoiCl+CcGTZE5RbMO3Lv17/ic5d/KytlCuTmtPqy0QS36HGGbgRuvmT6LjeEFjow
+         b+r1DLiRqNIOIUYDn6Mfwi918ErSFMdzY/HzDbPwKaxy9FPZEYPJsuKJJBuV7x4ukeaG
+         zWm2dyDLBdHT6eA7V0jDJDgIm+PcZLgaubA/y8jq8r1KCmbFqxVd00ojtFfeAWUZuZS8
+         2X3yn3i4euKRewCDaAuQaUA/glYcpZiOfbce9syB8grhiBQBzdZ/XTZzpG4Mws19T82w
+         0QnnpNjwXg1o2Y1yvwx4+LIK5i1DnGwU4of7MBTgyMZKlme4QqfkzN9lx4C8u/RQj6PC
+         KPfQ==
+X-Gm-Message-State: AOJu0Yy1HjWsNDPs5StIuA6jPWXO1r1t3rPFLRaQpn283fmm6iixH73R
+	yfBhD1YNB3mvvG60482I7yusVdkbVIIw3rZJYICjoLiZLsiqSkNRTvidqqbw4w==
+X-Gm-Gg: ATEYQzyUHVZfG/R7vh4iVFrLI8oQ2+C0Uq2iX4wC6WVBtaxvFxZVEpeMCyq/MTKEvaY
+	zrLEhU/A2Un0URlYzruoI3thV0Vcb4G/3JTI1IUCHJ5fQqmUZObw6x4UPejbFwjR2pKw3Lfyk7W
+	W6aKNrNOEZOtxp1RtIGSFzxJ9n/MRaGNnkqm0ZLpANLo+G1FPU6WIhINqVpgQnphX0R/fgkl/op
+	dvTQlFSAch2gh0SLhdCsIPk/SqWM7GpjgDtRpXOEHD1Le4FOVNsJeEqvIzJxVfqahH965upVN3X
+	ytvkeGI6a+NKQIJ/fceeJvjuvVLBLarO+R2fxfEohcEYLK5btKn4unzoQpNbuw37nQQGyF5boA5
+	VBsmZXmnV4pE7GDRwWbt7udUIDBBToRJIXHgMiXO55FZgh1/mkiEeX6yPJ8DcTxFq/wQORjRPy9
+	IKUSBabl7cApecGt/wJpmV0W3q5Y4=
+X-Received: by 2002:a05:693c:60d0:b0:2be:6f30:f317 with SMTP id 5a478bee46e88-2be6f30fd5dmr2060907eec.34.1773149339414;
+        Tue, 10 Mar 2026 06:28:59 -0700 (PDT)
+Received: from [127.0.0.1] ([172.184.209.162])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be6df8a348sm7317691eec.30.2026.03.10.06.28.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2026 06:28:58 -0700 (PDT)
+Message-Id: <pull.2233.v3.git.git.1773149337.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2233.v2.git.git.1773140364525.gitgitgadget@gmail.com>
+References: <pull.2233.v2.git.git.1773140364525.gitgitgadget@gmail.com>
+From: "Arsh Srivastava via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 10 Mar 2026 13:28:55 +0000
+Subject: [PATCH v3 0/2] Advice on checkout dirty files
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260310-pks-upload-pack-write-contention-v3-10-8bc97aa3e267@pks.im>
-References: <20260310-pks-upload-pack-write-contention-v3-0-8bc97aa3e267@pks.im>
-In-Reply-To: <20260310-pks-upload-pack-write-contention-v3-0-8bc97aa3e267@pks.im>
 To: git@vger.kernel.org
-Cc: Matt Smiley <msmiley@gitlab.com>, 
- "brian m. carlson" <sandals@crustytoothpaste.net>, 
- Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-X-Mailer: b4 0.14.3
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Arsh Srivastava <arshsrivastava00@gmail.com>,
+    Arsh Srivastava <arshsrivastava00@gmail.com>
 
-When running `git pack-objects --stdout` we feed the data through
-`hashfd_ext()` with a progress meter and a smaller-than-usual buffer
-length of 8kB so that we can track throughput more granularly. But as
-packfiles tend to be on the larger side, this small buffer size may
-cause a ton of write(3p) syscalls.
+This is my submission for microproject [GSOC]
 
-Originally, the buffer we used in `hashfd()` was 8kB for all use cases.
-This was changed though in 2ca245f8be (csum-file.h: increase hashfile
-buffer size, 2021-05-18) because we noticed that the number of writes
-can have an impact on performance. So the buffer size was increased to
-128kB, which improved performance a bit for some use cases.
+This patch adds a new advice type ADVICE_STASH_BEFORE_CHECKOUT to help users
+when they attempt to switch branches with local modifications that would be
+overwritten by the operation.
 
-But the commit didn't touch the buffer size for `hashd_throughput()`.
-The reasoning here was that callers expect the progress indicator to
-update frequently, and a larger buffer size would of course reduce the
-update frequency especially on slow networks.
+The new advice follows the same patterns established by existing advice
+functions such as advise_on_updating_sparse_paths(). When triggered, it
+lists the affected files and suggests using git stash push/pop to save and
+restore local changes.
 
-While that is of course true, there was (and still is, even though it's
-now a call to `hashfd_ext()`) only a single caller of this function in
-git-pack-objects(1). This command is responsible for writing packfiles,
-and those packfiles are often on the bigger side. So arguably:
+The advice can be silenced with:
 
-  - The user won't care about increments of 8kB when packfiles tend to
-    be megabytes or even gigabytes in size.
+git config set advice.stashBeforeCheckout false
 
-  - Reducing the number of syscalls would be even more valuable here
-    than it would be for multi-pack indices, which was the benchmark
-    done in the mentioned commit, as MIDXs are typically significantly
-    smaller than packfiles.
+Changes:
 
-  - Nowadays, many internet connections should be able to transfer data
-    at a rate significantly higher than 8kB per second.
+> advice.h: add ADVICE_STASH_BEFORE_CHECKOUT enum value advice.c: add
+> "stashBeforeCheckout" to advice_setting[] and implement
+> advise_on_checkout_dirty_files() function
+> Documentation/config/advice.adoc: document the new advice key
 
-Update the buffer to instead have a size of `LARGE_PACKET_DATA_MAX - 1`,
-which translates to ~64kB. This limit was chosen because `git
-pack-objects --stdout` is most often used when sending packfiles via
-git-upload-pack(1), where packfile data is chunked into pktlines when
-using the sideband. Furthermore, most internet connections should have a
-bandwidth signifcantly higher than 64kB/s, so we'd still be able to
-observe progress updates at a rate of at least once per second.
+Signed-off-by: Arsh Srivastava arshsrivastava00@gmail.com
 
-This change significantly reduces the number of write(3p) syscalls from
-355,000 to 44,000 when packing the Linux repository. While this results
-in a small performance improvement on an otherwise-unused system, this
-improvement is mostly negligible. More importantly though, it will
-reduce lock contention in the kernel on an extremely busy system where
-we have many processes writing data at once.
+Arsh Srivastava (2):
+  advice: add stashBeforeCheckout advice for dirty branch switches
+  advice: add stashBeforeCheckout advice for dirty branch switches
+    [GSOC]
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/pack-objects.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ Documentation/config/advice.adoc |  5 +++++
+ advice.c                         | 20 ++++++++++++++++++++
+ advice.h                         |  2 ++
+ 3 files changed, 27 insertions(+)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index f5cb80e870..59876b024d 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -41,6 +41,7 @@
- #include "promisor-remote.h"
- #include "pack-mtimes.h"
- #include "parse-options.h"
-+#include "pkt-line.h"
- #include "blob.h"
- #include "tree.h"
- #include "path-walk.h"
-@@ -1332,14 +1333,17 @@ static void write_pack_file(void)
- 
- 		if (pack_to_stdout) {
- 			/*
--			 * Since we are expecting to report progress of the
--			 * write into this hashfile, use a smaller buffer
--			 * size so the progress indicators arrive at a more
--			 * frequent rate.
-+			 * This command is most often invoked via
-+			 * git-upload-pack(1), which will typically chunk data
-+			 * into pktlines. As such, we use the maximum data
-+			 * length of them as buffer length.
-+			 *
-+			 * Note that we need to subtract one though to
-+			 * accomodate for the sideband byte.
- 			 */
- 			struct hashfd_options opts = {
- 				.progress = progress_state,
--				.buffer_len = 8 * 1024,
-+				.buffer_len = LARGE_PACKET_DATA_MAX - 1,
- 			};
- 			f = hashfd_ext(the_repository->hash_algo, 1,
- 				       "<stdout>", &opts);
+
+base-commit: d181b9354cf85b44455ce3ca9e6af0b9559e0ae2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2233%2FArsh123344423%2Fadvice_on_checkout_dirty_files-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2233/Arsh123344423/advice_on_checkout_dirty_files-v3
+Pull-Request: https://github.com/git/git/pull/2233
+
+Range-diff vs v2:
+
+ 1:  eb5639dbc3 = 1:  eb5639dbc3 advice: add stashBeforeCheckout advice for dirty branch switches
+ -:  ---------- > 2:  e88c851701 advice: add stashBeforeCheckout advice for dirty branch switches [GSOC]
 
 -- 
-2.53.0.880.g73c4285caa.dirty
-
+gitgitgadget
