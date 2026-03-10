@@ -1,181 +1,127 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A8F34D917
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 08:43:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB2A43637D
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 08:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773132233; cv=none; b=ilHnoevFvd21834vNzagetq4IWppr0299J6dRWc8qrdZCE+5NQX3LiiKAn255erDwnI6Haxi+2wl0gDaWOgEOMzMHeFYWisvvbRoRxuXCLo2Ppwv9zLQi9cF28s2eil38g9/Rr5uNHTZ9HZPI4NwyZl4eOYVuSCUTJBOCW2TBRM=
+	t=1773132682; cv=none; b=hjXETGLav88PpRg94Wc7wvQ6MikQu9dFRLo1xzsEJHoyUHisUX9Yxx/oU2StwR5m+qryHOIvsBluD0fti5ka4eav2dJtaTCRY4vvxFJdZpTPKRiy2zxFVIiPMvp5jmypvPl4sf+bQhv4frRW0L3iYMyj/BijO7KrhhwiYUvDn6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773132233; c=relaxed/simple;
-	bh=VMB9bf00F7KhKKMvOSoBr/reCvKbkQhbGDk2Kkpm09U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VnzS3oor+LIE7hiJwN0JkeF+D2l0DF34JvAuujgmRx1qP1oUbHohzwTlMW4KjqV9v7NSEb40WNqaARdqd+RS7aBvh7MWvGD/ft1mwwvjd6VbGxuO8SRMyqrm37AghhiXOS7IsIAGhI+Di47QFRoR0SmItUQ3rvZYa0unWsP2QfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PD180rov; arc=none smtp.client-ip=209.85.216.43
+	s=arc-20240116; t=1773132682; c=relaxed/simple;
+	bh=Ch0ReRhRyI3FPV1f0pOZOWihGD7an/hdbOsnWQraZs8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=eD16imXdGI22ZfQ4ihOc84J8bZdDwCDcowEWoXqm9FlRkqASTvEeRynNoapKs2z4Mq7+CmzEn0oD2P6labr7u0q6in2A05k+RCaYZulkmm4QjdC0ZVmY2DlvDHJWlX6S/42o6NXDdEi6pzWfaX2quHTyfOSKMmhkEgtxJbTcuLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=edcDJ2yt; arc=none smtp.client-ip=74.125.82.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PD180rov"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-358d80f60ccso6853552a91.3
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 01:43:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="edcDJ2yt"
+Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-128cba36eceso1366540c88.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 01:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773132231; x=1773737031; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dvVZssfErEff+vvwXC7q/Kn8WogDtECcjJud3ey/E1w=;
-        b=PD180rovnsECd/UujuMtxMMrp4Ft7iV9w9XhGMcnwxJnq7nSXbvhRs0vVDCr9VGzlX
-         9RwPoMVo0XfY2jNrzFZthOYBg2sEuKtq3rKBUbgnk9I0DX7/ZYu336uJCNE6jYF73bMQ
-         NMdZuOzn54yfE3BIkMQ25J/IIDM+/wjKV84935567jl0Ir/DlB1oOXND8yqfWpc9RLfp
-         yKINV6pYVwY8IjpYYuIKfJqx9262RBG8g0vTfuUHEf/IIG2DuN3Mi5Vavs2lx1OiwJKG
-         XqLAwaDyY1eU92Ugy40cCCN/DSr+M/aX8/yqDAR9mo7qArGr/JHQeeqle0hypMis39fd
-         x5VA==
+        d=gmail.com; s=20230601; t=1773132680; x=1773737480; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=X1ADmBUXm2+sxIEYKgaKUoaHjQLYNVW4LoVgF8nBDoo=;
+        b=edcDJ2yt53mTC9QmuTiLLDL4IeT+EKGrWrw09l1F7Ue7Gxt2/iOymONp3HsPgKvl8j
+         YznJn6YrCKbWxTalDYBrsSaXuyKw96JcF8YSMTxl0NIPmBkrYcbOoxbfb4SNTbTiV19i
+         WVvSKYuVPp/6fJyN5YkxWnz/NVY18sNPMFZKkXkIks/g4b6oKj1o0FOBSX1NixMtIpg/
+         ZSPS2I29+wwxGTYQ/1vLAm3jT/AggfGEuRcybSUFHm0h5Ih+qLzjgf9Z9tqzylSCoJPZ
+         9d+/p79U29uChSSSvClzyO4u4USuBsVK6qYmyQ1qaJkN31pP+v5yu5gA4xnnYWywZgyg
+         oArA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773132231; x=1773737031;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1773132680; x=1773737480;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dvVZssfErEff+vvwXC7q/Kn8WogDtECcjJud3ey/E1w=;
-        b=U1dLnv1hHDjbytmeKkOx+wpxsycgK2CzICGT6BsJebBi86CC50Repa6n+yuhz8Libp
-         04a+UYZWWpqn/xEZzA9/S/VMvEQUznEfk+i0LdHM/fCn8xsioMJIroqyLEMoXJfr7duC
-         N+EWtSeFZGJye6xqg7ahSEK8sSrO50B2bfJdPXa0IiFyVGJSvUeVtlPNbB4x4v1Z+cMe
-         iTuL8NmTiTD38wD5lpt5M76ww8KXOZXRTKcCtyzu5T5pknG8aqa2qFZ/tgtXeBvaNt+L
-         JIP8G8ow/cxje3Q4ap4aXDW24xUBL9ySlQnHOng4TsZgJdnXvJH89PpTTOgVUc7asFM1
-         YE0w==
-X-Gm-Message-State: AOJu0YzJq/nUfiE9jTNJG19APa6W+MsTCLG/l6FeZW6s6lrnQisJTBFZ
-	fsZfKia4qE30kfrAnONnNwKqfCbklHMPfI7UhD+AirgRl6MOu554aqIRr/zXBA==
-X-Gm-Gg: ATEYQzxXl1+SFLlWxbT0ad+IQDUeFLwvWoJ6GOarPc2x+EBYi/ari17U6h6egj4VFxf
-	QOwUF5P6Fygp+7O0VmVqJZVbqaoFlXUTKFHwOOOhUxWwrnK2PtUTofROoX48KlU8acTUf4OdpmD
-	5h5VPhs9IM0V9mHary86XBDoNAgkBOp5Wi4Bny2zpdZXU6W1uY5dtsQ2ggvGzcT/ZkQpIrOcM4s
-	uQbEk3bSrCv8J63Bh67NlM8MJx7C/gYXVj6XYa8ib3tgYXQtB5fGwCWFobliAzJy2tagLyokCWG
-	dDPvkp2DcwrU6EjYqNI+G0ih5qrdQJKIH/YSSn1bW2jP9v+pyvrgLgVLpPaS9d0wzT/S7xKGP2Y
-	/+auM8a60mxTFgkjXRyUkfLeFWKmHL0w9XlNaxCqz9j502Gorf0FK7VJ9KGovPjeELMHxoJtuub
-	2WvvG8ATpxx4ggqCLDUzBdyzMWAsrTZnSK/iEteK1FFMHLQmQ/jHvGsNuY53eo
-X-Received: by 2002:a17:90b:558b:b0:359:8812:7c07 with SMTP id 98e67ed59e1d1-359be2c700cmr12892603a91.14.1773132230965;
-        Tue, 10 Mar 2026 01:43:50 -0700 (PDT)
-Received: from localhost.localdomain ([115.244.141.202])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359f05edd69sm2185534a91.1.2026.03.10.01.43.48
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 10 Mar 2026 01:43:50 -0700 (PDT)
-From: PRASHANT S BISHT <prashantjee2025@gmail.com>
-To: git@vger.kernel.org
-Cc: sunshine@sunshineco.com,
-	gitster@pobox.com,
-	PRASHANT S BISHT <prashantjee2025@gmail.com>
-Subject: [PATCH v2] t4200: replace test -f and test -d with test_path_exists
-Date: Tue, 10 Mar 2026 14:13:38 +0530
-Message-ID: <20260310084338.49923-1-prashantjee2025@gmail.com>
-X-Mailer: git-send-email 2.50.1
+        bh=X1ADmBUXm2+sxIEYKgaKUoaHjQLYNVW4LoVgF8nBDoo=;
+        b=sUV5EIWpsdJ1+b11HdVW7fqI+zptvuFrfahL4NA5cxBU6zfw1vpvNi1skGcGnR2eTQ
+         2ODRh1pGYhTxKozrwLwcFafj0ttmY/IQo57Gd49sjBhOV52uoXio8p42fxQpS3JT3viI
+         dDFHOQcnW+CsAoU+QcfcoyBbtON23v4UI/KTo7kac4PWasIibXPb3rIY4rKw5HGHq2Zv
+         Ic6NpVRCfp4Tu+gzF0DTIluwYdvFK+wp1j3DEpZ683tpiwOpwdH7mlHOdlsJ32Vdwefo
+         FWoCxpEFomvdsMkogHFElF6dqHz8CTOM2nT3rl2fMIpKY7x/yPsC/D9LtG0mnHmqX6cp
+         X/Vg==
+X-Gm-Message-State: AOJu0YxhogkQC3Zoy6+MPp0erdy9rtV+f4+8IBwRK5aB70fOWJYIPniq
+	FScPfvgMkEITsxEsgVarCxHNnluGymSGp6QwfdavNFr4PLXwxPdCGtkzqBPmPA==
+X-Gm-Gg: ATEYQzyoJGOGrUAhq3wGv7Enev7LJDcPoN8mDRB7TeZWC2l4QpZMzcIol5gnWgFgTzQ
+	aXWE99yjgpzuLCreEWB9A4qgnyv6VJMvlI8iBlN9NRxRdRaJC6ZQFMjM3RDhywKeCjcIuSVuEIj
+	ocaHoD5AcowcuiJv2TmI33BsMNylT7OC6Wx5n6GSdPi3mBg6B6kcD1Gq2pkAmBk/ZY+gyGu5Cti
+	dSlQ8kORLSHU/wMhGggysV2zS500U32eiwg2A93X/Uf8e1J5ybVQ5xcffw6cWwgzIgm+koaCeIz
+	sosHwueeTTKHDEj8oo2QPm16fTxVQ4Xtkg9vWay7Vck+yqez0PEL71BhmucLhPg5SnwGRT/3WN4
+	n31rUfvJpe7AKx7Hzi/gAPMSXxi08RlqmFze22L0AWsiwMAlch8xn7a6hpSN5GDaRpKVDmm+qv4
+	xW7hytTBCJr3wrEyNjzJaeWECOzFmxi9mBWqQ=
+X-Received: by 2002:a05:7022:602:b0:128:cc63:82f0 with SMTP id a92af1059eb24-128cc6383a0mr4423437c88.25.1773132680058;
+        Tue, 10 Mar 2026 01:51:20 -0700 (PDT)
+Received: from [127.0.0.1] ([52.161.69.161])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-128db3d79fbsm5095898c88.4.2026.03.10.01.51.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2026 01:51:19 -0700 (PDT)
+Message-Id: <pull.2233.git.git.1773132678.gitgitgadget@gmail.com>
+From: "Arsh Srivastava via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 10 Mar 2026 08:51:13 +0000
+Subject: [PATCH 0/5] Advice on checkout dirty files
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Arsh Srivastava <arshsrivastava00@gmail.com>
 
-Replace old-style path existence checks with the modern test_path_exists
-helper function that provides clearer diagnostic messages on failure.
+This is my submission for microproject [GSOC]
 
-This conversion focuses on test assertions within test_expect_success
-blocks where a missing path genuinely indicates a test failure,
-rather than on control-flow checks (such as those in test_lazy_prereq
-blocks) where missing paths are expected in certain environments.
+This patch adds a new advice type ADVICE_STASH_BEFORE_CHECKOUT to help users
+when they attempt to switch branches with local modifications that would be
+overwritten by the operation.
 
-Signed-off-by: PRASHANT S BISHT <prashantjee2025@gmail.com>
----
- t/t4200-rerere.sh | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+The new advice follows the same patterns established by existing advice
+functions such as advise_on_updating_sparse_paths(). When triggered, it
+lists the affected files and suggests using git stash push/pop to save and
+restore local changes.
 
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 204325f4d5..71a49bee56 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -72,7 +72,7 @@ test_expect_success 'nothing recorded without rerere' '
- 	rm -rf .git/rr-cache &&
- 	git config rerere.enabled false &&
- 	test_must_fail git merge first &&
--	! test -d .git/rr-cache
-+	! test_path_exists .git/rr-cache
- '
- 
- test_expect_success 'activate rerere, old style (conflicting merge)' '
-@@ -84,8 +84,8 @@ test_expect_success 'activate rerere, old style (conflicting merge)' '
- 	sha1=$(sed "s/	.*//" .git/MERGE_RR) &&
- 	rr=.git/rr-cache/$sha1 &&
- 	grep "^=======\$" $rr/preimage &&
--	! test -f $rr/postimage &&
--	! test -f $rr/thisimage
-+	! test_path_exists $rr/postimage &&
-+	! test_path_exists $rr/thisimage
- '
- 
- test_expect_success 'rerere.enabled works, too' '
-@@ -110,8 +110,8 @@ test_expect_success 'set up rr-cache' '
- 
- test_expect_success 'rr-cache looks sane' '
- 	# no postimage or thisimage yet
--	! test -f $rr/postimage &&
--	! test -f $rr/thisimage &&
-+	! test_path_exists $rr/postimage &&
-+	! test_path_exists $rr/thisimage &&
- 
- 	# preimage has right number of lines
- 	cnt=$(sed -ne "/^<<<<<<</,/^>>>>>>>/p" $rr/preimage | wc -l) &&
-@@ -167,7 +167,7 @@ test_expect_success 'first postimage wins' '
- 	git show first:a1 | sed "s/To die: t/To die! T/" >expect &&
- 
- 	git commit -q -a -m "prefer first over second" &&
--	test -f $rr/postimage &&
-+	test_path_exists $rr/postimage &&
- 
- 	oldmtimepost=$(test-tool chmtime --get -60 $rr/postimage) &&
- 
-@@ -190,14 +190,14 @@ test_expect_success 'rerere clear' '
- 	mv $rr/postimage .git/post-saved &&
- 	echo "$sha1	a1" | tr "\012" "\000" >.git/MERGE_RR &&
- 	git rerere clear &&
--	! test -d $rr
-+	! test_path_exists $rr
- '
- 
- test_expect_success 'leftover directory' '
- 	git reset --hard &&
- 	mkdir -p $rr &&
- 	test_must_fail git merge first &&
--	test -f $rr/preimage
-+	test_path_exists $rr/preimage
- '
- 
- test_expect_success 'missing preimage' '
-@@ -205,7 +205,7 @@ test_expect_success 'missing preimage' '
- 	mkdir -p $rr &&
- 	cp .git/post-saved $rr/postimage &&
- 	test_must_fail git merge first &&
--	test -f $rr/preimage
-+	test_path_exists $rr/preimage
- '
- 
- test_expect_success 'set up for garbage collection tests' '
-@@ -230,16 +230,16 @@ test_expect_success 'set up for garbage collection tests' '
- 
- test_expect_success 'gc preserves young or recently used records' '
- 	git rerere gc &&
--	test -f $rr/preimage &&
--	test -f $rr2/preimage
-+	test_path_exists $rr/preimage &&
-+	test_path_exists $rr2/preimage
- '
- 
- test_expect_success 'old records rest in peace' '
- 	test-tool chmtime =$just_over_60_days_ago $rr/postimage &&
- 	test-tool chmtime =$just_over_15_days_ago $rr2/preimage &&
- 	git rerere gc &&
--	! test -f $rr/preimage &&
--	! test -f $rr2/preimage
-+	! test_path_exists $rr/preimage &&
-+	! test_path_exists $rr2/preimage
- '
- 
- rerere_gc_custom_expiry_test () {
+The advice can be silenced with:
+
+git config set advice.stashBeforeCheckout false
+
+Changes:
+
+> advice.h: add ADVICE_STASH_BEFORE_CHECKOUT enum value advice.c: add
+> "stashBeforeCheckout" to advice_setting[] and implement
+> advise_on_checkout_dirty_files() function
+> Documentation/config/advice.adoc: document the new advice key
+
+Signed-off-by: Arsh Srivastava arshsrivastava00@gmail.com
+
+Arsh Srivastava (1):
+  advice: add stashBeforeCheckout advice for dirty branch switches
+
+Junio C Hamano (1):
+  The 13th batch
+
+K Jayatheerth (1):
+  repo: remove unnecessary variable shadow
+
+LorenzoPegorari (2):
+  diff: handle ANSI escape codes in prefix when calculating diffstat
+    width
+  t4052: test for diffstat width when prefix contains ANSI escape codes
+
+ Documentation/RelNotes/2.54.0.adoc | 14 +++++++++++++
+ Documentation/config/advice.adoc   |  5 +++++
+ advice.c                           | 27 +++++++++++++++++++++++++
+ advice.h                           |  2 ++
+ builtin/repo.c                     |  1 -
+ diff.c                             | 12 ++++-------
+ t/t4052-stat-output.sh             | 32 ++++++++++++++++++++++++++++++
+ 7 files changed, 84 insertions(+), 9 deletions(-)
+
+
+base-commit: 3fe08b8fd1f7731edabeab8138547ec88d6407de
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2233%2FArsh123344423%2Fadvice_on_checkout_dirty_files-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2233/Arsh123344423/advice_on_checkout_dirty_files-v1
+Pull-Request: https://github.com/git/git/pull/2233
 -- 
-2.50.1 (Apple Git-155)
-
+gitgitgadget
