@@ -1,149 +1,171 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A196321445
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:09:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773162570; cv=pass; b=ZlUu8yAMGBeADB61U2W6La4QNk84/UIvTK5hAJ5hPU8OsqNkrfobO0cwTF+NVS77buzQYybzWK36U3MNKis5kZWsduxjPOY6hcVDHjeWcBHTH88RO+3yXs8PtM7ik9HMuSUmBvbnrL/pNrRz6o1kaszdQyDNSDEmdyah63Bqnbw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773162570; c=relaxed/simple;
-	bh=op4mRHvFdTkibkEy0zZafAZdXLBwqgPigVwQKcB4x7k=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S8GBi24I3QApB4Y6PGTKjZgQeKqR4Z3c6ddI90ijgX7xJQT2SULjaEIXmROXOoqf6jK9IpGMFbeHeC677kuv8jRbH1OFox9Ba+fyjPdWtPtcABMndsTBuC4os4WAc/4SpnEBP+6R6+ccRI9YEhNMB1mhjbraage1cditDEBo0aI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AybtIeC1; arc=pass smtp.client-ip=209.85.222.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFC7321445
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:09:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773162596; cv=none; b=iH70KMI+y0qKxBYK2gaF+3xI3WeLCDfhICXkvPSW9KDLZApOOa1OnzVG8JKy4cVJqxxASawYHZk27mXwLhfBUB1Y3bGak+ktZS+LaF5AsZtNn9poW86Oq9ff8znkW9XYVL8kZODMIl0iQCMoDNShBlzZg4iAaGeHJLrTLmz2vCQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773162596; c=relaxed/simple;
+	bh=rtIaKgL6sFO1mx2V0RwNhriQR8IJa6Y4d8wTHdzVAFY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=niEAPGG94nBdO9WEwo45BU4Sh7BTqE718H3PFKNLl0xw9kytSsPh+XwGvzRQs57czhMMztF16secOD6YBacQl0UUV6mT1VDclHIjRFQVis3v5BGAhYCUx6sNickx/qEg2iaT+zde490lG62ljFA32AszHq5pAUjid+7DeO74Cug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DgsxmLRL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C/icPmi6; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AybtIeC1"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-94e578a0fa5so3693707241.0
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 10:09:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773162568; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lgKMYueklOxqphW5gIiphvAyIzZp9tQeEQo8FeFKRsEf3V/I2eWI7ZBhdtyqDbpDrj
-         tOLAx3RMxAE2jscuDLFhtOr0sy/GkNmcIh5vUE9tvvCtQfxMcRNalpSmhvQwZrseePO/
-         NoVirH/xQP5+3obKYvdpmV+Dl/8qjan10Zq5JKk4/tQ+lo906rXentu6NGhMWLjVozj0
-         RiYduUwAjsINJlt0H1nE7961cXtky2IiXfl6g8ahYhDgqCr/QlJAzdo0OdrWd8Poe5Cy
-         a5Sse1WsIcKwy90bJ2pz8TGmkF/t5pGSAJRQ1vHG6jtj6h9vpvb963f6W4tTFXcrx7AO
-         YWNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=CrGsIbpNBvZwtleXZPGJAd1AcvLJjnshz06d0V8IH+Q=;
-        fh=CJGYMKLwAOfjfNdLN8124M4dhjIbsvlUnz0Bn4pvkUk=;
-        b=dB26s2ZficRFg7fCeXGuMYhLMCM/1zhSjE0et4rK4vPmRhVtFTMYHD5dH9uKl5DNsX
-         ji9bgD3cSL/cvCx0ESq2JY8xhnI/90ZOJcjo/YIlYzKplEV6eDkKv/47pqiOjwc1AgUt
-         JfFDxDnMR5cXLPfT6U15dt39i5Eq8/Aru62f9swlX0gYAuJAaKG2CLluf6BqD2rOAIRt
-         +XwDLUG17YbEJ0wVH8XeRjKMs73VBLy+gnk3thpRIGv/7nC/PxhhJqG0WXBzcAH4oP/2
-         JHOymHTxTfvoGlTu0Ycb9+Hu5n6HJRI4/+ha8BBASF2qFuzuz1a7OHf394yIfqqTIxKg
-         bnfA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773162568; x=1773767368; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CrGsIbpNBvZwtleXZPGJAd1AcvLJjnshz06d0V8IH+Q=;
-        b=AybtIeC1b5FtFRky3f5fIM5qWbTUKbydK+BSTffiSbFJgGOED3Z9cUYPnJzMxt1VgV
-         eFVjFbVfbRsZkwKdFYzAfLYVJhFMjIz3OossTggGVf8rmYtXVOP351/1BIvEQT21BVUT
-         aNKoucTZDY28e0k/1+AMA8I6lgmCupRBsTER9KPUaKdorBtAOwh6XtqdzDBWsQfzIq3w
-         p8/pwtO4A8ztSbVesWY2bE2UZAM/rpzTbFboAGUwCBj+s2tJsXMKWDVLu8UQvnwY6S2J
-         8xkvSgi50Ct2DcPwq55LZiamiqR2auc7c0IqEYl467CuFZRB4e+zSl7hzNmzFsM7EKf+
-         E8IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773162568; x=1773767368;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CrGsIbpNBvZwtleXZPGJAd1AcvLJjnshz06d0V8IH+Q=;
-        b=qIrCa0xh+ITV7cYlQPwoSy6BTJ8ejOyhoEAyhKPb2II3gR7Ba6g1XwZTE1PktnPWU8
-         insczaCA2U3wuCrv7cCAHwewNO5Gc6SJkFfmZPKS84n0syn68kWlnm7GtF3ujv19Gifq
-         r2aCVeciCSyhX0g12pHGJibbGk70NIuCv8zJXILCfUawC2UqqNB94I5zDhLBKkmlS41Z
-         s/AeHEYyLjscH4R9nnqJxtLKLRZ14eM6V5A1CgLO12A1aNIMx4prpABupScLVqqcrkk/
-         MdN9oytmXLvUC0pSge2/D86SRNqyBJp6KkhtVjF+B0CPljpv8AQYwGClH2fYn+a3ZJx4
-         BS2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXUv775pZOva7dXrsqKb3ZcHQWGX8Dm3+WgvKxuwy42X8Ez+j0H9g7OwoK2v+GcPNlG+YY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yym5z4m1Ksi4MwfeBjGCO0fW1t3hO3G0xj/mJbSF/rhOBsLfQIx
-	npYemadAS0r5ehvCdzMQbLU0+mTghVTQOzt3E5d4eeEBzoATgk4+f08OKMo1n5LtK2An/z/e6Cn
-	7VWrPLfw+VumG+nK/Agpiqcvv8rq7R7+LqTrM
-X-Gm-Gg: ATEYQzx/ckgFgKzcb99FgXF7WQGg/pt5903Hogr8MauGNxB1kZlzBKEoFakGJUSdMQs
-	qPG9ak8ThN8TiahYJkAzqEUEnkABHi6liz3N/Zw9m4XT6u1SkamVnuaY0+DsDsyWdWd8YFNNuWz
-	WCs0mPxZFX5yCSK7Pe2Dpz/Twvh6nOJhb9gZb2L/kff0LXMvm4MMayHtJI7il833Op911XKvGkQ
-	CXtQ4fk9/7X581YzdZmR7pyYQ5XFAetCJLUtntVo65NqZJpN3+QaufbAVq6YEVEbzAqhYd5oXei
-	jrgCl1mKCbxx2lH2JKSbtnGRru6PxgDKwpG2C9icgw==
-X-Received: by 2002:a05:6102:38cf:b0:5f5:76ed:f1db with SMTP id
- ada2fe7eead31-5ffe5b7d7bamr6734985137.0.1773162567872; Tue, 10 Mar 2026
- 10:09:27 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Mar 2026 10:09:25 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Mar 2026 10:09:25 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqeclrwrz4.fsf@gitster.g>
-References: <pull.2233.git.git.1773132678.gitgitgadget@gmail.com>
- <pull.2233.v2.git.git.1773140364525.gitgitgadget@gmail.com>
- <CAOLa=ZRfaSR2CisUrW0gLf_45KQj1wQZ70F4PZ5XcwWZ--+HhQ@mail.gmail.com>
- <CAOAgETMmLKcz2CWqfKCJeoTCfACMXz7M0d2g_zO5M53tnGqQuA@mail.gmail.com> <xmqqeclrwrz4.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DgsxmLRL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C/icPmi6"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 575E9EC0FC9;
+	Tue, 10 Mar 2026 13:09:53 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 10 Mar 2026 13:09:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773162593; x=1773248993; bh=n1Q8lYif39
+	GxSxKAZhj61supeawQ1gtR9c+Ui8k0lhM=; b=DgsxmLRLqb6RiLbz40duCFhzqa
+	CbC1+5HMTujdZEZX9A4UXK/lOp09Akvh6Vo6rYzEBM7gJ9qOU4WHcvxWSKbvc/hY
+	C3cXMBXYmvDEad154/aCP2XPVdjhUc4dFW396JVf7l0QtKOPbUILsNCgcszIv+kR
+	hl9FVGOCBdVOQ7jyG+m7xbzD+eD011jA8kqkINklFO9W1LiLmw9HOjLvGhV/rita
+	IIrcWY8a7+5Hk/cNFKRigFu1jYeegCC0QFVWWFh5jmGsZAm/N/fGBfjSBnCtbzvq
+	zYv15BjLnwqsCV+3o0mrzgFLvEHHITzhBE1LoOvwJZAHDTmez1AO6QPFUTSA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773162593; x=1773248993; bh=n1Q8lYif39GxSxKAZhj61supeawQ1gtR9c+
+	Ui8k0lhM=; b=C/icPmi6+fX1ya1g4sH9ZcKkDtcFb8gLVF3RGyTanMdDOZqXUsd
+	RK9Ki9e/MeN78SwOgghIwBfIcrrKjyKIztQxnK5ZWOd/uBwM4mAcVQrnx2WDg4ot
+	xPBqSfIlXu2XsVjJH34w/ur0nVeNpVcALaTtzVCy+dRpKIBtGxa4XbnUR97rqB8m
+	fFzTPPi3zRseOwiy17l2OfFFkJ82G8ZJfg0+ggJsatbbA2d7fZt89kvmFvGFPZDJ
+	HWpzpNlnokl+/vIO/h5x45tsbctskx3EMZCBWH5l9Wwr1579fQYHUYlSRogBauqA
+	jvAutyDF1qTUF9VwXOQITm28dMV5JbPKzmw==
+X-ME-Sender: <xms:YVCwaWk29PHCCWrCuQMuK31mJk0-R6xxeigmNOvwR2cJUZ5vVn21qw>
+    <xme:YVCwaQGFd6O8uuPmD_46bweBQ-XJ7dSzgKzhSJMysqm_0b_bklDsnQpJ5912e8Ose
+    but6qQiZbfiS66zbKzK-ZzLMTFEOj-dYWpFE54CM8hpWPVeKztE_2M>
+X-ME-Received: <xmr:YVCwaW5jkmG-AbrLbMCVNxq0pxxuVIMHekTAcOZXVyJ3sr5vJhKGufHShyo23-8ErJFq2dTesLPrF-ZxaBGQlqcuTNASEIdMvQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduheekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhsmhhilhgvhiesghhithhl
+    rggsrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
+    hsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
+    pehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:YVCwaQmYwKzbZ7YK9FCK8t3-KQpmfagV6kUCrGLdI6tmjXbrto2BmA>
+    <xmx:YVCwaTqmmdTIDi4-UA1n3wg8SGXjFSnt6pHh16W3d6DSNHXbgFs28Q>
+    <xmx:YVCwaXtCiWx8yxGVUB2Hhxj7FCt1oA9PPJPrpeh69IkpRDb4EG69cA>
+    <xmx:YVCwaQEsau-KIFHTexkqSstpAildqrrzU6aVEcexc_d6oZlFfstYnA>
+    <xmx:YVCwaTa8WQIUEUwJW3ODpPJyVD1cOf4K8YkES7NwtPvKm2yKSBi6QGXS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Mar 2026 13:09:52 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Matt Smiley <msmiley@gitlab.com>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>,
+  Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 03/10] upload-pack: prefer flushing data over sending
+ keepalive
+In-Reply-To: <20260310-pks-upload-pack-write-contention-v3-3-8bc97aa3e267@pks.im>
+	(Patrick Steinhardt's message of "Tue, 10 Mar 2026 14:24:59 +0100")
+References: <20260310-pks-upload-pack-write-contention-v3-0-8bc97aa3e267@pks.im>
+	<20260310-pks-upload-pack-write-contention-v3-3-8bc97aa3e267@pks.im>
+Date: Tue, 10 Mar 2026 10:09:51 -0700
+Message-ID: <xmqq5x73wqzk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 10 Mar 2026 10:09:25 -0700
-X-Gm-Features: AaiRm53_gRDOkpXQGNiym2_0cQVxj4-ILHc-8HKNtZjAJXhUX025ERFWqe7NFgk
-Message-ID: <CAOLa=ZQu1hyiwMpBxJ=0PhNCf6LQqBt3F3=kycDv9cZST_JTNw@mail.gmail.com>
-Subject: Re: [PATCH v2] advice: add stashBeforeCheckout advice for dirty
- branch switches
-To: Junio C Hamano <gitster@pobox.com>, Arsh Srivastava <arshsrivastava00@gmail.com>
-Cc: Arsh Srivastava via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000fcdaf1064cae9412"
+Content-Type: text/plain
 
---000000000000fcdaf1064cae9412
-Content-Type: text/plain; charset="UTF-8"
+Patrick Steinhardt <ps@pks.im> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Arsh Srivastava <arshsrivastava00@gmail.com> writes:
+> When using the sideband in git-upload-pack(1) we know to send out
+> keepalive packets in case generating the pack takes too long. These
+> keepalives take the form of a simple empty pktline.
 >
->> Subject: Re: [GSOC] advice: add stashBeforeCheckout advice for dirty
->> branch switches
->>
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> Doesn't 'ADVICE_COMMIT_BEFORE_MERGE' already do this?
->>> So won't this simply be duplicating the same message?
->>
->> Thank you for the detailed review. You are correct, the existing message
->> ...
->> I will rework the patch in that direction and send a v4.
->>
->> Signed-off-by: Arsh Srivastava <arshsrivastava00@gmail.com>
+> In the preceding commit we have adapted git-upload-pack(1) to buffer
+> data more aggressively before sending it to the client. This creates an
+> obvious optimization opportunity: when we hit the keepalive timeout
+> while we still hold on to some buffered data, then it makes more sense
+> to flush out the data instead of sending the empty keepalive packet.
 >
-> Just a comment by a bystander, but it confuses me quite a lot to see
-> in-body "Subject:" and "Sign-off" in a message that is *not* a patch
-> at all.  What are you signing off with this signature?
+> This is overall not going to be a significant win. Most keepalives will
+> come before the pack data starts, and once pack-objects starts producing
+> data, it tends to do so pretty consistently. And of course we can't send
+> data before we see the PACK header, because the whole point is to buffer
+> the early bit waiting for packfile URIs. But the optimization is easy
+> enough to realize.
+>
+> Do so and flush out data instead of sending an empty pktline. While at
+> it, drop the useless
 
-Tangentially, I know that b4 adds a "Sign-off" to the cover message.
+Useless what?
 
---000000000000fcdaf1064cae9412
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 8355a010fcc229d0_0.1
+> Suggested-by: Jeff King <peff@peff.net>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  upload-pack.c | 21 +++++++++++++++------
+>  1 file changed, 15 insertions(+), 6 deletions(-)
+>
+> diff --git a/upload-pack.c b/upload-pack.c
+> index f6f380a601..7a165d226d 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -466,18 +466,27 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+>  		}
+>  
+>  		/*
+> -		 * We hit the keepalive timeout without saying anything; send
+> -		 * an empty message on the data sideband just to let the other
+> -		 * side know we're still working on it, but don't have any data
+> -		 * yet.
+> +		 * We hit the keepalive timeout without saying anything. If we
+> +		 * have pending data we flush it out to the caller now.
+> +		 * Otherwise, we send an empty message on the data sideband
+> +		 * just to let the other side know we're still working on it,
+> +		 * but don't have any data yet.
+>  		 *
+>  		 * If we don't have a sideband channel, there's no room in the
+>  		 * protocol to say anything, so those clients are just out of
+>  		 * luck.
+>  		 */
+>  		if (!ret && pack_data->use_sideband) {
+> -			static const char buf[] = "0005\1";
+> -			write_or_die(1, buf, 5);
+> +			if (output_state->packfile_started && output_state->used > 1) {
+> +				send_client_data(1, output_state->buffer, output_state->used - 1,
+> +						 pack_data->use_sideband);
+> +				output_state->buffer[0] = output_state->buffer[output_state->used - 1];
+> +				output_state->used = 1;
+> +			} else {
+> +				static const char buf[] = "0005\1";
+> +				write_or_die(1, buf, 5);
+> +			}
+> +
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1td1VFTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mekVVREFDRWRXdXowa3MvNUxpZHFUR1lLNXY0WlcvNApwK3FVYXJISjVS
-SXViejdZR3lERlF4T0N4aTRBVkJGRW90WHFYTzIxSVhSeU92Y0NrV24wdEREbzJTcXByUy9GCnlv
-V3paN1dINk9TTE9OY1VIN1FyOVViSlN6bjJTdUxkcVJpR3V5S1NEbzhVOGZ3dUVRTzZ4QXdzcy94
-SVdYdWcKcGgvUnZZeFk4WENoM1ZpNzRTKy85ZkFvQ3QxYWdWV2RzajdQU21PYzA4KzVPejhlZDFT
-b01VeGVPYnRZRXdZOQo4MXRvalIyZjBqNkJNQUZPRlNNVEJSandmVndKZ29qb3l2SmVVZjVqMjBn
-emFGN0hkZFdoY3NIVSsvZ3VieG8zCmtvUE5iY3g1Sm1GUEljaU4vYm9Xb2hKUGlhenltTFN3cFI5
-ajNQaGNYODh4SGE4VUNjSWRtSjdQSW5LWDVFOUQKNjg4cmpBV09ZZGE1bEhDREQwU0hnT3grbFRM
-OWFxK3RYZS8yOHlsN2Z5RUN2b0RKSTVkWVdadW5EZHJyVlBkegppeWo4ZlJ6eEYwUlhkcWZlQnoz
-bnRJczdQSU11NkZCTG5BRTZTUzkzTnVmSldTckNLYlZrWTNIbTFCbGVlRURJCjJoNnQrN0dhNFpL
-b0o5MnRwdU9jK2dIQ0VwcXVsNld4aVBwM1JnMD0KPW5ZRkcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000fcdaf1064cae9412--
+OK.  The new part of the comment, "If we have pending data, flush
+it", is what the new code is doing (i.e., flush all the bytes before
+the final byte, and make the buffer hold only that final byte we
+kept for ourselves).  Otherwise we give a keepalive packet (i.e., 0
+byte thrown at the sideband #1) as before.
+
+OK.
+
+>  			last_sent_ms = now_ms;
+>  		}
+>  	}
