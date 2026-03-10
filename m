@@ -1,81 +1,82 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008D41DF755
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 03:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01B63B960F
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 03:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773113506; cv=none; b=b5ud9/xaiiXU6xhYdbpGHZ/rfB7nHN/lIRk4e1lH8sKfP1wl2TSSSqFBB/CCEqXTYEbxvR5IMjTWsxjiAHx0fujl3Zr5W118qvNs3AKc/Yswe/Ih2R2M6hzM91S7AvFxjshQDythLdmxnFP+shQ+AdZ3XYbaZrr9wQ5svJxgxRc=
+	t=1773113732; cv=none; b=aBldTTpUE4a7Ow3engCuzvwgr5dtWtYHDrbEmtB1Npug9ZaQ8WnymX+12xEz5iPjEe5W0uslz8yoDlL6A2+FOurD/Gz1TqKlf9769PPp8k9K62S/RLBm91YOWi/owBOHswTCVZmUxKpU+4zBprCo75/LqOfPy5c8AVXOK6xTJqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773113506; c=relaxed/simple;
-	bh=lnYhYr+YLejpV+oJabV+1T/DpHnI9eUzMOt7HyxF3jA=;
+	s=arc-20240116; t=1773113732; c=relaxed/simple;
+	bh=bFdtTka9pcZ6iBHhvaauaBFxbKIoOgFLIWkqCqoaAG8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Eko1QPpulXAMRc6AhHsvETgm88+luQlYeuaalQZSeGLllPmZGR3DYuyKecm5TcUOYWNDdS08I1dqpbspA4AlDJ74Q2F3pwT/29hl9bRZWpa9lU5Ip4P7XoB2yM2UK2/grQ/vP488PXBuzd35fQOeUlV0ErpQEyQVIaurwVR3KD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IbhosHNP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BL7pfMJ9; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=dnfCHoOpFfGXD9vIX8Ju3ZYCpJ2MOdlzqQzV30Vb/OtFmMFGVv9rP4E90+aM171R4Ai08FmlDyj3QVp2/uwjeCnkXnd8hASo7ESEeZIb/vp6gXw3VQWru4SA6jk2MN5hpX2rwOXMstp1Ty1mWXEUbPqa3Octk3+h7kHhieT/b/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gv0pB696; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y6z5GukM; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IbhosHNP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BL7pfMJ9"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 282021D00192;
-	Mon,  9 Mar 2026 23:31:44 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 09 Mar 2026 23:31:44 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gv0pB696";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y6z5GukM"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1D98E1D0018E;
+	Mon,  9 Mar 2026 23:35:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 09 Mar 2026 23:35:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773113503; x=1773199903; bh=5C0cS+dWmd
-	SuxkPA7q/sktpn41V2qeXKeFAQlxBOQ/c=; b=IbhosHNPBkR8OkeL1c0uGWch8V
-	wzzLshjisHInmKfTgIqXX0/FX7+iWZe19XvIldbyc1e9B0cVCrAzlFfAYn4hA1E9
-	ppnnDhUu9nhuNdEYkK1PH1Y8UpXo+/jXx1ubUjH0AeyQ+4pwh0zuVPBMztxdeecO
-	VU6ZLFsKGKSGUtLNcpf9NaCiIjYmbiAlnR8qZnTifIX5kdGj21HK3J5p87rTyFm6
-	i/iYhBQPLDrb1GE1sRa2XtD11OJfCtNKu+VdmUX/C8Q+BmL/fQkSbe/FujnKkurR
-	rKiR5JPBjRSVTTepPVjkGthJiCo37o6SZUiivCcmCWJZDLy8YARZo22CG4wQ==
+	:subject:to:to; s=fm3; t=1773113729; x=1773200129; bh=bFdtTka9pc
+	Z6iBHhvaauaBFxbKIoOgFLIWkqCqoaAG8=; b=gv0pB696aSlg3qaIgKrBvgbyOy
+	1bqUQfcnoBXTtkz0BujT/vx4iPQ2i3jwUHGJUKwqlDGHJFtha9w/CG5kfo7/0QXF
+	zHmjVn03niEMnEiCjaXCRCuDtL12BHZu/AC44Nlx7XKtfno3r9ZOYPEi8sMgxhyt
+	6jcQ+F4Cw+EFJky0gUzuhXCmCmPVqwq1PJQqfvQIjACQyEeq6a2Ylwsvtwm9QHWZ
+	Pp+M2OBRGuBmp42SwHGxh4J9kxIZjIlukB1IFrlzpgSZYYUcbuIjnuJqXrBC9rXv
+	F4EWS5eLV9NSRDTYKQQunG/0oTkBsBf9U2i0oR7oYrWXx17hpqkxwhTC9g7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773113503; x=1773199903; bh=5C0cS+dWmdSuxkPA7q/sktpn41V2qeXKeFA
-	QlxBOQ/c=; b=BL7pfMJ9MPA7krxPa/u4ia8hFb2rfBzBQY3ztwPmrzZe+QJiOLv
-	OIwwii3xp2TlN/BBDisJ5g+NAMdqdVAoS+Hnc83Vk0VqaTPmuHw5I/VKjrIilJsl
-	o50EI1o2RICN5KQGKL7RD3OMClIr6aB70JsCUf7uTz3VJmTLdqTrmo3fUiOh1XSk
-	mPjXJBHWMbDP1JYliKVfv/j8FEf7PhTCb2zlAKb5ZcsStC8m3ijYg1FOYlEb3RZ6
-	vAVDc06A6+siuY4zcEYoNVFNpjzjolSrSUx2IjzPi37KesgukiwBfbK0vmz1e/yj
-	mCk1w8raC50U2JIyRQN6gSQt3w4+sTxMCPQ==
-X-ME-Sender: <xms:n5CvaV9kIVTDgSoShzjslh7NjieYCTp2oY_CqIu5wQ9qcITK6RPtOw>
-    <xme:n5CvaRIOy22Zbi2qh78OrR-pIfb-E4g0nTP_V9QY907vbO0QWGkYpLcvfKH_AZaX2
-    FP7jIhcbO0rQHRYYaP0n0auM4o9ys69SaUL3ufIFqQI9YoHmdV75A>
-X-ME-Received: <xmr:n5CvaQYyL_cHUDXa5fMATgzD-K3KafOI5gp3wm8cG3sayk3qhflDMKqw9dRrTN7YPTuLDg4Q0Ob5o3yDs7N770QHHwKJATXN9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeelleekucetufdoteggodetrf
+	1773113729; x=1773200129; bh=bFdtTka9pcZ6iBHhvaauaBFxbKIoOgFLIWk
+	qCqoaAG8=; b=y6z5GukMH/i87vEf7Ne+Tszn2kocv1Sfx1eEWr9lGRmzhtnxQ90
+	usflSt+YwJNAN4gACW+0JflesKy53FFrbfmqwyU4w0pbOojzAP53nKLCPSIIw46d
+	IolV1UZwRAK+R9vdgvJKCoV34mcWsb/sU3wdbg5mmUHtDFl2+j+VAWJWFAO6rri3
+	MMlnslG9JnclUg9a9NftAylZYohuvyfOMXQxv6Eub/DLooWGOMCpZ9L0pM45vPzE
+	ghxOa9ll9qlgUq/KAYxB+Ewei/sLXYjEXWxS7zxXbkVTiaIsvIJNcT8DpFzJKMia
+	nlDUE0T4wjrFFkBOaOUcdJypOQOz63uLrKg==
+X-ME-Sender: <xms:gZGvaReyVP4PJRCaUr7m55ukELBC9lF3z-zthKkdma6UMnvW3cYAAg>
+    <xme:gZGvaWM-c-QSOJx6IheONvtmo_BSyXp_TpbxmyD-VV3Y9HNNFcPPEsfBDfsexbvdy
+    mXLZBPjDeZ2P-jA4YKmpK-4TqgowVFlAfLKvWA4UOk9X1OUN9C0N3U>
+X-ME-Received: <xmr:gZGvafiPTJpxfaTZW-OyhDKaZBKPzFCS5-5uKXFNaaroAj34S9-2SHgoZ1S-c409UYtJ8eOv6_xeUP1zf14-7fsM89lvDp7XzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeelleelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
-    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:n5CvaTI0XODcldOKmyStHN_zDI5c9J2oxHcUdnAvEkghSvGR9wc8lQ>
-    <xmx:n5CvaeCgoEIY0xhMepCq62-iYk_l8V6tLVtP_UqnuDuNdm9_jmA5ow>
-    <xmx:n5CvaYpA_0cIUIt1H8iYBTk3HAIha28XCsNc_e_a_Ac90Qri63cS7A>
-    <xmx:n5CvaZiAtZStWhQNC2r3N2U1YapId8Wp8W5_L9oLFtyrxRoQvlXubQ>
-    <xmx:n5CvaT2mo8ccY6ueC-036COvR8qUFDEIT0SHdFN_k4A33DNLCNIv7DFR>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehmrghnshhimhgrrghnuhekiedvjeesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gZGvaZ0qsh35bWXIqPiQvwwBg6V2vKyqNedJDX5RYtARzOzbIFzKag>
+    <xmx:gZGvaZhoItPhW-eTDM1U8zn0FCwYgCpf0GCPwPk06UgTkKJpuRJVdQ>
+    <xmx:gZGvaZdmVVqbPo9pDoOf4g_JNZyg6kuAkPUlYEAXk4FHz5WvN8ejaQ>
+    <xmx:gZGvaclrpz0iiXB8VEgl_RtSmzflyQYXV3hJnH6PsNnEJuROs4fbLg>
+    <xmx:gZGvaTBcTqGRVbq1p-8ctHUH8sYYlORkumksy3myBzTilKMMSLQWAs1i>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Mar 2026 23:31:43 -0400 (EDT)
+ 9 Mar 2026 23:35:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] apply.c: fix -p argument parsing
-In-Reply-To: <20260310005408.2022216-1-mroik@delayed.space> (Mirko Faina's
-	message of "Tue, 10 Mar 2026 01:54:07 +0100")
-References: <20260309232700.553168-1-mroik@delayed.space>
-	<20260310005408.2022216-1-mroik@delayed.space>
-Date: Mon, 09 Mar 2026 20:31:42 -0700
-Message-ID: <xmqqwlzkxsv5.fsf@gitster.g>
+To: "Mansi Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Mansi Singh <mansimaanu8627@gmail.com>
+Subject: Re: [PATCH] t1900: add tests for git repo structure subcommand
+In-Reply-To: <pull.2066.git.1773112159662.gitgitgadget@gmail.com> (Mansi Singh
+	via GitGitGadget's message of "Tue, 10 Mar 2026 03:09:19 +0000")
+References: <pull.2066.git.1773112159662.gitgitgadget@gmail.com>
+Date: Mon, 09 Mar 2026 20:35:28 -0700
+Message-ID: <xmqqsea8xsov.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,130 +86,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Mirko Faina <mroik@delayed.space> writes:
+"Mansi Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> "git apply" has an option -p that takes an integer as its argument.
-> Unfortunately the function apply_option_parse_p() in charge of parsing
-> this argument uses atoi() to convert from string to integer, which
-> allows a non-digit after the number (e.g. "1q") to be silently ignored.
-> As a consequence, an argument that does not begin with a digit silently
-> becomes a zero. Despite this command working fine when a non-positive
-> argument is passed, it might be useful for the end user to know that
-> their input contains non-digits that might've been unintended.
+> From: Mansi Singh <mansimaanu8627@gmail.com>
 >
-> Replace atoi() with strtol_i() to catch malformed inputs.
+> The t1900 test file covers git repo info thoroughly but has
+> no tests for the git repo structure subcommand. Add basic
+> tests to verify that:
 >
-> Signed-off-by: Mirko Faina <mroik@delayed.space>
-> ---
+> - git repo structure succeeds and produces no stderr output
+> - git repo structure --format=keyvalue outputs expected keys
+> - git repo structure --format=nul succeeds
+> - git repo structure rejects an unknown format
 
->  apply.c                 |  3 ++-
->  t/t4103-apply-binary.sh | 19 +++++++++++++++++++
->  t/t4103/patch           | 16 ++++++++++++++++
->  3 files changed, 37 insertions(+), 1 deletion(-)
->  create mode 100644 t/t4103/patch
+Ask those who have worked on the relevant command to review by
+adding them on the Cc: line.
 
-Curious.  It is true that we need to parse the p_value correctly
-even when we are applying a binary patch, but the problem is not
-limited to binary patches, is it?
 
-> diff --git a/apply.c b/apply.c
-> index b6dd1066a0..61df3bdcd0 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -4981,7 +4981,8 @@ static int apply_option_parse_p(const struct option *opt,
->  
->  	BUG_ON_OPT_NEG(unset);
->  
-> -	state->p_value = atoi(arg);
-> +	if (strtol_i(arg, 10, &state->p_value) < 0 || state->p_value < 0)
-> +		die("<num> has to be a non-negative integer");
->  	state->p_value_known = 1;
->  	return 0;
->  }
-
-Sounds sensible.
-
-I briefly wondered if it would have negative fallouts to change the
-type of .p_value member to "unsigned int" and use strtol_ui() to
-parse it, but the amount of work this part of the code needs to do
-does not change that much, so such a change is of dubious value.
-It looks like the above draws the line at the right place to stop.
-
-Great execution.
-
-> diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
-> index 8e302a5a57..d9dc884946 100755
-> --- a/t/t4103-apply-binary.sh
-> +++ b/t/t4103-apply-binary.sh
-> @@ -53,6 +53,25 @@ test_expect_success 'setup' '
->  	)
->  '
->  
-> +test_expect_success 'git apply -p 1 patch' '
-> +	test_when_finished "rm -rf result t" &&
-> +	git apply -p 1 $TEST_DIRECTORY/t4103/patch &&
-> +	ls -l | sed -e "/[[:space:]]t$/!d" >result &&
-> +	test_line_count = 1 result
-> +'
-
-Is this saying "in the directory there must be only a single file
-whose name is t?"  Wouldn't it be more readable and direct to do
-something like
-
-	test_path_is_dir t
-
-or is there something more subtle going on here?
-
-> +test_expect_success 'git apply -p malformed patch' '
-> +	test_must_fail git apply -p malformed $TEST_DIRECTORY/t4103/patch
-> +'
->
-> +test_expect_success 'git apply -p 2q patch' '
-> +	test_must_fail git apply -p 2q $TEST_DIRECTORY/t4103/patch
-> +'
-
-If this did not fail and patch gets applied with some p_value that
-happens to be used when we fail to parse the number, then ...
-
-> +test_expect_success 'git apply -p -1 patch' '
-> +	test_must_fail git apply -p -1 $TEST_DIRECTORY/t4103/patch
-> +'
-
-... it would not be clear why this step fails.  Perhaps with that
-same "unable to parse" p_value was used and this tried to create the
-same file as the previous step already created, or we detected parse
-failure.  We cannot tell.
-
-It probably is a good idea to prepare for the worst by doing
-something silly like
-
-	test_when_finished "rm -f t/test/test test/test test" &&
-
-at the beginning of each of these tests so that we would clean up
-whatever we could leave behind?  I dunno.
-
->  test_expect_success 'stat binary diff -- should not fail.' \
->  	'git checkout main &&
->  	 git apply --stat --summary B.diff'
-> diff --git a/t/t4103/patch b/t/t4103/patch
-> new file mode 100644
-> index 0000000000..c4511bb708
-> --- /dev/null
-> +++ b/t/t4103/patch
-> @@ -0,0 +1,16 @@
-> +From 90ad11d5b2d437e82d4d992f72fb44c2227798b5 Mon Sep 17 00:00:00 2001
-> +From: Mroik <mroik@delayed.space>
-> +Date: Mon, 9 Mar 2026 23:25:00 +0100
-> +Subject: [PATCH] Test
-> +
-> +---
-> + t/test/test | 0
-> + 1 file changed, 0 insertions(+), 0 deletions(-)
-> + create mode 100644 t/test/test
-> +
-> +diff --git a/t/test/test b/t/test/test
-> +new file mode 100644
-> +index 0000000000..e69de29bb2
-> +-- 
-> +2.53.0.851.ga537e3e6e9
-> +
