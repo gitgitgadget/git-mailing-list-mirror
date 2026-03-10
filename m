@@ -1,138 +1,86 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4567474C14
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 00:54:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773104068; cv=none; b=ir1TZxJamxc3qCoUsfjTfIo/g/dV04UK2m6eJAaTmpqJv1tu7oBaYyNlJ0MKRZV6vV8yjQzx4TZmHN2reIZ+fqyWCv0P7f8uvxVK+HTHimJLiwFv0CYh0jYPdTzJqBDYPp66OTQKR7ggFkYx6EiRmdXpu+qx234im2p12D2R8u0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773104068; c=relaxed/simple;
-	bh=UjGbU8TYJWBK/s2Mb9kTDB1MKCZmt/RzYppMz4Jkmy8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8JKFwTVZ4Dn9/ENgVSyg3VH4jWL6NWUA9Jkt1JocMGpL8CLXK24xBG995OGEoSkN4CiY5qbB1sSGyEepKHzRz29O1Ba1RDzKPIfB6tJigjN2lOzDvRIFOb5vyN1CqihE6+TuGsN7xEfiq1wlu+km3+TOcCqHO1n0RL3Uz3pN8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=RqGY1y/R; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="RqGY1y/R"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1773104064;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MFsty6tLVhHwk4jTIwzvnZHOAExJIditK6MdpjLtHIo=;
-	b=RqGY1y/RbIW+Fw+zy1FB8PjYa/KWxruuq6vo1hgFBUX7eZukBF6nka5Le4eBOIGwYz/zOO
-	ylm4uvub37H58kgcJLKz/KJukQmRdWuSIkqvZJaJv/n9GdU9q6s78zYsT0zczK0ooVczKo
-	cF0vXR2s2aeyN1PfOXbqafJ877bZaJt3aauEoLoHmOhKAaTF4gaYeBdu3mgZ4sG1ZxM2AQ
-	J3ltGY86j5VHq5lzT0OapbYgU1UOLLyzEwEdSBRtQNzh0LiGiXCReLgFIXVPgVFgDKlpdj
-	wxWc8l94Uui6ojkDgzNP2WM1O4iSOaAKwFEDJbbKhSeBfHrDmBw2e1AsMi/Y9g==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] apply.c: fix -p argument parsing
-Date: Tue, 10 Mar 2026 01:54:07 +0100
-Message-ID: <20260310005408.2022216-1-mroik@delayed.space>
-In-Reply-To: <20260309232700.553168-1-mroik@delayed.space>
-References: <20260309232700.553168-1-mroik@delayed.space>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D1A2D6E67
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 00:57:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773104251; cv=pass; b=t/cYi2bfvr+DB2mJeUqAe1KFZlW3DLXlhPu0m+EU9DANzU3nTmKfrtayZ+GL+JfbfPC6T7XeqNC7b2rd77EaQ7UYWVfvUr/qOhJNyXXVoawNFtRzBbZeii2UQ/ofdxEYzsUp+6911lUL1kIBxBxOS9GQzv34gCRn4iqY+3aI4Eo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773104251; c=relaxed/simple;
+	bh=2QSC9PZz8h3UqEV/6qYYfWzghZIvWFr2ojTt1OOoKNI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PxQ9eRc+gHq9o7vgHe3SefDwEwC0ReGZo5bghD0U5wEAzYpFIdY8oO6ZAk9Cv22Q7UJgO6wvW+TjHNL85TJhKJXdb+40LbRfpJ+XAjuhJXorlbkr9EADcuJNyAAX+0GyxhsrnV0ERtWvCVcZThXzzQmOQYon9BnQ0g+Jxuht5Gs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=209.85.167.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-466ec4c6852so1602452b6e.3
+        for <git@vger.kernel.org>; Mon, 09 Mar 2026 17:57:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773104244; cv=none;
+        d=google.com; s=arc-20240605;
+        b=J36C7DLl7KUE6+qvN+uSTAYaikWi/VIVQi7BBsi6qZ8lKuqH732gZiKVtU7DWIjCq5
+         lBKmFToc+Ggaz5TQfXHFAtNnqsoAFv4NmBQ1GPnGE1hr08jWPmSA6W38ZHIPjTi2wNfN
+         8Y/BDT5SNwBDuXQTUjlkyfJhgfrasBJ1ws1m7tNCsIWTC5jVBvWXjdvFoj7gzmqtHgWS
+         28zwvgO5UfaeEO/OhbpsMnRDph9aZR7q285ljM0Z9UJexxTRmzE/70kTnAxDZ59LXkAA
+         pSBmB8vV+zkc80mb8dN/rRNwFOmX6sQUtzN2EAdFk7Q03mo1KEe73y4FS+VSYrxcr9OU
+         2agQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version;
+        bh=2QSC9PZz8h3UqEV/6qYYfWzghZIvWFr2ojTt1OOoKNI=;
+        fh=u3TiFIbMAOjDXr15gEItaB2MLO3ezi8OAP/6LgvlHQg=;
+        b=UeSMWnZnsKAkWDbls0Tdc43FbVsUpFQ6S6+Vx4RatP9AMpSHTzXwYIKpG0UQabfnzp
+         TliyOE0sX+ruG6Kvt3ziKv0TYfejBKxBywn60+tFAbFUaI9Qct/NgIdmYsnrLWrUepVB
+         yfZgiYUwVCXuPa0CX48w3eaumNUXijndeDy5JLETyEdsu3TfcvhDa4VTN5/bi+kcJfcC
+         FKFfho57nulMRn5cDkXUyp4J8C2OwMpvSZdeytnme4SBRHAu6JfYOav0YGa3ok+gNn4p
+         OPOqVs6pG2xEyjejOjgztCaVCEyK/DjLExfZwIoPPwPsXHmBTjPDz2+nXygEwkfHHTyA
+         NmMw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773104244; x=1773709044;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2QSC9PZz8h3UqEV/6qYYfWzghZIvWFr2ojTt1OOoKNI=;
+        b=NZKIfhpePLUX1YQhNMuBrcvJ0H1jDmXbOduIe7MpqXeSzHAZmcmgFs08ydaIm8bZfD
+         UjA2zWT9Jsu1eyEpOrkQ/PNaD5SHwD1SIdeWoRvWViS0Hsu9EUFRv0K7Z3hvPWDcI+SV
+         H3ivfLN3iHMsMUphjriSGSS4ODt2O/RX5CbTY2v7J5KozKhZp/zKpe4j0Qrirp26OtDP
+         xnEGZLPC7HabHwdaCcEAz/V2xfiNP/cdc8Txsfl/Yd46WJOxhe9EKdHIDIzKMIr6JqqA
+         NmNDYuWZFk4/1HAkMvDg3xlp6Gq6MNh0miEdn/DvkjBgLQ1PpoWjVsIjZcgGpHJzJKvo
+         112Q==
+X-Gm-Message-State: AOJu0Yx/wYAKJhqbjUgx3SLL5Y35IiYk/f1VdDAW7J9TR6lWOjX5T2De
+	QTaOAJxhF0U18mmJeA4BQVd4rY2sksZftazXMHKsC7/Zs6rhW/HNuZdVg0O/iHjxULMoDKkhBbF
+	zQSjiAp2M7VaUFrtKtsZyXPOPHZn+vzg=
+X-Gm-Gg: ATEYQzxvnHTreqMd8JYpFfcrllaGsdNc79uLeWsocVCgNUrroXv+UvzmEp9h847kKiY
+	Ugk9tlUCf9xYQzCyABKsEMmXPKAmeWdOf2zGWb3vTLyWfW6aV6FF6Nhv48dh/uTccYuQ4m9ynZF
+	zQe5tPkZ7Whk2sxnn9SfMJMP25C0lBCuYc6hBNEPeolUrNOPJQ5u3oVUaEwIAamPTYTD3PeOVW6
+	mTGphyWxC04KqtGvSVFLuFGb5zy5UhDT0YXhjmemSK3V3ow+FDpCEZdYtMtRPIr9evKTJbLfQQD
+	louNIZw=
+X-Received: by 2002:a05:6808:1903:b0:467:1ad3:7ee with SMTP id
+ 5614622812f47-4671ad320femr1090510b6e.40.1773104244663; Mon, 09 Mar 2026
+ 17:57:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: -----
+References: <3ad40c3d0762c2e8c14792dfb68cba9f63a883a3.1773026586.git.collin.funk1@gmail.com>
+ <xmqqbjgx6obs.fsf@gitster.g> <87a4wgwn18.fsf@gmail.com>
+In-Reply-To: <87a4wgwn18.fsf@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Date: Mon, 9 Mar 2026 17:57:08 -0700
+X-Gm-Features: AaiRm50StSpMoVxAUXUNRl_f00UeEo2iq-CTMo50Q-3nIKYbmc8A6D_3Jn3qAEs
+Message-ID: <CAPc5daXDPLYnmtgk3M+B4qOPVU7vWwP3A8jqNe6ex3WaVZMufA@mail.gmail.com>
+Subject: Re: [PATCH] dir: avoid -Wdiscarded-qualifiers in remove_path()
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: git@vger.kernel.org, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-"git apply" has an option -p that takes an integer as its argument.
-Unfortunately the function apply_option_parse_p() in charge of parsing
-this argument uses atoi() to convert from string to integer, which
-allows a non-digit after the number (e.g. "1q") to be silently ignored.
-As a consequence, an argument that does not begin with a digit silently
-becomes a zero. Despite this command working fine when a non-positive
-argument is passed, it might be useful for the end user to know that
-their input contains non-digits that might've been unintended.
+> > "it's" -> "its", if I am reading the above correctly?
+>
+> Yep, my mistake. Assuming you can fix that locally?
 
-Replace atoi() with strtol_i() to catch malformed inputs.
-
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
- apply.c                 |  3 ++-
- t/t4103-apply-binary.sh | 19 +++++++++++++++++++
- t/t4103/patch           | 16 ++++++++++++++++
- 3 files changed, 37 insertions(+), 1 deletion(-)
- create mode 100644 t/t4103/patch
-
-diff --git a/apply.c b/apply.c
-index b6dd1066a0..61df3bdcd0 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4981,7 +4981,8 @@ static int apply_option_parse_p(const struct option *opt,
- 
- 	BUG_ON_OPT_NEG(unset);
- 
--	state->p_value = atoi(arg);
-+	if (strtol_i(arg, 10, &state->p_value) < 0 || state->p_value < 0)
-+		die("<num> has to be a non-negative integer");
- 	state->p_value_known = 1;
- 	return 0;
- }
-diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
-index 8e302a5a57..d9dc884946 100755
---- a/t/t4103-apply-binary.sh
-+++ b/t/t4103-apply-binary.sh
-@@ -53,6 +53,25 @@ test_expect_success 'setup' '
- 	)
- '
- 
-+test_expect_success 'git apply -p 1 patch' '
-+	test_when_finished "rm -rf result t" &&
-+	git apply -p 1 $TEST_DIRECTORY/t4103/patch &&
-+	ls -l | sed -e "/[[:space:]]t$/!d" >result &&
-+	test_line_count = 1 result
-+'
-+
-+test_expect_success 'git apply -p malformed patch' '
-+	test_must_fail git apply -p malformed $TEST_DIRECTORY/t4103/patch
-+'
-+
-+test_expect_success 'git apply -p 2q patch' '
-+	test_must_fail git apply -p 2q $TEST_DIRECTORY/t4103/patch
-+'
-+
-+test_expect_success 'git apply -p -1 patch' '
-+	test_must_fail git apply -p -1 $TEST_DIRECTORY/t4103/patch
-+'
-+
- test_expect_success 'stat binary diff -- should not fail.' \
- 	'git checkout main &&
- 	 git apply --stat --summary B.diff'
-diff --git a/t/t4103/patch b/t/t4103/patch
-new file mode 100644
-index 0000000000..c4511bb708
---- /dev/null
-+++ b/t/t4103/patch
-@@ -0,0 +1,16 @@
-+From 90ad11d5b2d437e82d4d992f72fb44c2227798b5 Mon Sep 17 00:00:00 2001
-+From: Mroik <mroik@delayed.space>
-+Date: Mon, 9 Mar 2026 23:25:00 +0100
-+Subject: [PATCH] Test
-+
-+---
-+ t/test/test | 0
-+ 1 file changed, 0 insertions(+), 0 deletions(-)
-+ create mode 100644 t/test/test
-+
-+diff --git a/t/test/test b/t/test/test
-+new file mode 100644
-+index 0000000000..e69de29bb2
-+-- 
-+2.53.0.851.ga537e3e6e9
-+
--- 
-2.53.0.851.ga537e3e6e9
-
+Sure, will do.
