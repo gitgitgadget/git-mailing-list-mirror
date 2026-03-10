@@ -1,79 +1,79 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4033101C0
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 15:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6D8316905
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 15:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773155918; cv=none; b=urBQb7RWhSxxMmuEkh+0bOigkmxSqUdYE4X1yHK5hsfNjq+/tH74Yct7rS5KJTmPlhesJKw13oHC4FKqpiSa6VXAxDhBkjTUK94S33JN6UjBQso/ib1IPTA4oFrdajew32s5JehcCPz/HcqQDUJ/Z4v/YUskrQXU90vw9jLV/n4=
+	t=1773155920; cv=none; b=hfa3dw8SzAGTLbggVKe0E669YgkfdNPYhkrclbHnnStbxUJxm/OWH7v6Go8q9uSVgeHCN46t3YF1Sr9jPVmpt/Rc+sX8xmedtkTjdsR5aexDYEtjhPyFqi27gKREKDovsEqTaOvua6WwYubjkDTGViibfDZGroIlPPSFT/9nc+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773155918; c=relaxed/simple;
-	bh=RD6c2Zxtafap1tLqyDQnltNbPPuhHuzaAwIB9SDFD9s=;
+	s=arc-20240116; t=1773155920; c=relaxed/simple;
+	bh=9km4RxKCPiHlf4DaXQyEp3Pb8+qbykPpZ8g0jjNPMjc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hUPwwv8TQNanhU0sJ5EqQoZm27uswFyx3zSa93ptVZwIIyg5oZOOiBiRQxKDHFqxBKDA9byex5BpOWBPYSAdWeOcdqXRCeBzU2H22q4g8mGjSBFYNXKDYGumFdEmFbnwwBhU7ZeErwTSzlO3kDPfiYPE2sSfBi67H4zt41y+Yl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Mm7fOxrC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bc62KOHA; arc=none smtp.client-ip=103.168.172.158
+	 In-Reply-To:To:Cc; b=LL/hOl+ykRY7djhYxgWrQ4F5P+TthKqRbkxbaXdv2CGOifqRBpvZSzdH3mSQ3Qw0Z9URiuuJL1amNxvfbtcZiSjs/IrM+vJHSOB6QYmcTsiYiE9FPEAn3TfQM4u7R4pWQFnqid5bFJ77adxBzEfmis8PArwI7RTXyD4abDhX5IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y21bWKeD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nLgGMQOw; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Mm7fOxrC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bc62KOHA"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D5459140013E
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 11:18:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y21bWKeD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nLgGMQOw"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8EF8914001D8
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 11:18:38 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Tue, 10 Mar 2026 11:18:36 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 10 Mar 2026 11:18:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773155916;
-	 x=1773242316; bh=5xK1ZQz1B7TZYLC69tsMXA/bWm8O4+fg9fe1xvBsvFc=; b=
-	Mm7fOxrC+X98z6Bd+4kLqRPPzT0kfvP15WR4wp669UOR5iLbrELKuNnPfA+ftBz9
-	fjFUBdCL/e6olMU51lyxZ8qtMhl3qtDXn7UJ54jIg/5IhNjA4NpYusPexBGtJP3u
-	thJ6FAt1HdgJqXAaZKlZb8HQdUHX/t42P6ItCd4K/dinUzwWHD3Lm6o48XkRvz7M
-	KV49EeQiSeq4EhLm45QurTuwgv2pwKfoJbhmEqKjEhGYe6V3G7wDYTI7tv8pBtOR
-	eROcVBgIwp3Sg3Qnmsluajl+/1Pq4Tm71pwGj3othTEWeOLu62hxJJBfTm5kmNv9
-	vJDixFZOUXctDxO2P9c+/Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773155918;
+	 x=1773242318; bh=Al1IZkpZhDfhZrgqW77iEjs2gbhUJFvSs3XjPiH+6gc=; b=
+	Y21bWKeDwgayZ5GgDkU/XfGxzQ9FLMDOqpoRXJUmb+LA+ylsugnSnlcI1XIdyMts
+	JkWS7NtRBluNHll6CapIa8pyckBUqu+Q0rC16opnY0A3XBo2ge73oiTlxJXaqI1K
+	qckqKLDIjDv5Exx7KafVm9Ws2Oq8pfzRIjLabFwQ8d30bbZDKcY/+/wE/LEZhKpv
+	ddJFpJ6VeoTAPIvq5cj2qOBmVlI8+qXzG50ASsN44TgK4NrNiit5JiaFcGgtNbnp
+	i9jiVwREgCHPoL2QORw1nn45xgxkl+CU4cy3OyXk5JdHwByQYMFvgU3Iysvs7GAD
+	1G4emkc4QciY9wjlGDWqdQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773155916; x=
-	1773242316; bh=5xK1ZQz1B7TZYLC69tsMXA/bWm8O4+fg9fe1xvBsvFc=; b=B
-	c62KOHAfZsSsjPmKLyr7TVQO7koT1kisFEQ05NRy0fYSibG70Fu9N9iR8xiUgDxh
-	7TiCdy5TpZFRDllTAf/47Pr2u9h9esKs0rd1O1W8vIXKK06Rm+NOCTRqUTqXjhL5
-	/oXFdsJUIoz58nV3LAqORi7TMlr/NyY2OEjGn+lnxqh8jw2g42vEuKY1LmCfwwBK
-	CknDq4s3VRHL0UC/QtqMLtJs+Gx2MJYVyPcPPSOaRWw1pT3wNXEjShFFJmeCarC9
-	y5KiSos5MHPc4j2CIJpNU6pTdbPdAQuTv0JrJq+wrfSz496KK46Rwt/3GsvqzpU3
-	5djMFOMq0Nx0ZgbKTNFQA==
-X-ME-Sender: <xms:TDawabWprk80HgdCtRFxeX0pLjtGf-fKLEx7Khis1MGXPSiD8tYUgw>
-    <xme:TDawaaj0Uuk-7Iex5xCRSTIZHtkkLh68p_gn6_sowzsi7lE3uWqWYzf-BlPzt1qSn
-    6LyNLCdF8CwsHyJrvcZqK9-w417SyHuNvnFTARJfCi8WmaLvpQ>
-X-ME-Received: <xmr:TDawadCGI5dGf15GXr68aJxv9bE00VP2PddAb3PU7J1GbLxFY04rJOOIik70kj6gnrk4k47Zi4CcO_pkIeyHlCIZBflpAc9ZjBBIefeH>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773155918; x=
+	1773242318; bh=Al1IZkpZhDfhZrgqW77iEjs2gbhUJFvSs3XjPiH+6gc=; b=n
+	LgGMQOw9M24u7JDhlytKcBqALWQi3JxUXX8Fd4ogQ6r5rWmik8WYRn4Lni8hlqHX
+	RG7vzUT/sQda6O9skcjlXxrAlrmastISbyu5sGGjUrvrfKolbgA02xJw1lRyp0yN
+	Gje+N9aePBJH3ZlAC7WKRoADWzZ4bGnfG9BKkNV8TLM8y1XabV306OJ2mzwKCRwp
+	kK627wSu8TTp705MsD5fPONig7UPk70YYviAhI/pxdEElIT22DlJlckjrBLrV2iA
+	uBY7N9/cgmmm5AE0YoSDcd3+XHbo5Dn90wQSRqZgpJLIwp9bdarc+vKx/auXLCaJ
+	AfIysTampeoF8ZOuBpcyA==
+X-ME-Sender: <xms:TjawaUoU055rqcUWioTUWNqcJU0VaaXXUfbwEeMKSnr-E3-VMxTH-Q>
+    <xme:TjawaRk08spNmQUBBLYyMZxzaM8DAbu0JtC7Kv1qLU5MZSwldAU2VtmSnBWwTNLIl
+    z4ni6vCgObe3pQIh5JK6Y-8JWuf7zbVU_R48CTNMFtHUmPFV3tXEQ>
+X-ME-Received: <xmr:Tjawae0PHTVc0rOgJd4N3N5kCDerKqfCZSCnP5JLyPfWQ9B9A18ZoW3q_QWB2VlJsJcYwczbPbbO05KuJ_GXDz4Qyti7fusrF7eB0TVi>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedufeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
     dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepvdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:TDawabfHdFW1NZa8UvKlH8iGQaMpHlxlrnTFQcgdbFECKoBkDcB1fw>
-    <xmx:TDawaVdoAL4llZCrhMP52LlwLXEjxuCk8bsO4e5pFdHcvfFlkb5nHA>
-    <xmx:TDawafiDyadg_hvK4aJu4aqsyuftQ-Vp_tpQlnfpWChrjV-lQfyA7Q>
-    <xmx:TDawaRQK_US4LcHQlJHNigYtJo6O2JiAjkGBIKHeDwJ7tg8Zu_iaqg>
-    <xmx:TDawaelyFh1NyWP6Jp8doIVE7ammJls1uNAZ0OaZs7F6hyiYGPvK8PG8>
+X-ME-Proxy: <xmx:TjawaRA3oFayHPB4VzdNDFVxulJdpfbpmLPz5FDojDrU0znKnbYOwQ>
+    <xmx:TjawaTzHlBfmsdYYBtf6yzacn78R1EkHLE7wvmDfDsC4qqNCuWDldA>
+    <xmx:TjawaXmpUyrymr6FZMSUwnk1PU4arI7ulHxLLzjA9gbJKF_M5lKZEA>
+    <xmx:TjawaQHobGhdodZCAgju_RB0Ydun2-X5VnLg8VL5NqP_EeU163k65Q>
+    <xmx:TjawaYJqUJQH9B1JQv4f8BUTZXj9CgYzC9BBE4gifz8Dk6_FCF4-0BYC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 10 Mar 2026 11:18:36 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 10 Mar 2026 11:18:37 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 70cc4023 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id fd2b47d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 10 Mar 2026 15:18:35 +0000 (UTC)
+	Tue, 10 Mar 2026 15:18:37 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 10 Mar 2026 16:18:24 +0100
-Subject: [PATCH 4/6] object-file: generalize counting objects
+Date: Tue, 10 Mar 2026 16:18:25 +0100
+Subject: [PATCH 5/6] odb/source: introduce generic object counting
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,159 +82,153 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260310-b4-pks-odb-source-count-objects-v1-4-109e07d425f4@pks.im>
+Message-Id: <20260310-b4-pks-odb-source-count-objects-v1-5-109e07d425f4@pks.im>
 References: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
 In-Reply-To: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-Generalize the function introduced in the preceding commit to not only
-be able to approximate the number of loose objects, but to also provide
-an accurate count. The behaviour can be toggled via a new flag.
+Introduce generic object counting on the object database source level
+with a new backend-specific callback function.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c  |  5 +++--
- object-file.c | 58 +++++++++++++++++++++++++++++++++++++---------------------
- object-file.h |  5 +++--
- odb.h         |  9 +++++++++
- 4 files changed, 52 insertions(+), 25 deletions(-)
+ odb/source-files.c | 30 ++++++++++++++++++++++++++++++
+ odb/source.h       | 27 +++++++++++++++++++++++++++
+ packfile.c         |  4 ++--
+ packfile.h         |  1 +
+ 4 files changed, 60 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index a08c7554cb..3a64d28da8 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -474,8 +474,9 @@ static int too_many_loose_objects(int limit)
- 	int auto_threshold = DIV_ROUND_UP(limit, 256) * 256;
- 	unsigned long loose_count;
- 
--	if (odb_source_loose_approximate_object_count(the_repository->objects->sources,
--						      &loose_count) < 0)
-+	if (odb_source_loose_count_objects(the_repository->objects->sources,
-+					   ODB_COUNT_OBJECTS_APPROXIMATE,
-+					   &loose_count) < 0)
- 		return 0;
- 
- 	return loose_count > auto_threshold;
-diff --git a/object-file.c b/object-file.c
-index da67e3c9ff..d35cec201f 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1868,40 +1868,56 @@ int odb_source_loose_for_each_object(struct odb_source *source,
- 					     NULL, NULL, &data);
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 14cb9adeca..c08d8993e3 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -93,6 +93,35 @@ static int odb_source_files_for_each_object(struct odb_source *source,
+ 	return 0;
  }
  
--int odb_source_loose_approximate_object_count(struct odb_source *source,
--					      unsigned long *out)
-+static int count_loose_object(const struct object_id *oid UNUSED,
-+			      struct object_info *oi UNUSED,
-+			      void *payload)
++static int odb_source_files_count_objects(struct odb_source *source,
++					  enum odb_count_objects_flags flags,
++					  unsigned long *out)
 +{
-+	unsigned long *count = payload;
-+	(*count)++;
-+	return 0;
++	struct odb_source_files *files = odb_source_files_downcast(source);
++	unsigned long count;
++	int ret;
++
++	ret = packfile_store_count_objects(files->packed, flags, &count);
++	if (ret < 0)
++		goto out;
++
++	if (!(flags & ODB_COUNT_OBJECTS_APPROXIMATE)) {
++		unsigned long loose_count;
++
++		ret = odb_source_loose_count_objects(source, flags, &loose_count);
++		if (ret < 0)
++			goto out;
++
++		count += loose_count;
++	}
++
++	*out = count;
++	ret = 0;
++
++out:
++	return ret;
 +}
 +
-+int odb_source_loose_count_objects(struct odb_source *source,
-+				   enum odb_count_objects_flags flags,
-+				   unsigned long *out)
+ static int odb_source_files_freshen_object(struct odb_source *source,
+ 					   const struct object_id *oid)
  {
- 	const unsigned hexsz = source->odb->repo->hash_algo->hexsz - 2;
--	unsigned long count = 0;
--	struct dirent *ent;
- 	char *path = NULL;
- 	DIR *dir = NULL;
- 	int ret;
+@@ -220,6 +249,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+ 	files->base.read_object_info = odb_source_files_read_object_info;
+ 	files->base.read_object_stream = odb_source_files_read_object_stream;
+ 	files->base.for_each_object = odb_source_files_for_each_object;
++	files->base.count_objects = odb_source_files_count_objects;
+ 	files->base.freshen_object = odb_source_files_freshen_object;
+ 	files->base.write_object = odb_source_files_write_object;
+ 	files->base.write_object_stream = odb_source_files_write_object_stream;
+diff --git a/odb/source.h b/odb/source.h
+index a1fd9dd920..96c906e7a1 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -142,6 +142,21 @@ struct odb_source {
+ 			       void *cb_data,
+ 			       unsigned flags);
  
--	path = xstrfmt("%s/17", source->path);
-+	if (flags & ODB_COUNT_OBJECTS_APPROXIMATE) {
-+		unsigned long count = 0;
-+		struct dirent *ent;
++	/*
++	 * This callback is expected to count objects in the given object
++	 * database source. The callback function does not have to guarantee
++	 * that only unique objects are counted. The result shall be assigned
++	 * to the `out` pointer.
++	 *
++	 * Accepts `enum odb_count_objects_flag` flags to alter the behaviour.
++	 *
++	 * The callback is expected to return 0 on success, or a negative error
++	 * code otherwise.
++	 */
++	int (*count_objects)(struct odb_source *source,
++			     enum odb_count_objects_flags flags,
++			     unsigned long *out);
++
+ 	/*
+ 	 * This callback is expected to freshen the given object so that its
+ 	 * last access time is set to the current time. This is used to ensure
+@@ -333,6 +348,18 @@ static inline int odb_source_for_each_object(struct odb_source *source,
+ 	return source->for_each_object(source, request, cb, cb_data, flags);
+ }
  
--	dir = opendir(path);
--	if (!dir) {
--		if (errno == ENOENT) {
--			*out = 0;
--			ret = 0;
-+		path = xstrfmt("%s/17", source->path);
++/*
++ * Count the number of objects in the given object database source.
++ *
++ * Returns 0 on success, a negative error code otherwise.
++ */
++static inline int odb_source_count_objects(struct odb_source *source,
++					   enum odb_count_objects_flags flags,
++					   unsigned long *out)
++{
++	return source->count_objects(source, flags, out);
++}
 +
-+		dir = opendir(path);
-+		if (!dir) {
-+			if (errno == ENOENT) {
-+				*out = 0;
-+				ret = 0;
-+				goto out;
-+			}
-+
-+			ret = error_errno("cannot open object shard '%s'", path);
- 			goto out;
+ /*
+  * Freshen an object in the object database by updating its timestamp.
+  * Returns 1 in case the object has been freshened, 0 in case the object does
+diff --git a/packfile.c b/packfile.c
+index 1ee5dd3da3..8ee462303a 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1102,6 +1102,7 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
+ }
+ 
+ int packfile_store_count_objects(struct packfile_store *store,
++				 enum odb_count_objects_flags flags UNUSED,
+ 				 unsigned long *out)
+ {
+ 	struct packfile_list_entry *e;
+@@ -1146,10 +1147,9 @@ unsigned long repo_approximate_object_count(struct repository *r)
+ 
+ 		odb_prepare_alternates(r->objects);
+ 		for (source = r->objects->sources; source; source = source->next) {
+-			struct odb_source_files *files = odb_source_files_downcast(source);
+ 			unsigned long c;
+ 
+-			if (!packfile_store_count_objects(files->packed, &c))
++			if (!odb_source_count_objects(source, ODB_COUNT_OBJECTS_APPROXIMATE, &c))
+ 				count += c;
  		}
  
--		ret = error_errno("cannot open object shard '%s'", path);
--		goto out;
--	}
-+		while ((ent = readdir(dir)) != NULL) {
-+			if (strspn(ent->d_name, "0123456789abcdef") != hexsz ||
-+			    ent->d_name[hexsz] != '\0')
-+				continue;
-+			count++;
-+		}
- 
--	while ((ent = readdir(dir)) != NULL) {
--		if (strspn(ent->d_name, "0123456789abcdef") != hexsz ||
--		    ent->d_name[hexsz] != '\0')
--			continue;
--		count++;
-+		*out = count * 256;
-+		ret = 0;
-+	} else {
-+		ret = odb_source_loose_for_each_object(source, NULL, count_loose_object,
-+						       out, 0);
- 	}
- 
--	*out = count * 256;
--	ret = 0;
--
- out:
- 	if (dir)
- 		closedir(dir);
-diff --git a/object-file.h b/object-file.h
-index b870ea9fa8..f8d8805a18 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -149,8 +149,9 @@ int odb_source_loose_for_each_object(struct odb_source *source,
-  *
-  * Returns 0 on success, a negative error code otherwise.
+diff --git a/packfile.h b/packfile.h
+index 1da8c729cb..74b6bc58c5 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -275,6 +275,7 @@ enum kept_pack_type {
+  * Return 0 on success, a negative error code otherwise.
   */
--int odb_source_loose_approximate_object_count(struct odb_source *source,
--					      unsigned long *out);
-+int odb_source_loose_count_objects(struct odb_source *source,
-+				   enum odb_count_objects_flags flags,
-+				   unsigned long *out);
+ int packfile_store_count_objects(struct packfile_store *store,
++				 enum odb_count_objects_flags flags,
+ 				 unsigned long *out);
  
- /**
-  * format_object_header() is a thin wrapper around s xsnprintf() that
-diff --git a/odb.h b/odb.h
-index 7a583e3873..e6057477f6 100644
---- a/odb.h
-+++ b/odb.h
-@@ -500,6 +500,15 @@ int odb_for_each_object(struct object_database *odb,
- 			void *cb_data,
- 			unsigned flags);
- 
-+enum odb_count_objects_flags {
-+	/*
-+	 * Instead of providing an accurate count, allow the number of objects
-+	 * to be approximated. Details of how this approximation works are
-+	 * subject to the specific source's implementation.
-+	 */
-+	ODB_COUNT_OBJECTS_APPROXIMATE = (1 << 0),
-+};
-+
- enum {
- 	/*
- 	 * By default, `odb_write_object()` does not actually write anything
+ /*
 
 -- 
 2.53.0.880.g73c4285caa.dirty
