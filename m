@@ -1,79 +1,79 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E212E9749
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 15:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F1C3126CA
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 15:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773155911; cv=none; b=aKMf9kAMvRbk3UjACvETFRQbA+2bna0L5XLayKyWuwL3BANNDLwnBEWrsKaeoOGalaNBJqfDsNYiesm37pjqdj5v19OJe6iKMbrYTSOJW7gq6Cu+PEbwdRAGSvjlQ72TOTYB8n8ekJDCgn4uKE0sfgN5JX2yMMK0gtJfOY63fas=
+	t=1773155913; cv=none; b=ohTQvwwQvij3i1iAvdMo0jZPA4WMOFSOWMJzgRDpTH3htaztXyg0HrrvFZyfEWHHVAlPhcrB5Z1fc1LXM9YyL4bhq7SK06jNhj2l2sVwIWJLi/dqGCqGk92b9H+2spcscKXE2o4ZdeLKzdS93kaaFIQq4s4f1aj3PHS6+9Y+yDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773155911; c=relaxed/simple;
-	bh=OjQsIinfZq7+Nr0ouqotS06YQuPvuOuovYh63bQNkzU=;
+	s=arc-20240116; t=1773155913; c=relaxed/simple;
+	bh=DbU8H4RWlUPHrobDldmDByw1DPlocA+ob5wSs43VMpw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qocYQlWS0cHoWDzZEZcBhin82FxSH9AYgSG2tOFm/jOWlASsvo6B41leyxiHJFHYr/usGCPSPVMElwhIbLvkQ8a0vExMcHvKnKjb0g7RHHld+S4PlltQv/Y3Z3isvMYnGvnBONGAKacPfcoiwQBIGUkVImdqnIEcusaudoGeAUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gnCks66F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A84a2fWl; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=haeJH1MlkzmRXOylsc0rMTQFwWZQaPuOgCIk6J07VtWhCvvzz/GQYcnffwcQQkzXPxV0zl7kJsNoOYCdWuyDCT3K80DMGEmBIwkvdhnMqK7Jsy1XDHXt5fe+FXsEW0juVuM4wZkZXanmz473jE902/vukzMmxyMod4+WpY7gDSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nJE+4Aps; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HgWN/SC1; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gnCks66F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A84a2fWl"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9C3BFEC0ADD;
-	Tue, 10 Mar 2026 11:18:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nJE+4Aps";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HgWN/SC1"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 55B57EC05A6
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 11:18:31 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 10 Mar 2026 11:18:29 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 10 Mar 2026 11:18:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773155909;
-	 x=1773242309; bh=YbXSJIyVQhJr1aS9ZJ/Hm3CIGH+CLneHwLvUhJtnKMc=; b=
-	gnCks66FtlKhJf0DivMFEWqCtwnFuMWN3d8oajaD0zrKyzehO2Mt3M/O4oYGKpeD
-	KyuOFybOxxRvJ9rIL55QHigZAMORwMj2r73LIJUF01tYBBJ6sweH9mSeD4Ms1Z8i
-	HoxbNou4a8DNC6nzKLOkV3FoyMRMKuM+Y6bIrQmiSbQJdAEKfeMzgkt6V/rGt7Zk
-	WX9Q7T2lUdmJ8O0blyXVvPhCfbD6nNyoUw/rqM/tqEiacJEC0aNq7KA6IVDvE0ja
-	k5HNXwA3OAaNsKEyHVcaoeYNlQD88RmE8/vdyJ5K+UgWsFDHavqn8G6B812XvV2o
-	T3T7SNkcmYGUPl7FiSJaUg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773155911;
+	 x=1773242311; bh=muMAu8LVtrtFiVc6GeANJ/wRFZif3NCXvaqhVtHcG+k=; b=
+	nJE+4ApsKbytV+oDDpXFRa0debei4eWMlHcADtLHWJx4OfOwtM11BujccmUqsjjD
+	HrFWT6GxWK2o+YLLPB10HhoOMqljlBDRQfbDySQTJylXNcefiGohpm3drXy8YUme
+	3kN61bxhMdUjJ5hgm0fMsIVGkvVp/DJIOXmKCtvMR5bE6+A1tMDo4dlTtIb8NsZ1
+	yACC/WtSM6AKzr+ZRhGKjGtqoRStW0p83I33jO/EpIjG2TbC90hIp7l65jMEPkJB
+	hXjiklzvtUVEud9N6LWmLwxLk6YpmMLuQvYQh0rxK1laeeko7VinVRr7uDRK7o8r
+	Yzv8f1KfetYbJq2kjJ9tDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773155909; x=
-	1773242309; bh=YbXSJIyVQhJr1aS9ZJ/Hm3CIGH+CLneHwLvUhJtnKMc=; b=A
-	84a2fWlFVCaCr1/u1K8XTePs1XDCUq5YGW2fZ/kmhjGj1HDVw5+Tn53wN9atQ/td
-	vd3ZOfpBODQb96SYN4y1+ajU3iXLwzBQ8LN17Mwy8Me17jYNp/7zgqfBgQ3jHZTJ
-	RNb9mvIdwOGX8MdgxL37qGV9KfUnGaTG0bVNpfuPR6q+MO82kr5q1SO8IcaJK+hS
-	HIYVcjq7crsA8F0g0nUlG2QKHPESoEwErYtubIM996rh/IHMkiKMTf7fo8o430I1
-	MMJDqn91/hpQe8aUWeGKqUNOyG3I968aDPkpxBY5ChtfVnbQvpkFwq84vSGJYbX/
-	ow4igtQ2GRAYaEym7NkhA==
-X-ME-Sender: <xms:RTawaS_IPYNQ1myaRnZ0LauWZnE137T2cb4bHD11tvzpvjcmwo7b0w>
-    <xme:RTawaYsVEIllttan2_Vrl-kXU4GOsvKvSGeiNP413nwp15ptzPFBWF-VdmR0x2BXK
-    pJIl96k5g1qtG2aXT44cp3D79Po4VNsl2oqfrPQElfCO4vVHdgOLg>
-X-ME-Received: <xmr:RTawaVoEoWlIN7uhObtSQbfG87PNy40CeY-OIIcgBwapYRgpdHJ8Uad7clbE7a9FbBTVckTwZD4bm0JzEIyZfn8JHutM9JZIeU_n6ZL9>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773155911; x=
+	1773242311; bh=muMAu8LVtrtFiVc6GeANJ/wRFZif3NCXvaqhVtHcG+k=; b=H
+	gWN/SC1DeSGgkwJvAbWuzajy4H+L9JprarlFl5xYj8JnD/KOEYvL41BbERUaNHU7
+	Pk/fteqo8quiUvnozJ/o4xZ96pLA1MlVD80HsnLOTUN77WUkd4gIyex76Epey2Q3
+	74TfI8B4BMe/RsX8fVTP5RxUHnVDC15PPXiAX1cf8/4TYBtOn66qKEzeMT71OjuZ
+	GVwTA15EYxmQ21BWUHYc9GmJyxRrMpqVtviVhBTtOom6oxBNJmxRuU6XMcfEuSZF
+	4OeIdB+GSGhXGy8BOd+IheoZXRRx2ixtKdQZCAsfeC3Ry7rOC/LHxiwqFX8OGTvp
+	17sHYflHq6pm4QkyrsQoQ==
+X-ME-Sender: <xms:RzawafgFhcRIOdulV-e9913czfKFRFmUV46Ed37EjblGGPs0QyfWzQ>
+    <xme:RzawaS9vQGfflPc0nt2GhgSfhZ8h4ii9bx2ypTZN8iJazeEdfXClrFgPCTq2BtZwy
+    aJkLasfKSOULFFfLWVKTyBq7zxjtVt_HaRjc0lGv1MSFUe50lwlJA>
+X-ME-Received: <xmr:RzawaUv8yZdYOSWFjxCgR5q6xys66JVleQefWcoEV01O1_A7waMK_ImpTPQePe7NjiYpPsG9G3xy0JYdCL862GW6lYPNQPsxF8G3dGZL>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedufeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosg
-    hlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:RTawaVn_SdpfbJOBwHIS_7sJU0Nh0D85_MIQn1uAmnG6GlLJgaRY3w>
-    <xmx:RTawaZwsvuqXBemReObB3QcVm2SJw0yajpHA_xqUo86bn9Eg5A5RmQ>
-    <xmx:RTawadkRddQHdxKVzGrLmEPvKMzDfTzQOv4ZicvgOIrn49ULdrR9tw>
-    <xmx:RTawaSdCgiG0JH8UCCQV7sXD0kcEjVXLlAs-3rYVEv6JiIoiumWddA>
-    <xmx:RTawaRtu-ZehD2vKWTDBJnIyQODXqIPDjIbALn_0zqmDvFUR7lUPi1Wh>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
+    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
+    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
+    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrgh
+X-ME-Proxy: <xmx:RzawaRZPRSFETtBBh_qcama1xxVYmro9tCe8nTUJUuRp0faY1xpWng>
+    <xmx:Rzawacpl_Qy89C8BENSzbDLdwMTo-Jgoy78gnrWdGfZB_xX4dcr_xA>
+    <xmx:Rzawae-_OvVtlfY6ZXLwTFqR7BI6btabNQrDhQlRYmKbEQ7GXfiUJg>
+    <xmx:RzawaT98x3N2QB5b3pHY1qqLTf-sgVgSn5OQX77Z84QvUniVcl8F7g>
+    <xmx:RzawaQiQI3XNO_eVirVKHJqdb5XzKmYlvyfrLlmiH581odrisTTdVWyJ>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 11:18:28 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 10 Mar 2026 11:18:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5a49b11c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Mar 2026 15:18:27 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 45642c57 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 10 Mar 2026 15:18:30 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 10 Mar 2026 16:18:21 +0100
-Subject: [PATCH 1/6] odb: stop including "odb/source.h"
+Date: Tue, 10 Mar 2026 16:18:22 +0100
+Subject: [PATCH 2/6] packfile: extract logic to count number of objects
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,265 +82,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260310-b4-pks-odb-source-count-objects-v1-1-109e07d425f4@pks.im>
+Message-Id: <20260310-b4-pks-odb-source-count-objects-v1-2-109e07d425f4@pks.im>
 References: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
 In-Reply-To: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
 To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
+Cc: 
 X-Mailer: b4 0.14.3
 
-The "odb.h" header currently includes the "odb/source.h" file. This is
-somewhat roundabout though: most callers shouldn't have to care about
-the `struct odb_source`, but should rather use the ODB-level functions.
-Furthermore, it means that a couple of definitions have to live on the
-source level even though they should be part of the generic interface.
+In a subsequent commit we're about to introduce a new
+`odb_source_count_objects()` function so that we can make the logic
+pluggable. Prepare for this change by extracting the logic that we have
+to count packed objects into a standalone function.
 
-Reverse the relation between "odb/source.h" and "odb.h" and move the
-enums and typedefs that relate to the generic interfaces back into
-"odb.h". Add the necessary includes to all files that rely on the
-transitive include.
-
-Suggested-by: Justin Tobler <jltobler@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/multi-pack-index.c  |  1 +
- builtin/submodule--helper.c |  1 +
- odb.h                       | 50 ++++++++++++++++++++++++++++++++++++++++++-
- odb/source.h                | 52 +--------------------------------------------
- odb/streaming.c             |  1 +
- repository.c                |  1 +
- submodule-config.c          |  1 +
- tmp-objdir.c                |  1 +
- 8 files changed, 56 insertions(+), 52 deletions(-)
+ packfile.c | 45 +++++++++++++++++++++++++++++++++++----------
+ packfile.h |  9 +++++++++
+ 2 files changed, 44 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 5f364aa816..3fcb207f1a 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -9,6 +9,7 @@
- #include "strbuf.h"
- #include "trace2.h"
- #include "odb.h"
-+#include "odb/source.h"
- #include "replace-object.h"
- #include "repository.h"
+diff --git a/packfile.c b/packfile.c
+index 215a23e42b..1ee5dd3da3 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1101,6 +1101,36 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
+ 	return store->packs.head;
+ }
  
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 143f7cb3cc..4957487536 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -29,6 +29,7 @@
- #include "object-file.h"
- #include "object-name.h"
- #include "odb.h"
-+#include "odb/source.h"
- #include "advice.h"
- #include "branch.h"
- #include "list-objects-filter-options.h"
-diff --git a/odb.h b/odb.h
-index 86e0365c24..7a583e3873 100644
---- a/odb.h
-+++ b/odb.h
-@@ -3,7 +3,6 @@
- 
- #include "hashmap.h"
- #include "object.h"
--#include "odb/source.h"
- #include "oidset.h"
- #include "oidmap.h"
- #include "string-list.h"
-@@ -12,6 +11,7 @@
- struct oidmap;
- struct oidtree;
- struct strbuf;
-+struct strvec;
- struct repository;
- struct multi_pack_index;
- 
-@@ -339,6 +339,42 @@ struct object_info {
-  */
- #define OBJECT_INFO_INIT { 0 }
- 
-+/* Flags that can be passed to `odb_read_object_info_extended()`. */
-+enum object_info_flags {
-+	/* Invoke lookup_replace_object() on the given hash. */
-+	OBJECT_INFO_LOOKUP_REPLACE = (1 << 0),
++int packfile_store_count_objects(struct packfile_store *store,
++				 unsigned long *out)
++{
++	struct packfile_list_entry *e;
++	struct multi_pack_index *m;
++	unsigned long count = 0;
++	int ret;
 +
-+	/* Do not reprepare object sources when the first lookup has failed. */
-+	OBJECT_INFO_QUICK = (1 << 1),
++	m = get_multi_pack_index(store->source);
++	if (m)
++		count += m->num_objects + m->num_objects_in_base;
 +
-+	/*
-+	 * Do not attempt to fetch the object if missing (even if fetch_is_missing is
-+	 * nonzero).
-+	 */
-+	OBJECT_INFO_SKIP_FETCH_OBJECT = (1 << 2),
++	for (e = packfile_store_get_packs(store); e; e = e->next) {
++		if (e->pack->multi_pack_index)
++			continue;
++		if (open_pack_index(e->pack)) {
++			ret = -1;
++			goto out;
++		}
 +
-+	/* Die if object corruption (not just an object being missing) was detected. */
-+	OBJECT_INFO_DIE_IF_CORRUPT = (1 << 3),
++		count += e->pack->num_objects;
++	}
 +
-+	/*
-+	 * We have already tried reading the object, but it couldn't be found
-+	 * via any of the attached sources, and are now doing a second read.
-+	 * This second read asks the individual sources to also evaluate
-+	 * whether any on-disk state may have changed that may have caused the
-+	 * object to appear.
-+	 *
-+	 * This flag is for internal use, only. The second read only occurs
-+	 * when `OBJECT_INFO_QUICK` was not passed.
-+	 */
-+	OBJECT_INFO_SECOND_READ = (1 << 4),
++	*out = count;
++	ret = 0;
 +
-+	/*
-+	 * This is meant for bulk prefetching of missing blobs in a partial
-+	 * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK.
-+	 */
-+	OBJECT_INFO_FOR_PREFETCH = (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK),
-+};
++out:
++	return ret;
++}
 +
  /*
-  * Read object info from the object database and populate the `object_info`
-  * structure. Returns 0 on success, a negative error code otherwise.
-@@ -432,6 +468,18 @@ enum odb_for_each_object_flags {
- 	ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS = (1<<4),
+  * Give a fast, rough count of the number of objects in the repository. This
+  * ignores loose objects completely. If you have a lot of them, then either
+@@ -1113,21 +1143,16 @@ unsigned long repo_approximate_object_count(struct repository *r)
+ 	if (!r->objects->approximate_object_count_valid) {
+ 		struct odb_source *source;
+ 		unsigned long count = 0;
+-		struct packed_git *p;
+ 
+ 		odb_prepare_alternates(r->objects);
+-
+ 		for (source = r->objects->sources; source; source = source->next) {
+-			struct multi_pack_index *m = get_multi_pack_index(source);
+-			if (m)
+-				count += m->num_objects + m->num_objects_in_base;
+-		}
++			struct odb_source_files *files = odb_source_files_downcast(source);
++			unsigned long c;
+ 
+-		repo_for_each_pack(r, p) {
+-			if (p->multi_pack_index || open_pack_index(p))
+-				continue;
+-			count += p->num_objects;
++			if (!packfile_store_count_objects(files->packed, &c))
++				count += c;
+ 		}
++
+ 		r->objects->approximate_object_count = count;
+ 		r->objects->approximate_object_count_valid = 1;
+ 	}
+diff --git a/packfile.h b/packfile.h
+index 8b04a258a7..1da8c729cb 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -268,6 +268,15 @@ enum kept_pack_type {
+ 	KEPT_PACK_IN_CORE = (1 << 1),
  };
  
 +/*
-+ * A callback function that can be used to iterate through objects. If given,
-+ * the optional `oi` parameter will be populated the same as if you would call
-+ * `odb_read_object_info()`.
++ * Count the number objects contained in the given packfile store. If
++ * successful, the number of objects will be written to the `out` pointer.
 + *
-+ * Returning a non-zero error code will cause iteration to abort. The error
-+ * code will be propagated.
++ * Return 0 on success, a negative error code otherwise.
 + */
-+typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
-+				      struct object_info *oi,
-+				      void *cb_data);
++int packfile_store_count_objects(struct packfile_store *store,
++				 unsigned long *out);
 +
  /*
-  * Iterate through all objects contained in the object database. Note that
-  * objects may be iterated over multiple times in case they are either stored
-diff --git a/odb/source.h b/odb/source.h
-index caac558149..a1fd9dd920 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -2,6 +2,7 @@
- #define ODB_SOURCE_H
- 
- #include "object.h"
-+#include "odb.h"
- 
- enum odb_source_type {
- 	/*
-@@ -14,61 +15,10 @@ enum odb_source_type {
- 	ODB_SOURCE_FILES,
- };
- 
--/* Flags that can be passed to `odb_read_object_info_extended()`. */
--enum object_info_flags {
--	/* Invoke lookup_replace_object() on the given hash. */
--	OBJECT_INFO_LOOKUP_REPLACE = (1 << 0),
--
--	/* Do not reprepare object sources when the first lookup has failed. */
--	OBJECT_INFO_QUICK = (1 << 1),
--
--	/*
--	 * Do not attempt to fetch the object if missing (even if fetch_is_missing is
--	 * nonzero).
--	 */
--	OBJECT_INFO_SKIP_FETCH_OBJECT = (1 << 2),
--
--	/* Die if object corruption (not just an object being missing) was detected. */
--	OBJECT_INFO_DIE_IF_CORRUPT = (1 << 3),
--
--	/*
--	 * We have already tried reading the object, but it couldn't be found
--	 * via any of the attached sources, and are now doing a second read.
--	 * This second read asks the individual sources to also evaluate
--	 * whether any on-disk state may have changed that may have caused the
--	 * object to appear.
--	 *
--	 * This flag is for internal use, only. The second read only occurs
--	 * when `OBJECT_INFO_QUICK` was not passed.
--	 */
--	OBJECT_INFO_SECOND_READ = (1 << 4),
--
--	/*
--	 * This is meant for bulk prefetching of missing blobs in a partial
--	 * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK.
--	 */
--	OBJECT_INFO_FOR_PREFETCH = (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK),
--};
--
- struct object_id;
--struct object_info;
- struct odb_read_stream;
--struct odb_transaction;
--struct odb_write_stream;
- struct strvec;
- 
--/*
-- * A callback function that can be used to iterate through objects. If given,
-- * the optional `oi` parameter will be populated the same as if you would call
-- * `odb_read_object_info()`.
-- *
-- * Returning a non-zero error code will cause iteration to abort. The error
-- * code will be propagated.
-- */
--typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
--				      struct object_info *oi,
--				      void *cb_data);
--
- /*
-  * The source is the part of the object database that stores the actual
-  * objects. It thus encapsulates the logic to read and write the specific
-diff --git a/odb/streaming.c b/odb/streaming.c
-index a4355cd245..5927a12954 100644
---- a/odb/streaming.c
-+++ b/odb/streaming.c
-@@ -7,6 +7,7 @@
- #include "environment.h"
- #include "repository.h"
- #include "odb.h"
-+#include "odb/source.h"
- #include "odb/streaming.h"
- #include "replace-object.h"
- 
-diff --git a/repository.c b/repository.c
-index e7fa42c14f..05c26bdbc3 100644
---- a/repository.c
-+++ b/repository.c
-@@ -2,6 +2,7 @@
- #include "abspath.h"
- #include "repository.h"
- #include "odb.h"
-+#include "odb/source.h"
- #include "config.h"
- #include "object.h"
- #include "lockfile.h"
-diff --git a/submodule-config.c b/submodule-config.c
-index 1f19fe2077..72a46b7a54 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -14,6 +14,7 @@
- #include "strbuf.h"
- #include "object-name.h"
- #include "odb.h"
-+#include "odb/source.h"
- #include "parse-options.h"
- #include "thread-utils.h"
- #include "tree-walk.h"
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index e436eed07e..d199d39e7c 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -11,6 +11,7 @@
- #include "strvec.h"
- #include "quote.h"
- #include "odb.h"
-+#include "odb/source.h"
- #include "repository.h"
- 
- struct tmp_objdir {
+  * Retrieve the cache of kept packs from the given packfile store. Accepts a
+  * combination of `kept_pack_type` flags. The cache is computed on demand and
 
 -- 
 2.53.0.880.g73c4285caa.dirty
