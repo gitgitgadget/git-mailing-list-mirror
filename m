@@ -1,183 +1,121 @@
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411D543C059
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 08:51:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773132690; cv=none; b=RbTCPHrcQ7QlXjoeZu/7s9sb2mB+dGdPLRVhiEzf8VWcPq9KW9Y0gbJaMbkCe4V4BReICnMpRQReXkISE7k3dobZV+v/7UW8jLRFaS8uds/znVVlW43sMvklk0UiU0WiBU9pT8A1e+Z1Yo8mwUHpNpEgciucZGiajRBg9XOv53Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773132690; c=relaxed/simple;
-	bh=N4bl45+ugHBhJTK8b1LEjbjDMqTcTFmnyc9du+YCtG4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LHicVYT8l+kNaB6XrVNJSuEYnL8hOV/x1kmdv3dFA+HBisPjkSkS15a5VJk2ZZCSoV1WGp3/is9vkVJA39rC0a6wgVdbHdlsCVyYTyLgBrLh74ViVDH8SqVsbZ5BKyYyeSNApAoCHBLv3h801OGwSvlw5qNTXrXli+FSyvggjcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=as480nqI; arc=none smtp.client-ip=74.125.82.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0184B40759B
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 09:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773133301; cv=pass; b=bs+Ihl/HFVp6zCMpfX9IMp6UHKHdBj1y2+B/b0iKfxlq4HE7StQS7mtZsrc7pJ5V9Nx144XsYUzDlWHDkyiF0YLSKPMBe/AaBViAdk/9osz33IpIjmfSLgwlAXkyV7mRAyUzXOvh3CfQhcbQv+K4aXj4NTFiQyrMZJBHAXFr7Xo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773133301; c=relaxed/simple;
+	bh=PKg8sCLGZRIl7kkSVzvq4RZr92A6tP1+neYPPD8goCs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hXJsWJnVJ1Oxp1IHFXKhIF1Z4VmhXWwOK1vR5tygjYiEZM+t+Q74cSlh8It17NRyB5OjxVNexdIYCU8udRESQjuuz+DyGDh8j2ENCoeSs5XDDSOIMI91yF5DIcb2P5vBHdu9lVfk9sO28w1O/30jqxB7srmQPSsIEATS3hbdmgU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V6kHkeL2; arc=pass smtp.client-ip=74.125.82.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="as480nqI"
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2ba9c484e5eso12507891eec.1
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 01:51:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V6kHkeL2"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-128cc4b4b6aso3290982c88.0
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 02:01:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773133299; cv=none;
+        d=google.com; s=arc-20240605;
+        b=OujhIlJT3pC8LU3mnXqm31xhbOXe8UNcnUb0wwMkVxgXb+DnmQRVft0lJqlEdM489K
+         04YR56bxXcfOJTdYufLDdZqhHcS5LEkIwlJvELD0qHBPvUrtNFzpI2lWndm/LoFETCrB
+         4VzrGnrY7FFlUtLbGoLq0AgAQ26EAAeUoQrW07xcWtK1Xt9vPXFB1OOU9jNFSlnbymgs
+         JLEE04YOh+XlyyBNzuo1zdEnTMMUiQge3kXlGPtZFOgLXCt3Vyxhk6sZf3TS+AEvir2T
+         3NpnNVT8EiEjLxXVUuwVao0sx9fCRvVQfUixCHhzwWYhVBc3eTp4S4KaQdY+q3FMWG6E
+         bA3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=PKg8sCLGZRIl7kkSVzvq4RZr92A6tP1+neYPPD8goCs=;
+        fh=nVu3zMpebDzg1Ff15F5ywHRoIXsUIo/ckc17zpZE/+M=;
+        b=D2Rta/4CggaWTq5kFTHRYgCs7BfdZA/ZnL8s18kQhvIttE/EimgzSrdy9qi/z41ego
+         WIc0xENJv1l9zpvFIX2pM4Iad6UwYjOPzMUWuheUZaRegXK6W04fLobh/+0D8I6AwUda
+         BWD/nLQc0x8b9OxUfnfXJ8Z2OpVIAzHCYeVOU3ljkKSSWMqIWLGbWBLk0nc13T6QW+hr
+         VwCqQk+CLpSncgIApXdsfV/Tnwx5G7WGJ4iVLXjUoBMBaBo4MTm28aMTbhu4drGFiruy
+         qyXhmvG0XoMF9stn9KCs1eydtciZHeaFa3udv7EKew+Wrw4nqSJSzlwXliyy/b4luVYK
+         tFiA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773132688; x=1773737488; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773133299; x=1773738099; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oDHqb+0tAKIx6CbJXkCNT0BIOeQZL5zcuAbIjSUDvxw=;
-        b=as480nqI3UituncWUDJ4laASEuXGX9Oi/6GX6B46y8qKSzGMDXCpJSV8GADgjCOb01
-         hFQ3DUi01u67kDY7l2KvzwF2pEya3kRfsdydSxM4AoKBKQ/D5ywG13m+JTWtS5gLyJGa
-         5hYwbDB7I4VYEvLSLB/Nl5bnUErbIVpDYLB8vXe6ss7WfCZDGveSY1g/vUs6/LhTY4gq
-         P+zpQZoIGlSFwdPL6/JcqVSkCzmrX+3/1bdSvDfY8VURUDGwUohwecIfLfH9Oxgg0v+C
-         VUoKXwAt85fEH6CfiVMvfs0Pbk99LESZqnUxygUOBlAHecMPA43o9gEY7hsBcMyYkM+7
-         +QWg==
+        bh=PKg8sCLGZRIl7kkSVzvq4RZr92A6tP1+neYPPD8goCs=;
+        b=V6kHkeL2k8keCKW/0yErb14HKoebK/C10ek9nbrKcC6CyG0tAAlrgwNJ5kQu91NUp0
+         JUZs3QZCCFU0vCpjbgqLNUiSEU+obU2TqKMjf3uJPhA85nhYCB4AeuMQlUYdzUNwb4Ob
+         xPHR0Z5CTHGpr4CfplGaYILpanrrcD5lFelyPXN6mL9j9B2hGEK+ejE4OWetYkByDUEf
+         pwUxDNRUrPvA6hiVa8C0WS5HMYebNb3a+tle5chNTnXMgZgqkTiIm5VkL+vgEA4X6z4e
+         KLphxkBkqXyTzlQZg5kMVGxDYehZwVeqbNyRvwNGoPFJdpUy3xQUEDDh+h4E9ipYt8ja
+         wXCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773132688; x=1773737488;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1773133299; x=1773738099;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=oDHqb+0tAKIx6CbJXkCNT0BIOeQZL5zcuAbIjSUDvxw=;
-        b=Fwp6k21Gbpu5q4Kj3ovmtp48pUVZgzZM8g7hPBvgRpQTuJn916w9DzQ7YwpDY5FOIT
-         S2z9ExujIjVbM9wSsWy4qVR/hYw4TvQtKosawF+CIDIrgPfI2hdxMZuscKlgMqnr9gSv
-         6RZTklpYV+rcFZjSFepegyOFLtuJi67b4P+9h9betgmBVGfMd1t5fqsYH0Tu8nsK156t
-         Ytu8oVzBzKBRmk9+ZbjIDb2RFwqH67ZFug+4sv4OLRSbzR3E0inVliQwS5CENkvvn5XE
-         MpQCA4UrwE6Lnqu5RgqL0LlxnTtL2Pt01fYzuvDhV8ckY6v5GSXp1NmM2yLYmixn3IE5
-         kvqQ==
-X-Gm-Message-State: AOJu0YwxFL8EfTp7ZRG/EEFYCeI789KFRr2RPzdFeJ0760qtg/od5m7c
-	+FI1Pm6il1Y9W5tpZ/pjxVLNQWY8TM5bqyEwaM/A9fSfQrxJdVk0+xl4bfZ2pg==
-X-Gm-Gg: ATEYQzzZk3afg4JgxIaRT7AwVekLrCCB+mW52g3WahwnXAOQ75Kd2oZbPL5jYbXMzy0
-	JDGv/s2kbBMbmSq9Di4U7mynXAsBkjnN78oBCtVCRU3ahsIMEFsL4rYiUklimM7ea9pcjC2x1Ye
-	h/1o/g+XX+IQnhgjUqFGC1b0BcBTCGQUCU4giW74dJixa2r0sS7rzD01QmG8ZG2AehB7nlp4iAo
-	kj/knXnbd5FFWV8ULE11xASimtSVoRprh6NFM2QYnYH3PckZnP1BJaDIKmL3kpEw1sFjLwwHser
-	Owt+etIqStT0mz9qiNBb6PHz6nxxBoNRAt4pK54Qe02MN6vmR4YlrJx9oCZhj8vDRdLHHGjrmn+
-	flJ1qeFTgxqTOyRCc7IYQDur1pK0K3Bn0FiwXVBOI10r6AFy3d9xCuc+f5FcHL7nfqOpnIS8MEf
-	zMQBpZfyn0HCs0MmDusMJk+Pfr
-X-Received: by 2002:a05:7300:ed0d:b0:2be:2acf:4098 with SMTP id 5a478bee46e88-2be4e0ac31amr5581465eec.31.1773132687910;
-        Tue, 10 Mar 2026 01:51:27 -0700 (PDT)
-Received: from [127.0.0.1] ([52.161.69.161])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be4f807714sm14897565eec.1.2026.03.10.01.51.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2026 01:51:27 -0700 (PDT)
-Message-Id: <9ec447e3cb1d5fb0a1fbb76369e186be23efab1a.1773132678.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2233.git.git.1773132678.gitgitgadget@gmail.com>
-References: <pull.2233.git.git.1773132678.gitgitgadget@gmail.com>
-From: "Arsh Srivastava via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 10 Mar 2026 08:51:18 +0000
-Subject: [PATCH 5/5] advice: add stashBeforeCheckout advice for dirty branch
- switches
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=PKg8sCLGZRIl7kkSVzvq4RZr92A6tP1+neYPPD8goCs=;
+        b=k+iaJEhqRFC8nLlbgn25yaypVOluPfeJHHUrcNoNqOgVryukQK1YfWydYLVTnf5bUG
+         AF7ErWTD2EcrjHSD6LkNerGfFLSLyjQS47z/gP4TtFhFLPxZP4aN6lvFk/vAVg6y+D5Y
+         St2VwuY1PgRHJpyLCIJXxe9g/rSo235fT50tNPegllzuWyrnTrh+uRHXKexjbZXdYsyc
+         cPVoKTBmCRUiHbkMfisQ6QlShIa1ybxPnQEsS5hOerPe0Xqv/eEoZueb5yvTkx9LpC5c
+         wN7tS5/dWm0XDRttVM7ueSroggPnHSNr2yHMCTuJLCloNW1c8nrOW/zuU9ZhTStYXI17
+         7m8g==
+X-Gm-Message-State: AOJu0YxfJBUzTbtrTn6lduJ7LGBY0uVUOpOlTPYt7OFcqz40ky1UnRgr
+	QqD7l6vMkgT+wNlqFwfDqc9omi9LqhVjeG5qW+R//TLtl26OstZP0UXwLqy+kOIo7hDUqu53lOh
+	fz3Gmnl2bThcCxT5bjZXD+H9KjU+yixxGbYLh
+X-Gm-Gg: ATEYQzw7rxeXzUSYXM5EPQq95KzS0oPWd85V+ycU65EDqy7GYCL65JBMub7eJP1+eHk
+	8HX+gEOQK7+rCgtDt71IaOMa6djXROu3AGLeSGiuAdsRsPGv69eDr5mstcNg3tGLbUIx5s8p/4I
+	CGxN3ugm/ZDP2c0BY4B7YLZcH1vX1JqrMriPwYoM+ffnLR8gJJebv+P07F1I0KTgql1vUnp3Fiy
+	dfKdyi62Ua3tP+t3+0SnRbMXiVrkGyNy0GAonU1vAlvjEQMsW80unoskxxf85PsdPA4+DRLAtxx
+	iudJp80qpz22G9BFoRglF5C/qyT1/98OqXOAOt6SHWkOZ2S4UCoF7aPl+eog/S1KObDR
+X-Received: by 2002:a05:7022:f83:b0:127:33e0:ea44 with SMTP id
+ a92af1059eb24-128c2e43e2emr6987274c88.29.1773133299044; Tue, 10 Mar 2026
+ 02:01:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Arsh Srivastava <arshsrivastava00@gmail.com>,
-    Arsh Srivastava <arshsrivastava00@gmail.com>
+References: <20260223194146.3476768-1-jltobler@gmail.com> <20260306205359.1723254-1-jltobler@gmail.com>
+ <20260306205359.1723254-3-jltobler@gmail.com>
+In-Reply-To: <20260306205359.1723254-3-jltobler@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 10 Mar 2026 10:01:27 +0100
+X-Gm-Features: AaiRm52jHcedjWr4TpykSZW2UTc4-9QyxSHJwlOGQH6tFcyciCHDOEv1kSF2dDA
+Message-ID: <CAP8UFD2F-81dwyOP8iMqQq2MjQ0GN-92ZyACSzbk6f7cOQAmTw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] gpg-interface: introduce sign_buffer_with_key()
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, ps@pks.im, 
+	gister@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Arsh Srivastava <arshsrivastava00@gmail.com>
+On Fri, Mar 6, 2026 at 9:54=E2=80=AFPM Justin Tobler <jltobler@gmail.com> w=
+rote:
+>
+> The `sign_commit_to_strbuf()` helper in "commit.c" provides fallback
+> logic to get the default configured signing key when a key is not
+> provided and handles generating the commit signature accordingly. This
+> signing operation is not really specific to commits as any arbitrary
+> buffer can be signed. Also, in a subsequent commit, this same logic is
+> reused by git-fast-import(1) when resigning invalid commit signatures.
 
-Add a new advice type ADVICE_STASH_BEFORE_CHECKOUT to guide users
-when they attempt to switch branches with local modifications that
-would be overwritten by the operation.
+Nit: s/resigning/re-signing/
 
-This includes:
-> New ADVICE_STASH_BEFORE_CHECKOUT enum value in advice.h
-> Corresponding "stashBeforeCheckout" entry in advice_setting[]
-> New advise_on_checkout_dirty_files() function that lists the
-  affected files and suggests using git stash push/pop
-> Documentation entry in Documentation/config/advice.txt
+> Introduce `sign_buffer_with_key()` to centralize signing key resolution
+> in gpg-interface to allow callers to reuse the same behavior without
+> duplicating logic.
 
-The advice follows existing patterns established by
-advise_on_updating_sparse_paths() and can be silenced with:
+Nit: I think it would be a bit clearer if the change was described as:
 
-  git config set advice.stashBeforeCheckout false
+- moving the `sign_commit_to_strbuf()` helper from "commit.c" to
+"gpg-interface.c",
+- renaming it to `sign_buffer_with_key()`, and
+- exporting it (so it can later be used by both "commit.c" and
+"builtin/fast-import.c").
 
-Signed-off-by: Arsh Srivastava <arshsrivastava00@gmail.com>
----
- Documentation/config/advice.adoc |  5 +++++
- advice.c                         | 27 +++++++++++++++++++++++++++
- advice.h                         |  2 ++
- 3 files changed, 34 insertions(+)
-
-diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
-index 257db58918..8752e05636 100644
---- a/Documentation/config/advice.adoc
-+++ b/Documentation/config/advice.adoc
-@@ -126,6 +126,11 @@ all advice messages.
- 		Shown when a sparse index is expanded to a full index, which is likely
- 		due to an unexpected set of files existing outside of the
- 		sparse-checkout.
-+	stashBeforeCheckout::
-+		Shown when the user attempts to switch branches but has
-+		local modifications that would be overwritten by the
-+		operation, to suggest using linkgit:git-stash[1] to
-+		save changes before switching.
- 	statusAheadBehind::
- 		Shown when linkgit:git-status[1] computes the ahead/behind
- 		counts for a local ref compared to its remote tracking ref,
-diff --git a/advice.c b/advice.c
-index 0018501b7b..e1264f525c 100644
---- a/advice.c
-+++ b/advice.c
-@@ -81,6 +81,7 @@ static struct {
- 	[ADVICE_SET_UPSTREAM_FAILURE]			= { "setUpstreamFailure" },
- 	[ADVICE_SKIPPED_CHERRY_PICKS]			= { "skippedCherryPicks" },
- 	[ADVICE_SPARSE_INDEX_EXPANDED]			= { "sparseIndexExpanded" },
-+	[ADVICE_STASH_BEFORE_CHECKOUT] = { "stashBeforeCheckout" },
- 	[ADVICE_STATUS_AHEAD_BEHIND_WARNING]		= { "statusAheadBehindWarning" },
- 	[ADVICE_STATUS_HINTS]				= { "statusHints" },
- 	[ADVICE_STATUS_U_OPTION]			= { "statusUoption" },
-@@ -312,3 +313,29 @@ void advise_on_moving_dirty_path(struct string_list *pathspec_list)
- 			    "* Use \"git add --sparse <paths>\" to update the index\n"
- 			    "* Use \"git sparse-checkout reapply\" to apply the sparsity rules"));
- }
-+
-+void advise_on_checkout_dirty_files(struct string_list *file_list)
-+{
-+    struct string_list_item *item;
-+
-+    if (!file_list->nr)
-+	return;
-+
-+    fprintf(stderr, _("The following files have local modifications that would\n"
-+		      "be overwritten by switching branches:\n"));
-+    for_each_string_list_item(item, file_list)
-+	fprintf(stderr, "\t%s\n", item->string);
-+
-+    advise_if_enabled(ADVICE_STASH_BEFORE_CHECKOUT,
-+		      _("You can save your local changes before switching by running:\n"
-+			"\n"
-+			"\tgit stash push\n"
-+			"\n"
-+			"Then restore them after switching with:\n"
-+			"\n"
-+			"\tgit stash pop\n"
-+			"\n"
-+			"Or to discard your local changes, use:\n"
-+			"\n"
-+			"\tgit checkout -- <file>"));
-+}
-diff --git a/advice.h b/advice.h
-index 8def280688..c035b5d8e3 100644
---- a/advice.h
-+++ b/advice.h
-@@ -48,6 +48,7 @@ enum advice_type {
- 	ADVICE_SET_UPSTREAM_FAILURE,
- 	ADVICE_SKIPPED_CHERRY_PICKS,
- 	ADVICE_SPARSE_INDEX_EXPANDED,
-+	ADVICE_STASH_BEFORE_CHECKOUT,
- 	ADVICE_STATUS_AHEAD_BEHIND_WARNING,
- 	ADVICE_STATUS_HINTS,
- 	ADVICE_STATUS_U_OPTION,
-@@ -83,5 +84,6 @@ void NORETURN die_ff_impossible(void);
- void advise_on_updating_sparse_paths(struct string_list *pathspec_list);
- void detach_advice(const char *new_name);
- void advise_on_moving_dirty_path(struct string_list *pathspec_list);
-+void advise_on_checkout_dirty_files(struct string_list *file_list);
- 
- #endif /* ADVICE_H */
--- 
-gitgitgadget
+Or did I miss something?
