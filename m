@@ -1,127 +1,114 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CDE3BD231
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 12:23:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773145440; cv=none; b=k/t2t8Z9yVhzzmTlrGIcpJqUoXK8662Ujz7XwBuGk4WPjOqBuB9iVPkp0ogAxvokmTKB8n0a8xeqadJoYtQvuwDLkWmvlYzB6nB0Ti8Jml1u4GVFNjmxGpYD0cFP2LPMe7lVIjw29W8iWRzGxiMIGnv0Ulc1dK9x2/kTz44qC8g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773145440; c=relaxed/simple;
-	bh=ouKCY4WKNCwxHJgGxKx9po2AwEw5dJAwYzCdPcirl4Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nIOzWGy5jzU6FDuOXRr7Id99aMCJwGU9zgr3AmcQ2DSYVClBRJkMAxWVVnU4Rs5a4Eo+Y2s7UCo9sIPGXUg9lAkhdsCb8KE4CL63lWmRcy7ljP7BFx1MNA3Ys8XIAyJnNw8/r9uzzw6TcYDSpH+Nb2w3xMVyw4rQA35BJ9hj6OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LCmT6Eur; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yJ2on2T+; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91543C9EF9
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 12:31:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773145901; cv=pass; b=rUzfItVM4Aho1Xs3hwuP+wyRQPrpkd0C2tqquCUzU225huri5UeEMQd0B2BbWaiqV9s0k+yv4DDetpNZXV14/01A2WI02oHXRLcqlEU6gZrE9MPpS0ItvcY+hWFFGKw87v7k03O5cJZV6vouY0AYFfTsTLZRclwxo0i3XhDiKpE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773145901; c=relaxed/simple;
+	bh=ofasqmbatbsJaXuCZkbO1BiI9kACGo9OjAIqoHbt0Wg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OeuWqySCkeI083auofhQi0YYroynvxhT0MkFMe7cRpSKhubEfLEXgK871f0Ku6a5+lNig7zO2Z0qd9Soid/ZeJLZgeFDFRkOKBYNShStt6A7m8zdwKNLwr6dSCPC60KyMh0be2L+htKNXqB7M2MVuo4/q8xrCBVWhG7nb0DOnts=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O6Xu2InY; arc=pass smtp.client-ip=74.125.82.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LCmT6Eur";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yJ2on2T+"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B6C3C14001E3;
-	Tue, 10 Mar 2026 08:23:58 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 10 Mar 2026 08:23:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773145438; x=1773231838; bh=yY31WN3iPN
-	t7ptNR1KGnHqmZiXb939mXTuGvZNHEFo0=; b=LCmT6EurNQmg8/qllnh6unsYHO
-	g4U8K2XVIs0v6/OVUGcVQthS2RqTVUKXsk7m41RUdB+0oFSZIhCuhV0oUeegnQnt
-	pAWBq7YRAZO8rekeuzQtSbrlkVDggEQRljDqkrwPcOtmm2sHnhLeW1/4JRUgt+vM
-	z2yUx/vdz41gQwiyiWJJPaWVBvbfSsQdwaX7xR6PTQYHw52Dwg2sVvFAA0m68P+m
-	N7XWjktix6PdP+rlComlscPm/cMJ46LviEXalKG+bl/A9B+5go67bCrD2vK/8Uh0
-	TfgikBnKqeCGEkj0nq5n9G4YD/Qs1+kfP04nNt1PNRIYd0ZWBCh3SOXhlv4Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773145438; x=1773231838; bh=yY31WN3iPNt7ptNR1KGnHqmZiXb939mXTuG
-	vZNHEFo0=; b=yJ2on2T+iEuceTi+4oNXb8oObY8z4Y8AVnIhyEsaOsK09EHzJBU
-	Eylr0n/46Hj7ZMHr2DxwkNe8+iGvZuLWfGcAgI87gbVNmQ30Z2w6ZogBisIx8Lcr
-	hEmV4N1DWDdQuIvhwbdwGqz5yG/Ug85GrgyJg9Nh7ckzY+3fLd8hPpkoHFFcuz3u
-	SjyXRut31meTkDq9a1keaN9FQJvgbu3ZaOZgdDYtkgowuymjT8aWmGFVlMWMaJlH
-	P8IvKixxQe6BnKPjE1F+7I8DnCnS6WH8rBgv3YKuVMDjrGf2WZ3DnlhOgQmxSIuW
-	Kw2oHkRuaOulzTRaYdzlql2rjNmScwJT7hQ==
-X-ME-Sender: <xms:Xg2waeJRKdzR2BFuItJQw4n0Y9mWqaPRmh7oR4skXGLIqeZm24vtcg>
-    <xme:Xg2wadKpr7guRcLDWhSAVRlnRXZyUDRnfkA9DqM9evLm3jokNiFhC9FQoE3V3vnYO
-    0MVts4ZkRkcOZB3xVzydbCSBxBBl7QbAXr4OfS6l62pqJIoSwFRUA>
-X-ME-Received: <xmr:Xg2waTsI4IyA0rQMJllKRF-4DFtIYf7F0qbeeb7-HFFp9U0o7XcZ1BvyzrC2gEYF6m2FVAm98TEdYtR4t48IgXqqk7egB9WR1NEi9JTe>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedutdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epgfffkedugedvuddtuddvgeeijeeghedvgfegjedtieduhfeuuefhueffteejiefgnecu
-    ffhomhgrihhnpehmrghpphgvugdrihhtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhgr
-    tghosgdrvgdrkhgvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Xg2waSSRTNxwe9OFpxgZzhNf_hKVgmfKNqcoozeBBOeBjJ7gBQTy8g>
-    <xmx:Xg2waRNacUkncZwgLtbZS_IHM_ILwoQoBBV7n0FoqRDxN2MYNpqEAQ>
-    <xmx:Xg2wafa5Su7ZTk35--lEk5islnN1SRTNpDeK4MEjob0Ysvc23MrtEQ>
-    <xmx:Xg2waTxFl-NzQs07_I9C-aAgS0xeR2uQxI4-1g_At9OiNbYjOIYBQA>
-    <xmx:Xg2waVqi-elR4Hhou8D42F6KCQBMubwTj1tdD6wiwIOMmL0mu17TEbAc>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 08:23:57 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3414633a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Mar 2026 12:23:56 +0000 (UTC)
-Date: Tue, 10 Mar 2026 13:23:53 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Jacob Keller <jacob.e.keller@intel.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 3.5/4] object-file: fix mmap() leak in
- odb_source_loose_read_object_stream()
-Message-ID: <abANWS_j2g-ae89b@pks.im>
-References: <20260305230315.GA2354983@coredump.intra.peff.net>
- <20260305231305.GD2901305@coredump.intra.peff.net>
- <xmqqqzpwv3t7.fsf@gitster.g>
- <20260307022459.GA693632@coredump.intra.peff.net>
- <xmqqv7f8td6b.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O6Xu2InY"
+Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-128e3125372so171677c88.0
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 05:31:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773145900; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bBloT17T/rgtMpFTT7CGjcCfqYXK/gUEVPpkXUmsbNL1IPkJijphJqXC5p5lXPs2yB
+         XD0UGFYZLgdshtGCrEeGPwTEiK4vZO65oTxx87aceXbuBBL0A9nCsyi5Xp+C910IFBKz
+         1U3TIO0qlbOBAjPxidAk2DDWcAXp+ShPIDEcVEpJ1IZ5CQ9lOKPN0XGN0eW7wISq06VP
+         xLQVRjsIucEc4ssuHuhHYN0KA1nvkI2ZkAlM9OABZL+IPyaBRd7lud4/M0EEHciNiOcs
+         r/XzViJBecRwuhJ8qzvX6hjR5tJRuhBa8jXK6c0EkdMQ9cn6qCj/A7CS53fDwIPSD8BP
+         3kJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=N/miCCqVVG2B1CJePoc1BgN70Ur42Xdb/B9doklgNbU=;
+        fh=d1OiLHDdPg0fo3w5ZN4iTzpH9FgWNOi2p7e6HPfuyEk=;
+        b=kMQ35iYFzDr916PYOKg8VlFMWuPw+SSwqkoYlUjPL2tFa4C2Ype4x0XeAxLAffEPc7
+         ToXMrs8dAZYV7SgTLIEElMj3NMD2ZuJmX0Pjt4ZrlT0QbNY9N/+2RtJfaoNfSDSDuhw+
+         akugVVLic9G4K/DazeVGn7QA8k0VWK0ZThw/UqGdYj9d+9Aw89+JTSVXJlRdeIBN9VZj
+         J86pPd7ZyZvKmH3t6DUiVG359ymYenV17b27HUt5CXZPnSPTKg67TlgNfYHITIwGiSIM
+         dLtpCzKj2kDspbBk4pc1ZsqoMmIpujYIfD7ZfFT9umrQq0ITz7+44g7pugIFzhF2Va9N
+         ylDQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773145900; x=1773750700; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=N/miCCqVVG2B1CJePoc1BgN70Ur42Xdb/B9doklgNbU=;
+        b=O6Xu2InYNOBMdaTmllwQf/GfALeMVpA95JYxjkh0dalwzkY4bKc7z0v2EBdqmalkgU
+         xmHLpo44IQI8X49Q2mVoxlIg2oZLoOSWmZvNt4NN90UEAB1c/4kEWcCmJnWnVwmfYxtL
+         xv4+0MajcdYcgcFbPC7IAVCxbdwt62GnOmUxpzNm/LhgJJqJUuvA0T4si96CdJsDkNqB
+         0ZiWTSZrra8U2xPfiJARuTtfPqCl8eSTuxGkAzxQAki5toi/1ZmN4LVGUS6KjfXbABHg
+         n42X8g0sjhTsSjsJZ6sW1bysp6bf/8ST3z9lDyFRTk2pm0rfTVavlg8MMlwx+3JYZYS0
+         yMKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773145900; x=1773750700;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=N/miCCqVVG2B1CJePoc1BgN70Ur42Xdb/B9doklgNbU=;
+        b=ETUJ8SpOrcoyJrHJFxhNWME3LsxZuJVc94SSGX++RQ8z01WZwrbsWAOOGfiAmDd7gM
+         1Dgs9QJNjrpuRmMqhV9QfRf41uYS10lIzQM4jpWANFTMXr8NcP0jTPF3BKzcYs8Bc1XP
+         VYFZkSaW7omuhcBwG+FmfE0ai8bZqV8i+zJ8Qj9J1INd4+xF7/PJURcDNA45UN1KDoQt
+         3n9UJB1nqOESsuTMZdFI60EjOsr0ZC+iX+cBDH8OhkcBFopcmTX0kTv6l4o0Nyjngr1J
+         506N4JE+MIn1WANKXg1gvw1ktBJ/g2K0YzRiX+xxos5G1V7ObJ4IaP5BA4I9+f8drTLD
+         FMeg==
+X-Gm-Message-State: AOJu0YwW7tNGwop7yeIss6oMuCqJZU8tbaWEAox0fw9uaS3ZKQ5ZEGOK
+	k7m9zo4ZfNif2l0scgxZv0vf/R2skEZqHYscqrxY8HlW+xAJdMu1rV0GyKoyQ5zHKWrOCMT99Nq
+	Vx5G+IyJxjq5tElvyoeRIOkN7maY8LPU=
+X-Gm-Gg: ATEYQzwCpU9+v++ZD1ToQTo58RKIy/4wj8Mh5NImSIMRPu4/8aqXo+UZwu9CHw1rrnv
+	ZwrtF+i6RH6NEfgOVcZES+ZVzOAZB0eqpi6crdEvsc/oq+1buKnWSdXGO+/3g1pth3fr8YB1+qi
+	uTnUmEhiUOYrMihHmm+5ipHwCzDCtUigL6qWQZyx2jwkmXrfQcJ2O+/c1xZKX9iFuJcNAfJeQFp
+	KuJxYz41ImHlhzDP0hH4I3hAKIsrpnWVWTgzLRfCl9aFIMXbYwumYjMST5ekm9ws814nfnWEDY0
+	CK8zLjnVMpw0g8jANqHfUMLFcgRUcoLtS5E0th6EkoBFOnOuGKCgmzk4YO/iINGmhz9P
+X-Received: by 2002:a05:7022:238e:b0:11b:f271:835a with SMTP id
+ a92af1059eb24-128dde07d15mr1435208c88.3.1773145898623; Tue, 10 Mar 2026
+ 05:31:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv7f8td6b.fsf@gitster.g>
+References: <cover.1773127785.git.belkid98@gmail.com>
+In-Reply-To: <cover.1773127785.git.belkid98@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 10 Mar 2026 13:31:27 +0100
+X-Gm-Features: AaiRm53Vaa__Kcip5m_PxNjakSY8bgfXpWp_0oq7Yk3X8loAs5kavlzQwpKSO2o
+Message-ID: <CAP8UFD1t4Xs=xYW4uzqi7Ybc7Wz0nGMTkucCt5UxVnKTO1KE8w@mail.gmail.com>
+Subject: Re: [PATCH v1 0/8] repo_config_values: migrate more globals
+To: Olamide Caleb Bello <belkid98@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, phillip.wood123@gmail.com, 
+	gitster@pobox.com, usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, 
+	me@ttaylorr.com, karthik.188@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 06, 2026 at 09:35:08PM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > Subject: object-file: fix mmap() leak in odb_source_loose_read_object_stream()
-> >
-> > We mmap() a loose object file, storing the result in the local variable
-> > "mapped", which is eventually assigned into our stream struct as
-> > "st.mapped". If we hit an error, we jump to an error label which does:
-> >
-> >   munmap(st.mapped, st.mapsize);
-> >
-> > to clean up. But this is wrong; we don't assign st.mapped until the end
-> > of the function, after all of the "goto error" jumps. So this munmap()
-> > is never cleaning up anything (st.mapped is always NULL, because we
-> > initialize the struct with calloc).
-> >
-> > Instead, we should feed the local variable to munmap().
-> >
-> > This leak is due to 595296e124 (streaming: allocate stream inside the
-> > backend-specific logic, 2025-11-23), which introduced the local
-> > variable. Before that, we assigned the mmap result directly into
-> > st.mapped. It was probably switched there so that we do not have to
-> > allocate/free the struct when the map operation fails (e.g., because we
-> > don't have the loose object). Before that commit, the struct was passed
-> > in from the caller, so there was no allocation at all.
-> 
-> Makes sense.  Thanks for finding and fixing the issue so quickly.
+On Tue, Mar 10, 2026 at 1:07=E2=80=AFPM Olamide Caleb Bello <belkid98@gmail=
+.com> wrote:
+>
+> Base series
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> This series builds on top of the merged series:
+>   [PATCH v7 0/3] Move repo-specific globals into repo_config_values
+>
+> available at:
+>   https://lore.kernel.org/git/<cover.1771258573.git.belkid98@gmail.com>
+>
+> It should be applied on top of that series.
 
-Yup, indeed, this is an obvious fix. Thanks for cleaning up after me!
+The above was interesting when the "Move repo-specific globals into
+repo_config_values" series wasn't merged to master. But now that it
+has been merged, you can remove it.
 
-Patrick
+Thanks.
