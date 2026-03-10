@@ -1,155 +1,104 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C004E140E5F
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 22:51:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406E8372B36
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 23:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773183067; cv=none; b=IFnDGQm9rekXmO3mWGlcRhdMuGfPnbr8J3go0eCvzzcjoSJfjoX1qcxqas5cYz1oNDcIO9Q7P7LqPa11TfvjzCTupiCmbgp289gwJjlKPFc/wTdH3Om0Q+dKvprsOoH6VRxPEKaPrQ6YWaHOCNISC0MMeeVqddfuMVVRmF+RHQ4=
+	t=1773183793; cv=none; b=e2rU9RPItzknP5XmmV+tOC9FBRZfZC3ebJSiZGcs3RDVjZsxlse14pWCuYVhiZqfAet3UTOqb//aFeagW+BDNTm9jcdXHJI6vwvHaV3mniA3doc8Ay2XqC5mso1srCAd6TN5PVsHYor2xX5zZKIirZbBIk1+PzYjybvkljSZIqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773183067; c=relaxed/simple;
-	bh=nbGqdwUNNUnAEe0eX/RSv+Se6TdZHSyrn8y0bBBzzaU=;
+	s=arc-20240116; t=1773183793; c=relaxed/simple;
+	bh=Q4fHAn5+oJsZCVUH8LbIlc3PVCZxM9/3AcEelbwt/0s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KvOoSzn2jl9aWsqeSwiFxE6YoCKSq/1eXFPWZeKwJgZA+RYWdK3SRUw1D0fMA1+AVL6Ko8r/cyoVdRdPoKvogyI9radQ4m2iSJZtUH1X+J12oXIq5UyVZJ+6JEGhGw+Xrfug48uwDdNyyn/scG4axqFtasRVEBPm+3RobNH+Ndo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=eDAbKkbP; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=O+ODTNsbbaAXmJXVRAVBah0ENbGhuBfGo0mYpTxME986BtdsYtuA98ZRdQthUa+DWzqFHGxuf27bDS+L+yRGwfW5TZNEs1YwSYcuY1koYcnO7zlEK9d+2H0WlABf5gpWtN7aQQ0gGlHmbQx8s9IWXVFoiEiFfXRl3jxWi2N2htc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hnr86hzV; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="eDAbKkbP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1773183059;
-	bh=nbGqdwUNNUnAEe0eX/RSv+Se6TdZHSyrn8y0bBBzzaU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=eDAbKkbPAITgxeaQ+BpcA6bOYv86W44Oc3HpxLk17epU72JcAQy2bvTsEXVjCTpQO
-	 ET6Em3SG1e6UuOLz1n7Qqo6upGJDMNlmbSWjxZbnsyqFx+fG17dWLUh2lQaxPQBA6c
-	 BihoNtW7/LGfc5oESDAJyfI5TtDBwJQR5bZ9jSQsiRkJhUhBZtJf8BmVl/zoE5AgyB
-	 saMV5hulCNX9A2ffoG9U/TLcIBbVqzOCuPcZyhgYq8ptogneyUntJ8lKeG+hK/c1HD
-	 MDgq/RnMl+m+HvfdE8QDyN2Njg2ybJnRNmOlOBPnyUI811nhujrfYbsf/FHLUvui35
-	 buTyStvE+1NCw3hwSSIVLqyJ1z310w1vje3HyXwIvRvL5kvZKpgoabNsJ33YlD/du7
-	 qfQhlAFO9qZw31SU7Cm6VtoIEedTI02iFxFQxpgKBA7S7Fx0Dqvca9MNcY4otyw5jF
-	 DjjNPXHYh05IYqCayCJ6i6Daj1R1i2kdJXG3GB0MK/f2mNI5+ZP
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:676e:74a9:1de6:9151])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id ABB7720107;
-	Tue, 10 Mar 2026 22:50:59 +0000 (UTC)
-Date: Tue, 10 Mar 2026 22:50:58 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: "R. Diez" <rdiez-2006@rd10.de>
-Cc: git@vger.kernel.org
-Subject: Re: git-fetch takes forever on a slow network link. Can parallel
- mode help?
-Message-ID: <abCgUu3ZFSOIZwKu@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"R. Diez" <rdiez-2006@rd10.de>, git@vger.kernel.org
-References: <5c7c975e-2541-47e1-b789-fee1fdb77d2a@rd10.de>
- <aas--JZ-CCWN-o7O@fruit.crustytoothpaste.net>
- <1d6a8eec-20b3-4d6e-83f1-d18b7a3c0145@rd10.de>
- <aazUlMBj_IK41Ss2@fruit.crustytoothpaste.net>
- <0ebf757b-eab5-424a-a58b-e654b1a2942e@rd10.de>
- <aa39obsSbk9R1mqu@fruit.crustytoothpaste.net>
- <3ed2d803-5df9-44f4-9427-958d28aa1c46@rd10.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hnr86hzV"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-4645dde00a7so413502b6e.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 16:03:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773183791; x=1773788591; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=oDti+7yo8ELEIl6L1gr1nziqLeQU4ZXMI40Y16FoRwE=;
+        b=Hnr86hzVy4YZOg039dOsjM6YLMJUxqzNejmc/NndgfymVBxsjNzXeDEo1oJdyT8Jvi
+         ABI8HyAUSL/6nEnZHQpl8BLlsXLYqFzpo/tux2pmEjZ+Cu5/GkQZ0yeSPdJd0xigv9eg
+         Sz0fux5pEfEo9/KCXLmpHs3YiW/tmppLYZL5Y/b4fNAkmyv9IgD2gc1CZoWwgiltQS3s
+         vojOwejs5SXqyiOX6c8m4F30r8KYPMJgQoZhmXSO+SndFzHM5x9Cv/2108SUHKjQSEnf
+         F1pfA4K1Bu6UoK9b5fKhP31YGQujccYd0uS/INUE1ZQIqdcKH4ejVx7EnNcTRkrYgS+M
+         eb7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773183791; x=1773788591;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oDti+7yo8ELEIl6L1gr1nziqLeQU4ZXMI40Y16FoRwE=;
+        b=MuOW9H5URLXRoZYQ5IcGEzHNS9qU6tGfB8ymqHFSbaw9JjIYqo2YTom3VyPW6mhO0A
+         wF/78826newp+UniJBhWs5IfJBF2rfJMLyyVpPyAY4R7ps46e5o25oU7wy6MzY5Q4CT1
+         X4R3ijmiIrIuDsM6zzkelF4MhNYkOyPYlcBrqIh27IAYWhTSJDN1+U9CcnAUa1trCqGg
+         vsnitTGUl98eXtLfQXC3MJ58+pkz6SkhKJrFvXW27FX1B8psTGHhvqUgf9t8C8ACgGG4
+         ElLjx9vJE2FF25jaFhCfbrrjUrbMnVTS7FLZkJzFI2MJNgXBwd6gmDPeLIngvclJuWlm
+         f0zw==
+X-Gm-Message-State: AOJu0YwED+leu8MDQ1E6ZZrz4NCc/VnYoqTVZf8hX7Uo9xALf2BcN31F
+	V2WMEA2ouwz9tjRGIzfVxPpVtY7zO+Btm5RyEkqT28RmvtlA5B7VJyEd
+X-Gm-Gg: ATEYQzxhrLHMbrg+izcC+BVFjFtSDscRcrgQSglWCy7uL+NSV1HY9OxvQAs8P+cN9lb
+	D/Vmp0n2eqNJJOf1MQ2YgJGKyuLlEDJqTIyZD1C4GfmwkAwt35ZcYyBnPAttsD9isd8DEZPsV0t
+	iiNtBoLKHeUnn8YvKmtzb2kVkj2DwuHf3on4vGE7c4/T3T3fKK/PiTFTnVyWxa1BrdvSHGFb+nQ
+	CiStrbDjTpoOFOpAVpJCqP7a/tGE4o/DN7Xkzcxa2W5542sz3voMzL+skSxSRxTQ3+y4VWzNaVk
+	hpevlt+OnzsqQF4o1hXq8u5rcCJ7bruwuvWrPevUYYHYTlyJRnR6HaasBb9BHuLg1Rl8g8CPHIp
+	l9S6BgB/OJ6E3tvK6nsExZ8TZDHv7cFY3ezyoNei125qIIiDhiURzTdibAxx0cHrLh05TEDHNnh
+	OUJ88AFV5YMrV8oEKD
+X-Received: by 2002:a05:6820:1689:b0:67a:222e:ae6f with SMTP id 006d021491bc7-67bc9118c61mr247538eaf.26.1773183791023;
+        Tue, 10 Mar 2026 16:03:11 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4177e1f9f86sm379588fac.2.2026.03.10.16.03.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2026 16:03:10 -0700 (PDT)
+Date: Tue, 10 Mar 2026 18:03:08 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, 
+	christian.couder@gmail.com, ps@pks.im
+Subject: Re: [PATCH v3 0/3] fast-import: add mode to re-sign invalid commit
+ signatures
+Message-ID: <abCgIt6X72UR2vbU@denethor>
+References: <20260306205359.1723254-1-jltobler@gmail.com>
+ <20260310201116.1130160-1-jltobler@gmail.com>
+ <xmqqv7f3s93l.fsf@gitster.g>
+ <abCFKEHxu7OZr9bm@denethor>
+ <xmqqqzprs7o3.fsf@gitster.g>
+ <abCTTaYCQIub_xjW@denethor>
+ <xmqq8qbzs40p.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="81Dk8xChUhFQLEIK"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3ed2d803-5df9-44f4-9427-958d28aa1c46@rd10.de>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <xmqq8qbzs40p.fsf@gitster.g>
 
+On 26/03/10 03:39PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > This certainly seems like a reasonable use case, but if we want to
+> > support leaving previously unsigned objects unsigned too,
+> > `--signed-commits=strip-if-invalid --signed-commits` wouldn't be
+> > granular enough.
+> 
+> Yes, --signed-commits=(re-)sign-if-invalid is a perfect match for
+> that use case.  I am just saying that if you add the machinery
+> needed to re-sign, you would be able to reuse it to sign objects
+> that weren't signed in the first place, so that is wherea yet
+> another feature "--sign-commits=all" may fit.
 
---81Dk8xChUhFQLEIK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ah ok. Ya, adding a signed-commits mode to cover signing all rewritten
+objects could make sense. I am planning to also add an
+--abort-if-invalid mode in a followup series. I'll may explore adding
+this other mode too.
 
-On 2026-03-09 at 21:08:31, R. Diez wrote:
-> There is one more thing I am curious about. Git does not document how it =
-uses SSH (or at least I couldn't find it in the standard end-user documenta=
-tion). Git cannot launch a process on the target host over SSH, unless Git =
-is already installed on the remote system. After all, the local system may =
-have a different architecture (like AMD vs ARM), so you cannot copy a binar=
-y across. And I haven't seen the requirement that Git must be installed on =
-the remote host when connecting over SSH. In that case, I would have probab=
-ly seen somewhere a version compatibility table between client and server.
->=20
-> So Git must be accessing files over SSH using the standard SSH file trans=
-fer operations. I am guessing that the same latency problem will apply here=
- too, because uploads and downloads over SSH will also be sequential. Is my=
- reasoning correct?
-
-Git doesn't use standard SSH file transfer operations.  That would be
-much slower and it also works poorly when the remote side doesn't grant
-access to a file system, such as with a forge or gitolite.
-
-SSH allows multiple commands to be run over a single connection with
-`-oControlMaster`, which can improve performance.  The benefit to
-running a single command for each Git operation is that we can do
-authentication once at the beginning of each command, whereas if we have
-a long-running SSH connection and attempt to do SFTP, we might
-interleave requests on different repositories, so each request would
-have to perform authentication.  That's not a problem if you're using
-Unix permissions to control access, but it scales really poorly when
-your Git data is actually spread across many different file servers and
-the user is accessing multiple repositories, such as is common on
-forges.
-
-Using SSH file transfer operations also would not work well because you
-would effectively have to download every pack file and loose object to
-be sure you got the data you need, instead of getting a pack with only a
-few objects if that's all you need.
-
-However, you can of course mount a remote file system as SFTP with
-`sshfs` and use it as a local file system if you actually have a real
-file system on the remote side.  That will send multiple requests over
-the connection when reading or writing since the `sshfs` does queue
-those.
-
-> Or does Git attempt to find out whether there is a Git on the other side?=
- What happens if there isn't then?
-
-Git invokes git-upload-pack on the remote side and talks to it over
-standard input and output.  If there isn't one, then the operation
-fails.
-
-Here's an example:
-
-----
-% GIT_TRACE=3D1 git ls-remote git@github.com:git/git.git
-22:41:36.731673 git.c:502               trace: built-in: git ls-remote git@=
-github.com:git/git.git
-22:41:36.731937 run-command.c:673       trace: run_command: unset GIT_PREFI=
-X; GIT_PROTOCOL=3Dversion=3D2 ssh -o SendEnv=3DGIT_PROTOCOL git@github.com =
-'git-upload-pack '\''git/git.git'\'''
-22:41:36.731952 run-command.c:765       trace: start_command: /usr/bin/ssh =
--o SendEnv=3DGIT_PROTOCOL git@github.com 'git-upload-pack '\''git/git.git'\=
-'''
-----
-
-I don't have any systems without Git on them, so I can't demonstrate the
-failure case.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---81Dk8xChUhFQLEIK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.9 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCabCgUQAKCRB8DEliiIei
-gY0WAQDdMh4gDo+xohqrSxslPRAp6bstv21z6YxrNqQfkauivQD9EJMT/d5sxcBt
-L+AMdKMuAmP3qe1PS9hJjpubSKKzjwI=
-=Y/12
------END PGP SIGNATURE-----
-
---81Dk8xChUhFQLEIK--
+Thanks,
+-Justin
