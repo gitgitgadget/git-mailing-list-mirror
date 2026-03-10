@@ -1,291 +1,188 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MEUPR01CU001.outbound.protection.outlook.com (mail-australiasoutheastazolkn19010001.outbound.protection.outlook.com [52.103.73.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23D1314D13
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 11:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E812381AF8
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 11:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.73.1
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140686; cv=pass; b=acwSz+IFCymyhqGYPdz2RuY1xSZzG7yBouv+PSBcLNA24s2mEMmiICcFymb0PYkkWEnylbKjkdYvayqvzzg3DS/3+Pm655VEZpJpJrN1GUrqIv3uunKi0QQyeQuNGo7ZQ3KtinqvAxVoVfVv75cZuk1xiTSMscJFLPYuEaxDPKM=
+	t=1773142883; cv=fail; b=rG0uQxQ4EgWKcMJikembrwvc3XfdqkayQV24F6kh3rnJrJA03lXy+Mb5sTgPevadE4HY1keqTOF1Y1McsoEVVJI1KhPyi2AsjckOV0GuMRGJnETHC1SgUd1F2SMlp5GTEdfKtcLQ6bkQn01CeeeUkVlNG+5iwjkURl1h1gsrEbc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140686; c=relaxed/simple;
-	bh=gPL4Tz6yX9EnpeAJfxAVij/qn7C2FYblnquMV277Ve4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rxbcECcTAtStpgCl7Bbti+Qg1prWiRpYJZRAsFwVR6habieuwfrJ92yEklcEDQ1oarsBLuEdaMs84vyFRzaIiZuK15zJZahPhWQnChDirXcO/5PjtiWzlTjnvP4qYjETcmAlZGqA9MKinMsr4mbq5nScO1eaAGQxaU4o9sGeED0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pv6RHcCj; arc=pass smtp.client-ip=209.85.221.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773142883; c=relaxed/simple;
+	bh=K1e04ElrneODHVF2lbVmGXZA7NZnFCUbpsBznczwtXw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=LjK5De/b/p0DXulc6LL7J/oq3iQOnaulcZ2D4wAer2QLwyHBLkZX4B+plVfl0Hlw7XAkTXAPFDF2UessUOfqwQv/WB2qzAoueckInI0J94wOtHRBbtYCS+eYaI1H807Ks8gc0YXqLrvCet2xllwaJut6jdXiGTDiU1mJwFySw/o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=fyhv6t1o; arc=fail smtp.client-ip=52.103.73.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pv6RHcCj"
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-56ae58f3fc6so5580617e0c.3
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 04:04:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773140684; cv=none;
-        d=google.com; s=arc-20240605;
-        b=IyF+o5GAh4Ka2cFUyWOvBjub+vuzrgS18ncvH2k97FCZkqt9+8Doxkpz4MOoeHTJn3
-         6a3gx/byjyiXcGL8Js7XX2sFbkk0SxQ44Jp/lM1Ar8kvJLD8jLiFcIWOpNJxCmaYhc6Q
-         JRG1bhUDIgp3ZaYapc4TaB6gyJHuDVzA/RuZtan3ehJ51mPShcjrDR8DttydkIIjxxh9
-         OKtA+OYlN+PqUmOkkzqLzhbkcnWRZrrEN/9J0RuwoHi1hlPdZb8g+94xRtPnKCNyfxvH
-         m+ElliZ3PoS2socq3zgSCgOYd1fXErevel3rR5Ijer9eQgeUoDnIKdPiO4J3hvHs7MC7
-         ywpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=E0Kl7VFn9tJLcVa9RDWZWw9gDzwsA8iqvQT2OnP0C2M=;
-        fh=XVVFyFZMJjkbD6fnpvMqEm5YgTspAOmhENsu3xpjjIY=;
-        b=TyCCMRn0hdCya32IUcy9V8xReFqZ4m9UN1CFjx2j1TDPzMpy7peYaJ9UuKLT11MJc1
-         BYt1Ii/5AKE2SN6tHSLv9I3s3FTQ4qxJ1yiwL4/iNyQnFb40jQEiB817YzeUUZO3zlmi
-         Z66ISEiVhZL/hKfC9kZVkI5ZrYq/po/5yqj1IJ/yD+gh/U5tJrmo2johp/zUQZcHk6uI
-         2MInLTwtjRpftW2L1fMcacMHzpV+0fExokBfW7An9PqAeyNiyQDVDDiC7pl2Aqi90gny
-         SCAaxdNtOCWSkPxgXdBMfzKXkfLHhoPccPcfzOfPoYbPwSIQptM7d2YLokmxbY8hCdXj
-         oWTA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773140684; x=1773745484; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E0Kl7VFn9tJLcVa9RDWZWw9gDzwsA8iqvQT2OnP0C2M=;
-        b=Pv6RHcCjGIjs9pwGQ23eTlkmfEg0LG8o5WUJZwfXWyeQVP65Wr4NHkHdjE3vB1zBN5
-         JM5iKYcuY0HG8aAlCBh+OSFTKVGrsVtKqVMutlMjgklZ9jEOGbVdHWjsb5349o5u1VT7
-         JcVd8Xw6tLoUscZ2U+leS5BDIAuhlZc9nb3F3/zxcueIlIOliZkuKV4Ogq24OdF4bRfR
-         UFhFd3iXgLnH94wdpE8T5o8Df2MTuPY2Su/ydhaum1fw1ZK0H9WNKXEDCJ2r/Jy063bG
-         07bHZEjFPQvAVTf86jJhJ8cV4GQMGO0MIKqkMD9t3aMU9tl6azM4EYy2Q7vU4oi3y3dC
-         AIaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773140684; x=1773745484;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=E0Kl7VFn9tJLcVa9RDWZWw9gDzwsA8iqvQT2OnP0C2M=;
-        b=VZRSVTt2ceD5CZsH7wiF77rkXtH+mPZh8L61MjAdQ9ux6oHYM1OPAWXjiS/68pJkCx
-         MtOSyv2ROu7wElt4BrBf/PFRnkTpS9t9nZ776PDConThlfkDcpj/R6z1ImhZHzAS3d96
-         WR3d3YoXTd1F3a3RIEY47Rea8OIHOeiAo8fGmvjb9JFm326q3H3ntKOyi9Zw9Q1qfbcd
-         HPj58AOmV5LkZfisGPQVVGgIX2UxRA107bsVcfd9L0N/LR/sJU0hlBflj+K9RWoaoQzU
-         CxyZzUe4g7htU+y3YoVX0rEZ9weJPEjgPlncm6oAWis0PPZTbGfyo8pywxOGLs7zMY5i
-         cepg==
-X-Gm-Message-State: AOJu0Yy/wjRPSrv65Ih5ENh3mca3JjFFTIgR+hJtWXW8QcdVPwFOSpkb
-	r+/UOMye0tmzcoAVHL/3qWytixYABh4g43XUR75XqxKL0b+F1++jkW4GmhUohjOQFwIUnDUxSNQ
-	duOscMO3WDUlqZKah4jKUXRLvSfK6AAE=
-X-Gm-Gg: ATEYQzxm1cx2LfquQW4LZIHGXxhv3EG/SBh5lA68f26JzAyCkJhE1H7/9UkXnbE3K/K
-	Orkhh77cFb/wzB9Uu5HXU/p3oLi9AW7s1jQoNiCaYkznn7oMTA0stwX0Xu33G+t7r+cYvFsjFYm
-	42VuBO0uuv63iTWE/EKRzNPzoI51P9mjX03v282aRWQg2PLrGyOHorHqrNjldQW9VYbFtADMbFs
-	itfr8xg6ijhZ0S8SBd7uQLtO7Y47Y4syGA5z4s2+uMx1E3YdlhBvfexJd+R8v4vgWrj8K7G+JG0
-	B3iZ3gYhBjgM2Q5g9hfphpOo+XTguc/ylI3aROou8MdBXMHCCvEcCcle+jRC8Xri9eDsfBfXa9S
-	amSm4PHD45BfZG7R31YU=
-X-Received: by 2002:a05:6102:3584:b0:5df:aff3:c42d with SMTP id
- ada2fe7eead31-5ffe61e1502mr7182277137.32.1773140683569; Tue, 10 Mar 2026
- 04:04:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="fyhv6t1o"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GjtxOpUKJA5oOj6DdnlpQUwtF3nZGnadYY/hx53hwz9MFMaUwJMF1OeDpWIXczOLpGvUhckI/YpLZtJa2S4L+Bp30Ogn2wJYJHTez/jZwtaNtvupWLyKTgvJJQfoj7qCERFM8a67p4d9qktjR7zfTYwc9pn742qTeSURTD0zE7BlBQHLUg64M+f27cXFMTH3Hu58NO2QQOq+og7ZWcGx8Ptdeb3BCoiK2rqXyTjGv5kJbpM1VYkxtmqfCZyC++jYQJCJQRkqWA0bNn94UZnjGkuD9dT75Cu/QwfJi1RLtLQHwu34E41Lh2uFtpy7CPz+DdNNol0iZ5MpubMWOg8nRw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=z02XZNn4uCZOjh/jWBLUVwAYY8t8PpFvaAJCeUJ0cVk=;
+ b=ELqgpRhZl8AukM2v7KQ/wIxtMEfva9lQO4TeOZzIlfP9Apa70+hZhTI30ynoEzoz0By13IKNNE8gFfVGDfcB87YTdEPq65TovRts8/ODjURqG0oPE3wj6Z/WaoxFRnopwA3sM/4pCL0EYFzTH31flJqC2WxQMc1Op09vUQcP/8Ph85jdfk45oEJCldErXx1vO2ham7ArKs7959xjmFyIfcPolp42LLchHBR+QPuiTPhqn4mhB1udOUDzw1BgoyoIDyQzVG16kLnd+f9DG/HU9MQewuQbLp15G0FsOpOpz2+H0NoHf+D6XnPLfMww/C2yeOGydfbSVZMf53Opl3YpuQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=z02XZNn4uCZOjh/jWBLUVwAYY8t8PpFvaAJCeUJ0cVk=;
+ b=fyhv6t1oKUe1XoZ1BHK7AcT880saQl4XaQM/1cty0jW2ap/7t8zbqdFZOTq8ZDgm86/FMRT2zozip/yqwc7J1FEJPIf4gEbfaS6+oslynswFO9O5x1vP00sjW4ot8h1EdolpSlWRKdGkaLEMrXcWHJQC8vpqHBCcoS7mHyPdX7n+eYT8sHrNGSyiKfS8J020wc0yiudRn3uFlz+DZSA4Iv62Qge3n7v7zz3yUdyXTQz+ObVZJa9AJ6w4Iv+vUvpmHEMVvFIyXaUrSuWAGvsq59Eu/ZfA2k/isjI8T0QSmR1q7BA77jBuJG14gJIK+RAM3Ive0/N2SR1bcdZphjusTw==
+Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
+ by SY7P300MB1392.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:2c2::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Tue, 10 Mar
+ 2026 11:41:18 +0000
+Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9700.010; Tue, 10 Mar 2026
+ 11:41:18 +0000
+From: Jiamu Sun <39@barroit.sh>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jiamu Sun <39@barroit.sh>
+Subject: [PATCH v3 0/8] parseopt: add subcommand autocorrection
+Date: Tue, 10 Mar 2026 20:40:59 +0900
+Message-ID:
+ <SY0P300MB0801C6F21C2D8F49892DF8E7CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <SY0P300MB08013E35DCA8FC31B0662125CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+References: <SY0P300MB08013E35DCA8FC31B0662125CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TYCP286CA0201.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:385::15) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:27f::21)
+X-Microsoft-Original-Message-ID: <20260310114107.1086103-1-39@barroit.sh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2233.git.git.1773132678.gitgitgadget@gmail.com>
- <pull.2233.v2.git.git.1773140364525.gitgitgadget@gmail.com> <CAOAgETOebObfZNWA5LWMDxYv8YXYpbrb9L3_ASs_AbQjiQZYZw@mail.gmail.com>
-In-Reply-To: <CAOAgETOebObfZNWA5LWMDxYv8YXYpbrb9L3_ASs_AbQjiQZYZw@mail.gmail.com>
-From: Arsh Srivastava <arshsrivastava00@gmail.com>
-Date: Tue, 10 Mar 2026 16:34:31 +0530
-X-Gm-Features: AaiRm52uYUEVAwmMWRAR2rwS1X4bRKZGy0CU2J9-Y0Ka8LSA5o9FZ1aulo9XZTU
-Message-ID: <CAOAgETOQzQceHbevFa_uTQ6rm=9NzsruPqDOJhnj_E_vUp0Bfg@mail.gmail.com>
-Subject: Re: [PATCH v2] advice: add stashBeforeCheckout advice for dirty
- branch switches
-To: Arsh Srivastava via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Sender: Jiamu Sun <sunjiamu@outlook.com>
+X-MS-Exchange-MessageSentRepresentingType: 2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY7P300MB1392:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0c8652f4-bf90-4e54-4785-08de7e99f103
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199028|5072599009|51005399006|19110799012|8060799015|12121999013|25031999004|23021999003|15080799012|440099028|3412199025|40105399003|1710799026;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?hRMNFyebkFRRjYrFqmsApL37Zo8/AClmSrTFgz9dgxBIHjqt+xCX41lfkYBQ?=
+ =?us-ascii?Q?Yn261/YEGDLq44QnY980T/dHhRN7ZXcjxa1U6Ia/VD/bpfRKO4G7w4VwBD9B?=
+ =?us-ascii?Q?LH6XmjDtK+p3N+8lojIrupetUZWQD3VFlp+Au+XRyj7s7eBKB9IYZkjvAX1p?=
+ =?us-ascii?Q?tYNhkTcIKIKJ8MQUl0e3nxPD+oIqXTptFUSIhsQWj8qNI/gH9nSh7iufAyG+?=
+ =?us-ascii?Q?2p8QoQbpdl7fsReDe7dS53W6O6A1sdsOsvnjYH6KwnUINWUfZJj0npsyrKp+?=
+ =?us-ascii?Q?wn5U2WXVk4D4JufORUZxKKQYDJgRzu+nzyisducZb6lX6SSxLvlWahQzzKQx?=
+ =?us-ascii?Q?ZS24vDCcqkYtAbJmxvwNMm3W1WNZotYmZkRsGe/rIR7EUQNbEPCyN91Mlq6Z?=
+ =?us-ascii?Q?vqzLznYSf9IFdO0NjsBF+wcWx1fX6JfKcZa+fisgQMjISL26xSfAr008TLgW?=
+ =?us-ascii?Q?6T8grS2i7hNJ0J4lipEK+WZxzYpStKVoJ9ZM04OxfJ7b3LMJnS3CiFE3lVAn?=
+ =?us-ascii?Q?aFACBMojht4+Xx2gkl1Nc5CyC3Okz0ft8hXEvMXUSKogFmWn3dX7g8bBD3pk?=
+ =?us-ascii?Q?8WSuDyzvkw6YL7Qbfqd/kYO93PTKnEZVfx1DieSKIV8kKqWyv5Vocl2OA68f?=
+ =?us-ascii?Q?AQSeIBia1pnQNOb/sRo1OF7VEVgagVep213xEJqQuhJLubw31Ya0bB8UNKv+?=
+ =?us-ascii?Q?ZsNlwCQliqzwJaRS43MzTPz2WHfboSgeiM/FQa76P5jrZUYTalREb3KawjTF?=
+ =?us-ascii?Q?wTVsw+gT2PkJCtpqU4yszqXjDRSCww6fyi3ecf+hzC5F6lo9wpuWhRZbQ+Vq?=
+ =?us-ascii?Q?+TLMwcwonRICWjeV3m9b3j9QamLWnWlC0VQTu+KUhYNaf6fvtOn5gKHfAr0G?=
+ =?us-ascii?Q?YjtBuLs32ZKSi0G9l9wgpugY8DfesXJtlWwv7xSS4NENaoDb+BTUrUZ+G107?=
+ =?us-ascii?Q?R8FzS6horQV0y4JV7670TZ4noidrH4o0gzjJ5xskH0uXYNOyvIo/X7taA5Hg?=
+ =?us-ascii?Q?8ODM?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?9UIWwU6HifW2B4pw17Bic7TGxqRyohWxy5PhHmZKmb91kxPqFcDB0LJK8NKX?=
+ =?us-ascii?Q?3NIiCsUdqvRGKhKMwmbCvh6Gq8pjJWe6TbJdkD5iNuaEXyQmqyEmj/c9Gvxp?=
+ =?us-ascii?Q?SOpWCLljg7FFl+EDwIcE53CiM+HvMUIIWrh34vLYrl5Vd8+R6Ir0LU2f28tS?=
+ =?us-ascii?Q?CjfjudtMmpAj7h/zEwc9WHEJPpJvgQvvhnSkVHTU+Gu0d0GUQYor/fIrBuLB?=
+ =?us-ascii?Q?jIStuRR+n3kc+jPC9QfaosNLl0l62m5WEeSXwVXNmSnDDJJ78Ew4LfZdUjoQ?=
+ =?us-ascii?Q?rWLx6ihPaUxkWWakrQJm3zFoHrDTZkV6CD3cm2O99IONLDftbTiFjPseyK3m?=
+ =?us-ascii?Q?GaR+0T4OeCGciun/5d2rsHggNXi0Izwha4RkrAD5f0UImWsAfp3elMF71ZLu?=
+ =?us-ascii?Q?OSqWAulXat9qVa/pCmkJN9gXF9egxAbtg+ZeX06zUL5pf7Vr6waevQf2scsI?=
+ =?us-ascii?Q?SX85rcmOStoDDIKbIfF6gWkHh026/Wz6+fryj2UP0NZyM7XY8wsvAO22niKI?=
+ =?us-ascii?Q?jB7CxQVkmlm+sXQutOZazLX97+PFzdkaho0ncik6LmOpfxc5U9GaQFM4XpPa?=
+ =?us-ascii?Q?KPMTqBSo2WjhXVX6XiZ5i72jysyfZxZNY3ywLn4eFYj8CZQ222WJQb1mosIE?=
+ =?us-ascii?Q?ZGjn2MPqobRNPa6mXCnch1ct5nlTn/md7qHjUj8JledwNskfnAhftIxAo9Bk?=
+ =?us-ascii?Q?5WDhSJnmvy6h/z30eR5fROFbvZfE0hMH8mXwR8lisMn+sk0Rr7Tl174X24YJ?=
+ =?us-ascii?Q?WgD7KdpLJckdK3IqgXPu2ojMRQzRa9KBoDpfeBCqP9/3ksAmmeVzTabScmnB?=
+ =?us-ascii?Q?9eI1hLFydLUGYsFjBUvHesFVHq3RFTt+TKCU7EzkoNlUTF8v+Y+EiYEKoZBv?=
+ =?us-ascii?Q?LBs8Bz9ZDkFIoiqI7NfBJmh+zv08B4CSxNvFhvszE9rDJPauHszsnOkTVuzn?=
+ =?us-ascii?Q?tAyJa4QByGyWiHNQHcHyFqAl+LqZcVoBNyr6AjSwawKu7lodqhfxul8xOWoD?=
+ =?us-ascii?Q?qr3D1Vx3XamRTkzsSBYVl0yNGD+XU+oxMco0ytPhgk2Jck5nMiD83LCef8cm?=
+ =?us-ascii?Q?qvSRtOdNmQrTbhxIkBgU7itSzdQDMfyf7a+s8pxuYti/0Jz6OTLoUWZ32fUQ?=
+ =?us-ascii?Q?nuOX7y5wC8bgtPdYmuJk1Ylnt3VjPVd9DUV9V1+P5z3DiAnObxilzVlCaWld?=
+ =?us-ascii?Q?rSvBYgV7Oxi7I55pXsu6bUk4u4741RkRJO/OMgAgsesXCcNEYJKyuBTuvZD7?=
+ =?us-ascii?Q?1eiBpP4hr8WJJhibkj3OKE4qpSSA5AGuTVNktWOb/1/mY4HPx8WcymHmI6xB?=
+ =?us-ascii?Q?2TxXoPdZV0nUenMUxsvh1+WE3y76Hk/UuflhQq+mZhM4jAz+NCIoFfSJt7Y6?=
+ =?us-ascii?Q?prfDG8gHQN+U6xW+g3zTlLTLiUDh?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0c8652f4-bf90-4e54-4785-08de7e99f103
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2026 11:41:18.0367
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY7P300MB1392
 
-I have as you mentioned changed
-> Rebased my files pointer
-> Changed advice to git checkout -m
-Thank you
+Git currently provides auto-correction for builtins and aliases, but
+lacks this functionality for subcommands parsed via the parse-options
+API. Subcommands are also commands, and typos will occur, too. Like:
 
-Signed-off-by: Arsh Srivastava <arshsrivastava00@gmail.com>
+	git remote add-rul
 
-On Tue, 10 Mar 2026 at 16:33, Arsh Srivastava
-<arshsrivastava00@gmail.com> wrote:
->
-> I have as you mentioned changed
-> > Rebased my files pointer
-> > Changed advice to git checkout -m
-> Thank you
->
-> Signed-off-by: Arsh Srivastava <arshsrivastava00@gmail.com>
->
-> On Tue, 10 Mar 2026 at 4:29=E2=80=AFPM, Arsh Srivastava via GitGitGadget =
-<gitgitgadget@gmail.com> wrote:
->>
->> From: Arsh Srivastava <arshsrivastava00@gmail.com>
->>
->> Add a new advice type ADVICE_STASH_BEFORE_CHECKOUT to guide users
->> when they attempt to switch branches with local modifications that
->> would be overwritten by the operation.
->>
->> This includes:
->> > New ADVICE_STASH_BEFORE_CHECKOUT enum value in advice.h
->> > Corresponding "stashBeforeCheckout" entry in advice_setting[]
->> > New advise_on_checkout_dirty_files() function that lists the
->>   affected files and suggests using git stash push/pop
->> > Documentation entry in Documentation/config/advice.txt
->>
->> The advice follows existing patterns established by
->> advise_on_updating_sparse_paths() and can be silenced with:
->>
->>   git config set advice.stashBeforeCheckout false
->>
->> Signed-off-by: Arsh Srivastava <arshsrivastava00@gmail.com>
->> ---
->>     Advice on checkout dirty files
->>
->>     This is my submission for microproject [GSOC]
->>
->>     This patch adds a new advice type ADVICE_STASH_BEFORE_CHECKOUT to he=
-lp
->>     users when they attempt to switch branches with local modifications =
-that
->>     would be overwritten by the operation.
->>
->>     The new advice follows the same patterns established by existing adv=
-ice
->>     functions such as advise_on_updating_sparse_paths(). When triggered,=
- it
->>     lists the affected files and suggests using git stash push/pop to sa=
-ve
->>     and restore local changes.
->>
->>     The advice can be silenced with:
->>
->>     git config set advice.stashBeforeCheckout false
->>
->>     Changes:
->>
->>     > advice.h: add ADVICE_STASH_BEFORE_CHECKOUT enum value advice.c: ad=
-d
->>     > "stashBeforeCheckout" to advice_setting[] and implement
->>     > advise_on_checkout_dirty_files() function
->>     > Documentation/config/advice.adoc: document the new advice key
->>
->>     Signed-off-by: Arsh Srivastava arshsrivastava00@gmail.com
->>
->> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-22=
-33%2FArsh123344423%2Fadvice_on_checkout_dirty_files-v2
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2233/=
-Arsh123344423/advice_on_checkout_dirty_files-v2
->> Pull-Request: https://github.com/git/git/pull/2233
->>
->> Range-diff vs v1:
->>
->>  1:  0ed992956e < -:  ---------- diff: handle ANSI escape codes in prefi=
-x when calculating diffstat width
->>  2:  c70043a2c0 < -:  ---------- t4052: test for diffstat width when pre=
-fix contains ANSI escape codes
->>  3:  185356a454 < -:  ---------- repo: remove unnecessary variable shado=
-w
->>  4:  acebdd714b < -:  ---------- The 13th batch
->>  5:  9ec447e3cb =3D 1:  eb5639dbc3 advice: add stashBeforeCheckout advic=
-e for dirty branch switches
->>
->>
->>  Documentation/config/advice.adoc |  5 +++++
->>  advice.c                         | 27 +++++++++++++++++++++++++++
->>  advice.h                         |  2 ++
->>  3 files changed, 34 insertions(+)
->>
->> diff --git a/Documentation/config/advice.adoc b/Documentation/config/adv=
-ice.adoc
->> index 257db58918..8752e05636 100644
->> --- a/Documentation/config/advice.adoc
->> +++ b/Documentation/config/advice.adoc
->> @@ -126,6 +126,11 @@ all advice messages.
->>                 Shown when a sparse index is expanded to a full index, w=
-hich is likely
->>                 due to an unexpected set of files existing outside of th=
-e
->>                 sparse-checkout.
->> +       stashBeforeCheckout::
->> +               Shown when the user attempts to switch branches but has
->> +               local modifications that would be overwritten by the
->> +               operation, to suggest using linkgit:git-stash[1] to
->> +               save changes before switching.
->>         statusAheadBehind::
->>                 Shown when linkgit:git-status[1] computes the ahead/behi=
-nd
->>                 counts for a local ref compared to its remote tracking r=
-ef,
->> diff --git a/advice.c b/advice.c
->> index 0018501b7b..e1264f525c 100644
->> --- a/advice.c
->> +++ b/advice.c
->> @@ -81,6 +81,7 @@ static struct {
->>         [ADVICE_SET_UPSTREAM_FAILURE]                   =3D { "setUpstre=
-amFailure" },
->>         [ADVICE_SKIPPED_CHERRY_PICKS]                   =3D { "skippedCh=
-erryPicks" },
->>         [ADVICE_SPARSE_INDEX_EXPANDED]                  =3D { "sparseInd=
-exExpanded" },
->> +       [ADVICE_STASH_BEFORE_CHECKOUT] =3D { "stashBeforeCheckout" },
->>         [ADVICE_STATUS_AHEAD_BEHIND_WARNING]            =3D { "statusAhe=
-adBehindWarning" },
->>         [ADVICE_STATUS_HINTS]                           =3D { "statusHin=
-ts" },
->>         [ADVICE_STATUS_U_OPTION]                        =3D { "statusUop=
-tion" },
->> @@ -312,3 +313,29 @@ void advise_on_moving_dirty_path(struct string_list=
- *pathspec_list)
->>                             "* Use \"git add --sparse <paths>\" to updat=
-e the index\n"
->>                             "* Use \"git sparse-checkout reapply\" to ap=
-ply the sparsity rules"));
->>  }
->> +
->> +void advise_on_checkout_dirty_files(struct string_list *file_list)
->> +{
->> +    struct string_list_item *item;
->> +
->> +    if (!file_list->nr)
->> +       return;
->> +
->> +    fprintf(stderr, _("The following files have local modifications tha=
-t would\n"
->> +                     "be overwritten by switching branches:\n"));
->> +    for_each_string_list_item(item, file_list)
->> +       fprintf(stderr, "\t%s\n", item->string);
->> +
->> +    advise_if_enabled(ADVICE_STASH_BEFORE_CHECKOUT,
->> +                     _("You can save your local changes before switchin=
-g by running:\n"
->> +                       "\n"
->> +                       "\tgit stash push\n"
->> +                       "\n"
->> +                       "Then restore them after switching with:\n"
->> +                       "\n"
->> +                       "\tgit stash pop\n"
->> +                       "\n"
->> +                       "Or to discard your local changes, use:\n"
->> +                       "\n"
->> +                       "\tgit checkout -- <file>"));
->> +}
->> diff --git a/advice.h b/advice.h
->> index 8def280688..c035b5d8e3 100644
->> --- a/advice.h
->> +++ b/advice.h
->> @@ -48,6 +48,7 @@ enum advice_type {
->>         ADVICE_SET_UPSTREAM_FAILURE,
->>         ADVICE_SKIPPED_CHERRY_PICKS,
->>         ADVICE_SPARSE_INDEX_EXPANDED,
->> +       ADVICE_STASH_BEFORE_CHECKOUT,
->>         ADVICE_STATUS_AHEAD_BEHIND_WARNING,
->>         ADVICE_STATUS_HINTS,
->>         ADVICE_STATUS_U_OPTION,
->> @@ -83,5 +84,6 @@ void NORETURN die_ff_impossible(void);
->>  void advise_on_updating_sparse_paths(struct string_list *pathspec_list)=
-;
->>  void detach_advice(const char *new_name);
->>  void advise_on_moving_dirty_path(struct string_list *pathspec_list);
->> +void advise_on_checkout_dirty_files(struct string_list *file_list);
->>
->>  #endif /* ADVICE_H */
->>
->> base-commit: d181b9354cf85b44455ce3ca9e6af0b9559e0ae2
->> --
->> gitgitgadget
+So, this series introduces subcommand auto-correction.
+
+By default, this implementation enables autocorrection for builtins
+with mandatory subcommands. However, for those using
+PARSE_OPT_SUBCOMMAND_OPTIONAL, autocorrection is skipped to avoid
+misinterpreting legitimate unknown arguments as mistyped subcommands.
+
+To allow builtins with optional subcommands to explicitly opt in,
+this series adds the PARSE_OPT_SUBCOMMAND_AUTOCORR flag. This flag
+is subsequently enabled for git-remote and git-notes.
+
+Additionally, the existing autocorrection logic is extracted from
+help.c so subcommand handling can reuse the same config parsing and
+prompt/delay logic.
+
+Some split string literals are also combined so the full text is easier
+to grep for.
+
+Changes in v3:
+  - Align with the coding guildline
+
+Changes in v2:
+  - Reword the explanation of default autocorrection behavior
+
+Jiamu Sun (8):
+  parseopt: extract subcommand handling from parse_options_step()
+  help: make autocorrect handling reusable
+  help: move tty check for autocorrection to autocorrect.c
+  autocorrect: rename AUTOCORRECT_SHOW to AUTOCORRECT_HINTONLY
+  autocorrect: provide config resolution API
+  parseopt: autocorrect mistyped subcommands
+  parseopt: enable subcommand autocorrection for git-remote and
+    git-notes
+  help: add tests for subcommand autocorrection
+
+ Makefile                          |   1 +
+ autocorrect.c                     |  89 +++++++++++++++++
+ autocorrect.h                     |  21 ++++
+ builtin/notes.c                   |  10 +-
+ builtin/remote.c                  |  12 +--
+ help.c                            | 104 ++++----------------
+ parse-options.c                   | 156 ++++++++++++++++++++++--------
+ parse-options.h                   |   1 +
+ t/t9004-autocorrect-subcommand.sh |  51 ++++++++++
+ 9 files changed, 305 insertions(+), 140 deletions(-)
+ create mode 100644 autocorrect.c
+ create mode 100644 autocorrect.h
+ create mode 100755 t/t9004-autocorrect-subcommand.sh
+
+
+base-commit: 795c338de725e13bd361214c6b768019fc45a2c1
+-- 
+2.53.0
+
