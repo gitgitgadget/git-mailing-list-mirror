@@ -1,62 +1,62 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE4B3B47D9
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC5E2D2496
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:45:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773164738; cv=none; b=SH8sIHZWVQ36NmRneFHFHGfGAFBewhjzX6x+DM33owJdHikgCRgG6oPquN3bbcIe/3Y/5/t1jCtHeltTHOPvrL/M/deMXLdUL2/F4ijuiKjSihzZDjgTUQUXvW3JMwvQ79etr/q6J1giKW9QMpKpgfXI+jUbYKd+aIDFRUi5u9M=
+	t=1773164743; cv=none; b=POdPz3s0yiUurTOGyb4JFAhhyGHpLnsaQutzrnDn0tYScAb9xctKJaNH5nu4NS8TAir+m9PC2bAQ/l0j5X/lAUKW/hNDp+BLzykMGArYcjPHRmGh0HqJYYdFfq/UVIUoe1IaEaF7gOytDnrM9pM/iccRmWAenSkkyb6cYpoV1AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773164738; c=relaxed/simple;
-	bh=PXBPwV925f9l55QKh+uK7Z9lnMMFjApEJeKCtzM+gWg=;
+	s=arc-20240116; t=1773164743; c=relaxed/simple;
+	bh=VJk8UKgdSQF8OR7b6igiWsnJkhm74sQI5w6EjZPAxa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IphnRgEXyZGeHW/OsJrRPF7z2X4KaXV0u8FTeiA/4lHWn+jWyqGq6lLGKNE7iRwPTS/B5ZFoEGVVvQiOA+FkUZqik4VDTEg6Uj0m0BnkYcJJOifcuiyxSJsElFk2QO5PNQicoI8V8MCO1hLmtSelBSldwxKCwSFC8D0i8l0NFQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HNm2FDk6; arc=none smtp.client-ip=209.85.210.178
+	 MIME-Version; b=COPVUS/j3q6ctsFRz/L2mCVzzoK4qi+t6v9lV55dJ1ypQwsBLMMMe1o9w6kfdeRiZXrdv+iBQTP/7lP0rda2hP6y75N8SDDDZEmrREHTJegGEuN8mKmMUXEQoHQrbGQ1LVGaKC3rtbo9w+gdEDLKRLn0Jlanbitr940O+NyZpvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D5mEPl84; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNm2FDk6"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8298fad2063so3096923b3a.3
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 10:45:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D5mEPl84"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-827270d50d4so12963562b3a.3
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 10:45:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773164736; x=1773769536; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773164742; x=1773769542; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p2q2cKYNvSyN9HCrY2Mhjbx6WPVAaoaX0Et/hTET2Y0=;
-        b=HNm2FDk6gD2sGz5FPtvNRbZr11z1TCsJAUsH8z0lPZdBMtckXJcfrKFnktKGbzkz+c
-         Uh9L+N6OaXbVGycRxbF2HHXrGt4KAtj/WVdes9R+piDaYf6nwAJRY4h63nVXkErl/w6x
-         huB1SrXjuPHFw7lCduAmh36bmumj7MUFPS2uD0GCYiaC0w1F5bFLHhyXA+HIuoMFqDxd
-         8M2iw6BpLAYsIOI9GLrU7vr8uqn0juqsTqFr0T6tZi91E52lj6HeaCe7/o9RrVgfS9mN
-         6MITWum9Z3aEOhWAIgYZavjf9IOb7ZYSKIlcEqyheuV5h5Sp+IP9NxT7MKkhxgAmfBRW
-         56/g==
+        bh=NHHh7vDwNnkAVISaJtSOwNXhsrq0qAcj78Ek+80xUSs=;
+        b=D5mEPl84S8E5etkxSBtxjAgoLg/pQs9UQHGm5C0RSxp+qj64LrO6HGaZ7gLk9LaRQ1
+         22EwrxOvIimPiY7K+302XctgVXu3IUnmHMsjbRvLfHGfy5SiDtGDLanwvlVcLdRNnoAn
+         lbYtRbOsFTOkRLL2n6Pg+7H1Da82ohJMnk0s98AYdSRXPAntKe1qbq0qeGw50M3wV0Tv
+         agVysCCrASWTX+t5W4w7I5R/vfUS06qHrnwQXYHtaA1FfVnI+HNf2XgTB1uJXZHe7rbc
+         PeKssLqFoyMEjNBLZAIrpOUialZYlFVS20Om+DpuKs08FLsUWQvU6wctwoLb/dVRSd/S
+         Fv4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773164736; x=1773769536;
+        d=1e100.net; s=20230601; t=1773164742; x=1773769542;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=p2q2cKYNvSyN9HCrY2Mhjbx6WPVAaoaX0Et/hTET2Y0=;
-        b=Mj2PJ7L1RKmz5ClEE5yYSP+VS0KOxs3cdzX3dEMfsKx0cDVRDA6ZEnQHYXWvepTSh7
-         wjy5Mt1aZzzfdnfpLAiLd4/PLrzqPnF3a8c0fZWKWP/kyUa9c4VhLb9JkKheilIv6lC3
-         Y2KSQwKEc+pz5BFVKKVa/STVnDcEnPBmHmCcdAty6VoHaCE11BUQf7+KjhKZsKm3EmUP
-         CWrznMFZzfYJIG4k0y6efmUdrQDclAxUbTIo3uwpeRWMejZFxBO8lGdUSKvswqPRBlv1
-         lQppSC2YaFyYQmscO+/cyKFYUwA4h5Hm7EeNm7dEPOev6PnYN7JvAQGj9ylzuCZF5Q/Z
-         C0Rg==
-X-Gm-Message-State: AOJu0YyDjgI7Qp0i+3MKy6QJOfIVUgu0s14x9DyT5jZoPCSuL5CEc9m8
-	0m8b0HNnrShW4rYFk8q8JTOHaQnEW5jRDFxFikeBLaODTD9J6T+fTCaIeH9dNA==
-X-Gm-Gg: ATEYQzzjOk/LN26oBZvynebOJhaz3OuBZeVmAGe2wu6wLvCV/N0pRI3nSojCKWCq8BK
-	LaeLVvLm5Mvz1FXhIS0mCK+/gUY0adjlOqbyw/fe/FG9njSxyH8RJWSEb8r7Q+S1+tp07yvSUrS
-	ZUVR998yTlGohnDRDfNUqtdMTO6oOWly9wmO7ysGmd+5JjyW7wr70oFf13mHSSDWY4sOCOFl5M/
-	uxaDGMFEXvXq05MzaDROWFWzZrhVBJTfBB2ri6gfmTh807lrKucd7UhscgUmSfAF5TXT12leVgx
-	8jmLJ9LVhbLdo1dFso7m6yQ+8wJzkgzDKTWau8pD+khpXdtMMjAeNmn0tSJkc2aXONrQ8vbQYGZ
-	3GV5yX47Qu8it0CpiK5FibaFClcMsBb4qn/ekEcv3gEhoY3RXmX4GNsGsdS4OTvZLL1JdIqKCMe
-	TXgnaLOiW0wU2Xa5Qvfd1vrHKlefiHg8Pl5KE6wEh1OLo=
-X-Received: by 2002:a05:6a00:4b53:b0:821:853f:b9c3 with SMTP id d2e1a72fcca58-829a30c203emr13907094b3a.58.1773164736252;
-        Tue, 10 Mar 2026 10:45:36 -0700 (PDT)
+        bh=NHHh7vDwNnkAVISaJtSOwNXhsrq0qAcj78Ek+80xUSs=;
+        b=Qo+hxPr8C8E7JPHd7bsNMJTNWiuPp+73E9K5TnCmLM85lWkI30gyvvRJX59MI5iVdC
+         Oj6y4iO/iaGYhresajuQly2Hj2SM+zlWCUt5t7Xf2Xp/aSGW5pAoyhFzS45Srgn/mJcA
+         8JxvWY3DkQS6LtPhZ5hLc18+3o1Y+qBwvhUke3Z4fIikWOZfMVlVhHfhcCmCU4MB1iBU
+         iykVoC8Y2mzYeanLIg1WDkWDPB1vuoXyWJ1u1GS5+VrKLutVif98Wap1cbUc7IPjz/F8
+         sRIcXxiQ2K10/Jbl6MEj+SzHZNVIGoQJUHPf5ueHfIn9UZ7hhV6z4EUYJXjFwMVuQnVm
+         nFLQ==
+X-Gm-Message-State: AOJu0Yyz77r/AX7qrzBJ1fC8yzG6hWRTH+PCw1vrA6etZrSA3MUiXwUH
+	JTdKyTHh3sfH3ruBPsj4vT+a1S5g0m2JHGte+0pnLmEL9anSAgk4k2X1mi9VjQ==
+X-Gm-Gg: ATEYQzwy2sEr8xn5WY5wWtVeL0fKBSNUKhLh0OMmioAL0dbTagudU1T9zRaIv2eipYK
+	dlxrwvNQLgkBaycmHBaQsG7DiFh1eTlYRNpJWGQGBRfDB+U6DR4RQTsGLJ+aE1Qy5PG2mgEgoyK
+	xd12fGayo9BUy3Xd1Dsm4GWOXk9bFM5ndszLunbk4B8rA1zj2TJ2zkpZFCGM5Oizqh4xNrgkOjd
+	wplFChTilV67NxEs57u8UtuLIR2oWZa9Mgm1GxcJ6SjNSH4bVqToo1luoAdU3RsV3Vgdvg9HvCF
+	jA6lMXKaru9QPi59oU8l6Qh/CeehTz20AAi3IRtoOfNW4KsANwr4Kx4A62uiqMd8BpIFoyS/Cql
+	t+Q9nO1nbYXrJBaqJBV9nOeZkcSpGAiYCENXNj5eGOWOw7NtNinClo3QbDeFRgqRG+TtkJO9rQz
+	bj36IBUZDUgnvGspsA2xMv0PfBbqOYJ1SGLtgkkLCH/BeRN6PXcYgGFQ==
+X-Received: by 2002:a05:6a00:983:b0:829:7e6d:cf20 with SMTP id d2e1a72fcca58-829a30dfcb6mr13381302b3a.58.1773164741556;
+        Tue, 10 Mar 2026 10:45:41 -0700 (PDT)
 Received: from Shreyansh-PC ([2401:4900:88eb:2b10:af62:6ac0:52fa:9f8a])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a48676besm13414023b3a.40.2026.03.10.10.45.32
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a48676besm13414023b3a.40.2026.03.10.10.45.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2026 10:45:35 -0700 (PDT)
+        Tue, 10 Mar 2026 10:45:41 -0700 (PDT)
 From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -67,12 +67,13 @@ Cc: gitster@pobox.com,
 	siddharthasthana31@gmail.com,
 	lucasseikioshiro@gmail.com,
 	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [GSOC][PATCH v2 0/2] Remove global state from editor.c
-Date: Tue, 10 Mar 2026 23:10:47 +0530
-Message-ID: <20260310174519.676851-1-shreyanshpaliwalcmsmn@gmail.com>
+Subject: [GSOC][PATCH v2 1/2] editor: make editor_program local to editor.c
+Date: Tue, 10 Mar 2026 23:10:48 +0530
+Message-ID: <20260310174519.676851-2-shreyanshpaliwalcmsmn@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260301105228.1738388-1-shreyanshpaliwalcmsmn@gmail.com>
+In-Reply-To: <20260310174519.676851-1-shreyanshpaliwalcmsmn@gmail.com>
 References: <20260301105228.1738388-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260310174519.676851-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,69 +82,101 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series reduces reliance on global states. Mainly there
-are two such global states in editor.c,
+editor_program is a global variable defined in environment.c, which is set
+by git_default_core_config(), but is used only by editor.c only in the
+function git_editor().
 
-* editor_program: defined in environment.c and populated during config
-  parsing, but only used by editor.c via git_editor().
+Remove the global from the environment.c and localize it in editor.c.
+Introduce a helper for setting the local editor_program variable by the
+help of git_config_string(). Call this helper in the core.editor part of
+the git_default_core_config().
 
-* the_repository: used in git_sequence_editor() to read the sequence.editor
-  configuration.
+This keeps the existing initialization timing and availability of the
+variable, so invalid core.editor values are still reported early during
+startup, causing no ux regression.
 
-In patch 1/2, localize editor_program to editor.c by introducing a helper
-that allows git_default_core_config() to continue initializing the value
-during initial config parsing.
-
-In patch 2/2, remove the remaining use of the_repository in editor.c by
-passing struct repository through git_sequence_editor() and its
-callers. With this change, editor.c no longer requires
-'USE_THE_REPOSITORY_VARIABLE' and 'environment.h' include.
-
-Shreyansh Paliwal (2):
-  editor: make editor_program local to editor.c
-  editor: remove the_repository usage
-
- builtin/var.c        |  2 +-
- editor.c             | 19 ++++++++++++-------
- editor.h             |  6 ++++--
- environment.c        |  5 ++---
- environment.h        |  1 -
- rebase-interactive.c |  2 +-
- 6 files changed, 20 insertions(+), 15 deletions(-)
-
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 ---
-Changes in v2:
- - removed 'environment.h' dependency from editor.c as well.
+ editor.c      | 8 ++++++++
+ editor.h      | 2 ++
+ environment.c | 5 ++---
+ environment.h | 1 -
+ 4 files changed, 12 insertions(+), 4 deletions(-)
 
-Range-diff against v1:
--:  ---------- > 1:  6f8b82fed5 editor: make editor_program local to editor.c
-1:  f9ef18b77a ! 2:  5b858c7e98 editor: remove the_repository usage
-    @@ Commit message
-           local repository instance, so pass it down the caller.
+diff --git a/editor.c b/editor.c
+index fd174e6a03..b509d23f3b 100644
+--- a/editor.c
++++ b/editor.c
+@@ -18,6 +18,14 @@
+ #define DEFAULT_EDITOR "vi"
+ #endif
 
-         With no remaining global states in editor.c remove '#define
-    -    USE_THE_REPOSITORY_VARIABLE'. This removes another dependency on
-    -    the_repository and keeps editor code consistent with the ongoing effort to
-    -    reduce global state.
-    +    USE_THE_REPOSITORY_VARIABLE' and drop the dependency on 'environment.h'.
-    +    This removes another dependency on the_repository and keeps editor code
-    +    consistent with the ongoing effort to reduce global state.
++static char *editor_program;
++
++int set_editor_program(const char *var, const char *value)
++{
++	FREE_AND_NULL(editor_program);
++	return git_config_string(&editor_program, var, value);
++}
++
+ int is_terminal_dumb(void)
+ {
+ 	const char *terminal = getenv("TERM");
+diff --git a/editor.h b/editor.h
+index f1c41df378..ced29046f8 100644
+--- a/editor.h
++++ b/editor.h
+@@ -8,6 +8,8 @@ const char *git_editor(void);
+ const char *git_sequence_editor(void);
+ int is_terminal_dumb(void);
 
-         Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
++int set_editor_program(const char *var, const char *value);
++
+ /**
+  * Launch the user preferred editor to edit a file and fill the buffer
+  * with the file's contents upon the user completing their editing. The
+diff --git a/environment.c b/environment.c
+index 0026eb2274..9aa9124328 100644
+--- a/environment.c
++++ b/environment.c
+@@ -37,6 +37,7 @@
+ #include "setup.h"
+ #include "ws.h"
+ #include "write-or-die.h"
++#include "editor.h"
 
-    @@ editor.c
-      #include "git-compat-util.h"
-      #include "abspath.h"
-      #include "advice.h"
-    + #include "config.h"
-    + #include "editor.h"
-    +-#include "environment.h"
-    + #include "gettext.h"
-    + #include "pager.h"
-    + #include "path.h"
-     @@ editor.c: const char *git_editor(void)
-      	return editor;
-      }
+ static int pack_compression_seen;
+ static int zlib_compression_seen;
+@@ -61,7 +62,6 @@ int fsync_object_files = -1;
+ int use_fsync = -1;
+ enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
+ enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
+-char *editor_program;
+ char *askpass_program;
+ char *excludes_file;
+ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
+@@ -437,8 +437,7 @@ int git_default_core_config(const char *var, const char *value,
+ 	}
+
+ 	if (!strcmp(var, "core.editor")) {
+-		FREE_AND_NULL(editor_program);
+-		return git_config_string(&editor_program, var, value);
++		return set_editor_program(var, value);
+ 	}
+
+ 	if (!strcmp(var, "core.commentchar") ||
+diff --git a/environment.h b/environment.h
+index 27f657af04..053b678786 100644
+--- a/environment.h
++++ b/environment.h
+@@ -199,7 +199,6 @@ const char *get_commit_output_encoding(void);
+ extern char *git_commit_encoding;
+ extern char *git_log_output_encoding;
+
+-extern char *editor_program;
+ extern char *askpass_program;
+ extern char *excludes_file;
+
 --
 2.53.0
 
