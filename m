@@ -1,119 +1,120 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C77B3B8D70
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 16:03:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773158629; cv=none; b=n0NodV5QiufARDpOC0RMXk4XEkrM/PKZWSJ8GmBSXG5e4gwXoqigFsT4z+KBaYLoXHqZt9kBl9UWlN7/o07iVc9Hnqc/Pc/iU30ytwNkfiE77rDWuVeSH+/4Yom8vCggwxdyBYrFMZxS29oRwwRpZ4iuIZ5mn3Ei1avRA8UzDmk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773158629; c=relaxed/simple;
-	bh=GSpp+qQVaI4s5ocO4R2Qo1SAZMVy6RI5Esvz16AMdfM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H+QNYN/BH3jY/Gz1Z6Ks7+7bR20iG99OEN1T5rDm1OE2q0HxhCrBmjIYgbhuwi8O+26P575+025XZlbh98yA5Uk67f2pDr8xg5Zol5Xy4aTZJIRjEP2zf0e27vIusuUxKzxSKYpXLThB7IOEmMG/URE8WdUeBbdn3Y3x19ULeDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MRzypUuh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2QmAy2/Y; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F80A3BF66C
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 16:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773158764; cv=pass; b=FDJ1PJWBbWqMITd1ATwQz3/VvdUYuYRRFz7vYjuOJjuuTSdV/A48PGOzdtlf1X0NrTbE27RzzdoDs05PIm+fnZydkwrvjjg6HtyFTBTNFBWblHoW8AV9K8VpfbOugWHOZCvtd5deL/b/NtfE3Dk28EB4FI4tvdRORc5ZS04mUZY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773158764; c=relaxed/simple;
+	bh=qEPSdhyyvcyBbherh/H6KwpWH/rV03ts726lwg9mVOk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=g0dmalb8vTna6LocR1KSZOuak/432axq75immLQ1L/L54oTUuWzC3vVvzGyf776bPtdTSMLq4mGSaqSIMxS9a6EPnxfT71eBBcC0T1b3344FhMDlbfyfbEGlVfcwXm+o7ZRIqnEgVYAgcdHo5Ui+cKMMSZSXpHqA21yykOkM5ns=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XZ+M1Jx7; arc=pass smtp.client-ip=209.85.221.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MRzypUuh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2QmAy2/Y"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 689A0EC027D;
-	Tue, 10 Mar 2026 12:03:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 10 Mar 2026 12:03:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773158627; x=1773245027; bh=6FgLOize7c
-	altxjlXUTjzpyUOLtbG1XegyBCHqsibwk=; b=MRzypUuhSG6XpocYu9F0OgNxxq
-	h5zq09kCVHJJ6khEM9Zj63MXU20veXY8jPunF5nO4M6JedoMwmEbybm0gEYwIbRG
-	HE7TPc4/tWXDxtSWGOSqU+9cPALL2/UeoASMrJx4BH/tYU19jeylop2LqCLMkRdh
-	aBQw7iuZD8MiFqwwmkPtNYm/RmuThFasgDM7YGWT5ii6O92m8+o7Hr7fDH/SvOVz
-	jgPCr4xPs2U8lJN1JuW6vdTd8KEbpRJuqgmCTsHwNd+xYk8gPEkD0Ui2aHQmz5ip
-	gVaXMYBwZOnDDEp0ORg2wyCiBlys2r1ybtiPzOZ8RoL4PTonsuRnGmt+BOQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773158627; x=1773245027; bh=6FgLOize7caltxjlXUTjzpyUOLtbG1XegyB
-	CHqsibwk=; b=2QmAy2/YXi8hyjHaS7wuYF09XVOasl6eQ08Ttxw77D8M3xXcljL
-	c8VsnA6WElKukqevFzO2xhBWdJZxJep0JqpBlwNOmos+0ccuvcypCdMUWPurmDmY
-	f1IOyrK1JfYdmaH17AEu5RgZyb/ryDF8Y9eDnnRvIU9KeJehhjkRxrVmvOSX0O/i
-	RZWfQndB5vhiy9ymXNXVQmVFlHpWeCJBeNw4ehwRoCGPAhU9xUln2N0nwMhVGVI5
-	W+/z+anTThTzB0c5hL4zZ+wpUu2JpVzhdJLfZR4yr1GdvCrA0mS+SUawn88Mn8ms
-	7GA5XyjAKVfvvOGrVIl+NIOA+Qkrs2DPUyw==
-X-ME-Sender: <xms:40CwaeLyD1mcJBx41VtxWv59ZwdmrGS3QygeAP7vQTvXRFmfH0XWGQ>
-    <xme:40CwadI2iIeCUDmvxJPv9YgpszUMfNUT8VpIMOBgboYOMib4r7qH8iqy2RQnUcNs0
-    hLSxTWoQmjFjJPbzO7R0cWEMSX8kryjSAIDKvgIITwr-6C380D8hA>
-X-ME-Received: <xmr:40CwaTsRwikanAyFNckosXtLTq0wFVjrkCiwICQt8Ibt0oBGKz6nnrFAjheHcmGXG3z2VHELmguWEKJK5T7Tu3NvZWhAKuF1xA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedugeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprhdrshhiugguhhgrrhhthhdrshhhrhhimhgrlhhise
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:40CwaSRmoAjOpJ9QBOpeKLqYqIGXxvjv8PRMAeL8lTLBm51cakTprg>
-    <xmx:40CwaRMLgdb-0iAsin66QghrBsvSfFhE--gnf0Woyyb79Ti6iRQUzQ>
-    <xmx:40CwafYW_0JaRA-vFcWLuOywBqWiBgK-QZ-9v7xWzchrYQlh1L3vdg>
-    <xmx:40CwaTze8LuHBrBR5lb35w53EDzz1V9BDC4ZX0S3mZFmybT_mXQ5Ig>
-    <xmx:40CwaTPvFRmKMLTcjgUaqOVhKXtt21lPMghrvqLFBGyd2AfNGPKE3xGq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 12:03:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH] submodule--helper: replace malloc with xmalloc
-In-Reply-To: <20260310121013.39291-1-r.siddharth.shrimali@gmail.com>
-	(Siddharth Shrimali's message of "Tue, 10 Mar 2026 17:40:13 +0530")
-References: <20260310121013.39291-1-r.siddharth.shrimali@gmail.com>
-Date: Tue, 10 Mar 2026 09:03:45 -0700
-Message-ID: <xmqqqzprwu1q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XZ+M1Jx7"
+Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-56a9c5cb48bso4677331e0c.0
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 09:06:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773158762; cv=none;
+        d=google.com; s=arc-20240605;
+        b=YxZgTORZO3PfyS22QlDkgMKw5MU2i259Et/vNFz9K6W74EbaY4X+FgOov3OcztW64J
+         x1DeB0PIRg18IwJB5o0T/NrIJRJo/ip73we3Yxaw68oN3nupFPOqU+7hgZpyJsGBsq8N
+         VkBjBZswyjeoR8DojCrcEbYHz+yGu7q2MlHwfys83+KsKw7uiHhu+niEN9IiUHZ6Lm6V
+         xIC3q71WetvSjtFDuuW42C+nIwW1IdJbt0xBlvFgecyarcuDje1dclAzHXf0yJwX33tC
+         VdWILIhrZIsn4SycLE4dVxTmPbbDT7FKM1qyxq8tD/O7RBXVphwB3e286ivHQxyE/w0I
+         KmOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=qEPSdhyyvcyBbherh/H6KwpWH/rV03ts726lwg9mVOk=;
+        fh=e8vZekoJhmvBxc+s/c7Xb15aY9Vnru3zhbBYAnvki8k=;
+        b=BP/q0bKzpAenwMTJ9tUgL+Xclf4UlAthJwYcAhg2Ng5w5ItKN7GSwqMEz+vig5JW1K
+         vysvkDnO7rhGDSNXPLlBeCPEg9nsKRjF4sU35O+sBx/OcWEaO7WxeP/5xEwLsraKVNub
+         vUWhnlSjxE2D+WltqwVh9IzerEoA8bBGZ7+TBEdIDS8GvPZ5D3RSFTtDhsEmCJl5hrub
+         SPn9hp5JFmFmQZOOuX/qeP+Jywr/B291gvuHujlXcmlDkqZ/OyB/0RDQWuni+dcAJzC1
+         LE6fFZy3ZLb+9Ew3R6SofplUSTXTT6OaJBAawPKY+ISj/wTVSltPZre5YaxQsULtkSnZ
+         XwRQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773158762; x=1773763562; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qEPSdhyyvcyBbherh/H6KwpWH/rV03ts726lwg9mVOk=;
+        b=XZ+M1Jx79p9lzE8xHO1ePcbKAmSKwbFjbvr3Jit3egplruf98OitNLa/f4FsXb24Fl
+         oRyhD5EhU0UGTkd7pl2Mnv34yNxu3HJan06d2i0HrtuDHLmWWdaGlDbvRKJ94hDmdUGY
+         1x06Sl+u4JoMhXhWKN99e92HQUxj/3styZdCllZz+f8xBpNSMpteWftY+k1JilsscsoB
+         F0qpKmABj6hHuV7xqaEEFnmeqvayknaSG7v3AcYzgiQInp8qBhr5+iGeEAZWkfDvUvmF
+         2nQgAF4ckl//YGKdzf37VIPfhxI1IdGoFho1Dn+n8tiuqAFeMaGwViTQAcVhOltlqtre
+         2/lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773158762; x=1773763562;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qEPSdhyyvcyBbherh/H6KwpWH/rV03ts726lwg9mVOk=;
+        b=DOuHIYGnMmNpxKiq2vFZOoNGZRtMA0WbbexyYp610lcHkOdyZA5RhuHFYt77/RQdYh
+         8dzIiW/VtueFBHqi6BjiORP1MkCC4HoBYVI3KBNPOGgIgSDaKyGDSGVsInFtOyh0KX3D
+         Ckq8pbteL7WYP7hJO4EHPkx2gd5HVNlszeb53C5fmeoj3tVcL9EesteFeNuRP6a9HTVI
+         ekOVFJGSZfPwrQLpUud+B0xno8zyzhVTGWsJWrNLQazPnhnsATwSsdEvnxHLY4BN0M79
+         +D/F7y5X3UCGjVRUrw914xjTQAndFXV8eJQyLfqvXEpaINIUnxuAxvqKzxJnxwIhSjDR
+         s2UA==
+X-Forwarded-Encrypted: i=1; AJvYcCWSs2ezGZEfP96rqTBVYNVvuUhDR6VfLBfgbDgT3TyReRq8DU2wMsNut5Va+OTu2JtBNkY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWtkBeoa//bpC1moJN8HqZs7p5w82HCkEZhCXTGNWqLz4jPD/F
+	W+wdQqv57YRGWg2PCIgcZkHsVeQ5lddSp7Tk7CALZrZrk+LkF6imxLpVpT2DQHUrOyx3VZm/fOv
+	bfuL5rhR7jF6M47sJS5jMxGJMDp1L1RyYecngl0ME/w==
+X-Gm-Gg: ATEYQzz9aMOt0ZljcKuYNketLG/xesec9yyEA3LmQg24FG8likEwyPy4LW1Ue5DRrn6
+	eF1TLCnuT3cQxrzmq1Oa03ngKNUvQBimwJmk8NAY5DVuYt9ZOm67pOXEPSabFcNjijhhtpZV/+u
+	YDt3wGsbDZEas5K9dMLoTxS2rFgYA1GEyC0Gv5sLnkzg/HapahQ8lsb1wH/PRXztd8KD9Y4fNpl
+	ynjfMTco//6ekaNpIT2MknU6ih39jJ8i2msuL2xP39dEv63pr8aVhWu6HgalV8WHSSDT2gJGvg6
+	eGkvpccWcjb2wHgXLWogvWy3RYxDE2YHkQlxcq8Z4pUDdPY/J9HwQICTNAMyx2Srd0GM9Knazna
+	Ww+JLksVM/4ZG+830UVs=
+X-Received: by 2002:a05:6102:2909:b0:5ff:cac8:b1fe with SMTP id
+ ada2fe7eead31-5ffe61bf244mr5392220137.30.1773158761903; Tue, 10 Mar 2026
+ 09:06:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2233.git.git.1773132678.gitgitgadget@gmail.com>
+ <5f100fe0-d601-4ee3-adb9-a2458203d10d@gmail.com> <xmqqzf4fx0vo.fsf@gitster.g>
+ <CAOAgETNoQuju_RWbe=jo8JF7J2+V_pVoyr6FeKw8LwYKi_HipA@mail.gmail.com> <xmqqv7f3wv51.fsf@gitster.g>
+In-Reply-To: <xmqqv7f3wv51.fsf@gitster.g>
+From: Arsh Srivastava <arshsrivastava00@gmail.com>
+Date: Tue, 10 Mar 2026 21:35:49 +0530
+X-Gm-Features: AaiRm50Tj5PgEnOK27qm0DpsSK9iwF9p1gevxXV8Y00e1QHluSc6HkpvFMYNxUw
+Message-ID: <CAOAgETNkKrJHpPjfbW2nfZ8DUJ84-Z-zBx-WefYJb2sfD+EdWg@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Advice on checkout dirty files
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, 
+	Arsh Srivastava via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Siddharth Shrimali <r.siddharth.shrimali@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> The submodule_summary_callback() function currently uses a raw malloc()
-> which could lead to NULL pointer dereference.
+> It is understood as author that I understand.
+> It is the users who need to understand.
+
+As informed by Karthik Nayak <karthik.188@gmail.com> and Patrick
+Steinhardt <ps@pks.im>.
+My PR seemed to have redundancy for which I will create a v4 for my PR
+removing it and giving it proper description for users to understand.
+
+Signed-off-by: Arsh Srivastava <arshsrivastava00@gmail.com>
+
+On Tue, 10 Mar 2026 at 21:10, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Standardize this by replacing malloc() with xmalloc() for error handling.
-> Also, remove the unnecessary type cast and use sizeof(*temp) instead of
-> struct name in xmalloc to improve maintainability of the code.
-
-The proposed log message should explain why it is a good change to
-lose the cast.
-
+> Arsh Srivastava <arshsrivastava00@gmail.com> writes:
 >
-> Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-> ---
->  builtin/submodule--helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> > As per the recommendation of Phillip Wood <phillip.wood123@gmail.com>
+> > I have changed my files and added git checkout -m after understanding
+> > its significance :)
 >
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 143f7cb3cc..f3e132888f 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1160,7 +1160,7 @@ static void submodule_summary_callback(struct diff_queue_struct *q,
->  
->  		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
->  			continue;
-> -		temp = (struct module_cb*)malloc(sizeof(struct module_cb));
-> +		temp = xmalloc(sizeof(*temp));
->  		temp->mod_src = p->one->mode;
->  		temp->mod_dst = p->two->mode;
->  		temp->oid_src = p->one->oid;
+> It is a given that you as the author of the patch understand it.
+> What I meant was that the users who get the recommendation need to
+> be told about the potential issues.
