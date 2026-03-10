@@ -1,125 +1,102 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FAE397E9B
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 12:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252573A7584
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 12:10:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773144598; cv=none; b=KNcqPY+Na6Si5AyvGiMax0PsL/RgbB4V05m1mbXv0kMrfq/JeD2batAFK/ie5E4fN2HstCswohhsv7IeT8Ev3zjswvpFPkQRi/ljsu0wdzbQRxGYjnE49rWbxjET1YVywoJdU4WRyJF2LGQlDFeaHtBNUX2gqnUt8ia9p7hSPlM=
+	t=1773144623; cv=none; b=JVtnkS5OhOD3SsKyvTYpctmuVyU5hkkLLt38pl7RpaM9RCpMcpGaZ19uYtB37ohPZlTZ5vX6GJ1MMGojYcs8Ua3N1NCv4DEEZZeJH4JcJxRYB9BKSSMNKj8MTOggcMOfxvLskZR7dhHXcL1ACJsXM0QG9VKcqn0U+xhne9w5Jb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773144598; c=relaxed/simple;
-	bh=eJ7qDOTvoPzfptveSdL6+codjzf7bf7QKdOD+q0ooy4=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N9VUEjSeyDfZvqiKLokSj2+7qELl2kOKKJpGkQc4O56/9ZH6phnAz7MveFZkICX8NzA0GYHlm+Xx4pXOolF3O1Ua812NbLfkm2A4O3gmeqR2uFaOPdjt+pxdkb+HrbQHbD2zdFScfiy+PMQgrqEovQ+d8dvsUhSslD2PFp/Udn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TTMm3Ymb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D3zm+z3c; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773144623; c=relaxed/simple;
+	bh=Q4aWdm8z5Y/jzE/cNn66HOdPvFbATnVtNZ7sLltPxUY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=vBaBXE9Lm5Th2xDjtkqYBYTxLFpyWcXhyE3PKLRv3UZrHz1Sc6PpeFqSOdgbfpOy7Sy8CCw4MvJeAhYNJ5yPUHLQC02vVppbirJHBlxBruLPdNeEKy192qm9Cs/BV4BX2zFsZxwFx7hEd4DmScJF0gGS3hw/vRVcCOpn73hedNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QXCsYbOY; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TTMm3Ymb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D3zm+z3c"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2F787EC0C55;
-	Tue, 10 Mar 2026 08:09:56 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 10 Mar 2026 08:09:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773144596; x=1773230996; bh=T1oDnffXdm
-	JFXxAcf7AhMHQOIcTMhV1Zus3kD46it9w=; b=TTMm3YmbFhTGQ8ArZSGBWBUI5v
-	cv7TJayHir74Lazmnp2dIiDgH4bUw2bUkwRfWtiiuw5xMw/gNzXbPJOpO1/A1yzx
-	pbRDXYpnjxYoAHrrhIKLCV+7FIDmh2SrQ4wssneLizbAaTKcVIAkDUO4v2wvpO0a
-	1Ciqbf3/Eohavjfj2FrLcslJ5oyeiQXpD+ae1rh2Yoi6gA9cuUuailvIcrYWI2ju
-	6y1GlPCMruO8O1Gzt3rt5iZnIus2XPYCeIZcfPXaT9m2e5WfA7HLT3ZZ7bMGZ4LR
-	7VdMMey3LopgdCQn3XqIqvshZv2+QcUb3v8pvYdHMiQBxEAMj7WULTOdi4mQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773144596; x=1773230996; bh=T1oDnffXdmJFXxAcf7AhMHQOIcTMhV1Zus3
-	kD46it9w=; b=D3zm+z3cAz8ICF3tHB6Hs7oZ0KRkLR5OZZ8xlu94RRnrog1bo+J
-	hsY33F5KsHkgJQnie7Nsyv5mMlbpojTOD5klTF+bhwoBHcctiDAv582BgVvyHdpf
-	OEoKZGmATc4b5rHaYvWKVWWoG1I31r0okrppZCb8gR0TyJe+uUrGwKqtXf+VGzh+
-	5e4k5cDHjrUStJ+G39A+p6A4/Jx/0xRmcXAULOUOH8tHFJIwXih0pXzjTsyZ4ON2
-	XW8tc3rU8l5X2+Cghd2FbrKT8/HPtOPIyBr/kqyYZMKc6yI+MYK8KS8yMtKSKTEw
-	i3bFbd92e/K7sscc0rP1MLAOJEAgqKe1Y8g==
-X-ME-Sender: <xms:EwqwaVffo2_l1Wh-aGYTXRJXh6A6OSWFvrh1zTthjh9Dobz0P2WRzQ>
-    <xme:EwqwaW6DExHisVG44-Nrcbbv3j6F7Zl2_yvgZ-cVIL2aU1zR3j76SJjo-n8p3ry2P
-    94zffWSR8_M0ylDoaSyevJNzH1In2hzc9Q2p1ohUq08TcLBRRuTpQ>
-X-ME-Received: <xmr:EwqwaYUkj6NHyjaD06rOeOYWenI37dd3Q-mjORQSoTDbE0VPcaa_90MmzubRO2ZcOuytfHlkuR8IzyllGw9ct66nMgNL1NudheS9wA-T>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedtleekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ehkeeffeeggedvgedvfeefheettddtffejuefflefggfehfeelffeljedvfeehieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomhdprhgtphhtthhopehmshhmihhlvgihsehgihhtlhgrsgdrtghomhdprhgtphht
-    thhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhp
-    rghsthgvrdhnvght
-X-ME-Proxy: <xmx:EwqwaV56SyOQRdyfVgncBl7-8NQqkTO2A15hCEiYLyapcX-NeVYfMw>
-    <xmx:EwqwaTpdMZCL6AIUhHeEo-1ccUafm0K1lQzCCdWyp850m0XgRdzLeA>
-    <xmx:EwqwaYnsboupUdTLm-0LK_dNF3amc2m-pHBYocHUDEhZMfaUEluqmA>
-    <xmx:EwqwafNCEvG_Obw42uylCC_AkqrRqzDhNFr5CwTFgPXE8A0LZLrE1Q>
-    <xmx:FAqwaebc7057NhdzQj2WEO4lK3rwBTKel11LcG9lo53Rsnn56LoCfvx0>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 08:09:54 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7d338598 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Mar 2026 12:09:53 +0000 (UTC)
-Date: Tue, 10 Mar 2026 13:09:51 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matt Smiley <msmiley@gitlab.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 05/10] compat/posix: introduce writev(3p) wrapper
-Message-ID: <abAKD91MweDTS4jv@pks.im>
-References: <20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im>
- <20260303-pks-upload-pack-write-contention-v2-5-7321830f08fe@pks.im>
- <xmqqseaf5k5t.fsf@gitster.g>
- <20260305003745.GA4943@coredump.intra.peff.net>
- <aajnZZI5yqL9CYeR@fruit.crustytoothpaste.net>
- <7e8b51d1-382d-47f8-be71-74e76f0c9888@kdbg.org>
- <aaoCNUY3XVyFaDcu@fruit.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QXCsYbOY"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c739e680bebso1070544a12.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 05:10:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773144621; x=1773749421; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=feU4gYh2dasZaL5Qlr3idxXyhVESH7zckcNnujcr28s=;
+        b=QXCsYbOYBF22eEd0j5xyCXdGJwO10ah1hB6vPnFUNnZ8qSLdwP6Kl6MywX44u2iZCN
+         u9iLcv/ootoD/LFzJL6Tk9XnO9Ex5qsJlglG8MCM71YLMvUkPHzlohau7XWCOzhU9D6G
+         ND6Uwb7F2LR9p93Fb6VAxe9eWx/xxR1bE5xD+vxxTTFbhWtHslB2tLBJJORAoOKcnPS7
+         mGY+82li8+rt4jIzXSVpamyDYvMjlEhuuY0Mulw8I9XXdt6Ska+IT5yTR2zhR3SEaLxL
+         MO+4MYgyo0hE8cyvbhUn/M1FDdfK7OWgZSQTAB9GEYX6xlB4F/asNfqw3ku4Xlo2C9zu
+         VLhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773144621; x=1773749421;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=feU4gYh2dasZaL5Qlr3idxXyhVESH7zckcNnujcr28s=;
+        b=cix0USkFGmeqqB+Z6fU+asDwn+OLms8tfelm/pdxtekxTJRtKBsDwKM9MUyQDaYGsO
+         SvuKAb7s9t3bv21Jm3oGJsHw7o/lY7K1eZwWoAcdFAceJO8tCgnzUFUAEI/ObSSRHETX
+         nQ3EmbAy44mvWM/0fNOu7MWwr+8TRbiK1rH6VRWWu/PegGxPR1BEa6AKyKzExer3oGKN
+         bK1eag1kKj4DzX+jyVt1vZtJd0dLGXl4eP5WXAzOlcOJHOKlePQ2LUR504prb6HY7V6v
+         JVn7YARJtF5pkahuUp7l+r2ByCPTxcySqML0tBBMfIzqFc/ZQtTboilEL0fRIUooByZm
+         Ifmg==
+X-Gm-Message-State: AOJu0YzwJZG0dc/USLPLpr7eIvGymI9kpVwwkpMuUo7MlJv0Y8k/y18r
+	6Z4wocGwvZ5N+MGBZDX43hLN9wHPdQriFVJd7f4hXeCoYa3T+s+E2spo37CfZSVbYHk=
+X-Gm-Gg: ATEYQzxEO3XdC0O7jlyvhliemXMWK93BMgw1aRIu7vzcD8AlVlOOshQLpMYwqlbFLC+
+	M/thA7A2NgBT6ZtjbdQcokDv3fHIuRcGlV+wBWyJh06YdZsGIfizLm54rXHd9QNw7CtJNykaxCz
+	Sosres5NU5M7W/CX1YJcfJKqs5mmgz/OArCyP41u+EFDMm0c/up7vVUcwDeHBjbBHy2Qy7r2iYW
+	zaQrY5HTaUtc7hHP01KTPCwStqlc/H2t5XhXjGl30whZqkEST4btXGYlvDIgWwQt6T9o6GoGQUD
+	di7l+ufn/TwTDBb/w52vCuiHotE3jpTlykohsl6wCSXrj1SYejxJqCzFUkWlAbhsQTIKoi5bpK4
+	uf8pRllUL0/qbxFgWcgrVPlvw+1JIMq80GRioK3OgXEqHMlKy4i5YARG6Nle0JdmMLf8esfLwqF
+	i8JdNFkFC5I5UZQriB42bmaiGh1H1KHkDi0ilRvMhiJyyMuT7Mqh5kZ/qE3BeY
+X-Received: by 2002:a17:903:a8f:b0:2a7:c188:bd1b with SMTP id d9443c01a7336-2aea2040a5cmr29238415ad.25.1773144621068;
+        Tue, 10 Mar 2026 05:10:21 -0700 (PDT)
+Received: from localhost.localdomain ([14.139.107.194])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae840b6639sm208978345ad.86.2026.03.10.05.10.18
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 10 Mar 2026 05:10:20 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	r.siddharth.shrimali@gmail.com
+Subject: [PATCH] submodule--helper: replace malloc with xmalloc
+Date: Tue, 10 Mar 2026 17:40:13 +0530
+Message-ID: <20260310121013.39291-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aaoCNUY3XVyFaDcu@fruit.crustytoothpaste.net>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 05, 2026 at 10:22:45PM +0000, brian m. carlson wrote:
-> On 2026-03-05 at 06:39:13, Johannes Sixt wrote:
-> > Please don't. The use of writev may mislead you to depend on guarantees
-> > that a kernel implementation of writev can provide, but a compat/
-> > implementation cannot. (For example, I read something about "the file
-> > pointer shall be unchanged" in the case of errors.) Please use simple
-> > and stupid functions (write). I highly doubt that you can squeeze out a
-> > noticable performance improvement with writev.
-> 
-> I have Rust code that does show a substantial performance improvement
-> with writev and I use it for a very similar purpose (printing the size
-> before a packet of data).
-> 
-> I am okay with slightly loosening the guarantees to support our compat
-> implementation if that's what we need to do.
+The submodule_summary_callback() function currently uses a raw malloc()
+which could lead to NULL pointer dereference.
 
-Yeah, I think that having a syscall like writev(3p) in our codebase
-could likely also lead to improvements in other areas. Nice to see that
-it'll also help your use case.
+Standardize this by replacing malloc() with xmalloc() for error handling.
+Also, remove the unnecessary type cast and use sizeof(*temp) instead of
+struct name in xmalloc to improve maintainability of the code.
 
-So for now I'll stick with it, but will fix overflow handling as
-suggested by Junio.
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+---
+ builtin/submodule--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks!
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 143f7cb3cc..f3e132888f 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1160,7 +1160,7 @@ static void submodule_summary_callback(struct diff_queue_struct *q,
+ 
+ 		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
+ 			continue;
+-		temp = (struct module_cb*)malloc(sizeof(struct module_cb));
++		temp = xmalloc(sizeof(*temp));
+ 		temp->mod_src = p->one->mode;
+ 		temp->mod_dst = p->two->mode;
+ 		temp->oid_src = p->one->oid;
+-- 
+2.51.2
 
-Patrick
