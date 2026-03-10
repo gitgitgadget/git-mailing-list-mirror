@@ -1,148 +1,177 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FAB40DFAF
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:30:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CC739936E
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773149431; cv=none; b=U6oGl8rq9Rf0BnejNZ4YW5jIAKwO37XniotUcMOZPasDAvKuzNStRdsbZccxgmU+XJO4cp1DpMRvnl1gNvVc4DtXvsezAx/U+jriyskwEPLDTMGwFeqSr/VnMF6Y78iW91GBpnMp/fW7DtRrxlQUZK1AtrrSnCCvRWi26bXAzt8=
+	t=1773149697; cv=none; b=Jg+/0denEKR3dPIorvmlZL4M/SI9mYBHNPstAEDs+6VeZg8j+V+gU7nyWRrwVP2ZRTjI3QzAEQ0ymfweZmCoHfUmOSiCOsHOEUWzyh83aZ3/cs/YypQd4xuuHzO4Veo6XjV4oozvxfAz4IVycybOD9z4QZ/MC/juEaV0He9/RZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773149431; c=relaxed/simple;
-	bh=NnPR31PnLUsF+9wiasrxR5aPrtjUT2qoG7SwmS95T1k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Q6ogUVku1I6Jhn8QY9mvHVbjuSkUuMK1FOIKX2Rq/AqLP5VVqGcKAxuIZgY7D6IMb7XZpOtUw8VYV1UZDonLw5Hnj7qOydcErsC/6G95bjEYbq+PH1sW36TE08GVigzx7WRCsQnfkxyD0QHv3QpfF1EjkGQ8v2nUdddNmF4tUGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jx3k2KiS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WgbmnPqt; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773149697; c=relaxed/simple;
+	bh=HOo5cST5q3smRi/xz7qAwO4a1BvscdyHYBMQ4ix/L68=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Juzn4hm46tZwy0v2UgVdU8JTYydGdH9oiikDhFJ7s/UnL9DKopJDYE10cjC+c09nFvUmDf4kIbAibqes6cb5wyLDRuI3m5BqVJhDkL24s3sazMZRWtu14MQYtMYJRnlx6/Gjc7NCe7C4Xvr5jMLggZtZR1E2dWb8A+yvwW7NHwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RGjQ/lrb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uB/LAHCB; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jx3k2KiS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WgbmnPqt"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id E6C52EC0591;
-	Tue, 10 Mar 2026 09:30:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Tue, 10 Mar 2026 09:30:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773149429; x=1773235829; bh=oiwJ1aLB45
-	vmpZyj/6yVyXzQRmRv15ou1fkO/rHbWX8=; b=Jx3k2KiS6lJtGf6pHT+rRA2wDx
-	7NyPUqqW3ANCrcZlEXIr0n54GRL38gx3orQUavv/hf0UyK6vWf+LqFGiE2A3XwOi
-	sWYhdZRpEhz3BJclKhRXym64HKL8VXx6BLDO5X9oaM0Szj7P2rrFfwKGzK3JylgG
-	Y9vJYGSxxi8At6/wzJUl3thZSl/2/abd566WdFdYxxbS2fdFPE4LDhjHAbytgBh5
-	G5GsL3c7FgP2EiV+1ORNuI2hbFx9V2MIuh7sK5mwbVfneve8PmaRkT3pg72wR5gE
-	i/9ORIBzVg7CDhZxIj5/R6XXDQ80CGKSHpy+Cczct5bOFDr2X3wUhVf7qUpg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RGjQ/lrb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uB/LAHCB"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9EC6F1D000FF;
+	Tue, 10 Mar 2026 09:34:54 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 10 Mar 2026 09:34:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773149694;
+	 x=1773236094; bh=5b1s1+3Hcmgk1Sjz19IIdwGt1GvWPtIIpwyRC6Bgcqs=; b=
+	RGjQ/lrbKPHVk2hLrXq0GHTFZMJAVW6NnhqGCsndvxXW69r9u0D+Y2CSe1xTPfP0
+	v0CHT3pod5WWol5wNT5IsJ9wXfvWGHMLayCIS+pnt+SaCS2XJ5J6uNYXB5igpGgO
+	M/IVy9R0OFXRnMlXF+m0Z9b+B4xH33m++ujqJGD5eO1eKt0vS4k2PxbwEwyWl1Jg
+	afyQXoLABLAgqVmVtYXaIx3TrMucpXOb4OqlOrjKkaMvzvOEtxZpeKNKxMeHFNkN
+	UTrXGQag2I5ZE+UE6YtRZywY/2GqqZBshk94MVaFF/gRCCqfZys0Vul7KeeBYtD1
+	mOo6W/aDU5rD3Eo8z7Ln5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773149429; x=1773235829; bh=oiwJ1aLB45vmpZyj/6yVyXzQRmRv15ou1fk
-	O/rHbWX8=; b=WgbmnPqtweeF58DmYJ3so48L0loYX/05jQrmdiNRLOjf3YiZBV/
-	oKisVgOjxcMnGyJl8tiiUqSKi26OgYk1xE3YEdPWP1vr4wdEJz3u7ggraAS5ElF6
-	x55dyVp06IEdfZm0U3wxxfo+JOa/cnSJglddC7dLYxjuQ7bMwctMY64HJDG3pdNN
-	qJgjMCUkH28LCt9mV7cRGdbSYw0WXzII4z6XxZIOfG9lcGkWHYOArfNnTq/usGZ3
-	qyQdoWdFPbcdb4oEcwrNvQ4kQs+kksQRuY9fjRDTATk5HVnPG2cfhleGfyn/fjet
-	77yY4ZR5ZlIn2TQMzvu1lW9x2GdXxHJIr7Q==
-X-ME-Sender: <xms:9RywaRrSf9r8aq2uDqBLDMmEsqiGxVgv5P15a5BVoL5HktMXMhPzxw>
-    <xme:9RywaaqRVn6Sj4PwvUjITvJTkxfAggTjsopj2RZMz8HMpOqrSSpmpDpip4T0HIeVs
-    UnW-BPjjyvmX1qdCEYKlZ5toi9ocgi0T_xg9Ptzor1luz6_7Ef8Iw>
-X-ME-Received: <xmr:9RywaTPPXLQ7SBhuk3gNNiVLyTLxuOsT5X-LjILxniyQQTAcxTV2pqmr7wtaWy8OQJYuY89guI9fFAYFq8L-mwkD9Ts47Z6f8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduudegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773149694; x=
+	1773236094; bh=5b1s1+3Hcmgk1Sjz19IIdwGt1GvWPtIIpwyRC6Bgcqs=; b=u
+	B/LAHCB7bkvpuHdkKnBKiYZv8iQAgkx2PEc483tNQrupv6h7odS3WQbTEaTbVy8p
+	ojSDJOaLL5qbVxUaIuAQLUFHyw7M9S8D6IbEHcBo8P+8YWoxOf4Y0iBvFXrl+EpU
+	SJKFErZ7IkPpdHgdq5Xw/GMv+D0tDmYTHj8vMVWzfAqY5UT1DYBYuKjWYld87oVx
+	lhV46giIfWeqQQMVFVuHzAJQSqTI5x04ZZ8819aQGNoMyzIuOl4AtxL3CGIbNbi2
+	hekvddaCn/l7+wKI0nl7Y53eC5Lk8Do2deC2d4kqcolnqD5ImvCX3iU5twnaJ9r8
+	mKPDZprc81QZhLtU2SIkA==
+X-ME-Sender: <xms:_R2waSLl35f6VKGc3oCtfUjFLGfhzd1qci2hb2V0p6yREl54lOJeqtU>
+    <xme:_R2waU_vF2Wjgh5pbr-y4mAs8oGv5Cg2KcHL24tScbU0eWY_wMU04SJUII_8Hmpc4
+    GnnFN3Xj2eZI3q3OckipS__ceFak00W3GXs_0ffiihfwCv1PnwTwQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduudehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehmrghnshhimhgrrghnuhekiedvjeesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:9RywabwY0EMKB9qVqIFrGvTiUwhT296rtOyiX2yh92P0ECIMVLJk7w>
-    <xmx:9RywaculZFiJmEkOXYNFGjzxA2srHjTW-y_xp78DSnM066P5yzEjKQ>
-    <xmx:9RywaU5HiT8MziRT3hoYqrhxNgsJdYIxmKASKzE7_maOXhqk2T48YA>
-    <xmx:9RywabSDVkthlX2dcYuoQL0Kz5NAwxvj4YErj0evVRuPsxbUPnb2Nw>
-    <xmx:9RywaSvTVIBC5zMZJGa46zo57QA53xuTcsRk_wo5YT7DrpM9Vx-7VTA3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 09:30:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Mansi Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Mansi Singh <mansimaanu8627@gmail.com>
-Subject: Re: [PATCH] t7605: use test_path_is_file instead of test -f
-In-Reply-To: <pull.2067.git.1773120813628.gitgitgadget@gmail.com> (Mansi Singh
-	via GitGitGadget's message of "Tue, 10 Mar 2026 05:33:33 +0000")
-References: <pull.2067.git.1773120813628.gitgitgadget@gmail.com>
-Date: Tue, 10 Mar 2026 06:30:27 -0700
-Message-ID: <xmqq7brjyfpo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
+    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeekpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
+    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunh
+    gvlhhmrdhorhhgrdhukhdprhgtphhtthhopehmsehgihhtrdhsthhrohhvrgdrughkpdhr
+    tghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhhntg
+    grihekieesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:_R2waY71_OqYXSj6ImkuXmZArLSeGsBhiSlAVnnBe8IoN0jqEEQ7MQ>
+    <xmx:_R2waccB7geOnbiAYY1fSqFwwEjoACYF5Uv8q-rpuFd6IHq4FOXyBA>
+    <xmx:_R2wabFggfJJv75Lby0xRBX0c8mfHsXnl49uY2TIJEfeWhlULi9WKQ>
+    <xmx:_R2wadTmrSw_C2grzOuWwxVp-YEZXypuShjkWG_nWiKtr3ClBLMgrw>
+    <xmx:_h2wae5wD2eZOJPDE8DwFgF3geT-j-OfPTPEhi_SubhJjPS1UkfTjnGH>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id C561D1EA006B; Tue, 10 Mar 2026 09:34:53 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: Adl1l9tAOWUZ
+Date: Tue, 10 Mar 2026 14:34:33 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Mathias Rav" <m@git.strova.dk>, git@vger.kernel.org
+Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ "John Cai" <johncai86@gmail.com>,
+ =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <c4781432-57f1-4b2f-a52d-aa0d5cc2b406@app.fastmail.com>
+In-Reply-To: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
+References: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
+Subject: Re: [PATCH] merge-file: fix BUG when --object-id is used in a worktree
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-"Mansi Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Mar 10, 2026, at 12:46, Mathias Rav wrote:
+> The `--object-id` option was added in commit e1068f0ad4
+> ("merge-file: add an option to process object IDs", 2023-11-01)
 
-The e-mail header seems to imply you are "Mansi Singh".  Do you want
-to be known to this community under that name, or just "Mansi"?
+Using `git show -s --pretty=reference <commit>` for mentioning commits
+is recommended (SubmittingPatches).
 
-> From: Mansi <mansimaanu8627@gmail.com>
+> together with a call to setup_git_directory() to avoid crashing
+> when run outside a repository.
 >
-> Replace old-style 'test -f' path checks with the modern
-> test_path_is_file helper in the merge_c1_to_c2_cmds block.
+> However, the call to setup_git_directory() is redundant when run inside
+> a repository, as merge-file runs with RUN_SETUP_GENTLY, so the
+> repository has already been set up. The redundant call is harmless when
+> worktrees are not used, but when run inside a worktree, the
+> repo_set_gitdir() function ends up being called twice.
 >
-> The helper provides clearer failure messages and is the
-> established convention in Git's test suite.
-
-OK.
-
-> These instances were found using:
->   grep -rn "test -[efd]" t/ --include="*.sh"
-
-People seem to add the above paragraph to their test-path helper
-patches, but unless the coverage of the work is fairly thorough and
-you want to say "all the similar issues should be found with this
-command and I addressed all of them", I do not see much point saying
-how you found one of them and addressed it.
-
-You could have used "git grep -e <pattern> -- t/\*.sh", or you could
-have been working to fix something in t7605 and noticed these while
-you were doing something else to the file.
-
-I do not see it as too huge a deal and it is probably not a cause to
-send in another iteration once it is already written, though.
-
-> Signed-off-by: Mansi <mansimaanu8627@gmail.com>
-
-No matter which name you pick, this should match the identity used
-on your in-body "From:" header.  In this message you are using the
-same "Mansi" with address, which is good, but see also
-Documentation/SubmittingPatches::real-name section.
-
-> diff --git a/t/t7605-merge-resolve.sh b/t/t7605-merge-resolve.sh
-> index 5d56c38546..44de97a480 100755
-> --- a/t/t7605-merge-resolve.sh
-> +++ b/t/t7605-merge-resolve.sh
-> @@ -34,9 +34,9 @@ merge_c1_to_c2_cmds='
->  	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
->  	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
->  	git diff --exit-code &&
-> -	test -f c0.c &&
-> -	test -f c1.c &&
-> -	test -f c2.c &&
-> +	test_path_is_file c0.c &&
-> +	test_path_is_file c1.c &&
-> +	test_path_is_file c2.c &&
-
-The patch is quite straight-forward.  Good.
-
->  	test 3 = $(git ls-tree -r HEAD | wc -l) &&
->  	test 3 = $(git ls-files | wc -l)
+> Calling repo_set_gitdir() used to be silently accepted, but commit
+> 2816b748e5 ("odb: handle changing a repository's commondir", 2025-11-19)
+> changed this to a BUG in repository.c with the error message:
+> "cannot reinitialize an already-initialized object directory".
+>
+> Guard the call to setup_git_directory() behind a repo pointer check,
+> to ensure that we continue to give the correct "not a git repo" error
+> whilst avoiding the BUG when running inside a worktree.
+>
+> Signed-off-by: Mathias Rav <m@git.strova.dk>
+> ---
+>  builtin/merge-file.c  | 4 ++--
+>  t/t6403-merge-file.sh | 9 +++++++++
+>  2 files changed, 11 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+> index 46775d0c79..a8768c6e0c 100644
+> --- a/builtin/merge-file.c
+> +++ b/builtin/merge-file.c
+> @@ -60,7 +60,7 @@ static int diff_algorithm_cb(const struct option *opt,
+>  int cmd_merge_file(int argc,
+>  		   const char **argv,
+>  		   const char *prefix,
+> -		   struct repository *repo UNUSED)
+> +		   struct repository *repo)
+>  {
+>  	const char *names[3] = { 0 };
+>  	mmfile_t mmfs[3] = { 0 };
+> @@ -110,7 +110,7 @@ int cmd_merge_file(int argc,
+>  			return error_errno("failed to redirect stderr to /dev/null");
+>  	}
+>
+> -	if (object_id)
+> +	if (object_id && !repo)
+>  		setup_git_directory();
+>
+>  	for (i = 0; i < 3; i++) {
+> diff --git a/t/t6403-merge-file.sh b/t/t6403-merge-file.sh
+> index 06ab4d7aed..60cc43775f 100755
+> --- a/t/t6403-merge-file.sh
+> +++ b/t/t6403-merge-file.sh
+> @@ -506,6 +506,15 @@ test_expect_success '--object-id fails without
+> repository' '
+>  	grep "not a git repository" err
 >  '
 >
-> base-commit: d181b9354cf85b44455ce3ca9e6af0b9559e0ae2
+> +test_expect_success 'run inside worktree with --object-id' '
+> +	empty="$(test_oid empty_blob)" &&
+> +	git worktree add work &&
+> +	(cd work && git merge-file --object-id $empty $empty $empty) >actual
+> &&
+> +	git worktree remove work &&
+> +	git merge-file --object-id $empty $empty $empty >expected &&
+> +	test_cmp actual expected
+> +'
+> +
+>  test_expect_success 'merging C files with "myers" diff algorithm
+> creates some spurious conflicts' '
+>  	cat >expect.c <<-\EOF &&
+>  	int g(size_t u)
+> --
+> 2.53.0
