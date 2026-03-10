@@ -1,117 +1,184 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A4E2F84F
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 19:35:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D7E3C140B
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 19:56:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773171309; cv=none; b=MXx2TraMdQ5P6DlcV/loBzvj9q8cd2kJgw6UzZqqp/PZXZnauBMzlBJeiiFO8UAkz93x7gmURgB60T3nN3qXcgoMJiXtArLYXJuO8sJRFiFPtDU34oXCfICAetw1fPgZJLSpKim1bQLBXEaUIDkRX1LTWAWKIgFhTrN0EwMlqOY=
+	t=1773172603; cv=none; b=NSk7GYwm1ht3DMfYRb+ZPNZG8RygU9dEAcGBDwAevysuSD+mbUot4uiZIaQXdfQ0V62oJZVGD6bPa35GrBfJ0u3/E9LunNinhH9OpNnNPGBK10ux4Iy8jB/1XG1uyYTa7ziaG+mOXxzDa0wYqXzr5xL/SOzQJw1bzzT7GG9hQsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773171309; c=relaxed/simple;
-	bh=gpaaBvE9/tcIkYx9X0/12Op4An5sCnXfCtXjWQ5jjzA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LFJ44cBR014teMTTEhECG4GnSTqW7JRrEZeRFISl7PfSW4j0xVsMxQIC6XA5j1LT33QONXSPcAxL1ujS4Jadb3UH0PpB9MHwb4l+ZKQrm+uCnw19N2sYMJmptUCGrQev6MAmoM0h3TLeIhKHaqNYcOjbBfW7lxcyCUkMajzDdrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UQSCWsOp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FgKIkTOl; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773172603; c=relaxed/simple;
+	bh=FHh6Fo6fu9w9xkQ2el0Lg6Tlxr6ibeXLE/3ZrbCt2Fw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZyyXaedxPlXf/ybaTGF7r+u24vZ1A/FMGN2EQQRyMqb9xq4UGXvs0WHUuLHzXMkX69E98fonBbuG30eRjoSJSGaBhx3/+j0S+8Z+kBdLWf5O3RyIR/vK/ltHEKa8x0SLK2EQXOUnp3+UvW2+TCIKYlwOsTT96T+++redfQP3g4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mzjAuE8S; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UQSCWsOp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FgKIkTOl"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id AE25BEC09F9;
-	Tue, 10 Mar 2026 15:35:07 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 10 Mar 2026 15:35:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773171307; x=1773257707; bh=KkwkOUC2Lq
-	4P3J+pWZsGFW1qK+J2Ol0rKF6TGiQSuSI=; b=UQSCWsOp6E90HNfrK5IF6MB6Cg
-	1Tw1l3AzJMmpljrVNtbBTUHS5F+hYwFsE0ZrDHgjYIhO51B1loRKSDK0LPBls7GH
-	tcgxRzOYIuvQVW0YFrwFSkrMWg2iOlybR+QHay6gRNnVL4pqgS6gzknyD7BNuQ83
-	4pA1+WNPDYhOL94eHxmyY2DExeyLltaBwb+W1gb9vcMzq0DOAQVAFAscV72ggCay
-	Psr0bMunACx6hDRBdQZPUIUggwjUBHMkkVLFf6biNmJEUVG2qFbu5dWRIOZivOeg
-	g/QJO/gNon2ukU0lhIihGGT/R1k3n0Hd+RhDKtVkTKVZXop1ycCEN6vJmNQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773171307; x=1773257707; bh=KkwkOUC2Lq4P3J+pWZsGFW1qK+J2Ol0rKF6
-	TGiQSuSI=; b=FgKIkTOleUMEW4HVC0SkzFysE0g6miwhK4TUBBok9EgCxpDkkOF
-	uLHfgDhYcWB5cjwcYm/9SujcLMZPC1d+lLkXXx92ua4Zlo/MI+RGg2p9H4i3aVIr
-	C0Jqj9kArrl0y5MwSBHLGek6xv8XQomrF2cOmUrjMdLQ4Amt/qOPRSSRAaLAdOXB
-	HmrPUxnNOimUFAcMUF3onL++kkUG/97a0LedLhvjl+pgJllsVsG6u08BmPKYH4F4
-	faYlmbCyI84kfZtdqUGmIIaJMCCTE+0/6p/MasWitO/YhTgtxxoMQTXhZDIELlxN
-	kBDI2CjDhYJBCTBGmFuYax5VBsbyltwXeXw==
-X-ME-Sender: <xms:a3KwaRRkP44UA9UYFrkKmSHNSKtVKAd-gW4Q3tPDz7nAYaW2CQ6CjQ>
-    <xme:a3KwaRxVhoKLVpmbCyD6SwWrh9zMrCfZWGbGGGqn8WlmUy4U2_MNDn2miDXK85EWN
-    JuEmi5uGtoMm5cig6GfhWDKp3tgbwEn4JUkpgYg62_79etnDimi4g>
-X-ME-Received: <xmr:a3Kwab1yY29JkC316xr0ExBGtmd7LX-U50pA6Kc4i3O2hetsTZRTAprGrB2xtLk96ZxmV2J3Rg7m35Wpogu1BOqOGGyGeCeGNw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedukeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprhdrshhiugguhhgrrhhthhdrshhhrhhimhgrlhhise
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:a3KwaX62yUvK1O1R3ihcDd3SCflVQxz5dFs2jTpFp6oin5RbKpiKqQ>
-    <xmx:a3KwaWUdQaw8rNzlTp8Cxwf_a5qydeTVmLCciGe1lyieFQwwT_bLQg>
-    <xmx:a3KwaeCP1NVLBZCB6D5W3AGdvBo3Ol86qx6cg1euPmDW9ulPXC3j-A>
-    <xmx:a3Kwad6VL28nVb5c66iZWlrwoKhhNBKbmBGZwXg_bHpO8uGI8TPvHg>
-    <xmx:a3KwaTWH7RrJwn5foBNGuAww3UhSnSgAMW3XjCFKF55r77i80CYVmiI_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 15:35:06 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v2] submodule--helper: replace malloc with xmalloc
-In-Reply-To: <20260310164412.47403-1-r.siddharth.shrimali@gmail.com>
-	(Siddharth Shrimali's message of "Tue, 10 Mar 2026 22:14:12 +0530")
-References: <xmqqqzprwu1q.fsf@gitster.g>
-	<20260310164412.47403-1-r.siddharth.shrimali@gmail.com>
-Date: Tue, 10 Mar 2026 12:35:05 -0700
-Message-ID: <xmqqo6kvtr4m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mzjAuE8S"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-439bcec8613so7321356f8f.3
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 12:56:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773172599; x=1773777399; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=5i7KlNDElxun79dliR2i4SpOzqx3CiIxAGqlys9a11Y=;
+        b=mzjAuE8SuXsZmgeiwk4cxfgEUZY6Z2LxTDfAjn3pMWINIrcywRGWSHVI/tyqEAae45
+         38Arq9gk16rJgNroCNOgY4RCdoa5GI0TwU9HKKBB5FRWaL2xBYx1vHrmGN1Hh0Xw6LaX
+         qN1yTi12IxxIF77tji4G+rVFslDW87Lfaz411HfefW+AWST2q+RxbvnXjQ0cBbQdh5Ty
+         U/50OpRBnsmAz5cjpN+vDn6LXXvbm4LD0KuJ5SFAUeJxsTiyw3uGzRzAotK0QOmVwNQv
+         dOtD9Gh6nH6VmVxuJ7+YdupPTdlbK6kLuLBkcirCqQVlrdFRLZNOSeqoL+QECkKVVRYq
+         iAhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773172599; x=1773777399;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5i7KlNDElxun79dliR2i4SpOzqx3CiIxAGqlys9a11Y=;
+        b=ePEnRuJcO5d92pkCOS9sYesbQXUec4mgkumWgGhIip0wQYG8orM9QqSDbUzDvDiQQj
+         lTK5177QBHyeKzwvPocspUjRhXQ2iPI4Lu/tJol+tQx6IER65NBWN5JfBz/qFX47fY6y
+         H98rHfmZXA73dwalqci9nj9VcxcgIdKiVG1hV0ARLzrxIXAoCUOT45AKwp+BLKY2qubv
+         e9iqHe97DTVZQj7lE3wXL8BEa28Gxy8vTQO3dP54VCwc2tLo4p+V/hW0JtcGjnDgFFVH
+         rXEk3DcCnhH/5RyNRwaG8ROSI95W1ZqHn316BeXNzO40GDdPpOPWmVhXv1ooqIcVJ7tv
+         IPNA==
+X-Gm-Message-State: AOJu0YypD5X3fZgNvEhhaFnLcuRR0w73kMmfHwnX0RnsBnKAHjpmbwu1
+	vZhk2vpB/t+Oq0FSmBSwrYQ1dJfGAChzeN0EuP1Ps+8H6Q7tWD7rDNOP
+X-Gm-Gg: ATEYQzzfmQ4/96FRXgl2NAcT4NtoUDfxtnbPU9AHOtZ3epNTg2C2SnK7oOrsCvgYOpW
+	UGqR6IFMuzcDwgMJxD4Xb35PZYUj7p4shjfOmrYFlUWONQ3tiCUQaRcCHqd9oIxU9nupu0OiWP2
+	79i/dbpe90px+aas9wn6tk1fLSiJSdxUxJ52VvulWNrlFYR8g8XHs8UzpqOpXRnmRTFZd/TsH5r
+	tjS6XxwMi8BkG8l/2Idq4cGMQTFV8Fmazwu9LcjrxdWUZPTRD4G6BacYC3LzK8XVtgUy9oH6pwQ
+	8xIS8a44ohGflK83TrtSAxsEIXgAe9BNailX+iuXQzlt0up5ZUK8k+E1YBY3aCN0jk7wyAXFICn
+	G3Y0cnAPogwxA4g9vAOCtV+2k4J0qdzNdGYgiFphrog1n3J2ST1A8EG4/tTFXsy2cC37wzM3Juz
+	vmmbQ9qnkyzh+6pHpzMlixi8jVB1oUNa/6J4sKZikqBM0od3s=
+X-Received: by 2002:a05:6000:2386:b0:439:b811:11de with SMTP id ffacd0b85a97d-439f81bd4aemr298385f8f.7.1773172598813;
+        Tue, 10 Mar 2026 12:56:38 -0700 (PDT)
+Received: from localhost (78-131-14-0.pool.digikabel.hu. [78.131.14.0])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439f81f143asm369034f8f.23.2026.03.10.12.56.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2026 12:56:38 -0700 (PDT)
+Date: Tue, 10 Mar 2026 20:56:07 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 01/10] hook: move unsorted_string_list_remove() to
+ string-list.[ch]
+Message-ID: <abB3V4BcYDgMJo0x@szeder.dev>
+References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
+ <20260309005416.2760030-2-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260309005416.2760030-2-adrian.ratiu@collabora.com>
 
-Siddharth Shrimali <r.siddharth.shrimali@gmail.com> writes:
+On Mon, Mar 09, 2026 at 02:54:07AM +0200, Adrian Ratiu wrote:
+> Move the convenience wrapper from hook to string-list since
+> it's a more suitable place. Add a doc comment to the header.
 
-> The submodule_summary_callback() function currently uses a raw malloc()
-> which could lead to a NULL pointer dereference.
->
-> Standardize this by replacing malloc() with xmalloc() for error handling.
-> To improve maintainability, use sizeof(*temp) instead of the struct name.
->
-> While at it, ...
+unsorted_string_list_remove() in string-list has a 'free_util'
+parameter that didn't exist in its original version in 'hook.c', but
+it's not mentioned in the commit message.
+Furthermore, none of the function's callsites are adjusted to the new
+parameter, and the build fails with:
 
-I think use of sizeof(*temp) and dropping of a cast from (void *)
-fall into the same bucket, i.e. to improve maintainability.  Both
-are good changes.
+  hook.c: In function ‘hook_config_lookup_all’:
+  hook.c:151:33: error: too few arguments to function ‘unsorted_string_list_remove’
+    151 |                                 unsorted_string_list_remove(e->value, hook_name);
+        |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  In file included from hook.h:5,
+                   from hook.c:5:
+  string-list.h:273:6: note: declared here
+    273 | void unsorted_string_list_remove(struct string_list *list, const char *str,
+        |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  hook.c:163:25: error: too few arguments to function ‘unsorted_string_list_remove’
+    163 |                         unsorted_string_list_remove(hooks, hook_name);
+        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  string-list.h:273:6: note: declared here
+    273 | void unsorted_string_list_remove(struct string_list *list, const char *str,
+        |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  hook.c:180:25: error: too few arguments to function ‘unsorted_string_list_remove’
+    180 |                         unsorted_string_list_remove(&data->disabled_hooks,
+        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  string-list.h:273:6: note: declared here
+    273 | void unsorted_string_list_remove(struct string_list *list, const char *str,
+        |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  make: *** [Makefile:2917: hook.o] Error 1
 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 143f7cb3cc..f3e132888f 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1160,7 +1160,7 @@ static void submodule_summary_callback(struct diff_queue_struct *q,
+
+> Suggested-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+> ---
+>  hook.c        | 8 --------
+>  string-list.c | 9 +++++++++
+>  string-list.h | 8 ++++++++
+>  3 files changed, 17 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hook.c b/hook.c
+> index 2c8252b2c4..313a6b9937 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -110,14 +110,6 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
+>  	string_list_append(hook_list, hook_path)->util = h;
+>  }
 >  
->  		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
->  			continue;
-> -		temp = (struct module_cb*)malloc(sizeof(struct module_cb));
-> +		temp = xmalloc(sizeof(*temp));
-
-Looking good.
-
-Thanks.
+> -static void unsorted_string_list_remove(struct string_list *list,
+> -					const char *str)
+> -{
+> -	struct string_list_item *item = unsorted_string_list_lookup(list, str);
+> -	if (item)
+> -		unsorted_string_list_delete_item(list, item - list->items, 0);
+> -}
+> -
+>  /*
+>   * Callback struct to collect all hook.* keys in a single config pass.
+>   * commands: friendly-name to command map.
+> diff --git a/string-list.c b/string-list.c
+> index fffa2ad4b6..d260b873c8 100644
+> --- a/string-list.c
+> +++ b/string-list.c
+> @@ -281,6 +281,15 @@ void unsorted_string_list_delete_item(struct string_list *list, int i, int free_
+>  	list->nr--;
+>  }
+>  
+> +void unsorted_string_list_remove(struct string_list *list, const char *str,
+> +				 int free_util)
+> +{
+> +	struct string_list_item *item = unsorted_string_list_lookup(list, str);
+> +	if (item)
+> +		unsorted_string_list_delete_item(list, item - list->items,
+> +						 free_util);
+> +}
+> +
+>  /*
+>   * append a substring [p..end] to list; return number of things it
+>   * appended to the list.
+> diff --git a/string-list.h b/string-list.h
+> index 3ad862a187..b86ee7c099 100644
+> --- a/string-list.h
+> +++ b/string-list.h
+> @@ -265,6 +265,14 @@ struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
+>   */
+>  void unsorted_string_list_delete_item(struct string_list *list, int i, int free_util);
+>  
+> +/**
+> + * Remove the first item matching `str` from an unsorted string_list.
+> + * No-op if `str` is not found. If `free_util` is non-zero, the `util`
+> + * pointer of the removed item is freed before deletion.
+> + */
+> +void unsorted_string_list_remove(struct string_list *list, const char *str,
+> +				 int free_util);
+> +
+>  /**
+>   * Split string into substrings on characters in `delim` and append the
+>   * substrings to `list`.  The input string is not modified.
+> -- 
+> 2.52.0.732.gb351b5166d.dirty
+> 
