@@ -1,120 +1,91 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D0D21E098
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 04:45:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221C630E0FC
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 04:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773117910; cv=none; b=MspTPJ+RbL/GsLC+VFqmG+LIOAAK+M4qlfv/wjqIP8Jctq1mKfiEW/jpWf2hb/4RVQe7u4hioQLaJ0jSWRa2JUp9mB7JqUBr3g16q9gJ6Fdkqi0idQTZVX4ix0wRjbI2evpchj9hkikWaSeHH045p/fqGYIZwzEHcO9PODnuW5M=
+	t=1773118293; cv=none; b=LpY4AUFyZT7Ra9CAY7A/fmrmRvyjPyMxuGDfC4PhB0wthrN7H11TjqzEeF3hE2ENf7YM2uUAUzxKr0vO/qHl41XWFimcqLOxwvkvZeeSS6C8MRc2UvRVJkzc1yycV79jxzPdVFonfceJkm7B6/hEV9uiET9ieXcvSlczrAjhN7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773117910; c=relaxed/simple;
-	bh=o+z3sIqGH6fesApuw7VmxXSGMgGpwEa56xpuR6UQCNE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NUSV9jPH1REB9O0x5K4gH+kQqc6dCFGxlVLCcalsnAemcKfEkmu7xpiEDPpZ8Ch2o9VYsK+n3Uw8waymWuTAvpeur6IV9hM0CGVV/HgFIXaPZvxMW/KWEE7Lnng13iyuREYup350YFwddkJ8bs6fb/fcnJCMW0hjWUh9zzEAW4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=DJAvV3d7; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1773118293; c=relaxed/simple;
+	bh=II3is0ehZgEkdFA3kJW5POnFvfvwjK+MkeM4eVMu2RM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mW33Z4gS/YEZBSVjm6S78JjWiKOz5uMHG0Y/LNH5xPw7reEpnhriOLX5SEE1GLqq9jrUdCPsaXSsuX3g0rgtYEdaSv0Wgbqy4t3FWihHUEGicGvbFEZRlqVRvCQVEnC89pwy67kBwhge5Imp0KuhEwGmfuhcIdjO+Sab97i2Rqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=fwHn/8Ag; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=s9cobJT2; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="DJAvV3d7"
-Date: Tue, 10 Mar 2026 05:45:04 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1773117905;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ItkdVrraA50CjB9aVgSEl1sRJdIM09URCEEN0JL6VSo=;
-	b=DJAvV3d7uZMSeRt+WyPk3f/sVAZjv4a5zDW9ctITcsSVCs/S59E6EGYCI3uQ0sO3lmlgdL
-	/cCybT4mjRraUfyU1aHYCiMtS/IpdY+BgPPO2t/UNQOAgkvPPHMzjmEOv4aJAL+dmsw+WL
-	gPFHpHptEDAw+KVOAJGZikd80eoPQY7rlrkFbmnSZhd8tVLjTlPjkLWFDBAYR0irXObRUC
-	ZgO3kb3K0EyJwK34BzWr4Jue94nURrUzhdWJhkyF3P53Zl63Y7s2l/rJ8B2D0kNdG7KHEs
-	+kwuAcV+lRx+wv4LYo6RdKppPyGTHCoHfS3FfZXFa6bquaw5QirNTQfTI/nZjQ==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Mirko Faina <mroik@delayed.space>
-Subject: Re: [PATCH v2] apply.c: fix -p argument parsing
-Message-ID: <aa-eXgsUnQRV7nvZ@exploit>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1997; i=mroik@delayed.space;
- h=from:subject:message-id; bh=o+z3sIqGH6fesApuw7VmxXSGMgGpwEa56xpuR6UQCNE=;
- b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpr6HETJzgEwtB8pO0bTj55qJcRROMUVipnjlt/
- DTtxqihQtaJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaa+hxAAKCRBIeX6hnBm+
- 0aV/D/0fOeke8l6/01yVSmimOOxw4Li4Bwip89ibIxHfcAoQEsHVK2TWspRguLXaau0kstF8+wh
- xR+qR+ZQY+JULXtnoom0YE9NvDUhQ7rQPmDj/lY5RP4cMXA0jCyfieIMhSCoGZ3rSU+Blyz1JyW
- 11npX5RsehSCQU/nnD3WbQZF4QoTbv+G+hjSzGmWZN5dHlSjPYLo4SKmJIcT0GiWp0PoGvvJsq2
- 50erTR0tpiDA5nGWyo+NKFaqWPSSUgyZUrQxLNENkCPSOPMbUG1g38g4hH890h2iSClOHT+QYD1
- fCzrbPwZ5kzlH+vcItsOvEgY3ALdc5snDFUsMOCFzelaRYB6DHYrot+PtSMJQpWUJU7VAV5BU51
- 9XjvLgkam/nG95pXee3BBDLN56d8duz5OQ7FizYIo8zD26XGU1I8wlF5XDHUXlEe2ngNvDtSqwE
- rBhWS4QGIBlU1YLYgUVlkcdYyYrpnfDBx6FjMN0FTl1JBi7U+9VItv1KX5/0jNVmprozNtMAdFg
- vsEvtxVglhWV2s2QecH8k1mgwLPKdh6H/5Mj/+FOQWpkUnARWScbe1zZi47vPcWr2wwG/kWoF1j
- bZ5SvGMRhQFzsLYolOAib8g8VjUcPHV+ktZmCng27M+8Q5TaoPn4QqdFZk3sdnQTqK2vev+jMOx
- Qaxg/i8uM0MwH+g==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp;
- fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-References: <20260309232700.553168-1-mroik@delayed.space>
- <20260310005408.2022216-1-mroik@delayed.space>
- <xmqqwlzkxsv5.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="fwHn/8Ag";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="s9cobJT2"
+DKIM-Signature: a=rsa-sha256; b=fwHn/8Agny5qHxZhUMOKR76gAlB8lStS7B5zmLl+e7MzMHu8vJCJEM3KnpnCsvcik9dMJgnQIH+emCwaMUM73DlI3AVK/FosLFwlDVvDXGylHaKS6Tj7XcJf5nw7CuoHkUwE+0wcmMq3pzJUFj4BKP89ey+fgbQJuEvdSJzMvatFEAVORZcix6y73EjBB8dINKRuu2PZe+eKrcN9nFBNPny3zKiejO8OXo1ABAV2Lr5ta/6FUQJEgZh9PPFGNsI5C4Q9A1sbyBZtZ4y/tYPr3OCzFHjsRRGT41gDcWNwJA16nbkShm56gVSei72mOjlVEUjSnDOKrkH1oYb7JMgLbA==; s=purelymail1; d=malon.dev; v=1; bh=II3is0ehZgEkdFA3kJW5POnFvfvwjK+MkeM4eVMu2RM=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=s9cobJT2/CEWo5BuQpcn/AJ2rwQ4hWMwHo2t6t3DXH3TGBNrUCMxRds5epc+mauSzaUizT80RALD6GBTPjDY+IEeFor+cbh0KitYpib4jQGfdOajW+E6HaHD5mOFTXmjCgt1Ug6tgNTnQ7sUY4LNjf9niTEHWHePaByb9RZ6FaJuERTU1hUuvIC+4xhxM+6gRojV1ul7fuyq1CVRIG3DhRkdFxkvtYUgjBU9044E4iJ4RirDJrmg14qmFyPuX2EH/eDoZuLU/2K1Df18qomm4lSP9lPwAd1S3+CikndXnlh68S+aOF4O3X39YCNIIJOi2cSQpteOXNu+tWDQ9Bw3Hw==; s=purelymail1; d=purelymail.com; v=1; bh=II3is0ehZgEkdFA3kJW5POnFvfvwjK+MkeM4eVMu2RM=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -688842347;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Tue, 10 Mar 2026 04:51:28 +0000 (UTC)
+Message-ID: <71287f25-eb60-4a45-b4ac-9368053c9183@malon.dev>
+Date: Tue, 10 Mar 2026 12:51:23 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwlzkxsv5.fsf@gitster.g>
-X-Spamd-Bar: --
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] diff: document -U without <n> as using default context
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <xmqqh5qswo45.fsf@gitster.g>
+ <20260309172719.125419-1-cat@malon.dev> <xmqqwlzk1wd8.fsf@gitster.g>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <xmqqwlzk1wd8.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-On Mon, Mar 09, 2026 at 08:31:42PM -0700, Junio C Hamano wrote:
-> Curious.  It is true that we need to parse the p_value correctly
-> even when we are applying a binary patch, but the problem is not
-> limited to binary patches, is it?
+Hi Junio,
 
-Using a better regex I now realize t4120 would've been more apropriate.
-I will move the tests.
+> I am moderately nagative.
+>=20
+> It is not like we are _encouraging_ users to omit <n> from -U<n>,
+> but it is not errored out only due to a bug.  Who would the new text
+> help?  Users would wonder why <n> is not optional in --unified=3D<n>,
+> the other way to spell the same thing.
 
-> Is this saying "in the directory there must be only a single file
-> whose name is t?"  Wouldn't it be more readable and direct to do
-> something like
-> 
-> 	test_path_is_dir t
-> 
-> or is there something more subtle going on here?
+Indeed.
 
-Sorry, this approach is due to the unfamiliarity of the testing
-framework. I must've missed test_path_is_dir, the README is very dense
-so trying to find things at a glance is not the easiest (in my opinion).
+What I was actually thinking earlier was: for bugs like this, which most=20
+likely come from misoperations, typos, or inconsistencies from *ancient*=20
+standards, should we acknowledge them as
 
-Will rewrite to use test_path_is_dir.
+=E2=80=9Cyes it is a bug/historical issue=E2=80=9D
 
-> > +test_expect_success 'git apply -p malformed patch' '
-> > +	test_must_fail git apply -p malformed $TEST_DIRECTORY/t4103/patch
-> > +'
-> >
-> > +test_expect_success 'git apply -p 2q patch' '
-> > +	test_must_fail git apply -p 2q $TEST_DIRECTORY/t4103/patch
-> > +'
-> 
-> If this did not fail and patch gets applied with some p_value that
-> happens to be used when we fail to parse the number, then ...
-> 
-> > +test_expect_success 'git apply -p -1 patch' '
-> > +	test_must_fail git apply -p -1 $TEST_DIRECTORY/t4103/patch
-> > +'
-> 
-> ... it would not be clear why this step fails.  Perhaps with that
-> same "unable to parse" p_value was used and this tried to create the
-> same file as the previous step already created, or we detected parse
-> failure.  We cannot tell.
-> 
-> It probably is a good idea to prepare for the worst by doing
-> something silly like
-> 
-> 	test_when_finished "rm -f t/test/test test/test test" &&
-> 
-> at the beginning of each of these tests so that we would clean up
-> whatever we could leave behind?  I dunno.
+or
 
-right, "rm -rf t test" should be enough, will add this cleanup code.
+=E2=80=9C*special behavior* we defined=E2=80=9D?
 
-Thank you for the review :)
+I'm not as familiar with the Git codebase as you are, so I couldn't make=20
+a definitive call. I chose the second approach, but I now agree the=20
+first makes more sense. In other words, users shouldn't be *encouraged*=20
+to engage in such behavior, right?
+
+> If we want to be explicit, we should probably do this instead:
+>=20
+>      `-U<n>`::
+>      `--unified=3D<n>`::
+>              Generate diffs with _<n>_ lines of context. Defaults to `dif=
+f.context`
+>              or 3 if the config option is unset (`-U` without '<n>' is ac=
+cepted
+>              as a silent synonym for `-p` due to a historical accident).
+>=20
+> which would tell readers what happens when '<n>' is omitted and why
+> we allow such an inconsistency.
+
+That makes sense. I'll make the changes accordingly.
+
+Regards,
+
+Yuchen
