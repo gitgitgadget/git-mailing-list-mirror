@@ -1,177 +1,118 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CC739936E
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365CE39DBD2
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:35:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773149697; cv=none; b=Jg+/0denEKR3dPIorvmlZL4M/SI9mYBHNPstAEDs+6VeZg8j+V+gU7nyWRrwVP2ZRTjI3QzAEQ0ymfweZmCoHfUmOSiCOsHOEUWzyh83aZ3/cs/YypQd4xuuHzO4Veo6XjV4oozvxfAz4IVycybOD9z4QZ/MC/juEaV0He9/RZY=
+	t=1773149702; cv=none; b=EL5el7QZfPjh+t4HZvFDJ6EEpgIfpUQ5pucUnWCaPjLDvN9/Ms1WWPu5P3TNXtz36I09XMbauAHxeYWy3cj4PYCT9udoBVb2Jq/ZsCHSXGTWYBJh0w7UmSUShyu1yBPkJAi+UC0DqzOpnSPDzr33v0ymrAaQdS58sOu9HmtjQTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773149697; c=relaxed/simple;
-	bh=HOo5cST5q3smRi/xz7qAwO4a1BvscdyHYBMQ4ix/L68=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Juzn4hm46tZwy0v2UgVdU8JTYydGdH9oiikDhFJ7s/UnL9DKopJDYE10cjC+c09nFvUmDf4kIbAibqes6cb5wyLDRuI3m5BqVJhDkL24s3sazMZRWtu14MQYtMYJRnlx6/Gjc7NCe7C4Xvr5jMLggZtZR1E2dWb8A+yvwW7NHwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RGjQ/lrb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uB/LAHCB; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1773149702; c=relaxed/simple;
+	bh=8d1Rtm241vlGEXyFu9r2k5SKidIuYmADYJggHtg8nLM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=eYWBpIPIb9QGmmoqA9gG8tL1Sx3Fsp1AEtIoZQAo5D8OpVH8Mpjwh6vUqeOdPX4g4I1Xa2AZRZYV+01akgoGI2axRqfbhRNO6dTRzdFUKWeNGBFCZZyXcmFk6u8AL7nfPdnVCFpfJ+0o3suHcKUZOTOc5HGP48O60kI+wE5h4tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ce5Msu1R; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RGjQ/lrb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uB/LAHCB"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9EC6F1D000FF;
-	Tue, 10 Mar 2026 09:34:54 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 10 Mar 2026 09:34:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773149694;
-	 x=1773236094; bh=5b1s1+3Hcmgk1Sjz19IIdwGt1GvWPtIIpwyRC6Bgcqs=; b=
-	RGjQ/lrbKPHVk2hLrXq0GHTFZMJAVW6NnhqGCsndvxXW69r9u0D+Y2CSe1xTPfP0
-	v0CHT3pod5WWol5wNT5IsJ9wXfvWGHMLayCIS+pnt+SaCS2XJ5J6uNYXB5igpGgO
-	M/IVy9R0OFXRnMlXF+m0Z9b+B4xH33m++ujqJGD5eO1eKt0vS4k2PxbwEwyWl1Jg
-	afyQXoLABLAgqVmVtYXaIx3TrMucpXOb4OqlOrjKkaMvzvOEtxZpeKNKxMeHFNkN
-	UTrXGQag2I5ZE+UE6YtRZywY/2GqqZBshk94MVaFF/gRCCqfZys0Vul7KeeBYtD1
-	mOo6W/aDU5rD3Eo8z7Ln5Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773149694; x=
-	1773236094; bh=5b1s1+3Hcmgk1Sjz19IIdwGt1GvWPtIIpwyRC6Bgcqs=; b=u
-	B/LAHCB7bkvpuHdkKnBKiYZv8iQAgkx2PEc483tNQrupv6h7odS3WQbTEaTbVy8p
-	ojSDJOaLL5qbVxUaIuAQLUFHyw7M9S8D6IbEHcBo8P+8YWoxOf4Y0iBvFXrl+EpU
-	SJKFErZ7IkPpdHgdq5Xw/GMv+D0tDmYTHj8vMVWzfAqY5UT1DYBYuKjWYld87oVx
-	lhV46giIfWeqQQMVFVuHzAJQSqTI5x04ZZ8819aQGNoMyzIuOl4AtxL3CGIbNbi2
-	hekvddaCn/l7+wKI0nl7Y53eC5Lk8Do2deC2d4kqcolnqD5ImvCX3iU5twnaJ9r8
-	mKPDZprc81QZhLtU2SIkA==
-X-ME-Sender: <xms:_R2waSLl35f6VKGc3oCtfUjFLGfhzd1qci2hb2V0p6yREl54lOJeqtU>
-    <xme:_R2waU_vF2Wjgh5pbr-y4mAs8oGv5Cg2KcHL24tScbU0eWY_wMU04SJUII_8Hmpc4
-    GnnFN3Xj2eZI3q3OckipS__ceFak00W3GXs_0ffiihfwCv1PnwTwQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduudehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
-    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeekpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
-    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunh
-    gvlhhmrdhorhhgrdhukhdprhgtphhtthhopehmsehgihhtrdhsthhrohhvrgdrughkpdhr
-    tghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhhntg
-    grihekieesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:_R2waY71_OqYXSj6ImkuXmZArLSeGsBhiSlAVnnBe8IoN0jqEEQ7MQ>
-    <xmx:_R2waccB7geOnbiAYY1fSqFwwEjoACYF5Uv8q-rpuFd6IHq4FOXyBA>
-    <xmx:_R2wabFggfJJv75Lby0xRBX0c8mfHsXnl49uY2TIJEfeWhlULi9WKQ>
-    <xmx:_R2wadTmrSw_C2grzOuWwxVp-YEZXypuShjkWG_nWiKtr3ClBLMgrw>
-    <xmx:_h2wae5wD2eZOJPDE8DwFgF3geT-j-OfPTPEhi_SubhJjPS1UkfTjnGH>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id C561D1EA006B; Tue, 10 Mar 2026 09:34:53 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ce5Msu1R"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ae505619baso56695225ad.2
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 06:35:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773149700; x=1773754500; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q49lZQ6U3vqCaT9BK21E/DcIBk4wFgK+mLHTUtTwDZE=;
+        b=Ce5Msu1RwwNJ8+7wvCWxmEhqToxqE7s4oD+LnBeYd/NvDV5N89g9e7nDKBlrKgnGwf
+         1YQLDgCcqBa+Zdv/3iLMXwy9wVvv9URgZxay7Q9GS0CXi0UC9eCtElT6lpbjizZmkVn9
+         LJAYe7QBBVPNNABCmEkQzGyggI/WW9+mhdXUiXKstsHjVWbzn9y1iaHPg4+rGMas/Aci
+         Zpc+XGqi6f4ogz+Of1il66kkOQFTVw/FPVrCDAqU9/u5I6tToLNaBHUwvL4E8FDab05M
+         LxMLEqgYNMsQiJsA6qSd9heS0rhInvMEiEnwl/SuvvXP6RN8EMvLvn2XMPGZh194Ab/S
+         TGxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773149700; x=1773754500;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=q49lZQ6U3vqCaT9BK21E/DcIBk4wFgK+mLHTUtTwDZE=;
+        b=dtbzQncxn44LGokol1mC8UEBnZ2WGlkaNbIRidMN4xteO7vKnXU98TBaNKNp/2B/bb
+         3Ros4YlKW4/P7Jkhh/idkbcUL72Dj1mmDNz+NmIoJjz/tDsG7n6tBkoNf4tJoywZd/TD
+         n9mz8PJcgaA0CJcQBU8V6+YnD79L3u0wKjszoQZH0eodMQbu43NFks6ROZYm3fpsxTfP
+         BKcdeg9UivVXJj1io/sS4dSrxc0kVEbdD69H1PVFOZRxubb8CwzU9PaqJVhz+Puh3K2b
+         tqkZ0+SGr+rz/DiUl2p8EDXvD0Fcf1R9/4mg1AhVTxlrK6mXN+T3eWGHQPyKOcfZ/9Qa
+         heZA==
+X-Gm-Message-State: AOJu0Yy1AAiJiqsKXzcyzc5CJXJ8AXJTbjRd/B+nmUSWseA99sd/m6d6
+	UKVR679K7cbN5+982Y+dxTryovJ5oNaLs39gP+NBCm3o8FMvvwlf7nmB
+X-Gm-Gg: ATEYQzysaPzHliMJFYsk04ECEhWH1dVYPtEI82GEzphF06RZaAjfNoXf5vMtRh1BmVh
+	7kSaP4mI+5yh79CVDCXxOWSDeIq7RyegXWMdZogcl14G6bDlF3bijwta9dAoRFi5L0BPC7KDDkU
+	3A3tSinKm77WnUmRtfhNhJ1YfWw0zojTyPxZZmx7CA/LlUILEJe1Tbp8Hrdnvf55N9Li5u/RYwj
+	4jxl0pdmvl5D9ZQHAkZFsT/7LGKfF1Kn3MqBpA4usYOzPOVycQFB7tP3PvYVKS5016rv3eslRaJ
+	qrBgeVTPdZrwLh4vAbRv3dS7yrNQhMyOvld2uqaIQyXp8Ky8C5IeBCi/2hQTe1yRBKs93+mHx0i
+	sjV2ecdxW4O41PuCMXouYu2yFXRzQvnK9vTeHP2edHwA57wXRWnoy6ZCqBdwb9wMRsoxrE6ti5Y
+	NAcjz3ZR8qjDFzXNoeJerw9NiNNhKirtDFffncE9gZJrPTQWbHtzse1bdPoKrbSTJpeyKtacSyC
+	TFW3KADzn11eV7hG0UsxEnSvR6KDULr
+X-Received: by 2002:a17:902:ea02:b0:2aa:e387:b83b with SMTP id d9443c01a7336-2ae825006femr144136295ad.43.1773149700419;
+        Tue, 10 Mar 2026 06:35:00 -0700 (PDT)
+Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83e9b9c6sm173315835ad.29.2026.03.10.06.34.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2026 06:34:59 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: gitgitgadget@gmail.com
+Cc: git@vger.kernel.org,
+	mansimaanu8627@gmail.com
+Subject: Re: [PATCH] t1900: add tests for git repo structure subcommand
+Date: Tue, 10 Mar 2026 19:04:35 +0530
+Message-ID: <20260310133435.42995-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <pull.2066.git.1773112159662.gitgitgadget@gmail.com>
+References: <pull.2066.git.1773112159662.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Adl1l9tAOWUZ
-Date: Tue, 10 Mar 2026 14:34:33 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Mathias Rav" <m@git.strova.dk>, git@vger.kernel.org
-Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "John Cai" <johncai86@gmail.com>,
- =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
- "Junio C Hamano" <gitster@pobox.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <c4781432-57f1-4b2f-a52d-aa0d5cc2b406@app.fastmail.com>
-In-Reply-To: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
-References: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
-Subject: Re: [PATCH] merge-file: fix BUG when --object-id is used in a worktree
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 10, 2026, at 12:46, Mathias Rav wrote:
-> The `--object-id` option was added in commit e1068f0ad4
-> ("merge-file: add an option to process object IDs", 2023-11-01)
-
-Using `git show -s --pretty=reference <commit>` for mentioning commits
-is recommended (SubmittingPatches).
-
-> together with a call to setup_git_directory() to avoid crashing
-> when run outside a repository.
->
-> However, the call to setup_git_directory() is redundant when run inside
-> a repository, as merge-file runs with RUN_SETUP_GENTLY, so the
-> repository has already been set up. The redundant call is harmless when
-> worktrees are not used, but when run inside a worktree, the
-> repo_set_gitdir() function ends up being called twice.
->
-> Calling repo_set_gitdir() used to be silently accepted, but commit
-> 2816b748e5 ("odb: handle changing a repository's commondir", 2025-11-19)
-> changed this to a BUG in repository.c with the error message:
-> "cannot reinitialize an already-initialized object directory".
->
-> Guard the call to setup_git_directory() behind a repo pointer check,
-> to ensure that we continue to give the correct "not a git repo" error
-> whilst avoiding the BUG when running inside a worktree.
->
-> Signed-off-by: Mathias Rav <m@git.strova.dk>
+> From: Mansi Singh <mansimaanu8627@gmail.com>
+> 
+> The t1900 test file covers git repo info thoroughly but has
+> no tests for the git repo structure subcommand. Add basic
+> tests to verify that:
+> 
+> - git repo structure succeeds and produces no stderr output
+> - git repo structure --format=keyvalue outputs expected keys
+> - git repo structure --format=nul succeeds
+> - git repo structure rejects an unknown format
+> 
+> Signed-off-by: Mansi Singh <mansimaanu8627@gmail.com>
 > ---
->  builtin/merge-file.c  | 4 ++--
->  t/t6403-merge-file.sh | 9 +++++++++
->  2 files changed, 11 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-> index 46775d0c79..a8768c6e0c 100644
-> --- a/builtin/merge-file.c
-> +++ b/builtin/merge-file.c
-> @@ -60,7 +60,7 @@ static int diff_algorithm_cb(const struct option *opt,
->  int cmd_merge_file(int argc,
->  		   const char **argv,
->  		   const char *prefix,
-> -		   struct repository *repo UNUSED)
-> +		   struct repository *repo)
->  {
->  	const char *names[3] = { 0 };
->  	mmfile_t mmfs[3] = { 0 };
-> @@ -110,7 +110,7 @@ int cmd_merge_file(int argc,
->  			return error_errno("failed to redirect stderr to /dev/null");
->  	}
->
-> -	if (object_id)
-> +	if (object_id && !repo)
->  		setup_git_directory();
->
->  	for (i = 0; i < 3; i++) {
-> diff --git a/t/t6403-merge-file.sh b/t/t6403-merge-file.sh
-> index 06ab4d7aed..60cc43775f 100755
-> --- a/t/t6403-merge-file.sh
-> +++ b/t/t6403-merge-file.sh
-> @@ -506,6 +506,15 @@ test_expect_success '--object-id fails without
-> repository' '
->  	grep "not a git repository" err
->  '
->
-> +test_expect_success 'run inside worktree with --object-id' '
-> +	empty="$(test_oid empty_blob)" &&
-> +	git worktree add work &&
-> +	(cd work && git merge-file --object-id $empty $empty $empty) >actual
-> &&
-> +	git worktree remove work &&
-> +	git merge-file --object-id $empty $empty $empty >expected &&
-> +	test_cmp actual expected
-> +'
-> +
->  test_expect_success 'merging C files with "myers" diff algorithm
-> creates some spurious conflicts' '
->  	cat >expect.c <<-\EOF &&
->  	int g(size_t u)
-> --
-> 2.53.0
+>     t1900: add tests for git repo structure subcommand
+> 
+>     Add tests for the git repo structure subcommand in t1900-repo-info.sh.
+>     The tests verify that git repo structure outputs the expected fields
+>     (commits, trees, blobs, tags) in both default and key-value formats.
+> 
+>     Signed-off-by: Mansi Singh mansimaanu8627@gmail.com
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2066%2FMansiSingh17%2Frepo-add-structure-tests-v3-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2066/MansiSingh17/repo-add-structure-tests-v3-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2066
+> 
+>  t/t1900-repo-info.sh | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+
+
+Hi,
+
+The very next file in t/
+i.e t1901.. is about repo structure
+
+You might wanna check that out
+because I find most of these to be redundant
+
+Regards
+- Jayatheerth
