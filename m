@@ -1,101 +1,147 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126FE2BE621
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 06:11:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773123079; cv=pass; b=crNYIsTUXm7FyW2KVGTjvnaaHOunic/EOiOH0IORECSMMZi7mwoqXaeLJk6F1XvSj7vSndm+xosq0BUxUKXip735GOcY/Snda3+d+A1V6XGxiDz29fRNA++mb2MdCQHyHNFfqh6R+9Z0n/ZQPgSzk9jgqlxhnBM7e3Bjcx99iDI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773123079; c=relaxed/simple;
-	bh=m5B02/tRsBWahxYcfplFVG8x9qd9MEgnRnOAKW7A0P4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=itczf+foIYR8GDA0rDiXYbY/fluvmkhZ/12h+oOXmYlqlFgudbtmOX0AeHu3MABmAvp/SO1OmGwLWdX5E/cLzcJqWwndG8OFegmh4TG/jetGFqOoHCCB3KpGdl5LwliNFqq6x84kGTT8cWAIyvxdKGV1ubS2bWe1wl7AWNobRyc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CKgiCrTY; arc=pass smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805273CD8C9
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 07:03:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773126222; cv=none; b=DykBmSASj62OVg5T99L//GT9glWb5OPD0i2S5/PCMK0pZA5yrHNtCHG+goKjXNRGWkYuQB2pXSROwuEWmsbJTjggd1t6fD2KCQ8oSGZlLfx5yFenZrLdSOAxQGinc0vw0DGlMfBFmUG7fiBrOT+R+ScHS9HAKc8wMPysnydpJLM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773126222; c=relaxed/simple;
+	bh=0lgNUAnw0+ravsjFmm64TQdZ13K9djyFMtFzsBFunDc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TdQ7uYKZPQNk7/ti+2cZ4djrDIdM0o+32mXPZszjbkYtlCrn7ZVqk2xnqf+dZdENtaK9pDzAtG6wW10G079Yy/PygXmXz8ju4b5aGP5zOra/RSXoRZleP6/PV4cqnQrtKjnyNtFsF+nDsME2lQH0g5JE4TUVBrcj6AVVPZIGdjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IeK14DT4; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CKgiCrTY"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-466f1c3c627so1727095b6e.1
-        for <git@vger.kernel.org>; Mon, 09 Mar 2026 23:11:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773123077; cv=none;
-        d=google.com; s=arc-20240605;
-        b=YMmN1n8P2b4dH5lId1LNrVORLklNQs8IWTiQnfluP5yzkPr2BPAOVHGII4CLUS11VS
-         x29v5hkokgZdNQLxQWAzjarYPbOiH1E6LzN5JG3N1i40K8yuTdDlXnVY+pzUmrbfR/KF
-         2q8Dv6QBdO0msAEfV6f1cUgLHAh+oLRHOKENoQWObgl9MSkuapxBxDpndKTps2Yyd0Ic
-         w8aeSYgPDnml+sFdCjGXyDyiMCVzKQI3zfKSj9uKrfOGGbmpcg/9dsL5WtNbkTFC7O7U
-         H/xa0Odl63bd0EYXVLbqOlr4rRxvGrIzLIrwaG9FEphIq+jso0eDvsD/RkDwa57ZsVg3
-         wUaA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=m5B02/tRsBWahxYcfplFVG8x9qd9MEgnRnOAKW7A0P4=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=VuotvT/RBPKdNf21R87YYvwprgWPCKp6s9w7Pp967g4gxLRm8QTt9OU/FizcqZQJKi
-         8v8WfJxxBijOvrfGLBoLsKL900HLVWkXGFx311nNBGGJGFRZ7Fy7o3biHsFnhwcN0clp
-         ukN5TVzNpbmO5txDeo2wyRjM/TS4XJavyDDGWOdBzsJOqHAaUe8gjgqrrBvR6hpNP994
-         ey3dK7pe0R8gJCKmO9rIBFJgEs4lY68Y07tsAtwHfj7nF6kjnzug9yot3Upsm0y8XzRB
-         Pe4R5f+oa5oOBVQdxEozegHzqtMAkwK2bEG0rUGppn/A3SeO4N3p3J7EUSwcvEbLjwdT
-         ZamQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IeK14DT4"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-829781b2b01so3808062b3a.2
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 00:03:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773123077; x=1773727877; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=m5B02/tRsBWahxYcfplFVG8x9qd9MEgnRnOAKW7A0P4=;
-        b=CKgiCrTYki0/GpmHSA1J8cJzqD5WXifJ77CvyH5IdBd5i/s2uMy18YTIYHJqNjoVgS
-         jvTeA+Vmogxu1xk0EtcZcwjUhdFa7jpt6ntPakj+wPh3XA4jBTBzIhozjlP3Pj+U4Y3X
-         KZdP2i2637Lck+A+PsykbywWbLeCdvi8/V2mG6tpsunC5rEGNEcaG3TA6h4gC3v4SoKp
-         GvhNwcYIysFr/qn3GmcYJpAcIv8AOg1Y6XxaGe150+VedjeZpGMeF5qp57esaGpOgup+
-         LcfWIIi4/7hNxKrOuYNPWhCWFH2udleyjiHJcvJpnBR6TSJZctuSdlqmRgOqKZg1r+A0
-         PdmQ==
+        d=gmail.com; s=20230601; t=1773126216; x=1773731016; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pj9kqxj/5MXCJU02c+nbqYSZ3ieEmokKXU95IIEG7s8=;
+        b=IeK14DT4s1mLxkMPB0eSfDc7N2oH3AwkVgk/n/LQ5eW00RNcHS6KWQMcEYHdmQS0sh
+         YQrSXS6GNd5KH3/12pQhnh6YpqiGl91F/2p6CiAzudJQwGZeD0u56u/w2MyYqMaOi+rE
+         +wgfZHRBSlYBoq66E708Om598XHi0FgEpttUgvf0urvvubDAbq1mUUxrMi4sfhTKIJ+F
+         +HIPipNBqtV0jOkCuy8yJbsl2Sie38LVbe9DOOjL3iRJjuYxPGVCiHcctTBc03Jrh2Z7
+         HqrQ6OglT2RLp21BkoVHhzOw4SyRCeF/QU0o+MspzlJb1SlOOqpekb1Mk44ifJydoxUN
+         C5TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773123077; x=1773727877;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m5B02/tRsBWahxYcfplFVG8x9qd9MEgnRnOAKW7A0P4=;
-        b=ZXiiTq8na1B3XEsSzvW9HFKAciAN4pg3PwaSrvAgIRhHuYepYKJ81KfDQJOlFrTpqA
-         03ZMzUnWj3E0yGpq8O2rkqVbCsci4UMtTi3Ms8WAfytya+CEy83RJ6CPzbNt/oJIJW4u
-         1vTeyBBoLTAXjBDTdbxm47A38dB2K9rxYTdkcqvM+FH4mmlDkANro7ZuTtXbRDNrzQC8
-         pvbzrvVtj8m3P60p+T5ijYUrv/lRc+Kz45PJt5Pe8AXGz2a3zNKQs0zWt4RVUTb3g/HK
-         LAP0gmPfu6S8E8Vt35HPVbAtP5hZzSw2i5ygVjpxpLri6Y1ayBkt3qd3hT/KEkZ5nLAm
-         EMzg==
-X-Gm-Message-State: AOJu0YwYCSaB7zA75SAzPLidEFSan0te4hWDPgpbIVl1D26YcJsU98g9
-	emZriRmB1J37xyJqYgLZ6N+To7+kpojKXptCy9tUyxUSBIghTOpnjJRGmN6u1KBkK69o6IOl/ks
-	+ZAhYT9abMucbK423gtGSpzgoa0Gr6Aj0laD+
-X-Gm-Gg: ATEYQzx2sEe+I6Z4ka3N45AYJUlljUwERmoud/mb/XEwhubhdpVfRz4jD/5jNFenRk+
-	VqHjr/z5ZFo57SaFfBPri61w29LDnBOAiE4RgI/YpFWW2obnKhCkLt+uKZRYNC8xsTKRD4hyeP+
-	uNtOoLKHz+ymWXTehDUeq8MMPFeiZYwGjfw4jHabTFCiH9makGUEuJOt5PO9HoccR2sG53hSG11
-	fhwBpMDPtXLLl3dGNB4VVuPMCqFJtx5uldQOwo2VtQjTmia5gtoRvjF1ui+LmS8xiewqUqCWY3b
-	VLR/Sz3Rmz77Rj7V2Sc=
-X-Received: by 2002:a05:6871:2286:b0:40c:d8bb:8414 with SMTP id
- 586e51a60fabf-416e3f2064emr8096411fac.15.1773123076821; Mon, 09 Mar 2026
- 23:11:16 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1773126216; x=1773731016;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pj9kqxj/5MXCJU02c+nbqYSZ3ieEmokKXU95IIEG7s8=;
+        b=gGzKjgCTD3qoZs0+zJkiQxOF8nmZzZg2FoZa9RJukUQ+YxH3Om7q8mtGOGulK1laME
+         IoiNSMpW0H7TAVhB4CrJXM/mSfnJmQ01lqt/CorFSztdzLqP9E16TM1No/7QQAhGi49V
+         ljKmMWvbOqjc00q6A7OgAe/otum5tiQplysyMuurunO56ToFPrqCK3lWGyMgIgYKnCVZ
+         6jEeD1UGi9P3XE3q+nPS44ipRN2271Iw4/fuWqcxa827RJ6o4laBwbZB0/9LqJS9O2Xz
+         x5f6FHeN+2/A36e4VjrOvMS4j0clCDXusV0HqXzwa/Ym1BXwlN3UXSc8FCi5q6H9dZkH
+         9G1A==
+X-Gm-Message-State: AOJu0Yyrdnm3+LTCodhd1mP3loQc+lQGUtC2gGLhxpgm7BzC+PBC2NtR
+	jDE+p4Y7HIBe+6RA3lI0W8m+IzpGk0RQgN0CK4OQNwikLCQ7ACi2o7JBb8f7dwUHvyw=
+X-Gm-Gg: ATEYQzyZ6cxPCDHbL4ENWrml/LZ9Cx+hs7E2qTaHa79x1pBQZ+Lz9B+ef6EB6vjYvd7
+	n980nrwxQ2NPS/1Vn3fejOw7Li4nREYabV8qPfVWQQ5Cx/ZfwWCJdp2/OUAXaYyKhLHMoJriFeG
+	NdJnj2j+M+9M3jyg1TjSOe8mLgWYn4BTjg/xos3heY/J9MI6z2n54utXT32Zksy5maVvKtZAcUK
+	2ONpKrCya0LUTdGEvhWYouaMc6QM4cMQqVagDEA0x5jyVtYYEVervW8ucoSycivjwapQC6lf/HV
+	gB+E5ql7Ga2PbBlcEeLXkkNLZV95gkMPDyuL89XpnKU43K7LZZxsPZAu14MpmBN/fziJpFONM+R
+	ucgZr4GhADGTbaHn+rfEtfET0I043f/i3cTyCZUCZsZ8POOlGHrw3HeIOGgdkrGce4K1c0fzUFa
+	OmCHfQ84xD9cukLvR3yKuSKSyLo8ZVRDUKTitvvBIkGDFHP6LDI1AiwTDMElD3TQ==
+X-Received: by 2002:a05:6a00:4006:b0:81e:81fb:b392 with SMTP id d2e1a72fcca58-829a2d6e680mr11577578b3a.11.1773126216012;
+        Tue, 10 Mar 2026 00:03:36 -0700 (PDT)
+Received: from localhost.localdomain ([123.252.204.197])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a465b6f7sm15137843b3a.23.2026.03.10.00.03.33
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 10 Mar 2026 00:03:35 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	jonatan@jontes.page,
+	r.siddharth.shrimali@gmail.com
+Subject: [PATCH] builtin/help.c: move strbuf out of help loops
+Date: Tue, 10 Mar 2026 12:33:28 +0530
+Message-ID: <20260310070328.29836-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: MOHAMED AYMAN <mohamedaymanworkspace@gmail.com>
-Date: Tue, 10 Mar 2026 08:11:05 +0200
-X-Gm-Features: AaiRm53ikGvwyRy0mjoYVicdZZrY5AP_GS_RWCQdO5w8p55lkwpDVeskoBrwr3U
-Message-ID: <CABWZVhraW4zD132R0iv1uhBwS=uuQZduksCCYN_+4+OcBKBodQ@mail.gmail.com>
-Subject: Question about microprojects for GSoC
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hello,
+In list_config_help(), a strbuf was being initialized and released
+inside two separate loops. This caused unnecessary memory allocation
+and deallocation on every iteration.
 
-My name is Mohamed Ayman and I am an engineering student specializing
-in embedded systems. I am interested in applying to Google Summer of
-Code with the Git project.
+Move the strbuf declaration to the top of the function and use
+strbuf_reset() inside the loops to reuse the same buffer. Similarly
+release() the buffer at the end of the function to free the memory.
+This improves performance by avoiding repeated heap pressure by reducing
+the number of allocations.
 
-I am currently setting up my development environment and reviewing the
-recommended microprojects to become familiar with the Git workflow and
-contribution process.
+This also fixes a minor memory leak when the SHOW_CONFIG_HUMAN case
+triggers a continue.
 
-If anyone has advice on a good starting microproject or areas where new
-contributors could help, I would greatly appreciate the guidance.
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+---
+ builtin/help.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-Best regards,
-Mohamed Ayman
+diff --git a/builtin/help.c b/builtin/help.c
+index 86a3d03a9b..07398b430e 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -134,10 +134,10 @@ static void list_config_help(enum show_config_type type)
+ 	struct string_list keys = STRING_LIST_INIT_DUP;
+ 	struct string_list keys_uniq = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *item;
++	struct strbuf sb = STRBUF_INIT;
+ 
+ 	for (p = config_name_list; *p; p++) {
+ 		const char *var = *p;
+-		struct strbuf sb = STRBUF_INIT;
+ 
+ 		for (e = slot_expansions; e->prefix; e++) {
+ 
+@@ -149,7 +149,6 @@ static void list_config_help(enum show_config_type type)
+ 				break;
+ 			}
+ 		}
+-		strbuf_release(&sb);
+ 		if (!e->prefix)
+ 			string_list_append(&keys, var);
+ 	}
+@@ -161,10 +160,10 @@ static void list_config_help(enum show_config_type type)
+ 
+ 	string_list_sort(&keys);
+ 	for (size_t i = 0; i < keys.nr; i++) {
++		strbuf_reset(&sb);
+ 		const char *var = keys.items[i].string;
+ 		const char *wildcard, *tag, *cut;
+ 		const char *dot = NULL;
+-		struct strbuf sb = STRBUF_INIT;
+ 
+ 		switch (type) {
+ 		case SHOW_CONFIG_HUMAN:
+@@ -195,13 +194,13 @@ static void list_config_help(enum show_config_type type)
+ 
+ 		strbuf_add(&sb, var, cut - var);
+ 		string_list_append(&keys_uniq, sb.buf);
+-		strbuf_release(&sb);
+ 
+ 	}
+ 	string_list_clear(&keys, 0);
+ 	string_list_remove_duplicates(&keys_uniq, 0);
+ 	for_each_string_list_item(item, &keys_uniq)
+ 		puts(item->string);
++	strbuf_release(&sb);
+ 	string_list_clear(&keys_uniq, 0);
+ }
+ 
+-- 
+2.51.2
+
