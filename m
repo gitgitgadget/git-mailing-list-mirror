@@ -1,91 +1,115 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221C630E0FC
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 04:51:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F893822A3
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 04:54:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773118293; cv=none; b=LpY4AUFyZT7Ra9CAY7A/fmrmRvyjPyMxuGDfC4PhB0wthrN7H11TjqzEeF3hE2ENf7YM2uUAUzxKr0vO/qHl41XWFimcqLOxwvkvZeeSS6C8MRc2UvRVJkzc1yycV79jxzPdVFonfceJkm7B6/hEV9uiET9ieXcvSlczrAjhN7A=
+	t=1773118473; cv=none; b=k/BI9P1uJQ3rQUqLyq3RP8NY1N3T5mzmyhb3/WfcVjo0B8/0lz8kh3Xd2L5paPY9E69BatnCxdqxPReiOv0JArQLJ8/yYlixTCEuQZLOEt38hOpF3s5iWipS4a6VmLdzF19cgOqCsmNQ1WGwqXUXjFc5GTiy998ihjrTSUay7fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773118293; c=relaxed/simple;
-	bh=II3is0ehZgEkdFA3kJW5POnFvfvwjK+MkeM4eVMu2RM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mW33Z4gS/YEZBSVjm6S78JjWiKOz5uMHG0Y/LNH5xPw7reEpnhriOLX5SEE1GLqq9jrUdCPsaXSsuX3g0rgtYEdaSv0Wgbqy4t3FWihHUEGicGvbFEZRlqVRvCQVEnC89pwy67kBwhge5Imp0KuhEwGmfuhcIdjO+Sab97i2Rqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=fwHn/8Ag; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=s9cobJT2; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1773118473; c=relaxed/simple;
+	bh=vuiN5oXZecnRLzVCr+Rh+AroA19kSZxyMeeuKdjf3Xk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aYYigYgjYkvt+B4dFV1h/tbk/rvETisB0GxHxcNNbrbsl/PWV5qXNYW2YsRwxy4ohA/aAPoSMlbr1sJbGCVhRWLktdMH1QRcD0NRj0Z33/goyKhXr0tOQ0VtcnUv8KOOnEmSSPSwA6neSk5wPwgHsdAmPwRYcsOU1IcEpxxyr1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lpxLUg8c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n4pTLGcL; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="fwHn/8Ag";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="s9cobJT2"
-DKIM-Signature: a=rsa-sha256; b=fwHn/8Agny5qHxZhUMOKR76gAlB8lStS7B5zmLl+e7MzMHu8vJCJEM3KnpnCsvcik9dMJgnQIH+emCwaMUM73DlI3AVK/FosLFwlDVvDXGylHaKS6Tj7XcJf5nw7CuoHkUwE+0wcmMq3pzJUFj4BKP89ey+fgbQJuEvdSJzMvatFEAVORZcix6y73EjBB8dINKRuu2PZe+eKrcN9nFBNPny3zKiejO8OXo1ABAV2Lr5ta/6FUQJEgZh9PPFGNsI5C4Q9A1sbyBZtZ4y/tYPr3OCzFHjsRRGT41gDcWNwJA16nbkShm56gVSei72mOjlVEUjSnDOKrkH1oYb7JMgLbA==; s=purelymail1; d=malon.dev; v=1; bh=II3is0ehZgEkdFA3kJW5POnFvfvwjK+MkeM4eVMu2RM=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=s9cobJT2/CEWo5BuQpcn/AJ2rwQ4hWMwHo2t6t3DXH3TGBNrUCMxRds5epc+mauSzaUizT80RALD6GBTPjDY+IEeFor+cbh0KitYpib4jQGfdOajW+E6HaHD5mOFTXmjCgt1Ug6tgNTnQ7sUY4LNjf9niTEHWHePaByb9RZ6FaJuERTU1hUuvIC+4xhxM+6gRojV1ul7fuyq1CVRIG3DhRkdFxkvtYUgjBU9044E4iJ4RirDJrmg14qmFyPuX2EH/eDoZuLU/2K1Df18qomm4lSP9lPwAd1S3+CikndXnlh68S+aOF4O3X39YCNIIJOi2cSQpteOXNu+tWDQ9Bw3Hw==; s=purelymail1; d=purelymail.com; v=1; bh=II3is0ehZgEkdFA3kJW5POnFvfvwjK+MkeM4eVMu2RM=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -688842347;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Tue, 10 Mar 2026 04:51:28 +0000 (UTC)
-Message-ID: <71287f25-eb60-4a45-b4ac-9368053c9183@malon.dev>
-Date: Tue, 10 Mar 2026 12:51:23 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lpxLUg8c";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n4pTLGcL"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 99A671D00168;
+	Tue, 10 Mar 2026 00:54:30 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 10 Mar 2026 00:54:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773118470; x=1773204870; bh=L0Q8oA8OTK
+	6aLBt2bh70Bqs5Fy7Akcx74R8kHkMhD0w=; b=lpxLUg8cZGm+6bBPFBSsIQ/PqC
+	mEJeredvWLXnkFDRIDsL9SqhIk+/cVbFTBYLmaYbQLZ3d3r2iJnp3EAWQnm9WkBD
+	Tw009XEdMz10uX7VdSO4IuczAbbq+2HSDVsEZhLwvxieJfbvxZYpE3pC1vWcs+W6
+	CJHwPgJvtZfQbtSbgDYMUgzBRzTFNaOhXnb6SgsiUNdtTlXO7XZz38oUdFvN4btR
+	XNaksIzu3lPVHdnj4FCruHNNdeiEVOppZQ4MeEQjos1S2UwN+LXsWTWR9T9WmSRN
+	XmDii75cwlhl5Br50WwSSEB5BT2n7pNLtW7vgON2RmWgD+Su8vDktKfs5ziA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773118470; x=1773204870; bh=L0Q8oA8OTK6aLBt2bh70Bqs5Fy7Akcx74R8
+	kHkMhD0w=; b=n4pTLGcL/38i244IIM74WzEWHdN4h7RIlXPoG7YbJDxagxKOpjZ
+	Tdo3UHkbi9mCg5+fCcrNszR3ZdJ7p28mXz7y6oxKvNl0jlc1NEv44pnmtkiKa6LC
+	GQOUBpXq+DVyGJCSbn3/MkBSxftMeTI0iM2ESTrLJt2atLv5piRJ15We+hgAGTKG
+	mbekmjgqv9xmQBFL01keonWZTaPqXAuh/Dib4T/EobAqYQOl3pJbSM460F7zOJ1X
+	5oehHDU/ZIH16VeWRU+FjvZNAzDcE5lmyCeE2Mut6FmdhXcR+szsINqOZa9ILOAk
+	w3cL0cKsB5zGUkZ/WLGgtw+bWfLepjG1tUA==
+X-ME-Sender: <xms:BqSvaY9wWyjClykknGh0rW21o0qjay_NWJSgeWLCPj6ZXsKeOx-KEw>
+    <xme:BqSvaYJetc3UeKLQLlgw7NGdE9dcnSAg_AsKb-MkRC8xde6_qjg9Sp5a14Es3Hc41
+    Tbjn75h1QT9sIcKILcCwywWtWInt9z9RnTa9D0PcllDC_C6n8ly9g>
+X-ME-Received: <xmr:BqSvabYReJlPMmkk5XLaj46nyk_HTy1iNJeC5lVX7NL_71E_siYbgQGuPGa5ip5REPtF_Qx2y9Iirrs8uHg8pVJfDAI-xfKYdQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedtudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigf
+    efkeevteevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdho
+    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgrsghlohhoshgrsggrthgvrhhrsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:BqSvaSKSm0hQS7IyXzQnzifuJzV3-2KOZRCGaZH9XstU5qAkKgbhuA>
+    <xmx:BqSvaRBAQU0FOM9WbI6o-kYAbhuhrXHYearLdQ-_fezqC5xLc8W60A>
+    <xmx:BqSvafonqH2a1sZgk2iZCCycuaprhncRLeM2koeKqhFMdf6fl0DTAg>
+    <xmx:BqSvaUirzqiSbKgWCr62HfoF-r6HQ0oT3DG46q7SyOsUDjiwrOFTqA>
+    <xmx:BqSvaUJ_F6FOLlbbaFsYyVQBZXps9vE8qPaV5QjW70Dxcn29IrByboaF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Mar 2026 00:54:30 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH] format-patch: write numbered list in cover letter
+In-Reply-To: <20260310041929.1687483-1-pabloosabaterr@gmail.com> (Pablo
+	Sabater's message of "Tue, 10 Mar 2026 05:19:29 +0100")
+References: <20260310041929.1687483-1-pabloosabaterr@gmail.com>
+Date: Mon, 09 Mar 2026 21:54:28 -0700
+Message-ID: <xmqqo6kwxp17.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] diff: document -U without <n> as using default context
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <xmqqh5qswo45.fsf@gitster.g>
- <20260309172719.125419-1-cat@malon.dev> <xmqqwlzk1wd8.fsf@gitster.g>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <xmqqwlzk1wd8.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain
 
-Hi Junio,
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> I am moderately nagative.
->=20
-> It is not like we are _encouraging_ users to omit <n> from -U<n>,
-> but it is not errored out only due to a bug.  Who would the new text
-> help?  Users would wonder why <n> is not optional in --unified=3D<n>,
-> the other way to spell the same thing.
+> Cover letter generated with 'git format-patch --cover-letter' uses
+> shortlog grouping commits by author. For a single author patch grouping
+> by author add useless information and makes it hard to follow patch
+> references: "second patch does x and y patch does z"
+>
+> Replace the shortlog with a numbered list of patches:
+>
+>   [1/2]: first commit
+>   [2/2]: second commit
+>
+> shortlog grouping by author is lost, both for single author patches
+> and multiple author patches
+>
+> suggested as #leftoverbits by Junio C Hamano at
+> https://lore.kernel.org/git/xmqqbjhjxp2d.fsf@gitster.g/
+>
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> ---
+> I haven't tried to group by author on multiple authors patches to keep it simple 
+> but I believe it's doable.
 
-Indeed.
+How does this compare with
 
-What I was actually thinking earlier was: for bugs like this, which most=20
-likely come from misoperations, typos, or inconsistencies from *ancient*=20
-standards, should we acknowledge them as
+  https://lore.kernel.org/git/cover.1772839973.git.mroik@delayed.space/
 
-=E2=80=9Cyes it is a bug/historical issue=E2=80=9D
-
-or
-
-=E2=80=9C*special behavior* we defined=E2=80=9D?
-
-I'm not as familiar with the Git codebase as you are, so I couldn't make=20
-a definitive call. I chose the second approach, but I now agree the=20
-first makes more sense. In other words, users shouldn't be *encouraged*=20
-to engage in such behavior, right?
-
-> If we want to be explicit, we should probably do this instead:
->=20
->      `-U<n>`::
->      `--unified=3D<n>`::
->              Generate diffs with _<n>_ lines of context. Defaults to `dif=
-f.context`
->              or 3 if the config option is unset (`-U` without '<n>' is ac=
-cepted
->              as a silent synonym for `-p` due to a historical accident).
->=20
-> which would tell readers what happens when '<n>' is omitted and why
-> we allow such an inconsistency.
-
-That makes sense. I'll make the changes accordingly.
-
-Regards,
-
-Yuchen
+I wonder.
