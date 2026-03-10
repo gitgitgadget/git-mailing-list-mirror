@@ -1,253 +1,126 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E004296BD3
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 14:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773153106; cv=pass; b=lN9tvYfJbwuP59yrM/qO8IrkMJ0fU+lbJ8HnJaqMn9e475ielrBzJ6eKOH/gGGb8J/Hc1c5gw8ifpE0yRPsEgysUDZDFm13l6GXnFNQ6mkGuPC8mL4CW5iOQkoVxJJl86pFp4UsUmG/KInTqMJk1WR81wvH80calNsDaAjz4GAU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773153106; c=relaxed/simple;
-	bh=jkjSvTxEGSihRR7PlD8ATeX2q9ilObORGDkv2R5Q/1I=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fViUWjBLlI/i9TcdcMpHnCq/72koVrr7g/qMaGoMk4t4HzsYB1z4sN1vUEFmWoIwCU3ieNmK20BC67U6Xs7lGDR7HWE72nth58yAuNMfZHdIqJn5LfXj97x3/b04GcvV7XHL2+vDKn9F2CteIAVNxMaOaxPcoVfsE9w9uwirD9s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P26jwab+; arc=pass smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6DB2EC562
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 14:32:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773153179; cv=none; b=YWNUNX4QRgFz3AaL6w7YB7UeOhaWJgXEXcne3W3l+K43eg1mF4IwpG8qyhlV3Z3+QOIBUAQClacI6k2QAFCw4Ys1djrpIH/sMAAeSHyCxUslXi6DcePBUWWjPyJCOLrfW2i8eKflYL13MbNSXNYAtolAwYSVgTTwiSrYrp+aLRM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773153179; c=relaxed/simple;
+	bh=bBLnlL52rNur7Ksg17IjBuQ6Bge/v0iy2Sez9cSCCDg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fXdi2apnTPWHfTwDZN/UER11XPRQVei88fSmU/DzV0XQex08LfT0beuDxYa5p1Lqh0qhI5RxzB+hslRB6YQPq8Hi+SaG4FxCeiCufbYEl62OVwmlXw5k2WaTkhY5CCVNwDFHYsp/ssoZfrNBxpO/WX1MBtH1XVWcIO5vKOKYiRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GKZ7VS3K; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P26jwab+"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-94ac8cbf3feso7375256241.0
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 07:31:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773153104; cv=none;
-        d=google.com; s=arc-20240605;
-        b=IkUw3VwyMjyVVN+wamyrQkd9iMYZvn2CvYeE2w5NlPtot3dG+Ke25RNk1xrFi90UJt
-         my6OTHyUYh961Bvj+figsRWhzmeyzFx5Qbd46uUSnTi9CBFcnKV5ucukBCh7x4xQzw+o
-         DUMqFTtLd6gPkeg9geq8o1YrKkKpx3UoMUB47JyJh189xquU3kABUKRvZQCbW8gMEg4e
-         C8egM0qWk/zBpxKQd+FEoqCuHYsB4imqSfGXFhDd60gqHOpZ4TKkvZPohA66QdogF8VR
-         vWROpHSwtpnjIKoEZKaz0AQvlUH2oFdobTBrQZ9LHjBFad3wAuhgPokP2mpx9TL9JSLE
-         Wj8w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=/e5k5xYautRCVzBSBNSBd1tucczPa9s/trDgT+CVrr8=;
-        fh=EL0A9RkZRkspFMAxYgYUeoAkyRBh3aFYgVJ2ztkrXCk=;
-        b=c3ALkF/TJjjzqPcZTXf6W+L9/C9bopLT6cydI1kGY53NF+7j/yyi6gDgaCsHejyIYX
-         entGjy1MR0HD/FXTXz8MNttl+y5FElDYWlyYieC5GWlYuCJLK66S8mceK44naYMvwJmg
-         kQWwPbOwxU5JYuFjClGdt7t10au2vUbkbM6iWG+dnrRhfaSEYKEHc2FeNzg23QvjiQYO
-         7gz7gLSnYE4fcCFxB4Wg1q613gqLg1C4Cp5VN1/H995ZY+l/S1F1VdsWeSCd/0uIYrJg
-         4CZ3RppQfM1s0O4U3DmZr/XlSjNi9NXmqcTfSzHLvR6+wq8tjYSsgyzIkoMI/wZtDBke
-         qn9g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GKZ7VS3K"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b942b36de08so678432666b.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 07:32:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773153104; x=1773757904; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/e5k5xYautRCVzBSBNSBd1tucczPa9s/trDgT+CVrr8=;
-        b=P26jwab+Uvj0OZZzqQwBJb+wk566ME1CcSBUyD58ASu0pcDg36vXBvNxg2cnAvoGMo
-         Ld1szfGOk8oZnatXvebiHp7ncGtbd8eYloKKk2kydWGOpZZWgeCNYvqtW6ZTt/BRlDr6
-         HEOQM3So7NWZ5ag8br9Yc00HeTcpa2eeBafkBSURQiwZwKZvBfJc1eRnpm/77CwlDA1p
-         qJEs243PD6VPy6X9m93ezX1+hG9Tu+0TSGMo/zK3Sxz624GMs6FruB4Anv/dNrK4xzqP
-         K3Ibyc78wdkdwFn10uGVD4wpR2hA7VeOAaKqIMI8Xb85RRAqe11GgWYroDN9AMamxSMs
-         7GaA==
+        d=gmail.com; s=20230601; t=1773153176; x=1773757976; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=sdgaeL3gwETMaPOGt/cioaCjOZgz7P6mXaf9qlbrSe4=;
+        b=GKZ7VS3KA10+/9XHLl779/An/WOLYiu5Y08zlQn4Sp1MZPFlUtPUMVCyb+KEFiKC/N
+         NbHoKuIx5r6Z9A6uvNjCmUTlUvJNiCYNpYNolU7ULpxEsLxcDg/L74+A0k1GYZThP8N0
+         sXhkGbgZGOXveUT1nXg9IwQPxdr9uIL3zZr8wLqJq6tTznZ5MpEBL61uO/mmgQQrB0T/
+         zOBDHqBqfxnsgeUah+kaTant9Ry7ATrmrWcpX9wNHBnDzceaO5P8txyajB+SfV+LQMfr
+         3grtc3DVVl+OkPiqajarpg+G4VJmbdzmy59MBGz2vLt9GBKdfuA1fLh+PwjJklj+cst3
+         EgRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773153104; x=1773757904;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/e5k5xYautRCVzBSBNSBd1tucczPa9s/trDgT+CVrr8=;
-        b=s0m+ma0x2Wh3HxfxjtweH/KG9p8p32rURq2+Md8ZjHTqCio2e4wxu3NcMJIt4VqOk7
-         vfZLZw1WfIG/PoJaRsP+TaACdsrYzXJkfCu0sTZmMFe6K1ki8r4ySJo58smkNHp0/HmO
-         R4O21A79IcttFAjNL7jw9Ry7SCp3AcoYx/Mp1PyODyRJHecbss79KVcxI+jEzDUVvMgs
-         033W63v+94cjeTyfiK0wrErG0Xggd7ypmPOVX9fSXjv2Ggtft/aHhoIHDgLcY8Ob9a/z
-         WdrJQrFd5y7CN3G8jwr54JBCGHxhCfUwkb/ciw/clDvxRjqTIdQbsgsnxZybBkZpvm2X
-         K+EA==
-X-Forwarded-Encrypted: i=1; AJvYcCVhhSZBJYxYh8xIuqU/xdCSU4QIayEe2HN3v2RRn8+3KWFsBEXHWY89xXqz3k/r5vG/jrs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwF9DtZiI9HrN+MFZaK5Tw8DlRywo92q7n5JRN4quE73tRItC1G
-	lHISO/PP+tCD6w3sdQ3dtgAzSbQGDdZ2fycxNo46V/NH1Tw9lpRJ1CvwH2XtL11LKTCpIfhDLNM
-	olURfEZ8suWMJgk8SzoZYMXdDFVMMb0U=
-X-Gm-Gg: ATEYQzyKnLeV6uyOu0gAQCKKwLIpGWY1tRt6Na5k7QDch3Evej487hgCbYUobOHFo8G
-	UAZdw31fzIk2Ag7lNOJG08IqSvKQa14Xz321r9dfukH5x+2joxj5PsWjtgZaybJYpg7Sp4A8gR3
-	+bp4yialC3FmTSMW/RKWQDspEZ+1+a+8HwEDR0TrVrB6UVVQ5eFwJq16HZ2L1B17lo5I2zjf7hL
-	ojTm8FXW7u9zHHT86y7lbk0HHSNZBNkyyGwJcG6iJq510ucRMqtvlNoyflIXbzLofh87qAxbGmi
-	0cApJvnmbfECsGbk8VWs2euX9MauSvqjYlB03NhK
-X-Received: by 2002:a05:6102:3581:b0:5f7:2655:f2c1 with SMTP id
- ada2fe7eead31-5ffe5f72ce7mr5961702137.13.1773153103866; Tue, 10 Mar 2026
- 07:31:43 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Mar 2026 07:31:43 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Mar 2026 07:31:43 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <pull.2233.v2.git.git.1773140364525.gitgitgadget@gmail.com>
-References: <pull.2233.git.git.1773132678.gitgitgadget@gmail.com> <pull.2233.v2.git.git.1773140364525.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1773153176; x=1773757976;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sdgaeL3gwETMaPOGt/cioaCjOZgz7P6mXaf9qlbrSe4=;
+        b=k/DT/UpHnh2fJpR4xfVD/uywAHSgR5bHrxFKijNgwqWOfgJ1Ult5jh35XTCxhWHjrL
+         SShrjC6a9tzOn0+yhJzwUO3RX7uPeYL/WptPzQ4IjCJGIePJuIRWOA7hO0Nf4yPyYUY6
+         gvcAKQTRL8LGjSP/DQsmsXqW8OHAPILqpWqugYDCgqFbNUkgUDVwnW0GLQ47iUgH0n/Q
+         NlaXPOWUR2aySY7F1FG/1WaShTAsqXirLMECyVXzW/yqxaiW72BVVVqH0ijdbIbFvt9G
+         DRgc9lPBISlm3y7LNDjvaUIrf/wxZD7KiQNOsAz46A/pdC8rKo7JNg3zw/x9cg8EkfW2
+         BI8g==
+X-Forwarded-Encrypted: i=1; AJvYcCXgUI1yYlnKgKDfXeuBwtdFbLEoe+lQQrZNFIb9sFUirI7nScRnGtUxgDS+uGb6VhUgo5M=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyPTryGietKNoH35DOwO9ydzfCn8rAZUf9Kjjs1g0i0w/f3bRXl
+	/IXZF5A8ic/Vh/zyhscUna0pbPa2x6csIB1afrPrreMDVxrxKREmPGBe
+X-Gm-Gg: ATEYQzyq6JrIjarA7kbcQbN2xTTjVFX1s+5XaEfu+ISfDgjglCvr01czie1R2deKJ1c
+	QtGTJBWF659ZYS1YSjsBuX8IPbsQkc3/aeWfoBrkQVEJX+gfinxQZqN50LwjwpXvLFBFmBnkAFu
+	p0WfgI/DLRhNImysOQMNk7+Pce+VuEdT7n/anQtmmtzssgkVixpgPH2bCJHby9NGUYyvD7qCX8w
+	/AP1zd0+yZygUXVJDfRWuJgJAcRyBA578BVwK0Be3ZTiwietsQ7/Cb2LW7Tn5k2YdjeRpxlCgYq
+	H7NH81yy+SX581s5yEy3jryXFQ3ygn8avBWdtOTwNyyDnzd0QjIKfjppwHWRRLnSt3dKrlvZw3n
+	MQm5ZExhMLSv9HvFa3SzsU+eRvD6rXOTwcaosw/a/by+7KfEiWiGdZwN9BwWKLAdQDfKger9qoQ
+	i6GRcpkncoibsI+mlF0oBYXGl8goQx65c/qHAKzHjXpG90ZYqESpETQnh5YHObaOSWZGy3Tt3Xl
+	zm2hSHZqVEPLetn
+X-Received: by 2002:a17:907:d92:b0:b93:758a:4487 with SMTP id a640c23a62f3a-b97118b1d1cmr229315366b.13.1773153175909;
+        Tue, 10 Mar 2026 07:32:55 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b942ef42a85sm512145966b.6.2026.03.10.07.32.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Mar 2026 07:32:55 -0700 (PDT)
+Message-ID: <8855efd5-a53a-47fc-8708-4cd6d416e441@gmail.com>
+Date: Tue, 10 Mar 2026 14:32:54 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 10 Mar 2026 07:31:43 -0700
-X-Gm-Features: AaiRm53qxvYjjiSQ8ceZ2DbpuOnqC33p2SzfANmRE8PD_1zwLGon-ionLdveqEg
-Message-ID: <CAOLa=ZRfaSR2CisUrW0gLf_45KQj1wQZ70F4PZ5XcwWZ--+HhQ@mail.gmail.com>
-Subject: Re: [PATCH v2] advice: add stashBeforeCheckout advice for dirty
- branch switches
-To: Arsh Srivastava via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>, Arsh Srivastava <arshsrivastava00@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000e38e0b064cac607e"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 1/5] pretty.c: add %(count) and %(total) placeholders
+To: Mirko Faina <mroik@delayed.space>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <cover.1772837832.git.mroik@delayed.space>
+ <cover.1772839973.git.mroik@delayed.space>
+ <cfed3bddf66ed2fab1f4da896759de1ba086578f.1772839973.git.mroik@delayed.space>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <cfed3bddf66ed2fab1f4da896759de1ba086578f.1772839973.git.mroik@delayed.space>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000e38e0b064cac607e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 06/03/2026 23:34, Mirko Faina wrote:
+> diff --git a/pretty.c b/pretty.c
+> index e0646bbc5d..e29bb8b877 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -1549,6 +1549,21 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+>   	if (!commit->object.parsed)
+>   		parse_object(the_repository, &commit->object.oid);
+>   
+> +	if (starts_with(placeholder, "(count)")) {
+> +		if (!c->pretty_ctx->rev)
+> +			die(_("this format specifier can't be used with this command"));
 
-"Arsh Srivastava via GitGitGadget" <gitgitgadget@gmail.com> writes:
+ From the user's point of view it would be more helpful if this message 
+told them which format specifier isn't supported
 
-> From: Arsh Srivastava <arshsrivastava00@gmail.com>
->
-> Add a new advice type ADVICE_STASH_BEFORE_CHECKOUT to guide users
-> when they attempt to switch branches with local modifications that
-> would be overwritten by the operation.
->
-> This includes:
->> New ADVICE_STASH_BEFORE_CHECKOUT enum value in advice.h
->> Corresponding "stashBeforeCheckout" entry in advice_setting[]
->> New advise_on_checkout_dirty_files() function that lists the
->   affected files and suggests using git stash push/pop
->> Documentation entry in Documentation/config/advice.txt
->
+	die(_("%s is not supported by this command"), "%(count)");
 
-Nit: Did you mean to add bullet point here? '>' is generally used to
-quote text. Perhaps use '-' or '*'.
+Normally we do not add code that cannot be exercised so you may want to 
+squash this change into a later patch that adds support and 
+documentation for the new specifiers.
 
-[snip]
+Thanks
 
->
->  Documentation/config/advice.adoc |  5 +++++
->  advice.c                         | 27 +++++++++++++++++++++++++++
->  advice.h                         |  2 ++
->  3 files changed, 34 insertions(+)
->
+Phillip
 
-Hmm. Shouldn't there be changes which actually call the newly introduced
-function? Also shouldn't there be tests added?
-
-> diff --git a/Documentation/config/advice.adoc b/Documentation/config/advi=
-ce.adoc
-> index 257db58918..8752e05636 100644
-> --- a/Documentation/config/advice.adoc
-> +++ b/Documentation/config/advice.adoc
-> @@ -126,6 +126,11 @@ all advice messages.
->  		Shown when a sparse index is expanded to a full index, which is likely
->  		due to an unexpected set of files existing outside of the
->  		sparse-checkout.
-> +	stashBeforeCheckout::
-> +		Shown when the user attempts to switch branches but has
-> +		local modifications that would be overwritten by the
-> +		operation, to suggest using linkgit:git-stash[1] to
-> +		save changes before switching.
-
-Doesn't 'ADVICE_COMMIT_BEFORE_MERGE' already do this?
-
-In one of my repos:
-
-=E2=9D=AF git status
-On branch master
-Your branch is up to date with 'origin/master'.
-
-nothing to commit, working tree clean
-
-=E2=9D=AF echo "aldjf" >> LICENSE
-
-=E2=9D=AF git status
-On branch master
-Your branch is up to date with 'origin/master'.
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   LICENSE
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-=E2=9D=AF git checkout  0-1-stable
-error: Your local changes to the following files would be overwritten
-by checkout:
-	LICENSE
-Please commit your changes or stash them before you switch branches.
-Aborting
-
-So won't this simply be duplicating the same message?
-
->  	statusAheadBehind::
->  		Shown when linkgit:git-status[1] computes the ahead/behind
->  		counts for a local ref compared to its remote tracking ref,
-> diff --git a/advice.c b/advice.c
-> index 0018501b7b..e1264f525c 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -81,6 +81,7 @@ static struct {
->  	[ADVICE_SET_UPSTREAM_FAILURE]			=3D { "setUpstreamFailure" },
->  	[ADVICE_SKIPPED_CHERRY_PICKS]			=3D { "skippedCherryPicks" },
->  	[ADVICE_SPARSE_INDEX_EXPANDED]			=3D { "sparseIndexExpanded" },
-> +	[ADVICE_STASH_BEFORE_CHECKOUT] =3D { "stashBeforeCheckout" },
->  	[ADVICE_STATUS_AHEAD_BEHIND_WARNING]		=3D { "statusAheadBehindWarning" =
-},
->  	[ADVICE_STATUS_HINTS]				=3D { "statusHints" },
->  	[ADVICE_STATUS_U_OPTION]			=3D { "statusUoption" },
-> @@ -312,3 +313,29 @@ void advise_on_moving_dirty_path(struct string_list =
-*pathspec_list)
->  			    "* Use \"git add --sparse <paths>\" to update the index\n"
->  			    "* Use \"git sparse-checkout reapply\" to apply the sparsity rule=
-s"));
->  }
+> +		strbuf_addf(sb, "%0*d", decimal_width(c->pretty_ctx->rev->total),
+> +			    c->pretty_ctx->rev->nr);
+> +		return 7;
+> +	}
 > +
-> +void advise_on_checkout_dirty_files(struct string_list *file_list)
-> +{
-> +    struct string_list_item *item;
+> +	if (starts_with(placeholder, "(total)")) {
+> +		if (!c->pretty_ctx->rev)
+> +			die(_("this format specifier can't be used with this command"));
+> +		strbuf_addf(sb, "%d", c->pretty_ctx->rev->total);
+> +		return 7;
+> +	}
 > +
-> +    if (!file_list->nr)
-> +	return;
-> +
-> +    fprintf(stderr, _("The following files have local modifications that=
- would\n"
-> +		      "be overwritten by switching branches:\n"));
-> +    for_each_string_list_item(item, file_list)
-> +	fprintf(stderr, "\t%s\n", item->string);
-> +
-> +    advise_if_enabled(ADVICE_STASH_BEFORE_CHECKOUT,
-> +		      _("You can save your local changes before switching by running:\=
-n"
-> +			"\n"
-> +			"\tgit stash push\n"
-> +			"\n"
-> +			"Then restore them after switching with:\n"
-> +			"\n"
-> +			"\tgit stash pop\n"
-> +			"\n"
-> +			"Or to discard your local changes, use:\n"
-> +			"\n"
-> +			"\tgit checkout -- <file>"));
-> +}
+>   	switch (placeholder[0]) {
+>   	case 'H':		/* commit hash */
+>   		strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_COMMIT));
 
-This doesn't seem to be formatted with tabs.
-
---000000000000e38e0b064cac607e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 78a7a42b7fb9a942_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1td0swMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK0srQy8wZGRNb2V6cmlpWTh0ZFo1NiszeENxSVlETwpaUzRaTEU3RWdz
-TWllbndEWm82NHFqaTMxL3BkNXoyS05vTksvTWxuZm1uRDEyUVRCSC9yNUR2MGhiQnlPNlpjCnZs
-Z21NL29UQ1lJaitNOXVDbmFBMWlOWitNWCt0MW9Ya3haaGx2SFlLMTlWZ2JNK0pYWUhPYjBuKzJF
-NDAwTysKRUpUY1doQjhpZ0NuNVM3bndOWVhDcjcwb0l1K043ZFNNa0lnaWlqY2c0a1lBMVJOTDJ0
-cFBvTGNFeVVWSEJ1TQoxYlpVZVpGWkVTK0N5anhMa1MyTWRtbEhZRmI1ZkxaTHd6RCtsbmFKQkJV
-T0kxV2pLMlZlNUpoQTJGY3pXVWk4CkRsQUVycFNYOXhyRmE3YjI5SnZQb0tmd2dLSWJ5dkVtR1ZN
-OXkwZDZrYS8xa1d0VnJZenk5ZWwzZUM0a0tiM2IKQWdVZFJMZlJnMFQ3MHFkcXFiMG5iZEtlcDNt
-Tkd3QmhVSGloUjJ4MjNBd3VMSk15S1ZFb29TclRWdWFyRVZVYgppTlQwQkZrb084QzVraVNsZll3
-b1k2TFRMc2xwTUZwRkptaHNMVklUKy96azNmb3NzTEV0a25tNHg5SS9UMDc2CmZLblVvNk8xcW10
-OFVXNXdqNVFCcGRHTDQxYkp1OEtLRkNOWUcrST0KPUR0WkMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000e38e0b064cac607e--
