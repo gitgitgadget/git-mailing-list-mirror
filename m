@@ -1,82 +1,89 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F2B3BD236
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 12:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CDE3BD231
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 12:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773145330; cv=none; b=d/FgLEkdGJvI1loFH+j5K9DTMbi5J+b/0uXcX86mwc5e52noE08h99g5VCFzGCkm1ezeQT/aBbaJrcAN7B6j9JNTd7eyzCSltnHaKn4PpauHOnpffsngTbgOapSuRRWrSTZAqoI5iX6SIsbQCNMXXPxuGyP9jdJjPkr8h6At99Q=
+	t=1773145440; cv=none; b=k/t2t8Z9yVhzzmTlrGIcpJqUoXK8662Ujz7XwBuGk4WPjOqBuB9iVPkp0ogAxvokmTKB8n0a8xeqadJoYtQvuwDLkWmvlYzB6nB0Ti8Jml1u4GVFNjmxGpYD0cFP2LPMe7lVIjw29W8iWRzGxiMIGnv0Ulc1dK9x2/kTz44qC8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773145330; c=relaxed/simple;
-	bh=rJCvopWp5iiDLccoYd5jWA6yqz+XgfhTotF/3HquArg=;
+	s=arc-20240116; t=1773145440; c=relaxed/simple;
+	bh=ouKCY4WKNCwxHJgGxKx9po2AwEw5dJAwYzCdPcirl4Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YLBbuMVxfxpv8o9RfA+Z9EFoRm2KFVHkzipdykrQIIXvLJO1PSxDYFSfi3LZfblSyeb+RanemME8819Zj+hV+j5oqhlu2pbwoCgNxXwynyWbrz6MRf7exfCm9ab15yesB5XOcpzaPRGiq39TjKRAj1CsYSzu+ju0mazDUUoMhRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nh4h92EI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TMBllGQ1; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=nIOzWGy5jzU6FDuOXRr7Id99aMCJwGU9zgr3AmcQ2DSYVClBRJkMAxWVVnU4Rs5a4Eo+Y2s7UCo9sIPGXUg9lAkhdsCb8KE4CL63lWmRcy7ljP7BFx1MNA3Ys8XIAyJnNw8/r9uzzw6TcYDSpH+Nb2w3xMVyw4rQA35BJ9hj6OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LCmT6Eur; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yJ2on2T+; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nh4h92EI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TMBllGQ1"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5EE2314001BD;
-	Tue, 10 Mar 2026 08:22:08 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 10 Mar 2026 08:22:08 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LCmT6Eur";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yJ2on2T+"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B6C3C14001E3;
+	Tue, 10 Mar 2026 08:23:58 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 10 Mar 2026 08:23:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773145328; x=1773231728; bh=RBmkbI+vZZ
-	RBLumob0ydrClTmKpcw2QqDzCtRIR4JmY=; b=nh4h92EIIyV0G7iWwMeacK5gUF
-	DJP5q6vkArdfWno69YyM4qN5E4vmWpjUhrAoRcpKSVGlTOyw9aVWernv8DRID1Cu
-	oBmw5IOZxKvbpSQN31pSW97PEcExNmqV2r466+KHfQHY2gnEQvUy7WWxXzDQLzOB
-	auHpSQWYuffhxxNPYGoivwz9gN+JgnMh+7LMxw08wDB937ijquuVWWp9HrHDiMmq
-	nNT+iyLTYTpWaggSnGbmaBJgQvtZt9Qzmo4AoQmWr4eGz+kujEoZCQh+KOEYgkjq
-	xA2CR/Bup8G5S1UoBPY3Z+5Epm5sxZy5VFzM+ksOpMm/8iasqJMEVv1/3PIg==
+	:subject:to:to; s=fm1; t=1773145438; x=1773231838; bh=yY31WN3iPN
+	t7ptNR1KGnHqmZiXb939mXTuGvZNHEFo0=; b=LCmT6EurNQmg8/qllnh6unsYHO
+	g4U8K2XVIs0v6/OVUGcVQthS2RqTVUKXsk7m41RUdB+0oFSZIhCuhV0oUeegnQnt
+	pAWBq7YRAZO8rekeuzQtSbrlkVDggEQRljDqkrwPcOtmm2sHnhLeW1/4JRUgt+vM
+	z2yUx/vdz41gQwiyiWJJPaWVBvbfSsQdwaX7xR6PTQYHw52Dwg2sVvFAA0m68P+m
+	N7XWjktix6PdP+rlComlscPm/cMJ46LviEXalKG+bl/A9B+5go67bCrD2vK/8Uh0
+	TfgikBnKqeCGEkj0nq5n9G4YD/Qs1+kfP04nNt1PNRIYd0ZWBCh3SOXhlv4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773145328; x=1773231728; bh=RBmkbI+vZZRBLumob0ydrClTmKpcw2QqDzC
-	tRIR4JmY=; b=TMBllGQ1HokIOEryS4KS6luE3OkWKk54zlFijdmKFmSsyKcxMU2
-	ao27Gyv0kI88CVOOtmmm84afd4jbA4dF2s5Lqp/LQmvQK1jSoYD/MUICWnZOyGHj
-	3Q3mMT+ALuQ5Gtw2GBDruPWPyAiiLw0niEklBjKlux5Y45Ve+7bTHQcTiWIO8AKb
-	OCsto5Y4gu91IWRLyprPxYbta5JIcNsaqeoxSHwaeoVuBSxse+FdkvR7cf2zZR54
-	ZbRC1i+V+m6td1YU5ldIGhgJl2D9fPC2GwF0/toKCdmznVZGb/ro0A48h+feGej0
-	k9194RT58MauFDRaDx966KHdw7kl776CkLw==
-X-ME-Sender: <xms:8AywaWGjQBVnguu7Me3PA7gpaZ9YDwIaLHAFtqv4Nfksw0W-am5RwQ>
-    <xme:8AywaeytjIyrqUAltyOMAeekOIl25eZHGgKKg8K4gRg0uXV-00LeHFlQOO-Abwruu
-    Citm2TzplYKGzjaj4aANn6UEfpFkVu2EtNZbxqanrPC3NAlAsbHvw>
-X-ME-Received: <xmr:8AywadgdNm74ddkXZMvo2ibym8AtanVIr8TTqLWhtIOMaUfR-oYXmDM6oBErBRVrLngEmGfj1azAvjeESS82NdxMm3mFblfd3b9Q1K34>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedutddtucetufdoteggodetrf
+	1773145438; x=1773231838; bh=yY31WN3iPNt7ptNR1KGnHqmZiXb939mXTuG
+	vZNHEFo0=; b=yJ2on2T+iEuceTi+4oNXb8oObY8z4Y8AVnIhyEsaOsK09EHzJBU
+	Eylr0n/46Hj7ZMHr2DxwkNe8+iGvZuLWfGcAgI87gbVNmQ30Z2w6ZogBisIx8Lcr
+	hEmV4N1DWDdQuIvhwbdwGqz5yG/Ug85GrgyJg9Nh7ckzY+3fLd8hPpkoHFFcuz3u
+	SjyXRut31meTkDq9a1keaN9FQJvgbu3ZaOZgdDYtkgowuymjT8aWmGFVlMWMaJlH
+	P8IvKixxQe6BnKPjE1F+7I8DnCnS6WH8rBgv3YKuVMDjrGf2WZ3DnlhOgQmxSIuW
+	Kw2oHkRuaOulzTRaYdzlql2rjNmScwJT7hQ==
+X-ME-Sender: <xms:Xg2waeJRKdzR2BFuItJQw4n0Y9mWqaPRmh7oR4skXGLIqeZm24vtcg>
+    <xme:Xg2wadKpr7guRcLDWhSAVRlnRXZyUDRnfkA9DqM9evLm3jokNiFhC9FQoE3V3vnYO
+    0MVts4ZkRkcOZB3xVzydbCSBxBBl7QbAXr4OfS6l62pqJIoSwFRUA>
+X-ME-Received: <xmr:Xg2waTsI4IyA0rQMJllKRF-4DFtIYf7F0qbeeb7-HFFp9U0o7XcZ1BvyzrC2gEYF6m2FVAm98TEdYtR4t48IgXqqk7egB9WR1NEi9JTe>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedutdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhdrshhiugguhhgrrhhthhdrshhhrhhi
-    mhgrlhhisehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:8AywaZxIxUdhu5mQKrIvS_sp3lQBfmRTkFyIgnTO8akxk_8r5hjghg>
-    <xmx:8AywaQKObXDWAVwzLASgUnRzNfzZHunWhVkstzhy14jZtFfLXSJB1g>
-    <xmx:8AywaQTEpPzaHhYytvnSu6L-oSWPQFDvrTVErMMhC9W13-ibLV9IuA>
-    <xmx:8AywaYoXxjNp0ZErRzn8vZi-48vG8W8yiFQDz0mBBfigIuL1bRUCOA>
-    <xmx:8AywaSx3uhJY2LC7qoiBin-zlQQEHA9O2ynp9At39XMr-EF2Esr29chd>
+    epgfffkedugedvuddtuddvgeeijeeghedvgfegjedtieduhfeuuefhueffteejiefgnecu
+    ffhomhgrihhnpehmrghpphgvugdrihhtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhgr
+    tghosgdrvgdrkhgvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Xg2waSSRTNxwe9OFpxgZzhNf_hKVgmfKNqcoozeBBOeBjJ7gBQTy8g>
+    <xmx:Xg2waRNacUkncZwgLtbZS_IHM_ILwoQoBBV7n0FoqRDxN2MYNpqEAQ>
+    <xmx:Xg2wafa5Su7ZTk35--lEk5islnN1SRTNpDeK4MEjob0Ysvc23MrtEQ>
+    <xmx:Xg2waTxFl-NzQs07_I9C-aAgS0xeR2uQxI4-1g_At9OiNbYjOIYBQA>
+    <xmx:Xg2waVqi-elR4Hhou8D42F6KCQBMubwTj1tdD6wiwIOMmL0mu17TEbAc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 08:22:07 -0400 (EDT)
+ 10 Mar 2026 08:23:57 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2b258faa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Mar 2026 12:22:06 +0000 (UTC)
-Date: Tue, 10 Mar 2026 13:22:03 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 3414633a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Mar 2026 12:23:56 +0000 (UTC)
+Date: Tue, 10 Mar 2026 13:23:53 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] submodule--helper: replace malloc with xmalloc
-Message-ID: <abAM68lOLFVwmN5Y@pks.im>
-References: <20260310121013.39291-1-r.siddharth.shrimali@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Jacob Keller <jacob.e.keller@intel.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 3.5/4] object-file: fix mmap() leak in
+ odb_source_loose_read_object_stream()
+Message-ID: <abANWS_j2g-ae89b@pks.im>
+References: <20260305230315.GA2354983@coredump.intra.peff.net>
+ <20260305231305.GD2901305@coredump.intra.peff.net>
+ <xmqqqzpwv3t7.fsf@gitster.g>
+ <20260307022459.GA693632@coredump.intra.peff.net>
+ <xmqqv7f8td6b.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,36 +92,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260310121013.39291-1-r.siddharth.shrimali@gmail.com>
+In-Reply-To: <xmqqv7f8td6b.fsf@gitster.g>
 
-On Tue, Mar 10, 2026 at 05:40:13PM +0530, Siddharth Shrimali wrote:
-> The submodule_summary_callback() function currently uses a raw malloc()
-> which could lead to NULL pointer dereference.
+On Fri, Mar 06, 2026 at 09:35:08PM -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> Standardize this by replacing malloc() with xmalloc() for error handling.
-> Also, remove the unnecessary type cast and use sizeof(*temp) instead of
-> struct name in xmalloc to improve maintainability of the code.
+> > Subject: object-file: fix mmap() leak in odb_source_loose_read_object_stream()
+> >
+> > We mmap() a loose object file, storing the result in the local variable
+> > "mapped", which is eventually assigned into our stream struct as
+> > "st.mapped". If we hit an error, we jump to an error label which does:
+> >
+> >   munmap(st.mapped, st.mapsize);
+> >
+> > to clean up. But this is wrong; we don't assign st.mapped until the end
+> > of the function, after all of the "goto error" jumps. So this munmap()
+> > is never cleaning up anything (st.mapped is always NULL, because we
+> > initialize the struct with calloc).
+> >
+> > Instead, we should feed the local variable to munmap().
+> >
+> > This leak is due to 595296e124 (streaming: allocate stream inside the
+> > backend-specific logic, 2025-11-23), which introduced the local
+> > variable. Before that, we assigned the mmap result directly into
+> > st.mapped. It was probably switched there so that we do not have to
+> > allocate/free the struct when the map operation fails (e.g., because we
+> > don't have the loose object). Before that commit, the struct was passed
+> > in from the caller, so there was no allocation at all.
 > 
-> Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-> ---
->  builtin/submodule--helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 143f7cb3cc..f3e132888f 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1160,7 +1160,7 @@ static void submodule_summary_callback(struct diff_queue_struct *q,
->  
->  		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
->  			continue;
-> -		temp = (struct module_cb*)malloc(sizeof(struct module_cb));
-> +		temp = xmalloc(sizeof(*temp));
->  		temp->mod_src = p->one->mode;
->  		temp->mod_dst = p->two->mode;
->  		temp->oid_src = p->one->oid;
+> Makes sense.  Thanks for finding and fixing the issue so quickly.
 
-Yup, looks good to me, and all the other while-at-it changes are
-sensible, as well. Thanks!
+Yup, indeed, this is an obvious fix. Thanks for cleaning up after me!
 
 Patrick
