@@ -1,135 +1,180 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4A33D6477
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:51:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FB639DBCA
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:52:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773165097; cv=none; b=sdveDo+kD6Ri0YMcCAH3lsryM4CWD2MFCBVgC7nR13pgN/pyKYwrj0/eXolcCLrP+d62GdsmUca/WujlfWalsXl+VXal5cOXGr2ua5Lxvszq5bhcRChauZl4zJsoW3m/mz5+2//xqkUPiilnC5/5SpQGD5OOL75+AascgGZSdB0=
+	t=1773165177; cv=none; b=SSKBA2q/OU1y0tjYK88qR9v8Dt0iYf4f/hjTP2RdiUNjI5aq36Ge8H7Gx2Q1wTLSJdByjZHjbBX+pQQJn62ZMReiQ2w8sLC5x32oe+Il5Mc/WEWCn7ooIPaRVmZUw5m7d50S9JIZNRel/HERXa7iDViFbd/gvPXpaDSYgYD8MEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773165097; c=relaxed/simple;
-	bh=5H2S/veUaTV/uxwzUSVVqq/90W1p8xX3ueS77I2lvok=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f6hV5siZd9hCctVgE7wPvtgGvd0w0laN2cjiialDSGxoFWGkEYvxLlCsxoPJUUecBwH6csu5rQefOe8wksxoUE7vLkye27BQHa0nANPLsl6kYETxD4R01+YryH7bu4k/iNlIwNxkWa2+ADWSZJgSPEENsM6QCuTwTB59IiPTPEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fH2hkre3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j9JZKwdM; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773165177; c=relaxed/simple;
+	bh=xnzGyIziWiTWNY/6I2RpCBpjqKfodc9MAM2vZPh6FmQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nTeTHIGADcMvimHM1UmK2mcOI2WEoSX8peIFJcMF1F5vybpKM5HcwsdJONZhcRXir/5leF7iNrerwpQ/VuuiTydV6h0Vegn6vQTAiFT2yd6Z6WF5vuq1t9dVacV/eazf+8X+CT6pLtfPe+0vA6CKjCct/9yF4hkdkfbFxldeOUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aoHtvPaW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g1uQctAT; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fH2hkre3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j9JZKwdM"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B4C5A140016A;
-	Tue, 10 Mar 2026 13:51:34 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 10 Mar 2026 13:51:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773165094; x=1773251494; bh=p2IcLx9Ra8
-	WgqtalRjcX05ycWDja9xHNH7l00mcbVvc=; b=fH2hkre3xCQ1J/GPUSj01oz27Q
-	EEbvUaNIyu8nQnWfGysBWznuPlxTJxB8nld8tnjtndJ7FGaWPkTNONZioOBHdjWK
-	bEo/LMM2Ik0YxqDbDkA+EXl9TB5nf4ugJvnzRCrEFLf/refggRFePdDfypgSWC8K
-	yF4Usf5mxDcUuf4eNoh5GXvr/9PyoJYXALrYWdPpECHWFXGP0fB83G9xSInE4J8s
-	FR4EVHhrSBBZapJBS373KiOOupdgyoPzNkf4QI1fvTxITPs6gT3ngQ8re2B+nl03
-	bHGqW1AfZx0H9vLjKD09mUTm06P8D2/CdqeBrWBHL4X0UpTYuWIFf+mHYSLw==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aoHtvPaW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g1uQctAT"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 24D5CEC0FCD
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:52:55 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Tue, 10 Mar 2026 13:52:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1773165175; x=1773251575; bh=PbgESy1jjA
+	ujEtA+drKAjRlMzDVPO1lSeJNU3Y7hK78=; b=aoHtvPaW1/FEqHNb2jqJEVUOfH
+	eHd0WvvHBQY7vlcfWzX3tAoga+oS2UMaXabvMsOZ40IhBNGM+KOHfcTNW+qiTLO+
+	t1WcJIOge+vZgpj/u5019Q74EJu6oHOGBUTCo2Y25cE4IEqBJ/xmvsDNaA+WXzkN
+	BVL/NdpDy4zG4cOUq5jesETyIenwTAYTmzaKnFDnvUsrjy+3PJeL1E5xygzskysu
+	4FE3tYLugweysQ/pKJTA+5MMXFJiF8QNgDHM2J80acs3pI/+gZzzBxglHt2EHXmI
+	Aunirg4xtRZlyfPcN/jtyGzeAdtxUGl77idnn+4A955XCHwq2JrVKPbf8W0Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773165094; x=1773251494; bh=p2IcLx9Ra8WgqtalRjcX05ycWDja9xHNH7l
-	00mcbVvc=; b=j9JZKwdMvZvom3FLbQUbRw64CPB1SDf9afe52YLz42sOTKm2ZH+
-	tRz5xKbJPUaxZvWGGnicCeO/fwKYAC3/Y8tjTwJUZVMHc+5ynJdwszMK3IFoN25f
-	5NDN1vd0ZubnEeXwHxaiZgfrP1bwCKPfHKPZe1VE+PQp1catnIEMmuVSqpVT4pMX
-	RtzVywtUkPxUeOwgmsUeAgnLuRywQSrIFrpmexO/+26N0BVoIIsIPtQ7E16PMfnZ
-	AqzxEJhyQ/EQEVQvt7t2kAa+txuYlmlsDJ+NLTU/eMjKZplcxMhAZ+TtOsJxGVtD
-	50lKnBhJF6KbPNl1HZzpL/uit4b/qKCBCeA==
-X-ME-Sender: <xms:JlqwaSJdI06ptmAQckyRY7di835vdE61FOuyZCpZZw4bkgWKAzWX6g>
-    <xme:JlqwaRkr5RM6Gq_KHvpqgNEcRj3Nn6F6GeEfAEh7PoQe8caP757VyUwFGmbJYMtNw
-    QdK0Qw8KSfkYvc990fCVQ0DxMHbdkc7uaXnCl5GAFW64KprY3JUDvA>
-X-ME-Received: <xmr:JlqwaQHY1frjRj7uhn0GLhmQY-_nJ_DBJkD2wB4nukjRVoxtfYCRgA1jp5MBEoeTMpBrgHe2JmQTEB0tO7tmrqjnocxp5I77Pw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduieeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1773165175; x=1773251575; bh=PbgESy1jjAujEtA+drKAjRlMzDVP
+	O1lSeJNU3Y7hK78=; b=g1uQctATPEum0QXpsf8nd2vcLQxRKtmjZElbxqngz9HZ
+	ORdM9KWeajo0x/aEnFjd3Znkr06VDJEHMQN3UIwCAY0m7CS4cpF+oLDMcc07Qg4y
+	dpVnlS3GeYB13tUyWiuzN72eudh6sloXQiTgvMWQ8fRtZqv+jGNmah9rFiyXu3NC
+	UJ/EjrsuCM8a2JMXw95PoH6+3HQMaDjDK4PSXTmD3BeLIpOaDHGVZp1WLrUqi7oe
+	y9ua0JRWkn5NVho/B64BZZtjfH2TX93s1MhLqMIbwcu8HFvjGydjF5KALpFWCK2l
+	VHgHgIbRXC3fuGu7P/qCFhCNQVmfRpq8+neSbIvk7A==
+X-ME-Sender: <xms:d1qwad2dw3UtqD_kfC14zUfV9LYpddBxrZvNNhIPJJtn68fkcNJBQQ>
+    <xme:d1qwabDZerjEUcpINdZQsGl5huJhTTkj5onQVnYOOyeBan6qAXr05yJwBWDvnmMQ_
+    FMSE_sm90vHn2dOm52wRvm2aaEjAmqfXrtZJv20EWufRrM7P0lQVg>
+X-ME-Received: <xmr:d1qwaTg7RbaIvBQr8x8DyksI8GnItT04k1At103X9RLp1envAfuCKnkPbXQjDR4cctZEZqXUCbe52tTlYPDpoQKFv0LWF6LizGUP59ql>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:JlqwaRFi1NTYI7wq44hJPFieh-pCvxSG0CXSJh4fcoI8lFtlkJ79hA>
-    <xmx:JlqwadOClv4w0opxiw_4a6BlPw98D85jPFTO58Ci642OqG23cLqz6w>
-    <xmx:JlqwaQHHtD5_Cgrj58LBRo2-fr-waahhfaVJ0q-8d6zU_XWFRPMAwg>
-    <xmx:JlqwaUOrgt7FwLY3TC6WYkQhtYPkG3updB4EXs3TyGQOV-C2RCReEA>
-    <xmx:JlqwaZsZOTJMb3cuIYMKZuiRQzVyBmdQTPnIChCrXDfsv70b-k5jyYDK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 13:51:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/6] odb/source: introduce generic object counting
-In-Reply-To: <20260310-b4-pks-odb-source-count-objects-v1-5-109e07d425f4@pks.im>
-	(Patrick Steinhardt's message of "Tue, 10 Mar 2026 16:18:25 +0100")
-References: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
-	<20260310-b4-pks-odb-source-count-objects-v1-5-109e07d425f4@pks.im>
-Date: Tue, 10 Mar 2026 10:51:33 -0700
-Message-ID: <xmqqfr67vahm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
+    dmnecujfgurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpefggfevffelleeuffefuedtjeeghfeuudfgheeuieefgfekveeihfeiveejffej
+    ueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhmrghkrdguvghvnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
+    nhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:d1qwaf8HxF6mvDvvnsc7Xds3BgE7_kepeqsR9-JAlmviklWiLl9S1g>
+    <xmx:d1qwaf9235oOxEto8rRe7zTZxSAMHiGekF3_cFYn1yAASZ-aMAMbcQ>
+    <xmx:d1qwaYCxzUxNI2N_00goOh0hdsIcI_8L3Vcc_Q9qHuTgRGDvSkFhPw>
+    <xmx:d1qwafycDDJHuZqyQ6jGv9L-LpBPrUspMZbObRn1aBd4uHzwySavSw>
+    <xmx:d1qwaTFVVjmTX7z9Ms9f1-HYfZ5-RxOHiDThm5owvDw0GHrtk_ksf_4d>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 10 Mar 2026 13:52:54 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c9556e72 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 10 Mar 2026 17:52:53 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/8] Some build system improvements
+Date: Tue, 10 Mar 2026 18:52:33 +0100
+Message-Id: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGJasGkC/x3NQQqEMAxA0atI1gZqrS7mKoMLW6MGtZZkRgTx7
+ haXb/P/BUrCpPApLhA6WHmPGVVZQJj7OBHykA3W2NbUxqF3mBZF/+d1QI6j9Mhbkv2gjeJPMQR
+ nKhuaunUEuZKERj7fw7e77we6Iw9ycQAAAA==
+X-Change-ID: 20260304-b4-pks-build-infra-improvements-cc4012c5364e
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.14.3
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi,
 
-> +static int odb_source_files_count_objects(struct odb_source *source,
-> +					  enum odb_count_objects_flags flags,
-> +					  unsigned long *out)
-> +{
-> +	struct odb_source_files *files = odb_source_files_downcast(source);
-> +	unsigned long count;
-> +	int ret;
-> +
-> +	ret = packfile_store_count_objects(files->packed, flags, &count);
-> +	if (ret < 0)
-> +		goto out;
-> +
-> +	if (!(flags & ODB_COUNT_OBJECTS_APPROXIMATE)) {
-> +		unsigned long loose_count;
-> +
-> +		ret = odb_source_loose_count_objects(source, flags, &loose_count);
-> +		if (ret < 0)
-> +			goto out;
-> +
-> +		count += loose_count;
-> +	}
-> +
-> +	*out = count;
-> +	ret = 0;
-> +
-> +out:
-> +	return ret;
-> +}
+this patch series contains a small set of build system improvements:
 
-The design to assume that the majority of objects should be in the
-packfiles and the number of loose objects can be ignored when we are
-getting approximation is inherited from the world before this
-series, I think, which is a valid choice for this series to make.
+  - The first couple patches introduce a new "tools/" directory that
+    contains items related to our build infrastructure and to our
+    developer tooling. This finally follows up on my promise to do this
+    back when I did the spring clean of "contrib/". [1]
 
-As your "get an approximate count of loose objects" counts a single
-shared fully, instead of punting as soon as the limit is hit, we
-could ask that function and add it in when the APPROXIMATE flag is
-passed, and get a bit more accurate number cheaply even when we are
-approximating.  I am not sure what the pros and cons of doing so
-myself, but you may already have thought about it and rejected it,
-perhaps?
+  - The last couple patches introduce precompiled headers into Meson for
+    a nice compilation speedup of ~30%. It's 
 
-Thanks for a pleasant read.
-Queued.
+The two topics are not really related with one another other than being
+related to build systems. I decided to throw them in the same patch
+series though so that I can introduce "precompiled.h" in "tools/".
+
+Thanks!
+
+Patrick
+
+[1]: https://lore.kernel.org/git/20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im/
+
+---
+Patrick Steinhardt (8):
+      Introduce new "tools/" directory
+      contrib: move "coccinelle/" directory into "tools/"
+      contrib: move "coverage-diff.sh" script into "tools/"
+      contrib: move "update-unicode.sh" script into "tools/"
+      builds: move build scripts into "tools/"
+      git-compat-util.h: move warning infra to prepare for PCHs
+      meson: compile compatibility sources separately
+      meson: precompile "git-compat-util.h"
+
+ Makefile                                           | 76 ++++++++---------
+ ci/run-static-analysis.sh                          |  2 +-
+ config.mak.dev                                     |  2 +-
+ contrib/buildsystems/CMakeLists.txt                | 18 ++--
+ contrib/meson.build                                |  1 -
+ contrib/subtree/meson.build                        |  2 +-
+ git-compat-util.h                                  |  8 +-
+ meson.build                                        | 96 +++++++++++++---------
+ tools/README.md                                    |  7 ++
+ check-builtins.sh => tools/check-builtins.sh       |  0
+ {contrib => tools}/coccinelle/.gitignore           |  0
+ {contrib => tools}/coccinelle/README               |  2 +-
+ {contrib => tools}/coccinelle/array.cocci          |  0
+ {contrib => tools}/coccinelle/commit.cocci         |  0
+ .../coccinelle/config_fn_ctx.pending.cocci         |  0
+ {contrib => tools}/coccinelle/equals-null.cocci    |  0
+ {contrib => tools}/coccinelle/flex_alloc.cocci     |  0
+ {contrib => tools}/coccinelle/free.cocci           |  0
+ .../coccinelle/git_config_number.cocci             |  0
+ {contrib => tools}/coccinelle/hashmap.cocci        |  0
+ .../coccinelle/index-compatibility.cocci           |  0
+ {contrib => tools}/coccinelle/meson.build          |  0
+ {contrib => tools}/coccinelle/object_id.cocci      |  0
+ {contrib => tools}/coccinelle/preincr.cocci        |  0
+ {contrib => tools}/coccinelle/qsort.cocci          |  0
+ {contrib => tools}/coccinelle/refs.cocci           |  0
+ {contrib => tools}/coccinelle/spatchcache          |  6 +-
+ {contrib => tools}/coccinelle/strbuf.cocci         |  0
+ {contrib => tools}/coccinelle/swap.cocci           |  0
+ {contrib => tools}/coccinelle/tests/free.c         |  0
+ {contrib => tools}/coccinelle/tests/free.res       |  0
+ {contrib => tools}/coccinelle/the_repository.cocci |  0
+ {contrib => tools}/coccinelle/xcalloc.cocci        |  0
+ {contrib => tools}/coccinelle/xopen.cocci          |  0
+ .../coccinelle/xstrdup_or_null.cocci               |  0
+ {contrib => tools}/coccinelle/xstrncmpz.cocci      |  0
+ {contrib => tools}/coverage-diff.sh                |  0
+ detect-compiler => tools/detect-compiler           |  0
+ generate-cmdlist.sh => tools/generate-cmdlist.sh   |  0
+ .../generate-configlist.sh                         |  0
+ generate-hooklist.sh => tools/generate-hooklist.sh |  0
+ generate-perl.sh => tools/generate-perl.sh         |  0
+ generate-python.sh => tools/generate-python.sh     |  0
+ generate-script.sh => tools/generate-script.sh     |  0
+ tools/meson.build                                  |  1 +
+ tools/precompiled.h                                |  1 +
+ {contrib => tools}/update-unicode/.gitignore       |  0
+ {contrib => tools}/update-unicode/README           |  0
+ .../update-unicode/update_unicode.sh               |  0
+ 49 files changed, 123 insertions(+), 99 deletions(-)
+
+
+---
+base-commit: af2c8a61818d773325ef2324dd135786a03ebca0
+change-id: 20260304-b4-pks-build-infra-improvements-cc4012c5364e
 
