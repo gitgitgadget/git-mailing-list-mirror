@@ -1,55 +1,55 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4579B40DFBF
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:25:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916CD391E73
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773149111; cv=none; b=JVgh5VtKZH4O12Dkr0KfJayvVNoBOmAACE74RZVwusY1qFH7hzU3yPboB1EtJeNotEJkwUktBQliNvCWTmwstlSSREGEg6FnYLUdIsdse20NvjbtWrgRHWFk44KZR9a0dr1u0L4Hv3FhlSwX4Z3S2bqhABpoIRk1cpiWwRJMaHo=
+	t=1773149114; cv=none; b=aOROP7vsvGWX8uSB+3jadKHCsGvMOrHe/bKx9qDQAhKtn6IbX49U3D8dkJ7SA9e/EjCa53IKEkNjf0LzusySUfBVtG6wEe5C6fSifhNBSFjwGvsU+RGEe0+4nZlu3DTS+nryoTQA2gmiGdxPClGqvuBpj3xxotAKTXC02z4CjDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773149111; c=relaxed/simple;
-	bh=8c7/+oNNUm4eOWbJfuryDdmJPq0Gd2mMS1aWKauGOO0=;
+	s=arc-20240116; t=1773149114; c=relaxed/simple;
+	bh=N6T4w57oXDdgjx5NaPsKziU9zhR5ErNpMErRGhxaTIo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=f8WB+uQThbr/anUliTlTwq8MwNC47Wizl/GPw6jIDl3DN/ng/WWfFLCQFKo/88Nj6Q5pQG1sGVRCu9yJGMkYjLpS+fSB0ImpLgii/4TXLXHULqrT7bSyhos4bz8+3dSF3y5HtvKJ1SnYeOFfgy6sL08CfiUJ/9Tu/BDVSV0z4qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VEqUFfXW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W0POiNEV; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=vCz3gFcSLv453n6IRGYLkLlr5bwcb0IViRNWd5/lvDLYAp5hhzTSWBmzHONciomBJMpQvjv8h7q2l8vQal0hT9A5RZopeTTybX6f7SiwBsU/HF43XG3Zm+rn/7ssXaoJwCYC+hzj0q8ccctJDlazdzWOvXnBcvS0wj8kLYmIf0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hLzdKr8A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=obJXVDJy; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VEqUFfXW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W0POiNEV"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 86AC714001BB;
-	Tue, 10 Mar 2026 09:25:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hLzdKr8A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="obJXVDJy"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id E11B7EC0B07;
+	Tue, 10 Mar 2026 09:25:11 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 10 Mar 2026 09:25:09 -0400
+  by phl-compute-11.internal (MEProxy); Tue, 10 Mar 2026 09:25:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773149109;
-	 x=1773235509; bh=waMTFX/lX2a/RVQvkVhNkhXXf+jFQ1cCeanAItzEXZ4=; b=
-	VEqUFfXWCblwlW1Ty2A4L+frmp+a0pc2J9rO9r9QlnKuyFReGQHjo5u3b1kJzbR4
-	vWcmKUOvE5BCd1tG0KN+CC0x7YxDHw+qCs8/rFIshSdG96G+mq21hKcJUGOETiha
-	jcXxn02bzIWaDwFnX17J7hdZe4sG9e51sir7eykgVR4yjBoHpVBPgis5GoSO+e4C
-	OR80CsuKCJ+HuJkGuNgz5IX5tPVgsEvgbVWhq1dwBPC21dwkuDzBoPek9mlpM2Hc
-	5rVb9sH0FZ0whV8fQvvShrZMEVfdfXj/NKFvaO5UeFTQexTvXpGVegtKK7LhOqY0
-	Ez4cNs1JIE6Ri06iuDKvhw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773149111;
+	 x=1773235511; bh=xTQYyUI87L5+8i3sL/i1lsh5fAp3JF7fjlChDdHLXEY=; b=
+	hLzdKr8ADKCg7rXaUJXhZWMH+eplHXgvF8QcGuv3A6DGNYKqU2jBiR7dLo0Xss9u
+	ndWbjWURjHHbABgnuT0UrW5fHEJJCNBB0xCTgkmNnCvFK5AafMQj9xRVV5TCNITn
+	gbMOw6Ab0U5qxf+aGDFp4zxgqxZPZQbxVZ9mPERuoX9Ihc+kD/zIXwSC5y11HBiP
+	0JB2tb5a7f6BEetxBgGC+mmMhMokRyr/Y0FkZFV19JrvSojv2UYVSppArDmN30QT
+	ptyhQHjr3jZ8yRSEqseKejvLtCtpWyGvP4iSFoEcxIfxwRE/14wehCV9zdjlyfDY
+	PPR53+eqSKAO4DesslE19Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773149109; x=
-	1773235509; bh=waMTFX/lX2a/RVQvkVhNkhXXf+jFQ1cCeanAItzEXZ4=; b=W
-	0POiNEVKOa+bA9HcUza85rLNrOjaOpt17oeL+uiZG5WElAHry/3SzSaflL1CO7yO
-	QngfcwEtsuxmrcwRkq0Mn082eY1OeZUApuMGWI1Syl5v0AxT5eRoEZ8KW8mbOxg8
-	scYSzHe+v2HUgum6xxORebN2EfL8Qj7Kz6vaHC/7YH0WFJVXNCtFaQkjxG0X7uSS
-	336X2DyVzrG3V9eUC9NnzCC8qYRSA0CIwxlXDzckGDC3DOw9q1fPF2HkPkDO1i7r
-	204gNU2z4B7tU/ALnj6EcvdcgmCLykaAgC5V6praOyCBPktoqNWWTPqO5az0Wdv6
-	M/0hA/44TMUDDphOefh1Q==
-X-ME-Sender: <xms:tRuwaQkItubpWnqmCLDNw2msI8blULYMPOcbA6n5sEu1YEYjcJ9xUw>
-    <xme:tRuwaWtoMhhvrz-rohfYG9cgDDmGLlMzhOruRh0OR5vSFlsreY_DYkO5_RNq6lt0g
-    40p5GjuBtqdo8eliUF0PENeCNZJOOrw6xTVvICHzfxx7g-jF7lrMg>
-X-ME-Received: <xmr:tRuwaW8q_Ua7vmPBddKVDI7b0xVPXZGnIwIrx2IRdq3LDLOU6rbqSipZdsmHdvTaVg1sVtMnzgDQRNQL28p-ZTdblHJpU6GZ7EXlIFgz>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773149111; x=
+	1773235511; bh=xTQYyUI87L5+8i3sL/i1lsh5fAp3JF7fjlChDdHLXEY=; b=o
+	bJXVDJy3wJN5EmyJ5gv7BbJFtUa29ivNEW7HIiF2OABdHIeZLL59wPjfBRjyJrrh
+	38sJ1PMbgjpPwAsYJL4mLqFKZ3FJc4Sro4V+IaZ7ixPVTUGrHJGvl+KGQKC1jTim
+	OUG/CSaHl28NTbso1pYvYm6bre2/b4NY6znCeMUAB9GJHW94Fy23kN5b3Ol7xRqb
+	du88/DzyPd+igFfkI4pDy1scaTh24a1BwSFDjdss25NhgBZfrP6EEh1yLJE9r/lZ
+	msVTmifvbs6lESNvVMAE541PZbfKrOKSHrDQBbSrc5OaWrqRUZILYrq0XNvt85BU
+	1irEeuAsVF6IjSbHQgiJw==
+X-ME-Sender: <xms:txuwadmI8Wowgp4vKKqHOPEIKBrFjxm_HYWRbdAzb_CwebJG0M37OA>
+    <xme:txuwafsgA_urOm5iBnr6wUdVdcdc_anDssZTRRPqShqta-yMFnDujYM-SRW-PeWPB
+    UszEacSlCu-B7m9TJWPQwoiaAyUieGfjczgcJ7e1XhvkBvWOhgWlWk>
+X-ME-Received: <xmr:txuwab8fbWT-mun5Bu-b0aYryBtB1zVM5-t5mG7F1uFe0_mPsVaAgjC8I15aAUfGqFKvtS5H1m75kTIkyRDxD3b-BPjj7UEjDYpKHrcW>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduudefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -59,24 +59,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduudefucetufdote
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
     thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhsmhhi
-    lhgvhiesghhithhlrggsrdgtohhmpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:tRuwaYP135PUP_K_myJDtexc_SdEfz8U52pvdtZKAgat2DYYA2DCiQ>
-    <xmx:tRuwacH3yFCdZ-UnseVvFk-kIPbzeD_BCVQQZARECpc7Q3ceDbxkEA>
-    <xmx:tRuwaeQ8EbwTWMpI5AIoswYj23PqzE13HP8znTmG5Z6bUj3nnyDfQw>
-    <xmx:tRuwaRsNdcAono4yFJsm4wgs1jvjsBeFH3WIeKHm6-ltH6E9w6Y2TQ>
-    <xmx:tRuwaRJRv3Lna9OFTks7a-VyK7QQGwTkWbffOgw0QDvXHWgPl5BTpDp1>
+    htthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
+    hopehmshhmihhlvgihsehgihhtlhgrsgdrtghomh
+X-ME-Proxy: <xmx:txuwaZNIsTjxj12Psqo3OaC0LHBIA169MFbhKl6Dx01nzJVJnNYDhg>
+    <xmx:txuwaZG1SQG8ewiI931pmCYIXtOcNlyancLmtlx4iZGDQcXnqfEw8g>
+    <xmx:txuwaXTuKunyFky3GKJeShWQSnhV2pDyZy1FYSWfatnMY0YuQNzH9g>
+    <xmx:txuwaWsHrZoC2PyjQ7z_xRNPmucY7YXAyTI7I8tY2_Y9kKat0YBkhw>
+    <xmx:txuwabsvCCQ2OPZnyuv3L3oFSEfe6EcuRmG3Uid_8ThWCP1Hv_YNGLOH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Mar 2026 09:25:08 -0400 (EDT)
+ 10 Mar 2026 09:25:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d1ee110e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 10 Mar 2026 13:25:07 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 198569f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Mar 2026 13:25:09 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 10 Mar 2026 14:24:57 +0100
-Subject: [PATCH v3 01/10] upload-pack: fix debug statement when flushing
- packfile data
+Date: Tue, 10 Mar 2026 14:24:58 +0100
+Subject: [PATCH v3 02/10] upload-pack: adapt keepalives based on buffering
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260310-pks-upload-pack-write-contention-v3-1-8bc97aa3e267@pks.im>
+Message-Id: <20260310-pks-upload-pack-write-contention-v3-2-8bc97aa3e267@pks.im>
 References: <20260310-pks-upload-pack-write-contention-v3-0-8bc97aa3e267@pks.im>
 In-Reply-To: <20260310-pks-upload-pack-write-contention-v3-0-8bc97aa3e267@pks.im>
 To: git@vger.kernel.org
@@ -94,57 +93,199 @@ Cc: Matt Smiley <msmiley@gitlab.com>,
  Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
 X-Mailer: b4 0.14.3
 
-When git-upload-pack(1) writes packfile data to the client we have some
-logic in place that buffers some partial lines. When that buffer still
-contains data after git-pack-objects(1) has finished we flush the buffer
-so that all remaining bytes are sent out.
+The function `create_pack_file()` is responsible for sending the
+packfile data to the client of git-upload-pack(1). As generating the
+bytes may take significant computing resources we also have a mechanism
+in place that optionally sends keepalive pktlines in case we haven't
+sent out any data.
 
-Curiously, when we do so we also print the string "flushed." to stderr.
-This statement has been introduced in b1c71b7281 (upload-pack: avoid
-sending an incomplete pack upon failure, 2006-06-20), so quite a while
-ago. What's interesting though is that stderr is typically spliced
-through to the client-side, and consequently the client would see this
-message. Munging the way how we do the caching indeed confirms this:
+The keepalive logic is purely based poll(3p): we pass a timeout to that
+syscall, and if the call times out we send out the keepalive pktline.
+While reasonable, this logic isn't entirely sufficient: even if the call
+to poll(3p) ends because we have received data on any of the file
+descriptors we may not necessarily send data to the client.
 
-  $ git clone file:///home/pks/Development/linux/
-  Cloning into bare repository 'linux.git'...
-  remote: Enumerating objects: 12980346, done.
-  remote: Counting objects: 100% (131820/131820), done.
-  remote: Compressing objects: 100% (50290/50290), done.
-  remote: Total 12980346 (delta 96319), reused 104500 (delta 81217), pack-reused 12848526 (from 1)
-  Receiving objects: 100% (12980346/12980346), 3.23 GiB | 57.44 MiB/s, done.
-  flushed.
-  Resolving deltas: 100% (10676718/10676718), done.
+The most important edge case here happens in `relay_pack_data()`. When
+we haven't seen the initial "PACK" signature from git-pack-objects(1)
+yet we buffer incoming data. So in the worst case, if each of the bytes
+of that signature arrive shortly before the configured keepalive
+timeout, then we may not send out any data for a time period that is
+(almost) four times as long as the configured timeout.
 
-It's quite clear that this string shouldn't ever be visible to the
-client, so it rather feels like this is a left-over debug statement. The
-menitoned commit doesn't mention this line, either.
+This edge case is rather unlikely to matter in practice. But in a
+subsequent commit we're going to adapt our buffering mechanism to become
+more aggressive, which makes it more likely that we don't send any data
+for an extended amount of time.
 
-Remove the debug output to prepare for a change in how we do the
-buffering in the next commit.
+Adapt the logic so that instead of using a fixed timeout on every call
+to poll(3p), we instead figure out how much time has passed since the
+last-sent data.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- upload-pack.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ upload-pack.c | 49 ++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 40 insertions(+), 9 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index e8c5cce1c7..b3a8561ef5 100644
+index b3a8561ef5..f6f380a601 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -457,11 +457,9 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+@@ -29,6 +29,7 @@
+ #include "commit-graph.h"
+ #include "commit-reach.h"
+ #include "shallow.h"
++#include "trace.h"
+ #include "write-or-die.h"
+ #include "json-writer.h"
+ #include "strmap.h"
+@@ -218,7 +219,8 @@ struct output_state {
+ };
+ 
+ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+-			   int use_sideband, int write_packfile_line)
++			   int use_sideband, int write_packfile_line,
++			   bool *did_send_data)
+ {
+ 	/*
+ 	 * We keep the last byte to ourselves
+@@ -232,6 +234,8 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+ 	 */
+ 	ssize_t readsz;
+ 
++	*did_send_data = false;
++
+ 	readsz = xread(pack_objects_out, os->buffer + os->used,
+ 		       sizeof(os->buffer) - os->used);
+ 	if (readsz < 0) {
+@@ -247,6 +251,7 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+ 				if (os->packfile_uris_started)
+ 					packet_delim(1);
+ 				packet_write_fmt(1, "\1packfile\n");
++				*did_send_data = true;
+ 			}
+ 			break;
+ 		}
+@@ -259,6 +264,7 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+ 			}
+ 			*p = '\0';
+ 			packet_write_fmt(1, "\1%s\n", os->buffer);
++			*did_send_data = true;
+ 
+ 			os->used -= p - os->buffer + 1;
+ 			memmove(os->buffer, p + 1, os->used);
+@@ -279,6 +285,7 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+ 		os->used = 0;
  	}
  
- 	/* flush the data */
--	if (output_state->used > 0) {
-+	if (output_state->used > 0)
- 		send_client_data(1, output_state->buffer, output_state->used,
- 				 pack_data->use_sideband);
--		fprintf(stderr, "flushed.\n");
--	}
- 	free(output_state);
- 	if (pack_data->use_sideband)
- 		packet_flush(1);
++	*did_send_data = true;
+ 	return readsz;
+ }
+ 
+@@ -290,6 +297,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 	char progress[128];
+ 	char abort_msg[] = "aborting due to possible repository "
+ 		"corruption on the remote side.";
++	uint64_t last_sent_ms = 0;
+ 	ssize_t sz;
+ 	int i;
+ 	FILE *pipe_fd;
+@@ -365,10 +373,14 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 	 */
+ 
+ 	while (1) {
++		uint64_t now_ms = getnanotime() / 1000000;
+ 		struct pollfd pfd[2];
+-		int pe, pu, pollsize, polltimeout;
++		int pe, pu, pollsize, polltimeout_ms;
+ 		int ret;
+ 
++		if (!last_sent_ms)
++			last_sent_ms = now_ms;
++
+ 		reset_timeout(pack_data->timeout);
+ 
+ 		pollsize = 0;
+@@ -390,11 +402,21 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 		if (!pollsize)
+ 			break;
+ 
+-		polltimeout = pack_data->keepalive < 0
+-			? -1
+-			: 1000 * pack_data->keepalive;
++		if (pack_data->keepalive < 0) {
++			polltimeout_ms = -1;
++		} else {
++			/*
++			 * The polling timeout needs to be adjusted based on
++			 * the time we have sent our last package. The longer
++			 * it's been in the past, the shorter the timeout
++			 * becomes until we eventually don't block at all.
++			 */
++			polltimeout_ms = 1000 * pack_data->keepalive - (now_ms - last_sent_ms);
++			if (polltimeout_ms < 0)
++				polltimeout_ms = 0;
++		}
+ 
+-		ret = poll(pfd, pollsize, polltimeout);
++		ret = poll(pfd, pollsize, polltimeout_ms);
+ 
+ 		if (ret < 0) {
+ 			if (errno != EINTR) {
+@@ -403,16 +425,18 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 			}
+ 			continue;
+ 		}
++
+ 		if (0 <= pe && (pfd[pe].revents & (POLLIN|POLLHUP))) {
+ 			/* Status ready; we ship that in the side-band
+ 			 * or dump to the standard error.
+ 			 */
+ 			sz = xread(pack_objects.err, progress,
+ 				  sizeof(progress));
+-			if (0 < sz)
++			if (0 < sz) {
+ 				send_client_data(2, progress, sz,
+ 						 pack_data->use_sideband);
+-			else if (sz == 0) {
++				last_sent_ms = now_ms;
++			} else if (sz == 0) {
+ 				close(pack_objects.err);
+ 				pack_objects.err = -1;
+ 			}
+@@ -421,11 +445,14 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 			/* give priority to status messages */
+ 			continue;
+ 		}
++
+ 		if (0 <= pu && (pfd[pu].revents & (POLLIN|POLLHUP))) {
++			bool did_send_data;
+ 			int result = relay_pack_data(pack_objects.out,
+ 						     output_state,
+ 						     pack_data->use_sideband,
+-						     !!uri_protocols);
++						     !!uri_protocols,
++						     &did_send_data);
+ 
+ 			if (result == 0) {
+ 				close(pack_objects.out);
+@@ -433,6 +460,9 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 			} else if (result < 0) {
+ 				goto fail;
+ 			}
++
++			if (did_send_data)
++				last_sent_ms = now_ms;
+ 		}
+ 
+ 		/*
+@@ -448,6 +478,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 		if (!ret && pack_data->use_sideband) {
+ 			static const char buf[] = "0005\1";
+ 			write_or_die(1, buf, 5);
++			last_sent_ms = now_ms;
+ 		}
+ 	}
+ 
 
 -- 
 2.53.0.880.g73c4285caa.dirty
