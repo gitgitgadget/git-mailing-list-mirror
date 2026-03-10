@@ -1,128 +1,137 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2883434C130
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 03:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4835E38E5D0
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 03:09:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773112128; cv=none; b=U3e9yZIqxlVFNjKdpazwliDxAsu+5AcIPeNnQfZmu/l+SulX2Fn8e7Io/pxOELcOIV5xv6XkDvhH/bX1SYQTcKJmRmLhQxFoOCCX+z6QH57blfEzBOIb9U4lBvSIHs07ZrqHNLtPVpRFg2xRxMqnRBZfSmWG+4cDskQl3lqHXEw=
+	t=1773112163; cv=none; b=DWG+extQNz3vaug4bj+TDOKHrhV+06ALePegWB3XIY9LwWT/8pE/CgThKJaTXSbyU7VqMEU1xMcJJHeFxUbC0nhe6z8zsdHO1m5652R/SWVQ2rrIbqnUOx+43ibVeWqrnigOPTBv+t/U/D7y6tcOkou/TiCDd3PQkNQkaO4hcWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773112128; c=relaxed/simple;
-	bh=FbZx4F2KYfPzZtOWYg3rAM96onBMJlathTiRANK7dPo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ukMrbDkaf9kKCyidj604RQla3pA81wCiH3fmxkJ0zWRUpGGkRhuFWg9KNCBKaZjhU0VtDJMo8+R3gTd0fQqszdoHaOf2oZBdcuYIFHFBCTwF+JNeV30tRLiu+3Pt5P+0tRd922kwfxER3nBKQCpua5mHXFWKC3tkEHqbP8zNqd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VB4rxd2O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nrpS9nsA; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773112163; c=relaxed/simple;
+	bh=ut3PRF23q+5xJbtESuvsErn8NecOnkD51O3qC5VkCEs=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=TD61khlDFaxeSLn64MizB+eU7OYK8CAqz0sbQXnf9uumc8gbhjid7eLsZuCHTzN5MmJD1HpcF/UrXfa8OqUbjglR4v4Yweu+CCKVsUEfweMX13s9AlG7q5i0DBVV6O4dEzwQLy9b3NF4fbg9aFKrjYG0CsdXQfiAAl43kv8sA4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DsXYNr7C; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VB4rxd2O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nrpS9nsA"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4E7781D00228;
-	Mon,  9 Mar 2026 23:08:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 09 Mar 2026 23:08:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773112125; x=1773198525; bh=9pUKki20fD
-	JPxRvltkfRJklee2ahA5v+l+Y0WUT23Iw=; b=VB4rxd2OyvZk578b3Bl1nb0mmG
-	1pm0EDAEGPwYlCBXqyg4irVsRdbVJCvSRP6GAIXgZ5k5sUBQhPljDx6+fBnXuk1g
-	fFUWSj5Et5B5br/vvNYxKcLOhAo7XWye3AkNz+cYYbaPluM4JKV92BJ0tI2DP54A
-	Ax0ZBz1VRSgQblS4Jvq1fy+PdoWqCq7lQwdIKXlCSwjUtt/MDb2cfPD7ICxfEQXy
-	Di3G7tamEPtGxOK9CzgbdJVhHkDF33Lx7JfTw/qLxl/nkpquKpQlieC5DTOXcq03
-	mD+48ZSkgR5LNdx/iJkO2qWeLkN6qAAmCxdNJKpZR+3f768M7Rymk17qdSyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773112125; x=1773198525; bh=9pUKki20fDJPxRvltkfRJklee2ahA5v+l+Y
-	0WUT23Iw=; b=nrpS9nsABR8vqRB7bzoqYn0z5t+2XfJwQM6YIhMP3VmGVVZGaAg
-	Eg4szjmi5SSslNb41M3oGIat/8wR3D5HABvFyNbSZ+bFHcmVjgqSoCN3Nem4Imnd
-	gDefdVcs8n7oKKTqDsl4UVT34MSwCKUBioGwN5mw+HQzsTe+DiOJtg2EwYRIhJP9
-	B0FdYh+p5J1vdKmUn8rywCjFLZ8BpWwnrauDwpy+Ah9+lu4sqsFUsecn9e2TFZ/B
-	ffdzM+yPhgqWfr9LoW7cvwaotg878/5q4QOSbG43LsCdn/4B4dJNC9WRpRgOIJ/2
-	w1WWQDKhOhAAAKfxUnfU7AaHp+ZTKxoHyFg==
-X-ME-Sender: <xms:PYuvaTLWxL9dc9RxE9P93EOq-Ncmug2esMdzMRi6Qa_r2TGwax7h2Q>
-    <xme:PYuvaeLfhrSUz7ltkK9qqI3RZL4OaHOyKVHubS3T3mkoNwAAxeTa4mxUVXKzmKH3l
-    wkmbljNijRertQI3DBVjlZgVEjW7LkVDKJ81ZUp-2-6-LABq49daxE>
-X-ME-Received: <xmr:PYuvaQtt1NgTZmlZOzB9uCiuZB5Lj3Z42azqaEp8fkukI4HUnLPEYCi52YV6Xhi8xJKlmxLihh5BKMPemYsKTVja2tuNID9JPg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeelleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrnhhsihhmrggrnhhukeeivdejse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PYuvabRdrhWxIQU89wCPTk9rmN4DBZmhKR1Kzumgzkvts41XCHlvLw>
-    <xmx:PYuvaWPTngr6yvzRYQ1DkB9JLLo4VO2QA2AkEqJrx-3lrNTfcMh0CQ>
-    <xmx:PYuvaQZBZT9rv8Se7BV0AkgwNlDtmPAf8oTMoahLCuL_Vy_xoWU7Ig>
-    <xmx:PYuvaQwn-6P_4wp1p6sJekeu1cRdjUxPdqgZBY3S6XFoe5YhDdHUwg>
-    <xmx:PYuvaQMvcxahjOpEhyAEpdDoh7c9kir1Uufw0hwS4I9A0ZYvzritMGRo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Mar 2026 23:08:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Mansi Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Mansi Singh <mansimaanu8627@gmail.com>
-Subject: Re: [PATCH 0/2] repo: remove redundant variable shadow in
- stats_table_print_structure
-In-Reply-To: <pull.2062.git.1773109018.gitgitgadget@gmail.com> (Mansi Singh
-	via GitGitGadget's message of "Tue, 10 Mar 2026 02:16:56 +0000")
-References: <pull.2062.git.1773109018.gitgitgadget@gmail.com>
-Date: Mon, 09 Mar 2026 20:08:43 -0700
-Message-ID: <xmqqcy1cz8hw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DsXYNr7C"
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-899fbf92bdbso119808606d6.0
+        for <git@vger.kernel.org>; Mon, 09 Mar 2026 20:09:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773112160; x=1773716960; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=it/jAkv1s+tfwB90WhP7pF49MIDjzkLsNyVKYmnNyy4=;
+        b=DsXYNr7C3FvLOdLK8cH5cUfKT4tYWq11zFdDx67vlVfgq/RXza8/YoaEGxaq67F7f7
+         b5ht4iXwPFKXV3gpR5lzPdtliyccaI26J5rLx7aECCq/UFa2/ZubdxsLe8LXvSxIAz4N
+         yHLUeGRPE69KvgDZYRWXRYFwNjWPpZj7fqJ8RqC8vGwUVLr6+Ydt9U18xkZhc6kK3AW4
+         AIXABS4SmNvyhZHXWxCBsIUe2ir7T13GDCQUme1EYkQfd2ieFghfjplpAggr2bVpK3F2
+         ZSQwjqwTq9aXsObW64rMyp7LqA4Q/5P/CIVocP+hRSBrp3gArb+uSBpniEn+EADERk/k
+         xm+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773112160; x=1773716960;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=it/jAkv1s+tfwB90WhP7pF49MIDjzkLsNyVKYmnNyy4=;
+        b=DF+We92oNC27cd5AfQLI3VZDAtoPL0HW6Kdy9Pz8Izv7xtWZLhuqM5GeG92NY/hAot
+         aOLj0YJQOo1f2nNtwhCWxLGK3BpzbErt77OiHDV/ijwwiSSsxJkbCSIBz1LN+1DpDuNv
+         opjFVEMFRJyLTNhG8Dr/9aL04WN14B0i8tSv6T3rSsx1e+LfILt8KVmlyYfaw9/r7f2E
+         qXfa2pPFY6hzhs96MGx/+R4DSEql7389rPpB9afZTKy9nuHgbiFnGbw3L4h34A0+5l75
+         3hjO3sVsmsF1x3sdJ3BfiSErni8JHJCweAzgUTHZYghPaRDQ6AaVJITp6r1RCg67LrwD
+         Xqqg==
+X-Gm-Message-State: AOJu0YwekzpnMaYmne8T7JNi/FLs+W38BTaVppzy6kWR1pUNMG8Ozi4D
+	nHQAZtFM+651EDhXLg+Sot+E/SnufyCR+l7THNfucAxDbuzOOOjdcGFfblhvsA==
+X-Gm-Gg: ATEYQzx4j4laugdrz9AN5uYUPsyFJ6UTXfvDbeu1Qmp3DmGrfLWcqO6Minm4PiCmsi7
+	aPo5d+1i+xGyC5aWr7EFKuxU/c/tgV4JvwFiCP/cKVy0qBztF9mOkZYOmmluZVWGy9tKGK9ihOo
+	eO+4SNNLz0V0ZvZPZ4oAslLxuiUEl3CDTwa5H72jxYluZpbmO1hNIn33XkKqzQ09VqaTaDEDIyE
+	kMTTwSo39lRcmoHnRaDJUmiwL3tlIonmHjrQcMKrvmuCxKhcetX3JPXDZfFNze9jEhhx39L6za3
+	Y/Pk62ih/UjWe5Urs3oj+H37DPt05P3zyQFtiURgdJDLWCml3Jf8wJgKfgFGsycQ3Q2vgflHG6X
+	QxpRFzQBTY9uav8UvIqMTbLxOgM0l2V9ZrX67jxYQKOGHhmtTVxEeB4qfD/Kf9NGkutPuzNjWLb
+	ya9ktM6PdTaKi95FvbjLj1EUU=
+X-Received: by 2002:a05:6214:262c:b0:89a:e5f:d536 with SMTP id 6a1803df08f44-89a30b06e13mr206254466d6.63.1773112160528;
+        Mon, 09 Mar 2026 20:09:20 -0700 (PDT)
+Received: from [127.0.0.1] ([9.234.151.19])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a57c2c482sm10441266d6.42.2026.03.09.20.09.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Mar 2026 20:09:20 -0700 (PDT)
+Message-Id: <pull.2066.git.1773112159662.gitgitgadget@gmail.com>
+From: "Mansi Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 10 Mar 2026 03:09:19 +0000
+Subject: [PATCH] t1900: add tests for git repo structure subcommand
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Mansi Singh <mansimaanu8627@gmail.com>,
+    Mansi Singh <mansimaanu8627@gmail.com>
 
-"Mansi Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Mansi Singh <mansimaanu8627@gmail.com>
 
-> The variable i is declared in the outer scope of
-> stats_table_print_structure() and then re-declared inside the loop,
-> shadowing the outer one unnecessarily. Remove the redundant inner
-> declaration to clean up the scope.
->
-> Signed-off-by: Mansi Singh mansimaanu8627@gmail.com
+The t1900 test file covers git repo info thoroughly but has
+no tests for the git repo structure subcommand. Add basic
+tests to verify that:
 
-The above sounds more like a description for a single patch, not a
-cover letter.
+- git repo structure succeeds and produces no stderr output
+- git repo structure --format=keyvalue outputs expected keys
+- git repo structure --format=nul succeeds
+- git repo structure rejects an unknown format
 
-Because we strongly encourage one patch doing only one thing and
-doing it well, a commit log message for one of the patches in a
-two-patch series rarely makes a good description for the whole
-series.
+Signed-off-by: Mansi Singh <mansimaanu8627@gmail.com>
+---
+    t1900: add tests for git repo structure subcommand
+    
+    Add tests for the git repo structure subcommand in t1900-repo-info.sh.
+    The tests verify that git repo structure outputs the expected fields
+    (commits, trees, blobs, tags) in both default and key-value formats.
+    
+    Signed-off-by: Mansi Singh mansimaanu8627@gmail.com
 
-But reading it again, which variable 'i' is it talking about?  [2/2]
-does address 'entry' that is declared in an inner scope, masking the
-variable with the same name declared in an outer scope.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2066%2FMansiSingh17%2Frepo-add-structure-tests-v3-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2066/MansiSingh17/repo-add-structure-tests-v3-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2066
 
-Stepping back a bit, I do not quite see the need for these two
-patcches to form a single topic.  They look pretty much totally
-independent topics.  Perhaps you're better off treating them as two
-independent topics, each with a single patch.
+ t/t1900-repo-info.sh | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-> Mansi (1):
->   t7605: use test_path_is_file instead of test -f
->
-> Mansi Singh (1):
->   repo: remove redundant variable shadow in stats_table_print_structure
+diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+index a9eb07abe8..b63d404075 100755
+--- a/t/t1900-repo-info.sh
++++ b/t/t1900-repo-info.sh
+@@ -149,4 +149,26 @@ test_expect_success 'git repo info --keys uses lines as its default output forma
+ 	test_cmp expect actual
+ '
+ 
++
++test_expect_success 'git repo structure succeeds' '
++	git repo structure >actual 2>stderr &&
++	test_must_be_empty stderr
++'
++
++test_expect_success 'git repo structure --format=lines succeeds' '
++	git repo structure --format=lines >actual &&
++	grep "references.branches.count=" actual &&
++	grep "objects.commits.count=" actual
++'
++
++test_expect_success 'git repo structure --format=nul succeeds' '
++	git repo structure --format=nul >actual
++'
++
++test_expect_success 'git repo structure rejects unknown format' '
++	echo "fatal: invalid format ${SQ}foo${SQ}" >expect &&
++	test_must_fail git repo structure --format=foo 2>actual &&
++	test_cmp expect actual
++'
++
+ test_done
 
-Are these two patches from two different people?
-
-Last time in https://lore.kernel.org/git/xmqqv7fjw6yx.fsf@gitster.g/
-we had three names, and we now have only two, so that can be called
-an improvement, but let's whittle them down to just one ;-).
-
-Thanks.
+base-commit: d181b9354cf85b44455ce3ca9e6af0b9559e0ae2
+-- 
+gitgitgadget
