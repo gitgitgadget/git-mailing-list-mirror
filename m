@@ -1,45 +1,72 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4746335839E
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 21:05:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211E9279DCA
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 21:06:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773176709; cv=none; b=AQjlEp9iV87b0cL/2ZcOpGhRQr7XOrtR33v801SvCnPmagRTiyQgQQ/FCkBp/G1byI0pRqyWVFIZ4dMmGonlzBaMaNwt2S9TotbC5HfxWwJpAn9ANhm738omUBV8EMxSiuKlt3tqxa61R9P78cplzKCbmQ3ymS+dDQa2zVVAJXQ=
+	t=1773176789; cv=none; b=c1mvDIhsnCQLQSneT46ZRo0mTWtU2NNMisU7S59zXqOK6fAWtv2zPoYo8VoPOXrX1slsbd5JX9ac9zN5Qwp+M54wfCqMACnmagBaCN5WchURksVLdq/26t1xNvuSgEm9tCkVwM0oM4lmS+ay8dCrJGjY/VmALYeuKzuvOtE424U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773176709; c=relaxed/simple;
-	bh=LK8jyehOxaS/BM+Q/qlywhbxxM6nxr1dSswRvjFBgOI=;
+	s=arc-20240116; t=1773176789; c=relaxed/simple;
+	bh=uznGXqNRbT41UQZpPDV86ZGLHG05U5gwxQnt5eXdAPc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VxLesUuozh5hIbfb+U0Q5nVR1z1zELCqzswKJc3Itj5sYHu98a66OTXrrdYOPaU1orTL6hp+tV5vaP7ucT7JKz0tr7O4PhQmte/y259mDj+bmqkQ0rEJtbOc3drGOGNPYgfUgXRdVrvGbxyStBJCfE3VZM/WwbXstG/1fUEEzBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=A+PFYVBZ; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	 Content-Type:Content-Disposition:In-Reply-To; b=bG8FqtFNXrsN9faP7288qWe0LGx6uyrU0Flg/w5HTPC2c3EormKLP7ThSv+3yNf6FiVouj9xTdDCoZ4050lFYl3GtiFRnzdQVXOo7lI9N2G07Yqj1jnQzdjNrj8G2XIY9VxB3/TKrn3hfbvF3sLlXOhhWNiLZq/GUz9SkgyVkt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D2QIrnNm; arc=none smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="A+PFYVBZ"
-Date: Tue, 10 Mar 2026 22:05:04 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1773176705;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=y6brBNqcdfn554XKTQ6QCHjcUCyfV7MoooFSrPsTCF4=;
-	b=A+PFYVBZ57DQ69civxRhK1lx9ADbpkRlVi0bMqdjDSHOKvV3qqtRSs3w8MRw8/Z+QwmmiQ
-	NjYdoI9Ds/APhnJmUzu42P8YkjMiFkowVHEiVNJmsavRHeX6fosM4s1Fa4T0rLvfwNHpY7
-	8fMOt3NuqwxgWZvE+0BXgguaz5O3TtT7wX74xOvySu+Ccazr3ow95CyKa/yQzj8QydoP7/
-	pVDvjV7e+3kqYG+d5PIkHWIZwzwN6WGjIz0ZGkw+Oy61SgoEEgCgzl2xQvcNYuORnBOFCH
-	/qn99BacQe+HgkuPe/XIc/etNqeiJr+H6SuthZFydfb0qnMF/Kzyme75AIj2sQ==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mroik <mroik@delayed.space>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v7 3/5] format-patch: add ability to use alt cover format
-Message-ID: <abCFlUkXbth08nPS@exploit>
-References: <cover.1772837832.git.mroik@delayed.space>
- <cover.1772839973.git.mroik@delayed.space>
- <316c9e76ee49d73aff75b63299c970e9f55f79b6.1772839973.git.mroik@delayed.space>
- <8f49d551-9741-4461-b076-3caba75e6122@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D2QIrnNm"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7d749f99691so1459455a34.3
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 14:06:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773176787; x=1773781587; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SNtkKoqiK1APE+xhZN16bF8/MsTHtKVcRurMzaKEI2s=;
+        b=D2QIrnNmVcDwOp8t6c20324bWtzAzxUMCWvMT5bPkShcGp1oC4D9PxPNDxj1WY7CXJ
+         I2TQpEHTGyNr43id6V+2RuNOMWTmxitg4OUZdf/tQwQL/IgUAmstUi8ZRKTf5z+Otq97
+         FvA5yeQNiChEhPmKa8yDIoT495sNuvIyakkC15hpqAPzD0Lj/fPoexfQiqJk5vSEQyX+
+         IEgwyNa1xyAcSyoq5Ol5UUkPVMc/d0ca3WAZtl7T15o6lDwSg2yq+XGULhRYmgCwAPrw
+         BtX13OQwah070x0FHPGg2m4uUS7lHnPvEuUlTblJlkoti0dqSD+zr6W77mLiLMTdcYxI
+         QDLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773176787; x=1773781587;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SNtkKoqiK1APE+xhZN16bF8/MsTHtKVcRurMzaKEI2s=;
+        b=NEPOceEJMqJDYvLvRg2wxGFuHc+0dm9TCfu7B5YsZ3rHyBLylPeF5DRKw/ikJyW41Z
+         0KB6w0wctdkcjx0wNrsSc0PCxOpOQC4oPqyHNOOelIrJMbAuIe9DYojvTzPoyyQhORFn
+         K1LaL+FxzKpyja5LEJPvC8sU8dGx18c3b40MeQ3RjRoM4UEkZ5JnXogsBk9TBcG3O8zz
+         xLTFTuKvsDBfRbvicJBb/LIuWWnEqrfCGVCTPAgiwRqH/oGyEK1fiLGCFToCg35NE293
+         CQPMSzlKJyMu5uSRRl6gMNovn6Rvzy43ZZjA2dbQSPVrq1VQj1UiFQ6jD490sKnG5qbD
+         wP6w==
+X-Gm-Message-State: AOJu0YwFTwAap1mj9+A5rJsle13kzusfBis29QGljdCw54Z04mtw+2XK
+	btTFSpnnKy1e4FKO61HCdAClQjgZ7rrKkXk+zAhNeZO7vNWnsUUUNi4s
+X-Gm-Gg: ATEYQzxYbzhfByeilPNABni8icwwGyw1i3ovE6ak7HJoCUZ8j90c6lRZ+s0K1bmOraT
+	6sADW3Ivgiqyt0L9W9RTVn5Hbv286F3kv3gjYw1iNXSpbZk5+9fLnwW1RzghPJ6vslXig979xAa
+	OL3LktIKhxX1rc/41r4iSXSAlXMGCmT5B+6hQYhQu3XbeUfqLTuGCziDJyauOSF5IRoTdRVoNMF
+	BX7B5KbeqLMCUL8+t+7aEp+X7WrS1I5hseKDOfiShowArU4hX1N/PAtljEoUccW39bve43F4361
+	1iixV7OSx/ogbT1CVb2slo5+laUX7vbuKUKvPjPb1I3eqbUFsVsS5CQ4yETtwatUq0Nekl0pKoC
+	bhG5uivij1jZMhEHcafhkGc+Xd8/bcK4iZHjNKcP532j7m1uYFQfyJR3DeMIvr6I5WNlgWs726K
+	24eCY3dkDXV1Y2Rq4V
+X-Received: by 2002:a05:6830:3893:b0:7c5:2e2a:d386 with SMTP id 46e09a7af769-7d76a75dabemr219755a34.21.1773176787008;
+        Tue, 10 Mar 2026 14:06:27 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d76ac328a1sm209582a34.6.2026.03.10.14.06.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2026 14:06:26 -0700 (PDT)
+Date: Tue, 10 Mar 2026 16:06:23 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, 
+	christian.couder@gmail.com, ps@pks.im
+Subject: Re: [PATCH v3 0/3] fast-import: add mode to re-sign invalid commit
+ signatures
+Message-ID: <abCFKEHxu7OZr9bm@denethor>
+References: <20260306205359.1723254-1-jltobler@gmail.com>
+ <20260310201116.1130160-1-jltobler@gmail.com>
+ <xmqqv7f3s93l.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,76 +75,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8f49d551-9741-4461-b076-3caba75e6122@gmail.com>
-X-Spamd-Bar: --
+In-Reply-To: <xmqqv7f3s93l.fsf@gitster.g>
 
-On Tue, Mar 10, 2026 at 02:33:46PM +0000, Phillip Wood wrote:
-> > Give format-patch the ability to specify an alternative format spec
-> > through the "--cover-letter-format" option. This option either takes
-> > "shortlog", which is the current format, or a format spec prefixed with
-> > "log:".
+On 26/03/10 01:49PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 > 
-> That sounds like a nice improvement over using the shortlog output. However
-> it is rather cumbersome to have to type "log:" each time. As
-> --cover-letter-format=shortlog is a nonsensical format I don't think we need
-> to require the "log:" prefix. --no-cover-letter-format should behave like
-> --cover-letter-format=shortlog.
-
-This was done to avoid having "anything that is not shortlog should be
-in pretty-print format". Having it this way in the future we can check
-for the prefix and see if the user indeed would like the pretty-print
-format, otherwise check againts other formats available (so far only
-shortlog). If "log:" is too cumbersome maybe we can drop it and check
-instead for existing presets first, "shortlog, etc..." and then when
-nothing is found interpret it as pp format. I like the explicit prefix
-but I guess it is unlikely that a user will want to print "shortlog" on
-every line.
-
-Do we all agree on dropping the prefix?
-
-> This is unnecessary as commit_line is initialized in the declaration above.
-
-Will remove
-
-> This loop is a bit confusing, I wonder if it would be simpler to count up
-> 	for (int i = 1; i <= n; i++) {
-> 		rev.nr = i
-> 		repo_format_commit_message(the_repository, list[n - i], ...);
-
-Will rewrite for readability
-
-> > +test_expect_success 'cover letter with subject, author and count' '
-> > +	rm -rf patches &&
-> > +	test_when_finished "git reset --hard HEAD~1" &&
-> > +	test_when_finished "rm -rf patches result test_file" &&
-> > +	touch test_file &&
-> > +	git add test_file &&
-> > +	git commit -m "This is a subject" &&
-> > +	git format-patch --cover-letter \
-> > +	--cover-letter-format="log:[%(count)/%(total)] %s (%an)" -o patches HEAD~1 &&
-> > +	grep "^\[1/1\] This is a subject (A U Thor)$" patches/0000-cover-letter.patch >result &&
+> > With c20f112e51 (fast-import: add 'strip-if-invalid' mode to
+> > --signed-commits=<mode>, 2025-11-17), it became possible to remove
+> > invalid signatures from commits via git-fast-import(1) while maintaining
+> > valid commit signatures. Building upon this functionality, a user may
+> > want to re-sign these invalid commit signatures. This series introduces
+> > the `re-sign-if-invalid` mode to do so accordingly.
 > 
-> using test_grep here would make it easier to debug test failures.
-
-Will do
-
-> > +	test_line_count = 1 result
-> > +'
-> > +
-> > +test_expect_success 'cover letter shortlog' '
-> > +	test_when_finished "git reset --hard HEAD~1" &&
-> > +	test_when_finished "rm -rf patches result test_file" &&
-> > +	touch test_file &&
-> > +	git add test_file &&
-> > +	git commit -m "This is a subject" &&
-> > +	git format-patch --cover-letter --cover-letter-format=shortlog \
-> > +	-o patches HEAD~1 &&
-> > +	sed -n -e "/^A U Thor/p;" patches/0000-cover-letter.patch >result &&
+> I know that this "re-sign" used to be "resign", and the update is
+> indeed a replacement, but I wonder if we can just say "sign"?
 > 
-> This just checks that the author name appears in the coverletter, not that
-> the patches are formatted with shortlog.
+> When we see a signature on an object we are rewriting, we either
+> "strip" it, or we "sign" it (afresh).  It is not like we are
+> retaining the old signature, and signing on top of it.  We are
+> discarding the old one so there is no difference from signing the
+> object that never had a signature, no?
 
-The name at the start of the line can appear only if the foramt is
-shortlog, but if in the future it we do decide to support more prefix
-that might not be true anymore. Will rewrite this test to be more
-robust.
+From my perspective, "re-sign" implies that the signature was previously
+signed, but we are now going to sign it again. Indeed, the resulting
+commit signing is functionally the same as if the object never had a
+previous signature though. Also, "if-invalid" already implies that the
+object is signed, but its signature is invalid. So it could be argued
+that "re-sign" is already redundant.
+
+Ultimately, I don't feel super strongly, but I can send another version
+that changes this option to "sign-if-invalid". It's probably a bit
+simpler this way too. I guess the enum value would need to be changed to
+"SIGN_SIGN_IF_INVALID"? Or maybe just "SIGN_IF_INVALID"?
+
+Thanks,
+-Justin
