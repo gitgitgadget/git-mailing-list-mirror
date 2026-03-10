@@ -1,55 +1,55 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5428D39DBCA
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EBC3CFF7E
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 17:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773165184; cv=none; b=uzwQM15NpIx1qR2n+jcMfZiw7smZvgCM5AQ6fXB1pD+9tbS4maL6AUP5K0FuCu+XySSMhpdrFxuspXWI5a3gk0fB76XG9IbsV8735sxUjXPFcMaK+Nnf79/bXeuLFfcPjMbYaV+px1MTadSDWOt85ozaS4fTq+az9SrLJRMRaoI=
+	t=1773165187; cv=none; b=t4f/h1gZcbfqrXwaKw7MgAE5j1GlAH6Wu5DeJG+Ug0brmdsmA0sIJJnsaLuqoGR/F4x50OAsf3jizgOYL9X1WiJuhG52Z87cwBdlm41lHcXRtUd8Nsq6CWCyUNhzqnfBBTFGRu/6jIIa+/lhofs6Hf+3aGIj882U7B6sE2zvs9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773165184; c=relaxed/simple;
-	bh=JL93VwbP6GiU3A55SXP9jmlsdtwev20caCyvkftu6oQ=;
+	s=arc-20240116; t=1773165187; c=relaxed/simple;
+	bh=UvqNt9dJvDVAbBcO+7yL3HWLCOPOqbeW2Tc22L+ZB0U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=koMmWe2Kb5cqSs0wD9o/GuoGLiVBIgWA4iiAzJVyfPRAlg/hSLzIMvn6EkCPX2cTT+4poNgUvcXz1/qzCdHwDWiI4Xp/DBcX4ThX7V9/ILFlHVleb7LvT+nsbF2lbDPSMGsnExD2CWVQqZXJzTC7+YtXUzG2QqekQYJrnmDGkPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZDtzLVHZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gATDjCAJ; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=hPbnGw6raoKNALvSpq9DuZZGvlyUxmGBg29WNdkn2GPDSVegF0YqyUX0YDgT5FuHGZz4sTb4yAw6R/00WMbD08zJTCgBVh/b9rTHxlO5EtR180pWIh5h+9IWJe9qHUtzkx/91bnyuThg4+Hjfc+84eMJ73GVc3fihsm+n/4Rw6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F4nDpHcM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VYhpz1ow; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZDtzLVHZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gATDjCAJ"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F4nDpHcM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VYhpz1ow"
 Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5E82314000B2
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:53:01 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1D2C51400169
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 13:53:04 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 10 Mar 2026 13:53:01 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 10 Mar 2026 13:53:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773165181;
-	 x=1773251581; bh=5RfvrMt5QYcx/fQeMrdQKl2LVNr5ky/eSKxWx7LzFnE=; b=
-	ZDtzLVHZ6L3KAe6xPH4D+DIhBxcC0ajOiYh7jiPG0H44ta6+ho5Fq3tOHMYl1BCK
-	CIG/hRX6xhtp3SSmttOzrnPjyRep1/S6cfhoW2IQjPH/qnR09orMn/wDKtDUrhXe
-	7bhpafPVWJ7k1gEvTBzMAiPuP1QB2BXtWJj3EThl0WUgMpSygFCjQihEZ+QUezBf
-	4C4c+WR+cxZMVRASfswUt3AUCGQh4fb89jDG67mB39LVy/o6ql+AmfDx9bWtyhJh
-	ETlGL+MQxBQzA9ddUQlHo1XB6b0KYCFYVdBKQ89IlQGNd/2aPk9Ciw5XHL588oeb
-	jf2wHWRSstK3TGRMpFEtvw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773165184;
+	 x=1773251584; bh=DQQmYG0SmW057t20G2Iufgdbkt01KyACzqJXES1+6tQ=; b=
+	F4nDpHcM/vNeoes9/SPHK71WTq1LtxaeZyDeINzOE9qZ2ZfB+UlAp1B7EziJq8mz
+	oUvn9nTCD1fTZ9HiEYrwM3jQAwlhZdjYAMJ6zPmCdCMTYIxTs09QSMHZyRleJTm0
+	xVthtDYD0u1Q45fTtZaqBmMKHQ944kPIjcutjewH9wOj/TBeq3jEsRPvJen5NiOY
+	UHZiRBNjxOLpuUoQ96DgGUESCissrJKxJMrkufPvq0Yuubc559VmGorosM+vfRVB
+	jROB5iTIimvCab+7p9clhxAGZRT0sfxAHdhv6m/nkxorJL4Eba2WYu9eYg2P8GRj
+	mE62yNPRE0IJwyNRdhyzwg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773165181; x=
-	1773251581; bh=5RfvrMt5QYcx/fQeMrdQKl2LVNr5ky/eSKxWx7LzFnE=; b=g
-	ATDjCAJXT49qjogGX4YIiTqfqtkCGRNHRNGhz5Xqc54B1jox5ulv+7ludSAVj1zk
-	xEjYsd8GX5fbZ94eteOtM9KsmBO49Znjp3ibYURRUP5zi0m0eUXz29ouGnjz9nQd
-	m4vQV2+a6R8fNH20aNwqBwGjg8JPo5MiX+Yvz9Co6dwJA66HXtLjrwV0gg8tF7W5
-	j39BV+cbQPDFdCIL7Cnw1SzjhCE3kpSDUZ+Mp5WPmgvCq4rVK59Vx+qfJvEIwgtl
-	SDjuVtUHmPgDoNNgS0ie7QyW/66bCtGg+l67qN/5iGjoLh5ebw4I06838XaCuGQo
-	TuFOkJV83nsC34uPieGMA==
-X-ME-Sender: <xms:fVqwacnPC587amG0PIq4CjhEdCI_ATSyKKP_Nq7G3al87iNavZjsuQ>
-    <xme:fVqwaSwjotY8RcWdEtjF4wFq1xlyelSmPjYrGDnAY_gj04WvKNxQRnGgQ288gAMqO
-    fspyy-iU8A3ul0q4ocxirfCqJh116N3pbrOriVH6siBEvLLXUZh>
-X-ME-Received: <xmr:fVqwaQTtVB8QaaLfqXMx36B0TAsBEXZdiyxeH53GFxgt8NpWRtL-Wbsi7Lfz7DXmP0ZIVmEmZKaZgnc99W4tyKAn_NW7xohKZzzRkpZK>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773165184; x=
+	1773251584; bh=DQQmYG0SmW057t20G2Iufgdbkt01KyACzqJXES1+6tQ=; b=V
+	Yhpz1owfB2BbNEXEkDBUS4MmKNuaavDT1ijvSE+/yDjUxkPDFMTNnGxhRg9ZKor5
+	VxlgKiPEbOoW2XP+l0X5oGNyOZ/rGmEoSU0FkrYzyWkP2TIHe1c5rQQ7uvsKevLJ
+	3W76/i8uHFzI7mWOCu96uMaLfdLa1ucemwfDUoc5KemhojIrpdXqaxfEYGHvPYin
+	YAt39cAm/g3ly2oLuccyuvspfdecr3M7nXsS6rsxwI6sh62z1Z07YvsyZS66lNGi
+	E6Xzk01ND9HMIJ+oLFyhPraNZ1M8SNh8X7xYcQokBxYa6NWhvijgHCWGkHz16c2J
+	C2T2iU9gLLBFi6j+HGDeQ==
+X-ME-Sender: <xms:gFqwaRelZiku7iA7v-Y99GyAFo6d0SVs6GZyCZkIrItzbudxuoaP6A>
+    <xme:gFqwaWIJ26I2QNkgqMKykMsK0Deu9zwJJxSDT1jyQZWykYl2TOc45H5v-5dcX7HL6
+    YRwQLWKIGuiERVPUVldljs76HmloQY6sJvgTlO02HlzaYYcGcwFxg>
+X-ME-Received: <xmr:gFqwaQJ2K0Dk-FLh9P_aIuXmxyVs0pSShsHGrNXffIa0BQ7IxDXfDdeYTUFm8i6s9AbshBNBc7XNoUzTZIOwKfZ6fuLpTpFJYWoIqTtT>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
@@ -59,21 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduieejucetufdote
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:fVqwadsDQASdItvYCVxSnd3Mz03RCvwJB4_jVhNMpIaPpHxKD-1Sxw>
-    <xmx:fVqwaatbwWsdzF4Q3kW7BOPDlZeKeWlIu2g9gj3GW3GtnkRHKdzMgw>
-    <xmx:fVqwabyW_iaCDrrgzNQtn9zVw3QhE7tMY0SCqlTOjLEMaL4qXo38Cg>
-    <xmx:fVqwaYgfImLbqhItIx1W9dGI3wK5SupDZCuuQCxLnkGFEmA-8ZWSAA>
-    <xmx:fVqwaQ0AedWxXT9by9TuvtRSNyPbDMbpaahpz8lBm_dUuAlIQgaQnsNb>
+X-ME-Proxy: <xmx:gFqwaQGM1EwUKqT53JGvkYO2fjfDr0WszhwaIaTnb1SzhDsuqlxu8Q>
+    <xmx:gFqwadl3WTxfsZBKD3pNNcoPKtBfL2VL3wMYQnxXl39JR9bET5-N2Q>
+    <xmx:gFqwaVLqe39lRKt9HGBXS5sGmGjsoIXEFr41XWbtJ8c_X916EdhLZw>
+    <xmx:gFqwaWZ638qxhW_YeBOP1ORHBrGjkvL3zPJ2F3iGjS1umYDTJvnYWQ>
+    <xmx:gFqwabPdd10CbmmWpalkt4e9kMtV0gYCQMdvp4Ho2YJ3xt3tvu8kWGtc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 10 Mar 2026 13:53:00 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 10 Mar 2026 13:53:03 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4eb53602 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 151abbc3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 10 Mar 2026 17:53:00 +0000 (UTC)
+	Tue, 10 Mar 2026 17:53:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 10 Mar 2026 18:52:36 +0100
-Subject: [PATCH 3/8] contrib: move "coverage-diff.sh" script into "tools/"
+Date: Tue, 10 Mar 2026 18:52:37 +0100
+Subject: [PATCH 4/8] contrib: move "update-unicode.sh" script into "tools/"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,30 +82,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260310-b4-pks-build-infra-improvements-v1-3-ec75d0710d6a@pks.im>
+Message-Id: <20260310-b4-pks-build-infra-improvements-v1-4-ec75d0710d6a@pks.im>
 References: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
 In-Reply-To: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-The "coverage-diff.sh" script can be used to get information about test
-coverage fro the Git codebase. It is thus rather specific to our build
-and test infrastructure and part of the developer-facing tooling. The
-fact that this script is part of "contrib/" is thus rather misleading
-and a historic wart.
+The "update-unicode.sh" script is used to update the unicode data
+compiled into Git whenever a new version of the Unicode standard has
+been released. As such, it is a natural part of our developer-facing
+tooling, and its presence in "contrib/" is misleading.
 
-Promote the tool into the new "tools/" directory.
+Promote the script into the new "tools/" directory.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- {contrib => tools}/coverage-diff.sh | 0
- 1 file changed, 0 insertions(+), 0 deletions(-)
+ {contrib => tools}/update-unicode/.gitignore        | 0
+ {contrib => tools}/update-unicode/README            | 0
+ {contrib => tools}/update-unicode/update_unicode.sh | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
 
-diff --git a/contrib/coverage-diff.sh b/tools/coverage-diff.sh
+diff --git a/contrib/update-unicode/.gitignore b/tools/update-unicode/.gitignore
 similarity index 100%
-rename from contrib/coverage-diff.sh
-rename to tools/coverage-diff.sh
+rename from contrib/update-unicode/.gitignore
+rename to tools/update-unicode/.gitignore
+diff --git a/contrib/update-unicode/README b/tools/update-unicode/README
+similarity index 100%
+rename from contrib/update-unicode/README
+rename to tools/update-unicode/README
+diff --git a/contrib/update-unicode/update_unicode.sh b/tools/update-unicode/update_unicode.sh
+similarity index 100%
+rename from contrib/update-unicode/update_unicode.sh
+rename to tools/update-unicode/update_unicode.sh
 
 -- 
 2.53.0.880.g73c4285caa.dirty
