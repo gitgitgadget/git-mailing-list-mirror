@@ -1,94 +1,135 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42522868B5
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 14:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773152485; cv=pass; b=anBMdaS0TpAPBu2MRHTCrHnQXcrEc+D5zaPRbci4LVsFMgs0NWSFy6tPyLi7arbAHKtA2e/U+U3bkBK23jD4ctIGHdUBA8v11mWOFZSANP9On9yNsE3dgfrnJAdMef665/y+wnm3/gRWwXMoXmSuaiaEtnv3qbss7ktei4cseek=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773152485; c=relaxed/simple;
-	bh=xcRY/MS5VRV70OZXZHaXX5mCI5UBS9Q3MCMhkR55Tlo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t39ICTBAtTQGyVbBtcz0igoXr4VjJiNAoeRPlnGADWhxL2Z++mgjdKqGaZkBWCv+CasEfT42IUR/pEgOwR0rtHG2gBN+vGeltQ/xianoYLktkUZajYS0MNLV+ySv1PQWWeoy+mrlC2o6vd5VlkNTuy7b1W0zfKCf64LOWOckDTw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=lONW6t0W; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9B62D7DD4
+	for <git@vger.kernel.org>; Tue, 10 Mar 2026 14:25:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773152707; cv=none; b=LzmaSsc0k85YTUybOKIFBNXCGlqK1v1zoDOX7cXzDCPskN0bgF4norK+FLII2qkSw0e5kGSdQAy4HzDkMjIKlVfvjnfhaWXc5OMzV/Za5Bz6vy5pYtC0ChmNS8nxvhQd6sp8B52BK5tVxUOJXY1a2cnuOSImfMLrittdBinhg+E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773152707; c=relaxed/simple;
+	bh=ASK0H0PbAVMDv27OYJE0Bi+WFA9p+cNrAa3j14OMIig=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s3Vu4RHiyyEVF+hylxW9nNAPfTNaHr8N4qiRHH5vaRCTlr5N7KDU9DfE1GHkjr/gtNHvcv4sSnkqfERjULf5M0CjNYGfZ6UJ5Lk39Uco2X8rWY6u/FR7HacErqmwH6g4Y2Shz022v+rm1mzyMeug5qYlEaEkrrI6zauxRrhfxy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B0rsTcu+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4jL32HZh; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="lONW6t0W"
-ARC-Seal: i=1; a=rsa-sha256; t=1773152459; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=VIeWQ4ZhHfyFonl+bGk6yzJdwyz+SpjJYvL/EnJoGXoHkYr4dD1GgL+jgmvD0Uru4kxz5M5k4RcDgGd8uWq9uMfN4EBotwycMQNpx8Pg6JzY4P89nze8NXRGKl7I5UHKbi6cKHizwxiK7MMVjiouEEdLv7O1vcjhNrofgGGmz48=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1773152459; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=tQ/64W9fyqS6v+9JH1gg3FlfWXmiSfARH97R1Q7SZ50=; 
-	b=k+TxlvMnZZuKwsqquRoselsmZWKLLCT8FpT8SEZaWSM6+moIxkrG3qyO2jn1MVG26RilN4hgbLDgDpKCfONBxVzIHbKqSAHZqtjfXKXLG+hp9NLk9x7HtuznHeJ4SxmCUgQ0aqa4sAjZVRuxhZ9q8zNfZQWCmfp5bDf7KQTEqL8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773152459;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=tQ/64W9fyqS6v+9JH1gg3FlfWXmiSfARH97R1Q7SZ50=;
-	b=lONW6t0WUFwrG12Oj3n7YluHiqeON16Q9++GDaEfHs/x/o5DaBXCpOAe9yGMWcWC
-	ikBYEVz5HzZsptgjM9JyS/aR+srLcuuyOgD0TmxUq0zXexmwxu9ya0P7AFADNApvM3C
-	Yv7wQR9E5XH+nGGe5k0tU8OqCrW03z2xYwZEtSGQ=
-Received: by mx.zohomail.com with SMTPS id 1773152456470730.8434276955337;
-	Tue, 10 Mar 2026 07:20:56 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Junio C
- Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, "brian m .
- carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 05/10] hook: replace hook_list_clear() ->
- string_list_clear_func()
-In-Reply-To: <CAPig+cRngzGdd-ABWLSiypuJVQ-LVv-xqmn2h+c7qB8_OBpyRg@mail.gmail.com>
-References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
- <20260309005416.2760030-6-adrian.ratiu@collabora.com>
- <CAPig+cRngzGdd-ABWLSiypuJVQ-LVv-xqmn2h+c7qB8_OBpyRg@mail.gmail.com>
-Date: Tue, 10 Mar 2026 16:20:52 +0200
-Message-ID: <87eclrg3zv.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B0rsTcu+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4jL32HZh"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7135E140021F;
+	Tue, 10 Mar 2026 10:25:05 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 10 Mar 2026 10:25:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773152705; x=1773239105; bh=D4uMG+3jSi
+	iiRxEhdAKK4jEt7kjbrhwzWgWlA1H9LnU=; b=B0rsTcu+l6myDE7LGz1/K0btn1
+	wKzHoeM9GswVbTEwYY+OEqUP/jc3tv0SekNIFR8s5S5UMfT4/hXXb9YOtIosrDsq
+	PAYWaifQhctPpoZFJHd/f3dHgyAr6GdWev2OLLWHlXcXdQqMwtFslMIsHVJ4rNMH
+	trtADNAyN26vhYdKGWEICkmySgSWF7uU9oAAHg/vUQfo7jiRuR0lWIo6ZcTqJ95h
+	i3hRA2JvmQ+8G7Iy6NJFhBmSKwcvQMyWAm5QPD1IbNyCEA4GWG9T3Wwaa9/1hzxq
+	OwuhR4cWfSbnhlXFhRBQRe+v7Gz8G5rTg3gVsNI/dEC+n9JIGAVnXRMpgMFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773152705; x=1773239105; bh=D4uMG+3jSiiiRxEhdAKK4jEt7kjbrhwzWgW
+	lA1H9LnU=; b=4jL32HZhUMabrq5AKXxK/Jwz6qDW2RnxaDAAd2UMvs7is8I+bXP
+	+DcjLBHB2/mmT9nA4fkwzOkuAKb2LoX609IU7TRNd3+zojXN5mwdaRB9HnqgnvbD
+	jD+iV/af3HowN/RS3D8/tslRptneYeNMEzXYSGWVeI2RvoPaGwv8RiW9SfY1GtsF
+	1tlXh96Qs2Ag9TkWcxJr4QWUJnVcRVEHJEMuiSoDG1zf4wOGu246QHs0usZxxhSd
+	Jv+r9tJwgTWIqCX22m9Y4i5N6JyHbAKUYrQmmLM1sUBs2tNa7p81Tu2DYWOy69DF
+	V3wPzHDxVfBbzkCRsx0TiWZeqivpKzXLH8Q==
+X-ME-Sender: <xms:wSmwaeO1k5pwz3_BwJ9v_IIA51bYnENW8aonZH2diNsb8kLRsJcwcQ>
+    <xme:wSmwaT8kwXAaAVYLDsgxw4D-WLxCs7qVs8FhAiV4LfTly-su5hNSnKbIaei2TDPOr
+    yMuvg_v3IJhUoD5zs-z7WJyzYLSKk3scZLcuw3DIirWkkF2GRZNCw>
+X-ME-Received: <xmr:wSmwaaQWywLAr1uywlfAuO7wkQS7PkdS_OMnGw2k4adQsBnh5tQK89oyWPQb5fwbFxslHAJL9NMt0kCAZOBsmtmx7kVf60OIx33cc0vZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeduvdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhgihhtghgr
+    ughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprghrshhhshhrihhvrghsthgrvh
+    grtddtsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:wSmwadkJIJeQd3eI7-day_JPw0RnfYEtW3aL-5Zw7fA2DMC9EPj4IA>
+    <xmx:wSmwaSRdyhD7nYDuwEPy-E8fhlZhrbU4E_iXpE_-cNlTQT5aWxVtpQ>
+    <xmx:wSmwaTNOnll4j--2dk863nBzvvX6AHR5KpJJNuPMP1FFI_xsncv0kg>
+    <xmx:wSmwaTUxmDs9-9veXoS56oIxn0VzeeMXmzcD6_G8A0AWFXIB-gGq0A>
+    <xmx:wSmwaVnbGIP1ugup-eCdFCxjCeWnfYYRkxdt7ZoK42TUNy01emVCNGZJ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Mar 2026 10:25:04 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 35b73393 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 10 Mar 2026 14:25:02 +0000 (UTC)
+Date: Tue, 10 Mar 2026 15:24:59 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Arsh Srivastava <arshsrivastava00@gmail.com>
+Cc: Arsh Srivastava via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2] advice: add stashBeforeCheckout advice for dirty
+ branch switches
+Message-ID: <abApu_JDG4im9vwT@pks.im>
+References: <pull.2233.git.git.1773132678.gitgitgadget@gmail.com>
+ <pull.2233.v2.git.git.1773140364525.gitgitgadget@gmail.com>
+ <abAZw-Z1mKf4tAuH@pks.im>
+ <CAOAgETMe_yGyuaV4Eo9WDNYBa+eG-SEYDTCDoV45itNh_TE_GA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOAgETMe_yGyuaV4Eo9WDNYBa+eG-SEYDTCDoV45itNh_TE_GA@mail.gmail.com>
 
-On Sun, 08 Mar 2026, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sun, Mar 8, 2026 at 8:55=E2=80=AFPM Adrian Ratiu <adrian.ratiu@collabo=
-ra.com> wrote:
->> Replace the custom function with string_list_clear_func() which
->> is a more common pattern for clearing a string_list.
->>
->> To be able to do this, rework hook_clear() into hook_free(), so
->> it can be passed to string_list_clear_func().
->>
->> A slight complication is the need to keep a copy of the internal
->> cb data free() pointer, however I think it's worth it since the
->> API becomes cleaner, e.g. no more calls with NULL function args
->> like hook_list_clear(hooks, NULL).
->>
->> Suggested-by: Patrick Steinhardt <ps@pks.im>
->> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
->> ---
->> diff --git a/hook.h b/hook.h
->> @@ -186,10 +194,10 @@ struct string_list *list_hooks(struct repository *=
-r, const char *hookname,
->>  /**
->> + * Frees a struct hook stored as the util pointer of a string_list_item.
->> + * Suitable for use as a string_list_clear_func_t callback.
->>   */
->> +void hook_free(void *p, const char *str UNUSED);
->
-> See [*] regarding UNUSED in header file.
->
-> [*]: https://lore.kernel.org/git/xmqqcy1g25fl.fsf@gitster.g/
+On Tue, Mar 10, 2026 at 07:06:39PM +0530, Arsh Srivastava wrote:
+> On Tue, 10 Mar 2026 at 18:46, Patrick Steinhardt <ps@pks.im> wrote:
+> > On Tue, Mar 10, 2026 at 10:59:24AM +0000, Arsh Srivastava via GitGitGadget wrote:
+> > > diff --git a/advice.c b/advice.c
+> > > index 0018501b7b..e1264f525c 100644
+> > > --- a/advice.c
+> > > +++ b/advice.c
+> > > @@ -81,6 +81,7 @@ static struct {
+> > >       [ADVICE_SET_UPSTREAM_FAILURE]                   = { "setUpstreamFailure" },
+> > >       [ADVICE_SKIPPED_CHERRY_PICKS]                   = { "skippedCherryPicks" },
+> > >       [ADVICE_SPARSE_INDEX_EXPANDED]                  = { "sparseIndexExpanded" },
+> > > +     [ADVICE_STASH_BEFORE_CHECKOUT] = { "stashBeforeCheckout" },
+> > >       [ADVICE_STATUS_AHEAD_BEHIND_WARNING]            = { "statusAheadBehindWarning" },
+> > >       [ADVICE_STATUS_HINTS]                           = { "statusHints" },
+> > >       [ADVICE_STATUS_U_OPTION]                        = { "statusUoption" },
+> > > @@ -312,3 +313,29 @@ void advise_on_moving_dirty_path(struct string_list *pathspec_list)
+> > >                           "* Use \"git add --sparse <paths>\" to update the index\n"
+> > >                           "* Use \"git sparse-checkout reapply\" to apply the sparsity rules"));
+> > >  }
+> > > +
+> > > +void advise_on_checkout_dirty_files(struct string_list *file_list)
+> >
+> > Huh. So this patch wires up a new function and advice, but we don't ever
+> > seem to use it. Am I missing something?
+> 
+> Thank you so much for looking into my PR and i believe advice.h is
+> used in the add.c file. And advice really helps young developers
+> understand what's wrong in their files because navigating git and
+> trying to find solutions is very difficult, causing them to go to ai
+> models making them copy pasting machines.
 
-Thank you for pointing this out!
+(Please note that we prefer bottom posting on this mailing list, where
+your answer goes below the quoted context.)
 
-I will fix it in v2 together with your other suggestion.
+It is used in "add.c", but not magically so. The function that you have
+introduced is the only site that uses the new advice, but the function
+is never called as far as I can see. So ultimately, the proposed change
+does not have any effect on the user-observable behaviour.
+
+Patrick
