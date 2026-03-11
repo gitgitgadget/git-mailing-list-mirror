@@ -1,166 +1,150 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1201F282F33
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 14:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C46372B3E
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 14:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773238618; cv=none; b=qEGFQwgk4AvZPOlLm5qBJhsVOjMguJmJowXjGE9MLn90PACZeqCxI6XjNKP4USwup/CbrHrmekiJF9siml0G1GkOA4Vy2TAwjV0YtGaR86UVHAJaLVfYYGH5Ew/bOW/ZG04CaFjerdtS2wuN2xpyfSykR99F478XLJJaZWIrCX4=
+	t=1773238732; cv=none; b=hRACzdIdI0OlEhq0z9pCLOth+9KI18env2cv0GBb/PQHDYjhszQFiGCmfncVxP1StJ9o8UY/fMY9FMzjvMMpyHyoFkEh2xsTOqkp2VzjZIG6OeHteNAw3xuJZxAjh1Ic8//Lo8AN/xR73CJCCJ89YzebxmktaEjHwx2zggf+ZY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773238618; c=relaxed/simple;
-	bh=v3EYGr7FY/qsl2kWRlNZZ3wFRUzXcBmygIjVoEVWSuQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ucmhd9gbtdUj0/uDNMkDtVOtztKrfy8/g9mdLpju6JG5yWQpD22gDk4ozPCuvdyrO23ahGxtDcbH2Oq3ARAaLjdBh63RhG189knf4khftksAZNPqHFs55KN5xjcgv7rAnvOEoBn592m7KZrJg3hfuvg1zVNrkz2tK+Pyoq0GDzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LZ7Vvd9E; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1773238732; c=relaxed/simple;
+	bh=Q8kTBXQIbrEA9rUatT1/TE52Bt0TDK5eaUifu1k3FOc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Y57OGgnZ/uHEoY8vwUiDN9Jeiv4yjAX+5VqHxoJs90wbGxyPW7tFPqOiNA7ofZV0hWbeFiok8shAcyiQcWH5IcPUskwrCiwNpYvui8ZFwNgwgbCGpaLTw+83+W9i8TkiDX/oSb3F+tXSl8ldiatmR/PxzheT1ZCB7Z70Vb7HIBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nY0qHBJa; arc=none smtp.client-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LZ7Vvd9E"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4853c3c2fe7so21577005e9.0
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 07:16:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nY0qHBJa"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8cd75abd09dso565451885a.0
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 07:18:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773238615; x=1773843415; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3KhD6xNVnzapY4B9yd3Gu9O1mv2hK3wBdZZpw+3u1No=;
-        b=LZ7Vvd9EgJRB+egncZLt2nz8TOI30T2C9PaRYp4GyWm18zgxH6qtcRRNHjDBQOFxe9
-         Pa9DR1LVjRLhZ0xEmLoPigfyu7C/YsD+yKnZD9DOiimMJIQlL5DE0nQtl0wlHQe/0Ets
-         6ixbR2MV/t6UiEy6CePUtyFy3Q5Zf8OcvYMmJrQm6xWH23nGy+UxYBm1U87C9MpiznDU
-         lhEZrRr3sbbbVe/D0oisEQX4oKOwMsH+F2X+rA0G9vky9GO9+TKsY+QFJKYn5iSN/y4k
-         rZoiJBCWRRLLb9uZ+2JIc4rW3dqBr1RynJvKW90E4YDDQiSTBg/l4IahHH0PDOUgFBO2
-         nxkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773238615; x=1773843415;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773238729; x=1773843529; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3KhD6xNVnzapY4B9yd3Gu9O1mv2hK3wBdZZpw+3u1No=;
-        b=gwZAIH06C8Rd9deta6ooSnFOzDOTdeZTKC/OIupiMikbXoPTPfh451fgsXO/0mHFs5
-         RTdSZRsk2WtKGA2djzrlfW01nDW4o4VqkHcjVyR5vg2AQY/XXhDHR3Fd8YUW8AyrVEAR
-         kOfhSgwk06kbIMVh2/2+8V5A9rDjK4IrJ0zrXztBa7bwbfSDkpQYl5pxXLJO6tRRixj0
-         8iO/mMyR1KJR80nlMkT7sAGQHJNT/LsD4SfpxRFtpKEyNr13VzOgwZDyYcT0S7D1sVQS
-         lZvnizslVPrnhkskJZVrpDuh/Zm/emAa/WFjO+1s5pwDXx7shBdQvRAsh2ZOV81+QoUp
-         sCZA==
-X-Forwarded-Encrypted: i=1; AJvYcCVUGlPl9rSDyKxSGyvr+zEEksJ/AkK4GhIOSMQ+0jSnZ/8EWQ8khK/UDEQEJjE9zSiEe6U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxlmqXxDWW/wfHa34269cKuXn8s/GcuEJnmhL3GbwupfEaKEBlu
-	mcd4fEsIfdiYmVmX/IisjheMbaP6q+D1YHFXXKOf38Xx8zPq51u4Gh37
-X-Gm-Gg: ATEYQzyS0JJekCwyyL6k0bqqurIfZtIcOIxVnBWmR6On55IJgTjpP0FfZYX2BerGf+7
-	uPP/l1DLackPEVpr0GmkvB/OXfOtpPUN/NZ27ZaBg3fD3eeQwKxQCnakbsvWIqIiMQx28sr+/Tr
-	pRm7omehbNScPijMAFHwsxbIv/ndgd8b00K2n9DlzO7yo392OazjWmbDz+1yyROp2K7Ujo/iAW1
-	9TORypOatNTKCwgGp9Z2X//Jh1SKybtPUjFOtZySaW9Dj4MI42B7dLDoUZwUqV2mUHIiECjLyCw
-	vNhBX8/WI/1yMTHaVOxKGMgwP2TtEmq8xXDNp2Ypp7ePGOKEKdrF1Tin1gHHSJC5vtRGs3pnpuU
-	ak2WNs9HgrITW5j2jnQ2nBJkoow5TZPhKHdj9TV8rWcCP0nFViReS3sR3LtHcDH2TGlRRDNi3c2
-	0lKkFs/vpiKoZV4N1EOjB6bmtVTcLg6mmX6CZrybdoNcfjTiYIqz2LlEitiXGDPVFBapl3osbqv
-	Ocq8A==
-X-Received: by 2002:a05:600c:1f10:b0:483:8062:b2f with SMTP id 5b1f17b1804b1-4854b0ae55amr52153535e9.6.1773238615067;
-        Wed, 11 Mar 2026 07:16:55 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48541b6f6b7sm199873935e9.9.2026.03.11.07.16.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Mar 2026 07:16:54 -0700 (PDT)
-Message-ID: <1eb3b78c-5833-4fa9-83f6-237d4a3e78d3@gmail.com>
-Date: Wed, 11 Mar 2026 14:16:53 +0000
+        bh=Q8kTBXQIbrEA9rUatT1/TE52Bt0TDK5eaUifu1k3FOc=;
+        b=nY0qHBJaGkeCFnthoX7OMKbj2O7LZ76TuMSErGmGPyBJA9lV4xrAlHkWZY+3ynUaiH
+         d8HY1w1hSzjYsNnA/yajBNO2KzTkz40j24uulwPtb8ZC0c95nFswT4eKWaVtb+lRax1j
+         LAEw8KClPzlbxfNohXgta3ejqifJOl6K3dfIG7rmDIZtQf+oqFdBcS5uIFwepNx4QStk
+         Zj79wgRtle4gJEQuFn5GdMnFGLvAnhzrRFJ537apKJNtcda1yK7naSKLti+8aipBxhXX
+         OhFLdqcmib1dJVANW0Bb+LpJwOdm+3PsC4qurE9WDSfAToq8PjhVms8jrXFSc011vDKI
+         2Cuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773238729; x=1773843529;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q8kTBXQIbrEA9rUatT1/TE52Bt0TDK5eaUifu1k3FOc=;
+        b=NajpwbhEKsHOj5Ba5eAWRA9GE6yaub6qtC3ijiHfZSxWCFCxXFwEna/AfKQPyneNJY
+         jvrrlECSbyF09u1lDBHBJXF8ini4WyJp+oYJCfiBvefOWuux8rHhKFkAxKYsiNdYr0TJ
+         pgWEgj2g92Ixjh2YB/QhmfKNYgY893eUEh63Qsw2++zTTDOC2yqhzLudn9S3kQFrMtKm
+         uweaZwVvW+STln3gNjfpSR3X4lCmlKz/lD5eSi4X/rHoRLd0Cbigoh66kl2y2F5jMFUR
+         UWDPvhOuSUNA7OTdWwnJicXBGKZeKn4kqcRHoheXa77lSiawaegYcoGT2A7v4yFKdTyd
+         VnQA==
+X-Gm-Message-State: AOJu0YxYnyX9Jy7LNTzzpVPqYEw2ZhkuofSNqxs5qYSkAvG0sTNOhdO3
+	KWRVq9dXMZMHvHnhk3MGQ3STHlxWdj9xok2wWOp8xr14T9ldcwmdPq4EkBDT3w==
+X-Gm-Gg: ATEYQzxBT2eKHXuhta+1Tbtcj4b8cgfWmWwvbAKVqJlXLC9bRNLQrtu+1ukFX2Q3lYl
+	g4ZmY5gFnZZ+aqqbNYNm1zQUk/4tGbw2tMgeuQgxIOqlLKYokhcAa/xXjr8UYR9uuP7kVThwSHr
+	DIVEPg5f20czMaqyTtZWZf3xESVCvtjNHl2xnw6JHZjcbV0mCbRx4KBk6927uequtn3y4LGAPwu
+	yq8LUV+QuVwF38bjo2OVpxfEtfm5hPAeOLOtFvAVSGJ0zvcQCvXYcoR1/5NPfs3m4dTTcpkca0e
+	X9CtrASLYriNknetQIjMvNQpvhSR/jrLu8i0LofY37Z+w/zxO6X6+HMp9MLsY27PR4TnMV9RLiQ
+	p0GaLmWG67mtS1tRoTbp2rELxmiPjaQ1d/YX6bSi5lPX2ScgHqCZ3f6LELoCWT0DO3Ity972HMm
+	X+ou60liu/Vi+fzan+yy+E4McfS5N8IsNPzS/v/f3ellR8JIfnSa/JlBqD8kkRGWRpYj+mkHSlt
+	0WvHl3GSQ==
+X-Received: by 2002:a05:620a:2985:b0:8cd:8f66:c9c4 with SMTP id af79cd13be357-8cda1a7c96emr355656985a.74.1773238729109;
+        Wed, 11 Mar 2026 07:18:49 -0700 (PDT)
+Received: from localhost.localdomain (d75-158-111-22.abhsia.telus.net. [75.158.111.22])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cda213cba5sm138181585a.37.2026.03.11.07.18.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Mar 2026 07:18:48 -0700 (PDT)
+Sender: Paul Tarjan <ptarjan@gmail.com>
+From: Paul Tarjan <paul@paultarjan.com>
+X-Google-Original-From: Paul Tarjan <github@paulisageek.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitgitgadget@gmail.com,
+	christian.couder@gmail.com,
+	hanxin.hx@bytedance.com
+Subject: Re: [PATCH v2] promisor-remote: prevent lazy-fetch recursion in child fetch
+Date: Wed, 11 Mar 2026 08:18:46 -0600
+Message-ID: <20260311141846.12315-1-github@paulisageek.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <abFJhFhHLhS4qdrM@pks.im>
+References: <abFJhFhHLhS4qdrM@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] editorconfig: fix style not applying to subdirs anymore
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20260311-b4-pks-editorconfig-fix-subdirs-v1-1-4938193ccd31@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20260311-b4-pks-editorconfig-fix-subdirs-v1-1-4938193ccd31@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+Patrick Steinhardt <ps@pks.im> writes:
 
+> Is this a theoretical concern or a practical one? I would expect that
+> backfill fetches never cause the server side to send a pack with
+> REF_DELTA objects to nonexistent objects. And if they did they are
+> broken.
 
-On 11/03/2026 07:09, Patrick Steinhardt wrote:
-> In 046e1117d5 (templates: add .gitattributes entry for sample hooks,
-> 2026-02-13) we have added another pattern to our EditorConfig that sets
-> the style for our hook templates. As our templates are located in
-> "templates/hooks/", we explicitly specify that subdirectory as part of
-> the globbing pattern.
-> 
-> This change causes files in other subdirectories, like for example
-> "builtin/add.c", to not be configured properly anymore. This seems to
-> stem from a subtlety in the EditorConfig specification [1]:
-> 
->    If the glob contains a path separator (a / not inside square
->    brackets), then the glob is relative to the directory level of the
->    particular .editorconfig file itself. Otherwise the pattern may also
->    match at any level below the .editorconfig level.
-> 
-> What's interesting is that the _whole_ expression is considered to be
-> the glob.
+Practical. We hit this at Anthropic: 276 GB of promisor packs written
+by `git maintenance --task=prefetch` in 90 minutes against a ~10 GB
+monorepo with ~61K stale prefetch refs pointing at GC'd commits.
 
-Ouch, I'd missed that, thanks for fixing it
+> Exactly, this here matches my understanding. The backfill fetches don't
+> perform negotiation, so we shouldn't ever see a thin pack in the first
+> place. What I don't yet understand is your comment about the depth-2
+> fetch -- when would we ever do that?
 
-> So when the expression used is for example "{*.c,foo/*.h}",
-> then it will be considered a single glob, and because it contains a path
-> separator we will now anchor "*.c" matches to the same directory as the
-> ".editorconfig" file.
-> 
-> Fix this issue by splitting out the configuration for hook templates
-> into a separate section. It leads to a tiny bit of duplication, but the
-> alternative would be something like the following (note the "{,**/}"):
-> 
->    [{{,**/}*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,{,**/}Makefile,templates/hooks/*.sample}]
->    indent_style = tab
->    tab_width = 8
-> 
-> This starts to become somewhat hard to read, so the duplication feels
-> like the better tradeoff.
+The code path already exists and is tested: t5616 line 832 ("tolerate
+server sending REF_DELTA against missing promisor objects") creates
+exactly this scenario. index-pack's fix_unresolved_deltas() calls
+promisor_remote_get_direct() when it encounters a REF_DELTA against a
+missing base (builtin/index-pack.c:1508). That's the depth-2 fetch.
 
-Agreed
+With noop negotiation a well-behaved server shouldn't send REF_DELTA
+against objects the client doesn't have. But partial clones with
+blob:none mean the client is missing most blobs, and if the server
+sends a thin pack deltified against one of those filtered-out blobs,
+index-pack will try to fetch the base.
 
-Thanks
+> I dunno, I think it's quite different overall. In the mentioned commit
+> we protect against a stale commit-graph, which is something that is
+> quite plausible to happen on the client side. But here we protect us
+> against a remote side that sends a packfile that violates specs, as far
+> as I understand.
 
-Phillip
+Fair point. The commit-graph case is purely client-side corruption,
+while this requires a misbehaving server. The bug shape is the same
+(unbounded recursion through fetch_objects()) but the trigger is
+different. I'll drop the comparison in the next version.
 
-> [1]: https://spec.editorconfig.org/#glob-expressions
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-> Hi,
-> 
-> this fixes a small regression in our EditorConfig introduced in
-> 046e1117d5 (templates: add .gitattributes entry for sample hooks,
-> 2026-02-13). Thanks!
-> 
-> Patrick
-> ---
->   .editorconfig | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/.editorconfig b/.editorconfig
-> index 6e4eaa8e95..82e121a417 100644
-> --- a/.editorconfig
-> +++ b/.editorconfig
-> @@ -4,7 +4,11 @@ insert_final_newline = true
->   
->   # The settings for C (*.c and *.h) files are mirrored in .clang-format.  Keep
->   # them in sync.
-> -[{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile,templates/hooks/*.sample}]
-> +[{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile}]
-> +indent_style = tab
-> +tab_width = 8
-> +
-> +[templates/hooks/*.sample]
->   indent_style = tab
->   tab_width = 8
->   
-> 
-> ---
-> base-commit: 7f19e4e1b6a3ad259e2ed66033e01e03b8b74c5e
-> change-id: 20260311-b4-pks-editorconfig-fix-subdirs-981e6db389ec
-> 
-> 
+> Hm. Can we craft a test that shows us the resulting failure in practice?
+> Testing for the environment variable feels like a bad proxy to me, as
+> I'd rather want to learn how Git would fail now.
 
+Good point. Reworked the test in v3. It now injects a thin pack
+containing a REF_DELTA against a missing base via HTTP (using the
+replace_packfile pattern from t5616). This triggers the actual
+recursion path: index-pack encounters the missing base, calls
+promisor_remote_get_direct(), which hits the GIT_NO_LAZY_FETCH=1
+guard and fails with "lazy fetching disabled". Without the fix,
+the depth-2 fetch would proceed and potentially recurse.
+
+> Okay, so this seems to be an issue that can be hit in the wild. But I
+> have to wonder whether this really is a bug on the client-side, or
+> whether this is a bug that actually sits on your server. So ultimately:
+> why does the server send REF_DELTA objects in the first place? Is it
+> using git-upload-pack(1), or is it using a different implementation of
+> Git to serve data?
+
+The server is GitHub. I did a blob:none partial clone and after some
+further git operations ended up in this state. I don't have
+server-side data on why it sent REF_DELTAs against missing bases.
+
+> Note that I'm not arguing that we shouldn't have protection on the
+> client, too. But I'd first like to understand whether there is a bug
+> lurking somewhere that causes us to send invalid packfiles.
+
+Agreed, there may well be a server-side bug here. Regardless, the
+client should fail fast rather than consume unbounded resources.
