@@ -1,82 +1,82 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECB02DFF04
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 22:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD9C391E49
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 22:31:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773268302; cv=none; b=WMvtpq3vCju0Gs/4r5IxfZXFK2KHVaGWLdiY6iIpx9kYTepuwoKk0bKfFcor5Ed+P3Nvspmo/jDV51VrokH40ewBGEorwRszAX6cxH6eupYQeHAZD37Yhajk+ZGKEsQMENoVO7Q41PR0n85y6jkE3dornUlHKtr24mgvas0XUN4=
+	t=1773268321; cv=none; b=lU//EgSlteIizL3lQYKd0Nt5wC8lE61abX518rGPAkGklDgWdinXGaUjnqrJAbBMRQoMaJWJynNmTyCLZWiED/lOicayGEct0nLgLIU1N5XE9yV7G26MNvzhJ0Eab3tgu4NFAQTZ3/jA6eWLtBN7DIIMiK/6CbYusZdZj04WxXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773268302; c=relaxed/simple;
-	bh=nGfRQicz74V9PsUjcbBsSSWyzCUrTHNExzX5xfb7FNE=;
+	s=arc-20240116; t=1773268321; c=relaxed/simple;
+	bh=x5EWXtHn0oGHCBsYvcrhXx0v5QDU2P8F/Wzs23e0hNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AUZ90JqZSZ22Ry0BX0p36v8dsvBvuxwABNZctvaIL5MMOekv/iYP3R4a7RNVjVYFdS4ErbxgH1XkwnAhkscp7/ZrF2csXmWqIbLDF+SUxW8QxLLmE4P/TZbZC08Cv9B910wj/lqwWtpAc1kYe31IWimjwXoK+o+XFAobzCNspnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=afoFNtDO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=umODls89; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=lYe2mQraOhdxNS+/afIjQkdiNKUhh3KaDmawRMCizmaqHj06pqNTQc+Z5zmJgl0Gu4PDApGmj/n6JQT+cc1g1g9/QHMqu31tsMSza27oqp5aEINGZr2WFv1Rs9RFFxMJSa3Jdj4igx6uuuodL5Vy/7T+0q8ecY75Ewyaw3F6Avo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cP5ZNufj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GjXgvuRe; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="afoFNtDO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="umODls89"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8092C7A01C4;
-	Wed, 11 Mar 2026 18:31:40 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 11 Mar 2026 18:31:40 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cP5ZNufj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GjXgvuRe"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 525571D00124;
+	Wed, 11 Mar 2026 18:31:59 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Wed, 11 Mar 2026 18:31:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773268300;
-	 x=1773354700; bh=O3BLcDQsPUJZAn7jWsukqDYWeQ3Hznzg/DdXxv9BcpE=; b=
-	afoFNtDOSzbggsuwa55196BE+zRxqwgOaH35FdfjQcfG3r6ayc0bncpORT765uQU
-	+Hm8TmabgjMBBwyeqm34gs+ZF4hVVfZRD+uJKNJGKfM9L9obYQVagh7m7QVLojs3
-	p1C6xFsa8voSyGpmwmjdTAdygI4col+PBwaIUu7g3uqVohWvgZq4TpWzl3Kq42/r
-	afprP1ZITmUpAlhja2O0JBnvoOT92Ljp3Hsz8H6VtnnPWUxDs5RR1nzwwQfnIyCf
-	5JzxsGGM+9YcatkbgSajRM8S0cT3jTJvjFsXkOBQdrkglYNRAXFXSRYq+5OseuYv
-	d23PZ/M8XuYWMqgEeWkZqw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773268319;
+	 x=1773354719; bh=AmC0cn3XGIjL8+inxBa8Lj4gk30s/mYLc27cheaFfkU=; b=
+	cP5ZNufjXozjgy5L7XLY2LK2USXtIKQJTUjX6EhwyTMhihYpoSG6gSDR7eZtplXH
+	LHbVUU4vjta/uUzPd97zG8kxz2Bv8/eOIX5mepEDRI5WW/8unAbsRhZAcG3/vddD
+	UWIt0I8E5L1rSfK8nLzmcTGXSX3okTvy7V543gGQmlwNAhWa7mKFd+lwc5jcaOIE
+	U/HrBaNZCOlX+62UK0aaYp2Tb8HwepM9xG//+P02vkaUIRdPV/oh7UZK8NXmIVRp
+	0QHywlxCvpOE0PQ/D2sNqcV2fXJ3m1VIBEEAHg4eu691haTDCcgWRpzd7Z8xYSmB
+	pCC2qO6Jhg/xTRDQ2tI7rw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773268300; x=
-	1773354700; bh=O3BLcDQsPUJZAn7jWsukqDYWeQ3Hznzg/DdXxv9BcpE=; b=u
-	mODls89d9Un0VfJ2MeadGi2tvFl7NdPrzNtbuwdi4t9wU8j+IpFKmD0NKwdUyzmV
-	pKeIzaXfhz7dy2VJ4Jcb6z/Jqu0JZIVww2jdw6x52YzNPeWtpmdWVBu9KlOVnynd
-	3BFaZklSi2dw0V98yqx4uBQ8C6dys3VXM2/R8JJM8iX+wD9mpNnQY6mhD4Cs6FOi
-	goFbm2DV2ocGX07/cLxToXfjZin8xtTxvqxYou8zFEQavsA/EvRcRZxRuPSO/rmL
-	UDoV/aFueP5hPoiuFsj6hRe9N/T0Q+Cc/qyCc8D40xaxRzulKK8h87baPktJpfti
-	HefWOtULNDOtGTQ+Jun0w==
-X-ME-Sender: <xms:TO2xaZwhYq3kRl1pc65kFx-YGAmZkAFWX4xh1DMOQVxtB3w1z6fD9K0>
-    <xme:TO2xaQtvnPKZFpVAUFlrAfp_1p8lCdRFJXxrVd2CDCi_oTaCJIhVkRSn5BvDbwEA0
-    0hoJjTp5YBp53cRp4acdM2HHPaT6oroF-_xM_AwQigJB7GSes7atg>
-X-ME-Received: <xmr:TO2xaQsyAfWQ7fcmtBeob8lL2vF3KjvAqU2r1G-GTlj6rrEXeqXXDvuvBlJQ7vFgCYFRbMfq1Kltjn6Wyse9oAv79seubZ9GRU_twDV6LA-1nbqgq4XPW4rwIw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773268319; x=
+	1773354719; bh=AmC0cn3XGIjL8+inxBa8Lj4gk30s/mYLc27cheaFfkU=; b=G
+	jXgvuReY9gdwyohqkamgBprviGOoogsHscNN1j3ZoLjX5oJut8RPrU1D1VVtbr0U
+	aFvfau1pe9WxQZD1X10hScXHS+nLeTsCKWiBptyb9AIbGdov08Z8xbZpL4UoXmK5
+	DVYS9Lwpxb1DQcD4h62Kc2U31ifLpG7+T8nQT405FwqVbCN2e8j75gM1tBV1bo72
+	+5xZ2OrIzdMi92VuOSOunktaO5CLs4SJOwseCmZELsNs7DzSSmBVtN3NhCcSFkc9
+	m+E6fP59YQNqJ6bBH8w70xqScz4cq+iyo9Q3z/HwJN0523BHsBAY6BwNA+74BhI5
+	SGib80IWb4HJrLBe+gI9Q==
+X-ME-Sender: <xms:X-2xaa78luthNQeCx912C6V1OT_MxkZ7h3fO2hweIpA3VrumpxXx6i4>
+    <xme:X-2xabXhh3x6bMQ34nqhKv3s0Kr3xWRoEiOv_Jerf353hnC6HbAAb0JKM41oWqjDh
+    IzZeoUmevOTtuUeXsdwqY8LQxyPbrevJtnaqgivxy3krN2X8X0OqqA>
+X-ME-Received: <xmr:X-2xaW3A_Ves8gVaNbkPP-rnKg0VoBoE9J0k25Tx7Pdyx9kd0MIt6qIYy9I0xnvFKmQZJmQGwQy3RDb4ezQJbr1-FftqwW799tFBTNewtQXKdgqKZqKpTGXjIg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeehudduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
+    hlucfvnfffucdlvdefmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
     jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
-    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
-    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
-    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepjhhnrdgrvhhilhgrse
-    hfrhgvvgdrfhhr
-X-ME-Proxy: <xmx:TO2xaVO0ZvlpLMZ1G8d4vgZ6i7OM4xi8RkLZOaL6S8kTrOr2lN3tQw>
-    <xmx:TO2xae3Uohc5v355PId18AWxzmhG2SLlqjINsTdrRW8Qf3cPLzeBdA>
-    <xmx:TO2xaRMYrzYZ_IaQgjpSjrqm5JjSYl78l5dv0eyvyVlayiK7En1-Kw>
-    <xmx:TO2xae1bhbGUvMa2OIfdxBLgm5yTIZ8gGXYh4CXxkrejBGZehS60Hg>
-    <xmx:TO2xaXVAjZJ-nnMK3C1gZEMuaWxKLdL7TyagE_m3UsHa8Zp1mnWBup-j>
+    hlrdgtohhmnecuggftrfgrthhtvghrnhepudelgfeuieeuteekleeifeegudefheetkefh
+    jeffkedvueehtdevhfekieekhffgnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishht
+    ohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpth
+    htohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrg
+    hmvgdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrh
+X-ME-Proxy: <xmx:X-2xaQ1gM0UbwJP7aOzspOfSyr_aT4lKe1_j-MaNpuUlkwtELGKvrA>
+    <xmx:X-2xaR8PidvbXoKTsoA6P2z4dquuCoHXVEf9P08ETc1Kp0eeaC-d9g>
+    <xmx:X-2xaV3LFno0pvAr3wQrMgORqvaGi0vQPlcPf9b3OKdAkdjEe9lQ_g>
+    <xmx:X-2xaW8u-QNx30UXLYS6Q6sBgap3pt9Ef-BYlBo3DWEmQuRCl4YhcA>
+    <xmx:X-2xaf9ftisu19e1-GoQhw4AY_58bcBf4NyRmi5nIvziVcToURRSHQ2l>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 18:31:38 -0400 (EDT)
+ 11 Mar 2026 18:31:57 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH 1/3] doc: interpret-trailers: convert to synopsis style
-Date: Wed, 11 Mar 2026 23:31:04 +0100
-Message-ID: <doc_interpret-tr_synopsis.48b@msgid.xyz>
+Subject: [PATCH 2/3] doc: interpret-trailers: normalize and fill out options
+Date: Wed, 11 Mar 2026 23:31:05 +0100
+Message-ID: <doc_interpret-tr_options.48c@msgid.xyz>
 X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
 In-Reply-To: <CV_doc_interpret-tr_synopsis.48a@msgid.xyz>
 References: <CV_doc_interpret-tr_synopsis.48a@msgid.xyz>
@@ -91,309 +91,149 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-See e.g. 0ae23ab5 (doc: convert git worktree to synopsis style,
-2025-10-05) for the markup rules for this style.
+Some negated options are missing according to
+`git interpret-trailers -h`.
 
-There aren’t many subtleties to the transformation of this doc since it
-doesn’t use any advanced constructs. The only thing is that `": "` is
-used instead of `': '` to refer to effective inline-verbatim with
-a space (␠). I also use (_) for emphasis although (') gives the
-same result.
+Also normalize to the “stuck form” (see gitcli(7)) like what was done
+in 806337c7 (doc: notes: use stuck form throughout, 2025-05-27).[1]
 
-Also prefer linking to Git commands instead of saying
-e.g. `git format-patch`.
+Also normalize the order of the regular and negated options according to
+the current convention.[2]
+
+Also note that `--no-trailer` will reset the list.
+
+† 1: See also https://lore.kernel.org/git/6f7d027e-088a-4d66-92af-b8d1c32d730c@app.fastmail.com/
+† 2: https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/git-interpret-trailers.adoc | 126 +++++++++++-----------
- 1 file changed, 63 insertions(+), 63 deletions(-)
+ Documentation/git-interpret-trailers.adoc | 66 +++++++++++++++--------
+ 1 file changed, 43 insertions(+), 23 deletions(-)
 
 diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index fd335fe772a..8a6c1bff472 100644
+index 8a6c1bff472..e5da0462fad 100644
 --- a/Documentation/git-interpret-trailers.adoc
 +++ b/Documentation/git-interpret-trailers.adoc
-@@ -7,14 +7,14 @@ git-interpret-trailers - Add or parse structured information in commit messages
- 
- SYNOPSIS
- --------
--[verse]
--'git interpret-trailers' [--in-place] [--trim-empty]
-+[synopsis]
-+git interpret-trailers [--in-place] [--trim-empty]
- 			[(--trailer (<key>|<key-alias>)[(=|:)<value>])...]
- 			[--parse] [<file>...]
- 
- DESCRIPTION
- -----------
--Add or parse 'trailer' lines that look similar to RFC 822 e-mail
-+Add or parse _trailer_ lines that look similar to RFC 822 e-mail
- headers, at the end of the otherwise free-form part of a commit
- message. For example, in the following commit message
- 
-@@ -27,10 +27,10 @@ Signed-off-by: Alice <alice@example.com>
- Signed-off-by: Bob <bob@example.com>
- ------------------------------------------------
- 
--the last two lines starting with "Signed-off-by" are trailers.
-+the last two lines starting with `Signed-off-by` are trailers.
- 
- This command reads commit messages from either the
--<file> arguments or the standard input if no <file> is specified.
-+_<file>_ arguments or the standard input if no _<file>_ is specified.
- If `--parse` is specified, the output consists of the parsed trailers
- coming from the input, without influencing them with any command line
- options or configuration variables.
-@@ -43,7 +43,7 @@ to each input file. The result is emitted on the standard output.
- 
- This command can also operate on the output of linkgit:git-format-patch[1],
- which is more elaborate than a plain commit message. Namely, such output
--includes a commit message (as above), a "---" divider line, and a patch part.
-+includes a commit message (as above), a `---` divider line, and a patch part.
- For these inputs, the divider and patch parts are not modified by
- this command and are emitted as is on the output, unless
- `--no-divider` is specified.
-@@ -53,24 +53,24 @@ are applied to each input and the way any existing trailer in
- the input is changed. They also make it possible to
- automatically add some trailers.
- 
--By default, a '<key>=<value>' or '<key>:<value>' argument given
-+By default, a `<key>=<value>` or `<key>:<value>` argument given
- using `--trailer` will be appended after the existing trailers only if
--the last trailer has a different (<key>, <value>) pair (or if there
--is no existing trailer). The <key> and <value> parts will be trimmed
-+the last trailer has a different (_<key>_, _<value>_) pair (or if there
-+is no existing trailer). The _<key>_ and _<value>_ parts will be trimmed
- to remove starting and trailing whitespace, and the resulting trimmed
--<key> and <value> will appear in the output like this:
-+_<key>_ and _<value>_ will appear in the output like this:
- 
- ------------------------------------------------
- key: value
- ------------------------------------------------
- 
--This means that the trimmed <key> and <value> will be separated by
--`': '` (one colon followed by one space).
-+This means that the trimmed _<key>_ and _<value>_ will be separated by
-+": " (one colon followed by one space).
- 
--For convenience, a <key-alias> can be configured to make using `--trailer`
-+For convenience, a _<key-alias>_ can be configured to make using `--trailer`
- shorter to type on the command line. This can be configured using the
--'trailer.<key-alias>.key' configuration variable. The <keyAlias> must be a prefix
--of the full <key> string, although case sensitivity does not matter. For
-+`trailer.<key-alias>.key` configuration variable. The _<keyAlias>_ must be a prefix
-+of the full _<key>_ string, although case sensitivity does not matter. For
- example, if you have
- 
- ------------------------------------------------
-@@ -91,13 +91,13 @@ least one Git-generated or user-configured trailer and consists of at
- least 25% trailers.
- The group must be preceded by one or more empty (or whitespace-only) lines.
- The group must either be at the end of the input or be the last
--non-whitespace lines before a line that starts with '---' (followed by a
-+non-whitespace lines before a line that starts with `---` (followed by a
- space or the end of the line).
- 
- When reading trailers, there can be no whitespace before or inside the
--<key>, but any number of regular space and tab characters are allowed
--between the <key> and the separator. There can be whitespaces before,
--inside or after the <value>. The <value> may be split over multiple lines
-+_<key>_, but any number of regular space and tab characters are allowed
-+between the _<key>_ and the separator. There can be whitespaces before,
-+inside or after the _<value>_. The _<value>_ may be split over multiple lines
- with each subsequent line starting with at least one whitespace, like
- the "folding" in RFC 822. Example:
- 
-@@ -111,77 +111,77 @@ rules for RFC 822 headers. For example they do not follow the encoding rule.
- 
+@@ -112,64 +112,80 @@ rules for RFC 822 headers. For example they do not follow the encoding rule.
  OPTIONS
  -------
----in-place::
-+`--in-place`::
- 	Edit the files in place.
+ `--in-place`::
+-	Edit the files in place.
++`--no-in-place`::
++	Edit the files in place. The default is `--no-in-place`.
  
----trim-empty::
--	If the <value> part of any trailer contains only whitespace,
-+`--trim-empty`::
-+	If the _<value>_ part of any trailer contains only whitespace,
+ `--trim-empty`::
++`--no-trim-empty`::
+ 	If the _<value>_ part of any trailer contains only whitespace,
  	the whole trailer will be removed from the output.
  	This applies to existing trailers as well as new trailers.
+++
++The default is `--no-trim-empty`.
  
----trailer <key>[(=|:)<value>]::
--	Specify a (<key>, <value>) pair that should be applied as a
-+`--trailer <key>[(=|:)<value>]`::
-+	Specify a (_<key>_, _<value>_) pair that should be applied as a
- 	trailer to the inputs. See the description of this
- 	command.
+-`--trailer <key>[(=|:)<value>]`::
++`--trailer=<key>[(=|:)<value>]`::
++`--no-trailer`::
+ 	Specify a (_<key>_, _<value>_) pair that should be applied as a
+-	trailer to the inputs. See the description of this
+-	command.
++	trailer to the inputs. See the description of this command. Can
++	be given multiple times.
+++
++Use `--no-trailer` to reset the list.
  
----where <placement>::
----no-where::
-+`--where <placement>`::
-+`--no-where`::
+-`--where <placement>`::
++`--where=<placement>`::
+ `--no-where`::
  	Specify where all new trailers will be added.  A setting
--	provided with '--where' overrides the `trailer.where` and any
-+	provided with `--where` overrides the `trailer.where` and any
+ 	provided with `--where` overrides the `trailer.where` and any
  	applicable `trailer.<keyAlias>.where` configuration variables
--	and applies to all '--trailer' options until the next occurrence of
--	'--where' or '--no-where'. Upon encountering '--no-where', clear the
--	effect of any previous use of '--where', such that the relevant configuration
-+	and applies to all `--trailer` options until the next occurrence of
-+	`--where` or `--no-where`. Upon encountering `--no-where`, clear the
-+	effect of any previous use of `--where`, such that the relevant configuration
- 	variables are no longer overridden. Possible placements are `after`,
+ 	and applies to all `--trailer` options until the next occurrence of
+-	`--where` or `--no-where`. Upon encountering `--no-where`, clear the
+-	effect of any previous use of `--where`, such that the relevant configuration
+-	variables are no longer overridden. Possible placements are `after`,
++	`--where` or `--no-where`. Possible placements are `after`,
  	`before`, `end` or `start`.
+++
++Use `--no-where` to clear the effect of any previous use of `--where`,
++such that the relevant configuration variables are no longer overridden.
  
----if-exists <action>::
----no-if-exists::
-+`--if-exists <action>`::
-+`--no-if-exists`::
+-`--if-exists <action>`::
++`--if-exists=<action>`::
+ `--no-if-exists`::
  	Specify what action will be performed when there is already at
--	least one trailer with the same <key> in the input.  A setting
--	provided with '--if-exists' overrides the `trailer.ifExists` and any
-+	least one trailer with the same _<key>_ in the input.  A setting
-+	provided with `--if-exists` overrides the `trailer.ifExists` and any
+ 	least one trailer with the same _<key>_ in the input.  A setting
+ 	provided with `--if-exists` overrides the `trailer.ifExists` and any
  	applicable `trailer.<keyAlias>.ifExists` configuration variables
--	and applies to all '--trailer' options until the next occurrence of
--	'--if-exists' or '--no-if-exists'. Upon encountering '--no-if-exists', clear the
--	effect of any previous use of '--if-exists', such that the relevant configuration
-+	and applies to all `--trailer` options until the next occurrence of
-+	`--if-exists` or `--no-if-exists`. Upon encountering `--no-if-exists`, clear the
-+	effect of any previous use of `--if-exists`, such that the relevant configuration
- 	variables are no longer overridden. Possible actions are `addIfDifferent`,
+ 	and applies to all `--trailer` options until the next occurrence of
+-	`--if-exists` or `--no-if-exists`. Upon encountering `--no-if-exists`, clear the
+-	effect of any previous use of `--if-exists`, such that the relevant configuration
+-	variables are no longer overridden. Possible actions are `addIfDifferent`,
++	`--if-exists` or `--no-if-exists`. Possible actions are `addIfDifferent`,
  	`addIfDifferentNeighbor`, `add`, `replace` and `doNothing`.
+++
++Use `--no-if-exists` to clear the effect of any previous use of
++`--if-exists`, such that the relevant configuration variables are no
++longer overridden.
  
----if-missing <action>::
----no-if-missing::
-+`--if-missing <action>`::
-+`--no-if-missing`::
+-`--if-missing <action>`::
++`--if-missing=<action>`::
+ `--no-if-missing`::
  	Specify what action will be performed when there is no other
--	trailer with the same <key> in the input.  A setting
--	provided with '--if-missing' overrides the `trailer.ifMissing` and any
-+	trailer with the same _<key>_ in the input.  A setting
-+	provided with `--if-missing` overrides the `trailer.ifMissing` and any
+ 	trailer with the same _<key>_ in the input.  A setting
+ 	provided with `--if-missing` overrides the `trailer.ifMissing` and any
  	applicable `trailer.<keyAlias>.ifMissing` configuration variables
--	and applies to all '--trailer' options until the next occurrence of
--	'--if-missing' or '--no-if-missing'. Upon encountering '--no-if-missing',
--	clear the effect of any previous use of '--if-missing', such that the relevant
-+	and applies to all `--trailer` options until the next occurrence of
-+	`--if-missing` or `--no-if-missing`. Upon encountering `--no-if-missing`,
-+	clear the effect of any previous use of `--if-missing`, such that the relevant
- 	configuration variables are no longer overridden. Possible actions are `doNothing`
- 	or `add`.
+ 	and applies to all `--trailer` options until the next occurrence of
+-	`--if-missing` or `--no-if-missing`. Upon encountering `--no-if-missing`,
+-	clear the effect of any previous use of `--if-missing`, such that the relevant
+-	configuration variables are no longer overridden. Possible actions are `doNothing`
+-	or `add`.
++	`--if-missing` or `--no-if-missing`. Possible actions are
++	`doNothing` or `add`.
+++
++Use `--no-if-missing` to clear the effect of any previous use of
++`--if-missing`, such that the relevant configuration variables are no
++longer overridden.
  
----only-trailers::
-+`--only-trailers`::
- 	Output only the trailers, not any other parts of the input.
+ `--only-trailers`::
+-	Output only the trailers, not any other parts of the input.
++`--no-only-trailers`::
++	Output only the trailers, not any other parts of the
++	input. The default is `--no-only-trailers`.
  
----only-input::
-+`--only-input`::
+ `--only-input`::
++`--no-only-input`::
  	Output only trailers that exist in the input; do not add any
  	from the command-line or by applying `trailer.*` configuration
- 	variables.
+-	variables.
++	variables. The default is `--no-only-input`.
  
----unfold::
-+`--unfold`::
+ `--unfold`::
++`--no-unfold`::
  	If a trailer has a value that runs over multiple lines (aka "folded"),
- 	reformat the value into a single line.
+-	reformat the value into a single line.
++	reformat the value into a single line. The default is `--no-unfold`.
  
----parse::
-+`--parse`::
+ `--parse`::
  	A convenience alias for `--only-trailers --only-input
- 	--unfold`. This makes it easier to only see the trailers coming from the
+@@ -177,11 +193,15 @@ OPTIONS
  	input without influencing them with any command line options or
  	configuration variables, while also making the output machine-friendly with
--	--unfold.
-+	`--unfold`.
+ 	`--unfold`.
+++
++There is no convenience alias to negate this alias.
  
----no-divider::
-+`--no-divider`::
- 	Do not treat `---` as the end of the commit message. Use this
- 	when you know your input contains just the commit message itself
--	(and not an email or the output of `git format-patch`).
-+	(and not an email or the output of linkgit:git-format-patch[1]).
++`--divider`::
+ `--no-divider`::
+-	Do not treat `---` as the end of the commit message. Use this
+-	when you know your input contains just the commit message itself
+-	(and not an email or the output of linkgit:git-format-patch[1]).
++	Treat `---` as the end of the commit message. This is the default.
++	Use `--no-divider` when you know your input contains just the
++	commit message itself (and not an email or the output of
++	linkgit:git-format-patch[1]).
  
  CONFIGURATION VARIABLES
  -----------------------
-@@ -193,7 +193,7 @@ include::config/trailer.adoc[]
- EXAMPLES
- --------
- 
--* Configure a 'sign' trailer with a 'Signed-off-by' key, and then
-+* Configure a `sign` trailer with a `Signed-off-by` key, and then
-   add two of these trailers to a commit message file:
- +
- ------------
-@@ -230,8 +230,8 @@ Signed-off-by: Bob <bob@example.com>
- Acked-by: Alice <alice@example.com>
- ------------
- 
--* Extract the last commit as a patch, and add a 'Cc' and a
--  'Reviewed-by' trailer to it:
-+* Extract the last commit as a patch, and add a `Cc` and a
-+  `Reviewed-by` trailer to it:
- +
- ------------
- $ git format-patch -1
-@@ -239,9 +239,9 @@ $ git format-patch -1
- $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --trailer 'Reviewed-by: Bob <bob@example.com>' 0001-foo.patch >0001-bar.patch
- ------------
- 
--* Configure a 'sign' trailer with a command to automatically add a
--  'Signed-off-by: ' with the author information only if there is no
--  'Signed-off-by: ' already, and show how it works:
-+* Configure a `sign` trailer with a command to automatically add a
-+  "Signed-off-by: " with the author information only if there is no
-+  "Signed-off-by: " already, and show how it works:
- +
- ------------
- $ cat msg1.txt
-@@ -272,7 +272,7 @@ body text
- Signed-off-by: Alice <alice@example.com>
- ------------
- 
--* Configure a 'fix' trailer with a key that contains a '#' and no
-+* Configure a `fix` trailer with a key that contains a `#` and no
-   space after this character, and show how it works:
- +
- ------------
-@@ -284,7 +284,7 @@ subject
- Fix #42
- ------------
- 
--* Configure a 'help' trailer with a cmd use a script `glog-find-author`
-+* Configure a `help` trailer with a cmd use a script `glog-find-author`
-   which search specified author identity from git log in git repository
-   and show how it works:
- +
-@@ -308,7 +308,7 @@ Helped-by: Junio C Hamano <gitster@pobox.com>
- Helped-by: Christian Couder <christian.couder@gmail.com>
- ------------
- 
--* Configure a 'ref' trailer with a cmd use a script `glog-grep`
-+* Configure a `ref` trailer with a cmd use a script `glog-grep`
-   to grep last relevant commit from git log in the git repository
-   and show how it works:
- +
-@@ -331,7 +331,7 @@ body text
- Reference-to: 8bc9a0c769 (Add copyright notices., 2005-04-07)
- ------------
- 
--* Configure a 'see' trailer with a command to show the subject of a
-+* Configure a `see` trailer with a command to show the subject of a
-   commit that is related, and show how it works:
- +
- ------------
-@@ -359,8 +359,8 @@ See-also: fe3187489d69c4 (subject of related commit)
- * Configure a commit template with some trailers with empty values
-   (using sed to show and keep the trailing spaces at the end of the
-   trailers), then configure a commit-msg hook that uses
--  'git interpret-trailers' to remove trailers with empty values and
--  to add a 'git-version' trailer:
-+  linkgit:git-interpret-trailers[1] to remove trailers with empty values and
-+  to add a `git-version` trailer:
- +
- ------------
- $ cat temp.txt
 -- 
 2.53.0.32.gf6228eaf9cc
 
