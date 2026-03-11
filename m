@@ -1,67 +1,66 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB753C3426
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:32:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DF23CEBA5
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:38:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773225175; cv=none; b=NOzCfBFcNX2Q7z3OEufL1jsgOSb6xOCHX/sPN6Wkn3PNYME3+7IxCHyg2sSqVQuLMJzLMwRGUVieyYQWsTWGe3LB7mH8kpiaBGHMIveXMZqH/ob+XVceNA1BAOwHVzpHWKBifodklqreSrKxVLCduiNQO1WXZicfdpUXwElTJfU=
+	t=1773225494; cv=none; b=VWXI+qtzXGMyUDtl/PltuLvPZqXxc3/2dEanpc1UQN+Cnlo9uZy+B94EfjfOw6Qr6eRV4aAs0n2Dn6oDPybfr46ZoPUWGkVW46EgyQPeKgqqfvSkrufxRgheDDyhSjy1g+OadzCXDkjep9gKgefFfaSAd1KRLAU6f6KGUlJBGRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773225175; c=relaxed/simple;
-	bh=3+XO2imiCB+ZowkhvlyarXn0ieyy221F8lyKaMsYB3E=;
+	s=arc-20240116; t=1773225494; c=relaxed/simple;
+	bh=U5DkTQGE9nk+YMCHLovn0i4FA0qpvSrOB8/TEo1SC20=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=M2MuR6a6fYxjl1muE4V3VyZPc39hRxeEzNi5QLp1Or61yVq10iaJwEudvjOvEjIPzj7/Ej/C2cy1wAYhWFexFkaBR3ddQcTPVDip/EpxB/BoJi+cMWWJDpU+BWdGHHmECUEd+NCr3bvO1MwGYfwm4OYyWSwf76h6yJN2s9ZTiRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JxXP9Rbw; arc=none smtp.client-ip=209.85.128.44
+	 In-Reply-To:Content-Type; b=GaS1KWSKMvh6rt/E/zxWlgd3RxVZOkGSP28etUD7i2079epwuRwfpfx6/Um49sI91DnTAOFKikvbXBGw5dSBjwBCGMll5xteJu8i7oEetbQZ9f5obdSltpI7bLwX0W4Vq/xzOQe3BT6aHcQnVu9GuMKWdPkdLNZOx5aYxLmJFkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SU2pS8ZL; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JxXP9Rbw"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4852e9ca034so42873455e9.2
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 03:32:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SU2pS8ZL"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4852e9ca034so42953915e9.2
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 03:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773225172; x=1773829972; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773225491; x=1773830291; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Zklnu4fmt1vkjaVD6IP9TM4tZfBNpFqhS7jXyK8+gyU=;
-        b=JxXP9Rbwl0AJVCyOMHkBukazgqn5vbpHHap6ACicrm336ckLpPrMq/zBwNPvobR5B9
-         BT+3VtyL+aNCpT24SOathY05rSuoDG5e/Xe1Rtq5Juby3HjTW7U1BVt6tenGLUyi3FxJ
-         MDSzIg/Oz5qetESEw/bpPb1VF4sOz7EURA8XMpKtzFFusWy84ZWBMbUtRqREBTl+L0Tn
-         YeVfszovT5XStH5IDuWLzOPXHFTcFrekr6B13wmZxyGiQ/B20vv6arSc6i1lQXFGvidC
-         AIuMeeaSyg8wEhhnAmU9FRUuXkWKvMJUjXnAABIVZV7mlox8zQWQqkL//3XwS405ksFE
-         bTlg==
+        bh=53JBScB5jktxSa9AhPsNIXvZyRTxvQnXXN45q7u7JUU=;
+        b=SU2pS8ZLM2C41I7wABq6x8uSJGmBTr77drNamLNIkx3PFHCNedvbJyEM0IrmIJXGvT
+         +tVNcONwp+WPL80Z4FqsyHrsHWTXVYawREgR63THwC3jbd3roSsp6J0UilnxbBjZVYH7
+         LaM2KdMW7VaJAjuohpl6d0E4ZMjqIo4sxisNv7D8zyMMwbtRYjrPtFqYz2hilLn4zpYK
+         YV4grQy/2M+zPNuH0AoUxQ8dPOeluBUYFGWoW1Wgbstn7anxT6JDk8n1YYg4ZYEzciJ0
+         yMfGV1QpOvQi/8hMVybvWm7LqPEeQKGIk6KP+q9OvCvzvu3/QHx6dPKpDxDSdv/NNfrY
+         3CHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773225172; x=1773829972;
+        d=1e100.net; s=20230601; t=1773225491; x=1773830291;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Zklnu4fmt1vkjaVD6IP9TM4tZfBNpFqhS7jXyK8+gyU=;
-        b=byIbka6V8t1rT0eUJZy6gqmbWVSAPDIv8XoHrH3P0/Zag08U+OoUB3aI0qWn0100uo
-         jQcTjJLIbbsp0lj8wvfbg3DfULHbdGX8LRqLpzRa/4fGPWb72X003YYJQ9p8c+oqINo3
-         w+J82yoPhWgFm0bGgkv7jk/lxVG/E8T2UGaAuL5aYwXJkZCRgzts4jndnommI1PRT/A2
-         ASnYnInmCUdNtpuLcKOdRTKd+E8kGU05uCAiIPqQqx8nmZ0zD54Uiv0xf3tuVids6yfs
-         QULC/wWUO69gVzWvNaP+lKitI8RYFJA1ptzgyM0taPDHU/fgzn3L6bCnSmRydLh13CIT
-         5PPg==
-X-Forwarded-Encrypted: i=1; AJvYcCXbo7Ql4jB36pcqf6aQlNwR9q6awGIOraX67fyLJMlm9tmAZO1kzIXmxiZmGL1Z3f5fYRY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyIDT2ePGeyBAeaU+rkRqti2EgOAbt3GI04jk0DZlJ3YzrPN4VD
-	ViMN+4P1V3RBFdi41W9L753g1lbQk8mT3zv8Pys/X9Ha85Vlg3Pfvyl38CF9wQ==
-X-Gm-Gg: ATEYQzzOOlVe3EWTZ4UPNVU012GFe5YIDV7nAaNkCAHWaasDfIEyLT1tQblmqWpsp5d
-	fF+t0kxn5ztWxcCCrVelZnekEMZZKp3bmwYfRmATmCm8jyiKQUoHYlTm2trCJKqPIf9wPsrLAt5
-	CMtKhY42ffj07eJsYrYooulH0SN/ofUlX+W8w5ot8hhryueng8wQRuuik4E0irZfrplt41ILBz0
-	CapbfFNOeantbunN3mdYua8mBFgyxXh/pH5l2e9FL8XDxwnl16ZIdPzLHNeav8vvmU8xMCI7Vj2
-	dN/NCzAJiOsBU8WhL1dD11oAvDd23czzarRcmqu9VNNDj855Z95SIQ75f3Vz+kev9ahNY4Z20QO
-	kobndY5/8qgSJNkisQDRplsL5cx7oomA2fNTFtZ8M68GAVWeH8XoVhpdopy1maDYKFAKnd54j7Y
-	Hthp/AL2nUwxhhsmFg9LE5+LIVVdsds1q1qFYtKdNS8zq1Ui4WHkqYG8YdVOuRX0l0hRAgFJ5oT
-	BYTLA==
-X-Received: by 2002:a05:600c:800f:b0:485:3baa:af14 with SMTP id 5b1f17b1804b1-4854b0fb09bmr30286105e9.18.1773225171746;
-        Wed, 11 Mar 2026 03:32:51 -0700 (PDT)
+        bh=53JBScB5jktxSa9AhPsNIXvZyRTxvQnXXN45q7u7JUU=;
+        b=WHTWrXkWTACsNbeVtgOF4ZcH95bleZk4BC+z+5VpOdgc/8SbPtvhcym19gyfIv5R7O
+         jpcr/+Tdz6MwUXYXSt6n431Faw/UFb/DSWNsYiESgefQ/jenjhQEj9Oerqhy0QamJv+c
+         a7qNQLdovso0UxHxYqwwcOvLY5/XKAklhHRFC8oVD6bUNe4c4n3ZW8/7294iivRqlXoX
+         9ImX7hKmL1SmIsQofwtbwNBhgJy/TwxPM4ehf9IPzETm71If1altTiEe9rXIQcnzsFhN
+         sOiK0LcjtE8uiNbYVaeBVC9riemOykTLjq1R8BPO8zMbeoX8LJlnoVhsJT+lL6I6yAmZ
+         dRww==
+X-Gm-Message-State: AOJu0Yw9WQ2h/eK4acHnYU4PTapolWIXMYLuiak1lSxsJLh2Gqq1Ca6K
+	m2tNcWxpZ4QREvv/fRDUMJb8a0jxzTzORqZcml0CCGgyM21FXe3wJt0k
+X-Gm-Gg: ATEYQzznGPKjq/yy7juJsrO1d/YDLkIA5Vse/qfA2q5g1ejVhaW4TMuEp8BWenQ4N1n
+	myh3StPUy0Nj9g+rr0Y4DguxN6JalR42Ur/qoePHds+HakpF/3WhrMbmFxvd0LtSF58iWT7AH9C
+	yMJoacvV/isWQzpvdNbajZuPRNEwaxMn3rN10r6p10hNXgg5dymM+oO5kzqdeyyDtJIn+6CqqYy
+	E3rK232M7GT8rZe4HLa0TRjbUFLzpL70dWhNNp/XAz/wBAH+v4K+oH+DIWPbeknK18FeTpIyfis
+	vVA5S+HYKyk8plgVn4phMuKhf0CfyLBXQSl9f7rkG6RYmLtT2RSyfoGJJy3amrC7nbISQuo1xLu
+	fsOffBYSzIaYYCq/liHDSlGpD4PC7tWd9qU6+uAfyTGR0iEqtNGK0YJxKYkXmH/VOcI9jXwJWPQ
+	HmZAmDjrbCmqe4StNAtjzRUFbgu/sAGV7aDxEOrvcz5S9/0tQjdFRRtyR1yJ+n9FOZpJxeoy9bJ
+	EG4BA==
+X-Received: by 2002:a05:600c:800f:b0:485:4972:35b with SMTP id 5b1f17b1804b1-4854b0cbf90mr31567095e9.14.1773225491194;
+        Wed, 11 Mar 2026 03:38:11 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854e2537c3sm10512265e9.15.2026.03.11.03.32.50
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b5e912fsm113167035e9.2.2026.03.11.03.38.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Mar 2026 03:32:51 -0700 (PDT)
-Message-ID: <3fb4baf7-a820-401d-815b-a0b7c11fe6c3@gmail.com>
-Date: Wed, 11 Mar 2026 10:32:50 +0000
+        Wed, 11 Mar 2026 03:38:10 -0700 (PDT)
+Message-ID: <3191559b-d79a-4d50-8364-50581df24ebc@gmail.com>
+Date: Wed, 11 Mar 2026 10:38:09 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,221 +71,67 @@ User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH v7 4/5] format-patch: add commitListFormat config
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Mirko Faina <mroik@delayed.space>, git@vger.kernel.org,
- Jeff King <peff@peff.net>
+To: Mirko Faina <mroik@delayed.space>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 References: <cover.1772837832.git.mroik@delayed.space>
  <cover.1772839973.git.mroik@delayed.space>
  <c522f47e5b574c0c889c40284c71c36158b6bb6e.1772839973.git.mroik@delayed.space>
  <6b160915-1cdf-48b5-abe4-3efd0771598e@gmail.com> <xmqqikb3ws3e.fsf@gitster.g>
+ <abCLFS3QP7rJHueq@exploit>
 Content-Language: en-US
-In-Reply-To: <xmqqikb3ws3e.fsf@gitster.g>
+In-Reply-To: <abCLFS3QP7rJHueq@exploit>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/03/2026 16:45, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+On 10/03/2026 21:23, Mirko Faina wrote:
+> On Tue, Mar 10, 2026 at 09:45:57AM -0700, Junio C Hamano wrote:
+>> That syntax is the same as setting config.key=true; disabling the
+>> feature triggered by config.key is quite counter-intuitive, isn't
+>> it?
+>>
+>> We are by default using "shortlog", but use of this configuration
+>> variable is a sign that the user wants to use a more modern custom
+>> format that is not the traditional "shortlog".  It would be quite
+>> natural to invoke the modern default by setting it to "true" (i.e.,
+>> "I want to enable the new format.commitlistformat feature, but I am
+>> not saying which format, and the "log:[%(count)/%(total)] %s" format
+>> is used).
+>>
+>> Perhaps "format.commitlistformat = false" should disable the modern
+>> format and fall back to "shortlog", setting it to true (including
+>> the use of "valueless true" syntax) should enable it and use the
+>> modern default "log:[%c/%t] %s" format, and non-bool text should be
+>> used as a custom specification ("shortlog", or "log:<format>")?
+>>
+>> I.e.
+>>
+>> 	switch (git_parse_maybe_bool_text(value)) {
+>>          case 0: /* false */
+>> 		fmt_cover_letter_commit_list = "shortlog";
+>> 		break;
+>> 	case 1: /* true - use the modern default format */
+>> 		fmt_cover_letter_commit_list = "log:[%c/%t] %s";
+>> 		break;		
+>> 	default:
+>> 		fmt_cover_letter_commit_list = value;
+>> 		break;
+>> 	}
+>>
+>> Hmm?
 > 
->>> Possible values:
->>>     - commitListFormat is set but no string is passed: it will default to
->>>       "[%(count)/%(total)] %s"
->>
->> It is unusual for an empty config value to mean something different from
->> it not being set. The reason for this is that it allows
->>
->>       git -c config.key some-command
->>
->> to act as though config.key was not set.
+> Mmh, what if instead we defined a prefix format just like shortlog?
+> Maybe call it something like "numbered" or something similar (not too
+> good with coming up with names).
 > 
-> That syntax is the same as setting config.key=true; disabling the
-> feature triggered by config.key is quite counter-intuitive, isn't
-> it?
+> I dislike the idea of having an option be multiple types. Should bool or
+> string, not both.
 
-I'd forgotten about the boolean case, I was thinking about an empty or 
-missing value clearing multi-valued keys which is quite common I think. 
-Anyway we seem to agree that we don't want to use a missing value to 
-signal a default here. The suggestion below using true and false seems 
-quite reasonable to me.
+I don't mind either way if we can come up with some sensible names 
+instead of "true" and "false". For the "false" case above we could just 
+use "shortlog", "numbered" sounds petty good for the "true" case above 
+as well.
 
 Thanks
 
 Phillip
-
-> We are by default using "shortlog", but use of this configuration
-> variable is a sign that the user wants to use a more modern custom
-> format that is not the traditional "shortlog".  It would be quite
-> natural to invoke the modern default by setting it to "true" (i.e.,
-> "I want to enable the new format.commitlistformat feature, but I am
-> not saying which format, and the "log:[%(count)/%(total)] %s" format
-> is used).
-> 
-> Perhaps "format.commitlistformat = false" should disable the modern
-> format and fall back to "shortlog", setting it to true (including
-> the use of "valueless true" syntax) should enable it and use the
-> modern default "log:[%c/%t] %s" format, and non-bool text should be
-> used as a custom specification ("shortlog", or "log:<format>")?
-> 
-> I.e.
-> 
-> 	switch (git_parse_maybe_bool_text(value)) {
->          case 0: /* false */
-> 		fmt_cover_letter_commit_list = "shortlog";
-> 		break;
-> 	case 1: /* true - use the modern default format */
-> 		fmt_cover_letter_commit_list = "log:[%c/%t] %s";
-> 		break;		
-> 	default:
-> 		fmt_cover_letter_commit_list = value;
-> 		break;
-> 	}
-> 
-> Hmm?
-> 
-> 
->> It would be nice to support a default format on the commandline as well.
-> 
-> 
->>
->>>     - if a string is passed: will use it as a format spec. Note that this
->>>       is either "shortlog" or a format spec prefixed by "log:"
->>>       e.g."log:%s (%an)"
->>
->> Having the config value behave like --cover-letter-format=<value> is
->> sensible
->>
->>>     - if commitListFormat is not set: it will default to the shortlog
->>>       format.
->>
->> makes sense
->>
->> Thanks
->>
->> Phillip
->>
->>> Signed-off-by: Mirko Faina <mroik@delayed.space>
->>> ---
->>>    builtin/log.c           | 21 ++++++++++++++++
->>>    t/t4014-format-patch.sh | 53 +++++++++++++++++++++++++++++++++++++++++
->>>    2 files changed, 74 insertions(+)
->>>
->>> diff --git a/builtin/log.c b/builtin/log.c
->>> index 95e5d9755f..5fec0ddaf9 100644
->>> --- a/builtin/log.c
->>> +++ b/builtin/log.c
->>> @@ -886,6 +886,7 @@ struct format_config {
->>>    	char *signature;
->>>    	char *signature_file;
->>>    	enum cover_setting config_cover_letter;
->>> +	char *fmt_cover_letter_commit_list;
->>>    	char *config_output_directory;
->>>    	enum cover_from_description cover_from_description_mode;
->>>    	int show_notes;
->>> @@ -930,6 +931,7 @@ static void format_config_release(struct format_config *cfg)
->>>    	string_list_clear(&cfg->extra_cc, 0);
->>>    	strbuf_release(&cfg->sprefix);
->>>    	free(cfg->fmt_patch_suffix);
->>> +	free(cfg->fmt_cover_letter_commit_list);
->>>    }
->>>    
->>>    static enum cover_from_description parse_cover_from_description(const char *arg)
->>> @@ -1052,6 +1054,19 @@ static int git_format_config(const char *var, const char *value,
->>>    		cfg->config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
->>>    		return 0;
->>>    	}
->>> +	if (!strcmp(var, "format.commitlistformat")) {
->>> +		struct strbuf tmp = STRBUF_INIT;
->>> +		strbuf_init(&tmp, 0);
->>> +		if (value)
->>> +			strbuf_addstr(&tmp, value);
->>> +		else
->>> +			strbuf_addstr(&tmp, "log:[%(count)/%(total)] %s");
->>> +
->>> +		FREE_AND_NULL(cfg->fmt_cover_letter_commit_list);
->>> +		git_config_string(&cfg->fmt_cover_letter_commit_list, var, tmp.buf);
->>
->>
->>
->>> +		strbuf_release(&tmp);
->>> +		return 0;
->>> +	}
->>>    	if (!strcmp(var, "format.outputdirectory")) {
->>>    		FREE_AND_NULL(cfg->config_output_directory);
->>>    		return git_config_string(&cfg->config_output_directory, var, value);
->>> @@ -2329,6 +2344,12 @@ int cmd_format_patch(int argc,
->>>    		goto done;
->>>    	total = list.nr;
->>>    
->>> +	if (!cover_letter_fmt) {
->>> +		cover_letter_fmt = cfg.fmt_cover_letter_commit_list;
->>> +		if (!cover_letter_fmt)
->>> +			cover_letter_fmt = "shortlog";
->>> +	}
->>> +
->>>    	if (cover_letter == -1) {
->>>    		if (cfg.config_cover_letter == COVER_AUTO)
->>>    			cover_letter = (total > 1);
->>> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
->>> index 458da80721..4891389a53 100755
->>> --- a/t/t4014-format-patch.sh
->>> +++ b/t/t4014-format-patch.sh
->>> @@ -428,6 +428,59 @@ test_expect_success 'cover letter no format' '
->>>    	test_line_count = 1 result
->>>    '
->>>    
->>> +test_expect_success 'cover letter config with count, subject and author' '
->>> +	test_when_finished "rm -rf patches result" &&
->>> +	test_when_finished "git config unset format.coverletter" &&
->>> +	test_when_finished "git config unset format.commitlistformat" &&
->>> +	git config set format.coverletter true &&
->>> +	git config set format.commitlistformat "log:[%(count)/%(total)] %s (%an)" &&
->>> +	git format-patch -o patches HEAD~2 &&
->>> +	grep -E "^[[[:digit:]]+/[[:digit:]]+] .* \(A U Thor\)" patches/0000-cover-letter.patch >result &&
->>> +	test_line_count = 2 result
->>> +'
->>> +
->>> +test_expect_success 'cover letter config with count and author' '
->>> +	test_when_finished "rm -rf patches result" &&
->>> +	test_when_finished "git config unset format.coverletter" &&
->>> +	test_when_finished "git config unset format.commitlistformat" &&
->>> +	git config set format.coverletter true &&
->>> +	git config set format.commitlistformat "log:[%(count)/%(total)] (%an)" &&
->>> +	git format-patch -o patches HEAD~2 &&
->>> +	grep -E "^[[[:digit:]]+/[[:digit:]]+] \(A U Thor\)" patches/0000-cover-letter.patch >result &&
->>> +	test_line_count = 2 result
->>> +'
->>> +
->>> +test_expect_success 'cover letter config commitlistformat set but no format' '
->>> +	test_when_finished "rm -rf patches result" &&
->>> +	test_when_finished "git config unset format.coverletter" &&
->>> +	test_when_finished "git config unset format.commitlistformat" &&
->>> +	git config set format.coverletter true &&
->>> +	printf "\tcommitlistformat" >> .git/config &&
->>> +	git format-patch -o patches HEAD~2 &&
->>> +	grep -E "^[[[:digit:]]+/[[:digit:]]+] .*" patches/0000-cover-letter.patch >result &&
->>> +	test_line_count = 2 result
->>> +'
->>> +
->>> +test_expect_success 'cover letter config commitlistformat set to shortlog' '
->>> +	test_when_finished "rm -rf patches result" &&
->>> +	test_when_finished "git config unset format.coverletter" &&
->>> +	test_when_finished "git config unset format.commitlistformat" &&
->>> +	git config set format.coverletter true &&
->>> +	git config set format.commitlistformat shortlog &&
->>> +	git format-patch -o patches HEAD~2 &&
->>> +	grep -E "^A U Thor \([[:digit:]]+\)" patches/0000-cover-letter.patch >result &&
->>> +	test_line_count = 1 result
->>> +'
->>> +
->>> +test_expect_success 'cover letter config commitlistformat not set' '
->>> +	test_when_finished "rm -rf patches result" &&
->>> +	test_when_finished "git config unset format.coverletter" &&
->>> +	git config set format.coverletter true &&
->>> +	git format-patch -o patches HEAD~2 &&
->>> +	grep -E "^A U Thor \([[:digit:]]+\)" patches/0000-cover-letter.patch >result &&
->>> +	test_line_count = 1 result
->>> +'
->>> +
->>>    test_expect_success 'reroll count' '
->>>    	rm -fr patches &&
->>>    	git format-patch -o patches --cover-letter --reroll-count 4 main..side >list &&
 
