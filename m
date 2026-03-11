@@ -1,104 +1,149 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SY5PR01CU010.outbound.protection.outlook.com (mail-australiaeastazolkn19012067.outbound.protection.outlook.com [52.103.72.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406E8372B36
-	for <git@vger.kernel.org>; Tue, 10 Mar 2026 23:03:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773183793; cv=none; b=e2rU9RPItzknP5XmmV+tOC9FBRZfZC3ebJSiZGcs3RDVjZsxlse14pWCuYVhiZqfAet3UTOqb//aFeagW+BDNTm9jcdXHJI6vwvHaV3mniA3doc8Ay2XqC5mso1srCAd6TN5PVsHYor2xX5zZKIirZbBIk1+PzYjybvkljSZIqU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773183793; c=relaxed/simple;
-	bh=Q4fHAn5+oJsZCVUH8LbIlc3PVCZxM9/3AcEelbwt/0s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O+ODTNsbbaAXmJXVRAVBah0ENbGhuBfGo0mYpTxME986BtdsYtuA98ZRdQthUa+DWzqFHGxuf27bDS+L+yRGwfW5TZNEs1YwSYcuY1koYcnO7zlEK9d+2H0WlABf5gpWtN7aQQ0gGlHmbQx8s9IWXVFoiEiFfXRl3jxWi2N2htc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hnr86hzV; arc=none smtp.client-ip=209.85.167.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40F213FEE
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 01:49:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773193798; cv=fail; b=INm7FDDtugA+XrmPGDz44EDQqsAT1tTbG0D+eN51tZSeZzyXc0Wxz0Qa4DgygT76iz6kTQcPMzs0BJKfHDOklMjlWDzGxK+myaztzKo54TNCf8wGilNf4d/PkjrzGdrL0aHt7nX+Wef1473sQjDObPybvwrlkAElSOGKJdCnB+c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773193798; c=relaxed/simple;
+	bh=ZXgseYGqrY6BBrajYmXRMmM3Wmye+4zL21LHsnLFUWU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Pi7vPlBivc2wpRyj0QQDmHb3ZCNv14rO/rjSYhHMRtAgyT1+PO+ydAoVRvux0s8hj6PgOFLI0EmNAx48Ch7KTN3FXPQ4OGuRMd+p65x+STI2FiumcP/rV53D+AiVspCrjTRFessXu8AKcb6mGkezpZBONlXIg7RB4S7yc3J0PLY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=EBeNd+vp; arc=fail smtp.client-ip=52.103.72.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hnr86hzV"
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-4645dde00a7so413502b6e.1
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 16:03:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773183791; x=1773788591; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oDti+7yo8ELEIl6L1gr1nziqLeQU4ZXMI40Y16FoRwE=;
-        b=Hnr86hzVy4YZOg039dOsjM6YLMJUxqzNejmc/NndgfymVBxsjNzXeDEo1oJdyT8Jvi
-         ABI8HyAUSL/6nEnZHQpl8BLlsXLYqFzpo/tux2pmEjZ+Cu5/GkQZ0yeSPdJd0xigv9eg
-         Sz0fux5pEfEo9/KCXLmpHs3YiW/tmppLYZL5Y/b4fNAkmyv9IgD2gc1CZoWwgiltQS3s
-         vojOwejs5SXqyiOX6c8m4F30r8KYPMJgQoZhmXSO+SndFzHM5x9Cv/2108SUHKjQSEnf
-         F1pfA4K1Bu6UoK9b5fKhP31YGQujccYd0uS/INUE1ZQIqdcKH4ejVx7EnNcTRkrYgS+M
-         eb7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773183791; x=1773788591;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oDti+7yo8ELEIl6L1gr1nziqLeQU4ZXMI40Y16FoRwE=;
-        b=MuOW9H5URLXRoZYQ5IcGEzHNS9qU6tGfB8ymqHFSbaw9JjIYqo2YTom3VyPW6mhO0A
-         wF/78826newp+UniJBhWs5IfJBF2rfJMLyyVpPyAY4R7ps46e5o25oU7wy6MzY5Q4CT1
-         X4R3ijmiIrIuDsM6zzkelF4MhNYkOyPYlcBrqIh27IAYWhTSJDN1+U9CcnAUa1trCqGg
-         vsnitTGUl98eXtLfQXC3MJ58+pkz6SkhKJrFvXW27FX1B8psTGHhvqUgf9t8C8ACgGG4
-         ElLjx9vJE2FF25jaFhCfbrrjUrbMnVTS7FLZkJzFI2MJNgXBwd6gmDPeLIngvclJuWlm
-         f0zw==
-X-Gm-Message-State: AOJu0YwED+leu8MDQ1E6ZZrz4NCc/VnYoqTVZf8hX7Uo9xALf2BcN31F
-	V2WMEA2ouwz9tjRGIzfVxPpVtY7zO+Btm5RyEkqT28RmvtlA5B7VJyEd
-X-Gm-Gg: ATEYQzxhrLHMbrg+izcC+BVFjFtSDscRcrgQSglWCy7uL+NSV1HY9OxvQAs8P+cN9lb
-	D/Vmp0n2eqNJJOf1MQ2YgJGKyuLlEDJqTIyZD1C4GfmwkAwt35ZcYyBnPAttsD9isd8DEZPsV0t
-	iiNtBoLKHeUnn8YvKmtzb2kVkj2DwuHf3on4vGE7c4/T3T3fKK/PiTFTnVyWxa1BrdvSHGFb+nQ
-	CiStrbDjTpoOFOpAVpJCqP7a/tGE4o/DN7Xkzcxa2W5542sz3voMzL+skSxSRxTQ3+y4VWzNaVk
-	hpevlt+OnzsqQF4o1hXq8u5rcCJ7bruwuvWrPevUYYHYTlyJRnR6HaasBb9BHuLg1Rl8g8CPHIp
-	l9S6BgB/OJ6E3tvK6nsExZ8TZDHv7cFY3ezyoNei125qIIiDhiURzTdibAxx0cHrLh05TEDHNnh
-	OUJ88AFV5YMrV8oEKD
-X-Received: by 2002:a05:6820:1689:b0:67a:222e:ae6f with SMTP id 006d021491bc7-67bc9118c61mr247538eaf.26.1773183791023;
-        Tue, 10 Mar 2026 16:03:11 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4177e1f9f86sm379588fac.2.2026.03.10.16.03.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2026 16:03:10 -0700 (PDT)
-Date: Tue, 10 Mar 2026 18:03:08 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, 
-	christian.couder@gmail.com, ps@pks.im
-Subject: Re: [PATCH v3 0/3] fast-import: add mode to re-sign invalid commit
- signatures
-Message-ID: <abCgIt6X72UR2vbU@denethor>
-References: <20260306205359.1723254-1-jltobler@gmail.com>
- <20260310201116.1130160-1-jltobler@gmail.com>
- <xmqqv7f3s93l.fsf@gitster.g>
- <abCFKEHxu7OZr9bm@denethor>
- <xmqqqzprs7o3.fsf@gitster.g>
- <abCTTaYCQIub_xjW@denethor>
- <xmqq8qbzs40p.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="EBeNd+vp"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KPVVR9B3UkJXIuwCD/gYJuhDU6b001736mJFnc1uEflhdGPvPa68dTS29eVC3lPQbgB+LnNkVDlnl4cpH6voy1zq5pI1oSODIKMz/J7gyAcqUntWjzuGM5GjVDHtU88vzF4PvrQpsMNBYTiJbco52d5LZKgLBa3LFgj/IBNaMWsUokXVMFIsuUAcgwvTM7gEu83ac0O+M/tbOqGj567pLjxKrLtGR4ncXjA+TGgkr3PuawXLATmSLr4cwc74xOC5hNJpuRXgK+pLUUHpu7UeqxEIFSTVn3saA3F7CzuE0n6ehl3oem2GOsLxzajB7Z+22zIaTseDt4NVhODFF8V7Gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KbTvrrjoqOPgjltm5kef1vYUHZuKOGocezchH5W2V1E=;
+ b=O51n6vj2s4KMMs32R2lnFRGwCEcbAkKUM2Qyx/s3Rk6JOMV7JWTc0PZhkJLfBXvsU6zu0+M4D1xLptI4rn9z9k1WF4BClwcrrSIifw3/KbrQ/ZMOqCXgw8Bpt/fNl6YXxoHuwftjXVSEOrynGeqnRbHz+6F225mDtrVaxADmaHHH+c9+lP85GQQMAULTX/WUIiXh7C5Ie4zJNAOVi9fF4t8MiwAHDPNmxNuwGeaCiYArJW47N0JR0SfUg227HBsVqPLKl/Y02Lj6HTdtKQWAT8xDGuOyctHjVXXJtcsM/0XJnPRo9e0DUFrWeeqk8z3vrzWJYrvz9Q96qR1itGg76Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KbTvrrjoqOPgjltm5kef1vYUHZuKOGocezchH5W2V1E=;
+ b=EBeNd+vpG+KxYzCTQVUvMC0FuRSUjsDmIQWtFSmUsUop+zuL2x5DKIiglKxzc0eXRhhIpcOk78Ua3osEJbo5WDK2nllHafz7OErOse06KV4KUl9OZ+1i0qJQBmisx9FevFT8bv9Lo9jrBGeIGpooiTFFDmrukuqG8bzbnRDGGByg/BbrsSvzf8pRiHTBEwNhqhns8DFYCeNlT+alXG+3OFKWQ2p+uqex1t8RvuhSyd/YCm9DwNODysg2CENj+qwKqg88St37KxbHZ93m9ebCbetU9neEXYbnK8QurMpunL8ESTtYk1H7yRhwr8BVXqbSnkvDHIYe4jbCvi38yQbOrQ==
+Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
+ by ME0P300MB1341.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:245::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.12; Wed, 11 Mar
+ 2026 01:49:52 +0000
+Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
+ 01:49:52 +0000
+Date: Wed, 11 Mar 2026 10:49:40 +0900
+From: Jiamu Sun <39@barroit.sh>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/8] parseopt: extract subcommand handling from
+ parse_options_step()
+Message-ID:
+ <SY0P300MB0801AE08F2AE4C0EAA274A68CE47A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+Reply-To: Jiamu Sun <39@barroit.sh>
+References: <SY0P300MB08013E35DCA8FC31B0662125CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB0801C6F21C2D8F49892DF8E7CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB080114A7548292AB4B60D817CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <CAOLa=ZQ3eCky2rH_D-6=vwQ26TKW_dSO84+Z-WL2LFJ2rGVmqQ@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQ3eCky2rH_D-6=vwQ26TKW_dSO84+Z-WL2LFJ2rGVmqQ@mail.gmail.com>
+X-ClientProxiedBy: BY3PR05CA0029.namprd05.prod.outlook.com
+ (2603:10b6:a03:254::34) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:27f::21)
+X-Microsoft-Original-Message-ID: <abDKNHvTrlj0HANp@lancer>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qbzs40p.fsf@gitster.g>
+Sender: Jiamu Sun <sunjiamu@outlook.com>
+X-MS-Exchange-MessageSentRepresentingType: 2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|ME0P300MB1341:EE_
+X-MS-Office365-Filtering-Correlation-Id: 403ecaf7-4532-403e-ee69-08de7f107b26
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|5072599009|25031999004|12121999013|8022599003|19110799012|23021999003|461199028|41001999006|8060799015|6090799003|15080799012|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?3kpYyZAQukUAALHIit3nFEjIBXiWS24fofIjfeZSG9grP/jwHHM2uiuOUmjG?=
+ =?us-ascii?Q?bpAUR5AFkMY/AE7F6kSUH1iLUY5BZuowioPLrft4wsGWie6earXIGuGGfWrp?=
+ =?us-ascii?Q?aTiFPjgUSj04zNLCRxbDqf7rZj8Ij9JT3chIkefZvFZABKhQ8ihT7nTkbKYy?=
+ =?us-ascii?Q?cjEFzjhi08YhXc0p6JQhHDpQjv8zuigyah0QuAgJ1JFIaP0u+nLKJOJVwbnt?=
+ =?us-ascii?Q?jtfxfn8c6XyzgMtmRP0TUdAqxiy8931x5hW+dcibdpDutvSL6EGT5Jl8wcAR?=
+ =?us-ascii?Q?HthP0rskfgin8EjqazfCskVvMRZOWj+K52oqRvW0L11Cyau8n/3HuuWwUslN?=
+ =?us-ascii?Q?teUy95doNCxXC5+gxpLE5s+c4QgyZ/gTWi6gioHkkCieAKiciRBsIcEJpw3B?=
+ =?us-ascii?Q?ZzT5zWm9lHy90IPDJy9Q3jaimwWohdug8rgSzC4V+5rtncItscaFFUs9irM8?=
+ =?us-ascii?Q?O/ECWYYQEYYm6t9oM/zOmqgEC6vOtYJQamu2ohEv3dp3DnrxyVxTYSS+ksg5?=
+ =?us-ascii?Q?HT9mOdO9RZNUSkhus+O4biXJj6md7ZDiRQbn/6CMXEjR8+XKX7Xf2xbbV/rr?=
+ =?us-ascii?Q?UTZHic1Kp0OWAvHdeRjMJVP+J9hh2LS7nC6hRGxQYd1lAC7SmykDlwWft9Tn?=
+ =?us-ascii?Q?cUdobEC26wxCsivk910pSuqoS4lpMrcesGS4YNqUpAcJK2XH02Jo0/Mpu1Tw?=
+ =?us-ascii?Q?QSs/VU3x3EE3bW4dBG/Jo1xKtqNMtmzM3aKg4ysF+7/44gY4E4i6HfTEu/pB?=
+ =?us-ascii?Q?kaiPt2MZ3HS4il1SM8gSyeugarQBj6cFc2mek6h2LZbeeMOQO3yYtyhDLedd?=
+ =?us-ascii?Q?wIWhiohXtqtQaiY41xjW7jzPA5J+IZtjChVf/Nz6gleQ4XvGuyCRrj77FrFp?=
+ =?us-ascii?Q?c1SArlMXFaUOC84zoTgVqvGrVeMP75FyMgBIJbXDSyhGl78kkZiUrh9BMzAu?=
+ =?us-ascii?Q?ccuuTppu8knoyIijC4VJTincg0nl5Zkjqj1YxLEUDB976LyICW8t3oItaJFA?=
+ =?us-ascii?Q?5r4h?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?5odpsFbIDM8rHkenIcH4F+xMjmW+ObV0vkXea4S0zkiGpESBG2UhviJy/wS6?=
+ =?us-ascii?Q?LtN53jFGI41IlBI0T8F6DhJZ6Q+k0+RE4b/peTSIbvZt0VcPSHIrpVcafjnl?=
+ =?us-ascii?Q?JojanOAtbtCb3pORTWljWXYyGDnzZpR40tvdkRSvxd1Vu3ACp187RSbXksMU?=
+ =?us-ascii?Q?M1Udi9tkjRRqCCLQeyem3NpQj1lV6E7wTCNZOLIY25dtdaBkja6dEka9BvnN?=
+ =?us-ascii?Q?PuW54y9OazBKF2+Ba2dDj2jn7laEdR4J3XlmTTNG7hkAmzbnbKoLJKkREZ37?=
+ =?us-ascii?Q?2IDFl3x3ts4CqTvKfY3CbVq/qTf4IAfTZuEjLhc7g5Xm8mnoqDSsNXemLeRN?=
+ =?us-ascii?Q?rjGXqF9KUowxymSxR6GAG+POGKI3ioyciiU/KuHLhtt/Wb5a/MZK3XZUMjpf?=
+ =?us-ascii?Q?8Nmhl+Escd2lzwyZUSer/Pc1CnMnJMwDV1cpzJ3oQ0uQMXTpbWaF6S3Gh02R?=
+ =?us-ascii?Q?JINJYvjfBmS33Qssz40wixwb5mjnm/kkYC3eOa5FTCjH+ghKt1+tmt/gf5Ov?=
+ =?us-ascii?Q?yaWCfHFYUyqLjzBufFMwT3Nn8mBZmRjygDm0beLJNeYJADh+FuJUjm4jZLJG?=
+ =?us-ascii?Q?zcatIGuhjswEEjrYL+Jg3KZIi6sHRUp/PtxYinDGD4KD7E31AjaXPd98znXl?=
+ =?us-ascii?Q?vTSAhP3VBrTfnMjOd1qcBGgiCEdjSW0SItJ2/roHNVScoTFOIF/L/69v8VRL?=
+ =?us-ascii?Q?3BcILHSeKi6wkydQ+BmhcjV76OT/clUUJ6wNQIof8hwNBqCd0UUQ9f98IBCV?=
+ =?us-ascii?Q?452GjYjANyF5ubmoM8YFZbUvHr9y8vLM1Ely4n1MrHLwsvmgXp5DYOazCaMI?=
+ =?us-ascii?Q?GSaVhXCV7udgcbH5QAs4aIdYQvjQIO1cuT4dm2Tri3DisvbdBvpLhGJA/fFA?=
+ =?us-ascii?Q?pVWe6RFEE0ouUyxAU7ZkKUYKjuSMI+s9J+27cWh3jsuYZTnARcTqaY2xit1J?=
+ =?us-ascii?Q?2v/3Dv/6djGDR/3uTufIp/fLucY6W8QH4j6Sf9FyWO/sRi6+RRpbO1e2jwmQ?=
+ =?us-ascii?Q?5hITidk+qKzyPdxla2T80T5hTRPuJzFf6LUvnN5wUg6kN/CyLDE4LW8mHidU?=
+ =?us-ascii?Q?EUeb1BPnyUc7OfRmPwLAr4NUPIutK8VtXV5OOkq2BuZjtO2SQthhtcS1ZvQN?=
+ =?us-ascii?Q?uoIq1Ec8k0bIUVZCZjmg+zMYl07i5+hsRtMN6BsljW1LjvpFQvNel7GW2Ei5?=
+ =?us-ascii?Q?wXJPgSf6KwQ+HAAPnnwsjzN+eCl1nDYNnXpABvfqgywrR+6E//V2uozp0wY1?=
+ =?us-ascii?Q?1ZCMg7YE3USwnAzhL093sLDoJD0O9EyxcxYs9y3aRRHoxOXP4X1yxoro6WjL?=
+ =?us-ascii?Q?9c47c45rqj9gzy2qJl2tk52YRqPnzA48wvmq8hJ5kg0xyg7RVuyq7/V5qxJI?=
+ =?us-ascii?Q?3Bb2AWMqUPY0QEsSYC518MVTuSRP?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 403ecaf7-4532-403e-ee69-08de7f107b26
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2026 01:49:52.0678
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME0P300MB1341
 
-On 26/03/10 03:39PM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
+On Tue, Mar 10, 2026 at 05:46:12AM -0700, Karthik Nayak wrote:
+> > +			if (ctx->has_subcommands) {
+> > +				return handle_subcommand(ctx, arg, options,
+> > +							 usagestr);
+> >  			}
+> > +
 > 
-> > This certainly seems like a reasonable use case, but if we want to
-> > support leaving previously unsigned objects unsigned too,
-> > `--signed-commits=strip-if-invalid --signed-commits` wouldn't be
-> > granular enough.
-> 
-> Yes, --signed-commits=(re-)sign-if-invalid is a perfect match for
-> that use case.  I am just saying that if you add the machinery
-> needed to re-sign, you would be able to reuse it to sign objects
-> that weren't signed in the first place, so that is wherea yet
-> another feature "--sign-commits=all" may fit.
+> Nit: we try to avoid braces around single statement blocks.
 
-Ah ok. Ya, adding a signed-commits mode to cover signing all rewritten
-objects could make sense. I am planning to also add an
---abort-if-invalid mode in a followup series. I'll may explore adding
-this other mode too.
+I'm not sure if we should drop the braces in this case. I mean, the
+statement is indeed a single one, but it spans multiple lines. Keeping
+the braces improves readability. Also, CodingGuidelines says: "When the
+statement extends over a few lines" use braces. So I think we should
+keep those braces?
 
-Thanks,
--Justin
+-- 
+Jiamu Sun <39@barroit.sh>
+          <sunjiamu@outlook.com>
