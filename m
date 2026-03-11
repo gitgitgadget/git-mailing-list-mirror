@@ -1,161 +1,123 @@
-Received: from SY8PR01CU002.outbound.protection.outlook.com (mail-australiaeastazolkn19010075.outbound.protection.outlook.com [52.103.72.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C27B391832
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 23:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.75
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773271582; cv=fail; b=b1SuItRA0OoiV8vwWUYimObufVYzUVcWhGRgbedaVAx/hSk1s3ei89wVtmDQPrw1GdBuHLYhgQTtDo/TASFUQqlkP/w9hGQt6WsuBGTM93uL1L+X8IrJxbbj33ZI7rocTXOTsygAbzAN1zcJGKEalS9hV4JmqSfm+xxe7RpbzIY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773271582; c=relaxed/simple;
-	bh=8smeHQuE7fCtS7uRLu527/xUYbvyU31g2XmOqx83+Oo=;
-	h=Date:From:To:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=MW0Wse730joUkBiHKDjkgbXWm70RUNOmpB3ES+oW+JKg7GQZ1hMSsLEXtvHxx0W6bby+1Ft7t5pVHyNQrrXNLqxtKoZPTbtfl4/g8DAkvGNN+KwfJHCd2UoU6tF1Rfdn47i6gVbfXMYKREBrold3go4LJ29HiAJr2e1gjyj2RZ0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=o0adf0Dq; arc=fail smtp.client-ip=52.103.72.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205AF1D7E41
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 23:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773271684; cv=none; b=Hx0XgE0DAAC8QrjpwZuxpq//RmZ2BkEKy5K63Mir7cMdSel7GHnBcJfBsbCOgCE2pvC2jQlZkVZhQP/+eZbMWr0SO72y+8Fq6zvLUKtt5/tiYpG85A1D7P5o8BRkstlnQaPMBDkrAKkLoF1Plkysy8FEVXYnM0c7yxWy6BSRcY8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773271684; c=relaxed/simple;
+	bh=bTkg+kKlww1gGtg6fBiU4gRahcXFLln6TPirYjrxz8o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cGYT7U/fq4G/zuS3hn7Z+q4zn3RQ2iwOFj4dRSxeBCbunDx+3vKk3F1j0l1dMDnSX2tvMNChalQEKOV1S0Ilsz9kQpUPukhywZqhq4dD3hRHuO562NON+W5EFXc3Lvc5k0yem+850/C5t010kTgwrw7I7zzW0qkppHYmdruoPU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PyNWkKwH; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="o0adf0Dq"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=btOlVC8ytxjSr5AtdAHkIPLjqO12M9l/+/8A/DmYzUenZ05g2x+dyRgcrxx2IoW4oQVF+WF1w2GiidJCNeWlqt/LttFiq4/4CX8zYp0tGjxieyOXpeU8jYYrZfgus+6s954vKflAiwyuKzCrsVTHjqB87PBq6qlsT6GaMVQkrJH9wD2D3voKxqpLoFWjI3fbz4pXXWEMSobV3zgOwPqMKRcNHs0DNKxTwddOTY8bV0UrHE1YVEvP3In+PN0K7UtRU1nyGrCvLmRlWGlsr42M4pgcPWKxZUQNMUgLI6yTSDhCWhQy9aIyt5cj/qqVge/YUafoNzncU3fLwZliP5XC0Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VfUMCo56cTxCyTMQligP4ItksuLf94DuEiyqDYxgbSU=;
- b=kYo50v6N0MOC/eDB+gdW85kaCdNKTn6o37ftKdNxLvxvjQtWwrY82HqyAVqBvv3RWeaeRzEnu1EEwAxl7kN+dOqQ9LGSfrirqnLE5vOQFdm1XCyNKlwQD5J/CCuhGUR0n6mPRJi/9/pe68xs8V+kK31brixcDhKG4sfI2XG9QQ58/5JHXS1CKi9VIO7XdHW0PIquc5P5K/tXC8FI1fyeE4eum1G9pgIhdO4wtfCQN17s7l2etKToNyF42uCgjQmr2l4Pw1F3dl3wqsEQK8kXQiI7sJjV4vm3s37jbi0cRLpJATedfeGuU7yHXwd0KYWoLch4KIOSF4AggrCxpnWi9g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VfUMCo56cTxCyTMQligP4ItksuLf94DuEiyqDYxgbSU=;
- b=o0adf0Dqj3RiGuU2EZdh95igm5Ax5XpIMjzs8xtvNa2nrvdx/wrxw5oiCVrpFrnekQATAdoKA3+tRvakT6SptYa5lX2g7bvSfT8u+7hAuhhpBC4pVTVR1NFOB9YCueAw7+gfa4EEV2lkWNYuzxOjqcekbYM42f9DaeuV6KYkZ0Zh8wEwRvC6HqJrTiIi/Csm/XkGDStEsoWhRTO6q/j/QtRqUXhutXMrrTdtLZ0xjdj0yK7ldQPcAjcjQYenVK3BYS0/q2cWqnCNu/YEiaw7tMrEAyMWZVTN3hSGzo+O8zy8W7QfEtLvHxVWotaVCsHfSPDRhMo8GR55GDzlzk6T/g==
-Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
- by SY7P300MB1557.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:2d1::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.4; Wed, 11 Mar
- 2026 23:26:15 +0000
-Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
- 23:26:15 +0000
-Date: Thu, 12 Mar 2026 08:26:11 +0900
-From: Jiamu Sun <39@barroit.sh>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 6/8] parseopt: autocorrect mistyped subcommands
-Message-ID:
- <SY0P300MB0801C9B110080DA6DE9827BFCE47A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-Reply-To: Jiamu Sun <39@barroit.sh>
-References: <SY0P300MB08013E35DCA8FC31B0662125CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
- <SY0P300MB0801C6F21C2D8F49892DF8E7CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
- <SY0P300MB08011B31B360FC14F05418C1CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
- <xmqq7brjtp7c.fsf@gitster.g>
- <SY0P300MB0801DA185098623A3729B9F8CE47A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <SY0P300MB0801DA185098623A3729B9F8CE47A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-X-ClientProxiedBy: TYWP286CA0011.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:178::18) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:10:27f::21)
-X-Microsoft-Original-Message-ID: <abH6E6t3foZ_mxL8@lancer>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PyNWkKwH"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-4327790c4e9so296193f8f.2
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 16:28:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773271681; x=1773876481; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aN3aZKkgcSOjzP4SusJY5zZAw0No75gf1tSkB4DIvWo=;
+        b=PyNWkKwHQEtcS/71X6SJr6kbbYiec1Cd6VIaJLg0q4Gm6y9wqh+Wxc1/vX5JU9AaIS
+         YE5DmbPbgG5sX9qlsBapJ+CAeeVPFGP/xJSbRifTvauTZD77h3I2QHXtgTPXgAMeYXHy
+         ableSVgU16xOLU8kHjjRH4zZ1H39pcYSFAzkUiv2uvMB8es+KFZfnW1OPHGATslmD3FA
+         nL+fJCcdT0xWx+AesXPgY0g96moJmcU2O0ZlsNSAzGhS/lSx6NQWjtQE6B0BCC0Dcq2y
+         Nb9j1r5ctjpoGZDrp8pERsTYqAWVNydTP6dvL5aP6WXsOeAujq5IV2CF4xuJT+HEmmHu
+         0Efw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773271681; x=1773876481;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aN3aZKkgcSOjzP4SusJY5zZAw0No75gf1tSkB4DIvWo=;
+        b=xSTTzWmFGkkOq/2DHN+aav6kkPGfVZQizAP4A0nWATHSiz7Wht25mBGbjiPzvktlYT
+         Rf3bI6SH9+itQVQJKJY5oQRLGTt6oJ1od7CJvc+KGSzQV6wXKdS7bHVts72kVKXeaGzu
+         k7Y4re03uwOekRyN8iyWlrrSlbATJZ8B3EcXrgeTKIfKrC/Pyj7c/s4MTUVMltxGQphS
+         9YaVtgGYXRD1mvCvmf81AQAfebxvzsQjW6+BOyHuLQFQuJvuDxdfFX4CVCrbhYKd3e4B
+         E3R8TAP6Tl1vdUsTMJo3wxQp67dbXQ5DkXwTtpcZy+kkYjaXpKqlwHwJRG7tDvG07Fy2
+         a0yQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVgdEKVROFGZrtFVZ3y+6H5A4BQ1j58QCxB70jNXCtCXYFxwGYHEaDagaXkMdJI3o/f+XY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCer3SFSyeJ7xoAiBwy6gE7LhJb6MthHIaIAKmh4sqaltCRdpz
+	9DJ9VYnHcXEgA5iG7vgbHcidiloK+O5FDskMPhVdW/G3bA/n8uOToV+5
+X-Gm-Gg: ATEYQzx1DkQd4kdGrKkkYAQpwlRgJW3kOCN8zP/7LTvEv218Xm0srm7yxb+1oFzTZh+
+	Tn9yx8PCO1NgGjk19gszd6mdTFPkVTuTobx/D4aAZQTWgYDum1QVpGhCcItM9IEo3ToiuAAKuht
+	VP1NJWur3ZaZhRqs1PJPI4ZzEPWWX6GNSBgc36S/F+jqaNKR0jA0telcuDsRhgVaLZDYi29muR+
+	Y+28j+2jP570Y8/ShyKMrNpZjaJBLgG+bQfRIOnULOZqqXJJnSHuZ3AfvuuATTcKHihQXJwyGBS
+	Vvy85eIXupD2qqss6u8lw4oyaXV5ZWNU1ZrnKXFom4n61sOFqVqMoSkIeeH3a3GXidrZrGsINoI
+	MGiAhHH1HYwRpBlgqcqa+NpRcqnvvsE08jZ5PjZrmclUOAqrXfpYYRRrwtFDmfhXOaqFiv3RkIo
+	CWw6jbmVCTuC10C7MFAkGcikaQ4Qd6V+hvNhofJLvIDyIPu86Oow9yvrqMUsGl
+X-Received: by 2002:a05:600c:c4b7:b0:485:3ff1:d5c5 with SMTP id 5b1f17b1804b1-4854b0a5669mr70838145e9.7.1773271681210;
+        Wed, 11 Mar 2026 16:28:01 -0700 (PDT)
+Received: from localhost (94-21-146-27.pool.digikabel.hu. [94.21.146.27])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48541b6f6e6sm332660325e9.10.2026.03.11.16.28.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Mar 2026 16:28:00 -0700 (PDT)
+Date: Thu, 12 Mar 2026 00:27:49 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: phillip.wood@dunelm.org.uk
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 7/8] meson: compile compatibility sources separately
+Message-ID: <abH6dayn5tJBMY9p@szeder.dev>
+References: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
+ <20260310-b4-pks-build-infra-improvements-v1-7-ec75d0710d6a@pks.im>
+ <a5d1ea70-12dd-461d-b5c5-a1127e017d01@gmail.com>
+ <debb89c9-2fab-4922-af1a-6048094baf9f@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Sender: Jiamu Sun <sunjiamu@outlook.com>
-X-MS-Exchange-MessageSentRepresentingType: 2
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY7P300MB1557:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0fd6b107-94fb-4263-923d-08de7fc5971d
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|51005399006|19110799012|8060799015|5072599009|15080799012|6090799003|23021999003|25031999004|461199028|440099028|3412199025|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?W//q0JG0//im8pkN01l3u+Obk/hZrXBlnmSfbgRZ1yVCaiVcyGu7FQBS5Hke?=
- =?us-ascii?Q?hChnjoZdTYoOqr9N2c6x6dY5CErT3mBncFiWuLux3S7MXZcHZvtdAct7r1hp?=
- =?us-ascii?Q?jZ0cyddbRo32oV1HBhmdkpD18tJ5p+SAFIUXwqQZ7u167PuzI79ybyUyXm/A?=
- =?us-ascii?Q?0qCx0ZZctHKetC4I4oOcFPxRhzTAAyW6xyYSlDiJopE/7p+59ss41UXW9/j3?=
- =?us-ascii?Q?dxyGVBF7Cl/eeFWN1MKBuovbjHb8XT6Doj/214YxVx6ikTIU7BHLliaMNQpP?=
- =?us-ascii?Q?VcV+niqUKAzOxt44hYVj22P6Qt/gQSX2guBrKVdhWs+Q10dhLGi58HbAlUDI?=
- =?us-ascii?Q?/BSUZL4wZKbxBbQDncz2ZP3N/uZtBb0tj4UMyt1OOdrA+/psv2a/OmnnKD/B?=
- =?us-ascii?Q?D3KsmhBqciPqIGGv5Q+IAL0trX76X+sBYn9cnC9vVbl5nD0Ja9ynrqtp+Utg?=
- =?us-ascii?Q?njb1j+6OQv9W0UArSCuJ0ly2fN06SUwmpX1GtXmfo0Po8Cchml4q+lkeCryy?=
- =?us-ascii?Q?DHgN8Bt424UPUk4B+XIqtf4qfPt09Iq/E+Emdq16Vp33g9lQykWFBJTSH/5B?=
- =?us-ascii?Q?NLK4WQOWzdSE3yoXJwh1da2h/U0KfLertUHmaJe0CdaiJyO05QQNXkhe5gX3?=
- =?us-ascii?Q?S4pLprFU4Xd/AcM2UcXPkmtGXGVD4A3EZwtphPGn9dkmDCw13yJlVuGAOMgy?=
- =?us-ascii?Q?Q1yvTzIX4+9454c5XUvUHYDtcJgdf1e8mtJ4CmLt0p6IDfQP+sBdVRAfazws?=
- =?us-ascii?Q?hSSNPxuyCMI+nzZtuwzlk657NrWdpao+JryqPheX7p+kIiOJUfzk/8DtID8Y?=
- =?us-ascii?Q?nvmjVvKRZEFWl8jp4BJgPWQd7sHiVlLIeVpid71A31IKyjiyaegruitNaHjM?=
- =?us-ascii?Q?vr/hTQsiiOA+fJ1UfAkDFXJcbr7mzXz0YlbxLLeakZhUTutkogxN41FnFWkb?=
- =?us-ascii?Q?DLsXWSkSLZ/cjArNOc8P2w=3D=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?eqrz71XqxgcMw1mjZPgOdaX03pElo4tFD61hY2eqU1WdliSQjv6UyGMaLGPl?=
- =?us-ascii?Q?X+XVTznpjAsNgUMgS9kCKCLruPv+ytQTTRd8+WpiOCggTSXwC7MkN2OGTMW7?=
- =?us-ascii?Q?Zm2Y1MCFR1n6/muVarrIv71Z162Ruq9jfQoKHnGNZTlYf5QQqCviqExOdkr/?=
- =?us-ascii?Q?bA+spaXCbHURVFCRHElJBgXoRdyePp/d9GELT7rCV6bOl4oknJQ6Xu7kkRX2?=
- =?us-ascii?Q?rVY/Vz1hTOL3hKHaZhRD2NjoDjjKumG0cYZuTOtI4PacYorm6UjOCSqmYCdL?=
- =?us-ascii?Q?P8AqC/bEtY5Cp6554OsqFkX3AdCdWpEyZNd39WY0d9I4gKC39xBNIOHTeS/z?=
- =?us-ascii?Q?UbQ9ApSTW0zC4pCpkzvbLi0td2mprygIxGPhih5BNkELOvQph9H67py5SDbU?=
- =?us-ascii?Q?Ay9uA+NLPA+QhpRVJZc2zl8UO9E2HCX56r2Xb98Nw1qugVSCQX5xopbb3UnM?=
- =?us-ascii?Q?0WN2k9O1NnMRuL8XWohsvUSyA75bsxQdunGL+vXzHUGwUzUXBtidleMu9aJG?=
- =?us-ascii?Q?YwbPCpzs6eGt2P7diKVj0tZJ+8fhkGN17wCAux6GrdYMy1OHSIikBkogYxKc?=
- =?us-ascii?Q?BiZl+uEKBKSQuIYi8395U1id8lKv05yJSMq5DZ9xXA9FDrxx5gmtcP4pRHOj?=
- =?us-ascii?Q?Z7RklqwJcxkdwzyT4xakVVbI1mCDVHCohZQ6BI3Q9+9ExLG7lXgKPEYaZV0q?=
- =?us-ascii?Q?GmjfAFFrvc8dhQMscEL5YEyhQA8bTM1pyoeSIqG7Yilrd2Ai8vH64QhhChQE?=
- =?us-ascii?Q?8maFYeRUe8JifELSClBkrpP3Z71k3A5YjxRwkNEm5mFzFwqyXx06hX3M30Gs?=
- =?us-ascii?Q?D/gI1JyxkaxBQuJSMvWq8yKtvItgpiDxoC/liNJxNQEqD+Q33jx0sd/pvfW3?=
- =?us-ascii?Q?d7oWFaH0dr/F8uwM9fn/9ItOLDdpyLPvb1F0PfvJhi/O+4jxnx3sk5VqRHKJ?=
- =?us-ascii?Q?DSCwT9L4skrTFnJzBKwNcgUiGaTK7E+YXO7l8vB/5Z88phAsC7IRbGc5Q8Mi?=
- =?us-ascii?Q?4fkl9A/+guAS1snADjh5sU6oYeChboIPbuaBKNcNUwohFMA7l+LOU3H15hKn?=
- =?us-ascii?Q?I8lOzotexLTp3k/oS45FCb1GVrh78t69w26fTFElHb86RPkqhT4KvwH9QtlT?=
- =?us-ascii?Q?nfjjzFlAVETuzH5P6Gh6HQLXMxfFOv1RySGCjIuE4izQ1hH0ukkmpop63tmJ?=
- =?us-ascii?Q?mROTE3vBWLb1cEmuUH5P9FYYRYmvIZDyesEW1kiiF8pJjUp47QUnKEGvNHUC?=
- =?us-ascii?Q?If85Kb5ZHwLCGezxBBo4ALtqT33RmgNO2l4N3K6NGOEP1FzwoIVz/CQx+yGq?=
- =?us-ascii?Q?giZZ5TYGrgCXh+NphxBZ3NeokYK3a/eCw+uUfq+kp+qbSZKSdtLzdxC/THus?=
- =?us-ascii?Q?w3EhXk72ux8TPt0jncAPKXGZSfKB?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0fd6b107-94fb-4263-923d-08de7fc5971d
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2026 23:26:15.6613
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY7P300MB1557
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <debb89c9-2fab-4922-af1a-6048094baf9f@gmail.com>
 
-On Wed, Mar 11, 2026 at 11:48:41AM +0900, Jiamu Sun wrote:
-> > There should be some explanation on the reason why this is very
-> > different from SIMILAR_ENOUGH used in help.c for main commands,
-> > especially given that the levenshtein() call here uses identical
-> > weight parameters (0,2,1,3) as used by the call there.
+On Wed, Mar 11, 2026 at 02:56:24PM +0000, Phillip Wood wrote:
+> On 11/03/2026 14:32, Phillip Wood wrote:
+> > On 10/03/2026 17:52, Patrick Steinhardt wrote:
+> > > In the next commit we're about to introduce a precompiled header for
+> > > "git-compat-util.h". The consequence of this change is that we'll
+> > > implicitly include that header for every compilation unit that uses the
+> > > precompiled headers.
+> > 
+> > Is that a meson thing? I know it defines precompiled headers on a per-
+> > target basis but does it somehow force each source file to include the
+> > precompiled header? Looking at the gcc documentation it seems like the
+> > precompiled header is only included where the original header is
+> > included.
 > 
-> Will add a comment to explain it.
+> Answering my own question the precompiled header is included via "-include"
+> on the commandline. This is necessary in the general case because a
+> precompiled header cannot be used once the first C token is seen.
+> 
+> As an aside in git we could probably get away without using "-include"
+> because if we include "git-compat-util.h" it is always the first thing we
+> do, or we inculde another file like "builtin.h" which immediately includes
+> "git-compat-util.h" and so it is included before the first C token is seen.
 
-	/* skip and count prefix matches */
-	for (n = 0; n < main_cmds.cnt && !main_cmds.names[n]->len; n++)
-		; /* still counting */
+I couldn't find this in the GCC docs, but Make's documentation states
+that "you cannot include a precompiled header from inside another
+header." [1]
 
-	if (main_cmds.cnt <= n) {
-		/* prefix matches with everything? that is too ambiguous */
-		best_similarity = SIMILARITY_FLOOR + 1;
-	} else {
-		/* count all the most similar ones */
-		for (best_similarity = main_cmds.names[n++]->len;
-		     (n < main_cmds.cnt &&
-		      best_similarity == main_cmds.names[n]->len);
-		     n++)
-			; /* still counting */
-	}
+The strace of compiling a 'builtin/*.c' source file seems to confirm
+it, the compiler (gcc-12) does look for 'builtin.h.gch', but doesn't
+look for 'git-compat-util.h.gch':
 
-	if (autocorrect.mode != AUTOCORRECT_HINTONLY && n == 1 &&
+  592662 newfstatat(AT_FDCWD, "builtin/builtin.h.gch", 0x7fff2066e610, 0) = -1 ENOENT (No such file or directory)
+  592662 openat(AT_FDCWD, "builtin/builtin.h", O_RDONLY|O_NOCTTY) = -1 ENOENT (No such file or directory)
+  592662 newfstatat(AT_FDCWD, "./builtin.h.gch", 0x7fff2066e610, 0) = -1 ENOENT (No such file or directory)
+  592662 openat(AT_FDCWD, "./builtin.h", O_RDONLY|O_NOCTTY) = 4
+  592662 newfstatat(4, "", {st_mode=S_IFREG|0664, st_size=17968, ...}, AT_EMPTY_PATH) = 0
+  592662 read(4, "#ifndef BUILTIN_H\n#define BUILTI"..., 17968) = 17968
+  592662 close(4)                         = 0
+  592662 openat(AT_FDCWD, "./git-compat-util.h", O_RDONLY|O_NOCTTY) = 4
 
-If I read the code correctly, for the prefix matched case, the similar
-command finding in help.c skips all prefix matched strings and increases
-"n". Inside the "else", since that "n++", the "n" will always be greater
-than one, thus no correction happens, e.g., it doesn't autocorrect
-"commi" to "commit". Do you know if this behavior is by design or
-something else?
+
+[1] Second bullet point at:
+    https://gcc.gnu.org/onlinedocs/gcc/Precompiled-Headers.html
+
