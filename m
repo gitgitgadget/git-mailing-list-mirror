@@ -1,147 +1,118 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7321C38657E
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 20:16:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050DA13D539
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 20:31:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773260198; cv=none; b=h4wV8+++d4uzIcAi/Fcw7T0vjdjQyLBDoqTS2xTnBHIbY4J6mM+vk4PCDAsEO2IlbImIaxxusSlbzlEIr3ePRAOoTn9HthdRXuIAnLS7LduhzuopVqDLKFBhJrA44a3eEM+boUlCaRNdJEUDBsRXjb0Re4QejGHbMQ24kCOF/3w=
+	t=1773261109; cv=none; b=siTBIBIbNb6yVli8k5LzyOr8IdAm9UL23KbuwHuUQN3cd3sZ9/o1vfiwnQXu18qg+lJ+jaJBbAfr2GnZu2j03KfcamirAxNODMBomMhZTYVDXe5LTvZNHS0Zv68T+RuTIjXxDXF3/R+MFvc5LvrnIvN9GABzSxLs5stzZBGWMkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773260198; c=relaxed/simple;
-	bh=pp4J+WSMjt12558u2ohiQEU+m4TXukjMPJ4bZPDDo3s=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=VWdPEQq7WCUF3pNgh+tycnJAzpfN8//Nq52LoR3exsGI8zF53ODq4UoiGwaN77wMWFyq9R5oZUpA4ckCWrV66QSc3V05bATp5IWl0t04QYhW777HmTZDVYbOTC/bG4iKD6OP6OSaIwl5psAUO1m5H6apB8cAIW3EA0QfkFyHkaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mOs042pw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U9Y8OTT+; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1773261109; c=relaxed/simple;
+	bh=97llovE94lV1On3QK/MSQuTh8bWP99E1DT5daq4WOcQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WDdsGaQ4ioL6t8DtAXlRUacBEul+GUA/7KWU9TVlnbIZL2tWnog5QV04Iu4AhnkdsHGTfYnWBH480oy/e1yHEmHWrd2/EILsxf0MfRI9AFTEFNZXBEUi6yoZajuci24JyrFztt2xjdnNAaZXw5hakAtwRXvdFoCzOdnTqRIHros=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DQpAZaJU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zzbs27ZB; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mOs042pw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U9Y8OTT+"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DQpAZaJU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zzbs27ZB"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 18A987A021C;
-	Wed, 11 Mar 2026 16:16:35 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Wed, 11 Mar 2026 16:16:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773260194;
-	 x=1773346594; bh=JiPbsCiGz6pd6q0vEaNPff27DfFarM/ognJ1k4phHc8=; b=
-	mOs042pwZiWfUay6bXlpWFaUY5U6moKl0uv294f6ziBEYLUQ+t9utORMs5QjeLjw
-	SjeVpOHujdfKNoSQ2/3ce44rvMSbAKyxhut6RlODwMElWqPZXThcZ70RiJ32oHzk
-	5eqEhhpa+fad8crWX13UsphOqO8ZeJ1M0UyIPf23bqj6lw504uywB+O4dNhi7lmc
-	3hjUyiH5MEI5z269UO9PUe3kWfhhuu3x8XScvRRPbfDusV+bzOgKio7faGCHzuyC
-	3LTUq3CU/7+ekaLjGogML5QALXzYTLY/20IKEnoCIovoP+/hewCRiRJuvbaWmF9O
-	Uaj3AGsNcmB8DVs8TokIAA==
+	by mailfout.stl.internal (Postfix) with ESMTP id CD8541D001AD;
+	Wed, 11 Mar 2026 16:31:46 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 11 Mar 2026 16:31:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773261106; x=1773347506; bh=WzyppcLUX1
+	DPrPwglJbW5SBiN6gLi1pp+x8Ugmp37mY=; b=DQpAZaJULJQiOuHrIfQxoNtukn
+	qe7o2EkCiEvX8CbsIEuHYF48dsN/8C+aljuN20TYWooERXILN4n211+xsOKCVobh
+	WJsg6qglVvmfT1krYgLe2F9mIfY3mgpZzKuNC739pz8lyVYkf/WE3OvyrKHJBbuu
+	UhP9J1roI3tRXXurqlCp8df1GRa6TEarlfxOJyRbpgLEMbn6mLrYC/2nrmwP2AhU
+	VCrpq3hZr4bHpAP+5/q4AlSjui7uKJEXuFdpvy94u4az6DbjMB8ryi1VpNGk66QN
+	Okz1BnuIpDpZDkCj7jdQFNy6NxA1ApwQOttO9fEwDQFSSPNQYjS9jqsoS0hQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773260194; x=
-	1773346594; bh=JiPbsCiGz6pd6q0vEaNPff27DfFarM/ognJ1k4phHc8=; b=U
-	9Y8OTT+R09mhYvxzdAZ8KvMzB1+HTC9R76QQPJ0NaqiCZT4Jn0oPJr6graySiCp+
-	dNTY7iFH3eDZmiFVFHd2bgaVdBKggiZzxGmz9+7bQuWEsk/PVsv+b2Xa/euazTHx
-	sqNFEyqwh1U3x3D0xmiXAbPyB1dxeXSpwpXhesJrigdw33cN2r0Aa/pELvbiPFdh
-	n9joSwurTngG6dVhpVfnM3DgwOJdAF72Ob0pzlc9cFFdZdx74Z5VqZyXQ1c2Zabc
-	sHS+0k3tY2hTO8dr3F7EuEFZDu+nPy7B/fINTVA4jN7P03wATqXElW45QGIksie2
-	Pc9EuvZyHtc4B/O9GndIw==
-X-ME-Sender: <xms:os2xaUFUgRo5l77kgbLORjFQ6FKvMLZ1ggWHK-6mu5iYD9woR8O6pbQ>
-    <xme:os2xaYIZPmBg-FJbgZSC12bRP_CNkKDB62W7TM7TXK5aSWENAxuKXAvleEYjq0KdW
-    r_QzPdDP6MLEN-9Y43ZHHnkjQdBUuKP8fuucPV7ptttJZlE-KSUOA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegkeegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773261106; x=1773347506; bh=WzyppcLUX1DPrPwglJbW5SBiN6gLi1pp+x8
+	Ugmp37mY=; b=zzbs27ZBP587Mj5H1J8aZwFuLRO+UNoLD1uE+jQar3g7vtK5fgx
+	sSwXCjcoq6b5bDV82ntzLqUcbyR6Pd4XtuipS2J1dq9kJonNT3H0eju1FWAIGnk8
+	okkpl3u+4lyb9iI6dADf+3J9ZjjEMv4nWigWVoKTNfNMWVmOQhsDa9QbqQGz4Ncp
+	52xwdksIYxAiMsdT7ms15mM2A+AofhEXmzfHbQqlfcbAOQsRKN0koxDEhvxK8CCB
+	hsd9w1p06eOQdqwjFBS7+aSqdsUvsvrabtI4td+l/Qw64Zv0OwaVtjLNxVbi1TWU
+	FXfx7bzWqjtxDNS3zchehX9Un5hXmMhbehg==
+X-ME-Sender: <xms:MtGxaWWDGRM0a-7dH8WZARaqk_VB5gRy99Qp9XgTKZCXAW-je3Lycg>
+    <xme:MtGxaVKQuffl8N3l9plYvpXWtBTzQVZLABBCRakr9S-kAldyZ9PHhm-2lFNlqY-ep
+    V2as0d0O-iyS8qcJekP31PPvYkcz16cc3Ig4NKzVzzNCgFZ_n9-pOM>
+X-ME-Received: <xmr:MtGxaeDzYeCT4vYPZXh1ZRAAFkU9cQa2MKTUpXuGGj0Yi5An6HU1PminuZTgAgNrZEn22HSY0_2iRcCGMfG5dJQfMH2UQLkfDQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegkeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhephedugfevgfef
-    gfffvdfhffdvveevgeehhedutedvgfeuffejveejudegveefvdefnecuffhomhgrihhnpe
-    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
-    htohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthht
-    ohepmhesghhithdrshhtrhhovhgrrdgukhdprhgtphhtthhopegrvhgrrhgrsgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:os2xaZHop9bsHvmVR7vvm61Pnx_K19TVLuW36zlbWnzQN1Js1UpyHA>
-    <xmx:os2xaa4y6NurxZv9xwYHU_H7-FoyC0JGahU5Bm2V2jiSEc0mBBYT4w>
-    <xmx:os2xafkgdE833fuZoYzItw165y_970sUVfSqNVAIZXPHt05CTauS8g>
-    <xmx:os2xaV7BEq6n3ho7ZRLJ4a0iGQjFeF4tsBwHWeYXohM6XwkZBXAumw>
-    <xmx:os2xaTHiqA4g5FWuyyhjNqbXcMZkVkNeMI2Rj7UhEBUyQECqBCb9ZCoT>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3BA331EA006B; Wed, 11 Mar 2026 16:16:34 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgrsghlohhoshgrsggrthgvrhhrsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthho
+    sghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprgihuhdrtghhrghnuggvkhgrrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgef
+    udesghhmrghilhdrtghomhdprhgtphhtthhopegthhgrnhgurhgrphhrrghtrghpfeehud
+    elsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:MtGxadfL3KrIFlHISZy9h4OfcXTPIoXRFEsbX61jEvtTe-7CFrHy1A>
+    <xmx:MtGxaV0k2vwEfHVqgYliidmvj2aTMUf4_dIdS9URuzHOOYARUby_pQ>
+    <xmx:MtGxaci_6uKCXpzSnyHl6T05cw7jggiHuzlv7cEEhVqKaVFNBCu5rg>
+    <xmx:MtGxaWlUqItgxy1C1oCK2OBWqGDCgc1CbQ157uk3oFgG8g6JN7qPuA>
+    <xmx:MtGxadQXGlCeSqVHkP4z9RkqQmduj41PlaHT7J6_ELr_cy_T7H5k2HB7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 16:31:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  karthik nayak
+ <karthik.188@gmail.com>,  jltobler@gmail.com,  Ayush Chandekar
+ <ayu.chandekar@gmail.com>,  Siddharth Asthana
+ <siddharthasthana31@gmail.com>,  Chandra Pratap
+ <chandrapratap3519@gmail.com>
+Subject: Re: [GSoC PATCH v3] t9200: replace test -f/-d with modern path helpers
+In-Reply-To: <CAN5EUNSmZmdnDzpAKAh8fZRex3--tnKaWZZSQ+o5WATc6sLy_Q@mail.gmail.com>
+	(Pablo's message of "Wed, 11 Mar 2026 20:49:54 +0100")
+References: <20260309150935.578465-1-pabloosabaterr@gmail.com>
+	<20260309230134.758107-1-pabloosabaterr@gmail.com>
+	<xmqqwlzip82b.fsf@gitster.g>
+	<CAN5EUNRZQP6ATE87AeZiJx-OTnNn_4NxhW4zyH6AspGUfnV7TA@mail.gmail.com>
+	<xmqqbjgunofq.fsf@gitster.g>
+	<CAN5EUNSmZmdnDzpAKAh8fZRex3--tnKaWZZSQ+o5WATc6sLy_Q@mail.gmail.com>
+Date: Wed, 11 Mar 2026 13:31:44 -0700
+Message-ID: <xmqqtsumm7kf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Adl1l9tAOWUZ
-Date: Wed, 11 Mar 2026 21:16:13 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Mathias Rav" <m@git.strova.dk>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "John Cai" <johncai86@gmail.com>,
- =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org,
- "Karthik Nayak" <karthik.188@gmail.com>
-Message-Id: <4b2a192e-240a-45d2-92a5-7ab669f481a9@app.fastmail.com>
-In-Reply-To: <xmqq5x72qnu6.fsf@gitster.g>
-References: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
- <abATPiRUczb8fe4t@pks.im> <xmqqh5qntpvy.fsf@gitster.g>
- <c076edd0-9057-443b-ba37-33aacde2eede@app.fastmail.com>
- <bcbbdcb3-9c4b-4eb8-9e70-3eb0bd19b32c@app.fastmail.com>
- <xmqq5x72qnu6.fsf@gitster.g>
-Subject: Re: [PATCH v2] merge-file: fix BUG when --object-id is used in a worktree
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Mar 11, 2026, at 18:26, Junio C Hamano wrote:
->>>[snip]
->>
->> Turns out that this has been attempted least once before:
->>
->> https://lore.kernel.org/git/1472230741-5161-1-git-send-email-dev+git@=
-drbeat.li/
->
-> True.
->
-> Perhaps something like this patch makes it clear that what the gitk
-> command gives and what --pretty=3Dreference gives are not identical,
-> to avoid confusion like this?  I dunno.
->
->
->  Documentation/SubmittingPatches | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git c/Documentation/SubmittingPatches w/Documentation/Submittin=
-gPatches
-> index e270ccbe85..fad0b41af0 100644
-> --- c/Documentation/SubmittingPatches
-> +++ w/Documentation/SubmittingPatches
-> @@ -335,7 +335,7 @@ date)", like this:
->  ....
->
->  The "Copy commit reference" command of gitk can be used to obtain this
-> -format (with the subject enclosed in a pair of double-quotes), or this
+Pablo <pabloosabaterr@gmail.com> writes:
 
-And now I see for the first time that the doc points out the difference
-already... I=E2=80=99m really paying attention it turns out.
-
-> +format (but with the subject enclosed in an extra pair of double-quot=
-es), or this
-
-I think replacing =E2=80=9Cwith=E2=80=9D with =E2=80=9Cbut=E2=80=9D is g=
-ood. But why =E2=80=9Cextra=E2=80=9D pairs? It=E2=80=99s
-just a pair of double quotes.
-
->  invocation of `git show`:
+>> Yeah, but if we are going to do so eventually, it would be pointless
+>> to use the path helper in that "set up CVS environment and make sure
+>> we got a sensible directory structure" check, no?  Upon failure, we
+>> will hit test_done that loudly says that their CVS installation is
+>> not working as we expect.
 >
->  ....
+> Yeah, the new patch will change it back to test -d because it ends up
+> in a if condition instead of an assertion.
+> Would you prefer to drop that hunk from my v3 or should I send a v4 ?
+
+Yup, let me mark the "cvs setup failure" one ready for 'next'.  The
+other hunk that updates "test -[efd]" can become a separate patch.
+
+Thanks.
