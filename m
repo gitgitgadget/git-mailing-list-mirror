@@ -1,74 +1,74 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3772BEFED
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B14D35A930
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:33:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773250430; cv=none; b=kdRMfXHdZ1qvy8COA0NuACbbQnBSxZKM63q6HA5W2fPiTxOQ0hfMPPQTw6zNG+ZBzBvXusoBhVTC3fVqH+EvpNLfidnjOzrToRcRduDsn67B/sLSRe+KBTUWfIepeQgr/gzBRgKyj8bcBwLsp20l5wSYYoSSkEyWbJH32SfcItg=
+	t=1773250434; cv=none; b=rfq4o3b7gL+xOKDXdHCWgdPE+G+Obo9Lyuc64BtU06dlVWNGwKH6FnGKPJBHs0Z8vuyayUioEDSO9W+RRn0CoWr8Z2ul4T+Ya4+WwduNV03eWdvLwIUtXAE5JaxegjYa+n7Bp8NrjQ+0bKHtiSrJIj6K2MmP3dBfbJt2rGAD0v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773250430; c=relaxed/simple;
-	bh=MOEfyq0R0J6uHAwKBjDTALRFtzXdiC/QSO4Y+E9tNng=;
+	s=arc-20240116; t=1773250434; c=relaxed/simple;
+	bh=IOkxyRhuRssOpYp+F14VnK36YiVUPDMR7XOb+WkSYLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZyGv4e3MKeFiugZPl51scSl++Mmm+pp54qzr3N3KC3RtYJel5mhjqabMth7HfeqElU8QYa8df+ctPwy3tnYidBJwiWWAqcsYgBcOtdK99X8J8tBtOaXfUlzvVtTVs9+F1WzEX484298xvIQZBDulky+mU5ObaJOP6YKO204A45g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJFjPxjR; arc=none smtp.client-ip=209.85.216.50
+	 MIME-Version; b=AqDI6VSwMGXThILM+hJTSi653gPOXQLzi8OWhmS5zSBFifQXaNCggAr95kna/wtu0XysMdhERA+hC5jW4suCrKMBIwsxe58EYSdXqG8a/J7s/G2UGoYiIGs0LcarWw915L4KVhLY0Q4cPf5Dt4MAcCSI0MJ7YjNrGn9CL/KP+Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ddAaGsc8; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJFjPxjR"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-35a07c4b17dso28322a91.2
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:33:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ddAaGsc8"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-358ed696623so42184a91.0
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:33:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773250426; x=1773855226; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773250430; x=1773855230; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MsDM5/GAf4gBOU4Qh+0dyY+oNXh5OzYL9myNTcpoLV8=;
-        b=LJFjPxjRx82zNO3KJGyu+PZdBxRF0IPn0cCpznsSaPNDEGYEoBk8nHWTJY5ZW5nAjm
-         zfVNoTEVRLg+bFn27OOF+ef2VQGzfXT2RBalUjxK8eP1OCznp5EJ20Mb9FXA+NE1GOR6
-         wzL+6RczhVSvkQLEPkIMueuE5a7pMAZenzCiBhah17ykMIW+56Ww81mXICd5u9xoJLcF
-         xB5te7mURc1QeFv76QJSehHm77WVnBhOpyVPR0c+H9zNU0tjzMM69mOA2hsmA1I2PAmQ
-         rgtqfVOK1prn6a5hCcGmxZ1K8rywa3OI5F4+v6bg22lOc256Yvb3PKkQj09aiJfRZiRa
-         KVog==
+        bh=QLbHhcS5eLvd5bqFsY5fOnnEMAZB49VLmJU9ddEf3Cs=;
+        b=ddAaGsc8/0C5U/iqHMNlxbqhUm1vKdO3EnUaSg8utlK9LX3WFqtt5FIj1NJa4tYHrm
+         1bQ/FyvNRo/PZLQdugMCym9K2YToVjeIeZgnzfdr3azccOIdx8sbbxqBtnKxw+PC3aBu
+         BnKWp2LI04QtC2q+tlvF1vqrHjoIIqtC5PVd+FqBMr1nsfTANvWq3AIvC5lDyTPMa3zK
+         ncuToVaGYKzn55UHmifD1j7CN/1yQlZD8aIN9pvrsUG6WoyaDQd+8xVMJN9ZKeY+OJQD
+         c+svACuuj5Uv9g0oBLP6UC2jbOq1v2RyQeb1QiPo7ukKnO+XTEiFP6n2DyPqLiCc3tH5
+         e3xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773250426; x=1773855226;
+        d=1e100.net; s=20230601; t=1773250430; x=1773855230;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=MsDM5/GAf4gBOU4Qh+0dyY+oNXh5OzYL9myNTcpoLV8=;
-        b=mVIsK56126vIckbe3065s5gAx7XivZhLMWeX+5aevr5x+oT5kBVGLRhHVIgcn7Etg5
-         AwG/ZV1S00XXignHspinmZuypdCmknxyIhBKBNHVz+MhYLCX8GrotXkqU7+m3i7VM8JE
-         l7e5RX49Rq4Dem8XGn8NerBmj4B2XZfr/yYKDyXfJdhyB5s2s9sZqDPI3HOsa1XbqXiS
-         MZFr7XFigizygdK5ljhS47OVmcizLkv6NrGBWnA8v9i8kY71/rPUpVL2szUic90UShKF
-         nK+hy4snMkPVGaCCaYA/T9r9eIzitfeQkOBikteP57GxP/mFzYawI4KHx8h8yYrcqVjQ
-         K0fg==
-X-Gm-Message-State: AOJu0YxSxX8p38EDpQT6YcgA32v5o4BN34Ja467Mdw/QXkBl7mCTA+mB
-	3nXsZmdMsinOsLZxS67RoSKPJWDX/Tba+w71IbMyLlxTTzMvAWkUKzKfadNAOQ==
-X-Gm-Gg: ATEYQzwL3VEpUJXwd+Q7ZjyF79gd2ch4wUy55MM96S7XRBBDw+jgAPBlPByNt+gxkqn
-	E5h514SW6pJ8k/Ko9tVumY1dSkq4mSGd5ItmZsueuyGJ/lYXeV7hTHbkdeG+/CKaI24xLnc5zsK
-	EmSpg7Grq2itD8M+5YCeFV8SMjz9av533mZSNEwM4WhHsXAoEdyLvCnIzKAQEfeXi4S6Gee67qV
-	b5hql1K0gKUplkBLzfeCzmpZw2pXi4Zftfp+LZgXs2O7/QyA+Hc2uYoeL+hugc0yzKSNCFgRrKS
-	JLDSvmdn7Sk92xvnjn06wP5QSu98zi7oYUgaXCWZS18I4dYWqS6mPWz5zoHlY3YgE8bzv21W6CW
-	WvKdJoRx0LeE6J4gE6TVMgk3CsTPWhFv4kkb02VOfq/cWY7jPueqmYZNsUVRhtqEwC+YUC9L+Xv
-	qgH531UjczZqnZ82AzUmy18ELfPIvnjIzIvvm0SiSzfznuURFihmgd19ggqWHABjKzHMTw/QUUL
-	MR1
-X-Received: by 2002:a17:90b:3889:b0:354:a57c:65dd with SMTP id 98e67ed59e1d1-35a012c96f4mr2950190a91.24.1773250426139;
-        Wed, 11 Mar 2026 10:33:46 -0700 (PDT)
+        bh=QLbHhcS5eLvd5bqFsY5fOnnEMAZB49VLmJU9ddEf3Cs=;
+        b=wx1I/ENaCU2VkiOeEMcsjfpNQ/1U5Ib0fnvRwWFBXuajVWhgPDbxcQ9YftKS4HIQ4O
+         joBdNPGdOeYHHVmEBpAOPs3H2mGBXNr6vjd95bR/Qd7WByumGPDVMKr2ORzoJsLKeYlJ
+         ggM7+Juhbqf588rTw7a4h8I1jO0MVHkgSm/Is+RtQnu2laEjanzZLkKCHbzgBXEeSa8m
+         QCIy4HipJvOtXmcxN3ya7A6i4aD2z3U9igbxiO3XWWmVs7WWqGGliRsT7tNuID+LRJXw
+         Xl1Mg/dG+zClWJX/9QgjEb2WfC3o8WMq8ZcPWtd2uGKP/VrROI/Xo919WMYdo+RpDHNw
+         HXAg==
+X-Gm-Message-State: AOJu0Yxc3FAEa/DZVuKOox4k9RnCoHBg2V/Pun6x/kHIcGD/gVB7rmnd
+	c3v8upoQufAPC5he0F9Sm2ipY725r6KPz3SguaR04UnzzvQNKE7nsNdyBr+5mQ==
+X-Gm-Gg: ATEYQzwO0mS47FVHiYO5ONLLbGu5MDbIZgpitQXH1NB8fLd2Jrxbt01sxpPVOQGsm3G
+	rnlnKM7XmRAZcRZtq6Sly3OWeWLQYWnlQXQ8WGWo73Lp5ociqqu+wDiWLIZM2V5iL8wrERn+rZk
+	MaAyfRms5YtNUHODfCXXcjkXq2hAHWXn1dxmOnitebV/wR5LyZoushqi1Qm2b5Zu9PdXp9HLOqY
+	omdAKzUrPJL7/rLZ1rAlrr0CDXKdsDD+Scm4s5tgm1nEKPoVS+1oIj8n5pnmwr5zptG4koyWzr7
+	OBybdf1ZLnEg3EH2BI7prHfZW4CFNScqKgQLex0ixJPBOiTY7BQYlUJ4e2WWR3zWAqc8fD61ApK
+	HiM2r3wD/Qt/yY79xWX+qQFV8BYoP2CCh2rsFi8eyovt3gua3i2B9CjrDB41GgsQgIolBGuqDKi
+	hkR4BApX5V3PVxMCczJdDuqomdSLboiScxy8Ujh0tG845x8Dcsmue04uzPP4eSkYJInQ==
+X-Received: by 2002:a17:90b:3f4b:b0:359:8c21:ef46 with SMTP id 98e67ed59e1d1-35a0126923fmr2843463a91.13.1773250429782;
+        Wed, 11 Mar 2026 10:33:49 -0700 (PDT)
 Received: from d.iiitdmj.ac.in ([14.139.241.214])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35a0f6d190csm749973a91.14.2026.03.11.10.33.43
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35a0f6d190csm749973a91.14.2026.03.11.10.33.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 10:33:45 -0700 (PDT)
+        Wed, 11 Mar 2026 10:33:49 -0700 (PDT)
 From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	peff@peff.net,
 	Deveshi Dwivedi <deveshigurgaon@gmail.com>
-Subject: [PATCH v3 0/2] avoid unnecessary strbuf_split*() and strbuf-by-value usage
-Date: Wed, 11 Mar 2026 17:33:34 +0000
-Message-ID: <20260311173336.8395-1-deveshigurgaon@gmail.com>
+Subject: [PATCH v3 1/2] worktree: do not pass strbuf by value
+Date: Wed, 11 Mar 2026 17:33:35 +0000
+Message-ID: <20260311173336.8395-2-deveshigurgaon@gmail.com>
 X-Mailer: git-send-email 2.52.0.230.gd8af7cadaa
-In-Reply-To: <20260311132041.12044-1-deveshigurgaon@gmail.com>
+In-Reply-To: <20260311173336.8395-1-deveshigurgaon@gmail.com>
 References: <20260311132041.12044-1-deveshigurgaon@gmail.com>
+ <20260311173336.8395-1-deveshigurgaon@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,92 +77,128 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Junio's "do not overuse strbuf_split*()" series calls out remaining
-uses of strbuf_split*() as leftover bits for others to continue.
-This series picks up two of them.
-
 write_worktree_linking_files() takes two struct strbuf parameters by
-value even though it only needs plain path strings.
+value, even though it only reads path strings from them.
 
-parse_combine_filter() in list-objects-filter-options.c uses
-strbuf_split_str() to split a combine: filter spec at '+'.  An array
-of strbufs is unnecessary; walking the string directly with
-strchrnul() is simpler and cleaner.
+Passing a strbuf by value is misleading and dangerous. The structure
+carries a pointer to its underlying character array; caller and callee
+end up sharing that storage.  If the callee ever causes the strbuf to
+be reallocated, the caller's copy becomes a dangling pointer, which
+results in a double-free when the caller does strbuf_release().
 
-Changes since v2:
+The function only needs the string values, not the strbuf machinery.
+Switch it to take const char * and update all callers to pass .buf.
 
- * Patch 1/2: no changes.
- * Patch 2/2: Incorporate review feedback from Junio C Hamano.
-   - Reuse a single strbuf instead of xmemdupz()/free() per
-     iteration to avoid repeated allocations.
-   - Skip empty sub-specs consistently (e.g. "foo++bar" or "foo+")
-     instead of only handling the trailing case.
-   - Trim commit message to focus less on implementation details.
+Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+---
+ builtin/worktree.c |  2 +-
+ worktree.c         | 22 +++++++++++-----------
+ worktree.h         |  2 +-
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
-Deveshi Dwivedi (2):
-  worktree: do not pass strbuf by value
-  list-objects-filter-options: avoid strbuf_split_str()
-
- builtin/worktree.c                  |  2 +-
- list-objects-filter-options.c       | 40 ++++++++++++++---------------
- t/t6112-rev-list-filters-objects.sh |  4 ---
- worktree.c                          | 22 ++++++++--------
- worktree.h                          |  2 +-
- 5 files changed, 33 insertions(+), 37 deletions(-)
-
-Range-diff against v2:
-1:  ee6b7d1e6a = 1:  ee6b7d1e6a worktree: do not pass strbuf by value
-2:  c04ddaeb95 ! 2:  9f8690b9c7 list-objects-filter-options: avoid strbuf_split_str()
-    @@ Commit message
-         parse_combine_subfilter(), only read the string content of the strbuf
-         they receive.
-     
-    -    Walk the input string directly with strchrnul() to find each '+'.
-    -    strchrnul() returns a pointer to the terminating '\0' when the
-    -    delimiter is not found, so no separate "found separator?" branch is
-    -    needed.  Copy each sub-spec into a temporary buffer using end - p,
-    -    which naturally excludes the '+', so the separator is always stripped
-    -    cleanly.  A trailing '+' causes the outer while (*p) test to fail on
-    -    the next iteration rather than passing an empty string to the parser.
-    -    Change the helpers to take const char * instead of struct strbuf *.
-    +    Walk the input string directly with strchrnul() to find each '+',
-    +    copying each sub-spec into a reusable temporary buffer.  The '+'
-    +    delimiter is naturally excluded.  Empty sub-specs (e.g. from a
-    +    trailing '+') are silently skipped for consistency.  Change the
-    +    helpers to take const char * instead of struct strbuf *.
-     
-         The test that expected an error on a trailing '+' is removed, since
-         that behavior was incorrect.
-    @@ list-objects-filter-options.c: static int parse_combine_filter(
-     -	struct strbuf **subspecs = strbuf_split_str(arg, '+', 0);
-     -	size_t sub;
-     +	const char *p = arg;
-    ++	struct strbuf sub = STRBUF_INIT;
-      	int result = 0;
-      
-     -	if (!subspecs[0]) {
-    @@ list-objects-filter-options.c: static int parse_combine_filter(
-     -			filter_options, subspecs[sub], errbuf);
-     +	while (*p && !result) {
-     +		const char *end = strchrnul(p, '+');
-    -+		char *sub = xmemdupz(p, end - p);
-     +
-    -+		result = parse_combine_subfilter(filter_options, sub, errbuf);
-    -+		free(sub);
-    ++		strbuf_reset(&sub);
-    ++		strbuf_add(&sub, p, end - p);
-    ++
-    ++		if (sub.len)
-    ++			result = parse_combine_subfilter(filter_options, sub.buf, errbuf);
-    ++
-     +		if (!*end)
-     +			break;
-     +		p = end + 1;
-      	}
-    ++	strbuf_release(&sub);
-      
-      	filter_options->choice = LOFC_COMBINE;
-      
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index bc2d0d645b..4035b1cb06 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -539,7 +539,7 @@ static int add_worktree(const char *path, const char *refname,
+ 
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
+-	write_worktree_linking_files(sb_git, sb, opts->relative_paths);
++	write_worktree_linking_files(sb_git.buf, sb.buf, opts->relative_paths);
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
+ 	write_file(sb.buf, "../..");
+diff --git a/worktree.c b/worktree.c
+index 6e2f0f7828..7eba12c6ed 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -445,7 +445,7 @@ void update_worktree_location(struct worktree *wt, const char *path_,
+ 	strbuf_realpath(&path, path_, 1);
+ 	strbuf_addf(&dotgit, "%s/.git", path.buf);
+ 	if (fspathcmp(wt->path, path.buf)) {
+-		write_worktree_linking_files(dotgit, gitdir, use_relative_paths);
++		write_worktree_linking_files(dotgit.buf, gitdir.buf, use_relative_paths);
+ 
+ 		free(wt->path);
+ 		wt->path = strbuf_detach(&path, NULL);
+@@ -684,7 +684,7 @@ static void repair_gitfile(struct worktree *wt,
+ 
+ 	if (repair) {
+ 		fn(0, wt->path, repair, cb_data);
+-		write_worktree_linking_files(dotgit, gitdir, use_relative_paths);
++		write_worktree_linking_files(dotgit.buf, gitdir.buf, use_relative_paths);
+ 	}
+ 
+ done:
+@@ -742,7 +742,7 @@ void repair_worktree_after_gitdir_move(struct worktree *wt, const char *old_path
+ 	if (!file_exists(dotgit.buf))
+ 		goto done;
+ 
+-	write_worktree_linking_files(dotgit, gitdir, is_relative_path);
++	write_worktree_linking_files(dotgit.buf, gitdir.buf, is_relative_path);
+ done:
+ 	strbuf_release(&gitdir);
+ 	strbuf_release(&dotgit);
+@@ -913,7 +913,7 @@ void repair_worktree_at_path(const char *path,
+ 
+ 	if (repair) {
+ 		fn(0, gitdir.buf, repair, cb_data);
+-		write_worktree_linking_files(dotgit, gitdir, use_relative_paths);
++		write_worktree_linking_files(dotgit.buf, gitdir.buf, use_relative_paths);
+ 	}
+ done:
+ 	free(dotgit_contents);
+@@ -1087,17 +1087,17 @@ int init_worktree_config(struct repository *r)
+ 	return res;
+ }
+ 
+-void write_worktree_linking_files(struct strbuf dotgit, struct strbuf gitdir,
++void write_worktree_linking_files(const char *dotgit, const char *gitdir,
+ 				  int use_relative_paths)
+ {
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct strbuf repo = STRBUF_INIT;
+ 	struct strbuf tmp = STRBUF_INIT;
+ 
+-	strbuf_addbuf(&path, &dotgit);
++	strbuf_addstr(&path, dotgit);
+ 	strbuf_strip_suffix(&path, "/.git");
+ 	strbuf_realpath(&path, path.buf, 1);
+-	strbuf_addbuf(&repo, &gitdir);
++	strbuf_addstr(&repo, gitdir);
+ 	strbuf_strip_suffix(&repo, "/gitdir");
+ 	strbuf_realpath(&repo, repo.buf, 1);
+ 
+@@ -1110,11 +1110,11 @@ void write_worktree_linking_files(struct strbuf dotgit, struct strbuf gitdir,
+ 	}
+ 
+ 	if (use_relative_paths) {
+-		write_file(gitdir.buf, "%s/.git", relative_path(path.buf, repo.buf, &tmp));
+-		write_file(dotgit.buf, "gitdir: %s", relative_path(repo.buf, path.buf, &tmp));
++		write_file(gitdir, "%s/.git", relative_path(path.buf, repo.buf, &tmp));
++		write_file(dotgit, "gitdir: %s", relative_path(repo.buf, path.buf, &tmp));
+ 	} else {
+-		write_file(gitdir.buf, "%s/.git", path.buf);
+-		write_file(dotgit.buf, "gitdir: %s", repo.buf);
++		write_file(gitdir, "%s/.git", path.buf);
++		write_file(dotgit, "gitdir: %s", repo.buf);
+ 	}
+ 
+ 	strbuf_release(&path);
+diff --git a/worktree.h b/worktree.h
+index 06efe26b83..f4e46be385 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -240,7 +240,7 @@ int init_worktree_config(struct repository *r);
+  *  dotgit: "/path/to/foo/.git"
+  *  gitdir: "/path/to/repo/worktrees/foo/gitdir"
+  */
+-void write_worktree_linking_files(struct strbuf dotgit, struct strbuf gitdir,
++void write_worktree_linking_files(const char *dotgit, const char *gitdir,
+ 				  int use_relative_paths);
+ 
+ #endif
 -- 
 2.52.0.230.gd8af7cadaa
 
