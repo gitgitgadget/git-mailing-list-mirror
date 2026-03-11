@@ -1,114 +1,137 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340903CCFC9
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 11:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397033BADAD
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 11:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773227677; cv=none; b=d3zw+4cykzn+mLmXYiqcGLA3uPEJ5pht0HGRURC4irmXi6TyPZPtWHYZvH2+PYleqr4Pj76r3Fr1WDKd/Rvx6IpgJY16+6L1HfTHz9fgXHYcVMHxOfuJlQos1fdxyiB9axqjf7VV69tUjE0pmA+d/c7Va0OIEBo7w/GIL9sY8ZE=
+	t=1773228032; cv=none; b=HRmJoQGsZgVQTGPYASm3dNv1zgC99OHV9DRDZciyzIiogbOxTpKVDUzB+kNEc7ezXrgpttObvnS/iy65RG+f17qlg34em7569zhaBjkxFQYOwWvmxSkZu8AmtiDxT9LbIQ57A2THeD8YoEtZd2c1F4reuPCKxYC88aPrEdzy2xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773227677; c=relaxed/simple;
-	bh=ZK75+YA+glAwQ8XYDkGBSHKznRIa2YTJTixczt0vGJU=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=IRidfrnQVhQn34UEKlUSh1/fJgTA9CkjTuGr7QITWz+fotD3A4bCWLYyHK0w+A2D4leaNJUF/CQe9FvbhkrtfQkMUkZsSM1jZshEp8IiK5nhsc/l/uvqyFruNZcFhE1kA4mOhwO+vJq+bDJbSP0EaN5/ouavY/eXGq/Eo4aGDQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dkPD7oku; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oPRdAezp; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1773228032; c=relaxed/simple;
+	bh=8h0TxSNW/X6dTsNSCpmDcxgP8X5OnsdqMQxgyMFR/Es=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ShG2VpxTjOWloJh5SK3D2L5dOwgJSYJNoaPVMSwIsb6oQEqYBcX8ACJtTfSyM51WiFMCr5xiGiRcv5/HZGtqMDrkefy/139GaNkytdZu/2brpJEHWbpZ4NagUPSbNlbqMeX7LPXIK0UWWSgtYAiMd25Abfx1ANYeIrPEOq9/4KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AocODiN/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kyBbfcti; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dkPD7oku";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oPRdAezp"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 92AF77A01FA;
-	Wed, 11 Mar 2026 07:14:32 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Wed, 11 Mar 2026 07:14:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773227672;
-	 x=1773314072; bh=ZK75+YA+glAwQ8XYDkGBSHKznRIa2YTJTixczt0vGJU=; b=
-	dkPD7okuRj5AC3S3O+qNfLltj/Z92YTOpPCk8UlxnW/tw5ATemKLsSRO9Ng+MVks
-	2BPTBN0c1dT3VxmGkA+lOu/uRaJDO7y6GjwkUoIQxBiksMRiMtiDSFf8MOb/Khxv
-	+bPHHhD6AQKG/4N+4V4rjUDwIUi3P6hRvf3+nxkQn5c2QgLMdA0LUOHiVktgy11H
-	0rkLT+MgKZmbNL6Vcgv+67VPai2JHENMsOLGactsFbmURn24fC/nBzzj37vKS8vN
-	C182eZG1Zp9AxmQCElTAwIhc9RHyjMSu18gC1457A8iRPpjhTlJ459EVPltYmXQY
-	t8/wYH9AcYtA8BpOMeq7zQ==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AocODiN/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kyBbfcti"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6C48C7A01B4;
+	Wed, 11 Mar 2026 07:20:27 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 11 Mar 2026 07:20:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773228027; x=1773314427; bh=I6erjVRDTd
+	agUG2AnRrzdsHdR66f+A1xDl0JugsFKIA=; b=AocODiN/4FhjKoLbzduTo8EtJ8
+	2GhqjOMOoHuILOdRechlU2tjKLMStCUPnnArlaMuoFTloxkgV9/xX6UWHMhpuIGq
+	jbKqBzZsxqJnA06q9scgkMjZJI3nns4tznmFUQBuXm/GDa0WuDNVH86XIx8M9iMY
+	58PgslYk2yHHGI+fJwYSFOVnVUHCyr5cPJPcX+WIvIzg49fYbIP+m6i54FvqBQco
+	gT0pAbAlQg6b+DHIdHLTn89D1VVeZaERXSt3TanPTtGowejyfOTaqHgYWsw5LMT2
+	llKk2hIl3kyV70UmyHFTxyN5UIVK8hsikg3flRzjswY1vogthofFtPRHxODw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773227672; x=
-	1773314072; bh=ZK75+YA+glAwQ8XYDkGBSHKznRIa2YTJTixczt0vGJU=; b=o
-	PRdAezp6rpkjEnSX7q05engz3YVyF+sLc4QJu76qKHF2GD4fKXJgKNHQ5Al7uU+q
-	JpjnkwyAHAkx4TUjcZpnYqoSc4UD9YERwuBdlRlUK7qqylaJdqz691EunRb7Lqje
-	F4/iZzClytgBJ68kq2aVua4srZOogo21+Xt07I3a2ocU6WlNsTCqcMTZwQXvyHs3
-	2cd91hGbwwrhB/VbOk2MuYYJFvV4Rh/kCmcmAP3kp5cELP+cBxxuWmEwk8DGU60T
-	H9D5njhRbnO+tai183hDTo73Wy6IYhDN1jxGiVsnaQUg1apnOL+eut3hTkPeOJ43
-	+IrTV/yFSaQI49htQ115A==
-X-ME-Sender: <xms:l06xafAEpW1nkbQiBApKF0cvpv5MPF4-nlVDyDaecDjScHEfJ94ArJc>
-    <xme:l06xaQWOgXq8YDpsKXsEy0lp0PP0zyS4BKYVIx2xlX0IaR0krcpDk9HHLzOgWckre
-    aSI5jtctQEmEoZf8i6IMlYr0VGeDe9bJjvGbQ4rnbochCcW60bM7bo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeefjeehucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773228027; x=1773314427; bh=I6erjVRDTdagUG2AnRrzdsHdR66f+A1xDl0
+	JugsFKIA=; b=kyBbfctiXZPDx3vAYalAFXV017NkSFrhCK9cLfnpO8hVNtvr9Sl
+	m1QBIdW+HEDtYTCOiQlVIfXp77Y38gQvRx92/EkYphtRt/JNVJn8aq+GGtjn3zhm
+	OMJrwZajCaZ0dXdk9z+jJnwnl+I1PkPO5PSL+UzWLnbb5dYDcvI82Jb7Bp2oMAOK
+	LBWrnpVrrjA2LQ1myGYuhhDH4K64k77Q21PioGeTH/zf5UXq4xcm3J6bmdcrLZrO
+	US5WA+X2stNJdrSqSJ0K0HK3LwQevAvHKHqhE6IpHf+II/c14Pcgv4+xwwQtd8A/
+	2M2xsHdExPp6Hf6Uvcm3A9HnR+e4fy6uzLA==
+X-ME-Sender: <xms:-0-xaVrEQjZUsEdGbSrRwUCjl3OpPRRvjKm25J660RtxMjeuVSUxgg>
+    <xme:-0-xafFtoNcvDN6ZxKQMkXyFCcXZ5kDvKxfUFpK5wphnBpiClSGu22WYZbfDiUx_e
+    k9ikOVRVDTGg7FiqXkeQ1NCJ7qyLVN4p-D_20K5WXnwP1M5FViKS6E>
+X-ME-Received: <xmr:-0-xafldv37f-kFYhHAqJSJNJaWYDvsmC8huuKO6cpYsKaga-VpisL0gh5Ki-2hFYaxE1grHR-U_WR5AeQTXnBbWgZ_64YE90J_YEt6nsA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeefjeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepffeuueeiheeh
-    ffejgedtveefhedthfevvdegudeltdffheejvdfhjeduffehgeelnecuffhomhgrihhnpe
-    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
-    htohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthht
-    ohepmhesghhithdrshhtrhhovhgrrdgukhdprhgtphhtthhopegrvhgrrhgrsgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:l06xaeimCDQPXs7MFtJhWkk4LC7bTo70lGiwxmWViyqWZDiLsNEK6w>
-    <xmx:l06xablnT3Pj1TdF9Q_drX17rTKYIBUZvVb97wGq1zyyrVVRwr8AvQ>
-    <xmx:l06xaaiYMfDXvXN5fSLlVPQiQhE2z2Xor_2Tx7pR37u2yhabu3TVGQ>
-    <xmx:l06xaeHwmW_2ECp5UqWaeC00hJri8hYWY3p34ZhkAX0jvuzY-H3eqw>
-    <xmx:mE6xaTC9Yd9IF4sI7G_F_Kllj_QfreXCrObhAOLGcBHseCaFfD8inCem>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id A16851EA006B; Wed, 11 Mar 2026 07:14:31 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtoheprhdrshhiugguhhgrrhhthhdrshhhrhhi
+    mhgrlhhisehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:-0-xaak8P149Rij9DJza5Ws21npth-yfiOI_4czcdkRm4zItIJpDyg>
+    <xmx:-0-xaYslmtWnqcrLbhX0tOZWbRAndSHHYtpWg5Uuw-0Ns9lIDptcJw>
+    <xmx:-0-xaVlfEqHxj40VndA-r_n53fvdAv8bn3-8pyKKEoEYL5CsZvV2GQ>
+    <xmx:-0-xabuYW5hBff3cnJh8lOYGAAuBRohKCz4b2PnaSXZIYMJXVxIFdA>
+    <xmx:-0-xaXGP1-YLSHlrXpdkxG6VdtTs07a333aIfedpr63qZ_I91uCl9Scn>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 07:20:26 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c51b7f58 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Mar 2026 11:20:24 +0000 (UTC)
+Date: Wed, 11 Mar 2026 12:20:22 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] t3200: replace hardcoded null OID with $ZERO_OID
+Message-ID: <abFP9vZOVHGI536G@pks.im>
+References: <20260311105829.60508-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Adl1l9tAOWUZ
-Date: Wed, 11 Mar 2026 12:14:11 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Mathias Rav" <m@git.strova.dk>, "Junio C Hamano" <gitster@pobox.com>
-Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "John Cai" <johncai86@gmail.com>,
- =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org,
- "Karthik Nayak" <karthik.188@gmail.com>
-Message-Id: <bcbbdcb3-9c4b-4eb8-9e70-3eb0bd19b32c@app.fastmail.com>
-In-Reply-To: <c076edd0-9057-443b-ba37-33aacde2eede@app.fastmail.com>
-References: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
- <abATPiRUczb8fe4t@pks.im> <xmqqh5qntpvy.fsf@gitster.g>
- <c076edd0-9057-443b-ba37-33aacde2eede@app.fastmail.com>
-Subject: Re: [PATCH v2] merge-file: fix BUG when --object-id is used in a worktree
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260311105829.60508-1-r.siddharth.shrimali@gmail.com>
 
-On Wed, Mar 11, 2026, at 07:44, Mathias Rav wrote:
->[snip]
-> As for the quotes in the commit references, I use gitk's "Copy commit
-> reference" daily and am personally used to the quotes. Since
-> SubmittingPatches seems to give equal preference to --pretty=reference and
-> "Copy commit reference" I didn't think that the quotes were a problem.
+On Wed, Mar 11, 2026 at 04:28:10PM +0530, Siddharth Shrimali wrote:
+> Taking into consideration the SHA-256 transition, the test suite must
+> be updated to support the length of the underlying hash algorithm.
+> Tests that rely on hardcoded 40-character strings to represent the
+> null object ID will fail when run in a SHA-256 environment, which
+> expects a 64-character hash.
+> 
+> Replace the hardcoded 40-zero string in the 'git branch --merged' test
+> with the '$ZERO_OID' variable which is provided by the test framework.
+> This ensures the test dynamically adapts to the correct null OID
+> length and functions correctly regardless of the active hash
+> algorithm.
+> 
+> Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+> ---
+>  t/t3200-branch.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> index c58e505c43..ed317a75f5 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -1494,7 +1494,7 @@ test_expect_success 'refuse --edit-description on unborn branch for now' '
+>  '
+>  
+>  test_expect_success '--merged catches invalid object names' '
+> -	test_must_fail git branch --merged 0000000000000000000000000000000000000000
+> +	test_must_fail git branch --merged $ZERO_OID
+>  '
 
-> (I wonder how controversial it would be to remove the quotes in gitk.)
+I expect that the failure reason before and after this change is
+different, right? And likewise, I expect that before the change, the
+failure with SHA1 is likely different than the one with SHA256.
 
-Turns out that this has been attempted least once before:
+Taking a peek, that's indeed the case. With SHA1 we get:
 
-https://lore.kernel.org/git/1472230741-5161-1-git-send-email-dev+git@drbeat.li/
+    error: option `merged' must point to a commit
+
+But with SHA256 we get:
+
+    fatal: malformed object name 0000000000000000000000000000000000000000
+
+So the only reason why we didn't detect that the test is broken with
+SHA256 is that we didn't verify the error message. Do we maybe want to
+make the test a bit less fragile by using something like `test_grep
+"must point to a commit"` on the error message?
+
+Patrick
