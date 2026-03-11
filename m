@@ -1,120 +1,181 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8853161BE
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 18:13:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773252827; cv=pass; b=hvjC246bMaUIcciyugKHKlnj0DEbL5j2dFjfXF/iem5qhSt1tUVOcYVO95560J3DkMvUQq54o92s6kw2kvS4WQCQ7T+ttWuhewL4OO5/D5rySsYin7xSCOCQTEjjdB2/k61EWcvkX+LL/WdKCPiXcjPrvvsu7inISF0/KbsDXwY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773252827; c=relaxed/simple;
-	bh=qkfyB/gFmMq5HbTqrDIOR0+5L5Q4luoVyf4f5FIC/nc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hds2JKSEkksstPZd0LUvlitoiP+T37CK5TehAekBCcP8ScZlDulnlJF9F97jR4CiC82UODM6SW8oMr/qmFMwONfXsjjkIJiYKCMD6CxlAdrlMCRFwtm7P3RGIThIYe7xANhcnV9b6sCUplEzb40P83xTO48CoXQ0OWhC1nwVU9E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AaFG9wrs; arc=pass smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EF83E8666
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 18:17:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773253048; cv=none; b=SNo2ejWUY+9CBGsH2dj1iIMZDmB+dY5GzoZBOkP6MLf4EYvSdjtrhmq/jHuu58TyhpfLiLQZrLTGpfMtwe0pH8CZAGD/57uF9n7t1WM9A5mxG8R3TnFgZK1EsGFGouJBcUPzri30H87LaYLNBy6iYK+n7KWUOajA3+9O9Ldt5FI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773253048; c=relaxed/simple;
+	bh=ztBWZLsKL5j1+1L5QmuXJA63d7zq84xeCUe2OJfSzvs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=U9/e3kWpaU5swJRjIEcGHn+45tF3qvgSYtAG9qBr3rf7jaCQI0hVf0LiXubwGoOg+vyMD9Cxn4RMQNsLT+D7w/PIXR/+Inp5A79f6R1uCHpwbtefCzzY44rXMIgrLQx5+NwwzWGb3rHPRwZ7ccqWa6M0mExpS1pb5jFM3AFTt/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=kprCG2y0; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=aMo6Oo4m; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AaFG9wrs"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-8299c75f730so137977b3a.0
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 11:13:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773252825; cv=none;
-        d=google.com; s=arc-20240605;
-        b=DmPDR2HNcwd/vZllGhkMuAT8pMi5SRt+/BmpyEVdLHG6C8Jgfz+zqb39QIuB9XsdWJ
-         hMpY7lUuAMTcoTeISuftkd6t6HqAfEIedTPF3FWZQIyT2A4pO8KBbCvswtbHaIazNNlA
-         +nFCvSrXvG98v2uEzSlmFx73JSPtEPOSCpuboWkmvwe3PAviETDKAZ9l/eSjRcLmy7SG
-         E7VCtcUAPDmfJpv5dYE4c6H5/0PbIcTtf0Z0p4s5PEuooWtEubW251hBO5uoZkYKl/8U
-         fw4jhpD872r2LiFH8ztGML2TD/At303dtHxBWRRdiJX2i6sHVr0vA+y6ty9FUw+vatJh
-         E1qw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=qkfyB/gFmMq5HbTqrDIOR0+5L5Q4luoVyf4f5FIC/nc=;
-        fh=KaLnBZp1yZPmY7BL58epWeAfL0HmH3SPUatxE6goP+o=;
-        b=ebg61bQQ6536b0s1TcD/oV6feKpVwkrWNzxHTHFTaC4z/aRQEGHrJ6nQoGMvh693ck
-         fqeONXYO2sO/ElMQXXhCIWF++NFHDT/yF4OKzjhP9QZEt8xymRVxALyjutky3AnJ3gcg
-         owe0Vv+zB+MoHRZo0ccfK4FJizrzHrQicRsZK4WGepMqFaKN6uKxiz4o3YPbGSWmH+Ap
-         EZxatfmPGetk8gkQRajs18UXajZYE2cFqAlLZPwXVKIbP09DeAfpQlDZiTZ2Tj3cMPCx
-         YkSuW7UrkYfvfKeG470I0nOdEr7acpNiH9+QNFtKcrdu5gl+Dzj/mKBKvd5F1bBbsWtX
-         NsOg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773252825; x=1773857625; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qkfyB/gFmMq5HbTqrDIOR0+5L5Q4luoVyf4f5FIC/nc=;
-        b=AaFG9wrsj98pouPpbFBKY3QH52VXTJHPWyvjvJWDPcdyaFxg286Ak1iVoVsCGmrcI+
-         +jl0TSvSlSkuYvMQuCs36d1FOwV0u7N+4RnW47Qxi/zBAu1MsQnrIDOjL4UzZ524Nm9J
-         GyEqJi/zFtWSdmTDAYfSrJbZpJev67rV+LxcAFF1I1AlrK12h6BJzO5u5o19OJ2WORfW
-         9Tzehn1C0JurCXseB8LjMC9xxAh3onPnL2MvzM7Xp/7RgrWazLv7V8ceeT7IJDrv/GTW
-         P8XdxXs9CUNhqACPws6UL9l9Br5nZHIZ4+XaQIwFbmvKzNPGTI0hNE91LUS0MUpU3ZhY
-         5uvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773252825; x=1773857625;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qkfyB/gFmMq5HbTqrDIOR0+5L5Q4luoVyf4f5FIC/nc=;
-        b=E0yy8CtZv2c0BD8QD40y9nbjke+bpBHnvevFujM2gj0Hg6fYEH7OEleMTElVHP5uPs
-         2qHEZMJBOcMfeqPxnvIS4ojgCRb/lMAKjNmgdSE2PbtafNdUxzj2QUo0dqYNx9fH9Npt
-         nwzejnSAvuQlul71f5ecbm5On1p6gbfNxeJeyPov6TWOHdP5Xv7nhJQUfRpOB5M/h0x5
-         ynKvOtkx9z895kbYogacmnDCq90Hv30jEIM3W1fLsuktJ8HcG1eCL1AVPvBpFt6cr3C9
-         28iyAyoqs/Anyp1cUUBsULpWPAlYh9xUuFjfjj+nmpKTdqmq9rZZga2GAjpXi9B/PXP8
-         YoZg==
-X-Gm-Message-State: AOJu0YwqMYRrwwPj/lUA0GPrJWGyZBV6tYq2d+3Q0ojazwqaXiuTPL4u
-	QhxA6qPyr5MHgyE1M+pNk9bP4jI0lKBmkp9PAYRCJS5kA0kFVbU+sZ6Y7LlnYXL/wbDQK1DH42F
-	QGzAFpuA7WksajktAOrYaT+LKtwpZoHI=
-X-Gm-Gg: ATEYQzz6VKaUSFVZFbewGB2TAQeg4DCEIdUmH0Ru9JLtjKGdEBl+A7elZWBn5fwzqxi
-	YyiQrXX1whQGQ6KJEr4yXppPZNe5XRZ+ZgMCUp98QOMz6KXZIw7gio1HHsbS47s1f3DTp/n3tSr
-	XOiNbwK6jIekTWMiQM7aQXt25OC4dQ64m83ZyozkUO3PjvsIcJCgvorbjt67xt6XsnPFYnTnekh
-	eetCh2e9EmWrUmK9ZiZMghYqrgVA4kcUQmB/SWhVswrveyN6ms+5Ha6VkmK3WKmyE2pC3dXG4xi
-	55RT+BHlKz+nRQon51H8xsHQ6bd6IztXZ52/oyM=
-X-Received: by 2002:a05:6a00:13a9:b0:823:1bc7:ffd8 with SMTP id
- d2e1a72fcca58-82a071aeb8amr454380b3a.9.1773252825014; Wed, 11 Mar 2026
- 11:13:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="kprCG2y0";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="aMo6Oo4m"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=kprCG2y0+mLEmNQprdb/7KL8xZkAl9k6PHYOZo3t6el89AH1dmqe2EWJMQrpmjfskIaFqPBr4ZwdRwnoX+RbM6bxXe2LCxQJYunayJ5Rj52SeGXk/pEe5MSicbaFpF7o+uOqnTRBSzmCofcrogOhNFsmzSJBOhl1CQZvUOsxraCNkIBrTP6yn+KrgvHSr5/o9jcczPoyFWoH3/ESUVVOd77cT5FbPqYNiyTo9ttIM8Wor8XAZmNGIvphccj7lIL5AijWMpKfYcVmNvDS5+1JkF4xYKZxnmH/8Qzmom/WF0XE6fIo+ZUv19MNkwYkKSVPG51wCMLYc5oZaFnf+6TrTA==; s=purelymail2; d=malon.dev; v=1; bh=ztBWZLsKL5j1+1L5QmuXJA63d7zq84xeCUe2OJfSzvs=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=aMo6Oo4mxOoC7qw64pR9ko6gQy1H/+u/kPTCUWSETJBL/rBr6/00VfiBngKW6kIf0gUXcsqZ5uCs1xUpdrpxoo7wGrWKtMx2l6TB0UTelMAlIiglftlbNXh7DyFOV/spe/GTa/ii9UdYDwdVJBSv2berMhkTJTE86FPylE7+XatT666kPVh3TLwuc0Mse3BrXERV1PglPmooBAGAC/zNyyFZxNebW8aZt93RBQ0USK12fdzqeZXevbqhopF15jmEwkAtuA2bgSN+Q+6B4A6ZjVzNlJVVQED3FEfrOahKLMc6ZkiCwNhyxfXJ8mS/5td2eXQCnI1mHXj1+9rfT0ppNg==; s=purelymail2; d=purelymail.com; v=1; bh=ztBWZLsKL5j1+1L5QmuXJA63d7zq84xeCUe2OJfSzvs=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -2114418119;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Wed, 11 Mar 2026 18:17:17 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	karthik.188@gmail.com,
+	phillip.wood@dunelm.org.uk,
+	jltobler@gmail.com,
+	ps@pks.im,
+	Tian Yuchen <cat@malon.dev>
+Subject: [PATCH v1] builtin/mktree: remove USE_THE_REPOSITORY_VARIABLE
+Date: Thu, 12 Mar 2026 02:17:03 +0800
+Message-ID: <20260311181704.958509-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <abARj_VI9n2nB_xT@pks.im> <20260310160029.44605-1-r.siddharth.shrimali@gmail.com>
- <xmqq1phrtoen.fsf@gitster.g>
-In-Reply-To: <xmqq1phrtoen.fsf@gitster.g>
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Date: Wed, 11 Mar 2026 23:43:07 +0530
-X-Gm-Features: AaiRm51Qnm6KzdJmmMfJcx420LtYfPwxJiQhKF8uF6NeiHs5aMKaXUV6d0ODbKg
-Message-ID: <CAGWgyh_dJX7TteKjwVXUwnmUL5kmZifpA0a4n1RiwRvCBEY5gw@mail.gmail.com>
-Subject: Re: [PATCH v2] builtin/help.c: move strbuf out of help loops
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, jonatan@jontes.page, 
-	Amisha Chhajed <amishhhaaaa@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-On Wed, 11 Mar 2026 at 02:03, Junio C Hamano <gitster@pobox.com> wrote:
-> Having looked at this patch, I recall somebody else is revamping
-> this function already, so this patch would step on their toes.
-> Please pay attention to what is going on in the project around the
-> code you are touching, and coordinate with others who are working on
-> the same code if necessary.
->
-> https://lore.kernel.org/git/20260228104654.80831-2-amishhhaaaa@gmail.com/
->
-> Thanks.
+The 'cmd_mktree' already receives a 'struct repository *repo' but was
+previously marked as UNUSED.
 
-Hi Junio (CC'ing Amisha),
+Pass the 'repo' down the 'mktree-line()' and 'write_tree()'.
+Consequently, remove the 'USE_THE_REPOSITORY_VARIABLE' macro, and
+replace 'parse_oid_hex()' with its context-aware version
+'parse_oid_hex_algop()'.
 
-After looking at the refactor of list_config_help() in the
-other active thread, I agree that my optimization is no longer
-necessary.
+Signed-off-by: Tian Yuchen <cat@malon.dev>
+---
 
-Amisha's new structure with set_config_vars() and set_config_sections()
-is much cleaner. Since the logic is now encapsulated in these helpers,
-my proposed changes would not be applicable.
+I originally intended to attempt the #FIXME in t1006-cat-file.sh.
+I followed the clues all the way here, only to discover that the
+FIXME required a level of expertise far beyond my capabilities,
+so I gave up. However, I spot the global variable here, so I went
+ahead and fixed it ;)
 
-I'll drop this patch and focus on my other contributions.
-Thanks for the guidance!
+Two questions:
 
-Regards,
-Siddharth
+The 'oid_to_hex' function appears to use 'the_hash_algo' internally.
+Seems that it also implicitly relying on global state. Is there
+anything we should be aware of?
+
+I've always been unsure about who to CC on domain-specific patches,
+so I've only been sending them to Junio and the mailing list. Could
+this be why my previous patch for a global variable refactor didn't
+receive any review feedback? Here is the link:
+
+https://lore.kernel.org/git/20260302085738.2510514-1-a3205153416@gmail.com/
+
+I would be most grateful if you could provide any feedback. Thank you.
+
+ builtin/mktree.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index 12772303f5..4084e32476 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -3,7 +3,6 @@
+  *
+  * Copyright (c) Junio C Hamano, 2006, 2009
+  */
+-#define USE_THE_REPOSITORY_VARIABLE
+ #include "builtin.h"
+ #include "gettext.h"
+ #include "hex.h"
+@@ -46,7 +45,7 @@ static int ent_compare(const void *a_, const void *b_)
+ =09=09=09=09 b->name, b->len, b->mode);
+ }
+=20
+-static void write_tree(struct object_id *oid)
++static void write_tree(struct repository *repo, struct object_id *oid)
+ {
+ =09struct strbuf buf;
+ =09size_t size;
+@@ -60,10 +59,10 @@ static void write_tree(struct object_id *oid)
+ =09for (i =3D 0; i < used; i++) {
+ =09=09struct treeent *ent =3D entries[i];
+ =09=09strbuf_addf(&buf, "%o %s%c", ent->mode, ent->name, '\0');
+-=09=09strbuf_add(&buf, ent->oid.hash, the_hash_algo->rawsz);
++=09=09strbuf_add(&buf, ent->oid.hash, repo->hash_algo->rawsz);
+ =09}
+=20
+-=09odb_write_object(the_repository->objects, buf.buf, buf.len, OBJ_TREE, o=
+id);
++=09odb_write_object(repo->objects, buf.buf, buf.len, OBJ_TREE, oid);
+ =09strbuf_release(&buf);
+ }
+=20
+@@ -72,7 +71,7 @@ static const char *const mktree_usage[] =3D {
+ =09NULL
+ };
+=20
+-static void mktree_line(char *buf, int nul_term_line, int allow_missing)
++static void mktree_line(struct repository *repo, char *buf, int nul_term_l=
+ine, int allow_missing)
+ {
+ =09char *ptr, *ntr;
+ =09const char *p;
+@@ -93,7 +92,7 @@ static void mktree_line(char *buf, int nul_term_line, int=
+ allow_missing)
+ =09=09die("input format error: %s", buf);
+ =09ptr =3D ntr + 1; /* type */
+ =09ntr =3D strchr(ptr, ' ');
+-=09if (!ntr || parse_oid_hex(ntr + 1, &oid, &p) ||
++=09if (!ntr || parse_oid_hex_algop(ntr + 1, &oid, &p, repo->hash_algo) ||
+ =09    *p !=3D '\t')
+ =09=09die("input format error: %s", buf);
+=20
+@@ -124,7 +123,7 @@ static void mktree_line(char *buf, int nul_term_line, i=
+nt allow_missing)
+=20
+ =09/* Check the type of object identified by oid without fetching objects =
+*/
+ =09oi.typep =3D &obj_type;
+-=09if (odb_read_object_info_extended(the_repository->objects, &oid, &oi,
++=09if (odb_read_object_info_extended(repo->objects, &oid, &oi,
+ =09=09=09=09=09  OBJECT_INFO_LOOKUP_REPLACE |
+ =09=09=09=09=09  OBJECT_INFO_QUICK |
+ =09=09=09=09=09  OBJECT_INFO_SKIP_FETCH_OBJECT) < 0)
+@@ -155,7 +154,7 @@ static void mktree_line(char *buf, int nul_term_line, i=
+nt allow_missing)
+ int cmd_mktree(int ac,
+ =09       const char **av,
+ =09       const char *prefix,
+-=09       struct repository *repo UNUSED)
++=09       struct repository *repo)
+ {
+ =09struct strbuf sb =3D STRBUF_INIT;
+ =09struct object_id oid;
+@@ -187,7 +186,7 @@ int cmd_mktree(int ac,
+ =09=09=09=09=09break;
+ =09=09=09=09die("input format error: (blank line only valid in batch mode)=
+");
+ =09=09=09}
+-=09=09=09mktree_line(sb.buf, nul_term_line, allow_missing);
++=09=09=09mktree_line(repo, sb.buf, nul_term_line, allow_missing);
+ =09=09}
+ =09=09if (is_batch_mode && got_eof && used < 1) {
+ =09=09=09/*
+@@ -197,7 +196,7 @@ int cmd_mktree(int ac,
+ =09=09=09 */
+ =09=09=09; /* skip creating an empty tree */
+ =09=09} else {
+-=09=09=09write_tree(&oid);
++=09=09=09write_tree(repo, &oid);
+ =09=09=09puts(oid_to_hex(&oid));
+ =09=09=09fflush(stdout);
+ =09=09}
+--=20
+2.43.0
+
