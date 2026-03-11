@@ -1,140 +1,106 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2760345757
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32683DCD9F
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:31:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773250006; cv=none; b=GWg6WJxUBmJpLAyn6PXy0WKCYycDsVi+iEClKDFOu8D/Mwd1YI2I+mDvYkK8FoGwVO2wyiOvAam8d+XT7/hX1X1uCQOmop+AJh0T4rZuQppTyWBQGfUMdGkxQYEN1rD5hm9QT2wZGvOY8yH6bdLpM/ErQ45U3TaupcJs7GvDAbw=
+	t=1773250318; cv=none; b=L0BvUubjcUwhMtawMcghSKjkeMovF41paV4VcMhvnsDc8nUD4beeeekDwiG9BlYdaPesdYoSVlAHnmaFCkREdKsEILRktdEBv2c18ZscT6jTWnfUsoglqdKsx1kgG1WjHgQLoPxqFK9lLnurRQrRMwhHSJzrfPCmJ5EOZKIV+k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773250006; c=relaxed/simple;
-	bh=ynyN8zwZetJGa0Lg+PX+WgzQFxgmjy1Pk53X2uxjhFk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=POpPf1LbYG4IY9iIZy17J33Y4/D2MaG3iSig9UY0U4SLbG/a18ZGN8ZRfMcpL9EqEZpXvvOEJ+OrCHqHUVY3uU3vRpwjgsWvbs7yyhFfE8izrro42JXrEziYTMkUJqCywm+5NheN9iPA+Q4RddPvvn7ob/7QWfHQ4974/BSeCo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LiDMO1kv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ip1k3T7k; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773250318; c=relaxed/simple;
+	bh=SimSezPDUX3sWC+meBWBAnslS8/egIYa67DAQbmHWxU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Xx7KYDSzXq5t4QKwAK43kATLvpady57Pge8zHxyrKQNM5B6nrAUj0exB/1/Sbb6bCWQqKUcXbLKs7D8uhaVmXp3dKEhIZHOgaYHdp9s6CkkO/m+HaLiSXOiEOve6nyDk245SbnbY46GJcnThA68aWtduI5r5PCKesVEOnbP03mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dsK+hiS6; arc=none smtp.client-ip=209.85.160.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LiDMO1kv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ip1k3T7k"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2460D14001AE;
-	Wed, 11 Mar 2026 13:26:44 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 11 Mar 2026 13:26:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773250004; x=1773336404; bh=ZPC5arugq+
-	spDAP2W/D61k75/Dh+Bvd0TW3icZGopQY=; b=LiDMO1kvHOM/NV5QZz53Qy8/47
-	Ee2vsky7D2K0RhC4gCV8voDr4QVn16mP5slDK6vP7z3PewNd/ddqSbXdiY6Z70vG
-	qXdphBhVWEc9Z5/HTfZGGjwlWv63IP++/0oAjs/gGvqBTYOyzfedqkqhjuxSlJhp
-	AAmnlLoehGn5/OQ4FHJL0/rBWjBxUFz4g92ycloe3UAK/JKgZvsKnVuH3Qo0h3cI
-	NNAka5hBQV+L0SWOLgi1D0j2Ahst37RlzOmzRBC5+d5j9TY4b6Yiq8wc2gkwUecP
-	MLUIrR5veKZU8f0ZjGwHDn74KpZSGiBw5Kbg8cntQyIAxgPQTRgBZgnN4+eQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773250004; x=1773336404; bh=ZPC5arugq+spDAP2W/D61k75/Dh+Bvd0TW3
-	icZGopQY=; b=ip1k3T7k1Z6nE68UKk/3hIVRmC+3w4aRK5ZzO/hDbLFL26xSxsX
-	8OIVsXk9/sR03nPU7kZv2EPoM2s/22QFxzOtt1SCtIm3WWm3uk2kGyM3R36rN3I1
-	BMwjYKxdhiv++AjaIFjzQLWjmSFxW9kMkdKlrklicxM7su995w+5tm29jIBZSD6U
-	QAT7QW4f9aYjXHkK82dMLbJGa5L0m52hIiS9hTMw/6O0Mv4HMs2LiZzAoZem7wV5
-	6/9Cr8o3U9IYQJerBCqGSeJHbGBdjGOdN9CIbluMyb0NpKQ04KcB31tulIAs9OL0
-	N7ownWNRFub7eX7O6uB9i5Vpdz7OPh2XfXA==
-X-ME-Sender: <xms:06WxafjNnu35kLe0O0dCjce18-BuuUVS-DVW88nE72yc2JSNgCrKug>
-    <xme:06WxaSD6TKOoQb13KuucuCefVPQuyBzeey1qc2lUtLT0WXh3-0sz6do4x9zmMUQG8
-    GK4Ij4VYWqr2V7cQusPeSi0uNEe9xDrDfKQfTkbiukL7KYVj_-_8A>
-X-ME-Received: <xmr:06WxaZ6ov5kip9qNa4Xafj_N4QrDbbDwqdlMc2Zv4ssHAIdWvw9BQfLRWiuJ9rhrteR4SX_kwKuaLcijBA8-WGonv04ZKbik1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeghedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkh
-    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
-    thhtohepmhesghhithdrshhtrhhovhgrrdgukhdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehjohhhnhgtrghikeei
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvght
-    pdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
-    tghomh
-X-ME-Proxy: <xmx:06WxafHPMuAws9ZKTvrTXBv769It1PdU4Urs89-QL1QP98n1eLd-Lw>
-    <xmx:06WxacDRG1bxkwCSEXLYRyW_GN-03LG38enz2Qp5r7qce3zyFyGu8Q>
-    <xmx:06WxacxUw-f_3eKNHX6XJ5dxk1t1DQ7dk62tws2cN_72oNzXi00FAA>
-    <xmx:06WxaY6muDctZIAo22t2oJUSZIsxorFmtVqIGIW5W1rLd8nFY1f0eQ>
-    <xmx:1KWxab9cv9ZvE4qyCdlp0IDm2OtN9YGI9MjjfTx1okCXJRVpcKCHvdR_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 13:26:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Mathias Rav" <m@git.strova.dk>,  "Phillip Wood"
- <phillip.wood@dunelm.org.uk>,  "John Cai" <johncai86@gmail.com>,
-  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,  "brian
- m. carlson"
- <sandals@crustytoothpaste.net>,  "Patrick Steinhardt" <ps@pks.im>,
-  git@vger.kernel.org,  "Karthik Nayak" <karthik.188@gmail.com>
-Subject: Re: [PATCH v2] merge-file: fix BUG when --object-id is used in a
- worktree
-In-Reply-To: <bcbbdcb3-9c4b-4eb8-9e70-3eb0bd19b32c@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 11 Mar 2026 12:14:11 +0100")
-References: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
-	<abATPiRUczb8fe4t@pks.im> <xmqqh5qntpvy.fsf@gitster.g>
-	<c076edd0-9057-443b-ba37-33aacde2eede@app.fastmail.com>
-	<bcbbdcb3-9c4b-4eb8-9e70-3eb0bd19b32c@app.fastmail.com>
-Date: Wed, 11 Mar 2026 10:26:41 -0700
-Message-ID: <xmqq5x72qnu6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dsK+hiS6"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-40ea36b56b7so111087fac.3
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:31:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773250314; x=1773855114; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=imne22hxy8MEPoK1faX4yqNl5eOW77+XOAOfx/LPR1c=;
+        b=dsK+hiS6jwLLR740L4g2zZfmAzjcJ/pMdaZEphr0llfny3akNkmoBz4Nkotw8TA/nV
+         ah8lPkQCBat5J9TIi7YfpzwBQ3Q0yJdqJdFPJqZVVlGvXQBuDYmPPFW7x+hNDuEguAR2
+         cN2zAGQi6R+fDRId1LOcvj6goy7OnpamYtXrvwkg/25uT6VMv0v1i3KaPU/G5rTTGxGe
+         zn8B5IPZWzKc8Sq9sbTGyP3jRXcpa2Gv4vZOhFYWeKgSQ2CdLHR8MqjF8+n2rHYp5OfF
+         sUDOtJkqqeZYEO5jDJQADu6T8Be9KMFUrw1KSWB5vhWN3YOzXpZP8U2ytCqPyLPGqCBy
+         bEnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773250314; x=1773855114;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=imne22hxy8MEPoK1faX4yqNl5eOW77+XOAOfx/LPR1c=;
+        b=qa/MUzf7zEUH4ROCl1r2kmoDuCyID+R8HctFapplxEnPQnH+j4Gu3HbLbI3ok9FVrw
+         QlCMqp4ZCvA3ZHSHqQw7FoqlPgkkRt3HBFtx+Js8TBsQenZmdMIG3Yp6mPGZfM3haPFc
+         pswKRow1Gv4LxM8yF8JuX4FQ3IkyiuQ7fcQQEePDJ/AL1BnMY3v3seJzZRscpX9YZ1m2
+         RQsGXI/gcsBUAcUuQrfXeSc6Hf8orI2wkba809QMBrGU841OkjVpBASxVYBRhf/84xwp
+         z4hVLigfTffViI/SstPZe/leodbmb4se6Gt1t2MEytst7fjzVvKP107YyiAfl98sm5nK
+         dcPg==
+X-Gm-Message-State: AOJu0Yz4aXzeGW2+bS8NLHlRLnzj/iDZnsI9vbEPsmwWrnbr2Vivgsd9
+	h3L7pZnXRp11OA0PBZJe/qV/mt7ZLRg7QPeRFjwJbIGXVIUTo52ZCjOEZMAAUw==
+X-Gm-Gg: ATEYQzwWcnbX0xaCVSmgt1MasjizeFK7vHYhs9ltd0Nb6yRv5+KkVNQfiYkRzsLguIr
+	awlg4FqeHhvDgW1MCbrcJW5kEAcBLNItOHmNb4XDRbSoN9RELxg5cT6OhDR4eNuioQQWHIBLeGc
+	/JS/hHSSrg+a7Ri/5l/rMuGTARSnAqu8zWbarEV/86KoCfMFfox4f/J5dGbBZ9ccvdFe8iiQf8u
+	M0mzUboIcp+p7CY4QL+Xn1Q2JLRKH4HDQbdmrh3DKqfnSVJ+CVAwQLhO4L+iVfuy2Vu43HRg1Lh
+	rUsstewajRANW0WDVWgEX5f3FmyWVBz+N5q2KJcOoKsj6JYPOMX8QvTmrvt1iXcXpNg9opo1Z7c
+	6f1JsGryFnVZr/BrnqayHa+ky5ExOdrRzTn7EWXyF0lyQeyKpzV921iFk3BeGNLbfWwAmaAKvgt
+	eqbKG5HxenBBVZE88c4BOOGjHIfJ05kXM=
+X-Received: by 2002:a05:6870:3c8b:b0:409:a4d3:a30e with SMTP id 586e51a60fabf-4177c8013b9mr2109408fac.2.1773250314266;
+        Wed, 11 Mar 2026 10:31:54 -0700 (PDT)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4177e26e2c6sm2826761fac.7.2026.03.11.10.31.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Mar 2026 10:31:53 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net,
+	christian.couder@gmail.com,
+	ps@pks.im,
+	gitster@pobox.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v4 1/3] commit: remove unused forward declaration
+Date: Wed, 11 Mar 2026 12:31:45 -0500
+Message-ID: <20260311173147.2336432-2-jltobler@gmail.com>
+X-Mailer: git-send-email 2.53.0.381.g628a66ccf6
+In-Reply-To: <20260311173147.2336432-1-jltobler@gmail.com>
+References: <20260310201116.1130160-1-jltobler@gmail.com>
+ <20260311173147.2336432-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+In 6206089cbd (commit: write commits for both hashes, 2023-10-01),
+`sign_with_header()` was removed, but its forward declaration in
+"commit.h" was left. Remove the unused declaration.
 
-> On Wed, Mar 11, 2026, at 07:44, Mathias Rav wrote:
->>[snip]
->> As for the quotes in the commit references, I use gitk's "Copy commit
->> reference" daily and am personally used to the quotes. Since
->> SubmittingPatches seems to give equal preference to --pretty=reference and
->> "Copy commit reference" I didn't think that the quotes were a problem.
->
->> (I wonder how controversial it would be to remove the quotes in gitk.)
->
-> Turns out that this has been attempted least once before:
->
-> https://lore.kernel.org/git/1472230741-5161-1-git-send-email-dev+git@drbeat.li/
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ commit.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-True.
-
-Perhaps something like this patch makes it clear that what the gitk
-command gives and what --pretty=reference gives are not identical,
-to avoid confusion like this?  I dunno.
-
-
- Documentation/SubmittingPatches | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
-index e270ccbe85..fad0b41af0 100644
---- c/Documentation/SubmittingPatches
-+++ w/Documentation/SubmittingPatches
-@@ -335,7 +335,7 @@ date)", like this:
- ....
+diff --git a/commit.h b/commit.h
+index 1635de418b..f0c38cb444 100644
+--- a/commit.h
++++ b/commit.h
+@@ -390,8 +390,6 @@ LAST_ARG_MUST_BE_NULL
+ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		    int *invoked_hook, const char *name, ...);
  
- The "Copy commit reference" command of gitk can be used to obtain this
--format (with the subject enclosed in a pair of double-quotes), or this
-+format (but with the subject enclosed in an extra pair of double-quotes), or this
- invocation of `git show`:
- 
- ....
+-/* Sign a commit or tag buffer, storing the result in a header. */
+-int sign_with_header(struct strbuf *buf, const char *keyid);
+ /* Parse the signature out of a header. */
+ int parse_buffer_signed_by_header(const char *buffer,
+ 				  unsigned long size,
+-- 
+2.53.0.381.g628a66ccf6
+
