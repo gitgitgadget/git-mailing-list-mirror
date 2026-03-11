@@ -1,242 +1,292 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AB93C661B
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:24:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB753C3426
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773224689; cv=none; b=rxQVyyAKOWaQ7jccz0RbG0CZbJGSwMqsfyAIKbKSqY+qhWCMME2jOsNNO0d0V531e6AWSux9eiaekZCGbcaTI8z9YhO/p1gV1kXOlJrc9BYhccQgU+RxbmCjaE1/+KeWsfUmda0ErwMQMNAyzBW245kCWD2JEwHL+Pq7w8KmJt4=
+	t=1773225175; cv=none; b=NOzCfBFcNX2Q7z3OEufL1jsgOSb6xOCHX/sPN6Wkn3PNYME3+7IxCHyg2sSqVQuLMJzLMwRGUVieyYQWsTWGe3LB7mH8kpiaBGHMIveXMZqH/ob+XVceNA1BAOwHVzpHWKBifodklqreSrKxVLCduiNQO1WXZicfdpUXwElTJfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773224689; c=relaxed/simple;
-	bh=whRwJQeIkL3KT2mTGY96g1xhAYLremiBQ3gk5otZsiI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nE5kQm1KDegrJJDOaYN0lga2/BQvgHUCS6xUdE3hSMWH6oIyvtb+60pIOihsceXsZCgrR0u9/nuA2Ld9/o8Fdv/7p9wzPRak7iW1FPeoSJbtaFtcGKm8sWTw2tv+GLYPtAOfEV2l03gITur1Gnsv2pIBO+i5qJUMd+fGOGbYeH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SvZBt34k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xrghqwhn; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773225175; c=relaxed/simple;
+	bh=3+XO2imiCB+ZowkhvlyarXn0ieyy221F8lyKaMsYB3E=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=M2MuR6a6fYxjl1muE4V3VyZPc39hRxeEzNi5QLp1Or61yVq10iaJwEudvjOvEjIPzj7/Ej/C2cy1wAYhWFexFkaBR3ddQcTPVDip/EpxB/BoJi+cMWWJDpU+BWdGHHmECUEd+NCr3bvO1MwGYfwm4OYyWSwf76h6yJN2s9ZTiRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JxXP9Rbw; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SvZBt34k";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xrghqwhn"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 57C551D001CA;
-	Wed, 11 Mar 2026 06:24:47 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 11 Mar 2026 06:24:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773224687; x=1773311087; bh=2Bnn7g3Q9r
-	FOVO4XbGdBKJwvSRLFQcy0JuvOTDSWtWE=; b=SvZBt34k1e3hpf5gPedpfT/gjl
-	/KOsEiALCuazVpgwzVKvkmImF4IkwygsTO9dXiT6OdkQK6gySBCW4cgGBJVCz8Zx
-	HCGYvDgMyArlv8d7v/ueAZDpw2x5IqJiAi/RxET4gPY1coMqL20KCOjjBaP+Qxe/
-	ZC4aGNF1aGEtm/LNV6xvm5Oj6y4/zCbs2g5hRQjnBeRfuiVWRcj/leFheITHhftu
-	27bN0RjaFQy1fNkYW4OQ7y2Ayz9DRLw47Un1HSAvrTv6ksdVH9+R2kQI36zvyCLu
-	4lkN7bFlfifR+luxN7jYQz1Y3fl8Tgu3gXSiwyB+U9xRT6R96X9IkmLwO9lw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773224687; x=1773311087; bh=2Bnn7g3Q9rFOVO4XbGdBKJwvSRLFQcy0Juv
-	OTDSWtWE=; b=xrghqwhngUzKIL17AfW2ZBJso4h3dvE6VwdozqzbZc9mwboajuf
-	5sCKvbI3V1GauxMgQWjuutwwE1LnKhpsNa4N6BAq0JdKOEMHEIjvTuEjoL0bri1g
-	B92JU/eC7HaB7ojPPwOKG69wZe1+eP/LqZOfZcefcGTDZWMwpYSLGuKENqfPlEft
-	lH9AaycZowYGBCuuAxWQNQtBNmoXCdT+ZdeB4/59zI+BNBXZZFJLf6ssCmQj9ecC
-	UlkOacpZBlJsNX87tSyHA6rwqfc/XQDZ/TdhjLpD0FIJXxroycca3PfnR8RKuur+
-	NjYyZ84zL/ZF6PSrehuaoJHbn6hjAwQHflA==
-X-ME-Sender: <xms:70KxaX-mZfRyrvViM3NIVTRy8QAnIJ-i76_yRbU5sVr8WTVW9iSBqg>
-    <xme:70KxaankHh1t86civetUn-qAQD6msPI8eaXvaeU-chmvJ7OJnN8lRwo1bz9WsqTW6
-    WZ-jvpuo9O_KKGgxiz7-saOCXsYuaoWsShVHW53V6PRE3g5nuQ>
-X-ME-Received: <xmr:70KxadXEdST6PAFVrhhrtclMoNsn7AJjL8RLoIzmpsq9wOE6c-G4nyu1_T0HN3pVRK77q3D0pZzkH4gujo5bHJG27lSDokmO6Tx54pWumQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeefieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggurhhirghnrdhrrght
-    ihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
-    shhtvgdrnhgvth
-X-ME-Proxy: <xmx:70KxafFW-QRsouMZL3wdXUaxLa9-QF4aPpZOSwH2qieS6gcfLQPnvw>
-    <xmx:70KxaZdHiHsYjNxR0Wk0K4ZYrvshE9HpeoyydfKN_q9Y1RMW7DezJQ>
-    <xmx:70KxaQJ_iP6HJ21GLVBndG69OMaJFO4iFb0Ip3WQfGsn8z4N_ybvfA>
-    <xmx:70KxaeEnSyo-aE7s1eL0pEcKZjCcH9BkCnN4ZMei0GQJANxvhGGSbQ>
-    <xmx:70KxaYY9q7ASZiJ6l_-SpzoEg2_cRctO97RzB25V666Av9ByBoLOeZwA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 06:24:46 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6f5557a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Mar 2026 10:24:45 +0000 (UTC)
-Date: Wed, 11 Mar 2026 11:24:42 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 10/10] hook: show disabled hooks in "git hook list"
-Message-ID: <abFC6pEEmicjG6a9@pks.im>
-References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
- <20260309005416.2760030-11-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JxXP9Rbw"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4852e9ca034so42873455e9.2
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 03:32:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773225172; x=1773829972; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Zklnu4fmt1vkjaVD6IP9TM4tZfBNpFqhS7jXyK8+gyU=;
+        b=JxXP9Rbwl0AJVCyOMHkBukazgqn5vbpHHap6ACicrm336ckLpPrMq/zBwNPvobR5B9
+         BT+3VtyL+aNCpT24SOathY05rSuoDG5e/Xe1Rtq5Juby3HjTW7U1BVt6tenGLUyi3FxJ
+         MDSzIg/Oz5qetESEw/bpPb1VF4sOz7EURA8XMpKtzFFusWy84ZWBMbUtRqREBTl+L0Tn
+         YeVfszovT5XStH5IDuWLzOPXHFTcFrekr6B13wmZxyGiQ/B20vv6arSc6i1lQXFGvidC
+         AIuMeeaSyg8wEhhnAmU9FRUuXkWKvMJUjXnAABIVZV7mlox8zQWQqkL//3XwS405ksFE
+         bTlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773225172; x=1773829972;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Zklnu4fmt1vkjaVD6IP9TM4tZfBNpFqhS7jXyK8+gyU=;
+        b=byIbka6V8t1rT0eUJZy6gqmbWVSAPDIv8XoHrH3P0/Zag08U+OoUB3aI0qWn0100uo
+         jQcTjJLIbbsp0lj8wvfbg3DfULHbdGX8LRqLpzRa/4fGPWb72X003YYJQ9p8c+oqINo3
+         w+J82yoPhWgFm0bGgkv7jk/lxVG/E8T2UGaAuL5aYwXJkZCRgzts4jndnommI1PRT/A2
+         ASnYnInmCUdNtpuLcKOdRTKd+E8kGU05uCAiIPqQqx8nmZ0zD54Uiv0xf3tuVids6yfs
+         QULC/wWUO69gVzWvNaP+lKitI8RYFJA1ptzgyM0taPDHU/fgzn3L6bCnSmRydLh13CIT
+         5PPg==
+X-Forwarded-Encrypted: i=1; AJvYcCXbo7Ql4jB36pcqf6aQlNwR9q6awGIOraX67fyLJMlm9tmAZO1kzIXmxiZmGL1Z3f5fYRY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIDT2ePGeyBAeaU+rkRqti2EgOAbt3GI04jk0DZlJ3YzrPN4VD
+	ViMN+4P1V3RBFdi41W9L753g1lbQk8mT3zv8Pys/X9Ha85Vlg3Pfvyl38CF9wQ==
+X-Gm-Gg: ATEYQzzOOlVe3EWTZ4UPNVU012GFe5YIDV7nAaNkCAHWaasDfIEyLT1tQblmqWpsp5d
+	fF+t0kxn5ztWxcCCrVelZnekEMZZKp3bmwYfRmATmCm8jyiKQUoHYlTm2trCJKqPIf9wPsrLAt5
+	CMtKhY42ffj07eJsYrYooulH0SN/ofUlX+W8w5ot8hhryueng8wQRuuik4E0irZfrplt41ILBz0
+	CapbfFNOeantbunN3mdYua8mBFgyxXh/pH5l2e9FL8XDxwnl16ZIdPzLHNeav8vvmU8xMCI7Vj2
+	dN/NCzAJiOsBU8WhL1dD11oAvDd23czzarRcmqu9VNNDj855Z95SIQ75f3Vz+kev9ahNY4Z20QO
+	kobndY5/8qgSJNkisQDRplsL5cx7oomA2fNTFtZ8M68GAVWeH8XoVhpdopy1maDYKFAKnd54j7Y
+	Hthp/AL2nUwxhhsmFg9LE5+LIVVdsds1q1qFYtKdNS8zq1Ui4WHkqYG8YdVOuRX0l0hRAgFJ5oT
+	BYTLA==
+X-Received: by 2002:a05:600c:800f:b0:485:3baa:af14 with SMTP id 5b1f17b1804b1-4854b0fb09bmr30286105e9.18.1773225171746;
+        Wed, 11 Mar 2026 03:32:51 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854e2537c3sm10512265e9.15.2026.03.11.03.32.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Mar 2026 03:32:51 -0700 (PDT)
+Message-ID: <3fb4baf7-a820-401d-815b-a0b7c11fe6c3@gmail.com>
+Date: Wed, 11 Mar 2026 10:32:50 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260309005416.2760030-11-adrian.ratiu@collabora.com>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 4/5] format-patch: add commitListFormat config
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Mirko Faina <mroik@delayed.space>, git@vger.kernel.org,
+ Jeff King <peff@peff.net>
+References: <cover.1772837832.git.mroik@delayed.space>
+ <cover.1772839973.git.mroik@delayed.space>
+ <c522f47e5b574c0c889c40284c71c36158b6bb6e.1772839973.git.mroik@delayed.space>
+ <6b160915-1cdf-48b5-abe4-3efd0771598e@gmail.com> <xmqqikb3ws3e.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqikb3ws3e.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 09, 2026 at 02:54:16AM +0200, Adrian Ratiu wrote:
-> diff --git a/builtin/hook.c b/builtin/hook.c
-> index c806640361..ff446948fa 100644
-> --- a/builtin/hook.c
-> +++ b/builtin/hook.c
-> @@ -72,16 +72,20 @@ static int list(int argc, const char **argv, const char *prefix,
->  		case HOOK_TRADITIONAL:
->  			printf("%s%c", _("hook from hookdir"), line_terminator);
->  			break;
-> -		case HOOK_CONFIGURED:
-> -			if (show_scope)
-> -				printf("%s (%s)%c",
-> -				       h->u.configured.friendly_name,
-> -				       config_scope_name(h->u.configured.scope),
-> +		case HOOK_CONFIGURED: {
-> +			const char *name = h->u.configured.friendly_name;
-> +			const char *scope = show_scope ?
-> +				config_scope_name(h->u.configured.scope) : NULL;
-> +			if (scope)
-> +				printf("%s (%s%s)%c", name, scope,
-> +				       h->u.configured.disabled ? ", disabled" : "",
->  				       line_terminator);
-> +			else if (h->u.configured.disabled)
-> +				printf("%s (disabled)%c", name, line_terminator);
->  			else
-> -				printf("%s%c", h->u.configured.friendly_name,
-> -				       line_terminator);
-> +				printf("%s%c", name, line_terminator);
->  			break;
-> +		}
->  		default:
->  			BUG("unknown hook kind");
->  		}
+On 10/03/2026 16:45, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>> Possible values:
+>>>     - commitListFormat is set but no string is passed: it will default to
+>>>       "[%(count)/%(total)] %s"
+>>
+>> It is unusual for an empty config value to mean something different from
+>> it not being set. The reason for this is that it allows
+>>
+>>       git -c config.key some-command
+>>
+>> to act as though config.key was not set.
+> 
+> That syntax is the same as setting config.key=true; disabling the
+> feature triggered by config.key is quite counter-intuitive, isn't
+> it?
 
-Hm. This starts to feel less and less like an interface that can easily
-be parsed by a machine, even with "-z". I guess this partly comes from
-our insistence to reinvent the wheel in Git instead of just using
-something like JSON :/
+I'd forgotten about the boolean case, I was thinking about an empty or 
+missing value clearing multi-valued keys which is quite common I think. 
+Anyway we seem to agree that we don't want to use a missing value to 
+signal a default here. The suggestion below using true and false seems 
+quite reasonable to me.
 
-> diff --git a/hook.c b/hook.c
-> index 2c03baeaac..4f4f060156 100644
-> --- a/hook.c
-> +++ b/hook.c
-> @@ -119,6 +119,7 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
->  struct hook_config_cache_entry {
->  	char *command;
->  	enum config_scope scope;
-> +	int disabled;
->  };
->  
->  /*
+Thanks
 
-Is there any reason this is an `int` and not a `bool`?
+Phillip
 
-> @@ -217,8 +218,10 @@ static int hook_config_lookup_all(const char *key, const char *value,
->   * every item's string is the hook's friendly-name and its util pointer is
->   * a hook_config_cache_entry. All strings are owned by the map.
->   *
-> - * Disabled hooks and hooks missing a command are already filtered out at
-> - * parse time, so callers can iterate the list directly.
-> + * Disabled hooks are kept in the cache with entry->disabled set, so that
-> + * "git hook list" can display them. Hooks missing a command are filtered
-> + * out at build time; if a disabled hook has no command it is silently
+> We are by default using "shortlog", but use of this configuration
+> variable is a sign that the user wants to use a more modern custom
+> format that is not the traditional "shortlog".  It would be quite
+> natural to invoke the modern default by setting it to "true" (i.e.,
+> "I want to enable the new format.commitlistformat feature, but I am
+> not saying which format, and the "log:[%(count)/%(total)] %s" format
+> is used).
+> 
+> Perhaps "format.commitlistformat = false" should disable the modern
+> format and fall back to "shortlog", setting it to true (including
+> the use of "valueless true" syntax) should enable it and use the
+> modern default "log:[%c/%t] %s" format, and non-bool text should be
+> used as a custom specification ("shortlog", or "log:<format>")?
+> 
+> I.e.
+> 
+> 	switch (git_parse_maybe_bool_text(value)) {
+>          case 0: /* false */
+> 		fmt_cover_letter_commit_list = "shortlog";
+> 		break;
+> 	case 1: /* true - use the modern default format */
+> 		fmt_cover_letter_commit_list = "log:[%c/%t] %s";
+> 		break;		
+> 	default:
+> 		fmt_cover_letter_commit_list = value;
+> 		break;
+> 	}
+> 
+> Hmm?
+> 
+> 
+>> It would be nice to support a default format on the commandline as well.
+> 
+> 
+>>
+>>>     - if a string is passed: will use it as a format spec. Note that this
+>>>       is either "shortlog" or a format spec prefixed by "log:"
+>>>       e.g."log:%s (%an)"
+>>
+>> Having the config value behave like --cover-letter-format=<value> is
+>> sensible
+>>
+>>>     - if commitListFormat is not set: it will default to the shortlog
+>>>       format.
+>>
+>> makes sense
+>>
+>> Thanks
+>>
+>> Phillip
+>>
+>>> Signed-off-by: Mirko Faina <mroik@delayed.space>
+>>> ---
+>>>    builtin/log.c           | 21 ++++++++++++++++
+>>>    t/t4014-format-patch.sh | 53 +++++++++++++++++++++++++++++++++++++++++
+>>>    2 files changed, 74 insertions(+)
+>>>
+>>> diff --git a/builtin/log.c b/builtin/log.c
+>>> index 95e5d9755f..5fec0ddaf9 100644
+>>> --- a/builtin/log.c
+>>> +++ b/builtin/log.c
+>>> @@ -886,6 +886,7 @@ struct format_config {
+>>>    	char *signature;
+>>>    	char *signature_file;
+>>>    	enum cover_setting config_cover_letter;
+>>> +	char *fmt_cover_letter_commit_list;
+>>>    	char *config_output_directory;
+>>>    	enum cover_from_description cover_from_description_mode;
+>>>    	int show_notes;
+>>> @@ -930,6 +931,7 @@ static void format_config_release(struct format_config *cfg)
+>>>    	string_list_clear(&cfg->extra_cc, 0);
+>>>    	strbuf_release(&cfg->sprefix);
+>>>    	free(cfg->fmt_patch_suffix);
+>>> +	free(cfg->fmt_cover_letter_commit_list);
+>>>    }
+>>>    
+>>>    static enum cover_from_description parse_cover_from_description(const char *arg)
+>>> @@ -1052,6 +1054,19 @@ static int git_format_config(const char *var, const char *value,
+>>>    		cfg->config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
+>>>    		return 0;
+>>>    	}
+>>> +	if (!strcmp(var, "format.commitlistformat")) {
+>>> +		struct strbuf tmp = STRBUF_INIT;
+>>> +		strbuf_init(&tmp, 0);
+>>> +		if (value)
+>>> +			strbuf_addstr(&tmp, value);
+>>> +		else
+>>> +			strbuf_addstr(&tmp, "log:[%(count)/%(total)] %s");
+>>> +
+>>> +		FREE_AND_NULL(cfg->fmt_cover_letter_commit_list);
+>>> +		git_config_string(&cfg->fmt_cover_letter_commit_list, var, tmp.buf);
+>>
+>>
+>>
+>>> +		strbuf_release(&tmp);
+>>> +		return 0;
+>>> +	}
+>>>    	if (!strcmp(var, "format.outputdirectory")) {
+>>>    		FREE_AND_NULL(cfg->config_output_directory);
+>>>    		return git_config_string(&cfg->config_output_directory, var, value);
+>>> @@ -2329,6 +2344,12 @@ int cmd_format_patch(int argc,
+>>>    		goto done;
+>>>    	total = list.nr;
+>>>    
+>>> +	if (!cover_letter_fmt) {
+>>> +		cover_letter_fmt = cfg.fmt_cover_letter_commit_list;
+>>> +		if (!cover_letter_fmt)
+>>> +			cover_letter_fmt = "shortlog";
+>>> +	}
+>>> +
+>>>    	if (cover_letter == -1) {
+>>>    		if (cfg.config_cover_letter == COVER_AUTO)
+>>>    			cover_letter = (total > 1);
+>>> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+>>> index 458da80721..4891389a53 100755
+>>> --- a/t/t4014-format-patch.sh
+>>> +++ b/t/t4014-format-patch.sh
+>>> @@ -428,6 +428,59 @@ test_expect_success 'cover letter no format' '
+>>>    	test_line_count = 1 result
+>>>    '
+>>>    
+>>> +test_expect_success 'cover letter config with count, subject and author' '
+>>> +	test_when_finished "rm -rf patches result" &&
+>>> +	test_when_finished "git config unset format.coverletter" &&
+>>> +	test_when_finished "git config unset format.commitlistformat" &&
+>>> +	git config set format.coverletter true &&
+>>> +	git config set format.commitlistformat "log:[%(count)/%(total)] %s (%an)" &&
+>>> +	git format-patch -o patches HEAD~2 &&
+>>> +	grep -E "^[[[:digit:]]+/[[:digit:]]+] .* \(A U Thor\)" patches/0000-cover-letter.patch >result &&
+>>> +	test_line_count = 2 result
+>>> +'
+>>> +
+>>> +test_expect_success 'cover letter config with count and author' '
+>>> +	test_when_finished "rm -rf patches result" &&
+>>> +	test_when_finished "git config unset format.coverletter" &&
+>>> +	test_when_finished "git config unset format.commitlistformat" &&
+>>> +	git config set format.coverletter true &&
+>>> +	git config set format.commitlistformat "log:[%(count)/%(total)] (%an)" &&
+>>> +	git format-patch -o patches HEAD~2 &&
+>>> +	grep -E "^[[[:digit:]]+/[[:digit:]]+] \(A U Thor\)" patches/0000-cover-letter.patch >result &&
+>>> +	test_line_count = 2 result
+>>> +'
+>>> +
+>>> +test_expect_success 'cover letter config commitlistformat set but no format' '
+>>> +	test_when_finished "rm -rf patches result" &&
+>>> +	test_when_finished "git config unset format.coverletter" &&
+>>> +	test_when_finished "git config unset format.commitlistformat" &&
+>>> +	git config set format.coverletter true &&
+>>> +	printf "\tcommitlistformat" >> .git/config &&
+>>> +	git format-patch -o patches HEAD~2 &&
+>>> +	grep -E "^[[[:digit:]]+/[[:digit:]]+] .*" patches/0000-cover-letter.patch >result &&
+>>> +	test_line_count = 2 result
+>>> +'
+>>> +
+>>> +test_expect_success 'cover letter config commitlistformat set to shortlog' '
+>>> +	test_when_finished "rm -rf patches result" &&
+>>> +	test_when_finished "git config unset format.coverletter" &&
+>>> +	test_when_finished "git config unset format.commitlistformat" &&
+>>> +	git config set format.coverletter true &&
+>>> +	git config set format.commitlistformat shortlog &&
+>>> +	git format-patch -o patches HEAD~2 &&
+>>> +	grep -E "^A U Thor \([[:digit:]]+\)" patches/0000-cover-letter.patch >result &&
+>>> +	test_line_count = 1 result
+>>> +'
+>>> +
+>>> +test_expect_success 'cover letter config commitlistformat not set' '
+>>> +	test_when_finished "rm -rf patches result" &&
+>>> +	test_when_finished "git config unset format.coverletter" &&
+>>> +	git config set format.coverletter true &&
+>>> +	git format-patch -o patches HEAD~2 &&
+>>> +	grep -E "^A U Thor \([[:digit:]]+\)" patches/0000-cover-letter.patch >result &&
+>>> +	test_line_count = 1 result
+>>> +'
+>>> +
+>>>    test_expect_success 'reroll count' '
+>>>    	rm -fr patches &&
+>>>    	git format-patch -o patches --cover-letter --reroll-count 4 main..side >list &&
 
-What exactly does "build time" refer to? To me this reads like invoking
-make :)
-
-> + * skipped rather than triggering a fatal error.
->   */
->  void hook_cache_clear(struct hook_config_cache *cache)
->  {
-> @@ -268,21 +271,26 @@ static void build_hook_config_map(struct repository *r,
->  			struct hook_config_cache_entry *entry;
->  			char *command;
->  
-> -			/* filter out disabled hooks */
-> -			if (unsorted_string_list_lookup(&cb_data.disabled_hooks,
-> -							hname))
-> -				continue;
-> +			int is_disabled =
-> +				!!unsorted_string_list_lookup(
-> +					&cb_data.disabled_hooks, hname);
->  
->  			command = strmap_get(&cb_data.commands, hname);
-> -			if (!command)
-> -				die(_("'hook.%s.command' must be configured or "
-> -				      "'hook.%s.event' must be removed;"
-> -				      " aborting."), hname, hname);
-> +			if (!command) {
-> +				if (is_disabled)
-> +					warning(_("disabled hook '%s' has no "
-> +						  "command configured"), hname);
-> +				else
-> +					die(_("'hook.%s.command' must be configured or "
-> +					      "'hook.%s.event' must be removed;"
-> +					      " aborting."), hname, hname);
-> +			}
->  
->  			/* util stores a cache entry; owned by the cache. */
->  			CALLOC_ARRAY(entry, 1);
-> -			entry->command = xstrdup(command);
-> +			entry->command = command ? xstrdup(command) : NULL;
-
-You can use `xstrdup_or_null()` here.
-
->  			entry->scope = scope;
-> +			entry->disabled = is_disabled;
->  			string_list_append(hooks, hname)->util = entry;
->  		}
->  
-> @@ -401,7 +411,16 @@ struct string_list *list_hooks(struct repository *r, const char *hookname,
->  int hook_exists(struct repository *r, const char *name)
->  {
->  	struct string_list *hooks = list_hooks(r, name, NULL);
-> -	int exists = hooks->nr > 0;
-> +	int exists = 0;
-> +
-> +	for (size_t i = 0; i < hooks->nr; i++) {
-> +		struct hook *h = hooks->items[i].util;
-> +		if (h->kind == HOOK_TRADITIONAL ||
-> +		    !h->u.configured.disabled) {
-
-Is the first condition required? I would expect that `disabled` would
-always be false for traditional hooks.
-
-> +			exists = 1;
-> +			break;
-> +		}
-> +	}
->  	string_list_clear_func(hooks, hook_free);
->  	free(hooks);
->  	return exists;
-> diff --git a/hook.h b/hook.h
-> index 0d711ed21a..0432df963f 100644
-> --- a/hook.h
-> +++ b/hook.h
-> @@ -31,6 +31,7 @@ struct hook {
->  			const char *friendly_name;
->  			const char *command;
->  			enum config_scope scope;
-> +			int disabled;
->  		} configured;
->  	} u;
->  
-
-Same question here regarding the type of the struct member.
-
-Patrick
