@@ -1,146 +1,252 @@
-Received: from SY8PR01CU002.outbound.protection.outlook.com (mail-australiaeastazolkn19010079.outbound.protection.outlook.com [52.103.72.79])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8226B652
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 02:48:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.79
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773197329; cv=fail; b=E6eWUWooIn2SkM1x8sc2LlzTrRrwdKkPMVUlt9Y/3y3Gt2fhvQDku3X9ELe9qI2KnpH4IPGbXhEhAuYXebF+1NqjXPs9R/RQCE16o5wQ7D/q6mQ/4Q5aPw8RKgRTT1IHWF14ANarmbaQiB3Hpfufa4P6CtmH+0Qh365RKI/BQQQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773197329; c=relaxed/simple;
-	bh=yQahBz38kG2UsdVv/Os3KLb29oRSqrkUwSFgwbQ8SpI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ASTEVg2gAafp3SNF0HXmy579cg+Q7XiS3TFt34Jn7aLeIRWj3M70DYuHwmPlUoKdBDFhWYbrcrC14lhKUdkNLbn1gC/yDSqbNSSewu7b1WckTGue7fBt4OoXlu2fMqn3snvvQddLAxvskCphe+Uj0PdJLRZXP1BUTzyVSh4nxPY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=KL+rGlGj; arc=fail smtp.client-ip=52.103.72.79
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380E126ED3A
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 03:14:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773198892; cv=none; b=LCg1+yymVwi1RsOuB6H0XIl9plxnp4MjU59/VuSobs2QNTupxADGSI/qlV5cZnpY4H3VYabBRlyFYSneo/WED1XrVJ2A4KZAnruTNfho5ccqLhf8aNqOx2bB4MPYnAW2kUMocV9YWqFH/NaJr8E0Ay+PN+ogOs0TMSP8NTadczQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773198892; c=relaxed/simple;
+	bh=9I40iICAFJncWjAqZAeDLdDL/JSM8klPnVQ1Z4ONeKk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ci/UeaC97RdY6KKYIg4TidE63qKw5NttcmCuQiBO3MkRB1cyTxQBSZrcD2vP5rmEVnrmvjBOE/xTLeXQXTb0Lmm9WQjpyyvpWxbaGd0pPTewfOjV+rqv9VpGAzqf4VNQdrvhhTT/hYjUAN59mvVyFa7r+AzLpiISHbgP8p/E9TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A1CktSzZ; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="KL+rGlGj"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=q8nuB+MI4wNdZCzB73wal5g03qGAqvcfGP2zMcNAdODGzJ4ScOHa33H084bhTzI53hxWk/5YOGZjeZ9I29Kg7habIMqAXgEBvVnfs/+5iD74JLR9vJ5M870s4ENgmVVdcdcv73gi0P/TFhd/GLmCo/uEb4FIfN4QPKGotBezo9v0N1ffA9Cf8MIFUZ0GpNPS3Js4mZ1in5hdr0DrLuNo9QpWwEyty+fg8blGvSZe90xBiYoskaFrfD5lZJqBxztxOoaduPUcs+oAiHmBYhx/T7M24PR5mk/qWJQEe59wpFeiAbj0Z7PtAhLbQZ5ISJnEfLAYDNtMieC58CVgjWauiA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QZnTtTDuRM7hiq8Bn1Ts82DJhqENOMT5esly1+3BzNw=;
- b=T1kLm3ieLtqHafXk6B7Jj88zGzeYM0POkr2DXeWaHDQmhSiyMwuylBQGaXlgsA1gEHBZZe60CKSXMoBfLGEZ8fwFhruIv/NnmL/o01zUV2vUSRWSje/OI37gG3vAFWDLiJ9ax29UwsjSd6glCnyogUT6p+8ATblT+eXMVYsLpBaJ/+JQFE3SZ+cjqchMClrySaHkfzpst3JjOMgGV/RFWgjQ+4vR+oyxfUxHWpAaldoakPdgQwOg4F5cpZwveL6RsG1IpEUpoOyjyyLuU6iqkc9VojKSRCkzKFUTBCxtMHlkWZJsdFHNbQdsm8PJ0vHONgem5odxlIw6v2ta9UDSKw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QZnTtTDuRM7hiq8Bn1Ts82DJhqENOMT5esly1+3BzNw=;
- b=KL+rGlGjA+UWHCqpobw9vcW3ia8d9Q6f/+RHu/e24tpLK25duTV9PaaG0D5wuL0g0MsLog0bTqXa+lRvvXhc/BaZmBNV2URneo8npg7zzZ9oHalUNQib5G9jHZ+drKmwhEYHpX5Zo3KEE3+SZshtei0RBGfYHXwiQ7bSz82j7pwFDMZLgljHKJpG3S/WljLMe9BCFzRUrZQCaq5ZYkumKMX1WiiQ4ntRTJ4yLlcfg/OsVt5PZ+1vqeCy3Kb4MVYkvv5FU3NIY9C1ncU55urv811Sl92AiCLqKghcpOnf448NiZE++dfUG7djzJEZRpQy3bxaQy+EIjxwhprk1+g1cA==
-Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
- by ME0P300MB0602.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:22c::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.12; Wed, 11 Mar
- 2026 02:48:44 +0000
-Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
- 02:48:44 +0000
-Date: Wed, 11 Mar 2026 11:48:41 +0900
-From: Jiamu Sun <39@barroit.sh>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 6/8] parseopt: autocorrect mistyped subcommands
-Message-ID:
- <SY0P300MB0801DA185098623A3729B9F8CE47A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-Reply-To: Jiamu Sun <39@barroit.sh>
-References: <SY0P300MB08013E35DCA8FC31B0662125CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
- <SY0P300MB0801C6F21C2D8F49892DF8E7CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
- <SY0P300MB08011B31B360FC14F05418C1CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
- <xmqq7brjtp7c.fsf@gitster.g>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7brjtp7c.fsf@gitster.g>
-X-ClientProxiedBy: TY4P286CA0137.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:37f::11) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:10:27f::21)
-X-Microsoft-Original-Message-ID: <abDYCb1fuuDBq0cP@lancer>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A1CktSzZ"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-48374014a77so161005565e9.3
+        for <git@vger.kernel.org>; Tue, 10 Mar 2026 20:14:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773198889; x=1773803689; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nw9NC9d0uH+5V/fvKnKO8/IZxKkoXQaRQC0SrnqQhmk=;
+        b=A1CktSzZhopIXUhJ9OuQHgRj/kWjrWUVPOYTC++47iYbJDgs55ZeVkxLjE5XqvPC1/
+         k/K1q2naHnwIayWgArqQzU7Rt8vyzg4nrAA8JVN8/0JFbjoBq2xSQkTolvfyQgW9i2dj
+         wFBAipkg3MuSeZT6wJu4IvJYSHKO88yLPw/yNP1OZXAv1aHOdbICz/8JuuEVorRKjA3d
+         1nKiE0oTt8q1VMjEDQCepkRISohDykiNlEEvs6OwNF9F5SzhA6KAW4mW8muACfWUZY84
+         KStXXpGJPWDRooELAtl/b1FIQzzimLFql/d0ikUgE+6kaNQ8X9WEbiMTTKg+BYT3WUco
+         85AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773198889; x=1773803689;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=nw9NC9d0uH+5V/fvKnKO8/IZxKkoXQaRQC0SrnqQhmk=;
+        b=v4DqRfJz91Las5rzypZdrpynMDwUPc6Jg1adlzblM9PnwbQKJcQ10wfE+Cz4LfslZs
+         WnORUozHksirpwttVQYFbdLVhyuuhhttpRM2va6ooDs/jYjPosIbLmEA76/QB8QUPa+z
+         7EbEapUin9MS/9cBAxnmmMTtRqndoUYv0WtrV4JAY/LpXo2zHCshjwXThgahv+ZPiHsL
+         cCNAbLH/MyWO2rh2IcAVoGerK1kh5tmcUktAWC1ZSgGeGVEAZ4NdY2IP3VrjWKi2vwpd
+         +eKwCU5Ju0v4s4S5WPIiIwpXPnlKk3Q6QuSPbPdYkXOSGKsWEa5QK/7uOqtK58JtjuKh
+         Sz1A==
+X-Gm-Message-State: AOJu0Yw1VV1VRgYG/3N6pZux2MqVzTYNWLQwoDiCRRWcJlwbxNBmuY6C
+	Ph7Qpu6EAVIUU14aVaf7yaVyoFGogZjS9osDt6Toj7OzCbKpaJPmUhu0g18nol4M
+X-Gm-Gg: ATEYQzztPzKzqe3wi/4Wao60IyrE2RZ3bfgszumGOxhFUafdGTcaWbBYuGnjOigoV2h
+	Mh8pQJIT0e9W2ciJhH+22mUMvw8fOedrEK7wHCs8Rjzxohb8BHq58G3ivP0/udioMJ/lv3sx008
+	4P76blz895S8BK1D59eqWJog8hb5FsC7QkVd5pqQsO89QwhOZayfg2lfIrl7aGQcKkl0FcjGfpI
+	TMW+ELOYzUSdEFtN6mXbroXbmrqCl4nOUUDT6KduEZRWUGMwmnRWTQO56OelbfuwROSBYgg3hfh
+	dsiLo0sf+lQQv42gQbdVvZzf2AfIdNYhry3LDtbxAMQ7AP/yUSJZcrY8IJYTpR7OT+bCvjbULfJ
+	ynh3iFlDPvv2b2a7cieGYySF6O83c7n8Rhsqy7IEckg9KHRyYp79i4IvBi+f8H34ZaEuNVY9h9n
+	/PtP4Pb0Epqf/XGaHLK/I6h0VWoIN0+hqRYl9nWVVUjugEFW9+8cvf+DFZ6tpFvSzLDYx0bZ2I8
+	J2/QLk+UVMvO5WQgCpvMRENkhb9t5NJ4lC9C22wP/CPG9jTK204GSE4eUA=
+X-Received: by 2002:a05:600c:45c3:b0:485:3e00:9440 with SMTP id 5b1f17b1804b1-4854b1396d2mr15106095e9.24.1773198889162;
+        Tue, 10 Mar 2026 20:14:49 -0700 (PDT)
+Received: from farblopa.localdomain ([84.126.0.122])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b47145dsm15393495e9.0.2026.03.10.20.14.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2026 20:14:48 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+To: git@vger.kernel.org
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [GSoC PATCH v2] test-lib: print escape sequence names
+Date: Wed, 11 Mar 2026 04:14:42 +0100
+Message-ID: <20260311031442.11942-1-pabloosabaterr@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260310183513.1077875-1-pabloosabaterr@gmail.com>
+References: <20260310183513.1077875-1-pabloosabaterr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Sender: Jiamu Sun <sunjiamu@outlook.com>
-X-MS-Exchange-MessageSentRepresentingType: 2
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|ME0P300MB0602:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1b2a6226-5661-4ec9-6b71-08de7f18b635
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|23021999003|15080799012|5072599009|461199028|8060799015|19110799012|41001999006|6090799003|51005399006|25031999004|3412199025|440099028|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?0715GtTqGj5OkLTf7bCtyUANEXrbVLj3WE+M4pMZIu5FwOyhPaU5XcbF2SPU?=
- =?us-ascii?Q?8KeB5aWZl55hvCbhAr1AOSbK7RJ7zbVTfKfnYhhAjAaHm+ViucnxhGL51lDl?=
- =?us-ascii?Q?uX/JWySqHFwT67HAL71RbjaSxEw2+9qco1LoLUzIulBPV4Bcx6Wac4c0J6eL?=
- =?us-ascii?Q?8B5QjOfF0BRag7kfjE6dLQov5ZONm2dBtRNDx1KSjDw/Qz3DMlCvqj0WCUXh?=
- =?us-ascii?Q?nSwDxLCOy/UI+Ensw64IzlVw6KRgIhfNTYiLOPwXN240DOiNwzqjKuS44T+2?=
- =?us-ascii?Q?A7uspQQWARXlL5vIC5nKNiyLIFboz9lzdZPg9dzJcSYSYXoDiNgvAmj1UdU2?=
- =?us-ascii?Q?9wI1DhZOYwTZKmZuEh+pfCAuTZVwITNEKBzlgE94I2gSshPQw1s+BxzfawB5?=
- =?us-ascii?Q?nT2kyJFLRLc8RMD3ZGTpakN2drXXC220Y5SmTV4pp7X1T0VLgDXD9pACkdaH?=
- =?us-ascii?Q?gCysOvYaBU20klPDQdF2UdOfgWAnMjiZ1jB0rv2QR0dneZVW5FWj9DlFilL5?=
- =?us-ascii?Q?uVSY5sYmdhXsHW0d+FCX6Fd+k9owF9dg9AWXohRpjEZ4I3QaAaOmQA1Lh7me?=
- =?us-ascii?Q?3N1H5Fg3zmEllr8zW+HVV0BQfF3Y7l23kx5R/FpggkXxdEb8UNHKuFtj4pFL?=
- =?us-ascii?Q?jyCvYu5lrXiw0nOaRmXE85SHdfWnT7pEvCg3LvblJ3pfakjoS0ZQNN5ON9zg?=
- =?us-ascii?Q?UMHXqI+x95bnqb+vdn318Ux2r7H5uk0AjDs9XyMWBN3lyntdOOi1cHXeWISU?=
- =?us-ascii?Q?BuUYRUwZMeAAqLby+PsO0E3HcNNp8RvSD8JwqKJgoTjNbOvFExETdmkBZ2Ct?=
- =?us-ascii?Q?HhsQ5kX8ZZBIInXg+3rRsP9jE5F/I/gKPlI14qugHPTuC4ZkKyNN/VA+QbuW?=
- =?us-ascii?Q?DM3DqVRNl8lv38V+2voxIuuc6e5fcl05FzFPTHLEzZRSUx12XzMkEtK/adKd?=
- =?us-ascii?Q?NhyoZq0k9DhvLictNmWO7Q44PNf6oGrKxNfpC9Pg/EdHwAX4rseGMjVVrh8m?=
- =?us-ascii?Q?HG+G?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?C7uETYwYG2sYxGssQjH0OM/chbzb+SfQPeR4NesYjy36wg6MU7kKh/L9hEPN?=
- =?us-ascii?Q?t6VTymErUTuBobLKpjfW4ErFfbasvBSBuC6tiYRCJhyNBVmYoxROuCD37MFV?=
- =?us-ascii?Q?E74YDTNVGVcTX5Cm/zvulGSQVeIIm7ipIH+xuNneCk5Ls9yUABK9LD0eNGf4?=
- =?us-ascii?Q?eMJzkRrQj1bgmoqRzm9ljF1nPt0VZMN44IpXDfg4dsO1X38+sXnkhRFoOVGI?=
- =?us-ascii?Q?oq2Q6n5CEn5b8QdfnArWNbK61jnbPbALqlzqoezOOGv5IPCJpJHFmgTAvhWF?=
- =?us-ascii?Q?NTVYHNC7dQ6AiOah+Umpb6+qiofcbIfoWMchASpBapa0DsdrZkrxYKv1nMr0?=
- =?us-ascii?Q?mC+xLjnOFXEwwfX8WdsqP9AEzz5sklMLO4XnnJOijvL1pKkq1rc9jqE6QBfM?=
- =?us-ascii?Q?hNBkBXHsVwTZKb/4Dsi3MWN7N7M7bNxmtV/XIF6s7mqt1Jih6Oyehc0rPLK0?=
- =?us-ascii?Q?vvh7Kov3TxMKnzDw7r9Q0ypVB+310YCutv3omGVJb2JVJoMpMhZdJFGDZF16?=
- =?us-ascii?Q?QCIoce4dJtaPKeMYJ3NCaKfFACv6XG17rsM7A/NBEEWsRPpUd15sLU2RVB2O?=
- =?us-ascii?Q?/BSEsIscVLcdWmHujKtjyWUDV+n5gj/T0aPWNsmnRezaKRA/LQAhMfPsYa5E?=
- =?us-ascii?Q?6xnlrmglLCDBoDUqVkOBGS/Q9fYtAa8d1glD8OLISx6A6D60K7xOW5coAhus?=
- =?us-ascii?Q?wrJXafc9p+gEJo91a8n1SpyOK+uOViXOCicHm92jQpzKctefkvknzjmomXWB?=
- =?us-ascii?Q?dWwksBZD+6KW952K17HyJ8ZYdppQHDb5qppdxaRXjcPY97YJ2hahFxKkufl9?=
- =?us-ascii?Q?hlfP+nxVlCYgd4tjPaszLqBO4BzGUOrSDoOsy4ms2F7yPBODfvXPOe58Uxu+?=
- =?us-ascii?Q?m7pljWWcooXXglSB+uEUPY6H9WBGa4TLDZAfAmSrwPA7exiiiIC6sNKPDcZa?=
- =?us-ascii?Q?NrLxlWyanduNmD7ur6sLr7wx4KhZXooWv8fhrSJM/h/HVOKJI/wSxkWoc0wD?=
- =?us-ascii?Q?ekmbZPbSar9q/yCUNnU29zX3z0ASwPOBYz0aLidkncj6zCBwYMZ3vIdxD2Sf?=
- =?us-ascii?Q?lf08CQFyN7iFhdeAMOP6RIVcgTCyMiEkN/rjSxF8b2sBtrE8Vydc6uBz2AJB?=
- =?us-ascii?Q?Q/+VFzSb/lEC8Ud9uEh7csc5/eTfOnWtYmGB25IjtSEHKfS5UnezPbf3wVgx?=
- =?us-ascii?Q?auL0c/7+ndDXLDdivvSBuOH/5R5DNmD1cvAFQ/kazR02FGQuAwtDUqJqGLln?=
- =?us-ascii?Q?6uuKou9ACSo8dL1Tuql5VOj9nYbAu9Mq/Tfv1UfTc5d5nR3wdQ+wyC4ATy4K?=
- =?us-ascii?Q?ym1aPhnyRUg7cW/4h2UTX2E9z8vYm/OcEwdryZ84+3LD8or9EP0ogL0fduN8?=
- =?us-ascii?Q?UDm0UIKsWfg/iqCsn0TT/8uQR3Mr?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1b2a6226-5661-4ec9-6b71-08de7f18b635
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2026 02:48:44.8157
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME0P300MB0602
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 10, 2026 at 01:16:39PM -0700, Junio C Hamano wrote:
-> > +	unsigned int threshold = len < 3 ? 1 : len < 6 ? 3 : 6;
-> > +
-> > +	return dist < threshold;
-> > +}
-> 
-> There should be some explanation on the reason why this is very
-> different from SIMILAR_ENOUGH used in help.c for main commands,
-> especially given that the levenshtein() call here uses identical
-> weight parameters (0,2,1,3) as used by the call there.
+When printing expected/actual characters in failed checks, use
+their names (\a, \b, \n, ...) instead of their octal representation,
+making it easier to read.
 
-Will add a comment to explain it.
+Add tests to test-example-tap.c
+Update t0080-unit-test-output.sh to match the desired output
 
+Teach 'print_one_char()' the equivalent name
+
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+---
+Changes from v1:
+reverted unrelated test change '\'' to '\\'' in t0080
+
+ t/helper/test-example-tap.c |  4 +++
+ t/t0080-unit-test-output.sh | 52 +++++++++++++++++++++++--------------
+ t/unit-tests/test-lib.c     | 19 ++++++++++++--
+ 3 files changed, 53 insertions(+), 22 deletions(-)
+
+diff --git a/t/helper/test-example-tap.c b/t/helper/test-example-tap.c
+index 229d495ecf..998a1f0b42 100644
+--- a/t/helper/test-example-tap.c
++++ b/t/helper/test-example-tap.c
+@@ -63,6 +63,8 @@ static void t_messages(void)
+ 	check_str("NULL", NULL);
+ 	check_char('a', ==, '\n');
+ 	check_char('\\', ==, '\'');
++	check_char('\a', ==, '\v');
++	check_char('\x00', ==, '\x01');
+ }
+ 
+ static void t_empty(void)
+@@ -123,6 +125,8 @@ int cmd__example_tap(int argc UNUSED, const char **argv UNUSED)
+ 		check_str("NULL", NULL);
+ 		check_char('a', ==, '\n');
+ 		check_char('\\', ==, '\'');
++		check_char('\a', ==, '\v');
++		check_char('\x00', ==, '\x01');
+ 	}
+ 	if_test ("if_test test with no checks")
+ 		; /* nothing */
+diff --git a/t/t0080-unit-test-output.sh b/t/t0080-unit-test-output.sh
+index 3db10f095c..66838a00b2 100755
+--- a/t/t0080-unit-test-output.sh
++++ b/t/t0080-unit-test-output.sh
+@@ -6,10 +6,10 @@ test_description='Test the output of the unit test framework'
+ 
+ test_expect_success 'TAP output from unit tests' - <<\EOT
+ 	cat >expect <<-EOF &&
+-	# BUG: check outside of test at t/helper/test-example-tap.c:75
++	# BUG: check outside of test at t/helper/test-example-tap.c:77
+ 	ok 1 - passing test
+ 	ok 2 - passing test and assertion return 1
+-	# check "1 == 2" failed at t/helper/test-example-tap.c:79
++	# check "1 == 2" failed at t/helper/test-example-tap.c:81
+ 	#    left: 1
+ 	#   right: 2
+ 	not ok 3 - failing test
+@@ -34,53 +34,65 @@ test_expect_success 'TAP output from unit tests' - <<\EOT
+ 	not ok 15 - failing check after TEST_TODO()
+ 	ok 16 - failing check after TEST_TODO() returns 0
+ 	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:62
+-	#    left: "\011hello\\\\"
+-	#   right: "there\"\012"
++	#    left: "\thello\\\\"
++	#   right: "there\"\n"
+ 	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:63
+ 	#    left: "NULL"
+ 	#   right: NULL
+ 	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:64
+ 	#    left: 'a'
+-	#   right: '\012'
++	#   right: '\n'
+ 	# check "'\\\\' == '\\''" failed at t/helper/test-example-tap.c:65
+ 	#    left: '\\\\'
+ 	#   right: '\\''
++	# check "'\a' == '\v'" failed at t/helper/test-example-tap.c:66
++	#    left: '\a'
++	#   right: '\v'
++	# check "'\x00' == '\x01'" failed at t/helper/test-example-tap.c:67
++	#    left: '\000'
++	#   right: '\001'
+ 	not ok 17 - messages from failing string and char comparison
+-	# BUG: test has no checks at t/helper/test-example-tap.c:94
++	# BUG: test has no checks at t/helper/test-example-tap.c:96
+ 	not ok 18 - test with no checks
+ 	ok 19 - test with no checks returns 0
+ 	ok 20 - if_test passing test
+-	# check "1 == 2" failed at t/helper/test-example-tap.c:100
++	# check "1 == 2" failed at t/helper/test-example-tap.c:102
+ 	#    left: 1
+ 	#   right: 2
+ 	not ok 21 - if_test failing test
+ 	not ok 22 - if_test passing TEST_TODO() # TODO
+-	# todo check 'check(1)' succeeded at t/helper/test-example-tap.c:104
++	# todo check 'check(1)' succeeded at t/helper/test-example-tap.c:106
+ 	not ok 23 - if_test failing TEST_TODO()
+-	# check "0" failed at t/helper/test-example-tap.c:106
++	# check "0" failed at t/helper/test-example-tap.c:108
+ 	# skipping test - missing prerequisite
+-	# skipping check '1' at t/helper/test-example-tap.c:108
++	# skipping check '1' at t/helper/test-example-tap.c:110
+ 	ok 24 - if_test test_skip() # SKIP
+ 	# skipping test - missing prerequisite
+ 	ok 25 - if_test test_skip() inside TEST_TODO() # SKIP
+-	# check "0" failed at t/helper/test-example-tap.c:113
++	# check "0" failed at t/helper/test-example-tap.c:115
+ 	not ok 26 - if_test TEST_TODO() after failing check
+-	# check "0" failed at t/helper/test-example-tap.c:119
++	# check "0" failed at t/helper/test-example-tap.c:121
+ 	not ok 27 - if_test failing check after TEST_TODO()
+-	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:122
+-	#    left: "\011hello\\\\"
+-	#   right: "there\"\012"
+-	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:123
++	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:124
++	#    left: "\thello\\\\"
++	#   right: "there\"\n"
++	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:125
+ 	#    left: "NULL"
+ 	#   right: NULL
+-	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:124
++	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:126
+ 	#    left: 'a'
+-	#   right: '\012'
+-	# check "'\\\\' == '\\''" failed at t/helper/test-example-tap.c:125
++	#   right: '\n'
++	# check "'\\\\' == '\\''" failed at t/helper/test-example-tap.c:127
+ 	#    left: '\\\\'
+ 	#   right: '\\''
++	# check "'\a' == '\v'" failed at t/helper/test-example-tap.c:128
++	#    left: '\a'
++	#   right: '\v'
++	# check "'\x00' == '\x01'" failed at t/helper/test-example-tap.c:129
++	#    left: '\000'
++	#   right: '\001'
+ 	not ok 28 - if_test messages from failing string and char comparison
+-	# BUG: test has no checks at t/helper/test-example-tap.c:127
++	# BUG: test has no checks at t/helper/test-example-tap.c:131
+ 	not ok 29 - if_test test with no checks
+ 	1..29
+ 	EOF
+diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
+index 87e1f5c201..72ee20a06f 100644
+--- a/t/unit-tests/test-lib.c
++++ b/t/unit-tests/test-lib.c
+@@ -396,8 +396,23 @@ int check_uint_loc(const char *loc, const char *check, int ok,
+ static void print_one_char(char ch, char quote)
+ {
+ 	if ((unsigned char)ch < 0x20u || ch == 0x7f) {
+-		/* TODO: improve handling of \a, \b, \f ... */
+-		printf("\\%03o", (unsigned char)ch);
++		char esc;
++		switch (ch) {
++		case '\a': esc = 'a'; break;
++		case '\b': esc = 'b'; break;
++		case '\t': esc = 't'; break;
++		case '\n': esc = 'n'; break;
++		case '\v': esc = 'v'; break;
++		case '\f': esc = 'f'; break;
++		case '\r': esc = 'r'; break;
++		default: esc = 0; break;
++		}
++		if (esc) {
++			putc('\\', stdout);
++			putc(esc, stdout);
++		} else {
++			printf("\\%03o", (unsigned char)ch);
++		}
+ 	} else {
+ 		if (ch == '\\' || ch == quote)
+ 			putc('\\', stdout);
 -- 
-Jiamu Sun <39@barroit.sh>
-          <sunjiamu@outlook.com>
+2.43.0
+
