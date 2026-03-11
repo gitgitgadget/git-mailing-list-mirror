@@ -1,179 +1,337 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2745534FF58
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 14:24:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEDD36C9FC
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 14:32:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773239057; cv=none; b=BweOzDglWwNNxe+293zwiFjyhYiw6+oGeKF7c1OUcfyKUY8Q34sQ2TNeotgaYYmnLe8JUBv8oPtvkwN70+4sKHZL7r8elrmXc9xC4HkZT9KFYRxSCURbO9/miTNVyUJ4ooosXr7WTr85JsEMwPlwYCYk+j633fXXnUtitXv3PPk=
+	t=1773239555; cv=none; b=h6jW966QFKsyYSgF+TNJt3zCb9nEG/hYVXKH9I+D1jPHuoznXYq+Ca7ddxtrSkTapK5xy2QJpuzhNVRKWl0vOU1f3piATQ6y3z3JHviz/MW2LnapeT9xZp2v0peLmyq/nBP4UIg4758zn9aDxxKeqpEVEC9FcrQmbYajwRKbPmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773239057; c=relaxed/simple;
-	bh=L57DyL9JqYHJOxjCUoep8ioOMn7Lq7x9XdFf52WIIgo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XUcge5ckPp4bI6v3fSXiU4v5DqP15ZJ1M9l/11bSH4sSZ5hzv6rT7rTKAU0zyjt6nYKtLGl5arN8EsrixCuDkv9C3ySRceRWn4AqbeXSJVxaYqGfdVJ22YrYAfgRq6eH/7CHcNk5xZv3nUMcHA37tXISBCSToA4xf33+rEX8f5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KgDZCCPY; arc=none smtp.client-ip=209.85.210.178
+	s=arc-20240116; t=1773239555; c=relaxed/simple;
+	bh=gf5jicafZFOHMX3xPeAYE1ZFdE+3V/d45NGZJa0BUOk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=UgstpXek6SJnY+et8AyhXakh60HHbJ4l1XGK5wxtG4MtQeWAzwo6iT4KzQYU9yw028I/SAOr7i1tKrN6fcrvGaoubtuvNcCxCicVg+3DQeUnm194ReN+W1CQIivUabolxkAYOSC6yiy+9IyKZ+DiK1pF20FNW7lzpR79ODoxJiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jo1RZJnF; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KgDZCCPY"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-82985f42664so3797869b3a.0
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 07:24:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jo1RZJnF"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6630858b4ceso1649470a12.3
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 07:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773239055; x=1773843855; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qz1lJcZy2HT8Stn73SouVxpOMJ392s47/FcfWKynnVU=;
-        b=KgDZCCPYuLoDzTrF2Fo7Yg5MybBUKzYnrh53ldEls4aJNd1LoSYF6Z2Me9R7aSozrt
-         jKF4hwQFnIwDBtiZFNjv41JquReLcwWHI192pJ2OABeqsAz7wrcbdJs7PVwvTBtWoggK
-         Ca1T1gdcSXVzyvK36pbVj8AKyR5QBJvJqLVF1GChUx86RwRLnJ2LCo7ydUyfWn3ur9ZZ
-         p42GfXqVR7yl99bYfUio50rMY9oyZ0YTi60oWjIaRTwr/h1s+BETVRSfLbYfE4zNs1YE
-         mMdPRk3Dd1JTDtZDfVCCWD9gnpV4uOKe3izmAqtz3RRfkttgd2NwUCoBvy8iBJ7XcR+6
-         Ms/w==
+        d=gmail.com; s=20230601; t=1773239552; x=1773844352; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1OPLYjjBJreFOAxI9JQLnLdycPkIVrbC53ziF7OY8MU=;
+        b=jo1RZJnF6L1NODJmkX2r6jifgTwG9BPuK2ha1Ztg7r74Eqf3wTEXXYkWZ8u40vdM1b
+         NuFVDhew3M2RGAs8j6BMziOFHuUOV3/h72L38zLIsyI9iuoPMEAEv0jRhEh39j7gCz4B
+         oHIBlEpmS//FQtHj+RRVLYOxcQD+zlp4/klokC4IEJi9GsdVTRomZAJagNtpaRb3Io7L
+         TLIOLzD1jaAJvCKyn4zaOv1qkQiMCRSh4Om5YmFBP+HQVQwgWVf6Be+o87FDj8y3cbyT
+         wqkgQUQMciIWLL1ucDeJzVYmd4od0dq7F4kCA4gyCJ4SQzWR7d7yaJ8goTxrbtv8k69z
+         IkKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773239055; x=1773843855;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Qz1lJcZy2HT8Stn73SouVxpOMJ392s47/FcfWKynnVU=;
-        b=L0ZLAXFd/qe6JQUztEqkxcszb3lqgaMgdGCuNe2NNwOx9g/rNiI3gxr/e4O3t1MHzK
-         jevWdODHbNWgYERSSyDr2g/7ghbmYXdU+SdZ7TsnCoQrGprffoRCRnDCKJEFZOci24FT
-         YAOpAy0lIMJ7j9VLCXuOWh7FD//sFbfQIWbbLlAE3ldGBuqRXYcPnbkuIXiKRB78T1p0
-         LEeb4qbgp8Eqk8jVeiUo+hfZeMyk/Se2tojU4QBaVpEsrt/zX8Ylldi8txtC/TWqwtUx
-         yGaxh6PdU3/wZ5qskqnorZAm+qxZ+RSveUTB0p3nOI6q+OMzyBy0c9aHDb6EcoXeDihf
-         barw==
-X-Gm-Message-State: AOJu0Yy0flGm2mY/SYzvHK/6xySF7z1EkvVBVAM6RhLmE4gnYrPfxsEI
-	a04mZieyhNsEzyhaNcS0CO6FmU4TAPjCqlDBFshmtZh3b2Khha716gEASH3xYBSp
-X-Gm-Gg: ATEYQzwhsvl3w67J4/wfS4pCdghrk/6kl0j2azbrUYuUIlYAh0kPCY7YjMiNx/y2QF0
-	n58Uu8orIX/cyl9XSjnk9zH6exeyvO6jvk1Eg/fjxfmV87EmeZ8IgsPcUZAOBOGo6PWkJjHLkJS
-	DbAmPfFO86hGySLekd6qjZ0+pl0djdg82MHlj6phxD5wcc1KwO3TinJ25MdNIwqmTzMGP9ibAY3
-	oE8Yy8VYULKJqtkkVa0s8hNoujXmBM8qaQ4LWvDS0bzrzEfT8Wa8bk0AR7u/Dhlwr8Vv7wRJvFj
-	nZafRCm0HaatyiYtyMwmDmDDUsu5gQecGFRdx/FQx7urBQulkevfLoyIOUbEBqw3yDR+KTzZOGE
-	Al016yNZYSDHr0/iVfWnXr/aTg3dm2xo6ghjxoY+nMOM9HMTZwcGfI8z6GtMNWJqBUW6sC6nslG
-	qTmtiWneAH3kNs05JOb6E7Q+Sj3BcUChcvVRzEcuCdptWTAR8=
-X-Received: by 2002:a05:6a00:1882:b0:824:92b7:63ac with SMTP id d2e1a72fcca58-829f6ee89ffmr2895677b3a.13.1773239055060;
-        Wed, 11 Mar 2026 07:24:15 -0700 (PDT)
-Received: from CPC-yingh-DJJP7.reddog.microsoft.com ([70.37.26.36])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829f6eebea0sm3552081b3a.40.2026.03.11.07.24.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 07:24:14 -0700 (PDT)
-From: Andrew Au <cshung@gmail.com>
-To: git@vger.kernel.org
-Cc: Andrew Au <cshung@gmail.com>
-Subject: [PATCH v2] transport-helper, connect: add atexit handler to reap children on abnormal exit
-Date: Wed, 11 Mar 2026 14:20:21 +0000
-Message-ID: <20260311142021.3464789-1-cshung@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260223165147.3294516-1-cshung@gmail.com>
-References: <20260223165147.3294516-1-cshung@gmail.com>
+        d=1e100.net; s=20230601; t=1773239552; x=1773844352;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1OPLYjjBJreFOAxI9JQLnLdycPkIVrbC53ziF7OY8MU=;
+        b=GrBhCzJoRLwqW73FQnAiRY+w8CWJ9F9nzSQgWtd0h9hQSgtngSVQ7T1POAl356hgQ/
+         w77e2AkGo5p3Id3laHD+kYPEcNrJMsCBCQzdmqvbJoJwm+da5X9DEoCnlldCRiy615z9
+         MxG+ag1FJxw+QpxILR64mWTQuseKwa39VXoy8Hc3wWLO5RLn6Z0d0zr4RQCvkPb8gzdp
+         5JjJYniYpEohl3Wp3raPmJTRAzLDIVC/5qNvF59t40w3Dv2ag1ma5focbpvt9sjZ1DEH
+         LvX6inFjZkTS2iwbAVLyPQTj+SkI4j690SGCk1b4in3MVhQJffbrzMKqVPj8+SpAR5We
+         u7EA==
+X-Forwarded-Encrypted: i=1; AJvYcCXgcxJZ1TJT8XBR/MJMhgA37erSOCAJT0dgKH1PT5hV5SAGUiwzRYNh6QGxgOLybdWgRtE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwC9ordvq+BTXTKMXFG8pA9FdLI+s6g+qsU46ThbrC6ntE+kvr9
+	gL83MfYYnSRdzdfnXMZyPil37Rp3il9HRKpWU3x6XC2sz2dbdOfGQxGW
+X-Gm-Gg: ATEYQzyZf+QaRz9ISAYJh4BvNh3iNaf0ZScs3Iteep4frBBA3HVJTpXYfqM3gIWeCDb
+	ryo9pRmyW341UieIjaLkV5Z4QNPpDq+VQx5KzWYgDDCZUmP+dFVC23tS7V88l3zk/uhjQSG9L8l
+	NgY5c05lmQQ0BTbK9zZINAYr+Fqq10dDHtzvQaKD4nxQdTiwAIuFKC6vVL52kjfnRU2+IG5RIry
+	heNO/RR/uLOUl7RAv7auHFYCCa5Hl/7zzjKYcB/cSZOMfQZaKEJ0a2GO+YSPOe0yv1DNbelmPIh
+	vBCPt2v87vWfPwZKLQV6Ud7pzQq7E3axXJh7lqXZeW3tkxRIF45RhvjfwMQUwRmsVx3KLah89DQ
+	N5pCODRAQX2/IEmOCJcXDtafTso7G+186VVtDrkmZd6rIMpiKpCnVPSXKdu3iEysS9bwGh+wMG6
+	jZomcrEkPxyn38c8ZBbIvO2fX1PQyoX3lZZ5oVtNkjGIh3RGKVN7Sy/w1Tj5riEnJzTvR7vIhiK
+	H9RAQ==
+X-Received: by 2002:a05:6402:5206:b0:65c:cf5:193b with SMTP id 4fb4d7f45d1cf-66319ddbffdmr1427189a12.24.1773239551548;
+        Wed, 11 Mar 2026 07:32:31 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6631503c5b2sm607638a12.16.2026.03.11.07.32.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Mar 2026 07:32:31 -0700 (PDT)
+Message-ID: <a5d1ea70-12dd-461d-b5c5-a1127e017d01@gmail.com>
+Date: Wed, 11 Mar 2026 14:32:30 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 7/8] meson: compile compatibility sources separately
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
+ <20260310-b4-pks-build-infra-improvements-v1-7-ec75d0710d6a@pks.im>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260310-b4-pks-build-infra-improvements-v1-7-ec75d0710d6a@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-When git exits via exit(128) on transport errors, child processes
-(git-remote-https, ssh, proxy) are never waited on because the normal
-cleanup paths (disconnect_helper, finish_connect) are bypassed. When
-git is PID 1 in a container, these un-reaped children become zombies.
+On 10/03/2026 17:52, Patrick Steinhardt wrote:
+> In the next commit we're about to introduce a precompiled header for
+> "git-compat-util.h". The consequence of this change is that we'll
+> implicitly include that header for every compilation unit that uses the
+> precompiled headers.
 
-Register atexit handlers in both transport-helper.c and connect.c to
-ensure children are reaped on any exit path. Clear the handlers on the
-normal cleanup paths to avoid double-waiting.
+Is that a meson thing? I know it defines precompiled headers on a 
+per-target basis but does it somehow force each source file to include 
+the precompiled header? Looking at the gcc documentation it seems like 
+the precompiled header is only included where the original header is 
+included. Splitting out the sources that do not depend on 
+"git-compat-util.h" does mean we get some additional parallelism while 
+we're precompiling the header which is probably a good thing.
 
-Signed-off-by: Andrew Au <cshung@gmail.com>
----
- connect.c          | 17 +++++++++++++++++
- transport-helper.c | 11 +++++++++++
- 2 files changed, 28 insertions(+)
+Thanks
 
-diff --git a/connect.c b/connect.c
-index eef752f14..322b1f816 100644
---- a/connect.c
-+++ b/connect.c
-@@ -20,6 +20,18 @@ static char *server_capabilities_v1;
- static struct strvec server_capabilities_v2 = STRVEC_INIT;
- static const char *next_server_feature_value(const char *feature, int *len, int *offset);
- 
-+/*
-+ * Ensure the connection child (ssh, proxy, or local git) is reaped on
-+ * any exit path, mirroring the transport-helper.c atexit pattern.
-+ */
-+static struct child_process *conn_to_reap;
-+
-+static void cleanup_conn_on_exit(void)
-+{
-+	if (conn_to_reap)
-+		finish_command(conn_to_reap);
-+}
-+
- static int check_ref(const char *name, unsigned int flags)
- {
- 	if (!flags)
-@@ -991,6 +1003,8 @@ static struct child_process *git_proxy_connect(int fd[2], char *host)
- 	proxy->out = -1;
- 	if (start_command(proxy))
- 		die(_("cannot start proxy %s"), git_proxy_command);
-+	conn_to_reap = proxy;
-+	atexit(cleanup_conn_on_exit);
- 	fd[0] = proxy->out; /* read from proxy stdout */
- 	fd[1] = proxy->in;  /* write to proxy stdin */
- 	return proxy;
-@@ -1449,6 +1463,8 @@ struct child_process *git_connect(int fd[2], const char *url,
- 
- 		if (start_command(conn))
- 			die(_("unable to fork"));
-+		conn_to_reap = conn;
-+		atexit(cleanup_conn_on_exit);
- 
- 		fd[0] = conn->out; /* read from child's stdout */
- 		fd[1] = conn->in;  /* write to child's stdin */
-@@ -1466,6 +1482,7 @@ int finish_connect(struct child_process *conn)
- 		return 0;
- 
- 	code = finish_command(conn);
-+	conn_to_reap = NULL;
- 	free(conn);
- 	return code;
- }
-diff --git a/transport-helper.c b/transport-helper.c
-index e95267a4a..cdfd40dfc 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -17,6 +17,14 @@
- 
- static int debug;
- 
-+static struct child_process *helper_to_reap;
-+
-+static void cleanup_helper_on_exit(void)
-+{
-+	if (helper_to_reap)
-+		finish_command(helper_to_reap);
-+}
-+
- struct helper_data {
- 	const char *name;
- 	struct child_process *helper;
-@@ -147,6 +155,8 @@ static struct child_process *get_helper(struct transport *transport)
- 		exit(code);
- 
- 	data->helper = helper;
-+	helper_to_reap = helper;
-+	atexit(cleanup_helper_on_exit);
- 	data->no_disconnect_req = 0;
- 	refspec_init(&data->rs, REFSPEC_FETCH);
- 
-@@ -249,6 +259,7 @@ static int disconnect_helper(struct transport *transport)
- 		close(data->helper->out);
- 		fclose(data->out);
- 		res = finish_command(data->helper);
-+		helper_to_reap = NULL;
- 		FREE_AND_NULL(data->helper);
- 	}
- 	return res;
--- 
-2.43.0
+Phillip
+
+> This is okay for our "normal" library sources and our builtins. But some
+> of our compatibility sources do not include the header on purpose, and
+> doing so would cause compileir errors.
+> 
+> Prepare for this change by splitting out compatibility sources into
+> their static library. Like this we can selectively enable precompiled
+> headers for the library sources.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>   meson.build | 79 +++++++++++++++++++++++++++++++++++--------------------------
+>   1 file changed, 45 insertions(+), 34 deletions(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index 604fe89d2d..cd00be1c23 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -271,6 +271,13 @@ version_gen_environment.set('GIT_VERSION', get_option('version'))
+>   
+>   compiler = meson.get_compiler('c')
+>   
+> +compat_sources = [
+> +  'compat/nonblock.c',
+> +  'compat/obstack.c',
+> +  'compat/open.c',
+> +  'compat/terminal.c',
+> +]
+> +
+>   libgit_sources = [
+>     'abspath.c',
+>     'add-interactive.c',
+> @@ -304,10 +311,6 @@ libgit_sources = [
+>     'commit.c',
+>     'common-exit.c',
+>     'common-init.c',
+> -  'compat/nonblock.c',
+> -  'compat/obstack.c',
+> -  'compat/open.c',
+> -  'compat/terminal.c',
+>     'compiler-tricks/not-constant.c',
+>     'config.c',
+>     'connect.c',
+> @@ -1163,7 +1166,7 @@ endif
+>   
+>   if not has_poll_h and not has_sys_poll_h
+>     libgit_c_args += '-DNO_POLL'
+> -  libgit_sources += 'compat/poll/poll.c'
+> +  compat_sources += 'compat/poll/poll.c'
+>     libgit_include_directories += 'compat/poll'
+>   endif
+>   
+> @@ -1179,7 +1182,7 @@ endif
+>   # implementation to threat things like drive prefixes specially.
+>   if host_machine.system() == 'windows' or not compiler.has_header('libgen.h')
+>     libgit_c_args += '-DNO_LIBGEN_H'
+> -  libgit_sources += 'compat/basename.c'
+> +  compat_sources += 'compat/basename.c'
+>   endif
+>   
+>   if compiler.has_header('paths.h')
+> @@ -1209,7 +1212,7 @@ if host_machine.system() != 'windows'
+>     foreach symbol : ['inet_ntop', 'inet_pton', 'hstrerror']
+>       if not compiler.has_function(symbol, dependencies: networking_dependencies)
+>         libgit_c_args += '-DNO_' + symbol.to_upper()
+> -      libgit_sources += 'compat/' + symbol + '.c'
+> +      compat_sources += 'compat/' + symbol + '.c'
+>       endif
+>     endforeach
+>   endif
+> @@ -1251,18 +1254,18 @@ else
+>   endif
+>   
+>   if host_machine.system() == 'darwin'
+> -  libgit_sources += 'compat/precompose_utf8.c'
+> +  compat_sources += 'compat/precompose_utf8.c'
+>     libgit_c_args += '-DPRECOMPOSE_UNICODE'
+>     libgit_c_args += '-DPROTECT_HFS_DEFAULT'
+>   endif
+>   
+>   # Configure general compatibility wrappers.
+>   if host_machine.system() == 'cygwin'
+> -  libgit_sources += [
+> +  compat_sources += [
+>       'compat/win32/path-utils.c',
+>     ]
+>   elif host_machine.system() == 'windows'
+> -  libgit_sources += [
+> +  compat_sources += [
+>       'compat/winansi.c',
+>       'compat/win32/dirent.c',
+>       'compat/win32/flush.c',
+> @@ -1289,20 +1292,20 @@ elif host_machine.system() == 'windows'
+>     libgit_include_directories += 'compat/win32'
+>     if compiler.get_id() == 'msvc'
+>       libgit_include_directories += 'compat/vcbuild/include'
+> -    libgit_sources += 'compat/msvc.c'
+> +    compat_sources += 'compat/msvc.c'
+>     else
+> -    libgit_sources += 'compat/mingw.c'
+> +    compat_sources += 'compat/mingw.c'
+>     endif
+>   endif
+>   
+>   if host_machine.system() == 'linux'
+> -  libgit_sources += 'compat/linux/procinfo.c'
+> +  compat_sources += 'compat/linux/procinfo.c'
+>   elif host_machine.system() == 'windows'
+> -  libgit_sources += 'compat/win32/trace2_win32_process_info.c'
+> +  compat_sources += 'compat/win32/trace2_win32_process_info.c'
+>   elif host_machine.system() == 'darwin'
+> -  libgit_sources += 'compat/darwin/procinfo.c'
+> +  compat_sources += 'compat/darwin/procinfo.c'
+>   else
+> -  libgit_sources += 'compat/stub/procinfo.c'
+> +  compat_sources += 'compat/stub/procinfo.c'
+>   endif
+>   
+>   if host_machine.system() == 'cygwin' or host_machine.system() == 'windows'
+> @@ -1315,13 +1318,13 @@ endif
+>   
+>   # Configure the simple-ipc subsystem required fro the fsmonitor.
+>   if host_machine.system() == 'windows'
+> -  libgit_sources += [
+> +  compat_sources += [
+>       'compat/simple-ipc/ipc-shared.c',
+>       'compat/simple-ipc/ipc-win32.c',
+>     ]
+>     libgit_c_args += '-DSUPPORTS_SIMPLE_IPC'
+>   else
+> -  libgit_sources += [
+> +  compat_sources += [
+>       'compat/simple-ipc/ipc-shared.c',
+>       'compat/simple-ipc/ipc-unix-socket.c',
+>     ]
+> @@ -1339,7 +1342,7 @@ if fsmonitor_backend != ''
+>     libgit_c_args += '-DHAVE_FSMONITOR_DAEMON_BACKEND'
+>     libgit_c_args += '-DHAVE_FSMONITOR_OS_SETTINGS'
+>   
+> -  libgit_sources += [
+> +  compat_sources += [
+>       'compat/fsmonitor/fsm-health-' + fsmonitor_backend + '.c',
+>       'compat/fsmonitor/fsm-ipc-' + fsmonitor_backend + '.c',
+>       'compat/fsmonitor/fsm-listen-' + fsmonitor_backend + '.c',
+> @@ -1355,7 +1358,7 @@ if not get_option('b_sanitize').contains('address') and get_option('regex').allo
+>   
+>     if compiler.get_define('REG_ENHANCED', prefix: '#include <regex.h>') != ''
+>       libgit_c_args += '-DUSE_ENHANCED_BASIC_REGULAR_EXPRESSIONS'
+> -    libgit_sources += 'compat/regcomp_enhanced.c'
+> +    compat_sources += 'compat/regcomp_enhanced.c'
+>     endif
+>   elif not get_option('regex').enabled()
+>     libgit_c_args += [
+> @@ -1364,7 +1367,7 @@ elif not get_option('regex').enabled()
+>       '-DNO_MBSUPPORT',
+>     ]
+>     build_options_config.set('NO_REGEX', '1')
+> -  libgit_sources += 'compat/regex/regex.c'
+> +  compat_sources += 'compat/regex/regex.c'
+>     libgit_include_directories += 'compat/regex'
+>   else
+>       error('Native regex support requested but not found')
+> @@ -1428,7 +1431,7 @@ else
+>   
+>     if get_option('b_sanitize').contains('address')
+>       libgit_c_args += '-DNO_MMAP'
+> -    libgit_sources += 'compat/mmap.c'
+> +    compat_sources += 'compat/mmap.c'
+>     else
+>       checkfuncs += { 'mmap': ['mmap.c'] }
+>     endif
+> @@ -1438,7 +1441,7 @@ foreach func, impls : checkfuncs
+>     if not compiler.has_function(func)
+>       libgit_c_args += '-DNO_' + func.to_upper()
+>       foreach impl : impls
+> -      libgit_sources += 'compat/' + impl
+> +      compat_sources += 'compat/' + impl
+>       endforeach
+>     endif
+>   endforeach
+> @@ -1449,13 +1452,13 @@ endif
+>   
+>   if not compiler.has_function('strdup')
+>     libgit_c_args += '-DOVERRIDE_STRDUP'
+> -  libgit_sources += 'compat/strdup.c'
+> +  compat_sources += 'compat/strdup.c'
+>   endif
+>   
+>   if not compiler.has_function('qsort')
+>     libgit_c_args += '-DINTERNAL_QSORT'
+>   endif
+> -libgit_sources += 'compat/qsort_s.c'
+> +compat_sources += 'compat/qsort_s.c'
+>   
+>   if compiler.has_function('getdelim')
+>     libgit_c_args += '-DHAVE_GETDELIM'
+> @@ -1511,7 +1514,7 @@ if meson.can_run_host_binaries() and compiler.run('''
+>     }
+>   ''', name: 'fread reads directories').returncode() == 0
+>     libgit_c_args += '-DFREAD_READS_DIRECTORIES'
+> -  libgit_sources += 'compat/fopen.c'
+> +  compat_sources += 'compat/fopen.c'
+>   endif
+>   
+>   if not meson.is_cross_build() and fs.exists('/dev/tty')
+> @@ -1745,14 +1748,22 @@ else
+>   endif
+>   
+>   libgit = declare_dependency(
+> -  link_with: static_library('git',
+> -    sources: libgit_sources,
+> -    c_args: libgit_c_args + [
+> -      '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
+> -    ],
+> -    dependencies: libgit_dependencies,
+> -    include_directories: libgit_include_directories,
+> -  ),
+> +  link_with: [
+> +    static_library('compat',
+> +      sources: compat_sources,
+> +      c_args: libgit_c_args,
+> +      dependencies: libgit_dependencies,
+> +      include_directories: libgit_include_directories,
+> +    ),
+> +    static_library('git',
+> +      sources: libgit_sources,
+> +      c_args: libgit_c_args + [
+> +        '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
+> +      ],
+> +      dependencies: libgit_dependencies,
+> +      include_directories: libgit_include_directories,
+> +    ),
+> +  ],
+>     compile_args: libgit_c_args,
+>     dependencies: libgit_dependencies,
+>     include_directories: libgit_include_directories,
+> 
 
