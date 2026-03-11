@@ -1,131 +1,135 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7866B175A73
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 08:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653B43C0630
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 08:50:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773218487; cv=none; b=Aa3y76vbY+1dbjYfl/2v0AFQk+nRVDVouLVKVkaHULlp8gxTqqIArUMVceH8kusoF3LeO5QwZY7AGdVX2x0FSik1U4XPw6yoCoIc8USK7ZlbKI2EfUH9nOsIXlOcIFoo2QLVLPiWXV+qt8oBaq41T+EA/RBlz+POvFjLk+u8u+0=
+	t=1773219037; cv=none; b=DxKH1hq7VtA6NYphlqWZszZnkXLLlDeWZAKJmNcUEiSae/xFe0FtcFnRJKhtgR6DiAPYVfsgQ7PV4ibpWSaRFIXQZ84nE0F6clrDjkcsKS5seSuFWhlJZFj2yd86u3TE36ozNi3I8hHGYEp8S4WGDI3xjvXA7FkQDsfypJEb6t8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773218487; c=relaxed/simple;
-	bh=4vUzUMc63nceGGVbp4mANhNVb/U2iL5HhPyVQ+yY/+c=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=gH0qDwHx1mRKJZbVVY7Fwf0J5qxjnkOJta1NfSjKo6KRMoGLNotGfs8JlR8Jly4X8SfzOpzWiMMDeJAqNv0pCFdZ70+GLgaHlFgtCe9vBPLEEM2D+SPpOsJHpJ6FK22yMnpZEdhjVcLQberkY7vo1e1XDicBju1rTJuyd6J+d1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RN6h0q9c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gQD8Jc7i; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1773219037; c=relaxed/simple;
+	bh=oWeuFvn+CXp77S5BiZkZRbcl2jHaBsY0jNodiz80ld8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=taZXLElc5CU/Aze8EYJEXD7UPxbMBxtxbKrOhuwAKlzziKtdsK+YpLkt6SB6opvdg7iGtoMh2APRbkETM+zADlDVRaALbTgwWYqDtgQX92bA6wuA3ebWTUqqFs/TPrw7IzRy8RQAE4MLJQty9vVxK4p951/opIJM44o5td+LlBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kVSaoISi; arc=none smtp.client-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RN6h0q9c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gQD8Jc7i"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 77ED71D001A1;
-	Wed, 11 Mar 2026 04:41:24 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Wed, 11 Mar 2026 04:41:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773218484;
-	 x=1773304884; bh=3fGtp719zcYnzZVzJG87BpuXlZv9ygOGVraShPtIJ+o=; b=
-	RN6h0q9csEAM654pu9PIHsz83yjbaTo/iDDCF4GToNhZwFCtl1zuXUE7Vcj7JLO7
-	zPCfrA5E5u1wXGjDAb36V9432G+BMzFV94Jg3eVtsIygb/onmV1/zMO1djNMFiAK
-	vvTr5i1wO4zBUdRVMfprH9MmLJ1KhlbqQjib6px1Gzpn2kZzlSL2C03b9b503+Ut
-	P0d2RK+iiU8BkLE1YqrdUDacvZZMK6afwd/PqYYg9+fd5nYbLXRo0c2LPPDyX2R5
-	Hk1MvmbBq2pGh3NwBcsl/V10vC1ie1mWUA85zqaMA+T60nyOtKZcICv7h6ZcrdxP
-	mOEvLLLUJPtsW1iWJ9J4cQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773218484; x=
-	1773304884; bh=3fGtp719zcYnzZVzJG87BpuXlZv9ygOGVraShPtIJ+o=; b=g
-	QD8Jc7iCY33PlRvgshc/QHeuiGV9IyuDiZkQeXCYvRhRSOT1nHOLWoDQbzawNRPV
-	dBM+UETw4CaLildJ6cBKCpnaC1b/JcUUPnu5wiUt/0WAyfLOLka/rTjUwdr0FswO
-	8YpZuc9EXehGWrqs8GdmNJKAsRzXeUaXwxtbfHH4McB26zCBUcvzZnmHpxhzyWbl
-	GkUkX5+JictcjO324L5IhsRpsFzgHcfjGbPJjxUsU7F1JEt02SPrWQevL8Ng7Ey6
-	eYTA9YITdbw+TVJAv4SI/egA6s+3g6Na5IAKf2U8dwo+kmaf+5ePAdOIi+XmRve3
-	PnrfiMXH0j4l7AQKMcaNQ==
-X-ME-Sender: <xms:tCqxaWjft8CKpZ_ThGuCQiKLgEvI9N-bXCYqu_G9uN52SLWz7Oh4eS4>
-    <xme:tCqxaR1jcEAbQJYSXNdQmIxeGW4iY-RyML5r7zgUFQMHy9mO5IZzKMWRi6tNJ19Xn
-    PcCkgURemjn691-78PDVRkAOs93dvrocuGcKCca5GM7JXLIlHYHng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeefgeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehmmhhonhhtrghlsghosehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:tCqxaX_rUufjqJiPXgAsDY4ZuRlTDyQmbWUwHuMTvE2zEf2YtmFKlA>
-    <xmx:tCqxabfiwCHIZXWdtmcybm6u3_iutJqoppOycP6f3r7PbuHYbIUG-g>
-    <xmx:tCqxaYFt5sc5rTp0m2YQ2uGIgQ7zh5tdre5S9cuIyWNJPCqvdwL3zg>
-    <xmx:tCqxaRcH_P6WCcSI5TH1jYBJAuoYnzW-h-HWiesO1u-70G5Fevk4AA>
-    <xmx:tCqxadcexmFNeBz8RwTu3nJWZy2QMmBdIJTZEjs94V5jAtZ5GDBxaJCB>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 30BC61EA006B; Wed, 11 Mar 2026 04:41:24 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kVSaoISi"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8cd73c4a827so469596285a.3
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 01:50:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773219032; x=1773823832; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Zh1bTJxvitHIE/AI9UJxPv+vM4oSuCUxw5PvsFs0/r4=;
+        b=kVSaoISi9r6/nADZ7CE1+tX+dgEESEfEe7uOVF14lNjrAmIwwTbjGbrrkMO0ttNLch
+         31WXgpejgTj1G3VJRCjxQIgZ/5JU1rZXz836kpHA2QU09jk0FtYTLjIExIbMbgnayjPQ
+         ZHzJMusamocgURixAwaZF712f9QhbWxRxbnQR7/HBwZxBxTeQ8MsMMTMweqNqezQ3l6L
+         eQC8KPiBzdbzLamqdhvy5NFiIEhQYquHus/ysifMB3m64g9K2eLBKjfGLz/79vWPgtr6
+         oRuq53jUu28wizMMnelGcAjtq5TlpVfLCL6V9xilFc8NwwIg915uI1TKUba+GVp/Ggx3
+         QRug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773219032; x=1773823832;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Zh1bTJxvitHIE/AI9UJxPv+vM4oSuCUxw5PvsFs0/r4=;
+        b=ZqR9wh2SXDxczOw6ZFNSEkiNC9WakoXi3z1PKqYqvxBx9gSVkDKkOoEI8GHZhiSXyZ
+         lPu195KfYD0oy6g99cCO+W8K0ymyqWS1OLPfXyhUeuqwPhsw/1qh3IPsmmnfwqd/1KNi
+         QRotmrT8h/XQ9tpXwoApM46QUXrcylvHeqA+hsZtupBLmNejaGEdrnQaQ+IofVMCOaxd
+         80KkKYxKivXXWR+PBn24T26DujdV6FHipmufFF7ZkVUM4KzoHXx8fiAK88Jcw/AmmGSI
+         TYQC2hkHvGeOVaED6UQw9Up0hb5+id3EujIQ64MmgjWxOmv+7Om2bMd+7vQ8jGfXHW0o
+         C39g==
+X-Gm-Message-State: AOJu0YwmKKz9L9AyLP7tvn4id6Zt8tTugqX3Y612nUjP4SFoEZBoIgUh
+	BPWsOAtamQyNDoZdP8dJ9G3isT8VgVOEGkVEdcBq4ixKLFPXru1gkqZyK9s3oXog
+X-Gm-Gg: ATEYQzys3bVcDyV7mtYKLRQ//ZRefNiEaF92K8ygwhr3OQLHQJ8BTa0CIWEbhBKns3U
+	0wDl3GupnXkXrUWKEiCF7t5/Or/3jix2/lgq78lFRZkoB593xfCFITSLFnbToj0xpD+yO8etFkM
+	Rvh0xbIFvehzgJoNWJ2ob7eFHuG02jsgE6nqL0z7Fvmkb1985IaD8Fw1WMjKjNnHLit0VNXvffb
+	QZWBtpGWbC7hoL62D3r7Y8hdTiDzwNGS+torhk1vLRVvwtAP/wiuHsl3zenQDLmO8xbqyq06yJv
+	veTcMDtBeNB8ppYcyleJUjgu2vSxjXIz3WgTfT66eGdblCo8aP6iEiruxWR+Q4M4eopSN+21l64
+	7JLI4C63+g/xxN06mYHOaP4TfrW9WN2EkeLpJyCo7rFwL1n/MYFx9H8BW9aeMV5JjsaVliFrKWh
+	jVXFq20QSQXLSuOZLkd0mGJZo=
+X-Received: by 2002:a05:620a:1a82:b0:8c9:f996:81f9 with SMTP id af79cd13be357-8cda1ae719bmr200886685a.82.1773219031690;
+        Wed, 11 Mar 2026 01:50:31 -0700 (PDT)
+Received: from [127.0.0.1] ([40.81.42.178])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cda21100dasm97777185a.25.2026.03.11.01.50.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Mar 2026 01:50:30 -0700 (PDT)
+Message-Id: <pull.2233.v4.git.git.1773219028.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2233.v3.git.git.1773149337.gitgitgadget@gmail.com>
+References: <pull.2233.v3.git.git.1773149337.gitgitgadget@gmail.com>
+From: "Arsh Srivastava via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 11 Mar 2026 08:50:23 +0000
+Subject: [PATCH v4 0/5] Advice on checkout dirty files
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Aye3URkR62QV
-Date: Wed, 11 Mar 2026 09:41:03 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: git@vger.kernel.org, gitgitgadget@gmail.com
-Cc: "Michael Montalbo" <mmontalbo@gmail.com>
-Message-Id: <e551ce17-8118-4b3b-ad8c-bdfe1a854c0b@app.fastmail.com>
-In-Reply-To: 
- <0d3e84a088ec53368a748684268db89064632871.1772845338.git.gitgitgadget@gmail.com>
-References: <pull.2065.git.1772845338.gitgitgadget@gmail.com>
- <0d3e84a088ec53368a748684268db89064632871.1772845338.git.gitgitgadget@gmail.com>
-Subject: Re: [PATCH 4/4] doc: note that -L supports patch formatting and pickaxe
- options
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Arsh Srivastava <arshsrivastava00@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Karthik Nayak <karthik.188@gmail.com>,
+    Arsh Srivastava <arshsrivastava00@gmail.com>
 
-On Sat, Mar 7, 2026, at 02:02, Michael Montalbo via GitGitGadget wrote:
-> From: Michael Montalbo <mmontalbo@gmail.com>
->
-> Now that -L output flows through the standard diff pipeline,
-> document that patch formatting options like --word-diff,
-> --color-moved, --no-prefix, whitespace handling (-w, -b),
-> and pickaxe options (-S, -G) are supported.
->
-> Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
-> ---
->  Documentation/line-range-options.adoc | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/Documentation/line-range-options.adoc
-> b/Documentation/line-range-options.adoc
-> index c44ba05320..aa236281b3 100644
-> --- a/Documentation/line-range-options.adoc
-> +++ b/Documentation/line-range-options.adoc
-> @@ -11,5 +11,9 @@
->  	Patch output can be suppressed using `--no-patch`, but other diff
-> formats
->  	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary=
-`,
->  	`--name-only`, `--name-status`, `--check`) are not currently
-> implemented.
-> ++
-> +	Patch formatting options such as `--word-diff`, `--color-moved`,
-> +	`--no-prefix`, and whitespace options (`-w`, `-b`) are supported,
-> +	as are pickaxe options (`-S`, `-G`).
+This is my submission for microproject [GSOC]
 
-You shouldn=E2=80=99t use indentation here. This is a code block now.
+This patch adds a new advice type ADVICE_STASH_BEFORE_CHECKOUT to help users
+when they attempt to switch branches with local modifications that would be
+overwritten by the operation.
 
-Just a line continuation and flush to the left.
+The new advice follows the same patterns established by existing advice
+functions such as advise_on_updating_sparse_paths(). When triggered, it
+lists the affected files and suggests using git stash push/pop to save and
+restore local changes.
 
->  +
->  include::line-range-format.adoc[]
-> --
-> gitgitgadget
+The advice can be silenced with:
+
+git config set advice.stashBeforeCheckout false
+
+Changes:
+
+> advice.h: add ADVICE_STASH_BEFORE_CHECKOUT enum value advice.c: add
+> "stashBeforeCheckout" to advice_setting[] and implement
+> advise_on_checkout_dirty_files() function
+> Documentation/config/advice.adoc: document the new advice key
+
+Signed-off-by: Arsh Srivastava arshsrivastava00@gmail.com
+
+Arsh Srivastava (5):
+  advice: add stashBeforeCheckout advice for dirty branch switches
+  advice: add stashBeforeCheckout advice for dirty branch switches
+    [GSOC]
+  unpack-trees: suggesting 'git checkout -m <branch>' with its
+    repercussions
+  Updating tests and unpack-tress.c [GSOC]
+  File updation [GSOC]
+
+ t/t6439-merge-co-error-msgs.sh | 6 ++++++
+ t/t7406-submodule-update.sh    | 3 +++
+ unpack-trees.c                 | 9 +++++++--
+ 3 files changed, 16 insertions(+), 2 deletions(-)
+
+
+base-commit: d181b9354cf85b44455ce3ca9e6af0b9559e0ae2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2233%2FArsh123344423%2Fadvice_on_checkout_dirty_files-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2233/Arsh123344423/advice_on_checkout_dirty_files-v4
+Pull-Request: https://github.com/git/git/pull/2233
+
+Range-diff vs v3:
+
+ 1:  eb5639dbc3 = 1:  eb5639dbc3 advice: add stashBeforeCheckout advice for dirty branch switches
+ 2:  e88c851701 = 2:  e88c851701 advice: add stashBeforeCheckout advice for dirty branch switches [GSOC]
+ -:  ---------- > 3:  4237b9667d unpack-trees: suggesting 'git checkout -m <branch>' with its repercussions
+ -:  ---------- > 4:  b25ea22410 Updating tests and unpack-tress.c [GSOC]
+ -:  ---------- > 5:  2ef7d5a3d6 File updation [GSOC]
+
+-- 
+gitgitgadget
