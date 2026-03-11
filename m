@@ -1,206 +1,147 @@
-Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C671A6817
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 13:53:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39AE4A33
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 13:53:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773237221; cv=none; b=qVjFadr9enmsIqrHEKEgmsHIF88no+77apSJ9MO/yetG4RMJEYXdN3G+omEJ/fklJzwAfmLWegL08db7qYfmxhqVFqcmxDDWqxRTXaA90ra6cDwkKh4mLP7lseycHpP7Ye18lh/mumxzytBbGSiEJYatQPDowZF3RaTng7TSSGE=
+	t=1773237222; cv=none; b=bjgQwVpEvpFDbNxmneXqUZdpwT6I9YWIu0koi9SJR82KXlB1t3KewoWsi7LGWi+uQkxIJWeksRKtM4HrsTfLjgzlf2xTP+BYlFaHtrogtu/1HdraMJkF09/TVRIuuO3EM1KfL47VISWs64ajzaZnaMAKbUR46lzqlKzqHDXw6wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773237221; c=relaxed/simple;
-	bh=qYfmyY/TUG+a5aoEAVKs1oAmSvOT+lpCeszdDmSDVgs=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l2pa/78ap0dq+C/Qse8Xu0o5a6CZvzs7amt1B/EtWGnZWcaO0gdc5OjCXj5xvUb/Gh79m8PFgH86z3NaDDvdI9A4LVlj0Ayfhqc57k7DjPfbRmmqI2i1MpWBw2w8dXxlgmsugAPE3vGqpAkVzOQALEN55O0/5ZOsy5AtKXaHO5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=sgk1yPZs; arc=none smtp.client-ip=95.215.58.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1773237222; c=relaxed/simple;
+	bh=RisrU4zsi+IdLHvfhdPojrM9cUWKs/hFAc4Xrnw5IMU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WtaOh9J1hMli+ktzYdNbEVNeX33EcH3MdxNnZR7zer5hvWEOpo6ZBYdBiohY3uZxQuN6iKgzgKep79zLCl5aw9Te/eqzu7eugZ2L8f9wBp+p8md1UyjzUv+KMefy+/2FWWlsE5cN2HTLxEJFL/YYuF/FqEkxqZHPrCKvXup8yeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y76D/9+f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ti7or2wK; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="sgk1yPZs"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1773237211;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qvnaQA6zGZ8+UWpropWOqgLjqUtvlBxn1EydfUBxMAo=;
-	b=sgk1yPZsPqKvF2oULs8iEVE5to+TmpJszCIAW1uiZD0+eikjYtB+X7m0rdtXXo/nGXLXPR
-	GEUOE3qRiUgPVNNJNrRZ3GSFzkoJCtD1vE+vnYb14B51thRTorQx9g+bDCIXLvoLVb1nTp
-	mcadC6NW4DtGgsEEi+P7YQlCEVoQhHg=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 4/6] object-file: generalize counting objects
-In-Reply-To: <20260310-b4-pks-odb-source-count-objects-v1-4-109e07d425f4@pks.im>
-References: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
- <20260310-b4-pks-odb-source-count-objects-v1-4-109e07d425f4@pks.im>
-Date: Wed, 11 Mar 2026 14:53:20 +0100
-Message-ID: <87pl5albfz.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y76D/9+f";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ti7or2wK"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BBFFB7A0114;
+	Wed, 11 Mar 2026 09:53:36 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 11 Mar 2026 09:53:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773237216; x=1773323616; bh=nPIIeUliNR
+	iYj6yDmzY9uidMKS1OF5z7Vkxurnk8Qak=; b=Y76D/9+fuhYC3BWe/p6O7zq2hx
+	KVrbjl6/OaHetIN7kfXHpeZNyz3XiRPVpZW5phF6TL+IH9HnfgYZwivBVEJEkBiK
+	BhvS/oG6Bhw/0/03JFzq2VIJtgb959TIcCXD8+qPmqTlFLV4kf3FFeZV0WcEWSJ1
+	T1fe2O4kVKk86ikpDwf4eGqivXG+ShtX7uRflnJbvM8Msw89M0x7TrNToJ6bfC5J
+	7ZJOx+79m/7/AaXu0Q0pLRXeNfMkBWjZ03qTuOEK9MgJqVs/srmFPLsgV30TIX/T
+	9ldL6415q5jl5eMaFgKxbmKRzKZXI0IvE4Fgb1AyYuotBQL4VLMhdcZ+JpOw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773237216; x=1773323616; bh=nPIIeUliNRiYj6yDmzY9uidMKS1OF5z7Vkx
+	urnk8Qak=; b=ti7or2wKy2vlPE5YyPyBSLEY4R3k2Cy/TgmG5tFYkgbqvxZqqQU
+	xsueLrH9vB/EnNONpKv18zm+a2BMe+yVfH031O37NtUX3SLFxSoNdo6SjOJpqlBp
+	zJzrtIQTWJ8lKHkoLOekOWnB0whCtSGcl3CaA1XHu6n6A9JN0McfznFHpa5EoHyY
+	NYdChS0QlQ91MFRrDL6BNFddTU13/oFLJ9Yqz5dygmkqgtqDiCPFDUeheXEj+8jv
+	acvdkM7XfSZ9MtoD/wfYMhM5U7eH1F560c1HgWkq66/yRkt2Il2htE8X1tsBW0Rl
+	heQ3TiOOry2HcEbcSC9NrjMH+NOmr4WtSsA==
+X-ME-Sender: <xms:4HOxaU7HL02H6mS7JAMyJ7-eXIoX6nGgAhR2M995V0XRgRl-arMIrA>
+    <xme:4HOxaczWfEXLXiQ6nOiWCOjhpyw3_Oix2QkoH4TzLnP4kA4nIWL4ToWhiMxDfqM-d
+    tg3u09o0DH8PjNBaFXONDMceCd8SkIDlJeiuYatJqAtRchj087pvA>
+X-ME-Received: <xmr:4HOxabxPRU4Rl9Lj5stuaTZyGnNYVVrLHRAKUTT7eZlj8m7JJ-SbCXGrVKZlxDwD_iqHaqSZfNDUlUifG_xQMC6CCB5s6h0n15KJx09Mpg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegtdejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehsrg
+    hnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggs
+    ohhrrgdrtghomh
+X-ME-Proxy: <xmx:4HOxaUwFF6iTHjNYopWx_3WqDfdpuo64TQ2k70e88gBFTT8DvC2xnw>
+    <xmx:4HOxaVZGtT-hB4FQU1oiHPymW36LiefR424mKqLNKmrHw4GBl2Ds8A>
+    <xmx:4HOxaVWQpGzQfUZJ8JCtK7C4d8YCscKKd9B4Oi5OMyRNN9pfRXf-6g>
+    <xmx:4HOxaTgaUzZFDIh1oq4LjfEk7xWl1tUbZjDy2L_oll4c8HMZxhqoHw>
+    <xmx:4HOxaamKk7JQbiF9EXzC5Y0W8iLegkgsQIxUnBYRK1XC6WhOoc4i3Hvm>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 09:53:35 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ecc0aa0b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Mar 2026 13:53:33 +0000 (UTC)
+Date: Wed, 11 Mar 2026 14:53:30 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 10/10] hook: show disabled hooks in "git hook list"
+Message-ID: <abFz2sav7FLv8hOG@pks.im>
+References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
+ <20260309005416.2760030-11-adrian.ratiu@collabora.com>
+ <abFC6pEEmicjG6a9@pks.im>
+ <87eclqa70x.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87eclqa70x.fsf@collabora.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Wed, Mar 11, 2026 at 02:24:14PM +0200, Adrian Ratiu wrote:
+> On Wed, 11 Mar 2026, Patrick Steinhardt <ps@pks.im> wrote:
+> > On Mon, Mar 09, 2026 at 02:54:16AM +0200, Adrian Ratiu wrote:
+> >> diff --git a/builtin/hook.c b/builtin/hook.c
+> >> index c806640361..ff446948fa 100644
+> >> --- a/builtin/hook.c
+> >> +++ b/builtin/hook.c
+> >> @@ -72,16 +72,20 @@ static int list(int argc, const char **argv, const char *prefix,
+> >>  		case HOOK_TRADITIONAL:
+> >>  			printf("%s%c", _("hook from hookdir"), line_terminator);
+> >>  			break;
+> >> -		case HOOK_CONFIGURED:
+> >> -			if (show_scope)
+> >> -				printf("%s (%s)%c",
+> >> -				       h->u.configured.friendly_name,
+> >> -				       config_scope_name(h->u.configured.scope),
+> >> +		case HOOK_CONFIGURED: {
+> >> +			const char *name = h->u.configured.friendly_name;
+> >> +			const char *scope = show_scope ?
+> >> +				config_scope_name(h->u.configured.scope) : NULL;
+> >> +			if (scope)
+> >> +				printf("%s (%s%s)%c", name, scope,
+> >> +				       h->u.configured.disabled ? ", disabled" : "",
+> >>  				       line_terminator);
+> >> +			else if (h->u.configured.disabled)
+> >> +				printf("%s (disabled)%c", name, line_terminator);
+> >>  			else
+> >> -				printf("%s%c", h->u.configured.friendly_name,
+> >> -				       line_terminator);
+> >> +				printf("%s%c", name, line_terminator);
+> >>  			break;
+> >> +		}
+> >>  		default:
+> >>  			BUG("unknown hook kind");
+> >>  		}
+> >
+> > Hm. This starts to feel less and less like an interface that can easily
+> > be parsed by a machine, even with "-z". I guess this partly comes from
+> > our insistence to reinvent the wheel in Git instead of just using
+> > something like JSON :/
+> 
+> Yes, I agree, a structured output format like JSON would be ideal in
+> this case.
+> 
+> Please see my previous patch suggestion of mirroring the existing git
+> config --show-scope by using tab separated prefixes. Maybe we could do
+> that here as well.
 
-> Generalize the function introduced in the preceding commit to not only
-> be able to approximate the number of loose objects, but to also provide
-> an accurate count. The behaviour can be toggled via a new flag.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/gc.c  |  5 +++--
->  object-file.c | 58 +++++++++++++++++++++++++++++++++++++---------------------
->  object-file.h |  5 +++--
->  odb.h         |  9 +++++++++
->  4 files changed, 52 insertions(+), 25 deletions(-)
->
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index a08c7554cb..3a64d28da8 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -474,8 +474,9 @@ static int too_many_loose_objects(int limit)
->  	int auto_threshold = DIV_ROUND_UP(limit, 256) * 256;
->  	unsigned long loose_count;
->  
-> -	if (odb_source_loose_approximate_object_count(the_repository->objects->sources,
-> -						      &loose_count) < 0)
-> +	if (odb_source_loose_count_objects(the_repository->objects->sources,
-> +					   ODB_COUNT_OBJECTS_APPROXIMATE,
-> +					   &loose_count) < 0)
->  		return 0;
->  
->  	return loose_count > auto_threshold;
-> diff --git a/object-file.c b/object-file.c
-> index da67e3c9ff..d35cec201f 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1868,40 +1868,56 @@ int odb_source_loose_for_each_object(struct odb_source *source,
->  					     NULL, NULL, &data);
->  }
->  
-> -int odb_source_loose_approximate_object_count(struct odb_source *source,
-> -					      unsigned long *out)
-> +static int count_loose_object(const struct object_id *oid UNUSED,
-> +			      struct object_info *oi UNUSED,
-> +			      void *payload)
-> +{
-> +	unsigned long *count = payload;
-> +	(*count)++;
-> +	return 0;
-> +}
-> +
-> +int odb_source_loose_count_objects(struct odb_source *source,
-> +				   enum odb_count_objects_flags flags,
-> +				   unsigned long *out)
->  {
->  	const unsigned hexsz = source->odb->repo->hash_algo->hexsz - 2;
-> -	unsigned long count = 0;
-> -	struct dirent *ent;
->  	char *path = NULL;
->  	DIR *dir = NULL;
->  	int ret;
->  
-> -	path = xstrfmt("%s/17", source->path);
-> +	if (flags & ODB_COUNT_OBJECTS_APPROXIMATE) {
-> +		unsigned long count = 0;
-> +		struct dirent *ent;
->  
-> -	dir = opendir(path);
-> -	if (!dir) {
-> -		if (errno == ENOENT) {
-> -			*out = 0;
-> -			ret = 0;
-> +		path = xstrfmt("%s/17", source->path);
-> +
-> +		dir = opendir(path);
-> +		if (!dir) {
-> +			if (errno == ENOENT) {
-> +				*out = 0;
-> +				ret = 0;
-> +				goto out;
-> +			}
-> +
-> +			ret = error_errno("cannot open object shard '%s'", path);
->  			goto out;
->  		}
->  
-> -		ret = error_errno("cannot open object shard '%s'", path);
-> -		goto out;
-> -	}
-> +		while ((ent = readdir(dir)) != NULL) {
-> +			if (strspn(ent->d_name, "0123456789abcdef") != hexsz ||
-> +			    ent->d_name[hexsz] != '\0')
-> +				continue;
-> +			count++;
-> +		}
->  
-> -	while ((ent = readdir(dir)) != NULL) {
-> -		if (strspn(ent->d_name, "0123456789abcdef") != hexsz ||
-> -		    ent->d_name[hexsz] != '\0')
-> -			continue;
-> -		count++;
-> +		*out = count * 256;
-> +		ret = 0;
-> +	} else {
-> +		ret = odb_source_loose_for_each_object(source, NULL, count_loose_object,
-> +						       out, 0);
+Yeah, I think doing it similarly makes sense.
 
-Isn't `*out` uninitialized here? Should we add `*out = 0;` before this
-line?
-
->  	}
->  
-> -	*out = count * 256;
-> -	ret = 0;
-> -
->  out:
->  	if (dir)
->  		closedir(dir);
-> diff --git a/object-file.h b/object-file.h
-> index b870ea9fa8..f8d8805a18 100644
-> --- a/object-file.h
-> +++ b/object-file.h
-> @@ -149,8 +149,9 @@ int odb_source_loose_for_each_object(struct odb_source *source,
->   *
->   * Returns 0 on success, a negative error code otherwise.
->   */
-> -int odb_source_loose_approximate_object_count(struct odb_source *source,
-> -					      unsigned long *out);
-> +int odb_source_loose_count_objects(struct odb_source *source,
-> +				   enum odb_count_objects_flags flags,
-> +				   unsigned long *out);
->  
->  /**
->   * format_object_header() is a thin wrapper around s xsnprintf() that
-> diff --git a/odb.h b/odb.h
-> index 7a583e3873..e6057477f6 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -500,6 +500,15 @@ int odb_for_each_object(struct object_database *odb,
->  			void *cb_data,
->  			unsigned flags);
->  
-> +enum odb_count_objects_flags {
-> +	/*
-> +	 * Instead of providing an accurate count, allow the number of objects
-> +	 * to be approximated. Details of how this approximation works are
-> +	 * subject to the specific source's implementation.
-> +	 */
-> +	ODB_COUNT_OBJECTS_APPROXIMATE = (1 << 0),
-> +};
-> +
->  enum {
->  	/*
->  	 * By default, `odb_write_object()` does not actually write anything
->
-> -- 
-> 2.53.0.880.g73c4285caa.dirty
->
->
-
--- 
-Cheers,
-Toon
+Patrick
