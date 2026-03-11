@@ -1,112 +1,142 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067D234A76F
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773258546; cv=pass; b=uFuRNp4P/J7SyvGLRA1DqoLtoqouawjnzcBI3BZ5lQShhSDbXTRiXChBo8y4l/AQ6ezSFRkwSeJ7iMCVEVEBM/oVl6xQ4a7T6UpntPSEmFThgUcvJtnSOc2L0ZvhEMRvfG7BodrnL1VjHZlG1IpHD/jzXMkNFgxTwEj/E4+JmgU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773258546; c=relaxed/simple;
-	bh=dEWMTJwyEN2/7akwMhMjZp16aXwepobKwuPij0Pkubw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KdCE+ECrjSjK7mhLVE6WGu3jnFx7H/9iyi7lS+8IzzyojOHTkyw9DIWC2ddJV+us/Wy2uRaOJoLFhgD4tCBgyTRIfUYAwui7L1WYJp2LD3sz7GngH0CB3i92D4fZ33TXpfQmJCAu5xEKPRMkzfidTXNZELvWOebXEfjJPqAgMAw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eG2zGJmq; arc=pass smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C7C347505
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773258582; cv=none; b=V5l9UqY/voZmVupkgLHSM3h0XJpXlg8A0HRJ1t/U1gM0w3TCIP2kzhy8gLAu11pqzQjWlfh7DhkxGj7VW90QDB/UCw6EV0ppYz574hqb4iUn+QGAnb/1aogawhxXfhcphr/ijCGw9YGdB4eBouOn5mPhEd1efs74ykZI1jFbT8w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773258582; c=relaxed/simple;
+	bh=1JRKOfJasy0Qaw3PVle+ldokrAkgiwqSseovZXP9yOs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=l2FmndEMr9sPT0p32m7cXmLZr3JDVPCUeJsuigDWn7ZmQftK6vGdulPBDiek5LitXHVli+o1S8du1LWCdw3z9XyPAl4Qxpmk5plda7nP72Z8Z+n65Q19Zj4OewgsOHQvBv4cpUPBMrUHlVBYpLEpdV3tgXhWj8KKAMOL1VYT1tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F8802nQI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H+Y4ROTB; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eG2zGJmq"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-798374d0f44so22337177b3.0
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 12:49:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773258541; cv=none;
-        d=google.com; s=arc-20240605;
-        b=TvfUMfI8X0Y8zGlIPywxP0emAai4pSmDFdsUo4cqAKoI+MduWuxF/pFaEn7bRmXjAD
-         j1UfFCPKyIFN9IK2ervXyPYm5wwbfPqXmm61kK7blmNgqv/KWzKcbrf5ijXOb2aiBZXs
-         V7DRTG1dp5XDaqxP3MsSxd1U/qPVbFiNqGYUvEX3opeEqmIeukDVfWOTGQv69pVUsHMp
-         R/oBOWkiMZJH/ldJijNBp+CQr5UajwduPWdvRtt03AFaNRuQXsC+m+FPZUQJVKlJbX2r
-         bk/uPrqhRLHEa+ZxlI6FbbUs0XiVa+hjH4qGRIfAvbfPhDRmaaS7pPFugtrxfw9lE3ZM
-         97Fg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=UC6gQnN5UUKowf8ow4wxLtDwlbpgwY14dFWKSf3+K8c=;
-        fh=jlRpvZ9X+tvXm6YF0ePxl+1FyunRX2COKQGck/qQCks=;
-        b=EMrQ5X84FBpEzi8CsXaYO5IT1PaVBCV5NBHPJY7bD4wQJpVnegLhHrKE+oAgOvR+sk
-         qJqPyabWGtM64R8MveUHNmVEi0ZrAC1Ud0lJyfrKzkmrLqcs8J85RxYjXRDz9VCQLI0F
-         jX9qjurLzxocYwoL3u1Ne+7k+SbX/jRkwk8aX483NHsma1pXlvRHiayfmkPIgAqgQv+t
-         WRtnoq4AW2bbOy9pnw9wyig8y6XFhnlkwKXGIUaHZyRhRSu+E4+Bodb0eGtErDYiYXT4
-         BkcbRjxwFVykIqcpxnV8/fxyAiIRJoiQz2Cn0iq2Xz081GCGlZiWGKkBt1iY7QkPKL5v
-         FV4g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773258541; x=1773863341; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UC6gQnN5UUKowf8ow4wxLtDwlbpgwY14dFWKSf3+K8c=;
-        b=eG2zGJmqBrC3B1hZuxICgbrsDqNZneiKJy5aYjyB8Y45trAFx5q1hcgz8/pAqEOJ/W
-         ZNMqZpj/b/EXR/0tjskKeIA1Hhr4AGI3H2PmKiTy/bj4QmemzWyGgn8BA/OZUVcfuaGq
-         o0pNMviSFfGCxFtOTeaTxXaNLkLLfupFP8/Wt6vxGHlcFTqnX2+H2qdy4J2CDm4an74y
-         tRZJff/QXe9oyIp35BOvN1djTUCmekUSqzPi62/s9DbZWOPRM1yl9sUWTGq8bxlKcDS9
-         fQ69XzqoLKW9kwJyG0UOsRRCfUrPdI3kPBtk39U1O8g+iknHY4mW0hmnd5IgDyxfbmOl
-         wpzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773258541; x=1773863341;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UC6gQnN5UUKowf8ow4wxLtDwlbpgwY14dFWKSf3+K8c=;
-        b=l+ft7MqBILWMDPLuQNjQxtaPqrPgu6W82DwgS74ZrrNsKyzyNhi7XSvWMdXitm+Pxx
-         iGwL7eC6rL7h5fa4X7GVXxiGfm9rWtyUTsOuRbNVUUy5FSQI06H+6sPYpsW96Uei5YhW
-         yuoCe/mn4TFHStLo2ixRh99oyDCLaVi+KrJ/bjE1Dt+A5kZbhR24R/lWLhvFqxcJ2UTS
-         JoOapsZlVR7Dv6j2l0p+af284E7w6gSdlsMcks5qnuhE6UnX2IHyeJ8rLpmNJtO/4u3F
-         747Le3N7Iob23aS9dVVT+FohgUzIld0sBgeIN0H0aB2XH6zQv4Sucy69dTXNUmaC9Aeg
-         jATQ==
-X-Gm-Message-State: AOJu0YzlqH5t5Vggw3OSt/vRkObosTgbfYTTQX/qdC1YbH5zPkkhoJZZ
-	GId6ajQjpzfl4B9KFf48piUDp2Uebgt7o5ScICNXzdg2p5i5/B0KryjNEhSL9SgelN7MMVf6wSt
-	zOq1lKX289BDxzBGhOvzHZ97WTfGMvKs=
-X-Gm-Gg: ATEYQzxbdTF6jnHOQ55mJkAMBG/B3i/3eqqaA7eiGcgpQRNyt6G8NU5lV2RqZ0Ybrei
-	XclKoawyEO8tjEMPC1GiNAW5wTDgGvlaKpMj16a+zk8DEOMiNlmdmyLppPjz9FN7wkETWuergaP
-	ZpV2tuCuxfHoAcWZZFdKryFfusPfBZ48eyD0oUz4u233SnjqKGzT01M5aJzJcH3p80aan9TGxPC
-	hpFD6wgqD7srVZao6gcQEo+hgwgIXmzSbJ8t32qpTDgmZv0ZzVTYR+Eh4t0bxpR81N7apLQiAFH
-	XxbJg/A6fvrtsjomFBIICEFfq2Cl5UBU5H7HbOIdvC/RlVa2Nw==
-X-Received: by 2002:a05:690c:4b08:b0:794:bc47:df1 with SMTP id
- 00721157ae682-799475e5ae4mr8902007b3.22.1773258540644; Wed, 11 Mar 2026
- 12:49:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F8802nQI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H+Y4ROTB"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 870BE7A01F3;
+	Wed, 11 Mar 2026 15:49:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Wed, 11 Mar 2026 15:49:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773258576; x=1773344976; bh=V4Wah3kuTg
+	jnCjf81ii940n+h6CqKGyo72bUoZjdc1A=; b=F8802nQIRlbMz6ick2jJv6A7oH
+	qHkx/FUiafrvUBPR0JEkvCLKMyUxLt7jiDErfiBezBWiGJ4pLxeRkRj7zm7KDxiv
+	SW1DatD3FAnpFKJmxNy8J3HOTaRsQgk3gX5F8BLR8eFoX3JAXwivMd+4YWtClYxu
+	7fbxunL/du50qVsSCWj1mUkGjQBBQWRgUOA92BUqgNizdgl9J1CroObSg3BaxZZ/
+	tt63zDmYP8bTuAPlIOy2KLwgSV4Xi8fGE/h7vgcysJYsIBzUbe6pdqJL30N3WA7W
+	+it1ocna9GFI/fyxm9kOgZi/6RyEiEyunihHskFQhiuXDX9u9fKb/0joYzUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773258576; x=1773344976; bh=V4Wah3kuTgjnCjf81ii940n+h6CqKGyo72b
+	UoZjdc1A=; b=H+Y4ROTBHJAKD9kIdxZkRXyFzQtcBvmkhzGp7G3xwWjHB4mAwoQ
+	eyB0GjStoLXegAUyLfAdcDsdz05VBhGU5OqYITf4aV57Ms9TiriruBe6Wax0XkvC
+	eeKsHR9Oe3LOIK61CbFmZTNx1Ack/MaSsYILJLK3F+MYbd75oxevJLb7qCi+1ux5
+	4nkeT8KKytmZN1NF6xJkZ48J2+m2/SL/B/uO6gXGNXbsa4sfysBbtzM6nyVvu25U
+	uSLXqSnkVeH4yZ55m0DV2tptXDXI83+nz49ac3rmN9uUBorasIW227CYz+An/OVD
+	rNyLrQ551eNHJeYU6OBkWhGJ0OGEZYRW9Lw==
+X-ME-Sender: <xms:UMexaVgFWhsdNmueQqarDQ6nCd9vbzcjWDJixO1TGzF26ouDlp6mzA>
+    <xme:UMexack29fUcHGxmAhTk52M9JbxXVwpbpcTOKKns0OPFIp7dfKWLosszB-wCplJfJ
+    Si4cixsM75GrkIlW-GByv5q6cyW123mPCgfcTjY08GlN10QNJSVlxE>
+X-ME-Received: <xmr:UMexaYu-Cl-RZL5EUA_sMy7jP2mCsEAH10Ze4Ze4Kv3Hvh00wMLc2dJ0jCrvUwTaw2kkMyx4melAJNKtLZGbE67wBRy9Tj8Tdw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegjeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprggslhho
+    ohhsrggsrghtvghrrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghr
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilh
+    drtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsh
+    hiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    tghhrghnughrrghprhgrthgrphefheduleesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:UMexaaa4dF6qF2jK1ZKNvZIsQrEVeb31nxe8Zq20lFYySgCndHBUfg>
+    <xmx:UMexaYDyH8QvySf8SEsUnANM8PuyKsZox01x50xFhxidDdIYPj8DeA>
+    <xmx:UMexaa_2GtUQ7XDbUtSJ1WXSE-RLwIycgLgpSjrPlMF3Z9gDaUajxw>
+    <xmx:UMexacQ-d-oBf6eZ9BueRH6I8cNN9prIJ-BOvUFL2QLFvhNl38-68A>
+    <xmx:UMexaVPnV3jRifG1WwGh7nR8gW1HIuqSbOKy3ns4EUKskydV9j5Km7Cs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 15:49:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
+  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com
+Subject: Re: [GSoC PATCH] t9200: handle missing CVS with skip_all
+In-Reply-To: <20260311194002.190195-1-pabloosabaterr@gmail.com> (Pablo
+	Sabater's message of "Wed, 11 Mar 2026 20:40:02 +0100")
+References: <20260311194002.190195-1-pabloosabaterr@gmail.com>
+Date: Wed, 11 Mar 2026 12:49:34 -0700
+Message-ID: <xmqqy0jym9ip.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260212041017.91370-1-amishhhaaaa@gmail.com> <20260228104654.80831-1-amishhhaaaa@gmail.com>
- <20260228104654.80831-2-amishhhaaaa@gmail.com> <xmqqwlzu43rh.fsf@gitster.g>
-In-Reply-To: <xmqqwlzu43rh.fsf@gitster.g>
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
-Date: Thu, 12 Mar 2026 01:18:49 +0530
-X-Gm-Features: AaiRm51JWGqu5pmQt2K-g7Ynjwt-3LS4LFM2huQ41KLU2sXfi_V-8_c-0UP9Wcw
-Message-ID: <CAPvEtrf7gqyQYMcsii===kXY5Vut0EC_VsJ=xWUKNrq6YmA=nA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/1] help: cleanup the contruction of keys_uniq
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, avarab@gmail.com, peff@peff.net, stolee@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-> Perhaps something like this would replace the original "grep | sed"
-> pipeline?
->
->         sed -E -e "
->                 /^[^.]+\.[^.]+$/b out
->                 /^[^.]+\.[^.]+\.[^.]+$/b out
->                 d
->                 : out
->                 s/\..*//
->         " human |
->         sort -u
->
->
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-Thank you for pointing me in the right direction!
+> CVS initialization runs outside a test_expect_success and when it
+> fails, the error report isn't good.
+>
+> Wrap CVS initialization in a skip_all check so when CVS initialization
+> fails, the error report becomes clearer.
+>
+> Move the Git repo initialization into its own test_expect_success instead
+> of being in the same CVS check.
+>
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> ---
+>  t/t9200-git-cvsexportcommit.sh | 18 +++++++++++-------
+>  1 file changed, 11 insertions(+), 7 deletions(-)
 
--- 
-Thanks,
-Amisha
+Makes sense.  Will queue.  Thanks.
+
+
+> diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+> index a44eabf0d8..cba3b1a28a 100755
+> --- a/t/t9200-git-cvsexportcommit.sh
+> +++ b/t/t9200-git-cvsexportcommit.sh
+> @@ -30,13 +30,17 @@ export CVSROOT CVSWORK GIT_DIR
+>  
+>  rm -rf "$CVSROOT" "$CVSWORK"
+>  
+> -cvs init &&
+> -test -d "$CVSROOT" &&
+> -cvs -Q co -d "$CVSWORK" . &&
+> -echo >empty &&
+> -git add empty &&
+> -git commit -q -a -m "Initial" 2>/dev/null ||
+> -exit 1
+> +if ! cvs init || ! test -d "$CVSROOT" || ! cvs -Q co -d "$CVSWORK" .
+> +then
+> +	skip_all="cvs repository set-up fails"
+> +	test_done
+> +fi
+> +
+> +test_expect_success 'git setup' '
+> +	echo >empty &&
+> +	git add empty &&
+> +	git commit -q -a -m Initial
+> +'
+>  
+>  check_entries () {
+>  	# $1 == directory, $2 == expected
