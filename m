@@ -1,202 +1,158 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CA53D6462
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 15:03:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620E93DEAEF
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 15:19:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773241434; cv=none; b=uuiLurKDI/bFBTmdMGTURVreyYtms/lNF24jdP2xIi0pyLdKQfJjwx+ONhQACGc15EOn31f3iDEBL8lzg43XSQE4mBE1pPYx+q3m387kE293ct+1ozVVVaTdvPp3cJD5YgtCDju737RjfCjCMQwlyv2CSHpW7dhHl3gfQkwDFaM=
+	t=1773242379; cv=none; b=PLjAFTcdkC2lVDOZu7uUIQpEDl0GvudNlREhCYOuPDWxAn3RrDyYGSFMuH1fQRoBcRMlYmhYtuoD8yW4jTp5/kLGh50CrRwyVLFwP522UH+xFZFpg2ceRqw0xvj+FPkEL6NZvX45X9oy4aW2XyiNtzLuBR0pPh5lxIXZE0zvVOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773241434; c=relaxed/simple;
-	bh=W2R18GIzsq0og9AbzJGp94xfbcGzKnIbKZv67GXfOps=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=svI4GT5gil00ivLCNdjRTRbiZCc6rMSy8O91nVcz76oWMAFX+oPKEkHwPygzt15rbYIr3s9gAM6P2iBSKx0J+7tXTtHORWUul1+YXTVd2hhoUIXwVGbTKkZAx4rhD9WxVMVNetCAn/vBvF03TJvuSXSNKTqvgq+PaPjAQkh2v1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=mpN2sBtk; arc=none smtp.client-ip=95.215.58.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1773242379; c=relaxed/simple;
+	bh=eWsxuZneaX0qT4iYSLAoA0Yx1FljWwzfm1HYnqzFxOI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JDeZ0e0xWoGbS/2vpDB/fCURp9FHPt+me6tF4bQb2N5mhGrGaY0GL4y2T6LXbvLdAlpDs33k+UryGR8c0xuyYKGYIq3qcNYGYkmxJonaIdN7VzYA2Ls1KvsBZXDQFubmHtyFPzXb9ytw2S4IejQ5pveW0lpvt9Fw5/fx3GUcS8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UiVqcEI6; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="mpN2sBtk"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1773241426;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=sfXFkIVOyKzZbivi91IiTQRp2l1CsUj8CMjdWv3H2a8=;
-	b=mpN2sBtkCak/HvZHZt4z0m+bE5jXQ1rTHI4D8CKQ5WQKOJc0c9NnmysfoCsvVNRXJt49B8
-	qDN9w4crRCSvLgG56iX9jvgeHUOvDYqaAAmemt39xhRodb+XSXeN5kPSRs3yfazqWSiX4r
-	P8Zpd6f7IUnKkpqry6jDIEhiDgRhGZ0=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 5/6] odb/source: introduce generic object counting
-In-Reply-To: <20260310-b4-pks-odb-source-count-objects-v1-5-109e07d425f4@pks.im>
-References: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
- <20260310-b4-pks-odb-source-count-objects-v1-5-109e07d425f4@pks.im>
-Date: Wed, 11 Mar 2026 16:03:36 +0100
-Message-ID: <87ldfyl86v.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UiVqcEI6"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-48534b59cf3so35237995e9.2
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 08:19:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773242377; x=1773847177; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=c4jHyaNGuRlVIL0t5kbXraRZjiC3aPEbYhqFETLOrPA=;
+        b=UiVqcEI6pgCFMntbnZCUiuAnFGvsnyhRzcny1N2J5k042r2BkOv+n830AsofA097aG
+         QtMHC5tvDFfQauTS13xw4mpbJz1fF5mbbeBxAjn/X6C+M4Sne9COJEdcxMKtY+learkF
+         4yQUZvSiesNK8VVlFopuUxoQqDaZDIQPPTMg2dSbG3J50Eq8j78HJ6kqc0DsaDWfgH96
+         7u+hia9UjZfguBxuM8ZVjUpsq7CWu18JcuZ09CFtpAorYIPC4yD3iJvUM0wQy2gmFpBt
+         Q11e1Esxw42bs7js69o9q0iPpFT/nr86h5sv471dpkRJsx1DkNCQ9pZi/8mgMgz643XL
+         9AAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773242377; x=1773847177;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c4jHyaNGuRlVIL0t5kbXraRZjiC3aPEbYhqFETLOrPA=;
+        b=gbjgBbb5rpCuFIazk9azDz86fLTIBcWlmHnzkQXWiccXbPezq+QikGm2PDcZMM54xA
+         9qqi/MKdIDASsAkohTiOeeYDT2QBfCVJpsl/ZUjBX+lkHavwvDlRTSYFjiPccynV0Q9S
+         F8L6Qorj5LSCqVYXIRVBxgnKnAEG/jQI56FJ8Od+knaI6Z+HuOUFXG7HtCKax4uKRnwx
+         21oyuxcE2T6Z5gk7983/NVv4fPGy5fezfRPghCEXwUPIZoA6jA142cuB7rPyOUF/pPYO
+         Za3hh05cu5ZKYxed2sk0nYBUp+8n9UV9SjmiUm58jH1SoOxI/bv/5bUjpBeuf9BR1XO5
+         i8rw==
+X-Gm-Message-State: AOJu0YyrartBTqTq7pwizNMreM/cfzLqxsiEdwqD2iPU7zStd0YQMsWq
+	IdYHm6bhqn6ihqOJDBtYWjylcwY9FghAPwyK4WX3G/36cXfKqB4yFhFmQPAZ9hVH
+X-Gm-Gg: ATEYQzytQhxDn7aEl6P9WC5HW7fVF3L8guVOGa1PnlySfogS03lYA6hFOH8lxHCtAUM
+	oX/bAmLq4uZbDW9DN4FHq58YGtbb5F7OLJTbzyEv2cubBXmHri0n3GP9Wma6SRcbXwKPzs55E19
+	2j2SaeG80TUYeYlIRR8QZ5cfdquiq3YyipDwF57kjbR3zX0x8WwUK8wekZqWyM2+tX3QiiSKxAn
+	EZGXv6S8f6iK+4iR6cigCR4tDssA97/6RoKO3ZJ5f1RecI48Ao8h5BY24mEOXZrKSDqSJex5OMv
+	BXt9y9vukqmBzjeuEt8ssE8ug8vL0KkK1jIRgttchTC1599B6v6Z/vU4AJnMjclai9P3e03J38A
+	V8TvIY8CdbP1zCIbERrVilfFweVKrNWAgqbB5z5Vrp9plupyRqiMTutdU/JhZrptPrcNAdbJzmu
+	1xLjl2F8I763FnoYY=
+X-Received: by 2002:a05:600c:8b13:b0:47e:e48b:506d with SMTP id 5b1f17b1804b1-4854b100d98mr55013815e9.16.1773242376257;
+        Wed, 11 Mar 2026 08:19:36 -0700 (PDT)
+Received: from fedora ([159.146.43.38])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b65fd3dsm62743975e9.10.2026.03.11.08.19.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Mar 2026 08:19:35 -0700 (PDT)
+From: =?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	l.s.r@web.de,
+	ps@pks.im,
+	=?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
+Subject: [PATCH 0/4] wean start_command() off the_repository
+Date: Wed, 11 Mar 2026 18:19:19 +0300
+Message-ID: <20260311151923.4178655-1-bkkaracay@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi,
 
-> Introduce generic object counting on the object database source level
-> with a new backend-specific callback function.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb/source-files.c | 30 ++++++++++++++++++++++++++++++
->  odb/source.h       | 27 +++++++++++++++++++++++++++
->  packfile.c         |  4 ++--
->  packfile.h         |  1 +
->  4 files changed, 60 insertions(+), 2 deletions(-)
->
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index 14cb9adeca..c08d8993e3 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> @@ -93,6 +93,35 @@ static int odb_source_files_for_each_object(struct odb_source *source,
->  	return 0;
->  }
->  
-> +static int odb_source_files_count_objects(struct odb_source *source,
-> +					  enum odb_count_objects_flags flags,
-> +					  unsigned long *out)
-> +{
-> +	struct odb_source_files *files = odb_source_files_downcast(source);
+start_command() relies on the_repository due to the 'close_object_store'
+flag in 'struct child_process'. Introduce repo_start_command() to allow
+working with arbitrary repositories. Turn start_command() into a macro
+that wraps repo_start_command() and migrate the existing callers with a
+cocci script.
 
-I didn't read the other series this depends on, but good to see
-odb_source_files_downcast() BUGs when the source isn't a 'files'
-source.
+For callers that cannot access 'the_repository' due to the lack of
+USE_THE_REPOSITORY_VARIABLE, define the macro. If the caller already has
+a local repository context, pass it explicitly instead of defining the
+macro.
 
-> +	unsigned long count;
-> +	int ret;
-> +
-> +	ret = packfile_store_count_objects(files->packed, flags, &count);
-> +	if (ret < 0)
-> +		goto out;
-> +
-> +	if (!(flags & ODB_COUNT_OBJECTS_APPROXIMATE)) {
-> +		unsigned long loose_count;
-> +
-> +		ret = odb_source_loose_count_objects(source, flags, &loose_count);
-> +		if (ret < 0)
-> +			goto out;
-> +
-> +		count += loose_count;
-> +	}
-> +
-> +	*out = count;
-> +	ret = 0;
-> +
-> +out:
-> +	return ret;
-> +}
-> +
->  static int odb_source_files_freshen_object(struct odb_source *source,
->  					   const struct object_id *oid)
->  {
-> @@ -220,6 +249,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
->  	files->base.read_object_info = odb_source_files_read_object_info;
->  	files->base.read_object_stream = odb_source_files_read_object_stream;
->  	files->base.for_each_object = odb_source_files_for_each_object;
-> +	files->base.count_objects = odb_source_files_count_objects;
->  	files->base.freshen_object = odb_source_files_freshen_object;
->  	files->base.write_object = odb_source_files_write_object;
->  	files->base.write_object_stream = odb_source_files_write_object_stream;
-> diff --git a/odb/source.h b/odb/source.h
-> index a1fd9dd920..96c906e7a1 100644
-> --- a/odb/source.h
-> +++ b/odb/source.h
-> @@ -142,6 +142,21 @@ struct odb_source {
->  			       void *cb_data,
->  			       unsigned flags);
->  
-> +	/*
-> +	 * This callback is expected to count objects in the given object
-> +	 * database source. The callback function does not have to guarantee
-> +	 * that only unique objects are counted. The result shall be assigned
-> +	 * to the `out` pointer.
-> +	 *
-> +	 * Accepts `enum odb_count_objects_flag` flags to alter the behaviour.
-> +	 *
-> +	 * The callback is expected to return 0 on success, or a negative error
-> +	 * code otherwise.
-> +	 */
-> +	int (*count_objects)(struct odb_source *source,
-> +			     enum odb_count_objects_flags flags,
-> +			     unsigned long *out);
-> +
->  	/*
->  	 * This callback is expected to freshen the given object so that its
->  	 * last access time is set to the current time. This is used to ensure
-> @@ -333,6 +348,18 @@ static inline int odb_source_for_each_object(struct odb_source *source,
->  	return source->for_each_object(source, request, cb, cb_data, flags);
->  }
->  
-> +/*
-> + * Count the number of objects in the given object database source.
-> + *
-> + * Returns 0 on success, a negative error code otherwise.
-> + */
-> +static inline int odb_source_count_objects(struct odb_source *source,
-> +					   enum odb_count_objects_flags flags,
-> +					   unsigned long *out)
-> +{
-> +	return source->count_objects(source, flags, out);
-> +}
-> +
->  /*
->   * Freshen an object in the object database by updating its timestamp.
->   * Returns 1 in case the object has been freshened, 0 in case the object does
-> diff --git a/packfile.c b/packfile.c
-> index 1ee5dd3da3..8ee462303a 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -1102,6 +1102,7 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
->  }
->  
->  int packfile_store_count_objects(struct packfile_store *store,
-> +				 enum odb_count_objects_flags flags UNUSED,
->  				 unsigned long *out)
->  {
->  	struct packfile_list_entry *e;
-> @@ -1146,10 +1147,9 @@ unsigned long repo_approximate_object_count(struct repository *r)
->  
->  		odb_prepare_alternates(r->objects);
->  		for (source = r->objects->sources; source; source = source->next) {
-> -			struct odb_source_files *files = odb_source_files_downcast(source);
->  			unsigned long c;
->  
-> -			if (!packfile_store_count_objects(files->packed, &c))
-> +			if (!odb_source_count_objects(source, ODB_COUNT_OBJECTS_APPROXIMATE, &c))
->  				count += c;
->  		}
->  
-> diff --git a/packfile.h b/packfile.h
-> index 1da8c729cb..74b6bc58c5 100644
-> --- a/packfile.h
-> +++ b/packfile.h
-> @@ -275,6 +275,7 @@ enum kept_pack_type {
->   * Return 0 on success, a negative error code otherwise.
->   */
->  int packfile_store_count_objects(struct packfile_store *store,
-> +				 enum odb_count_objects_flags flags,
->  				 unsigned long *out);
->  
->  /*
->
-> -- 
-> 2.53.0.880.g73c4285caa.dirty
->
+Thanks,
+Burak Kaan Karaçay
 
-Okay.
+Burak Kaan Karaçay (4):
+  run-command: add repo_start_command()
+  run-command: use repo_start_command() in strict callers
+  run-command: redefine start_command() as a wrapper macro
+  cocci: convert start_command() to repo_start_command()
+
+ archive-tar.c                           |  2 +-
+ branch.c                                |  2 +-
+ builtin/credential-cache.c              |  4 +++-
+ builtin/difftool.c                      |  4 ++--
+ builtin/gc.c                            | 16 ++++++++--------
+ builtin/help.c                          |  2 +-
+ builtin/index-pack.c                    |  2 +-
+ builtin/merge.c                         |  2 +-
+ builtin/notes.c                         |  2 +-
+ builtin/receive-pack.c                  |  6 +++---
+ builtin/remote-ext.c                    |  4 +++-
+ builtin/repack.c                        |  2 +-
+ builtin/replace.c                       |  2 +-
+ builtin/upload-archive.c                |  2 +-
+ builtin/worktree.c                      |  2 +-
+ bundle-uri.c                            |  2 +-
+ bundle.c                                |  2 +-
+ column.c                                |  3 ++-
+ compat/mingw.c                          |  2 +-
+ connect.c                               |  4 ++--
+ connected.c                             |  2 +-
+ contrib/coccinelle/the_repository.cocci |  3 +++
+ convert.c                               |  2 +-
+ credential.c                            |  3 ++-
+ daemon.c                                |  6 +++---
+ diff.c                                  |  2 +-
+ editor.c                                |  2 +-
+ fetch-pack.c                            |  4 ++--
+ http-backend.c                          |  2 +-
+ imap-send.c                             |  2 +-
+ midx-write.c                            |  4 +++-
+ odb.c                                   |  2 +-
+ pager.c                                 |  2 +-
+ parallel-checkout.c                     |  2 +-
+ promisor-remote.c                       |  2 +-
+ prompt.c                                |  3 ++-
+ range-diff.c                            |  2 +-
+ reachable.c                             |  2 +-
+ remote-curl.c                           |  2 +-
+ repack-cruft.c                          |  4 +++-
+ repack-filtered.c                       |  4 +++-
+ repack-midx.c                           |  4 +++-
+ repack-promisor.c                       |  6 ++++--
+ run-command.c                           | 12 ++++++------
+ run-command.h                           |  6 ++++--
+ send-pack.c                             |  4 ++--
+ sub-process.c                           |  5 ++++-
+ submodule.c                             | 12 ++++++------
+ t/helper/test-run-command.c             |  6 ++++--
+ transport-helper.c                      |  6 +++---
+ upload-pack.c                           |  4 ++--
+ 51 files changed, 108 insertions(+), 81 deletions(-)
 
 -- 
-Cheers,
-Toon
+2.53.0
+
