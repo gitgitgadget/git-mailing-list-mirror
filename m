@@ -1,141 +1,120 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608AC2BEFED
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:35:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773250515; cv=pass; b=irkKFP3bdPc1M5fiLtc25AFCD157HigUca7CSoPOJqa7HXmiFcCB8tppD264J6XMQi/cX/0dlqWtF5nYOM+S5ToihB+Aa3bvwkfbkMGzrWl3mBq+LxWHQmJJWASVqtqkoArJWxVD3LfWt9fXzUotdyEShhx482Nei779bxR1siU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773250515; c=relaxed/simple;
-	bh=ubNtk9mqdflwxDC0LUAlnZRq8Ci7EzPvnevG/+TIR8U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a2wjKqGPzZUxdtShorKCOuDOWLTGdsT7RJJXcPrseXUNjraPG1PMxpzW31SqhLGc6jdnP4YH8ec7sLFXTPqHVKbWuVRlyedbvjtffhWUEgwuhc4mDcXBth+fwra6Xz7VDdqTR5YHAh6DGDrsdVcJkOi2jXQY43PQOGFeoi9l3so=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gacETzYR; arc=pass smtp.client-ip=209.85.167.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423AE2C08CF
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:41:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773250891; cv=none; b=bn6A8SfYGdARBL6s9NUygLKWbLuWQZnZctshzyxJeeDn4tC0VOdyfgXcBIBCaXU1zdSiV9Tz+39xa6mYm3kf5BC0zM9uH2ynMcZs5RvKIDz5mb6O+8TRe0PolOhRdP0t/WFvpzpPpDjnFoauds9m85VEt7VX05t/tSKPwKe1j6I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773250891; c=relaxed/simple;
+	bh=Ew/6BfEg8Y2KTim0iL+rQVPwJ8xATrTq16B/NBwdpvc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=j7XQxv9jvZVZT9BW27zdEeTscte/i4St7eTyOTWI8SfufXotK0HvGLqdJsAYIl3Q1QWCLUGqD01lDsf8FNUYn17Cm7DKni+ixMCz8ybM8X3PhpDfHdJU/c+NtxDgHOE3NZb5pQ/Vc4TgzdG4eTr/Hfqgw3S84pR82cmL8HmFu+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SFMzZXvR; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gacETzYR"
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-463f00cda04so100285b6e.2
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:35:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773250513; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gIZ19IeS5X4f2ViiXi7L1TuRoJ2eanyAOaOZMOqrQYsSNPk68KeOEBlAUYQqPeloaG
-         rYHkrts2BpNn3nUHzS/wEEP0ATafCDCDastNWdiSScA9r254iAlxkBdKHnbFJojQWe8q
-         3xIvVfZ4idXqNRCCLXbEl782zVl2c+l3leL0teAuO4BCqWpyiGBrZA7IYmfPQtt2kVpA
-         lgu6zke980iGbZM7qJPJXICiQ2BEOYdozHwSTngVj8Rn8dUHuXFlEVVr4mvgXLAttTiw
-         p6mk+MwkIJvPeAuzr6MbHAbL8IrsaQPj2w2xW4+l4pn0V4td8GntWUlNx/If+wy/sOkC
-         OSAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ya2v3CHwXZBOwucuCMyU2oOAt1jKv1/zlwc9T/VmyK8=;
-        fh=I7kSREOKccExaJIk4LHZTI4NDp0TCFfrn+5qiZPtFGM=;
-        b=ALk34A/fOVMQpdEJqEmgQo1jJk4e1aqCl0UJwXwmJOFYN/TjXSobnhwid1kriJCXQu
-         HmpVNwC6DSw+ikfyiwaF7yzuEG1ekoGuJ6MXls/mmLWA1B9NpY7eIysniraZBFnG2O2o
-         ADACspw/Qmg+eBSBPZlFBChSAxavOLbMFZ6xfG2PisJiKogV5JpJHXs3sWjfqcNuoock
-         Jc1FAEWT+FtSNt2HN5y5Nl9OvoobdbS1nF+BdDx/qk5l+onoRd2GFezx6fWfJT5fQ8tu
-         EeJRnpVM3CnBF65VlYmvwzTjEv8dmjFlT1vpwrKlkVyu9muQfGsUq/HkKHS9AjCsQRMZ
-         yeCQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SFMzZXvR"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-8298fad2063so88574b3a.3
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:41:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773250513; x=1773855313; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773250890; x=1773855690; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ya2v3CHwXZBOwucuCMyU2oOAt1jKv1/zlwc9T/VmyK8=;
-        b=gacETzYRyMIND2EpIxoUJitEWzCd876lzoZTTK0617Im125hj7qoQ7/vB4zLulLzqc
-         UoFMUaJcHBEgGx3iDPQyfgUjoQCFn23DfjtzbErSPjrndS+jPJ/MKBpArglFgQCjDmZr
-         rFbefPWu2H0/mFcABJ/BuQeew9fQ4kv319qTUuc4z1wZ43DwvJu7DzmStyxGGPUaxzLb
-         34wH1zn4wFMLPfntFLmK+wJhrDfy14xRRlWr7ANVj7At+prvfblu/bAnI8VwOUDxfc6x
-         l/dqX6ZfczR9kd4H/dXgsgxQeZ7oOalEMuKbLNf+6cNhzCPKJWGLKC/KLrNY3w1ZJrha
-         lMXQ==
+        bh=zvFuMrE7ZIn6u3So/eXVuT/SVWTFfYkdy3x9N1adiX4=;
+        b=SFMzZXvRJmjzHxSskCuR8bHWg8o25bUaobGiIpNVdgDCiGXI+Lfs6FyuGDfjcUm66f
+         iydVKw8+lI4M3HjGHxOhiAvje3T9VgOdaq1nCovHgSEtdDHlLFpXI2JVaqb3xos0SO+w
+         WbUjmpDi+PCk0jEkdL0ZQSJMVOom7dXfZ2wT0CXzvYWj+Fg2Rt0Iw3Ka8LjWeDgk03vX
+         XPgFbtVJowp6OihFLnV80rZpd/TkAQIjOTgWAmR93jmhQWXnssANcBqw1hgdLCu+j/Fu
+         MjJC7ZQuZ21cI+vobx3p12P17mwYye/AqhTWSBhxqElXVOyFe4hQJHSOITxFPpt/ZOeo
+         0nHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773250513; x=1773855313;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1773250890; x=1773855690;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ya2v3CHwXZBOwucuCMyU2oOAt1jKv1/zlwc9T/VmyK8=;
-        b=T5KMqolMOz4ZnoCfIWBN7WUQ3gSO8Ids6uYhe5ixV/SB6Ra5zbxGchsU7EgfRol43I
-         nJ3wBe9gMuaAZEaMhLKV16XKdEvQAAL9asWH1/m+DFE8EOjf7VvdK7OMCJkF8YQNyigo
-         FkhOATPkxZ5zudwMETa0+dQxaXJ+96fHxqnc+tYsLL0EUy/lNXG4Gkmxd/EK7XjK68u8
-         Yz+Jv78jua+ZoTkqe0rEvrxnSj9vEE1AjwlpJJKF9Ao+ik6FkgWD3rgqRpIU830PFO5m
-         PMEAgWQnTobkkkAUsSKfCuMcwM4ror55nMrJJGmfwVsSW2FgjTKm5YGsxT535evkg5zr
-         /brg==
-X-Gm-Message-State: AOJu0YwZTb4HbVVGbaHppQmOymzhFNZs7NImI+VXEqYPmm7FL2Xwddz2
-	MG+DfOH9Qtv62ICRdOxeTbc4pbcfRMGFCMEvB0LCpU4MILolRFv+iwOMinMUjibZbPcS5KG7wPI
-	IBa9liFmzjHD1h9kv9vXFyfhLQ29x1ezWkg==
-X-Gm-Gg: ATEYQzz7IRm572KPJ0h9Kc8E7wWMpAey8TJ5gDgPKKx8diCa0X5DVNvhKc6WYGGxAHJ
-	Q+zVJYv8hea2JrKgP7pCQYZlIwyZaJQqtuMd3hUHyf0/cuqbtsTsQfg29WdSwViLHU6yc0kVAAJ
-	f7UHA7gp5RXpMm5KDTGtze0dI6Ts2NZ0nSkh9LMbdYlYFXdE8ty0bMk6DLWGc0Sy+tYLh/WOAZx
-	fAhGZ8qkZpsRys6tvmpRxRzMWUulYwyiAEgdeQeXS+hC8uajlmEyzDei/NIJdkbXOxxpk0qjz+S
-	U5XXjJoeDSFde0l10jb7O+29Hq59BHFO4H1cfSow6A==
-X-Received: by 2002:a05:6808:191b:b0:467:1ad3:7ee with SMTP id
- 5614622812f47-46733546206mr1865844b6e.40.1773250513215; Wed, 11 Mar 2026
- 10:35:13 -0700 (PDT)
+        bh=zvFuMrE7ZIn6u3So/eXVuT/SVWTFfYkdy3x9N1adiX4=;
+        b=YcVSwKuQNu/DDMeZWrIMe1UaSvJ8VacoOGdn4fmJ+Uapfp0lKoQDmgedNFzhCX5U3t
+         9tMqKjs0NV307FBoFisRyyYo35JaQ/ZWwXVGrge1F1E+YMmdxOvuIDoLuuYitqXgaGna
+         YWZJN7nAT9CvIjUZnGu+3nfX1yjMeLy/ClGyaZYUpKSWyBcUOfFN89bOWAYOs/bRGKgE
+         loQNkF8xQKfzRddWz62OwcYQTN5p0wWq0sM7a9f2poh34PFiJT0xFBjWA947SamhRzQN
+         go/v4t2aXIGd1Ek5xbLnH8wsT3wKQUH5kmF/uI1dUoLsd0eauG1+wMa7GGD3sPTP2+Tw
+         MtaQ==
+X-Gm-Message-State: AOJu0YxOXjpdMEvEIV9hvc2EG1iggh4zG8C3iqvCDJm0qTsky96xPik4
+	1jqlavCSznHxT64PgyaiBaCYYIUAZUKDH+Px2NhClOVTYjfH+5L8zyBU3YahQNZ0kk8=
+X-Gm-Gg: ATEYQzwn8lAMXqpx4JQ/Y7CiaMzkyjOB2fqAWEIPyP/h29s64O2vxc4TEPWG9OgJdiB
+	mha7n/yLZdeN2/Ylp8RtKHqCd4w1tHOkRKog85LbzDIRpQpik7spXVnX/ILSPf3onde0+Kf6IkV
+	zwXxgWT+XCosIeuhRPz+IcVocU3xPimm0/hgcE7qCuQZhNggWaUhWOH7LfibBt75x4OVbpgMmse
+	aTQam0kC66e3HJx03fu3m2CYeNoAvkH7koZSF7YvVhz2KCtCi6F30wYZdN5lpn8JTKVX8bGgWWh
+	qeONQHx/5CCPfSpBlS7S5tV7Cmk1Nlb8+1xROe856cBwjMfGkylFMMLc4jGz1Eu78vMaWAtZRgD
+	xWmwgTwKzJQEI76SL81z+0WsqccautWJXHEdY/NU9Nvnlc7atnS2kT116KCIwgqQqfwTZ5dTsaK
+	eLpqTL+LOaO4xrnLY1752HiuaS6EcwwBMgXcAqhczbd+2ebb0J+aw58hyOFVBpzOuFjOfYE8r7N
+	Q==
+X-Received: by 2002:a05:6a00:4c0c:b0:7ff:97b3:59bb with SMTP id d2e1a72fcca58-829f6eada71mr3050394b3a.16.1773250889383;
+        Wed, 11 Mar 2026 10:41:29 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:c0d0:e2d9:a48c:9160:564c:f9])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a07244ab3sm303702b3a.7.2026.03.11.10.41.26
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 11 Mar 2026 10:41:29 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Subject: [PATCH v2] t3200: replace hardcoded null OID with $ZERO_OID
+Date: Wed, 11 Mar 2026 23:11:20 +0530
+Message-ID: <20260311174120.76871-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <abFP9vZOVHGI536G@pks.im>
+References: <abFP9vZOVHGI536G@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2065.git.1772845338.gitgitgadget@gmail.com>
- <0d3e84a088ec53368a748684268db89064632871.1772845338.git.gitgitgadget@gmail.com>
- <e551ce17-8118-4b3b-ad8c-bdfe1a854c0b@app.fastmail.com>
-In-Reply-To: <e551ce17-8118-4b3b-ad8c-bdfe1a854c0b@app.fastmail.com>
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Wed, 11 Mar 2026 10:35:01 -0700
-X-Gm-Features: AaiRm53-luanBbbjIx7R5_pzeM5aW9UdqIeL9AHc5FlF4VBmZ_lJRhtcEgq1sfo
-Message-ID: <CAC2QwmJTqYj5b531itc=8ZM3vXsg5oG3BLCHiEuoB7d0d4U=TQ@mail.gmail.com>
-Subject: Re: [PATCH 4/4] doc: note that -L supports patch formatting and
- pickaxe options
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 11, 2026 at 1:41=E2=80=AFAM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
->
-> On Sat, Mar 7, 2026, at 02:02, Michael Montalbo via GitGitGadget wrote:
-> > From: Michael Montalbo <mmontalbo@gmail.com>
-> >
-> > Now that -L output flows through the standard diff pipeline,
-> > document that patch formatting options like --word-diff,
-> > --color-moved, --no-prefix, whitespace handling (-w, -b),
-> > and pickaxe options (-S, -G) are supported.
-> >
-> > Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
-> > ---
-> >  Documentation/line-range-options.adoc | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/Documentation/line-range-options.adoc
-> > b/Documentation/line-range-options.adoc
-> > index c44ba05320..aa236281b3 100644
-> > --- a/Documentation/line-range-options.adoc
-> > +++ b/Documentation/line-range-options.adoc
-> > @@ -11,5 +11,9 @@
-> >       Patch output can be suppressed using `--no-patch`, but other diff
-> > formats
-> >       (namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summ=
-ary`,
-> >       `--name-only`, `--name-status`, `--check`) are not currently
-> > implemented.
-> > ++
-> > +     Patch formatting options such as `--word-diff`, `--color-moved`,
-> > +     `--no-prefix`, and whitespace options (`-w`, `-b`) are supported,
-> > +     as are pickaxe options (`-S`, `-G`).
->
-> You shouldn=E2=80=99t use indentation here. This is a code block now.
->
-> Just a line continuation and flush to the left.
->
+To support the SHA-256 transition, replace the hardcoded 40-zero string
+in 'git branch --merged' with '$ZERO_OID'. The current 40-character
+string causes the test to fail prematurely in SHA-256 environments
+because Git identifies a "malformed object name" (due to the 40 vs 64
+character mismatch) before it even validates the object type.
 
-Good catch, thank you. Will update in followup.
+By using '$ZERO_OID', we ensure the hash length is always correct for
+the active algorithm. Additionally, use 'test_grep' to verify the
+"must point to a commit" error message, ensuring the test validates
+the object type logic rather than just string syntax.
 
-> >  +
-> >  include::line-range-format.adoc[]
-> > --
-> > gitgitgadget
+Suggested-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+---
+Changes in V2:
+- Updated the test to capture stderr and use 'test_grep' to verify the 
+  error message. This ensures the failure is due to the object type 
+  check ("must point to a commit") rather than a hash length mismatch.
+- Improved the commit message to add detail to the 40 vs 64 character
+  mismatch and the "premature failure" in SHA-256.
+
+ t/t3200-branch.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index c58e505c43..e7829c2c4b 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1494,7 +1494,8 @@ test_expect_success 'refuse --edit-description on unborn branch for now' '
+ '
+ 
+ test_expect_success '--merged catches invalid object names' '
+-	test_must_fail git branch --merged 0000000000000000000000000000000000000000
++	test_must_fail git branch --merged $ZERO_OID 2>err &&
++	test_grep "must point to a commit" err
+ '
+ 
+ test_expect_success '--list during rebase' '
+-- 
+2.51.2
+
