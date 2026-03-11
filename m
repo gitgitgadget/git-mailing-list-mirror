@@ -1,106 +1,144 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF40A3E3176
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:13:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773249218; cv=pass; b=VyWhinGxa7Fsz1uf+EamJjG8PafwwKSt/DdzkP3bT/agmQzzWeXRvkZxsEO+mEZSbq562CisRK0kSYRRZyBxQ0hx+HvgC7loYDTo33QJiIpk6BJ2vPBLJanDqkDl/LhM1P7oEJxzgas0+6GkBPOnrqBk4P5LCXTzOCVrC9YwUco=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773249218; c=relaxed/simple;
-	bh=HBnoV0e6Nf1fme0nJ/njpVv9SZMOz7oecCTsgYyVi6k=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=bx7QZeJrB7qNHx2yQo+qtqxP8J2VWO2ng2NuYxzpBPEx41yJiiks/rwmRWuf63zqdrQf8H/LVScEMuG5gwO9fzHV6tbP2d3rHvf/Z+v+bTfZ5d5hBSkk6JrsqjbZbsQcREL1eDs2eW1ciO7zCYOAFE+G1nat/XixnpYFM21XAk0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T4dpOyBC; arc=pass smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC2D3644CA
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:13:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773249227; cv=none; b=JDhmfbs53n9GeD1M8Net93ISzY24dRekVgfmrmMVSgu56BYECto0J1cl/pbcVFWh47FRL3/3wJfrmT1es/yTYIZGRQ4SKDrKrf4MRU9XzNTKHQ5kKcDbcIx0TYZLdP7pfwvc1PNzmJvluDMnHqTcKNuk9EONhJESDQxLIsgBfoo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773249227; c=relaxed/simple;
+	bh=KTokZpcF0Jz/I3+yi00/WRzd4zKK0XLFGSrBLSxtQpI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bHSJJYQG1M5D+gmmmWcz6XfTVVzoWburxLvnLjzyHj6Xbpt2EaDEZrY/D9qlHiwDDtjSwJYAAXGwIIwfoXCWsY5wf7zLbj+q74WcMfOZLPUc4nj3e5uG+Zx8fHnwwUTLc9nq4iwKrjpTBfn8SpZJJEWf2l1RCf11oyxxrkRnSOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=feuVlxnQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I2IQQAIz; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T4dpOyBC"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-7985ce90542so1023257b3.0
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:13:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773249215; cv=none;
-        d=google.com; s=arc-20240605;
-        b=EykLOeoNapREupdEDk+pMX345hwu1nx0yq0nmOTNGsof7wwYyxEXBHY4DuqVMRJSpq
-         pqKZ+QSIOldelm/lqjTltR+MsFpQtpbZKW6oMyD3Soe4oJ84lSKF+BPz0a2TyUEyiJ8x
-         ChzLYN3tshdfedcQOrrs/SxsV2Y1GkyhtX/9ONydyN559lIqC9RiIjc7HoHHexpV8esK
-         nDZvTaAyFxMfUw7ksHU8Fn+0ozEL1V4klWrr7yEekT0obJA7XESuDBzMuCuAt8X6fJqw
-         +4a4CLvAaspOYfcPlCulLvadMIu8sPpYinhfHI2aSX/otGAk9JfD1XHh+rFsOTPK0vq1
-         TqYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=fht9Hzi54HmvTI1eImS5sw0mHlLxiKaKt88YdnZtr6k=;
-        fh=1CJ/aI/drbvzIs9bbfUod9Bb/qt44Dpsr+bC8reB/yI=;
-        b=Fc0aUA3afOy1fhsISQSpWhMVGATxyyZjqux6/MjCn/a5bIbD18aXnLQFAQfcSHUs4j
-         apRlssZsLDiR1WpVLaz+rGRK77m+N9QEAjALBqLsZmlC9bzk0AZNGv22I+qRccijjeEl
-         n2q1aO2lbTw9D2VQ+9ziMamEQs3r3CsiwH4I5gRmm8yaSklNssOOqSPdnN1m2wFJYyBk
-         ksNJdcDazFhR3uFsFaTXz2QovgErMIaToBhnWt01CtX1nwtGrxhbLKL/8Is1XgDg2F2+
-         Qf40aXzNQZqfJXo/Nx5UEPwHl8GX+O+XtZlijrFqtLbHFWNrGqsvQ4PnqMkMT+Q/LbUZ
-         6a9Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773249215; x=1773854015; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fht9Hzi54HmvTI1eImS5sw0mHlLxiKaKt88YdnZtr6k=;
-        b=T4dpOyBCBlsL3eBd5VPn/MqSA50216FdQcGnU8wNHvwyEWmIhS4FjkdxjBvt0yOtT4
-         c/rRGLI/l+ZSAZihrC/tdr8IidWvcu7FevnbMxmMv6XGb1zkyqqZF0bgViLGcalZpmXZ
-         HJdHV6gX5IvKL630FIcdJbzpoqAwKBiV3spvAYGb18twDRtIq0v2qrc6QoRFp/esfRHG
-         zMVvEqE5GP1QB2waTCJwI7HQ3kkdPMa/DthXj8LxTyzQgCpO+3EeHZZvWCMWSHSg4cny
-         DJCVfqIs7OE/khc56V8syIHzMyrXaxdGNV3OU4PXAXCxPGiexJJNjv7CkfPlrEaBMrYL
-         zghg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773249215; x=1773854015;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fht9Hzi54HmvTI1eImS5sw0mHlLxiKaKt88YdnZtr6k=;
-        b=MiX1iBFXYaOl+lavudK3/pIr+EFBdTbxbgTprdaRoVzpCXWxvTWX3ugdpg5bopzItt
-         9NCW5x4UybNAUf9WgzTJ4UI8DEI18xQY7GNXpqMW7cF74Wm6/TK8d0RLzHdSR9ifStyX
-         F+K163VAa1hw+NYczyK73nOAQTta/qOA6wngwDKt2kwqi/ke9513IdkQiBWEbqEPvVCC
-         PLe3bsmkTU0w2GzyiIrLEjirFGrDCJiYZ15fE4x9g293FmmhZcnULoxISRubS0Uh7yEd
-         BCKEnOsSpGvjIr8nc/t4qefrZ7cex3g5yeoQ0ZZ6IcC+GiwTLGzAztYNQY9bHt8e8+Mx
-         jyEQ==
-X-Gm-Message-State: AOJu0YyeGCO8MtKoMSLDrpfuHjEvU85/XMMfHhncSgdYFW68Xe1DEzu6
-	T6QkyApIBOqtnexXU/CfVw2i1IiiHT+VzIilZN3IhYW7jPY+EbTKqWqkGs++b92GL17ugVoH+yc
-	G+r7vosS8V6wKXCpnTHPSP52W+/rIAn5IeBMuZuNNwQ==
-X-Gm-Gg: ATEYQzzv3ryMGcnATOvyxcfSWqe3OMzDhApBGhaDNERwufTrbzoywYnVbaAgQfQObZK
-	YawONCY24RSpQEW4FlVE5OcOPy06Mi6Q0+vfw/js9TXyXYfRhC0fnXsu3+szD4bVT2nK9pq+Qpd
-	XmhOC5CnOoIrJmYPl0obTwWVDThGXesoMU3Bh8fAMCnb5Z+sukP5AW3Sd1GvHb4ufyjaVYom+xS
-	sCmTDEmnFWxPOxU4L7Qa7TwSS39uaL/lQ8xXaDVj1r+aSm7Nc6jZ+SnZadsdsCbO+71naDjYmen
-	d7XV9j+9GyPMSg5XPPb998zF0pgCySUEI+xlE57Om4o1IphGG/YUcHq8eT+DlG1OTKgVbBUBXOh
-	oNVYyyHz6WTJYxo4OA2ODVS4=
-X-Received: by 2002:a05:690c:d85:b0:798:6401:fd1f with SMTP id
- 00721157ae682-79917e96475mr30149087b3.14.1773249215439; Wed, 11 Mar 2026
- 10:13:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="feuVlxnQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I2IQQAIz"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 07A8D14000F7;
+	Wed, 11 Mar 2026 13:13:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 11 Mar 2026 13:13:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773249226; x=1773335626; bh=+OeAAkeevG
+	dNKTKqBfn7+dT8Y6u78SMm8jvK+AIehZc=; b=feuVlxnQwfqJwUAJVIp261RwMf
+	VZZ2qv2SgrBUdrJ1HbZxz4qbXJ50SgiF3wU8p/OptuhcYXJEpcqy4pmu4O7eMrLI
+	E9aAcLkRWRd0BFiuyAecbRoF+iXoubpp2dJbXyLgQdkGLxuQAoML4uq31RS0X+EK
+	+//WlHqbcr78nWaRZ+mG7GO3HW84Xql3Ezz7wCbxVfAGg7eAyJ5Sv8MCpsaFE7AG
+	tFTutSeftANKknrbvUntDgyIcD7Tw2x9KPTH3138G9lQm0zRNQYESmifMgQLmcGY
+	zLbN6PunWW7SCHu4WYUYnxS+2plMxYE4kEMjc9gyq9183VxCCYtkfhERdjhA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773249226; x=1773335626; bh=+OeAAkeevGdNKTKqBfn7+dT8Y6u78SMm8jv
+	K+AIehZc=; b=I2IQQAIzsdwO+HQErWOMxdjyT8LU/qvgjiBRTLq/PO5ZSKzHZDy
+	UAX58Im4009OSxD2Sg3aDXy+q5hE76LTyudOkFN94uxjZStnJ0VLwrRI6EN0lbgf
+	IaGmJinqB7XXHtRk+BOggVBpwy9xhlCtjFn0JxPEKmFTpJY6VVSSk10HCjMzWSLa
+	W8D6oGxrLRVotyYs42L4SeeqUqJQ6Jr3apKdbHp5NPPxTCyGCpFCNP3YLNEqG33F
+	/Dbr2JCQCX653wzJiVv143M64YjN2MG/70aq+468M2GvqLHj/jp6xkoajuem3hzZ
+	h3NsKEiAo5pNf32SqNwQNnrQxYmFQnUAsTw==
+X-ME-Sender: <xms:yaKxaaUVPN4OG60qB2OGdBpo86ePLGlbA9eCqCiomEQa2_ktg2cMgQ>
+    <xme:yaKxaddbUMBuyXvx3C0g-jB_fgS42mVPGRbH4_e3P1SKolr_YC1OGNaMQ7lZZKcPc
+    dumCNfkP8YOMxPP1ZbDRX_lIPSuDa3IlD8X81nbIdS8zwq5eBx7>
+X-ME-Received: <xmr:yaKxaWvXANSuYP_mKNuhCzn0aLE55SQNhIYfBv-KVQmLZFUE6IK01t_jiNlCzu0rQpvvjIMzvWvj1tsNGWap1JX6oYcDuCULWw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeggeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehmrhhoihhkseguvghlrgihvggurdhsphgrtggvpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:yaKxac8EK-z--_61mRyVcZIewnmx3cUK7ULSpDKSB1KYt-u637HLlw>
+    <xmx:yaKxaR3DjFpxLzHnhy2IblLB2sjL7Vm6UEaPuWyt9rEoauXyTwG1XQ>
+    <xmx:yaKxaRB78w1i2I6P39oCgRLjJXTJSNZr0K63pzV-m4CVKM4liCJqjQ>
+    <xmx:yaKxadcNNVr4YaNclTiwcFw0g9shJ7ow4MUfmJWmjRPDgD51JggKiA>
+    <xmx:yqKxaWB6tK8Q_1itfBhEtGLxTxbXSPQgI2uv77mdAYKlq1iyrZHNbhtA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 13:13:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Mirko Faina <mroik@delayed.space>,  git@vger.kernel.org,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v7 4/5] format-patch: add commitListFormat config
+In-Reply-To: <3191559b-d79a-4d50-8364-50581df24ebc@gmail.com> (Phillip Wood's
+	message of "Wed, 11 Mar 2026 10:38:09 +0000")
+References: <cover.1772837832.git.mroik@delayed.space>
+	<cover.1772839973.git.mroik@delayed.space>
+	<c522f47e5b574c0c889c40284c71c36158b6bb6e.1772839973.git.mroik@delayed.space>
+	<6b160915-1cdf-48b5-abe4-3efd0771598e@gmail.com>
+	<xmqqikb3ws3e.fsf@gitster.g> <abCLFS3QP7rJHueq@exploit>
+	<3191559b-d79a-4d50-8364-50581df24ebc@gmail.com>
+Date: Wed, 11 Mar 2026 10:13:43 -0700
+Message-ID: <xmqqeclqqofs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Pablo <pabloosabaterr@gmail.com>
-Date: Wed, 11 Mar 2026 18:13:24 +0100
-X-Gm-Features: AaiRm53tftzCiFcMOqrPZkWGZhkrV7bc5Qe60CWX66kWuwzvXZGNSMz3suzClrg
-Message-ID: <CAN5EUNSxS_A=XT7cmUiQ9bsS5vtzB_KAb8URCzc3X5AzkQci8w@mail.gmail.com>
-Subject: [GSoC] question for an additional objective
-To: git@vger.kernel.org
-Cc: jltobler@gmail.com, christian.couder@gmail.com, 
-	karthik nayak <karthik.188@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi!
-I'm working on my proposal for
-'Complete and extend the remote-object-info command for git cat-file'
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-While thinking about what else I could suggest to contribute to the project,
-I had an idea I would like to get feedback on:
-In a partial clone, someone might want to know what blobs are missing inside
-a concrete tree and their size before fetching them.
+>>> Perhaps "format.commitlistformat = false" should disable the modern
+>>> format and fall back to "shortlog", setting it to true (including
+>>> the use of "valueless true" syntax) should enable it and use the
+>>> modern default "log:[%c/%t] %s" format, and non-bool text should be
+>>> used as a custom specification ("shortlog", or "log:<format>")?
+>>>
+>>> I.e.
+>>>
+>>> 	switch (git_parse_maybe_bool_text(value)) {
+>>>          case 0: /* false */
+>>> 		fmt_cover_letter_commit_list = "shortlog";
+>>> 		break;
+>>> 	case 1: /* true - use the modern default format */
+>>> 		fmt_cover_letter_commit_list = "log:[%c/%t] %s";
+>>> 		break;		
+>>> 	default:
+>>> 		fmt_cover_letter_commit_list = value;
+>>> 		break;
+>>> 	}
+>>>
+>>> Hmm?
+>> 
+>> Mmh, what if instead we defined a prefix format just like shortlog?
+>> Maybe call it something like "numbered" or something similar (not too
+>> good with coming up with names).
+>> 
+>> I dislike the idea of having an option be multiple types. Should bool or
+>> string, not both.
+>
+> I don't mind either way if we can come up with some sensible names 
+> instead of "true" and "false".
 
-The idea is to build on top of 'remote-object-info':  given a tree hash,
-return the missing blobs (inside that tree) ordered by size.
+I do not mind a pair of synonym if you insist, but I disagree with
+your assessment on true and false being not sensible.  When you view
+the feature as "use the modern commit list format" (specified either
+with a command line option, or a configuration variable), "yes, I do
+want to use that modern one, not the historical shortlog format" and
+"no, don't bother. I like the old one just fine" are both natural
+answers to the question "do you want to use the modern one?".  Of
+course, "let's use the modern one, and as it lets me give a custom
+format string, please use this one" would be how the user feeds a
+value that is not boolean to the feature.
 
-Is this too ambitious to be on the same project or even a good idea?
+So in short, I view this very similar to other "extended bool" (or
+"bool or even more customization") option/configuration, and "true"
+and "false", while they may not be so descriptive, are also sensible
+choices in that context.
 
-Thanks,
-Pablo.
