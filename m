@@ -1,126 +1,107 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2BF40DFB4
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:40:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D1B2D2488
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:42:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773258012; cv=none; b=XfphdWZD0BX8sIqpGY+EkSFEr9GQF6RkNz7WED+nhOQKIN6nbtNyZ1qBsPFaB+xPJ9KC1Xhjqybo0K/gD49tNEOSubdFnqv0b+3x0rGfS7TwAyTsepGow+uCSHg6a8+GtBVnA9UObPeolG4eqk9oADEgmZaAqcSMD29M6+gPzZ0=
+	t=1773258125; cv=none; b=Lywc13C9gXSwPTItTj2IPz4yGPD3sPef48cdnWxaXE9aDo6KkTqoVMR3KhoZmB+zKm3TelSLR78OFM0IySW6KHyxbXXxhgvq1pcnkIypoK8r5s+/ZAbEf/W3rhvwPA3/j7/UKnagrzjp3XNhNMO8tVvPz1lEZalHuhdNXsaPsUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773258012; c=relaxed/simple;
-	bh=KagLR7KbQvLzgYWI4al8JmyZHmrtLaRSdvNr/76ZMqI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LRcxw123z6w2KUqfnRk9raWl/aJ59vKEuLBAhu8zH4KuWCtabLF8O+u8CTBTGR+UDDDkhvmRcYOhXFQHBIpxmkUDnQiYKu87E9w+6qIl3qctjwsSKWDBkLj06P9BySuUYc7QbKT2kONZfahr1zCyt1NZb3+Y2nP2rV4dIt+DVUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AHpuxgWy; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773258125; c=relaxed/simple;
+	bh=arvTOwx0QEexdRmrfNp3rKqWN3oZGvY3tBHRbFD3tUg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Q67BF8RLqSlSznmZyqPSsYJ33jsTy2h6yLnYoZaRS0qTcgCVQQIwDpIymZpWcAxVk10xP0/8x02rDTRRXJ9CtqYscb4rtYxx6gAUYXBonvgIJehiPTbuObrdodbbe7pk6z/OBxqNBvTRIIAfW1YwMpjw0zbD4y/C4wuu4LU1/1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZYnmtYIP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OVMQ3u/9; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AHpuxgWy"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4853c1ca73aso1699505e9.2
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 12:40:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773258009; x=1773862809; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HfXZmY5/10IVCOaOVcw4iHlFHDo24WiY/2P6Pv6Q/2w=;
-        b=AHpuxgWymyTOI5Rr7bqvvKJ6b1zRTpCaRZMgOZNbg+NIGyvcF5kK+JeJLjaB++rFkn
-         g1SE7rfb/N2LMLGxXB2WOObUCDUS5xgIV2UitYA6iVOK+95bE0Cc7n1Xx+qQd/R7QMzg
-         HqXqX7qe1e16Qq9DXC+druAIjqHB4F+QKuKIcb9/7MxZZhN+90htUzWk0yzirEORBw3b
-         SM9z2vqDch4DVFBG7+Mp6+7NiB+kwLXpAGn3ntxPeMj0A8Rwq4Ts6iRJ5kZGxnagFLbg
-         SKWMjzO0JLnDKH18wn0t6jzi0pzebLu/wRuxLHR+ljP6Z5Y6CzpN5OfmB2vpW4b0F/Ih
-         bXdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773258009; x=1773862809;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HfXZmY5/10IVCOaOVcw4iHlFHDo24WiY/2P6Pv6Q/2w=;
-        b=OCec77qjcPZukwmE/zkgbULSYJc9tf3IjpOKKgs6jcATekKK2adxRgiRqksxB13LUK
-         tV3N91+DxguHdgAPiIIl/bbE7gvMdTmdcYns8pPyHxBjcL25dSqqUePAFnBhm+93IL1U
-         l4WaDHykbQeW4BVAEXHGsxvuWtJlKD808KPQ0HS2patIzbG1lRyzgSIIrQ3ShSJF7GAO
-         1oSrk1f9bCcEcV3TCISOmwDoqiI92xnow+K+J0nEidj8vRYOA4klAG2a9UIglVsw9kcr
-         XYlSH360H5nhdN1tvpVVdbqaJDOOwGq8cmC3mtgHmU+q85jmsDfJQb9xL7nXifBbr5MV
-         F4XA==
-X-Gm-Message-State: AOJu0YyvczDUBV85TV//1sVN7GhVcgJX54ONkokcmZUr8UxC+ZR0GXWV
-	j5bzpxLY/Ordwt3HOyVz/KYL9HRh255vTYi9RiZXbQ7lnhDLFlnrW3Ajv+Rkl1U6Fkw=
-X-Gm-Gg: ATEYQzxoeQA3mjgTwyK4tHoAlwgk4oqtwiEdLU+mx9r9LSRgpRIOl9NFSZzVgQL55tX
-	GmlYrbh3WhKB0I5sylaKVIM+vkkQ0qNvvpOHiwt9GJpBAzg4Rmizo9B75fk7iclAktjArHWvISb
-	cSZknXA5ioM6GT2cGIRmcuNeObmtEAgT4IOFRqZU0phltqz5ZZ/Lop9S+YI0sFcXnNfFP7YN9c4
-	nWX9KJalgD1yPUPRlJzOdOavCzbvwTGfKOjJavFZ3XcowPrAZ4Y2gtMcFN8xdz0SfqkWfVWGmkn
-	30DTyJOpKCTtfgKVD3qOzB/kJIQhSJ28driE+ER7DwnTLn1fSGVQO+dLeHa9GcwqpeqCIAqXCDV
-	Vd1Y+vzVocVOhlF63AJ0X4pydWYHn0Ef4KrWJNC3qwZ6rECuEz8phv9ZoIRXWod0jk4fffDQnmQ
-	lNbxJ3AVOlaV6akkrUsdu5ZgVyG9F/owamwdEIq1h0DK8Ys0yaGDHpsk19KEHmbzvAi5qAJ7oL/
-	+R1yZE/cn6mn+S25Z+GyBhjTwd2Iqnow8y1E6RrE/YeOYSkyWg3s/nP+HwpISp6W9zTBQ==
-X-Received: by 2002:a05:600c:458e:b0:477:7ab8:aba with SMTP id 5b1f17b1804b1-4854b0ac93fmr57252155e9.1.1773258009280;
-        Wed, 11 Mar 2026 12:40:09 -0700 (PDT)
-Received: from farblopa.localdomain ([84.126.0.122])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe23afc5sm1694775f8f.39.2026.03.11.12.40.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 12:40:08 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	christian.couder@gmail.com,
-	karthik.188@gmail.com,
-	jltobler@gmail.com,
-	ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com,
-	chandrapratap3519@gmail.com,
-	Pablo Sabater <pabloosabaterr@gmail.com>
-Subject: [GSoC PATCH] t9200: handle missing CVS with skip_all
-Date: Wed, 11 Mar 2026 20:40:02 +0100
-Message-ID: <20260311194002.190195-1-pabloosabaterr@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZYnmtYIP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OVMQ3u/9"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id B29E21D00089;
+	Wed, 11 Mar 2026 15:42:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 11 Mar 2026 15:42:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773258123; x=1773344523; bh=kb0P7gHudC
+	rnfynW1EYV84ANmJSG/FN7VCtH3tMv5zU=; b=ZYnmtYIPPYuBmvg7WrCqrH6EuS
+	pWwztrLfVW3U2zsG+/AYSDmPjnVg0evnKrfqUAL0SLF29GgZkT1kM35dBfxNURtr
+	iqpPhbqkIUUonOOzs05rEz4jydtOHccvXQyMiMyOYdO3FKlkevtf7axNBUBjnBrV
+	CJg0wCb5RkEMdRgzPjMxdQtOk4y9nn2p+X/vzSUVT0QsaMT4UwI7CHuRycjd60zU
+	Cr9WniEuFDx0pkHMP3DCftfEVe/gji0YamI4F2xBW1hKqYSsiEXevI0oMt8/mOsP
+	aBgZNPoN5ITwd3kH/7hlcNuSiA7YoBYPzQQtReBQE4lsyJuybeh+aieFX8Fw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773258123; x=1773344523; bh=kb0P7gHudCrnfynW1EYV84ANmJSG/FN7VCt
+	H3tMv5zU=; b=OVMQ3u/9l8NBCd892PjXG1H3ZI5mn7b4ZO5hPl2Q1n+GNU6hQE3
+	bhwrZiaeQNR2zQ9rSGlclkfmz+NX1rEwSvlHD/LEaKlQA4G4YM11En2rrZMKnWlW
+	1waQompqBhwz/lRE4TSfZgXrhFYDBeZjDeVqXxxpI1UkUz2EbT1OD08rdjs2n4BA
+	A6CxGAvzuX4fmpBW/Lk/G6SUKv6ICqy+Rt3Dd5nHNLAEzEf0pAozhPPymR87WmI+
+	Nvq4aXoQJLJAuMYTIYM8qtkr50Ncfwfp64EjM8RDK51wnivWyOjFQY9vFOW3fabG
+	QibYMp1C+G4z1Q5Jcc95/pG3sCWN8UdiOmQ==
+X-ME-Sender: <xms:i8WxabYdqiC_y7vpYeBuLMJb8DrjqKnyu_F_JI5vwyqAl4O4jEailA>
+    <xme:i8WxaR0iuqj0Vf3f66gp36EsPGA8vdsHLyxbcCLuAzL1zHFpE92mNh3JY4e4Fb8d7
+    JJTjEM-eiy54WP5D5QudwecraKemMh2ab-h81JBTjV1_47RD8BBRQ>
+X-ME-Received: <xmr:i8WxabWcIN8R2McwnfQsWRAX9R_cy7xQ5qHGCHzb7xfggl0u8rII6zyAeJixpNZ4UaxaWXZTB2H5T6mmEGL0Gq2LsjN442sO4Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegjeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhff
+    eggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprggslhho
+    ohhsrggsrghtvghrrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:i8WxabXaU6NM58DfL7BIktw7mVfye66BaxRZLFRgrHQ7gV1CmQpx4g>
+    <xmx:i8Wxaac4cOCcAdzWNAJ1jHk1BGXclmEkT_DJ-5c8kjX1yEnNrDwQvw>
+    <xmx:i8WxaUWqM3maErbD0xYdAWUM3tOW2RL_4LD_sBGqeBFYkpoDd1zkyg>
+    <xmx:i8WxaTeHaEFUNxaqAR_WNVxJaGP72YXXf6gAgdgQ52PbKy6bG0eowg>
+    <xmx:i8WxaZ2y300ED5GzbgTyez7zeakmVYxYnolyfmDZE2HKxvG9U0O2EuBH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 15:42:02 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH v3] t9200: replace test -f/-d with modern path helpers
+In-Reply-To: <CAN5EUNRZQP6ATE87AeZiJx-OTnNn_4NxhW4zyH6AspGUfnV7TA@mail.gmail.com>
+	(Pablo's message of "Wed, 11 Mar 2026 20:06:26 +0100")
+References: <20260309150935.578465-1-pabloosabaterr@gmail.com>
+	<20260309230134.758107-1-pabloosabaterr@gmail.com>
+	<xmqqwlzip82b.fsf@gitster.g>
+	<CAN5EUNRZQP6ATE87AeZiJx-OTnNn_4NxhW4zyH6AspGUfnV7TA@mail.gmail.com>
+Date: Wed, 11 Mar 2026 12:42:01 -0700
+Message-ID: <xmqqbjgunofq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-CVS initialization runs outside a test_expect_success and when it
-fails, the error report isn't good.
+Pablo <pabloosabaterr@gmail.com> writes:
 
-Wrap CVS initialization in a skip_all check so when CVS initialization
-fails, the error report becomes clearer.
+>> Our test-path helpers should work even outside test_expect_*
+>> functions, so this is not wrong per-se, but it somehow looks a bit
+>> unusual.  A related clean-up would be to wrap the CVS initialization
+>> part inside another "do we even have a working CVS installation to
+>> make it worth our time testing 'git cvsexportcommit' command?"
+>
+>
+> Thanks for the feedback, I can send a separate patch to wrap the CVS
+> in a skip_all git move the git setup
 
-Move the Git repo initialization into its own test_expect_success instead
-of being in the same CVS check.
-
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
----
- t/t9200-git-cvsexportcommit.sh | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
-
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-index a44eabf0d8..cba3b1a28a 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -30,13 +30,17 @@ export CVSROOT CVSWORK GIT_DIR
- 
- rm -rf "$CVSROOT" "$CVSWORK"
- 
--cvs init &&
--test -d "$CVSROOT" &&
--cvs -Q co -d "$CVSWORK" . &&
--echo >empty &&
--git add empty &&
--git commit -q -a -m "Initial" 2>/dev/null ||
--exit 1
-+if ! cvs init || ! test -d "$CVSROOT" || ! cvs -Q co -d "$CVSWORK" .
-+then
-+	skip_all="cvs repository set-up fails"
-+	test_done
-+fi
-+
-+test_expect_success 'git setup' '
-+	echo >empty &&
-+	git add empty &&
-+	git commit -q -a -m Initial
-+'
- 
- check_entries () {
- 	# $1 == directory, $2 == expected
--- 
-2.43.0
-
+Yeah, but if we are going to do so eventually, it would be pointless
+to use the path helper in that "set up CVS environment and make sure
+we got a sensible directory structure" check, no?  Upon failure, we 
+will hit test_done that loudly says that their CVS installation is
+not working as we expect.
