@@ -1,56 +1,56 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC773E1CE9
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 09:26:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90843E1229
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 09:26:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773221185; cv=none; b=lbbZ/A7Dh5+Xd6S8lpm1A3TOZbfgToR78TStz4u9V9bskLJcdK+eNV7eNEw6SrnVLRXUdshCJeHNiQ5S+ZtXHteun2nF7nf8qTgT/Ko6spwmHCF4dW2rDhktz6o3TASBBZ4G7AM272hP9Thehx/PP0m9eej+l3svMmYrwRK82iQ=
+	t=1773221187; cv=none; b=DlHlEysWURKmfKA9/z4//pBbKFiSS1dxtgTnStBII89pIsEtFkRAKFuzSQ6Fg0vuNHjC5MVBdzf5Tg6Lld2sUpV7HoA1XIlqxagl/ZKCcEvwtESImXmwdRaJQMlfHRz73DaU3WEWKyHHuNUdwXHCk9CQ2zGNhAIErn6NNtc8YyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773221185; c=relaxed/simple;
-	bh=/BE62Jxev3nNL+NSVR2fNGm7AjqcEEXtwvJESu52/io=;
+	s=arc-20240116; t=1773221187; c=relaxed/simple;
+	bh=Y4qhe/sK+l4NwH7EXUIhfwBPDlpgwXxEzyJWm01KcM0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z43apzUWKSyuW+OhSuQhrTW63uXqHqUcoCUnuMdPuSxoEFZFkq/gCGxq/1xnVBZ3hq4klHhyF4zPwPz2jRAqfUJ73jpgXFye7VNV8YAd2Fyw+v6sLT4teITebPVz5e3I27IiwYXknQ+7N/W1wJqv2MINuUnOVFAEJNdKELoKHps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GxE5j6ou; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zWSnAYcr; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=StqKx0xbxfJjAiMTZoz0tITBEwsvlgXhfnmgabNXJKT/O7M0tt9tPCp5VvMkj3Vv2v3Bdru+S9gb3dg0CLOWJwKREf82/SlLmKuPKqlDE21XUvbI3rymtesJZ2qDd6EkJJ95Cd/ueCeRLcudgDx475khwiHvX2ETTyy1m53L4PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ew2vtd6j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hk8AY3BL; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GxE5j6ou";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zWSnAYcr"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 583F61D00144;
-	Wed, 11 Mar 2026 05:26:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ew2vtd6j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hk8AY3BL"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DC2D77A0163;
+	Wed, 11 Mar 2026 05:26:23 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 11 Mar 2026 05:26:21 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 11 Mar 2026 05:26:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773221181;
-	 x=1773307581; bh=IXIyYSwtJHaLWut+SHJZXWu7al0L7ofANI+7U8Rp+OQ=; b=
-	GxE5j6oumOdzjd2zab1S1N+kiNmsC0t9TxDlO1oOIMmeU7IpYBr6PhckekVtxLwa
-	RBI9AEDW0z5TqTPQNTN2CwisIj09o15ze7JfbDwwKsguo6duidjQ5+Vk0b7mhg1X
-	hrSlUl/IxipgzSztnCBfwcJ+xpaJTFWvuS+QrdkZ0o4pBW9WqTiGpGCofWrfh+7+
-	bcjO8AJRKegwcI39gW6diMGt1ZrEUBm5t3Qn6DmdrGIBYg7iksy8YZpwSMVJ1Ra8
-	wYRNeMCGpwbXzIOrb8ljwaL6uBApG27AEDs03+QZa6Ngv9aMttueXQxQzfmUOz1d
-	QpgwFJSfRnzHya5JxeaNwg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773221183;
+	 x=1773307583; bh=T9X7nnPoJlcal/B3PrBsyAJDyiTS06UCbC8WzVaMWls=; b=
+	Ew2vtd6jSAAWpMd7naMLZ9WslBw9ZL98dSCgsIJdEt+dyxy9JAqlD2l4Ha+/ZkKY
+	Sl1sFXEjXlQdRcqHhV3HMvGU5AzCzC6wp5s1/SkMUL1gUYd+P4w242eD/f0GA3Zh
+	torvf8YCj2O1UloeQkJJN7GZwdPlChlk9DqqTsZlAZpomG4mnAkjmocJiLKFRGPu
+	ZLk+utHLax352fvJiJ3iOODJSJP+/c6GI2q+a/u58y9Hkswa/HxMwFlozJP2sWeJ
+	RIVRCIRZi1w/JTh0hahn5QP6dUCqS5tf8Y2qAKtgBjGKUsPimiiSrBTiqCGRDonJ
+	YuHAyb283RJ6yhp5TElTTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773221181; x=
-	1773307581; bh=IXIyYSwtJHaLWut+SHJZXWu7al0L7ofANI+7U8Rp+OQ=; b=z
-	WSnAYcr2Qfjf4xRMbn1EfxGzmHGK4C036XYhQOoA/kevp9qEwbwIbWzIoXL9lUrj
-	8vWIlzXaxLKhem4BXMAo3jEmIQapQYw6OxZITWCBVe2Xt5Ue9h09hDRkG3k13exp
-	UwmCSDE+LwhUFqQbnqOpXj0RqtfGGee3+jELlt8H8As5pX2nKNmmMDDEXYWXdYGr
-	wcILJAsT446rxh6b3aVft3T0AdQV5dV+nsHsXN2yqmzRz64CmyBwS0gl8k+zyG6A
-	9IqN483Z8xI/RPJGenaiB9Qh8/HpQm5Lq1CScOg2Phj7jxo5FsNtVX8JcebEcE5S
-	ttxqcMt0xNKdAZVGAmUHA==
-X-ME-Sender: <xms:PDWxaQpsqsVGFoTVITuFU5MDsmueq53xoBBHkiHkU6jUX-bQlJG8Mg>
-    <xme:PDWxaeHzqj1IH9WFfCIcj6a77WicD9xyT1bAuEsvuPRonwHsKM8XcAlBa1WJV1oKg
-    zoPhgFZGH7zNuemITWesE1vxRZDH2Gqzs3Kxu1NRlRN4-zmeuTT>
-X-ME-Received: <xmr:PDWxaSkF0P4Y121U3xnsW8u4hMFLWZs-sIeSIq8VrMl655kFI9TlsXGeUSipmpEYLspdDs2DQOwwqgZedBEy_n0G7hyCKnL8yymJMha8Yg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeefheegucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773221183; x=
+	1773307583; bh=T9X7nnPoJlcal/B3PrBsyAJDyiTS06UCbC8WzVaMWls=; b=h
+	k8AY3BL8eVlUDRm4TmfKK+5BDHdhFuVBJ8BAcIF5Tsk8WC3MCzWvNoUJVUvLqkTT
+	YL3HjY6DMsxv08vkK/SkwNUKU6aL+WZDNbvaqowlKA8LoTN0qJWn/EvOBfT1/KCp
+	zx9A8OZ8BhoY3/7x1zbd7aluZ+UQ/04JAcdScEWgNpyxgrba0GOY0X9tH3tP/pCW
+	re0A91fmMcQhpf/Ecw+7a/LESRTgpNtL6s3/Wl6Sx492Jk3akLhxAP7pbmzFjl1P
+	LFVXSUuk7arco59G0PgCe66IE/llzse5EfQz2RYLoqnQs/2bEhmJ9l1TcpNTKtyu
+	oqTlxMPT9kMYlAnZNRpIw==
+X-ME-Sender: <xms:PzWxaRfqJhItolvjyvLIyQM9--jJQn634h0YZe9GyAlftV5-AevpdA>
+    <xme:PzWxaWpN6CGwawSe3uRsu4IIaAMNy4Pka4_BhL1ep_wVLr6sloMMkYLij7Q4Ur_a6
+    3nG8joTi2JyiabeL6D0Jkia_LN-saQcEQoQkJgKX9iPXBploPSOrg>
+X-ME-Received: <xmr:PzWxaX46rKMWpV0qsqBfJ7JTsOX-bKrMhJOnLXEcMgHpM4ppZH_8hmsjXgBl_7JKpxPuvGIVqbEH_-cKP2BpH7wYYaO0FyPs2I480AHL-g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeefheefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
@@ -58,30 +58,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeefheegucetufdote
     hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosg
-    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    thhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrh
+    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
     rdhorhhg
-X-ME-Proxy: <xmx:PDWxaRmMy5vzmpXhtUYZjePeTRPd8Lc-Iqux-XImpQ_DwzXPtTuHUw>
-    <xmx:PDWxaTuY9nQ2ORbqi3cxRmdj4uR67AmA4_H370sqoeGKidZBK-FJOA>
-    <xmx:PDWxaUlUueRV-yqJEQgiJ2Wo9FIF7skjZrxU9cZZBNEYAHe0tOhlYQ>
-    <xmx:PDWxaeuCwVMb_p8SYIiBMACTMLEUJmpY_xOc7Nopf0HA9nuZRDgmVQ>
-    <xmx:PTWxaThix5LufML3fKAX7BHQGSWW1GdnGcSJwizxQ-U_8GA8anrvpDuG>
+X-ME-Proxy: <xmx:PzWxaUqf1IXKczdMsgakNWkcaABqVZ_tXR6liOsDf83HPLd55ZNQow>
+    <xmx:PzWxaRjKPXFU_gzlFq2lQTOD5wKlLRz3TFABryYv8GYZVgAMXMY4iA>
+    <xmx:PzWxaWIdkuM-OdeLQrUWxGAN5vKQL-wu1cO9jCiw2bcXS_T3jYCsYw>
+    <xmx:PzWxaZCYx6s5YllO3Nii5QljZij8eOHcHTPRRrKy7ikw7sMcbD5ClQ>
+    <xmx:PzWxaVFsaSL00YOMNoqeO-BEOWu7BlyBiwPaxVdH-tC_f2FcY_kcqPUu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 05:26:20 -0400 (EDT)
+ 11 Mar 2026 05:26:22 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 143cecb3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Mar 2026 09:26:17 +0000 (UTC)
-Date: Wed, 11 Mar 2026 10:26:15 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 973984e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Mar 2026 09:26:22 +0000 (UTC)
+Date: Wed, 11 Mar 2026 10:26:20 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: "D. Ben Knoble" <ben.knoble@gmail.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 7/8] builtin/history: split out extended function to
- create commits
-Message-ID: <abE1NwXLCsXanSjy@pks.im>
+Subject: Re: [PATCH 8/8] builtin/history: implement "split" subcommand
+Message-ID: <abE1PPWRdPaHMaAs@pks.im>
 References: <20260302-pks-history-split-v1-0-444fc987a324@pks.im>
- <20260302-pks-history-split-v1-7-444fc987a324@pks.im>
- <CALnO6CC5FB29bHPtyKD=L5EWxTCLx3K2qd+wGySdck7tCvvs_w@mail.gmail.com>
+ <20260302-pks-history-split-v1-8-444fc987a324@pks.im>
+ <CALnO6CC_UMnQvcyCe37mCan8eASugknK-WbVp-KWXWptvrsJDg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,30 +90,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CC5FB29bHPtyKD=L5EWxTCLx3K2qd+wGySdck7tCvvs_w@mail.gmail.com>
+In-Reply-To: <CALnO6CC_UMnQvcyCe37mCan8eASugknK-WbVp-KWXWptvrsJDg@mail.gmail.com>
 
-On Tue, Mar 03, 2026 at 01:43:12PM -0500, D. Ben Knoble wrote:
-> On Mon, Mar 2, 2026 at 7:17 AM Patrick Steinhardt <ps@pks.im> wrote:
+On Tue, Mar 03, 2026 at 01:47:27PM -0500, D. Ben Knoble wrote:
+> On Mon, Mar 2, 2026 at 7:13 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+> > index cc019de697..24dc907033 100644
+> > --- a/Documentation/git-history.adoc
+> > +++ b/Documentation/git-history.adoc
+> > @@ -57,6 +58,26 @@ The following commands are available to rewrite history in different ways:
+> >         details of this commit remain unchanged. This command will spawn an
+> >         editor with the current message of that commit.
 > >
-> > In the next commit we're about to introduce a new command that splits up
-> > a commit into two. Most of the logic will be shared with rewording
-> > commits, except that we also need to have control over the parents and
-> > the old/new trees.
-> >
-> > Extract a new function `commit_tree_with_edited_message_ext()` to
-> > prepare for this commit.
+> > +`split <commit> [--] [<pathspec>...]`::
+> > +       Interactively split up <commit> into two commits by choosing
+> > +       hunks introduced by it that will be moved into the new split-out
+> > +       commit. These hunks will then be written into a new commit that
+> > +       becomes the parent of the previous commit. The original commit
+> > +       stays intact, except that its parent will be the newly split-out
+> > +       commit.
+> > ++
+> > +The commit messages of the split-up commits will be asked for by launching
+> > +the configured editor. Authorship of the commit will be the same as for the
+> > +original commit.
+> > ++
+> > +If passed, _<pathspec>_ can be used to limit which changes shall be split out
+> > +of the original commit. Files not matching any of the pathspecs will remain
+> > +part of the original commit. For more details, see the 'pathspec' entry in
+> > +linkgit:gitglossary[7].
 > 
-> Curious—what's the "ext" suffix mean here. Extracted? External? (Maybe
-> I'll get a better clue in the next patch.)
+> That is quite convenient when changes to 2 independent areas have
+> become mixed. Nice.
+> 
+> > +It is invalid to select either all or no hunks, as that would lead to
+> > +one of the commits becoming empty.
+> 
+> Is it easy to make this a no-op? It could be done later if that
+> suggestion is contentions. But I figure rather than error we can
+> silently do nothing, since we have performed the desired split. (Or
+> even use this to split an "--allow-empty" commit, but… why that's
+> desirable, I can't guess.)
+> 
+> So yeah, probably for later.
 
-It stands for "extended". I thought that this was already common use in
-our code base:
+I mean we could make it a no-op, but wouldn't that make the interface
+even more confusing? You don't really split a commit in the case where
+you select everything or nothing, as you'd only end up with a single
+commit in that case. Making one of the commits completely empty would
+probably be an accident in almost all cases, I would claim.
 
-  - `refs_for_each_ref_ext()`
-  - `odb_write_object_ext()`
-  - `peel_object_ext()`
-
-But Junio recently asked the same, so maybe I'm biased here (I am, two
-of these functions are my doing). Happy to take an alternative suffix.
+But yeah, if there actually are use cases for this I would say that we
+could then introduce "--allow-empty" for this command at a later point.
 
 Patrick
