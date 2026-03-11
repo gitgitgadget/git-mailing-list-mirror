@@ -1,192 +1,95 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7693F3E9285
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 18:33:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156D63E8C7B
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 18:34:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773254022; cv=none; b=bZETtyRiXf83er9AA8jSCFacIloxStRmpD6Dfmiti/NNyL9SwG9lEUJiAeMvkEek+faYiVGEdxURBT5/pLZl669n+II0dyWuf9sswe0WsqtyJgmJjRtuVAZeHikV+jV+lwnNIkxH3Aq0OVBwPZM5JbDJryu/g+WuOaPHuh7XjQM=
+	t=1773254067; cv=none; b=Ny9ImuG4vKJYFvMgAfJBqyXvQVZWKNjYjESi0j3PzAQ79ibHYBhGQmLCYv4IWCHWWoiFkaWUe8GAoSLzahukm0QPc4OYUr9ZIhXzeqPhXQukBQt8juAtGbac5QzySJvdlutpYDOccjBghg68rzCiJT9OEqJl63bPIQS0JnBrR6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773254022; c=relaxed/simple;
-	bh=SPcUR7RRGk0iQAR6p2M/2rFTmWLOiEzDXeG57aMkSKs=;
+	s=arc-20240116; t=1773254067; c=relaxed/simple;
+	bh=VMkDSmkawHDqMKiUGZzE3i48lXhkkeZW2Fk4XOg5YFQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xtlk5ruZJGMaPteNlAOwnXGatiVcMk0lO5YWnXQzNO/7/0Js1/2oqx7PLNShv9hywr22FKuXL5kUCSua8SDn4NuELb9A5LtZogfpPZFthHUPyHmPZ7ZC1oDI4R666IaqlFsG7h3FG6MIxa14mPLmsGB2Uf/ZjzKWi/t3AWuIo3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ykzeg00O; arc=none smtp.client-ip=209.85.167.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=I2kDryhi4zzppTn3MGQtxqO0Z545zzcGBKc6r6SPSXN+ZDBrxGIO4UPu6S4nL56a+z7m8QJzj/zEpbZ3pvz/EihchMwYSpUDpI5LasA5KRT/XRmXI+izQwESbriOicK8ElWVCoDNavzhsUNIA+syQNaDqF3iDig0b5Cq2jp0IDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gAmQm2Jg; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ykzeg00O"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-467161c4b7aso122841b6e.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 11:33:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gAmQm2Jg"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-48534b59cf3so1361715e9.2
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 11:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773254019; x=1773858819; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773254062; x=1773858862; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GT9bS3A8NSmIRQ7wq+HeJi/ERGGQLT+7b8ruT0KxCXM=;
-        b=Ykzeg00O1lz3g5wBgSq4/nbPmKYn6SXJdwbNYS4/tvesd5HjzNSfy/kl0olh3FaQQq
-         SDrmnWQ6R+6W2M6d+bNMxWIG3EU3GSh5ZkJesa/usP2o5tsXYg+8VWGsFgandGSgmmcF
-         CMhY34FAMGn0e4EZJKWtaGWtPeq+vEE2ityGOTmyaZTlSSan5nNFe/NYc0lJn31KJLj+
-         d68hoMXRgScZ2rDhfAVpp8/V/hbrZ9ZfK/ohcj8sD46XHn5T7oReXTN1C6yPpkRQNGMz
-         lzG7qSM2kGQMT/31Bzxb8vr0Iu94F+JUeMxyT713yq9MOSVy+z3ii2HwoUxhja669xjx
-         qB6w==
+        bh=VMkDSmkawHDqMKiUGZzE3i48lXhkkeZW2Fk4XOg5YFQ=;
+        b=gAmQm2Jg1BXQdcD5OpGuSk4sjGsTgFd3ZHQ3YU+e8Jg9O4YmNuU27jZZIZU4ivJsQU
+         qMtNiJJs4d+H4+YOcFPSBgjSEDE+5N8W7RhYwjXG+qzzeINmetBpvmbsg9daEVas8HyL
+         VVI2nYRzXgSIRXAGX6M5bBTVdnbDEOSn0NPjHknHZvzonvAseTM1uk9sjoFwAchCJBrr
+         f6FRUkBU9BFey8FH8uKhZMe33Y3qyNqv7IJAlTlogNJfI2GwueW75Ccb5hjYq5EitnVr
+         Nth4QvW83DRftIafH5YjIRfl4Nb/vi2I69HmN5466s3EeSS8PuNdQwhIBEG8wipCKO4w
+         nhEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773254019; x=1773858819;
+        d=1e100.net; s=20230601; t=1773254062; x=1773858862;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GT9bS3A8NSmIRQ7wq+HeJi/ERGGQLT+7b8ruT0KxCXM=;
-        b=Vhj/KMD4eLNGxP7Hv5gqSXj6eVsVIUxqRMDz1WnqIVtQZ6OU59arQKJWh8EPe8afvu
-         1FNbir+BOVYkFXP7sa+YD1+K/SAJT2biY+SUgnLoTnG25tM6rQFOQDc2erhgRtkZR/dB
-         JHxklmdgFpJLOU/aLvf5q/nXYi3b3mxB6mQENBW6ptXpx6eLehUUAM2+hChQHUBBcZct
-         ++7drV4lXRaR/e5agzKob/qwbdRuMCEOGuobnM+4PEn85dEosOR+IjN7ZdPN+wU7FYZI
-         plJowxIZ85SysXCwX8mJh4r1wlRAa2aSeoIs+PAj9infCjMiDEODZ4wJRsOhC4iqIv5G
-         5sww==
-X-Gm-Message-State: AOJu0YzN0Zw05seEy00mMK9o/McLA+scT2UnXVJQ0QF+hStlcYtDUsaZ
-	KP7eS3/9poxz4/v2Ii0bEAQK5ZgFqk0ZLDKvBTpAxQzDfNx7W69rRSe5
-X-Gm-Gg: ATEYQzxPiR8VHSwSkyMNpX/97QtXqUmdd4CKC9DRaPoOa4L8CYQrD9IbMcD05HdSRBK
-	ZW12vrHi07UnVBqMABvwmWho2HCQcr7WGyxEMo9x8k4+pl58J0tZpburwJzaIKwulRGCTJlvdax
-	GfLlCnc+5vMix1pWE/OSZPmH3djfaejBbSn+MeHgAbZH5ViJL1OMBt5t8XDEJt36pJH/EEKJBdg
-	XGMFIeM2IivnZoe6gCsNsabvOcYxunr+8fZz6oozkDQG5a86YuCia8W+V/MFo9wOkPxKlNJqt2R
-	TNYbvXvuuMVXYwB0/sdhu9cW8Tn3ZXMLX4LpotWs1AaltPPGSTRSLnZ3Src2WYyLtpV//BBlk+H
-	zXN21b/EyOkP5W65Zmtu0PYkWh9gn4xVO5kCtF9UejlOCKbwEsMn7bdcv1R4vtRsWhWml8tvKJT
-	PoX9SDcpcPi1HYulUJ
-X-Received: by 2002:a05:6808:152a:b0:467:1f6:4ace with SMTP id 5614622812f47-4673341d034mr1896264b6e.12.1773254018557;
-        Wed, 11 Mar 2026 11:33:38 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-41791432d87sm1317705fac.1.2026.03.11.11.33.37
+        bh=VMkDSmkawHDqMKiUGZzE3i48lXhkkeZW2Fk4XOg5YFQ=;
+        b=bvRx4bCLxanhmeHUzqomIUPeUHjmnBffSCi+z1tXd+/Ug8Ags6XwLyeELNVFJJcLjG
+         rt7nhV+tjM3P1JK5Z8ARh/awxS56lBRbS6Qsnjb0zvwoELCnD7J5EwBDAluOuWX50Egz
+         DRrz+1RwA1YEr69xAKhZsqhij2dgXvhJJKR0WVnMlj8gFNiprTdkMs1kLGm7O7E4CkUF
+         WWHVqtbv/l3HCHVcC6Q3vIkB2DeGW16tFyX3VzlX1cDKJnWRCsTt3eMpHHnZE/PnsB2o
+         aUdouSH9Nl1igpB9Cpf8aRGDS0dq4g1R2QeI6uoZ0+Udwx/w+qZUe5oNdTUBvirrEGBn
+         XrRw==
+X-Gm-Message-State: AOJu0YxfmP4POwd2u0tEp7VaEY794rOl+u7fuEwI/OW8fEtGSA+BMFhD
+	No9PZS9q7B1Yqfurzu3hAPbQOAdwbWWF301vWdOPAkRUMmHOQg4SiqyZ
+X-Gm-Gg: ATEYQzxcN3OQeJh2wn5LBdtzhbrkT8h8DUGMtB46lz59bMFyvgEyUWJPxANzAkTjJUB
+	4P+/z5ilMjYnUVEDami3yx8WtpkxN1x0WCxuX+VObZXa2sIU1qloAa4nCwPmdu1u82FCuOoAEyx
+	3FAojfQCB/36H+5wL3AvmufpLrswhC2O4M2y+MQXGS4xAUooHg/qnJ20Cw1uwFKCFh5thpZxZ6V
+	/iTEWIGz3QhgF+uoh4dSF05TtlG8CDpLLc0/voLbjqDGCDzlr80XmjlJKR5qIEqyw4Q3ti8x/uP
+	R/zQmcguieNyiuMUlwtIRq8OYeMACwnJx3+h6l3TD7PM4q1StOKRRfCdLhpDNPEM/0p69CoNeOR
+	3QykwXvtcu9M9PcosWxd90+tWJBuZH1OO35hJpjN80bjkJ1DAE2sgqX5Iw8rsc5SREFaIZ38hR7
+	tOTPOtAV11i+ANGp1JBok=
+X-Received: by 2002:a05:600c:3114:b0:485:4526:ee06 with SMTP id 5b1f17b1804b1-4854b0bb7dbmr60236365e9.11.1773254062006;
+        Wed, 11 Mar 2026 11:34:22 -0700 (PDT)
+Received: from gmail.com ([159.146.43.38])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fdf09abesm1273338f8f.0.2026.03.11.11.34.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 11:33:38 -0700 (PDT)
-Date: Wed, 11 Mar 2026 13:33:34 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Siddharth Asthana <siddharthasthana31@gmail.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH RFC] git-replay: implement subcommands
-Message-ID: <abGutGnWo1gN0Dii@denethor>
-References: <20260309-toon-replay-subcommands-v1-1-864ec82ef68a@iotcl.com>
+        Wed, 11 Mar 2026 11:34:21 -0700 (PDT)
+Date: Wed, 11 Mar 2026 21:34:14 +0300
+From: Burak Kaan =?utf-8?Q?Kara=C3=A7ay?= <bkkaracay@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, jltobler@gmail.com, 
+	ayu.chandekar@gmail.com, siddharthasthana31@gmail.com
+Subject: Re: [GSoC Draft Proposal] Refactoring in order to reduce Git's
+ global state
+Message-ID: <abGhquQz_mxK_Ow8@gmail.com>
+References: <aa1cn0_ATfh-uRE4@gmail.com>
+ <CAP8UFD391QPtk3Mtt5z17ivdVMk9EEWZuKhVtt7X9Twm7WTpRg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260309-toon-replay-subcommands-v1-1-864ec82ef68a@iotcl.com>
+In-Reply-To: <CAP8UFD391QPtk3Mtt5z17ivdVMk9EEWZuKhVtt7X9Twm7WTpRg@mail.gmail.com>
 
-On 26/03/09 08:30PM, Toon Claes wrote:
-> git-replay(1) has various operation modes. The mode depends on which of
-> the options `--onto`, `--advance`, or `--revert` is given. These options
-> are mutually exclusive. This usage pattern is counterintuitive and
-> uncommon for Git commands to behave this way.
-> 
-> Implement subcommands into git-replay(1):
-> 
-> * `rebase`: This replaces what `--onto=` used to do.
+On Mon, Mar 09, 2026 at 04:17:20PM +0100, Christian Couder wrote:
+>I didn't talk about it earlier, but I am not sure using 'enum
+>git_error_code' all over the codebase would be a good idea. Perhaps a
+>few functions would benefit from that, but then the enum could be
+>specific for these functions.
 
-I'm a bit confused by this. It appears that the "rebase" subcommand
-still requires the `--onto` option so it doesn't seem to really be
-replacing anything. I assume we are tyring to break these operations
-into distinct categories which seems reasonable.
+I understand your point. I have also noticed the use of
+function-specific enums for error returns in the codebase, which makes a
+lot of sense. Because of this, I plan to remove the part about
+introducing a global git_error_code from the proposal. Thanks for
+pointing this out.
 
-> * `pick`: This replaces what `--advance=` used to do.
-> * `revert`: This replaces what `--revert=` used to do.
-> 
-> Option `--onto` is still accepted. It's mandatory for the `rebase`
-> subcommand and needs to be used in the exact same way.
-> 
-> Option `--ref` is added and required for the `pick` and `revert`
-> subcommands. This replaces what `--advance` and `--revert` used to do,
-> but as a single uniform option for all subcommands.
-> 
-> The `rebase` subcommand also accepts option `--ref`, and when given this
-> is the ref that's updated with the outcome of the git-replay(1) command.
-> Thus following commands are identical:
-> 
->     $ git replay rebase --onto=master master..branch-1
-> 
->     $ git replay rebase --onto=master master..branch-1^{0} --ref=refs/heads/branch-1
-> 
-> In the second example the upper boundary of the revision range is peeled
-> down to a commit (using '^{0}'). Without option `--ref`, git-replay(1)
-> doesn't know which ref to update, that's why `--ref` is passed
-> explicitly.
-> 
-> For the subcommands `pick` and `revert` it's also possible to combine
-> `--ref` and `--onto`. Here are again two identical examples:
-> 
->     $ git replay pick --onto=branch-1 master..aabbccdd
-> 
->     $ git replay pick --onto=branch-1^{0} master..aabbccdd --ref=refs/heads/branch-1
-> 
-> In the latter the argument for `--onto` is peeled down to a commit, so
-> the command doesn't know which ref to update. To inform git-replay(1)
-> which refs should be updated, it's passed explicitly as option `--ref`.
-> 
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
-> In the patch series by Siddharth Asthana[1] the option `--revert` is
-> added to git-replay(1). This is implemented as option `--revert`, next
-> to the existing options `--advance` and `--onto`.
-> 
-> The usage of these options is mutually exclusive, so the user can only
-> use one of them, and depending on which one, git-replay(1) selects a
-> "mode of operating".
-> 
-> Various people have raised this behavior is somewhat confusing. In this
-> series we attempt to make the usage of git-replay(1) more intuitive and
-> user-friendly by implementing the modes as subcommands.
+I have also noted your other suggestions regarding Olamide's work and
+the commit hashes. I will apply them in the next version of the
+proposal.
 
-Ok, subcommands for git-replay(1) seem like they could be a good fit
-here.
-
-> This patch is submitted as an RFC to gather feedback about the design.
-> All changes are implemented as a single patch right now, and thus
-> reviewing the changes might be challenging. When we got people aligned
-> on the direction, I'll work toward cleaner patches.
-> 
-> These changes are based on 'master' at 864f55e190 (The second batch,
-> 2026-02-09) with the patches of Siddharth[1] applied: 'sa/replay-revert'
-> at f79189a653 (replay: add --revert mode to reverse commit changes,
-> 2026-02-19)
-> 
-> [1]: 20260218234215.89326-3-siddharthasthana31@gmail.com
-> ---
->  Documentation/git-replay.adoc | 124 ++++++++++++++++----------
->  builtin/replay.c              | 150 ++++++++++++++++++++++++-------
->  replay.c                      |  66 +++++++-------
->  replay.h                      |  31 +++----
->  t/t3650-replay-basics.sh      | 199 +++++++++++++++++++++++-------------------
->  5 files changed, 349 insertions(+), 221 deletions(-)
-> 
-> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
-> index ffdf790278..a7e8dac23f 100644
-> --- a/Documentation/git-replay.adoc
-> +++ b/Documentation/git-replay.adoc
-> @@ -8,8 +8,13 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
->  
->  SYNOPSIS
->  --------
-> -[verse]
-> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch> | --revert <branch>) [--ref-action[=<mode>]] <revision-range>...
-
-Do we intent to remove the experimental marker?
-
-> +[synopsis]
-> +git replay rebase --onto <newbase> [--ref <branch>] [--contained]
-> +		[--ref-action[=<mode>]] <revision-range>
-> +git replay pick --ref <branch> [--onto <newbase>]
-> +		[--ref-action[=<mode>]] <revision-range>
-> +git replay revert --ref <branch> [--onto <newbase>]
-> +		[--ref-action[=<mode>]] <revision-range>
-
-Subcommands with required options like this feel quite bad IMO and I'm
-not sure it makes it much more intuitive. I guess subcommands do make it
-easier to convey which options pertain to which operation. Maybe it
-would be better if required arguments remained positional though?
-
-Also, using these subcommands appears to be required now which is a
-breaking change compared to before. The command is experimental, so this
-may be fine, but should probably be more directly mentioned.
-
--Justin
+Thanks for your time and guidance, it is really helpful.
