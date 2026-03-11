@@ -1,199 +1,192 @@
-Received: from mail.univention.de (mail.univention.de [78.138.66.89])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585E41FE451
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 18:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.138.66.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7693F3E9285
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 18:33:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773253862; cv=none; b=egRdDlUfQ5wCmirJLBp0nsFrMG6BkCQbqH+vFS4iRKO166Isoa7sdJhPFqGtMn2pQXBorN08sRfO0DT7XJNN8h/7MF2CKLkvnF3QlMmkWtEna1Y0A7wyGl4EZbmhe4h0UCdaXOUosBOLmZpj4P/UDichH6x9PTKajwCQFjFPf9c=
+	t=1773254022; cv=none; b=bZETtyRiXf83er9AA8jSCFacIloxStRmpD6Dfmiti/NNyL9SwG9lEUJiAeMvkEek+faYiVGEdxURBT5/pLZl669n+II0dyWuf9sswe0WsqtyJgmJjRtuVAZeHikV+jV+lwnNIkxH3Aq0OVBwPZM5JbDJryu/g+WuOaPHuh7XjQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773253862; c=relaxed/simple;
-	bh=0w2fTMcIVFLkZCKjeUkMnGXptyLyqM2eFJzHP+V21D0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=QXtTT7riwl03FPyZV9qDxwB50JUf+uM/mFiBo7T3qJUzysAYXioVcOMXqa+t1JA8pxP8GFZQkreUxEWKOiBDPH1uuOcgYVzFxHikXrbPox1xBYUiV33ZfOOWzq5fEwxYTZLNgCo8PjsmIV0tBpdPreIhp7NOm3wjf0NwghVBL2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=univention.de; spf=pass smtp.mailfrom=univention.de; dkim=pass (2048-bit key) header.d=univention.de header.i=@univention.de header.b=gIQT53/f; dkim=pass (2048-bit key) header.d=univention.de header.i=@univention.de header.b=iOK+ZMiT; arc=none smtp.client-ip=78.138.66.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=univention.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=univention.de
+	s=arc-20240116; t=1773254022; c=relaxed/simple;
+	bh=SPcUR7RRGk0iQAR6p2M/2rFTmWLOiEzDXeG57aMkSKs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xtlk5ruZJGMaPteNlAOwnXGatiVcMk0lO5YWnXQzNO/7/0Js1/2oqx7PLNShv9hywr22FKuXL5kUCSua8SDn4NuELb9A5LtZogfpPZFthHUPyHmPZ7ZC1oDI4R666IaqlFsG7h3FG6MIxa14mPLmsGB2Uf/ZjzKWi/t3AWuIo3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ykzeg00O; arc=none smtp.client-ip=209.85.167.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=univention.de header.i=@univention.de header.b="gIQT53/f";
-	dkim=pass (2048-bit key) header.d=univention.de header.i=@univention.de header.b="iOK+ZMiT"
-Received: from localhost (localhost [127.0.0.1])
-	by lankmoj.knut.univention.de (Postfix) with ESMTP id 1E86D105FD7
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:30:58 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univention.de;
-	s=202111; t=1773253858;
-	bh=0w2fTMcIVFLkZCKjeUkMnGXptyLyqM2eFJzHP+V21D0=;
-	h=Date:From:Subject:To:From;
-	b=gIQT53/ffsxNKyBCxUrd8VLDmG88Ow6jqqL+7huS68vb5L0njZ8ka3QjoibBDTUit
-	 7bKrbUpj16L06xfatRS6z7WBg7LNO8lTwWLysK8e5r2z5KxbqZHmuLbF8dr552V/Yr
-	 QpaJ8UHPyLfwa3rFg9KH3DvSprKI437GEyjxZwCLeW7u/iXnRtKCENj+EtVe3VL4Ua
-	 u3IDQ/eP8JolIeUUGpegz4d2/Y2hX6lO5GUZ6UKWTFIsBsvCF/HHiYsLJLi3EYvnCl
-	 2X4nfvRgD/I6slKDTmLwBpL/vqIL1op9UbzW6Ec/lEcP0WL51n1Rp6/G2tit3sW/DN
-	 ko8T2RFfiyJRg==
-X-Virus-Scanned: by amavisd-new-2.11.0 (20160426) (Debian) at
-	knut.univention.de
-Received: from mail.univention.de ([127.0.0.1])
-	by localhost (lankmoj.knut.univention.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UurPU3t7xTWX for <git@vger.kernel.org>;
-	Wed, 11 Mar 2026 19:30:56 +0100 (CET)
-Received: from [192.168.178.154] (dyndsl-037-138-209-019.ewe-ip-backbone.de [37.138.209.19])
-	by lankmoj.knut.univention.de (Postfix) with ESMTPSA id E2A671020D5
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:30:55 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univention.de;
-	s=202111; t=1773253855;
-	bh=0w2fTMcIVFLkZCKjeUkMnGXptyLyqM2eFJzHP+V21D0=;
-	h=Date:From:Subject:To:From;
-	b=iOK+ZMiTRZiMMGmywL8gAlOAGvs11sVrZdAerFeFdwsQEqIGjAuHNKCY1n/U/tXzO
-	 Y+YC6Ymo7s47AwAm0GyzqNofJjcO8arV4Tu+1dE1xcFdbvFnqZSrDv5a7dkTphua4/
-	 z94H1zoJ0Msfx/85YHddaxy+0iKCxGcbCVGK2s876XPB1nsNDPdNh2eV2Zat6quOdg
-	 NBpjJjZ0kLWw12Nig1L1/Ueu4SrWaLHjKe67Na4pRjay7EbuV5CfCZi2OzgRyK9HCE
-	 4B0yrKHOqMgOvujAsfTd/JWmuqXILkCPR+CNkQ/v6TzTY1cvcgHJyMTK+JXhSKC3yZ
-	 QaVJ0JJT0IWEA==
-Message-ID: <43529695-5987-486a-bdff-46f573868c4c@univention.de>
-Date: Wed, 11 Mar 2026 19:30:55 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ykzeg00O"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-467161c4b7aso122841b6e.1
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 11:33:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773254019; x=1773858819; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GT9bS3A8NSmIRQ7wq+HeJi/ERGGQLT+7b8ruT0KxCXM=;
+        b=Ykzeg00O1lz3g5wBgSq4/nbPmKYn6SXJdwbNYS4/tvesd5HjzNSfy/kl0olh3FaQQq
+         SDrmnWQ6R+6W2M6d+bNMxWIG3EU3GSh5ZkJesa/usP2o5tsXYg+8VWGsFgandGSgmmcF
+         CMhY34FAMGn0e4EZJKWtaGWtPeq+vEE2ityGOTmyaZTlSSan5nNFe/NYc0lJn31KJLj+
+         d68hoMXRgScZ2rDhfAVpp8/V/hbrZ9ZfK/ohcj8sD46XHn5T7oReXTN1C6yPpkRQNGMz
+         lzG7qSM2kGQMT/31Bzxb8vr0Iu94F+JUeMxyT713yq9MOSVy+z3ii2HwoUxhja669xjx
+         qB6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773254019; x=1773858819;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GT9bS3A8NSmIRQ7wq+HeJi/ERGGQLT+7b8ruT0KxCXM=;
+        b=Vhj/KMD4eLNGxP7Hv5gqSXj6eVsVIUxqRMDz1WnqIVtQZ6OU59arQKJWh8EPe8afvu
+         1FNbir+BOVYkFXP7sa+YD1+K/SAJT2biY+SUgnLoTnG25tM6rQFOQDc2erhgRtkZR/dB
+         JHxklmdgFpJLOU/aLvf5q/nXYi3b3mxB6mQENBW6ptXpx6eLehUUAM2+hChQHUBBcZct
+         ++7drV4lXRaR/e5agzKob/qwbdRuMCEOGuobnM+4PEn85dEosOR+IjN7ZdPN+wU7FYZI
+         plJowxIZ85SysXCwX8mJh4r1wlRAa2aSeoIs+PAj9infCjMiDEODZ4wJRsOhC4iqIv5G
+         5sww==
+X-Gm-Message-State: AOJu0YzN0Zw05seEy00mMK9o/McLA+scT2UnXVJQ0QF+hStlcYtDUsaZ
+	KP7eS3/9poxz4/v2Ii0bEAQK5ZgFqk0ZLDKvBTpAxQzDfNx7W69rRSe5
+X-Gm-Gg: ATEYQzxPiR8VHSwSkyMNpX/97QtXqUmdd4CKC9DRaPoOa4L8CYQrD9IbMcD05HdSRBK
+	ZW12vrHi07UnVBqMABvwmWho2HCQcr7WGyxEMo9x8k4+pl58J0tZpburwJzaIKwulRGCTJlvdax
+	GfLlCnc+5vMix1pWE/OSZPmH3djfaejBbSn+MeHgAbZH5ViJL1OMBt5t8XDEJt36pJH/EEKJBdg
+	XGMFIeM2IivnZoe6gCsNsabvOcYxunr+8fZz6oozkDQG5a86YuCia8W+V/MFo9wOkPxKlNJqt2R
+	TNYbvXvuuMVXYwB0/sdhu9cW8Tn3ZXMLX4LpotWs1AaltPPGSTRSLnZ3Src2WYyLtpV//BBlk+H
+	zXN21b/EyOkP5W65Zmtu0PYkWh9gn4xVO5kCtF9UejlOCKbwEsMn7bdcv1R4vtRsWhWml8tvKJT
+	PoX9SDcpcPi1HYulUJ
+X-Received: by 2002:a05:6808:152a:b0:467:1f6:4ace with SMTP id 5614622812f47-4673341d034mr1896264b6e.12.1773254018557;
+        Wed, 11 Mar 2026 11:33:38 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-41791432d87sm1317705fac.1.2026.03.11.11.33.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Mar 2026 11:33:38 -0700 (PDT)
+Date: Wed, 11 Mar 2026 13:33:34 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Siddharth Asthana <siddharthasthana31@gmail.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH RFC] git-replay: implement subcommands
+Message-ID: <abGutGnWo1gN0Dii@denethor>
+References: <20260309-toon-replay-subcommands-v1-1-864ec82ef68a@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Florian Best <best@univention.de>
-Subject: cherry-pick: add --show-current-patch
-To: git@vger.kernel.org
-Content-Language: de-DE
-Autocrypt: addr=best@univention.de; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260309-toon-replay-subcommands-v1-1-864ec82ef68a@iotcl.com>
 
-Hello,
+On 26/03/09 08:30PM, Toon Claes wrote:
+> git-replay(1) has various operation modes. The mode depends on which of
+> the options `--onto`, `--advance`, or `--revert` is given. These options
+> are mutually exclusive. This usage pattern is counterintuitive and
+> uncommon for Git commands to behave this way.
+> 
+> Implement subcommands into git-replay(1):
+> 
+> * `rebase`: This replaces what `--onto=` used to do.
 
-When running `git cherry-pick` over a range of commits, the command may 
-stop due to conflicts. At that point Git reports the conflict but does 
-not provide an easy way to see which commit is currently being 
-cherry-picked or what patch is being applied.
+I'm a bit confused by this. It appears that the "rebase" subcommand
+still requires the `--onto` option so it doesn't seem to really be
+replacing anything. I assume we are tyring to break these operations
+into distinct categories which seems reasonable.
 
-`git rebase` provides a helpful option for this situation:
+> * `pick`: This replaces what `--advance=` used to do.
+> * `revert`: This replaces what `--revert=` used to do.
+> 
+> Option `--onto` is still accepted. It's mandatory for the `rebase`
+> subcommand and needs to be used in the exact same way.
+> 
+> Option `--ref` is added and required for the `pick` and `revert`
+> subcommands. This replaces what `--advance` and `--revert` used to do,
+> but as a single uniform option for all subcommands.
+> 
+> The `rebase` subcommand also accepts option `--ref`, and when given this
+> is the ref that's updated with the outcome of the git-replay(1) command.
+> Thus following commands are identical:
+> 
+>     $ git replay rebase --onto=master master..branch-1
+> 
+>     $ git replay rebase --onto=master master..branch-1^{0} --ref=refs/heads/branch-1
+> 
+> In the second example the upper boundary of the revision range is peeled
+> down to a commit (using '^{0}'). Without option `--ref`, git-replay(1)
+> doesn't know which ref to update, that's why `--ref` is passed
+> explicitly.
+> 
+> For the subcommands `pick` and `revert` it's also possible to combine
+> `--ref` and `--onto`. Here are again two identical examples:
+> 
+>     $ git replay pick --onto=branch-1 master..aabbccdd
+> 
+>     $ git replay pick --onto=branch-1^{0} master..aabbccdd --ref=refs/heads/branch-1
+> 
+> In the latter the argument for `--onto` is peeled down to a commit, so
+> the command doesn't know which ref to update. To inform git-replay(1)
+> which refs should be updated, it's passed explicitly as option `--ref`.
+> 
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+> In the patch series by Siddharth Asthana[1] the option `--revert` is
+> added to git-replay(1). This is implemented as option `--revert`, next
+> to the existing options `--advance` and `--onto`.
+> 
+> The usage of these options is mutually exclusive, so the user can only
+> use one of them, and depending on which one, git-replay(1) selects a
+> "mode of operating".
+> 
+> Various people have raised this behavior is somewhat confusing. In this
+> series we attempt to make the usage of git-replay(1) more intuitive and
+> user-friendly by implementing the modes as subcommands.
 
-`git rebase --show-current-patch`
+Ok, subcommands for git-replay(1) seem like they could be a good fit
+here.
 
-This prints the patch of the commit that is currently being applied. I 
-believe a similar feature would be useful for `git cherry-pick`.
+> This patch is submitted as an RFC to gather feedback about the design.
+> All changes are implemented as a single patch right now, and thus
+> reviewing the changes might be challenging. When we got people aligned
+> on the direction, I'll work toward cleaner patches.
+> 
+> These changes are based on 'master' at 864f55e190 (The second batch,
+> 2026-02-09) with the patches of Siddharth[1] applied: 'sa/replay-revert'
+> at f79189a653 (replay: add --revert mode to reverse commit changes,
+> 2026-02-19)
+> 
+> [1]: 20260218234215.89326-3-siddharthasthana31@gmail.com
+> ---
+>  Documentation/git-replay.adoc | 124 ++++++++++++++++----------
+>  builtin/replay.c              | 150 ++++++++++++++++++++++++-------
+>  replay.c                      |  66 +++++++-------
+>  replay.h                      |  31 +++----
+>  t/t3650-replay-basics.sh      | 199 +++++++++++++++++++++++-------------------
+>  5 files changed, 349 insertions(+), 221 deletions(-)
+> 
+> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+> index ffdf790278..a7e8dac23f 100644
+> --- a/Documentation/git-replay.adoc
+> +++ b/Documentation/git-replay.adoc
+> @@ -8,8 +8,13 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
+>  
+>  SYNOPSIS
+>  --------
+> -[verse]
+> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch> | --revert <branch>) [--ref-action[=<mode>]] <revision-range>...
 
-Currently, when a conflict occurs during a range cherry-pick (e.g. `git 
-cherry-pick A..B`), there is no straightforward command to show the 
-patch of the commit being applied. While it is possible to inspect 
-`.git/CHERRY_PICK_HEAD`and run something like:
+Do we intent to remove the experimental marker?
 
-`git show $(cat .git/CHERRY_PICK_HEAD)`
+> +[synopsis]
+> +git replay rebase --onto <newbase> [--ref <branch>] [--contained]
+> +		[--ref-action[=<mode>]] <revision-range>
+> +git replay pick --ref <branch> [--onto <newbase>]
+> +		[--ref-action[=<mode>]] <revision-range>
+> +git replay revert --ref <branch> [--onto <newbase>]
+> +		[--ref-action[=<mode>]] <revision-range>
 
-this is not very discoverable and requires manual steps.
+Subcommands with required options like this feel quite bad IMO and I'm
+not sure it makes it much more intuitive. I guess subcommands do make it
+easier to convey which options pertain to which operation. Maybe it
+would be better if required arguments remained positional though?
 
+Also, using these subcommands appears to be required now which is a
+breaking change compared to before. The command is experimental, so this
+may be fine, but should probably be more directly mentioned.
 
-Proposed feature
-
-Add a command:
-
-`git cherry-pick --show-current-patch`
-
-which would display the patch of the commit currently being applied 
-during an in-progress cherry-pick operation (similar to `git rebase 
---show-current-patch`).
-
-Behavior could be:
-
-  * If a cherry-pick is in progress, show the patch corresponding to 
-`CHERRY_PICK_HEAD`.
-  * If no cherry-pick is in progress, report an appropriate error.
-
-
-Motivation
-
-This would help users:
-
-  * understand which commit caused the conflict
-  * review the exact changes being applied
-  * debug large range cherry-picks more easily
-
-It would also provide feature parity with `git rebase`.
-
-Best regards
-Florian
-
--- 
-Florian Best
-Open Source Software Engineer
-
-Geschäftsführer: Peter H. Ganten, Stefan Gohmann
-HRB 20755 Amtsgericht Bremen
-Steuer-Nr.: 71-597-02876
-
-Univention GmbH
-Mary-Somerville-Str. 1
-28359 Bremen
-Germany / Deutschland
-
-📞 Phone : +49 421 22232-0
-🖶 Fax   : +49 421 22232-99
-✉️best@univention.de
-🌐https://www.univention.de / https://www.univention.com
-
-Managing Directors: Peter H. Ganten, Stefan Gohmann
-Local court: Amtsgericht Bremen
-HRB 20755 / Steuer-Nr.: 71-597-02876
-
-The information contained in this message is confidential or protected 
-by law.
-If you are not the intended recipient, please contact the sender and 
-delete this message.
-Any unauthorized copying of this message or unauthorized distribution of 
-the information contained herein is prohibited.
-Legally required information for business correspondence: Legal Information
-
-Diese E-Mail enthält vertrauliche oder rechtlich geschützte Informationen.
-Wenn Sie nicht der beabsichtigte Empfänger sind, informieren Sie bitte 
-sofort den Absender und löschen Sie diese E-Mail. Das unbefugte Kopieren 
-dieser E-Mail oder die unbefugte Weitergabe der enthaltenen 
-Informationen ist nicht gestattet.
-Gesetzliche Pflichtangaben für Geschäftskorrespondenz: Datenschutzerklärung
+-Justin
