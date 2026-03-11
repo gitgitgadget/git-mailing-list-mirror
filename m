@@ -1,65 +1,112 @@
-Received: from outbound.st.icloud.com (p-east2-cluster6-host4-snip4-1.eps.apple.com [57.103.76.142])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAD0175A99
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 04:09:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.76.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF18B23ABA8
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 04:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773202179; cv=none; b=A5dAA+TkMVS3WR/xNdzFZOvsSrI0whf5E1m4JjqAcz5L3dyQKw5ETLMbkJW7MvN6StHONLRXL/PyfMhK5aNVCyM9zXJedMAoGLZiRXgbQ/lDu8fjjnFKG5ITTB5qZsTgPatD5lSWGqYpnWLh6ytY2h0nemSAcHgCiJfQ2MIuPJ4=
+	t=1773202824; cv=none; b=QfWFCXM0QsIX9TUmFbTzBfYyHtQYsgaXMvRkn1i36rpQaUfHn+hSgUvPXEr8SRp8Q4nIy/clQtLJTO10EWMir4a+5k2UiwIRYzuMP+A5TVlTj2auzrR3WL9R4U1CTllLkEf1jYG0iQyCof2PyW+I+qCkkNStQfx3edD1QuvPsqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773202179; c=relaxed/simple;
-	bh=GOyddEgTIkZFHHl1E7d33o2deTF8jRBSEG1vQyK7F80=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=NFNcvqyVYYWSIgUw0qQ7PeQmi+dxOacmsI+/ePsIUIQSpFhw3S+o/t8ViNNqJaTukR+RzTwnGADEgwqCYASEQC01TjLGZktzQ88LMdGKk8fyRW1YKkfdghbJc75VN3uMrAYtXjiHeg/GKxnA9CnmbOuNJPnOJ6XTpwEbbp+W1gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=iFI+dskO; arc=none smtp.client-ip=57.103.76.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1773202824; c=relaxed/simple;
+	bh=l6x8lWwqCpb5ReT72r5c4NkMFb0v6S73OD3OvQUkMbk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tjFJPYzyjgJq9ImL01pQ11xRQDRWULeny6lGnfB+8kdGSoplNg65w0m1fjeX3OuWWab8qVzIrBsrvEZOFHsCsArSiCkj018cvAIBYkaESHAtlteUYGYJsmRSnWYNboh+CRmKe4ALpa1ssSn9SGP/SRG4HbhDX+X8ksKsshXp6Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j4PHZZyN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gLBjvGTS; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="iFI+dskO"
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPS id CCD71180012E
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 04:09:36 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1773202177; x=1775794177; bh=GOyddEgTIkZFHHl1E7d33o2deTF8jRBSEG1vQyK7F80=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=iFI+dskOyGtspQOkXpuxANwCoTizjUxI8Ln1yk96wJOma3925ZrSvKTBOzAMqYhQJuGxXZC4CWiv8g/0IwtQIkNuAJ5Lt+WXNCqhRelByPK8a2LR111VRjLQWWnmYRK4CxxVQl02jvbfACPivK/QRfa/RXJirpKzv9pIw1Yc6EyLKcjA9cJPe/l10F4d8E+pH88dddmLy+Xdol/+mtOcRgFCRBziAEVfhtNguIKUWz5yNhhAGwTBeoNJEM0MfUKL8EBUV8jCcAR0Rn2FmLKL1c51TLjs10yZ6OYmmYHnbGmK6sdgsS4X18MG6wMpZUtnjMMgic5h6urBxKhZE2+LVw==
-Received: from smtpclient.apple (unknown [17.42.251.67])
-	by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPSA id 482DD18000B3
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 04:09:36 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-From: Jonny Belger <jbsticktint@icloud.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j4PHZZyN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gLBjvGTS"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 013271D00140;
+	Wed, 11 Mar 2026 00:20:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 11 Mar 2026 00:20:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773202821; x=1773289221; bh=JgAmYDktvo
+	LowV7PrjUiYU26KRkaM4BeF+YedzvX0Zs=; b=j4PHZZyN7oSrmjdIUwpCYvAyX6
+	BbT/b81z8dgJXjrmO33TzeFIVoUMSaqLb2nBpBC9XyEBgAGbvcBk+WMDWVg/lugT
+	4b76C+qMx6Yh+XP255mg8O7Kr1eacYCmBqaAyH3HpwwBRd/zPQ9sx2PSE+5pGoRU
+	nsJQP8DsT19ZV8kU3+nz5f70dYWRtYXXGjyw8XjHNuo7c40wFsSXnDJF9QIzBjzo
+	miqbBELivrhESkfep+yRpMWtiC67XjYh39feQxM/qYfQRn3+I3PJ22wU007V06R5
+	RzfvK/V9BvlqDUY5z3lK9SC0nz/lUy5ZdseolWCtSBae+GruHKzq57wK4EdQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773202821; x=1773289221; bh=JgAmYDktvoLowV7PrjUiYU26KRkaM4BeF+Y
+	edzvX0Zs=; b=gLBjvGTSrl5fKYwiuJuANBL5TMDrkDytM6IRemMyYcIu8e4eHMs
+	u0F4M1QoKLHAYNMjDxUC+2kZhyYBNRUBfV7BAlnIYPaD1YaV52tA7XCu6Wr66V7u
+	Py6/mVmAJi0K7rCb7dpRYWtjbAMuv0H4WAr46QVEG2GBrUcVdNrmj6tvCt8VPISC
+	wE2ozrpDQvbmcYkx3K3LkC5vM8KGOJTeqsvX0p0QVITEtW7N3A5CGcRRrAnBUL+1
+	pgQG2SfftaDKrgUBvVcTwmam83twYUwtV2hEhLbOaNCP2okOWKNzcTat3o6FV/Ta
+	4JNDU0cn9/cSOzTNDuFz/7fLy79uPAP0NSQ==
+X-ME-Sender: <xms:he2wadgaSB3DMKHXLxFnZ8pFxnXDMfg0HayWOVdckEAe0QFg3M6wlg>
+    <xme:he2wacmL27wkDPlPJR9xE-XOdbODNoLuMlyuU3pZtPiUsY8FEBd2SyZ1qjJ6Hkh3j
+    zWowaDOKAFLLiX3kCAdQgQV5Kxt6KYcBCdnuPBw1WgAHejIDw4E5A>
+X-ME-Received: <xmr:he2waZoofa1E3JRv4iMoQZpl3iafhOddlVBfis8CE6d5h20EWiUUyjZm-_IyPD9AgEJV50Slsv69NgbALgxxALYeKWK2Zev02w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedvledvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepfeelsegsrghrrhhoihhtrdhshhdprhgtphhtthhope
+    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:he2waVHb_feLSvUiUYb6qeX-CpLAlckEqk4CWsl3jESByj9DGXZPmw>
+    <xmx:he2waVx1Y2Wz8N6UZRy7ENBvBICbKwYJkx7MgETEhiF4BROVbYXELQ>
+    <xmx:he2waaqzhAfG57pqsq2vVqe0lAoAaqiedwHsbWTQmDg4MyX0se6sZg>
+    <xmx:he2wafgh0JRVs3mPRDR-wj1vfa-EiQFxK2L4AyO_8iXAwKZro5LNtw>
+    <xmx:he2wac5o8au-uk33vsNHWYXD2Da18CNyX_7LUhBQYboA5ih50-Y9aB9K>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 00:20:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jiamu Sun <39@barroit.sh>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v3 1/8] parseopt: extract subcommand handling from
+ parse_options_step()
+In-Reply-To: <SY0P300MB0801AE08F2AE4C0EAA274A68CE47A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+	(Jiamu Sun's message of "Wed, 11 Mar 2026 10:49:40 +0900")
+References: <SY0P300MB08013E35DCA8FC31B0662125CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+	<SY0P300MB0801C6F21C2D8F49892DF8E7CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+	<SY0P300MB080114A7548292AB4B60D817CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+	<CAOLa=ZQ3eCky2rH_D-6=vwQ26TKW_dSO84+Z-WL2LFJ2rGVmqQ@mail.gmail.com>
+	<SY0P300MB0801AE08F2AE4C0EAA274A68CE47A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+Date: Tue, 10 Mar 2026 21:20:19 -0700
+Message-ID: <xmqq4imnro8s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Tue, 10 Mar 2026 21:02:40 -0700
-Subject: Hello 
-Message-Id: <DC70F807-989A-4476-8A3F-0AF19CE1BB04@icloud.com>
-To: git@vger.kernel.org
-X-Mailer: iPhone Mail (23D127)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDAzMiBTYWx0ZWRfX6wKDGt+mkZ6q
- 39h7mHZPWe98ytqJyEq7ARMcX70b8BIGj+3SLeovPARHg5FDSOie5oD9NlVU38SjMSWlmKh1aKG
- WxItcxevuwuqBaKAybIqaKi/j51E8Ci04Keg1PgOGMwRi+NX23wyegSXI01+vYQIOKkzxm8d7m/
- suWVzPuKBIR5TfrNmOWEl8Qp/LnyAfpNI12VHWYOGAiQNcfyaxMRbywHdYYzmXBLpYD5dNr7Kgg
- x0gwcregYBITmrJAUA07MiH+y5Z8/dw78YA19GrmrwjScT2ECb+Nt9DtcZFPjKODXqxWcm4Wkcl
- z49Fey5iNImjA2EUa9h/+BgtuLgPvewMfwHA31oEZk7K8BMyE0h96wxVCpzdZA=
-X-Proofpoint-ORIG-GUID: 9SAcI1fAtj22ViLDglRgB9qnbqPBdOHP
-X-Proofpoint-GUID: 9SAcI1fAtj22ViLDglRgB9qnbqPBdOHP
-X-Authority-Info-Out: v=2.4 cv=M+lA6iws c=1 sm=1 tr=0 ts=69b0eb00
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10
- a=x7bEGLp0ZPQA:10 a=3ShiLzhxtXwA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=ufj2q9GEQk6cS1ZHVqkA:9 a=CjuIK1q_8ugA:10 a=xo5jKAKm-U-Zyk2_beg_:22
- a=bIkczNPxLzuTTV6gayW0:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_05,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 suspectscore=0 bulkscore=0 malwarescore=0 spamscore=0
- mlxlogscore=439 clxscore=1011 lowpriorityscore=0 phishscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603110032
-X-JNJ: AAAAAAABpIZk+lAEvtlwJSYlS+JLGnvWtrAajtbAH559G2aOsQXqs+7d+/p7fELo40B9p6Z/Ovr7lxN+PtJthF1IWYN6SVNnH6bZGSAgHKKJsiQA9YWlWG0Ge85XjacC37L3IgxrBHa6X5RnrKA5+VDis3pxqIbfkJeTmNZ02OJxCZGKonkXtV8Q+4M4pRtgB6RZlCjaZhaqBDosNQlnDH/YmF4U4INtUXWpqcaH3nqHpZ9+VGXhKwfzZtZzmXa9Eq8CYIbNTxZF0r8ARlykrPB4Y8t/vgv/wFTZtaLcskDhWhKydx0AYGS1wvC6BOtYTCjUXr91nRW23RGDe1ekamLvVPfj2IM6H1ouo0tDvZ0WRRVIS46ef7tdH904ux7e3DXgWaXbBQR9EfcI4GtD3SbkODV0iRSoeL/85Hq/b4t5e4Gl9ZKLqOAGfi9zyfncmcWzFzHZXoLiSAJr5N5O7t+dsGzbGm6LJrilmBTWEj9WDmCb6d2Hm8ikVMZOGQD240SNO+YfZLZFcp0Zbl5IVq1qqMuCJ6kHED4/modB2nOsZ9ILXZ7FxIRR+NSSOFfuYl8cz7WzUxDsObdFTCrmlqJGEo7PygTHvw7Q7wmJAUZcKvOADBnnzL4FMWGCacOW0GiACZmOON2o+UIW5ne7EDNlEUvlf2YUet8d5Jc9/MVzVEalF3Wy
+MIME-Version: 1.0
+Content-Type: text/plain
 
-I have a bug / hacker involved in some serious stuff they hacked my json web=
- token and I know who it is=20
-Sent from my iPhone=
+Jiamu Sun <39@barroit.sh> writes:
+
+> On Tue, Mar 10, 2026 at 05:46:12AM -0700, Karthik Nayak wrote:
+>> > +			if (ctx->has_subcommands) {
+>> > +				return handle_subcommand(ctx, arg, options,
+>> > +							 usagestr);
+>> >  			}
+>> > +
+>> 
+>> Nit: we try to avoid braces around single statement blocks.
+>
+> I'm not sure if we should drop the braces in this case.
+
+You should.
+
+You can tell that it is a single statement immediately after seeing
+the beginning of the line, which says "return".  It does not matter
+how many lines the function call that follows "return" spans.
+
