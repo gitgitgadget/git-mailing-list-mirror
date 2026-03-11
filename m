@@ -1,111 +1,84 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51633B5852
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 11:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902FC3D8102
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 11:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773227346; cv=pass; b=Ebx1XC7daNkVQVevX9b88oKzUpFk4Dhdmdlrw5609M/Dku/dXzTUP2E6Ps2/x/DU8p+Y7r5zJJxkd2s4SBEZZVJdG+8nOcFAvpp0Actw4p/S8fY4Kig4yEGHBOdHpJ61ZkbXyVxrhHtaoaf2idu8CnRHrL4HArv39FJUyd111Mk=
+	t=1773227418; cv=pass; b=MRyuT5HK4ju1Po4NQSK6DxuhpUekjokc2CXNi6UCxYy03g23Mj75I+fEBs9pCUyTAouHHkKx8EuXc89zi565GXez8bPuXeAQUndQLgukJPlwJ6YjDCWrfs6e6CtRfzh4khTJPKkwTsH3TQ8YTQ/CaQdEaXvO6ae2qHYnCU5/dtg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773227346; c=relaxed/simple;
-	bh=Staro78T5XnMV5Oef+TTb/vmQ7oOienb+BFAPl+s/wg=;
+	s=arc-20240116; t=1773227418; c=relaxed/simple;
+	bh=Y629LDa8oHkaHI+KZKjk8r69tG9dRQpdii+64HB/Mok=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uRlCxVYwt5SfrqywNW9iPsC1MHTP9r0ntuW+dsYo5UIiRVBpjxAprpEpIEg1Domgj4gEN1iKOzuTva/nziM9Das77StEen0sT3PY8lru2/+letoW7123tUKQMrBYzaFdOSpOQmX/knoApkvQroPW+8txmAA5Z6sdo6U9k7W5n9w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Q1saywec; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version:Content-Type; b=UhibaDMqd3nO5KG5FhqGPqmPKg7nigl0Ib26+8p+oHzgLvvElTyLZZ7tXZERhQNDGGTbkOS6s86hty96C/wMMM264hqeo8f1zZJcesgW+Clt1RFie5ywRyYH3PlQPwUaRNNq3KXSvCtZH850Aa9gtmiX5ZUI+26nMc3nvMk2x38=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=XWwCXAtR; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Q1saywec"
-ARC-Seal: i=1; a=rsa-sha256; t=1773227328; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="XWwCXAtR"
+ARC-Seal: i=1; a=rsa-sha256; t=1773227403; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=ZabKqePWSwp/SuSVSnQIdNGxLEXScobHHQ2s+jYke1l7bpXBer5ETNZKzD1l++A1DoXGPLEC9uh0w9u2S5wvGaZZu1nee185xGm8p1lui23JY/nQpe2hiNu6NQecaJH2B8cXISbdmoR2wLgf80AD5i6qCYBGrS1tAUU0V8pR0W4=
+	b=I0qBw4QwOCelQUUco96rnWnylfRlQ0Wz2L92pA7g3B0pCQRzRbNgyeLHDSXRLa2bznD4jrBywgmy7tUh7yLKPfsdCA06rZxc8rE/GgF8D2gF1SsOvaoui8Ce0v+HmF1cARfFmEIHbxLAg2MjgvsxY7z4o5O0xbHjq45eNU46pGc=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1773227328; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=IayCKXb7dN9O86t6IofUg6uppD1/hvY5ZCzJAFF3WQc=; 
-	b=LVcafHlmBiwD6zxVotydrrw/KR3qlmdQp0iIawnfR0LfpgQPxm7VauW+L2/vVsbRITtbnEzR16niL6Vfzw94SXKTPcAmj2iw0fkyDpKu5TWv4j8UsAt5o/R/TsY+j7MiXS+m2hHFP/1s/i6kos5gZFsS9XLAL+ytUgDNAv5ySxA=
+	t=1773227403; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=A667y2/bRzdJBZQUgf8Gubpg9AMDTL7RBN98IIa+SY8=; 
+	b=mSDkEy5/Nd4V16YEw1KKBpIwn4svVerGz/BrPLyY5WCp1rkRs5efnOsrhgDRiIHv5emE+ITCYOKHwu1lUNAsho7xT20vy828pjdX37rO0Wt123QO8CZkdhQMAyHrYy+EQ5OfLiT1uEEskbtyKQMu73cxkxhDoAhFPtjnx9TSiy4=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773227328;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773227403;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=IayCKXb7dN9O86t6IofUg6uppD1/hvY5ZCzJAFF3WQc=;
-	b=Q1saywecJ/8ojneS+Nlu0Dnaq3Gej7r4EJD4f7RHiTAKXhnEn2TydItrrAyhCBGI
-	ag1WLP6+xtlJphAwi7Sxx6OHmyL7fA8xibi2wAHHpmnotozDaI6bgpkxNWKJcKCSdGa
-	3zJ7k6GyDQ+TNThmV/8bSTIuiDKixfJDnh0k/mfw=
-Received: by mx.zohomail.com with SMTPS id 1773227326049285.42387910517175;
-	Wed, 11 Mar 2026 04:08:46 -0700 (PDT)
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=A667y2/bRzdJBZQUgf8Gubpg9AMDTL7RBN98IIa+SY8=;
+	b=XWwCXAtRislbjGuAnBN0FcIm+ct0M+ujjjNiDtMCwmWVovU+RMzVATQrZIjEhaiQ
+	mljaFMYj16qFysVj/N3WY5GuCvPRmPp9jn/Y+NEWmFCgFHsXwtu/Rk/kNblR7yPqo+c
+	pU8U1P7n8sn78I9XIo6BffCXfaro8J5x4S6vU1f8=
+Received: by mx.zohomail.com with SMTPS id 1773227401620685.5255693575348;
+	Wed, 11 Mar 2026 04:10:01 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Junio C
- Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, "brian m .
- carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 01/10] hook: move unsorted_string_list_remove() to
- string-list.[ch]
-In-Reply-To: <abB3V4BcYDgMJo0x@szeder.dev>
+ Hamano <gitster@pobox.com>, "brian m . carlson"
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 03/10] hook: rename cb_data_free/alloc ->
+ hook_data_free/alloc
+In-Reply-To: <abFC3ToqvzCZ25h4@pks.im>
 References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
- <20260309005416.2760030-2-adrian.ratiu@collabora.com>
- <abB3V4BcYDgMJo0x@szeder.dev>
-Date: Wed, 11 Mar 2026 13:08:42 +0200
-Message-ID: <87ms0eaait.fsf@gentoo.mail-host-address-is-not-set>
+ <20260309005416.2760030-4-adrian.ratiu@collabora.com>
+ <abFC3ToqvzCZ25h4@pks.im>
+Date: Wed, 11 Mar 2026 13:09:58 +0200
+Message-ID: <87jyviaagp.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 X-ZohoMailClient: External
 
-On Tue, 10 Mar 2026, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote:
-> On Mon, Mar 09, 2026 at 02:54:07AM +0200, Adrian Ratiu wrote:
->> Move the convenience wrapper from hook to string-list since
->> it's a more suitable place. Add a doc comment to the header.
+On Wed, 11 Mar 2026, Patrick Steinhardt <ps@pks.im> wrote:
+> On Mon, Mar 09, 2026 at 02:54:09AM +0200, Adrian Ratiu wrote:
+>> diff --git a/hook.h b/hook.h
+>> index e949f5d488..e514c1b45b 100644
+>> --- a/hook.h
+>> +++ b/hook.h
+>> @@ -43,8 +43,8 @@ struct hook {
+>>  	void *feed_pipe_cb_data;
+>>  };
+>>  
+>> -typedef void (*cb_data_free_fn)(void *data);
+>> -typedef void *(*cb_data_alloc_fn)(void *init_ctx);
+>> +typedef void (*hook_data_free_fn)(void *data);
+>> +typedef void *(*hook_data_alloc_fn)(void *init_ctx);
+>>  
+>>  struct run_hooks_opt
+>>  {
 >
-> unsorted_string_list_remove() in string-list has a 'free_util'
-> parameter that didn't exist in its original version in 'hook.c', but
-> it's not mentioned in the commit message.
-> Furthermore, none of the function's callsites are adjusted to the new
-> parameter, and the build fails with:
->
->   hook.c: In function =E2=80=98hook_config_lookup_all=E2=80=99:
->   hook.c:151:33: error: too few arguments to function =E2=80=98unsorted_s=
-tring_list_remove=E2=80=99
->     151 |                                 unsorted_string_list_remove(e->=
-value, hook_name);
->         |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->   In file included from hook.h:5,
->                    from hook.c:5:
->   string-list.h:273:6: note: declared here
->     273 | void unsorted_string_list_remove(struct string_list *list, cons=
-t char *str,
->         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->   hook.c:163:25: error: too few arguments to function =E2=80=98unsorted_s=
-tring_list_remove=E2=80=99
->     163 |                         unsorted_string_list_remove(hooks, hook=
-_name);
->         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->   string-list.h:273:6: note: declared here
->     273 | void unsorted_string_list_remove(struct string_list *list, cons=
-t char *str,
->         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->   hook.c:180:25: error: too few arguments to function =E2=80=98unsorted_s=
-tring_list_remove=E2=80=99
->     180 |                         unsorted_string_list_remove(&data->disa=
-bled_hooks,
->         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->   string-list.h:273:6: note: declared here
->     273 | void unsorted_string_list_remove(struct string_list *list, cons=
-t char *str,
->         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->   make: *** [Makefile:2917: hook.o] Error 1
+> Ah, this here is also a small style issue that you may want to fix up in
+> the preceding patch. For structures, the curly brace goes on the same
+> line.
 
-Excellent catch, thanks!
-
-I have been moving a lot of code around for this series and I ended up
-updating the call sites in a later commit, causing this breakage.
-
-Will fix in v2 as well as document the introduction of the new parameter
-in the commit message.
+Ack, will fix this in v2 together with the rest of style issues pointed
+out. Thanks!
