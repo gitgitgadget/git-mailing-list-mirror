@@ -1,300 +1,142 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from SY2PR01CU004.outbound.protection.outlook.com (mail-australiaeastazolkn19011062.outbound.protection.outlook.com [52.103.72.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD382DFF04
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 22:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773268339; cv=none; b=r+gH1e93SJFZd14+VULXPRzR9XpmWQhTl5jBHNxNjc+yb2jK/VMNgfRQt0ktUNF97LFgSkJfFK4va7UhcrL6nay390jgZDZrMN7fnPvJkvvRjQTcw3a8bzTKOg/xODWKoid8jiCEwy1ILvDquwPeTvqqA0qtICX3T3VWM3LwmcY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773268339; c=relaxed/simple;
-	bh=6vITHfTQBa1y25D24RznJ8wv6ZIZCdFGBxwuA7OngUs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mhcBMqker8+awOnta6i/FsQT4jIgM/hB6F9W8E2+Qkb09vC4xX3ddP8BlL80Isf89e8k2MFCmGH+PtGJQaDX30fmQuyqqFaagTnmSpSG7qV7bx97zz0pmBH3I0ODm1CxMUjOOfl+CAAPIowU2k638zWB2N7S/AyDY4SSm06T6pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=EhW1gACa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bhDzKDHg; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18F2EEBB
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 22:45:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773269130; cv=fail; b=FcU4U2IoXYaAG9kEt3qNyJBIysiXC1OoGRvZJJatQcPYDck0m95xbqAFxyxxzrk7Ao4MZp7kfxyQOJp4oFuP0TTOKmhQn7uG1xv8/AgYcLcoq/STIzckNw8Nd83czDiWcqv56HRtDEqHabQieO6/fSawZAN4w+Z+eu9/7tPaT0c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773269130; c=relaxed/simple;
+	bh=fJFaVr9r7mX6IkLYJGBcc8R9/siOMpxA7ceRhvSV50E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=gnVKfrTpYeiatQO1qrLs1VRyRnlO+BDPZGJ0aFqc0eCkarzYpinhzZa7bWiySV4+pm0bawX1CC7JATt6++QJaVg/ivFrecCB05PBkjVmzTL+MfqGEpG1LVijPLZZIZp5nNyc8M6WIq+X6l9YqZ1U0oX3DWZfxn6n+ox5kh9G3GE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=oUOSpYq5; arc=fail smtp.client-ip=52.103.72.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="EhW1gACa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bhDzKDHg"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7DBFF7A01B9;
-	Wed, 11 Mar 2026 18:32:17 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 11 Mar 2026 18:32:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1773268337; x=
-	1773354737; bh=kc/xUfernlWq8LCniHZlZy8yu/UrBT+WjxihjFzfp2o=; b=E
-	hW1gACah/Hu5qUOPYf0En4DxxS/kzkW2QFgBAnL1gJdMTggNtwh9B6ya4X9VWR7A
-	HHVj4Uk36KyhoYWb2+cwNoWMDaB1s29vDamnk7/HDToaSoFnnhbRpONdmIHuHtgi
-	YiDzUjqnrTcLOXgowLqCnRqBsTBzWZ7woMFOIR6l2lZR71AnAkYIE7v2342uml8l
-	T/VtwZ9FZ0jd5Pxy9UgU3V1bzZYqXZWsqbzMLhSCsJDzp9fttinD+v2TVl+Cd262
-	5HILnwOesqdjgTcbI0T7Rn/A5RWzVb70fUlpoLL0/flz83OjDsgXueI3b2ObH+d+
-	SxTkFyecK60NaoKOMlXBw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1773268337; x=1773354737; bh=k
-	c/xUfernlWq8LCniHZlZy8yu/UrBT+WjxihjFzfp2o=; b=bhDzKDHgdFAko7Izi
-	S1x8uwmm8+otdWXliyVypOsS/tgPzEpfIuS9OPjxJZ1maKhCAsUsyAh7uOsX7vjD
-	4xY7sAkymW7JcKWuSaYZnwWi28jzCD02xha8mS9gvSvPvgNrBKWG3JmsiLauM/Jo
-	rI3/0LomS9T2XkwQsWQb+zWfTVehw6bDnpJEUAqfDe0gFcYeBpme6E486EOBrf/v
-	+MkoBIdJyfN/OVjzGGZyUx5KWdPclPtOriEG6D/dFB/3geK3uRvZtH8mbv7T6/pV
-	xufWvVEeTSBYzkTW7g9F1XBFDZCfMEajXQd4U//nVZAgce0ExXZZ2X3tlxoIbMeP
-	mlvjw==
-X-ME-Sender: <xms:ce2xaaDuRxThx50MipMlyAr8UG2st_-eMTB2S8XAbGdxxWa5O0zKoUk>
-    <xme:ce2xab9RVrBtI2rQ6ZHbE5FRzOgyvEhpwTCZSVbPCriaTXwupeomRzmaIeK7n6qIQ
-    eWee-3Zqi9wr5i-pg-xMi80YnjypYDhn7hXzQwOYeOqkxJb28T-7w>
-X-ME-Received: <xmr:ce2xaa9wxNRG47f7a62i_UXQwZHaGZLPNa0nUqazVvCyZ5SW_TlkrS2XhMTTQEOHHytLyGwQNFguORER4iGVwyjo2zl6pTiXkNjnKJlqOmToIZhEUEXq71L5NQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeehudduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
-    necuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhenucggtffrrghtthgvrhhnpeefheetkeeftdeiffdvjeetueethfeugfetgfdt
-    veehhfevffeuffdtheeitdefudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
-    vgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehjnhdrrghvihhlrgesfh
-    hrvggvrdhfrh
-X-ME-Proxy: <xmx:ce2xaSe4_6DODMJT3gjXQJ8T3UpcgCCrS5eh_d_MarU6QDxCnSxOtA>
-    <xmx:ce2xaTHuqUxNPkpqpFAVoJ-eorxhrZd4sP9VLz-ihDv5qKUa5vILtA>
-    <xmx:ce2xaQfyF24UGlPqZsv8TZNU8-PPZoMbpXi4HuXOp5vPMjtZl5QvRw>
-    <xmx:ce2xadFg6wEjAzHf9oaBxmtWxyPED9nUHHS6mfZ-MiMacsGr4IJKLQ>
-    <xmx:ce2xaekuQ8LlV5_o0t0e0aqBsvayb0iVqTdzvolPsRXINZM2okzv43sv>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 18:32:16 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH 3/3] doc: config: convert trailers section to synopsis style
-Date: Wed, 11 Mar 2026 23:31:06 +0100
-Message-ID: <doc_interpret-tr_config.48d@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
-In-Reply-To: <CV_doc_interpret-tr_synopsis.48a@msgid.xyz>
-References: <CV_doc_interpret-tr_synopsis.48a@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="oUOSpYq5"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=b4OqcuTr+D7w27RxCJknYwAejPaA9XTxkn+CR43z4fCSoKq/GkATMY2tvodB/hmwjtgaKyK4gZmTAopGjqJzXBh6ppBW9ti8uCeX+reiutgZd9qHvHCKLOE9gLnlJUtuyCTeAmiRTZuhQxgtbrLCnu44QQv/MEnBIkQV5ACZvV/qGWBAg4/Mbfz3GUy58KrFAMYO5AXT5cIeLGkLSQjm5wUra1b8SRC4o8Ck6trwQEni6iSQlSbogmUhQYqkRf/W/fPKYy+5QANBQZrqq3/eyRiOOZqIDP6c6cBwIJGLYtfhsjndTo4MQKa+9Y6i1NCt4jcn5m21mMLY9Aen1sP0oQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HZBwHtchcRvyLf7mFcI3muK65iQ7RbOCDX/dN7v3KKk=;
+ b=RvMJV71r8KuBP8LjC6bV5vv8D7O31pMEtv+/yTVqf4jReQ+szhrSW1vWw6P9IrxQBEXtKCwelUwnLSgJXf+t81DMSCy5N9M8hbaqGd30DACspYXpT178qt/zzVpOkM11BU9r/vAT5D+cOI69szrY+sKKatXf9xw14smGUAlxsjheIHNqpb2zIT0gvFiRzFlrwJlbMNJHu2gpGvyPewyI24z7YgVLwDPWVhYrCmGKaLwpIKfwwtgc2TuyV5uZZVlLxQMhx1N9REhzooo/9z3qul0b47GM5WjnLJqurkByF9aa4ZK2+nuv4Qaf5cjF4h9qsrw92rzPPQ5tkt4SSMQsYQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HZBwHtchcRvyLf7mFcI3muK65iQ7RbOCDX/dN7v3KKk=;
+ b=oUOSpYq5cQ6nx2XjgDlW+gOy4mURvkQTmhPnPbw5FayJKaINryzFU0aP4nMDKjjnpdarWgqELxEHAUqFsbWmddGZB/1c+l1L96I9xva2gQ09QSrRI97uw1xM01sWogLlc7J82d5NGx+fECOzGZ83A3SPmI6oxzMl9hrMz3QoGHunsFmx/QGwZ+Lql3eOybWnnDR9frkFKRHqQHSZj/SmvhN6eGjWmVJJwLrXmtnQ91Ys6k5eDS9sdGErjUsIy4YIw57QDjJR3Zium1VM59CgDp/2Bm4PZtH7Lb9vWEsv9E5yNym5Y4t1K+Ge3xmt2ya1EtFnmqRbnUy2X05XrjDZCA==
+Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
+ by SY7P300MB0637.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:28b::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.6; Wed, 11 Mar
+ 2026 22:45:25 +0000
+Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
+ 22:45:25 +0000
+Date: Thu, 12 Mar 2026 07:45:18 +0900
+From: Jiamu Sun <39@barroit.sh>
+To: Aaron Plattner <aplattner@nvidia.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] help: add tests for subcommand autocorrection
+Message-ID:
+ <SY0P300MB0801600E6ACF38D7BC715D66CE47A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+Reply-To: Jiamu Sun <39@barroit.sh>
+References: <SY0P300MB08019805A8304105FA805EB1CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB08015B9BA815B2C4F6CDC639CE78A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <7caf4a0f-f11c-4a4f-864a-933142311a68@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7caf4a0f-f11c-4a4f-864a-933142311a68@nvidia.com>
+X-ClientProxiedBy: TYCP286CA0269.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:455::20) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:27f::21)
+X-Microsoft-Original-Message-ID: <abHwftGKtfAnCPQY@lancer>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Sender: Jiamu Sun <sunjiamu@outlook.com>
+X-MS-Exchange-MessageSentRepresentingType: 2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY7P300MB0637:EE_
+X-MS-Office365-Filtering-Correlation-Id: 31f0c0b7-1b26-42b7-c8bb-08de7fbfe252
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|6090799003|5072599009|19110799012|51005399006|25031999004|23021999003|8060799015|15080799012|461199028|40105399003|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?3BcnWrVbf7hv4xkd/a+ri2/nz1Wjokrr21MjqqgdtLzEU8Vlqc+/EiN/FsmX?=
+ =?us-ascii?Q?hcI/4AWeBL/LeGAnDCI47sQG4GFGol8hqIVhTCk3gUpfUqR1+gCyCIArAsRW?=
+ =?us-ascii?Q?j9YL+Fs3znBY0SMq09MFFGQ0oCAAnj0rZ221wK/4Fs0zfofvaU5CR2AaMeN1?=
+ =?us-ascii?Q?XDV4aux9k96oRyz1/3wTYaaSe/AlIkxydOWtmTLFPa5UytpsdRbl3Q5bDxRn?=
+ =?us-ascii?Q?l/QQVkrJ6Zw0VBuWMRJU7+3WBQ1KOqeEyt+JNtVvkndA6qqDsWznHFy/mJ/x?=
+ =?us-ascii?Q?tnTti0PcmY2cM5MOpzqQ69drP6UhPYuNI8t5bZ7JV3G/cj6MtX/k4aUQrckp?=
+ =?us-ascii?Q?h4UNskZFVzIVSXDkcl3NpOtF2xPGx5IAmjBKI/fPt4cpralvVhQWE0PP63bx?=
+ =?us-ascii?Q?bSsnEm8QOjTZTedyLPOLNw6bBqeBCVv5t90baHJ1f16+Wcyo5Fx6a2O4Co8e?=
+ =?us-ascii?Q?0oGJgTpp1y+tu4lEzu1kQvHB0zSkZaFJ3W4prvSBt6PUTVYlanxYaYxrzx5n?=
+ =?us-ascii?Q?GCJtVOWRo/WF9b7x/Zz5COLs+3xrayvM86A3Xb8Le2bTevUJG8Ia/pK4cYBb?=
+ =?us-ascii?Q?bFIvllJsk9+Jt41IuD5vK82pQfQx7aASTraDN0dTMhP60fmpr0Ra9qJ8TmH5?=
+ =?us-ascii?Q?m3oBBwoBwi07EOn4KIXF7N8BwQ2Tl3QKmR3+Xu4gf586XLa2w1fDcfy8LWJ5?=
+ =?us-ascii?Q?zxFgovE6/Dnoaxbn9D6aXN6i5lb33ypy7tZX6KWxjNHpqKfq4v3tV9BliDEq?=
+ =?us-ascii?Q?vlVKUuJ4Heh5me1+CvTuoimKg5xA+bseJWufl5T3cjtb4UsspRQZYJY3QmMm?=
+ =?us-ascii?Q?yoHJyAKFOZqEjO+XeWiuGmGR677rNO0Tv1ZcEqrkWOjyRVTimIVjPBdt82hH?=
+ =?us-ascii?Q?KhDP7gHMMechv8CaIqVxmdu4VOJ03YLkq9cbEyNQUQmPlSQU5zpxHyUHM3GX?=
+ =?us-ascii?Q?CyTeY/Lc2y6uBCLzWCDdfQ=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?pJKkzyOcjOM7sE9DKCBYOn1GKMz3kGBlH8WjIxn+jiME52VRqgfKsgny4JTf?=
+ =?us-ascii?Q?dJ7VdKNj07cgjNHYOj6Y0kqFF1GZMlHrHjjKs1OW4FmnJxxAjt2xCt0CgtwZ?=
+ =?us-ascii?Q?XdjopfOt+0oJiGoagEgtrfCDqyxA+jcwR0qLLE+Oh4t70Tr7HAdBo9+panSY?=
+ =?us-ascii?Q?cMXD7eSbBbo+j9Cqzzd3u094yOv2vvoA+CeDq1X94/6LNiQuJcfJub9bN/Um?=
+ =?us-ascii?Q?AZb4/A0x6KwG3/r9kquXJNbZwXjO7QyH6C5BFl0QgSSnt+J/Dd12XhJldSw8?=
+ =?us-ascii?Q?HVpwKQRJz45KJSN9W6gLVXdeff2cCs13W8rUCZB1SxZTgMVnWLYAiuWqZXjh?=
+ =?us-ascii?Q?DXuSZJKuEgSzfbtMQdUXTU4o8cV8Jy2q/lJxO3Sx8dCRAzZwqw+S2yehhCNC?=
+ =?us-ascii?Q?xX6IsGiigJOCMxgZNzunELJ1DmX6mECY66crmk8fVAzhg55mNAvSmEFcFfEM?=
+ =?us-ascii?Q?oouH6pZK+PiI2H5HM0a5oBTQHnw7DpMzhrc/fnHJB3CmjeWCzYLUKf4tERcK?=
+ =?us-ascii?Q?sYBdEblCCVUFGx1iF5L1p7RRZOJeoCWeAQXyoBVZJJuE8U8Yq2yYaQQSlcQm?=
+ =?us-ascii?Q?zb12HGeEyzwPtgcS9z84PIIH7khwgEACIHH2pCmPoau7hBTsBDJmU+rt53G+?=
+ =?us-ascii?Q?tR79NuO8I9jfpYjbtVKDL0yzyQ+H/1PRUJyvv9UiXzq2fvsqJsKfGlc6TDtm?=
+ =?us-ascii?Q?NuzpJAF89F2KZDgiqGcxKFeehncWf++xGMnKB1Mb7YyGeZWNfRVhkdll7z20?=
+ =?us-ascii?Q?6qRipOemv0lCdmxEj8myQcIWY1yhYmQPodG2Z4Ni2vIGE5XeyIzGBpbfiBj6?=
+ =?us-ascii?Q?YFmUGoR73gLcTbsoqR+61+w0xdGVj3rd6b/mZmObmUyFCvyncmqMjQbLq38H?=
+ =?us-ascii?Q?9rU2cUd1vlIAigxVPHydMtDLJZlNAlPNP9XseqsCfuywxIt5qWjtQ08b6o69?=
+ =?us-ascii?Q?YcUnKT5eoKbjLxyxwPvCI9Cs5NKel7qQIUmVuFdzpV4/+rAAFXlev6oH8esW?=
+ =?us-ascii?Q?XcfFEtw9WKX3y3DgaLi3xpS5QiEx++j0cmppCih9v4Pp/XHMrRyYlW5TO69O?=
+ =?us-ascii?Q?UQv+Yein5Q1/ZEO3tlNGlekoebYSz7LX6thZMGZOTmyIjx+XYmkDXmCLFySS?=
+ =?us-ascii?Q?a/uWYUX6oavlUIOm5Z+a5mMdDOH9tiCHRTXUs2GNHpV8zcH2uD3LzkmfuO4X?=
+ =?us-ascii?Q?8R/fsKCBsogGO5GPJ5ihTlMhpsGJZZYokc5cp8b8OKJvFyqKrKQqWNTXY50x?=
+ =?us-ascii?Q?1qQf3aJ3dsmBH+tnFtr0ZnPnA1xS/QBxZryvOsM8zfm2Ldd7/R4q3BHv8YY7?=
+ =?us-ascii?Q?V+lYqWUHJHsLspmuGU//NcBOf4/ghFVvVkK9aOryhpgMJMz713WPOKadS0ca?=
+ =?us-ascii?Q?kvVw6hSSafjxNcJzV5hqed6bvmqc?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 31f0c0b7-1b26-42b7-c8bb-08de7fbfe252
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2026 22:45:25.0405
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY7P300MB0637
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Wed, Mar 11, 2026 at 10:01:55AM -0700, Aaron Plattner wrote:
+> t/meson.build:1193:6: ERROR: Problem encountered: Test files found, but not
+> configured:
+> 
+>  - t9004-autocorrect-subcommand.sh
+> 
+> 
+> I think you just need to add it to meson.build:
 
-Convert this part of the configuration documentation to synopsis style
-so that all of git-interpret-trailers(1) is consistent.
+Will add it, thanks!
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/config/trailer.adoc | 121 +++++++++++++++---------------
- 1 file changed, 61 insertions(+), 60 deletions(-)
-
-diff --git a/Documentation/config/trailer.adoc b/Documentation/config/trailer.adoc
-index 60bc221c88b..a382f68fe9e 100644
---- a/Documentation/config/trailer.adoc
-+++ b/Documentation/config/trailer.adoc
-@@ -1,21 +1,21 @@
--trailer.separators::
-+`trailer.separators`::
- 	This option tells which characters are recognized as trailer
--	separators. By default only ':' is recognized as a trailer
--	separator, except that '=' is always accepted on the command
-+	separators. By default only `:` is recognized as a trailer
-+	separator, except that `=` is always accepted on the command
- 	line for compatibility with other git commands.
- +
- The first character given by this option will be the default character
- used when another separator is not specified in the config for this
- trailer.
- +
--For example, if the value for this option is "%=$", then only lines
--using the format '<key><sep><value>' with <sep> containing '%', '='
--or '$' and then spaces will be considered trailers. And '%' will be
-+For example, if the value for this option is `%=$`, then only lines
-+using the format _<key><sep><value>_ with _<sep>_ containing `%`, `=`
-+or `$` and then spaces will be considered trailers. And `%` will be
- the default separator used, so by default trailers will appear like:
--'<key>% <value>' (one percent sign and one space will appear between
-+`<key>% <value>` (one percent sign and one space will appear between
- the key and the value).
- 
--trailer.where::
-+`trailer.where`::
- 	This option tells where a new trailer will be added.
- +
- This can be `end`, which is the default, `start`, `after` or `before`.
-@@ -27,41 +27,41 @@ If it is `start`, then each new trailer will appear at the start,
- instead of the end, of the existing trailers.
- +
- If it is `after`, then each new trailer will appear just after the
--last trailer with the same <key>.
-+last trailer with the same _<key>_.
- +
- If it is `before`, then each new trailer will appear just before the
--first trailer with the same <key>.
-+first trailer with the same _<key>_.
- 
--trailer.ifexists::
-+`trailer.ifexists`::
- 	This option makes it possible to choose what action will be
- 	performed when there is already at least one trailer with the
--	same <key> in the input.
-+	same _<key>_ in the input.
- +
- The valid values for this option are: `addIfDifferentNeighbor` (this
- is the default), `addIfDifferent`, `add`, `replace` or `doNothing`.
- +
- With `addIfDifferentNeighbor`, a new trailer will be added only if no
--trailer with the same (<key>, <value>) pair is above or below the line
-+trailer with the same (_<key>_, _<value>_) pair is above or below the line
- where the new trailer will be added.
- +
- With `addIfDifferent`, a new trailer will be added only if no trailer
--with the same (<key>, <value>) pair is already in the input.
-+with the same (_<key>_, _<value>_) pair is already in the input.
- +
- With `add`, a new trailer will be added, even if some trailers with
--the same (<key>, <value>) pair are already in the input.
-+the same (_<key>_, _<value>_) pair are already in the input.
- +
--With `replace`, an existing trailer with the same <key> will be
-+With `replace`, an existing trailer with the same _<key>_ will be
- deleted and the new trailer will be added. The deleted trailer will be
--the closest one (with the same <key>) to the place where the new one
-+the closest one (with the same _<key>_) to the place where the new one
- will be added.
- +
- With `doNothing`, nothing will be done; that is no new trailer will be
--added if there is already one with the same <key> in the input.
-+added if there is already one with the same _<key>_ in the input.
- 
--trailer.ifmissing::
-+`trailer.ifmissing`::
- 	This option makes it possible to choose what action will be
- 	performed when there is not yet any trailer with the same
--	<key> in the input.
-+	_<key>_ in the input.
- +
- The valid values for this option are: `add` (this is the default) and
- `doNothing`.
-@@ -70,67 +70,68 @@ With `add`, a new trailer will be added.
- +
- With `doNothing`, nothing will be done.
- 
--trailer.<keyAlias>.key::
--	Defines a <keyAlias> for the <key>. The <keyAlias> must be a
--	prefix (case does not matter) of the <key>. For example, in `git
--	config trailer.ack.key "Acked-by"` the "Acked-by" is the <key> and
--	the "ack" is the <keyAlias>. This configuration allows the shorter
-+`trailer.<keyAlias>.key`::
-+	Defines a _<keyAlias>_ for the _<key>_. The _<keyAlias>_ must be a
-+	prefix (case does not matter) of the _<key>_. For example, in `git
-+	config trailer.ack.key "Acked-by"` the `Acked-by` is the _<key>_ and
-+	the `ack` is the _<keyAlias>_. This configuration allows the shorter
- 	`--trailer "ack:..."` invocation on the command line using the "ack"
--	<keyAlias> instead of the longer `--trailer "Acked-by:..."`.
-+	`<keyAlias>` instead of the longer `--trailer "Acked-by:..."`.
- +
--At the end of the <key>, a separator can appear and then some
--space characters. By default the only valid separator is ':',
-+At the end of the _<key>_, a separator can appear and then some
-+space characters. By default the only valid separator is `:`,
- but this can be changed using the `trailer.separators` config
- variable.
- +
- If there is a separator in the key, then it overrides the default
- separator when adding the trailer.
- 
--trailer.<keyAlias>.where::
--	This option takes the same values as the 'trailer.where'
-+`trailer.<keyAlias>.where`::
-+	This option takes the same values as the `trailer.where`
- 	configuration variable and it overrides what is specified by
--	that option for trailers with the specified <keyAlias>.
-+	that option for trailers with the specified _<keyAlias>_.
- 
--trailer.<keyAlias>.ifexists::
--	This option takes the same values as the 'trailer.ifexists'
-+`trailer.<keyAlias>.ifexists`::
-+	This option takes the same values as the `trailer.ifexists`
- 	configuration variable and it overrides what is specified by
--	that option for trailers with the specified <keyAlias>.
-+	that option for trailers with the specified _<keyAlias>_.
- 
--trailer.<keyAlias>.ifmissing::
--	This option takes the same values as the 'trailer.ifmissing'
-+`trailer.<keyAlias>.ifmissing`::
-+	This option takes the same values as the `trailer.ifmissing`
- 	configuration variable and it overrides what is specified by
--	that option for trailers with the specified <keyAlias>.
-+	that option for trailers with the specified _<keyAlias>_.
- 
--trailer.<keyAlias>.command::
--	Deprecated in favor of 'trailer.<keyAlias>.cmd'.
--	This option behaves in the same way as 'trailer.<keyAlias>.cmd', except
-+`trailer.<keyAlias>.command`::
-+	Deprecated in favor of `trailer.<keyAlias>.cmd`.
-+	This option behaves in the same way as `trailer.<keyAlias>.cmd`, except
- 	that it doesn't pass anything as argument to the specified command.
--	Instead the first occurrence of substring $ARG is replaced by the
--	<value> that would be passed as argument.
-+	Instead the first occurrence of substring `$ARG` is replaced by the
-+	_<value>_ that would be passed as argument.
- +
--Note that $ARG in the user's command is
--only replaced once and that the original way of replacing $ARG is not safe.
-+Note that `$ARG` in the user's command is
-+only replaced once and that the original way of replacing `$ARG` is not safe.
- +
--When both 'trailer.<keyAlias>.cmd' and 'trailer.<keyAlias>.command' are given
--for the same <keyAlias>, 'trailer.<keyAlias>.cmd' is used and
--'trailer.<keyAlias>.command' is ignored.
-+When both `trailer.<keyAlias>.cmd` and `trailer.<keyAlias>.command` are given
-+for the same _<keyAlias>_, `trailer.<keyAlias>.cmd` is used and
-+`trailer.<keyAlias>.command` is ignored.
- 
--trailer.<keyAlias>.cmd::
-+`trailer.<keyAlias>.cmd`::
- 	This option can be used to specify a shell command that will be called
--	once to automatically add a trailer with the specified <keyAlias>, and then
--	called each time a '--trailer <keyAlias>=<value>' argument is specified to
--	modify the <value> of the trailer that this option would produce.
-+	once to automatically add a trailer with the specified _<keyAlias>_, and then
-+	called each time a `--trailer <keyAlias>=<value>` argument is specified to
-+	modify the _<value>_ of the trailer that this option would produce.
- +
- When the specified command is first called to add a trailer
--with the specified <keyAlias>, the behavior is as if a special
--'--trailer <keyAlias>=<value>' argument was added at the beginning
--of the "git interpret-trailers" command, where <value>
--is taken to be the standard output of the command with any
--leading and trailing whitespace trimmed off.
-+with the specified _<keyAlias>_, the behavior is as if a special
-+`--trailer <keyAlias>=<value>` argument was added at the beginning
-+of linkgit:git-interpret-trailers[1], where _<value>_ is taken to be the
-+standard output of the command with any leading and trailing whitespace
-+trimmed off.
- +
--If some '--trailer <keyAlias>=<value>' arguments are also passed
-+If some `--trailer <keyAlias>=<value>` arguments are also passed
- on the command line, the command is called again once for each
--of these arguments with the same <keyAlias>. And the <value> part
-+of these arguments with the same _<keyAlias>_. And the _<value>_ part
- of these arguments, if any, will be passed to the command as its
--first argument. This way the command can produce a <value> computed
--from the <value> passed in the '--trailer <keyAlias>=<value>' argument.
-+first argument. This way the command can produce a _<value>_ computed
-+from the _<value>_ passed in the `--trailer <keyAlias>=<value>`
-+argument.
 -- 
-2.53.0.32.gf6228eaf9cc
-
+Jiamu Sun <39@barroit.sh>
+          <sunjiamu@outlook.com>
