@@ -1,120 +1,144 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423AE2C08CF
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:41:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947BE1A6812
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773250891; cv=none; b=bn6A8SfYGdARBL6s9NUygLKWbLuWQZnZctshzyxJeeDn4tC0VOdyfgXcBIBCaXU1zdSiV9Tz+39xa6mYm3kf5BC0zM9uH2ynMcZs5RvKIDz5mb6O+8TRe0PolOhRdP0t/WFvpzpPpDjnFoauds9m85VEt7VX05t/tSKPwKe1j6I=
+	t=1773251152; cv=none; b=nTJDTIOgnIl/QL9O66XzFoI/ILgUisj7KLgKI0Duac+oIgkRJVrSyoDgToNmEjowP7c8wY8yjPrcifQXBZXlWyFYorOq+hVJaTYoTdNX/S+iwQDYj1g+EGdj1M1WLLyhxJqoeQLY8ngLzLUkeLEJp92PNHkaJYOz1Psccu8pLo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773250891; c=relaxed/simple;
-	bh=Ew/6BfEg8Y2KTim0iL+rQVPwJ8xATrTq16B/NBwdpvc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7XQxv9jvZVZT9BW27zdEeTscte/i4St7eTyOTWI8SfufXotK0HvGLqdJsAYIl3Q1QWCLUGqD01lDsf8FNUYn17Cm7DKni+ixMCz8ybM8X3PhpDfHdJU/c+NtxDgHOE3NZb5pQ/Vc4TgzdG4eTr/Hfqgw3S84pR82cmL8HmFu+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SFMzZXvR; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773251152; c=relaxed/simple;
+	bh=uuK3IUnzkiTIGCIqHZPNsCtTYF7ARn228MWnKkhees8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UVxS/rCmxHYbuYbxrx0Me+cxh+v0tbldunC0uwM4BO+wANjRBpLpslD/vF2i0cCfUp3f6bA/6v9MJ9H2M0a8z/hvRtsthJhSVep3ShEAVlb/sC4t6RvcrSVLJ2aCr95mb+Uu5LGidxycTM9P4uCPfFxyw+Sxs34RZhQsQAUGLBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WFj48wQX; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SFMzZXvR"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-8298fad2063so88574b3a.3
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 10:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773250890; x=1773855690; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zvFuMrE7ZIn6u3So/eXVuT/SVWTFfYkdy3x9N1adiX4=;
-        b=SFMzZXvRJmjzHxSskCuR8bHWg8o25bUaobGiIpNVdgDCiGXI+Lfs6FyuGDfjcUm66f
-         iydVKw8+lI4M3HjGHxOhiAvje3T9VgOdaq1nCovHgSEtdDHlLFpXI2JVaqb3xos0SO+w
-         WbUjmpDi+PCk0jEkdL0ZQSJMVOom7dXfZ2wT0CXzvYWj+Fg2Rt0Iw3Ka8LjWeDgk03vX
-         XPgFbtVJowp6OihFLnV80rZpd/TkAQIjOTgWAmR93jmhQWXnssANcBqw1hgdLCu+j/Fu
-         MjJC7ZQuZ21cI+vobx3p12P17mwYye/AqhTWSBhxqElXVOyFe4hQJHSOITxFPpt/ZOeo
-         0nHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773250890; x=1773855690;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zvFuMrE7ZIn6u3So/eXVuT/SVWTFfYkdy3x9N1adiX4=;
-        b=YcVSwKuQNu/DDMeZWrIMe1UaSvJ8VacoOGdn4fmJ+Uapfp0lKoQDmgedNFzhCX5U3t
-         9tMqKjs0NV307FBoFisRyyYo35JaQ/ZWwXVGrge1F1E+YMmdxOvuIDoLuuYitqXgaGna
-         YWZJN7nAT9CvIjUZnGu+3nfX1yjMeLy/ClGyaZYUpKSWyBcUOfFN89bOWAYOs/bRGKgE
-         loQNkF8xQKfzRddWz62OwcYQTN5p0wWq0sM7a9f2poh34PFiJT0xFBjWA947SamhRzQN
-         go/v4t2aXIGd1Ek5xbLnH8wsT3wKQUH5kmF/uI1dUoLsd0eauG1+wMa7GGD3sPTP2+Tw
-         MtaQ==
-X-Gm-Message-State: AOJu0YxOXjpdMEvEIV9hvc2EG1iggh4zG8C3iqvCDJm0qTsky96xPik4
-	1jqlavCSznHxT64PgyaiBaCYYIUAZUKDH+Px2NhClOVTYjfH+5L8zyBU3YahQNZ0kk8=
-X-Gm-Gg: ATEYQzwn8lAMXqpx4JQ/Y7CiaMzkyjOB2fqAWEIPyP/h29s64O2vxc4TEPWG9OgJdiB
-	mha7n/yLZdeN2/Ylp8RtKHqCd4w1tHOkRKog85LbzDIRpQpik7spXVnX/ILSPf3onde0+Kf6IkV
-	zwXxgWT+XCosIeuhRPz+IcVocU3xPimm0/hgcE7qCuQZhNggWaUhWOH7LfibBt75x4OVbpgMmse
-	aTQam0kC66e3HJx03fu3m2CYeNoAvkH7koZSF7YvVhz2KCtCi6F30wYZdN5lpn8JTKVX8bGgWWh
-	qeONQHx/5CCPfSpBlS7S5tV7Cmk1Nlb8+1xROe856cBwjMfGkylFMMLc4jGz1Eu78vMaWAtZRgD
-	xWmwgTwKzJQEI76SL81z+0WsqccautWJXHEdY/NU9Nvnlc7atnS2kT116KCIwgqQqfwTZ5dTsaK
-	eLpqTL+LOaO4xrnLY1752HiuaS6EcwwBMgXcAqhczbd+2ebb0J+aw58hyOFVBpzOuFjOfYE8r7N
-	Q==
-X-Received: by 2002:a05:6a00:4c0c:b0:7ff:97b3:59bb with SMTP id d2e1a72fcca58-829f6eada71mr3050394b3a.16.1773250889383;
-        Wed, 11 Mar 2026 10:41:29 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:c0d0:e2d9:a48c:9160:564c:f9])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a07244ab3sm303702b3a.7.2026.03.11.10.41.26
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 11 Mar 2026 10:41:29 -0700 (PDT)
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Subject: [PATCH v2] t3200: replace hardcoded null OID with $ZERO_OID
-Date: Wed, 11 Mar 2026 23:11:20 +0530
-Message-ID: <20260311174120.76871-1-r.siddharth.shrimali@gmail.com>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <abFP9vZOVHGI536G@pks.im>
-References: <abFP9vZOVHGI536G@pks.im>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WFj48wQX"
+Received: (qmail 78139 invoked by uid 106); 11 Mar 2026 17:45:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uuK3IUnzkiTIGCIqHZPNsCtTYF7ARn228MWnKkhees8=; b=WFj48wQXySo3Sdy1JsKfzohm3md94dqnOd2rpa3eJHjbItwDKbgprOgH7VTaKvEl3/7ypMdn+1PstqU2m3Qyds5MeyYgxrfXBW/ZLzshY4DegAiJop37XksZfxNwpSzirDft43QnKVVWMGUbJ/1qC3ZY7hytFA1Qohc4W7LGq6sy2NarO9PnTTMSmR9bZqurMy+87RkGRCzfJBES50fpy7JcLoubEY4Ey4Jv6eaZ3MZ5sgZxYNlAaU1BdrZWRk6qZ1SP9HWSHwhnlzfGnJlLFcUPqgZnmtk7qFr1eSWGdpp01jDPkszKQzYa0miUZulDZEMaLXqz3Dmr1P+VymdH1g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Mar 2026 17:45:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 492725 invoked by uid 111); 11 Mar 2026 17:45:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Mar 2026 13:45:50 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 11 Mar 2026 13:45:48 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Deveshi Dwivedi <deveshigurgaon@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] list-objects-filter-options: avoid
+ strbuf_split_str()
+Message-ID: <20260311174548.GA1900488@coredump.intra.peff.net>
+References: <20260311132041.12044-1-deveshigurgaon@gmail.com>
+ <20260311132041.12044-3-deveshigurgaon@gmail.com>
+ <xmqqo6kuqqje.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo6kuqqje.fsf@gitster.g>
 
-To support the SHA-256 transition, replace the hardcoded 40-zero string
-in 'git branch --merged' with '$ZERO_OID'. The current 40-character
-string causes the test to fail prematurely in SHA-256 environments
-because Git identifies a "malformed object name" (due to the 40 vs 64
-character mismatch) before it even validates the object type.
+On Wed, Mar 11, 2026 at 09:28:21AM -0700, Junio C Hamano wrote:
 
-By using '$ZERO_OID', we ensure the hash length is always correct for
-the active algorithm. Additionally, use 'test_grep' to verify the
-"must point to a commit" error message, ensuring the test validates
-the object type logic rather than just string syntax.
+> > +	while (*p && !result) {
+> > +		const char *end = strchrnul(p, '+');
+> > +		char *sub = xmemdupz(p, end - p);
+> > +
+> > +		result = parse_combine_subfilter(filter_options, sub, errbuf);
+> > +		free(sub);
+> > +		if (!*end)
+> > +			break;
+> > +		p = end + 1;
+> >  	}
+> [...]
+> It is curious what would happen when the input were "combine:foo++",
+> though.  What happens is that the loop begins with p pointing at 'f'
+> in the initial iteration, "end" points at the first '+', and a
+> temporary copy of 'foo' is fed to parse_combine_subfilter(), and we
+> move on to the second '+'.  Then the second iteration finds NUL
+> after that '+' in "end", and we end up calling the helper function
+> with a temporary copy of '+'; gently_parse_list_objects_fiter() will
+> reject it as an invalid filter-spec.
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
----
-Changes in V2:
-- Updated the test to capture stderr and use 'test_grep' to verify the 
-  error message. This ensures the failure is due to the object type 
-  check ("must point to a commit") rather than a hash length mismatch.
-- Improved the commit message to add detail to the 40 vs 64 character
-  mismatch and the "premature failure" in SHA-256.
+I don't think this is quite right. After we skip the first "+" and "p"
+points to the second one, then strchrnul() will find that second "+",
+not NUL. And so we have a 0-length spec, and feed the empty string to
+parse_combine_subfilter(), which complains.
 
- t/t3200-branch.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+It is the same behavior when we see "++" in the middle of the string.
 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index c58e505c43..e7829c2c4b 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1494,7 +1494,8 @@ test_expect_success 'refuse --edit-description on unborn branch for now' '
- '
+> Logically, "foo+" would be a combination of "foo" and "" (an empty
+> string) and we ignore the empty string, and "foo++" would be a
+> combination of "foo", "" and "" (two empty strings), but we barf at
+> the empty string if it appears in the middle.  And recall that "" we
+> saw earlier at the beginning of this function was also triggered an
+> error.
+> 
+> Admittedly the original wasn't much better.  It ignored an empty
+> string in the middle (e.g., "foo++bar" would have fed 'foo', '', and
+> 'bar' to parse_combine_subfilter() and an empty string would have
+> become a no-op) but barfed at the trailing one "foo+".  This new
+> implementation swaps where it barfs, complaining an empty string in
+> the middle and ignoring an empty string at the end.
+> 
+> In any case, the error behaviour against an empty filter-spec feels
+> a bit uneven.
+> 
+> Tightening to reject empty string in the middle may appear to
+> existing users as a regression if they are using "combine:foo++bar"
+> as they are forced to update it to lose the extra '+'.
+
+But yeah, it is somewhat inconsistent that we complain about an empty
+spec in the middle, but not at the end. If we were starting from
+scratch, I'd probably forbid it everywhere. But since we allow it in
+some cases now, it may be worth being more permissive.
+
+It is easy to check in the loop, or even just teach the helper to make
+empty specs a noop:
+
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index 616c6c7faa..56e1c651f6 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -151,6 +151,9 @@ static int parse_combine_subfilter(
+ 	char *decoded;
+ 	int result;
  
- test_expect_success '--merged catches invalid object names' '
--	test_must_fail git branch --merged 0000000000000000000000000000000000000000
-+	test_must_fail git branch --merged $ZERO_OID 2>err &&
-+	test_grep "must point to a commit" err
- '
- 
- test_expect_success '--list during rebase' '
--- 
-2.51.2
++	if (!*subspec)
++		return 0;
++
+ 	ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
+ 		      filter_options->sub_alloc);
+ 	list_objects_filter_init(&filter_options->sub[new_index]);
 
+> By the way, instead of making a temporary copy and discarding it
+> repeatedly in a loop, it might be cheaper to reuse an allocated
+> temporary with the common pattern:
+> 
+> 	struct strbuf temp = STRBUF_INIT;
+> 	while (... loop ...) {
+> 		const char *end = ...;
+> 		strbuf_reset(&temp);
+> 		strbuf_add(&temp, p, end - p);
+> 		... use temp.buf ...
+> 	}
+> 	strbuf_release(&temp);
+> 
+> because _reset() only resets the len member of the strbuf without
+> releasing the resource, if the next piece of memory you need a
+> temporary copy for is shorter than the pieces you have ever used the
+> strbuf for, you can make the copy without a new allocation.
+
+As a general strategy, I agree this is a good one. But I'd be quite
+surprised if it ever made a measurable difference for this loop, which
+we'd expect to trigger a handful of times (and which allocates in the
+sub-function anyway).
+
+-Peff
