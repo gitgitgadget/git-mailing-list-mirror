@@ -1,115 +1,106 @@
-Received: from mail-gateway-shared02.cyon.net (mail-gateway-shared02.cyon.net [194.126.200.224])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C16366553
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 22:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.224
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EB02DFF04
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 22:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773267050; cv=none; b=H1o4bHVn2AGdOd9XuXV5cIknnO1OPDYo6yGZCq9UA7orPC+8yM9bHlsyBpMhBsXYhUM8pTLxcYP2XVqdVnWCCcbk2+nCpjj5WeDClp9oyavFf9HRdLpxDtlJ8zF2E3+KAsp2ka+9dwFPntCAjPnlBqda5BuWNKMndtgzkmVAJd8=
+	t=1773268284; cv=none; b=SN7WW+UdpS9zowfL4ILfVrscM7c4ozdNE2SNqTBHml4JKiVuP9EHiiiYmbrVmq5Uvyl0M0N4fawdApLW4o5lyxT1FLfS4Rznux+piH76yYn6gYNZAwG+qkRTNlnn3oxqMe57T9R1IxHWs3VGEvUZoPv5kfctAlShz+WyKwhDVZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773267050; c=relaxed/simple;
-	bh=RFf7VJIkV9DzMfkOpWF8aeAD+eadwmeTOyud4uRzxHo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfJVSuN0PlxLKv9wRYVC1lqcAfsPBaDTqkcoxTDjOaDOgiYg7uBPEBj3K8EPvQ38Ray6SbwqmlJgNGKTqt5hFDxPDTKurM44N3gW6tAT62hmUotNppPfrItdCI/HT6MQfux2spseXak58JyExqzl+zMzuPvRtvPsmOA2dn2JhDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.224
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
-Received: from s019.cyon.net ([149.126.4.28])
-	by mail-gateway-shared02.cyon.net with esmtpsa (TLS1.2:ECDHE_SECP256R1__RSA_SHA512__AES_256_GCM:256)
-	(Exim)
-	(envelope-from <ig@drbeat.li>)
-	id 1w0RlM-00AgPq-0Q
-	for git@vger.kernel.org;
-	Wed, 11 Mar 2026 23:10:45 +0100
-Received: from [10.20.10.53] (port=31806 helo=mail.cyon.ch)
-	by s019.cyon.net with esmtpa (Exim 4.98.1)
-	(envelope-from <ig@drbeat.li>)
-	id 1w0RlG-0000000FgN8-3qSU
-	for git@vger.kernel.org;
-	Wed, 11 Mar 2026 23:10:38 +0100
-Received: from eap.internal (eap.internal [192.168.11.6])
-	by oh4.internal (Postfix) with ESMTP id 223524045B
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 23:10:38 +0100 (CET)
-Received: from bb (uid 1000)
-	(envelope-from bb@eap.internal)
-	id 54030d
-	by eap.internal (DragonFly Mail Agent v0.14 on eap);
-	Wed, 11 Mar 2026 23:10:38 +0100
-From: Beat Bolli <dev+git@drbeat.li>
+	s=arc-20240116; t=1773268284; c=relaxed/simple;
+	bh=isdeXYc8FBwQuzwPPWLxJH6v8jGcHWLa/IivoWRF8ko=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=b3JhJl3cSvcL0VgHGDm4oYPlluwd0lpUaMdnzx7Zir4mImAHhRtIgfRC7z6fsFg747WGtBFhnrAgTNJq1XEstllfINkD6CzI+/Ec9dy/RG3Az2WfoHmddVkgVP87zjDgpVcn9kQ2ENZ9P2oH/0peMRt+4hfdOKrTQG1kw+yFKWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=gQfu9j/W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AeDZl2U+; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="gQfu9j/W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AeDZl2U+"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 926BF1D00026;
+	Wed, 11 Mar 2026 18:31:21 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Wed, 11 Mar 2026 18:31:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1773268281; x=1773354681; bh=09
+	7VF1J/JkQ59FixlbdoSqkr8o2CLtnxQ/U/VEoet+c=; b=gQfu9j/WVq1dEF0ZNv
+	vwf/blh671nklH9cEZhcUOK7K9vETIkJHpTsUJ2xOUg/RZrHio5LAhejKrXk/4BV
+	nPSNHJpK+lHtfllNrfGvs55i+GkR0NyPaHfrADwOiV0prYwEaDq6S9kcSRcg2E7l
+	7z+MUCiIuzGXM5HM5mRs6qifWthUWVNQH9aaZ33iDkmK/9BNM0TRMdMu9EPXvtsL
+	Cn9Bos7bD9Izi79MJIdUVLAorToZWCuhPEfvp4d84JHZp73Zkj0pv4Jep9t/d/lm
+	76P5CHkqvrHn2AThV1G/zrTT+NxaCVDqPnWJT8VBSxN98ct1WNwuDkhk/s5g5DVP
+	jJpg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1773268281; x=1773354681; bh=097VF1J/JkQ59FixlbdoSqkr8o2C
+	LtnxQ/U/VEoet+c=; b=AeDZl2U+5R5719T1wccFixJ95Owq3YIjc99FXTaGzCQL
+	5wYggNO2SxHHw4kuHQl1mEx5/QWc+KXGdP7QD0kt4kJEd78tXu6GfjG0qziKTx/W
+	JDuUFIsniFsdt7s04G/478NJZvgyMck4RtjsrAIIrRDObBUyGgBOuVayPTsEEoml
+	oycT2V7GcJtDlkrc1N1xUfx0xMAzn6u4FUghyGQrU41O9VqtuWBed6b/h/7GNamp
+	j6ocy+SgpaOySbXiiMZ9cwjYUuxvqLBKpJd2wZY/S8Jf9DK6qxO/NFvIs7WAw9GF
+	dfKq3BqxYC8e71m1GL13dp6QEG0lAFNcakeaKmP5Wg==
+X-ME-Sender: <xms:Oe2xaUq8t8hWl2Mu3a_C-pQqioFSqpfI7HjGQaZh-g6Q8aCrFG1kjJs>
+    <xme:Oe2xaSGfb_vxXZxs9J4-obIx-hIJHmLQg_Ub8sDC-skAMt8KyA9_HwDyFQQIhLyZF
+    x6AnHut6scCU-xg9nwYNcyiRfwOc-Yl1aVXeOJvZdr_jAA4hbq_>
+X-ME-Received: <xmr:Oe2xaWlvaNyfbDM4XZDyD_wjmZ-kutMAxkX5MHpt8lVfjfI0smni2yPQ8sm9z9ttZs0b2b7C4goX6tv7VIJVeHuiy4Zzoqewp6xCqqEdSsv9lWHyEtJa1bJxDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeehuddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffogggtgfesthekredtredtjeen
+    ucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmnecuggftrfgrthhtvghrnheptefgkeejffdufeefffegkeevgfevvdegffeujeej
+    leegudfhtdffieekleefhffgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
+    ihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggv
+    sehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrh
+    gvvgdrfhhr
+X-ME-Proxy: <xmx:Oe2xaVlJJlhgLTD4DCWwYs5p2A0a2l_l0pvKQnGbEpLG1BpGF9nLJQ>
+    <xmx:Oe2xaXusoCTLsU9JxHr_uyMxg3rlLvyiO-14N5nboDfBtKUsvx0bNg>
+    <xmx:Oe2xaYlzVakyP3J7sjnhZ3Plq4RoqMIKt-v27vcIs-avVr9KUcYXOw>
+    <xmx:Oe2xaStRTp0zjQSC2KsHD6bEKbUfFuDvbQOhWTGiIbfBvvykxIIULQ>
+    <xmx:Oe2xaaund8HDl03hePY7gCVAP19oWjBPYPw8nIq1ho_XpWBHwfAWSCuV>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 18:31:19 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
-Cc: Beat Bolli <dev+git@drbeat.li>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: [PATCH v2 2/3] imap-send: use the OpenSSL API to access the subject common name
-Date: Wed, 11 Mar 2026 23:10:26 +0100
-Message-ID: <20260311221027.1404476-3-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260311121107.1122387-1-dev+git@drbeat.li>
-References: <20260311121107.1122387-1-dev+git@drbeat.li>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH 0/3] doc: interpret-trailers: convert to synopsis and update options
+Date: Wed, 11 Mar 2026 23:31:03 +0100
+Message-ID: <CV_doc_interpret-tr_synopsis.48a@msgid.xyz>
+X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
-The OpenSSL 4.0 master branch has deprecated the
-X509_NAME_get_text_by_NID function. Use the recommended replacement APIs
-instead. They have existed since OpenSSL v1.1.0.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Take care to get the constness right for pre-4.0 versions.
+Topic name: doc-interpret-trailers-1
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
- imap-send.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+Topic summary: Convert to synopsis style and update options.
 
-diff --git a/imap-send.c b/imap-send.c
-index 1c934c2487..2a904314dd 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -233,9 +233,13 @@ static int host_matches(const char *host, const char *pattern)
- 
- static int verify_hostname(X509 *cert, const char *hostname)
- {
--	int len;
-+#if (OPENSSL_VERSION_NUMBER >= 0x40000000L)
-+	const X509_NAME *subj;
-+#else
- 	X509_NAME *subj;
--	char cname[1000];
-+#endif
-+	const X509_NAME_ENTRY *cname_entry;
-+	const ASN1_STRING *cname;
- 	int i, found;
- 	STACK_OF(GENERAL_NAME) *subj_alt_names;
- 
-@@ -262,12 +266,15 @@ static int verify_hostname(X509 *cert, const char *hostname)
- 	/* try the common name */
- 	if (!(subj = X509_get_subject_name(cert)))
- 		return error("cannot get certificate subject");
--	if ((len = X509_NAME_get_text_by_NID(subj, NID_commonName, cname, sizeof(cname))) < 0)
-+	if ((i = X509_NAME_get_index_by_NID(subj, NID_commonName, -1)) < 0 ||
-+	    (cname_entry = X509_NAME_get_entry(subj, i)) == NULL ||
-+	    (cname = X509_NAME_ENTRY_get_data(cname_entry)) == NULL)
- 		return error("cannot get certificate common name");
--	if (strlen(cname) == (size_t)len && host_matches(hostname, cname))
-+	if (strlen((const char *)ASN1_STRING_get0_data(cname)) == ASN1_STRING_length(cname) &&
-+	    host_matches(hostname, (const char *)ASN1_STRING_get0_data(cname)))
- 		return 0;
- 	return error("certificate owner '%s' does not match hostname '%s'",
--		     cname, hostname);
-+		     ASN1_STRING_get0_data(cname), hostname);
- }
- 
- static int ssl_socket_connect(struct imap_socket *sock,
+[3/1] doc: interpret-trailers: convert to synopsis style
+[3/2] doc: interpret-trailers: normalize and fill out options
+[3/3] doc: config: convert trailers section to synopsis style
+
+ Documentation/config/trailer.adoc         | 121 +++++++--------
+ Documentation/git-interpret-trailers.adoc | 170 ++++++++++++----------
+ 2 files changed, 156 insertions(+), 135 deletions(-)
+
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
 -- 
-2.51.0
+2.53.0.32.gf6228eaf9cc
 
