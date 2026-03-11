@@ -1,93 +1,81 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C303B2FF0
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 07:44:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A003B2FC8
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 07:51:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773215065; cv=none; b=sVYnRNnh5VZB8tNMe3akFDssYT0ogeIwERWq6GLaWuQV2gA29H1pnVvYnEH/hOocwHQwIAF0tekUx05OK4KXLKmw4zpGZf3JAwAaY7Qn/ZNReL+2W9H2L0urpip3jeLmqAy4UVdJ8Sqcq57avujGZf2mkbsb2v+toT4m7Mhr/pg=
+	t=1773215492; cv=none; b=DYqElCP5Wysx0Cg0E5I0hlplC9DbH/RG3xaUkUAmasbsHEydqLnxyYlky6+HNK60l/JNCrZ3NtomYJOOy3MQQdVNC1oJnquLcS0AlGbyLY4AuAvU6FfLwjguMfaR0jI1MVpGzj5K0DwqoeMd2+PdSET2rYCsAJ8bFIvBZPXthzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773215065; c=relaxed/simple;
-	bh=Zhu1PO4Kn0FydsshYmqEYnGnKakHrljtEHHLKFB/EPI=;
+	s=arc-20240116; t=1773215492; c=relaxed/simple;
+	bh=RUwH0DMFRGPYtiET90ezD3QUTbNAUYcVz3L0Xn0cGXQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rl1y+tMMPbeNrrHNuSrF0Q0nJDxMLwtE7q/9+yomb5YO5WHSLbZS4XS/RIeQ/4yzkjL24x8cA3/dVd/4vb85fKM38VF1LyonR7fgjgPVN3mv/Fq6Vv9DZO9iN6/WUPXSBnqj9zINbVTdlJbF3ycyLpcs6AfU2eo+Wj2WohqpJpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cAId/B3l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T2HKRzsc; arc=none smtp.client-ip=202.12.124.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=bC5nD6hrju8OESoY8U66wvizjDWzxeSZouBqsoYtrQAiVEktefIyXyFdqwyL9HqFHPrb80ypWWj63bml+KpIkPOi/QIz0SaD6YKpIatOB0WeIvyzijyYK8xiyZ6yuuy8BfM6coqrnh5gk12HPC0WjdiStBbngJtqX1L7dMs0g2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LoSa2f5s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K/ZZICw7; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cAId/B3l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T2HKRzsc"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LoSa2f5s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K/ZZICw7"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id ADF127A012F;
-	Wed, 11 Mar 2026 03:44:19 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id A17B31D00128;
+	Wed, 11 Mar 2026 03:51:28 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 11 Mar 2026 03:44:20 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 11 Mar 2026 03:51:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773215059; x=1773301459; bh=J4ERzlXdHT
-	myxS8LBYIv5vrDGtUChozOyaPJiB9/6Ac=; b=cAId/B3lnT0VsT6hZJp+X3xrwp
-	87wBo6UuyUlK66OnbH/QmegENuFoRIpPKvu3uKRkwLnQho529YghuQ1U0Gba774u
-	ftJWhUEbdULXkyKeF5Pc1SbGWo0EOUtTlugBU3gd9GKqll5JjV3SW/JylDsh2X6W
-	Hvj0+QeKTs+x4tl7rUZcJ+bphaojEqp4aRLfkCkjLAsE1U4eslU43qQjOBfQupCm
-	NWPQ4IENuRwe4HKXqwi0KFqOZSyAbX10ZNZL/QjUmYbIWo5HcIrrLscnmudBl5eb
-	3p8Q+llwRL4s/vnB58RQ4tkirEaIVJCxpcGmqPEefBn22YeWjgSex3Fys4kw==
+	:subject:to:to; s=fm1; t=1773215488; x=1773301888; bh=UUgoAhQ8T9
+	KENiAcNx93yo26Y/ZZzePA4A8ZCTUDpfw=; b=LoSa2f5s/VbDRrH+5rLmgHQGsm
+	4AtWjJFcKZEmwB61M2DIlkm6loGYu/V8D5DbeDshKBO+zv9+QSBoDdh1pvr7Yh/A
+	rW9VtUVU2F2MBvAmz1zBu9a7peSBJ0QjMoNdBJvd2QRhwfigsCeMnyeV9jlx4Bb0
+	FmWYQGLylbcg00oAVLnSSOvededewMC2fXnoue/Uis1pvLWGr1thjj+Tlrs8Y36T
+	8JxCI0Z60VUDG5nkfOV4Lflq4oEFO07OCaWvqJpjTWtd2avojwvTgPMeAcTIBf3h
+	osrA6WYpoahuSTfA4/CfTRvBct07JHJAfMufTQehDbnqtAVl7LVW5c4vDObg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773215059; x=1773301459; bh=J4ERzlXdHTmyxS8LBYIv5vrDGtUChozOyaP
-	JiB9/6Ac=; b=T2HKRzscEmcSiJsoJv6YKcO8DEmD69j7Pd+ngqIO1tEe8DqA+N1
-	ooKoZKtYpBFeBpjBdgGd32zdgQWzvkfNr9vA0WMd6UAg2ciHIVHvVe1XtBew7b8y
-	2RoVvyqtDFQzHAoNsW8YsypzASzXzWChwtDDu+qN6F+35l/khs/A7OoUAxTbHC/H
-	/RAdlkEPbKc/+9/mn5RVOHC0WAgzB+ZpAyHAP6ZL/HBLMKX6wbXMUzq55MW8rNoW
-	+pxRNzEBsiLruAo76a6yuQtqcJVTGOC494h8WQ3leQY9OsKNZAvtO7/LL3Dffw1m
-	Rtjqz4K9hGtZ9HjE4jGBzIKmSMMbq2dINBA==
-X-ME-Sender: <xms:Uh2xacuxAnGm3is0jGJObrpcMBpw8_Ix7JRQCpSCSMbzgW9UekzlWQ>
-    <xme:Uh2xacD1ua39OqvdV-9IevRJi9F8_y6trwleMycJpWtZzYF_UV9v4gnWDnHcS0Q1b
-    m1VJmwclUBz_qrFu4ZgwN-KU8tZgUpjPNRhGNMSg2koMPbadnA>
-X-ME-Received: <xmr:Uh2xabb3FZ-TgHC42K_h45c4OXsm-j_UcR5v8_dmaxJr5mdiG8EOg7mXMFgB-RWbRcIAvNNGTSOyb4jVKRGkS6M3NooWmFFLwRK40P1Hrg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeffeefucetufdoteggodetrf
+	1773215488; x=1773301888; bh=UUgoAhQ8T9KENiAcNx93yo26Y/ZZzePA4A8
+	ZCTUDpfw=; b=K/ZZICw701CI7/0Wx0KlI494fm0KmCpIxgRqkJ/oplcM8KeFbLX
+	wX4Vr2kV+442YF02tWyJ93Dulyq1dK+sh8eNa6hyAtLcbF6sM7wxLxmKLGy5ZXEk
+	vI8fGyMlJsdDej/ri9n0R+nK5l9bC35nweE5PtemZtB3tLapV6rI/w5CKs90ufOm
+	oscDEPI0XBf+aM6UHfJp54s4fEtH+NhdZZWlpGMtaCadiOEzJU2srlOW0iBaA2b/
+	29hdElG9y6O5C/WJtzuOEb82GdVDYzOdiLWSczgFtzIJd4oBDV5jRE2HAUp8OkGQ
+	NBDB/1u6dCypav3RGSyjADbRN0fT+NCyeWQ==
+X-ME-Sender: <xms:AB-xaaFeWAvhD_VNse5xhi_XVslSdGloCZHQNIciFHPKl4pbjj6qOA>
+    <xme:AB-xaRWQpOxdUrqosZ6ki4Oadec3FeT5oqHUYBdDmvPRrRqDWdGlBYkdUOfXyRhuw
+    3bBvWvp5-DY866lI_pg3_BtC-sCkG6eLd4hMO43T_mnRugry3Q>
+X-ME-Received: <xmr:AB-xaRwtKdkEPUDSEq0UfX4rYtVoIR1E4ocvPMK50YpTkHeGf5z0MT7utP3t1SNEm9Hvd4WZvQL1IaQ4d8ii98KH-qAbOwDS84Oot67WxA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeffeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epteduhfethfeuteehkeelfeehveelteeuuefhhfejtdevgfekleefveeihffhjeefnecu
-    ffhomhgrihhnpehthhgvmhhoshhtshhpvggtihhfihgtuhhrlhhmrghttghhfihinhhsrd
-    ihohhupdhgihhthhhusgdrtghomhdptghorhhprdgtohhmnecuvehluhhsthgvrhfuihii
-    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtg
-    hpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhoth
-    hhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtoheprghlrghnsegsrhgrihhthhifrghithgvrdguvghvpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehjohhnrghthhgrnhhtrg
-    hnmhihsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-    pdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:Uh2xafWxPLaQC0uf0GFVUhnTCN0gzkt1lsWck0pVN8SVi0YTWZ_vNw>
-    <xmx:Uh2xaSMTFiVUdsKZe9E35UJiZkmz0fbdWMTQUiUOSFRX6KgkCX-48A>
-    <xmx:Uh2xaRZOfa8mwLpS8dqlcNah9-oqcdXQzaf_YSq_RYCd0SjB3JGl7Q>
-    <xmx:Uh2xaZ__0CWrxe_cI9Eimn3orj5eHgBrGhIxGxEGzC1CU2N1eUME_A>
-    <xmx:Ux2xaZ92jccS-Mp6h-iCzOLkFfQwXgIxCmXN2rnAbAs7iDOrxga8ZSud>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:AB-xafOluXqKoOPIoNVmt-VK0yp-zHjEprQhwZIgGiL7Vo2aJHLvog>
+    <xmx:AB-xaS547qvByKul74kYhTmi2b4ILltH8jX3LqOXF9vNXJHhGgU2hA>
+    <xmx:AB-xaQNrgsBc-2ZIa-a7tz3oQBaDS-BegcmFe5iQe438BsTdQsaFBA>
+    <xmx:AB-xaQn1BEDLv5wyY88DUYNte5XScWevU7-BuF8DVRm-vefXcliT9w>
+    <xmx:AB-xaVdRTup8vJNPROoBLtBBdsfu4WtNoNf2QFo0wLQqq7_EEKP0L9_J>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 03:44:17 -0400 (EDT)
+ 11 Mar 2026 03:51:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 79d343c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Mar 2026 07:44:15 +0000 (UTC)
-Date: Wed, 11 Mar 2026 08:44:13 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 5b5e4a3f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Mar 2026 07:51:26 +0000 (UTC)
+Date: Wed, 11 Mar 2026 08:51:23 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Alan Braithwaite via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	jonathantanmy@google.com, me@ttaylorr.com, gitster@pobox.com,
-	Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Alan Braithwaite <alan@braithwaite.dev>
-Subject: Re: [PATCH v5] clone: add clone.<url>.defaultObjectFilter config
-Message-ID: <abEdTQrRtAveH1rB@pks.im>
-References: <pull.2058.v4.git.1772833649843.gitgitgadget@gmail.com>
- <pull.2058.v5.git.1772847236966.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH RFC 0/2] Makefile: deprecate autoconf build infrastructure
+Message-ID: <abEe-87CJSm418ln@pks.im>
+References: <20260304-pks-autoconf-deprecation-v1-0-f5b611b13138@pks.im>
+ <xmqq8qc78nyt.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -96,130 +84,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.2058.v5.git.1772847236966.gitgitgadget@gmail.com>
+In-Reply-To: <xmqq8qc78nyt.fsf@gitster.g>
 
-On Sat, Mar 07, 2026 at 01:33:56AM +0000, Alan Braithwaite via GitGitGadget wrote:
-> diff --git a/Documentation/config/clone.adoc b/Documentation/config/clone.adoc
-> index 0a10efd174..1d6c0957a0 100644
-> --- a/Documentation/config/clone.adoc
-> +++ b/Documentation/config/clone.adoc
-> @@ -21,3 +21,37 @@ endif::[]
->  	If a partial clone filter is provided (see `--filter` in
->  	linkgit:git-rev-list[1]) and `--recurse-submodules` is used, also apply
->  	the filter to submodules.
-> +
-> +`clone.defaultObjectFilter`::
-> +`clone.<url>.defaultObjectFilter`::
-> +	When set to a filter spec string (e.g., `blob:limit=1m`,
-> +	`blob:none`, `tree:0`), linkgit:git-clone[1] will automatically
-> +	use `--filter=<value>` to enable partial clone behavior.
-> +	Objects matching the filter are excluded from the initial
-> +	transfer and lazily fetched on demand (e.g., during checkout).
-> +	Subsequent fetches inherit the filter via the per-remote config
-> +	that is written during the clone.
-> ++
-> +The bare `clone.defaultObjectFilter` applies to all clones.  The
-> +URL-qualified form `clone.<url>.defaultObjectFilter` restricts the
-> +setting to clones whose URL matches `<url>`, following the same
-> +rules as `http.<url>.*` (see linkgit:git-config[1]).  The most
-> +specific URL match wins.  You can match a domain, a namespace, or a
-> +specific project:
-> ++
-> +----
-> +[clone]
-> +    defaultObjectFilter = blob:limit=1m
-> +
-> +[clone "https://github.com/"]
-> +    defaultObjectFilter = blob:limit=5m
-> +
-> +[clone "https://internal.corp.com/large-project/"]
-> +    defaultObjectFilter = blob:none
-> +----
-> ++
-> +An explicit `--filter` option on the command line takes precedence
-> +over this config, and `--no-filter` defeats it entirely to force a
-> +full clone.  Only affects the initial clone; it has no effect on
-> +later fetches into an existing repository.  If the server does not
-> +support object filtering, the setting is silently ignored.
+On Wed, Mar 04, 2026 at 10:10:50AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > roundabout 1.5 years ago we had a long discussion that eventually led to
+> > a rough consensus that we'd rather want to get rid of our autoconf build
+> > infrastucture. This eventually led to the introduction of Meson to cover
+> > this use case, which has stabilized for quite a while by now.
+> >
+> > This patch series thus starts the deprecation period of the autoconf
+> > build infrastructure. Target for removal is Git 2.55 for now, but I'm
+> > very open for discussions here. I also assume that depending on feedback
+> > from packagers we may need to adapt the timeline.
+> 
+> I do not consider autoconf a thing on its own; rather it is a mere
+> extension to Makefile based build, isn't it?  So the declaration to
+> say "we favor meson over autoconf" makes little sense, at least to
+> me.
 
-This all reads good to me.
+Yeah, that's why I mentioned 3.5 build systems. I don't consider it to
+be a full build system itself, but rather the .5 part.
 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 45d8fa0eed..1207655815 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -757,6 +758,47 @@ static int git_clone_config(const char *k, const char *v,
->  	return git_default_config(k, v, ctx, cb);
->  }
->  
-> +static int clone_filter_collect(const char *var, const char *value,
-> +				const struct config_context *ctx UNUSED,
-> +				void *cb)
-> +{
-> +	char **filter_spec_p = cb;
-> +
-> +	if (!strcmp(var, "clone.defaultobjectfilter")) {
-> +		if (!value)
-> +			return config_error_nonbool(var);
-> +		free(*filter_spec_p);
-> +		*filter_spec_p = xstrdup(value);
-> +	}
-> +	return 0;
-> +}
-> +
-> +/*
-> + * Look up clone.defaultObjectFilter or clone.<url>.defaultObjectFilter
-> + * using the urlmatch infrastructure.  A URL-qualified entry that matches
-> + * the clone URL takes precedence over the bare form, following the same
-> + * rules as http.<url>.* configuration variables.
-> + */
-> +static char *get_default_object_filter(const char *url)
-> +{
-> +	struct urlmatch_config config = URLMATCH_CONFIG_INIT;
-> +	char *filter_spec = NULL;
-> +	char *normalized_url;
-> +
-> +	config.section = "clone";
-> +	config.key = "defaultobjectfilter";
-> +	config.collect_fn = clone_filter_collect;
-> +	config.cb = &filter_spec;
-> +
-> +	normalized_url = url_normalize(url, &config.url);
+> Asking which between Makefile and Meson should be the "primary"
+> build environment is a different story, and the question does make
+> sense, even though my answer may be different from yours ;-)
 
-`url_normalize()` will return a `NULL` pointer in case it cannot parse
-the URL. We need to be prepared for this, otherwise we might segfault.
-I guess the best route is to simply ignore the URL in that case --
-otherwise, we would always error out in case the remote has a weird URL
-configured.
-
-> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-> index 1e354e057f..1254901f3e 100755
-> --- a/t/t5616-partial-clone.sh
-> +++ b/t/t5616-partial-clone.sh
-> @@ -722,6 +722,124 @@ test_expect_success 'after fetching descendants of non-promisor commits, gc work
->  	git -C partial gc --prune=now
->  '
->  
-> +# Test clone.<url>.defaultObjectFilter config
-> +
-> +test_expect_success 'setup for clone.defaultObjectFilter tests' '
-> +	git init default-filter-src &&
-> +	echo "small" >default-filter-src/small.txt &&
-> +	dd if=/dev/zero of=default-filter-src/large.bin bs=1024 count=100 2>/dev/null &&
-> +	git -C default-filter-src add . &&
-> +	git -C default-filter-src commit -m "initial" &&
-> +
-> +	git clone --bare "file://$(pwd)/default-filter-src" default-filter-srv.bare &&
-> +	git -C default-filter-srv.bare config --local uploadpack.allowfilter 1 &&
-> +	git -C default-filter-srv.bare config --local uploadpack.allowanysha1inwant 1
-> +'
-> +
-> +test_expect_success 'clone with clone.<url>.defaultObjectFilter applies filter' '
-> +	SERVER_URL="file://$(pwd)/default-filter-srv.bare" &&
-> +	git -c "clone.$SERVER_URL.defaultObjectFilter=blob:limit=1k" clone \
-> +		"$SERVER_URL" default-filter-clone &&
-
-Do we want to "test_when_finished rm -rf default-filter-clone" here and
-for all the subsequent tests?
+My intent isn't really to push Meson instead of our Makefile, only Meson
+instead of the autoconf infra. I would claim it's the least-loved part
+of our build infra overall, and it's both hard to read and write. Our
+recommendation typically is to use the Makefile directly, and from my
+perception I think that past discussions seemed to be in favor of
+getting rid of autoconf eventually. I think we're now in a good position
+to do that, but you or others may of course disagree.
 
 Patrick
