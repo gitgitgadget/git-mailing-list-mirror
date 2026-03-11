@@ -1,252 +1,65 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outbound.st.icloud.com (p-east2-cluster6-host4-snip4-1.eps.apple.com [57.103.76.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380E126ED3A
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 03:14:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAD0175A99
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 04:09:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.76.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773198892; cv=none; b=LCg1+yymVwi1RsOuB6H0XIl9plxnp4MjU59/VuSobs2QNTupxADGSI/qlV5cZnpY4H3VYabBRlyFYSneo/WED1XrVJ2A4KZAnruTNfho5ccqLhf8aNqOx2bB4MPYnAW2kUMocV9YWqFH/NaJr8E0Ay+PN+ogOs0TMSP8NTadczQ=
+	t=1773202179; cv=none; b=A5dAA+TkMVS3WR/xNdzFZOvsSrI0whf5E1m4JjqAcz5L3dyQKw5ETLMbkJW7MvN6StHONLRXL/PyfMhK5aNVCyM9zXJedMAoGLZiRXgbQ/lDu8fjjnFKG5ITTB5qZsTgPatD5lSWGqYpnWLh6ytY2h0nemSAcHgCiJfQ2MIuPJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773198892; c=relaxed/simple;
-	bh=9I40iICAFJncWjAqZAeDLdDL/JSM8klPnVQ1Z4ONeKk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ci/UeaC97RdY6KKYIg4TidE63qKw5NttcmCuQiBO3MkRB1cyTxQBSZrcD2vP5rmEVnrmvjBOE/xTLeXQXTb0Lmm9WQjpyyvpWxbaGd0pPTewfOjV+rqv9VpGAzqf4VNQdrvhhTT/hYjUAN59mvVyFa7r+AzLpiISHbgP8p/E9TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A1CktSzZ; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773202179; c=relaxed/simple;
+	bh=GOyddEgTIkZFHHl1E7d33o2deTF8jRBSEG1vQyK7F80=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=NFNcvqyVYYWSIgUw0qQ7PeQmi+dxOacmsI+/ePsIUIQSpFhw3S+o/t8ViNNqJaTukR+RzTwnGADEgwqCYASEQC01TjLGZktzQ88LMdGKk8fyRW1YKkfdghbJc75VN3uMrAYtXjiHeg/GKxnA9CnmbOuNJPnOJ6XTpwEbbp+W1gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=iFI+dskO; arc=none smtp.client-ip=57.103.76.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A1CktSzZ"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-48374014a77so161005565e9.3
-        for <git@vger.kernel.org>; Tue, 10 Mar 2026 20:14:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773198889; x=1773803689; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nw9NC9d0uH+5V/fvKnKO8/IZxKkoXQaRQC0SrnqQhmk=;
-        b=A1CktSzZhopIXUhJ9OuQHgRj/kWjrWUVPOYTC++47iYbJDgs55ZeVkxLjE5XqvPC1/
-         k/K1q2naHnwIayWgArqQzU7Rt8vyzg4nrAA8JVN8/0JFbjoBq2xSQkTolvfyQgW9i2dj
-         wFBAipkg3MuSeZT6wJu4IvJYSHKO88yLPw/yNP1OZXAv1aHOdbICz/8JuuEVorRKjA3d
-         1nKiE0oTt8q1VMjEDQCepkRISohDykiNlEEvs6OwNF9F5SzhA6KAW4mW8muACfWUZY84
-         KStXXpGJPWDRooELAtl/b1FIQzzimLFql/d0ikUgE+6kaNQ8X9WEbiMTTKg+BYT3WUco
-         85AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773198889; x=1773803689;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nw9NC9d0uH+5V/fvKnKO8/IZxKkoXQaRQC0SrnqQhmk=;
-        b=v4DqRfJz91Las5rzypZdrpynMDwUPc6Jg1adlzblM9PnwbQKJcQ10wfE+Cz4LfslZs
-         WnORUozHksirpwttVQYFbdLVhyuuhhttpRM2va6ooDs/jYjPosIbLmEA76/QB8QUPa+z
-         7EbEapUin9MS/9cBAxnmmMTtRqndoUYv0WtrV4JAY/LpXo2zHCshjwXThgahv+ZPiHsL
-         cCNAbLH/MyWO2rh2IcAVoGerK1kh5tmcUktAWC1ZSgGeGVEAZ4NdY2IP3VrjWKi2vwpd
-         +eKwCU5Ju0v4s4S5WPIiIwpXPnlKk3Q6QuSPbPdYkXOSGKsWEa5QK/7uOqtK58JtjuKh
-         Sz1A==
-X-Gm-Message-State: AOJu0Yw1VV1VRgYG/3N6pZux2MqVzTYNWLQwoDiCRRWcJlwbxNBmuY6C
-	Ph7Qpu6EAVIUU14aVaf7yaVyoFGogZjS9osDt6Toj7OzCbKpaJPmUhu0g18nol4M
-X-Gm-Gg: ATEYQzztPzKzqe3wi/4Wao60IyrE2RZ3bfgszumGOxhFUafdGTcaWbBYuGnjOigoV2h
-	Mh8pQJIT0e9W2ciJhH+22mUMvw8fOedrEK7wHCs8Rjzxohb8BHq58G3ivP0/udioMJ/lv3sx008
-	4P76blz895S8BK1D59eqWJog8hb5FsC7QkVd5pqQsO89QwhOZayfg2lfIrl7aGQcKkl0FcjGfpI
-	TMW+ELOYzUSdEFtN6mXbroXbmrqCl4nOUUDT6KduEZRWUGMwmnRWTQO56OelbfuwROSBYgg3hfh
-	dsiLo0sf+lQQv42gQbdVvZzf2AfIdNYhry3LDtbxAMQ7AP/yUSJZcrY8IJYTpR7OT+bCvjbULfJ
-	ynh3iFlDPvv2b2a7cieGYySF6O83c7n8Rhsqy7IEckg9KHRyYp79i4IvBi+f8H34ZaEuNVY9h9n
-	/PtP4Pb0Epqf/XGaHLK/I6h0VWoIN0+hqRYl9nWVVUjugEFW9+8cvf+DFZ6tpFvSzLDYx0bZ2I8
-	J2/QLk+UVMvO5WQgCpvMRENkhb9t5NJ4lC9C22wP/CPG9jTK204GSE4eUA=
-X-Received: by 2002:a05:600c:45c3:b0:485:3e00:9440 with SMTP id 5b1f17b1804b1-4854b1396d2mr15106095e9.24.1773198889162;
-        Tue, 10 Mar 2026 20:14:49 -0700 (PDT)
-Received: from farblopa.localdomain ([84.126.0.122])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b47145dsm15393495e9.0.2026.03.10.20.14.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2026 20:14:48 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: git@vger.kernel.org
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>
-Subject: [GSoC PATCH v2] test-lib: print escape sequence names
-Date: Wed, 11 Mar 2026 04:14:42 +0100
-Message-ID: <20260311031442.11942-1-pabloosabaterr@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260310183513.1077875-1-pabloosabaterr@gmail.com>
-References: <20260310183513.1077875-1-pabloosabaterr@gmail.com>
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="iFI+dskO"
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPS id CCD71180012E
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 04:09:36 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1773202177; x=1775794177; bh=GOyddEgTIkZFHHl1E7d33o2deTF8jRBSEG1vQyK7F80=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=iFI+dskOyGtspQOkXpuxANwCoTizjUxI8Ln1yk96wJOma3925ZrSvKTBOzAMqYhQJuGxXZC4CWiv8g/0IwtQIkNuAJ5Lt+WXNCqhRelByPK8a2LR111VRjLQWWnmYRK4CxxVQl02jvbfACPivK/QRfa/RXJirpKzv9pIw1Yc6EyLKcjA9cJPe/l10F4d8E+pH88dddmLy+Xdol/+mtOcRgFCRBziAEVfhtNguIKUWz5yNhhAGwTBeoNJEM0MfUKL8EBUV8jCcAR0Rn2FmLKL1c51TLjs10yZ6OYmmYHnbGmK6sdgsS4X18MG6wMpZUtnjMMgic5h6urBxKhZE2+LVw==
+Received: from smtpclient.apple (unknown [17.42.251.67])
+	by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPSA id 482DD18000B3
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 04:09:36 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+From: Jonny Belger <jbsticktint@icloud.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Date: Tue, 10 Mar 2026 21:02:40 -0700
+Subject: Hello 
+Message-Id: <DC70F807-989A-4476-8A3F-0AF19CE1BB04@icloud.com>
+To: git@vger.kernel.org
+X-Mailer: iPhone Mail (23D127)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDAzMiBTYWx0ZWRfX6wKDGt+mkZ6q
+ 39h7mHZPWe98ytqJyEq7ARMcX70b8BIGj+3SLeovPARHg5FDSOie5oD9NlVU38SjMSWlmKh1aKG
+ WxItcxevuwuqBaKAybIqaKi/j51E8Ci04Keg1PgOGMwRi+NX23wyegSXI01+vYQIOKkzxm8d7m/
+ suWVzPuKBIR5TfrNmOWEl8Qp/LnyAfpNI12VHWYOGAiQNcfyaxMRbywHdYYzmXBLpYD5dNr7Kgg
+ x0gwcregYBITmrJAUA07MiH+y5Z8/dw78YA19GrmrwjScT2ECb+Nt9DtcZFPjKODXqxWcm4Wkcl
+ z49Fey5iNImjA2EUa9h/+BgtuLgPvewMfwHA31oEZk7K8BMyE0h96wxVCpzdZA=
+X-Proofpoint-ORIG-GUID: 9SAcI1fAtj22ViLDglRgB9qnbqPBdOHP
+X-Proofpoint-GUID: 9SAcI1fAtj22ViLDglRgB9qnbqPBdOHP
+X-Authority-Info-Out: v=2.4 cv=M+lA6iws c=1 sm=1 tr=0 ts=69b0eb00
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10
+ a=x7bEGLp0ZPQA:10 a=3ShiLzhxtXwA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=ufj2q9GEQk6cS1ZHVqkA:9 a=CjuIK1q_8ugA:10 a=xo5jKAKm-U-Zyk2_beg_:22
+ a=bIkczNPxLzuTTV6gayW0:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-10_05,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 suspectscore=0 bulkscore=0 malwarescore=0 spamscore=0
+ mlxlogscore=439 clxscore=1011 lowpriorityscore=0 phishscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603110032
+X-JNJ: AAAAAAABpIZk+lAEvtlwJSYlS+JLGnvWtrAajtbAH559G2aOsQXqs+7d+/p7fELo40B9p6Z/Ovr7lxN+PtJthF1IWYN6SVNnH6bZGSAgHKKJsiQA9YWlWG0Ge85XjacC37L3IgxrBHa6X5RnrKA5+VDis3pxqIbfkJeTmNZ02OJxCZGKonkXtV8Q+4M4pRtgB6RZlCjaZhaqBDosNQlnDH/YmF4U4INtUXWpqcaH3nqHpZ9+VGXhKwfzZtZzmXa9Eq8CYIbNTxZF0r8ARlykrPB4Y8t/vgv/wFTZtaLcskDhWhKydx0AYGS1wvC6BOtYTCjUXr91nRW23RGDe1ekamLvVPfj2IM6H1ouo0tDvZ0WRRVIS46ef7tdH904ux7e3DXgWaXbBQR9EfcI4GtD3SbkODV0iRSoeL/85Hq/b4t5e4Gl9ZKLqOAGfi9zyfncmcWzFzHZXoLiSAJr5N5O7t+dsGzbGm6LJrilmBTWEj9WDmCb6d2Hm8ikVMZOGQD240SNO+YfZLZFcp0Zbl5IVq1qqMuCJ6kHED4/modB2nOsZ9ILXZ7FxIRR+NSSOFfuYl8cz7WzUxDsObdFTCrmlqJGEo7PygTHvw7Q7wmJAUZcKvOADBnnzL4FMWGCacOW0GiACZmOON2o+UIW5ne7EDNlEUvlf2YUet8d5Jc9/MVzVEalF3Wy
 
-When printing expected/actual characters in failed checks, use
-their names (\a, \b, \n, ...) instead of their octal representation,
-making it easier to read.
-
-Add tests to test-example-tap.c
-Update t0080-unit-test-output.sh to match the desired output
-
-Teach 'print_one_char()' the equivalent name
-
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
----
-Changes from v1:
-reverted unrelated test change '\'' to '\\'' in t0080
-
- t/helper/test-example-tap.c |  4 +++
- t/t0080-unit-test-output.sh | 52 +++++++++++++++++++++++--------------
- t/unit-tests/test-lib.c     | 19 ++++++++++++--
- 3 files changed, 53 insertions(+), 22 deletions(-)
-
-diff --git a/t/helper/test-example-tap.c b/t/helper/test-example-tap.c
-index 229d495ecf..998a1f0b42 100644
---- a/t/helper/test-example-tap.c
-+++ b/t/helper/test-example-tap.c
-@@ -63,6 +63,8 @@ static void t_messages(void)
- 	check_str("NULL", NULL);
- 	check_char('a', ==, '\n');
- 	check_char('\\', ==, '\'');
-+	check_char('\a', ==, '\v');
-+	check_char('\x00', ==, '\x01');
- }
- 
- static void t_empty(void)
-@@ -123,6 +125,8 @@ int cmd__example_tap(int argc UNUSED, const char **argv UNUSED)
- 		check_str("NULL", NULL);
- 		check_char('a', ==, '\n');
- 		check_char('\\', ==, '\'');
-+		check_char('\a', ==, '\v');
-+		check_char('\x00', ==, '\x01');
- 	}
- 	if_test ("if_test test with no checks")
- 		; /* nothing */
-diff --git a/t/t0080-unit-test-output.sh b/t/t0080-unit-test-output.sh
-index 3db10f095c..66838a00b2 100755
---- a/t/t0080-unit-test-output.sh
-+++ b/t/t0080-unit-test-output.sh
-@@ -6,10 +6,10 @@ test_description='Test the output of the unit test framework'
- 
- test_expect_success 'TAP output from unit tests' - <<\EOT
- 	cat >expect <<-EOF &&
--	# BUG: check outside of test at t/helper/test-example-tap.c:75
-+	# BUG: check outside of test at t/helper/test-example-tap.c:77
- 	ok 1 - passing test
- 	ok 2 - passing test and assertion return 1
--	# check "1 == 2" failed at t/helper/test-example-tap.c:79
-+	# check "1 == 2" failed at t/helper/test-example-tap.c:81
- 	#    left: 1
- 	#   right: 2
- 	not ok 3 - failing test
-@@ -34,53 +34,65 @@ test_expect_success 'TAP output from unit tests' - <<\EOT
- 	not ok 15 - failing check after TEST_TODO()
- 	ok 16 - failing check after TEST_TODO() returns 0
- 	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:62
--	#    left: "\011hello\\\\"
--	#   right: "there\"\012"
-+	#    left: "\thello\\\\"
-+	#   right: "there\"\n"
- 	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:63
- 	#    left: "NULL"
- 	#   right: NULL
- 	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:64
- 	#    left: 'a'
--	#   right: '\012'
-+	#   right: '\n'
- 	# check "'\\\\' == '\\''" failed at t/helper/test-example-tap.c:65
- 	#    left: '\\\\'
- 	#   right: '\\''
-+	# check "'\a' == '\v'" failed at t/helper/test-example-tap.c:66
-+	#    left: '\a'
-+	#   right: '\v'
-+	# check "'\x00' == '\x01'" failed at t/helper/test-example-tap.c:67
-+	#    left: '\000'
-+	#   right: '\001'
- 	not ok 17 - messages from failing string and char comparison
--	# BUG: test has no checks at t/helper/test-example-tap.c:94
-+	# BUG: test has no checks at t/helper/test-example-tap.c:96
- 	not ok 18 - test with no checks
- 	ok 19 - test with no checks returns 0
- 	ok 20 - if_test passing test
--	# check "1 == 2" failed at t/helper/test-example-tap.c:100
-+	# check "1 == 2" failed at t/helper/test-example-tap.c:102
- 	#    left: 1
- 	#   right: 2
- 	not ok 21 - if_test failing test
- 	not ok 22 - if_test passing TEST_TODO() # TODO
--	# todo check 'check(1)' succeeded at t/helper/test-example-tap.c:104
-+	# todo check 'check(1)' succeeded at t/helper/test-example-tap.c:106
- 	not ok 23 - if_test failing TEST_TODO()
--	# check "0" failed at t/helper/test-example-tap.c:106
-+	# check "0" failed at t/helper/test-example-tap.c:108
- 	# skipping test - missing prerequisite
--	# skipping check '1' at t/helper/test-example-tap.c:108
-+	# skipping check '1' at t/helper/test-example-tap.c:110
- 	ok 24 - if_test test_skip() # SKIP
- 	# skipping test - missing prerequisite
- 	ok 25 - if_test test_skip() inside TEST_TODO() # SKIP
--	# check "0" failed at t/helper/test-example-tap.c:113
-+	# check "0" failed at t/helper/test-example-tap.c:115
- 	not ok 26 - if_test TEST_TODO() after failing check
--	# check "0" failed at t/helper/test-example-tap.c:119
-+	# check "0" failed at t/helper/test-example-tap.c:121
- 	not ok 27 - if_test failing check after TEST_TODO()
--	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:122
--	#    left: "\011hello\\\\"
--	#   right: "there\"\012"
--	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:123
-+	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:124
-+	#    left: "\thello\\\\"
-+	#   right: "there\"\n"
-+	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:125
- 	#    left: "NULL"
- 	#   right: NULL
--	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:124
-+	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:126
- 	#    left: 'a'
--	#   right: '\012'
--	# check "'\\\\' == '\\''" failed at t/helper/test-example-tap.c:125
-+	#   right: '\n'
-+	# check "'\\\\' == '\\''" failed at t/helper/test-example-tap.c:127
- 	#    left: '\\\\'
- 	#   right: '\\''
-+	# check "'\a' == '\v'" failed at t/helper/test-example-tap.c:128
-+	#    left: '\a'
-+	#   right: '\v'
-+	# check "'\x00' == '\x01'" failed at t/helper/test-example-tap.c:129
-+	#    left: '\000'
-+	#   right: '\001'
- 	not ok 28 - if_test messages from failing string and char comparison
--	# BUG: test has no checks at t/helper/test-example-tap.c:127
-+	# BUG: test has no checks at t/helper/test-example-tap.c:131
- 	not ok 29 - if_test test with no checks
- 	1..29
- 	EOF
-diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
-index 87e1f5c201..72ee20a06f 100644
---- a/t/unit-tests/test-lib.c
-+++ b/t/unit-tests/test-lib.c
-@@ -396,8 +396,23 @@ int check_uint_loc(const char *loc, const char *check, int ok,
- static void print_one_char(char ch, char quote)
- {
- 	if ((unsigned char)ch < 0x20u || ch == 0x7f) {
--		/* TODO: improve handling of \a, \b, \f ... */
--		printf("\\%03o", (unsigned char)ch);
-+		char esc;
-+		switch (ch) {
-+		case '\a': esc = 'a'; break;
-+		case '\b': esc = 'b'; break;
-+		case '\t': esc = 't'; break;
-+		case '\n': esc = 'n'; break;
-+		case '\v': esc = 'v'; break;
-+		case '\f': esc = 'f'; break;
-+		case '\r': esc = 'r'; break;
-+		default: esc = 0; break;
-+		}
-+		if (esc) {
-+			putc('\\', stdout);
-+			putc(esc, stdout);
-+		} else {
-+			printf("\\%03o", (unsigned char)ch);
-+		}
- 	} else {
- 		if (ch == '\\' || ch == quote)
- 			putc('\\', stdout);
--- 
-2.43.0
-
+I have a bug / hacker involved in some serious stuff they hacked my json web=
+ token and I know who it is=20
+Sent from my iPhone=
