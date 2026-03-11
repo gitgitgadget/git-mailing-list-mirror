@@ -1,115 +1,120 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2683161BE
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 18:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773252821; cv=none; b=W1p+a0pO+6E6lIr5OvE7qoY2nJ6Tlwug4O/ZjwQXyXn6x1nBaz2jeA4lwv1LmnGX051FADkrDmFSa7+vXpozJarwjIU3UbRYyp2z6Nh8fX1/2z/0wlkCpFfOSsDxz/z70MHsYYUjkN5Y9spyRH6ZleZPybJSXOSk8/nItpbQtns=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773252821; c=relaxed/simple;
-	bh=fV+0kHss4LCIjnL1BV00m5e7qXFHRIu3MKwOCKpCEAc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DlRsKrGJOn3S2lf6yiC+py5yOlW8ze/ukaBgtdm8x2S2TypUhpHI0pUWf6zp/JBOLR6D2WBPOHMHCwd4kR+NKA1PzEnRj9sysqdk+RUgqdgi9dvSmhayK9NgZ51ynDVngXiRkbKBPUdDCUmgD3/9CoN3diMOVJ1PD1J5fd2Az3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NY78sRgy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qk45OKJd; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8853161BE
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 18:13:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773252827; cv=pass; b=hvjC246bMaUIcciyugKHKlnj0DEbL5j2dFjfXF/iem5qhSt1tUVOcYVO95560J3DkMvUQq54o92s6kw2kvS4WQCQ7T+ttWuhewL4OO5/D5rySsYin7xSCOCQTEjjdB2/k61EWcvkX+LL/WdKCPiXcjPrvvsu7inISF0/KbsDXwY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773252827; c=relaxed/simple;
+	bh=qkfyB/gFmMq5HbTqrDIOR0+5L5Q4luoVyf4f5FIC/nc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Hds2JKSEkksstPZd0LUvlitoiP+T37CK5TehAekBCcP8ScZlDulnlJF9F97jR4CiC82UODM6SW8oMr/qmFMwONfXsjjkIJiYKCMD6CxlAdrlMCRFwtm7P3RGIThIYe7xANhcnV9b6sCUplEzb40P83xTO48CoXQ0OWhC1nwVU9E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AaFG9wrs; arc=pass smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NY78sRgy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qk45OKJd"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9F7091D00111;
-	Wed, 11 Mar 2026 14:13:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 11 Mar 2026 14:13:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773252819; x=1773339219; bh=F7qsSSulqk
-	SK98JtAkVlCJ1UEKKaZ5sLnsUzi8BqTwo=; b=NY78sRgy/TiYMuN/PxpFGrMZ7l
-	V+kC2VDDukNxifLrxfPbAHviDhMQSKsU6W4KOxQa0k79RNP0OhBDGFh8j7wuZDqf
-	1/lmMGq8CWI/lzNhOMhn9KL8qyYcwEv7D/uF4dkfSPq72nEJ6NTnikml0uRTMU8Q
-	esYv//TSia++3gu0ipBRsMQk8HTk5I2WFuYDbBNO6Z7FXx1d4LIrpVawUAify7vl
-	IhG4tsj9+8GbFgYHLd9UCL32Nc4YgHBoSftiA1hVBuZDiejgFQnxeW2TkAoMJVle
-	kpWfTZzWN7z6DyqDifSagO0+17CZvXjjoJFSNu64CxmZR8gUhNAg+5hqSH9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773252819; x=1773339219; bh=F7qsSSulqkSK98JtAkVlCJ1UEKKaZ5sLnsU
-	zi8BqTwo=; b=qk45OKJdXP4qpwyAMCiYP8p3PtUZv8278al9nLpCkh1ln7lY5Wj
-	YFhF+CQ4SZhpRUquhPPrvgjjZ2ZudoOjh2sLFeZ5nim8zOvyIapwQZa/CuE9L1GZ
-	bHsCFarhuIsdVRlv2dFaHmccoUfhtUmNErr8vbqv52QgDhezfDkkE4Bxy6Q3JbTi
-	ENd/+1sUM4YoCypHoHor6UFCISXrpTsh50ZxW+siEYV16BPgYuxxs/nseIGn7kBb
-	ct6Yrl0nTxw4a0bjhmSdSDOObkKUGw5JlAVtfhH4WvRMYBz7SBdl1xH9SKPZnUA0
-	peDt9TQJhbQT/I0UzMnej04fv73dMrJFx/w==
-X-ME-Sender: <xms:07CxaWNPXOEivzmiVWZ4LwPE0yI_CyE24vihj_uF2poj9LrP9HOmKA>
-    <xme:07Cxab9_E1AtxI9PPRhWrAUf6vs5XqDdNcTaetdeNf9qAMuqnQrwMrCQKPzYJph5X
-    HjasnFrKDArs4ItRi0SySrkN1ii0cb26b0TJYigQ0L41WFD-kmpKg>
-X-ME-Received: <xmr:07CxaSQMEXEPKKVpP9kKeHMlxKrKkfc9AJmePjg4UifFgwTHMHtsJACO7_iihppzc0LDUrNtou4mfgUrLJQPJIb7zu528pq7nQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegheelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepuggvvhgvshhhihhguhhrghgrohhnsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:07CxaVmRercavXwAGw0oaOd1F2HG8NWvdCDX1mMND-rrut3yOpSMpw>
-    <xmx:07CxaaQOExeZ_vWVjPxgUCB4lPSaZYh5S55Wq1HlAiBvmUwYDP1VGA>
-    <xmx:07CxabPhCvj8LN9kGzBFG-9phxucFGW0wFq5uAFzbmokfg1ZVrTr1Q>
-    <xmx:07CxabX-VzZdp9sdbz13bgu-Y4pf9DPor_6Cu5TVr6JkJqi7fH9L7w>
-    <xmx:07CxaePIsIAV2STqyGEo-xAsjJuws4hZL9JjavYBOhnPebUUc3TSxKTM>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 14:13:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Deveshi Dwivedi <deveshigurgaon@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] list-objects-filter-options: avoid
- strbuf_split_str()
-In-Reply-To: <20260311174816.GB1900488@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 11 Mar 2026 13:48:16 -0400")
-References: <20260311132041.12044-1-deveshigurgaon@gmail.com>
-	<20260311173336.8395-1-deveshigurgaon@gmail.com>
-	<20260311173336.8395-3-deveshigurgaon@gmail.com>
-	<20260311174816.GB1900488@coredump.intra.peff.net>
-Date: Wed, 11 Mar 2026 11:13:37 -0700
-Message-ID: <xmqqjyvip73i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AaFG9wrs"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-8299c75f730so137977b3a.0
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 11:13:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773252825; cv=none;
+        d=google.com; s=arc-20240605;
+        b=DmPDR2HNcwd/vZllGhkMuAT8pMi5SRt+/BmpyEVdLHG6C8Jgfz+zqb39QIuB9XsdWJ
+         hMpY7lUuAMTcoTeISuftkd6t6HqAfEIedTPF3FWZQIyT2A4pO8KBbCvswtbHaIazNNlA
+         +nFCvSrXvG98v2uEzSlmFx73JSPtEPOSCpuboWkmvwe3PAviETDKAZ9l/eSjRcLmy7SG
+         E7VCtcUAPDmfJpv5dYE4c6H5/0PbIcTtf0Z0p4s5PEuooWtEubW251hBO5uoZkYKl/8U
+         fw4jhpD872r2LiFH8ztGML2TD/At303dtHxBWRRdiJX2i6sHVr0vA+y6ty9FUw+vatJh
+         E1qw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=qkfyB/gFmMq5HbTqrDIOR0+5L5Q4luoVyf4f5FIC/nc=;
+        fh=KaLnBZp1yZPmY7BL58epWeAfL0HmH3SPUatxE6goP+o=;
+        b=ebg61bQQ6536b0s1TcD/oV6feKpVwkrWNzxHTHFTaC4z/aRQEGHrJ6nQoGMvh693ck
+         fqeONXYO2sO/ElMQXXhCIWF++NFHDT/yF4OKzjhP9QZEt8xymRVxALyjutky3AnJ3gcg
+         owe0Vv+zB+MoHRZo0ccfK4FJizrzHrQicRsZK4WGepMqFaKN6uKxiz4o3YPbGSWmH+Ap
+         EZxatfmPGetk8gkQRajs18UXajZYE2cFqAlLZPwXVKIbP09DeAfpQlDZiTZ2Tj3cMPCx
+         YkSuW7UrkYfvfKeG470I0nOdEr7acpNiH9+QNFtKcrdu5gl+Dzj/mKBKvd5F1bBbsWtX
+         NsOg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773252825; x=1773857625; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qkfyB/gFmMq5HbTqrDIOR0+5L5Q4luoVyf4f5FIC/nc=;
+        b=AaFG9wrsj98pouPpbFBKY3QH52VXTJHPWyvjvJWDPcdyaFxg286Ak1iVoVsCGmrcI+
+         +jl0TSvSlSkuYvMQuCs36d1FOwV0u7N+4RnW47Qxi/zBAu1MsQnrIDOjL4UzZ524Nm9J
+         GyEqJi/zFtWSdmTDAYfSrJbZpJev67rV+LxcAFF1I1AlrK12h6BJzO5u5o19OJ2WORfW
+         9Tzehn1C0JurCXseB8LjMC9xxAh3onPnL2MvzM7Xp/7RgrWazLv7V8ceeT7IJDrv/GTW
+         P8XdxXs9CUNhqACPws6UL9l9Br5nZHIZ4+XaQIwFbmvKzNPGTI0hNE91LUS0MUpU3ZhY
+         5uvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773252825; x=1773857625;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qkfyB/gFmMq5HbTqrDIOR0+5L5Q4luoVyf4f5FIC/nc=;
+        b=E0yy8CtZv2c0BD8QD40y9nbjke+bpBHnvevFujM2gj0Hg6fYEH7OEleMTElVHP5uPs
+         2qHEZMJBOcMfeqPxnvIS4ojgCRb/lMAKjNmgdSE2PbtafNdUxzj2QUo0dqYNx9fH9Npt
+         nwzejnSAvuQlul71f5ecbm5On1p6gbfNxeJeyPov6TWOHdP5Xv7nhJQUfRpOB5M/h0x5
+         ynKvOtkx9z895kbYogacmnDCq90Hv30jEIM3W1fLsuktJ8HcG1eCL1AVPvBpFt6cr3C9
+         28iyAyoqs/Anyp1cUUBsULpWPAlYh9xUuFjfjj+nmpKTdqmq9rZZga2GAjpXi9B/PXP8
+         YoZg==
+X-Gm-Message-State: AOJu0YwqMYRrwwPj/lUA0GPrJWGyZBV6tYq2d+3Q0ojazwqaXiuTPL4u
+	QhxA6qPyr5MHgyE1M+pNk9bP4jI0lKBmkp9PAYRCJS5kA0kFVbU+sZ6Y7LlnYXL/wbDQK1DH42F
+	QGzAFpuA7WksajktAOrYaT+LKtwpZoHI=
+X-Gm-Gg: ATEYQzz6VKaUSFVZFbewGB2TAQeg4DCEIdUmH0Ru9JLtjKGdEBl+A7elZWBn5fwzqxi
+	YyiQrXX1whQGQ6KJEr4yXppPZNe5XRZ+ZgMCUp98QOMz6KXZIw7gio1HHsbS47s1f3DTp/n3tSr
+	XOiNbwK6jIekTWMiQM7aQXt25OC4dQ64m83ZyozkUO3PjvsIcJCgvorbjt67xt6XsnPFYnTnekh
+	eetCh2e9EmWrUmK9ZiZMghYqrgVA4kcUQmB/SWhVswrveyN6ms+5Ha6VkmK3WKmyE2pC3dXG4xi
+	55RT+BHlKz+nRQon51H8xsHQ6bd6IztXZ52/oyM=
+X-Received: by 2002:a05:6a00:13a9:b0:823:1bc7:ffd8 with SMTP id
+ d2e1a72fcca58-82a071aeb8amr454380b3a.9.1773252825014; Wed, 11 Mar 2026
+ 11:13:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <abARj_VI9n2nB_xT@pks.im> <20260310160029.44605-1-r.siddharth.shrimali@gmail.com>
+ <xmqq1phrtoen.fsf@gitster.g>
+In-Reply-To: <xmqq1phrtoen.fsf@gitster.g>
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Date: Wed, 11 Mar 2026 23:43:07 +0530
+X-Gm-Features: AaiRm51Qnm6KzdJmmMfJcx420LtYfPwxJiQhKF8uF6NeiHs5aMKaXUV6d0ODbKg
+Message-ID: <CAGWgyh_dJX7TteKjwVXUwnmUL5kmZifpA0a4n1RiwRvCBEY5gw@mail.gmail.com>
+Subject: Re: [PATCH v2] builtin/help.c: move strbuf out of help loops
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, jonatan@jontes.page, 
+	Amisha Chhajed <amishhhaaaa@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+On Wed, 11 Mar 2026 at 02:03, Junio C Hamano <gitster@pobox.com> wrote:
+> Having looked at this patch, I recall somebody else is revamping
+> this function already, so this patch would step on their toes.
+> Please pay attention to what is going on in the project around the
+> code you are touching, and coordinate with others who are working on
+> the same code if necessary.
+>
+> https://lore.kernel.org/git/20260228104654.80831-2-amishhhaaaa@gmail.com/
+>
+> Thanks.
 
-> On Wed, Mar 11, 2026 at 05:33:36PM +0000, Deveshi Dwivedi wrote:
->
->> +	while (*p && !result) {
->> +		const char *end = strchrnul(p, '+');
->> +
->> +		strbuf_reset(&sub);
->> +		strbuf_add(&sub, p, end - p);
->> +
->> +		if (sub.len)
->> +			result = parse_combine_subfilter(filter_options, sub.buf, errbuf);
->> +
->> +		if (!*end)
->> +			break;
->> +		p = end + 1;
->>  	}
->> +	strbuf_release(&sub);
->
-> This version of the loop looks good to me.
->
-> -Peff
+Hi Junio (CC'ing Amisha),
 
-Thanks, both.  Will queue.
+After looking at the refactor of list_config_help() in the
+other active thread, I agree that my optimization is no longer
+necessary.
+
+Amisha's new structure with set_config_vars() and set_config_sections()
+is much cleaner. Since the logic is now encapsulated in these helpers,
+my proposed changes would not be applicable.
+
+I'll drop this patch and focus on my other contributions.
+Thanks for the guidance!
+
+Regards,
+Siddharth
