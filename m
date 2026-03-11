@@ -1,96 +1,82 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050DA13D539
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 20:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCC6286D73
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 20:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773261109; cv=none; b=siTBIBIbNb6yVli8k5LzyOr8IdAm9UL23KbuwHuUQN3cd3sZ9/o1vfiwnQXu18qg+lJ+jaJBbAfr2GnZu2j03KfcamirAxNODMBomMhZTYVDXe5LTvZNHS0Zv68T+RuTIjXxDXF3/R+MFvc5LvrnIvN9GABzSxLs5stzZBGWMkQ=
+	t=1773262146; cv=none; b=teGnkfbEKVFYFsIMQHAFID9qA2SkFdwNPugaQK0L7+aWALMnK1bRRpyzTGszLPunaw6m7sUGg6spdJkDgOEz+JcBZLbEqp5xQHcGSl0xe/drfjt6nsnUrpSuU6j960tryEsIE3h2vwZdzoNwI3543eRCSCi7A/+4x1cg6uzZ7WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773261109; c=relaxed/simple;
-	bh=97llovE94lV1On3QK/MSQuTh8bWP99E1DT5daq4WOcQ=;
+	s=arc-20240116; t=1773262146; c=relaxed/simple;
+	bh=b8Ja91TSwqdua0Osrw8/tEcx5AAXX/0HUl8R0qsbdso=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WDdsGaQ4ioL6t8DtAXlRUacBEul+GUA/7KWU9TVlnbIZL2tWnog5QV04Iu4AhnkdsHGTfYnWBH480oy/e1yHEmHWrd2/EILsxf0MfRI9AFTEFNZXBEUi6yoZajuci24JyrFztt2xjdnNAaZXw5hakAtwRXvdFoCzOdnTqRIHros=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DQpAZaJU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zzbs27ZB; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=SZ/a034TKIUp59gBQDqgVbFq5hPu9Oixvcnv8SWLQpMNRymQC153NLBuWhjWpCAQxdULJQaGewUTzuZr+I2FS7EltlMSxMXo8s1IPH/66RZ+jmC5hoim7m3os3DO9tjxuErQI/XMQ7ezHbSEa0G5nhnKHkVHJ6fvyHuMf9O2zCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bZ1hkwBj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CuUq9mCM; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DQpAZaJU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zzbs27ZB"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bZ1hkwBj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CuUq9mCM"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id CD8541D001AD;
-	Wed, 11 Mar 2026 16:31:46 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 69EBF1D00190;
+	Wed, 11 Mar 2026 16:49:03 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 11 Mar 2026 16:31:47 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 11 Mar 2026 16:49:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773261106; x=1773347506; bh=WzyppcLUX1
-	DPrPwglJbW5SBiN6gLi1pp+x8Ugmp37mY=; b=DQpAZaJULJQiOuHrIfQxoNtukn
-	qe7o2EkCiEvX8CbsIEuHYF48dsN/8C+aljuN20TYWooERXILN4n211+xsOKCVobh
-	WJsg6qglVvmfT1krYgLe2F9mIfY3mgpZzKuNC739pz8lyVYkf/WE3OvyrKHJBbuu
-	UhP9J1roI3tRXXurqlCp8df1GRa6TEarlfxOJyRbpgLEMbn6mLrYC/2nrmwP2AhU
-	VCrpq3hZr4bHpAP+5/q4AlSjui7uKJEXuFdpvy94u4az6DbjMB8ryi1VpNGk66QN
-	Okz1BnuIpDpZDkCj7jdQFNy6NxA1ApwQOttO9fEwDQFSSPNQYjS9jqsoS0hQ==
+	:subject:to:to; s=fm3; t=1773262143; x=1773348543; bh=hoIxjf9DcZ
+	Wk6nfg3DVPYxf4bguROqjulFFGPEMTlU4=; b=bZ1hkwBjg+boeGPk0KwOlxHP0s
+	5ERlzbsxj/07kldcb87gleDlQBv1aPjcPrenKX05EdWjIKhq7sieHjOonC6r1exw
+	mmivjj0uYlQ9o8JyFx40cx4WsIDp8PLnIlEkzVYPSHzhtra6hdGFxbjwSszPnr/d
+	eqKOLug3/64PQOJrAeUqHOfaVwvPhDRG6O7BAIXH3ZsHKwlTeBti55/2UvBiApvv
+	ysun1nP44Yp8JK7OOhQspOWzuu+wyVy8gUUc7vQDtPAhGkvsf+eiqiSg9NL/x92h
+	bW+pJB91jX180T2GxbHxVV5R6jplglmOsieEtUNb7N4ACs92A3JjVuTD2CmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773261106; x=1773347506; bh=WzyppcLUX1DPrPwglJbW5SBiN6gLi1pp+x8
-	Ugmp37mY=; b=zzbs27ZBP587Mj5H1J8aZwFuLRO+UNoLD1uE+jQar3g7vtK5fgx
-	sSwXCjcoq6b5bDV82ntzLqUcbyR6Pd4XtuipS2J1dq9kJonNT3H0eju1FWAIGnk8
-	okkpl3u+4lyb9iI6dADf+3J9ZjjEMv4nWigWVoKTNfNMWVmOQhsDa9QbqQGz4Ncp
-	52xwdksIYxAiMsdT7ms15mM2A+AofhEXmzfHbQqlfcbAOQsRKN0koxDEhvxK8CCB
-	hsd9w1p06eOQdqwjFBS7+aSqdsUvsvrabtI4td+l/Qw64Zv0OwaVtjLNxVbi1TWU
-	FXfx7bzWqjtxDNS3zchehX9Un5hXmMhbehg==
-X-ME-Sender: <xms:MtGxaWWDGRM0a-7dH8WZARaqk_VB5gRy99Qp9XgTKZCXAW-je3Lycg>
-    <xme:MtGxaVKQuffl8N3l9plYvpXWtBTzQVZLABBCRakr9S-kAldyZ9PHhm-2lFNlqY-ep
-    V2as0d0O-iyS8qcJekP31PPvYkcz16cc3Ig4NKzVzzNCgFZ_n9-pOM>
-X-ME-Received: <xmr:MtGxaeDzYeCT4vYPZXh1ZRAAFkU9cQa2MKTUpXuGGj0Yi5An6HU1PminuZTgAgNrZEn22HSY0_2iRcCGMfG5dJQfMH2UQLkfDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegkeejucetufdoteggodetrf
+	1773262143; x=1773348543; bh=hoIxjf9DcZWk6nfg3DVPYxf4bguROqjulFF
+	GPEMTlU4=; b=CuUq9mCMVP1hOPihZ6v99gBWvkWDeWqvok1emmhwxtfNCKKIE7e
+	bH6iQsNEM2+PgP+CFjlHT+TcEbie+2zVl/3LPtmCSEai6UaODm4STnUzI5e0Lfn0
+	ixsyrv8GUMG6gAYOd6ajKViyZhXdlonjyQOhI31Dz/5bDVhTdIU+fTuGR+9952JO
+	5Ph5UTpnK+jqi8asVphM/XhR4zgG0tvqEcmtMP4HAzBUOR/dN9p+Gv9Yo5aVa7Hg
+	PPGUG/VpQH+oyJijOPGq0DBRFJRZTBzIoSHMWBVgUHH0qEMDQgkmqSlJVFwnqE+x
+	LqYrg5GbQRFtK8FY+oGd55eKG2Cd4iUuxLA==
+X-ME-Sender: <xms:P9WxaSNfWY2E2RT6p5TNNVJCdC5VpLfQOUhJ6vxGm1zsF__L3i1s9w>
+    <xme:P9WxaYbrnDqLDyyRb0DmNodMlNQSq72iG7jCsZme2qODQ1VpSQTMSDdFdn-Y1GrmF
+    dV9M0pjG8IZAlcnUsPmWLA2p6RO_31QogDc8nnCr9KHDunRCr1voQ>
+X-ME-Received: <xmr:P9WxaWq0cHi2w2boz6FypjnruvDFLkPrf--N_EvAnm-FVgBwaDj-lZeopzow-GlJ7Kk7UoiSrmqtVvtbWfOxSnmloQBNSan7rg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegledtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgrsghlohhoshgrsggrthgvrhhrsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthho
-    sghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprgihuhdrtghhrghnuggvkhgrrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgef
-    udesghhmrghilhdrtghomhdprhgtphhtthhopegthhgrnhgurhgrphhrrghtrghpfeehud
-    elsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprggslhho
+    ohhsrggsrghtvghrrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
     mh
-X-ME-Proxy: <xmx:MtGxadfL3KrIFlHISZy9h4OfcXTPIoXRFEsbX61jEvtTe-7CFrHy1A>
-    <xmx:MtGxaV0k2vwEfHVqgYliidmvj2aTMUf4_dIdS9URuzHOOYARUby_pQ>
-    <xmx:MtGxaci_6uKCXpzSnyHl6T05cw7jggiHuzlv7cEEhVqKaVFNBCu5rg>
-    <xmx:MtGxaWlUqItgxy1C1oCK2OBWqGDCgc1CbQ157uk3oFgG8g6JN7qPuA>
-    <xmx:MtGxadQXGlCeSqVHkP4z9RkqQmduj41PlaHT7J6_ELr_cy_T7H5k2HB7>
+X-ME-Proxy: <xmx:P9WxacaQlrAqCNLEd3SGartLgnfN2tDt1ScbJF0tzXPqMLdCYBo7_g>
+    <xmx:P9WxaeQDFwv9J8cl1gvzr8eFxfOc0KBMXQMf6VuypFgIzTMa0JRurw>
+    <xmx:P9WxaT4BDb8MEhU4UFw-nr6iqH_6n6Cg31KyKysdaKleMz6s5SOwSw>
+    <xmx:P9WxaTxFol6V32A0uBnTyeh6iIyN63P-Ayx5_L8gqCQeGTxxfp3RxQ>
+    <xmx:P9WxaUb5iy4ofOhiwfJEwp5BVqTiTvWH3ufoBwQUou3JXXAZVQL7f_Hs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 16:31:46 -0400 (EDT)
+ 11 Mar 2026 16:49:02 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Pablo <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  karthik nayak
- <karthik.188@gmail.com>,  jltobler@gmail.com,  Ayush Chandekar
- <ayu.chandekar@gmail.com>,  Siddharth Asthana
- <siddharthasthana31@gmail.com>,  Chandra Pratap
- <chandrapratap3519@gmail.com>
-Subject: Re: [GSoC PATCH v3] t9200: replace test -f/-d with modern path helpers
-In-Reply-To: <CAN5EUNSmZmdnDzpAKAh8fZRex3--tnKaWZZSQ+o5WATc6sLy_Q@mail.gmail.com>
-	(Pablo's message of "Wed, 11 Mar 2026 20:49:54 +0100")
-References: <20260309150935.578465-1-pabloosabaterr@gmail.com>
-	<20260309230134.758107-1-pabloosabaterr@gmail.com>
-	<xmqqwlzip82b.fsf@gitster.g>
-	<CAN5EUNRZQP6ATE87AeZiJx-OTnNn_4NxhW4zyH6AspGUfnV7TA@mail.gmail.com>
-	<xmqqbjgunofq.fsf@gitster.g>
-	<CAN5EUNSmZmdnDzpAKAh8fZRex3--tnKaWZZSQ+o5WATc6sLy_Q@mail.gmail.com>
-Date: Wed, 11 Mar 2026 13:31:44 -0700
-Message-ID: <xmqqtsumm7kf.fsf@gitster.g>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH v2] test-lib: print escape sequence names
+In-Reply-To: <20260311031442.11942-1-pabloosabaterr@gmail.com> (Pablo
+	Sabater's message of "Wed, 11 Mar 2026 04:14:42 +0100")
+References: <20260310183513.1077875-1-pabloosabaterr@gmail.com>
+	<20260311031442.11942-1-pabloosabaterr@gmail.com>
+Date: Wed, 11 Mar 2026 13:49:01 -0700
+Message-ID: <xmqqms0em6rm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -100,19 +86,181 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Pablo <pabloosabaterr@gmail.com> writes:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
->> Yeah, but if we are going to do so eventually, it would be pointless
->> to use the path helper in that "set up CVS environment and make sure
->> we got a sensible directory structure" check, no?  Upon failure, we
->> will hit test_done that loudly says that their CVS installation is
->> not working as we expect.
+> When printing expected/actual characters in failed checks, use
+> their names (\a, \b, \n, ...) instead of their octal representation,
+> making it easier to read.
 >
-> Yeah, the new patch will change it back to test -d because it ends up
-> in a if condition instead of an assertion.
-> Would you prefer to drop that hunk from my v3 or should I send a v4 ?
+> Add tests to test-example-tap.c
+> Update t0080-unit-test-output.sh to match the desired output
+>
+> Teach 'print_one_char()' the equivalent name
+>
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> ---
+> Changes from v1:
+> reverted unrelated test change '\'' to '\\'' in t0080
+>
+>  t/helper/test-example-tap.c |  4 +++
+>  t/t0080-unit-test-output.sh | 52 +++++++++++++++++++++++--------------
+>  t/unit-tests/test-lib.c     | 19 ++++++++++++--
+>  3 files changed, 53 insertions(+), 22 deletions(-)
 
-Yup, let me mark the "cvs setup failure" one ready for 'next'.  The
-other hunk that updates "test -[efd]" can become a separate patch.
+Looking good.  Will queue.  Thanks.
 
-Thanks.
+
+>
+> diff --git a/t/helper/test-example-tap.c b/t/helper/test-example-tap.c
+> index 229d495ecf..998a1f0b42 100644
+> --- a/t/helper/test-example-tap.c
+> +++ b/t/helper/test-example-tap.c
+> @@ -63,6 +63,8 @@ static void t_messages(void)
+>  	check_str("NULL", NULL);
+>  	check_char('a', ==, '\n');
+>  	check_char('\\', ==, '\'');
+> +	check_char('\a', ==, '\v');
+> +	check_char('\x00', ==, '\x01');
+>  }
+>  
+>  static void t_empty(void)
+> @@ -123,6 +125,8 @@ int cmd__example_tap(int argc UNUSED, const char **argv UNUSED)
+>  		check_str("NULL", NULL);
+>  		check_char('a', ==, '\n');
+>  		check_char('\\', ==, '\'');
+> +		check_char('\a', ==, '\v');
+> +		check_char('\x00', ==, '\x01');
+>  	}
+>  	if_test ("if_test test with no checks")
+>  		; /* nothing */
+> diff --git a/t/t0080-unit-test-output.sh b/t/t0080-unit-test-output.sh
+> index 3db10f095c..66838a00b2 100755
+> --- a/t/t0080-unit-test-output.sh
+> +++ b/t/t0080-unit-test-output.sh
+> @@ -6,10 +6,10 @@ test_description='Test the output of the unit test framework'
+>  
+>  test_expect_success 'TAP output from unit tests' - <<\EOT
+>  	cat >expect <<-EOF &&
+> -	# BUG: check outside of test at t/helper/test-example-tap.c:75
+> +	# BUG: check outside of test at t/helper/test-example-tap.c:77
+>  	ok 1 - passing test
+>  	ok 2 - passing test and assertion return 1
+> -	# check "1 == 2" failed at t/helper/test-example-tap.c:79
+> +	# check "1 == 2" failed at t/helper/test-example-tap.c:81
+>  	#    left: 1
+>  	#   right: 2
+>  	not ok 3 - failing test
+> @@ -34,53 +34,65 @@ test_expect_success 'TAP output from unit tests' - <<\EOT
+>  	not ok 15 - failing check after TEST_TODO()
+>  	ok 16 - failing check after TEST_TODO() returns 0
+>  	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:62
+> -	#    left: "\011hello\\\\"
+> -	#   right: "there\"\012"
+> +	#    left: "\thello\\\\"
+> +	#   right: "there\"\n"
+>  	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:63
+>  	#    left: "NULL"
+>  	#   right: NULL
+>  	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:64
+>  	#    left: 'a'
+> -	#   right: '\012'
+> +	#   right: '\n'
+>  	# check "'\\\\' == '\\''" failed at t/helper/test-example-tap.c:65
+>  	#    left: '\\\\'
+>  	#   right: '\\''
+> +	# check "'\a' == '\v'" failed at t/helper/test-example-tap.c:66
+> +	#    left: '\a'
+> +	#   right: '\v'
+> +	# check "'\x00' == '\x01'" failed at t/helper/test-example-tap.c:67
+> +	#    left: '\000'
+> +	#   right: '\001'
+>  	not ok 17 - messages from failing string and char comparison
+> -	# BUG: test has no checks at t/helper/test-example-tap.c:94
+> +	# BUG: test has no checks at t/helper/test-example-tap.c:96
+>  	not ok 18 - test with no checks
+>  	ok 19 - test with no checks returns 0
+>  	ok 20 - if_test passing test
+> -	# check "1 == 2" failed at t/helper/test-example-tap.c:100
+> +	# check "1 == 2" failed at t/helper/test-example-tap.c:102
+>  	#    left: 1
+>  	#   right: 2
+>  	not ok 21 - if_test failing test
+>  	not ok 22 - if_test passing TEST_TODO() # TODO
+> -	# todo check 'check(1)' succeeded at t/helper/test-example-tap.c:104
+> +	# todo check 'check(1)' succeeded at t/helper/test-example-tap.c:106
+>  	not ok 23 - if_test failing TEST_TODO()
+> -	# check "0" failed at t/helper/test-example-tap.c:106
+> +	# check "0" failed at t/helper/test-example-tap.c:108
+>  	# skipping test - missing prerequisite
+> -	# skipping check '1' at t/helper/test-example-tap.c:108
+> +	# skipping check '1' at t/helper/test-example-tap.c:110
+>  	ok 24 - if_test test_skip() # SKIP
+>  	# skipping test - missing prerequisite
+>  	ok 25 - if_test test_skip() inside TEST_TODO() # SKIP
+> -	# check "0" failed at t/helper/test-example-tap.c:113
+> +	# check "0" failed at t/helper/test-example-tap.c:115
+>  	not ok 26 - if_test TEST_TODO() after failing check
+> -	# check "0" failed at t/helper/test-example-tap.c:119
+> +	# check "0" failed at t/helper/test-example-tap.c:121
+>  	not ok 27 - if_test failing check after TEST_TODO()
+> -	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:122
+> -	#    left: "\011hello\\\\"
+> -	#   right: "there\"\012"
+> -	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:123
+> +	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:124
+> +	#    left: "\thello\\\\"
+> +	#   right: "there\"\n"
+> +	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:125
+>  	#    left: "NULL"
+>  	#   right: NULL
+> -	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:124
+> +	# check "'a' == '\n'" failed at t/helper/test-example-tap.c:126
+>  	#    left: 'a'
+> -	#   right: '\012'
+> -	# check "'\\\\' == '\\''" failed at t/helper/test-example-tap.c:125
+> +	#   right: '\n'
+> +	# check "'\\\\' == '\\''" failed at t/helper/test-example-tap.c:127
+>  	#    left: '\\\\'
+>  	#   right: '\\''
+> +	# check "'\a' == '\v'" failed at t/helper/test-example-tap.c:128
+> +	#    left: '\a'
+> +	#   right: '\v'
+> +	# check "'\x00' == '\x01'" failed at t/helper/test-example-tap.c:129
+> +	#    left: '\000'
+> +	#   right: '\001'
+>  	not ok 28 - if_test messages from failing string and char comparison
+> -	# BUG: test has no checks at t/helper/test-example-tap.c:127
+> +	# BUG: test has no checks at t/helper/test-example-tap.c:131
+>  	not ok 29 - if_test test with no checks
+>  	1..29
+>  	EOF
+> diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
+> index 87e1f5c201..72ee20a06f 100644
+> --- a/t/unit-tests/test-lib.c
+> +++ b/t/unit-tests/test-lib.c
+> @@ -396,8 +396,23 @@ int check_uint_loc(const char *loc, const char *check, int ok,
+>  static void print_one_char(char ch, char quote)
+>  {
+>  	if ((unsigned char)ch < 0x20u || ch == 0x7f) {
+> -		/* TODO: improve handling of \a, \b, \f ... */
+> -		printf("\\%03o", (unsigned char)ch);
+> +		char esc;
+> +		switch (ch) {
+> +		case '\a': esc = 'a'; break;
+> +		case '\b': esc = 'b'; break;
+> +		case '\t': esc = 't'; break;
+> +		case '\n': esc = 'n'; break;
+> +		case '\v': esc = 'v'; break;
+> +		case '\f': esc = 'f'; break;
+> +		case '\r': esc = 'r'; break;
+> +		default: esc = 0; break;
+> +		}
+> +		if (esc) {
+> +			putc('\\', stdout);
+> +			putc(esc, stdout);
+> +		} else {
+> +			printf("\\%03o", (unsigned char)ch);
+> +		}
+>  	} else {
+>  		if (ch == '\\' || ch == quote)
+>  			putc('\\', stdout);
