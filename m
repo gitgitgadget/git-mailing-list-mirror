@@ -1,82 +1,82 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1F62E9EB5
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:52:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECE73E63B0
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 17:58:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773251568; cv=none; b=k4SgfqeVhRwqMIpKiNxh9iw07jz8TJTS4kH99gnsNW3OvpooAxZoo1ay0WBkT/5JR8yZJECRi+2/LnVRGaUEm1u1xE3c3tq/lZTT1F7VrKdq+KiH1LPgONHe8IpLRleGL3caTCbKzCZZ8Js0sxzwY5jHIjwwaHQGK4AA6OLkvS0=
+	t=1773251909; cv=none; b=UB+lu/wHtzz11t+YzeHzoxm3J57jTA1Gu12cQ/dqkcJ7XDaUfIlsbn4JqbrW3lhhoHMnvwwgTRx1UxsO1Axwyj9H4CcU1nZpt7mnwzTnbjvGjVT8JQvozObkZMteU9u16LauSYKth5jxMYELS2lPv330jj7W3N5YnHrGdxwR7JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773251568; c=relaxed/simple;
-	bh=YUZmQT32G89+LJT+AKWZmkbOk7qNqAeiqIs+pz2+7i0=;
+	s=arc-20240116; t=1773251909; c=relaxed/simple;
+	bh=70kqb0zCdNeBY8SzZoD0ekyzlOIXdnlrHCUdVeK+Uh8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p/hC1Rf++lEeyKlmptbooZGSJXh/+leF/z95BKpTCSGIrDqBOa8vw4DyIsnG2PpAMdl1BLJZWG1CWGtTS4mV6agCvZZGMoKt6AjV8CV3DUVZ55OZqhPnU5rlEni6QHKuUtUH9kIQAuuYJ1mFQYX1+gDX5Jb9L4477/INIKYkFE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ro2nkE57; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c3qjtgtW; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=ClEkiwuawKkQhvAOfPZtYM44GS60ByXTj/qutxORQyIdqR8BHp2FKiZ5mLVz+u0O/DlA1tv71j+WzT9iwejAHhCFiIY7CQC9yw8L2N4DCXTcUJFl/xuEpHHwtjBC51i34HwlsJib0zbsVIgJAveLAy2tBBzVUuizjyBmiQsDc5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WiQdepof; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I8z56icY; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ro2nkE57";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c3qjtgtW"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0CB991400025;
-	Wed, 11 Mar 2026 13:52:46 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 11 Mar 2026 13:52:46 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WiQdepof";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I8z56icY"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id E88CBEC064D;
+	Wed, 11 Mar 2026 13:58:27 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 11 Mar 2026 13:58:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773251566; x=1773337966; bh=FIGnk9URtX
-	XVT5683I8i5IupBnjyTPAVSvVpfX/xC+g=; b=Ro2nkE57ztBKH8Vl/0P2JbUw/t
-	e5RFRMvPlO9WmOE4wEsK/KOKAf6xfhHqSkdP185Dd5xmW59r2bfHoyfAOd1ynikZ
-	vtSb1fVjne5+rh0CF+/npgPseNOVIiuULx5ybploJopk0mfa+FF1F5DDCgubR/MY
-	3Iu603eYtxi8qjrrbdbEQO2aEdXKDoR8FXjp09iTQ4+gpm5elc/gwJuf0aEZzlWL
-	5TATNoUYIGbWVgQsQb/AqDAHHzBEL/Vr24T5HtnixeMPtFG2936JRsG+zpX4Wbmu
-	6JjV73XxcIMhQJRjof4lqFP8rRD0ZDgfx/SNC/XsgQrVbSKQUsCTaUSHb1Jw==
+	:subject:to:to; s=fm3; t=1773251907; x=1773338307; bh=4uhu3h97Z0
+	cqTCIa/NQFSgMPaSaUwP2FBv3HD7l6j0I=; b=WiQdepofqMD/u63Q6VblJ5hedD
+	M740j5Wu3UAy+yypKJCpuFExTnPBcUQbnO5qGsFjGoKBnRBnJOhCO0PAS/LXCkbR
+	SkUQlouJO9U+gN4xil4oAMgqjVwEUD4zHjF86RgbWke1tIUN6dgpMUmoj9h3gSim
+	HO0X4v46wVeFg9yV7h5CYvojvTpivf1iWodaiV/+8KxIbMzcc2LsmyXGTar9klFn
+	prQc3YoPi0ruOtOwGlLvzkCJfmedJx+GE1fdbh96pQy6d6Vstr4I1FmvFvN7XDfs
+	/j3lrwGbteVXGDTEzWOj9miWj4JG+iyfYPuIBhkivNhnhT7HHTwoKm9CEnaw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773251566; x=1773337966; bh=FIGnk9URtXXVT5683I8i5IupBnjyTPAVSvV
-	pfX/xC+g=; b=c3qjtgtWO8UigHCYbwcpPunNCrJOJoan5i3e/gPX3tCnzWQWDdU
-	Orq/GVhBEcYOf1AQuZJskcKnwVav6QAuJ1Zj6+KKgmAKBlpzbpO0dsHeEJUVWOOW
-	NmjNeYh4J9PXrmxP/KQnY1s5IpHUHLVR/qcAvx16+2mz45KEEIpeIf+EZfDKKkJd
-	UaLBCjLfObW8uNB/fiqIxf9iWoVaIoHjEcYYykUQVdQaw1ICvjs3E6xpZM3FdOjW
-	R6seWyGLVraFR3/yTBEQ4LtT47b+aZBQaiJ/f3hb9UpxZuxMyikGw0CB1RE6xFW4
-	Sejau89hV8QxOqX8nQA0yCQoQqYGaLKtguw==
-X-ME-Sender: <xms:7auxabIHTPE_ZeRzK-rHkc0CZTl2JJbmZ2STH5Jw1CKNqDNLZeRFug>
-    <xme:7auxaWkqMzJgb7MmNkT3MwJupgKeDu8Of1EQH7SwrDxR9Oruq50fNl_BUm9ohcAL_
-    aMEyTYxfMmxZBPJLzWhytKdyqP2cqSvAcoyIq5Ep_UrN77yhlyqRA>
-X-ME-Received: <xmr:7auxaRFtLbP7T9fA2OjDquXAbLC-Io4VnUOXceBBtF6K3eMvyF0NTiUgI_KkoUCRsRaSzRJOQX16MAQG3PVJ3fmWJlxTLpIEYA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegheehucetufdoteggodetrf
+	1773251907; x=1773338307; bh=4uhu3h97Z0cqTCIa/NQFSgMPaSaUwP2FBv3
+	HD7l6j0I=; b=I8z56icYJhXu5e2vw0IIa4yBlY8WQXsy+ropqmxpN22PzEx7kYq
+	dXqz8tlbqvp7lWcYi+nt5J/fv6Snr60IXN50YehwvHAhn3Rts1Z2NrF2/u/SM0jm
+	MoHdMOYumghfVf/z59F4fh5rxt30I4PfjySZV5GNCp74a9z5IUMmnIFpRKuODNsf
+	nWTvH/lNhXhaDgRl8M8Q1afYxJadJi/ZP9JNMCzL9de/5Q3KA0AwsN7dP67xg+eU
+	b3pjjG7iCsbOxBG0VbR4wzJ9Xa6j7nlH0IH7x5xTAsJVotUbxEUfvFcV6HiNjhMP
+	yQXsruC9OkyDV0kDUXL1tCVp7spyNRejEsQ==
+X-ME-Sender: <xms:Q62xaSjHc1V3BGMYe9jgvh3pHNW5UqNLUMUw20DlGd86PoYppTxJ8A>
+    <xme:Q62xaaez62Focbc5uxXHciRbfNTPCR2yN7rll0vCqEPIIB5tSR-RRpdO3xjzPlR0h
+    ASDsXwVyfi8-5_u9a2gKkcvHaPdctbSmx2RP9xl4prJA92sCTb8Rw>
+X-ME-Received: <xmr:Q62xaXeQNRkkQGI-o5rDHk43chtBhOYKleBoR8hCazTithq7a4oBWtRTHLS97B5CYTCXUwT9Pwnpo_P99z41O43xtUrosl-8RQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegheeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
     dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
     ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
     ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
     rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprggslhho
-    ohhsrggsrghtvghrrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:7auxaeE5y0xtpv2McrMYj7WLqgQ3-fiZDknCUI5infViej46dsCgoA>
-    <xmx:7auxaWNGVSwLl4-xbEQWN4ZiDss_Mm0gpo77osrc4Kk8IT7qHht3Wg>
-    <xmx:7auxaVFrYUWFMZLAHSeni7-YozI3NIIUMYPoHFOXKCThI6K6yRGzHQ>
-    <xmx:7auxaVOBZKvd7cUdtZncuVTx75yEoEQOZuZBRjBvhyXTLIBb87i-OQ>
-    <xmx:7quxaemRDbbxz-OyaxFUeC7rY4Ph7jMuzAjjppziN1ioR6Znr_jqRf0f>
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtshhhuhhn
+    ghesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Q62xaU_wFySpCXHirKfmJHPajFaS1A_3s6hZmINcD87PwFLJBL_xUg>
+    <xmx:Q62xaTnHTVXnpCjVO_7Xd8Y0_sVgAdeGMZjIUX7cmuEHXX7MHxezEw>
+    <xmx:Q62xaW-KOFRDLsYttOFVfe2StvtDyiMVdCsipgZSsmKau7mVV6gdSw>
+    <xmx:Q62xaRm1mfZU3_B1wmUfKJz6hT43AQApU4zaDyG4F9hlPXGo8kWMOg>
+    <xmx:Q62xaafUWILiGNd9qHq1PEYjdZfdP7mxi2sZR9k9l3irlneo4UJ91Uyr>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 13:52:45 -0400 (EDT)
+ 11 Mar 2026 13:58:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
+To: Andrew Au <cshung@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [GSoC PATCH v3] t9200: replace test -f/-d with modern path helpers
-In-Reply-To: <20260309230134.758107-1-pabloosabaterr@gmail.com> (Pablo
-	Sabater's message of "Tue, 10 Mar 2026 00:01:34 +0100")
-References: <20260309150935.578465-1-pabloosabaterr@gmail.com>
-	<20260309230134.758107-1-pabloosabaterr@gmail.com>
-Date: Wed, 11 Mar 2026 10:52:44 -0700
-Message-ID: <xmqqwlzip82b.fsf@gitster.g>
+Subject: Re: [PATCH v2] transport-helper, connect: add atexit handler to
+ reap children on abnormal exit
+In-Reply-To: <20260311142021.3464789-1-cshung@gmail.com> (Andrew Au's message
+	of "Wed, 11 Mar 2026 14:20:21 +0000")
+References: <20260223165147.3294516-1-cshung@gmail.com>
+	<20260311142021.3464789-1-cshung@gmail.com>
+Date: Wed, 11 Mar 2026 10:58:26 -0700
+Message-ID: <xmqqsea6p7st.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,81 +86,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Andrew Au <cshung@gmail.com> writes:
 
-> Replace old style 'test -f' and 'test -d' with helpers
-> 'test_path_is_file' and 'test_path_is_dir' respectively,
-> which make debugging a failing test easier by loudly
-> reporting what expectation was not met.
+> When git exits via exit(128) on transport errors, child processes
+> (git-remote-https, ssh, proxy) are never waited on because the normal
+> cleanup paths (disconnect_helper, finish_connect) are bypassed. When
+> git is PID 1 in a container, these un-reaped children become zombies.
 
-Well explained.
+Could you tell me more about the real use case behind such a set-up.
 
-> The instances were found with:
->
-> 	git grep "test -[efd]" t/
+These children become zombies, and then what will be done to the
+container that lost the "git" process, running of which presumably
+was the primary reason why the container was brought up in the first
+place?  Wouldn't these zombies go away when the container that
+finished its sole purpose of running "git" gets dismantled?
 
-People seem to add the above to their test-path helper patches, but
-unless the coverage of the work is fairly thorough and you want to
-say "all the similar issues should be found with this command and I
-addressed all of them", I do not see much point saying how you found
-one of them and addressed it.
-
-You could have used "git grep -e <pattern> -- t/\*.sh", or you could
-have been working to fix something in t9200 and noticed these while
-you were doing something else to the file.
-
-I do not see it as too huge a deal and it is probably not a cause to
-send in another iteration once it is already written, though.
-
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
->  t/t9200-git-cvsexportcommit.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-> index a44eabf0d8..4507e8e6db 100755
-> --- a/t/t9200-git-cvsexportcommit.sh
-> +++ b/t/t9200-git-cvsexportcommit.sh
-> @@ -31,7 +31,7 @@ export CVSROOT CVSWORK GIT_DIR
->  rm -rf "$CVSROOT" "$CVSWORK"
->  
->  cvs init &&
-> -test -d "$CVSROOT" &&
-> +test_path_is_dir "$CVSROOT" &&
->  cvs -Q co -d "$CVSWORK" . &&
->  echo >empty &&
->  git add empty &&
-
-Our test-path helpers should work even outside test_expect_*
-functions, so this is not wrong per-se, but it somehow looks a bit
-unusual.  A related clean-up would be to wrap the CVS initialization
-part inside another "do we even have a working CVS installation to
-make it worth our time testing 'git cvsexportcommit' command?"
-check, i.e.,
-
-	if ! cvs init || ! test -d "$CVSROOT" || ! cvs -Q co -d "$CVSWORK" .
-        then
-		skip_all="cvs repository set-up fails"
-		test_done
-	fi
-
-and then move the git initialization part to its own test, e.g.,
-
-	test_expect_success 'git setup' '
-		echo >empty &&
-		git add empty &&
-		git commit -q -a -m Initial
-	'
-
-> @@ -303,7 +303,7 @@ test_expect_success 're-commit a removed filename which remains in CVS attic' '
->  	git commit -m "Added attic_gremlin" &&
->  	git cvsexportcommit -w "$CVSWORK" -c HEAD &&
->  	(cd "$CVSWORK" && cvs -Q update -d) &&
-> -	test -f "$CVSWORK/attic_gremlin"
-> +	test_path_is_file "$CVSWORK/attic_gremlin"
->  '
-
-OK.
-
->  
->  # the state of the CVS sandbox may be indeterminate for ' space'
+Thanks.
