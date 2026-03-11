@@ -1,307 +1,250 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC183750A9
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:25:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3978732D7F1
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:26:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773257108; cv=none; b=KEuVZYkzWxFeroSBL9ukrez509oqrDdtjaURaf26GZtXzbL0KLFXCid5IR9U3VqQOegBHHOGMsVK3UfhG+w9nDT0k2StQqsHCcsA8gDEOQEZVCRbiFVYbpa3lzQFwZCqulYe5N4Jqu+dh27KmXS8rB3mv9eAv5SMrUbOTJWpWfE=
+	t=1773257181; cv=none; b=i1ojeON841xurHYo8Ct6JM5juCdq2ecmztuVSBKWQ+1qw42IgxRgKv7EjM/JnV3Ce1upuJz43oPtVvaf6TDUo0stXfsHtpig0LGGzFu6IsqDGv5qtrgDLUQoQfl7ynhH36olnTUIG7IBHGTnkl6/vFpT8BZEIjyvSPapgW5+4KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773257108; c=relaxed/simple;
-	bh=qzC16Dqz+p33EVzeOG+WZP22VNa/mYLWOhs0staSwbQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZswQo3gAm+ZNaWRWT6OT9cNYXD1hDOP/xFNISGp9oTz9gutt1USKTjtAeWJpNr97QrguEKedm+a0sUgLIvXmkYtlaSVtR1jPIkhCm77StZB09ux93Fd4t9+l2LSsZPJWPaJx0WOwCQpYMLcj3DlmR3teEpy0UnIMFAFTor0sFBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ibf2TAjC; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773257181; c=relaxed/simple;
+	bh=9Zi+PJomfNDPWvWUfRS3hzZmsuFv7qzMkAcK4EvBn3Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UtzbXAxX5MH1YVn/4aFRjW72Py20qEI8D1zCkkM3FhK55p4hslxs/Cw6VRr/3U0+DeaE2QWiRYAi4e8wxJz89Wrbm8rNX7Qb9k9px12A7A1IRixCgmFoEl3xor0SuUauLVpHOdfBHFha/Dk8BNaiDUhTfr4jJFsop0DpPjekdZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iiGNrqAA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B8AMPaBK; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ibf2TAjC"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2aea41d4fbcso1495615ad.3
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 12:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773257106; x=1773861906; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qeIgDHSxkfhVyzU/EaYv6diYb8ba2P8aqcstwvDCK+4=;
-        b=ibf2TAjCefW5zMNpN1vT50CHCLljTvsouaAmXEsWZIhGRoGR73eGRpRNmj0Gjo6x7v
-         0vO1qvvVv51oObyio/QJFKJMJyx57JFR9U6FOCBF5RBwWfxh8L+iTl1+p1An4HfM1kgZ
-         3YOP39adAz3OtkANCL6OEmD0XIZrzZ7a0BYN4zXKxYwTyzenkJWMgZkvnqPipgtPShE9
-         shHYWpLNYJyaS0gpcpvQunk7uKQ/8ghuTzo660om2W82rzoQvxuPpaYBv9vM0NzEhq+g
-         8sAssUMKFd5CA8BoHgqTQmX5SHZIcIOaSSFAZck/MmqTtJL/w2XwdrZ/vFuRwHb1DxFv
-         ig8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773257106; x=1773861906;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qeIgDHSxkfhVyzU/EaYv6diYb8ba2P8aqcstwvDCK+4=;
-        b=ppzEZCm6I7t1AJQDug6zZ4jBTzH6dXrM7WAhZJrv09twYJXZ7HBMB6mEWovy/5I7Et
-         k6phlufpyxzDrzI62RhA02Dw+myrg27/3UMtKWaGoT7Dl+2SIATJfwwtPTn/s3giMFVW
-         armU8tKXygPr9jV/oU4BTX34NZvsp7ztqvRHjNBBCkL5bRN0fSGFcZDEm1uBx8H+ZTNs
-         7ND7fdfC3bsC8/u8KlMB+GyLEPI1ynPyNGNBwum5w1gdtEHFLTxSvBD9gY1dTGy5eKZS
-         Td4gpAt/3p/MxDJ9i8jjY2uQ3LBsObHyMdR3/FjW4LJ0fxApxgBSbOmdFgyG1Pv0YsMn
-         vv0g==
-X-Gm-Message-State: AOJu0Yyuu00hfFIM5uCM5wqv99FB9KzIfuwuYd69GDHX10BHBnD2nSkm
-	2FbPLLV1c2mLIhhwt67WquvJpxsUa0KedYetHqvwFKWj8RwaFRWRw9S4iA1bgg==
-X-Gm-Gg: ATEYQzwgjejouvudiPy8R5LlnlXSjEXzuji2k885bclOeD0iIuS3AuBNZ2DLX3J2h/Q
-	Zuca7nE+uQT1dr4nHyvuBg8ceomD9Abdg+nbvmGZCVwno99utBnKjSVSa+CXmSztTt2/LmpRNoA
-	awYg2QHZOEaRuqiqfgbw3vWBRCgdoPMbEI0nMVmiSQXbK1SC+4hYL+Q1FPaGHVg0TCB3FjkOZdj
-	xuj6dbftzNGseB3kqnntPgKsA14may8LZMwXAhBUpZzT7vkwhg86zEykacrFZwuZrvP8MPn3zxT
-	p8TbHuQjgZpknvT56IDTue1QY3Y1EtCsFR1ZfKU7c8L9DU8tvEArDbWKT0vILXsU/1qUXV52TqW
-	E5iGBjDCE6e30+Y/KtUlbgL8acV1BD/21Eze1Yz+ODV/Pthq0caZ4eie2ai3pJYFjDFr5VvEpxT
-	CMdu9aBCfrW+ITONyq8KkwaFWPNT5vlnCBZM4FFHfOiWwuvKbVr2sP/h5Ok9En943PTyyT4F6Ba
-	X9bNks=
-X-Received: by 2002:a17:902:d506:b0:2ae:aa16:acfb with SMTP id d9443c01a7336-2aeae80cc3fmr36080125ad.22.1773257106081;
-        Wed, 11 Mar 2026 12:25:06 -0700 (PDT)
-Received: from localhost.localdomain ([115.98.233.37])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aeae360cb7sm31985545ad.72.2026.03.11.12.25.03
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 11 Mar 2026 12:25:05 -0700 (PDT)
-From: Amisha Chhajed <amishhhaaaa@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	r.siddharth.shrimali@gmail.com,
-	amishhhaaaa@gmail.com
-Subject: [PATCH v5] help: cleanup the contruction of keys_uniq
-Date: Thu, 12 Mar 2026 00:54:53 +0530
-Message-ID: <20260311192453.62213-1-amishhhaaaa@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260212041017.91370-1-amishhhaaaa@gmail.com>
-References: <20260212041017.91370-1-amishhhaaaa@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iiGNrqAA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B8AMPaBK"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id E8E6D1D000A4;
+	Wed, 11 Mar 2026 15:26:18 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Wed, 11 Mar 2026 15:26:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773257178;
+	 x=1773343578; bh=7U/BPkoaTQdvaTrxdPzUStaZbQtAhqaS/3ZQzHBQyIc=; b=
+	iiGNrqAAgUbs6auZRRKrbl/ZopKC+7orXAEZ9HPGmFZdJdFUKoKUVIWALA1w/7za
+	HLJ4TktNJujf4fZIrlkzq79OuU7CJYcgji0z69PL4WuddzgU92N5gF5qoNSQp4B0
+	igba6L0jHZ4w375ON58pAq08Xe2x68pHAXEOmskVuDa9nb4WuEykY4WhshYe3Ims
+	7zDzRw+J1fTnqeDmKBAjI2C4va4gmguiJcnAfI9Bt+5sk/BTB1pY9hW0xK/wCqrW
+	8P1pYviCpamRmFgDqolxo3zXc8lZsFXK8Jn1b8M/Ftaga5lUHGgAjgB1rJNG/Xzo
+	vgQoTDCO7wLnO4woAMQpCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773257178; x=
+	1773343578; bh=7U/BPkoaTQdvaTrxdPzUStaZbQtAhqaS/3ZQzHBQyIc=; b=B
+	8AMPaBKtIDKu6jgs7NVkDSsysaipwDwwKOQYnncOslArqEbutbXh9R65eb5hb8UK
+	5j3zTS5k7LPhbJ+NuS5zmxjlJuWKKSSms3zoin1NPZvmENuUaYEBiDHAgel8Etjv
+	PwaXQR8CPTmjJtBqBZg+BFdCJCGylEQSCH6BbW9VTdNw7A01cICE2jrT4Sat5zmV
+	7nepnhvD59mIJokHYeC8RJdjoBIvs+z+k+idNks/I5bKXvz7jdv0UuGpnrnnFikC
+	LLRSJgAzPzUFRhNc9C6sSLyTqLC/5ruUR8D3UqAx8kgnC4HO2X8pwL421ZfblJlI
+	BCK6rLPV6DzwhaMyZ1f4A==
+X-ME-Sender: <xms:2sGxaZirIt8wSKZqv8nohTwP1WTm-vksL7cTV9sZMUs4txZuth6GLw>
+    <xme:2sGxaamG2Z-FdR1fsZdsku68MKj7wWn4HLHZHE1r8swbAyKKZ5w_nhDmpWmNiEPTf
+    LGBVOT94H9NTxqzff7s3nrgslsoSeUkfTVr0_PZ5M6f5kU5Vp_4eA>
+X-ME-Received: <xmr:2sGxadhkDKQTGAHBYr39OKxDLnX6GLZr0HvGhz9UPuyzFDFj2njzmukh4hb-25KqB-yKLBjy6N9VT-PYKGOTafPBT5139D2dwQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegjeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepsghkkhgrrhgrtggrhiesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    tghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkh
+    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgv
+    rhesghhmrghilhdrtghomhdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehg
+    mhgrihhlrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtoh
+    epphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:2sGxaVEBdnPFHatfXttHf3mhWnJyxcXq_Z9hQYIJa_uSDUwvrwsvAw>
+    <xmx:2sGxaXstN_94SchEjF3x72XIrr3LZnWWC2d56agyavR-8N33gkjLIA>
+    <xmx:2sGxaedWwa3xOr3jU3KObSA-U6PyycLwX0G4nMlOp816eEsM6ZuQ1w>
+    <xmx:2sGxaVnzGbLNhHwZ0d8fPn7qV-NMRC6LQuJhF56k7oFy8Rv0ZUJwfg>
+    <xmx:2sGxaSW6Rikar7NInbDdSB4jqB3HfKeMOGPsVp0evWhjbEyx3xdX2x2q>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 15:26:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Burak Kaan =?utf-8?Q?Kara=C3=A7ay?= <bkkaracay@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
+  siddharthasthana31@gmail.com,  l.s.r@web.de,  ps@pks.im
+Subject: Re: [PATCH 2/4] run-command: use repo_start_command() in strict
+ callers
+In-Reply-To: <20260311151923.4178655-3-bkkaracay@gmail.com> ("Burak Kaan
+	=?utf-8?Q?Kara=C3=A7ay=22's?= message of "Wed, 11 Mar 2026 18:19:21 +0300")
+References: <20260311151923.4178655-1-bkkaracay@gmail.com>
+	<20260311151923.4178655-3-bkkaracay@gmail.com>
+Date: Wed, 11 Mar 2026 12:26:16 -0700
+Message-ID: <xmqqsea6np5z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-construction of keys_uniq depends on sort operation
-executed on keys before processing, which does not
-gurantee that keys_uniq will be sorted.
+Burak Kaan Karaçay <bkkaracay@gmail.com> writes:
 
-refactor the code to shift the sort operation after
-the processing to remove dependency on key's sort operation
-and strictly maintain the sorted order of keys_uniq.
+> Some callers have been freed from global state and they do not define
+> the 'USE_THE_REPOSITORY_VARIABLE' macro.
+>
+> To complete the mitigation of 'start_command()', update these callers to
+> use repo_start_command() and pass their local 'struct repository' as an
+> argument, completely eliminating their hidden reliance on the global
+> state.
+>
+> Signed-off-by: Burak Kaan Karaçay <bkkaracay@gmail.com>
+> ---
+>  builtin/difftool.c | 4 ++--
+>  odb.c              | 2 +-
+>  pager.c            | 2 +-
+>  repack-promisor.c  | 2 +-
+>  send-pack.c        | 4 ++--
+>  5 files changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/builtin/difftool.c b/builtin/difftool.c
+> index e4bc1f8316..15ac552edf 100644
+> --- a/builtin/difftool.c
+> +++ b/builtin/difftool.c
+> @@ -257,7 +257,7 @@ static void changed_files(struct repository *repo,
+>  	diff_files.out = -1;
+>  	diff_files.dir = workdir;
+>  	strvec_pushf(&diff_files.env, "GIT_INDEX_FILE=%s", index_path);
+> -	if (start_command(&diff_files))
+> +	if (repo_start_command(repo, &diff_files))
+>  		die("could not obtain raw diff");
+>  	fp = xfdopen(diff_files.out, "r");
+>  	while (!strbuf_getline_nul(&buf, fp)) {
+> @@ -437,7 +437,7 @@ static int run_dir_diff(struct repository *repo,
+>  	child->clean_on_exit = 1;
+>  	child->dir = prefix;
+>  	child->out = -1;
+> -	if (start_command(child))
+> +	if (repo_start_command(repo, child))
+>  		die("could not obtain raw diff");
+>  	fp = xfdopen(child->out, "r");
 
-move strbuf init and release out of loop to reuse same buffer.
+Up to [1/4], we called start_command(), running the new process in
+the context of the_repository, and if these "repo" were referring to
+a repository different from the_repository, we risk changing the
+behaviour without meaning to do so.
 
-dedent sort -u and sed in tests and replace grep with sed, to
-avoid piping grep's output to sed.
+The difftool command, however, would not be dealing with multiple
+repositories so it is very likely that the "repo" passed to these
+two functions are the_repository _anyway_, so these changes are
+correct, safe, and a move in the right direction.
 
-Suggested-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Signed-off-by: Amisha Chhajed <amishhhaaaa@gmail.com>
----
- builtin/help.c  | 91 ++++++++++++++++++++++++++++++-------------------
- t/t0012-help.sh | 39 ++++++++++++---------
- 2 files changed, 78 insertions(+), 52 deletions(-)
+> diff --git a/odb.c b/odb.c
+> index 776de5356c..8ec279f84e 100644
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -535,7 +535,7 @@ static void read_alternate_refs(struct repository *repo,
+>  
+>  	fill_alternate_refs_command(repo, &cmd, path);
+>  
+> -	if (start_command(&cmd))
+> +	if (repo_start_command(repo, &cmd))
+>  		return;
+>  
+>  	fh = xfdopen(cmd.out, "r");
 
-diff --git a/builtin/help.c b/builtin/help.c
-index c09cbc8912..daadc61c70 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -111,6 +111,49 @@ struct slot_expansion {
- 	int found;
- };
- 
-+static void set_config_vars(struct string_list *keys_uniq, struct string_list_item *var)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *str = var->string;
-+	const char *wildcard = strchr(str, '*');
-+	const char *tag = strchr(str, '<');
-+	const char *cut;
-+
-+	if (wildcard && tag)
-+		cut = wildcard < tag ? wildcard : tag;
-+	else if (wildcard)
-+		cut = wildcard;
-+	else if (tag)
-+		cut = tag;
-+	else {
-+		string_list_append(keys_uniq, str);
-+		return;
-+	}
-+
-+	strbuf_add(&sb, str, cut - str);
-+	string_list_append(keys_uniq, sb.buf);
-+	strbuf_release(&sb);
-+}
-+
-+static void set_config_sections(struct string_list *keys_uniq, struct string_list_item *var)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *str = var->string;
-+	const char *dot = strchr(str, '.');
-+	const char *cut;
-+
-+	if (dot)
-+		cut = dot;
-+	else {
-+		set_config_vars(keys_uniq, var);
-+		return;
-+	}
-+
-+	strbuf_add(&sb, str, cut - str);
-+	string_list_append(keys_uniq, sb.buf);
-+	strbuf_release(&sb);
-+}
-+
- static void list_config_help(enum show_config_type type)
- {
- 	struct slot_expansion slot_expansions[] = {
-@@ -131,13 +174,12 @@ static void list_config_help(enum show_config_type type)
- 	struct string_list keys = STRING_LIST_INIT_DUP;
- 	struct string_list keys_uniq = STRING_LIST_INIT_DUP;
- 	struct string_list_item *item;
-+	struct strbuf sb = STRBUF_INIT;
- 
- 	for (p = config_name_list; *p; p++) {
- 		const char *var = *p;
--		struct strbuf sb = STRBUF_INIT;
- 
- 		for (e = slot_expansions; e->prefix; e++) {
--
- 			strbuf_reset(&sb);
- 			strbuf_addf(&sb, "%s.%s", e->prefix, e->placeholder);
- 			if (!strcasecmp(var, sb.buf)) {
-@@ -146,60 +188,39 @@ static void list_config_help(enum show_config_type type)
- 				break;
- 			}
- 		}
--		strbuf_release(&sb);
-+
- 		if (!e->prefix)
- 			string_list_append(&keys, var);
- 	}
- 
-+	strbuf_release(&sb);
-+
- 	for (e = slot_expansions; e->prefix; e++)
- 		if (!e->found)
- 			BUG("slot_expansion %s.%s is not used",
- 			    e->prefix, e->placeholder);
- 
--	string_list_sort(&keys);
- 	for (size_t i = 0; i < keys.nr; i++) {
--		const char *var = keys.items[i].string;
--		const char *wildcard, *tag, *cut;
--		const char *dot = NULL;
--		struct strbuf sb = STRBUF_INIT;
--
- 		switch (type) {
- 		case SHOW_CONFIG_HUMAN:
--			puts(var);
--			continue;
-+			string_list_append(&keys_uniq, keys.items[i].string);
-+			break;
- 		case SHOW_CONFIG_SECTIONS:
--			dot = strchr(var, '.');
-+			set_config_sections(&keys_uniq, &keys.items[i]);
- 			break;
- 		case SHOW_CONFIG_VARS:
-+			set_config_vars(&keys_uniq, &keys.items[i]);
- 			break;
-+		default:
-+			BUG("%d: unexpected type", type);
- 		}
--		wildcard = strchr(var, '*');
--		tag = strchr(var, '<');
--
--		if (!dot && !wildcard && !tag) {
--			string_list_append(&keys_uniq, var);
--			continue;
--		}
--
--		if (dot)
--			cut = dot;
--		else if (wildcard && !tag)
--			cut = wildcard;
--		else if (!wildcard && tag)
--			cut = tag;
--		else
--			cut = wildcard < tag ? wildcard : tag;
--
--		strbuf_add(&sb, var, cut - var);
--		string_list_append(&keys_uniq, sb.buf);
--		strbuf_release(&sb);
--
- 	}
--	string_list_clear(&keys, 0);
--	string_list_remove_duplicates(&keys_uniq, 0);
-+
-+	string_list_sort_u(&keys_uniq, 0);
- 	for_each_string_list_item(item, &keys_uniq)
- 		puts(item->string);
- 	string_list_clear(&keys_uniq, 0);
-+	string_list_clear(&keys, 0);
- }
- 
- static enum help_format parse_help_format(const char *format)
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index d3a0967e9d..40b2d656a5 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -141,20 +141,23 @@ test_expect_success 'git help -c' '
- 
- 	'\''git help config'\'' for more information
- 	EOF
--	grep -v -E \
--		-e "^[^.]+\.[^.]+$" \
--		-e "^[^.]+\.[^.]+\.[^.]+$" \
--		help.output >actual &&
-+	sed -E -e "
-+		/^[^.]+\.[^.]+$/d
-+		/^[^.]+\.[^.]+\.[^.]+$/d
-+	" help.output >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'git help --config-for-completion' '
- 	git help -c >human &&
--	grep -E \
--	     -e "^[^.]+\.[^.]+$" \
--	     -e "^[^.]+\.[^.]+\.[^.]+$" human |
--	     sed -e "s/\*.*//" -e "s/<.*//" |
--	     sort -u >human.munged &&
-+	sed -E -e "
-+		/^[^.]+\.[^.]+$/b out
-+		/^[^.]+\.[^.]+\.[^.]+$/b out
-+		d
-+		: out
-+		s/\*.*//
-+		s/<.*//
-+	" human | sort -u >human.munged &&
- 
- 	git help --config-for-completion >vars &&
- 	test_cmp human.munged vars
-@@ -162,14 +165,16 @@ test_expect_success 'git help --config-for-completion' '
- 
- test_expect_success 'git help --config-sections-for-completion' '
- 	git help -c >human &&
--	grep -E \
--	     -e "^[^.]+\.[^.]+$" \
--	     -e "^[^.]+\.[^.]+\.[^.]+$" human |
--	     sed -e "s/\..*//" |
--	     sort -u >human.munged &&
--
--	git help --config-sections-for-completion >sections &&
--	test_cmp human.munged sections
-+	sed -E -e "
-+		/^[^.]+\.[^.]+$/b out
-+		/^[^.]+\.[^.]+\.[^.]+$/b out
-+		d
-+		: out
-+		s/\..*//
-+	" human | sort -u >expect &&
-+	
-+	git help --config-sections-for-completion >actual &&
-+	test_cmp expect actual
- '
- 
- test_section_spacing () {
--- 
-2.52.0
+The only semantic change brought in by [1/4] to start_command() is
+that the object store of the named repository is closed, instead of
+the object store of the_repository.  The read_alternate_refs()
+function calls fill_alternate_refs_command() to run for-each-ref in
+the named "repo" to find out the refs _they_ have.
 
+But then, do we really want to close the object database we have
+been using in the context of that "repo", that is different from
+"the_repository" we have been using so far?
+
+Of course, there is no guarantee that the_repository is always the
+"current" repository object we are using and trying to read the refs
+from this alternate repository in the codebase in an imaginary
+future where we can start from one repository, add refs from an
+alternate repository, and while doing so, we may add refs from an
+alternate of the alternate repository, so always starting from
+the_repository may not be correct, either.  But even before going
+there, closing object store of "repo" feels more wrong than from
+"the_repository".  Perhaps repo_start_command() needs to be aware of
+two repositories, one that we have been using and neeed to close the
+object store if instructed, and the other one that we want to launch
+the new process in its context?  Keeping "the current repository" as
+a global variable will drag us back to the similar issues these
+efforts to wean us from "the_repository" global are trying to
+address, so if our new repo_start_command() does need to be aware of
+the two repositories, perhaps it needs to take two repository
+parameters (i.e., where we are coming from, and where we are going
+to)?  I dunno.
+
+> diff --git a/pager.c b/pager.c
+> index 5531fff50e..9a23ed958d 100644
+> --- a/pager.c
+> +++ b/pager.c
+> @@ -169,7 +169,7 @@ void setup_pager(struct repository *r)
+>  	prepare_pager_args(&pager_process, pager);
+>  	pager_process.in = -1;
+>  	strvec_push(&pager_process.env, "GIT_PAGER_IN_USE");
+> -	if (start_command(&pager_process))
+> +	if (repo_start_command(r, &pager_process))
+>  		die("unable to execute pager '%s'", pager);
+>  
+>  	/* original process continues, but writes to the pipe */
+
+OK.
+
+> diff --git a/repack-promisor.c b/repack-promisor.c
+> index 90318ce150..dba161a11a 100644
+> --- a/repack-promisor.c
+> +++ b/repack-promisor.c
+> @@ -125,7 +125,7 @@ void pack_geometry_repack_promisors(struct repository *repo,
+>  	prepare_pack_objects(&cmd, args, packtmp);
+>  	strvec_push(&cmd.args, "--stdin-packs");
+>  	cmd.in = -1;
+> -	if (start_command(&cmd))
+> +	if (repo_start_command(repo, &cmd))
+>  		die(_("could not start pack-objects to repack promisor packs"));
+>  
+>  	in = xfdopen(cmd.in, "w");
+
+OK.
+
+> diff --git a/send-pack.c b/send-pack.c
+> index 67d6987b1c..c339c3d1ca 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -92,7 +92,7 @@ static int pack_objects(struct repository *r,
+>  	po.out = args->stateless_rpc ? -1 : fd;
+>  	po.git_cmd = 1;
+>  	po.clean_on_exit = 1;
+> -	if (start_command(&po))
+> +	if (repo_start_command(r, &po))
+>  		die_errno("git pack-objects failed");
+
+OK.
+
+> @@ -459,7 +459,7 @@ static void get_commons_through_negotiation(struct repository *r,
+>  		return;
+>  	}
+>  
+> -	if (start_command(&child))
+> +	if (repo_start_command(r, &child))
+>  		die(_("send-pack: unable to fork off fetch subprocess"));
+>  
+>  	do {
+
+OK.
