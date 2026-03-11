@@ -1,62 +1,62 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAF83CCFC1
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 15:19:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF542C08A2
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 15:19:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773242390; cv=none; b=lXI9LnJ5eihJB+EpjIMUCb6ap+WMZning/Ta49QzLgctH4LPinxUk/ekeU0qjn5VCR1oom9QcuYUnUO9/rcdTARA+Nnf8nqjCdkWwSVA+ev3gv7aEpsCeK2JGjRBuzg+9XgJjlgy44Z/L7iUhtDcoe2ZOa7qoeYILp4a2g4fVRU=
+	t=1773242393; cv=none; b=I+zN6yzx/yABM5J+UeX7fzfvOwMw5N44AWc+IdLJkoLtCU1kgFzjwKlgmP2c9DacgLkWyLRAmRDV4T0lMllTCXsjFAIZOUAmi56thgdiqahOSN/SR0QQsgjNPKz90Ct+2jcLCDljKUy0EXqBwaeq5N0ZyIunc9KVvlbFBx/Udcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773242390; c=relaxed/simple;
-	bh=3C5pw9r5hpb7l0B3EsV7s8y6itEmR2RPR5Sn+rLu1FY=;
+	s=arc-20240116; t=1773242393; c=relaxed/simple;
+	bh=vZIWc5NGUtbNDFhT4v8DudMor+Brpu+9E1ZYUBgogD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dvDnLcnEzsNp1nww5jghM8zE51+No3zXsud5uXflPWpU+23X2NlkdulXwi1BIxp9hLe5C8Mx4i55+/o9SSa9fSk3ZItGRzuzMVs8tOkg5fbF81SBldjGSuGwPlPy9Yp3WW4m6y9Rjhn7ktcsjwzm0rVLshVZEcclv3+RVbZjrH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eFXgPAFk; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version:Content-Type; b=bGhFriLBJNmXM06T/MJX95IY5mhE3ChZDLw0QLvCQKLidIObPq54MJboN8guWc7GehSQz5oHHYi3U2YZ7EGZfPwp6frtE9JV4PEhK41qQYyXiGKhVjQPqZv0yJu0vbjWv43J7Wc7+UovuUT8YIML43xnHgFB6bUvwaR0kmvtl38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iZRwyR+h; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eFXgPAFk"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4853aec185aso32404665e9.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 08:19:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iZRwyR+h"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4852afd42ceso48701725e9.2
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 08:19:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773242387; x=1773847187; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773242391; x=1773847191; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Iio4cl+OyEd/81nwvdw/7qGoFT8YEOteWN+/bhaNG+c=;
-        b=eFXgPAFkGET5ntUYrKlcYF9ud1Um6qOwSPETtiy/gYiKI53RvFWm/37pumMtN/fE9F
-         EofEvzGojrfzAxldIzNYSfRC9YmAFZQutH3XIA4SeUPLOZEtUoSOVtcXFrhuA2/ug4/8
-         Y/22nVUpgNLSdxO5D6VLWjGbKAI3LslAox4gco3wfg1KWRB+yzHAtRT5aU9k3uj+5+Jt
-         zQzBjt/DZ2bwOLbaepxKuwaF0mDw4bZCU6aZYTCqcIu6b3IefUF1+MQ9C8SunA4Pm5Pj
-         VRuh2W8+62zktKBWpY3vWn74Aw6Q1Wxa+5/1cAK4Aza9wPyllpZR9yfe5kUsmPHGu5HG
-         QB8w==
+        bh=fvRSG0oY5SxYCYFj4Z22GMt8UA/K7ENFmohjzqFYwUQ=;
+        b=iZRwyR+h/MKGUKbZrCteT6A+f/P/q4jUyv0JKy+ptAp0X7bEgbnGHbLLUAYlzDKK17
+         vYk2pra2CLVsbjX+1GFY8qFswxd61iV6FRUZvbyCD20gfD7/xpVtCXNH42xcl5F5Zc7c
+         1i6doGDpxcbgR8BrNW6cStpHLLh0SPI6mv4XGiotrDPSd3YTUIkljE1Y4ECKVxKpdaif
+         2REgcBUrCvVg3ugHElV6dI8pt3Hi1pVIVHkfyTOIARBWMLURJLZnAjVn9N8Rxg6+Bx9G
+         aJHRY1KbqBMYvgN39RZ5K8Ys3oldhDGSjuVAa90MtR0DNBQFUK3wJNwFAFlEyrbUXgWC
+         r1eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773242387; x=1773847187;
+        d=1e100.net; s=20230601; t=1773242391; x=1773847191;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Iio4cl+OyEd/81nwvdw/7qGoFT8YEOteWN+/bhaNG+c=;
-        b=TVRFMNrGJ454CsCSNZnGhSegrW6fffqHPfO1fOJk4qbc86HBTO8DodkXHA4tdZTgM2
-         TRmxJtcJvzspl3WwR5o8avM1LaoIgQFDEDQEaqVHiK4ZX7eqabeD2uxI+qGDq5EBFkYV
-         tdfIZVobdbFHSukxWVIwPXxCH9UwF4IdHC0VUXXWqqAM+fUCRENWy2WFeK/09xOFOcrY
-         uZQaJATGCtZGbCoQxbIfZRckAEqr/QQIZVPClhh97n2qtqaKlRLAKLuaetIztwS3Xg6Z
-         2ELt6EoBT8k1V+H1KDQq/tuZV3cQ9r2c/Hb4ItJeMwYR3FHgP7SHTsQpAs5oQHq38j/w
-         mPTg==
-X-Gm-Message-State: AOJu0Yzf98shPIjVjUI0hOsgZDOTc+xCw9UYjl/fOyrZ7jo5JM+O++yl
-	eUFu5xBRusPpwQMgHZzSc3ySjwoKu54D9XFgudCRJdEyINa72k7Vb31gJSM+ODY6
-X-Gm-Gg: ATEYQzyWu0Q5BSNOc029RhNUpTerqXVolmZuxMtKKbcHaGoM/p0EKXN3p6Zt9keoOUP
-	oxRI6WTnJF9saHy5FZIkkHGdh0SUHyQY2I3vzNg0huMHyQlXJmAMDFnjwks9vF7L3bJKBcq5chP
-	T65jF/qwzLlGSaC0IbaLw1y3ZnYqd6B52Axa5gL4dijHzBpHrDbwjYJzdZEJ98oMAwgXBNLSevY
-	kFBBYdnVzWEmmHyTzJ0C32YgS1iaCWgVx3UK1uZuJtsTplbz7PN4fk7IZhji4YErbmDnBW9hO7z
-	ToVD1Q0+3QyKvCWjWxneAQNO4STPXHTiqhRUPiMNXFf8qYfk9WciJDrEUOHlgFQF6kRjrjvTqgV
-	4LFZyXpbuFAVTPuEoC1hnIL6yzlUkqYCknp24bqOr/FfJDGgXbZS2B85/i9KqtxQsKPDWBV1jsC
-	qJo0D9kYNJ599xauqlxekgbxHAVg==
-X-Received: by 2002:a05:600c:8b8b:b0:485:2f4a:6ae6 with SMTP id 5b1f17b1804b1-4854b0a5370mr45082145e9.6.1773242387111;
-        Wed, 11 Mar 2026 08:19:47 -0700 (PDT)
+        bh=fvRSG0oY5SxYCYFj4Z22GMt8UA/K7ENFmohjzqFYwUQ=;
+        b=EUaYUqs91MUyxDQSaOnVPE7mks2BSSvcX80WZg7aSu5OzlwH4662wyMO7h0SP28ZkU
+         swzd9nmOkXBnWN+yjrByPqBPtiR/kRKH8tVtJmQqkQ6qlyf60BRUxB6zdT/YPFB/n/B7
+         W6zECdYb06dqCTHkCmZ1i0LwgTJ06fgg4ZfS8QS0b7R4z+bEUGTEW9961REKFX/PHG9V
+         YwoImWrepWClWI1L7tW4bXiomKaDhi67IPbhH46DB8dAI0MaIdlkzFfrs4Pjzc2TMhLM
+         5MqaWoV9AXF+n0jkHyQu8hWjB0akr/ijq2asAFvQeB/fxm0EgUTmnTaIQm3e2lOEZn/m
+         7sog==
+X-Gm-Message-State: AOJu0YyAYviK9gM+WjK30/C0hHH1mw7svMNX2s/Ev5jJaG4sW0kdB+YS
+	hBehjEpFUUleNtIyArMM1rv7Se8yPE2oVj1P+tElyU16r4qpE7VCJ1FKLp1FWVR9
+X-Gm-Gg: ATEYQzznHAHEOUU3bdZDZBSdMSL/27cQlX2uvAtOV+2PLdbJXPxVWYGXKPyoFbrMJQd
+	ZhQENazEL2mi5XmF9MCmMbAm0pUvL87utgeOQhaIs5xQVN9nacGMelUNxPhVGHWRq6skPyT0cQ7
+	awGrZ/YIe9AfMFsMBYwz3MA0og+A4Ng238bLMN9zsdbCWH33NGVIQ+kxRiElqFv/sHbM67Z9ftb
+	w3XkzJrk7Bf9kMq6nzqGdRkygC+JqI77CpMylvV99S0uoH7bdTGhv9H8yPBvK9yYnJHJebOOA20
+	Kjdi1GKTilHPquVCcgfV1qG657qyp3TjFe7Z4G4/Gwb6rvPCzxoWsvbwTybHsigjfgCHCYxZMOG
+	uMT5tVMrbitl2xYyBvs0hbkBAawiAvgXGBqSEitj99OTf+fguckV5qJGT5ZhqUm7+jQNsUdXb1f
+	ZZWi3pm30VqV8gKv8=
+X-Received: by 2002:a05:600c:46d2:b0:485:38fc:7080 with SMTP id 5b1f17b1804b1-4854b10ef23mr46242195e9.28.1773242390555;
+        Wed, 11 Mar 2026 08:19:50 -0700 (PDT)
 Received: from fedora ([159.146.43.38])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b65fd3dsm62743975e9.10.2026.03.11.08.19.45
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b65fd3dsm62743975e9.10.2026.03.11.08.19.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 08:19:46 -0700 (PDT)
+        Wed, 11 Mar 2026 08:19:50 -0700 (PDT)
 From: =?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
@@ -67,9 +67,9 @@ Cc: christian.couder@gmail.com,
 	l.s.r@web.de,
 	ps@pks.im,
 	=?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
-Subject: [PATCH 2/4] run-command: use repo_start_command() in strict callers
-Date: Wed, 11 Mar 2026 18:19:21 +0300
-Message-ID: <20260311151923.4178655-3-bkkaracay@gmail.com>
+Subject: [PATCH 3/4] run-command: redefine start_command() as a wrapper macro
+Date: Wed, 11 Mar 2026 18:19:22 +0300
+Message-ID: <20260311151923.4178655-4-bkkaracay@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260311151923.4178655-1-bkkaracay@gmail.com>
 References: <20260311151923.4178655-1-bkkaracay@gmail.com>
@@ -82,106 +82,199 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Some callers have been freed from global state and they do not define
-the 'USE_THE_REPOSITORY_VARIABLE' macro.
+In the commit introducing 'repo_start_command()', 'start_command()' was
+redefined as a wrapper function.
 
-To complete the mitigation of 'start_command()', update these callers to
-use repo_start_command() and pass their local 'struct repository' as an
-argument, completely eliminating their hidden reliance on the global
-state.
+Now, redefine 'start_command()' as a wrapper macro to make 'the_repository'
+dependency explicit at the caller's site. To successfully build, expose
+'the_repository' dependency at the call sites by defining
+'USE_THE_REPOSITORY_VARIABLE' or including 'repository.h' where necessary.
 
 Signed-off-by: Burak Kaan Karaçay <bkkaracay@gmail.com>
 ---
- builtin/difftool.c | 4 ++--
- odb.c              | 2 +-
- pager.c            | 2 +-
- repack-promisor.c  | 2 +-
- send-pack.c        | 4 ++--
- 5 files changed, 7 insertions(+), 7 deletions(-)
+ builtin/credential-cache.c  | 2 ++
+ builtin/remote-ext.c        | 2 ++
+ column.c                    | 1 +
+ credential.c                | 1 +
+ midx-write.c                | 2 ++
+ prompt.c                    | 1 +
+ repack-cruft.c              | 2 ++
+ repack-filtered.c           | 2 ++
+ repack-midx.c               | 2 ++
+ repack-promisor.c           | 2 ++
+ run-command.c               | 5 -----
+ run-command.h               | 2 +-
+ sub-process.c               | 3 +++
+ t/helper/test-run-command.c | 2 ++
+ 14 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index e4bc1f8316..15ac552edf 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -257,7 +257,7 @@ static void changed_files(struct repository *repo,
- 	diff_files.out = -1;
- 	diff_files.dir = workdir;
- 	strvec_pushf(&diff_files.env, "GIT_INDEX_FILE=%s", index_path);
--	if (start_command(&diff_files))
-+	if (repo_start_command(repo, &diff_files))
- 		die("could not obtain raw diff");
- 	fp = xfdopen(diff_files.out, "r");
- 	while (!strbuf_getline_nul(&buf, fp)) {
-@@ -437,7 +437,7 @@ static int run_dir_diff(struct repository *repo,
- 	child->clean_on_exit = 1;
- 	child->dir = prefix;
- 	child->out = -1;
--	if (start_command(child))
-+	if (repo_start_command(repo, child))
- 		die("could not obtain raw diff");
- 	fp = xfdopen(child->out, "r");
+diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
+index 7f733cb756..fb17aa87ba 100644
+--- a/builtin/credential-cache.c
++++ b/builtin/credential-cache.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "builtin.h"
+ #include "credential.h"
+ #include "gettext.h"
+diff --git a/builtin/remote-ext.c b/builtin/remote-ext.c
+index bd2037f27d..ed2d551753 100644
+--- a/builtin/remote-ext.c
++++ b/builtin/remote-ext.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "builtin.h"
+ #include "transport.h"
+ #include "run-command.h"
+diff --git a/column.c b/column.c
+index 93fae316b4..998b2ab458 100644
+--- a/column.c
++++ b/column.c
+@@ -1,3 +1,4 @@
++#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
  
-diff --git a/odb.c b/odb.c
-index 776de5356c..8ec279f84e 100644
---- a/odb.c
-+++ b/odb.c
-@@ -535,7 +535,7 @@ static void read_alternate_refs(struct repository *repo,
+ #include "git-compat-util.h"
+diff --git a/credential.c b/credential.c
+index 2594c0c422..a513355105 100644
+--- a/credential.c
++++ b/credential.c
+@@ -1,3 +1,4 @@
++#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
  
- 	fill_alternate_refs_command(repo, &cmd, path);
+ #include "git-compat-util.h"
+diff --git a/midx-write.c b/midx-write.c
+index 6485cb6706..a53f77f13a 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "abspath.h"
+ #include "config.h"
+diff --git a/prompt.c b/prompt.c
+index 706fba2a50..20a8c34438 100644
+--- a/prompt.c
++++ b/prompt.c
+@@ -7,6 +7,7 @@
+ #include "strbuf.h"
+ #include "prompt.h"
+ #include "compat/terminal.h"
++#include "repository.h"
  
--	if (start_command(&cmd))
-+	if (repo_start_command(repo, &cmd))
- 		return;
- 
- 	fh = xfdopen(cmd.out, "r");
-diff --git a/pager.c b/pager.c
-index 5531fff50e..9a23ed958d 100644
---- a/pager.c
-+++ b/pager.c
-@@ -169,7 +169,7 @@ void setup_pager(struct repository *r)
- 	prepare_pager_args(&pager_process, pager);
- 	pager_process.in = -1;
- 	strvec_push(&pager_process.env, "GIT_PAGER_IN_USE");
--	if (start_command(&pager_process))
-+	if (repo_start_command(r, &pager_process))
- 		die("unable to execute pager '%s'", pager);
- 
- 	/* original process continues, but writes to the pipe */
+ static char *do_askpass(const char *cmd, const char *prompt)
+ {
+diff --git a/repack-cruft.c b/repack-cruft.c
+index 0653e88792..0bfc77792a 100644
+--- a/repack-cruft.c
++++ b/repack-cruft.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "repack.h"
+ #include "packfile.h"
+diff --git a/repack-filtered.c b/repack-filtered.c
+index edcf7667c5..2f5d1dd709 100644
+--- a/repack-filtered.c
++++ b/repack-filtered.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "repack.h"
+ #include "repository.h"
+diff --git a/repack-midx.c b/repack-midx.c
+index 0682b80c42..8b4c0d95e3 100644
+--- a/repack-midx.c
++++ b/repack-midx.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "repack.h"
+ #include "hash.h"
 diff --git a/repack-promisor.c b/repack-promisor.c
-index 90318ce150..dba161a11a 100644
+index dba161a11a..70ef19d04f 100644
 --- a/repack-promisor.c
 +++ b/repack-promisor.c
-@@ -125,7 +125,7 @@ void pack_geometry_repack_promisors(struct repository *repo,
- 	prepare_pack_objects(&cmd, args, packtmp);
- 	strvec_push(&cmd.args, "--stdin-packs");
- 	cmd.in = -1;
--	if (start_command(&cmd))
-+	if (repo_start_command(repo, &cmd))
- 		die(_("could not start pack-objects to repack promisor packs"));
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "repack.h"
+ #include "hex.h"
+diff --git a/run-command.c b/run-command.c
+index fadc3d5283..af26c636a9 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -674,11 +674,6 @@ static void trace_run_command(const struct child_process *cp)
+ 	strbuf_release(&buf);
+ }
  
- 	in = xfdopen(cmd.in, "w");
-diff --git a/send-pack.c b/send-pack.c
-index 67d6987b1c..c339c3d1ca 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -92,7 +92,7 @@ static int pack_objects(struct repository *r,
- 	po.out = args->stateless_rpc ? -1 : fd;
- 	po.git_cmd = 1;
- 	po.clean_on_exit = 1;
--	if (start_command(&po))
-+	if (repo_start_command(r, &po))
- 		die_errno("git pack-objects failed");
+-int start_command(struct child_process *cmd)
+-{
+-	return repo_start_command(the_repository, cmd);
+-}
+-
+ int repo_start_command(struct repository *repo, struct child_process *cmd)
+ {
+ 	int need_in, need_out, need_err;
+diff --git a/run-command.h b/run-command.h
+index 654ca659b3..890d7c5d72 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -206,7 +206,7 @@ char *git_shell_path(void);
+  * See below for details.
+  */
  
- 	/*
-@@ -459,7 +459,7 @@ static void get_commons_through_negotiation(struct repository *r,
- 		return;
- 	}
+-int start_command(struct child_process *);
++#define start_command(cmd) repo_start_command(the_repository, cmd)
+ int repo_start_command(struct repository *, struct child_process *);
  
--	if (start_command(&child))
-+	if (repo_start_command(r, &child))
- 		die(_("send-pack: unable to fork off fetch subprocess"));
+ /**
+diff --git a/sub-process.c b/sub-process.c
+index 83bf0a0e82..ae7493eb5c 100644
+--- a/sub-process.c
++++ b/sub-process.c
+@@ -1,10 +1,13 @@
+ /*
+  * Generic implementation of background process infrastructure.
+  */
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "sub-process.h"
+ #include "sigchain.h"
+ #include "pkt-line.h"
++#include "repository.h"
  
- 	do {
+ int cmd2process_cmp(const void *cmp_data UNUSED,
+ 		    const struct hashmap_entry *eptr,
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index 4a56456894..dcd58f228c 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -8,6 +8,7 @@
+  * published by the Free Software Foundation.
+  */
+ 
++#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "test-tool.h"
+@@ -18,6 +19,7 @@
+ #include "string-list.h"
+ #include "thread-utils.h"
+ #include "wildmatch.h"
++#include "repository.h"
+ 
+ static int number_callbacks;
+ static int parallel_next(struct child_process *cp,
 -- 
 2.53.0
 
