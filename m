@@ -1,96 +1,99 @@
-Received: from mail-gateway-shared02.cyon.net (mail-gateway-shared02.cyon.net [194.126.200.224])
+Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A023D669F
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 12:27:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.224
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57E517A586
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 12:41:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773232029; cv=none; b=Wn+7s76zWCEaRhAl8eRHc0m9GPhKWpIM/D+uzpDUXZ+VqdkuthDH0xmozbFchyAV2g48MeOFztWrZbPbxHsYu17cETsLSnULjeOLIvjwwTGLwSVNrazTu/pl6delcvHdsM334qKOUjjQuZdVsRAvaM251cXB05ySv/POCiihWQI=
+	t=1773232887; cv=none; b=dQEupv3WUsrxatP3iCelgXTM5z3+NEfh4MReV6uQCO9VYUkUO+hBDtx28QJgNnN6suyvkn/+3mVHYeLYLT09MEUcR8PK/2hW5NVUWRCkCLhjUeHrhlo97xZSC0gvup4UgTvn0GruZMV+KmPyc7xGjoOa+9hPjhoiFxh6BE+9yxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773232029; c=relaxed/simple;
-	bh=YPymcFgsme8scai7FFFxj2zq2CX4VJ6R2FzOkIxr0oE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aTiL243t0andtwtIxf19jK0oX5oriLf0/1cjtj9Q2RKPqGEG3jXvwrglnieQGW1gC6fx50e4H0icrzB9ul88N+4oNGHIdQbUwgBqjJJz8p8pJ93+m8ucrrp0fv9OH43TMOf/ukxwq39xuHrLwA1+NvqAaUN0MmSycLmxiZZxY8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.224
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
-Received: from s019.cyon.net ([149.126.4.28])
-	by mail-gateway-shared02.cyon.net with esmtpsa (TLS1.2:ECDHE_SECP256R1__RSA_SHA512__AES_256_GCM:256)
-	(Exim)
-	(envelope-from <ig@drbeat.li>)
-	id 1w0IPW-008JrH-0m
-	for git@vger.kernel.org;
-	Wed, 11 Mar 2026 13:11:36 +0100
-Received: from [10.20.10.54] (port=60622 helo=mail.cyon.ch)
-	by s019.cyon.net with esmtpa (Exim 4.98.1)
-	(envelope-from <ig@drbeat.li>)
-	id 1w0IPR-0000000BEoU-0Wy0
-	for git@vger.kernel.org;
-	Wed, 11 Mar 2026 13:11:29 +0100
-Received: from eap.internal (eap.internal [192.168.11.6])
-	by oh4.internal (Postfix) with ESMTP id B5B82402AD
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 13:11:28 +0100 (CET)
-Received: from bb (uid 1000)
-	(envelope-from bb@eap.internal)
-	id 5402fb
-	by eap.internal (DragonFly Mail Agent v0.14 on eap);
-	Wed, 11 Mar 2026 13:11:28 +0100
-From: Beat Bolli <dev+git@drbeat.li>
-To: git@vger.kernel.org
-Cc: Beat Bolli <dev+git@drbeat.li>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: [PATCH 1/4] imap-send: use the OpenSSL API to access the subject alternative names
-Date: Wed, 11 Mar 2026 13:11:04 +0100
-Message-ID: <20260311121107.1122387-2-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260311121107.1122387-1-dev+git@drbeat.li>
-References: <20260311121107.1122387-1-dev+git@drbeat.li>
+	s=arc-20240116; t=1773232887; c=relaxed/simple;
+	bh=ZyOwJxqkTxCViHCRpiNrGXUXchJgd2u2Znr8IC/asgs=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G6a+Q2jxQ2KrHnFOhJFdy7DgmpolntqooOkdyBaEp4F2aPCbqtGYIvRZ7TUVUV1WL1NqKy1GxJze/seDZN3s7wp9PJ1ZgjSUUIyeSvh++jgSdSKABXFDBj1pQ8lFtnjGurlPkhk+eUjnPqJMJsc1PQjtxJwIfFHJ6VhwsdrJ4VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=b8YM7T3p; arc=none smtp.client-ip=91.218.175.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="b8YM7T3p"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1773232882;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qfxKjOyBXuazSfJDP2VdroE/Hqn/Mm5eglWzIJEjdPI=;
+	b=b8YM7T3pDnJNjVco4lth+eKktHsRnrtBeo0C3zn3wLXeYvWp/sNYi775/aGixJh+ydZ5kO
+	BgaHi3Nf3shKrT9DuHYik0dWki9juMmy/J6NU0M7nQLTdUmCbXXplacRGyOSDSMikE6qpH
+	XmTO9icwlDfitFlRoLAkZTVx5d0oFao=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 2/6] packfile: extract logic to count number of objects
+In-Reply-To: <20260310-b4-pks-odb-source-count-objects-v1-2-109e07d425f4@pks.im>
+References: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
+ <20260310-b4-pks-odb-source-count-objects-v1-2-109e07d425f4@pks.im>
+Date: Wed, 11 Mar 2026 13:41:05 +0100
+Message-ID: <871phqmtcu.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-The OpenSSL 4.0 branch has made the ASN1_STRING structure opaque,
-forbidding access to its internal fields. Use the official accessor
-functions instead. They have existed since OpenSSL 1.1.0.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
- imap-send.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+> In a subsequent commit we're about to introduce a new
+> `odb_source_count_objects()` function so that we can make the logic
+> pluggable. Prepare for this change by extracting the logic that we have
+> to count packed objects into a standalone function.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  packfile.c | 45 +++++++++++++++++++++++++++++++++++----------
+>  packfile.h |  9 +++++++++
+>  2 files changed, 44 insertions(+), 10 deletions(-)
+>
+> diff --git a/packfile.c b/packfile.c
+> index 215a23e42b..1ee5dd3da3 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -1101,6 +1101,36 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
+>  	return store->packs.head;
+>  }
+>  
+> +int packfile_store_count_objects(struct packfile_store *store,
+> +				 unsigned long *out)
+> +{
+> +	struct packfile_list_entry *e;
+> +	struct multi_pack_index *m;
+> +	unsigned long count = 0;
+> +	int ret;
+> +
+> +	m = get_multi_pack_index(store->source);
+> +	if (m)
+> +		count += m->num_objects + m->num_objects_in_base;
 
-diff --git a/imap-send.c b/imap-send.c
-index 26dda7f328..1c934c2487 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -244,10 +244,14 @@ static int verify_hostname(X509 *cert, const char *hostname)
- 	if ((subj_alt_names = X509_get_ext_d2i(cert, NID_subject_alt_name, NULL, NULL))) {
- 		int num_subj_alt_names = sk_GENERAL_NAME_num(subj_alt_names);
- 		for (i = 0; !found && i < num_subj_alt_names; i++) {
-+			int ntype;
- 			GENERAL_NAME *subj_alt_name = sk_GENERAL_NAME_value(subj_alt_names, i);
--			if (subj_alt_name->type == GEN_DNS &&
--			    strlen((const char *)subj_alt_name->d.ia5->data) == (size_t)subj_alt_name->d.ia5->length &&
--			    host_matches(hostname, (const char *)(subj_alt_name->d.ia5->data)))
-+			ASN1_STRING *subj_alt_str = GENERAL_NAME_get0_value(subj_alt_name, &ntype);
-+
-+			if (ntype == GEN_DNS &&
-+			    strlen((const char *)ASN1_STRING_get0_data(subj_alt_str)) ==
-+				    ASN1_STRING_length(subj_alt_str) &&
-+			    host_matches(hostname, (const char *)ASN1_STRING_get0_data(subj_alt_str)))
- 				found = 1;
- 		}
- 		sk_GENERAL_NAME_pop_free(subj_alt_names, GENERAL_NAME_free);
+To make sure I understand correctly:
+
+`m->num_objects` indicates how many objects are in the current pack, and
+`m->num_objects_in_base` how many are in it's base (and that accumulates
+what's in the bases of the base?).
+
+> +	for (e = packfile_store_get_packs(store); e; e = e->next) {
+> +		if (e->pack->multi_pack_index)
+> +			continue;
+
+Because we added the count through the midx already, we skip any
+packfile that's included in the midx.
+
+But some packfiles are not in the midx so we fall through for those.
+
+Makes sense.
+
+
 -- 
-2.51.0
-
+Cheers,
+Toon
