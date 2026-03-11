@@ -1,71 +1,70 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFF3317161
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 13:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C59D31714A
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 13:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773235259; cv=none; b=CUJI0cuJxicCMMX0ON0yXYXC7tR38Ki34IQKubM7B/LVF/5LuOtkTor23qY0F8tSYj5Qqr46WSGa3TsvhmitT4hjuQPduZ3d3yCMkPE71hYPz8+LMdDetkrKapPz3LVmLmmSEcUsf64Qb+uSL2L3PVCct0OPD/71qpgxjJANZB4=
+	t=1773235264; cv=none; b=cu0uMx/TUJM0aAmp7MRwTqWk0qshsm8udu7BgLOkDx8kUnK0zOeq+ks4LumCZkjyRjUu2jx4MxVnU7GuHAL+Mpm/xVOu6fjg/4+ZQrtPYYvosGsBPs9K6Rg2B1CJOmescnbVCoVO2fRu2m6LJaLQtlOffkUWrTpLO9k6fyzSCv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773235259; c=relaxed/simple;
-	bh=IOkxyRhuRssOpYp+F14VnK36YiVUPDMR7XOb+WkSYLE=;
+	s=arc-20240116; t=1773235264; c=relaxed/simple;
+	bh=YzVTJ2qkcCW798ReYCEl9C9Fd57XGz3b/lXKD2tfyEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qk+xNZRJkoYZra8B6sC4qG2bRrRobP/joL9HOk6rh53uMhYK8odpaMZS59LAVYeGQmus5IpLYyxOwAozuEfvNxp/C5FanNSDNRu0WlJer5itPlEqvfyWDyaZgLuDv5FUn/BakiQihNiRwKs424SBWuwjR8vPcoKhAq49UHyMdwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RnJlowBN; arc=none smtp.client-ip=209.85.215.173
+	 MIME-Version; b=XpZYNQSdiV5JY1TqN7kWOf78SxijOkxQkpFLgxtmx2T+sLKQ+CO5h52zfeud/SHPLKqTPGB+KbvYTVMcGorFZa0ypBwqPeawEMUBh2LGQGPW6dNQBzWjxBDP/w0gzLuWc/RtlPs/GBhI0jCYIMfPK0ss6SyZxvacyEAkh2CX6sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YsnCijWu; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RnJlowBN"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-c70ea5e9e9dso5355299a12.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2026 06:20:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YsnCijWu"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-359832fc558so8585721a91.0
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 06:21:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773235257; x=1773840057; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773235262; x=1773840062; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QLbHhcS5eLvd5bqFsY5fOnnEMAZB49VLmJU9ddEf3Cs=;
-        b=RnJlowBNoxiQn6xXEaNKXaXdzd+Ou8FJi6QKwnZ/5kZw30H1A/jdw4zb3DyBvxLXrn
-         G3TOs2WdXI2TG7NuK5jMbsSoNUZrZR7zBNt6MRsBlUee/xkl+dpzwB16zYSBcfNZPqk2
-         d/txhBAN5mvIeS9WCrlMK6aSew3Qgt8U/+nEBzJMOgfTV2WUww6R2DUnqpNgnl95I+zG
-         hwroI/7IPhp2aodJQYm4W3F8Ounhl9nnD+2N5ZiQ6J/dxQuWAxYxU7dIjrt2fks8gzYB
-         jUlkVdsjPjpfKnGj7bJqotIBocMSyTKYeLclEi4A6VpLDZk/CJF/A5tc73fp3QsIsSbM
-         VTbg==
+        bh=5neS2mcZvrJJHC0KDRAwEQKsGZqQQvTZLtkKC4DzYn4=;
+        b=YsnCijWu6fMpFiqj+0wYDf+bQEy4J84WfvLhNkvDFzp8Z+OXDKX7Bg1NC4enX75024
+         4rrf8EvC8OUHhfFJOeoJyXiYaxhACkBM58ksqQAl1INaumnYXSDsqAClnfUE87eOgD8a
+         vg8pEFQYU+Ov3tdHQj922c9FaUPVo+CP7mkNPFQB4nIeu2/7yOn+CogzkSD7F6BORaXU
+         cYqo/jWFVAKc0oWU6ybZ3jsFQiGRC+y//OjltzreLZ6bZzMusL0ZxOoLNkDnoc+zNG75
+         j5onIErXFqEZ7lZ9sOX4eLgjfoZguZP68g0/+3G2Y1r9P4UYT8sWVNI8SLw+q2Ib/ODP
+         BY5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773235257; x=1773840057;
+        d=1e100.net; s=20230601; t=1773235262; x=1773840062;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=QLbHhcS5eLvd5bqFsY5fOnnEMAZB49VLmJU9ddEf3Cs=;
-        b=TmzsBtWe3hIdDDFLo9aUT+Mn2IvIi9ZzFeRume7ZKXeSPBpfglWSMTYr0Y+dHgmS76
-         mwNMuslDPqYX5wfaULOfcU0kGB8VjvD87hDv/Af5YFtX98mYLnz8Jn7sq7ATZFMf0PAu
-         fVlQwve0dur+vnwhTgpbsH4sT+sjJOKBKudkA/GUc80EdffeLBhcOdZpVt9OJ2wV4sKV
-         BWqOKZA5+Nv0saDnMkdehzFSfbo+Fywx+9xZHfjJ+/XKNahC4Ht5txUKqA8Qa2nOJWrn
-         p8ym747Ow7a9ZWO/UcALHhNTaDFFUS9EzQJQJ5ozajnAm0LU+Vxdi9FpTFp1gIBhgQ5K
-         d38g==
-X-Gm-Message-State: AOJu0YwVpHaKSAo5VfvABZf3zfhL2IT39m9YlkHk/cCsDJ8VUtMm2c9j
-	j4bBC7jJj1MdGZHP6ccwGuk+3soZ3Bn8d1C2qk+ec+JAy/AIjn3kZyUG5zJRlQ==
-X-Gm-Gg: ATEYQzwP+V1KA+GI7hx1dd4bsl2vYLj1JP0942OKM1wPE3nfx6Ykn5aTsdGUP/rTeAC
-	yD66k8OSaCbv2ubX64VgWi6l6dEVM2LsqBBapD+Y62Sg2Ou4+NsYaWDXr/i2Tj8yCqRH8wen2h2
-	BW8sbhfR0Zl0VhADPQoQh9JPUMG9SRSvpe2xrQwzeHEqBjyQJEPKKjTYJe8yVySedqnH+rD3Brb
-	0wGoqQfbrtoHvx2Va64fwZ//SqVrVUM+e1J9jjAsG3Ryzem41CxBuz4GsAuU9zopvYDLQMj4S/y
-	eu2cGo+4+3rQGBfZV1wU7kKtlnKItTFDEtt+dbar2+fWIkGqG+sRLcJTa7eWJZM4WIG8dAq+nRy
-	w98WHz/CNQ6N6mDRpg8AW2CP5ofnD+hvE07BCL+lBr4KpfyaxYGX8GEAhvowaQP1rL7mqbVV6Pu
-	0a/jYmf/sjOYu+owU3fQYAbiq1SiNs/lqXLicnyACVsww+I9VlLezcvoXuMO777llVzWuo3Jtyf
-	W+e
-X-Received: by 2002:a05:6a20:1f28:b0:398:c1d8:f58c with SMTP id adf61e73a8af0-398c6170cf8mr2321117637.71.1773235256843;
-        Wed, 11 Mar 2026 06:20:56 -0700 (PDT)
+        bh=5neS2mcZvrJJHC0KDRAwEQKsGZqQQvTZLtkKC4DzYn4=;
+        b=pYuR0VTg9MYlWoz3Nhpn6ZI/3x4bn1GG3tKAQgpax1S6CTp6MLimsWxqtldYsvgUKP
+         eFR6EMgWdJ0fL4lqdGgs/ZAC2hvMfKrlwE6UXdddITRUMcltnO2WcJVpIEFEzOlTW7/g
+         mFlXefl1nm8llUUGRtGg5YnYlg5pRD54kSskMB45Hh32y6N/vmuDVzElysuohB9QUNUS
+         Xpvlcr6gMVOBu56+R4NMAVW/mMeWW+owd2f3GhzhcoRTD41KBjrTLhkTan9EEA218liK
+         N43FaCqL8iJC5FlaAoEgeiUlVj9VVJgfRUBHvPw8yyrSAVEYL13G2Sf7FBd6wCqNdtaE
+         ZLYQ==
+X-Gm-Message-State: AOJu0YzczwZGrfWMMrMx3KC/em9FadNwuQ/vt3MjUI15+2B1j/B3z+jr
+	jaH4/RzNC97t+JdZlYPf8eph11N53F8dVtVpXSLf7+vMb/G7yIeByu4MI34Xxg==
+X-Gm-Gg: ATEYQzygWygERdc0Qdok5TOVL8QFPJoAFNUXENDwKbEbtwmjl1XyN5hI1r5gCd6gvNF
+	2H4vfnu2XX2TYlLZOCGiaCmymaVnEEIbHePiOpb6wfS2YAPbcR4qc8SHBdElwXtZ8GU31FyEuNc
+	l9ZunCLlgb5ZnnoCHQfm36ZHcrwz/q9M80UnSnVRF3UQl1R3D+/sAhpHPI2dwFD9pdZLCqUI1+N
+	/gbzkhx7L/dN3BaxKxBzbToT239OCXFXAjr+hPkGABYK4WRy6oqqnISvF0rEqQTpJ5e3A1T0vNr
+	eK4BWASXbG1lclDB1G7UtJ5IMe1dHH9vSrlFIsHIz87DBzt23jSJvkawrY7tlpMuf67MRWfWmTp
+	nEcbRUc8R7fqbVjbFf0oBaxtlBVYCePDs+scs+gCH7KQ52d+pif+0LUDK6nTRB923ajbYNkPHlU
+	3mbwdWSpGWYVv8QDLQs0Mz4PhMX5JflgulSptx+4UI9T5BAb55+rsgo83thOx/VJwACg==
+X-Received: by 2002:a17:90b:4f4a:b0:359:8411:a40 with SMTP id 98e67ed59e1d1-35a00f23012mr2693929a91.0.1773235262491;
+        Wed, 11 Mar 2026 06:21:02 -0700 (PDT)
 Received: from d.iiitdmj.ac.in ([14.139.241.214])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73cdf92fe7sm2281441a12.21.2026.03.11.06.20.54
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73cdf92fe7sm2281441a12.21.2026.03.11.06.21.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 06:20:56 -0700 (PDT)
+        Wed, 11 Mar 2026 06:21:02 -0700 (PDT)
 From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	peff@peff.net,
 	Deveshi Dwivedi <deveshigurgaon@gmail.com>
-Subject: [PATCH v2 1/2] worktree: do not pass strbuf by value
-Date: Wed, 11 Mar 2026 13:20:40 +0000
-Message-ID: <20260311132041.12044-2-deveshigurgaon@gmail.com>
+Subject: [PATCH v2 2/2] list-objects-filter-options: avoid strbuf_split_str()
+Date: Wed, 11 Mar 2026 13:20:41 +0000
+Message-ID: <20260311132041.12044-3-deveshigurgaon@gmail.com>
 X-Mailer: git-send-email 2.52.0.230.gd8af7cadaa
 In-Reply-To: <20260311132041.12044-1-deveshigurgaon@gmail.com>
 References: <20260311132041.12044-1-deveshigurgaon@gmail.com>
@@ -77,128 +76,130 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-write_worktree_linking_files() takes two struct strbuf parameters by
-value, even though it only reads path strings from them.
+parse_combine_filter() splits a combine: filter spec at '+' using
+strbuf_split_str(), which yields an array of strbufs with the
+delimiter left at the end of each non-final piece.  The code then
+mutates each non-final piece to strip the trailing '+' before parsing.
 
-Passing a strbuf by value is misleading and dangerous. The structure
-carries a pointer to its underlying character array; caller and callee
-end up sharing that storage.  If the callee ever causes the strbuf to
-be reallocated, the caller's copy becomes a dangling pointer, which
-results in a double-free when the caller does strbuf_release().
+Allocating an array of strbufs is unnecessary.  The function processes
+one sub-spec at a time and does not use strbuf editing on the pieces.
+The two helpers it calls, has_reserved_character() and
+parse_combine_subfilter(), only read the string content of the strbuf
+they receive.
 
-The function only needs the string values, not the strbuf machinery.
-Switch it to take const char * and update all callers to pass .buf.
+Walk the input string directly with strchrnul() to find each '+'.
+strchrnul() returns a pointer to the terminating '\0' when the
+delimiter is not found, so no separate "found separator?" branch is
+needed.  Copy each sub-spec into a temporary buffer using end - p,
+which naturally excludes the '+', so the separator is always stripped
+cleanly.  A trailing '+' causes the outer while (*p) test to fail on
+the next iteration rather than passing an empty string to the parser.
+Change the helpers to take const char * instead of struct strbuf *.
+
+The test that expected an error on a trailing '+' is removed, since
+that behavior was incorrect.
 
 Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
 ---
- builtin/worktree.c |  2 +-
- worktree.c         | 22 +++++++++++-----------
- worktree.h         |  2 +-
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ list-objects-filter-options.c       | 35 +++++++++++++----------------
+ t/t6112-rev-list-filters-objects.sh |  4 ----
+ 2 files changed, 15 insertions(+), 24 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index bc2d0d645b..4035b1cb06 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -539,7 +539,7 @@ static int add_worktree(const char *path, const char *refname,
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index 7f3e7b8f50..616c6c7faa 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -125,9 +125,9 @@ int gently_parse_list_objects_filter(
+ static const char *RESERVED_NON_WS = "~`!@#$^&*()[]{}\\;'\",<>?";
  
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
--	write_worktree_linking_files(sb_git, sb, opts->relative_paths);
-+	write_worktree_linking_files(sb_git.buf, sb.buf, opts->relative_paths);
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
- 	write_file(sb.buf, "../..");
-diff --git a/worktree.c b/worktree.c
-index 6e2f0f7828..7eba12c6ed 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -445,7 +445,7 @@ void update_worktree_location(struct worktree *wt, const char *path_,
- 	strbuf_realpath(&path, path_, 1);
- 	strbuf_addf(&dotgit, "%s/.git", path.buf);
- 	if (fspathcmp(wt->path, path.buf)) {
--		write_worktree_linking_files(dotgit, gitdir, use_relative_paths);
-+		write_worktree_linking_files(dotgit.buf, gitdir.buf, use_relative_paths);
- 
- 		free(wt->path);
- 		wt->path = strbuf_detach(&path, NULL);
-@@ -684,7 +684,7 @@ static void repair_gitfile(struct worktree *wt,
- 
- 	if (repair) {
- 		fn(0, wt->path, repair, cb_data);
--		write_worktree_linking_files(dotgit, gitdir, use_relative_paths);
-+		write_worktree_linking_files(dotgit.buf, gitdir.buf, use_relative_paths);
- 	}
- 
- done:
-@@ -742,7 +742,7 @@ void repair_worktree_after_gitdir_move(struct worktree *wt, const char *old_path
- 	if (!file_exists(dotgit.buf))
- 		goto done;
- 
--	write_worktree_linking_files(dotgit, gitdir, is_relative_path);
-+	write_worktree_linking_files(dotgit.buf, gitdir.buf, is_relative_path);
- done:
- 	strbuf_release(&gitdir);
- 	strbuf_release(&dotgit);
-@@ -913,7 +913,7 @@ void repair_worktree_at_path(const char *path,
- 
- 	if (repair) {
- 		fn(0, gitdir.buf, repair, cb_data);
--		write_worktree_linking_files(dotgit, gitdir, use_relative_paths);
-+		write_worktree_linking_files(dotgit.buf, gitdir.buf, use_relative_paths);
- 	}
- done:
- 	free(dotgit_contents);
-@@ -1087,17 +1087,17 @@ int init_worktree_config(struct repository *r)
- 	return res;
- }
- 
--void write_worktree_linking_files(struct strbuf dotgit, struct strbuf gitdir,
-+void write_worktree_linking_files(const char *dotgit, const char *gitdir,
- 				  int use_relative_paths)
+ static int has_reserved_character(
+-	struct strbuf *sub_spec, struct strbuf *errbuf)
++	const char *sub_spec, struct strbuf *errbuf)
  {
- 	struct strbuf path = STRBUF_INIT;
- 	struct strbuf repo = STRBUF_INIT;
- 	struct strbuf tmp = STRBUF_INIT;
+-	const char *c = sub_spec->buf;
++	const char *c = sub_spec;
+ 	while (*c) {
+ 		if (*c <= ' ' || strchr(RESERVED_NON_WS, *c)) {
+ 			strbuf_addf(
+@@ -144,7 +144,7 @@ static int has_reserved_character(
  
--	strbuf_addbuf(&path, &dotgit);
-+	strbuf_addstr(&path, dotgit);
- 	strbuf_strip_suffix(&path, "/.git");
- 	strbuf_realpath(&path, path.buf, 1);
--	strbuf_addbuf(&repo, &gitdir);
-+	strbuf_addstr(&repo, gitdir);
- 	strbuf_strip_suffix(&repo, "/gitdir");
- 	strbuf_realpath(&repo, repo.buf, 1);
+ static int parse_combine_subfilter(
+ 	struct list_objects_filter_options *filter_options,
+-	struct strbuf *subspec,
++	const char *subspec,
+ 	struct strbuf *errbuf)
+ {
+ 	size_t new_index = filter_options->sub_nr;
+@@ -155,7 +155,7 @@ static int parse_combine_subfilter(
+ 		      filter_options->sub_alloc);
+ 	list_objects_filter_init(&filter_options->sub[new_index]);
  
-@@ -1110,11 +1110,11 @@ void write_worktree_linking_files(struct strbuf dotgit, struct strbuf gitdir,
+-	decoded = url_percent_decode(subspec->buf);
++	decoded = url_percent_decode(subspec);
+ 
+ 	result = has_reserved_character(subspec, errbuf);
+ 	if (result)
+@@ -182,34 +182,29 @@ static int parse_combine_filter(
+ 	const char *arg,
+ 	struct strbuf *errbuf)
+ {
+-	struct strbuf **subspecs = strbuf_split_str(arg, '+', 0);
+-	size_t sub;
++	const char *p = arg;
+ 	int result = 0;
+ 
+-	if (!subspecs[0]) {
++	if (!*p) {
+ 		strbuf_addstr(errbuf, _("expected something after combine:"));
+ 		result = 1;
+ 		goto cleanup;
  	}
  
- 	if (use_relative_paths) {
--		write_file(gitdir.buf, "%s/.git", relative_path(path.buf, repo.buf, &tmp));
--		write_file(dotgit.buf, "gitdir: %s", relative_path(repo.buf, path.buf, &tmp));
-+		write_file(gitdir, "%s/.git", relative_path(path.buf, repo.buf, &tmp));
-+		write_file(dotgit, "gitdir: %s", relative_path(repo.buf, path.buf, &tmp));
- 	} else {
--		write_file(gitdir.buf, "%s/.git", path.buf);
--		write_file(dotgit.buf, "gitdir: %s", repo.buf);
-+		write_file(gitdir, "%s/.git", path.buf);
-+		write_file(dotgit, "gitdir: %s", repo.buf);
+-	for (sub = 0; subspecs[sub] && !result; sub++) {
+-		if (subspecs[sub + 1]) {
+-			/*
+-			 * This is not the last subspec. Remove trailing "+" so
+-			 * we can parse it.
+-			 */
+-			size_t last = subspecs[sub]->len - 1;
+-			assert(subspecs[sub]->buf[last] == '+');
+-			strbuf_remove(subspecs[sub], last, 1);
+-		}
+-		result = parse_combine_subfilter(
+-			filter_options, subspecs[sub], errbuf);
++	while (*p && !result) {
++		const char *end = strchrnul(p, '+');
++		char *sub = xmemdupz(p, end - p);
++
++		result = parse_combine_subfilter(filter_options, sub, errbuf);
++		free(sub);
++		if (!*end)
++			break;
++		p = end + 1;
  	}
  
- 	strbuf_release(&path);
-diff --git a/worktree.h b/worktree.h
-index 06efe26b83..f4e46be385 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -240,7 +240,7 @@ int init_worktree_config(struct repository *r);
-  *  dotgit: "/path/to/foo/.git"
-  *  gitdir: "/path/to/repo/worktrees/foo/gitdir"
-  */
--void write_worktree_linking_files(struct strbuf dotgit, struct strbuf gitdir,
-+void write_worktree_linking_files(const char *dotgit, const char *gitdir,
- 				  int use_relative_paths);
+ 	filter_options->choice = LOFC_COMBINE;
  
- #endif
+ cleanup:
+-	strbuf_list_free(subspecs);
+ 	if (result)
+ 		list_objects_filter_release(filter_options);
+ 	return result;
+diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
+index 0387f35a32..39211ef989 100755
+--- a/t/t6112-rev-list-filters-objects.sh
++++ b/t/t6112-rev-list-filters-objects.sh
+@@ -483,10 +483,6 @@ test_expect_success 'combine:... with non-encoded reserved chars' '
+ 		"must escape char in sub-filter-spec: .\~."
+ '
+ 
+-test_expect_success 'validate err msg for "combine:<valid-filter>+"' '
+-	expect_invalid_filter_spec combine:tree:2+ "expected .tree:<depth>."
+-'
+-
+ test_expect_success 'combine:... with edge-case hex digits: Ff Aa 0 9' '
+ 	git -C r3 rev-list --objects --filter="combine:tree:2+bl%6Fb:n%6fne" \
+ 		HEAD >actual &&
 -- 
 2.52.0.230.gd8af7cadaa
 
