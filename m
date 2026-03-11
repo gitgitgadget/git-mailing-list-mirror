@@ -1,39 +1,84 @@
-Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA313DF018
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 15:31:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3379B3DCDBF
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 16:28:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773243068; cv=none; b=rvF2MWb3v483NMNsF+dKhnSCqnMOkXFNcxr/Zabuowph1PilXxTqy6fs8VdsLhR28Vym3fsjBtR1KR32NlkIaRC0KqmBW6IH79i6DYLuygB9UT+sGR/zSOCoQW2vQgpCVcKDF47Htrt3q5x3DxGyRY3SJ8TLMD3KYg/9TVzP7kc=
+	t=1773246506; cv=none; b=SsfGnVFrLfPfaI0Pu5Di0YF6Zg56qyvfdinxEtM5sBEGqKiMC3bilILn9jwQmADs4A7BReS+Yh8RqpQBB3Evu8lssoCBybsiie2YAKRFMlPxTeYzAFIQlgwy6nfEqzwGL6lZagur0FmM8ilydZzY5YPJzAjxqqam6yNKgis3Sk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773243068; c=relaxed/simple;
-	bh=5Powp0sTAdWbDrh5e3iNiCGmUpklNNIeYaobtMeXT2o=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vr1GVl78n7++KCy28iUAzKPh0fsdYNlc1V9TnIqt5h6W5DjO0n66XUo7VRkPK66QO8BvXDA5tPyuEE8bTa0TuOJQfQT/3xGaCvjrH2D1pjsz6h9B32jE0u/9NxCYiBjmUMITQf0ty97Txxpf9TL6DL8qOqPEgEEsEFdGq/pc4y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=2AGQ8XrS; arc=none smtp.client-ip=91.218.175.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1773246506; c=relaxed/simple;
+	bh=7GU1cH+Ze3P9iiz7ZOnqhWtTl1UfzCMyfOgRP9xY21M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=trWNSMS7SShektoDFZwFZh/b6oou60Cam9+4+4dNvBFvw+pQgJfMRsVkFZnpIAUWpzXk8ipTc0ZStFSFsFl8Dds1bt9kgZaqVfaIVIabFN5WxaToxjHWp0D3h+XhiuYY73AkHdRqx7JqeAGdc3geCaPgQuTGSfjNOdyE30SToXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PaplmyKF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p9A9WVuy; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="2AGQ8XrS"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1773243062;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ICmsYBxdWp/pcdIuBAxmZDLOE9E26Kw6BJzmgK7W7Eg=;
-	b=2AGQ8XrSPNp2Sl9lhmwCcES9lhadf8TiIZtmPCoEEKBotuPUmUI3knXWAY6GF7R7sFLzmI
-	eROlfrmtpm1CoTMGWujWhDJF2iMZBxZT2/xlL770ntgeLLiUu+x0C8zJMv5B2qHwTTDG4K
-	tR1/sEFrtuvmT18JKZCZCe5efYuclh4=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 6/6] odb: introduce generic object counting
-In-Reply-To: <20260310-b4-pks-odb-source-count-objects-v1-6-109e07d425f4@pks.im>
-References: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
- <20260310-b4-pks-odb-source-count-objects-v1-6-109e07d425f4@pks.im>
-Date: Wed, 11 Mar 2026 16:30:50 +0100
-Message-ID: <87fr66l6xh.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PaplmyKF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p9A9WVuy"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 558091400192;
+	Wed, 11 Mar 2026 12:28:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 11 Mar 2026 12:28:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773246503; x=1773332903; bh=N0zhxvCMan
+	l6VRkHdjg1TGkYUOYBkEp7wjkKPO688kU=; b=PaplmyKFN6heMvIZENPcNDIsjK
+	8bIuIC3RYWDy6o6NUe8Mt51Ga/nmxNZuuhFFpRrqZrQFnv4Qsb1tFL2p32k1o1t0
+	S04TMqRm3ClcGwnFXNKqtsFNJ91OPg74IXI2jf3Uz69IU9cnNg4dFUOAV6cz3kvb
+	VbrPrVrG4muLN2swIDjnLSQ3t24LUfWY/Wzv3O4RlkVskCpG7wpQekwmSo5JpnKR
+	ztNgzLo5IUXbxec0ajPm36QAUG+FFwf/D3AIPccPXcg6fSNDdbjMQYusacjwGRSi
+	fInitllZnqnnatlZk8e7aOtGB8kZCKRi/MdhqHQJVvGn+vA7JaaXRiG2vfuQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773246503; x=1773332903; bh=N0zhxvCManl6VRkHdjg1TGkYUOYBkEp7wjk
+	KPO688kU=; b=p9A9WVuy60dqmBtW6Rk8MpdSigWvbNrw/6OQW1Ed/qVY51BDGLr
+	slSEUY1vVbzOyVXa4JuKAVbiZE4cFWUTPU5d9g/QV0UJOPvAe+fKPkHXgEmpmI+x
+	C7p14ysvtT0VQqCw3nz+vnteKllactsd+L3L2f1T05iLu/L3qIJv/vF1mzO9yGvR
+	iyhXzNoIkqhwyYkBXThQ+Fp9KJBPkcTLeZB/6LwJhRjfT9F07nLLR3kqlMko456V
+	ibOyGakIDp9ZLgf5AIp8Fe5hpEOHXMGJieZ+3oanbfptrEfuqr1ez+/bDPV0S92H
+	uk8MhK1AebOf/azTS1FoIoOMMm3KQwLy6QQ==
+X-ME-Sender: <xms:J5ixaeM4X82KEwPtE6efTB8Tk619ciV_FFrnQ-NnOftR7tODiF4ZwA>
+    <xme:J5ixaT_rGa3IPg7_52WVN-_GMPv3NVy4l84Swsu1zBx1-qEDKTlR5h5FcTyNUiusQ
+    YZP3njl9Hu6xVYkU123baprJjK5T0Km9V6aPjFJaJdVU8q9pZ_F>
+X-ME-Received: <xmr:J5ixaaTRYeut6YFgflWOngohKDEY2Q9xfG_lNMn6uzJhuG5rPuVT3clIJO1nOtlfveWYzG-odDKqEcPEgKGGhwvttnhHu7jwwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegfeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeguvghvvghs
+    hhhighhurhhgrghonhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:J5ixadmoT29-ThjcS-w1S8EHFoctQYbPjng9kNwcdMghqISZbWZysw>
+    <xmx:J5ixaSQQ63kasOSvC3kK8GDoEjaXl-cMF_oDhniAErECwT38VE_Dlw>
+    <xmx:J5ixaTOFXIH8XBPwE5OkhnvqsPj9en3CXMACOBOY-EgKPlgyPE30Hw>
+    <xmx:J5ixaTWc_8BS3sY6SZZDEwSVRPcbiMcgeqcuWhHmYnhJBOZUhJhUuQ>
+    <xmx:J5ixaWOePppBz0XvcgpeAb5B2nV9Moe3tLRuYLLe64WLo5uU3RiuNhVo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Mar 2026 12:28:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net
+Subject: Re: [PATCH v2 2/2] list-objects-filter-options: avoid
+ strbuf_split_str()
+In-Reply-To: <20260311132041.12044-3-deveshigurgaon@gmail.com> (Deveshi
+	Dwivedi's message of "Wed, 11 Mar 2026 13:20:41 +0000")
+References: <20260311132041.12044-1-deveshigurgaon@gmail.com>
+	<20260311132041.12044-3-deveshigurgaon@gmail.com>
+Date: Wed, 11 Mar 2026 09:28:21 -0700
+Message-ID: <xmqqo6kuqqje.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,148 +86,99 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
-Patrick Steinhardt <ps@pks.im> writes:
+Deveshi Dwivedi <deveshigurgaon@gmail.com> writes:
 
-> Similar to the preceding commit, introduce counting of objects on the
-> object database level, replacing the logic that we have in
-> `repo_approximate_object_count()`.
->
-> Note that the function knows to cache the object count. It's unclear
-> whether this cache is really required as we shouldn't have that many
-> cases where we count objects repeatedly. But to be on the safe side the
-> caching mechanism is retained, with the only excepting being that we
-> also have to use the passed flags as caching key.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/gc.c   |  6 +++++-
->  commit-graph.c |  3 ++-
->  object-name.c  |  6 +++++-
->  odb.c          | 37 ++++++++++++++++++++++++++++++++++++-
->  odb.h          | 17 +++++++++++++++--
->  packfile.c     | 27 ---------------------------
->  packfile.h     |  6 ------
->  7 files changed, 63 insertions(+), 39 deletions(-)
->
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 3a64d28da8..cb9ca89a97 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -574,9 +574,13 @@ static uint64_t total_ram(void)
->  static uint64_t estimate_repack_memory(struct gc_config *cfg,
->  				       struct packed_git *pack)
->  {
-> -	unsigned long nr_objects = repo_approximate_object_count(the_repository);
-> +	unsigned long nr_objects;
->  	size_t os_cache, heap;
->  
-> +	if (odb_count_objects(the_repository->objects,
-> +			      ODB_COUNT_OBJECTS_APPROXIMATE, &nr_objects) < 0)
-> +		return 0;
-> +
->  	if (!pack || !nr_objects)
->  		return 0;
->  
-> diff --git a/commit-graph.c b/commit-graph.c
-> index f8e24145a5..c030003330 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -2607,7 +2607,8 @@ int write_commit_graph(struct odb_source *source,
->  			replace = ctx.opts->split_flags & COMMIT_GRAPH_SPLIT_REPLACE;
+> Walk the input string directly with strchrnul() to find each '+'.
+> strchrnul() returns a pointer to the terminating '\0' when the
+> delimiter is not found, so no separate "found separator?" branch is
+> needed.  Copy each sub-spec into a temporary buffer using end - p,
+> which naturally excludes the '+', so the separator is always stripped
+> cleanly.  A trailing '+' causes the outer while (*p) test to fail on
+> the next iteration rather than passing an empty string to the parser.
+
+OK.  The above description is a bit more excessively focused on the
+implementation (which readers can find in the patch text) than the
+level of detail we usually aim for, but let's let it pass.
+
+> +	if (!*p) {
+>  		strbuf_addstr(errbuf, _("expected something after combine:"));
+>  		result = 1;
+>  		goto cleanup;
 >  	}
->  
-> -	ctx.approx_nr_objects = repo_approximate_object_count(r);
-> +	if (odb_count_objects(r->objects, ODB_COUNT_OBJECTS_APPROXIMATE, &ctx.approx_nr_objects) < 0)
-> +		ctx.approx_nr_objects = 0;
->  
->  	if (ctx.append && g) {
->  		for (i = 0; i < g->num_commits; i++) {
-> diff --git a/object-name.c b/object-name.c
-> index 7b14c3bf9b..e5adec4c9d 100644
-> --- a/object-name.c
-> +++ b/object-name.c
-> @@ -837,7 +837,11 @@ int repo_find_unique_abbrev_r(struct repository *r, char *hex,
->  	const unsigned hexsz = algo->hexsz;
->  
->  	if (len < 0) {
-> -		unsigned long count = repo_approximate_object_count(r);
-> +		unsigned long count;
-> +
-> +		if (odb_count_objects(r->objects, ODB_COUNT_OBJECTS_APPROXIMATE, &count) < 0)
-> +			count = 0;
-> +
->  		/*
->  		 * Add one because the MSB only tells us the highest bit set,
->  		 * not including the value of all the _other_ bits (so "15"
-> diff --git a/odb.c b/odb.c
-> index 84a31084d3..350e23f3c0 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -917,6 +917,41 @@ int odb_for_each_object(struct object_database *odb,
->  	return 0;
->  }
->  
-> +int odb_count_objects(struct object_database *odb,
-> +		      enum odb_count_objects_flags flags,
-> +		      unsigned long *out)
-> +{
-> +	struct odb_source *source;
-> +	unsigned long count = 0;
-> +	int ret;
-> +
-> +	if (odb->object_count_valid && odb->object_count_flags == flags) {
-> +		*out = odb->object_count;
-> +		return 0;
-> +	}
-> +
-> +	odb_prepare_alternates(odb);
-> +	for (source = odb->sources; source; source = source->next) {
-> +		unsigned long c;
-> +
-> +		ret = odb_source_count_objects(source, flags, &c);
-> +		if (ret < 0)
-> +			goto out;
-> +
-> +		count += c;
-> +	}
-> +
-> +	odb->object_count = count;
-> +	odb->object_count_valid = 1;
-> +	odb->object_count_flags = flags;
-> +
-> +	*out = count;
-> +	ret = 0;
-> +
-> +out:
-> +	return ret;
-> +}
-> +
->  void odb_assert_oid_type(struct object_database *odb,
->  			 const struct object_id *oid, enum object_type expect)
->  {
-> @@ -1030,7 +1065,7 @@ void odb_reprepare(struct object_database *o)
->  	for (source = o->sources; source; source = source->next)
->  		odb_source_reprepare(source);
->  
-> -	o->approximate_object_count_valid = 0;
-> +	o->object_count_valid = 0;
->  
->  	obj_read_unlock();
->  }
-> diff --git a/odb.h b/odb.h
-> index e6057477f6..7b004f1cf4 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -112,8 +112,9 @@ struct object_database {
->  	 * These two fields are not meant for direct access. Use
->  	 * repo_approximate_object_count() instead.
 
-This comment needs updating now.
+This complains when "combine:" is not followed by anything.
 
-Otherwise no comments here.
+> +	while (*p && !result) {
+> +		const char *end = strchrnul(p, '+');
+> +		char *sub = xmemdupz(p, end - p);
+> +
+> +		result = parse_combine_subfilter(filter_options, sub, errbuf);
+> +		free(sub);
+> +		if (!*end)
+> +			break;
+> +		p = end + 1;
+>  	}
 
--- 
-Cheers,
-Toon
+The usual "process up to the next '+' and skip over that '+' to find the
+next piece" pattern is here.  There is nothing surprising.  Good.
+
+The "trailing '+' problem" the proposed log message talks about
+happens when the input is "combine:foo+" (this loop starts scanning
+from 'f').  We find the '+' at the end of the string in "end", make
+a temporary copy of 'foo' and feed it to parse_combine_subfilter(),
+and move on to the NUL after '+', at which the loop control notices
+that we are at the end.
+
+It is curious what would happen when the input were "combine:foo++",
+though.  What happens is that the loop begins with p pointing at 'f'
+in the initial iteration, "end" points at the first '+', and a
+temporary copy of 'foo' is fed to parse_combine_subfilter(), and we
+move on to the second '+'.  Then the second iteration finds NUL
+after that '+' in "end", and we end up calling the helper function
+with a temporary copy of '+'; gently_parse_list_objects_fiter() will
+reject it as an invalid filter-spec.
+
+Logically, "foo+" would be a combination of "foo" and "" (an empty
+string) and we ignore the empty string, and "foo++" would be a
+combination of "foo", "" and "" (two empty strings), but we barf at
+the empty string if it appears in the middle.  And recall that "" we
+saw earlier at the beginning of this function was also triggered an
+error.
+
+Admittedly the original wasn't much better.  It ignored an empty
+string in the middle (e.g., "foo++bar" would have fed 'foo', '', and
+'bar' to parse_combine_subfilter() and an empty string would have
+become a no-op) but barfed at the trailing one "foo+".  This new
+implementation swaps where it barfs, complaining an empty string in
+the middle and ignoring an empty string at the end.
+
+In any case, the error behaviour against an empty filter-spec feels
+a bit uneven.
+
+Tightening to reject empty string in the middle may appear to
+existing users as a regression if they are using "combine:foo++bar"
+as they are forced to update it to lose the extra '+'.
+
+By the way, instead of making a temporary copy and discarding it
+repeatedly in a loop, it might be cheaper to reuse an allocated
+temporary with the common pattern:
+
+	struct strbuf temp = STRBUF_INIT;
+	while (... loop ...) {
+		const char *end = ...;
+		strbuf_reset(&temp);
+		strbuf_add(&temp, p, end - p);
+		... use temp.buf ...
+	}
+	strbuf_release(&temp);
+
+because _reset() only resets the len member of the strbuf without
+releasing the resource, if the next piece of memory you need a
+temporary copy for is shorter than the pieces you have ever used the
+strbuf for, you can make the copy without a new allocation.
+
+> -test_expect_success 'validate err msg for "combine:<valid-filter>+"' '
+> -	expect_invalid_filter_spec combine:tree:2+ "expected .tree:<depth>."
+> -'
+
