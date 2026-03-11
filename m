@@ -1,111 +1,126 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01F22C11CA
-	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:38:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2BF40DFB4
+	for <git@vger.kernel.org>; Wed, 11 Mar 2026 19:40:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773257926; cv=none; b=Yb13DHjrMzpoJUka3uSPSB6YHE4EWZxkpuyjEP1sUbwJpN/u81VbwQxB+X1QCmAJ0XW3V2GhF4ozyxSiQvK6Qd9uqKTbK1CQBRFjVR5XduAqoTINiUU+rj2khMAwa9DNtgTtQHSuONoJ18KGevsNqOelvSbeG88hjgYZn5wOZYM=
+	t=1773258012; cv=none; b=XfphdWZD0BX8sIqpGY+EkSFEr9GQF6RkNz7WED+nhOQKIN6nbtNyZ1qBsPFaB+xPJ9KC1Xhjqybo0K/gD49tNEOSubdFnqv0b+3x0rGfS7TwAyTsepGow+uCSHg6a8+GtBVnA9UObPeolG4eqk9oADEgmZaAqcSMD29M6+gPzZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773257926; c=relaxed/simple;
-	bh=M/LNFPcg694LN5sdOss4slU8J0GDjwXoGLCaPeV3wVU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SSP71ymaoeCBiI5YLEPnKunVIRI5gwvIDEBllP3JyLxC9tMJjlBmq2TePxQKY43AV1u8ngpNOVhnSOG5EjsIJuad8dmtwqMepg/ZKs1uz/ytVpQOGpGPh3ZSBQzd3wXMeGUq0MiChLmej54YE3D0nWgYg3SQpll2waKcDRJrIDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RSwidhep; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LNp7cyAP; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773258012; c=relaxed/simple;
+	bh=KagLR7KbQvLzgYWI4al8JmyZHmrtLaRSdvNr/76ZMqI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LRcxw123z6w2KUqfnRk9raWl/aJ59vKEuLBAhu8zH4KuWCtabLF8O+u8CTBTGR+UDDDkhvmRcYOhXFQHBIpxmkUDnQiYKu87E9w+6qIl3qctjwsSKWDBkLj06P9BySuUYc7QbKT2kONZfahr1zCyt1NZb3+Y2nP2rV4dIt+DVUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AHpuxgWy; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RSwidhep";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LNp7cyAP"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D9807A00CD;
-	Wed, 11 Mar 2026 15:38:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 11 Mar 2026 15:38:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1773257924;
-	 x=1773344324; bh=jq9/VxfuahWv5AZy7QgXGugrmzsnR6P0fuLLxj04HH4=; b=
-	RSwidhepGXHZ5PTJ8R4YJPSqf78W+rsWdnaYPwQ71/w2n+EBgUOFQ5Gn853sQOTL
-	0etQ60RkBfGX4XFs3Ot4ArRH450k/OD0PC+TMO60kh7NQ4jKESE87qB2urnM/Iz3
-	9ByZ9drsEWxqtfZGVRvHfCVGdUf5dYYUWWqBnShG07NABgTnHYCe+SoOxqLjsqR4
-	CbTdjCp2qoYxwDCygowlQwYb/myHFHer7ppDSwXodDkmY4A47IklWxe7TtaUTBcR
-	gDD+MqI86dI4Q2ZyPRz5WhhD3t+YmWRg9bfR9WEDpltQ2QRRLxigW10mXpuy5IvY
-	XRzJTyXstKc+yKgZUjLvaA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773257924; x=
-	1773344324; bh=jq9/VxfuahWv5AZy7QgXGugrmzsnR6P0fuLLxj04HH4=; b=L
-	Np7cyAPG6OMJccsesin6ZThaLWRZdDdn7phg1SX/INk+HdSC/kK8r3xxaCAeSM49
-	lHStxz7vsgzQh88xrHqa6oadJiztRFHz8fahp8ZKdhf94L385kSLHmdiju3BWwlQ
-	iHHLmbKc1KNvlAl5uNTw3Z3DWitk8pvHgDafJPHi7sD90QiVkj8CSizPAnzwZfVk
-	CaGmkPBSvO3Tb0MnDfSLmUuuMYaMYeXT+HH/KlkiJKGojX6ubaTLw6sSxVKh4u25
-	Yt6erE2gFcvo0JQgOYlMoBfRugLfg4ei63IkH1UQnMmfz3Whbsi5NbjZodxUJTRx
-	eBhBNYaaNbiTXEtvwJVVg==
-X-ME-Sender: <xms:xMSxaRDsYkKVWgyDrFOXJhAh-RxIa_DWKUOjh7k9alv7L9Ic1wlmFw>
-    <xme:xMSxaW_axlSOq3yxMwbnJ4l9c7MaE5O_7sGV1q7yNEhy8kUoSUKrv8GwIVpepss2C
-    TLn0LxcW2HiMC9uzK02kgP3DeF24hydO41xG-DT2OjJXO-jdVvx>
-X-ME-Received: <xmr:xMSxaZ_DvJXqMmSRbSI9_1Ja7jWXJmko14RCSDK4-sJmwIgO2oa4BSjUdv8gIA113lshlRFHS4Gy_jlFaL088-KTSvWgJphDBw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeegjeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
-    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghshhhu
-    nhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xMSxaVeofnqwos_KwlQIDsETwNoco6EKw0BVg88STbsKpRvTEHGWug>
-    <xmx:xMSxaaFSwf-mfTapysqqnHt7_vsyiUm9O-Om5xFBiEDLD3UHimDp5A>
-    <xmx:xMSxabdVimrRwjI0CoqJMeE70M9kuUHsMSrampxxoPBxl4Nkb2yZag>
-    <xmx:xMSxacHyb8oN6GE7XNY1LAnNaWoSSQzXDjKvYy1sL7jP6weLEyW80g>
-    <xmx:xMSxaW9FVXR4NUpfG2eufxQ66BTxM6kQXQwz3m6gRSgFSpvfhknELRa2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Mar 2026 15:38:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andrew Au <cshung@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] transport-helper, connect: add atexit handler to
- reap children on abnormal exit
-In-Reply-To: <CAGVkMb6M2buc5zS+SFfYa6LLs7fN369MrVagETVg0U_PN7njOg@mail.gmail.com>
-	(Andrew Au's message of "Wed, 11 Mar 2026 11:19:54 -0700")
-References: <20260223165147.3294516-1-cshung@gmail.com>
-	<20260311142021.3464789-1-cshung@gmail.com>
-	<xmqqsea6p7st.fsf@gitster.g>
-	<CAGVkMb6M2buc5zS+SFfYa6LLs7fN369MrVagETVg0U_PN7njOg@mail.gmail.com>
-Date: Wed, 11 Mar 2026 12:38:43 -0700
-Message-ID: <xmqqfr66nol8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AHpuxgWy"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4853c1ca73aso1699505e9.2
+        for <git@vger.kernel.org>; Wed, 11 Mar 2026 12:40:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773258009; x=1773862809; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HfXZmY5/10IVCOaOVcw4iHlFHDo24WiY/2P6Pv6Q/2w=;
+        b=AHpuxgWymyTOI5Rr7bqvvKJ6b1zRTpCaRZMgOZNbg+NIGyvcF5kK+JeJLjaB++rFkn
+         g1SE7rfb/N2LMLGxXB2WOObUCDUS5xgIV2UitYA6iVOK+95bE0Cc7n1Xx+qQd/R7QMzg
+         HqXqX7qe1e16Qq9DXC+druAIjqHB4F+QKuKIcb9/7MxZZhN+90htUzWk0yzirEORBw3b
+         SM9z2vqDch4DVFBG7+Mp6+7NiB+kwLXpAGn3ntxPeMj0A8Rwq4Ts6iRJ5kZGxnagFLbg
+         SKWMjzO0JLnDKH18wn0t6jzi0pzebLu/wRuxLHR+ljP6Z5Y6CzpN5OfmB2vpW4b0F/Ih
+         bXdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773258009; x=1773862809;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HfXZmY5/10IVCOaOVcw4iHlFHDo24WiY/2P6Pv6Q/2w=;
+        b=OCec77qjcPZukwmE/zkgbULSYJc9tf3IjpOKKgs6jcATekKK2adxRgiRqksxB13LUK
+         tV3N91+DxguHdgAPiIIl/bbE7gvMdTmdcYns8pPyHxBjcL25dSqqUePAFnBhm+93IL1U
+         l4WaDHykbQeW4BVAEXHGsxvuWtJlKD808KPQ0HS2patIzbG1lRyzgSIIrQ3ShSJF7GAO
+         1oSrk1f9bCcEcV3TCISOmwDoqiI92xnow+K+J0nEidj8vRYOA4klAG2a9UIglVsw9kcr
+         XYlSH360H5nhdN1tvpVVdbqaJDOOwGq8cmC3mtgHmU+q85jmsDfJQb9xL7nXifBbr5MV
+         F4XA==
+X-Gm-Message-State: AOJu0YyvczDUBV85TV//1sVN7GhVcgJX54ONkokcmZUr8UxC+ZR0GXWV
+	j5bzpxLY/Ordwt3HOyVz/KYL9HRh255vTYi9RiZXbQ7lnhDLFlnrW3Ajv+Rkl1U6Fkw=
+X-Gm-Gg: ATEYQzxoeQA3mjgTwyK4tHoAlwgk4oqtwiEdLU+mx9r9LSRgpRIOl9NFSZzVgQL55tX
+	GmlYrbh3WhKB0I5sylaKVIM+vkkQ0qNvvpOHiwt9GJpBAzg4Rmizo9B75fk7iclAktjArHWvISb
+	cSZknXA5ioM6GT2cGIRmcuNeObmtEAgT4IOFRqZU0phltqz5ZZ/Lop9S+YI0sFcXnNfFP7YN9c4
+	nWX9KJalgD1yPUPRlJzOdOavCzbvwTGfKOjJavFZ3XcowPrAZ4Y2gtMcFN8xdz0SfqkWfVWGmkn
+	30DTyJOpKCTtfgKVD3qOzB/kJIQhSJ28driE+ER7DwnTLn1fSGVQO+dLeHa9GcwqpeqCIAqXCDV
+	Vd1Y+vzVocVOhlF63AJ0X4pydWYHn0Ef4KrWJNC3qwZ6rECuEz8phv9ZoIRXWod0jk4fffDQnmQ
+	lNbxJ3AVOlaV6akkrUsdu5ZgVyG9F/owamwdEIq1h0DK8Ys0yaGDHpsk19KEHmbzvAi5qAJ7oL/
+	+R1yZE/cn6mn+S25Z+GyBhjTwd2Iqnow8y1E6RrE/YeOYSkyWg3s/nP+HwpISp6W9zTBQ==
+X-Received: by 2002:a05:600c:458e:b0:477:7ab8:aba with SMTP id 5b1f17b1804b1-4854b0ac93fmr57252155e9.1.1773258009280;
+        Wed, 11 Mar 2026 12:40:09 -0700 (PDT)
+Received: from farblopa.localdomain ([84.126.0.122])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe23afc5sm1694775f8f.39.2026.03.11.12.40.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Mar 2026 12:40:08 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	chandrapratap3519@gmail.com,
+	Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [GSoC PATCH] t9200: handle missing CVS with skip_all
+Date: Wed, 11 Mar 2026 20:40:02 +0100
+Message-ID: <20260311194002.190195-1-pabloosabaterr@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Andrew Au <cshung@gmail.com> writes:
+CVS initialization runs outside a test_expect_success and when it
+fails, the error report isn't good.
 
-> Thank you for the feedback.
->
-> The use case is a long-running service running as PID 1 inside a
-> container. The service continuously spawns git to detect repository
-> changes — it is not a one-shot container where git itself is the
-> primary process. Because the service is meant to stay alive
-> indefinitely, any zombies git leaves behind accumulate over time
-> rather than being cleaned up when the container exits.
+Wrap CVS initialization in a skip_all check so when CVS initialization
+fails, the error report becomes clearer.
 
-Wait, the proposed log message said "Git is the pid 1", and now the
-above is "there is some long-running service that runs Git".  Which
-one is it?  Wouldn't that long-running service be the right process
-that should reap these unwaited children?  Or is "git" used as that
-long-running service somehow?
+Move the Git repo initialization into its own test_expect_success instead
+of being in the same CVS check.
 
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+---
+ t/t9200-git-cvsexportcommit.sh | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+index a44eabf0d8..cba3b1a28a 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -30,13 +30,17 @@ export CVSROOT CVSWORK GIT_DIR
+ 
+ rm -rf "$CVSROOT" "$CVSWORK"
+ 
+-cvs init &&
+-test -d "$CVSROOT" &&
+-cvs -Q co -d "$CVSWORK" . &&
+-echo >empty &&
+-git add empty &&
+-git commit -q -a -m "Initial" 2>/dev/null ||
+-exit 1
++if ! cvs init || ! test -d "$CVSROOT" || ! cvs -Q co -d "$CVSWORK" .
++then
++	skip_all="cvs repository set-up fails"
++	test_done
++fi
++
++test_expect_success 'git setup' '
++	echo >empty &&
++	git add empty &&
++	git commit -q -a -m Initial
++'
+ 
+ check_entries () {
+ 	# $1 == directory, $2 == expected
+-- 
+2.43.0
 
