@@ -1,165 +1,101 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D99F3AE1B1
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 07:27:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E44A250C06
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 08:13:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773300437; cv=none; b=IMNVj+SjsOkUs7al51DN0Rv1rwAxKzzVgSxcgcwBVQZE2LQzoA8kmB2hKC+8HQmVtx6QkD1KlotOETbyjeDYTHdCMTrnPplR+aiUhHG2cWcUlLcZ4WAPVLQkK+ZRwnaCAMjkn5NJ0kAhckkAVAF/ZcAtKwYXeJ0Ljjic04U1W+o=
+	t=1773303201; cv=none; b=Nk9aWFUKd69fI44TOPFzhjp5VrJQPyLCPAkvCSYhc70LnIxUsfXRRVkI76RxQD6UaNM2Ft6dxD6kilQ5eShI7JnC/H0DIr3q8gRtEBvrVbDZGTZCz0UHJ0GQysXIel96JCZeLjIlZvk41Gi9gHnzw6r9gnzp9TdZPYLfZKAnUYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773300437; c=relaxed/simple;
-	bh=DUSS0vMwjZy9Rsn2vHq1nz06hA3NvfkRUMBSV//Yfxw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nYUWFBFsnyZMgoh38c6yLT+n0coVHUfcDKKtMxGWYAQfdyf++4ZupLXIoWC15a5LSz9SdoBIAFXwGWIJDY95tXGRkWWmj14OthhUWFrxZXHIevZJ735hyWd8fE05R5Yq6BgjxX1y6YK+RPhqdmQaXuvJM/tGzhKVakSnw4C5Pks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K3zgfeo+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G9W3M9Iz; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773303201; c=relaxed/simple;
+	bh=W364uJo5KFUjyYfctf/ymQX1axjrFLXNrD6FTTIWA1E=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=RcaRZb0EthXHteV9FgJ9wTza7a+VZcYzIvo138QUAEuYQJSXQ9LEpU/fGs1AkyNqpWzcN2ZVhUtE1U2FIYuc/jAqKzfWOR+HGM5wxz1I38JiugAxYuqFU/KP91Yp7poNWr9NdQumjO/+wGnLEndyR1XkByCkMyYZrQyX5KT8eaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=odoo.com; spf=pass smtp.mailfrom=odoo.com; dkim=pass (2048-bit key) header.d=odoo.com header.i=@odoo.com header.b=jE8VePKj; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=odoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=odoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K3zgfeo+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G9W3M9Iz"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6D3791400188;
-	Thu, 12 Mar 2026 03:27:11 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 12 Mar 2026 03:27:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773300431; x=1773386831; bh=q/RVh48DZz
-	wMA52MdsR8Un3t1LhhwUfrxGFfq/b2YcE=; b=K3zgfeo+hLnyJ+hBDTMoPxay+J
-	2xO84jbaeHqVDtNgJuCqrtigyX0/lH1BHqgM666rzPY89JCAvSnBz9tU39gb1EPR
-	8GyrdjYAVBTzGKepdI8nQBq8YdC3mKT2+WKTe0Zqaz6BzhqLMqwTlhINQ9crFuKG
-	ZI7wZTS9SHT2aYmi2LCU/V3Txv5Q3aTZCeYFE0ePuZgOEsuKywvBJCf0JIBwic+s
-	8uByKz5Drbgykcjg8DxdipNS1pzgpStWdEoWpIZiNioR+VyvZoZd+ZihPT6hmHtc
-	bUB1G5xsYLfpwEcfaDKMNOlaxTxb4oPaWxQNQ16sROaDEsxy2IlDARu9oxQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773300431; x=1773386831; bh=q/RVh48DZzwMA52MdsR8Un3t1LhhwUfrxGF
-	fq/b2YcE=; b=G9W3M9IzinimtVzirkC64BKsZ4rT4UhuV2I38ATdAMQoKyObipb
-	RWgI5HfWtD+0AtkxYakOWChUbbtmzdubzClN/LcPlr95qvAMTYndlCgFUjhdbko1
-	N0SdntWdhJU2O2PGh5EauQ27kqBd1L4NQFm1KHil+Snrg0nP3MdU5rhnfJvx4qli
-	Y2b+zbR0wmk3+z65Kg/velHXoupB1tCakpv2xgaWTpgVLB+hkNUouHP7QGzEGQnr
-	VWQR/o+8GdGisTKdC5iGfEhVnBmPVK9garamzH678+g4wpF6JPlr5pet1bwHQ1cC
-	JPtN9FcOO8qrTTz4YfXHKPLgzCVOASfRT/g==
-X-ME-Sender: <xms:z2qyabwI1bTpYEzFAxMpWwu4YRHw0qa0qx80_SrPNa8u5ekBK6JOxg>
-    <xme:z2qyaW_hTnGXvAYg8-tgsEzti8u-CJcKXD9uOoMfd45VByssWlV9Tu56JF97Vb7f6
-    Q7eRiJYQ5Su5lf83N2Kn1MTZTDYo9adRAeQ6wb5h6S2PzyavH-U>
-X-ME-Received: <xmr:z2qyafIQN3pzMu-MWd6g58dmKpwBL1N8n7p_GsbGv4Q7k6dJfeHvYGpkOsjJggJMGMg7mMQkpiOC-e2qae1e6VPtypYlJuIfiHN0pu1HvtTpYw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeiudejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesph
-    gvfhhfrdhnvghtpdhrtghpthhtohepphgruhhlsehprghulhhtrghrjhgrnhdrtghomhdp
-    rhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
-    pehhrghngihinhdrhhigsegshihtvggurghntggvrdgtohhm
-X-ME-Proxy: <xmx:z2qyaccSseGF9haJZN8i-6ACB1czF8xtlpQ13YintUspanUKYK3Bgg>
-    <xmx:z2qyae-XLXfV0XL6pmymsORMacHGOIXMKsD57UbHpIt-DpbCaubGJQ>
-    <xmx:z2qyaZqJbpaeZczEJcQ9Xa3IOQUSUk6Tny5bSLt_8vEnOGiSVUCwtA>
-    <xmx:z2qyaTBpsdDKyBATm_dqn1uv-tq2jb8tePo3BtsoBJawpQmFPB-CXQ>
-    <xmx:z2qyaYOqcbCJkKCrXTOxcmVzxYnFOZgyj3pUnNPTWsNqrhnG3NUl9GUI>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 03:27:10 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 66870bbb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Mar 2026 07:27:08 +0000 (UTC)
-Date: Thu, 12 Mar 2026 08:27:05 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Paul Tarjan <paul@paultarjan.com>
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, christian.couder@gmail.com,
-	hanxin.hx@bytedance.com, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] promisor-remote: prevent lazy-fetch recursion in
- child fetch
-Message-ID: <abJqySqfdFoY8cEu@pks.im>
-References: <abFJhFhHLhS4qdrM@pks.im>
- <20260311141846.12315-1-github@paulisageek.com>
+	dkim=pass (2048-bit key) header.d=odoo.com header.i=@odoo.com header.b="jE8VePKj"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4852f8ac7e9so7862035e9.1
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 01:13:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=odoo.com; s=google; t=1773303194; x=1773907994; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LIesOUHUd+lWXLW6JXv8C0zvnZFNZTn5XgHVE+PdO9I=;
+        b=jE8VePKjnV4kkvXNwGYRcDI23ttGlU9hnjMx2WFJBV+aDYJpvwK+pkIdNaji+dW2Z2
+         f/Grm77ur4V372YeIBoUQg0xlANCTFxgJ7vHMbG/5WFymSDISAgq+9gvHX7Ru6bc32Yj
+         phicXl/wTaUpi1sTvm4nWoVmr6/hJ36dfZFbdj8IOhwngy7Wjm1h1IyLW+RUlt20b+7g
+         m8BX7DHOijykODcNWAQ3nKfOBT/ScvrwlBg0jxw0knoywUpbItch5xaJ0rV4jyxX4SGZ
+         EM2PP8cMOMxgwyRcrPDSxhNYy/Mtvx8vdONOpVWXZI3SZ63iZzYqPpQmeHKC+svhTMfj
+         jM1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773303194; x=1773907994;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LIesOUHUd+lWXLW6JXv8C0zvnZFNZTn5XgHVE+PdO9I=;
+        b=gHLXjZB4R/5XtGDYxwxXx4RATgEzFQ4qt4yCNyCVYLkoLFs27yfejQcTr1vtxHU6We
+         R7MCtRucj3VonUWm3DDoJrd//Cj0R7mkxwNj3J8SfQkVdKDQeHqp+pu0Ms60LVFnSf1Q
+         YbO5m2EpskcBi5AMv2h6Za5Uy4oyF+6to+l6mz/ZDRDL4A2BqgOQjZKyt4YJ+9lztsiu
+         gRX5xCyLC8QSWubcBHdYJ6WzQk9wm5PZNQlVnSkDHOc9xyIAXIwhQ+cPAUQPd1Ilgwqi
+         pZAiaNBB325f5M8aFbH77rUBkuZKN9YizxWbjxbgbm2syM8I5FJrdynTuANyhL9Bkv2g
+         qs0A==
+X-Gm-Message-State: AOJu0Yzfc17Cc3mszecaW8ChG9Ask9teeA4oVy+hQiQPADA3RismZ5N4
+	bKxp04BkLzcR+pao+E2+83LgZKHfvD8KKJS/Xf6PhPc0kZatCXx2PnJJtR45v7FdXLAkX8NGTxg
+	XC+OB
+X-Gm-Gg: ATEYQzwy2W01xsKdSCTWsPzTw45WvotlJHCaRd4PVqFcccu6BuIHGk9fBzjxhTS8zke
+	omfLoFQEtUXfKtp7JTekwIomv4Xx6B2Z1Nw534gEettY7SWwCkRalkc215OKvZ3ISSgtzpgUKeJ
+	i1jDFplLYidhYp7y2RxmBbu3yGTHWARQZb0nDm6sXTJUNDNT5FCkmO5S+9B58hg4DGXhb+nJ3Fq
+	9p3dp0aukRs/FyvbR5VSnku/WwMFGYJEK7rt750JDGkm5DDtqFuflLvFHnf5WFIWckIffRcqu+2
+	XjXChl3Rs9z9wZrUnm0oN3aILBlo9M6Y+SqrWb34AAv4S8oaLlPquVEQ+ML1J5tMWnQoavOthdk
+	deqWA8iaBw5g8auzU+bwI9QWeTSepd1+MIINTU/GeHBI0uFjdUSTnyocBbER7PTwGMr37V+O6sq
+	nnbEKfU+dS6vCJTqbft8bghIU+yQTxjq7J2Ivz3i/yoMC8eeotOKmP9lmq
+X-Received: by 2002:a05:600c:a010:b0:485:2c61:9457 with SMTP id 5b1f17b1804b1-4854b0e0565mr93147145e9.10.1773303194111;
+        Thu, 12 Mar 2026 01:13:14 -0700 (PDT)
+Received: from [10.30.68.14] (ip-94-140-170-249.reverse.destiny.be. [94.140.170.249])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48541ad1e4esm215943505e9.8.2026.03.12.01.13.13
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Mar 2026 01:13:13 -0700 (PDT)
+Message-ID: <5152ce98-b0ce-42f2-bd34-1cc324042f88@odoo.com>
+Date: Thu, 12 Mar 2026 09:13:12 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260311141846.12315-1-github@paulisageek.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: Xavier Morel <xmo@odoo.com>
+Subject: git submodule using worktrees?
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Mar 11, 2026 at 08:18:46AM -0600, Paul Tarjan wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Is this a theoretical concern or a practical one? I would expect that
-> > backfill fetches never cause the server side to send a pack with
-> > REF_DELTA objects to nonexistent objects. And if they did they are
-> > broken.
-> 
-> Practical. We hit this at Anthropic: 276 GB of promisor packs written
-> by `git maintenance --task=prefetch` in 90 minutes against a ~10 GB
-> monorepo with ~61K stale prefetch refs pointing at GC'd commits.
+I have a number of fairly large projects I work with, for that reason I 
+have a bare clone for each and fork off worktrees as needed in order to 
+avoid unnecessary duplication and pulls between them. That works just fine.
 
-I must be misunderstanding something here, but how is it that a commit
-can be garbage collected if a ref points to it? That shouldn't ever
-happen, as reachable commits should not be pruned.
+However when I tried to use submodules to provide a unified view of some 
+of those projects I found out that there's seemingly no way to have 
+submodules created as worktrees (off of a shared repository), at least 
+not built-in. It seems like the submodules do set up some sort of bare 
+repository / worktree situation but do not support passing in an 
+existing repository to worktree off of.
 
-Or do you mean to say that the commits don't exist on the server side
-anymore?
+`--reference` with `--dissociate` does avoid unnecessary fetches on the 
+initial clone, but they do duplicate objects (and without `--dissociate` 
+has all the issues of a non-static shared alternate), and do require 
+duplicate fetches afterwards to update the submodules, even if the 
+central local repository already has everything.
 
-> > Hm. Can we craft a test that shows us the resulting failure in practice?
-> > Testing for the environment variable feels like a bad proxy to me, as
-> > I'd rather want to learn how Git would fail now.
-> 
-> Good point. Reworked the test in v3. It now injects a thin pack
-> containing a REF_DELTA against a missing base via HTTP (using the
-> replace_packfile pattern from t5616). This triggers the actual
-> recursion path: index-pack encounters the missing base, calls
-> promisor_remote_get_direct(), which hits the GIT_NO_LAZY_FETCH=1
-> guard and fails with "lazy fetching disabled". Without the fix,
-> the depth-2 fetch would proceed and potentially recurse.
+Q1: is there any way to massage the submodules into working off of a 
+central shared repository? Poking around and messing with `.git/modules` 
+didn't really work out but I may have just not poked the right bit, 
+having to set up the submodules by hand (or via a bespoke script) is no 
+issue.
 
-Great, thanks.
-
-> > Okay, so this seems to be an issue that can be hit in the wild. But I
-> > have to wonder whether this really is a bug on the client-side, or
-> > whether this is a bug that actually sits on your server. So ultimately:
-> > why does the server send REF_DELTA objects in the first place? Is it
-> > using git-upload-pack(1), or is it using a different implementation of
-> > Git to serve data?
-> 
-> The server is GitHub. I did a blob:none partial clone and after some
-> further git operations ended up in this state. I don't have
-> server-side data on why it sent REF_DELTAs against missing bases.
-
-That's certainly curious. Do you maybe have multiple remotes attached to
-the repository, or are you dropping/modifying the object filter at some
-point?
-
-All subsequent fetches need to use the same object filter as you've used
-during the initial clone, otherwise you may run into a situation as you
-have described. But in theory, Git knows to continue using the filter.
-
-> > Note that I'm not arguing that we shouldn't have protection on the
-> > client, too. But I'd first like to understand whether there is a bug
-> > lurking somewhere that causes us to send invalid packfiles.
-> 
-> Agreed, there may well be a server-side bug here. Regardless, the
-> client should fail fast rather than consume unbounded resources.
-
-Probably, yes. What I'm trying to figure out is whether there are edge
-cases here where it's _valid_ for the server to send a thin pack with a
-REF_DELTA. Because if so, unconditionally disabling the lazy fetches
-would break such edge cases.
-
-I don't think there are such cases, but I wouldn't consider myself an
-expert with partial clones.
-
-Cc'd Peff, as he's implemented a couple fixes in this area a couple
-years ago.
-
-Patrick
+Q2: is there any chance submodules will gain more first-class support 
+for worktree-ing off of a local repository in the future
