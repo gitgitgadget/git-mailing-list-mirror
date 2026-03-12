@@ -1,124 +1,114 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5A43F074C
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA7D3876B5
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:33:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773336445; cv=none; b=LC8rhu59V+vZapoNFzQ36YMsYq88Ai4bBo4+OcOXbnj408/XKuOknnHy17e7tXgs9QnwifPeO64g40NYBbw0533unyzpkpwUVWKW8Hj3JrJTz9OoQXjSv7k8CGiK8ntFw63lL/ldo1b0Iw8Q3r/CVNxWnV/nzc0w9dnXdvKn7Ag=
+	t=1773336795; cv=none; b=fCxXmY106y7MLxw82laVuuq7okxGgsf9Lc2uOCkGqPSeZ00WCFPqngt7/nFkYE9tbTmSj060ekkZmtjuFwypH2GL34sm0zEln85pRQvPna7EA9isyWPQgQ+ndZg4oN1zLzH39FXmrLPNMfDhGtWE/5eVAICQEeu6Qgfpcm+7ISM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773336445; c=relaxed/simple;
-	bh=wdK3wC3ysjB7kJ/JO0ouMxvOTLWUVjcUAvoCFJuIaSM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MjCpjXxWJRSbBrqvNCnT4CE2KilI880IBGnqYfpzcGKhVYKU7/kjxO0WMWLnOE3WuHPXCn+VjU24qT1Y2bmxx7dkxjg+DG61gWSQ6EhmSrp+Vog+M41qZd21FQRZ0T8o/D6Py6Chwkjdgm8CUi5+gLTbtveo48X1bA/vdvj/ZiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UJP9S4SS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C9FbV4dL; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773336795; c=relaxed/simple;
+	bh=D7NY6eqWZNZaMIXi8JNKI4JPJa5NFtnxAP4VnbsikWo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AmV1ocAnQtTAUihoVqFsxBAEGPaEG75UcIV2f3yF5U2gF3KZW7J7L0bYYpbzQNgFQj7YAiJ/yDVQ4OSemhhksKyppldjsZwdWaJhB9YgGIj+ojRdZ86pcXwKsGtUomCvAkpPVJpaqy9B1uKa/U6UDzM7MaLmpx5PM0w6BUrQLts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ah4KrJCA; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UJP9S4SS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C9FbV4dL"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C6FD67A0113;
-	Thu, 12 Mar 2026 13:27:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Thu, 12 Mar 2026 13:27:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773336443; x=1773422843; bh=GGl/uIn0Q4
-	d0UgufQlk8gzQMtCPZLv9Lz+LACeXmEG4=; b=UJP9S4SSPLOis4Ttx0j2y7DANx
-	B6D8Jj9wm3cA9uqivKos6jSeAB0XttfPBI6J0NNzJ49N+u/I/aurnJvaNMRlVr34
-	Zh/lriD2Y1PsNRPKVppiNUgVaz0syQSEHkuZ3h/TKi+ysuuWD46vsClQ47AvQwtl
-	wJ1DU9cQNQQqczdvmj9RQZpd/s3hxeBAcyQBG/h2/5X8JGcBhyVAja/wptjFZkJr
-	/g12KOo9zQyba+RzH8mhczbpb0IOk9J6ipGgE85QiVhtqRlHFqrqNcpsa/EiDRVp
-	tyIzuZ8EwXD04UrSmGJPXuOHUl2aqUp49podo0BxFUSGbsbz4Hr6RzWxwY3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773336443; x=1773422843; bh=GGl/uIn0Q4d0UgufQlk8gzQMtCPZLv9Lz+L
-	ACeXmEG4=; b=C9FbV4dLRHANGjc1iujh3rlDb5L49K1ArXJkM79U0qbVutDsk9Q
-	yDHHWb5hhxF2ywhE6thi8z85n9bRdSxnNyxDpKR63E5inu7PXbDBrwXxapEfbMgu
-	tpgUnWalbql1b9eXmdllrfCxofNEqMFjxDD2CHkDIqQqhfhQuqrfZzE2utbn3urI
-	q0T1+GSExeUhaBhxew4IRx9iFU7KCfQBODhE/GYk1r73Cb+MgHv8KJihKEgLKVtn
-	+V7ekSgVwbpOR9+6jiS+oXW0GIri5xDqXGZVX3osdz8XVEsdJysigoHpZyy3o/Oi
-	8Ofutl4uzdMQMkYy1VTFjILeqIoIZbMZWEg==
-X-ME-Sender: <xms:e_eyaZ5NjB8-fVV6dcYDtb6gkADjhF9ZE4bW9NXRZe7U1Z6q1_HwPA>
-    <xme:e_eyaalBkgXbvqp6GnEJcWTgIL9AnSgEKGEYEa45Vo0iXf54-gmlZevt_UpQ-eqm_
-    pC4YE2h1C8IfOawyonkcyrGqEecYiQZliK7-RozHEoxUvePP6JtNQ>
-X-ME-Received: <xmr:e_eyaaQl0yR8v8Etygfbk6NKR7QYJoCfiBs7SRurVwDFWW08pRwwwHMSfsRI-ffo2p6Gx66u0ZxQQet3uve8cxgXF67CTRJk8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejfeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvrhhtrdifvghsrghrghesghhoohhglhgv
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:e_eyaZHO1TAILCH3JY_8K-WalV24eeJZheugcGDwCKkaJdyKnKhiNA>
-    <xmx:e_eyafEIwXRscVpaZi-CayLXSCE4hPmvKUoxBb29PGWkr-cD6BSZ-Q>
-    <xmx:e_eyaXRzle_eoDhdPK0SmR3dHJggTtDoAwcqAKQSPePFwJ07Na3TZQ>
-    <xmx:e_eyaQLXVF0wdv0Nn3dC-bkpecUauDQ6rEbNY74_Ez6tqr26Hm5tSA>
-    <xmx:e_eyaZJIptl6EAaccHKKyqw0QOn5hwrhEgiGi4Lfyl-8mtxCNBEA5BgK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 13:27:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH v8 2/4] format-patch: add ability to use alt cover format
-In-Reply-To: <xmqqjyvhez96.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	12 Mar 2026 10:25:25 -0700")
-References: <cover.1772839973.git.mroik@delayed.space>
-	<cover.1773331753.git.mroik@delayed.space>
-	<225065cc0dd54d1a592939d41783a904a98fb2ad.1773331753.git.mroik@delayed.space>
-	<xmqq5x71gfci.fsf@gitster.g> <abLw6vUUh36zFK4n@exploit2>
-	<xmqqjyvhez96.fsf@gitster.g>
-Date: Thu, 12 Mar 2026 10:27:22 -0700
-Message-ID: <xmqqfr65ez5x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ah4KrJCA"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-483487335c2so11478015e9.2
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 10:33:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773336792; x=1773941592; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C+L9nbsPs/oeUX2xL0FjEXPKMjXBS/GBi/caAFXrA+k=;
+        b=ah4KrJCAl7FRtuglArJxQqk9a/OsnRNGh7i3l3fdFzNQbu3Hop2vFwQktJ1a+nJKcR
+         CAxiRzth3C+QeY+nM60BlEjzV35jOoqXCdSx8bfXR5q+eWpk29eSLaYTngEMn65M0SPo
+         xWNVUpDcfG/ALCXQOG1FFkSsYM2bGA/rJWCf5DV7iOCyAErA6bK68AfchdJlDcm+onyH
+         GgZqf9vs25+chvZEY+IAlmJNhtAHBLinPynXX6EVdF1Z0viDkzDOlvWg25f89QPz/wRO
+         pvfkH8DfIPWD/DIwYEHJKh8rMzeb7D9jG3qjDwE6Xq5H9DfE6uiH4Syc3VNJ6jSva1gE
+         5J4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773336792; x=1773941592;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=C+L9nbsPs/oeUX2xL0FjEXPKMjXBS/GBi/caAFXrA+k=;
+        b=IlElEJJYJEQMXWPoQ1rEPk7uSFrj1C1KxB7/xlynBspoE46uKwAv9pgiVEPWyRY/4M
+         Tce0kWR+JrhaM4I1xlskCM+POEIg/9sCsl2Er9+Y/8iedcTRq8UvoiWP9JfyPI6AUDPO
+         TxH8Z8+rtZtBq6aMMUlIL2ZF99T5iumIfr5vOoYb9W478fL2SfMT2/7Mfu2ADxdj/GaF
+         dL2IllKondQVoJm8NkFExmoq8Qj+D01hLo8wi/qyq20PACL8SDaDWQIrxtFpkKAVSF4R
+         ReNwjbohRW6CDiOeHKC29DZF4pLoCVORzHrNGK/DyprZf7aVaEgkd3E9cZQuW8/I6R17
+         SZ4w==
+X-Gm-Message-State: AOJu0Yxi/tGnB7UO892vAJWb5sp2X94lVCHmbrDW3aw94ocfjqt3AePQ
+	LD0LCjVBcxDXs8k3GmGHL9v6328rb7gFFFFVgxsK4Vbfg98dwD3f+UNEeFjXXyQylTI=
+X-Gm-Gg: ATEYQzzuObvTbaw7zEST3ZFwSWIU7p5PONShrNp7RfQFpxy9Zv640PvaEgZOFZXSbzW
+	a7WOcurnS8NgFCxBWThZSnxz8/lkOh5MFh30HzDoWzADkL/rWDloK3gQhjC4EMbfUoX9k31CfRJ
+	dwTsNluUJFwy97UNRd/7fLxqf20gLNsramdv3/VU6qsQ5SGnlp/UVRQYjihB3bhkoI/kfAipwaM
+	BujJKGuFPRX+9RiLMcFkppB0WRcLj3+4FKlW6nOvYKW1kno3t9ObJbQ/aTrk/R3/8AlWGRWqyVp
+	hD3g8IVsR6RpmUhJ7cXfxLXVdq25pNoxYwZTNaKP3u8vm8kfeAuzk1L9tIEqIYTkrmIvkfPhoP2
+	Qr6gonzP55ySsIsQbDpIY3e7h09VoDTO4SzDUi2EqyyrYmAWTQIO6f9fr1cRxnrS9hhn4UZpqSj
+	gpwR8Y/vdUAK+z1ZHraacgpplUPx925B/uuLx5XPF/IQT4H8IBlh4kO0QwICflMCqZ01RZFbdKy
+	xllPLNbaRSEto9Ut2IcShNzt84agOAg/5s3Gk6C1W4kcpmie6FN25zt4vzq2rRdZFnF+Q==
+X-Received: by 2002:a05:600c:3489:b0:46e:32dd:1b1a with SMTP id 5b1f17b1804b1-485566ca8bbmr2701665e9.7.1773336791992;
+        Thu, 12 Mar 2026 10:33:11 -0700 (PDT)
+Received: from farblopa.localdomain ([84.126.0.122])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe2273e8sm10979668f8f.33.2026.03.12.10.33.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Mar 2026 10:33:11 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	chandrapratap3519@gmail.com,
+	Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [GSoC PATCH v4] t9200: replace test -f with modern path helper
+Date: Thu, 12 Mar 2026 18:33:05 +0100
+Message-ID: <20260312173305.15112-1-pabloosabaterr@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260309150935.578465-1-pabloosabaterr@gmail.com>
+References: <20260309150935.578465-1-pabloosabaterr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+Replace old style 'test -f' with helper
+'test_path_is_file', which make debugging
+a failing test easier by loudly reporting
+what expectation was not met.
 
-> Mirko Faina <mroik@delayed.space> writes:
->
->>> future developers to introduce something other than "shortlog", no?
->>> If the version of Git in 'next' supports "longlog" and user gives
->>
->> Not really, anyone can introduce new formats, it's just an additional if
->> statement.
->>
->>> "--cover-letter-format=longlog" to their version that does not yet
->>> support it, it would be mistaken by the version of the code here as
->>> a "log:longlog" without any placeholder that shows a fixed string
->>> "longlog" for each commit in the series?  We'd rather want such an
->>> input to cause failure, no?
->>
->> Isn't that the same for any feature that is in next but not merged in
->> master yet? I wouldn't expect subcommands of history not yet merged in
->> master to work either if I'm using a version built from master. This is
->> an issue with the user and I don't think it's grounds for any issue.
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+---
+Changes from v3:
+The first hunk was dropped from this patch, and sent as a separate patch.
+https://lore.kernel.org/git/20260311194002.190195-1-pabloosabaterr@gmail.com/
 
-You need to remember that some people use multiple machines with
-different versions of Git installed.  Yet to be enabled option
-should be diagnosed as an error to be safe.
+ t/t9200-git-cvsexportcommit.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Or misspelt "chrnological".  What are we gaining by removing it,
-> which would rob safe extensibility (aka "future-proofing") and typo
-> detection?
->
-> It is a bad idea to drop "log:", period.
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+index a44eabf0d8..15a91931a2 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -303,7 +303,7 @@ test_expect_success 're-commit a removed filename which remains in CVS attic' '
+ 	git commit -m "Added attic_gremlin" &&
+ 	git cvsexportcommit -w "$CVSWORK" -c HEAD &&
+ 	(cd "$CVSWORK" && cvs -Q update -d) &&
+-	test -f "$CVSWORK/attic_gremlin"
++	test_path_is_file "$CVSWORK/attic_gremlin"
+ '
+ 
+ # the state of the CVS sandbox may be indeterminate for ' space'
+-- 
+2.43.0
+
