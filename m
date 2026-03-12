@@ -1,53 +1,53 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4FF3750D2
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 19:07:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1773976A6
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 19:09:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773342442; cv=none; b=X2AO9TrHcIZKWq8SlKbfllsHbQSim1zPRGaxhMO6oFxrw0tpR8loadhu+Ie/5LOFncfi1LCLA+efRcC6iWJfabRODbAiNDfi8WO9B/LMl88O8Qb03h5fvWOJp1pvqd1GTyEgMNlpw71TM1tjQRjkqewdMNhJkWTqe7LZQaMGx2o=
+	t=1773342549; cv=none; b=L2yXSubpiP9Yu19J62A+/vm5s63Ob5LzzDCVbnwaaoqjY4RN+SCr4K64sgSWhZCNDoW2vJ+Dcvtv63DbwxiNPJqQf/WGAlkSlxq6KDiT6sTsylH7IvyCeMoAsCCv2r+9iiFaT01Ou5lnLzlCGmuKiaPzSApLN3TajOWtdmo5rxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773342442; c=relaxed/simple;
-	bh=8lOd+2stY6AiuOg/ilzgxsqotMIuB6fguC9p4WREUAI=;
+	s=arc-20240116; t=1773342549; c=relaxed/simple;
+	bh=LSOtEgV4fdFXMTDbJmvRjE9Brxz7Df9oGj90DvLBWXA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BIexVRCJk00XXHbCYZ4zUhA7c8KBai5ggOGPY3NS0bWzS9/62wZeXR2+eo+kzOGvUUeDuVc6gexHWJ5pHXd/TtByxGSY5HtiZKcTYt/j75tiwGFZTNfciWQIw10QRTTqEi80BdbRTmNakt0I3elvjCA75EjgX5bHvC20jzdYpxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hT/Oxl/l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k4IhRGIP; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=J6R5+atMz/OPTL7bA3nEnelZnXe0xQvZKoek4iVeYM/ZdSC/gXbgB+suLi9Oy2ZZ5UnmR7XPc13MZogBv90n1YT2tx/LBPF3kj98vxonirSLHSbbhuu6dkto6ejcU9rj321FM2YITdyIS0cfFnAfYTHrS9a5WgVKsJExbuOYxlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jnz1wx6t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b26DAxDl; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hT/Oxl/l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k4IhRGIP"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id EEE7EEC0536;
-	Thu, 12 Mar 2026 15:07:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Thu, 12 Mar 2026 15:07:20 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jnz1wx6t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b26DAxDl"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A715414001DD;
+	Thu, 12 Mar 2026 15:09:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 12 Mar 2026 15:09:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773342440; x=1773428840; bh=8lOd+2stY6
-	AiuOg/ilzgxsqotMIuB6fguC9p4WREUAI=; b=hT/Oxl/lxej72SA+KKS2jk4KXQ
-	hP9Yo4yKcerKUkVvgP5eJDX2oElv+BgYIfsqalAP+ZHzLBg1y9eUCol36kLZVoNu
-	9TaMKBXT4q0cojQYkyJmnuDfp4gZ47WUwY12EZOVDvNM7Qci1cCzSycmuLt+mTCH
-	YCIdy9uveDVshE/4LQ7sZpCkAfRA6+U/awA6OSPNg2C4zCXPgxWhXonhM6VBcCdO
-	jq+Yaub+2oaXX2ESWil7u5Ma3L9Objb2Vx91QxWJeEl2CSAco8D5Uc3Th/V0AYNP
-	s9O7hvz+1/Vc3OLF7rBXnGM8EOePBzNPA+eQ9Ydunr9DE89JcpVdcB4VeY8w==
+	:subject:to:to; s=fm3; t=1773342547; x=1773428947; bh=X3kxfLeGF8
+	qqYacYsU7QvzP07k87MVpKfyGHsWjo/DM=; b=Jnz1wx6tV0ZP1W0UTvF2Y5Vfst
+	7NInnyMhnS8ZBqtkECRAoXp3l7lROW3i0QgFpaCS7fzdBn1BANoh1y0O6zHjEXyW
+	lik2iexRz5faKFCAfIkRHGIvb/kMQ/kKFhRzOT1EGJnHpLLVzWq3vIn4pWw2M4n5
+	geq8QMlEndV+airKidOI+fR2C7B22E2Q4udofbXvUrM+IplYqGVCeD2i0DF+tuQa
+	6pIJmyh83QuV5DAFET/sj+4yxQBSZvPbFnaFobLnAn3chjtL42P5cjUxFSCmzOlz
+	glXDKsEreg1GjI0z8hqPulG4OcQjXaJ9a3K8FVRkknMhek9GU5RYBnW4JNTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773342440; x=1773428840; bh=8lOd+2stY6AiuOg/ilzgxsqotMIuB6fguC9
-	p4WREUAI=; b=k4IhRGIP+2CPMFcyCKdIBt8lnqHiOoOJNXVeRXHRba5xwJM90G2
-	brtzmFCZXsZ1h8ajghIPQNYUE84NYsoKXNevzjVwpAtKJ5ywquUumDZiyyLVNmj8
-	S7wPNY6QHzeSeSRWGV49DsUkbL01ETZB6MxGCrk11gbLgcJ+68fKsCSEsacmEB2q
-	UIKGey9JPEUqpBRr/fLEFQYOATNj2P+tZ3/LbefwgtAtVeEJ9toqhwefEn2h89jJ
-	lCqGCXMa00X1ujd53ZeLcGAHqig0s3cvh/v4vAWCdUYbu7G8bn9UOUTdetQfF06Z
-	IusGvaadYwuprOMHlYSrtmDhfqC7nTF0GsA==
-X-ME-Sender: <xms:6A6zaYxl4dzMZ2U7AxhBXjDEwDjz3nZhP9E7tSpGllWaJxhSoEvBbw>
-    <xme:6A6zaegIEpFST5OY9vQfLClNWFp9e5kRseFTzhmdCtX5eyReVOIrmw-D41pKKoBoX
-    Tru4JC_xzbrHJt6cZqdV1_y-gwPQH0YxeP3eIUgTncyggDtLuDk>
-X-ME-Received: <xmr:6A6zackW0klFJOETAM44KKmngMXPLDwnLYQJjl4d82PpZW-yv-ZhuzGTC84vmKI__FmL_TaM5YUnkI9fz2KQxL8nrazqF_rbsg>
+	1773342547; x=1773428947; bh=X3kxfLeGF8qqYacYsU7QvzP07k87MVpKfyG
+	HsWjo/DM=; b=b26DAxDlgMhI3ElO/NLCc88coKt6jn0t5+4iIRtxX+kzUvCeX80
+	QtXdll/jSF/zQFNovxsPBnzr7gsMEYaPIUmn00HBGLvL4V81DPEhMv76oe+A3F6X
+	ojWN1c3QE119bep0O0EESx+MIa+LlrtmSlNRfypMLHbgHij2Urf+iake6z9FIt/D
+	N3rkJ74Up1y2wXKWuHhvGvUr0DH3y+9ynneOPL5V5I3lIpT0j/7q83RfaiNAmF7g
+	Mz7Mcb+PuGNozfnwOoYNbvVPNpC8s3exZVC3d/LvDBMfdSyzwqJkYQNnndyCUgqp
+	WdO5rU9U22dJllIVxL6y4gHIOePROPgapXw==
+X-ME-Sender: <xms:Uw-zabTeEN2OaqeqGOxQonQ3mIx7c0Tp_ShjjhKOWbCDsbIcPTKT6w>
+    <xme:Uw-zafCOAq069XpORnj1dQ35-KCv4YuB7ZCcKnw7sPM3wb96hFE5WPIYGek-VR92Z
+    TBfNgWuyYnXJ5Xw95Tuu09W67IvLjhR0KeQHG--GLWwHJkOHg_uoA>
+X-ME-Received: <xmr:Uw-zaTFYBse5EvOQdbCIp4j-taKA-twADi-5qJ_cQm6PfXTsJSY2Hj6bR3q5-ewsPDxx8S0xV_nexo2fLoyA-qXXv-4ZkKuvZg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejheekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,37 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejheekucetufdote
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprghrshhhshhrihhvrghsthgrvhgrtddtsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhs
-    sehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:6A6zaci35wwrNOxqwI5peyzvnvSV5D3zCIDkjD2O40SNalFhebk7qw>
-    <xmx:6A6zaY3E29Gx0zpVlrtLxRopu6Jys3gBV49rJkjvKV97HU0Sq58D0w>
-    <xmx:6A6zadK9cpdq2-sC5b_TNAs7twV0hW92h38RZ5EkcFUy8tUCRaZVsQ>
-    <xmx:6A6zaQza1x9urX-TKD9_WVLUDh2oBtdTavP-xyBGbtyk4m0SCRKVlg>
-    <xmx:6A6zaZUsVLLHLqnT_EP5XBMFB5N-7OPEMCvW7RFRVsDWcRtTJw2wDsGD>
+    mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopehrrdhsihguughhrghrthhhrdhshhhrihhmrghlihesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpthht
+    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Uw-zaRABy8ol0HbEbQmuF1eNR2QBYYdtiVxkusiotxM_EUcHsbdvJw>
+    <xmx:Uw-zaTWo2N0gE6uhFezCneAoHHFSVkyJEjx6po8vKp6cocGFLlykaw>
+    <xmx:Uw-zaVqciHUZGlXNba7_q7Qi34hRXohUHsLBXwuu5H70SqVKON16eQ>
+    <xmx:Uw-zafTJdWpDPk8MIqG9hZ4f8JjZRIIgDyskBTV4tiYxRpPcaWj7Cg>
+    <xmx:Uw-zacrhw-az2rof2y2i3kZVUf4T1QrfGyP13CFL59nGkJKdl_uMTSZP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 15:07:20 -0400 (EDT)
+ 12 Mar 2026 15:09:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Arsh Srivastava <arshsrivastava00@gmail.com>
-Cc: Arsh Srivastava via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6] unpack-trees: suggesting 'git checkout -m' with its
- repercussions
-In-Reply-To: <CAOAgETOd7-vPpBK+8rhE-i_vpqw48gDBdc3QPm3xWOR4w3c7jw@mail.gmail.com>
-	(Arsh Srivastava's message of "Fri, 13 Mar 2026 00:33:51 +0530")
-References: <pull.2233.v5.git.git.1773251369.gitgitgadget@gmail.com>
-	<pull.2233.v6.git.git.1773288013936.gitgitgadget@gmail.com>
-	<xmqqms0dghgk.fsf@gitster.g>
-	<CAOAgETN-UVtee5OjjcLE45sRxajCkgF3nipBqXpec4JjN8+vfw@mail.gmail.com>
-	<xmqqwlzgev16.fsf@gitster.g>
-	<CAOAgETOd7-vPpBK+8rhE-i_vpqw48gDBdc3QPm3xWOR4w3c7jw@mail.gmail.com>
-Date: Thu, 12 Mar 2026 12:07:18 -0700
-Message-ID: <xmqqsea4eujd.fsf@gitster.g>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>,
+  git@vger.kernel.org,  jonathantanmy@google.com,
+  christian.couder@gmail.com,  karthik.188@gmail.com
+Subject: Re: [PATCH] t0410: modernize delete_object helper
+In-Reply-To: <CAPig+cS3v=OT6BJ0WWh=qvWBm1TVck+O7eKd7gJ2fe_d5Rny_A@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 12 Mar 2026 15:05:24 -0400")
+References: <20260312125030.7799-1-r.siddharth.shrimali@gmail.com>
+	<CAPig+cS3v=OT6BJ0WWh=qvWBm1TVck+O7eKd7gJ2fe_d5Rny_A@mail.gmail.com>
+Date: Thu, 12 Mar 2026 12:09:05 -0700
+Message-ID: <xmqqo6kseuge.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,17 +92,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Arsh Srivastava <arshsrivastava00@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> write:
->> I wonder where this came from, as it is quite unusual to have a rephrased summary of what you respond to.
->> Is this LLM-generated summary that was copied-and-pasted without much human brain effort?
->> What is more usual is to quote the message you are responding to.
+>> diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+>> @@ -11,7 +11,11 @@ test_description='partial clone'
+>>  delete_object () {
+>> -       rm $1/.git/objects/$(echo $2 | sed -e 's|^..|&/|')
+>> +       repo=$1
+>> +       obj=$2
+>> +       path="$repo/.git/objects/$(test_oid_to_path $obj)" &&
+>> +       test_path_is_file "$path" &&
+>> +       rm "$path"
+>>  }
 >
-> Actually as suspicious as it looks the mail was written by me only and
-> I thought that each line was as important as other and
-> I wanted to reply to each point you mentioned
-> Sorry for shortening your response
-> next time I will make sure that I will make quotations direct.
+> Despite what the commit message says, adding a call to
+> `test_path_is_file` here does not add value since `rm` will already
+> fail noisily and exit with an error code if the path does not exist.
+> Moreover, because it's unnecessary, the `test_path_is_file` invocation
+> may confuse readers into thinking that something subtle is going on
+> that requires extra scrutiny and care even though that's not the case.
+> So let's not add this needless extra code.
 
-That wasn't what I meant, and you are still top-posting X-<.
+Good to point this out.  Use of test_oid_to_path would still be
+good, though.
+
+Thanks.
