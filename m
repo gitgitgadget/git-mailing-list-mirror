@@ -1,84 +1,86 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643DF28B4E2
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 19:50:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43EB3BFE4B
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 19:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773345014; cv=none; b=s/ldXkKO+LrgQ7ii8YxjWwHMHpJf/7LfA6e7CfhvtiEgJGeXTuVjQUlNB/+fQ7V3xjfJOM3k0+jmXcmQJHwcSswkwfsU2k1mE0HdbmvRB2TAvLjdN6rZ/mU2wNsrDbv+o6FpBp9PEqP+NhONdf8rA52kJZtQtNnj3Rr+SzZoxc4=
+	t=1773345528; cv=none; b=hT1dTeX73SNTygYj9/74bEdweOg4KN9mbNJ6wrg4NPWXKY89crTD5+/M4gUyu+zMR4rJDDP9ea70SYYpih26M6FD00eUBMv2W4hg9jkBgXxubrcGZdAdvNsL1L7aCAxIEQKE8z/tmLS0RypRVOUEnbAlVxpkbB7rm/nG7YYDjJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773345014; c=relaxed/simple;
-	bh=ZWg3YiFflGMGxM4aI5yoAhToIjFVj4g3Vwy/73NzixU=;
+	s=arc-20240116; t=1773345528; c=relaxed/simple;
+	bh=qoALPdx1WNk+2t17eFMfljun16m9EVWduJZC/M2ydgY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sZVbHCYD/XoMJn5Zq7QgYsxBtIcMlObJlnkCP/FEpY12KfNgkIpD+DJYoSWSW8hZztnlAI13Zf+MHyIXAhR7NiDjejBr2sp6ySvs3RO/dqgdabsa1FiyHN+eZuDpS05/rJ3y4P9coixns8Y/8dqwBDnZrCNyC47hpdVV5iO6T/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c0Y659F+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vJrJHijb; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=WIafH++hfB4tCJkmPlzvaghjaK14Bl7lw2v4qdyf5cPg0a46xIK5aqOmm7eurgYLFv6ke/lUW0YlVJyaknv90qUZuhPm90/el5kEc8iG/x7x4GMIXESRxVPJFxSyuweb+b2Nr6cRkBDpExh6PUj1TNlCQ4bzeNvo77hciLbG1SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HIO6/ijm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tAZwyfn0; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c0Y659F+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vJrJHijb"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 978A614002AB;
-	Thu, 12 Mar 2026 15:50:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HIO6/ijm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tAZwyfn0"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id DD9ECEC0AE2;
+	Thu, 12 Mar 2026 15:58:45 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Thu, 12 Mar 2026 15:50:12 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 12 Mar 2026 15:58:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773345012; x=1773431412; bh=d1Yfkr2tpV
-	jLAe+xUk9C93dO0QSsY/sn/I/wDRKuv6o=; b=c0Y659F+XdKiVc4LCka6aGoLKX
-	1T0Q8G9Y4jRNTqjy9k4mlLsytqOEHmJkCC5imgB5MxmngGLwSxRz/3SE/AqJZCjN
-	1qhFcf+DvVO8rDtaUWReSBJCm059LZkFSBvPbB41dxVOxbgSir2fCW4oDE2sH6Cv
-	xoVMBUxRofEj+Jyar/gbqjzPadr/y8YlCHgt9wIV3mFIHq0vZgHYoaR5PdCb/gbV
-	XvZ5G8+PDKAG2h1cmeJSdx1QFUfSrkQsY49HJOCe0yZPXnqZRMq6FZTHuCEqrxjj
-	LAojfDYO1pk5CaT5Eo6L9HZ/KHNgKR2yuWDOmJAL4BThbTTctqQetybU5ZAg==
+	:subject:to:to; s=fm3; t=1773345525; x=1773431925; bh=9ElXixXLxd
+	NrTIIRurj5rvjJhP5IFj1WRLSo9bAy2TA=; b=HIO6/ijmadx+k9E+r3STXvKO6c
+	CcaBgs22cAoHXK20t3kQ9yVFSda1NIjpOLo5WD51a12QUpHhv19Sdn0PEvnR9MBk
+	V3RL/dPNxDbRky/S/SDgHt2uK30ELe+rcxQcx8VSRE6jfdgnNkxa79ZGmrXsILW4
+	vmY+BazQx1UY+JhYIhZVYr/SinxaEKR57TCC6CBXlb219F5z5zyFb7trvWjWWPpx
+	ILyxU4MTN8zSXM7cnSGzqongvFVRNFpqEXcBjwUN7BWPgwp+NpYKgXe7q3iqD63T
+	Gmhz7Ii6q2yO4MpOVQ8EiPEILoYcmJm4IPKFYRwU24jHWSJgP1YVlNoNVniA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773345012; x=1773431412; bh=d1Yfkr2tpVjLAe+xUk9C93dO0QSsY/sn/I/
-	wDRKuv6o=; b=vJrJHijbrUFaScgLx4GlDzR5il6RufKbanV02Vc1hNTlENbemKC
-	lnd+h7xul4MhnHd74m9fgY/hVYjJMeDrz4oJodNxWTY5xvRoAp00g5TUQUI4HzPZ
-	A1fud1onCOZlcOVwKmer+i7FzG/Su5e8rlOxh0h26ieovkmHyjwAY9No18P2G1De
-	QB3zZMbQNBK/LGmlUK7KUUb5nkgtUOEs+YqQ+ojn3pWpEWcC3ZNKnm3dPOIt13w5
-	mfwhuPi6bfL0KrarIxqhOxdPgICESDcxugHzl85EdmK0LSktiNJJv8sW087gA7lx
-	1oLPvcpIQxIBPea64UwKL89Z+kKhIjZNd5Q==
-X-ME-Sender: <xms:9BizaaOs9-fUM8bonPE0GrAKNVnx7oiokrOFxKyuWKs-0o9H6HHs5g>
-    <xme:9Bizaf-zAS0ytHWfkcDUAjFiJWnAGVVC3NUiVclDpfNXrAvyQcxHkTU4aIfXDtLhV
-    KZMOZ9XoV5sSaX5doq5pa2iugo492eg0bKUl5UtxiDRpU_RW68gZA>
-X-ME-Received: <xmr:9BizaWTLbjBAIgzzVU1opaHBYhiojVVSQF2Chu7OW7-REeZY0wVy1Jg1L4b1h7dMRCgpPiAoRvmzJSYMIVv9NRSXqFS28NQAaw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejieeiucetufdoteggodetrf
+	1773345525; x=1773431925; bh=9ElXixXLxdNrTIIRurj5rvjJhP5IFj1WRLS
+	o9bAy2TA=; b=tAZwyfn06wLu5OYwu7m9VX99KeFDpJOZDiJ/LO6vMw+nX5U50LG
+	qind62EcBB+iCKiqB8Kk7ztDpR5N8wC/2Y3bFW2ztbDQSQAYvxnVERrRhbJNy3u/
+	EIP4NsBoc6FCdGAiuHt36oXgqy77xAWHFWRSKIP6XBU11Mzd+FUrougOO8/Aqm5Q
+	ODXxk4DVSRUFNRmJyGcnrfitQ2EVyCHe7BuwtS0T1+7arg3BiPlAEekoLVttqVYk
+	8mRt7nhJU4EJPr2eXMEHu9QSXUsDavZrKLXlRYDb58ROeQTAjmRKZnqSxhFXCw59
+	8T42VMlmrYhhNI0luVin6S1anoP5h07g+/Q==
+X-ME-Sender: <xms:9Rqzab81GdSkLBIjrMjbjrww3JUDcLGgCmPRhv-bFIZI2jgOZn19ig>
+    <xme:9RqzaYbqyLHoLbOMlZy3XnJi9FVRBubH2e9wxZpbPV87o8LH_Z5Zw83WIU8PgM2na
+    MpgcSbkmFmVKJpdDboKHEtXTOz2XGlaV2F6Wm6N1ec3FOqSYRT4>
+X-ME-Received: <xmr:9RqzaXMTfeTFiSPB9T_I8oKsYh62VYOrwg4diR-x6NNyGmLMncKIkEg-BmtyzF5AEbne2OHFYGzMH4GXZ8QJQBZ02FNU9U90xA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:9BizaZl_ODvBwbXtnYknwc2H5x_oIuMGYeG5HeWcmKQbqgBYAC2CSQ>
-    <xmx:9BizaeT__vUnF13wuFU2Z_FhNNshfqfH1xfD4lrs1ZBqSPYxW-q_XA>
-    <xmx:9BizafMZQMSJag5Y9vr6R4KCcVRQeQFvtSFYcYGMgit4AhHZ-Xyvdw>
-    <xmx:9BizafVxilQTOKhUh4ecGk2AtFd1De9JwDitLKP05C4vc_CfbY4iEw>
-    <xmx:9BizaaPGEOjJoTW9GWt_mVQ4Khm68nSeoFxfxPMZZMV9aS7sst7JA07f>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrghtsehm
+    rghlohhnrdguvghvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoh
+    epjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:9RqzacD5C6OdL22keP4jbBHO8Ne0C3DkDjUxvaLhiBhD6pJnuLyM4g>
+    <xmx:9RqzaWIyVl81yJXYGKWlFkfoOcSh33NsgHEFvKLLrTl72COBkhq6bw>
+    <xmx:9RqzadN6uAWcPku3n61janZyxZ-_dkTTFlOOIl_2mXQI0reyf73XXg>
+    <xmx:9Rqzac6b9vWOyegKk0sX1Ri2giO4OVJpnlnrwV584kWJqmo0hRdTJA>
+    <xmx:9Rqzad5kToXocWWAiYVpzHENokeheotXp2ZjJq43tGZomHWzUl8aUZyR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 15:50:12 -0400 (EDT)
+ 12 Mar 2026 15:58:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v2] checkout: add --autostash option for branch switching
-In-Reply-To: <pull.2234.v2.git.git.1773344022931.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Thu, 12 Mar 2026
-	19:33:42 +0000")
-References: <pull.2234.git.git.1773321998854.gitgitgadget@gmail.com>
-	<pull.2234.v2.git.git.1773344022931.gitgitgadget@gmail.com>
-Date: Thu, 12 Mar 2026 12:50:10 -0700
-Message-ID: <xmqqjyvgesjx.fsf@gitster.g>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com,
+  phillip.wood@dunelm.org.uk,  jltobler@gmail.com,  ps@pks.im
+Subject: Re: [PATCH v2] builtin/mktree: remove USE_THE_REPOSITORY_VARIABLE
+In-Reply-To: <2c9861c0-fdac-4123-8cd9-4a841755abf3@malon.dev> (Tian Yuchen's
+	message of "Fri, 13 Mar 2026 02:49:05 +0800")
+References: <20260312164203.964033-1-cat@malon.dev>
+	<xmqqsea5ezwl.fsf@gitster.g>
+	<2c9861c0-fdac-4123-8cd9-4a841755abf3@malon.dev>
+Date: Thu, 12 Mar 2026 12:58:43 -0700
+Message-ID: <xmqqfr64es5o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,34 +90,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Tian Yuchen <cat@malon.dev> writes:
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
+>> As somebody (Phillip?) said earlier, we probably should update
+>> document and clearly say that removing USE_THE_REPOSITORY_VARIABLE
+>> is not a high-value target when done in the builtin/ directory, even
+>> though it is very desirable thing to do for more library-ish part of
+>> the codebase.
 >
-> When switching branches, local modifications in the working tree can
-> prevent the checkout from succeeding.  While "git rebase" and "git
-> merge" already support --autostash to handle this case automatically,
-> "git checkout" and "git switch" require users to manually stash and
-> unstash their changes.
+> I am fully aware of this, and I did not specifically modify 
+> the_repository in builtin/ during previous patches. It's just that this 
+> macro makes me particularly uncomfortable, and I believe it would be 
+> better to remove it.
 >
-> Teach "git checkout" and "git switch" to accept --autostash and
-> --no-autostash options that automatically create a temporary stash
-> entry before the branch switch begins and apply it after the switch
-> completes.  If the stash application results in conflicts, the stash
-> entry is saved to the stash list so the user can resolve them later.
->
-> Also add a checkout.autoStash configuration option that enables this
-> behavior by default, which can be overridden with --no-autostash on
-> the command line.
+> On the other hand, this patch is indeed boring and useless. Feel free to 
+> ignore it.
 
-With this, shouldn't "-m" become a synonym for "--autostash"?
-For users of "checkout -m", this is a strictly improved version of
-the same feature, it seems.
+Nah, I think we do want to keep it; once it is written, it is a
+waste to discard it, especially given that the change is not wrong
+per-se.  If anything else, having it will save somebody else time
+and effort to do the same thing again ;-).
 
-Also, "stash" is merely an implementation detail of how we make the
-merge safer, so from end-user's point of view, this feature is more
-like "switch to the other branch, while merging the local changes
-there", so calling it "--merge" or something may be much better than
-calling it "--autostash".
-
-Other than that, I like the implementation in general.
+Thanks.
