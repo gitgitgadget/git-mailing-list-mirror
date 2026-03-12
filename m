@@ -1,124 +1,332 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985983A6F0F
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 19:13:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773342784; cv=pass; b=m9bSI8U4oyeZnXhOtNAiVseoOgX8SdeeGePixnkWjiMokqyT1W1KM1CFFA3mSDTRDkkbfCcyl1nnS8MBajorhtW9SL62JUblu8KykVpRKR/yPY+R5ypRNXfjOfGId7zYdUPQt56tsKLGK/hhNrINZQU1Edjg1ToSH9Pch3rdHZ4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773342784; c=relaxed/simple;
-	bh=A+WYX3Zj+K5UHEFQ63KyrozjtWuzXXoe8px29Ibr494=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XOku30YW1epSmch8+ZdB6A74rCwjUbsT2+0RNCpfilB2R9UzlKtpitkCp4LGry9t9FntOA4w87sGd7iGkcDxuRq1HvOjL4DVRLw8veXe+K9impQOWs+yNjxPZT80chbZrOAmwV34bH/CZ0E6v31bpLkFWoF07pivVAGqakbOwCU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gFjlqHki; arc=pass smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A4D32D441
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 19:22:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773343356; cv=none; b=QMwig2lh0cAPu3fZgjg50SA5fdAL3qCkXRBKczYfKcFfS48iq7adcHyo0rcnPYhCC6riUZH8S6H+b54ntkxrBlqMUBCh6FcAS8zseNkSZ019JpkfDpiM4vgDfwB/aRSxdWajO7wDZVt1h5XbehmB3y3R6BkeqF3v5IFhKNrrPnI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773343356; c=relaxed/simple;
+	bh=5UtCq996DoexFMINf8L3T0ivs+RE/ZdUMuBg5fFKc14=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=S6q1UVb3q3Q87GEK9btNwlkri2/18ldUUzqUEDMbouKBq1zl2ijcgZcoieH0nzOBhdDFdKgTQAUJ+nmbeYVzMqI8hzX7graSFeoYWhwiY271koJSwaVFpyOdqHrozqNja0xi2D/LdHbA/qsgZiq9b0FyXkYqGZ1+cs0UYhR+GCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UdJaBcLz; arc=none smtp.client-ip=209.85.160.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gFjlqHki"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-94e82e5b262so358461241.0
-        for <git@vger.kernel.org>; Thu, 12 Mar 2026 12:13:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773342782; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Mz28+mfXDWhHtq7m1arlZSdsct72PafRCTovArbmgthJrfnPjWgLZ+SOH/tGBdTk2k
-         YS+0b3ZVt+Dxtlo8J9SVuWGT3tbNPbpG3ZPZPTJZMYb8G+Bkovmt3cYHAIgusQA1rk37
-         yDHXSfbfiVh1F84s/dJC373Zb0pW7zfnIzTfOdRefYPMV+i0AXsGkDxuQDbivl7fLfX5
-         MRAUTtM7rIikwgB3EKDhKn1R6hNSNuaKBD46nzbLRuWZiVl5mBoCWSYyFf+jE+X6M3W/
-         P12WU5NGV0tZxHBOll0jOtMlBJmrIpmL+nHJ/5XitOQAcYR2aCJnWiaPJi8CSgayskyE
-         mW5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=A+WYX3Zj+K5UHEFQ63KyrozjtWuzXXoe8px29Ibr494=;
-        fh=zvznNIvkDpaA3vVVhZV4hpF9gI2TYBb+++47C6EW18E=;
-        b=BRP/MV8FgMyLmfh0T87OUTbpAo/GgRNjOtFM9OQ8tETuV2IVC3Nu/SRlLzQynthSvN
-         fj+RLARQUz2QqfwO29UohK974H8AiYucTL/MLtNPY9rhZjna43PWDu0BtXeDeQK2xcJb
-         BnakEZjORyfzs95IHyIac2gKOuSLf6/GCs7GG63SUF6yCIN63ncSDhnhTJNLzmoMuZ+U
-         tgVS1zispMirY5L895XyrChgA9VH5Zd+7q4UHyVoJwoPasFWwuwiFo+1VkdlNh6AWZQB
-         4p/WUm3lpgB+7d7MbpAyYIK4va1bG3tDoyQ/seQSXRkXekwXlNIfb2lwA58f7VtEHOAs
-         mBig==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UdJaBcLz"
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-40429b1d8baso609201fac.0
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 12:22:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773342782; x=1773947582; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=A+WYX3Zj+K5UHEFQ63KyrozjtWuzXXoe8px29Ibr494=;
-        b=gFjlqHkiRVOBRDDSq/NK1Jp1lMXfyYXWA/cjToWE4DiUtgVoVJqCHxnhjb1x8bU7bw
-         SrBXJZulw7HFdZ9q4nrxg33/yg+pkHq8DElj4bH1eErYvGBsvyGRqoRBg/BJxXl+xjBv
-         GG2I4W5Z33jYcNQNzjyeJCUPqdn6sib8pD9yTRbnvX460KpBam9bjD+JPMOEGzjvZ6nf
-         o4vxuG9WgbBUKEZAE4zo3XyMV2sNJ4YE27TEBgmGHQYvVS8HP1q/UHiDjzvzma/dbY2E
-         zyEK4HxMJfcSskw4r5otwN3RlIC56K/oN/CO4/BIjS6ktDsjTjnJPW0/UT0QH76rO/hS
-         KIqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773342782; x=1773947582;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773343353; x=1773948153; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A+WYX3Zj+K5UHEFQ63KyrozjtWuzXXoe8px29Ibr494=;
-        b=D2nKxVs7LeaZhz6JuPIds9fUxNrcg10I3Ju9kZJMxXVuV8B0oDtgwp+GQZ7Ca73r3O
-         frZ2fbPlt5rvTG8vl1MZrUagVt19Oqq/nrjA/Z0+5lVpsDijZpdyoiqx9D/9qBfDuMQT
-         2ldsvz2UWul0dx0GFCLsVE2VfIO9ZfTpGjuKq/RVUHID0SP4JIvQRtDD8HU4au1P77UY
-         M12Cnjpzfh8hy/oBPmgo2/Rq0/3ypZ3TkG4YZvFfaEHxG0oCGEfX0nJYtwSpHKDV37lC
-         zZnZ05p27w4A7rJ7UOVjMf6iZsu04OmqczUPjp4s3g1wlTZ/w9nN5+9F4llnLx1KlPa/
-         KiPg==
-X-Forwarded-Encrypted: i=1; AJvYcCWEtA8OtyAsajcTc/Mtnn67FQFeSU1Ne5GW7RdbhZfFI2LjAtLh8M/ojO1uSE53cGK42+4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFZifWsXwddp1xGN1VMRqqYwbYcT3tqKp1HBHEvGO8CsjmJd6f
-	sYR8RanmgYPCUL1xF5s+ZkINZX7OwFYROQ4R+4vhioYjCqzc+GmU2E6XlFheIyH1NVPBbBEKJvT
-	3zEpXyDKoRVxoAPRP0+yW5LoFfEHQvxo=
-X-Gm-Gg: ATEYQzz1iDJNaAmZW1+vxo+bdKQZXaMI5HzD4qTdwByWhGv5ASOHQC+ueolrv5+OjP+
-	ewqVafeWIMV3hBeoHgqJ7hqXb/2siFmo9be2bfiYIppfHifKw9CfWUYe2qT1gk7o8cUUlXIqNn+
-	hg15Q1gxUmxgkdfWnxGYlPY/+LdQzz4HQzZ0kLzXgQBS/t8Zrusf3QjFCHIbGABo8eg39KYnyy4
-	t9F1BpLnVFx0okbel1QmSp+r5pdZlBLlXZJx4g6zP7OlvoDbGJ4mQgrVmM56fQjfG5TmIL/wyet
-	51WfWmda3EJTrM6N4Ge4Uio7dmHiAg3JBPV8lQoBOW2cp43oGU9qCVl1eKGyzN4s9utVr4oTaUb
-	UmWd1ts1QG54yjvztUTz9Sept5CK1SZG2Y6smLlWdCIbG4x1iNp+sOSnup+q/MV/atWfCvsvg4q
-	HA9vPi
-X-Received: by 2002:a05:6102:d87:b0:5ff:d299:6679 with SMTP id
- ada2fe7eead31-6020e56c4b6mr267388137.27.1773342782456; Thu, 12 Mar 2026
- 12:13:02 -0700 (PDT)
+        bh=lB4yYuKogNi0AHP//j6yLA+bbcOi47HFR7m94Uq+uQA=;
+        b=UdJaBcLzMJlyXcHiB5Q+BNko3V7E5PTsA6iFujlW50prXB1VTlxCViPzrbOmbqHxnD
+         EFANs0VD8bGV3/d0mQ5IAw5YMv511OAcVsJKzDBNe/OY7Xr7uJoRiG1Y8YemGQabLKZ2
+         OZ8VPT6pNmorWoZZzChdPLeD/K9eX11zrytqvHoHR/Mzr+JYPb/wa9BM2xhWEjKkV3pj
+         KD37tk95ZxJpV6/9H83yXPr34OXx13+Z2sgQWTC0awjaqToqrIJM5LjUIVU1KPiFczGR
+         UahHOEPnUIdyLH1x3TS16uUbK+pjJWzniFbMnzSdTfsQZmoDTYJswJ/pjNBcoSB4vMp1
+         NRBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773343353; x=1773948153;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=lB4yYuKogNi0AHP//j6yLA+bbcOi47HFR7m94Uq+uQA=;
+        b=xUeDFSIexjfWgbv6NLIxO9SSkUBK+No06SRDHa6CmyDgktNhJ0ZHSMul6WwId8Z69U
+         RqBJsGbjVEdI1fruHWAM1tc+xzCfNkg0QBPzM7JXRGM+20A0yO58IC9/xtbry1SMQ0Oi
+         DRWKU9QrNYc3jxAdrFZao+xvwg3qWDJQor9kp3R8iJp7oVZaipPUx+ZLKemqEQ+r4/Gu
+         xDXBH+cl5VoODFWJw8XODT9TqQcOBpS0cMqOn+zTrJ6PVgEFpAqicMbGIpQIOK5OLkyj
+         XCxmPtb7WE1lSpZhjSlle8QOyBfJszFMZkCi+PzhiSr0To479nGWrjEmAifwGWnnSaYc
+         1IcA==
+X-Gm-Message-State: AOJu0YwYnhX+7qptSfBx0SRxtjVeQKF17mq7vPmiO7XJ/wBZfFkBck/v
+	8e/SED4ka06dLFq+ngftrYmwXeFDfbt9QNJ8cV4gG0JP2aWi6qpLEtF84O6hsw==
+X-Gm-Gg: ATEYQzwlr8WqZoZY2wEQ5YlFohs0geztNZxjNxeeP2pm4XZMjE4M3ZJPSdhNdxrHaCu
+	lRsJ+Fs6GSluAOwvl+QdatwQ9rLAGKUrtkGjHQwLDh5rapq8LdkHc7fbA++MvSN7gyELjWYEh5v
+	fZI8jz+Y6EX4VRMA1/Phx0bGfTIrnpZCG4ZCHM3y6tQmIUcIFYD/4oosmxZz21LC1ktVPKfnZRB
+	BXnq8X+/6gI86yQzYKEhe0SlNlec2VIbR9us6IIHDfayhCUSq4BBC67/sU95WdZxCWwtvGYrhW6
+	E63n6u+9gyWs/WcvBnjll6r0iMmKYZaXY+BW+BCNIjyZ37KM0nm7YOFgNXfd0dW8Lb1DFP+QLG1
+	TEtLC8cDlD/FoVHGWo2Pnse+5+Sabtz39QkPoXuU6CsJsTN5YgLVghTkD1GdZp+ywlWqan04nlJ
+	bOpPMX0/YYuIvRP8J1GNYAu7QdHVKRkwM=
+X-Received: by 2002:a05:6871:7c10:b0:417:1bb9:c00 with SMTP id 586e51a60fabf-417b91f0be3mr285982fac.20.1773343353181;
+        Thu, 12 Mar 2026 12:22:33 -0700 (PDT)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4177e6e82cdsm6159987fac.18.2026.03.12.12.22.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Mar 2026 12:22:32 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net,
+	christian.couder@gmail.com,
+	ps@pks.im,
+	gitster@pobox.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v5 0/3] fast-import: add mode to re-sign invalid commit signatures
+Date: Thu, 12 Mar 2026 14:22:25 -0500
+Message-ID: <20260312192228.481134-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.53.0.381.g628a66ccf6
+In-Reply-To: <20260311173147.2336432-1-jltobler@gmail.com>
+References: <20260311173147.2336432-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2233.v5.git.git.1773251369.gitgitgadget@gmail.com>
- <pull.2233.v6.git.git.1773288013936.gitgitgadget@gmail.com>
- <xmqqms0dghgk.fsf@gitster.g> <CAOAgETN-UVtee5OjjcLE45sRxajCkgF3nipBqXpec4JjN8+vfw@mail.gmail.com>
- <xmqqwlzgev16.fsf@gitster.g> <CAOAgETOd7-vPpBK+8rhE-i_vpqw48gDBdc3QPm3xWOR4w3c7jw@mail.gmail.com>
- <xmqqsea4eujd.fsf@gitster.g>
-In-Reply-To: <xmqqsea4eujd.fsf@gitster.g>
-From: Arsh Srivastava <arshsrivastava00@gmail.com>
-Date: Fri, 13 Mar 2026 00:42:49 +0530
-X-Gm-Features: AaiRm50-aKmIQ75HcO0Xp7RJEJxe76YEzVa8jioEB4sRy17UuWrkyMvmbHAWihQ
-Message-ID: <CAOAgETMXbFVH=SLk5xHZ6uvO1BFpfP93WNRUn18uDzDzsbHfEw@mail.gmail.com>
-Subject: Re: [PATCH v6] unpack-trees: suggesting 'git checkout -m' with its repercussions
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Arsh Srivastava via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> write:
-> That wasn't what I meant, and you are still top-posting X-<.
+Greetings,
 
-Oh.. I understand now I mistakenly again used top-posting mail (-<
-which is frustrating
-I will use the recommended method only from now on. : )
+With c20f112e51 (fast-import: add 'strip-if-invalid' mode to
+--signed-commits=<mode>, 2025-11-17), it became possible to remove
+invalid signatures from commits via git-fast-import(1) while maintaining
+valid commit signatures. Building upon this functionality, a user may
+want to re-sign these invalid commit signatures. This series introduces
+the `sign-if-invalid` mode to do so accordingly.
 
-On Fri, 13 Mar 2026 at 00:37, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Arsh Srivastava <arshsrivastava00@gmail.com> writes:
->
-> > Junio C Hamano <gitster@pobox.com> write:
-> >> I wonder where this came from, as it is quite unusual to have a rephrased summary of what you respond to.
-> >> Is this LLM-generated summary that was copied-and-pasted without much human brain effort?
-> >> What is more usual is to quote the message you are responding to.
-> >
-> > Actually as suspicious as it looks the mail was written by me only and
-> > I thought that each line was as important as other and
-> > I wanted to reply to each point you mentioned
-> > Sorry for shortening your response
-> > next time I will make sure that I will make quotations direct.
->
-> That wasn't what I meant, and you are still top-posting X-<.
+The newly added mode in this series currently ignores
+`extensions.compatObjectFormat` when generating the new signatures. From
+my understanding, to generate the compatibility structure would also
+require us to reconstruct the compatibility object for the object being
+signed. I think this would be possible to do, but would require getting
+the mapped OIDs for the commit parents and tree. I'm not completely sure
+of a good way to go about this yet though. I'm also not completely
+certain if this is something that should be addressed as part of this
+series, or could be done later down the road. So for now I've opted to
+delay its implementation. I'm open going down the other route if that is
+preferred though.
+
+The first commit is a simple cleanup for something I noticed while
+reading though commit signing code. The second commit actually
+introduces the new `--signed-commits` mode.
+
+Changes since V4:
+- Instead of introducing a separate `sign_buffer_with_key()` helper,
+  extend `sign_buffer()` to support a SIGN_BUFFER_USE_DEFAULT_KEY flag.
+- Fixed message in die().
+
+Changes since V3:
+- Rename the `re-sign-if-invalid` mode to `sign-if-invalid`. The
+  "if-invalid" already implies the signatures was previously signed
+  making "re-sign" redundant.
+
+Changes since V2:
+- Adapted commit message in second patch to improve clarity.
+- Fixed typos.
+- Renamed SIGN_RESIGN_IF_INVALID to SIGN_RE_SIGN_IF_INVALID.
+- Created separate helper function to handle printing invalid signature
+  warnings.
+
+Changes since V1:
+- Improved commit messages and comments to better explain why
+  interoperability mode is not currently supported.
+- Clarified documentation for re-sign-if-invalid mode.
+- Renamed `handle_invalid_signature()` to `handle_signature_if_invalid()`.
+- Added warning messages specific to commit resigning.
+- Fixed some small typos.
+- Added support for explicitly specifying the signing key ID via
+  `--signed-commits=re-sign-if-invalid[=<keyid>]` similar to how it can
+  specified in git-commit(1).
+- We now die() as unsupported when attempting to re-sign an invalid
+  commit signature in interoperability mode.
+- We now die() when failing to re-sign a commit.
+
+Thanks,
+-Justin
+
+Justin Tobler (3):
+  commit: remove unused forward declaration
+  gpg-interface: allow sign_buffer() to use default signing key
+  fast-import: add mode to sign commits with invalid signatures
+
+ Documentation/git-fast-import.adoc |   4 +
+ builtin/fast-export.c              |   8 +-
+ builtin/fast-import.c              | 101 ++++++++++++++++-----
+ builtin/tag.c                      |   4 +-
+ commit.c                           |  19 ++--
+ commit.h                           |   2 -
+ gpg-interface.c                    |  36 +++++---
+ gpg-interface.h                    |  19 +++-
+ send-pack.c                        |   2 +-
+ t/t9305-fast-import-signatures.sh  | 140 ++++++++++++++++++-----------
+ 10 files changed, 229 insertions(+), 106 deletions(-)
+
+Range-diff against v4:
+1:  0d00b72ee0 = 1:  0d00b72ee0 commit: remove unused forward declaration
+2:  87f590f1f8 ! 2:  7a0deed77b gpg-interface: introduce sign_buffer_with_key()
+    @@ Metadata
+     Author: Justin Tobler <jltobler@gmail.com>
+     
+      ## Commit message ##
+    -    gpg-interface: introduce sign_buffer_with_key()
+    +    gpg-interface: allow sign_buffer() to use default signing key
+     
+         The `sign_commit_to_strbuf()` helper in "commit.c" provides fallback
+         logic to get the default configured signing key when a key is not
+    @@ Commit message
+         reused by git-fast-import(1) when signing commits with invalid
+         signatures.
+     
+    -    Move the `sign_commit_to_strbuf()` helper from "commit.c" to
+    -    "gpg-interface.c" and rename it to `sign_buffer_with_key()`. Also export
+    -    this function so it can be used by "commit.c" and
+    -    "builtin/fast-import.c" in the subsequent commit.
+    +    Remove the `sign_commit_to_strbuf()` helper from "commit.c" and extend
+    +    `sign_buffer()` in "gpg-interface.c" to support using the default key as
+    +    a fallback when the `SIGN_BUFFER_USE_DEFAULT_KEY` flag is provided. Call
+    +    sites are updated accordingly.
+     
+         Signed-off-by: Justin Tobler <jltobler@gmail.com>
+     
+    + ## builtin/tag.c ##
+    +@@ builtin/tag.c: static int do_sign(struct strbuf *buffer, struct object_id **compat_oid,
+    + 	char *keyid = get_signing_key();
+    + 	int ret = -1;
+    + 
+    +-	if (sign_buffer(buffer, &sig, keyid))
+    ++	if (sign_buffer(buffer, &sig, keyid, 0))
+    + 		goto out;
+    + 
+    + 	if (compat) {
+    +@@ builtin/tag.c: static int do_sign(struct strbuf *buffer, struct object_id **compat_oid,
+    + 		if (convert_object_file(the_repository ,&compat_buf, algo, compat,
+    + 					buffer->buf, buffer->len, OBJ_TAG, 1))
+    + 			goto out;
+    +-		if (sign_buffer(&compat_buf, &compat_sig, keyid))
+    ++		if (sign_buffer(&compat_buf, &compat_sig, keyid, 0))
+    + 			goto out;
+    + 		add_header_signature(&compat_buf, &sig, algo);
+    + 		strbuf_addbuf(&compat_buf, &compat_sig);
+    +
+      ## commit.c ##
+     @@ commit.c: int add_header_signature(struct strbuf *buf, struct strbuf *sig, const struct gi
+      	return 0;
+    @@ commit.c: int commit_tree_extended(const char *msg, size_t msg_len,
+      
+      	write_commit_tree(&buffer, msg, msg_len, tree, parent_buf, nparents, author, committer, extra);
+     -	if (sign_commit && sign_commit_to_strbuf(&sig, &buffer, sign_commit)) {
+    -+	if (sign_commit && sign_buffer_with_key(&buffer, &sig, sign_commit)) {
+    ++	if (sign_commit && sign_buffer(&buffer, &sig, sign_commit,
+    ++				       SIGN_BUFFER_USE_DEFAULT_KEY)) {
+      		result = -1;
+      		goto out;
+      	}
+    @@ commit.c: int commit_tree_extended(const char *msg, size_t msg_len,
+      		free(mapped_parents);
+      
+     -		if (sign_commit && sign_commit_to_strbuf(&compat_sig, &compat_buffer, sign_commit)) {
+    -+		if (sign_commit && sign_buffer_with_key(&compat_buffer, &compat_sig, sign_commit)) {
+    ++		if (sign_commit && sign_buffer(&compat_buffer, &compat_sig,
+    ++					       sign_commit,
+    ++					       SIGN_BUFFER_USE_DEFAULT_KEY)) {
+      			result = -1;
+      			goto out;
+      		}
+     
+      ## gpg-interface.c ##
+    -@@ gpg-interface.c: int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+    - 	return use_format->sign_buffer(buffer, signature, signing_key);
+    +@@ gpg-interface.c: const char *gpg_trust_level_to_str(enum signature_trust_level level)
+    + 	return sigcheck_gpg_trust_level[level].display_key;
+      }
+      
+    -+int sign_buffer_with_key(struct strbuf *buffer, struct strbuf *signature,
+    -+			 const char *signing_key)
+    -+{
+    +-int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key)
+    ++int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
+    ++		const char *signing_key, enum sign_buffer_flags flags)
+    + {
+     +	char *keyid_to_free = NULL;
+     +	int ret = 0;
+    -+	if (!signing_key || !*signing_key)
+    ++
+    + 	gpg_interface_lazy_init();
+    + 
+    +-	return use_format->sign_buffer(buffer, signature, signing_key);
+    ++	if (flags & SIGN_BUFFER_USE_DEFAULT_KEY && (!signing_key || !*signing_key))
+     +		signing_key = keyid_to_free = get_signing_key();
+    -+	if (sign_buffer(buffer, signature, signing_key))
+    -+		ret = -1;
+    ++
+    ++	ret = use_format->sign_buffer(buffer, signature, signing_key);
+     +	free(keyid_to_free);
+     +	return ret;
+    -+}
+    -+
+    + }
+    + 
+      /*
+    -  * Strip CR from the line endings, in case we are on Windows.
+    -  * NEEDSWORK: make it trim only CRs before LFs and rename
+     
+      ## gpg-interface.h ##
+    +@@ gpg-interface.h: int parse_signature(const char *buf, size_t size, struct strbuf *payload, struct
+    +  */
+    + size_t parse_signed_buffer(const char *buf, size_t size);
+    + 
+    ++/* Flags for sign_buffer(). */
+    ++enum sign_buffer_flags {
+    ++	/*
+    ++	 * Use the default configured signing key as returned by `get_signing_key()`
+    ++	 * when the provided "signing_key" is NULL or empty.
+    ++	 */
+    ++	SIGN_BUFFER_USE_DEFAULT_KEY = (1 << 0),
+    ++};
+    ++
+    + /*
+    +  * Create a detached signature for the contents of "buffer" and append
+    +  * it after "signature"; "buffer" and "signature" can be the same
+     @@ gpg-interface.h: size_t parse_signed_buffer(const char *buf, size_t size);
+    +  * at the end.  Returns 0 on success, non-zero on failure.
+    +  */
+      int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
+    - 		const char *signing_key);
+    - 
+    -+/*
+    -+ * Similar to `sign_buffer()`, but uses the default configured signing key as
+    -+ * returned by `get_signing_key()` when the provided "signing_key" is NULL or
+    -+ * empty. Returns 0 on success, non-zero on failure.
+    -+ */
+    -+int sign_buffer_with_key(struct strbuf *buffer, struct strbuf *signature,
+    -+			 const char *signing_key);
+    +-		const char *signing_key);
+    +-
+    ++		const char *signing_key, enum sign_buffer_flags flags);
+      
+      /*
+       * Returns corresponding string in lowercase for a given member of
+    +
+    + ## send-pack.c ##
+    +@@ send-pack.c: static int generate_push_cert(struct strbuf *req_buf,
+    + 	if (!update_seen)
+    + 		goto free_return;
+    + 
+    +-	if (sign_buffer(&cert, &cert, signing_key))
+    ++	if (sign_buffer(&cert, &cert, signing_key, 0))
+    + 		die(_("failed to sign the push certificate"));
+    + 
+    + 	packet_buf_write(req_buf, "push-cert%c%s", 0, cap_string);
+3:  8b01ad1570 ! 3:  e659971e84 fast-import: add mode to sign commits with invalid signatures
+    @@ builtin/fast-import.c: static void handle_strip_if_invalid(struct strbuf *new_da
+     +			 * in interoperability mode is currently unsupported.
+     +			 */
+     +			if (the_repository->compat_hash_algo)
+    -+				die(_("signing signatures in interoperability mode is unsupported"));
+    ++				die(_("signing commits in interoperability mode is unsupported"));
+     +
+     +			strbuf_addstr(&payload, signature_check.payload);
+    -+			if (sign_buffer_with_key(&payload, &signature, signed_commit_keyid))
+    ++			if (sign_buffer(&payload, &signature, signed_commit_keyid,
+    ++					SIGN_BUFFER_USE_DEFAULT_KEY))
+     +				die(_("failed to sign commit object"));
+     +			add_header_signature(new_data, &signature, the_hash_algo);
+     +
+
+base-commit: 7c02d39fc2ed2702223c7674f73150d9a7e61ba4
+-- 
+2.53.0.381.g628a66ccf6
+
