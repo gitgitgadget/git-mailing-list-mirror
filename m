@@ -1,113 +1,147 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A9236607D
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 14:17:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773325040; cv=pass; b=kvUfkKRETeF7YE5+FpPrfYSEPHjrwasuerqdDXipLgNhyY6Q7EcplHoVaMN1noyq5QM4zRFs/h5QCbobG4Ku4D4VfGPozgdamblSM/a4B/l1T9YKZQNU1+NSvz0TlUsHfKflH46989+CqCdpO7JL9ypmGY47qm9Xs4gFitkNkpo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773325040; c=relaxed/simple;
-	bh=/vtSaOslwClH0ekv5ZjdyPN3yTjelqYk4/Ba6sn3q/8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OM+uq9lZWdxM2RRcMrWT6CBCtm/c/8dTmC15/dEpH1F6LlNl4O1RsoivimhmZceZBCX+KnPdsb2TzlopM8fG2te4UI3tZm9XHJxQx4JY32lKHKv9o0vQuncjm1xyDVPP3uPYEf48aET1Vzd57XFsvWBnHNrn8/mGLVh11VbsbGM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gvWAx/tn; arc=pass smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742DC36AB53
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 14:22:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773325332; cv=none; b=bavvq6XR8rbp1SNCzmMGcJCyMUpSnQA2D4pDOWwQIwCj+nMJkFdhQ+PG9s1wZ5ugInKdu9uCH3iTrwqTMNDaIG/iacOLjS+ZeYlcLaVrN3VE0dUblQZi3iX3MHeAyeBJnGuyuAo1yyUSWC+CypaRgf27AECWunx8qROm8icsAyk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773325332; c=relaxed/simple;
+	bh=x9GvMebL00HfJyacdSM+3TdX/Ko0I0BpSwXzoLjQgzU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pYYbkm0L0HpdZOidE97FyiWDiRvIzjpCZX9mgNs8C1qtKzKlVnoE8kHh1bDx368cQGyUn8YUbG21ZMvjs8Q2OM3E5LyxNGzrZvGexVvYw+e/oaqHTDKlTTqLWEDElz9ByuFy3+9GiFJZ3MI4vnpsoyonkCYdx0uCrMeqDGzK6x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i9SNTli0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BGOdVk4E; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gvWAx/tn"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7986c7b8076so11885857b3.2
-        for <git@vger.kernel.org>; Thu, 12 Mar 2026 07:17:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773325037; cv=none;
-        d=google.com; s=arc-20240605;
-        b=BZnCLmOiHSv09ywDCxntzmCXZIUO1BQ73iBq1PguAHY91ac4CCzVBJjDyoiRHUUCa8
-         sFhDZ5FlGb0bpQ6WrXYoop4CgZCbTun6/7A1b7qIOo5GZVQJOt81J3DDlrR0067UGgNb
-         azrUbkaMnegkW4Cq5Xp5rdWFBaPR+ZDCV1f4hdNW6uCQWZK26yPP3Vzl6tdcGTFnVFdV
-         Kwcv//iZWyKKuLvyw/5nZfTeQO/7sXn8MgOc0ZJE4J9LSucb6Z+cJnTakOw4YFHaIqyx
-         orWMBW7aYmoZPSntlm3DEc0AkbZQU5mh7hLP78molpzjayBMwXyLJTCIfyYK4tlWce2u
-         UzsA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=KhiC5i9YPYh9dKskJTA2z1lzyf350K9cok1WzhZW7O8=;
-        fh=iio2uoOBAWn7SWeSQbYhiY0qAwgocdKu3eQ+r4UbYXM=;
-        b=fE05RjDYxbncBcvS122KMRsYBKOYN3JNk5LfNTKHFRyEAFT8n8XnTgUqt3+0pBD1aO
-         cp2rVleeNoZGJpVBu1qEdreJ0wwARPWG6u3mj573l+clFqxDoNM7KkQpq8XPs14AePqv
-         sKCdQRlOcZq6tpdj9OdfbpQxj39vHDZagDiun7LuTBXDpJl0oYFIlvxlcM+ljFaUGjMI
-         hfpwKXoXhbG90Dg9ZiYPkAUDcdqyNhaYnunNHbetCYv5fBTsJWgiUb6RvpaihW4TNrqI
-         V6v/ndntOW+dmpz0SnN7ZBg87gCuR5GT0p88kK1Hthuc226vPzxvVT8Q0Jimm3MvM8aJ
-         yETg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773325037; x=1773929837; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KhiC5i9YPYh9dKskJTA2z1lzyf350K9cok1WzhZW7O8=;
-        b=gvWAx/tnIWMIHAVGTCO0jS8vEJteBZiPWIW90pC0pIapbNcttKvGbfIdyOzkp9qdvY
-         KV6zGEL8lDuEDI5hvXPwOkroKfHNcrrmO1Oeh17CqTLbRivdDRi34lgVRUzQN0aw7oVM
-         LF4Po6Fdy4THbO+J7DXge4YupizWekZ4KXuFN/gHa1DD3NDnZ9QW5W9ggqs75pHS1CgH
-         V0PJwiuK9FzLHKWWylEWPUeY5tcGdybbNLrdGGoamUx63ceVbapinVhTvZ3lga9zqaim
-         dX9IJl5croYqgoe+cZXXWNwwsXRpvuCTi9hAVAP+lAlVzjG+MsZCatL6QV49pGiBLUfD
-         0xUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773325037; x=1773929837;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KhiC5i9YPYh9dKskJTA2z1lzyf350K9cok1WzhZW7O8=;
-        b=IfLx9NppFmwIOajt6lF/7/Lw7Ex4F10mS69Cg66eAkPYiiMQVCj2uDuHqe53EzKpyb
-         jJKB9RQ/pmhv9gs/Etne6UN97+k/ICEQYJFPxoEl1CQ+QZCmh7o2ufWPWbfYMDh25uiv
-         cIBOZICb4p4dvVpU3waEnMwx6TlXLKesYuTNJ/0jlW69QJv0Qtt1xdImFB6hHXfcHBGs
-         0yuTLGEfP1tma5+ZvjixguE0R36GKuDYb/Pt+Zcjad1S1iB8aYNzirBEOzPeyQcQFFHr
-         G8G4onpu4VS4NGhcBTtzQsL2Vk3DuWwzEINyt4rhnjtutzGNKqa1zCGnzkl60FCQDe2I
-         Cetw==
-X-Gm-Message-State: AOJu0YwcxG98FIaRyrNw7H4qEvslgUwSCXrZHH1bF69lp0lr+fi1pbpB
-	GezmhF3YfTqVLYfdjKc0UBKUWQjwrSiM1fSuzocwGwOmic6CEgXgo5BuYUX0fyy4K2C/B3Kblca
-	kbqUxUQU1KsURD0VNFebFYaVetYalzyE=
-X-Gm-Gg: ATEYQzwsQRKpNjIm7xGNv4ypZD38b/lSjvzngdFJy/+Njs54x4kHCMBiqEdSo8Gkueo
-	32iaYmlktKMlh+pB8uX8jhaDLfSy4WDWH0awj7BSsWZItJXD0z0oV3qMW0ZGFqvKOnJ7njKocyv
-	g0YyTDe16QvU2a0LdLIm3b/R4rnSG/QtLJABfBDoWx4j8jdwnapQxmxov+zuG089ye6y1a7vrx3
-	fCuJt5qTxKXs+zVQTdUr1GKGAmUrYs1ofa0DEmY0FEzqpmn+MedXztOj2aQiSHJk/RAcTGrngSW
-	AZ6HPnk=
-X-Received: by 2002:a05:690c:6d10:b0:798:ff2f:267a with SMTP id
- 00721157ae682-79917f824fdmr60942897b3.52.1773325037128; Thu, 12 Mar 2026
- 07:17:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i9SNTli0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BGOdVk4E"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7E1EC1D000FF;
+	Thu, 12 Mar 2026 10:22:09 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 12 Mar 2026 10:22:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773325329; x=1773411729; bh=eNXQWMHlzP
+	AkImje6WZsy1R6s02jCEna2FH1wCOLcPo=; b=i9SNTli0kfV6ZC0tVtnHeRWu7Z
+	mO3gEJvHv7SfyxkcPyAWa+J+WXd+MPIAhwd2dgs3g+620WP1Oaa53S6lo0LlcB6+
+	I20Xegu4UoCVwSdHGZqkarnnHQMdzKAN2Wm0CGxvKiHt7RAc0+V2cBNWswYGw3lI
+	g7XK18cgd1T8z9inooq4cdjBVbShkS1IDVFBupLyDHEifsH8JMVg7QDqCHye6tnG
+	n0rAwRt0b1gCiwjhSf69tlkG3scWAfV7lOZ+aMSfNznm/A1L2i2GF6gTvtU2Xoxn
+	Kz5+vANvlpyUi1UkvZXCssfPuAgIQsEH8F1F5LHwYwCdut3lvc5sgrQFgoug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773325329; x=1773411729; bh=eNXQWMHlzPAkImje6WZsy1R6s02jCEna2FH
+	1wCOLcPo=; b=BGOdVk4EdsCl4AODCj6OKhivkRfqAm6/klf6DKz/hnj4OqJ5JPq
+	IMd26oT5/GfyfZEoU6uIbSEayhFUhyIbigWPGlUwYulY9jbeO1+buomlSAqq82qC
+	HmpoDGv9sxIht5aUg7vE2fZvvQa6vEPS0bUVC5Cn6yMcOsB82SF5oY0zfJjTp4j2
+	OiFJVPHSpOhkeElIhWygQIDPbg5DgEWOsimDl5BJ6Nwyn1NLySGSIVJAKGv06vs0
+	HsdmhTk+ESKVfN2svu5qLM46yxyHYsQwgTNzD8nxMXISffvVyDkbXlbWCqu0NZx9
+	30w5TvWWmVvJqF8s/s6ezOSrQ2MUM1gDzug==
+X-ME-Sender: <xms:EMyyaXgOMTEKTC9Tf7si66GJ5NM8aQZxqM8CEcHqYA1bZzvLw0Zfow>
+    <xme:EMyyaa7fr4YeYO4ncd-UmN_PbvAE2MlS0-9DzSTM7Pogwj6euNAf_qrO7rWPBX59C
+    g6diLKopj-GdtkcidASW7emTeUyiFEaupHDZAGDGEC2S3DT4HxRtQ>
+X-ME-Received: <xmr:EMyyafYjUxcNcwPB9p4qB3sNHAHdwu0pCXdXhlyA5FFpBtH2SvVO63odhkGUu9_W5a7TGn4NwWN1q7tVs8il2QFALHlLlPlwz_5t3uBP4Ft57Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejtdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
+    ohhm
+X-ME-Proxy: <xmx:EMyyaf59HqHGmEEjxQtgnXU58cg9iUn_hKbkOobBAXz7AZUIISAaWQ>
+    <xmx:EMyyaSCWa56zZWY5iZGZgVpPLEjXNZogCD_C7ZX2jhQOwOuUo8pepQ>
+    <xmx:EMyyaVcFLEY3Zhb5rwf5D2baiFg2xPSi_vr1kv9C93u5QYnjlyvRBA>
+    <xmx:EMyyaRK49yH5A2YhgGwcilpe1-RVOiOhgzDrOv8n7ECis9ZlpJEEgg>
+    <xmx:EcyyaSLDHEfBlbvwJcmoprd_NBLKr4Z586P2DrsiehxYpbb0FlZNyh1b>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Mar 2026 10:22:07 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 05af0b28 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Mar 2026 14:22:05 +0000 (UTC)
+Date: Thu, 12 Mar 2026 15:22:03 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net,
+	christian.couder@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v4 3/3] fast-import: add mode to sign commits with
+ invalid signatures
+Message-ID: <abLMCxWWNiCnqmp_@pks.im>
+References: <20260310201116.1130160-1-jltobler@gmail.com>
+ <20260311173147.2336432-1-jltobler@gmail.com>
+ <20260311173147.2336432-4-jltobler@gmail.com>
+ <abKUBRRgRmbJ1hRA@pks.im>
+ <abLGgq-PXzdWs6kD@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260312125030.7799-1-r.siddharth.shrimali@gmail.com>
-In-Reply-To: <20260312125030.7799-1-r.siddharth.shrimali@gmail.com>
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Thu, 12 Mar 2026 19:47:05 +0530
-X-Gm-Features: AaiRm50VwrbG1kX6kKONpXGOQPwKlzv2Wq-HDaSj_15vb-853uWVD3sJV9jMzek
-Message-ID: <CALE2CrTzYbMam_fi5HszSUFVZADE1haLtpBqhUmd1ki9biM2hA@mail.gmail.com>
-Subject: Re: [PATCH] t0410: modernize delete_object helper
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com, 
-	christian.couder@gmail.com, karthik.188@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <abLGgq-PXzdWs6kD@denethor>
 
-Hi Siddharth,
+On Thu, Mar 12, 2026 at 09:08:46AM -0500, Justin Tobler wrote:
+> On 26/03/12 11:23AM, Patrick Steinhardt wrote:
+> > On Wed, Mar 11, 2026 at 12:31:47PM -0500, Justin Tobler wrote:
+> > > diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> > > index b8a7757cfd..d6281ff119 100644
+> > > --- a/builtin/fast-import.c
+> > > +++ b/builtin/fast-import.c
+> > > @@ -2865,6 +2855,66 @@ static void handle_strip_if_invalid(struct strbuf *new_data,
+> > >  		else
+> > >  			warning(_("stripping invalid signature for commit\n"
+> > >  				  "  allegedly by %s"), signer);
+> > > +		break;
+> > > +	case SIGN_SIGN_IF_INVALID:
+> > > +		if (subject_len > 100)
+> > > +			warning(_("signing commit with invalid signature for '%.100s...'\n"
+> > > +				  "  allegedly by %s"), subject, signer);
+> > > +		else if (subject_len > 0)
+> > > +			warning(_("signing commit with invalid signature for '%.*s'\n"
+> > > +				  "  allegedly by %s"), subject_len, subject, signer);
+> > > +		else
+> > > +			warning(_("signing commit with invalid signature\n"
+> > > +				  "  allegedly by %s"), signer);
+> > > +		break;
+> > > +	default:
+> > > +		BUG("unsupported signing mode");
+> > > +	}
+> > > +}
+> > 
+> > I'm still not convinced that it makes sense to warn about this case.
+> > After all the user has asked us to re-sign such commits, so they
+> > probably expect such cases. These warnings would thus result in a ton of
+> > noise in a repository where most commits are signed, drowning out the
+> > potentially-useful warnings.
+> > 
+> > Anyway, I won't insist on a change here.
+> 
+> I'm not really against removing these warning as I also agree it creates
+> a bunch of noise. If we get rid of them for "sign-if-invalid" though,
+> shouldn't we also get rid of them for "strip-if-invalid"? If the user
+> asks to strip commits, I figure they would expect such cases as well. If
+> we think removing the warning altogether is sensible, I can add another
+> prepatory commit that simply removes the warning for the
+> "strip-if-invalid" case.
 
-Thanks for the cleanup! Using `test_oid_to_path` here makes the helper
-cleaner and avoids the `sed` trick.
+Yeah, it kind of falls into the same space, agreed. As said, I won't
+insist on changing this. Maybe the right way to approach this is to keep
+it as-is for now and create a follow-up patch where you propose to strip
+it from both sites?
 
-I tested this patch locally and the tests passed.
-
-One small thought: maybe we could quote `$obj` in the
-`test_oid_to_path` call, like this:
-
->
-> +       path="$repo/.git/objects/$(test_oid_to_path $obj)" &&
-          path="$repo/.git/objects/$(test_oid_to_path "$obj")" &&
-
-Also, would it make sense to use `local` for `repo` and `obj` to avoid
-leaking variables outside the helper? Not a strong opinion, but it
-might make the helper a bit safer.
-
-Thanks,
-Pushkar
+Patrick
