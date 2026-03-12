@@ -1,177 +1,130 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609ED3B634A
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 14:40:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500613C552C
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 14:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773326434; cv=none; b=ivdb2RqzkDD9M89J7u1mRGwt/NMdInvue9vT2mhRHvbEWlKJBpm6HkxfH26lUSi454PbDXd3VXe+IzQajmuFO+UIzuF42m11TesTI7lmIUqQRNIiVGjpehL0piNc2teMRuOijvoTBcIwOkFegKOHP17QyOAId/2e+c9cMyoy2Go=
+	t=1773326690; cv=none; b=c2Heedwp6vwHScKFxsxPBY3OJ8Qm93sCVmxFzgngQIrqSpfYjL2rdZgexhDgK5iq+zL8T4qaLNXuElmxS9kBdMapUYHjVGT++rpcPPbuLbrZrWm4KMhh1t9wC99kCNt8NMryJhGTCkK+uyWYmWfaSEOSXRXSfv2Wtvz1ih7QxEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773326434; c=relaxed/simple;
-	bh=X+LqG+41qlK2w4sx7aNJEddbf3OEomIqUWZoBy7UYdA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BjiAavX7uimv1mvnKKuNG98DeYAaaoRJ6g8UM9W1/qq3DG92MH93Kl5kZyssOxR7Q8o8k6WwTUjuM9BiuxuUbcx6bwvBE7mHEo5EXuivGENIHrQvqSvRUJyIJhOV8aqLvO1eALf0T38vB/Y2UCPfYKvAzI0iDIbSF1ryUbpLafY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LaqZF2Yc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gQgpA5xf; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773326690; c=relaxed/simple;
+	bh=MBs5i7Rhu/DZHtG/w6RrYANH2JcjLi8oQeIEz66EQ5Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Dj7LvXbvpKdRfZZbc3JzMs3yQMAZEvkExa/CN548mfPvbGZvw0cRLlWVz66ECinyI/rJdBtU+s1ciKdLOgYntRYNjbUpkWlsPh4kfbVZzVF+CBro94+z1/Ihr3N2BomY3jU+RVwvzhiTPCgpht9U/2OBS4R98BP40tbUYi7XPko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mQmap+M/; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LaqZF2Yc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gQgpA5xf"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 837D57A0147;
-	Thu, 12 Mar 2026 10:40:31 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 12 Mar 2026 10:40:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773326431; x=1773412831; bh=SFk4d9r0JG
-	PF+KP49W2N2h/NvGqgJx4GZLQb3CjKg44=; b=LaqZF2Yc8bVURjODpEuXCA4WTn
-	+jf/hjCSaG0dZK1HAd4wDMrlGAFKbsMaa/ksNReQXpEc9BOUdFDht6Llojhm6rso
-	IftOKR7oShL961etLqJfD5Z0a1U+HYFvKSG0UtMfruP0S5UqTg7qMIljSGhGDiT5
-	w+DbHuNYTG9x9FACT34xez1zpOUt2HTF+tftiw6JaK2l70MYLttKgsjv6A5Jt/4s
-	HaQJb5aYf7HGWBiTBupE0lHWjq1GxnoPi4bLgbqp8GP4gpKuGuLk5lThzzHRORao
-	5fs2Al5AujAi/KSdBs2imydvXfPKKo3VVBIzZ/rS0cJra508Z61Os52ZseCA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773326431; x=1773412831; bh=SFk4d9r0JGPF+KP49W2N2h/NvGqgJx4GZLQ
-	b3CjKg44=; b=gQgpA5xfd2XiDxnbJKDJRHa8XLtP1zvSZ/HFp1KADZ6xuEjmh1j
-	k2YB9G55QCs5fcKNJ5lsa9p64/KZ5hGSxmNsgiHcgblm7JqKitjvxbzFKKy/dGID
-	8a1jLrf9A2DMgAlF0sc80MitD9sz1TXgoVrcrhg07aZmbLe1VQwalaQ+EbfPKB+n
-	KsHDC2mkwieR5E9xtCoYuykiYWKf5eW7B0O48pvwtny6Sp/N84AGy+lPFm4B04vP
-	uf1b3DOWza7cD6U1NLsVy3SzhkjZag4sB9cxeVTP5vtX6wnzk/kronRB5MiYdnqM
-	fnKTj+p80QdFFekMd/TrzbeoDVRx0NpCySw==
-X-ME-Sender: <xms:X9CyaZfXsiF4tBFIzPTNCvQOksWh-72_L-DLT20hB4wV60CM5yplnQ>
-    <xme:X9CyaeM1OhuQGIvOz1JZVcP5j0O84RRyp0RPLNvv8NekJFwiMhq0aAcSiY1b3y62_
-    PriBhHagpwECKlNs_wt2PHcJCr9J5gkQCiAc02O_W_1W5nE4I_ZCg>
-X-ME-Received: <xmr:X9CyaXjxYNlGr4wC4_2mvnLYYCL6HmXH9DgYyfj1AZH_70aTH4HXv5AyUkar8kwOCSpLAk52GOrNdesKXzb2NmuYinKz-HozXA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejtdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:X9CyaR2u-CpJoeQhUeY74qTstJNov5exR6YNjIX3D0PUFQUrVB9ncQ>
-    <xmx:X9CyaRhmTQ5n45xHEjPNkGikVz1e5E2ZZdMgyY65zkEG7kP-MEprMQ>
-    <xmx:X9CyaRdWZN2QCx4pu9RP_DYasMHZsStP02eFnhkmWeqC41JcsA4pyg>
-    <xmx:X9CyaUllMECRVPp1c5JP7oh-xzv3vh0uYFdn3QtMe9MPRhYshXNRMA>
-    <xmx:X9CyabCdm4-L4tPYvyak-qT7anB1PaMBmLtlGuogTjAxlB_NPGvDw2tH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 10:40:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH] checkout: add --autostash option for branch switching
-In-Reply-To: <pull.2234.git.git.1773321998854.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Thu, 12 Mar 2026 13:26:38
-	+0000")
-References: <pull.2234.git.git.1773321998854.gitgitgadget@gmail.com>
-Date: Thu, 12 Mar 2026 07:40:29 -0700
-Message-ID: <xmqqeclpi00y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mQmap+M/"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-439b94a19fdso1097108f8f.0
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 07:44:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773326685; x=1773931485; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HWRy6IyehC4xxNKo8K9pyyCjpWYQRLolAfcbI22x2NA=;
+        b=mQmap+M/RGnlMSAhOk7fOtNmguO4d/i2CqqZM1YRE+s0VA42ceFza1UwATcVYqaGzE
+         2Q8e+TqD66/zjGhiB42SEmMeYnV+4WCEToZ7mm0shPsRnQZibYx1J97b8R895FL8EIcl
+         5cwMOytHgjbSif0HYop4BUENg2wLaIVNurqt7bzv8tTwFrGTgOqcT87kzmywHYz+uJ/1
+         AAArDvxg1AJ1n5T5H22aXlAUGca8KHzg9fZ6Jh/2sZB8SEUTiquGzFNot0okbwfeXk45
+         aWeOAMw+5FFyrUGp6bRQU1hh3JdngdgYCRBlXjV0P9m2gBv16FgEG9IUCv1jX9ptt+TP
+         2PWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773326685; x=1773931485;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HWRy6IyehC4xxNKo8K9pyyCjpWYQRLolAfcbI22x2NA=;
+        b=Lyrlu+V7mFR3On693l9ZzgSI1lNvhMoXbVIdFZ/8Ov23x5BcLeLL10xxTiO56tYFMx
+         +K3GWkvpPfMnDmkly5hw4ZSknMhSfmweWfihybv8dugKNuzpK1xZWDUbw4W9GZDUvR9m
+         YsUm2Fm4jcL0jkzJ76EgNgVira51B079+60JIrBTdYLacMzR2i/AEBaCt/t3ITb1+nUN
+         TMt88wXlCLdkxajC3T40i5SSHwN5GPti2gqxhELs5XMA+7/VkgVTxXUszU+85ASlY6CF
+         tionS08MD+WjR9lP8VlgxLjT8yRLmGO2bKFsXDspAqJvd5tVr6oU7nKj/m923Wia/W9D
+         ZQ4Q==
+X-Gm-Message-State: AOJu0Yzcn2SMlQdDP7wYb2JHLjfJecrZBw8ln9AVOxzvYscuIoP47zVP
+	DrATSvWD6a+XRE1U/6pl7tPq+r0BtBWxjTptYId6VqeqMEmytAPzbzesznzcKg==
+X-Gm-Gg: ATEYQzwBS6MYNoF3vxNukEYA8ZoXl+YhXnmIA7UquTbSOuLI+4XJtYW/O1u2Gzbkm2f
+	x1b6IU8hNaEdkKayZ3CbGZP1DjFpdwIi2+Sd/J/qFsidCXOdbxh17clM7NC5CC7LbeDwZ/sVPuV
+	Cnap18imgkX4YHlEiNVvTOZGl2+UoyWRi4JQk1Ja/5SkLr/JssosOWga4TH5lUuDRpDFSj9FTMU
+	wnsPHt7bLugFLpPbHB3beMn0vrqxDrHs3k6yj+wXhVV4cfALwpMsuCROaxdESVk+3c6D50LAok2
+	U7TVItTNj3d/BIkgYDZrIDkK1msKuRC9PbZ+i6+qYejkNCn1qXnfUXFn3rAQbNNlJdM3M2ATbl3
+	C4skdtUMzH9cssQtYseo7VMQTgAt5LCKOT0I5HjoOPZGHil2xdP4RvqSL6QsnmbP8dgOSLLddd7
+	BgJ9zrvrD8PnfskAs=
+X-Received: by 2002:a05:600c:4710:b0:485:34b3:8587 with SMTP id 5b1f17b1804b1-4854b0bb77dmr112365195e9.10.1773326684638;
+        Thu, 12 Mar 2026 07:44:44 -0700 (PDT)
+Received: from fedora ([159.146.43.38])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b47145dsm130688015e9.0.2026.03.12.07.44.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Mar 2026 07:44:43 -0700 (PDT)
+From: =?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	l.s.r@web.de,
+	ps@pks.im,
+	peff@peff.net,
+	gitster@pobox.com,
+	=?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
+Subject: [PATCH v3 0/2] run-command: stop using the_repository 
+Date: Thu, 12 Mar 2026 17:44:35 +0300
+Message-ID: <20260312144437.626392-1-bkkaracay@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260311151923.4178655-1-bkkaracay@gmail.com>
+References: <20260311151923.4178655-1-bkkaracay@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi,
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> When switching branches, local modifications in the working tree can
-> prevent the checkout from succeeding.  While "git rebase" and "git
-> merge" already support --autostash to handle this case automatically,
-> "git checkout" and "git switch" require users to manually stash and
-> unstash their changes.
->
-> Teach "git checkout" and "git switch" to accept --autostash and
-> --no-autostash options that automatically create a temporary stash
-> entry before the branch switch begins and apply it after the switch
-> completes.  If the stash application results in conflicts, the stash
-> entry is saved to the stash list so the user can resolve them later.
->
-> Also add a checkout.autoStash configuration option that enables this
-> behavior by default, which can be overridden with --no-autostash on
-> the command line.
+This patch series aims to remove the_repository dependency in
+'run-command.c'.
 
-Unconditionally always stash when checkout happens?  This feature as
-implemented does not have to be a separate feature.  It can be done
-by end-users as a short-cut for "stash" followed by "checkout" via
-alias or custom command.
+The first patch removes the dependency in start_command() by replacing
+the boolean 'close_object_store' flag with a pointer to the target
+object store.
 
-Perhaps doing it this way would make it more worth doing?
+The second patch handles the prepare_auto_maintenance() and
+run_auto_maintenance() functions by passing a 'struct repository *'
+parameter. With no global repository dependencies left, it drops the
+USE_THE_REPOSITORY_VARIABLE macro from the file.
 
- - At the beginning of branch switching, ask a new helper function
-   that takes the branch we are switching to as an argument this
-   question:
+Changes in v3:
+- Added the second patch at the suggestion of Patrick to fully clean up
+  the file.
 
-   Do any paths that are different between the current branch and
-   the branch we are switching to have local (i.e., either in the
-   index or in the working tree) change [Yes/No]?
+Changes in v2:
+- Dropped the wrapper approach and rewrote the patch around the approach
+  suggested by René.
 
- - When the answer is "yes", save the local changes to a new stash
-   entry, and clear the local changes from the index and from the
-   working tree.  If not, do not bother with stash at all.
+Thanks for all guidance,
+Burak Kaan Karaçay
 
- - Switch to other branch the usual way.  This will never conflict.
+Burak Kaan Karaçay (2):
+  run-command: wean start_command() off the_repository
+  run-command: wean auto_maintenance() functions off the_repository
 
- - If we created a stash entry earlier, try to unstash it.  It may
-   conflict or it may not.  
+ builtin/am.c           |  2 +-
+ builtin/commit.c       |  2 +-
+ builtin/fetch.c        |  2 +-
+ builtin/gc.c           | 14 +++++++++-----
+ builtin/merge.c        |  2 +-
+ builtin/pull.c         |  2 +-
+ builtin/rebase.c       |  4 +++-
+ builtin/receive-pack.c |  2 +-
+ run-command.c          | 20 ++++++++++----------
+ run-command.h          |  9 ++++++---
+ 10 files changed, 34 insertions(+), 25 deletions(-)
 
-   - If it does not conflict, then we are done.  We drop that stash
-     entry, and tell nothing about the stash to the user, as there
-     is nothing they can do to the now-consumed stash.
+-- 
+2.53.0
 
-   - If it does conflict, tell the user that the original change is
-     in the stash, and can be used to recover if you botch the
-     conflict resolution, and also tell the user that they need to
-     drop the stash entry once they are done with the change that
-     caused this current conflict.
-
-Essentially, the new "autostaash only when needed" would become a
-much better reimplementation of the "-m" option.  From the point of
-view of a user who is used to "checkout -m", the basic workflow
-would be the same, only with vast improvement.
-
- - It may not conflict and merge cleanly, in which case they do not
-   have to do anything.  This is the same as status quo.
-
- - It may conflict and they find it too involved to resolve right at
-   the moment, in which case they now have a choiceto say "git reset
-   --hard", essentially declaring "I prioritize working on this new
-   branch; I'll deal with the work in progress I started on the
-   previous branch later", and then later they can "git stash pop"
-   to deal with it.
-
-   Which is a vast improvement over the current "-m" that gives you
-   only one chance to resolve it right.
-
- - It may conflict and they may be able to resolve cleanly, in which
-   case they have to remember that they need to do an extra thing
-   (i.e., drop the stash we created just in case) but that may not
-   be too bad a tradeoff.
-
-If we can sell it as an improved implementation of "-m", we probably
-can lose some code that the current "-m" implementation uses to do
-its merge; we'd be instead using the "unstash" code paths.
-
-And the new helper function to detect if switching from one commit
-to another commit would never conflict can later be used to enhance
-"git rebase" as well---we could call it N times to rebase a branch
-with N commits and if all steps are clear, we do not have to insist
-that there is no local changes like we do currently.
-
-Hmm?
