@@ -1,212 +1,147 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF27E3FBEA0
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:11:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E70438C40C
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773335490; cv=none; b=QtVjodwN+hQ43N9yo8neYtJs8NENb3bcXoC7/KxqhpEgAOZVf2cEPczkiBRpYG23Y2kitqLdA+e/PJ4I1nLjNaVRCh3U2cqhw1p8XOUBYYWYaEwaGc9+pNPrOHe1Lc5r6dxpoZWjJ2Fp2TNDu566oY8uOwa9j4AJWIgorG3QYKU=
+	t=1773335911; cv=none; b=AvGpy1WSLyqaWFJuLYVEhlWaYAAM7CYju1FxLmbklmzvmKhJXhDU8/pTtg1kplZEgV7l7usKrUxYgu3lwWfU+LFgIE26DJkwoKvbbWQwiCk2hQyZEQ0iC6Fhf+Zi4VoOaSqFGYTQvFf74aD5fF6vyHJSotmmheZlQ3XO8Z24deM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773335490; c=relaxed/simple;
-	bh=iF52domlK3ndl93LUYyh4qeVX/HASH+7vVHfiZ3H8cg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Aq6F4FIO5+W5DqDYwjNSEsnzIRTjlHObW5vdhA8O3i+AIQ5Sa5Ur+TSbQF+SxocGT1u+vgNIDaS5IfPv32lx5ojvgZsrvoyMntd9NT8k+gKyGskmPgOsB473EhvlooxvrhYJnyg2Yu14emEILwhVBUkW+EkVN42RzR29iXOP4+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RBd6rUaL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R1zisnQq; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773335911; c=relaxed/simple;
+	bh=W8j9pQupUpCZOW3dEQoARfOoFzQTXVNzX4gLaGALAg0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G84SLT6Ok+FsVGVz21Mfot8CqkrdbEYWMUMb9oUzAifmS4dRnTFJyS6K//NS3RUPA3XyjnDxHEAdXnTHpKG3Gd0vmQMXzaRXuCIMInqEV7nXIbsKz14mlsAszDaArLJzfQapMu6PLr5NsiwLch4jJ+VP629Er9GDr/M25OeOMEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=GLOGvx1d; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RBd6rUaL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R1zisnQq"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 412981D00113;
-	Thu, 12 Mar 2026 13:11:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 12 Mar 2026 13:11:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773335484; x=1773421884; bh=+287h0W+uA
-	9q54hx4VU30oqk2Uxq78BI8IGySNTv8Ec=; b=RBd6rUaLSqF+c6S3S7VSCQhXlJ
-	tbkvXvMur5IV2hFkeYFU+M7AM37V6IZGEvcfjDob5lYCOm2/xXbWo8R8QCdSd7/j
-	AOXVnmnbU/zPa7ex5AklhVZMmEKPlyjVYKXC2LlGQHC78uzzYEjG9A06BQyA/gZ6
-	dIxa5/3bP4muC6cfbQPFayKlzf5JzGfNbm8dLQqseeNJzrs4G7NPv3fVwNjbgWdY
-	tKS63ArnBjNGq5mPIe9x4dmZKf7JYWFdN3GtIyMsxDTO7Jcj28474SxTsFF5EKaB
-	q1cj4H21DUKDRvNbkRSrkvwu5IsjaQVtn5M7cRV0mWdgQu+i11+/HpQAFYvw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773335484; x=1773421884; bh=+287h0W+uA9q54hx4VU30oqk2Uxq78BI8IG
-	ySNTv8Ec=; b=R1zisnQq1p8gvS81V0iYhQtDEzaqlurPqtOQdHKO5WSOOUYY4IX
-	vz6+F94pvkB+UdHxdg1memA3IlG3t1jgf32Zf4BV+M0DbszCrkD0Cmzrnxyq4OpA
-	7Rvm07wceC5Wp7mwvLtXgpCNs2qBc5hUayBBKCYP6PIW+L66pnd8+TtvzF0kvgLp
-	UTbMfc8Qt8UA6sW+s20/Cm6lP0u2RYeoIElyL6Wpq4M74cZh3U3wfEWmwhCkXpd0
-	aN47O/DolZOATHcM9G/nZA2H+zta2ImvzUAbgCLGvvKu22YJpDf0doLz5JL5duBv
-	zubJC1aTh1UipGYzLOTC7a88CaJFt8P/jKQ==
-X-ME-Sender: <xms:u_OyaTxwGiKlCjJ8WXcEYeniithDEwCR7eMVSHKsFSbC3ff1nmLTRw>
-    <xme:u_Oyab8fF1RH-h0KvfZEZLHRicer2GjgBWNKNLQSXcQT_wEL2RiVa2M4HQnj5Zw-n
-    oDvYNsLtLBK3uXAl3K4UaonkBDFzfULPrnW9ggydLD0XVSXS09qTw>
-X-ME-Received: <xmr:u_OyabjyJsIN2RffOVpJEmO5zrI8vv5k9xlQdlyD_n6I0W9zGMe780wkLnbWGg0Gze6jDONsssSb3VhkVejIuraAG4r_0GFr3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejfeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrghtsehm
-    rghlohhnrdguvghvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoh
-    epjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:u_OyaSEIlEzi02INQlIsDPNmVaeghGe3zuFh3GqHlZd3YDSfeV1_-w>
-    <xmx:u_Oyaa93myoCLwiVyFQga57ev1FJZkrx43SZ-ffNKcGyqmfvunob0w>
-    <xmx:u_OyaZwqdndtE7d97C1TGP1k7BgN8mGuuhkx-j2s32_Zy0xXgcq9VQ>
-    <xmx:u_OyaWMK9SquqIDKBLBfgrhQ3cOAJ5zodr2pS-49e67ocSbnzv3A8g>
-    <xmx:vPOyae-KapgCIJJzLn288Or6rJKSap4zd-jVi7QTn9vCaNi_Myw1YNns>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 13:11:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com,
-  phillip.wood@dunelm.org.uk,  jltobler@gmail.com,  ps@pks.im
-Subject: Re: [PATCH v2] builtin/mktree: remove USE_THE_REPOSITORY_VARIABLE
-In-Reply-To: <20260312164203.964033-1-cat@malon.dev> (Tian Yuchen's message of
-	"Fri, 13 Mar 2026 00:42:03 +0800")
-References: <20260312164203.964033-1-cat@malon.dev>
-Date: Thu, 12 Mar 2026 10:11:22 -0700
-Message-ID: <xmqqsea5ezwl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="GLOGvx1d"
+Date: Thu, 12 Mar 2026 18:18:23 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1773335905;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=R80MD2gYFyrZs00aM2aRVN94fFza8lY3/LE0hGycehI=;
+	b=GLOGvx1d/Sa2TdqwzthsYUxeav2w5GKf6oMusg+h5OHpsOvUHE5gTih4Q0JRhFBBIqQy9B
+	a+hK1JJmiaPA327RdFnTEwv1ETqNqQLv5fpJ4ADf97wjsR1QKyjPg6/VYwJHeo4oxgNlH7
+	T7pBcucSiceZutB6p4WB8yiXWVPUpCiKxVnc/uRNUFF9phZ6rgB17ExBCpJja/wQw6lddU
+	b81ScYssD0q1EgyX5/GbkwS6vSwiODCgBYN3ZcxSnxF2JKo4YbvrJcfX1izZuRquWrJcMb
+	kFZ99fsPmhXVh6TJcOiiEtKzIF1GzA1xv2P+1K1mcrth+juiFd5xeFag3Gggdw==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Bert Wesarg <bert.wesarg@googlemail.com>, 
+	Mirko Faina <mroik@delayed.space>
+Subject: Re: [PATCH v8 2/4] format-patch: add ability to use alt cover format
+Message-ID: <abLw6vUUh36zFK4n@exploit2>
+References: <cover.1772839973.git.mroik@delayed.space>
+ <cover.1773331753.git.mroik@delayed.space>
+ <225065cc0dd54d1a592939d41783a904a98fb2ad.1773331753.git.mroik@delayed.space>
+ <xmqq5x71gfci.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5x71gfci.fsf@gitster.g>
+X-Spamd-Bar: -
 
-Tian Yuchen <cat@malon.dev> writes:
+On Thu, Mar 12, 2026 at 09:52:29AM -0700, Junio C Hamano wrote:
+> The example does not use a format spec 'prefixed with "log:"',
+> though?
 
-> The 'cmd_mktree()' function already receives a 'struct repository *repo'
-> pointer, but it was previously marked as UNUSED.
->
-> Pass the 'repo' pointer down to 'mktree_line()' and 'write_tree()'.
-> Consequently, remove the 'USE_THE_REPOSITORY_VARIABLE' macro, replace
-> usages of 'the_repository', and swap 'parse_oid_hex()' with its context-aware
-> version 'parse_oid_hex_algop()'.
->
-> This refactoring is safe because 'cmd_mktree()' is registered with the
-> 'RUN_SETUP' flag in 'git.c', which guarantees that the command is
-> executed within a initialized repository, ensuring that the passed 'repo'
-> pointer is never 'NULL'.
+Yes, I fixed the example but forgot fix the paragraph when rewording.
+Will fix
 
-RUN_SETUP also guarantees that the repo points at the_repository.
+> The second sentence reads funny.  The option is available whether
+> the user wants to use it or not.  I'd suggest dropping the sentence,
+> without which the paragraph reads just fine.
 
-The patch is not wrong per-se, but at the same time, it is not a
-very interesting change exactly for this reason.
+Will do
 
-Where did you read that dropping USE_THE_REPOSITORY_VARIABLE is a
-good idea?
+> OK, so we are not requiring "log:"?  This robs extensibility from
 
-As somebody (Phillip?) said earlier, we probably should update
-document and clearly say that removing USE_THE_REPOSITORY_VARIABLE
-is not a high-value target when done in the builtin/ directory, even
-though it is very desirable thing to do for more library-ish part of
-the codebase.
+Like I said above, we won't require "log:" as per the discussion with
+Phillip.
 
-> Signed-off-by: Tian Yuchen <cat@malon.dev>
-> ---
->  builtin/mktree.c | 19 +++++++++----------
->  1 file changed, 9 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin/mktree.c b/builtin/mktree.c
-> index 12772303f5..4084e32476 100644
-> --- a/builtin/mktree.c
-> +++ b/builtin/mktree.c
-> @@ -3,7 +3,6 @@
->   *
->   * Copyright (c) Junio C Hamano, 2006, 2009
->   */
-> -#define USE_THE_REPOSITORY_VARIABLE
->  #include "builtin.h"
->  #include "gettext.h"
->  #include "hex.h"
-> @@ -46,7 +45,7 @@ static int ent_compare(const void *a_, const void *b_)
->  				 b->name, b->len, b->mode);
->  }
->  
-> -static void write_tree(struct object_id *oid)
-> +static void write_tree(struct repository *repo, struct object_id *oid)
->  {
->  	struct strbuf buf;
->  	size_t size;
-> @@ -60,10 +59,10 @@ static void write_tree(struct object_id *oid)
->  	for (i = 0; i < used; i++) {
->  		struct treeent *ent = entries[i];
->  		strbuf_addf(&buf, "%o %s%c", ent->mode, ent->name, '\0');
-> -		strbuf_add(&buf, ent->oid.hash, the_hash_algo->rawsz);
-> +		strbuf_add(&buf, ent->oid.hash, repo->hash_algo->rawsz);
->  	}
->  
-> -	odb_write_object(the_repository->objects, buf.buf, buf.len, OBJ_TREE, oid);
-> +	odb_write_object(repo->objects, buf.buf, buf.len, OBJ_TREE, oid);
->  	strbuf_release(&buf);
->  }
->  
-> @@ -72,7 +71,7 @@ static const char *const mktree_usage[] = {
->  	NULL
->  };
->  
-> -static void mktree_line(char *buf, int nul_term_line, int allow_missing)
-> +static void mktree_line(struct repository *repo, char *buf, int nul_term_line, int allow_missing)
->  {
->  	char *ptr, *ntr;
->  	const char *p;
-> @@ -93,7 +92,7 @@ static void mktree_line(char *buf, int nul_term_line, int allow_missing)
->  		die("input format error: %s", buf);
->  	ptr = ntr + 1; /* type */
->  	ntr = strchr(ptr, ' ');
-> -	if (!ntr || parse_oid_hex(ntr + 1, &oid, &p) ||
-> +	if (!ntr || parse_oid_hex_algop(ntr + 1, &oid, &p, repo->hash_algo) ||
->  	    *p != '\t')
->  		die("input format error: %s", buf);
->  
-> @@ -124,7 +123,7 @@ static void mktree_line(char *buf, int nul_term_line, int allow_missing)
->  
->  	/* Check the type of object identified by oid without fetching objects */
->  	oi.typep = &obj_type;
-> -	if (odb_read_object_info_extended(the_repository->objects, &oid, &oi,
-> +	if (odb_read_object_info_extended(repo->objects, &oid, &oi,
->  					  OBJECT_INFO_LOOKUP_REPLACE |
->  					  OBJECT_INFO_QUICK |
->  					  OBJECT_INFO_SKIP_FETCH_OBJECT) < 0)
-> @@ -155,7 +154,7 @@ static void mktree_line(char *buf, int nul_term_line, int allow_missing)
->  int cmd_mktree(int ac,
->  	       const char **av,
->  	       const char *prefix,
-> -	       struct repository *repo UNUSED)
-> +	       struct repository *repo)
->  {
->  	struct strbuf sb = STRBUF_INIT;
->  	struct object_id oid;
-> @@ -187,7 +186,7 @@ int cmd_mktree(int ac,
->  					break;
->  				die("input format error: (blank line only valid in batch mode)");
->  			}
-> -			mktree_line(sb.buf, nul_term_line, allow_missing);
-> +			mktree_line(repo, sb.buf, nul_term_line, allow_missing);
->  		}
->  		if (is_batch_mode && got_eof && used < 1) {
->  			/*
-> @@ -197,7 +196,7 @@ int cmd_mktree(int ac,
->  			 */
->  			; /* skip creating an empty tree */
->  		} else {
-> -			write_tree(&oid);
-> +			write_tree(repo, &oid);
->  			puts(oid_to_hex(&oid));
->  			fflush(stdout);
->  		}
+>                                      This robs extensibility from
+> future developers to introduce something other than "shortlog", no?
+> If the version of Git in 'next' supports "longlog" and user gives
+
+Not really, anyone can introduce new formats, it's just an additional if
+statement.
+
+> "--cover-letter-format=longlog" to their version that does not yet
+> support it, it would be mistaken by the version of the code here as
+> a "log:longlog" without any placeholder that shows a fixed string
+> "longlog" for each commit in the series?  We'd rather want such an
+> input to cause failure, no?
+
+Isn't that the same for any feature that is in next but not merged in
+master yet? I wouldn't expect subcommands of history not yet merged in
+master to work either if I'm using a version built from master. This is
+an issue with the user and I don't think it's grounds for any issue.
+
+> s/If defined, d\(efaults.*variable\)\./D\1, if defined./ would avoid
+> "if I define --cover-letter-format, why does it default to a
+> configuration?  do you mean 'if not given'?"
+> 
+> So, "If defined," -> "If not given" would be another possible
+> improvement.  I think I like it better, actually.
+
+Will do
+
+> Hmph, an alternative that may make it easier to use is to make the
+> command line option _imply_ "--cover-letter", so that the user does
+> not have to give two similar looking command line options.
+> 
+>     git format-patch --cover-letter --cover-letter-format=...
+> 
+> Of course, the presence of the configuration variable should not
+> imply generation of a cover letter. I.e.
+> 
+>     git -c format.commitListInCoverLetterFormat=shortlog \
+> 	    format-patch -1 HEAD
+> 
+> should not imply --cover-letter.
+
+Yes, that'd be a nice behaviour to have, it is indeed obvious that I
+want a cover letter if I'm specifying a format from command line.
+
+> Many issues.
+> 
+> In modern tests (written within the past 10 years), we try not to
+> execute things outside text_expect_foo blocks.  The golden output
+> to compare with is customary called 'expect' (not 'expected').  A
+> redirection operator ">", "<<", etc. has a single SP before but no
+> SP after it, when there is no parameter interpolation happens in a
+> HERE document, quote the "EOF" marker to show the intention of the
+> author of the test that no parameter interpolation is expected.
+> 
+> i.e.,
+> 
+>     cat >expect <<\-EOF
+> 	...
+>     EOF
+> 
+> and do so inside a set-up test_expect_success block.
+
+Will fix
+
+> Why do we have so many blank lines?  Are the number of blank lines
+> significant?  Such a hidden and hard to count dependency would hurt
+> maintainability of this test script.
+
+In the beginning I thought about stripping the empty lines, but doing so
+would not ensure that those two lines were next to each other. grep
+matches line by line so I couldn't ensure that they'd be next to each
+other like that.
+
+If I were to strip the empty lines the test would be not better (imo)
+than the previous series (where it was flagged down).
