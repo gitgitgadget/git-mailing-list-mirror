@@ -1,194 +1,113 @@
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C35391E61
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 12:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773319597; cv=pass; b=p/yFjRPCINGrWc9o5MvZHo+tgX0SHXm67vj+ls5I97vkx9Frtr7Z/DajYovxNXX1q8gDvmgY4utaJ5ahBJjocCat01pRTzRVkFLW3IEU8pP51P60p74Df43Wk2cZQ4vDwF1tAdoee287f90/5GslNStwFW/DbnbDjcfCsQVPFe4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773319597; c=relaxed/simple;
-	bh=iK47JyloY1FHzTfz1vLRFn57D/C5xK8YF3xgCDhrBGs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LSTz7+fXVPiwKzEf3POfnpsjP1Gzv8FVQH9HBfrPFdgf1+A0RfkPWxBCLrkoZQoZqBSsaI7CtsfjWewWCwLNR7IkkBc8CWUA5TTs5yw/aJ/WSAO5oz7C3xjEMhW8FdTib95jPrrs8+C7oS2Gg3LPVBCRm4WwBGgOFerNDJToBo0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h6ZzJp9p; arc=pass smtp.client-ip=74.125.82.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF5C3A450D
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 12:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773319839; cv=none; b=RGWdG0q6jl5wlSooxWkihz7kd8oAjvSKFBon96Eb13Ak0yfiBlBF5YWGgEwRx4066n3CvY62jxGDQuoHZe+2n3HYWjThehbox/bOsSJVD4h7tAJU8P/ACQgKQ/Fk4WC8p+7VlnUnJoGbLT/Wy33DT/lLdYd4tvz4qMi31/yNkI0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773319839; c=relaxed/simple;
+	bh=0YQCOen66LJSIImiulOj7ThMFQFIZXwqguloGMX2amg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BHtJaSG2/6iNPO3vViZCrWCGig2m7N6tiR2eCFIxSv2XEDWfIxjtffagRKztARziOUvLVjwf68vP269wrM0C9F9YTYU8q6nsmkIfZJT6+z/JNjoWY4u3cdrnXFF/3Zj6ddcnyfIe5hPXlkc+XT+0xs6IGrFE7H5zA8Fi6qef4/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QyW1QzAc; arc=none smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h6ZzJp9p"
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-126ea4e9694so2401246c88.1
-        for <git@vger.kernel.org>; Thu, 12 Mar 2026 05:46:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773319596; cv=none;
-        d=google.com; s=arc-20240605;
-        b=emrHCdKKxLyCA7CRPlLp/lyJImB8zB8vyTrgsyDTkR9TZiPwcQIzYIHBT1/7x95Zbx
-         +zzRx5us8rQ/JyV+lBUfJvcvM0eabbTB/VNHG+FassVboEV43LHyiXOUNGeRQP90kykd
-         ghbDZmVNAv6l2IbM1x089DUv7kRidtoyws6xfOEz7Czjw4GwUPJuO+75GEfq/RgnIexT
-         ZsbqzxAbPqo3JpgMZWoCaHhXzX1kXuSa1QD95LQF3C4AHGGj+SWdfslCggdFibaZF9m0
-         IkOKECxDrUcLQ6dq/ZDYRd7UaiUNNqfa+0xY5Omj8sOMC7j6K+tWQlNcd90mdDpwEB+O
-         vwUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=U1swvYhRDc6oMCuMbGw0JhbR4bur7F282SOT53ZXexA=;
-        fh=GCEUApHpIhxEfCfJ7RbGtLoDV6uTTpHqLmIEC/rGufk=;
-        b=TxLzuNc/FXsbCwLujWYJkAPZNo2ALYs5K20i4DTm5WtW4ZaWtRwHgx7FllAQougM32
-         aEZJgO678mSJSznTkaslAQqpZQKvrTo308nE35afdqRM6rmqoH97ZJb94bXeyCKUa9Fg
-         RYX8/PcvQ8gZr3L1pa5DMZ8daSTReB2tNnaRAnWwS8sbEBIpRkavOzMM8gwqjMTRtSGT
-         NOQL2+jQUEYqLmOfnFBU7xNc8/S/PxHiLrX5K/8uBBcbi4ojb4nMUuyYYWDuNf4bXbPt
-         zx67uwrXeL7Zs9zSAPH9COdn+y4OWqu47bm3VOo05RPWgbjd7f+3gsagj601PyuO0V6t
-         /tGA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QyW1QzAc"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c70f91776fcso429548a12.0
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 05:50:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773319596; x=1773924396; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U1swvYhRDc6oMCuMbGw0JhbR4bur7F282SOT53ZXexA=;
-        b=h6ZzJp9pBNsmxIbljK82kqXbPfF3qW/QOzX/U1MdDsYMVpkXvAXWfkRb74R5Kp62Tj
-         NqtiezrVeyKgwZT+aqfYuUtO39j2kZpvn80EU+GksTjCXiHjqhrqGLihqNOxHQnwSTlf
-         LqIpj++V1UZJaYTuNtoMZCpkB76XOFakkX9HiC2nleFx6rWLGji+x7UStz2rZ3W2E1PE
-         BwFeK3PxGDfQclqzCqQb2PDFhvvbLAy0qTU1fnoG0G0QKEOxmuqVZoAcAor5/tsR7tHo
-         mSnPyRXjdmh3Ef7SGwOLYivCcn7Ucf7CQGC5qb5ZJVkwjCeLZIJCapgMKs6J1PegWHlR
-         e1Iw==
+        d=gmail.com; s=20230601; t=1773319837; x=1773924637; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CNGZtCed9EKrsa6tEIdi6FJ0+KVC8y2A9c5lfFu5CKk=;
+        b=QyW1QzAcGhdVTuAQM1Hfs7fyKmgs2tHop8vIrwziHumCeefMPMeSth4AZwR+f3yVJr
+         sjkSV4NEm85+ltAEO8VIaD52v3yi1Cff9Ca9IEJXSNAbE3HalGcevmxRfpdH4cspd0NQ
+         CcVWdirW+5YyNWmJN/rtfLiukPrOg0h+Lm9cEzJsyh+W6MWwIUgi9QAYSG4y4GHlSBfs
+         GRL+3b3ixTB0LdHa89VOSuQkCS40VsELBjRoQYlJ/VI4iglIe0dRVlDtn1WTaGXmwh44
+         hEgX1uXssE/HPV+yy5S1unt/de+6TCb6m6cIq/IJFGenRTLl2fDUzxcsU2UUiU2U8rui
+         98Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773319596; x=1773924396;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=U1swvYhRDc6oMCuMbGw0JhbR4bur7F282SOT53ZXexA=;
-        b=wUvaumhS3XOd/GDql8WXE3+q8VGa9m+6dK9ycmuZsn54utRDAPv/WdQWRIjl6CUQAK
-         r1aySWxb4mw/hPfEgKl0uiY2qC8cMX+ho/Hcal4ClYW5dC+vILB8g/uJQLwLpEZboxrO
-         c0NjIQlh6LijNLn4oKXkOpXBGVx3sBmAk2VlILrB0xGzwCEiDbdVcfMibPvvPMCqy22K
-         p0oS3ytbrO8SxJio4YBmb4Bw0LJZ6Cdha7ZCSFwb2+GACJYaRppzsX3PdC6Pw43PX6d1
-         820HPDFb3JH0UV2wBtD/7CJ+EWfGLFB83rTkQ4sjAIuX9PgOF5qO2RwdSwFwWEje2fEt
-         Wi8g==
-X-Gm-Message-State: AOJu0YyUwV2GDKfO2zh47jjN0XPfMKbgtRBmO5JhBSGyefLO8axXlHh5
-	uJaNL/aXIzF4e/16VM56u4cvAJiYAPQ6mvFv9cDhIX9C61/rLDTCi+gSNW+GPdlEUIfKd2BTADm
-	FMpcoVI+0zk/ugXcU2waSoXwbXPOKFK4=
-X-Gm-Gg: ATEYQzxEV2+juuBUIGCffjlUyWY/yxGN1xz+seAQDArlUZdN61LJBMEiu6n7KavftZE
-	PJMct/ZA9jXtTWEIiUrgXnLAqsjFjOS3MoUtifSlo8kpzD/pvGwoO2HKTggSQqdEY7pAZs7LCYa
-	KQ9TJxyKg7Eh15uMxywnmVNrzVKtlU9exbbrhAwQ6CJ77YKzd2xgY3XlfdqlKikmGRFygwg3nGo
-	BXhMenSt0qD2MFUEK2QyOehw5a83Mgo3HHSndzcJFMwKicDRQNJYodHZ3VKeBrI23rT+qut2sSS
-	gQXAtNPhvXNgL9UYYoCBH/KHvLvu2kBJpA3if3xnQ73A
-X-Received: by 2002:a05:7022:e14:b0:128:d4be:7428 with SMTP id
- a92af1059eb24-128e77c2066mr3341651c88.19.1773319595501; Thu, 12 Mar 2026
- 05:46:35 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1773319837; x=1773924637;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CNGZtCed9EKrsa6tEIdi6FJ0+KVC8y2A9c5lfFu5CKk=;
+        b=kkww6/f5RCI+S9YZDJDwjRveycy+duTWJ2bwCsYvAfZMM/kDznIKeI8jzqAQIVt+7X
+         6No+aOToPIXp1vcPw/01wbdVZiBYIMbpLsUmjk4LhPNG6X8M+CkdZ6rUfcLgBlx32R6C
+         iSYC2pvn+QRjgTlTuZjA0Za6Kt8ZFSEtbYpaubCDse2iFj8HdXtK+lI5DhF4SeN9vuC1
+         8vNSUIQwIgjivXjG/3IgMKdCfknvHQWHCjzduM5/9BKmooXsmZ4cZFSV5lQqGtup5GyQ
+         Oe6m5djTxYGp41eMhwAb1+OZzK257r505C3pXVNmF8el7zZFSPv/6XH45atmeMvOF/F2
+         PFmA==
+X-Gm-Message-State: AOJu0Yzg3+TqlBjqENfmLmOId4It73n8NCGN3VBU3D6DAq1b4ZnQjgJO
+	ADbI5uTojBElP0L7WVXxdB8Jgif4eJ6Bq4cwo5QPMBJQFFZuNMQYdtRmXqF2WOH3uiU=
+X-Gm-Gg: ATEYQzx/o+76+yOKQSXPow2zG0coHFCSylv0X7tIEWx7YbaqyE7T6KkzAivfdMAWfwo
+	jSuh1Cz8SRQhoCxNiPyDXoRPOpuQzNkHQpiqNZfwRWNMiCimfAj6BV7rEQF4FnzAO0G+I04JBDC
+	314eUQahKeVxMgEgyoRBeyhd/Se/nxLrLptUBlsFCTPtVTu+faK93LZYyW1V3aI6VzyPz9pSQZp
+	GfnEDF8GlD1BgMDeWpz6mPBoPbtgD5FiDXr5f6eD5seuN7YsK3fE3LKKnW2QRGId5PTA5QFz9fG
+	cTuxSMer+U2px/L5vmAZ+5vWBr11uiQMjpJ1ypHyfadEWSIOxVjzHucXHJX11acwXGrHwayOSNi
+	au9xZYVnpKboQWmXkDWrG+Fces+3Ow85mf2abQDCOH4UFLK1C6giTBP4cDdd+YhSJiFakKsF1rd
+	SzbJQ1O29+bshL6fCsLdbuz+I1RjdIjm9WPvfybNLno56ZfnHNAV236vissDQJIYNSrHzkKic=
+X-Received: by 2002:a17:903:2f8d:b0:2ae:3fb9:2690 with SMTP id d9443c01a7336-2aeae7ef14amr62110125ad.19.1773319837378;
+        Thu, 12 Mar 2026 05:50:37 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:57c5:70fb:4d85:c87c:62ea:831e])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aeae378c9csm55705795ad.86.2026.03.12.05.50.34
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 12 Mar 2026 05:50:37 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	jonathantanmy@google.com,
+	christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	r.siddharth.shrimali@gmail.com
+Subject: [PATCH] t0410: modernize delete_object helper
+Date: Thu, 12 Mar 2026 18:20:30 +0530
+Message-ID: <20260312125030.7799-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1773127785.git.belkid98@gmail.com> <9f9a2e8e-6db7-4105-ba2b-7e42bff2ad1a@gmail.com>
-In-Reply-To: <9f9a2e8e-6db7-4105-ba2b-7e42bff2ad1a@gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Thu, 12 Mar 2026 13:46:23 +0100
-X-Gm-Features: AaiRm50i4hSSBi-tnFNotDZCBnz2HJdxgNa7DGDYJ6pdt2o1jugtWIl57K7O4uU
-Message-ID: <CAD=f0L_HkyRNYk07Laq77gr8+JLaHeVxTwFN5eqC9-rLjgNRvA@mail.gmail.com>
-Subject: Re: [PATCH v1 0/8] repo_config_values: migrate more globals
-To: Tian Yuchen <a3205153416@gmail.com>
-Cc: git@vger.kernel.org, toon@iotcl.com, phillip.wood123@gmail.com, 
-	gitster@pobox.com, christian.couder@gmail.com, usmanakinyemi202@gmail.com, 
-	kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Yuchen,
+The delete_object helper currently relies on a manual sed command to
+calculate object paths. This works, but it's a bit brittle and forces
+us to maintain shell logic that Git's own test suite can already
+handle more elegantly.
 
-Thanks for taking a close look.
+Switch to 'test_oid_to_path' to let Git handle the path logic. This
+makes the helper hash independent, which is much cleaner than manual
+string manipulation. While we're at it, add a call to
+'test_path_is_file' so that the test fails early and clearly if we
+try to delete an object that isn't there, rather than failing
+silently.
 
-My intention here was mainly to avoid repeating `cfg->pack_compression_leve=
-l`
-multiple times in the function, so I introduced a local
-`pack_compression_level` initialized from `cfg->pack_compression_level`.
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+---
+ t/t0410-partial-clone.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-But you are right to point out the interaction with the CLI option. The
---compression option currently writes to the local variable via
-OPT_INTEGER, and the value is not propagated back to
-`cfg->pack_compression_level`.
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 2a5bdbeeb8..eca113f0f8 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -11,7 +11,11 @@ test_description='partial clone'
+ GIT_TEST_COMMIT_GRAPH=0
+ 
+ delete_object () {
+-	rm $1/.git/objects/$(echo $2 | sed -e 's|^..|&/|')
++	repo=$1
++	obj=$2
++	path="$repo/.git/objects/$(test_oid_to_path $obj)" &&
++	test_path_is_file "$path" &&
++	rm "$path"
+ }
+ 
+ pack_as_from_promisor () {
+-- 
+2.51.2
 
-I took a second look at it and will change the option to write
-directly into `cfg->pack_compression_level instead` in upcoming versions.
-
-Thanks for pointing this out.
-
-Best,
-Olamide
-
-On Thu, 12 Mar 2026 at 06:03, Tian Yuchen <a3205153416@gmail.com> wrote:
->
-> Hi Olamide,
->
-> On 3/10/26 20:06, Olamide Caleb Bello wrote:
-> >       int status =3D Z_OK;
-> >       int write_object =3D (flags & INDEX_WRITE_OBJECT);
-> >       off_t offset =3D 0;
-> > +     struct repo_config_values *cfg =3D repo_config_values(the_reposit=
-ory);
-> >
-> > -     git_deflate_init(&s, pack_compression_level);
-> > +     git_deflate_init(&s, cfg->pack_compression_level);
-> >
-> >       hdrlen =3D encode_in_pack_object_header(obuf, sizeof(obuf), OBJ_B=
-LOB, size);
-> >       s.next_out =3D obuf + hdrlen;
->
-> I didn't look closely at the other parts, but I have a small question
-> about this section.
->
-> pack_compression_level before this patch is a global variable:
->
->         int pack_compression_level =3D Z_DEFAULT_COMPRESSION;
->
-> and struct option  in cmd_pack_objects contains its pointer:
->
-> struct option pack_objects_options[] =3D {
->         ...
->         OPT_INTEGER(0, "compression", &pack_compression_level, ...),
->         ...
-> };
->
-> The reason why functions such as do_compress, write_large_blob_data can
-> work properly is beacuse they all read the same global variable, right?
->
->
-> However, in this patch,
->
-> > +     struct repo_config_values *cfg =3D repo_config_values(the_reposit=
-ory);
-> > +     int pack_compression_level =3D cfg->pack_compression_level;
->
-> Here, a local variable with the same name was created via value
-> assignment (I also find the naming a bit odd).
->
-> > @@ -383,8 +383,9 @@ static unsigned long do_compress(void **pptr, unsig=
-ned long size)
-> >       git_zstream stream;
-> >       void *in, *out;
-> >       unsigned long maxsize;
-> > +     struct repo_config_values *cfg =3D repo_config_values(the_reposit=
-ory);
-> >
-> > -     git_deflate_init(&stream, pack_compression_level);
-> > +     git_deflate_init(&stream, cfg->pack_compression_level);
-> >       maxsize =3D git_deflate_bound(&stream, size);
->
-> But then in the do_compress() function, the variable being read is still
-> that pointer, cfg->pack_compression_level. The expected input wasn't
-> *written back* to this pointer, right? If I understand correctly, after
-> parsing CLI, the output is written to the local variable rather than the
-> cfg. And that's why the naming is a bit confusing to me.
->
-> struct option pack_objects_options[] =3D {
->         ...
->         OPT_INTEGER(0, "compression", &cfg->pack_compression_level, ...),
->         ...
-> };
->
-> I think change like this is needed. Of course, you'll need to
-> double-check it. _(:3 =E3=80=8D=E2=88=A0 )_
->
-> Regards,
->
-> Yuchen
