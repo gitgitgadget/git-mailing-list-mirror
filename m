@@ -1,163 +1,165 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7D83F8E04
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 16:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312143CCA04
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 16:42:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773332926; cv=none; b=hBnbC5/WZ+WznDTEHYF7e4+uzAqPdFcVFLQ8dDAT2pQcfKYmJj27IRGfYOWdn0XF5hfOzr9hgjyP8gt7WVzSuuwSM1QUjitpMLCxWeQSC6Lf5OfjGknkTp5Ds5iw7VNkitOnyHkD9xELXbVUCQtHNBxPegZxrcwK5C/Bq0JTmaU=
+	t=1773333736; cv=none; b=EuYzBc4IjsZYPi9/i11vg48jEzFrCtDYsbA+GC+PC92cpIqhWIhAA5KOM/eENYVYpUXRMohZ0UwKFs1W11tFBS1nN8Tm7N4sCoU8vQxXjMMYr1KYm/mq08q7oQqgExCBeheb0vuMYAvociBRfevBmHIRYTe15SQKI3P79y44fhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773332926; c=relaxed/simple;
-	bh=PhcstMj74Zz8NfuHcDT3gcN0eHDF01owgB0oyor3fWk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=riBcMAYy0b0R5U4YsalJT5jbwWekXDjJ7IcNu7W0eMJik4eMFn4vcW/gonl2Wbuz+KhCvcw6LOt42orY2jW7oRdWlU69a4oX/TFRWeTDdbmZGvqKE48wnr43y9yQzYLM66GcE6asnI9y/Xt5VNGfKQKjMWMOULtHh8eFI+KK1Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j3vNWpAc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JHuJ78Zq; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773333736; c=relaxed/simple;
+	bh=uYCS6TZK/KeM/i8Prx4SJmNRaY2Kk/gK5Od+Y73UYXw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mOv9TW1JrkAj3hVjH38KAm9r6pFztQeBuKIOk23ftmciRC4Xjxxk9RD4VyroT45VDLGDKmrzaJpkL35r/41zeDSdTtInEHhwHN/t1yemb7blU30vQFrvVJKpyHeGDNKWyPB2glKorDYWE6VOhVGWNCGXUSucEuzg7RWkNKBMEBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=jnM3OsRH; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=UCMyO448; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j3vNWpAc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JHuJ78Zq"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id A385B1D001B1;
-	Thu, 12 Mar 2026 12:28:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 12 Mar 2026 12:28:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773332915; x=1773419315; bh=35YLQIjA24
-	ZM6w6eF89jd+/s9Et6GV2Ree6jq4mVDeI=; b=j3vNWpAcrJoxbE+rWNLP2J6Xje
-	1ivCoKb+F4zQpvc0ICQRyjGYA7NY3rD5qO3IiVIC0ZBefHPgOq8mOiIjeQ7bJam3
-	HCZCPHvW3bzUWy4qf4nn8YXioRrEs+FfpNI64p1IijfIH4Pp1gG6c6L2Yq4lqh/L
-	neCh5ttEMiH/8xv41tQcUJSyvHU1dmVtFzWI7AQU0pUsKnd7hl9HIEYnpVzoZ78/
-	p5cCfjq5TUoFrY7PniiHu5GbuXb4pi0LQUjEDT14dktffKsDou9B1ubWo2KoEwas
-	yoiXKGKUpBauRntHtslEsCSLgwZ6fOEfhjs3bk6HZ/sUVVoPPoGPB6ON7KIQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773332915; x=1773419315; bh=35YLQIjA24ZM6w6eF89jd+/s9Et6GV2Ree6
-	jq4mVDeI=; b=JHuJ78ZqryD7ZsTLcpqLktVPuUvhHMNxyOQ5PCpLCLffn4LYFhv
-	i0PM1ANs6BHCUW+vdyfxB/NBaDDe4s5ZWz+eGYxBokOAzyu9cZiwfrzqlaabDJIP
-	fFfed4EDbnrzx6vCzUnu3Boqg2ZwI0HE4TeQlV0PGdPSNyvOGf6GkzWcfH5llOwp
-	MQtzr0i59TE+XdafdEQQaOArkgpgXVD15xrJ7nW7bmtpq8MUdCtleVJ3+h9urW0L
-	WJFK3lbamyu37SdnOWbEkGqF7EkvTw1nX5Vpdok7ieU1rlN7MTNum7rxBsKwLOS/
-	P/OsEmVrm+EYvRxNxRel6eZD0Zl3IZv7jmQ==
-X-ME-Sender: <xms:s-myaYyN37guw1n1V4cUeq9r7CthDylWy3wZF6PloX459srgGD15nA>
-    <xme:s-myaf9N3GxxT3R4kFi5ix77eAJTj-rnJaGMneBr4ABSejirbGKOVhXSptf4Yxxv0
-    eWpEYgnfUCvQL0IlXWnhpnuZK7LYZRbB1kKiFo8-e3i_Oe29W_MBFg>
-X-ME-Received: <xmr:s-myaUKqt5mbDeLdkuQ2J9bFvDAHN3Bi8V-9JIgi3w8y6AYzg2gfSmVBdh0J3Dfz4GHk01vyx0SVey-Q2aPPKqVhI8DwMzfgiQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejvdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvrhhtrdifvghsrghrghesghhoohhglhgv
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:s-myadc58IrrsQ0-Xe_njR4ZaGrBeKa6M_2i-w1F8laCPnZJxAGp8g>
-    <xmx:s-myab-Z6SYPKut836AVk-vPoANx9np3zLEdRavgvD2gQi3YyDTZDw>
-    <xmx:s-myaSov3F4fCZw-ksrP-GDROAFbQNdePC7iykKqY2sSFKOrpb67yA>
-    <xmx:s-myaYBH4CpC5sjAMtQYUZX1n65g5kR0GRSoudrHqaq8U2kbLlYzTA>
-    <xmx:s-myaTBCF3COhI-a4FaXtQlmFAbqythzssW8_-zvE2SVVsTBhAm6d5zg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 12:28:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH v8 1/4] format-patch: move cover letter summary generation
-In-Reply-To: <3b008fb94dff3b54f19eb0754938a33968acd1cc.1773331753.git.mroik@delayed.space>
-	(Mirko Faina's message of "Thu, 12 Mar 2026 17:20:08 +0100")
-References: <cover.1772839973.git.mroik@delayed.space>
-	<cover.1773331753.git.mroik@delayed.space>
-	<3b008fb94dff3b54f19eb0754938a33968acd1cc.1773331753.git.mroik@delayed.space>
-Date: Thu, 12 Mar 2026 09:28:33 -0700
-Message-ID: <xmqqeclpggge.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="jnM3OsRH";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="UCMyO448"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=jnM3OsRHmeZjfLMnuPlCMDFEJ6jusesCz1MM6fz+IZBvN4ESEXYkROy6bRkuDRvJy+eDAWqlKXFRM4ywt0bXGmMLt5BH3IMIr1WK/pVIYUAXbHEL9Xif80D71pXzejE5GywtHc9e7L9DZy4bCWp3Rdtlg360ep1vVwE30teojsMpBH++0VeX4rZKED3yBYRuxqiLdfDgOw8BUeCQjx+VkPS+R9sRvtdJvkQTnuTTFEh/vIt3FwuZZ8GjidHig3FwqLo9jvvpY8Im7/yV/YqldqsKZh/mSjQarYO8LpNxXn/sp8ZC7D/qYaklq6tSvzX+AU4tQkzcNAs3ZgOcu9m+aA==; s=purelymail2; d=malon.dev; v=1; bh=uYCS6TZK/KeM/i8Prx4SJmNRaY2Kk/gK5Od+Y73UYXw=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=UCMyO448F6+nnUuYbXKIoJXPUxK1HWB1W1r3fAbM+UvuXSMGFQ+CPenVNRKTiD18HZvgxqqnO8Nm9YUl/93w2g2tYG2Ts1mqpcAGuk/oRza6wLzDHY9kZ1kdy9oln//CdjNGe7f5uKYWlDERJ6Z9NyYmTSTQ7kMuOZMsuYb58mfv6MyD7vLgw3se6jt53jvnp1D0NIyQXD84cENwYrlWWvC6m5fdXO4Ad9uub/WTy1V54yGPzjVZfkxzc6QxcTys/jUAN7jJSB+0WHOitX/kbfjkmaH8FTGPFx+yIE8ra///u2m0x+DnQxk/XjDIDx/okas3rQh9F8mhOE21xjToDA==; s=purelymail2; d=purelymail.com; v=1; bh=uYCS6TZK/KeM/i8Prx4SJmNRaY2Kk/gK5Od+Y73UYXw=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -597434471;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Thu, 12 Mar 2026 16:42:13 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	karthik.188@gmail.com,
+	phillip.wood@dunelm.org.uk,
+	jltobler@gmail.com,
+	ps@pks.im,
+	Tian Yuchen <cat@malon.dev>
+Subject: [PATCH v2] builtin/mktree: remove USE_THE_REPOSITORY_VARIABLE
+Date: Fri, 13 Mar 2026 00:42:03 +0800
+Message-ID: <20260312164203.964033-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-Mirko Faina <mroik@delayed.space> writes:
+The 'cmd_mktree()' function already receives a 'struct repository *repo'
+pointer, but it was previously marked as UNUSED.
 
-> As of now format-patch allows generation of a template cover letter for
-> patch series through "--cover-letter".
+Pass the 'repo' pointer down to 'mktree_line()' and 'write_tree()'.
+Consequently, remove the 'USE_THE_REPOSITORY_VARIABLE' macro, replace
+usages of 'the_repository', and swap 'parse_oid_hex()' with its context-awa=
+re
+version 'parse_oid_hex_algop()'.
 
-"As of now" is redundant.  Our convention is to describe the state
-of the codebase _before_ your changes in the present tense to set
-the stage for describing the problem.
+This refactoring is safe because 'cmd_mktree()' is registered with the
+'RUN_SETUP' flag in 'git.c', which guarantees that the command is
+executed within a initialized repository, ensuring that the passed 'repo'
+pointer is never 'NULL'.
 
-> Move shortlog summary code generation to its own function. This is done
-> in preparation to other patches where we enable the user to format the
-> commit list using thier own format string.
+Signed-off-by: Tian Yuchen <cat@malon.dev>
+---
+ builtin/mktree.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-Makes sense.
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index 12772303f5..4084e32476 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -3,7 +3,6 @@
+  *
+  * Copyright (c) Junio C Hamano, 2006, 2009
+  */
+-#define USE_THE_REPOSITORY_VARIABLE
+ #include "builtin.h"
+ #include "gettext.h"
+ #include "hex.h"
+@@ -46,7 +45,7 @@ static int ent_compare(const void *a_, const void *b_)
+ =09=09=09=09 b->name, b->len, b->mode);
+ }
+=20
+-static void write_tree(struct object_id *oid)
++static void write_tree(struct repository *repo, struct object_id *oid)
+ {
+ =09struct strbuf buf;
+ =09size_t size;
+@@ -60,10 +59,10 @@ static void write_tree(struct object_id *oid)
+ =09for (i =3D 0; i < used; i++) {
+ =09=09struct treeent *ent =3D entries[i];
+ =09=09strbuf_addf(&buf, "%o %s%c", ent->mode, ent->name, '\0');
+-=09=09strbuf_add(&buf, ent->oid.hash, the_hash_algo->rawsz);
++=09=09strbuf_add(&buf, ent->oid.hash, repo->hash_algo->rawsz);
+ =09}
+=20
+-=09odb_write_object(the_repository->objects, buf.buf, buf.len, OBJ_TREE, o=
+id);
++=09odb_write_object(repo->objects, buf.buf, buf.len, OBJ_TREE, oid);
+ =09strbuf_release(&buf);
+ }
+=20
+@@ -72,7 +71,7 @@ static const char *const mktree_usage[] =3D {
+ =09NULL
+ };
+=20
+-static void mktree_line(char *buf, int nul_term_line, int allow_missing)
++static void mktree_line(struct repository *repo, char *buf, int nul_term_l=
+ine, int allow_missing)
+ {
+ =09char *ptr, *ntr;
+ =09const char *p;
+@@ -93,7 +92,7 @@ static void mktree_line(char *buf, int nul_term_line, int=
+ allow_missing)
+ =09=09die("input format error: %s", buf);
+ =09ptr =3D ntr + 1; /* type */
+ =09ntr =3D strchr(ptr, ' ');
+-=09if (!ntr || parse_oid_hex(ntr + 1, &oid, &p) ||
++=09if (!ntr || parse_oid_hex_algop(ntr + 1, &oid, &p, repo->hash_algo) ||
+ =09    *p !=3D '\t')
+ =09=09die("input format error: %s", buf);
+=20
+@@ -124,7 +123,7 @@ static void mktree_line(char *buf, int nul_term_line, i=
+nt allow_missing)
+=20
+ =09/* Check the type of object identified by oid without fetching objects =
+*/
+ =09oi.typep =3D &obj_type;
+-=09if (odb_read_object_info_extended(the_repository->objects, &oid, &oi,
++=09if (odb_read_object_info_extended(repo->objects, &oid, &oi,
+ =09=09=09=09=09  OBJECT_INFO_LOOKUP_REPLACE |
+ =09=09=09=09=09  OBJECT_INFO_QUICK |
+ =09=09=09=09=09  OBJECT_INFO_SKIP_FETCH_OBJECT) < 0)
+@@ -155,7 +154,7 @@ static void mktree_line(char *buf, int nul_term_line, i=
+nt allow_missing)
+ int cmd_mktree(int ac,
+ =09       const char **av,
+ =09       const char *prefix,
+-=09       struct repository *repo UNUSED)
++=09       struct repository *repo)
+ {
+ =09struct strbuf sb =3D STRBUF_INIT;
+ =09struct object_id oid;
+@@ -187,7 +186,7 @@ int cmd_mktree(int ac,
+ =09=09=09=09=09break;
+ =09=09=09=09die("input format error: (blank line only valid in batch mode)=
+");
+ =09=09=09}
+-=09=09=09mktree_line(sb.buf, nul_term_line, allow_missing);
++=09=09=09mktree_line(repo, sb.buf, nul_term_line, allow_missing);
+ =09=09}
+ =09=09if (is_batch_mode && got_eof && used < 1) {
+ =09=09=09/*
+@@ -197,7 +196,7 @@ int cmd_mktree(int ac,
+ =09=09=09 */
+ =09=09=09; /* skip creating an empty tree */
+ =09=09} else {
+-=09=09=09write_tree(&oid);
++=09=09=09write_tree(repo, &oid);
+ =09=09=09puts(oid_to_hex(&oid));
+ =09=09=09fflush(stdout);
+ =09=09}
+--=20
+2.43.0
 
->
-> Signed-off-by: Mirko Faina <mroik@delayed.space>
-> ---
->  builtin/log.c | 32 ++++++++++++++++++++------------
->  1 file changed, 20 insertions(+), 12 deletions(-)
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 5c9a8ef363..0d12272031 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1324,6 +1324,25 @@ static void get_notes_args(struct strvec *arg, struct rev_info *rev)
->  	}
->  }
->  
-> +static void generate_shortlog_cover_letter(struct shortlog *log,
-> +					   struct rev_info *rev,
-> +					   struct commit **list,
-> +					   int nr)
-> +{
-> +	shortlog_init(log);
-> +	log->wrap_lines = 1;
-> +	log->wrap = MAIL_DEFAULT_WRAP;
-> +	log->in1 = 2;
-> +	log->in2 = 4;
-> +	log->file = rev->diffopt.file;
-> +	log->groups = SHORTLOG_GROUP_AUTHOR;
-> +	shortlog_finish_setup(log);
-> +	for (int i = 0; i < nr; i++)
-> +		shortlog_add_commit(log, list[i]);
-> +
-> +	shortlog_output(log);
-> +}
-> +
->  static void make_cover_letter(struct rev_info *rev, int use_separate_file,
->  			      struct commit *origin,
->  			      int nr, struct commit **list,
-> @@ -1377,18 +1396,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
->  	free(pp.after_subject);
->  	strbuf_release(&sb);
->  
-> -	shortlog_init(&log);
-> -	log.wrap_lines = 1;
-> -	log.wrap = MAIL_DEFAULT_WRAP;
-> -	log.in1 = 2;
-> -	log.in2 = 4;
-> -	log.file = rev->diffopt.file;
-> -	log.groups = SHORTLOG_GROUP_AUTHOR;
-> -	shortlog_finish_setup(&log);
-> -	for (i = 0; i < nr; i++)
-> -		shortlog_add_commit(&log, list[i]);
-> -
-> -	shortlog_output(&log);
-> +	generate_shortlog_cover_letter(&log, rev, list, nr);
->  
->  	/* We can only do diffstat with a unique reference point */
->  	if (origin)
