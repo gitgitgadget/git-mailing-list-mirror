@@ -1,142 +1,295 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82D53FAE12
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 16:47:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2390386C04
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 16:52:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773334078; cv=none; b=qyLI+WQim9Hah4VYjKKQiX2pHuD/92hXcsFDb21BwSg96RtjqxhwebiKhdSjqDTA8NhHHzqTb/iFtX/SCuT1F7IAK9lVSDOA8rcKxIVAsI1bXZO+a6afK0eWTJmzie/+xR+/1S9QUWGIZTditNDnb2dyVneARPJB4ArPlSiRlZ8=
+	t=1773334354; cv=none; b=igF/J6nDvAf1OH041Ye5kCN9OAbs6Cxu9JbrIrF1Uv3jGXzM20av9Ubeu4BC90dXVCNIYZcGb0nPNhS6uU6x1gvnX2tZddlJEa+Isn5D7tiN3J/KICaw0T/ebubQdNTKF99/0pIGROZQQSgZFXyhOnnmrBe4Fe0o/abw8X/wBlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773334078; c=relaxed/simple;
-	bh=ex+ALXIHxpvbVUN1o2LAzabe57g8M65Xn2GzWpNDC5c=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=q1UQkTLkDrVrIbQcfPUivEeg8SZSeNvQmc1I2HqI4hxDmjPkeAwpZus+CR2WpMazDFIS0cKYULzcMlqwANBUpK3UIvCZnb82GZ96o94WO26b6aWMUsHU235GYBVN1WOEsQ7EN2qcfEw2K7G0B1n+qct5tTuml96RKMyMP06eqbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T/RlvQ9+; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773334354; c=relaxed/simple;
+	bh=wsN/P2OJflT9g3oP0c8SMp1GxUpSPmaiyjrpmyXIaqM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BTkmZsgeD8fk70q5lDABnEKt16G64L8/D/8/+70eXUsluPnNeen0xgFTJ98MVXsM6k9iRuMpCdgd8tucPy9zv5FuEb4IaJ8vkf6KWjzE7yPYkUmQpKOj+uHT5s0YTFOHELsOPoZMMO+mHOpGtoLA55nsThCrKM1lYzQAGJokx9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F0mW1E8W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tEHCuPjC; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T/RlvQ9+"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5a126b79512so1297100e87.3
-        for <git@vger.kernel.org>; Thu, 12 Mar 2026 09:47:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773334069; x=1773938869; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ex+ALXIHxpvbVUN1o2LAzabe57g8M65Xn2GzWpNDC5c=;
-        b=T/RlvQ9+X/OzjQ+rJk/j22JZ+gr0QQw2ezqqYyrI887CTkNnhtXepbawdbZeCsgLgy
-         YjNW4u+du7/YxwFcQWhkMzA5GEN2blT0rQjkIYgnmj26YIFKle2TDyPEipn+uSHssO2C
-         8X+Iu15PmPnQOIEsqmpgzIFviMpxf+iQSSIRsIbDvy5c+N50eJPO8X1lYHHHQRYi/HkW
-         YqaifDM1z/vmXzQm+DkfslPrnPJOqC+pMabi1KuBSbAMWC0JVus4+mkHsmOM9C+iT+Nq
-         YER6Cr04ys0lFxeayXlS6OS7YLnD8z3SE7hlxicfXF9FBrRt2geRwbeEv4xEv9wX7J7Y
-         vxEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773334069; x=1773938869;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ex+ALXIHxpvbVUN1o2LAzabe57g8M65Xn2GzWpNDC5c=;
-        b=trTUV8BFxPuyZDNJpyPy1Rv7RqeOz5baEqMkdeiZx+u9GfTuvqgMHKSdnJHNlzlr2W
-         WsnjRcDfYUTZkfFk9LN1BXWB73tuCj3Th3QDfRjJd2Affjl4Q96HauHphKbNcrg96nrm
-         N9qvpgvTfjXwoS9qyTIiehaIBdkpvxnoSuYd08lBF3il9A11lvgqYZBPiVFm78EhaZIZ
-         BygUbYNWwNBcGoqaRF8pV7oSzwdvDp5YvS8sEmMeKiZwvrBp4lM7J/jdwG/Qtu5qsBBK
-         N6gLtKv9HOrr5vWzyecWomQCRDR6qcBTab1FuyjtfbMsgRY4jU0mFUGZEBTN4K8Mrnd2
-         7JYw==
-X-Gm-Message-State: AOJu0YydDI2cBySO45PDBnJtTirVRJATuzB1lqPiRFYyYakCsXuK5ztE
-	OWzh/EjNGoMNZKwjD314z/tH1Rvhw8FvgUA+LGSE9E1Hjvy5xKyr5hQjexKRqPWtbCE=
-X-Gm-Gg: ATEYQzwTonQFKRFGC3IAECyXWmjbKq3TxqiRz5TXdvn1ngXHN9/XmsmAXsGDUrySKYU
-	5yItM+dFkLNik2S+phYVkKu+uq1MCMltPjrF5KNRTVevQHnsEsLOfZaEsyf4PVRwvXUu422BOqU
-	xQfC0eJAtlGPdCrlEujekG+TaxCUpGsj3MMu6w2P6s3fSQvwAwJsteAP2Shk03HPZLeWwFubT8S
-	sTSv4yrkt7szAeFj+zr7CRUgsXTPGzz5tPwGjPV49PK5QUGsEqNpWyNnXp6uDzGUAyNG4yYDBS8
-	Ugyld+2LQdXA5CRcXE+jNZ6VQqcRAjWDgw8stc785ltUgNl2vFS85hkTf/CEOsbLohbxZis9Koi
-	z5EJ6hd+Mca1GREM2b2oWbkLF/5pLW3dzZ0AfAZn3Ke9YQi3feFsO9lbwn6w6bLZdf2ioaO+Lfv
-	e6eklCi7oU0OJkHZRW0pjc2pzcQiwFSGJtbbaB2xU4l/mNEj5zliRYGYmmGueKkie7nRJXVK3i
-X-Received: by 2002:a05:651c:198d:b0:38a:6acb:eb1d with SMTP id 38308e7fff4ca-38a896a74e6mr24241fa.12.1773334068548;
-        Thu, 12 Mar 2026 09:47:48 -0700 (PDT)
-Received: from ?IPV6:2a02:2168:8772:9800:eb6d:4393:98f8:641a? ([2a02:2168:8772:9800:eb6d:4393:98f8:641a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38a67e70d66sm11097121fa.40.2026.03.12.09.47.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Mar 2026 09:47:48 -0700 (PDT)
-Message-ID: <57252c1e-69e6-4953-beb3-3cfd41cab857@gmail.com>
-Date: Thu, 12 Mar 2026 19:47:47 +0300
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F0mW1E8W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tEHCuPjC"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A807B7A008E;
+	Thu, 12 Mar 2026 12:52:31 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 12 Mar 2026 12:52:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773334351; x=1773420751; bh=8UKFPvqeQM
+	szunsj30kR/s/vX7RKKRIUJA6knNVkO1o=; b=F0mW1E8Wi46wjDeLvCXXq3/wJW
+	Dut/Dw+H49QZA/5oWYs1Cp2HTPTNSgMkPQ7NDewA6TVvnCZqa0cOqsr6Np+KYqm4
+	LK9rK4d3XnXkhilK6Roc/65Tjf5sJ7oQih2hnIRBmeb2bJp2iG7bz3z7jiBQ98ua
+	/xxiNhAg2+d7O1v2YfM6rpqVtH+N80wZl2zmo8bFGFOgw0k5Jz9FzNejrqjjeoTL
+	mWN0jNGpPARWSggbkap44mD0K5gou4bgm3hCv/LBbbX+YdJZrbQ+9q7ND/ITuiUS
+	vf1vquEL1JllgdLlTorTABpiQUqFERtA/wwuQoUB/DDl3EdxD6iDOaez8myw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773334351; x=1773420751; bh=8UKFPvqeQMszunsj30kR/s/vX7RKKRIUJA6
+	knNVkO1o=; b=tEHCuPjCQAAsOEU1e8QJao4NqLIl9l1LhodE1o+c8LjhElbIWpc
+	sOs5+K46VyzlVGMVvfyk3ypW2uRBntcuy0l5Ebysm1t/g0J+HCzIYmyK7bxJLl7J
+	lbCX/9wjDeV6QDQLpLMr6SDw2rPX8gU3vAfmjQaGeNFD3gvOivdX1GmHoPTH1jdE
+	YAcUD+SVlouHAXm7WS6O9YozHhbdDBwu/qi6/eJUaFfWwi5Id9XlnV9kAoR0uuA1
+	4gLNYCPeg9NzZO5359Wd6bk/szwaY1WRYiYr6v3lwfwytIyOn3hyFci8kggaPV3C
+	GIQLD7TZHPVwfQyzyTYtSQmiQB72ahcutHw==
+X-ME-Sender: <xms:T--yafWYDKnHNfyqAiSWEKRy8vu0S-S5RbwvBAsadRgPOJHv3xY4YA>
+    <xme:T--yabR_FruXlhurHnAthxA4Eo766VjmMMw-qy1LyCdSjBS9nk5t47hzUBPYNE07V
+    g1EHppynrvhn4FRhCFbSHWPeWrJ2FJ3M3UuW_H698aeCsbNOSK9>
+X-ME-Received: <xmr:T--yaVNyA_qW5nqZAwu4PNv7QaR2Sl4LjgeobgkxDUuv_-_dKWvXcJLWkH4lhwXgF-2-IaYa9lrgarhka7gg1C36zaHiRiZKHw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejfeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgv
+    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvrhhtrdifvghsrghrghesghhoohhglhgv
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:T--yaRSvn86Wz_Z37ssk3oYW-W7rBEZ78UQaHe_wabyqUZDX51Lo8w>
+    <xmx:T--yabhSL5awh0RY1PFftQJHtCw7LkGdQ3GcU83bRzE54mpv0ujEDg>
+    <xmx:T--yaS-nR9cLo9WK2Xu7nkztoTo6lnvXVLXsZ-VdTXO5hrzvmoVzww>
+    <xmx:T--yaaHfEvkiHEApPk5dOl5w6ebQPkI4q0gA04AvQ6MGJ5FEB6DH0Q>
+    <xmx:T--yacHfAhxnSou_OWA-2FTnDqEYN3n9XwaJ6gGhlHraDLTGy-F-Q5Gv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Mar 2026 12:52:30 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH v8 2/4] format-patch: add ability to use alt cover format
+In-Reply-To: <225065cc0dd54d1a592939d41783a904a98fb2ad.1773331753.git.mroik@delayed.space>
+	(Mirko Faina's message of "Thu, 12 Mar 2026 17:20:09 +0100")
+References: <cover.1772839973.git.mroik@delayed.space>
+	<cover.1773331753.git.mroik@delayed.space>
+	<225065cc0dd54d1a592939d41783a904a98fb2ad.1773331753.git.mroik@delayed.space>
+Date: Thu, 12 Mar 2026 09:52:29 -0700
+Message-ID: <xmqq5x71gfci.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Andrey <butirsky@gmail.com>
-Subject: Re: bash completion bug: "symbolic-ref" subcommand doesn't complete
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <c1e0c05b-c767-4fcc-859a-4da6b90c4497@gmail.com>
- <xmqqikb1ggri.fsf@gitster.g>
-Content-Language: en-US
-Autocrypt: addr=butirsky@gmail.com; keydata=
- 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
- VVOdns/k4krQA8QXLlOOXh+F
-In-Reply-To: <xmqqikb1ggri.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-You forgot to mention the main thing:
+Mirko Faina <mroik@delayed.space> writes:
 
-/usr/share/bash-completion/completions/git:
+> Often when sending patch series there's a need to clarify to the
+> reviewer what's the purpose of said series, since it might be difficult
+> to understand it from reading the commits messages one by one.
 
-...
-#   GIT_COMPLETION_SHOW_ALL_COMMANDS
-#
-#     When set to "1" suggest all commands, including plumbing commands
-#     which are hidden by default (e.g. "cat-file" on "git ca<TAB>").
+Yes, that is the whole point of having a cover letter.
 
-Thanks for the tip, though.
+> "git format-patch" provides the useful "--cover-letter" flag to declare
+> if we want it to generate a template for us to use. By default it will
+> generate a "git shortlog" of the changes, which developers find less
+> useful than they'd like, mainly because the shortlog groups commits by
+> author, and gives no obvious chronological order.
 
+Very true.
 
-On 3/12/26 19:21, Junio C Hamano wrote:
-> Isn't this working as intended?
+> To better reference relevant patches in the coverletter this patch
+> introduces two new placeholders that can be used in the format spec:
+
+"this patch introduces" -> "introduce" (imperative).
+
+> %(count) and %(total). These are the chronological number of the patch
+> in the series and the total amount of patches in the series. Note that
+> the width of %(count) will always be the same witdh of %(total).
+
+"total amount" -> "total number"?
+
+"the width of %(count)..." -> "%(count) will zero-padded to the left
+to match the number of digits in %(total)".
+
+But the paragraph "To better reference ..." up to this point should
+probably be moved a bit low?  The punchline "Give format-patch the
+ability" to specify a custom format is the most important thing to
+tell readers, and %(count)/%(total) is an implementation detail of
+only one possible customized format.
+
+> Give format-patch the ability to specify an alternative format spec
+> through the "--cover-letter-format" option. This option either takes
+> "shortlog", which is the current format, or a format spec prefixed with
+> "log:".
 >
-> Our general principle is that the plumbing commands are not designed
-> to be "typed" by end-user to use interactively, and cat-file,
-> commit-tree, etc. are not completed to reduce cluttering
+> Example:
+>     git format-patch --cover-letter \
+>         --cover-letter-format="[%(count)/%(total)] %s (%an)" HEAD~3
+>
+>     [1/3] this is a commit summary (Mirko Faina)
+>     [2/3] this is another commit summary (Mirko Faina)
+>     ...
+
+The example does not use a format spec 'prefixed with "log:"',
+though?
+
+> +--cover-letter-format=<format-spec>::
+> +	Specify the format in which to generate the commit list of the patch
+> +	series. This option is available if the user wants to use an
+> +	alternative to the default `shortlog` format. The accepted values for
+
+The second sentence reads funny.  The option is available whether
+the user wants to use it or not.  I'd suggest dropping the sentence,
+without which the paragraph reads just fine.
+
+> +	format-spec are "shortlog" or a format string.
+> +	e.g. `%s (%an)`
+
+OK, so we are not requiring "log:"?  This robs extensibility from
+future developers to introduce something other than "shortlog", no?
+If the version of Git in 'next' supports "longlog" and user gives
+"--cover-letter-format=longlog" to their version that does not yet
+support it, it would be mistaken by the version of the code here as
+a "log:longlog" without any placeholder that shows a fixed string
+"longlog" for each commit in the series?  We'd rather want such an
+input to cause failure, no?
+
+> +	If defined, defaults to the `format.commitListFormat` configuration
+> +	variable.
+
+s/If defined, d\(efaults.*variable\)\./D\1, if defined./ would avoid
+"if I define --cover-letter-format, why does it default to a
+configuration?  do you mean 'if not given'?"
+
+So, "If defined," -> "If not given" would be another possible
+improvement.  I think I like it better, actually.
+
+> +	This option is relevant only if a cover letter is generated.
+> +
+
+Hmph, an alternative that may make it easier to use is to make the
+command line option _imply_ "--cover-letter", so that the user does
+not have to give two similar looking command line options.
+
+    git format-patch --cover-letter --cover-letter-format=...
+
+Of course, the presence of the configuration variable should not
+imply generation of a cover letter. I.e.
+
+    git -c format.commitListInCoverLetterFormat=shortlog \
+	    format-patch -1 HEAD
+
+should not imply --cover-letter.
+
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index 21d6d0cd9e..631669c159 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -380,6 +380,64 @@ test_expect_success 'filename limit applies only to basename' '
+>  	done
+>  '
+>  
+> +test_expect_success 'cover letter with subject, author and count' '
+> +	rm -rf patches &&
+> +	test_when_finished "git reset --hard HEAD~1" &&
+> +	test_when_finished "rm -rf patches result test_file" &&
+> +	touch test_file &&
+> +	git add test_file &&
+> +	git commit -m "This is a subject" &&
+> +	git format-patch --cover-letter \
+> +	--cover-letter-format="[%(count)/%(total)] %s (%an)" -o patches HEAD~1 &&
+> +	test_grep "^\[1/1\] This is a subject (A U Thor)$" patches/0000-cover-letter.patch
+> +'
+> +
+> +cat > expected <<EOF
+> +
+> +
+> +
+> +
+> +
+> +
+> +
+> +
+> +
+> +
+> +A U Thor (1):
+> +  This is a subject
+> +
+> +
+> +
+> +
+> +
+> +
+> +
+> +
+> +EOF
+
+Many issues.
+
+In modern tests (written within the past 10 years), we try not to
+execute things outside text_expect_foo blocks.  The golden output
+to compare with is customary called 'expect' (not 'expected').  A
+redirection operator ">", "<<", etc. has a single SP before but no
+SP after it, when there is no parameter interpolation happens in a
+HERE document, quote the "EOF" marker to show the intention of the
+author of the test that no parameter interpolation is expected.
+
+i.e.,
+
+    cat >expect <<\-EOF
+	...
+    EOF
+
+and do so inside a set-up test_expect_success block.
+
+Why do we have so many blank lines?  Are the number of blank lines
+significant?  Such a hidden and hard to count dependency would hurt
+maintainability of this test script.
+
+> +test_expect_success 'cover letter shortlog' '
+> +	test_when_finished "git reset --hard HEAD~1" &&
+> +	test_when_finished "rm -rf patches expected test_file result" &&
+> +	touch test_file &&
+> +	git add test_file &&
+> +	git commit -m "This is a subject" &&
+> +	git format-patch --cover-letter --cover-letter-format=shortlog \
+> +	-o patches HEAD~1 &&
+> +	sed -n -e "/^A U Thor (1):$\|^  This is a subject$/!s/.*//; /.*/p" patches/0000-cover-letter.patch >result &&
+> +	test_cmp expected result
+> +'
+> +
+> +test_expect_success 'cover letter no format' '
+> +	test_when_finished "git reset --hard HEAD~1" &&
+> +	test_when_finished "rm -rf patches result test_file" &&
+> +	touch test_file &&
+> +	git add test_file &&
+> +	git commit -m "This is a subject" &&
+> +	git format-patch --no-cover-letter-format --cover-letter -o patches HEAD~1 &&
+> +	sed -n -e "/^A U Thor/p;" patches/0000-cover-letter.patch >result &&
+> +	test_line_count = 1 result
+> +'
+> +
+>  test_expect_success 'reroll count' '
+>  	rm -fr patches &&
+>  	git format-patch -o patches --cover-letter --reroll-count 4 main..side >list &&
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 964e1f1569..4f760a7468 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -2774,6 +2774,7 @@ test_expect_success PERL 'send-email' '
+>  	test_completion "git send-email --cov" <<-\EOF &&
+>  	--cover-from-description=Z
+>  	--cover-letter Z
+> +	--cover-letter-format=Z
+>  	EOF
+>  	test_completion "git send-email --val" <<-\EOF &&
+>  	--validate Z
