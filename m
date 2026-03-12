@@ -1,128 +1,88 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119583A5427
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:37:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541143FE653
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:45:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773337062; cv=none; b=UCIyJ0VcSuq5HJE9SsGawfrMUzJ5WOGnzyoABdiBiEKsT8hQZM3Bh/T4I0jzBNjzq0dxel/cJ4KItcgBxYBalPEJJ7x7brV6rVykiTiTZopxNivqi/SISOCVLKv6gu65wxkY7DC8/3lM3m6Ck/F+jp6dVdKcL4U0MuUg6U6Y840=
+	t=1773337553; cv=none; b=AN6SWDtyfnEWNe6C4c2R8gXTHAG74moEfvJEYtz56fsrdNVfPg+cisL1f4FI7jo5s3TngaEsrQlV4oorjqSx6WKDzJU3FJkrNZI6nX5A59FFHB1rlgFVwrdANIe+LMzb44bDxjRwKx4jvqsxCdc90l3G7uCtCxldSaIgiH0yodw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773337062; c=relaxed/simple;
-	bh=gtSPxI9Rd8rs0/gyKIGHLRnU3akrK0nrAYxt6IWmuT0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CGCwYG7CcEyLWcgZH+eC4+T9FVRqCDBP4hLdpFplRSBMNucQbj6QI/ZQmDBJ/9BTq0FUlaFmU6EPisa1w/bxtezCdakdtbK9FtGqtT8gi31MNybVQ4yinHOWz7pzxufACnaF5QOuEw8PWoqVah/wzioxd8PCcjlWugWjPqF0StM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g0bASArC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gStvZHUv; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773337553; c=relaxed/simple;
+	bh=9UA+zCQiWZ2VVssFmUcyvVVw+UroCnvHLhQwggmLLwo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VHiKXyA5x4aGOTgPpAny/LJrVhqRHR6jbt0CcZ1LO72hwXRZn8jX9TljCi5i7DngqfLyNw3Zeo2sNVRdOTvNHzSsyH5eqWGAvKPDFi5OEQ/azfIKJMUJq9PSokOGXsYcGtLh9EYPCh+LdTTJTWIjKxsAZ8EMQLzvsV0iOwgeno0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=DbFURvss; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g0bASArC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gStvZHUv"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 49CEA7A016A;
-	Thu, 12 Mar 2026 13:37:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 12 Mar 2026 13:37:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773337060; x=1773423460; bh=oPLJ9/KOPG
-	twNjMyTZf8Yf7KPckVJG8v7ddZiGGOO1c=; b=g0bASArC/gVjRSdV4vE9FyNtq+
-	mxktUz6oQ4/x3QNeYahDrwnmoYulUU/XsNYUFyYXs3DdOR6m4D9wujPXY5Rc36km
-	qgnzWciCfKiK7jt7pjYR3hn8h9idph5hQCD7gmSwGoefCvd9fHYhQob1mMABzKWy
-	KBGShcAdlm3/l8DZ07LDYj29V7z/BYjds2LPTWX3GEgO7s2qP+7nY13INfoZ3avl
-	Iitc0RxtMgkOfjaNs91jRNut9w14/qZrzDyUMM32GXpp94oHlrA5sB0xtrHQYJkp
-	ABIeJR+F74ZRCE2os+eHlFClFc0EIlFcnQ2/TIqAw5J8ZrerxSqWMBTZG6FA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773337060; x=1773423460; bh=oPLJ9/KOPGtwNjMyTZf8Yf7KPckVJG8v7dd
-	ZiGGOO1c=; b=gStvZHUvm4s3X1DZU4MJumWdOs6EEdTkaheWc7JE59eV23B/fOc
-	W4SeXOd+GBcCOJPwFImQebC1Y/LIw/yv9P9NDx+havf7BWChIyp2A1MTog0tITKl
-	7ElGeomCr0xOtldHcIj3QCsOusIye+lM+wtSswPe6qwoyT4J+DoC3tDut3sDLkox
-	92O6OWgB0bKEUZN5ErIpVx6KOCmTTxQ/i/c7Vrpj/PYUu5z0EWdK0rEBQOrMyKPg
-	gRBXMtDQENmsnMF1cdvw0cqBLXgqKRsPeprXljv1oyxn6SHZWREXPRdxCtIDwzoZ
-	URQsLNP8bX8G8LG6xdKWFimMtAD9ObNiT0A==
-X-ME-Sender: <xms:4_myabJI1MabknOmIIgseOrJevV82ml8E7phb95iO6ni7vUd2DRfxg>
-    <xme:4_myaRvAfvTzXGlWxNUywIVP0gBAeiGcpov5B1IOMjCc6_k3x8z1jPQrW0C1k7axs
-    WH1EsMVSbL3EsTWXLyDTXyCZyPaOceylY1GQeTY26tpoElFU1rRTw>
-X-ME-Received: <xmr:4_myaXXikQTOXI5-v_TcnRhbPoU9_dYhZyTpmyE6Z00mcpBUEheF7pTD7zXd1dCDLdXoS8kpNMsJImNRMUdFKOQuYdW7hclz0g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejgedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefgteejgeduveeuteeiudfhhfegud
-    dtjefhjedvffelteelhfdtveejueehudffueenucffohhmrghinhepkhgvrhhnvghlrdho
-    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgrsghlohhoshgrsggrthgvrhhrsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthho
-    sghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprgihuhdrtghhrghnuggvkhgrrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgef
-    udesghhmrghilhdrtghomhdprhgtphhtthhopegthhgrnhgurhgrphhrrghtrghpfeehud
-    elsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:5PmyaUg_-0qliGYT0vQaWP6NmWjCDzEuPnXCWjOcRvb1bzvxC87j7Q>
-    <xmx:5PmyaXrRtO8hCbPyEmqyGdcqoThICGFswNQhwloky2OnPcUje3_2wg>
-    <xmx:5PmyaSGDSn7IrIxpMFBUXNRDulK7SMiSpo0sudQgt0MFKDk9RpTr8Q>
-    <xmx:5PmyaU53_ADs_99Dc5a791mKi3EDfxpprTtE77pvnSRwVWBZUny-Ag>
-    <xmx:5PmyaZU8cOjw-_guNMWIqwlcMxexhojq4fSHCIhdOSSb_WoYRFNhJyFh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 13:37:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
-  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com
-Subject: Re: [GSoC PATCH v4] t9200: replace test -f with modern path helper
-In-Reply-To: <20260312173305.15112-1-pabloosabaterr@gmail.com> (Pablo
-	Sabater's message of "Thu, 12 Mar 2026 18:33:05 +0100")
-References: <20260309150935.578465-1-pabloosabaterr@gmail.com>
-	<20260312173305.15112-1-pabloosabaterr@gmail.com>
-Date: Thu, 12 Mar 2026 10:37:38 -0700
-Message-ID: <xmqqbjgteyot.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="DbFURvss"
+Date: Thu, 12 Mar 2026 18:45:48 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1773337549;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3xCXr7X7ij6xe2JRj1f7E9aY+ZZkTeaEpy/WmcklrY4=;
+	b=DbFURvssXcjJ2nmxlinzGuIilKkTmfV1Tuw6Po+kVo9gNBfzpQRns9aaGvtRsVTDeW8+iD
+	gDx/b3i1dk9BtBovoK/ESjZcmG848FEPgMwRBlg/rKPmcMKWkCwv/+bbfPS+5Nutp6vv0i
+	kaxAoUjonh9nMjyi/b9xIGAh5NK418FIJ2ek22Vxdf8xatwWOQiBKyCUheaJeDVPqsNkBn
+	aP3YpL209oJkuYvOMY4vbKuaqFnaTf2xYRPvkeWTi/AnpHVFj5M/c9bSqgGgXWSd6x0c35
+	/ZYR0Da2ru1LVXXKbXHNwy9edBbRbTkLJnN3cqG8nUtGG2jPRbLie06CzSJOFw==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Bert Wesarg <bert.wesarg@googlemail.com>, 
+	Mirko Faina <mroik@delayed.space>
+Subject: Re: [PATCH v8 0/4] format-patch: add cover-letter-format option
+Message-ID: <abL6gNTwmVfQsmU2@exploit2>
+References: <cover.1772839973.git.mroik@delayed.space>
+ <cover.1773331753.git.mroik@delayed.space>
+ <xmqqo6ktezh2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo6ktezh2.fsf@gitster.g>
+X-Spamd-Bar: -
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+On Thu, Mar 12, 2026 at 10:20:41AM -0700, Junio C Hamano wrote:
+> By the way, we have merged the topic to 'next' on March 9th already,
+> so it is a bit awkward to see a wholesale replacement series.
+> 
+> We could revert the merge of the previous attempt out of 'next' and
+> queue the new iteration in 'seen', but I think the major changes in
+> this iteration are
+> 
+>  (1) the "log:" prefix is omitted (which I think is a bad change
+>      that we do not want),
+> 
+>  (2) we no longer consider the option an extended boolean "use the
+>      modern customized format [Yes/no/use this format]?" (which I
+>      think is OK), and
+> 
+>  (3) the default modern format has a name (which is OK, even though
+>      "chronological" may be a mouthful to say).
+> 
+> and associated documentation and test updates, so at this point,
+> making incremental changes on top of what we already have in 'next'
+> may be more appropriate.  The incremental changes are easier to
+> justify as well.
 
-> Replace old style 'test -f' with helper
-> 'test_path_is_file', which make debugging
-> a failing test easier by loudly reporting
-> what expectation was not met.
->
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
+(1) Very well, given that there are more cons than pros to dropping the
+prefix, this change will be dropped and will no longer be discussed
+going forward.
 
-Will queue.  Looks good.  Thanks.
+(3) Would an abbreviation like "chrono" be better? The originally
+suggested "numbered" didn't seem to be very descriptive, that's why I
+went with chronological.
 
-> Changes from v3:
-> The first hunk was dropped from this patch, and sent as a separate patch.
-> https://lore.kernel.org/git/20260311194002.190195-1-pabloosabaterr@gmail.com/
->
->  t/t9200-git-cvsexportcommit.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-> index a44eabf0d8..15a91931a2 100755
-> --- a/t/t9200-git-cvsexportcommit.sh
-> +++ b/t/t9200-git-cvsexportcommit.sh
-> @@ -303,7 +303,7 @@ test_expect_success 're-commit a removed filename which remains in CVS attic' '
->  	git commit -m "Added attic_gremlin" &&
->  	git cvsexportcommit -w "$CVSWORK" -c HEAD &&
->  	(cd "$CVSWORK" && cvs -Q update -d) &&
-> -	test -f "$CVSWORK/attic_gremlin"
-> +	test_path_is_file "$CVSWORK/attic_gremlin"
->  '
->  
->  # the state of the CVS sandbox may be indeterminate for ' space'
+Please disregard series v8, I will send a new series that builds on top
+of v7. Regarding this, how should incremental changes be numbered in
+their version? Do I keep going incrementally (v9 despite building on top
+of another version), or should I use something like "v7.1, v7.2, v7.3"?
