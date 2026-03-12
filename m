@@ -1,122 +1,123 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F332264C7
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 10:01:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C693D2BD5A8
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 10:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773309671; cv=none; b=i/XztJypjYToRl9rSV7LiM9ta6ujxD7rMovMpf0V3di9dcBzNH+RN7RKJUqefdJMNOYvRgGO3r5Aa4w0J5Gf9sCCAb5cNy96+pYxNE+DQi1/GotqXYT5lG4SzFnX3NutsCBG36kGI4GgrxN/RHShXTDg5KvB8STsnW1IX/7ePUE=
+	t=1773310983; cv=none; b=pWeDMWwSqZK7Lljkz2gq76XEZhYbkr1TuMzYy2sXRg3Miz+TvsN+Jq+hXnkdh88aR1z+TSk5JEA4is9g5+i+O/mDSeJVzlxjfBIowZ8nPzLs1U8aLLZcdYu4Ezo6Aws50H7RAN3DZ0+sLjkFJVF8bpjEBxlOwHXrI1RZxyRRh00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773309671; c=relaxed/simple;
-	bh=cNHQXM0RD6A7uja0MUr7q6iFgzyZroq5CndNwjvpwok=;
+	s=arc-20240116; t=1773310983; c=relaxed/simple;
+	bh=lg7JcfSIK/WNXyXHuA6v1YDE8DdctWRSA79MRY4rFQQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mPNAKMHiJwoEzaDoNCMApTCdMAggQ01zJf/nNFKj0L27fTSlJqMsc5i38XZ53EfgvAURFmRB3yRbEQALuZjJtAG1gJ9mTjK39Y9PLGUJx+/X/Srp60L7f7CPN37rLtm4+H0tnz0p8Y/FLia9ngsFGaiQy9QM42t0YkF+tV/Jpnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L9geBt3d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bAAt86hD; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=BV6rpC1ZuycMFttpbgdk+HycrPUuZ8OTmdFqQkRY+rNB9NgPP50krZ/6+2FgPs/pMPmuyRwls3EN9X11hIW4g+nHFdgJ/l73/40546Bp182QDlgGDyZUyfGrxrnmNp/FtMXFOjKvYI3bk9zNs0UMjt63E2oqRGt3pEsA5vO/fW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D7g1k4wk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xaPHGq0K; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L9geBt3d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bAAt86hD"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D7g1k4wk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xaPHGq0K"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3139EEC0B24;
-	Thu, 12 Mar 2026 06:01:09 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 12 Mar 2026 06:01:09 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F3B871400176;
+	Thu, 12 Mar 2026 06:23:00 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Thu, 12 Mar 2026 06:23:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773309669;
-	 x=1773396069; bh=c6dDyYWt2NuuRPoULvNFKAt/1GEuNIwzh8qgg79fRc4=; b=
-	L9geBt3dd+4c2XxjAONFMpSppO1m6Cbg2xi9TUw6N8oIbEPVeZ5GkfPWDbjW+x12
-	XqZzJfK6k045mKddegQ9IXg+Aa5qc69lrcR4nxsYlP7YGONYC6bLL8CmT88YutpM
-	lEp3s2LcEKwUuyiqx2J1q4n7OBtVNesRhaLWwiVv4VuTd8FrKS4Pgw8RcRV5aW72
-	Eks+JBn/1991/G9Ud85CWgB8Hxdnuw+lXw1yjR9JwMhvVD4X4dRJXvD9deBX0FZH
-	7yxhk7occFVpXziaOO9kFFrSQ3HpAEvjFB8yPcdmvyQV0k5iSo+qpD4+kQY42y4O
-	q8b5nles9W5V809CwPXT2g==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773310980; x=1773397380; bh=2n+DMHAJdy
+	sgG+HSz5PluPmYpRreys0aCTzwNeThaMc=; b=D7g1k4wkT4VU+13rfWi2FImNSR
+	Ym2Ur3Lcwy8KqZsxDImIj8rdCXdk5RCpeNOQIEXH0MezbWaD7q7PsKYrbZ/oMjME
+	OwU37u5uo5tSAdnO6hTsVFxRvdU8GdVNs1vpc9qMXrY2HgALPXCzxJIKoWAGjWc8
+	SnOWtId/HC+naNcE/nUjyiaC4rE12ASleo3AwRauunpRWV6x0TIqRqcqt49f5Wei
+	/VQKvorwZ6MRbkxNwpqxXrbcmyZNubtZR9aOs8As536uo3yVHphIaGfj6CLqt2Cy
+	ywMaALL0ULuaaH/5HKyCoJULZ3V+Y4fgKtpkR8k780O2XcXBYUpFzPrKdSkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773309669; x=
-	1773396069; bh=c6dDyYWt2NuuRPoULvNFKAt/1GEuNIwzh8qgg79fRc4=; b=b
-	AAt86hDffbDRPhwmLpynVYctVeC9itv82glFXv5CBRwuUqL+/kMI2g9bRxVI5AYw
-	7nUiWAMYeCTmpScQkyZ5v5EEvZ4AbICUGXfwuDJOJOyK6E+I73D4T6l8DdeZo/PT
-	haWZ8JiN9rJUqKsYSktDQUWiD2QDWXpaUS3qDHdR4bznFwU6UUTRkEMnmqmppK9z
-	pSlQSjvuFIvi7u0mrOcWZ31Q5/WC9az6TNn3dQ9+lM5tB6VekOI2wFDIZtg4hhmU
-	GgZ4I7NJWD14TKgFC2l3OHU8lqEjwE+6hIOBu9/kVHIr3wqsA5LCAEhPuVLi2buV
-	0vZUskzzKbLFt++xmtlqw==
-X-ME-Sender: <xms:5I6yabGndHaxim3FL2U9dVzUcwgBN6ea7SxiruuW0S8m4b4c4czjgw>
-    <xme:5I6yaU5TTMviJRvHRG-TgI804hVGfUoQiR2YTSy47F0a5J7zGO3FpT-xWBKi1CYKE
-    io72PKoQMxdh8s0ak5O5zvCrDDQCXOrGbOuEqoSRjHtrtYCspvdD7E>
-X-ME-Received: <xmr:5I6yaRnF5QWnH3IbmmrIox8t1iJTYEBnTQGs7jj6CSxc2-2iT7FUPj_eroCZTUABwjmNLkj1vKfbR-vtup-Mv2EMi0d5JnJVjzGbEtZg56pxFQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeigeekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773310980; x=1773397380; bh=2n+DMHAJdysgG+HSz5PluPmYpRreys0aCTz
+	wNeThaMc=; b=xaPHGq0KMi7KTDZCi8M/z5UJd5A5arymunAiDfolD7R0xgbEWYd
+	MaFM9Ris8JrwYqt/z8GoXyOqpNRKWiTNTaTzCWLv989CI3rjIKd0e84qyLbVMWX0
+	8jFGi9Mj64xngCe31lfTCRL1uUFZuO5xbO6R50uO2LW/MeccaioRljZGztpWZN0a
+	awvAA8zQvudJ5Avdptk9hMEfGToD8dATSKfXFgirHK/ot2CuRqjpDLjeTHZZvNw9
+	0wOlJPlNSyGGPAHRu97lcw7z4Vnv+brqxAZbBIxbPLcSg9vEXvX0+CwkCxRIxt2y
+	uBzUYqUwVQqlQUp9mOge85JEVIg88oXcW8w==
+X-ME-Sender: <xms:BJSyaVFI8u8lgXmHZxO-_mJ5E5vAoBaAPFNTHAlr2fSWz_-36EGqdA>
+    <xme:BJSyaRN3-tr313_NQVFei9ugHvATjXrOUO6UhbybVkuilpU40ihzCv23xpwKCM_bU
+    PRa0z6mUI5g0i9agdEYuMwT4rCs41uBMBYBc3R7EONL4o7WxnxVXQ>
+X-ME-Received: <xmr:BJSyafdXNibPaZp9quzaFTiaqW0ueNmYXbWy1ZkeuX2cr53birzEohUCJS2JIFCI3nTYTmSBPZ-Z61prgp_FxInNtvWkAkusZ7FCR-YNObMGqw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeiheefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrhihurd
-    gthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdr
-    udekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrg
-    hnrgefudesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdp
-    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegskh
-    hkrghrrggtrgihsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtg
-    homh
-X-ME-Proxy: <xmx:5I6yaf5iaoMXrgJcijjCiPQvis2VYru3qe22oXtWaQMZgIc7MOnz5Q>
-    <xmx:5I6yaSQygmttlGRhI8ud5Bak-nqPkE-FEifkBMNcSewfkDiqP8yyIQ>
-    <xmx:5I6yadworgmwrPpG_b4H1AqKYKL8Dr2urPGPaEBdnTAEx0yCvOLPbQ>
-    <xmx:5I6yaap2bZ7tHC8Fq8yloM33zlvdZ4O6VRVTvKg8l8bXKDCLsS_RhA>
-    <xmx:5Y6yaVeJT6Np-I9LPD3Et08N4jshzg-415g0xZhluTmwxBaYl5nvdiAy>
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlsh
+    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoheptghhrhhishht
+    ihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:BJSyaWuIgOcqFcwUv11z6ATzCctZD41EPCj_Fiy3Eu50THv4_Cka3Q>
+    <xmx:BJSyaYn0A87Nqfn5TrlaH577OHMD3221VH1JnF5lA4jqrU-oJzBDNQ>
+    <xmx:BJSyaQyOqoXRSAuiR1Y_sjkiGSsaoCBdwDKSRcgyJcuYW1lvDSMAIQ>
+    <xmx:BJSyaSOLhtbfrzKy2yXBUWyvl6tZVgNuuP0iTSHekrRVmU1bVRglHg>
+    <xmx:BJSyaWca2W0E_5E6l1Qnxwg3oG0H98UXm0wVtGMD4uvhB9lnbROKqyck>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 06:01:07 -0400 (EDT)
+ 12 Mar 2026 06:22:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 42447f3c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Mar 2026 10:01:05 +0000 (UTC)
-Date: Thu, 12 Mar 2026 11:01:03 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 1a530207 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Mar 2026 10:22:58 +0000 (UTC)
+Date: Thu, 12 Mar 2026 11:22:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Burak Kaan =?utf-8?Q?Kara=C3=A7ay?= <bkkaracay@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, karthik.188@gmail.com,
-	jltobler@gmail.com, ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com, l.s.r@web.de, peff@peff.net,
-	gitster@pobox.com
-Subject: Re: [PATCH v2] run-command: wean start_command() off the_repository
-Message-ID: <abKO3155A9mw2pbO@pks.im>
-References: <20260311151923.4178655-1-bkkaracay@gmail.com>
- <20260312085341.631318-1-bkkaracay@gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net,
+	christian.couder@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v4 2/3] gpg-interface: introduce sign_buffer_with_key()
+Message-ID: <abKT_50GVgBcj7op@pks.im>
+References: <20260310201116.1130160-1-jltobler@gmail.com>
+ <20260311173147.2336432-1-jltobler@gmail.com>
+ <20260311173147.2336432-3-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260312085341.631318-1-bkkaracay@gmail.com>
+In-Reply-To: <20260311173147.2336432-3-jltobler@gmail.com>
 
-On Thu, Mar 12, 2026 at 11:53:41AM +0300, Burak Kaan Karaçay wrote:
-> The start_command() relies on the_repository due to the
-> close_object_store flag in 'struct child_process'. When this flag is
-> set, start_command() closes the object store associated with
-> the_repository before spawning a child process.
-> 
-> To eliminate this dependency, replace the 'close_object_store' with the
-> new 'odb_to_close' field. This allows callers to specify the object
-> store that needs to be closed.
+On Wed, Mar 11, 2026 at 12:31:46PM -0500, Justin Tobler wrote:
+> diff --git a/gpg-interface.h b/gpg-interface.h
+> index 789d1ffac4..a32741aeda 100644
+> --- a/gpg-interface.h
+> +++ b/gpg-interface.h
+> @@ -83,6 +83,13 @@ size_t parse_signed_buffer(const char *buf, size_t size);
+>  int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
+>  		const char *signing_key);
+>  
+> +/*
+> + * Similar to `sign_buffer()`, but uses the default configured signing key as
+> + * returned by `get_signing_key()` when the provided "signing_key" is NULL or
+> + * empty. Returns 0 on success, non-zero on failure.
+> + */
+> +int sign_buffer_with_key(struct strbuf *buffer, struct strbuf *signature,
+> +			 const char *signing_key);
 
-I really like this solution.
+I think this interface is a bit confusing, as you wouldn't really be
+able to tell what the difference between `sign_buffer()` and
+`sign_buffer_with_key()` is without having a deeper look. Naively, I
+would expect the latter function to be the one that actually mandates
+that the user provides a key, but it's the other way round.
 
-There's now only a single other function that still uses
-`the_repository` in `prepare_auto_maintenance()`. Do we maybe want to
-add a second commit that converts this function and its caller
-`run_auto_maintenance()` to receive the repository as parameter so that
-we can drop the `USE_THE_REPOSITORY_VARIABLE` declaration?
-
-Thanks!
+Would it be preferable to instead extend `sign_buffer()` to take a flags
+parameter and then introduce `SIGN_BUFFER_USE_DEFAULT_KEY` to make it
+fall back to the configured signing key? If so, we could drop
+`sign_commit_to_strbuf()` completely.
 
 Patrick
