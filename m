@@ -1,197 +1,65 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E15375F7C
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 22:40:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC1B264A86
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 23:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773355227; cv=none; b=ijndHwHm4TODR5rwqVGv3O/ylmLWcG+hQy5yAKi5dU9SgnXnw0oIaMIgSyhwYv4NETLBQWymiqIMwqQ3n4rr2vgfKIBZ1vPJBVmqmcM9k3M8wYfWoLGySCo5Rg5lnYquhU6vB2ntyqrzaNSfPhabZiyu5sJl4zRVcsCI3a00d10=
+	t=1773359912; cv=none; b=a9rGY2mHVbg9qwyeaAvKgOxnaJ5RLH3wkq9J2oHkcPCYpcneWSscCHGcob6BwZBeP1K227pyVeAGR+uTklZnuMFuut9xz6qPI3moR+QW/43Q0CbA4cAIidh05fwFXYzzxSJfzbPKtgcJ/2gUWfp4AIUq0siFiAJdrWOdybOc4I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773355227; c=relaxed/simple;
-	bh=0hI2PkswR3zRfNSBfL47cxKwgGpQdXzLLRLEmsvuYa0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kzU3b2XTEOOMUK/4L/ssLX6z6ws1o44615EO/asque+uDYGwaAC78a2MTSB1y+Mtj5eYpSMaAqgWLv2TdRRwdUhG1roLPvk0tfEXTZUke8w6orbaGwn7pN6nZJwaT4RMEPmZpXFmdjP5r0JRBiOu4EI46ESDag8O7BROJ9lOuDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NGIo/DNu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WyyEe4H6; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773359912; c=relaxed/simple;
+	bh=8dt17S0zT2FSsGhv+7+vymjFAr3gUy4nztLZeQ7Ppzw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LDPW6kziOlVtRqwKxqecLKjFavvq13wyUu72aB8na2bn+YH+qchwebe/P1ilH1jKcZHZQF+YCJxotNepCNGbp0GB2cumLN6lT4bjX6R0aVh7MlhZ+Abb99RnDxp4XSuvbTKuMnQ+znz4cE7kV+h9q9sLjmLImiVtELWCEq7zC98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=G/9kSt82; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NGIo/DNu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WyyEe4H6"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BB1FC140027C;
-	Thu, 12 Mar 2026 18:40:25 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Thu, 12 Mar 2026 18:40:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773355225; x=1773441625; bh=jIVE4QByPN
-	1jKxomUZjm6Kaw3rtu1G7ZLkLcJggsMEs=; b=NGIo/DNuLJbADTlsQvccDswl8g
-	I3NWHEqQLXqOJrhpMAdd+lckR5scsQjr4+SKjtHk3vrNPBmigGsr1Cg7p0X0GfM3
-	x9QPff9vD3ei8yKweAXbQvXlYrWBO1cBiWIHvrYJq9aV+L0zQoGhj1fjCJE66jX9
-	7Hx7el32FTaHzGQg9hBeQv/o/QefgZQyVZTgTt39BS93kyelZZtNFAI3QNdgpV6f
-	2sh7528RP+IHvDtJmXd1cjvl0C3xkwso5YG3ewzJJ5Drgi9Fr6+SrPT3LeH+6LWQ
-	8SAu47A+0Khmpjk6UYtcYnGhWNoc3QJSbxAdElPWi86q2grmfJ4DUjSBLxpQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773355225; x=1773441625; bh=jIVE4QByPN1jKxomUZjm6Kaw3rtu1G7ZLkL
-	cJggsMEs=; b=WyyEe4H6KH5diCeDfCSoqvskJZD7I1Xg7480158oJ6aCh43hqxG
-	rwMpbKL5HlIKR7rWWvCih+Jzcbn+k0O5KIKf9xJ/clW4g98JKRLYipq3kLGFMu9O
-	y8choZWxdhRWeFVpaydYnA0KPA0fZEBqT6m+qsFGIseopy9lyUPRPhcuARPO1PvL
-	crUcEUq+gRweJHn5D+J3v7p/gG1pMNAoHkLF2WFJ8/oqfrhhhQy0vraB9P5JF+83
-	5gTMSQYr2IgjrsQdHFvXR3NXi0CEpwQlwDPjhgrPJCdjdXQqvABPe+YqDzshZcct
-	yw+GUyYH5CG0ZfSdwY78N45HGzaPXTqHBPA==
-X-ME-Sender: <xms:2UCzaeVzk1hK6JxhpZkEV2J1BI6hjG4GmA3oTxONL1tDICBcvn9-9Q>
-    <xme:2UCzaYLyR4mP_-pykvseMYtnP52k9H-CLywQ5vTbr7Wcz3fb3QlI0FRwqoeO4cygJ
-    bLeTGASxaCBF9YKnMxTXB-C3TqlxtVGKlgf6cCtdNKgVeUUIeE0>
-X-ME-Received: <xmr:2UCzaY17CvJvMGpCTWTRK3GxNu28OmF1w57u9l3Xc9rm6eegYyrGn4b2Oez_hO10bcOoxdBPC4Bi45Bn-Qtha8uCSV4nRzvhEQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeektddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprg
-    hrshhhshhrihhvrghsthgrvhgrtddtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhs
-    sehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:2UCzaW4dKO0SUGTxHf8iS3ECe7GVmfCYJ0u0db9kBofMyrD7-80P1w>
-    <xmx:2UCzaZ-7OtxuXpE695tlGC_hSsga-TUhHvVBFfFT3z_3Yx7sxpP6xA>
-    <xmx:2UCzaVUYAdaCL3h_mT1QwlKz6lyj60Xkzv5O8H81ti32q4p_6HCOWw>
-    <xmx:2UCzaUq1GM1fZL5cf7Nkw9HpR1Ac4AyTWEoYeNk_60SrZIHDt7zoAw>
-    <xmx:2UCzaf1TNldVRZJfPewMVsRcDLCcbac9fNj4F_uSJDLW7FIMaDR-lDpu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 18:40:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Arsh Srivastava via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-  Phillip Wood <phillip.wood123@gmail.com>,
-  Arsh Srivastava <arshsrivastava00@gmail.com>,
-  Patrick Steinhardt <ps@pks.im>,
-  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v7] unpack-trees: suggest using 'git stash' when
- checkout fails
-In-Reply-To: <pull.2233.v7.git.git.1773345901659.gitgitgadget@gmail.com> (Arsh
-	Srivastava via GitGitGadget's message of "Thu, 12 Mar 2026 20:05:01
-	+0000")
-References: <pull.2233.v6.git.git.1773288013936.gitgitgadget@gmail.com>
-	<pull.2233.v7.git.git.1773345901659.gitgitgadget@gmail.com>
-Date: Thu, 12 Mar 2026 15:40:23 -0700
-Message-ID: <xmqqldfwacyw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="G/9kSt82"
+Received: (qmail 94172 invoked by uid 106); 12 Mar 2026 23:58:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8dt17S0zT2FSsGhv+7+vymjFAr3gUy4nztLZeQ7Ppzw=; b=G/9kSt826Y5UxZipQ4dZ/+DavX+wd+4EFT/9L0XXunyan3ZdGAVytsDyC2XVzSFBXtRC1hZeuLsOB5BWgItuolw1+dywbEyELmxDsiIQUmTZUMVw8FLpV/5fOM31f5lTFdU406n/JrnaIOz7FCzrrQahqCgvnWdkO5+9GLLwEgyZ+N9/dweXVF5UiudAFiWPeKgjE4Ou4LiL57KHI2rPFNuRDVm3SpraknyOMimmI6ehChLDLTNlYhpgfG8O8SRSOp/E8PECtO9qOg+1UvlAgENHyZvaUYcEIc4jWhLFXY1138sJhWBsTbRGmG57guc+HXe2Lb5ugsy2lqpmslJl/w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Mar 2026 23:58:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 517220 invoked by uid 111); 12 Mar 2026 23:58:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Mar 2026 19:58:31 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 12 Mar 2026 19:58:28 -0400
+From: Jeff King <peff@peff.net>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net,
+	christian.couder@gmail.com, ps@pks.im, gitster@pobox.com
+Subject: Re: [PATCH v5 3/3] fast-import: add mode to sign commits with
+ invalid signatures
+Message-ID: <20260312235828.GA3193385@coredump.intra.peff.net>
+References: <20260311173147.2336432-1-jltobler@gmail.com>
+ <20260312192228.481134-1-jltobler@gmail.com>
+ <20260312192228.481134-4-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260312192228.481134-4-jltobler@gmail.com>
 
-"Arsh Srivastava via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Mar 12, 2026 at 02:22:28PM -0500, Justin Tobler wrote:
 
-> When a branch switch fails due to local changes and
-> new users who are not familiar with the error message often
-> get confused about how to move ahead and resolve the issue as
-> the previous error message only suggests to commit or stash the changes
-> but doesn't explain how to do that or what the next steps are.
+> +test_expect_success GPGSSH "sign invalid commit with explicit keyid" '
+>  	rm -rf new &&
+>  	git init new &&
 
-The first paragraph is a bit of a run-on and has a misplaced "and";
-I cannot quite read and understand this overly long single sentence.
+This test is failing on Windows in GitHub's CI.
 
-Perhaps the early part can become a bit easier to read with
-punctuations, and cutting the sentence into two, e.g.,
+You can't see it from the context, but the next line of this test is:
 
-  When a branch switch fails due to local changes, new users who
-  are unfamiliar with the error message often get confused about how
-  to move ahead and resolve the issue.
+	git fast-export --signed-commits=verbatim openpgp-signing >output &&
 
-Also it is misleading to say "previous" error message.  We talk
-about the current code in the present tense, to highlight what the
-problem in the current code is.  The _current_ message stops at
-hinting the commands to be used without giving wordy instructions
-that are best left to manuals.  You may view it as a weakness (which
-may motivate this patch to be written).  But I personally am not so
-sure that adding words to the existing message would necessarily
-make it more clear.
+But the openpgp-signing branch will only have been created if the GPG
+prereq is set. Should this be referencing ssh-signing instead? Or should
+it be using GPG,GPGSSH as prereqs?
 
-> This patch enhances the error message with more specific
-> instructions in a concise manner to help users understand
-> how to resolve the issue and move their local changes
-> safely to the other branch using stash.
-
-As Documentation/SubmittingPatches says, let's instruct the code to
-"be like so" in imperative mood.  E.g., "Enhance the error
-message..." instead of "This patch enhances...".
-
-By the way, the updated message seems much less concise than the
-original.
-
->  	msg = advice_enabled(ADVICE_COMMIT_BEFORE_MERGE)
->  	      ? _("Your local changes to the following files would be overwritten by checkout:\n%%s"
-> -		  "Please commit your changes or stash them before you switch branches.")
-> -	      : _("Your local changes to the following files would be overwritten by checkout:\n%%s");
-> +		  "To move you local changes safely to the other branch,\n"
-> +		  "Please try 'git stash' followed by 'git checkout <branch>' followed by 'git stash pop' for safe merge."
-> +		  )
-> +	      : _("Your local changes to the following files would be overwritten by checkout:\n%%s"
-> +		  "Please commit your changes or stash them before you switch branches.");
-
-These were already overly long, but the updated one is way too long
-to be read on end-user's terminal.  The source lines are overly
-long, too.
-
-The original was this:
-
- 	msg = advice_enabled(ADVICE_COMMIT_BEFORE_MERGE)
- 	      ? _("Your local changes to the following files would be overwritten by checkout:\n%%s"
-		  "Please commit your changes or stash them before you switch branches.")
-	      : _("Your local changes to the following files would be overwritten by checkout:\n%%s");
-
-Note that when advice is *NOT* enabled, we only gave
-
-_("Your local changes to the following files would be overwritten by checkout:\n%%s");
-
-without any "advise" in the output.  That is what !advice_enabled() means.
-
-The updated code does this:
-
-	msg = advice_enabled(ADVICE_COMMIT_BEFORE_MERGE)
-	      ? _("Your local changes to the following files would be overwritten by checkout:\n%%s"
-		  "To move you local changes safely to the other branch,\n"
-		  "Please try 'git stash' followed by 'git checkout <branch>' followed by 'git stash pop' for safe merge."
-		  )
-	      : _("Your local changes to the following files would be overwritten by checkout:\n%%s"
-		  "Please commit your changes or stash them before you switch branches.");
-
-to those users who decline the advice, we now show "Please
-commit...".  That is not what !advice_enabled() should trigger, is
-it?
-
-Also "To move you" -> "To move your".
-
-Also the advice lost the other possiblity of first committing the
-work in progress on the original branch before switching, yet the
-new advice message is quite wordy.
-
-Also, using "for safe merge" when the user is performing a
-"checkout" might be slightly confusing, even if 'stash pop' involves
-a merge under the hood.
-
-A more concise version might say:
-
-  Try 'git stash && git checkout <branch> && git stash pop' to carry
-  your changes to the new branch, or commit your work before switching.
-
-But as I already said, I think the current text may already strike
-the right balance between being clear and being concise.
-
-Thanks.
-
+-Peff
