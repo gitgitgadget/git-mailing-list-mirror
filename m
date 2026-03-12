@@ -1,216 +1,95 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E8C3F20EA
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 16:20:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CF93CF024
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 16:21:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773332427; cv=none; b=lKksA7YHxiBUnyb92+ZIpnlm+ourb6tebxvVs4N9Pjg2g66KSGWTDSmmGsMKFgo1ihzkqzkWnBOPusU/oy930JXBOvRlS7sFNvDtEZV2ITUAFYQo9rB39PGdJTdnD/oEOLx7SCaogkA4o+GycudTlOkHe4oM9UqqfgWvPik9axQ=
+	t=1773332511; cv=none; b=clyEyc/dbD59oc3Rc/YrXgsxegHxT2bXKm0a3lkaO4jkMeJ2l/pWpHlnSvjJwcYcm60+0H5raTwxZee2tueG98+MeVqo8ZTpSK9MgG2ZaLn2gsln7FvKgpX+1RrRyQwXL4UFJrc7dXDD2r8a/H5evwfOb5H/Xti85DUN37U28k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773332427; c=relaxed/simple;
-	bh=wocUx9EkZ4PTYUKNdYL4nEv8BGyBMIh/FS9nDoIoCbs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBmKCfeDsVTHGJw8iXFjAnpCmF43v7zg20jla7ahW8wHD/dc8Bi8ZIOqg3pHaKSieQsGO8Obl20RLY9Pl+F+VVFHXeibVaQd+8hLZLbqgxFbtSjzNK6Xc3v7tRVWVqEbeiYHwGfo3MMby/s1SqkvfuHtk/dTMzl1KYMoweaFufI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=UZxmMhy/; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1773332511; c=relaxed/simple;
+	bh=y4MjVarNiTt5iIAn7HnNpVQ+39I1IvrFKmO5al8uGxw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AsyyMOBPfVL5tLkShZmwwgEk5I2c0p7YkUW5VnuktPQthTC17D6eCT2kev/lWP00D66F382oNE08+TLXMzXZ/SQxqnCUFE6AjthkKkZ7sJvY+GD2RaCgJncQuEXsAZU0nIbuN4KPdmmNK3/9+yyMFF3/EWBkZS7gNdXFNLCmJZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=WZJ8UlQ2; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=GlYusDeb; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="UZxmMhy/"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1773332418;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bfOcgQhWIXuROFZmBLHuOA03jv+EgiE/uvqw4bC936s=;
-	b=UZxmMhy/BhLEOwkcKl5KU67RPs26lXy4LcpuDmdQaL0oSh6kV+l5btkvMuz7lkpkitC7wT
-	kLqaKFDyuI64WYNtPyZaelrMimESi8T3DTZkh9ebbI5OTrh5XurACRJ3uqWvjSeegsGB9D
-	p1bAxTLHEjK5vRrcygBPRB9saa0XhueVwHjk8Hbbn+P/shF8ap3O0imUsNu7qkZUwUKk0L
-	IIXvG3RW7AfhoTpX8ouK3c1Np3xWrMN/0e3BIh7ptjVd3ERgcFkYGd6m6SIlm/y9Es8uT4
-	bt6JqaxzN3y0pQ+xdmhqDuqJbVJiiA2G9hd5YETEm7qHl3rGmZNhRtBEtqHqAQ==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH v8 4/4] format-patch: add commitListFormat config
-Date: Thu, 12 Mar 2026 17:20:11 +0100
-Message-ID: <50b1f37e8cd6091deca793f9a972b1d15d9aae7d.1773331754.git.mroik@delayed.space>
-In-Reply-To: <cover.1773331753.git.mroik@delayed.space>
-References: <cover.1772839973.git.mroik@delayed.space> <cover.1773331753.git.mroik@delayed.space>
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="WZJ8UlQ2";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="GlYusDeb"
+DKIM-Signature: a=rsa-sha256; b=WZJ8UlQ2Hz5+K+VW8da/kPq9IDeOm5z91xirNOFjhIQ8mPM4RIlVoag9HG8T0bQp3Ru0CWrkikl5he47SfClTLqMioogg7eJHSE5XypG2+EhZ8FkgJQKqOOBgJ8QSQzpNCv/rfnev/6uU4oeO1EI6KLpqcBHGUa/fOifSgNXuP6Nhhbl2vlfgYOlUNiskheM1Q6xLqZA7SranbnX/V6LfOpvCd7keBm5p0+ttZMa2Nfd8++nQR4+a4DF2YCiWDTHI+JBORipx+FVfPe9XU9XQJfaqZXOFOTC9FnCg6knL1zOv0ocC5Jls+PG/ym2ZZjCX7UuqdALbAFxNiTWxb3XZw==; s=purelymail2; d=malon.dev; v=1; bh=y4MjVarNiTt5iIAn7HnNpVQ+39I1IvrFKmO5al8uGxw=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=GlYusDebTH1+w0fNofi3PRbhw1ARgkZqYs5yMlB5MFht2oiwVHoUA+4trzC/u8BveKX02vyWAnJZoscwp2uSpoUEjwPXVfSMQk5yUIA6uuv0sQe9DdR46I3Ecd/YNn8NmxPseoEo9J2PuGyH3Ts20dmMMj+gzH14j/PhbfG/HJiOX7PIjqrKTge6D0gvn5WoaqdtbV6DppZs44rXECP6J+hYGjYhp6KZOJzypIZEfYzrhsM9wc5v3kMgscZh5lT/h7ewNg/wuyidA+VrU8fWqUjS9YO7FOjbtLfDJap0RC/G2LSgBIjTQhK+aHlt4OtD87N1HXI8EKdAmDLBQzVBKQ==; s=purelymail2; d=purelymail.com; v=1; bh=y4MjVarNiTt5iIAn7HnNpVQ+39I1IvrFKmO5al8uGxw=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1993667700;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Thu, 12 Mar 2026 16:21:45 +0000 (UTC)
+Message-ID: <af2c4ae3-c273-40ba-bbca-cbbf687b1b91@malon.dev>
+Date: Fri, 13 Mar 2026 00:21:41 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: ----
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] builtin/mktree: remove USE_THE_REPOSITORY_VARIABLE
+Content-Language: en-US
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com, karthik.188@gmail.com,
+ phillip.wood@dunelm.org.uk, jltobler@gmail.com
+References: <20260311181704.958509-1-cat@malon.dev> <abJjYNq_sxeH8yLQ@pks.im>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <abJjYNq_sxeH8yLQ@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-Using "--cover-letter" we can tell format-patch to generate a cover
-letter, in this cover letter there's a list of commits included in the
-patch series and the format is specified by the "--cover-letter-format"
-option. Would be useful if this format could be configured from the
-config file instead of always needing to pass it from the command line.
+Hi Patrick,
 
-Teach format-patch how to read the format spec for the cover letter from
-the config files. The variable it should look for is called
-format.commitListFormat, it accepts the same values as the option
-"--cover-letter-format".
+Thanks for the review!
 
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
- Documentation/config/format.adoc    |  5 +++
- Documentation/git-format-patch.adoc |  1 +
- builtin/log.c                       | 13 +++++++
- t/t4014-format-patch.sh             | 57 +++++++++++++++++++++++++++++
- 4 files changed, 76 insertions(+)
+On 3/12/26 14:55, Patrick Steinhardt wrote:
 
-diff --git a/Documentation/config/format.adoc b/Documentation/config/format.adoc
-index ab0710e86a..ef1ed1d250 100644
---- a/Documentation/config/format.adoc
-+++ b/Documentation/config/format.adoc
-@@ -101,6 +101,11 @@ format.coverLetter::
- 	generate a cover-letter only when there's more than one patch.
- 	Default is false.
- 
-+format.commitListFormat::
-+	When the `--cover-letter-format` option is not given, `format-patch`
-+	uses the value of this variable to decide how to format the title of
-+	each commit. Defaults to `shortlog`.
-+
- format.outputDirectory::
- 	Set a custom directory to store the resulting files instead of the
- 	current working directory. All directory components will be created.
-diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-index 6364fd1f5a..88e580d1b3 100644
---- a/Documentation/git-format-patch.adoc
-+++ b/Documentation/git-format-patch.adoc
-@@ -463,6 +463,7 @@ with configuration variables.
- 	signOff = true
- 	outputDirectory = <directory>
- 	coverLetter = auto
-+	commitListFormat = shortlog
- 	coverFromDescription = auto
- ------------
- 
-diff --git a/builtin/log.c b/builtin/log.c
-index 12877a0ac2..e19e122bc9 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -887,6 +887,7 @@ struct format_config {
- 	char *signature;
- 	char *signature_file;
- 	enum cover_setting config_cover_letter;
-+	char *fmt_cover_letter_commit_list;
- 	char *config_output_directory;
- 	enum cover_from_description cover_from_description_mode;
- 	int show_notes;
-@@ -931,6 +932,7 @@ static void format_config_release(struct format_config *cfg)
- 	string_list_clear(&cfg->extra_cc, 0);
- 	strbuf_release(&cfg->sprefix);
- 	free(cfg->fmt_patch_suffix);
-+	free(cfg->fmt_cover_letter_commit_list);
- }
- 
- static enum cover_from_description parse_cover_from_description(const char *arg)
-@@ -1053,6 +1055,11 @@ static int git_format_config(const char *var, const char *value,
- 		cfg->config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
- 		return 0;
- 	}
-+	if (!strcmp(var, "format.commitlistformat")) {
-+		FREE_AND_NULL(cfg->fmt_cover_letter_commit_list);
-+		git_config_string(&cfg->fmt_cover_letter_commit_list, var, value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "format.outputdirectory")) {
- 		FREE_AND_NULL(cfg->config_output_directory);
- 		return git_config_string(&cfg->config_output_directory, var, value);
-@@ -2329,6 +2336,12 @@ int cmd_format_patch(int argc,
- 		goto done;
- 	total = list.nr;
- 
-+	if (!cover_letter_fmt) {
-+		cover_letter_fmt = cfg.fmt_cover_letter_commit_list;
-+		if (!cover_letter_fmt)
-+			cover_letter_fmt = "shortlog";
-+	}
-+
- 	if (cover_letter == -1) {
- 		if (cfg.config_cover_letter == COVER_AUTO)
- 			cover_letter = (total > 1);
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 5ec527bce9..2091b5e9bb 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -449,6 +449,63 @@ test_expect_success 'cover letter no format' '
- 	test_line_count = 1 result
- '
- 
-+test_expect_success 'cover letter config with count, subject and author' '
-+	test_when_finished "rm -rf patches result" &&
-+	test_when_finished "git config unset format.coverletter" &&
-+	test_when_finished "git config unset format.commitlistformat" &&
-+	git config set format.coverletter true &&
-+	git config set format.commitlistformat "[%(count)/%(total)] %s (%an)" &&
-+	git format-patch -o patches HEAD~2 &&
-+	grep -E "^[[[:digit:]]+/[[:digit:]]+] .* \(A U Thor\)" patches/0000-cover-letter.patch >result &&
-+	test_line_count = 2 result
-+'
-+
-+test_expect_success 'cover letter config with count and author' '
-+	test_when_finished "rm -rf patches result" &&
-+	test_when_finished "git config unset format.coverletter" &&
-+	test_when_finished "git config unset format.commitlistformat" &&
-+	git config set format.coverletter true &&
-+	git config set format.commitlistformat "[%(count)/%(total)] (%an)" &&
-+	git format-patch -o patches HEAD~2 &&
-+	grep -E "^[[[:digit:]]+/[[:digit:]]+] \(A U Thor\)" patches/0000-cover-letter.patch >result &&
-+	test_line_count = 2 result
-+'
-+
-+test_expect_success 'cover letter config commitlistformat set to shortlog' '
-+	test_when_finished "rm -rf patches result" &&
-+	test_when_finished "git config unset format.coverletter" &&
-+	test_when_finished "git config unset format.commitlistformat" &&
-+	git config set format.coverletter true &&
-+	git config set format.commitlistformat shortlog &&
-+	git format-patch -o patches HEAD~2 &&
-+	grep -E "^A U Thor \([[:digit:]]+\)" patches/0000-cover-letter.patch >result &&
-+	test_line_count = 1 result
-+'
-+
-+test_expect_success 'cover letter config commitlistformat set to chronological' '
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_when_finished "rm -rf patches result test_file" &&
-+	test_when_finished "git config unset format.coverletter" &&
-+	test_when_finished "git config unset format.commitlistformat" &&
-+	git config set format.coverletter true &&
-+	git config set format.commitlistformat chronological &&
-+	touch test_file &&
-+	git add test_file &&
-+	git commit -m "This is a subject" &&
-+	git format-patch -o patches HEAD~1 &&
-+	grep -E "^[[[:digit:]]+/[[:digit:]]+]" patches/0000-cover-letter.patch >result &&
-+	test_line_count = 1 result
-+'
-+
-+test_expect_success 'cover letter config commitlistformat not set' '
-+	test_when_finished "rm -rf patches result" &&
-+	test_when_finished "git config unset format.coverletter" &&
-+	git config set format.coverletter true &&
-+	git format-patch -o patches HEAD~2 &&
-+	grep -E "^A U Thor \([[:digit:]]+\)" patches/0000-cover-letter.patch >result &&
-+	test_line_count = 1 result
-+'
-+
- test_expect_success 'reroll count' '
- 	rm -fr patches &&
- 	git format-patch -o patches --cover-letter --reroll-count 4 main..side >list &&
--- 
-2.53.0.904.g2727be2e99
+> I guess s/the/to/? Also, it's `mktree_line()`, not `mktree-line()`.
 
+Thank you for pointing that out. I'll correct it right away.
+
+
+> One thing that commit messages should also explain is why a certain
+> refactoring is safe to do.
+
+I'll add it.
+
+> That is, can `repo` ever be `NULL`? For that
+> you have to look at "git.c" and figure out whether or not the command
+> requires a repository to exist.
+I checked git.c and found that there is:
+
+{ "mktree", cmd_mktree, RUN_SETUP }
+
+in commands[]. If my understanding is correct, before cmd_mktree is=20
+called, setup_git_directory() must have been fully executed. In that=20
+case, if the current directory isn't a valid repository (NULL), it=20
+should have already exited at an earlier stage, right?
+
+
+> `oid_to_hex()` falls back to using `the_hash_algo` in case the object ID
+> you have doesn't have a proper hash specified. So this depends on how
+> exactly you construct the object IDs: if you parse them with a proper
+> hash algorithm, then you're fine.
+
+I see. That's pretty much what I had in mind.
+
+> It's typically fine to just send to the mailing list, so you wouldn't
+> even Cc Junio. Sometimes it's just a matter of capacity, and it's fine
+> to eventually send a ping after a week or two have passed without any
+> feedback.
+
+Oh, I see. I thought =E2=80=9Crepeatedly bringing up a patch no one cares a=
+bout=E2=80=9D=20
+would be considered kinda *impolite*. Now I understand. Thank you.
+
+Regards,
+
+Yuchen
