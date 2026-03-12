@@ -1,147 +1,126 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E70438C40C
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:18:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85F138F652
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773335911; cv=none; b=AvGpy1WSLyqaWFJuLYVEhlWaYAAM7CYju1FxLmbklmzvmKhJXhDU8/pTtg1kplZEgV7l7usKrUxYgu3lwWfU+LFgIE26DJkwoKvbbWQwiCk2hQyZEQ0iC6Fhf+Zi4VoOaSqFGYTQvFf74aD5fF6vyHJSotmmheZlQ3XO8Z24deM=
+	t=1773336044; cv=none; b=NbKQEUGdlUjPmw3QhepR7Jz5IyIRdvj3lrHTGhM8SSfKjzc/WVFOQrzlAt21mTbkT2NfnHfJFQnMiyGNu2NWThO78rme0kJWzR2KetrurVtmNEg4FqKCFBHHuFOtpmxvDpWTLYNxPBkNKJWl9R8Qbg8mRhqdLpV2tk7Ljhl+2SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773335911; c=relaxed/simple;
-	bh=W8j9pQupUpCZOW3dEQoARfOoFzQTXVNzX4gLaGALAg0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G84SLT6Ok+FsVGVz21Mfot8CqkrdbEYWMUMb9oUzAifmS4dRnTFJyS6K//NS3RUPA3XyjnDxHEAdXnTHpKG3Gd0vmQMXzaRXuCIMInqEV7nXIbsKz14mlsAszDaArLJzfQapMu6PLr5NsiwLch4jJ+VP629Er9GDr/M25OeOMEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=GLOGvx1d; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1773336044; c=relaxed/simple;
+	bh=po2Yk9rtKPV/JNmNHnXfhpvS1JPYyd7tva6R27RQK8Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=H4QcCA7+jc2Y0HkRo1Svq3rspaCb0il62kV9R5fFEPbQui3i/QKcczW5i0xe7l0y7ao8Pmg8QSpnzlXvX5fCKBMSKvYaXqJ1w4H32OfdTaNlNWcFpOR0yTmQCNQgFWkDc89suokqAP0/owdZ7cQHRDazXi99UXFaksiOOChpAOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RoWpfsrc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XAlgJQtP; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="GLOGvx1d"
-Date: Thu, 12 Mar 2026 18:18:23 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1773335905;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R80MD2gYFyrZs00aM2aRVN94fFza8lY3/LE0hGycehI=;
-	b=GLOGvx1d/Sa2TdqwzthsYUxeav2w5GKf6oMusg+h5OHpsOvUHE5gTih4Q0JRhFBBIqQy9B
-	a+hK1JJmiaPA327RdFnTEwv1ETqNqQLv5fpJ4ADf97wjsR1QKyjPg6/VYwJHeo4oxgNlH7
-	T7pBcucSiceZutB6p4WB8yiXWVPUpCiKxVnc/uRNUFF9phZ6rgB17ExBCpJja/wQw6lddU
-	b81ScYssD0q1EgyX5/GbkwS6vSwiODCgBYN3ZcxSnxF2JKo4YbvrJcfX1izZuRquWrJcMb
-	kFZ99fsPmhXVh6TJcOiiEtKzIF1GzA1xv2P+1K1mcrth+juiFd5xeFag3Gggdw==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Bert Wesarg <bert.wesarg@googlemail.com>, 
-	Mirko Faina <mroik@delayed.space>
-Subject: Re: [PATCH v8 2/4] format-patch: add ability to use alt cover format
-Message-ID: <abLw6vUUh36zFK4n@exploit2>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RoWpfsrc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XAlgJQtP"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2F5867A0119;
+	Thu, 12 Mar 2026 13:20:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 12 Mar 2026 13:20:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773336042; x=1773422442; bh=WeU9hmojtn
+	+fF+XPkiTLz/Tu4Dn/8hGRPyqfmDRgKQ4=; b=RoWpfsrcB4dh6gnMrcY1XNjbCO
+	ze2gSNGPmC4KNsCkmNUb+McerupC0pQ0cO8knSjweAxqMRHjryBd12K3iEbRdSnC
+	t9PFVcTGRZs3AYnah71ypfA9Ixc5C+HOzOWvL9iGkz33LPBpFes8xiPWG8fGPve2
+	+NIMNGfQ5o7B+SKboc1bCeNKmvCNhLy7JbmClLpxToA/2gdy16Dm9SumBNv1jI6Z
+	dqFP7z1uleBWzkuMegUzNCqDfgTZ54deiIgKKPUoC+Jz4o8LlWM2CcjCGQVFuJux
+	5ynzsvw9FFXP5T7c+khiBJteLXwoGmWojIvhj3OXeqeaExoLrt+8zKXUsZsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773336042; x=1773422442; bh=WeU9hmojtn+fF+XPkiTLz/Tu4Dn/8hGRPyq
+	fmDRgKQ4=; b=XAlgJQtP6mdlvcs3oU8Mt1Uu2K7z50OP3VavG7B8tLWaCSUrC/O
+	6MyH84nYsmBobPuM2LKNVJ9fuF6lzl81jExI9shjkYCzvhb0Mbu7q2isXOC7j20n
+	bb8B0w7ywUGG55XNGWyGjCx7hxdSTXH7LqjOFBSpAiQn1tBiv6LIf+7t33Ej3Hjg
+	by0NZ4hrjCpuoLmcnNOFOQ02QRxuq9ek61EW1CUWuR5cq+yNkMyBtfra0PrJLYe+
+	A8e5f+rD9f4+bxyvtX8gRlSlhvGxPYEJ7P6V3ZaDUeCEAEmYsswsnaEIUh9yrdAx
+	6ImJ/O209ctNBSvkAP63AKOI2b+b3guelsg==
+X-ME-Sender: <xms:6vWyabmiQHvVHIxttjdVf52NWm_sVvwLgmx4Cu6mYPFm1MJEIaaSuA>
+    <xme:6vWyaSjAtPTf88HVftbgTqhP5VWmBMZpXo_JKKDpn93jmDeUbYknlLIQQT7jhQY2b
+    jWdqn-xaAWjw01gKPv0j940e485IXuSfHYegru41bjA0peV8YfPrA>
+X-ME-Received: <xmr:6vWyabcbPbPNdtTHLOf6BAuV4ADpO6zkrXYSzXsbRKO_pxaI5UXM8P2JqxF-ySC3Zs4Pz8FhyFCRJXaUrnxGSx-3FTywSoMvdg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejfeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgv
+    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvrhhtrdifvghsrghrghesghhoohhglhgv
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:6vWyaaimjFpyIJFGje7ITS87PIbPc28AaGbvZYlGXPGsK25_ZOgYUg>
+    <xmx:6vWyaby086RYOowwK8oaNbrOmw3Hsp5kDeOSLjspAL0ym6Y9JgdfAg>
+    <xmx:6vWyaeP6pGQnNtNFDzvwqaWthYlwfgEtgBR27YziHMFsaZ54K3Km-g>
+    <xmx:6vWyaUU780SRYq4M1uOOvLNKu9X8NiedEocKRw2UdghQbOCILlI67A>
+    <xmx:6vWyaf5hEGI97burxkMX5wzPJEm3F7k1efAOrsq9tmz4AmLL0k0LZIXw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Mar 2026 13:20:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH v8 0/4] format-patch: add cover-letter-format option
+In-Reply-To: <cover.1773331753.git.mroik@delayed.space> (Mirko Faina's message
+	of "Thu, 12 Mar 2026 17:20:07 +0100")
 References: <cover.1772839973.git.mroik@delayed.space>
- <cover.1773331753.git.mroik@delayed.space>
- <225065cc0dd54d1a592939d41783a904a98fb2ad.1773331753.git.mroik@delayed.space>
- <xmqq5x71gfci.fsf@gitster.g>
+	<cover.1773331753.git.mroik@delayed.space>
+Date: Thu, 12 Mar 2026 10:20:41 -0700
+Message-ID: <xmqqo6ktezh2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5x71gfci.fsf@gitster.g>
-X-Spamd-Bar: -
+Content-Type: text/plain
 
-On Thu, Mar 12, 2026 at 09:52:29AM -0700, Junio C Hamano wrote:
-> The example does not use a format spec 'prefixed with "log:"',
-> though?
+Mirko Faina <mroik@delayed.space> writes:
 
-Yes, I fixed the example but forgot fix the paragraph when rewording.
-Will fix
+> Squashed the documentation changes to their relevant patch and added a
+> new format preset "chronological".
+>
+> Thank you for the reviews
+>
+> [1/4] format-patch: move cover letter summary generation (Mirko Faina)
+> [2/4] format-patch: add ability to use alt cover format (Mirko Faina)
+> [3/4] format-patch: add "chronological" format for cover (Mirko Faina)
+> [4/4] format-patch: add commitListFormat config (Mirko Faina)
 
-> The second sentence reads funny.  The option is available whether
-> the user wants to use it or not.  I'd suggest dropping the sentence,
-> without which the paragraph reads just fine.
+By the way, we have merged the topic to 'next' on March 9th already,
+so it is a bit awkward to see a wholesale replacement series.
 
-Will do
+We could revert the merge of the previous attempt out of 'next' and
+queue the new iteration in 'seen', but I think the major changes in
+this iteration are
 
-> OK, so we are not requiring "log:"?  This robs extensibility from
+ (1) the "log:" prefix is omitted (which I think is a bad change
+     that we do not want),
 
-Like I said above, we won't require "log:" as per the discussion with
-Phillip.
+ (2) we no longer consider the option an extended boolean "use the
+     modern customized format [Yes/no/use this format]?" (which I
+     think is OK), and
 
->                                      This robs extensibility from
-> future developers to introduce something other than "shortlog", no?
-> If the version of Git in 'next' supports "longlog" and user gives
+ (3) the default modern format has a name (which is OK, even though
+     "chronological" may be a mouthful to say).
 
-Not really, anyone can introduce new formats, it's just an additional if
-statement.
+and associated documentation and test updates, so at this point,
+making incremental changes on top of what we already have in 'next'
+may be more appropriate.  The incremental changes are easier to
+justify as well.
 
-> "--cover-letter-format=longlog" to their version that does not yet
-> support it, it would be mistaken by the version of the code here as
-> a "log:longlog" without any placeholder that shows a fixed string
-> "longlog" for each commit in the series?  We'd rather want such an
-> input to cause failure, no?
 
-Isn't that the same for any feature that is in next but not merged in
-master yet? I wouldn't expect subcommands of history not yet merged in
-master to work either if I'm using a version built from master. This is
-an issue with the user and I don't think it's grounds for any issue.
-
-> s/If defined, d\(efaults.*variable\)\./D\1, if defined./ would avoid
-> "if I define --cover-letter-format, why does it default to a
-> configuration?  do you mean 'if not given'?"
-> 
-> So, "If defined," -> "If not given" would be another possible
-> improvement.  I think I like it better, actually.
-
-Will do
-
-> Hmph, an alternative that may make it easier to use is to make the
-> command line option _imply_ "--cover-letter", so that the user does
-> not have to give two similar looking command line options.
-> 
->     git format-patch --cover-letter --cover-letter-format=...
-> 
-> Of course, the presence of the configuration variable should not
-> imply generation of a cover letter. I.e.
-> 
->     git -c format.commitListInCoverLetterFormat=shortlog \
-> 	    format-patch -1 HEAD
-> 
-> should not imply --cover-letter.
-
-Yes, that'd be a nice behaviour to have, it is indeed obvious that I
-want a cover letter if I'm specifying a format from command line.
-
-> Many issues.
-> 
-> In modern tests (written within the past 10 years), we try not to
-> execute things outside text_expect_foo blocks.  The golden output
-> to compare with is customary called 'expect' (not 'expected').  A
-> redirection operator ">", "<<", etc. has a single SP before but no
-> SP after it, when there is no parameter interpolation happens in a
-> HERE document, quote the "EOF" marker to show the intention of the
-> author of the test that no parameter interpolation is expected.
-> 
-> i.e.,
-> 
->     cat >expect <<\-EOF
-> 	...
->     EOF
-> 
-> and do so inside a set-up test_expect_success block.
-
-Will fix
-
-> Why do we have so many blank lines?  Are the number of blank lines
-> significant?  Such a hidden and hard to count dependency would hurt
-> maintainability of this test script.
-
-In the beginning I thought about stripping the empty lines, but doing so
-would not ensure that those two lines were next to each other. grep
-matches line by line so I couldn't ensure that they'd be next to each
-other like that.
-
-If I were to strip the empty lines the test would be not better (imo)
-than the previous series (where it was flagged down).
