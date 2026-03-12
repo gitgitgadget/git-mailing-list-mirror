@@ -1,177 +1,194 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010045.outbound.protection.outlook.com [52.101.84.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2945313520
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 12:34:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C35391E61
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 12:46:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773318886; cv=fail; b=J2yrhSLs9Wszg9w30NVnAO+4jEDO2kCXhsiJScvuMG2iM7v8fbLKyGmWfLfJcXYD0mKgLTsDnu4RnKlCku3P2kEBewF0mn2Pijoke/K6vI3pHLEOoPGhFWm4eMPVLwUL6dGChWalJJ0LeQ5CAknfnj1J5G6eCZeKEtLSphqWoJ0=
+	t=1773319597; cv=pass; b=p/yFjRPCINGrWc9o5MvZHo+tgX0SHXm67vj+ls5I97vkx9Frtr7Z/DajYovxNXX1q8gDvmgY4utaJ5ahBJjocCat01pRTzRVkFLW3IEU8pP51P60p74Df43Wk2cZQ4vDwF1tAdoee287f90/5GslNStwFW/DbnbDjcfCsQVPFe4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773318886; c=relaxed/simple;
-	bh=Q6cvUTRVk7tssHueqqY2ZAOBwks2rblW/xk7vGzFLoM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=SGlPR/97BXJsUWKEYUD0O3HwZ6CNSsQUXjd8t4TL65so4Ab7Px9i3HwI3ywDgQvliKjaeiUFJFmyier/6yguURCSLyvQXKL5UCBbMsDTN0/XJdYWnpvhXqQ2CuR++sAfl3Cgsn1l2V6b6+ezPT0lEmukKIQ6QfWlFqIAJnTOIrQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mt.com; spf=fail smtp.mailfrom=mt.com; dkim=pass (2048-bit key) header.d=mt.com header.i=@mt.com header.b=XSAo962H; arc=fail smtp.client-ip=52.101.84.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mt.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=mt.com
+	s=arc-20240116; t=1773319597; c=relaxed/simple;
+	bh=iK47JyloY1FHzTfz1vLRFn57D/C5xK8YF3xgCDhrBGs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LSTz7+fXVPiwKzEf3POfnpsjP1Gzv8FVQH9HBfrPFdgf1+A0RfkPWxBCLrkoZQoZqBSsaI7CtsfjWewWCwLNR7IkkBc8CWUA5TTs5yw/aJ/WSAO5oz7C3xjEMhW8FdTib95jPrrs8+C7oS2Gg3LPVBCRm4WwBGgOFerNDJToBo0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h6ZzJp9p; arc=pass smtp.client-ip=74.125.82.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mt.com header.i=@mt.com header.b="XSAo962H"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=a5/SnLrJiIJX/xvu6Izkojzyst1NdpO1l6CqR7o2NXfjslRPvlDoe3Rm1jHLHA6nR0MWnhz0LNPDXJNJTUnt8ry0wQz4I6PF48axSW+xKPlRyT2USEI0YNCmt6qswAhzgjtW8kRLhqeWNu1BIIlElw9TGwcNh0d2iWP5SePziYX606wEaZtCZ9th3lldYklDGJ/4w59fHb9hO9FR2O1D4QN05HT2yiHQbnhce65g8Kd9Ow1fCQ8Ai7uSRmHH4/6aUhB2iIHwxUntCkt1OHYvcNnFG1xK3jPSYjIECdoIgn6dbLbLBSI+R1KSifvUNzcPnmjyqhvbX4tR5zdrhsxGrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rQJs7ZhYpVNSuXLXmcCsx+OO0jdWl7GOgiOcOlBDFTc=;
- b=u92HMzHU3stQwdhVmNognVg8yHM3tKh0Tfb67koz4zjPddkDirhAEHjX1y+PZHeI1wvdqFm6OqahnkwNgnZdS4ypODTXKk0BwFBydrb+lMGaJv4uyb3SjkjGHAcgCYpDFs4Bu57MvbWuI5yL7TSYH8U/IeTobI505mhT9U83E0bHvyzo9hmMjwYjG6c9nprnFvgp5Gt2H2rKp0PopMv8sdYTtNij82f4oLbbm3XQY/GOEOX8+Y4O+8gGHNdBlkAjWF/B4VHwAhQN9kcHTJBMhvKrXjiHwnslbcN2LXBpDI1GVib0GzNjGIZkmr3Z371TIEuDot4WobHgWvAvjpPRFw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=mt.com; dmarc=pass action=none header.from=mt.com; dkim=pass
- header.d=mt.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mt.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rQJs7ZhYpVNSuXLXmcCsx+OO0jdWl7GOgiOcOlBDFTc=;
- b=XSAo962HkxmXuJ/1m8Vbn53fLlaCLwd11hGc4S5IPfHA687heXWM2PewNwmS3WzRMFNk2ff5hLJzvh8k5K4KJ0srsM2ovG2EniRe0HMJvrQ1PAcCiQ8QkSzVBM8DWHw1xx6sBd2Ql4kH7Ik/jLryhKEOr6WUtREnYjMtiazDMKQ29UCyGS5bLHDGHr768esQBmGK+jYgR/8Tvel+OLqzqaCNsQma6jHj7rEPflyOpIb2cwFVAHoDZvb32G+RnUTMvwFBwH9MZJP0CClbjY+qmvpa4Kn7M9v19OBtAQBICpSsLaSz82ydpRo4f+neR13QPCe+Sej25/hVIKq5aEayHw==
-Received: from DB8SPR01MB0009.eurprd03.prod.outlook.com (2603:10a6:10:b6::14)
- by AS8PR03MB8926.eurprd03.prod.outlook.com (2603:10a6:20b:5c2::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.12; Thu, 12 Mar
- 2026 12:34:38 +0000
-Received: from DB8SPR01MB0009.eurprd03.prod.outlook.com
- ([fe80::71cc:95b0:e234:77d2]) by DB8SPR01MB0009.eurprd03.prod.outlook.com
- ([fe80::71cc:95b0:e234:77d2%6]) with mapi id 15.20.9700.010; Thu, 12 Mar 2026
- 12:34:38 +0000
-From: Friedli Adrian LCPF-CH <adrian.friedli@mt.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-CC: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin/clone: fix segfault when using --revision on some
- servers
-Thread-Topic: [PATCH] builtin/clone: fix segfault when using --revision on
- some servers
-Thread-Index: AQHcshyXIfUSXbXjTkWm/T1b7zGyOA==
-Date: Thu, 12 Mar 2026 12:34:38 +0000
-Message-ID:
- <DB8SPR01MB0009F61C462C819CDFF80ED7EA44A@DB8SPR01MB0009.eurprd03.prod.outlook.com>
-References: <20260306111001.261916-1-adrian.friedli@mt.com>
- <xmqqwlzozqgb.fsf@gitster.g>
-In-Reply-To: <xmqqwlzozqgb.fsf@gitster.g>
-Accept-Language: en-CH, de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_af615ef3-aa90-4fa2-9d66-c4f70f9fc413_ActionId=057d00bd-1686-4c5d-b12d-86b3ac46162f;MSIP_Label_af615ef3-aa90-4fa2-9d66-c4f70f9fc413_ContentBits=0;MSIP_Label_af615ef3-aa90-4fa2-9d66-c4f70f9fc413_Enabled=true;MSIP_Label_af615ef3-aa90-4fa2-9d66-c4f70f9fc413_Method=Standard;MSIP_Label_af615ef3-aa90-4fa2-9d66-c4f70f9fc413_Name=Confidential;MSIP_Label_af615ef3-aa90-4fa2-9d66-c4f70f9fc413_SetDate=2026-03-12T11:22:23Z;MSIP_Label_af615ef3-aa90-4fa2-9d66-c4f70f9fc413_SiteId=fb4c0aee-6cd2-482f-a1a5-717e7c02496b;MSIP_Label_af615ef3-aa90-4fa2-9d66-c4f70f9fc413_Tag=10,
- 3, 0, 1;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=mt.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB8SPR01MB0009:EE_|AS8PR03MB8926:EE_
-x-ms-office365-filtering-correlation-id: 7511d90f-7c9a-4c15-5d51-08de8033b9da
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|1800799024|19092799006|376014|38070700021|56012099003|22082099003|18002099003;
-x-microsoft-antispam-message-info:
- bVSCzrwMBVeAdXjxpLaF/W6jJOLzMdnHnpL/nY34NyNZ9x4h0m9/EkiYiGCo7P4T0uhV1EBNbP8TzISlkd8SEHcdygFreGlA8+ISJEn6D6bgnbpCls1Wmys1P4XsWcbgg5EtY1X0dNX/7m1htvamRAfP6yZjLEYN49GEUXX5Jh9XcvEkj2KJNarM0ElNbBiDOkiRMjTKrZ9jcHO6Pt8TsdqbwRpNs104bBlY4/WRZDlDehalCNb32VinEikCjx9+nOeORXrFf0QpEBzE52WhFaZieEJ0SUPEfwtsi2KEYe4EJ4Kl/fIYUsaa4lSdKFSvz16PbP/ReH5StLnmsuwgUw9vCWh6z3PpvNUmEtD0Vu7jHUiLfQPhi7kKPFPcf7Biqj/4sOqvqWqh75pdgiwU13kVIOTAwAGyaQEI77leq9ClOrT8oeNN7BMeQlfa2iaRaE3wkp8Rxz8aNW0gr28yEAF46gqcSTl50nZoIaWwktr5l6ghX9JLvwtaJXhbpdl6Mq4l1YGjST0Jhv3OAXOQ3n9Xk+i1R1c0ZMGOXYZW+aB2jsQUg3wejcL1DKPfifSdGA34fxwP4pLwVdTPgttTZhJRDVNSFNc81ZQWa0lB9g8POrn8/bqjBXSqD8ysBtNllPdrbnlyYWYoYM8WTYTOlInFQhgNtSFknBnLftXs1h2Y1et8qhE1t7E/xOJ0Y17q5RgCSP3X6daE+BIuVOERy++jAXho2pZJsBEU9ilYgYeEx6rKT6BHYqSpAZ6O14eVRSl8rJMnDmxFANZiikN6r61rYFINy/i7fK1FgdBj708=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB8SPR01MB0009.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(19092799006)(376014)(38070700021)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?aOMEQq10a5idtz5r6cnTIstcJolGAigNHZsJtuJezQ4/I7OF7f0Ocb4bi/73?=
- =?us-ascii?Q?jJZPxUVEeaNni/fUP8At7fzF+C0R1gh2JpQQgAtmunPKpfI9+Z0R64fHDfzJ?=
- =?us-ascii?Q?lYjVWxTD7P0O5CKILcvmxUZizNDXzVptwyM5J4HmZ7Zq8HkKABfOUz11Fx18?=
- =?us-ascii?Q?TK42xC3ArBxXPpOTxpOxnAcPT04LSjKPkIEcJQqYm+6FrqBnmfZGTnhSRf8l?=
- =?us-ascii?Q?e6vnV6EXjgEnM3s6/DlJqzx0LHDMqW5wLrIa44DNRW3/goro9KAsPYCqXwOI?=
- =?us-ascii?Q?tSqj78mImceA4skJHs9vdkyR0GKt7gMV9iusiOSIDcZydhxaSw6mofIsAQIX?=
- =?us-ascii?Q?8ezW9iaXHIkg7Rmv1b6j06vjdCMR3SPtj+8O620T107xu+CNV+mB4bF7FhH5?=
- =?us-ascii?Q?ONoui3RGyUj3B83foycIoLWw3vqbuNsvsut/uylv9bMKBBRNMioAdmEcJcXm?=
- =?us-ascii?Q?j9K82kWb+IxlugAt0c36446xGZARqfpKrlbogG1Jv2J5OX/RBIcmc7EG5C/a?=
- =?us-ascii?Q?a157Apqwl9PrESVxJwrS5DisF/tMXw5zuKZv3I0GO1XNH782P4Wz7GRHe+Aa?=
- =?us-ascii?Q?TvJ1l0liprt3ui7Um6cy4aPApiVzBtoSwnl8kxabGaGZC3MVxJl0EfDRBzyK?=
- =?us-ascii?Q?WOL3wP0xUR01v08W9yf8EtyRImVQletOGzxm6FIL72GNqWrq3Lpst/LLreWF?=
- =?us-ascii?Q?aG62oM/gbmwrUiTZFyi2hP2ZYhi4cOOjZhRoTu1eqxX2XtWlOVRUBHpcSBql?=
- =?us-ascii?Q?GHvWiBcBoOtiE49eZ5v8NUMlmchehHl+eMc4n30YuuOjUOozSk/sfSjFacTc?=
- =?us-ascii?Q?EAJRgcPfVqiTPaKo2CsmpGylBnzNaEdhu6v9FvMRUtSbKVwXWM9Y4u77tfo3?=
- =?us-ascii?Q?x0nIPNoslbI8GB7UnupTVRiaJY87F0HDdScgY94ykjGsu6fQEwdE6UUZR1rA?=
- =?us-ascii?Q?uGnEo3yDaviap4KIIayPpeKyRzheVdFx/6u9QLnQjepUZPj8PUXWjyLQSvCp?=
- =?us-ascii?Q?y0WU2jzhcQW9Qp3mUOQHjT2UIpB/wfvgqa8UjMGckI2YTRmx3HuO0wP5jdBs?=
- =?us-ascii?Q?VEwvyknAaJVCznXZ+Mg6hpsaD+mypChQKRODvSt8YAJsUFMzjzhxt7ZjZGMY?=
- =?us-ascii?Q?0K1Z/z26bqfzr3mbahi/2eGwRcIWWbN338SnX7aYJ/sM3I/ukdLSDPqDHrRf?=
- =?us-ascii?Q?AE0j9AAbP8qv/vV5kcPtpKfP6WJwLtA4Q02mOdOTxdvXXmtvtT4ulNCMR9f0?=
- =?us-ascii?Q?LtwgidmjX1zYOQ+TdYXe8473iKfvB2B5ejqr1Yqa/AH/mK7v4NcQyC4QlXcs?=
- =?us-ascii?Q?Zaiyh3O3Y8G4+JsJj/nQVrTCYKNwN8/VN3cw5xawOtkU++VBrYFmk2ttKX92?=
- =?us-ascii?Q?+uTBqNWhDnNw/iXkPxBmVylCpoG70y5MPKFzlkJKBaVRdlw0OiAAERApzAVs?=
- =?us-ascii?Q?OwR3WQdc3UPcrKs8OZ7aeRF5P/Eays2rQBskjTg0evCQiYQIoZ9Bz5e+E0xm?=
- =?us-ascii?Q?FuMMB2Xgcqu0ppb6oK+1UztZVHfWj2kyW9iTLgug7pdwxOqXdqCVtryBQvCE?=
- =?us-ascii?Q?Tx6l8uColYdIXrWWt1LQd6vXgplg4W9kvm39UCn9YfzoAhas5KHaCV6CjgmX?=
- =?us-ascii?Q?1DukGvVbj5+Vanc6BrhZU4Ux+wYwQa6bPsk2z8zGpQfBmQyND3tlRCVnbCMK?=
- =?us-ascii?Q?XPurA0dt1kYgwOQGSjPvqD93pJ1t1f+A071tUOxvNmBb1Yaf?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h6ZzJp9p"
+Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-126ea4e9694so2401246c88.1
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 05:46:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773319596; cv=none;
+        d=google.com; s=arc-20240605;
+        b=emrHCdKKxLyCA7CRPlLp/lyJImB8zB8vyTrgsyDTkR9TZiPwcQIzYIHBT1/7x95Zbx
+         +zzRx5us8rQ/JyV+lBUfJvcvM0eabbTB/VNHG+FassVboEV43LHyiXOUNGeRQP90kykd
+         ghbDZmVNAv6l2IbM1x089DUv7kRidtoyws6xfOEz7Czjw4GwUPJuO+75GEfq/RgnIexT
+         ZsbqzxAbPqo3JpgMZWoCaHhXzX1kXuSa1QD95LQF3C4AHGGj+SWdfslCggdFibaZF9m0
+         IkOKECxDrUcLQ6dq/ZDYRd7UaiUNNqfa+0xY5Omj8sOMC7j6K+tWQlNcd90mdDpwEB+O
+         vwUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=U1swvYhRDc6oMCuMbGw0JhbR4bur7F282SOT53ZXexA=;
+        fh=GCEUApHpIhxEfCfJ7RbGtLoDV6uTTpHqLmIEC/rGufk=;
+        b=TxLzuNc/FXsbCwLujWYJkAPZNo2ALYs5K20i4DTm5WtW4ZaWtRwHgx7FllAQougM32
+         aEZJgO678mSJSznTkaslAQqpZQKvrTo308nE35afdqRM6rmqoH97ZJb94bXeyCKUa9Fg
+         RYX8/PcvQ8gZr3L1pa5DMZ8daSTReB2tNnaRAnWwS8sbEBIpRkavOzMM8gwqjMTRtSGT
+         NOQL2+jQUEYqLmOfnFBU7xNc8/S/PxHiLrX5K/8uBBcbi4ojb4nMUuyYYWDuNf4bXbPt
+         zx67uwrXeL7Zs9zSAPH9COdn+y4OWqu47bm3VOo05RPWgbjd7f+3gsagj601PyuO0V6t
+         /tGA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773319596; x=1773924396; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U1swvYhRDc6oMCuMbGw0JhbR4bur7F282SOT53ZXexA=;
+        b=h6ZzJp9pBNsmxIbljK82kqXbPfF3qW/QOzX/U1MdDsYMVpkXvAXWfkRb74R5Kp62Tj
+         NqtiezrVeyKgwZT+aqfYuUtO39j2kZpvn80EU+GksTjCXiHjqhrqGLihqNOxHQnwSTlf
+         LqIpj++V1UZJaYTuNtoMZCpkB76XOFakkX9HiC2nleFx6rWLGji+x7UStz2rZ3W2E1PE
+         BwFeK3PxGDfQclqzCqQb2PDFhvvbLAy0qTU1fnoG0G0QKEOxmuqVZoAcAor5/tsR7tHo
+         mSnPyRXjdmh3Ef7SGwOLYivCcn7Ucf7CQGC5qb5ZJVkwjCeLZIJCapgMKs6J1PegWHlR
+         e1Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773319596; x=1773924396;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=U1swvYhRDc6oMCuMbGw0JhbR4bur7F282SOT53ZXexA=;
+        b=wUvaumhS3XOd/GDql8WXE3+q8VGa9m+6dK9ycmuZsn54utRDAPv/WdQWRIjl6CUQAK
+         r1aySWxb4mw/hPfEgKl0uiY2qC8cMX+ho/Hcal4ClYW5dC+vILB8g/uJQLwLpEZboxrO
+         c0NjIQlh6LijNLn4oKXkOpXBGVx3sBmAk2VlILrB0xGzwCEiDbdVcfMibPvvPMCqy22K
+         p0oS3ytbrO8SxJio4YBmb4Bw0LJZ6Cdha7ZCSFwb2+GACJYaRppzsX3PdC6Pw43PX6d1
+         820HPDFb3JH0UV2wBtD/7CJ+EWfGLFB83rTkQ4sjAIuX9PgOF5qO2RwdSwFwWEje2fEt
+         Wi8g==
+X-Gm-Message-State: AOJu0YyUwV2GDKfO2zh47jjN0XPfMKbgtRBmO5JhBSGyefLO8axXlHh5
+	uJaNL/aXIzF4e/16VM56u4cvAJiYAPQ6mvFv9cDhIX9C61/rLDTCi+gSNW+GPdlEUIfKd2BTADm
+	FMpcoVI+0zk/ugXcU2waSoXwbXPOKFK4=
+X-Gm-Gg: ATEYQzxEV2+juuBUIGCffjlUyWY/yxGN1xz+seAQDArlUZdN61LJBMEiu6n7KavftZE
+	PJMct/ZA9jXtTWEIiUrgXnLAqsjFjOS3MoUtifSlo8kpzD/pvGwoO2HKTggSQqdEY7pAZs7LCYa
+	KQ9TJxyKg7Eh15uMxywnmVNrzVKtlU9exbbrhAwQ6CJ77YKzd2xgY3XlfdqlKikmGRFygwg3nGo
+	BXhMenSt0qD2MFUEK2QyOehw5a83Mgo3HHSndzcJFMwKicDRQNJYodHZ3VKeBrI23rT+qut2sSS
+	gQXAtNPhvXNgL9UYYoCBH/KHvLvu2kBJpA3if3xnQ73A
+X-Received: by 2002:a05:7022:e14:b0:128:d4be:7428 with SMTP id
+ a92af1059eb24-128e77c2066mr3341651c88.19.1773319595501; Thu, 12 Mar 2026
+ 05:46:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: mt.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB8SPR01MB0009.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7511d90f-7c9a-4c15-5d51-08de8033b9da
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Mar 2026 12:34:38.2429
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: fb4c0aee-6cd2-482f-a1a5-717e7c02496b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AkR3rT7HBdU4JqwYm/e0q4O+wRyTp77pbctlAjZwoelueTKAaldEcjkgOQzGUvAvK8f01EFEC1Z8GdDLbg496w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR03MB8926
+References: <cover.1773127785.git.belkid98@gmail.com> <9f9a2e8e-6db7-4105-ba2b-7e42bff2ad1a@gmail.com>
+In-Reply-To: <9f9a2e8e-6db7-4105-ba2b-7e42bff2ad1a@gmail.com>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Thu, 12 Mar 2026 13:46:23 +0100
+X-Gm-Features: AaiRm50i4hSSBi-tnFNotDZCBnz2HJdxgNa7DGDYJ6pdt2o1jugtWIl57K7O4uU
+Message-ID: <CAD=f0L_HkyRNYk07Laq77gr8+JLaHeVxTwFN5eqC9-rLjgNRvA@mail.gmail.com>
+Subject: Re: [PATCH v1 0/8] repo_config_values: migrate more globals
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, phillip.wood123@gmail.com, 
+	gitster@pobox.com, christian.couder@gmail.com, usmanakinyemi202@gmail.com, 
+	kaartic.sivaraam@gmail.com, me@ttaylorr.com, karthik.188@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi
+Hi Yuchen,
 
-Thanks for your response.
+Thanks for taking a close look.
 
-> > In the bad case the server ignores
-> > `transport_ls_refs_options.ref_prefixes` and in `cmd_clone()` the
-> > linked list `refs` returned by `transport_get_remote_refs()` contains
-> > many items, amongst others "HEAD". `remote_head` returned by
-> > `find_ref_by_name()` is not NULL and `remote_head_points_at` returned
-> > by `guess_remote_head()` is not NULL but its field `peer_ref` is NULL.
-> > Because `remote_head_points_at` is not NULL the guard in
-> > `update_remote_refs()` does not skip the affected code and
-> > `remote_head_points_at->peer_ref->name` is accessed, which causes a
-> > segfault later on.
->=20
-> The description makes it sound more like this code is perfectly fine, and=
- the
-> problem is in guess_remote_head() that reads the refs list and includes s=
-uch a
-> bogus thing with no peer_ref in the result of its guessing.  There are 4 =
-direct
-> callers to guess_remote_head() including this one---wouldn't they also ob=
-tain
-> a list with such a ref entry?
+My intention here was mainly to avoid repeating `cfg->pack_compression_leve=
+l`
+multiple times in the function, so I introduced a local
+`pack_compression_level` initialized from `cfg->pack_compression_level`.
 
-I traced the 3 other callers to guess_remote_head() and none of them has a
-problem if peer_ref is NULL. In get_expanded_map() there is even a conditio=
-n
-`if (cpy->peer_ref)`, which indicates peer_ref is allowed to be NULL.
+But you are right to point out the interaction with the CLI option. The
+--compression option currently writes to the local variable via
+OPT_INTEGER, and the value is not propagated back to
+`cfg->pack_compression_level`.
 
-> Or is guess_remote_head() correct in that some uses of its result do not =
-mind
-> such a ref with no peer_ref, but only this code path wants to see a ref w=
-ith
-> peer_ref?  If that is the case, then shouldn't the code this patch touche=
-s be
-> looping over remote_head_points_at to see if there is one with a peer_ref=
- and
-> use that?  The original is assuming that remote_head_points_at that is no=
-t
-> NULL has a valid and usable entry at the beginning of the list, but if th=
-at
-> assumption does not hold and we are getting multiple hits, wouldn't it be
-> possible that a good entry is hidden behind a bad one in the list of refs=
-?
+I took a second look at it and will change the option to write
+directly into `cfg->pack_compression_level instead` in upcoming versions.
 
-In this path, guess_remote_head() is called without the
-REMOTE_GUESS_HEAD_ALL flag, which makes it return only the most likely ref.
+Thanks for pointing this out.
 
-Kind regards,
-Adrian
+Best,
+Olamide
+
+On Thu, 12 Mar 2026 at 06:03, Tian Yuchen <a3205153416@gmail.com> wrote:
+>
+> Hi Olamide,
+>
+> On 3/10/26 20:06, Olamide Caleb Bello wrote:
+> >       int status =3D Z_OK;
+> >       int write_object =3D (flags & INDEX_WRITE_OBJECT);
+> >       off_t offset =3D 0;
+> > +     struct repo_config_values *cfg =3D repo_config_values(the_reposit=
+ory);
+> >
+> > -     git_deflate_init(&s, pack_compression_level);
+> > +     git_deflate_init(&s, cfg->pack_compression_level);
+> >
+> >       hdrlen =3D encode_in_pack_object_header(obuf, sizeof(obuf), OBJ_B=
+LOB, size);
+> >       s.next_out =3D obuf + hdrlen;
+>
+> I didn't look closely at the other parts, but I have a small question
+> about this section.
+>
+> pack_compression_level before this patch is a global variable:
+>
+>         int pack_compression_level =3D Z_DEFAULT_COMPRESSION;
+>
+> and struct option  in cmd_pack_objects contains its pointer:
+>
+> struct option pack_objects_options[] =3D {
+>         ...
+>         OPT_INTEGER(0, "compression", &pack_compression_level, ...),
+>         ...
+> };
+>
+> The reason why functions such as do_compress, write_large_blob_data can
+> work properly is beacuse they all read the same global variable, right?
+>
+>
+> However, in this patch,
+>
+> > +     struct repo_config_values *cfg =3D repo_config_values(the_reposit=
+ory);
+> > +     int pack_compression_level =3D cfg->pack_compression_level;
+>
+> Here, a local variable with the same name was created via value
+> assignment (I also find the naming a bit odd).
+>
+> > @@ -383,8 +383,9 @@ static unsigned long do_compress(void **pptr, unsig=
+ned long size)
+> >       git_zstream stream;
+> >       void *in, *out;
+> >       unsigned long maxsize;
+> > +     struct repo_config_values *cfg =3D repo_config_values(the_reposit=
+ory);
+> >
+> > -     git_deflate_init(&stream, pack_compression_level);
+> > +     git_deflate_init(&stream, cfg->pack_compression_level);
+> >       maxsize =3D git_deflate_bound(&stream, size);
+>
+> But then in the do_compress() function, the variable being read is still
+> that pointer, cfg->pack_compression_level. The expected input wasn't
+> *written back* to this pointer, right? If I understand correctly, after
+> parsing CLI, the output is written to the local variable rather than the
+> cfg. And that's why the naming is a bit confusing to me.
+>
+> struct option pack_objects_options[] =3D {
+>         ...
+>         OPT_INTEGER(0, "compression", &cfg->pack_compression_level, ...),
+>         ...
+> };
+>
+> I think change like this is needed. Of course, you'll need to
+> double-check it. _(:3 =E3=80=8D=E2=88=A0 )_
+>
+> Regards,
+>
+> Yuchen
