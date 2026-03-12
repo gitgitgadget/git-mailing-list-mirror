@@ -1,88 +1,61 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541143FE653
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:45:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864DE22A4F1
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773337553; cv=none; b=AN6SWDtyfnEWNe6C4c2R8gXTHAG74moEfvJEYtz56fsrdNVfPg+cisL1f4FI7jo5s3TngaEsrQlV4oorjqSx6WKDzJU3FJkrNZI6nX5A59FFHB1rlgFVwrdANIe+LMzb44bDxjRwKx4jvqsxCdc90l3G7uCtCxldSaIgiH0yodw=
+	t=1773337734; cv=none; b=lpT4DGfDmEzgalUiJo8BEKwZMudJAuzENBFwQfbUaehSwNI95fEi/JHKcXI1NoYULq64DlfIpgcU2z30IiK0rSWKTSFbPi6VmspFwATk5zuBou05yg14eY5spytcI865UVkL+mP046HkH0gEXIEh/Cawi2H2D5G8bjQqpaR7wkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773337553; c=relaxed/simple;
-	bh=9UA+zCQiWZ2VVssFmUcyvVVw+UroCnvHLhQwggmLLwo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VHiKXyA5x4aGOTgPpAny/LJrVhqRHR6jbt0CcZ1LO72hwXRZn8jX9TljCi5i7DngqfLyNw3Zeo2sNVRdOTvNHzSsyH5eqWGAvKPDFi5OEQ/azfIKJMUJq9PSokOGXsYcGtLh9EYPCh+LdTTJTWIjKxsAZ8EMQLzvsV0iOwgeno0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=DbFURvss; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1773337734; c=relaxed/simple;
+	bh=Rotc9vCeEp1xTje2pVsVke5YCCUYgKsdTu1y93gzD0U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=T8e9TtGvnwGJF2zlfcufFh+aXgP0nop7H6OMeFqUWCoZ2eju/0g1eTM1jaTrKF+z8Rmqp/u4FXznmPMNrHc96wAtKDwUh9cQxncg+duhzmfSq7I/fvk0NZ/UN3HjDb7n9gNqHsBZXB4/p/Imzh/cOL0uNxndY9UnDAlkq9NsiPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=O63fJjs9; arc=none smtp.client-ip=212.27.42.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="DbFURvss"
-Date: Thu, 12 Mar 2026 18:45:48 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1773337549;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3xCXr7X7ij6xe2JRj1f7E9aY+ZZkTeaEpy/WmcklrY4=;
-	b=DbFURvssXcjJ2nmxlinzGuIilKkTmfV1Tuw6Po+kVo9gNBfzpQRns9aaGvtRsVTDeW8+iD
-	gDx/b3i1dk9BtBovoK/ESjZcmG848FEPgMwRBlg/rKPmcMKWkCwv/+bbfPS+5Nutp6vv0i
-	kaxAoUjonh9nMjyi/b9xIGAh5NK418FIJ2ek22Vxdf8xatwWOQiBKyCUheaJeDVPqsNkBn
-	aP3YpL209oJkuYvOMY4vbKuaqFnaTf2xYRPvkeWTi/AnpHVFj5M/c9bSqgGgXWSd6x0c35
-	/ZYR0Da2ru1LVXXKbXHNwy9edBbRbTkLJnN3cqG8nUtGG2jPRbLie06CzSJOFw==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Bert Wesarg <bert.wesarg@googlemail.com>, 
-	Mirko Faina <mroik@delayed.space>
-Subject: Re: [PATCH v8 0/4] format-patch: add cover-letter-format option
-Message-ID: <abL6gNTwmVfQsmU2@exploit2>
-References: <cover.1772839973.git.mroik@delayed.space>
- <cover.1773331753.git.mroik@delayed.space>
- <xmqqo6ktezh2.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="O63fJjs9"
+Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:3d51:7a10:3981:3744])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 87A22B00571;
+	Thu, 12 Mar 2026 18:48:49 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1773337731;
+	bh=Rotc9vCeEp1xTje2pVsVke5YCCUYgKsdTu1y93gzD0U=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=O63fJjs9pCVwHqegsZSOWLZGgTo1f4vjOamLdBhpeiInjSiQw2LkJKdNC5CIQhmWM
+	 0Mkrkbnm407wVxDpI+yGhr1iZjpFDQpUiDx/rfVnpg/yrwlAK1nPLJrcYqz8nH7qDn
+	 ZZMJyye65TBQdsVqy0sT1g5BCMvjSGqCDGfPCAiUcUKIDZ/I22e1ahhlF+yBBveZvp
+	 j8J/hNHbOxjUC8rMTXOYBwho5u4ol//xEHkyiQ41cUa1PQVQTFGtlD0BgQP9pZ94Su
+	 /JC1KxwtQsuQiOUPZBiHDzTjoUk7uaCMAEVBBZOPT8YHtx7z1BIldRTDTnHfMLdt5N
+	 9bDyV4ndVFPtg==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, kristofferhaugsbakk@fastmail.com
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject:
+ Re: [PATCH 3/3] doc: config: convert trailers section to synopsis style
+Date: Thu, 12 Mar 2026 18:48:49 +0100
+Message-ID: <3411126.44csPzL39Z@piment-oiseau>
+In-Reply-To: <doc_interpret-tr_config.48d@msgid.xyz>
+References:
+ <CV_doc_interpret-tr_synopsis.48a@msgid.xyz>
+ <doc_interpret-tr_config.48d@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo6ktezh2.fsf@gitster.g>
-X-Spamd-Bar: -
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-On Thu, Mar 12, 2026 at 10:20:41AM -0700, Junio C Hamano wrote:
-> By the way, we have merged the topic to 'next' on March 9th already,
-> so it is a bit awkward to see a wholesale replacement series.
-> 
-> We could revert the merge of the previous attempt out of 'next' and
-> queue the new iteration in 'seen', but I think the major changes in
-> this iteration are
-> 
->  (1) the "log:" prefix is omitted (which I think is a bad change
->      that we do not want),
-> 
->  (2) we no longer consider the option an extended boolean "use the
->      modern customized format [Yes/no/use this format]?" (which I
->      think is OK), and
-> 
->  (3) the default modern format has a name (which is OK, even though
->      "chronological" may be a mouthful to say).
-> 
-> and associated documentation and test updates, so at this point,
-> making incremental changes on top of what we already have in 'next'
-> may be more appropriate.  The incremental changes are easier to
-> justify as well.
+Hello,
 
-(1) Very well, given that there are more cons than pros to dropping the
-prefix, this change will be dropped and will no longer be discussed
-going forward.
+Except the replacement of <keyAlias> by <key-alias>, this is all good.
 
-(3) Would an abbreviation like "chrono" be better? The originally
-suggested "numbered" didn't seem to be very descriptive, that's why I
-went with chronological.
+Thanks
 
-Please disregard series v8, I will send a new series that builds on top
-of v7. Regarding this, how should incremental changes be numbered in
-their version? Do I keep going incrementally (v9 despite building on top
-of another version), or should I use something like "v7.1, v7.2, v7.3"?
+
+
+
