@@ -1,84 +1,87 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13E134404A
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 06:22:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44DB315D21
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 06:41:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773296529; cv=none; b=atd1n6YUlo2SGdeUwEcM6E1yAzIekri8W9p0g+zP/ZB2bkvY40GsOJtID87UhJI5wyA+LQhv7BCqxVWtSmo8OjbwBPSNQNC4aCrAu4nloYOxLh/x6OlNHYq4bO3ET0PlDVX/Th/0DdwHm01w0b465mW8nxGuwRqw+oOJPkzZD6o=
+	t=1773297710; cv=none; b=p5zCaZZu3K4Nukb32yEQvsClW8/xrPl7eScXI//1mZP620o/HICOYVs7yPVFgum8DjV/UXp9efpaimpLdTmFQM7ZJjcnqbheiqWEkS4KfZqt1JzpqDNWBVqz3NA21hFEX1QUQZWwbVGZCxd6Lc2HOFuWpXwrWACzb3wS9/6+MDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773296529; c=relaxed/simple;
-	bh=HkcDqN4bzoaH8+ZhNUdLLvCPg2teTTR+zuB8xoZiZ2w=;
+	s=arc-20240116; t=1773297710; c=relaxed/simple;
+	bh=JHjxENFMFjDW/6WmmVRjwdh93+IPiBIm/okObPk+2Uo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BUKBYf95XcvhqhZcyw8LZdGpi2p40Ly1Ad4ndgPcAdQ0OnzeyKDxb4edoeQ6oR/TuwQm9z7mAZyPxSxecPlPER0Epcd5t08VB1WvlolkeOFNTR8xgHod6tZ4tsdBHuLIRZhHqWqMWzx8Q2qwTUV+Qj/xWyBjh7ANPvYKTGnHpzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=laB6tPx1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RQLDO2Kp; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=lonPjAEvDbLthjvVhqAC8jE8SdPfW491z0/vGJnqZn0SFV1KGLUYqzP82GMpIMpV3Ky2Puab4txqktBxc38jDDEYYcvC0vkLIG7bUA2/N5KFzX79c4n6CcCD3g4zjUZm/1pfE5PDhf3NJ7rcnZdh24oHT/LwvAKs2kkfivzLQWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RSSswfQR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XZiUEK4r; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="laB6tPx1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RQLDO2Kp"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0F61F1400025;
-	Thu, 12 Mar 2026 02:22:07 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 12 Mar 2026 02:22:07 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RSSswfQR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XZiUEK4r"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D61291400057;
+	Thu, 12 Mar 2026 02:41:47 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Thu, 12 Mar 2026 02:41:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773296527; x=1773382927; bh=Z6DdOCJLxq
-	3EmhWhGb9zYoBoYKPjLTQZqP36Wa0J70A=; b=laB6tPx1BKEG3viBPsnI16iBo1
-	dpyNw8p3QLDrdwiq8wsm2amDmJh1TWz8e+hsirxFE/0YOjilEc7cn/75XZon+OLb
-	Q48wcw47U98rnEhkJDSRVx0S/TVZDgVyEP+VFekMWxJ4NN1L38r/JodndxLMVN7R
-	jtsBWrRSpmLFOS2hRyzk4XTKdkfndPEFsT62OsWBQtpD17DeN9Eeiz4acQIdJTAM
-	k8VJP8JIGMGOj5TZru8cVvNV0jfi8yL6Bp5IUZJr24IVf5c6qW89lb8OnU6DmQmj
-	4Aeo9NI55w6c+/d/5P71cYXdhlrWbBCJCs3pFdb0BvZuC4EAc9bxcXvreuCQ==
+	:subject:to:to; s=fm1; t=1773297707; x=1773384107; bh=a0GIxi4yYG
+	3XG+3kkhHZBzkSfMpFwkdvSvC5GQDMQi0=; b=RSSswfQRpLd6UItLu0irBiWSWg
+	pO/uIsXS/OpFgjRu7etI1CgZQDhjXemJWGmKEoMW+xnkHyN8HVEPsIc7NpD++xg9
+	nxAWF8mmp8pWqbpKw09ysEuGZggpVs0uDTdYShkogpgf5nh5Iv3ECL4Sd6RXvBmj
+	FgzcngB3+cYcfZxQkvuGmCLn8Om2btTmsJO351eIyZ5Jj8ZLyAzfQCUeUxRE4PdS
+	vRRdx6YyRKwKza/qggWLuz5dr+QwbRneN9T8IjYj11CIlCZe9WmmeQqA+E5ZHqfK
+	Ugg9EewmbgPuuV5JYEFNVvZ6WmzIOLHHuHPb/v3ptZvoJpgB9xeq7B9v8mqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773296527; x=1773382927; bh=Z6DdOCJLxq3EmhWhGb9zYoBoYKPjLTQZqP3
-	6Wa0J70A=; b=RQLDO2Kpxl3zliU46FS4KTqP7Wi02PZ0FuUGgbk0NLz/XkPvfTE
-	eApPxnJFay4e8caqhbB1rY9Q75GfkrhRZrvRYtUxcIDJLKmGHh6VA6jINZMQ5aJr
-	H2qPzOV1WfDI2+OmNG3ZuSJXJPnOJxgJY0l2CwEsK7qQg28pjTLrPg2OA47brqMC
-	imow7i08JH4smwn5j8h+p/lCGsATwTDUlrQAndv+s9p2O4xnq+O8zHrkZetZ8PEw
-	8YwElHbNtZk7dtZchHEkN+mBGfiMDgW+AZDdipz7UyAqtVcbsEBUc362mrnoLFjC
-	vAm3o+O+y49h4EIFpv0rqUYstXqxXuHh2Tg==
-X-ME-Sender: <xms:jluyafF6mBsBDqNBlg6i5bQlo5s6LwBLZm0a2r8_67MJEnw8t3e8qQ>
-    <xme:jluyaaQnZzqZGLZhYnGLEXl7WTiRUl-DS2dzFsEEjgPN3jPjoMKdv02gXPx8WE2d2
-    9if3DlRhKopRY2OEVsMk-vE8AeCzj1U6YHU45JfrRhjIPc78GA8YA>
-X-ME-Received: <xmr:jluyaYu2fzj-H1JKCq887f9CfAbVextlLEuZMEwydIGykTTuUQPN21S2U2xRNDzoGQKTMQ8bG4fOs586YTWSfXukegxNnoT0fNTdje4Qu_gNeg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeitdegucetufdoteggodetrf
+	1773297707; x=1773384107; bh=a0GIxi4yYG3XG+3kkhHZBzkSfMpFwkdvSvC
+	5GQDMQi0=; b=XZiUEK4rMmfkHe+wXhd1TLR7jAGGbK5oJuZi8CS4VA6chLgZv0g
+	cC9fhTNbvUIj7+dTPe+9+ualQr+uwM9cat3D2D4OFjKLcleltM+4KXDRlAk9e4QR
+	CKm5hqfWHoCwiJAGxLjbUOwhzoz1Jqc5KKMrbXpwU7jmAJGHvIgomTdzOZ7CZuU3
+	8V/GliWC3TNEVXT3mKYfPzxhDd2Bz0dsn0SXIDZ2gZj+gnCl5TMRKecUNwQ6v8vZ
+	UEeUIWuSngILe1gXAh54UkzVFq0AbAI3Bj5QPwicSpe6q+1VwobJa1tvPuzh8KgL
+	teIZuyptlwi/SS9DayQzrC/amtv4EXuiUQQ==
+X-ME-Sender: <xms:K2CyaVbNZH-yCLWtfDxHtDcgLc2gmq38kuRChOMZZUqtSSd_96b5Qw>
+    <xme:K2CyaTSY28gMGiQ1lxpzAE_2LwnhvgQP-0Dt-SCcNeLhclCxACKxq42ajQtqac1ab
+    pHT8WzL0q4P_qgwj-CCbCkGCWCFf7IaUyaX6Kd3HPD630fQjvQnhA>
+X-ME-Received: <xmr:K2CyaQQZQdsNQKCvizB3jjRrbLPY3gSbzB8IrkE3IBdg3GCoGhan0lR1kc5JvGRJaAV246xalNR_xF3yCVDTnSgtUa5m8VdPpB3Ot5GRZ8poJg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeitdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruh
-    hk
-X-ME-Proxy: <xmx:j1uyaZyGHTw3VnXT5TEvoHgItHPO7oRNSCb-V8YSZeujnWyZz8FhEQ>
-    <xmx:j1uyaS4r51oZudrnq9gLV_2abKLF4R3qW1ym-T_4mcX-gWMIu564Mw>
-    <xmx:j1uyaTWucskk4amfOWUqVKedy4N8rlTIXmGZ6LQOAbzQqLeQzhB-Tg>
-    <xmx:j1uyae3SsZELQa4Bpbr8aknCxVnRGM-Q4ddsmsEZXaD6QgxknsU7oQ>
-    <xmx:j1uyaTJaJsnrKUNutpM-rAPCZDeT38_b6Qavwv5deiiH2HajHAn_-5X->
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthgsohgvghhiseifvggsrdguvgdprhgt
+    phhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehsuh
+    hnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
+X-ME-Proxy: <xmx:K2CyafRoguQZv_jE2-t20y4Uglivm47Xx6GymK9zRHEjxlT73hXRXQ>
+    <xmx:K2Cyad6k1wPTMdC36_FoR9NgRukoumv1c-UN4p6rXzxss21D_UI8pQ>
+    <xmx:K2CyaT0AleVFiKnPZvAE6RK4EtZcUP2USIeJAtliJXTG5PATPtiUrQ>
+    <xmx:K2CyaQAwHROXVK4XSkD4EvPScCJG-w0GGSXZw5WZ6Mdk4DOMUBbY-A>
+    <xmx:K2CyacqQyeC3lhA7n0GyQk-5pMABq9D-kBZW2S4HtK76yz_0p-vqLhD5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 02:22:06 -0400 (EDT)
+ 12 Mar 2026 02:41:46 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c23c3c7b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Mar 2026 06:22:05 +0000 (UTC)
-Date: Thu, 12 Mar 2026 07:22:02 +0100
+	by mail (OpenSMTPD) with ESMTPSA id ef11d4e5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Mar 2026 06:41:45 +0000 (UTC)
+Date: Thu, 12 Mar 2026 07:41:37 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 7/8] meson: compile compatibility sources separately
-Message-ID: <abJbir7NocxmBuAo@pks.im>
-References: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
- <20260310-b4-pks-build-infra-improvements-v1-7-ec75d0710d6a@pks.im>
- <a5d1ea70-12dd-461d-b5c5-a1127e017d01@gmail.com>
- <debb89c9-2fab-4922-af1a-6048094baf9f@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] t: allow use of "sed -E"
+Message-ID: <abJgGapdAIQXIsNy@pks.im>
+References: <xmqq5x72m4lu.fsf@gitster.g>
+ <xmqq3425lvtq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,45 +90,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <debb89c9-2fab-4922-af1a-6048094baf9f@gmail.com>
+In-Reply-To: <xmqq3425lvtq.fsf@gitster.g>
 
-On Wed, Mar 11, 2026 at 02:56:24PM +0000, Phillip Wood wrote:
-> On 11/03/2026 14:32, Phillip Wood wrote:
-> > On 10/03/2026 17:52, Patrick Steinhardt wrote:
-> > > In the next commit we're about to introduce a precompiled header for
-> > > "git-compat-util.h". The consequence of this change is that we'll
-> > > implicitly include that header for every compilation unit that uses the
-> > > precompiled headers.
-> > 
-> > Is that a meson thing? I know it defines precompiled headers on a per-
-> > target basis but does it somehow force each source file to include the
-> > precompiled header? Looking at the gcc documentation it seems like the
-> > precompiled header is only included where the original header is
-> > included.
+On Wed, Mar 11, 2026 at 05:45:21PM -0700, Junio C Hamano wrote:
+> Since early 2019 with e62e225f (test-lint: only use only sed [-n]
+> [-e command] [-f command_file], 2019-01-20), we have been trying to
+> limit the options of "sed" we use in our tests to "-e <pattern>",
+> "-n", and "-f <file>".
 > 
-> Answering my own question the precompiled header is included via "-include"
-> on the commandline. This is necessary in the general case because a
-> precompiled header cannot be used once the first C token is seen.
+> Before the commit, we were trying to reject only "-i" (which is one
+> of the really-not-portable options), but the commit explicitly
+> wanted to reject use of "-E" (use ERE instead of BRE).  The commit
+> cites the then-current POSIX.1 (Issue 7, 2018 edition) to show that
+> "even recent POSIX does not have it!", but the latest edition (Issue
+> 8) documents "-E" as an option to use ERE.
 > 
-> As an aside in git we could probably get away without using "-include"
-> because if we include "git-compat-util.h" it is always the first thing we
-> do, or we inculde another file like "builtin.h" which immediately includes
-> "git-compat-util.h" and so it is included before the first C token is seen.
-> However meson cannot rely on that.
+> But that was 7 years ago, and that is a long time for many things to
+> happen.
 > 
-> I notice the reftable sources don't seem to include "git-compat-util.h", do
-> they need special handling here as well?
+> Besides, we have been using "sed -E" without the check in question
+> triggering in one of the scripts since 2022, with 461fec41 (bisect
+> run: keep some of the post-v2.30.0 output, 2022-11-10).  It was
+> hidden because the 'E' was squished with another single letter
+> option.
+> 
+> t/t6030-bisect-porcelain.sh:	sed -En 's/.*(bisect...
+> 
+> This escaped the rather simple pattern used in the checker
+> 
+>     /\bsed\s+-[^efn]\s+/ and err 'sed option not portable...';
+> 
+> because -E did not appear as a singleton.
 
-I don't see a strong reason to do so. The reason why we need to be
-careful with "compat/" is that we redefine a bunch of standard symbols
-there, and that requires us to play a couple of tricks with preprocessor
-macros (see e.g. "compat/fopen.c").
+Makes me wonder whether we also want to harden this regex. But even if
+we started to understand that multiple single-letter options can be
+squished together it wouldn't be sufficient, as we don't know to process
+multiple arugments, either. And I guess it doesn't make sense to grow a
+full command line parser here.
 
-We don't do anything like that in the reftable library, and we already
-include "compat/posix.h". So in practice, it shouldn't have much of a
-consueqence if we start to include "git-compat-util.h" implicitly over
-there.
+> Let's change the rule to allow the "-E" option, which nobody has
+> complained against for the past 3 years.  We rewrite our first use
+> of the "-E" option so that it is caught by the old rule, primarily
+> because we do not want to teach our mischievous developers how to
+> smuggle in an unwanted option undetected by the test lint.  And at
+> the same time, loosen the pattern to allow "-E" the same way we
+> allow "-n" and friends.
 
-But if it ever does we can treat it the same as the compat library.
+Feels reasonable to me.
 
 Patrick
