@@ -1,126 +1,112 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85F138F652
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9B237B011
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:21:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773336044; cv=none; b=NbKQEUGdlUjPmw3QhepR7Jz5IyIRdvj3lrHTGhM8SSfKjzc/WVFOQrzlAt21mTbkT2NfnHfJFQnMiyGNu2NWThO78rme0kJWzR2KetrurVtmNEg4FqKCFBHHuFOtpmxvDpWTLYNxPBkNKJWl9R8Qbg8mRhqdLpV2tk7Ljhl+2SE=
+	t=1773336082; cv=none; b=VOL0Y6fM/bcfNbY+HxtqMMNZa3kEArfU/fYsJgw6eAfi7zrGlJU2qWE1/wkGd6BEs3j9aT4A7ddo0ieAUypeloumA2L7xGGPqz9oCV8ZFFRJE7vosDsGcstTq7wtSaUvcg0MdYU7dv0uI5ZXU34TPM7Lekwo5IwkPZ98LVAP7I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773336044; c=relaxed/simple;
-	bh=po2Yk9rtKPV/JNmNHnXfhpvS1JPYyd7tva6R27RQK8Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H4QcCA7+jc2Y0HkRo1Svq3rspaCb0il62kV9R5fFEPbQui3i/QKcczW5i0xe7l0y7ao8Pmg8QSpnzlXvX5fCKBMSKvYaXqJ1w4H32OfdTaNlNWcFpOR0yTmQCNQgFWkDc89suokqAP0/owdZ7cQHRDazXi99UXFaksiOOChpAOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RoWpfsrc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XAlgJQtP; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773336082; c=relaxed/simple;
+	bh=a8jks/U99AojQ/NPOIWoQrZKJJI4X7O8YztZ4njt3uk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KVn9UY6+yrW6UenhA9qu0bra5s2pZjasnNRjEBPA1GB4KAluX+1neXWmnfgELSWYt9nl7tjyBgzWaIGorjcnH8AtI9RUD5XotkPRJLrR6enhyfF/xFrwUJPCzPUtuB8Ea8e23lW7pKF6eSm0dxLUpHKYvy03cFY9HgBzH2zMNNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TT/152WQ; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RoWpfsrc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XAlgJQtP"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2F5867A0119;
-	Thu, 12 Mar 2026 13:20:43 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 12 Mar 2026 13:20:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773336042; x=1773422442; bh=WeU9hmojtn
-	+fF+XPkiTLz/Tu4Dn/8hGRPyqfmDRgKQ4=; b=RoWpfsrcB4dh6gnMrcY1XNjbCO
-	ze2gSNGPmC4KNsCkmNUb+McerupC0pQ0cO8knSjweAxqMRHjryBd12K3iEbRdSnC
-	t9PFVcTGRZs3AYnah71ypfA9Ixc5C+HOzOWvL9iGkz33LPBpFes8xiPWG8fGPve2
-	+NIMNGfQ5o7B+SKboc1bCeNKmvCNhLy7JbmClLpxToA/2gdy16Dm9SumBNv1jI6Z
-	dqFP7z1uleBWzkuMegUzNCqDfgTZ54deiIgKKPUoC+Jz4o8LlWM2CcjCGQVFuJux
-	5ynzsvw9FFXP5T7c+khiBJteLXwoGmWojIvhj3OXeqeaExoLrt+8zKXUsZsA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773336042; x=1773422442; bh=WeU9hmojtn+fF+XPkiTLz/Tu4Dn/8hGRPyq
-	fmDRgKQ4=; b=XAlgJQtP6mdlvcs3oU8Mt1Uu2K7z50OP3VavG7B8tLWaCSUrC/O
-	6MyH84nYsmBobPuM2LKNVJ9fuF6lzl81jExI9shjkYCzvhb0Mbu7q2isXOC7j20n
-	bb8B0w7ywUGG55XNGWyGjCx7hxdSTXH7LqjOFBSpAiQn1tBiv6LIf+7t33Ej3Hjg
-	by0NZ4hrjCpuoLmcnNOFOQ02QRxuq9ek61EW1CUWuR5cq+yNkMyBtfra0PrJLYe+
-	A8e5f+rD9f4+bxyvtX8gRlSlhvGxPYEJ7P6V3ZaDUeCEAEmYsswsnaEIUh9yrdAx
-	6ImJ/O209ctNBSvkAP63AKOI2b+b3guelsg==
-X-ME-Sender: <xms:6vWyabmiQHvVHIxttjdVf52NWm_sVvwLgmx4Cu6mYPFm1MJEIaaSuA>
-    <xme:6vWyaSjAtPTf88HVftbgTqhP5VWmBMZpXo_JKKDpn93jmDeUbYknlLIQQT7jhQY2b
-    jWdqn-xaAWjw01gKPv0j940e485IXuSfHYegru41bjA0peV8YfPrA>
-X-ME-Received: <xmr:6vWyabcbPbPNdtTHLOf6BAuV4ADpO6zkrXYSzXsbRKO_pxaI5UXM8P2JqxF-ySC3Zs4Pz8FhyFCRJXaUrnxGSx-3FTywSoMvdg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejfeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvrhhtrdifvghsrghrghesghhoohhglhgv
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:6vWyaaimjFpyIJFGje7ITS87PIbPc28AaGbvZYlGXPGsK25_ZOgYUg>
-    <xmx:6vWyaby086RYOowwK8oaNbrOmw3Hsp5kDeOSLjspAL0ym6Y9JgdfAg>
-    <xmx:6vWyaeP6pGQnNtNFDzvwqaWthYlwfgEtgBR27YziHMFsaZ54K3Km-g>
-    <xmx:6vWyaUU780SRYq4M1uOOvLNKu9X8NiedEocKRw2UdghQbOCILlI67A>
-    <xmx:6vWyaf5hEGI97burxkMX5wzPJEm3F7k1efAOrsq9tmz4AmLL0k0LZIXw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 13:20:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH v8 0/4] format-patch: add cover-letter-format option
-In-Reply-To: <cover.1773331753.git.mroik@delayed.space> (Mirko Faina's message
-	of "Thu, 12 Mar 2026 17:20:07 +0100")
-References: <cover.1772839973.git.mroik@delayed.space>
-	<cover.1773331753.git.mroik@delayed.space>
-Date: Thu, 12 Mar 2026 10:20:41 -0700
-Message-ID: <xmqqo6ktezh2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TT/152WQ"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7d1872504cbso1467842a34.0
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 10:21:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773336080; x=1773940880; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NSOFklbtQGugwUO9HVPnJccMJgByv1WLrg27sy0qi/g=;
+        b=TT/152WQ+utTfj328S7o9e731OMRPsPxmT9AxLzevar4EX+qGbK5IcSBructK/I1p4
+         6rL7MEcCj0+XDiuKUCS8tfl7l8WaWGRQJinsIrB+O2ukUaHL7uOBVQRjmgXhp+hNvWgb
+         1nQemP+UD2Rjbp4wAcnf0T9DNufcSfi/Yox171icdAAe5lJOStgtBidoE+CRSAW+Xl3S
+         OJWIEO02a5eFCxTMg/3TubIJhoHJcd+RdLX+0vlQSOWoU/JwhkwmTaM13HB+aDLh9HMv
+         noyPwl3A3ZgV2D8r54mgWhiK3tU6APdZEf6MNilx6iUkbdXVS9ruzXL+HP6PS8LxOtYR
+         tEpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773336080; x=1773940880;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NSOFklbtQGugwUO9HVPnJccMJgByv1WLrg27sy0qi/g=;
+        b=eqlJSm+XSZY6JpRLhlfoxa0GVt12vA806WbgULNimeOn2MUAVwyRyHoEHyYTRW0Yfo
+         JPjeui9X8SfVhnDytkb/1cahw+7Lu/rbvV3vbGRj4mDzQKglJyJWqddkhmw7Dj6JDKe1
+         VvIvNOynpc01gYJTld9UE/hv+gRGLHgivZVWBYe99CiiwcagagcQX6AQQZrxD9UYbXUr
+         3xpiOXFGk1OMvijptKtM9e93vhEZ8ssrgo7lGM0KF7zhuKV6zEV2K+okzhSRAsJ+vJd+
+         5/YUwje/0f4x5wzhTPlBo7ooS6CHK/EezMDdMCyOcWBH+G2aXdFNatqkSIvvVyDWJ6du
+         aXTw==
+X-Gm-Message-State: AOJu0YzAeviXSXBKLE4VXCrr230AH9HMjSt7a8PO7XLOR8P+WzX9xSz3
+	eL0sSVkzgzzOii+QS9Wwu7/YG0HDNYhf3e4KCXOx9wLIxCdZaXfu5b3j
+X-Gm-Gg: ATEYQzxbc9HBGSulCouJgHK8b6AwBbQi0hmAVIfgbA13FSOnCSY+on7xpkKqcULGjKx
+	fJ++XTXMCmGrDlxbtfV/AiDxqbAmLUhHf+hGPS3LY42I1eFgKskA5Sj6E4rYndhWO5DlPVrLI56
+	txpJy4qnIes2PuTM+mMGd6Nd61n2sd0iZRjraPlrePB4XJQHoQLkNTmpK1iWIKjO6+sgWJbHpWN
+	1VsuqstRGAru4qW5H4X74g5Y1c+ProuI7RMwsvbIcxoHZxk2/oYeeehEKP3pnKJJM4iQ0C1T2YY
+	4z2a67/CM8lrTPTsX+rCtfAF+d51Z8qqc6r2OUMO0PW9DS3yyd3KvPSiCELRpfE9ouapJSlYygS
+	HDetzDCgbLCdfbKYXMDDZyFmpIONj7wTtbynckm0RXY36xZyYR9AwOPIc65RPELfBhLlX4+WBUh
+	7qhmAND8tfoA2D9cP/
+X-Received: by 2002:a9d:67cd:0:b0:7d7:4c90:ddce with SMTP id 46e09a7af769-7d776b8b295mr1855669a34.7.1773336079986;
+        Thu, 12 Mar 2026 10:21:19 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d76aa5dcc7sm4644206a34.0.2026.03.12.10.21.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Mar 2026 10:21:19 -0700 (PDT)
+Date: Thu, 12 Mar 2026 12:21:16 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, 
+	christian.couder@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v4 3/3] fast-import: add mode to sign commits with
+ invalid signatures
+Message-ID: <abL1Nkb_9aNUcUnY@denethor>
+References: <20260310201116.1130160-1-jltobler@gmail.com>
+ <20260311173147.2336432-1-jltobler@gmail.com>
+ <20260311173147.2336432-4-jltobler@gmail.com>
+ <abKUBRRgRmbJ1hRA@pks.im>
+ <abLGgq-PXzdWs6kD@denethor>
+ <abLMCxWWNiCnqmp_@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <abLMCxWWNiCnqmp_@pks.im>
 
-Mirko Faina <mroik@delayed.space> writes:
+On 26/03/12 03:22PM, Patrick Steinhardt wrote:
+> On Thu, Mar 12, 2026 at 09:08:46AM -0500, Justin Tobler wrote:
+> > On 26/03/12 11:23AM, Patrick Steinhardt wrote:
+> > > I'm still not convinced that it makes sense to warn about this case.
+> > > After all the user has asked us to re-sign such commits, so they
+> > > probably expect such cases. These warnings would thus result in a ton of
+> > > noise in a repository where most commits are signed, drowning out the
+> > > potentially-useful warnings.
+> > > 
+> > > Anyway, I won't insist on a change here.
+> > 
+> > I'm not really against removing these warning as I also agree it creates
+> > a bunch of noise. If we get rid of them for "sign-if-invalid" though,
+> > shouldn't we also get rid of them for "strip-if-invalid"? If the user
+> > asks to strip commits, I figure they would expect such cases as well. If
+> > we think removing the warning altogether is sensible, I can add another
+> > prepatory commit that simply removes the warning for the
+> > "strip-if-invalid" case.
+> 
+> Yeah, it kind of falls into the same space, agreed. As said, I won't
+> insist on changing this. Maybe the right way to approach this is to keep
+> it as-is for now and create a follow-up patch where you propose to strip
+> it from both sites?
 
-> Squashed the documentation changes to their relevant patch and added a
-> new format preset "chronological".
->
-> Thank you for the reviews
->
-> [1/4] format-patch: move cover letter summary generation (Mirko Faina)
-> [2/4] format-patch: add ability to use alt cover format (Mirko Faina)
-> [3/4] format-patch: add "chronological" format for cover (Mirko Faina)
-> [4/4] format-patch: add commitListFormat config (Mirko Faina)
+That's fair. I'll leave it as-is for now and submit a separate follow up
+patch after this gets merged that proposes removing the warnings
+altogether. We can see what folks think about it there.
 
-By the way, we have merged the topic to 'next' on March 9th already,
-so it is a bit awkward to see a wholesale replacement series.
-
-We could revert the merge of the previous attempt out of 'next' and
-queue the new iteration in 'seen', but I think the major changes in
-this iteration are
-
- (1) the "log:" prefix is omitted (which I think is a bad change
-     that we do not want),
-
- (2) we no longer consider the option an extended boolean "use the
-     modern customized format [Yes/no/use this format]?" (which I
-     think is OK), and
-
- (3) the default modern format has a name (which is OK, even though
-     "chronological" may be a mouthful to say).
-
-and associated documentation and test updates, so at this point,
-making incremental changes on top of what we already have in 'next'
-may be more appropriate.  The incremental changes are easier to
-justify as well.
-
-
+Thanks,
+-Justin
