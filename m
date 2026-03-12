@@ -1,82 +1,80 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4649E386571
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 08:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CAC326D65
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 08:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773304988; cv=none; b=sSgyFNVztT4vJxDbjiqkSOZj8TKYxoVRTUf1uRKy944QHT9t/sGMAeajRFuxJREzx2sngT3No7h7ZZleBGW9jRYkln19zJjyZaaRyXyUVuDhf11ej7uy8Tbzrlhlnrwwf20Mh47bOnpDS992jz3WRvJQjkdN8O1YfJY8f4OFC1o=
+	t=1773304990; cv=none; b=IPY+TqYNf+w0oSfb0PXqZeucawLJ6yPV43yvAS/wxdUei4mLZoVmH9mzcLiPuaPmQdmFPdxr56NR0zGQESVFV7RvF9Yqvfa5db1nCtu7mvsuUiZv88/Qv0slREAebwkOVezqLjzeuENZPgxUAyfMBINbV/+O2AKuKbu28ODKRZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773304988; c=relaxed/simple;
-	bh=X1XdSDiD1CrvzBu5U4L0dsvu4kbnEZzF9crDOzpSD8Y=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=BseIbqUfi7hxZgCMRCqDwBb7LwmjV+u1tHlXJYzql/oAh7z05QHah9FRz3Yikgh2/NQgANxa4TPjnd8L5n1sO/TcimFAtIZsr7o7tFbZrNtxkoHVL5Vl3jKBtqq6uAIBT8cJdeCcYOCqDct+sGz+RmH+Fy/C7F1yMYpIiQlXV0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Be7LTf2R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C1RubxM7; arc=none smtp.client-ip=103.168.172.148
+	s=arc-20240116; t=1773304990; c=relaxed/simple;
+	bh=OjQsIinfZq7+Nr0ouqotS06YQuPvuOuovYh63bQNkzU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Gvt63gL/JwOPVLZaDXruUZyEdqnpHbIVSWZBluOK0Zrcapax6bdIwd45UmeniYM/3mzcTjtYXC+zlgnqF4wE6Bp0IKbzjn5XsVqeWFosXnFWIpy2kj6c+TCDVbmX/NoqE8nP8M7eNz1PDL1Cw2c9Jt1xNLbRGPL/q9Y5h5pBP3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZPscrJlL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KznoLOaw; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Be7LTf2R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C1RubxM7"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 33AF3EC00DF;
-	Thu, 12 Mar 2026 04:43:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZPscrJlL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KznoLOaw"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5A99CEC05B1;
+	Thu, 12 Mar 2026 04:43:06 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 12 Mar 2026 04:43:04 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 12 Mar 2026 04:43:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773304984;
-	 x=1773391384; bh=yvYp5Eh6GL+T67w4kt/ImVncwm/BRluXDQ+mHPxzrOA=; b=
-	Be7LTf2RQq5odHomJ3+u2zVQp7FeQYRi2LgZAfExy9A7dK5w/pcAaY4Bk4+E6kGj
-	Vzsr0JevmL8WjaytGRwQ7X5O5k8zZRo9bL7ggaDuHsHRi3p1N07kkZf/LzQ37rrH
-	uXeYZtj3sNNK9fa0Ya9KW0zoEjYE8TWj8nUD+77Wm37uhRNp3HbID50fzpSRFJt3
-	IDoOlUqwFimKN4vV21GhAuPiPTH09nE9/bQy+fGrffFQvhrfs92y8RKe+qS/MbtF
-	sVVG8t5NDzrGk+gA7UoLl1xdMwsrQBNtymMXqt/fUiz8ux+692LrwdXdgoo8nN1r
-	ArTueuljP/7HzlK5RwcjKA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773304986;
+	 x=1773391386; bh=YbXSJIyVQhJr1aS9ZJ/Hm3CIGH+CLneHwLvUhJtnKMc=; b=
+	ZPscrJlLDbfY8FOCYcLLfvwaFGG4+OCzOfALtbUhxuvEHrzUlPQ68uiIf90gVp8F
+	GzyqLcFsTzXDyK5o5E98kumKqyv8lz40MM8h2PTOFlwWO76eQ8iGJS9HlpPqyg95
+	ubY62hLXXFEbKHnRekQ1sPjSL+6gSPiHzbG25V+vRk9SnPLvZ4B/rnF3Y6l1j84x
+	3KY+ME02Tp31kdrQ8z+zZlOmoF0rzbZ5FdmhBJLZu/OK9vw32p0gl3SAF94HjHK0
+	jKQBE0TJOIwLoNJ/b1LR+0OTTXRwamC3waX5Qldai5pW58zjm9PMdi8lCpdUcYsS
+	/yfTooRHeAmSHJ+cfVsXUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773304984; x=
-	1773391384; bh=yvYp5Eh6GL+T67w4kt/ImVncwm/BRluXDQ+mHPxzrOA=; b=C
-	1RubxM77Lu9SEL05O7yqCUOSIzs2lLR4n72sVymDmlePw2qs/6zr/zLdyd7/6THS
-	v8oS3KijGUCDq/Mi/lpz2v3JTzXw1RSmgar8YoaaKCaL3roRxd2xm2KJHcPrglVg
-	KWfmDf8OFNqd9lYtMG3a3zL+Obks+n/S9o7I0RhuMi7I/H6E50jQ2ghiX07eqOmq
-	Uvap9eOlb9kTk1iagjiVquvMUdxenRwaQPBp15mPta/7/BMdjtccZ8kQOawCyrKd
-	2/zzdioreyv7GJuEBKTjVBrlLAjxlzecu4rZX8uS0+tTOulYXAtyPuM+4up7YWQF
-	aoshRELxleJyAwBQd8AhA==
-X-ME-Sender: <xms:mHyyabQ8MVYxC97vTc9xMbDylh5RNLL9PQ9QKJxij_FSebI9Kl77sQ>
-    <xme:mHyyaTxRn2CAgfwCMzQk4SU93GLq_2nUsu__vNYEZ9TQYuFhPrWgWQXCCB4uSTEj6
-    Cf7oqU4WntAF1TaN5k1sTXgk2nGT70QGdCqt5CNnKcqhJYbysbaOec>
-X-ME-Received: <xmr:mHyyaV2MC6BOb87rcSEXoSRIrrxTpk3jkF83EhXLr-Cwj2pCXfC4KKbZoYH5rHDji2wBwKIR4ztTrzgB5ujdCnGrFUu_mPPWKiYm_IcGL1A0gg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773304986; x=
+	1773391386; bh=YbXSJIyVQhJr1aS9ZJ/Hm3CIGH+CLneHwLvUhJtnKMc=; b=K
+	znoLOaw7kG29cnJmvbZsODPLr8Qs5nWhHB2nR+6yT7aOu1+mbLgiCr75BMxpU/bm
+	HYIUeGIgzYFYL+rFesYUsmiaDLZC+R+/Bd6QyfkSH5MTqgjF97Ytqg+HzGu4LHKx
+	xtxuOO7+BLS03KZI7Ioh/9sD6/WMfL37QSC11kCU1UEHES/w6skyW/Ik1m7QzW+q
+	EpEwclR6lkwNkl+Y75uQQJT1ZHRQ8AxgyuvhnNp2RNmUBLUDnE4Grn8jQks28rq9
+	hNb97v0bTS/BWtmxIRohhlb96qe69QkEse+NwzwXMordmCisH1XMZOgwWgd7x+tY
+	5EPLrMR2WiINjvZYOlzCA==
+X-ME-Sender: <xms:mnyyafCO6bqFcDb-b6FFaxJm3xXWscO_zt-WAw8wPZnl7vUPUbSBXQ>
+    <xme:mnyyacg8TLTfTB2Z8KPCVK0775mI69qQd5K7LTqyBqNZTsmHqnlArlPRjWZMOKaNM
+    3FRUEoYaq0janPK_RoNsC-7fqPPOK9yXmq_3aDn3t-JLSCf6FDswQ>
+X-ME-Received: <xmr:mnyyafmeWynLpoBMOVzPxnJjdXV6eDGI9Na1ZzJbzzQqd2P6ter4Hm2jf5Bl5li-HOX7d6q4vtU-QImvFXjWiy91Nm1D0REtHTQY7yyYUtLDEw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeifeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeuvden
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
-    gedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnse
-    hiohhttghlrdgtohhm
-X-ME-Proxy: <xmx:mHyyaZ5f4mlBnN3CQdYU6P5GkVBuetZD5lmyrJXwCa_lkorUdpvVzg>
-    <xmx:mHyyaQXgM07QaQoPvkrHot5NBceorgsT4WjBHsPab6sUFhKYWfcVCA>
-    <xmx:mHyyaQAujRCZagQ2m-YhCtNtZAv-9DjJwVIhvFcrqcjX1N79erctmw>
-    <xmx:mHyyaX6pW9Prza7PYjJlBpfTUbswkrGSJD6Z2sA6A_tRrNnwwE-GHg>
-    <xmx:mHyyac12aooEhUX_izRanvmhf2ZoFAuKFtNh1l-9BKLq9TGHE9z2kjNl>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepthhoohhnsehioh
+    httghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:mnyyaQp0gkFhSDypZiJ3KCSzAvMlDPwyTHRdg21NsAHgUsLnVdT7YA>
+    <xmx:mnyyaQGaRWtEy3HTlm_iV783FfKva_-Ed9lnTOHp1FZVPLm7H1nzog>
+    <xmx:mnyyaUzGgVp1lKiuuAXFta3v7uG1PiHK--FdhtPJb34LTgM5JpyurQ>
+    <xmx:mnyyadrJZF8arYIs4GVg4-le-mgjyo8DPD8-mdNxX3SgqXNw0Z5V_A>
+    <xmx:mnyyaamxsHJqvmU4PlgQaJMVXrKFb5QQDWV__NQKIv3bhua7clL2LSnf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 04:43:03 -0400 (EDT)
+ 12 Mar 2026 04:43:05 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9f9d0ae6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Mar 2026 08:43:01 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 70bbf6a9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Mar 2026 08:43:04 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/6] odb: introduce generic object counting
-Date: Thu, 12 Mar 2026 09:42:55 +0100
-Message-Id: <20260312-b4-pks-odb-source-count-objects-v2-0-5914f69256bf@pks.im>
+Date: Thu, 12 Mar 2026 09:42:56 +0100
+Subject: [PATCH v2 1/6] odb: stop including "odb/source.h"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,103 +83,267 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAI98smkC/4WNQQ6CMBBFr0K6dkw7VhBW3sOwkDKV0UhJB4iGc
- HcrHsDl+/l5b1FCkUlUlS0q0szCoU+Au0y57trfCLhNrFBjrhEtNBaGh0BoG5AwRUfgwtSPEJo
- 7uVHAFqWn/ITO514lyxDJ82srXOrEHcsY4nsLzua7/twHo/+6ZwMajC5JF63Fo7fndN/zU9Xru
- n4AYlicgssAAAA=
-X-Change-ID: 20260224-b4-pks-odb-source-count-objects-479fe682cf6f
-In-Reply-To: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
-References: <20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im>
+Message-Id: <20260312-b4-pks-odb-source-count-objects-v2-1-5914f69256bf@pks.im>
+References: <20260312-b4-pks-odb-source-count-objects-v2-0-5914f69256bf@pks.im>
+In-Reply-To: <20260312-b4-pks-odb-source-count-objects-v2-0-5914f69256bf@pks.im>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>, 
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+The "odb.h" header currently includes the "odb/source.h" file. This is
+somewhat roundabout though: most callers shouldn't have to care about
+the `struct odb_source`, but should rather use the ODB-level functions.
+Furthermore, it means that a couple of definitions have to live on the
+source level even though they should be part of the generic interface.
 
-this small patch series introduces generic object counting for pluggable
-object databases. The series is built on top of d181b9354c (The 13th
-batch, 2026-03-09) with ps/odb-sources at d6fc6fe6f8 (odb/source: make
-`begin_transaction()` function pluggable, 2026-03-05) merged into it.
+Reverse the relation between "odb/source.h" and "odb.h" and move the
+enums and typedefs that relate to the generic interfaces back into
+"odb.h". Add the necessary includes to all files that rely on the
+transitive include.
 
-Changes in v2:
-  - Properly initialize `out` pointer when counting loose objects.
-  - Fix a stale comment.
-  - Fix a commit message type.
-  - Link to v1: https://lore.kernel.org/r/20260310-b4-pks-odb-source-count-objects-v1-0-109e07d425f4@pks.im
-
-Thanks!
-
-Patrick
-
+Suggested-by: Justin Tobler <jltobler@gmail.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (6):
-      odb: stop including "odb/source.h"
-      packfile: extract logic to count number of objects
-      object-file: extract logic to approximate object count
-      object-file: generalize counting objects
-      odb/source: introduce generic object counting
-      odb: introduce generic object counting
-
- builtin/gc.c                | 44 +++++++++----------------
  builtin/multi-pack-index.c  |  1 +
  builtin/submodule--helper.c |  1 +
- commit-graph.c              |  3 +-
- object-file.c               | 58 +++++++++++++++++++++++++++++++++
- object-file.h               | 14 ++++++++
- object-name.c               |  6 +++-
- odb.c                       | 37 ++++++++++++++++++++-
- odb.h                       | 78 +++++++++++++++++++++++++++++++++++++++++---
- odb/source-files.c          | 30 +++++++++++++++++
- odb/source.h                | 79 ++++++++++++++++-----------------------------
+ odb.h                       | 50 ++++++++++++++++++++++++++++++++++++++++++-
+ odb/source.h                | 52 +--------------------------------------------
  odb/streaming.c             |  1 +
- packfile.c                  | 48 +++++++++++++--------------
- packfile.h                  | 16 +++++----
  repository.c                |  1 +
  submodule-config.c          |  1 +
  tmp-objdir.c                |  1 +
- 17 files changed, 301 insertions(+), 118 deletions(-)
+ 8 files changed, 56 insertions(+), 52 deletions(-)
 
-Range-diff versus v1:
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 5f364aa816..3fcb207f1a 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -9,6 +9,7 @@
+ #include "strbuf.h"
+ #include "trace2.h"
+ #include "odb.h"
++#include "odb/source.h"
+ #include "replace-object.h"
+ #include "repository.h"
+ 
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 143f7cb3cc..4957487536 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -29,6 +29,7 @@
+ #include "object-file.h"
+ #include "object-name.h"
+ #include "odb.h"
++#include "odb/source.h"
+ #include "advice.h"
+ #include "branch.h"
+ #include "list-objects-filter-options.h"
+diff --git a/odb.h b/odb.h
+index 86e0365c24..7a583e3873 100644
+--- a/odb.h
++++ b/odb.h
+@@ -3,7 +3,6 @@
+ 
+ #include "hashmap.h"
+ #include "object.h"
+-#include "odb/source.h"
+ #include "oidset.h"
+ #include "oidmap.h"
+ #include "string-list.h"
+@@ -12,6 +11,7 @@
+ struct oidmap;
+ struct oidtree;
+ struct strbuf;
++struct strvec;
+ struct repository;
+ struct multi_pack_index;
+ 
+@@ -339,6 +339,42 @@ struct object_info {
+  */
+ #define OBJECT_INFO_INIT { 0 }
+ 
++/* Flags that can be passed to `odb_read_object_info_extended()`. */
++enum object_info_flags {
++	/* Invoke lookup_replace_object() on the given hash. */
++	OBJECT_INFO_LOOKUP_REPLACE = (1 << 0),
++
++	/* Do not reprepare object sources when the first lookup has failed. */
++	OBJECT_INFO_QUICK = (1 << 1),
++
++	/*
++	 * Do not attempt to fetch the object if missing (even if fetch_is_missing is
++	 * nonzero).
++	 */
++	OBJECT_INFO_SKIP_FETCH_OBJECT = (1 << 2),
++
++	/* Die if object corruption (not just an object being missing) was detected. */
++	OBJECT_INFO_DIE_IF_CORRUPT = (1 << 3),
++
++	/*
++	 * We have already tried reading the object, but it couldn't be found
++	 * via any of the attached sources, and are now doing a second read.
++	 * This second read asks the individual sources to also evaluate
++	 * whether any on-disk state may have changed that may have caused the
++	 * object to appear.
++	 *
++	 * This flag is for internal use, only. The second read only occurs
++	 * when `OBJECT_INFO_QUICK` was not passed.
++	 */
++	OBJECT_INFO_SECOND_READ = (1 << 4),
++
++	/*
++	 * This is meant for bulk prefetching of missing blobs in a partial
++	 * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK.
++	 */
++	OBJECT_INFO_FOR_PREFETCH = (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK),
++};
++
+ /*
+  * Read object info from the object database and populate the `object_info`
+  * structure. Returns 0 on success, a negative error code otherwise.
+@@ -432,6 +468,18 @@ enum odb_for_each_object_flags {
+ 	ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS = (1<<4),
+ };
+ 
++/*
++ * A callback function that can be used to iterate through objects. If given,
++ * the optional `oi` parameter will be populated the same as if you would call
++ * `odb_read_object_info()`.
++ *
++ * Returning a non-zero error code will cause iteration to abort. The error
++ * code will be propagated.
++ */
++typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
++				      struct object_info *oi,
++				      void *cb_data);
++
+ /*
+  * Iterate through all objects contained in the object database. Note that
+  * objects may be iterated over multiple times in case they are either stored
+diff --git a/odb/source.h b/odb/source.h
+index caac558149..a1fd9dd920 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -2,6 +2,7 @@
+ #define ODB_SOURCE_H
+ 
+ #include "object.h"
++#include "odb.h"
+ 
+ enum odb_source_type {
+ 	/*
+@@ -14,61 +15,10 @@ enum odb_source_type {
+ 	ODB_SOURCE_FILES,
+ };
+ 
+-/* Flags that can be passed to `odb_read_object_info_extended()`. */
+-enum object_info_flags {
+-	/* Invoke lookup_replace_object() on the given hash. */
+-	OBJECT_INFO_LOOKUP_REPLACE = (1 << 0),
+-
+-	/* Do not reprepare object sources when the first lookup has failed. */
+-	OBJECT_INFO_QUICK = (1 << 1),
+-
+-	/*
+-	 * Do not attempt to fetch the object if missing (even if fetch_is_missing is
+-	 * nonzero).
+-	 */
+-	OBJECT_INFO_SKIP_FETCH_OBJECT = (1 << 2),
+-
+-	/* Die if object corruption (not just an object being missing) was detected. */
+-	OBJECT_INFO_DIE_IF_CORRUPT = (1 << 3),
+-
+-	/*
+-	 * We have already tried reading the object, but it couldn't be found
+-	 * via any of the attached sources, and are now doing a second read.
+-	 * This second read asks the individual sources to also evaluate
+-	 * whether any on-disk state may have changed that may have caused the
+-	 * object to appear.
+-	 *
+-	 * This flag is for internal use, only. The second read only occurs
+-	 * when `OBJECT_INFO_QUICK` was not passed.
+-	 */
+-	OBJECT_INFO_SECOND_READ = (1 << 4),
+-
+-	/*
+-	 * This is meant for bulk prefetching of missing blobs in a partial
+-	 * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK.
+-	 */
+-	OBJECT_INFO_FOR_PREFETCH = (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK),
+-};
+-
+ struct object_id;
+-struct object_info;
+ struct odb_read_stream;
+-struct odb_transaction;
+-struct odb_write_stream;
+ struct strvec;
+ 
+-/*
+- * A callback function that can be used to iterate through objects. If given,
+- * the optional `oi` parameter will be populated the same as if you would call
+- * `odb_read_object_info()`.
+- *
+- * Returning a non-zero error code will cause iteration to abort. The error
+- * code will be propagated.
+- */
+-typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
+-				      struct object_info *oi,
+-				      void *cb_data);
+-
+ /*
+  * The source is the part of the object database that stores the actual
+  * objects. It thus encapsulates the logic to read and write the specific
+diff --git a/odb/streaming.c b/odb/streaming.c
+index a4355cd245..5927a12954 100644
+--- a/odb/streaming.c
++++ b/odb/streaming.c
+@@ -7,6 +7,7 @@
+ #include "environment.h"
+ #include "repository.h"
+ #include "odb.h"
++#include "odb/source.h"
+ #include "odb/streaming.h"
+ #include "replace-object.h"
+ 
+diff --git a/repository.c b/repository.c
+index e7fa42c14f..05c26bdbc3 100644
+--- a/repository.c
++++ b/repository.c
+@@ -2,6 +2,7 @@
+ #include "abspath.h"
+ #include "repository.h"
+ #include "odb.h"
++#include "odb/source.h"
+ #include "config.h"
+ #include "object.h"
+ #include "lockfile.h"
+diff --git a/submodule-config.c b/submodule-config.c
+index 1f19fe2077..72a46b7a54 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -14,6 +14,7 @@
+ #include "strbuf.h"
+ #include "object-name.h"
+ #include "odb.h"
++#include "odb/source.h"
+ #include "parse-options.h"
+ #include "thread-utils.h"
+ #include "tree-walk.h"
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index e436eed07e..d199d39e7c 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -11,6 +11,7 @@
+ #include "strvec.h"
+ #include "quote.h"
+ #include "odb.h"
++#include "odb/source.h"
+ #include "repository.h"
+ 
+ struct tmp_objdir {
 
-1:  3d5f8733d5 = 1:  1639bb1725 odb: stop including "odb/source.h"
-2:  2fe42618f4 = 2:  056b6f3ae3 packfile: extract logic to count number of objects
-3:  4cbf727523 ! 3:  069c908771 object-file: extract logic to approximate object count
-    @@ Commit message
-         repack objects. This is done by counting the number of objects that we
-         have and checking whether it exceeds a certain threshold. We don't
-         really need an accurate object count though, which is why we only
-    -    open a single object diretcroy shard and then extrapolate from there.
-    +    open a single object directory shard and then extrapolate from there.
-     
-         Extract this logic into a new function that is owned by the loose object
-         database source. This is done to prepare for a subsequent change, where
-4:  c1a527877a ! 4:  6f293f1352 object-file: generalize counting objects
-    @@ object-file.c: int odb_source_loose_for_each_object(struct odb_source *source,
-     +		*out = count * 256;
-     +		ret = 0;
-     +	} else {
-    ++		*out = 0;
-     +		ret = odb_source_loose_for_each_object(source, NULL, count_loose_object,
-     +						       out, 0);
-      	}
-5:  c12d4ec401 = 5:  0bda4a3d01 odb/source: introduce generic object counting
-6:  91307f205d ! 6:  89164dad76 odb: introduce generic object counting
-    @@ odb.c: void odb_reprepare(struct object_database *o)
-     
-      ## odb.h ##
-     @@ odb.h: struct object_database {
-    + 	/*
-    + 	 * A fast, rough count of the number of objects in the repository.
-      	 * These two fields are not meant for direct access. Use
-    - 	 * repo_approximate_object_count() instead.
-    +-	 * repo_approximate_object_count() instead.
-    ++	 * odb_count_objects() instead.
-      	 */
-     -	unsigned long approximate_object_count;
-     -	unsigned approximate_object_count_valid : 1;
-
----
-base-commit: 2247f478a898a7f8f8322cc51bdeb1cc773d8f4a
-change-id: 20260224-b4-pks-odb-source-count-objects-479fe682cf6f
+-- 
+2.53.0.880.g73c4285caa.dirty
 
