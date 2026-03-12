@@ -1,314 +1,210 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2C6388E5F
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 08:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2432BEC2C
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 08:53:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773305004; cv=none; b=PGOXmicJ1oYogaMdLv60OR/M/tCrE5PQ9xMrUj7XLfhPgN25qMUpc2Zd2ye1EoObp8BhL3haWEBIkLdr48fwsi87XetFDRaxPXPXV7w7rxAstRh/equruSDaiDij2Px+HlWp4W7/VNF1YY9k45KYVX3sR09xOe2wEIxvfLtWDWs=
+	t=1773305641; cv=none; b=sPZDdXMljC/pUgShcIalAAU7bPkdaXwyPcdAXC5ioSst+eWIX77JN2Q7cPGgNxND8YQWz6bUEs/GDw+fHeFrJTkqe2F5lxvPoRUY+g8mge6YZXQ8iQ4i2DDxjecu+UCmIfx0ZsVice6LGgs7Px2h5GAHRKj4pZ8DIS1RcnNZLMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773305004; c=relaxed/simple;
-	bh=9cy0kYR+GpCLWsA/dATjRp3bOhm0LkbYlZzvEjjANLQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Lx7xHA+sbtvlJKtgWa21vEViwpBBH1banvs7elwQe6adtzQKwCTYxMo3XjEFb/e05pt3Hy8uR8NfoBk6a+MFfGIyuPI36TBHhBKm2HCWEm/931lxGFo+SNUGp/c61X/QKh2aETXFCq9qDgkRvacsERtqFEFn5a/X3x/6eUHcJZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LKyscT3u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RDQGXaRX; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773305641; c=relaxed/simple;
+	bh=TG6JP8D6RX5tM/ilhKUor1rRImNqtX2ppmGoXmNfZk4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qUkXTtOE+38I/okhtozbNnFICq4UikH8c0eifBJtGWhrQJtYoZwNrjs/8JSPfkD5BqZQ2kuuJrj7PynkjF0lnUE9lKo5JE499POT5mMblofMsbmqkv4Aow4GhRqwr3De2qUmpEtQK56HfPig0SA0L6agjrhCOOpFkccVMaVgLJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CdP3EZmL; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LKyscT3u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RDQGXaRX"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id A54FFEC00DF;
-	Thu, 12 Mar 2026 04:43:19 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 12 Mar 2026 04:43:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773304999;
-	 x=1773391399; bh=r+YeSKUMKCBJj5s9avTIutCelBm2jPSgW3OaucdJiF8=; b=
-	LKyscT3uebCyS8YUC469IMXuCuDjb1XAUYAvvw19fw3/EKSoE+nJrQ3JtjOh3Bd0
-	cwb2scY2FUmZscZ+Kr6p2KOqn1zRH1fHqBLX1Zrpf2761hvmKxsonTY9BYclsFjL
-	XHruNfbpvWOOeSGysHft/FwDm/1lUKyPOC+h3zB4o7RVYzjd6Zv5/JuUsdJcpYPN
-	gUPFTZuV38aaKAlQQHD4drgCMI5imkrznOUW9rGuu99EtNFlpp+OokzSDl6f/BTi
-	rtkFcn/PQ4UOuy8JGS1YvKrTEBeoiY3Jr4uZtKJRLX3lAGIgm42mOtja4NyTLkiW
-	wEEGEJUfFv6DmpdYg3r9wg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773304999; x=
-	1773391399; bh=r+YeSKUMKCBJj5s9avTIutCelBm2jPSgW3OaucdJiF8=; b=R
-	DQGXaRXps8APCtf777iwcM0EdhbxKPg9VZkN3XkTjYtWsrwb9+VFRFk8ovZr2G03
-	8Fpnzh8HPeEylxKV2Vhqw8rylUZmQyAdLpkbVfsRoPP+396wgww9tG4DRHzqFuG0
-	V3+UtBwGHwpBjY54yO1UlLD+pVBPQPbwdxBjfvjlA2kzqUVewcpf6hn3YlERuSTd
-	l03pv6yVV5Llic3urFhK9y7j8ceLRRA7dD482ahIqkT3Ih8npBdU99fgoncv4izS
-	2NNOrdWqxc+z7gxpxYgHS4599HoWXgy/hwqCNKnm+PH1HLI5i4F/L64WOGwOkyMB
-	a+ma/HWETpYwbe/GHtVNg==
-X-ME-Sender: <xms:p3yyae_1dVMf6pDzC_1M30cZqajNNyGegTLdI-dZGjaytSmXqNhcQw>
-    <xme:p3yyaWJoVDD0TRGh7LTuBHsl4vRvzvN6fkYt9x-keG36FrjtwRX3SRBDqTznrFaJN
-    4ALAmUpVg7TKV6uwOyKejT--01woRuq5S8gXp0B4umqhdIVorb1QFw>
-X-ME-Received: <xmr:p3yyaRaGjtTFdrvBtk1G0rXdYs4AO2-qNBAw8uBNnFHbGIl6k99g5bKhvlTKJg3pYYKMFkaxuWKeZLs2WBc-i7nXnEv-Zbuzh2QK72_TlznBVg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeifeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpeegnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomh
-X-ME-Proxy: <xmx:p3yyaQJfOSZV-kQJaWGx9Fs-IPpdK1WaLIXCIWwm_Wras65tqnabuA>
-    <xmx:p3yyaXC7Ao4ASKcHCpEnR0XioJFfwFQPR7Jp4AoxnWSePQuRkT4BbA>
-    <xmx:p3yyadrvYeHOGUssPRfhnmbDRcku4G4zq0cKFyHXo1fzPE79UH6Z3w>
-    <xmx:p3yyaagF_IrJvk_Ulac9ohogzz9sIrOALL8HP3Io9AowwhW8Nz836g>
-    <xmx:p3yyaZyJ85yPCPWbMBd6LobnBwUK55CK9_dPDGNiABdFVTYrT-GtJay1>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 04:43:18 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3118ec03 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Mar 2026 08:43:18 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 12 Mar 2026 09:43:01 +0100
-Subject: [PATCH v2 6/6] odb: introduce generic object counting
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CdP3EZmL"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-48540d21f7dso8700755e9.0
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 01:53:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773305638; x=1773910438; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eq2SdatqzujYk0R0h9woFR9dJhgmqYM+T/olUDlwb2Y=;
+        b=CdP3EZmLlLcESpsMGAfyQc7NjP4hkVi0ZVv5UD8nL8cWb4qGEr8mVYaE9YjFxU0eWB
+         kT3x3UPLzQQnMl0N+3t+UsMLhdzUvSPUTWeBQq19pL/RkTPuoDUg85P7Ae1Dg/GIUtYl
+         E/JXmTK9HDpGyZCWvtint1f3SHdXNAqTh/TxJ4ig7SRhKcAq0WwmBtpWJdmkBZg0OqCi
+         vEDdiyRSo3M0GyM+WyC7fAmEQbVFxMzsTodZmWza9RxgGeERhMDnitBKuuDS48WTQUkL
+         F9KCwjFAattdOnaLqwWfQygsoGx9YdRMMEY6+IUqseuHioMDjQF/bmU2zs+SRVrYEbcI
+         3OUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773305638; x=1773910438;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=eq2SdatqzujYk0R0h9woFR9dJhgmqYM+T/olUDlwb2Y=;
+        b=EfNgp+bGzJAbgZB+0tDPzN5DC2vdgq1rGdK7U6rk4g8x4oLF56UhWCYxll9yUzhJ3x
+         /zZsnGJVhPBswSO09Yrf6PXUV6ehMIKBDDcWFYz3Yl2kgqAxyEETrWYgO3PWYPQexD8y
+         WS5p9igGme7nf3OiTGhaq+xw2Zrtl+7QYdgiRjrSRiMnWIMUh6nepcoIjtrEd5u0prPA
+         KU+LJrl5Xj84aojFbU3bexMO+BZfknvToC4eAcIz3zrTOalX4G6NerCDFVsOxTTozIvM
+         VIbxh6ys6Cv6++SNclZiK8tuPil0zHNP4n+4lsVBYeiw5jr8+2CECLLlkFLsSuL2xaGD
+         +Gkw==
+X-Gm-Message-State: AOJu0YwiwwPH9kpQDI85eeQJ3ZBs7YXk3ZhwQeBnl2mOnPvOXV2RSHNG
+	HxTrZ9QYuAS1C53Vn4xPdkwylZrPOu8oeQOiBZ9fRN35AIxIfY+pWdPwor6KLKVb
+X-Gm-Gg: ATEYQzwNnINp3exfL6aoVMQzGzJkY49sI63Ti4cRfTnG4lIWev3AKWRri6AY8v0PsUb
+	CHZ6gdxKbkOKXkDeJkcrDS45FYH8SHVk08ChBZDh+VjLbfbtivK+p5RyBOaJXKgffMHDBTSR77D
+	WZoh8lGllnyA+qaROMmlycXeokNGGmdwywLuvgesQjNJf8xapqa4zG0k5ICjNe1HmscFmWXlOQP
+	J3H7TQLaUZAHABA8ATmXlJ/yVHhzgi/WLxt4FytBSaWyWpJVgAOc5KeBE+71nIOpOH4K2i5xKXO
+	psJHQPHIkbginiKbPWl/OmXwxZqPWZbuQzsihJhZ9nbaCPSJzMI2euU40WBmSBNPyQ7Oz/FfOaT
+	+g2TzlJN18UhwDfQrCUqW1VCa/f6+MLSXwOuOnzDbM1R6EQQXf/XKug+ayIGvg1Q8uuq90zxqr/
+	xx1tVzUe0ipP7JhUbK8kq7LgJiXDXqPkJ6CQ==
+X-Received: by 2002:a05:600c:3551:b0:485:3f72:324d with SMTP id 5b1f17b1804b1-4854b0cabe4mr98881965e9.14.1773305637811;
+        Thu, 12 Mar 2026 01:53:57 -0700 (PDT)
+Received: from fedora.marun.edu.tr ([193.255.169.14])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48541ad1e4esm218574695e9.8.2026.03.12.01.53.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Mar 2026 01:53:57 -0700 (PDT)
+From: =?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	l.s.r@web.de,
+	ps@pks.im,
+	peff@peff.net,
+	gitster@pobox.com,
+	=?UTF-8?q?Burak=20Kaan=20Kara=C3=A7ay?= <bkkaracay@gmail.com>
+Subject: [PATCH v2] run-command: wean start_command() off the_repository
+Date: Thu, 12 Mar 2026 11:53:41 +0300
+Message-ID: <20260312085341.631318-1-bkkaracay@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260311151923.4178655-1-bkkaracay@gmail.com>
+References: <20260311151923.4178655-1-bkkaracay@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260312-b4-pks-odb-source-count-objects-v2-6-5914f69256bf@pks.im>
-References: <20260312-b4-pks-odb-source-count-objects-v2-0-5914f69256bf@pks.im>
-In-Reply-To: <20260312-b4-pks-odb-source-count-objects-v2-0-5914f69256bf@pks.im>
-To: git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Similar to the preceding commit, introduce counting of objects on the
-object database level, replacing the logic that we have in
-`repo_approximate_object_count()`.
+The start_command() relies on the_repository due to the
+close_object_store flag in 'struct child_process'. When this flag is
+set, start_command() closes the object store associated with
+the_repository before spawning a child process.
 
-Note that the function knows to cache the object count. It's unclear
-whether this cache is really required as we shouldn't have that many
-cases where we count objects repeatedly. But to be on the safe side the
-caching mechanism is retained, with the only excepting being that we
-also have to use the passed flags as caching key.
+To eliminate this dependency, replace the 'close_object_store' with the
+new 'odb_to_close' field. This allows callers to specify the object
+store that needs to be closed.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Suggested-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: Burak Kaan Karaçay <bkkaracay@gmail.com>
 ---
- builtin/gc.c   |  6 +++++-
- commit-graph.c |  3 ++-
- object-name.c  |  6 +++++-
- odb.c          | 37 ++++++++++++++++++++++++++++++++++++-
- odb.h          | 19 ++++++++++++++++---
- packfile.c     | 27 ---------------------------
- packfile.h     |  6 ------
- 7 files changed, 64 insertions(+), 40 deletions(-)
+ builtin/gc.c   | 14 +++++++++-----
+ builtin/pull.c |  2 +-
+ run-command.c  |  6 +++---
+ run-command.h  |  2 +-
+ 4 files changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 3a64d28da8..cb9ca89a97 100644
+index fb329c2cff..5d8d358f7a 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -574,9 +574,13 @@ static uint64_t total_ram(void)
- static uint64_t estimate_repack_memory(struct gc_config *cfg,
- 				       struct packed_git *pack)
+@@ -1030,7 +1030,7 @@ int cmd_gc(int argc,
+ 		struct child_process repack_cmd = CHILD_PROCESS_INIT;
+ 
+ 		repack_cmd.git_cmd = 1;
+-		repack_cmd.close_object_store = 1;
++		repack_cmd.odb_to_close = the_repository->objects;
+ 		strvec_pushv(&repack_cmd.args, repack_args.v);
+ 		if (run_command(&repack_cmd))
+ 			die(FAILED_RUN, repack_args.v[0]);
+@@ -1199,7 +1199,8 @@ static int run_write_commit_graph(struct maintenance_run_opts *opts)
  {
--	unsigned long nr_objects = repo_approximate_object_count(the_repository);
-+	unsigned long nr_objects;
- 	size_t os_cache, heap;
+ 	struct child_process child = CHILD_PROCESS_INIT;
  
-+	if (odb_count_objects(the_repository->objects,
-+			      ODB_COUNT_OBJECTS_APPROXIMATE, &nr_objects) < 0)
-+		return 0;
-+
- 	if (!pack || !nr_objects)
- 		return 0;
+-	child.git_cmd = child.close_object_store = 1;
++	child.git_cmd = 1;
++	child.odb_to_close = the_repository->objects;
+ 	strvec_pushl(&child.args, "commit-graph", "write",
+ 		     "--split", "--reachable", NULL);
  
-diff --git a/commit-graph.c b/commit-graph.c
-index f8e24145a5..c030003330 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2607,7 +2607,8 @@ int write_commit_graph(struct odb_source *source,
- 			replace = ctx.opts->split_flags & COMMIT_GRAPH_SPLIT_REPLACE;
- 	}
+@@ -1268,7 +1269,8 @@ static int maintenance_task_gc_background(struct maintenance_run_opts *opts,
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
  
--	ctx.approx_nr_objects = repo_approximate_object_count(r);
-+	if (odb_count_objects(r->objects, ODB_COUNT_OBJECTS_APPROXIMATE, &ctx.approx_nr_objects) < 0)
-+		ctx.approx_nr_objects = 0;
+-	child.git_cmd = child.close_object_store = 1;
++	child.git_cmd = 1;
++	child.odb_to_close = the_repository->objects;
+ 	strvec_push(&child.args, "gc");
  
- 	if (ctx.append && g) {
- 		for (i = 0; i < g->num_commits; i++) {
-diff --git a/object-name.c b/object-name.c
-index 7b14c3bf9b..e5adec4c9d 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -837,7 +837,11 @@ int repo_find_unique_abbrev_r(struct repository *r, char *hex,
- 	const unsigned hexsz = algo->hexsz;
+ 	if (opts->auto_flag)
+@@ -1484,7 +1486,8 @@ static int multi_pack_index_expire(struct maintenance_run_opts *opts)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
  
- 	if (len < 0) {
--		unsigned long count = repo_approximate_object_count(r);
-+		unsigned long count;
-+
-+		if (odb_count_objects(r->objects, ODB_COUNT_OBJECTS_APPROXIMATE, &count) < 0)
-+			count = 0;
-+
- 		/*
- 		 * Add one because the MSB only tells us the highest bit set,
- 		 * not including the value of all the _other_ bits (so "15"
-diff --git a/odb.c b/odb.c
-index 84a31084d3..350e23f3c0 100644
---- a/odb.c
-+++ b/odb.c
-@@ -917,6 +917,41 @@ int odb_for_each_object(struct object_database *odb,
- 	return 0;
+-	child.git_cmd = child.close_object_store = 1;
++	child.git_cmd = 1;
++	child.odb_to_close = the_repository->objects;
+ 	strvec_pushl(&child.args, "multi-pack-index", "expire", NULL);
+ 
+ 	if (opts->quiet)
+@@ -1542,7 +1545,8 @@ static int multi_pack_index_repack(struct maintenance_run_opts *opts)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 
+-	child.git_cmd = child.close_object_store = 1;
++	child.git_cmd = 1;
++	child.odb_to_close = the_repository->objects;
+ 	strvec_pushl(&child.args, "multi-pack-index", "repack", NULL);
+ 
+ 	if (opts->quiet)
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 6ad420ce6f..7e67fdce97 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -454,7 +454,7 @@ static int run_fetch(const char *repo, const char **refspecs)
+ 	} else if (*refspecs)
+ 		BUG("refspecs without repo?");
+ 	cmd.git_cmd = 1;
+-	cmd.close_object_store = 1;
++	cmd.odb_to_close = the_repository->objects;
+ 	return run_command(&cmd);
  }
  
-+int odb_count_objects(struct object_database *odb,
-+		      enum odb_count_objects_flags flags,
-+		      unsigned long *out)
-+{
-+	struct odb_source *source;
-+	unsigned long count = 0;
-+	int ret;
-+
-+	if (odb->object_count_valid && odb->object_count_flags == flags) {
-+		*out = odb->object_count;
-+		return 0;
-+	}
-+
-+	odb_prepare_alternates(odb);
-+	for (source = odb->sources; source; source = source->next) {
-+		unsigned long c;
-+
-+		ret = odb_source_count_objects(source, flags, &c);
-+		if (ret < 0)
-+			goto out;
-+
-+		count += c;
-+	}
-+
-+	odb->object_count = count;
-+	odb->object_count_valid = 1;
-+	odb->object_count_flags = flags;
-+
-+	*out = count;
-+	ret = 0;
-+
-+out:
-+	return ret;
-+}
-+
- void odb_assert_oid_type(struct object_database *odb,
- 			 const struct object_id *oid, enum object_type expect)
+diff --git a/run-command.c b/run-command.c
+index b27064ef57..ed5e8be976 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -742,8 +742,8 @@ int start_command(struct child_process *cmd)
+ 
+ 	fflush(NULL);
+ 
+-	if (cmd->close_object_store)
+-		odb_close(the_repository->objects);
++	if (cmd->odb_to_close)
++		odb_close(cmd->odb_to_close);
+ 
+ #ifndef GIT_WINDOWS_NATIVE
  {
-@@ -1030,7 +1065,7 @@ void odb_reprepare(struct object_database *o)
- 	for (source = o->sources; source; source = source->next)
- 		odb_source_reprepare(source);
+@@ -1955,7 +1955,7 @@ int prepare_auto_maintenance(int quiet, struct child_process *maint)
+ 		auto_detach = git_env_bool("GIT_TEST_MAINT_AUTO_DETACH", true);
  
--	o->approximate_object_count_valid = 0;
-+	o->object_count_valid = 0;
- 
- 	obj_read_unlock();
- }
-diff --git a/odb.h b/odb.h
-index e6057477f6..9aee260105 100644
---- a/odb.h
-+++ b/odb.h
-@@ -110,10 +110,11 @@ struct object_database {
- 	/*
- 	 * A fast, rough count of the number of objects in the repository.
- 	 * These two fields are not meant for direct access. Use
--	 * repo_approximate_object_count() instead.
-+	 * odb_count_objects() instead.
+ 	maint->git_cmd = 1;
+-	maint->close_object_store = 1;
++	maint->odb_to_close = the_repository->objects;
+ 	strvec_pushl(&maint->args, "maintenance", "run", "--auto", NULL);
+ 	strvec_push(&maint->args, quiet ? "--quiet" : "--no-quiet");
+ 	strvec_push(&maint->args, auto_detach ? "--detach" : "--no-detach");
+diff --git a/run-command.h b/run-command.h
+index e1ca965b5b..af4c9da279 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -136,7 +136,7 @@ struct child_process {
+ 	 * want to repack because that would delete `.pack` files (and on
+ 	 * Windows, you cannot delete files that are still in use).
  	 */
--	unsigned long approximate_object_count;
--	unsigned approximate_object_count_valid : 1;
-+	unsigned long object_count;
-+	unsigned object_count_flags;
-+	unsigned object_count_valid : 1;
+-	unsigned close_object_store:1;
++	struct object_database *odb_to_close;
  
- 	/*
- 	 * Submodule source paths that will be added as additional sources to
-@@ -509,6 +510,18 @@ enum odb_count_objects_flags {
- 	ODB_COUNT_OBJECTS_APPROXIMATE = (1 << 0),
- };
- 
-+/*
-+ * Count the number of objects in the given object database. This object count
-+ * may double-count objects that are stored in multiple backends, or which are
-+ * stored multiple times in a single backend.
-+ *
-+ * Returns 0 on success, a negative error code otherwise. The number of objects
-+ * will be assigned to the `out` pointer on success.
-+ */
-+int odb_count_objects(struct object_database *odb,
-+		      enum odb_count_objects_flags flags,
-+		      unsigned long *out);
-+
- enum {
- 	/*
- 	 * By default, `odb_write_object()` does not actually write anything
-diff --git a/packfile.c b/packfile.c
-index 8ee462303a..d4de9f3ffe 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1132,33 +1132,6 @@ int packfile_store_count_objects(struct packfile_store *store,
- 	return ret;
- }
- 
--/*
-- * Give a fast, rough count of the number of objects in the repository. This
-- * ignores loose objects completely. If you have a lot of them, then either
-- * you should repack because your performance will be awful, or they are
-- * all unreachable objects about to be pruned, in which case they're not really
-- * interesting as a measure of repo size in the first place.
-- */
--unsigned long repo_approximate_object_count(struct repository *r)
--{
--	if (!r->objects->approximate_object_count_valid) {
--		struct odb_source *source;
--		unsigned long count = 0;
--
--		odb_prepare_alternates(r->objects);
--		for (source = r->objects->sources; source; source = source->next) {
--			unsigned long c;
--
--			if (!odb_source_count_objects(source, ODB_COUNT_OBJECTS_APPROXIMATE, &c))
--				count += c;
--		}
--
--		r->objects->approximate_object_count = count;
--		r->objects->approximate_object_count_valid = 1;
--	}
--	return r->objects->approximate_object_count;
--}
--
- unsigned long unpack_object_header_buffer(const unsigned char *buf,
- 		unsigned long len, enum object_type *type, unsigned long *sizep)
- {
-diff --git a/packfile.h b/packfile.h
-index 74b6bc58c5..a16ec3950d 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -375,12 +375,6 @@ int packfile_store_for_each_object(struct packfile_store *store,
- #define PACKDIR_FILE_GARBAGE 4
- extern void (*report_garbage)(unsigned seen_bits, const char *path);
- 
--/*
-- * Give a rough count of objects in the repository. This sacrifices accuracy
-- * for speed.
-- */
--unsigned long repo_approximate_object_count(struct repository *r);
--
- void pack_report(struct repository *repo);
- 
- /*
-
+ 	unsigned stdout_to_stderr:1;
+ 	unsigned clean_on_exit:1;
 -- 
-2.53.0.880.g73c4285caa.dirty
+2.53.0
 
