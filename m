@@ -1,137 +1,122 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B877E3B3883
-	for <git@vger.kernel.org>; Thu, 12 Mar 2026 09:26:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F332264C7
+	for <git@vger.kernel.org>; Thu, 12 Mar 2026 10:01:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773307615; cv=none; b=cfLkY/IMB0jTUEMwF6HSG+FteCig87nigCDaQajWbslgWvkAOKLX429DZW2CXksRaozd1v8ecoyeZEle8NSg6Pk7vMebhbcWlMNgSprDFbU4M+vMF88dKeGYQAWlmUivD/KgPY8frWMN/3HZ4ERNBpf/fyhKyl/doYIUApYVRdM=
+	t=1773309671; cv=none; b=i/XztJypjYToRl9rSV7LiM9ta6ujxD7rMovMpf0V3di9dcBzNH+RN7RKJUqefdJMNOYvRgGO3r5Aa4w0J5Gf9sCCAb5cNy96+pYxNE+DQi1/GotqXYT5lG4SzFnX3NutsCBG36kGI4GgrxN/RHShXTDg5KvB8STsnW1IX/7ePUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773307615; c=relaxed/simple;
-	bh=VtDjH+eef9f9QHR82mppPqhXSjcURx4oaUcvYZgZTGQ=;
+	s=arc-20240116; t=1773309671; c=relaxed/simple;
+	bh=cNHQXM0RD6A7uja0MUr7q6iFgzyZroq5CndNwjvpwok=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MBIQ8izlv8Evh0tdRxhiGTBJDZpcMtmcB59co1thLZB09WccEXBD1xZHuu2/bpdep3Tsq2O5QMDSZILXG++FY0qgDAchTEhzUH7paZ6t9Mcn8AVsToiOzcaFZXapnRkcnpo0Vx6mCkBXfayki8r3Ld+jQ5LC2+I0ERCJnrMpK3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=PSYJH87H; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=mPNAKMHiJwoEzaDoNCMApTCdMAggQ01zJf/nNFKj0L27fTSlJqMsc5i38XZ53EfgvAURFmRB3yRbEQALuZjJtAG1gJ9mTjK39Y9PLGUJx+/X/Srp60L7f7CPN37rLtm4+H0tnz0p8Y/FLia9ngsFGaiQy9QM42t0YkF+tV/Jpnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L9geBt3d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bAAt86hD; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="PSYJH87H"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1773307607;
-	bh=VtDjH+eef9f9QHR82mppPqhXSjcURx4oaUcvYZgZTGQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=PSYJH87HlAUb00tn/xKMpXeqVK8Zz0X5rud0GBe26u199AcLKN+RrvObUY8hf567b
-	 xRsBoSp65uxx8vUMs5G+qxDnr3td2wVZapLz24DYVIG3Xe4QwOKPbQDN/+Txj3ekTF
-	 2BKBowlWLdQNAtitEOmJ8TUMpJ2dqpbvGoxsfyMqnGpUZFK84BrVaw8XkkU/su5yFm
-	 vCKam+qinnQ17TW0eCvejHlGcvNGLewuG2G26wXj/6pp32R9OuZK1LpSdmxM/RvFVR
-	 dzApcbm6NlEPy5GOxGrVM4ySIsB4rgz3epsTS+A/X4MFHIRONvVTmXyR38GMLFVUo8
-	 /zwYSVTL6A8EowwiljWKC6NsN0cZpj3KvgcKCmVbwNPBfstr/V15siU1JUHN+CNzOd
-	 81s0LXsZYufxadFFSkWKwikGM+t0/F2lVadMuWHLw4CEJjahSfm/5ILEERwhJDXmYs
-	 n5SNNVJzi1i5yVn73CyGEBhVyFPz5L6xho/pO//m7Chqj1sJpvp
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:1cc6:4e25:b9fd:13bc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0833E20116;
-	Thu, 12 Mar 2026 09:26:47 +0000 (UTC)
-Date: Thu, 12 Mar 2026 09:26:45 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] t: allow use of "sed -E"
-Message-ID: <abKG1U3fVuNV1w_9@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-References: <xmqq5x72m4lu.fsf@gitster.g>
- <xmqq3425lvtq.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L9geBt3d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bAAt86hD"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3139EEC0B24;
+	Thu, 12 Mar 2026 06:01:09 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Thu, 12 Mar 2026 06:01:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773309669;
+	 x=1773396069; bh=c6dDyYWt2NuuRPoULvNFKAt/1GEuNIwzh8qgg79fRc4=; b=
+	L9geBt3dd+4c2XxjAONFMpSppO1m6Cbg2xi9TUw6N8oIbEPVeZ5GkfPWDbjW+x12
+	XqZzJfK6k045mKddegQ9IXg+Aa5qc69lrcR4nxsYlP7YGONYC6bLL8CmT88YutpM
+	lEp3s2LcEKwUuyiqx2J1q4n7OBtVNesRhaLWwiVv4VuTd8FrKS4Pgw8RcRV5aW72
+	Eks+JBn/1991/G9Ud85CWgB8Hxdnuw+lXw1yjR9JwMhvVD4X4dRJXvD9deBX0FZH
+	7yxhk7occFVpXziaOO9kFFrSQ3HpAEvjFB8yPcdmvyQV0k5iSo+qpD4+kQY42y4O
+	q8b5nles9W5V809CwPXT2g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773309669; x=
+	1773396069; bh=c6dDyYWt2NuuRPoULvNFKAt/1GEuNIwzh8qgg79fRc4=; b=b
+	AAt86hDffbDRPhwmLpynVYctVeC9itv82glFXv5CBRwuUqL+/kMI2g9bRxVI5AYw
+	7nUiWAMYeCTmpScQkyZ5v5EEvZ4AbICUGXfwuDJOJOyK6E+I73D4T6l8DdeZo/PT
+	haWZ8JiN9rJUqKsYSktDQUWiD2QDWXpaUS3qDHdR4bznFwU6UUTRkEMnmqmppK9z
+	pSlQSjvuFIvi7u0mrOcWZ31Q5/WC9az6TNn3dQ9+lM5tB6VekOI2wFDIZtg4hhmU
+	GgZ4I7NJWD14TKgFC2l3OHU8lqEjwE+6hIOBu9/kVHIr3wqsA5LCAEhPuVLi2buV
+	0vZUskzzKbLFt++xmtlqw==
+X-ME-Sender: <xms:5I6yabGndHaxim3FL2U9dVzUcwgBN6ea7SxiruuW0S8m4b4c4czjgw>
+    <xme:5I6yaU5TTMviJRvHRG-TgI804hVGfUoQiR2YTSy47F0a5J7zGO3FpT-xWBKi1CYKE
+    io72PKoQMxdh8s0ak5O5zvCrDDQCXOrGbOuEqoSRjHtrtYCspvdD7E>
+X-ME-Received: <xmr:5I6yaRnF5QWnH3IbmmrIox8t1iJTYEBnTQGs7jj6CSxc2-2iT7FUPj_eroCZTUABwjmNLkj1vKfbR-vtup-Mv2EMi0d5JnJVjzGbEtZg56pxFQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeigeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrhihurd
+    gthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdr
+    udekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrg
+    hnrgefudesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegskh
+    hkrghrrggtrgihsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
+    nhgvthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtg
+    homh
+X-ME-Proxy: <xmx:5I6yaf5iaoMXrgJcijjCiPQvis2VYru3qe22oXtWaQMZgIc7MOnz5Q>
+    <xmx:5I6yaSQygmttlGRhI8ud5Bak-nqPkE-FEifkBMNcSewfkDiqP8yyIQ>
+    <xmx:5I6yadworgmwrPpG_b4H1AqKYKL8Dr2urPGPaEBdnTAEx0yCvOLPbQ>
+    <xmx:5I6yaap2bZ7tHC8Fq8yloM33zlvdZ4O6VRVTvKg8l8bXKDCLsS_RhA>
+    <xmx:5Y6yaVeJT6Np-I9LPD3Et08N4jshzg-415g0xZhluTmwxBaYl5nvdiAy>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Mar 2026 06:01:07 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 42447f3c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Mar 2026 10:01:05 +0000 (UTC)
+Date: Thu, 12 Mar 2026 11:01:03 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Burak Kaan =?utf-8?Q?Kara=C3=A7ay?= <bkkaracay@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, karthik.188@gmail.com,
+	jltobler@gmail.com, ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com, l.s.r@web.de, peff@peff.net,
+	gitster@pobox.com
+Subject: Re: [PATCH v2] run-command: wean start_command() off the_repository
+Message-ID: <abKO3155A9mw2pbO@pks.im>
+References: <20260311151923.4178655-1-bkkaracay@gmail.com>
+ <20260312085341.631318-1-bkkaracay@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Be1zv/t9PKRgnlV4"
-Content-Disposition: inline
-In-Reply-To: <xmqq3425lvtq.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---Be1zv/t9PKRgnlV4
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260312085341.631318-1-bkkaracay@gmail.com>
 
-On 2026-03-12 at 00:45:21, Junio C Hamano wrote:
-> Since early 2019 with e62e225f (test-lint: only use only sed [-n]
-> [-e command] [-f command_file], 2019-01-20), we have been trying to
-> limit the options of "sed" we use in our tests to "-e <pattern>",
-> "-n", and "-f <file>".
->=20
-> Before the commit, we were trying to reject only "-i" (which is one
-> of the really-not-portable options), but the commit explicitly
-> wanted to reject use of "-E" (use ERE instead of BRE).  The commit
-> cites the then-current POSIX.1 (Issue 7, 2018 edition) to show that
-> "even recent POSIX does not have it!", but the latest edition (Issue
-> 8) documents "-E" as an option to use ERE.
->=20
-> But that was 7 years ago, and that is a long time for many things to
-> happen.
+On Thu, Mar 12, 2026 at 11:53:41AM +0300, Burak Kaan Karaçay wrote:
+> The start_command() relies on the_repository due to the
+> close_object_store flag in 'struct child_process'. When this flag is
+> set, start_command() closes the object store associated with
+> the_repository before spawning a child process.
+> 
+> To eliminate this dependency, replace the 'close_object_store' with the
+> new 'odb_to_close' field. This allows callers to specify the object
+> store that needs to be closed.
 
-I think this seems reasonable.  I know this works on both reasonably
-new Linux machines and on macOS, and I did some spot checking with the
-FreeBSD manual page viewer[0] and it's present in the following:
+I really like this solution.
 
-* at least FreeBSD 9.0 (current is 15.0)
-* at least NetBSD 7.0 (current is 10.1)
-* at least OpenBSD 6.0 (current is 7.8)
-* Ubuntu 18.04
+There's now only a single other function that still uses
+`the_repository` in `prepare_auto_maintenance()`. Do we maybe want to
+add a second commit that converts this function and its caller
+`run_auto_maintenance()` to receive the repository as parameter so that
+we can drop the `USE_THE_REPOSITORY_VARIABLE` declaration?
 
-so this appears to be reasonably well supported across major open source
-distributions.  The irony is that Linux is most likely the OS holding us
-back here, since older versions labeled this `-r` and the newer `-E`
-wasn't available in Ubuntu 16.04.  I myself only recently learned about
-the fact that `-E` had been officially standardized, since I'd been
-using `-r` for a long time.
+Thanks!
 
-And, for the record, I agree with you that `-i` is totally non-portable
-because it _requires_ an argument on BSD sed and the argument is
-optional on GNU sed (and cannot be specified as '').  I have a testsuite
-at work where I gave up and just used `perl -i` instead.
-
-> Besides, we have been using "sed -E" without the check in question
-> triggering in one of the scripts since 2022, with 461fec41 (bisect
-> run: keep some of the post-v2.30.0 output, 2022-11-10).  It was
-> hidden because the 'E' was squished with another single letter
-> option.
-
-Yes, I think if nobody has complained about it in three years, we should
-be fine.
-
-[0] https://man.freebsd.org/cgi/man.cgi
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---Be1zv/t9PKRgnlV4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.9 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCabKG1QAKCRB8DEliiIei
-geKmAQD4VkI0X9OwJnyD4yIWoyUTxDQlPiXR+qoj6y+e+PvfDAEAmfl3Bp0uyNoo
-ndFBO866IvfyKG3uNFhqoUm3156CywU=
-=Qtgw
------END PGP SIGNATURE-----
-
---Be1zv/t9PKRgnlV4--
+Patrick
