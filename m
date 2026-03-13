@@ -1,78 +1,85 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from www130.your-server.de (www130.your-server.de [88.198.195.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA211DA23
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 19:17:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1701B4244
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 19:24:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.198.195.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773429433; cv=none; b=rj1ACMuZ94VPSLKv+3efIdEJRjJwaXY2JwcOIcfsz8hq3jWY9iQQaqRdDheYbVahnnLnMRPn6LpKl8Ik44dDZMzsR5KHiC17lhoqarzY5mQNIuMrGF2zeR/KDDHwY8eWx8eEMJjPhrHO7AiHpJkpin4iPFNt9cJLXrW4b41Xky8=
+	t=1773429886; cv=none; b=WEPdSdMYTSoULcdyvq7QynnLhtbLYaR8TwjW5sBoxn8OEGeDapKgD6sXuklNNPz7qyAaPrLACbKFiw58xpbNMg8E53it/oR/Xk9jpd37U069KmV5slTmzXiczNIQ1RIWE7o9sY38cbdHwkvaYEYFK7B1UbNwDdDKfZEqKkfJqm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773429433; c=relaxed/simple;
-	bh=zs61NPX9C859Dh7NzAnjC29y5/J3qX1hSMm6HIm+7B0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E5SHd4ZRWVkGPZ6El0NvAyJdBwjOl44PChrbZ5Y+oY5rO2zrKiRgqMSpjNzteKTCc8qDVbCph25CymACOlRVKDRms7hq9DDpMqCH1z8zMmvZ6aEU8H1nJrThhXNoaHPBaBGIFJ44+05/Idqp0dxNdynlwYYVT3lvubyXb0UPi5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=RkPnbAh4; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1773429886; c=relaxed/simple;
+	bh=zVBGprkm7KMfvy11VLU91OjlJx8w378tlHGPjQ7ZizY=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=OKUOPdYZARqyquOrNQMant3JBDjYL5Q2XV/SsIH0uJ/DNEOoKrlwOqUSpcKpHMUcyUs8mCCPxxnfSuh6SI/TtUq7VmZlwK5utkgVoUNmxdoNzk9llasygYEaTurWtw9izPHSSI+sDk49NtGXzNWqnAEP41Wd/6HSCE5ZUamZ3EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=virtuell-zuhause.de; spf=pass smtp.mailfrom=virtuell-zuhause.de; dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b=MBQQV1rH; arc=none smtp.client-ip=88.198.195.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=virtuell-zuhause.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=virtuell-zuhause.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="RkPnbAh4"
-Date: Fri, 13 Mar 2026 20:17:01 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1773429423;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zs61NPX9C859Dh7NzAnjC29y5/J3qX1hSMm6HIm+7B0=;
-	b=RkPnbAh4dMfzWD5K+Ajuv/eDmd+YIDunJcTyrmM57tqlmXQVa4bg/D+sDlyBT0eNbGNr82
-	HM2j/0FYpc/W2zDgiDaCSWydLJa0QnxL/LIKkxaDxlgiYvEXku7R040+uQO+nhX7fQJRS8
-	ECXTcoA3c50Vhvu91cGUrxQ43Qyev3tPzxKT1ZB9drwXXA41Nr2MVQeiQzIQTONc7DKEPT
-	Z9W0Ne3o3nDjuS70P/qGvFS53U/tX04tGvZgA0sFlWu2zBUgCsanOgJy9vCLJkimaMqBqp
-	hwyz+u+C+mYbl6hyfTtstiAhIwM91Cyvb9Y9Wdw4i6WYoKDg5QLmS5/3DX2xtg==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
-	Jeff King <peff@peff.net>, Bert Wesarg <bert.wesarg@googlemail.com>, 
-	Mirko Faina <mroik@delayed.space>
-Subject: Re: [PATCH v8 2/4] format-patch: add ability to use alt cover format
-Message-ID: <abRTEXspvX_z0usP@exploit>
-References: <cover.1772839973.git.mroik@delayed.space>
- <cover.1773331753.git.mroik@delayed.space>
- <225065cc0dd54d1a592939d41783a904a98fb2ad.1773331753.git.mroik@delayed.space>
- <xmqq5x71gfci.fsf@gitster.g>
- <abLw6vUUh36zFK4n@exploit2>
- <xmqqjyvhez96.fsf@gitster.g>
- <1759c2fe-6e7a-41b6-9869-97544870ebef@gmail.com>
- <xmqqqzpn63yn.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b="MBQQV1rH"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=virtuell-zuhause.de; s=default2504; h=Content-Transfer-Encoding:
+	Content-Type:Subject:From:To:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References;
+	bh=utjVjOs6GkEQFztwY41QSyzF1yPpMTYbcNyHrQBB8zg=; b=MBQQV1rH/uZgnotS9ARsB9VVxi
+	bgfI68wrygO+WAidmntN3iI8mORd1f/sUpnDEPjoBaOiaaa5SclnzBtIXbNxUUX986Fhle5pMFT4Q
+	T2Tw1D5IIx6QL1NGQLLtcEd7EwxK0+R6OTR9P+SzONm3lnefV8N2S41tulS8fUXaex1zbmgOEZmMi
+	LDwp/2xhJFrCcw+gx+B8/qHK6wColTDGtTDFx0Hvd+6myqLuWmtJZ8Od1F+9IQaI8OBUwwHUDXRR7
+	83zA0ZJIFa72lY0x2qUzl/bRVKj/bS3fFeKlbjvDaxUUOEeIrvx9z8xgzT0205Mb3flZ+PdQuU96h
+	yLZaDlIw==;
+Received: from sslproxy08.your-server.de ([78.47.166.52])
+	by www130.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <thomas.braun@virtuell-zuhause.de>)
+	id 1w17mm-000AkO-1Z
+	for git@vger.kernel.org;
+	Fri, 13 Mar 2026 20:03:00 +0100
+Received: from localhost ([127.0.0.1])
+	by sslproxy08.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <thomas.braun@virtuell-zuhause.de>)
+	id 1w17ml-000F4B-0D
+	for git@vger.kernel.org;
+	Fri, 13 Mar 2026 20:02:59 +0100
+Message-ID: <99f2ba7e-cc5f-4ef5-9b09-85896563346f@virtuell-zuhause.de>
+Date: Fri, 13 Mar 2026 20:02:58 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqqzpn63yn.fsf@gitster.g>
-X-Spamd-Bar: -
+User-Agent: Mozilla Thunderbird
+To: GIT Mailing-list <git@vger.kernel.org>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: describe with --git-dir and --dirty outside of the repo always says
+ dirty
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/27939/Fri Mar 13 07:24:42 2026)
 
-On Fri, Mar 13, 2026 at 10:20:48AM -0700, Junio C Hamano wrote:
-> I do not mind a sort of DWIM similar to "log --pretty=format:%s";
-> technically, "git log --prefix" requires the "format:" prefix when
-> using a custom format (i.e., not the canned "short", "fuller", etc.)
-> but we DWIM when the string appears to use %-interpolation.
+When I do
 
-Then we can move towards keeping the "log:" prefix but
-allowing for it to be dropped when %-interpolation occurs, just like
---pretty does.
+git describe --dirty
 
-Something to point out, --pretty does a very simple check (it seems to
-check only for the presence of '%'). This does indeed catch typos
-related to preset formats like "short", "full", etc... but it doesn't
-catch typos in format-strings.
-"an%" is an accepted format-string even without the prefix despite not
-doing any substitution.
+in clean repo of git.git I get
 
-Maybe there should be a function, to be used as a check, that parses the
-string and checks whether the format-string should be accepted.
-This could be an improvement for a future patch.
+v2.53.0-522-g67006b9db8
+
+but when I do it from outside of the repo
+
+cd ..
+git --git-dir=git/.git describe --dirty
+
+I get
+
+v2.53.0-522-g67006b9db8-dirty
+
+Curiously I can workaround the issue by directly passing the work-tree
+
+git --work-tree=git --git-dir=git/.git describe --dirty
+
+I suspect 2ed5c8e174 (describe: setup working tree for --dirty, 
+2019-02-03) has something to do with that.
+
+Where should I start digging for a fix?
+
