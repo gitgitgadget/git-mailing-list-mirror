@@ -1,150 +1,170 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995BD375F92
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 20:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3ED382F06
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 21:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773434181; cv=none; b=YhO+1OEBUMpYUoKBBLR3MfUJBhi0yS2hv2jeKq995x18GqJUi+9dcT0OaGj3o1hB6QbUdN8t4PCeJLkKk+jswi2aeEt5IKKPp2W19bPB64uHKsb/Mij11zGyJWtomFAoEiCEAqhYiZwXHg+ioOcqb4H9DmN53RX08kafMEAYMbg=
+	t=1773436843; cv=none; b=ShKBu8qLUNxX4k12ln7Ac5ZB86a3a5wmlTzhvH7jtBV88U42aO4OPFCsDW5bTFz/LdmpKJNrqFf+SPTF5CD2jfu85iutNgheDpidajGmCg/du90Yqi2bhaW3CX7ESJrHpRj+vfPu/+5ZpWewe4kMo1Q6z9oSYyIv2dhWIT046rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773434181; c=relaxed/simple;
-	bh=7oH5GPlv/91TiwDfQjX3LRpFFYMDQm6iEk4HjfvdGyc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=hyGN6zdO00m4or2St4uKEZEPWLuvxbsdJufGX5yWe4CVJ+EAg9zsoTPsq7W0BEWbGxXJ2MRnPpZnvE8Xr7UlX0MoB0E6D7+VTkdi/jWsGrHavY/bQeHTDxidV95DGkudcdhxl9vMa3fw2SbqRcjxpKdTlkogtvvaj4DWMzOhcsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QZBnkFao; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773436843; c=relaxed/simple;
+	bh=mODKFV84P72ple4f01gwja5jjTtrA4aVh2UoTu/yKAc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pd2lG06uB+1af8CX2kXMMnCFBg7HzzvuDxv9IXIOEXbbD/32GuTEzXQL9BZtKS+WWbkISYbco78neF39FFntbF7Lg5GuHVZHQbKZx0w6jlvcAaY7+HuM7C5p9KzJSkErP+rEkYQB4O2Zi9jdVroSfuB8VUkhcG8rydekMLFgz4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ORsQ9yT0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KQlFLEe7; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QZBnkFao"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5a13e1cfa45so3100286e87.2
-        for <git@vger.kernel.org>; Fri, 13 Mar 2026 13:36:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773434179; x=1774038979; darn=vger.kernel.org;
-        h=content-transfer-encoding:autocrypt:content-language:to:subject
-         :from:user-agent:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=vbjHjGaews5aETex4OnNg1PqkpI+JyRbm4xvMfbgJPY=;
-        b=QZBnkFaoUl7JfJ2DvFWKOOcqI3KpWGpYIUbiwuYVyA9QcN9Q66F1OlbkRiIav/VtgV
-         Tc49wfEMUTwMC+Do5ePo8OAnR6j5vezAu7nmocIBgp6jeSeTUbYKdGSPOOlK9jueGFUV
-         fIsp7qWk3PKDb3ssSrjARjS9bWnXdLqeaDUg/LoOSq6p4WY/ZNlXdad+VTtI0WOVS29O
-         xGVymE87R0Djlm/AkIYH1asrijmZCKzAnW7TzszAvttrGpEJ/+0qhRljtkC6YKcH8zbJ
-         TWAPKPlvM7z6v/fCa4BkdE4tjQpIedP/7VAc/y8mUHPciC/3TVDVJ35ecOeICq97AN42
-         rSQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773434179; x=1774038979;
-        h=content-transfer-encoding:autocrypt:content-language:to:subject
-         :from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vbjHjGaews5aETex4OnNg1PqkpI+JyRbm4xvMfbgJPY=;
-        b=eb3gk0rCJNo0ZtirwaA3mUDuyRgE3F9rR89TG7W67bO9UQT3Tqvy8LOAvlCVYf4Fzd
-         SqMMjAZrhRNr9q3V5zl6e2yiqn3GIlsfrxZ2hBW0cb5uf8eLIaViDHRsFFvD1DqoOvqO
-         Miwic/mD8n61zDIke+Lo3NfrKAOKHsa33YSODYpthnEKdfsMSY7KFYpvwQv8h6+K5iwG
-         bnuyYPZxmadaUtXRuE9NYw8wPB3CWwVOuzDq6w10ng2ZB6rv1lsE4Y4WZ54zjjY6PsMz
-         1+npV6IKRrLSlujlqKlLGmNFJxm3zOoGMCHRf8gWKg4VoLDBv7sJm0iBS28U4KDbO4BM
-         52xw==
-X-Gm-Message-State: AOJu0YwHMyef7l4vEljddub4TPOtlr+VmOdr6fRy76pTzVlbVeLoGZ1m
-	tP2n/wvniZBYTNxZmeqNqzUkHU8eLOwI6NVGqkn8ktqJoaATtsS9lLnnxZRqAtFVqtQ=
-X-Gm-Gg: ATEYQzzXXjuEdxQy42H0ziv22/+mXRglS8+wMaeyHzmrPjEXrstPhhrFadCsEnE0aLF
-	jxoH2DLb04D0nsm+CQvr7X+6iMDoqFChd4oPXfjDfv6ThI2CgGgg10mVVjdxMTM2NsQUgT9bdui
-	STUNwB4IxtYMkbYDboaitdyZonrXiy8LZOWiu/c04B/2ROjEskHMvzuAdVY/Lk1l0wrFRuJQJDh
-	qeta+RR03J1RGqbOV7+ys6wfCI2GE2Fs8C4tWqs1uS7q2MMQf29/Tuo3+l8Skml/r6duafkqL7H
-	R+jZ/R+76dHipQYNLTPRoCc2K8uCMr1RpyEPjfE9iO9Rw/i5Qi3frdWjDQtDAKZ8HdKGZbOE8ys
-	F10O/kqmUy+r7amQspLKdzNOzlSv1ocR7vZiUgmcW51PZDIsxWQ+sgxwV/OLZxN327m6TxON59y
-	fy3Rj8Y/xx0BeA/8MGXvxaRsg5DBDC70F/Yj9xgZ2ad7R9ZSvbDucRTj4gf9Vh7rjDFGVDTvc8
-X-Received: by 2002:a05:6512:1413:b0:59e:1954:1d3f with SMTP id 2adb3069b0e04-5a162b3bb6amr1345616e87.44.1773434178590;
-        Fri, 13 Mar 2026 13:36:18 -0700 (PDT)
-Received: from ?IPV6:2a02:2168:8772:9800:eb6d:4393:98f8:641a? ([2a02:2168:8772:9800:eb6d:4393:98f8:641a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a155f33e07sm1797492e87.4.2026.03.13.13.36.17
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Mar 2026 13:36:17 -0700 (PDT)
-Message-ID: <2c9651da-6c1c-471a-a239-5a60576251a6@gmail.com>
-Date: Fri, 13 Mar 2026 23:36:17 +0300
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ORsQ9yT0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KQlFLEe7"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id C03CF1D001B0;
+	Fri, 13 Mar 2026 17:20:39 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 13 Mar 2026 17:20:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773436839; x=1773523239; bh=pJXOBb78dF
+	rrn6187BYxtYFjRkqR8GLMAZLVgIVuFM4=; b=ORsQ9yT0JZeSAquWLX7i0lZ+cw
+	3vJjfSgYWfQ4dXN3wfkjkpk/L5iiPHtSjT7E379ifMfYrmc5hQtYFFzIAFI/ZPcL
+	tfskHQUDgGEzmXzZx82tHGHttoy9v48DTB2PBfvabYtbTrILVAoSC/ycPvI0A1SB
+	6dvKTZ/iOj/2O3I6RaO29J1muArPQn0HCrAbbc3JEH3d04o2Up0fg/uSuQp3UnTY
+	l5zmeb6h/eVDLhvuNKewODthlWGzCRpyHk1cBm74K5FnJao/Eml42dcppv337z7V
+	x0PETmM5iUx79s5+TZhirQe2Q05nW2XSefNzom2ad7shrCpeKs84zt0HOKdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773436839; x=1773523239; bh=pJXOBb78dFrrn6187BYxtYFjRkqR8GLMAZL
+	VgIVuFM4=; b=KQlFLEe7RiMHJR/72WsTHUPFel4N4dar/3f8a1Ju1HS4N+5FLK0
+	HAl83kwMQvlmaTVdhIRoruZHuWPRILKxLjnUExtLliaTQNDfuuQ7imlScsyr9wqz
+	xx8fXzppJAYe3tT/effgglnzffT7EOmBWtuRyxfKXaeQzepcKncpn8UNo17OWnLu
+	Qxg957IAuifZHNvfm3dUm6NV0PeqySjxSLSUdY2sh5Ght1pF6zwsbDfc6lQ10iSf
+	KXcDjw4PpPJw1EN8CjnYiGK7k0ZCTgMihh0t00myA2l7p5SCg3ha7XKbLq7BpbTk
+	FdtNC+lWfr70itUTCcde750TNp/5QinWcrg==
+X-ME-Sender: <xms:p3-0aZgIRP81ejFMn_aRcy7au8APwkcsBZJo_0_dPn6OIhIv-VhO4g>
+    <xme:p3-0aU4f_aY1cEQzZi9p25kYputW_a3Qx-enE8JVrlSSQU6eFCLJQtgzlLIjjILQU
+    8KpV1ILqC402-GYuOwe5g7vuBndlTXnTerPkNYiDpuO-Heb1PNjqA>
+X-ME-Received: <xmr:p3-0aRb74KaF3KbsRbtFNqkQ2ywbDwUdnzn8Dfcto8i8Nx-cCP_d4quXKhY7LLIjrOCkKb2OOCY5xhoe1YPZDBrCZD1c4h0X9w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledtjedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvrhhitgdr
+    phgvihhjihgrnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehj
+    lhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:p3-0aZ7WSUEEpMfhExBOijTiGxz85O66lCMKu9DYtrE5_SpN5p2pvg>
+    <xmx:p3-0aUASADaHVQfa5gXA4smqNr4msQmRRzxZU0ueGk-OvnVDDQpK-Q>
+    <xmx:p3-0afeeaWUfUhG-vnFLZbHpXrESg4Yxzw_s8bjUCadqDfC-4RrDpw>
+    <xmx:p3-0aTLhtyat6Q_VaCHG6D0iMr4z1a1KXp_MEtk_QzL5UtgIsF9Djw>
+    <xmx:p3-0aVJqPVVXLvaGRBKi0rgF66jeXuef38UKgXEpCqt4fQu0ChHJsq34>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Mar 2026 17:20:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: eric.peijian@gmail.com
+Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com
+Subject: Re: [PATCH 1/1] Add preparing state to reference-transaction hook
+In-Reply-To: <20260313193537.62827-2-eric.peijian@gmail.com> (eric peijian's
+	message of "Fri, 13 Mar 2026 15:35:36 -0400")
+References: <20260313193537.62827-1-eric.peijian@gmail.com>
+	<20260313193537.62827-2-eric.peijian@gmail.com>
+Date: Fri, 13 Mar 2026 14:20:37 -0700
+Message-ID: <xmqqpl572zq2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Andrey <butirsky@gmail.com>
-Subject: bash completion bug: git range-diff: no --diff-merges option
-To: git@vger.kernel.org
-Content-Language: en-US
-Autocrypt: addr=butirsky@gmail.com; keydata=
- xsFNBFpWP0sBEADdnQLkXcwaJnoXWO4o9vlWHsLqsbltZ1MEIewNV/7jfhQ6mBBW43O4wK0/
- kdICUpH3Tv2iGQtWszAxBotWhEjFii6naG5FK5nHtO/qbIhpRA0I3nHn0tNJRxIPbtM1rFHh
- xplEEPRqL04EG0C5iC69SdKPQdHCDEP+xFrBSmANQ7Zi2ipUG9ctHiWA85iatbK1Y1T/AhfS
- d0dOkKXxH7SWz1w8TiinhIGlHDtKdul8W/g2pUkSE0iW9j2Yipr4YRMSVJPMYiilWrC2ofth
- 1gH8rUI5/a4ePatVBh2GZInpyUImjGbC3r7vzig/w7tdrq8dXQYramHHs4xpCQZ+kW45nkS6
- aNY1AWvwGKJBzVIyqflVenn/oElIvaviiR4txl+HfaIcSwRfVLIym2ywa1ZUGFfVF89U5kh8
- WSp++JDIAEflm3Yh+56H0L2th81mV2XzjEJhS87isDnQLvBYvW4GSwUTwgHbGvU6yuHGC81y
- d4bGdYKEJtPLjGpFMRAdin2YRHyKZbbcQknOJCOSOZW/H01H5aix1FqklZp+jwAvXRAT+dPR
- 77sYVu21IDe/glcuTxHRvk7fgMnJt5+Gdv6nWEtg1r4NLAik1eWMKJnc7Ho52T9Zw/Fie/UX
- mQ4iZDJFmOmckxLLoRJnvGBmQJD+dHQLW9LHIM4aKwSqAIbZXwARAQABzSRBbmRyZXkgQnV0
- aXJza3kgPGJ1dGlyc2t5QGdtYWlsLmNvbT7CwYcEEwEIABoECwkIBwIVCAIWAQIZAQWCaXyn
- cAKeAQKbIwAhCRD8txru3lAhIhYhBJhAidEwFbzdZP55C/y3Gu7eUCEi3U4QALaYKHNoZMMA
- v9wz+lRTade6vgD7dLTfxvWK5Ahy+3N/RyMe4yH8Vg1t5gGAtTqIV6xB2sGC69f86LLSa9+H
- Wj+9FYGksqd2B9STVjSRC754hMwSObM8WPMFj6qoP8I/URgH5J6rRhPQuk9Ltc0Kb7ws4BTi
- gT1Ss4+aEizcwiahH2JjHrnYFHAM/IkCQEmxHZFrtlODCPpQvSw1iuL6hL3iwYFLZkkcNIDr
- FYnNKAF+0t28Upq0Opd12NpIvOtBaqJ1+QeP5FqpuuuDMW350pr/oieCUS3XfAEV8ilcABCJ
- kK5EpwkbNW5KdOuMYjchP1UfkdT5vz85YhhAW/MC9DpC8Ade3Jdo8c4dmvgrYduhHyJ7xLfS
- soJbD68mUcJ4aG0uiZR8XBrca2e99cG0QfDyVl5NqbYj289Arhs+26LMEBu3wECUqQSlXL7V
- A2iUShH3Tp06XOyMkbUv8gDIzD6vrhaKK+MkDjeTOHC8pZzFeh7n15e1V1vdiwsup+9Lcz/J
- J822sR0ivReRRM1jQKW8O6t+eZDOSw71WUdGU/ySQXkPQUcsy/20kXZ+8JXMZ/OSOhzp2wdw
- Fw9iokn/mYUXKLqae3MHp2s/FPV+AqyfEUFCXOePii8nI/GvG4VDA77V8dNi5LqPnDsULW2y
- Ym/vvid8aBO1HOtRjpGnPlWwzsFNBFpWP0sBEADxNpLRM8haulFf+d8g7SRS38t3AUBou1cS
- lym08+djQVUXCpNLPj0LSsV4zKzmyGs5rn4R0kin+EIjhJEVqfiPrE9FwCV5tk3r5kP4X+oK
- LHxworYy7E+nBtw7GHvXvLvtWyMGstC1dVhU3lLmIPfwwNpjvE6LSDS+xwZLZeeoIO07Png1
- KjYZ+T7FAdrClhhwypMFwM3kimBUifZdzSPwnxww6G97Vqm8hFP2Oxyh8AEWBTeya0ayfV+k
- BEdnSw+Uy7sRt0L8Pvs5bk3lm+Qi6NMzDGsT6ezvOVSAa5meDULmdjkett8lbRRE9IndSGhx
- CDXQDeRC4NLcHdWVDHir0tHvZZxCuD6FSlDXZtnYYL3PhWef9q3nTdpXzfKhNxUbFU/4AKAv
- UiNTvypvgsrbhHnGKWBX3/oNPSY5ISuGYe5BCgeBKBCc/5MFvPAT8/YOJbZUkHNiN3Y4xGQ0
- tNCcgxmffQPDt+F7XLDdfnvIlgDPI0yxr7tp07uW8QItp/ArTfknGzZNOT0T0HjiWojD8TqY
- YKQzsEh5Acszh5auNMOucGMV89TG4o8PMAgGlyQvUVix3TI9JWG8LYEooSFttkf8iE4/6Plm
- hlkr5I6lCyguRo2+o88+o6tt7Y/f3LDYcV4JtMhye/BSrhjv4xd26yYWpTmGf3avU5UsNcBf
- XwARAQABwsFlBBgBCAAPBQJpepOJAhsMBQkYi4yFAAoJEPy3Gu7eUCEifCQQAMEP1VOnkIEt
- jXQ6qgpuBvyPZkudJ7w38VHpL66cQn8ipQE6YEeE4bpQmw5x7TvyHiATEnI9cWK9dhiNMe8D
- QXrKuLIxEW6sEhhd/lpfMWCAERmvZw4rGW9KDjhr+O3i3we88VVl+5eWW+A7cwrcavSZtGhk
- Jdb9KeUFFplVO1MBcKnO6DST42S5oJ3xOyHXuXGZjbfKv7HL2leQ0mVOmBG/2pgz1YbCFE4F
- BtmMjP82dEAJYJChM9uvw+OaJDOc8HCSOT/OHJT7exl6XGBpwAzz+LRw5wybf5llafPFv42H
- W68z4rewUh5lFZFsQHcBYsaUmLKg4HaiVNQNSNhkCjTaS0Ns4Sw2muvwSwHT1EkWgEhOdAFc
- fRFHtu4LW6eZIQAcyzjt+9cnvCz5/FRpGzLVHFVhkHNi9qkdbnGNNz8B0nbAxYQJgQ5TWDsa
- uiVzj4EZrDZSbZHl9sjfFSer2bzCK9bfVLhM/fjOfoyLWJuZ5kgGJqfDyfPsCHoiqsJfamJ+
- PsWRKZFcB3U+mbaMzFUqKDCskpRE6+frm188LrSf55BLmL5XnIykO+l+zAH8u9/iy6NHSjEK
- 0ft1PUXja1u52zJ4FNtW/PVbeYP2Thow1izzyA5L2b35FVfpz1wlQ2WHkJ3x4CpaET/6H/dY
- VVOdns/k4krQA8QXLlOOXh+F
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
---diff-merges=, --no-diff-merges, --remerge-diff valuable options are 
-absent for 'git range-diff' completion.
+eric.peijian@gmail.com writes:
 
-These are the options presented here:
+> From: Eric Ju <eric.peijian@gmail.com>
+>
+> From: Eric Ju <eju@gitlab.com>
 
-|# Options accepted by log and show
-__git_log_show_options="
-         --diff-merges --diff-merges= --no-diff-merges --dd --remerge-diff
-         --encoding=
-"|
+This is curious.  The former matches the sign-off, but I somehow
+suspect that the @gitlab.com identity may be what you want to use
+for both of them, if this is a company sponsored work by an
+employee?  I dunno.
 
-But they are not included for range-diff:
+Also the commit title deviates from the established "<area>: <what
+is done>" format.
 
-|_git_range_diff ()
-{
-         case "$cur" in
-         --*)
-                 __gitcomp "
-                         --creation-factor= --no-dual-color
-                         $__git_diff_common_options
-                 "
-                 return
-                 ;;
-         esac
-         __git_complete_revlist
-}|
+    Subject: [PATCH] refs: add 'preparing" phase to the transaction hook
 
+or something?
 
-[System Info]
-git version 2.53.0
+Other than that, both the cover letter and the proposed log message
+very well explain the motivation behind the new feature.  I wish
+everybody wrote their log messages as clearly as this one.
 
+> The "reference-transaction" hook is invoked multiple times during a ref
+> transaction. Each invocation corresponds to a different phase:
+>
+> - The "prepared" phase indicates that references have been locked.
+> - The "commit" phase indicates that all updates have been written to disk.
+> - The "abort" phase indicates that the transaction has been aborted and that
+>   all changes have been rolled back.
 
+"commit" -> "committed" and "abort" -> "aborted", if the existing
+documentation is to be trusted.
+
+> This hook can be used to learn about the updates that Git wants to perform.
+> For example, forges use it to coordinate reference updates across multiple
+> nodes.
+>
+> However, the phases are insufficient for some specific use cases. The earliest
+> observable phase in the "reference-transaction" hook is "prepared", at which
+> point Git has already taken exclusive locks on every affected reference. This
+> makes it suitable for last-chance validation, but not for serialization. So by
+> the time a hook sees the "prepared" phase, it has no way to defer locking, and
+> thus it cannot rearrange multiple concurrent ref transactions relative to one
+> another.
+
+I cannot quite picture how "rearrangement" would happen, though.
+
+Would the hook notice "ah there is a preparing hook invocation
+incoming", stall the caller by not immediately returning and instead
+wait for a different Git process to invoke the same ref-transaction
+hook "preparing" invocation, and somehow decide to let the latter go
+first before releasing the former?
+
+> Introduce a new "preparing" phase that runs before the "prepared" phase, that
+> is before Git acquires any reference lock on disk. This gives callers a
+> well-defined window to perform validation, enable higher-level ordering of
+> concurrent transactions, or reject the transaction entirely, all without
+> interfering with the locking state.
+>
+> This change is strictly speaking not backwards compatible. Existing hook
+> scripts that do not know to handle unknown phases handle the "preparing" state
+
+"know to handle unknown phrases handle"?
+
+> string will encounter an unknown phase, and that might cause them to return an
+> error now. But the hook is considered to expose internal implementation details
+> of how Git works, and as such we have been a bit more lenient with changing its
+> exact semantics, like for example in a8ae923f85 (refs: support symrefs in
+> 'reference-transaction' hook, 2024-05-07).
+>
+> An alternative would be to introduce a "reference-transaction-v2" hook that
+> knows about the new phase. This feels like a rather heavy-weight option though,
+> and was thus discarded.
+
+And documenting the design alternatives and decision like these two
+paragraphs is very much appreciated.
+
+The insertion of a new hook invocation itself is at a very much
+expected place in the code path.  Well written.
+
+Will queue.  Thanks.
