@@ -1,84 +1,81 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E54433F8B4
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 06:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA833603CD
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 06:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773384328; cv=none; b=hc5X1PTUL20I1juY2iLJBhJ1NWFNlwjXCoqGrJfWmk0e17xHklljn/VK/esr6Jjc26ttnyCxgyEnwuNNhAXqO8PF/H4XYDwxwHdGKzLKpP2ZGz67nmLEYpLKdy0wtY7vxICWL615JlHFs30UCknxJYLvwvZkCExBHvveTFGPnOI=
+	t=1773384328; cv=none; b=nmVN8bpjMvWQGnyEpPE2KsHFmr6PDBOrKvkkMOelkCwAIj/ABBUnAaHS/riIeTWqx2XpgPSvSPk78S1Y4Jnoo1EOnvE9EaUv5UPiJQoaoK+86NhBJqvKNq47OpnpJOudWdEUivTSKqEeth0iu+8gW4l8IA8QB+DGAlI/JA5Fwqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773384328; c=relaxed/simple;
-	bh=dy0qkzgqdT2ZAL8oKhrBglQ+xPM3GT+1yRJDYaX45MU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=KCcFUrX0ndwYUleiG9BlXSXiNeMwzMBKHEtQfwJk0dX5GDhBhJ6e9C+w3oAacYNftFrXbXJKe04wo4w6auxwkQvEKtrop13IAytpZCHbEnOCgB02LWK0pcES/mu/E2wC0UE7eR7NpnQq4kbBrmMXbqVU3C0OokZwqgjVO9ovGEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FO/MRYVR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fw4P52uj; arc=none smtp.client-ip=202.12.124.146
+	bh=CJd/YtH89c8NPdkS0lm7ncPxyzMy7tgRZ6JU5l9/6cU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=eOJpcgNWROlwxlVtpJslR83x/f93LxdnUy42QWuu/Jd/Vt449QmYRio1B/onekvVeDgKtKajkYIqL9ZrYGnUpTv4Y6hcy7Q+P06oE95cl3/oCQbnGQ7xIjrEk9GPoI2q3nU+Xe+GMD56/98SpNZgQcXrLox3g+gvbGkwKiWLEJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=okjY3a+9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hwYBM/X9; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FO/MRYVR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fw4P52uj"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 410961D0011E;
-	Fri, 13 Mar 2026 02:45:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="okjY3a+9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hwYBM/X9"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id E1CE21D0010D;
+	Fri, 13 Mar 2026 02:45:26 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 13 Mar 2026 02:45:22 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 13 Mar 2026 02:45:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773384322;
-	 x=1773470722; bh=7eoRXY3gWP5EeEi5e3DCVNevwXsnwbMeqKQx7kRyQ3Q=; b=
-	FO/MRYVRgc8H192ak4ZsCyRT/jAOMQbZZaP/rNn2XinqH5yaYSeuqg9m6DvGmHCA
-	TrS4Rdp4g5xvQcxAxyBvPZ2GJw013mHXJxzkcbHL8xf18Pp4yCdSaR8m4JO5dzjS
-	+4h+xbCW8bd+RMzZWDke/jy0FnWPe0gc2+0YEAUd9SePP+EHpqLAQSg1Rptq30fA
-	nLClOmqAa9PwUosllkbHjzDvGLwXpAb06ZF9ptIEtPnL/3lzL+RXGl+xKRaPmUtR
-	jzxbcRm/YwdTdRNHap3zxjl64Tn8RR1pqhJsq3aA3imd0Gjygp947nO4Bb/gTBue
-	vHnQapzFMZhyLI40woMjBQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773384326;
+	 x=1773470726; bh=NCHDglmGZZ/ujYXInHdTvZIupg5ltPb5huy4o5VnwvE=; b=
+	okjY3a+9DTLlpbchrnfZqUi6x4+NbGbmErMfOg43FrAF5g8Fw/UedSCf+4K9yVcf
+	VS7hTKtzOUVu29Cu7zCq33Fg+rPYl9eD0Zt+Qz1m4F5owSSVs+wxz+y+z5+wLMmr
+	nFLbuhn6Eh1sEpXUBYZ0Ag8hcJg+PVhbd11RMTQgtBIPTCFZrOo257E2bL+CL1y+
+	gQzexzw0PXBFqrIyePbW5nc9BLmhYUL2zB93sp2c5A4UBkP3iVcK0tV16tZvzjWX
+	lJPSZoRK9O+3o6lDRtLb7prxeVjTLEbfTCoZMwCpLPxTG34RjhN9Mx3YUtYodAP0
+	sqh1osChM4Sn8iMpy6txbw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773384322; x=
-	1773470722; bh=7eoRXY3gWP5EeEi5e3DCVNevwXsnwbMeqKQx7kRyQ3Q=; b=F
-	w4P52ujODnlUn1YjGywrqypA4csALGviVd7WzDhQfJH5C2ARi5XJZcBKDv5ujLeF
-	9P8MZvnrV/QnM5+7ft+gdLlAjzQJWWf6WeSX9xZfzuZud700XLb1X9KZu2Tkp25K
-	2vVVYMO3tSGICPJ0v3/KwfMINCK0NYkDn/iSNLeVhmJDRQXg9UsWlUrjCRVk4I2p
-	s5wM1Ksy+Ibq2d/HFD6/1qz7gCVEZq+jcfHS1fQD9ddamEG1AkIK+l8gf+0vtebl
-	qL9bYqfBln4qiesqRSWVwTXjxSltDC6RadRxeSeD0Zo9C0ykrIT7M7TrkjifRpJf
-	5Bn8epAOCqknWs5Iw97bQ==
-X-ME-Sender: <xms:gbKzaY4LAD6U02qnVimL4Jy5NPBfN3hOo3PZ9AJv_bcFMIPijeAu1A>
-    <xme:gbKzaQxme1Yhq8YSkLXbCkVL2ps5OtxfJphvJJCT5Dn40SedDw5PsAzIFxbFJ_c4v
-    PsGkIM9XMnuPrVDBTuEzRdFtziIaD32IVo8d15xuuzZ0ivRRn7Rkw>
-X-ME-Received: <xmr:gbKzafzNW84bccvljhecehRNfO3tQu6Wku8o_x7L6692sWVl6_lCSkSWCJx49Up9eeeeCV-IHjBynEHGnoJAKyjVeLUjGZtXENkXCKzavA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773384326; x=
+	1773470726; bh=NCHDglmGZZ/ujYXInHdTvZIupg5ltPb5huy4o5VnwvE=; b=h
+	wYBM/X9R8E2sKL0kPUBmuix8gh4lq5KFVBJ3gZU865oog/WA4ktWy5ZP+Gvw6CV5
+	6FzJc75PSm4atB1k9mbJgkf2q2ihWa90c3SyuE8HZNQkVNKwf++GwrXTBvN8zc1N
+	fEplZmeU8+YGsdCLoizeocg+GffeR2ehTvXZGnuy8PinnGs14ik2NO+GvOJnGV/s
+	q79IxncmXegyUiV6vDbrnjsHjXPmc44KOVdfPd3guq2s9E4ce0hxW0s79hZNNBtH
+	tnnO93q/D5M5mLOjkCLVRsNq1C8/wwMB6n/G1VxbqpJn+xvjnMrtK42MgjKbk8hh
+	YqxFUkCZoDGK06XSXBZSQ==
+X-ME-Sender: <xms:hrKzaeszBmHm1BAzFUgsGQUItb-AQHn3xGeQiKR-9xekSMJ-iS08uQ>
+    <xme:hrKzaaUjGqTpoubU91DoHLRMQd1Jl1Bz1A1ezjIgBBYTH2PiTHA45eewhWNgex5t7
+    gvptyrOIv5Fdo8ANfjC9np7-YppYUIa4a-NRjWZV0lXcDmGN_8C>
+X-ME-Received: <xmr:hrKzaSH-VfBVJbXXpBuUjZVVBFfvVOUmOWYrzUke0IKGDYeBrhSHko0SqNXpRnDCQugC639-u0bbgJsmoU9fkfj1wvQJBSnAvHo7hiVVuQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeekleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetkeelkeeuueevkeeufeegvdfhueeilefgtdegteeifeehkedvhfduvdekvdehvden
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhtlhgrsgdrtghomhenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjie
-    htsehkuggsghdrohhrghdprhgtphhtthhopehmshhmihhlvgihsehgihhtlhgrsgdrtgho
-    mhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnh
-    gvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:gbKzaYxGGEqs3SbiRPHWqnL8XPYBeYT9KR1CURXtzvic5j3wdQ6ruA>
-    <xmx:gbKzaZaO3QH57eD4fDSvt3xBF4ZRq3H_47aN-AyH-Kvpk42Umdmt6g>
-    <xmx:gbKzaZXTtGOhnEPeSgk-CkPAn-ALOgHu6aWXRWzXPqKDfc-rJZIxRw>
-    <xmx:gbKzaXg8q4NbSEzD5uXIgq_ogywfBYzdY2gGP7uaTLvPa0tI40_CjQ>
-    <xmx:grKzaRRNbTpfXni5qTRlQ85JjtMN7rwmBUydH1l8-kn9PFdGtIcLPlkl>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhp
+    rghsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
+    hopehmshhmihhlvgihsehgihhtlhgrsgdrtghomh
+X-ME-Proxy: <xmx:hrKzaU0E_AC4aLep-IDwy7J_HsJPWHUBEKr168TaE2g_kRPpZHRuNg>
+    <xmx:hrKzacO_PMlMNmovdbs08dyy0K1zU5dV6WD3aPTmV8A4w3dRNL4Dyg>
+    <xmx:hrKzab4x5ygPVfw0JIagVHoykv5aInSgLjXqB7u-ra6RgD6TWhka2w>
+    <xmx:hrKzae0pghYnkffxyLCVs4OM2owl0IbhyAHvzE5DhA8D0rRzbSMUwQ>
+    <xmx:hrKzaTUlrnzFO6YOg9_6gJVO1TrOXGSAf3EamK7W4QwHFGn3rLSPV6tK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 02:45:20 -0400 (EDT)
+ 13 Mar 2026 02:45:25 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4852a24a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Mar 2026 06:45:19 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id ad60993f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Mar 2026 06:45:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 00/10] upload-pack: reduce lock contention when writing
- packfile data
-Date: Fri, 13 Mar 2026 07:45:11 +0100
-Message-Id: <20260313-pks-upload-pack-write-contention-v4-0-7a9668061f7f@pks.im>
+Date: Fri, 13 Mar 2026 07:45:13 +0100
+Subject: [PATCH v4 02/10] upload-pack: adapt keepalives based on buffering
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,109 +84,209 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHeys2kC/5XNzQ6CMBAE4FcxPbtmuwWKnnwP46HWrTYqkBZRY
- 3h3Cwd/bnicSeabp4gcPEexmj1F4M5HX1cpZPOZsEdTHRj8PmVBSAUSaWhOEa7NuTZ7aIw9wS3
- 4lsHWVctVm8aQqdwySpc7XorENIGdv48Xm23KRx/bOjzGx04O7R94JwFBy6JwTHmuMVunycJfx
- CB39NEUqgkaDZoiWSp0WDr+0dSXJnGCppJW7uxSG6OYCv3W+r5/AXEObwNpAQAA
-X-Change-ID: 20260227-pks-upload-pack-write-contention-435ce01f5fe9
-In-Reply-To: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
-References: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
+Message-Id: <20260313-pks-upload-pack-write-contention-v4-2-7a9668061f7f@pks.im>
+References: <20260313-pks-upload-pack-write-contention-v4-0-7a9668061f7f@pks.im>
+In-Reply-To: <20260313-pks-upload-pack-write-contention-v4-0-7a9668061f7f@pks.im>
 To: git@vger.kernel.org
 Cc: Matt Smiley <msmiley@gitlab.com>, 
  "brian m. carlson" <sandals@crustytoothpaste.net>, 
  Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
 X-Mailer: b4 0.14.3
 
-Hi,
+The function `create_pack_file()` is responsible for sending the
+packfile data to the client of git-upload-pack(1). As generating the
+bytes may take significant computing resources we also have a mechanism
+in place that optionally sends keepalive pktlines in case we haven't
+sent out any data.
 
-this small patch series fixes some heavy lock contention when writing
-data from git-upload-pack(1) into pipes. This lock contention can be
-observed when having hundreds of git-upload-pack(1) processes active at
-the same time that write data into pipes at dozens of gigabits per
-second.
+The keepalive logic is purely based poll(3p): we pass a timeout to that
+syscall, and if the call times out we send out the keepalive pktline.
+While reasonable, this logic isn't entirely sufficient: even if the call
+to poll(3p) ends because we have received data on any of the file
+descriptors we may not necessarily send data to the client.
 
-I have uploaded the flame graph that clearly shows the lock contention
-at [1].
+The most important edge case here happens in `relay_pack_data()`. When
+we haven't seen the initial "PACK" signature from git-pack-objects(1)
+yet we buffer incoming data. So in the worst case, if each of the bytes
+of that signature arrive shortly before the configured keepalive
+timeout, then we may not send out any data for a time period that is
+(almost) four times as long as the configured timeout.
 
-Changes in v4:
-  - Drop a stale half-sentence that I wanted to remove.
-  - Link to v3: https://lore.kernel.org/r/20260310-pks-upload-pack-write-contention-v3-0-8bc97aa3e267@pks.im
+This edge case is rather unlikely to matter in practice. But in a
+subsequent commit we're going to adapt our buffering mechanism to become
+more aggressive, which makes it more likely that we don't send any data
+for an extended amount of time.
 
-Changes in v3:
-  - Fix handling of `iov_len` overflows in writev(3p) wrapper.
-  - Add another patch that causes us to flush out data instead of
-    sending a 0005 keepalive packet.
-  - Link to v2: https://lore.kernel.org/r/20260303-pks-upload-pack-write-contention-v2-0-7321830f08fe@pks.im
+Adapt the logic so that instead of using a fixed timeout on every call
+to poll(3p), we instead figure out how much time has passed since the
+last-sent data.
 
-Changes in v2:
-  - Change the buffer size in git-pack-objects(1) to also reduce the
-    number of write syscalls over there.
-  - Introduce writev to half the number of syscalls when writing
-    pktlines.
-  - Use `sizeof(os->buffer)` instead of open-coding its size.
-  - Improve keepalive logic in git-upload-pack(1) to account for
-    buffering.
-  - Link to v1: https://lore.kernel.org/r/20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: https://gitlab.com/gitlab-org/git/-/work_items/675
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (10):
-      upload-pack: fix debug statement when flushing packfile data
-      upload-pack: adapt keepalives based on buffering
-      upload-pack: prefer flushing data over sending keepalive
-      upload-pack: reduce lock contention when writing packfile data
-      compat/posix: introduce writev(3p) wrapper
-      wrapper: introduce writev(3p) wrappers
-      sideband: use writev(3p) to send pktlines
-      csum-file: introduce `hashfd_ext()`
-      csum-file: drop `hashfd_throughput()`
-      builtin/pack-objects: reduce lock contention when writing packfile data
+ upload-pack.c | 49 ++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 40 insertions(+), 9 deletions(-)
 
- Makefile               |  4 +++
- builtin/pack-objects.c | 23 +++++++++++---
- compat/posix.h         | 14 +++++++++
- compat/writev.c        | 44 +++++++++++++++++++++++++++
- config.mak.uname       |  2 ++
- csum-file.c            | 28 +++++------------
- csum-file.h            | 16 ++++++++--
- meson.build            |  1 +
- sideband.c             | 14 +++++++--
- upload-pack.c          | 81 +++++++++++++++++++++++++++++++++++++++-----------
- wrapper.c              | 41 +++++++++++++++++++++++++
- wrapper.h              |  9 ++++++
- write-or-die.c         |  8 +++++
- write-or-die.h         |  1 +
- 14 files changed, 239 insertions(+), 47 deletions(-)
+diff --git a/upload-pack.c b/upload-pack.c
+index b3a8561ef5..f6f380a601 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -29,6 +29,7 @@
+ #include "commit-graph.h"
+ #include "commit-reach.h"
+ #include "shallow.h"
++#include "trace.h"
+ #include "write-or-die.h"
+ #include "json-writer.h"
+ #include "strmap.h"
+@@ -218,7 +219,8 @@ struct output_state {
+ };
+ 
+ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+-			   int use_sideband, int write_packfile_line)
++			   int use_sideband, int write_packfile_line,
++			   bool *did_send_data)
+ {
+ 	/*
+ 	 * We keep the last byte to ourselves
+@@ -232,6 +234,8 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+ 	 */
+ 	ssize_t readsz;
+ 
++	*did_send_data = false;
++
+ 	readsz = xread(pack_objects_out, os->buffer + os->used,
+ 		       sizeof(os->buffer) - os->used);
+ 	if (readsz < 0) {
+@@ -247,6 +251,7 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+ 				if (os->packfile_uris_started)
+ 					packet_delim(1);
+ 				packet_write_fmt(1, "\1packfile\n");
++				*did_send_data = true;
+ 			}
+ 			break;
+ 		}
+@@ -259,6 +264,7 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+ 			}
+ 			*p = '\0';
+ 			packet_write_fmt(1, "\1%s\n", os->buffer);
++			*did_send_data = true;
+ 
+ 			os->used -= p - os->buffer + 1;
+ 			memmove(os->buffer, p + 1, os->used);
+@@ -279,6 +285,7 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
+ 		os->used = 0;
+ 	}
+ 
++	*did_send_data = true;
+ 	return readsz;
+ }
+ 
+@@ -290,6 +297,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 	char progress[128];
+ 	char abort_msg[] = "aborting due to possible repository "
+ 		"corruption on the remote side.";
++	uint64_t last_sent_ms = 0;
+ 	ssize_t sz;
+ 	int i;
+ 	FILE *pipe_fd;
+@@ -365,10 +373,14 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 	 */
+ 
+ 	while (1) {
++		uint64_t now_ms = getnanotime() / 1000000;
+ 		struct pollfd pfd[2];
+-		int pe, pu, pollsize, polltimeout;
++		int pe, pu, pollsize, polltimeout_ms;
+ 		int ret;
+ 
++		if (!last_sent_ms)
++			last_sent_ms = now_ms;
++
+ 		reset_timeout(pack_data->timeout);
+ 
+ 		pollsize = 0;
+@@ -390,11 +402,21 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 		if (!pollsize)
+ 			break;
+ 
+-		polltimeout = pack_data->keepalive < 0
+-			? -1
+-			: 1000 * pack_data->keepalive;
++		if (pack_data->keepalive < 0) {
++			polltimeout_ms = -1;
++		} else {
++			/*
++			 * The polling timeout needs to be adjusted based on
++			 * the time we have sent our last package. The longer
++			 * it's been in the past, the shorter the timeout
++			 * becomes until we eventually don't block at all.
++			 */
++			polltimeout_ms = 1000 * pack_data->keepalive - (now_ms - last_sent_ms);
++			if (polltimeout_ms < 0)
++				polltimeout_ms = 0;
++		}
+ 
+-		ret = poll(pfd, pollsize, polltimeout);
++		ret = poll(pfd, pollsize, polltimeout_ms);
+ 
+ 		if (ret < 0) {
+ 			if (errno != EINTR) {
+@@ -403,16 +425,18 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 			}
+ 			continue;
+ 		}
++
+ 		if (0 <= pe && (pfd[pe].revents & (POLLIN|POLLHUP))) {
+ 			/* Status ready; we ship that in the side-band
+ 			 * or dump to the standard error.
+ 			 */
+ 			sz = xread(pack_objects.err, progress,
+ 				  sizeof(progress));
+-			if (0 < sz)
++			if (0 < sz) {
+ 				send_client_data(2, progress, sz,
+ 						 pack_data->use_sideband);
+-			else if (sz == 0) {
++				last_sent_ms = now_ms;
++			} else if (sz == 0) {
+ 				close(pack_objects.err);
+ 				pack_objects.err = -1;
+ 			}
+@@ -421,11 +445,14 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 			/* give priority to status messages */
+ 			continue;
+ 		}
++
+ 		if (0 <= pu && (pfd[pu].revents & (POLLIN|POLLHUP))) {
++			bool did_send_data;
+ 			int result = relay_pack_data(pack_objects.out,
+ 						     output_state,
+ 						     pack_data->use_sideband,
+-						     !!uri_protocols);
++						     !!uri_protocols,
++						     &did_send_data);
+ 
+ 			if (result == 0) {
+ 				close(pack_objects.out);
+@@ -433,6 +460,9 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 			} else if (result < 0) {
+ 				goto fail;
+ 			}
++
++			if (did_send_data)
++				last_sent_ms = now_ms;
+ 		}
+ 
+ 		/*
+@@ -448,6 +478,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 		if (!ret && pack_data->use_sideband) {
+ 			static const char buf[] = "0005\1";
+ 			write_or_die(1, buf, 5);
++			last_sent_ms = now_ms;
+ 		}
+ 	}
+ 
 
-Range-diff versus v3:
-
- 1:  65471f969b =  1:  f9896a8451 upload-pack: fix debug statement when flushing packfile data
- 2:  c5705c1cb1 =  2:  b1bc6f5749 upload-pack: adapt keepalives based on buffering
- 3:  f34fa584f4 !  3:  fcf5f06375 upload-pack: prefer flushing data over sending keepalive
-    @@ Commit message
-         the early bit waiting for packfile URIs. But the optimization is easy
-         enough to realize.
-     
-    -    Do so and flush out data instead of sending an empty pktline. While at
-    -    it, drop the useless
-    +    Do so and flush out data instead of sending an empty pktline.
-     
-         Suggested-by: Jeff King <peff@peff.net>
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
- 4:  8d08e93929 =  4:  f2bb7a38aa upload-pack: reduce lock contention when writing packfile data
- 5:  aa42217e43 =  5:  78a1bbb810 compat/posix: introduce writev(3p) wrapper
- 6:  c5d194ca2b =  6:  c199dd398a wrapper: introduce writev(3p) wrappers
- 7:  e4df805840 =  7:  b7fe2b818f sideband: use writev(3p) to send pktlines
- 8:  16f9968bcd =  8:  b9d33b93cd csum-file: introduce `hashfd_ext()`
- 9:  47ae58440b =  9:  b2af62c4ff csum-file: drop `hashfd_throughput()`
-10:  c92ccf9df2 = 10:  47f5090b66 builtin/pack-objects: reduce lock contention when writing packfile data
-
----
-base-commit: fb1b83bcddff60463f6e86bb021784c88d0b748c
-change-id: 20260227-pks-upload-pack-write-contention-435ce01f5fe9
+-- 
+2.53.0.904.g2727be2e99.dirty
 
