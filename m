@@ -1,112 +1,130 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C282FC881
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 01:43:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C85429D267
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 02:59:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773366198; cv=none; b=b/BvQJMJ5UX/NMCJcCYJAnp4gZ2gGU+PI76nCwaAFP9clM57TT6aKfsUj4XSM0Ny4UX7TvYTAv+EtPeo6ltu0Nnfb9X5nyf2XJKYifpxyJkPyd1qzRXm0ZOfkcorddvnsCkVyWfl0O6WKXSDCCH7xy3lcxAeOV74Fo+rZCzTtnA=
+	t=1773370745; cv=none; b=XGIiFZWVwmNtQHFUDZbXAdeRvErcZ6xtyg7xQa5xmEP20YhiHT4usC3XpmnA5wbYQhJWXlqRY+2R2Z01rOm/rcKV/7gz2HYBetFiE7e6AeH33QjqPMK99d9WRDXUkEwAReNPkSOfvtGz8TQ5M1HNwzzYHbPwn8MJK49qVL80HyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773366198; c=relaxed/simple;
-	bh=gUcDf7nrSIbSuaovKIYywnqcCOIp89h/Ur9d9C3JPnI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ulZ6I+/kN6jEcCuocPP2DtZOEX1rNiKDWNk1LZpGht2g8B3RyR3x+VqZpxDhNP/442uE4cpCM0OapncQN01DquvUiBSnUl1Zs2q38JY5UyA5hqlAS1ZWFcOgNwl2z5ndNwZz6H8SHgN3kF2MKmtuS9gRIpgDF+JRchUPy0jv9cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=C00y/V7W; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773370745; c=relaxed/simple;
+	bh=o+HZ1mAdgS+5LsRYVC5OcATKqACkU7eltgYLCT1jKsA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dalWTwfxsmYtaddyeSXtvhVgN5TgyBUaH6k51k0y83k7vz4WLVcrtjkav52H+qCmT99t+AZUPfDEWaZam1qnZ84YNHZv/Kkmd3yLojG2EGNor/jMzfld+oRtXKm/X6VCNWBLH0cUuLAhzhZRVhyxxBqE1n23mE6X4fADJNl22q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ar/wdRl2; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="C00y/V7W"
-Received: (qmail 95386 invoked by uid 106); 13 Mar 2026 01:43:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=gUcDf7nrSIbSuaovKIYywnqcCOIp89h/Ur9d9C3JPnI=; b=C00y/V7WXYW8aXKUZcELvFahbJUkxhpSAIVd9BH92iiojzqYy5v9L5VwejpMUuq+EdebVZs6llkWkkEAHj/Pt7rF0hvlAXrUzdT0PrY1mGLiB5uIbotV9amwP9Fqjk5AFqBQ0wh9oEn7LtUmCyxN1sbVN2gjbmp6Q1X5mBjrkTqeqxXpUdj3Jvp9ezzpK8bbZAij9t/j5Qjk6s3Zwz6kcQwskXeWADFrzi/maAxSefw4OJST0U48LOb8K3n+hhkQ5Pwd2Ozx/qQpKgtbSLpyjFmUUwVhLTg+2pODzftRyLzAwfAmpw/Y2TFiPrmH/fJa+vfFm9r/31ho0kf+FjR/0w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Mar 2026 01:43:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 518301 invoked by uid 111); 13 Mar 2026 01:43:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Mar 2026 21:43:18 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 12 Mar 2026 21:43:15 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Paul Tarjan <paul@paultarjan.com>, git@vger.kernel.org,
-	gitgitgadget@gmail.com, christian.couder@gmail.com,
-	hanxin.hx@bytedance.com
-Subject: Re: [PATCH v2] promisor-remote: prevent lazy-fetch recursion in
- child fetch
-Message-ID: <20260313014315.GA3201544@coredump.intra.peff.net>
-References: <abFJhFhHLhS4qdrM@pks.im>
- <20260311141846.12315-1-github@paulisageek.com>
- <abJqySqfdFoY8cEu@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ar/wdRl2"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2adff872068so8275365ad.1
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 19:59:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773370743; x=1773975543; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h+2DM8X9R/IkYkZLWozt0mYj7ku4widtjQc1K+pZxBU=;
+        b=Ar/wdRl2LsTnllWub8eCDNp6oifSuEesrlkTL8kh15wp9/1QN/Z4Qae1jlSBfyADnR
+         ydErtzKkJDOeYP8nBO9lNZntMpoYt9l416ryPFtSTt2CPap8SgpUHU/4lxIeKPHGdrTo
+         GEBLxlKwKDces6VyX1rg3NLOrmuNNPKefTAQEMQBVv8cKov2XVCQbmkgkFYUvnqkX8RM
+         D9CxBs62TSMXhy/mnMeTSwl9cSvNwr989VnbKSVnzkGRYEGGPJ2hLm7WdOzwE5c1QG74
+         gkPeVhl0vBp/wwGVEfMLhGd9hxIgcCV4p0gkgHh8z0vBiJa8pgZTCcELL/gyizjvQoNR
+         9GYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773370743; x=1773975543;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=h+2DM8X9R/IkYkZLWozt0mYj7ku4widtjQc1K+pZxBU=;
+        b=nzfovfNDQkefTOh9fMj49WpVGnKQR09KFdCuTAoueHJu5ud42wrMA2clsVcu2y+uES
+         3S5brFEMQSLC+sM7bzQhxxJTN3eO6WwrG8dEjdvFrzovEmOP62p6ye2aXDtm6AQ8NBhn
+         jS38lguGBmj7/BtbbJdi/q+gHoeRB2gsr0HYTKmQ48StOT4pd1itb/s9UPw9Bf+LoL0u
+         p6Tpch73dakTl3hU0vv329lV+xDWR2DipOCb59mKzg513zTtAC6G361CE4LBbirVlEZH
+         DzT78cX3GYX1Y2v3dngYU/9I2O6hs2fXfxyIi5itqnCWdqFckOMfpsjQDLRT8C27H/H+
+         tXQg==
+X-Gm-Message-State: AOJu0Yy5ftEr2ju78NosOS6kImZxjy0zB0Zuh8amfWu/gskaGzzNED9H
+	CNZ3eFal77s3BIfyLX3Jcd+x9W2aXRbHDiH3z3PfDK8Tjp4Ooi5QyBHxhDx4B8+gJRk=
+X-Gm-Gg: ATEYQzzGP+45iCP3/NihCfoeULzRCNQdz9wofo/helEn52ACYP7micKjZiUgBpHNg4u
+	wLsxQw6Tlv4ZMq0He2KLL8Z7kpuSCXPQogGjKxDvYtWvtLYWPmfuwyTloxviW5gOC/QL6YZWauh
+	TNY71CHH8pEM7LJqt7+5o9o1zEXYZ/Mzn2+oxfH21C8qTdq43B/tp/oW0yOeyReIVdjsZ+zzCMV
+	hOasZXkDXD9Dzbg1Pe7uFC91ME3GZN188j6faPwlRRYie7/7ugiYkgWOtEfAGJCjCqJCUBzOHKY
+	Y+yHSuT982sj5v+TLuFGCqkNiStll9d3R3txVKTo06xLXtp9pwgZlJab5fqO9z8TaO+nYhnqlbe
+	npv+Nd1mZERwz3v+5j7LfyOB8Ual/tULxO/5rIvJmFsbxAQN6Drc7jAVsl2M6gt/Kjd+0dPZr2P
+	OVFAe/nC1PM11quWRuIT0lqsMkvSSrCTkstIKfAm55mrqewNV4rw9A7L7DBgGVjCKpASoX7AKgQ
+	MAR
+X-Received: by 2002:a17:903:2ec7:b0:2ae:c67c:3b05 with SMTP id d9443c01a7336-2aeca8ec2b6mr14594985ad.10.1773370743013;
+        Thu, 12 Mar 2026 19:59:03 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:c0ee:598f:20ee:2768:9705:3a24])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece7ee3ecsm5582135ad.42.2026.03.12.19.58.58
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 12 Mar 2026 19:59:02 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	sunshine@sunshineco.com,
+	peff@peff.net,
+	pushkarkumarsingh1970@gmail.com,
+	christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	r.siddharth.shrimali@gmail.com
+Subject: [PATCH v2] t0410: modernize delete_object helper
+Date: Fri, 13 Mar 2026 08:28:52 +0530
+Message-ID: <20260313025852.30010-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20260312125030.7799-1-r.siddharth.shrimali@gmail.com>
+References: <20260312125030.7799-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <abJqySqfdFoY8cEu@pks.im>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 12, 2026 at 08:27:05AM +0100, Patrick Steinhardt wrote:
+The delete_object helper currently relies on a manual sed command to
+calculate object paths. This works, but it's a bit brittle and forces
+us to maintain shell logic that Git's own test suite can already
+handle more elegantly.
 
-> > > Note that I'm not arguing that we shouldn't have protection on the
-> > > client, too. But I'd first like to understand whether there is a bug
-> > > lurking somewhere that causes us to send invalid packfiles.
-> > 
-> > Agreed, there may well be a server-side bug here. Regardless, the
-> > client should fail fast rather than consume unbounded resources.
-> 
-> Probably, yes. What I'm trying to figure out is whether there are edge
-> cases here where it's _valid_ for the server to send a thin pack with a
-> REF_DELTA. Because if so, unconditionally disabling the lazy fetches
-> would break such edge cases.
-> 
-> I don't think there are such cases, but I wouldn't consider myself an
-> expert with partial clones.
-> 
-> Cc'd Peff, as he's implemented a couple fixes in this area a couple
-> years ago.
+Switch to 'test_oid_to_path' to let Git handle the path logic. This
+makes the helper hash independent, which is much cleaner than manual
+string manipulation. While at it, use 'local' to declare helper-specific
+variables and quote them to follow Git's coding style. This prevents
+them from leaking into global shell scope and avoids potential naming
+conflicts with other parts of the test suite.
 
-Hmm, I'm not sure I have much wisdom. Here's the most plausible scenario
-I could come up with.
+Helped-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+---
+Thanks to Pushkar for initially testing the patch locally and suggesting
+improvements. Thanks also to Jeff, Eric, and Junio for the technical 
+feedback regarding 'local' variables and the redundancy of 
+'test_path_is_file'.
 
-A backfill fetch like this is going to have a noop negotiation
-algorithm. So the server does not have any idea what the client has, and
-therefore shouldn't be sending any thin deltas against it.
+Changes in v2:
+- Added 'local' to variables and ensured they are properly quoted.
+- Removed 'test_path_is_file' as 'rm' provides sufficient error reporting.
 
-But it _can_ send deltas against objects which are part of the backfill
-itself. Normally we'd send those as OFS_DELTA, because they're both in
-the same output pack. But there are cases where we might not:
+ t/t0410-partial-clone.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-  - if the client did not tell us it understands ofs-deltas; this would
-    not be true for any version of Git in the last 15+ years, but maybe
-    there is a bug in sending or parsing the capability? Or an alternate
-    Git implementation on the client side which forgets to send it?
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 2a5bdbeeb8..d36d1c3a5f 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -11,7 +11,10 @@ test_description='partial clone'
+ GIT_TEST_COMMIT_GRAPH=0
+ 
+ delete_object () {
+-	rm $1/.git/objects/$(echo $2 | sed -e 's|^..|&/|')
++	local repo=$1
++	local obj=$2
++	local path="$repo/.git/objects/$(test_oid_to_path "$obj")" &&
++	rm "$path"
+ }
+ 
+ pack_as_from_promisor () {
+-- 
+2.51.2
 
-  - the verbatim pack-reuse code will sometimes rewrite ofs-delta into
-    ref-delta. I don't remember all of the cases where this might
-    happen. Certainly if the client hasn't claimed to support
-    ofs-deltas, but I think maybe some other cases? I'd have to dig into
-    it.
-
-Now there's a catch: the pack is not really thin, and so index-pack
-should not need to do an extra backfill request in order to get the base
-object. But depending how index-pack is written, it might try to do so
-anyway. If X is a delta against base Y, but Y is itself a delta, we
-might not have resolved it yet. And so when we try to resolve X, we
-think "aha, let us see if we have Y", and then eagerly attempt a
-backfill fetch (probably triggered from odb_has_object() or similar).
-When in fact the right thing to do is to queue X, resolve everything we
-can, and see if we ended up with Y (actually index-pack works from the
-bases up in the final resolution phase, but the effect is the same).
-
-If that's what is happening, then I _think_ Paul's patch will do the
-right thing. We'd say "no, we don't have that object" without doing the
-backfill, and then eventually find it as part of the final resolution.
-
-It would be nice to confirm that's what's going on, though (and it isn't
-really a thin pack). If the problem can be reproduced, I don't suppose
-we have a GIT_TRACE_PACKET output from a failing instance? That would
-confirm that we're correctly using the noop negotiation.
-
--Peff
