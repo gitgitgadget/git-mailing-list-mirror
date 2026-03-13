@@ -1,81 +1,90 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F2C3D1CA0
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 17:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BD331E853
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 17:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773424319; cv=none; b=QIAZX/+FgnjYopr7etElpWvvtfwLRQAWyry6Jcx4bYYdkmyNlca0qXghiyLnhWd7bDy+2N6T7HuRg1nE1+kJTvVa1bhCXC3lgyrjCIqqfgWOjp3o0B8sVHPyMawO+OYVuin8shfZ701ka2YWZzvTors1526x2s+e+xG/3dHVOdI=
+	t=1773424485; cv=none; b=DonngrrrA6fSGqE7OF2pH7wVjUQTlbLhK7WLeKCwwYfBw5CQbDde0Qdklpvkw1tqcYHL5ktwKb3OHpMRMBfv++TJHmzBKWlOnH2I/IcK2kflunq/o7BihSS4QvJW2OUNcW2vHpSUuwxs2sKrF+20OTu6iva/SFi5WJFLgzCATJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773424319; c=relaxed/simple;
-	bh=VDRPKZcLkoWzplKBDfOXXXRCw1up4ni/s3JPfmTlIJ0=;
+	s=arc-20240116; t=1773424485; c=relaxed/simple;
+	bh=zWRjjaPMgPSqjHygad8g+TAW0DtJn54qum+vdMpXRJ0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Zv0OKLrqVEYZxGGQQnvfnZvjSSElHRxX7/nADFFIHdY/nUHAVAVTcKAG8l5NIP/DCkDSmwlRQYnKWACFh72JQ11VUTSWNezmi4SzaH/Q5aj1pnKEcP/CNis93hoZgxzTgbvwAnlSJWOwDXcFSwFlWSbZHzberkb1PYNf0XUJAUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dIXyFAHY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCjehJMS; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=aiaCqq7+KdZE6GakQH3fNNg8Ml8go56lCZzOQJdqxEMWXE6pfeU1uywfxUoy+SGMC/apOXcOtMbaM2T/o7lBLgNeUbo7vteJ4G0/aiEmsK1pcrQD0lRm/uFTr7BV7JeZEFTA51jzbvLm2mvkTU1/nHKhC6rXK+E40s51p+Pgj1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ND6IPNMc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fqwpALYC; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dIXyFAHY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCjehJMS"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id E639BEC00BE;
-	Fri, 13 Mar 2026 13:51:55 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 13 Mar 2026 13:51:55 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ND6IPNMc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fqwpALYC"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 91194EC0389;
+	Fri, 13 Mar 2026 13:54:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Fri, 13 Mar 2026 13:54:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773424315; x=1773510715; bh=nz1JfYQcxZ
-	Tcg33AuzC6vz3128mlj3DEk4ZVBGgdVck=; b=dIXyFAHYMDKnRdNde0Mfth5RQR
-	Dgmv3+krxYkh2fm5Y63/YiSPnYaVEmM/DqojKp/zS0ZV7fHUTccOZMLAm7wSP3dS
-	U3SxhbfuRTDsNUwrFtY3B8KtMH6pBD/wxsJ0b/dzjmyZgARSEwoKpPBlKZH83Oi6
-	nNO1o23mXyUn7fdM7g+a647kDVEM8yJjZpQjnuqXhtuWfuKUIbor4XvuADD14+Pf
-	X3QiE4ej3QsbR+v2L/EgP7Hz6VuS58IYD+zYlFYg+vYwj5eWUnoBJKbSTJZsD5GH
-	T7SLRAZdX/KrmfqaIV5oinQeZGtDM0ZXF1r3lRChWGZ7uMrG4zcGqrLbT6sg==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773424483;
+	 x=1773510883; bh=wXYEYomYBj0jLdEGxf5OvPAMRzONAnOYobBnmIs7BaI=; b=
+	ND6IPNMcXq/m1H6dNwqgkxhervIcOWyh7vHXEWIrhqs7fffMQ7JnqvzQBFN9hBiF
+	yy87Mb/dlG3Qj+zn/tvU+Mo+OYcxnwFGZ85/XacknNJaKWgcZAzXwFMDZ8fF5egZ
+	xLe7Uh0B4SfiopulWDbEp4L8TiG+5K1Pjf/8oKAT0Egre9MynyYtkbsc4bJB4N1T
+	DYOao4pZEdNqhoGJUoc8nCIazbvAoDb/KsKgOdda3oBjzEUU6IyTHDa1zC/KdkUA
+	flJ0ZwsJ4e9YZw/qKgb8pq2RbyDaOpmtrKyJ2tvJblAAa4Zu6H4CCZfL+m3L7vgG
+	DXCwBj9dOkECTMuUJFa21g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773424315; x=1773510715; bh=nz1JfYQcxZTcg33AuzC6vz3128mlj3DEk4Z
-	VBGgdVck=; b=VCjehJMSmoNZcVcVsLQOulO2N+6q80LJGXYPd7dKfMxYCTKAxfG
-	ac7E7i2FsaDLuoSA9JCxr5pJoyHP7RGFkG/qewPoBX+4PQG+3ONU6UGpU5b3xhFc
-	ipkVdofglyNUWGaLWFTeKG58YDeZODxG/+9lbRq2JpTfiVALfPExNjeCxU2ZnXXz
-	QssgDaHxc3gGf9Duy40+uY1Xj45taReJHHT0P5Hv8W+muVMhPBeLZtUcHFI7HTyT
-	BrXfSkLvP5dSWz7quFyCCtxIQw9uw1IF4PeC8a7PfUbS+eDl2opQZLDhjJOKLAjN
-	ZRiCo63dK2xXJ3CulHhWEDyYRdfY0nXl66w==
-X-ME-Sender: <xms:u060aS_Rn50Yv3SmxFlwNIC-BChUt7zNRrmXVmUDdWDZUoMz82h2eA>
-    <xme:u060aaJCIv7sW2XSkgxxPtPufA5pkKIETPjBJ4qVWCwsSBxWNBsmCJF0LnW6APZSw
-    e5s6wkQyvOgaISKxTM-n8etnX26u-JTOYxeeeGnyej0AqyWs8Omcg>
-X-ME-Received: <xmr:u060aVbzSRpOwo2J-iHT_uhdmRbFqPsjd5zQZ7Dx28wKWtffSRG0yvclEA-6gpRbFQxSYJK--Uk2ERW6hqkGInJWSnTUop_IMQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledtfedtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773424483; x=
+	1773510883; bh=wXYEYomYBj0jLdEGxf5OvPAMRzONAnOYobBnmIs7BaI=; b=f
+	qwpALYCYw5TvoxcPSQmTS3lvHr3Y3eLfwi/fIF0Q/xUEGqo8XdvM2mOn+wSf+FuM
+	lXMRN5ZMX8t7cxFm8rKFB0QBd5xT6QmvSvXtc1hrAk8SnrvCNH/0kXagtn43lq3J
+	BTSzckzx4guzaz3BbIu4jQuae10EBxcaNi6y7C0H2Nh7xcUHn1dTSKIxtBc3bO2B
+	zg0WBu3c4JG9gGS4Ji3VQ1xkNv6R2CBi6bydqgEbz/EqYfw8HGcGXAwfFUGxr2vV
+	y7rcf3Zz2cWfhoNFSgMdyX/x94uz7GSDVH2ZrAVjAEEZETnC2IEHCDdIDZ1REpY+
+	vbXTqEhJI6XvN8p4xhlTA==
+X-ME-Sender: <xms:Yk-0aVa8hkyWxcvbZnfmJh7HBrjdIeQEu_KAfs7TIVBmpZFNslnQmA>
+    <xme:Yk-0adHiimQAZrsjVI8Re1zmIzJ25kQeii0SiBy0Yf8g8C464LMWz3rvDlOauAsyk
+    N97XVKozultvQXNjw_kz4VrvR4Z6PZFe_JSB-Y5OUa66CtC8W63m5Q>
+X-ME-Received: <xmr:Yk-0aWItSzWVF9E57_4VYNt1DtGVX8Ba8rvjd6w6nQQhk3-k1e1WykSCF7Ko1BoKJRMspK7bNWDEdmpVWU7lgMFmp_tzNtaHmA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledtfeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrihhtvghs
-    hhhjugejheesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:u060aUJjLnKFDGRzTZojVFZEzMPhWhVI176QpU321UhltI-4mcYZgg>
-    <xmx:u060abAKJ3KjC_eV9l_NHz1psLlAd8P3Dro891rAFS5hg-Vznkg4NQ>
-    <xmx:u060aRouCzMBIUv1kkMq0G4pzZ0fzMQBKVCH6NtbLNJRWE8gr58o9A>
-    <xmx:u060aegG-UAJGbK0XjzPfITqo_-PHDeq3G7Y9rUI-7T5ZLsopvWtnA>
-    <xmx:u060aWLL3gy4U_sEOtmwckqejsVdWwzG2mWujp_213aVYVWB-zeEZdA0>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegtrghtsehmrghlohhnrdguvghvpdhrtghpthhtoh
+    epphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtph
+    htthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Yk-0aYO-bWCzjvpz1qy23v4ZCCZc_FpjRWq4UXF1L5yHetpbn3m2iQ>
+    <xmx:Yk-0aWkrglYskpIqgYqOHN-t1lAT_96nK_tclGVK7T-tD7QPJ6p9eQ>
+    <xmx:Yk-0ac7MoWngfeZtwwQcgzeanrq2jYQmZPc8ztjIEtqDvZrMUdvdtw>
+    <xmx:Yk-0aa0FWl2938c1j0bbdBSNVb8Wp8plt7s0X8AO_sX_0mbaExhZkA>
+    <xmx:Y0-0abEuiLjG9bpd89hsHvUOZpf34XUplp5Zic-sb0qxjr4mfuQMrWYN>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 13:51:55 -0400 (EDT)
+ 13 Mar 2026 13:54:42 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ritesh Singh Jadoun <riteshjd75@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] Modernize pack-refs-tests.sh with git's standard
- command like test_path_is_file, etc
-In-Reply-To: <20260313161808.1242-1-riteshjd75@gmail.com> (Ritesh Singh
-	Jadoun's message of "Fri, 13 Mar 2026 21:48:08 +0530")
-References: <20260313161808.1242-1-riteshjd75@gmail.com>
-Date: Fri, 13 Mar 2026 10:51:54 -0700
-Message-ID: <xmqq4imj62it.fsf@gitster.g>
+To: Tian Yuchen <cat@malon.dev>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,
+  karthik.188@gmail.com,  phillip.wood@dunelm.org.uk,  jltobler@gmail.com
+Subject: Re: [PATCH v1] builtin/mktree: remove USE_THE_REPOSITORY_VARIABLE
+In-Reply-To: <4fb9c915-7246-4c55-b7c6-b4ef7ca91230@malon.dev> (Tian Yuchen's
+	message of "Sat, 14 Mar 2026 01:15:23 +0800")
+References: <20260311181704.958509-1-cat@malon.dev> <abJjYNq_sxeH8yLQ@pks.im>
+	<af2c4ae3-c273-40ba-bbca-cbbf687b1b91@malon.dev>
+	<xmqqpl577m3y.fsf@gitster.g>
+	<4fb9c915-7246-4c55-b7c6-b4ef7ca91230@malon.dev>
+Date: Fri, 13 Mar 2026 10:54:41 -0700
+Message-ID: <xmqqzf4b4ntq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,62 +92,48 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Ritesh Singh Jadoun <riteshjd75@gmail.com> writes:
+Tian Yuchen <cat@malon.dev> writes:
 
-> Subject: Re: [PATCH] Modernize pack-refs-tests.sh with git's standard command like test_path_is_file, etc
+> On 3/14/26 00:03, Junio C Hamano wrote:
+>
+>> There is one corner case; upon "git foo -h", your cmd_foo() will get
+>> repo==NULL when the command is run outside a repository.  As long as
+>> your cmd_foo() asks parse_options() to react to "-h" (which gives
+>> the help message and then exits) before it uses repo assuming it
+>> cannot be NULL, you are safe.
+>
+> I was completely blown away Σ( ° △ °)
+>
+> Thanks for pointing that out. Otherwise, I wouldn’t have been able to 
+> figure it out no matter how hard I try.
+>
+> I just took a quick look at the code:
+>
+>> 	const struct option option[] = {
+>> 		OPT_BOOL('z', NULL, &nul_term_line, N_("input is NUL terminated")),
+>> 		OPT_SET_INT( 0 , "missing", &allow_missing, N_("allow missing objects"), 1),
+>> 		OPT_SET_INT( 0 , "batch", &is_batch_mode, N_("allow creation of more than one tree"), 1),
+>> 		OPT_END()
+>> 	};
+>> 
+>> 	ac = parse_options(ac, av, prefix, option, mktree_usage, 0);
+>> 	getline_fn = nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
+>> 
+>> 	while (!got_eof) {
+>> 		while (1) { ...
+>
+> I think if there's a '-h' parameter, it gets intercepted in 
+> parse_options() and the process exits before repo is called. So there’s 
+> nothing to worry about, right?
 
-Unusual patch title.
+Correct.  The function calls parse_options() before it looks at "repo".
 
-No justification given for these changes in the proposed log message.
+> By the way, I find it a bit confusing that the'`-h' parameter — which is 
+> solely used for documentation query — is parsed and intercepted within a 
+> function that handles actual business logic.
 
-Missing sign-off.
-
-> ---
->  t/pack-refs-tests.sh | 28 ++++++++++++++--------------
->  1 file changed, 14 insertions(+), 14 deletions(-)
-
-Check CodingGuidelines and SubmittingPatches (both found in
-the Documentation/ directory).
-
-> diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-> index 2fdaccb6c7..dca0c77ca1 100644
-> --- a/t/pack-refs-tests.sh
-> +++ b/t/pack-refs-tests.sh
-> @@ -61,13 +61,13 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
->  test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
->  	git branch f &&
->  	git ${pack_refs} --all --prune &&
-> -	! test -f .git/refs/heads/f
-> +	! test_path_is_file .git/refs/heads/f
->  '
-
-The point of "test_path_is_file" is "we expect this path to be a
-file and there is something wrong if it isn't and we should report
-to the person who is running the test loudly".  That is why
-
-	test_path_is_file existing-file
-
-is silent, while
-
-	test_path_is_file missing-file
-	test_path_is_file existing-directory/
-
-both loudly report the failure.
-
-But in this test, that expects "! test -f .git/refs/heads/f" to be
-true, the story is the other way around.  The test expects that the
-loose ref file for the branch 'f' on the filesystem should be gone.
-In other words, it is not a notable event if .git/refs/heads/f did
-*NOT* exist, and if .git/refs/heads/f existed, that is something you
-want to report loudly, now you are using a better helper function.
-
-I think the update should use test_path_is_missing instead, without
-negation.
-
-I did not look at the rest of the patch, but the above should be
-a sufficient guideline to decide what replacement should be used.
-Be careful to the original that uses negation and you'd do fine.
-
-Thanks.
+I strongly disagree your idea that 'z' is more business logic than
+'h' is.  Both are equally relevant.
