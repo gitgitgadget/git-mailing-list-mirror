@@ -1,550 +1,112 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EB02F5A34
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 01:39:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C282FC881
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 01:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773365991; cv=none; b=HCVkVsbVhaotJuVeAsKick/TDnSM0eeDaP5rxXMaMu74+z2bIf9fmYj/LOjmSnzzetG3unM4Nd0qGLz8+nJyIABcgwTpzsvzve6OkCpiVmHPE8XVHkmzJ95VGxVxfNE7Kqv65Lgit7pCisFUHOg7z9CludR0oeu3bWceoiBUyZY=
+	t=1773366198; cv=none; b=b/BvQJMJ5UX/NMCJcCYJAnp4gZ2gGU+PI76nCwaAFP9clM57TT6aKfsUj4XSM0Ny4UX7TvYTAv+EtPeo6ltu0Nnfb9X5nyf2XJKYifpxyJkPyd1qzRXm0ZOfkcorddvnsCkVyWfl0O6WKXSDCCH7xy3lcxAeOV74Fo+rZCzTtnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773365991; c=relaxed/simple;
-	bh=XtZlmb86fqyOcESuJGbqukR4nCa8IW/E1n7tm36oI2Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jO+xYOnqBJcAWsJ+t35aOO097Fx/1LtirpkpBqI5OSGvsyRcXKdnsKNLFXwn86ti9kprakfnDwe8Mb27GPsi4vMB/eSQNhJ143wSha2wOJ4o0S4Hsy+FHoljEh/AlnyB/haHj1fQU3rDmakilMWbg0wsAANyTpLn8w826OWP9rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HcSV4mbe; arc=none smtp.client-ip=209.85.167.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773366198; c=relaxed/simple;
+	bh=gUcDf7nrSIbSuaovKIYywnqcCOIp89h/Ur9d9C3JPnI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ulZ6I+/kN6jEcCuocPP2DtZOEX1rNiKDWNk1LZpGht2g8B3RyR3x+VqZpxDhNP/442uE4cpCM0OapncQN01DquvUiBSnUl1Zs2q38JY5UyA5hqlAS1ZWFcOgNwl2z5ndNwZz6H8SHgN3kF2MKmtuS9gRIpgDF+JRchUPy0jv9cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=C00y/V7W; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HcSV4mbe"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4645dde00a7so2338428b6e.1
-        for <git@vger.kernel.org>; Thu, 12 Mar 2026 18:39:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773365988; x=1773970788; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RI1wKaWqLZQZ01b8tK4jrtdf4tyY8JsS3F/GnYauBpg=;
-        b=HcSV4mbe4g1wCUwUeGrHiHOh/c9OotRiQWMaEJcWTvbKgqgHVqcy98TBsgyXmEggoh
-         20ayxA+nWYzrGl150j6mdai0zVSS+u/qSo6pC05v76CguTWROKIAg05/J8pcB0O71y7q
-         yWMFU31owwIPK7qVgh7DT4x9pCZE6/CzMtcThA7SKea/PxjX5ibw3jcbQnnTurq3fEsd
-         Q2MPvDAe/NTsaGqcSDLXPJW4IDjAYYl6B3Axu1vPA5s9Co5qmYG1Uhq2ngp9YdJ4WfHT
-         I8YlDIlUbn88gH848nOIWKgwqEP+KmTGeMT2LnFYsqIP86LkFocPDiS9KTJ28+qh84gP
-         r37g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773365988; x=1773970788;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=RI1wKaWqLZQZ01b8tK4jrtdf4tyY8JsS3F/GnYauBpg=;
-        b=d17HVJPFJ9G1QcFYs9SYYR0V+FTyTIdDI48lh4iopo6+f+Y+4En5KNEH0Gg9bqzE1c
-         mCNUzBK4sUf1Lt9+0oGsLt6lxjIK4cUFiSmfU8SlfDxSsEzmEQ92+ClpZ/FPYO6RZRUT
-         NqEdJHFirtG2F195Zu++Q+Bsg0a1eJrM8piV1nhsqh0MmyedQHc/2ijY2H6mbefgA2Vm
-         6p2N2IGx/2wCdTnCv31iWWOMqi9BC73+1IO0HIEJgw6eAmIeYTxRx0MoqHtB4g79m6c9
-         nOkQMMp2YLwk1QPPNSRO/AcWXvqTYcDC42W9joEZFohltfnDJR75E3vXUqAlWKLw7r0J
-         L5oQ==
-X-Gm-Message-State: AOJu0Yx0blz0JVNSTXtsY3yk9GQ+HKJQ4XVxVS0nSyqNZH61uuGk0MBA
-	4AAYtjw68Ws9ca3OnxMKhlnZzMhbDdwhoOJNLFriEm56lJYLaGpINL4F7ulH4A==
-X-Gm-Gg: ATEYQzzA9ul6WtNNB25qTiScwdMmGVIhklQdxBAJ+rRHhXWn4M3eNIgk4xN2HJ9+lMs
-	vziyPfjGmoArkD+LELj7XYLjDGYq6O1eEljYGqllM9qbILZQ5xygZ6Bt2/CAuvjFqPiGduJZNrc
-	KJgGLULiWGoUcxQlHrRlZmJKvf3KDYK7P5ZybG7IU2tvNY8G/LKLnstOEO8Qwf3p2TbeyaTDTZd
-	VdTgA6f+Wdb2tLS7Nf6Y+BGlO77wy+hSjiA8NMnElTn+XXWlzFbgC+Iy5L6ppY3eUaItbJHLZTH
-	1aAyrbYsQDAeK4iyjEbrES9bJiwNVSKDg8vFhoA4Nqv/tMcvQ+0I0pkIOWmT8aHLgTJLvjjo7Yt
-	gp3aXNxJUidgjeyrLlkiBZN4WQ5SLifYfA6PdFAaFYtOPVR7pfv4qffE/ylifyUWjI3XiRcPa5C
-	kEyKkPa9NfBaA+unkxbbaPC68YjYyKC0E=
-X-Received: by 2002:a05:6808:1304:b0:467:8b7:4a46 with SMTP id 5614622812f47-46755585a97mr1103849b6e.9.1773365988017;
-        Thu, 12 Mar 2026 18:39:48 -0700 (PDT)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-467342c084asm3897154b6e.12.2026.03.12.18.39.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2026 18:39:47 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: sandals@crustytoothpaste.net,
-	christian.couder@gmail.com,
-	ps@pks.im,
-	gitster@pobox.com,
-	peff@peff.net,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v6 3/3] fast-import: add mode to sign commits with invalid signatures
-Date: Thu, 12 Mar 2026 20:39:38 -0500
-Message-ID: <20260313013938.2742124-4-jltobler@gmail.com>
-X-Mailer: git-send-email 2.53.0.381.g628a66ccf6
-In-Reply-To: <20260313013938.2742124-1-jltobler@gmail.com>
-References: <20260312192228.481134-1-jltobler@gmail.com>
- <20260313013938.2742124-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="C00y/V7W"
+Received: (qmail 95386 invoked by uid 106); 13 Mar 2026 01:43:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=gUcDf7nrSIbSuaovKIYywnqcCOIp89h/Ur9d9C3JPnI=; b=C00y/V7WXYW8aXKUZcELvFahbJUkxhpSAIVd9BH92iiojzqYy5v9L5VwejpMUuq+EdebVZs6llkWkkEAHj/Pt7rF0hvlAXrUzdT0PrY1mGLiB5uIbotV9amwP9Fqjk5AFqBQ0wh9oEn7LtUmCyxN1sbVN2gjbmp6Q1X5mBjrkTqeqxXpUdj3Jvp9ezzpK8bbZAij9t/j5Qjk6s3Zwz6kcQwskXeWADFrzi/maAxSefw4OJST0U48LOb8K3n+hhkQ5Pwd2Ozx/qQpKgtbSLpyjFmUUwVhLTg+2pODzftRyLzAwfAmpw/Y2TFiPrmH/fJa+vfFm9r/31ho0kf+FjR/0w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Mar 2026 01:43:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 518301 invoked by uid 111); 13 Mar 2026 01:43:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Mar 2026 21:43:18 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 12 Mar 2026 21:43:15 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Paul Tarjan <paul@paultarjan.com>, git@vger.kernel.org,
+	gitgitgadget@gmail.com, christian.couder@gmail.com,
+	hanxin.hx@bytedance.com
+Subject: Re: [PATCH v2] promisor-remote: prevent lazy-fetch recursion in
+ child fetch
+Message-ID: <20260313014315.GA3201544@coredump.intra.peff.net>
+References: <abFJhFhHLhS4qdrM@pks.im>
+ <20260311141846.12315-1-github@paulisageek.com>
+ <abJqySqfdFoY8cEu@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <abJqySqfdFoY8cEu@pks.im>
 
-With git-fast-import(1), handling of signed commits is controlled via
-the `--signed-commits=<mode>` option. When an invalid signature is
-encountered, a user may want the option to sign the commit again as
-opposed to just stripping the signature. To facilitate this, introduce a
-"sign-if-invalid" mode for the `--signed-commits` option. Optionally, a
-key ID may be explicitly provided in the form
-`sign-if-invalid[=<keyid>]` to specify which signing key should be used
-when signing invalid commit signatures.
+On Thu, Mar 12, 2026 at 08:27:05AM +0100, Patrick Steinhardt wrote:
 
-Note that to properly support interoperability mode when signing commit
-signatures, the commit buffer must be created in both the repository and
-compatability object formats to generate the appropriate signatures
-accordingly. As currently implemented, the commit buffer for the
-compatability object format is not reconstructed and thus signing
-commits in interoperability mode is not yet supported. Support may be
-added in the future.
+> > > Note that I'm not arguing that we shouldn't have protection on the
+> > > client, too. But I'd first like to understand whether there is a bug
+> > > lurking somewhere that causes us to send invalid packfiles.
+> > 
+> > Agreed, there may well be a server-side bug here. Regardless, the
+> > client should fail fast rather than consume unbounded resources.
+> 
+> Probably, yes. What I'm trying to figure out is whether there are edge
+> cases here where it's _valid_ for the server to send a thin pack with a
+> REF_DELTA. Because if so, unconditionally disabling the lazy fetches
+> would break such edge cases.
+> 
+> I don't think there are such cases, but I wouldn't consider myself an
+> expert with partial clones.
+> 
+> Cc'd Peff, as he's implemented a couple fixes in this area a couple
+> years ago.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/git-fast-import.adoc |   4 +
- builtin/fast-export.c              |   8 +-
- builtin/fast-import.c              | 101 +++++++++++++++-----
- gpg-interface.c                    |  23 +++--
- gpg-interface.h                    |   7 +-
- t/t9305-fast-import-signatures.sh  | 144 ++++++++++++++++++-----------
- 6 files changed, 202 insertions(+), 85 deletions(-)
+Hmm, I'm not sure I have much wisdom. Here's the most plausible scenario
+I could come up with.
 
-diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
-index 479c4081da..b3f42d4637 100644
---- a/Documentation/git-fast-import.adoc
-+++ b/Documentation/git-fast-import.adoc
-@@ -86,6 +86,10 @@ already trusted to run their own code.
- * `strip-if-invalid` will check signatures and, if they are invalid,
-   will strip them and display a warning. The validation is performed
-   in the same way as linkgit:git-verify-commit[1] does it.
-+* `sign-if-invalid[=<keyid>]`, similar to `strip-if-invalid`, verifies
-+  commit signatures and replaces invalid signatures with newly created ones.
-+  Valid signatures are left unchanged. If `<keyid>` is provided, that key is
-+  used for signing; otherwise the configured default signing key is used.
- 
- Options for Frontends
- ~~~~~~~~~~~~~~~~~~~~~
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 0c5d2386d8..13621b0d6a 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -64,7 +64,7 @@ static int parse_opt_sign_mode(const struct option *opt,
- 	if (unset)
- 		return 0;
- 
--	if (parse_sign_mode(arg, val))
-+	if (parse_sign_mode(arg, val, NULL))
- 		return error(_("unknown %s mode: %s"), opt->long_name, arg);
- 
- 	return 0;
-@@ -825,6 +825,9 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 		case SIGN_STRIP_IF_INVALID:
- 			die(_("'strip-if-invalid' is not a valid mode for "
- 			      "git fast-export with --signed-commits=<mode>"));
-+		case SIGN_SIGN_IF_INVALID:
-+			die(_("'sign-if-invalid' is not a valid mode for "
-+			      "git fast-export with --signed-commits=<mode>"));
- 		default:
- 			BUG("invalid signed_commit_mode value %d", signed_commit_mode);
- 		}
-@@ -970,6 +973,9 @@ static void handle_tag(const char *name, struct tag *tag)
- 			case SIGN_STRIP_IF_INVALID:
- 				die(_("'strip-if-invalid' is not a valid mode for "
- 				      "git fast-export with --signed-tags=<mode>"));
-+			case SIGN_SIGN_IF_INVALID:
-+				die(_("'sign-if-invalid' is not a valid mode for "
-+				      "git fast-export with --signed-tags=<mode>"));
- 			default:
- 				BUG("invalid signed_commit_mode value %d", signed_commit_mode);
- 			}
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index b8a7757cfd..935e688e33 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -190,6 +190,7 @@ static const char *global_prefix;
- 
- static enum sign_mode signed_tag_mode = SIGN_VERBATIM;
- static enum sign_mode signed_commit_mode = SIGN_VERBATIM;
-+static const char *signed_commit_keyid;
- 
- /* Memory pools */
- static struct mem_pool fi_mem_pool = {
-@@ -2836,26 +2837,15 @@ static void finalize_commit_buffer(struct strbuf *new_data,
- 	strbuf_addbuf(new_data, msg);
- }
- 
--static void handle_strip_if_invalid(struct strbuf *new_data,
--				    struct signature_data *sig_sha1,
--				    struct signature_data *sig_sha256,
--				    struct strbuf *msg)
-+static void warn_invalid_signature(struct signature_check *check,
-+				   const char *msg, enum sign_mode mode)
- {
--	struct strbuf tmp_buf = STRBUF_INIT;
--	struct signature_check signature_check = { 0 };
--	int ret;
--
--	/* Check signature in a temporary commit buffer */
--	strbuf_addbuf(&tmp_buf, new_data);
--	finalize_commit_buffer(&tmp_buf, sig_sha1, sig_sha256, msg);
--	ret = verify_commit_buffer(tmp_buf.buf, tmp_buf.len, &signature_check);
--
--	if (ret) {
--		const char *signer = signature_check.signer ?
--			signature_check.signer : _("unknown");
--		const char *subject;
--		int subject_len = find_commit_subject(msg->buf, &subject);
-+	const char *signer = check->signer ? check->signer : _("unknown");
-+	const char *subject;
-+	int subject_len = find_commit_subject(msg, &subject);
- 
-+	switch (mode) {
-+	case SIGN_STRIP_IF_INVALID:
- 		if (subject_len > 100)
- 			warning(_("stripping invalid signature for commit '%.100s...'\n"
- 				  "  allegedly by %s"), subject, signer);
-@@ -2865,6 +2855,67 @@ static void handle_strip_if_invalid(struct strbuf *new_data,
- 		else
- 			warning(_("stripping invalid signature for commit\n"
- 				  "  allegedly by %s"), signer);
-+		break;
-+	case SIGN_SIGN_IF_INVALID:
-+		if (subject_len > 100)
-+			warning(_("replacing invalid signature for commit '%.100s...'\n"
-+				  "  allegedly by %s"), subject, signer);
-+		else if (subject_len > 0)
-+			warning(_("replacing invalid signature for commit '%.*s'\n"
-+				  "  allegedly by %s"), subject_len, subject, signer);
-+		else
-+			warning(_("replacing invalid signature for commit\n"
-+				  "  allegedly by %s"), signer);
-+		break;
-+	default:
-+		BUG("unsupported signing mode");
-+	}
-+}
-+
-+static void handle_signature_if_invalid(struct strbuf *new_data,
-+					struct signature_data *sig_sha1,
-+					struct signature_data *sig_sha256,
-+					struct strbuf *msg,
-+					enum sign_mode mode)
-+{
-+	struct strbuf tmp_buf = STRBUF_INIT;
-+	struct signature_check signature_check = { 0 };
-+	int ret;
-+
-+	/* Check signature in a temporary commit buffer */
-+	strbuf_addbuf(&tmp_buf, new_data);
-+	finalize_commit_buffer(&tmp_buf, sig_sha1, sig_sha256, msg);
-+	ret = verify_commit_buffer(tmp_buf.buf, tmp_buf.len, &signature_check);
-+
-+	if (ret) {
-+		warn_invalid_signature(&signature_check, msg->buf, mode);
-+
-+		if (mode == SIGN_SIGN_IF_INVALID) {
-+			struct strbuf signature = STRBUF_INIT;
-+			struct strbuf payload = STRBUF_INIT;
-+
-+			/*
-+			 * NEEDSWORK: To properly support interoperability mode
-+			 * when signing commit signatures, the commit buffer
-+			 * must be provided in both the repository and
-+			 * compatibility object formats. As currently
-+			 * implemented, only the repository object format is
-+			 * considered meaning compatibility signatures cannot be
-+			 * generated. Thus, attempting to sign commit signatures
-+			 * in interoperability mode is currently unsupported.
-+			 */
-+			if (the_repository->compat_hash_algo)
-+				die(_("signing commits in interoperability mode is unsupported"));
-+
-+			strbuf_addstr(&payload, signature_check.payload);
-+			if (sign_buffer(&payload, &signature, signed_commit_keyid,
-+					SIGN_BUFFER_USE_DEFAULT_KEY))
-+				die(_("failed to sign commit object"));
-+			add_header_signature(new_data, &signature, the_hash_algo);
-+
-+			strbuf_release(&signature);
-+			strbuf_release(&payload);
-+		}
- 
- 		finalize_commit_buffer(new_data, NULL, NULL, msg);
- 	} else {
-@@ -2927,6 +2978,7 @@ static void parse_new_commit(const char *arg)
- 			/* fallthru */
- 		case SIGN_VERBATIM:
- 		case SIGN_STRIP_IF_INVALID:
-+		case SIGN_SIGN_IF_INVALID:
- 			import_one_signature(&sig_sha1, &sig_sha256, v);
- 			break;
- 
-@@ -3011,9 +3063,11 @@ static void parse_new_commit(const char *arg)
- 			"encoding %s\n",
- 			encoding);
- 
--	if (signed_commit_mode == SIGN_STRIP_IF_INVALID &&
-+	if ((signed_commit_mode == SIGN_STRIP_IF_INVALID ||
-+	     signed_commit_mode == SIGN_SIGN_IF_INVALID) &&
- 	    (sig_sha1.hash_algo || sig_sha256.hash_algo))
--		handle_strip_if_invalid(&new_data, &sig_sha1, &sig_sha256, &msg);
-+		handle_signature_if_invalid(&new_data, &sig_sha1, &sig_sha256,
-+					    &msg, signed_commit_mode);
- 	else
- 		finalize_commit_buffer(&new_data, &sig_sha1, &sig_sha256, &msg);
- 
-@@ -3060,6 +3114,9 @@ static void handle_tag_signature(struct strbuf *msg, const char *name)
- 	case SIGN_STRIP_IF_INVALID:
- 		die(_("'strip-if-invalid' is not a valid mode for "
- 		      "git fast-import with --signed-tags=<mode>"));
-+	case SIGN_SIGN_IF_INVALID:
-+		die(_("'sign-if-invalid' is not a valid mode for "
-+		      "git fast-import with --signed-tags=<mode>"));
- 	default:
- 		BUG("invalid signed_tag_mode value %d from tag '%s'",
- 		    signed_tag_mode, name);
-@@ -3649,10 +3706,10 @@ static int parse_one_option(const char *option)
- 	} else if (skip_prefix(option, "export-pack-edges=", &option)) {
- 		option_export_pack_edges(option);
- 	} else if (skip_prefix(option, "signed-commits=", &option)) {
--		if (parse_sign_mode(option, &signed_commit_mode))
-+		if (parse_sign_mode(option, &signed_commit_mode, &signed_commit_keyid))
- 			usagef(_("unknown --signed-commits mode '%s'"), option);
- 	} else if (skip_prefix(option, "signed-tags=", &option)) {
--		if (parse_sign_mode(option, &signed_tag_mode))
-+		if (parse_sign_mode(option, &signed_tag_mode, NULL))
- 			usagef(_("unknown --signed-tags mode '%s'"), option);
- 	} else if (!strcmp(option, "quiet")) {
- 		show_stats = 0;
-diff --git a/gpg-interface.c b/gpg-interface.c
-index dca192d5c4..32f2880976 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -1151,21 +1151,28 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
- 	return ret;
- }
- 
--int parse_sign_mode(const char *arg, enum sign_mode *mode)
-+int parse_sign_mode(const char *arg, enum sign_mode *mode, const char **keyid)
- {
--	if (!strcmp(arg, "abort"))
-+	if (!strcmp(arg, "abort")) {
- 		*mode = SIGN_ABORT;
--	else if (!strcmp(arg, "verbatim") || !strcmp(arg, "ignore"))
-+	} else if (!strcmp(arg, "verbatim") || !strcmp(arg, "ignore")) {
- 		*mode = SIGN_VERBATIM;
--	else if (!strcmp(arg, "warn-verbatim") || !strcmp(arg, "warn"))
-+	} else if (!strcmp(arg, "warn-verbatim") || !strcmp(arg, "warn")) {
- 		*mode = SIGN_WARN_VERBATIM;
--	else if (!strcmp(arg, "warn-strip"))
-+	} else if (!strcmp(arg, "warn-strip")) {
- 		*mode = SIGN_WARN_STRIP;
--	else if (!strcmp(arg, "strip"))
-+	} else if (!strcmp(arg, "strip")) {
- 		*mode = SIGN_STRIP;
--	else if (!strcmp(arg, "strip-if-invalid"))
-+	} else if (!strcmp(arg, "strip-if-invalid")) {
- 		*mode = SIGN_STRIP_IF_INVALID;
--	else
-+	} else if (!strcmp(arg, "sign-if-invalid")) {
-+		*mode = SIGN_SIGN_IF_INVALID;
-+	} else if (skip_prefix(arg, "sign-if-invalid=", &arg)) {
-+		*mode = SIGN_SIGN_IF_INVALID;
-+		if (keyid)
-+			*keyid = arg;
-+	} else {
- 		return -1;
-+	}
- 	return 0;
- }
-diff --git a/gpg-interface.h b/gpg-interface.h
-index 37f3ac42db..a365586ce1 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -120,12 +120,15 @@ enum sign_mode {
- 	SIGN_WARN_STRIP,
- 	SIGN_STRIP,
- 	SIGN_STRIP_IF_INVALID,
-+	SIGN_SIGN_IF_INVALID,
- };
- 
- /*
-  * Return 0 if `arg` can be parsed into an `enum sign_mode`. Return -1
-- * otherwise.
-+ * otherwise. If the parsed mode is SIGN_SIGN_IF_INVALID and GPG key provided in
-+ * the arguments in the form `sign-if-invalid=<keyid>`, the key-ID is parsed
-+ * into `char **keyid`.
-  */
--int parse_sign_mode(const char *arg, enum sign_mode *mode);
-+int parse_sign_mode(const char *arg, enum sign_mode *mode, const char **keyid);
- 
- #endif
-diff --git a/t/t9305-fast-import-signatures.sh b/t/t9305-fast-import-signatures.sh
-index 022dae02e4..ac4228127a 100755
---- a/t/t9305-fast-import-signatures.sh
-+++ b/t/t9305-fast-import-signatures.sh
-@@ -103,71 +103,111 @@ test_expect_success GPG 'strip both OpenPGP signatures with --signed-commits=war
- 	test_line_count = 2 out
- '
- 
--test_expect_success GPG 'import commit with no signature with --signed-commits=strip-if-invalid' '
--	git fast-export main >output &&
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
--	test_must_be_empty log
--'
--
--test_expect_success GPG 'keep valid OpenPGP signature with --signed-commits=strip-if-invalid' '
--	rm -rf new &&
--	git init new &&
--
--	git fast-export --signed-commits=verbatim openpgp-signing >output &&
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
--	IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
--	test $OPENPGP_SIGNING = $IMPORTED &&
--	git -C new cat-file commit "$IMPORTED" >actual &&
--	test_grep -E "^gpgsig(-sha256)? " actual &&
--	test_must_be_empty log
--'
--
--test_expect_success GPG 'strip signature invalidated by message change with --signed-commits=strip-if-invalid' '
-+for mode in strip-if-invalid sign-if-invalid
-+do
-+	test_expect_success GPG "import commit with no signature with --signed-commits=$mode" '
-+		git fast-export main >output &&
-+		git -C new fast-import --quiet --signed-commits=$mode <output >log 2>&1 &&
-+		test_must_be_empty log
-+	'
-+
-+	test_expect_success GPG "keep valid OpenPGP signature with --signed-commits=$mode" '
-+		rm -rf new &&
-+		git init new &&
-+
-+		git fast-export --signed-commits=verbatim openpgp-signing >output &&
-+		git -C new fast-import --quiet --signed-commits=$mode <output >log 2>&1 &&
-+		IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
-+		test $OPENPGP_SIGNING = $IMPORTED &&
-+		git -C new cat-file commit "$IMPORTED" >actual &&
-+		test_grep -E "^gpgsig(-sha256)? " actual &&
-+		test_must_be_empty log
-+	'
-+
-+	test_expect_success GPG "handle signature invalidated by message change with --signed-commits=$mode" '
-+		rm -rf new &&
-+		git init new &&
-+
-+		git fast-export --signed-commits=verbatim openpgp-signing >output &&
-+
-+		# Change the commit message, which invalidates the signature.
-+		# The commit message length should not change though, otherwise the
-+		# corresponding `data <length>` command would have to be changed too.
-+		sed "s/OpenPGP signed commit/OpenPGP forged commit/" output >modified &&
-+
-+		git -C new fast-import --quiet --signed-commits=$mode <modified >log 2>&1 &&
-+
-+		IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
-+		test $OPENPGP_SIGNING != $IMPORTED &&
-+		git -C new cat-file commit "$IMPORTED" >actual &&
-+
-+		if test "$mode" = strip-if-invalid
-+		then
-+			test_grep "stripping invalid signature" log &&
-+			test_grep ! -E "^gpgsig" actual
-+		else
-+			test_grep "replacing invalid signature" log &&
-+			test_grep -E "^gpgsig(-sha256)? " actual &&
-+			git -C new verify-commit "$IMPORTED"
-+		fi
-+	'
-+
-+	test_expect_success GPGSM "keep valid X.509 signature with --signed-commits=$mode" '
-+		rm -rf new &&
-+		git init new &&
-+
-+		git fast-export --signed-commits=verbatim x509-signing >output &&
-+		git -C new fast-import --quiet --signed-commits=$mode <output >log 2>&1 &&
-+		IMPORTED=$(git -C new rev-parse --verify refs/heads/x509-signing) &&
-+		test $X509_SIGNING = $IMPORTED &&
-+		git -C new cat-file commit "$IMPORTED" >actual &&
-+		test_grep -E "^gpgsig(-sha256)? " actual &&
-+		test_must_be_empty log
-+	'
-+
-+	test_expect_success GPGSSH "keep valid SSH signature with --signed-commits=$mode" '
-+		rm -rf new &&
-+		git init new &&
-+
-+		test_config -C new gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+
-+		git fast-export --signed-commits=verbatim ssh-signing >output &&
-+		git -C new fast-import --quiet --signed-commits=$mode <output >log 2>&1 &&
-+		IMPORTED=$(git -C new rev-parse --verify refs/heads/ssh-signing) &&
-+		test $SSH_SIGNING = $IMPORTED &&
-+		git -C new cat-file commit "$IMPORTED" >actual &&
-+		test_grep -E "^gpgsig(-sha256)? " actual &&
-+		test_must_be_empty log
-+	'
-+done
-+
-+test_expect_success GPGSSH "sign invalid commit with explicit keyid" '
- 	rm -rf new &&
- 	git init new &&
- 
--	git fast-export --signed-commits=verbatim openpgp-signing >output &&
-+	git fast-export --signed-commits=verbatim ssh-signing >output &&
- 
- 	# Change the commit message, which invalidates the signature.
- 	# The commit message length should not change though, otherwise the
- 	# corresponding `data <length>` command would have to be changed too.
--	sed "s/OpenPGP signed commit/OpenPGP forged commit/" output >modified &&
--
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <modified >log 2>&1 &&
--
--	IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
--	test $OPENPGP_SIGNING != $IMPORTED &&
--	git -C new cat-file commit "$IMPORTED" >actual &&
--	test_grep ! -E "^gpgsig" actual &&
--	test_grep "stripping invalid signature" log
--'
--
--test_expect_success GPGSM 'keep valid X.509 signature with --signed-commits=strip-if-invalid' '
--	rm -rf new &&
--	git init new &&
--
--	git fast-export --signed-commits=verbatim x509-signing >output &&
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
--	IMPORTED=$(git -C new rev-parse --verify refs/heads/x509-signing) &&
--	test $X509_SIGNING = $IMPORTED &&
--	git -C new cat-file commit "$IMPORTED" >actual &&
--	test_grep -E "^gpgsig(-sha256)? " actual &&
--	test_must_be_empty log
--'
--
--test_expect_success GPGSSH 'keep valid SSH signature with --signed-commits=strip-if-invalid' '
--	rm -rf new &&
--	git init new &&
-+	sed "s/SSH signed commit/SSH forged commit/" output >modified &&
- 
-+	# Configure the target repository with an invalid default signing key.
-+	test_config -C new user.signingkey "not-a-real-key-id" &&
-+	test_config -C new gpg.format ssh &&
- 	test_config -C new gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	test_must_fail git -C new fast-import --quiet \
-+		--signed-commits=sign-if-invalid <modified >/dev/null 2>&1 &&
-+
-+	# Import using explicitly provided signing key.
-+	git -C new fast-import --quiet \
-+		--signed-commits=sign-if-invalid="${GPGSSH_KEY_PRIMARY}" <modified &&
- 
--	git fast-export --signed-commits=verbatim ssh-signing >output &&
--	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
- 	IMPORTED=$(git -C new rev-parse --verify refs/heads/ssh-signing) &&
--	test $SSH_SIGNING = $IMPORTED &&
-+	test $SSH_SIGNING != $IMPORTED &&
- 	git -C new cat-file commit "$IMPORTED" >actual &&
- 	test_grep -E "^gpgsig(-sha256)? " actual &&
--	test_must_be_empty log
-+	git -C new verify-commit "$IMPORTED"
- '
- 
- test_done
--- 
-2.53.0.381.g628a66ccf6
+A backfill fetch like this is going to have a noop negotiation
+algorithm. So the server does not have any idea what the client has, and
+therefore shouldn't be sending any thin deltas against it.
 
+But it _can_ send deltas against objects which are part of the backfill
+itself. Normally we'd send those as OFS_DELTA, because they're both in
+the same output pack. But there are cases where we might not:
+
+  - if the client did not tell us it understands ofs-deltas; this would
+    not be true for any version of Git in the last 15+ years, but maybe
+    there is a bug in sending or parsing the capability? Or an alternate
+    Git implementation on the client side which forgets to send it?
+
+  - the verbatim pack-reuse code will sometimes rewrite ofs-delta into
+    ref-delta. I don't remember all of the cases where this might
+    happen. Certainly if the client hasn't claimed to support
+    ofs-deltas, but I think maybe some other cases? I'd have to dig into
+    it.
+
+Now there's a catch: the pack is not really thin, and so index-pack
+should not need to do an extra backfill request in order to get the base
+object. But depending how index-pack is written, it might try to do so
+anyway. If X is a delta against base Y, but Y is itself a delta, we
+might not have resolved it yet. And so when we try to resolve X, we
+think "aha, let us see if we have Y", and then eagerly attempt a
+backfill fetch (probably triggered from odb_has_object() or similar).
+When in fact the right thing to do is to queue X, resolve everything we
+can, and see if we ended up with Y (actually index-pack works from the
+bases up in the final resolution phase, but the effect is the same).
+
+If that's what is happening, then I _think_ Paul's patch will do the
+right thing. We'd say "no, we don't have that object" without doing the
+backfill, and then eventually find it as part of the final resolution.
+
+It would be nice to confirm that's what's going on, though (and it isn't
+really a thin pack). If the problem can be reproduced, I don't suppose
+we have a GIT_TRACE_PACKET output from a failing instance? That would
+confirm that we're correctly using the noop negotiation.
+
+-Peff
