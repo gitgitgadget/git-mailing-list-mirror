@@ -1,68 +1,105 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB2534C123
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 18:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E7E2EDD70
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 19:09:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773425540; cv=none; b=XTtVIwkNEwHJso5m4+KxKYg72O1HuPCv3MpfQTN2XAUdHyXhnyIKznSi2+xkyS9vpqcRdVFx5Ldw7nq62EvA7ZZ7x48mQHbV0LM5ALysjEhIF0zBQMSgHqrItPqtDjZvI9JyndPe3BouKwqXuBZldi5Uuy7aUS/s9NVtHjuXucU=
+	t=1773428943; cv=none; b=Fc4eT3vkz/BfMVnfCXNoreCQTk0/niC3nnMjcv1GKAxjAJE6WX+bAP6ilLh+5D5/tpRu20Z0xrXFHkA8v+uMPZnGXK4g3xc2PMVp2oISzXeAc7elt9PnDfb6TMTaquvX9X3outs4FBvRbhbF4d2Ac6AhjagsXFj9Ku25nbEyi90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773425540; c=relaxed/simple;
-	bh=AM74oC5Pz2fUJiZHEhwmBhQ/qlHSKNZ/QvNq/FhvLN4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Zjn+URDlZX1I3KqWeRhRE3ZgtBPu6zjcP7VRmtp9unvLlEUriAgg7GY4zm9WmH4LvXV2kUMY6MAya/BcWuhMy3hJFjeoohXQBMn6bFBfF/UwGe9jMf0WASJUgg5eocu4uIYTI3H14L7a4TSVZeeDW1+2burjrpwqkc7Wv/3cjZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=KjH9IUBh; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=IMDd8Mzr; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1773428943; c=relaxed/simple;
+	bh=f999w1GKKrhnInfQblFWNJX9FwkDumsf0xUxMeLlFN8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=K9b5MSaJUyTHA16g/ensxT+yXAuzyqsBh/VgdG+RjMdPVvlKuQ8wqUqDR5jERc2Itm4rrniCYma7qL1mQpZeZuPWGTP8f8HS/m1JUXZgMYSMpx96BPu57W93ad4g1RjtmkZ6Fii2ZEYdvR7exq7FfYT96W6bFa0JVA9ZUQinR80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TpExBJCz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nUaaq/EH; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="KjH9IUBh";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="IMDd8Mzr"
-DKIM-Signature: a=rsa-sha256; b=KjH9IUBhbn/1mvZMGa1aZgFpZ60iEWl85Goi6mhBe3vSQSPCiQgy4W4V452Y3E9ApfycYfozWBt7Va5Dwykvjpog/J32QO/NXPbKcN3QfbV/HQ2poXdV45UPQN69J9wNW3/YgAMfBmyg84PeCM5OXYhH8U4Jwg+bCNezlY8GutBmhNUR/LAR7VlbUTuY3sjg9LSa31UPCnBNRjGYx4xPjk6odkIyw3c24uST141OKQKkRC6005OnzSaYN4nYMwA3++mKQRg+o2UP47rTJjUjmHrAPAvL6Qq4jApISuueTmW5ZgX8/ZhAiWTzSxgRKeePVMqlAnSdnKm3s+oAZaqUdA==; s=purelymail2; d=malon.dev; v=1; bh=AM74oC5Pz2fUJiZHEhwmBhQ/qlHSKNZ/QvNq/FhvLN4=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=IMDd8Mzrv6g3N9WuMsskHVPVtQIM7GWIhcJeKqkXlby1c/F1CuLG3PB182OoV8KIfu+U8/98iaHbOrFSb5tlc0Z+m3+xLeP59dA8ckFmX00kLLR5kUhmH05nyjSm9anxNLAS5NlaQVV6rsRTeyvatuLSCyVl45bbfKaHG2hlyNwz6I7P1h1VTcfKcp3MPMXWvOdFp7g/8L6gD4bp8fyih0BSentF12v4hW+39w6m2rHRkXzqYUQW/FU8t3HHtC0rlNi3cznxr8zx4pSsuHjDq7wC36nnO+eU8oVU+FXZ+Q/QhDeZxBf4uOVDg4HYxDTOecG35lOcOgtyRXAnmAIGLA==; s=purelymail2; d=purelymail.com; v=1; bh=AM74oC5Pz2fUJiZHEhwmBhQ/qlHSKNZ/QvNq/FhvLN4=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1932714853;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Fri, 13 Mar 2026 18:12:12 +0000 (UTC)
-Message-ID: <e448f98d-58be-409d-9ff2-ae45442dbded@malon.dev>
-Date: Sat, 14 Mar 2026 02:12:07 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TpExBJCz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nUaaq/EH"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 365041D0016F;
+	Fri, 13 Mar 2026 15:09:00 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Fri, 13 Mar 2026 15:09:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773428940; x=1773515340; bh=pjoFI44bMl
+	isV20xG7Ukmz2MQS6PRXcw08e/gq56EMo=; b=TpExBJCzVmJnDR1IbkHguOelUb
+	Lpfc17WToeoGyCiepkihpiWGgOKlyIujHyY6gPLA7AHIQFGifovR2j6MhmYGUl28
+	2Yl4FeadhJrC/q/s/ZtjYG0h1HWZqQt6P1B5i/E+J5qk6P0CYnv/Y9RUzMewOIEh
+	rxqIKJuZG+dnzEHdrz1t450Jev5r+lZG7kP3FU0jnue+4MqtMqoFkQd0Ibxpdev1
+	gRPk11JiTUViTWCq1cDIrwdy1D5QvRRtn7/N20n+O7dALhnCC25F0zZJOzNOOJpu
+	PHlU3jkyOFmq01TyB7302VeW9clOqHG53qv5PDb2d/ceYghYv0o8KFA6AFzA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773428940; x=1773515340; bh=pjoFI44bMlisV20xG7Ukmz2MQS6PRXcw08e
+	/gq56EMo=; b=nUaaq/EHSMlXmtWRbsIBlD5URVfhi2EjTdM27F0InGqmcEDaxRJ
+	/ihn6ZYHe/LaHQXCf2xUUidseXjN/V6NX8HG1bq3DrgEtVVoYdS8dcSnzZ7c/lnR
+	1sp4BiO6twhbtxQZNvMv5YPbrlR9bprH76uZSpP3GFUxLpOEIkdD+PyFgD1zFjQc
+	4ybDrcg/vm7beajCX/o1mAqqCTMZ9LfeNfBBdu4aVH57ax2sJbVmFsFPerwZRITf
+	a034p6uGP48FhvURC0P5yTvZX1ealS3GUlZzytlOhn0L5FRuCBjv52FQA0sPJgQS
+	9umBju/qwqacQDuwk3cUcVl0ly5w3CdEkjg==
+X-ME-Sender: <xms:y2C0aaxpsGz8wGR8eCXPswPIiItJcXcgb9Hx_OCK5PJBetesvtO0mw>
+    <xme:y2C0adRGzLsiKhshEea_ntbHibgBlfN61Q40pz04LZTcmmlOcxYLP5eBAyCZGEh8o
+    zuaO0cdKXGSfaNlWugAFn3B6Bydj_ZZ-e-yrJfHu72xSfZLziyVew>
+X-ME-Received: <xmr:y2C0aRWu9g4fr15wxxoaK716chJdwZsZrZ3kEfuh_1Sm2Nr3Cba2a1mZxQ24msr4tst2onL9kb94D1uVQkY2VoqMXn6k_b8WCg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledtgeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrg
+    hmuhgvlhdrthhhihgsrghulhhtsegvnhhsqdhlhihonhdrohhrghdprhgtphhtthhopehp
+    shesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:y2C0afYK64lYkO_FrhzpibPczKFDEZPOjeLtMDt1-nCwcEr7cjiwLA>
+    <xmx:y2C0aX3k9QCSPi9Kp5FimxDnAtz124rJSzDkJUsnNSHlwZlqWBxfSQ>
+    <xmx:y2C0aRjlzKuxQ8FhOk8KtbKsRe44zoWTwddYFXkF0HDBy6kx3nhn9w>
+    <xmx:y2C0abYuHMbF6F88urgO1kiyll4h7rM7jD96VfjQCPeaUlr0Ow4oxg>
+    <xmx:zGC0ae6JozOZXS8AhHtvE2ZUgV170tTdx6Bk4brn_fWpggvNFlxhUe4c>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Mar 2026 15:08:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH] Fix GNU/Hurd build
+In-Reply-To: <abRIXE2es5A-4VLv@end> (Samuel Thibault's message of "Fri, 13 Mar
+	2026 18:24:44 +0100")
+References: <20260312191901.174808-1-samuel.thibault@ens-lyon.org>
+	<xmqqbjgsdbr6.fsf@gitster.g> <abOxLFNGgZjo1dyi@pks.im>
+	<abRIXE2es5A-4VLv@end>
+Date: Fri, 13 Mar 2026 12:08:57 -0700
+Message-ID: <xmqqsea34kdy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] builtin/mktree: remove USE_THE_REPOSITORY_VARIABLE
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
- karthik.188@gmail.com, phillip.wood@dunelm.org.uk, jltobler@gmail.com
-References: <20260311181704.958509-1-cat@malon.dev> <abJjYNq_sxeH8yLQ@pks.im>
- <af2c4ae3-c273-40ba-bbca-cbbf687b1b91@malon.dev> <xmqqpl577m3y.fsf@gitster.g>
- <4fb9c915-7246-4c55-b7c6-b4ef7ca91230@malon.dev> <xmqqzf4b4ntq.fsf@gitster.g>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <xmqqzf4b4ntq.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 3/14/26 01:54, Junio C Hamano wrote:
+Samuel Thibault <samuel.thibault@ens-lyon.org> writes:
 
-> I strongly disagree your idea that 'z' is more business logic than
-> 'h' is.  Both are equally relevant.
+>> Agreed, something like this would read better indeed.
+>
+> Ah, actually Pino already contributed a fix in december:)
 
-Perhaps I didn't explain myself clearly :(
+Good to know.
 
-I do understand that *currently* both are part of the business logic. 
-However, what puzzles me is: why is it written this way? Why isn't -h 
-intercepted at the outer global level, but instead handed off to a 
-function like parse_options() for interception?
+> It would be useful to put this github url in the README, I have
+> submitted
+> https://github.com/clar-test/clar/pull/135
+> so it'll eventually end up in the git source for people to find out
+> where to send clar patches.
 
-Is this due to historical reasons?
-
-Please forgive my slowness. I would appreciate it if you could offer 
-some guidance!
-
-Thanks,
-
-Yuchen
+Wonderful.  Thanks.
