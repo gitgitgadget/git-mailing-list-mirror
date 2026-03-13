@@ -1,67 +1,68 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09529324B27
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 14:04:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF123264EE
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 14:20:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773410661; cv=none; b=cf0Vm4TAp9BU2/QrzXGpmNMQGavYF/BfdNFBjq7YvPNbQxOfMAszFXl9ID/iqLNkHRrPN1FCp6Ma+7QQzP+6XSFeh2+znvQmfGtUQoMaWIjscp/ey6RMIKZlvjC/ULmcgLP5fVD5n2ji1JW2KgUorHFQKYDmeaBd/du/FPi8kaI=
+	t=1773411606; cv=none; b=rSJ0WiZv8BjfpuSuxqa06pyVkGfrPoirsWa8WNv3MYFLPEgUDV7V82Sb4k5yD9rfx5n7GV8S2uoQlSUSkFqz4dCKEB0YhkJ83p+veVcPc0rAZTz5ri4+hKfGnJYy+THHinkcmE1cFTQd52KhZ7fPY2wL3EoGAeC+r6uDy73zEOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773410661; c=relaxed/simple;
-	bh=1ye0M7jy2GqNtgx9jg08vk2zsOEBLJ6Dwt9XzS8+SJ0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QarbQdR99AeExURry4hw0x0mfMwWQmWHtiLIR7PcvQa6TQa1JYVO+m82IHUa0hYmOXuTr988fAayenuhQul8WLj+o4kCOS+J4E+iXmpxYlI9biW4ohGy2KdxXbhi8b+v/O6HlSggUrhrNgSIJfMGSfO5+d9TxTC9IWby6wz96Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YXjf2XBl; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1773411606; c=relaxed/simple;
+	bh=Ew1mIwZAUt62FY3XjvELGdmptTw4D3bkGWsK+2gxk7U=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=svWRdv3Ut8ieR0GtMRZZLpSXo1JB5OUbp5qzdkj+nJtEdJgQVI6Im1rm7WhNleH75DuAvnjAhGou72ba2mkFTNlT8Mphr/GEly9bkR4O2yUq7r+LoJDet7F8CmXtEqOAHT6wXL90bSxm3hrmtbSgQ9+wpFLiRwy/9bunmcaapCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LRNO9VDi; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YXjf2XBl"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2aea68839a5so17468975ad.1
-        for <git@vger.kernel.org>; Fri, 13 Mar 2026 07:04:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LRNO9VDi"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-439c9bdc1eeso2229447f8f.3
+        for <git@vger.kernel.org>; Fri, 13 Mar 2026 07:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773410659; x=1774015459; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ngz8VvOSsajozeAmVbPtHTBA6R7Ie45SRRI/oudwuAA=;
-        b=YXjf2XBlS5c1LTELqjpg0Qy7tr581JXzkdPKZLNa2nh1FyzrPNKZRYXwMQzPEfiC38
-         r5cS2HeR9BPBe0XqANGQnAR4w4RSHi1TGAM9yzfQlVpPFujqPl8Gu6ebrpNJPuxiWWQr
-         Hwk4O/2BPGV3MCFfBNJrvD20Yc6rFAON34wk9MjiNK4GsPfCXMjs7H1QW12rUmKeWD2Y
-         jlqgM9hsrSCB4Gy04UdfrpFDZwtk3aLXMJZYRtGbXiLJGgnVIetqMnoHrFmyyl4RHm/u
-         Uxwq5BZl5pH0EGI5ZN+DSnLswYEypL5P+n6Qm509/zvhHOlscADyVN18K/DoB8Wkh7yH
-         85aA==
+        d=gmail.com; s=20230601; t=1773411603; x=1774016403; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mBRMCDwP2l/N5PQF5WV++kuThDOKzB/CYv3aYHEzTmg=;
+        b=LRNO9VDiRYAuVU1bbC05ABbGDQKbVTrswvCfgotYgv6g09TPJP/7lmfjQUvTRkDyM4
+         cADkO6z5fVg5xiB32NhijE5iMu8f+cRznDpR7xuf/Hiozx/+IjYk2zERV+9PhrzxjK7x
+         HjeM8gAwfkGQDrEegpC70YwYG77QgH+2XUc/EM8xxJeaoYv2HnEO7SIGfmj7blFjZR8y
+         s+fI40veDW7LAO+wg3aRCGIX9eUnXr2nesc0bZX9fAVcPfsO2tOINMLO6mLar6GfIYAq
+         V0UHvP6nKhmRebhwE8ctbqDji6F696vspDgHMoD8cW4KAjfXaU/VMs3gz09JXK49wSC2
+         De8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773410659; x=1774015459;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1773411603; x=1774016403;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ngz8VvOSsajozeAmVbPtHTBA6R7Ie45SRRI/oudwuAA=;
-        b=pMKEsNvtsJYavfo7Q4vPQjD63TWPhQyLt/6Ej72LDwYtjd31QlmJP5G9T9nm92R8ad
-         Lw+L32WuvJKgcVSxU38u7WbXUFUj6W7srv00aX39m70Xr77+Vnx1w26HxlqBg5MFK/IC
-         nO9IqHJfNq9RGND1gjCBfearuHouVX7dxQPLrI3Kdk80/QfWEg9yqo5dJR7sVaBTHBt4
-         iDayhqXilyHmvyS3ST0+vWOcRgiJVNYsUGU42LxVndiKjYPZ2bFmFaa0pj3Y5Kw2SZbk
-         MBP7simNPgGkTlYsCarBQwGy9p9Uua8jxFEHvP9dnM+B8S7DA/h8rkmgWLdSfks9ZB+c
-         G7IQ==
-X-Gm-Message-State: AOJu0YwgwcOgYbR4wmVUDDrcItT3YTbbzzPHmiY5INmgIg9B/ZJ8RtGX
-	LENpRIHJt5I96/oJArLbyv44ZK6HK6yqPo22V5qPMYHdqowO5HiHgfu6zXx5mNmc
-X-Gm-Gg: ATEYQzx0ZxZyXxib4boEab1WCa3qeOMyySYW9oKhubTByj7P6bGU8IR0ysJj1EXc73n
-	OBKNQI18fyA7leloYQqjiu9h4+0zHho95Oo7/991reCvyGvUOexgwVjPRNzHWuSYlT73RefR//b
-	5+JNRkc7swa63iUfmMkzuoVvGLqWRR526KwfUpqE4j9k9s9MPYJDYwJ54XSmDQ7/rT/21w2pcun
-	yFo049Y+mdquwy2pTbk6YOe67J0Tlr++D/VW1UbpNr0DdP7hU+huqpo55pJ1Az1KUV06NJEkYZ1
-	0gTdF3CixYt8wnAxRGmYJ8qsD/8ZHYQZvS6q5mrDfmwWkdGHLIpkqftT35VRhGbF+Pmv6hlrsFj
-	YMkedpDB812ut66hJMwPnQ+7I1ocK9l1WH/qhYCSrCHPXI6bHhiBHKWHDnutWNpGj6bSlGqcxmf
-	MFlLvIoV0iZtVFU7Tvv8YdtVIQD3aMvA==
-X-Received: by 2002:a17:903:19c7:b0:2ae:46f9:a115 with SMTP id d9443c01a7336-2aeba5158eemr67089465ad.22.1773410658795;
-        Fri, 13 Mar 2026 07:04:18 -0700 (PDT)
-Received: from divineocn ([45.127.227.82])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece8629bbsm22769885ad.88.2026.03.13.07.04.16
+        bh=mBRMCDwP2l/N5PQF5WV++kuThDOKzB/CYv3aYHEzTmg=;
+        b=H1/SbLzmrSgWX5B6BHAjFe/OzSei0Yz79wIwrgAebv1BSqE+VTNnxby0Q/ER6fTeUB
+         nzB+oz243ZPCAh23OJH9Q7r4FBKMU8ouYJ7qxH7l31cUrNQBPCU6ZdgCt6rd10QF0BiD
+         W8m/BzhQkyqEHzesjsIoKUVgSbtaAs8ZFn3qHv11bsgAa7zg1ODjWgjKfdTelT6J6YH2
+         JEdViDbkd/JjwgJUfo997f9HUeLFNztUxqlfiKIC9j5wXk+iC92cwfPW5EHSLi2Dv/ec
+         spjSe306TNFNAbIDQaHq5k1AGhwn+7750NSSvZ27uHW3LDO6vTUQBkcO7CImJdNORasb
+         XazQ==
+X-Gm-Message-State: AOJu0YwofWRJ4SDRxGX07QcWQF74FbZy3cXkY5nh2SVslYR6D/2IjEqz
+	7+ARrNUj6A4fyU9MAIVRHqa4dnEVmphbks+Ndo7v6ya7xeKHO3xr4fHCih6Kkg==
+X-Gm-Gg: ATEYQzzs/GeJVXk83GucamYTN+KImijVHedM2puv+FJHlRvxonKeB/IIbsiXjGD4GZ+
+	mNK6Pn7WhZEknxtI7pQDOn2hdfhtzKuq85FQZ2/XjcKWyhdH+AGE2GNYBRPReIgVARjk2qoGw2G
+	gsT/8F5nVZguvTYND2TpGsquI4X+WpOwVUdYEUmZI+/3m4peULSLwVS86fLZjpt0+UvpvtmTVJ/
+	y97K7JzJj5GUCudalMCmP0ekAktIzYjEB4iimgoiZiFFfojUSYtuofg8cHGGVUC5XWx8fHw11rx
+	Xiad76uJcfMVOsQUQUSnkUdpW/Om3r6YjHdN3VdLhSIMtITtwY8avWUacoO1XcGv2EVsUStL30D
+	Fdw3I4Xfc7IW4rkYtqtPn436cG5cpC9QLpsp03aBpRMNZ6mHhGenM8jiVPLUY6N9X4cnqoJQWNH
+	ZFdAtrFpL0tF9n/4Z+3V/peGKIzqU=
+X-Received: by 2002:a05:6000:402c:b0:439:ca12:d4ee with SMTP id ffacd0b85a97d-43a04d8dc84mr6755304f8f.25.1773411602949;
+        Fri, 13 Mar 2026 07:20:02 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe1a78cesm17215509f8f.11.2026.03.13.07.20.02
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2026 07:04:18 -0700 (PDT)
-From: aum2357 <ahambrahmasmi2357@gmail.com>
+        Fri, 13 Mar 2026 07:20:02 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
-Cc: aum2357 <ahambrahmasmi2357@gmail.com>
-Subject: [PATCH GSOC] diff: use conventional comparison order
-Date: Fri, 13 Mar 2026 19:34:40 +0530
-Message-ID: <20260313140440.564201-1-ahambrahmasmi2357@gmail.com>
-X-Mailer: git-send-email 2.53.0
+Subject: [PATCH 0/3] worktree: stop using "the_repository" in is_current_worktree()
+Date: Fri, 13 Mar 2026 14:19:47 +0000
+Message-ID: <cover.1773411586.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.52.0.362.g884e03848a9
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,28 +71,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-diff: use conventional comparison order
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Replace `0 <= addremove_explicit` with `addremove_explicit >= 0`
-to follow the common coding style where variables appear on the
-left side of comparisons.
----
- builtin/add.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This is a follow up to pw/no-more-NULL-means-current-worktree that removes
+"the_repository" from is_current_worktree() and get_worktree_git_dir().
+The first patch removes the use of "the_repository" when determining
+if a worktree is current. Patches 2 & 3 require a non-NULL worktree
+when calling get_worktree_git_dir() to remove the last use of
+"the_repository" in that function.
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 0ee21692c2..ad0d6047af 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -432,7 +432,7 @@ int cmd_add(int argc,
- 	argc--;
- 	argv++;
- 
--	if (0 <= addremove_explicit)
-+	if ( addremove_explicit >= 0 )
- 		addremove = addremove_explicit;
- 	else if (take_worktree_changes && ADDREMOVE_DEFAULT)
- 		addremove = 0; /* "-u" was given but not "-A" */
+Base-Commit: 7f19e4e1b6a3ad259e2ed66033e01e03b8b74c5e
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fworktree-is-current-use-repo%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/7f19e4e1b...1151b5b30
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/worktree-is-current-use-repo/v1
+
+
+Phillip Wood (3):
+  worktree: remove "the_repository" from is_current_worktree()
+  worktree add: stop reading ".git/HEAD"
+  worktree: reject NULL worktree in get_worktree_git_dir()
+
+ builtin/worktree.c      | 21 ++-------------------
+ t/t2400-worktree-add.sh | 28 ++++++++++++----------------
+ worktree.c              | 10 +++++-----
+ 3 files changed, 19 insertions(+), 40 deletions(-)
+
 -- 
-2.53.0
+2.52.0.362.g884e03848a9
 
