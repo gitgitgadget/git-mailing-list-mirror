@@ -1,114 +1,151 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92C734F24B
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 07:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3140A381AF
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 07:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773385362; cv=none; b=nnFbaK/EWEvqtYJo9HkHM6kHxxz+gaK2lvnh9vkk5xy/8oXSg+YGERnGLkDkFS1ei/mw+kldKf9KOsOg30FNa82TxrPlQa7THH2nFDjg1Va3K8kjAz/dYGaCI3vydEbKAhTI84UucEBy5P6NxaRb9U2nLUNKToSlvjd75ETcpbk=
+	t=1773385660; cv=none; b=DIKOV/LjACngAxvNnxV/Ju6c6DqgMFSrVz16rduEtdtILB/vccTTqqn8l7wu8pVQtrM94Bb0Y/UD8FHMnHydVWAgGiOUSbFF9Ve6CLYo4AhJxFQH9BSL8ecLBhYnLh/77egWr+W4ggSwIS4j52w11hpYlJzk4Q17ULINp4OsJLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773385362; c=relaxed/simple;
-	bh=RZxCBiMLO5CjijRNTXW1KIYGOXc1tih1dmMZ/ftX2aQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AY1sju8U1qqGP4yIt8ZrMLesW4zn22kx8/L3moTQKhVpv6IGMducEHkysqN7q66dhgl1O8TGDlLQ2doUtcMrHxYZsKxmQCF0mtyB+lv9ocoR/MJ4CEdfvbpbKE1kTyQgi5vWOoBgomFjcghUCqVvCWC+jHcWgCvgLDaQFTcat6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mYaXTkxe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tkxXZxpf; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773385660; c=relaxed/simple;
+	bh=q4AWLFndzrY4KHaOTFL23Vne6PD6IQBjTBDhmwSMhrQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PPmljquKLMEcekqEY6WTPj6NtlXO3g10NGqs1OPos0282HQrG4pNQGY0DT/SzTY1kWV5hJ1cf7hcQfQ6zxmPuBKEq4bUBAzVB1GK37WIPDaTIX6DPuHOB07TjTSt6KAGoW3xrJfxPtlzr3Jn5B4J62/OI+0nAnBdJmkofcrJNkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BZ0HnSmn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YuDVa27z; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mYaXTkxe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tkxXZxpf"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 01FDB1D0012D;
-	Fri, 13 Mar 2026 03:02:39 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 13 Mar 2026 03:02:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773385359;
-	 x=1773471759; bh=oMi25/6pm6saIXkjELTeTYidy4xpCf60tyOiSwCj8b0=; b=
-	mYaXTkxeF6qN8nD54c0O92gbohui12AP+A12rBVlvRe8GLGOlmdryQH7JfMw9/iB
-	/e66M147BPTZFOZABwuJf4gelOcM9PMt1WomRmOvfW2PxzxJLFBOZG/Y785tXIIV
-	8NfizGyF9kRLgsaU4JTS6aXgaHDvwQvXdyzTkzsKs1s9vWb5DRxGpuEQhuwNJU7e
-	GbLPlS1n/6ePddRC2+Fa/hag7ZY2xk4xnzYpk1iBJcWKzVK0uidON3oMV+Tp7PD6
-	bC4FZKzUMJ9mPA/brUx/T597IyjY9KxP/tVpjLZ0gVCkOI9zp9bgGiccS3w50RhP
-	fTqnQSdztVHE8KVDYkruGg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BZ0HnSmn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YuDVa27z"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7CE321D0011C;
+	Fri, 13 Mar 2026 03:07:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 13 Mar 2026 03:07:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773385658; x=1773472058; bh=rkGT/3jtWw
+	25LwyqxXSnwLhfUiAEujQDsCZ9erWa0JA=; b=BZ0HnSmneDO96whQnicrBn8M6L
+	f6EhN3Tn8lPH7y59LNrTs/lqDb1Kuq8joOR/s/4UMwBAgv3PjgfK6f/CW32zGgbj
+	Ix8LzPxyIl8LqpzgvBJQ5nm0oUNLTHX77npAJdlciWSArUXek8NNshftV1qQfe6B
+	w0VfGfv4yeWNOUHmvAYKzSX6JAfd5hioJkuJ8wn3fWkaw9kTSeEsIJ/Znyj3b4s6
+	TRlnltMIOH9fR4sIuo1TcSiwhTSyzQ2DqG9I1ZYJv8SSu0DyP3Gp5VlpnN8TbQnr
+	l1CTj41rBKfpJ2yW6Vo1EMrjE5a+rEJ8YamhgbL+UEo4Gwxqr8GZuUqwbzcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773385359; x=
-	1773471759; bh=oMi25/6pm6saIXkjELTeTYidy4xpCf60tyOiSwCj8b0=; b=t
-	kxXZxpfZBKCaXWMlUa/rh7+AoRAcI1R4UJE4rvybm23ZT2MfrG4i62/8iXHgVFlY
-	HV7ZkoWByk1Sj/8sMTI+S72neB3p56rI84biHyu/1qRuvcxaku35e0U0SvA40v40
-	aZp4KS9ekW2TlBdt3ljRSRfq3RKOCHaGJrkVXDXVn8eYDeNgo4ySyQB/tgin/zL5
-	9A5VWg4tMYugmg8fAMF4FR4CkS41PETwYVyMAMlVQ2zF6ldZ2UGkZ60FC+JpG11j
-	48B8XecGCjX1vAu3bk0RKoVkGQmTT+KV2p0MWEecPIewYzjtphz/FduZZ+/L3Mia
-	IoHZAF8ML9IG3Bo5txNhQ==
-X-ME-Sender: <xms:j7azaQO4oqlSvekogmoorfjUFYo2ai379jJec5q3mwPwSx2wSDAFng>
-    <xme:j7azaQR7TIxCvBsYvMr1U5ccztBmZFXVD4jjsNcqAq9nilrmj5EWJznwj3Pbvv3Mx
-    Ilhz492flYYD4PtqN-hovxBOJN6cRFxT9pOtEF7blD_0dDs8F_D>
-X-ME-Received: <xmr:j7azaejHO7nlmu8dDv-VTZQUMNzwH2oB5H5SDmZc6C-YM7MOJsTPvb08mpyE6hbzqDjVd0x-o2EBj9xhA9h3jGr5o8MBZ0er6oW9wvqERQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeltdduucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773385658; x=1773472058; bh=rkGT/3jtWw25LwyqxXSnwLhfUiAEujQDsCZ
+	9erWa0JA=; b=YuDVa27zJASLxPoBdLFSUJdisbiWI6TSTELrw/eItHhVF/Wi9jE
+	lK6V7TkC/nuU680upeRn49f5ZR+N5rqaRQZ0sp6Q2sDsbKipdllBxvSfnrAX5T8e
+	ROWSHGsNwI+i3Pqq516YM1qthkGm3Xo15RDDprTAilcxcCHvnV36nYeF7NBwGPlH
+	TtGENNoNjjQkS42Si0CwF5kwp7HOaO5ox+rcVtCXbS87JjFgFcOqvXO50Mxcy6/E
+	D6scleIn7VlzdqAM7pdrNYBTlHtQEer71r7xIoike1mJOT7NgCuT7bPtEnST9zi1
+	HCGUXvweJVSuiiH/0bskPJWUofXoPdf4Vog==
+X-ME-Sender: <xms:urezacX-8aEOWWYbaiT52Mtg1RpUhZYkfRxGzhwUjP9qyVVxXw7bFw>
+    <xme:urezaXdety0zuDfoaeExfAF8Oy7QFwxki3wxmKAQOwQDZ2RQaBXE7XDjVGR7goYa4
+    LD8WnciXNS6tVp-pY9T14C8hF8Rql5FghKAJFkSwirvtvq-uDpeng>
+X-ME-Received: <xmr:urezaYu1uCAK51nUkMvo9VNeonlCpN7Z5Rap9PtLdDG3XChRfeJgGojPB_VuZBQVyFUq3QkUXzAHrHJHxuQ7Y8tA1DzYTj92eA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeeltddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
-    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
-    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtoheptggrthesmhgrlhhonhdruggvvhdprhgt
-    phhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhk
-X-ME-Proxy: <xmx:j7azaZ-sHp1J80ao55FbZFpPWpcj0hwGZAUB-gMi4zvhdJYjPOF-Gg>
-    <xmx:j7azaVHQwof_KI37fTC2yRlCawNstHOFkgESd-yAufrAmNy1SU3cjA>
-    <xmx:j7azacl8lRyzY_bhwyp-vSPnNpb9v0qqXJ5KIKP6j2tyqP7ajuX0PQ>
-    <xmx:j7azaZaTUrxE7v9PItP9jJ205PQ5FDhFv_4tv8hmKSM_Z9kN4EiqSA>
-    <xmx:j7azafrgN5_tWCwy4UgYuC9i5G43ykmpDiWptw7yDQn7eyKDXK-Og1GI>
-Feedback-ID: i197146af:Fastmail
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohephi
+    gthhhinhdrghhithesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:urezaW9YhU1VaPEeNPJGcFXS0aBDsl-Guqmev5XSjAThjzsD8FD-IQ>
+    <xmx:urezaT0epMyTPGXMsa7HdY3KaD_BxULXgroyEdo1tDrw8u24haCppg>
+    <xmx:urezabAHRF8DGrVUWMPNRalriCh7Ezfy62K_h_or-Z8fkiW70FKkmA>
+    <xmx:urezafetWLtBnhu_7NHbKREAPBnf-xwQ5Pbi6IC8WzPdX_ynUm-xOg>
+    <xmx:urezaWP7zQdcYG-Sjl56ZdvfZ5zPyG4Wc7ABDzBkpB6xFa4z_yFraXhp>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 03:02:38 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c501d435 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Mar 2026 07:02:36 +0000 (UTC)
-Date: Fri, 13 Mar 2026 08:02:33 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org, gitster@pobox.com, karthik.188@gmail.com,
-	phillip.wood@dunelm.org.uk, jltobler@gmail.com
-Subject: Re: [PATCH v1] builtin/mktree: remove USE_THE_REPOSITORY_VARIABLE
-Message-ID: <abO2iS-7S0G-3Ftf@pks.im>
-References: <20260311181704.958509-1-cat@malon.dev>
- <abJjYNq_sxeH8yLQ@pks.im>
- <af2c4ae3-c273-40ba-bbca-cbbf687b1b91@malon.dev>
+ 13 Mar 2026 03:07:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Yee Cheng Chin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Yee
+ Cheng Chin <ychin.git@gmail.com>
+Subject: Re: [PATCH v2] xdiff: re-diff shifted change groups when using
+ histogram algorithm
+In-Reply-To: <pull.2120.v2.git.git.1772463265865.gitgitgadget@gmail.com> (Yee
+	Cheng Chin via GitGitGadget's message of "Mon, 02 Mar 2026 14:54:25
+	+0000")
+References: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
+	<pull.2120.v2.git.git.1772463265865.gitgitgadget@gmail.com>
+Date: Fri, 13 Mar 2026 00:07:36 -0700
+Message-ID: <xmqqikb08ax3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <af2c4ae3-c273-40ba-bbca-cbbf687b1b91@malon.dev>
+Content-Type: text/plain
 
-On Fri, Mar 13, 2026 at 12:21:41AM +0800, Tian Yuchen wrote:
-> > It's typically fine to just send to the mailing list, so you wouldn't
-> > even Cc Junio. Sometimes it's just a matter of capacity, and it's fine
-> > to eventually send a ping after a week or two have passed without any
-> > feedback.
-> 
-> Oh, I see. I thought “repeatedly bringing up a patch no one cares about”
-> would be considered kinda *impolite*. Now I understand. Thank you.
+"Yee Cheng Chin via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I mean if you nudge every second day that would certainly be considered
-impolite. But nuding after a week or two, and then maybe nudging again
-after a month is certainly fine. It just happens that patches fall
-through the cracks.
+> From: Yee Cheng Chin <ychin.git@gmail.com>
+>
+> After a diff algorithm has been run, the compaction phase
+> (xdl_change_compact()) shifts and merges change groups to produce a
+> cleaner output. However, this shifting could create a new matched group
+> where both sides now have matching lines. This results in a
+> wrong-looking diff output which contains redundant lines that are the
+> same on both files.
+>
+> Fix this by detecting this situation, and re-diff the texts on each side
+> to find similar lines, using the fall-back Myer's diff. Only do this for
+> histogram diff as it's the only algorithm where this is relevant. Below
+> contains an example, and more details.
+> ...
+> This issue is rare in a normal repository. Below is a table of
+> repositories (`git log --no-merges -p --histogram -1000`), showing how
+> many times a re-diff was done and how many times it resulted in finding
+> matching lines (therefore addressing this issue) with the fix. In
+> general it is fewer than 1% of diff's that exhibit this offending
+> behavior:
+>
+> | Repo (1k commits)  | Re-diff | Found matching lines |
+> |--------------------|---------|----------------------|
+> | llvm-project       |  45     | 11                   |
+> | vim                | 110     |  9                   |
+> | git                |  18     |  2                   |
+> | WebKit             | 168     |  1                   |
+> | ripgrep            |  22     |  1                   |
+> | cpython            |  32     |  0                   |
+> | vscode             |  13     |  0                   |
+>
+> Signed-off-by: Yee Cheng Chin <ychin.git@gmail.com>
+> ---
 
-These aren't strict numbers by the way, it's mostly pulled out of thin
-air with some (hopefully) common sense applied to it by me.
+Thanks for the updated patch, and sorry for nobody responding to the
+patch for over a week.
 
-Patrick
+The detailed explanation of the issue and the inclusion of the
+repository analysis results are very helpful; they clearly show that
+while this is a rare edge case, it significantly improves the
+quality of histogram diffs when it does occur.
+
+ - The removal of go_orig is correct since g and go are kept in sync 
+   throughout the slide loops.
+
+ - Clearing the algorithm mask while preserving other flags ensures that 
+   user-provided options like --ignore-all-space are correctly applied 
+   during the re-diff.
+
+ - While ignore_regex and anchors are not passed to the sub-diff, they 
+   aren't currently available to xdl_change_compact anyway. Given that 
+   compaction happens before regex filtering in the main pipeline, this
+   is OK, I guess.
+
+Let me mark the topic for 'next'.
+
