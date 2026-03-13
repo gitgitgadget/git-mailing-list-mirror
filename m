@@ -1,83 +1,81 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D85301460
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 17:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F2C3D1CA0
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 17:51:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773423797; cv=none; b=ZHDc0wa8uKzxGDGlYAN81OTgP4e4e1yW3mOtnJZmHp7fhVg8rUweVB7b66g3IOBilTpJAYj/tt1iMTCFFNveiAkihN++kfESq4WUroTpELgc4YrfYs/+N5z0p66n42zqtP2rfLu24+dI7XWG3hHxSJJofi4wphVArm72t97l/EQ=
+	t=1773424319; cv=none; b=QIAZX/+FgnjYopr7etElpWvvtfwLRQAWyry6Jcx4bYYdkmyNlca0qXghiyLnhWd7bDy+2N6T7HuRg1nE1+kJTvVa1bhCXC3lgyrjCIqqfgWOjp3o0B8sVHPyMawO+OYVuin8shfZ701ka2YWZzvTors1526x2s+e+xG/3dHVOdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773423797; c=relaxed/simple;
-	bh=RnAv6b6Rm81Dw//88XzFusCuZlMG7h4+XFUdjRFNt1E=;
+	s=arc-20240116; t=1773424319; c=relaxed/simple;
+	bh=VDRPKZcLkoWzplKBDfOXXXRCw1up4ni/s3JPfmTlIJ0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cdLh6IDFC9pl45G29kgxh9eAG7G5gcDXR5gVpOSLJFIzxqZDdlgvM10yH4+pY0B7v2bp5YjAlvqIojrOSofWnwFAJo0e6uAHU0GO41s3X6WxlhPCg27oyEBFFnt5bKm+SU1FymDy6Y1CVwy9bZHwAEunr90kKYLHkeCb4IyX6pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fgHWzQc8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yWRKLnMO; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=Zv0OKLrqVEYZxGGQQnvfnZvjSSElHRxX7/nADFFIHdY/nUHAVAVTcKAG8l5NIP/DCkDSmwlRQYnKWACFh72JQ11VUTSWNezmi4SzaH/Q5aj1pnKEcP/CNis93hoZgxzTgbvwAnlSJWOwDXcFSwFlWSbZHzberkb1PYNf0XUJAUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dIXyFAHY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCjehJMS; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fgHWzQc8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yWRKLnMO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 924E9EC0610;
-	Fri, 13 Mar 2026 13:43:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dIXyFAHY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCjehJMS"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id E639BEC00BE;
+	Fri, 13 Mar 2026 13:51:55 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 13 Mar 2026 13:43:15 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 13 Mar 2026 13:51:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773423795; x=1773510195; bh=g5eMzN3l0J
-	0xsRrvxMAKnNBtjAVLoGw3eT7hFjxGCRQ=; b=fgHWzQc8T6Engr7sLrpl2Ninib
-	hj+P8fulU3jQdW8l77+FAALjCAosVSVt9GwNc+ZIjULEA3yH09y8ml6p2wk4/IyJ
-	Z0/MQhf7rKVbKsmNJDcHZ/QpT+CbmAw4YP8wLq9l/4xb/ZLjJRklPixQUEgwzRvr
-	qtTxmvdxYDvYuWHU0B7xh0RF31s4qZ6/o0kIg72VL4Mb/JMtcI9WMi3KsBGj0GMk
-	vp/dl+rK/QEEEvIPrwatFASy5ONHm4zVJTiCjh2VW+XY8K/r5nnLUgAV8+Psi/tL
-	2umLQ+VVlKu7eEwiw0Kxlys4PQUI6s5SeQViKrKiYpv34PCZzfW69GMKJdaQ==
+	:subject:to:to; s=fm3; t=1773424315; x=1773510715; bh=nz1JfYQcxZ
+	Tcg33AuzC6vz3128mlj3DEk4ZVBGgdVck=; b=dIXyFAHYMDKnRdNde0Mfth5RQR
+	Dgmv3+krxYkh2fm5Y63/YiSPnYaVEmM/DqojKp/zS0ZV7fHUTccOZMLAm7wSP3dS
+	U3SxhbfuRTDsNUwrFtY3B8KtMH6pBD/wxsJ0b/dzjmyZgARSEwoKpPBlKZH83Oi6
+	nNO1o23mXyUn7fdM7g+a647kDVEM8yJjZpQjnuqXhtuWfuKUIbor4XvuADD14+Pf
+	X3QiE4ej3QsbR+v2L/EgP7Hz6VuS58IYD+zYlFYg+vYwj5eWUnoBJKbSTJZsD5GH
+	T7SLRAZdX/KrmfqaIV5oinQeZGtDM0ZXF1r3lRChWGZ7uMrG4zcGqrLbT6sg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773423795; x=1773510195; bh=g5eMzN3l0J0xsRrvxMAKnNBtjAVLoGw3eT7
-	hFjxGCRQ=; b=yWRKLnMOmGp0j/DWz6CYk/Cmt869CdSJQRfgA8ljvuRwl0Y/tIr
-	qDvGx+IR9nLdofN7kxqEoBn/79aG7S4HBAts7P2v0sNWiPFVUTnn3BLbSGdCHh3Z
-	+Np66msFJ/zcKSRNjTTDO/z7i/j+/B82pzL2L7QXeS9tcXtrKlb4bI+dSWP0mS/y
-	+qbMI8IrFPzyqWXHS/DqmBC7orJsj+cLUnUnBVkdeC9eO9x4i9JJ7fJNez3QYGrO
-	sYe1mxaa+6fcMHe3FRRGJyu56o+9d740I4vtIRmVviv7sC0Urd1siTIOGBNKeMSR
-	NUbWRnsyUVPXMZHSiJ8pzRB7z5VUGZfEskg==
-X-ME-Sender: <xms:s0y0aaW9il8kVLNFPFmNWISlraNXx1EyPaw1fTrJpJV7ALISw11S7A>
-    <xme:s0y0adm9v6H6rKOXZpVI0P0PRJWrMp92eBE41cze-uN7ufPsWNo2gABYhgUdejnpQ
-    Gl0KEJvLbzdP2Qm12htCOKrTgcqL7k8cjt6PNoM95p2yNKESiJGXQ>
-X-ME-Received: <xmr:s0y0aTbZKsOI3SpHJytq7Nrovz3l4mZsX2l_MInCLvjGquvWVP52sNIwG91VBNSR4A8U_eyGYfJHR3j5FT_VdOxfmBtbkXd7yA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledtvdelucetufdoteggodetrf
+	1773424315; x=1773510715; bh=nz1JfYQcxZTcg33AuzC6vz3128mlj3DEk4Z
+	VBGgdVck=; b=VCjehJMSmoNZcVcVsLQOulO2N+6q80LJGXYPd7dKfMxYCTKAxfG
+	ac7E7i2FsaDLuoSA9JCxr5pJoyHP7RGFkG/qewPoBX+4PQG+3ONU6UGpU5b3xhFc
+	ipkVdofglyNUWGaLWFTeKG58YDeZODxG/+9lbRq2JpTfiVALfPExNjeCxU2ZnXXz
+	QssgDaHxc3gGf9Duy40+uY1Xj45taReJHHT0P5Hv8W+muVMhPBeLZtUcHFI7HTyT
+	BrXfSkLvP5dSWz7quFyCCtxIQw9uw1IF4PeC8a7PfUbS+eDl2opQZLDhjJOKLAjN
+	ZRiCo63dK2xXJ3CulHhWEDyYRdfY0nXl66w==
+X-ME-Sender: <xms:u060aS_Rn50Yv3SmxFlwNIC-BChUt7zNRrmXVmUDdWDZUoMz82h2eA>
+    <xme:u060aaJCIv7sW2XSkgxxPtPufA5pkKIETPjBJ4qVWCwsSBxWNBsmCJF0LnW6APZSw
+    e5s6wkQyvOgaISKxTM-n8etnX26u-JTOYxeeeGnyej0AqyWs8Omcg>
+X-ME-Received: <xmr:u060aVbzSRpOwo2J-iHT_uhdmRbFqPsjd5zQZ7Dx28wKWtffSRG0yvclEA-6gpRbFQxSYJK--Uk2ERW6hqkGInJWSnTUop_IMQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledtfedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtoheprghhrghmsghrrghhmhgrshhmihdvfeehjeesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:s0y0aQMOTYPix5o7NV9cw3lFzvGkrsCyx-TmmBsEVjavNsAuq2i1HA>
-    <xmx:s0y0aQbfalRFh8VCpbC-gL2uJLLOAZG7LJiPpqayz9XnUBQ6goEtkA>
-    <xmx:s0y0aW2n_hEqxEdihHpmfIVthrUWPIzyly8xdLBB6J2UnbchXjYtRg>
-    <xmx:s0y0aedKQNqrBkbDr3kSdlxjlOYFYY9xc94rtvAOkLKD7q8uXu86Dw>
-    <xmx:s0y0ae5eb2cUWN5URgWNYr4QP1uNHKv8WPqRq5lJGbCX10SUIztKqpxQ>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrihhtvghs
+    hhhjugejheesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:u060aUJjLnKFDGRzTZojVFZEzMPhWhVI176QpU321UhltI-4mcYZgg>
+    <xmx:u060abAKJ3KjC_eV9l_NHz1psLlAd8P3Dro891rAFS5hg-Vznkg4NQ>
+    <xmx:u060aRouCzMBIUv1kkMq0G4pzZ0fzMQBKVCH6NtbLNJRWE8gr58o9A>
+    <xmx:u060aegG-UAJGbK0XjzPfITqo_-PHDeq3G7Y9rUI-7T5ZLsopvWtnA>
+    <xmx:u060aWLL3gy4U_sEOtmwckqejsVdWwzG2mWujp_213aVYVWB-zeEZdA0>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 13:43:15 -0400 (EDT)
+ 13 Mar 2026 13:51:55 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: aum2357 <ahambrahmasmi2357@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] Signed-off-by: aum2357 <ahambrahmasmi2357@gmail.com>
-In-Reply-To: <m1fr63zt91.fsf@gmail.com> (Collin Funk's message of "Fri, 13 Mar
-	2026 07:41:46 -0700")
-References: <20260313133937.562603-1-ahambrahmasmi2357@gmail.com>
-	<m1fr63zt91.fsf@gmail.com>
-Date: Fri, 13 Mar 2026 10:43:13 -0700
-Message-ID: <xmqqa4wb62xa.fsf@gitster.g>
+To: Ritesh Singh Jadoun <riteshjd75@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Modernize pack-refs-tests.sh with git's standard
+ command like test_path_is_file, etc
+In-Reply-To: <20260313161808.1242-1-riteshjd75@gmail.com> (Ritesh Singh
+	Jadoun's message of "Fri, 13 Mar 2026 21:48:08 +0530")
+References: <20260313161808.1242-1-riteshjd75@gmail.com>
+Date: Fri, 13 Mar 2026 10:51:54 -0700
+Message-ID: <xmqq4imj62it.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,56 +85,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Collin Funk <collin.funk1@gmail.com> writes:
+Ritesh Singh Jadoun <riteshjd75@gmail.com> writes:
 
-> Subject: Re: [PATCH] Signed-off-by: aum2357 <ahambrahmasmi2357@gmail.com>
+> Subject: Re: [PATCH] Modernize pack-refs-tests.sh with git's standard command like test_path_is_file, etc
 
-The commit title is not where sign-off is made.
+Unusual patch title.
 
-> aum2357 <ahambrahmasmi2357@gmail.com> writes:
->
->> diff: use conventional comparison order
+No justification given for these changes in the proposed log message.
 
-The first line of the commit body begins with "diff:" but the patch
-is about "add".
+Missing sign-off.
 
->> Replace `0 <= addremove_explicit` with `addremove_explicit >= 0`
->> to follow the common coding style where variables appear on the
->> left side of comparisons.
->> ---
->>  builtin/add.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/builtin/add.c b/builtin/add.c
->> index 0ee21692c2..ad0d6047af 100644
->> --- a/builtin/add.c
->> +++ b/builtin/add.c
->> @@ -432,7 +432,7 @@ int cmd_add(int argc,
->>  	argc--;
->>  	argv++;
->>  
->> -	if (0 <= addremove_explicit)
->> +	if ( addremove_explicit >= 0 )
-> ... We also generally prefer the previous ordering there.
+> ---
+>  t/pack-refs-tests.sh | 28 ++++++++++++++--------------
+>  1 file changed, 14 insertions(+), 14 deletions(-)
 
-CodingGuidelines say that "We prefer a space between the function
-name and the parentheses, and no space inside the parentheses.".  
+Check CodingGuidelines and SubmittingPatches (both found in
+the Documentation/ directory).
 
-It also says that "less stable value on the left hand side" and
-"textual order match the actual order of values" are both valid ways
-to write comparisons, and concludes "Just do not mix styles in the
-same part of the code and mimic existing styles in the
-neighbourhood."
+> diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
+> index 2fdaccb6c7..dca0c77ca1 100644
+> --- a/t/pack-refs-tests.sh
+> +++ b/t/pack-refs-tests.sh
+> @@ -61,13 +61,13 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
+>  test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
+>  	git branch f &&
+>  	git ${pack_refs} --all --prune &&
+> -	! test -f .git/refs/heads/f
+> +	! test_path_is_file .git/refs/heads/f
+>  '
 
-And as you point out, I think this file prefers the "textual order
-matches actual order" style (there is only one violation of it in
-the file, if I counted correctly, in prune_directory()).
+The point of "test_path_is_file" is "we expect this path to be a
+file and there is something wrong if it isn't and we should report
+to the person who is running the test loudly".  That is why
 
-Many things in this patch contradicts the coding guidelines X-<.  I
-wish if the vger mailing list can use some e-mail lint installed to
-bounce a patch e-mail that ignores our guides like CodingGuidelines
-and SubmittingPatches before it reaches the list to the author, with
-explanation.
+	test_path_is_file existing-file
 
+is silent, while
 
+	test_path_is_file missing-file
+	test_path_is_file existing-directory/
 
+both loudly report the failure.
+
+But in this test, that expects "! test -f .git/refs/heads/f" to be
+true, the story is the other way around.  The test expects that the
+loose ref file for the branch 'f' on the filesystem should be gone.
+In other words, it is not a notable event if .git/refs/heads/f did
+*NOT* exist, and if .git/refs/heads/f existed, that is something you
+want to report loudly, now you are using a better helper function.
+
+I think the update should use test_path_is_missing instead, without
+negation.
+
+I did not look at the rest of the patch, but the above should be
+a sufficient guideline to decide what replacement should be used.
+Be careful to the original that uses negation and you'd do fine.
+
+Thanks.
