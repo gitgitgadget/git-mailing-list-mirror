@@ -1,101 +1,62 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7417135A53
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 00:17:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6675E2D8DDB
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 00:24:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773361032; cv=none; b=pC1Dhs8022Pap6wYNddlrX0JBbshjXxXQZv8onWLjvTF4BscunMK8Surs6fcpi8tu52H1QBVrEZpwnqvFu0SSpPBdOraarDXDCHsFnKde/bIOsn20DC0ggfqXVm9g4ledsEzVD5fOZI7UN3IsCDupgHEr2hymBDjFA/747HAFHg=
+	t=1773361475; cv=none; b=lrA9A2lBLgtRRQQa9EL2pNt2JiLEd246COeg1893to3AsFfLvnPUeRS/aOnoz39fGHXLk7VwMsxxNaY+6YR24krdC2Y4rukZ6uqY+rlbPzzWC/0RW+cmKl4Yho1t2qDkhg6PyADdOoipb8i3Q1VeUctS11ZM7feedY6gyXsBzHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773361032; c=relaxed/simple;
-	bh=UeQFfM2sngm1Ux4ZnWqpEPys8mUfTcEHNc02INI22Cw=;
+	s=arc-20240116; t=1773361475; c=relaxed/simple;
+	bh=ipC7DkHNY7Euc/yg3kl2OVit5xUQkMVlw7ZNZFJnvyA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dHEKDt3Jsul1F9pQXOol+ghjtXnP9qDnzmBFL0ycH3x09a3UTYNxWbX0HyZ/ZXfGljIR85ppVlU3a9H7RCXKQI8ABWl+yfWAXrCg2KN/3b81jb3J6HrNQ0BJn89IGNfRgAk6gTy9Gpp9aYOxsvBHtodCVesgH0seypIJnnT4GcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kevX7FeG; arc=none smtp.client-ip=209.85.167.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=MwzrMUx5eNZvtskPrYOvjVmwH2K7QkkmTGlnMyxxdlSAFyZVuhvq49IAUNdizeUkhMjRscKN/qXLmFvfymv2C9iT1E+kCUdbqjIL/zVhs/DV1usSK2APBwrsg/7GpHxgFbzsa+ortsWdD1F8vTGqbl7wx6za1EzRkUfR77YmZhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fz/IpmJ6; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kevX7FeG"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4645dde00a7so2299943b6e.1
-        for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:17:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773361030; x=1773965830; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CfJrxv71JQIMXFkGW5SfB1EhM5Tlmi9x0GvfIPnNGBQ=;
-        b=kevX7FeGk/57Mod4JaihaLl4SUVmQgILv2eZFwpfqM8TF+FP+bA0cti3sf32fQ8wad
-         vZiCL1g9vdfUvcAfyc+10dt02uKfYHjFpIf5UTfHezjUD90VK8Q3khFitDZXdnlVuNan
-         hiFi/gAV1lTwdfRRLTkipjU4pQwa3rAADGUFLceVzfjZrE0jguR4M+GmJZaEqxAqwgw8
-         yaeRRlnIDK8lynE2OndkdSJFM0/4nG8R4jE9u3+VglS5Y8lcyOCu9+5kCi9p5uk143RY
-         /qppexHujNKRv4mjd7XlJ0XqrtK0OWrcRu5EOPFmKveKlX1CXFOhYHj9Y1KV329MaaPA
-         DsTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773361030; x=1773965830;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CfJrxv71JQIMXFkGW5SfB1EhM5Tlmi9x0GvfIPnNGBQ=;
-        b=ZkZj/A/ZMpeRL9cOpbrlzOUEDdkhLWKc+MK6RLoPoZ0pBfu4ij3rs2L+U8UaS7hkWO
-         x4pLpEDCYnHlrve0u7UFfhEvwlud5/ryBemkyg3T4D2osIIdTykLGuEmPNwYgKHzvxRZ
-         NKc0PZBjt1XiYRFIf0bE1BcQLEw7Sgq2f8MmzW6x8ogqZ/DqdwYCusRomAy7kCZW7cW0
-         y6azl6iYpGbMVRkYaV0n2fC27gWvId4oTjQDWjXepna8PSuZH8wqW59UxlPkt+8sVvmj
-         6t6Jnp0n4v7yDTBPDU8UbLY5qwT9tbS5AJzdlh6lG04IHY96+YkbPL6/og/28x2bpilx
-         MXKg==
-X-Gm-Message-State: AOJu0YzUmfuBXSrM3ZL6VosrOOMbvfVSkoblXG5DIsBN+xEUC6rdYffx
-	3s88NOYKUricIhvH5PIAbjU2wKSLZac3tFM6PAvrhWYTEuMWToIrbSOH
-X-Gm-Gg: ATEYQzwWpR8qw9EuzueN3H2lyUEx6rOzvYRPtRyzjT8PZBZDP3YH9UtQdvbhDnhk3bH
-	Din5Jxr8VM5ZRx/F0Z2cDqxaz2Pa7JfdejqYO2wmTBxVT9adJc/oiq0sL2BZ+oAv4kG33ZC37Sm
-	hVNtMfagwWC0lUvDAk22KHRZ9ECFvv7PapQvrU/1PROm51FHg94ojM5WIeUqwu+VLd+JfxHvJss
-	JCzMGNjjT3Qfi5RB76c96b3+bJG07RPXMH0u6dQGdTv31H4bpHEwKsPCz+UJZSQZCAM8dOLUta4
-	uZCvi60oK8f8469Jp52fK6WUoeXyQe2o3/tEW3Ja2HL/TNlFLhhArbij/5+xRIF6Hr0CMNSTD7U
-	zb4F2lMpYqtJ8W4CoidBTrYfvFrqmc+Fo9g96/3vcmPuBwvWndVD/eTVlLBESlYmO9Mz9bQRvk/
-	Qz7YXl/HA9x+ocuIPM
-X-Received: by 2002:a05:6808:1a17:b0:45f:318:adb8 with SMTP id 5614622812f47-46743283468mr2953441b6e.28.1773361029765;
-        Thu, 12 Mar 2026 17:17:09 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4177e6ae0e3sm6973908fac.16.2026.03.12.17.17.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2026 17:17:09 -0700 (PDT)
-Date: Thu, 12 Mar 2026 19:17:08 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, 
-	christian.couder@gmail.com, ps@pks.im, gitster@pobox.com
-Subject: Re: [PATCH v5 3/3] fast-import: add mode to sign commits with
- invalid signatures
-Message-ID: <abNXLWadH-nUQRpS@denethor>
-References: <20260311173147.2336432-1-jltobler@gmail.com>
- <20260312192228.481134-1-jltobler@gmail.com>
- <20260312192228.481134-4-jltobler@gmail.com>
- <20260312235828.GA3193385@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fz/IpmJ6"
+Received: (qmail 94473 invoked by uid 106); 13 Mar 2026 00:24:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ipC7DkHNY7Euc/yg3kl2OVit5xUQkMVlw7ZNZFJnvyA=; b=fz/IpmJ6EG0qTo660MOPdmmxhboqmCAzcvDW6Q6DV6xdjvoYV1OBEo8ovOp4Q8xyXnBYdF9bkFjZAJJvfite9/VQI10GPWbmjHuWk8HChy2do6rWY7b3dzKyfiuioEP/yXdA8C2e5gHX5buhKzyh1nQ1UsEqJ2pfUIyiG+yGDmdViNoGqGOcI/rdEJ90JQv0QzyEXSIdmUG/Mq9eyrIj1smkh9zvbOnl2NAWU0Erjp1w7lv4I7D13XT6Ac9CviWZ9HC7hc02PZ+3jspfGsf6/TgpEuiUxCCCKpf+DY7Q1y0jYKSoD0nG1YboXuvpTbwToT9qnrIZYPTvW4lqPSe22A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Mar 2026 00:24:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 517506 invoked by uid 111); 13 Mar 2026 00:24:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Mar 2026 20:24:34 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 12 Mar 2026 20:24:31 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2026, #05)
+Message-ID: <20260313002431.GA3200726@coredump.intra.peff.net>
+References: <xmqqh5qka8so.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260312235828.GA3193385@coredump.intra.peff.net>
+In-Reply-To: <xmqqh5qka8so.fsf@gitster.g>
 
-On 26/03/12 07:58PM, Jeff King wrote:
-> On Thu, Mar 12, 2026 at 02:22:28PM -0500, Justin Tobler wrote:
-> 
-> > +test_expect_success GPGSSH "sign invalid commit with explicit keyid" '
-> >  	rm -rf new &&
-> >  	git init new &&
-> 
-> This test is failing on Windows in GitHub's CI.
-> 
-> You can't see it from the context, but the next line of this test is:
-> 
-> 	git fast-export --signed-commits=verbatim openpgp-signing >output &&
-> 
-> But the openpgp-signing branch will only have been created if the GPG
-> prereq is set. Should this be referencing ssh-signing instead? Or should
-> it be using GPG,GPGSSH as prereqs?
+On Thu, Mar 12, 2026 at 05:10:31PM -0700, Junio C Hamano wrote:
 
-Ahh, it look like this should be referencing ssh-signing. I'll include
-this fix in my next version. Thanks! :)
+> * mf/apply-p-no-atoi (2026-03-09) 1 commit
+>  - apply.c: fix -p argument parsing
+> 
+>  "git apply -p<n>" parses <n> more carefully now.
+> 
+>  Will merge to 'next'.
+>  source: <20260310050621.3849719-1-mroik@delayed.space>
 
--Justin
+I think this is responsible for test failures on Windows in jch/seen,
+but I'm stumped as to why. You might want to hold off until we figure
+it out.
+
+From the output I doubt the code change is responsible, but failing
+tests in 'next' is annoying.
+
+-Peff
