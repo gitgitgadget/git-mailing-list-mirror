@@ -1,155 +1,101 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982472236FD
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 00:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7417135A53
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 00:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773360993; cv=none; b=T/iU0hyjkymEUBMhpyHO0Q1ivkrT1gCYiCnV+kU0+k3RDCnCGHduv0zRg9SC72QdUnCxChXrGN137aYCaEYEF2kwJEGz0cUA+WouAa00ll+t3l4qziGi9fP2iQVeROi5bYLSZ+SIqLp3/xXBc4JXsNkho1q+u1YgBNHVXkEc/zg=
+	t=1773361032; cv=none; b=pC1Dhs8022Pap6wYNddlrX0JBbshjXxXQZv8onWLjvTF4BscunMK8Surs6fcpi8tu52H1QBVrEZpwnqvFu0SSpPBdOraarDXDCHsFnKde/bIOsn20DC0ggfqXVm9g4ledsEzVD5fOZI7UN3IsCDupgHEr2hymBDjFA/747HAFHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773360993; c=relaxed/simple;
-	bh=J67bBhJWWZtKNTxykFhcZZCaQCmp1y+zG/n8zSdn6RU=;
+	s=arc-20240116; t=1773361032; c=relaxed/simple;
+	bh=UeQFfM2sngm1Ux4ZnWqpEPys8mUfTcEHNc02INI22Cw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T7q+P4YG5TO1HdkajRt3M+VeVd0c+llBC+JZTA17VEmGRnpBHVruhYwMOk9eyUyDDXSh8VK0/1CuHomAfljlN38acFDqn16zubuE6vsj+RUTrETvYMYaJgtit4A6Mh9m78s2qcFQqLVoQkSjqt7vz6kYZO7BX0SVFkRx73MT/E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=b0Juu0vv; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=dHEKDt3Jsul1F9pQXOol+ghjtXnP9qDnzmBFL0ycH3x09a3UTYNxWbX0HyZ/ZXfGljIR85ppVlU3a9H7RCXKQI8ABWl+yfWAXrCg2KN/3b81jb3J6HrNQ0BJn89IGNfRgAk6gTy9Gpp9aYOxsvBHtodCVesgH0seypIJnnT4GcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kevX7FeG; arc=none smtp.client-ip=209.85.167.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="b0Juu0vv"
-Received: (qmail 94368 invoked by uid 106); 13 Mar 2026 00:16:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=J67bBhJWWZtKNTxykFhcZZCaQCmp1y+zG/n8zSdn6RU=; b=b0Juu0vvV0C9MmcR2WCWBoXTzpZDjo+SD+PuyMb1+IVodvW7hwikzHXROVDeEFvw4wPdiOTzZypQweDjy/t6v4DQms7iryZyXAoCXGwRwU0gqm/fjWz6xLN6IEr5xm8LABxa9gOFcZH/tIQ5kMdVrKFEpaF1+NJHEhVrufpGbCc/CmyD2l0gv6oljv125EtdvCthVq72lfOHy/ZqH18F10tq4gYwy9L1JY5MW2bmIxL1yNBfNmZQilYHHru12bLByHO8dnqsfX4SrUeUVnGCGpb+wWauv2VHEKu3m1OQve67r0em15xBuWvquz3nia1+6KB+munsC12ocew6toRAmA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Mar 2026 00:16:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 517400 invoked by uid 111); 13 Mar 2026 00:16:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Mar 2026 20:16:32 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 12 Mar 2026 20:16:29 -0400
-From: Jeff King <peff@peff.net>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] apply.c: fix -p argument parsing
-Message-ID: <20260313001629.GA3193660@coredump.intra.peff.net>
-References: <20260310005408.2022216-1-mroik@delayed.space>
- <20260310050621.3849719-1-mroik@delayed.space>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kevX7FeG"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4645dde00a7so2299943b6e.1
+        for <git@vger.kernel.org>; Thu, 12 Mar 2026 17:17:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773361030; x=1773965830; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CfJrxv71JQIMXFkGW5SfB1EhM5Tlmi9x0GvfIPnNGBQ=;
+        b=kevX7FeGk/57Mod4JaihaLl4SUVmQgILv2eZFwpfqM8TF+FP+bA0cti3sf32fQ8wad
+         vZiCL1g9vdfUvcAfyc+10dt02uKfYHjFpIf5UTfHezjUD90VK8Q3khFitDZXdnlVuNan
+         hiFi/gAV1lTwdfRRLTkipjU4pQwa3rAADGUFLceVzfjZrE0jguR4M+GmJZaEqxAqwgw8
+         yaeRRlnIDK8lynE2OndkdSJFM0/4nG8R4jE9u3+VglS5Y8lcyOCu9+5kCi9p5uk143RY
+         /qppexHujNKRv4mjd7XlJ0XqrtK0OWrcRu5EOPFmKveKlX1CXFOhYHj9Y1KV329MaaPA
+         DsTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773361030; x=1773965830;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CfJrxv71JQIMXFkGW5SfB1EhM5Tlmi9x0GvfIPnNGBQ=;
+        b=ZkZj/A/ZMpeRL9cOpbrlzOUEDdkhLWKc+MK6RLoPoZ0pBfu4ij3rs2L+U8UaS7hkWO
+         x4pLpEDCYnHlrve0u7UFfhEvwlud5/ryBemkyg3T4D2osIIdTykLGuEmPNwYgKHzvxRZ
+         NKc0PZBjt1XiYRFIf0bE1BcQLEw7Sgq2f8MmzW6x8ogqZ/DqdwYCusRomAy7kCZW7cW0
+         y6azl6iYpGbMVRkYaV0n2fC27gWvId4oTjQDWjXepna8PSuZH8wqW59UxlPkt+8sVvmj
+         6t6Jnp0n4v7yDTBPDU8UbLY5qwT9tbS5AJzdlh6lG04IHY96+YkbPL6/og/28x2bpilx
+         MXKg==
+X-Gm-Message-State: AOJu0YzUmfuBXSrM3ZL6VosrOOMbvfVSkoblXG5DIsBN+xEUC6rdYffx
+	3s88NOYKUricIhvH5PIAbjU2wKSLZac3tFM6PAvrhWYTEuMWToIrbSOH
+X-Gm-Gg: ATEYQzwWpR8qw9EuzueN3H2lyUEx6rOzvYRPtRyzjT8PZBZDP3YH9UtQdvbhDnhk3bH
+	Din5Jxr8VM5ZRx/F0Z2cDqxaz2Pa7JfdejqYO2wmTBxVT9adJc/oiq0sL2BZ+oAv4kG33ZC37Sm
+	hVNtMfagwWC0lUvDAk22KHRZ9ECFvv7PapQvrU/1PROm51FHg94ojM5WIeUqwu+VLd+JfxHvJss
+	JCzMGNjjT3Qfi5RB76c96b3+bJG07RPXMH0u6dQGdTv31H4bpHEwKsPCz+UJZSQZCAM8dOLUta4
+	uZCvi60oK8f8469Jp52fK6WUoeXyQe2o3/tEW3Ja2HL/TNlFLhhArbij/5+xRIF6Hr0CMNSTD7U
+	zb4F2lMpYqtJ8W4CoidBTrYfvFrqmc+Fo9g96/3vcmPuBwvWndVD/eTVlLBESlYmO9Mz9bQRvk/
+	Qz7YXl/HA9x+ocuIPM
+X-Received: by 2002:a05:6808:1a17:b0:45f:318:adb8 with SMTP id 5614622812f47-46743283468mr2953441b6e.28.1773361029765;
+        Thu, 12 Mar 2026 17:17:09 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4177e6ae0e3sm6973908fac.16.2026.03.12.17.17.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Mar 2026 17:17:09 -0700 (PDT)
+Date: Thu, 12 Mar 2026 19:17:08 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, 
+	christian.couder@gmail.com, ps@pks.im, gitster@pobox.com
+Subject: Re: [PATCH v5 3/3] fast-import: add mode to sign commits with
+ invalid signatures
+Message-ID: <abNXLWadH-nUQRpS@denethor>
+References: <20260311173147.2336432-1-jltobler@gmail.com>
+ <20260312192228.481134-1-jltobler@gmail.com>
+ <20260312192228.481134-4-jltobler@gmail.com>
+ <20260312235828.GA3193385@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260310050621.3849719-1-mroik@delayed.space>
+In-Reply-To: <20260312235828.GA3193385@coredump.intra.peff.net>
 
-On Tue, Mar 10, 2026 at 06:06:15AM +0100, Mirko Faina wrote:
+On 26/03/12 07:58PM, Jeff King wrote:
+> On Thu, Mar 12, 2026 at 02:22:28PM -0500, Justin Tobler wrote:
+> 
+> > +test_expect_success GPGSSH "sign invalid commit with explicit keyid" '
+> >  	rm -rf new &&
+> >  	git init new &&
+> 
+> This test is failing on Windows in GitHub's CI.
+> 
+> You can't see it from the context, but the next line of this test is:
+> 
+> 	git fast-export --signed-commits=verbatim openpgp-signing >output &&
+> 
+> But the openpgp-signing branch will only have been created if the GPG
+> prereq is set. Should this be referencing ssh-signing instead? Or should
+> it be using GPG,GPGSSH as prereqs?
 
-> diff --git a/t/t4120-apply-popt.sh b/t/t4120-apply-popt.sh
-> index 697e86c0ff..3fdcfecc52 100755
-> --- a/t/t4120-apply-popt.sh
-> +++ b/t/t4120-apply-popt.sh
-> @@ -23,6 +23,27 @@ test_expect_success setup '
->  	rmdir süb
->  '
->  
-> +test_expect_success 'git apply -p 1 patch' '
-> +	test_when_finished "rm -rf t" &&
-> +	git apply -p 1 $TEST_DIRECTORY/t4120/patch &&
-> +	test_path_is_dir t
-> +'
+Ahh, it look like this should be referencing ssh-signing. I'll include
+this fix in my next version. Thanks! :)
 
-This test seems to fail on Windows. From CI:
-
-    ++ git apply -p 1 /d/a/git/git/t/t4120/patch
-    error: git diff header lacks filename information when removing 1 leading pathname component (line 14)
-    error: last command exited with $?=128
-
-but I can't figure out why (and don't have a local Windows machine to
-test on easily).
-
-> diff --git a/t/t4120/patch b/t/t4120/patch
-
-Not related to the failure, but IMHO we should keep small data like this
-in the script itself, rather than as auxiliary files. The t/ directory
-is already quite crowded, and it is often easier to refer to it when
-it's near the tests themselves.
-
-You don't even need the full email, just the patch part. (You might even
-be able to reuse one of the other patches we make in the script, but I
-didn't check).
-
-Something like this would work. Note that it also gets rid of bare
-references to $TEST_DIRECTORY, which really ought to be quoted (unlike
-$TRASH_DIRECTORY, it does not always have a space, but it depends on
-where somebody places their clone of git.git).
-
-
- t/t4120-apply-popt.sh | 16 ++++++++++++----
- t/t4120/patch         | 15 ---------------
- 2 files changed, 12 insertions(+), 19 deletions(-)
-
-diff --git a/t/t4120-apply-popt.sh b/t/t4120-apply-popt.sh
-index 3fdcfecc52..0531a19ee8 100755
---- a/t/t4120-apply-popt.sh
-+++ b/t/t4120-apply-popt.sh
-@@ -23,25 +23,33 @@ test_expect_success setup '
- 	rmdir süb
- '
- 
-+test_expect_success 'setup deep subdir patch' '
-+	cat >patch.deep <<-\EOF
-+	diff --git a/t/test/test b/t/test/test
-+	new file mode 100644
-+	index 0000000000..e69de29bb2
-+	EOF
-+'
-+
- test_expect_success 'git apply -p 1 patch' '
- 	test_when_finished "rm -rf t" &&
--	git apply -p 1 $TEST_DIRECTORY/t4120/patch &&
-+	git apply -p 1 patch.deep &&
- 	test_path_is_dir t
- '
- 
- test_expect_success 'apply fails due to non-num -p' '
- 	test_when_finished "rm -rf t test" &&
--	test_must_fail git apply -p malformed $TEST_DIRECTORY/t4120/patch
-+	test_must_fail git apply -p malformed patch.deep
- '
- 
- test_expect_success 'apply fails due to trailing non-digit in -p' '
- 	test_when_finished "rm -rf t test" &&
--	test_must_fail git apply -p 2q $TEST_DIRECTORY/t4120/patch
-+	test_must_fail git apply -p 2q patch.deep
- '
- 
- test_expect_success 'apply fails due to negative number in -p' '
- 	test_when_finished "rm -rf t test" &&
--	test_must_fail git apply -p -1 $TEST_DIRECTORY/t4120/patch
-+	test_must_fail git apply -p -1 patch.deep
- '
- 
- test_expect_success 'apply git diff with -p2' '
-diff --git a/t/t4120/patch b/t/t4120/patch
-deleted file mode 100644
-index bfccc708dd..0000000000
---- a/t/t4120/patch
-+++ /dev/null
-@@ -1,15 +0,0 @@
--From 90ad11d5b2d437e82d4d992f72fb44c2227798b5 Mon Sep 17 00:00:00 2001
--From: Mroik <mroik@delayed.space>
--Date: Mon, 9 Mar 2026 23:25:00 +0100
--Subject: [PATCH] Test
--
-----
-- t/test/test | 0
-- 1 file changed, 0 insertions(+), 0 deletions(-)
-- create mode 100644 t/test/test
--
--diff --git a/t/test/test b/t/test/test
--new file mode 100644
--index 0000000000..e69de29bb2
----
--2.53.0.851.ga537e3e6e9
+-Justin
