@@ -1,55 +1,55 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB46C1C84A2
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 06:45:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC4733F8B4
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 06:45:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773384341; cv=none; b=fqeePIPEhhSSfIc1EJfyGIU7Nzrl5jgLTtQnwDqzrw0zU3tjBtWUOq95U461+RQ0iCdeDIh0QRRK3JT0znCh+w3ivnSudXwzqVJxRy3j/RZb3AzV2axuO+BPmxYzat4l769lYNJh/5AowUwo+dKFY+fSf0wB4g55sJun83dQgK4=
+	t=1773384343; cv=none; b=AZwaeBGkAWKod5PiGIk8GdMlBNY7wzlfaNGshYdaHxiYBynd8Ln/kUUcr3xR6t72e6lM2QWU2uzbnQQMmDHGW3DGA1vB7FI2s7S+6oitvNfxM6YZrSnquls6eicsVVt3fugwN4Xi7uthMOnn5xfrJksUqcX+H0UrSK1kbPiwoNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773384341; c=relaxed/simple;
-	bh=t6vhza+NC5kbCw+tUiaWYPEihGrOibYiEsQZc5qH+E4=;
+	s=arc-20240116; t=1773384343; c=relaxed/simple;
+	bh=JoxIgNsA6zzl8zplULQhioDT43SQVSCb25WoviIVum8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=M2K6bshjWZIgW9KkJmf1dpDpfoWpJdM+HXR4dfnNVOsCSuM00xiHjhO0ze6r+00luM9ErNaHwjEOixsyRAdrNM3JHyKgIdqDIUNPJEfB2nV5Z5pgVYgQVoTlxHa050lZrkYvE2Ssyg5QFuhHhk24yl+6y5bMkyM10LFIOX39oOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m7xr7JD8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R2zr74KR; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=hdEcvDI5AvqtDmv3kJb2+/0mvYpMM5qI4iJ9afaOGpQngrAU5E1FVjVmYDAv3htyHGqj82s9zx8fyN6yV03iQr/f69sv3BqiNqa6hQo72JO9qkSO4lV29NPYWRBj5ful5QJeWSWpJau+ktV0lcEx10ia0wFJFmA4gu8aoQRxHWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N5gzmqWM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lEZIt1PH; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m7xr7JD8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R2zr74KR"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 42B481D00126;
-	Fri, 13 Mar 2026 02:45:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N5gzmqWM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lEZIt1PH"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 84CA97A0190;
+	Fri, 13 Mar 2026 02:45:41 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 13 Mar 2026 02:45:36 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 13 Mar 2026 02:45:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773384336;
-	 x=1773470736; bh=uqkj4VkSKAP6Ye8E3DdexCuGdm3yVCz4CW9noOuIGP4=; b=
-	m7xr7JD8JxYX8AYECojzdZseh6qxUYd+STzC1sSWcspw1FFIEz2TU9Tn/1d8h0kD
-	gNTheRcr+BLYoyDt+kJXK2+24y0XRpzsGDcssPJur2guY2wEhsa9qwFg22/drNzf
-	yxDo67dtLEMWjQujUVz9502qTZwOW2oobyTGRpE/XGWR31JPn9Zucq9/vEpNzrji
-	0a9frtCfqdWicRpnbWGGpBW6GB+JXGclhbBh1D0qdo16Laycihb6YEHf4BmsD16B
-	JJNl/m9apWm/yAhKw0N2bIC5bbWblDAZRXUwKGjhDMkCy/eY4Xtf830EOYPqR4tH
-	q/iWwfTYlQxp6dvp6yVtog==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773384341;
+	 x=1773470741; bh=huTTE60rJPmXEJV8F19QsiNBUdt2zCU1JCWvGVpnjA4=; b=
+	N5gzmqWMYvrKq3lMrR477Yo1ubvqe4aMXgsD/4suE1wOz3yofd9W8J2tl0TwYOVQ
+	FhTWKVQMAS0CKrRgRx7GAEp5C9HYojPN6nZgIMaUntfkCEYGO74JJtJzcEt1eHDm
+	wy+2b3vEjjpDO1Qx85VJFmPbhru9g3NKz+9fnO7+DZ/+phi6zkMLvCHa9QiX5OT8
+	xMhd/wpqqv8QkGS33DLcQ13/gpdavur46m3Zhx8mQFGzRoJlOndFtWNGgDZCt6kp
+	WNtekfuyE/FOZaDEk21GBjGl1GaVLI3dKd8ErpaZmu3AEc1+rFZjjS9zFrGKAnM6
+	bn74gzsszOcPGnETx3Sy7w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773384336; x=
-	1773470736; bh=uqkj4VkSKAP6Ye8E3DdexCuGdm3yVCz4CW9noOuIGP4=; b=R
-	2zr74KRhYUNm3kad+apwFhto8JETfI6Gtm0T4JpuS1nXcuA9KIxW342s2uUQJwp8
-	+/rYCdKN8BYJt5hKPg80UvCMuAhzMsL0jjULHoFA34YIaCaAwxAhZP62Cs2bVkoq
-	UxiisecJnJVnHOmFwrSeeyY4vL7zbb1Ty7x7Z1yHzRaIt0QcozXu4FLe+Bpen24U
-	qJJDlKruIi93WbXbIfBTnUiXxiXtONRYAfMkUQE//DU8pJ8UAaVB9mGJqTk7afdG
-	t2XbbU+0kpJY8o3s0Z60hrPT29E4zaK42AfgaM9eornrRSkkWJn/ats+juWw4fvJ
-	B32cGwZ0r7NT7WKe7m7hQ==
-X-ME-Sender: <xms:kLKzaYZsZLUx6sSXgX5ORn4rdM4uE8mJs5-bleCa8oigpu5l_Ah2eA>
-    <xme:kLKzaaR_989ZY--pgChgTigc9gsXL91ygqryd3XD4-3kJnTsYDh9dtqPeJXDATzRC
-    ri80uPGdIowMucFayj2SphBiMnpAducs58uNA-CwNCABe90Iecj_w>
-X-ME-Received: <xmr:kLKzabRDUW-eN83SvYVfFev-4gA5vzc4YpnWTEgZZDs3Fx6N2eeai3Ab8VFnqWYd2gQMh29SdfJeDsn-ZbUQjzoh-uJ62dhXgsOhuOinhA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773384341; x=
+	1773470741; bh=huTTE60rJPmXEJV8F19QsiNBUdt2zCU1JCWvGVpnjA4=; b=l
+	EZIt1PH0ialtdty/phTZx6+bzEV5FG3JAOamJxYD1LJMb8iuY8v01iN6dLoZgoH4
+	f/un+a2clJiMLlhDa9jIb7Na9WFceYP8GbRrQj0Ks1ZqRK7xL+qp8todTSiLcUYK
+	ELJECZe6xem2EXpEU3DJ4t9Z/KNkKoahIPkaI5NZ+uIqWRGOOlXCdcEIYIgXLjXv
+	bx0QVSBeohb7NkeRhAUY6oLv52fkJWOC9YGN1Xi1FNmMAZLEr0SFYwR8dWwTZWCx
+	YkCK5GM8maysYPYiXyI8vF/TFuuPZPbkWHpT+cR0jcS+sZ+DCuJ02MspkXQWL1ew
+	YwnLBkNwJdAgcpfgt1rkw==
+X-ME-Sender: <xms:lbKzaTS52-XfR1ROhrKV78EvFrp_-btbEiSPBgKZu7VIITpKVbckzA>
+    <xme:lbKzabp5DzaTXE6FOp3yNEe93m-gHZ6gcP_kDapkn_YeQrICog4gjcQQao4El8mpQ
+    d33EpLsYr2Ir7oWBDexBKxoX3xpuItFGGHZanet2IuZ62dcGxzknSw>
+X-ME-Received: <xmr:lbKzaRKDfhLUgQL-hmEhtiloy20hbWJHsX3NnDp3-rwrTdSr9vm-z7puQkF4GEIyqasAVpJ3wKqZj-CPADi8M7QVMoemClXN48FwNsJHgw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeekleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeekleejucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehmshhmihhlvgihsehgihhtlhgrsgdrtghomhdprhgtphhtthhopehsrghnuggrlh
-    hssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-    dprhgtphhtthhopehjiehtsehkuggsghdrohhrgh
-X-ME-Proxy: <xmx:kLKzaeS1_m-xk_FYbrzYRIzTfAuYCsQJyl3x9Xf4uYajAcRPzODeAA>
-    <xmx:kLKzaQ4HJCLNTc5IGDa3LmBMMe96w06KQfJGMDW8fyJE9fHWDVWoDw>
-    <xmx:kLKzaa3ukZBi0dRrYayZNSv5WaIB55J7BAvq32HmCHHsDEdig-LqcQ>
-    <xmx:kLKzabBVRw5dkbG34mHTofC7pMHnyrZkLwsTFCrRbGcJcsghn3KONw>
-    <xmx:kLKzaTsx0uvFsP0lmLJoKqT_gR8gum73udaM7NI5ytJOjkTD24vbSHAh>
+    thhopehmshhmihhlvgihsehgihhtlhgrsgdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
+    rhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehsrghnuggrlhhsse
+    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:lbKzaeok2X805Dox99WglFjLvHSrDYNohWGRJOylqiJFOTEx1_MZQg>
+    <xmx:lbKzaZywbK9juJttDcBqhyR1Bw6w4qep3NDlyFBFEWEvv-HKSXpL4Q>
+    <xmx:lbKzaSO0v3O4zxFMVdKHythRl0Cri2H12CSRYauwK3v6v1I2vW0vCg>
+    <xmx:lbKzae5s9ESuisetZ2BJE0uxrWUR1tnT1D6Yu787JeMFet2GiTq_2A>
+    <xmx:lbKzabJq20EkaHD7MChvjU1XxHvo0p0wEPn9WDDRTff-_2_Z3TfPd8X6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 02:45:35 -0400 (EDT)
+ 13 Mar 2026 02:45:40 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 22846b59 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Mar 2026 06:45:34 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a14d80e7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Mar 2026 06:45:39 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 13 Mar 2026 07:45:17 +0100
-Subject: [PATCH v4 06/10] wrapper: introduce writev(3p) wrappers
+Date: Fri, 13 Mar 2026 07:45:19 +0100
+Subject: [PATCH v4 08/10] csum-file: introduce `hashfd_ext()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260313-pks-upload-pack-write-contention-v4-6-7a9668061f7f@pks.im>
+Message-Id: <20260313-pks-upload-pack-write-contention-v4-8-7a9668061f7f@pks.im>
 References: <20260313-pks-upload-pack-write-contention-v4-0-7a9668061f7f@pks.im>
 In-Reply-To: <20260313-pks-upload-pack-write-contention-v4-0-7a9668061f7f@pks.im>
 To: git@vger.kernel.org
@@ -93,121 +93,100 @@ Cc: Matt Smiley <msmiley@gitlab.com>,
  Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
 X-Mailer: b4 0.14.3
 
-In the preceding commit we have added a compatibility wrapper for the
-writev(3p) syscall. Introduce some generic wrappers for this function
-that we nowadays take for granted in the Git codebase.
+Introduce a new `hashfd_ext()` function that takes an options structure.
+This function will replace `hashd_throughput()` in the next commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- wrapper.c      | 41 +++++++++++++++++++++++++++++++++++++++++
- wrapper.h      |  9 +++++++++
- write-or-die.c |  8 ++++++++
- write-or-die.h |  1 +
- 4 files changed, 59 insertions(+)
+ csum-file.c | 22 +++++++++++++---------
+ csum-file.h | 14 ++++++++++++++
+ 2 files changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/wrapper.c b/wrapper.c
-index 16f5a63fbb..be8fa575e6 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -323,6 +323,47 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
- 	return total;
+diff --git a/csum-file.c b/csum-file.c
+index 6e21e3cac8..a50416247e 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -161,17 +161,16 @@ struct hashfile *hashfd_check(const struct git_hash_algo *algop,
+ 	return f;
  }
  
-+ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt)
-+{
-+	ssize_t total_written = 0;
-+
-+	while (iovcnt) {
-+		ssize_t bytes_written = writev(fd, iov, iovcnt);
-+		if (bytes_written < 0) {
-+			if (errno == EINTR || errno == EAGAIN)
-+				continue;
-+			return -1;
-+		}
-+		if (!bytes_written) {
-+			errno = ENOSPC;
-+			return -1;
-+		}
-+
-+		total_written += bytes_written;
-+
-+		/*
-+		 * We first need to discard any iovec entities that have been
-+		 * fully written.
-+		 */
-+		while (iovcnt && (size_t)bytes_written >= iov->iov_len) {
-+			bytes_written -= iov->iov_len;
-+			iov++;
-+			iovcnt--;
-+		}
-+
-+		/*
-+		 * Finally, we need to adjust the last iovec in case we have
-+		 * performed a partial write.
-+		 */
-+		if (iovcnt && bytes_written) {
-+			iov->iov_base = (char *) iov->iov_base + bytes_written;
-+			iov->iov_len -= bytes_written;
-+		}
-+	}
-+
-+	return total_written;
-+}
-+
- ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset)
+-static struct hashfile *hashfd_internal(const struct git_hash_algo *algop,
+-					int fd, const char *name,
+-					struct progress *tp,
+-					size_t buffer_len)
++struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
++			    int fd, const char *name,
++			    const struct hashfd_options *opts)
  {
- 	char *p = buf;
-diff --git a/wrapper.h b/wrapper.h
-index 15ac3bab6e..27519b32d1 100644
---- a/wrapper.h
-+++ b/wrapper.h
-@@ -47,6 +47,15 @@ ssize_t read_in_full(int fd, void *buf, size_t count);
- ssize_t write_in_full(int fd, const void *buf, size_t count);
- ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
+ 	struct hashfile *f = xmalloc(sizeof(*f));
+ 	f->fd = fd;
+ 	f->check_fd = -1;
+ 	f->offset = 0;
+ 	f->total = 0;
+-	f->tp = tp;
++	f->tp = opts->progress;
+ 	f->name = name;
+ 	f->do_crc = 0;
+ 	f->skip_hash = 0;
+@@ -179,8 +178,8 @@ static struct hashfile *hashfd_internal(const struct git_hash_algo *algop,
+ 	f->algop = unsafe_hash_algo(algop);
+ 	f->algop->init_fn(&f->ctx);
  
-+/*
-+ * Try to write all iovecs. Returns -1 in case an error occurred with a proper
-+ * errno set, the number of bytes written otherwise.
-+ *
-+ * Note that the iovec will be modified as a result of this call to adjust for
-+ * partial writes!
-+ */
-+ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt);
-+
- static inline ssize_t write_str_in_full(int fd, const char *str)
- {
- 	return write_in_full(fd, str, strlen(str));
-diff --git a/write-or-die.c b/write-or-die.c
-index 01a9a51fa2..5f522fb728 100644
---- a/write-or-die.c
-+++ b/write-or-die.c
-@@ -96,6 +96,14 @@ void write_or_die(int fd, const void *buf, size_t count)
- 	}
+-	f->buffer_len = buffer_len;
+-	f->buffer = xmalloc(buffer_len);
++	f->buffer_len = opts->buffer_len ? opts->buffer_len : 128 * 1024;
++	f->buffer = xmalloc(f->buffer_len);
+ 	f->check_buffer = NULL;
+ 
+ 	return f;
+@@ -194,7 +193,8 @@ struct hashfile *hashfd(const struct git_hash_algo *algop,
+ 	 * measure the rate of data passing through this hashfile,
+ 	 * use a larger buffer size to reduce fsync() calls.
+ 	 */
+-	return hashfd_internal(algop, fd, name, NULL, 128 * 1024);
++	struct hashfd_options opts = { 0 };
++	return hashfd_ext(algop, fd, name, &opts);
  }
  
-+void writev_or_die(int fd, struct iovec *iov, int iovlen)
-+{
-+	if (writev_in_full(fd, iov, iovlen) < 0) {
-+		check_pipe(errno);
-+		die_errno("writev error");
-+	}
-+}
-+
- void fwrite_or_die(FILE *f, const void *buf, size_t count)
- {
- 	if (fwrite(buf, 1, count, f) != count)
-diff --git a/write-or-die.h b/write-or-die.h
-index 65a5c42a47..ae3d7d88b8 100644
---- a/write-or-die.h
-+++ b/write-or-die.h
-@@ -7,6 +7,7 @@ void fprintf_or_die(FILE *, const char *fmt, ...);
- void fwrite_or_die(FILE *f, const void *buf, size_t count);
- void fflush_or_die(FILE *f);
- void write_or_die(int fd, const void *buf, size_t count);
-+void writev_or_die(int fd, struct iovec *iov, int iovlen);
+ struct hashfile *hashfd_throughput(const struct git_hash_algo *algop,
+@@ -206,7 +206,11 @@ struct hashfile *hashfd_throughput(const struct git_hash_algo *algop,
+ 	 * size so the progress indicators arrive at a more
+ 	 * frequent rate.
+ 	 */
+-	return hashfd_internal(algop, fd, name, tp, 8 * 1024);
++	struct hashfd_options opts = {
++		.progress = tp,
++		.buffer_len = 8 * 1024,
++	};
++	return hashfd_ext(algop, fd, name, &opts);
+ }
  
- /*
-  * These values are used to help identify parts of a repository to fsync.
+ void hashfile_checkpoint_init(struct hashfile *f,
+diff --git a/csum-file.h b/csum-file.h
+index 07ae11024a..a03b60120d 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -45,6 +45,20 @@ int hashfile_truncate(struct hashfile *, struct hashfile_checkpoint *);
+ #define CSUM_FSYNC		2
+ #define CSUM_HASH_IN_STREAM	4
+ 
++struct hashfd_options {
++	/*
++	 * Throughput progress that counts the number of bytes that have been
++	 * hashed.
++	 */
++	struct progress *progress;
++
++	/* The length of the buffer that shall be used read read data. */
++	size_t buffer_len;
++};
++
++struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
++			    int fd, const char *name,
++			    const struct hashfd_options *opts);
+ struct hashfile *hashfd(const struct git_hash_algo *algop,
+ 			int fd, const char *name);
+ struct hashfile *hashfd_check(const struct git_hash_algo *algop,
 
 -- 
 2.53.0.904.g2727be2e99.dirty
