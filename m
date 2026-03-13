@@ -1,66 +1,66 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6800D30E0E5
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 14:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09529324B27
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 14:04:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773410509; cv=none; b=RIIGold48JXJGcKC56EobwWCv/FX0KNPCqhij+g3uZD6JesHvRZHDfYqGG9xp6OEkkn1W7QaEhJk9P9VdgK9OR5DomWhFswGJPYamfqTtQ4e/cwze9fw7Bk/Kr/uytfprbalCfzoipVAuf/+Q64qJXb0M/3HDvpAjiMSD4534Cg=
+	t=1773410661; cv=none; b=cf0Vm4TAp9BU2/QrzXGpmNMQGavYF/BfdNFBjq7YvPNbQxOfMAszFXl9ID/iqLNkHRrPN1FCp6Ma+7QQzP+6XSFeh2+znvQmfGtUQoMaWIjscp/ey6RMIKZlvjC/ULmcgLP5fVD5n2ji1JW2KgUorHFQKYDmeaBd/du/FPi8kaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773410509; c=relaxed/simple;
+	s=arc-20240116; t=1773410661; c=relaxed/simple;
 	bh=1ye0M7jy2GqNtgx9jg08vk2zsOEBLJ6Dwt9XzS8+SJ0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d+7mwFl/tRwQTm4JjkNIpCnGblBnG6cszwmtLxujTLXknlmoWN7+rSTLCqXV+l5cy2SjRiE7OvLxGXy0MlXEdqTval6txE8TNaWFsLjBdxufrhQHZrepUVW7AydZiVBAQPn96eJM7aTNasMaVjWIO9xQG6EGZVO3Klzttiu5bIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ao17jFRN; arc=none smtp.client-ip=209.85.216.42
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QarbQdR99AeExURry4hw0x0mfMwWQmWHtiLIR7PcvQa6TQa1JYVO+m82IHUa0hYmOXuTr988fAayenuhQul8WLj+o4kCOS+J4E+iXmpxYlI9biW4ohGy2KdxXbhi8b+v/O6HlSggUrhrNgSIJfMGSfO5+d9TxTC9IWby6wz96Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YXjf2XBl; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ao17jFRN"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-35a211df8e3so767318a91.2
-        for <git@vger.kernel.org>; Fri, 13 Mar 2026 07:01:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YXjf2XBl"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2aea68839a5so17468975ad.1
+        for <git@vger.kernel.org>; Fri, 13 Mar 2026 07:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773410507; x=1774015307; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773410659; x=1774015459; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
         bh=Ngz8VvOSsajozeAmVbPtHTBA6R7Ie45SRRI/oudwuAA=;
-        b=ao17jFRNxr4gV3Ls+ovWuh34BCENchqw2RqzDZGtUxFu8134vikdNWkq3EIOOGNiIQ
-         bDqEXob8V677YO5fnFnHiPgd8ZXZ7gZ+R8m+OtY1R81Sjr+PvBkt3WXGkl9BRf5CUqiu
-         5wwWCrMe8plbAnrQg8qbT7eNfwtVACc+YmmhCee/tHIkVW/4oGidZNyM4SYLw08tBgF1
-         /7iHZG6SJJ/de3fqeipFj2F93h4tPmIbsFU/7oKuLrY96SXAEtY1d3Txn4Af86lsGaK+
-         dvVzFtIH1UC8wHPSX/G1HHkoWihicfP2iOB+8ONh7nBp+ysqTWJJ1xTmFEHABPByGOzr
-         k+Kw==
+        b=YXjf2XBlS5c1LTELqjpg0Qy7tr581JXzkdPKZLNa2nh1FyzrPNKZRYXwMQzPEfiC38
+         r5cS2HeR9BPBe0XqANGQnAR4w4RSHi1TGAM9yzfQlVpPFujqPl8Gu6ebrpNJPuxiWWQr
+         Hwk4O/2BPGV3MCFfBNJrvD20Yc6rFAON34wk9MjiNK4GsPfCXMjs7H1QW12rUmKeWD2Y
+         jlqgM9hsrSCB4Gy04UdfrpFDZwtk3aLXMJZYRtGbXiLJGgnVIetqMnoHrFmyyl4RHm/u
+         Uxwq5BZl5pH0EGI5ZN+DSnLswYEypL5P+n6Qm509/zvhHOlscADyVN18K/DoB8Wkh7yH
+         85aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773410507; x=1774015307;
+        d=1e100.net; s=20251104; t=1773410659; x=1774015459;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
         bh=Ngz8VvOSsajozeAmVbPtHTBA6R7Ie45SRRI/oudwuAA=;
-        b=HaHeHUw7emJE3w2SJQk0NXo7j9pXvN1xpfdILdfaQOgYkQcfkUWlr5h+Be5f/Rxwx2
-         BPYBeid1vl4X4fX/C+a1U3SLnHOS8yuXts9trXo2WDQScyDMF3BiWcl04AO8yiGCGZ5O
-         k+1+VifjAAFPs/n3JkmCY+m4zcgwt28MyRr9ZFIy9QGnykeBohcyUzDfvTy8tAewLcpR
-         w/aw0UorPrFsZor/ln5T5K1Bf0ukpDv0Fn/vQ8lizlCiGJirEdJgufIpcD2ENYV5fCGq
-         kvDXd25LwB23P2Jhi0WJxSNGOHo1lsCooLTMlhXcHneze1doNO1ApMCYefyalDmQpvHr
-         G3ew==
-X-Gm-Message-State: AOJu0Ywkcejb6PkjmZPOUSOXBwgxTVKggwZIwErFaV3E68gtyAyZXR1a
-	q48UlwvGBcZgG97uK5R+NsY8IDRop4q6I0G/BaPpsok+XrC+YS3JhzgjQho01rJK
-X-Gm-Gg: ATEYQzzfAgPANHJMBNaRYbvgT4JOZTn68EMIhz3+yXRXsG+xnX4aFFA9N1wj61ui6Qd
-	xUmXcEhykQogRAxrn7ftE9OdkLTnHXSWhefzTOZ11+NhIL2gA7YYIj3DxLIssPnuZnLenSSX4sP
-	zkrJqkE0zcXkQnsY7obL9a3nicKKkmvxG1GXnGTZ06SeZH0sLTIHGvfnIHcXBxjIrvHBZhvoZ7u
-	adGWzEUuv3ynPzdGD8RXy52+OlFgTB8zqxnIQvH29HtEhQTsvX3FMlVuGI5qHIHlwusBDI+jv+r
-	v/y1nWTRG9OugD4WUj8Ot/2PeRFXrP5TQwajy94YL62LQo6zKEKndrZQqVPKcaE6gFG+MEmxmKE
-	ea+t6fG8tBJuBdK9QhChSRvaR95kq/ojrdp04w+7Wtww+UXtwgP+fwu30sM+JGO7dxFPTmN3fxg
-	Zj23/WsXj4VyVHOEX26CBes6jwKQ1T6w==
-X-Received: by 2002:a17:90b:574f:b0:359:fe72:3559 with SMTP id 98e67ed59e1d1-35a21fdd3b7mr2936588a91.21.1773410507105;
-        Fri, 13 Mar 2026 07:01:47 -0700 (PDT)
+        b=pMKEsNvtsJYavfo7Q4vPQjD63TWPhQyLt/6Ej72LDwYtjd31QlmJP5G9T9nm92R8ad
+         Lw+L32WuvJKgcVSxU38u7WbXUFUj6W7srv00aX39m70Xr77+Vnx1w26HxlqBg5MFK/IC
+         nO9IqHJfNq9RGND1gjCBfearuHouVX7dxQPLrI3Kdk80/QfWEg9yqo5dJR7sVaBTHBt4
+         iDayhqXilyHmvyS3ST0+vWOcRgiJVNYsUGU42LxVndiKjYPZ2bFmFaa0pj3Y5Kw2SZbk
+         MBP7simNPgGkTlYsCarBQwGy9p9Uua8jxFEHvP9dnM+B8S7DA/h8rkmgWLdSfks9ZB+c
+         G7IQ==
+X-Gm-Message-State: AOJu0YwgwcOgYbR4wmVUDDrcItT3YTbbzzPHmiY5INmgIg9B/ZJ8RtGX
+	LENpRIHJt5I96/oJArLbyv44ZK6HK6yqPo22V5qPMYHdqowO5HiHgfu6zXx5mNmc
+X-Gm-Gg: ATEYQzx0ZxZyXxib4boEab1WCa3qeOMyySYW9oKhubTByj7P6bGU8IR0ysJj1EXc73n
+	OBKNQI18fyA7leloYQqjiu9h4+0zHho95Oo7/991reCvyGvUOexgwVjPRNzHWuSYlT73RefR//b
+	5+JNRkc7swa63iUfmMkzuoVvGLqWRR526KwfUpqE4j9k9s9MPYJDYwJ54XSmDQ7/rT/21w2pcun
+	yFo049Y+mdquwy2pTbk6YOe67J0Tlr++D/VW1UbpNr0DdP7hU+huqpo55pJ1Az1KUV06NJEkYZ1
+	0gTdF3CixYt8wnAxRGmYJ8qsD/8ZHYQZvS6q5mrDfmwWkdGHLIpkqftT35VRhGbF+Pmv6hlrsFj
+	YMkedpDB812ut66hJMwPnQ+7I1ocK9l1WH/qhYCSrCHPXI6bHhiBHKWHDnutWNpGj6bSlGqcxmf
+	MFlLvIoV0iZtVFU7Tvv8YdtVIQD3aMvA==
+X-Received: by 2002:a17:903:19c7:b0:2ae:46f9:a115 with SMTP id d9443c01a7336-2aeba5158eemr67089465ad.22.1773410658795;
+        Fri, 13 Mar 2026 07:04:18 -0700 (PDT)
 Received: from divineocn ([45.127.227.82])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359ffe77311sm9342229a91.11.2026.03.13.07.01.45
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece8629bbsm22769885ad.88.2026.03.13.07.04.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2026 07:01:46 -0700 (PDT)
+        Fri, 13 Mar 2026 07:04:18 -0700 (PDT)
 From: aum2357 <ahambrahmasmi2357@gmail.com>
 To: git@vger.kernel.org
 Cc: aum2357 <ahambrahmasmi2357@gmail.com>
-Subject: [PATCH GSOC] Signed-off-by: aum2357 <ahambrahmasmi2357@gmail.com>
-Date: Fri, 13 Mar 2026 19:32:25 +0530
-Message-ID: <20260313140225.563948-1-ahambrahmasmi2357@gmail.com>
+Subject: [PATCH GSOC] diff: use conventional comparison order
+Date: Fri, 13 Mar 2026 19:34:40 +0530
+Message-ID: <20260313140440.564201-1-ahambrahmasmi2357@gmail.com>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
