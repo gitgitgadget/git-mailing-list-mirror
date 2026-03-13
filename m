@@ -1,156 +1,270 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F423B7B79
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 16:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761A73168EB
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 16:23:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773418754; cv=none; b=j5iZwc98Ej92m1r0KEi2N8jlfDw+iWhBDpTTwRREs+ieM960IQtN56m6dphaMygnsvdmrYgsjKRXZOIJQ6anifTlcAmHXWbGSQjmUHY2w69TDIpiPLxK4+tOJkQaabSlRcN6UO99zHYfiSu5fVE2L4yY5PGzgmxgMzZ0Ro7oTGE=
+	t=1773419019; cv=none; b=tt3gIlv00ntoLjwbZqc/UcIWRQf5YH00r4qdSyF+Jhx0PQOfBB9LtlIvDrqF5xgbmIwFAMvE7AApZDV962YMkCNQUYW4fP676WuekFd0qYexKBJJ0zdRtYNxJiiqIZeg6UR52ve/VSz2irFqSpwJuE5i6XNLvIsSeUoDe5EwF4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773418754; c=relaxed/simple;
-	bh=+ixPbwo4zTDqO/vdKdw3m9DoFA8/mZLtHnfGzR8xMeE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ohXqe9wZzQiouQRiDiskmzUFL5UQqjLeUk2wONXn077NxIvwxEp+M2MkNgVYRBd4JSUu6MY2Cl6AkLyK8aThxfcPX6enLaxVqw2wLvtaH/rz8CCTrFGrIvSwUtCeZ9vWukukl5dpVRId4xuByGiuxRQ7hAc7VrRpGHkh9FJ2IyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nx5WDqCI; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773419019; c=relaxed/simple;
+	bh=YXFvj/hjY75VkSjX6xK1pl7f94jQ/J3fB8zaxPtETu8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CkktX9ElBfWZW04uGAYOsoUkDKJ1dXksVPB+/18N1PbITb+WI1sODw6fPpjmS4bm63sFoZrvlGRx4KqnQl990cSySpvJXr98kJ1fkWdvR0DhFyItLZDVDXKeMJeB3j9gWfDmTR288IK6RXxW8UniKnSwHkDL+m9ISL9kWFSwOOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=lTCUYdM9; arc=none smtp.client-ip=91.218.175.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nx5WDqCI"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-35a17791284so1267306a91.2
-        for <git@vger.kernel.org>; Fri, 13 Mar 2026 09:19:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773418751; x=1774023551; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ft5N5D7ycWvkafwuMBtcjGou+4Cudot/UvRd3fAWBfA=;
-        b=Nx5WDqCIg9X77CttPKDSAvpDSCsAzOpojLpsc4BMU2zmekk2qYMtJ+d3R1a5AaG1th
-         CHBKj5paU5B+DpP2uAWYoxM/ilc+G9C8NnERb3PZp+Ks7/YoIvWtaYieIbMRpPtWsmRJ
-         /WQsY5SoamwFmKapJohMHisnULmwNA7wyBm7X2c1gbfY/Fb9PmQsPUAZ2PE+PGp/NxS4
-         dSgRZDy2o19CgWKaQ/pdNfTgxZNl4dMyv04vJwIOIUm7S0M4/PiwkLhjengt1AeXeGOf
-         eIx1ljZI/m2w1y5Nc27f6laDZgx8PHtzvOb/xinf8K/mDUGdD4oNPEBD6ObbI1jiIPrt
-         QgHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773418751; x=1774023551;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ft5N5D7ycWvkafwuMBtcjGou+4Cudot/UvRd3fAWBfA=;
-        b=AeW10H5AWZU+is5gJ9mK55ukAaElJoZ5jBxHlTne3vb02gh+7xeOC6ZN+WoBfLg/H4
-         N2jytthPv3zH/R5kfoepCK2ztSC6LWXUF/R1cluzQAF0LDfmGbXsLTGjuN2GwPstMrA0
-         SHswldOgpDT+ALTsRaYRyxPmUWsYq940wh/3iTwxAy63TZBSYB+wkt7QKl9aeUD2PsZ2
-         Ivq0wrmCfj48gpB0hM07ysZj00V28nL5fapW/EhiLxu23y7fZe4c2eYx/bgBorfFVDqd
-         2DIUaZ6m9cmdUK5MyvnY0o0aARqHODd/L57fBZJJz/vZ/VHXvIwQOaa52PMPigsju8X1
-         trDg==
-X-Gm-Message-State: AOJu0YyKp+RZpUfQ5xkRoOm+9Tu/V1qyB2yGPUWqUQgyaiLIjAvnDvgH
-	E1Y8uZAiNEZl7HIdA590i9f5/TvvNfm25WnxaY0II8b+9NEHYcTNjmASJmxe0zw0
-X-Gm-Gg: ATEYQzzc+FL5vzwy9zxgkdZ7NbGzp2QFSHxBEjMvolVhdW+5glsp7qUD/rImYp6MTpt
-	ssSWle8a8yWeENA+sQx57fDxH0qwkwfjy/NorgwdSr7c/hKAj0ljNXduTvy/KKi9UisZRmQqXe8
-	feTa1/53c00g5IeBxsp/LZmC+yhQJiFthOykOg/cq0JnUzWB41zqIrx46KnjPd/eURMZmkmHlUf
-	EW00FQoXNsxanx7mFNTbxpPHzFLRF7Z/3sOivEb2y0NEoUpqMfll7wXjiwWSsHM51zMO8GnhkFh
-	72W9rmoXB3753xjV5KTD5bTt89LxPKXuB8gQhi/xIoQn9BQtB20hVY4zqiwtUepEjlvrCdbmxHh
-	ava1IaU3LAhMqDjuGIAPOjrGzAB5epZrbvGfF1cRiVL4C58iOU/Go4G2JDc2UVrPdqcsr/ul0JS
-	JlfMLJO2Hk811eRN5IOLDYGlJMEUEX4LwLt8Ditc9LwgR4QPDa91MtH8L3dMbdLvHCCVFQjGerI
-	xU8
-X-Received: by 2002:a17:90b:3c8d:b0:359:8749:cf93 with SMTP id 98e67ed59e1d1-35a21e1cb62mr3762402a91.1.1773418750766;
-        Fri, 13 Mar 2026 09:19:10 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1cd6:7137:9d5b:f334:52e7:a47])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35a02fc845asm8932162a91.11.2026.03.13.09.19.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2026 09:19:10 -0700 (PDT)
-From: Ritesh Singh Jadoun <riteshjd75@gmail.com>
-To: git@vger.kernel.org
-Cc: Ritesh Singh Jadoun <riteshjd75@gmail.com>
-Subject: [PATCH] Modernize pack-refs-tests.sh with git's standard command like test_path_is_file, etc
-Date: Fri, 13 Mar 2026 21:48:08 +0530
-Message-ID: <20260313161808.1242-1-riteshjd75@gmail.com>
-X-Mailer: git-send-email 2.46.0.windows.1
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="lTCUYdM9"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1773419012;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xSX9IAcD8mO64nYAlOmUQ4ywTg1S24nZPc292k/ZvXk=;
+	b=lTCUYdM9DNv0YwOUPMorZuLZQYc4LEnzS+LTIXB7N8eww+JlgBCgo2Mx9chFthc7CMoXxU
+	GnPBxgENqRvjzSMwNiYOb8qihzTqwkf77cRR+K+ttEi24Ye/6ALv9WunAVkMR/XXtqI+kt
+	0kTsX5eTyz4nL6Q6flaxVTQFOSBetqw=
+From: Toon Claes <toon@iotcl.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Siddharth Asthana <siddharthasthana31@gmail.com>,
+ Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH RFC] git-replay: implement subcommands
+In-Reply-To: <abGutGnWo1gN0Dii@denethor>
+References: <20260309-toon-replay-subcommands-v1-1-864ec82ef68a@iotcl.com>
+ <abGutGnWo1gN0Dii@denethor>
+Date: Fri, 13 Mar 2026 17:22:48 +0100
+Message-ID: <87v7ezsnqf.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
----
- t/pack-refs-tests.sh | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+Justin Tobler <jltobler@gmail.com> writes:
 
-diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-index 2fdaccb6c7..dca0c77ca1 100644
---- a/t/pack-refs-tests.sh
-+++ b/t/pack-refs-tests.sh
-@@ -61,13 +61,13 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
- test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
- 	git branch f &&
- 	git ${pack_refs} --all --prune &&
--	! test -f .git/refs/heads/f
-+	! test_path_is_file .git/refs/heads/f
- '
- 
- test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
- 	git branch r/s/t &&
- 	git ${pack_refs} --all --prune &&
--	! test -e .git/refs/heads/r
-+	! test_path_exists .git/refs/heads/r
- '
- 
- test_expect_success 'git branch g should work when git branch g/h has been deleted' '
-@@ -111,43 +111,43 @@ test_expect_success 'test excluded refs are not packed' '
- 	git branch dont_pack2 &&
- 	git branch pack_this &&
- 	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" &&
--	test -f .git/refs/heads/dont_pack1 &&
--	test -f .git/refs/heads/dont_pack2 &&
--	! test -f .git/refs/heads/pack_this'
-+	test_path_is_file .git/refs/heads/dont_pack1 &&
-+	test_path_is_file .git/refs/heads/dont_pack2 &&
-+	! test_path_is_file .git/refs/heads/pack_this'
- 
- test_expect_success 'test --no-exclude refs clears excluded refs' '
- 	git branch dont_pack3 &&
- 	git branch dont_pack4 &&
- 	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" --no-exclude &&
--	! test -f .git/refs/heads/dont_pack3 &&
--	! test -f .git/refs/heads/dont_pack4'
-+	! test_path_is_file .git/refs/heads/dont_pack3 &&
-+	! test_path_is_file .git/refs/heads/dont_pack4'
- 
- test_expect_success 'test only included refs are packed' '
- 	git branch pack_this1 &&
- 	git branch pack_this2 &&
- 	git tag dont_pack5 &&
- 	git ${pack_refs} --include "refs/heads/pack_this*" &&
--	test -f .git/refs/tags/dont_pack5 &&
--	! test -f .git/refs/heads/pack_this1 &&
--	! test -f .git/refs/heads/pack_this2'
-+	test_path_is_file .git/refs/tags/dont_pack5 &&
-+	! test_path_is_file .git/refs/heads/pack_this1 &&
-+	! test_path_is_file .git/refs/heads/pack_this2'
- 
- test_expect_success 'test --no-include refs clears included refs' '
- 	git branch pack1 &&
- 	git branch pack2 &&
- 	git ${pack_refs} --include "refs/heads/pack*" --no-include &&
--	test -f .git/refs/heads/pack1 &&
--	test -f .git/refs/heads/pack2'
-+	test_path_is_file .git/refs/heads/pack1 &&
-+	test_path_is_file .git/refs/heads/pack2'
- 
- test_expect_success 'test --exclude takes precedence over --include' '
- 	git branch dont_pack5 &&
- 	git ${pack_refs} --include "refs/heads/pack*" --exclude "refs/heads/pack*" &&
--	test -f .git/refs/heads/dont_pack5'
-+	test_path_is_file .git/refs/heads/dont_pack5'
- 
- test_expect_success 'see if up-to-date packed refs are preserved' '
- 	git branch q &&
- 	git ${pack_refs} --all --prune &&
- 	git update-ref refs/heads/q refs/heads/q &&
--	! test -f .git/refs/heads/q
-+	! test_path_is_file .git/refs/heads/q
- '
- 
- test_expect_success 'pack, prune and repack' '
+> On 26/03/09 08:30PM, Toon Claes wrote:
+>> git-replay(1) has various operation modes. The mode depends on which of
+>> the options `--onto`, `--advance`, or `--revert` is given. These options
+>> are mutually exclusive. This usage pattern is counterintuitive and
+>> uncommon for Git commands to behave this way.
+>> 
+>> Implement subcommands into git-replay(1):
+>> 
+>> * `rebase`: This replaces what `--onto=` used to do.
+>
+> I'm a bit confused by this. It appears that the "rebase" subcommand
+> still requires the `--onto` option so it doesn't seem to really be
+> replacing anything. I assume we are tyring to break these operations
+> into distinct categories which seems reasonable.
+
+Okay, maybe I should be more verbose about the problem I'm trying to
+solve.
+
+Let's start with the existing option `--onto`. This implies a "rebase"
+operation. The argument to this option is a revision which acts as the
+base for the rebase. On this base the commits in the revision-range are
+replayed.
+
+In the end, git-replay(1) takes the ref from the upper boundary of this
+revision-range, and updates that to the result of the rebase.
+
+A usage example:
+
+    $ git replay --onto=master master..my-branch
+
+With option --ref-action=print, you'll get:
+
+    update refs/heads/my-branch aaabbbccc 000111222
+
+(using abbreviated OIDs for simplification in this email)
+
+So 000111222 would be the commit my-branch is pointing to before the
+git-replay(1), and aaabbbccc the new commit.
+
+Now looking at `--advance`, this works differently:
+
+    $ git replay --advance=other-branch master..my-branch
+
+With option --ref-action=print, you'll get:
+
+    update refs/heads/other-branch 888999000 444555666
+
+As you can see, the argument of --advance is the ref that gets updated.
+
+So this command would be identical to:
+
+    $ git replay --advance=other-branch master..000111222
+
+If we try to do use the commit OID in the revision-range when using
+--onto: 
+
+    $ git replay --onto=master master..000111222
+
+Nothing (noticable) happens. git-replay(1) does the replay, but doesn't
+know which ref to update.
+
+This assymetry between --onto and --revert & --advance is the main issue
+I'm trying to resolve with this proposal.
+
+
+>> * `pick`: This replaces what `--advance=` used to do.
+>> * `revert`: This replaces what `--revert=` used to do.
+>> 
+>> Option `--onto` is still accepted. It's mandatory for the `rebase`
+>> subcommand and needs to be used in the exact same way.
+>> 
+>> Option `--ref` is added and required for the `pick` and `revert`
+>> subcommands. This replaces what `--advance` and `--revert` used to do,
+>> but as a single uniform option for all subcommands.
+>> 
+>> The `rebase` subcommand also accepts option `--ref`, and when given this
+>> is the ref that's updated with the outcome of the git-replay(1) command.
+>> Thus following commands are identical:
+>> 
+>>     $ git replay rebase --onto=master master..branch-1
+>> 
+>>     $ git replay rebase --onto=master master..branch-1^{0} --ref=refs/heads/branch-1
+>> 
+>> In the second example the upper boundary of the revision range is peeled
+>> down to a commit (using '^{0}'). Without option `--ref`, git-replay(1)
+>> doesn't know which ref to update, that's why `--ref` is passed
+>> explicitly.
+>> 
+>> For the subcommands `pick` and `revert` it's also possible to combine
+>> `--ref` and `--onto`. Here are again two identical examples:
+>> 
+>>     $ git replay pick --onto=branch-1 master..aabbccdd
+>> 
+>>     $ git replay pick --onto=branch-1^{0} master..aabbccdd --ref=refs/heads/branch-1
+>> 
+>> In the latter the argument for `--onto` is peeled down to a commit, so
+>> the command doesn't know which ref to update. To inform git-replay(1)
+>> which refs should be updated, it's passed explicitly as option `--ref`.
+>> 
+>> Signed-off-by: Toon Claes <toon@iotcl.com>
+>> ---
+>> In the patch series by Siddharth Asthana[1] the option `--revert` is
+>> added to git-replay(1). This is implemented as option `--revert`, next
+>> to the existing options `--advance` and `--onto`.
+>> 
+>> The usage of these options is mutually exclusive, so the user can only
+>> use one of them, and depending on which one, git-replay(1) selects a
+>> "mode of operating".
+>> 
+>> Various people have raised this behavior is somewhat confusing. In this
+>> series we attempt to make the usage of git-replay(1) more intuitive and
+>> user-friendly by implementing the modes as subcommands.
+>
+> Ok, subcommands for git-replay(1) seem like they could be a good fit
+> here.
+
+<3
+
+>
+>> This patch is submitted as an RFC to gather feedback about the design.
+>> All changes are implemented as a single patch right now, and thus
+>> reviewing the changes might be challenging. When we got people aligned
+>> on the direction, I'll work toward cleaner patches.
+>> 
+>> These changes are based on 'master' at 864f55e190 (The second batch,
+>> 2026-02-09) with the patches of Siddharth[1] applied: 'sa/replay-revert'
+>> at f79189a653 (replay: add --revert mode to reverse commit changes,
+>> 2026-02-19)
+>> 
+>> [1]: 20260218234215.89326-3-siddharthasthana31@gmail.com
+>> ---
+>>  Documentation/git-replay.adoc | 124 ++++++++++++++++----------
+>>  builtin/replay.c              | 150 ++++++++++++++++++++++++-------
+>>  replay.c                      |  66 +++++++-------
+>>  replay.h                      |  31 +++----
+>>  t/t3650-replay-basics.sh      | 199 +++++++++++++++++++++++-------------------
+>>  5 files changed, 349 insertions(+), 221 deletions(-)
+>> 
+>> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+>> index ffdf790278..a7e8dac23f 100644
+>> --- a/Documentation/git-replay.adoc
+>> +++ b/Documentation/git-replay.adoc
+>> @@ -8,8 +8,13 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
+>>  
+>>  SYNOPSIS
+>>  --------
+>> -[verse]
+>> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch> | --revert <branch>) [--ref-action[=<mode>]] <revision-range>...
+>
+> Do we intent to remove the experimental marker?
+
+Yeah, I did. I don't like them in this synopsis. It seems git-replay(1)
+is the only one doing this, so I'd like to get rid of it.
+
+Doing this should end up in a separate commit.
+
+>> +[synopsis]
+>> +git replay rebase --onto <newbase> [--ref <branch>] [--contained]
+>> +		[--ref-action[=<mode>]] <revision-range>
+>> +git replay pick --ref <branch> [--onto <newbase>]
+>> +		[--ref-action[=<mode>]] <revision-range>
+>> +git replay revert --ref <branch> [--onto <newbase>]
+>> +		[--ref-action[=<mode>]] <revision-range>
+>
+> Subcommands with required options like this feel quite bad IMO and I'm
+> not sure it makes it much more intuitive.
+
+Okay, I did some looking up, and maybe you're right, I couldn't find any
+other command that has required options. It seems all commands have some
+kind of "default behavior" when no options are given.
+
+> I guess subcommands do make it easier to convey which options pertain
+> to which operation. Maybe it would be better if required arguments
+> remained positional though?
+
+I'm not sure that's better:
+
+    [synopsis]
+    git replay rebase <newbase> [--ref <branch>] [--contained]
+    		[--ref-action[=<mode>]] <revision-range>
+    git replay pick <branch> [--onto <newbase>]
+    		[--ref-action[=<mode>]] <revision-range>
+    git replay revert <branch> [--onto <newbase>]
+    		[--ref-action[=<mode>]] <revision-range>
+
+I don't think is better because the required argument for 'rebase' is
+used differently than 'pick' and 'revert', as explained above.
+
+I guess my main gripe with the current options is the naming: `--onto`
+to rebase, `--advance` to cherry-pick, and `--revert` to revert. And
+while the last one does sound intuitive, the argument to that option is
+the branch you want to replay the reverted commits onto. So the argument
+isn't *what* you're reverting, it's *where* you're reverting to.
+
+With my proposal I wanted to make that more clear.
+
+This proposal is trying to be not too disruptive (for example, for
+rebase you only need to a add `rebase`), but that's maybe not a good
+idea. So an alternative could be: on top of this proposal, make both
+`--onto` and `--ref` required. In various cases the user will provide
+the exact same argument to both options, but since git-replay(1) is a
+plumbing command, we can consider this is acceptable?
+
+And now, while writing this, I was thinking about yet another proposal.
+Because --advance and --revert are pretty similar. Why is --revert not
+an additional option you can add when using --advance. So instead of:
+
+    git replay --revert=my-branch master..other-branch
+    git replay --advance=my-branch --revert master..other-branch
+
+@Siddharth, have you considered that?
+
+> Also, using these subcommands appears to be required now which is a
+> breaking change compared to before. The command is experimental, so this
+> may be fine, but should probably be more directly mentioned.
+
+Sure, I can do that when I clean up the commits.
+
 -- 
-2.46.0.windows.1
-
+Cheers,
+Toon
