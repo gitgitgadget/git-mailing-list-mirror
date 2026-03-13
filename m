@@ -1,105 +1,78 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E7E2EDD70
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 19:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA211DA23
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 19:17:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773428943; cv=none; b=Fc4eT3vkz/BfMVnfCXNoreCQTk0/niC3nnMjcv1GKAxjAJE6WX+bAP6ilLh+5D5/tpRu20Z0xrXFHkA8v+uMPZnGXK4g3xc2PMVp2oISzXeAc7elt9PnDfb6TMTaquvX9X3outs4FBvRbhbF4d2Ac6AhjagsXFj9Ku25nbEyi90=
+	t=1773429433; cv=none; b=rj1ACMuZ94VPSLKv+3efIdEJRjJwaXY2JwcOIcfsz8hq3jWY9iQQaqRdDheYbVahnnLnMRPn6LpKl8Ik44dDZMzsR5KHiC17lhoqarzY5mQNIuMrGF2zeR/KDDHwY8eWx8eEMJjPhrHO7AiHpJkpin4iPFNt9cJLXrW4b41Xky8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773428943; c=relaxed/simple;
-	bh=f999w1GKKrhnInfQblFWNJX9FwkDumsf0xUxMeLlFN8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K9b5MSaJUyTHA16g/ensxT+yXAuzyqsBh/VgdG+RjMdPVvlKuQ8wqUqDR5jERc2Itm4rrniCYma7qL1mQpZeZuPWGTP8f8HS/m1JUXZgMYSMpx96BPu57W93ad4g1RjtmkZ6Fii2ZEYdvR7exq7FfYT96W6bFa0JVA9ZUQinR80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TpExBJCz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nUaaq/EH; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773429433; c=relaxed/simple;
+	bh=zs61NPX9C859Dh7NzAnjC29y5/J3qX1hSMm6HIm+7B0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E5SHd4ZRWVkGPZ6El0NvAyJdBwjOl44PChrbZ5Y+oY5rO2zrKiRgqMSpjNzteKTCc8qDVbCph25CymACOlRVKDRms7hq9DDpMqCH1z8zMmvZ6aEU8H1nJrThhXNoaHPBaBGIFJ44+05/Idqp0dxNdynlwYYVT3lvubyXb0UPi5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=RkPnbAh4; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TpExBJCz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nUaaq/EH"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 365041D0016F;
-	Fri, 13 Mar 2026 15:09:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 13 Mar 2026 15:09:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773428940; x=1773515340; bh=pjoFI44bMl
-	isV20xG7Ukmz2MQS6PRXcw08e/gq56EMo=; b=TpExBJCzVmJnDR1IbkHguOelUb
-	Lpfc17WToeoGyCiepkihpiWGgOKlyIujHyY6gPLA7AHIQFGifovR2j6MhmYGUl28
-	2Yl4FeadhJrC/q/s/ZtjYG0h1HWZqQt6P1B5i/E+J5qk6P0CYnv/Y9RUzMewOIEh
-	rxqIKJuZG+dnzEHdrz1t450Jev5r+lZG7kP3FU0jnue+4MqtMqoFkQd0Ibxpdev1
-	gRPk11JiTUViTWCq1cDIrwdy1D5QvRRtn7/N20n+O7dALhnCC25F0zZJOzNOOJpu
-	PHlU3jkyOFmq01TyB7302VeW9clOqHG53qv5PDb2d/ceYghYv0o8KFA6AFzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773428940; x=1773515340; bh=pjoFI44bMlisV20xG7Ukmz2MQS6PRXcw08e
-	/gq56EMo=; b=nUaaq/EHSMlXmtWRbsIBlD5URVfhi2EjTdM27F0InGqmcEDaxRJ
-	/ihn6ZYHe/LaHQXCf2xUUidseXjN/V6NX8HG1bq3DrgEtVVoYdS8dcSnzZ7c/lnR
-	1sp4BiO6twhbtxQZNvMv5YPbrlR9bprH76uZSpP3GFUxLpOEIkdD+PyFgD1zFjQc
-	4ybDrcg/vm7beajCX/o1mAqqCTMZ9LfeNfBBdu4aVH57ax2sJbVmFsFPerwZRITf
-	a034p6uGP48FhvURC0P5yTvZX1ealS3GUlZzytlOhn0L5FRuCBjv52FQA0sPJgQS
-	9umBju/qwqacQDuwk3cUcVl0ly5w3CdEkjg==
-X-ME-Sender: <xms:y2C0aaxpsGz8wGR8eCXPswPIiItJcXcgb9Hx_OCK5PJBetesvtO0mw>
-    <xme:y2C0adRGzLsiKhshEea_ntbHibgBlfN61Q40pz04LZTcmmlOcxYLP5eBAyCZGEh8o
-    zuaO0cdKXGSfaNlWugAFn3B6Bydj_ZZ-e-yrJfHu72xSfZLziyVew>
-X-ME-Received: <xmr:y2C0aRWu9g4fr15wxxoaK716chJdwZsZrZ3kEfuh_1Sm2Nr3Cba2a1mZxQ24msr4tst2onL9kb94D1uVQkY2VoqMXn6k_b8WCg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledtgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrg
-    hmuhgvlhdrthhhihgsrghulhhtsegvnhhsqdhlhihonhdrohhrghdprhgtphhtthhopehp
-    shesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:y2C0afYK64lYkO_FrhzpibPczKFDEZPOjeLtMDt1-nCwcEr7cjiwLA>
-    <xmx:y2C0aX3k9QCSPi9Kp5FimxDnAtz124rJSzDkJUsnNSHlwZlqWBxfSQ>
-    <xmx:y2C0aRjlzKuxQ8FhOk8KtbKsRe44zoWTwddYFXkF0HDBy6kx3nhn9w>
-    <xmx:y2C0abYuHMbF6F88urgO1kiyll4h7rM7jD96VfjQCPeaUlr0Ow4oxg>
-    <xmx:zGC0ae6JozOZXS8AhHtvE2ZUgV170tTdx6Bk4brn_fWpggvNFlxhUe4c>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 15:08:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH] Fix GNU/Hurd build
-In-Reply-To: <abRIXE2es5A-4VLv@end> (Samuel Thibault's message of "Fri, 13 Mar
-	2026 18:24:44 +0100")
-References: <20260312191901.174808-1-samuel.thibault@ens-lyon.org>
-	<xmqqbjgsdbr6.fsf@gitster.g> <abOxLFNGgZjo1dyi@pks.im>
-	<abRIXE2es5A-4VLv@end>
-Date: Fri, 13 Mar 2026 12:08:57 -0700
-Message-ID: <xmqqsea34kdy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="RkPnbAh4"
+Date: Fri, 13 Mar 2026 20:17:01 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1773429423;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zs61NPX9C859Dh7NzAnjC29y5/J3qX1hSMm6HIm+7B0=;
+	b=RkPnbAh4dMfzWD5K+Ajuv/eDmd+YIDunJcTyrmM57tqlmXQVa4bg/D+sDlyBT0eNbGNr82
+	HM2j/0FYpc/W2zDgiDaCSWydLJa0QnxL/LIKkxaDxlgiYvEXku7R040+uQO+nhX7fQJRS8
+	ECXTcoA3c50Vhvu91cGUrxQ43Qyev3tPzxKT1ZB9drwXXA41Nr2MVQeiQzIQTONc7DKEPT
+	Z9W0Ne3o3nDjuS70P/qGvFS53U/tX04tGvZgA0sFlWu2zBUgCsanOgJy9vCLJkimaMqBqp
+	hwyz+u+C+mYbl6hyfTtstiAhIwM91Cyvb9Y9Wdw4i6WYoKDg5QLmS5/3DX2xtg==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
+	Jeff King <peff@peff.net>, Bert Wesarg <bert.wesarg@googlemail.com>, 
+	Mirko Faina <mroik@delayed.space>
+Subject: Re: [PATCH v8 2/4] format-patch: add ability to use alt cover format
+Message-ID: <abRTEXspvX_z0usP@exploit>
+References: <cover.1772839973.git.mroik@delayed.space>
+ <cover.1773331753.git.mroik@delayed.space>
+ <225065cc0dd54d1a592939d41783a904a98fb2ad.1773331753.git.mroik@delayed.space>
+ <xmqq5x71gfci.fsf@gitster.g>
+ <abLw6vUUh36zFK4n@exploit2>
+ <xmqqjyvhez96.fsf@gitster.g>
+ <1759c2fe-6e7a-41b6-9869-97544870ebef@gmail.com>
+ <xmqqqzpn63yn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqqzpn63yn.fsf@gitster.g>
+X-Spamd-Bar: -
 
-Samuel Thibault <samuel.thibault@ens-lyon.org> writes:
+On Fri, Mar 13, 2026 at 10:20:48AM -0700, Junio C Hamano wrote:
+> I do not mind a sort of DWIM similar to "log --pretty=format:%s";
+> technically, "git log --prefix" requires the "format:" prefix when
+> using a custom format (i.e., not the canned "short", "fuller", etc.)
+> but we DWIM when the string appears to use %-interpolation.
 
->> Agreed, something like this would read better indeed.
->
-> Ah, actually Pino already contributed a fix in december:)
+Then we can move towards keeping the "log:" prefix but
+allowing for it to be dropped when %-interpolation occurs, just like
+--pretty does.
 
-Good to know.
+Something to point out, --pretty does a very simple check (it seems to
+check only for the presence of '%'). This does indeed catch typos
+related to preset formats like "short", "full", etc... but it doesn't
+catch typos in format-strings.
+"an%" is an accepted format-string even without the prefix despite not
+doing any substitution.
 
-> It would be useful to put this github url in the README, I have
-> submitted
-> https://github.com/clar-test/clar/pull/135
-> so it'll eventually end up in the git source for people to find out
-> where to send clar patches.
-
-Wonderful.  Thanks.
+Maybe there should be a function, to be used as a check, that parses the
+string and checks whether the format-string should be accepted.
+This could be an improvement for a future patch.
