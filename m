@@ -1,280 +1,142 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588483054EC
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 03:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773371609; cv=pass; b=jWKhpR2VoPSNOffj2QIPYxnSYocUeK7xPbLXXn67ZCIR6Gw23Pt/Q7mZZ9ZGLqS6IxpD/Q+uqzx4o1OPlZ/Rdneu9qd4ZGS6OQ15L06xft45cLat5C3ut66UIO+bHmd4hxqOtFFRIgHar7JZrzQc1qB9lZtYyY+xdDUXKFX4P28=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773371609; c=relaxed/simple;
-	bh=HjKsSaz+OSGtgfaVIvQ4TSJX2PUPJltnNxmocIdWuEI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WVpSUc2ALDG1WVNmtky+Y3ehJhqOjihrOgPgcKC2PB4Ds/mYy9cCqIeY+/AX5JEHIiWp3CV9FAbLTGlGHyag1chi41SlJWUtEJqgPJdULMQ7bpWjEpmtLVmhDELZ2rK8AIys77+9+UqmKd89TQnlPTFCipoYLIc/STPihENac3o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UPpjNoFH; arc=pass smtp.client-ip=209.85.217.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2009E20C038
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 03:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773372003; cv=none; b=Y3qV5kLFok1klbx2LvFB3E/88D4EA9r1jNNZK8b1lYMY38vFyF5/lkJlSl/60OCcgoGhine15YZXjx0HN7/TCgis+HGoYY4p87DoZFDMqDVTNNGkBIu1Rcc32Xzi1fdHGsRNUdkWEeh8vB0dP759KUJ6XFt+l2PsGEjIoELpNHc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773372003; c=relaxed/simple;
+	bh=gQfT59ToCoauUkUWBcNI+QP3WKsqMtMVt3q7GeJglB4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Dh2VcJqjc5egJzu0NOtMPnI5jegJr2Wtvuq3ASRgpMWS1nA8DGOC68uAhagh/zvBtlPmKLU12RC4EMc+YFgrxeLGIrs5q8ZHXVgwfVnpkBOnHjiJjdQvzVyIF2J1eoGDILn7TMZjuaWUo+R5QUZJ6rvZpwS2I6Cb1gpFWFOjONs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=S7z2ceDF; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UPpjNoFH"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-5fff13d5a19so2075744137.0
-        for <git@vger.kernel.org>; Thu, 12 Mar 2026 20:13:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773371607; cv=none;
-        d=google.com; s=arc-20240605;
-        b=HHUuwN+dedxEIsDXqYI2XX33NmlWYQTXVfAZQf825+Z04md77LZER/RySQSmyW3198
-         ALgW8f9YEKYEKGsn5CYPvFA6wE1+xICOLeKBUM3+Lh10yfqUAepo/00st2d8nyAzzmok
-         ouCfzD+uKANxBnTywNQWzgkd1l3VriEtLVaAmGilWyqm/NOKAM6VhD5Yh5g9fZUjhdZb
-         dOfjBpueFhefiGLA2zQ9rGDfrV55nKFtFh37FQKYUNI4vOdixbfvbSnnuy9nS1HAQIHy
-         OaCBT74GM55ltiNMp7Fq4vR6judXopbq4ccbNrw3Hv3tES0uzKOI/syl3ku+wddxfGmw
-         EppA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=3wyQs/H1aCRWDX1RU7c30OLMh8Haf3Fj/knb/q5csrg=;
-        fh=uir88SuOPkx983BsGtP3TofSW+GQcmtlvNI/8fYfNU4=;
-        b=FsidzhLTEVO8f/kJvXFuO1RgQkqC6/yvhvl9dB961v7i/ZKH10sMMYaYpdZej52iEp
-         86I4BVMTcO8+M5sHJyKmJSRp9OlQmMLY3VtY5xNtNYuVxjIFYLXr6aVo9EPEsBpLCJpb
-         D/LzcKS9Ov8a/FS7Yx2M+mjZpGk+hjrpfsORSJJ8JZ9CEmtLZ4gPirVA1Fp9qDdtB8QG
-         U4oCpmraTaFOIXaAHfCY+0iwdLPhwLDVxrGaTYy+xnw5rUN/yWucdXD4MdORfpvqsTcy
-         2+Zmf8mzwwsP+xoo+QmKV0wxxT4zs1ZPHMNtNFAyTyMUDNkUi3vIxcFA0thYpAlhtCwH
-         rcww==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773371607; x=1773976407; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3wyQs/H1aCRWDX1RU7c30OLMh8Haf3Fj/knb/q5csrg=;
-        b=UPpjNoFHtIrPOYMwOW1t716mi/qysldZhJ+9MWVcCVOfB+RAoFjq9ipvaNLD6A5etu
-         pNaw9s2kZD1+KYvSSZTTacmDYqLu2FQ+PA1MGPxff4SFRdPSWGnejBbOOOy5Dd6WOzoB
-         a2W8C5eVxbyE/BhIVSKW2BdVkS4dnbJb0H/WDvzeCHW0O/3i0UR1Rds3dvCkcT4Ia8ra
-         gqdEXzp4zwQ3AnxkIu4erU7T7HRW4mZk6u3o70qO6/giBSDP+5eYz0IZJY7vkL4zme7r
-         TuENpzPcKIBbZuBlI5wnAPp5zvNRL1XwQHGqJeJfp/eNKKS5ifkSm36DDg+N6UDqH57o
-         Nz2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773371607; x=1773976407;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3wyQs/H1aCRWDX1RU7c30OLMh8Haf3Fj/knb/q5csrg=;
-        b=icOAXjlc7XjV21AuFplkiOO6tQTIa+nFKchBqLpqCeEj57lxC0bKUwgg+L9/KJt8dO
-         142pYEp62wlfgmF90+gFsD1ZN0wxk7bDHLvufoqg46YpbH3iQsUmWq3eI5QcrCA9WJKq
-         IlEzGEhsvzNc58W/9DQ/0UF9cmgfQN6xl6AHFD6ddkPKSrn6p/XrfSMk1kdg1L5ERUyU
-         FDEPQEgiGXuPa73x8NuZkl585MuKLU4vSC8m1e7Nj3loo1ZIToggUQiN5Rm55UE8I/ap
-         bMdf1XtbbXQxjttAtvhWVST0HjaBF2bBLe6Dm6fZTBzDou7788K8TOMrh4y+bOErGCiX
-         gogg==
-X-Forwarded-Encrypted: i=1; AJvYcCVh5LKbyGpRvj3GxtJZKrxcOdSSSXuftCPK96/kAb/42tWcSrmt4A7qa9XS7hAnPOywQLg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyqwP0qo/b18FYHy9u5t8bt/ZfrWaFv7dCQ2eYxeJNaC3TBrLSf
-	ju3j0Z1zdB/MJgblep3TRbuWl+QQ+OdVjs63MCVHTmEBW8NDHVGAOqMCRhNrM/D1mJIwfoOaDkU
-	hBJL9zladPwa78BLwnTJkV5jB8jmFrno=
-X-Gm-Gg: ATEYQzyl3KyIIOgwfjIvhIctjXpcOe0pUSfDsW64DgN3krLqUkwnSAqxh8FlYy+ysOG
-	4/PO2p6wbNNY7aai+ZWRHDaidIkgo86zM7woISlt8tZlKZIJa5xfO2L9CwdG+s5VNDrYc0NAhh/
-	jy8TUgqJjFewClwBz68ZMFBizR10Ncs45UDmmiyGsN3Yl9caN7EJWs/wOcb2eZ95Jq6LkQ1sAt+
-	BL7HuUsN/MRn3bD+QINCmEsNRdiMBKTqnK3Z2cpKuNLCBpPvGa9MBwhLIL0SV+sTpRT7hpwKf/Y
-	JYBEnwwuMCoUGs30jwnBHT4oDXlzWaAd/JDcBMGjr6m2VDdGDSglAIvwuokzofBKoIwuNHz8onv
-	NEYpSNpTtKGhVta4AakVS3/wxz7xHrJP3Vjaghi1Zezx1mq6aAtt9yrTFqNyXZ0VTiB8bVX2W3I
-	xmFsRW
-X-Received: by 2002:a05:6102:94c:b0:5dd:c53b:75cc with SMTP id
- ada2fe7eead31-6020d41c319mr954090137.13.1773371607282; Thu, 12 Mar 2026
- 20:13:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="S7z2ceDF"
+From: Mirko Faina <mroik@delayed.space>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1773371998;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Z282bFq3K3HFx6GFM+nF8hWFgb6Yo/Rb0Tgwe/OhghI=;
+	b=S7z2ceDFsBIINpfWFzZ/1x3p+gx5pGKAPYMKglVUzP0cuMCPA/8RuyzLG0vENkPot6bPbZ
+	S559iMCVWOQPDw5y49/jGTBIObkL++b4OlHmYt+gu3VJNxEoQOxpDBiuGz8LTOtQzdS/Fh
+	/5LgmMZzvYjKbmXpStVP2zdNs/+DUaxr/XRWq4oKOlbBoi8wmOn36CLaQFa6b4U08qsY7s
+	8b+27RnMvLYuR7cqBYAvlYRZAHuU8cTrLUwSZYqYDKSXxgbfk33ORc1C+3OlNqlgNjR8s2
+	QRvyNABaear97KwPhRYw/4rcdkg6xERebcqJDJ5oTX1PRfvHXJGx7r+qdyGIsg==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+To: git@vger.kernel.org
+Cc: Mirko Faina <mroik@delayed.space>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH v4] apply.c: fix -p argument parsing
+Date: Fri, 13 Mar 2026 04:19:47 +0100
+Message-ID: <20260313031950.1695103-1-mroik@delayed.space>
+In-Reply-To: <20260310050621.3849719-1-mroik@delayed.space>
+References: <20260310050621.3849719-1-mroik@delayed.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2233.v6.git.git.1773288013936.gitgitgadget@gmail.com>
- <pull.2233.v7.git.git.1773345901659.gitgitgadget@gmail.com> <xmqqldfwacyw.fsf@gitster.g>
-In-Reply-To: <xmqqldfwacyw.fsf@gitster.g>
-From: Arsh Srivastava <arshsrivastava00@gmail.com>
-Date: Fri, 13 Mar 2026 08:43:14 +0530
-X-Gm-Features: AaiRm53aQ7AbpMvdqlXo0fwCxc7kZ1u0Olu6OJhHe1CoKmvyNlsu-o6OBiMIihM
-Message-ID: <CAOAgETMCb++MnOC9YEN+y0TE9NeVC+-=Zez7UOVY3kt8vv7dRQ@mail.gmail.com>
-Subject: Re: [PATCH v7] unpack-trees: suggest using 'git stash' when checkout fails
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Arsh Srivastava via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: --
 
-Junio C Hamano <gitster@pobox.com> writes :
+"git apply" has an option -p that takes an integer as its argument.
+Unfortunately the function apply_option_parse_p() in charge of parsing
+this argument uses atoi() to convert from string to integer, which
+allows a non-digit after the number (e.g. "1q") to be silently ignored.
+As a consequence, an argument that does not begin with a digit silently
+becomes a zero. Despite this command working fine when a non-positive
+argument is passed, it might be useful for the end user to know that
+their input contains non-digits that might've been unintended.
 
-> The first paragraph is a bit of a run-on and has a misplaced "and";
-> I cannot quite read and understand this overly long single sentence.
-> Perhaps the early part can become a bit easier to read with
-punctuations, and cutting the sentence into two, e.g.,
+Replace atoi() with strtol_i() to catch malformed inputs.
 
-In my future commits I will remember to make it as easy to read as possible.
-With less punctuations and shorter sentences which will in turn make it more
-concise.
+Signed-off-by: Mirko Faina <mroik@delayed.space>
+---
+As Jeff pointed out, the previous patch doesn't pass tests on windows...
+Inlined as a workaround and to avoid adding additional folders to the
+existing test directory.
 
-> Also it is misleading to say "previous" error message.  We talk
-> about the current code in the present tense, to highlight what the
-> problem in the current code is.
+Thank you for the review :)
 
-Understood I will in future not use previous because it is the
-_current_ code.
+ apply.c               |  3 ++-
+ t/t4120-apply-popt.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 1 deletion(-)
 
-> You may view it as a weakness (which
-> may motivate this patch to be written).  But I personally am not so
-> sure that adding words to the existing message would necessarily
-> make it more clear.
+diff --git a/apply.c b/apply.c
+index b6dd1066a0..61df3bdcd0 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4981,7 +4981,8 @@ static int apply_option_parse_p(const struct option *opt,
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 
+-	state->p_value = atoi(arg);
++	if (strtol_i(arg, 10, &state->p_value) < 0 || state->p_value < 0)
++		die("<num> has to be a non-negative integer");
+ 	state->p_value_known = 1;
+ 	return 0;
+ }
+diff --git a/t/t4120-apply-popt.sh b/t/t4120-apply-popt.sh
+index 697e86c0ff..3dbccbfc03 100755
+--- a/t/t4120-apply-popt.sh
++++ b/t/t4120-apply-popt.sh
+@@ -23,6 +23,45 @@ test_expect_success setup '
+ 	rmdir süb
+ '
+ 
++test_expect_success 'git apply -p 1 patch' '
++	cat >patch <<-\EOF &&
++		From 90ad11d5b2d437e82d4d992f72fb44c2227798b5 Mon Sep 17 00:00:00 2001
++		From: Mroik <mroik@delayed.space>
++		Date: Mon, 9 Mar 2026 23:25:00 +0100
++		Subject: [PATCH] Test
++
++		---
++		 t/test/test | 0
++		 1 file changed, 0 insertions(+), 0 deletions(-)
++		 create mode 100644 t/test/test
++
++		diff --git a/t/test/test b/t/test/test
++		new file mode 100644
++		index 0000000000..e69de29bb2
++		-- 
++		2.53.0.851.ga537e3e6e9
++
++	EOF
++	test_when_finished "rm -rf t" &&
++	git apply -p 1 patch &&
++	test_path_is_dir t
++'
++
++test_expect_success 'apply fails due to non-num -p' '
++	test_when_finished "rm -rf t test" &&
++	test_must_fail git apply -p malformed patch
++'
++
++test_expect_success 'apply fails due to trailing non-digit in -p' '
++	test_when_finished "rm -rf t test" &&
++	test_must_fail git apply -p 2q patch
++'
++
++test_expect_success 'apply fails due to negative number in -p' '
++	test_when_finished "rm -rf t test patch" &&
++	test_must_fail git apply -p -1 patch
++'
++
+ test_expect_success 'apply git diff with -p2' '
+ 	cp file1.saved file1 &&
+ 	git apply -p2 patch.file
+-- 
+2.53.0.931.gb56d940889
 
-I understand, git wants people to not explore the available
-change options and help them make logical decisions rather
-than pushing them with some unneeded commands.
-
-> As Documentation/SubmittingPatches says, let's instruct the code to
-> "be like so" in imperative mood.  E.g., "Enhance the error
-> message..." instead of "This patch enhances...".
-
-Understood that makes sense because nevertheless
-it is given that I am writing the changes for this patch only.
-
-> These were already overly long, but the updated one is way too long
-> to be read on end-user's terminal.  The source lines are overly
-> long, too.
-
-That makes total sense.
-
-> to those users who decline the advice, we now show "Please
-> commit...".  That is not what !advice_enabled() should trigger, is
-> it?
-
-Thank you so much for your guidance the advice should not
-trigger to those who have opted not to see.
-My code might have misjudged this paradigm.
-
-> Also "To move you" -> "To move your".
-
-I thought I had fixed this typo. Seems like I didn't.
-I will remember to be more cautious next time.
-
-> Also the advice lost the other possiblity of first committing the
-> work in progress on the original branch before switching, yet the
-> new advice message is quite wordy.
-
-Absolutely correct this commit does narrow the users vision
-for exploring.
-
-> Also, using "for safe merge" when the user is performing a
-> "checkout" might be slightly confusing, even if 'stash pop' involves
-> a merge under the hood.
-
-I don't want to sound like a programmed robot but I absolutely
-agree with the recommendations.
-
-> But as I already said, I think the current text may already strike
-> the right balance between being clear and being concise.
-
-Thank you so much for your valuable guidance.
-If it's possible I want some guidance over the questions written below,
-As it is well stated by you that the current
-text is clear enough.
-Should I still work on this PR from a purely GSoC
-perspective. Or should I start making my proposal or
-still work on this PR until my micro project is merged?
-Because I have already shown I can navigate git project which
-was the goal of micro projects in the first place.
-
-On Fri, 13 Mar 2026 at 04:10, Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Arsh Srivastava via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > When a branch switch fails due to local changes and
-> > new users who are not familiar with the error message often
-> > get confused about how to move ahead and resolve the issue as
-> > the previous error message only suggests to commit or stash the changes
-> > but doesn't explain how to do that or what the next steps are.
->
-> The first paragraph is a bit of a run-on and has a misplaced "and";
-> I cannot quite read and understand this overly long single sentence.
->
-> Perhaps the early part can become a bit easier to read with
-> punctuations, and cutting the sentence into two, e.g.,
->
->   When a branch switch fails due to local changes, new users who
->   are unfamiliar with the error message often get confused about how
->   to move ahead and resolve the issue.
->
-> Also it is misleading to say "previous" error message.  We talk
-> about the current code in the present tense, to highlight what the
-> problem in the current code is.  The _current_ message stops at
-> hinting the commands to be used without giving wordy instructions
-> that are best left to manuals.  You may view it as a weakness (which
-> may motivate this patch to be written).  But I personally am not so
-> sure that adding words to the existing message would necessarily
-> make it more clear.
->
-> > This patch enhances the error message with more specific
-> > instructions in a concise manner to help users understand
-> > how to resolve the issue and move their local changes
-> > safely to the other branch using stash.
->
-> As Documentation/SubmittingPatches says, let's instruct the code to
-> "be like so" in imperative mood.  E.g., "Enhance the error
-> message..." instead of "This patch enhances...".
->
-> By the way, the updated message seems much less concise than the
-> original.
->
-> >       msg = advice_enabled(ADVICE_COMMIT_BEFORE_MERGE)
-> >             ? _("Your local changes to the following files would be overwritten by checkout:\n%%s"
-> > -               "Please commit your changes or stash them before you switch branches.")
-> > -           : _("Your local changes to the following files would be overwritten by checkout:\n%%s");
-> > +               "To move you local changes safely to the other branch,\n"
-> > +               "Please try 'git stash' followed by 'git checkout <branch>' followed by 'git stash pop' for safe merge."
-> > +               )
-> > +           : _("Your local changes to the following files would be overwritten by checkout:\n%%s"
-> > +               "Please commit your changes or stash them before you switch branches.");
->
-> These were already overly long, but the updated one is way too long
-> to be read on end-user's terminal.  The source lines are overly
-> long, too.
->
-> The original was this:
->
->         msg = advice_enabled(ADVICE_COMMIT_BEFORE_MERGE)
->               ? _("Your local changes to the following files would be overwritten by checkout:\n%%s"
->                   "Please commit your changes or stash them before you switch branches.")
->               : _("Your local changes to the following files would be overwritten by checkout:\n%%s");
->
-> Note that when advice is *NOT* enabled, we only gave
->
-> _("Your local changes to the following files would be overwritten by checkout:\n%%s");
->
-> without any "advise" in the output.  That is what !advice_enabled() means.
->
-> The updated code does this:
->
->         msg = advice_enabled(ADVICE_COMMIT_BEFORE_MERGE)
->               ? _("Your local changes to the following files would be overwritten by checkout:\n%%s"
->                   "To move you local changes safely to the other branch,\n"
->                   "Please try 'git stash' followed by 'git checkout <branch>' followed by 'git stash pop' for safe merge."
->                   )
->               : _("Your local changes to the following files would be overwritten by checkout:\n%%s"
->                   "Please commit your changes or stash them before you switch branches.");
->
-> to those users who decline the advice, we now show "Please
-> commit...".  That is not what !advice_enabled() should trigger, is
-> it?
->
-> Also "To move you" -> "To move your".
->
-> Also the advice lost the other possiblity of first committing the
-> work in progress on the original branch before switching, yet the
-> new advice message is quite wordy.
->
-> Also, using "for safe merge" when the user is performing a
-> "checkout" might be slightly confusing, even if 'stash pop' involves
-> a merge under the hood.
->
-> A more concise version might say:
->
->   Try 'git stash && git checkout <branch> && git stash pop' to carry
->   your changes to the new branch, or commit your work before switching.
->
-> But as I already said, I think the current text may already strike
-> the right balance between being clear and being concise.
->
-> Thanks.
->
