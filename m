@@ -1,126 +1,93 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BCA390980
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 11:59:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D15E396572
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 12:39:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773403178; cv=none; b=uAyP6co+Xw5+24mZBEvsTXN1ndMEDWwmUcbtzTBNbj879hQHnQk7Ub5UtvsLWJ2MhP+4Fv5BaatEJ5UBUHV3LJWDt1r4duL4eSwuzRfqa3E5YAMA4s4VhyFfs8j9LC1HV56XzLuq36+5aMcvLarQlAPXWrYQrZBeMBntZpwb7tw=
+	t=1773405548; cv=none; b=FJq812dbxkVCYLFO9dZtcRNa8kjS4N47qRpe54YQrFZpAVxbCpwfrO+lqKndBk/xrpHFS2Xp7vU99GHOtJ2z3+0C+7v9BGH0ExEVPpebUrWw0eZV3CBMQ64saWRdWOvLr+MTp6gkloOWF+0dZqsysNRcShdxrenwpppFoa3LfcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773403178; c=relaxed/simple;
-	bh=eF8oTAlgb/9vhvWHCjhMc7xXP3nrqAtbP/WQTDUDURc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=og/JpTuOz173RFfvNvYAxY5u4eZh3LRaMZgJFrjwS88mH6mf9jdPJ678vJ5dcOm2g+2px4XWtO63kDyoT5LR+lC414Yey1FDpoQNe6U9X45cbX4hhf4WiM7JvR21S8k0372lFU1yb9VQ4038CTWJPZ52YCQu8T7PhAUgRCgnd/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QRWD2ljb; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QRWD2ljb"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2ad9a9be502so13283005ad.0
-        for <git@vger.kernel.org>; Fri, 13 Mar 2026 04:59:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773403177; x=1774007977; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KXe1/sbL8FBluHrOcJKTNAq0aoPbok1l+4MikIuM8ug=;
-        b=QRWD2ljbr0JGzvsjhYzVFALMOmsD6wy2ZiaITG2HuQ1Uh/skr4A3jq5/NNQvRAGPsO
-         aCNr6ndj+VWL/x6Vr/b6DqlWr6zda1HMD38PsLKEy8qN4ckWgNCizaZ6JGiT4TkB7pb0
-         G27SVmAfdJ+tVplykdxUX/D3AxX1N6roY4G4Qwj0Rzosq6Zmu3XjaSLbI7foEOUrMQsG
-         1LfqRPTEfE4wvWqWSQVZdIgzYTCmID5krUS74QIGwxYI+/WNOSFfrk5qEOzIk+zG+nuX
-         wDgdcaUKl3q4jrTUwhtk8TFMz08XDWdxL/GSz5QqavcpuCJf9gMV8suVGkRTmEfqGT6B
-         Qi1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773403177; x=1774007977;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=KXe1/sbL8FBluHrOcJKTNAq0aoPbok1l+4MikIuM8ug=;
-        b=QdxolYaem+slofAr9iyyNRXeT3pRVH1M2pK+ZCjDS7AiY/rukgG5KcF8s6La3KXY2c
-         bDvquSvhVgC7rf/ejOy78TiTW8+qTFSlPXRY7njX57oKgJjNumYFJ+lkYk71u4Ty2ro0
-         AAL7vYU/rghA4DzK9GvBfaLhRZyG3QYTHAceYKTZHP3KbnCOyTkUqAHAnyJiw78+IMOM
-         2luuIHdJ1a9OjLXgOMWW2CgNuNKwZVGe7tO9PaH7RAeSNSftQxWTbY+PAY/AIedOHfgK
-         3PVJQ1OQHpWTbcavLG4KvARSslrX24aJsAlJ70IKZvRe86VB/AWKYFu/8Yp6w0WbXgjl
-         ILcQ==
-X-Gm-Message-State: AOJu0YzF6DUR/s94legV75efzyHmFYbQzsICRG8w/0xd6JT4KRpYjXVU
-	HzFwWhjKNdzqNKgGF2pmDPynUwXsuCqjwfWaIoc4K20WCVGmKnIXO5dPvE+iNzndcWQ=
-X-Gm-Gg: ATEYQzxJ6H3nTixBSuo2JecnkK62NxL2f6CJmnW0b/Nb6aufn+hDbj1Q6EbGYyOH9p7
-	ZG5dv32uM6ZNAyTGio7fUKOfySXPQc1/D7rHtqcDj7DLGuCEEcrvRiFfhDQHZqujNcxOAooA18y
-	2I0NdbZ0PTmVcZ9d27hL2davTPDFV54/6VVK8RJRY7aPnqSLniXIXsDHPPmUlKw+0RRafo98eiY
-	DKPSwIwoMZyLLyi30sWBUEN07/9UXk9sPnSrzFPuF5cKQCirbDLd5/nvNrm0dESr5VentXtmY/B
-	utjBInmdQ9GWuMruaQ7uCzFMfpchiiai98tOsYNpFwfCYUZPJppr1sn9mp6k4Ry3SofBMDnS6ci
-	KMrvM14zKXBFFE2/v/Eucs8zlg7cNAHHu0kq9rNLN3wr73iIXjGEhZAvjmRpuyzy/YZvP0vDhsS
-	aZL32xli5PTs4jq2/Q85VAnIDd3KG6pxGwKgpOPP/nSFhPa+Kl758l9b7ZPLWx1DuoU2AdyRXZX
-	RSpTx8/XhwGc/0si03d5dSy4OsESk4FcBZIJ/mesh85wCMz51Zq9nTzCIKmUC9fF9CWnQ==
-X-Received: by 2002:a17:903:19d0:b0:2ae:4f15:1aba with SMTP id d9443c01a7336-2aecab22c09mr32290355ad.30.1773403176816;
-        Fri, 13 Mar 2026 04:59:36 -0700 (PDT)
-Received: from farblopa.localdomain ([84.126.0.122])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece56e0b8sm27333585ad.16.2026.03.13.04.59.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2026 04:59:36 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: git@vger.kernel.org
-Cc: rleone@scaleway.com
-Subject: Re: [PATCH] gc: add git maintenance list command
-Date: Fri, 13 Mar 2026 12:59:31 +0100
-Message-ID: <20260313115932.15259-1-pabloosabaterr@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <pull.2201.git.git.1772040758787.gitgitgadget@gmail.com>
-References: <pull.2201.git.git.1772040758787.gitgitgadget@gmail.com>
+	s=arc-20240116; t=1773405548; c=relaxed/simple;
+	bh=AO9NkwzfP+Vl8HoPCFdP5uotWCfv/0Z1kFPrEsaKLmI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WnS2cGaeEQ9Hg2ALa2u5KMFjT4VijrwRHupOR6uR1+89c/gDbzXsGsM8E33noyDgr1QKet3ctcKwtBfPPS01r2K/b+uEi2qyD8D8bzNxd5Y9uD2EWhzGQFRmhVQgEUF6h/LsV1YqfxG8yPyaGXyVv1cGbkA7fZwft1b3IWA7Wo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.103] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4fXPDd5wZRzRpLH;
+	Fri, 13 Mar 2026 13:38:57 +0100 (CET)
+Message-ID: <7905c1d6-ae6e-4930-b4bf-d1129685d10f@kdbg.org>
+Date: Fri, 13 Mar 2026 13:38:57 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] run auto maintenance in git-gui
+To: Wolfgang Faust <contrib-git@wolfgangfaust.com>
+Cc: Birger Skogeng Pedersen <birger.sp@gmail.com>,
+ Pratyush Yadav <me@yadavpratyush.com>, Marc Branchaud
+ <marcnarc@xiplink.com>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>
+References: <091e68fa-428d-48b0-bf7d-42b01660d6eb@app.fastmail.com>
+ <e17f094f-f869-4cc9-b59c-091b7e61a021@kdbg.org> <xmqqms0jti24.fsf@gitster.g>
+ <40ccd060-e6f7-4130-a25e-3c2f65df8eb7@kdbg.org>
+ <876fd32d-3965-4587-b567-399787741247@app.fastmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <876fd32d-3965-4587-b567-399787741247@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> char *config_file = NULL;
+Am 11.03.26 um 05:48 schrieb Wolfgang Faust:
+> However, it seems to me that the conditions you outlined are very
+> unlikely.
 
->	if (config_file) {
->		git_configset_init(&cs);
->		git_configset_add_file(&cs, config_file);
->		if (git_configset_get_string_multi(&cs, key, &list)) {
->			/* No repositories registered in custom config */
->			git_configset_clear(&cs);
->			return 0;
->		}
->	} else {
->		global_config_file = git_global_config();
->		if (!global_config_file)
->			die(_("$HOME not set"));
->		git_configset_init(&cs);
->		git_configset_add_file(&cs, global_config_file);
->		if (git_configset_get_string_multi(&cs, key, &list)) {
->			/* No repositories registered in global config */
->			free(global_config_file);
->			git_configset_clear(&cs);
->			return 0;
->		}
->	}
+This was the whole point of my argument.
 
-Here the branches look too similar, after the third line at the else it becomes
-exactly the same. If you notice, global_config_file is initialized as NULL
-then in case of !config_file, its value comes from git_global_config().
-Anyways, there's no need to separate the free logic because both NULL and
-git_global_config() can be freed.
+> In particular:
+> 
+>> - They configure maintenance.* to do more cleanups than the default
+>> confituration (which is the same as `git gc --auto`, I think).
+>>
+>> - They never use `git maintenance run` through some other facility.
+> 
+> Are these not more or less mutually exclusive? Why would someone set
+> up maintenance to do things, and then never run maintenance?
 
-you can avoid this by extracting the diferent logic from the else
+The system configuration could be set to non-default values.
 
-  if (!config_file) {
-      config_file = git_global_config();
-      if (!config_file)
-          die(_("$HOME not set"));
-      global_config_file = config_file;
-  }
+But it would need quite some determination from a user to side-step any
+and all explicit and implicit `git maintenance` calls on such a system
+instead of countermanding the configuration in the personal (global or
+local) settings.
 
-and then the rest of the code is common for both cases
+My point is only that these conditions aren't mutually exclusive, but
+still unlikely in practice.
 
-  git_configset_init(&cs);
-  git_configset_add_file(&cs, config_file);
-  if (git_configset_get_string_multi(&cs, key, &list)) {
-      free(global_config_file);
-      git_configset_clear(&cs);
-      return 0;
-  }
+> Given the above, I see two options:
+> 
+> 1. Assume that in practice everybody wants auto maintenance and
+>    `gui.gcwarning` is set because they were annoyed by the dialog.
+> 2. Assume that some people do *not* want auto maintenance, and if the
+>    `gui.gcmaintenance` option is unset then show some kind of dialog
+>    that tries to explain the situation to the user and encourages them
+>    to set `gui.gcmaintenance=auto`.
+> 
+> #2 is the safer option, but is rather complicated and involves
+> bothering every user for the sake of strict compatibility. I assume
+> that git core itself had to make a similar tradeoff when deciding to
+> enable automatic garbage collection, but I don't know where I'd find
+> that discussion and perhaps it's far enough in the past that the
+> rationales are no longer relevant anyway.
+
+Let's just call `git maintenance` on every commit except when, for
+legacy reasons, gui.gcwarning is false. No new configuration, please,
+until there is proof that Git GUI users really do not want the standard
+`git maintenance` behavior.
+
+-- Hannes
 
