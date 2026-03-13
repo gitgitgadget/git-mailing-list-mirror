@@ -1,83 +1,82 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3ED382F06
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 21:20:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88B8223323
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 21:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773436843; cv=none; b=ShKBu8qLUNxX4k12ln7Ac5ZB86a3a5wmlTzhvH7jtBV88U42aO4OPFCsDW5bTFz/LdmpKJNrqFf+SPTF5CD2jfu85iutNgheDpidajGmCg/du90Yqi2bhaW3CX7ESJrHpRj+vfPu/+5ZpWewe4kMo1Q6z9oSYyIv2dhWIT046rg=
+	t=1773438085; cv=none; b=Y6Y8jsxzYz8TrNHPtNoM9B9XnaWgryAOkR97uRexwBQRxSk24OPGytlgbr9ueRC2Q9YHgQVyrq3CUsTb4TuUoLBZKkIbdsTocFBRatMG+jzfZaKEa8Gv6e+HGCerj8KFitBbUNWKM96eKZ7nIB8/H0ly72v89M6vzBASlqmpbfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773436843; c=relaxed/simple;
-	bh=mODKFV84P72ple4f01gwja5jjTtrA4aVh2UoTu/yKAc=;
+	s=arc-20240116; t=1773438085; c=relaxed/simple;
+	bh=zhnpHprVo2vDUIhxe+yYAgUwBJlkin0NrTEkIUDbpJw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pd2lG06uB+1af8CX2kXMMnCFBg7HzzvuDxv9IXIOEXbbD/32GuTEzXQL9BZtKS+WWbkISYbco78neF39FFntbF7Lg5GuHVZHQbKZx0w6jlvcAaY7+HuM7C5p9KzJSkErP+rEkYQB4O2Zi9jdVroSfuB8VUkhcG8rydekMLFgz4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ORsQ9yT0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KQlFLEe7; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=S3oF3Gx3ejQG0Dq4vsHUN99T9Ol5JdjPF7nDX0e7itZlu36aYEqV3DAKnzLAlrwQLwEvmK7u/HeY2h3ZpMzD1aG2RqOV9aczy+bfWq8KKeyqBMzA/s3sUX4ONrtYp5x6d6DbhNArR6qHnGs/dLJM8eW2jeSU5y3zii6bfb/+XD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=adVKSg7w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tKsv4r+f; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ORsQ9yT0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KQlFLEe7"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id C03CF1D001B0;
-	Fri, 13 Mar 2026 17:20:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="adVKSg7w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tKsv4r+f"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3097F7A0129;
+	Fri, 13 Mar 2026 17:41:23 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 13 Mar 2026 17:20:40 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 13 Mar 2026 17:41:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773436839; x=1773523239; bh=pJXOBb78dF
-	rrn6187BYxtYFjRkqR8GLMAZLVgIVuFM4=; b=ORsQ9yT0JZeSAquWLX7i0lZ+cw
-	3vJjfSgYWfQ4dXN3wfkjkpk/L5iiPHtSjT7E379ifMfYrmc5hQtYFFzIAFI/ZPcL
-	tfskHQUDgGEzmXzZx82tHGHttoy9v48DTB2PBfvabYtbTrILVAoSC/ycPvI0A1SB
-	6dvKTZ/iOj/2O3I6RaO29J1muArPQn0HCrAbbc3JEH3d04o2Up0fg/uSuQp3UnTY
-	l5zmeb6h/eVDLhvuNKewODthlWGzCRpyHk1cBm74K5FnJao/Eml42dcppv337z7V
-	x0PETmM5iUx79s5+TZhirQe2Q05nW2XSefNzom2ad7shrCpeKs84zt0HOKdA==
+	:subject:to:to; s=fm3; t=1773438083; x=1773524483; bh=ax3vwz0jjt
+	OrF19faBtq2DbqZfhvyseYQQPy0wEcsmw=; b=adVKSg7wzme5LhBtLF38Xee4iZ
+	+fcqyTrtGMOtIcqYSIdqj4C0/rMhKXACK+k/481G7OPS2ET70SmG55iZ8/79s21c
+	E3dQcSukDIggimfTyihbwNpxUwItyrmZmnuhYT74EQLkwj8yM5/B0mHzotGrqHji
+	uzLfFjuoFv64Q141E5wabCu0/FF7TvicOHz5PZhPRUnh5E7DSFfggkfSqIHW+l7E
+	mxyr4whq5keqGT/i27KpWdivF5YuAl4mWhUz4islzU89aqfqNqfCBJe/I4E4uPut
+	rpVAM92xJayMmBNx+t8nkQrGmmZpjxJzSe86blrcqdaoxmCkRTiktDkvQZ8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773436839; x=1773523239; bh=pJXOBb78dFrrn6187BYxtYFjRkqR8GLMAZL
-	VgIVuFM4=; b=KQlFLEe7RiMHJR/72WsTHUPFel4N4dar/3f8a1Ju1HS4N+5FLK0
-	HAl83kwMQvlmaTVdhIRoruZHuWPRILKxLjnUExtLliaTQNDfuuQ7imlScsyr9wqz
-	xx8fXzppJAYe3tT/effgglnzffT7EOmBWtuRyxfKXaeQzepcKncpn8UNo17OWnLu
-	Qxg957IAuifZHNvfm3dUm6NV0PeqySjxSLSUdY2sh5Ght1pF6zwsbDfc6lQ10iSf
-	KXcDjw4PpPJw1EN8CjnYiGK7k0ZCTgMihh0t00myA2l7p5SCg3ha7XKbLq7BpbTk
-	FdtNC+lWfr70itUTCcde750TNp/5QinWcrg==
-X-ME-Sender: <xms:p3-0aZgIRP81ejFMn_aRcy7au8APwkcsBZJo_0_dPn6OIhIv-VhO4g>
-    <xme:p3-0aU4f_aY1cEQzZi9p25kYputW_a3Qx-enE8JVrlSSQU6eFCLJQtgzlLIjjILQU
-    8KpV1ILqC402-GYuOwe5g7vuBndlTXnTerPkNYiDpuO-Heb1PNjqA>
-X-ME-Received: <xmr:p3-0aRb74KaF3KbsRbtFNqkQ2ywbDwUdnzn8Dfcto8i8Nx-cCP_d4quXKhY7LLIjrOCkKb2OOCY5xhoe1YPZDBrCZD1c4h0X9w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledtjedvucetufdoteggodetrf
+	1773438083; x=1773524483; bh=ax3vwz0jjtOrF19faBtq2DbqZfhvyseYQQP
+	y0wEcsmw=; b=tKsv4r+fGVduF0iZQ0Om+e5QR3nZ0ogIDVeJ8ejEWLUnCG7uUoz
+	y5FRC6pKWjQfKLhlHcukQRSxk0Kqw2w7wy/+rq64ro6lFbRQPpEjVoJQmuTWFpDJ
+	6Jl0QEwsmmI/qkbA4nDa5XL7hlZADVOh8pTEw49w1tblNu71bVGCTWQBi5ltwpe4
+	LZVnbd7kqSaUxFz9W+hE1nwvtMSixueSXDV71vc81EzBkETw4jyaS3YIs4h7iPAn
+	8bUi/kQVZzew3uG7I5bhDCKl1MnPQCozhoclimpkfSNtR5IWD2UPCq+3I4eNF5+P
+	m5oW8R70Litl8oGBtijdW2wqAzrem6qEFqw==
+X-ME-Sender: <xms:goS0aUhE9OuhO5rNBmh5Qmo0kGkKro1xMKVQ21er-kUaV_eorIk8wA>
+    <xme:goS0aUe6iwDrVhcuzEQg_PAjEStIGSHPRS0YJmwmeUfjQTl08ntN6kFojLlkchWdW
+    xa7cXFTKmvEeNHK8Emd7aCR69I_ecpFE9Po-lqMFz6v-cVtMU5_1tI>
+X-ME-Received: <xmr:goS0aZcizESqwTqOTLFE7azCc0PIJIHLQ-Vd7DedAm5M7Z0y7-tWyHa1WLWDBjDY2fwjSDdN3p8KWA_3SXl2R8CJiz73Yankpw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledtjeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvrhhitgdr
-    phgvihhjihgrnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehj
-    lhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:p3-0aZ7WSUEEpMfhExBOijTiGxz85O66lCMKu9DYtrE5_SpN5p2pvg>
-    <xmx:p3-0aUASADaHVQfa5gXA4smqNr4msQmRRzxZU0ueGk-OvnVDDQpK-Q>
-    <xmx:p3-0afeeaWUfUhG-vnFLZbHpXrESg4Yxzw_s8bjUCadqDfC-4RrDpw>
-    <xmx:p3-0aTLhtyat6Q_VaCHG6D0iMr4z1a1KXp_MEtk_QzL5UtgIsF9Djw>
-    <xmx:p3-0aVJqPVVXLvaGRBKi0rgF66jeXuef38UKgXEpCqt4fQu0ChHJsq34>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:goS0ae_n_G_S_FskyAYvNR70qa2rHVNusIl8GYVofMCtG2Sv8KHRaA>
+    <xmx:goS0aVn2xGPmD4mpAWHyWOjwLwp9CECFkH5w4HZdOFwyUz0KmJSOvg>
+    <xmx:goS0aQ9bzsLqnMWPq0jyiwJwe-WwQuo2XgvGclOQuQWob55Qj9JBIg>
+    <xmx:goS0aTlJU7lGTtYVyiKqfne4g5b5UxdUQ2xh-soL3rykwyhObtk7Ew>
+    <xmx:g4S0aUdjJzyFOonDiPpvbQclOKSNqruYvg8ikJnp-IbhBCjdo04AmUqa>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 17:20:38 -0400 (EDT)
+ 13 Mar 2026 17:41:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: eric.peijian@gmail.com
-Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com
-Subject: Re: [PATCH 1/1] Add preparing state to reference-transaction hook
-In-Reply-To: <20260313193537.62827-2-eric.peijian@gmail.com> (eric peijian's
-	message of "Fri, 13 Mar 2026 15:35:36 -0400")
-References: <20260313193537.62827-1-eric.peijian@gmail.com>
-	<20260313193537.62827-2-eric.peijian@gmail.com>
-Date: Fri, 13 Mar 2026 14:20:37 -0700
-Message-ID: <xmqqpl572zq2.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] worktree add: stop reading ".git/HEAD"
+In-Reply-To: <ae2a368e7e783bfe9dd038bbb2e986e6d8540900.1773411586.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Fri, 13 Mar 2026 14:19:49 +0000")
+References: <cover.1773411586.git.phillip.wood@dunelm.org.uk>
+	<ae2a368e7e783bfe9dd038bbb2e986e6d8540900.1773411586.git.phillip.wood@dunelm.org.uk>
+Date: Fri, 13 Mar 2026 14:41:20 -0700
+Message-ID: <xmqqjyvf2yrj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,84 +86,131 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-eric.peijian@gmail.com writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> From: Eric Ju <eric.peijian@gmail.com>
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> From: Eric Ju <eju@gitlab.com>
-
-This is curious.  The former matches the sign-off, but I somehow
-suspect that the @gitlab.com identity may be what you want to use
-for both of them, if this is a company sponsored work by an
-employee?  I dunno.
-
-Also the commit title deviates from the established "<area>: <what
-is done>" format.
-
-    Subject: [PATCH] refs: add 'preparing" phase to the transaction hook
-
-or something?
-
-Other than that, both the cover letter and the proposed log message
-very well explain the motivation behind the new feature.  I wish
-everybody wrote their log messages as clearly as this one.
-
-> The "reference-transaction" hook is invoked multiple times during a ref
-> transaction. Each invocation corresponds to a different phase:
+> The function can_use_local_refs() prints a warning if there are no local
+> branches and HEAD is invalid or points to an unborn branch. As part of
+> the warning it prints the contents of ".git/HEAD". In a repository using
+> the reftable backend HEAD is not stored in the filesystem so reading
+> that file is pointless. In a repository using the files backend it is
+> unclear how useful printing it is - it would be better to diagnose the
+> problem for the user. For now, simplify the warning by not printing
+> the file contents and adjust the relevant test case accordingly. Also
+> fixup the test case to use test_grep so that anyone trying to debug a
+> test failure in the future is not met by a wall of silence.
 >
-> - The "prepared" phase indicates that references have been locked.
-> - The "commit" phase indicates that all updates have been written to disk.
-> - The "abort" phase indicates that the transaction has been aborted and that
->   all changes have been rolled back.
-
-"commit" -> "committed" and "abort" -> "aborted", if the existing
-documentation is to be trusted.
-
-> This hook can be used to learn about the updates that Git wants to perform.
-> For example, forges use it to coordinate reference updates across multiple
-> nodes.
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  builtin/worktree.c      | 21 ++-------------------
+>  t/t2400-worktree-add.sh | 28 ++++++++++++----------------
+>  2 files changed, 14 insertions(+), 35 deletions(-)
 >
-> However, the phases are insufficient for some specific use cases. The earliest
-> observable phase in the "reference-transaction" hook is "prepared", at which
-> point Git has already taken exclusive locks on every affected reference. This
-> makes it suitable for last-chance validation, but not for serialization. So by
-> the time a hook sees the "prepared" phase, it has no way to defer locking, and
-> thus it cannot rearrange multiple concurrent ref transactions relative to one
-> another.
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index bc2d0d645ba..70410b53df3 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -692,25 +692,8 @@ static int can_use_local_refs(const struct add_opts *opts)
+>  	if (refs_head_ref(get_main_ref_store(the_repository), first_valid_ref, NULL)) {
+>  		return 1;
+>  	} else if (refs_for_each_branch_ref(get_main_ref_store(the_repository), first_valid_ref, NULL)) {
+> -		if (!opts->quiet) {
+> -			struct strbuf path = STRBUF_INIT;
+> -			struct strbuf contents = STRBUF_INIT;
+> -			char *wt_gitdir = get_worktree_git_dir(NULL);
+> -
+> -			strbuf_add_real_path(&path, wt_gitdir);
+> -			strbuf_addstr(&path, "/HEAD");
+> -			strbuf_read_file(&contents, path.buf, 64);
+> -			strbuf_stripspace(&contents, NULL);
+> -			strbuf_strip_suffix(&contents, "\n");
+> -
+> -			warning(_("HEAD points to an invalid (or orphaned) reference.\n"
+> -				  "HEAD path: '%s'\n"
+> -				  "HEAD contents: '%s'"),
+> -				  path.buf, contents.buf);
+> -			strbuf_release(&path);
+> -			strbuf_release(&contents);
+> -			free(wt_gitdir);
+> -		}
+> +		if (!opts->quiet)
+> +				warning(_("HEAD points to an invalid (or orphaned) reference.\n"));
 
-I cannot quite picture how "rearrangement" would happen, though.
+This is indented one level too deep, it seems.
 
-Would the hook notice "ah there is a preparing hook invocation
-incoming", stall the caller by not immediately returning and instead
-wait for a different Git process to invoke the same ref-transaction
-hook "preparing" invocation, and somehow decide to let the latter go
-first before releasing the former?
+Other than that, I fully agree with the reasoning of the removal
+explained in the proposed log message, and the updated test to use
+test_grep does look much better.
 
-> Introduce a new "preparing" phase that runs before the "prepared" phase, that
-> is before Git acquires any reference lock on disk. This gives callers a
-> well-defined window to perform validation, enable higher-level ordering of
-> concurrent transactions, or reject the transaction entirely, all without
-> interfering with the locking state.
->
-> This change is strictly speaking not backwards compatible. Existing hook
-> scripts that do not know to handle unknown phases handle the "preparing" state
+We seem to use "[ a = b ]" instead of "test a = b" in this test
+file, unlike everybody else, which I didn't notice before.  Of
+course, this series has no need to touch them; it is just a tangent
+I happened to have noticed.
 
-"know to handle unknown phrases handle"?
+Thanks.
 
-> string will encounter an unknown phase, and that might cause them to return an
-> error now. But the hook is considered to expose internal implementation details
-> of how Git works, and as such we have been a bit more lenient with changing its
-> exact semantics, like for example in a8ae923f85 (refs: support symrefs in
-> 'reference-transaction' hook, 2024-05-07).
->
-> An alternative would be to introduce a "reference-transaction-v2" hook that
-> knows about the new phase. This feels like a rather heavy-weight option though,
-> and was thus discarded.
-
-And documenting the design alternatives and decision like these two
-paragraphs is very much appreciated.
-
-The insertion of a new hook invocation itself is at a very much
-expected place in the code path.  Well written.
-
-Will queue.  Thanks.
+> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+> index 023e1301c8e..58b4445cc44 100755
+> --- a/t/t2400-worktree-add.sh
+> +++ b/t/t2400-worktree-add.sh
+> @@ -987,7 +987,7 @@ test_dwim_orphan () {
+>  				then
+>  					test_must_be_empty actual
+>  				else
+> -					grep "$info_text" actual
+> +					test_grep "$info_text" actual
+>  				fi
+>  			elif [ "$outcome" = "no_infer" ]
+>  			then
+> @@ -996,39 +996,35 @@ test_dwim_orphan () {
+>  				then
+>  					test_must_be_empty actual
+>  				else
+> -					! grep "$info_text" actual
+> +					test_grep ! "$info_text" actual
+>  				fi
+>  			elif [ "$outcome" = "fetch_error" ]
+>  			then
+>  				test_must_fail git $dashc_args worktree add $args 2>actual &&
+> -				grep "$fetch_error_text" actual
+> +				test_grep "$fetch_error_text" actual
+>  			elif [ "$outcome" = "fatal_orphan_bad_combo" ]
+>  			then
+>  				test_must_fail git $dashc_args worktree add $args 2>actual &&
+>  				if [ $use_quiet -eq 1 ]
+>  				then
+> -					! grep "$info_text" actual
+> +					test_grep ! "$info_text" actual
+>  				else
+> -					grep "$info_text" actual
+> +					test_grep "$info_text" actual
+>  				fi &&
+> -				grep "$bad_combo_regex" actual
+> +				test_grep "$bad_combo_regex" actual
+>  			elif [ "$outcome" = "warn_bad_head" ]
+>  			then
+>  				test_must_fail git $dashc_args worktree add $args 2>actual &&
+>  				if [ $use_quiet -eq 1 ]
+>  				then
+> -					grep "$invalid_ref_regex" actual &&
+> -					! grep "$orphan_hint" actual
+> +					test_grep "$invalid_ref_regex" actual &&
+> +					test_grep ! "$orphan_hint" actual
+>  				else
+> -					headpath=$(git $dashc_args rev-parse --path-format=absolute --git-path HEAD) &&
+> -					headcontents=$(cat "$headpath") &&
+> -					grep "HEAD points to an invalid (or orphaned) reference" actual &&
+> -					grep "HEAD path: .$headpath." actual &&
+> -					grep "HEAD contents: .$headcontents." actual &&
+> -					grep "$orphan_hint" actual &&
+> -					! grep "$info_text" actual
+> +					test_grep "HEAD points to an invalid (or orphaned) reference" actual &&
+> +					test_grep "$orphan_hint" actual &&
+> +					test_grep ! "$info_text" actual
+>  				fi &&
+> -				grep "$invalid_ref_regex" actual
+> +				test_grep "$invalid_ref_regex" actual
+>  			else
+>  				# Unreachable
+>  				false
