@@ -1,74 +1,69 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2A23CD8DE
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 19:33:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4146E3E024D
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 19:36:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773430404; cv=none; b=asR2fpB2XUifQHWWaqGrkTCiUQ2Owcmqez8T3E5n5Tlnijc5Dzdad4b72VB+0bxGE9H5OZx3i1gy1GWADaYaDoH1AQmFqO4dVc3QJiA1yrusWpS6K8ryx1zMycm99QZ56PklcZkIsmtLG66b5GXLvL6kfZ9NC5cxT6HFu6WO0zw=
+	t=1773430587; cv=none; b=M2lSjJ8vaGdDEodkgj5fByUlu4T8VxINn34lQwQEW9XXtl0h/bVC16jyHbArgfB8NQ9Tlo6P0RkEWAyqo0wmq2/f2qZzpFzzl4h82HBfBh3LdGRYD9NBXDTzzoTfpVX2+7Z2UeiGX6+iiF4tiz5RIzlPrPnG7Ekv21dhuMuiw3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773430404; c=relaxed/simple;
-	bh=RVS3hFEUT6clvjYkP4wOwkkSCSFYuJU7azuqVZQ+wJ4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OC+NXDrZP8WfMeghvX6kWFdPzk2OL4qVg7RjNE5yY4vFp6esnDhKmc2o0A2tTqX5X7lNV70JuIuPk7Qc5aaGQvAC4iTwcrdozgfh++9MHQY6LyYZs4WDxlEf8JPM592vVK6U4BPJotZ3ns/K+xdFOr/Fnx6g0Gle59qvYl86bm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BL/6j3D2; arc=none smtp.client-ip=209.85.208.176
+	s=arc-20240116; t=1773430587; c=relaxed/simple;
+	bh=kFqc9LX5KfzzDp7zZRjETPKHtu4SgdVEkUgbNHwIsS8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dx3DGf+8ogcmih3jKyhPemJzb/sQnjJGO59cNWCPqNtnbbLt3e3u2fN5SbTH8vJYCflBRVMTel8qK2QU1JyczYuKDOAfBF2z3RoXre3uKlLnv122Orp6FKty9Y4RfgjJeRLSSNPEajVcVVK36Et+3x6q3cVdy4KdXcJaNXGm4WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NmVbWrTH; arc=none smtp.client-ip=209.85.222.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BL/6j3D2"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-38a2f92fab4so23184861fa.2
-        for <git@vger.kernel.org>; Fri, 13 Mar 2026 12:33:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NmVbWrTH"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cd80bea5f3so160398885a.3
+        for <git@vger.kernel.org>; Fri, 13 Mar 2026 12:36:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773430401; x=1774035201; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s/Y79CtS47szoamjCqK+e+yGIbP1aNpfio17xa4mLZQ=;
-        b=BL/6j3D2VTOjZg9VjpiEWpt3UDB5rmEIRUygJSZNOS39sH0/Z5NBzU/rCDIdpa5xHu
-         x/dbKNQNq4BmFpn83aTZVAPaVbN43hLN4MC0ULKvlZfC5y+SYL7YTtd0bv4zqdx8Mzo/
-         BbUtTBxIHSe6jYE2DwtN3fG9haGKDxHsP+riBlq7mKf9DfzSZVLD6OreQelfTzWdbkox
-         OTd/bvmVFsSWFbSvHiYwnvmoBw54jUkitPzWWYZYIml5iibp3gI/R7jgAKLqnHsGgZUQ
-         vmEuUEjJmpXpwqOE6YNerUAiVMKm5MQ7/HRt/hez7ccof0BqeZPxvxQO7OOues/iuy0a
-         6Nxw==
+        d=gmail.com; s=20230601; t=1773430578; x=1774035378; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SMNS6AGaAmgJEbtDsoIR2HHRh/neSAzvioDm4CZdMZ4=;
+        b=NmVbWrTHIzopqvA7Iw8tiXKoPnGF3eRzpoYfaJDy7WsVL0lbVYgodEN9drPnP6WMZa
+         fm2lBAi2b1U8WymzCytC4XE7DzI23rlazUmRmdja7X2zYtLIPSBlvBfAGbnIEsnjmZrj
+         oi4SMqvJ2VanO+gYJCRzmu6Qb8ireRhzzw5hMEm1+V5Wguy8touGmSGN+/E8e/W9J7pp
+         7UYvBfHL4EhScvghjWwF4pIu8tZ1PK5iAoFBPadWVQqRzlxjf2/yqgKK0t/0aKlW86be
+         eQzfHhMcnXLYph9HVoyO8QKTNs1HTJ5XXrh3AAM4DLon98gCTdb6beZ4iw/3udJFKXpB
+         OG4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773430401; x=1774035201;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=s/Y79CtS47szoamjCqK+e+yGIbP1aNpfio17xa4mLZQ=;
-        b=W5NWiYEUlafqWCv5TcQknLSivjPNap3KtBYYBA0cLsg0n7AuIC5VQ9WmfHSQO5tGEK
-         VkJ7KLJPsoEFPAAt372uMBRcLLi1f4PkkQVy4mW+vixxzFGdPMdkOBuzt27tlZRabyuC
-         rN/AV5oYZnmZRljZOuXWSVdFtxhWEbIePcfSg20bfMUoSbLOBF0Q9+ojR5pdN5f4mHv7
-         fQeKy1wAo/n60DyIVJXPQBC/FJbJd1IW8WKc1KAyYFSqr96o+cmEZ7MafnGy8HZ+BJhu
-         0pDLdbRFqOMsgC2icXo5Fg8O4fraIpIjN1ma5/doI4R2SlHEatJeny4az2ELCLqWH+WJ
-         RCAQ==
-X-Gm-Message-State: AOJu0YwLMBdzHBdF9LWo6DRwT9MtOnmuOg3nLf4Z3vPctwkfkbekc/sC
-	2RtpVaGofQWXmPiP9ZL/ucN/5gwuTcuMcvTMQofBxdkxDnkNjpfe7e9SzQqb1A==
-X-Gm-Gg: ATEYQzxww4oTYM+ChtcG6BnKBi5z7/yrYutAoyAkIs0CRvsfvKBfrnefoU4pvv4UUT/
-	aPDy9cnWR1E5Y5uSoy267ylXNrT4GqkzE/WwACs/eZnnqa1R7hoRFINI+0Q0mUc18nXiDdYviKH
-	OJQMjXqdvpflsklK1qZrgMZNHFnZSf8u2QO4qCT5CiK3ahw4LSp/4x720heE2+CobTqf6eRNnY0
-	IcRoiYoSSsFMsCkXGs9u6Nt3pu1pwdZP7dgcuYdltT8+d/UdyMIXXCDnE7yhFIGqx6XGbAxpbVe
-	11Nb7dYbbTJ28L/Kpf/AanPnom2ePTwCxNtSNFrQC0/q/x48QeXDwiknC3zS72JRHBhSBvckixf
-	1AOgfVhnu6AwIzpE23Ew2tYrr+egrUuFP8TFJjk03RhHEQw1fDxGWFVYEHJ+eOnyqcORUW1U0gk
-	HAzW43DcsIE75dZ7oQJIH+Ob/Tdc2MyIq6NkqeCGoAphIEcBW8M83QmQhFxSSZvGxv/9iWiy+Pw
-	sTvOLwjLfkGeO0o
-X-Received: by 2002:a05:651c:20db:20b0:38a:7a70:8702 with SMTP id 38308e7fff4ca-38a896994e4mr11395901fa.11.1773430401257;
-        Fri, 13 Mar 2026 12:33:21 -0700 (PDT)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38a8c8979d8sm5317681fa.40.2026.03.13.12.33.20
+        d=1e100.net; s=20251104; t=1773430578; x=1774035378;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SMNS6AGaAmgJEbtDsoIR2HHRh/neSAzvioDm4CZdMZ4=;
+        b=b+CN9z8htFzLUzWFlo+3q1/vEIaoJycW6thLg2oLkCAUdpZBaIU+0Qg5EoGZNN18Hh
+         GEfMfj8yVrzktE/z+sgKDf1kaMHTOimYCGkmpsS1bDx4hb370QHh5RIpFNo59zetEBAc
+         avm4OBzTV/RCwQ2UQqOy0GilZcHXL2QhXCnVaQQc/IfJofWdwHFpeq6Hf7fWwKpldt9f
+         RNe7BnSyf/wmz4nzLj9XpXNxcsbRPLKtG2i1LCiNj5QnTGTbK2MMCZbUWgqAy+Wg5Vrl
+         vbbNeqf7DyLcmwMrY9Vz7YW9IjD1ExSKKNpTebEI830FmftUo4PFqhoImz+PuvkQlzz3
+         lL4A==
+X-Gm-Message-State: AOJu0YyMyCD4RmwcBwADkqD+VZON/8vIjEwE1lLY8Gp4ag35zKw4o+mX
+	/n/J46BQUTRLFzxlIi67zywhxUhbMyqSkppJJaLVdnEuSDztBffvtYoHYKeoFw==
+X-Gm-Gg: ATEYQzxAETfSw0u5SiT+K+U9//sM0V/jbq3IbKba+2QY896v34BJcd7/v6h6hSO93KD
+	kt7rm1PIQU6fR7nMwTr6T1UAIU/EnmEqzhcLw2+bjUVTMY6m1V9kjh+cY9qOoDE7FPknGqW0jTC
+	jm0vFFsEeuu3b2MPS5Q0LYcV9MR0j0Wt0UWg0/hWVlaqmNEjlRdeMKp+eYmIpnUTEhQAqWGleeY
+	1URyvaGPDAYTiOuAujpakWLu7EMtgV9nTgOk3iO7qrNpXvuisxLNM045NRW52HF6VLV/0QnPv/X
+	bNqzD+ba1asDrTWOg1kicWYaY6/jZ+h+Uil+/B3fwej2A9Z6OxcgDxwUUcL53n1bxJfJDOnztyf
+	qhIyt9OPJFJfe6ec/prBjl5ehxz0hZHAswxvUtr1HGtkRBurb0NI3UF2SgQHY8lAVkpPZMftuJZ
+	GjH2ap1CxG8DUvI+D8GZuCQlF/YSNyTPruUimU59yCAzue4UOUYQ0NyZhNuQRV
+X-Received: by 2002:a05:620a:2802:b0:8c7:a84:d0e4 with SMTP id af79cd13be357-8cdb5a4c395mr627581485a.24.1773430577685;
+        Fri, 13 Mar 2026 12:36:17 -0700 (PDT)
+Received: from eju--20230906-5R2TJ ([74.15.89.125])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cda210daa1sm633711285a.26.2026.03.13.12.36.16
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 13 Mar 2026 12:33:20 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH] checkout: add --autostash option for branch switching
-Date: Fri, 13 Mar 2026 20:33:20 +0100
-Message-ID: <20260313193320.42832-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <xmqqv7ez6455.fsf@gitster.g>
-References: <xmqqv7ez6455.fsf@gitster.g>
+        Fri, 13 Mar 2026 12:36:17 -0700 (PDT)
+From: eric.peijian@gmail.com
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	jltobler@gmail.com,
+	Eric Ju <eric.peijian@gmail.com>
+Subject: [PATCH 0/1] Add "preparing" phase to reference-transaction hook
+Date: Fri, 13 Mar 2026 15:35:35 -0400
+Message-ID: <20260313193537.62827-1-eric.peijian@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,17 +72,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Almost all of the above is now stale, as we no longer call this the
-> "autostash" feature.  It turned into a project to vastly improve the
-> "checkout --merge" option, so the proposed log message needs to be
-> revamped to match.
+From: Eric Ju <eric.peijian@gmail.com>
 
-My feeling is that this feature will drift far away from what I initially
-needed. I have never used 'checkout -m' but stash->checkout-unstash is a
-pattern I use a lot.
+The "reference-transaction" hook currently exposes three phases to callers:
+"prepared", "committed", and "aborted". The earliest of these, "prepared",
+fires after Git has already acquired exclusive locks on every affected
+reference. This is well-suited for last-chance validation, but it arrives
+too late for any use case that requires coordination before locking, such
+as serializing concurrent transactions across distributed storage nodes.
 
-I wonder with how complicated this might turn out, if it would be better to
-have this as a separate feature called autostash (mirroring the same
-feature from git pull rebase which I have enabled).
+This series introduces a new "preparing" phase that fires before
+refs->be->transaction_prepare() is called, that is, before Git takes any
+reference lock on disk. Hook scripts that handle this phase receive the full
+list of proposed updates and may reject the transaction by returning a
+non-zero exit status, causing Git to abort cleanly before any locks are
+acquired.
 
-Harald
+The motivating use case is Gitaly/Praefect, GitLab's distributed Git storage
+layer. Praefect must serialize concurrent writes that target the same
+references across replicas. With only the "prepared" phase available, by the
+time Praefect can observe a transaction the locks are already held, making
+reordering impossible. The "preparing" phase provides the necessary
+pre-lock window.
+
+Compatibility note: this change is not strictly backwards compatible. Hook
+scripts that do not expect unknown phase strings may return an error when
+they encounter "preparing". We consider this acceptable for the same reasons
+cited when symref support was added to the hook in a8ae923f85 (refs: support
+symrefs in 'reference-transaction' hook, 2024-05-07): the hook is documented
+as exposing internal implementation details, and its semantics have been
+adjusted before. An alternative of introducing a "reference-transaction-v2"
+hook was considered but rejected as unnecessarily heavyweight.
+
+Eric Ju (1):
+  Add preparing state to reference-transaction hook
+
+ Documentation/githooks.adoc      | 19 ++++++++++++-------
+ refs.c                           |  9 ++++++++-
+ t/t1416-ref-transaction-hooks.sh | 30 ++++++++++++++++++++++++++----
+ t/t5510-fetch.sh                 |  7 ++++++-
+ 4 files changed, 52 insertions(+), 13 deletions(-)
+
+-- 
+2.51.0
+
