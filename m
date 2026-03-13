@@ -1,56 +1,56 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F0F1A6832
-	for <git@vger.kernel.org>; Fri, 13 Mar 2026 06:45:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A9B316199
+	for <git@vger.kernel.org>; Fri, 13 Mar 2026 06:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773384347; cv=none; b=WLL43qcaXE8FQL779V6P389Dd707L+UEc41shWs3BMNkJqw9XpJ9O61a+4pMFzfLyaE9JFEkBCGp4zGEYJ/j4aNpk0TfuYv+GNL1S16bK6HAQCwvKVG2ypursKkIbK021G84hpsGf9GPbaoulagC32vcsDgQio6tR4ByCm3Kb2w=
+	t=1773384349; cv=none; b=qvO9eIaR1Bl7E8AfgXzt11YbO3ByoPSm7DffV1VcLmK39CbYUdSTDDi3IZt3lvONwwKs08uCgKtnoxV0+jor/z5H0rbO4EdOnbbhMjJNX7ffv7Kjfd0yTmVoV5R7hUw53SgXLUUDcwk44QNk/4SdQhPGzoIDh6FUAUBlA9XRK2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773384347; c=relaxed/simple;
-	bh=8U/l9ym3m3p71TmRw62BLpCrmL/2aZoL9FNxuiA/ITc=;
+	s=arc-20240116; t=1773384349; c=relaxed/simple;
+	bh=5WKJnkPGgAAmt+/1VbykiLj7acBpJmJ7YlcwCkpUFww=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=scMV1c216+H4czbibQYzmbnX9+OuH+AZdWFGPDhPYuGL5WoF4eXL7uXDk+MZLO3IBji+devmKWoKsH8LS6h4Q+9cfP4QXSx/7L6KoKC7p/uDrycdJex8qHAftcYBOWedfJMMWzR6caZ0oAN+sabDkOsq4qB0PcqFG+PqVaNMzUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jgp6BQTd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GmRxKPBf; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=SC3tLQG3TEX41X6TrJNDpR54bpauyPZoOzy80nrUpkHq5KuznEwXl0wlil3NwXL/9JNE54ldoQLDHZw60whj9rMO8FJtBI4hUPtu/itqmNxEuFwhTxsUkj4H5kEDLWFVtTFDuOVM2hvpOFWmHTxWqEd2B80irb1RkyXWVeX8m78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XRGphCaL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lke8PdUC; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jgp6BQTd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GmRxKPBf"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id B75861D00126;
-	Fri, 13 Mar 2026 02:45:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XRGphCaL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lke8PdUC"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 29CD27A019E;
+	Fri, 13 Mar 2026 02:45:44 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 13 Mar 2026 02:45:45 -0400
+  by phl-compute-11.internal (MEProxy); Fri, 13 Mar 2026 02:45:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773384345;
-	 x=1773470745; bh=ir14Mg3oHXncJ00IUC+83dO3xCbqAiCMJvNAcaPN94s=; b=
-	jgp6BQTd8ZBdm7PE1MDNUY8rpKbZhs8854JYtUcPB7ycIyPu0W0lpeJskslY4q5e
-	RuJwrH6S18ygAHz/EMZOgkqc24pvRn3aU9Ho3uVSYYskjrKVQEEzA2DhmNPOdbde
-	zjDfncNWwlGT6S0daN/BwqsTIAzv7pb90iVjaoBLj7nabVr6OmztsomsI2GqLmB4
-	FOhtzIHhhb1vLf6UDyM7YaUI8E46GnzUeDAXAmW4h1eZKF35WRkJ+WofvUTp+baL
-	WGS1b3wnz1+xBmv5BhyRqWi6ogG506IoWBdCVN+ju0uG6WZpDGaadXFueMCR/LXv
-	b+9xa0MfvtcZwgU8Sv7mKw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773384344;
+	 x=1773470744; bh=HCPMJOhr/AAIz4lE80lPIx5Wsuz1zLbir7KEr+4zfy0=; b=
+	XRGphCaLyFrXQ3GhxwZHIobSGkLHJYHvfknxrawTGi5PyrUIQou9sHDrRrpq/sRc
+	YrbkENu0zGWr7ePODBk2Os/sHtZD+7wx2iP0U2CxNreZGPp2TLbJqTmpeiQSqRDP
+	C0ktazpSB/7gD7EFTur2ST+t11Xs0raS752J5KM8sG6fnXJOIt1XCgbM17c2HmDT
+	1clWYkyRrNSMcA30CiuMQlHC2aad4OIyz/SqXWA3d6JO4wvjnAfB9hQc6dr8LFng
+	g4s72IqzXKjflOdiB/ELINIDuRZ9AJm1uOTHKUMrnI/MOiH0/ixGEHVud6t0UEPP
+	TMGl8WEnpqrpzxSQiqVP5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773384345; x=
-	1773470745; bh=ir14Mg3oHXncJ00IUC+83dO3xCbqAiCMJvNAcaPN94s=; b=G
-	mRxKPBf1p9gRdI85JT7LWF5wnBWtOH3sf0avNv1Uhn95MENo+NDZaneREQC+jBf5
-	KCT122gMRHUBJd09nGJ4p4wvfFP1FsYZon6q8kwfb2RvkmXV4o19DjuEqRriIAg2
-	ktBljDSqDtFKSmnyv8rlwRvIhoYfKJo8S+Qp8okLIX9wQfhF3MRXe2KFJSg2WFFk
-	jDz4QL6PPQkbmAy9sjDK8p1PBZzzH2ThGgVSxmGoZxBGWlCtvYMSdpYHDZioLfQx
-	TWTdURIhoHipTBOVhRBQ7LSOQsw3BdB6tr3a2b9SaXUvyiQ1TQVHsB2OAz+6mgHk
-	JL30XpFz8iACjv/UsgrVw==
-X-ME-Sender: <xms:mbKzaavOuVAfAmK5nPcWWaQUdbzB8tk3ymviYe6cHvrRS5sRoNYh8g>
-    <xme:mbKzaa8zgcHSG12fAYgsnch3DOnTlIGMy7u1tZJYwdSdub5cuF82TrZFxV4_FKM1T
-    6aYtwnpzXtiMUuFJc0d5MxK5sgXesvdIOT5JoA57mo4YQHecUTF-A>
-X-ME-Received: <xmr:mbKzacNlZ2WMA0MpMZ67P15jik0jRAYwhzrIHv3Z9dW_P45VxYfZCwQhY666Atfsd9Nd_aXJp3YEWsVmYeTfHrdISCWd9T2nPIH6NCegmA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeekleekucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773384344; x=
+	1773470744; bh=HCPMJOhr/AAIz4lE80lPIx5Wsuz1zLbir7KEr+4zfy0=; b=L
+	ke8PdUCLOXZTvK5Khg4wsYmsEwzeDIeaVwQ3xWCwwGA8I99YWIJQ44GzHhtFFXh1
+	dXeYZOSbSirDb7wauu6F7BezqdFoPUpdeWJpOPBGToFBcJyOESjRuDdYCflhqDLQ
+	9ZrEtYYH1d6sskaJF6H3xEUqGY7p1JAksMbYBt1qs3XLizkmuD804qhHxFs1GEb5
+	YZhQ7jBbjCUF6gG1SKpwJuEazUJgBqIlfYEqy68ly6cBvxjpZkawEqOpkv46MxcP
+	gNpfFZeELgQiAdRONc7W81tL39SasDiCZURGg7BnLLWX1n5B7Fe9Ox34Hy6OEaI0
+	IoYPk04yIAKUZ3P3byKRw==
+X-ME-Sender: <xms:l7KzaTTeVzGT-03_bVcaEEcCWk6i8uqnTQ2Y8S0ztCO7xy-EK9XiJQ>
+    <xme:l7Kzabo6Kf_rxXIiMuenXL6D4zaGPGx7qUpl0jOxZAxz4swZDbuPe_QlpQCJ2pb45
+    hYbUA9qVh_fi625g5QQ-RktGiKO172xqL4cocFhjktKyF41lxCl>
+X-ME-Received: <xmr:l7KzaRKw28EemOqITcJ-zLEEKTZo1VC_2J_kbyPAZdATvepuhFYqwd6PszSSZLRMTASjEzTnYA9N0fs-RgL71WwRxRxYVp2px6Dlplu8Ew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeekleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
@@ -58,25 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeekleekucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhhsmhhilhgvhiesghhith
-    hlrggsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehsrghnuggrlhhsse
-    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:mbKzaQFDTTFEedA2Stqlm-fJxS3_qVoCY2m3qRLGztq8cPURLbKqow>
-    <xmx:mbKzaSTHAA-XNVB-pvRmTNshwuJAcS8VN7p8ku88ZmFQV2EgQWvtKQ>
-    <xmx:mbKzaVtqqDkvzkIS-JhGwMG9i8JAT5-0hCIUUrHfqdrzrfjdxCadkA>
-    <xmx:mbKzaSJMmMmAU6F_I3ae7iOjhvLZS3UAcaVfTnEB-diUXuxB0duZDA>
-    <xmx:mbKzaU4epv4zmy7ybZicZ66312JOW6p-GXiz16gMJiPoSdRk2vP4xflQ>
+    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgurghlshestghruh
+    hsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepmhhsmhhilhgvhiesghhi
+    thhlrggsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehjiehtsehkuggsghdrohhrgh
+X-ME-Proxy: <xmx:l7KzaepN81yaPa_XQr0J0GWyAllZUqE-lvabvaamvq-oaO-OXJf9JA>
+    <xmx:l7KzaZwlZiAoPGBY7CWAG7HvR76CyGareNpK4ez2wHiSDixbuYFndg>
+    <xmx:l7KzaSOFFIkJrCbxAXiwqvu0dWwRahuXphT2xnqcyyi_ezCFBI7MrQ>
+    <xmx:l7Kzae5p1zlMMtrgcXU5KU4epf6Ka7KRlgY16lMmiaVcCGj1wsYIIg>
+    <xmx:mLKzabLzBhXxqZSX9ARlYMcpfPviqWipKjECR8SoWaofR__zNQ2zymaK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 02:45:44 -0400 (EDT)
+ 13 Mar 2026 02:45:42 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dcbe6191 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Mar 2026 06:45:44 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 7bc4c7fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Mar 2026 06:45:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 13 Mar 2026 07:45:21 +0100
-Subject: [PATCH v4 10/10] builtin/pack-objects: reduce lock contention when
- writing packfile data
+Date: Fri, 13 Mar 2026 07:45:20 +0100
+Subject: [PATCH v4 09/10] csum-file: drop `hashfd_throughput()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260313-pks-upload-pack-write-contention-v4-10-7a9668061f7f@pks.im>
+Message-Id: <20260313-pks-upload-pack-write-contention-v4-9-7a9668061f7f@pks.im>
 References: <20260313-pks-upload-pack-write-contention-v4-0-7a9668061f7f@pks.im>
 In-Reply-To: <20260313-pks-upload-pack-write-contention-v4-0-7a9668061f7f@pks.im>
 To: git@vger.kernel.org
@@ -94,95 +93,95 @@ Cc: Matt Smiley <msmiley@gitlab.com>,
  Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
 X-Mailer: b4 0.14.3
 
-When running `git pack-objects --stdout` we feed the data through
-`hashfd_ext()` with a progress meter and a smaller-than-usual buffer
-length of 8kB so that we can track throughput more granularly. But as
-packfiles tend to be on the larger side, this small buffer size may
-cause a ton of write(3p) syscalls.
+The `hashfd_throughput()` function is used by a single callsite in
+git-pack-objects(1). In contrast to `hashfd()`, this function uses a
+progress meter to measure throughput and a smaller buffer length so that
+the progress meter can provide more granular metrics.
 
-Originally, the buffer we used in `hashfd()` was 8kB for all use cases.
-This was changed though in 2ca245f8be (csum-file.h: increase hashfile
-buffer size, 2021-05-18) because we noticed that the number of writes
-can have an impact on performance. So the buffer size was increased to
-128kB, which improved performance a bit for some use cases.
+We're going to change that caller in the next commit to be a bit more
+specific to packing objects. As such, `hashfd_throughput()` will be a
+somewhat unfitting mechanism for any potential new callers.
 
-But the commit didn't touch the buffer size for `hashd_throughput()`.
-The reasoning here was that callers expect the progress indicator to
-update frequently, and a larger buffer size would of course reduce the
-update frequency especially on slow networks.
+Drop the function and replace it with a call to `hashfd_ext()`.
 
-While that is of course true, there was (and still is, even though it's
-now a call to `hashfd_ext()`) only a single caller of this function in
-git-pack-objects(1). This command is responsible for writing packfiles,
-and those packfiles are often on the bigger side. So arguably:
-
-  - The user won't care about increments of 8kB when packfiles tend to
-    be megabytes or even gigabytes in size.
-
-  - Reducing the number of syscalls would be even more valuable here
-    than it would be for multi-pack indices, which was the benchmark
-    done in the mentioned commit, as MIDXs are typically significantly
-    smaller than packfiles.
-
-  - Nowadays, many internet connections should be able to transfer data
-    at a rate significantly higher than 8kB per second.
-
-Update the buffer to instead have a size of `LARGE_PACKET_DATA_MAX - 1`,
-which translates to ~64kB. This limit was chosen because `git
-pack-objects --stdout` is most often used when sending packfiles via
-git-upload-pack(1), where packfile data is chunked into pktlines when
-using the sideband. Furthermore, most internet connections should have a
-bandwidth signifcantly higher than 64kB/s, so we'd still be able to
-observe progress updates at a rate of at least once per second.
-
-This change significantly reduces the number of write(3p) syscalls from
-355,000 to 44,000 when packing the Linux repository. While this results
-in a small performance improvement on an otherwise-unused system, this
-improvement is mostly negligible. More importantly though, it will
-reduce lock contention in the kernel on an extremely busy system where
-we have many processes writing data at once.
-
-Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/pack-objects.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ builtin/pack-objects.c | 19 +++++++++++++++----
+ csum-file.c            | 16 ----------------
+ csum-file.h            |  2 --
+ 3 files changed, 15 insertions(+), 22 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index f5cb80e870..59876b024d 100644
+index c1ee4d5ed7..f5cb80e870 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -41,6 +41,7 @@
- #include "promisor-remote.h"
- #include "pack-mtimes.h"
- #include "parse-options.h"
-+#include "pkt-line.h"
- #include "blob.h"
- #include "tree.h"
- #include "path-walk.h"
-@@ -1332,14 +1333,17 @@ static void write_pack_file(void)
+@@ -1330,11 +1330,22 @@ static void write_pack_file(void)
+ 		unsigned char hash[GIT_MAX_RAWSZ];
+ 		char *pack_tmp_name = NULL;
  
- 		if (pack_to_stdout) {
- 			/*
--			 * Since we are expecting to report progress of the
--			 * write into this hashfile, use a smaller buffer
--			 * size so the progress indicators arrive at a more
--			 * frequent rate.
-+			 * This command is most often invoked via
-+			 * git-upload-pack(1), which will typically chunk data
-+			 * into pktlines. As such, we use the maximum data
-+			 * length of them as buffer length.
-+			 *
-+			 * Note that we need to subtract one though to
-+			 * accomodate for the sideband byte.
- 			 */
- 			struct hashfd_options opts = {
- 				.progress = progress_state,
--				.buffer_len = 8 * 1024,
-+				.buffer_len = LARGE_PACKET_DATA_MAX - 1,
- 			};
- 			f = hashfd_ext(the_repository->hash_algo, 1,
- 				       "<stdout>", &opts);
+-		if (pack_to_stdout)
+-			f = hashfd_throughput(the_repository->hash_algo, 1,
+-					      "<stdout>", progress_state);
+-		else
++		if (pack_to_stdout) {
++			/*
++			 * Since we are expecting to report progress of the
++			 * write into this hashfile, use a smaller buffer
++			 * size so the progress indicators arrive at a more
++			 * frequent rate.
++			 */
++			struct hashfd_options opts = {
++				.progress = progress_state,
++				.buffer_len = 8 * 1024,
++			};
++			f = hashfd_ext(the_repository->hash_algo, 1,
++				       "<stdout>", &opts);
++		} else {
+ 			f = create_tmp_packfile(the_repository, &pack_tmp_name);
++		}
+ 
+ 		offset = write_pack_header(f, nr_remaining);
+ 
+diff --git a/csum-file.c b/csum-file.c
+index a50416247e..5dfaca5543 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -197,22 +197,6 @@ struct hashfile *hashfd(const struct git_hash_algo *algop,
+ 	return hashfd_ext(algop, fd, name, &opts);
+ }
+ 
+-struct hashfile *hashfd_throughput(const struct git_hash_algo *algop,
+-				   int fd, const char *name, struct progress *tp)
+-{
+-	/*
+-	 * Since we are expecting to report progress of the
+-	 * write into this hashfile, use a smaller buffer
+-	 * size so the progress indicators arrive at a more
+-	 * frequent rate.
+-	 */
+-	struct hashfd_options opts = {
+-		.progress = tp,
+-		.buffer_len = 8 * 1024,
+-	};
+-	return hashfd_ext(algop, fd, name, &opts);
+-}
+-
+ void hashfile_checkpoint_init(struct hashfile *f,
+ 			      struct hashfile_checkpoint *checkpoint)
+ {
+diff --git a/csum-file.h b/csum-file.h
+index a03b60120d..01472555c8 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -63,8 +63,6 @@ struct hashfile *hashfd(const struct git_hash_algo *algop,
+ 			int fd, const char *name);
+ struct hashfile *hashfd_check(const struct git_hash_algo *algop,
+ 			      const char *name);
+-struct hashfile *hashfd_throughput(const struct git_hash_algo *algop,
+-				   int fd, const char *name, struct progress *tp);
+ 
+ /*
+  * Free the hashfile without flushing its contents to disk. This only
 
 -- 
 2.53.0.904.g2727be2e99.dirty
