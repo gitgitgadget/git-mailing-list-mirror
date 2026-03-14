@@ -1,53 +1,53 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF9D2253FC
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 00:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54677239E7F
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 00:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773447729; cv=none; b=Is4nQekRjjYT9hpbyk6Tbh2nP+RP0jRA24Y7QWbym7nPK6Pr7o7MPl306gKFPdLWlJjgcfEhsTzBcaKltoj7bdUCVY8nmBKvCOIHAXNvbx9SM5yfDV1dZPP1eJFIgGdQuo+sYYM8cLo0/Xbrjue3e6DsOaSw5Ap773H81pdnd20=
+	t=1773447736; cv=none; b=sse8as597JXvHAg7Mzkr7zKmFHecQqaFpsLWujN1RI8uZe93KW5x7URrxGz8JCr4PN/Vm9w/huEj/TlcCmE4rzf06yXlP9MWIP3JPQ1YQMO/uxIYi0+PXzNRJUrjuRZSwRiS7VigKNPCV/Lzt9+n3eddwDcUwtH+x7Td4z/jOfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773447729; c=relaxed/simple;
-	bh=H/AlD3uj2GT1EMjJYwBmLOf5U0KOQfBatBwa8KCrcBc=;
+	s=arc-20240116; t=1773447736; c=relaxed/simple;
+	bh=4vTFyDaPA403nZPwimynycxuZhcy2yrJ4OYGJJ2AG0w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XEWmfn1MunD4/dTHOC8H3p0fVjce2NnpOz41A0Dt3qA9HYcfMAz4W9ERWU+uvfiBKryyABPplbopaGacCXzjG+3ddVL+0Ev2/uLgdJW0Z3T1ntJ0EuCO9HqestGl206/5GrdsIiCgB7IDng6xxQoaUy/vi7JSwH75eR6eS2QwZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LEp413Fq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oRuwQ0Y9; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=lis2cCujFUuybSSYEwkqdAl9mrgL6rq2v1qXV/V0+hXWlzHjQgtkR/1blNlyDJ1KppKiSTNUvTLPZPOrGxCCI6jwYSo1x8OIK+ZimS5hWbx1Mdfj3deNMEJERFjqnZ01diB6wR304wHFLVVGyye2eKZHLYZldas2IpYnAvOQfAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dRDL4e8e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EAYZ4gDM; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LEp413Fq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oRuwQ0Y9"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id B69E31D00136;
-	Fri, 13 Mar 2026 20:22:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dRDL4e8e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EAYZ4gDM"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id AF1201D000D1;
+	Fri, 13 Mar 2026 20:22:14 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 13 Mar 2026 20:22:07 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 13 Mar 2026 20:22:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773447726; x=1773534126; bh=ZH64APEusK
-	gkZPLGn4yWC+Xz1hZMG6xZeETZkq/cCl4=; b=LEp413FqIb1QLHXb5ycOBV5Vhe
-	oOCLl8qOtXYK14JbRl+9Eug/EgC4IuNSUobx6heeFjBx+XEpgqlAoXRrlIaQc2+c
-	xZraLCmokkOD9IeaxkQlnnJQhlJoPu/yoOsDtQDaJ/Z+2bcCIN2F0vEwoyzmyd5/
-	/9ZbE2i1r9TtbBfC6CdpjqXyrz2nfXIhYHhwtappjgls3I8M97SqoOZyfMNExSPr
-	Lf6f9mqwRC23VLPeEU2qqDjRYSfB2WvL4Y+5uB+8+R4J5ZZujH2jxSpV6b5KBWdF
-	OYKdEQLTfHbBOlfFxZoNV/iFAVxJZ/sssxVDiE9JB6cCA+0YXQtluRKZrRVQ==
+	:subject:to:to; s=fm3; t=1773447734; x=1773534134; bh=/g6Fi3PqUC
+	G47NxUiIYQlMytRe65apqVx/RNoy2erk4=; b=dRDL4e8eYHAmhSF40URrKByp9b
+	8pNvRt2OKJo3O5NdPcbKtRz24U9IbE2vUKrWrSFZKCfpMOb3YpE3xT98T/AWyiB3
+	8DEgtVY7Nr5jJznbgnKNQipgFGpvBX1HVzySswxtSahg6GJOLwnpvB7N5OyiubC4
+	XZdOZ8ubZWlI0OODaKqsEaeLaHK0/4zSLxkx9bo6PZU3GnbTHJEWNtaWdAm8J1qC
+	XRr1q2BfMEzo9m9Ogpb7MKSm96yp4IU75XnyBMnN+xtsQJDeXJvYXgYB0jgj++TX
+	DfKFSiV2sjes/Fcx9jILlb1UOyovK6N5zTYO6WqiT9Zn2QDxViWCUNq4BrKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773447726; x=1773534126; bh=ZH64APEusKgkZPLGn4yWC+Xz1hZMG6xZeET
-	Zkq/cCl4=; b=oRuwQ0Y97XBS0LhFcIkpxnn8t+/A/fuBKdGbQ9Bgx/E6zEP2poa
-	rz4bVuy8UA9GwCkM3W5FeDWSD0nRhHNJ0wdQBwv4faF3KgQf+tBGNplBpTQsxyzY
-	+PHQxKyYS5lkQPa95bEWLvReDDZtOjo4/Q4a4d8BGNyqMHeJNJpwSYLO93dQW5gH
-	R2P/N/xldQlMmqo2jUhVD68fYg4bfSMnepKMoCYs07ubnTSeFFPz2IC07AiXneZE
-	AT6JTnlsRqiXneOdyDwCsynFSxAe9yJH0dCePZfwEGVG/Qn/yGFhGZQlRAdpTAwx
-	NO7p6Yp1mJALw8xshHxWjj2aQfTxvJ09Z1Q==
-X-ME-Sender: <xms:Lqq0aYTrsRNM78BGq3awpdIq66JiYRpQgOSzgTWLN8cUqSLweFY8AQ>
-    <xme:Lqq0acyfODVFbqwVJ1mvpCKXPpkAxcFaxINI0jH2Gs5fFogED93mVh8HZBvO-h2hD
-    zfQqqCIIBDZQAPjCShgWjSpdxddzKwK5NF8dcq2muZXKPfjsca085g>
-X-ME-Received: <xmr:Lqq0aa1fpy5iloH7pNrpUbj7EF1wHJ48h4Kd-V_clZGAXTeo1MMZpFQ6Tgs8eohYdPVS2EvJ1zsCe2T_wt6hp_wF82k8_e7Xfw>
+	1773447734; x=1773534134; bh=/g6Fi3PqUCG47NxUiIYQlMytRe65apqVx/R
+	Noy2erk4=; b=EAYZ4gDMiSQEugZS4O9kt0hXFywGQLCtxK7+U/Ep2GGTMOwCCFV
+	jKW5ApJShBfzD2fhMZKMFu1vbWLTTW+80FUUY2hl47PlohmS4/jXAOdIGNMmgQWO
+	3BPQ/IondZ9JQ+pgXuRdbzFcAW4V1N0qXY43hDwG14bRzKfWo7EjeYM/ugSb1R96
+	qkLEVlYEq6SRO6IQOaxcUHg9wNek63dyPspsFhIvSkicPLINgwy8epX/vtIoax7c
+	cDLh5/xVrplXotjjiJdcRvpKOwhugr3UROdPDqL5aDHEgbBVZQuAxU6cDDAMU/5c
+	q1Azu634fhxzlQrwjwiV/C41mHqF1pzNW8Q==
+X-ME-Sender: <xms:Nqq0aamODYb5X4JD11mci8ytqvp5e774ZFInUKAfoCdQ8ZLelJiqzw>
+    <xme:Nqq0acahp8EgmmHMMsvLB6FiXty_n_Kss_aTkuf7kugqurHtGCHWZ-65J26G0TMsa
+    7n_gS-IsVRyK5x9jYObOliIqMJic9i6sLPwHm05v0CYZ3fRVlThPtc>
+X-ME-Received: <xmr:Nqq0aVPTX78N3fXhmNGcHS1zfQbyAt4AxgXoOge1WxqZCHICAopUUd4bneJqZYgsWlyNhkd8ZKYLaLgVGBaZJslwAycxsGr3tg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleduuddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
@@ -60,25 +60,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleduuddtucetufdote
     hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgr
     uhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
     homh
-X-ME-Proxy: <xmx:Lqq0aa441U9t_SjGU9SI8w988rOmgUdR3pl5aPNUNadNhBNwNfI4rw>
-    <xmx:Lqq0adWrXmDdS3vWcZdG3TRFhJgM2wfDWaQeZybBJ2X0QoGXTKW9AA>
-    <xmx:Lqq0aZDVooNiEfpYuqdFXu_jRA0bVk9r9PzoUsPQ80mO1cmpF_XvMA>
-    <xmx:Lqq0ac5h36Bb75oJHNNhZ5hzjqeMv8YIi6oVisfcIpx3DSRTq4Jvfg>
-    <xmx:Lqq0aZcu10giFwVPXxmXAqrTQyG_BsGNlaYrenKhLXrEg8WOoboVnMJp>
+X-ME-Proxy: <xmx:Nqq0aRbCbgtROddVRc0ndQ4FjUYqht7LPgqkKRU6YldKbbL8XYbFiA>
+    <xmx:Nqq0aT21Zq_-T-sSA5ADIe0IE8nS4qT7ctBxRZEMN3Qx4ODgbBumQg>
+    <xmx:Nqq0aXcMt3dvlMA-OOaTf4SDKigTGBR914mHSTK2HuSZCJG-nZZ8hQ>
+    <xmx:Nqq0aUEfBDlxjXp59aMCjxQmhWNy-1NGOMwCy9D5qqihMd0vzLzA6Q>
+    <xmx:Nqq0aZ8H_rOL5LW3jlOcqJOIecUdiAH8tNU87tbo0_JG0B6g98Dwb2QB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 20:22:05 -0400 (EDT)
+ 13 Mar 2026 20:22:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: kristofferhaugsbakk@fastmail.com
 Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 1/2] name-rev: wrap both blocks in braces
-In-Reply-To: <name-rev_braces.4ae@msgid.xyz>
+Subject: Re: [PATCH 2/2] name-rev: learn --format=<pretty>
+In-Reply-To: <name-rev_--format.4af@msgid.xyz>
 	(kristofferhaugsbakk@fastmail.com's message of "Fri, 13 Mar 2026
-	17:03:37 +0100")
+	17:03:38 +0100")
 References: <CV_name-rev_--format.4ad@msgid.xyz>
-	<name-rev_braces.4ae@msgid.xyz>
-Date: Fri, 13 Mar 2026 17:22:04 -0700
-Message-ID: <xmqqeclnz2dv.fsf@gitster.g>
+	<name-rev_--format.4af@msgid.xyz>
+Date: Fri, 13 Mar 2026 17:22:13 -0700
+Message-ID: <xmqq8qbvz2dm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,22 +90,145 @@ Content-Type: text/plain
 
 kristofferhaugsbakk@fastmail.com writes:
 
-> -		else if (++counter == hexsz &&
-> -			 !ishex(*(p+1))) {
-> +		} else if (++counter == hexsz &&
-> +			   !ishex(*(p + 1))) {
->  			struct object_id oid;
->  			const char *name = NULL;
->  			char c = *(p+1);
+> diff --git a/Documentation/git-name-rev.adoc b/Documentation/git-name-rev.adoc
+> index d4f1c4d5945..8f050cd4763 100644
+> --- a/Documentation/git-name-rev.adoc
+> +++ b/Documentation/git-name-rev.adoc
+> @@ -9,7 +9,7 @@ git-name-rev - Find symbolic names for given revs
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git name-rev' [--tags] [--refs=<pattern>]
+> +'git name-rev' [--tags] [--refs=<pattern>] [--format=<pretty>]
+>  	       ( --all | --annotate-stdin | <commit-ish>... )
 
-You are correcting "p+1" to "p + 1" to honor our coding style in a
-few lines above "while at it", but there are three others in the
-same block (we can see one of them in the post-context), which means
-these are now inconsistent.  Fixing all of them would make it a far
-larger change than qualifies as a "while at it" change.  Either make
-it another step that is an unrelated clean up, or leave it as-is.
+We acquired a new option.  Do we need a matching change to
+the contents of name_rev_usage[] array?
 
-The primary thrust of this patch does make sense and is executed
-well.
+> +--format=<pretty>::
+> +--no-format::
+> +	Format revisions instead of outputting symbolic names. The
+> +	default is `--no-format`.
+> ++
+> +Implies `--name-only`.
 
-Thanks.
+If it is implication, would 
+
+    git name-rev --format=reference --no-name-only
+
+do what is naturally expected?
+
+> @@ -462,6 +472,25 @@ static const char *get_rev_name(const struct object *o, struct strbuf *buf)
+>  	if (o->type != OBJ_COMMIT)
+>  		return get_exact_ref_match(o);
+>  	c = (const struct commit *) o;
+> +
+> +	if (format_ctx) {
+> +		strbuf_reset(buf);
+> +
+> +		if (format_ctx->want.notes) {
+> +			struct strbuf notebuf = STRBUF_INIT;
+> +
+> +			format_display_notes(&c->object.oid, &notebuf,
+> +					     get_log_output_encoding(),
+> +					     format_ctx->ctx.fmt == CMIT_FMT_USERFORMAT);
+> +			format_ctx->ctx.notes_message = strbuf_detach(&notebuf, NULL);
+> +		}
+> +
+> +		pretty_print_commit(&format_ctx->ctx, c, buf);
+> +		free(format_ctx->ctx.notes_message);
+
+Is free() the expected thing to do here, or FREE_AND_NULL()?  Unlike
+callers like log-tree.c:show_log() where a context is prepared, used
+once, and then discarded, format_pp is initialized in cmd_name_rev()
+once and then repeatedly used by show_name() potentially multiple
+times, so there may be a risk of getting confused by this leftover
+non-NULL pointer that points at an already free'd piece of memory.
+
+Or there may not be---I did not check, but you as the author must
+have already checked, hence this question.
+
+> +		return buf->buf;
+> +	}
+> +
+>  	n = get_commit_rev_name(c);
+>  	if (!n)
+>  		return NULL;
+> @@ -479,6 +508,7 @@ static const char *get_rev_name(const struct object *o, struct strbuf *buf)
+>  
+>  static void show_name(const struct object *obj,
+>  		      const char *caller_name,
+> +		      struct pretty_format *format_ctx,
+>  		      int always, int allow_undefined, int name_only)
+>  {
+>  	const char *name;
+> @@ -487,7 +517,7 @@ static void show_name(const struct object *obj,
+>  
+>  	if (!name_only)
+>  		printf("%s ", caller_name ? caller_name : oid_to_hex(oid));
+> -	name = get_rev_name(obj, &buf);
+> +	name = get_rev_name(obj, format_ctx, &buf);
+>  	if (name)
+>  		printf("%s\n", name);
+>  	else if (allow_undefined)
+> @@ -507,7 +537,9 @@ static char const * const name_rev_usage[] = {
+>  	NULL
+>  };
+>  
+> -static void name_rev_line(char *p, struct name_ref_data *data)
+> +static void name_rev_line(char *p,
+> +			  struct name_ref_data *data,
+> +			  struct pretty_format *format_ctx)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+>  	int counter = 0;
+> @@ -532,7 +564,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
+>  				struct object *o =
+>  					lookup_object(the_repository, &oid);
+>  				if (o)
+> -					name = get_rev_name(o, &buf);
+> +					name = get_rev_name(o, format_ctx, &buf);
+>  			}
+>  			*(p+1) = c;
+>  
+> @@ -567,6 +599,10 @@ int cmd_name_rev(int argc,
+>  #endif
+>  	int all = 0, annotate_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
+>  	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
+> +	const char *format = NULL;
+> +	struct rev_info format_rev = REV_INFO_INIT;
+> +	struct pretty_format *format_ctx = NULL;
+> +	struct pretty_format format_pp = {0};
+
+Hmph, would we want to use the full init_revisions() instead of
+static REV_INFO_INIT that initialises a lot more members of the
+struct properly, most importantly the "repo" member that points at
+the repostiory to be used?
+
+> +	if (format) {
+> +		struct pretty_print_context ctx = {0};
+> +		struct userformat_want want = {0};
+> +
+> +		get_commit_format(format, &format_rev);
+> +		ctx.rev = &format_rev;
+> +		ctx.fmt = format_rev.commit_format;
+> +		ctx.abbrev = format_rev.abbrev;
+> +		ctx.date_mode_explicit = format_rev.date_mode_explicit;
+> +		ctx.date_mode = format_rev.date_mode;
+> +		ctx.color = GIT_COLOR_AUTO;
+> +		format_pp.ctx = ctx;
+
+Why does this code initialize and assign to a on-stack ctx first and
+then assign it to format_pp.ctx, instead of working on format_pp.ctx
+directly?
+
+> +		userformat_find_requirements(format, &want);
+> +		if (want.notes)
+> +			load_display_notes(NULL);
+> +
+> +		format_pp.want = want;
+> +		format_ctx = &format_pp;
+> +
+> +		data.name_only = true;
+> +	}
+> +
