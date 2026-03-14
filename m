@@ -1,364 +1,121 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B99A285CBA
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 14:38:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DF72FD660
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 16:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773499122; cv=none; b=aM/smlfPIby/wKFHgeNUyr1oVTLPaee9O6OZdz4fxy82huoEl/Wj2YKmrp3EIdoNQmd7/jpUcn1z0OrEV5/843iba4ckf1zg14kvcd4DnD0mKh53XCuTy5PLk4+V7GClC9mlRKdfTSzpU2h7o/afPLt1r4dtB38RbvAEZ8bK71U=
+	t=1773504504; cv=none; b=Rlii+P1TKt74r7SobyeXhlag3Km8GAiv5h/Yew9pgIUGA/t0kGkCIVo4JlSxWFkSnO/BhbR7CYKc2lLJRPStduuNjpyddtZPtWZLnFOIjMcoMzdaoddweb1jU1UjaAltoc7c1FtuLypse1CFRnk1W0UVvoPNmrhD6w/l74va+Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773499122; c=relaxed/simple;
-	bh=Di5EfXbrZURntXP5mMFQeGevLpIbl8YcTQ4Pjg/6now=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NUBRfZo/XrXyooCGOStnKzB9aOihH9AvO+ov0jq6NODbv1q+0hO3gKXxiF4e7G5NhRLPpJq/6LE29WuMXUhpfrhFyUTJtGOh/dkYIHiqPEWMXVIggGleI9+zM99yRMcCoZbVYboCdcypXOvwm2eD9IPAK09nonIQaWiriXVjNcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JPCTA0py; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773504504; c=relaxed/simple;
+	bh=tUVzb+hUVOLRb2DttJTOa8x2j5UowxwGwwPHHwDItw4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ctoOgWt56plX2SxYaZUI7+6z/+Bx2P9tijxo4aoktZKCfY2HVp9QEajHph1nNgMZG4mPx/+kj4cDqzPWOjK3Lf5Bc8ax2PGUpNLIlIa/D90pGv07HRGdkP8iS7Fy4aIG7EF705eRphTedOZ5DDqMW0lUb1AhJbrdI9P/CUn/xVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XQj2UQRL; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JPCTA0py"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-7985ce90542so31050387b3.0
-        for <git@vger.kernel.org>; Sat, 14 Mar 2026 07:38:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773499120; x=1774103920; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KyNq/LGEfM8KBuqXtE8eYDoWiiNMqQJORZ8ZJCpFsqA=;
-        b=JPCTA0pyeCuuhOnQ5eFbJoiyKAOxrD7u5oV+u3iZWok+cgd2ClVKajEV9RYd0W2cw8
-         +8QQCy0YL5CulSFyBWY0skv8OtEHBDJbcLm5zcs7UmgZiSWRnbOZHHnV60guMOBxw5Bu
-         8CdY1XNXymAo4j3eTkV31yY64ACV4NRG1qrw89IRphiiPrBBD0Qu2kUZvmmX4BEX4sR0
-         jQsGiboq5njsVeIeGU3Q24F37Zx/xY9sJH4KhZM+pJCAEkNOJDpk1r3bcLATBinAV11R
-         /1dsCCXruzC7nvj+enyvVLpIspoFOzMwRvUjIVk1TKOF5kY1UaAw3gyLtkCIW171MNSv
-         Igfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773499120; x=1774103920;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=KyNq/LGEfM8KBuqXtE8eYDoWiiNMqQJORZ8ZJCpFsqA=;
-        b=IBq1eO/fGl73ejR3ToS7hQcem1JowbKESp1b36R7TBUpWXdPOzOCIfzE7rpJHSsq9c
-         vUpph9Hb+KqAHCWou3jY0ntvLpIOZm6irCguQd4GA8RdSyEEyMfamJJ+Kv1twInQaFar
-         OUDAmXbHuSziCvJyB5L66N6N3zkOLBRNJ3JhWazsT4pgThHywINLRFNZkw+nqmsfCXNj
-         qYh+8wWaKggK0dW7H6O4NO0yl7ewdz3JbbtVLAwaITR3nbx/kSeBaelh7Mh9KBQTDXMy
-         kASytmy9Gqd4lqiVNZZSolnGpoz3wlmLmBqgxkzpqOGj6NMLopwXU1wp/s7JJOTNm7Qt
-         KD2A==
-X-Forwarded-Encrypted: i=1; AJvYcCXfGop+pdgsdI1g5Lroigic8HPrf7b6Mj/5VaAot/amIsbB3W9Rcp9M3iO9qvY7ZugAx1w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKdIHkpQ2gFP+//bM4glriJSQ6WrRidLcI7c1klFIyNP/gN4IA
-	0X7a9ImuUs4NZmNsbCFU2mazl8EZN5ZtPxEPLnWtgepdj/ZGs/kvXIy2
-X-Gm-Gg: ATEYQzz9xx6hPssh+F2cCxWVWvYWomAQmJ0BYjFPAydTO8fGJFeYdAkhypePhMVsB2a
-	HlTlEWremU0T7D4lcGJeqKxwX/iAKYqb/evg/FkAIvzZCROO8EAWl55bCjnvYL0x7F7ZxTN6K2K
-	or2RWIFGG5L9cJHiGJxfqTtyXFF4a0RZhXARCXDrhqLLv+kpoTemedIEl2RLFXZCWCPm0xI2fXA
-	3qB97kTs26LB+QTorcX9xaVfeP+4/75/+V68XlZ7SktSloqLR0bmoHgEPYX1cPPvEJ2WqBZE6jo
-	JCKs4gvYniwh8j6fJAWBw0JHMlarAcAa2gB9w0ctiN9jgK0Diq9m8CDS+DXRQDi/DVky90M6fm4
-	dfRRUGVrreKUsSEXZZlIwibVaC278MNm5906ktJfDKz5JnyA1jx5dwuM/KIUGtzD4YAC/IIobXY
-	3m6llx5zDNQma/NO2zRNMIzPmgByZvWB9VsuKwWreofRILsXtG5fhEEhjBdJvZ1kwkBO0yeypuU
-	izcAkwXJfcek4e7Kko/1a/w8j0rkK+gOncGIaizgQEoy0Ycq3eZRzWtyE1GH+YxvN5YM1lkIVB0
-	h7wzuinI7IW4yiIlXO1BVg==
-X-Received: by 2002:a05:690c:690b:b0:798:1219:c78d with SMTP id 00721157ae682-79a1c1de110mr71555757b3.50.1773499120066;
-        Sat, 14 Mar 2026 07:38:40 -0700 (PDT)
-Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79917f0846csm65264207b3.39.2026.03.14.07.38.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Mar 2026 07:38:39 -0700 (PDT)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Mikel Forcada <mikel.forcada@gmail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Emir SARI <bitigchi@me.com>,
-	Arkadii Yakovets <ark@cho.red>,
-	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>,
-	Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [PATCH v3 5/5] docs(l10n): add AI agent instructions to review translations
-Date: Sat, 14 Mar 2026 22:38:14 +0800
-Message-ID: <208c1230d1152f96474abbd0a8da9222b3cca081.1773497547.git.worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.51.0.rc2
-In-Reply-To: <cover.1773497547.git.worldhello.net@gmail.com>
-References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com> <cover.1773497547.git.worldhello.net@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XQj2UQRL"
+Received: (qmail 116720 invoked by uid 106); 14 Mar 2026 16:08:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tUVzb+hUVOLRb2DttJTOa8x2j5UowxwGwwPHHwDItw4=; b=XQj2UQRLpH+a53S7Hz9XIbI3xFLqnrckbJcpuuEjqTzdtirKkZXbqmSpKyTgRdJMJkdYWi4qe9t8VldOeCze852rMUtssECIqp4PSuaT/8TX3AMwGLbKeX0Km0tu2kbdmo0FliBhjOZ0Jlb9E6xLPCOIjeuy/hMrazdQQynZ5x7K88zeMUhWcynW98iP2COmKP+dq0EFoCqEaoDwb4z4rObF8RrbjAu7IoiKatrU6jS1hEapwQEU1qJETKiZgxGnE+b2gze4u0zag8PkxiwiV0sUc38+L9BNEWt102PHiqOxHgMnUfhPJ/8TGk+4R0GlkzGVgWgSYaEQfQHF2NsGsg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 14 Mar 2026 16:08:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 545657 invoked by uid 111); 14 Mar 2026 16:08:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 14 Mar 2026 12:08:15 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 14 Mar 2026 12:08:14 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Andrew Au <cshung@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v4] transport-helper, connect: use clean_on_exit to reap
+ children on abnormal exit
+Message-ID: <20260314160814.GA918806@coredump.intra.peff.net>
+References: <20260311184206.GA1911377@coredump.intra.peff.net>
+ <20260312214945.4050010-1-cshung@gmail.com>
+ <xmqqsea4aen2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqsea4aen2.fsf@gitster.g>
 
-Add a new "Reviewing po/XX.po" section to po/AGENTS.md that provides
-comprehensive guidance for AI agents to review translation files.
+On Thu, Mar 12, 2026 at 03:04:17PM -0700, Junio C Hamano wrote:
 
-Translation diffs lose context, especially for multi-line msgid and
-msgstr entries. Some LLMs ignore context and cannot evaluate
-translations accurately; others rely on scripts to search for context
-in source files, making the review process time-consuming. To address
-this, git-po-helper implements the compare subcommand, which extracts
-new or modified translations with full context (complete msgid/msgstr
-pairs), significantly improving review efficiency.
+> Thanks, queued.
 
-A limitation is that the extracted content lacks other
-already-translated content for reference, which may affect terminology
-consistency. This is mitigated by including a glossary in the PO file
-header. git-po-helper-generated review files include the header entry
-and glossary (if present) by default.
+Curiously this patch seems to cause a failure in one of the CI leak
+jobs, but I don't think it's the culprit. See below for a fix and
+explanation.
 
-The review workflow leverages git-po-helper subcommands:
+I don't know if you want to apply it separately (since it's really a
+totally different topic) or on top (since it is only the application of
+Andrew's patch which lets us find the problem).
 
-- git-po-helper compare: Extract new or changed entries between two
-  versions of a PO file into a valid PO file for review. Supports
-  multiple modes:
+-- >8 --
+Subject: [PATCH] transport: plug leaks in transport_color_config()
 
-  * Compare HEAD with the working tree (local changes)
-  * Compare a commit's parent with the commit (--commit)
-  * Compare a commit with the working tree (--since)
-  * Compare two arbitrary revisions (-r)
+We retrieve config values with repo_config_get_string(), which will
+allocate a new copy of the string for us. But we don't hold on to those
+strings, since they are just fed to git_config_colorbool() and
+color_parse(). But nor do we free them, which means they leak.
 
-- git-po-helper msg-select: Split large review files into smaller
-  batches by entry index range for manageable review sessions. Supports
-  range formats like "-50" (first 50), "51-100", "101-" (to end).
+We can fix this by using the "_tmp" form of repo_config_get_string(),
+which just hands us a pointer directly to the internal storage. This is
+OK for our purposes, since we don't need it to last for longer than our
+parsing calls.
 
-Evaluation with the Qwen model:
+Two interesting side notes here:
 
-    git-po-helper agent-run review --commit 2000abefba --agent qwen
+  1. Many types already have a repo_config_get_X() variant that handles
+     this for us (e.g., repo_config_get_bool()). But neither colorbools
+     nor colors themselves have such helpers. We might think about
+     adding them, but converting all callers is a larger task, and out
+     of scope for this fix.
 
-Benchmark results:
+  2. As far as I can tell, this leak has been there since 960786e761
+     (push: colorize errors, 2018-04-21), but wasn't detected by LSan in
+     our test suite. It started triggering when we applied dd3693eb08
+     (transport-helper, connect: use clean_on_exit to reap children on
+     abnormal exit, 2026-03-12) which is mostly unrelated.
 
-    | Metric           | Value                            |
-    |------------------|----------------------------------|
-    | Turns            | 22                               |
-    | Input tokens     | 537263                           |
-    | Output tokens    | 4397                             |
-    | API duration     | 167.84 s                         |
-    | Review score     | 96/100                           |
-    | Total entries    | 63                               |
-    | With issues      | 4 (1 critical, 2 major, 1 minor) |
+     Even weirder, it seems to trigger only with clang (and not gcc),
+     and only with GIT_TEST_DEFAULT_REF_FORMAT=reftable. So I think this
+     is another odd case where the pointers happened to be hanging
+     around in stack memory, but changing the pattern of function calls
+     in nearby code was enough for them to be incidentally overwritten.
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- po/AGENTS.md | 197 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 197 insertions(+)
+ transport.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/po/AGENTS.md b/po/AGENTS.md
-index 65017624f7..e9a6ffc7f1 100644
---- a/po/AGENTS.md
-+++ b/po/AGENTS.md
-@@ -10,6 +10,7 @@ most commonly used housekeeping tasks:
- 1. Generating or updating po/git.pot
- 2. Updating po/XX.po
- 3. Translating po/XX.po
-+4. Reviewing translation quality
+diff --git a/transport.c b/transport.c
+index 107f4fa5dc..2fb4767821 100644
+--- a/transport.c
++++ b/transport.c
+@@ -54,14 +54,14 @@ static int transport_color_config(void)
+ 		return 0;
+ 	initialized = 1;
  
+-	if (!repo_config_get_string(the_repository, key, &value))
++	if (!repo_config_get_string_tmp(the_repository, key, &value))
+ 		transport_use_color = git_config_colorbool(key, value);
  
- ## Background knowledge for localization workflows
-@@ -664,6 +665,202 @@ step 8 after step 6.
-    ```
+ 	if (!want_color_stderr(transport_use_color))
+ 		return 0;
  
- 
-+### Task 4: Review translation quality
-+
-+Review may target the full `po/XX.po`, a specific commit, or changes since a
-+commit. When asked to review, follow the steps below.
-+
-+**Workflow**: Follow steps in order. Do **NOT** use `git show`, `git diff`,
-+`git format-patch`, or similar to get changes—they break PO context; use **only**
-+`git-po-helper compare` for extraction. Without `git-po-helper`, refuse the task.
-+Steps 3→4→5→6→7 loop: after step 6, **always** go to step 7 (back to step 3).
-+The **only** ways to step 8 are when step 4 finds `po/review-todo.json` missing
-+or empty (no batch left to review), or when step 1 finds `po/review-result.json`
-+already present.
-+
-+1. **Check for existing review (resume support)**: Evaluate the following in order:
-+
-+   - If `po/review-input.po` does **not** exist, proceed to step 2 (Extract
-+     entries) for a fresh start.
-+   - Else If `po/review-result.json` exists, go to step 8 (only after loop exits).
-+   - Else If `po/review-done.json` exists, go to step 6 (Rename result).
-+   - Else if `po/review-todo.json` exists, go to step 5 (Review the current
-+     batch).
-+   - Else go to step 3 (Prepare one batch).
-+
-+2. **Extract entries**: Run `git-po-helper compare` with the desired range and
-+   redirect the output to `po/review-input.po`. See "Comparing PO files for
-+   translation and review" under git-po-helper for options.
-+
-+3. **Prepare one batch**: Batching keeps each run small so the model can
-+   complete review within limited context. **Directly execute** the script
-+   below—it is authoritative; do not reimplement.
-+
-+   ```shell
-+   review_one_batch () {
-+       min_batch_size=${1:-100}
-+       INPUT_PO="po/review-input.po"
-+       PENDING="po/review-pending.po"
-+       TODO="po/review-todo.json"
-+       DONE="po/review-done.json"
-+       BATCH_FILE="po/review-batch.txt"
-+
-+       if test ! -f "$INPUT_PO"
-+       then
-+           rm -f "$TODO"
-+           echo >&2 "cannot find $INPUT_PO, nothing for review"
-+           return 1
-+       fi
-+       if test ! -f "$PENDING" || test "$INPUT_PO" -nt "$PENDING"
-+       then
-+           rm -f "$BATCH_FILE" "$TODO" "$DONE"
-+           rm -f po/review-result*.json
-+           cp "$INPUT_PO" "$PENDING"
-+       fi
-+
-+       ENTRY_COUNT=$(grep -c '^msgid ' "$PENDING" 2>/dev/null || echo 0)
-+       ENTRY_COUNT=$((ENTRY_COUNT > 0 ? ENTRY_COUNT - 1 : 0))
-+       if test "$ENTRY_COUNT" -eq 0
-+       then
-+           rm -f "$TODO"
-+           echo >&2 "No entries left for review"
-+           return 1
-+       fi
-+
-+       if test "$ENTRY_COUNT" -gt $min_batch_size
-+       then
-+           if test "$ENTRY_COUNT" -gt $((min_batch_size * 8))
-+           then
-+               NUM=$((min_batch_size * 2))
-+           elif test "$ENTRY_COUNT" -gt $((min_batch_size * 4))
-+           then
-+               NUM=$((min_batch_size + min_batch_size / 2))
-+           else
-+               NUM=$min_batch_size
-+           fi
-+       else
-+           NUM=$ENTRY_COUNT
-+       fi
-+
-+       BATCH=$(cat "$BATCH_FILE" 2>/dev/null || echo 0)
-+       BATCH=$((BATCH + 1))
-+       echo "$BATCH" >"$BATCH_FILE"
-+
-+       git-po-helper msg-select --json --head "$NUM" -o "$TODO" "$PENDING"
-+       git-po-helper msg-select --since "$((NUM + 1))" -o "${PENDING}.tmp" "$PENDING"
-+       mv "${PENDING}.tmp" "$PENDING"
-+       echo "Processing batch $BATCH ($NUM entries out of $ENTRY_COUNT)"
-+   }
-+   # The parameter controls batch size; reduce if the batch file is too large.
-+   review_one_batch 100
-+   ```
-+
-+4. **Check todo file**: If `po/review-todo.json` does not exist or is empty,
-+   review is complete; go to step 8 (only after loop exits). Otherwise proceed to
-+   step 5.
-+
-+5. **Review the current batch**: Review translations in `po/review-todo.json`
-+   and write findings to `po/review-done.json` as follows:
-+   - Use "Background knowledge for localization workflows" for PO/JSON structure,
-+     placeholders, and terminology.
-+   - If `header_comment` includes a glossary, follow it for consistency.
-+   - Do **not** review the header (`header_comment`, `header_meta`).
-+   - For every other entry, check the entry's `msgstr` **array** (translation
-+     forms) against `msgid` / `msgid_plural` using the "Quality checklist" above.
-+   - Write JSON per "Review result JSON format" below; use `{"issues": []}` when
-+     there are no issues. **Always** write `po/review-done.json`—it marks the
-+     batch complete.
-+
-+6. **Rename result**: Rename `po/review-done.json` to `po/review-result-<N>.json`,
-+   where N is the value in `po/review-batch.txt` (the batch just completed).
-+   Run the script below:
-+
-+   ```shell
-+   review_rename_result () {
-+       TODO="po/review-todo.json"
-+       DONE="po/review-done.json"
-+       BATCH_FILE="po/review-batch.txt"
-+       if test -f "$DONE"
-+       then
-+           N=$(cat "$BATCH_FILE" 2>/dev/null) || { echo "ERROR: $BATCH_FILE not found." >&2; return 1; }
-+           mv "$DONE" "po/review-result-$N.json"
-+           echo "Renamed to po/review-result-$N.json"
-+       fi
-+       rm -f "$TODO"
-+   }
-+   review_rename_result
-+   ```
-+
-+7. **Loop**: **MUST** return to step 3 (Prepare one batch) and repeat the cycle.
-+   Do **not** skip this step or go to step 8. Step 8 is reached **only** when
-+   step 4 finds `po/review-todo.json` missing or empty.
-+
-+8. **Only after loop exits**: **Directly execute** the command below. It merges
-+   results, applies suggestions, and displays the report. The process ends here.
-+
-+   ```shell
-+   git-po-helper agent-run report
-+   ```
-+
-+   **Do not** run cleanup or delete intermediate files. Keep them for inspection
-+   or resumption.
-+
-+**Review result JSON format**:
-+
-+The **Review result JSON** format defines the structure for translation
-+review reports. For each entry with translation issues, create an issue
-+object as follows:
-+
-+- Copy the original entry's `msgid`, optional `msgid_plural`, and optional
-+  `msgstr` array (original translation forms) into the issue object. Use the
-+  same shape as GETTEXT JSON: `msgstr` is **always a JSON array** when present
-+  (one element singular, multiple for plural).
-+- Write a summary of all issues found for this entry in `description`.
-+- Set `score` according to the severity of issues found for this entry,
-+  from 0 to 3 (0 = critical; 1 = major; 2 = minor; 3 = perfect, no issues).
-+  **Lower score means more severe issues.**
-+- Place the suggested translation in **`suggest_msgstr`** as a **JSON array**:
-+  one string for singular, multiple strings for plural forms in order. This is
-+  required for `git-po-helper` to apply suggestions.
-+- Include only entries with issues (score less than 3). When no issues are
-+  found in the batch, write `{"issues": []}`.
-+
-+Example review result (with issues):
-+
-+```json
-+{
-+  "issues": [
-+    {
-+      "msgid": "commit",
-+      "msgstr": ["委托"],
-+      "score": 0,
-+      "description": "Terminology error: 'commit' should be translated as '提交'",
-+      "suggest_msgstr": ["提交"]
-+    },
-+    {
-+      "msgid": "repository",
-+      "msgid_plural": "repositories",
-+      "msgstr": ["版本库", "版本库"],
-+      "score": 2,
-+      "description": "Consistency issue: suggest using '仓库' consistently",
-+      "suggest_msgstr": ["仓库", "仓库"]
-+    }
-+  ]
-+}
-+```
-+
-+Field descriptions for each issue object (element of the `issues` array):
-+
-+- `msgid` (and optional `msgid_plural` for plural entries): Original source text.
-+- `msgstr` (optional): JSON array of original translation forms (same meaning as
-+  in GETTEXT JSON entries).
-+- `suggest_msgstr`: JSON array of suggested translation forms; **must be an
-+  array** (e.g. `["提交"]` for singular). Plural entries use multiple elements
-+  in order.
-+- `score`: 0–3 (0 = critical; 1 = major; 2 = minor; 3 = perfect, no issues).
-+- `description`: Brief summary of the issue.
-+
-+
- ## Human translators remain in control
- 
- Git translation is human-driven; language team leaders and contributors are
+ 	for (size_t i = 0; i < ARRAY_SIZE(keys); i++)
+-		if (!repo_config_get_string(the_repository, keys[i], &value)) {
++		if (!repo_config_get_string_tmp(the_repository, keys[i], &value)) {
+ 			if (!value)
+ 				return config_error_nonbool(keys[i]);
+ 			if (color_parse(value, transport_colors[i]) < 0)
 -- 
-2.53.0.rc2.20.g532543fa46
+2.53.0.887.g3d5d06adec
 
