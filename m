@@ -1,66 +1,66 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5693806C6
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 20:08:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81F034B19A
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 20:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773518900; cv=none; b=gRqv8aAQsx46PNHabFB70lM1T0OAhPshSItY1KUNMu19n3WEkxo7hmr13/01zL8Nk0joLpcHbta7ibhGpFtDrS0jBIVhhMFsnrBFE6EXykSxt6Ir9+m4BgpmEPPm2T2hfWFOFwufjSrFc9SBs8wHwjaCHz+3kBFoPbJEeuT9TFA=
+	t=1773518979; cv=none; b=BL9zNl2/GP9OlJcZCwHoPGbtymNpb32qXEZj+IDsEbfkRr9+QXVHHHIFKBTv+wu3YcNGs6sn3KIYcybzbu3PmlPN4DtEJI9fm8nM4MbzJR6YNbxOHqcvikFTMF3q81qa42kQbETnDJk7pyoET1VRip0J10X94F1gIGm22S10wxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773518900; c=relaxed/simple;
-	bh=7QEhOjAdvKCLOzw0x5i4EU6E/3OCTxupN4oJX76VFoc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=caUdlwVEb39CqT6hh1ovDzccbXxWlKQCnaMd3BzEn4LkG5PuyF2hJ60w3icaR7WN4GAZiWh3PBQKLNd6TzxtWQT6BponHX0r4sLSWVWZGP582kv00lg9HC1Vab3OeDj4KfsveDc5+CeMAdTn7jmaDqmGoSzKVOiSii7hwHCgBMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ntJpqhs+; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1773518979; c=relaxed/simple;
+	bh=lNkk5dQMIYu286H7fTuaucea+ko0dphdh1dvxRvN0fI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=psByAo/vgwTd9R/jhUf5nVhF5NgdatJ4lomelneV8omynET3T4HsrwkSFBaxv1QBRylFXzbyWt0kwvgVT+Zl5jBUfwO/Dqwkpb+5SVux1sYFfGealS1YpqiAWq4GSrglanxR5I28psLLnFUK0lyTC5vlG8Viy5c+V22+pMrlaHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NFLm8Mg+; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ntJpqhs+"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-485445e80bdso28631475e9.0
-        for <git@vger.kernel.org>; Sat, 14 Mar 2026 13:08:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NFLm8Mg+"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48534b59cf3so29180855e9.2
+        for <git@vger.kernel.org>; Sat, 14 Mar 2026 13:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773518897; x=1774123697; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=HlwXiFhzd7zaNMzuZWuPji+CAYbZ5nig2wr3cb2FE/k=;
-        b=ntJpqhs+oHlcgVcbScdl9qBj8weuovXt7Q2YXHEUrInVXRG4ceoTPNKQPIBa7zaGpP
-         81+sWu0XePO/VotbVaRQ/FW/dvJoq2k0jPF87vuOo+sRd6zqtulz9eJtlLmZqg6/nzem
-         k/WTNf2Ysm5UcmLdWYqbnrB3bCOizbvR7fPEERmKtrov5e/sC8k7xmZAMHE9xDwpjkkq
-         aiBkIZ87xreGjPtpOQ7NujdYXzJ5b2xqZbt27duUDbCIX3oeRxs/O7x5Bt9FNfRH+tcf
-         q8m47Q362dZOEO2DtTG9BdY45q2PMSF/ICIm/41iqdn803wUbOFI85zzrNfVNSxhDWYZ
-         AG/g==
+        d=gmail.com; s=20230601; t=1773518976; x=1774123776; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=80FKicaAoiNNZLgqOA7CWUvKj3Iyso0MYfiPJBFHnwM=;
+        b=NFLm8Mg+dRnZpWjOMLl260GF2bz6jWiKTS0omWa1yXpFw9qrZDn+Ee4jhfCbHlrJp5
+         2ditlsZUEoP0mIaNCszQtURXvNNz4regbi+av56thYM15cKgiY4hwCylQ30ps2wn2NC8
+         cgukrgrrkWSCs2BKJrQ3r5u8I4KoWhdA7xJldWnCfJfsclLE7nWXYvDBmi1MJs4FZLQV
+         R8Sz10LPO7kAKAbQXrm8ppKRsf78FcUwAndZ5Zcf1bQeALc2nDUgNt7Ks7M0/yeIdvRh
+         YQApJfmM4bPBh5jkhg3BDHdIy0tdGTzZ//TcLHP6EJf44dSdCe2Ws4+QFPP+o6Skaovx
+         uxXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773518897; x=1774123697;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HlwXiFhzd7zaNMzuZWuPji+CAYbZ5nig2wr3cb2FE/k=;
-        b=sKohtIR1rtsoJsucNdsY00is2dZ7pGvGCOhf2LZh0WUuA837QmX+Zq2YBYdwGbR3C8
-         cIDw3R87w6AINUVQvGo/Cf9CB0RZjYvvLYPgF9VUiI+4f+C9CLjzPAjKNcHUlviiZEsM
-         EckFl3cfKZBTbe5nKRRnsZ8r0Zpq8UiZaGYuYWwWuK2oUriOMghiyhsql9LauT83YARL
-         6rBhGM3VoB1q6tgYfvH/VvRkkclCltBG6lRlFutgYmd+aWyRb83X4d96IFxsb4OQWzj/
-         GEQ95aUxPGDEOiFwjG/3I6akFJeWFHiJfIL24GxWXa9ZxOoaZ/iT3tcBlwTt7zvf2xA6
-         OJuQ==
-X-Gm-Message-State: AOJu0Yxs5X1wFVaxHfYa+3qpAF5VQXVS5IAwUHjjDKIlPCuYsaK4XDvf
-	18LpfyMWrN9KzQZRn5px0ovbFGoR8Hm0FoSl71IBwgrNj1tfEn5IYI14
-X-Gm-Gg: ATEYQzyJRM0Y2h7Ssi8fvDJJ/VNoA+WsJKXFKyoK4Ipaa7QQkrIuyUaLC9qOIo0zetE
-	owEThJhzQwTayAFU5ThqvezARkphcvp5cKg3RPLCx1wjk1tcUdU9irFfVbVXAJWKXnTRznrAYhy
-	7GEZFVjc9uVPMbF5BYOcaO5w9gWLTpfyEeGAd9peXUSauKmwWlssstpvuWrZpUKkYlvqSXGuT5j
-	Et9gaiMYuKPJzeOVt8rlV+fzFWcPmXwKiq+ObGmq9rP2hKt1gj3mZ1dMnQ056+UQeZos5qr0qM0
-	oN4ml8uOysRqz2IbKg1iXAUjYR384oxNDPLRfsSB/foLLRClXyxDhEJt8JUCd238ERPnG885fJR
-	9xOLLWZ4ZBFRl2BFrLpSHsxpK34X6drJouiZOzQeOhhunV12drYBgYeKKhDlrKl8ehPeGOeWmol
-	Iv0MppFscVSykh+1WzmQLzvfgIozLToNpi9FIpMi71cHZc2ht9P5HuoN1wvdMWqyLPcZxam7ntE
-	/1JaQ==
-X-Received: by 2002:a05:600c:a39a:b0:485:3b00:f93b with SMTP id 5b1f17b1804b1-48556728b5emr94283165e9.31.1773518897328;
-        Sat, 14 Mar 2026 13:08:17 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1773518976; x=1774123776;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=80FKicaAoiNNZLgqOA7CWUvKj3Iyso0MYfiPJBFHnwM=;
+        b=evnWxGzNLAuPobl+zKNHOLwsTRUbyvkHn+N1kcYykMnTqlu6nAIx/RgQSqPlJplBLf
+         dMfpqUolwHvhZc0FktjUxBVq/9hwiNwoCiQjDF6NE4FcAQhTPYmugV3c33KLCqa8075Y
+         fXcJM332dsG3OuqAEtK8DEXb4D81L8zWL3K2bgbCadiwnL21TQUlLIDgoi7ZKjvumjvZ
+         c7Icx+KWMbcHapaYppDtPWy00WuIvveWvG+I3Pp1KaJPLT8AH0VfqLmNvN4rUgQPG92d
+         9O99MACmQzKaosf8OovDhFGhWt94X2a0o/GWfQya01jB/JMGRFDe0+M2CPRo66lfky5R
+         IB4w==
+X-Gm-Message-State: AOJu0YwzksF9uSFBq2kCqPNI1DxNnHBSAxw8jJuFqnX8rtUMwCR5Tqho
+	DJWhaHxo1fYGDqS0Ax3b/zT9dAIiJIa/G9q/kjIdUXIf0eOEJ++Trpz1hYMv8A==
+X-Gm-Gg: ATEYQzy9h0LhvqqaMdCX53qyS9etcW3TBo46eUlHoOrk3cROwFALxDmQgcz4pFe/LC0
+	0ZgjJhV210NhUy2WYkqxSVrSVfmoKzzDakrmtutKldiDuuh1Yyj/hYaet+ika2//SBLbTRfTCnD
+	HuqUMCxYHtWcDdnb5zwraxGiObI0DpVwNJZVRfqhOnJKhTWPLa7I7W1bcfrHhmQ+Yere69FEVUk
+	zCHewADebWeQGN2TxQIDYr3Xn0uvvb0HukeamiJkL/42PFYbnKgXxbW1DZarpzXJXVCzgAxN0OE
+	ru+nACY6HPVGsdjHn9Dg7dS3Az2NYsBH2Jqmowek9h4anvUyKEtJOe4lmnvlHnRQi52GLtG8O+2
+	ACOmkOH/4hlb54V26HjGeuUh5Dc9kxAKc3/SFhj5ZsGLxtCA/z7+v54A0tNZHiBMFTuLEgHKpaT
+	k9LyKsXF8sdnkMIhjkYaQkwXLBYknFduATRoEQQ9wjP+6PCB9RTRNMdezT8B5weebWzIfnOY3Xf
+	n/X9Q==
+X-Received: by 2002:a05:600c:1d1a:b0:485:3d00:efd with SMTP id 5b1f17b1804b1-485566cfacbmr134708545e9.7.1773518976032;
+        Sat, 14 Mar 2026 13:09:36 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4855638cebcsm106738555e9.0.2026.03.14.13.08.16
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe1a76e5sm27566693f8f.12.2026.03.14.13.09.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 14 Mar 2026 13:08:16 -0700 (PDT)
-Message-ID: <ca6e021e-0301-496d-8bd1-b646487ccbf6@gmail.com>
-Date: Sat, 14 Mar 2026 20:08:15 +0000
+        Sat, 14 Mar 2026 13:09:35 -0700 (PDT)
+Message-ID: <4649d374-59ad-4019-aacc-259245e18587@gmail.com>
+Date: Sat, 14 Mar 2026 20:09:34 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,46 +68,33 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] remote: use plural-only message for diverged branch
- status
-To: Junio C Hamano <gitster@pobox.com>,
- Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2239.git.git.1773479526823.gitgitgadget@gmail.com>
- <xmqqqzpmwdyi.fsf@gitster.g> <xmqqtsuiuugy.fsf@gitster.g>
-Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqtsuiuugy.fsf@gitster.g>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 3/3] worktree: reject NULL worktree in
+ get_worktree_git_dir()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <cover.1773411586.git.phillip.wood@dunelm.org.uk>
+ <1151b5b302069b4f3414a37e3be4bdbbc7e40686.1773411586.git.phillip.wood@dunelm.org.uk>
+ <xmqqfr632yq8.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqfr632yq8.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 14/03/2026 18:38, Junio C Hamano wrote:
+On 13/03/2026 21:42, Junio C Hamano wrote:
 > 
->      remote: don't use Q_() when it is not needed
+> <worktree.h> still has
 > 
->      In this code path, both ours and theirs are already known to be
->      positive integers, so ours + theirs will always be plural, never
->      using the first variant given to Q_().
-> 
->      Just use _() with the plural string only.
+>      /*
+>       * Return git dir of the worktree. Note that the path may be relative.
+>       * If wt is NULL, git dir of current worktree is returned.
+>       */
+>      char *get_worktree_git_dir(const struct worktree *wt);
 
-There can be more than one form of the plural string though. The gettext 
-manual has the following example of the Polish translation of "file" for 
-different numbers of files [1]
-
-	1 plik
-	2,3,4 pliki
-	5-21 plików
-	22-24 pliki
-	25-31 plików
-
-ngettext() handles that correctly, translating a single string without 
-an associated count will not.
+Good catch, I'll fix that and send a re-roll
 
 Thanks
 
 Phillip
 
-[1] 
-https://www.gnu.org/software/gettext/manual/gettext.html#Additional-functions-for-plural-forms
