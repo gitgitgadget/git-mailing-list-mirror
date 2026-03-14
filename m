@@ -1,113 +1,163 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80142171CD
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 12:27:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B96336885
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 14:38:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773491261; cv=none; b=A1nJVFNH/2kvfWCg91+USzt3aR7hLra3UM90Afdmof9EAo1KknvcrNW/DiCXhBXM8kCevxnhVWPtgBGq7Alqjr+zjMG6zhaRgxVG3d9nXlf6y7A5p9aBltUlnZuGUuHHWJvUBCKvPwaYu1nSNUr7fQPVls0GXbnG+izKt2wEAF8=
+	t=1773499114; cv=none; b=TMswyysR4ZwL23rykZeix6uCaql+exMFxBQy4myHbAEigjCACUjVhyFd2HfwwdwOAoiGWkg9nS+iofAS1SjOkoghWjCEI4H/IfTZVH0rVzZtq/JT9/JzTkBpeW2HpDUuSdiGVHr/gMkRLfLAWz9G4QlZZZK+4jcfUNtLGtsxBVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773491261; c=relaxed/simple;
-	bh=CQv9LAldC+YxvQ8jKaTlw+Pj5xo+ee3+ORLzKTXInHY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cG9hJKeWL5QR0j0M2y82fJ2g88PEfslvmGbUEiQdIpTQk2aJPspX4dawo5aEU6Rz+HpJzNOtB8wepD6YlxZoPf/AxrMmSwWAL2TYOsBH/sv+bLs/GZVoIZhycoW5a/1ohO/L47qypo0BEJi5+ANY5lFVY2Jmt/n8xbtUrOKeVBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DrC9E3RH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TsbFh4wB; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773499114; c=relaxed/simple;
+	bh=a2wwUNgeXOmUeZmABngoZRzyNhNN3Hleib3poxPfiJI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=lANZWQKswEYojEp/FjjSN2k4MwQ6pEJO6L4eAtt9K4IFsLBv6InKM32DbSNhFIdU/znK6ero3ls/uazVzZoHO3OZEq2f9+WfEOAR7GrjBeaialYACOY3AXFmrcffmHlv4jU5KrXTnI9iX2o5Z28o/BfbsYuZIll7Yu/1un0p6Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ic91dKcb; arc=none smtp.client-ip=74.125.224.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DrC9E3RH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TsbFh4wB"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 87F7F1D000F0;
-	Sat, 14 Mar 2026 08:27:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 14 Mar 2026 08:27:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1773491258;
-	 x=1773577658; bh=6xNRZH1rJ31ZdoA4v3zhhi0/D7Ikyl6Xx/dTmmCD+qc=; b=
-	DrC9E3RHAikPhAImt4eRboh9+0WA8aahgHz0W40OJSrJ1Q4m3v7Zr0JpHDr5IAa+
-	OpRjb/129tGXhN3rCGjQVZDGHj2KMzqSvc0eP5jpTe1QUPneUZ46iRc4vXxVElYw
-	FOnsTH0EKwNmoSmAbS/Tbqv2bisjiFFvOS9j4a8Q8QaXzPigSxTz7MofOk2qCzf5
-	yaupijRtwvV/2qI4WrW5T2j5QQ+9bxXlythJV9TKCdd9YMZwap5WP6R/jBf/Qg9t
-	du6tFbOx86GQnL4cuHgKNmQC1jhD/2WldelYpbyrQ8wZARewp4BD0zz0b4f+R7cF
-	MBcy9pBPc1rlvT0xwXq2kQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773491258; x=
-	1773577658; bh=6xNRZH1rJ31ZdoA4v3zhhi0/D7Ikyl6Xx/dTmmCD+qc=; b=T
-	sbFh4wBcuadiulUzRYUKDojKCEW0NQv+daxYBn9wssk+NYebMOAIM744Lp+Ua75H
-	I0H7zzjnkQr3HSiZsQOOZxlklooOfX8jPp4ex5+XLhOlZSDqOEDawNo9jI44x/qP
-	7YMqJdZXql6nkxu08dDoV7vYXIQKo2vlgrPnZ0vqKR3b4eHv5xetxoj21aZEOm+d
-	EzcYZqb+iMaxhYFYNxqAnyx0OyC6hSl7+F8shnCBruvHI7f52gZiim/GS7VGh+dQ
-	ja0/iMpxfMh54ojseEbIa5pzXgtlPpBKYodjbTtX9OpEWjgSgB5vDADqFgwkv9GI
-	oDpdVHM5qX2SGp+xADZLA==
-X-ME-Sender: <xms:OlS1aZ7IwUzYkSOPZHiRBPdVokSPkGZ5amOboOdIJWVgb_6M-69_ug>
-    <xme:OlS1ad4flyEU7W1MZ3b7-jrWAX8q8EQMk4xHISUnF_fiQs6qky2TjwyzTpH8lYH0k
-    maQV_rHIMKOKzTOyaX0IuJr1nFHPSRm_YlcaVp4XNOARdcl-evw0Q>
-X-ME-Received: <xmr:OlS1aVcTjGZCFgLu7uL-BNPh2kp3DYRuWiFCD6C6MVfpU_afIcPUDYwGjE6KqotNZ66c7iFIP9_f0MDTEc37MlBE_bpfJwQqIg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledvheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
-    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptggrthes
-    mhgrlhhonhdruggvvhdprhgtphhtthhopegrhhgrmhgsrhgrhhhmrghsmhhivdefheejse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:OlS1aRB0WKJ6gRvfhLg8gIXCR5Q0wt90TScUoW8KFl6dkBOReZwLHg>
-    <xmx:OlS1aY8A8SPuM0qCaVPpMI5btPt8QBrcMd3Q4aTv9Qa88kv-wsgySQ>
-    <xmx:OlS1acIEiKgATEFKWDCW24aL5thDiJjXvgCSQaXG1jXr6KLytS9gxg>
-    <xmx:OlS1aRhm8xw5gLh7U301S4HPHkTALAjLo0GZf7AWUuSjx8A9c_67Ew>
-    <xmx:OlS1aZsNweq_ZHLIPXWZf76OGOQoeYjMHabS_YTfpa_o9DYOwZokLZ3d>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Mar 2026 08:27:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: aum2357 <ahambrahmasmi2357@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH GSOC] diff: use conventional comparison order
-In-Reply-To: <405c075b-731b-47e3-9e9c-70aaa0efe1cc@malon.dev> (Tian Yuchen's
-	message of "Sat, 14 Mar 2026 11:59:43 +0800")
-References: <20260313140440.564201-1-ahambrahmasmi2357@gmail.com>
-	<9afe48e3-8348-4e2c-8e5f-bbdc3b2951f8@malon.dev>
-	<xmqqldfv4h6k.fsf@gitster.g>
-	<405c075b-731b-47e3-9e9c-70aaa0efe1cc@malon.dev>
-Date: Sat, 14 Mar 2026 05:27:36 -0700
-Message-ID: <xmqqbjgqy4sn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ic91dKcb"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-64ca09f2056so2416168d50.2
+        for <git@vger.kernel.org>; Sat, 14 Mar 2026 07:38:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773499112; x=1774103912; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KwRsE5U0QzgXcCGouHN+6NnBawivyOGZJOQ3G8DOiFI=;
+        b=Ic91dKcbKfFoQ2QnK+sv9itRvM+2WeCayYePqbcjKoWuDTvok2knxtFqjAliDvgfWx
+         XHtxmyUcCoLzq/Yqt9K91qTjdC/djlAOyBetxxXW73dCMuJl8ZLCgNamhkDBLkAnBVJB
+         G9dMv+K7aYJcWSWplYG8EQ5lve/2TP9F6nrY4gYsaEzdq+P4z/+f7rfgxSPoLS6kcJDQ
+         OgjWJviqyFAQ5vTewYcwCttntJWltIWrh6L26b1Dhh003S/tDW8CFhR9NapZBBvatWeJ
+         Ks7Ngd7rPkogkU+1eSnbud9WKbuBScCMSNl7/RzEM75Aj53qLh0wadnNPtiVdxEZPhzn
+         gfcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773499112; x=1774103912;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=KwRsE5U0QzgXcCGouHN+6NnBawivyOGZJOQ3G8DOiFI=;
+        b=sS0FK/+JK6XRZ3awJtKtjPsQ7Zi8YDpIk5+Hz43JHnOLq6Q2/3rRGYUP4dncGKuJvR
+         osBdhUAd9d0bZjC2A4T/RMft+jkYO9IFhXcvv5QOZyt4BuHtG1GmwJyYuUidW1xV5XHh
+         k/ivc88LcLpAO/0BK26uwcJyOhY8tfhM7j0SUMJJ4t1OdzJtv/0Q/U3KL1SLdAWiCgVQ
+         mZupjgp7ceaQB0fZzg2qNft8X0E9MMG6AJXdYHALFlHqGijyARk3Aed7mNoWuxySRZkU
+         nWniVYqoisfto6vgdfY7z6yjHl3+6/hcQMg2QwR+di5rMQEHvBM+Ek0vORs3931C5PGo
+         9f5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUJ+j9YcOXa8y32/J6z8AhOk9HhMe41bOH9Wg/abtc+YXWtxvOVu+KUVxJXVjuK2YxYzlk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwiyL2dDPCwPGNuynK+CWjA/NDsQWCPhu8fU+4/iNPEhUdpo7dl
+	vpSi+d3/AOPlAMez9dgBAQdlOHSGYS5QGAKthWXzD9J6NaAKhZNwNcgY
+X-Gm-Gg: ATEYQzxjrrmVIpRF790hPoLG3chnATh/1dGqb9ecp/p4WtPyBHD3d9TligH5MnF5b4u
+	SZi7SlWd9ha+Z33mgeL5GdBduaRJ79v3DdYZF1BipO+vhknGTS9KHnQRYIhrnmMma4q8JU27Z64
+	pj4cF70f/mTl8RbyR6NWe4rTU6cDDmrz8xoxkDB7/cS+GsAT4s1Q2QlfdG6Ukof8fUcSG+252TW
+	EunTkUsTnUxEzVThfnqQDMLacKBlB86mInyo/8LHmLrmp1rqVXmvgd2oC1f8ce7kg2zRzUYS4W3
+	uU0YDlCR3e7/Ci33fUgibZfM1kqUfFnedRjB2iCBuQ1W3umh8bDw17WAWMUYWpw5+qasBZJ7B/V
+	hgoYfG3s1yKaYlQUww5ZG4YOck29IoazoKB/d1a9loCuXEqL1zgcW1DzE8543UXJsjmNQGo0lfQ
+	tNQJEQMwSJDPdhS6aZitvFAuwFH8idCCDySaGR8b1ZdXtdkvFIftLbQ+7qmHqbWlA0wSgKCvitC
+	tXAdk9KhKpUUeD/0y9d3NXV8+ZSfoiQqxkfbw7i/wkVEYiVLdCvSqRnVzsTMI5fJk2hqAQzNwAF
+	8wDz7/SDWEk=
+X-Received: by 2002:a05:690c:6f0a:b0:798:980f:66f0 with SMTP id 00721157ae682-79a1c1ac305mr76847557b3.33.1773499111625;
+        Sat, 14 Mar 2026 07:38:31 -0700 (PDT)
+Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79917f0846csm65264207b3.39.2026.03.14.07.38.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Mar 2026 07:38:30 -0700 (PDT)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [PATCH v3 0/5] docs(l10n): AI agent instructions and workflow improvements
+Date: Sat, 14 Mar 2026 22:38:09 +0800
+Message-ID: <cover.1773497547.git.worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.51.0.rc2
+In-Reply-To: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com>
+References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Tian Yuchen <cat@malon.dev> writes:
-> However, in builtin/add.c before the patch, there isn't even a single 
-> “>” symbol used for comparison. The “<” symbol is used throughout the 
-> comparison sections.
+## Changes since v2
 
-Look a bit harder.  I think there is one comparison that uses a
-comparison that does not follow "textual order reflects actual
-order" convention.
+- CI: Fix trailing spaces that caused check-whitespace to fail.
+- Size: Trim po/AGENTS.md by removing unnecessary examples and compressing
+  wording so the file stays smaller and easier to follow.
+- GETTEXT JSON: Use a single `msgstr` array for all translations instead
+  of separate `msgstr` (string) and `msgstr_plural` (array). One element
+  means singular; multiple elements mean plural forms in order. This reduces
+  redundancy and model errors.
+- Workflow: Rename the final step of translation workflow to "Only after
+  loop exits" so agents do not jump from the merge step to the final step
+  before the loop has exited. Simplify the review flow by using one pending
+  file for entries awaiting review instead of multiple review-input-<N>.json
+  files and file-selection logic.
 
-	while (--i >= 0) {
+## Introduction
 
-> I find it quite strange because the author says:
->
->> to follow the common coding style
->
-> This patch seems more like it breaks the common coding style.
+This series introduces AI agent instructions for Git localization (l10n)
+workflows to help localization contributors quickly complete drafts and
+use AI to check translation quality. The changes focus on:
 
-To somebody who does not know both conventions and understand that
-both are valid, the only one that is familiar to the person would be
-the only common one.
+1. Separating agent-specific documentation into po/AGENTS.md for
+   targeted optimization of AI-assisted workflows
+2. Providing step-by-step instructions for update-pot, update-po,
+   translation, and review tasks
+3. Simplifying location filtering for PO file commits via .gitattributes
+
+AI-assisted translation is optional; many successful l10n teams work
+well without it. When used, AI output serves as reference only—human
+contributors must review and approve before submission.
+
+## Performance summary
+
+Benchmarks use the Qwen model via git-po-helper. The improvements reduce
+API costs and make agent workflows more efficient while maintaining human
+oversight of translation quality.
+
+| Task        | Before              | After                    | Improvement                           |
+|-------------|---------------------|--------------------------|---------------------------------------|
+| update-pot  | 17 turns, 34s       | 3 turns, 8s (range 3–3)  | -82% turns, -76% time                 |
+| update-po   | 22 turns, 38s       | 4 turns, 9s (3–9, 7–14s) | -82% turns, -76% time                 |
+| translate   | 86 turns, ~21m      | 56 turns, ~19m           | -35% turns (git-po-helper JSON batch) |
+| review      | N/A                 | 22 turns (63 entries)    |                                       |
+
+## Testing
+
+All changes have been evaluated with the qwen model via git-po-helper
+agent-test and agent-run. The po/AGENTS.md instructions are designed
+to work with coding tools that support file references (e.g.,
+"Translate po/zh_CN.po by referring to @po/AGENTS.md").
+
+## Changes
+
+Jiang Xin (5):
+  l10n: add .gitattributes to simplify location filtering
+  docs(l10n): add AGENTS.md with optimized update-pot instructions
+  docs(l10n): add AI agent instructions for updating po/XX.po files
+  docs(l10n): add AI agent instructions for translating PO files
+  docs(l10n): add AI agent instructions to review translations
+
+ po/.gitattributes |  36 ++
+ po/AGENTS.md      | 872 ++++++++++++++++++++++++++++++++++++++++++++++
+ po/README.md      |  70 ++--
+ 3 files changed, 946 insertions(+), 32 deletions(-)
+ create mode 100644 po/.gitattributes
+ create mode 100644 po/AGENTS.md
+
+-- 
+2.53.0.rc2.20.g532543fa46
+
