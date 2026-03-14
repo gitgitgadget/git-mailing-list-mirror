@@ -1,82 +1,79 @@
 Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9785A286897
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 23:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714DB234984
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 23:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773530463; cv=none; b=eHbFJOWxPKgR2eKQCLmv2wd0h0jdEIJRUEuBXb32w6lElGYj7YX6PNEY1ZngJaK9LxNA92jM+2tKDBQR9xG0zMiNt34/eigvbf084LDBtPz4q2ksyguvch2qyYHXt3ldRxCTv/HICdVcA+kIC5kAzVaVsGex/6ZM2h4QIkpuAsY=
+	t=1773530464; cv=none; b=anSzLOgIYBryjxgGtCjHhvpH+0TE48RZsH48wDC6vgYzax4stKeiz/xk5T0HF0b5d8p/hb3ghFlwvuW7l4vs11yv4vRlPwHmMvIwD6GBDk27s82DTEd5eT2ZQkAloH9akYSka690Tgmzql9YGddHdnZVbQIk5qXxMu6SZbeb2pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773530463; c=relaxed/simple;
-	bh=IGFXnsbVN7EVdFrGKuIywy04wTzYe+pTdWuIArSWeNo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=av04QYubQt1NPcKO50M8JQXGR/1sKAuChlZRVx++5t3SgYllnyLGykZKWBrRR+yvouXfXFsNyBQ0/xFDSKSj7iUNjRCV6bI/QxJdJ8giLu1fihrbg+di7Le9V85GmKk77+4Yv1YwA/De6ikdcSw17ggxFCeyEzBySrgFf6Tfz2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=QpPHurWr; arc=none smtp.client-ip=195.231.85.169
+	s=arc-20240116; t=1773530464; c=relaxed/simple;
+	bh=v6HV9lYeq9kpDOi4Au8BaIIympCxww+hqAq0GOmKhsk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GGppovqTIUUt5DtYkfZHDLpk7AlZyisWpuo7YmIh9s+Wz/TfDwiWy/OHjnLr54LTIvxWnE2soFDoVyHaLwCUkRxgLFk6dfbxb1awLZyLOz/ANgyLwV221IJRyPvVnIQV1UuB10UBXJoLPmQ5TTCwC86/TkIS95qPFLC76RO/WT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=CfzK3Ivx; arc=none smtp.client-ip=195.231.85.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="QpPHurWr"
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="CfzK3Ivx"
 From: Mirko Faina <mroik@delayed.space>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1773530453;
+	s=dkim; t=1773530452;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yD/iXjKRaAo0JA+BsIsWs0CsNk4/jrtCUijvHH1+YtQ=;
-	b=QpPHurWr71NO7PIZh5Ekk9K1xi8M7kbhkMoIxyFFM04r2jixJbSJ6DZCRWW8cQelulajnH
-	2AnFApc7G26HDiR4hLOFNuvO2wtqY2XeWp9t4Z79dx223Wewm/wI3fbqU6DL+yojXP9pv/
-	fEOXJnCgTwaaePSHxxCh4f5jk7e7nJW2N2lZt2uRhQ6MiSE4tuNur/Jm++mMnrsr/GmNWP
-	FBNhpHr8rWoFBnChw77uaBziBf7VhyZtbvLhh/RrJ8dIkNqLSP+RysQs4bSSS2v77qIbL/
-	6FIJMDyZxjBMy78L+n5Cyc9J0E81wSWAxfItxG5XkFcG7i8a+BniJSJGP5fn2Q==
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=gObqMQ03uLqCw7a7eVYZoVC2mvCGHccBesra8tRp5S4=;
+	b=CfzK3IvxDbyvvImg9vuipvX1rpveC0xj9wrVrmu4kFqhwutPFkY7u154u+CCM2mw7qPvI8
+	lo915pxzV4pLsPNWEboDLAxKUVQ1QVC4CIn+OUltUEhrCxu8dCaf8YHcjuTAlY+7b2DQSg
+	ySct2OLs7Y8Jv8SDG8XKwk0tGamnFzNrnFMDXAxyUl9MsnKYSKVIXXct2TN10La1a+izV5
+	XbcFDwcicu6nsW07Cb0r2BBQwqzkZtvmpwB+plRMNENIIQUCceCB341/W2SgDwffCOwl+y
+	Gw0NF5d4ro9s6Dg8gvKZ2A1Qfc9/A7rd+3BojBAzXYJ7+8mJdQ/G6aqqVPFBEw==
 Authentication-Results: mail.delayed.space;
 	auth=pass smtp.mailfrom=mroik@delayed.space
 To: git@vger.kernel.org
 Cc: Mirko Faina <mroik@delayed.space>
-Subject: [PATCH 2/7] format-patch: refactor generate_commit_list_cover
-Date: Sun, 15 Mar 2026 00:20:45 +0100
-Message-ID: <086cdfd57206735ed90416e6859ea0067172d708.1773530191.git.mroik@delayed.space>
-In-Reply-To: <cover.1773530191.git.mroik@delayed.space>
-References: <cover.1773530191.git.mroik@delayed.space>
+Subject: [PATCH 0/7] improve "git format-patch --commit-list-format"
+Date: Sun, 15 Mar 2026 00:20:43 +0100
+Message-ID: <cover.1773530191.git.mroik@delayed.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=960; i=mroik@delayed.space; h=from:subject:message-id; bh=IGFXnsbVN7EVdFrGKuIywy04wTzYe+pTdWuIArSWeNo=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBptezDBeBTXfcJBbYx6Y0RhGtC1ObRLDlnmCDq/ acwWSTdbL2JAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCabXswwAKCRBIeX6hnBm+ 0fqLD/47uo6GLtbTIw4rDc7N2R+bFlwpUS/VQE7xS/fWESLZU5UZlAOJv9ujomOHWPlU8Bsq3Pu 4P+AZRl4fCcV2lPsR85Lw8hLaghx8WeOUpI4Rw9zsv90sqb143C+nzbzsIwTSe2ZfpL9xP54+7L 8xeMvOfR32m5VpUvGBg2wjtDbpZIOfvR3mY0mSMI6MAbMvgg5k1HPGQxbbcgE95m0kFxFmgqEti +pbS5SZpOYA76fVYEh19YsXDOuJ8B9ek4vmLaCN41sVHNHvFSLk+u35IL9TheLcRoYZDK/YjuQH 3AHONAr2eFMYjd7aQf91ZNdef89AUS4jnoKtsSNgOIbtXkyXngpx9+haElJJ6//aWVCQ/9KYGER qfa/4R2ysOzVJsznZCUzHmHWsRhItJ8i7WQ1tpOQitH96giCkG5UI2bWmyE7gq2X1D0iPEi//an IS6AKFWJ+4Yk5DB91OuTf7/7TjgBmR8PF+6V1khJAbRy1w05nwdn2IPtLQIdtNmMG+/tL1jSvtz PStcvjQ1inpHJM2uFhg4WDvcDiD7wKaW0hZ9pmII0is7m4aUv5d7WJOBNipETDIH5jxAefYpeNn 5+xcXI5LSPwa7FuPtXEH+kRLESCqmJrva2vVAam0p1atOoWnhX+JCqh2P/vl7FKcrwc40DeFjVY 9QF9DJ33iD
- 463rQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1549; i=mroik@delayed.space; h=from:subject:message-id; bh=v6HV9lYeq9kpDOi4Au8BaIIympCxww+hqAq0GOmKhsk=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBptezCNB3xN1HFbVwD4vz2Xx/Yj9CzupaLgXmB1 /Bm3nmfxt+JAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCabXswgAKCRBIeX6hnBm+ 0dvNEACMz8pX6/fRimLrU2QZnt2g1GRXOd/ROcI1dthKbqOeX5fh0m6RphPnCXbIfwiVQJylISr O52GNA3aaFheeQ8v4/PIv2QTa4VjbXdGt8ohXotGpN2Ymjq5YLs9+7q2eCTPyANn7hpfi0LD2t3 XMkpjAFYRH0L8zD7gEeYeLY2Fy+eIYGOl4W1FoPlMkym6VUaqg5rAtpD5gal8gaEn0m9A1VQYGR Gqu0fc4sfeCPGURqCWraxciO/a1VU66I9FI/2YSo0eyh0HEz+0nIybrzN9sNaTy2Fwq0XRlIC8g p1DcTd/BzZT/AMzEibTl+qJHS4AQ8OIYXyKsHr4JswGWG4dzGKIC5r3heXduK3TJiEqtacwFQeX TdMHMC8/0+driiiLBnlSd9P6zsel20kJHSYKyM3Gvqlzm8JoC8gYNQ3xflYxwJh9vN/7AUb8OtQ NiZX84XZgetyJw8nQIrk4E18+47P/DDmnSMHMfMqeKUAhdO78VB4PiYCVMkGygNcVHWukbZl+fz n3YquMxVOpXS0SryxL8bsPVOVKIenwFNny8LeeysF6YBTL99jJZ87bL0bsIl5uGtYOTuoArWtWl FAYx1orBjGZcswx6DhkvUjdx5peU6E8TlJGeuWa9h37KehsY/I2GmHHuq4RPsrdhhcoMOW31pys YB5PrkHrk
+ vexkHw==
 X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
 Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: -----
+X-Spamd-Bar: -
 
-Refactor for readability and remove unnecessary initialization.
+This series aims to improve the --commit-list-format (former
+--cover-letter-format) option for format-patch by improving a bit the
+user interaction with the option (and its configuration variable
+counterpart), removing the ability to use the configuration variable in
+an ambiguous way (which also causes problems when interacting with it
+through the cli interface) and introducing a new format preset.
 
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
- builtin/log.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+This series is based on top of 67006b9db8 (The 15th batch, 2026-03-12)
+with the following series merged into it:
+  - mf/format-patch-cover-letter-format at 51ed9f7e72 (docs: add usage
+	for the cover-letter fmt feature, 2026-03-07)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 716ebc2701..997bdd608e 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1376,12 +1376,11 @@ static void generate_commit_list_cover(FILE *cover_file, const char *format,
- 	struct pretty_print_context ctx = {0};
- 	struct rev_info rev = REV_INFO_INIT;
- 
--	strbuf_init(&commit_line, 0);
- 	rev.total = n;
- 	ctx.rev = &rev;
--	for (int i = n - 1; i >= 0; i--) {
--		rev.nr = n - i;
--		repo_format_commit_message(the_repository, list[i], format,
-+	for (int i = 1; i <= n; i++) {
-+		rev.nr = i;
-+		repo_format_commit_message(the_repository, list[n - i], format,
- 				&commit_line, &ctx);
- 		fprintf(cover_file, "%s\n", commit_line.buf);
- 		strbuf_reset(&commit_line);
+[1/7] pretty.c: better die message %(count) and %(total) (Mirko Faina)
+[2/7] format-patch: refactor generate_commit_list_cover (Mirko Faina)
+[3/7] format-patch: rename --cover-letter-format option (Mirko Faina)
+[4/7] format.commitListFormat: strip meaning from empty (Mirko Faina)
+[5/7] format-patch: wrap generate_commit_list_cover() (Mirko Faina)
+[6/7] format-patch: add preset for --commit-list-format (Mirko Faina)
+[7/7] format-patch: --commit-list-format without prefix (Mirko Faina)
+
+ Documentation/config/format.adoc    |  2 +-
+ Documentation/git-format-patch.adoc | 19 ++++----
+ builtin/log.c                       | 35 +++++++-------
+ pretty.c                            |  4 +-
+ t/t4014-format-patch.sh             | 72 +++++++++++++++++++----------
+ t/t9902-completion.sh               |  1 -
+ 6 files changed, 80 insertions(+), 53 deletions(-)
+
 -- 
 2.53.0.959.g497ff81fa9
 
