@@ -1,137 +1,76 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1430761FFE
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 03:47:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A83E2E9729
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 03:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773460054; cv=none; b=EMBcSl11eIT3JQSgp2FYNjyB3HFw3WO2Iam6EzAOtmwYKdHGBIzabhx4qCC58RqqOagbSGa3hhTfsAInNlaBeeuAcV1jbK8WREpAEkMGSjtGZESymXKMhMmqgTIJ6c/+VhR8ppTo/FpyJpjj3Jh2CxbOoDp20Tun47Zpsxg9mV4=
+	t=1773460796; cv=none; b=S3J3JFyi6MXPWSsS8ghnjalqGyCHBP9dyKkgptJKSHDX4JmyPd6g3iDEVc7HUXxXH0o9Xc9Lz7LMNQ3xFlGMn/xzaPO9RV8vYVbFhLPd2rgqib/M8w4Ol1lxk4VR75W/J5AuYwHO1Pr5wbCMDceVL2s0c4TnxBTq7uzByuexxe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773460054; c=relaxed/simple;
-	bh=j8HpGXrHEKG0AK4bKEC9COQRhz5YJh4asXmGkWL5ANM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bmgWf3g2bqPqL4VJVVNm5rguVgDjEN2TFoUrJjJgmxgnZ+LDn/YN3uftAN+3jJa3Tf3tBQKGppWa0v3ZySiJs7FwdNmYOVWJ4/rmBdYs6xefxYqUPIsuWUiJuA9IJaymWFvnFANgzjt46In4IrgiG1qCN0i61Fc1MYXlcnMxqf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M4kiG0KK; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773460796; c=relaxed/simple;
+	bh=CzxHbpPw01aVAadzDToIEir8GnrzikcgVQwO9hlJsoo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kvEQxMAM7By2n2Xho68TwxuHWeyaqypP9E4itzijSVP0NO/nIoBKT0H0e340og/6eTu1SltJ82l485RBsdoXK8W5O/krLSBbH8fWfaNZpjgStAQ5Nr90wtP5WZ5lhPoBxqQ2RZkn+oEn7ZsQr8rr6nEEfTExaCi3icIE7IjDyA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=PiMLMzct; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=TFsbSGIb; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M4kiG0KK"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c6e2355739dso1063729a12.2
-        for <git@vger.kernel.org>; Fri, 13 Mar 2026 20:47:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773460052; x=1774064852; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XA+5DHyVOxg9GjJMbR3MbvDn0aQv8w3uW6lquIVtcVI=;
-        b=M4kiG0KKETHsKXDf4rQaaJlw+ePFiGeoMa4saxYDYtHaDPCrPPqRahfpXh9TXizmN0
-         uJS4Kg9xtJ+X34LdvHEgQXD6VEREP+utzJ+vN4kNM6recWgXduN8c3rkAoM2jp3R+h7/
-         8jMgtEpfgINnBuX/+880Yr//Aydgq/x5fS9Al9SsmTFO2oxEnN1bf3uKhSP0OaQHusWZ
-         bZDYD6Hmrv24m1wD3Yvd3wRaWIDpZbxAFYkUHm7+0bdo8SKHYM2xUbMYMprXmwrQIeih
-         +QRlbQ6HQ4Otnfelb6xODqn/CF8kbtRu/IWGS+4jsw+6Dy3RrxolSLX2240LoyHSP/qm
-         cu+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773460052; x=1774064852;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XA+5DHyVOxg9GjJMbR3MbvDn0aQv8w3uW6lquIVtcVI=;
-        b=BZpdvL2xHq7oo5VRMr8CEiVcQb+gjGsR4l3WegEEyggT0xIeRPDxhnTefwwlch1chd
-         3rrHQ7yVhBuIjK2JIa70tzO7lKBRAVJky4AT3SljjdCyrozGHFKXXg4nqIayqeQbG4HP
-         ECEYIEcBTlM/7DxFjN+DCosgBXqxk7sxkUoyZNNDBLMTvvo6hmsrm5JID8YaexfKJWlc
-         ku/4iak2OexL6KFJllBHdwwoimu9+td0rAFzfkInJp6+om6nRlUWIuiLKN/zPizJzuAH
-         iG9vLtbYXUVupnmYyzbGTkDSeU1HwDzM53rsbt04TcTudDcpEEgMe8K2kzjQUPxvOp2a
-         rGuw==
-X-Gm-Message-State: AOJu0Yzf95acbHc8Pmgt48EF6kcOh0yBza8QujeBQOWeTrL1MqiEbdxw
-	D4RPlbPpuPptOJml9sVqklEagDj4qIoALU/5J0RAW9/3H7g4v4hUOchdCSu5HB2W+8c=
-X-Gm-Gg: ATEYQzzqD3GVe5D5gT74+SWFwFezxpk9mW2v0qiHjzuxU4+Q3LmvTmtBG0lr+oE70FB
-	//A7bxxEAfCBan/Vfc1nwFK2MvgpXUF/rj01dL8aht/wh0HURqwcSt6+uO62ESbhOlewnCEsj01
-	qLez2NuuxFTxi2ajqu3Jhhd++j79+wKx5Wo4TUxA4RQPxdYUwcaoM6XeidDsmC6n/Y/zqagoTbk
-	0r/zNO0ALdam0arTwxxI7quO7laWHvh1b1jlxPfH2GRVipc24Za9NyewzLhzDoONt4P0JbtDv37
-	RkPoEI9vfKJjLsNddoCTfTMZQ33TTPzZb/saa5g+r6Wt/e/z+7VsW8yb7iD8jSpuJ5UKqkN7O2d
-	yN/gxnfcLt7SnPKvCum9oPDpxlYJWFeZP5cqio0pkyeU1AZ++eK69ZLJMakolJjAgHZ+zirfuVZ
-	wtoM/GmF+aC37RJjB3MBJGvOhNATrBIUL3aLBtzubzAZk484tpQdCuw71L6BWrRByDzbp8Bl6bR
-	JpT
-X-Received: by 2002:a17:902:ffd0:b0:2ae:3f3f:67b8 with SMTP id d9443c01a7336-2aeca9a1751mr53691985ad.15.1773460052231;
-        Fri, 13 Mar 2026 20:47:32 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1cd6:7137:9d5b:f334:52e7:a47])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece7edd1fsm48946775ad.47.2026.03.13.20.47.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2026 20:47:31 -0700 (PDT)
-From: Ritesh Singh Jadoun <riteshjd75@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Ritesh Singh Jadoun <riteshjd75@gmail.com>
-Subject: [PATCH v2] t/pack-refs-tests: use test_path_is_missing
-Date: Sat, 14 Mar 2026 09:16:17 +0530
-Message-ID: <20260314034617.1261-1-riteshjd75@gmail.com>
-X-Mailer: git-send-email 2.46.0.windows.1
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="PiMLMzct";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="TFsbSGIb"
+DKIM-Signature: a=rsa-sha256; b=PiMLMzct31l1+aoR29MPFHA1svpu/shYA73VRfeZMFf5rp801HybB83ZRVFkuXAfGv6kqhiyv/IgEfRQFjVONyoeZRsulxlTfABf5DBm+Kg9trcJYf0Y1/jepgFs06qGsvqsKq/D5l7mm8U5axXE2iHcJ9PkJZ4VeVF6hTF/eVdVyEMg8VY3T/3KCXi8YZoh9O1qKht19OOkMUEbCqx0Vke/Ju6dJrzmThi5PVU6UZs1q1M2vuC14krOb8v2TG8FtpMbb2iUao5NfwgmwF9h8qQF5Y08MltUNO78mkMFYqIkyweyIX+GnXl7wr3fsLGaGrwMsxPIF4qgqpqwwQ5j6A==; s=purelymail2; d=malon.dev; v=1; bh=CzxHbpPw01aVAadzDToIEir8GnrzikcgVQwO9hlJsoo=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=TFsbSGIbSZ7ym7uxHaKgIRkX2B/Yx/z/B0Io40dGfYFMcgy/FJq+Jo2urzIXa9tT+GsEHQKE1CIrLxw1P4//qUK2ZY0hwCZ2/4ZmJloVkOLcHABh4XgidmYI+8DrPBYLGgIlBCrmbZzWwJMagjjRpF/lMwCMtNYKO+2Bgm9yNjvah/cE637o/FS2W0rJMnX9GXlhtKdbIgADVOK7uynyxSm/vwqm/PAP+SJP2NQFFf/dGMqdse7ZAeHa5d3TIiA8wBuHq80WEm/iKjc4ccmMknIBW6Uy/y3UbUNoPQe/fpcWLDLb1m+MU67dmAH5xapWo+ufdcPhHOc0DTiJyZ9+cA==; s=purelymail2; d=purelymail.com; v=1; bh=CzxHbpPw01aVAadzDToIEir8GnrzikcgVQwO9hlJsoo=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1281284292;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Sat, 14 Mar 2026 03:59:47 +0000 (UTC)
+Message-ID: <405c075b-731b-47e3-9e9c-70aaa0efe1cc@malon.dev>
+Date: Sat, 14 Mar 2026 11:59:43 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH GSOC] diff: use conventional comparison order
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: aum2357 <ahambrahmasmi2357@gmail.com>, git@vger.kernel.org
+References: <20260313140440.564201-1-ahambrahmasmi2357@gmail.com>
+ <9afe48e3-8348-4e2c-8e5f-bbdc3b2951f8@malon.dev> <xmqqldfv4h6k.fsf@gitster.g>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <xmqqldfv4h6k.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-The pack-refs tests currently use raw 'test -f' checks with negation.
-Update them to use Git's standard helper function test_path_is_missing
-for clearer failure reporting.
+On 3/14/26 04:18, Junio C Hamano wrote:
 
-Signed-off-by: Ritesh Singh Jadoun <riteshjd75@gmail.com>
----
- t/pack-refs-tests.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+> You guessed wrong.  See CodingGuidelines.
 
-diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-index dca0c77ca1..3cc4906f05 100644
---- a/t/pack-refs-tests.sh
-+++ b/t/pack-refs-tests.sh
-@@ -61,7 +61,7 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
- test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
- 	git branch f &&
- 	git ${pack_refs} --all --prune &&
--	! test_path_is_file .git/refs/heads/f
-+	test_path_is_missing .git/refs/heads/f
- '
- 
- test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
-@@ -113,14 +113,14 @@ test_expect_success 'test excluded refs are not packed' '
- 	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" &&
- 	test_path_is_file .git/refs/heads/dont_pack1 &&
- 	test_path_is_file .git/refs/heads/dont_pack2 &&
--	! test_path_is_file .git/refs/heads/pack_this'
-+	test_path_is_missing .git/refs/heads/pack_this'
- 
- test_expect_success 'test --no-exclude refs clears excluded refs' '
- 	git branch dont_pack3 &&
- 	git branch dont_pack4 &&
- 	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" --no-exclude &&
--	! test_path_is_file .git/refs/heads/dont_pack3 &&
--	! test_path_is_file .git/refs/heads/dont_pack4'
-+	test_path_is_missing .git/refs/heads/dont_pack3 &&
-+	test_path_is_missing .git/refs/heads/dont_pack4'
- 
- test_expect_success 'test only included refs are packed' '
- 	git branch pack_this1 &&
-@@ -128,8 +128,8 @@ test_expect_success 'test only included refs are packed' '
- 	git tag dont_pack5 &&
- 	git ${pack_refs} --include "refs/heads/pack_this*" &&
- 	test_path_is_file .git/refs/tags/dont_pack5 &&
--	! test_path_is_file .git/refs/heads/pack_this1 &&
--	! test_path_is_file .git/refs/heads/pack_this2'
-+	test_path_is_missing .git/refs/heads/pack_this1 &&
-+	test_path_is_missing .git/refs/heads/pack_this2'
- 
- test_expect_success 'test --no-include refs clears included refs' '
- 	git branch pack1 &&
-@@ -147,7 +147,7 @@ test_expect_success 'see if up-to-date packed refs are preserved' '
- 	git branch q &&
- 	git ${pack_refs} --all --prune &&
- 	git update-ref refs/heads/q refs/heads/q &&
--	! test_path_is_file .git/refs/heads/q
-+	test_path_is_missing .git/refs/heads/q
- '
- 
- test_expect_success 'pack, prune and repack' '
--- 
-2.46.0.windows.1
+It does have nothing to do with the compiler. Thanks for pointing out.
 
+However, the coding guidelines state:
+
+> Both are valid, and we use both.
+
+So, the real key is this sentence:
+
+> Just do not mix styles in the same part of the code and mimic
+> existing styles in the neighbourhood.
+
+However, in builtin/add.c before the patch, there isn't even a single=20
+=E2=80=9C>=E2=80=9D symbol used for comparison. The =E2=80=9C<=E2=80=9D sym=
+bol is used throughout the=20
+comparison sections.
+
+I find it quite strange because the author says:
+
+> to follow the common coding style
+
+This patch seems more like it breaks the common coding style.
+
+Regards,
+
+Yuchen
