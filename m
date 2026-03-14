@@ -1,121 +1,186 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DF72FD660
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 16:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0F42F6160
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 16:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773504504; cv=none; b=Rlii+P1TKt74r7SobyeXhlag3Km8GAiv5h/Yew9pgIUGA/t0kGkCIVo4JlSxWFkSnO/BhbR7CYKc2lLJRPStduuNjpyddtZPtWZLnFOIjMcoMzdaoddweb1jU1UjaAltoc7c1FtuLypse1CFRnk1W0UVvoPNmrhD6w/l74va+Vw=
+	t=1773506366; cv=none; b=N7Xy3PTBoFBSEsYHNjAjnyil8s9N5ih597s2Q9bDsJTQjlM3LSNR+NB5dR5FHOiIQ/96iagMCUhiG0ZS0NOWNj5UbyHyIb61GxCJp+IxdzWNukC2rAq5YsJyUYF+RiwBXoAQ/aByK3lKaFd1qjyiaasUbXfn26u6hdK2W7GUquc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773504504; c=relaxed/simple;
-	bh=tUVzb+hUVOLRb2DttJTOa8x2j5UowxwGwwPHHwDItw4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ctoOgWt56plX2SxYaZUI7+6z/+Bx2P9tijxo4aoktZKCfY2HVp9QEajHph1nNgMZG4mPx/+kj4cDqzPWOjK3Lf5Bc8ax2PGUpNLIlIa/D90pGv07HRGdkP8iS7Fy4aIG7EF705eRphTedOZ5DDqMW0lUb1AhJbrdI9P/CUn/xVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XQj2UQRL; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773506366; c=relaxed/simple;
+	bh=M8Hz+n8qmchwyCH8mOFAJy7mLIZm6J/qRgaFAJgKlwo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gkfbHfQoUKhqM8fu1rQjtBuDi0gzNxE8kInKRW6Z1tPSd0RUsTesPppmNhSStIK4i5wXreIStM+bta/nzZZAEB/AUXADBl9QzAfT49ejZEx6HttG3xjAJ4SvdIvgMvbD43bFJ3OmbELUAQvDo8IvsJW3soXCBbtxb2Z/Sh+4ftY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OjCw6T7d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fyJssqbj; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XQj2UQRL"
-Received: (qmail 116720 invoked by uid 106); 14 Mar 2026 16:08:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tUVzb+hUVOLRb2DttJTOa8x2j5UowxwGwwPHHwDItw4=; b=XQj2UQRLpH+a53S7Hz9XIbI3xFLqnrckbJcpuuEjqTzdtirKkZXbqmSpKyTgRdJMJkdYWi4qe9t8VldOeCze852rMUtssECIqp4PSuaT/8TX3AMwGLbKeX0Km0tu2kbdmo0FliBhjOZ0Jlb9E6xLPCOIjeuy/hMrazdQQynZ5x7K88zeMUhWcynW98iP2COmKP+dq0EFoCqEaoDwb4z4rObF8RrbjAu7IoiKatrU6jS1hEapwQEU1qJETKiZgxGnE+b2gze4u0zag8PkxiwiV0sUc38+L9BNEWt102PHiqOxHgMnUfhPJ/8TGk+4R0GlkzGVgWgSYaEQfQHF2NsGsg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 14 Mar 2026 16:08:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 545657 invoked by uid 111); 14 Mar 2026 16:08:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 14 Mar 2026 12:08:15 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 14 Mar 2026 12:08:14 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Andrew Au <cshung@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v4] transport-helper, connect: use clean_on_exit to reap
- children on abnormal exit
-Message-ID: <20260314160814.GA918806@coredump.intra.peff.net>
-References: <20260311184206.GA1911377@coredump.intra.peff.net>
- <20260312214945.4050010-1-cshung@gmail.com>
- <xmqqsea4aen2.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OjCw6T7d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fyJssqbj"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4D36B1D000D3;
+	Sat, 14 Mar 2026 12:39:23 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sat, 14 Mar 2026 12:39:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773506363; x=1773592763; bh=TjKGt47G2U
+	Jasid5+d2TUN8DG11qsLtV67FHTBcr6+c=; b=OjCw6T7dVG5NJreB+1YRPkzXvW
+	jG4y26OKwGUumYPVMiwTWUXNsh8yj8YU4jsy1NAL95z8F9y1IbUkqhzz6A1IQU+A
+	2BU4o78KLD3GKC5TW9A9r2GGqLVuOAuF3eKN65Nj4fTrMiDpvPZgx1PEemc5qyqr
+	fXs8ZUPgIiCs1x16SGXJbLGToFbjgZslpazosvjW6uJ5ckyxVKhZbHkDhmfpFbEz
+	hP4inRk6f/kEVS8/iokvbuBopU0zBSAV8xhGkKAnIWtZj1J0ft7Ae801LqOrySQp
+	CRvl2+/+N8VyajVtF5vtdw0F2dg+d9RhX9x6008SSavRv6oMuGFoU0EXSfFg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773506363; x=1773592763; bh=TjKGt47G2UJasid5+d2TUN8DG11qsLtV67F
+	HTBcr6+c=; b=fyJssqbjcpoQOrVbCkilifFbA6CxWYUdqir//lIMd6so0LB5SDy
+	na8/nNtN95xaMq+kYEhPIQHKUXEmtG1msXP1sYyBtnz6OcZRiBWcM+OzDPDzphT3
+	cmz987tnofPRY/eJkQ66Zvhit40sd71X0wHIcJ+/fqmpbM8xhuNts6Htvh+97v5F
+	kwWP6I1F+Xcjq9egquIEkxxs3ud+iintsMBd0w7StvKk5kVjnD3kgWTONJGEQv/t
+	LOMWahr259GDvsftl7nfhfpac9vucudDEZKYG05CINtIylf6Y46z3zTf+Mrfr2sF
+	PSRMJxRC57DH5pbX3QLbRshof0HIq6AkhxQ==
+X-ME-Sender: <xms:O4-1afr0UJI1aIQ4-PCYJNJcKusDpwntiXbMyCK6yhwbZn3rp5kXxw>
+    <xme:O4-1aRHi2lzEO4pPk6GSAzbEZzK8JcRadCuTvZ1cdtoheumAIXtVWrI9ASRXd-5Zh
+    4IcU5YsV8-MO_0zmsP4Shb4gvwa5MBUWbPFopBlXWdFO-IbNWs_NQ>
+X-ME-Received: <xmr:O4-1aZmPd4onwQkrejVeQDuCosuw-0ZTGyUmLCWo1OVLjc08FDpAjnwgZV6QsQAN6q82humCMqYE6KE6NzUmHDMA8rumuvUwNQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleeftdejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrihhtvghs
+    hhhjugejheesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:O4-1ackdwlcGOaX2tNyDYRJisXaU9RyTVbYi1Z2Tm7dKVO5QnjXd9w>
+    <xmx:O4-1aSvAFvKR2nGLZVyRd3Xdvan4US1sZJKyxVKjcPaml0tDR8GUuA>
+    <xmx:O4-1aXn1iwA4L_yClg-cDihl1AqJFKPLRUqdgTQFX6_LnVfrdWCF-g>
+    <xmx:O4-1aVtEgaEfHvONjQnsrhBhyzlOzvfrq7FQFfV3cK9keBQCeBX7vg>
+    <xmx:O4-1aZFrAAplakbOPfpYItpc0-sxlS-Q6zbjyP276c6RtnujTd7Oe-lQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 14 Mar 2026 12:39:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ritesh Singh Jadoun <riteshjd75@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] t/pack-refs-tests: use test_path_is_missing
+In-Reply-To: <20260314060550.1277-1-riteshjd75@gmail.com> (Ritesh Singh
+	Jadoun's message of "Sat, 14 Mar 2026 11:35:50 +0530")
+References: <20260314060550.1277-1-riteshjd75@gmail.com>
+Date: Sat, 14 Mar 2026 09:39:21 -0700
+Message-ID: <xmqq5x6yxt52.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqsea4aen2.fsf@gitster.g>
+Content-Type: text/plain
 
-On Thu, Mar 12, 2026 at 03:04:17PM -0700, Junio C Hamano wrote:
+Ritesh Singh Jadoun <riteshjd75@gmail.com> writes:
 
-> Thanks, queued.
+> The pack-refs tests currently use raw 'test -f' checks with negation.
+> Update them to use Git's standard helper function test_path_is_missing
+> for consistency and clearer failure reporting. This aligns with
+> CodingGuidelines and makes test failures more obvious.
+>
+> Signed-off-by: Ritesh Singh Jadoun <riteshjd75@gmail.com>
+> ---
+>  t/pack-refs-tests.sh | 28 ++++++++++++++--------------
+>  1 file changed, 14 insertions(+), 14 deletions(-)
+>
+> diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
+> index 2fdaccb6c7..3cc4906f05 100644
+> --- a/t/pack-refs-tests.sh
+> +++ b/t/pack-refs-tests.sh
+> @@ -61,13 +61,13 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
+>  test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
+>  	git branch f &&
+>  	git ${pack_refs} --all --prune &&
+> -	! test -f .git/refs/heads/f
+> +	test_path_is_missing .git/refs/heads/f
+>  '
 
-Curiously this patch seems to cause a failure in one of the CI leak
-jobs, but I don't think it's the culprit. See below for a fix and
-explanation.
+Good.
 
-I don't know if you want to apply it separately (since it's really a
-totally different topic) or on top (since it is only the application of
-Andrew's patch which lets us find the problem).
+>  test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
+>  	git branch r/s/t &&
+>  	git ${pack_refs} --all --prune &&
+> -	! test -e .git/refs/heads/r
+> +	! test_path_exists .git/refs/heads/r
+>  '
 
--- >8 --
-Subject: [PATCH] transport: plug leaks in transport_color_config()
+Questionable.  When do we want to loudly tell the human about an
+unsatisfied expectation?  We expect .git/refs/heads/r not to exist,
+so we want to use "test_path_is_missing", no?
 
-We retrieve config values with repo_config_get_string(), which will
-allocate a new copy of the string for us. But we don't hold on to those
-strings, since they are just fed to git_config_colorbool() and
-color_parse(). But nor do we free them, which means they leak.
+Please do double check the remainder of the patch, although from a
+cursory look I think you got them all correctly.
 
-We can fix this by using the "_tmp" form of repo_config_get_string(),
-which just hands us a pointer directly to the internal storage. This is
-OK for our purposes, since we don't need it to last for longer than our
-parsing calls.
+THanks.
 
-Two interesting side notes here:
 
-  1. Many types already have a repo_config_get_X() variant that handles
-     this for us (e.g., repo_config_get_bool()). But neither colorbools
-     nor colors themselves have such helpers. We might think about
-     adding them, but converting all callers is a larger task, and out
-     of scope for this fix.
-
-  2. As far as I can tell, this leak has been there since 960786e761
-     (push: colorize errors, 2018-04-21), but wasn't detected by LSan in
-     our test suite. It started triggering when we applied dd3693eb08
-     (transport-helper, connect: use clean_on_exit to reap children on
-     abnormal exit, 2026-03-12) which is mostly unrelated.
-
-     Even weirder, it seems to trigger only with clang (and not gcc),
-     and only with GIT_TEST_DEFAULT_REF_FORMAT=reftable. So I think this
-     is another odd case where the pointers happened to be hanging
-     around in stack memory, but changing the pattern of function calls
-     in nearby code was enough for them to be incidentally overwritten.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- transport.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/transport.c b/transport.c
-index 107f4fa5dc..2fb4767821 100644
---- a/transport.c
-+++ b/transport.c
-@@ -54,14 +54,14 @@ static int transport_color_config(void)
- 		return 0;
- 	initialized = 1;
- 
--	if (!repo_config_get_string(the_repository, key, &value))
-+	if (!repo_config_get_string_tmp(the_repository, key, &value))
- 		transport_use_color = git_config_colorbool(key, value);
- 
- 	if (!want_color_stderr(transport_use_color))
- 		return 0;
- 
- 	for (size_t i = 0; i < ARRAY_SIZE(keys); i++)
--		if (!repo_config_get_string(the_repository, keys[i], &value)) {
-+		if (!repo_config_get_string_tmp(the_repository, keys[i], &value)) {
- 			if (!value)
- 				return config_error_nonbool(keys[i]);
- 			if (color_parse(value, transport_colors[i]) < 0)
--- 
-2.53.0.887.g3d5d06adec
-
+>  test_expect_success 'git branch g should work when git branch g/h has been deleted' '
+> @@ -111,43 +111,43 @@ test_expect_success 'test excluded refs are not packed' '
+>  	git branch dont_pack2 &&
+>  	git branch pack_this &&
+>  	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" &&
+> -	test -f .git/refs/heads/dont_pack1 &&
+> -	test -f .git/refs/heads/dont_pack2 &&
+> -	! test -f .git/refs/heads/pack_this'
+> +	test_path_is_file .git/refs/heads/dont_pack1 &&
+> +	test_path_is_file .git/refs/heads/dont_pack2 &&
+> +	test_path_is_missing .git/refs/heads/pack_this'
+>  
+>  test_expect_success 'test --no-exclude refs clears excluded refs' '
+>  	git branch dont_pack3 &&
+>  	git branch dont_pack4 &&
+>  	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" --no-exclude &&
+> -	! test -f .git/refs/heads/dont_pack3 &&
+> -	! test -f .git/refs/heads/dont_pack4'
+> +	test_path_is_missing .git/refs/heads/dont_pack3 &&
+> +	test_path_is_missing .git/refs/heads/dont_pack4'
+>  
+>  test_expect_success 'test only included refs are packed' '
+>  	git branch pack_this1 &&
+>  	git branch pack_this2 &&
+>  	git tag dont_pack5 &&
+>  	git ${pack_refs} --include "refs/heads/pack_this*" &&
+> -	test -f .git/refs/tags/dont_pack5 &&
+> -	! test -f .git/refs/heads/pack_this1 &&
+> -	! test -f .git/refs/heads/pack_this2'
+> +	test_path_is_file .git/refs/tags/dont_pack5 &&
+> +	test_path_is_missing .git/refs/heads/pack_this1 &&
+> +	test_path_is_missing .git/refs/heads/pack_this2'
+>  
+>  test_expect_success 'test --no-include refs clears included refs' '
+>  	git branch pack1 &&
+>  	git branch pack2 &&
+>  	git ${pack_refs} --include "refs/heads/pack*" --no-include &&
+> -	test -f .git/refs/heads/pack1 &&
+> -	test -f .git/refs/heads/pack2'
+> +	test_path_is_file .git/refs/heads/pack1 &&
+> +	test_path_is_file .git/refs/heads/pack2'
+>  
+>  test_expect_success 'test --exclude takes precedence over --include' '
+>  	git branch dont_pack5 &&
+>  	git ${pack_refs} --include "refs/heads/pack*" --exclude "refs/heads/pack*" &&
+> -	test -f .git/refs/heads/dont_pack5'
+> +	test_path_is_file .git/refs/heads/dont_pack5'
+>  
+>  test_expect_success 'see if up-to-date packed refs are preserved' '
+>  	git branch q &&
+>  	git ${pack_refs} --all --prune &&
+>  	git update-ref refs/heads/q refs/heads/q &&
+> -	! test -f .git/refs/heads/q
+> +	test_path_is_missing .git/refs/heads/q
+>  '
+>  
+>  test_expect_success 'pack, prune and repack' '
