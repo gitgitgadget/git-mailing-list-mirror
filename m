@@ -1,98 +1,131 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391377082D
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 21:36:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DD618AE2
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 23:16:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773524223; cv=none; b=T5heKSF5LPrOHbTG10ugBiMBNpwIS4TvS83wGtAdoIETuUdYkDkOgbtfHUXlN2RTCabGFSBJ1fwaWLk6vDmdt8YcyGG44pFbXx2mTFOGwHCNMuXPVufeHpI2uI+FG1qJUIM3drKYUZiOaYuvZS+djuHasND9lzCMSslPLi9cyGM=
+	t=1773530208; cv=none; b=O+354nGmUSE7o3cDl9yfmbqpHpvGjVzx4KsjI3RbFG5OkJ0xDOH4kSaLCNVbPRnD2WyFGbXcksloW2+JPbnPWpItY0FRFNjL5xYkiMxxCFOqq6AG+Exp3ldr7O/YLdKhOEHt3TLrQyf4/zHk5RSN2NaA/8GJN/mKVxbik9daP1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773524223; c=relaxed/simple;
-	bh=NDTVpXyg70fjDPTbKCiXYt+1QB8rBJCAm7bcfAfifNE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=g0/ZSdu6coIbYZvqRdrUVLzUqsNQo0q7Iqp9itEm6mMDCzMwQEEPnoxwWdiiT0nrem5G9ILbtXNuqh6uDB5Pha6U8Yj9YQLbrtOo2wLYn8nQnAS/SiRq4vh9nua4lhzvLekFZXpPAHuv6FMJfO36F0w8b/0LtaALQ0Yhw+EYte4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=NuEpR4Fj; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1773530208; c=relaxed/simple;
+	bh=FrLEnMTDsntCiGWZNw4QKzuDSXmuzpSIHZLg4ASXopc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tzBObDtfiG81mOO3/PIiXbKSnQJlN/ltQQgRjqetxVo1Ea+pICHixmRnGDy8kHVvFaQNoINUq6phr10zjo36sW0PSY93pSRs1mRgSoxGbtDs5APihrkBwIYe5oC0R8hXlVqCxkhM/qqmxxMAz4NT8pTndKrQyvhDmUfvxjLQzgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hx/QzZlx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oen965EK; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="NuEpR4Fj"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1w1WfC-006rFa-LP; Sat, 14 Mar 2026 22:36:50 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:Cc:
-	References:To:Subject:MIME-Version:Date:Message-ID;
-	bh=VZNPJOAuJr2l+jPON+RmTbxGfxXdvuj0sYbbr4e2MIc=; b=NuEpR4FjNd8iEl+2STYbyqbETW
-	ABixSYKufYPBahinQZ8GTkqNN6eKtijUoC8fCvZYbeFdexWhh3QYwCtrFDGWJGQPVKOmBOPlAqT8O
-	1cZXz8VfWs5co47cmQ/m7JZ02qKOkJA4NDR2W0ddsyOh4srMnmlgMKtI2oKlNOjkOWnpnlpH+HBG/
-	PVUThDgN4iAd1RRsdq4YLQhLKhN3/fB8bSBKFlYGymWRfRQhy5X0euHRmatIBH6k65ij5Gi8GYCpI
-	grBKg1sdbA1xKagWC8uK0GNZvi6Y+zYa9UfdgaXbR2iMbaTy7xh+xGMf7wb3JlNRMguofcmcaMrGA
-	XP9aI+GA==;
-Received: from [10.9.9.72] (helo=submission01.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1w1Wf7-0003Ci-4e; Sat, 14 Mar 2026 22:36:45 +0100
-Received: by submission01.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1w1Wes-004KRu-6E; Sat, 14 Mar 2026 22:36:30 +0100
-Message-ID: <454235b2-139f-40bd-a4ac-fb7664962471@howdoi.land>
-Date: Sat, 14 Mar 2026 16:36:27 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hx/QzZlx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oen965EK"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3AF7C1D000D3;
+	Sat, 14 Mar 2026 19:16:45 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Sat, 14 Mar 2026 19:16:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773530205; x=1773616605; bh=re7eIdITrX
+	S40JSt0tUaSOwdwZta2/RP9BUpyxRAKRs=; b=hx/QzZlxJq0DUob8W1384xfwj0
+	gHURyAHFHewm/3N8hMYoYseyBiOl7d360pAePgSFYNnsbEjEjGft7nR5RA6GPBW/
+	GuVZdMF88ekTBxS1Wszo+3D6QoEBhAvJ/xx3A9DYqkvobwEunbUdOaK70LgwLr4V
+	iTMUGkqK0RB7K9xdVANg9D7BHZVdsBSZJ4G9nF0Sg90xRMkAvvLeNZ74+UvSqslV
+	zocjT64JAkGJZt4dKr1XXyhS8KFefaTuTM6da/66OykjkyHeLKhMGL+sw8fC3etQ
+	hTyOe+WJpNevHfpl2/iLQuSYCJckx3jSx4plEzMjSZ2IrRpoPvN3KTmHD/wQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773530205; x=1773616605; bh=re7eIdITrXS40JSt0tUaSOwdwZta2/RP9BU
+	pyxRAKRs=; b=oen965EKOb7SVk8JlovjCbTHHY5vBb0R0g6cs+l3AazTCAqjom/
+	2YqsTHeTnd5YBuLClsywEx95yrwzKhD9BgB31WYrMKd3FMd8dz/v3kf1D0G5KjLY
+	bSYWuQk5sGZq28A3wodUsZ655miGtJnbzEf00D8EKX7zBhbz211YwTba0seObZpv
+	980+ZnYaWocsQ2VIW5YuYcW4TL2Q/Z5CB1GVUqIsHnDwWDSXZOqqdYkEpvUIpsfk
+	C1La2kV13+MQUVjglXipIX1xdc0X5NT/V3YSwc5pmBVWU4e+WjxCD3k6jjTDPk2N
+	XkRVmJVAyRn4EydufjDGG/EL7AV/azyRgtA==
+X-ME-Sender: <xms:XOy1aWrbEIfSGzAF5lfXPvRbE_6nDi36RfF0aYU5UgPxHY8T4jox_g>
+    <xme:XOy1aYXpd9BW0rGp85u8q1KBkdUnXL8CpZFaTbBbhiy8KS0G5-hsXeK6o-WsN3p8p
+    wVr0w5Fu16SR4VhptUx2Yw0eE8n1Gv7FFnhSaycKH705H7VFQt1>
+X-ME-Received: <xmr:XOy1aVBGO2T_f9sNS8dzLR2GPs8vfXV4jLuKbA5Awuu5qRZDwftcqaIoH9IxWTj1yJobIqBEddis03SfxUaxbLYREvDWCyXD1d26p1AmLgrTB5oPKk7_Vy0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleefkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepvfhougguucgk
+    uhhllhhinhhgvghruceothhmiiesphhosghogidrtghomheqnecuggftrfgrthhtvghrnh
+    epheeutedvhfejfeekieehgefhvdevheegieeuveeludfftedvtdegtddtleevhffgnecu
+    ffhomhgrihhnpehgnhhurdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohep
+    iedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsth
+    ihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepthgsohgvghhiseifvggsrdguvgdprhgtphhtthhopehsiigvuggvrhdruggv
+    vhesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinh
+    gvtghordgtohhm
+X-ME-Proxy: <xmx:XOy1ac0_FgTh5Q0bNLJXgzSeqc69Xt_yF8uZAMVyaIj_WtvoXulPwQ>
+    <xmx:XOy1aX0nPbifu1dlj5oAOldahb3gZ7Po_O03Nci73rRNPFsReihylA>
+    <xmx:XOy1aRA98L_SvodQzN2u5bFtw7k2BQcwR_E4id6U7Io8c9NUBmusCw>
+    <xmx:XOy1aW7W7si-trqkDz2HgY8Tcs3GKFwFHIQn52J2kp5SPIkHcVYbdw>
+    <xmx:Xey1ab24uIAVo64Y_TX87k84k8TPnh-zJTSAngrR6gqD-AIerhHLkEDl>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 14 Mar 2026 19:16:44 -0400 (EDT)
+Date: Sat, 14 Mar 2026 19:16:42 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] t: allow use of "sed -E"
+Message-ID: <abXsWp5gYbxdHbkz@teonanacatl.net>
+References: <xmqq5x72m4lu.fsf@gitster.g>
+ <xmqq3425lvtq.fsf@gitster.g>
+ <abKG1U3fVuNV1w_9@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: bug report: mutual recursion in the git-subtree shell script
-To: Arun Sharma <arun@sharma-home.net>
-References: <CAN7rbOve-EFOGPjr1wrD77r-3RQ+3+qso82_oV5Qud-skobL7w@mail.gmail.com>
- <YEzwOqgFcva4fmoV@camp.crustytoothpaste.net>
- <CAN7rbOuOaHY553KX1Qcr_XWGG6DFo1yUjdYVu5mn=HYPmOj6vQ@mail.gmail.com>
-Content-Language: en-US
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
-From: Colin Stagner <ask+git@howdoi.land>
-In-Reply-To: <CAN7rbOuOaHY553KX1Qcr_XWGG6DFo1yUjdYVu5mn=HYPmOj6vQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Z/sbLSaR7WxtTn6T"
+Content-Disposition: inline
+In-Reply-To: <abKG1U3fVuNV1w_9@fruit.crustytoothpaste.net>
 
-Arun,
 
-I found your git-subtree bug report from several years ago.
+--Z/sbLSaR7WxtTn6T
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 3/13/21 10:06, Arun Sharma wrote:
+brian m. carlson wrote:
+> so this appears to be reasonably well supported across major open source
+> distributions.  The irony is that Linux is most likely the OS holding us
+> back here, since older versions labeled this `-r` and the newer `-E`
+> wasn't available in Ubuntu 16.04.  I myself only recently learned about
+> the fact that `-E` had been officially standardized, since I'd been
+> using `-r` for a long time.
 
-> So I'm trying to split out a directory from postgres source code
-> (which has 52k commits).
-> 
-> $ git subtree push --prefix=src/interfaces/libpq libpq master
-> /usr/lib/git-core/git-subtree: 647: Maximum function recursion depth
-> (1000) reached
+IIRC, GNU sed supported -E for a very long time before it
+was documented.  In a quick search, I see it added in v4.1a,
+in commit 3a8e165 (treat cygwin CR/LF correctly (and by
+design, not by chance), 2006-08-07).
 
-On 3/14/21 12:31, Arun Sharma wrote:
+https://cgit.git.savannah.gnu.org/cgit/sed.git/diff/sed/sed.c?id=3D3a8e165
 
-> I was using ubuntu 20.04.
-> 
-> $ git --version
-> git version 2.25.1
-> 
-> $ bash --version
-> GNU bash, version 5.0.16(1)-release (x86_64-pc-linux-gnu)
-> 
-> To repro, you can try to split a week old version of:
-> 
-> https://github.com/postgres/postgres (subtree: src/interfaces/libpq)
+--=20
+Todd
 
-Is this issue still relevant to you?
+--Z/sbLSaR7WxtTn6T
+Content-Type: application/pgp-signature; name=signature.asc
 
-I have prepared a patch series that I hope will correct this problem. If 
-you have the time, can you please test and review:
+-----BEGIN PGP SIGNATURE-----
 
-<https://lore.kernel.org/git/20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land/>
+iHUEARYIAB0WIQSvlwC4tRNlCF6x+moHOcdGE+n45gUCabXsUwAKCRAHOcdGE+n4
+5rx5AQDIWmZiCs4tUI2WetWOEUMgo0loaY91vyWad2rtErigswD9GP7CMzT+sLHt
+WnXo0jrvY7gj+c5GeCtqqxT8LTf4Jg0=
+=uK+A
+-----END PGP SIGNATURE-----
 
-Code reviews are eagerly solicited.
-
-Colin
-
+--Z/sbLSaR7WxtTn6T--
