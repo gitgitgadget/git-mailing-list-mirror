@@ -1,90 +1,83 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6D530FC39
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 16:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181F835898
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 16:52:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773506934; cv=none; b=mKxCRYkjy5/4h6nDFLC0+zg+Q+wmkrcJiTwoD6koBq+GR3oZY41UW5aohFn6MvciybyU8TNItjrnNC7lZqeXdFKQ3ukRgqIt4zEFydLfGvH9QzNLsl/J04wNklyPmAVIpICHt2sh9yi7y64DRB5pvZm9cu8Aa8LJmVIPgzWuj4k=
+	t=1773507161; cv=none; b=CZjwd6AuiFwbnfto3aTCAT8+8A+4gUJtBGS0mG1rs7DyVCITjLMpDILVnNA/EI3YqYxzUv+LDTbZmgttF9LMlq4D1L5umxY7ugCNCp7PqVwrvb5G8XReqVaENkzTy5HjVhjnR0K7v/wMCLweOCsX8IIGo9KiDx/+q6oP9cO2Sw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773506934; c=relaxed/simple;
-	bh=VaH4UMSsRJfV3BbrV1gdE9E5HmROWCPzeD7+5ktkcfw=;
+	s=arc-20240116; t=1773507161; c=relaxed/simple;
+	bh=I2ETbO3IRnxQdG6ukOm3T/EERlPHheAbymoYfbLVw5E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QqIsRWgJj5oA2NK+5k19sUd9truqZYCmge7tErfK3nWEudBXiWDmZPGSaZDPZ0BsrJgWnlEqB2HbBFe9RXxselxC8rFBHSiyHYWmkRRLA06lDG2m4DN5mPAhouY6THiOaAcmrDxBvDEoO27oCCdjGdfto8R+NlVbMnklP9ldxJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bNPkh5IM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=42ZGKzny; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=NqgfSbKphGQaNBoxglf32hoWsxFLl/7kfvKRwcHSr/Q3lPoCvFWLaYVcu0tsaOWozSbh8FFv0G0jpRnfsFF9DBGAyi8HiGoIGZNK712Ls03fTrwh8nm0NSZS6ee4VgG/qVZn3dV4DKNYOextjWoPsXozdBaEXCQZcsYhBkxrKdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gUnNeTZH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G7JXV3EG; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bNPkh5IM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="42ZGKzny"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 73F027A0065;
-	Sat, 14 Mar 2026 12:48:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gUnNeTZH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G7JXV3EG"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 41AD27A00AC;
+	Sat, 14 Mar 2026 12:52:39 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 14 Mar 2026 12:48:52 -0400
+  by phl-compute-09.internal (MEProxy); Sat, 14 Mar 2026 12:52:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773506932; x=1773593332; bh=kXPDFrm9sQ
-	0HVvpZykADBD6ITf9bKDi66FHKYX6PodI=; b=bNPkh5IMnXWEWIPiUIXL6KkMFs
-	SNfwLrsUMkQ1IZfGGPgI5sQQyIx4/OqlPhWGEXdY15vLLjmQcsbxQILGWBQIEd/u
-	QmF08YPim77zktrqjvQOv0QeptdoZf5tOhbAwgJ9zVj12GNa9MgzhFrMNH07T0yV
-	/YfXCiYpE+fxqzV1I7hCv1+oTR+gYdlpIUR/KoDd5buCPQXS7Kfoj8IiiGBbcAm2
-	Mq5oj2EGMZRBCJxeGOZJPFCpIDkUOWU1qnt3uVAsv3F4shTn0VAWSYlCZO/xrBA6
-	4P9coJBZbtLT1XVIOEh4pravIIylhTVt3sH6WPqB4eMDDHMIMDb1ofg/infw==
+	:subject:to:to; s=fm3; t=1773507159; x=1773593559; bh=b/UhuPrWbU
+	yd7i8zO2psMPKmYN4mQLXsm4gkjjpR4l0=; b=gUnNeTZHn05xLPklCJZRzn9JDb
+	86cGNoUj1sLaVItJ0Skh0T8qq9czDSSOOYQGQyzvlQXEJowPBWP7jS2j3AlNc6Ht
+	7tOk+VSMw7pjgZ1oPvZ2bZRzb80fH7RffuWHTGSV9+2+KZ7EgLcvs81SqIL7z6sH
+	mrmAle556Yrz3q5uk1X6qYRaspErWs5zees6Na9OjPp9CPK8IHiWbIcQxHYqYDnh
+	/hpTZlXoVTKpoSj/xJWxEq6XEIqDjFYAfEoBhDLiysYKJrGCfiMRDuxWwlhLNnkf
+	GhQ+1MZ33e+XVrZquMM1FARRSa/R4zoJdj4OA7TcP8sOLrSTB5XtOmBxD2Yw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773506932; x=1773593332; bh=kXPDFrm9sQ0HVvpZykADBD6ITf9bKDi66FH
-	KYX6PodI=; b=42ZGKznywUhA0Y8QDLPEQ1uiA2/PofCFKe30evrmGJw/GPIQan3
-	4l3f52R9w7gxtUByBTFjIUKJSEXqzjFnBQq31GDyvrNbZeQhQTh+UznpXbDS+rVA
-	eDJd2eSZVj5ePjvLj0Ork4Sil0cAqUAspS45rlzEsetdRAYgKS05ZK4Ow9ci/6ab
-	zcrBrN0KQ7y+dvuj6V2rAbbqDynVXe52kamqhz2cJ4SHae3Ubj5zdpfTl6NYxYQm
-	Fo2MrpWps10tvPN+wXQvdoQPLI/hlC76h3tAaLwU4oT3AMJRrKdOpQVkyyS72GDQ
-	3odMAMVmUcjWL1eWNSyOTQUdDBPIt7POmJQ==
-X-ME-Sender: <xms:c5G1aTKJlfkjNIfxGdFD-dGZG4nPrIVH9it0Bc3dkUZt-2UJMTbgkA>
-    <xme:c5G1aeA8M4-ApKRQ4o5PXuDrDCAwgQSh8FJjPsNrVfHikpCtIJm8VmWgrX5aZfaN4
-    qzjGFNdBKm5kjEM8J93e-16JNU82c-yHQMxM4sbe_wwkjGUmPlsiA>
-X-ME-Received: <xmr:c5G1aUC-FAPOytxMEqZzMEjEf6UVB6tM58dfIGf17wJfDF_zjD6iVHHk6R3fRV4HaSFSBQgUsg9soJKqY1-SvOdIeG7ErQLhKw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleeftdelucetufdoteggodetrf
+	1773507159; x=1773593559; bh=b/UhuPrWbUyd7i8zO2psMPKmYN4mQLXsm4g
+	kjjpR4l0=; b=G7JXV3EGcTrfSmmrf0/o1ztLNhazzutC8llBngYtIPA4lpRu6oT
+	jpni5hThwsP1UEv5vhnepTEg+GPnlrd1GDNYs67lCO+7AgVgljvf0WUo2i3SH/vA
+	rUK8je95fJc2iq2lTYSq19V1XyhUX+qyq0OWPL+eFckDuhXUH8X1xEp4B/TN9kiM
+	PS2Pt4AgmHvmq0OgSxkde6YEadStx1dega3dYDbsAIpI6CmQFxjoXbBb78/vwNy1
+	ks5iSM0+OnN9FI5AtaK3lDLyccsS8zigPny5E0Nz67T6EZeOo3/otSOfBQ9ZnQy2
+	Pzkl44Ya4iDNenSXYum2CAXNl9knmiwCC1Q==
+X-ME-Sender: <xms:V5K1aT_I06ia2OBiuf_eflSJoMHrukiuGJm1-_yPojqjYMSGAO2twA>
+    <xme:V5K1aWudV8csbCrels9CNK6m-bIz3waErV3-n4KWTnMcVvInq0Oc4DPs4WeP0-0fJ
+    C67vVRdgHgQeOTWdegzAaV83MvU4zZvxCJxJuosxFIDCjTy_9xTGyA>
+X-ME-Received: <xmr:V5K1aWA2Su5goKSx1FmfsxohWfPj7x05CHvgQFVlESvMkNAuaY2gIaWEJxsS5uS1b-ESctpC93RzSHSQU_JH1SheeHsjcda5uA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleefuddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    htvghrnhepjeekueejgeetveejteegieelueejieejfeeugeeiteeitdelffdvffehieeh
+    udefnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
     dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrih
-    htohesrhhithhovhhishhiohhnrdgtohhmpdhrtghpthhtohepkhhonhhsthgrnhhtihhn
-    sehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvg
-    hsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:dJG1aYCrY1uQ2ztxt0GJjM3yGteHsBSCpWXUscQy8JmbyZDL_lS_jw>
-    <xmx:dJG1aXrCmsQzAS7XVuHh8XC2xs-Yj9_c3lVc9SSFMrapWiazO0aaAA>
-    <xmx:dJG1aanDEtkwlGfEso7o2fewZvgzpjGUO_tglaNxpevFbIuGz_zyxw>
-    <xmx:dJG1afxszIwcbMLhp7lnHVGfeRUOIeULhLUoJ6NFJjSOUSdvw73d-g>
-    <xmx:dJG1aWblZh68hiuPpj76ivaD7mHd8nRQE3t0HR3mBrz1tjByLmSePFK5>
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvghnse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:V5K1aeV0E1zZuZiqe1JyJ9dMHcvyke1JHgpC398LecUGagIZN8xSIQ>
+    <xmx:V5K1aUC5q7V-CVzZUeHnafBt8IF-yprU3QXUzCFW85sKXvigL3R-DA>
+    <xmx:V5K1aR-uIzgHtXDoYcTO0s0PRekuKUq1FyQLueKAqAZM9VP0wwrBLw>
+    <xmx:V5K1abEQIORFBjHow8BhxXmFhI8D9locK-yL45sWxgYyyrWTx3vx-g>
+    <xmx:V5K1aZgUDUXtgjSaJ8I2FRD3Oj2-ckSbY7PjdPEv_Vd-tu05hfjV-umT>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Mar 2026 12:48:51 -0400 (EDT)
+ 14 Mar 2026 12:52:38 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Rito Rhymes" <rito@ritovision.com>
-Cc: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>,  "Johannes
- Schindelin" <Johannes.Schindelin@gmx.de>,  <git@vger.kernel.org>
-Subject: Re: GitGitGadget's website is responsive, how about kernel.org?
-In-Reply-To: <DH2ADSKXNCXG.2DM7T0NF5NH59@ritovision.com> (Rito Rhymes's
-	message of "Sat, 14 Mar 2026 02:20:55 -0400")
-References: <fbe96a44-2f97-4310-3e2e-34e5bd02d4a4@gmx.de>
-	<20260313-loose-whale-of-speed-ccdbe2@lemur>
-	<DH1OK0NDO2D5.1BKGX8J7KWW52@ritovision.com>
-	<20260313-adventurous-lemon-unicorn-278ccc@lemur>
-	<xmqqtsuj7mcf.fsf@gitster.g>
-	<DH2ADSKXNCXG.2DM7T0NF5NH59@ritovision.com>
-Date: Sat, 14 Mar 2026 09:48:50 -0700
-Message-ID: <xmqqv7eywe4t.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH] remote: use plural-only message for diverged branch status
+In-Reply-To: <pull.2239.git.git.1773479526823.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Sat, 14 Mar 2026 09:12:06
+	+0000")
+References: <pull.2239.git.git.1773479526823.gitgitgadget@gmail.com>
+Date: Sat, 14 Mar 2026 09:52:37 -0700
+Message-ID: <xmqqqzpmwdyi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,40 +87,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Rito Rhymes" <rito@ritovision.com> writes:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Actually...
+> From: Harald Nordgren <haraldnordgren@gmail.com>
 >
-> now that I've had time to think about it (and get some
-> rest), I think it's best to keep the patch series review and
-> discussion all in this thread, publicly and transparently.
->
-> I initially defaulted to sending it separately to Konstantin directly
-> because this is Git's archive, and I wanted to respect convention by
-> keeping the thread appropriately scoped. At first, this seemed more like
-> just a routing touchpoint.
->
-> But seeing as there is no public mailing list for kernel.org's repo
-> specifically, and this is basically already a sidecar thread about the
-> site theme patch, we might as well consolidate the process here for
-> simplicity and transparency. Plus, I imagine the site matters to most
-> people in Git, and the mailing list is archived on lore.kernel.org
-> anyway...
->
-> This will allow anyone to review the code and comment on it.
->
-> I'm sending the patch series again directly in this thread, and I
-> think we should keep communication contained here (unless someone has
-> a better idea).
+> Drop Q_() singular form and use _() with the plural string only.
 
-I would not object discussion here, and I personally do not mind
-having to see, and possibly ignore, more patches on this list, but
-to those who come here to work with and work on Git, I am reasonably
-sure that it will look offtopic to discuss how the k.org website
-appears and behaves, and/or how a better version of it would appear
-and behave.
+I know the commit title talks about plural-only, but please make
+sure that the body of the log message carries all the necessary
+information to justify the change standalone.  "In the else clause,
+both ours and theirs are positive integers so ours+theirs must be at
+least 2, hence there is no need to prepare singular and plural
+variants of the message", or something to that effect, perhaps.
 
-I'll leave Konstantin with the final say.  I hope there are better
-places, even though I do not now where they are as I do not do
-websites.  I've seen folks with accounts at k.org discuss things on
-mailing lists that is more limited for kernel.org users.
+The patch text and the reasoning behind it does sound familiar and I
+vaguely recall discussing about it ;-)
+
+Thanks.
+
+
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>     format_branch_comparison: diverged message has only plural case
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2239%2FHaraldNordgren%2Fformat_branch_comparison__plural-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2239/HaraldNordgren/format_branch_comparison__plural-v1
+> Pull-Request: https://github.com/git/git/pull/2239
+>
+>  remote.c | 9 ++-------
+>  1 file changed, 2 insertions(+), 7 deletions(-)
+>
+> diff --git a/remote.c b/remote.c
+> index 7ca2a6501b..12136dfa23 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2307,13 +2307,8 @@ static void format_branch_comparison(struct strbuf *sb,
+>  				_("  (use \"git pull\" to update your local branch)\n"));
+>  	} else {
+>  		strbuf_addf(sb,
+> -			Q_("Your branch and '%s' have diverged,\n"
+> -			       "and have %d and %d different commit each, "
+> -			       "respectively.\n",
+> -			   "Your branch and '%s' have diverged,\n"
+> -			       "and have %d and %d different commits each, "
+> -			       "respectively.\n",
+> -			   ours + theirs),
+> +			_("Your branch and '%s' have diverged,\n"
+> +			       "and have %d and %d different commits each, respectively.\n"),
+>  			branch_name, ours, theirs);
+>  		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS))
+>  			strbuf_addstr(sb,
+>
+> base-commit: dc6ecd5354dca88d51b6d6562777fc8fc10d77e1
