@@ -1,138 +1,113 @@
-Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C972236E0
-	for <git@vger.kernel.org>; Sat, 14 Mar 2026 10:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773485721; cv=pass; b=YT90VaLypfANWUjSOBTQYYN+AxyicdDMPsOtnrpxnk14Fhg7wM47y+RcFxiOkd95JaBoce5YDf2y3+eK5TPocF6cuibbizTRt2GXqAJIJZeoVfcIk3BcKIIQM6msGXnhfU95xd029dX58rJvWuJVgDEawEspfPjpAuxI0eMGoJM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773485721; c=relaxed/simple;
-	bh=OrhD6EBJFRyNqu6aejQxGib6T/Zd6hV1oFRqv/RB2b8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aPNrf3GofTts/qfdfAYa+3jqF08QL/gu0Xsni9978EG6Sv4XLr/xvV921ceqHSuvJ6mITavzOUbmmU2VfjrIjI/k8N3h2fksmRwBSer+8+Uy8UuM8jWynyNg1LChyy+en7+UP4Px1GvqDKzdREmYrBiDq1BBY4jq1dGLw9yDQUQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MezuNySS; arc=pass smtp.client-ip=74.125.82.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80142171CD
+	for <git@vger.kernel.org>; Sat, 14 Mar 2026 12:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773491261; cv=none; b=A1nJVFNH/2kvfWCg91+USzt3aR7hLra3UM90Afdmof9EAo1KknvcrNW/DiCXhBXM8kCevxnhVWPtgBGq7Alqjr+zjMG6zhaRgxVG3d9nXlf6y7A5p9aBltUlnZuGUuHHWJvUBCKvPwaYu1nSNUr7fQPVls0GXbnG+izKt2wEAF8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773491261; c=relaxed/simple;
+	bh=CQv9LAldC+YxvQ8jKaTlw+Pj5xo+ee3+ORLzKTXInHY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cG9hJKeWL5QR0j0M2y82fJ2g88PEfslvmGbUEiQdIpTQk2aJPspX4dawo5aEU6Rz+HpJzNOtB8wepD6YlxZoPf/AxrMmSwWAL2TYOsBH/sv+bLs/GZVoIZhycoW5a/1ohO/L47qypo0BEJi5+ANY5lFVY2Jmt/n8xbtUrOKeVBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DrC9E3RH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TsbFh4wB; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MezuNySS"
-Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-1271257ae53so4521873c88.1
-        for <git@vger.kernel.org>; Sat, 14 Mar 2026 03:55:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773485719; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Wqi25gnTojqKhDafNFUhKDEiXR1SuExuGMxGMpMj5tnuyiIDYHQoC4kv+K4+az9Rt3
-         bEBn1YI/RLSGRl9qBt1AJTPVgwMaCswsBW8jdol0Xt5DRqkjyigK6akC8G2EChkn6gu1
-         Jt+d9gsTGSAq+aw8Cpa1HxNYDQYy8C3qxjRxGhikPuem/GxIOam+QW/tkvT0+D4huBuy
-         gwCThBbYqKZU7XUh9xtIavZOba/4bk73LH/C3yA3HwPK/ruES47dhL2TZJhaW8/agjYO
-         Dvgoc7lwJfZNQ3MXSpv6csFo1yrAbPkcgn5kLJfkKwlUpbUIn7qJQcsVCwJhHLTaTdpd
-         11RA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=OrhD6EBJFRyNqu6aejQxGib6T/Zd6hV1oFRqv/RB2b8=;
-        fh=cg+mcShEU8BBKbY5b01IDSTH7eSHRnFLcK+dKoOnIJA=;
-        b=hjXlV5XsjrAWIRlHZo4JDJ4tSTTwJ5F7SCZM1bhFUloKsKrkLHBIMuoGlUSbK1nTWi
-         PX7fGWLeSGvYjja2tSUDfT6FLQy5K47+Y0RG606CZNtnR/JbBWjs1XSs9AZEWVefe9gm
-         XQEIIXEXhevlZXG8AItMx4kXMXZbefl175J4ksywwxDPestCaKID7/mI/eU46CjwxmtB
-         eJFefUbM16ONbdh3Y5NAVE92GDVSUYFLm8sFxaWhXsz4YkCUtJyLHzrLfi4dIvIbO0LL
-         ghb0ZAFZ3DI85e75QzRln00bkeZMMJOT7YROrz2jk0sOAqJBxz2xC1vmtAhnEl0h0CZx
-         3HMQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773485719; x=1774090519; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OrhD6EBJFRyNqu6aejQxGib6T/Zd6hV1oFRqv/RB2b8=;
-        b=MezuNySSfhqp04cR2ZxBelsQXjID7PajwIKAn1zgoy14wr7YK5MatQKG11B094wR5A
-         piXinUkTLq0Lj4yeWQJgGRpLALAKbJqvLEk8naPu1iS6UsY3Dr+C0et/BE3qTfYo3m3K
-         2rOv770bJuOBJouObQte+5OkoeYKT8JuSrFHAt2eufqtViHkJCdIzsYS+UVJSogqLVfE
-         bU8zA9RFjEsAN7d5PdjKnRThTEsEIzPxw+1OwC7cSohyG3YVWE3T59dbLZEPBNyzo8Ae
-         7NsyY387bnJcYTxgwJFfJ+DvzUgiv69PxMgL3LzcytjkOIW1W3YWuwyX/xms8JaBvevf
-         hB2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773485719; x=1774090519;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=OrhD6EBJFRyNqu6aejQxGib6T/Zd6hV1oFRqv/RB2b8=;
-        b=MIfUrlXXtFEZN2P3l0tBGcsMCJJxwM2TYRrfas/wB2QoBgdD1iUT8So08fWPkz4gfK
-         ptcWJMe0euPnrFGehS1yuMzizln6XCGA61KMkLZwqxMDn8TN3i2InDZTZp3lFgovIuSz
-         gzQxLjDcqXh2f1t63N3fgk2ImwsSA+cGJYmbz/oa11609Qa1dr7x0Xy4Cd2bJu9bvwQq
-         qY/TACe5kQKLwpSmUJKxNNF7L+qfL1haKQEzyi65fpRXl31JbrZGQW65ga9IAtb7yHOd
-         G+pJPSpKikwrtttnSzyEKh8tFlPKAhFmvyL5L9l8q7Sk/XaxmqJOow0gAokLCM/MvQCM
-         F1yQ==
-X-Gm-Message-State: AOJu0YwYD6rOMskZWZqsPCFw5ZC8wzV7YPH4GfIPbLpSi1x1QQaoXh/q
-	yp6PUFTOvhKtE/HNN6ZYUeeMz1/IgPMWq2KIj6/fLl8sYFFqtwLUC+GXy9oSMgou0kh3pRBrTAR
-	OSmkTfDQS/9p3v1o3If2FRJ69YftdFjU=
-X-Gm-Gg: ATEYQzwFcHPcgxvfAWhgqGBDRXk183iN25pyxxK19urWeauN5SRLUmYuzhjRd4P7EU6
-	RJNNyU9nEzDvFKZkjjv5QPW3mur5h+tPk2wa+tE3+58pDz7FQlGgbHqy+yOUczYgF6xieJDGjme
-	twhasmsPaE+vwnHkPxLrrzJky+PBd9htqu3Yxt3EpVjtqY89W6QTCV9oymG4pR3u9rXbQvdLfVA
-	uooAbJi4XwanXjeOtRex/8zWV1KQw/v9NsU7K++p9GXMOoXaCo/LLLWO07smdhPHVURkELqjyHl
-	u4TZMTIGnLAamgUW1CmvEDzBKH6IJ6OXXBQAwZequKD5DwsuBgurHzhWV5c5mgPGLlVtcBoDCkx
-	jrIKgVD8/tirGG5MVWgtwFw0Y
-X-Received: by 2002:a05:7022:6709:b0:11b:ade6:45a7 with SMTP id
- a92af1059eb24-128f3d011acmr2966193c88.1.1773485719077; Sat, 14 Mar 2026
- 03:55:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DrC9E3RH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TsbFh4wB"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 87F7F1D000F0;
+	Sat, 14 Mar 2026 08:27:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sat, 14 Mar 2026 08:27:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773491258;
+	 x=1773577658; bh=6xNRZH1rJ31ZdoA4v3zhhi0/D7Ikyl6Xx/dTmmCD+qc=; b=
+	DrC9E3RHAikPhAImt4eRboh9+0WA8aahgHz0W40OJSrJ1Q4m3v7Zr0JpHDr5IAa+
+	OpRjb/129tGXhN3rCGjQVZDGHj2KMzqSvc0eP5jpTe1QUPneUZ46iRc4vXxVElYw
+	FOnsTH0EKwNmoSmAbS/Tbqv2bisjiFFvOS9j4a8Q8QaXzPigSxTz7MofOk2qCzf5
+	yaupijRtwvV/2qI4WrW5T2j5QQ+9bxXlythJV9TKCdd9YMZwap5WP6R/jBf/Qg9t
+	du6tFbOx86GQnL4cuHgKNmQC1jhD/2WldelYpbyrQ8wZARewp4BD0zz0b4f+R7cF
+	MBcy9pBPc1rlvT0xwXq2kQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773491258; x=
+	1773577658; bh=6xNRZH1rJ31ZdoA4v3zhhi0/D7Ikyl6Xx/dTmmCD+qc=; b=T
+	sbFh4wBcuadiulUzRYUKDojKCEW0NQv+daxYBn9wssk+NYebMOAIM744Lp+Ua75H
+	I0H7zzjnkQr3HSiZsQOOZxlklooOfX8jPp4ex5+XLhOlZSDqOEDawNo9jI44x/qP
+	7YMqJdZXql6nkxu08dDoV7vYXIQKo2vlgrPnZ0vqKR3b4eHv5xetxoj21aZEOm+d
+	EzcYZqb+iMaxhYFYNxqAnyx0OyC6hSl7+F8shnCBruvHI7f52gZiim/GS7VGh+dQ
+	ja0/iMpxfMh54ojseEbIa5pzXgtlPpBKYodjbTtX9OpEWjgSgB5vDADqFgwkv9GI
+	oDpdVHM5qX2SGp+xADZLA==
+X-ME-Sender: <xms:OlS1aZ7IwUzYkSOPZHiRBPdVokSPkGZ5amOboOdIJWVgb_6M-69_ug>
+    <xme:OlS1ad4flyEU7W1MZ3b7-jrWAX8q8EQMk4xHISUnF_fiQs6qky2TjwyzTpH8lYH0k
+    maQV_rHIMKOKzTOyaX0IuJr1nFHPSRm_YlcaVp4XNOARdcl-evw0Q>
+X-ME-Received: <xmr:OlS1aVcTjGZCFgLu7uL-BNPh2kp3DYRuWiFCD6C6MVfpU_afIcPUDYwGjE6KqotNZ66c7iFIP9_f0MDTEc37MlBE_bpfJwQqIg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledvheejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptggrthes
+    mhgrlhhonhdruggvvhdprhgtphhtthhopegrhhgrmhgsrhgrhhhmrghsmhhivdefheejse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:OlS1aRB0WKJ6gRvfhLg8gIXCR5Q0wt90TScUoW8KFl6dkBOReZwLHg>
+    <xmx:OlS1aY8A8SPuM0qCaVPpMI5btPt8QBrcMd3Q4aTv9Qa88kv-wsgySQ>
+    <xmx:OlS1acIEiKgATEFKWDCW24aL5thDiJjXvgCSQaXG1jXr6KLytS9gxg>
+    <xmx:OlS1aRhm8xw5gLh7U301S4HPHkTALAjLo0GZf7AWUuSjx8A9c_67Ew>
+    <xmx:OlS1aZsNweq_ZHLIPXWZf76OGOQoeYjMHabS_YTfpa_o9DYOwZokLZ3d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 14 Mar 2026 08:27:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: aum2357 <ahambrahmasmi2357@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH GSOC] diff: use conventional comparison order
+In-Reply-To: <405c075b-731b-47e3-9e9c-70aaa0efe1cc@malon.dev> (Tian Yuchen's
+	message of "Sat, 14 Mar 2026 11:59:43 +0800")
+References: <20260313140440.564201-1-ahambrahmasmi2357@gmail.com>
+	<9afe48e3-8348-4e2c-8e5f-bbdc3b2951f8@malon.dev>
+	<xmqqldfv4h6k.fsf@gitster.g>
+	<405c075b-731b-47e3-9e9c-70aaa0efe1cc@malon.dev>
+Date: Sat, 14 Mar 2026 05:27:36 -0700
+Message-ID: <xmqqbjgqy4sn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAN5EUNR0KJ4VeuOF_bVupaTuGKGaeTKa0SMRAUoBPo5wWi8YGA@mail.gmail.com>
- <CAN5EUNSK9Lk-ME3nCFSG=Whkcm-0hvF5Npyj8MaXucKLkmM=Sw@mail.gmail.com>
-In-Reply-To: <CAN5EUNSK9Lk-ME3nCFSG=Whkcm-0hvF5Npyj8MaXucKLkmM=Sw@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sat, 14 Mar 2026 11:55:07 +0100
-X-Gm-Features: AaiRm50KIZoQd8FskSXQdw0wJBhcg28si0Nv1EoPkPc5jXTvli3S4bSxkT7guqE
-Message-ID: <CAP8UFD22BtMAJLA0a6pqYRNp55iAWoi7y=_qYdrJUJYxPSz6-A@mail.gmail.com>
-Subject: Re: [GSoC] Introduction Pablo Sabater
-To: Pablo <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>, jltobler@gmail.com, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi Pablo,
+Tian Yuchen <cat@malon.dev> writes:
+> However, in builtin/add.c before the patch, there isn't even a single 
+> “>” symbol used for comparison. The “<” symbol is used throughout the 
+> comparison sections.
 
-On Wed, Mar 11, 2026 at 12:20=E2=80=AFPM Pablo <pabloosabaterr@gmail.com> w=
-rote:
->
-> Completing my introduction.
-> I'm interested in the "Complete and extend the remote-object-info
-> command for git cat-file" project. My pronouns are he/him.
->
-> I've confirmed that I meet all GSoC eligibility requirements.
+Look a bit harder.  I think there is one comparison that uses a
+comparison that does not follow "textual order reflects actual
+order" convention.
 
-Thank you for your interest in Git and this project.
+	while (--i >= 0) {
 
-> Steps I've taken so far:
+> I find it quite strange because the author says:
 >
-> I started reading the docs, followed the MyFirstContribution tutorial,
-> I'm reading chapter 10 of the git pro book that talks about the git
-> internals and I've already sent two patches:
+>> to follow the common coding style
 >
-> [GSoC PATCH v2] test-lib: print escape sequence names
-> https://lore.kernel.org/git/20260311031442.11942-1-pabloosabaterr@gmail.c=
-om/
-> [GSoC PATCH] t9200: use helpers to replace test -f and test -d
-> https://lore.kernel.org/git/20260309230134.758107-1-pabloosabaterr@gmail.=
-com/
->
-> The project seems very interesting and currently I've already read
-> up to the v11 from Eric Ju's and the feedback he received and what's
-> left to do for the proposal. I've taken notes to make a good proposal!
->
-> I'm now getting familiar with what's related with the proposal and
-> writing a draft
-> Once I get feedback from the test-lib patch, I'll seek free time to
-> keep making patches.
+> This patch seems more like it breaks the common coding style.
 
-Sorry for the delay, but I think you recently got feedback for both
-your patches and your proposal.
-
-Best,
-Christian.
+To somebody who does not know both conventions and understand that
+both are valid, the only one that is familiar to the person would be
+the only common one.
