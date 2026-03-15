@@ -1,93 +1,92 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95204126BF7
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 20:47:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15202366059
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 20:56:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773607622; cv=none; b=ZXANyQEt7GYDDcYTS4TGsvxpidYSg46IthEZY+0U/mjWYDZYyEk3yX0KNF/EqnUUCGsbhUyKjTTDkoKzmmwWtPP5rBv6ReitnrxEv8A7FB4Buxrw6FB3bsZQLUoW5A19zq4EAlyxgp8CtUeUYkM6zUcI56g4k2dx+KLlvAfcKrU=
+	t=1773608209; cv=none; b=QLTE6N+Jy4YhaP0SLIYF8JhIxsoUVqRD7z5kJ0YBQ9V7NyrBx+HD7H9hdLvW4KyFlHuL/rxa3FfR3/8UIuQV68S9obaDq6/hBDpMxL5A3U3p9mULOygIn75fbJ8RX4D91p23eaNYTLdfUyIG6ANLAImW5D5V81gmljXuKXFjdI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773607622; c=relaxed/simple;
-	bh=3e0WUqf2Hri90pVpzrHaK6fvqOhmdwf92StdLjM/SoE=;
+	s=arc-20240116; t=1773608209; c=relaxed/simple;
+	bh=BwmSm9aGmYA4CrB+xWuPA6SIkY24XcLBrEOHH3+vxp4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ltuwpejb5+UvZJAMPn7NGah8EPajT/dKcmGv0R8wPTTKELLrodOPFqKjEEIcI/yY7AMuLKdAK4uWShrkp7ZzRFcK7zo6gMx0dqExxDNji/mh4VLXBP2FU/ZW3vuGXTmWQ/YLYqASDaK6X7k98Qh4fB+fs/RDu2YWAMdatqaghDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fDIUmtT9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AzZpcPze; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=F9LrX/KkOyOAlYzsFi9WHO61MRu/aJj8ct4rsNlAMV2nbaJ2ATJlaUbl6s76qs8E5oOT6u4WM/0VgrxzwAfyt4WHIDxLQnjRhy9h3fgSCJURMfSpOkWxZJpmZDn5embYxHeUQaZdEkyEq41NDgvh8o5Xh7AxqTVwThzj8kR9gv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CnwMgZNM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BS7aDetw; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fDIUmtT9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AzZpcPze"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2A05AEC001A;
-	Sun, 15 Mar 2026 16:46:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CnwMgZNM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BS7aDetw"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8B26614001D5;
+	Sun, 15 Mar 2026 16:56:46 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 15 Mar 2026 16:46:59 -0400
+  by phl-compute-09.internal (MEProxy); Sun, 15 Mar 2026 16:56:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773607619; x=1773694019; bh=xFJ00LkaSW
-	PtgYQ03Y/HBb4CeGjkWsCM7DLkhgGqLJg=; b=fDIUmtT9l9pPFMkGEA4agdaVLM
-	AMWG56KUk1cwhSRBP/iubsHzuIF8IJuS7RflWqeN7ktUU/K84sJOvYxBUBrMDqls
-	++LaXLkAK5yn3j4u9KP67TyEGvKiQWfYJuhBPx4DuV/McCJtp9O88mNauqLu4PDu
-	7FNtl9yRSU458cMxiM4GrH1NL8hZNOh+vjiLduXBo590riLosqwanTyqb7jxa1Cu
-	WksrlhVm5ucZRABP+QIvRmPp9Qg225cVgZPhUD//4Dl5Wd+uZSbZW6Bp6BZYbQbc
-	crGzLOr0RixSyPZjUYhxZwedDuMqBkqMA+4VJLofmRUEgAKSjqXazSc/QtKg==
+	:subject:to:to; s=fm3; t=1773608206; x=1773694606; bh=wfrssLOYm9
+	TkXxBxp7HkdHCoPBlZmwlAq38FirWutmQ=; b=CnwMgZNMFyPQhCuibRa9sQGyH/
+	qVDncahtWlaf7SC27+Mc3tAcFZLu7IXYtPmOjv7heT+wJO7Lp10YACiFcpAxwoYw
+	k48RntLp7+OrFL95gRasmpXH5jpiI2ue1fGijonYp35pqGTI10wp08ghKmG58eXn
+	5scncYubSU8DIXhAq+7sdMR0xs84hbEepSNT1Szvv8y8jMWg+cpS2A6FJnOPFsXu
+	dhSeu+RmH4eL5wgg6SbAZHrQ5QmHCQGRKsgCltMlYSwWhcmtV7brdRizz54TACNF
+	Fpd8wHxWg7KpsIEX7POg3qELaI3uMMJK7x7Z1nge0d/uFb8yxIgCly1C1usw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773607619; x=1773694019; bh=xFJ00LkaSWPtgYQ03Y/HBb4CeGjkWsCM7DL
-	khgGqLJg=; b=AzZpcPzevWKR3MjvGVs2yYINW2hFxPsQMi0SjADAfdlm51AnNry
-	rvPLBmZw4RueQlnwzcNmcyTi85wAugrUvwzZefFKH+sEDESSc+8TsgOG20gQsC+H
-	/QEjhbvfN4EPgfecr2pBUUtTdNBBFMCknMHtgY4TAgYQDU9x3NG8pA1jj83LKDOe
-	7XcBLIfnQjbiLGx2mNY+O0yH4H5LHVLgqQ9otKcva91JqqKj7N/q/Wuvr+dZXGXn
-	omj4MrKYDz4uFCVU7iaPKEy6C9jRQEz9PwJ1C6cXhb3t6E3a9cosTOJp1pisaWBs
-	NIOj/He6jA0hwgXPABPvpJ6wyLb6aUx312w==
-X-ME-Sender: <xms:whq3afa2Vxvi8jiwG52WRiy4a8o1FEUWjCRamTY3_0Cv1iWlOTOqKg>
-    <xme:whq3aWn78zNs5vu8IDB6gIr8RJvldmqtQTqe-HpWY_wmbB-oF8jFh7DQJmEvfLWY-
-    em0tvrkWpFeYck9kZsw3ui7BBpP_HanV_TxSLu2i69tdSRMXjypOQ>
-X-ME-Received: <xmr:whq3adgjCa-PJtwAamlXIjcGQYDw4JFjKbkdyGP45tfzxEIgvDmAKgYAcgafRFfjIewkJ3ciZ5LJei8LsSVrP3pyafh07GsHIw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleeigeekucetufdoteggodetrf
+	1773608206; x=1773694606; bh=wfrssLOYm9TkXxBxp7HkdHCoPBlZmwlAq38
+	FirWutmQ=; b=BS7aDetw3HRcWv86S8vxCcZ9SNOTtVQDSpsHwhibc6wRbR8i/x6
+	ZxrWjGev86L8/y4R283l8DlLiztlBFnuY1fU5mLLdwlj8QrtOMYGjNsWPzeZsvrL
+	xdQ5TRdCE5Wj+2M6B8+kaTvoW0hKCzCcax0aeSGwXSdJ69k2kJ8ULqj95VppXtd2
+	VLIqW6ACz6UEV4+XBDDMvLhY7/eh3m4EO8zSWtIC4kGcwx9RPD/s2MsBrWw1IE1T
+	VRirRmfkZqbAoRwDPTnzvLZ4oDNr847RLyTAlKRRfAYqUABwibRALU6kEg0n/Gt6
+	e/pyVZu6oYT8yG2uAa0gKKeTkIsHg/3+CAw==
+X-ME-Sender: <xms:Dh23aQ5teX5cVjeTd_QrwA5ovaF4m7zmO7tuUDTF5IAKg83LWGrjlQ>
+    <xme:Dh23aUfjSdH3fKLfIXoIp7h7t6LbSQzJr56zfHv4MLeyDCSbaEUKdg2SGTKLQPjD3
+    aH83xKvAkP0UtWnVzY2tHE9X-cdleay4Vhjc1zSxISwFiy12Enf8A>
+X-ME-Received: <xmr:Dh23aTFkOR0dipNdyqe_BZjRT0Zl7L2aqV1XbtBR-IYaqipoQNYLs9MPRf5cHoKejufFQmzaNogGHdwYiFMx1SZ91h0SXzjXmQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleeihedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsoh
-    hrrgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegvmhhilhihshhhrg
-    hffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgt
-    phhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepkhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthht
-    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
-    htohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:whq3aQTZsHqHq9LUrKq8gQpAk4Jyxd7_zR13fcNRJsKTaK1eCDKwKA>
-    <xmx:whq3aWZCRJ-ZNVWiLEswlpFPcjtREXbMpwAGpEoWr-5z7rR7dQZHzw>
-    <xmx:whq3aVS8pMTcW64-P7b48pM_5PztQmiRQtPVSkGTS0e6pOyO7U4g0Q>
-    <xmx:whq3ad_CkgAPX6RQ6kH8CEtL5gMHynsNX2xeMy6Nbzl0WAZosXJI2Q>
-    <xmx:wxq3aXqPbWEWDH0oFw9EviYg8LdWR4727T0noAHLabvTxMW_XPHfq005>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
+    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepvghmihhlhihshhgrfh
+    hfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
+    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Dh23aVRkLOrAafYesHtSY9Foutqoh0m4OSDiOmpScoMxylG1GGQJdw>
+    <xmx:Dh23aZZf-m2ZZRfdN56feYM4cPGrzF1df93AKVwxR97ajpwvyyzDUA>
+    <xmx:Dh23aQ0tZQkf27UG4qjsqNDv3lZAWuedPU5GAzr5rrjS2KSM9Ka2oA>
+    <xmx:Dh23acrYkH06fwYEV9yuMFh-nFqLIglWKFL4DMO-Z27azJdD8qVoDA>
+    <xmx:Dh23aVU2MsxUvWhyRqJje0FWcNIpDf2WZXPGf_frj8Ie-UHVwhJEpkco>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 15 Mar 2026 16:46:58 -0400 (EDT)
+ 15 Mar 2026 16:56:45 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Emily Shaffer
  <emilyshaffer@google.com>,  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon
  <steadmon@google.com>,  Kristoffer Haugsbakk
  <kristofferhaugsbakk@fastmail.com>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Emily Shaffer <nasamuffin@google.com>,
-  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v3 4/9] hook: allow parallel hook execution
-In-Reply-To: <20260309133739.294555-5-adrian.ratiu@collabora.com> (Adrian
-	Ratiu's message of "Mon, 9 Mar 2026 15:37:34 +0200")
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 5/9] hook: mark non-parallelizable hooks
+In-Reply-To: <20260309133739.294555-6-adrian.ratiu@collabora.com> (Adrian
+	Ratiu's message of "Mon, 9 Mar 2026 15:37:35 +0200")
 References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
 	<20260309133739.294555-1-adrian.ratiu@collabora.com>
-	<20260309133739.294555-5-adrian.ratiu@collabora.com>
-Date: Sun, 15 Mar 2026 13:46:57 -0700
-Message-ID: <xmqqjyvcstvi.fsf@gitster.g>
+	<20260309133739.294555-6-adrian.ratiu@collabora.com>
+Date: Sun, 15 Mar 2026 13:56:44 -0700
+Message-ID: <xmqqcy14stf7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,90 +98,26 @@ Content-Type: text/plain
 
 Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-> +hook.<name>.parallel::
-> +	Whether the hook `hook.<name>` may run in parallel with other hooks
-> +	for the same event. Defaults to `false`. Set to `true` only when the
-> +	hook script is safe to run concurrently with other hooks for the same
-> +	event. If any hook for an event does not have this set to `true`,
-> +	all hooks for that event run sequentially regardless of `hook.jobs`.
+>  hook.jobs::
+>  	Specifies how many hooks can be run simultaneously during parallelized
+>  	hook execution. If unspecified, defaults to 1 (serial execution).
+> +	Some hooks always run sequentially regardless of this setting because
+> +	git knows they cannot safely be parallelized: `applypatch-msg`,
+> +	`pre-commit`, `prepare-commit-msg`, `commit-msg`, `post-commit`,
+> +	`post-checkout`, and `push-to-checkout`.
 
-This is very conservative and safe default.
+If there is a simple rule that can be used to decide hooks with what
+characteristics can and cannot be run in parallel, near the "because
+git knows" sentence is where we want to write it down.  It would
+help new developers decide if their newly invented hook should be
+forced serial execution.
 
-> @@ -307,6 +316,7 @@ static void build_hook_config_map(struct repository *r,
->  			entry->command = command ? xstrdup(command) : NULL;
->  			entry->scope = scope;
->  			entry->disabled = is_disabled;
-> +			entry->parallel = (int)(uintptr_t)par;
+For example, applypatch-msg is given a file and is allowed to modify
+the file (perhaps reformat or typofix), so two of them competing to
+edit that single file would be a nonsense.  Letting them edit the
+file one after the other would make much more sense.  So one of the
+rules may be "a hook that is given a file and expected to edit it".
+other two hooks with -msg suffix may fall into the same category.
+What are the rules behind the decision for others?  Are they also
+explained with simple rules?
 
-Hmm.  The source "par" is (void *) and the destination .parallel
-member is a single bit, so would this
-
-			entry->parallel = !!par;
-
-be the same?  A cast first to uintptr_t, presumably not to lose
-bits, and then casting it down to potentially narrower int made me
-wonder what else is going on here that is tricky.
-
-> +/* Determine how many jobs to use for hook execution. */
-> +static unsigned int get_hook_jobs(struct repository *r,
-> +				  struct run_hooks_opt *options,
-> +				  struct string_list *hook_list)
-> +{
-> +	unsigned int jobs;
-> +
-> +	/*
-> +	 * Hooks needing separate output streams must run sequentially. Next
-> +	 * commits will add an extension to allow parallelizing these as well.
-> +	 */
-> +	if (!options->stdout_to_stderr)
-> +		return 1;
-> +
-> +	/* An explicit job count (FORCE_SERIAL jobs=1, or -j from CLI). */
-> +	if (options->jobs)
-> +		return options->jobs;
-
-This could be risky for hooks that claim they do not want to run
-with others at the same time, but the CLI user ought to know what
-they are using, so this override is very much appreciated.  After
-all, the override may be serializing an overly optimisitic set of
-hooks that want to run in parallel to avoid interaction between
-them.
-
-> +	/*
-> +	 * Use hook.jobs from the already-parsed config cache (in-repo), or
-> +	 * fall back to a direct config lookup (out-of-repo).  Default to 1.
-> +	 */
-> +	if (r && r->gitdir && r->hook_config_cache)
-> +		/* Use the already-parsed cache (in-repo) */
-> +		jobs = r->hook_config_cache->jobs ? r->hook_config_cache->jobs : 1;
-> +	else
-> +		/* No cache present (out-of-repo call), use direct cfg lookup */
-> +		jobs = repo_config_get_uint(r, "hook.jobs", &jobs) ? 1 : jobs;
-> +
-> +	/*
-> +	 * Cap to serial any configured hook not marked as parallel = true.
-> +	 * This enforces the parallel = false default, even for "traditional"
-> +	 * hooks from the hookdir which cannot be marked parallel = true.
-> +	 */
-> +	for (size_t i = 0; jobs > 1 && i < hook_list->nr; i++) {
-> +		struct hook *h = hook_list->items[i].util;
-> +		if (h->kind == HOOK_CONFIGURED && !h->parallel)
-> +			jobs = 1;
-> +	}
-
-Losing "jobs > 1 &&" from the termination condition and instead
-explicitly "break;" out when we demote jobs to 1 would be easier to
-read, even though it would spend two more lines, i.e.,
-
-	for (size_t i = 0; i < hook_list->nr; i++) {
-        	struct hook *h = ...;
-		if (...) {
-			jobs = 1;
-			break;
-		}
-	}
-
-
-Other than that, very cleanly written.
-
-Thanks.
