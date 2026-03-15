@@ -1,68 +1,68 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C6D366572
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 16:19:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E69369222
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 16:19:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773591552; cv=none; b=TQ4p+WzFsRBftCwTQtY6ViY+k/L8yYVWD78bzHDCt3XTRrtpsCm9KAdC9CLZAYvz41vChA3558kH5S7vfNCQiRaSfgjQ2/5bNj2Quv/6csbRabXzSir+vKFpJxBvjMDWAhup6Z3ukQCEuCJuosjeHP1dM+kP6P8K+1EkXR6zd8k=
+	t=1773591555; cv=none; b=dOfC1zMx7O5jzi5Duxp7x2HRdSOv97vJqRoYBQyZzOduP+dd3MlCw4NMVVMpZVJKqfsuNPCoNMo64bT+d1d2ychlcOQ5eTcQRp/utK9yie5btQLohuZnBeSSof3W42iGuHB1SM1os69TkI/oyvK9U0qZdAPLgOuKvkhd1H+KGAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773591552; c=relaxed/simple;
-	bh=frzaapeFAv8gU+MaIZUOzC0gloaTOdxogXiCzKZXbDg=;
+	s=arc-20240116; t=1773591555; c=relaxed/simple;
+	bh=2n7GgEG1ZhsxSLyiYrWOlvRjZSjOEB2s8qCXSMH3gDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWOTJhqHQKQcCGu+tTnY5DBH+K1S3QoE9Q9LFfuJEgn4lynkXtqAG/pYnfvc0qbDXK3MuqRWeFBdHl+QcKsJgEksJzQudnTQvEKrs100cGVFaMeWruRuz8o+sveFbPMXyFqaAf3sfnqdWg5QMmrwzUX+3Gjgi9tJw7d/RmZ9N+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EffS6EqL; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version; b=oRpoNBUCkCYHLR/pliWwQP61ClUNQOKUgIkD72Fm9EufRbcwt1DEJ9JziO2ANoBoR+4qwRkr9axlAup2zHxfnSI86vc1CNXYQ5ZT26q/4gPF9ePC2DXpi5ynLJ0V8U0F4dhYaKs0uSHCi+IsfL5q5KmSq+CNvAJBsUM+XVPcTqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jmz1E4d5; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EffS6EqL"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4852ff06541so41901225e9.2
-        for <git@vger.kernel.org>; Sun, 15 Mar 2026 09:19:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jmz1E4d5"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-439cd6b0aedso2891301f8f.1
+        for <git@vger.kernel.org>; Sun, 15 Mar 2026 09:19:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773591549; x=1774196349; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773591550; x=1774196350; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=oGQlZoMUqO616K9o5ti3oYPnh8TRRW8WdJNw2STC+QY=;
-        b=EffS6EqLX/2Ylq+E4bQ15w9z0sPB0iHAoCHrlWHdju3+CJZdnQtMGHenGEw4hSSrAj
-         EBYwNo3SSTynqSA4ZS9Lyeqz4uVvGQWMnZEqEORr1NlPfRi521AiqgOrXkN+KGE5ShU3
-         72/YYCd0wrrdYDjNzDs2yVHm9Uv4WVl/pCfL4YZsvV6zrvU7aE5yeeBwEuULOQBPXCVG
-         cYTL6F8w7GPlWO9I0v9QEyThb7Jt0IkS4WYE8eiCbKJ26xH2Dy8kNOv1OMX5v6u6q+5K
-         oMBwE+azwFlT1AKErRDfR9S3MrJxO3qnwk+JkvPK1OrY1ps28EwPxSsQzqNABI/WZAVi
-         ylnw==
+        bh=Ym5aS+9dL+OuJ07UvNuem6mw1n3bxgEj99fbf5/f9/8=;
+        b=Jmz1E4d5pakwa9aydwWhItX8zk3tzvQE82iueSJcY64jkaEX6xHNZJhN7wuusjL66V
+         gxAA2U1XD1a3TQI6uffsehwMntM3+DoEeXzgHhyffQHrpGhwi4eU5hbI4IBWbRV+xpt9
+         9C032ZLjfooz2f1925BJ4Ld5Fnwa7VnJfAkVmzEADJJPq43qmQLgfAgjZNfFecry8gWw
+         p2MOd6FpWl9O2MOuP3Nuliwf5LxDld0DlmZTuuUYBcLzPXnY3slRCHqw9klfaVDYtZuX
+         UxrqXG6bddeRFI+M7ngRhiqTkz2Gp2s2qXUCWZ7yjZIzriLNUI932ngLtFt4+PVVQj0w
+         DPLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773591549; x=1774196349;
+        d=1e100.net; s=20251104; t=1773591550; x=1774196350;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oGQlZoMUqO616K9o5ti3oYPnh8TRRW8WdJNw2STC+QY=;
-        b=osKU/C3zMgosruOtgTsqQRT2aPpMPzYw/LQMP6OULcuIQB2fAqBEcV2cF4I/S9MzSa
-         5sHAgz/oDwoHQfTl3YwP6mbDnhcvmMC7rUrinHbE+Cy4sQkwmuImO4xZRjB6JM4nz85G
-         b+FtKomjzo5x6HPwc5MbGV/rZDxYxvAGHa/kzbDYaykLgilVbyGHhzAJALvgml/8J8a5
-         b2xolV4savopSsYtEtQQWUPu8++n7eeNuVhNNDj/Pr7jDpFDKPplWbTDGbl9sF+TM2qF
-         B45PhYjmp53JzBbZP7SoIHiBRGxBeifSLTF0WpfUaMO5Hy/CL1x88KivL+55Wz21yK64
-         9YXQ==
-X-Gm-Message-State: AOJu0YyVi5L6Q5bwC6rhRyHSTHrJ8Jdv1kKUl5heZyfRsMrZPwNfhjV2
-	pRuGEne/4oakRIL09sF2mwSMU3TQW/2vUPVpKO9XBp0BaV1/ihATy5+rtddvbA==
-X-Gm-Gg: ATEYQzwubsWwT6cLPtpm9ZyQhzaFsBOq3ioepCLEgxfqM6wCxOWjMdS7YUhFib0jrCA
-	lOOexR1Ci1jMqks7IWay86C2D/dZsdGc62BjfV/i7JuVB4ZwilUDHM8uiHQjwrCSuij0IiwRe6t
-	ax9ph+qd+4T+n/SVrEboSQRm3nWo+7AGm8OGFIu539/vBw3xyZHK6Gh9c8/IM99guM+hLgPim5W
-	6C6ZPpWmvaPjjmVTfD4KL7mWJVyefIQvxichuPy2XAx5HYgHDvU+Tf7oJS50Pi8lYJFtsDhfai9
-	yBuna9VLM8Tiao/dAn2Xv36jESccpX4YqBnFsmlOUPFRzPXndIi4+jNSdUZYlrftEYjzNILCADK
-	n1bE9v05xWffQHofOehzqFlU4mf9nwphM2y/hWoUY4oIsJWWIEPj/7SwLQEpEA4Zp+1EHaG7rkR
-	F8PqV0SkCzPDlHktbRh9iyLAUHfEUZqodD5MN6Kw==
-X-Received: by 2002:a05:600c:1c21:b0:485:5ba3:37d8 with SMTP id 5b1f17b1804b1-4855ba33bf2mr134014235e9.5.1773591548834;
-        Sun, 15 Mar 2026 09:19:08 -0700 (PDT)
+        bh=Ym5aS+9dL+OuJ07UvNuem6mw1n3bxgEj99fbf5/f9/8=;
+        b=qDh/iqyu5jBW3tLJ1ZdPsnoVv7SAVRw5h3KDx2Jwao1NgTvcL4PVWVQhhWhHs5ba2E
+         B3m1jRSBjukWPoDw+HDFz9JW1G3sXdEDLpZfEZqGx3vlJukihsXXQ2qlTUXDu2G2e8FT
+         lXXcotEkzyQ6+MCd3QVU9D7jNISNbHMWdctFcku4FB859yTTGIWG8ZuG2qjZhx3uiQPM
+         9fGwQA2Tnn4MDTaXw/+XhCx7uIpoOmcWIuuNjQ/kL6XorrfP5BZZbKg6RklS477A0Cdr
+         Av/dtL2o+/uHlG+twJDZi1N7UwW93mSMhWa1V8jRI0W1kC6hWTFfyHrVi1X4VoFWyuoG
+         pRrQ==
+X-Gm-Message-State: AOJu0YyrLGdw0FErsMjnKJDBOaXr/Zuhwf53LcVs5Jj6qjBu/bU5QXIb
+	4LTddcI2Axoi+XctbFkJJTXlrQjLzUxZEuHf2uy3wU4mLhUg+cRbCTyeo1Zmgg==
+X-Gm-Gg: ATEYQzxAp7rZRnibYmgwsyLHt+q1bHzCWHG20Ej5fbo3psMaMCqGo72KO8k4D4phM2G
+	mnPL1ZJPYU4J+m6uE7UluYq2b0QuGBi2NyYedI3wivmkxj8rMvKHo915ZN2FDh0BUoULLJYXMCI
+	nXPeK//dJCzqIvj5/7izuDC/v5vuABUJYvAla3FX4Ko0aqSaK0wiBNBg7Vs1PKM0sWaI8rdNmCC
+	vX5s4Of7zd4St+mkbmpC5X3/l38pSoG61JilUYOHvjUo56ypCQcpEyCGjeTQE9qFxZhGsprGVTY
+	9FoC+eKi9wORZTgrXNTcoq6m5G4TeidfjFkCMflMwMHJG0JAEOYVQgfQa0U4noax/B3Wq3MKsHX
+	Q+WxRIAOYGkrTVlGiqSylYumyUjPm8FxMJi41mi6fsbhptUp169wdilq1oGd7RhP4lEQEy9ej8V
+	3EBn98XtmY5XrG9elVN0JjkZTIwgMB3zift+atlw==
+X-Received: by 2002:a05:600c:4e08:b0:485:2f4a:6ae6 with SMTP id 5b1f17b1804b1-485566cdc39mr159820635e9.6.1773591549988;
+        Sun, 15 Mar 2026 09:19:09 -0700 (PDT)
 Received: from berwick ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48558fd09d8sm200476225e9.7.2026.03.15.09.19.07
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48558fd09d8sm200476225e9.7.2026.03.15.09.19.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 09:19:08 -0700 (PDT)
+        Sun, 15 Mar 2026 09:19:09 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 1/3] worktree: remove "the_repository" from is_current_worktree()
-Date: Sun, 15 Mar 2026 16:18:50 +0000
-Message-ID: <075700a22568913988c9fa8e1ff49db1a1a5b606.1773591528.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 2/3] worktree add: stop reading ".git/HEAD"
+Date: Sun, 15 Mar 2026 16:18:51 +0000
+Message-ID: <c3c5767725d6d3b31604fbd0dd29486b70bc18a1.1773591528.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.52.0.362.g884e03848a9
 In-Reply-To: <cover.1773591528.git.phillip.wood@dunelm.org.uk>
 References: <cover.1773411586.git.phillip.wood@dunelm.org.uk> <cover.1773591528.git.phillip.wood@dunelm.org.uk>
@@ -77,63 +77,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-is_current_worktree() compares the gitdir of the worktree to the gitdir
-of "the_repository" and returns true when they match. To get the gitdir
-of the worktree it calls get_workree_git_dir() which also depends on
-"the_repository". This has the effect that even if "wt->path" matches
-"wt->repo->worktree" is_current_worktree(wt) will return false when
-"wt->repo" is not "the_repository" which is confusing.
-
-The use of "the_repository" in is_current_wortree() comes from
-replacing get_git_dir() with repo_get_git_dir() in 246deeac951
-(environment: make `get_git_dir()` accept a repository, 2024-09-12). In
-get_worktree_git_dir() it comes from replacing git_common_path() with
-repo_common_path() in 07242c2a5af (path: drop `git_common_path()`
-in favor of `repo_common_path()`, 2025-02-07). In both cases we have
-a repository instance available so use that instead. This means
-that a worktree "wt" is always considered current when "wt->path"
-matches "wt->repo->worktree" and so the worktree returned by
-get_worktree_from_repository() is always considered current.
+The function can_use_local_refs() prints a warning if there are no local
+branches and HEAD is invalid or points to an unborn branch. As part of
+the warning it prints the contents of ".git/HEAD". In a repository using
+the reftable backend HEAD is not stored in the filesystem so reading
+that file is pointless. In a repository using the files backend it is
+unclear how useful printing it is - it would be better to diagnose the
+problem for the user. For now, simplify the warning by not printing
+the file contents and adjust the relevant test case accordingly. Also
+fixup the test case to use test_grep so that anyone trying to debug a
+test failure in the future is not met by a wall of silence.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- worktree.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/worktree.c      | 21 ++-------------------
+ t/t2400-worktree-add.sh | 28 ++++++++++++----------------
+ 2 files changed, 14 insertions(+), 35 deletions(-)
 
-diff --git a/worktree.c b/worktree.c
-index e9ff6e6ef2e..344ad0c031b 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -58,7 +58,7 @@ static void add_head_info(struct worktree *wt)
- 
- static int is_current_worktree(struct worktree *wt)
- {
--	char *git_dir = absolute_pathdup(repo_get_git_dir(the_repository));
-+	char *git_dir = absolute_pathdup(repo_get_git_dir(wt->repo));
- 	char *wt_git_dir = get_worktree_git_dir(wt);
- 	int is_current = !fspathcmp(git_dir, absolute_path(wt_git_dir));
- 	free(wt_git_dir);
-@@ -78,7 +78,7 @@ struct worktree *get_worktree_from_repository(struct repository *repo)
- 	wt->is_bare = !repo->worktree;
- 	if (fspathcmp(gitdir, commondir))
- 		wt->id = xstrdup(find_last_dir_sep(gitdir) + 1);
--	wt->is_current = is_current_worktree(wt);
-+	wt->is_current = true;
- 	add_head_info(wt);
- 
- 	free(gitdir);
-@@ -229,9 +229,9 @@ char *get_worktree_git_dir(const struct worktree *wt)
- 	if (!wt)
- 		return xstrdup(repo_get_git_dir(the_repository));
- 	else if (!wt->id)
--		return xstrdup(repo_get_common_dir(the_repository));
-+		return xstrdup(repo_get_common_dir(wt->repo));
- 	else
--		return repo_common_path(the_repository, "worktrees/%s", wt->id);
-+		return repo_common_path(wt->repo, "worktrees/%s", wt->id);
- }
- 
- static struct worktree *find_worktree_by_suffix(struct worktree **list,
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index bc2d0d645ba..9170b2e8981 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -692,25 +692,8 @@ static int can_use_local_refs(const struct add_opts *opts)
+ 	if (refs_head_ref(get_main_ref_store(the_repository), first_valid_ref, NULL)) {
+ 		return 1;
+ 	} else if (refs_for_each_branch_ref(get_main_ref_store(the_repository), first_valid_ref, NULL)) {
+-		if (!opts->quiet) {
+-			struct strbuf path = STRBUF_INIT;
+-			struct strbuf contents = STRBUF_INIT;
+-			char *wt_gitdir = get_worktree_git_dir(NULL);
+-
+-			strbuf_add_real_path(&path, wt_gitdir);
+-			strbuf_addstr(&path, "/HEAD");
+-			strbuf_read_file(&contents, path.buf, 64);
+-			strbuf_stripspace(&contents, NULL);
+-			strbuf_strip_suffix(&contents, "\n");
+-
+-			warning(_("HEAD points to an invalid (or orphaned) reference.\n"
+-				  "HEAD path: '%s'\n"
+-				  "HEAD contents: '%s'"),
+-				  path.buf, contents.buf);
+-			strbuf_release(&path);
+-			strbuf_release(&contents);
+-			free(wt_gitdir);
+-		}
++		if (!opts->quiet)
++			warning(_("HEAD points to an invalid (or orphaned) reference.\n"));
+ 		return 1;
+ 	}
+ 	return 0;
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index 023e1301c8e..58b4445cc44 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -987,7 +987,7 @@ test_dwim_orphan () {
+ 				then
+ 					test_must_be_empty actual
+ 				else
+-					grep "$info_text" actual
++					test_grep "$info_text" actual
+ 				fi
+ 			elif [ "$outcome" = "no_infer" ]
+ 			then
+@@ -996,39 +996,35 @@ test_dwim_orphan () {
+ 				then
+ 					test_must_be_empty actual
+ 				else
+-					! grep "$info_text" actual
++					test_grep ! "$info_text" actual
+ 				fi
+ 			elif [ "$outcome" = "fetch_error" ]
+ 			then
+ 				test_must_fail git $dashc_args worktree add $args 2>actual &&
+-				grep "$fetch_error_text" actual
++				test_grep "$fetch_error_text" actual
+ 			elif [ "$outcome" = "fatal_orphan_bad_combo" ]
+ 			then
+ 				test_must_fail git $dashc_args worktree add $args 2>actual &&
+ 				if [ $use_quiet -eq 1 ]
+ 				then
+-					! grep "$info_text" actual
++					test_grep ! "$info_text" actual
+ 				else
+-					grep "$info_text" actual
++					test_grep "$info_text" actual
+ 				fi &&
+-				grep "$bad_combo_regex" actual
++				test_grep "$bad_combo_regex" actual
+ 			elif [ "$outcome" = "warn_bad_head" ]
+ 			then
+ 				test_must_fail git $dashc_args worktree add $args 2>actual &&
+ 				if [ $use_quiet -eq 1 ]
+ 				then
+-					grep "$invalid_ref_regex" actual &&
+-					! grep "$orphan_hint" actual
++					test_grep "$invalid_ref_regex" actual &&
++					test_grep ! "$orphan_hint" actual
+ 				else
+-					headpath=$(git $dashc_args rev-parse --path-format=absolute --git-path HEAD) &&
+-					headcontents=$(cat "$headpath") &&
+-					grep "HEAD points to an invalid (or orphaned) reference" actual &&
+-					grep "HEAD path: .$headpath." actual &&
+-					grep "HEAD contents: .$headcontents." actual &&
+-					grep "$orphan_hint" actual &&
+-					! grep "$info_text" actual
++					test_grep "HEAD points to an invalid (or orphaned) reference" actual &&
++					test_grep "$orphan_hint" actual &&
++					test_grep ! "$info_text" actual
+ 				fi &&
+-				grep "$invalid_ref_regex" actual
++				test_grep "$invalid_ref_regex" actual
+ 			else
+ 				# Unreachable
+ 				false
 -- 
 2.52.0.362.g884e03848a9
 
