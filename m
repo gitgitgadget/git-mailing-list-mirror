@@ -1,133 +1,71 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C310625
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 03:14:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664287080D
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 03:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773544492; cv=none; b=HvVRSejzDGttugW+2PMG+ccHbUwdV/OjnARK2YbR9utiYNOIU/9p+E5Vetlcq/QEzJAuV76p8oSCfU4+PUi9fVTgE1FFUA7Y7NrcfkzCyFoG+OxvLiin86vkmxO0TzG9MkWctntywivcChzMwwEgqHUXxpLwa06u6vU3XnkUFu0=
+	t=1773546555; cv=none; b=CxsIG86Do/l7IqNAeaoG2gIcQZutarC0XgLdwKz0mtqQqsgmWWBiVcpyrLPFO1PstXMx4tK6VTNPb6fwc1OdUWOWGXGVo2Smnh8TWCc7ynDj2PqhhPl9LRXuLqK2nI22rD2rJ3kLbtBGMJoeDwsKOQf4s/Xd7UMnzoMjMKKFU0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773544492; c=relaxed/simple;
-	bh=wjUeTeAT8lOwHa5WJy+OjbfCi1CFHYiBN85wcdZjAdQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gshOETDrIOByn7lZBYfw8U5spsr2KgaHbfW05HVpUXdXR8/jplddWS5/6zIRlyU8Qt5xOCLrIuYUyRZhjSwoupsuC6/L95DnWRQDSRUwG4HN7usp19t+zXCTmLAQBuvC8fYTUjCM9tRguBKMxtR1SHr39ly9dEYq1sRSHMq962w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ha0qJ7eI; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773546555; c=relaxed/simple;
+	bh=4MeiCKp2+QOV9AbC1iboL+PN7l950reI+1lu/fUe5YA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=C87QM1tTPab8By/snYFYGmvv1tI+5eUbpTu7+XvN1H/nfVo2QKp2sPyv+F04F9V7CeVDI31gCckJpdKxIPKQ3eZNEs72+hvNhLO5mx9Y3ezeSQAdiyJUYPfa0v5YgEQGZtHWMJvX9z+l5pkZDiv8LnKqXATZ0XHm99OZ/YmEvpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=A2beaBlY; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ha0qJ7eI"
-Received: (qmail 123534 invoked by uid 106); 15 Mar 2026 03:14:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=wjUeTeAT8lOwHa5WJy+OjbfCi1CFHYiBN85wcdZjAdQ=; b=ha0qJ7eIW1JgPNU5IGzk+RCbyYK4lBUIsGDj5IyfliKN1fVt1KL7TqvQ9mNDqdT1ayI7MNNADRaBJE00EYqYFAZ+99/FJGYkCvEhjU70GAZ8c1eAgcxNbshjGWmD2lopBk3rAxhqipokjDUY8G+KUshfPnMEH4syM2dzsLk0RqkSvZJRFfNzUGdDlMgyiVCbBAc5QGNd+o2w0A9xFcoqkPRrFnADfphc9VUI7Xga+4TrEzzU1uG+Ti2ACdJcjkGXPDdysJ+B7lGRYiIpfK4gCNbo8AxyHu5Rtf6WBEEODJx5Y1syp+FSuowjRljzQTcAkxNKaACnpqKYc4sf2pUnog==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 15 Mar 2026 03:14:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 554771 invoked by uid 111); 15 Mar 2026 03:14:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 14 Mar 2026 23:14:51 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 14 Mar 2026 23:14:47 -0400
-From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-Subject: Re: Unexpected exit code for --help with rev-parse --parseopt
-Message-ID: <20260315031447.GB926820@coredump.intra.peff.net>
-References: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="A2beaBlY"
+From: Mirko Faina <mroik@delayed.space>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1773546551;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Du8E9JnQpeTMs09sbKOqgFOuPHXO1nvZmDxi0fxdd2s=;
+	b=A2beaBlY3Z5Gso2EzscYEbt4QRjAIa9/COdq4C2UA7CYqsQ4MuyBxNWhVQLobL6FTjYuCy
+	tOtH4pLRWcyhF3pXtPuN3byNZJVgYwOoGlMQxEJE0q7+4OzIK/N9wR+9pesJxyrIh4fpcO
+	mkYOKskO9neWOSx/GwTkLVzFaLvOKwFhMoMIHYVUhBIVzn2JAQ2p8y7UwqB0ca2uruwtM6
+	EQmkuiaRBQXRmmtL7/PjGkbM4lpgDMy1axz82EFsAi7+DQLGhV12/lrNEC7ueOoFNoEhct
+	nkSqZuD4aFEafQ1jvK/bKGGnDgCUVNE5O0qW8JEO6f/AV6J5BPfrd1j/kJyTBw==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+To: git@vger.kernel.org
+Cc: Mirko Faina <mroik@delayed.space>
+Subject: [PATCH] t0008: fix "large exclude file ignored in tree"
+Date: Sun, 15 Mar 2026 04:48:50 +0100
+Message-ID: <20260315034851.2261530-1-mroik@delayed.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=753; i=mroik@delayed.space; h=from:subject; bh=4MeiCKp2+QOV9AbC1iboL+PN7l950reI+1lu/fUe5YA=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBptiwEGxNtJjaS0QikDYaAetbnaoWmGXZIbqAyq znNfD7FEACJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCabYsBAAKCRBIeX6hnBm+ 0dLBD/973a+2+tr+u/uhyxx9mAcTY8MSEYVstKuw3Qr48/rRk+khI2U66o0r5btHSzNWhXlmK7Y 3VSqhSMKTUfhfW7qPiHRjNa4cxKTGcxLfT/r2l0NDj9AX+HblPkrdVRw9rVFyE96A1WduD+GeCr fL23Wm1M0toEjuap7LJ82MZdHzgleubvyeUzuZjCVcH8m5SP22mYanmlDHlk4XTkk9daWag0d/u 7MxlKzE3J94qEjlaBobN4/og6ioQYSCQWyQTXK8lhZLuPOjCGj66bsqrNxT5ksrcGMJV2XkBL0h HlzoEw+pc4fXuDq0pjb71vcurC2gD4UDCqqDMf/F/wKx5vvByTvCdM4hBhiPn8tU4jGLqtsw+mS HhutlrAvpkFkR2foNt1WmXy38J6hI8nM0l0TjJ1+BgGNoJCMO7yrxBvCVZqLSOnW5CicFB0PGGE 9Xk2IIZFunkWA1Bw6pxsVuGXArRxyGGDGTmqNhWNpDau1rw0Le3pnQ6daDYUI4xyaXjujkqMcP1 m/BRhiX8p6xUlIsS1abwzmnoIBzLIuCV1t0OofzBNsSFey+jSd+GbwQ8I7WExBVHjfhqvFFqH73 pINeXzKuUjixW54cBvGKMY8Jws+0Mx9g/yeOnEq49UqCCnUAr5eGQoP+tnCSSLnWX1uugLfGzRq 5dm9OtR2Of8m/Rw==
+X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: -
 
-On Sun, Mar 15, 2026 at 12:52:22AM +0000, brian m. carlson wrote:
+Add cleanup to previous test for file that is unrequired to test the
+size of the ignored exclude file.
 
-> I use git rev-parse --parseopt to parse command-line options in various
-> script.  I've noticed that it exits 129 if the options are invalid,
-> which is fine, but that it also exits 129 if --help or -h are given,
-> which is not.
-> 
-> The standard philosophy is that if the user explicitly asked for help,
-> then help output should be printed to standard output (since that's what
-> the user asked for) and it should exit 0, since the program fulfilled
-> the user's request successfully.  If the help output is provided because
-> the user provided an invalid option or argument, then the output should
-> Go to standard error (since it's an error message) and the program
-> should exit unsuccessfully (since it did not fulfill the user's request
-> successfully).
+Signed-off-by: Mirko Faina <mroik@delayed.space>
+---
+ t/t0008-ignores.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I agree with this philosophy in general, but there's catch here with
-"rev-parse --parseopt", because it's running as a separate program. It
-needs to signal to the calling program that "-h" was seen, the program
-should not proceed normally (because rev-parse already dumped help
-output).
-
-So if your proposal is to just exit with code 0 from rev-parse, I don't
-think that works.
-
-My first instinct is that it would have to exit with some other
-well-known code, the callers would recognize that, and then exit
-themselves (with code 0).
-
-But there's a little more to the story. The output of --parseopt is meant
-to be eval'd by the shell. And so when it works, we get a "set" command:
-
-  $ git rev-parse --parseopt <input -- --output=foo
-  set -- -o 'foo' --
-
-And when there's an error, it dumps the usage text straight to stderr
-and exits 129:
-
-  $ git rev-parse --parseopt <input -- --foo
-  error: unknown option `foo'
-  usage: foo-cmd [<options>] <args>...
-  
-      Do stuff.
-  
-      -h, --help            show this help
-      -o, --[no-]output ... output to this file
-      -d, --[no-]dir ...    specify dependencies relative to this directory
-
-But when the user asks for "-h", we get a here-doc! Like this:
-
-  $ git rev-parse --parseopt <input -- -h
-  cat <<\EOF
-  usage: foo-cmd [<options>] <args>...
-  
-      Do stuff.
-  
-      -h, --help            show this help
-      -o, --[no-]output ... output to this file
-      -d, --[no-]dir ...    specify dependencies relative to this directory
-  
-  EOF
-
-So the calling program runs that cat command. And I think what you
-really want is to tack "exit 0" onto the end of that output, which would
-tell the callers to exit. Something like this:
-
-diff --git a/parse-options.c b/parse-options.c
-index a676da86f5..b990f38419 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1473,8 +1473,10 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
- 	}
- 	fputc('\n', outfile);
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index db8bde280e..18e048ee8c 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -946,7 +946,7 @@ test_expect_success SYMLINKS 'symlinks respected in info/exclude' '
+ '
  
--	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
-+	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL) {
- 		fputs("EOF\n", outfile);
-+		fputs("exit 0\n", outfile);
-+	}
- 
- 	return PARSE_OPT_HELP;
- }
+ test_expect_success SYMLINKS 'symlinks not respected in-tree' '
+-	test_when_finished "rm .gitignore" &&
++	test_when_finished "rm -rf subdir .gitignore" &&
+ 	ln -s ignore .gitignore &&
+ 	mkdir subdir &&
+ 	ln -s ignore subdir/.gitignore &&
+-- 
+2.53.0.959.g497ff81fa9
 
-And then you don't even need to change the exit code of rev-parse itself
-(since we'd never hit the "exit $?" that the caller tacks on in case of
-failure). Though I think it might be reasonable to switch it to 0
-anyway.
-
--Peff
