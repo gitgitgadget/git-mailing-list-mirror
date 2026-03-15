@@ -1,122 +1,138 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA80A371CF0
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 16:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E21370D60
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 16:19:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773591211; cv=none; b=rvYDtxSQMOmcHcalsOJVRCr+Dal/ivJjfrrBiT6YsGc9H8IekX69Pe6PtBFop32WrX0DqlcaI8KhqHrngC22AbTT3MGFxSK7FE/T+l9xuB7fqX4+21KkmhmWa0tCj5Z87Krr+TphGDZTr4n1ghzEog8OPnzwweTI4ytJVtje4eI=
+	t=1773591550; cv=none; b=Cdnq9FEsPfGvCj+EcRkBJcSfujrECWRAw5iojRr0nHDHx2bgRGHLGvlwRv/XszIRCkmRFamV2rXthGNiRLwcaNcVw9rNGJjw408BGwiDO3gXbcCCI7nxWycT65zmNEtmYCpkJDWIPKiD0CJ56Oa6FfUgsN72pXiov5vAvyeN5Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773591211; c=relaxed/simple;
-	bh=sfLKfZ+sUOmxTBv3ijydgZx6qAZOyGJzpG87ZTrSlBI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K+xN4MHqK7Bc/IHMn3c1mQVb8YaWvNiCbXm/J/EiSZIeUW51X3V6GBSk2lyaPAMxLDv/uJpQ7ZiYIZFyQPJ7+bNzoRLpCal24QQel9M8vIHuHDgugvIzDkcuZnbX2rsXJ/FiaoqkLT2ublOAmWEjU6UtRWbGpm5BRJYGWY7O9Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=blMmN8x4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=InK/n32l; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773591550; c=relaxed/simple;
+	bh=ocfaaDh765UUHDo1YM3wbzo0nTnlMDB/DxhFcdFqjYU=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sQ+CA4oRpE2p+DmPEjJ+d8mGJAQQufUJ2+KPFBWePp+lF5DG/1m3AGAQrtfKxs6LDA2uwVPv3XVNUQmIIYlri2xGJbrNUjjbHJBPBHcFSgZsUGiW6O10hAlfa28wcojUpWaafDl7x11egkNG7ld4DPEV7mLhGKjTSM5IywBwa/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VT5cPM9/; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="blMmN8x4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="InK/n32l"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 03F141400105;
-	Sun, 15 Mar 2026 12:13:28 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sun, 15 Mar 2026 12:13:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773591208; x=1773677608; bh=MtKWEqLyKN
-	s2Rc1rTc8pKIuH24zdPOnuBlFzKH3wsqw=; b=blMmN8x4x1XALMfPqZezE75uGz
-	e/2Yn2n5FEF8UxVsZ/rh6IgExVpM9VtIJ0mj8WEsNh/pSYNhsRZE7NygGaRSj+Mb
-	DvAEJsi0R8ffCdl3sRldO140C9o6awqjZuGs6OHsUEZ1ri50T0Dbja5gkKl91/6F
-	GUqm8S8DuSZHGkt1DMLsGLDw82KEhaPnOcwkXUDCZvvWtjp1k8jMRwfPhZ10iqLb
-	dpja/BGDApIFiGow5X4Pl8k6h3NcYxK2lLCLYCMWWGbR6417sDbmrDNbdvak3ztD
-	r9jQ/JjmFNLI6x5OGs/A1MYNOMwzhrMrheuaBOTlcQeXpa0CRtJRganw0ZIQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773591208; x=1773677608; bh=MtKWEqLyKNs2Rc1rTc8pKIuH24zdPOnuBlF
-	zKH3wsqw=; b=InK/n32l/4YeWkpqh5HcUgA1/iSOa/dnEpFdGQ/aXtx6Kt5NjzU
-	J1TO/4sZRtq/yLQQC1ZMRLBCZ4Dld3iiLbcMQI6/5OWGy6fnJJgo4Ow7r1LX1frg
-	2sVFOwqKKMuIFKADUnZjo8fA8nAIiwROAEjpkHa+vGQj6sWfcu+mNTAn9hpfzoT/
-	NdKsNXJOfX3ZU7gxt8Yu2o+J4/BpqAeuPsrlPx+biG6Xu0JKmyEWD+mIUmg7zoZO
-	BtraKSVoddvvQQ2R0wdrU8t680DCQSBn5ZuBkqQNjTT3yefRQwfjkb0AJ5uEZlrQ
-	u8H7cTA5omS5IHyDyd7siLEcsfThd+k2NNA==
-X-ME-Sender: <xms:p9q2aYI8rHfV9ysOY-zLHdHZ2pSrMcH_UI4Jtrtm8Y5KxM1etOTDag>
-    <xme:p9q2aatvPmmFNvLJH48AQW0VBYWQhLtfxMA1Tdyzvg9ahojJC_bU9GwZrkQqH2RR8
-    dCcs2cSzMCkzZXrPD0a37GM33S9Rv346Vg9ahtPBsKmQC7oJiRGxmU>
-X-ME-Received: <xmr:p9q2acUCq6qcPmfVfhcE3_NPLGxoNW2HRb4dAa0bqBADAxec6sPDr8hAKT8U1m5xLvxlv5nuENRQMB71YkH2C6XOueJid_Alzw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleehleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
-    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepvghmihhlhihshhgrfh
-    hfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
-    thhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
-    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:p9q2aVjhdcAAO5BByUqNJLA_0l8z2YXWHQXXynzO56x_2vRueDlodQ>
-    <xmx:p9q2aUoyRmmviZ7mlP330jifcDHkBAKTBmYJIMF9cGMYkr5TOR9hMg>
-    <xmx:p9q2abGb632wBjbHrDgj6bcIq-bfIaBxycRmvc8EIGtgzaPKtNjoKQ>
-    <xmx:p9q2aZ5MZRkTcOde0NxDMt-twlT5693dVK2AB1ezs1SOO8QOdKTauw>
-    <xmx:qNq2aXkZcPrBgNmo0E726BEKqFDEsRo0EPGFP6uuJYMCZeMfEyY1ByOT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 15 Mar 2026 12:13:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Emily Shaffer
- <emilyshaffer@google.com>,  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon
- <steadmon@google.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 3/9] hook: parse the hook.jobs config
-In-Reply-To: <20260309133739.294555-4-adrian.ratiu@collabora.com> (Adrian
-	Ratiu's message of "Mon, 9 Mar 2026 15:37:33 +0200")
-References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
-	<20260309133739.294555-1-adrian.ratiu@collabora.com>
-	<20260309133739.294555-4-adrian.ratiu@collabora.com>
-Date: Sun, 15 Mar 2026 09:13:25 -0700
-Message-ID: <xmqqtsuhrryy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VT5cPM9/"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48557c8ad47so19420905e9.0
+        for <git@vger.kernel.org>; Sun, 15 Mar 2026 09:19:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773591547; x=1774196347; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nOzqUq5ZFnLgAd0afdEdL+HTBSILNxVT6niFIrzhO34=;
+        b=VT5cPM9/OzoBblF3uIVwcHvGDqMdhFyB9XHNmQQNOZnNHZT6CcYve/BJqnrFfF6iAM
+         oettkd98Y2ww0Vmj7PY1F6SAh99RkmT4GMQU49Oj92SVlUNmUzU+FP0xIUc/UKatcmq8
+         5qjYVNmr2QnY3Ee+F9KD2E1BvHC/VnYraWRMwhMqYDY2ctz09HOjoJd/0IJn41Fg6qUo
+         JKOHznjybYiZQvqWo7im0weIPyqZ2CfOInCM9O+Caj616iRUzZggUXK6MmBEAQ6zKlJi
+         LcgstxoP5587nivvJy4blVpd6foAZxWJqduGis4C0F4e5wwI2V9cVGiU3OxTH+/Dvylk
+         zA/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773591547; x=1774196347;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nOzqUq5ZFnLgAd0afdEdL+HTBSILNxVT6niFIrzhO34=;
+        b=JbYTEdxTw67u0aGOLJ+Ger6d5N3yB/WAtSA9VeroXQbfDm9OSkTszTlg25SINmClFe
+         9PA4sa6O2XYbgnwzU0Ka30By1cDICZgnWPxsZ/5gWNqEqq/eKGqTrMhmmgNBCQ+i76v+
+         sFxeQboA84T25xlq1szxkl/BN3tOvHKQ4KLMNo0kDmwPTqSHJ+W/JRRT749zzwZZRb/u
+         UmNvesepMZaXfnOjax5zrI+KMN2/ilAmFFnEPUJGDyHC/1H8uuckTpjmrS0S3Rpr0Zgx
+         3bCgKYAT3MMsND0hRHfyHn+XAe9o/OASRgX7OjR5ehVqlYm8vEpA/gCTmeeZua2GdSB8
+         MT2w==
+X-Gm-Message-State: AOJu0YzLAKvMNA0zT7WVgvmVTmISm3vsm+ZPdYuN0NgI8cPaqff2j/D6
+	aYqswEPLmXbhCETrTiciVFGVL9omaJf390HfMQW0UU8rZEDIDS3DSqr4QeTd0Q==
+X-Gm-Gg: ATEYQzz+2WnEEcJg6h14zVjQhXR0jVR/+3ZO0eIdZWavRtfe8a3OBZ0m8Tqyx0A9QzT
+	DDUG6Hq4aGsNanlLPeJvPTawMXO/PF8BSGODsO5B98HltDAv74gqd8KA/+IM35OwK5tniZfrwS4
+	Qiznk+bov399cgLESHBcnMOzk/bMZu0OnJvkvw/HtomsAazTmc56KanG44d2tKKLX80njZx5myt
+	u2Sj/C6RR4pxC/MjVgWKuu7CEDMPsuh/QDlPdjLvOPIi66QnteMOeJic10XA87KW9MPk0uCrVmA
+	r6Oxz3FB+pA67CXeYahyCR0dPYyCyDUUMlgX0bcJztWFVr1x/FLS7lMTJ39PkFiCQ1UKgpIVhJb
+	fHmStpKfzsI/0hnLC2D0y9TJ7rMGHeOpO/cMJwesVmg9cFYUA2/JMIKH9y4SRCyRty5eZ2aLHNF
+	i35Q6ni1rUwklQJmJeUWEvX0SEREU=
+X-Received: by 2002:a05:600c:64cd:b0:485:4533:9c47 with SMTP id 5b1f17b1804b1-48556705203mr159421315e9.22.1773591547191;
+        Sun, 15 Mar 2026 09:19:07 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48558fd09d8sm200476225e9.7.2026.03.15.09.19.05
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Mar 2026 09:19:06 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Subject: [PATCH v2 0/3] worktree: stop using "the_repository" in is_current_worktree()
+Date: Sun, 15 Mar 2026 16:18:49 +0000
+Message-ID: <cover.1773591528.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.52.0.362.g884e03848a9
+In-Reply-To: <cover.1773411586.git.phillip.wood@dunelm.org.uk>
+References: <cover.1773411586.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-> The hook.jobs config is a global way to set hook parallelization for
-> all hooks, in the sense that it is not per-event nor per-hook.
->
-> Finer-grained configs will be added in later commits which can override
-> it, for e.g. via a per-event type job options. Next commits will also
-> add to this item's documentation.
->
-> Parse hook.jobs config key in hook_config_lookup_all() and store its
-> value in hook_all_config_cb.jobs, then transfer it into
-> hook_config_cache.jobs after the config pass completes.
->
-> This is mostly plumbing and the cached value is not yet used.
->
-> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-> ---
->  Documentation/config/hook.adoc |  4 ++++
->  hook.c                         | 22 ++++++++++++++++++++--
->  hook.h                         |  1 +
->  3 files changed, 25 insertions(+), 2 deletions(-)
+This is a follow up to pw/no-more-NULL-means-current-worktree that removes
+"the_repository" from is_current_worktree() and get_worktree_git_dir().
+The first patch removes the use of "the_repository" when determining
+if a worktree is current. Patches 2 & 3 require a non-NULL worktree
+when calling get_worktree_git_dir() to remove the last use of
+"the_repository" in that function.
 
-OK.  The previous step is a good preliminary step to prepare for
-this.
+Changes since V1
+
+ - Patch 2: fixed indentation (thanks to Junio)
+ - Patch 3: removed stale comment (thanks to Junio)
+
+Base-Commit: 7f19e4e1b6a3ad259e2ed66033e01e03b8b74c5e
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fworktree-is-current-use-repo%2Fv2
+View-Changes-At: https://github.com/phillipwood/git/compare/7f19e4e1b...75eecc849
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/worktree-is-current-use-repo/v2
+
+
+Phillip Wood (3):
+  worktree: remove "the_repository" from is_current_worktree()
+  worktree add: stop reading ".git/HEAD"
+  worktree: reject NULL worktree in get_worktree_git_dir()
+
+ builtin/worktree.c      | 21 ++-------------------
+ t/t2400-worktree-add.sh | 28 ++++++++++++----------------
+ worktree.c              | 10 +++++-----
+ worktree.h              |  1 -
+ 4 files changed, 19 insertions(+), 41 deletions(-)
+
+Range-diff against v1:
+1:  075700a2256 = 1:  075700a2256 worktree: remove "the_repository" from is_current_worktree()
+2:  ae2a368e7e7 ! 2:  c3c5767725d worktree add: stop reading ".git/HEAD"
+    @@ builtin/worktree.c: static int can_use_local_refs(const struct add_opts *opts)
+     -			free(wt_gitdir);
+     -		}
+     +		if (!opts->quiet)
+    -+				warning(_("HEAD points to an invalid (or orphaned) reference.\n"));
+    ++			warning(_("HEAD points to an invalid (or orphaned) reference.\n"));
+      		return 1;
+      	}
+      	return 0;
+3:  1151b5b3020 ! 3:  75eecc8492e worktree: reject NULL worktree in get_worktree_git_dir()
+    @@ worktree.c: struct worktree **get_worktrees_without_reading_head(void)
+      	else if (!wt->id)
+      		return xstrdup(repo_get_common_dir(wt->repo));
+      	else
+    +
+    + ## worktree.h ##
+    +@@ worktree.h: int submodule_uses_worktrees(const char *path);
+    + 
+    + /*
+    +  * Return git dir of the worktree. Note that the path may be relative.
+    +- * If wt is NULL, git dir of current worktree is returned.
+    +  */
+    + char *get_worktree_git_dir(const struct worktree *wt);
+    + 
+-- 
+2.52.0.362.g884e03848a9
+
