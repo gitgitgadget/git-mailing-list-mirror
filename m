@@ -1,70 +1,70 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D6826ED3E
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 09:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C2F241686
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 09:44:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773567898; cv=none; b=eWpr0J46sB0eRSka+rINIkNAEM2O5yINbLdTcpci2ivkB1e8GnYppr1ISqr6O6YgcbFbdfOZ2Z5/SwqaekPlKp7ic9ocMn4iA+7voohBDLBjn06Cw8HSoESXTEC8OXykUIbclfFbzYJ0KjUumthuMcAOEz5nowNT8kAlBLMaWuo=
+	t=1773567901; cv=none; b=Itum4yZWCvP1+gZgvf0/nPvb2BcX/WROzUYqTHxcDhUQfSJYf0ksc7DsgV1dAnnAsmagq4xd5B47oFemCajW83rh0ty+UDmZcjGmVzhedSZ6bWccvlbCBeoPCUdoOKzrlXcYzfEo0OC6ozPgqRHi0DkixYC5jJBdt4vKMVCoSZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773567898; c=relaxed/simple;
-	bh=Hjuvi43WjkTRGrJfzcnE2gEzOn/lg2QCHl+6jUGm85I=;
+	s=arc-20240116; t=1773567901; c=relaxed/simple;
+	bh=5DWbVhqstlhz+qH7ZJgKeTdVWwrYDCNh3Igu5Rr8aSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0/O3nGRgQQZ1l38x3ifFWuahsiemAqs/zvSZOqpXK+clLeEsxZFYMNg0dozfu9hdIa3tcQOEm8SNj04f7kDvTAiNT27LoAxazWCX3U8F1TvJAMqIG+jIUtWpr60GzYzqCeadq9NqXmwTXiiLJ3NGlCw0sMWYpMC1QWdgTH/PEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nf3RjEkJ; arc=none smtp.client-ip=209.85.216.46
+	 MIME-Version; b=INF+js8WN6a7D9s03sGrBBcq62bW9pbCUOXLZmyRq1iktdQszvsB7yG0kWzJvf3JSVnE2IcdJG2CKeaCSV0FnDhXYnlD1jwdjiopE5ZFvWFO4JSd55P5cGLwPbmOXytbO7h9x8gaFD/0/QxokYhpR4jx9iruCXOmBfaMDfboUjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lQpssJhO; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nf3RjEkJ"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-354a18c48b5so3548258a91.1
-        for <git@vger.kernel.org>; Sun, 15 Mar 2026 02:44:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lQpssJhO"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-35b95e21ccaso70050a91.0
+        for <git@vger.kernel.org>; Sun, 15 Mar 2026 02:44:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773567896; x=1774172696; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773567899; x=1774172699; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/3JVar4ABkZKSRLyISHPHrcPlEHfg4dR0DYh+w/hS2k=;
-        b=nf3RjEkJLSN8FDyGgNuuhdVWXRl0N7CWoCOSz8G/4v8BJOJkemVDg7MAMvw4jSr7Wp
-         MOirRswZ5YDFdQxBZUL/QAmoHD+j3lTYRw/7PZ2/xeh7cquLPa2xFVTrxvr03oprbPs5
-         Vrclhk9A5BQxyrxyZVICZi1d4YmjaPq2mLjg+lxgFEPvTcZSeCd9iy5hVyb0Gncbu45w
-         B9NBFdipYeKk528kMFej9hUo2Ka0u+gVuf7QJhqrxdNwfw286dZzK6s7p+unL6ilp3f0
-         XJjb9hPmXi1V/qx9W1yDWKOBr/mwVy7wDQ3ssQWLDKjGQyKlbAl20HORbxAaP9Fi7PSg
-         2irw==
+        bh=SP4RMNlqMnNL+kSdod4jRZFnTYtKufMdw3CRDgt7mP4=;
+        b=lQpssJhOHmPBgKj3K+OpasqwoecRdHbg+zgLkvYwd/Xx9OjsMAEIN7SEL9nuwA2NA1
+         qS41FtM5MDibgPUbr351/d1ysC6aZveO1iTG/lvkRSe9d6woZCnj35+LypxrfWGfDvvY
+         C6d9mFBsgMO70MNUS/hyLB67Arku6YP+tL1FmiN0IaZpiAMFDa5MHwXk79CMl4gCy8mO
+         BFtHAeiaeH7PbJR7PI7lZSiP5Mu8eVdAuHt1/1xD32VnljOJP9FafkCUEtnU0USDNC6f
+         5MBPiH6cYzYEJbCwQj60RaBgzFfax+7i9/E+tagOfqLkNvoZFosRBId+Bgu/lACYWn73
+         iDbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773567896; x=1774172696;
+        d=1e100.net; s=20251104; t=1773567899; x=1774172699;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/3JVar4ABkZKSRLyISHPHrcPlEHfg4dR0DYh+w/hS2k=;
-        b=He+cWDbqxIfwWj36o81TFaaVS3p9U9m13+fEc6t+rSdfp21WM+0HpZ4hKYnI2dN6Kk
-         xQWg4NWZ/O4rQcee7dX9ZR0RDQbfV8htZ4HRbfFK69xiWE9UM8WdFOkPZPhbfDGh36Yd
-         ZIV4Pwk+L6SUWYrtkNzQQFZPHOZTcKRNHIHAHbsdLTRxwYRhlhJYvhDiFVt4e2Hu5TnR
-         TyjwKnUNhAT1FWi1sgmh0+mNmRQZ51yJ8DetPPMIsNrh1aHoINVuJooR+vFKxlks8oBD
-         COpkUYxQUG1fY+aNvZXiRkTQji6J3dy+IrLZ+zUxPkb0FFG6UsK3phpvaOWpArZQvzBt
-         5MQw==
-X-Gm-Message-State: AOJu0YykAgwpxbSvg0wdbjPwgNizqh+pA0lPhYU57dB//oNcJSqiE3aN
-	vWp6/UG/NFNCNFWvF9OErxYTnQLJEyeCvm3tlw6ZxweZsoSjrtkoCUF0Xc1lTw==
-X-Gm-Gg: ATEYQzz7NtrHxxmVgtmCSl5q8k5FwPxjxd95AIypOrBc1YftqX1PXIPB94fEj3XVkU2
-	h2h5nIzoLW55sAoiHCjvelwBcQ+k4i0GaMCchLVg59zm9cPIthmKueqGxm47fznkLYEg1rV77iC
-	YTkyLbp6TKkshGWvlBocf0YuGXltvImydXBpaTsyZfgAaTvkqF9YkMgPTWo3GCEeRDlBf3c0uKi
-	xC5B9/JpHfoZkckbTiVqrPSjkGvhtTvUyfB3nSE7Naugl72o3Mqrr70bvt0HHU/CgHB1HIMsx+c
-	eESVa3UM74PjYEswwT8jYUJLFwgjCfZ15z6rtaTpZlORR5krQpF4u1ZJJZ3gM+qXtJWdCS+Xtn6
-	TZZnVD/ShQu2TbN5YwCJnxZQZpUNoO++ugehXGmhw+6P3E0A8qzkPjAz4KwZSU0Ovwd9Nq0eB3j
-	tbO9voUjy409tyLqWjAZ/yMVQEWWfAnI316HqXKvuhzy54vok=
-X-Received: by 2002:a17:90b:4c4d:b0:340:776d:f4ca with SMTP id 98e67ed59e1d1-35a220656aemr8684278a91.26.1773567896033;
-        Sun, 15 Mar 2026 02:44:56 -0700 (PDT)
+        bh=SP4RMNlqMnNL+kSdod4jRZFnTYtKufMdw3CRDgt7mP4=;
+        b=J2QejJ++gODXTv+Y7fi5EG54PorgGFk3DLRr5XYRAPevW5Fx/l+o3qOirM7qdFNIj6
+         NSLEuz5LvJtrFf46A6NDQ2c46vSd8pIFg48RdvQ0zejR9du6+uWZgGXjUuHUDrgNqs8G
+         XWqEoYx31GEgki9Nc9D1OJo6UZzKjV4fOpxZtH5OtZhg3ONQWYyOuSGAD66lRsaEJ24P
+         VCaNzmTvZQITG7B8sMzw/GMChE5Ab4rpr6YyNxf9674VkIsdb8VE1GUPJlEKco4uz8U3
+         +NshKqPJfpGqdcxwi3OL0lXsp8qS8CCjqoLGyQpr9Lx/f5B5R3NQqmj3S5FOssgSy/H/
+         ly6w==
+X-Gm-Message-State: AOJu0YziA/s4zn87Iwy2ZQ4soravuhmAEZtOqM1knYXfby0ztGbAhRd7
+	xvdMBEHeqBfQROJLRFJtyKiTAt7MuUT/X2m2aRu15sW31PCxarG2S6pYlwKM2Q==
+X-Gm-Gg: ATEYQzyaeox8e1XjMQSzJUgln4CvzdfwHCtT4cJ0f90Xg/hl87syIC4OoTbyC7PgPD1
+	mP5bdWUXvxMsgbpz3Zl7Ik9+gHb3zYmQCY+7QZx8CCpd51av7435pcn91aJ7Gy0mBc4exJuqlMI
+	2mIO8Gt6bCntslLqxCPh7U8LW0LBEMVdIPWrkqV2JW+3Uh1CybrsN5T4rkcLmizhDCOccxWSJ2C
+	gphIuP2VoGJ19SQpn4z6Q4Zw4otubLyt87qzHS6ynV3mbsYEM/VlA5EMz+R2knNJVDiyAhZkjNx
+	kXdDwaYMH6hJn6NoAqju6WHr5PeYKIn9wQpgRDs/koFmoW7OB/YPA79tw2E5fG2encbQ92vPakZ
+	3UW6Ts5yN1hzm+0ggeCbNHjU2Z8+NyTxIYZJphEZSUkb+Lr2+dfPEr6epBVjNeSL5MhAcXWF+7z
+	FwS4ke/Iaf+AkAmvvJWICS0y3JfGv+bwtuPnzoXS5iinfctk4=
+X-Received: by 2002:a17:90b:4b47:b0:359:ff9f:9164 with SMTP id 98e67ed59e1d1-35a21e39c75mr8218362a91.2.1773567898978;
+        Sun, 15 Mar 2026 02:44:58 -0700 (PDT)
 Received: from d ([106.207.231.68])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35a229e7f9asm3413596a91.0.2026.03.15.02.44.53
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35a229e7f9asm3413596a91.0.2026.03.15.02.44.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 02:44:55 -0700 (PDT)
+        Sun, 15 Mar 2026 02:44:58 -0700 (PDT)
 From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
 To: git@vger.kernel.org
 Cc: peff@peff.net,
 	gitster@pobox.com,
 	Deveshi Dwivedi <deveshigurgaon@gmail.com>
-Subject: [PATCH 1/2] coccinelle: detect struct strbuf passed by value
-Date: Sun, 15 Mar 2026 09:44:43 +0000
-Message-ID: <20260315094445.19849-2-deveshigurgaon@gmail.com>
+Subject: [PATCH 2/2] stash: do not pass strbuf by value
+Date: Sun, 15 Mar 2026 09:44:44 +0000
+Message-ID: <20260315094445.19849-3-deveshigurgaon@gmail.com>
 X-Mailer: git-send-email 2.52.0.230.gd8af7cadaa
 In-Reply-To: <20260315094445.19849-1-deveshigurgaon@gmail.com>
 References: <20260315094445.19849-1-deveshigurgaon@gmail.com>
@@ -76,53 +76,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Passing a struct strbuf by value to a function copies the struct
-but shares the underlying character array between caller and callee.
-If the callee causes a reallocation, the caller's copy becomes a
-dangling pointer, leading to a double-free when strbuf_release() is
-called.  There is no coccinelle rule to catch this pattern.
+save_untracked_files() takes its 'files' parameter as struct strbuf
+by value.  Passing a strbuf by value copies the struct but shares
+the underlying buffer between caller and callee, risking a dangling
+pointer and double-free if the callee reallocates.
 
-Jeff King suggested adding one during review of the
-write_worktree_linking_files() fix [1], and noted that a reporting
-rule using coccinelle's Python scripting extensions could emit a
-descriptive warning, but we do not currently require Python support
-in coccinelle.
-
-Add a transformation rule that rewrites a by-value strbuf parameter
-to a pointer.  The detection is identical to what a Python-based
-reporting rule would catch; only the presentation differs.  The
-resulting diff will not produce compilable code on its own (callers
-and the function body still need updating), but the spatch output
-alerts the developer that the signature needs attention.  This is
-consistent with the other rules in strbuf.cocci, which also rewrite
-to the preferred form.
-
-[1] https://lore.kernel.org/git/20260309192600.GC309867@coredump.intra.peff.net/
+The function needs both the buffer and its length for
+pipe_command(), so a plain const char * is not sufficient here.
+Switch the parameter to struct strbuf * and update the caller to
+pass a pointer.
 
 Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
 ---
- contrib/coccinelle/strbuf.cocci | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ builtin/stash.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.cocci
-index 5f06105df6..83bd93be5f 100644
---- a/contrib/coccinelle/strbuf.cocci
-+++ b/contrib/coccinelle/strbuf.cocci
-@@ -60,3 +60,14 @@ expression E1, E2;
- @@
- - strbuf_addstr(E1, real_path(E2));
- + strbuf_add_real_path(E1, E2);
-+
-+@@
-+identifier fn, param;
-+@@
-+  fn(...,
-+- struct strbuf param
-++ struct strbuf *param
-+  ,...)
-+  {
-+  ...
-+  }
+diff --git a/builtin/stash.c b/builtin/stash.c
+index e79d612e57..472eebd6ed 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1232,7 +1232,7 @@ static int check_changes(const struct pathspec *ps, int include_untracked,
+ }
+ 
+ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
+-				struct strbuf files)
++				struct strbuf *files)
+ {
+ 	int ret = 0;
+ 	struct strbuf untracked_msg = STRBUF_INIT;
+@@ -1246,7 +1246,7 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
+ 			 stash_index_path.buf);
+ 
+ 	strbuf_addf(&untracked_msg, "untracked files on %s\n", msg->buf);
+-	if (pipe_command(&cp_upd_index, files.buf, files.len, NULL, 0,
++	if (pipe_command(&cp_upd_index, files->buf, files->len, NULL, 0,
+ 			 NULL, 0)) {
+ 		ret = -1;
+ 		goto done;
+@@ -1499,7 +1499,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 	parents = NULL;
+ 
+ 	if (include_untracked) {
+-		if (save_untracked_files(info, &msg, untracked_files)) {
++		if (save_untracked_files(info, &msg, &untracked_files)) {
+ 			if (!quiet)
+ 				fprintf_ln(stderr, _("Cannot save "
+ 						     "the untracked files"));
 -- 
 2.52.0.230.gd8af7cadaa
 
