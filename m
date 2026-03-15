@@ -1,165 +1,125 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C7A14BF92
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 08:11:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F50D42AA9
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 08:50:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773562265; cv=none; b=KtrdaYdTW+HUqgKpkSeOFHPepfAs9DdhJBBp33H/KF6uWgNLuB6ix0MHLpyAvYXaJGZRbSyHMs/Jnor0TF15pwzZPq7xpPwYQe+17DCw+55GWn2L7fZoAc13Z7eJCLIVh1l3ZqijbGaLfu2BtdZm0h22wQBk0oAFja94qepgHy8=
+	t=1773564613; cv=none; b=BqZzmEqTQUAoq5sVQnDwEpq48a9CqNIfG0gZUZVypDpyXAP83PMoF6/qJ7/L4chin2QYKLYKgnyAL2oCtRRz67WYl7gO24W9+zWKnHB4QnUvGNgEE9WPstgyguy8KyHG1TqwVcx2YIEOyEDi5EtSW5bHwpTByyLGO7CoHVey5iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773562265; c=relaxed/simple;
-	bh=MymvLHYobwdXrmraRsMncmKWPt+rU8XxGBbOP/BPRUE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=F8A2QRRdV3MSZN751EgyARckcYKo0HWwo46GlmHNGnGAIt/Jm0Eh+Py57+ZIW8F58lu7uby7SvPj6skO5mZSJv4u4nbk7+uSiqSaGgLGQ5c+9R5QEUzJcIAohJ8VSmJN+73R5jDa2y8OA2utu81x2Rw3yDI50zUU1DhK07hcrP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hq7Az2Ci; arc=none smtp.client-ip=209.85.215.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773564613; c=relaxed/simple;
+	bh=ArfonAWLt+vXlqTJU8OEdcKNYm1UDe/+4fXSNEGesK8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nrRCVcAenUABXTnzPB07xqewPJMwQaQu4p557XHBsLm33/pYBvZQlXPuFZLTc+QhMrXwV1MWn82wFJfrLj9a/BqI0QKn78uV/4kbq7NcUiZJQBF36hPHwWFtMgq9y11nfpD3BjrdO0dlEsjYIdauzHy6ZQpYIXRJh/B4uvUlHTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=SLCvvSFp; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hq7Az2Ci"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c73c990a96dso1286522a12.0
-        for <git@vger.kernel.org>; Sun, 15 Mar 2026 01:11:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773562263; x=1774167063; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6iANwMsVCXVPQU5EQ5zr4XzFkN3sfoea4uuAabTCikk=;
-        b=hq7Az2CiM/zH1Ot/hlVWnR3chYHN4YctZHW6k82Lq8v3QskNbho0a8koF8VWcngzgX
-         eNarVpigh3UFa5ussq/XWvy2bzXWM149uixkEoZCAQ/CpQiIkEszfwDm0+PUMl6ynMTC
-         FO6fsqJSaq5y4HLww7XlVxkz4aOFewQ6m8jqzlnia19KGZxosF+ro3mq+jDHHV3/OCTj
-         +zmqNo+/ZNMMuzDKQAFzrY6AiSoFTn/th9rOA8TJy8rupAke/Vl/63G1dglfrqyMnNOG
-         yh+zUnYnxCXxBsHz39Q7qLQ+jsNMCfG+3sXo1+ccG4FoJ6jQvIhn0bZOLbaP/X3XcKDO
-         bnRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773562263; x=1774167063;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6iANwMsVCXVPQU5EQ5zr4XzFkN3sfoea4uuAabTCikk=;
-        b=J5H/yGgvRHxlJ02sHjd3VECSaTRmi0rxOpKyzIbTHGxjR3Tkmy2V9U360kAkThVF6z
-         7hqbgTHA3jeJAaI2DLHC4ri2NYcBSNv0HjMtupNoh31z4p2WnhsrBmXBOEoIO/uYRUd/
-         OwmRlZZw4DOrv5t0KdAZti9enSUsOBJDZTjN8sun6+pQ45lNDxUqj7kcCET/SHfet3D7
-         6oRygYyGt00MQzn8sWrky9HCXzjOKfru2BE+UYBl4/kyl2tru6p7YtkR+QDLCDlO/gC/
-         sFJAm6ZOC0ne6EYL/qk6sbccCY3lJHEhKdtOLioNCY6VNX+yS2VtzEr9aWPugMeUhjal
-         rX2Q==
-X-Gm-Message-State: AOJu0YxxfhBYZ3NjAzlbeJ+Cyph8uU5SJVcpXyg6RbOP+YhR01wHEatb
-	xpxqeFa2Xb4EKfCUzxpOC8iwTO3coDqBQO0ub3ioH6z89niaJFUHyKvcm+GahdHg
-X-Gm-Gg: ATEYQzwqAEv9rxAb+URYNiM2qg9hXu9SdPas7xTII9H9s0YGv/nMd4QQJKr1P5ioP+n
-	VA+2X8sox4dMMSIXHd9nbViH2J88EZKDJ6Lug8GOgt+4XAiq4sOzNiEZ/HXYOLY8ZQz+I/1IHZX
-	Q+PC2svqqDTofARd/so9LiR+F9kIbcPZTE7gwZv8zg2bZDUitzA/vBOmXHVqwRu1VGi2OeTn6ZR
-	5Lq7dJNtjQy/VeBWTvJlFOoVE5JxWSjIQxUJiB6Y35lmL8hUwVctGcnj3BGCCRtRW4aG2tU19ID
-	IRTxOMR6CY8Vd1ACp0+vOdclR46w2yZjlJGZFml1tbM2/s4zA/bhRBeKpsD6UA7rHlMpeCwOZDZ
-	WHPTzY1+hy3YLTOwZYLLy6RHbvIB3MW3gHbJeJUsYKiEuPj35bD8i+OKuJW8oAFSYz4FWOsiyLZ
-	js9qr6blPi7AdveKkika/rmlWOwxFZUKgViro+oP8rzG3kPnP/0WEcTUJ+D+V8XgGyG43VYnq26
-	TE+hrRpduaTvRb6
-X-Received: by 2002:a17:902:f70a:b0:2ae:3bb2:a8cb with SMTP id d9443c01a7336-2aecac49127mr93880535ad.40.1773562263297;
-        Sun, 15 Mar 2026 01:11:03 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1cd6:3841:bc6b:8052:ee17:538d])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece81cde8sm73436125ad.70.2026.03.15.01.11.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 01:11:02 -0700 (PDT)
-From: Ritesh Singh Jadoun <riteshjd75@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Ritesh Singh Jadoun <riteshjd75@gmail.com>
-Subject: [PATCH v2] t/pack-refs-tests: use test_path_is_missing
-Date: Sun, 15 Mar 2026 13:40:32 +0530
-Message-ID: <20260315081032.497-1-riteshjd75@gmail.com>
-X-Mailer: git-send-email 2.46.0.windows.1
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="SLCvvSFp"
+Date: Sun, 15 Mar 2026 09:50:06 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1773564608;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jnlIQuP9BZXp6PpBo2RIYid0apYE6lgwm76G+UOSkrA=;
+	b=SLCvvSFpetJ3MP75+izZOTJaytxCch4AF60W0i6Oi9yc5ABIh5AHkxhoA0BfPl/WJPHhVf
+	LSChePIyScXllyqEU2zgB7kDgvAKu5P0IvyUgpUw7ho5bgZccDT0M+sdvmZKBPKXteszDk
+	kVo0t/iPQuyAygBQ/uqWp596z3rU8rvxHpBZo5N71GFDnK+BWAchQQhloEcTmiRBNMPG+A
+	3EcguS0ic+RNtkeDMSulwhdDrBIrLVWuh6TPQ8HnscYUVyeDNXQi5ac9avoQQSwVpFrom+
+	cumaX0XLydEVdFaZKV963hR8kBITr3QugdwtcboFKJAJS3EQyY+uNSit/IhcwQ==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Mirko Faina <mroik@delayed.space>
+Subject: Re: [PATCH] t0008: fix "large exclude file ignored in tree"
+Message-ID: <abZwbCF1R0_bnFBv@exploit>
+References: <20260315034851.2261530-1-mroik@delayed.space>
+ <xmqqv7extzd9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqv7extzd9.fsf@gitster.g>
+X-Spamd-Bar: --
 
-The pack-refs tests previously used raw 'test -f' and 'test -e' checks
-with negation. Update them to use Git's standard helper function
-test_path_is_missing for consistency and clearer failure reporting.
+On Sat, Mar 14, 2026 at 10:50:42PM -0700, Junio C Hamano wrote:
+> > Subject: Re: [PATCH] t0008: fix "large exclude file ignored in tree"
+> 
+> Strange.  That is clearly not what this patch is touching.
+> 
+>   Subject: t0008: fix cleanup in 'symlinks not respected in-tree'
+> 
+> or something?
 
-As suggested in review, replaced the negated 'test_path_exists' with
-test_path_is_missing to better reflect the expected absence of paths.
+The test I'm touching is "symlinks not respected in-tree", but the test
+failing is "large exclude file ignored in tree". That's why in the
+following section it mentions "the previous test".
 
-Signed-off-by: Ritesh Singh Jadoun <riteshjd75@gmail.com>
----
- t/pack-refs-tests.sh | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+> > Add cleanup to previous test for file that is unrequired to test the
+> > size of the ignored exclude file.
+> 
+> This description is also inaccurate. It seems to be talking about the
+> next test in the file ("large exclude file ignored in tree") rather than
+> the one it's actually changing. Worse, the next test does its own
+> creation of the "large" .gitignore file and also cleans it up itself,
+> so there seem to be no need to fix it, either.
+> 
+>     The test 'symlinks not respected in-tree' creates a 'subdir'
+>     directory and 'subdir/.gitignore' symlink, but only removes the
+>     top-level '.gitignore' file in its cleanup.
+> 
+>     Add 'subdir' to the test_when_finished command to ensure the
+>     worktree is properly cleaned up after the test.
+> 
+> or something, perhaps?
 
-diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-index 2fdaccb6c7..d76b087b09 100644
---- a/t/pack-refs-tests.sh
-+++ b/t/pack-refs-tests.sh
-@@ -61,13 +61,13 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
- test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
- 	git branch f &&
- 	git ${pack_refs} --all --prune &&
--	! test -f .git/refs/heads/f
-+	test_path_is_missing .git/refs/heads/f
- '
- 
- test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
- 	git branch r/s/t &&
- 	git ${pack_refs} --all --prune &&
--	! test -e .git/refs/heads/r
-+	test_path_is_missing .git/refs/heads/r
- '
- 
- test_expect_success 'git branch g should work when git branch g/h has been deleted' '
-@@ -111,43 +111,43 @@ test_expect_success 'test excluded refs are not packed' '
- 	git branch dont_pack2 &&
- 	git branch pack_this &&
- 	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" &&
--	test -f .git/refs/heads/dont_pack1 &&
--	test -f .git/refs/heads/dont_pack2 &&
--	! test -f .git/refs/heads/pack_this'
-+	test_path_is_file .git/refs/heads/dont_pack1 &&
-+	test_path_is_file .git/refs/heads/dont_pack2 &&
-+	test_path_is_missing .git/refs/heads/pack_this'
- 
- test_expect_success 'test --no-exclude refs clears excluded refs' '
- 	git branch dont_pack3 &&
- 	git branch dont_pack4 &&
- 	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" --no-exclude &&
--	! test -f .git/refs/heads/dont_pack3 &&
--	! test -f .git/refs/heads/dont_pack4'
-+	test_path_is_missing .git/refs/heads/dont_pack3 &&
-+	test_path_is_missing .git/refs/heads/dont_pack4'
- 
- test_expect_success 'test only included refs are packed' '
- 	git branch pack_this1 &&
- 	git branch pack_this2 &&
- 	git tag dont_pack5 &&
- 	git ${pack_refs} --include "refs/heads/pack_this*" &&
--	test -f .git/refs/tags/dont_pack5 &&
--	! test -f .git/refs/heads/pack_this1 &&
--	! test -f .git/refs/heads/pack_this2'
-+	test_path_is_file .git/refs/tags/dont_pack5 &&
-+	test_path_is_missing .git/refs/heads/pack_this1 &&
-+	test_path_is_missing .git/refs/heads/pack_this2'
- 
- test_expect_success 'test --no-include refs clears included refs' '
- 	git branch pack1 &&
- 	git branch pack2 &&
- 	git ${pack_refs} --include "refs/heads/pack*" --no-include &&
--	test -f .git/refs/heads/pack1 &&
--	test -f .git/refs/heads/pack2'
-+	test_path_is_file .git/refs/heads/pack1 &&
-+	test_path_is_file .git/refs/heads/pack2'
- 
- test_expect_success 'test --exclude takes precedence over --include' '
- 	git branch dont_pack5 &&
- 	git ${pack_refs} --include "refs/heads/pack*" --exclude "refs/heads/pack*" &&
--	test -f .git/refs/heads/dont_pack5'
-+	test_path_is_file .git/refs/heads/dont_pack5'
- 
- test_expect_success 'see if up-to-date packed refs are preserved' '
- 	git branch q &&
- 	git ${pack_refs} --all --prune &&
- 	git update-ref refs/heads/q refs/heads/q &&
--	! test -f .git/refs/heads/q
-+	test_path_is_missing .git/refs/heads/q
- '
- 
- test_expect_success 'pack, prune and repack' '
--- 
-2.46.0.windows.1
+When running "GIT_TEST_OPTS='-l -v' git make t0008-ignores.sh", "large
+exclude file ignored in tree" fails with the comparison failing due to
+an extra warning "warning: unable to access 'subdir/.gitignore': Too
+many levels of symbolic links".
 
+I don't know if this tests fails only on my setup, but seeing that the
+failing test is supposed to check for .gitignore size only, the "subdir"
+directory is not strictly necessary, without it the test works just
+fine.
+
+> This patch has some disturbing characteristics.
+> 
+> - The subject line and commit message describe a fix for the "large
+>   exclude file ignored in tree" test, but the code change actually
+>   modifies the "symlinks not respected in-tree" test.
+> - The description mentions a file "unrequired to test the size", which
+>   doesn't logically apply to the change being made (adding a directory
+>   to a cleanup command in a symlink test).
+> - This kind of context-mixing (applying a correct fix for one test but
+>   attributing it to a neighboring one) is a common pattern in LLM
+>   outputs.
+
+Sorry for very bad commit message. When writing it and knowing where the
+problem is, I found it obvious. Now reading it again, it doesn't make
+sense at all without additional context.
+
+> Is this generated with LLM sent without any sanity-checking by a
+> human?
+
+No, this was all hand written. This mess is all due to my incompetency.
+
+> > diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+> > index db8bde280e..18e048ee8c 100755
+> > --- a/t/t0008-ignores.sh
+> > +++ b/t/t0008-ignores.sh
+> > @@ -946,7 +946,7 @@ test_expect_success SYMLINKS 'symlinks respected in info/exclude' '
+> >  '
+> >  
+> >  test_expect_success SYMLINKS 'symlinks not respected in-tree' '
+> > -	test_when_finished "rm .gitignore" &&
+> > +	test_when_finished "rm -rf subdir .gitignore" &&
+> >  	ln -s ignore .gitignore &&
+> >  	mkdir subdir &&
+> >  	ln -s ignore subdir/.gitignore &&
