@@ -1,138 +1,126 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11CE37186C
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 16:19:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E2623BD17
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 16:59:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773591555; cv=none; b=QtFnaPllDv6TWcsEzZRyBShKtMyeYlTw8mQ7VQ9lI1QtHBMmlUZrj8y5SipT5WVnTKj4lEbaDW012KU1c+qqqvy3LC/c0lYCU+Rx6CEUk4IStGUHFIh717K4v2wVGklWBIs+c10SRnWlh/dNiGgaL8gpmrtPxzChjwuv3UrP5+0=
+	t=1773593993; cv=none; b=m4nNWUMdALEhy15m4SjCevCWVkpCX+2SmE2eUV2mhd+uysnQNzedwqIrK5+hYlqhMxpLceDamG72RD8vQ5ArGG4JwGKKNRX2aD8sdpFguONlSEu6/4Sf472vbh3MzmqrvCGWUPJJ+1zc9yw3aGLtQhYltR5Gp/5bj+yUuVsKNI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773591555; c=relaxed/simple;
-	bh=eTQZFoQyYZuwoNQHTCWOofZvoeeoL9Z6I/nJJZj6p7A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HNNqiSsYLoXhb9rbrz1TFw4FCf14JbAdL3utwLH4bMM68oUx7BppN8CHr/cmMuqL5ZI7Q1DO8Ca+PFZ4mxf/crJyNFSmRBDQ4ChhP/Wl5+ej5jn2xWro4oBONpcmX1wK60D9CoMNs/XdC2eowfYaUShVN5qlwOXCvJpKVM2I0Hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cp1efPvj; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773593993; c=relaxed/simple;
+	bh=iI/Pyp23Vi6sxeVufP8Hott3c61F2D/WT3M/rfAV7YY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YCNJnNvTT+HADGJPrNkoQHoIy7Pymxu2Tmcjpcqtuk+qLCWiZnGsi1YdQs9QouOTFYO1Y4oROz3EY6Ik212Eq9695X5K0TgBssBwdPXMw7brf3FxzaONaOY1dOUHjOoad0/2MnKfPs0S4ws4Zy/jTMB8vJfCY037SZkoc9GHX0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=bzDhPyB3; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cp1efPvj"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-485410a0a8aso34524815e9.2
-        for <git@vger.kernel.org>; Sun, 15 Mar 2026 09:19:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773591551; x=1774196351; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=573nfqusiJQf3Gvl1YOw8BJajYl3W9OqbwPkH0QKwA4=;
-        b=Cp1efPvj8I3X3gpWn+SDOK3NeJAocCMxKmCskkz2nGzwFkcvjPMFGHZyYyr7jEEYTN
-         PEYJM1XwjyT4i7+3ncvTN5wjn+KManxmpWRLglaJXIYh5w+O2dSIuayiTAzqFHs9wgju
-         wyGFfZxhtYZa27t6t+KmiS/llhq/YndyYPwAkA9rxnlajgWj/AFbsEjMfdAGBirIuSIt
-         SncX/MwGUH8U3zqQHZgrF/OkHITXyzvKw0FfZuqcizsh3TjGuk/0A8LmInCnhiGPM9q6
-         3Mvv92Eyk1oEeAApJ3QnifeGMZBcmeN5ZN3wh8IXs5iTJ21h65vGaWo09879BWRu/SPl
-         aNTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773591551; x=1774196351;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=573nfqusiJQf3Gvl1YOw8BJajYl3W9OqbwPkH0QKwA4=;
-        b=gA2UvVzIKqhuMB4Z/H/UjcIlmcldd03KBIyHH8G30oiPAHLDW7lQwAtv1dMtn2sc/T
-         5Gwux9Q5tELm4JEh3VRetpIdqDxxjOCkFalePSqqMtnLsz3NKXQws6o2/3jgrazs25yH
-         OeTzWn/iFQnXerzw8NzLgzW8kf0qSYSu/RQrG0KJ+pHsOCnK3/eXa9gQtPaRT49tOd5a
-         J/a5ScYiJcNoU1+suARek3hDdqvUkzf4v1Fl+pFqGOrHkqEMcxtYlszl23jT7H1VV4pO
-         7piG2GTaDwLY4JRwdTpvjRXGUfY9XfXlEM10oTA/VzQsJtSQl6wJ94cm0zwXHi8jLwYL
-         fWmw==
-X-Gm-Message-State: AOJu0YwmTWe7qj3ESpWhRcVZpn5sdBQQykPjfM/QnIGxUbphmwlMpVJb
-	3obFT9vQ1rA61HjdbIb9U3F/RcbXHfsCeF2nTlhE6v39OOEWUrMkY2lCSwvPKA==
-X-Gm-Gg: ATEYQzxkUJcO7eaLGGlTHGgw+lMGw12rvoTp2S5kt0gEg3fjbTUPcZSmuvyl7PZXZ6F
-	gNxjZOtQXp9kv6pGtSN9cNGpRJ+/2aYqnR1dCHT0WB0pNpoAuQzwU73nzPoMez+7OrHeB31eG4Y
-	lBB+MJi/DtARsYSMUbidYWclyHbSTHCxLpfvxLxxbz2AWmgfHbAgoWo/pyGxycVwMUbfAIPZ5gT
-	OIrx7yRhXP8GmkQ7BiIlE56TndtqaVcq33KRxhLj11uDivoFZKgtOssKUh4r0v4leoXMuqKZGjc
-	x7Y8pfak/UIQE+/G07b4yWFx5+uQ+B3vyz97FashHqZbTYsDN1mKuEoV++iiyELExNTFDPSOlFu
-	flq4721A5lAXOn4gwMoHSuyVR/3hiHYE1Yqh8V6AKfK8mLgut6+cflhSx+y/hE0qD75fnx0ZJD0
-	z/IuSvphF708veVOdP/Iu5v+iCX9c=
-X-Received: by 2002:a05:600c:8489:b0:485:4552:8fbb with SMTP id 5b1f17b1804b1-485566fab29mr167348735e9.22.1773591550797;
-        Sun, 15 Mar 2026 09:19:10 -0700 (PDT)
-Received: from berwick ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48558fd09d8sm200476225e9.7.2026.03.15.09.19.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 09:19:10 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 3/3] worktree: reject NULL worktree in get_worktree_git_dir()
-Date: Sun, 15 Mar 2026 16:18:52 +0000
-Message-ID: <75eecc8492e3fae70c3f11edfc29417937459dd0.1773591528.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.52.0.362.g884e03848a9
-In-Reply-To: <cover.1773591528.git.phillip.wood@dunelm.org.uk>
-References: <cover.1773411586.git.phillip.wood@dunelm.org.uk> <cover.1773591528.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="bzDhPyB3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1773593990;
+	bh=iI/Pyp23Vi6sxeVufP8Hott3c61F2D/WT3M/rfAV7YY=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=bzDhPyB3OWa6lwedVhX7iiB3J0yKcfsBrvhy/E2G2IadtJPbyeGqiV49zmQ4j+f1j
+	 /gHbgprEJQBcJ7NYAdbsrsTbhfnXqs/46JEhNCpQPwvSjYDiqs1o+0e1jrqVauO/v2
+	 BtQ6Fcr2ez9M9TyaydWuw5EqLlU2qZceMfbQZ2k2XbDspa0GAJ6ygxHGFuXnq2K56j
+	 RiX16psUed62LwEHKkBIM13Jz8l6uabX9XkGjtNO1chD9zLGfCatAVHLIHmza5Jdvt
+	 YuBRlzs5FcDywGtlror4f5x84N75AV83XvH5DnwlyQUjVkUPXkTVcFbkEXuVw9pw5y
+	 r4bGIT4SwlNsKV6Z49q27FLYKELjpC4+KjNcZnWxcMC7fy7La9DEaZcMiJUKz1q77R
+	 yHbExXnsRFi0FH0sNaSWe09MaCWNIYsGayizTCPMrjH0YdluOjWYGYVB2pQLxE+N6e
+	 MifZKO/L125hnofg8SixL63mJDo6gTAGAJcRqFDVX2fpqIg4vKO
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:c233:1397:3eba:c74d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 56EA020113;
+	Sun, 15 Mar 2026 16:59:50 +0000 (UTC)
+Date: Sun, 15 Mar 2026 16:59:48 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: Unexpected exit code for --help with rev-parse --parseopt
+Message-ID: <abblhCBTgamxPOhD@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
+ <20260315031447.GB926820@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="62JDF6GYzIJN/nPv"
+Content-Disposition: inline
+In-Reply-To: <20260315031447.GB926820@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This removes the final dependence on "the_repository" in
-get_worktree_git_dir(). The last commit removed only caller that
-passed a NULL worktree.
+--62JDF6GYzIJN/nPv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-get_worktree_git_dir() has the following callers:
+On 2026-03-15 at 03:14:47, Jeff King wrote:
+> So the calling program runs that cat command. And I think what you
+> really want is to tack "exit 0" onto the end of that output, which would
+> tell the callers to exit. Something like this:
+>=20
+> diff --git a/parse-options.c b/parse-options.c
+> index a676da86f5..b990f38419 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -1473,8 +1473,10 @@ static enum parse_opt_result usage_with_options_in=
+ternal(struct parse_opt_ctx_t
+>  	}
+>  	fputc('\n', outfile);
+> =20
+> -	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
+> +	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL) {
+>  		fputs("EOF\n", outfile);
+> +		fputs("exit 0\n", outfile);
+> +	}
+> =20
+>  	return PARSE_OPT_HELP;
+>  }
 
- - branch.c:prepare_checked_out_branches() which loops over all
-   worktrees.
+Yeah, I did some poking around, saw the heredoc, and came to the same
+conclusion that this was a viable solution.  Since we both seem to agree
+that this is a good solution and it also has the advantage of being
+backward compatible (in that nobody has to change their code to get the
+new behaviour[0]), this seems like the best option.
 
- - builtin/fsck.c:cmd_fsck() which loops over all worktrees.
+> And then you don't even need to change the exit code of rev-parse itself
+> (since we'd never hit the "exit $?" that the caller tacks on in case of
+> failure). Though I think it might be reasonable to switch it to 0
+> anyway.
 
- - builtin/receive-pack.c:update_worktree() which is called from
-   update() only when "worktree" is non-NULL.
+I can do that as well, even though I think that is actually
+substantially more complicated than the first part.  I'll write up a
+bunch of new tests for these cases in addition.
 
- - builtin/worktree.c:validate_no_submodules() which is called from
-   check_clean_worktree() and move_worktree(), both of which supply
-   a non-NULL worktree.
+Thanks for a sober second opinion.
 
- - reachable.c:add_rebase_files() which loops over all worktrees.
+[0] As we all know, sometimes one has to use older systems and having
+scripts break on older systems needlessly is quite inconvenient.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
- - revision.c:add_index_objects_to_pending() which loops over all
-   worktrees.
+--62JDF6GYzIJN/nPv
+Content-Type: application/pgp-signature; name="signature.asc"
 
- - worktree.c:is_current_worktree() which expects a non-NULL worktree.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.9 (GNU/Linux)
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- worktree.c | 2 +-
- worktree.h | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCabblhAAKCRB8DEliiIei
+gXScAQClgmwIdftSohmxIX2qKgMEf6t5TWwOWJ7ba3COPuXbyQD9E+RwOQzKmWZB
+O5HEOhH99CdTsvCqXc8b5TxNMGt1fQU=
+=tUt7
+-----END PGP SIGNATURE-----
 
-diff --git a/worktree.c b/worktree.c
-index 344ad0c031b..1ed5e8c3cd2 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -227,7 +227,7 @@ struct worktree **get_worktrees_without_reading_head(void)
- char *get_worktree_git_dir(const struct worktree *wt)
- {
- 	if (!wt)
--		return xstrdup(repo_get_git_dir(the_repository));
-+		BUG("%s() called with NULL worktree", __func__);
- 	else if (!wt->id)
- 		return xstrdup(repo_get_common_dir(wt->repo));
- 	else
-diff --git a/worktree.h b/worktree.h
-index e450d1a3317..85d634c36c0 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -51,7 +51,6 @@ int submodule_uses_worktrees(const char *path);
- 
- /*
-  * Return git dir of the worktree. Note that the path may be relative.
-- * If wt is NULL, git dir of current worktree is returned.
-  */
- char *get_worktree_git_dir(const struct worktree *wt);
- 
--- 
-2.52.0.362.g884e03848a9
-
+--62JDF6GYzIJN/nPv--
