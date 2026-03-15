@@ -1,125 +1,152 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f65.google.com (mail-yx1-f65.google.com [74.125.224.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE6935F609
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 21:17:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326C437C91E
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 21:23:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773609468; cv=none; b=SjJiC6Lf0tdUlHni/kPGmiQ/n1Y0U01IP7uUk8xDwWMDvf8Lnv3uvRcEBFwPkhacELmf1NZ5qKeaRfXUEVzj65/qj2a7hI3fZhtEUNkTNPIlsU1duw0N1hWXAxkUWZvLl/8NORHPFvXs+qoyavt7SHLNd++7a0X3hrjq47TZGbI=
+	t=1773609816; cv=none; b=ZgbeKzMOlupUiz+L7v2rnvgpcH7IWoVo72n+8QNteBd3vC3QmfXO8G5ZdbHlE+uik1c2753U+ZqUcSPa8mfQW+h8bjFSXv7o6k2vr7T3XhlhZrYu7R83Tc6ECWFNNzArdpWH6hkyH+J+SZwnJWvqRiR9RdHwQWmBY24wlP/cnug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773609468; c=relaxed/simple;
-	bh=Y1Lmmvt1d6afrbGeLZ5dSetlrr0JiLUN4UWtF2Zs5nc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cvQeYf78htabxdlfAKv1z0M9NNwETjvDs+k30RQJGCCJWXiYh87QyORUHRi2cpp5QizvEQTYVePQXF2pHBZYiAk59LLpn+jAIVViUy6gPy0Ia4av9V08b/XF0M73VBrcpDIhU/YpdTMAl/xYRpxc0pBv0Iw+3pMNQmWxFC3DT08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aSu0KikD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qb9aIvnt; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773609816; c=relaxed/simple;
+	bh=d12RclPW8UvoTtTfqnjQp99TKKCmWCXvuulu3964neo=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=HMhyuZkkI6LhnfAs1NG+y2+b0qBbNyejuYTzBxnYFRTT998UR+sXYHCLTzc1+oLIfvdnSKgmC/Jd2QcS2w2NuSdQ9VXIqDD/e+6JDgmSZgN5uXJ+BBg/cE7oJVVAW3rzEiNqA6gcZWZE0EAzAr7vchtMahf6E8Az8JkbGvmURkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=p1lTh6Sv; arc=none smtp.client-ip=74.125.224.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aSu0KikD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qb9aIvnt"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 56F8F14001CD;
-	Sun, 15 Mar 2026 17:17:46 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Sun, 15 Mar 2026 17:17:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773609466; x=1773695866; bh=bNr34tqS+Z
-	hr87P/FzE/1C6JCfufeFVcuH2hf4/RwxM=; b=aSu0KikDsRDtwGd96unTwRpAt9
-	1gCQEPPzpzgbRQJJlCSkFos8kpiJjb/G1ZL2MPgsSHMCZkHHC2+T8Hj0CsS8Jucm
-	il3FA2MX+u5wZzMBDt20vvkpZy6eRFpzScHdkEwldGkhXx5oE42Ied+wHae+Bmaz
-	PvdZeezMhJHSYqE9GSDJao/JNY9HGaigX7T2fOUV7gTZgcZ5LTDTTemnq0OQJPRY
-	8HrZzbRZR4T4vza4kuo5kmGf1+uysYptNSBJHguJ+hRTnXuhuv3sJIawhKoPm8NF
-	CxqWslCuftyWApuUrtcQClv0xuP2xKz3+lI3SSRDVqvS7E0g2rF9M++op3xw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773609466; x=1773695866; bh=bNr34tqS+Zhr87P/FzE/1C6JCfufeFVcuH2
-	hf4/RwxM=; b=qb9aIvntHTubMkOs3aSy3/WNQ8YIxxjEHFCWLr+a2QEgXPWgleb
-	ve1CpE+y3RyyqVzN8fpID3BSRF9zAaFiU07Uip+hME7cfUGCAmsL+Kau+LsJ0m40
-	TwNGGz9xfPtMPaW13fqALnA8f5uhe7TSlIsxi/sP6Vqvv8DktVDBN+l0IbJQSNBL
-	vG1TwDWrOc/vn9nnna5NDjM1+RM4pYKjhOOhzuitRyT3mYBPBWxWCMFqhcG5TQAo
-	0soZqU6XsxhEh8kJ1CKYf/ETrl/W4OTOSFd8ekeITI4qhLf+zO8X8aifGPB50TUZ
-	36PuIJ9UnTmEuLNEcbjNSXbKOroCV3bJ9Ig==
-X-ME-Sender: <xms:-iG3abXeh8QV4bzcedsyK3fgQRkpN7AZ0zO_T-o-GBoO6LczXNiovQ>
-    <xme:-iG3abBonraot-sCTBVXNKEIilBsQtnfrMhKOuwEOrMPR1hVdIaRhA0hDhlNa1Sgw
-    oyb8Ova-w6K8UZFkVnDrX00cXjPGqOXii8QRkfxBALYWuCEpNv4aw>
-X-ME-Received: <xmr:-iG3aUy7PmqfNSSoYLozWlUulrrqyzqqJSRi46NA-0Lwx5_r9jNc0C_lgbHd4xo90pDYQVoYzg_nZhXvflGxYWEPXQ9qz0icYw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleeiheehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-iG3aQCL1hMgP1Jg7wSb5_uk4pwgT8BmJ9o3kndaj_FZRu55n6rHUg>
-    <xmx:-iG3aZaqnMEQvU4jgpkOUZ9ml3bVrZvO0skJggztljm6T6iiiMZNIg>
-    <xmx:-iG3aQjn0JEKES5Mxj9pUMwtT8l42e9aiE1alXN6u7piN2fTfqeruQ>
-    <xmx:-iG3aT6Yth6kmneS7p05KrqQ0tefjhUInrK3NKWhOfVMyMaBAB9zCw>
-    <xmx:-iG3afDO82DccXQGsW4PTWuxZk69iVm0IXpwgBBfi2qMbiUwF8RAXtWj>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 15 Mar 2026 17:17:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] worktree: stop using "the_repository" in
- is_current_worktree()
-In-Reply-To: <cover.1773591528.git.phillip.wood@dunelm.org.uk> (Phillip Wood's
-	message of "Sun, 15 Mar 2026 16:18:49 +0000")
-References: <cover.1773411586.git.phillip.wood@dunelm.org.uk>
-	<cover.1773591528.git.phillip.wood@dunelm.org.uk>
-Date: Sun, 15 Mar 2026 14:17:44 -0700
-Message-ID: <xmqqzf48rdvr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="p1lTh6Sv"
+Received: by mail-yx1-f65.google.com with SMTP id 956f58d0204a3-64caaacb9bcso4060003d50.1
+        for <git@vger.kernel.org>; Sun, 15 Mar 2026 14:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1773609813; x=1774214613; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fPYVFQveTwzK4YfPtnwpo9qW8B7s92M4SuJLPh3fvWY=;
+        b=p1lTh6SvXAjEc00d3cwUKADEObv7YgiC59HCabWoQv3B3ytMYSWxDJQg84160eYJ83
+         QaOcP2SCM2NpsM4QX7T93Ybr9vunQrpoTidLBMV+cbZEVan5hIoMXVEe92tCNza+vuPM
+         qvzW89R59pt4NeA9fgCp+zrKhXj/1rS1CVX/4k0vJl/mitEeD10ljfL64rJU6gLvAkiQ
+         aJKytyg/JqeALozYIMUhQpY+Hsr+xhUz6FLj1Yjp03ZIHM0/1x7ZsUeUyzD1Q91kIyos
+         nXl6wihG4LMm7ULfgClSDaR1RvNhhyMNr1E8SK4YssdkK50il5WihJBP01/vS39HTKo+
+         cdDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773609813; x=1774214613;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fPYVFQveTwzK4YfPtnwpo9qW8B7s92M4SuJLPh3fvWY=;
+        b=sIghEF8jxDlbOJ+gXfvseM1BuaF2gtu5MTZ1D9ycyLipTXn89kS0b0VLr13aboIC7P
+         bi/5HLAzr3fCJRVQGFzmCOyOYutT5bVIQiw8ADmNaXsFL47ypvUR8YYrtLQQ9wtzY5Xr
+         tI/1evgB7pBvzIteCAMYJHYRSLIOo4qhy3K8VaY9PlnI727Eqqq2mQuC+ghtw+yrfYCr
+         IG3qFRBV4eLUSCy4TZyXlckkfoZVYMipmTDI6Y91rreGHU7vTWe3W3pPOLRYHCiQlQiT
+         KLk02eYd100qYQ2g7HlMpSkxEHwjP1S0ARYNbPDMM7OxqaYz3OJPeBd9tCpeiZxNkRUK
+         H8yg==
+X-Gm-Message-State: AOJu0Yyzn9IOLjKuyGEgxsT9eb+BH6MHRFwyIivRTOgUWjb1S3Fqvl02
+	8B+AEkyrgQ2RCjQv1b6ht+7DbjWYsY4NX5bkp+A6KWb7XLdVBeOJ3h1IKhsJC1YOIoRQefDsTId
+	luZGzJYyFAsso
+X-Gm-Gg: ATEYQzylKDqxqTsju2lVB99qggcujKLe3YlPaoiZvGFDu84dLjnBGGkUlRQOhi7vNRq
+	wz/15r/aUumABFiaCB/Fo0GNoaNqhRgETF/Ivlsmslm4K0VRBw5QC0/TZWvjBWECDseBjOcdY+a
+	DhVxhQSJ9m7HZ+TeA7Rx4NRMvDAr3pd6b7yLrycdu1rcTH6MyLpncSpJKQN+SYrMwOR8wW9gPl2
+	YyvHc9QQFfbaiChmH6Ng6n0h279ebflamtj5iQAjloRnNOR1p3pdzv98F4QCojWeDbyAd/+r8EA
+	eiCnJyFUhnzHfFBzuze3wNDQwe20fId8j88Rk1M1emxFsX/awyVgdAVK3Ul7xenmaoAtBfNY626
+	wz36TDZmgglE8xyqO1fQPEYu99g4U4/SOYftf4LhFa7z86rlQJGBGQ8UTxghI/8OzrtYU5Qpf53
+	ghK7kit5s4T2hNKto5KrPEkKz6tzTSh0s2VPOnJ9VLoJbQH7rjH9TEc5hKqEE/cj2bXT7PN5+b0
+	rPap8tjevbnyYrTJK1aDj8kzHTOPof/BUjSoa0S
+X-Received: by 2002:a05:690e:2c6:b0:64a:e7e0:a723 with SMTP id 956f58d0204a3-64e62f13453mr8038927d50.18.1773609812632;
+        Sun, 15 Mar 2026 14:23:32 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-64e65b39917sm4634221d50.13.2026.03.15.14.23.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Mar 2026 14:23:32 -0700 (PDT)
+Date: Sun, 15 Mar 2026 17:23:31 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH] .editorconfig: separate tree-wide glob patterns
+Message-ID: <518d71de9cdd71d0fc259740cf0da075bcf79746.1773609807.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+In 046e1117d5d (templates: add .gitattributes entry for sample hooks,
+2026-02-13), we added a sub-directory specific pattern to our
+.editorconfig's main section. Prior to 046e1117d5d, all glob patterns
+within that section applied to files at any level in the tree (e.g., the
+`*.c` rule matched both "pack-objects.c" and "builtin/pack-objects.c").
 
-> Range-diff against v1:
-> 1:  075700a2256 = 1:  075700a2256 worktree: remove "the_repository" from is_current_worktree()
-> 2:  ae2a368e7e7 ! 2:  c3c5767725d worktree add: stop reading ".git/HEAD"
->     @@ builtin/worktree.c: static int can_use_local_refs(const struct add_opts *opts)
->      -			free(wt_gitdir);
->      -		}
->      +		if (!opts->quiet)
->     -+				warning(_("HEAD points to an invalid (or orphaned) reference.\n"));
->     ++			warning(_("HEAD points to an invalid (or orphaned) reference.\n"));
->       		return 1;
->       	}
->       	return 0;
-> 3:  1151b5b3020 ! 3:  75eecc8492e worktree: reject NULL worktree in get_worktree_git_dir()
->     @@ worktree.c: struct worktree **get_worktrees_without_reading_head(void)
->       	else if (!wt->id)
->       		return xstrdup(repo_get_common_dir(wt->repo));
->       	else
->     +
->     + ## worktree.h ##
->     +@@ worktree.h: int submodule_uses_worktrees(const char *path);
->     + 
->     + /*
->     +  * Return git dir of the worktree. Note that the path may be relative.
->     +- * If wt is NULL, git dir of current worktree is returned.
->     +  */
->     + char *get_worktree_git_dir(const struct worktree *wt);
->     + 
+Ordinarily, we would expect that the change in 046e1117d5d would not
+have an effect outside of applying our settings to
+`templates/hooks/*.sample` in addition to the existing globs, that is
+not the case.
 
-Ah, I somehow expected to see that we say "passing NULL to wt is an
-error", but that is misleading.  When something expects a worktree
-instance, and it accepts NULL as a special case, then that is worth
-commenting, but otherwise, it is not worth mentioning.
+The EditorConfig specification has a quirk[1] which changes the behavior
+of globbed patterns when the section contains patterns which contain
+path separators. Namely:
 
-All look good.  Will replace.  Thanks.
+    If the glob contains a path separator (a / not inside square
+    brackets), then the glob is relative to the directory level of the
+    particular .editorconfig file itself. Otherwise the pattern may also
+    match at any level below the .editorconfig level. [...]
+
+While it seems like this should apply only within a particular glob
+(e.g., in a section covering `{*.foo,bar/*.baz}` all `*.foo` files (at
+any level of the tree) should match, but `*.baz` files match only when
+they are within directory `bar`), it seems to apply to *all* globs
+within that section's filter.
+
+In practice, this means that a file like "builtin/pack-objects.c" would
+have matched the rules in our main section until commit 046e1117d5d was
+applied, but no longer afterwords.
+
+(It's possible that this isn't what the specification intends and that
+instead I'm observing implementation-specific quirks. I first saw this
+in vim-editorconfig, which is quite popular, so perhaps this is part of
+the de-facto specification.)
+
+To ensure that these rules are applied in a pre-046e1117d5d fashion,
+split this section in two: one for patterns that don't contain path
+separators and another for ones that do. This restores the
+pre-046e1117d5d behavior where, e.g., our `*.c` rule matches C files at
+any level within the tree.
+
+Add a brief note above this rule in an attempt to prevent similar
+changes in the future.
+
+[1]: https://spec.editorconfig.org/#glob-expressions
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ .editorconfig | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/.editorconfig b/.editorconfig
+index 6e4eaa8e955..d06f5c6100b 100644
+--- a/.editorconfig
++++ b/.editorconfig
+@@ -4,7 +4,14 @@ insert_final_newline = true
+ 
+ # The settings for C (*.c and *.h) files are mirrored in .clang-format.  Keep
+ # them in sync.
+-[{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile,templates/hooks/*.sample}]
++#
++# Only list glob patterns intended to match throughout the entire tree. Create
++# new rules for files in specific sub-directories (as below), if needed.
++[{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile}]
++indent_style = tab
++tab_width = 8
++
++[templates/hooks/*.sample]
+ indent_style = tab
+ tab_width = 8
+ 
+
+base-commit: dc6ecd5354dca88d51b6d6562777fc8fc10d77e1
+-- 
+2.53.0.308.g50d063e335a
