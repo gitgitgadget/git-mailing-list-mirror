@@ -1,196 +1,89 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C895616A956
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 12:46:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773578785; cv=pass; b=OIL9eNuDQc0Efteht3YkC3imA4pUCMBpIgz8ED2CUCl+tfRenwmWBRBLeZJyYWRpIuRbDP6iO89rVtdIWEljyVXBdkBpCR8CZGCIWRkWHV5RzpEzLL+bxNC+CeK0cGkrJaxEtbZlu8GFZUFnVkgTfr4zUcI8JYXiZ659SOluyfw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773578785; c=relaxed/simple;
-	bh=jEjgHlOoGLLd+oxrvx4ruBt5MIH3ehuM+YXcFKF4i2M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KH05VmcjAp8o8TpqRzzw2cr3ElKabwGc0p4765tHR7UYfZ8DtYIqToQ4mXd3C9vzbiJq65FfuoZphPZy+HQ0BpuJlqFGkUeFq9aph3UyFKkX8eHlwWYv6fAXfZy9waxqNR00DeJ3agA+MRPBOBaW2r6HhD6GVBRbprGwwxsKIMw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F4O5R/mI; arc=pass smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BCB81724
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 14:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773584968; cv=none; b=F9zDt73LSB+ogDb1xRvUNpJjoJMaeJACbXHCuz2YoquHDfJTLqv7bsX5R8f/4o9WXSQgQN/R6DIDCowNkb0QMHAgrWDGAI4Ab6yAiWEyiV19kdFVDev3UeCgqxmuZRgc/SWtLqfBoW4MNIXHtlpSR85y1x0ZwabeIHTDia9WJUY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773584968; c=relaxed/simple;
+	bh=kAO+CrUTDVAH5ZV4XOyc049WVbHfCmAIP920/KNyHxE=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=ajlGPcHJrsSRXzAYBbo04Ffbgjlywc88iwL1u6SpwR11JgBWy4V/Y/SMWdZeHrHcV/DoxELX3gc4qnI8/hMxY2veTbvZ0a9/jRK6y0z4Fw7SWrrECA0mOihO2aEQrwVmfz50TSIFNNVqqzrxNixiR+0z1U0WSDzmsZ+9HTXvpkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UU4MyomI; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F4O5R/mI"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-950cc286d86so39655241.0
-        for <git@vger.kernel.org>; Sun, 15 Mar 2026 05:46:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773578783; cv=none;
-        d=google.com; s=arc-20240605;
-        b=cqyhQNaV1F4WuDzlR41vCjP3PbHhUzfOYH/nanTCzoQhA1yoSPCaJhXew3liIpfVbX
-         +eiRRj4yAeHfpiM02nUum5jRqgOJ3MGzSn0vsIx1zQaIXBGZSez57DEI8xTnoIVUr21z
-         tiSFnGpgJNmengzyhVAgt1DQutMn+Pro65r+LRXji6uhavvPltRL77m8T+kY0m15boFp
-         HkFzmPYZ8kWUfjdQT6HFDx2hZ+fquVNWPt8UpvjxWoDyErEQc4+h1yccuP+XvJ2Pozj/
-         2XhQM5mkq/LMqEY9i0vGj246vF3kCkvOaMpWeO/LW/QqeYQSlY6Zcx+VjZ7I4dMnCFvL
-         oX9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=jEjgHlOoGLLd+oxrvx4ruBt5MIH3ehuM+YXcFKF4i2M=;
-        fh=zMdzpXACyCg5d4FjsiAnBALTe74J+PxnUmcB8GPZ0IY=;
-        b=Tgdf9/5QK2CtwG33Zc5QEDEP78/EYfE6ZpsbCfcp2csLBcancLB2HRoh55bH2e8+/0
-         geLJZxkmjpMZr6yyagQP4NUjIwSdBcFYlmudBnLUJ6dRJxdmrWIEUlc2pa3To8Y90f/w
-         s1k9qI3FESNOV6ovzE4a6nQlVFRL7o/PznG4CsrcEQAD2deXQU4PiSz91aXP/g6oMWM1
-         UoDdWrJDYNF8bR3DsFVR/IHiFFEMsoJdC0wficD9xrYB/MUJUV5BR3xCYGjK7F3XUS8F
-         OipS5L+2MHylI0WjtOzwd19K4mXyWc4E6Ws2qYAsfZgxlPMBvq2sf5XtLsOfwwF+MOzd
-         9dzQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UU4MyomI"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-82976220e97so2208482b3a.3
+        for <git@vger.kernel.org>; Sun, 15 Mar 2026 07:29:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773578783; x=1774183583; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jEjgHlOoGLLd+oxrvx4ruBt5MIH3ehuM+YXcFKF4i2M=;
-        b=F4O5R/mIrfDrmor8aUBnNrQ5hcwfd2AFGOTKHmESG4o0jWmEpqKyBEagp1F28Id1UX
-         EZHZrIlntKIGgGxs7K65GdarwGKQvE0351ePc1rDg8GMMo1SrzN+He7G8Oa5an3wBUB2
-         inwHzcdVMmBkZUJYUovnWxqVwb0Yjd1t55ct+du0/d7Hp8OUDW7ysbut1t8yUqhPQzbr
-         7MbNOSztXWPAKdXajjpM1q5qNLc6+CyGMP1tRzbfOSRrvta6HVKzZSIhuMuVPkya0F2f
-         DS2SJ/O4JQN12t2k5wJsJtrBFVrwds6HaBQzEtqNAZ86VVn84Ptync3u70RyScqOCN9/
-         5cQA==
+        d=gmail.com; s=20230601; t=1773584966; x=1774189766; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kAO+CrUTDVAH5ZV4XOyc049WVbHfCmAIP920/KNyHxE=;
+        b=UU4MyomIrwJ/49udpSDyxjOX9R4QR234ByNTX5qQECWNDuxQpSR5nJ65ug++ovi/Tb
+         Ct3ziuwNXC7ZASRUsARUwsN0uyKH/SZq0b6Wo3OK7NoAowmgEmnZHYItVzuUqqVvtu3n
+         chRpqZf7UT25UY0KOFdtiQj8iclW/HoPmsEzks0EmihTcHtZcOQQT1XUNzW2os49/p3y
+         GAJfaLIvaJN0aOC5Pk/qLxW8wkNH19xKyAh99mpKfzgc7cq2XBmby9Y8FTc8CRldhhO4
+         6uD2+FRXZqArbFloxPtAI50DYQIqqiC05hsOAcmbJVh/BOaNWmDevwQsKqmTEY6YWHSJ
+         GaMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773578783; x=1774183583;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=jEjgHlOoGLLd+oxrvx4ruBt5MIH3ehuM+YXcFKF4i2M=;
-        b=S8WJo/1L2qapMbfyW4jEd6IcGZWMSeWYRWEUI39UhAE5wLI7JPTEn4FgGVOyihWlZI
-         NoolH/ynmNwmkfSfNi1bia/645eGHWfXNZK8T70wNXFJ4bucaRGFJ+4suts8khEu71qZ
-         baTBF4luWoONp7nSYGX+OiSRY49tFrm1V/F0gsC8Y9HHikKSEqjQWcT/mwSGElcGLjFh
-         YYz+yyi8u0jPjlsfvNeDQJgyq2wFeqYgtS2E7MIfpNWOHurN+k4FOddMcUxz7OV/cnvU
-         eAFz7z+20lQhc8fDrPUquFYqIDnrYKymA7U96Q7vcavpxfj5Dla6+7aJIPB03Vmmx/Vj
-         ep7A==
-X-Gm-Message-State: AOJu0YxRVb/LjjGxsMmc7X/pchNp4wHxoB3VBlwS8IAwg0ey4rKO/hgT
-	F5Ok81tTvhQIpsPh3KI9ZwgYIR1gQDVzFfYu8D3REcvIupGlfqcz8wTz0+kHbPqQgLFUontShtO
-	10dPE8Tgh8kUgBhHwujSWG/tBrxvWfaEmBjxE1to=
-X-Gm-Gg: ATEYQzzNZQBXMQGi0sUiZcNGhEHVbS9FF4r3RLXFFhRXAsOHmFcUQIiWVkDzrfpn72F
-	E852e+oQWEPQpPgp+1wK/nq66hKLanRkZeE6VC5ZsrbmAZELn+EuMgNpGgtnL3822w4SJUgUqeV
-	Dy1dkHypjwgQjaiD9DSpzKDnq3RSf+8+yakCKv+dc7VVqe54iWyhQ5/GDZZyITerqE5cJya8Rwn
-	I7CBcC4wg3U6ykYFGP6fMiK4lk4qzbwCCQbxgrcZizeMh1SkRR06+dZ5D9aQtXwrbUyfErxFerY
-	vE3a1jKLYFai1Ttmud+A5ka5ElnK83uK4GTRPDNKHE1I+vLurGitE7buD+2HIhu8RXmKiAXvg0u
-	VRNBRgKNjTHfxySSsedcZeJ4FtXOkpp4tgWt8cZsoLzOzMPHuAISDTHAJhFvNgDIqXfiIcRdDok
-	fOdO4m/Q==
-X-Received: by 2002:a05:6102:a54:b0:5ff:ed38:188c with SMTP id
- ada2fe7eead31-6020e5078f7mr3387985137.21.1773578782663; Sun, 15 Mar 2026
- 05:46:22 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1773584966; x=1774189766;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kAO+CrUTDVAH5ZV4XOyc049WVbHfCmAIP920/KNyHxE=;
+        b=n8v5GS6tXPmiaf5Z5vtik65OOw3P9tUxkUsJtFpsR3/Lugac+oiwSpByXKagC7HKLX
+         WwpxJnVoXQekQ1WFrUvA1+mosCRI7BBFXDiH/cAitlJz/kgvl/VJlAs6dRcxrW6fGcNs
+         jD4FMC3kzWlQL7BkbDb+W4ONHDIsQUhFSDdeWZB8x9Tj7C58EczmN+ppbOGdFSC+rakr
+         SaDeDbnhKK24unk3UMPPJMmGsL5AfKe4kYagRTNeb7UwpRJbKsxA350tJdjkPCce6bix
+         RY3d1aoWNUVxrhYfcQIDyxOEpEnXf3ZjbhFjYCc7ZhlX0IZQu8T1O0XxguEpt7cafBJt
+         PC9g==
+X-Gm-Message-State: AOJu0YyzstDCgHK3I1DwpS86vxDVYJLBfiNzbgRuK7NxyifH6eT/RR+M
+	Ykg2zXZe5TAt5wrF9GByWgKlMiVVnlFPRRQBg6nlT8KysGN/tYU8e0z6kZQuwk2w
+X-Gm-Gg: ATEYQzzXkmOHDBpBVzirLDcgjJyDMNs2D7cXcaz3JmaCAa9ZYcqHierBe7CCRgwOJ/a
+	QAC5+J6+RLAW1pleXHK7ocrj5IVBFtBYbNnaG2xQRM1J4rq+SisIyzMWHEj6VZupuYUgPbxn1eo
+	u7DylCooe7OZ0GSOsbxw/Yi3W45ng5v4QvzV+LPTGwQGBpleT5stMlspbjxbBxkYUqSEUlFQE7M
+	intIy1uuK6g4hAvlxcggnPbtkrXjefUkcOGkwgmLyNz4IuDZ0aH5G50woL1Wy6qZ5q/xbCHVi69
+	VB0dQ/RM7fsOZk7xdz7UUciHgS6W7kbO5Bcd02xOt2vO8hVDfLvQZCx4QpGrqIHR0WnNEg2F/6H
+	Oh7bO6AuvbkQC26CMfsg27bdbqMNLlnHbsV+WsnzOJ9U70gLKpkay7eco8SdisLy7E6KsN/SQGi
+	dcmgScKishW2kjSScmmvpOfS7b
+X-Received: by 2002:a17:903:41cf:b0:2ad:d0ff:2ed4 with SMTP id d9443c01a7336-2aeca9415e7mr107352825ad.6.1773584966402;
+        Sun, 15 Mar 2026 07:29:26 -0700 (PDT)
+Received: from Dummy.. ([2409:40f4:ac:5e0a:3e63:c59c:7030:5250])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece81cde8sm81084585ad.70.2026.03.15.07.29.24
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Mar 2026 07:29:26 -0700 (PDT)
+From: siddharthantv <siddharth13102@gmail.com>
+To: git@vger.kernel.org
+Subject: [GSoC] Introduction - Siddharthan T V
+Date: Sun, 15 Mar 2026 19:59:10 +0530
+Message-ID: <20260315142910.17684-1-siddharth13102@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOAgETOX815iJcsZOjVSYXr+o-uSkkAkEJ3FE2xkt1ODBaOUmg@mail.gmail.com>
- <CALE2CrTWMcMOPoWH8HEN_Z8_H1tdhdN2a6hN9BkJ4xs=0DN3Xw@mail.gmail.com>
-In-Reply-To: <CALE2CrTWMcMOPoWH8HEN_Z8_H1tdhdN2a6hN9BkJ4xs=0DN3Xw@mail.gmail.com>
-From: Arsh Srivastava <arshsrivastava00@gmail.com>
-Date: Sun, 15 Mar 2026 18:16:11 +0530
-X-Gm-Features: AaiRm53RCxCpriI-DCLSFh0voP_3xI3AfoeHun0aE4MrV54I2a3O0XpR3yTvWQk
-Message-ID: <CAOAgETPzGiYem3Z3rV5duhs07g=0A+-MO6bCi9MFARwrQPR7Aw@mail.gmail.com>
-Subject: Re: [GSOC 2026] Proposal Draft: Improving Git Advice Messages
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
+Hello,
 
-> It would be better to share the proposal in plain text
-> That makes it easier for reviewers to read inline and give feedback
-> directly on specific parts.
+I am Siddharthan T V and I am a CS student applying for GSoC 2026.
 
-Thank you so much for the quick reply. The draft is as follows:-
+While I am looking at the test script t/t4014-format-patch.sh for
+my microproject, I found the usage of test -f for the $filename,
+sub/$basename and $basename in three tests, but the same file
+already uses test_path_is_file for pager_used.
 
-Name and Contact Information:-
-Preferred Name: Arsh
-Full Name: Arsh Srivastava
-Email: arshsrivastava00@gmail.com
-GitHub: https://github.com/arshsrivastava00
-Micro-Project Contribution: https://github.com/git/git/pull/2233
+When the test failed with test_path_is_file, it showed the exact
+filename it was looking for. With test -f a failure would show
+nothing useful.
 
-Title:-
-Refining Git Advice Messages for Common Error Scenarios
+Is this a good microproject? I also have a patch ready.
 
-Synopsis :-
-Git provides guidance through optional advice messages when
-operations fail or when repository states require user attention.
-While these hints are
-technically accurate, some messages assume familiarity with Git concepts an=
-d
-may leave users unsure about the safest next step. This project
-proposes refining advice messages
-across common Git commands such as checkout, push, merge, and rebase.
-The goal is to improve clarity while preserving Git=E2=80=99s philosophy of
-concise, script-friendly terminal output.
-
-Benefits to the Community:-
-- Improve Git=E2=80=99s usability by making advice messages easier to under=
-stand.
-- Help beginners recover from common errors more confidently and efficientl=
-y.
-- Maintain concise and safe workflows aligned with Git=E2=80=99s philosophy=
-.
-- Improve consistency across Git commands so that they don=E2=80=99t look v=
-ery long.
-- Contribute incremental improvements that can be easily reviewed and
-merged upstream
-
-Deliverables:-
-- Audit existing advice messages across key Git commands.
-- Identify 12=E2=80=9315 scenarios where wording improvements could improve=
- clarity.
-- Refine message wording without increasing verbosity.
-- Submit a patch series for each improvement.
-- Update related tests in the Git test suite.
-- Provide documentation updates where needed
-
-Proposed Timeline:-
-Weeks 1=E2=80=932: Review advice paths and finalize scenarios.
-Weeks 3=E2=80=934: Improve checkout-related advice messages.
-Weeks 5=E2=80=936: Improve push-related advice messages.
-Weeks 7=E2=80=938: Refine merge and rebase advice.
-Weeks 9=E2=80=9310: Address remaining scenarios and ensure consistency.
-Week 11: Documentation and cleanup.
-Week 12: Address review feedback and finalize patch series.
-(if the timeline looks longer I considered Hofstadter's law and gave more s=
-pace
-so that work is complete on time)
-
-Related Work:-
-Git already includes an advice system implemented primarily in advice.c and
-controlled through configuration options such as advice.*.
-Previous work in the Git project has focused on improving command
-consistency and repository integrity checks. This project builds on the
-existing advice infrastructure and focuses on refining message wording
-rather than introducing new mechanisms which would have complicated the
-current git advice system even more.
-
-Biographical Information:-
-I am Arsh Srivastava. I am a developer interested in open-source systems an=
-d
-developer tools. I have also mentored in SWoC and worked on many more open
-source projects such as google-deepmind and opencv. I am currently in my 3 =
-year
-of college where I am studying B.Tech CSE with minors in AI/ML and I
-have always been
-curious and am known for good communication skills and for a creative mind.
-
-On Sun, 15 Mar 2026 at 18:01, Pushkar Singh
-<pushkarkumarsingh1970@gmail.com> wrote:
->
-> Hi Arsh,
->
-> > A rough draft of the proposal is attached below.
-> >
-> > I would greatly appreciate any feedback on whether this direction
-> > would be useful.
->
-> It would be better to share the proposal in plain text on the mailing
-> list instead of attaching a PDF.
-> That makes it easier for reviewers to read inline and give feedback
-> directly on specific parts.
->
-> Best,
-> Pushkar
+Thanks,
+Siddharthan T V
