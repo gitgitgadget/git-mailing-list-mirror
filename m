@@ -1,99 +1,130 @@
-Received: from mail-yx1-f67.google.com (mail-yx1-f67.google.com [74.125.224.67])
+Received: from sonic306-3.consmr.mail.bf2.yahoo.com (sonic306-3.consmr.mail.bf2.yahoo.com [74.6.132.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501F4C8E6
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 00:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490B28460
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 00:36:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.132.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773619787; cv=none; b=iFCvUo+TRW0Pe/qgclfm8Kgip6417sSq2F4a4xkzTxAl+ybLQQ6H3Hce1d8pn/cZ7s0cAVNO0Zhcj5MVqrBUCRL28paVYKe5Ze3wOpc/b1+IHfHIHMnkWmMo2NbTWcP2FVJ69tyPu3Jn2auLPkDC7MRaGkp4qCwk9cAp6A7NoCM=
+	t=1773621400; cv=none; b=EbqaFboDX2jvjLQOjGNw86WIbP1XxC7a1YuG4qDxOtgDX/MQxzpYZplNqfsx6nFAds82dMwTZZJcZWUeimm4sIG0qrDKhjofiGAwiqIMlu0B+e4Rjw3BUIeff2MDT29u7xreWBV1MmkXqxBJtlttnmAZCv7ReFeJRaOv59jeTSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773619787; c=relaxed/simple;
-	bh=xovjTCS2CQqpuSisTu6odHmTBLU51Vn92LkaGa9/YKQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rQDgiLOEqeEpMqQ3qBvZB75C56n/HRouYJmqRoqV07JJKdUqLT9J2gtup+VGI/lQqWGsbbIzBkNCETofLLlP8AzaGKhlZy+nrE3u1/Oahb2eJgv1BldbbYGVpDdpt2oHPC6bB2PGSu3Z4R/VS2W+cqG3Xnw8RuWWGmQ9EkYUACg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=VmNonJsX; arc=none smtp.client-ip=74.125.224.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1773621400; c=relaxed/simple;
+	bh=7JOL2eSWCJhiXkx/B+K41lk5prCrO4diVCa3Zud8FBg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:References; b=hhrVZv7YT4zFG7AJrfPBBNPBYy6M+Qna/fAv4DyySUNnIYPccDDkkRtA9Nvp9lmjcyeRKUi2DXSkizhjkrYdQ/2mVlaCbQqCZSgy6aB9d6LcfGu3ZaswwaDo+n91HDo61tjnT+ZIpsrwRcRfSSjzcKuHyedepHItleaS4T6o5Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=scXIDoU7; arc=none smtp.client-ip=74.6.132.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="VmNonJsX"
-Received: by mail-yx1-f67.google.com with SMTP id 956f58d0204a3-64ae2ce2fe1so3775371d50.1
-        for <git@vger.kernel.org>; Sun, 15 Mar 2026 17:09:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1773619785; x=1774224585; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jtS2lRFi3XlNAzVN3urDCEDaySWiV1WoqC6JbcyzTwo=;
-        b=VmNonJsXr03RCmopBvv0eaaN4GTmKct1Wp79IqWHdABLhkRuZnjkJF6Fs5KvXaaHeb
-         tBvlj9njIFXSADvmqFZE8QMhmECkTboXIkwG1RciUwt6U7bo0EVp893T1ubEKSnopgCX
-         YEgggDPKzG+6VH9OBemYboFFkUNPyPrbsYCOkdVKmLm7QFnomZxziCO0ufgEvNCuHnNr
-         IDfw/miHUkYN/HquUYdhJjLM18psdz04+rhs8RW3lRISzJ68DunDoraE+oBWoXtl0el2
-         3/VyPs9iIkVpN/bsZSPjGDdXOBHvdq8udzo1ZtMfmxGExjTN54jkmf0+xW68P+SsFrZN
-         QOTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773619785; x=1774224585;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jtS2lRFi3XlNAzVN3urDCEDaySWiV1WoqC6JbcyzTwo=;
-        b=r5gFXVRPzN6GHcmSLw7JceCI7P/ULSXnmTULXINXJt8OE+T5ul9LJzcxynfdgJX+Wt
-         /CUW/WLQFmjfz06PcKLeiUBjzIaYVfC8UtzIudTZ1YzfCK3CwkzBD2erkBWBltBFvdO1
-         pkahJf+DJPXpZOpJCRsVoWLIiiw5V2zsWaQiTJkr5M+Jm2NIJklECNgW0Tsb7vjDIkw3
-         RAO7zWY4LpuFKOZvgvJYmMEkzFZJK61wxGfhn2qod/JZZe+d1Px8JuCBCM4gcgPUcGwD
-         /GbDboR4VdeRroBqYZ2XCEq93+6eTqXKT4GU4x87+LwpmTjRp/WJVYR9AozXwwmWiQGA
-         nn2A==
-X-Gm-Message-State: AOJu0Yzig43WhvNtnCqVBCMTL9Suw5dDEUh0N6Kb0gPkncxfDMljcyAY
-	7XqugJKLgdNim5RGgnJ7MtqSYlSGMCuKaoMC0ztbrUgN6S9qr+JcPGvE4R2ywp13NEp4Krhdn5T
-	RZYi4PqoqmTRS
-X-Gm-Gg: ATEYQzxfhvxjuYUz3PzDDoMKmEOgSyENd0sgT7nhcT0P5iSJP4KjETRJunALXMcfOJj
-	6MjFRfERwF/cspHYHEBqpqLhCivDcZNkSe0zcNXa/CO1kYtorsASU/giCbc6XYrvtKB+6CLagGX
-	mmgoyGLYMG+NF9Bi4yQWvlo9FIJJPiraavt3pGZD1INnat5qiZsL0PmnKvR0sgmPOvfNd+yNMgI
-	6kLHXXtXx9W2LRwrJ1Yb3+57Xp1h+xB7brFu9ejNUxy65VQq81vqsJTuXJJF74dFPvTvldUcdl6
-	amLhlZmhHscbq51cu22dwOynEE+2grBDQmBmGtDmgBJz+x4gxhpK0A0zUAmyddFSO6s09PGILHF
-	Ly4LMh/IliuCcaTm7eAjbXIPuzuFxor3uME4ayAcnsLgl3BNoORufs9UPX+8AWj8Un5RlpFc64J
-	/RyWajlXEoxfPOjDwQb7aEtGXUnFAbaikVeVI6YEYcVJt6PDmfdwV/jETzSxKejzZ0yAMOjOFq9
-	K6iPpW6V9EtNv/zqRioHcFb1CBwhQ==
-X-Received: by 2002:a53:d611:0:b0:644:795a:391 with SMTP id 956f58d0204a3-64e6308d775mr8215668d50.60.1773619785212;
-        Sun, 15 Mar 2026 17:09:45 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-64e65b63601sm4803012d50.18.2026.03.15.17.09.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 17:09:44 -0700 (PDT)
-Date: Sun, 15 Mar 2026 20:09:41 -0400
-From: Taylor Blau <me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="scXIDoU7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773621398; bh=lE+Eg1N6wFbRf0nTFv0h1LM7ajZKSoi8r/rWUC9LWPc=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=scXIDoU7uWKVrYXw1+nl34SOBmkTFRrV1sCBPc2N+P25qwFm8LS3Cf00hlDl4rWCprhqzAjAqUP14B3KuSVARRLNLxZERDU3grrE+V4jOmsSfaPZ+W72/q7Dh6kTeluFz5NBQjvzJYkuqErZZYxAlPHz66GrTFKlOe4UjElqVO3L9bsEKK7KHXdplAdP9P9fELeGsXPhYmjsGwPvFkbpMR4DbqGpB3pSz0quQ/D64LpLGXmOdlOvswzxNgbqyVbnwtwhqiXoWghLFyJb6mQEJP2aaLHzGdDwHWMzEw5F1BYhRuTOsyE2ngoRkd4eiLMtUok741rKMrg+Z0XWB1/byA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773621398; bh=kuie+ultpJQcTr0sBRuIHxkrEJrw9cfVxfQlo1ChJin=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=YCmsG5XK8I3Dv81vbVelXGx9Y+iE9hZ9Co2kQxsL9JXC6y8T/cAZAaIlW4mZSOYDoA9U+LCj75Ee+ro1oMtbfNCULO5BmEKXtw6KFp6Qk437WDm1Y6SE89C8azN0OErQhhmWgeHU+zIvyKQQ+YTs38NvLQu74OSvu2wIl2K7k2CmhmLBJG9ZUmi3fu6eyuuIsjEoklTt38++e4Iy7JWgNuvA+BuW5JgInZrkNrBWuL0iRLz5KLxAtBnaBltgOpDpu/NzCZNKr45K3Fk6q/OuQuEPYxUzrXQT2gGDXK+ygiI8sfAsiCmyvjdrJ3i9J7O6iro0lGazTzlTxFv8A0SG0w==
+X-YMail-OSG: p3xRAHoVM1nwqldbVPFU8WB.CaSIjcYJWeewzwKvSbzt18obz_30zvZZWj4hDx3
+ w24R24JH2cLxgWzCzxMukegAwqIjRLmdYUAQbk9s5MiILCd_0ekUkHwGtFNYKh.lZKL3hvIeMIQc
+ PKuU2ljPiNnnHE7jJP_uuGh4U3Sub8y9aZWrhim00DLBwyYzZJVdE54r95W2t8eca7lPEsTvpYHo
+ eIIDC20CbjaUB.WX_0NG_Vj7cd9Yl6hfHIxo9ESKVJSkf7jHfDSiMM3EcgcZedC062gy_am81P1i
+ gt4ie_gflCnA.dcuu4u2uR24VpX.vu571D2_LQXb7vwT6MtrBXGrNx3vN23NS05rGNaIE579Em3Q
+ HBs3RfvFpBjg9LgoLqTSN2t7qf5kCsBX19hkMNIq7nUEMLrqB2TqN1Oc0cr0f6vXxy6klRGf39Qn
+ FV7BGl173p.E.lbtqD_W1yB_oa3_k7Ut2K.kEDgPD21lFVk86Sjv2kMeKNDhrlMnUPv_k1RCHHIV
+ dyYpxwFWmTKUW9l74s.L7h1Athbj4zgDSwmLOrDGZwG50jplea.FkKiz8sg4yUZPCLUa_L4ZI554
+ UHYdNz0C6hc8dMbaS7XQk5kdtyGPOc2HGFxzoucwe5w1yw7xXArPBGkUYhQUG2GSnBHwlZ94UQKc
+ 8.SZoLc3gGR14XOIJGgzUn9_ahAIlqIKi.N0N4wF0iMCrDFjIvJALdLaiyPxdHuwejAZLtZ1fSdg
+ Dk7l.OJg3ofsh55veoM0_BWRftSZeQ80PJVi08l_RhVgciBi.65HNZHWZU2mWS0exBXWPa1_XPJi
+ jtWCkY64EJSo2gcvN1L2otosfFPLkKZ.Q058XCES1OPiCqneToUPaRA7rnz_.fd9ZrSSqUu4GNZM
+ WVeZAlXVCwZFWT896YgQ4dKQZlkgaPUD8_qaiC8WFyODsgTPuY_6Kb1i2q1M1POHKc7M4wsHpUfk
+ CnroUhTi.wfjKcuiYtlOwr99LzhjBgbEgsn6UZUoSgTTI5PteTWn7j8pUywswIzE3TFCfuyPcPjY
+ E3cgOsq0f5Ec1823lhUwc8KexTXSmdOpEUe70y.K3EmAKkwxxYOKW_sU7W9_OceNhLwLJMbka5JN
+ 4nG_QvJYQiowCEntybUK2lIjLVk0GYy9k4jAcF_kbmJMlnGZnwc6JXWIkq5zMn.SbRqckK9ndcp3
+ trezH56mi2_16SRbZNJrrMVE.Ewoc7dgovmP8yEn9ZIxjqhWeTLZyfUSiJcM64Iq.qOwlC3SY2z9
+ U9ymo1UhN9bdLlTvFHYMG0pS_dQsV.hsYgrQQFbJOXdwgF7IfV06Ifbi19tiWZSumnQY1rd2YB8H
+ HSWPaKNy8YV4qKbYIZlDr6PADV2wYLJP0vcI4_PrEnZt_NuMBwWf.Hl7uAqJ3pcaz0k4cCXUo0O2
+ QZ67fTnAJk3o9WeBv_WvNhH5S78X8_E1aL6aPPGO9koacK2IL5b8HuPpF6qAlavuhrgXDIHFpoSE
+ mhC6lvgQt5pEVDLWb1sYpuGA0kGAQj6eQ0UNaHnPlYxR6VyhfyQQ5vdz9U0.DUNVaXGBYtqnXEZi
+ By3HXdP6IucE8yTtmg5CyAhxZHaV.EBw7RTfIkttaaPEggUFpSiWKEVwTwrmtwYBausCDyUs_fva
+ vOmMvpS77glroHKF_CnSpvd4qyROcuiIDyautEHUWeNZLAvgnTcTPrCDEGNTIB98PFI.fhkFf6hQ
+ oXl4jhU.Dw5m7aFhm1S0r.Uep70V7Mp1rXyjnE8Eb37QKq9dn1zHPeEMCcVVYT9l6ovNILeOnM7F
+ h7XhxDCbETBzEvFrlukDdULiX3JLYlAUKYZu3eTSJ04FGH6tHAzwIdSpJUojeUUuuI7Xk175gFdf
+ U4LE2ecxTP7FvZqfaNhQ1Ek.opQZXRHJIYh981q1l5fK3EXCD10bKYmt_0v4kfS3b.Dr0YNlPuUX
+ gCGDtrNJrUoSCh2BRhXrAwyh4hRLDU_O.mvO8t3eyjvacsd3u_fq2HWf806DqgOeDd6orUuDcixY
+ RYgNQqOceyoUcuyBeLuFO_2IJwJOXFxNaAaAj06B_MECGntkw2U7OuVIpaJTOppSBTaQcQX0PN9Z
+ oR0QmW6_.hVJpTQsK2T.IBceAA4FTgTOBtH.VT3Ik2oZpoMn287hEVW2RyOE1KIMaEXxLuw3y02B
+ FC5mzl73udbicpAcrOn0btHUfqjHRPflMfC9.mTlUnkm.i9FyNOtw5XIgHqX5iHe6S_oQI84YXv_
+ KGUapzMpe_cucTBkinNLHLmQYk5AUv9f0NOGCP7gIae7oKw6FQLlzbi1HP4RTbm5j4F8tMfdOsSA
+ AQGUFjC8tTm895Q._AtNK0.xLPAsiyIiw.g--
+X-Sonic-MF: <jerrywang183@yahoo.com>
+X-Sonic-ID: e4b69ef3-d54a-406b-a7c6-d74534698d1b
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic306.consmr.mail.bf2.yahoo.com with HTTP; Mon, 16 Mar 2026 00:36:38 +0000
+Received: by hermes--production-bf1-697f88457-q5phm (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 3c0d679b7f564603cf34049d6e595a5a;
+          Sun, 15 Mar 2026 23:15:39 +0000 (UTC)
+From: Jialong Wang <jerrywang183@yahoo.com>
 To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] .editorconfig: separate tree-wide glob patterns
-Message-ID: <abdKRVm29/zJsMZW@nand.local>
-References: <518d71de9cdd71d0fc259740cf0da075bcf79746.1773609807.git.me@ttaylorr.com>
+Cc: Jialong Wang <jerrywang183@yahoo.com>
+Subject: [GSoC PATCH] apply: report the location of corrupt patches
+Date: Sun, 15 Mar 2026 19:15:38 -0400
+Message-ID: <20260315231538.68586-1-jerrywang183@yahoo.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <518d71de9cdd71d0fc259740cf0da075bcf79746.1773609807.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
+References: <20260315231538.68586-1-jerrywang183.ref@yahoo.com>
 
-On Sun, Mar 15, 2026 at 05:23:31PM -0400, Taylor Blau wrote:
-> ---
->  .editorconfig | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
+When parsing a corrupt patch, git apply reports only the line number.
+That does not tell the user which input the line number refers to.
 
-Heh, serves me right for trying to send something to the list after
-vacation without being fully caught up ;-). Patrick already took care of
-this in his series [1].
+Include the patch input path in the error message so the reported
+location is easier to use.
 
-Our approach is ever so slightly different, but the end result is the
-same. His patch is further along, so let's drop this one in favor of
-his.
+Add tests for both file input and standard input.
 
-Sorry for the noise :-).
+Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
+---
+ apply.c               |  3 ++-
+ t/t4100-apply-stat.sh | 16 +++++++++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-Thanks,
-Taylor
+diff --git a/apply.c b/apply.c
+index b6dd1066a0..904d1c3e55 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1875,7 +1875,8 @@ static int parse_single_patch(struct apply_state *state,
+ 		len = parse_fragment(state, line, size, patch, fragment);
+ 		if (len <= 0) {
+ 			free(fragment);
+-			return error(_("corrupt patch at line %d"), state->linenr);
++			return error(_("corrupt patch at %s:%d"),
++				     state->patch_input_file, state->linenr);
+ 		}
+ 		fragment->patch = line;
+ 		fragment->size = len;
+diff --git a/t/t4100-apply-stat.sh b/t/t4100-apply-stat.sh
+index a5664f3eb3..f99e439688 100755
+--- a/t/t4100-apply-stat.sh
++++ b/t/t4100-apply-stat.sh
+@@ -48,7 +48,21 @@ test_expect_success 'applying a hunk header which overflows fails' '
+ 	+b
+ 	EOF
+ 	test_must_fail git apply patch 2>err &&
+-	echo "error: corrupt patch at line 4" >expect &&
++	echo "error: corrupt patch at patch:4" >expect &&
++	test_cmp expect err
++'
++
++test_expect_success 'applying a hunk header which overflows from stdin fails' '
++	cat >patch <<-\EOF &&
++	diff -u a/file b/file
++	--- a/file
++	+++ b/file
++	@@ -98765432109876543210 +98765432109876543210 @@
++	-a
++	+b
++	EOF
++	test_must_fail git apply <patch 2>err &&
++	echo "error: corrupt patch at <stdin>:4" >expect &&
+ 	test_cmp expect err
+ '
+ test_done
+-- 
+2.51.0
 
-[1]: https://lore.kernel.org/git/20260311-b4-pks-editorconfig-fix-subdirs-v1-1-4938193ccd31@pks.im/
