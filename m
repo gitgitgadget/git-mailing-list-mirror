@@ -1,161 +1,123 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26B9191F84
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 21:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773610347; cv=none; b=btIZCyDye5oY8oVcO1h1UI5EnBrT7i9i+WZCU0pVh0sJPkGry3ai3Ac7X+Q8isx+j8+gX0SGl/FZdw/9g6eDTa/zC74WyJs/oGjJ0oDIptMYzI617n5hYKIcUIiWl3AFxkjpDkDwPHz6IqS5j7F/4sf09snVgPkYDtFfb2XpuEw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773610347; c=relaxed/simple;
-	bh=wWBvHDpAWD/+hsm82fVNCp2Pe1KV0IlQS0AnYRhvarI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PdcpiTd3cwWjP1u2FsGhOHxvBc18RhticAKJa0uPRUHrpZRk+6xt7CPdRK4u3sCtx79oalZtkgc7sGglXvTyFVR3OE9+YTcPupXQgKJgrDPK09hN17zpqi0X86p1aKRZ6bPfyY8GiFGkPNMsZFRy29eSFlMkl00AUXZTJRe6CSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Khv8Fdty; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0uX2SDQU; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C2B37AA7D
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 22:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773614681; cv=pass; b=R7n75VH7P/wMW/A1jK/jkaohI6eelQyYx7NKft8jN8PH+FTNTtHt1QDyqDGugUcmne+z8RHTl6+ZqFBivpr1F/GLBfTO1wD9BwSvYzp23Rvb3lxYsKlSjH0MhW+yhPz0FKRcwHvsUohX7uaXW6+7tlHS24CJ2nPcG0EKuzHHTj0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773614681; c=relaxed/simple;
+	bh=1CeXJMKDhrZ7AT2XaI/eMO1N/xWM1aPJf7axh/q0Y9o=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=e0Sj9C9B4/AxZ9rvuTTl1AAznTmeCeJHcyTg0IR1LSbJaspSebFMsoCpDeX+4V/mIYdKUknuQtZbCmmU2bcwubgqgfFrvRqQHAMX/d3B4i6gyIgLrh0zqarMDPo9O5ZxAseKZbyEzSeqX5zcqsXSqI4n4DpfunO194MPzhmbsyM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EOmun6XL; arc=pass smtp.client-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Khv8Fdty";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0uX2SDQU"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 18853EC0261;
-	Sun, 15 Mar 2026 17:32:25 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sun, 15 Mar 2026 17:32:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1773610345;
-	 x=1773696745; bh=3HydnbGIu/4mep/tIe0A13O24+cl5MUok3a/+Gd1s7Y=; b=
-	Khv8Fdty6mV629oxOtkv+ceg8c4cLMezQaEkLM8r35DrXNlFuZpDGwIlXaFI+IXC
-	+aMrWWHy9W5J1a0kVVIftrn1Y76tLAPdLV+JlrZ/BXEcbJBSyZI4UsLK9Ak+H/xG
-	ABu/lPq4O1s92XqWsnK7t7ap0WBWkAHA/BrC9TwbYXMWBwAXO+rVGkiks+++//He
-	Otlyw8vQvlgrPm108Hdd0OYHZ5+uvRslm59F+8/7bowPWzY2wtyijUH5BNaNggkU
-	EZhb8mI/wYXdT56qO2KACVyUV/FbP4Ro4XgBbKpAqurdhkJ4cVI9MgOmqFPWNPma
-	gE2O7uWZy2yYx8+WRchf9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773610345; x=
-	1773696745; bh=3HydnbGIu/4mep/tIe0A13O24+cl5MUok3a/+Gd1s7Y=; b=0
-	uX2SDQUkCn8phAkvl/VcB9A4W/QA66pp9ygzrXe2j3EwC2snSNYTlWtq/OQSCxAP
-	jJdbUZqxwoBB8NBYisxserBYvPBoR41FMJmHs5+rOEdMQxFP86NC4drgNjJXhJs8
-	R22anEknkLWwOA9BDiALEwJ5EoXLfBdZjOwrfaKHKD7jKNVg9X0JKRFtB/GT8JIW
-	4K0iKOJxAv3SgJO8egRm5YUPHDom3AVVCT9mIHwfVMsmqUozm/k4jhXpMbx/l38j
-	vsAtWtD7KjBZT/3Aq/JcXTfhFLxbRibfS41HuanpXLCdDBI7VXn29W6ToCbQA9mZ
-	vC6xhPhG+9aJDMwW0Ya3g==
-X-ME-Sender: <xms:aCW3aRQUUXKmB9M8vcY4OrJuRvXUy7HLPz_k0FCgyqNdiHAMz82BgQ>
-    <xme:aCW3aXVry9aCGQ7gNGxc5TTaK2Udq8ehpNrCnsMlgMcNXTeiWyvVrp6i-9a3wyfwX
-    NI1R785Oa012J1IOWmDYJiNtp0zYY2tqwpz96gYME2m8BeVnFLe>
-X-ME-Received: <xmr:aCW3abQXqjARnjrkJnSB2myXHb-NRl0X2wdPxRI3RnesvvyVOiCt3qUHy3sP7cXlseLM35mTC-NjxWLz1jgPnr_SceMvavusxw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleeiheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeevgfejveejffefueevfeehhedvhefhiefhgefhudeukeethedvudeggeef
-    uedvjeenucffohhmrghinhepghhithhhuhgsrdgtohhmpdgtohhrphdrtghomhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
-    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgtoh
-    hmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpvghf
-    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhooh
-    hthhhprghsthgvrdhnvghtpdhrtghpthhtoheprghlrghnsegsrhgrihhthhifrghithgv
-    rdguvghv
-X-ME-Proxy: <xmx:aCW3af3QHKx8CyISJcxWqV9_ktvxcx71CWHPMTF86YRVvJpZM8h48g>
-    <xmx:aCW3abchYpcq2hAbvOwbMSosxnsXIoHeCbHZCYh9mKWfgyiR6y4FlA>
-    <xmx:aCW3aXM8yT4QI86wZBJizP3IVgCdAMqntwarhfunH9yLG4Gp8WhVEg>
-    <xmx:aCW3afV3wo8BuBjk4570uNqwO0nWEAN3qpizuD4eOp8M145irvVbRg>
-    <xmx:aSW3aSGnHoaTWgJVuLb1ZWYQvstSf-6u0o6nYiVejNE272hJiCYPcS3H>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 15 Mar 2026 17:32:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Alan Braithwaite via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  christian.couder@gmail.com,
-  jonathantanmy@google.com,  me@ttaylorr.com,  Jeff King <peff@peff.net>,
-  "brian m. carlson" <sandals@crustytoothpaste.net>,  Alan Braithwaite
- <alan@braithwaite.dev>
-Subject: Re: [PATCH v6] clone: add clone.<url>.defaultObjectFilter config
-In-Reply-To: <pull.2058.v6.git.1773553022381.gitgitgadget@gmail.com> (Alan
-	Braithwaite via GitGitGadget's message of "Sun, 15 Mar 2026 05:37:02
-	+0000")
-References: <pull.2058.v5.git.1772847236966.gitgitgadget@gmail.com>
-	<pull.2058.v6.git.1773553022381.gitgitgadget@gmail.com>
-Date: Sun, 15 Mar 2026 14:32:23 -0700
-Message-ID: <xmqqldfsrd7c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EOmun6XL"
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2beab594d8eso5179355eec.0
+        for <git@vger.kernel.org>; Sun, 15 Mar 2026 15:44:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773614679; cv=none;
+        d=google.com; s=arc-20240605;
+        b=es5HafWe4wm/cDE7cfqt0oLw390K532ejFfhL91Tn64UT1MQdrWYZSTyNRe5JnQynj
+         xo1s/8plO4GMrjiaIpeSVKUFk7iq0x5ERN+i6krY9Fejm+mSUU89uMcEl77aV5HXtGIV
+         dJO/kSYfl5gf5ktl5YfKyDvXJS7QEL2mGuuG8BMFdGHC3pTuBjJcPOs4XvctRTzwZiIK
+         18R4qQr+vIAh9wi3pAhxW7aulFB7//hwtyRPCylfO/YNcGSIyWN3z67UKJyHctzPqhvO
+         JmcfJ4W+yuDuAYt9S2Nnx0oOkHb7rsP67F4kbuk1dT4h5iUBRITRq7twG8/p8Mr7U6Vp
+         UGpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=0csBR+0NpxH7/QxE/mSVXNfTzmgTXuOL7eRPl0Zanlw=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=B9RTbMjfCpUKwDRM7EY7UBOJFA7aXYxeijoUdRf6JGTQGJgomXojqCy5FToudqsC0S
+         N1VITDh511lqqICOF2M9VgFbQXAoQvs2+hTP2tNvX/CDsJFVfJ/Z8/8TfLnsk++EG0Yt
+         w/q7j/ojNqwkes67rXmzA6UjGaxPofW+FxxajXrqSVXxKKXiL1rOvFXu4EjF+CJ0iYaa
+         lckztkUHkWXWnKqSjPkHikzGZWzg0HnGJBr8nnFPn4FegWJflIcVlo1Q/UzNnE7Th2ZG
+         QfKxgpYeKrx/ZfdEU5+BdePleihGemDS5XqbmNqjXy/fWFLdBmGqupQKLk8VoFPLw1S7
+         00LA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773614679; x=1774219479; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0csBR+0NpxH7/QxE/mSVXNfTzmgTXuOL7eRPl0Zanlw=;
+        b=EOmun6XLQOIG1KHvO6wC0NKf6BnmXkcqYxSndmnwI3N5SFxpPBf8T5VWHS4D0l4LuL
+         MvY889Mh7NIfxKObNErTsMQx+KqmAx7q0Uf7DUyFTYhqWA2lpYPAqpkyu4sFiH1xO1Ya
+         BNyPqvVyxT1D743KtDrZl/H4BQr2QLbGFP8NaaM1nkPd8eeVv7cRHz/YUbsRdBH0CzXH
+         eYhiiBh2vhHQ8YvzapCC/Ex0V5WyV/MGsaqvdWJJzn/R4dwkejokyN6iuqWCR6xFwjob
+         Mn3yTEbnEDe2EKkT2Z/9jqOa6kVNz28vWW1jisYvzdNg2iKUqI2Rxhhun8W5UETUhtsP
+         mWvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773614679; x=1774219479;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0csBR+0NpxH7/QxE/mSVXNfTzmgTXuOL7eRPl0Zanlw=;
+        b=DXwP5TvjQDqmmiHziEWVoTV+7mOldpGPHAxQqaq1SUJGl+pQ4VUXaFeUM31vGRbVJ+
+         EfGYwtgGAGDMkwffLSyx0qqXNRi5h/99/RRKSA6r1QFaaGmzKdjH3oLDGAeguzNODAcb
+         G966sAcHuZouE9wsxPFV4iSkajShCRa5ze5A1/Kv8JWKIv0YH3lUZ0+eW7zyJ1pHcDli
+         J+o4Sa/zpn0bFnq26Q4xl8cGIcmej8eVU+i6S9hNmrG7FCnLFlC0z/v+11XJbJYq78UR
+         0gtdQYj2Fk5irlA9y/qBT0YvmUOdzs/Xlxw/02B/KWpBM1vU2RyQ4mmTRhqAtMeT9s96
+         Ik3A==
+X-Gm-Message-State: AOJu0YwbLLtukPgh2yxV3QX8Uw9nkIFSSbxJkQKRXQzMj3WuyZntR5e+
+	zMYOHay5vwB6l5i88PnwCq3qnVLGqVxxM+U1QsIaA18CBPJOAYquSdGucICjWKu4/I4STWHyA3z
+	baTmFLZfuKvL0AzSs507C4U0NWtHwiFZxGsIblonxPw==
+X-Gm-Gg: ATEYQzx6btnn/aAfZ8xj20VAHpxYJEp9yUN7ziDyqOMPaA8MprbiVXfYDIr3w8aoa9K
+	Au5NV5i9plRHL0Grsr93tfKMJEMUgka69R9/Vk5xoTbNdEDMvty2JzdeuIZml4o4ffk60lVt/DD
+	1nMfVDGqzRo/RcYAN8aUENctSx7Nl/DKzj+19FxjxOO3xBq3W2tr1JwYh5+9i+qQrg4FCP95WaS
+	Wc6jJ3CYVhc7Bhd8gO7yUZ7SIdJXfs/kSWpY9ju5j8W88Ut1lmz0WilUzPevFTGTf/NEKfRr09W
+	97WvZ+WJo/C0h4ZjyaVFujjWwQ==
+X-Received: by 2002:a05:7301:1f0e:b0:2ba:6458:b325 with SMTP id
+ 5a478bee46e88-2bea5585cb6mr5175094eec.23.1773614678499; Sun, 15 Mar 2026
+ 15:44:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From: Jerry Wang <jerrywang1201@gmail.com>
+Date: Sun, 15 Mar 2026 18:44:27 -0400
+X-Gm-Features: AaiRm52zyF2TjJ_XxCactw-MPm1_rAYMDcbwayFtHv3Z-IwejsNJL_qZmlZ0qQU
+Message-ID: <CAKWWG_nGhD6vqhAS1mkEwBQPrg_YX0+C3-xW=Q3ifFDw4dDviw@mail.gmail.com>
+Subject: [GSoC] microproject idea: improve corrupt patch location reporting in
+ git am
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Alan Braithwaite via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi,
 
-> From: Alan Braithwaite <alan@braithwaite.dev>
->
-> Add a new configuration option that lets users specify a default
-> partial clone filter, optionally scoped by URL pattern.  When
-> cloning a repository whose URL matches a configured pattern,
-> git-clone automatically applies the filter, equivalent to passing
-> --filter on the command line.
->
->     [clone]
->         defaultObjectFilter = blob:limit=1m
->
->     [clone "https://github.com/"]
->         defaultObjectFilter = blob:limit=5m
->
->     [clone "https://internal.corp.com/large-project/"]
->         defaultObjectFilter = blob:none
->
-> The bare clone.defaultObjectFilter applies to all clones.  The
-> URL-qualified form clone.<url>.defaultObjectFilter restricts the
-> setting to matching URLs.  URL matching uses the existing
-> urlmatch_config_entry() infrastructure, following the same rules as
-> http.<url>.* — a domain, namespace, or specific project can be
-> matched, and the most specific match wins.
->
-> The config only affects the initial clone.  Once the clone completes,
-> the filter is recorded in remote.<name>.partialCloneFilter, so
-> subsequent fetches inherit it automatically.  An explicit --filter
-> on the command line takes precedence, and --no-filter defeats the
-> configured default entirely.
->
-> Signed-off-by: Alan Braithwaite <alan@braithwaite.dev>
-> ---
->     fetch, clone: add fetch.blobSizeLimit config
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2058%2Fabraithwaite%2Falan%2Ffetch-blob-size-limit-v6
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2058/abraithwaite/alan/fetch-blob-size-limit-v6
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2058
+My name is Jialong Wang, and I plan to apply to Git for GSoC 2026.
 
-I as a bistander reviewer would have appreciated some mention of
-where some changes relative to the previous iteration came from.
+I have been reading the Git contribution documentation, including
+Documentation/CodingGuidelines, Documentation/SubmittingPatches, and
+Documentation/MyFirstContribution.txt. I have also built Git from
+source locally and started looking for a small microproject.
 
-E.g., check for !normalized_url case is from a realization that
-url_normaize() can return NULL.  Use of test_when_finished all of
-the place is to clean cruft after each test did its thing.
+I found an older open issue that still seems reproducible on my setup:
 
-What I am most unsure about is what the removal of "large.bin" in a
-test is about.  What was it trying to achieve by having the file
-that weighs 100kB, and what was the reason the file got removed (is
-it because whatever the presence of the file was trying to verify in
-the previous iteration is already checked by other means and if so
-what is it?  Or is it something else?).
+when git am encounters a corrupt patch, it reports "corrupt patch at
+line <n>", but that line number does not correspond to the original
+mail/mbox as the user sees it.
 
-Mechanically generated range-diff alone does not answer questions
-like the above.
+Related discussion I found:
+  - bug report from 2019-10-02:
+    https://public-inbox.org/git/20191002184546.GA22174@generichostname/
+  - follow-up patch from 2019-10-04:
+    https://public-inbox.org/git/ec38908d05f0d40190173158ef3f0753fa9f1184.1570226253.git.liu.denton@gmail.com/
+  - GitGitGadget issue #374:
+    https://github.com/gitgitgadget/git/issues/374
 
-Other than the "dd" thing, everything is looking good.
+I also saw review feedback mentioning additional test coverage for
+cases such as stdin input and running from a subdirectory.
 
-Will replace.  Thanks.
+I reproduced the issue locally with Git 2.51.0 on 2026-03-15, and I am
+considering working on a small patch in this area.
+
+Before I start, I wanted to ask whether this still looks like an
+appropriate microproject for a GSoC applicant, and whether improving
+the error location/reporting plus adding the missing tests would be a
+good direction.
+
+Thanks,
+Jialong
