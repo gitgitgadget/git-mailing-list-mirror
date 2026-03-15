@@ -1,150 +1,253 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B37286A9
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 00:52:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DE91C84DE
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 01:34:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773535951; cv=none; b=Gi2WmdTOWt4VIGJei/f8mHsJ9Y6DiMz0DBx4ZW7ocira4il4vGSA+RvmfnQTV396eOqZGDXC1Yg6fMHG6eL+ISeR/931r7h9cqqo5X4Ue9QNpcflU8IJVSJGWeWmrFGeADNKrR2fyYtnVz1kMHS0yE1mfJy9lGTVG35mE2VgCFY=
+	t=1773538443; cv=none; b=HOFPF+QjbAp143POGP7H4TtOdN7psH71g4CBFx1xl3B6n50xR/CdYIfz8F4RBpF8DGQgnymGvkwck9InHRopIjj1RM+Vb0aDlBa7iqo6ywiSkut/s+5jAVqugZgy/BW65vHR31T7Xl53Kr+WH6wmkWET6g1luIdQS8cbK6+jI8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773535951; c=relaxed/simple;
-	bh=LJ+5HMXUgNwXeCX6zfyKQlQI5gCRWadPBnt37iCowSc=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Y/ySsOvbI5wWq923nxOgtsXVaGsAXHOnZBaiPdvYh8uQaqg5Ri6dPpiZOOLBbxNbO2rqMvEOQ20CyaOOReVDKjCBqqW/K2iM7VFr1VqeZ5bPed1uCDDD4UXIbPArS6hd48uuLrP5G/RLyMWumSUAdp/lYfa5Y6WZrOKurlTLchA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=eYZyjx+C; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1773538443; c=relaxed/simple;
+	bh=lMW7MgY+x9DKlxp0r25jUsqYor9sJO9L2Em7BVNZ/hA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=JIUcUvAPP9JKLDMjsSaV6iIYj7vMkystA9w5WMsSY+nfBOza1lsKh6ApNhOLmwSlBIay9j0afGqr8TV/UtqzSh0z3LbI3hgBGhSHDIZ76pXk6FvivvE/rus/WM4XyhHAiCT20Fi17qSRWrPZXI+46TwPRJIj5Tv3la2RsVt2YMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=braithwaite.dev; spf=pass smtp.mailfrom=braithwaite.dev; dkim=pass (2048-bit key) header.d=braithwaite.dev header.i=@braithwaite.dev header.b=QuAO/njW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3AHREW4X; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=braithwaite.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=braithwaite.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="eYZyjx+C"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1773535943;
-	bh=LJ+5HMXUgNwXeCX6zfyKQlQI5gCRWadPBnt37iCowSc=;
-	h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
-	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-	b=eYZyjx+C9WcN2gpR+PRSDF1HdGEGtk1vd8NJPcMM3HFHzLzQG5HJuIVNzwrcKY7kv
-	 hRQgU+uuUCGCit5W9MP9vPEP61DGsNusXQRm4thGSopIss3wueeVa6+bZkPRYCHxx2
-	 R3GdXIHe5RXzvrH4BE0kRT1YxK2JPBGqnQ28jCS+sN8BzpuRwKQ8QMj9ErRCd+L4IS
-	 xGeepSYaJxq9KFzqPplkxiJ9+HNcrQxRxqa120bndBA3EA6sjRjBnc6T5QjYah63MK
-	 1i071b4W15Vq0ip+pp7Yms+nxBGQSBce3mT+mLP5ygsBd+L7uz5YoQWYC3ZOdDBIwk
-	 bTkh2PtmKrzc+RAXHW7bfJ3fG7fkqjK89KKAoCz2/Jcb5CW8GnRSC/DHGNvsKi3Sss
-	 5SVqS1G+DfsUJhNuXFXn88HmveT3f/Y3QAV8AqPawsCzLeARnJi62GgJX0WvKwMF4M
-	 dX7xS28okRPt0kM9ZQj8rbftzBKzbn00WhFnO2l8zT1zeFMV7it
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:c233:1397:3eba:c74d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8C20920113
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 00:52:23 +0000 (UTC)
-Date: Sun, 15 Mar 2026 00:52:22 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: git@vger.kernel.org
-Subject: Unexpected exit code for --help with rev-parse --parseopt
-Message-ID: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=braithwaite.dev header.i=@braithwaite.dev header.b="QuAO/njW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3AHREW4X"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id BC5FDEC031B;
+	Sat, 14 Mar 2026 21:34:00 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-05.internal (MEProxy); Sat, 14 Mar 2026 21:34:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=braithwaite.dev;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1773538440; x=1773624840; bh=3UrqLhTS5S8HeY6Iwj7s39jxaVxw3dgr
+	Sv6Tkps6Tno=; b=QuAO/njWpcYPiirR96hZEhvimQebPFgwALYH3VIuFFI9rQIH
+	FgsOX5R+vRNmdO8h9Pep3LSjBY5c7OqDB1R1t7gpIS9bFE+YxJheDD0ewB/mQtod
+	ezUKGEAprY41S2qskk4Q5nCV7HWcELtYhb2x5E61/hALTEgnMVWyJ5BmADv3aBkc
+	fc53+M/abbU5xfhhGyKFoajANmod/mCG77Hy2+dMDg8lzZVYc0emJkHyaH5t5Ga9
+	mK0cy8CO9RUcHiUa1CxZKXbZHmpS8Op1c8szEuQ4cBJACA+uKoM+S4S3rCaYQ/6T
+	xsOR4ibrO9kFCsVaLjqLsW7yvB2cpOxiU8E31g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773538440; x=
+	1773624840; bh=3UrqLhTS5S8HeY6Iwj7s39jxaVxw3dgrSv6Tkps6Tno=; b=3
+	AHREW4X2b8tkYnDllSZPIUNEZlVS37MbB2Xhkk/dBZqNCA+0EiB8co2te4Ag+58t
+	i5gAqZYDqmZn+mtZ5DJbEREoRJBpqdjpYvQ6jkzudxkYpCmH03AmXWTiw6gKFXX7
+	WvrGBby1VpB04XxoLozESao1MWvvlfbgN7Pt7rtv/54/PiSnHQOAG+GjpYiJL1Kz
+	HS1yHBIXJqb+iLh/Y6un2NDwPYkTT++7Itzahj49lpe/xuvpkFUAI6oJtSx8Lwxj
+	lBIwaP6vV4yy7jfhUL7K0j3w9tyldmyKrj9Q8qBALepZbhtY9wYlr8MTrG8YCkKx
+	/E0x9+RJvsXfb7YWEfUAw==
+X-ME-Sender: <xms:iAy2aab7TlRShfiJ9M0XUhjp0iGw_XFTxigbtwQG-6oTKEwpl13rHQ>
+    <xme:iAy2aYMdT6hDr3H911NppviGUrijwDINRvocFX9JFBgN3H3MuVXvA1WOHRAzSRD9a
+    AHurFlSfMcjA7-qpWi--4ovshlYg0WR7Loz5Z0hMeGddXxvjtdS2Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleegudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehlrghn
+    uceurhgrihhthhifrghithgvfdcuoegrlhgrnhessghrrghithhhfigrihhtvgdruggvvh
+    eqnecuggftrfgrthhtvghrnhepgeethedvjefftedvhfeufefhfedvlefffffgjeffhfdv
+    jefhhffhkefhgeeftdeunecuffhomhgrihhnpehthhgvmhhoshhtshhpvggtihhfihgtuh
+    hrlhhmrghttghhfihinhhsrdihohhupdhgihhthhhusgdrtghomhdptghorhhprdgtohhm
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlrg
+    hnsegsrhgrihhthhifrghithgvrdguvghvpdhnsggprhgtphhtthhopeelpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhph
+    grshhtvgdrnhgvthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
+    homhdprhgtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtghomhdp
+    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    mhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhg
+X-ME-Proxy: <xmx:iAy2aVW4T4dj6bB7amB2L4be3_gt_fr8BbpJaekrjyjZRT86Kvwzvg>
+    <xmx:iAy2aaiPdu5uDlxrLYLcdLdSu7GPxgA2FUEDi7hoRJ4rn0MOrfNxvQ>
+    <xmx:iAy2aVpK7K3oMtv08DauxsTc_GtCSEgb9AjQ3TeJvhPhX3zEihBwJA>
+    <xmx:iAy2aYE6AgF5WGgf54n7gc9N2hR0EpV8j6aV7yvk4YrT6eqzzwEetA>
+    <xmx:iAy2acdAiFA7gucrtHitCDp3B3s2diIMKIwdH6JfKrLF0TNNNaoX60Po>
+Feedback-ID: i1a914699:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 0AF841EA006C; Sat, 14 Mar 2026 21:34:00 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mTIpGq0eiexjspv+"
-Content-Disposition: inline
-User-Agent: Mutt/2.2.13 (2024-03-09)
+X-ThreadId: AItb9aa6r_v7
+Date: Sat, 14 Mar 2026 18:33:38 -0700
+From: "Alan Braithwaite" <alan@braithwaite.dev>
+To: "Patrick Steinhardt" <ps@pks.im>,
+ "Alan Braithwaite" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, jonathantanmy@google.com,
+ me@ttaylorr.com, "Junio C Hamano" <gitster@pobox.com>,
+ "Jeff King" <peff@peff.net>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Message-Id: <9b67801b-ce07-42b6-b2c6-2e7f0e5fd5f7@app.fastmail.com>
+In-Reply-To: <abEdTQrRtAveH1rB@pks.im>
+References: <pull.2058.v4.git.1772833649843.gitgitgadget@gmail.com>
+ <pull.2058.v5.git.1772847236966.gitgitgadget@gmail.com>
+ <abEdTQrRtAveH1rB@pks.im>
+Subject: Re: [PATCH v5] clone: add clone.<url>.defaultObjectFilter config
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
+Thanks for the review, Patrick.
 
---mTIpGq0eiexjspv+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> `url_normalize()` will return a `NULL` pointer in case
+> it cannot parse the URL.  We need to be prepared for
+> this, otherwise we might segfault.
 
-I use git rev-parse --parseopt to parse command-line options in various
-script.  I've noticed that it exits 129 if the options are invalid,
-which is fine, but that it also exits 129 if --help or -h are given,
-which is not.
+Good catch.  The updated patch guards on the return value
+and skips the urlmatch lookup entirely when the URL cannot
+be normalized.  Today `match_urls()` happens to handle
+this safely (it returns 0 when `url->url` is NULL), but an
+explicit NULL check guards against future regressions in
+that code path.
 
-The standard philosophy is that if the user explicitly asked for help,
-then help output should be printed to standard output (since that's what
-the user asked for) and it should exit 0, since the program fulfilled
-the user's request successfully.  If the help output is provided because
-the user provided an invalid option or argument, then the output should
-Go to standard error (since it's an error message) and the program
-should exit unsuccessfully (since it did not fulfill the user's request
-successfully).
+> Do we want to "test_when_finished rm -rf
+> default-filter-clone" here and for all the subsequent
+> tests?
 
-Git gets the location of the output just fine, but currently there's no
-way for a program to detect the help output and exit successfully.  Note
-that Git subcommands don't have this problem because Git itself
-intercepts the help output and sends it to man (or whatever the user has
-configured), which then exits successfully.
+Done -- added `test_when_finished` cleanup to each test.
 
-I'd like to fix this in git rev-parse --parseopt (that is, I am willing
-to send a patch), but I'm unsure about the best way to go about this.
-Does anyone have ideas about how they'd like this to be fixed?  I could
-simply change the exit code in this case or I could add an option to
-control this behaviour for backwards compatibility.
+Patch incoming. :)
 
-Example:
+Thanks,
+- Alan
 
-----
-#!/bin/sh
-
-OPTS_SPEC=3D"\
-foo-cmd [<options>] <args>...
-
-Do stuff.
---
-h,help!         show this help
-
-o,output=3D       output to this file
-d,dir=3D          specify dependencies relative to this directory
-"
-
-main () {
-    eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo ex=
-it $?)"
-
-    # Do something with the options here.
-}
-
-main "$@"
-----
-
-Output:
-
-----
-% ./foo-cmd --help >/dev/null; echo $?
-129
-% ./foo-cmd -h >/dev/null; echo $?
-129
-% ./foo-cmd --bassoon >/dev/null; echo $?
-error: unknown option `bassoon'
-usage: foo-cmd [<options>] <args>...
-
-    Do stuff.
-
-    -h, --help            show this help
-    -o, --[no-]output ... output to this file
-    -d, --[no-]dir ...    specify dependencies relative to this directory
-
-129
-----
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---mTIpGq0eiexjspv+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.9 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCabYCxQAKCRB8DEliiIei
-gRwJAP4mBYFOxOT1qW7RvMS3nzDqqHj5imRmkIRgp2s8rwlKjAEAm7ZBVYsMZU0a
-ktuK8pTtm9KYJ7T19s5exIrrLaeztwY=
-=e9AF
------END PGP SIGNATURE-----
-
---mTIpGq0eiexjspv+--
+On Wed, Mar 11, 2026, at 00:44, Patrick Steinhardt wrote:
+> On Sat, Mar 07, 2026 at 01:33:56AM +0000, Alan Braithwaite via 
+> GitGitGadget wrote:
+>> diff --git a/Documentation/config/clone.adoc b/Documentation/config/clone.adoc
+>> index 0a10efd174..1d6c0957a0 100644
+>> --- a/Documentation/config/clone.adoc
+>> +++ b/Documentation/config/clone.adoc
+>> @@ -21,3 +21,37 @@ endif::[]
+>>  	If a partial clone filter is provided (see `--filter` in
+>>  	linkgit:git-rev-list[1]) and `--recurse-submodules` is used, also apply
+>>  	the filter to submodules.
+>> +
+>> +`clone.defaultObjectFilter`::
+>> +`clone.<url>.defaultObjectFilter`::
+>> +	When set to a filter spec string (e.g., `blob:limit=1m`,
+>> +	`blob:none`, `tree:0`), linkgit:git-clone[1] will automatically
+>> +	use `--filter=<value>` to enable partial clone behavior.
+>> +	Objects matching the filter are excluded from the initial
+>> +	transfer and lazily fetched on demand (e.g., during checkout).
+>> +	Subsequent fetches inherit the filter via the per-remote config
+>> +	that is written during the clone.
+>> ++
+>> +The bare `clone.defaultObjectFilter` applies to all clones.  The
+>> +URL-qualified form `clone.<url>.defaultObjectFilter` restricts the
+>> +setting to clones whose URL matches `<url>`, following the same
+>> +rules as `http.<url>.*` (see linkgit:git-config[1]).  The most
+>> +specific URL match wins.  You can match a domain, a namespace, or a
+>> +specific project:
+>> ++
+>> +----
+>> +[clone]
+>> +    defaultObjectFilter = blob:limit=1m
+>> +
+>> +[clone "https://github.com/"]
+>> +    defaultObjectFilter = blob:limit=5m
+>> +
+>> +[clone "https://internal.corp.com/large-project/"]
+>> +    defaultObjectFilter = blob:none
+>> +----
+>> ++
+>> +An explicit `--filter` option on the command line takes precedence
+>> +over this config, and `--no-filter` defeats it entirely to force a
+>> +full clone.  Only affects the initial clone; it has no effect on
+>> +later fetches into an existing repository.  If the server does not
+>> +support object filtering, the setting is silently ignored.
+>
+> This all reads good to me.
+>
+>> diff --git a/builtin/clone.c b/builtin/clone.c
+>> index 45d8fa0eed..1207655815 100644
+>> --- a/builtin/clone.c
+>> +++ b/builtin/clone.c
+>> @@ -757,6 +758,47 @@ static int git_clone_config(const char *k, const char *v,
+>>  	return git_default_config(k, v, ctx, cb);
+>>  }
+>>  
+>> +static int clone_filter_collect(const char *var, const char *value,
+>> +				const struct config_context *ctx UNUSED,
+>> +				void *cb)
+>> +{
+>> +	char **filter_spec_p = cb;
+>> +
+>> +	if (!strcmp(var, "clone.defaultobjectfilter")) {
+>> +		if (!value)
+>> +			return config_error_nonbool(var);
+>> +		free(*filter_spec_p);
+>> +		*filter_spec_p = xstrdup(value);
+>> +	}
+>> +	return 0;
+>> +}
+>> +
+>> +/*
+>> + * Look up clone.defaultObjectFilter or clone.<url>.defaultObjectFilter
+>> + * using the urlmatch infrastructure.  A URL-qualified entry that matches
+>> + * the clone URL takes precedence over the bare form, following the same
+>> + * rules as http.<url>.* configuration variables.
+>> + */
+>> +static char *get_default_object_filter(const char *url)
+>> +{
+>> +	struct urlmatch_config config = URLMATCH_CONFIG_INIT;
+>> +	char *filter_spec = NULL;
+>> +	char *normalized_url;
+>> +
+>> +	config.section = "clone";
+>> +	config.key = "defaultobjectfilter";
+>> +	config.collect_fn = clone_filter_collect;
+>> +	config.cb = &filter_spec;
+>> +
+>> +	normalized_url = url_normalize(url, &config.url);
+>
+> `url_normalize()` will return a `NULL` pointer in case it cannot parse
+> the URL. We need to be prepared for this, otherwise we might segfault.
+> I guess the best route is to simply ignore the URL in that case --
+> otherwise, we would always error out in case the remote has a weird URL
+> configured.
+>
+>> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+>> index 1e354e057f..1254901f3e 100755
+>> --- a/t/t5616-partial-clone.sh
+>> +++ b/t/t5616-partial-clone.sh
+>> @@ -722,6 +722,124 @@ test_expect_success 'after fetching descendants of non-promisor commits, gc work
+>>  	git -C partial gc --prune=now
+>>  '
+>>  
+>> +# Test clone.<url>.defaultObjectFilter config
+>> +
+>> +test_expect_success 'setup for clone.defaultObjectFilter tests' '
+>> +	git init default-filter-src &&
+>> +	echo "small" >default-filter-src/small.txt &&
+>> +	dd if=/dev/zero of=default-filter-src/large.bin bs=1024 count=100 2>/dev/null &&
+>> +	git -C default-filter-src add . &&
+>> +	git -C default-filter-src commit -m "initial" &&
+>> +
+>> +	git clone --bare "file://$(pwd)/default-filter-src" default-filter-srv.bare &&
+>> +	git -C default-filter-srv.bare config --local uploadpack.allowfilter 1 &&
+>> +	git -C default-filter-srv.bare config --local uploadpack.allowanysha1inwant 1
+>> +'
+>> +
+>> +test_expect_success 'clone with clone.<url>.defaultObjectFilter applies filter' '
+>> +	SERVER_URL="file://$(pwd)/default-filter-srv.bare" &&
+>> +	git -c "clone.$SERVER_URL.defaultObjectFilter=blob:limit=1k" clone \
+>> +		"$SERVER_URL" default-filter-clone &&
+>
+> Do we want to "test_when_finished rm -rf default-filter-clone" here and
+> for all the subsequent tests?
+>
+> Patrick
