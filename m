@@ -1,142 +1,105 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934FD1CBEB9
-	for <git@vger.kernel.org>; Sun, 15 Mar 2026 05:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773553847; cv=none; b=a2lvXZEKG92Bvh2YXDR0O7cTNJkN5Cy9zcCa54F5O4Zc+o5I740/4bpz8RltbgqlwcGrVUxwTb/nunX6jL/4mVyK0PwmRBXKS6vhBd/ybCneN+M6AglNSfTXzGu9j0rv0QCxIUTjMPGDQNRnUVDJbj2DNS6TYPbpbqshsH3uiw0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773553847; c=relaxed/simple;
-	bh=hSo34MwKbhk6U5ijTXn/Q6bacSPnuKmREwcxCznG/AM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HyuD8+ZUqX52+2jOHfq/b6nffWQ1MJDbOsLP77qNNYTJs13x/q5jHpJwMcx2hNnEwIZ8ZZ50+gokLhG5MjF1AJCube7rYqiAZn5k7SbA75tbKPlDIjoplj7xSZwY1aBIilHkjodRM5n1Wqz1zj+LrJYaVU804Fgl8qgvrxjOtO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fz4Fh0l7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vDN2fQch; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9D978C9C
+	for <git@vger.kernel.org>; Sun, 15 Mar 2026 07:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773559764; cv=pass; b=SbkzIkijd076j8uzDXWda2ya9fcygf5kNMTTn87uWSVyaHbH+xJ0NIYu33ccNT0jHqeYO6gDcL8eRPFjwz4KwW1JruKcd81hg/xMxhqKHfgYbCibAC2wwv49eJw4TlkRSr1CEffnYUrQDxRNZiQ4UwMVZr5l+xW+OUW0leKytuI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773559764; c=relaxed/simple;
+	bh=gA6oJkndRTfQXjVoOubi7YH8nZEZPc7Hv97oGBzTUGw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Mnm2rfX42rlThMDzj6xqNXA8wVAEylgKx1cjxk0qFFyOkstvqQ+R0U681Q65sDhKvqRyrFarz5YiM5O5LMJ/4xjTg899KckKYALUedc4rKSdMWBsaEKZhVRaFqqLQcQP/WNcYP2+KbqHMjBbjeEz3df9GSEvM/wJwQwP7mTxAuA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BIlx83vO; arc=pass smtp.client-ip=74.125.82.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fz4Fh0l7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vDN2fQch"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id C2DBDEC060E;
-	Sun, 15 Mar 2026 01:50:44 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sun, 15 Mar 2026 01:50:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773553844; x=1773640244; bh=w827tgUpaG
-	pZICX7cQjzH6Hf6p5alUcDxcMt6lNUXSI=; b=fz4Fh0l7v7Sylb+6EBzagnwWTU
-	QWd2PTdutczffLQwb0wK2ExvwCYy/phtH0jOjqrPwdRqKVV+PFyDWgft0z6bKVLo
-	wNxiQnNdLyGpZyNzYk+7LoHBzpUdl9U6kKvNiTBEF72+8nOBjhoy618R82TYA1wW
-	CuFrn27VTWtGOKy9uJLSLahhqG94X+Iv0gfYI6914KKdH6kfSUJP+J+HqtTakUP3
-	+EZ81lmrUS6DI4S+HTPV8S19SPrHMiEQeoSV8vwINj7d0vd6n8auCOQcM0eN3ANt
-	GFcw9YIRFZWL/W6F1qkU/ItfsfMTVkBEMy16Sl5Hw/xl6ZywDeghiH7sheLg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773553844; x=1773640244; bh=w827tgUpaGpZICX7cQjzH6Hf6p5alUcDxcM
-	t6lNUXSI=; b=vDN2fQchNHGmqb0EsjRCr63NQrDJ3jFJGAkNJKhbr9dY9F6vRKh
-	zXEmHKI7uYi31CLhN1tE2ioOdPmRujyUVe1bxTPxLon3bw7Q9I8W3xv4xAvXPE2k
-	vdsInHWi6f6xS27rSX+TWdcw9sYFre9ifIRJTB30Hwil6+7FxHQvl9IdoOC1wKGy
-	RVi1oGNWXaXpKE1xSkLvx/s0O/z1ZY0dNui5GbzaujFY71g66Syl03k+dS4CrKY3
-	SHSYAUxRi+hRIS5m3AIBWPkdq4bW/GkW7HZb5UkEZzcMuOoqOKOvp66/DCKAZG19
-	1dzgfws7p2dzB43yHc01KBc0sIw7NyjShlw==
-X-ME-Sender: <xms:tEi2aTWR6MXGXZpymVtHe_gb-mIpFHs5HOVk8MW6204IjxYjbdFEyw>
-    <xme:tEi2aTBpKbtwGEUbDdNYbGu2GoyP6SeHJGXuyatGV4_Jv4Ydey5iAf-hgnhvY8AU4
-    _MTy7inKKWZlmFrfW0ryU5h1xgeGro65b4-zAq2N3Ii8AWpBuCQEA>
-X-ME-Received: <xmr:tEi2aczx4LGldsMJLUpG0_OenjkJYNLCfc-oC_29Xd7Y_-PZhDvkfswx2GkXlmkfQjyomJtC3-mf-mS24QBfh_c_COhIyjCODw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleegieeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
-    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:tEi2aYC_3o6auTmbdosOk5u5uN9oL-3O-oyzpoDb-NFr32RKWz6CDQ>
-    <xmx:tEi2aRYFRunh1XL0eAGDHPhJSj-yM319FPtTJXeDz1ekaSihTGrSvQ>
-    <xmx:tEi2aYhvOwqhsftqLf3OX9qqVP3arMLso3njGRPSRrCg9DRo8t_XAg>
-    <xmx:tEi2ab62tfAbBwCfb4swvr_SZH677F-b4bk2cw1Msa3HUkapmqX1dQ>
-    <xmx:tEi2aWuHgw4PzhuM5s3Sx_TpZJ6vDHVM_l0gDtb9yZHDFW3VnMjUrEjd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 15 Mar 2026 01:50:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] t0008: fix "large exclude file ignored in tree"
-In-Reply-To: <20260315034851.2261530-1-mroik@delayed.space> (Mirko Faina's
-	message of "Sun, 15 Mar 2026 04:48:50 +0100")
-References: <20260315034851.2261530-1-mroik@delayed.space>
-Date: Sat, 14 Mar 2026 22:50:42 -0700
-Message-ID: <xmqqv7extzd9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BIlx83vO"
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1279eced0b9so4530080c88.0
+        for <git@vger.kernel.org>; Sun, 15 Mar 2026 00:29:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773559763; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WSoEuMlojDLOZTL24kI1UE4YQLOxXW+XulNDTsYX5QqPrmfUbFqx4+LX5LxMJhNtKx
+         GUyqSPS0Vnc+mlIjkNyJZk/gCIkA/h5u6IfRwgrMqAPMqzHzSydq7if5JDiASmvAh6MZ
+         0mt66qCwq7XgSSBQDZN2ynMuJzAqDGNRmNX2SRKkYLG0ETeARdPIjVDHTQ/vfQPIabrL
+         fNuZxTJ9f3MTPuPQ+plctOGFzHQgluWCcX2L7kJG381ZumlNjt0I7FdPzNiw7KlzwIf5
+         OJHSJzigx02UXUfMCaJfOeX0ePeASshWVRudZVQ6DwY16BWDsKJM5ydIUM3fdw/2ESwN
+         g/qQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=gA6oJkndRTfQXjVoOubi7YH8nZEZPc7Hv97oGBzTUGw=;
+        fh=F+28c4S1DLBLF8WAKGCbUdQDaSjxlCk8M97gm1UIdr8=;
+        b=J+qxdjjrUYE8JqZsas2Hy3nsCTOL0rBinA4aSoEOOfSURy6NxIKx8O1Pt97p0K2ByN
+         pBeZJO1ZjiioWIwqRooF4XIqGpAjEfibwqAf9U1ArxejmVoCFi/0W3NOxhZ508nPnNq6
+         j+McbZ6vAR9WL8Vpdp6b4uOJP1HuuX8xIdcHf15RSDE2/M8AQtLR0rPMXbRwVxyMLwxV
+         jC4gNLcHdfYJxluRzCvl8S9YSJ8oGak06rmCJAbniuDzSuXo4WQoW0WIxX37D68tesrF
+         fwxbzMHMr2ec0ch1UotEnU3KQ0I2vkSJqeAH48t2i6nvwqPigPMedRZiAH4+mH20yZLt
+         fuvw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773559763; x=1774164563; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gA6oJkndRTfQXjVoOubi7YH8nZEZPc7Hv97oGBzTUGw=;
+        b=BIlx83vOhp47rRanVqMDmU548HWTatgVdzM8l+3fFyqSRWOzSzSHUCUme4XKj1CUFO
+         E+U5VmXfUu6nyLc4M4Cy/L5BmecF0Kx1zlY9RQ2xdageZWKYe8zkY/13db0N6tlQzE/e
+         4C+lzHl7f6CKFB+pyVbQzLiyzBp1eaMxQiGps5qKy93WuE+x8s7z1p7ZubRWA5skDGil
+         QP/4G/jyUA7Rka4wB24FtRZ7V9jiAvm9szzq7KH2CaGuH0OQFrafHGrFI+5xM9jfPGPv
+         sOjZE6Z2Gay4Rz2Ir8pgjYaUhGgCPEggaTtPLgRrLFQ6jXae0VkvUrgh9jiKeZAZmK8B
+         Mjgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773559763; x=1774164563;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gA6oJkndRTfQXjVoOubi7YH8nZEZPc7Hv97oGBzTUGw=;
+        b=VawCUUXjaCw7F9xqr5Qtnv/vZp35xhbL13x8tZ7BjmM78jwOhHneTk+lcClfGVXxb5
+         z5VgFqYn58Cc28TZF+n7BY03mqHUP/XQXHTSzcmzw7CBt4ro7a4fLBYRlbme0JpSqT57
+         HjabgkZFszj4gqSwjnwq/GM85Sef1dtgbPUJY2uJyd+AVrqBbrmQ4jXkIBO7cnwaI8SI
+         NPLXaPhKRAXuX4um+6+SWOJe8tBgjnExX5+4jp78Pm0MgRbzISTaIPbkshipmEX+ikJb
+         xrJ1asltwL88sLEMvb2HUNmHV/19XBnPB8ipPx+Ppx5ARC6hEJNCjsEbidJt5wlZohll
+         sAUg==
+X-Gm-Message-State: AOJu0YynjKnyAOtn0NMoMaFqe7OAJw0pBBJRCyAM/GDvoL9EMKFbq8Xe
+	FUsH3+5UuSv2n6JjEgavCrZ5fSWgZ1CeehJnaxDztiYe0z/LwY29HMTy9Z61oBUEm38vSmzNTIy
+	0PsyC1HxHJSnduQlibnAUvhE+z4OQzGU=
+X-Gm-Gg: ATEYQzzjjq6Q83pOolDORN3N1rB5HIhTSswNDEX6nd1J5nlbeeXQDobL+aS5hVg8Zlt
+	aBWsOPOlp27NPi5M/QeE5BYUYhdwJnt9QQ62heRvylnz1eksoCP4ppaxLQLG6mgXinbDmCvZBbP
+	W5CXV93Zn7CdloKDbx93F2oKdD5KlmB5xU26GVq4XOj4csox+VYr87ivwXZu48bVXPGmd2bhSUf
+	8gIb5SXRoftNxjbpNVmSgcYRkfeDWbRqyLZMzVNATZuoxGeBhgWe4kPnNVE58Ltwj3auPi35231
+	JdLhKBPh8Je6wnABLVVu5O0omxi1L5yYozPB/7sTGJaNADTUwtQ=
+X-Received: by 2002:a05:7022:4587:b0:11b:99a2:9082 with SMTP id
+ a92af1059eb24-128f3dacfc2mr3837459c88.15.1773559762468; Sun, 15 Mar 2026
+ 00:29:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAG7UgESKLMnO_4+PSJUt-TXJxFQyxEEfpCmJfMmTw2+rhT-HWw@mail.gmail.com>
+ <20260315025508.GA926820@coredump.intra.peff.net>
+In-Reply-To: <20260315025508.GA926820@coredump.intra.peff.net>
+From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Date: Sun, 15 Mar 2026 12:59:08 +0530
+X-Gm-Features: AaiRm5370UWJ_SjvS3waFcQ52-hY7RcE8P-9JS5KeLYKG96UAuEpsCJuISa2NpQ
+Message-ID: <CAG7UgETB7uPvWuZL08i48JvVgefJAoUqjt96C0dPNV_Qpj8jfw@mail.gmail.com>
+Subject: Re: [RFC] coccinelle: detect struct strbuf passed by value
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Mirko Faina <mroik@delayed.space> writes:
+> So the only question to me is whether people who hit the coccinelle
+> suggestion might be confused by the patch output, since it doesn't carry
+> any rationale. But I would rather catch the problem and risk confusion
+> then have it go unnoticed.
+>
+> -Peff
+Thanks for the review. I agree that the patch output may be a bit
+confusing, but it still seems useful to flag these cases. I will send
+a follow-up patch adding the rule and fixing the stash case.
 
-> Subject: Re: [PATCH] t0008: fix "large exclude file ignored in tree"
-
-Strange.  That is clearly not what this patch is touching.
-
-  Subject: t0008: fix cleanup in 'symlinks not respected in-tree'
-
-or something?
-
-> Add cleanup to previous test for file that is unrequired to test the
-> size of the ignored exclude file.
-
-This description is also inaccurate. It seems to be talking about the
-next test in the file ("large exclude file ignored in tree") rather than
-the one it's actually changing. Worse, the next test does its own
-creation of the "large" .gitignore file and also cleans it up itself,
-so there seem to be no need to fix it, either.
-
-    The test 'symlinks not respected in-tree' creates a 'subdir'
-    directory and 'subdir/.gitignore' symlink, but only removes the
-    top-level '.gitignore' file in its cleanup.
-
-    Add 'subdir' to the test_when_finished command to ensure the
-    worktree is properly cleaned up after the test.
-
-or something, perhaps?
-
-This patch has some disturbing characteristics.
-
-- The subject line and commit message describe a fix for the "large
-  exclude file ignored in tree" test, but the code change actually
-  modifies the "symlinks not respected in-tree" test.
-- The description mentions a file "unrequired to test the size", which
-  doesn't logically apply to the change being made (adding a directory
-  to a cleanup command in a symlink test).
-- This kind of context-mixing (applying a correct fix for one test but
-  attributing it to a neighboring one) is a common pattern in LLM
-  outputs.
-
-Is this generated with LLM sent without any sanity-checking by a
-human?
-
-> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-> index db8bde280e..18e048ee8c 100755
-> --- a/t/t0008-ignores.sh
-> +++ b/t/t0008-ignores.sh
-> @@ -946,7 +946,7 @@ test_expect_success SYMLINKS 'symlinks respected in info/exclude' '
->  '
->  
->  test_expect_success SYMLINKS 'symlinks not respected in-tree' '
-> -	test_when_finished "rm .gitignore" &&
-> +	test_when_finished "rm -rf subdir .gitignore" &&
->  	ln -s ignore .gitignore &&
->  	mkdir subdir &&
->  	ln -s ignore subdir/.gitignore &&
+Thanks,
+Deveshi
