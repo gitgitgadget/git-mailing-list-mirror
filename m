@@ -1,119 +1,203 @@
-Received: from mail-qk1-f193.google.com (mail-qk1-f193.google.com [209.85.222.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF05330D24
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 22:07:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99ABD330D24
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 22:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773698868; cv=none; b=GEqycmEUxAG40nOChwQvsX41jFgL2Mog8Jnci4KJ2DhV/8XxNH1a2wF72OvW7CNQC575YR/CvIbF8ojGVMm0IYCoR9yuidEuv5Ih5Nl5N2m6Auyu5yc6WG+Wn3VCaGub7CifNBu/la+uNvL6uLMpuSCC2Zei2inZM9KL6MfORdc=
+	t=1773698881; cv=none; b=IQ91jCyGgqKEisZF2WtaTzqyDC6F+ulR6sWGajybf5aQdxdI2hQIR82F6TJB3UuUcsn+X58p+jEVEIoOyljZgsewz17b1g5hNywklIs62lJKYZOSfdTv9/kr1A5iaETcbNXf5i2oOdeDGif2VbCpxo1fgdiODSag8gRP8dbPOYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773698868; c=relaxed/simple;
-	bh=ktzU2nQ9wjsby0Oyimg2K1muu/wCsfzU6AxIHvk1Y+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LLCUdqiQ5RLYyNx3a9LlqEsYAXCf2dQrBSV8z/xuyK4iLC9De5T0i5MH7+QtPFmceqwJ6QsFlcbwDwOlXl0MkJgTrNyPoyhVKjYvbWDpnmHY+cQoTVO3Haz8n1R0uWdwcCuYORCxIMqXjST8RCftdoPq0SnUYRwTVvuosWfaOkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=He/r9i2J; arc=none smtp.client-ip=209.85.222.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1773698881; c=relaxed/simple;
+	bh=LR/uEjiFeMy88IfIGI3E9Cqc3gEBhM+szalSAmarJmg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GLmAoB/W63/Y+gflw4A32NE4Orn68uZ3XV2CPod2uxErrax2W2Uu6d83pSgbR5A0OZiHg5RoO+/8T8SxNNf8qAKpYs9P97GpouP2HKpKjF/LPQjG21ccfFBNXcIuvhnoagQ5tOgxQRGggs0cIq1jCCjGOKTry+YLucgs0m9psSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xk81Th5Q; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="He/r9i2J"
-Received: by mail-qk1-f193.google.com with SMTP id af79cd13be357-8c9f6b78ca4so647891585a.0
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 15:07:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1773698866; x=1774303666; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y9o2SUwvNFY/+s6bOX+uLRqhp8nbm4c3A307w/r1BnI=;
-        b=He/r9i2JLbeeYsNpumfpZ/kjRI1MPOhDKmGQOHn5GJlYv1GVq45RIN/fk+F2+SFTPp
-         hf2GSQRiXMQZ8EiiP/OwQcNhiIj0RyEk6qiXUEe9efD9MjN19wh2yNVaXxslfY+iLPkk
-         eDEBZcK1kBflDxIXrWGCgMBeUrepxfoAOQdUmRislwP1ZMbJJVra9L2sNKTXRfYRaQ0T
-         avf08eUysn80NL7mvJKsU62bhxjSFV4G9vBr64//JmWcjfEi/iwXQdboKeFsFiXGB+tC
-         gs8dBAJ31EF00M1Pj1iPFHprd3Bvm/iCWVIyByqx3V0iaQMQQu6hndBg0Eu3UXbWFw9w
-         /NhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773698866; x=1774303666;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y9o2SUwvNFY/+s6bOX+uLRqhp8nbm4c3A307w/r1BnI=;
-        b=G1LOoAqoNxYRxSJ1NmIDCla0wkw6QsRxZzQy1jRyq0JwF6JkjpeNBI97nGfIXNX9AZ
-         RQenMeV9yKeR6KUW6vT0M5kACYFCDLb0/5/xU7zXHV7koxVxE0VOwrBc4NeP7LQgfSUz
-         c4mIef0O7hVeSOn8FEIPEs+KNeInFzwirKdpJi7ZT86xh80MjwvXd+lQS9v3OPcZ/Fi5
-         AN4HUxsqevYUXbVWZ3f3OWAnEiZeRdaedtH1VBLF+xP96cWsXOgdgob/Iai7LY6HSvV2
-         fm3Ab1VP15L55DTSTV1OxWj4GT19VEHvraWZ1vWnwL+pyu36IbO7zmNTlZtn5yzrpcZ/
-         HJ4w==
-X-Gm-Message-State: AOJu0YwiZelTcwewR7FdR98dB1WaZaxthwoUArB5zuG+RBtwSP/kOFdZ
-	t4+Sx5qsWkZNRIFupan0mZWrH7KlbA8sGqpchMPCAORpIRiJ2R0Gf9HpPjhCgCWGSDM=
-X-Gm-Gg: ATEYQzyHgX7r+qyYgRjJ0ZByqKtduB72OU//Ig755gt3q6NVTS039MPxUbw7Q0gfegK
-	UsjimOz128/M2H4HkvFY0Dfqi8leP88JlD7dB/kgQ1KJkK3nuKO17kI74Cjmh/FvXkT4BVPYZfq
-	Kyjc9d7QvAj9bu33n3H3x+skAD6LE+VRzKTC2yQ5YSQn0G+z7890/qiFQzY26lcVyNp/wGOh3u/
-	WHjEi8H3kIkd9qbzxeyFbIzLHGD3VEAaOTd6WMwuhxq7rXVic/WY+Wxh5qO3UTBMRRhOQSRymMs
-	qwqD09TCzAZks5fGVuV8i/qLJvCKrxf8yknGIsJSFwEsTWaIgC7llzi8dZO/i0w77+edTxCwcZ5
-	hAXumJZCigBcydkJKLVmAkeVibs/Y7Oodz+wpnfsRB9oNh7hAOawUbAiWDbe/mA2ew/rwCXPv3x
-	xXtbk6fh2ysCChjaLlAcjLEd05nLo0HBUOhheSj1nDULSlC21pppeUyBlLQYKcpZvWXegTUQ44Y
-	ElRNnoHUygmPPSTFp2pILY6/Pp8IqW4pKBU3J9r
-X-Received: by 2002:a05:620a:170f:b0:8c6:bbfa:36af with SMTP id af79cd13be357-8cdb5b59a8fmr1938231285a.40.1773698866121;
-        Mon, 16 Mar 2026 15:07:46 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cda1fddfe8sm1303010685a.12.2026.03.16.15.07.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2026 15:07:45 -0700 (PDT)
-Date: Mon, 16 Mar 2026 18:07:41 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2026, #05)
-Message-ID: <abh/LUGAWUDx/E2t@nand.local>
-References: <xmqqh5qka8so.fsf@gitster.g>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xk81Th5Q"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1773698872;
+	bh=LR/uEjiFeMy88IfIGI3E9Cqc3gEBhM+szalSAmarJmg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
+	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+	b=xk81Th5Qk53Bu/NDJCl7va0dsG15fO2LH7EhTI12LC3kvfExyMKJHDatw6hsW0E17
+	 3yr79KQRY51Emlt1AeeA3FaoAj0+Nj+fW7hpTxmBZf/URPm+hcQejIbuH6e0JnkB/2
+	 pcQJWGdXn2RE7k7qUNSwaGqImfMRZFDQoj7gf7V9hUHJgyZPTFzJPHAn95JXr9Xa4r
+	 +w9VDOOCbSTn49uUem68NyxRn4deuLm93DMkB+G077FBw7Ll3LTuZIaVL7JttZgdTX
+	 korOiuRt1plUfHUR3cBr6aybZksxvKXtRi5I/oSYkxfKh0OtP8b0uMP7WknBbGMwzp
+	 kjpzAh0Epb9++MbrFBpxyIREdGSrmK1KM5E0cD2zLgFVJtPwHkdJCeMPTo8Mnr8dGH
+	 ecpfKErCrx0BuqZQkAf/SSHqzle7rpYHJSMUXUpTjk8okthqgdVXCKay8ilfr9ui2g
+	 kOzkjcamKqAdYNmxY3X7csWr3V9rSte+SeNnTOF/2UC9n/2011o
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b013:e8d8:1645:32b1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 79CBD20113;
+	Mon, 16 Mar 2026 22:07:52 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH] rev-parse: have --parseopt callers exit 0 on --help
+Date: Mon, 16 Mar 2026 22:07:42 +0000
+Message-ID: <20260316220742.1286157-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
+In-Reply-To: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
+References: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh5qka8so.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 12, 2026 at 05:10:31PM -0700, Junio C Hamano wrote:
-> * tb/incremental-midx-part-3.2 (2026-02-24) 17 commits
->  - midx: enable reachability bitmaps during MIDX compaction
->  - midx: implement MIDX compaction
->  - t/helper/test-read-midx.c: plug memory leak when selecting layer
->  - midx-write.c: factor fanout layering from `compute_sorted_entries()`
->  - midx-write.c: enumerate `pack_int_id` values directly
->  - midx-write.c: extract `fill_pack_from_midx()`
->  - midx-write.c: introduce `midx_pack_perm()` helper
->  - midx: do not require packs to be sorted in lexicographic order
->  - midx-write.c: introduce `struct write_midx_opts`
->  - midx-write.c: don't use `pack_perm` when assigning `bitmap_pos`
->  - t/t5319-multi-pack-index.sh: fix copy-and-paste error in t5319.39
->  - git-multi-pack-index(1): align SYNOPSIS with 'git multi-pack-index -h'
->  - git-multi-pack-index(1): remove non-existent incompatibility
->  - builtin/multi-pack-index.c: make '--progress' a common option
->  - midx: introduce `midx_get_checksum_hex()`
->  - midx: rename `get_midx_checksum()` to `midx_get_checksum_hash()`
->  - midx: mark `get_midx_checksum()` arguments as const
->
->  Further work on incremental repacking using MIDX/bitmap
->
->  Will merge to 'next'?
->  source: <cover.1771959555.git.me@ttaylorr.com>
+The standard philosophy for Unix software when a help option (such as
+--help) is specified is that the software should exit 0, printing the
+help output to standard output, since the standard output is for
+user-requested output and the program performed the requested task
+successfully.  If the user specifies an incorrect option, then the help
+output should be printed to standard error (since the user has made a
+mistake) and it should exit unsuccessfully.
 
-I think that this one is ready to go. There was a relatively small
-range-diff between v2 and v3 based on Peff's review of the earlier
-round.
+git rev-parse --parseopt properly directs the output in both of these
+cases, but it currently exits 129 when it receives a --help or -h option
+on the command line, which causes its invoking script to do the same.
+This is not in line with the usual behavior and it causes scripts using
+this command to exit unsuccessfully on --help as well.
 
-That review[1] said that:
+Note that Git subcommands implemented using scripts, such as git
+submodule, don't have this problem because Git itself intercepts the
+--help option and runs man (or a similar tool), which then exits 0.
+However, this still affects the myriad scripts that use this
+functionality because Git is widespread and the --parseopt functionality
+is a good way to get sensible option parsing across shells in a portable
+way.
 
-    There were a couple minor issues brought up in review, like
-    out-dated comments and the u32_add interface. So I think we might
-    need a v3 with a few touch-ups, but that's it.
+Because git rev-parse --parseopt is intended to be eval'd by the shell,
+when help output is to be printed to standard output, Git actually
+prints a cat command with a heredoc since the standard output is being
+evaluated by the shell.  Thus, to do the right thing, simply add an
+"exit 0" right after the end of the heredoc, which will cause the
+invoking program to exit successfully.
 
-, so I think with the latest round we should be OK to start merging this
-one down.
+The usual invocation recommended by the manual page is this:
 
+    eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
 
-Thanks,
-Taylor
+Thus, the fact that git rev-parse --parseopt still exits 129 in this
+case is irrelevant, since the "echo exit $?" will print "exit 129", but
+that will be after the "exit 0" printed by Git—and thus ignored, since
+the shell will have already exited successfully.
 
-[1]: https://lore.kernel.org/git/20260223140847.GB271392@coredump.intra.peff.net/
+Update the tests for this case.  Note that we no longer need to delete
+only the first and last lines in some tests, so add a command to delete
+the end of the heredoc as well.  We could do something clever with sed
+to delete all but the last two lines or switch to head and tail, but
+those would be more complicated and less readable, so just stick with
+the simple approach.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ parse-options.c               | 2 +-
+ t/t1502-rev-parse-parseopt.sh | 9 +++++++--
+ t/t1502/optionspec-neg.help   | 1 +
+ t/t1502/optionspec.help       | 1 +
+ 4 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/parse-options.c b/parse-options.c
+index a676da86f5..85e2f0ea7c 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1474,7 +1474,7 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
+ 	fputc('\n', outfile);
+ 
+ 	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
+-		fputs("EOF\n", outfile);
++		fputs("EOF\nexit 0\n", outfile);
+ 
+ 	return PARSE_OPT_HELP;
+ }
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
+index 3962f1d288..455608c429 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -12,7 +12,7 @@ check_invalid_long_option () {
+ 			cat <<-\EOF &&
+ 			error: unknown option `'${opt#--}\''
+ 			EOF
+-			sed -e 1d -e \$d <"$TEST_DIRECTORY/t1502/$spec.help"
++			sed -e 1d -e /EOF/d -e \$d <"$TEST_DIRECTORY/t1502/$spec.help"
+ 		} >expect &&
+ 		test_expect_code 129 git rev-parse --parseopt -- $opt \
+ 			2>output <"$TEST_DIRECTORY/t1502/$spec" &&
+@@ -87,6 +87,7 @@ test_expect_success 'test --parseopt help output no switches' '
+ |    some-command does foo and bar!
+ |
+ |EOF
++|exit 0
+ END_EXPECT
+ 	test_expect_code 129 git rev-parse --parseopt -- -h > output < optionspec_no_switches &&
+ 	test_cmp expect output
+@@ -100,6 +101,7 @@ test_expect_success 'test --parseopt help output hidden switches' '
+ |    some-command does foo and bar!
+ |
+ |EOF
++|exit 0
+ END_EXPECT
+ 	test_expect_code 129 git rev-parse --parseopt -- -h > output < optionspec_only_hidden_switches &&
+ 	test_cmp expect output
+@@ -115,6 +117,7 @@ test_expect_success 'test --parseopt help-all output hidden switches' '
+ |    --[no-]hidden1        A hidden switch
+ |
+ |EOF
++|exit 0
+ END_EXPECT
+ 	test_expect_code 129 git rev-parse --parseopt -- --help-all > output < optionspec_only_hidden_switches &&
+ 	test_cmp expect output
+@@ -125,7 +128,7 @@ test_expect_success 'test --parseopt invalid switch help output' '
+ 		cat <<-\EOF &&
+ 		error: unknown option `does-not-exist'\''
+ 		EOF
+-		sed -e 1d -e \$d <"$TEST_DIRECTORY/t1502/optionspec.help"
++		sed -e 1d -e /EOF/d -e \$d <"$TEST_DIRECTORY/t1502/optionspec.help"
+ 	} >expect &&
+ 	test_expect_code 129 git rev-parse --parseopt -- --does-not-exist 1>/dev/null 2>output < optionspec &&
+ 	test_cmp expect output
+@@ -252,6 +255,7 @@ test_expect_success 'test --parseopt help output: "wrapped" options normal "or:"
+ 	|    -h, --help            show the help
+ 	|
+ 	|EOF
++	|exit 0
+ 	END_EXPECT
+ 
+ 	test_must_fail git rev-parse --parseopt -- -h <spec >actual &&
+@@ -289,6 +293,7 @@ test_expect_success 'test --parseopt help output: multi-line blurb after empty l
+ 	|    -h, --help            show the help
+ 	|
+ 	|EOF
++	|exit 0
+ 	END_EXPECT
+ 
+ 	test_must_fail git rev-parse --parseopt -- -h <spec >actual &&
+diff --git a/t/t1502/optionspec-neg.help b/t/t1502/optionspec-neg.help
+index 7a29f8cb03..f85be7b8fd 100644
+--- a/t/t1502/optionspec-neg.help
++++ b/t/t1502/optionspec-neg.help
+@@ -10,3 +10,4 @@ usage: some-command [options] <args>...
+     --no-negative         cannot be positivated
+ 
+ EOF
++exit 0
+diff --git a/t/t1502/optionspec.help b/t/t1502/optionspec.help
+index cbdd54d41b..ded35ebc82 100755
+--- a/t/t1502/optionspec.help
++++ b/t/t1502/optionspec.help
+@@ -34,3 +34,4 @@ Extras
+     --[no-]extra1         line above used to cause a segfault but no longer does
+ 
+ EOF
++exit 0
