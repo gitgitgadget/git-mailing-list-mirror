@@ -1,81 +1,87 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1C237B03A
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 10:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEE638E132
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 10:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773655696; cv=none; b=J8+VivUaolTu2XmkXETlcbZ/QvWS4mSeLhhCdiarJBVIt/OyJ+8psdgya0rAsqJdjE7Wz9uyQgNPX/gg/Im42apyYaBvc+mXA88bJjHMJan59zZpYUwOk+HnDSo2Dr7uAmEx5wI8RGZA+5vYf9r4SGa6JIAGh/ly5jfmKEUTioM=
+	t=1773655698; cv=none; b=sBE/LLN+4i3xbH4F1I1m4zpNYjQeaQxtKh5pGQ+UI4A9NuhURj2+CVx5fTPyDoiAJnv52rCNVlbk/RSiDf4sEODmtU/fchNfFry99VdOcpN8MRJR3i8gbbm37Dtgz07NcmiilpuOHqga6GTjL0TCR8+CTYvBwZPQrPBEwiiLJPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773655696; c=relaxed/simple;
-	bh=8WCwuAkPVP93QN118w/8trJDDjTKnN3AF8bplL20r/0=;
+	s=arc-20240116; t=1773655698; c=relaxed/simple;
+	bh=O53yk9DBUoQ9T+rQe6hiROd61m7CdxqAIEIP8Uyaq4A=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Qu3lYScbGMincJxpgr70Hq0Ot/3G7zpcLnVAOhn0FZLjH+r3VSh4T8xePUPM3o0e69Tf3usOCfStBVYfR+Y2xNZkj2z2XXzhwK6HtHeJpmJOtsiPW0tjgdwEJLGF32mR9PaFtjNXJ8+ViWibmzW3Ttl/NNRKLhgoxcQ5XqVvU5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lLkwtSct; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gm4NihqP; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=MiW7SqkLeo61bVIZa7bDAUMmxrDeYxRxHXeFw1z6aih0PDGoshk0t1Jlo8HfMSKu12utEacTB1Y+20FxOUq2u5UxZ/thYorsWYj5cQAuczkrv45vkLH98VGq5G2ItNt+xxpX20XxQ6rXBPsIYBwOV2VG4n5JFjkvCAEe5cP/AEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bFIFzSN+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fFbKk5Te; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lLkwtSct";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gm4NihqP"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 249B014001D5;
-	Mon, 16 Mar 2026 06:08:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bFIFzSN+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fFbKk5Te"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 46E8F140019F;
+	Mon, 16 Mar 2026 06:08:16 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 16 Mar 2026 06:08:14 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 16 Mar 2026 06:08:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773655694;
-	 x=1773742094; bh=bI/ubNU8GighF2ALZ+Xij2wBywzz5SdN8vzErp2yx1E=; b=
-	lLkwtSct1QnKZLDQA0la2B8n9TkHSNQN+PXDa3Od77f6b5TlHILXuI3VMaQuLR7t
-	uJKGv8KOUl1MVT/OtKK0JRfqnESaREri5k9suuC+XvnJBOx+aehquzlAfnmDGqi5
-	fsouXaAylU/WvoN7wnzwMqOu3ohFKqGY6EnWdNPTCGUDboytZY+v+LMPCTfHYr1c
-	nZuLeRJxYT988zwp5RGnTr1RRsH58oCqv+zMo9coC7hrtG3bA5dR/q5hUb+0Su/Q
-	FrRF4yZal/23CoeVa6RXvcGxzE2mvFnhyRLSV3P8Ss1aDPWQftuYP6i0r0vmvxeL
-	93Ac7XRsgF0PjJwCIpaV2Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773655696;
+	 x=1773742096; bh=jPBvHd+6ZUC1w1Y+5u8u6zFAG5zBpvUB6LBybfYh7UA=; b=
+	bFIFzSN+i78ZW9XgJRLFWCz+9T5Ocv7GG3GAuLxQsj89c2Qh/3WILYU0frAqK937
+	PWeGOwXpPMqSuY4kRbplrLYT9CySdFK+GKvI+pFzhrvTsjtqbe5tprX3Wa9b8asN
+	/nqc44pMfuEsfyJhi0UGHYPW6pveAaMwRqSKoIPMgIm+Tr2sdB6i+8+1f61sp5E4
+	EylZq68ZAxm/sCtBu3uaNWr3hgpJe/6X4SulDCqVtFYcdNkSMPHB00RuPoexLTzu
+	V8rQymNnDhRK0Qvp+OYZC/I9xtfYwJwTYDd5yCH3L1xebhQOWQ4e3DrANsI2te9y
+	YxSylmKrl41czVMCI//rwg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773655694; x=
-	1773742094; bh=bI/ubNU8GighF2ALZ+Xij2wBywzz5SdN8vzErp2yx1E=; b=G
-	m4NihqPhnuzWCCuzT9ZOWRVacbqmYDoOs7Dg4Hrw4O0BuXPhVqkfH4CJfG2goTfh
-	OQPEmttuKAMdLRFfwhnhh0aQLD5XZ/rPrqFsc4ELZERPOh5ZhEpZKLxZ4ii9e7yv
-	XRw9/uyOFz2wR9WkI8ttaK0IzCClMaWyW0/ORMpLVtttrS+l3MPfMvxOVL5JNsD0
-	bk2ajVc++QoQ6upHRuK8LvHXaixd1GbUflZ4bivFntqGrPguauUvOBrYqcQeYYHy
-	uvgqn1VeL681NM0v8I6GqKOaKW+j47d4l4usRsYcAZI3EPJzHQ7ELe/AW9WfERlt
-	+Il0IOYWdTBw2y8+Ob7tA==
-X-ME-Sender: <xms:jta3aWW9oALco55LUzncfS2-U8tiLHZJnFLDlPDrCQhhQZ1pi-mfBQ>
-    <xme:jta3aQZw1ZAWTPrhtHFnLeGKIpZnVErl85xDl-kQfGKRqhp_W6uL8TSQ3lwzRal1x
-    fzX-LRKH1QWLq_V9Y_47IwPvteR5Y-WWLOthl1RKzjz9MrSZ5TZkBo>
-X-ME-Received: <xmr:jta3aU1MT5Q82-VPmqFh1n-AqebMAoLqxp3XuVkwWau8ASBhQpDaB-N4LOev8erF-SNFQConUPXEbygk3aVppbHLn5VO9WLC87yTrCBgdBw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773655696; x=
+	1773742096; bh=jPBvHd+6ZUC1w1Y+5u8u6zFAG5zBpvUB6LBybfYh7UA=; b=f
+	FbKk5Te+ZLxvncFsDu5fIh11X/VPkUT+Idzut83p+lTfcEnFDoN9CgxKVNH2Rlyj
+	Ux02CkoGF7gq2OL823hy3ylB41dj03zH8BzVKI0SynjIdkDBnOuUu79gwSyQMX2f
+	fomkfkpQELTebltBUdZ7yuymi22PTrv+XoHShBxPBNFdNCxy+SgULfGprIuhPrW1
+	vjLCwD4powdybng2tNa6zVrwLy/5DRbDI8Ql2zvCK3jHl9rZ9JeQZHl7xAVLshQ/
+	mLyz2ookFOZa89TSsp/7ATZkzm6EJ49KgnfC1d245AH7zcnf6Llxuj7cqLkfKD0L
+	2G1BRWdCnuZcqCouVxn3Q==
+X-ME-Sender: <xms:kNa3aZ5H5hv3jbg0Ex1N9zI5Chg3k1a7qq-2sLOMC45-Ls_4vtuFJg>
+    <xme:kNa3aUuALKhNO45gPIDdIrmcHmMawgFhJ6eLz9KEeJFNoza4YxbZPsMhGA4qYWZ13
+    7L-dcFxulwhsqRAqto29dQlF8ZzMhORL3n9NTPlcNNj2_cSpfGcMQ>
+X-ME-Received: <xmr:kNa3aa43m5Lr8I-zBecWWUjBHh4-iCEgh5bDRM_eEVpTgUEAGhoX4-eG7u_8GyIZ1eMhB0k6e3Vqz9C6M8TLB60iFt_4ClgcO2tCHS5NA0M>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleekuddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtth
-    hopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:jta3aaj44s_f6VYKTTVugE8-Cb9xhJKy2ndnKtEAcgSx-DBuYXa85A>
-    <xmx:jta3aQbj1eGU4SwZW659YxNcaBr906SSy2f9AML4_l3oFqW2lWGMsA>
-    <xmx:jta3aST0veqvO60IFlC-l-iNtu4vGVeTD7u_E0k5Pq749_OHIZu-CQ>
-    <xmx:jta3aTTee4ivojvaJHoQCJK8rQYJmuQGyDzHEYf_NidJOJDi1EHjfw>
-    <xmx:jta3aSxSvHGyqPvDrmxesU2BtghpWDrIn9NfxCg_m6DA9yLd7uTY92kq>
+    hnpeffhedukeehteffkeffkedthffgjeegkeffffefheefueffjeejudeuueetfefggfen
+    ucffohhmrghinheptghotggtihgpghgvnhgprghllhdrsghuihhlugdptghotggtihgprh
+    hulhgvshdrsghuihhlugdptghotggtihgthhgvtghkpghprghttghhvghspghpvghnughi
+    nhhgrdgsuhhilhgupdgtohgttghipghruhhlvghspghglhhosgdrsghuihhlugdptghotg
+    gtihgprhhulhgvshgpthhrrggtkhgvugdrsghuihhlugdpfhhouhhnuggphhgpshhouhhr
+    tggvshdrsghuihhlugdpfhhorhdrsghuihhlugdpshhprghttghhqdhruhhlvgdqrdgsuh
+    hilhgupdhprghttghhrdgsuhhilhgupdgtohgttghipghtvghsthgprhgvshgpghgvnhdr
+    sghuihhlugdptggrnhhttggrtghhvgdrsghuihhlugenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphht
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
+    gtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:kNa3afVWG2cy2vgDc8Mq_Mgv38VZEfRWuWcVmQkO9rkqPcx_zJbagQ>
+    <xmx:kNa3ac83i56lcP91B1fqoDLfEOIx8CTRGkapjiemM4feopwR7lULUA>
+    <xmx:kNa3abmja6UtJlR5sdS06-ZyiT4CT63ICZNBPQ31prakO6RIkhkN7w>
+    <xmx:kNa3aaV-iyP4ysL6-vijhFAgvOxmxmo70-0gJ3rNEvZmA9_COZ-INA>
+    <xmx:kNa3aR3YTr4B9_pZkQ8T6TRGu8uTlWjdWWyXsQgUmLW6nzcVbiinrnEu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 06:08:13 -0400 (EDT)
+ 16 Mar 2026 06:08:15 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 81fabd75 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Mar 2026 10:08:12 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id ed5d6cdc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Mar 2026 10:08:14 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Mar 2026 11:07:56 +0100
-Subject: [PATCH v2 1/8] Introduce new "tools/" directory
+Date: Mon, 16 Mar 2026 11:07:57 +0100
+Subject: [PATCH v2 2/8] contrib: move "coccinelle/" directory into "tools/"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +90,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260316-b4-pks-build-infra-improvements-v2-1-4b2c2c0c0425@pks.im>
+Message-Id: <20260316-b4-pks-build-infra-improvements-v2-2-4b2c2c0c0425@pks.im>
 References: <20260316-b4-pks-build-infra-improvements-v2-0-4b2c2c0c0425@pks.im>
 In-Reply-To: <20260316-b4-pks-build-infra-improvements-v2-0-4b2c2c0c0425@pks.im>
 To: git@vger.kernel.org
@@ -93,83 +99,361 @@ Cc: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.14.3
 
-According to its readme, the "contrib/" directory's main intent is to
-collect stuff that is not an official part of Git, either because it is
-too specialized or because it is still considered experimental. The
-reality tells a bit of a different story though: while it _does_ contain
-such things, it also contains other things:
+The Coccinelle tool is an ingrained part of our build infrastructure. It
+is executed by our CI to detect antipatterns and is used to detect
+misuses of certain interfaces. It's presence in "contrib/" is thus
+rather misleading.
 
-  - Our credential helpers, which are being distributed by many
-    packagers nowadays and which can be considered "stable".
-
-  - A bunch of tooling that relates to our build and test
-    infrastructure.
-
-Especially the second category is somewhat of a sore spot. You really
-wouldn't expect build-related tooling to be considered an optional part
-of Git. Quite the opposite.
-
-Create a new top-level "tools/" directory to fix this discrepancy. This
-directory will contain all kind of tools that are related to our build
-infrastructure and that Git developers are likely to use day to day.
-
-For now, this directory doesn't contain anything yet except for a
-readme and a Meson skeleton. This will change in subsequent commits.
+Promote the configuration into the new "tools/" directory.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile          | 2 ++
- meson.build       | 1 +
- tools/README.md   | 7 +++++++
- tools/meson.build | 0
- 4 files changed, 10 insertions(+)
+ Makefile                                           | 40 +++++++++++-----------
+ ci/run-static-analysis.sh                          |  2 +-
+ contrib/meson.build                                |  1 -
+ {contrib => tools}/coccinelle/.gitignore           |  0
+ {contrib => tools}/coccinelle/README               |  2 +-
+ {contrib => tools}/coccinelle/array.cocci          |  0
+ {contrib => tools}/coccinelle/commit.cocci         |  0
+ .../coccinelle/config_fn_ctx.pending.cocci         |  0
+ {contrib => tools}/coccinelle/equals-null.cocci    |  0
+ {contrib => tools}/coccinelle/flex_alloc.cocci     |  0
+ {contrib => tools}/coccinelle/free.cocci           |  0
+ .../coccinelle/git_config_number.cocci             |  0
+ {contrib => tools}/coccinelle/hashmap.cocci        |  0
+ .../coccinelle/index-compatibility.cocci           |  0
+ {contrib => tools}/coccinelle/meson.build          |  0
+ {contrib => tools}/coccinelle/object_id.cocci      |  0
+ {contrib => tools}/coccinelle/preincr.cocci        |  0
+ {contrib => tools}/coccinelle/qsort.cocci          |  0
+ {contrib => tools}/coccinelle/refs.cocci           |  0
+ {contrib => tools}/coccinelle/spatchcache          |  6 ++--
+ {contrib => tools}/coccinelle/strbuf.cocci         |  0
+ {contrib => tools}/coccinelle/swap.cocci           |  0
+ {contrib => tools}/coccinelle/tests/free.c         |  0
+ {contrib => tools}/coccinelle/tests/free.res       |  0
+ {contrib => tools}/coccinelle/the_repository.cocci |  0
+ {contrib => tools}/coccinelle/xcalloc.cocci        |  0
+ {contrib => tools}/coccinelle/xopen.cocci          |  0
+ .../coccinelle/xstrdup_or_null.cocci               |  0
+ {contrib => tools}/coccinelle/xstrncmpz.cocci      |  0
+ tools/meson.build                                  |  1 +
+ 30 files changed, 26 insertions(+), 26 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index f3264d0a37..c7cedbcd7c 100644
+index c7cedbcd7c..8564b1be36 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1066,11 +1066,13 @@ SOURCES_CMD = ( \
- 		'*.sh' \
- 		':!*[tp][0-9][0-9][0-9][0-9]*' \
- 		':!contrib' \
-+		':!tools' \
- 		2>/dev/null || \
- 	$(FIND) . \
- 		\( -name .git -type d -prune \) \
- 		-o \( -name '[tp][0-9][0-9][0-9][0-9]*' -prune \) \
- 		-o \( -name contrib -type d -prune \) \
-+		-o \( -name tools -type d -prune \) \
- 		-o \( -name build -type d -prune \) \
- 		-o \( -name .build -type d -prune \) \
- 		-o \( -name 'trash*' -type d -prune \) \
-diff --git a/meson.build b/meson.build
-index 4b536e0124..1d66b5181e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2149,6 +2149,7 @@ else
+@@ -1005,8 +1005,8 @@ SPATCH_TEST_FLAGS =
+ # COMPUTE_HEADER_DEPENDENCIES=no this will be unset too.
+ SPATCH_USE_O_DEPENDENCIES = YesPlease
+ 
+-# Set SPATCH_CONCAT_COCCI to concatenate the contrib/cocci/*.cocci
+-# files into a single contrib/cocci/ALL.cocci before running
++# Set SPATCH_CONCAT_COCCI to concatenate the tools/coccinelle/*.cocci
++# files into a single tools/coccinelle/ALL.cocci before running
+ # "coccicheck".
+ #
+ # Pros:
+@@ -1025,7 +1025,7 @@ SPATCH_USE_O_DEPENDENCIES = YesPlease
+ #   generate a specific patch, e.g. this will always use strbuf.cocci,
+ #   not ALL.cocci:
+ #
+-#	make contrib/coccinelle/strbuf.cocci.patch
++#	make tools/coccinelle/strbuf.cocci.patch
+ SPATCH_CONCAT_COCCI = YesPlease
+ 
+ # Rebuild 'coccicheck' if $(SPATCH), its flags etc. change
+@@ -3457,15 +3457,15 @@ check:
+ 		exit 1; \
+ 	fi
+ 
+-COCCI_GEN_ALL = .build/contrib/coccinelle/ALL.cocci
+-COCCI_GLOB = $(wildcard contrib/coccinelle/*.cocci)
++COCCI_GEN_ALL = .build/tools/coccinelle/ALL.cocci
++COCCI_GLOB = $(wildcard tools/coccinelle/*.cocci)
+ COCCI_RULES_TRACKED = $(COCCI_GLOB:%=.build/%)
+ COCCI_RULES_TRACKED_NO_PENDING = $(filter-out %.pending.cocci,$(COCCI_RULES_TRACKED))
+ COCCI_RULES =
+ COCCI_RULES += $(COCCI_GEN_ALL)
+ COCCI_RULES += $(COCCI_RULES_TRACKED)
+ COCCI_NAMES =
+-COCCI_NAMES += $(COCCI_RULES:.build/contrib/coccinelle/%.cocci=%)
++COCCI_NAMES += $(COCCI_RULES:.build/tools/coccinelle/%.cocci=%)
+ 
+ COCCICHECK_PENDING = $(filter %.pending.cocci,$(COCCI_RULES))
+ COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_RULES))
+@@ -3480,20 +3480,20 @@ COCCICHECK_PATCHES_PENDING_INTREE = $(COCCICHECK_PATCHES_PENDING:.build/%=%)
+ # on $(MAKECMDGOALS) that match these $(COCCI_RULES)
+ COCCI_RULES_GLOB =
+ COCCI_RULES_GLOB += cocci%
+-COCCI_RULES_GLOB += .build/contrib/coccinelle/%
++COCCI_RULES_GLOB += .build/tools/coccinelle/%
+ COCCI_RULES_GLOB += $(COCCICHECK_PATCHES)
+ COCCI_RULES_GLOB += $(COCCICHEC_PATCHES_PENDING)
+ COCCI_RULES_GLOB += $(COCCICHECK_PATCHES_INTREE)
+ COCCI_RULES_GLOB += $(COCCICHECK_PATCHES_PENDING_INTREE)
+ COCCI_GOALS = $(filter $(COCCI_RULES_GLOB),$(MAKECMDGOALS))
+ 
+-COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
++COCCI_TEST_RES = $(wildcard tools/coccinelle/tests/*.res)
+ 
+ $(COCCI_RULES_TRACKED): .build/% : %
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_CP)cp $< $@
+ 
+-.build/contrib/coccinelle/FOUND_H_SOURCES: $(FOUND_H_SOURCES)
++.build/tools/coccinelle/FOUND_H_SOURCES: $(FOUND_H_SOURCES)
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_GEN) >$@
+ 
+@@ -3507,12 +3507,12 @@ endif
+ define cocci-rule
+ 
+ ## Rule for .build/$(1).patch/$(2); Params:
+-# $(1) = e.g. ".build/contrib/coccinelle/free.cocci"
++# $(1) = e.g. ".build/tools/coccinelle/free.cocci"
+ # $(2) = e.g. "grep.c"
+ # $(3) = e.g. "grep.o"
+-COCCI_$(1:.build/contrib/coccinelle/%.cocci=%) += $(1).d/$(2).patch
++COCCI_$(1:.build/tools/coccinelle/%.cocci=%) += $(1).d/$(2).patch
+ $(1).d/$(2).patch: GIT-SPATCH-DEFINES
+-$(1).d/$(2).patch: $(if $(and $(SPATCH_USE_O_DEPENDENCIES),$(wildcard $(3))),$(3),.build/contrib/coccinelle/FOUND_H_SOURCES)
++$(1).d/$(2).patch: $(if $(and $(SPATCH_USE_O_DEPENDENCIES),$(wildcard $(3))),$(3),.build/tools/coccinelle/FOUND_H_SOURCES)
+ $(1).d/$(2).patch: $(1)
+ $(1).d/$(2).patch: $(1).d/%.patch : %
+ 	$$(call mkdir_p_parent_template)
+@@ -3538,13 +3538,13 @@ endif
+ 
+ define spatch-rule
+ 
+-.build/contrib/coccinelle/$(1).cocci.patch: $$(COCCI_$(1))
++.build/tools/coccinelle/$(1).cocci.patch: $$(COCCI_$(1))
+ 	$$(QUIET_SPATCH_CAT)cat $$^ >$$@ && \
+ 	if test -s $$@; \
+ 	then \
+ 		echo '    ' SPATCH result: $$@; \
+ 	fi
+-contrib/coccinelle/$(1).cocci.patch: .build/contrib/coccinelle/$(1).cocci.patch
++tools/coccinelle/$(1).cocci.patch: .build/tools/coccinelle/$(1).cocci.patch
+ 	$$(QUIET_CP)cp $$< $$@
+ 
+ endef
+@@ -3558,9 +3558,9 @@ $(COCCI_TEST_RES_GEN): GIT-SPATCH-DEFINES
+ $(COCCI_TEST_RES_GEN): .build/%.res : %.c
+ $(COCCI_TEST_RES_GEN): .build/%.res : %.res
+ ifdef SPATCH_CONCAT_COCCI
+-$(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : $(COCCI_GEN_ALL)
++$(COCCI_TEST_RES_GEN): .build/tools/coccinelle/tests/%.res : $(COCCI_GEN_ALL)
+ else
+-$(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinelle/%.cocci
++$(COCCI_TEST_RES_GEN): .build/tools/coccinelle/tests/%.res : tools/coccinelle/%.cocci
  endif
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_SPATCH_TEST)$(SPATCH) $(SPATCH_TEST_FLAGS) \
+@@ -3576,14 +3576,14 @@ coccicheck-test: $(COCCI_TEST_RES_GEN)
+ coccicheck: coccicheck-test
  
- subdir('contrib')
-+subdir('tools')
+ ifdef SPATCH_CONCAT_COCCI
+-COCCICHECK_PATCH_MUST_BE_EMPTY_FILES = contrib/coccinelle/ALL.cocci.patch
++COCCICHECK_PATCH_MUST_BE_EMPTY_FILES = tools/coccinelle/ALL.cocci.patch
+ else
+ COCCICHECK_PATCH_MUST_BE_EMPTY_FILES = $(COCCICHECK_PATCHES_INTREE)
+ endif
+ coccicheck: $(COCCICHECK_PATCH_MUST_BE_EMPTY_FILES)
+ 	! grep ^ $(COCCICHECK_PATCH_MUST_BE_EMPTY_FILES) /dev/null
  
- # Note that the target is intentionally configured after including the
- # 'contrib' directory, as some tool there also have their own manpages.
-diff --git a/tools/README.md b/tools/README.md
-new file mode 100644
-index 0000000000..d732997136
---- /dev/null
-+++ b/tools/README.md
-@@ -0,0 +1,7 @@
-+Developer Tooling
-+-----------------
-+
-+This directory is expected to contain all sorts of tooling that
-+relates to our build infrastructure. This includes scripts and
-+inputs required by our build systems, but also scripts that
-+developers are expected to run manually.
+-# See contrib/coccinelle/README
++# See tools/coccinelle/README
+ coccicheck-pending: coccicheck-test
+ coccicheck-pending: $(COCCICHECK_PATCHES_PENDING_INTREE)
+ 
+@@ -3857,8 +3857,8 @@ profile-clean:
+ 
+ cocciclean:
+ 	$(RM) GIT-SPATCH-DEFINES
+-	$(RM) -r .build/contrib/coccinelle
+-	$(RM) contrib/coccinelle/*.cocci.patch
++	$(RM) -r .build/tools/coccinelle
++	$(RM) tools/coccinelle/*.cocci.patch
+ 
+ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) -r .build $(UNIT_TEST_BIN)
+diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
+index 9e9c72681d..ba67e80b4d 100755
+--- a/ci/run-static-analysis.sh
++++ b/ci/run-static-analysis.sh
+@@ -10,7 +10,7 @@ make coccicheck
+ set +x
+ 
+ fail=
+-for cocci_patch in contrib/coccinelle/*.patch
++for cocci_patch in tools/coccinelle/*.patch
+ do
+ 	if test -s "$cocci_patch"
+ 	then
+diff --git a/contrib/meson.build b/contrib/meson.build
+index a88c5dfe09..569c23ee76 100644
+--- a/contrib/meson.build
++++ b/contrib/meson.build
+@@ -2,5 +2,4 @@ foreach feature : get_option('contrib')
+   subdir(feature)
+ endforeach
+ 
+-subdir('coccinelle')
+ subdir('credential')
+diff --git a/contrib/coccinelle/.gitignore b/tools/coccinelle/.gitignore
+similarity index 100%
+rename from contrib/coccinelle/.gitignore
+rename to tools/coccinelle/.gitignore
+diff --git a/contrib/coccinelle/README b/tools/coccinelle/README
+similarity index 98%
+rename from contrib/coccinelle/README
+rename to tools/coccinelle/README
+index 055ad0e06a..fd0a543cc2 100644
+--- a/contrib/coccinelle/README
++++ b/tools/coccinelle/README
+@@ -38,7 +38,7 @@ that might be useful to developers.
+    So to aid these large scale refactorings, semantic patches can be used.
+    However we do not want to store them in the same place as the checks for
+    bad patterns, as then automated builds would fail.
+-   That is why semantic patches 'contrib/coccinelle/*.pending.cocci'
++   That is why semantic patches 'tools/coccinelle/*.pending.cocci'
+    are ignored for checks, and can be applied using 'make coccicheck-pending'.
+ 
+    This allows to expose plans of pending large scale refactorings without
+diff --git a/contrib/coccinelle/array.cocci b/tools/coccinelle/array.cocci
+similarity index 100%
+rename from contrib/coccinelle/array.cocci
+rename to tools/coccinelle/array.cocci
+diff --git a/contrib/coccinelle/commit.cocci b/tools/coccinelle/commit.cocci
+similarity index 100%
+rename from contrib/coccinelle/commit.cocci
+rename to tools/coccinelle/commit.cocci
+diff --git a/contrib/coccinelle/config_fn_ctx.pending.cocci b/tools/coccinelle/config_fn_ctx.pending.cocci
+similarity index 100%
+rename from contrib/coccinelle/config_fn_ctx.pending.cocci
+rename to tools/coccinelle/config_fn_ctx.pending.cocci
+diff --git a/contrib/coccinelle/equals-null.cocci b/tools/coccinelle/equals-null.cocci
+similarity index 100%
+rename from contrib/coccinelle/equals-null.cocci
+rename to tools/coccinelle/equals-null.cocci
+diff --git a/contrib/coccinelle/flex_alloc.cocci b/tools/coccinelle/flex_alloc.cocci
+similarity index 100%
+rename from contrib/coccinelle/flex_alloc.cocci
+rename to tools/coccinelle/flex_alloc.cocci
+diff --git a/contrib/coccinelle/free.cocci b/tools/coccinelle/free.cocci
+similarity index 100%
+rename from contrib/coccinelle/free.cocci
+rename to tools/coccinelle/free.cocci
+diff --git a/contrib/coccinelle/git_config_number.cocci b/tools/coccinelle/git_config_number.cocci
+similarity index 100%
+rename from contrib/coccinelle/git_config_number.cocci
+rename to tools/coccinelle/git_config_number.cocci
+diff --git a/contrib/coccinelle/hashmap.cocci b/tools/coccinelle/hashmap.cocci
+similarity index 100%
+rename from contrib/coccinelle/hashmap.cocci
+rename to tools/coccinelle/hashmap.cocci
+diff --git a/contrib/coccinelle/index-compatibility.cocci b/tools/coccinelle/index-compatibility.cocci
+similarity index 100%
+rename from contrib/coccinelle/index-compatibility.cocci
+rename to tools/coccinelle/index-compatibility.cocci
+diff --git a/contrib/coccinelle/meson.build b/tools/coccinelle/meson.build
+similarity index 100%
+rename from contrib/coccinelle/meson.build
+rename to tools/coccinelle/meson.build
+diff --git a/contrib/coccinelle/object_id.cocci b/tools/coccinelle/object_id.cocci
+similarity index 100%
+rename from contrib/coccinelle/object_id.cocci
+rename to tools/coccinelle/object_id.cocci
+diff --git a/contrib/coccinelle/preincr.cocci b/tools/coccinelle/preincr.cocci
+similarity index 100%
+rename from contrib/coccinelle/preincr.cocci
+rename to tools/coccinelle/preincr.cocci
+diff --git a/contrib/coccinelle/qsort.cocci b/tools/coccinelle/qsort.cocci
+similarity index 100%
+rename from contrib/coccinelle/qsort.cocci
+rename to tools/coccinelle/qsort.cocci
+diff --git a/contrib/coccinelle/refs.cocci b/tools/coccinelle/refs.cocci
+similarity index 100%
+rename from contrib/coccinelle/refs.cocci
+rename to tools/coccinelle/refs.cocci
+diff --git a/contrib/coccinelle/spatchcache b/tools/coccinelle/spatchcache
+similarity index 97%
+rename from contrib/coccinelle/spatchcache
+rename to tools/coccinelle/spatchcache
+index 29e9352d8a..efbcbc3827 100755
+--- a/contrib/coccinelle/spatchcache
++++ b/tools/coccinelle/spatchcache
+@@ -30,7 +30,7 @@
+ #	   out of control.
+ #
+ # This along with the general incremental "make" support for
+-# "contrib/coccinelle" makes it viable to (re-)run coccicheck
++# "tools/coccinelle" makes it viable to (re-)run coccicheck
+ # e.g. when merging integration branches.
+ #
+ # Note that the "--very-quiet" flag is currently critical. The cache
+@@ -42,7 +42,7 @@
+ # to change, so just supply "--very-quiet" for now.
+ #
+ # To use this, simply set SPATCH to
+-# contrib/coccinelle/spatchcache. Then optionally set:
++# tools/coccinelle/spatchcache. Then optionally set:
+ #
+ #	[spatchCache]
+ #		# Optional: path to a custom spatch
+@@ -65,7 +65,7 @@
+ #
+ #	redis-cli FLUSHALL
+ #	<make && make coccicheck, as above>
+-#	grep -hore HIT -e MISS -e SET -e NOCACHE -e CANTCACHE .build/contrib/coccinelle | sort | uniq -c
++#	grep -hore HIT -e MISS -e SET -e NOCACHE -e CANTCACHE .build/tools/coccinelle | sort | uniq -c
+ #	    600 CANTCACHE
+ #	   7365 MISS
+ #	   7365 SET
+diff --git a/contrib/coccinelle/strbuf.cocci b/tools/coccinelle/strbuf.cocci
+similarity index 100%
+rename from contrib/coccinelle/strbuf.cocci
+rename to tools/coccinelle/strbuf.cocci
+diff --git a/contrib/coccinelle/swap.cocci b/tools/coccinelle/swap.cocci
+similarity index 100%
+rename from contrib/coccinelle/swap.cocci
+rename to tools/coccinelle/swap.cocci
+diff --git a/contrib/coccinelle/tests/free.c b/tools/coccinelle/tests/free.c
+similarity index 100%
+rename from contrib/coccinelle/tests/free.c
+rename to tools/coccinelle/tests/free.c
+diff --git a/contrib/coccinelle/tests/free.res b/tools/coccinelle/tests/free.res
+similarity index 100%
+rename from contrib/coccinelle/tests/free.res
+rename to tools/coccinelle/tests/free.res
+diff --git a/contrib/coccinelle/the_repository.cocci b/tools/coccinelle/the_repository.cocci
+similarity index 100%
+rename from contrib/coccinelle/the_repository.cocci
+rename to tools/coccinelle/the_repository.cocci
+diff --git a/contrib/coccinelle/xcalloc.cocci b/tools/coccinelle/xcalloc.cocci
+similarity index 100%
+rename from contrib/coccinelle/xcalloc.cocci
+rename to tools/coccinelle/xcalloc.cocci
+diff --git a/contrib/coccinelle/xopen.cocci b/tools/coccinelle/xopen.cocci
+similarity index 100%
+rename from contrib/coccinelle/xopen.cocci
+rename to tools/coccinelle/xopen.cocci
+diff --git a/contrib/coccinelle/xstrdup_or_null.cocci b/tools/coccinelle/xstrdup_or_null.cocci
+similarity index 100%
+rename from contrib/coccinelle/xstrdup_or_null.cocci
+rename to tools/coccinelle/xstrdup_or_null.cocci
+diff --git a/contrib/coccinelle/xstrncmpz.cocci b/tools/coccinelle/xstrncmpz.cocci
+similarity index 100%
+rename from contrib/coccinelle/xstrncmpz.cocci
+rename to tools/coccinelle/xstrncmpz.cocci
 diff --git a/tools/meson.build b/tools/meson.build
-new file mode 100644
-index 0000000000..e69de29bb2
+index e69de29bb2..f731f74312 100644
+--- a/tools/meson.build
++++ b/tools/meson.build
+@@ -0,0 +1 @@
++subdir('coccinelle')
 
 -- 
 2.53.0.959.g497ff81fa9.dirty
