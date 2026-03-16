@@ -1,39 +1,67 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4AA38F641
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 10:25:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A41372ED7
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 10:49:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773656734; cv=none; b=ktQJcYX2AKL3ZVzrmS8zttIm0m28u0gywcMkRnWrQgzFItc75ar9jZ8p79+0/yDPj8psuHiRR26xZdwJiYNRG/X4EzBvsW259G6SKwv9hLiZgpgTzlW4Y2rxI/D7uCfj674JHcpj29alpu83VTLSSAVyXbVJjLZghES+bchOgFI=
+	t=1773658172; cv=none; b=fh6SBhXlr2Bp/2tfpIC55CQsH4t60Xig6gpppyEGu770RU+vB+BmzALmgIcDKdh9HO870Qa6saz7b4lEdSNuJCjMwtULZ0Gj6O0TdKFNBHq7ulasDARkGd3F3mjVZOQay/ROlG/6b1tFrV1AEW4YOFFsPg/ccjUqBYyDWe7Gw2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773656734; c=relaxed/simple;
-	bh=dnRCccLBLvn8OaupjrqVqFoyQZf4Aosesinw3pHbUsY=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Qa4CuCeu5E0Xx8vi11v8FiWLohPB/t//0HWB8YnC2D9FQOIGb/8YyngvJ8YyEEifaWjptsEncPSUosxAxtjBCLVzHITRoQIQlIbnv56LFWYhSeWAPJ2iL0q26RK8mCOvrcfYShtB/3XcV0t3pwuI4IVbOhsYYrdmb2mlC1WE688=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=creativepost.co.uk; spf=pass smtp.mailfrom=creativepost.co.uk; dkim=pass (2048-bit key) header.d=creativepost.co.uk header.i=john@creativepost.co.uk header.b=2HFyl5rc; arc=none smtp.client-ip=212.227.126.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=creativepost.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=creativepost.co.uk
+	s=arc-20240116; t=1773658172; c=relaxed/simple;
+	bh=mcEHn7YJGIY4Pz43arjWE66myaAYj5Uzy8vdFYWapiU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=IXiM/GBjKdHQ5QyIheJz4wbo+dSdU+Uk+6QnbxK+BPh9FQChWX+j+ENJ/SZF3yjmc2JpuZGsLfU9ANrgW8cN974jXJxoPMANkRANefRQogXizqmSt8CbUK57VoVJXaATon4SfeMJuPiGVLOzA1SQVllU5FRjnmJC+SafITy/sXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PM4Sshv6; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=creativepost.co.uk header.i=john@creativepost.co.uk header.b="2HFyl5rc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=creativepost.co.uk;
-	s=s1-ionos; t=1773656728; x=1774261528; i=john@creativepost.co.uk;
-	bh=dnRCccLBLvn8OaupjrqVqFoyQZf4Aosesinw3pHbUsY=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=2HFyl5rcb38TGmzIWPubLXO3xcEnp4M+U3nLpUZ3uSN147XF8469gdICBAHr48X5
-	 JM+0pBH2Zy8ztm6HzlH8bXzSJ6Y/uor5GfoFDFNK+TixHkOO+A/HWK0BYdsuZ3O/w
-	 LruBRQJlcZJ/tFA8foUX+hfCqnnt4xYblFGcexDmmrQm9nhlfl3b+I8hIhjHca6sX
-	 U6ZrtAif2vWYWyUA5CMli3u+suF1DOqLVVM7Ak7T93064ZPgxnyDK4zG+YtJkMy1/
-	 BYCgO8mMRoW2+aUJ9+uAzdBIG8KXKFXYyzRwkkURO3a8m3NOgNk3DGnCcm9aQM5qi
-	 cAyUKqwH6634ugpPVA==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue012
- [212.227.15.167]) with ESMTPSA (Nemesis) id 1MGxYh-1vo4Jk2wHz-0033K8 for
- <git@vger.kernel.org>; Mon, 16 Mar 2026 11:12:27 +0100
-Message-ID: <457209f3-e998-4223-bdf3-57245bc51926@creativepost.co.uk>
-Date: Mon, 16 Mar 2026 10:12:28 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PM4Sshv6"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-439bc14dcf4so3890920f8f.1
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 03:49:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773658169; x=1774262969; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HCv2wbvdtwm3fIUZxBk4UJ9Q1H35sT5wpwjgI9A9bEk=;
+        b=PM4Sshv6qcy7PfFBKW0E3grin61GTmSTBJgm7d1ax1YLDfm4DSK95UKDhWMyvNy7cg
+         b9zVBUqxG7Oz041BAj6fcKjfbVUkWL9GUrviYQwWsZ74+MEmSowHd5JIc108h8ZFmmKf
+         t/FRo9sQwG4EgWI/CuyU5l7hVT6S2Zga+A9BE8A+fx8xS0CFqW7rH8qXQfHPNj7OeYYO
+         EtIf7vxT9bc0VBzgyTmoJ5bgiWt470xgK4drb/JOHOp93dS2dcxC6EBcx/55CtOgYoxv
+         anWmBMaI2ScS9NIXkON5kMOsBZB5VfmH8UVdSDFYHvJfeA1QmlrmEv8Kdwc2Fj8jqaI3
+         WLUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773658169; x=1774262969;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HCv2wbvdtwm3fIUZxBk4UJ9Q1H35sT5wpwjgI9A9bEk=;
+        b=nTx6lRi9yc8FK2Gn4326gJkz94GRj0vSo81d2EbnqgvR6Tva6/DvDrt+KobSDzkP/b
+         SVI7aselL4zdlUXOv1956txhJ2NcEfwk183fT622izFVsq8LJ1A6hhWOIgohU6SS5pS6
+         T+3Oa0syG/cg1cm9+37G95eBDMEYdb+M3JiFlVGqLo6flMpMccRekjVuEyEpn2yavykt
+         wekL2/OKbmHRNG/Rx+4DRB6p5tqf3Lj5oHPqTP9Or9voSIIMPVsM9giTe8eRDqFGdPah
+         uhnouA+TTZCX7iR2JsnFQtdh7CyglK/9m48ZenVI1L9ObnphzMnfhK4Q0Zd/p/FVKUpE
+         V01Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVy8dq2z1VfFC4hLj4N7DieY35SAyF5OzOD5hQqVbgULW5Vk62ciUb4HA6D8gP9HHl4JvA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIx86MdRamdjNrlYnleZe924ALnX0G9bmOLQIbcQiORJFQjVqa
+	3STfwnql84E58hWfo53iWNUi1hgIlonjEOrvivJG5ENQ8QN4HLOmBXRh
+X-Gm-Gg: ATEYQzyg3mijDXnd4rGZh09Ik3l9ayyqdK+etemcFyvyMfEXxntb1jwwNrW3XPImW94
+	S64jxNPXA81wGjsdxwYpzzvIYjqozgxkayW0/ePrf/+25KfiQWOojib+CQHSQgpQ9AexzujZ7Pl
+	cCZyFkXZQDzwSntkFM4oQRE/1KqTBOeTJK0c6Gua1nA9S6Zez0cyRN9w/TkPY9u6WggPKTv9+Q3
+	Y56UO9yvAi2sfiv4QX0UuZeyQ+AX3tUak8WDIZXBSxKrg0tYebrlNIQTTcfMff1Caz/T2RyquYo
+	7QH7CR2WpmmxzXo+U0ccZe+KVYWUALawrzFYtfiE5wlcaMQl+s4tVtdG4HuYcypOipo9lP5KB6f
+	daGSDteT2HQt3cndCtYiXy6mDxGux7V3zkrNve7kqu4qRYRiP70MuNJj0tar0x0LsnfxNTz+EcS
+	rwduHoSgelUSCykrJrWOAyw5Rp0Mudo6LbrmBuwKp5+Ku55kinfG0KZuul/+w6a99AuOVM2YqRo
+	mEIqQ==
+X-Received: by 2002:a05:600c:8b28:b0:485:3c11:de84 with SMTP id 5b1f17b1804b1-48555b47ac7mr197910845e9.14.1773658169235;
+        Mon, 16 Mar 2026 03:49:29 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4855725572csm179158085e9.2.2026.03.16.03.49.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Mar 2026 03:49:28 -0700 (PDT)
+Message-ID: <75c85249-1cff-425a-8e77-98d55215c324@gmail.com>
+Date: Mon, 16 Mar 2026 10:49:26 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,56 +69,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: git@vger.kernel.org
-From: John Emmas <john@creativepost.co.uk>
-Subject: git --format anyone ?
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] remote: use plural-only message for diverged branch
+ status
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2239.git.git.1773479526823.gitgitgadget@gmail.com>
+ <xmqqqzpmwdyi.fsf@gitster.g> <xmqqtsuiuugy.fsf@gitster.g>
+ <ca6e021e-0301-496d-8bd1-b646487ccbf6@gmail.com> <xmqqjyvdvo7t.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqjyvdvo7t.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:KnkQp85P7Y2zmBqIz6awrnhiMd3dlrO5MYNk1Msl07ZepqwV9+K
- 2LFpNJnY1EGRIMD2pBkwseM6H5XPkKBMgKC6Xfheox6vHg8k+jiSPz52sVnwIxHmgK4GGLJ
- ++axPL8YzuB996rUfSy/igEA1L4b0V3vHNo0WOYMGvXSIZx3LSXmNsE1BLveUL4ca0Zsetb
- 3gEJlq2VxwlTjwHMUOprQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:vBFAgzIaqW4=;B15dO09NR69n0AS4gXu/Vex4Mee
- 4S96TwKZKteiAUFQMD4NhfWv74uTGVMJ4XNegrcK2vrWFftRG1eHo3u7qbRGjKAXnG7pn9Asc
- IvOLEJLtx46R8Z/NKIFItH88t6CnJ9NZXv9ErPzdIExz7HhrJxmvQCgE3Kfw6QiUOyHOwqt74
- UYm/nDBOXhylJxL9r8L0KdGOe8ycFEa1pvXLJhgn8MdphUh/IRvXATGE6OX6/5tjFvyrZ+waw
- 5Xk+UpoQpGJCBm095DaIgeX/WglxznVBcPucsaOFIw3CevHB9+VG9jf2HNr+GrCgWp/938nyZ
- vHkOBs145rRe5g4fxylEk8Q7c09iearzGd2WOOXmvLw2Q9CB1IlFZnKOQ27mh98Xe/wykGdU9
- VcFXlST3Usgq6jfcRl4A7iX4NvBlj0YREeatqMqxcJCHZOScZ+6oriCCHt8tYRT8Wc++qpRA8
- L2IeiXRdJNZeZOxhEmiNxUj6KHGfLKsdEJv/RDpZBKzHHkduW5DS37IOuwjPGtyVxqY6BxUg9
- 9YNdAvF8t7XG7uTTAjAi7AuhYT2bzKl/E4SU2GXQVcW0wBpRfjYMarZAvMyzNHwzvvrBpbaNt
- AM3wLc8WmuJXIgwsDqBZwSKl1vubfkGoWHBQygw7TTy7fcS/mOLn4PMrzpxtXv4OPcA/AD09X
- 3/OEAA04QV5ZuQUQ+/SNaYeRjXLo3CPv8QRvI85Y+zGwFo9LeL7zvu7NEbGSFHUFpswG8sXE+
- R2UIE23WTH/jrMv42KHAMyXoNj7gkNZzr+4aMwRkSHH0Fy1S6Fo9+n5CzBA/UkrTlQ9xRFEgJ
- sXc33vDQgWxQgrBOyEN5w7xWmXoDCWs/02KTh74XJ9LXR5YYsuZcLoh0Qx+MFcgTXRpKtldEh
- oVdX2W2ZaDCwxn1YifK5C6sMXVcEqoB9fs74WinYD8XDamrCWDLZQABBsQSapUZLHV6ds/YaA
- F97D47TegBerQXDRGXWLGsfU6OYFuiJjPHwNZpa+tWg4k14O6ZBNsKgpGWesl+ywX6nZXGXy9
- 5QY0Ja/gMT3w0rR7Mal9yliiN2CeS7KN+4wwOLoLqp8b8Tlhk6QsEhei4OLNWNwZiw3rFlR37
- mTUgZ8lqWuuIU48PGTcZvOH75a6sEfoPOvIqtPsmbCrq8bPDHGLr+5UAxZLhO4WhplSuJdZXz
- dvy+enhIr/XjcPQ8IdhxfN0nwciy/5ivycnDWRdaFmjAom0WweYzJImG/iZj5+wgAr1TwD/1b
- gx7qOpEGtfIh1A8BISvbvpbvfCdmC338D/1uiarfL/uJ1NwPg9dmosQwrday+iTUBtL0gb65b
- vx3SOH6MM3a2HOOh9OzoQ4YRq5R1U/p/rJol9xrrkFQAeyIZZ/4Uj8yGeFD4VLMhAUcslVayU
- /rXxLHkQDvMSo7mBCGfuuT7rxZ9YZG3nVWWOg7TjbjKG6Sr/h02LFHAE54TcYPuAOjj+IRVyu
- RRgVtiMA+tq+R7nZxwd6XjdvivozGKh/9QQIf/0qOWmCgVD428h8bjk6zM54XgA6AC9Yd9b1a
- kqunqTcOMCOyXeJYdMXxzOQ/ZsYaJMWhiEVQl/55aA+gGA4TnuHmpJXrSuC9hTX4jCyOu+BE/
- 4AOu0ZRA3HN/fodx7PRb9XIrQMQ2nWcbc0UIe7FiS9Xoywl/iuu8hIBcDRutRZaf8MY/0f7z0
- XwRgGSUfzNnvqh1FoC/ScR+IzFr5OSFLyTSRY3oAe4rN3oVOEACcJcT/pzfMLnuaNH+35SgUK
- tx9dCVg2Xq65u0RV22GDkw8D5TFOlxUxZIw+o8pFGbVXhkrMkEN/tQtJmiOppzZC0F2rcbtZV
- wzejWgpXlOS+AVb4/UA9BI2ftw==
+Content-Transfer-Encoding: 8bit
 
-I'm hoping this is the right mailing list (I'm using a product called=20
-Git for Windows and its logo looks the same on your website!)
+On 15/03/2026 02:08, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> There can be more than one form of the plural string though. The gettext
+>> manual has the following example of the Polish translation of "file" for
+>> different numbers of files [1]
+>>
+>> 	1 plik
+>> 	2,3,4 pliki
+>> 	5-21 plików
+>> 	22-24 pliki
+>> 	25-31 plików
+>>
+>> ngettext() handles that correctly, translating a single string without
+>> an associated count will not.
+> 
+> That is a very interesting example, and a valid reason to have me
+> retract the #leftoverbits that led to the patch being discussed.
+> 
+> But wouldn't that lead to an awkward conclusion, i.e., hits from
+> "git grep '[^Q]_("[^"]*%[id]' \*.c" are potential bugs that need to
+> be updated to use ngettext().
 
-I'm working on a project which requires me to run "git --format" (with=20
-various parameters of course). I'm currently running version 2.51.2=20
-which looks fairly recent and if I simply type "git" it displays a list=20
-of available options - but it doesn't deem to offer an option called=20
-'format' :-(
+I think it does - maybe we should suggest fixing these as a miroproject 
+for GSoC and Outreachy? It certainly looks like there are plenty of them.
 
-I gather that the latest version is 2.53.0 so would it be worthwhile for=
-=20
-me to upgrade? i.e. would that then offer me git --format? Thanks,
+Thanks
 
-John
+Phillip
+
+> Of course, we need to exclude messages like "the error code %d was
+> returned" and "you have a bug on line %d", but there seem to be real
+> errors in randomly selected hits from the "git grep" output, e.g.,
+> 
+> add-patch.c:						 _("Split into %d hunks."),
+> archive-zip.c:		return error(_("path too long (%d chars, SHA1: %s): %s"),
+> builtin/checkout.c:	    die(_("'%s' matched multiple (%d) remote tracking branches"),
+> builtin/credential-store.c:		die_errno(_("unable to get credential storage lock in %d ms"), timeout_ms);
+> builtin/describe.c:				_("found %i tags; gave up search at %s\n"),
+> builtin/fsck.c:		fprintf_ln(stderr, _("Checking connectivity (%d objects)"), max);
+> 
+> You can notice that I started from 'a' and stopped very early in 'b'
+> ;-).
+> 
+> Thanks.
+
