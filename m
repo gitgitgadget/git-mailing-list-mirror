@@ -1,65 +1,65 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE6D27FB18
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 23:55:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0747A35CB73
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 23:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773705306; cv=none; b=SJi/OKmyGhUfV6o3cwVnNFaWrRbD43HijN8EPcPwbDuTfoF2EY+q9ePwBxXGPjQnJPE6H2rQxUBNBjeq+i9RK2TJmiHWYaFCA+0tr9/ZjY6ZdTATmqa0eg3SzFw9J7GixP8ZF3vE3NaTNg8HvGvlaU3K6qi9gfx5NwRIfbwJg7A=
+	t=1773705308; cv=none; b=CfxMT7iP5orda5U5dJUzaJYhg6gPRj9yaZ2icI8NDb0iouPsSXGX/Txl2BGqbU/953Tyhi7sZr5Enf7TPS7aUf2EPJPlVT1iOlBlFFu9xhneOmxQwE8JMXaVi03sJuKBxwbpBp7R4/UsCTHxcInd39u8k0qqTV6T51ZaiqsgodM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773705306; c=relaxed/simple;
-	bh=QN/Xpp1EFBCTaS4f0CxThNeUJVmfbwfPKuCqdAUws08=;
+	s=arc-20240116; t=1773705308; c=relaxed/simple;
+	bh=w6Ft3ts5Ak8hxmaSlIwm2Qa0HdIMTdfb2KjiPygREjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bJPviIz5nAB9abYzNsAiMMF0pPJjjyWafv0QbUDykb/HrTW6g6Z3iTod2nZwDDpSQlH07Fb8UMtFS83wTVfRqvrlT4UiuDI1N+ZWtyBnHXIADWpLbHRJVD0jezgbemxE/giYDwNk+lwrtw73mWnpskSrJ0Yegzc2TzebY9GKSXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d+h/rww6; arc=none smtp.client-ip=209.85.128.173
+	 MIME-Version:Content-Type; b=OIaETdfbdlPXcE6imvl7qZ5xrNEJifPGCB42f4aLfc1SX9vLxZKxaJdA8fr7Ke6pBOUw+hNhEQzfrLen6uA5t4sC2E+cTAbtgqdK0yrrWRg5LKYTUcVcyTWG33kJudSBhslW79iGkuOoUSu4UjHU8z15WsejLegEDwSiM51AMZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FDACdnQU; arc=none smtp.client-ip=209.85.128.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d+h/rww6"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7982c3b7da9so44137127b3.1
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:55:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FDACdnQU"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-7991db3dc98so48319837b3.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:55:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773705303; x=1774310103; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773705305; x=1774310105; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jCu6HdjhBtkBW4BMbOPdtZDkDU1/72gPK8EhhlPW1yc=;
-        b=d+h/rww65QtNWqI8a5TFQd+5ziSauNqmUfXvtdQIzJQ5/KpnjVtBpfG9bc7CT1HhGB
-         AjLxc58xOUnviX6dJei5IItEScEHSixArFXNeYesMwZ/+mOIPWOXOIl46JP3WlvvPxSS
-         ZDbqU/VIIUWV+GTsxBT68xuYRHRfog+aKhfZ2QXcX2P7WxNFGZfGM7WhgCTvQOAyTzS7
-         1of2tQ7PoaVat8CZ2GYgKSZMRzL6zcTTPMJVpDUgIvliaWM6GTq39UWdY6Hbe4h3/uGn
-         Uv1WrQRQbubI+5ucj14YQJvuU2Y9c4qDnRoOiUPgT7nt62P4kCBxQIXUIHL/TnvqVJgM
-         turg==
+        bh=9qeXSME/TxoYQUDHaSY46/myK7FHklLipi6pv76DfM0=;
+        b=FDACdnQU4jBNgj4s96/ZP4EB4wonCMvyc8LspD8CoYrxmvt0Y9Vn2nPFxucv/mQzqg
+         7diuXYmuVdUXdbFYHIZfzC4PkkIz95VGO/su9U3UpU7lhTTQ4J1p4ydL9r72CYv49BR5
+         X7r1t+ZPNwqsDnloiu7MWkmDWcJAWMqzcHEhFhTCdZP8ii8DgwKBTXl+J9f7zt8YZVnK
+         eMlsAqomx2btB/yEka2yDfiosxiahRY7fj1y95xRuMdndNQR5frRWsAv2vMabX8YWW0E
+         ua+IT84l14Yw7+LjqhCRVW+DJgAWS4KE8amrqYBk2SWGnrHzFfwFSJalJtZoVixOa71r
+         7GCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773705303; x=1774310103;
+        d=1e100.net; s=20251104; t=1773705305; x=1774310105;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=jCu6HdjhBtkBW4BMbOPdtZDkDU1/72gPK8EhhlPW1yc=;
-        b=f5r8+Cp0zc4jyZiNJd+bs/+NYlfI8UO7HTdnkr7kdliOS4cCH8/JMdJkUAkLn3Ix4j
-         tciCSYqhMuyYrgoDymDN18DxQW67wDcUtayHmsExBaAYybLtUcFJwE7A2X9XpLPNgYET
-         o28y2rJ9Ni1PYPgqWcfZuGNOs/f6LSQtrmPbi0kCE6IGJ4QXwrNVMXWlL+xme4vMD+Qa
-         yzL3w13R9dQEpkrJ8Jqzt3Dl3nNUun0JNVasNF6SMHCc3m0GBp3uC71LS/VoTJ7/RyVN
-         HbjNvwL3KAd1fqQ/Fd+Gn2F8tJ+ETx1npgdInnrK1Lu68RW6DHUq4wu/inG4U7W1oGgX
-         EIaw==
-X-Forwarded-Encrypted: i=1; AJvYcCV4TGeBDZTqDxKaY0/9YMh8Iiv33qfdaXuIBa2D8XYYszbd2W6BdTiYa7/byV13LdXVXC0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWU6RyYH1wDDL7e5qq32Ng3mxq2HSZZ6wiNJGSFN5bNGwd9vPF
-	g/59ZHV8hWiulwRmbokNG4syqePwC6af1qp7qPYgu+gHVCtgfcz4HDUv
-X-Gm-Gg: ATEYQzzfpLyN0qJ8/PKILH8EcLaUT744ZdzK0kgKmNfk6Y698wMlrVd2wUQXWZWx/XC
-	TyRuFVjd5A1W7sRArBYkrZKThn25G6s8l8ex6N3FtwMXcaFA53rlW8OP9zgqVvYI0CvuCl3817r
-	QDipOiAbtHNFiOGrNEtgmNWFY6ZDKiXD4H5Yq4nLY3alDanc3fZFo4jCTB82b0LyaTgdhxvgPfI
-	2fmASM/xYS9pPvC7vmlSLUpweLK6HEvR3TEz37JdWnqSiewvzoaehjDKBgGUCeqtpNwcUj9+nHk
-	dAdh2mP4H6A0MtP9TIcyv7K/+uiYHv1hiGHad7jnQeA8RabDGrn0CSQnb13uJ6GiRS2jIXKRavQ
-	BMxiSTOvVGcAcrUgZQH9eohS5mk1XNvvBiIyc61v0G8eDnvNwFh6BA23QoxW1OvmQ1ATurFUWWi
-	akgzNy+quKSxKNWhawUSzKEhNYDJIxxarqpovxxz+zjCs+iL3bQkQmq8VW8+esdX0+X82peEHY2
-	/3P05RVIuQVMXVcups4XEYdaYpNuCXq1tz1ExBaaKwah1sdC0VUcBqrR2Nd1ixdfgvU0raF2au/
-	XQPGlT6fYB0=
-X-Received: by 2002:a05:690c:e368:b0:79a:5e86:adb9 with SMTP id 00721157ae682-79a5e86bb00mr26266957b3.57.1773705303114;
-        Mon, 16 Mar 2026 16:55:03 -0700 (PDT)
+        bh=9qeXSME/TxoYQUDHaSY46/myK7FHklLipi6pv76DfM0=;
+        b=T7hpOQvFwv3xeO6urng2onwsoxfvoiMuUQN2xrrpvNwBuhnqo4Y7HBT+ic213j1eX4
+         tLUg6uOGIOfmPiOBmg5G9VVo4J3W8BVSHDCQtG702Lw5JWHETPMEfNYrtiOS/151nG5V
+         olCBLk/P9il1A1/UJWt4sNUJd2sONZxencpC53JT9wyDuytd4Na+GBkN5hZBKSCpG571
+         pqTt/UhYB2RkFnOQL4xYavT3XuO+xq/R4+Mx6xn+/WkWJ5VEDJLzzzsANaGA4r/P9Fvv
+         ZFdnAgsl0fpuV/DoBKEfz1YIvV0i90m9CHRSCHnpwFJRRo1QsoxrkLBV/BlQrg64pLI9
+         SWmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVFWcqlmaaypuS6bZ1sSqjVew5PO+HYcsTta4rQiwa8FlTvhIqAd0sGLO6OrxXTpvPHbsE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwB+xy68FR5OrtidUzuZnSTblnMjsjfZ8Dsjs73LtHvXB6yognv
+	UOoKiwiFCvQAVZlJx0rwkIw8j4XGhUPaZkqhdma/MOi5lfTOT1qZwOis
+X-Gm-Gg: ATEYQzwxbeC9gkc0gP9rF6kcH3Cl2ucdIVO0frykL62tAJJ+h5Jxxw70m15046kjP7V
+	zNcy6R146b2uoLBOnc/p41UMB4sY3UMZrfzUVvdV74za0/wzDSZP+ddvR2ntpyxZgPghimG6QhU
+	9/tbD2sn4B1XNPjBdOT+rz8ktOnsTX4NAnKudu6EEnW9gJw5MD95J9d5HTIZG3cGCXijX9+d7eR
+	TlTCsuKMCom+gIm8iQzj9em7GdOFrjDRids+8j8g3bLLLxbmBOy9PvpzGMFQkDlzO46mzAKX6yG
+	6RfU3x3fCOeV5SGSPkvKHZDN3mEZdJK4CTRJIWZwysGMY73cn8aGTokhc1iwrRhZm9tfVeX7SXk
+	hEdl3IoBSlTyZ689BrYWubojrhlSIwKvr6l09RyF3XAFTgGARv1qgGW3wdlIwpvmxOk7EHwehMy
+	Xu/CzroVESjkr3vgTArFWhu20E7KwNMYc9AF829wNc8V9BJGoY6MznrwqiR39oFrGB5qMxFQm6Z
+	y6i+6TwuSnQN91G9rAfJT/giAocxbklvz6dS2EYxUsuUNDqkn1BKXp2oW7JlZgm75fUGrMNNAnw
+	7iJkttHU5NU=
+X-Received: by 2002:a05:690c:260c:b0:794:e08a:9196 with SMTP id 00721157ae682-79a1c18491cmr151409537b3.34.1773705304799;
+        Mon, 16 Mar 2026 16:55:04 -0700 (PDT)
 Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a1fb76793sm56812897b3.38.2026.03.16.16.55.01
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a1fb76793sm56812897b3.38.2026.03.16.16.55.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2026 16:55:02 -0700 (PDT)
+        Mon, 16 Mar 2026 16:55:04 -0700 (PDT)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j6t@kdbg.org>,
@@ -77,12 +77,12 @@ Cc: Jiang Xin <worldhello.net@gmail.com>,
 	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
 	Teng Long <dyroneteng@gmail.com>,
 	Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [PATCH v4 0/5] docs(l10n): AI agent instructions and workflow improvements
-Date: Tue, 17 Mar 2026 07:54:44 +0800
-Message-ID: <cover.1773704908.git.worldhello.net@gmail.com>
+Subject: [PATCH v4 1/5] l10n: add .gitattributes to simplify location filtering
+Date: Tue, 17 Mar 2026 07:54:45 +0800
+Message-ID: <cb99047e24b195b4010acb5ed74729474a1492ef.1773704908.git.worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.51.0.rc2
-In-Reply-To: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com>
-References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com>
+In-Reply-To: <cover.1773704908.git.worldhello.net@gmail.com>
+References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com> <cover.1773704908.git.worldhello.net@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,207 +92,622 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-## range-diff v3...v4
+To simplify the location filtering process for l10n contributors when
+committing po/XX.po files, add filter attributes for selected PO
+files to the repository. This ensures all contributors automatically
+get the same filter configuration without manual setup in
+.git/info/attributes.
 
-1:  0c00f09918 ! 1:  cb99047e24 l10n: add .gitattributes to simplify location filtering
-    @@ Commit message
-         l10n: add .gitattributes to simplify location filtering
-     
-         To simplify the location filtering process for l10n contributors when
-    -    committing po/XX.po files, add the filter attributes for selected PO
-    +    committing po/XX.po files, add filter attributes for selected PO
-         files to the repository. This ensures all contributors automatically
-         get the same filter configuration without manual setup in
-         .git/info/attributes.
-     
-    -    The filter attribute is only applied to specific PO files that have
-    -    been properly prepared. Files without the filter attribute fall into
-    -    two categories:
-    +    The default filter (gettext-no-location) is applied to all .po files
-    +    except:
-     
-    -    - Legacy files that lack maintenance and still contain location
-    -      comments that have not been cleaned up
-    -    - Files that are already location-less but whose formatting (e.g., line
-    -      wrapping style) differs from the output of msgcat processing
-    +    - Legacy, unmaintained PO files that still contain location comments.
-    +      Leaving the filter off avoids index vs working-tree discrepancies for
-    +      these files. The CI pipeline will report an error when future updates
-    +      touch these legacy files.
-    +    - Some PO files use a different filter that strips only line numbers
-    +      from location comments while keeping filenames.
-     
-    -    To avoid discrepancies between the filtered blob in the index and the
-    -    unfiltered working tree for these files, the filter attribute is not
-    -    applied to them.
-    -
-    -    Contributors still need to manually define the filter drivers using
-    +    Contributors still need to manually define the filter drivers via
-         git-config as documented in po/README.md.
-     
-    -    Additionally, po/README.md has been reorganized: the content of handling
-    -    location-less PO file content has been moved from the "Updating a XX.po
-    -    file" section to a separate "Preparing a XX.po file for commit" section.
-    -    This prevents AI agents from introducing unrelated operations when
-    -    updating PO files.
-    +    Four PO files that use location filtering (po/ca.po, po/es.po, po/ga.po,
-    +    po/ru.po) were batch-modified so their on-disk format matches the filter
-    +    output (e.g. line wrapping), avoiding index vs working-tree mismatch.
-    +
-    +    Additionally, po/README.md has been reorganized: the material on
-    +    preparing location-less PO files for commit has been moved from
-    +    "Updating a XX.po file" to a separate "Preparing a XX.po file for
-    +    commit" section. This prevents AI agents from introducing unrelated
-    +    operations when updating PO files.
-     
-         Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-     
-    @@ po/.gitattributes (new)
-     +# space.
-     +#
-     +# Two filter types are used:
-    -+# 1. gettext-no-file-no-location: Strips both filenames and line numbers
-    ++# 1. gettext-no-location: Strips both filenames and line numbers
-     +#    (e.g., removes "#: main.c:123" entirely)
-    -+# 2. gettext-no-location: Preserves filenames but removes line numbers, which
-    ++# 2. gettext-no-line-number: Preserves filenames but removes line numbers, which
-     +#    requires gettext 0.20 or higher
-     +#    (e.g., "#: main.c:123" becomes "#: main.c")
-     +#
-     +# See `po/README.md` for instructions on setting up the required filter drivers.
-     +
-    -+# Do not apply these filters to all `*.po` files via a wildcard. For legacy,
-    -+# unmaintained PO files, that would cause discrepancies between the filtered
-    -+# blob in the index and the unfiltered file in the working tree.
-    ++# Default: Strip the whole location comments for all .po files
-    ++*.po	filter=gettext-no-location
-     +
-    -+# Languages that strip both filenames and line numbers
-    -+bg.po	filter=gettext-no-file-no-location
-    -+de.po	filter=gettext-no-file-no-location
-    -+#es.po	filter=gettext-no-file-no-location
-    -+fr.po	filter=gettext-no-file-no-location
-    -+#ga.po	filter=gettext-no-file-no-location
-    -+#ru.po	filter=gettext-no-file-no-location
-    -+sv.po	filter=gettext-no-file-no-location
-    -+tr.po	filter=gettext-no-file-no-location
-    -+uk.po	filter=gettext-no-file-no-location
-    -+vi.po	filter=gettext-no-file-no-location
-    ++# Legacy, unmaintained PO files: filter disabled to avoid index vs
-    ++# working-tree mismatch (these files still have location comments).
-    ++el.po	-filter
-    ++is.po	-filter
-    ++it.po	-filter
-    ++ko.po	-filter
-    ++pl.po	-filter
-    ++pt_PT.po	-filter
-     +
-    -+# Languages that preserve filenames but strip line numbers
-    -+#ca.po	filter=gettext-no-location
-    -+id.po	filter=gettext-no-location
-    -+zh_CN.po	filter=gettext-no-location
-    -+zh_TW.po	filter=gettext-no-location
-    ++# These files use gettext-no-line-number (keep filenames, strip line
-    ++# numbers). The choice is per l10n team preference. Requires gettext 0.20+.
-    ++# The only benefit is locating source files from location comments when
-    ++# the .po file is not updated from the POT via make po-update.
-    ++ca.po	filter=gettext-no-line-number
-    ++id.po	filter=gettext-no-line-number
-    ++zh_CN.po	filter=gettext-no-line-number
-    ++zh_TW.po	filter=gettext-no-line-number
-     
-      ## po/README.md ##
-     @@ po/README.md: It will:
-    @@ po/README.md: git-po-helper check-commits <rev-list-opts>
-     +The filter configuration is defined in the "po/.gitattributes" file.
-     +
-     +Then define the driver for the filter. Most languages use the
-    -+"gettext-no-file-no-location" clean filter, which strips out both filenames and
-    -+line numbers from location comments. To set this up, run the following command:
-    ++"gettext-no-location" clean filter, which strips out both filenames and line
-    ++numbers from location comments. To set this up, run the following command:
-     +
-     +```shell
-    -+git config --global filter.gettext-no-file-no-location.clean \
-    ++git config --global filter.gettext-no-location.clean \
-     +           "msgcat --no-location -"
-     +```
-     +
-    -+Some languages use the "gettext-no-location" clean filter, which preserves
-    -+filenames but not line numbers. For these, install gettext version 0.20 or
-    -+higher and set up the driver as follows:
-    ++Some PO files use the "gettext-no-line-number" clean filter, which keeps
-    ++filenames but strips line numbers. This filter requires gettext 0.20 or
-    ++later. The only benefit is being able to locate source files from location
-    ++comments when the .po file is not updated from the POT via `make po-update`.
-     +
-     +```shell
-    -+git config --global filter.gettext-no-location.clean \
-    ++git config --global filter.gettext-no-line-number.clean \
-     +           "msgcat --add-location=file -"
-     +```
-     +
-2:  573c24e798 = 2:  e1258eac7d docs(l10n): add AGENTS.md with optimized update-pot instructions
-3:  bc00ca2d30 = 3:  88f9e2e2cd docs(l10n): add AI agent instructions for updating po/XX.po files
-4:  6c61a8ca25 = 4:  5034063c2b docs(l10n): add AI agent instructions for translating PO files
-5:  208c1230d1 = 5:  9388b8e9f4 docs(l10n): add AI agent instructions to review translations
+The default filter (gettext-no-location) is applied to all .po files
+except:
 
-## Introduction
+- Legacy, unmaintained PO files that still contain location comments.
+  Leaving the filter off avoids index vs working-tree discrepancies for
+  these files. The CI pipeline will report an error when future updates
+  touch these legacy files.
+- Some PO files use a different filter that strips only line numbers
+  from location comments while keeping filenames.
 
-This series introduces AI agent instructions for Git localization (l10n)
-workflows to help localization contributors quickly complete drafts and
-use AI to check translation quality. The changes focus on:
+Contributors still need to manually define the filter drivers via
+git-config as documented in po/README.md.
 
-1. Separating agent-specific documentation into po/AGENTS.md for
-   targeted optimization of AI-assisted workflows
-2. Providing step-by-step instructions for update-pot, update-po,
-   translation, and review tasks
-3. Simplifying location filtering for PO file commits via .gitattributes
+Four PO files that use location filtering (po/ca.po, po/es.po, po/ga.po,
+po/ru.po) were batch-modified so their on-disk format matches the filter
+output (e.g. line wrapping), avoiding index vs working-tree mismatch.
 
-AI-assisted translation is optional; many successful l10n teams work
-well without it. When used, AI output serves as reference only—human
-contributors must review and approve before submission.
+Additionally, po/README.md has been reorganized: the material on
+preparing location-less PO files for commit has been moved from
+"Updating a XX.po file" to a separate "Preparing a XX.po file for
+commit" section. This prevents AI agents from introducing unrelated
+operations when updating PO files.
 
-## Performance summary
-
-Benchmarks use the Qwen model via git-po-helper. The improvements reduce
-API costs and make agent workflows more efficient while maintaining human
-oversight of translation quality.
-
-| Task        | Before              | After                    | Improvement                           |
-|-------------|---------------------|--------------------------|---------------------------------------|
-| update-pot  | 17 turns, 34s       | 3 turns, 8s (range 3–3)  | -82% turns, -76% time                 |
-| update-po   | 22 turns, 38s       | 4 turns, 9s (3–9, 7–14s) | -82% turns, -76% time                 |
-| translate   | 86 turns, ~21m      | 56 turns, ~19m           | -35% turns (git-po-helper JSON batch) |
-| review      | N/A                 | 22 turns (63 entries)    |                                       |
-
-## Testing
-
-All changes have been evaluated with the qwen model via git-po-helper
-agent-test and agent-run. The po/AGENTS.md instructions are designed
-to work with coding tools that support file references (e.g.,
-"Translate po/zh_CN.po by referring to @po/AGENTS.md").
-
-## Changes
-
-Jiang Xin (5):
-  l10n: add .gitattributes to simplify location filtering
-  docs(l10n): add AGENTS.md with optimized update-pot instructions
-  docs(l10n): add AI agent instructions for updating po/XX.po files
-  docs(l10n): add AI agent instructions for translating PO files
-  docs(l10n): add AI agent instructions to review translations
-
- po/.gitattributes |  35 ++
- po/AGENTS.md      | 872 ++++++++++++++++++++++++++++++++++++++++++++++
- po/README.md      |  71 ++--
- po/ca.po          |  48 +--
- po/es.po          |  34 +-
- po/ga.po          |  64 ++--
- po/ru.po          |  28 +-
- 7 files changed, 1033 insertions(+), 119 deletions(-)
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ po/.gitattributes | 35 +++++++++++++++++++++++
+ po/README.md      | 71 ++++++++++++++++++++++++++---------------------
+ po/ca.po          | 48 ++++++++++++++++----------------
+ po/es.po          | 34 +++++++++++------------
+ po/ga.po          | 64 +++++++++++++++++++++---------------------
+ po/ru.po          | 28 +++++++++----------
+ 6 files changed, 161 insertions(+), 119 deletions(-)
  create mode 100644 po/.gitattributes
- create mode 100644 po/AGENTS.md
 
+diff --git a/po/.gitattributes b/po/.gitattributes
+new file mode 100644
+index 0000000000..284af6bcc0
+--- /dev/null
++++ b/po/.gitattributes
+@@ -0,0 +1,35 @@
++# Git Attributes for PO Files
++#
++# This file configures Git filters to automatically strip location information
++# from PO files when committing, producing cleaner diffs and saving repository
++# space.
++#
++# Two filter types are used:
++# 1. gettext-no-location: Strips both filenames and line numbers
++#    (e.g., removes "#: main.c:123" entirely)
++# 2. gettext-no-line-number: Preserves filenames but removes line numbers, which
++#    requires gettext 0.20 or higher
++#    (e.g., "#: main.c:123" becomes "#: main.c")
++#
++# See `po/README.md` for instructions on setting up the required filter drivers.
++
++# Default: Strip the whole location comments for all .po files
++*.po	filter=gettext-no-location
++
++# Legacy, unmaintained PO files: filter disabled to avoid index vs
++# working-tree mismatch (these files still have location comments).
++el.po	-filter
++is.po	-filter
++it.po	-filter
++ko.po	-filter
++pl.po	-filter
++pt_PT.po	-filter
++
++# These files use gettext-no-line-number (keep filenames, strip line
++# numbers). The choice is per l10n team preference. Requires gettext 0.20+.
++# The only benefit is locating source files from location comments when
++# the .po file is not updated from the POT via make po-update.
++ca.po	filter=gettext-no-line-number
++id.po	filter=gettext-no-line-number
++zh_CN.po	filter=gettext-no-line-number
++zh_TW.po	filter=gettext-no-line-number
+diff --git a/po/README.md b/po/README.md
+index ec08aa24ad..ca39160077 100644
+--- a/po/README.md
++++ b/po/README.md
+@@ -159,38 +159,6 @@ It will:
+   and these location lines will help translation tools to locate
+   translation context easily.
+ 
+-Once you are done testing the translation (see below), it's better
+-to commit a location-less "po/XX.po" file to save repository space
+-and make a user-friendly patch for review.
+-
+-To save a location-less "po/XX.po" automatically in repository, you
+-can:
+-
+-First define a new attribute for "po/XX.po" by appending the following
+-line in ".git/info/attributes":
+-
+-```
+-/po/XX.po filter=gettext-no-location
+-```
+-
+-Then define the driver for the "gettext-no-location" clean filter to
+-strip out both filenames and locations from the contents as follows:
+-
+-```shell
+-git config --global filter.gettext-no-location.clean \
+-           "msgcat --no-location -"
+-```
+-
+-For users who have gettext version 0.20 or higher, it is also possible
+-to define a clean filter to preserve filenames but not locations:
+-
+-```shell
+-git config --global filter.gettext-no-location.clean \
+-           "msgcat --add-location=file -"
+-```
+-
+-You're now ready to ask the l10n coordinator to pull from you.
+-
+ 
+ ## Fuzzy translation
+ 
+@@ -229,6 +197,45 @@ git-po-helper check-commits <rev-list-opts>
+ ```
+ 
+ 
++## Preparing a "XX.po" file for commit
++
++Once you are done testing the translation, it's better to commit a
++location-less "po/XX.po" file to save repository space and make a
++user-friendly patch for review.
++
++To save a location-less "po/XX.po" automatically in the repository,
++follow these steps:
++
++First, check which filter is configured for your "po/XX.po" file:
++
++```
++git check-attr filter po/XX.po
++```
++
++The filter configuration is defined in the "po/.gitattributes" file.
++
++Then define the driver for the filter. Most languages use the
++"gettext-no-location" clean filter, which strips out both filenames and line
++numbers from location comments. To set this up, run the following command:
++
++```shell
++git config --global filter.gettext-no-location.clean \
++           "msgcat --no-location -"
++```
++
++Some PO files use the "gettext-no-line-number" clean filter, which keeps
++filenames but strips line numbers. This filter requires gettext 0.20 or
++later. The only benefit is being able to locate source files from location
++comments when the .po file is not updated from the POT via `make po-update`.
++
++```shell
++git config --global filter.gettext-no-line-number.clean \
++           "msgcat --add-location=file -"
++```
++
++You're now ready to ask the l10n coordinator to pull from you.
++
++
+ ## Marking strings for translation
+ 
+ (This is done by the core developers).
+diff --git a/po/ca.po b/po/ca.po
+index 8dc21f36ed..742109c65f 100644
+--- a/po/ca.po
++++ b/po/ca.po
+@@ -512,8 +512,8 @@ msgstr ""
+ #, c-format
+ msgid "Discard mode change from index and worktree [y,n,q,a,d%s,?]? "
+ msgstr ""
+-"Descarta el canvi de mode de l'índex i de l'arbre de treball [y,n,q,a,d"
+-"%s,?]? "
++"Descarta el canvi de mode de l'índex i de l'arbre de treball "
++"[y,n,q,a,d%s,?]? "
+ 
+ #: add-patch.c
+ #, c-format
+@@ -3879,11 +3879,11 @@ msgstr "HEAD no trobat sota refs/heads!"
+ 
+ #: builtin/branch.c
+ msgid ""
+-"branch with --recurse-submodules can only be used if submodule."
+-"propagateBranches is enabled"
++"branch with --recurse-submodules can only be used if "
++"submodule.propagateBranches is enabled"
+ msgstr ""
+-"la branca amb --recurse-submodules només es pot utilitzar si submodule."
+-"propagateBranches està habilitat"
++"la branca amb --recurse-submodules només es pot utilitzar si "
++"submodule.propagateBranches està habilitat"
+ 
+ #: builtin/branch.c
+ msgid "--recurse-submodules can only be used to create branches"
+@@ -7983,11 +7983,11 @@ msgstr "el protocol no admet --negotiate-only, se surt"
+ 
+ #: builtin/fetch.c
+ msgid ""
+-"--filter can only be used with the remote configured in extensions."
+-"partialclone"
++"--filter can only be used with the remote configured in "
++"extensions.partialclone"
+ msgstr ""
+-"--filter només es pot utilitzar amb el remot configurat en extensions."
+-"partialclone"
++"--filter només es pot utilitzar amb el remot configurat en "
++"extensions.partialclone"
+ 
+ #: builtin/fetch.c
+ msgid "--atomic can only be used when fetching from one remote"
+@@ -11436,8 +11436,8 @@ msgid ""
+ "| -C) <object>] [<object>] [-e]"
+ msgstr ""
+ "git notes [--ref <referència-notes>] add [-f] [--allow-empty] [--"
+-"[no-]separator|--separator=<salt-paràgraf>] [--[no-]stripspace] [-m <msg> | -"
+-"F <fitxer> | (-c | -C) <objecte>] [<objecte>]"
++"[no-]separator|--separator=<salt-paràgraf>] [--[no-]stripspace] [-m <msg> | "
++"-F <fitxer> | (-c | -C) <objecte>] [<objecte>]"
+ 
+ #: builtin/notes.c
+ msgid "git notes [--ref <notes-ref>] copy [-f] <from-object> <to-object>"
+@@ -11451,8 +11451,8 @@ msgid ""
+ "| -C) <object>] [<object>] [-e]"
+ msgstr ""
+ "git notes [--ref <referència-notes>] append [--allow-empty] [--"
+-"[no-]separator|--separator=<salt-paràgraf>] [--[no-]stripspace] [-m <msg> | -"
+-"F <fitxer> | (-c | -C) <objecte>] [<objecte>] [-e]"
++"[no-]separator|--separator=<salt-paràgraf>] [--[no-]stripspace] [-m <msg> | "
++"-F <fitxer> | (-c | -C) <objecte>] [<objecte>] [-e]"
+ 
+ #: builtin/notes.c
+ msgid "git notes [--ref <notes-ref>] edit [--allow-empty] [<object>]"
+@@ -13231,8 +13231,8 @@ msgstr "--empty=ask és obslolet; utilitzeu '--empty=stop' en el seu lloc."
+ #: builtin/rebase.c
+ #, c-format
+ msgid ""
+-"unrecognized empty type '%s'; valid values are \"drop\", \"keep\", and \"stop"
+-"\"."
++"unrecognized empty type '%s'; valid values are \"drop\", \"keep\", and "
++"\"stop\"."
+ msgstr ""
+ "tipus buit «%s» no reconegut; els valors vàlids són \"drop\", \"keep\" i "
+ "\"stop\"."
+@@ -14440,8 +14440,8 @@ msgid ""
+ msgstr ""
+ "Els reempaquetaments incrementals són incompatibles amb els índexs de mapes "
+ "de bits.  Useu\n"
+-"--no-write-bitmap-index o inhabiliteu el paràmetre de configuració pack."
+-"writeBitmaps."
++"--no-write-bitmap-index o inhabiliteu el paràmetre de configuració "
++"pack.writeBitmaps."
+ 
+ #: builtin/repack.c
+ msgid "could not start pack-objects to repack promisor objects"
+@@ -19350,11 +19350,11 @@ msgstr ""
+ #: commit-graph.c
+ #, c-format
+ msgid ""
+-"attempting to write a commit-graph, but 'commitGraph."
+-"changedPathsVersion' (%d) is not supported"
++"attempting to write a commit-graph, but 'commitGraph.changedPathsVersion' "
++"(%d) is not supported"
+ msgstr ""
+-"s'ha intentat escriure un graf de comissió, però no s'admet 'commitGraph."
+-"changedPathsVersion' (%d)"
++"s'ha intentat escriure un graf de comissió, però no s'admet "
++"'commitGraph.changedPathsVersion' (%d)"
+ 
+ #: commit-graph.c
+ msgid "too many commits to write graph"
+@@ -22940,8 +22940,8 @@ msgstr "el fitxer de l'índex multipaquet %s és massa petit"
+ #, c-format
+ msgid "multi-pack-index signature 0x%08x does not match signature 0x%08x"
+ msgstr ""
+-"la signatura de l'índex multipaquet 0x%08x no coincideix amb la signatura 0x"
+-"%08x"
++"la signatura de l'índex multipaquet 0x%08x no coincideix amb la signatura "
++"0x%08x"
+ 
+ #: midx.c
+ #, c-format
+diff --git a/po/es.po b/po/es.po
+index 1ff5ff3911..aa1bb9bf90 100644
+--- a/po/es.po
++++ b/po/es.po
+@@ -391,8 +391,8 @@ msgstr ""
+ #, c-format, perl-format
+ msgid "Apply mode change to index and worktree [y,n,q,a,d%s,?]? "
+ msgstr ""
+-"¿Aplicar cambio de modo para el índice y el árbol de trabajo [y,n,q,a,"
+-"d%s,?]? "
++"¿Aplicar cambio de modo para el índice y el árbol de trabajo "
++"[y,n,q,a,d%s,?]? "
+ 
+ #, c-format, perl-format
+ msgid "Apply deletion to index and worktree [y,n,q,a,d%s,?]? "
+@@ -2294,9 +2294,9 @@ msgid ""
+ "=<term>] [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] "
+ "[<paths>...]"
+ msgstr ""
+-"git bisect--helper --bisect-start [--term-{new,bad}=<término> --term-{old,"
+-"good}=<término>] [--no-checkout] [--first-parent] [<malo> [<bueno>...]] [--] "
+-"[<rutas>...]"
++"git bisect--helper --bisect-start [--term-{new,bad}=<término> --term-"
++"{old,good}=<término>] [--no-checkout] [--first-parent] [<malo> [<bueno>...]] "
++"[--] [<rutas>...]"
+ 
+ msgid "git bisect--helper --bisect-state (bad|new) [<rev>]"
+ msgstr "git bisect--helper --bisect-state (bad|new) [<rev>]"
+@@ -2983,11 +2983,11 @@ msgid "HEAD not found below refs/heads!"
+ msgstr "¡HEAD no encontrado dentro de refs/heads!"
+ 
+ msgid ""
+-"branch with --recurse-submodules can only be used if submodule."
+-"propagateBranches is enabled"
++"branch with --recurse-submodules can only be used if "
++"submodule.propagateBranches is enabled"
+ msgstr ""
+-"branch con --recurse-submodules solo se puede usar si submodule."
+-"propagateBranches está habilitado"
++"branch con --recurse-submodules solo se puede usar si "
++"submodule.propagateBranches está habilitado"
+ 
+ msgid "--recurse-submodules can only be used to create branches"
+ msgstr "--recurse-submodules solo se puede usar para crear ramas"
+@@ -5983,11 +5983,11 @@ msgid "protocol does not support --negotiate-only, exiting"
+ msgstr "el protocolo no soporta --negotiate-only, saliendo"
+ 
+ msgid ""
+-"--filter can only be used with the remote configured in extensions."
+-"partialclone"
++"--filter can only be used with the remote configured in "
++"extensions.partialclone"
+ msgstr ""
+-"--filter solo puede ser usado con el remoto configurado en extensions."
+-"partialclone"
++"--filter solo puede ser usado con el remoto configurado en "
++"extensions.partialclone"
+ 
+ msgid "--atomic can only be used when fetching from one remote"
+ msgstr "--atomic solo se puede usar cuando se busca desde un control remoto"
+@@ -8914,8 +8914,8 @@ msgstr "objeto esperado en el desplazamiento %<PRIuMAX> en el paquete %s"
+ 
+ msgid "disabling bitmap writing, packs are split due to pack.packSizeLimit"
+ msgstr ""
+-"deshabilitando escritura bitmap, paquetes son divididos debido a pack."
+-"packSizeLimit"
++"deshabilitando escritura bitmap, paquetes son divididos debido a "
++"pack.packSizeLimit"
+ 
+ msgid "Writing objects"
+ msgstr "Escribiendo objetos"
+@@ -9489,8 +9489,8 @@ msgstr ""
+ msgid ""
+ "\n"
+ "To avoid automatically configuring upstream branches when their name\n"
+-"doesn't match the local branch, see option 'simple' of branch."
+-"autoSetupMerge\n"
++"doesn't match the local branch, see option 'simple' of "
++"branch.autoSetupMerge\n"
+ "in 'git help config'.\n"
+ msgstr ""
+ "\n"
+diff --git a/po/ga.po b/po/ga.po
+index 4c05a2511e..2d8065b420 100644
+--- a/po/ga.po
++++ b/po/ga.po
+@@ -382,8 +382,8 @@ msgstr "Caitheamh breisiú ó innéacs agus crann oibre [y, n, q, a, d %s,?]? "
+ #, c-format
+ msgid "Discard this hunk from index and worktree [y,n,q,a,d%s,?]? "
+ msgstr ""
+-"An bhfuil an píosa beag seo le fáil réidh ón innéacs agus ón gcrann oibre [y,"
+-"n,q,a,d%s,?]? "
++"An bhfuil an píosa beag seo le fáil réidh ón innéacs agus ón gcrann oibre "
++"[y,n,q,a,d%s,?]? "
+ 
+ msgid ""
+ "y - discard this hunk from index and worktree\n"
+@@ -402,8 +402,8 @@ msgstr ""
+ #, c-format
+ msgid "Apply mode change to index and worktree [y,n,q,a,d%s,?]? "
+ msgstr ""
+-"Cuir athrú mód i bhfeidhm ar an innéacs agus ar an gcrann oibre [y,n,q,a,"
+-"d%s,?]? "
++"Cuir athrú mód i bhfeidhm ar an innéacs agus ar an gcrann oibre "
++"[y,n,q,a,d%s,?]? "
+ 
+ #, c-format
+ msgid "Apply deletion to index and worktree [y,n,q,a,d%s,?]? "
+@@ -413,14 +413,14 @@ msgstr ""
+ #, c-format
+ msgid "Apply addition to index and worktree [y,n,q,a,d%s,?]? "
+ msgstr ""
+-"Cuir an breiseán i bhfeidhm ar an innéacs agus ar an gcrann oibre [y,n,q,a,"
+-"d%s,?]? "
++"Cuir an breiseán i bhfeidhm ar an innéacs agus ar an gcrann oibre "
++"[y,n,q,a,d%s,?]? "
+ 
+ #, c-format
+ msgid "Apply this hunk to index and worktree [y,n,q,a,d%s,?]? "
+ msgstr ""
+-"Cuir an píosa seo i bhfeidhm ar an innéacs agus ar an gcrann oibre [y,n,q,a,"
+-"d%s,?]? "
++"Cuir an píosa seo i bhfeidhm ar an innéacs agus ar an gcrann oibre "
++"[y,n,q,a,d%s,?]? "
+ 
+ msgid ""
+ "y - apply this hunk to index and worktree\n"
+@@ -3114,11 +3114,11 @@ msgid "HEAD not found below refs/heads!"
+ msgstr "Ní fhaightear CEAD thíos na refs/heads!"
+ 
+ msgid ""
+-"branch with --recurse-submodules can only be used if submodule."
+-"propagateBranches is enabled"
++"branch with --recurse-submodules can only be used if "
++"submodule.propagateBranches is enabled"
+ msgstr ""
+-"ní féidir brainse le --recurse-submodules a úsáid ach amháin má tá submodule."
+-"propagateBranches cumasaithe"
++"ní féidir brainse le --recurse-submodules a úsáid ach amháin má tá "
++"submodule.propagateBranches cumasaithe"
+ 
+ msgid "--recurse-submodules can only be used to create branches"
+ msgstr "Ní féidir --recurse-submodules a úsáid ach chun brainsí a chruthú"
+@@ -6034,8 +6034,8 @@ msgid ""
+ "'strip-if-invalid' is not a valid mode for git fast-export with --signed-"
+ "commits=<mode>"
+ msgstr ""
+-"'strip-if-invalid' ní mód bailí é seo le haghaidh easpórtáil le haghaidh git fast-export le --signed-"
+-"commits=<mód>"
++"'strip-if-invalid' ní mód bailí é seo le haghaidh easpórtáil le haghaidh git "
++"fast-export le --signed-commits=<mód>"
+ 
+ #, c-format
+ msgid ""
+@@ -6067,8 +6067,8 @@ msgid ""
+ "'strip-if-invalid' is not a valid mode for git fast-export with --signed-"
+ "tags=<mode>"
+ msgstr ""
+-"'strip-if-invalid' ní mód bailí é seo le haghaidh git fast-export le --signed-"
+-"tags=<mode>"
++"'strip-if-invalid' ní mód bailí é seo le haghaidh git fast-export le --"
++"signed-tags=<mode>"
+ 
+ #, c-format
+ msgid ""
+@@ -7048,8 +7048,8 @@ msgid "protocol does not support --negotiate-only, exiting"
+ msgstr "ní thacaíonn an prótacal le --negotiate-only, ag scoir"
+ 
+ msgid ""
+-"--filter can only be used with the remote configured in extensions."
+-"partialclone"
++"--filter can only be used with the remote configured in "
++"extensions.partialclone"
+ msgstr ""
+ "--filter Ní féidir ach an scagaire a úsáid ach leis an iargúlta cumraithe in "
+ "extensions.partialclone"
+@@ -7584,8 +7584,8 @@ msgstr "Theip ar 'git multi-pack-index repack'"
+ msgid ""
+ "skipping incremental-repack task because core.multiPackIndex is disabled"
+ msgstr ""
+-"ag scipeáil an tasc athphacála incriminteach mar go bhfuil core."
+-"multiPackIndex díchumasaithe"
++"ag scipeáil an tasc athphacála incriminteach mar go bhfuil "
++"core.multiPackIndex díchumasaithe"
+ 
+ msgid "failed to perform geometric repack"
+ msgstr "theip ar athphacáil gheoiméadrach a dhéanamh"
+@@ -10097,8 +10097,8 @@ msgstr ""
+ 
+ msgid "disabling bitmap writing, packs are split due to pack.packSizeLimit"
+ msgstr ""
+-"scríobh bitmap a dhíchumasú, roinntear pacáistí mar gheall ar pack."
+-"packSizeLimit"
++"scríobh bitmap a dhíchumasú, roinntear pacáistí mar gheall ar "
++"pack.packSizeLimit"
+ 
+ msgid "Writing objects"
+ msgstr "Rudaí a scríobh"
+@@ -11904,8 +11904,8 @@ msgid ""
+ msgstr ""
+ "Tá tagairtí contrártha sa\n"
+ "tagarmharc sprice nua ag an gcianrialtán atá tú ag iarraidh a athainmniú. Is "
+-"dóichí gur mar gheall ar iarracht a dhéanamh cianrialtán a neadú ann féin, e."
+-"g. trí 'tuismitheoir' a athainmniú go 'tuismitheoir/leanbh'\n"
++"dóichí gur mar gheall ar iarracht a dhéanamh cianrialtán a neadú ann féin, "
++"e.g. trí 'tuismitheoir' a athainmniú go 'tuismitheoir/leanbh'\n"
+ "nó trí chianrialtán a dhí-neadú, e.g. an bealach eile.\n"
+ "\n"
+ "Más amhlaidh atá, is féidir leat é seo a réiteach tríd an\n"
+@@ -16114,11 +16114,11 @@ msgstr ""
+ 
+ #, c-format
+ msgid ""
+-"attempting to write a commit-graph, but 'commitGraph."
+-"changedPathsVersion' (%d) is not supported"
++"attempting to write a commit-graph, but 'commitGraph.changedPathsVersion' "
++"(%d) is not supported"
+ msgstr ""
+-"ag iarraidh commit-graph a scríobh, ach tá 'commitGraph."
+-"changedPathsVersion' (%d) ní thacaítear leis"
++"ag iarraidh commit-graph a scríobh, ach tá 'commitGraph.changedPathsVersion' "
++"(%d) ní thacaítear leis"
+ 
+ msgid "too many commits to write graph"
+ msgstr "an iomarca gealltanais graf a scríobh"
+@@ -18266,8 +18266,8 @@ msgid ""
+ "given pattern contains NULL byte (via -f <file>). This is only supported "
+ "with -P under PCRE v2"
+ msgstr ""
+-"tá byte NULL (trí -f<file>) i bpatrún tugtha. Ní thacaítear leis seo ach le -"
+-"P faoi PCRE v2"
++"tá byte NULL (trí -f<file>) i bpatrún tugtha. Ní thacaítear leis seo ach le "
++"-P faoi PCRE v2"
+ 
+ #, c-format
+ msgid "'%s': unable to read %s"
+@@ -18433,8 +18433,8 @@ msgid ""
+ msgstr ""
+ "Rinneadh neamhaird ar an gcroca '%s' toisc nach bhfuil sé socraithe mar "
+ "infheidhmithe.\n"
+-"Is féidir leat an rabhadh seo a dhíchumasú le `git config set advice."
+-"ignoredHook false `."
++"Is féidir leat an rabhadh seo a dhíchumasú le `git config set "
++"advice.ignoredHook false `."
+ 
+ msgid "not a git repository"
+ msgstr "ní stór git é"
+diff --git a/po/ru.po b/po/ru.po
+index 3e56eb546e..e8845ca2c0 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -369,8 +369,8 @@ msgstr ""
+ #, c-format
+ msgid "Discard mode change from index and worktree [y,n,q,a,d%s,?]? "
+ msgstr ""
+-"Отменить изменения режима доступа в индексе и рабочем каталоге [y,n,q,a,"
+-"d%s,?]? "
++"Отменить изменения режима доступа в индексе и рабочем каталоге "
++"[y,n,q,a,d%s,?]? "
+ 
+ #, c-format
+ msgid "Discard deletion from index and worktree [y,n,q,a,d%s,?]? "
+@@ -400,8 +400,8 @@ msgstr ""
+ #, c-format
+ msgid "Apply mode change to index and worktree [y,n,q,a,d%s,?]? "
+ msgstr ""
+-"Применить изменения режима доступа к индексу и рабочему каталогу [y,n,q,a,"
+-"d%s,?]? "
++"Применить изменения режима доступа к индексу и рабочему каталогу "
++"[y,n,q,a,d%s,?]? "
+ 
+ #, c-format
+ msgid "Apply deletion to index and worktree [y,n,q,a,d%s,?]? "
+@@ -2966,8 +2966,8 @@ msgid "HEAD not found below refs/heads!"
+ msgstr "HEAD не найден в refs/heads!"
+ 
+ msgid ""
+-"branch with --recurse-submodules can only be used if submodule."
+-"propagateBranches is enabled"
++"branch with --recurse-submodules can only be used if "
++"submodule.propagateBranches is enabled"
+ msgstr ""
+ 
+ msgid "--recurse-submodules can only be used to create branches"
+@@ -3997,8 +3997,8 @@ msgid ""
+ "clean.requireForce defaults to true and neither -i, -n, nor -f given; "
+ "refusing to clean"
+ msgstr ""
+-"clean.requireForce установлен по умолчанию как true и ни одна из опций -i, -"
+-"n или -f не указана; отказ очистки"
++"clean.requireForce установлен по умолчанию как true и ни одна из опций -i, "
++"-n или -f не указана; отказ очистки"
+ 
+ msgid "-x and -X cannot be used together"
+ msgstr "нельзя использовать одновременно -x и -X"
+@@ -5890,8 +5890,8 @@ msgid "protocol does not support --negotiate-only, exiting"
+ msgstr ""
+ 
+ msgid ""
+-"--filter can only be used with the remote configured in extensions."
+-"partialclone"
++"--filter can only be used with the remote configured in "
++"extensions.partialclone"
+ msgstr ""
+ 
+ msgid "--atomic can only be used when fetching from one remote"
+@@ -8385,8 +8385,8 @@ msgstr "Каталог %s в индексе и не является подмо
+ 
+ msgid "Please stage your changes to .gitmodules or stash them to proceed"
+ msgstr ""
+-"Чтобы продолжить, проиндексируйте или спрячьте ваши изменения в файле ."
+-"gitmodules"
++"Чтобы продолжить, проиндексируйте или спрячьте ваши изменения в "
++"файле .gitmodules"
+ 
+ #, c-format
+ msgid "%.*s is in index"
+@@ -16134,8 +16134,8 @@ msgid ""
+ msgstr ""
+ "Перехватчик «%s» был проигнорирован, так как он не установлен как "
+ "исполняемый.\n"
+-"Вы можете отключить это предупреждение с помощью команды «git config advice."
+-"ignoredHook false»."
++"Вы можете отключить это предупреждение с помощью команды «git config "
++"advice.ignoredHook false»."
+ 
+ #, c-format
+ msgid "argument to --packfile must be a valid hash (got '%s')"
 -- 
 2.53.0.rc2.20.g532543fa46
 
