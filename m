@@ -1,81 +1,81 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C81034EF17
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 10:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D45238B7BB
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 10:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773655700; cv=none; b=SLaJqUKcTnNo3Y8t+4Bu2h3Q9iBGCBtgLawFUDM4AsPnBn4QftPG/lm9DwopyqghstG+x0BlSoWHvAMQFvqpYHoUEQT1K3R0wsA30VJ2IQmhU+8QyAXm2jiI27EGsU06oAmu6GhW7DFDrY3gwe1g7ws53L39bQwy/SAcHSMf9FE=
+	t=1773655702; cv=none; b=AxOm0HO8+XFsDmzQV1tesqfHcsHW9tj2VUKAY0p+3tNqcJVYTO0SQgKx9XmNlrhuxn7pDXAsIsEDFRJ3NEPZQFZd79FDPYU+9Nfhi6y5cRb4IRuRPAejY2/Ab3nTLa2ArCFYm3BA7QJEtzIaRv/EBGtvY4NZucn5QlldSgfAitc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773655700; c=relaxed/simple;
-	bh=wgciiojjec9s7CbLwDMPMrejbLhOMmrqwEP/kEuFzQw=;
+	s=arc-20240116; t=1773655702; c=relaxed/simple;
+	bh=AIEoBKHn5fHIseGde8DzC6ceFeHij7L80zSSoaraWi4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=m31e6mHlfQDVvlXkqK0EVwEbpORANbBKnMjFSLlRwnL1KpYo67xpA1zt0qGJge8unATm+Gk1B2oHo2Lyjq2nl/FcdCLiJoWIpO4C/81azJXbqb4DSWN8f0CwtyvATemZfsXlVHbfPOgrAwRLfWPBnSb/3QN7DwHk+By7r/Wv4Hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JtdPn4Ur; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GZO8eP20; arc=none smtp.client-ip=103.168.172.145
+	 In-Reply-To:To:Cc; b=cE6Yq3F94n/JAQeHDzHZZIAit41YVvJJuJzN20T+wYcCjD1H7k6yNA8B3lrVm2OEvmv9NuuVsxjPe8+aO8mc9efM72Lsp7DdnIYwzyeDVabN2msJcwcFlzUwFqVwA2/Dq8Ipp62kTcT81VULDdWJ05DAcZ51YAHj/6PP2Ac96rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M1t3Hxse; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KjKoZO4P; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JtdPn4Ur";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GZO8eP20"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6CCBEEC00B4;
-	Mon, 16 Mar 2026 06:08:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M1t3Hxse";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KjKoZO4P"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 84AE2EC031B;
+	Mon, 16 Mar 2026 06:08:20 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 16 Mar 2026 06:08:18 -0400
+  by phl-compute-09.internal (MEProxy); Mon, 16 Mar 2026 06:08:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773655698;
-	 x=1773742098; bh=BT1yhkpjKmLdHy7o0xGMxT9G7TrLFr4ZPak1DFXfTwo=; b=
-	JtdPn4Urfnxmb2vM6ifuOQXBcN9k3u9HVMS1FOmXcoIMq0SooKME6+Hv+sfK13c7
-	ZambRII2omgD04AeZ2V37bz8S4JZQZHA+v1qOmukkYuIif4hsSAa47oTP9R/HvQ6
-	CkFqzZndX9lAi/sigCm9WQ6he8b6ST3MgZyh32juBHLjEGdVhT2xkCZdqyivxm8w
-	FYUgS5d2NgjHgaFDldFnhviauzdAfJ+v8xusbeKyb8Y8nKm31GdMtbpr3ApPBARH
-	L3cVYAhNIQIvPPT0PFyTeCd9AZm109Fh6sdF1EC0yJEfUKYNaJXbuBxmUHcce1fY
-	4fWTTaTP+x2S6Lw6a5pmZA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773655700;
+	 x=1773742100; bh=Lz9gSTQ4ojhN8cad9+6SbAZX6cncf6hCw33cnAQRK/o=; b=
+	M1t3HxseWT31I84W6VCXeOpvS3nybNdWdgXiUoU8B8iJJC7ZEgTTq8zod+/m785h
+	umMjGnREl3STq0N6jOIwriD9do6HIxloHvB7L4qjEpqjpWaqDCPTZP2ZmNywoqiD
+	BOd4OvcTZzm4R2KQTdTVPZSu8PkW3R6CuZuo7cCfW3e+xLGK0nrr8pLVqmgsPm1Y
+	0dN4AYBl3Zc4nl3ptPWPR9Rpm4oZ5kve/T9dOaTA6Y025oGJDve59HXmEq/U889l
+	otAk4Usv1fYkyAOc3OGPNs6Xc9tdrKBZH33pltUN8c7JCi6MTYcQFy3xcQoIhAKj
+	3YvbpqcXms92LiP8lgo+rg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773655698; x=
-	1773742098; bh=BT1yhkpjKmLdHy7o0xGMxT9G7TrLFr4ZPak1DFXfTwo=; b=G
-	ZO8eP20TYrC9CAtC12tCO5fJ2t04lsetNdPuUnID/KI4xmYzmAzrq1VW3YRP21ex
-	UmYinSSQd98kONN2LUsSaOOmpQTSRz0fgQtcJFp+OxSRGXkywZxxd+CvqVBdDQqY
-	u3/0eH98EnhEP6D0m7rPzz06SGCjvOQJism4AF7ZT0SFMHzNJZKsZLUP5FnM3/mx
-	aP8PIjwmMBlpODp5rq124OO+87DiVnyoyK893/yHYKULpR+UrANTvSTHCRpV6pMm
-	ozxf1hCdY8gCfuUscLkL6pH0DznmGBNIYrfhwkJ8+lq9TT7rN2rdvf2z2gtsxJ37
-	duZu82UerMlptHEEw91Ng==
-X-ME-Sender: <xms:kta3aegnkGy1tewhUkfkRqZ5ng-om4ha4AuwLA_06wwZrnWMqhJCkg>
-    <xme:kta3aYejXGSaQ6PcJ7HcdGmeoW-jvYlIQF9q6skmfHeuABkEueJHC1QLVh1fnrolF
-    wVxUfn0vrQPbaDS1tRdad40PkDzHQWfBnPmAcFHUbHqdfQaaRVkaxU>
-X-ME-Received: <xmr:kta3aVo4Zxf6VWnyJqqtvx-i9d9VOX4fMRd79260VhdbTQHazAvQ52DtOH-VNwZ76D54T7C9-B-cdUeUQb7QIQccF8adTaUpOrtFaBOqrDA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773655700; x=
+	1773742100; bh=Lz9gSTQ4ojhN8cad9+6SbAZX6cncf6hCw33cnAQRK/o=; b=K
+	jKoZO4Pb/ZHsB0aSW6U51YAFfQgXAmH8SssQlRhtBQyykl7sX2fzlB1qe0rrOUdF
+	BfX7oXuTUv+uzxYBmT8C1V1KiB22D7IXEKJK4RK5Rk1wjRmVY/8sufmM2B1d7Ti/
+	/Ua/9lVhaKtjB8zXmBsQqF2Q3BXCRpyM93hiJfLomYwDGwL/ycvLqORMjn9+aR7w
+	IyBL0+miggVveq3u+0Kn7gV6Nt5JVKZhcpAE7I2jmhzIBtz6PSIdixkN5VVQ70de
+	0Db9w+PEurUoVIdF84KdsJm+UvbHMCLqvs26hG/s0IQ4kms3QKP89cNledIuBRdL
+	KqV6DT5ViWeGB73dHq0Mw==
+X-ME-Sender: <xms:lNa3adkwgHiCxXB8SKdZqIlc8tv0kVVeQOP0nLA278sbNQr0AH7miQ>
+    <xme:lNa3aWrQo4lbAb-Q8914YB-TswRYguVJmzHcv711KaOBVTuPA6XPKr0kMNJz8lmB_
+    W55E6-s7SRmsBkNzJHctDCu5ZQSYsb3cb0BePZYxnsqRluTkksSfA>
+X-ME-Received: <xmr:lNa3aeEu-IJgpVfe8GaWMdSh-q6SRcG02vh10hmxSMZ36vWg0kHK-yUqtC-LepAEcdMLp1cpMfVA3M9f87y3DIpCGqGxRSYuYvb_5mPca8c>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleekuddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilh
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughu
+    nhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilh
     drtghomh
-X-ME-Proxy: <xmx:kta3adDtdjq6c2fGtQ1NWpM3JWTXWs-jDVc8VEo0YjsV_RoSkiBo3A>
-    <xmx:kta3aSYIOXXgQsyJwZiQSa4foLz6bcusEQmDuCcNJse5npex1vru0A>
-    <xmx:kta3aQ4vtUCYV4BaCqf7bln_vMTicyzgAaT78A_umi7Nk3BDsntDZQ>
-    <xmx:kta3aTbH9F9IXn6w6FPrLn4juVRp9yJ-wKN5dS96XEiXAllsewY_SQ>
-    <xmx:kta3aZyquup34mE_wFNRmOktPGeSgjLB8qta9cOnYJvolWIZoLjzvH2y>
+X-ME-Proxy: <xmx:lNa3aaxpzGHphHVMe-A_1t9noVn5znrLUMlBz3sfiVu9ELTUM8nAOw>
+    <xmx:lNa3abqZdGUBUKM7feCjfZ00xUgJeIhkOwGPpdfUXVxQ-NloZ6ZvXA>
+    <xmx:lNa3ach2ZxPvlxArWoG5xBfnxtBtoF2UDGSvHsKoFUKyqzs8NirIUA>
+    <xmx:lNa3aQjWN8uflQB14mt5osGyJrjz4zHB5T-IYHR34_CokB5sh0JdCw>
+    <xmx:lNa3aQC4HLaicAw_I4QWVQIsWzDLitf2mk5CEefHs5BNF-La6xe1m8TI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 06:08:17 -0400 (EDT)
+ 16 Mar 2026 06:08:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 26baefb3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Mar 2026 10:08:16 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4505809a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Mar 2026 10:08:19 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Mar 2026 11:07:58 +0100
-Subject: [PATCH v2 3/8] contrib: move "coverage-diff.sh" script into
+Date: Mon, 16 Mar 2026 11:07:59 +0100
+Subject: [PATCH v2 4/8] contrib: move "update-unicode.sh" script into
  "tools/"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260316-b4-pks-build-infra-improvements-v2-3-4b2c2c0c0425@pks.im>
+Message-Id: <20260316-b4-pks-build-infra-improvements-v2-4-4b2c2c0c0425@pks.im>
 References: <20260316-b4-pks-build-infra-improvements-v2-0-4b2c2c0c0425@pks.im>
 In-Reply-To: <20260316-b4-pks-build-infra-improvements-v2-0-4b2c2c0c0425@pks.im>
 To: git@vger.kernel.org
@@ -94,23 +94,32 @@ Cc: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.14.3
 
-The "coverage-diff.sh" script can be used to get information about test
-coverage fro the Git codebase. It is thus rather specific to our build
-and test infrastructure and part of the developer-facing tooling. The
-fact that this script is part of "contrib/" is thus rather misleading
-and a historic wart.
+The "update-unicode.sh" script is used to update the unicode data
+compiled into Git whenever a new version of the Unicode standard has
+been released. As such, it is a natural part of our developer-facing
+tooling, and its presence in "contrib/" is misleading.
 
-Promote the tool into the new "tools/" directory.
+Promote the script into the new "tools/" directory.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- {contrib => tools}/coverage-diff.sh | 0
- 1 file changed, 0 insertions(+), 0 deletions(-)
+ {contrib => tools}/update-unicode/.gitignore        | 0
+ {contrib => tools}/update-unicode/README            | 0
+ {contrib => tools}/update-unicode/update_unicode.sh | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
 
-diff --git a/contrib/coverage-diff.sh b/tools/coverage-diff.sh
+diff --git a/contrib/update-unicode/.gitignore b/tools/update-unicode/.gitignore
 similarity index 100%
-rename from contrib/coverage-diff.sh
-rename to tools/coverage-diff.sh
+rename from contrib/update-unicode/.gitignore
+rename to tools/update-unicode/.gitignore
+diff --git a/contrib/update-unicode/README b/tools/update-unicode/README
+similarity index 100%
+rename from contrib/update-unicode/README
+rename to tools/update-unicode/README
+diff --git a/contrib/update-unicode/update_unicode.sh b/tools/update-unicode/update_unicode.sh
+similarity index 100%
+rename from contrib/update-unicode/update_unicode.sh
+rename to tools/update-unicode/update_unicode.sh
 
 -- 
 2.53.0.959.g497ff81fa9.dirty
