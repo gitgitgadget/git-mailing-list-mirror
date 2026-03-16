@@ -1,313 +1,536 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BE9355F47
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 20:46:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B70335C1B6
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 20:59:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773693994; cv=pass; b=UY4an4EkFp9gMUsoFeTXPh/A50TOXg3yUp5kRiB2Hr7ie1xbphqSNISC+sq6qkyMW20+0Qzv46uY4g0Ybhbx9/N8AcO1OX147rQuCH6J46dPBMrc1SYEM+Sw3BuwzWvGOsPP5Vz6B3D9crllhyKI4kffZLEocb2o1/q2uMzqXUs=
+	t=1773694787; cv=pass; b=sXppGYQ3MQbKHTyvKE2gc99zpovGAWRmDA1GtFMiOvIYvVDAW3ylJiLN71XRJN0aV4znk9ylI5xAWJXoQ3OR9dDkCb3JW1OuSuMKaupTdFnJ1HnZbk9dth7oiu2P5+GK1T3IINVTqS7SzXbJlAMTsLVD75gPIF358RqzD+vnGG0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773693994; c=relaxed/simple;
-	bh=ZlByZCkFPvy/hygRhvvSeiIepecxcHuOOGtlCAVpDE4=;
+	s=arc-20240116; t=1773694787; c=relaxed/simple;
+	bh=0hqWigkTBhwjKAbRSdri0taF2cwtuK2qxGtVnK9cEIc=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WC+Dxiz5D6mH24pWsWuDb0Kf+GSmdHJxih9JX+FDAZxyaSlDWc2LpaolCcprbwXyDfeFYrbA7EBcQJ2ad3uvuoVxeKYBfS+NIdc9WjdYCZJwFfniYF3LvZg6eej0gJhyeBBd1ddIy5ZTMeO3QzaI9mc4GcfMv46zPrcJwAN0olE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fAsvqd0W; arc=pass smtp.client-ip=209.85.217.44
+	 To:Content-Type; b=TSNsIZC/P3vuCtsw04q2pj+MfyusTv1sHgvItzcwRQR2JczXqPzzeGinCc5dBMYzFvG+o24g8qVlRxIgCQAI15G/aRzh9NGQKUIvGoxGnSxS7w6je7ver0N6EMAYwVihGI1ypWZJA8jfkuSZd98Xoy9ji9D8HJsdhr5iQz/hdqM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hnv6jtLG; arc=pass smtp.client-ip=209.85.217.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fAsvqd0W"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-5ffbcfbcec4so1117059137.3
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 13:46:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773693990; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hnv6jtLG"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-5ffdd9a6155so97680137.1
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 13:59:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773694785; cv=none;
         d=google.com; s=arc-20240605;
-        b=HebQQnkD/DyuFkRcMFPnOjS1onw5V+fLoVNIeW868nOCL4uIfDFUmh+sN9Xc31SqVC
-         nkWYzzpp3Roz5iI48R/cZq+dUXKN1EckdUvQeCARalerkvtgnNhuy7sDv7T/KgOIAlbX
-         gr76MZcNCb6bkpDThkb+mJCTqVT+vbhqL4O6RlgyDjCr6XvHQKNlm1oHGHLc9S1wTbTE
-         JND+VmrCzH8QVl86WTe4xAPuXSppKJeg223dcEmly7HQjOg97anZEqTo2lxinLPeWQDM
-         oUw3CpTRJ4NmiPM2qVAFODa+Bh8FdfTANzbtAWdGeQxR7uOMkIjjO3czN9YlOSU81MIa
-         er4w==
+        b=P9L6C9Mb4FGo/wfS0PtiJ5yUtR6sGRJAv8miKVxbs3uqgjZxAOlwSTu50Pplvpdllf
+         I4HyA9cmMJay4ee22gGN8BnoLvQS36RfxwX6lTUkxQ3N3ewLvtN83YsysTT8gQjkArPG
+         EBdHp8EPZSJY2JnE/7kwrWbigWL62BuqZdZ004HHtJ5PPNBkJi7b1KsMMQQw9kqcdRwM
+         8oIz/gD6VdGm79YbLX/u3iHj++JUtfsh1jpawQJ3lcYtdaJ+IUUz4IqTU08Qsw+eHywS
+         dJnF534v9ba/8sz0ILetb8AXW/ZRhI5cNmOBQwOcW6hexisrXWwll7tHTfAMrok0pp4F
+         qgSw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=EBRMtQDaBrVKLNFoDdZF4FMeh3P+4uMFxbhY564kg74=;
-        fh=M2dWxBZ4Ld/qqfhMnmHZN071TO8NzP0A3DdaJsR0lQA=;
-        b=W20NusDDwplQ5dqsz3CmRedeVjoLfZ4CJtYGiREuZz9EgAq8S50UWxAwJ8yjGyvPEI
-         cIhJnCuIygSB4C25f54WlFUIpoLv3OQQzaX6ftAMpQxJDW+ltQVu1kpHj9rxSZAcBM4F
-         eNDd8za0X35ueye9So5VsUifX4BXwws9N2DdRe7xFnVeCA+b81y73r2lhZ1fl/1SVyFH
-         JuWNJ2LpmlN9uv8wm1MlOn8h+F1SifNSJUFfnWPbsSSTZp4PtyE/FKAZ1tYWKusE3ph6
-         BWrWsyLgqBez1dQp3nhPiTlM6XRAYuWIa/TNB3U162dbA0saedNAsIUxfx+wG7n6WBoa
-         yZQQ==;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=T5xrnoTyNRxg7zzdVkm55hjPERzmWPjzDZXS09UcW04=;
+        fh=dJe/SEVgvjq65n5BD7aZ+48Qzyr7pQMx9Dmmc8jSloM=;
+        b=dyKQKO04pCKEy3tYg4LEj8alJGTHzk5Mz8fE+PVqWRCllVCAM7TUG3bysti/CH4Q8I
+         Bfi1vOD30fDuxcI38vYvS+/6XOipbqT8tdaPAEFbcG6Yuid/CoejHSBTDKM5IA373dxh
+         rbf45TjfmPCCCsfPx+kwS4u59I/htP+JFDvM2rGAyMGdSlAeIZvEI/5CDxJG++OpkSYc
+         gHS59CY7acdW6+Qqb1mMOtRR4OVAHaWlBEVXr0jzXRgkTIhr4DdiU3+Udi+hxFoLlJbr
+         /GFT+OWo8pksqn4JW1EruAJ6H2xFJQb7f2sCrhXyrgRe9a74vOzNcnM4+4qbDyks7EHQ
+         ORhA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773693990; x=1774298790; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EBRMtQDaBrVKLNFoDdZF4FMeh3P+4uMFxbhY564kg74=;
-        b=fAsvqd0Wr0O4lfJtRB6B8yCxD+v0/L2xMFSd2AKOPIGGN9gcWqVXQ0mqOH736sbH63
-         SOyKZT6+ayblumXiBgqL7ZVS73jZaeaLz2nzvkh3+YKM/R6NYAPfuIQGW56hTc7G6Vx/
-         PH7tYzFtwhueYj/y30zk2zkZtn8UyHwsrczT6oEajqrAxiA7UmwWMG5HMNaKN0erPAYt
-         edwCvqFHbzWa0oZL4IRJNr/8Hlpcwn/Zvmy+pwzjf3bh7eREn740GyaVyf1zMiHX0nxt
-         MgUaYOxopTMGMO+SvmCYOVsNaGqKgKgZ1NR7dnyVtiy03XUv1xr67m1GAQssTDYqLT3i
-         jCmg==
+        d=gmail.com; s=20230601; t=1773694785; x=1774299585; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=T5xrnoTyNRxg7zzdVkm55hjPERzmWPjzDZXS09UcW04=;
+        b=hnv6jtLG9N9ZgP8LwAKb3DBgB7CiGXnb6XPkBOacL9jYCW3BEKBFzxJccoiCMGi2sr
+         W4uC/n6EOgt9vFUxhhQilMj0YBv/FHWUOYuK+4f5BnC1bFdePqtQpIjw5OZKQvumnpSD
+         CgmMlKOWi0IRK/JIy0l3o+KwjSdqYLpUkSJ7QFXY6q9PcWHYNqIyKbUC0USCHKUhS3tO
+         C0bMl9m2pxwYO3if4waeUwBsMgAtSRdePkEZVQ84854rlrN39/q/mdWImdXBhbhwV8o9
+         o7ocWeYhk0kx3Jzmarz/gZO4UUaPXl/tIh+2OaXns//1Vjq+aPXYZAA8B58p6WRxEyu6
+         hlXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773693990; x=1774298790;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20251104; t=1773694785; x=1774299585;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EBRMtQDaBrVKLNFoDdZF4FMeh3P+4uMFxbhY564kg74=;
-        b=aOyHsRuH7eIEnXg+IlN0GPZmcHd8EO9T+RK+ZjzUfH82Men4EYyhXOnUjZFQLAWjre
-         9juTHhPd4cCbxI/Va/oERMTeOCAgmvrSNic9riBgri2nRtiPFxorM7QkgLwJObGQpB6n
-         +DkB2qv7a82YtbCeeV2pUn0euOllMUEZsWIcw/BUWODMrd9zNh8bxcej2wcxlmHQO2Qx
-         KMtPwqes9pDOnkLzG6jCcyDu2RvZBtuZm48FGkYNP8NATUrfzfZkMB6u5gXVrJVth6bK
-         NSZKRlgvZUZnbCdUVU3/Z5L50HUbEplpUXowXz8EwaGZ57gT2e+dgF3CkCiIQq2P5uQj
-         E0Yw==
-X-Forwarded-Encrypted: i=1; AJvYcCVHsCcYWxm93PmqZ75TXDnYkf6+LFPd2CtOZuikjhtFnv+4VxDD+iuSI09/tFWbl8v4fmM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwbR7aXqbO54SCXfWvchZxskfPdy7zkDyuR6W2VgwEMK1gsz9IV
-	d/1aKChekwCx8tkwp1E793o+NX/taZab1kF+HUuHiFVA8FsEjysrhL2MnSx28CquhAetiHWDofi
-	xHU2TowbrJa2YUmhRGp+UTLwM/tYRTsv8zlMz
-X-Gm-Gg: ATEYQzxMEVwLQxlmeHzZA3KJcLtt0O6gjT+SaCs5NfeE99bnf45wgMUVKAB2Faak0So
-	//ZRoSXufVAS+9rwGsJkY+1JwMyzex1Z9kHWE4cvjxzB25vJhJvX5bVcAfupPSVWzLeb0Hcpd48
-	1ExbfRwFoQ5HCHzj86Ea1WrWI1yBSARM48b2T5d9yJZnnGjQp9CTixf7eCSiFim33rPpQMNKl9T
-	VvAvzAFwFg1Lc1gKBx4BpcfJeweymlPwF+DytqHJkUW1MixAcfhoYHV10sroaa678AeUc6W1qvH
-	6xiUTdwtTM5/xLFL4Ub3Lg5nqUpOoWZSQLvKmQUd
-X-Received: by 2002:a05:6102:c0d:b0:5db:cc69:739c with SMTP id
- ada2fe7eead31-6020e2f522fmr4572605137.17.1773693990307; Mon, 16 Mar 2026
- 13:46:30 -0700 (PDT)
+        bh=T5xrnoTyNRxg7zzdVkm55hjPERzmWPjzDZXS09UcW04=;
+        b=geU6kSyGdjTyF/f9dDm4YlJupUTn5yGT/HoKEyhIhrpnJNZCewbe76Nr+QUxuaBkG9
+         3d+MhRGUsvAU5O53DFkwpC0f7htwhU5gnktK+ctyduo82E/r0Jn836aQ/bJTlkWeENjz
+         9rEX8NZyqd+Xjx7I3diOt5HXCuusEdXFWJPpl/wbWlfSonxYnXGsIn3PXYy/0j6yGqAl
+         NQjBXkR9nLgbp+OZJFrqjELecOb78LtvxJJFX6yI4a5+OH8vq6Rni1jw1ehj4j7NBnbh
+         b4rm+nTO40cgZXlhtmC3MMV6Fx3Dd5aXAiUrIyFKo7gsIrTnpviNojLPbPVPTqooAbT8
+         +nuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWcz83SNvB2F7U5+qOnYEunnZfGV90H4NRKUNsPo2+xUOLiPKAFD+ja/DuNippwx+7zQes=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwzYiKyqxWKFKnRE06k2mJRjzMq1rm16o4SJRP4lzFLma2QnynK
+	Cys1cX9XOCF6Pyh93N5IGD5+nPA2ilbuYRVPPPR2lmqt/a29hQMI5rNjtO3SQnvduYCgHNPrY0d
+	a5AoSIfJ5ZQrXacQ6yj6TYkVu8EwGN6c=
+X-Gm-Gg: ATEYQzw+UB0UieIyMXxAXk5MlAfmEjCDkRNhtAuVImjML0ZVHLWh1VE2ZMZ/4JqnpMK
+	eKsiFIAdg5dTNej2iCoXiK831o4Ke6evKVE+HFLN68ApAfevgUw/b5beYaPDLLoy7gWj+sloSjc
+	znLqTKvRexpceaJryvF/X6FhfgGCAgBeRDSvhX/Bjp1Ke1Yr6yEBxj/+SiBHUWNI4X00YZebhQZ
+	YMIm9khy1YyHIOqcv61b0v5S2eZNFy8MEtJEg1EKh/uB3LrxBwbh0aK3xGu9Gur10WUEpcVhAIS
+	TS4entHEuWzwPNJHQlVAocC4xReX3g41OdeCaQKp
+X-Received: by 2002:a05:6102:50a3:b0:5f1:b685:e654 with SMTP id
+ ada2fe7eead31-60263e28c63mr444175137.8.1773694784837; Mon, 16 Mar 2026
+ 13:59:44 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Mar 2026 13:46:29 -0700
+ HTTPREST; Mon, 16 Mar 2026 13:59:44 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Mar 2026 13:46:29 -0700
+ HTTPREST; Mon, 16 Mar 2026 13:59:44 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260305204809.54927-1-valusoutrik@gmail.com>
-References: <20260305204809.54927-1-valusoutrik@gmail.com>
+In-Reply-To: <9fc1d23fbc7d46349ac01314fbfc06eb.gsoc-proposal-draft-jerrywang183@yahoo.com>
+References: <9fc1d23fbc7d46349ac01314fbfc06eb.gsoc-proposal-draft-jerrywang183.ref@yahoo.com>
+ <9fc1d23fbc7d46349ac01314fbfc06eb.gsoc-proposal-draft-jerrywang183@yahoo.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 16 Mar 2026 13:46:29 -0700
-X-Gm-Features: AaiRm53TF943pyH0JxBkVsrrV0GDiUSMdIK6E_OQT4B9d15hxhXeOjhJ2pPWbK4
-Message-ID: <CAOLa=ZQhzvgA2bpmUgx2qMTrxFaR5_6GET8e1y+A=m2nboDAiw@mail.gmail.com>
-Subject: Re: [GSOC Proposal] Complete and extend the remote-object-info
- command for git cat-file
-To: SoutrikDas <valusoutrik@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, jltobler@gmail.com, ayu.chandekar@gmail.com, 
-	siddharthasthana31@gmail.com, chandrapratap3519@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000003bb2e9064d2a5069"
+Date: Mon, 16 Mar 2026 13:59:44 -0700
+X-Gm-Features: AaiRm50D7VWUlVVs5mwzM4llP1jwue0fDwxBy6YA-pz-rkLu6NMWSqHP9LlfCWg
+Message-ID: <CAOLa=ZQ7AMUb72N-0Z-h09KneE+ASuXt=BUOmO9Bzp4y6w6XyQ@mail.gmail.com>
+Subject: Re: [GSoC] Proposal draft: Improve the new git repo command
+To: Jialong Wang <jerrywang183@yahoo.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000973ebf064d2a7fbf"
 
---0000000000003bb2e9064d2a5069
+--000000000000973ebf064d2a7fbf
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SoutrikDas <valusoutrik@gmail.com> writes:
+Jialong Wang <jerrywang183@yahoo.com> writes:
 
-Hello,
-
-[snip]
-
-> ## Pre GSOC
+> Hi,
 >
-> I started exploring Git's codebase around February 2026 and sent my first patch
-> as a docfix, followed by a microproject of modernizing tests
+> I plan to apply to Git for GSoC 2026, and I would like to share a draft
+> proposal for feedback.
 >
-> - [PATCH] doc: fix repo_config documentation reference [1]
->     status: merged to master
->     Merge Commit: 94336d77bcbf4360b67a9454d8bf2e84b3d88ae7
->     Description: Replace the path for the repo_config() documentation
->     from 'Documentation/technical/api-config.h' to 'config.h'.
+> The project I am currently most interested in is improving the new
+> `git repo` command, with a primary focus on extending `git repo info`
+> with path-related repository metadata.
 >
-> - [GSOC PATCH] t7003: modernize path existence checks using test helpers [2]
->     status: merged to master
->     Merge Commit: 11294bb0fa540d214d071b32cf74b1ed37b3bbbd
->     Description: Replace direct uses of 'test -f' and 'test -d' with
->     git's helper functions 'test_path_is_file' ,'test_path_is_missing'
->      and 'test_path_is_dir'
+> My draft is below. I would appreciate feedback on whether this scope
+> looks reasonable, and which parts of the current `git repo` work would
+> make the best starting point.
 >
+> Thanks,
+> Jialong
 >
-> I have read through most of Eric Ju's [4] work and some of Calvin Wan's [5]
-> work. I am still finding more things to understand from each thread, but
-> I feel I have grasped the basics.
+> ---
 >
-> My work in this project would be focused on implementing the changes
-> suggested at the end of Eric Ju's [Patch v11].
+> # Improve `git repo info` by adding repository path metadata
 >
-> I wouldn't say I understand every bit of discussion from that thread,
-> but in general my understanding is :
+> ## Name
 >
-
-I do agree that there is a lot to unpack there.
-
-> Calvin Wan and Eric Ju has already implemented a client side command
-> called get_remote_info but its designed for being batched to reduce
-> multiple network trips to get a single object's data.
+> Jialong Wang
 >
-
-As far as I can recall, the command allowed users to enter multiple OIDs
-in a single line to reduce the to-fro with the server. But you could
-still fetch single OID info.
-
-> I have added Eric Ju's patch series to an old master commit (2d2a71ce85)
-> since I could not find a base commit for Eric's patch series. The patch
-> was properly applied and I also played around and added a very rough
-> but workin "%(objecttype)" code , ie now it prints like this :
+> ## Email
 >
-> 29658341f39210201ff7f72a4be83937cf2288c5 14 blob
+> jerrywang183@yahoo.com
 >
-
-Nice, have you tried with a more recent 'master'? I assume there are
-merge conflicts?
-
+> ## Preferred project size
 >
-> ## Project : Complete and extend the remote-object-info command for git cat-file
+> 175 hours
 >
-> Currently in the case of a partial clone, the user cannot retrieve all
-> object data without fetching the object beforehand. To solve this problem
-> Calvin Wan and Eric Ju had designed a patch sreies that can solve that,
-> by utilising protocolv2 servers capabilities.
+> ## About me
 >
-> This was done in the form of "remote-object-info".
+> My name is Jialong Wang, and I plan to apply to Git for GSoC 2026.
 >
-> But only the %(objectsize) was implemented, and that patch was not merged.
-> This project has two goals
+> I have been getting familiar with Git=E2=80=99s development workflow by b=
+uilding
+> Git from source, reading the contribution documents, and working on a
+> microproject. As part of that process, I prepared and sent a patch to
+> the Git mailing list.
 >
-> 1: To Rebase and finalize Calvin Wan and Eric Ju's Work by addressing
->     the feedback on Eric Ju's Patch v11
+> I am interested in the new `git repo` command because it is user-facing,
+> but also closely tied to Git=E2=80=99s internal repository model. That ma=
+kes it
+> a good fit for the kind of work I want to do: understanding existing
+> code, discussing design details on the mailing list, and implementing
+> improvements in small, reviewable patches.
+>
+> Relevant links:
+>
+> - Microproject discussion thread:
+>   https://public-inbox.org/git/CAKWWG_nGhD6vqhAS1mkEwBQPrg_YX0+C3-xW=3DQ3=
+ifFDw4dDviw@mail.gmail.com/
+> - Microproject patch thread:
+>   https://public-inbox.org/git/20260315231538.68586-1-jerrywang183@yahoo.=
+com/
+> - SoC 2026 idea page:
+>   https://git.github.io/SoC-2026-Ideas/
 >
 
-Any idea how much work is left post v11?
+Perhaps it would be nice to give a few lines about what the microproject
+discussion thread and patch thread are about.
 
-> 2: To add support for objecttype in remote-object-info
+It also helps if you can state the current status, maybe look at other
+proposals for examples around this.
+
+> ## Project summary
 >
-> 3: To discuss other information type like objectsize:disk and deltabase.
+> I would like to work on improving the new `git repo` command, with a
+> primary focus on `git repo info`.
 >
-> Project Duration : 12 week approx
+> The `git repo` command was introduced to provide a cleaner interface for
+> querying repository metadata. However, several useful path-related
+> values are still mainly accessed through `git rev-parse` and
+> `git rev-parse --git-path`. My proposal is to extend `git repo info`
+> so that it can expose a selected set of those values in a more
+> structured form.
+>
+> The goal is not to replace `git rev-parse`, but to make `git repo info`
+> more useful as a structured interface for repository path metadata.
+>
+> ## Motivation
+>
+> Today, scripts and tools still often rely on commands such as:
+>
+>     git rev-parse --git-dir
+>     git rev-parse --show-toplevel
+>     git rev-parse --git-path <path>
+>
+> These commands are useful, but they were not primarily designed as a
+> structured repository metadata interface.
+>
+> Since `git repo info` already exists for this purpose, extending it with
+> path-related values would make repository layout information easier to
+> query in a cleaner and more consistent way.
+>
+> I think this is a good GSoC project because it has clear user value, can
+> be implemented incrementally, and naturally fits Git=E2=80=99s patch-and-=
+review
+> workflow.
+>
+> ## Current context
+>
+> I am aware that work on path-related `git repo info` fields has already
+> started. There have already been patch series for path keys, category
+> requests, and path formatting. Because of that, I do not want to assume
+> that the work described on the ideas page is still untouched.
+>
+> One of my first goals during the bonding period would be to review the
+> current state of these discussions carefully, identify what remains
+> open, and refine the project scope based on maintainer feedback. I would
+> rather build on the current direction than duplicate work that is
+> already in progress.
+>
+
+It would also make sense to have some sense of what that direction may
+look like and add that to the proposal.
+
+> I also think this project should be scoped carefully. The ideas page
+> mentions improvements to both `git repo info` and `git repo structure`,
+> but for a GSoC project I believe it is more realistic to focus first on
+> `git repo info` and only expand beyond that if the main work is in good
+> shape.
+>
+
+That's a fair assessment, what we do like to see is how you plan to
+structure the goals and possibly future work into the timeline. Reading
+on.
+
+> ## Proposed work
+>
+> The main objective of this project is to extend `git repo info` with
+> selected repository path values that are currently obtained through
+> `git rev-parse` and `git rev-parse --git-path`.
+>
+> The work will involve:
+>
+> 1. Studying the current implementation of `git repo info`.
+> 2. Comparing its current output with commonly used `git rev-parse`
+>    path queries.
+> 3. Identifying a first small set of missing path-related values to add.
+> 4. Discussing output design on the mailing list, especially where there
+>    are open questions about relative versus absolute paths.
+> 5. Implementing the agreed functionality through small patch series.
+> 6. Adding tests covering the new behavior.
+> 7. Updating documentation if needed.
+
+Generally each commit should be self contained with tests and
+documentation, so perhaps 5, 6, 7 are a single point with subheadings?
+
+>
+> ## Initial scope
+>
+> The first stage of the project would focus on a small set of commonly
+> used repository path values, for example:
+>
+> - `git-dir`
+> - `common-dir`
+> - `toplevel`
+> - `superproject-working-tree`
+>
+> I think these are a good first target because they are already familiar
+> to users through `git rev-parse`, and they provide immediate practical
+> value without requiring a large interface expansion.
+>
+> Depending on project progress and mailing list feedback, I would then
+> like to extend support to selected values currently accessed through
+> `git rev-parse --git-path`, such as:
+>
+> - index file
+> - objects directory
+> - hooks directory
+>
+> I do not want to promise every possible path-related key up front. I
+> would rather start with the most straightforward and useful values, get
+> feedback early, and continue from there.
+>
+> ## My approach to scope and quality
+>
+> One thing I would like to be careful about is not treating this project
+> as a simple checklist of fields to add.
+>
+> I think the quality of the project will depend on three things:
+>
+> 1. choosing a small set of fields that make sense together,
+> 2. agreeing on a consistent path representation,
+> 3. and making sure the result fits naturally into the existing `git repo`
+>    design rather than becoming a thin wrapper over `git rev-parse`.
+>
+> Because of that, I would prefer to make progress in a few coherent
+> batches instead of adding many unrelated keys at once.
+>
+> I also think it is important to keep room for scope reduction. If some
+> part of the design turns out to be more controversial than expected,
+> I would prefer to complete a smaller, cleaner set of path fields rather
+> than stretching the project too broadly.
+>
+> ## Technical approach
+>
+> The implementation of `git repo` is primarily in `builtin/repo.c`. The
+> first step would be to understand how `git repo info` currently collects
+> and prints repository metadata, and how that existing structure can be
+> extended without making the interface inconsistent.
+>
+> Many relevant repository paths are already available internally through
+> helpers such as:
+>
+> - `repo_get_git_dir()`
+> - `repo_get_common_dir()`
+> - `repo_get_work_tree()`
+>
+> Similarly, `git rev-parse --git-path` already relies on existing path
+> resolution logic. So the work is not about inventing these values from
+> scratch, but about exposing a selected subset of them through
+> `git repo info` in a way that fits its current design.
+>
+> The first implementation step would be to map existing helpers and path
+> resolution logic to a small set of `repo info` fields. After that, I
+> would extend the output code in `builtin/repo.c` to report those fields
+> in a consistent way.
+>
+> One of the main design questions is path formatting. The ideas page
+> explicitly mentions the need to decide between relative and absolute
+> paths. I do not want to assume the answer in advance. Instead, I would
+> review the current discussion, compare the behavior of existing
+> commands, and propose a small, consistent approach on the mailing list.
+>
+> I also expect that some preparatory cleanup or refactoring may be useful
+> before adding new fields. If so, I would keep that work minimal and send
+> it as small separate patches.
+>
+
+Something I would like to see is how we can leverage the existing tests
+for `git-rev-parse(1)` and use them.
+
+> ## Patch strategy
+>
+> I expect the implementation to be divided into small patches so that
+> each change can be reviewed independently.
+>
+> A likely patch strategy would be:
+>
+> 1. small preparatory cleanup if needed
+> 2. add support for a first path-related key or a very small set of keys
+> 3. extend support with additional related keys
+> 4. add or refine tests for the new behavior
+> 5. update documentation if necessary
+>
+> If existing in-progress series already cover some of these parts, I
+> would adjust the breakdown accordingly and focus on what remains useful
+> and open.
+>
+> ## Tests
+>
+> Tests would be added to cover the new behavior in common repository
+> setups.
+>
+> Depending on the exact scope agreed on, test cases may include:
+>
+> - ordinary repositories
+> - linked worktrees
+> - superproject/submodule cases
+> - cases where path values differ from simple defaults
+>
+> I would keep the tests focused on observable behavior instead of
+> overfitting them to a particular implementation detail.
+>
+> ## What I will not try to do
+>
+> To keep the project realistic, I do not plan to:
+>
+> - redesign all of `git repo`
+> - fully replace `git rev-parse`
+> - implement every possible repository path query
+> - work on both `git repo info` and `git repo structure` at full scope in
+>   the same project
+>
+> The project should stay focused on a well-defined subset of path-related
+> metadata for `git repo info`.
+>
+> ## Expected deliverables
+>
+> By the end of the project, I expect to deliver:
+>
+> - support for a useful set of path-related values in `git repo info`
+> - tests covering the new functionality
+> - documentation updates if needed
+
+wouldn't documentation be definitely needed? ;)
+
+> - one or more patch series discussed and refined on the Git mailing list
 >
 > ## Timeline
 >
-> Mar 6-31 : Refine Proposal
+> ### Community bonding period
 >
->     If possible I would like to submit small patches... but first I will
->     have to rebase Eric Ju's Patches ... I am not sure if I can do this
->     before GSOC...
+> - Study `builtin/repo.c` and the current `git repo info` implementation
+> - Review recent and ongoing mailing list discussions related to `git repo=
+`
+> - Compare current `git repo info` behavior with `git rev-parse`
+> - Refine the exact scope with mentors and mailing list feedback
 >
-
-As per the guidelines, it says
-
-  Any work done on the Project prior to acceptance of the Project
-  Proposal will not be considered for Evaluations.
-
->     If not, I plan to contribute to git in other areas.
+> ### Phase 1
 >
-> May 1-24 : Community Bonding
->     1-7  : Understand relevant underlying/ helper functions
->     8-24 : Ask about any design related problems/decisions
+> - Implement a first small batch of path-related values
+> - Send the first patch series
+> - Address review comments
+> - Add tests for the first batch
 >
-> May 25 - Jun 14 : Start a Patch Series to rebase Calvin Wan and Eric Ju's work
->     and keep refining
+> ### Phase 2
 >
-> Jun 15 - Aug 15 : Start and keep refining Patch Series to add support for
->     object type information
+> - Implement additional agreed path values
+> - Continue design discussion if needed
+> - Refine implementation and tests based on review feedback
 >
-> Aug 16 - Aug 24 : Discuss and Implement other object information if possible
->     Concurrently I shall make a report for all the work done.
-
-How will you manage reviews, considering generally they take a long
-time?
-
+> ### Phase 3
 >
-> ## Availability
+> - Complete remaining agreed work
+> - Update documentation if necessary
+> - Rework earlier patches if needed for consistency
+> - Prepare a final summary of the work
 >
-> My current semester is ending in the first week of April, so I will be
-> able to contribute 7-8 hours per day, totalling around 35-40 hrs a week
-> on the project.
+> ### Buffer time
 >
-> Total weeks = 12 , total hours = 35*12 = 420
-> It leaves with a lot more room to accomodate any unforeseen circumstances
-> that may arise during the project.
->
-> ## RFC
->
-> I have a few ideas but do not know if they are worth pursuing, so I will
-> leave them here in the first draft
->
-> - Addition of a remote-object-info outside of batchmode :
->     Yes it should be optimally used in batch mode .. but if user wants
->     only one objects size or type then should they be able to just
->     `git cat-file -r origin <oid>`
->     and get the size and type ? or something similar , I am not sure if
->     the way I have depicted it conforms to git's design.
+> - Handle review delays
+> - Fix regressions or edge cases
+> - Narrow scope if some planned work turns out to be too large
 >
 
-I do agree that something like that would be useful indeed, I'm not sure
-of what that design looks like though.
+We generally do timelines in terms of weeks of GSoC. So it would be nice
+to see that mapping over the phases mentioned here.
 
-> - Addition of commands for common user behaviour :
->     I dont know if its going to be a common user behaviour but what about
->     `git cat-file -r --all-absent`
->     Or inside "git cat-file --batch-command="<format> remote-object-info
->     --all-absent --type=tree <remote>"
->     which would basically fill in remote-object-info with all the blobs
->     that are currently absent from the worktree ?
->     No need to fill them if its for a common enough use case.
-
-I do see benefits of this too. But I do wonder if 'git rev-list' is a
-better command for something like this.
-
-> - Sort according to size :
->     Maybe a user would want to check whats the largest file they dont
->     have yet.
+> ## Risks and mitigation
 >
-
-Same here.
-
-> - Get total missing blob size :
->     Use case would be when someone wants to know how much exactly there
->     is to download, before starting the download.
+> One risk is that design discussion may take longer than expected,
+> especially around path representation and output structure.
 >
-
-This could probably go into 'git backfill' ? Interesting ideas
-nevertheless!
-
-> Thank you for your time in revewing my proposal as well as considering
-> my application. I am excited to learn everything I can from git.
+> To reduce that risk, I would keep the patch series small and prioritize
+> the least controversial values first.
 >
-> Thanks and Regards,
-> Soutrik
+> Another risk is overlap with work already in progress. If that happens,
+> I would adjust the project scope to avoid duplication and focus on what
+> is still useful and open.
 >
-
-What I missed from the proposal:
-1. Where did the work from Eric and Calvin stop at, what review comments
-need to be addressed.
-2. How do you plan to handle reviews and iterations taking time.
+> ## Why I think I am a good fit
+>
+> I have already started learning Git=E2=80=99s normal contribution workflo=
+w
+> through a microproject, including building Git from source, running
+> tests, preparing a patch, and sending it to the mailing list.
+>
+> This project fits the kind of work I want to do in Git: understanding
+> existing code, discussing interface details on the mailing list, and
+> implementing improvements incrementally in small patches.
+>
+> ## References
+>
+> - SoC 2026 idea page:
+>   https://git.github.io/SoC-2026-Ideas/
+>
+> - General application information:
+>   https://git.github.io/General-Application-Information/
+>
+> - `git repo` documentation:
+>   https://git-scm.com/docs/git-repo
+>
+> - `git rev-parse` documentation:
+>   https://git-scm.com/docs/git-rev-parse
+>
+> - `git-sizer` project:
+>   https://github.com/github/git-sizer
+>
+> - Recent patch series adding path-related support to `git repo`:
+>   https://public-inbox.org/git/20260228224252.72788-1-lucasseikioshiro@gm=
+ail.com/
+>
+> - More recent work-in-progress series for category/path keys and
+>   `--path-format`:
+>   https://public-inbox.org/git/pull.2208.v6.git.git.1772428548.gitgitgadg=
+et@gmail.com/
+>
+> - Recent GSoC proposal thread on improving the new `git repo` command:
+>   https://public-inbox.org/git/20260303140732.16886-1-pushkarkumarsingh19=
+70@gmail.com/
+>
+> - Another recent GSoC proposal thread on improving/extending `git repo`:
+>   https://public-inbox.org/git/CA+rGoLd-1Mb5JG1H1PvE-kyjdznrLVFjwQiMLHtd2=
+ETQ-igmXg@mail.gmail.com/
+>
+> - Recent proposal thread focused on the same SoC idea:
+>   https://public-inbox.org/git/CAO_P5U3g_+RpnDUmEv_qX-3GVhpxLV97eMxP1apER=
+c0KU_95tQ@mail.gmail.com/
+>
+> - Recent discussion around `git repo structure` enhancements:
+>   https://public-inbox.org/git/CAO_P5U2f4MD-URre+4ocC=3DYQ570hr03pZHDk1jv=
+uSOKx4aLOCA@mail.gmail.com/
+>
+> - Microproject discussion thread:
+>   https://public-inbox.org/git/CAKWWG_nGhD6vqhAS1mkEwBQPrg_YX0+C3-xW=3DQ3=
+ifFDw4dDviw@mail.gmail.com/
+>
+> - Microproject patch thread:
+>   https://public-inbox.org/git/20260315231538.68586-1-jerrywang183@yahoo.=
+com/
+>
+> - Review on the microproject patch thread:
+>   https://public-inbox.org/git/CAOLa=3DZTpfHUySnMgCFMnvo2JcRSv8zqFP-cLFSs=
++Ab5Cy2zsvg@mail.gmail.com/
 
 Regards,
 Karthik
 
->
-> [1] : pull.2187.git.git.1770293021383.gitgitgadget@gmail.com
-> [2] : 20260209172445.39536-1-valusoutrik@gmail.com
-> [3] : 20260225190306.39358-1-valusoutrik@gmail.com
-> [4] : 20240628190503.67389-1-eric.peijian@gmail.com
-> [5] : 20220728230210.2952731-1-calvinwan@google.com
-
---0000000000003bb2e9064d2a5069
+--000000000000973ebf064d2a7fbf
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 1789ed53d479bc06_0.1
+X-Attachment-Id: d81f62ae3e1efd5_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tNGJDSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meUZ4REFDaTJRdy9YbGpzZ3ZiaENwTWRYZ2wyVTRvdwpYU2l5bE5VSnZM
-VW1nOHBhRFZDdEhKV2dIQkNOaytZam11bWxyb2ZFcHdoM1d3VXdlQXpkTCtjNkxIWkRrNGFKCmRF
-Mm5QNklFbmZSSzBENXplcmZVRDZSd2F0VE01M0hxYjFUL2l6OEQwRkhmVUxaZ2Nlb2d4aGc0WFlC
-MDh4ME8KL1B3ZzhPQ1o2NkJRUC9aZEREeWs3ZkRqSlorOWN6M0hCdjViZ1dqYlFld09Kd2QxWG1U
-TjBiMUt0Q2NadFdxaQp1c2NZQmg4aUFMZ0FGWStYdHdwd2RNMHczbDUxMit2QkhJNTgzRlFCZjFE
-ZE5zUWczVnFLK0FGYzgxbXZtckZSCml6YWhvWWhmR0hraXNGK3hrZmtvbTRyVlNvS3lGKzY5SFVj
-c3p5N0tkMTVtUnJVcmM2OVZmRUh2VURkSUFrN1kKanl2Q29NTnRmTEhsSWxQMlY1OGxDMmU5U2hZ
-VUhVT011N0hGK2xTcitTSGI5dFAwOFFZTmFZUm83L3RqMGNITApiYVQ2cnJaTWJDbVFTRHdzMm1v
-TGE5aVpzWk4vSXhLRGRhbWdXd2pBUFpxQWp6V0dmQjFIN05FLzFjeEgzVU9WCnBMZE5iSENCOTNu
-QXMzUTB5RkJGdzhiU1dQSDFDZ2ZMOUNRcHBJVT0KPVlsUUQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tNGJ6MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNTdUQy80NVFPb3pXNUdWZDBEM01VNGZaL1JBMVdLWQptdFB3MlZLZDJR
+NUQ4em9rK093RmNualErQmtsdnRlbjRkdjkyUVdGUmdMb0F6aVlQbWlaMjRRY3U1NHZmYmpIClVh
+RXFianl0RTBBTHo2ZkJSY2pCL1F0MlNxdzJPS0dsMElzNy82aUlTSkhsUGQ3cXNON3NJNFBPMjd3
+c0FDWEwKYTBscVRBSFZXczUyeTRYZmN2ZFRVbWVTNWFVc1pKeGl6SWhMeWRmSVFGVmdCSVZtMkU3
+QzZMcWp3aG1oUXN5Ygp0UmVWNkNmMVV0NFJyZWlKZ3pGV2NQeDhkbW9LUFFIdHJvRFd3bllFZ0d4
+eEpua29pdlRXQTQ4UUdNTi9FMXRFCnh6Q0lTVlpsMXE4d2dxY1EyVmNoWlJXcitHREN0ek1KTnIr
+cm5nZ1Uxc284U0ZzS3A1cTRxM0ZLVFlGeThKbG0Kd3JIOUpxVHFYem04bVRkSzNZdmtBWUtCYm9m
+bW1FSU5Zbk1vQzNwRHgvS0NxbUV5ZitOZW1UaTAxZ1N5aWRROApqNVVwa296R2plR1QrNTM0SVMv
+OHh1MklScHBRS2s5Q1dWOTdHdDFZamYvNWd4NmdZMkRrbkh6TjRIRzlIcHhGCk52djZkQllYUXZX
+ZXM1NzJ5b2lUazJRUEVIQ0dla1dTR3lidHVlUT0KPUY5MGIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000003bb2e9064d2a5069--
+--000000000000973ebf064d2a7fbf--
