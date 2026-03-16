@@ -1,164 +1,313 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1453F3D7D7C
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 20:31:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773693072; cv=none; b=i2ezVCHp4GMNTcif4R4YwLjsrVEtTa4l4xwiCdjXsTi6jGAT45bejahitsYbQ/hiKMMnk2s9XsCbJlpwDb8nFGSG+ULIBTH04+o0gEsvL7XEDfGSjOe8M1YmAwRRsoX3LyXl+7jisqDtRBbO415wBoGX2k9E9QquevMmhmQz560=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773693072; c=relaxed/simple;
-	bh=6CWNNMrswmPICMh6iPqUW98YQAEXfonK4Ks/zE3K14c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I8Qj2AfewDQQ8nbCOc0LAw5oiQtSI2tIDtWWSVrzr0NHTkKZfPGg4XDvHqfVg5CXqTl1dSjXFaXvqIE4E3364DIDmO7+a33HtC5atF5P4ukNZGhXFgQ79a66TOEgw6TuJGHXygNJjvgYXvgqAMJLY8DuexPqRpOS7btKKLe3P4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MqldNmK/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yHXVVCle; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BE9355F47
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 20:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773693994; cv=pass; b=UY4an4EkFp9gMUsoFeTXPh/A50TOXg3yUp5kRiB2Hr7ie1xbphqSNISC+sq6qkyMW20+0Qzv46uY4g0Ybhbx9/N8AcO1OX147rQuCH6J46dPBMrc1SYEM+Sw3BuwzWvGOsPP5Vz6B3D9crllhyKI4kffZLEocb2o1/q2uMzqXUs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773693994; c=relaxed/simple;
+	bh=ZlByZCkFPvy/hygRhvvSeiIepecxcHuOOGtlCAVpDE4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WC+Dxiz5D6mH24pWsWuDb0Kf+GSmdHJxih9JX+FDAZxyaSlDWc2LpaolCcprbwXyDfeFYrbA7EBcQJ2ad3uvuoVxeKYBfS+NIdc9WjdYCZJwFfniYF3LvZg6eej0gJhyeBBd1ddIy5ZTMeO3QzaI9mc4GcfMv46zPrcJwAN0olE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fAsvqd0W; arc=pass smtp.client-ip=209.85.217.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MqldNmK/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yHXVVCle"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E31F57A0305;
-	Mon, 16 Mar 2026 16:31:09 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 16 Mar 2026 16:31:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773693069; x=1773779469; bh=ILdGlRNMPo
-	r5AuqU9mumKsfWuUb+QPGGMrMW4AGwbVo=; b=MqldNmK/JxqgomKANytcMdPy9r
-	9jigGFtb4pgkVu4Sf9Dd/2ay9yhSVipMQ5V3MR0jq3ezmY/e1bW8bFoGp9Vxt5M7
-	GiFxHZHsCVSMmglFhEu80spQl9PTGqfayF1Z5g2LfSrOJFXxvc5xJFyy201elMWu
-	FUDDAwDs5UbTnQVlUjMTgDQhPydd9Se0Y/BhOpOjb+VimJnjDhNKUrIz6yUS8k//
-	rMgxJU09nIo9YVnfocRdtfxX87o8X1WS1YPJ4WVgurXyxt/lXm6TwCkszssIrbjE
-	k38M9gF+qz+lr3Lk/jLp4/kYB686oGnUvijxWZ3JhhLJJnVnr8cP4qwAR4DQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773693069; x=1773779469; bh=ILdGlRNMPor5AuqU9mumKsfWuUb+QPGGMrM
-	W4AGwbVo=; b=yHXVVCleEdhfW2FK0TVtEJe5K3wDmCc4/7gNPxmXuKHSNDeW0AY
-	M+PUexsEJQQUDv9die9hBfpFngXsIkEbAEXAyppdKdH3o3sCW7yDL01jutKVnN/X
-	Pgzw69iqUfWZkzSmfm1G2aKP0sSjQrRmGyT6fw+EpebHF7gITFv7ZCuqUUo8jUYx
-	4TdsEctOSFAyrppRWShouHuMmZPEPey81tI34lN5jaLWogr3lTA9dUZ8iSR+PrP7
-	zXYjHIMRhHdR4OWCa9AK05GFXCQc/ppAfWwWcyVseIQvY4av2TRfwO1XlbJx2tAo
-	JV+dYIgMWQtnsfVDnCtZ0SBknDVOPHIO2oA==
-X-ME-Sender: <xms:jWi4afWE4Vvl_OhpWTttZwXUWdZW-UKNWqZGkB4oFraJcO-aa1oiaw>
-    <xme:jWi4ael6hCfxoc3eK1A7Ot5TLOrYWi9YFit3w0OB7PKdogUTWwPdHiQ6FM1jXB3Z9
-    XtCU5L_bBFaMV4GtmYB_M5k5KKCS0H7IV9LeI_Jz8PFErlxnVKakg>
-X-ME-Received: <xmr:jWi4aQa5i6SU3dKawS9lb-HT5KYX3PV6G7RMCLFnq__rFQ6BHLK6kPDDvtVu1CKLdtXZX4dZgJDwwaLqkn_nVjtnE8L8Yeq_iw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelfeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekteehffegieelgfetgfffudfgte
-    etjeelgffgvdevffeiledvvddvgfetkedtffenucffohhmrghinhepthhrrghnshhpohhr
-    thdrtgifnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    epghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
-    hopegtshhhuhhnghesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:jWi4aZM5YTYxZotCybzKeymx1LV_3wEQFSYXvbvADkKyaoMEixvoNQ>
-    <xmx:jWi4aVbL5LvXW3QRR2yIbazf07QNeaVdWLMDwEgR0q3RSxbEYMUHoQ>
-    <xmx:jWi4aX0l-OTHunAZ2RVzczNn1ZqPZI_kVp_FQB2ETEaTtVhxyZEj9g>
-    <xmx:jWi4abdXfewdUe9V9jBkkDWHiP-TIqpeR2WwsQrk92kPJdCc8KVCsg>
-    <xmx:jWi4aYXuVKzlyJxpF6FBE5tTtWrO7TVYL7pRXN3YXTeL51nN6sZsEeVf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 16:31:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Andrew Au <cshung@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v4] transport-helper, connect: use clean_on_exit to reap
- children on abnormal exit
-In-Reply-To: <20260314160814.GA918806@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 14 Mar 2026 12:08:14 -0400")
-References: <20260311184206.GA1911377@coredump.intra.peff.net>
-	<20260312214945.4050010-1-cshung@gmail.com>
-	<xmqqsea4aen2.fsf@gitster.g>
-	<20260314160814.GA918806@coredump.intra.peff.net>
-Date: Mon, 16 Mar 2026 13:31:08 -0700
-Message-ID: <xmqq4imfo6sz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fAsvqd0W"
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-5ffbcfbcec4so1117059137.3
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 13:46:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773693990; cv=none;
+        d=google.com; s=arc-20240605;
+        b=HebQQnkD/DyuFkRcMFPnOjS1onw5V+fLoVNIeW868nOCL4uIfDFUmh+sN9Xc31SqVC
+         nkWYzzpp3Roz5iI48R/cZq+dUXKN1EckdUvQeCARalerkvtgnNhuy7sDv7T/KgOIAlbX
+         gr76MZcNCb6bkpDThkb+mJCTqVT+vbhqL4O6RlgyDjCr6XvHQKNlm1oHGHLc9S1wTbTE
+         JND+VmrCzH8QVl86WTe4xAPuXSppKJeg223dcEmly7HQjOg97anZEqTo2lxinLPeWQDM
+         oUw3CpTRJ4NmiPM2qVAFODa+Bh8FdfTANzbtAWdGeQxR7uOMkIjjO3czN9YlOSU81MIa
+         er4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=EBRMtQDaBrVKLNFoDdZF4FMeh3P+4uMFxbhY564kg74=;
+        fh=M2dWxBZ4Ld/qqfhMnmHZN071TO8NzP0A3DdaJsR0lQA=;
+        b=W20NusDDwplQ5dqsz3CmRedeVjoLfZ4CJtYGiREuZz9EgAq8S50UWxAwJ8yjGyvPEI
+         cIhJnCuIygSB4C25f54WlFUIpoLv3OQQzaX6ftAMpQxJDW+ltQVu1kpHj9rxSZAcBM4F
+         eNDd8za0X35ueye9So5VsUifX4BXwws9N2DdRe7xFnVeCA+b81y73r2lhZ1fl/1SVyFH
+         JuWNJ2LpmlN9uv8wm1MlOn8h+F1SifNSJUFfnWPbsSSTZp4PtyE/FKAZ1tYWKusE3ph6
+         BWrWsyLgqBez1dQp3nhPiTlM6XRAYuWIa/TNB3U162dbA0saedNAsIUxfx+wG7n6WBoa
+         yZQQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773693990; x=1774298790; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EBRMtQDaBrVKLNFoDdZF4FMeh3P+4uMFxbhY564kg74=;
+        b=fAsvqd0Wr0O4lfJtRB6B8yCxD+v0/L2xMFSd2AKOPIGGN9gcWqVXQ0mqOH736sbH63
+         SOyKZT6+ayblumXiBgqL7ZVS73jZaeaLz2nzvkh3+YKM/R6NYAPfuIQGW56hTc7G6Vx/
+         PH7tYzFtwhueYj/y30zk2zkZtn8UyHwsrczT6oEajqrAxiA7UmwWMG5HMNaKN0erPAYt
+         edwCvqFHbzWa0oZL4IRJNr/8Hlpcwn/Zvmy+pwzjf3bh7eREn740GyaVyf1zMiHX0nxt
+         MgUaYOxopTMGMO+SvmCYOVsNaGqKgKgZ1NR7dnyVtiy03XUv1xr67m1GAQssTDYqLT3i
+         jCmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773693990; x=1774298790;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EBRMtQDaBrVKLNFoDdZF4FMeh3P+4uMFxbhY564kg74=;
+        b=aOyHsRuH7eIEnXg+IlN0GPZmcHd8EO9T+RK+ZjzUfH82Men4EYyhXOnUjZFQLAWjre
+         9juTHhPd4cCbxI/Va/oERMTeOCAgmvrSNic9riBgri2nRtiPFxorM7QkgLwJObGQpB6n
+         +DkB2qv7a82YtbCeeV2pUn0euOllMUEZsWIcw/BUWODMrd9zNh8bxcej2wcxlmHQO2Qx
+         KMtPwqes9pDOnkLzG6jCcyDu2RvZBtuZm48FGkYNP8NATUrfzfZkMB6u5gXVrJVth6bK
+         NSZKRlgvZUZnbCdUVU3/Z5L50HUbEplpUXowXz8EwaGZ57gT2e+dgF3CkCiIQq2P5uQj
+         E0Yw==
+X-Forwarded-Encrypted: i=1; AJvYcCVHsCcYWxm93PmqZ75TXDnYkf6+LFPd2CtOZuikjhtFnv+4VxDD+iuSI09/tFWbl8v4fmM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbR7aXqbO54SCXfWvchZxskfPdy7zkDyuR6W2VgwEMK1gsz9IV
+	d/1aKChekwCx8tkwp1E793o+NX/taZab1kF+HUuHiFVA8FsEjysrhL2MnSx28CquhAetiHWDofi
+	xHU2TowbrJa2YUmhRGp+UTLwM/tYRTsv8zlMz
+X-Gm-Gg: ATEYQzxMEVwLQxlmeHzZA3KJcLtt0O6gjT+SaCs5NfeE99bnf45wgMUVKAB2Faak0So
+	//ZRoSXufVAS+9rwGsJkY+1JwMyzex1Z9kHWE4cvjxzB25vJhJvX5bVcAfupPSVWzLeb0Hcpd48
+	1ExbfRwFoQ5HCHzj86Ea1WrWI1yBSARM48b2T5d9yJZnnGjQp9CTixf7eCSiFim33rPpQMNKl9T
+	VvAvzAFwFg1Lc1gKBx4BpcfJeweymlPwF+DytqHJkUW1MixAcfhoYHV10sroaa678AeUc6W1qvH
+	6xiUTdwtTM5/xLFL4Ub3Lg5nqUpOoWZSQLvKmQUd
+X-Received: by 2002:a05:6102:c0d:b0:5db:cc69:739c with SMTP id
+ ada2fe7eead31-6020e2f522fmr4572605137.17.1773693990307; Mon, 16 Mar 2026
+ 13:46:30 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 16 Mar 2026 13:46:29 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 16 Mar 2026 13:46:29 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260305204809.54927-1-valusoutrik@gmail.com>
+References: <20260305204809.54927-1-valusoutrik@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Mon, 16 Mar 2026 13:46:29 -0700
+X-Gm-Features: AaiRm53TF943pyH0JxBkVsrrV0GDiUSMdIK6E_OQT4B9d15hxhXeOjhJ2pPWbK4
+Message-ID: <CAOLa=ZQhzvgA2bpmUgx2qMTrxFaR5_6GET8e1y+A=m2nboDAiw@mail.gmail.com>
+Subject: Re: [GSOC Proposal] Complete and extend the remote-object-info
+ command for git cat-file
+To: SoutrikDas <valusoutrik@gmail.com>, git@vger.kernel.org
+Cc: christian.couder@gmail.com, jltobler@gmail.com, ayu.chandekar@gmail.com, 
+	siddharthasthana31@gmail.com, chandrapratap3519@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000003bb2e9064d2a5069"
 
-Jeff King <peff@peff.net> writes:
+--0000000000003bb2e9064d2a5069
+Content-Type: text/plain; charset="UTF-8"
 
-> I don't know if you want to apply it separately (since it's really a
-> totally different topic) or on top (since it is only the application of
-> Andrew's patch which lets us find the problem).
-> ...
->  transport.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+SoutrikDas <valusoutrik@gmail.com> writes:
+
+Hello,
+
+[snip]
+
+> ## Pre GSOC
 >
-> diff --git a/transport.c b/transport.c
-> index 107f4fa5dc..2fb4767821 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -54,14 +54,14 @@ static int transport_color_config(void)
->  		return 0;
->  	initialized = 1;
->  
-> -	if (!repo_config_get_string(the_repository, key, &value))
-> +	if (!repo_config_get_string_tmp(the_repository, key, &value))
->  		transport_use_color = git_config_colorbool(key, value);
->  
->  	if (!want_color_stderr(transport_use_color))
->  		return 0;
->  
->  	for (size_t i = 0; i < ARRAY_SIZE(keys); i++)
-> -		if (!repo_config_get_string(the_repository, keys[i], &value)) {
-> +		if (!repo_config_get_string_tmp(the_repository, keys[i], &value)) {
->  			if (!value)
->  				return config_error_nonbool(keys[i]);
->  			if (color_parse(value, transport_colors[i]) < 0)
+> I started exploring Git's codebase around February 2026 and sent my first patch
+> as a docfix, followed by a microproject of modernizing tests
+>
+> - [PATCH] doc: fix repo_config documentation reference [1]
+>     status: merged to master
+>     Merge Commit: 94336d77bcbf4360b67a9454d8bf2e84b3d88ae7
+>     Description: Replace the path for the repo_config() documentation
+>     from 'Documentation/technical/api-config.h' to 'config.h'.
+>
+> - [GSOC PATCH] t7003: modernize path existence checks using test helpers [2]
+>     status: merged to master
+>     Merge Commit: 11294bb0fa540d214d071b32cf74b1ed37b3bbbd
+>     Description: Replace direct uses of 'test -f' and 'test -d' with
+>     git's helper functions 'test_path_is_file' ,'test_path_is_missing'
+>      and 'test_path_is_dir'
+>
+>
+> I have read through most of Eric Ju's [4] work and some of Calvin Wan's [5]
+> work. I am still finding more things to understand from each thread, but
+> I feel I have grasped the basics.
+>
+> My work in this project would be focused on implementing the changes
+> suggested at the end of Eric Ju's [Patch v11].
+>
+> I wouldn't say I understand every bit of discussion from that thread,
+> but in general my understanding is :
+>
 
-Regardless of where it goes, we need to change a bit more, it seems?
+I do agree that there is a lot to unpack there.
 
-    CC transport.o
-transport.c: In function 'transport_color_config':
-transport.c:57:62: error: passing argument 3 of 'repo_config_get_string_tmp' from incompatible pointer type [-Wincompatible-pointer-types]
-   57 |         if (!repo_config_get_string_tmp(the_repository, key, &value))
-      |                                                              ^~~~~~
-      |                                                              |
-      |                                                              char **
-In file included from transport.c:5:
-config.h:644:62: note: expected 'const char **' but argument is of type 'char **'
-  644 |                                const char *key, const char **dest);
-      |                                                 ~~~~~~~~~~~~~^~~~
-transport.c:64:74: error: passing argument 3 of 'repo_config_get_string_tmp' from incompatible pointer type [-Wincompatible-pointer-types]
-   64 |                 if (!repo_config_get_string_tmp(the_repository, keys[i], &value)) {
-      |                                                                          ^~~~~~
-      |                                                                          |
-      |                                                                          char **
-config.h:644:62: note: expected 'const char **' but argument is of type 'char **'
-  644 |                                const char *key, const char **dest);
-      |                                                 ~~~~~~~~~~~~~^~~~
-gmake: *** [Makefile:2815: transport.o] Error 1
+> Calvin Wan and Eric Ju has already implemented a client side command
+> called get_remote_info but its designed for being batched to reduce
+> multiple network trips to get a single object's data.
+>
 
+As far as I can recall, the command allowed users to enter multiple OIDs
+in a single line to reduce the to-fro with the server. But you could
+still fetch single OID info.
 
-I'll squash an obvious patch in.
+> I have added Eric Ju's patch series to an old master commit (2d2a71ce85)
+> since I could not find a base commit for Eric's patch series. The patch
+> was properly applied and I also played around and added a very rough
+> but workin "%(objecttype)" code , ie now it prints like this :
+>
+> 29658341f39210201ff7f72a4be83937cf2288c5 14 blob
+>
 
- transport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Nice, have you tried with a more recent 'master'? I assume there are
+merge conflicts?
 
-diff --git c/transport.c w/transport.c
-index 358bc38585..7985b42a74 100644
---- c/transport.c
-+++ w/transport.c
-@@ -47,7 +47,7 @@ static int transport_color_config(void)
- 		"color.transport.reset",
- 		"color.transport.rejected"
- 	}, *key = "color.transport";
--	char *value;
-+	const char *value;
- 	static int initialized;
- 
- 	if (initialized)
+>
+> ## Project : Complete and extend the remote-object-info command for git cat-file
+>
+> Currently in the case of a partial clone, the user cannot retrieve all
+> object data without fetching the object beforehand. To solve this problem
+> Calvin Wan and Eric Ju had designed a patch sreies that can solve that,
+> by utilising protocolv2 servers capabilities.
+>
+> This was done in the form of "remote-object-info".
+>
+> But only the %(objectsize) was implemented, and that patch was not merged.
+> This project has two goals
+>
+> 1: To Rebase and finalize Calvin Wan and Eric Ju's Work by addressing
+>     the feedback on Eric Ju's Patch v11
+>
+
+Any idea how much work is left post v11?
+
+> 2: To add support for objecttype in remote-object-info
+>
+> 3: To discuss other information type like objectsize:disk and deltabase.
+>
+> Project Duration : 12 week approx
+>
+> ## Timeline
+>
+> Mar 6-31 : Refine Proposal
+>
+>     If possible I would like to submit small patches... but first I will
+>     have to rebase Eric Ju's Patches ... I am not sure if I can do this
+>     before GSOC...
+>
+
+As per the guidelines, it says
+
+  Any work done on the Project prior to acceptance of the Project
+  Proposal will not be considered for Evaluations.
+
+>     If not, I plan to contribute to git in other areas.
+>
+> May 1-24 : Community Bonding
+>     1-7  : Understand relevant underlying/ helper functions
+>     8-24 : Ask about any design related problems/decisions
+>
+> May 25 - Jun 14 : Start a Patch Series to rebase Calvin Wan and Eric Ju's work
+>     and keep refining
+>
+> Jun 15 - Aug 15 : Start and keep refining Patch Series to add support for
+>     object type information
+>
+> Aug 16 - Aug 24 : Discuss and Implement other object information if possible
+>     Concurrently I shall make a report for all the work done.
+
+How will you manage reviews, considering generally they take a long
+time?
+
+>
+> ## Availability
+>
+> My current semester is ending in the first week of April, so I will be
+> able to contribute 7-8 hours per day, totalling around 35-40 hrs a week
+> on the project.
+>
+> Total weeks = 12 , total hours = 35*12 = 420
+> It leaves with a lot more room to accomodate any unforeseen circumstances
+> that may arise during the project.
+>
+> ## RFC
+>
+> I have a few ideas but do not know if they are worth pursuing, so I will
+> leave them here in the first draft
+>
+> - Addition of a remote-object-info outside of batchmode :
+>     Yes it should be optimally used in batch mode .. but if user wants
+>     only one objects size or type then should they be able to just
+>     `git cat-file -r origin <oid>`
+>     and get the size and type ? or something similar , I am not sure if
+>     the way I have depicted it conforms to git's design.
+>
+
+I do agree that something like that would be useful indeed, I'm not sure
+of what that design looks like though.
+
+> - Addition of commands for common user behaviour :
+>     I dont know if its going to be a common user behaviour but what about
+>     `git cat-file -r --all-absent`
+>     Or inside "git cat-file --batch-command="<format> remote-object-info
+>     --all-absent --type=tree <remote>"
+>     which would basically fill in remote-object-info with all the blobs
+>     that are currently absent from the worktree ?
+>     No need to fill them if its for a common enough use case.
+
+I do see benefits of this too. But I do wonder if 'git rev-list' is a
+better command for something like this.
+
+> - Sort according to size :
+>     Maybe a user would want to check whats the largest file they dont
+>     have yet.
+>
+
+Same here.
+
+> - Get total missing blob size :
+>     Use case would be when someone wants to know how much exactly there
+>     is to download, before starting the download.
+>
+
+This could probably go into 'git backfill' ? Interesting ideas
+nevertheless!
+
+> Thank you for your time in revewing my proposal as well as considering
+> my application. I am excited to learn everything I can from git.
+>
+> Thanks and Regards,
+> Soutrik
+>
+
+What I missed from the proposal:
+1. Where did the work from Eric and Calvin stop at, what review comments
+need to be addressed.
+2. How do you plan to handle reviews and iterations taking time.
+
+Regards,
+Karthik
+
+>
+> [1] : pull.2187.git.git.1770293021383.gitgitgadget@gmail.com
+> [2] : 20260209172445.39536-1-valusoutrik@gmail.com
+> [3] : 20260225190306.39358-1-valusoutrik@gmail.com
+> [4] : 20240628190503.67389-1-eric.peijian@gmail.com
+> [5] : 20220728230210.2952731-1-calvinwan@google.com
+
+--0000000000003bb2e9064d2a5069
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 1789ed53d479bc06_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tNGJDSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meUZ4REFDaTJRdy9YbGpzZ3ZiaENwTWRYZ2wyVTRvdwpYU2l5bE5VSnZM
+VW1nOHBhRFZDdEhKV2dIQkNOaytZam11bWxyb2ZFcHdoM1d3VXdlQXpkTCtjNkxIWkRrNGFKCmRF
+Mm5QNklFbmZSSzBENXplcmZVRDZSd2F0VE01M0hxYjFUL2l6OEQwRkhmVUxaZ2Nlb2d4aGc0WFlC
+MDh4ME8KL1B3ZzhPQ1o2NkJRUC9aZEREeWs3ZkRqSlorOWN6M0hCdjViZ1dqYlFld09Kd2QxWG1U
+TjBiMUt0Q2NadFdxaQp1c2NZQmg4aUFMZ0FGWStYdHdwd2RNMHczbDUxMit2QkhJNTgzRlFCZjFE
+ZE5zUWczVnFLK0FGYzgxbXZtckZSCml6YWhvWWhmR0hraXNGK3hrZmtvbTRyVlNvS3lGKzY5SFVj
+c3p5N0tkMTVtUnJVcmM2OVZmRUh2VURkSUFrN1kKanl2Q29NTnRmTEhsSWxQMlY1OGxDMmU5U2hZ
+VUhVT011N0hGK2xTcitTSGI5dFAwOFFZTmFZUm83L3RqMGNITApiYVQ2cnJaTWJDbVFTRHdzMm1v
+TGE5aVpzWk4vSXhLRGRhbWdXd2pBUFpxQWp6V0dmQjFIN05FLzFjeEgzVU9WCnBMZE5iSENCOTNu
+QXMzUTB5RkJGdzhiU1dQSDFDZ2ZMOUNRcHBJVT0KPVlsUUQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000003bb2e9064d2a5069--
