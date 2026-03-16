@@ -1,152 +1,192 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic305-2.consmr.mail.bf2.yahoo.com (sonic305-2.consmr.mail.bf2.yahoo.com [74.6.133.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2B8219FC
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 17:07:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F4F33A039
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 17:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.133.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773680822; cv=none; b=okNSdbGoM5LZg3/tVy/WcupdK1P1KezyDz6IVPZuz7GQ5OYPoT3pDDGhOFi2SNRarIB9iu7lF8uOPsYh/UD5rog2Z1eFD0GjMZZ95IH3ewr/ZhJAWmJKqloedVYWX0YkVaiff/ANQv5/iwfsQLZNAU+5f7RKmPXslySGXp3blHQ=
+	t=1773681123; cv=none; b=i2PSlA+NZSsiA/bBzaOsiTrYIHeyMwEKhNtnSq64j5tuxTpHgM9hnur5nUlENur7oimkx9IjLHEQ0m6lWE8AgyCVM4U68LSAYeLg0/qPlkKgzF6I9YnGrXOZvsbUid0da/jLQ4YR2FyjyPs9u/51Iv412fxeX/2xhp5/Di+Qhpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773680822; c=relaxed/simple;
-	bh=ctJcSDR2AbBHvNwYK/fQvx4ik9T37shgGRwzFbxUuWA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sw6j7mSLFPvllI4yypR/bjJwlgZj1HIy73MgnswgWfLZsJaLWcDqzvonMaLq6aqJOmdj9rjQiNi5hiw9KY4UAr2QSSfxKB1f4Fd+U/BkssOCw7BpmAP+ZSLgUMEk/pdVqZSJ7ViA8puBeodOIlAwKw1ulQ2INt43Nh8s3aP18Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=T944PYr9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A/KmnUpc; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773681123; c=relaxed/simple;
+	bh=z02p49StLcjPzY3O2H5hpVyej9zhOPnW42Rw4ZStjSI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=t3s3e8OVmOyzNAi5PLl463y60gK2K3lsD6XQb3JtfYvyoZBM4dFWpr+uzEdmKGbIG+IbfUvo8rYazcfk63nEcB+6Px1uXeU7rI7fpwWpzz+V6zzZhiFE7rtVMiKy6+M7rSwsX7/SR/nEg+a83YUynWP9vOC9JaqIv2Q/jLUZdp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=UQcItfL+; arc=none smtp.client-ip=74.6.133.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="T944PYr9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A/KmnUpc"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id CD4FEEC00DF;
-	Mon, 16 Mar 2026 13:07:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 16 Mar 2026 13:07:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1773680820;
-	 x=1773767220; bh=XK7KV/9DsQGk8SmtmB/xm9ga1FT4Sg+uKjRaasOxrNU=; b=
-	T944PYr9nE7S7tyxixdOZIV6IEMyrdsWoYmwWfqBKFP+4uOjQGlKBSrl7ZNxdsiC
-	BHlizi4RZLFOhjFU1mPe32ylzf6wyFODZSxdEL1ImoKu+sCbdJNHjiWCnKL/CVRh
-	J7fq+t9U7hKuyw4PoWTibi5eXvznnoNIQyW8jAIYJyMwTPkUVgblkNwHrCB2I/mj
-	6TeRTkspoN2GpZm7hVT0cXTGPLvu1tk9ZK+XgDuMHR2M6vc+CWQCOps2Wv7MyJtY
-	x32gjpOFaLdtVVrmQPZc227mEf/9qeZlZcbg3aZGRGodTlVAhqZap/nYdH4GNdl2
-	Zq7GE01iu5a4U3KeQTNDmA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773680820; x=
-	1773767220; bh=XK7KV/9DsQGk8SmtmB/xm9ga1FT4Sg+uKjRaasOxrNU=; b=A
-	/KmnUpcuup46lflZOF0ui5wV91voVaXMLbyXaNPI8cqnPfM9fsPNGikAybaSpJRi
-	F6ZkGgD4910KdHM/d8D0LJI9ebWKYjPnStFV+RyE44g7teD/z1BAOZ1VIzbTSVpQ
-	o9cVv6yAIIghynSXR7atW6mgbBpe2/b/w6nJGGukjU2Gkfot3ltDfZngEpTfxiuR
-	MAXMPJthV3khAfzB9J0PUdNHZBaWF4rohbUVwV6b1r98abYyJPCwlPNItnd9KSMn
-	DxFMWFwMVjdHa/g4bMZeh4IJJCQnmIoXiXyQOTzv3TFQq3wYPYi6mF0EX5RhKQMB
-	diD1Sl9ZEr8BGiUPMiTOg==
-X-ME-Sender: <xms:tDi4aceELrJAjRIwxrDXLg9xVnKg5T02gat8mlwkpqFbm94swVrUOA>
-    <xme:tDi4aVE5ur10pFxvM8__wYxeawEJMZmMxSAWvdt9J50m9GgqUHTQuKf3erdhk4IDS
-    KWa9w435IFNtL6solk63wRYSntu2I3bKz_4aAaeywYOx52hikk7ow>
-X-ME-Received: <xmr:tDi4aV3Ah89fWFkhyVxnQ_z8nFnOf_WZMjlr8yvJD8ph-_QYiQ7pH7Tw7CdmRUmmkB19InTQPCc5pOjIiV1XOt3SRyLd1If_NA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleekleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:tDi4admf_dQnKrA0Zgzx4C7bZLuHjSYzm_nuqiFRu9FTBHh7WkruyA>
-    <xmx:tDi4aV_Cu0x2l6sKdFSvZ0f0kg7jsBvR7bdS3ieiUkbgnviK9DU0jA>
-    <xmx:tDi4aSp2I_JcNsUIDLCaI8FVTSmgx6V8la5-jFWmvbG5-Q1vpD2THg>
-    <xmx:tDi4aelTNKaM-zLiGPf3lJRS47Wft43kBK5xUSXqWlyQPU0wnalgDQ>
-    <xmx:tDi4aU3r9_--3j2Za_wY_ucW__afk_qSnpvlYUzV3TutqLDhZMuqqX3F>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 13:07:00 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH] remote: use plural-only message for diverged branch status
-In-Reply-To: <75c85249-1cff-425a-8e77-98d55215c324@gmail.com> (Phillip Wood's
-	message of "Mon, 16 Mar 2026 10:49:26 +0000")
-References: <pull.2239.git.git.1773479526823.gitgitgadget@gmail.com>
-	<xmqqqzpmwdyi.fsf@gitster.g> <xmqqtsuiuugy.fsf@gitster.g>
-	<ca6e021e-0301-496d-8bd1-b646487ccbf6@gmail.com>
-	<xmqqjyvdvo7t.fsf@gitster.g>
-	<75c85249-1cff-425a-8e77-98d55215c324@gmail.com>
-Date: Mon, 16 Mar 2026 10:06:58 -0700
-Message-ID: <xmqqms07putp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="UQcItfL+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773681121; bh=0/b+NMCxbZhTaS74jxbbas+xgtYw3zXB1stVjfYP0/Y=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=UQcItfL+EFvXq7o74WAAXeeK9zrkledhjsNjLmVEZJL0AOnIBR4w8it89OXj0ou9J2AReF45dq+7dJS90WY5kYmkTeB5VghjYzjWgR1Re6sl0nfDEZisN6O5iNFyIqiBBlZNXMhD1YHV4+wuuer6t5A5EZ+XPdZKslAVbH9Q/Om4uf5LKYMfxr9IOWGS7aOolITzYhWLOv+WjLOtgp8x4kgqWC8Ne4kxuozrRQdflghOFI8P4NFZr0c7ET9kzJ45psIp4EMNblSxRt8mEoLnj9aFVfEdEc9WYO+Zkfi4BeMD2pMFV2hVkArJQs1s18tEJLGg69Ma0HL1LyomumM/Og==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773681121; bh=9sOAw9SKTm4fBEmNmrt/A7+IBa2Jvj3i0m89ugCZGRe=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=r3fpKiKNHpr9W2sB20Dw7XOmPLKeYBxm/plyBbQ/S8WADn55BY2Shw/9q+tARfW2QAJHtU25C7QZ6XMNmyd1UGcSJ+uAGNJB4uPs65x0o+wmD9iZQ+hLOhv3Yx29XV+wELZ6VrOeBcs0O7FdnB7ziXbQV474Kq7t/KzniP7r7JqDwYsVbvQVQnRr9y9XbDU8o3N2LmmJ4nvpn75S+l6bO1OpL3HlocpDpwwUpId8LcGYV91i1BfOewgO9GddXVFovfQk0I+iPvij2ZZVxXVlfPEmd2BRQDFe94diNRubre4EqRNVf7gOfRcmsPDKGLDl8gdmSsNpJahTuUs3wP63DQ==
+X-YMail-OSG: q3gsP4YVM1kUPt2Xj.jYE9I.g_LDZAYn32GkSsqruwQgzY5jYQowmtoF2fXysTA
+ XSAKj1bOXkt8u8iDe_r2fCglMsimHp7m0aQdq4kdfukbDhqynAhy4EFG4Q7RCpi77qAjkS4dS82A
+ e130PEBrcm.5jKXHd7Yx1c9eFdry5wbIyrjn1L0iISue1.BlxNabnoZLO.ChZQgEiqVfwjLx1gSr
+ f72zeQDFk2btYfE3vdQDFUzbibKVkR5xU3BucgAd50T6CZJkXTcot7luagwV6fok846GJgOcevgW
+ vI4hwGa7Gp0yvReDYAWPdGJhMWAAQmP33y6xJKQcDx_q.bE3iAeyhIiGLvdkaxlt1MPQ3qKaPVlF
+ uT6nND39e7SIQGVMQx1IbOkzjghc676x5.8Ar2bYym5hK2OeIE3_zNB9ZRSktyCbfYhwLJQUqH2I
+ JZ278GGdOfKimLcys6xYIVDAj7q86rEeFGJLNADMpv_JsGO.6ge4l46h5FWTBwTYZsX2CvdrTR1k
+ AhhvDCKMNApUoSAroAANRnzklE1fbx7wWCzQTxLIGCKG_7wv.fz8fwsPfbOE7O8rC5wquMUvHEiq
+ qZ6wQOH1z2Cz3.V4ST46HSqzUKQnPpA_gebeKrgHwGHOgjq0sW3bm.JT757QRm.Fph2pbnxTQQPN
+ e9jxFX_SAplnK8CNNw1zlop0c5YzSDt2CLsyPLSL2rgD7MK90dq6OMcTxu2SWL3el0oDvS9UAmHU
+ mqnLFFg407LIDg6mOunvxqo0o1dweiJypo633tXoRPf_k0cxhEK8ymoqv6npKh.tpyRMWsp4xFIJ
+ 9dtv_nsV9Bq7rvdGniJcg3AQOJ13gCmm7YTxFUys.ealPPr2NArvwOIyFZ3GARMg0CR14Uu0Z8pP
+ c90YkO4thkHWdf1Pt1sZ5o8cDVgJjABxMmDvHYFB.UbdP7HKILYRkh0W_o3.J23IvYpQ3kIGDfCb
+ A3gFeV6nM37YVipQ8srkmy7ccDtkzuktjiJw2sc.rxoGFyKUUTpTY9bM7.1HscZnxdX.T96pSQc6
+ YHTbv9f2wNAfa7Qs8u31GTm2tzLepqWkHCwTd8Nc5u5SQtYycRVmm4YsNA67MjIljXFEqqp_yUZi
+ AUND0yM_Y3tcbZncaAi_JkWw7NfKlRICQck7NlImIO_bGHLILC7l.3O._wmumhKs4ClT39btD03D
+ YnoLPF.xrJqRhlV0sJNwERE7r4qemM6No7QaiYWr0dvPj3uTSa1Me7sar2xEVIweOyISI1kZvH3P
+ rHL6qgLbua87Us_QuAKJzN1x2AUKLlDjH_rMWB9jocf7wNmlqfyJiR6d2U2LZqYcLkgiAkhoRhTs
+ oh9KnV6JVjlbI.ChlKv3H6yTgT6GqpMWbpB38t.1GSQggIzfv6d_DKUac_hRyzfU.B0Eb4wLJqOb
+ kCDH5rk_S1Pzh6IBUcqg75zAEsGJsMD4qHYbf8YHHFi_TTgRxMTIAv8oMEGsiTl2botiBtL2yYyF
+ 8xE3wSCWCHr_d0ctpZFCtFI_dy5FtWJ.noZsS8krCt7snL_PkuuHK6iQV1YQZsLPkNvIGiux3D43
+ rq_qOrzIr9i2zk4EL8RNvi4me_8lkUUN.AWoWicV3.z.qz6JnNBPGH.fa.tE6pnKdy7qHFlvgYFc
+ GtpOAI7GLKbo_gaUBVX0u5SpBkg.JrNuikxER80YxdrsgiZBDdXnbuCZ1nU4xqMGduqhkZOaLPH9
+ 5KC_xoXw7VUqzvs_P7XBSmzRwmclO5Fblrglz7g4VIKkcbpHhQrQ1y.7ZEfiTP0K3rhOXWPAg5_H
+ tP6qA.UlJHwiLbHcZtvyU24M0CqwSsfJPRZx75BYNdhdHHfHgAC2x6RDhMRyUPJcPZkt4ep.j8_v
+ kLE5BZ01BAnpr9aHTT6hlHfqnUkrfU9DhGw5NiIWvlXgOcqTPSHsBngDpXdLV4Kk3bN7293bI7gL
+ M3_V0x8E8dGlsJPjzW3ydqR8OaNHSI9hsv8UPgQPUdKCB9PLQ.VGwyuNb59W9tG7kYn7IbnebM9j
+ ZA55kM.dBXxiWfM9xEONA9Mcr9b_JQIJ9tbNVWrbiNqLBWyzjO88i39.nnhcpWNrFsr07pGJz4RG
+ eY._M5dqnlG5l6Fa6HEnLrCu3FZoXHP9f_oqxJjlPbVyZ4H0bkPYdihzvgYEg6RztFGiN9eyYhN9
+ jY8plE30d9BRIWRuKIFMN3TI1sewx1qPvaXXtYFG8PMWJTpjj4fkrGkjMn_GkqVVXkd8xtbU7N1T
+ jNvR611p5N6VraJaJUwug7G1dsobxGmwRgYHdYoTy5yGkq7QkcQ_vvH8hQwQTEBep223YgIR3Ajz
+ FLYVYIlZ4NWS_zz0TZ.Gz1iY5DUA2_UKMOsA-
+X-Sonic-MF: <jerrywang183@yahoo.com>
+X-Sonic-ID: f1c04ef4-6b07-45a9-8cb7-4ded98fb59f4
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic305.consmr.mail.bf2.yahoo.com with HTTP; Mon, 16 Mar 2026 17:12:01 +0000
+Received: by hermes--production-bf1-697f88457-frvld (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID fa82ae2f37a216edfe9aa66572e44e19;
+          Mon, 16 Mar 2026 16:21:24 +0000 (UTC)
+From: Jialong Wang <jerrywang183@yahoo.com>
+To: git@vger.kernel.org
+Cc: jerrywang183@yahoo.com,
+	karthik.188@gmail.com
+Subject: [GSoC PATCH v3] apply: report the location of corrupt patches
+Date: Mon, 16 Mar 2026 12:21:23 -0400
+Message-ID: <20260316162123.84532-1-jerrywang183@yahoo.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260315231538.68586-1-jerrywang183@yahoo.com>
+References: <20260315231538.68586-1-jerrywang183@yahoo.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+When parsing a corrupt patch, git apply reports only the line number.
+That does not tell the user which input the line number refers to.
 
-> On 15/03/2026 02:08, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->> 
->>> There can be more than one form of the plural string though. The gettext
->>> manual has the following example of the Polish translation of "file" for
->>> different numbers of files [1]
->>>
->>> 	1 plik
->>> 	2,3,4 pliki
->>> 	5-21 plików
->>> 	22-24 pliki
->>> 	25-31 plików
->>>
->>> ngettext() handles that correctly, translating a single string without
->>> an associated count will not.
->> 
->> That is a very interesting example, and a valid reason to have me
->> retract the #leftoverbits that led to the patch being discussed.
->> 
->> But wouldn't that lead to an awkward conclusion, i.e., hits from
->> "git grep '[^Q]_("[^"]*%[id]' \*.c" are potential bugs that need to
->> be updated to use ngettext().
->
-> I think it does - maybe we should suggest fixing these as a miroproject 
-> for GSoC and Outreachy? It certainly looks like there are plenty of them.
+Include the patch input path in the error message so the reported
+location is easier to use.
 
-That would be great.  It needs a bit of thinking, the required
-change for each of them is quite small, and there are tons of them.
-An ideal candidate for a microproject.
+Reset the line number for each patch input so the reported location stays
+correct when multiple input files are provided.
 
-Adding it to the list of microproject ideas is a good #leftoverbits
-as well.
+Add tests for file input, standard input, multiple patch inputs, and
+existing binary-diff corrupt patch cases.
 
->
-> Thanks
->
-> Phillip
->
->> Of course, we need to exclude messages like "the error code %d was
->> returned" and "you have a bug on line %d", but there seem to be real
->> errors in randomly selected hits from the "git grep" output, e.g.,
->> 
->> add-patch.c:						 _("Split into %d hunks."),
->> archive-zip.c:		return error(_("path too long (%d chars, SHA1: %s): %s"),
->> builtin/checkout.c:	    die(_("'%s' matched multiple (%d) remote tracking branches"),
->> builtin/credential-store.c:		die_errno(_("unable to get credential storage lock in %d ms"), timeout_ms);
->> builtin/describe.c:				_("found %i tags; gave up search at %s\n"),
->> builtin/fsck.c:		fprintf_ln(stderr, _("Checking connectivity (%d objects)"), max);
->> 
->> You can notice that I started from 'a' and stopped very early in 'b'
->> ;-).
->> 
->> Thanks.
+Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
+---
+Changes since v2:
+- update t4012-diff-binary.sh for the new corrupt patch location format
+
+ apply.c                |  4 +++-
+ t/t4012-diff-binary.sh |  4 ++--
+ t/t4100-apply-stat.sh  | 38 +++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 42 insertions(+), 4 deletions(-)
+
+diff --git a/apply.c b/apply.c
+index b6dd1066a0..b7b0a201b3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1875,7 +1875,8 @@ static int parse_single_patch(struct apply_state *state,
+ 		len = parse_fragment(state, line, size, patch, fragment);
+ 		if (len <= 0) {
+ 			free(fragment);
+-			return error(_("corrupt patch at line %d"), state->linenr);
++			return error(_("corrupt patch at %s:%d"),
++				     state->patch_input_file, state->linenr);
+ 		}
+ 		fragment->patch = line;
+ 		fragment->size = len;
+@@ -4825,6 +4826,7 @@ static int apply_patch(struct apply_state *state,
+ 	int flush_attributes = 0;
+ 
+ 	state->patch_input_file = filename;
++	state->linenr = 1;
+ 	if (read_patch_file(&buf, fd) < 0)
+ 		return -128;
+ 	offset = 0;
+diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+index d1d30ac2a9..97b5ac0407 100755
+--- a/t/t4012-diff-binary.sh
++++ b/t/t4012-diff-binary.sh
+@@ -68,7 +68,7 @@ test_expect_success 'apply detecting corrupt patch correctly' '
+ 	sed -e "s/-CIT/xCIT/" <output >broken &&
+ 	test_must_fail git apply --stat --summary broken 2>detected &&
+ 	detected=$(cat detected) &&
+-	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
++	detected=$(expr "$detected" : "error.*broken:\\([0-9]*\\)\$") &&
+ 	detected=$(sed -ne "${detected}p" broken) &&
+ 	test "$detected" = xCIT
+ '
+@@ -77,7 +77,7 @@ test_expect_success 'apply detecting corrupt patch correctly' '
+ 	git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
+ 	test_must_fail git apply --stat --summary broken 2>detected &&
+ 	detected=$(cat detected) &&
+-	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
++	detected=$(expr "$detected" : "error.*broken:\\([0-9]*\\)\$") &&
+ 	detected=$(sed -ne "${detected}p" broken) &&
+ 	test "$detected" = xCIT
+ '
+diff --git a/t/t4100-apply-stat.sh b/t/t4100-apply-stat.sh
+index a5664f3eb3..b19fc9fe50 100755
+--- a/t/t4100-apply-stat.sh
++++ b/t/t4100-apply-stat.sh
+@@ -48,7 +48,43 @@ test_expect_success 'applying a hunk header which overflows fails' '
+ 	+b
+ 	EOF
+ 	test_must_fail git apply patch 2>err &&
+-	echo "error: corrupt patch at line 4" >expect &&
++	echo "error: corrupt patch at patch:4" >expect &&
++	test_cmp expect err
++'
++
++test_expect_success 'applying a hunk header which overflows from stdin fails' '
++	cat >patch <<-\EOF &&
++	diff -u a/file b/file
++	--- a/file
++	+++ b/file
++	@@ -98765432109876543210 +98765432109876543210 @@
++	-a
++	+b
++	EOF
++	test_must_fail git apply <patch 2>err &&
++	echo "error: corrupt patch at <stdin>:4" >expect &&
++	test_cmp expect err
++'
++
++test_expect_success 'applying multiple patches reports the corrupted input' '
++	cat >good.patch <<-\EOF &&
++	diff -u a/file b/file
++	--- a/file
++	+++ b/file
++	@@ -1 +1 @@
++	-a
++	+b
++	EOF
++	cat >bad.patch <<-\EOF &&
++	diff -u a/file b/file
++	--- a/file
++	+++ b/file
++	@@ -98765432109876543210 +98765432109876543210 @@
++	-a
++	+b
++	EOF
++	test_must_fail git apply --stat --summary good.patch bad.patch 2>err &&
++	echo "error: corrupt patch at bad.patch:4" >expect &&
+ 	test_cmp expect err
+ '
+ test_done
+-- 
+2.51.0
