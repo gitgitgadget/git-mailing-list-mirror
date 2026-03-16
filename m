@@ -1,115 +1,84 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic309-14.consmr.mail.bf2.yahoo.com (sonic309-14.consmr.mail.bf2.yahoo.com [74.6.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AAD36404F
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 21:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA5635F60C
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 21:26:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773696302; cv=none; b=tw9iX34JC9QdXqOQJjkM6sGt8RJy7CIn/W+9FtJ62+MrNELXpedJ6BpkLL1BUtGmxepKbk7YMxdqeW4BMILE6PgEG+RqvnJKzPicxISurIkE+nU10xlIj2FBjgvcsTzI7b9/F6cHJvogu6kRuA8nRaT+wA/ENt+8BpnzCk5z2jk=
+	t=1773696375; cv=none; b=jpm5PodX+eqbuYjFeU2rzmnV80C+LzF5AHei7q+9wT0tmdE/94VZFVBvCAXlZUg7XqYqn4rZ8WUchlXedZUKFrcwekcC3Dnic+3JjEjtMz4RwQZQcMEqFAxpSDBHCFPvWBcWckcBCXcj3VPaw8aDuLHJOvAuH3cg7E8eSEfqOZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773696302; c=relaxed/simple;
-	bh=CB/IOMLFYeQ5n6J7hBrzT8TAjrW8SWsj47R4oCnr0bs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ubcMR38YNl6Yf/E9fLJOCn0XZXYL81hDwHRTzerpYBK2iP5PT3uv/nWWVDjQWfb2uUMxY0XqG+G0GM6yv40XhXYP0eTm8bwDHSI6bM2kmtZhye1rXjfqA5bglxhYjSBQU9SRlwok4P4Ys6/iGmx9V5Y2o0kc4bdMHlt+nZmzawQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gC67Omtr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yZf9Pr4p; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773696375; c=relaxed/simple;
+	bh=uMua8iFkyTjvsDFg50lcbGFgktE9VvsWwPstLyInddY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:Message-ID:
+	 Content-Type:MIME-Version; b=juBO2X9pTeN0uY1MvzCAdJoB1kOVBU3g5VUMoFJsdnm+RdC7nQ/RV9LO3okzIdjFC5/kwVSDEe8fhm61Dc0Xd03Pk4kmSTYsH0nWpReKfv9M2yPCumDNQqhXjsC92ZUGnvzB0ShSsWMoAnpNfCYlkEqsV8J0RnLsu3aS+KryUgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=aEl2w/FX; arc=none smtp.client-ip=74.6.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gC67Omtr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yZf9Pr4p"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 09B7C7A0337;
-	Mon, 16 Mar 2026 17:25:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Mon, 16 Mar 2026 17:25:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773696299; x=1773782699; bh=XL2kHK7Pbu
-	iup3GGttKYDnLptNmNv26zeMFSa3suiU4=; b=gC67OmtrUBmtPpuxa4QWw/zjXn
-	ov1gquNXnegjXBDhnfgXDrAK0GdEcOEII96bpIUd8eUmdKAZi8+4MmoTvFUC+S/Q
-	4wASar5tK6fQzn9MVs3TtyuBe3uMVSZDmrQYv3MeXr9K+0tEdGbyhNLfyziRtCNU
-	vBvvtJBv1Yhn4eY9ksEN72Th2ZASMBWKh/5mnRkdWsGjXEmbZUjlVbtvh2F21B+Q
-	3xH2d0cTlZ2wZK2I6SKRoJsjL6w6CMfubZuanRrFLCZs/QEuOWBa1VhiFhKFc3An
-	L9UbGGvTZGfLSX4xncunnC/Srcrwj1txU5dmEZYV2JbN6IEu+MwGYh8Dr3zw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773696299; x=1773782699; bh=XL2kHK7Pbuiup3GGttKYDnLptNmNv26zeMF
-	Sa3suiU4=; b=yZf9Pr4p3kfl+R4LluCt9/xhev9d0XxWumPkMyomgFGpEcvfH20
-	KxHTKadn1a4JZfgM/mvw3C57PgvRw6VYZO0H3WoIoPN1Md6blV0QRCdwJEUGAfPE
-	wlHrsTGbxeTsnGCe1o2ibM+uHfe5xzR1diYMZnEJfwCcMYWn1PjokIrZAbK8daD1
-	FIfDahzzxyj7s48WbzsRWN9d+JALy25A6k6x/YtDsbXqCFMFsL6XAgGr83DgxXXi
-	K4Ln5RqSV5WPiuQj9btg5Z7iKtPSr7lGWrCu8/jGkmR6+3WI58XCDo2PhshKiHW0
-	4WfYN0SrXJVnPAgoKsDcK5hoiH/6204fBzQ==
-X-ME-Sender: <xms:K3W4aU2L9l5YUEIf_pibTODxoMlSYAvMBUKqG0GwMPk28AlFLq1KJQ>
-    <xme:K3W4aWE-S4Q3HxrrbaAawv8cR0mfDtlgLvOiIdeYfAWBr5AVrTKwlcJ3vGS7hTX8e
-    k5hXqHBzobYa5ybo5894MJco1x5XcV8Zo1olGzZq7BhAauCNu9S_g>
-X-ME-Received: <xmr:K3W4aR7Davv402dJtkZ2vSdQVCNVUUa4ELMYFqf-iw5EiP9a4s4Kg1g1jwvhXvcoUlKgEGOz90N03h9MP54FGKXCtwEc7gOalw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelgeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtoheptghshhhunhhgsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:K3W4acsVirSXBWfe4gI4RN8Nc0lkhibebcNHxzk70k10iPGxhBrqcQ>
-    <xmx:K3W4aS7fxLzXuOvgT_LZtwLVUDVo082ogiNXiuqyvk-z8u5KsxcBqQ>
-    <xmx:K3W4aXWoVDGnvVlgkAXk1tExn76XxXFtoY0n0CNGXODoGdmBKOVrgQ>
-    <xmx:K3W4aU_rK1rkjwYf1_p2Xsx39Ygz8j7vk2GgL84Z0vBdVu4bGzz0bw>
-    <xmx:K3W4aZ1xZnyM8gtYjmASEBHXXdeDH86vBg1NadP0pW9aLCVIS5YZ1oKR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 17:24:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Andrew Au <cshung@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v4] transport-helper, connect: use clean_on_exit to reap
- children on abnormal exit
-In-Reply-To: <20260316211934.GA1042816@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 16 Mar 2026 17:19:34 -0400")
-References: <20260311184206.GA1911377@coredump.intra.peff.net>
-	<20260312214945.4050010-1-cshung@gmail.com>
-	<xmqqsea4aen2.fsf@gitster.g>
-	<20260314160814.GA918806@coredump.intra.peff.net>
-	<xmqq4imfo6sz.fsf@gitster.g>
-	<20260316211934.GA1042816@coredump.intra.peff.net>
-Date: Mon, 16 Mar 2026 14:24:57 -0700
-Message-ID: <xmqqpl53mpqu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="aEl2w/FX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773696373; bh=uMua8iFkyTjvsDFg50lcbGFgktE9VvsWwPstLyInddY=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=aEl2w/FXRLzHJ65fHtuujgw+5BeTAtwySx9IXBefUVlG8PHWos4XeVAtGwlSDedkIBtOfNjsg3SR7/mxXeQf83qdoNZqJM+7eH0D+OuTtnvHnspEOzwzQagZTlQVMsjeKmO9CrHB3V1klADPtVJXcMTRo3x2EOvaVhGYKqqI6AhWQvaru0dwNYQqfarUv2DMdBNtvp7x31OrJldJgoIS8ZvWncO8GeSEMk9Qy2qC8gCaO+Lsnfa+GYHb5aiGJQyVkyAh0KaIYJarGlctTXKg6UrWP2PWMf2qpGlrJxFlbsc1QwBlS6vonMEqxyhSe7lQfoM+sQSUczP5ZVizhaFP2w==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773696373; bh=733rICT3D5jWOeT1TuFMDHw2JE/Qbqmuid8Ir8ce0ih=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=hvLAJVH1E+y5NS4gkb8GRDk+D9YOA/4dHaV+RZiOGKi+tahyb5bH5WoHWCoyjJJfyvRO/M4f27DeJ5ToloubEqabdSB+YniCvk6/js2DxHfEmVIrLWVqLNQ8MX/o1tocuZlx6bllXWE1Mk/hlEJkPtO/CSdUTYQiytI11azwnHLbI39M8IvuNlA/tkdXfCUQV0I9IZz+SUqqRpZlpzeRu7HdHgRC/hj/ng8x64md9212YdiPxONzJp0T48Me8kR3QWvXAVBnlHq5Zt9rPfzB59TR6LHee+GCq2YMBjWsviL1JuRXxf8fBDcq2k2IhTY7QVFeZudUseKSHlyw7J2F6w==
+X-YMail-OSG: MogVkysVM1ko2BAyXvh0BLyKdMT6XiS5pvnWIUPMuVuwzml_o8sVzbKE0k96DYL
+ XdxCKWoa0xWh7jdIkBB17Dg_UNCrBPINcvSPzd51hABJL80jcnahJOvgDFSCoNJz2NTuAUjxopdz
+ zI95Ao2tbUdQFeK..4Zj0CBm6j1f7qKS4r.fOq44dte.9.6IMiUDy4sXJn9Up770C4sarNnkSL3A
+ t.4CxWhOjkEcsu3Zk.lULqwMSYF1EIggKdeMzlGSt9Lo_MrEn3ozJU.Vq02diWUsooZJihg5kHXc
+ 9R4L9N.yUdyt8blXIH0zMJR0cdZ7W78GHUMFTVrsWNRldxpRySjZC6ZbF1DU9zK.X4Gb6eVnHfzZ
+ xIhtTIHOT8yHWzlqfBDkvBolSpdoWU4Vq_wpk_yZ.LNA7l9GtBilK4CfcDhXNVvbRW0LZUx3zI8.
+ kEPM3pKjJ8PU43mvidaPc4DODaBOzXNq77fOYUph_D8o_zsT47AgQQNnVmgXC0ZHYMuEjWZnTPSc
+ MT9xlsLIlRw4xTP88KduNu0tdh4pB0e6PZqhENNXdYf7WyJeMwOmQdVztkCy.A4PrqZGgizMQgHM
+ NADhNiz.xKgp4yNdsALJ2mlr0sP1xUmsqu_bKSu2BMPfoeCZB__djENzMG_yH2QN54d8GQM1Vs25
+ DIkuyKDkzAWKopwR2q2cG5OIFA2dcvxidlJRx99fDxyN9BzgaB1TnaqEt71I9PF2TONHX3l4kdd3
+ YAz.tX7EsxrYqIJcR.FQZwwLzbO1H7SJUcT_k5S.zXpaeGT0ZRpE2IvGiSC9o0srxk7.nBrxZ2bU
+ P0qKIL3_grPeG2DioxPIyK61WypPfyXsn5ZjxdcHgJsZhXoIbd5QhGdPUTHvI23IvPwdqdEjd5yr
+ zXVKlV9rxhQ9I7wYrkk7tuHpAin2MZAwYHaPd2Zw9p6HtPw9Tx88bNnwmxtKT5NIjkgELV.A7A4l
+ D0CZq_75Qe3ISaxkLLXvAx11wzyFkGvBPZWZNTEcdi9uGaQ5etnyo22.tS1x3G9G2PDijonmGTVd
+ uXeLCfxwwPyZf1so0OfeadZHJse2JvbTDpwu9LBKRV9GtxHS3dEnQhswjeq7DuUExkdo9B2QJBgi
+ RrWjd7J191zaVmvVSu8585QXbqRXCi.awAQ0glGQp7O.9fIOMkQqigoheArPxvPGLmHZfwIOsT1x
+ ZBTbvv4VZSubRx.HCGwD6sowu8gU_Q_35jQSaKFM5M5QGaCvi7vVhml2QyWMlcrw5FXBuci75awo
+ ExztNCG7e0i2FIN7D7wVwmYgmHx1joy1yoavZZYy3x3fvlHMtNFFkRQ3KFu_u14eVXnOtvUT2me_
+ KRLDPp1A8SZCRsIBXDw1R6P1KXWDQhi_QwsVSSVSuZoZpwD8iWgob7IQPoaky.Vp9JW9TuqB0Ndz
+ XLOlxHlTp3_y7HOhaVCzw1uqdGU713GKpuKwh5lnvtSm.Ia_oZzFq.62oJVfHsMM5Ma8Rbc0ezN9
+ Dpk7_yAW.8ZIsM7MTDb70X7whDdCUcjr3uim6GHv5RCjO11AL1gERNiC8xv3Xbnh6DyyNKEilj_z
+ bK1p6E2DUqVAfoeIHco0R6Kr7KKKTtff4XCib92INref9N6jw4CHKBkCZtHwPE7psuvMpkv2fAjO
+ uaUnTwr2Fn.T5qG5rXoBL01NSQdURVItIpTPVzWLETpXgTwKXuUBaV8twep0K4Bw81KdIftFOtys
+ h6n1ZnfQIZSuSEuLItUxYMsP.um8YrSwsB0yxz1hhk8WBHsOpbS654sZeXmpnKaHTvC3CcQPQPzV
+ Ozw0WT8sA4.LZUZIfInpvoByze1Z.wsx7m93p6VB9hoALHNhON_AUE2sUdKi2ULOjfxA.6lzvzsV
+ AKZUzeuAZQ4f138MYB9Yp9J9O1YY0PzeLfyLVIWd9rQpfYhuGXxlQ.fkt0696xvP02o5olqXFfzE
+ YJAockt8vypa7pKPRRPbkq213KoNotbNSmFuHB1M7vyVYLV8rWJ2eV7Lvtna8_91Wf_iFBRoqZ8S
+ SHKK.91vlKVtCIjIEqxUfAETZLtLzUvqX8QFANpPhMQKZ5Vlq6H.4aZv3FxsOjQ6synOaiLHKo22
+ eBU.7h1.m2aR9gKsWIggfMVRNBnzwi85lFbqQ0GQPtgSNdYaoFT_2vEgeqs9uETZ84wFVZ67QPqP
+ ERtHcTaLHI3gHnO2it23NPnb2ydKFlMbxQieqYlBF63u6rkn2MDvT995.i6QoAVQBbHMSnGc8YnZ
+ vHAISOcEfkBC14MfGBDPo04UK1qLXVT8TnbT7XTI_KJ3XKzUYMHIAkyMUlByc1vCCQGe98JslFuE
+ e8vj4PxhbkgwUFPsfc36f_k9NsfKg9PWrZ7XoAloXqV6TF_gEISnXQHaqTHKg3jYt2HfCVNTzzIi
+ a40ry1IavUMZfyvDaV5xUjK_xGpy3mQ--
+X-Sonic-MF: <jerrywang183@yahoo.com>
+X-Sonic-ID: 3599e753-90a1-41c5-9227-2a60d609cfc9
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.bf2.yahoo.com with HTTP; Mon, 16 Mar 2026 21:26:13 +0000
+Received: by hermes--production-bf1-697f88457-j2qvt (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID dd857beec0bbdfceae4d14d9fcd3f2d0;
+          Mon, 16 Mar 2026 21:05:55 +0000 (UTC)
+From: Jialong Wang <jerrywang183@yahoo.com>
+To: git@vger.kernel.org
+Cc: karthik.188@gmail.com
+Subject: Re: [GSoC] Proposal draft: Improve the new git repo command
+Date: Mon, 16 Mar 2026 17:05:54 -0400
+In-Reply-To: <9fc1d23fbc7d46349ac01314fbfc06eb.gsoc-proposal-draft-jerrywang183@yahoo.com>
+References: <9fc1d23fbc7d46349ac01314fbfc06eb.gsoc-proposal-draft-jerrywang183@yahoo.com>
+Message-ID: <177369515432.95597.4924615522630208830.git-proposal-thanks@yahoo.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Mailer: WebService/1.1.25297 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 
-Jeff King <peff@peff.net> writes:
+Thanks for the feedback.
 
-> Huh. Obviously yes, but how did I manage to bungle this so badly?
->
-> I _think_ what happened is that I compiled the topic without -Werror,
-> because of all of the -Wdiscarded-qualifier errors that happen on
-> 'master' with a recent glibc.
->
-> My integration cycle would have caught it, since I have another topic
-> with fixes for the discarded-qualifier issue. But I hadn't run one yet. ;)
->
-> None of that is important for you, but just wondering if there was
-> something more subtle going on, or if I just screwed up something as
-> simple as typing 'make'.
->
->> I'll squash an obvious patch in.
->
-> Yep, that looks good. Thanks for fixing.
+This is very helpful. I will revise the proposal to make the current
+direction, the relationship to my microproject work, and the timeline
+more concrete.
 
-Thanks.  It is probably a good thing that you are using toolchain
-ahead of the version I use.  We catch different kind of errors that
-way, even though occasionally we see a gotcha like this one.
+Thanks,
+Jialong
