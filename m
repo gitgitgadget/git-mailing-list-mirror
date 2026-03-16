@@ -1,67 +1,66 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2929E18AFE
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 10:54:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8073C192D97
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 11:03:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773658483; cv=none; b=Us2hgaWbYQAtBE/wkouV7VgZOV1m+gjPHNL1Qe109ksyhhAusBnDh90ZB9JSePKXlA+1ZpU5/+ERuh2PLKDi6y7jgGueM/RFmhmQJJnpjGTJ4VlSG9txpnLvvUBoxsGwc4PpiU9+JZOOvRkXmibRal0Vm0ibPWC/VfZ8XvYQbNY=
+	t=1773659003; cv=none; b=YeByoHLpCk6Q1HmHGYaiEVvmf+cJm0xb9S/SXD2fG52ylPXXwXtetBmCri7eMI+K2CBjMYMDonNgI0HvedqEM+RHPRKW0mP8yHgMSSC2ApY/2OPuhy4UWcblbcgE5CcAkRmg1ELgW4SruwrOn0R0CC0DwV5cFkXZjlItNSz5VTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773658483; c=relaxed/simple;
-	bh=E2pkc2qXl14uo1c/Z2LjhmECAtxLK69vN/nN/L+zRm0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QaU4aI3vA5OpjdoPSm8/dzxNlQTarWyBN0Nqo0qvyCjg3ca9t5JBLjFI4UjiaCsNJbAfvD/0InwZqWA2QqezAbCY/1qlMWgKRKUSDVLdmurAy+kLMYvKmGm8X3fecO1fHYZwj2AMA1QIhlX2PbHdhBOEj5QTvAWniBPh0AdhAt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kt4uO5+c; arc=none smtp.client-ip=209.85.221.46
+	s=arc-20240116; t=1773659003; c=relaxed/simple;
+	bh=L1kTZgRAhipoyo4IeBD8hNnGsYYQwZgzLS6dVKGSlmI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:Cc:
+	 In-Reply-To:Content-Type; b=a5OxtAb/26awiuyG9YdtHQr2/FGX2piOaVz1WCwaaNkPx0VCAkkQ5rM+c7RPhmZryjfT32An8ZzDBSlHLDUO/v4meFkHd2eMnLIIcoZIs/IvAtfFw9RdGFN3+57b+sBKxFjKEaGECfDK9XMig6sCV10BmGBqw8FGLDCMo/azXbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H0DdjCIT; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kt4uO5+c"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-439b94a19fdso4058765f8f.0
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 03:54:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0DdjCIT"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48529c325f0so31604315e9.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 04:03:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773658480; x=1774263280; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1773659001; x=1774263801; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:content-language
+         :references:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7joeUXEo0ZudSJ99K3I0n6waeJTPrXBIgl63hbda0hk=;
-        b=Kt4uO5+cfcS+SxEZQ/equLYoW0Hd743joj5NIVX+qAhAxQin9PCuAJ3zPLUnwgT6iG
-         ly+/VTdDAcb5CCPE4+mLTVb7HUooQZtvzz9b4LiNop0URggz7X2zmGDWK/caiKuEk+rp
-         OYUz4WUN5yth8zIyAZSq1mnOGtxUvWJFcPHuo/qIb87j16TH2/1rL7VebBnsbRybBFF5
-         Ezv1s1I0oNZ0tYDoECDH+q72yvbeD7bA4qkJpEraD9MpDDHK157UHktU/Y7CH8NmDHKF
-         INDdzftsWe36mpEMVlMt0kdk7rT/4oM8JqIQc+1WGyPz1CybJRUlDR7ox94ogrMta02o
-         cp4w==
+        bh=rL9BaB7/ZYPtP82bIdCFXyNuq/2HadqA+jIiXKoyVB8=;
+        b=H0DdjCITXBV3IUq6OnD8NkYZmTobhSk45zJT65rQBAsxoGf2Hjfo+K2CABdJqCjJ7J
+         tz256fob2FK+uwl44qrjqNMmDED9m2uJBfu2XNrw4U9EvC4tYHB7giJdM36gImeit5od
+         WBGBVErPuSCeHMTT229N3dLObCxoTpN+/AYMOrJyKmMO2o3Ny15VhQfC+z5/oYWOXi5H
+         dEXtOUdqcsHlzbIeWEBriuBV9KSx5h3Eli+TZdk4eKdYzr777Y5eD0yK5FG2gXYFEqzw
+         pH0ailLapSJTu3CorlCOOoEc7QOp18abr9/RhG07bTCDSEVZadWqkjJ/4m5GSpmGIZBg
+         RBNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773658480; x=1774263280;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20251104; t=1773659001; x=1774263801;
+        h=content-transfer-encoding:in-reply-to:cc:content-language
+         :references:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7joeUXEo0ZudSJ99K3I0n6waeJTPrXBIgl63hbda0hk=;
-        b=os1GLpiGlGfIbxIuz01+d/OhO8Pe1yxsFGiRTjA60XPppuvbTHS9PR9LehaeOLC/1y
-         GLVQTF6x3pJp32tMSv+KvQVcyeyjQZRhq89GHkGr9CB1tLFmgUai7aOWJDZ9IRgMYkDo
-         IIlzVYjjOb6qhsBsidDJ3QxdSZCIIsultsTgva1gZqFynBIA1udcVi/TZR9GWdCXs+VY
-         cUza/gOg208JNN0tRg2vECBp/ANOrALHduj2eKtuIjoBCxubWAn/ovhsebHBKTi1tztm
-         RHKUtoXClCfs2R+jHOQJQ6V39BWB+cY1YBQHKrC8wraj0fPAtwRXh79tzYqrXUrGxCOr
-         fC2A==
-X-Forwarded-Encrypted: i=1; AJvYcCV7rsUbDFVSstdn3SS1ITq9TT/dp7RQjiDc3IMgVeBqsPNkyE12WZ6v9So82MXeI/9YCrk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy10KnLE3p0fdnYPLQpWT+OLaeWDxZgb6HN1OnlZoMrsqXsckIS
-	QyFqpEBZf0qO22UFnGR7jWrQPw5DSk/HXgBV+QYbVWC2G7e/ul5v8Y37
-X-Gm-Gg: ATEYQzwM5CiqFVN+s8TnDyQhgM2gD5UtL9ZiIyr4dZwANIDRMJHH6fXk4ABIKZ0x2bx
-	XQ3PS+wZdonUowsR6hFvaukKkdO5+qMiyk8nglGMt4DcLSaB/yXsS/rzpvurRpxj5H9Dvasj/FF
-	om7RjQ9vQxOB2sIZDMGarpKkpjFYoPhpY09IxUHFYYqCmLGdJoWzBb2BHc0mw2aDsLa3dbclu6F
-	VXeWVscXUZ5zzqFLZ8GN066IJzoUPagoXEwwMi24GCsvgm2Cr6yowuq+EiI2g2plHdTN6ya/0Rz
-	iwQF5HTYhcqjM/hqW2RxxqFyOWrMp+qbxNIcMOGYF9EuQmjNJ/qrnUJYJonZSKj5c2Vm3YMWEYd
-	gUMcuyl122d0Wq1RlKviJxO9h2sSDmrAetmuHNkb7cP/S0Ro67rolJshUmUwf/YJsJqS8SvEF2y
-	6h/FIebCbrS03vv0xTo50wTKbDXaUsxpSFpvwnur5HkbbyRA2whz5eVtf6CVsq5t8AO1Mulf10M
-	fv6Zui8pnSzSxGN
-X-Received: by 2002:a05:600c:1f8d:b0:485:4278:24fb with SMTP id 5b1f17b1804b1-48556711dfcmr209920425e9.32.1773658480186;
-        Mon, 16 Mar 2026 03:54:40 -0700 (PDT)
+        bh=rL9BaB7/ZYPtP82bIdCFXyNuq/2HadqA+jIiXKoyVB8=;
+        b=c3zF5y3NXoJpBjuTIQfnpH/CzazEixKQhSc2UJrnLU7ktOgCdzAMgqzg7sGshZIGWO
+         nr8Y/DJZzr5UAfUILXed1dThKkwHnb5dQeNJWz00kZevIpCOKTVFnZRehW4Df5RrOrWP
+         NKfaeoNa3Vc1yCqEUtdLdJwtAYPlP8mDi7ldCD87SXrBRZWQ1q0oMDG/2I2/6Y+Kan30
+         /As30nRAi61wm7pZNFz6VkGu/qs8Wy7/R7IZR9KERA7pYM3M6psOd9or1blNIPJe8y0/
+         DliTdGbYO38Rc4ff/mvhky7eIqg2TCqH1z6Tqh7E4yG+A/uY2H5SkHKD6sM+jOhS8BXf
+         fRjw==
+X-Gm-Message-State: AOJu0YxEX0E/1XOpY8FWga8CC141ArbuZvIMdDLfzwvHKS+nuvgJJIFK
+	LFW36irzBf6cWmZxoi2FtBpNjvbX61vJHstGf3/D8Bf8XqfW5Yg+26oEoIRB7Q==
+X-Gm-Gg: ATEYQzxYlYUX858DcNXBCuOVNIfQ/tKnDU6JUr4sJXoakXSSFZ2GBqOUGd8B6kghzMz
+	iEyV/ihUsSPOpHnSBFUgsZF8jrirY3p5TjJ+RBpJ1FzrR24SSFGndA7F36nJHifRc2SkCn5v2RJ
+	44hd8XqfvR21IQ6jcadVE39Bs5Ae+5ANlLPlkgtq1CY+wjbk6FXtPJwkp5zvJvfHsXTHqoQcsD4
+	a/IVLt8R7aT7/Jf6KZZE60ZldAlIlA4Fu4GuPXg69Hz++bGmQmy6gOJRO6zFN9NkRnGkrIoLyTz
+	ux4EnMQTQzkHm9C3fNVvlXcbOduCMOHWiUCURtcM1dOLqHb2p1+bM95rWTWg1xWsKSURPT0jYT2
+	XRqkRxEftLsD6/Y9FdmBwUHzz7CecMsKsegqua5mejKk9H4uCOc+F8lxeV0GqRfwUs75s//UhSV
+	mZ1gJGSP73iVcVZuWUEgk3BhWQm1gYCVv7Hu5yFYX9xTURWeLevrPtXgCxPgtiu4TrIUesSELxL
+	dGfTQ==
+X-Received: by 2002:a05:600c:1f8b:b0:485:3bb5:92cf with SMTP id 5b1f17b1804b1-485566cfb97mr223518615e9.12.1773659000678;
+        Mon, 16 Mar 2026 04:03:20 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b65fd3dsm396999445e9.10.2026.03.16.03.54.39
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4855725572csm180023825e9.2.2026.03.16.04.03.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Mar 2026 03:54:39 -0700 (PDT)
-Message-ID: <7ff11efb-a44c-4c78-b8b2-d38f8a6beb9f@gmail.com>
-Date: Mon, 16 Mar 2026 10:54:37 +0000
+        Mon, 16 Mar 2026 04:03:20 -0700 (PDT)
+Message-ID: <82a8a222-b18a-405f-9a9c-92c6e0c05591@gmail.com>
+Date: Mon, 16 Mar 2026 11:03:18 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,155 +68,122 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/8] Some build system improvements
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
- Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
- <20260316-b4-pks-build-infra-improvements-v2-0-4b2c2c0c0425@pks.im>
-Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20260316-b4-pks-build-infra-improvements-v2-0-4b2c2c0c0425@pks.im>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: cherry-pick: add --show-current-patch
+To: Florian Best <best@univention.de>, phillip.wood@dunelm.org.uk
+References: <43529695-5987-486a-bdff-46f573868c4c@univention.de>
+ <2d818389-6456-4b75-8a29-3167fc3c885f@gmail.com>
+ <f2bf231a-2b18-4f1c-9cbc-2b94f669839f@univention.de>
+Content-Language: en-US
+Cc: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <f2bf231a-2b18-4f1c-9cbc-2b94f669839f@univention.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 16/03/2026 10:07, Patrick Steinhardt wrote:
-> 
-> Changes in v2:
->    - Turn array of precompiled headers into a simple string.
->    - Point out in the commit message that the precompiled header is
->      included implicitly.
->    - Link to v1: https://lore.kernel.org/r/20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im
+Hi Florian
 
-Thanks for expanding the commit message in patch 8, the range-diff looks 
-good.
+On 11/03/2026 19:42, Florian Best wrote:
+> Hi Phillip,
+> 
+> thank you!
+> Your reasoning makes sense, and therefore --show-current-patch is 
+> probably a bad idea.
+> I simply oversaw that complex sentence in the --help/manpage:
+> 
+>  >          2. The CHERRY_PICK_HEAD ref is set to point at the commit 
+> that introduced the change that is difficult to apply.
+> 
+> Maybe adding "git show CHERRY_PICK_HEAD" to the Examples section of the 
+> manpage improves finding it.
+
+That sounds reasonable, are you interested in contributing a patch?
+
+Thanks
 
 Phillip
 
-> Thanks!
+> Best regards
+> Florian
 > 
-> Patrick
-> 
-> [1]: https://lore.kernel.org/git/20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im/
-> 
-> ---
-> Patrick Steinhardt (8):
->        Introduce new "tools/" directory
->        contrib: move "coccinelle/" directory into "tools/"
->        contrib: move "coverage-diff.sh" script into "tools/"
->        contrib: move "update-unicode.sh" script into "tools/"
->        builds: move build scripts into "tools/"
->        git-compat-util.h: move warning infra to prepare for PCHs
->        meson: compile compatibility sources separately
->        meson: precompile "git-compat-util.h"
-> 
->   Makefile                                           | 76 ++++++++---------
->   ci/run-static-analysis.sh                          |  2 +-
->   config.mak.dev                                     |  2 +-
->   contrib/buildsystems/CMakeLists.txt                | 18 ++--
->   contrib/meson.build                                |  1 -
->   contrib/subtree/meson.build                        |  2 +-
->   git-compat-util.h                                  |  8 +-
->   meson.build                                        | 96 +++++++++++++---------
->   tools/README.md                                    |  7 ++
->   check-builtins.sh => tools/check-builtins.sh       |  0
->   {contrib => tools}/coccinelle/.gitignore           |  0
->   {contrib => tools}/coccinelle/README               |  2 +-
->   {contrib => tools}/coccinelle/array.cocci          |  0
->   {contrib => tools}/coccinelle/commit.cocci         |  0
->   .../coccinelle/config_fn_ctx.pending.cocci         |  0
->   {contrib => tools}/coccinelle/equals-null.cocci    |  0
->   {contrib => tools}/coccinelle/flex_alloc.cocci     |  0
->   {contrib => tools}/coccinelle/free.cocci           |  0
->   .../coccinelle/git_config_number.cocci             |  0
->   {contrib => tools}/coccinelle/hashmap.cocci        |  0
->   .../coccinelle/index-compatibility.cocci           |  0
->   {contrib => tools}/coccinelle/meson.build          |  0
->   {contrib => tools}/coccinelle/object_id.cocci      |  0
->   {contrib => tools}/coccinelle/preincr.cocci        |  0
->   {contrib => tools}/coccinelle/qsort.cocci          |  0
->   {contrib => tools}/coccinelle/refs.cocci           |  0
->   {contrib => tools}/coccinelle/spatchcache          |  6 +-
->   {contrib => tools}/coccinelle/strbuf.cocci         |  0
->   {contrib => tools}/coccinelle/swap.cocci           |  0
->   {contrib => tools}/coccinelle/tests/free.c         |  0
->   {contrib => tools}/coccinelle/tests/free.res       |  0
->   {contrib => tools}/coccinelle/the_repository.cocci |  0
->   {contrib => tools}/coccinelle/xcalloc.cocci        |  0
->   {contrib => tools}/coccinelle/xopen.cocci          |  0
->   .../coccinelle/xstrdup_or_null.cocci               |  0
->   {contrib => tools}/coccinelle/xstrncmpz.cocci      |  0
->   {contrib => tools}/coverage-diff.sh                |  0
->   detect-compiler => tools/detect-compiler           |  0
->   generate-cmdlist.sh => tools/generate-cmdlist.sh   |  0
->   .../generate-configlist.sh                         |  0
->   generate-hooklist.sh => tools/generate-hooklist.sh |  0
->   generate-perl.sh => tools/generate-perl.sh         |  0
->   generate-python.sh => tools/generate-python.sh     |  0
->   generate-script.sh => tools/generate-script.sh     |  0
->   tools/meson.build                                  |  1 +
->   tools/precompiled.h                                |  1 +
->   {contrib => tools}/update-unicode/.gitignore       |  0
->   {contrib => tools}/update-unicode/README           |  0
->   .../update-unicode/update_unicode.sh               |  0
->   49 files changed, 123 insertions(+), 99 deletions(-)
-> 
-> Range-diff versus v1:
-> 
-> 1:  224e28be31 = 1:  9d09d2c39a Introduce new "tools/" directory
-> 2:  b217df51e5 = 2:  1b96bfe0f4 contrib: move "coccinelle/" directory into "tools/"
-> 3:  e371b6c221 = 3:  ed6e90bd36 contrib: move "coverage-diff.sh" script into "tools/"
-> 4:  3efeda9fa0 = 4:  48d8275ed1 contrib: move "update-unicode.sh" script into "tools/"
-> 5:  ee074c1396 = 5:  daafeb3462 builds: move build scripts into "tools/"
-> 6:  d30d4a3119 = 6:  947fc0f7b4 git-compat-util.h: move warning infra to prepare for PCHs
-> 7:  ca118197a9 = 7:  6a2fb99aae meson: compile compatibility sources separately
-> 8:  a865a8650b ! 8:  857b478896 meson: precompile "git-compat-util.h"
->      @@ Commit message
->           set up properly it means that the file won't need to be reprocessed.
->       
->           Set up such a precompiled header for "git-compat-util.h" and wire it up
->      -    via Meson. This leads to a significant speedup when performing full
->      -    builds:
->      +    via Meson. This causes Meson to implicitly include the precompiled
->      +    header in all compilation units. With GCC and Clang for example this is
->      +    done via the "-include" statement [1].
->      +
->      +    This leads to a significant speedup when performing full builds:
->       
->             Benchmark 1: ninja (rev = HEAD~)
->             Time (mean ± σ):     14.467 s ±  0.126 s    [User: 248.133 s, System: 31.298 s]
->      @@ Commit message
->               ninja (rev = HEAD) ran
->                 1.40 ± 0.02 times faster than ninja (rev = HEAD~)
->       
->      +    [1]: https://gcc.gnu.org/onlinedocs/gcc/Precompiled-Headers.html
->      +
->           Signed-off-by: Patrick Steinhardt <ps@pks.im>
->       
->        ## meson.build ##
->      @@ meson.build: libgit = declare_dependency(
->              c_args: libgit_c_args + [
->                '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
->              ],
->      -+      c_pch: [ 'tools/precompiled.h' ],
->      ++      c_pch: 'tools/precompiled.h',
->              dependencies: libgit_dependencies,
->              include_directories: libgit_include_directories,
->            ),
->      @@ meson.build: test_dependencies = [ ]
->        
->        git_builtin = executable('git',
->          sources: builtin_sources + 'git.c',
->      -+  c_pch: [ 'tools/precompiled.h' ],
->      ++  c_pch: 'tools/precompiled.h',
->          dependencies: [libgit_commonmain],
->          install: true,
->          install_dir: git_exec_path,
-> 
-> ---
-> base-commit: af2c8a61818d773325ef2324dd135786a03ebca0
-> change-id: 20260304-b4-pks-build-infra-improvements-cc4012c5364e
-> 
+> Am 11.03.26 um 20:30 schrieb Phillip Wood:
+>> Hi Florian
+>>
+>> On 11/03/2026 18:30, Florian Best wrote:
+>>> Hello,
+>>>
+>>> When running `git cherry-pick` over a range of commits, the command 
+>>> may stop due to conflicts. At that point Git reports the conflict but 
+>>> does not provide an easy way to see which commit is currently being 
+>>> cherry- picked or what patch is being applied.
+>>>
+>>> `git rebase` provides a helpful option for this situation:
+>>>
+>>> `git rebase --show-current-patch`
+>>>
+>>> This prints the patch of the commit that is currently being applied. 
+>>> I believe a similar feature would be useful for `git cherry-pick`.
+>>
+>> That option exists for rebase because it originally applied a series 
+>> of patches rather than performing a 3-way merge like cherry-pick and 
+>> so there was no other way of seeing which commit was being processed. 
+>> With cherry-pick you can use
+>>
+>>     git show CHERRY_PICK_HEAD
+>>
+>> which allows you to add any of the options that you'd use when showing 
+>> a commit. That is more flexible than a "--show-current-patch" option 
+>> because you can restrict the diff to the path that you are interested 
+>> in, or show a word-diff etc. When reverting you can use REVERT_HEAD 
+>> and when rebasing you can use REBASE_HEAD to see the commit being 
+>> picked. I did wonder if the documentation could be improved but for 
+>> cherry-pick it mentions CHERRY_PICK_HEAD in the description section at 
+>> the top of the page.
+>>
+>> Thanks
+>>
+>> Phillip
+>>
+>>> Currently, when a conflict occurs during a range cherry-pick (e.g. 
+>>> `git cherry-pick A..B`), there is no straightforward command to show 
+>>> the patch of the commit being applied. While it is possible to 
+>>> inspect `.git/CHERRY_PICK_HEAD`and run something like:
+>>>
+>>> `git show $(cat .git/CHERRY_PICK_HEAD)`
+>>>
+>>> this is not very discoverable and requires manual steps.
+>>>
+>>>
+>>> Proposed feature
+>>>
+>>> Add a command:
+>>>
+>>> `git cherry-pick --show-current-patch`
+>>>
+>>> which would display the patch of the commit currently being applied 
+>>> during an in-progress cherry-pick operation (similar to `git rebase 
+>>> -- show-current-patch`).
+>>>
+>>> Behavior could be:
+>>>
+>>>   * If a cherry-pick is in progress, show the patch corresponding to 
+>>> `CHERRY_PICK_HEAD`.
+>>>   * If no cherry-pick is in progress, report an appropriate error.
+>>>
+>>>
+>>> Motivation
+>>>
+>>> This would help users:
+>>>
+>>>   * understand which commit caused the conflict
+>>>   * review the exact changes being applied
+>>>   * debug large range cherry-picks more easily
+>>>
+>>> It would also provide feature parity with `git rebase`.
+>>>
+>>> Best regards
+>>> Florian
+>>>
+>>
 > 
 
