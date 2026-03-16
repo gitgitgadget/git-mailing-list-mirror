@@ -1,539 +1,529 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83903B7B83
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:59:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773680380; cv=none; b=JcSUkR55wLofcmTRLlcVJaEP8n4tIePgiqy11TDEKYktXyEl+7xvJHrYbBDkFngcxnjxIhX1tTZqxUbPLQvR+I3Qg6kCpKeFbwAg9B80AVAN4iOGDk4XJP7CYR2BaByyANC1TOWwkwJHY6xIkTTCRh8gVgITZ1K6J50AxGvcJVk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773680380; c=relaxed/simple;
-	bh=BHIFjW0yEpDlcsguPir7uEOJRESLB+sUBbtzdsG5BE4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Hz4+te+zktam77r9HRoTAVpURtWvB22ENKsGdX6x34e6AzZAlvZAegzmmZM8uCHKkJJj7He7Szl+PpbH5iJl4kqjeucABZNBIYbIkLPYQ3Mo6MwLs8p5ZRd+qfpciVhGZXwhQ5NQcIBWKzs0WN5uxA8/x1+qkxyrCuJ2VUxZUPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IG/k8jxl; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4140E3CF66B
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 17:04:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773680663; cv=pass; b=u7MQ985eTFUE13yl0UMKPtuCNip1FN1GvAoGno29n0rw+J3gffd0qZnrH60gbHfkNswUaAwk1sTi87wj3mSrsRSiWAz8oSPRtQsJNWh5Zs1y3DSlF9s1s4on4Bd58NratO23VLjJOgvAm4n4Ui5lIbrKAzL44OxT1p6YDBcPC8Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773680663; c=relaxed/simple;
+	bh=Vf+jGo/C3rg7xHz06Kq0tBpr732on4o/M5PNZ4CV6lw=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aKSuAgBZ1ss9LJAxbR0589/rpW0wxe90vZ3eAhPQhUj1rMtjp9WKq+pssHIDyhxDkjXiQCFz5ZnsuYiBbl6STxZYZlQVd3YhD7EMIFIq5XefU5Xg72xqH9GFOw7cWvo2yv05nZI1wUja0On+I62O6GR6tWEgdJMY02/wUcte1aQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l8toM5yl; arc=pass smtp.client-ip=209.85.217.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IG/k8jxl"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-439b9b190easo3410492f8f.2
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 09:59:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l8toM5yl"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-5ffc6a96602so949062137.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 10:04:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773680660; cv=none;
+        d=google.com; s=arc-20240605;
+        b=StU2ICpDjWS8EvLA0SPDdRNT3oNrQpGHqYAFg1GMeJhy7w8DidRCDIEZvGjIv+ANuN
+         LkO6fYR5WLRgxhGTWtaQ/552wHSkaTuU1AtMMlYcxNm+aDuK19GUgz4ujHCIQdpVzdwd
+         YEJnfZLoX7RQIj4IqsT2N+H7jWrIU7T9a1kB+0yxFj+JwROMZC/H/brL331MiEGGSCxK
+         3+KUaQVxAyzG6YOxO9/jhLJNSO4aEOg3FnTsI9mVAncxoXiW4WFcfq4PHckbMRzKhu6y
+         va7+SCorgjlQAjxHWJlpAcOyOzGOvVnXAEJznUnYCHXLsRkE/jbqTnbRbJ1FECsDW47L
+         eSGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=ieJFBFtS1XcJFSNV4/FueELoPJVOY2Hsm+RYZ4YEKFo=;
+        fh=QhjMBNBIlZ/NPTAx3bWaIpzMsABow/tQSpnf5QNbDJY=;
+        b=ehmizF+NIyFnbQDTpoYzZ3L1XBKu+Byn5l7POfzKLiKquj25ZNNqUQsj9LxNVdNDv3
+         cUD7fNu9/fRKXqSxFPjxfGU21Z9Kkj41UhD7LazEt3e96T1o7Eh2HDHztD2SzFAzXDNX
+         1cqfW99y0MZ9kMoKOvKhubdWhSxmGlwtj7Zthw1/spiWl8ugzezFL8U5fAaVRkZiGdSM
+         9ZWXcnEF6Ca/CF/9dTyeAxSkS4D0+V41viDkokPLBN6KttcsNDuaUypoouiwijaAC+zV
+         vbZI6SiI5Qi7IMMl2PR4n+k96s/8thm/oCnkZipN2bTgJz41E6m+VZyvIHhSOytcy/m/
+         BEBQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773680377; x=1774285177; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IZjoC8aEFEuV6PQPnQ5Ay6iZMF8mBZYwuaPO5/NxCVw=;
-        b=IG/k8jxlxwRipc1iSgZSVzCUqvam5y78T5ZH5TrVeIpYm1WBdjgTN9kATdxa7dZUoH
-         aAdTL+BV/EnNzLKvxyBaMIdwyWmPW2lZCy2mWORtNQ0de20S8h7UoHFGRFzcjW2qrOhU
-         cF6TuLHq4OaD/Y27+TEcNY/DCiSOw61DmvScpOJhorpMgg37IpguarqpKSQHQ1R82ujR
-         bTBTmiDnL3E6DxSx9K2pRZQv7J/+5hQZKHNQ3fhUWCd+y3UVMPxCboDPH+rf6mT5eyAe
-         klV5O0UhJnpMiK61Vfhy8Y1BEkGMgkd6HfTaPzkjYGSkDXz46TeMJ9y5v85Jx9DaBVMF
-         D0Hg==
+        d=gmail.com; s=20230601; t=1773680660; x=1774285460; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ieJFBFtS1XcJFSNV4/FueELoPJVOY2Hsm+RYZ4YEKFo=;
+        b=l8toM5ylDT2sVIc6iv0t4+O7js22AXZN779RIJ1yY7YjwrOtkuhmpJXes0sDwGvG7t
+         Nhxmx6TfdslZK/xkxbHQVNnXXSFNjWO+Q4qkl5IvE1tstTbV53T01mWAb0wdr+gRN37s
+         VewNc7x1Wx4ljTFmw6vxfhIzNGXXP8eDDeyLPKSIpfBtAahD/YZ6i0gscVgZzl6OJqOb
+         97wWXCv3KlylSqUOcYo0zeQvA/bc9z9D699Fe10LZm3tUuq3EhMX9HYEXUSjn1swX2mH
+         QMCKWcHDxOp/EORgc5yL1g6JZKnmoZZubzzzw0/5Q6zCEjjxFs+g2Jom+69nLxKHTLuy
+         dftg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773680377; x=1774285177;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IZjoC8aEFEuV6PQPnQ5Ay6iZMF8mBZYwuaPO5/NxCVw=;
-        b=gc1pMkPI8+DopGZL8GG/zFHboKSRkGYIY9u1F9hyThmqbnkLhMtrfICTKWl6cv3tGV
-         4JGo8fj1wWcKr8xt96D8Q9cMHZlhR8Q4lbq1tP5SQFE5tkLFLQnzl6bk8pBbrOwyL6I8
-         DoOAr1322hyS5jP6noGecPcpIJt6ZgeOGjSFmss3lbLbz0GHLp96zvcUBQuftvcCFX2L
-         cgFmys35Sj5X1ubczf1hbBlrMy9Tmqg2YfBLYTe1jy0Ry3vTQ7IY8v9MNkDwGK9Ejzww
-         5rASrNtxiuz24h+pSYviLCwUWPac10otQl1QJidRn/iqFpcnChgZZ4mDxpYw78qydy+Z
-         dlVg==
-X-Forwarded-Encrypted: i=1; AJvYcCXPHlgHIbV1jJAyoB/a6lvvN1ovI6LQ+rlSVYkX60G23eJLEnNE90jEyk7x8nRHqvtzgBE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyla1p51pTd/SVUsTPFDfIxqTAfldABeVkq5XwM1p+/dSA61YGW
-	t312Os7c9zGUMlLhAootwr6hQ9hI4dG2TJYcUj92l3gVmazd+6UeTvxR
-X-Gm-Gg: ATEYQzw/G6OQYuLhyeevC1YKtQu/fbHiK5bQKZlZisrwFxPrEQG3wvwoaVQAqLDXZl3
-	JapZxZxSGv6Nye5ypnROF9jDLlnsRdGebeGUDo4w59poNMMTLoRt6kbfiKzAA6/mTAWuutiXYdv
-	7nYasBQJA4lzNH14LcI7m3hkT3fBO4FWITGXI8Mh07vvDq7w2EIk92qQYbScGklbGb2d7qvG3hs
-	V87aGIzkTXUZfW5Lb+xT0N5nYV9ynjEzzMyCwZ0AMuCvYIjDQs4JA+4LdZ2y4VleUm3Ug10w3gz
-	1Kq78bHW463Sax7/xT13lPytyEXwLYceW9q9ql15ImCPxDX3a4Bm5oQjWsMCw39kplaNcRtqqeS
-	NVJax7VzlBekWbP2NhPXLawnkV1zHCIbjTNVYQz4ReR2V1olHUUDmlinifMSIIP2uu1zV9IOpk4
-	JH3fcELxWwr71jHcYPN0bZMta5eLsM+nYni6UFX680vsa3YIEoICY7p1kDHnHT9Ewiuroj/d74K
-	jV18g==
-X-Received: by 2002:a05:6000:40df:b0:43b:4469:d106 with SMTP id ffacd0b85a97d-43b4469d11emr7381737f8f.40.1773680376871;
-        Mon, 16 Mar 2026 09:59:36 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe1affe9sm45341223f8f.15.2026.03.16.09.59.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Mar 2026 09:59:36 -0700 (PDT)
-Message-ID: <375b7285-9840-4704-9e3e-c83793e890d6@gmail.com>
-Date: Mon, 16 Mar 2026 16:59:35 +0000
+        d=1e100.net; s=20251104; t=1773680660; x=1774285460;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ieJFBFtS1XcJFSNV4/FueELoPJVOY2Hsm+RYZ4YEKFo=;
+        b=r0dAhDAtd6haBDWqlax0zIvPGDY30Nx287NSSa9v5Gcslo6kL39Bz8Lys4rQe7bSnx
+         y/10RprWohNCHWjCjDqmVSldw1+N7UHfZf8m2JtgTXOtDd9Cb59/NYXL9qo7wldEikD2
+         jNSQE1JwvlLeP1m+rXkOi2DD24Y8T6QLlYyZd5UveJll7I3Qol6v/m1dydGWW8apIU/J
+         W6ooqy047uodrKZTqDAo4UN+JjgAJkiQ8a/F1VLWLbdEG9yyxwNr/EB5oG5votX70zB+
+         UAubmHnhsSv52nKpUszJSH3BZAXUuiMzLdNXQ5FHb5NI9TBIGrxNbNJGksI6QMOjI1Rf
+         iLDw==
+X-Forwarded-Encrypted: i=1; AJvYcCWamUNjogy7lkWxQXgeNTpQGI/kPmhQUrZgWXZdFFHjWwMFAHT1U8955IrS0A7c5b9SH3Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3M3aznTREZC4bjfejDFUUMiMKllC/YVDykWzk5VgXmlqgcICT
+	0o3XA+qbIu2H/EnNr8NAjyaV4Oaq1YG0I5ry/bSpk961kCXKC5SMCxIbtl0Wl/b3duSAFdZFICv
+	ajkXfgXk1VwH4pz1vkTGLaUWbfv/jawQ=
+X-Gm-Gg: ATEYQzwFgL7OHsvdUV7A6Lp9zbOSY9gz/8BJXn0aT3aqU637SpCBFUoaFU1ZrcnOfKC
+	o/JNnuwZ3hQ/K2Sc9Pv0/Qu4Ias3PIAMmFLyi8Dg+haH1QUaDRrbZFW3CkJWy8NS6Uw9BDwpTkJ
+	zn7ZCUJAoJXSGb7+I/U2S+dJVztnVBQExAem9jJMCTBJ39fidssU4hEs0qcaGMi/HnCcUripzGx
+	xCK+rlrPnE8FXPgddcmXaUQnnb6UpwX0TYn/88URUz7fi/SCy0rX4uN9ClA7Wn5W4mAhCOA99Rx
+	CxZEOnvAbCYZYcqp5XP6wbEaVS3Q35xmROLn28rw
+X-Received: by 2002:a05:6102:d87:b0:5e8:1d93:921a with SMTP id
+ ada2fe7eead31-6020e2823b8mr5685974137.15.1773680659971; Mon, 16 Mar 2026
+ 10:04:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 16 Mar 2026 10:04:18 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 16 Mar 2026 10:04:18 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260316133426.117684-1-pabloosabaterr@gmail.com>
+References: <20260316133426.117684-1-pabloosabaterr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 0/2] replay: add --revert mode to reverse commit
- changes
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, karthik.188@gmail.com, johannes.schindelin@gmx.de,
- toon@iotcl.com
-References: <20260218234215.89326-1-siddharthasthana31@gmail.com>
- <20260313054035.26605-1-siddharthasthana31@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20260313054035.26605-1-siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 16 Mar 2026 10:04:18 -0700
+X-Gm-Features: AaiRm51xlJo_za9XDLGpzsjhvUqxHPMc2BbnozW84yG5EiFh2YBFWsn_WJo62Iw
+Message-ID: <CAOLa=ZSsC7zpfpRx8pShcqGEv_2_NMrKzJHCgTSaO=0Dg0xakg@mail.gmail.com>
+Subject: Re: [GSoC RFC PATCH] graph: add --graph-max option to limit displayed columns
+To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
+Cc: christian.couder@gmail.com, jltobler@gmail.com, ayu.chandekar@gmail.com, 
+	siddharthasthana31@gmail.com, chandrapratap3519@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000aef13c064d273503"
 
-On 13/03/2026 05:40, Siddharth Asthana wrote:
-> 
-> Changes in v4:
-> - Replaced sequencer_format_revert_header() with a more complete
->    sequencer_format_revert_message() that handles everything: subject
->    prefix, commit reference via refer_to_commit(), and merge-parent
->    references -- per Phillip
-> - Updated refer_to_commit() signature to take (struct repository *r,
->    bool use_commit_reference) instead of (struct replay_opts *opts)
-> - Reverts are now newest-first (revs.reverse = 0 for --revert),
->    chaining on last_commit rather than the parent mapping
-> - Changed doc example to cross-branch scenario and restored the
->    merge-tree NOTE
-> - Updated error message format to "'--revert' cannot be used with
->    multiple revision ranges..." (and same for --advance)
-> - Empty revert commits are now dropped, consistent with cherry-pick
+--000000000000aef13c064d273503
+Content-Type: text/plain; charset="UTF-8"
 
-This looks good to me. I've left a couple of nitpicking comments but 
-they're mainly for future reference - I'd be happy to see this merged as is.
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-Thanks
+> When there are multiple branches, --graph-max modifies the maximum
+> amount of columns that will be displayed.
+>
+> Add "--graph-max=<n>" option to cap how many columns will be shown,
+> columns after the limit are replaced with a single '.'. Changes only
+> the output rendering.
+>
 
-Phillip
+The first sentence seems to talk about the option like it already
+exists, when the second para introduces it. It would be nice if the
+first para explained the problem we're trying to solve and why and the
+second para then dove into the solution space.
 
-> - Link to v3: https://public-inbox.org/git/20260218234215.89326-1-siddharthasthana31@gmail.com/
-> - Link to v2: https://public-inbox.org/git/20251202201611.22137-1-siddharthasthana31@gmail.com/
-> - Link to v1: https://public-inbox.org/git/20251125170056.34489-1-siddharthasthana31@gmail.com/
-> 
-> Thanks,
-> Siddharth
-> 
+Do you think '--graph-max' signifies that we're talking about the
+maximum columns to display?
+
+> Define MINIMUM_GRAPH_COLUMNS constant to validate the option value.
+
+What does this mean? Validate how?
+
+> The commit character '*' is always shown no matter what the limit is.
+
+I think overall a little more explanation in the commit message makes it
+easier to understand the context and also helps reviewers!
+
+Shouldn't we also talk about the todo and the commit (c12172d2ea (Add
+history graph API, 2008-05-04)) in which it was added?
+
+>
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 > ---
-> Siddharth Asthana (2):
->    sequencer: extract revert message formatting into shared function
->    replay: add --revert mode to reverse commit changes
-> 
->   Documentation/git-replay.adoc |  43 ++++++++-
->   builtin/replay.c              |  46 ++++++----
->   replay.c                      | 165 ++++++++++++++++++++++++----------
->   replay.h                      |  11 ++-
->   sequencer.c                   |  78 +++++++++-------
->   sequencer.h                   |  14 +++
->   t/t3650-replay-basics.sh      | 114 +++++++++++++++++++++--
->   7 files changed, 364 insertions(+), 107 deletions(-)
-> 
-> Range-diff versus v3:
-> 
-> 1:  9d686bcdfe ! 1:  bdc710b265 sequencer: extract revert message formatting into shared function
->      @@ Commit message
->           sequencer: extract revert message formatting into shared function
->       
->           The logic for formatting revert commit messages (handling "Revert" and
->      -    "Reapply" cases) is currently duplicated between sequencer.c and will be
->      -    needed by builtin/replay.c.
->      +    "Reapply" cases, appending "This reverts commit <ref>.", and handling
->      +    merge-parent references) currently lives inline in do_pick_commit().
->      +    The upcoming replay --revert mode needs to reuse this logic.
->       
->      -    Extract this logic into a new sequencer_format_revert_header() function
->      -    that can be shared. The function handles both regular reverts ("Revert
->      -    "<subject>"") and revert-of-revert cases ("Reapply "<subject>"").
->      -    When an oid is provided, the function appends the full commit hash and
->      -    period; otherwise the caller should append the commit reference.
->      +    Extract all of this into a new sequencer_format_revert_message()
->      +    function. The function takes a repository, the subject line, commit,
->      +    parent, a use_commit_reference flag, and the output strbuf. It handles
->      +    both regular reverts ("Revert "<subject>"") and revert-of-revert cases
->      +    ("Reapply "<subject>""), and uses refer_to_commit() internally to
->      +    format the commit reference.
->       
->      -    Update do_pick_commit() to use the new helper, eliminating code
->      -    duplication while preserving the special handling for commit_use_reference.
->      +    Update refer_to_commit() to take a struct repository parameter instead
->      +    of relying on the_repository, and a bool instead of reading from
->      +    replay_opts directly. This makes it usable from the new shared function
->      +    without pulling in sequencer-specific state.
->       
->           Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
->       
->        ## sequencer.c ##
->      +@@ sequencer.c: static int should_edit(struct replay_opts *opts) {
->      + 	return opts->edit;
->      + }
->      +
->      +-static void refer_to_commit(struct replay_opts *opts,
->      +-			    struct strbuf *msgbuf, struct commit *commit)
->      ++static void refer_to_commit(struct repository *r, struct strbuf *msgbuf,
->      ++			    const struct commit *commit,
->      ++			    bool use_commit_reference)
->      + {
->      +-	if (opts->commit_use_reference) {
->      ++	if (use_commit_reference) {
->      + 		struct pretty_print_context ctx = {
->      + 			.abbrev = DEFAULT_ABBREV,
->      + 			.date_mode.type = DATE_SHORT,
->      + 		};
->      +-		repo_format_commit_message(the_repository, commit,
->      ++		repo_format_commit_message(r, commit,
->      + 					   "%h (%s, %ad)", msgbuf, &ctx);
->      + 	} else {
->      + 		strbuf_addstr(msgbuf, oid_to_hex(&commit->object.oid));
->       @@ sequencer.c: static int do_pick_commit(struct repository *r,
->        	 */
->        
->      @@ sequencer.c: static int do_pick_commit(struct repository *r,
->        		base = commit;
->        		base_label = msg.label;
->        		next = parent;
->      -@@ sequencer.c: static int do_pick_commit(struct repository *r,
->      - 		if (opts->commit_use_reference) {
->      - 			strbuf_commented_addf(&ctx->message, comment_line_str,
->      - 				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
->      + 		next_label = msg.parent_label;
->      +-		if (opts->commit_use_reference) {
->      +-			strbuf_commented_addf(&ctx->message, comment_line_str,
->      +-				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
->       -		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
->       -			   /*
->       -			    * We don't touch pre-existing repeated reverts, because
->      @@ sequencer.c: static int do_pick_commit(struct repository *r,
->       -			strbuf_addstr(&ctx->message, "Reapply \"");
->       -			strbuf_addstr(&ctx->message, orig_subject);
->       -			strbuf_addstr(&ctx->message, "\n");
->      -+			strbuf_addstr(&ctx->message, "\nThis reverts commit ");
->      - 		} else {
->      +-		} else {
->       -			strbuf_addstr(&ctx->message, "Revert \"");
->       -			strbuf_addstr(&ctx->message, msg.subject);
->       -			strbuf_addstr(&ctx->message, "\"\n");
->      -+			sequencer_format_revert_header(&ctx->message, msg.subject, NULL);
->      - 		}
->      +-		}
->       -		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
->      - 		refer_to_commit(opts, &ctx->message, commit);
->      +-		refer_to_commit(opts, &ctx->message, commit);
->      +-
->      +-		if (commit->parents && commit->parents->next) {
->      +-			strbuf_addstr(&ctx->message, ", reversing\nchanges made to ");
->      +-			refer_to_commit(opts, &ctx->message, parent);
->      +-		}
->      +-		strbuf_addstr(&ctx->message, ".\n");
->      ++		sequencer_format_revert_message(r, msg.subject, commit,
->      ++						parent,
->      ++						opts->commit_use_reference,
->      ++						&ctx->message);
->      + 	} else {
->      + 		const char *p;
->        
->      - 		if (commit->parents && commit->parents->next) {
->       @@ sequencer.c: int sequencer_pick_revisions(struct repository *r,
->        	return res;
->        }
->        
->      -+void sequencer_format_revert_header(struct strbuf *out,
->      -+				    const char *orig_subject,
->      -+				    const struct object_id *oid)
->      ++void sequencer_format_revert_message(struct repository *r,
->      ++				     const char *subject,
->      ++				     const struct commit *commit,
->      ++				     const struct commit *parent,
->      ++				     bool use_commit_reference,
->      ++				     struct strbuf *message)
->       +{
->      -+	const char *revert_subject;
->      ++	const char *orig_subject;
->       +
->      -+	if (skip_prefix(orig_subject, "Revert \"", &revert_subject) &&
->      -+	    /*
->      -+	     * We don't touch pre-existing repeated reverts, because
->      -+	     * theoretically these can be nested arbitrarily deeply,
->      -+	     * thus requiring excessive complexity to deal with.
->      -+	     */
->      -+	    !starts_with(revert_subject, "Revert \"")) {
->      -+		strbuf_addstr(out, "Reapply \"");
->      -+		strbuf_addstr(out, revert_subject);
->      -+		strbuf_addch(out, '\n');
->      ++	if (use_commit_reference) {
->      ++		strbuf_commented_addf(message, comment_line_str,
->      ++				      "*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
->      ++	} else if (skip_prefix(subject, "Revert \"", &orig_subject) &&
->      ++		   /*
->      ++		    * We don't touch pre-existing repeated reverts, because
->      ++		    * theoretically these can be nested arbitrarily deeply,
->      ++		    * thus requiring excessive complexity to deal with.
->      ++		    */
->      ++		   !starts_with(orig_subject, "Revert \"")) {
->      ++		strbuf_addstr(message, "Reapply \"");
->      ++		strbuf_addstr(message, orig_subject);
->      ++		strbuf_addstr(message, "\n");
->       +	} else {
->      -+		strbuf_addstr(out, "Revert \"");
->      -+		strbuf_addstr(out, orig_subject);
->      -+		strbuf_addstr(out, "\"\n");
->      ++		strbuf_addstr(message, "Revert \"");
->      ++		strbuf_addstr(message, subject);
->      ++		strbuf_addstr(message, "\"\n");
->       +	}
->      ++	strbuf_addstr(message, "\nThis reverts commit ");
->      ++	refer_to_commit(r, message, commit, use_commit_reference);
->       +
->      -+	strbuf_addstr(out, "\nThis reverts commit ");
->      -+	if (oid) {
->      -+		strbuf_addstr(out, oid_to_hex(oid));
->      -+		strbuf_addstr(out, ".\n");
->      ++	if (commit->parents && commit->parents->next) {
->      ++		strbuf_addstr(message, ", reversing\nchanges made to ");
->      ++		refer_to_commit(r, message, parent, use_commit_reference);
->       +	}
->      ++	strbuf_addstr(message, ".\n");
->       +}
->       +
->        void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag)
->      @@ sequencer.h: int sequencer_determine_whence(struct repository *r, enum commit_wh
->        int sequencer_get_update_refs_state(const char *wt_dir, struct string_list *refs);
->        
->       +/*
->      -+ * Formats a revert commit message following standard Git conventions.
->      -+ * Handles both regular reverts ("Revert \"<subject>\"") and revert of revert
->      -+ * cases ("Reapply \"<subject>\""). Adds "This reverts commit <oid>." if oid
->      -+ * is provided, otherwise just adds "This reverts commit " and the caller
->      -+ * should append the commit reference.
->      ++ * Formats a complete revert commit message following standard Git conventions.
->      ++ * Handles regular reverts ("Revert \"<subject>\""), revert of revert cases
->      ++ * ("Reapply \"<subject>\""), and the --reference style. Appends "This reverts
->      ++ * commit <ref>." using either the abbreviated or full commit reference
->      ++ * depending on use_commit_reference. Also handles merge-parent references.
->       + */
->      -+void sequencer_format_revert_header(struct strbuf *out,
->      -+				    const char *orig_subject,
->      -+				    const struct object_id *oid);
->      ++void sequencer_format_revert_message(struct repository *r,
->      ++				     const char *subject,
->      ++				     const struct commit *commit,
->      ++				     const struct commit *parent,
->      ++				     bool use_commit_reference,
->      ++				     struct strbuf *message);
->       +
->        #endif /* SEQUENCER_H */
-> 2:  066269706e ! 2:  bea6229575 replay: add --revert mode to reverse commit changes
->      @@ Commit message
->           We swap the base and pickme trees passed to merge_incore_nonrecursive()
->           to reverse the diff direction.
->       
->      +    Reverts are processed newest-first (matching git revert behavior) to
->      +    reduce conflicts by peeling off changes from the top. Each revert
->      +    builds on the result of the previous one via the last_commit fallback
->      +    in the main replay loop, rather than relying on the parent-mapping
->      +    used for cherry-pick.
->      +
->           Revert commit messages follow the usual git revert conventions: prefixed
->           with "Revert" (or "Reapply" when reverting a revert), and including
->           "This reverts commit <hash>.". The author is set to the current user
->      @@ Commit message
->           Helped-by: Phillip Wood <phillip.wood123@gmail.com>
->           Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->           Helped-by: Junio C Hamano <gitster@pobox.com>
->      +    Helped-by: Toon Claes <toon@iotcl.com>
->           Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
->       
->        ## Documentation/git-replay.adoc ##
->      @@ Documentation/git-replay.adoc: all commits they have since `base`, playing them
->       +To revert commits on a branch:
->       +
->       +------------
->      -+$ git replay --revert main main~2..main
->      ++$ git replay --revert main topic~2..topic
->       +------------
->       +
->      -+This reverts the last two commits on `main`, creating two revert commits
->      -+on top of `main`, and updates `main` to point at the result.
->      ++This reverts the last two commits from `topic`, creating revert commits on
->      ++top of `main`, and updates `main` to point at the result. This is useful when
->      ++commits from `topic` were previously merged or cherry-picked into `main` and
->      ++need to be undone.
->      ++
->      ++NOTE: For reverting an entire merge request as a single commit (rather than
->      ++commit-by-commit), consider using `git merge-tree --merge-base $TIP HEAD $BASE`
->      ++which can avoid unnecessary merge conflicts.
->       +
->        GIT
->        ---
->      @@ builtin/replay.c: int cmd_replay(int argc,
->        
->        	/* Parse ref action mode from command line or config */
->        	ref_mode = get_ref_action_mode(repo, ref_action);
->      +@@ builtin/replay.c: int cmd_replay(int argc,
->      + 	 * some options changing these values if we think they could
->      + 	 * be useful.
->      + 	 */
->      +-	revs.reverse = 1;
->      ++	/*
->      ++	 * Cherry-pick/rebase need oldest-first ordering so that each
->      ++	 * replayed commit can build on its already-replayed parent.
->      ++	 * Revert needs newest-first ordering (like git revert) to
->      ++	 * reduce conflicts by peeling off changes from the top.
->      ++	 */
->      ++	revs.reverse = opts.revert ? 0 : 1;
->      + 	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
->      + 	revs.topo_order = 1;
->      + 	revs.simplify_history = 0;
->      +@@ builtin/replay.c: int cmd_replay(int argc,
->      + 	 * Detect and warn if we override some user specified rev
->      + 	 * walking options.
->      + 	 */
->      +-	if (revs.reverse != 1) {
->      +-		warning(_("some rev walking options will be overridden as "
->      +-			  "'%s' bit in 'struct rev_info' will be forced"),
->      +-			"reverse");
->      +-		revs.reverse = 1;
->      ++	{
->      ++		int desired_reverse = opts.revert ? 0 : 1;
->      ++		if (revs.reverse != desired_reverse) {
->      ++			warning(_("some rev walking options will be overridden as "
->      ++				  "'%s' bit in 'struct rev_info' will be forced"),
->      ++				"reverse");
->      ++			revs.reverse = desired_reverse;
->      ++		}
->      + 	}
->      + 	if (revs.sort_order != REV_SORT_IN_GRAPH_ORDER) {
->      + 		warning(_("some rev walking options will be overridden as "
->       @@ builtin/replay.c: int cmd_replay(int argc,
->        		goto cleanup;
->        
->      @@ replay.c
->        #include "strmap.h"
->        #include "tree.h"
->        
->      +-/*
->      +- * We technically need USE_THE_REPOSITORY_VARIABLE for DEFAULT_ABBREV, but
->      +- * do not want to use the_repository.
->      +- */
->      +-#define the_repository DO_NOT_USE_THE_REPOSITORY
->       +enum replay_mode {
->       +	REPLAY_MODE_PICK,
->       +	REPLAY_MODE_REVERT,
->       +};
->      -+
->      +
->        static const char *short_commit_name(struct repository *repo,
->        				     struct commit *commit)
->      - {
->       @@ replay.c: static char *get_author(const char *message)
->        	return NULL;
->        }
->      @@ replay.c: static char *get_author(const char *message)
->       +	subject_len = find_commit_subject(message, &subject_start);
->       +	subject = xmemdupz(subject_start, subject_len);
->       +
->      -+	sequencer_format_revert_header(msg, subject, &commit->object.oid);
->      ++	sequencer_format_revert_message(repo, subject, commit,
->      ++					commit->parents ? commit->parents->item : NULL,
->      ++					false, msg);
->       +
->       +	free(subject);
->       +	repo_unuse_commit_buffer(repo, commit, message);
->      @@ replay.c: static void get_ref_information(struct repository *repo,
->       +	}
->       +	*onto = peel_committish(repo, *branch_name, option_name);
->       +	if (rinfo->positive_refexprs > 1)
->      -+		die(_("cannot %s target with multiple sources because ordering would be ill-defined"),
->      -+		    option_name + 2); /* skip "--" prefix */
->      ++		die(_("'%s' cannot be used with multiple revision ranges "
->      ++		      "because the ordering would be ill-defined"),
->      ++		    option_name);
->       +}
->       +
->        static void set_up_replay_mode(struct repository *repo,
->      @@ replay.c: static struct commit *pick_regular_commit(struct repository *repo,
->       +	merge_opt->branch2 = NULL;
->        	if (!result->clean)
->        		return NULL;
->      --	/* Drop commits that become empty */
->      --	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
->      -+	/* Drop commits that become empty (only for picks) */
->      -+	if (mode == REPLAY_MODE_PICK &&
->      -+	    oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
->      + 	/* Drop commits that become empty */
->      + 	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
->        	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid))
->        		return replayed_base;
->       -	return create_commit(repo, result->tree, pickme, replayed_base);
->      @@ replay.c: int replay_revisions(struct rev_info *revs,
->        
->        		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
->       -						  onto, &merge_opt, &result);
->      -+						  onto, &merge_opt, &result, mode);
->      ++						  mode == REPLAY_MODE_REVERT ? last_commit : onto,
->      ++						  &merge_opt, &result, mode);
->        		if (!last_commit)
->        			break;
->        
->      @@ t/t3650-replay-basics.sh: test_expect_success 'no base or negative ref gives no-
->        	test_must_fail git replay --advance=main --contained \
->        		topic1..topic2 2>actual &&
->        	test_cmp expect actual
->      + '
->      +
->      + test_expect_success 'cannot advance target ... ordering would be ill-defined' '
->      +-	echo "fatal: cannot advance target with multiple sources because ordering would be ill-defined" >expect &&
->      ++	cat >expect <<-\EOF &&
->      ++	fatal: '"'"'--advance'"'"' cannot be used with multiple revision ranges because the ordering would be ill-defined
->      ++	EOF
->      + 	test_must_fail git replay --advance=main main topic1 topic2 2>actual &&
->      + 	test_cmp expect actual
->      + '
->       @@ t/t3650-replay-basics.sh: test_expect_success 'invalid replay.refAction value' '
->        	test_grep "invalid.*replay.refAction.*value" error
->        '
->      @@ t/t3650-replay-basics.sh: test_expect_success 'invalid replay.refAction value' '
->       +'
->       +
->       +test_expect_success 'cannot revert with multiple sources' '
->      -+	echo "fatal: cannot revert target with multiple sources because ordering would be ill-defined" >expect &&
->      ++	cat >expect <<-\EOF &&
->      ++	fatal: '"'"'--revert'"'"' cannot be used with multiple revision ranges because the ordering would be ill-defined
->      ++	EOF
->       +	test_must_fail git replay --revert main main topic1 topic2 2>actual &&
->       +	test_cmp expect actual
->       +'
->      @@ t/t3650-replay-basics.sh: test_expect_success 'invalid replay.refAction value' '
->       +	# Revert commits I and J
->       +	git replay --revert topic4 topic4~2..topic4 &&
->       +
->      -+	# Verify the revert commits were created
->      ++	# Verify the revert commits were created (newest-first ordering
->      ++	# means J is reverted first, then I on top)
->       +	git log --format=%s -4 topic4 >actual &&
->       +	cat >expect <<-\EOF &&
->      -+	Revert "J"
->       +	Revert "I"
->      ++	Revert "J"
->       +	J
->       +	I
->       +	EOF
->       +	test_cmp expect actual &&
->       +
->      -+	# Verify commit message format includes hash
->      ++	# Verify commit message format includes hash (tip is Revert "I")
->       +	test_commit_message topic4 <<-EOF &&
->      -+	Revert "J"
->      ++	Revert "I"
->       +
->      -+	This reverts commit $(git rev-parse J).
->      ++	This reverts commit $(git rev-parse I).
->       +	EOF
->       +
->       +	# Verify reflog message
-> 
-> 
-> base-commit: d181b9354cf85b44455ce3ca9e6af0b9559e0ae2
-> 
-> 
+>
+> This addresses the TODO at graph.c:
+>
+>   TODO:
+>       - Limit the number of columns, similar to the way gitk does.
+>         If we reach more than a specified number of columns, omit
+>         sections of some columns.
+>
 
+One question to ask is, is this even needed anymore and does it really
+make sense to add it?
+
+The TODO was added back in 2008, that's ~16 years ago and was not
+touched till now. So perhaps no one needs it? If so, maybe the smarter
+option is to simply remove the TODO?
+
+Or do you see a usecase where this is useful? If so, it would be nice to
+talk about that in the commit message.
+
+> About the design of how this would have to be:
+>
+> - Should '--graph-max' by itself be enough to implicitly work like '--graph' so
+>   'git log --graph-max=3' works without needing to write '--graph'?
+
+My preference would be not to have implicit behavior but also at the
+same time guide the user in the right path, so:
+
+     $ git log --graph-max=4
+     fatal: --graph-max used without --graph
+
+> - graph_max_columns by default is set to 0, meaning no limit, and any other
+>   positive value becomes a limit. Is this a good design? it cannot be negative,
+>   shouldn't it be a uint32_t instead, I left it as a int because of the other
+>   variables like this that are int. like skip_count, max_count, etc.
+> - Is '--graph-max' a good name?
+
+I would argue against it. Perhaps '--graph-col-limit'? It's a bit handy though.
+
+> - Is '.' a good char for truncation?
+
+Trying it out:
+
+$ git log --graph --oneline --graph-max=3
+
+| * ba1c21d343 odb: split `struct odb_source` into separate header
+| *   b1af291b4a Merge branch 'ps/object-info-bits-cleanup' into ps/odb-sources
+| |\
+| * \   703c97519d Merge branch 'ps/odb-for-each-object' into ps/odb-sources
+| |\ \
+* | \ .   d0413b31dd Merge branch 'hn/status-compare-with-push'
+|\ \ \ .
+| * | .   68791d7506 status: clarify how status.compareBranches deduplicates
+| * | .   3ea95ac9c5 (gitster/hn/status-compare-with-push) status: add
+status.compareBranches config for multiple branch comparisons
+| * | .   04f47265c1 refactor format_branch_comparison in preparation
+| * | .     2aa9b75b43 Merge branch 'jk/remote-tracking-ref-leakfix'
+into hn/status-compare-with-push
+| |\ \ .
+* | \ .       03161747b4 Merge branch 'ds/for-each-repo-w-worktree'
+|\ \ \ .
+| * | .       e87493b9b4 for-each-repo: simplify passing of parameters
+| * | .       2ef539bcee for-each-repo: work correctly in a worktree
+| * | .       5f031fe4f1 run-command: extract sanitize_repo_env helper
+| * | .       c5e62e1aa0 for-each-repo: test outside of repo context
+* | | .       67006b9db8 The 15th batch
+* | | .         99da934835 Merge branch 'sp/send-email-validate-charset'
+|\ \ \ .
+| * | .         c52f085a47 (gitster/sp/send-email-validate-charset)
+send-email: validate charset name in 8bit encoding prompt
+
+vs
+
+$ git log --graph --oneline
+
+| * ba1c21d343 odb: split `struct odb_source` into separate header
+| *   b1af291b4a Merge branch 'ps/object-info-bits-cleanup' into ps/odb-sources
+| |\
+| * \   703c97519d Merge branch 'ps/odb-for-each-object' into ps/odb-sources
+| |\ \
+* | \ \   d0413b31dd Merge branch 'hn/status-compare-with-push'
+|\ \ \ \
+| * | | | 68791d7506 status: clarify how status.compareBranches deduplicates
+| * | | | 3ea95ac9c5 (gitster/hn/status-compare-with-push) status: add
+status.compareBranches config for multiple branch comparisons
+| * | | | 04f47265c1 refactor format_branch_comparison in preparation
+| * | | |   2aa9b75b43 Merge branch 'jk/remote-tracking-ref-leakfix'
+into hn/status-compare-with-push
+| |\ \ \ \
+* | \ \ \ \   03161747b4 Merge branch 'ds/for-each-repo-w-worktree'
+|\ \ \ \ \ \
+| * | | | | | e87493b9b4 for-each-repo: simplify passing of parameters
+| * | | | | | 2ef539bcee for-each-repo: work correctly in a worktree
+| * | | | | | 5f031fe4f1 run-command: extract sanitize_repo_env helper
+| * | | | | | c5e62e1aa0 for-each-repo: test outside of repo context
+* | | | | | | 67006b9db8 The 15th batch
+* | | | | | |   99da934835 Merge branch 'sp/send-email-validate-charset'
+|\ \ \ \ \ \ \
+| * | | | | | | c52f085a47 (gitster/sp/send-email-validate-charset)
+send-email: validate charset name in 8bit encoding prompt
+
+So we still keep the spaces, but only remove the column indicator
+
+> - Should '/' to outside branches be shown?
+> - What should it be done when a commit is in a column that is truncated?
+>
+> known limitations:
+>
+> - Post merge lines have some trouble with the padding.
+>
+> I added two tests for example, but I will add better test coverage as design
+> choices are more clear. testing on the Git repo itself is a good example also.
+>
+>  graph.c                      | 52 +++++++++++++++++++++++++++------
+>  graph.h                      |  2 ++
+>  revision.c                   |  7 +++++
+>  revision.h                   |  1 +
+>  t/t4215-log-skewed-merges.sh | 56 ++++++++++++++++++++++++++++++++++++
+>  5 files changed, 109 insertions(+), 9 deletions(-)
+>
+> diff --git a/graph.c b/graph.c
+> index 26f6fbf000..7ae0ab61b7 100644
+> --- a/graph.c
+> +++ b/graph.c
+> @@ -42,14 +42,6 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
+>  static void graph_show_strbuf(struct git_graph *graph,
+>  			      FILE *file,
+>  			      struct strbuf const *sb);
+> -
+> -/*
+> - * TODO:
+> - * - Limit the number of columns, similar to the way gitk does.
+> - *   If we reach more than a specified number of columns, omit
+> - *   sections of some columns.
+> - */
+> -
+>  struct column {
+>  	/*
+>  	 * The parent commit of this column.
+> @@ -317,6 +309,12 @@ struct git_graph {
+>  	struct strbuf prefix_buf;
+>  };
+>
+> +static int graph_is_truncated(struct git_graph *graph, int col)
+
+Isn't this more of `graphs_needs_truncation()`?
+
+> +{
+> +	int max = graph->revs->graph_max_columns;
+> +	return max > 0 && col >= max;
+> +}
+> +
+>  static const char *diff_output_prefix_callback(struct diff_options *opt, void *data)
+>  {
+>  	struct git_graph *graph = data;
+> @@ -846,6 +844,10 @@ static void graph_output_padding_line(struct git_graph *graph,
+>  	 * Output a padding row, that leaves all branch lines unchanged
+>  	 */
+>  	for (i = 0; i < graph->num_new_columns; i++) {
+> +		if (graph_is_truncated(graph, i)) {
+> +			graph_line_addstr(line, ". ");
+> +			break;
+> +		}
+>  		graph_line_write_column(line, &graph->new_columns[i], '|');
+>  		graph_line_addch(line, ' ');
+>  	}
+> @@ -903,6 +905,9 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+>  			seen_this = 1;
+>  			graph_line_write_column(line, col, '|');
+>  			graph_line_addchars(line, ' ', graph->expansion_row);
+> +		} else if (seen_this && graph_is_truncated(graph, i)) {
+> +			graph_line_addstr(line, ". ");
+> +			break;
+>  		} else if (seen_this && (graph->expansion_row == 0)) {
+>  			/*
+>  			 * This is the first line of the pre-commit output.
+> @@ -1013,6 +1018,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+>  	 * children that we have already processed.)
+>  	 */
+>  	seen_this = 0;
+> +
+>  	for (i = 0; i <= graph->num_columns; i++) {
+>  		struct column *col = &graph->columns[i];
+>  		struct commit *col_commit;
+> @@ -1028,8 +1034,14 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+>  			seen_this = 1;
+>  			graph_output_commit_char(graph, line);
+>
+> +			if (graph_is_truncated(graph, i))
+> +				break;
+> +
+>  			if (graph->num_parents > 2)
+>  				graph_draw_octopus_merge(graph, line);
+> +		} else if (seen_this && graph_is_truncated(graph, i)) {
+> +			graph_line_addstr(line, ". ");
+> +			break;
+>  		} else if (seen_this && (graph->edges_added > 1)) {
+>  			graph_line_write_column(line, col, '\\');
+>  		} else if (seen_this && (graph->edges_added == 1)) {
+> @@ -1109,9 +1121,15 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+>  			int par_column;
+>  			int idx = graph->merge_layout;
+>  			char c;
+> +			int truncated = 0;
+>  			seen_this = 1;
+>
+>  			for (j = 0; j < graph->num_parents; j++) {
+> +				if (graph_is_truncated(graph, i + j)) {
+> +					graph_line_addstr(line, ". ");
+> +					truncated = 1;
+> +					break;
+> +				}
+>  				par_column = graph_find_new_column_by_commit(graph, parents->item);
+>  				assert(par_column >= 0);
+>
+> @@ -1125,10 +1143,15 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+>  				}
+>  				parents = next_interesting_parent(graph, parents);
+>  			}
+> +			if (truncated)
+> +				break;
+>  			if (graph->edges_added == 0)
+>  				graph_line_addch(line, ' ');
+> -
+>  		} else if (seen_this) {
+> +			if (graph_is_truncated(graph, i)) {
+> +				graph_line_addstr(line, ". ");
+> +				break;
+> +			}
+>  			if (graph->edges_added > 0)
+>  				graph_line_write_column(line, col, '\\');
+>  			else
+> @@ -1279,6 +1302,12 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
+>  	 */
+>  	for (i = 0; i < graph->mapping_size; i++) {
+>  		int target = graph->mapping[i];
+> +
+> +		if (graph_is_truncated(graph, i / 2)) {
+> +			graph_line_addstr(line, ". ");
+> +			break;
+> +		}
+> +
+>  		if (target < 0)
+>  			graph_line_addch(line, ' ');
+>  		else if (target * 2 == i)
+> @@ -1372,6 +1401,11 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+>  	for (i = 0; i < graph->num_columns; i++) {
+>  		struct column *col = &graph->columns[i];
+>
+> +		if (graph_is_truncated(graph, i)) {
+> +			graph_line_addch(&line, '.');
+> +			break;
+> +		}
+> +
+>  		graph_line_write_column(&line, col, '|');
+>
+>  		if (col->commit == graph->commit && graph->num_parents > 2) {
+> diff --git a/graph.h b/graph.h
+> index 3fd1dcb2e9..9a4551dd29 100644
+> --- a/graph.h
+> +++ b/graph.h
+> @@ -262,4 +262,6 @@ void graph_show_commit_msg(struct git_graph *graph,
+>  			   FILE *file,
+>  			   struct strbuf const *sb);
+>
+> +#define MINIMUM_GRAPH_COLUMNS 1
+> +
+>  #endif /* GRAPH_H */
+> diff --git a/revision.c b/revision.c
+> index 31808e3df0..ba5088be14 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -2605,6 +2605,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+>  	} else if (!strcmp(arg, "--no-graph")) {
+>  		graph_clear(revs->graph);
+>  		revs->graph = NULL;
+> +	} else if (skip_prefix(arg, "--graph-max=", &optarg)) {
+> +		revs->graph_max_columns = strtoul(optarg, NULL, 10);
+> +		if (revs->graph_max_columns < MINIMUM_GRAPH_COLUMNS) {
+> +			die(_("minimum columns is %d, unable to set below %d"),
+> +			MINIMUM_GRAPH_COLUMNS,
+> +			revs->graph_max_columns);
+
+Shouldn't we allow users to set 0? That combined with an unsigned int
+would:
+1. remove the need for MINIMUM_GRAPH_COLUMNS
+2. allow users to specify that they do not want a column limit
+
+> +		}
+>  	} else if (!strcmp(arg, "--encode-email-headers")) {
+>  		revs->encode_email_headers = 1;
+>  	} else if (!strcmp(arg, "--no-encode-email-headers")) {
+> diff --git a/revision.h b/revision.h
+> index 69242ecb18..6442129c14 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -304,6 +304,7 @@ struct rev_info {
+>
+>  	/* Display history graph */
+>  	struct git_graph *graph;
+> +	int graph_max_columns;
+>
+
+I think it makes sense to make this an unsigned int.
+
+>  	/* special limits */
+>  	int skip_count;
+> diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+> index 28d0779a8c..6266de4e2b 100755
+> --- a/t/t4215-log-skewed-merges.sh
+> +++ b/t/t4215-log-skewed-merges.sh
+> @@ -370,4 +370,60 @@ test_expect_success 'log --graph with multiple tips' '
+>  	EOF
+>  '
+>
+> +test_expect_success 'log --graph --graph-max=2 only two columns' '
+> +	check_graph --graph-max=2 M_7 <<-\EOF
+> +	*-.   7_M4
+> +	|\ .
+> +	| | * 7_G
+> +	| | * 7_F
+> +	| * . 7_E
+> +	| * . 7_D
+> +	* | . 7_C
+> +	| |/
+> +	|/|
+> +	* | 7_B
+> +	|/
+> +	* 7_A
+> +	EOF
+> +'
+> +
+> +test_expect_success 'log --graph --graph-max=3 only three columns' '
+> +	check_graph --graph-max=3 M_1 M_3 M_5 M_7 <<-\EOF
+> +	*   7_M1
+> +	|\
+> +	| | *   7_M2
+> +	| | |.
+> +	| | | * 7_H
+> +	| | | | *   7_M3
+> +	| | | | .
+> +	| | | | | * 7_J
+> +	| | | | *   7_I
+> +	| | | | | | *   7_M4
+> +	| |_|_|_|_|.
+> +	|/| | .
+> +	| | |_.
+> +	| |/|_.
+> +	| |/|_.
+> +	| |/| .
+> +	| | |/.
+> +	| | * .     7_G
+> +	| | | .
+> +	| | |/.
+> +	| | |/.
+> +	| | * .   7_F
+> +	| * | .   7_E
+> +	| | |/.
+> +	| |/| .
+> +	| * | . 7_D
+> +	| | |/
+> +	| |/|
+> +	* | | 7_C
+> +	| |/
+> +	|/|
+> +	* | 7_B
+> +	|/
+> +	* 7_A
+> +	EOF
+> +'
+> +
+>  test_done
+> --
+> 2.43.0
+v
+
+--000000000000aef13c064d273503
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 4ee231e04cb64ca5_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tNE9CQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM1BXQy85VkFXWkNUVnNIaHEvc0F3RVcyYkZVSU5ZZQpmbFVKNFp4OWVy
+RnFTSyt6WjliUUFiZEFEWjAzZUlpUjVVZHpzUXhiK2V6RG14NVFiY2t3Y24zVmViMEdJREpnCndT
+OVdnb3RZak1qNDFrMVNrVzJCMFlaQjZKQk04SXBuSFMvSGRXWnhXT29HYjFOYUZCT2pUbHV3TzQv
+YnQ3M3YKd1UyRzNLdXQxM2JXMDRXYmI5cDRuK2EyWHRIODh6UVVBU3NhdGNwVVRkVE5MV1p2azdH
+OU5mUXExeG5QcDNraAoyMkoxYXB6eE9Ba0VlZFh6N2Y2N3RlRDBQS1JBTVc0Qjd2eW1vMGJqTTda
+cHpOL1Fqd2c0K2FrcEk3RFN1WVN5CmtGTkROelF2VFQ0ZEt5dlNaOUZpcGwwMmxDRWZXVlVDbEla
+VXlESGRWZlZ1V1B3SE9jWFBaSmZ2TVIrT09TNHgKVGt4Vy9mNjJha1h5MHFJL3dOTEV5cVBXVmJh
+WFNEWUtJUTgzUXg2TW9BeXlCcHlFd1I5QldVVlhzUHp6R09DUAprNzl2U0ozMUFmTWlzaTFjTVhL
+ejlpT1dqSTY4OHZQS005Z3BMRDlGQUtvTm4xZzRpblRMMGM0RjRJQU9zNUlFCjlIanR0OVp5WEJE
+QzNsWGdlb2xMZ2FnOCtCRkhzMFJlRXdMVSs2Yz0KPUJEMkgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000aef13c064d273503--
