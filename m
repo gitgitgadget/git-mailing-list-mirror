@@ -1,104 +1,142 @@
-Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22375223708
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 06:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773643081; cv=pass; b=E1A7HqW7yCjUiKX2mAh0MEG3oTWua4BuqTetNsxq1ZT1KtBnBPjY4TDaWdpZmlCRpNH0uv1rcNsUYMvFxsaLEw6UPOhZHthZvqp64SbkhDyiHz/Z/ouHZdmXnN91jm+vJ1d+Ma+UApQ/DpNN+yqfQ0pOKN6XfZGfianNS+Jird4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773643081; c=relaxed/simple;
-	bh=cjGCpk8dwt2N3XmoISB5PpSHd6tz3CVaw96VHUGE6Lo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ofKLJrtNweHzVF+aqtV8jrCvmCHzNi0HtJQpZYuUkr44w6KHGsvwYgXWtZoTeRuxUbmsF/U3CqCVjp0yraBByh4jA7ocjqrGdeyq43h8XgjcUE2xb+PCcKyoFFPH5XhJIfiOVH84ybdJzIMmQSa0ZI4Mi74HSCHwlQ1L+wP4Jyg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-2c0ba72d097so53632eec.1
-        for <git@vger.kernel.org>; Sun, 15 Mar 2026 23:37:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773643079; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ViQvdLGfM5E2GwI2DsOOeZjderFB4AHzHi+g15aDNwp/Pwjk2/sGnT/vK9QPb9z7ST
-         AALa5bgOv8p+N2jwrJqxuh0gwluQy0uxWktr77rnuO7WMgEweF6C2fhj2N2pJM6Z3Uqx
-         PU2Bpm6tC1i4arE9tA8dmiwLZWki/v66LIqugGFqetp6DFzNwpkVwtW7m+0yQkm2XzLG
-         33/9Mf2mjR3CwSHKwdIwn7lVpGNg2eLQLK28catOzV3plkdAOYLAIasSpzZtW2qk1iGc
-         xip4wwesFc8Y6CNqqpzUBA5BWKOuDFPhtlHSheBjfZ4lY0t6sNYA6BbCtniFitDu3MYV
-         Vrrw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=LdwEoUKiCfzJtWU60jkHcKukZ3aT4jecPVqY9/lPGJQ=;
-        fh=OqwB+JZBsSQT8s7W/1mPwK4nDn2/iMThoEkIEj0pAeo=;
-        b=VzuMJPTUlX9xLnifAPLmeH2caxKZwW0u5V7ex5PVAbd7/3/5QGipZSpoMtw1xIP5lp
-         aqYoivhuG428pQ0CRIiKYhaeRXkSaBP9HeOrHG/rAhQW489Jr4su2IgHDX8Eg6T/PPCK
-         DM+UgUH2+2HpRDpJYdCAzANRo7vEzgJhFunH3QP+gGSufa5yi7hUB9ktWkHQH34sRwJO
-         LzRyob0MecKtsKDZg7LlUzHqAtzGVhz17659Zywg8jfIAI3mdcRRCg0uaZ+dSr7P+pjJ
-         0G3tAG2GHhaSKhMun9fHqo8vy6YixUfRC2eN3QIv5rgWk2tyn7Ugl1HvrYnCt/Kf6fKr
-         kxnQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773643079; x=1774247879;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LdwEoUKiCfzJtWU60jkHcKukZ3aT4jecPVqY9/lPGJQ=;
-        b=WKz+w5Hfckyv4CkuZNRP5qFP8IbfHnfJ9VIPCRWf0LKLM1kIsOFcsvGrl0e5uyTOja
-         2AH2uznmeEduCy2UupSAz5f+i71KxKa9r69Gdjxxd0OJy2Mc5hqheQyfYrbHKRIk36Yn
-         sqMxXtIjvl5WLGjSo0f3arWp1pdk6spyq/DZaZtVxpxZNwAukA9rqzys29eJ9+cg+s6i
-         HAjJVg1cDr9mrAYSwwoEH3+O99RlyR9IgjHI1qClPQpHspVB5kDw5Rgcq/9IqpHFxEjf
-         JNHmcfPGXdNkvqrRwlppM84rsFbWzpUNbrZuOLiqaf52lV1hCdO3tBNCEoct+woHqc2u
-         wXTw==
-X-Gm-Message-State: AOJu0Yw+WpUteihwfKXYjpHlYFrDLYrxpDkrZ1/xVTlPhfixPq/ZOYzy
-	kb3V2g/wvQr5QEZ7eNGgLLLC8/82LYUO5ftdjtOTJdgPceznXqubjV8rbqZmLylo87Qgy0P6RH2
-	Yi6nHLLzikR8K27RBYQpkelhZAgV66vY=
-X-Gm-Gg: ATEYQzyhcHZ+UPBTmcgCDVHfd9bN40H6W23aMwviQ1bLU3RfqgF01DOQy0yvxukUp48
-	Hy/0k9DmjJ7dNe/F5YXXrI1V4whX/eghTX2DaTfmKBxmm0EXn1yC1UvBbqGB7JFevk9SKMvqF4q
-	EiaqwQCINcbaXAWJ3r9OgAIIp8OLQR2mXTueR/vopVPpabYKc5Qc1W91G8hYWKZ0W/LAYs3P4n9
-	7Sa5u5GQWDlCt3uFbmD/h5sdnIpnM+EaijrggYZslraXBJHhI6uwYGOOYT/Q7taquPU0mNe3o5c
-	vkfodc1sfUJZIu3JdwnZE5C3nC3UHmwSGyymBsgr
-X-Received: by 2002:a05:7300:d0f:b0:2be:2912:ff65 with SMTP id
- 5a478bee46e88-2bea54e9f14mr3053543eec.3.1773643079081; Sun, 15 Mar 2026
- 23:37:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB510269B1C
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 06:41:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773643291; cv=none; b=l/c99ltNmg6Q/97yfDoFeLsp4c26mKGFrDq12FTdAMne0jqi+LGWQG1o3VyqYyvjlt3kcWoH8TjVLp2slQ1rQfrywDmtaHzrxljFz8PQNlEM4yt+Is39g5x8gaSttR9agykbstvVoJgM63Pafdjud4azuxmhIt/HbwOcOtjbmwU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773643291; c=relaxed/simple;
+	bh=f15Kk3Ns29/BxZdFkA3hWhXFPxLlAKX/IKj7yo9/gx0=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OhGol5k5y7C5OhcbNcMe/D/ij6SLUSmF0o047NBCz2c1s15OPsI8nFwXdWorD7snwipQOcOXbVAD9FURJK3IkxSEOtUCd4OqGYGvOVOXBaU/iWK2Wen1bIzDJG3/aLk4ERS7bilt+xRsiL9xQPtXbs5afDTo9hykkziNqn7K+cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Di/bRA1n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=so+FPVE1; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Di/bRA1n";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="so+FPVE1"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id ECE9FEC056A;
+	Mon, 16 Mar 2026 02:41:28 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 16 Mar 2026 02:41:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773643288; x=1773729688; bh=ZifquYCKPN
+	9QGVQWvcJQ0gHk07VPhwbAGU5PgMdJbow=; b=Di/bRA1nduaordNJt/meqCEs53
+	rMHzJXKX4LxmO13YuTkD6613R7gib4K92iy5CX/30hu5t94QiS2pmdkf/rKa/XCc
+	e1T+9gJnJSLV7iQiK5ykPFub0QhihLy3xKfRJfd96dTvukF42Iy4oOyCJBS+Z96S
+	dlbzcRM4aE2T4x2keW8qPFXuYzGxZoSRjzu+naTpiIcuo6slqrF9AlZmdiHLnGNy
+	Dkwr1bSJlLyATaNpX0qD2RCBlSkAz3SNB4cmlu+VbZIoMkT5I3bgnpp/lbdQgTJy
+	OVg0diGpiMLudLj3Jm1bzYbOr32u5yGoA3/UApb2I1QZkdD3WIIvkHfQVapg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773643288; x=1773729688; bh=ZifquYCKPN9QGVQWvcJQ0gHk07VPhwbAGU5
+	PgMdJbow=; b=so+FPVE1q2rTrEP/6dptIkbARcIQH0WXEryPSXrwRUvX8cPKZgU
+	uo83fX7IJG7vQkSJXMAAUD/guZIgSZ0VPcnJ/VgDUpsfge1JJnJlplTOEUADi+5F
+	sVXNix5G+uTGmklVF5PAGId78X51Vb/2yTYM7+HVrqXGTs3J/p6M07FgOoXi2aYC
+	cGuxmGSuPir+Y29YUQqEhOqIyyi0RWY1gXMldy1euTxQvReVrwXVt1kQpgI2oR8R
+	DkXVUMkAZDpmvMoSduvyVG+O+/qfGna9SK2exf8KQ/0OD9ckcplVqQcbX/XEw+S3
+	jF7cdl1IapwjCZemdWNEgS1lJPiv3j4kD9A==
+X-ME-Sender: <xms:GKa3aYShlw6JZArJmutceQh3DYF9tFLW90FzovEFksVVFIi2cigLAw>
+    <xme:GKa3adNULoE2M1XBAxlTugwyN1r8fIQp139AilvZBSBSX7SqLqdkmE1cwram4OBts
+    ZtIJx2I--TVwQMajmJtzUYxHgA6d-tpJyt-q5KwZ-GhP2Kivl7V>
+X-ME-Received: <xmr:GKa3aTO48QH46O__FVBqBLQKxgJtM0Bb6XCVXre13VQjUe3uRtowRwiUQxzZs6HfxpvSJYHgEyrqsAFUaMICKtA98B27cAx6DaY8OvJQlwU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleejieekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    efveefudejvdfhudehkeeiieejgeffvdetuedvvdekvedvjefhleekhfffieegvdenucff
+    ohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepshgrmhhuvghlrdhthhhisggruhhlthesvghnshdqlhihohhnrdhorhhg
+X-ME-Proxy: <xmx:GKa3aVvDN_HLDDMtxJuIkDlXG79uMRtuYcLgGRSI552cvzq8VqR1eA>
+    <xmx:GKa3aVVrhzpRvOnFZZwJrJHIqN5xggy-CnlDf3GPHR8m8vv8TiMVmg>
+    <xmx:GKa3aVuSBEn296sfvwhcIqbcyT4BSV3GGrjOrojeD2CTk120JyAjxA>
+    <xmx:GKa3aZUcJ3Y9vWGEJxPdV6E5uET26bXw_9KL9V5UvkZpezAqZpivUA>
+    <xmx:GKa3aXYvdHYwgf4WEK04tlsMo_HN9G2_yTKS3PTk7xgqwNwKiYCjU9zS>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Mar 2026 02:41:27 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 00aaff73 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Mar 2026 06:41:26 +0000 (UTC)
+Date: Mon, 16 Mar 2026 07:41:23 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Fix GNU/Hurd build
+Message-ID: <abemE08uzRwB-xwp@pks.im>
+References: <20260312191901.174808-1-samuel.thibault@ens-lyon.org>
+ <xmqqbjgsdbr6.fsf@gitster.g>
+ <abOxLFNGgZjo1dyi@pks.im>
+ <abRIXE2es5A-4VLv@end>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260316042248.63278-1-prashantjee2025@gmail.com>
-In-Reply-To: <20260316042248.63278-1-prashantjee2025@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 16 Mar 2026 02:37:47 -0400
-X-Gm-Features: AaiRm516JG0OIM4MeQBYNJ03nz0rDFNw8wsam1UDv_9JqL_Sgs3zjldIsFvI7_A
-Message-ID: <CAPig+cRp+U8gWT7JkUdoaeyVVXGvq_iB8X3Ppj9Q862CiJFZmg@mail.gmail.com>
-Subject: Re: [PATCH v2] t4200: replace test -f and test -d with test_path_exists
-To: PRASHANT S BISHT <prashantjee2025@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <abRIXE2es5A-4VLv@end>
 
-On Mon, Mar 16, 2026 at 12:23=E2=80=AFAM PRASHANT S BISHT
-<prashantjee2025@gmail.com> wrote:
-> Replace old-style path existence checks with the modern test_path_exists
-> helper function that provides clearer diagnostic messages on failure.
->
-> This conversion focuses on test assertions within test_expect_success
-> blocks where a missing path genuinely indicates a test failure,
-> rather than on control-flow checks (such as those in test_lazy_prereq
-> blocks) where missing paths are expected in certain environments.
->
-> Signed-off-by: PRASHANT S BISHT <prashantjee2025@gmail.com>
-> ---
-> diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-> @@ -72,7 +72,7 @@ test_expect_success 'nothing recorded without rerere' '
->         test_must_fail git merge first &&
-> -       ! test -d .git/rr-cache
-> +       ! test_path_exists .git/rr-cache
+On Fri, Mar 13, 2026 at 06:24:44PM +0100, Samuel Thibault wrote:
+> Patrick Steinhardt, le ven. 13 mars 2026 07:39:40 +0100, a ecrit:
+> > On Thu, Mar 12, 2026 at 01:38:21PM -0700, Junio C Hamano wrote:
+> > > Samuel Thibault <samuel.thibault@ens-lyon.org> writes:
+> > > 
+> > > > GNU/Hurd does not have a PATH_MAX limitation
+> > > 
+> > > Thanks.  clar folks might prefer to take it upstream and have us as
+> > > a downstream to import from them, so I'll forward it first before
+> > > taking it for ourselves.
+> > > 
+> > > It makes me wonder if an organization like this is easier to follow,
+> > > i.e., platform specific settings first and then catch-all default at
+> > > the end:
+> > > 
+> > > 	#if defined(CLAR_LONGPATHS)
+> > > 	#define CLAR_MAX_PATH 4096
+> > > 	#elif defined(PATH_MAX)
+> > > 	#define CLAR_MAX_PATH PATH_MAX
+> > > 	#elif deifned(MAX_PATH)
+> > > 	#define CLAR_MAX_PATH MAX_PATH
+> > > 	#fi
+> > > 
+> > > 	#if !defined(CLAR_MAX_PATH)
+> > > 	#define CLAR_MAX_PATH 4096
+> > > 	#fi
+> > > 
+> > > but that is a separate issue best handled by the clar folks.
+> > 
+> > Agreed, something like this would read better indeed.
+> 
+> Ah, actually Pino already contributed a fix in december:)
 
-Unfortunately, this conversion and all of the others involving `!` are
-incorrect. Take a look at the implementations of `test_path_exists`
-and other `test_path_*` functions in t/test-lib/functions.sh to see if
-you can figure out why and what the proper change should be. (Hint: We
-want test failures to be noisy and explanatory, while successes should
-be silent.)
+Oh, you're right! I'll send an update to the latest clar version later
+today.
+
+> > Samuel, do you
+> > want to maybe create a pull request in [1] to fix this in clar itself?
+> 
+> > [1]: https://github.com/clar-test/clar
+> 
+> It would be useful to put this github url in the README, I have
+> submitted
+> https://github.com/clar-test/clar/pull/135
+> so it'll eventually end up in the git source for people to find out
+> where to send clar patches.
+
+Makes sense, thanks.
+
+Patrick
