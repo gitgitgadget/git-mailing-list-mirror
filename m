@@ -1,212 +1,132 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50B0332ED3
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77B233291F
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:57:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773679863; cv=none; b=cKTTZGvHjInCqgHthsyrI37PXmGnmBXs3EZw62Hj/IR/DjAmzjeXkD8Sfn5LLXz55RZFf97NKv34gvlyXLCdHsjT0lXoPMtblVAgJHOEzkM2pGOq3DpE6BzFIIxdXKVQ6aVQO+T6vzppo0U9M0alLWlUgoua928okId4RWeQv8Q=
+	t=1773680257; cv=none; b=rETa/O1Y5DOft9GdpRD5062pjJsJUp/v2++Peh6bEpcuNohCjCfmZNxa/8oWlQtPlg0og2hnFk9i6c2dOJFFu0ji5T0qBD9SS788Qb2T86JeYtTg/3KzZQTC3pb3a2DZKR8wdnMIfshse7mbZqwOL+F/MwCRNJtdrCanc6NXPis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773679863; c=relaxed/simple;
-	bh=wKwxzun8NeiCBSRKLGkbaah+oLGp8f7yMAXMjxPn4zM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HX81z0Ci/Id/Ox4Yo5EMgq5aW0zV+0mL0ZJKaDgDpuL7iXSrcYYoebdAvBxCBUWP9h08plbedEowiK8Dsjfzud8MAuzr4vioWR7YYrYtx8y/qJH/GVD19PPRk9f2/3Esrbbn9urcC+r4iCb9CWQfZoHhIlZm1LkRpzJMfx6KMiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bdQnJItK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yTIH0GGT; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773680257; c=relaxed/simple;
+	bh=77sw9HNyE5Xcc1YrF00VMBy53PCgcHngT9D22zXRCuc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BSmjS1vfb5NycY8Zof3Up5zTaaAz5uplQ0alGO/oq8WuGiOQOjzdyAmRQKF94Vxfe91kobDM2K0JoKr8ko7Tgmc8t64pvGmr7kXbu+0OATebVJHYucmI9aZUONxJws3YYaYRVQyzi9mPaiHmYJk/BooMF0kS/AQ9HppWEa0nVVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=htjVkjbr; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bdQnJItK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yTIH0GGT"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EEE731400219;
-	Mon, 16 Mar 2026 12:51:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 16 Mar 2026 12:51:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773679860; x=1773766260; bh=yLbK+NrZDb
-	twBTohn+BC+v+ILY/ULpA4+9kLmNKD1kQ=; b=bdQnJItKF7AgsoG5Y4SXzKmiXK
-	xIFZbJhQXg+EgkQYQfcOX8Lq0siis7AXbLg2twsSGNd27KX9INsV9GBV432HXBNA
-	Kjrl+4yoJOjiV94AmZtAvW2CUEjNXSNsfr+NXpE1KQ0wE1LlrElmkYVhGi4Rixzs
-	nOfCdy/lfacfg3mT4qWGzudgdDgP8ppBVZjQog+PRkCnuFM73trSfqvDERbp+c6p
-	MAHwleNBKOALtaWy/VREIO5WW5GUcsS35zdH1VqdVag3PZlP3q/nOr9Z6lj+NYEk
-	xTtqHN/0ZJ9rfUsYys4g4wlVZDeYmgMgghzviBod9p3C7yiZWRTvKK16F41A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773679860; x=1773766260; bh=yLbK+NrZDbtwBTohn+BC+v+ILY/ULpA4+9k
-	LmNKD1kQ=; b=yTIH0GGTzyD+qsrppSA2fhdQJTrjbUa+22OUVJMLe152KrGRyJ7
-	PcT7XKeeeLnCV6v8ajBpRu7ZIeILt4oSwpVQXKAP7LYaaDT6kxb9uOeEbEGx97FL
-	cSPZshT80+Y3ZWL57g6b3sK8E4wldFSrhLT4G/wvegyprz+9wNP6XjgqHJAae+If
-	Bbekk9hD/0p5gwLka4KgZpUVJDVdFPJDLV8aNpV+xsRT3+3iHEvX1Ty/pw8VufJO
-	O2+Up+2kfZELPmBVxcLIwA63zqQeSfIFexeCIbCtbvrzcZZedCLnOv2i9ow0hoAY
-	SAV9G8FjV1rU3hJJSK51K5xnme2DoKC5HYg==
-X-ME-Sender: <xms:9DS4aaXbJWrlt7HXwfEAgVCQsE4re1yd6aR_NLdNC0WeD_R3ullVbg>
-    <xme:9DS4aeC6YnmO409wJIPxKPpvTf7461I8hk0RfbRkpTxPTN1LcsJdqWfjVwJGdPe9C
-    07wL288oUf_bci-mqLBPHf2e49rlbSrh7BBOg0NffVynh-xinU4W20>
-X-ME-Received: <xmr:9DS4abzZ7B2xhk_7P03s18xq7c-0IsP63628NVP-3-Ou3YGKvnWefAR8qkjevJbafJqDb4fLElOMEFxYYJpq1ynyGGBfltZxWg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleekledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhff
-    eggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprhgrshhh
-    rghnthhjvggvvddtvdehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:9DS4abAgkjMTM92NaS-TmZlOu5I9W3zNV21Q3_bXuFwalbInYlgkuQ>
-    <xmx:9DS4aYaGN2vTlXZf5Jfj3EZWFSYiK4mvq_udt-b6Uy-5t-0S3m756w>
-    <xmx:9DS4aTgsmsvftmND_5ds5mhRr6ap8TkBTnG1ttvhzmtRLbb4nOWbIw>
-    <xmx:9DS4aa4t0vUoN2WjUyuIreZuScC8e02ZxfwATJopj8QpKi3ZZfKF9Q>
-    <xmx:9DS4aSC9UpXJdzS2eVrf63_sIT7QmfXYvd4g7HPSEfBaaZ0p9sQ-dAGV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 12:51:00 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: PRASHANT S BISHT <prashantjee2025@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3] t4200-rerere: use test_path helpers
-In-Reply-To: <20260316070812.84760-1-prashantjee2025@gmail.com> (PRASHANT
-	S. BISHT's message of "Mon, 16 Mar 2026 12:38:12 +0530")
-References: <20260316070812.84760-1-prashantjee2025@gmail.com>
-Date: Mon, 16 Mar 2026 09:50:59 -0700
-Message-ID: <xmqqqzpjpvkc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="htjVkjbr"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4855dbfc129so23644455e9.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 09:57:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773680254; x=1774285054; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=umm1way6SOAvSdDM5le2ICO6VoYevosKMgUCabHSBhU=;
+        b=htjVkjbrntMzLpAHsveNqN2mBYXM4dmyN0Rq3AXg84ZO2QGEZEZIJ11A55lsr6culU
+         9zXwTX6E8tyfoZ2G21wD/+tzfnWU9J8NAkckxhmc3FS8jS9/jFQRBxa+aAziFLVP+eQx
+         /WOgrJAB8zYgwUgVzDS22uhM+1zbmM1jNaEiGKXUazteM6yWzNithGWa5fTmh0Cf0llJ
+         s1yuVr4uPKKokJonV83kokgvOTX+YSdGfwpxVXV2zVAXayA9oozDn8tkZJPMdUessg2F
+         CXA+uqvVvdX/opKKfpKM0SS2AqW+mI/fdBTk0da1AfHR9r53//7zp/gZuGjptewCNkyy
+         MJag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773680254; x=1774285054;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=umm1way6SOAvSdDM5le2ICO6VoYevosKMgUCabHSBhU=;
+        b=od/SyQtrlV4SanFyEVctRJOQfjuxch3+i4srTf6kGFh3EWW263THnHt5RhHuqxUJOD
+         M++Kcw9cR5xnD8KhxLQXEjFWRI7W0sNFLexgmB+UlAkJhdavYkd2crXXex/L0w+H6pT6
+         bzNHntT6h08JJ1K3wQDGylIDGQr9RQXMEf3wnDyWHjoGzS7yqQgW6J/3NG5NWO1xQnUe
+         6RRbGT4xW5eiEvYePehduiVphA9Zy/hhpX8UYcqtURu+0X9LCGrYsEFUs6KgknMUmQaa
+         Dk15h7fOkQ3Qoi5vg69s3jOtB3+h3dC/QvCd+rlB3GTJoWBAeTiqptiUvPXOeRWYTnf8
+         XeYA==
+X-Forwarded-Encrypted: i=1; AJvYcCXfzwjfP1DiAOwO7WcubErIsXIJetU3i4vSMPVHV2PgOEwx+SzfrCuyNIXx393WJr7xPjk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx52s5DqS8KC6frD6NKMwvzpMaTjzsZNnYapak/BbfnBB6SkOTv
+	E4Ha0RCTUq/1sfoyKvSuY02GJyCF9VMmynr0oWzN7P1mHxFE+MXWJoVw
+X-Gm-Gg: ATEYQzyQbpyLtcEaaA/y4NIBZqV6ME3AVvM3vEFk12tZoH4ko7ipVHEayQjgCOb6FUf
+	AD6+2CmNW/JXsW3x9rEJPwiieWiboePMw4XX8sUMeMzfV1Rx271tjkiLi0xScbzicWJICrOIK+Z
+	sv9zn1KUs0VMVGfhDgWDixi5cgGUXWTrEMlfEGZJKoNis9yc94m1fOgdGMcNkHFDhWZ9OUMFZ5t
+	KoG/MCNaW1ye2gE+aaBJL9GUJbD5MremJUG0eWJE8RmxyX5VwQH5zX0R6+794QBi1xRlfDUQ2Ji
+	CvMvWpZQY6x2u9GedARFj9G9cAGIaq5xINYT6w3SBzmY6FNf5h5msBGS18Rrsz11wUJwOkXPNfc
+	L/mFSs30KTLnDFDi05FG9KHyOJORZOb9qAHycRisFP3Dxfhub3Qw+k9LbJ4EGz9/1TETDDTA4Gr
+	6lfYz5SSkL8kIfggiAETs4U8bPC7fpk4UOUSgxTuhyF97vfT0NiMS7g4bpVoNyf0o8dytFf7eb2
+	5P6te7zozgxCLFi
+X-Received: by 2002:a05:600c:c8d:b0:47e:e2ec:9947 with SMTP id 5b1f17b1804b1-4855671052dmr229335715e9.33.1773680253783;
+        Mon, 16 Mar 2026 09:57:33 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4856ea8fad1sm10011425e9.1.2026.03.16.09.57.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Mar 2026 09:57:33 -0700 (PDT)
+Message-ID: <6033b9ea-f219-43cc-9ce0-901594364ccd@gmail.com>
+Date: Mon, 16 Mar 2026 16:57:32 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 1/2] sequencer: extract revert message formatting into
+ shared function
+To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
+Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
+ gitster@pobox.com, karthik.188@gmail.com, johannes.schindelin@gmx.de,
+ toon@iotcl.com
+References: <20260218234215.89326-1-siddharthasthana31@gmail.com>
+ <20260313054035.26605-1-siddharthasthana31@gmail.com>
+ <20260313054035.26605-2-siddharthasthana31@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260313054035.26605-2-siddharthasthana31@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-PRASHANT S BISHT <prashantjee2025@gmail.com> writes:
+On 13/03/2026 05:40, Siddharth Asthana wrote:
+> The logic for formatting revert commit messages (handling "Revert" and
+> "Reapply" cases, appending "This reverts commit <ref>.", and handling
+> merge-parent references) currently lives inline in do_pick_commit().
+> The upcoming replay --revert mode needs to reuse this logic.
+> 
+> Extract all of this into a new sequencer_format_revert_message()
+> function. The function takes a repository, the subject line, commit,
+> parent, a use_commit_reference flag, and the output strbuf. It handles
+> both regular reverts ("Revert "<subject>"") and revert-of-revert cases
+> ("Reapply "<subject>""), and uses refer_to_commit() internally to
+> format the commit reference.
+> 
+> Update refer_to_commit() to take a struct repository parameter instead
+> of relying on the_repository, and a bool instead of reading from
+> replay_opts directly. This makes it usable from the new shared function
+> without pulling in sequencer-specific state.
 
-> Convert assertion-style test -[df] checks in t4200-rerere.sh to test_path_* helpers.
->
-> Instances were found with:
->
-> 	git grep 'test -[def]' t/t4200-rerere.sh
+This looks good.
 
-People seem to add the above to their test-path helper patches, but
-unless the coverage of the work is fairly thorough and you want to
-say "all the similar issues should be found with this command and I
-addressed all of them", I do not see much point saying how you found
-one of them and addressed it.
+> +/*
+> + * Formats a complete revert commit message following standard Git conventions.
+> + * Handles regular reverts ("Revert \"<subject>\""), revert of revert cases
 
-You could have used "git grep -e <pattern> -- t/\*.sh", or you could
-have been working to fix something in t9200 and noticed these while
-you were doing something else to the file.
+Not worth a re-roll on its own, but for future reference in comments you 
+can use single quotes to avoid nesting double quotes i.e. ('Revert 
+"<subject>"').
 
-I do not see it as too huge a deal and it is probably not a cause to
-send in another iteration once it is already written, though.
+Thanks
 
->
-> ---
+Phillip
 
-But the lack of sign-off is reason enough to require an update.  
+> + * ("Reapply \"<subject>\""), and the --reference style. Appends "This reverts
+> + * commit <ref>." using either the abbreviated or full commit reference
+> + * depending on use_commit_reference. Also handles merge-parent references.
+> + */
+> +void sequencer_format_revert_message(struct repository *r,
+> +				     const char *subject,
+> +				     const struct commit *commit,
+> +				     const struct commit *parent,
+> +				     bool use_commit_reference,
+> +				     struct strbuf *message);
+> +
+>   #endif /* SEQUENCER_H */
 
-For an "introduction to the project" patch, the change itself is not
-as important or interesting than demonstrating that you studied
-CodingGuidelines and SubmittingPatches well.
-
-
->  t/t4200-rerere.sh | 26 +++++++++++++-------------
->  1 file changed, 13 insertions(+), 13 deletions(-)
->
-> diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-> index 204325f4d5..1717f407c8 100755
-> --- a/t/t4200-rerere.sh
-> +++ b/t/t4200-rerere.sh
-> @@ -72,7 +72,7 @@ test_expect_success 'nothing recorded without rerere' '
->  	rm -rf .git/rr-cache &&
->  	git config rerere.enabled false &&
->  	test_must_fail git merge first &&
-> -	! test -d .git/rr-cache
-> +	test_path_is_missing .git/rr-cache
->  '
->  
->  test_expect_success 'activate rerere, old style (conflicting merge)' '
-> @@ -84,8 +84,8 @@ test_expect_success 'activate rerere, old style (conflicting merge)' '
->  	sha1=$(sed "s/	.*//" .git/MERGE_RR) &&
->  	rr=.git/rr-cache/$sha1 &&
->  	grep "^=======\$" $rr/preimage &&
-> -	! test -f $rr/postimage &&
-> -	! test -f $rr/thisimage
-> +	test_path_is_missing $rr/postimage &&
-> +	test_path_is_missing $rr/thisimage
->  '
->  
->  test_expect_success 'rerere.enabled works, too' '
-> @@ -110,8 +110,8 @@ test_expect_success 'set up rr-cache' '
->  
->  test_expect_success 'rr-cache looks sane' '
->  	# no postimage or thisimage yet
-> -	! test -f $rr/postimage &&
-> -	! test -f $rr/thisimage &&
-> +	test_path_is_missing $rr/postimage &&
-> +	test_path_is_missing $rr/thisimage &&
->  
->  	# preimage has right number of lines
->  	cnt=$(sed -ne "/^<<<<<<</,/^>>>>>>>/p" $rr/preimage | wc -l) &&
-> @@ -167,7 +167,7 @@ test_expect_success 'first postimage wins' '
->  	git show first:a1 | sed "s/To die: t/To die! T/" >expect &&
->  
->  	git commit -q -a -m "prefer first over second" &&
-> -	test -f $rr/postimage &&
-> +	test_path_is_file $rr/postimage &&
->  
->  	oldmtimepost=$(test-tool chmtime --get -60 $rr/postimage) &&
->  
-> @@ -190,14 +190,14 @@ test_expect_success 'rerere clear' '
->  	mv $rr/postimage .git/post-saved &&
->  	echo "$sha1	a1" | tr "\012" "\000" >.git/MERGE_RR &&
->  	git rerere clear &&
-> -	! test -d $rr
-> +	test_path_is_missing $rr
->  '
->  
->  test_expect_success 'leftover directory' '
->  	git reset --hard &&
->  	mkdir -p $rr &&
->  	test_must_fail git merge first &&
-> -	test -f $rr/preimage
-> +	test_path_is_file $rr/preimage
->  '
->  
->  test_expect_success 'missing preimage' '
-> @@ -205,7 +205,7 @@ test_expect_success 'missing preimage' '
->  	mkdir -p $rr &&
->  	cp .git/post-saved $rr/postimage &&
->  	test_must_fail git merge first &&
-> -	test -f $rr/preimage
-> +	test_path_is_file $rr/preimage
->  '
->  
->  test_expect_success 'set up for garbage collection tests' '
-> @@ -230,16 +230,16 @@ test_expect_success 'set up for garbage collection tests' '
->  
->  test_expect_success 'gc preserves young or recently used records' '
->  	git rerere gc &&
-> -	test -f $rr/preimage &&
-> -	test -f $rr2/preimage
-> +	test_path_is_file $rr/preimage &&
-> +	test_path_is_file $rr2/preimage
->  '
->  
->  test_expect_success 'old records rest in peace' '
->  	test-tool chmtime =$just_over_60_days_ago $rr/postimage &&
->  	test-tool chmtime =$just_over_15_days_ago $rr2/preimage &&
->  	git rerere gc &&
-> -	! test -f $rr/preimage &&
-> -	! test -f $rr2/preimage
-> +	test_path_is_missing $rr/preimage &&
-> +	test_path_is_missing $rr2/preimage
->  '
->  
->  rerere_gc_custom_expiry_test () {
