@@ -1,66 +1,66 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357B325A655
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 07:04:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C49024336D
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 07:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773644687; cv=none; b=oaJhd8mHVYTqh7LSJNK8yetWUTpeeNkd8UINBp7PQxkPBt8AW2Kwy5JjwGmUroy7SjN/TuToWPx1n0jlnsb6eoL/TXDN/PUpR3noqm3lg3IbNVvJ1EkgGaiCyzBG2YfQIuuadkecNlqEp6w+1PhkueM3B95MfKRNzr75CMG3EaA=
+	t=1773644899; cv=none; b=eZlfHScMPh5d6IXgftSqM4tC2wGOI9aApbUlUFg539PvqjLcHIc9bM4rJ7UsbntGZ1R9Z3NYdts2RTh53Th242P9RRkawokr0XdzYamxNrKgSY0MsdSAAtcs+lfou5uHW2dtXJzo+wlegBaeguK+WpU1881YQha4TDK6anjKCXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773644687; c=relaxed/simple;
-	bh=B71c64mqyh4VC7bB2btNgInYaH2DNQUs5/bm7Pzs2No=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZOWtrWuEB4IHYeuzDoKcSVwXbHy77MLtpJsJ4LSm5f/vm9tMYuDWyE/EfyvwkZrOHDfdMNh8nb/F6zoANHufvHINFsyOcUYc79v4xJzIl2j6zFI9G+e2nKKDziA+5qCguLwY4C1R85wYFMas906aC7BwhrfRPaS2C/53zSiOGCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DQSqL9UH; arc=none smtp.client-ip=209.85.214.169
+	s=arc-20240116; t=1773644899; c=relaxed/simple;
+	bh=Q2LnH/bjWOLAKwZjlg4LP0zqdHcm92PEZnHSbdp/ONQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uSyBE519POm2bTH10k+sO3Xjd+C8lvIedxfWlZdWmLWYHi1zm8FGvLS7enseaGXG+qITpXXYOzuqFje/ftvB6Da8q5GjL0VAjXAv3NEu4h4MsePrkeFILAKi+pXhopctYbjGt0CIqPwjM1o5p8BGLj0x7WwPsTCuEyc04QfVIuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gEEGzXq2; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DQSqL9UH"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2b0603ee486so135485ad.0
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 00:04:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gEEGzXq2"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-35b88a4f123so738674a91.1
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 00:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773644685; x=1774249485; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773644897; x=1774249697; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JiIW/5DBYS3cOqX97IfZwA7DmeP3o3gnqYNcvYttppg=;
-        b=DQSqL9UHzfXvjwPYpScvKQdoWhXOGh3TOHqOCoyEiyl06gJXZHIjEfdSmL8B11OsV0
-         JPqRM2LVMdSr0mnoQ7ZcHkRcJF6unSolb7XEidbE2i6MtgqM4bldmtxjY6VdwieYO/dU
-         zQf06mWYIYBk8WldxuXi0tjSmcjZfG7STTPVGg2/JbGIYy8fFqd9BahR8+WD5D3vAi/n
-         NBhV+DIpcxOCzNEW9OpK6LZSMgCT9qeDxtQUqjrxnxC++REdpvbfx3Btw7xe7Fgh1LZT
-         TjwSw4+6zRzyV1R7pVRpPRadXiGOlKntSA2fMwG2GCs8GkPyRfFDOHJcY4hJvDX8tgvS
-         7XVA==
+        bh=794E9R4Uj7Iv8p83a4ku37+33iasKbJu5QGYzm8g8go=;
+        b=gEEGzXq2TZp1G7oUgptjLN+gjvcHTuAt0AChz3+XQtUj/aiXGTCR7oVPu6OcEw65DX
+         YTg2i7hqMLReMBTosqBJaI2aOfPSozNXMxS/HrcVbfGJa2IT7lyNyyd8x3v4tRLswSiz
+         xUWmwDLi6nB1Cdp+L6A2h3NCYqP52C9l15AdFVQF3XYwvsAa9c1gfb4KtV3rmFUOWBLo
+         tXeUBlMOugV4Zvrlif8lzkvkUnj9QbRUJUwaQsOggi56v8V2SPPlcOBDrIMYuAEl4Kjc
+         y+8x53N8HErwCl8qhHeVIkRTYdzUA0jyj60HRWYq/VVjV7i1OvvWj0L+Dlpcr5DK39T/
+         YFkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773644685; x=1774249485;
+        d=1e100.net; s=20251104; t=1773644897; x=1774249697;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JiIW/5DBYS3cOqX97IfZwA7DmeP3o3gnqYNcvYttppg=;
-        b=q5bXnF+RHm9Pd6Gzhh2Ribpy/Eob08QHNdqkIr5a5+Gcr6s4s4NxSk293rpS9FnwmX
-         lelMdmkrFSgDdp8fx0jGmMfsPuFzcmhcs6iLX+FCeOf3bsJfGOz09BG7ZWEYIbb8uMH8
-         fiPqd+Dv+UhtBZ1NNcNtboYU7m6HaMVJZoVppqseiFQldv6UBSjTY3jIsMsxsvpJZ/a7
-         2OXN2vmJopRQS8im2maP1qYTHmzFoPqHBv+TL/vGK/KMLZgX1YTwjDwEi8Y/mCY6uCzk
-         ppnOP2SuHNUFSynDc75JB8f9hRQV7XBmSp4dQxUppQ7vgcn9eg0j1ereIeVNhT5a2HvQ
-         s2Pw==
-X-Gm-Message-State: AOJu0Ywff2U7y2a9Je5DyBrccavWg6cREnAN/xo+1fBq6uU1cz6nYFpB
-	a6LAXOwWgb/2CDm6+QDeEQrRyqtBJTeqxsXkST56EgAaSlbzTko+LPTgwXO63w==
-X-Gm-Gg: ATEYQzz0jMUJP4a/RDLbK0Uz5eelOEPxbf0gxOgRK2V9AJ/IiomapSoUtImvgt/TkYu
-	ox7g4p0ROYQGIXE0WLstRStb4nryhrvZHGACx5V/Gxppupv8lFgsbPrI/4mqhM+lqLks7NzzuZ7
-	u8ZFhwtd20eoLnPQDEWWp6hMiLryp7SpH40sytffCkTgGiSg6Q4iKG+OeXBCFw8lsq33Cu2+6Dd
-	uNlkRUPC+Q2Bx+KLtWmK5EBAFEsKxa6qbfa9j3k0RhaJe22YNNFDchDjLJw9Omd3h2/K4N2EGrP
-	TcJDnBzoiMQqVqjIt1bkcNpQ7nzb19F6uO7fB7mTzU2rhzoWEk9syetZy8QuCcydDZbTxfFP3NW
-	EKdOHpfvOVRTQhXpzfNyg+6v/Lux1kOFs3JWi8H2/iAmZs005EZEMyqD5wAEu+GWxD9y0+HL6s+
-	ElWHjWeohWLfHflw6exmG4wkFJto35LwzOluBn/o359LLEtqnkWZ1U4oI3tvpR
-X-Received: by 2002:a17:902:e94d:b0:2b0:5fa5:a68c with SMTP id d9443c01a7336-2b05fa5a811mr2859525ad.9.1773644685029;
-        Mon, 16 Mar 2026 00:04:45 -0700 (PDT)
+        bh=794E9R4Uj7Iv8p83a4ku37+33iasKbJu5QGYzm8g8go=;
+        b=PmvlOJf7jys8xPs16fB7q4ZEn+N3CdKAvEdQf9OX2u7E4hFWO0GjuBVjTkz6Fw32Uz
+         EcUAySX3+WnBqtgg0AQVt8FTctudEnQSAfwxWotzTfqNL0PQvBUSHKFrg+/kP/4zDZ+n
+         jW9Lg+GDtqXWjFFQpvN+oy2ionR4ROio4m7V5VtoydttACiZVv3MABHZeDvDznKJOLLz
+         F3WhSqh2hr76tTE7UWMNsuOdVne0qMXTYCWaQP9oUWanTLEfcOtu0C7pmkUFs89FRaVo
+         6xPqDp+PJdQTqWha6FmWfQmgPsV6sPXndsPOaXKtw+BhPtaeiVC38dSoBvqt1aykUHns
+         466g==
+X-Gm-Message-State: AOJu0YxQZIdQ5Oy+grGDYfKOa++0Pcbiq6s7KhyO7rcugSP278G4HtaY
+	Z59INsDgLo+H9js1T2fQj0gw48FPCMUTkxVM/1rVZlc2x+3qcpWkfKOdXJN11Q==
+X-Gm-Gg: ATEYQzxNwTzOaa0KY+7/0K+Eajt1LE1hiTdy9Lp5R2UCETIOXqZbBWicoWwCd1KpkBy
+	XkH4ikUk4jR/RhmW7IjNJL+6IV2ome7kEWG3A0AjerkB/LVuL/kVPxm9oP5dXaUlvfNVpiGP8W3
+	Oc+PYPdvojjzYqfm0yL+z7ueKQt9WQR+EG2IFxQOqq02CUu0c9xRjNFPZ2GYacD5196TrzJockG
+	OeTY6UBZEqU1eQ3MK7tEsw+xBlZzMH/GGVlpETbd0Dc5u46S+GC3Z7umoLLl1LTFrSPyxj+YfLU
+	+sFYMiEKl4lb/yw40f9AWQXn1PLDREkcye3/HpSUg/wzjIIlPS4xKcyTXOs83vXVTnIGGO2i6o0
+	MyYPLY+NJZShJzCHB8OOLyeByl6rmekT99s3GgLkP8XBhurh3eQ2iAgLuZV8L3PoV5s23xDi3Jw
+	8DYdOsu5A+B51GRkcw0SGt2P5bTR4tEUzIjh9b+mJatStQyt8OY9GKpltBb+9D
+X-Received: by 2002:a17:90b:1a8c:b0:35b:9ab6:1d59 with SMTP id 98e67ed59e1d1-35b9ab61fa1mr2497540a91.13.1773644897012;
+        Mon, 16 Mar 2026 00:08:17 -0700 (PDT)
 Received: from localhost.localdomain ([115.244.141.202])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece7edd14sm125905675ad.50.2026.03.16.00.04.43
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35a244c6136sm4399233a91.5.2026.03.16.00.08.15
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 16 Mar 2026 00:04:44 -0700 (PDT)
+        Mon, 16 Mar 2026 00:08:16 -0700 (PDT)
 From: PRASHANT S BISHT <prashantjee2025@gmail.com>
 To: git@vger.kernel.org
 Cc: PRASHANT S BISHT <prashantjee2025@gmail.com>
-Subject: [PATCH v2] t4200-rerere: use test_path helpers
-Date: Mon, 16 Mar 2026 12:34:40 +0530
-Message-ID: <20260316070440.79892-1-prashantjee2025@gmail.com>
+Subject: [PATCH v3] t4200-rerere: use test_path helpers
+Date: Mon, 16 Mar 2026 12:38:12 +0530
+Message-ID: <20260316070812.84760-1-prashantjee2025@gmail.com>
 X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -76,7 +76,6 @@ Instances were found with:
 
 	git grep 'test -[def]' t/t4200-rerere.sh
 
-Made-with: Cursor
 ---
  t/t4200-rerere.sh | 26 +++++++++++++-------------
  1 file changed, 13 insertions(+), 13 deletions(-)
