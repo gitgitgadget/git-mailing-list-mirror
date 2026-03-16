@@ -1,84 +1,85 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524DE3ED11B
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 20:12:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1453F3D7D7C
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 20:31:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773691933; cv=none; b=AjmWfemDin9lTXJ2jaQ2b8dDhLY46PzfCDn0rXwHtuLx2Dc++ZLrz9W7FOBA2GSkUZja9XALA/D0URl0mBUI2uegdYFAnY3pHj+v3IrNJjMNWHaMtThI7vKrBgHBYA5GW5vJbpqkDy5Mt21iF874IykrRFIf0X6VcXpIl3pqEmY=
+	t=1773693072; cv=none; b=i2ezVCHp4GMNTcif4R4YwLjsrVEtTa4l4xwiCdjXsTi6jGAT45bejahitsYbQ/hiKMMnk2s9XsCbJlpwDb8nFGSG+ULIBTH04+o0gEsvL7XEDfGSjOe8M1YmAwRRsoX3LyXl+7jisqDtRBbO415wBoGX2k9E9QquevMmhmQz560=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773691933; c=relaxed/simple;
-	bh=PnkF5FBALAPwhS+85tS/+lTj2oDPEBFMedFbx1kTuis=;
+	s=arc-20240116; t=1773693072; c=relaxed/simple;
+	bh=6CWNNMrswmPICMh6iPqUW98YQAEXfonK4Ks/zE3K14c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YIM62ZELujAy63zYoxYSjAVKt7aZNOXYurUqnLd9rU8vcpyngrv7vcJQIxinSUvUUMjgKGZMklbYtPFGm4f+dNFurQ7EAi8ZIKypWF7Rc8NRwMyqeGEBUKyU1c8jYwoU6rHCzoDPP9ez8XjtWLkTfu1okWfS+WfoCd4m52//e8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Uw5t9oFA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r3MisysA; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=I8Qj2AfewDQQ8nbCOc0LAw5oiQtSI2tIDtWWSVrzr0NHTkKZfPGg4XDvHqfVg5CXqTl1dSjXFaXvqIE4E3364DIDmO7+a33HtC5atF5P4ukNZGhXFgQ79a66TOEgw6TuJGHXygNJjvgYXvgqAMJLY8DuexPqRpOS7btKKLe3P4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MqldNmK/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yHXVVCle; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Uw5t9oFA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r3MisysA"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MqldNmK/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yHXVVCle"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 526791D0022F;
-	Mon, 16 Mar 2026 16:12:11 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E31F57A0305;
+	Mon, 16 Mar 2026 16:31:09 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 16 Mar 2026 16:12:11 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 16 Mar 2026 16:31:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773691931; x=1773778331; bh=PnkF5FBALA
-	PwhS+85tS/+lTj2oDPEBFMedFbx1kTuis=; b=Uw5t9oFAf7b7vrxm3be2OUpkxF
-	raUsbHqaenyH0IY2oQ7dWllVQxaFT2VY9acZuKAQF0nfLMsCuFkk2pa8j9zyCL1s
-	72iNzMT72aWfbFNr2+rC0iqzdxXcWzNvSHYAU0Qo22KLPImhXfBlATb7D9REcbgr
-	0fQn9orQW4UupJP4J5kNmS3saKg9r53i9Hb7p6KuvAR6Uvfp/CA8LOjkXzBb2DzJ
-	tslXpCNT1KM3BSNm0lRS+28G6sH/jWktcJXE5aML7LD6bxvgoHkFCETTUReVpVRK
-	NqkTwRWYO+Llx4t28McVqWxJwS9qBCsUlPvK0tHt44Rkyl6R8+jxfPwW5iwA==
+	:subject:to:to; s=fm3; t=1773693069; x=1773779469; bh=ILdGlRNMPo
+	r5AuqU9mumKsfWuUb+QPGGMrMW4AGwbVo=; b=MqldNmK/JxqgomKANytcMdPy9r
+	9jigGFtb4pgkVu4Sf9Dd/2ay9yhSVipMQ5V3MR0jq3ezmY/e1bW8bFoGp9Vxt5M7
+	GiFxHZHsCVSMmglFhEu80spQl9PTGqfayF1Z5g2LfSrOJFXxvc5xJFyy201elMWu
+	FUDDAwDs5UbTnQVlUjMTgDQhPydd9Se0Y/BhOpOjb+VimJnjDhNKUrIz6yUS8k//
+	rMgxJU09nIo9YVnfocRdtfxX87o8X1WS1YPJ4WVgurXyxt/lXm6TwCkszssIrbjE
+	k38M9gF+qz+lr3Lk/jLp4/kYB686oGnUvijxWZ3JhhLJJnVnr8cP4qwAR4DQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773691931; x=1773778331; bh=PnkF5FBALAPwhS+85tS/+lTj2oDPEBFMedF
-	bx1kTuis=; b=r3MisysADF+bcfbfZBqfHIpy7S9wzGnV3I9t3wa5A0+DJeuAuOn
-	G61liYVerJGHlzGa3H1kjafg/RjHiMYsRIhNVMi7vedXqwiN56WUuH4a+Jv45H7w
-	NMuLNkmyo5z/b+zJwVeONk3LmKWF1+811obNF3NJ0UK0rit4YhkR99/fvTo2I41I
-	ZTJQbiXeQM50jKDtC9cFQuuSI8UCEkoA/AnvD7Rw93gZjKALZnjb/WdZ0xmCfMN0
-	DJuyvBsheau7xFtfsoTjf27cng6UDudI0xFFrTFdTYhxudE9+Xl2rqOcV0GEvses
-	S0749j48e3UAw0REA+UmoF/GjFhv7YDWtow==
-X-ME-Sender: <xms:G2S4aYzXMwyM7qWINZlK50SmDmJ5Bd2AXDELbcvsmYM0Qcl7tYgDtQ>
-    <xme:G2S4aTRP-UVFXydqfHBwDJC0P98EQAhaFOp_qCA08K-KDm-N91rN_fUFVWrmWY_EP
-    QT-YPzlQy_331sHk0M91tPL-C4r56O2AKg-NjpEwQ3un_mvzc_J2x8>
-X-ME-Received: <xmr:G2S4afV-KVLr4iKqhQ-Q73E4WEU5lJ10GvFmpvyLQo1PIycXSDxE4AsyABUnkXq5PdR4PgHsdYugFDEK55FYs1oqq-jPd04caQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelfedtucetufdoteggodetrf
+	1773693069; x=1773779469; bh=ILdGlRNMPor5AuqU9mumKsfWuUb+QPGGMrM
+	W4AGwbVo=; b=yHXVVCleEdhfW2FK0TVtEJe5K3wDmCc4/7gNPxmXuKHSNDeW0AY
+	M+PUexsEJQQUDv9die9hBfpFngXsIkEbAEXAyppdKdH3o3sCW7yDL01jutKVnN/X
+	Pgzw69iqUfWZkzSmfm1G2aKP0sSjQrRmGyT6fw+EpebHF7gITFv7ZCuqUUo8jUYx
+	4TdsEctOSFAyrppRWShouHuMmZPEPey81tI34lN5jaLWogr3lTA9dUZ8iSR+PrP7
+	zXYjHIMRhHdR4OWCa9AK05GFXCQc/ppAfWwWcyVseIQvY4av2TRfwO1XlbJx2tAo
+	JV+dYIgMWQtnsfVDnCtZ0SBknDVOPHIO2oA==
+X-ME-Sender: <xms:jWi4afWE4Vvl_OhpWTttZwXUWdZW-UKNWqZGkB4oFraJcO-aa1oiaw>
+    <xme:jWi4ael6hCfxoc3eK1A7Ot5TLOrYWi9YFit3w0OB7PKdogUTWwPdHiQ6FM1jXB3Z9
+    XtCU5L_bBFaMV4GtmYB_M5k5KKCS0H7IV9LeI_Jz8PFErlxnVKakg>
+X-ME-Received: <xmr:jWi4aQa5i6SU3dKawS9lb-HT5KYX3PV6G7RMCLFnq__rFQ6BHLK6kPDDvtVu1CKLdtXZX4dZgJDwwaLqkn_nVjtnE8L8Yeq_iw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelfeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhgvrhhrhiifrghnghdukeefseihrghhohhordgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:G2S4aVY6t5x2YCIUC2BaSyu92bdAPbZjQBuOzLAwHHg-xR_r5T6RcA>
-    <xmx:G2S4aV1Q9mBd0prFktUF5DL3n0or77HgXQ2r-mg-8PdDpfLrWsYOzA>
-    <xmx:G2S4aXgTZp92ixVxftystix2WwJbvlmT1zl-m814eeWE1WS7yidNQw>
-    <xmx:G2S4aZYtfx5Bp317HS7N45dJhCGHbuyMaphz5SzldLkfUAKyiIq6eQ>
-    <xmx:G2S4aZXc7YJFaTfcHGh1juumYWc7ACEpsJod9yp0NP3_244N0O40lhrT>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekteehffegieelgfetgfffudfgte
+    etjeelgffgvdevffeiledvvddvgfetkedtffenucffohhmrghinhepthhrrghnshhpohhr
+    thdrtgifnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
+    hopegtshhhuhhnghesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:jWi4aZM5YTYxZotCybzKeymx1LV_3wEQFSYXvbvADkKyaoMEixvoNQ>
+    <xmx:jWi4aVbL5LvXW3QRR2yIbazf07QNeaVdWLMDwEgR0q3RSxbEYMUHoQ>
+    <xmx:jWi4aX0l-OTHunAZ2RVzczNn1ZqPZI_kVp_FQB2ETEaTtVhxyZEj9g>
+    <xmx:jWi4abdXfewdUe9V9jBkkDWHiP-TIqpeR2WwsQrk92kPJdCc8KVCsg>
+    <xmx:jWi4aYXuVKzlyJxpF6FBE5tTtWrO7TVYL7pRXN3YXTeL51nN6sZsEeVf>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 16:12:10 -0400 (EDT)
+ 16 Mar 2026 16:31:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jialong Wang <jerrywang183@yahoo.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [GSoC PATCH v2] apply: report the location of corrupt patches
-In-Reply-To: <177368589341.86550.13587211475575359717.git-reply-v2-queue@yahoo.com>
-	(Jialong Wang's message of "Mon, 16 Mar 2026 14:31:33 -0400")
-References: <20260315231538.68586-1-jerrywang183@yahoo.com>
-	<xmqq8qq6y4ql.fsf@gitster.g>
-	<177368589341.86550.13587211475575359717.git-reply-v2-queue@yahoo.com>
-Date: Mon, 16 Mar 2026 13:12:09 -0700
-Message-ID: <xmqq8qbro7om.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Andrew Au <cshung@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v4] transport-helper, connect: use clean_on_exit to reap
+ children on abnormal exit
+In-Reply-To: <20260314160814.GA918806@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 14 Mar 2026 12:08:14 -0400")
+References: <20260311184206.GA1911377@coredump.intra.peff.net>
+	<20260312214945.4050010-1-cshung@gmail.com>
+	<xmqqsea4aen2.fsf@gitster.g>
+	<20260314160814.GA918806@coredump.intra.peff.net>
+Date: Mon, 16 Mar 2026 13:31:08 -0700
+Message-ID: <xmqq4imfo6sz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,17 +89,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jialong Wang <jerrywang183@yahoo.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Thanks for the review.
+> I don't know if you want to apply it separately (since it's really a
+> totally different topic) or on top (since it is only the application of
+> Andrew's patch which lets us find the problem).
+> ...
+>  transport.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> I sent a v3 after CI exposed two existing tests that still expected the
-> old error format; v3 only updates those tests and does not change the
-> main logic further.
->
-> The other line-number-only error sites you pointed out, such as
-> find_header() and parse_git_diff_header(), make sense to address in a
-> follow-up patch.
+> diff --git a/transport.c b/transport.c
+> index 107f4fa5dc..2fb4767821 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -54,14 +54,14 @@ static int transport_color_config(void)
+>  		return 0;
+>  	initialized = 1;
+>  
+> -	if (!repo_config_get_string(the_repository, key, &value))
+> +	if (!repo_config_get_string_tmp(the_repository, key, &value))
+>  		transport_use_color = git_config_colorbool(key, value);
+>  
+>  	if (!want_color_stderr(transport_use_color))
+>  		return 0;
+>  
+>  	for (size_t i = 0; i < ARRAY_SIZE(keys); i++)
+> -		if (!repo_config_get_string(the_repository, keys[i], &value)) {
+> +		if (!repo_config_get_string_tmp(the_repository, keys[i], &value)) {
+>  			if (!value)
+>  				return config_error_nonbool(keys[i]);
+>  			if (color_parse(value, transport_colors[i]) < 0)
 
-I do not mind marking these as #leftoverbits; v3 looked great.
-Thanks.
+Regardless of where it goes, we need to change a bit more, it seems?
+
+    CC transport.o
+transport.c: In function 'transport_color_config':
+transport.c:57:62: error: passing argument 3 of 'repo_config_get_string_tmp' from incompatible pointer type [-Wincompatible-pointer-types]
+   57 |         if (!repo_config_get_string_tmp(the_repository, key, &value))
+      |                                                              ^~~~~~
+      |                                                              |
+      |                                                              char **
+In file included from transport.c:5:
+config.h:644:62: note: expected 'const char **' but argument is of type 'char **'
+  644 |                                const char *key, const char **dest);
+      |                                                 ~~~~~~~~~~~~~^~~~
+transport.c:64:74: error: passing argument 3 of 'repo_config_get_string_tmp' from incompatible pointer type [-Wincompatible-pointer-types]
+   64 |                 if (!repo_config_get_string_tmp(the_repository, keys[i], &value)) {
+      |                                                                          ^~~~~~
+      |                                                                          |
+      |                                                                          char **
+config.h:644:62: note: expected 'const char **' but argument is of type 'char **'
+  644 |                                const char *key, const char **dest);
+      |                                                 ~~~~~~~~~~~~~^~~~
+gmake: *** [Makefile:2815: transport.o] Error 1
+
+
+I'll squash an obvious patch in.
+
+ transport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git c/transport.c w/transport.c
+index 358bc38585..7985b42a74 100644
+--- c/transport.c
++++ w/transport.c
+@@ -47,7 +47,7 @@ static int transport_color_config(void)
+ 		"color.transport.reset",
+ 		"color.transport.rejected"
+ 	}, *key = "color.transport";
+-	char *value;
++	const char *value;
+ 	static int initialized;
+ 
+ 	if (initialized)
