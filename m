@@ -1,370 +1,107 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389B13988E1
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 13:34:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3C2AD2C
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 14:15:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773668079; cv=none; b=qLMzdqVCzwXlkqsjcVg8lwbXL4ajyf6EkVmWNj6BBZKZJNzhTHUJClY9r320FvqXo0Is+pHPceiChsKKYfDm8TuNYw3XGpE7e+JJR1GnBNK6/Z2GJxIZgmlWNB/r/MmgTLyattMLWmw4QRCrfD6jHiVR1xn5UsyY/nVJpBrYvG4=
+	t=1773670542; cv=none; b=Lxpg4iyznZafI4O6DBVHzHnli+u18foo2FLgfkO4B44j8VRnYp/Ydazy9sQJNVsOluaAW9/jLr2pGaqZit6GJHDrApeU72wT81fWUlmSfCl8SB1VksePLSGsYgh2Z6KQCB1vapmby/s5esJa8xroMh1a79wkJqhsfmbY2Dx00U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773668079; c=relaxed/simple;
-	bh=E3OfBjINr7Q1UhzMWAzj+4eJvO238sBEaoGQ+8t8lpQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nUIT+qllypXIEnqaVwUEQK6+M8Qv9htScKi+WWY16zyk4ebe4jF5MoXwP3Y+cbd/JySZYpC57IKEmQrl3N8yr4IENg3ex6oNei3UTvXqp5yVj3j9v7QQSyKGpiFoU9JG+jyQGXlMb+5EOZ4nagmNl7IQIPzpLws4PkB1HElKFAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SOW8qgEf; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1773670542; c=relaxed/simple;
+	bh=yLGuHQGhAGWhyQ/E1v6affNeTK03ulMy1Jh4PAtLBSk=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=d+DbLNRY/wJMWVqv2hmnesraHGfg9baZ3r3jfNvIKTC7XZdrIxO8InQVYUfsWfMiU9CtwOREscQ/VqJOOQ+Cl1jUwNUVYaGYIHdMXiNWWohglT/2zK6BvKfwtYtEqH3JbHzGec6CL7YE8JyS8tyXJUBZzVjfNyGQ0NW4V6QWNI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NdRUMV2n; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SOW8qgEf"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-48557c8ad47so26012965e9.0
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 06:34:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NdRUMV2n"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-79a60975dc5so591247b3.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 07:15:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773668076; x=1774272876; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WbJV46+sdbmxr+d8AjUeHw40qoB/rsMGioBe5KvBnS0=;
-        b=SOW8qgEf6F21izjF+SIth6rxL38ilt2/TWScGz5o2as0cQlu4/4Odn9eHryGVMZTdB
-         QfiTp1JCCDwgmBwB4eDrTz47ckBeJC25mfMpGVftOj6IYMfRQdF+yQeQKRL/AWkHjUh+
-         uWFp+bdTu6HQhImqdJPGX4xcj8F5VLGj0CFLkkEqHo0L179bNixvciNsTWU6OiRC+kwc
-         0DNF8iR+F40DehU/6De9riwH2R+OukdXEkbjf1dx+KoCXeY1pwTbDBw7aHnkQ+UpRNBP
-         hdim5lT0ND+XFeD3W3IEYVJonjHoyIsA4YGfRFTbZhGcoXhXVifeb51J5e+nCnKo8Esm
-         sscw==
+        d=gmail.com; s=20230601; t=1773670540; x=1774275340; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=B5AWo6205Ijh7vQumNwgvunH4o1nKxk9JUexina4DDw=;
+        b=NdRUMV2nTW53f+bm5e30BaHGMbivgi2UIcExKLLuSWkq8wqed1T98EeN4WZret4/iB
+         z41dnz8D+1PhVteTNGXejeOD99tLMpra7e1EfIpKsSWKqi0x3/diD+j1PL5QOspIh8w+
+         +qNx9fOLenhaXJCSZvEqq4X5Z8u1mQFiqsGDOzhDCRAsAgajefHQ8DDVlyKdpFXxiFIA
+         v77L4X03Mj9rgdbsgZ9k7YZr4BKEjXeLW+s+Fhj9tKWsrMT6926biJW7YhOq9ySUBqup
+         KqS3fhY5fmWvmaayxGXTNNC61IngZjTKvgy4wa0XsYePPx6hzFOK4vROyETGPX4dFMDn
+         xInA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773668076; x=1774272876;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1773670540; x=1774275340;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WbJV46+sdbmxr+d8AjUeHw40qoB/rsMGioBe5KvBnS0=;
-        b=VnpedpYFSjPpoffMRromwG1Rz19TP7jjnwK/Z7mYe4ceMqAXh8tbfnvajOk2/T4H9u
-         XhrBTZ9K0AnQ9MmTeaFDZLoVLDj2qQZWF4GT/Q39nJ59u3d5UAgA7KlzO5bdQOq0Nmeq
-         LMOCNorS4CuQ7ZwgRNSIU6uJcOApmspDUNkyTetFsGh5kLf4ssB1j/qA9V699MZ5D/SZ
-         iqnGXb+Bid6BSZg1Upo3COQIpjoCBPoLisF6i3R07Zhr7DcKx5ftcdaRYAy9Choe3ifr
-         xGgcRTQ0yjBU0HmDV3oxZlLMSe5/g1r7vKRhO70eSh/1duMBBL/zV0x0duwFMZ0LLD1n
-         x00g==
-X-Gm-Message-State: AOJu0YwbaTyZvEzvhADNPbZZhvDLEYyMksESloYTdpKWUJSO8MJkZSmF
-	DzoitnC3jiAdEXdwxZADgobLTj/yq2UrPEk15puhfTPdPW0cLU8W/MHx9b5u3QmEEud6Tw==
-X-Gm-Gg: ATEYQzyAX/KyoaOb2hsDW97TS3y+XK7bKXLp3pbhpwCRB61VDG/KF0LUi5aiw+IeCQH
-	NmTAXYGme/tGiZhd0Bbx7Ujy/abRbbPfTk5HVSKhvZbByskXz0EYlOxQU3JIvR3+tszdUdw//c/
-	5f6hOSeoml+Hwds2Q3jUB7Zy2kvVhq4TERIKr8xHsx30YYawQRoszJvGamtCYV/Zsmo+8IKQN+f
-	hXRNvP4mC/mpxU8zdP47Jr4QlfOCMhtuEAFEGhRmQvADErq/KkWhX008ExTS4/9K+wmxBeJOPMa
-	+7ErMSFUJ8CtPHmbwYH3N55tnibBJAQN/ILcZWosFkF9Y6upeATwlOSCvEw1tUfedOpPNEzMKeX
-	oOELpc786BlH5J9sd5Lxw4kHof4/64Qai5jRNAKkbwbO2UrZJcIWVDF9DYp2nXjawF4eZgf5vYW
-	RpHapELl5pSyiFEwHQwBaP3FpvqmZmsdZu0D5IqWuuR3RoSsk8qB+xLFp+SVjXiMvNA5NcqBcEN
-	/u7a4+l2Yuc510pJKU02c+dU6tiyDhy2XiRd3/H4wu/B5Ca+ZVMPSK56Esox+oQcNpqNQ==
-X-Received: by 2002:a05:600d:8486:20b0:485:30f7:6e88 with SMTP id 5b1f17b1804b1-485567149fbmr156900945e9.31.1773668076133;
-        Mon, 16 Mar 2026 06:34:36 -0700 (PDT)
-Received: from farblopa.localdomain ([84.126.0.122])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b66ffe2sm391805945e9.13.2026.03.16.06.34.34
+        bh=B5AWo6205Ijh7vQumNwgvunH4o1nKxk9JUexina4DDw=;
+        b=IQdVoUdnbyQ0MWaJjVGWHz1r1Ibw/u4tevtDYJTvlNaQoGddrvo8Fn4j5kt4SLyNUd
+         lD3s1BsuWhJ7hGGKbHZhGHwuYKnucMm3VYPrVtfbIQV1pQj4IwUXnt/tnenENSS/BkFD
+         /SQBgtEP3wO9L2GtESGFJEsFXs6ufhXY/e0QSMrXNaJbAvttLS196XmtgOpYTXeDX5Tm
+         xTIBxb+BVl/NtMQv5HXAnagyBWRYLXn+1YEwUCd7RvxC3ZCO9ymttET8+m+JLlhC0d+t
+         f3qNX2enp+x6k8cLk1d2fR1IR6snJL2zV1jCX2bfo93h08Dk9epgXn9Bbe8JxbNFY64G
+         OKiA==
+X-Gm-Message-State: AOJu0Yz7D1JdCkwwd+Do671+GyNFoBm8NjFcku7D3VssHDmXURWhKGzY
+	B/StJyr4PSj+EXFUFsj5AeGevPNgEnOZUEfPFgQesBJgPVlno5AEuWVfYa+VJQ==
+X-Gm-Gg: ATEYQzwSuTW83KJ14S3C13bVQ89HpFVaAYGNZO0ffgBjSTOIQOyKq15COXqTlLPJEku
+	e+vy93dZGojrNtqtQMa3/p5875Lku7CttvAq0XWmrF/TUkMvyabmH8lNlKREZpH58LNt5EoZm1k
+	6BfrvfLZLNk3fAakf7l9BtUgIYSuIBKQLzL3/fTQPsaPCsoO78SwyVOi8lhx/WWrAzZ0F1Q0s9y
+	uu8WxhMWhsbPCFnCq2lvHX/yOEFt5zYvpYJd80bDM1Cut73BNixL33jxn++Pv+F7vMP/BpcOUeo
+	Phxmw9YgJO6mjw6VxogDEDe0cveWj8HYSIXbPSS0thn6YLqNenu4Kl6y84DLyZq6y15NNI6FLQO
+	W/dbgOwLjuzIRl3f0kFHkpsmSZwrPvBtrkGOcvm0rXmcxEi0PVkasms27y1uEZyVrNvHdRCcwjF
+	2VvnSH65Dz0+v5+rYFNHaktlNIig==
+X-Received: by 2002:a05:690c:3612:b0:794:f3dc:a977 with SMTP id 00721157ae682-79a1c1d8f75mr127120737b3.46.1773670539489;
+        Mon, 16 Mar 2026 07:15:39 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.232.34])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a2de73263sm39893957b3.43.2026.03.16.07.15.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2026 06:34:35 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	karthik.188@gmail.com,
-	jltobler@gmail.com,
-	ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com,
-	chandrapratap3519@gmail.com,
-	Pablo Sabater <pabloosabaterr@gmail.com>
-Subject: [GSoC RFC PATCH] graph: add --graph-max option to limit displayed columns
-Date: Mon, 16 Mar 2026 14:34:26 +0100
-Message-ID: <20260316133426.117684-1-pabloosabaterr@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        Mon, 16 Mar 2026 07:15:38 -0700 (PDT)
+Message-Id: <pull.2069.git.1773670536808.gitgitgadget@gmail.com>
+From: "Guillaume Jacob via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 16 Mar 2026 14:15:36 +0000
+Subject: [PATCH] doc: fix git grep args order in Quick Reference
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Guillaume Jacob <guillaume@absolut-sensing.com>,
+    Guillaume Jacob <guillaume@absolut-sensing.com>
 
-When there are multiple branches, --graph-max modifies the maximum
-amount of columns that will be displayed.
+From: Guillaume Jacob <guillaume@absolut-sensing.com>
 
-Add "--graph-max=<n>" option to cap how many columns will be shown,
-columns after the limit are replaced with a single '.'. Changes only
-the output rendering.
+The example provided has its arguments in the wrong order. The revision
+should follow the pattern, and not the other way around.
 
-Define MINIMUM_GRAPH_COLUMNS constant to validate the option value.
-
-The commit character '*' is always shown no matter what the limit is.
-
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+Signed-off-by: Guillaume Jacob <guillaume@absolut-sensing.com>
 ---
+    doc: fix git grep args order in Quick Reference
 
-This addresses the TODO at graph.c:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2069%2Fguillaume-jcb%2Fdoc-fix-args-order-in-quick-ref-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2069/guillaume-jcb/doc-fix-args-order-in-quick-ref-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2069
 
-  TODO:
-      - Limit the number of columns, similar to the way gitk does.
-        If we reach more than a specified number of columns, omit
-        sections of some columns.
+ Documentation/user-manual.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-About the design of how this would have to be:
+diff --git a/Documentation/user-manual.adoc b/Documentation/user-manual.adoc
+index 7696987117..64009baf37 100644
+--- a/Documentation/user-manual.adoc
++++ b/Documentation/user-manual.adoc
+@@ -4466,7 +4466,7 @@ $ git show		    # most recent commit
+ $ git diff v2.6.15..v2.6.16 # diff between two tagged versions
+ $ git diff v2.6.15..HEAD    # diff with current head
+ $ git grep "foo()"	    # search working directory for "foo()"
+-$ git grep v2.6.15 "foo()"  # search old tree for "foo()"
++$ git grep "foo()" v2.6.15  # search old tree for "foo()"
+ $ git show v2.6.15:a.txt    # look at old version of a.txt
+ -----------------------------------------------
+ 
 
-- Should '--graph-max' by itself be enough to implicitly work like '--graph' so 
-  'git log --graph-max=3' works without needing to write '--graph'?
-- graph_max_columns by default is set to 0, meaning no limit, and any other 
-  positive value becomes a limit. Is this a good design? it cannot be negative,
-  shouldn't it be a uint32_t instead, I left it as a int because of the other
-  variables like this that are int. like skip_count, max_count, etc.
-- Is '--graph-max' a good name?
-- Is '.' a good char for truncation?
-- Should '/' to outside branches be shown?
-- What should it be done when a commit is in a column that is truncated?
-
-known limitations:
-
-- Post merge lines have some trouble with the padding.
-
-I added two tests for example, but I will add better test coverage as design 
-choices are more clear. testing on the Git repo itself is a good example also.
-
- graph.c                      | 52 +++++++++++++++++++++++++++------
- graph.h                      |  2 ++
- revision.c                   |  7 +++++
- revision.h                   |  1 +
- t/t4215-log-skewed-merges.sh | 56 ++++++++++++++++++++++++++++++++++++
- 5 files changed, 109 insertions(+), 9 deletions(-)
-
-diff --git a/graph.c b/graph.c
-index 26f6fbf000..7ae0ab61b7 100644
---- a/graph.c
-+++ b/graph.c
-@@ -42,14 +42,6 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
- static void graph_show_strbuf(struct git_graph *graph,
- 			      FILE *file,
- 			      struct strbuf const *sb);
--
--/*
-- * TODO:
-- * - Limit the number of columns, similar to the way gitk does.
-- *   If we reach more than a specified number of columns, omit
-- *   sections of some columns.
-- */
--
- struct column {
- 	/*
- 	 * The parent commit of this column.
-@@ -317,6 +309,12 @@ struct git_graph {
- 	struct strbuf prefix_buf;
- };
- 
-+static int graph_is_truncated(struct git_graph *graph, int col)
-+{
-+	int max = graph->revs->graph_max_columns;
-+	return max > 0 && col >= max;
-+}
-+
- static const char *diff_output_prefix_callback(struct diff_options *opt, void *data)
- {
- 	struct git_graph *graph = data;
-@@ -846,6 +844,10 @@ static void graph_output_padding_line(struct git_graph *graph,
- 	 * Output a padding row, that leaves all branch lines unchanged
- 	 */
- 	for (i = 0; i < graph->num_new_columns; i++) {
-+		if (graph_is_truncated(graph, i)) {
-+			graph_line_addstr(line, ". ");
-+			break;
-+		}
- 		graph_line_write_column(line, &graph->new_columns[i], '|');
- 		graph_line_addch(line, ' ');
- 	}
-@@ -903,6 +905,9 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
- 			seen_this = 1;
- 			graph_line_write_column(line, col, '|');
- 			graph_line_addchars(line, ' ', graph->expansion_row);
-+		} else if (seen_this && graph_is_truncated(graph, i)) {
-+			graph_line_addstr(line, ". ");
-+			break;
- 		} else if (seen_this && (graph->expansion_row == 0)) {
- 			/*
- 			 * This is the first line of the pre-commit output.
-@@ -1013,6 +1018,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
- 	 * children that we have already processed.)
- 	 */
- 	seen_this = 0;
-+
- 	for (i = 0; i <= graph->num_columns; i++) {
- 		struct column *col = &graph->columns[i];
- 		struct commit *col_commit;
-@@ -1028,8 +1034,14 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
- 			seen_this = 1;
- 			graph_output_commit_char(graph, line);
- 
-+			if (graph_is_truncated(graph, i))
-+				break;
-+
- 			if (graph->num_parents > 2)
- 				graph_draw_octopus_merge(graph, line);
-+		} else if (seen_this && graph_is_truncated(graph, i)) {
-+			graph_line_addstr(line, ". ");
-+			break;
- 		} else if (seen_this && (graph->edges_added > 1)) {
- 			graph_line_write_column(line, col, '\\');
- 		} else if (seen_this && (graph->edges_added == 1)) {
-@@ -1109,9 +1121,15 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
- 			int par_column;
- 			int idx = graph->merge_layout;
- 			char c;
-+			int truncated = 0;
- 			seen_this = 1;
- 
- 			for (j = 0; j < graph->num_parents; j++) {
-+				if (graph_is_truncated(graph, i + j)) {
-+					graph_line_addstr(line, ". ");
-+					truncated = 1;
-+					break;
-+				}
- 				par_column = graph_find_new_column_by_commit(graph, parents->item);
- 				assert(par_column >= 0);
- 
-@@ -1125,10 +1143,15 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
- 				}
- 				parents = next_interesting_parent(graph, parents);
- 			}
-+			if (truncated)
-+				break;
- 			if (graph->edges_added == 0)
- 				graph_line_addch(line, ' ');
--
- 		} else if (seen_this) {
-+			if (graph_is_truncated(graph, i)) {
-+				graph_line_addstr(line, ". ");
-+				break;
-+			}
- 			if (graph->edges_added > 0)
- 				graph_line_write_column(line, col, '\\');
- 			else
-@@ -1279,6 +1302,12 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
- 	 */
- 	for (i = 0; i < graph->mapping_size; i++) {
- 		int target = graph->mapping[i];
-+
-+		if (graph_is_truncated(graph, i / 2)) {
-+			graph_line_addstr(line, ". ");
-+			break;
-+		}
-+
- 		if (target < 0)
- 			graph_line_addch(line, ' ');
- 		else if (target * 2 == i)
-@@ -1372,6 +1401,11 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
- 	for (i = 0; i < graph->num_columns; i++) {
- 		struct column *col = &graph->columns[i];
- 
-+		if (graph_is_truncated(graph, i)) {
-+			graph_line_addch(&line, '.');
-+			break;
-+		}
-+
- 		graph_line_write_column(&line, col, '|');
- 
- 		if (col->commit == graph->commit && graph->num_parents > 2) {
-diff --git a/graph.h b/graph.h
-index 3fd1dcb2e9..9a4551dd29 100644
---- a/graph.h
-+++ b/graph.h
-@@ -262,4 +262,6 @@ void graph_show_commit_msg(struct git_graph *graph,
- 			   FILE *file,
- 			   struct strbuf const *sb);
- 
-+#define MINIMUM_GRAPH_COLUMNS 1
-+
- #endif /* GRAPH_H */
-diff --git a/revision.c b/revision.c
-index 31808e3df0..ba5088be14 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2605,6 +2605,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--no-graph")) {
- 		graph_clear(revs->graph);
- 		revs->graph = NULL;
-+	} else if (skip_prefix(arg, "--graph-max=", &optarg)) {
-+		revs->graph_max_columns = strtoul(optarg, NULL, 10);
-+		if (revs->graph_max_columns < MINIMUM_GRAPH_COLUMNS) {
-+			die(_("minimum columns is %d, unable to set below %d"),
-+			MINIMUM_GRAPH_COLUMNS,
-+			revs->graph_max_columns);
-+		}
- 	} else if (!strcmp(arg, "--encode-email-headers")) {
- 		revs->encode_email_headers = 1;
- 	} else if (!strcmp(arg, "--no-encode-email-headers")) {
-diff --git a/revision.h b/revision.h
-index 69242ecb18..6442129c14 100644
---- a/revision.h
-+++ b/revision.h
-@@ -304,6 +304,7 @@ struct rev_info {
- 
- 	/* Display history graph */
- 	struct git_graph *graph;
-+	int graph_max_columns;
- 
- 	/* special limits */
- 	int skip_count;
-diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
-index 28d0779a8c..6266de4e2b 100755
---- a/t/t4215-log-skewed-merges.sh
-+++ b/t/t4215-log-skewed-merges.sh
-@@ -370,4 +370,60 @@ test_expect_success 'log --graph with multiple tips' '
- 	EOF
- '
- 
-+test_expect_success 'log --graph --graph-max=2 only two columns' '
-+	check_graph --graph-max=2 M_7 <<-\EOF
-+	*-.   7_M4
-+	|\ .
-+	| | * 7_G
-+	| | * 7_F
-+	| * . 7_E
-+	| * . 7_D
-+	* | . 7_C
-+	| |/
-+	|/|
-+	* | 7_B
-+	|/
-+	* 7_A
-+	EOF
-+'
-+
-+test_expect_success 'log --graph --graph-max=3 only three columns' '
-+	check_graph --graph-max=3 M_1 M_3 M_5 M_7 <<-\EOF
-+	*   7_M1
-+	|\
-+	| | *   7_M2
-+	| | |.
-+	| | | * 7_H
-+	| | | | *   7_M3
-+	| | | | .
-+	| | | | | * 7_J
-+	| | | | *   7_I
-+	| | | | | | *   7_M4
-+	| |_|_|_|_|.
-+	|/| | .
-+	| | |_.
-+	| |/|_.
-+	| |/|_.
-+	| |/| .
-+	| | |/.
-+	| | * .     7_G
-+	| | | .
-+	| | |/.
-+	| | |/.
-+	| | * .   7_F
-+	| * | .   7_E
-+	| | |/.
-+	| |/| .
-+	| * | . 7_D
-+	| | |/
-+	| |/|
-+	* | | 7_C
-+	| |/
-+	|/|
-+	* | 7_B
-+	|/
-+	* 7_A
-+	EOF
-+'
-+
- test_done
+base-commit: dc6ecd5354dca88d51b6d6562777fc8fc10d77e1
 -- 
-2.43.0
-
+gitgitgadget
