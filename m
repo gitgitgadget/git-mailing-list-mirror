@@ -1,82 +1,82 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E794359703
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 21:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FD3247DE1
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 21:49:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773697779; cv=none; b=XF1X9Ts9a8ccCj/XyNQe1Lnhy6yo5t+6CNe4CHKEVT5hr+He8DuYPQyQfDZOkw1/+h8W2f1utCaAxVp6nY5RlV6+fItnnvOV4cGoUQ5tjHfTLILu7syBo5eNbehi7FgwfUfe1xSd7tooHuAv1ooaVIwjObDXQUSO5JuFQCkN0Wg=
+	t=1773697797; cv=none; b=FKFb2AqZGI3WV7WmtJxYRfCaG2VW/rUg2VZiT2oIqCBPQ/dHNSFlntgkK9OVvO9s9LbMrBT7fcKqrgcxXto/W2bA1YEFI86t37PaUPM8/39pob8UAimWdJJ/HXKy57aAMzbQ7tONc1v44PeaOF3qPfeXU5X07hVXwziEkUjFqpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773697779; c=relaxed/simple;
-	bh=lsaeD/ioCCeeSr+m9d8N/0nRPYvu+Sgwik69tjtNtpk=;
+	s=arc-20240116; t=1773697797; c=relaxed/simple;
+	bh=fIS7/mHoczeZG5LVPS/4BuChxEXcbXbLk+7+LwPi5eE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nMF0oBK/v2N8fFNAGOAAsrAU8hrVRxkQ4sJ17y6VLIpWYXqz88BvSyI60Hvx4Tt00fiex5mIH0MmlZ3eLQFx/XsBmWLedpeAjn/G71gz/W0FCPlswTRz3Zd0brN75YsnlC9bMz0eKvBBbgCGYhiTrXjfwEjSf5wFxR4um+7eo6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MkEjerRO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yGqWJuXi; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=sYyw2C3RU1LC20LhdkFuz7wcLjyy69JcbYmT5ITeCtFePl1I0VyOZZZTC05PhZ9DOCmFT1iAvWqGWdZUqJjMK2suIWy0pchRv3YGvPTzMPji7p8OhR5zNwpeJ/+3X0qrRd+/V9n1M7FeK9pIu7ipZJGfXDHv3siefO29kKE/GvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=WCwLA0Ul; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L1eDrNN+; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MkEjerRO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yGqWJuXi"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3EAF87A0318;
-	Mon, 16 Mar 2026 17:49:37 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 16 Mar 2026 17:49:37 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="WCwLA0Ul";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L1eDrNN+"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9A73C1D002EF;
+	Mon, 16 Mar 2026 17:49:55 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 16 Mar 2026 17:49:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773697777;
-	 x=1773784177; bh=dg7O+5O0NApB5D3VI4bqSaqAO56BgHyAAXsy6qtXzuU=; b=
-	MkEjerROtktpzNqari0hzPQBXSgJ6morRtvc6r8IK9kHp45nfF5iIQ6Y09fgHHHx
-	KD+S2IIOXJ+lRLPgSPBX7TJL763EyNYFfUBOHz8OBUnL5kedTXJG5uu2lmxyZOpO
-	REHzGGPgAdkdwCsH+N/Z8K/YQKiK/LkhtNp9lSN2KJEWnY2+JF1eNVWtgvo3noPf
-	4ICHiixMz6IG42B0dR2NHS+OR98jLOzkhQeTCVV2KVuGlJSm/K0auODaNLL6zQQH
-	h8UHQcnjOCoDu2R9rnury2jnS2dJKWjmZQZOuQqNPVNrFq2XUCd/4jd+TMnMAfxn
-	FNkRjL3EJMdXoGz7Tx5w6A==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773697795;
+	 x=1773784195; bh=f97Nqsbq7cyG1i8aFh1SQ3hoxAH6yi7UCqKRS950/vg=; b=
+	WCwLA0UlGEmZ4YPYvij1iFJH2eqdPNXk+JSfkT5bcs6ujESVvwIgBkdGAtFz/V/W
+	T9UqBBabMESb8qdoQp8mdgerHFF7Q8n8uLE4SzVp10z0NToJLWLS0nUF5plsWpq3
+	aRBflV1SLsl7NSaMLQFc58X1U9fy9UssYFTCGnpAog+uDk84CD6QNZmkaxMfyJUG
+	5WLdO7/wXpUIVHelX8QMp0ptXpmcTOiW0pMTi0yCl44eq8/AnQrxqQXsDdgclTTo
+	+58m23DlkYqKj4Lgdo8feu6rqFY+B2o1kO0TQKgJsLDkNl3JMun41C+SzHcha3MU
+	JAfdeR61Qh2x+2BAO7m6AA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773697777; x=
-	1773784177; bh=dg7O+5O0NApB5D3VI4bqSaqAO56BgHyAAXsy6qtXzuU=; b=y
-	GqWJuXiUpXz4vZeDk5NCcCHpLrTX5ylV9YwoUcJtUO+1Z//5ABtkXTzSXv7MnaaI
-	BFY8Y9yBkSqrOi6XWvJkKhyS14Wi5dE65OtHiGAeienpXRv3RxH23/LSWmfIsaO7
-	gWXnHucsyMhbpyDh4FFCuLfPMOeDnBbvWwoHW1m3KipCQ+la8YbbjDbTaUHcjaa0
-	q9EfjAJF/qy/FeAld/JnSTV4d1GFRTh7kV1tuTsYlo2znG813+PQY+/1glvBPw33
-	6i2QTEXlOeFuyHr595TfvCq6Zy3QUE1X4Ezkq5co43v3t01JI/AoTI+TGR06fGRw
-	QMfcgGNTjQS0JTL1B+vUA==
-X-ME-Sender: <xms:8Hq4aRhb1TMNWzpd_TexY6F3QPSJaVJnsz32h3SmWycrplAu5ErisXo>
-    <xme:8Hq4addQoT1_-zOUQ0yRBV7qdzapFJwcA6FyXZ4qzGVC5B4g9K-DZcCX8cA8FtGSv
-    b2gpYdIfSO7oTnIwa4XKS0TlzYpO7W-N0qB2HmdqeqYN-gs5GxVnA>
-X-ME-Received: <xmr:8Hq4aeedAll9AHCtoX8AjJBnCXQwBknmg_wrC0S4T4K5TqjOgqMXmEV20slQDO2fiomvf4URi_9X8uPmJyYNXgIoWUg3uVQ_GU55BR0z5vPJ5xa7hf8xual-UQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773697795; x=
+	1773784195; bh=f97Nqsbq7cyG1i8aFh1SQ3hoxAH6yi7UCqKRS950/vg=; b=L
+	1eDrNN+fxHLrf5BCQXhUYB0yADHgnA4Zr1rGWNRbVCLan+B6BxBby5kBf/mguWQG
+	eul9OElvZC8x+8dAHSFpWnKqY9riIqAqYz9LfM8WAoHHp+1j6REswESoMfc8p7mQ
+	/UlWtvAql5ACWdv6WuWBtZZFP48qn+leo02iE2TzZo7EsshCerngEp6dP3xbP415
+	6DaabYQD7FfHPl44F0HL66QcRWA8p3x4vXKMlDZhhCCsaDi7MY8oprutlFuXaUbc
+	cxxH2sg9isOUMmWhSqk5vGuGwNUfRuwYyZe46nvrkEHz2oCvjq+9UbXd6jyWOXyc
+	eLjoXI6QcpUOb9a45VVwg==
+X-ME-Sender: <xms:A3u4aTy72NocyaWLSAAYElX1Pcycx-iSVjy3Qm6xwi7MXs8mgmcDxaQ>
+    <xme:A3u4aSuYoTvmECVHGgXIVmwKOAm2T8_Xr-_wjP2WfAxezsvP1rurURedCFSbWkUXm
+    uChOiAGX6iEz4SCrXoTPTnFqS9xNXwKg2bUTsr9R_iLfVLUtuYhug>
+X-ME-Received: <xmr:A3u4aat0plg62YO_svYH2R4bal2OhiU7kdyk730VfVkJ-iIOIuZD17r3WSQDBC-yHBYDFZmKq4VHrMyy-_Q0CnKUw2PAHSVt-2_1FiIj_oYkWFpY8PaQm4pWkw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelhedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlvdefmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
+    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
     jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
-    hlrdgtohhmnecuggftrfgrthhtvghrnhepudelgfeuieeuteekleeifeegudefheetkefh
-    jeffkedvueehtdevhfekieekhffgnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishht
-    ohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpth
-    htohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrg
-    hmvgdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrh
-X-ME-Proxy: <xmx:8Xq4af9IuQti1Lf1TjqgEX6P4oaZQ80YAIgyGhD1wWDyShah1x4sOQ>
-    <xmx:8Xq4aSmq7kwZVL-C-ElMdHLoRg475qApYyhJrQep9zB_kfpfuJ9Q0w>
-    <xmx:8Xq4aZ_K3KSvXi93tCC0hyhP8RJ1s692HJfQ9diuP2X2u_mbXSm-Nw>
-    <xmx:8Xq4aYkpdKq4DSauQEAR9rAKmT-vwTA6EWqYhpu5MRiwzCE4lx4w5w>
-    <xmx:8Xq4aYEui2u51hP5u2cLai2PCvmP_F205glQ2xDBSCZ7mS97fxW9viDg>
+    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
+    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepjhhnrdgrvhhilhgrse
+    hfrhgvvgdrfhhr
+X-ME-Proxy: <xmx:A3u4aXPSHwx-pr8IsUPxu6WUlzKzCVTB-jLAiTOaJuE-LKitMPRbLA>
+    <xmx:A3u4aY1oBeeajmc3YKZ3_8rj3wCWvWiiwDxz887yDUQHB8PcJfQvJg>
+    <xmx:A3u4aTOzyevnkfErvpwiwb1YXlgqA_CaqupO7YEfg3lDbtm4njEBaA>
+    <xmx:A3u4aY0ouHZX7GfkmgWTOH1KRAl38Dd9zg12jSeOIsg7YPF2xUlVXw>
+    <xmx:A3u4aZUvcsrOUSMChx361i0pmQeFHLnnwtNlD8pTGw6IlAkY6S2DPOBB>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 17:49:36 -0400 (EDT)
+ 16 Mar 2026 17:49:54 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH v2 2/4] doc: interpret-trailers: normalize and fill out options
-Date: Mon, 16 Mar 2026 22:48:25 +0100
-Message-ID: <V2_doc_interpret-tr_options.50c@msgid.xyz>
+Subject: [PATCH v2 3/4] doc: config: convert trailers section to synopsis style
+Date: Mon, 16 Mar 2026 22:48:26 +0100
+Message-ID: <V2_doc_interpret-tr_config.50d@msgid.xyz>
 X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
 In-Reply-To: <V2_CV_doc_interpret-tr_synopsis.50a@msgid.xyz>
 References: <CV_doc_interpret-tr_synopsis.48a@msgid.xyz> <V2_CV_doc_interpret-tr_synopsis.50a@msgid.xyz>
@@ -91,149 +91,219 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Some negated options are missing according to
-`git interpret-trailers -h`.
+Convert this part of the configuration documentation to synopsis style
+so that all of git-interpret-trailers(1) is consistent.
 
-Also normalize to the “stuck form” (see gitcli(7)) like what was done
-in 806337c7 (doc: notes: use stuck form throughout, 2025-05-27).[1]
-
-Also normalize the order of the regular and negated options according to
-the current convention.[2]
-
-Also note that `--no-trailer` will reset the list.
-
-† 1: See also https://lore.kernel.org/git/6f7d027e-088a-4d66-92af-b8d1c32d730c@app.fastmail.com/
-† 2: https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
+See the commit message from two commits ago.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/git-interpret-trailers.adoc | 66 +++++++++++++++--------
- 1 file changed, 43 insertions(+), 23 deletions(-)
 
-diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index ea47f2f7ae5..77b4f63b05c 100644
---- a/Documentation/git-interpret-trailers.adoc
-+++ b/Documentation/git-interpret-trailers.adoc
-@@ -113,64 +113,80 @@ rules for RFC 822 headers. For example they do not follow the encoding rule.
- OPTIONS
- -------
- `--in-place`::
--	Edit the files in place.
-+`--no-in-place`::
-+	Edit the files in place. The default is `--no-in-place`.
+Notes (series):
+    v2:
+    • <keyAlias> → <key-alias> (no camelcase)
+    • Refer to two-commits-ago for an explanation of the changes
+
+ Documentation/config/trailer.adoc | 121 +++++++++++++++---------------
+ 1 file changed, 61 insertions(+), 60 deletions(-)
+
+diff --git a/Documentation/config/trailer.adoc b/Documentation/config/trailer.adoc
+index 60bc221c88b..1bc70192d3a 100644
+--- a/Documentation/config/trailer.adoc
++++ b/Documentation/config/trailer.adoc
+@@ -1,21 +1,21 @@
+-trailer.separators::
++`trailer.separators`::
+ 	This option tells which characters are recognized as trailer
+-	separators. By default only ':' is recognized as a trailer
+-	separator, except that '=' is always accepted on the command
++	separators. By default only `:` is recognized as a trailer
++	separator, except that `=` is always accepted on the command
+ 	line for compatibility with other git commands.
+ +
+ The first character given by this option will be the default character
+ used when another separator is not specified in the config for this
+ trailer.
+ +
+-For example, if the value for this option is "%=$", then only lines
+-using the format '<key><sep><value>' with <sep> containing '%', '='
+-or '$' and then spaces will be considered trailers. And '%' will be
++For example, if the value for this option is `%=$`, then only lines
++using the format _<key><sep><value>_ with _<sep>_ containing `%`, `=`
++or `$` and then spaces will be considered trailers. And `%` will be
+ the default separator used, so by default trailers will appear like:
+-'<key>% <value>' (one percent sign and one space will appear between
++`<key>% <value>` (one percent sign and one space will appear between
+ the key and the value).
  
- `--trim-empty`::
-+`--no-trim-empty`::
- 	If the _<value>_ part of any trailer contains only whitespace,
- 	the whole trailer will be removed from the output.
- 	This applies to existing trailers as well as new trailers.
-++
-+The default is `--no-trim-empty`.
+-trailer.where::
++`trailer.where`::
+ 	This option tells where a new trailer will be added.
+ +
+ This can be `end`, which is the default, `start`, `after` or `before`.
+@@ -27,41 +27,41 @@ If it is `start`, then each new trailer will appear at the start,
+ instead of the end, of the existing trailers.
+ +
+ If it is `after`, then each new trailer will appear just after the
+-last trailer with the same <key>.
++last trailer with the same _<key>_.
+ +
+ If it is `before`, then each new trailer will appear just before the
+-first trailer with the same <key>.
++first trailer with the same _<key>_.
  
--`--trailer <key>[(=|:)<value>]`::
-+`--trailer=<key>[(=|:)<value>]`::
-+`--no-trailer`::
- 	Specify a (_<key>_, _<value>_) pair that should be applied as a
--	trailer to the inputs. See the description of this
--	command.
-+	trailer to the inputs. See the description of this command. Can
-+	be given multiple times.
-++
-+Use `--no-trailer` to reset the list.
+-trailer.ifexists::
++`trailer.ifexists`::
+ 	This option makes it possible to choose what action will be
+ 	performed when there is already at least one trailer with the
+-	same <key> in the input.
++	same _<key>_ in the input.
+ +
+ The valid values for this option are: `addIfDifferentNeighbor` (this
+ is the default), `addIfDifferent`, `add`, `replace` or `doNothing`.
+ +
+ With `addIfDifferentNeighbor`, a new trailer will be added only if no
+-trailer with the same (<key>, <value>) pair is above or below the line
++trailer with the same (_<key>_, _<value>_) pair is above or below the line
+ where the new trailer will be added.
+ +
+ With `addIfDifferent`, a new trailer will be added only if no trailer
+-with the same (<key>, <value>) pair is already in the input.
++with the same (_<key>_, _<value>_) pair is already in the input.
+ +
+ With `add`, a new trailer will be added, even if some trailers with
+-the same (<key>, <value>) pair are already in the input.
++the same (_<key>_, _<value>_) pair are already in the input.
+ +
+-With `replace`, an existing trailer with the same <key> will be
++With `replace`, an existing trailer with the same _<key>_ will be
+ deleted and the new trailer will be added. The deleted trailer will be
+-the closest one (with the same <key>) to the place where the new one
++the closest one (with the same _<key>_) to the place where the new one
+ will be added.
+ +
+ With `doNothing`, nothing will be done; that is no new trailer will be
+-added if there is already one with the same <key> in the input.
++added if there is already one with the same _<key>_ in the input.
  
--`--where <placement>`::
-+`--where=<placement>`::
- `--no-where`::
- 	Specify where all new trailers will be added.  A setting
- 	provided with `--where` overrides the `trailer.where` and any
- 	applicable `trailer.<key-alias>.where` configuration variables
- 	and applies to all `--trailer` options until the next occurrence of
--	`--where` or `--no-where`. Upon encountering `--no-where`, clear the
--	effect of any previous use of `--where`, such that the relevant configuration
--	variables are no longer overridden. Possible placements are `after`,
-+	`--where` or `--no-where`. Possible placements are `after`,
- 	`before`, `end` or `start`.
-++
-+Use `--no-where` to clear the effect of any previous use of `--where`,
-+such that the relevant configuration variables are no longer overridden.
+-trailer.ifmissing::
++`trailer.ifmissing`::
+ 	This option makes it possible to choose what action will be
+ 	performed when there is not yet any trailer with the same
+-	<key> in the input.
++	_<key>_ in the input.
+ +
+ The valid values for this option are: `add` (this is the default) and
+ `doNothing`.
+@@ -70,67 +70,68 @@ With `add`, a new trailer will be added.
+ +
+ With `doNothing`, nothing will be done.
  
--`--if-exists <action>`::
-+`--if-exists=<action>`::
- `--no-if-exists`::
- 	Specify what action will be performed when there is already at
- 	least one trailer with the same _<key>_ in the input.  A setting
- 	provided with `--if-exists` overrides the `trailer.ifExists` and any
- 	applicable `trailer.<key-alias>.ifExists` configuration variables
- 	and applies to all `--trailer` options until the next occurrence of
--	`--if-exists` or `--no-if-exists`. Upon encountering `--no-if-exists`, clear the
--	effect of any previous use of `--if-exists`, such that the relevant configuration
--	variables are no longer overridden. Possible actions are `addIfDifferent`,
-+	`--if-exists` or `--no-if-exists`. Possible actions are `addIfDifferent`,
- 	`addIfDifferentNeighbor`, `add`, `replace` and `doNothing`.
-++
-+Use `--no-if-exists` to clear the effect of any previous use of
-+`--if-exists`, such that the relevant configuration variables are no
-+longer overridden.
+-trailer.<keyAlias>.key::
+-	Defines a <keyAlias> for the <key>. The <keyAlias> must be a
+-	prefix (case does not matter) of the <key>. For example, in `git
+-	config trailer.ack.key "Acked-by"` the "Acked-by" is the <key> and
+-	the "ack" is the <keyAlias>. This configuration allows the shorter
++`trailer.<key-alias>.key`::
++	Defines a _<key-alias>_ for the _<key>_. The _<key-alias>_ must be a
++	prefix (case does not matter) of the _<key>_. For example, in `git
++	config trailer.ack.key "Acked-by"` the `Acked-by` is the _<key>_ and
++	the `ack` is the _<key-alias>_. This configuration allows the shorter
+ 	`--trailer "ack:..."` invocation on the command line using the "ack"
+-	<keyAlias> instead of the longer `--trailer "Acked-by:..."`.
++	`<key-alias>` instead of the longer `--trailer "Acked-by:..."`.
+ +
+-At the end of the <key>, a separator can appear and then some
+-space characters. By default the only valid separator is ':',
++At the end of the _<key>_, a separator can appear and then some
++space characters. By default the only valid separator is `:`,
+ but this can be changed using the `trailer.separators` config
+ variable.
+ +
+ If there is a separator in the key, then it overrides the default
+ separator when adding the trailer.
  
--`--if-missing <action>`::
-+`--if-missing=<action>`::
- `--no-if-missing`::
- 	Specify what action will be performed when there is no other
- 	trailer with the same _<key>_ in the input.  A setting
- 	provided with `--if-missing` overrides the `trailer.ifMissing` and any
- 	applicable `trailer.<key-alias>.ifMissing` configuration variables
- 	and applies to all `--trailer` options until the next occurrence of
--	`--if-missing` or `--no-if-missing`. Upon encountering `--no-if-missing`,
--	clear the effect of any previous use of `--if-missing`, such that the relevant
--	configuration variables are no longer overridden. Possible actions are `doNothing`
--	or `add`.
-+	`--if-missing` or `--no-if-missing`. Possible actions are
-+	`doNothing` or `add`.
-++
-+Use `--no-if-missing` to clear the effect of any previous use of
-+`--if-missing`, such that the relevant configuration variables are no
-+longer overridden.
+-trailer.<keyAlias>.where::
+-	This option takes the same values as the 'trailer.where'
++`trailer.<key-alias>.where`::
++	This option takes the same values as the `trailer.where`
+ 	configuration variable and it overrides what is specified by
+-	that option for trailers with the specified <keyAlias>.
++	that option for trailers with the specified _<key-alias>_.
  
- `--only-trailers`::
--	Output only the trailers, not any other parts of the input.
-+`--no-only-trailers`::
-+	Output only the trailers, not any other parts of the
-+	input. The default is `--no-only-trailers`.
+-trailer.<keyAlias>.ifexists::
+-	This option takes the same values as the 'trailer.ifexists'
++`trailer.<key-alias>.ifexists`::
++	This option takes the same values as the `trailer.ifexists`
+ 	configuration variable and it overrides what is specified by
+-	that option for trailers with the specified <keyAlias>.
++	that option for trailers with the specified _<key-alias>_.
  
- `--only-input`::
-+`--no-only-input`::
- 	Output only trailers that exist in the input; do not add any
- 	from the command-line or by applying `trailer.<key-alias>` configuration
--	variables.
-+	variables. The default is `--no-only-input`.
+-trailer.<keyAlias>.ifmissing::
+-	This option takes the same values as the 'trailer.ifmissing'
++`trailer.<key-alias>.ifmissing`::
++	This option takes the same values as the `trailer.ifmissing`
+ 	configuration variable and it overrides what is specified by
+-	that option for trailers with the specified <keyAlias>.
++	that option for trailers with the specified _<key-alias>_.
  
- `--unfold`::
-+`--no-unfold`::
- 	If a trailer has a value that runs over multiple lines (aka "folded"),
--	reformat the value into a single line.
-+	reformat the value into a single line. The default is `--no-unfold`.
+-trailer.<keyAlias>.command::
+-	Deprecated in favor of 'trailer.<keyAlias>.cmd'.
+-	This option behaves in the same way as 'trailer.<keyAlias>.cmd', except
++`trailer.<key-alias>.command`::
++	Deprecated in favor of `trailer.<key-alias>.cmd`.
++	This option behaves in the same way as `trailer.<key-alias>.cmd`, except
+ 	that it doesn't pass anything as argument to the specified command.
+-	Instead the first occurrence of substring $ARG is replaced by the
+-	<value> that would be passed as argument.
++	Instead the first occurrence of substring `$ARG` is replaced by the
++	_<value>_ that would be passed as argument.
+ +
+-Note that $ARG in the user's command is
+-only replaced once and that the original way of replacing $ARG is not safe.
++Note that `$ARG` in the user's command is
++only replaced once and that the original way of replacing `$ARG` is not safe.
+ +
+-When both 'trailer.<keyAlias>.cmd' and 'trailer.<keyAlias>.command' are given
+-for the same <keyAlias>, 'trailer.<keyAlias>.cmd' is used and
+-'trailer.<keyAlias>.command' is ignored.
++When both `trailer.<key-alias>.cmd` and `trailer.<key-alias>.command` are given
++for the same _<key-alias>_, `trailer.<key-alias>.cmd` is used and
++`trailer.<key-alias>.command` is ignored.
  
- `--parse`::
- 	A convenience alias for `--only-trailers --only-input
-@@ -178,11 +194,15 @@ OPTIONS
- 	input without influencing them with any command line options or
- 	configuration variables, while also making the output machine-friendly with
- 	`--unfold`.
-++
-+There is no convenience alias to negate this alias.
- 
-+`--divider`::
- `--no-divider`::
--	Do not treat `---` as the end of the commit message. Use this
--	when you know your input contains just the commit message itself
--	(and not an email or the output of linkgit:git-format-patch[1]).
-+	Treat `---` as the end of the commit message. This is the default.
-+	Use `--no-divider` when you know your input contains just the
-+	commit message itself (and not an email or the output of
-+	linkgit:git-format-patch[1]).
- 
- CONFIGURATION VARIABLES
- -----------------------
+-trailer.<keyAlias>.cmd::
++`trailer.<key-alias>.cmd`::
+ 	This option can be used to specify a shell command that will be called
+-	once to automatically add a trailer with the specified <keyAlias>, and then
+-	called each time a '--trailer <keyAlias>=<value>' argument is specified to
+-	modify the <value> of the trailer that this option would produce.
++	once to automatically add a trailer with the specified _<key-alias>_, and then
++	called each time a `--trailer <key-alias>=<value>` argument is specified to
++	modify the _<value>_ of the trailer that this option would produce.
+ +
+ When the specified command is first called to add a trailer
+-with the specified <keyAlias>, the behavior is as if a special
+-'--trailer <keyAlias>=<value>' argument was added at the beginning
+-of the "git interpret-trailers" command, where <value>
+-is taken to be the standard output of the command with any
+-leading and trailing whitespace trimmed off.
++with the specified _<key-alias>_, the behavior is as if a special
++`--trailer <key-alias>=<value>` argument was added at the beginning
++of linkgit:git-interpret-trailers[1], where _<value>_ is taken to be the
++standard output of the command with any leading and trailing whitespace
++trimmed off.
+ +
+-If some '--trailer <keyAlias>=<value>' arguments are also passed
++If some `--trailer <key-alias>=<value>` arguments are also passed
+ on the command line, the command is called again once for each
+-of these arguments with the same <keyAlias>. And the <value> part
++of these arguments with the same _<key-alias>_. And the _<value>_ part
+ of these arguments, if any, will be passed to the command as its
+-first argument. This way the command can produce a <value> computed
+-from the <value> passed in the '--trailer <keyAlias>=<value>' argument.
++first argument. This way the command can produce a _<value>_ computed
++from the _<value>_ passed in the `--trailer <key-alias>=<value>`
++argument.
 -- 
 2.53.0.32.gf6228eaf9cc
 
