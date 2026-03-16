@@ -1,79 +1,79 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B429373C0E
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 23:08:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F5A374E5C
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 23:08:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.175
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773702504; cv=pass; b=tKH9WAKOlq6R/7vnmkgloAFNFQF8cheW82httjNdtfJY0OaTc7OH2UkLpTUn1klibzgxUjkvQR+dW67dVDKOgCaSsxA+HWay69BkwyT+xOJYWQXDwXhYR0fzETWLRuDt4GyeuUm2vwohatR91r0Xd/cLuUyBBGjnSvthqp3GYuI=
+	t=1773702505; cv=pass; b=TF8TflD3pRbYIAkzRz9mBT2BLTCina5iWLmnbtOs3OFJiH5V1hU8Db4HY5HMh5pRKnRq9LXYR6H8v7EQEnYud1pQfkiphaBu0zAkYETdC002pGjN86UF5C1d9B/aoaX+ODwjqbzpDdOr+MC1b1BM42bpfFJ0zX9Yawh+9DsdGxw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773702504; c=relaxed/simple;
-	bh=uAG3m1xmuAxJL3dcZ5tEgO4zy96dtvkIPIz2QejvC4Y=;
+	s=arc-20240116; t=1773702505; c=relaxed/simple;
+	bh=ITSLVsTkZ3fAwIaYkkuHKkLEvsKERg5EW93pIjqTygI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X1CioG5B7D1l9wtpyW0wQuDMIV8T5Zw9/exkrOGtEksuAkZAW+T9Z1re3qop6cnaZmNd1FWoRnjEO4CD7JRqQKNE+5yFw6ZTJuDZ6xNWnFQgSek79Oir7x+rUGwMhH9Mo6ZtvR/AdbebFaytVfZbZ0LU9ru6lNL3ySwQxIKvWSU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L1nHwKFO; arc=pass smtp.client-ip=209.85.128.170
+	 To:Cc:Content-Type; b=auepJtYgZ/jhANkYZwVNN9XrBi1XJQHX5lB1mJd4W6a6bPGr/j6oGpElx/u1FAh+71SZ1L/nnzQJ8qDfOo3qPyvqlBGyh/awTVC0EUy8Y9GoRvLnqYI5MhElfaFw3Zn01V2U9FGlMIoCvgvGrsq2UYQ81M/GxIxWM4i2noSm4mo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fdqtliwX; arc=pass smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L1nHwKFO"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-79a5ad7cc52so11209547b3.2
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:08:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773702502; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fdqtliwX"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7982c3b7da9so43972057b3.1
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:08:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773702504; cv=none;
         d=google.com; s=arc-20240605;
-        b=h2X02yYS/8XiOhpw+abetIN5DqutyR06H+tqG0AzJAgp36zwzlVSlOXPNOtc7BcKE9
-         JLt76SC51yAyQkfoo+uiRlCmv5FI+e0V4aOcjm3n8/egDLhgOF75Sv9/VrgnbrtaiKnU
-         Tk6rWXlj+7Yt1JeDJNDPxSRLjd+/NqySa7G8qpjLbTmoF/k1auq6FyG8FqT6Gr0mim1B
-         3V6eaq2omKKSa/kWC+DpQvKrP4BGZSMxxVZ2oItDFB+nfljP5xybO6E86Hh2pxYKcYmG
-         QbbnNXTmzULrevv5K7XqOK/YO93fsAQrruYLPvLdpqSdJUK7O8AzsRl8zZ3doyIkkWAb
-         qWeg==
+        b=VFzH0F7040ckGtpLTgxKEUDkqgZUODsJgMpFiGQTPGMs47VPhjW16bcuJX+yVwzUE4
+         B9+UhDwwDeBSJuclNULThdXjW40gPB0NVxrokngih6Gh5EstrgLdB4SU57u0baocu+xg
+         EFgNY4muco//hsYy3qEkiCheMkxTj16f52W78jWUcg+kuwrg3BZLoYMoVp0WxTPym5/8
+         Hv7WPoCR45xhB6WTgTnFR76e2DUgjiVQ1pmfAN/RNNMJengEIY52rIQHwEayGIxpoy6n
+         TupJCW9PSJppGpRdy90xcH10f5ENnZ3D6c1B2ZtzeehHK0At3mu95N65D5bT7NxDqRwV
+         IbMg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=gInx/PsIpVml5Aux84pHFzObYWZiE2UYJTWP6ji4Re4=;
-        fh=dbCSF73lZFJ5AOLWDBIH7dZiOSDSmRP+Sng7AkCGcpI=;
-        b=RLohmneRbB3vgCa0my7mpMbxevKxsTFUoEV6W9EGlF8qG8mXQWFK88bo1AKYVguvnU
-         z/oFCyUzKRPrnDLrt8KomUeu3dy4zwwPTADl5tsWyEZtITPRlKDU+qyjhhXnV+55wFYN
-         p6FuqW9S3uKeFGV3f8+WevNQBvuMMfCOkO/SJRoFTEwc6wiPux0GwlYuS9lY1W7cIwWu
-         ShQIXYS2j7VvR3NLJYZyNeCgexZARYl2K31OU1fg0sgJg+Aa1zlLalAdic550E1pGHYS
-         c2wCA6zpWSrqzhcWXNw222O6RD0ZvAaoJaB7uy65/n0fSQ4uNsrFREqJmc+N1heXp388
-         LhkA==;
+        bh=UREZqX0Q90KPqApvdDeGpazmGOeuAfWcP20yrTsyQIY=;
+        fh=j5Auco4cfrX3TYZA30zsL7eZhR2DKXLQGyE88JnbsoQ=;
+        b=aA3NR4dQI0Alqskff/YM6MEDHXOS96xZRBhR66m429VLPmJwy8tASSGx25kJBiBqOn
+         81KGJsFEMGROyERPG+44xwA0CHhDhdEGtnnYAjuvH8uU2DbBcUxVKIoqLEoyidB5Evha
+         4FrCn5yKZpJOPrZUewbh0Lffmwtz7OYK42uBMd8XDZHXCjr5Zg6a1oWR3DSRDcPP+PZC
+         sXDMXUrsM7pIrS07Syou60LW+KBKnM3ht2Jnivcm8ylPrZjI9TGT2CsdLhCtKdzQA4bd
+         DgVFNNxi930jPEbl8lfhdIYshQTPnXYtQe157VlT9fBbXbz/CgUgHiKmFTGZbEdDm3dq
+         qfzg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773702502; x=1774307302; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773702504; x=1774307304; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gInx/PsIpVml5Aux84pHFzObYWZiE2UYJTWP6ji4Re4=;
-        b=L1nHwKFODzrti943KiQlFdjyVTKGLBoiTaNJQNHENFFXRu33cfq4vrKpQlMAmae7Kv
-         l409u1sV52K+vNrMuqL0P9uwcHwkSe0+WYdv1gSQuQ0zEeuIIS1nZN210LvdTJzuBMmq
-         3WhJsTQEiwoM2sZA0K/JRl8VM5mwqtSZ0l9Drk/51vqJ1fMnzILBG25BW3Obc4/WR41/
-         fX+2jEcM+HS1IJxqUTkf+9efJulOKqDzMtvGIVEMpYr5acFmfvtFluaxzvZ9YePe+u0w
-         2XLKf5FHUagR3r+AETRiDfpbgmBLsvB/XyOJO4YUpaYaVjkE4SZy4+Zxfy7y+4UJlLOC
-         W7sA==
+        bh=UREZqX0Q90KPqApvdDeGpazmGOeuAfWcP20yrTsyQIY=;
+        b=fdqtliwXOsw01Hdk2751IRgAz/iqvKCI3X1Ulv8t6i82Rfp3JGpcYwVqf5pUJ/xKU+
+         CfBgjAecS1QK+xaVs4vIpMvclKhhwU/1sRklYmAItStxr6Ei5rRTr7dlOr6eUei093sz
+         471pT8vhkpIHNq+A870E+fhboc3fs18L9jy8tCts09GfBj0bPvlSnueHRXhCpNNOmPUL
+         UDnPjdUcnJcdWprscQaFgUQtrihLmnEQgDCeGzDb4UXw9SffMGdw4+/+/OQPgT1nVF9I
+         O17R8lQukQE5rLL1Lt5OhCGTVff2/Iv6qdVyhJzGOB7VThML2dZnB/55Y6i3JDdR/9cl
+         gFxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773702502; x=1774307302;
+        d=1e100.net; s=20251104; t=1773702504; x=1774307304;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=gInx/PsIpVml5Aux84pHFzObYWZiE2UYJTWP6ji4Re4=;
-        b=o2WKPdr6LVKvCfgDfuZm22Nf1gx3K3eRiPIx/OcngVRYgXF+hMqg/1gkAjhMk5HycM
-         pxL3YrmqNRBnNlIURwfBR7e0TQoDZ9ekf7OG+kkZn4gG3Fpfsz1Lw9y/adgxGMRsUXBq
-         1dL5USmjgzSim25pKtzcxbM/EAxujjAVG1Q7h0rhFUByQBbJj8TBhmneW1vxOm/xF+PB
-         pOL3G0u2/R6vA0emQ5vPE+eFVzFAQ90Vk6/TBrXZPn7RQKXSS4CNE17c/M7R+GiNVO8g
-         vZUjA1QBknntZfR/era7w+1/FUnOaIyOyA73KoLeAFyF/lX0/1RkfHZBXLSvD59AByg8
-         a7vw==
-X-Gm-Message-State: AOJu0YyN/FdgKRJtW5Y+lH5alIJsX+JyZ3Y394CwP5RXkRuqs4FIZC0K
-	5KQzqViurTa9L6RGm2SbErgKDsV8lh20m+oFT9q1XG+iYdWrd5oEn6zhVO17CG5VdypFI8gbydt
-	17KX0ynIuumyz/vdiXO7h8WsfnLBqcBY=
-X-Gm-Gg: ATEYQzwLwfUICAgfHqmF9vcpG2On0O4JeCVUqW4xT8ajEHFrGQtdARGJTzo/K8E9891
-	xe86P14cVY2TOfmg2dbRJc3T1G6ENzXUmMWAKXSQW+LeXe1ztqBm9MqDfsiLbXqB0K/di1ump3k
-	YtCl5eSyw7oHqZlJ7vxqngxc8zNtAgbJdt7xJcfaUWDN503xWeeUowTHt3MskRKRByai+g2W5BE
-	Yi91gueCjAeRQS5tCf+QXPfU3ACo5k9MwRS5L8FkL1vNwx4T9HLa0Wtpc2+1auTXbUGvvVYkaqv
-	lHfhTyvTUIGq57nh
-X-Received: by 2002:a05:690c:e691:20b0:797:a75e:3676 with SMTP id
- 00721157ae682-79a1bee11demr113799297b3.0.1773702502301; Mon, 16 Mar 2026
- 16:08:22 -0700 (PDT)
+        bh=UREZqX0Q90KPqApvdDeGpazmGOeuAfWcP20yrTsyQIY=;
+        b=JL5EtuZJvsgsSqZwZ9tlbDtHpISlzT9I7ylw7CNfp7NCfz0O1d5d5jQrvo0NeYDDz2
+         CbQihDgEpRCU93raiy7cPM/bdMzFtjpk2yVvPIlr3agoF4g3Xa4M9DCCpCq5EUt13u+N
+         OiEFhl7XkexRfiSzmJLC+WS3sNXUfB0cZEb5GIcjjglKg/gGi8W71czuT3rr8LtIBkDV
+         00NLpVyERSZbToJ2KTFIPWdPYkSe8E7QiCzaZYERIs342HY8RMvia3gkgU1+DojOpfZ1
+         8rJij8VNxr4I/JdiniEe295MMStVw8Q9BBJeTDN/QFhxkGJMsKSBd8lVc2/ybyxEd7o4
+         7kgg==
+X-Gm-Message-State: AOJu0YxnBsJkNQg36r2al73BTScRi7AZ1ouIAA24yPlzsYhkdVKozDd/
+	M73RkzA3GonI1bbNZUvDriui6Gpl0dYfSYixsWYsrxCagiWByWGC9IYRWbOCTXu+ttgHL+lpPbU
+	TdUBNstJW+wn1VygL6OKBG4ACTehhBYc=
+X-Gm-Gg: ATEYQzwg856lw6GF7aRp7HaaW43V76Ma6IoFobN2CJh7JAkTtp6gmQoxMlEiST9dpe3
+	tcCShRCmvWt9sZHFD9XDLuepdWB20LJnqIuAx8rOWRZbbEoienL2DtgWvk1jAuJ4Qu9IZSaucBP
+	KcuaIwLiDPk/bYPSeag/jTZclnOU1WNZQdVRGV8/fN5gZ+yC1rop27RrdZaWoH3NMzKYWyqCDo5
+	JrxPKhkSbsvQASzaTsNqOtYAeCuQ3dbeusV03pGhQFamjdBzerFc3a7FfJ6rVrXVWCmAfnjz+w3
+	thKpdQ==
+X-Received: by 2002:a05:690c:6d84:b0:79a:4dd6:140d with SMTP id
+ 00721157ae682-79a4dd62163mr55676447b3.15.1773702503631; Mon, 16 Mar 2026
+ 16:08:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,76 +81,62 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260313193537.62827-1-eric.peijian@gmail.com>
- <20260316045102.70551-1-eric.peijian@gmail.com> <aberRbSCbMtZrqxk@pks.im>
-In-Reply-To: <aberRbSCbMtZrqxk@pks.im>
+ <20260316045102.70551-1-eric.peijian@gmail.com> <20260316045102.70551-2-eric.peijian@gmail.com>
+ <xmqqv7evpwrr.fsf@gitster.g>
+In-Reply-To: <xmqqv7evpwrr.fsf@gitster.g>
 From: Peijian Ju <eric.peijian@gmail.com>
-Date: Mon, 16 Mar 2026 19:08:11 -0400
-X-Gm-Features: AaiRm52fSomoKRr3JN6F4InxiUU0o6kTeeKHu9hwmGvx1Pi8HghdeS3noeBpgCg
-Message-ID: <CAN2LT1DJcSEKuQOk2PHgUwORKwR4Vqo5=f2_FtNXHMH0BxvLZQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/1] refs: add 'preparing' phase to the
+Date: Mon, 16 Mar 2026 19:08:12 -0400
+X-Gm-Features: AaiRm52dAY-392cll9MABDXiRT7XZkPoybqn9sDrFwM9to0Nry45F_dK6lkO-4E
+Message-ID: <CAN2LT1AeEYbCFvhUSnWPvCUtahVQP_cG8edVhURHg2N3OgMuwQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] refs: add 'preparing' phase to the
  reference-transaction hook
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, jltobler@gmail.com, ericju711@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, jltobler@gmail.com, ericju711@gmail.com, 
+	Karthik Nayak <karthik.188@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 16, 2026 at 3:03=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Mon, Mar 16, 2026 at 12:24=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> On Mon, Mar 16, 2026 at 12:51:01AM -0400, Eric Ju wrote:
-> > Changes since v1:
-> >
-> > - Fix commit title to follow "area: description" convention
-> >   ("refs: add 'preparing' phase to reference-transaction hook")
-> > - Correct phase names in documentation to past tense
-> >   ("committed", "aborted")
-> > - Fix the sentence about backwards compatibility with unknown phases
-> > - Update die() messages to identify the hook by full name and phase
-> >   ("ref updates rejected by the reference-transaction hook at its
-> >   preparing/prepared phase")
-> > - Consolidate author identity to eric.peijian@gmail.com
-> > - Add clarification in reply to the question about how to use the prepa=
-ring
-> >   phase for write serialization
+> Eric Ju <eric.peijian@gmail.com> writes:
 >
-> All of these changes look good to me, thanks. This patch already looks
-> good to me, but I'm of course biased as I have been helping out behind
-> the scenes before the first version of this patch landed on the mailing
-> list.
+> > +     /* Preparing checks before locking references */
+> > +     ret =3D run_transaction_hook(transaction, "preparing");
+> > +     if (ret) {
+> > +             ref_transaction_abort(transaction, err);
+> > +             die(_("ref updates aborted by the reference-transaction h=
+ook at its %s state"), "preparing");
+> > +     }
 >
-> > Range-diff against v1:
-> > 1:  5f9f13a84d ! 1:  fb74f21d98 Add preparing state to reference-transa=
-ction hook
-> >     @@ Commit message
-> >          interfering with the locking state.
-> >
-> >          This change is strictly speaking not backwards compatible. Exi=
-sting hook
-> >     -    scripts that do not know to handle unknown phases handle the "=
-preparing" state
-> >     -    string will encounter an unknown phase, and that might cause t=
-hem to return an
-> >     -    error now. But the hook is considered to expose internal imple=
-mentation details
-> >     +    scripts that do not know how to handle unknown phases may trea=
-t
-> >     +    'preparing' as an error and return non-zero.
-> >     +    But the hook is considered to expose internal implementation d=
-etails
-> >          of how Git works, and as such we have been a bit more lenient =
-with changing its
-> >          exact semantics, like for example in a8ae923f85 (refs: support=
- symrefs in
-> >          'reference-transaction' hook, 2024-05-07).
+> On end-user's terminal, the above should look like
 >
-> One micro-nit: this paragraph could use some reflowing. But I don't
-> think it's worth a reroll.
+> fatal: ref updates aborted by the reference-transaction hook at its parpa=
+ring state
 >
-> Thanks!
+> consuming more than 80 columns and having the varying part of the
+> message at the very end.  Can we shorten this and highlight the more
+> important bits?  Here is my attempt
 >
-> Patrick
+>                 die(_("in '%s' phase, update aborted by the reference-tra=
+nsaction hook"),
+>                         "preparing");
+>
+> Enclosing the phase name in 'quotes' and moving it near the
+> beginning are both my attempt to make it stand out more.
+>
+> Another thing you may want to consider is to extract the message to
+> a separate constant, i.e.,
+>
+>         const char *abort_by_ref_transaction_hook[] =3D
+>         N_("in '%s' phase, update aborted by the reference-transaction ho=
+ok");
+>
+> and reuse at two places, perhaps?
+>
+>                 die(_(abort_by_ref_transaction_hook), "preparing");
+>
 
-Thank you. I will reflow the paragraph in v3, which I am already
-planning to send for the error message and string constant changes.
+Thank you. Fixed in V3.
 
 - Eric
