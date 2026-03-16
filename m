@@ -1,86 +1,85 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2491426560B
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 08:09:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8957E35CB75
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 08:22:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773648568; cv=none; b=h5daNp/5dVUVdcih6ogv0uqWt9+1OuNFzihheeRHIc66iwxivI48AiYRpX0kG9RPCcOjmo7xfYeFUkVSOmbJHmlVSV5eUxhZbaUdRT8ZydukAIlLUMeY8/THc4WjwGGJ7x7qukw8kcUfb/xcjyW0gQtkfWGQsFa8TgMz4fxxtbQ=
+	t=1773649349; cv=none; b=JZ7qUKn4K8nJqSMbwmMKrZoq2FUYXeLQOPBHyejH0GOBZm6/dQ4CjAdIE54RKKoZ2O+jaNvAwj3NT1BApNeO/6NlXyTJg15Asr3wTrKmgcm48UxhezmlNdBvBJBDtadH/BdJaFueN/uFT/UgyYouPB/3pzutvuR0oJKClsnOEYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773648568; c=relaxed/simple;
-	bh=cVPSc+R15zKsyeiE6jKUnOJbqKNx4waV/qhN+GmvUEw=;
+	s=arc-20240116; t=1773649349; c=relaxed/simple;
+	bh=bDtTlVDjtAVkW37xXrYgmsLB+9GiBTWYTsLP3HE7Kww=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cz/m8RuSKom/7TnlWLGyE2hYEcKVT+mEPhJ1qaIMbz5xNZKDjigkvuA4vwyx+OhV87YFI1T3MfXF8qBiLUxL7lLtZtLi+SaakjXg/Kpm2KpCPy/gckTOslQzn7syR+mwKkJShbeqpEQE8nNqzKYqPW8jCfmYkcVeXR60hJ+Ua5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i6tdVQRf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iB3UGzuu; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=BJ2NJvP18ysvGoa6jeEnruqTj+pPal0/9W4CZvB+/zkZIeFb4a4ytGSIuHkI9FrNAAtyIlvmirc4JdtwuaOnA0wC2SkyHRFwfQJWVht/wa12jGA295WGP6kS4I4luyvME0H5ZX4gJuyHmcG72brheywQJaPoi8ji/9bce98WS0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ma+o5xDB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OOK6Hce9; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i6tdVQRf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iB3UGzuu"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7392BEC0322;
-	Mon, 16 Mar 2026 04:09:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ma+o5xDB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OOK6Hce9"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6570814000CB;
+	Mon, 16 Mar 2026 04:22:21 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 16 Mar 2026 04:09:26 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 16 Mar 2026 04:22:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773648566; x=1773734966; bh=VpczY1I2te
-	M1dbdeRBWhDBkaBF3CHHP0N9kTgIbQvLA=; b=i6tdVQRfQDEV//cZcai0af0XNw
-	oIm9U82y55rCewnbdBL2pYTZzhk6T8uF4gqzIMqvZnUQ+NcD79HozpkTFMl8dxQM
-	gznUbSU7ZZ1bnkNgdIqFF2lT2w8uFo8FNwCgwi0QtsCf1KiH2mt+jWfs1kHE1s71
-	bMfr6kWtIXyEPPyZjeaqdS6wPOYyHf4Z9FBb7PUjBH+/PheJRfsEo5rk/T875AzK
-	oA4f4KZcWbSB8mJo63K32EKzVz2YfzOBsuAZCcND2rG8Eyy+1I6HFKa0ljHjRkD1
-	wuxPmGdbhltKes9hGKDpbpk2JbaDxB9YPiUSi9dh6HisveZXRwY/S47h0NmA==
+	:subject:to:to; s=fm1; t=1773649341; x=1773735741; bh=REorrLK2b7
+	ypR+Hnp5YtV05vMZ1vxUzuwy3PVn8OuyA=; b=Ma+o5xDBGy1UdGp1Dx+2cxpIU4
+	CpgRDyO53L10YFpu92xB+7799+bVS2IRI6H3mm2uZqCWEUYvDj+Q4BqBjG98sIMs
+	wtNrvh09ddtCvrIqg/NeMB68Wve2cFp3Vs9TMJO4y63oRjgRW4C66g4W51R1AXrv
+	+akxOnvBGQkxWuFKf4bXTEbz3RoE4boIg0dCUp8ykd9WiWy2LebKEmpkW2WOleMV
+	55v4wP+Htw3r+/UqgBs+5a50pZWTzfKLduRKjxfH/ekJPxBvwdEpZICVRkK/8kLz
+	6mCHv862Ak9Hz7onYxZziDHkT/ERxmCKsuc16VS3Iio6Ahae2WP6IT5/4wlA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773648566; x=1773734966; bh=VpczY1I2teM1dbdeRBWhDBkaBF3CHHP0N9k
-	TgIbQvLA=; b=iB3UGzuu93lx82YOy5zTXwzFlX0fvCwlDUQij2KfGQyHGwtWuRg
-	1f456HaK+GhuHj6QvuQ4hhLcUojpSOXb1ywn1mYmdzQ9YRL/kYowTKviabTWwr4L
-	+YKLQqvRwuBA0VojuOxvXkfBhgJLuQIbQlOkdTLLL1iabQv1MpRlv6WSBypixYLC
-	nCF/kf0wD2NTFQS40RIDLfwpDT95KT7wlmC2OxBfVoIRLroE9ZZlCVEU+yYxObXv
-	7UpMcSPRx64EZb2UvSXQH9PPqDQEwh1qtdbqYlUo8rSV8S1V7HFXW6/Np8JEhGlt
-	PY2cktH17qg79Mzzl5SMx6PEpHz+AP9l+tg==
-X-ME-Sender: <xms:trq3aW2GR1BNmhBzrLoxglBU6KU1CcEMfNsxfF0jABtwfbDZxP7GAg>
-    <xme:trq3aW441rxd4X8riFtWyI1OvWjw_HW_ztVrWPRtnxaHnha2M_nWp41UyU5Ql0Tg4
-    4rK_Os6kaCqRf6HynSLG748IaP1fokO789X_nXUHT6AORiq-o3o>
-X-ME-Received: <xmr:trq3aZUQkvQLOHYVeSkLMFtfiAu4fR4qksFvKFbzkNmho-4RQtbJrjL-3whKXNgBo4sYg9s-938NP-EE50vLfD4VxF1WPaxgY26oQkwE7SQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleejkeeiucetufdoteggodetrf
+	1773649341; x=1773735741; bh=REorrLK2b7ypR+Hnp5YtV05vMZ1vxUzuwy3
+	PVn8OuyA=; b=OOK6Hce9i3/1lmm9eSJW+Al1NdUgCj/Nmk+gHR65P9Wq9TDV25A
+	RhX9KMBMwOd2s1hDR25PjHRF6Plr9YRlFGzQWm5a3MlFX/2gjhw/BrmRIe3ciEfs
+	t7rK379o6dXQY55K/SiI2GW+SJnxdLMc0dYUCI2oeQnIW0L9+RcgHzHxT+In/urr
+	Qnw7jC3e3JKWsJNYskbJ8psQFruL/2KRrygrKa7zLmnrSTQer0GDKEqLDt4lZw6T
+	W8qvakSg9eYHvaA/NzBvBVszsa00H1okC3VJuF74auThmfUUNZ/MkWqHOeSN5dv+
+	3/kkqOWUAcyzG7igCw0TSWMDDAGK8pgx1rw==
+X-ME-Sender: <xms:vb23aYQuCduC7nYUBM2iXlf7z5Ry3T63uTXeVxAax4Sp-YJfr-torA>
+    <xme:vb23adNdNY50uliLS2CX1dAcqENygTGVEhU8OWiXX6Yumk6rWRZzTDYHaD3wJyoZ-
+    RkxNq1DIVvrmVbh_0ENZBQbEXF7Ma7RTtyMgjWMC-b9LmSROsIBNHU>
+X-ME-Received: <xmr:vb23aTONBiz15W0057QZ6N6rZE8ZEF-O8BgcYOKY5Bu0BlsG49EHxKSFWf-tWNkyx2dRDOE3DRimoJY1HIZPU43OtNj4PXELzvOoE9Fih7s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleejkeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllh
-    hiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhg
-X-ME-Proxy: <xmx:trq3aVA7CSud2RFnNQTHJOpwL20wh3JPVBUBYm48tbqe2AiWmOSTDg>
-    <xmx:trq3aY404zOMZ9I0vsXRWsdvn6a0p0HEm2pgaBavbqMvk1qJawgtkg>
-    <xmx:trq3aQzbCeshSFrylztNOUDtf15yLpE_YvStvOcQPWdhwVyH0FdN0A>
-    <xmx:trq3afyeIehhByEMG4aPzXuV-Ky1MYIIX0S6oO_4gkxrKFIcJ_b2qQ>
-    <xmx:trq3afQeoPADgPApvA56X6WowLnJx_LwLWHx9Ez6Re78ftBF-XYlCKxv>
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepthhhohhmrghsrdgsrhgruhhnsehvihhr
+    thhuvghllhdqiihuhhgruhhsvgdruggv
+X-ME-Proxy: <xmx:vb23aVt0dO9zz7aOcAOZ-GMIXxs7X1UhQA5PLUKyf4K1jst5RB4nWA>
+    <xmx:vb23aVXIZC12q-BQA7HUbsUmjd5ZQgbbDR85P2XsqJcdcrxD8rpj6Q>
+    <xmx:vb23aVsr004Q0vwM6N1Ho-MFDkWP4M4M1ZDDNiCwIwyMO1QHtN6qLA>
+    <xmx:vb23aZVBlJgpBAezzjLaO51ovw83WYjMWiRIjBAKXaGs5vCRzQSqqw>
+    <xmx:vb23aXZwnxmm065abG9OpzaDLydwYP87n-BHauMkwMGo6LotbzW7FvYT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 04:09:25 -0400 (EDT)
+ 16 Mar 2026 04:22:20 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1f9bc121 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Mar 2026 08:09:24 +0000 (UTC)
-Date: Mon, 16 Mar 2026 09:09:21 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 4d119226 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Mar 2026 08:22:18 +0000 (UTC)
+Date: Mon, 16 Mar 2026 09:22:16 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 0/8] Some build system improvements
-Message-ID: <abe6sUIlk7IuV42s@pks.im>
-References: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
- <xmqq34232wwu.fsf@gitster.g>
+Cc: Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+	GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: describe with --git-dir and --dirty outside of the repo always
+ says dirty
+Message-ID: <abe9uDp16zOcdzZs@pks.im>
+References: <99f2ba7e-cc5f-4ef5-9b09-85896563346f@virtuell-zuhause.de>
+ <xmqq8qbv4gnq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,30 +88,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq34232wwu.fsf@gitster.g>
+In-Reply-To: <xmqq8qbv4gnq.fsf@gitster.g>
 
-On Fri, Mar 13, 2026 at 03:21:21PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Mar 13, 2026 at 01:29:29PM -0700, Junio C Hamano wrote:
+> Thomas Braun <thomas.braun@virtuell-zuhause.de> writes:
 > 
-> > Hi,
+> > When I do
 > >
-> > this patch series contains a small set of build system improvements:
+> > git describe --dirty
 > >
-> >   - The first couple patches introduce a new "tools/" directory that
-> >     contains items related to our build infrastructure and to our
-> >     developer tooling. This finally follows up on my promise to do this
-> >     back when I did the spring clean of "contrib/". [1]
+> > in clean repo of git.git I get
 > >
-> >   - The last couple patches introduce precompiled headers into Meson for
-> >     a nice compilation speedup of ~30%. It's 
+> > v2.53.0-522-g67006b9db8
 > >
-> > The two topics are not really related with one another other than being
-> > related to build systems. I decided to throw them in the same patch
-> > series though so that I can introduce "precompiled.h" in "tools/".
+> > but when I do it from outside of the repo
+> >
+> > cd ..
+> > git --git-dir=git/.git describe --dirty
 > 
-> We saw a handful of exchanges a few days ago, but are there any more
-> comments?  Is the topic ready to advance?
+> "--git-dir" tells git "I am at the root of the working tree, but the
+> git directory that you usually find at ".git" (or a parent directory
+> of where we are) is not where you expect but somewhere else, so I am
+> telling you where it is with this argument.
+> 
+> So if you are not at the root of the working tree for that working
+> tree, "git --git-dir=git/.git diff" would report that you have a ton
+> of changes to working tree files, and "describe" would report that
+> your working tree is dirty.
+> 
+> In other words, working as intended.
+> 
+> You can tell where the working tree is (instead of telling the
+> command that you are at the root of the working tree, when you are
+> not), with the "--work-tree" option.
+> 
+> $ git --git-dir=git/.git --work-tree=git describe --dirty
 
-I'll send a v2 with some minor adjustments in a bit. Thanks!
+You can do that, but what you're probably looking for is `-C`:
+
+    $ git -C /path/to/git describe --dirty
+
+As Junio pointed out, "--git-dir" has a different effect, and you
+typically don't have to use it unless you're doing weird stuff.
 
 Patrick
