@@ -1,116 +1,119 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f193.google.com (mail-qk1-f193.google.com [209.85.222.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E158235B621
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 21:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF05330D24
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 22:07:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773697816; cv=none; b=t4XEA9hqZ1Kqpa0mm8GLYslGk4uGNMnqqjc+Vq7uTXCuK21N1CXbuyuwC86EjAve1Y0kOb+/38EzMMEMcfjQooZC9hLLK6zdHJcJb4qrRwAwjMOZ8NV3yofTuAmEtxZUNHeyTgXpd6U1O0liFN39A3sy+RgmEXLhiJhmAQg2UXE=
+	t=1773698868; cv=none; b=GEqycmEUxAG40nOChwQvsX41jFgL2Mog8Jnci4KJ2DhV/8XxNH1a2wF72OvW7CNQC575YR/CvIbF8ojGVMm0IYCoR9yuidEuv5Ih5Nl5N2m6Auyu5yc6WG+Wn3VCaGub7CifNBu/la+uNvL6uLMpuSCC2Zei2inZM9KL6MfORdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773697816; c=relaxed/simple;
-	bh=nynrllJwluzPt7euNGljCriEqrpNxOga68asm5hR+pM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmdxtXFpVyuO+VfF+Agj5TEozpLlNldrrCIsDZVMj302yf3DfPL84xT7162rYIpSsiMzzqvM9A7lZMwv4FMF8UpWg5Zq20LJ64ajg6R2zMwa8qYkBnMgZDgfoZmXbBnErVC5HnAQm4RxyfYXSCoQQ+bd+1YQwYaTnVIRAeuH6oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VtRGq8tf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LAu0gji0; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1773698868; c=relaxed/simple;
+	bh=ktzU2nQ9wjsby0Oyimg2K1muu/wCsfzU6AxIHvk1Y+g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LLCUdqiQ5RLYyNx3a9LlqEsYAXCf2dQrBSV8z/xuyK4iLC9De5T0i5MH7+QtPFmceqwJ6QsFlcbwDwOlXl0MkJgTrNyPoyhVKjYvbWDpnmHY+cQoTVO3Haz8n1R0uWdwcCuYORCxIMqXjST8RCftdoPq0SnUYRwTVvuosWfaOkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=He/r9i2J; arc=none smtp.client-ip=209.85.222.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VtRGq8tf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LAu0gji0"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 40D617A0047;
-	Mon, 16 Mar 2026 17:50:14 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 16 Mar 2026 17:50:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1773697814; x=
-	1773784214; bh=QtfSActhkARjY/0nmuFMrtMI64tcgz2tgqW5v+YWpfs=; b=V
-	tRGq8tfUj1/vKQ/vMLLIIh+WN3jMFha118QRji9fD/DSdcZHdJSBvRQk1pIeVitF
-	u6iXQrj6xq3g0Y6YUhgfXJgLL1IfJQjb4mZn53B7s+qt9YnydmCZ4ockiIpnLw2w
-	Is89olBY3EHOHFPR5I6I8lIDIWeDXX4W6Bk1dD0rV1NAz0YTmBcKayb3qk6NmcjZ
-	8RY7Ozyku1we+EoHec6IFWBRDgLXxrPqAlonom7CeAjv3DYUVUcS1jNgd7YqybpY
-	ZlwCNpL8+yJpBCgPf6L+4qmaH427xqF3+o/2omnb5wUoiX3lX+B8tcu9yaAqcWiv
-	qIXbLquJMmxStI6CU683Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1773697814; x=1773784214; bh=Q
-	tfSActhkARjY/0nmuFMrtMI64tcgz2tgqW5v+YWpfs=; b=LAu0gji0CJQoV1Izm
-	cojDt5ZKGh1b5+3XnPeSStlVnI6P92Sty2Zvin/orknny9yPZWp1sMUhkSD8nts6
-	qtsssxJKvqiOIIRZe9bPFlCDdEvISQB4MYvjuCeNGiZ1D+VIwkpB6tA6MgSj28Wn
-	vdwsn9zA14Juj3fpcFdJ6T2gwbVpJNBJPmpODtzJmogre2i3bT2WFMU5jka5YLjX
-	MNFTIuMDaF9mnBA90QclEPPbX3yM+J6hBCjcEZGZkbwDsYGtf08WWix8227t5Dgk
-	YQirIEki7X6SiA7WI180/PyVQo8mhpYM54lTJSMJd378taDNtVITVH+o6UoucEi1
-	H6rKw==
-X-ME-Sender: <xms:FXu4aQNG1EJH0zejvi1DbvEiNwiwNPcVRj0X-DYsTfl4CJsmOeRhxZs>
-    <xme:FXu4aeZ43gEPUASKq-HxqR4WSHD9Lx7n7DtJUILVuFAwiw2SIak_yTWuOUyYW6L1q
-    b6KKneaGEMZi-HvhYbRyANJ7vXOTP-fwukvlmpZe4VTZNLXPPx3bQ>
-X-ME-Received: <xmr:FXu4aUom3sgIk-0agcINlhMWMIoWKgU1lnxGSykWUkyeocU3PvIYs4z6I_x8CJd8N3OhkrG0RVXiC7gKfWiKieSnT67vwnenzkDF4PvB7Bde27WztUosd1Ai0Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelheduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
-    necuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhenucggtffrrghtthgvrhhnpeefheetkeeftdeiffdvjeetueethfeugfetgfdt
-    veehhfevffeuffdtheeitdefudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
-    vgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehjnhdrrghvihhlrgesfh
-    hrvggvrdhfrh
-X-ME-Proxy: <xmx:Fnu4aSZN_30TSOcB1uGwzhOWLhMXmriQatfqO-rp-A62A309LNFLjw>
-    <xmx:Fnu4acR4bYKWfOQK3OElM4g0lafLAw7vVYoUmLhB3FIueX_qJrsxFw>
-    <xmx:Fnu4aZ4EXjrhUMCRDQKvbwB68nGN7O7G_eZF6bXv9cBy3zRqwJKakw>
-    <xmx:Fnu4aRz1qAWc5Z9wOy1va04jpgpMaA-nRNZUFCCyiS9qwgPzo5kfRw>
-    <xmx:Fnu4aeDkDcN6hQA4eZv1z9h3iAjIRkgGk92USxyi_65SHykyuv8uHmLz>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 17:50:12 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH v2 4/4] interpret-trailers: use placeholder instead of *
-Date: Mon, 16 Mar 2026 22:48:27 +0100
-Message-ID: <doc_interpret-tr_source_transl.50e@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
-In-Reply-To: <V2_CV_doc_interpret-tr_synopsis.50a@msgid.xyz>
-References: <CV_doc_interpret-tr_synopsis.48a@msgid.xyz> <V2_CV_doc_interpret-tr_synopsis.50a@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="He/r9i2J"
+Received: by mail-qk1-f193.google.com with SMTP id af79cd13be357-8c9f6b78ca4so647891585a.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 15:07:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1773698866; x=1774303666; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y9o2SUwvNFY/+s6bOX+uLRqhp8nbm4c3A307w/r1BnI=;
+        b=He/r9i2JLbeeYsNpumfpZ/kjRI1MPOhDKmGQOHn5GJlYv1GVq45RIN/fk+F2+SFTPp
+         hf2GSQRiXMQZ8EiiP/OwQcNhiIj0RyEk6qiXUEe9efD9MjN19wh2yNVaXxslfY+iLPkk
+         eDEBZcK1kBflDxIXrWGCgMBeUrepxfoAOQdUmRislwP1ZMbJJVra9L2sNKTXRfYRaQ0T
+         avf08eUysn80NL7mvJKsU62bhxjSFV4G9vBr64//JmWcjfEi/iwXQdboKeFsFiXGB+tC
+         gs8dBAJ31EF00M1Pj1iPFHprd3Bvm/iCWVIyByqx3V0iaQMQQu6hndBg0Eu3UXbWFw9w
+         /NhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773698866; x=1774303666;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y9o2SUwvNFY/+s6bOX+uLRqhp8nbm4c3A307w/r1BnI=;
+        b=G1LOoAqoNxYRxSJ1NmIDCla0wkw6QsRxZzQy1jRyq0JwF6JkjpeNBI97nGfIXNX9AZ
+         RQenMeV9yKeR6KUW6vT0M5kACYFCDLb0/5/xU7zXHV7koxVxE0VOwrBc4NeP7LQgfSUz
+         c4mIef0O7hVeSOn8FEIPEs+KNeInFzwirKdpJi7ZT86xh80MjwvXd+lQS9v3OPcZ/Fi5
+         AN4HUxsqevYUXbVWZ3f3OWAnEiZeRdaedtH1VBLF+xP96cWsXOgdgob/Iai7LY6HSvV2
+         fm3Ab1VP15L55DTSTV1OxWj4GT19VEHvraWZ1vWnwL+pyu36IbO7zmNTlZtn5yzrpcZ/
+         HJ4w==
+X-Gm-Message-State: AOJu0YwiZelTcwewR7FdR98dB1WaZaxthwoUArB5zuG+RBtwSP/kOFdZ
+	t4+Sx5qsWkZNRIFupan0mZWrH7KlbA8sGqpchMPCAORpIRiJ2R0Gf9HpPjhCgCWGSDM=
+X-Gm-Gg: ATEYQzyHgX7r+qyYgRjJ0ZByqKtduB72OU//Ig755gt3q6NVTS039MPxUbw7Q0gfegK
+	UsjimOz128/M2H4HkvFY0Dfqi8leP88JlD7dB/kgQ1KJkK3nuKO17kI74Cjmh/FvXkT4BVPYZfq
+	Kyjc9d7QvAj9bu33n3H3x+skAD6LE+VRzKTC2yQ5YSQn0G+z7890/qiFQzY26lcVyNp/wGOh3u/
+	WHjEi8H3kIkd9qbzxeyFbIzLHGD3VEAaOTd6WMwuhxq7rXVic/WY+Wxh5qO3UTBMRRhOQSRymMs
+	qwqD09TCzAZks5fGVuV8i/qLJvCKrxf8yknGIsJSFwEsTWaIgC7llzi8dZO/i0w77+edTxCwcZ5
+	hAXumJZCigBcydkJKLVmAkeVibs/Y7Oodz+wpnfsRB9oNh7hAOawUbAiWDbe/mA2ew/rwCXPv3x
+	xXtbk6fh2ysCChjaLlAcjLEd05nLo0HBUOhheSj1nDULSlC21pppeUyBlLQYKcpZvWXegTUQ44Y
+	ElRNnoHUygmPPSTFp2pILY6/Pp8IqW4pKBU3J9r
+X-Received: by 2002:a05:620a:170f:b0:8c6:bbfa:36af with SMTP id af79cd13be357-8cdb5b59a8fmr1938231285a.40.1773698866121;
+        Mon, 16 Mar 2026 15:07:46 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cda1fddfe8sm1303010685a.12.2026.03.16.15.07.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Mar 2026 15:07:45 -0700 (PDT)
+Date: Mon, 16 Mar 2026 18:07:41 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2026, #05)
+Message-ID: <abh/LUGAWUDx/E2t@nand.local>
+References: <xmqqh5qka8so.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh5qka8so.fsf@gitster.g>
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Thu, Mar 12, 2026 at 05:10:31PM -0700, Junio C Hamano wrote:
+> * tb/incremental-midx-part-3.2 (2026-02-24) 17 commits
+>  - midx: enable reachability bitmaps during MIDX compaction
+>  - midx: implement MIDX compaction
+>  - t/helper/test-read-midx.c: plug memory leak when selecting layer
+>  - midx-write.c: factor fanout layering from `compute_sorted_entries()`
+>  - midx-write.c: enumerate `pack_int_id` values directly
+>  - midx-write.c: extract `fill_pack_from_midx()`
+>  - midx-write.c: introduce `midx_pack_perm()` helper
+>  - midx: do not require packs to be sorted in lexicographic order
+>  - midx-write.c: introduce `struct write_midx_opts`
+>  - midx-write.c: don't use `pack_perm` when assigning `bitmap_pos`
+>  - t/t5319-multi-pack-index.sh: fix copy-and-paste error in t5319.39
+>  - git-multi-pack-index(1): align SYNOPSIS with 'git multi-pack-index -h'
+>  - git-multi-pack-index(1): remove non-existent incompatibility
+>  - builtin/multi-pack-index.c: make '--progress' a common option
+>  - midx: introduce `midx_get_checksum_hex()`
+>  - midx: rename `get_midx_checksum()` to `midx_get_checksum_hash()`
+>  - midx: mark `get_midx_checksum()` arguments as const
+>
+>  Further work on incremental repacking using MIDX/bitmap
+>
+>  Will merge to 'next'?
+>  source: <cover.1771959555.git.me@ttaylorr.com>
 
-Use `<key-alias>` instead of `*` in order to be consistent with
-the documentation.
+I think that this one is ready to go. There was a relatively small
+range-diff between v2 and v3 based on Peff's review of the earlier
+round.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- builtin/interpret-trailers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+That review[1] said that:
 
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 41b0750e5af..4b617c3ecb0 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -211,7 +211,7 @@ int cmd_interpret_trailers(int argc,
- 			     N_("action if trailer is missing"), option_parse_if_missing),
- 
- 		OPT_BOOL(0, "only-trailers", &opts.only_trailers, N_("output only the trailers")),
--		OPT_BOOL(0, "only-input", &opts.only_input, N_("do not apply trailer.* configuration variables")),
-+		OPT_BOOL(0, "only-input", &opts.only_input, N_("do not apply trailer.<key-alias> configuration variables")),
- 		OPT_BOOL(0, "unfold", &opts.unfold, N_("reformat multiline trailer values as single-line values")),
- 		OPT_CALLBACK_F(0, "parse", &opts, NULL, N_("alias for --only-trailers --only-input --unfold"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_parse),
--- 
-2.53.0.32.gf6228eaf9cc
+    There were a couple minor issues brought up in review, like
+    out-dated comments and the u32_add interface. So I think we might
+    need a v3 with a few touch-ups, but that's it.
 
+, so I think with the latest round we should be OK to start merging this
+one down.
+
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/20260223140847.GB271392@coredump.intra.peff.net/
