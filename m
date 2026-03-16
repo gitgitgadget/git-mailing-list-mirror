@@ -1,170 +1,395 @@
-Received: from SY8PR01CU002.outbound.protection.outlook.com (mail-australiaeastazolkn19010075.outbound.protection.outlook.com [52.103.72.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45F43A1E69
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 15:36:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.75
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773675417; cv=fail; b=a/junx6u9xA73ViPVRF5aYf+rabdz7KP7C9g747f2X/TF890th1nGTp7G1kwCfJ0QHP0oWmweYQoMNGFh0CDOE/EG4g5iICaQnKZPMtca6Hypp6GHUgVm9mJPmskslEB0CUdwe7W+Bb4H2B7OraHiENaxsxWdGjiNwmF+Ya/UK4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773675417; c=relaxed/simple;
-	bh=zVrMOw+e+OJT4Bt4ylmuGZnT1mKro+fIPlOyuHB0lKI=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA2D2D8379
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773677165; cv=none; b=S6C7d8ZOAUwajChNmzET2owY5seeqZBXM5f2WuyBHjdzYds6wBKdMaJn/SgfXkSvKN2Dw/c61Bnb1zk27ry1xc9gIaKe9rLKUPyjF2W3lk/fM+kJJYraVPOvgcZ9wMB/whZpfVQI8B72iXvLxZ4O0m2VJ2oewNtIRQEGncgHSwU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773677165; c=relaxed/simple;
+	bh=NqUxa5TTBNF2IKwA226ZZYWMD2J8BKbivII12RAuf8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=kwZpq5dPhus0cdPZCqNFiGSU6r/7O7yTB9JIBF6bmQ1ayKHY0PUqXEeFtGjzM+jLMyOYkwKW08D2iuLaDIy+qWo5AenAjBjvpYfg/XmJsQNE6qbrThD6LEgHquclnFCNwp2vPiUGbnZmIrrMO58F0NktPNBKkZUSteVWQTSeObM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=KpVcNHn6; arc=fail smtp.client-ip=52.103.72.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	 MIME-Version:Content-Type; b=P6SHK1nwyZUKlbo28eIKqug0f+3fr4LmUlmATDtDjlnOR7qQnHrihqE49GjXMtQjpM1oDRLTD13qWOPv5SC26/I5yP421ZJ5FAnBZ2Yw71Bn8QTCM6g0qOlShE0wWa4pxrrWJ4eYlb0f0ylOmqiv4Ge2Wvfe0eQfo7PtldaTbeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cBV4/oHJ; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="KpVcNHn6"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F8EsWSRpAZi3psQknl5yJyKtN+rZCmrZWLKl+A7SyTuSz6E2nzz2OdY1na5DnwUbpciLu4kd8wXT3KKoRrHk021KrCXTJ4RoCI1nVoNh09C/n68uAFVfnuQmV4Jg6gP+Ftn7WE6LmjYeLf8Q1s1RjOe1LzEoDNvNl2k68BMKc/yiYQJBvz2ZwLGAFeVf5SO/+J8G2qd0pmPU2Bv//JJvgwuKvsGnr4stfzZizq+UQjW//zkYK1/NUpvHqJWWIT0OruTJg33vrNG6GG80eaMHp7I7IQYB+Ow3VsK2U4lUMN01O8fvdJRNnX8lU4hi8kjz/auNGUnE8IGO7zoyR+edOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KDXp454UjfwuO8FfC/hgHpBhy3zFkBNlIEPum0FweO8=;
- b=Rt6RFoIh09q0YpGotJ/IHtzfuqVn+AQ+YHEEtQjSVK27fxIwZfrxqJUIJMm98i5/2cPAK7GhGawxSXmElD45VONWYWMp5xpRR/MKUF3TBgB6Ete44Pn35CzLuJt4iGSLCyHkpTWfVIiTWBvQWX2dXHzCphq9xwoPslX9NVhmuXyrjjTBZf2vfx7argCvluxst4GMWvg2pIvT+uq09MH1f693zpEpiB8kFTqDxBLGlxdgafBRdq1NuDufh0UJPBJua831l52xeoyzPvc7NbbAc7bQAG8ijxVsTCRwhyx2b/SzYPr+kSm4xqJ+Fnn3a2pvRb9PMypupzHu7cSgA1gSzg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KDXp454UjfwuO8FfC/hgHpBhy3zFkBNlIEPum0FweO8=;
- b=KpVcNHn6FgJAnx1WK5ne/Cl2NJ1HzgXnEG4Q6xqrZI9DTZW4iDzmaruXIvYTdxjqfbpG/XCuhQ+K4bE0sQ9uPNKprwrNuPlfrQSwxsgn2GmPbLreOvFr4R+VVZLseAR4mm/u7SabFk/cuyrCNjkeZuofg1cGeBpM/kwpxLJgkg/HLUCq7xkHc2x/KMP8eefHYAq8OGUWoUWk7lP2wpbS/HgsXnkfo3Soe8xNP57GO9WhMVJf/+vtCB/IJZKvJ1CrhxYUSdVY0GlZ2iaXuVDvvkVz8BoQj5LSVJg3k+hDe6aDlCsegMSyG7PNn1lps2ohmCQpa3OOuMa+EOc98UMqCw==
-Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
- by SY8P300MB0774.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:295::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.17; Mon, 16 Mar
- 2026 15:36:46 +0000
-Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9723.014; Mon, 16 Mar 2026
- 15:36:46 +0000
-From: Jiamu Sun <39@barroit.sh>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cBV4/oHJ"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-485409ab264so33052665e9.1
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 09:06:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773677162; x=1774281962; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SIBu2A43KuMggy/FMAuOy/VrEN9/ewEubZsxrKy84Kc=;
+        b=cBV4/oHJiei1xfaDjhBaqP7/Pz0K9HEXvAiPNIMoGd93V972V+oWUTfQ1pW9qJLib2
+         vOltjjIp9D8T4/OSLO9AtBQTaLIje6CAThonrRWBofcIEu1NmoMvgvUJ3ougIUsuEBZT
+         SieostWbJYP4npLWdZawyUoXxHEmGV7bChpV5flwEiumQsSx6eqZFrVUoVrlQAy+G43o
+         Zt0pAz1bSyC+X+zO3e9lgtKYGBZQdTPyJh0InOt+KJyyQxJfPNGpxZLg5I8ZEaF5+XN6
+         CPMALShRsxNnRiZxzd0bzta01IT1k1cjmRXpC1Z3UOWRSxkbfAhbwNFFkLKAdLPZuyWS
+         CovA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773677162; x=1774281962;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SIBu2A43KuMggy/FMAuOy/VrEN9/ewEubZsxrKy84Kc=;
+        b=CUVmrEyPFDUUKNvN/NGy3WwYx1l70ehGm4N4j6CNe5Rth8vs6yGZnhJq2VxkMYB4bc
+         hTrmLtfWkQlDqMMdqHvoQlloQ+GpUkVB92zc6ycXjUIQmsO6rZJK66m9TMud4XaUEa3I
+         QdDrVS7pHthaBAfAxi5LnseO8pe9KvI/cl9/1x5ETj6Zbu0XRFgWJjShrJk6kn7oxnsE
+         DN41PbIfs9eZOXcPYfmGi664s1cp6oKCFfI/xX40QSGBcUK4RMPLJFOtF/kPYgxGow/U
+         2e4WPmaBTQPoDvEImJFbIZt4RkyU78+vR6x2zNBrS1Mc3PwQHdLO7QyQJtdNh5FWHBVd
+         FavA==
+X-Gm-Message-State: AOJu0Yx47+NibtAtuYruzrkxDJVMYi47tEkkxXcqDetpnuiHxVni5KoD
+	PVYmCV+1yxzvKdNecZL0jRA3iBU7hWw0RWSsAbOfJCQuNPoxHAOpRmp8Qb+OrQYhAjlaBA==
+X-Gm-Gg: ATEYQzwa5ZwJ/LFvNm695utHyVxXDCxb1Vkh7MuK9mTbOcLVqOzIkcIPV8PeacnM/60
+	FZZQ/prSmV0cLIN8mOik0MCf40afoMrcZoX2PjeCbwmi5wibwHi270k0SLuz2OTF7xg2Cy0rSol
+	b8ZvyGtAGLoiKokoovhnjhgygj9uPJK2lbIEDcy3RgWl11VskK3U9ZYvFqHpvl638++37CLYREi
+	O1LyHjOBFk6j2nY0V4hYGs0QSYDp44NiUtDKPYr2kFf6G4iW0AB9Oro1z+90knT5lsKZkrGNuT1
+	aP3Yx1kXf1UXDReVxqyELAV1nwCfY5/nf2BP0ESY7Sd3Fa3uB7BiypSp9cO5h8CVzn4GKqXGxQg
+	fknRMuVTTfPRLCc4ubWAcgM/dY+QM+5f8PJc32MXAq77EeYRyRPSiBjwnpfeN0I8+jhoyKmxkhA
+	Js0RZ+ZReFRSd4aDHwCA1HLPwcTxrjB7zkL5G/jv7+bT+HMQAXP607FW/EOfEj7sKP2Md44x1D6
+	XICvwbYP793pxFwp9vVBQb1RcdceXrvllgaPmlDz49OClM4cGKd+SkrJro=
+X-Received: by 2002:a05:600c:3486:b0:485:33b7:573d with SMTP id 5b1f17b1804b1-4856eaaa63fmr2387365e9.1.1773677161079;
+        Mon, 16 Mar 2026 09:06:01 -0700 (PDT)
+Received: from farblopa.localdomain ([84.126.0.122])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4856ea9c36bsm1914145e9.9.2026.03.16.09.05.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Mar 2026 09:06:00 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
-Cc: Aaron Plattner <aplattner@nvidia.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Jiamu Sun <39@barroit.sh>
-Subject: [PATCH v4 10/10] doc: document autocorrect API
-Date: Tue, 17 Mar 2026 00:36:23 +0900
-Message-ID:
- <SY0P300MB0801D52DC6F8E7F37E3A85A7CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-References: <SY0P300MB0801C6F21C2D8F49892DF8E7CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
- <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TYCP286CA0279.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:3c9::6) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:10:27f::21)
-X-Microsoft-Original-Message-ID: <20260316153623.569881-11-39@barroit.sh>
+Cc: christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	chandrapratap3519@gmail.com
+Subject: [GSoC v3] Proposal: Complete and extend the remote-object-info command for git cat-file
+Date: Mon, 16 Mar 2026 17:05:08 +0100
+Message-ID: <20260316160558.143619-1-pabloosabaterr@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CAN5EUNQKv-LCkbY+5scn6pk6fL8kpmjNR=66rjeY=NqKbqRkhA@mail.gmail.com>
+References: <CAN5EUNQKv-LCkbY+5scn6pk6fL8kpmjNR=66rjeY=NqKbqRkhA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Sender: Jiamu Sun <sunjiamu@outlook.com>
-X-MS-Exchange-MessageSentRepresentingType: 2
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY8P300MB0774:EE_
-X-MS-Office365-Filtering-Correlation-Id: 979dce0e-dc8e-441c-f500-08de8371d4ed
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|51005399006|25031999004|19110799012|8060799015|23021999003|15080799012|5072599009|461199028|40105399003|3412199025|440099028|1710799026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?dg0BCbWAI2lWNIbPpvdng4z6hqRHOSmg+pNLH63Y72RnqMCA6RVfyHHU7bmM?=
- =?us-ascii?Q?9jJgJzJF9+amMvdXF5JW7IVRGlTnHmEBF9iUcb9aNdW2JdcAla2kUyRjfbzu?=
- =?us-ascii?Q?yjRPBPdHaFZRCrYOozwjsp3nWwOOvkkQLs2NeJl8bFeWwuV5ZTCL2U6yyQO2?=
- =?us-ascii?Q?S6EWixTwFKBHn9U963li/MG03MKP2RANADUu/iEYDdcADRXQ7gAFFH7WsPxq?=
- =?us-ascii?Q?aDiA2GwlfSIyR/vEKsh1Pg05E/yESl5b0qUsyePuL2v8gU/3n2dk8YOuXuLS?=
- =?us-ascii?Q?iqGKwvRQ/JcZ7+WJDqj/CTEtjW9C+FNvY/IdAmKXyyrNT2ht2cHlOnfoJzXg?=
- =?us-ascii?Q?3NXOAA3DzFhV1ymuVM+0QSg0Htbfn7Savr/XxelyCE8770N68n32VOiOr7gJ?=
- =?us-ascii?Q?3XHbR6zzvvkZdPcdw6ea2A/GgueWBzXapFCcLr4ZZJRPZDSI92ze8EpxjeFM?=
- =?us-ascii?Q?2t0aN2d5DYXCBLw8QLXkPW2HJBW568SjE5UBGmFbaGBQ2f+N4gS8+mjWot0R?=
- =?us-ascii?Q?+PQ6OhM/GHMIPc4XXn3nexFenPV4jcyqArR8WGZUEW/yPBLo1K7EnELkH03y?=
- =?us-ascii?Q?Y1ISYemL2O8sDvkpj6gcAyyWiQRVJMO28uJFyH/kh2ecgW2yedSMlMOwEhti?=
- =?us-ascii?Q?IzwWynGv+VASkf8oxnmYoIW13HcpPnKUvb1Nw7wZmy2neSfTS6+3rtQy385M?=
- =?us-ascii?Q?Ok5KXZgznJJA+OWKN3O+HTnWWM/zfpzQCmp8Y/JF5ZnVx/hqmZHUBSOiBmW7?=
- =?us-ascii?Q?9pgDmQgzpEUhSkZg/gnvaGh1IsvtHuN6oQd+6JweXzjHepLkL3PAZpzk2Zta?=
- =?us-ascii?Q?lBbrhn8X30wEo4/JYokLfHtW4vPTDMxriDUY6+i+v4OorMTqO2Oo2bcpsZQG?=
- =?us-ascii?Q?nn74xrFl9YVTre/SN//GCo3MIgOIL/fq0rZAPJtjfvxOLdPINoDZasOFNTJ8?=
- =?us-ascii?Q?J9C2im1BXLrwdVVh94WysQ=3D=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?1ovx++SQsU74e1bmKaHJ2U3f+trMc3RFkojAxMcC43CT/r/zFcv3By5CS1hj?=
- =?us-ascii?Q?25399E51SbKh1xFsGl7ZIJehz7zuh7zWUJ9ARDHXD+tFT6SAfo4aSZ2DNjCd?=
- =?us-ascii?Q?m9Mr7GPbcyX+X3ho6SidiX/T3UriA9xRqVeKV6KqCTiSPBt0k7la7ChdzMwr?=
- =?us-ascii?Q?im0oaMMoDhh/bgjCrvv5rHRS6tbtcOydvKg5/eOq7QCelbcPvbcaBmgGwW7A?=
- =?us-ascii?Q?1aZLNJPOgNnJLdhFhOuHtvERSnFe3ckKnq0g/fklOY+6K7HE6ktak6++uyWo?=
- =?us-ascii?Q?XeaJssGjto8x/6pl++Gni5wP8Z42R8Io34GGQfE+vClitfDnnKyK/y7UK8F+?=
- =?us-ascii?Q?2YOTzk53kdSfp0RKwQej2zI3w5jxW/p7V6b9LmEEJdPlPMMw9g63BDZyk3FA?=
- =?us-ascii?Q?Dini1FxQrcrvMRQuUFR/lt5vWS37h2iSom35GwZku+c6ZmXKMKFTeBvKS2hs?=
- =?us-ascii?Q?T36Hjm6s5MfjhzYwKqvw6YgMhJZCb3/9Y4q9hbCVl1mvfK6R9Qxnu86umgXz?=
- =?us-ascii?Q?qfT0t0h3xBMv3Uo/fWqdc823bOSSDG9BW7Vv7j6JoDyHiN6bKx3FLYVymCmZ?=
- =?us-ascii?Q?kG8K9077OeYn3z0XGMEnW4AgaMNrBQ7HICWW0ZvKqn3AokozfP8qepf0nrWa?=
- =?us-ascii?Q?LpffEn3U2sgc3A3n871qwOXj5jkvudUQSPTx2F3NybiQOvjHGVpPRO9xKHYR?=
- =?us-ascii?Q?w585X/cpSBIcGHEKOkHu4LI+r5BUyXwWFiHGFPWNMv3kRSEEq35TxUTYj5xK?=
- =?us-ascii?Q?tK01CZ5+HsTTg8v9M9gJVh55EDkMNblCBGv+cwIayxnkhOOtKruuf4u/S8PS?=
- =?us-ascii?Q?hTsywBaIlT87xly0ishktCsI01ozsGcEhuBafTJKMcUNWV+EnlEgcRcjQRd7?=
- =?us-ascii?Q?QC4qgYmQFuhziTr4FqFEkKhS/NwM1vWdSUHVdBU8QrvmlVUrQh+Rnzupxf+s?=
- =?us-ascii?Q?kyVs5YUkDsF5Ooh2NIUunHfQjsxpsnHAtGp+DVE7KSV1Xv/ll9JVChUcSv8+?=
- =?us-ascii?Q?2lZkiqt1EGaxZBlTOt7H1hvb1SHh12HMi2ruMHGNho/5hN+6vFkISC/QR/Hf?=
- =?us-ascii?Q?G8Apu0oFX96y421qtavH3SB0CnH+JLu3P7Flvo9yjV9nwTLtlX+Rsqzx7bx8?=
- =?us-ascii?Q?1bxm7PqHs9ZbGSUXjBOSVHe0jelmoOh6ofIRq8wQVlNCha2FfzfFOczRFpoI?=
- =?us-ascii?Q?p3cPF4sxEiwuIxmdN5794P984huEqLmwhQfNzPIhMgfU5SOosSaRXJ/ui1xz?=
- =?us-ascii?Q?18SVoQOQLrY1a5mL3BJSmi89RgmnSysCGquAdQ1tMn+LY2uK+B6JAPoiI3Nt?=
- =?us-ascii?Q?rIF9PGqSfRA/s392POcFRIl1gZMhmD6yrGKfyxGIQ5jRx2ANRjaHxAw+BVJe?=
- =?us-ascii?Q?P9tJLbBJ/I8RdnZzdkZc8mF3z7DK?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 979dce0e-dc8e-441c-f500-08de8371d4ed
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Mar 2026 15:36:46.2993
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0774
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Explain behaviors for autocorrect_resolve(), autocorrect_confirm(), and
-struct autocorrect.
+Thanks for the feedback on v2, Christian and Chandra. 
 
-Signed-off-by: Jiamu Sun <39@barroit.sh>
----
- autocorrect.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Changes from v2:
 
-diff --git a/autocorrect.h b/autocorrect.h
-index 0d3e819262ed..bfa3ba20a4fb 100644
---- a/autocorrect.h
-+++ b/autocorrect.h
-@@ -9,13 +9,24 @@ enum autocorrect_mode {
- 	AUTOCORRECT_DELAY,
- };
- 
-+/**
-+ * `mode` indicates which action will be performed by autocorrect_confirm().
-+ * `delay` is the timeout before autocorrect_confirm() returns, in tenths of a
-+ * second. Use it only with AUTOCORRECT_DELAY.
-+ */
- struct autocorrect {
- 	enum autocorrect_mode mode;
- 	int delay;
- };
- 
-+/**
-+ * Resolve the autocorrect configuration into `conf`.
-+ */
- void autocorrect_resolve(struct autocorrect *conf);
- 
-+/**
-+ * Interact with the user in different ways depending on `conf->mode`.
-+ */
- void autocorrect_confirm(struct autocorrect *conf, const char *assumed);
- 
- #endif /* AUTOCORRECT_H */
--- 
-2.53.0
+> 1) What is returning an empty string. Is it the `allow_list`, the
+> client, the server or something else?
+> 2) And what is actually reported to the user (en error, a warning, nothing)?
+> 3) Also is it what is implemented in Eric's v11, or what you suggest
+> implementing?
 
+- Backward Compatibility expanded to answer the questions from Christian at the v2 feedback.
+- Performance Considerations now uses #### instead of bold ****.
+- Moved draft proposal on Pre-GSoC to its own subsection.
+- Added --graph-max RFC patch to Other Contributions.
+- Capitalization of subsections
+
+## Synopsis
+
+Git's partial clone allows cloning repositories without downloading all objects (blobs, trees, ...). These objects are fetched on demand from the remote when needed. However, when a user needs metadata about these remote objects (size, type, hash, ...), Git has no efficient way of doing this without downloading all the object content.
+
+The server side support for `object-info` protocol was implemented by Calvin Wan in 2021 [8]. Eric Ju built the client-side `remote-object-info` for `cat-file --batch-command`.
+
+This project finishes Eric Ju's work on `remote-object-info` for `git cat-file --batch-command` [1], resolves the pending feedback from Junio Hamano [2] and Jeff King [3] [4] [5], and extends support for `%(objecttype)`.
+
+Expected project size: 350 hours (Medium)
+
+## About Me and Contact
+
+Name: Pablo Sabater Jiménez (he/him)
+
+Age: 19
+
+Education: Currently on my second Computer Science year at University of Murcia, Spain
+
+Location: Murcia, Spain (CET, UTC+1)
+
+Languages: C (solid), shell(bash) (good)
+
+Tools: git(proficient)
+
+I've checked that I'm eligible for GSoC 2026.
+
+Email: pabloosabaterr@gmail.com
+
+GitHub: https://github.com/pabloosabaterr
+
+## Availability
+
+My classes end the first week of May. From then until September I won't have any classes which leaves me free to fully focus on the project. I can dedicate 8+ hours each day, and for sure 40 hours a week.
+
+## Relevant Projects
+
+- 16 bit CPU emulator. Good example of C programming.
+ 
+  cpu: https://github.com/pabloosabaterr/CPU16
+
+- Compiler. Good example of working on bigger projects.
+ 
+  compiler: https://github.com/pabloosabaterr/Orn
+
+## Pre-GSoC Work
+
+### Introduction
+
+**[GSoC] Introduction Pablo Sabater**
+
+https://lore.kernel.org/git/CAN5EUNR0KJ4VeuOF_bVupaTuGKGaeTKa0SMRAUoBPo5wWi8YGA@mail.gmail.com
+
+**Description**: A mailing list thread where I introduced myself to the git community.
+
+### Microproject
+
+**[GSoC PATCH v4] t9200: replace test -f/-d with modern path helpers**
+
+https://lore.kernel.org/git/20260312173305.15112-1-pabloosabaterr@gmail.com/
+
+**Status**: Merged to `next` on 2026-03-12 at `8500bdf172`.
+
+**Description**: Replaces `test -f` with helper `test_path_is_file`, which makes debugging failing tests easier with better reporting.
+As suggested as microproject.
+
+### Draft Proposal
+
+**[GSoC] Proposal: Complete and extend remote-object-info for git cat-file**
+
+https://lore.kernel.org/git/CAN5EUNQKv-LCkbY+5scn6pk6fL8kpmjNR=66rjeY=NqKbqRkhA@mail.gmail.com/
+
+**Description**: Proposal draft thread.
+
+### Other Contributions
+
+**[GSoC PATCH v2] test-lib: print escape sequence names**
+
+https://lore.kernel.org/git/20260311031442.11942-1-pabloosabaterr@gmail.com/
+
+**Status**: Will merge to `next`.
+
+**Description**: In failed expected/actual checks printing, the escape sequences were shown as their octal code. This patch fixes that to print the actual escape sequence name, adds tests, and updates the expected output.
+
+**[GSoC PATCH] t9200: handle missing CVS with skip_all**
+
+https://lore.kernel.org/git/20260311194002.190195-1-pabloosabaterr@gmail.com/
+
+**Status**: Merged to `next` on 2026-03-12 at `8500bdf172`.
+
+**Description**: Wraps CVS setup in a skip_all for clearer failure reporting and moves Git initialization into its own test_expect_success.
+
+**Re: [PATCH] gc: add git maintenance list command**
+
+https://lore.kernel.org/git/20260313115932.15259-1-pabloosabaterr@gmail.com/
+
+**Description**: Code review for a patch sent.
+
+**[GSoC RFC PATCH] graph: add --graph-max option to limit displayed columns**
+
+https://lore.kernel.org/git/20260316133426.117684-1-pabloosabaterr@gmail.com/
+
+**Status**: RFC, waiting for feedback.
+
+**Description**: Adds `--graph-max` option to `git log --graph` to cap the number of columns that will be displayed. Helps readability for projects with many branches.
+
+**[GSoC] Re: [PATCH v11 8/8] cat-file: add remote-object-info to batch-command**
+
+https://lore.kernel.org/git/20260312214154.89120-1-pabloosabaterr@gmail.com/
+
+**Description**: While testing Eric's v11 I've found and reported a new bug. On `remote-object-info` when it's preceded by a local query, `data->type` isn't being cleared. Causing it to return the wrong type.
+
+I have also studied the documentation provided and Eric Ju's work from v0 to v11 including all the feedback he got up to March 2025, the feedback he got from Junio Hamano and Jeff King, taking notes about what's left to be done and what else I can contribute to the already proposed project. That's how I've identified everything that I will address on the Problem, Solution and Timeline sections.
+
+I built Eric Ju's v11 and tested the bugs reported to his patch [5], I've confirmed the segfault and the `die()`, and found a new one:
+- When a local `info` runs before `remote-object-info` sharing the same format string, `data->type` isn't being cleared. A blob queried remotely after a local commit, `data->type` for blob becomes 'commit' with no error. I reported it on the mailing list [6].
+
+I attempted to test rebasing Eric Ju's v11 to master and got conflicts on 4 out of the 8 commits:
+- `d04cf85ece` t1006: split test utility functions into new "lib-cat-file.sh".
+        - `t/t1006-cat-file.sh`
+- `d918f720d8` fetch-pack: refactor packet writing.
+        - `fetch-pack.c`
+- `2daf9ed803` transport: add client support for object-info.
+        - `Makefile`
+- `c3ba4afaf6` cat-file: add remote-object-info to batch-command.
+        - `object-file.c`, `object-store-ll.h` (deleted).
+
+I'm being active on the mailing list and learning the Git flow of work and from the feedback I've received from the maintainers (Junio) from my patches.
+
+Following the project guidelines, I haven't done anything on the project that could step on other candidates' work before being accepted, and instead I'm focusing on understanding the project and its needs, and independent patches that will make the Git project more familiar and understandable to me.
+
+## The Problem
+
+Eric Ju's work remains unmerged after v11 because of these issues:
+ 
+ - The format validation uses `strstr()` which only checks for `%(objectsize)`. This causes two different errors:
+   - Atoms that `expand_atom()` recognizes but the remote doesn't (`objecttype`,`deltabase`, ...), `expand_atom()` returns 1, but when accessing `data->type` it only contains garbage, causing segfault, as Jeff King noted [3].
+   - Unknown atoms by `expand_atom()`, returns 0, calling `strbuf_expand_bad_format` on `expand_format()`, which calls `die()`, as Jeff King found [3].
+   Both cases block the command, including local `info` queries if the same format string is shared. Unsupported remote placeholders should return an empty string, matching how `for-each-ref` returns empty for known, but inapplicable atoms like `%(tagger)` on non-tags [4] [5].
+ 
+ - When local and remote queries are mixed, `data->type` is not being cleared between commands. `remote-object-info` returns the wrong type data from a previous local query [6].
+ 
+ - Style and code issues marked by Junio Hamano [2] and Jeff King [3] [5] are still undone.
+   - comment style.
+   - `#define` formatting.
+   - line length.
+   - misleading error messages.
+   - missing `count > MAX_ALLOWED_OBJ_LIMIT` check at `split_cmdline().`
+   - if/else invert at `get_remote_info()`.
+ - `%(objecttype)` is not yet supported on either client or server side.
+
+## The Solution
+
+There are two main goals:
+
+### Goal 1: Rebase and finish Eric's work
+
+Starting from where Eric Ju left off, I will rebase it on top of the current `master` branch and address the feedback left to do:
+- Fix style in comments, `#define` formatting and line length.
+- Fix misleading error message in the overflow check.
+- Add missing `count > MAX_ALLOWED_OBJ_LIMIT` check after `split_cmdline()`.
+- Invert if/else on `get_remote_info()` to keep the small block first (the error one) as Junio suggested.
+
+#### Replace `strstr()` format validation with allow_list in `expand_atom()`
+
+`strstr()` isn't enough to fully validate the placeholders, it only searches for `%(objectsize)` and unsupported placeholders cause segfaults. Jeff King noted [4] that the fix was to refactor the validation with an allow_list in `expand_atom()` or `expand_format()`. The best option is to place the validation at `expand_atom()`, but why `expand_atom()` ?
+- There are two cases, first, inside `expand_atom()` before returning (segfault) and second, calls `die()` when `expand_atom()` returns 0.
+  Placing the `allow_list` at the top of `expand_atom()` prevents both errors, on remote mode, append nothing to `sb` and return 1, accessing `data->type` won't cause segfault and prevents `expand_format()` from reaching `die()`.
+  As extra safety, initializing `data->type` to `OBJ_BAD` and check for `NULL` from `type_name()` makes it that even without `allow_list`, uninitialized data doesn't cause a segfault.
+  At Goal 1, only `%(objectname)` and `%(objectsize)` will be in the allow_list. Goal 2 will bring `%(objecttype)` support.
+
+### Goal 2: Adding `%(objecttype)`
+
+Following what Calvin Wan did in 2021 [8] for `%(objectsize)`, v2 protocol needs to be extended on the server side to support the new `%(objecttype)` placeholder:
+- extend `object_info_advertise()` at `serve.c`
+- add .type to `requested_info` struct at `serve.c`
+- support `type` in `cap_object_info()` at `protocol-caps.c`
+- look for type at `send_info()` at `protocol-caps.c`
+
+Following object-info protocol docs [7] it should look like:
+```
+  attrs = "size" SP "type"
+  obj-type = "blob" | "tree" | "commit" | "tag"
+  obj-info = obj-id SP obj-size SP obj-type
+  info = PKT-LINE(attrs LF)
+        *PKT-LINE(obj-info LF)
+```
+
+`%(objecttype)` needs to be added to the `allow_list`. Client side needs to learn to ask for `%(objecttype)` from remote, parse what has been received and fill `expand_data` with the actual type. This makes it return the object type instead of the empty string returned while it was unsupported.
+
+Default format evolves to `%(objectname) %(objecttype) %(objectsize)`. Test and document new placeholder support and server side extension.
+
+#### Backward Compatibility
+
+There are four possible scenarios to happen between client and server:
+
+1. **The server doesn't know type (new client but old server)**:
+
+   After receiving the server capabilities, the client doesn't see `type` being advertised. When the user format string has `%(objecttype)`, `expand_atom()` checks the `allow_list`, finds that type was not fetched. Appends an empty string to the output buffer and returns 1. The user will see an empty field where `type` should be, no errors nor warnings. In Eric Ju's v11, this would crash, as described in The Problem section, the `allow_list` from Goal 1 is what fixes this, following `for-each-ref` behaviour for known but inapplicable atoms as Jeff King suggested [4] [5].
+
+2. **The server knows type but the client doesn't (new server but old client)**:
+
+   The server advertises `type`, but the client doesn't know `type` and following `gitprotocol-v2.adoc`, "Clients must ignore all unknown keys", it silently ignores the `type` and only asks for the known (`size`). The server returns only what was requested, user will see the output for `size` but not for `type`. This doesn't need any new code, the v2 protocol already behaves like this.
+
+3. **Both know type (new client and new server)**:
+
+   The server advertises `type`, the client requests `type` and receives the type data. `expand_atom()` finds `type` in the `allow_list`, fills `data->type` and then the user will see the object type in the output. This is Goal 2.
+
+4. **Both know type but protocol middleware doesn't (new client, new server but old middleware)**:
+
+   This becomes case 1 or 2 depending on what side is being affected by the middleware. If the middleware removes `type` from the server advertised capabilities, the client never sees it and treats the server as it was old server, it becomes case 1 (empty string). If the middleware removes `type` from the client request, the server will only see `size` being requested and only returns size data, it becomes case 2.
+   
+#### Performance Considerations
+
+To get an object type, we have to look only at the header, to get the size `oid_object_info()` at `object-file.c` is being called which already returns the object type in the same call. Sending the string with the type will only be, worst case scenario 6 bytes for the "commit" string.
+
+## Timeline
+
+I've designed this to work with enough time so final work can be shorter than what's said here
+
+May 1-24: Community Bonding
+- Keep working on my ongoing patches and new ones.
+- Talk and meet with mentor that I'm assigned with, to get feedback about my proposal, how I will report my progress apart from the code submitted and possible blogs, and tips and tricks to work better at Git.
+- Confirm with mentor that the `allow_list` approach is still the best option.
+- Draft commits structure.
+- Setup a blog to keep track about how GSoC at Git is going.
+
+Week 1-2: (May 26 - June 8)
+- Start Goal 1 fixes.
+- Fix style and code issues.
+
+Week 3-4: (June 9 - June 22)
+- Start with Goal 1 implementations (allow_list approach).
+
+Week 5-6: (June 23 - July 6):
+- Goal 1 should be polished or close to the final form.
+- Send patch series for Goal 1.
+- Start Goal 2.
+- Prepare the midterm report.
+
+**Midterm evaluation** (July 7 - 11) as specified on GSoC timeline docs
+- Goal 1 submitted.
+
+Week 7-8: (July 14 - July 27)
+- Start with server side v2 protocol extension (`%(objecttype)`).
+
+Week 9-10: (July 28 - August 10)
+- Add `%(objecttype)` to the `allow_list` from Goal 1.
+- Client side extension.
+- End to end tests and documentation.
+- Default format becomes `%(objectname) %(objecttype) %(objectsize)`.
+- Send patch series.
+
+Week 11-12: (August 11 - August 24)
+- Goal 2 should be close to be done.
+- Polish everything, all tests pass, good test coverage, no style/comment issues.
+- Final documentation review.
+- Prepare for final evaluation.
+
+**Final evaluation** (August 18-24) as specified on GSoC timeline docs
+
+### Additional objectives
+
+If there is enough time, or for future work after the project. I've some ideas on how this could evolve:
+
+#### More placeholders support
+
+I've checked that Eric's v11 patch only supports `%(objectsize)` on server side, but on the client side there are other placeholders that can be added too. With the `allow_list` and having Goal 2 implemented, adding more placeholders becomes trivial.
+
+- `%(objectsize:disk)`: Returns the size on the disk (compressed or as a delta) instead of returning the uncompressed size that `%(objectsize)` does. To do this, the server would need to send what's the actual size on disk data.
+
+- `%(deltabase)`: Returns the delta base object OID. non delta objects return zero OID as it does on local.
+
+#### Returning missing blobs from a tree ordered
+
+In a partial clone, someone might want to know what blobs are missing inside a concrete tree and their size before fetching them.
+The idea is to build on top of `remote-object-info`:
+Given a tree hash, return the missing blobs (inside that tree) ordered by size.
+
+Thanks for reading my proposal and considering my application. I'm very excited about this opportunity,
+Pablo
+ 
+[1]: https://lore.kernel.org/git/20250221190451.12536-1-eric.peijian@gmail.com/ "Eric Ju's v11 patch"
+
+[2]: https://lore.kernel.org/git/xmqqo6yr3wc4.fsf@gitster.g/ "Junio Hamano feedback"
+
+[3]: https://lore.kernel.org/git/20250224234720.GC729825@coredump.intra.peff.net/ "Jeff King feedback"
+
+[4]: https://lore.kernel.org/git/20250313060250.GH94015@coredump.intra.peff.net/ "options for strstr() by Jeff King"
+
+[5]: https://lore.kernel.org/git/20250324033922.GB690093@coredump.intra.peff.net/ "Jeff King follow-up"
+
+[6]: https://lore.kernel.org/git/20260312214154.89120-1-pabloosabaterr@gmail.com/ "data->type not being cleared bug"
+
+[7]: https://github.com/git/git/blob/master/Documentation/gitprotocol-v2.adoc#object-info "object-info protocol docs"
+
+[8]: https://lore.kernel.org/git/20220728230210.2952731-1-calvinwan@google.com/#t "Calvin Wan's patch series"
