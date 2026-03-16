@@ -1,171 +1,104 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9B0346E7E
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 05:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22375223708
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 06:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.173
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773639897; cv=pass; b=uAX/cDCPcqGEDPU1BPVfrOoxdvybnKUa4pP6priENHkR58p0b0SFpNLQpkR955dF+AhRil/ZDosfz0XIHlumG7StKHVrnpfmo5L6UDDoaJ4UTzXtsx7Gr1+OflbCT4gJaO3WhZdK43mLqLyVRQo2QzgxKdOcgAWj16aozOu+nxg=
+	t=1773643081; cv=pass; b=E1A7HqW7yCjUiKX2mAh0MEG3oTWua4BuqTetNsxq1ZT1KtBnBPjY4TDaWdpZmlCRpNH0uv1rcNsUYMvFxsaLEw6UPOhZHthZvqp64SbkhDyiHz/Z/ouHZdmXnN91jm+vJ1d+Ma+UApQ/DpNN+yqfQ0pOKN6XfZGfianNS+Jird4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773639897; c=relaxed/simple;
-	bh=9qe7EBgxYPUHfoc+lrSzce47Lt//DQD/hhj6xJfWVuk=;
+	s=arc-20240116; t=1773643081; c=relaxed/simple;
+	bh=cjGCpk8dwt2N3XmoISB5PpSHd6tz3CVaw96VHUGE6Lo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uyU2gexAGKVqe80h/KrBEmC3ki2bbkQg0Tl6HasZbiliTn2pNlaHA+GFP1bbJOTBxx1PQnCabk9wcdPgi6Jet+UBGXzssrKjJhOeZ+0gZNnBklGI/pz5SflWoJ54r7iy5CYTsXWdlzmxqaodXuVrG6SOdQk8xyoWzbyzq/8YuYE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UIvW2p7g; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	 To:Cc:Content-Type; b=ofKLJrtNweHzVF+aqtV8jrCvmCHzNi0HtJQpZYuUkr44w6KHGsvwYgXWtZoTeRuxUbmsF/U3CqCVjp0yraBByh4jA7ocjqrGdeyq43h8XgjcUE2xb+PCcKyoFFPH5XhJIfiOVH84ybdJzIMmQSa0ZI4Mi74HSCHwlQ1L+wP4Jyg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UIvW2p7g"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-1274204434bso3219798c88.1
-        for <git@vger.kernel.org>; Sun, 15 Mar 2026 22:44:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773639895; cv=none;
+Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-2c0ba72d097so53632eec.1
+        for <git@vger.kernel.org>; Sun, 15 Mar 2026 23:37:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773643079; cv=none;
         d=google.com; s=arc-20240605;
-        b=V2/Y183L88PdyECMbP6DHbDOS2fgN22JjS3PCXQjeGlQNLHjMcCqY87yQQAh7tFZWA
-         Hv/hdpfSE2/B73uWxrCBJyW1CpISdoVkAOPGmnW0bm7klTd9dLEjSojlUldVevHQeXQo
-         9mx/d+cIHDkgeSxGkmzPGbttm5CWFilN/BXvsGKsV8eQ4/KiU1c4XfnDmrNcZnKqJ4yx
-         2RvFejCPWhJJ9G9fxrEdPcL8k3IJim4pFCUxyl/B169aLeDUxYwqHvS5Kqk7CrmW+nAC
-         9/nUOhx2j62pQL2e4QB18YBH5epNH/IA5Ar7WHqTyHYdBijLcroful/GcRFu+MmPN1PN
-         fvaA==
+        b=ViQvdLGfM5E2GwI2DsOOeZjderFB4AHzHi+g15aDNwp/Pwjk2/sGnT/vK9QPb9z7ST
+         AALa5bgOv8p+N2jwrJqxuh0gwluQy0uxWktr77rnuO7WMgEweF6C2fhj2N2pJM6Z3Uqx
+         PU2Bpm6tC1i4arE9tA8dmiwLZWki/v66LIqugGFqetp6DFzNwpkVwtW7m+0yQkm2XzLG
+         33/9Mf2mjR3CwSHKwdIwn7lVpGNg2eLQLK28catOzV3plkdAOYLAIasSpzZtW2qk1iGc
+         xip4wwesFc8Y6CNqqpzUBA5BWKOuDFPhtlHSheBjfZ4lY0t6sNYA6BbCtniFitDu3MYV
+         Vrrw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Fh1Cscn8t1FAfMntBMXFgqlAYEoNPPkpqlVz1HkTtek=;
-        fh=2egB7gLK4z5yUFRX5mOzLxNSJ/RUD+AFAnpovuj3LNk=;
-        b=coZh/x1VjuJtW9+MpO/4hzv8Qo8c3KiBc9VDNq2eodaH2jZ4a8UKQvT7FomyyHHD03
-         5WCE2PQj6OeoqKdwbMVLJwW5XcUHM6ljBKTSs20E64RV/mtrwBdLv2tSBG8XdC1qUv74
-         UH1KUyB6GQU0obUsu7XLTnNJ9iX9VbLPvWu7Wk3XC35SXwMg14CLKkO/qH5kP/oq4cwS
-         zhB2npZDQMH42gKXZOAy9cbupUVJz8lYoUyewq1Xg5prTfMB6tNBFlhilHc/HgdS9D8g
-         eTSn9BdIuql4q/hIuiFpfvY1/PG9KCrA/BJj2ciZRwmdvlGZID35z1+1QgO/baqUuK3W
-         pTbQ==;
+         :in-reply-to:references:mime-version;
+        bh=LdwEoUKiCfzJtWU60jkHcKukZ3aT4jecPVqY9/lPGJQ=;
+        fh=OqwB+JZBsSQT8s7W/1mPwK4nDn2/iMThoEkIEj0pAeo=;
+        b=VzuMJPTUlX9xLnifAPLmeH2caxKZwW0u5V7ex5PVAbd7/3/5QGipZSpoMtw1xIP5lp
+         aqYoivhuG428pQ0CRIiKYhaeRXkSaBP9HeOrHG/rAhQW489Jr4su2IgHDX8Eg6T/PPCK
+         DM+UgUH2+2HpRDpJYdCAzANRo7vEzgJhFunH3QP+gGSufa5yi7hUB9ktWkHQH34sRwJO
+         LzRyob0MecKtsKDZg7LlUzHqAtzGVhz17659Zywg8jfIAI3mdcRRCg0uaZ+dSr7P+pjJ
+         0G3tAG2GHhaSKhMun9fHqo8vy6YixUfRC2eN3QIv5rgWk2tyn7Ugl1HvrYnCt/Kf6fKr
+         kxnQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773639895; x=1774244695; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Fh1Cscn8t1FAfMntBMXFgqlAYEoNPPkpqlVz1HkTtek=;
-        b=UIvW2p7gukfS4W3hKV5v3eQQgvyhpg8QFIvCgEkaB1ucuFlEHL/MCnVIq2EH7GPLCk
-         usYluo7jcpT8ygX4pWrW2pQDOsspyoKGywjLghgmO0DeVsQ2hnIK+B6aJBveiowOSjEw
-         JwSOBP5nhSdi3Lznxe4qZWoFY0dAlIJdWxLN1vV+p39yr63gyDvBnQacuZkOaGerS/eZ
-         ekE/0MNQYNj7tfdz0pDxUF6/T5R+8LJsYSGFfA4pSA/yUNo8e2oS8+AMQWkBEpt4N+F5
-         DVFPmLzRuy9fdLK6TEcWOXcc1GyVJGz7n0h/G0iPsOJ+Et0ciILSnHDYn0IYdTwBmMBl
-         6B/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773639895; x=1774244695;
+        d=1e100.net; s=20251104; t=1773643079; x=1774247879;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Fh1Cscn8t1FAfMntBMXFgqlAYEoNPPkpqlVz1HkTtek=;
-        b=iq6BHrmS/Nya6RQX7Wfuwg+pzfA5KLPzuilN9ZYcd0XtZZvUBQuMNeAHNmfJUBEaTR
-         D/knfNSNmUBV451Cy3OdstU0b3SHhUnFu48F0IGEgcbFvjU//gufJ0NG3Lmk3H/danCy
-         8l70Ohaq90ktI7GkDurO6TfpXgPXYJGdq7UbAh0NYHZQDPs6CnHdgrY+n3TNBi2FkHky
-         bd/Dd3q72cBaiRai1+RSb3YuCOZuBfc6Nvfah505zuug/yyhHxxB5LZAGYgCoO3QHWI/
-         AN4F29aYAzvXKOdttDjTJO+yxDTmrE3QzNJq55EWBxq02fcLeaDmK2pqQVBa6AMhM8FY
-         uW/A==
-X-Forwarded-Encrypted: i=1; AJvYcCW6tESQcZydp851XR+IeGX49FzfNC2d5U4nDwQc30NzM1dDPdLbL7El5ZkxPmKLcRvUP1E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxesEqxzrUopBZ2dzFVoD6/17ZWaWgKQ3gauAL+YgdKAKGBW7o9
-	/n49J6TQjEJUWw95TI/+ItCOrzrArmC6BPcRjWR1JAXJ8PyAcOzetJ+eDC+TDuQT0Tl8UFze4zm
-	6xvsE7NV+Nnsb01yScMyJyN7gv5p9IRw=
-X-Gm-Gg: ATEYQzzA1WXaxmA8JI74R3vd2fYF2rbmV+oHSM8wO87PWGtaaDcX0nwrgfRFp+zYyH4
-	Zw2vq8B3Pj8pF00WfvkZnS/EUlVZOLVUQf35CkipDtTAsJLGHuKKUuaMJDPm2BeuAirD4DQd1Qs
-	eL+GVXJfzsUidOmDW7TcccnQr8G9Dy9och4atEbl1upsc8SZmekZgEitxR9XWj3h42kjuslvDch
-	RIsS1z9bf/a+bFTr9oO8HvAxZ2cPU87jav2S4cIBuhXnH5ssluseTNEauIt9ufITnIWtqji6oi3
-	nodYK9/BmzXgOCBpQyQ1fRWVAK3pLvOx9hPfVXN3+y2WDyJP5MYM2vNvvMM2ibI6bUGW2HFsBaW
-	RvNe61es=
-X-Received: by 2002:a05:7022:660c:b0:123:3c24:b15 with SMTP id
- a92af1059eb24-128ecc241fdmr5250686c88.19.1773639895212; Sun, 15 Mar 2026
- 22:44:55 -0700 (PDT)
+        bh=LdwEoUKiCfzJtWU60jkHcKukZ3aT4jecPVqY9/lPGJQ=;
+        b=WKz+w5Hfckyv4CkuZNRP5qFP8IbfHnfJ9VIPCRWf0LKLM1kIsOFcsvGrl0e5uyTOja
+         2AH2uznmeEduCy2UupSAz5f+i71KxKa9r69Gdjxxd0OJy2Mc5hqheQyfYrbHKRIk36Yn
+         sqMxXtIjvl5WLGjSo0f3arWp1pdk6spyq/DZaZtVxpxZNwAukA9rqzys29eJ9+cg+s6i
+         HAjJVg1cDr9mrAYSwwoEH3+O99RlyR9IgjHI1qClPQpHspVB5kDw5Rgcq/9IqpHFxEjf
+         JNHmcfPGXdNkvqrRwlppM84rsFbWzpUNbrZuOLiqaf52lV1hCdO3tBNCEoct+woHqc2u
+         wXTw==
+X-Gm-Message-State: AOJu0Yw+WpUteihwfKXYjpHlYFrDLYrxpDkrZ1/xVTlPhfixPq/ZOYzy
+	kb3V2g/wvQr5QEZ7eNGgLLLC8/82LYUO5ftdjtOTJdgPceznXqubjV8rbqZmLylo87Qgy0P6RH2
+	Yi6nHLLzikR8K27RBYQpkelhZAgV66vY=
+X-Gm-Gg: ATEYQzyhcHZ+UPBTmcgCDVHfd9bN40H6W23aMwviQ1bLU3RfqgF01DOQy0yvxukUp48
+	Hy/0k9DmjJ7dNe/F5YXXrI1V4whX/eghTX2DaTfmKBxmm0EXn1yC1UvBbqGB7JFevk9SKMvqF4q
+	EiaqwQCINcbaXAWJ3r9OgAIIp8OLQR2mXTueR/vopVPpabYKc5Qc1W91G8hYWKZ0W/LAYs3P4n9
+	7Sa5u5GQWDlCt3uFbmD/h5sdnIpnM+EaijrggYZslraXBJHhI6uwYGOOYT/Q7taquPU0mNe3o5c
+	vkfodc1sfUJZIu3JdwnZE5C3nC3UHmwSGyymBsgr
+X-Received: by 2002:a05:7300:d0f:b0:2be:2912:ff65 with SMTP id
+ 5a478bee46e88-2bea54e9f14mr3053543eec.3.1773643079081; Sun, 15 Mar 2026
+ 23:37:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com>
- <cover.1773497547.git.worldhello.net@gmail.com> <0c00f09918d94995b4f990679d598adcab0d6f2d.1773497547.git.worldhello.net@gmail.com>
- <87220e93-8159-4a92-9c3f-b3f9fa34ba4e@kdbg.org> <xmqqzf49rs2g.fsf@gitster.g>
-In-Reply-To: <xmqqzf49rs2g.fsf@gitster.g>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Mon, 16 Mar 2026 13:44:43 +0800
-X-Gm-Features: AaiRm52vToByWXuzKjWWus_KRfEYDrv3uEmBeGNy99EjDQzDKXKs0su8X-UpBzs
-Message-ID: <CANYiYbH2o15x0=pZHuPk0Hf0qDNFWsvOpYE65O+yBMFspKBevw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] l10n: add .gitattributes to simplify location filtering
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, Alexander Shopov <ash@kambanaria.org>, 
-	Mikel Forcada <mikel.forcada@gmail.com>, Ralf Thielow <ralf.thielow@gmail.com>, 
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
-	Bagas Sanjaya <bagasdotme@gmail.com>, Dimitriy Ryazantcev <DJm00n@mail.ru>, 
-	Peter Krefting <peter@softwolves.pp.se>, Emir SARI <bitigchi@me.com>, Arkadii Yakovets <ark@cho.red>, 
-	=?UTF-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>, 
-	Teng Long <dyroneteng@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>, 
-	Git List <git@vger.kernel.org>
+References: <20260316042248.63278-1-prashantjee2025@gmail.com>
+In-Reply-To: <20260316042248.63278-1-prashantjee2025@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 16 Mar 2026 02:37:47 -0400
+X-Gm-Features: AaiRm516JG0OIM4MeQBYNJ03nz0rDFNw8wsam1UDv_9JqL_Sgs3zjldIsFvI7_A
+Message-ID: <CAPig+cRp+U8gWT7JkUdoaeyVVXGvq_iB8X3Ppj9Q862CiJFZmg@mail.gmail.com>
+Subject: Re: [PATCH v2] t4200: replace test -f and test -d with test_path_exists
+To: PRASHANT S BISHT <prashantjee2025@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 16, 2026 at 12:11=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
+On Mon, Mar 16, 2026 at 12:23=E2=80=AFAM PRASHANT S BISHT
+<prashantjee2025@gmail.com> wrote:
+> Replace old-style path existence checks with the modern test_path_exists
+> helper function that provides clearer diagnostic messages on failure.
 >
-> Johannes Sixt <j6t@kdbg.org> writes:
+> This conversion focuses on test assertions within test_expect_success
+> blocks where a missing path genuinely indicates a test failure,
+> rather than on control-flow checks (such as those in test_lazy_prereq
+> blocks) where missing paths are expected in certain environments.
 >
-> >> +# Languages that strip both filenames and line numbers
-> >> +bg.po       filter=3Dgettext-no-file-no-location
-> >> +de.po       filter=3Dgettext-no-file-no-location
-> >> +#es.po      filter=3Dgettext-no-file-no-location
-> >> +fr.po       filter=3Dgettext-no-file-no-location
-> >> +#ga.po      filter=3Dgettext-no-file-no-location
-> >> +#ru.po      filter=3Dgettext-no-file-no-location
-> >> +sv.po       filter=3Dgettext-no-file-no-location
-> >> +tr.po       filter=3Dgettext-no-file-no-location
-> >> +uk.po       filter=3Dgettext-no-file-no-location
-> >> +vi.po       filter=3Dgettext-no-file-no-location
-> >> +
-> >> +# Languages that preserve filenames but strip line numbers
-> >> +#ca.po      filter=3Dgettext-no-location
-> >> +id.po       filter=3Dgettext-no-location
-> >> +zh_CN.po    filter=3Dgettext-no-location
-> >> +zh_TW.po    filter=3Dgettext-no-location
-> >
-> > How settled is the use of these two different filters (and names) in th=
-e
-> > community of translators? I am asking because I'm about to align the
-> > translation workflow in the Gitk repository with that in the Git
-> > repository. I need to know which of the two variants of filter names I
-> > should ask translators to use.
->
-> I too am curious.
->
-> I would imagine that the translation target langugae has nothing to
-> do with the choice, and it would be mere personal preference---in
-> which case it would be better if people can converge on a single
-> convention fast and stick to it.  After all, even if the current
-> French translators happen to prefer no-file no-location, for
-> example, existing translators would graduate the project and new
-> ones would come in, and their preference would change over time.
->
-> At least comments like "Languages that strip" is misleading, if this
-> is just "personal preferences of l10n groups of various languages".
+> Signed-off-by: PRASHANT S BISHT <prashantjee2025@gmail.com>
+> ---
+> diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+> @@ -72,7 +72,7 @@ test_expect_success 'nothing recorded without rerere' '
+>         test_must_fail git merge first &&
+> -       ! test -d .git/rr-cache
+> +       ! test_path_exists .git/rr-cache
 
-Will fix as below:
-
--------- >8 --------
-# Default: Strip the whole location comments for all .po files
-*.po filter=3Dgettext-no-location
-
-# Legacy, unmaintained PO files: filter disabled to avoid index vs
-# working-tree mismatch (these files still have location comments).
-el.po -filter
-is.po -filter
-it.po -filter
-ko.po -filter
-pl.po -filter
-pt_PT.po -filter
-
-# These files use gettext-no-line-number (keep filenames, strip line
-# numbers). The choice is per l10n team preference. Requires gettext 0.20+.
-# The only benefit is locating source files from location comments when
-# the .po file is not updated from the POT via make po-update.
-ca.po filter=3Dgettext-no-line-number
-id.po filter=3Dgettext-no-line-number
-zh_CN.po filter=3Dgettext-no-line-number
-zh_TW.po filter=3Dgettext-no-line-number
+Unfortunately, this conversion and all of the others involving `!` are
+incorrect. Take a look at the implementations of `test_path_exists`
+and other `test_path_*` functions in t/test-lib/functions.sh to see if
+you can figure out why and what the proper change should be. (Hint: We
+want test failures to be noisy and explanatory, while successes should
+be silent.)
