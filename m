@@ -1,119 +1,167 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic309-13.consmr.mail.bf2.yahoo.com (sonic309-13.consmr.mail.bf2.yahoo.com [74.6.129.123])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E285A390CA5
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 11:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8398F283CBF
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 12:05:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.129.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773661559; cv=none; b=Ab/gc4TwuBbUmb3jiQWMN1of0L3ovLno9rRCc4EIgOuKhFOq6jEp1+EHzh51mICrOCwRt7eVfmbATYjPkxJN/igTktGDC/1zVQnUpinO2Sy7u+a3bFHt4EbK0eFKKjBxxtaE0WSlqvCfVaapri2RIOjhTgS/Iv6R1uAgRCxw76c=
+	t=1773662728; cv=none; b=NVh9TXMww+svXdf+L8Tw0DkEpQNwUqqnY5JpOJ1zcrB1dRFW88DLvc9DLcdgdw72Ev8Cfmd13Un/dPSyy9jM+0qUy0Ov/NbB22SQEWk5s2gzFLKZArOGFWWU7kpq5Kmqk2NwsHKIgu3pX/rq1KtSTfLMM4EP5oghA8P5VJDSeBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773661559; c=relaxed/simple;
-	bh=E68mj8scqMn3w6X3tFxVhAYSHAjFRq1cMfRKhKmrlxg=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=kYtiNj+gOdRVgmejWliNTlJhL0dIGslriZXveGH9hOTZHZW3/gZd6S15YnXF72nFRyEKFBlNSJHSaKxWE38zQLhJPDqaTpm5ffsXbigPBW1ya5DkxTnnE8f1nkKe6R++wfhhJNcDSNifJjoBCny4sbDdgSqJJql6W2qy1AezhlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=WXmUBQNp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZNSXfpPw; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1773662728; c=relaxed/simple;
+	bh=BCErlpH8StCntoXHd3OXBX64G8V/62xVtdZ6kxDfAZs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AvKSIpHX3RwTYlKpxjJnb/7HfLw1l+CW6Df4cGY5fcFpSWv/UhYpPV2t+vi2/s7Ce0aspwbVDXI59jQvA2YxxJNK6TSC1U+T4xw9zQg/MIPnGzTW1psW0eLXlyRVKvZQnV4Amkft08WfVsNLOKmJr5/7STqq6ndvljlycFVb73w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=NuPOVgMo; arc=none smtp.client-ip=74.6.129.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="WXmUBQNp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZNSXfpPw"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 250A77A0289;
-	Mon, 16 Mar 2026 07:45:57 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 16 Mar 2026 07:45:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773661556;
-	 x=1773747956; bh=t+XiKo95NIkCTeKqx0oTiG3TcGTGLf8aGUu+5PeWdhA=; b=
-	WXmUBQNpXj0Q84gnUW+jXoQbHPWwAgccu4w3sbGrnuXNvCRJQY7T/OvYe7l29Z2o
-	++fQc08zFoIlxNDkI+IzyDOj1kfdlhRqoyxhzcVF/5jvV9iKZp2pBWKpXIVCWB+A
-	LpUWCDtAdfLKJOrCYFYeEn/U6UR4vNID4pUYq75A4dsZPWK/ps5JHnJZkIIZOOGp
-	gGqXbdgWIWuQDdgl3W7LWRcq2AqjkcgoCwL3R8bdMPByUp/UPIM5GYYU6wJUwj65
-	sSnGnuhwzOG+gyuZsZaIUjOnkZNo55WogMzYWFaL5j4CRBaxSKKovQa555NcEqbV
-	35i9i6rDX4HFjVy5ry05cA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1773661556; x=1773747956; bh=t
-	+XiKo95NIkCTeKqx0oTiG3TcGTGLf8aGUu+5PeWdhA=; b=ZNSXfpPwj+nJZQCbV
-	xLUsn6Cnj+9zPQsLWR852j77o+rONczuSvKSk1QQkUfXOHriQ11KeIminus9c3Ct
-	QFcLkzDR9NZ4RAuJFL/DlALtUGcwo9eejlbnwDlqUBiI9bRDSz9Q2Cm/wfvDlMey
-	61aqnn9M9ok+xbNIOTTLGZ4+Tb5VssEXrSiYnkAITP2hxIZ0fzuKKygGPXR63tis
-	SjHTvk/UX2JCCANJkYM61aMJSOEKjO0zXWhH/hv66I1iFvMP/WG/fPjt2YnxGZ8D
-	+rtJNelRZj2vTTpLG3qG95TKWS+K4oS8kR3hkZYcu8ge3dckhH513AxIAgxHv6lp
-	dlrkQ==
-X-ME-Sender: <xms:dO23afb4T0cVGGs-_wmkKeqDuNhGo4ss1PRY6L-zBQntHAs_zyAxU2Y>
-    <xme:dO23aZPYEOnFsieReQWEIdYfcyb1cr-uFfNMb_Hask27srrlCOhbg0UchF841ffsX
-    xYmrpSQweS5sdmVVSuCSw8VEdrfFa--baRFk3LTW2CO3GgToL3S2Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleekvdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudel
-    hfefkeehtefggeefjeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhhnsegtrhgvrghtihhvvghpohhsthdr
-    tghordhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:dO23abuckoScYNSOcNRsi8SZcLNYoN4VjYbhVqtNIc0yDrGdBsAFJg>
-    <xmx:dO23aQypOG8XdHbjOqi996WZzFjKS2qKT53MQa8LD4SYteXVQfuyCA>
-    <xmx:dO23ad50pV1ZMq4iePbKWkrJ63lPg3RS7PuxGNkUPp65A0RJTeOAbg>
-    <xmx:dO23aSUu7Hj168Fe-TbszZJMOuh628Gkdmncb6XUOPKo4lOXNMuU5Q>
-    <xmx:dO23aZQE7WrcC5R0ApPLEfFggK7NnMjkb8aTtw3QgYEzeRXoXsdlA7ES>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id B2E981EA006B; Mon, 16 Mar 2026 07:45:56 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="NuPOVgMo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773662726; bh=+bsH+n6DpDWPTkXTWcP9kghYBDS7dm92sLam7Cr8+C8=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=NuPOVgMoUFTIkljqfnjMswHpYUQ+k9M6VmdqSHPTfOB4Ap7CreKsF89nl8fqnTCcGhk4wQXScfmcGOpnVuxI6ZXCsEey+o4LTdQh0iIQ3P/P32oAwaw0s++YCW1dXgVyqf9oDuf3UPc+PicPdgC77dv3rpEndSf4+B0PAMZgBXOodS+C6Kxsm7cSJXcjeSZvVLgoVjeaI2J4oPn3h8GFX2kFLp32HNxXaiz1RIOqNmsRLBgHvlfwrSDVMIQVd5VOEe/rWpNQ4KK0sCo1Cyn84KXU/SxlU29+Gf+BPddND8P3jiC0ymEmx2vyE2j8Q8Yszuy/G9S5EuMFVfGl9z5BUQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773662726; bh=5Yji2c8NE5kxNKMzv+w1RgesnJ90u25P+7t8kuTrYmO=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=Z2w/iJVcDX3T05yQOte0D4KdVzYCk0BOUH17wHGAU1DSVgxWrutlTLGlwsOtWPM+NkP9yArsnbniETUAOoefqLz3frZ0mJJSBKg8UZHHfNgoxrXg0OB6FDlJ9Zh9KzjRsGZFwQMUFyo/8Qw7RM11nXirKn7NxQQullu1/PmM+7MnEV+8mktjgHmC95y8o4GXrcLY82eupE8gnPfpU5q7JTMpMy97vE/tPgv5rtMGCGwS/C8At8eBiN+G55zbnorc0T2y++OCy/FZJ+w5zZNdz5haQTRf5k2aQqrYoCKtwuL5UDRkV9yEDyKiJzQKPXu801vyWVBCD5CHN6tpfG1wEw==
+X-YMail-OSG: 1ZIh0OwVM1nF7cVxwhgpW6o8r3Bn6yWMcAzveW8KCdajBALcGsvVMBwNipGD9_m
+ wZycAyJnHuogbtDOs8dzW_eapmU6uup11jvkrF0xIR4neaKWBikzz778cE5tNYxnyjlPKphrNPPS
+ oAJGAERIu8QyIPoWV96Zp3P5tobkVjz1vJU2Cbf.riJvm7GS4QtNkv9u_a_JGW4WGEGOITswW9Ce
+ QW.7p7yiwEgI7I5S0_PUaiBM8YOe3Dn95gOmylXwjayYZ594M3fkzl3t7R74T3lDaxLOjW3rodff
+ lNE2OJmZASEYOEMpCoc7Pg4LYoSHk4DXH5EoMdF5T3ERzL8ceglZcGA2HQSa.5z0vTDPkAuTx_0X
+ HrXO5.ob8NTTKYg9AwwyMQs8zFOqZExpYVVi_YVu4KOB4qXJMcseS8bf_ntuKXO8__ymug5P.yP5
+ W90j55JJl.opC4Wr.6DXvEJdQfRKNIZeXrEERBasdtZjaT1Qu9H11IqJXYziTGWLg.Tbkz_k10nN
+ Ng1Uel1WEaOsj5F6qUg_9mv60puRvAipqqa.zujni23mUnBId_vv1m.iaga6dF8gJkR3UK7kpVBq
+ faY5De6fFDj80ZRH75UPx7bhZAhkqmrQLA8LR8IIZ6AEgYr3cU_QpqhzZG8vdnIojLN92TeJtQZ9
+ Jn_tu.pyuCuM6mQfaCHcG1u4rDfd7YpuHUA35tY_tJWJ1mGiC_xn8JW4sU8BpbpbBM.tRJnKUAmw
+ 5rAadprWOF0pYSSM7cmp4u77cUG7TbkJYEfbTZ4ToEiMKrWHR.lZdsYIB7yDhP6sQ8GGj17HMhUB
+ iupWj6tVzp7VEuy11jDAIHBz41dXuyNcCyjBs7.IdkUwfj4CMPArkvRrsZVzXuGSUSqZgO2KRzLc
+ 1MrDs3_ePY2BCLC.L3ZG.x7bgLesy81H0R7IQRgwYNyDFhTgp7FIaFRvuTIXZALu88CwZKiljPjF
+ Emzsh1M05fBoQTuAvkfuZs5FfauwbOvmHot0Bz4nyN85iUu2aqmExmW9OyyvylTWT9dLS7wyNLHA
+ f.f5EXghL2GVsCueZXdvwx0t7updVEgaRNYRfZ_ZY1bMwiYr1h04ojUB.xek8RsY7YB4hK4XlYAk
+ tL808DUeJc4WQYfHCJcizbKY7UQHzSTCmlFSTdwCIn94bxjS.KwF4OExqppBOB78vU9VvGde1vD2
+ nHHN8J81XTHdrG_s4aMCu9HQqtqRFev_kHy0ExevmQjbDishAIVpmUmU97Fh66qKOC_.7CQyuOnT
+ gtpzmpU.oY_EhW4wxTv9vqXHaKCyMff6fJ1gorNInBiPobeNx5YpCDgcbnJyePtGMXqsCohagv6B
+ NMRcw0ZtnTjIim8NJeME5sdeuQlZXCBj7pw1D_mU_jX5SVDPnIbu0WYm297DIrwyquG_O7Yp_ZbL
+ RlYReUkKzhrADU0BaNHKEFXtj9qA7SUeRY5BVQe7UWUqb2K.1Xm6cJqcQcLizCWolXf3D7gDbOMk
+ dXckJyMdHhnIDKewNPmBcfmnyEYaVVfBDDZtc7WxYocnZCLh5DT8GR5XTtceZWxSILL9fZ2oDFfS
+ yHArngyPkHMdS8cxRE1O2ZU9u97QrXRccQBPv63bfvRmaDFi63UkwFqyd5Xev1bEKoVQaYTYx4NU
+ w20qt.MCY7oXIy5HCbrMPDxEYx24dIhnQNKPm8JEf7ZBEwIi7sqsSlZMAXafm14yl_vWPcQoqtEx
+ zXarNcHf3c4kaQgygmcnZf.ByTTtpOpy3jWcQz2ST904l4LgFny4UWTVsDVxMAUTuLBoSMPIB2Xc
+ 9K_2ud2sROnh7ddWCtKqmqgzQi5m.u02Z6FVRtl7V1O4cRHSUUzKuUaSQWBtMN7xV0wWTwLsNl9A
+ BbsSE_jtLxHs3f4DIuxUGTfH8Vc5BNdYQfRWiPA2imRLUb71W75BTmrNQkRUq_drM3CGMgIVq_gn
+ UT4HJDRIdZWoeVwjN4t5.VDOHuAOi1o8FD2r_6zySAIo4W1ydH_FTnsYFiNir0wTL3K80MxaBgNO
+ MX4SngyqRLUd1ECPajzJw3Q7oRk6_Pr9Bea8U1pl0DR4l_M_RT0ACmnsZRsaxeOZTBxro03TwBXq
+ cBRp5OJju8aiTQiRvPkPxsMInEeje0ubQyyMS6gtZnHmt1mJw6WA0AH1BIwwkcemHhDCC6oUO_j_
+ 8vK1KHqv1fgMP79kRfK5BK9iGZg2UYGogkrVXOYkSydA7B53JGL_FSigELvhr5izwMnCdMxNwYpW
+ brYiKMy4IGNu6nGv1bqVmx5QNWa.9OqPdasmRH78wvhG3.EgngQ31370UgWQZ9zR7PSMm7KAFcDW
+ WQtzdktF.TY3dRB4yHT.4BjH1pprriQ--
+X-Sonic-MF: <jerrywang183@yahoo.com>
+X-Sonic-ID: df7aa206-0dec-48a7-84f1-c81262724d16
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.bf2.yahoo.com with HTTP; Mon, 16 Mar 2026 12:05:26 +0000
+Received: by hermes--production-bf1-697f88457-5cjx5 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID c4eac7c302a7592941f4c26be4777d13;
+          Mon, 16 Mar 2026 11:34:59 +0000 (UTC)
+From: Jialong Wang <jerrywang183@yahoo.com>
+To: git@vger.kernel.org
+Cc: karthik.188@gmail.com,
+	Jialong Wang <jerrywang183@yahoo.com>
+Subject: [GSoC PATCH v2] apply: report the location of corrupt patches
+Date: Mon, 16 Mar 2026 07:34:59 -0400
+Message-ID: <20260316113459.77794-1-jerrywang183@yahoo.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260315231538.68586-1-jerrywang183@yahoo.com>
+References: <20260315231538.68586-1-jerrywang183@yahoo.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AEY4yhY0zDWk
-Date: Mon, 16 Mar 2026 12:45:36 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "John Emmas" <john@creativepost.co.uk>, git@vger.kernel.org
-Message-Id: <ff0e899a-3d8b-4f46-8585-55881546423b@app.fastmail.com>
-In-Reply-To: <457209f3-e998-4223-bdf3-57245bc51926@creativepost.co.uk>
-References: <457209f3-e998-4223-bdf3-57245bc51926@creativepost.co.uk>
-Subject: Re: git --format anyone ?
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 16, 2026, at 11:12, John Emmas wrote:
-> I'm hoping this is the right mailing list (I'm using a product called
-> Git for Windows and its logo looks the same on your website!)
->
-> I'm working on a project which requires me to run "git --format" (with
-> various parameters of course). I'm currently running version 2.51.2
-> which looks fairly recent and if I simply type "git" it displays a list
-> of available options - but it doesn't deem to offer an option called
-> 'format' :-(
->
-> I gather that the latest version is 2.53.0 so would it be worthwhile f=
-or
-> me to upgrade? i.e. would that then offer me git --format? Thanks,
+When parsing a corrupt patch, git apply reports only the line number.
+That does not tell the user which input the line number refers to.
 
-The `git` command itself does not have a `--format` option. Some
-subcommands do like git-log(1).
+Include the patch input path in the error message, and reset the line
+number for each patch input so the reported location remains useful
+when multiple patch files are provided.
 
-    git log --format=3D<something>
+Add tests for file input, standard input, and multiple patch inputs.
 
-> I'm working on a project which requires me to run "git --format" (with
-> various parameters of course).
+Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
+---
+Changes since v1:
+- reset the line number for each patch input
+- add a test for multiple patch inputs where one input is corrupted
 
-`git log --format=3D<something>` is for formatting log output. But since=
- a
-project =E2=80=9Crequires it=E2=80=9D could this be formatting in the se=
-nse of formatting
-source code?
+ apply.c               |  4 +++-
+ t/t4100-apply-stat.sh | 38 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 40 insertions(+), 2 deletions(-)
 
-You can for example use the third-party git-clang-format(1) on this
-project. But it is third-party. It is not part of the git(1) suite of
-commands.
+diff --git a/apply.c b/apply.c
+index b6dd1066a0..b7b0a201b3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1875,7 +1875,8 @@ static int parse_single_patch(struct apply_state *state,
+ 		len = parse_fragment(state, line, size, patch, fragment);
+ 		if (len <= 0) {
+ 			free(fragment);
+-			return error(_("corrupt patch at line %d"), state->linenr);
++			return error(_("corrupt patch at %s:%d"),
++				     state->patch_input_file, state->linenr);
+ 		}
+ 		fragment->patch = line;
+ 		fragment->size = len;
+@@ -4825,6 +4826,7 @@ static int apply_patch(struct apply_state *state,
+ 	int flush_attributes = 0;
+ 
+ 	state->patch_input_file = filename;
++	state->linenr = 1;
+ 	if (read_patch_file(&buf, fd) < 0)
+ 		return -128;
+ 	offset = 0;
+diff --git a/t/t4100-apply-stat.sh b/t/t4100-apply-stat.sh
+index a5664f3eb3..b19fc9fe50 100755
+--- a/t/t4100-apply-stat.sh
++++ b/t/t4100-apply-stat.sh
+@@ -48,7 +48,43 @@ test_expect_success 'applying a hunk header which overflows fails' '
+ 	+b
+ 	EOF
+ 	test_must_fail git apply patch 2>err &&
+-	echo "error: corrupt patch at line 4" >expect &&
++	echo "error: corrupt patch at patch:4" >expect &&
++	test_cmp expect err
++'
++
++test_expect_success 'applying a hunk header which overflows from stdin fails' '
++	cat >patch <<-\EOF &&
++	diff -u a/file b/file
++	--- a/file
++	+++ b/file
++	@@ -98765432109876543210 +98765432109876543210 @@
++	-a
++	+b
++	EOF
++	test_must_fail git apply <patch 2>err &&
++	echo "error: corrupt patch at <stdin>:4" >expect &&
++	test_cmp expect err
++'
++
++test_expect_success 'applying multiple patches reports the corrupted input' '
++	cat >good.patch <<-\EOF &&
++	diff -u a/file b/file
++	--- a/file
++	+++ b/file
++	@@ -1 +1 @@
++	-a
++	+b
++	EOF
++	cat >bad.patch <<-\EOF &&
++	diff -u a/file b/file
++	--- a/file
++	+++ b/file
++	@@ -98765432109876543210 +98765432109876543210 @@
++	-a
++	+b
++	EOF
++	test_must_fail git apply --stat --summary good.patch bad.patch 2>err &&
++	echo "error: corrupt patch at bad.patch:4" >expect &&
+ 	test_cmp expect err
+ '
+ test_done
+-- 
+2.51.0
