@@ -1,65 +1,65 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907DF379980
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 23:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3B6371D0D
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 23:55:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773705315; cv=none; b=IkqcBRtmyUtgr+47JHyJEWweWp3r46bes5NfZ5plbg7wcmQKagEWoXy7YsHGiJDfmx6yjeZIM7hNrjArSvybJQfv+7MC+h+P3DxlX2c4VCoUjsBysUNlBT8+rv9S2w6mFibUh5ODEajEwfgxMYU+pshFgCvU8o1d0TnFfsJRCxg=
+	t=1773705315; cv=none; b=mwTZs0nrshFJGvpPhysRTUI2KSPjuzBDu+TWpxPnDeHGlpmcuRN1Qzn7QHr2qX7SQPy3QYtx+FUO4OV+pPXJEc7IOdw+GgKdkUBD4zMBudOXg2myj7bCCcdrTgxXvdCHEvrYPN/mEXScyEEPtabfi8XcHI0Zy84zruafdY9/r4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773705315; c=relaxed/simple;
-	bh=a++/DvWtq7JMipEWTAReIanv78W5PP68Z+/9i3W4Bpw=;
+	bh=Di5EfXbrZURntXP5mMFQeGevLpIbl8YcTQ4Pjg/6now=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IZPbF8jdeN+uf8P37zRXoUpIurjnvYMhuVPSGU2nUpYXnxDXI8h/BTkR/Boy21CKpva6KBa0IbhXddlyolmmq2dhC00BbvLUq1jVcNNcsXvmO0mXXgIEaq4oquYemKFF6hDBNYsavaG+asAG330lPzyveK/o0YP2pstpPRqX880=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l44QbnNU; arc=none smtp.client-ip=209.85.128.169
+	 MIME-Version:Content-Type; b=nGebOpJlLgUVhy7yye/0DBGedH9Y7HmIjsIHh7a0+TetJhkmXy8ZsfqjCNBxqXg6IboNetdJUa36qqhSkfnRsu+/SAf8aWfUGTvos6eucw7c8Gc0UtZ/saD0yMQ2ojTEVJe7QCdp26r1n6E9g7WNCBR6l/SdN7pIPJem8+nPVfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cxcbbyum; arc=none smtp.client-ip=74.125.224.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l44QbnNU"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-7986e538decso42413977b3.1
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:55:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cxcbbyum"
+Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-64ad019bbd4so5324068d50.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773705310; x=1774310110; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773705312; x=1774310112; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NPF3P5ZxzXufwrLEGMyXMqPHfMi/FMp5v5zo2W4D12g=;
-        b=l44QbnNUvMVcNDJ7bax7fypm8ovHZYxuV4M4QbQQE7PCNuyenfKVBMJEWbz/s1LATx
-         ivk758ZNh4a0d7NtObYEoWs8tEwEVlu46rAzu1IFrjOeRZtOZd8Dav1bJR5i0zs/B1eM
-         NENmJ6tM+LZzUafhGKsTKdvOfOQxEVnx85lo/Nle2YIKlSRYRIcU0Fv2iB4l0+yJ/sky
-         cC5TfPwS5q78z5tb2LE7etEEbNC39X72wGHpCnB8iObS+9TjVfZa3bgQKNx0aFpSqJM2
-         ojzvq4VLvlIFUeFds3HGgmIcAMGg9JJOoabyQ+a/9gXYZy4Qv9scVY641PDXD/tXAl52
-         /EQA==
+        bh=KyNq/LGEfM8KBuqXtE8eYDoWiiNMqQJORZ8ZJCpFsqA=;
+        b=cxcbbyumXL3MemAH2d/4Kk3L2RfRIzMWv4RfNzvQxYbdrDfYUyBIR1zjq8t093Qk6t
+         Vse5LjNSMU1xJRJbFytN+ZySVkUkmLmTFU4nQRNWgz2Rtggh+hihuglXtib8Y8/CHF7N
+         wFmntrxmO0eAINDVhoGUwUruoLBwabewV8ZHwLiFbsePb4+YlaOV8TvAfMOfy0kSi2XK
+         XJjXDqUkY8zvpuH4ZbyE4hRbA3jWtWcOHSmmM3gcIQzIYO62/cQXzA6BrUZZAqZMaJVn
+         LWzGYpYsWyJjww63Q/8IHoxZyZkx3eyzRb33CWtGOX/XsDxgGcOEmSSegYCzWBRVaWz3
+         rBiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773705310; x=1774310110;
+        d=1e100.net; s=20251104; t=1773705312; x=1774310112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=NPF3P5ZxzXufwrLEGMyXMqPHfMi/FMp5v5zo2W4D12g=;
-        b=DZJzI/ew5YumDwDzV6Fde8449ogw8WjX0EKLVUTlR+6Px1h/g04rqGkbJLWpAinMk/
-         jHcoqxlfr2BakrmiL8uQLRtnwIquSO68JS22f8GIOzGkjhadUEyiHShpiQDJk2HThaOj
-         vTPW/DiwRVsmmRL8ARbp3htrRzqzzjzFs+rvIgWl7nwQziEeiniKI3pMBrSOLcigDei7
-         Z162jCN8RU17E/pXLYPgyD9SvEv00SLqhviqZZNXATa72Nc3CAazMqy6i+6Vjy7vUMl4
-         qAyhdZtHuM/8njzyjb0Sbn1JX29wTsU8/gpcy6MaqXx37PL4xRvOHj/Gww/Yzb2LcCbN
-         /QPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXxB9dIwFBOQo+BiQt2+A16nuSSXIUsVZkDUvbFiQ02b1RkWB7m/wKUoKhV6wOxNQazyEc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyw+1JFZXtsYw7pyu8l2O+/CT3eVJDgrTVY5OtpIb6CpIDVEAnI
-	NA0IR3Zj/QE9rUDcNJy/77x55CUYyQh5Na2Rh+A+x7pJ5fh9RAP+xoBx
-X-Gm-Gg: ATEYQzwMFLZI77k0qwsxhl984DoW3xPPPl/Hy1VZXzAu1XTbj5LqD5W0cW83SXoZ4zl
-	WKDX/SqDI/mZFzawiCOxqecpYPf+sn7ujeepD2KFr3UMbPzDCtMCDA2X4gaBaBAz2b96fwNmAzW
-	+mJ58uxGCeH39NcBmnWv+Jr0x4eUBfMDPRNM5SfJrUhoPr9UfhfvRi78HZQriZfHLGEIu/KU4gU
-	cuS05PjPUek1I9K7fcs0Z13P2t8Ncv1u7AO8RJKFNF4bkWIKKZrXuqRY+1UYW3HvJhsw58uw2FQ
-	LmS08//t6w8+xKC5ipazVm7edLFJQ/E+Gm3aMjlOknQ5pWdOJeTerbLmIBKaVcIxQ3VDsVuuvT+
-	0J2Czy/TDUjFr2OgsZNpYlngIZKA7taUs1yTAMnn2aU6LV41riGCZgzYATjEsCb5cY0gH4yDAru
-	89GVTkP31IJyXd6Cneu1mmZrFrDvaTUgWVw1HhyJhf2RZWIz8Z37QdbVnZ/aAkRYJFibER5OAG2
-	PjyQjGzk2JXbsK9swpwBrecDjBYJNCEVN1KUW7Z2HNHLxq1xVGjD4R9St96Z2TQqknwBlrr+QVl
-	f2vbpa4UkyMQa6QlLwZiUg==
-X-Received: by 2002:a05:690c:6e81:b0:79a:4482:10b5 with SMTP id 00721157ae682-79a44823b88mr63677387b3.3.1773705309875;
-        Mon, 16 Mar 2026 16:55:09 -0700 (PDT)
+        bh=KyNq/LGEfM8KBuqXtE8eYDoWiiNMqQJORZ8ZJCpFsqA=;
+        b=KrGmKmDilkTAMwRktANes8yxpY6lUbWXKh0LUInrNIHlTHW2hhuKjoJZwAYGeMj+rm
+         HbC81d17MzKeZw6DY8f6M+rFX2o9Nubb394RS+01tZNWyX/BACqwAAu9wY6j7qGK0UwB
+         VRyW7rpR+gEqIehB6sj1zBR3SzJch8sAQq8+lO5PE4V6z6ZM5gokASjJ2lF7oM5ReMe1
+         LTG/3h1NxAC3byDwndoHqldM+iOeOeHcWQehsOV5bWDmr0wE3ZiirVS7rLL+i+blqftW
+         /LDG7jnTlcVFNfgY6+NkJno7ZtyHVjj8KM/K6o5Vd7A7FK/Hslos0l4/XfGn3QofnERW
+         7z2g==
+X-Forwarded-Encrypted: i=1; AJvYcCX/qZkQ90Rl8TbLHsr0lxBsjbZPQR23ynrqAAoJrqlFwLAJ2NFLpGv7j6RmvoHFxDCvmzo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4GqTZR5vH/RKgHUlnElLcPkv/fQnxb7Tm9YdPYGSE0Rjftr3c
+	IDlFQdGsnBcoqviEOSmAYRjTadM6Wslq2l98gY3hI6tVFWgOk9pj/mqA
+X-Gm-Gg: ATEYQzxjnLyNimLU1mEMkgYwyz/G1hX19C0myDXvqqvgjO7WNQ266jtIVGf8HYw34b+
+	rE3m3WNpbsY3ndQ8wjdNVfFASV1K5x1TXCQpqWsxrdtK+1V/EsFjciQh3hDaN44q7JG5+A7QwIX
+	LMtzU8XfagafJMFuO3Uzk869p7NzbnaiFvmvpK7Ff1fmaMyyMeZsbNEn7KEHm2F/eXSk1zii600
+	DwqZ0CNY/wyb5cDw7yPQVixMavIWyDRzgJzp7Rk6s5UD4+uGZ1z1Px8Kzu8Ikcrg2fcw2wxFzBI
+	v5wXg9dGYnqhYsXzYn6BZgjjXzHLe3P+9eSyo/37nX3zdP+QpkL5lx9P5mbaCgRKab7KbPHZWn4
+	zfTQYVi1Jg+iB3/uPKyOELMQ/qeu9cTWp7ksGjpxLm3tFEVSfjE54QT0eH+vLkiK5K2ye6J7C1K
+	dMNXcImAfAMJz5UJl9vtxbFLFlRdHmfmf/OPDkWmcQ77VIOl4eGXSlGQxSEHqLyC3OyD3c6RwsB
+	5nYrpuuUIb6D/Q2WeVSd1joWWFXV1w/biOL1Eni7I6uCy9HtvwktmrJv3hBcspitF7opR7dYYDc
+	brKkftHxpBQ=
+X-Received: by 2002:a05:690c:d91:b0:79a:3a33:92d with SMTP id 00721157ae682-79a3a336002mr90364087b3.45.1773705311612;
+        Mon, 16 Mar 2026 16:55:11 -0700 (PDT)
 Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a1fb76793sm56812897b3.38.2026.03.16.16.55.08
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a1fb76793sm56812897b3.38.2026.03.16.16.55.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2026 16:55:09 -0700 (PDT)
+        Mon, 16 Mar 2026 16:55:11 -0700 (PDT)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j6t@kdbg.org>,
@@ -77,9 +77,9 @@ Cc: Jiang Xin <worldhello.net@gmail.com>,
 	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
 	Teng Long <dyroneteng@gmail.com>,
 	Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [PATCH v4 4/5] docs(l10n): add AI agent instructions for translating PO files
-Date: Tue, 17 Mar 2026 07:54:48 +0800
-Message-ID: <5034063c2bed70949f9866d9634a3633c7881097.1773704908.git.worldhello.net@gmail.com>
+Subject: [PATCH v4 5/5] docs(l10n): add AI agent instructions to review translations
+Date: Tue, 17 Mar 2026 07:54:49 +0800
+Message-ID: <9388b8e9f471c68e7d08ff9f2ccf1d699f5079c1.1773704908.git.worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.51.0.rc2
 In-Reply-To: <cover.1773704908.git.worldhello.net@gmail.com>
 References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com> <cover.1773704908.git.worldhello.net@gmail.com>
@@ -92,504 +92,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Add a new "Translating po/XX.po" section to po/AGENTS.md with detailed
-workflow and procedures for AI agents to translate language-specific PO
-files. Users can invoke AI-assisted translation in coding tools with a
-prompt such as:
+Add a new "Reviewing po/XX.po" section to po/AGENTS.md that provides
+comprehensive guidance for AI agents to review translation files.
 
-    "Translate the po/XX.po file by referring to @po/AGENTS.md"
+Translation diffs lose context, especially for multi-line msgid and
+msgstr entries. Some LLMs ignore context and cannot evaluate
+translations accurately; others rely on scripts to search for context
+in source files, making the review process time-consuming. To address
+this, git-po-helper implements the compare subcommand, which extracts
+new or modified translations with full context (complete msgid/msgstr
+pairs), significantly improving review efficiency.
 
-Translation results serve as drafts; human contributors must review and
-approve before submission.
+A limitation is that the extracted content lacks other
+already-translated content for reference, which may affect terminology
+consistency. This is mitigated by including a glossary in the PO file
+header. git-po-helper-generated review files include the header entry
+and glossary (if present) by default.
 
-To address the low translation efficiency of some LLMs, batch
-translation replaces entry-by-entry translation. git-po-helper
-implements a gettext JSON format for translation files, replacing PO
-format during translation to enable batch processing.
+The review workflow leverages git-po-helper subcommands:
+
+- git-po-helper compare: Extract new or changed entries between two
+  versions of a PO file into a valid PO file for review. Supports
+  multiple modes:
+
+  * Compare HEAD with the working tree (local changes)
+  * Compare a commit's parent with the commit (--commit)
+  * Compare a commit with the working tree (--since)
+  * Compare two arbitrary revisions (-r)
+
+- git-po-helper msg-select: Split large review files into smaller
+  batches by entry index range for manageable review sessions. Supports
+  range formats like "-50" (first 50), "51-100", "101-" (to end).
 
 Evaluation with the Qwen model:
 
-    git-po-helper agent-run --agent=qwen translate po/zh_CN.po
+    git-po-helper agent-run review --commit 2000abefba --agent qwen
 
-Test translation (127 entries, 50 per batch):
+Benchmark results:
 
-    Initial state:  5998 translated, 91 fuzzy, 36 untranslated
-    Final state:    6125 translated, 0 fuzzy, 0 untranslated
-
-    Successfully translated: 127 entries (91 fuzzy + 36 untranslated)
-    Success rate: 100%
-
-Benchmark results (3-run average):
-
-AI agent using gettext tools:
-
-    | Metric           | Value                          |
-    |------------------|--------------------------------|
-    | Avg. Num turns   | 86 (176, 44, 40)               |
-    | Avg. Exec. Time  | 20m44s (39m56s, 14m38s, 7m38s) |
-    | Successful runs  | 3/3                            |
-
-AI agent using git-po-helper (JSON batch flow):
-
-    | Metric           | Value                          |
-    |------------------|--------------------------------|
-    | Avg. Num turns   | 56 (68, 39, 63)                |
-    | Avg. Exec. Time  | 19m8s (28m55s, 9m1s, 19m28s)   |
-    | Successful runs  | 3/3                            |
-
-The git-po-helper flow reduces the number of turns (86 → 56) with
-similar execution time; the bottleneck appears to be LLM processing
-rather than network interaction.
+    | Metric           | Value                            |
+    |------------------|----------------------------------|
+    | Turns            | 22                               |
+    | Input tokens     | 537263                           |
+    | Output tokens    | 4397                             |
+    | API duration     | 167.84 s                         |
+    | Review score     | 96/100                           |
+    | Total entries    | 63                               |
+    | With issues      | 4 (1 critical, 2 major, 1 minor) |
 
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 ---
- po/AGENTS.md | 596 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 595 insertions(+), 1 deletion(-)
+ po/AGENTS.md | 197 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 197 insertions(+)
 
 diff --git a/po/AGENTS.md b/po/AGENTS.md
-index f2b8fc5100..65017624f7 100644
+index 65017624f7..e9a6ffc7f1 100644
 --- a/po/AGENTS.md
 +++ b/po/AGENTS.md
-@@ -5,7 +5,11 @@ housekeeping tasks for Git l10n. Use of AI is optional; many successful
- l10n teams work well without it.
- 
- The section "Housekeeping tasks for localization workflows" documents the
--most commonly used housekeeping tasks.
-+most commonly used housekeeping tasks:
-+
-+1. Generating or updating po/git.pot
-+2. Updating po/XX.po
-+3. Translating po/XX.po
+@@ -10,6 +10,7 @@ most commonly used housekeeping tasks:
+ 1. Generating or updating po/git.pot
+ 2. Updating po/XX.po
+ 3. Translating po/XX.po
++4. Reviewing translation quality
  
  
  ## Background knowledge for localization workflows
-@@ -42,6 +46,351 @@ msgstr ""
- metadata only and must be left unchanged.
+@@ -664,6 +665,202 @@ step 8 after step 6.
+    ```
  
  
-+### Glossary Section
-+
-+PO files may have a glossary in comments before the header entry (first
-+`msgid ""`), giving terminology guidelines (e.g.):
-+
-+```po
-+# Git glossary for Chinese translators
-+#
-+#   English                          |  Chinese
-+#   ---------------------------------+--------------------------------------
-+#   3-way merge                      |  三路合并
-+#   branch                           |  分支
-+#   ...
-+```
-+
-+**IMPORTANT**: Read and use the glossary when translating or reviewing. It is
-+in `#` comments only. Leave that comment block unchanged.
-+
-+
-+### PO entry structure (single-line and multi-line)
-+
-+PO entries are `msgid` / `msgstr` pairs. Plural messages add `msgid_plural` and
-+`msgstr[n]`. The `msgid` is the immutable source; `msgstr` is the target
-+translation. Each side may be a single quoted string or a multi-line block.
-+In the multi-line form the header line is often `msgid ""` / `msgstr ""`, with
-+the real text split across following quoted lines (concatenated by Gettext).
-+
-+**Single-line entries**:
-+
-+```po
-+msgid "commit message"
-+msgstr "提交说明"
-+```
-+
-+**Multi-line entries**:
-+
-+```po
-+msgid ""
-+"Line 1\n"
-+"Line 2"
-+msgstr ""
-+"行 1\n"
-+"行 2"
-+```
-+
-+**CRITICAL**: Do **not** use `grep '^msgstr ""'` to find untranslated entries;
-+multi-line `msgstr` blocks use the same opening line, so grep gives false
-+positives. Use `msgattrib` (next section).
-+
-+
-+### Locating untranslated, fuzzy, and obsolete entries
-+
-+Use `msgattrib` to list untranslated, fuzzy, and obsolete entries. Task 3
-+(translating `po/XX.po`) uses these commands.
-+
-+- **Untranslated**: `msgattrib --untranslated --no-obsolete po/XX.po`
-+- **Fuzzy**: `msgattrib --only-fuzzy --no-obsolete po/XX.po`
-+- **Obsolete** (`#~`): `msgattrib --obsolete --no-wrap po/XX.po`
-+
-+
-+### Translating fuzzy entries
-+
-+Fuzzy entries need re-translation because the source text changed. The format
-+differs by file type:
-+
-+- **PO file**: A `#, fuzzy` tag in the entry comments marks the entry as fuzzy.
-+- **JSON file**: The entry has `"fuzzy": true`.
-+
-+**Translation principles**: Re-translate the `msgstr` (and, for plural entries,
-+`msgstr[n]`) into the target language. Do **not** modify `msgid` or
-+`msgid_plural`. After translation, **clear the fuzzy mark**: in PO, remove the
-+`#, fuzzy` tag from comments; in JSON, omit or set `fuzzy` to `false`.
-+
-+
-+### Preserving Special Characters
-+
-+Preserve escape sequences (`\n`, `\"`, `\\`, `\t`), placeholders (`%s`, `%d`,
-+etc.), and quotes exactly as in `msgid`. Only reorder placeholders with
-+positional syntax when needed (see Placeholder Reordering below).
-+
-+
-+### Placeholder Reordering
-+
-+When reordering placeholders relative to `msgid`, use positional syntax (`%n$`)
-+where *n* is the 1-based argument index, so each argument still binds to the
-+right value. Preserve width and precision modifiers, and place `%n$` before
-+them (see examples below).
-+
-+**Example 1** (precision):
-+
-+```po
-+#, c-format
-+msgid "missing environment variable '%s' for configuration '%.*s'"
-+msgstr "配置 '%3$.*2$s' 缺少环境变量 '%1$s'"
-+```
-+
-+`%s` → argument 1 → `%1$s`. `%.*s` needs precision (arg 2) and string (arg 3) →
-+`%3$.*2$s`.
-+
-+**Example 2** (multi-line, four `%s` reordered):
-+
-+```po
-+#, c-format
-+msgid ""
-+"the 'submodule.%s.gitdir' config does not exist for module '%s'. Please "
-+"ensure it is set, for example by running something like: 'git config "
-+"submodule.%s.gitdir .git/modules/%s'. For details see the "
-+"extensions.submodulePathConfig documentation."
-+msgstr ""
-+"模块 '%2$s' 的 'submodule.%1$s.gitdir' 配置不存在。请确保已设置，例如运行类"
-+"似：'git config submodule.%3$s.gitdir .git/modules/%4$s'。详细信息请参见 "
-+"extensions.submodulePathConfig 文档。"
-+```
-+
-+Original order 1,2,3,4; in translation 2,1,3,4. Each line must be a complete
-+quoted string.
-+
-+
-+### Validating PO File Format
-+
-+Check the PO file using the command below:
-+
-+```shell
-+msgfmt --check -o /dev/null po/XX.po
-+```
-+
-+Common validation errors include:
-+- Unclosed quotes
-+- Missing escape sequences
-+- Invalid placeholder syntax
-+- Malformed multi-line entries
-+- Incorrect line breaks in multi-line strings
-+
-+On failure, `msgfmt` prints the line number; fix the PO at that line.
-+
-+
-+### Using git-po-helper
-+
-+[git-po-helper](https://github.com/git-l10n/git-po-helper) supports Git l10n with
-+**quality checking** (git-l10n PR conventions) and **AI-assisted translation**
-+(subcommands for automated workflows). Housekeeping tasks in this document use
-+it when available; otherwise rely on gettext tools.
-+
-+
-+#### Splitting large PO files
-+
-+When a PO file is too large for translation or review, use `git-po-helper
-+msg-select` to split it by entry index.
-+
-+- **Entry 0** is the header (included by default; use `--no-header` to omit).
-+- **Entries 1, 2, 3, …** are content entries.
-+- **Range format**: `--range "1-50"` (entries 1 through 50), `--range "-50"`
-+  (first 50 entries), `--range "51-"` (from entry 51 to end). Shortcuts:
-+  `--head N` (first N), `--tail N` (last N), `--since N` (from N to end).
-+- **Output format**: PO by default; use `--json` for GETTEXT JSON. See the
-+  "GETTEXT JSON format" section (under git-po-helper) for details.
-+- **State filter**: Use `--translated`, `--untranslated`, `--fuzzy` to filter
-+  by state (OR relationship). Use `--no-obsolete` to exclude obsolete entries;
-+  `--with-obsolete` to include (default). Use `--only-same` or `--only-obsolete`
-+  for a single state. Range applies to the filtered list.
-+
-+```shell
-+# First 50 entries (header + entries 1–50)
-+git-po-helper msg-select --range "-50" po/in.po -o po/out.po
-+
-+# Entries 51–100
-+git-po-helper msg-select --range "51-100" po/in.po -o po/out.po
-+
-+# Entries 101 to end
-+git-po-helper msg-select --range "101-" po/in.po -o po/out.po
-+
-+# Entries 1–50 without header (content only)
-+git-po-helper msg-select --range "1-50" --no-header po/in.po -o po/frag.po
-+
-+# Output as JSON; select untranslated and fuzzy entries, exclude obsolete
-+git-po-helper msg-select --json --untranslated --fuzzy --no-obsolete po/in.po >po/filtered.json
-+```
-+
-+
-+#### Comparing PO files for translation and review
-+
-+`git-po-helper compare` shows PO changes with full entry context (unlike
-+`git diff`). Redirect output to a file: it is empty when there are no new or
-+changed entries; otherwise it contains a valid PO header.
-+
-+```shell
-+# Get full context of local changes (HEAD vs working tree)
-+git-po-helper compare po/XX.po -o po/out.po
-+
-+# Get full context of changes in a specific commit (parent vs commit)
-+git-po-helper compare --commit <commit> po/XX.po -o po/out.po
-+
-+# Get full context of changes since a commit (commit vs working tree)
-+git-po-helper compare --since <commit> po/XX.po -o po/out.po
-+
-+# Get full context between two commits
-+git-po-helper compare -r <commit1>..<commit2> po/XX.po -o po/out.po
-+
-+# Get full context of two worktree files
-+git-po-helper compare po/old.po po/new.po -o po/out.po
-+
-+# Check msgid consistency (detect tampering); no output means target matches source
-+git-po-helper compare --msgid po/old.po po/new.po >po/out.po
-+```
-+
-+**Options summary**
-+
-+| Option              | Meaning                                        |
-+|---------------------|------------------------------------------------|
-+| (none)              | Compare HEAD with working tree (local changes) |
-+| `--commit <commit>` | Compare parent of commit with the commit       |
-+| `--since <commit>`  | Compare commit with working tree               |
-+| `-r x..y`           | Compare revision x with revision y             |
-+| `-r x..`            | Compare revision x with working tree           |
-+| `-r x`              | Compare parent of x with x                     |
-+
-+
-+#### Concatenating multiple PO/JSON files
-+
-+`git-po-helper msg-cat` merges PO, POT, or gettext JSON inputs into one stream.
-+Duplicate `msgid` values keep the first occurrence in file order. Write with
-+`-o <file>` or stdout (`-o -` or omit); `--json` selects JSON output, else PO.
-+
-+```shell
-+# Convert JSON to PO (e.g. after translation)
-+git-po-helper msg-cat --unset-fuzzy -o po/out.po po/in.json
-+
-+# Merge multiple PO files
-+git-po-helper msg-cat -o po/out.po po/in-1.po po/in-2.json
-+```
-+
-+
-+#### GETTEXT JSON format
-+
-+The **GETTEXT JSON** format is an internal format defined by `git-po-helper`
-+for convenient batch processing of translation and related tasks by AI models.
-+`git-po-helper msg-select`, `git-po-helper msg-cat`, and `git-po-helper compare`
-+read and write this format.
-+
-+**Top-level structure**:
-+
-+```json
-+{
-+  "header_comment": "string",
-+  "header_meta": "string",
-+  "entries": [ /* array of entry objects */ ]
-+}
-+```
-+
-+| Field            | Description                                                                    |
-+|------------------|--------------------------------------------------------------------------------|
-+| `header_comment` | Lines above the first `msgid ""` (comments, glossary), directly concatenated.  |
-+| `header_meta`    | Encoded `msgstr` of the header entry (Project-Id-Version, Plural-Forms, etc.). |
-+| `entries`        | List of PO entries. Order matches source.                                      |
-+
-+**Entry object** (each element of `entries`):
-+
-+| Field           | Type     | Description                                                  |
-+|-----------------|----------|--------------------------------------------------------------|
-+| `msgid`         | string   | Singular message ID. PO escapes encoded (e.g. `\n` → `\\n`). |
-+| `msgstr`        | []string | Translation forms as a **JSON array only**. Details below.   |
-+| `msgid_plural`  | string   | Plural form of msgid. Omit for non-plural.                   |
-+| `comments`      | []string | Comment lines (`#`, `#.`, `#:`, `#,`, etc.).                 |
-+| `fuzzy`         | bool     | True if entry has fuzzy flag.                                |
-+| `obsolete`      | bool     | True for `#~` obsolete entries. Omit if false.               |
-+
-+**`msgstr` array (required shape)**:
-+
-+- **Always** a JSON array of strings, never a single string. One element = singular
-+  (PO `msgstr` / `msgstr[0]`); multiple elements = plural forms in order
-+  (`msgstr[0]`, `msgstr[1]`, …).
-+- Omit the key or use an empty array when the entry is untranslated.
-+
-+**Example (single-line entry)**:
-+
-+```json
-+{
-+  "header_comment": "# Glossary:\\n# term1\\tTranslation 1\\n#\\n",
-+  "header_meta": "Project-Id-Version: git\\nContent-Type: text/plain; charset=UTF-8\\n",
-+  "entries": [
-+    {
-+      "msgid": "Hello",
-+      "msgstr": ["你好"],
-+      "comments": ["#. Comment for translator\\n", "#: src/file.c:10\\n"],
-+      "fuzzy": false
-+    }
-+  ]
-+}
-+```
-+
-+**Example (plural entry)**:
-+
-+```json
-+{
-+  "msgid": "One file",
-+  "msgid_plural": "%d files",
-+  "msgstr": ["一个文件", "%d 个文件"],
-+  "comments": ["#, c-format\\n"]
-+}
-+```
-+
-+**Example (fuzzy entry before translation)**:
-+
-+```json
-+{
-+  "msgid": "Old message",
-+  "msgstr": ["旧翻译。"],
-+  "comments": ["#, fuzzy\\n"],
-+  "fuzzy": true
-+}
-+```
-+
-+**Translation notes for GETTEXT JSON files**:
-+
-+- **Preserve structure**: Keep `header_comment`, `header_meta`, `msgid`,
-+  `msgid_plural` unchanged.
-+- **Fuzzy entries**: Entries extracted from fuzzy PO entries have `"fuzzy": true`.
-+  After translating, **remove the `fuzzy` field** or set it to `false` in the
-+  output JSON. The merge step uses `--unset-fuzzy`, which can also remove the
-+  `fuzzy` field.
-+- **Placeholders**: Preserve `%s`, `%d`, etc. exactly; use `%n$` when
-+  reordering (see "Placeholder Reordering" above).
-+
-+
-+### Quality checklist
-+
-+- **Accuracy**: Faithful to original meaning; no omissions or distortions.
-+- **Fuzzy entries**: Re-translate fully and clear the fuzzy flag (see
-+  "Translating fuzzy entries" above).
-+- **Terminology**: Consistent with glossary (see "Glossary Section" above) or
-+  domain standards.
-+- **Grammar and fluency**: Correct and natural in the target language.
-+- **Placeholders**: Preserve variables (`%s`, `{name}`, `$1`) exactly; use
-+  positional parameters when reordering (see "Placeholder Reordering" above).
-+- **Special characters**: Preserve escape sequences (`\n`, `\"`, `\\`, `\t`),
-+  placeholders exactly as in `msgid`. See "Preserving Special Characters" above.
-+- **Plurals and gender**: Correct forms and agreement.
-+- **Context fit**: Suitable for UI space, tone, and use (e.g. error vs. tooltip).
-+- **Cultural appropriateness**: No offensive or ambiguous content.
-+- **Consistency**: Match prior translations of the same source.
-+- **Technical integrity**: Do not translate code, paths, commands, brands, or
-+  proper nouns.
-+- **Readability**: Clear, concise, and user-friendly.
-+
-+
- ## Housekeeping tasks for localization workflows
- 
- For common housekeeping tasks, follow the steps in the matching subsection
-@@ -70,6 +419,251 @@ When asked to update `po/XX.po` (or the like):
-    Simply run the command and consider the task complete.
- 
- 
-+### Task 3: Translating po/XX.po
-+
-+To translate `po/XX.po`, use the steps below. The script uses gettext or
-+`git-po-helper` depending on what is installed; JSON export (when available)
-+supports batch translation rather than per-entry work.
-+
-+**Workflow loop**: Steps 1→2→3→4→5→6→7 form a loop. After step 6 succeeds,
-+**always** go to step 7, which returns to step 1. The **only** exit to step 8
-+is when step 2 finds `po/l10n-pending.po` empty. Do not skip step 7 or jump to
-+step 8 after step 6.
-+
-+1. **Extract entries to translate**: **Directly execute** the script below—it is
-+   authoritative; do not reimplement. It generates `po/l10n-pending.po` with
-+   messages that need translation.
++### Task 4: Review translation quality
++
++Review may target the full `po/XX.po`, a specific commit, or changes since a
++commit. When asked to review, follow the steps below.
++
++**Workflow**: Follow steps in order. Do **NOT** use `git show`, `git diff`,
++`git format-patch`, or similar to get changes—they break PO context; use **only**
++`git-po-helper compare` for extraction. Without `git-po-helper`, refuse the task.
++Steps 3→4→5→6→7 loop: after step 6, **always** go to step 7 (back to step 3).
++The **only** ways to step 8 are when step 4 finds `po/review-todo.json` missing
++or empty (no batch left to review), or when step 1 finds `po/review-result.json`
++already present.
++
++1. **Check for existing review (resume support)**: Evaluate the following in order:
++
++   - If `po/review-input.po` does **not** exist, proceed to step 2 (Extract
++     entries) for a fresh start.
++   - Else If `po/review-result.json` exists, go to step 8 (only after loop exits).
++   - Else If `po/review-done.json` exists, go to step 6 (Rename result).
++   - Else if `po/review-todo.json` exists, go to step 5 (Review the current
++     batch).
++   - Else go to step 3 (Prepare one batch).
++
++2. **Extract entries**: Run `git-po-helper compare` with the desired range and
++   redirect the output to `po/review-input.po`. See "Comparing PO files for
++   translation and review" under git-po-helper for options.
++
++3. **Prepare one batch**: Batching keeps each run small so the model can
++   complete review within limited context. **Directly execute** the script
++   below—it is authoritative; do not reimplement.
 +
 +   ```shell
-+   l10n_extract_pending () {
-+       test $# -ge 1 || { echo "Usage: l10n_extract_pending <po-file>" >&2; return 1; }
-+       PO_FILE="$1"
-+       PENDING="po/l10n-pending.po"
-+       PENDING_FUZZY="${PENDING}.fuzzy"
-+       PENDING_REFER="${PENDING}.fuzzy.reference"
-+       PENDING_UNTRANS="${PENDING}.untranslated"
-+       rm -f "$PENDING"
++   review_one_batch () {
++       min_batch_size=${1:-100}
++       INPUT_PO="po/review-input.po"
++       PENDING="po/review-pending.po"
++       TODO="po/review-todo.json"
++       DONE="po/review-done.json"
++       BATCH_FILE="po/review-batch.txt"
 +
-+       if command -v git-po-helper >/dev/null 2>&1
++       if test ! -f "$INPUT_PO"
 +       then
-+           git-po-helper msg-select --untranslated --fuzzy --no-obsolete -o "$PENDING" "$PO_FILE"
-+       else
-+           msgattrib --untranslated --no-obsolete "$PO_FILE" >"${PENDING_UNTRANS}"
-+           msgattrib --only-fuzzy --no-obsolete --clear-fuzzy --empty "$PO_FILE" >"${PENDING_FUZZY}"
-+           msgattrib --only-fuzzy --no-obsolete "$PO_FILE" >"${PENDING_REFER}"
-+           msgcat --use-first "${PENDING_UNTRANS}" "${PENDING_FUZZY}" >"$PENDING"
-+           rm -f "${PENDING_UNTRANS}" "${PENDING_FUZZY}"
-+       fi
-+       if test -s "$PENDING"
-+       then
-+           msgfmt --stat -o /dev/null "$PENDING" || true
-+           echo "Pending file is not empty; there are still entries to translate."
-+       else
-+           echo "No entries need translation."
++           rm -f "$TODO"
++           echo >&2 "cannot find $INPUT_PO, nothing for review"
 +           return 1
 +       fi
-+   }
-+   # Run the extraction. Example: l10n_extract_pending po/zh_CN.po
-+   l10n_extract_pending po/XX.po
-+   ```
-+
-+2. **Check generated file**: If `po/l10n-pending.po` is empty or does not exist,
-+   translation is complete; go to step 8. Otherwise proceed to step 3.
-+
-+3. **Prepare one batch for translation**: Batching keeps each run small so the
-+   model can complete translation within limited context. **BEFORE translating**,
-+   **directly execute** the script below—it is authoritative; do not reimplement.
-+   Based on which file the script produces: if `po/l10n-todo.json` exists, go to
-+   step 4a; if `po/l10n-todo.po` exists, go to step 4b.
-+
-+   ```shell
-+   l10n_one_batch () {
-+       test $# -ge 1 || { echo "Usage: l10n_one_batch <po-file> [min_batch_size]" >&2; return 1; }
-+       PO_FILE="$1"
-+       min_batch_size=${2:-100}
-+       PENDING="po/l10n-pending.po"
-+       TODO_JSON="po/l10n-todo.json"
-+       TODO_PO="po/l10n-todo.po"
-+       DONE_JSON="po/l10n-done.json"
-+       DONE_PO="po/l10n-done.po"
-+       rm -f "$TODO_JSON" "$TODO_PO" "$DONE_JSON" "$DONE_PO"
++       if test ! -f "$PENDING" || test "$INPUT_PO" -nt "$PENDING"
++       then
++           rm -f "$BATCH_FILE" "$TODO" "$DONE"
++           rm -f po/review-result*.json
++           cp "$INPUT_PO" "$PENDING"
++       fi
 +
 +       ENTRY_COUNT=$(grep -c '^msgid ' "$PENDING" 2>/dev/null || echo 0)
 +       ENTRY_COUNT=$((ENTRY_COUNT > 0 ? ENTRY_COUNT - 1 : 0))
++       if test "$ENTRY_COUNT" -eq 0
++       then
++           rm -f "$TODO"
++           echo >&2 "No entries left for review"
++           return 1
++       fi
 +
 +       if test "$ENTRY_COUNT" -gt $min_batch_size
 +       then
@@ -602,166 +234,127 @@ index f2b8fc5100..65017624f7 100644
 +           else
 +               NUM=$min_batch_size
 +           fi
-+           BATCHING=1
 +       else
 +           NUM=$ENTRY_COUNT
-+           BATCHING=
 +       fi
 +
-+       if command -v git-po-helper >/dev/null 2>&1
-+       then
-+           if test -n "$BATCHING"
-+           then
-+               git-po-helper msg-select --json --head "$NUM" -o "$TODO_JSON" "$PENDING"
-+               echo "Processing batch of $NUM entries (out of $ENTRY_COUNT remaining)"
-+           else
-+               git-po-helper msg-select --json -o "$TODO_JSON" "$PENDING"
-+               echo "Processing all $ENTRY_COUNT entries at once"
-+           fi
-+       else
-+           if test -n "$BATCHING"
-+           then
-+               awk -v num="$NUM" '/^msgid / && count++ > num {exit} 1' "$PENDING" |
-+                   tac | awk '/^$/ {found=1} found' | tac >"$TODO_PO"
-+               echo "Processing batch of $NUM entries (out of $ENTRY_COUNT remaining)"
-+           else
-+               cp "$PENDING" "$TODO_PO"
-+               echo "Processing all $ENTRY_COUNT entries at once"
-+           fi
-+       fi
++       BATCH=$(cat "$BATCH_FILE" 2>/dev/null || echo 0)
++       BATCH=$((BATCH + 1))
++       echo "$BATCH" >"$BATCH_FILE"
++
++       git-po-helper msg-select --json --head "$NUM" -o "$TODO" "$PENDING"
++       git-po-helper msg-select --since "$((NUM + 1))" -o "${PENDING}.tmp" "$PENDING"
++       mv "${PENDING}.tmp" "$PENDING"
++       echo "Processing batch $BATCH ($NUM entries out of $ENTRY_COUNT)"
 +   }
-+   # Prepare one batch; shrink 2nd arg when batches exceed agent capacity.
-+   l10n_one_batch po/XX.po 100
++   # The parameter controls batch size; reduce if the batch file is too large.
++   review_one_batch 100
 +   ```
 +
-+4a. **Translate JSON batch** (`po/l10n-todo.json` → `po/l10n-done.json`):
++4. **Check todo file**: If `po/review-todo.json` does not exist or is empty,
++   review is complete; go to step 8 (only after loop exits). Otherwise proceed to
++   step 5.
 +
-+   - **Task**: Translate `po/l10n-todo.json` (input, GETTEXT JSON) into
-+     `po/l10n-done.json` (output, GETTEXT JSON). See the "GETTEXT JSON format"
-+     section above for format details and translation rules.
-+   - **Reference glossary**: Read the glossary from the batch file's
-+     `header_comment` (see "Glossary Section" above) and use it for
-+     consistent terminology.
-+   - **When translating**: Follow the "Quality checklist" above for correctness
-+     and quality. Handle escape sequences (`\n`, `\"`, `\\`, `\t`), placeholders,
-+     and quotes correctly as in `msgid`. For JSON, correctly escape and unescape
-+     these sequences when reading and writing. Modify `msgstr` and `msgstr[n]`
-+     (for plural entries); clear the fuzzy flag (omit or set `fuzzy` to `false`).
-+     Do **not** modify `msgid` or `msgid_plural`.
++5. **Review the current batch**: Review translations in `po/review-todo.json`
++   and write findings to `po/review-done.json` as follows:
++   - Use "Background knowledge for localization workflows" for PO/JSON structure,
++     placeholders, and terminology.
++   - If `header_comment` includes a glossary, follow it for consistency.
++   - Do **not** review the header (`header_comment`, `header_meta`).
++   - For every other entry, check the entry's `msgstr` **array** (translation
++     forms) against `msgid` / `msgid_plural` using the "Quality checklist" above.
++   - Write JSON per "Review result JSON format" below; use `{"issues": []}` when
++     there are no issues. **Always** write `po/review-done.json`—it marks the
++     batch complete.
 +
-+4b. **Translate PO batch** (`po/l10n-todo.po` → `po/l10n-done.po`):
-+
-+   - **Task**: Translate `po/l10n-todo.po` (input, GETTEXT PO) into
-+     `po/l10n-done.po` (output, GETTEXT PO).
-+   - **Reference glossary**: Read the glossary from the pending file header
-+     (see "Glossary Section" above) and use it for consistent terminology.
-+   - **When translating**: Follow the "Quality checklist" above for correctness
-+     and quality. Preserve escape sequences (`\n`, `\"`, `\\`, `\t`), placeholders,
-+     and quotes as in `msgid`. Modify `msgstr` and `msgstr[n]` (for plural
-+     entries); remove the `#, fuzzy` tag from comments when done. Do **not**
-+     modify `msgid` or `msgid_plural`.
-+
-+5. **Validate `po/l10n-done.po`**:
-+
-+   Run the validation script below. If it fails, fix per the errors and notes,
-+   re-run until it succeeds.
++6. **Rename result**: Rename `po/review-done.json` to `po/review-result-<N>.json`,
++   where N is the value in `po/review-batch.txt` (the batch just completed).
++   Run the script below:
 +
 +   ```shell
-+   l10n_validate_done () {
-+       DONE_PO="po/l10n-done.po"
-+       DONE_JSON="po/l10n-done.json"
-+       PENDING="po/l10n-pending.po"
-+
-+       if test -f "$DONE_JSON" && { ! test -f "$DONE_PO" || test "$DONE_JSON" -nt "$DONE_PO"; }
++   review_rename_result () {
++       TODO="po/review-todo.json"
++       DONE="po/review-done.json"
++       BATCH_FILE="po/review-batch.txt"
++       if test -f "$DONE"
 +       then
-+           git-po-helper msg-cat --unset-fuzzy -o "$DONE_PO" "$DONE_JSON" || {
-+               echo "ERROR [JSON to PO conversion]: Fix $DONE_JSON and re-run." >&2
-+               return 1
-+           }
++           N=$(cat "$BATCH_FILE" 2>/dev/null) || { echo "ERROR: $BATCH_FILE not found." >&2; return 1; }
++           mv "$DONE" "po/review-result-$N.json"
++           echo "Renamed to po/review-result-$N.json"
 +       fi
-+
-+       # Check 1: msgid should not be modified
-+       MSGID_OUT=$(git-po-helper compare -q --msgid --assert-no-changes \
-+           "$PENDING" "$DONE_PO" 2>&1)
-+       MSGID_RC=$?
-+       if test $MSGID_RC -ne 0 || test -n "$MSGID_OUT"
-+       then
-+           echo "ERROR [msgid modified]: The following entries appeared after" >&2
-+           echo "translation because msgid was altered. Fix in $DONE_PO." >&2
-+           echo "$MSGID_OUT" >&2
-+           return 1
-+       fi
-+
-+       # Check 2: PO format (see "Validating PO File Format" for error handling)
-+       MSGFMT_OUT=$(msgfmt --check -o /dev/null "$DONE_PO" 2>&1)
-+       MSGFMT_RC=$?
-+       if test $MSGFMT_RC -ne 0
-+       then
-+           echo "ERROR [PO format]: Fix errors in $DONE_PO." >&2
-+           echo "$MSGFMT_OUT" >&2
-+           return 1
-+       fi
-+
-+       echo "Validation passed."
++       rm -f "$TODO"
 +   }
-+   l10n_validate_done
++   review_rename_result
 +   ```
 +
-+   If the script fails, fix **directly in `po/l10n-done.po`**. Re-run
-+   `l10n_validate_done` until it succeeds. Editing `po/l10n-done.json` is not
-+   recommended because it adds an extra JSON-to-PO conversion step. Use the
-+   error message to decide:
++7. **Loop**: **MUST** return to step 3 (Prepare one batch) and repeat the cycle.
++   Do **not** skip this step or go to step 8. Step 8 is reached **only** when
++   step 4 finds `po/review-todo.json` missing or empty.
 +
-+   - **`[msgid modified]`**: The listed entries have altered `msgid`; restore
-+     them to match `po/l10n-pending.po`.
-+   - **`[PO format]`**: `msgfmt` reports line numbers; fix the errors in place.
-+     See "Validating PO File Format" for common issues.
-+
-+
-+6. **Merge translation results into `po/XX.po`**: Run the script below. If it
-+   fails, fix the file the error names: **`[JSON to PO conversion]`** →
-+   `po/l10n-done.json`; **`[msgcat merge]`** → `po/l10n-done.po`. Re-run until
-+   it succeeds.
++8. **Only after loop exits**: **Directly execute** the command below. It merges
++   results, applies suggestions, and displays the report. The process ends here.
 +
 +   ```shell
-+   l10n_merge_batch () {
-+       test $# -ge 1 || { echo "Usage: l10n_merge_batch <po-file>" >&2; return 1; }
-+       PO_FILE="$1"
-+       DONE_PO="po/l10n-done.po"
-+       DONE_JSON="po/l10n-done.json"
-+       MERGED="po/l10n-done.merged"
-+       PENDING="po/l10n-pending.po"
-+       PENDING_REFER="${PENDING}.fuzzy.reference"
-+       TODO_JSON="po/l10n-todo.json"
-+       TODO_PO="po/l10n-todo.po"
-+       if test -f "$DONE_JSON" && { ! test -f "$DONE_PO" || test "$DONE_JSON" -nt "$DONE_PO"; }
-+       then
-+           git-po-helper msg-cat --unset-fuzzy -o "$DONE_PO" "$DONE_JSON" || {
-+               echo "ERROR [JSON to PO conversion]: Fix $DONE_JSON and re-run." >&2
-+               return 1
-+           }
-+       fi
-+       msgcat --use-first "$DONE_PO" "$PO_FILE" >"$MERGED" || {
-+           echo "ERROR [msgcat merge]: Fix errors in $DONE_PO and re-run." >&2
-+           return 1
-+       }
-+       mv "$MERGED" "$PO_FILE"
-+       rm -f "$TODO_JSON" "$TODO_PO" "$DONE_JSON" "$DONE_PO" "$PENDING_REFER"
-+   }
-+   # Run the merge. Example: l10n_merge_batch po/zh_CN.po
-+   l10n_merge_batch po/XX.po
++   git-po-helper agent-run report
 +   ```
 +
-+7. **Loop**: **MUST** return to step 1 (Extract entries) and repeat the cycle.
-+   Do **not** skip this step or go to step 8. Step 8 (below) runs **only**
-+   when step 2 finds no more entries and redirects there.
++   **Do not** run cleanup or delete intermediate files. Keep them for inspection
++   or resumption.
 +
-+8. **Only after loop exits**: Run the command below to validate the PO file and
-+   display the report. The process ends here.
++**Review result JSON format**:
 +
-+   ```shell
-+   msgfmt --check --stat -o /dev/null po/XX.po
-+   ```
++The **Review result JSON** format defines the structure for translation
++review reports. For each entry with translation issues, create an issue
++object as follows:
++
++- Copy the original entry's `msgid`, optional `msgid_plural`, and optional
++  `msgstr` array (original translation forms) into the issue object. Use the
++  same shape as GETTEXT JSON: `msgstr` is **always a JSON array** when present
++  (one element singular, multiple for plural).
++- Write a summary of all issues found for this entry in `description`.
++- Set `score` according to the severity of issues found for this entry,
++  from 0 to 3 (0 = critical; 1 = major; 2 = minor; 3 = perfect, no issues).
++  **Lower score means more severe issues.**
++- Place the suggested translation in **`suggest_msgstr`** as a **JSON array**:
++  one string for singular, multiple strings for plural forms in order. This is
++  required for `git-po-helper` to apply suggestions.
++- Include only entries with issues (score less than 3). When no issues are
++  found in the batch, write `{"issues": []}`.
++
++Example review result (with issues):
++
++```json
++{
++  "issues": [
++    {
++      "msgid": "commit",
++      "msgstr": ["委托"],
++      "score": 0,
++      "description": "Terminology error: 'commit' should be translated as '提交'",
++      "suggest_msgstr": ["提交"]
++    },
++    {
++      "msgid": "repository",
++      "msgid_plural": "repositories",
++      "msgstr": ["版本库", "版本库"],
++      "score": 2,
++      "description": "Consistency issue: suggest using '仓库' consistently",
++      "suggest_msgstr": ["仓库", "仓库"]
++    }
++  ]
++}
++```
++
++Field descriptions for each issue object (element of the `issues` array):
++
++- `msgid` (and optional `msgid_plural` for plural entries): Original source text.
++- `msgstr` (optional): JSON array of original translation forms (same meaning as
++  in GETTEXT JSON entries).
++- `suggest_msgstr`: JSON array of suggested translation forms; **must be an
++  array** (e.g. `["提交"]` for singular). Plural entries use multiple elements
++  in order.
++- `score`: 0–3 (0 = critical; 1 = major; 2 = minor; 3 = perfect, no issues).
++- `description`: Brief summary of the issue.
 +
 +
  ## Human translators remain in control
