@@ -1,437 +1,370 @@
-Received: from sonic315-13.consmr.mail.bf2.yahoo.com (sonic315-13.consmr.mail.bf2.yahoo.com [74.6.134.123])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CCCA55
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 13:08:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.134.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389B13988E1
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 13:34:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773666495; cv=none; b=pKmB0tJ9lqXBhDp9cvpQfoZBOt4kYZP5OgV+iA7/RE2NIDOnQGV9LKv8Uo5LlBKrjNktQZNshM8qyXp9faW8Rlt3oQRSFwAw2s1LfLgJp2xIZyMTmDR5kR6QIdIVMU7RnTKfUW0t/54Hcsjdrm7tgzxtJcMglq1cTxCL47Fayr0=
+	t=1773668079; cv=none; b=qLMzdqVCzwXlkqsjcVg8lwbXL4ajyf6EkVmWNj6BBZKZJNzhTHUJClY9r320FvqXo0Is+pHPceiChsKKYfDm8TuNYw3XGpE7e+JJR1GnBNK6/Z2GJxIZgmlWNB/r/MmgTLyattMLWmw4QRCrfD6jHiVR1xn5UsyY/nVJpBrYvG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773666495; c=relaxed/simple;
-	bh=8ZivH+7Y1pSuSRxL89CEu2VZmaslKfTTOEDoNy57BSg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
-	 References; b=oaVW+yWgm9WnS9FOzrP+IrDhNIDICpUoijqAiPJhza9mQZYajyvNO+7nWKyWUOjkg1NJ7KLGCiCI88WdVm48ML6Cf4tEtDpxLkTc/uyHeqIhvh/3zwHN3iWH4TbQaTBPo7AvM8JtFDg/w0X7I8iwfX1ZqzVJtTHX05fS02kEW4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=TdXs53DU; arc=none smtp.client-ip=74.6.134.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1773668079; c=relaxed/simple;
+	bh=E3OfBjINr7Q1UhzMWAzj+4eJvO238sBEaoGQ+8t8lpQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nUIT+qllypXIEnqaVwUEQK6+M8Qv9htScKi+WWY16zyk4ebe4jF5MoXwP3Y+cbd/JySZYpC57IKEmQrl3N8yr4IENg3ex6oNei3UTvXqp5yVj3j9v7QQSyKGpiFoU9JG+jyQGXlMb+5EOZ4nagmNl7IQIPzpLws4PkB1HElKFAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SOW8qgEf; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="TdXs53DU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773666493; bh=iLEo1GMewJjpOG4S13mUmYc0+/ismmMLqb4vTvVVBhY=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=TdXs53DUWFSzMGGQmGGkbxUxS7YDPq6wSaTL2tucIJQV5SZPVC27mxOD1nI7vZMRXNAvfPHO2u3Khy5UomUh3jPjN5knbnCGFyUSoIM4uozlfzBNHcqv6LISUb1u9tacEzEQ/tP2bNq1/c4V086FbACYCuGbaIzd2glRfgVbJFmJ6bWvKMVpQRV8hMk4tKr1wgKzutcQB0fSMl4VprnZX2TuXGx90VgwiYuNkmpxd/s2Y3UVH9nUyqbEQEp3YDQQC8PFT1zfiqF9dJRO9r/d6T9E5J8/HKAIMphqV2ovrfzuRc5uiM+oyXjky9zW4sVra2BvOYXrMUmbl+5jHPDPzA==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773666493; bh=7MbTqtMxayEHmYsAJiUqxZPwzkpsOvs+XWXg5DiHBOW=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=OSWFro9i/yC+lbCFLaYjRifdQVnY9hoYAgbpBgBLHCmAVt237RJX7r2no6JJ0YEafdiGmHtILKrA/FF7tAs8ntltSSo+puJYjQC1vE9iPmdTjzt5eQpg9sOYwOSPC/NnbRCn19Ea2sIkcXKPH3hYc0B4Gjo0/8o0R4i3rpQuouwxprevdODH9b/Fm9z1i0GKTqq916SGGgjlP3HIvI9pOVfSK2ewfYPytoJTcJyR3Bcc1B5Hxd5cawUgopYgVX7/LL057CHl/CieqVkS4HG14Iv/2liviYz676QNGVtWSuNoJxYUg2b/PaSsoatIxaNI63P7O04Ie7XqmRZmZ0FsGg==
-X-YMail-OSG: v6UQDRUVM1mR3b8QyipCWgPkee5mEwTkEMewHN3CZ1D324ZtBK8aQ5nstsshLNA
- .GJ9CSZvHjtaktX3yGcE.Wh82suIEyloXbhu_99OF7Wtu5yKF3tfThgfgN4hHzXjUpXciEpULCoK
- dtTjytWyv8qVdCl5k32nrnv6snPSGKPm9Q1Swb6d6C34_O5V1H5PsS9Ms2AXo6YA3qKRapF38VTE
- QQCi7Ozr7QpsZeSAnLN3uwOTeOr732yQkgguN6XBXHcEbBJ7moIT3K14JaajcHagbdlCDtjVI6d6
- wqPxl.m2dvBBgqzDs6tQP5vaPQJDvVWqKLpFIuD6nfZDynCNAjdH.2AeZ7D.cF9fVZPDB4ZCZDNY
- DE4U_qaigNk620UbVFAV9oK6bKdjcQ25G.GdItfUthQ1Chm5g4TMjH0akiJSz.eaY_M6d8ykvPOo
- OUDpJF3W.vwAHaYpWLGf3EhZZvYaA.9RFH2ZSHIbrVqHTR_yq7ClOHkrWdEItGLV6TATbTy8Ycnh
- ABZPBi70iOh8eiqj_VIAt0DnFOdEvljiH26EX1ntADj0qBu_hRazxYsie2C9ujeBWxnrH7FgcdJ0
- Bs5qZ35c6J9v6zOxMs_B0.lgt.U3tzTXMm24fl_r4mFV5NR5u334OD8qYd0EO6co2OhW6BBDAzWd
- Moa2bBiDRyfI2e_MLB5Ixk_HKo9PZNtNOM_DEgPswXWP9FB.Va2CHvpYiefKYHu7v_motn7Ox4Wp
- moQy1CzCx_q59B9lvmaVPXov2vOVspgrlS6Oeqte_qR2f7D5izfxqnVLczqQQ689Vru4VFXdSDGm
- PGMYAoK0MzJE1oNBg04Nm3oHsJ5OqrAP94weLwMy0wkI.sIpx79iA9ybt.1ru37J.tqMgmbfOJCR
- aRAs8jI9asXyyqCyeb5B1q9DskuKtSenvg_p1tcQ_FPpSGIEJmhdQHkpznTZ3NcqPmYclyL05geB
- YDKItG.Pcb_yBbhdfZ0lZHcZs6gIi3rIHnOkvKRJfghfflhg7CtNEzKfbmT_f2.Jw8vR9uSzrC_L
- Q8fQW6_iIJv58m0Ys2Hq2K9BqH2Brji9uC.hWTyPAvEtOVljyqZjkDxT5TrsXlK0ZLlBjdFsHwaj
- AZyCotLBNh9yrbRyx4SQWxDPcv8eHXbLl_Co4KNz71nUL7xuC8IFJ0.EbQjw2CluIFMDTeKX8d3s
- WRvxiMWZBD8Hfckh96G0RQ6B68TN_8vLvyfQt4XZfz71mQHFbpuv1o71SV4BOUmkExT_3q7pAKfH
- Jo1ft3_NYdjUlCxhtAVtkctfveHi.aN7gErGdA.a19MlejAt7qkVLtNkzovLPRwU2m5eXB77wfHb
- .V3DLZ6GPCogeTlSgevYWXokpdwqwb4wtgnTZNwVj9OrK06cVVEwvTWLa.BHbj7_2xgqezn9CUYE
- xQzc5VNt9CMagzYAajFfC1fKJz6koBZdRYx6A2KlzWvpU8KpkewQYdGGYje6oaLGKbYWfOD4f5nM
- fmQH_AgTL2f6Wok4XL5Aq1A6ERPstprTcE92DPjTIJbuRcYBO4EijTi_mmDxwzdiyigMl22Ig08P
- 6LBBxJ36KSsMk5kWFIbIhscSekcSzddQAo1RSFeUUOWTkTaTipWYfEpon7s5UCTn5YRFEMrR0iyP
- 6R9PjhpDglhzS1pcmX.QAu8E0RaT8ufed.lYnRinekMV7RLg7lYKpTN.ycMlnSkTxhSGu6dd7MU8
- 55BIoj9I.87WtWnHq9c5kKYndOBFhqg4felRdtiuALlJT7dNRaFMyrlSYmYozuSkUX_rM3zUINwu
- 0UbaldEoo1itQt0aEXsUfenKRn1s1O1Uid_AWXW3VI.lOzgSN9Wquet3QD..CdbN988DDtODt1go
- qWXlqeEKfQSe1yEUg09b8hvWQcAXMrBDwOn10OvLqEv.MRnCWNHAl3zEQoCDwSVouNYhARoewV9S
- JUaJT.IPgGvJrqKxHeYbb1caghJF1BVMMCsht7L_ONcxT62sMrr0kWnD4AyNmmf0EO8ecR3vg4rT
- CpxmEhYbLRg7Wyo4cGAfEDq5QiDI7ZQCwOp9ft3Ujc6qXr8gxyqWoeav5pq3Qi1LH2Cja6Ys65nz
- dbqmWE.TY4LfuSOOCxVhthBo7Ss_0_X6EwtbdWVOg.Lw1X2Ql0DsFZJrVKDnYU4L9Y_J.AI0oWjT
- h.SDq8ZOv3zmneGvP_Kr52ChLZjOSDjslF4NzPhGKzuuUuoym2W9zrx9lkqUyyS0A7PDX3iw_rmD
- ezWeJv2r5m7wkDZ9K3APCQmUaunN0hLESl_V8M81IYnYFty5XxVe1YPTu0NKgSBmhyYaZkoz80KG
- zvGOrRyRRQQr8mi1yAeDQPXDCw28NjV7wH_I6B6wmveCQQX43Gwg-
-X-Sonic-MF: <jerrywang183@yahoo.com>
-X-Sonic-ID: b2f59852-4149-4e0e-8ac7-0c9ac0b094a8
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic315.consmr.mail.bf2.yahoo.com with HTTP; Mon, 16 Mar 2026 13:08:13 +0000
-Received: by hermes--production-bf1-697f88457-629ff (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID c970b30917d887ead9b391b21bfe3d56;
-          Mon, 16 Mar 2026 11:47:15 +0000 (UTC)
-From: Jialong Wang <jerrywang183@yahoo.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SOW8qgEf"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-48557c8ad47so26012965e9.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 06:34:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773668076; x=1774272876; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WbJV46+sdbmxr+d8AjUeHw40qoB/rsMGioBe5KvBnS0=;
+        b=SOW8qgEf6F21izjF+SIth6rxL38ilt2/TWScGz5o2as0cQlu4/4Odn9eHryGVMZTdB
+         QfiTp1JCCDwgmBwB4eDrTz47ckBeJC25mfMpGVftOj6IYMfRQdF+yQeQKRL/AWkHjUh+
+         uWFp+bdTu6HQhImqdJPGX4xcj8F5VLGj0CFLkkEqHo0L179bNixvciNsTWU6OiRC+kwc
+         0DNF8iR+F40DehU/6De9riwH2R+OukdXEkbjf1dx+KoCXeY1pwTbDBw7aHnkQ+UpRNBP
+         hdim5lT0ND+XFeD3W3IEYVJonjHoyIsA4YGfRFTbZhGcoXhXVifeb51J5e+nCnKo8Esm
+         sscw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773668076; x=1774272876;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WbJV46+sdbmxr+d8AjUeHw40qoB/rsMGioBe5KvBnS0=;
+        b=VnpedpYFSjPpoffMRromwG1Rz19TP7jjnwK/Z7mYe4ceMqAXh8tbfnvajOk2/T4H9u
+         XhrBTZ9K0AnQ9MmTeaFDZLoVLDj2qQZWF4GT/Q39nJ59u3d5UAgA7KlzO5bdQOq0Nmeq
+         LMOCNorS4CuQ7ZwgRNSIU6uJcOApmspDUNkyTetFsGh5kLf4ssB1j/qA9V699MZ5D/SZ
+         iqnGXb+Bid6BSZg1Upo3COQIpjoCBPoLisF6i3R07Zhr7DcKx5ftcdaRYAy9Choe3ifr
+         xGgcRTQ0yjBU0HmDV3oxZlLMSe5/g1r7vKRhO70eSh/1duMBBL/zV0x0duwFMZ0LLD1n
+         x00g==
+X-Gm-Message-State: AOJu0YwbaTyZvEzvhADNPbZZhvDLEYyMksESloYTdpKWUJSO8MJkZSmF
+	DzoitnC3jiAdEXdwxZADgobLTj/yq2UrPEk15puhfTPdPW0cLU8W/MHx9b5u3QmEEud6Tw==
+X-Gm-Gg: ATEYQzyAX/KyoaOb2hsDW97TS3y+XK7bKXLp3pbhpwCRB61VDG/KF0LUi5aiw+IeCQH
+	NmTAXYGme/tGiZhd0Bbx7Ujy/abRbbPfTk5HVSKhvZbByskXz0EYlOxQU3JIvR3+tszdUdw//c/
+	5f6hOSeoml+Hwds2Q3jUB7Zy2kvVhq4TERIKr8xHsx30YYawQRoszJvGamtCYV/Zsmo+8IKQN+f
+	hXRNvP4mC/mpxU8zdP47Jr4QlfOCMhtuEAFEGhRmQvADErq/KkWhX008ExTS4/9K+wmxBeJOPMa
+	+7ErMSFUJ8CtPHmbwYH3N55tnibBJAQN/ILcZWosFkF9Y6upeATwlOSCvEw1tUfedOpPNEzMKeX
+	oOELpc786BlH5J9sd5Lxw4kHof4/64Qai5jRNAKkbwbO2UrZJcIWVDF9DYp2nXjawF4eZgf5vYW
+	RpHapELl5pSyiFEwHQwBaP3FpvqmZmsdZu0D5IqWuuR3RoSsk8qB+xLFp+SVjXiMvNA5NcqBcEN
+	/u7a4+l2Yuc510pJKU02c+dU6tiyDhy2XiRd3/H4wu/B5Ca+ZVMPSK56Esox+oQcNpqNQ==
+X-Received: by 2002:a05:600d:8486:20b0:485:30f7:6e88 with SMTP id 5b1f17b1804b1-485567149fbmr156900945e9.31.1773668076133;
+        Mon, 16 Mar 2026 06:34:36 -0700 (PDT)
+Received: from farblopa.localdomain ([84.126.0.122])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4854b66ffe2sm391805945e9.13.2026.03.16.06.34.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Mar 2026 06:34:35 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
-Cc: Jialong Wang <jerrywang183@yahoo.com>
-Subject: [GSoC] Proposal draft: Improve the new git repo command
-Date: Mon, 16 Mar 2026 07:47:13 -0400
-Message-ID: <9fc1d23fbc7d46349ac01314fbfc06eb.gsoc-proposal-draft-jerrywang183@yahoo.com>
+Cc: christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	chandrapratap3519@gmail.com,
+	Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [GSoC RFC PATCH] graph: add --graph-max option to limit displayed columns
+Date: Mon, 16 Mar 2026 14:34:26 +0100
+Message-ID: <20260316133426.117684-1-pabloosabaterr@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-References: <9fc1d23fbc7d46349ac01314fbfc06eb.gsoc-proposal-draft-jerrywang183.ref@yahoo.com>
-X-Mailer: WebService/1.1.25297 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 
-Hi,
+When there are multiple branches, --graph-max modifies the maximum
+amount of columns that will be displayed.
 
-I plan to apply to Git for GSoC 2026, and I would like to share a draft
-proposal for feedback.
+Add "--graph-max=<n>" option to cap how many columns will be shown,
+columns after the limit are replaced with a single '.'. Changes only
+the output rendering.
 
-The project I am currently most interested in is improving the new
-`git repo` command, with a primary focus on extending `git repo info`
-with path-related repository metadata.
+Define MINIMUM_GRAPH_COLUMNS constant to validate the option value.
 
-My draft is below. I would appreciate feedback on whether this scope
-looks reasonable, and which parts of the current `git repo` work would
-make the best starting point.
+The commit character '*' is always shown no matter what the limit is.
 
-Thanks,
-Jialong
-
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
 
-# Improve `git repo info` by adding repository path metadata
-
-## Name
-
-Jialong Wang
-
-## Email
-
-jerrywang183@yahoo.com
-
-## Preferred project size
-
-175 hours
-
-## About me
-
-My name is Jialong Wang, and I plan to apply to Git for GSoC 2026.
-
-I have been getting familiar with Git’s development workflow by building
-Git from source, reading the contribution documents, and working on a
-microproject. As part of that process, I prepared and sent a patch to
-the Git mailing list.
-
-I am interested in the new `git repo` command because it is user-facing,
-but also closely tied to Git’s internal repository model. That makes it
-a good fit for the kind of work I want to do: understanding existing
-code, discussing design details on the mailing list, and implementing
-improvements in small, reviewable patches.
-
-Relevant links:
-
-- Microproject discussion thread:
-  https://public-inbox.org/git/CAKWWG_nGhD6vqhAS1mkEwBQPrg_YX0+C3-xW=Q3ifFDw4dDviw@mail.gmail.com/
-- Microproject patch thread:
-  https://public-inbox.org/git/20260315231538.68586-1-jerrywang183@yahoo.com/
-- SoC 2026 idea page:
-  https://git.github.io/SoC-2026-Ideas/
-
-## Project summary
-
-I would like to work on improving the new `git repo` command, with a
-primary focus on `git repo info`.
-
-The `git repo` command was introduced to provide a cleaner interface for
-querying repository metadata. However, several useful path-related
-values are still mainly accessed through `git rev-parse` and
-`git rev-parse --git-path`. My proposal is to extend `git repo info`
-so that it can expose a selected set of those values in a more
-structured form.
-
-The goal is not to replace `git rev-parse`, but to make `git repo info`
-more useful as a structured interface for repository path metadata.
-
-## Motivation
-
-Today, scripts and tools still often rely on commands such as:
-
-    git rev-parse --git-dir
-    git rev-parse --show-toplevel
-    git rev-parse --git-path <path>
-
-These commands are useful, but they were not primarily designed as a
-structured repository metadata interface.
-
-Since `git repo info` already exists for this purpose, extending it with
-path-related values would make repository layout information easier to
-query in a cleaner and more consistent way.
-
-I think this is a good GSoC project because it has clear user value, can
-be implemented incrementally, and naturally fits Git’s patch-and-review
-workflow.
-
-## Current context
-
-I am aware that work on path-related `git repo info` fields has already
-started. There have already been patch series for path keys, category
-requests, and path formatting. Because of that, I do not want to assume
-that the work described on the ideas page is still untouched.
-
-One of my first goals during the bonding period would be to review the
-current state of these discussions carefully, identify what remains
-open, and refine the project scope based on maintainer feedback. I would
-rather build on the current direction than duplicate work that is
-already in progress.
-
-I also think this project should be scoped carefully. The ideas page
-mentions improvements to both `git repo info` and `git repo structure`,
-but for a GSoC project I believe it is more realistic to focus first on
-`git repo info` and only expand beyond that if the main work is in good
-shape.
-
-## Proposed work
-
-The main objective of this project is to extend `git repo info` with
-selected repository path values that are currently obtained through
-`git rev-parse` and `git rev-parse --git-path`.
-
-The work will involve:
-
-1. Studying the current implementation of `git repo info`.
-2. Comparing its current output with commonly used `git rev-parse`
-   path queries.
-3. Identifying a first small set of missing path-related values to add.
-4. Discussing output design on the mailing list, especially where there
-   are open questions about relative versus absolute paths.
-5. Implementing the agreed functionality through small patch series.
-6. Adding tests covering the new behavior.
-7. Updating documentation if needed.
-
-## Initial scope
-
-The first stage of the project would focus on a small set of commonly
-used repository path values, for example:
-
-- `git-dir`
-- `common-dir`
-- `toplevel`
-- `superproject-working-tree`
-
-I think these are a good first target because they are already familiar
-to users through `git rev-parse`, and they provide immediate practical
-value without requiring a large interface expansion.
-
-Depending on project progress and mailing list feedback, I would then
-like to extend support to selected values currently accessed through
-`git rev-parse --git-path`, such as:
-
-- index file
-- objects directory
-- hooks directory
-
-I do not want to promise every possible path-related key up front. I
-would rather start with the most straightforward and useful values, get
-feedback early, and continue from there.
-
-## My approach to scope and quality
-
-One thing I would like to be careful about is not treating this project
-as a simple checklist of fields to add.
-
-I think the quality of the project will depend on three things:
-
-1. choosing a small set of fields that make sense together,
-2. agreeing on a consistent path representation,
-3. and making sure the result fits naturally into the existing `git repo`
-   design rather than becoming a thin wrapper over `git rev-parse`.
-
-Because of that, I would prefer to make progress in a few coherent
-batches instead of adding many unrelated keys at once.
-
-I also think it is important to keep room for scope reduction. If some
-part of the design turns out to be more controversial than expected,
-I would prefer to complete a smaller, cleaner set of path fields rather
-than stretching the project too broadly.
-
-## Technical approach
-
-The implementation of `git repo` is primarily in `builtin/repo.c`. The
-first step would be to understand how `git repo info` currently collects
-and prints repository metadata, and how that existing structure can be
-extended without making the interface inconsistent.
-
-Many relevant repository paths are already available internally through
-helpers such as:
-
-- `repo_get_git_dir()`
-- `repo_get_common_dir()`
-- `repo_get_work_tree()`
-
-Similarly, `git rev-parse --git-path` already relies on existing path
-resolution logic. So the work is not about inventing these values from
-scratch, but about exposing a selected subset of them through
-`git repo info` in a way that fits its current design.
-
-The first implementation step would be to map existing helpers and path
-resolution logic to a small set of `repo info` fields. After that, I
-would extend the output code in `builtin/repo.c` to report those fields
-in a consistent way.
-
-One of the main design questions is path formatting. The ideas page
-explicitly mentions the need to decide between relative and absolute
-paths. I do not want to assume the answer in advance. Instead, I would
-review the current discussion, compare the behavior of existing
-commands, and propose a small, consistent approach on the mailing list.
-
-I also expect that some preparatory cleanup or refactoring may be useful
-before adding new fields. If so, I would keep that work minimal and send
-it as small separate patches.
-
-## Patch strategy
-
-I expect the implementation to be divided into small patches so that
-each change can be reviewed independently.
-
-A likely patch strategy would be:
-
-1. small preparatory cleanup if needed
-2. add support for a first path-related key or a very small set of keys
-3. extend support with additional related keys
-4. add or refine tests for the new behavior
-5. update documentation if necessary
-
-If existing in-progress series already cover some of these parts, I
-would adjust the breakdown accordingly and focus on what remains useful
-and open.
-
-## Tests
-
-Tests would be added to cover the new behavior in common repository
-setups.
-
-Depending on the exact scope agreed on, test cases may include:
-
-- ordinary repositories
-- linked worktrees
-- superproject/submodule cases
-- cases where path values differ from simple defaults
-
-I would keep the tests focused on observable behavior instead of
-overfitting them to a particular implementation detail.
-
-## What I will not try to do
-
-To keep the project realistic, I do not plan to:
-
-- redesign all of `git repo`
-- fully replace `git rev-parse`
-- implement every possible repository path query
-- work on both `git repo info` and `git repo structure` at full scope in
-  the same project
-
-The project should stay focused on a well-defined subset of path-related
-metadata for `git repo info`.
-
-## Expected deliverables
-
-By the end of the project, I expect to deliver:
-
-- support for a useful set of path-related values in `git repo info`
-- tests covering the new functionality
-- documentation updates if needed
-- one or more patch series discussed and refined on the Git mailing list
-
-## Timeline
-
-### Community bonding period
-
-- Study `builtin/repo.c` and the current `git repo info` implementation
-- Review recent and ongoing mailing list discussions related to `git repo`
-- Compare current `git repo info` behavior with `git rev-parse`
-- Refine the exact scope with mentors and mailing list feedback
-
-### Phase 1
-
-- Implement a first small batch of path-related values
-- Send the first patch series
-- Address review comments
-- Add tests for the first batch
-
-### Phase 2
-
-- Implement additional agreed path values
-- Continue design discussion if needed
-- Refine implementation and tests based on review feedback
-
-### Phase 3
-
-- Complete remaining agreed work
-- Update documentation if necessary
-- Rework earlier patches if needed for consistency
-- Prepare a final summary of the work
-
-### Buffer time
-
-- Handle review delays
-- Fix regressions or edge cases
-- Narrow scope if some planned work turns out to be too large
-
-## Risks and mitigation
-
-One risk is that design discussion may take longer than expected,
-especially around path representation and output structure.
-
-To reduce that risk, I would keep the patch series small and prioritize
-the least controversial values first.
-
-Another risk is overlap with work already in progress. If that happens,
-I would adjust the project scope to avoid duplication and focus on what
-is still useful and open.
-
-## Why I think I am a good fit
-
-I have already started learning Git’s normal contribution workflow
-through a microproject, including building Git from source, running
-tests, preparing a patch, and sending it to the mailing list.
-
-This project fits the kind of work I want to do in Git: understanding
-existing code, discussing interface details on the mailing list, and
-implementing improvements incrementally in small patches.
-
-## References
-
-- SoC 2026 idea page:
-  https://git.github.io/SoC-2026-Ideas/
-
-- General application information:
-  https://git.github.io/General-Application-Information/
-
-- `git repo` documentation:
-  https://git-scm.com/docs/git-repo
-
-- `git rev-parse` documentation:
-  https://git-scm.com/docs/git-rev-parse
-
-- `git-sizer` project:
-  https://github.com/github/git-sizer
-
-- Recent patch series adding path-related support to `git repo`:
-  https://public-inbox.org/git/20260228224252.72788-1-lucasseikioshiro@gmail.com/
-
-- More recent work-in-progress series for category/path keys and
-  `--path-format`:
-  https://public-inbox.org/git/pull.2208.v6.git.git.1772428548.gitgitgadget@gmail.com/
-
-- Recent GSoC proposal thread on improving the new `git repo` command:
-  https://public-inbox.org/git/20260303140732.16886-1-pushkarkumarsingh1970@gmail.com/
-
-- Another recent GSoC proposal thread on improving/extending `git repo`:
-  https://public-inbox.org/git/CA+rGoLd-1Mb5JG1H1PvE-kyjdznrLVFjwQiMLHtd2ETQ-igmXg@mail.gmail.com/
-
-- Recent proposal thread focused on the same SoC idea:
-  https://public-inbox.org/git/CAO_P5U3g_+RpnDUmEv_qX-3GVhpxLV97eMxP1apERc0KU_95tQ@mail.gmail.com/
-
-- Recent discussion around `git repo structure` enhancements:
-  https://public-inbox.org/git/CAO_P5U2f4MD-URre+4ocC=YQ570hr03pZHDk1jvuSOKx4aLOCA@mail.gmail.com/
-
-- Microproject discussion thread:
-  https://public-inbox.org/git/CAKWWG_nGhD6vqhAS1mkEwBQPrg_YX0+C3-xW=Q3ifFDw4dDviw@mail.gmail.com/
-
-- Microproject patch thread:
-  https://public-inbox.org/git/20260315231538.68586-1-jerrywang183@yahoo.com/
-
-- Review on the microproject patch thread:
-  https://public-inbox.org/git/CAOLa=ZTpfHUySnMgCFMnvo2JcRSv8zqFP-cLFSs+Ab5Cy2zsvg@mail.gmail.com/
+This addresses the TODO at graph.c:
+
+  TODO:
+      - Limit the number of columns, similar to the way gitk does.
+        If we reach more than a specified number of columns, omit
+        sections of some columns.
+
+About the design of how this would have to be:
+
+- Should '--graph-max' by itself be enough to implicitly work like '--graph' so 
+  'git log --graph-max=3' works without needing to write '--graph'?
+- graph_max_columns by default is set to 0, meaning no limit, and any other 
+  positive value becomes a limit. Is this a good design? it cannot be negative,
+  shouldn't it be a uint32_t instead, I left it as a int because of the other
+  variables like this that are int. like skip_count, max_count, etc.
+- Is '--graph-max' a good name?
+- Is '.' a good char for truncation?
+- Should '/' to outside branches be shown?
+- What should it be done when a commit is in a column that is truncated?
+
+known limitations:
+
+- Post merge lines have some trouble with the padding.
+
+I added two tests for example, but I will add better test coverage as design 
+choices are more clear. testing on the Git repo itself is a good example also.
+
+ graph.c                      | 52 +++++++++++++++++++++++++++------
+ graph.h                      |  2 ++
+ revision.c                   |  7 +++++
+ revision.h                   |  1 +
+ t/t4215-log-skewed-merges.sh | 56 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 109 insertions(+), 9 deletions(-)
+
+diff --git a/graph.c b/graph.c
+index 26f6fbf000..7ae0ab61b7 100644
+--- a/graph.c
++++ b/graph.c
+@@ -42,14 +42,6 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
+ static void graph_show_strbuf(struct git_graph *graph,
+ 			      FILE *file,
+ 			      struct strbuf const *sb);
+-
+-/*
+- * TODO:
+- * - Limit the number of columns, similar to the way gitk does.
+- *   If we reach more than a specified number of columns, omit
+- *   sections of some columns.
+- */
+-
+ struct column {
+ 	/*
+ 	 * The parent commit of this column.
+@@ -317,6 +309,12 @@ struct git_graph {
+ 	struct strbuf prefix_buf;
+ };
+ 
++static int graph_is_truncated(struct git_graph *graph, int col)
++{
++	int max = graph->revs->graph_max_columns;
++	return max > 0 && col >= max;
++}
++
+ static const char *diff_output_prefix_callback(struct diff_options *opt, void *data)
+ {
+ 	struct git_graph *graph = data;
+@@ -846,6 +844,10 @@ static void graph_output_padding_line(struct git_graph *graph,
+ 	 * Output a padding row, that leaves all branch lines unchanged
+ 	 */
+ 	for (i = 0; i < graph->num_new_columns; i++) {
++		if (graph_is_truncated(graph, i)) {
++			graph_line_addstr(line, ". ");
++			break;
++		}
+ 		graph_line_write_column(line, &graph->new_columns[i], '|');
+ 		graph_line_addch(line, ' ');
+ 	}
+@@ -903,6 +905,9 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 			seen_this = 1;
+ 			graph_line_write_column(line, col, '|');
+ 			graph_line_addchars(line, ' ', graph->expansion_row);
++		} else if (seen_this && graph_is_truncated(graph, i)) {
++			graph_line_addstr(line, ". ");
++			break;
+ 		} else if (seen_this && (graph->expansion_row == 0)) {
+ 			/*
+ 			 * This is the first line of the pre-commit output.
+@@ -1013,6 +1018,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+ 	 * children that we have already processed.)
+ 	 */
+ 	seen_this = 0;
++
+ 	for (i = 0; i <= graph->num_columns; i++) {
+ 		struct column *col = &graph->columns[i];
+ 		struct commit *col_commit;
+@@ -1028,8 +1034,14 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+ 			seen_this = 1;
+ 			graph_output_commit_char(graph, line);
+ 
++			if (graph_is_truncated(graph, i))
++				break;
++
+ 			if (graph->num_parents > 2)
+ 				graph_draw_octopus_merge(graph, line);
++		} else if (seen_this && graph_is_truncated(graph, i)) {
++			graph_line_addstr(line, ". ");
++			break;
+ 		} else if (seen_this && (graph->edges_added > 1)) {
+ 			graph_line_write_column(line, col, '\\');
+ 		} else if (seen_this && (graph->edges_added == 1)) {
+@@ -1109,9 +1121,15 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+ 			int par_column;
+ 			int idx = graph->merge_layout;
+ 			char c;
++			int truncated = 0;
+ 			seen_this = 1;
+ 
+ 			for (j = 0; j < graph->num_parents; j++) {
++				if (graph_is_truncated(graph, i + j)) {
++					graph_line_addstr(line, ". ");
++					truncated = 1;
++					break;
++				}
+ 				par_column = graph_find_new_column_by_commit(graph, parents->item);
+ 				assert(par_column >= 0);
+ 
+@@ -1125,10 +1143,15 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+ 				}
+ 				parents = next_interesting_parent(graph, parents);
+ 			}
++			if (truncated)
++				break;
+ 			if (graph->edges_added == 0)
+ 				graph_line_addch(line, ' ');
+-
+ 		} else if (seen_this) {
++			if (graph_is_truncated(graph, i)) {
++				graph_line_addstr(line, ". ");
++				break;
++			}
+ 			if (graph->edges_added > 0)
+ 				graph_line_write_column(line, col, '\\');
+ 			else
+@@ -1279,6 +1302,12 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
+ 	 */
+ 	for (i = 0; i < graph->mapping_size; i++) {
+ 		int target = graph->mapping[i];
++
++		if (graph_is_truncated(graph, i / 2)) {
++			graph_line_addstr(line, ". ");
++			break;
++		}
++
+ 		if (target < 0)
+ 			graph_line_addch(line, ' ');
+ 		else if (target * 2 == i)
+@@ -1372,6 +1401,11 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+ 	for (i = 0; i < graph->num_columns; i++) {
+ 		struct column *col = &graph->columns[i];
+ 
++		if (graph_is_truncated(graph, i)) {
++			graph_line_addch(&line, '.');
++			break;
++		}
++
+ 		graph_line_write_column(&line, col, '|');
+ 
+ 		if (col->commit == graph->commit && graph->num_parents > 2) {
+diff --git a/graph.h b/graph.h
+index 3fd1dcb2e9..9a4551dd29 100644
+--- a/graph.h
++++ b/graph.h
+@@ -262,4 +262,6 @@ void graph_show_commit_msg(struct git_graph *graph,
+ 			   FILE *file,
+ 			   struct strbuf const *sb);
+ 
++#define MINIMUM_GRAPH_COLUMNS 1
++
+ #endif /* GRAPH_H */
+diff --git a/revision.c b/revision.c
+index 31808e3df0..ba5088be14 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2605,6 +2605,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--no-graph")) {
+ 		graph_clear(revs->graph);
+ 		revs->graph = NULL;
++	} else if (skip_prefix(arg, "--graph-max=", &optarg)) {
++		revs->graph_max_columns = strtoul(optarg, NULL, 10);
++		if (revs->graph_max_columns < MINIMUM_GRAPH_COLUMNS) {
++			die(_("minimum columns is %d, unable to set below %d"),
++			MINIMUM_GRAPH_COLUMNS,
++			revs->graph_max_columns);
++		}
+ 	} else if (!strcmp(arg, "--encode-email-headers")) {
+ 		revs->encode_email_headers = 1;
+ 	} else if (!strcmp(arg, "--no-encode-email-headers")) {
+diff --git a/revision.h b/revision.h
+index 69242ecb18..6442129c14 100644
+--- a/revision.h
++++ b/revision.h
+@@ -304,6 +304,7 @@ struct rev_info {
+ 
+ 	/* Display history graph */
+ 	struct git_graph *graph;
++	int graph_max_columns;
+ 
+ 	/* special limits */
+ 	int skip_count;
+diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+index 28d0779a8c..6266de4e2b 100755
+--- a/t/t4215-log-skewed-merges.sh
++++ b/t/t4215-log-skewed-merges.sh
+@@ -370,4 +370,60 @@ test_expect_success 'log --graph with multiple tips' '
+ 	EOF
+ '
+ 
++test_expect_success 'log --graph --graph-max=2 only two columns' '
++	check_graph --graph-max=2 M_7 <<-\EOF
++	*-.   7_M4
++	|\ .
++	| | * 7_G
++	| | * 7_F
++	| * . 7_E
++	| * . 7_D
++	* | . 7_C
++	| |/
++	|/|
++	* | 7_B
++	|/
++	* 7_A
++	EOF
++'
++
++test_expect_success 'log --graph --graph-max=3 only three columns' '
++	check_graph --graph-max=3 M_1 M_3 M_5 M_7 <<-\EOF
++	*   7_M1
++	|\
++	| | *   7_M2
++	| | |.
++	| | | * 7_H
++	| | | | *   7_M3
++	| | | | .
++	| | | | | * 7_J
++	| | | | *   7_I
++	| | | | | | *   7_M4
++	| |_|_|_|_|.
++	|/| | .
++	| | |_.
++	| |/|_.
++	| |/|_.
++	| |/| .
++	| | |/.
++	| | * .     7_G
++	| | | .
++	| | |/.
++	| | |/.
++	| | * .   7_F
++	| * | .   7_E
++	| | |/.
++	| |/| .
++	| * | . 7_D
++	| | |/
++	| |/|
++	* | | 7_C
++	| |/
++	|/|
++	* | 7_B
++	|/
++	* 7_A
++	EOF
++'
++
+ test_done
+-- 
+2.43.0
 
