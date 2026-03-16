@@ -1,260 +1,137 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBAE320A0E
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 07:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D4826560B
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 08:09:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773647457; cv=none; b=ijZ9uozoHTF9WXDae16S9QBdU7X28r+oaREU8R+46Xab+hSrYyeIakaOFBSsWDYs38/ZetAL7wZ1WEKjSRf0A7Tw3TvVThhXu9fFVJUVb9U6bl62L5At97DNs7AAeUUvAyfntuYwh5SAIJZ8sFIBTGQc8tLfjsjxUOslTHShKJ0=
+	t=1773648556; cv=none; b=SEbEaexHQ7qCKA6YnIm2DtMeNy2wBTouSPZEcwst6tLKmwStDgBK89p2jrjd6qcMbENVWa9qrhT+Luk3Y6rxt8giswiqGqIX+juJ2zfAU53dkqCPRwCZo73mc6KMX24r533GvW3tecphaO8kjDh2QXbZTt5LKnzZ4JMH30K7TnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773647457; c=relaxed/simple;
-	bh=QWfrZj0hEXPxEwDXVJUH59TegiPtj3eUHYbRc+QjMSo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ewvu1UPux0UxjnRXce5OeciyeJ+fB51HNFUj7nFdrMMDetbRWARTJIdNjJiLjE7UAdBZSE/81T+Le8aZfPx41OWpRF+fzS7f7OsUgAhk31Frxni2vVP04M2BFdTmQHfB4WJWzs4huXUCzGbryRRjUzfZvmYwKnIL6iTndkDUMu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bfm2ITmQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=otVk/Hos; arc=none smtp.client-ip=103.168.172.153
+	s=arc-20240116; t=1773648556; c=relaxed/simple;
+	bh=QweeQ3vgN2ipcAMVZdfDl9ScTJf/KQcopXVRxeUkLRY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nYVyJV1PCzEdhIxM14yHAMCTaQfoPZFyG/OxFjHoN1esfNCE2kff8+C2LkYcxu58pf6GAIuuKboajEAcVQN84w6Ti9iTRdkxJMBUroGIgE1CYu8PDwxdzz+bPblL9296v4XsOOItpXD60mSZwdqr1tsI6Vkbvxhbj4LZgozsNbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NWDQQzrd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fm9AXjbB; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bfm2ITmQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="otVk/Hos"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NWDQQzrd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fm9AXjbB"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4F3F71400233;
-	Mon, 16 Mar 2026 03:50:55 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 36B91EC05E0;
+	Mon, 16 Mar 2026 04:09:14 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 16 Mar 2026 03:50:55 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 16 Mar 2026 04:09:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1773647455; x=1773733855; bh=jpb3P+p8hO
-	apUiV7QEqo2GcmK1eLmynODxjUqws2eVI=; b=Bfm2ITmQoFeYm6bGqUujmrZkpi
-	W2UCxmvlgB+8jxhTNvbVannOqYeO1jS+hCp8mwM9VKX9m/O71v30OLR1FvVLZ/yk
-	DlyB7PU9hCB+EG9bU5/Pboa3YgGeg1eKI6Be1hNKtBeNeLfC721614bMXefvfzCh
-	RxCHPqmnlYO7Mg2mjheHAE2hNiEMtUsHVRRmLc5OQw/EHsEurnoQ/yMVlyhsu4U6
-	Pxt5paQojzHdELxKi+no7bxdZs6U/u9k5s4aLvrp2nsPT00Y9WH37zTJAnHG7+Za
-	vYo7BqPH3sapwnpZPE2wMAR7BOpTdKRG6ThTIK1JwPu5dS9eKhgOB5vSWwdg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773648554; x=1773734954; bh=7M8QgtNbGe
+	3jyZsBZ+kFAVljUMbur1OpdHMSavwwi8Q=; b=NWDQQzrd5aN1V3c5EwaGOEcg6l
+	SxXbinA41DXnvR+rHkUsG/q+lEiYxSTrqNMhKUH/nrHdaUHIB1hHnSRGbmP6JBcp
+	g6xyLOCFP0G1P7JRUgDqlAXDE0tCNmsg0bcHo6dYLkv0qC1t8k3kCt4cAQ0ndo5t
+	cuUNR7mMeAsZo4b8FSuZYxXlcWRo6Asee+bDtxVfuMzw5Ul19OXv3Bs6gQ+sifHW
+	iabRC+GhKQRKxBBWBLXtSEhXgPtbe6UwVBm9p30jsuYtVmoUq7/GSDAicATOhXJU
+	uywjuuQhC5nw3iuCJ2Je5ncVmGODBZanJwzzPjEzPi0wObVMvzzS0VDk4m1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1773647455; x=1773733855; bh=jpb3P+p8hOapUiV7QEqo2GcmK1eL
-	mynODxjUqws2eVI=; b=otVk/Hos9glxBDbjoo/xhjIOXRCReZAkh3oq/tM/KLvu
-	HIw4HsTiG6nkpFyK9ABrnmqkIqu3I1vBKCny0BM2ufKf7yjf3Ozj78QrrIYNNoIO
-	Vt6D3hnD6fYCsApJwKJGwk+KikygLAOymlVc5IH2XLR/MR4mlcd/+Te3HgityuDk
-	wn5aO+ncE25EfhmFg6CtVe8tQGgpmIzBN9B6mo4A09JDGowcVFXWwi2onDfeuTQ7
-	ws6ucnKRqFpWMtKFoSiKhb9JGxICguzGe44SyS8q09v2JctNOEqPIJ+rTJwVwfHu
-	7UB+XPyOBGFiKZ+y5RIhvgR8khB3dQjcAvvFpjEDtg==
-X-ME-Sender: <xms:X7a3aQSyopPsCnM461kjE14BuY_Y_o1vgk8lZbULfHWIDNv_8AVGlQ>
-    <xme:X7a3aVNbt00RN-FoxtovAMCkRSGc_MOXnK46nv-cI-3kDbjee09pAaeLcEWD-PMrz
-    Ymd5qG7snEA9gcza7WdKKPpu-LvGyoRv1vo_lZlQxSjT8ymATho>
-X-ME-Received: <xmr:X7a3abN8IDKwyHphoHvr0yTGBLQUzCoBlwul4XFY0ucYDTnqi6kppyI4PEP74qSu_Z6U0dfG5AlrOP2GjX_0WdCzhY-cXG_tb42ICTTdt-I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleejkedvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773648554; x=1773734954; bh=7M8QgtNbGe3jyZsBZ+kFAVljUMbur1OpdHM
+	Savwwi8Q=; b=fm9AXjbBrQJVYr5lwMNitLtFHB3uhN5NbBfBEgn0s2RJw3IlhXg
+	4ZpyeicnfOtaKi9rs9dacdi2JAmvBnEkyQZz+wU3rF9pfcdMFjTpqPgbHoqHWBmW
+	y9/SHKKHbG5qMwUvV1j8XW0RwSt5sb+Fhzv5YIM4ag04ZLPtmcglxEMGjZ7jFo21
+	xwqQ4FdtGME8PTl1YhgNpVVIzbyzHDycmRgkTsu03ZJ4oouLrnZm3UxfRqk+LLem
+	4iPHer6xUve6oyUy2mUIh55hoH/7pfvAeT2q6VG5Mn47CO8g9i0FqAKJ5iNFrOkR
+	Mv9darBs+vwEvtkU1tqVM7yz+f1n1sEndvA==
+X-ME-Sender: <xms:qbq3aQJfecSPscAc5h-mRzzIFH-Ct3ECyBbGjVggb6etR-oUm_8a0Q>
+    <xme:qbq3aeGIuyzo9938jjRiFJ1u7DP2fA3yDqZLYNdWLmRnYCwp4WqrlZNIbYprZTvJQ
+    KoqHmDSzcuX9MjGqSE0ZzQynKUY4-ZgT2evj7X05rParbkmjp3J>
+X-ME-Received: <xmr:qbq3aYTrBcDuPqwFlEIfw4DRE5Rh_np3mobO_W9xKE8GdnK2sbrlcHJDNnR5uxc4ltIvOkrB1njd1oJF6ug_eA87jhkG_ajT_oemuQmgwSQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleejkeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    eigfeitdffffdvvdeuheehjeehheeludduhfehkeekgeeggfeuffehveegteejfeenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehsrghmuhgvlhdrthhhihgsrghulhhtsegv
-    nhhsqdhlhihonhdrohhrgh
-X-ME-Proxy: <xmx:X7a3adttrJ-bUNy1KwVHc4DuGjhhdGP7G_nOvUgD-qwT-YONrO4FAA>
-    <xmx:X7a3adUDY4F5KODRg7qCAbPtrwRgjqAOnbLjwOBlffXckpB-4QB_iw>
-    <xmx:X7a3aduAh1Xt_VYkMxuLdPKs4ZnXmadXi1-0fqdQzcD4xt2slu1r3w>
-    <xmx:X7a3aRWpLUpuctWmfaac9DrprNdhAL3iG1KgL4-5kcHMMiRqqdhzwg>
-    <xmx:X7a3afZB1Oix-gC9Rnzk3dKZvEKPz3NHgr6_GTHVvSeITTiHftKWbFeT>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgv
+    lhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hg
+X-ME-Proxy: <xmx:qbq3aaHKZUd1QPNUPfQLNmkDtzlgAmhc7vbDqnDMeGklp5SDu7cQtQ>
+    <xmx:qbq3aU-fZCAYEg153zu6fufW3Pxx2XJwH8b_XmrxSeIA5I9TZQGftA>
+    <xmx:qbq3aULGnkL-Mm7sXmKx8fhDA1VgGSOovTJz6CBJPd8IUs7Z-S1Y0w>
+    <xmx:qbq3aXa-DzlmIDZHUN51CVYiRTfSOm_GnjDY8Yv0hUZ3VbVeOp9Xyw>
+    <xmx:qrq3afjRe24emxp0agS13GmEPqdEBv2rA2Dss7sgcfM7CwKJyxAkXzXG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Mar 2026 03:50:54 -0400 (EDT)
+ 16 Mar 2026 04:09:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f5c09b52 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Mar 2026 07:50:52 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c6933955 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Mar 2026 08:09:11 +0000 (UTC)
+Date: Mon, 16 Mar 2026 09:09:09 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 16 Mar 2026 08:50:43 +0100
-Subject: [PATCH] clar: update to fix compilation on platforms without
- PATH_MAX
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 7/8] meson: compile compatibility sources separately
+Message-ID: <abe6pVAzMEY60rJ8@pks.im>
+References: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
+ <20260310-b4-pks-build-infra-improvements-v1-7-ec75d0710d6a@pks.im>
+ <a5d1ea70-12dd-461d-b5c5-a1127e017d01@gmail.com>
+ <debb89c9-2fab-4922-af1a-6048094baf9f@gmail.com>
+ <abJbir7NocxmBuAo@pks.im>
+ <2fe87868-dff5-4b3a-95e3-d4b6376b59ed@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260316-b4-pks-clar-without-path-max-v1-1-40b4bc91fdc0@pks.im>
-X-B4-Tracking: v=1; b=H4sIAFK2t2kC/x3MQQqDMBAAwK/Inl1IUg2tXxEPq26bpVVDkqog/
- t3gcS5zQOQgHKEpDgi8SpRlztBlAYOj+cMoYzYYZax6aIt9hf4bcfhRwE2SW/4JPSWHE+1IRtl
- nrevxxQZy4QO/Zb/7tjvPC8ImT/JuAAAA
-X-Change-ID: 20260316-b4-pks-clar-without-path-max-a2068515d9e2
-To: git@vger.kernel.org
-Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2fe87868-dff5-4b3a-95e3-d4b6376b59ed@gmail.com>
 
-Update clar to e4172e3 (Merge pull request #134 from
-clar-test/ethomson/const, 2026-01-10). Besides some changes to
-"generate.py" which don't have any impact on us, this commit also fixes
-compilation on platforms that don't have PATH_MAX, like for example
-GNU/Hurd.
+On Fri, Mar 13, 2026 at 10:33:20AM +0000, Phillip Wood wrote:
+> On 12/03/2026 06:22, Patrick Steinhardt wrote:
+> > On Wed, Mar 11, 2026 at 02:56:24PM +0000, Phillip Wood wrote:
+> > > 
+> > > I notice the reftable sources don't seem to include "git-compat-util.h", do
+> > > they need special handling here as well?
+> > 
+> > I don't see a strong reason to do so. The reason why we need to be
+> > careful with "compat/" is that we redefine a bunch of standard symbols
+> > there, and that requires us to play a couple of tricks with preprocessor
+> > macros (see e.g. "compat/fopen.c").
+> > 
+> > We don't do anything like that in the reftable library, and we already
+> > include "compat/posix.h". So in practice, it shouldn't have much of a
+> > consueqence if we start to include "git-compat-util.h" implicitly over
+> > there.
+> 
+> It does mean we're using different includes when compiling with pre-compiled
+> headers compared to compiling without them though which means contributors
+> using per-compiled headers could accidentally depend on functions that are
+> not included when compiling without them. Wasn't the idea behind
+> "compat/posix.h" to avoid including "git-compat-util.h" in the reftable
+> code? The commit message for 75a044f748f (git-compat-util.h: split out
+> POSIX-emulating bits, 2025-02-18) says
+> 
+>     This intermixing is a bit of a problem for the reftable library as
+>     we don't want to recreate the POSIX-like interface there. But
+>     neither do we want to pull in the Git-specific functionality, as it
+>     is otherwise quite easy to start depending on the Git codebase
+>     again.
+> 
+> We could precompile "compat/posix.h" for the code that does not want
+> "git-compat-util.h"
 
-Reported-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
+In theory, yes. But in practice we'd notice this quite fast via other CI
+jobs, and it feels a bit ugly to split out so many different libraries.
+So I'd propose to keep this as-is for now, but iterate in case we notice
+that it _does_ become a problem.
 
-as discussed in the thread at [1]. Thanks!
+Does that work for you?
+
+Thanks!
 
 Patrick
-
-[1]: <20260312191901.174808-1-samuel.thibault@ens-lyon.org>
----
- t/unit-tests/clar/clar.h      |  4 ++-
- t/unit-tests/clar/generate.py | 79 +++++++++++++++++++++++++++++++++++--------
- 2 files changed, 68 insertions(+), 15 deletions(-)
-
-diff --git a/t/unit-tests/clar/clar.h b/t/unit-tests/clar/clar.h
-index f7e4363022..9ea91d3d0e 100644
---- a/t/unit-tests/clar/clar.h
-+++ b/t/unit-tests/clar/clar.h
-@@ -15,8 +15,10 @@
- # define CLAR_MAX_PATH 4096
- #elif defined(_WIN32)
- # define CLAR_MAX_PATH MAX_PATH
--#else
-+#elif defined(PATH_MAX)
- # define CLAR_MAX_PATH PATH_MAX
-+#else
-+# define CLAR_MAX_PATH 4096
- #endif
- 
- #ifndef CLAR_SELFTEST
-diff --git a/t/unit-tests/clar/generate.py b/t/unit-tests/clar/generate.py
-index fd2f0ee83b..2357b2d6d2 100755
---- a/t/unit-tests/clar/generate.py
-+++ b/t/unit-tests/clar/generate.py
-@@ -8,7 +8,7 @@
- 
- from __future__ import with_statement
- from string import Template
--import re, fnmatch, os, sys, codecs, pickle
-+import re, fnmatch, os, sys, codecs, pickle, io
- 
- class Module(object):
-     class Template(object):
-@@ -147,7 +147,7 @@ def __init__(self, path, output):
-         self.path = path
-         self.output = output
- 
--    def should_generate(self, path):
-+    def maybe_generate(self, path):
-         if not os.path.isfile(path):
-             return True
- 
-@@ -223,34 +223,85 @@ def callback_count(self):
-         return sum(len(module.callbacks) for module in self.modules.values())
- 
-     def write(self):
--        output = os.path.join(self.output, 'clar.suite')
--        os.makedirs(self.output, exist_ok=True)
-+        if not os.path.exists(self.output):
-+            os.makedirs(self.output)
- 
--        if not self.should_generate(output):
-+        wrote_suite = self.write_suite()
-+        wrote_header = self.write_header()
-+
-+        if wrote_suite or wrote_header:
-+            self.save_cache()
-+            return True
-+
-+        return False
-+
-+    def write_output(self, fn, data):
-+        if not self.maybe_generate(fn):
-+            return False
-+
-+        current = None
-+
-+        try:
-+            with open(fn, 'r') as input:
-+                current = input.read()
-+        except OSError:
-+            pass
-+        except IOError:
-+            pass
-+
-+        if current == data:
-             return False
- 
--        with open(output, 'w') as data:
-+        with open(fn, 'w') as output:
-+            output.write(data)
-+
-+        return True
-+
-+    def write_suite(self):
-+        suite_fn = os.path.join(self.output, 'clar.suite')
-+
-+        with io.StringIO() as suite_file:
-             modules = sorted(self.modules.values(), key=lambda module: module.name)
- 
-             for module in modules:
-                 t = Module.DeclarationTemplate(module)
--                data.write(t.render())
-+                suite_file.write(t.render())
- 
-             for module in modules:
-                 t = Module.CallbacksTemplate(module)
--                data.write(t.render())
-+                suite_file.write(t.render())
- 
-             suites = "static struct clar_suite _clar_suites[] = {" + ','.join(
-                 Module.InfoTemplate(module).render() for module in modules
-             ) + "\n};\n"
- 
--            data.write(suites)
-+            suite_file.write(suites)
- 
--            data.write("static const size_t _clar_suite_count = %d;\n" % self.suite_count())
--            data.write("static const size_t _clar_callback_count = %d;\n" % self.callback_count())
-+            suite_file.write(u"static const size_t _clar_suite_count = %d;\n" % self.suite_count())
-+            suite_file.write(u"static const size_t _clar_callback_count = %d;\n" % self.callback_count())
- 
--        self.save_cache()
--        return True
-+            return self.write_output(suite_fn, suite_file.getvalue())
-+
-+        return False
-+
-+    def write_header(self):
-+        header_fn = os.path.join(self.output, 'clar_suite.h')
-+
-+        with io.StringIO() as header_file:
-+            header_file.write(u"#ifndef _____clar_suite_h_____\n")
-+            header_file.write(u"#define _____clar_suite_h_____\n")
-+
-+            modules = sorted(self.modules.values(), key=lambda module: module.name)
-+
-+            for module in modules:
-+                t = Module.DeclarationTemplate(module)
-+                header_file.write(t.render())
-+
-+            header_file.write(u"#endif\n")
-+
-+            return self.write_output(header_fn, header_file.getvalue())
-+
-+        return False
- 
- if __name__ == '__main__':
-     from optparse import OptionParser
-@@ -275,4 +326,4 @@ def write(self):
-     suite.load(options.force)
-     suite.disable(options.excluded)
-     if suite.write():
--        print("Written `clar.suite` (%d tests in %d suites)" % (suite.callback_count(), suite.suite_count()))
-+        print("Written `clar.suite`, `clar_suite.h` (%d tests in %d suites)" % (suite.callback_count(), suite.suite_count()))
-
----
-base-commit: 67006b9db8b772423ad0706029286096307d2567
-change-id: 20260316-b4-pks-clar-without-path-max-a2068515d9e2
-
