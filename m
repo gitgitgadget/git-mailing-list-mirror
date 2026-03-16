@@ -1,167 +1,238 @@
-Received: from sonic309-13.consmr.mail.bf2.yahoo.com (sonic309-13.consmr.mail.bf2.yahoo.com [74.6.129.123])
+Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8398F283CBF
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 12:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.129.123
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773662728; cv=none; b=NVh9TXMww+svXdf+L8Tw0DkEpQNwUqqnY5JpOJ1zcrB1dRFW88DLvc9DLcdgdw72Ev8Cfmd13Un/dPSyy9jM+0qUy0Ov/NbB22SQEWk5s2gzFLKZArOGFWWU7kpq5Kmqk2NwsHKIgu3pX/rq1KtSTfLMM4EP5oghA8P5VJDSeBg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773662728; c=relaxed/simple;
-	bh=BCErlpH8StCntoXHd3OXBX64G8V/62xVtdZ6kxDfAZs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AvKSIpHX3RwTYlKpxjJnb/7HfLw1l+CW6Df4cGY5fcFpSWv/UhYpPV2t+vi2/s7Ce0aspwbVDXI59jQvA2YxxJNK6TSC1U+T4xw9zQg/MIPnGzTW1psW0eLXlyRVKvZQnV4Amkft08WfVsNLOKmJr5/7STqq6ndvljlycFVb73w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=NuPOVgMo; arc=none smtp.client-ip=74.6.129.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28740394795
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 12:08:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773662930; cv=pass; b=BHV7ETlyPuYuIps1RzNULqytudIP2guGDYAMMKba79O1o5FeaQ/tFs4GuQi2fU8S+SoSmt4UxmI4A8Pt7KXL+/BhaWBb4XNHr0NmOIS1En8AIDuFxQEBqpM1/ngWk78qvL/o+46GVJwMQsbFwWU1DSgufaf+i7iNgHjZXkLsVhQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773662930; c=relaxed/simple;
+	bh=btDy0NvHrU3QI3NUfb5UpzwPM8Bn/oAxTJYOApOIsoI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ViFoy67F5Qu2lFARgEPlQI6ZF89jDa8MWLCKQCGgCeoBZPdSwAnUz2+7ZJH3X8nSf7mkLOFnuLs0uVRLOwtmT5zMDyLD7LsKFWjNaBpq7ASiNI+ND1XKIWFWLVJaMPQcra7x55HWS9vtWOHrt3aSPDnjQdx+EJfQ2hIeCkqkYrU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bv6hurKv; arc=pass smtp.client-ip=74.125.82.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="NuPOVgMo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773662726; bh=+bsH+n6DpDWPTkXTWcP9kghYBDS7dm92sLam7Cr8+C8=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=NuPOVgMoUFTIkljqfnjMswHpYUQ+k9M6VmdqSHPTfOB4Ap7CreKsF89nl8fqnTCcGhk4wQXScfmcGOpnVuxI6ZXCsEey+o4LTdQh0iIQ3P/P32oAwaw0s++YCW1dXgVyqf9oDuf3UPc+PicPdgC77dv3rpEndSf4+B0PAMZgBXOodS+C6Kxsm7cSJXcjeSZvVLgoVjeaI2J4oPn3h8GFX2kFLp32HNxXaiz1RIOqNmsRLBgHvlfwrSDVMIQVd5VOEe/rWpNQ4KK0sCo1Cyn84KXU/SxlU29+Gf+BPddND8P3jiC0ymEmx2vyE2j8Q8Yszuy/G9S5EuMFVfGl9z5BUQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773662726; bh=5Yji2c8NE5kxNKMzv+w1RgesnJ90u25P+7t8kuTrYmO=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=Z2w/iJVcDX3T05yQOte0D4KdVzYCk0BOUH17wHGAU1DSVgxWrutlTLGlwsOtWPM+NkP9yArsnbniETUAOoefqLz3frZ0mJJSBKg8UZHHfNgoxrXg0OB6FDlJ9Zh9KzjRsGZFwQMUFyo/8Qw7RM11nXirKn7NxQQullu1/PmM+7MnEV+8mktjgHmC95y8o4GXrcLY82eupE8gnPfpU5q7JTMpMy97vE/tPgv5rtMGCGwS/C8At8eBiN+G55zbnorc0T2y++OCy/FZJ+w5zZNdz5haQTRf5k2aQqrYoCKtwuL5UDRkV9yEDyKiJzQKPXu801vyWVBCD5CHN6tpfG1wEw==
-X-YMail-OSG: 1ZIh0OwVM1nF7cVxwhgpW6o8r3Bn6yWMcAzveW8KCdajBALcGsvVMBwNipGD9_m
- wZycAyJnHuogbtDOs8dzW_eapmU6uup11jvkrF0xIR4neaKWBikzz778cE5tNYxnyjlPKphrNPPS
- oAJGAERIu8QyIPoWV96Zp3P5tobkVjz1vJU2Cbf.riJvm7GS4QtNkv9u_a_JGW4WGEGOITswW9Ce
- QW.7p7yiwEgI7I5S0_PUaiBM8YOe3Dn95gOmylXwjayYZ594M3fkzl3t7R74T3lDaxLOjW3rodff
- lNE2OJmZASEYOEMpCoc7Pg4LYoSHk4DXH5EoMdF5T3ERzL8ceglZcGA2HQSa.5z0vTDPkAuTx_0X
- HrXO5.ob8NTTKYg9AwwyMQs8zFOqZExpYVVi_YVu4KOB4qXJMcseS8bf_ntuKXO8__ymug5P.yP5
- W90j55JJl.opC4Wr.6DXvEJdQfRKNIZeXrEERBasdtZjaT1Qu9H11IqJXYziTGWLg.Tbkz_k10nN
- Ng1Uel1WEaOsj5F6qUg_9mv60puRvAipqqa.zujni23mUnBId_vv1m.iaga6dF8gJkR3UK7kpVBq
- faY5De6fFDj80ZRH75UPx7bhZAhkqmrQLA8LR8IIZ6AEgYr3cU_QpqhzZG8vdnIojLN92TeJtQZ9
- Jn_tu.pyuCuM6mQfaCHcG1u4rDfd7YpuHUA35tY_tJWJ1mGiC_xn8JW4sU8BpbpbBM.tRJnKUAmw
- 5rAadprWOF0pYSSM7cmp4u77cUG7TbkJYEfbTZ4ToEiMKrWHR.lZdsYIB7yDhP6sQ8GGj17HMhUB
- iupWj6tVzp7VEuy11jDAIHBz41dXuyNcCyjBs7.IdkUwfj4CMPArkvRrsZVzXuGSUSqZgO2KRzLc
- 1MrDs3_ePY2BCLC.L3ZG.x7bgLesy81H0R7IQRgwYNyDFhTgp7FIaFRvuTIXZALu88CwZKiljPjF
- Emzsh1M05fBoQTuAvkfuZs5FfauwbOvmHot0Bz4nyN85iUu2aqmExmW9OyyvylTWT9dLS7wyNLHA
- f.f5EXghL2GVsCueZXdvwx0t7updVEgaRNYRfZ_ZY1bMwiYr1h04ojUB.xek8RsY7YB4hK4XlYAk
- tL808DUeJc4WQYfHCJcizbKY7UQHzSTCmlFSTdwCIn94bxjS.KwF4OExqppBOB78vU9VvGde1vD2
- nHHN8J81XTHdrG_s4aMCu9HQqtqRFev_kHy0ExevmQjbDishAIVpmUmU97Fh66qKOC_.7CQyuOnT
- gtpzmpU.oY_EhW4wxTv9vqXHaKCyMff6fJ1gorNInBiPobeNx5YpCDgcbnJyePtGMXqsCohagv6B
- NMRcw0ZtnTjIim8NJeME5sdeuQlZXCBj7pw1D_mU_jX5SVDPnIbu0WYm297DIrwyquG_O7Yp_ZbL
- RlYReUkKzhrADU0BaNHKEFXtj9qA7SUeRY5BVQe7UWUqb2K.1Xm6cJqcQcLizCWolXf3D7gDbOMk
- dXckJyMdHhnIDKewNPmBcfmnyEYaVVfBDDZtc7WxYocnZCLh5DT8GR5XTtceZWxSILL9fZ2oDFfS
- yHArngyPkHMdS8cxRE1O2ZU9u97QrXRccQBPv63bfvRmaDFi63UkwFqyd5Xev1bEKoVQaYTYx4NU
- w20qt.MCY7oXIy5HCbrMPDxEYx24dIhnQNKPm8JEf7ZBEwIi7sqsSlZMAXafm14yl_vWPcQoqtEx
- zXarNcHf3c4kaQgygmcnZf.ByTTtpOpy3jWcQz2ST904l4LgFny4UWTVsDVxMAUTuLBoSMPIB2Xc
- 9K_2ud2sROnh7ddWCtKqmqgzQi5m.u02Z6FVRtl7V1O4cRHSUUzKuUaSQWBtMN7xV0wWTwLsNl9A
- BbsSE_jtLxHs3f4DIuxUGTfH8Vc5BNdYQfRWiPA2imRLUb71W75BTmrNQkRUq_drM3CGMgIVq_gn
- UT4HJDRIdZWoeVwjN4t5.VDOHuAOi1o8FD2r_6zySAIo4W1ydH_FTnsYFiNir0wTL3K80MxaBgNO
- MX4SngyqRLUd1ECPajzJw3Q7oRk6_Pr9Bea8U1pl0DR4l_M_RT0ACmnsZRsaxeOZTBxro03TwBXq
- cBRp5OJju8aiTQiRvPkPxsMInEeje0ubQyyMS6gtZnHmt1mJw6WA0AH1BIwwkcemHhDCC6oUO_j_
- 8vK1KHqv1fgMP79kRfK5BK9iGZg2UYGogkrVXOYkSydA7B53JGL_FSigELvhr5izwMnCdMxNwYpW
- brYiKMy4IGNu6nGv1bqVmx5QNWa.9OqPdasmRH78wvhG3.EgngQ31370UgWQZ9zR7PSMm7KAFcDW
- WQtzdktF.TY3dRB4yHT.4BjH1pprriQ--
-X-Sonic-MF: <jerrywang183@yahoo.com>
-X-Sonic-ID: df7aa206-0dec-48a7-84f1-c81262724d16
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.bf2.yahoo.com with HTTP; Mon, 16 Mar 2026 12:05:26 +0000
-Received: by hermes--production-bf1-697f88457-5cjx5 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID c4eac7c302a7592941f4c26be4777d13;
-          Mon, 16 Mar 2026 11:34:59 +0000 (UTC)
-From: Jialong Wang <jerrywang183@yahoo.com>
-To: git@vger.kernel.org
-Cc: karthik.188@gmail.com,
-	Jialong Wang <jerrywang183@yahoo.com>
-Subject: [GSoC PATCH v2] apply: report the location of corrupt patches
-Date: Mon, 16 Mar 2026 07:34:59 -0400
-Message-ID: <20260316113459.77794-1-jerrywang183@yahoo.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260315231538.68586-1-jerrywang183@yahoo.com>
-References: <20260315231538.68586-1-jerrywang183@yahoo.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bv6hurKv"
+Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-128ef4dddbfso1489495c88.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 05:08:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773662928; cv=none;
+        d=google.com; s=arc-20240605;
+        b=kWXlmImotsL3imb7v4Eg+QzyyDdpr1U4i43qcJc+RDW/aWwpWlj/5sgaACfsgIlIJ/
+         tPizgoIao21sNu+apWs2g5eFaMQbgHXcTsYCxQ62lIe5wDKYpR58hocAcN8tIJ0JskeX
+         WOO0jhakhtRjB443n3DQobrc4/tDeO0cJG2BFh7DVIv8TdcHHeqabs+Bo0yDac96tybC
+         eyLfajFTNzQGqO4n8DnNp9Ya6hZ2ENtNYgPhets7N4gA0PudYEwInuoVr5g7rAoaLY5H
+         GR1IeAZPvQ0K19fRDltGk8ol2rGPDoFuIQrReAUt/DAV+giM/vv77NGG7sl0M9Yvyeff
+         d4Fg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=+WiDaaRgESH+bH82mGjFTokVc4vYRweQ9MAc/+HS02c=;
+        fh=8mRAhMgRrlmUCid4VoYvAABqOLjH6YUN61F75yj3F6Y=;
+        b=CEzLWjYpiYEmCA46kohmt7rl13JaDGRkAQ5xglwRofI3V0607Icu9J4IDqMNdoNlEd
+         62rt6FkmNwH5UUrXHpHudvTJikgeoVxDewJ9FHcqeCQbEIhtO14mG14GGqC6kThPjCAx
+         BCW70UfCeNrWDGCWtYpeZuOXEM8ZVW1WqWTmw/T/4/yZBoY/jU+STSqYW9w83VC+JuDY
+         AdsuZILuVhCa9qYKBu0el4HCu0zawW6lMN1gvxlqpjqpgCJIJlBmM1pWITSeuh0JvsQh
+         HLvGj2AcGgUuqVta8vaZc3bwFY0OqtNFYKcHd/lmFqVebNQzeJMTWYH891oEg/yiijfd
+         YLlA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773662928; x=1774267728; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+WiDaaRgESH+bH82mGjFTokVc4vYRweQ9MAc/+HS02c=;
+        b=bv6hurKv0weuztVV+95Eb/Ihitmuao7iSvoREd9KaLsHnHWzDxTElvcP1ixrYc72/F
+         d+Z6HYrItnWjPqrocuSdzi/lJqJcWghOU8DucpS7SQ99CpzhH0FtOWIZ9CFxMvGcXu5w
+         5fEM3rgZaNScnTnw3v0ttMHv1ZhI3S5LfeVlS50A7MgLJi6DpGS6gHUzB8G9EYrKJTrj
+         aFzhg4SVKqZ1UPna44zDum8x595z67ILG4k+lGq4FaBtO1Wpb787B7WWn5g/pZFS/FEu
+         k54/LBeaFd7iQKcYXt6arRlz7svxjypXTfqHzzO37d6Os+tfP8lZAFwk0lTbrUyENJUf
+         JNKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773662928; x=1774267728;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+WiDaaRgESH+bH82mGjFTokVc4vYRweQ9MAc/+HS02c=;
+        b=PDRQ0Ew03FBDZYh5tW/3joQZC0Jmdd5Bx6fLGf7PBw9Bp+2et/f36jFZvAUFRqJTSj
+         loCF5UTCNhwdkVANrxg45xbJyKiGf0CWDlMdR8r0eDBbgxKFyuSxD04JrofN/XrRs3qo
+         On3xO/X/964Bdpj5z/cidVYRzNpiWyIWC5TIm7djlG9gdgSHF+k98W5ZcjxpTELIzh0L
+         FDjYQVy44KgkFgLv6iGlAsAJtN933NlqNebdPogCZT2HvPNkUR7emsrWgzZu3W0c2xEO
+         2yLxKvRLCn8WyCW9qCqLdfJq6q3wMQkCY096uiZW+7TFLggsJGYaDts5jPE2y/Kl2IMs
+         xenw==
+X-Gm-Message-State: AOJu0YwOJuhOqZ7LzSaolDhekUpUAuPY6MYtT7s/iQGmFgUmHZ9u/3vF
+	Mam7VOfWcw0b8Crg1mUJre1ZQVKjqWEZ1D7KcytY7/Hf/Yb+tyfLHx3V13Su0r2M9UKfKfbibyF
+	x07UczFlz65/Xf8CNJCoX+E6/fCE8VmI=
+X-Gm-Gg: ATEYQzwdhmUnHg0X2nsVEP611t01f+QJGUew1dod+KTWikWBkW+RxPQ3KlNyXZRGHEo
+	8zDGGJzwcqzcRNknOC/5twkIbhoJcJJih9su7FNreD5A2fYOBqdb82j+X1lhV3AzMW9Y9qdduLw
+	GIcJEYwu1lN6fYtJ2pVyvnUCytBnnhuSiWOp1BSXLN170UftxGHo2EG1VXB2Sv5C14QYoFIFhGb
+	cCymvrWk5ULaH6xdjmcpJ8/t30cHDobx2d3eOZW3AALOshaQ6xsTTDh5ILt/HatxmV6FjCc9Lxj
+	UkIceXZwZEs69Q5PPhzd+Ll1uQRZPsidk4/DE1QkW56wXwWjYOmFRJ0w5CIaFc3mvzUS
+X-Received: by 2002:a05:7022:2214:b0:124:4d0d:6921 with SMTP id
+ a92af1059eb24-128ecba47e8mr6722793c88.6.1773662928120; Mon, 16 Mar 2026
+ 05:08:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260305204809.54927-1-valusoutrik@gmail.com>
+In-Reply-To: <20260305204809.54927-1-valusoutrik@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 16 Mar 2026 13:08:36 +0100
+X-Gm-Features: AaiRm51s4rwsMRAzzNADEiBBHlX5MZKa8okyTZTW4qL0lHYwbGpeNdPMTUmQnZ0
+Message-ID: <CAP8UFD3LJEU1YNBOi5VtpZANTY9PA3_v=eU9JF163F2efp-hGg@mail.gmail.com>
+Subject: Re: [GSOC Proposal] Complete and extend the remote-object-info
+ command for git cat-file
+To: SoutrikDas <valusoutrik@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, jltobler@gmail.com, 
+	ayu.chandekar@gmail.com, siddharthasthana31@gmail.com, 
+	chandrapratap3519@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When parsing a corrupt patch, git apply reports only the line number.
-That does not tell the user which input the line number refers to.
+Hi,
 
-Include the patch input path in the error message, and reset the line
-number for each patch input so the reported location remains useful
-when multiple patch files are provided.
+Sorry for the late feedback.
 
-Add tests for file input, standard input, and multiple patch inputs.
+On Thu, Mar 5, 2026 at 9:48=E2=80=AFPM SoutrikDas <valusoutrik@gmail.com> w=
+rote:
 
-Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
----
-Changes since v1:
-- reset the line number for each patch input
-- add a test for multiple patch inputs where one input is corrupted
+> I have read through most of Eric Ju's [4] work and some of Calvin Wan's [=
+5]
+> work. I am still finding more things to understand from each thread, but
+> I feel I have grasped the basics.
+>
+> My work in this project would be focused on implementing the changes
+> suggested at the end of Eric Ju's [Patch v11].
+>
+> I wouldn't say I understand every bit of discussion from that thread,
+> but in general my understanding is :
+>
+> Calvin Wan and Eric Ju has already implemented a client side command
 
- apply.c               |  4 +++-
- t/t4100-apply-stat.sh | 38 +++++++++++++++++++++++++++++++++++++-
- 2 files changed, 40 insertions(+), 2 deletions(-)
+s/has/have/
 
-diff --git a/apply.c b/apply.c
-index b6dd1066a0..b7b0a201b3 100644
---- a/apply.c
-+++ b/apply.c
-@@ -1875,7 +1875,8 @@ static int parse_single_patch(struct apply_state *state,
- 		len = parse_fragment(state, line, size, patch, fragment);
- 		if (len <= 0) {
- 			free(fragment);
--			return error(_("corrupt patch at line %d"), state->linenr);
-+			return error(_("corrupt patch at %s:%d"),
-+				     state->patch_input_file, state->linenr);
- 		}
- 		fragment->patch = line;
- 		fragment->size = len;
-@@ -4825,6 +4826,7 @@ static int apply_patch(struct apply_state *state,
- 	int flush_attributes = 0;
- 
- 	state->patch_input_file = filename;
-+	state->linenr = 1;
- 	if (read_patch_file(&buf, fd) < 0)
- 		return -128;
- 	offset = 0;
-diff --git a/t/t4100-apply-stat.sh b/t/t4100-apply-stat.sh
-index a5664f3eb3..b19fc9fe50 100755
---- a/t/t4100-apply-stat.sh
-+++ b/t/t4100-apply-stat.sh
-@@ -48,7 +48,43 @@ test_expect_success 'applying a hunk header which overflows fails' '
- 	+b
- 	EOF
- 	test_must_fail git apply patch 2>err &&
--	echo "error: corrupt patch at line 4" >expect &&
-+	echo "error: corrupt patch at patch:4" >expect &&
-+	test_cmp expect err
-+'
-+
-+test_expect_success 'applying a hunk header which overflows from stdin fails' '
-+	cat >patch <<-\EOF &&
-+	diff -u a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -98765432109876543210 +98765432109876543210 @@
-+	-a
-+	+b
-+	EOF
-+	test_must_fail git apply <patch 2>err &&
-+	echo "error: corrupt patch at <stdin>:4" >expect &&
-+	test_cmp expect err
-+'
-+
-+test_expect_success 'applying multiple patches reports the corrupted input' '
-+	cat >good.patch <<-\EOF &&
-+	diff -u a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -1 +1 @@
-+	-a
-+	+b
-+	EOF
-+	cat >bad.patch <<-\EOF &&
-+	diff -u a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -98765432109876543210 +98765432109876543210 @@
-+	-a
-+	+b
-+	EOF
-+	test_must_fail git apply --stat --summary good.patch bad.patch 2>err &&
-+	echo "error: corrupt patch at bad.patch:4" >expect &&
- 	test_cmp expect err
- '
- test_done
--- 
-2.51.0
+> called get_remote_info but its designed for being batched to reduce
+
+s/its/it's/
+
+> multiple network trips to get a single object's data.
+
+The `git cat-file` command has a `--batch-command[=3D<format>]` option
+to enter a command mode. In this command mode some special commands
+and arguments can be passed via stdin to `git cat-file` to request
+information.
+
+[...]
+
+> ## Project : Complete and extend the remote-object-info command for git c=
+at-file
+>
+> Currently in the case of a partial clone, the user cannot retrieve all
+> object data without fetching the object beforehand. To solve this problem
+> Calvin Wan and Eric Ju had designed a patch sreies that can solve that,
+
+s/sreies/series/
+
+> by utilising protocolv2 servers capabilities.
+>
+> This was done in the form of "remote-object-info".
+>
+> But only the %(objectsize) was implemented, and that patch was not merged=
+.
+> This project has two goals
+>
+> 1: To Rebase and finalize Calvin Wan and Eric Ju's Work by addressing
+>     the feedback on Eric Ju's Patch v11
+>
+> 2: To add support for objecttype in remote-object-info
+>
+> 3: To discuss other information type like objectsize:disk and deltabase.
+
+s/type/types/
+
+But anyway I think "information type" is not a good wording for these
+things, because we already talk about "type" for Git object types.
+Please try to find a better wording.
+
+> ## Timeline
+>
+> Mar 6-31 : Refine Proposal
+>
+>     If possible I would like to submit small patches... but first I will
+>     have to rebase Eric Ju's Patches ... I am not sure if I can do this
+>     before GSOC...
+
+You can try a rebase to see which issues would need to be resolved to
+complete a rebase, and talk a bit about these issues in your proposal,
+but otherwise applicants shouldn't start working on a project before
+they have been accepted.
+
+>     If not, I plan to contribute to git in other areas.
+>
+> May 1-24 : Community Bonding
+>     1-7  : Understand relevant underlying/ helper functions
+>     8-24 : Ask about any design related problems/decisions
+>
+> May 25 - Jun 14 : Start a Patch Series to rebase Calvin Wan and Eric Ju's=
+ work
+>     and keep refining
+>
+> Jun 15 - Aug 15 : Start and keep refining Patch Series to add support for
+>     object type information
+
+Would you implement both the client and the server side in the same
+patch series or do it separately?
+
+> Aug 16 - Aug 24 : Discuss and Implement other object information if possi=
+ble
+>     Concurrently I shall make a report for all the work done.
+>
+> ## Availability
+>
+> My current semester is ending in the first week of April, so I will be
+> able to contribute 7-8 hours per day, totalling around 35-40 hrs a week
+> on the project.
+
+Do you have another semester starting after the current one?
+
+> Total weeks =3D 12 , total hours =3D 35*12 =3D 420
+> It leaves with a lot more room to accomodate any unforeseen circumstances
+> that may arise during the project.
+>
+> ## RFC
+>
+> I have a few ideas but do not know if they are worth pursuing, so I will
+> leave them here in the first draft
+>
+> - Addition of a remote-object-info outside of batchmode :
+>     Yes it should be optimally used in batch mode .. but if user wants
+>     only one objects size or type then should they be able to just
+>     `git cat-file -r origin <oid>`
+>     and get the size and type ? or something similar , I am not sure if
+>     the way I have depicted it conforms to git's design.
+
+Not sure if that would be very useful first. Also that might be better
+in a different command than `cat-file`.
+
+> - Addition of commands for common user behaviour :
+>     I dont know if its going to be a common user behaviour but what about
+>     `git cat-file -r --all-absent`
+>     Or inside "git cat-file --batch-command=3D"<format> remote-object-inf=
+o
+>     --all-absent --type=3Dtree <remote>"
+>     which would basically fill in remote-object-info with all the blobs
+>     that are currently absent from the worktree ?
+
+There are other ways to do this, like using:
+
+git rev-list --objects --all --missing=3Dprint
+
+Thanks for your proposal.
+
+Best.
