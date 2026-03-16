@@ -1,598 +1,630 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A634360753
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 21:38:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773697098; cv=pass; b=C29hlI3fDpXOWaF1CgEixGa5tAMEXFP2+Miu2ZMXI7QP6bjs9+cjjc0WHTbFIuOFRFEh0L2GvzJovOWWZ9OV/z7IZtbZj6mrRko5VNBr41vym2mB8lz8V4TRAIhFpVBt1GeI7gRZeIDDltNpL9xZwKC3b38ecaIRyP7KbtVvl9A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773697098; c=relaxed/simple;
-	bh=BlE5EzCsOYB1Z/sGYeyY/lfC+LSyRTfWoAhIWsC04MI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DYN5WCwg2WJ02AnmKZUrGVx6jMVgforQ07kTe5LoFaMI32R2GlnnBE/AI9Uy79VknzRPyfmLNJKRDZcCrX03A/GOr3EdzeP4zHG7MvYC/E3X3+RkdY7YB6UjhS1pAqdyPnahOKwNpYMv8zyFPPuyEhOM93IP1Nkf4RyPx2mPENQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGANWnnv; arc=pass smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6907364EA1
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 21:49:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773697744; cv=none; b=to4SUpR0gKQc7xTdRI6JaerofHTYPjPZbh/OgcXPcnCdgGeXa6jZxZCe+n+NSMmfX2Ai2vfHD29t5Et8jgamcvjAcYZHITaehGY1GFdrc5Av99CLjjLnmTBE732FsaIrjyxlAjG31UL6R+INteoJJUx9svSKe8CNHdxIRJP0/QU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773697744; c=relaxed/simple;
+	bh=W8WorUUrKh2Yik9O3X2SmdvphuAzSw+2aa7Mx8T0+LI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Fm+0lSLbOUpsVyoLeIwQ6PhoRDaYQB8IUYZudrZYFr5/iVT+6TFgze0AxGXpTVSb6DF4C9w2ov8NprRmoXief8kiNtQxOan23Ny9pspo3JPfWARVKO0GSPoc+x88+CXm6/+kyZnO6zuaODLHI5AZSkNSkA/526kqdqmzbQpyMKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=URVqngIk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uJOZkeum; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGANWnnv"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-56b1b9899d2so4662179e0c.1
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 14:38:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773697095; cv=none;
-        d=google.com; s=arc-20240605;
-        b=aCRTouCY5PbGGpjokoEKZgRCe17q6lxstKjyyliW4l2X1gI4YbcTTJYR5+gHIvruuo
-         BtLWp5vnH8IlbVGItO0RHbAsiYpjyvkFAItHjDeDXmui5ite/95vg7vcxjdHxBmEWe4E
-         vE3hKTLWhlx+K/vk/OdhE6Wni7o7RjRHGWUX5dNEHcnUUdBcNTc8MyGpWp/rr5F3ZdNg
-         F41v9cNCaMZKTOJLfo6lEm8bM5ChN2LvSxiSBPFalS+I1wfUmkheIAzvso97DOcXgAa9
-         xWxBdiTh82z2AJIC+RJ/HQH/11MaHmKY6bPyI1DyCcyBgCbSPkQ0ms0DE3QNtEaGE334
-         +tNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=mYo14qTG3Zpna7uSR/+EQNuSLpdIbohTWFupBGV24/M=;
-        fh=1jGbgOtHiIOtyCV15W34kegXYT7BBNQhqlRjebf7M1o=;
-        b=Tt4IE6cMHzKLz8DPWWatfqHBm9jE6dwMs6v5zuPIkm+xCS9lBTKnuM/T0qMA7vySaI
-         i7pDdsbpMQl5ArmUnzHcgcuuUSO7+KuZpio5r59Y2dlY0LA7DfEVGOCXTYOTdOMhnBGQ
-         Mh0vBBG46uROoB6ocsH/h+cmm7NXuE9xFqgjC9gz/hSFfvoRqo0QycKfQtN8EkkYPl03
-         XSRLERYSeoBFM13ZJHRJYZvxZANqpH6IdwDz79DSuze1+zeQ5pCDm91g4w3l/a+WwTt4
-         86DhW4eGG6DaZkRmdBrX+VskOeZBTNPIVUc4zGKxbrmU7LyTXFR/hQbF5MIrFJCjgNPJ
-         ZlSA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773697095; x=1774301895; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mYo14qTG3Zpna7uSR/+EQNuSLpdIbohTWFupBGV24/M=;
-        b=bGANWnnvQv/b+1br5VU+i7nEuCOM5Viq5AgYNvakMxPwBXyxnMvvFrYFbOSmf0ldbK
-         fKW1P3b85vc74r5rR+mydAgcpSfSXrLiFhHEjs43bxDqaTKqKFZf2vHCfIZ2KmzecSBK
-         lpHvedErOIcQBh8jRG3qM1fKX3EHXe8BPXrGIwaUhhXNuxmUQ13FM3cVWxEZu/FiVnIf
-         wyc8zLxu/8fOx/N7J4hxYcsEOf/FPUqnRosvDFLUHLXaY3vSKLKIuCUVxdGr4ryrP1nD
-         3rmz6jXnSjpeJP+E580ch6YrBRBd2NJK1LpgMmznfActsyr5amFoAKhiQKNp+6hIoVI1
-         gdgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773697095; x=1774301895;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mYo14qTG3Zpna7uSR/+EQNuSLpdIbohTWFupBGV24/M=;
-        b=L6A2P0GaB4i3e3QFbFJg1HbfAItwfVAbotHB22F18/QMZV2rwMRhBlc2G8Q9f2kmt8
-         HfnWye7ZtINZOSaVN7JxeGVXhNxsNwPp/yT75I4MG4a55l6ILwXoPLm9G/gHyw/WP4Nc
-         +XPecZXYlmHE/21B1JpGdlvA2q0b3azqRATRogRSni3pTSspZb2GoWGuBPKXiFp89Ir7
-         u4pjLwPusCcH3Er52Yway/uLgg0gW5v24T6obebA8uj93OjkBYeDcMQqw34V+UDPzV0U
-         oqBHCsaACqvaCeoTE8CkUxCwr+sW5p4Jp37CTjK9x7r858ECAE37uIxXhK6/jt42RtG0
-         LCQQ==
-X-Gm-Message-State: AOJu0YwzIecN1j8GKeSIWL7u5uv/buZdOHeme4uVl4SehL+KlgWfXvpT
-	m3HYRu3TmglWLJa/n8Jcw0PY3uvkrEElB70udxBPPXTPudhZTIOQY3EQKYvSIuB4aVEXQGBvNXC
-	6zDPLVoNoXW0aY1HcVAHlsS9ieygUXXw=
-X-Gm-Gg: ATEYQzy+jCF3wxJnfqIAslnxejc/PiBl+xMg46W68gm+trYmsvMts+Mr2bdLCs6k5ZM
-	q4BZdfp7TLSNCbrTKnOrJKhOviPR/3IH8t+0W1NK25LrZp35l3eeJUxoEUPQOvmCKwz8b74rYqF
-	xi/zBBqQzlMlNDZoqR/MrrF+gPaAcYGfx9kD8KRd+xE7Ar+w7aqz5T6YtwGomW03jcMJiDzlOUX
-	9gZTZncydWmP2Y+G4QPzqpnBti2wILVZsNWahBojNgGXGMjh8ooXkTdJfym+f1MXFrJNjKao9yf
-	Z1LFFnXfS5BWXASzSgT/WonepKYwOo4UZLmoFIDH6A==
-X-Received: by 2002:a05:6102:324e:20b0:602:6987:e233 with SMTP id
- ada2fe7eead31-6026987fb19mr15372137.37.1773697095133; Mon, 16 Mar 2026
- 14:38:15 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Mar 2026 14:38:14 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Mar 2026 14:38:14 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAN5EUNQdNtPq1mEBUXOjRJ_t2n=cSUS9dz+HUfqbFjrjZVoGLQ@mail.gmail.com>
-References: <CAN5EUNQKv-LCkbY+5scn6pk6fL8kpmjNR=66rjeY=NqKbqRkhA@mail.gmail.com>
- <CA+J6zkROsbkr6mWQrEhnswtb4sOh+UMO+bt3P-5XDiAjhtcsMg@mail.gmail.com> <CAN5EUNQdNtPq1mEBUXOjRJ_t2n=cSUS9dz+HUfqbFjrjZVoGLQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="URVqngIk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uJOZkeum"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id BE9261D002ED;
+	Mon, 16 Mar 2026 17:49:00 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 16 Mar 2026 17:49:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773697740;
+	 x=1773784140; bh=DiIHidP/Mwy/+g4ciUsdZS+apRPfhCVoZFtkeOrMxvg=; b=
+	URVqngIk5UoubSpVHxXG5E0fLNjP0c4Wj6eLLW1teb/b3mXzVfnQgWBOgzdBqpIt
+	meIypT/a9APg1XY18m2AWR4MUWzZGS2Xsl0cJvZo3sBdxhDg4FAuwT4hWj2Ayqzu
+	1+VQPJe52couhJRDHZjc7Bn3QMqX0Q9ju5US0g7XHvtUK/dRYfuHQXRbGbYW7+pT
+	9SQLAVwcSDnrgst4CrY6vFlZTDRaPQ0nGkIH2MtsS0bBmDwL3ZU0YeIG9lGf5jhw
+	wR3trqydB3QDazjp95TkkLUTg3BE+P0X9LwJz2PU6KRKSXfpAFeRQv1+4ECJZLKv
+	9v8qbdJ34taNAe+wJE1ztg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773697740; x=
+	1773784140; bh=DiIHidP/Mwy/+g4ciUsdZS+apRPfhCVoZFtkeOrMxvg=; b=u
+	JOZkeum0i9ZGhBRMNQ0NZG2OVgjZLVg988tdDgD2OxsbFF5vql0GR9VD5skoBFVE
+	esp9iZTIwuLzaZhQRmeM8qUleECq51vswjWRa11TVdwKHCuaOfbeaxS9FwUHr2tH
+	IYuYUss6E/YVAyzz3q8O6VHrYCqHUAxpoGv4bYNgQut7NZgytwRfz0EG+aBtWK3m
+	B1frYFdINkIBmJHoY4mGKvBoBSKLKLzSgEzyAhcSdRuZrtv1+vOovBVDPB5aFBCB
+	JvDqnvDqtbFZfLwFAQd4yjU4KeT3eAMs14BTULZTV54kitWpxXO4+i7HX1vknf3X
+	2oRUR7M9c3RuUlVE2htFg==
+X-ME-Sender: <xms:zHq4aS1JF9wS2NOTrEvjQTnGZGlYE80CGFZYZJmBaKm58AY-0S2xKcQ>
+    <xme:zHq4aciN9s59xAvAsdVX1_u122-ureS7C3V9j6T6FiQrX8qSktBgKWwMGAgGtbfA-
+    o9tVmKY3VHxpj7wX5-UK0_NolbbtOlcfeKro9TO49wQI4Ej1NIopN0>
+X-ME-Received: <xmr:zHq4aYQWOvtEq7u_G74nW6cuqhx5KzDBrhQFhw3Tc-cSIVS4U64raEQk35AC_DwHBSk8lFwgHoh1UyC5SryHWWJG6XDs44ri_wH0wjc-rEHxuPc3y5OWSRTTYQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelhedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
+    jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
+    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
+    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepjhhnrdgrvhhilhgrse
+    hfrhgvvgdrfhhr
+X-ME-Proxy: <xmx:zHq4adixcErzrqKafAezVjeTLO_d7HiThSweRKiUyptM1XTHYzU8Cg>
+    <xmx:zHq4aY5ERZ_uHibJL_niXIt0p1YkjGDnsaHvESvePUchZgGDJThk7A>
+    <xmx:zHq4aaBFj22RnFho9fgn9mscNLC1tPH3FrenuGF3qmxmM_M-ND1rVw>
+    <xmx:zHq4afZu4bul_89PxHy2fE7O_jKCO3elO5z0AcvYlCc9o2JqPi0qgQ>
+    <xmx:zHq4aSJNbGUtrgxYCYQTu71SrlqzbnZRP60WscgRk65Gl6GFpri7jZcY>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Mar 2026 17:48:58 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH v2 0/4] doc: interpret-trailers: convert to synopsis and update options
+Date: Mon, 16 Mar 2026 22:48:23 +0100
+Message-ID: <V2_CV_doc_interpret-tr_synopsis.50a@msgid.xyz>
+X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
+In-Reply-To: <CV_doc_interpret-tr_synopsis.48a@msgid.xyz>
+References: <CV_doc_interpret-tr_synopsis.48a@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 16 Mar 2026 14:38:14 -0700
-X-Gm-Features: AaiRm50xiXPFL5jogOyv-hYsHUmbTlPi6o5Ou6JvxjQjrM3DE36BKLNbyvvHzas
-Message-ID: <CAOLa=ZREJsZ_p9Hfi_+XePW8c1n7xd-UjEuMSh=AHrQC8X75Tw@mail.gmail.com>
-Subject: Re: [GSoC] Proposal: Complete and extend the remote-object-info
- command for git cat-file
-To: Pablo <pabloosabaterr@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, jltobler@gmail.com, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000004b890f064d2b09bc"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---0000000000004b890f064d2b09bc
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Pablo <pabloosabaterr@gmail.com> writes:
+Topic name (applied): doc-interpret-trailers-1
 
-> Hi Chandra, thanks a lot for the feedback! :)
->
->> You should upload your proposal on the GSoC website and add the link to =
-it here.
->> The proposal can be then updated later as many times as you like.
->
-> GSoC proposals opens March 16th, for now I'll send my v2 here and as
-> soon as I can I'll swap to GSoC website and send the link to the
-> thread.
->
-> To avoid having you reread everything again this is what I've done from v=
-1:
->
->   Moved context explanation from The Problem to Synopsis and
-> Availability below About Me and Contact.
->   Split Pre-GSoC patches into status (for code patches) and
-> description to improve readability.
->   Added a code review and proposal thread to the Pre-GSoC section.
->   Added new lines where noted and fixed capitalization.
->   Correctly credited Jeff King for the allow_list idea and added new
-> [8] for Calvin Wan's work.
->   Community bonding now includes continuing patches and setting up a blog=
-.
->   Removed most of the duplicated iteration on the Timeline from The
-> Problem. (feels a bit empty now tho).
->
+Topic summary: Convert to synopsis style and update options.
 
-Perhaps a diff would be a good addition for next time? :)
+§ Changes in v2
 
-> I paste here my v2 with the requested changes:
->
-> ## Synopsis
->
-> Git's partial clone allows cloning repositories without downloading
-> all objects (blobs, trees, ...). These objects are fetched on demand
-> from the remote when needed. However, when a user needs metadata about
-> these remote objects (size, type, hash, ...), Git has no efficient way
-> of doing this without downloading all the object content.
->
-> The server side support for `object-info` protocol was implemented by
-> Calvin Wan in 2021 [8]. Eric Ju built the client-side
-> `remote-object-info` for `cat-file --batch-command`.
->
-> This project finishes Eric Ju's work on `remote-object-info` for `git
-> cat-file --batch-command` [1], resolves the pending feedback from
-> Junio Hamano [2] and Jeff King [3] [4] [5], and extends support for
-> `%(objecttype)`.
->
+Apply changes from reviews by Jean-Noël and Junio. See the notes on the
+patches for details.
 
-Nice to see that you've linked in the relevant resources.
+The last patch is new. To use `trailer.<key-alias>` instead of `trailer.*`
+in the source code (translation strings), in line with the docs.
 
-> Expected project size: 350 hours (Medium)
->
-> ## About Me and Contact
->
-> Name: Pablo Sabater Jim=C3=A9nez (he/him)
->
-> Age: 19
->
-> Education: Currently on my second Computer Science year at University
-> of Murcia, Spain
->
-> Location: Murcia, Spain (CET, UTC+1)
->
-> Languages: C (solid), shell(bash) (good)
->
-> Tools: git(proficient)
->
-> I've checked that I'm eligible for GSoC 2026.
->
-> Email: pabloosabaterr@gmail.com
-> GitHub: https://github.com/pabloosabaterr
->
-> ## Availability
->
-> My classes end the first week of May. From then until September I
-> won't have any classes which leaves me free to fully focus on the
-> project. I can dedicate 8+ hours each day, and for sure 40 hours a
-> week.
->
-> ## Relevant Projects
->
-> - 16 bit CPU emulator. Good example of C programming.
->
->   cpu: https://github.com/pabloosabaterr/CPU16
->
-> - Compiler. Good example of working on bigger projects.
->
->   compiler: https://github.com/pabloosabaterr/Orn
->
-> ## Pre-GSoC Work
->
-> ### Introduction
->
-> **[GSoC] Introduction Pablo Sabater**
->
-> https://lore.kernel.org/git/CAN5EUNR0KJ4VeuOF_bVupaTuGKGaeTKa0SMRAUoBPo5w=
-Wi8YGA@mail.gmail.com
->
-> **Description**: A mailing list thread where I introduced myself to
-> the git community.
->
-> ### Microproject
->
-> **[GSoC PATCH v4] t9200: replace test -f/-d with modern path helpers**
->
-> https://lore.kernel.org/git/20260312173305.15112-1-pabloosabaterr@gmail.c=
-om/
->
-> **Status**: Merged to `next` on 2026-03-12 at `8500bdf172`.
->
-> **Description**: Replaces `test -f` with helper `test_path_is_file`,
-> which makes debugging failing tests easier with better reporting.
-> As suggested as microproject.
->
-> ### Other contributions
->
-> **[GSoC PATCH v2] test-lib: print escape sequence names**
->
-> https://lore.kernel.org/git/20260311031442.11942-1-pabloosabaterr@gmail.c=
-om/
->
-> **Status**: Will merge to `next`.
->
-> **Description**: In failed expected/actual checks printing, the escape
-> sequences were shown as their octal code. This patch fixes that to
-> print the actual escape sequence name, adds tests, and updates the
-> expected output.
->
-> **[GSoC PATCH] t9200: handle missing CVS with skip_all**
->
-> https://lore.kernel.org/git/20260311194002.190195-1-pabloosabaterr@gmail.=
-com/
->
-> **Status**: Merged to `next` on 2026-03-12 at `8500bdf172`.
->
-> **Description**: wraps CVS setup in a skip_all for clearer failure
-> reporting and moves Git initialization into its own
-> test_expect_success.
->
-> **Re: [PATCH] gc: add git maintenance list command**
->
-> https://lore.kernel.org/git/20260313115932.15259-1-pabloosabaterr@gmail.c=
-om/
->
-> **Description**: code review for a patch sent.
->
-> **[GSoC] Proposal: Complete and extend remote-object-info for git cat-fil=
-e**
->
-> https://lore.kernel.org/git/CAN5EUNQKv-LCkbY+5scn6pk6fL8kpmjNR=3D66rjeY=
-=3DNqKbqRkhA@mail.gmail.com/
->
-> **Description**: Proposal draft thread.
->
-> **[GSoC] Re: [PATCH v11 8/8] cat-file: add remote-object-info to batch-co=
-mmand**
->
-> https://lore.kernel.org/git/20260312214154.89120-1-pabloosabaterr@gmail.c=
-om/
->
-> **Description**: While testing Eric's v11 I've found and reported a
-> new bug. On `remote-object-info` when it's preceded by a local query,
-> `data->type` isn't being cleared. Causing it to return the wrong type.
->
+[1/4] doc: interpret-trailers: convert to synopsis style
+[2/4] doc: interpret-trailers: normalize and fill out options
+[3/4] doc: config: convert trailers section to synopsis style
+[4/4] interpret-trailers: use placeholder instead of *
 
-Nice to see that you're proactive and already testing out the branch.
+ Documentation/config/trailer.adoc         | 121 +++++++-------
+ Documentation/git-interpret-trailers.adoc | 193 ++++++++++++----------
+ builtin/interpret-trailers.c              |   2 +-
+ 3 files changed, 169 insertions(+), 147 deletions(-)
 
-> I have also studied the documentation provided and Eric Ju's work from
-> v0 to v11 including all the feedback he got up to March 2025, the
-> feedback he got from Junio Hamano and Jeff King, taking notes about
-> what's left to be done and what else I can contribute to the already
-> proposed project. That's how I've identified everything that I will
-> address on the Problem, Solution and Timeline sections.
->
-> I built Eric Ju's v11 and tested the bugs reported to his patch [5],
-> I've confirmed the segfault and the `die()`, and found a new one:
-> - When a local `info` runs before `remote-object-info` sharing the
-> same format string, `data->type` isn't being cleared. A blob queried
-> remotely after a local commit, `data->type` for blob becomes 'commit'
-> with no error. I reported it on the mailing list [6].
->
-> I attempted to test rebasing Eric Ju's v11 to master and got conflicts
-> on 4 out of the 8 commits:
-> - `d04cf85ece` t1006: split test utility functions into new "lib-cat-file=
-.sh".
->         - `t/t1006-cat-file.sh`
-> - `d918f720d8` fetch-pack: refactor packet writing.
->         - `fetch-pack.c`
-> - `2daf9ed803` transport: add client support for object-info.
->         - `Makefile`
-> - `c3ba4afaf6` cat-file: add remote-object-info to batch-command.
->         - `object-file.c`, `object-store-ll.h` (deleted).
+Interdiff against v1:
+diff --git a/Documentation/config/trailer.adoc b/Documentation/config/trailer.adoc
+index a382f68fe9e..1bc70192d3a 100644
+--- a/Documentation/config/trailer.adoc
++++ b/Documentation/config/trailer.adoc
+@@ -70,13 +70,13 @@ With `add`, a new trailer will be added.
+ +
+ With `doNothing`, nothing will be done.
+ 
+-`trailer.<keyAlias>.key`::
+-	Defines a _<keyAlias>_ for the _<key>_. The _<keyAlias>_ must be a
++`trailer.<key-alias>.key`::
++	Defines a _<key-alias>_ for the _<key>_. The _<key-alias>_ must be a
+ 	prefix (case does not matter) of the _<key>_. For example, in `git
+ 	config trailer.ack.key "Acked-by"` the `Acked-by` is the _<key>_ and
+-	the `ack` is the _<keyAlias>_. This configuration allows the shorter
++	the `ack` is the _<key-alias>_. This configuration allows the shorter
+ 	`--trailer "ack:..."` invocation on the command line using the "ack"
+-	`<keyAlias>` instead of the longer `--trailer "Acked-by:..."`.
++	`<key-alias>` instead of the longer `--trailer "Acked-by:..."`.
+ +
+ At the end of the _<key>_, a separator can appear and then some
+ space characters. By default the only valid separator is `:`,
+@@ -86,24 +86,24 @@ variable.
+ If there is a separator in the key, then it overrides the default
+ separator when adding the trailer.
+ 
+-`trailer.<keyAlias>.where`::
++`trailer.<key-alias>.where`::
+ 	This option takes the same values as the `trailer.where`
+ 	configuration variable and it overrides what is specified by
+-	that option for trailers with the specified _<keyAlias>_.
++	that option for trailers with the specified _<key-alias>_.
+ 
+-`trailer.<keyAlias>.ifexists`::
++`trailer.<key-alias>.ifexists`::
+ 	This option takes the same values as the `trailer.ifexists`
+ 	configuration variable and it overrides what is specified by
+-	that option for trailers with the specified _<keyAlias>_.
++	that option for trailers with the specified _<key-alias>_.
+ 
+-`trailer.<keyAlias>.ifmissing`::
++`trailer.<key-alias>.ifmissing`::
+ 	This option takes the same values as the `trailer.ifmissing`
+ 	configuration variable and it overrides what is specified by
+-	that option for trailers with the specified _<keyAlias>_.
++	that option for trailers with the specified _<key-alias>_.
+ 
+-`trailer.<keyAlias>.command`::
+-	Deprecated in favor of `trailer.<keyAlias>.cmd`.
+-	This option behaves in the same way as `trailer.<keyAlias>.cmd`, except
++`trailer.<key-alias>.command`::
++	Deprecated in favor of `trailer.<key-alias>.cmd`.
++	This option behaves in the same way as `trailer.<key-alias>.cmd`, except
+ 	that it doesn't pass anything as argument to the specified command.
+ 	Instead the first occurrence of substring `$ARG` is replaced by the
+ 	_<value>_ that would be passed as argument.
+@@ -111,27 +111,27 @@ separator when adding the trailer.
+ Note that `$ARG` in the user's command is
+ only replaced once and that the original way of replacing `$ARG` is not safe.
+ +
+-When both `trailer.<keyAlias>.cmd` and `trailer.<keyAlias>.command` are given
+-for the same _<keyAlias>_, `trailer.<keyAlias>.cmd` is used and
+-`trailer.<keyAlias>.command` is ignored.
++When both `trailer.<key-alias>.cmd` and `trailer.<key-alias>.command` are given
++for the same _<key-alias>_, `trailer.<key-alias>.cmd` is used and
++`trailer.<key-alias>.command` is ignored.
+ 
+-`trailer.<keyAlias>.cmd`::
++`trailer.<key-alias>.cmd`::
+ 	This option can be used to specify a shell command that will be called
+-	once to automatically add a trailer with the specified _<keyAlias>_, and then
+-	called each time a `--trailer <keyAlias>=<value>` argument is specified to
++	once to automatically add a trailer with the specified _<key-alias>_, and then
++	called each time a `--trailer <key-alias>=<value>` argument is specified to
+ 	modify the _<value>_ of the trailer that this option would produce.
+ +
+ When the specified command is first called to add a trailer
+-with the specified _<keyAlias>_, the behavior is as if a special
+-`--trailer <keyAlias>=<value>` argument was added at the beginning
++with the specified _<key-alias>_, the behavior is as if a special
++`--trailer <key-alias>=<value>` argument was added at the beginning
+ of linkgit:git-interpret-trailers[1], where _<value>_ is taken to be the
+ standard output of the command with any leading and trailing whitespace
+ trimmed off.
+ +
+-If some `--trailer <keyAlias>=<value>` arguments are also passed
++If some `--trailer <key-alias>=<value>` arguments are also passed
+ on the command line, the command is called again once for each
+-of these arguments with the same _<keyAlias>_. And the _<value>_ part
++of these arguments with the same _<key-alias>_. And the _<value>_ part
+ of these arguments, if any, will be passed to the command as its
+ first argument. This way the command can produce a _<value>_ computed
+-from the _<value>_ passed in the `--trailer <keyAlias>=<value>`
++from the _<value>_ passed in the `--trailer <key-alias>=<value>`
+ argument.
+diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
+index e5da0462fad..77b4f63b05c 100644
+--- a/Documentation/git-interpret-trailers.adoc
++++ b/Documentation/git-interpret-trailers.adoc
+@@ -35,11 +35,12 @@ If `--parse` is specified, the output consists of the parsed trailers
+ coming from the input, without influencing them with any command line
+ options or configuration variables.
+ 
+-Otherwise, this command applies `trailer.*` configuration variables
+-(which could potentially add new trailers, as well as reposition them),
+-as well as any command line arguments that can override configuration
+-variables (such as `--trailer=...` which could also add new trailers),
+-to each input file. The result is emitted on the standard output.
++Otherwise, this command applies `trailer.<key-alias>` configuration
++variables (which could potentially add new trailers, as well as
++reposition them), as well as any command line arguments that can
++override configuration variables (such as `--trailer=...` which could
++also add new trailers), to each input file. The result is emitted on the
++standard output.
+ 
+ This command can also operate on the output of linkgit:git-format-patch[1],
+ which is more elaborate than a plain commit message. Namely, such output
+@@ -65,11 +66,11 @@ key: value
+ ------------------------------------------------
+ 
+ This means that the trimmed _<key>_ and _<value>_ will be separated by
+-": " (one colon followed by one space).
++"`:`{nbsp}" (one colon followed by one space).
+ 
+ For convenience, a _<key-alias>_ can be configured to make using `--trailer`
+ shorter to type on the command line. This can be configured using the
+-`trailer.<key-alias>.key` configuration variable. The _<keyAlias>_ must be a prefix
++`trailer.<key-alias>.key` configuration variable. The _<key-alias>_ must be a prefix
+ of the full _<key>_ string, although case sensitivity does not matter. For
+ example, if you have
+ 
+@@ -135,7 +136,7 @@ Use `--no-trailer` to reset the list.
+ `--no-where`::
+ 	Specify where all new trailers will be added.  A setting
+ 	provided with `--where` overrides the `trailer.where` and any
+-	applicable `trailer.<keyAlias>.where` configuration variables
++	applicable `trailer.<key-alias>.where` configuration variables
+ 	and applies to all `--trailer` options until the next occurrence of
+ 	`--where` or `--no-where`. Possible placements are `after`,
+ 	`before`, `end` or `start`.
+@@ -148,7 +149,7 @@ such that the relevant configuration variables are no longer overridden.
+ 	Specify what action will be performed when there is already at
+ 	least one trailer with the same _<key>_ in the input.  A setting
+ 	provided with `--if-exists` overrides the `trailer.ifExists` and any
+-	applicable `trailer.<keyAlias>.ifExists` configuration variables
++	applicable `trailer.<key-alias>.ifExists` configuration variables
+ 	and applies to all `--trailer` options until the next occurrence of
+ 	`--if-exists` or `--no-if-exists`. Possible actions are `addIfDifferent`,
+ 	`addIfDifferentNeighbor`, `add`, `replace` and `doNothing`.
+@@ -162,7 +163,7 @@ longer overridden.
+ 	Specify what action will be performed when there is no other
+ 	trailer with the same _<key>_ in the input.  A setting
+ 	provided with `--if-missing` overrides the `trailer.ifMissing` and any
+-	applicable `trailer.<keyAlias>.ifMissing` configuration variables
++	applicable `trailer.<key-alias>.ifMissing` configuration variables
+ 	and applies to all `--trailer` options until the next occurrence of
+ 	`--if-missing` or `--no-if-missing`. Possible actions are
+ 	`doNothing` or `add`.
+@@ -179,7 +180,7 @@ longer overridden.
+ `--only-input`::
+ `--no-only-input`::
+ 	Output only trailers that exist in the input; do not add any
+-	from the command-line or by applying `trailer.*` configuration
++	from the command-line or by applying `trailer.<key-alias>` configuration
+ 	variables. The default is `--no-only-input`.
+ 
+ `--unfold`::
+@@ -260,8 +261,8 @@ $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --trailer 'Re
+ ------------
+ 
+ * Configure a `sign` trailer with a command to automatically add a
+-  "Signed-off-by: " with the author information only if there is no
+-  "Signed-off-by: " already, and show how it works:
++  "`Signed-off-by:`{nbsp}" with the author information only if there is no
++  "`Signed-off-by:`{nbsp}" already, and show how it works:
+ +
+ ------------
+ $ cat msg1.txt
+@@ -379,8 +380,8 @@ See-also: fe3187489d69c4 (subject of related commit)
+ * Configure a commit template with some trailers with empty values
+   (using sed to show and keep the trailing spaces at the end of the
+   trailers), then configure a commit-msg hook that uses
+-  linkgit:git-interpret-trailers[1] to remove trailers with empty values and
+-  to add a `git-version` trailer:
++  git-interpret-trailers(1) to remove trailers with empty values and to
++  add a `git-version` trailer:
+ +
+ ------------
+ $ cat temp.txt
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index 41b0750e5af..4b617c3ecb0 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -211,7 +211,7 @@ int cmd_interpret_trailers(int argc,
+ 			     N_("action if trailer is missing"), option_parse_if_missing),
+ 
+ 		OPT_BOOL(0, "only-trailers", &opts.only_trailers, N_("output only the trailers")),
+-		OPT_BOOL(0, "only-input", &opts.only_input, N_("do not apply trailer.* configuration variables")),
++		OPT_BOOL(0, "only-input", &opts.only_input, N_("do not apply trailer.<key-alias> configuration variables")),
+ 		OPT_BOOL(0, "unfold", &opts.unfold, N_("reformat multiline trailer values as single-line values")),
+ 		OPT_CALLBACK_F(0, "parse", &opts, NULL, N_("alias for --only-trailers --only-input --unfold"),
+ 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_parse),
+Range-diff against v1:
+1:  87ec90d0adb ! 1:  f9a4622feaf doc: interpret-trailers: convert to synopsis style
+    @@ Commit message
+         2025-10-05) for the markup rules for this style.
+     
+         There aren’t many subtleties to the transformation of this doc since it
+    -    doesn’t use any advanced constructs. The only thing is that `": "` is
+    +    doesn’t use any advanced constructs. The only thing is that "`:`{nbsp}" is
+         used instead of `': '` to refer to effective inline-verbatim with
+    -    a space (␠). I also use (_) for emphasis although (') gives the
+    +    a space (␠).[1] I also use (_) for emphasis although (') gives the
+         same result.
+     
+    -    Also prefer linking to Git commands instead of saying
+    -    e.g. `git format-patch`.
+    +    Also prefer linking to Git commands instead of saying e.g. `git
+    +    format-patch`. But for this command we can type out git-interpret-
+    +    trailers(1) to avoid a self-reference.
+    +
+    +    Also replace camel case `<keyAlias>` with kebab case `<key-alias>`.
+    +    And while doing that make sure to replace `trailer.*` with
+    +    `trailer.<key-alias>`.
+    +
+    +    † 1: Similar to "`tag:`{nbsp}" in `Documentation/pretty-formats.adoc`
+     
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+    @@ Documentation/git-interpret-trailers.adoc: Signed-off-by: Alice <alice@example.c
+      If `--parse` is specified, the output consists of the parsed trailers
+      coming from the input, without influencing them with any command line
+      options or configuration variables.
+    -@@ Documentation/git-interpret-trailers.adoc: to each input file. The result is emitted on the standard output.
+    + 
+    +-Otherwise, this command applies `trailer.*` configuration variables
+    +-(which could potentially add new trailers, as well as reposition them),
+    +-as well as any command line arguments that can override configuration
+    +-variables (such as `--trailer=...` which could also add new trailers),
+    +-to each input file. The result is emitted on the standard output.
+    ++Otherwise, this command applies `trailer.<key-alias>` configuration
+    ++variables (which could potentially add new trailers, as well as
+    ++reposition them), as well as any command line arguments that can
+    ++override configuration variables (such as `--trailer=...` which could
+    ++also add new trailers), to each input file. The result is emitted on the
+    ++standard output.
+      
+      This command can also operate on the output of linkgit:git-format-patch[1],
+      which is more elaborate than a plain commit message. Namely, such output
+    @@ Documentation/git-interpret-trailers.adoc: are applied to each input and the way
+     -This means that the trimmed <key> and <value> will be separated by
+     -`': '` (one colon followed by one space).
+     +This means that the trimmed _<key>_ and _<value>_ will be separated by
+    -+": " (one colon followed by one space).
+    ++"`:`{nbsp}" (one colon followed by one space).
+      
+     -For convenience, a <key-alias> can be configured to make using `--trailer`
+     +For convenience, a _<key-alias>_ can be configured to make using `--trailer`
+      shorter to type on the command line. This can be configured using the
+     -'trailer.<key-alias>.key' configuration variable. The <keyAlias> must be a prefix
+     -of the full <key> string, although case sensitivity does not matter. For
+    -+`trailer.<key-alias>.key` configuration variable. The _<keyAlias>_ must be a prefix
+    ++`trailer.<key-alias>.key` configuration variable. The _<key-alias>_ must be a prefix
+     +of the full _<key>_ string, although case sensitivity does not matter. For
+      example, if you have
+      
+    @@ Documentation/git-interpret-trailers.adoc: rules for RFC 822 headers. For exampl
+     +`--no-where`::
+      	Specify where all new trailers will be added.  A setting
+     -	provided with '--where' overrides the `trailer.where` and any
+    -+	provided with `--where` overrides the `trailer.where` and any
+    - 	applicable `trailer.<keyAlias>.where` configuration variables
+    +-	applicable `trailer.<keyAlias>.where` configuration variables
+     -	and applies to all '--trailer' options until the next occurrence of
+     -	'--where' or '--no-where'. Upon encountering '--no-where', clear the
+     -	effect of any previous use of '--where', such that the relevant configuration
+    ++	provided with `--where` overrides the `trailer.where` and any
+    ++	applicable `trailer.<key-alias>.where` configuration variables
+     +	and applies to all `--trailer` options until the next occurrence of
+     +	`--where` or `--no-where`. Upon encountering `--no-where`, clear the
+     +	effect of any previous use of `--where`, such that the relevant configuration
+    @@ Documentation/git-interpret-trailers.adoc: rules for RFC 822 headers. For exampl
+      	Specify what action will be performed when there is already at
+     -	least one trailer with the same <key> in the input.  A setting
+     -	provided with '--if-exists' overrides the `trailer.ifExists` and any
+    -+	least one trailer with the same _<key>_ in the input.  A setting
+    -+	provided with `--if-exists` overrides the `trailer.ifExists` and any
+    - 	applicable `trailer.<keyAlias>.ifExists` configuration variables
+    +-	applicable `trailer.<keyAlias>.ifExists` configuration variables
+     -	and applies to all '--trailer' options until the next occurrence of
+     -	'--if-exists' or '--no-if-exists'. Upon encountering '--no-if-exists', clear the
+     -	effect of any previous use of '--if-exists', such that the relevant configuration
+    ++	least one trailer with the same _<key>_ in the input.  A setting
+    ++	provided with `--if-exists` overrides the `trailer.ifExists` and any
+    ++	applicable `trailer.<key-alias>.ifExists` configuration variables
+     +	and applies to all `--trailer` options until the next occurrence of
+     +	`--if-exists` or `--no-if-exists`. Upon encountering `--no-if-exists`, clear the
+     +	effect of any previous use of `--if-exists`, such that the relevant configuration
+    @@ Documentation/git-interpret-trailers.adoc: rules for RFC 822 headers. For exampl
+      	Specify what action will be performed when there is no other
+     -	trailer with the same <key> in the input.  A setting
+     -	provided with '--if-missing' overrides the `trailer.ifMissing` and any
+    -+	trailer with the same _<key>_ in the input.  A setting
+    -+	provided with `--if-missing` overrides the `trailer.ifMissing` and any
+    - 	applicable `trailer.<keyAlias>.ifMissing` configuration variables
+    +-	applicable `trailer.<keyAlias>.ifMissing` configuration variables
+     -	and applies to all '--trailer' options until the next occurrence of
+     -	'--if-missing' or '--no-if-missing'. Upon encountering '--no-if-missing',
+     -	clear the effect of any previous use of '--if-missing', such that the relevant
+    ++	trailer with the same _<key>_ in the input.  A setting
+    ++	provided with `--if-missing` overrides the `trailer.ifMissing` and any
+    ++	applicable `trailer.<key-alias>.ifMissing` configuration variables
+     +	and applies to all `--trailer` options until the next occurrence of
+     +	`--if-missing` or `--no-if-missing`. Upon encountering `--no-if-missing`,
+     +	clear the effect of any previous use of `--if-missing`, such that the relevant
+    @@ Documentation/git-interpret-trailers.adoc: rules for RFC 822 headers. For exampl
+     ---only-input::
+     +`--only-input`::
+      	Output only trailers that exist in the input; do not add any
+    - 	from the command-line or by applying `trailer.*` configuration
+    +-	from the command-line or by applying `trailer.*` configuration
+    ++	from the command-line or by applying `trailer.<key-alias>` configuration
+      	variables.
+      
+     ---unfold::
+    @@ Documentation/git-interpret-trailers.adoc: $ git format-patch -1
+     -  'Signed-off-by: ' with the author information only if there is no
+     -  'Signed-off-by: ' already, and show how it works:
+     +* Configure a `sign` trailer with a command to automatically add a
+    -+  "Signed-off-by: " with the author information only if there is no
+    -+  "Signed-off-by: " already, and show how it works:
+    ++  "`Signed-off-by:`{nbsp}" with the author information only if there is no
+    ++  "`Signed-off-by:`{nbsp}" already, and show how it works:
+      +
+      ------------
+      $ cat msg1.txt
+    @@ Documentation/git-interpret-trailers.adoc: See-also: fe3187489d69c4 (subject of
+        trailers), then configure a commit-msg hook that uses
+     -  'git interpret-trailers' to remove trailers with empty values and
+     -  to add a 'git-version' trailer:
+    -+  linkgit:git-interpret-trailers[1] to remove trailers with empty values and
+    -+  to add a `git-version` trailer:
+    ++  git-interpret-trailers(1) to remove trailers with empty values and to
+    ++  add a `git-version` trailer:
+      +
+      ------------
+      $ cat temp.txt
+2:  e24f8a3d37e ! 2:  e04853c499e doc: interpret-trailers: normalize and fill out options
+    @@ Documentation/git-interpret-trailers.adoc: rules for RFC 822 headers. For exampl
+      `--no-where`::
+      	Specify where all new trailers will be added.  A setting
+      	provided with `--where` overrides the `trailer.where` and any
+    - 	applicable `trailer.<keyAlias>.where` configuration variables
+    + 	applicable `trailer.<key-alias>.where` configuration variables
+      	and applies to all `--trailer` options until the next occurrence of
+     -	`--where` or `--no-where`. Upon encountering `--no-where`, clear the
+     -	effect of any previous use of `--where`, such that the relevant configuration
+    @@ Documentation/git-interpret-trailers.adoc: rules for RFC 822 headers. For exampl
+      	Specify what action will be performed when there is already at
+      	least one trailer with the same _<key>_ in the input.  A setting
+      	provided with `--if-exists` overrides the `trailer.ifExists` and any
+    - 	applicable `trailer.<keyAlias>.ifExists` configuration variables
+    + 	applicable `trailer.<key-alias>.ifExists` configuration variables
+      	and applies to all `--trailer` options until the next occurrence of
+     -	`--if-exists` or `--no-if-exists`. Upon encountering `--no-if-exists`, clear the
+     -	effect of any previous use of `--if-exists`, such that the relevant configuration
+    @@ Documentation/git-interpret-trailers.adoc: rules for RFC 822 headers. For exampl
+      	Specify what action will be performed when there is no other
+      	trailer with the same _<key>_ in the input.  A setting
+      	provided with `--if-missing` overrides the `trailer.ifMissing` and any
+    - 	applicable `trailer.<keyAlias>.ifMissing` configuration variables
+    + 	applicable `trailer.<key-alias>.ifMissing` configuration variables
+      	and applies to all `--trailer` options until the next occurrence of
+     -	`--if-missing` or `--no-if-missing`. Upon encountering `--no-if-missing`,
+     -	clear the effect of any previous use of `--if-missing`, such that the relevant
+    @@ Documentation/git-interpret-trailers.adoc: rules for RFC 822 headers. For exampl
+      `--only-input`::
+     +`--no-only-input`::
+      	Output only trailers that exist in the input; do not add any
+    - 	from the command-line or by applying `trailer.*` configuration
+    + 	from the command-line or by applying `trailer.<key-alias>` configuration
+     -	variables.
+     +	variables. The default is `--no-only-input`.
+      
+3:  10f11ebb078 ! 3:  ed1eb37b935 doc: config: convert trailers section to synopsis style
+    @@ Commit message
+         Convert this part of the configuration documentation to synopsis style
+         so that all of git-interpret-trailers(1) is consistent.
+     
+    +    See the commit message from two commits ago.
+    +
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Documentation/config/trailer.adoc ##
+    @@ Documentation/config/trailer.adoc: With `add`, a new trailer will be added.
+     -	prefix (case does not matter) of the <key>. For example, in `git
+     -	config trailer.ack.key "Acked-by"` the "Acked-by" is the <key> and
+     -	the "ack" is the <keyAlias>. This configuration allows the shorter
+    -+`trailer.<keyAlias>.key`::
+    -+	Defines a _<keyAlias>_ for the _<key>_. The _<keyAlias>_ must be a
+    ++`trailer.<key-alias>.key`::
+    ++	Defines a _<key-alias>_ for the _<key>_. The _<key-alias>_ must be a
+     +	prefix (case does not matter) of the _<key>_. For example, in `git
+     +	config trailer.ack.key "Acked-by"` the `Acked-by` is the _<key>_ and
+    -+	the `ack` is the _<keyAlias>_. This configuration allows the shorter
+    ++	the `ack` is the _<key-alias>_. This configuration allows the shorter
+      	`--trailer "ack:..."` invocation on the command line using the "ack"
+     -	<keyAlias> instead of the longer `--trailer "Acked-by:..."`.
+    -+	`<keyAlias>` instead of the longer `--trailer "Acked-by:..."`.
+    ++	`<key-alias>` instead of the longer `--trailer "Acked-by:..."`.
+      +
+     -At the end of the <key>, a separator can appear and then some
+     -space characters. By default the only valid separator is ':',
+    @@ Documentation/config/trailer.adoc: With `add`, a new trailer will be added.
+      
+     -trailer.<keyAlias>.where::
+     -	This option takes the same values as the 'trailer.where'
+    -+`trailer.<keyAlias>.where`::
+    ++`trailer.<key-alias>.where`::
+     +	This option takes the same values as the `trailer.where`
+      	configuration variable and it overrides what is specified by
+     -	that option for trailers with the specified <keyAlias>.
+    -+	that option for trailers with the specified _<keyAlias>_.
+    ++	that option for trailers with the specified _<key-alias>_.
+      
+     -trailer.<keyAlias>.ifexists::
+     -	This option takes the same values as the 'trailer.ifexists'
+    -+`trailer.<keyAlias>.ifexists`::
+    ++`trailer.<key-alias>.ifexists`::
+     +	This option takes the same values as the `trailer.ifexists`
+      	configuration variable and it overrides what is specified by
+     -	that option for trailers with the specified <keyAlias>.
+    -+	that option for trailers with the specified _<keyAlias>_.
+    ++	that option for trailers with the specified _<key-alias>_.
+      
+     -trailer.<keyAlias>.ifmissing::
+     -	This option takes the same values as the 'trailer.ifmissing'
+    -+`trailer.<keyAlias>.ifmissing`::
+    ++`trailer.<key-alias>.ifmissing`::
+     +	This option takes the same values as the `trailer.ifmissing`
+      	configuration variable and it overrides what is specified by
+     -	that option for trailers with the specified <keyAlias>.
+    -+	that option for trailers with the specified _<keyAlias>_.
+    ++	that option for trailers with the specified _<key-alias>_.
+      
+     -trailer.<keyAlias>.command::
+     -	Deprecated in favor of 'trailer.<keyAlias>.cmd'.
+     -	This option behaves in the same way as 'trailer.<keyAlias>.cmd', except
+    -+`trailer.<keyAlias>.command`::
+    -+	Deprecated in favor of `trailer.<keyAlias>.cmd`.
+    -+	This option behaves in the same way as `trailer.<keyAlias>.cmd`, except
+    ++`trailer.<key-alias>.command`::
+    ++	Deprecated in favor of `trailer.<key-alias>.cmd`.
+    ++	This option behaves in the same way as `trailer.<key-alias>.cmd`, except
+      	that it doesn't pass anything as argument to the specified command.
+     -	Instead the first occurrence of substring $ARG is replaced by the
+     -	<value> that would be passed as argument.
+    @@ Documentation/config/trailer.adoc: With `add`, a new trailer will be added.
+     -When both 'trailer.<keyAlias>.cmd' and 'trailer.<keyAlias>.command' are given
+     -for the same <keyAlias>, 'trailer.<keyAlias>.cmd' is used and
+     -'trailer.<keyAlias>.command' is ignored.
+    -+When both `trailer.<keyAlias>.cmd` and `trailer.<keyAlias>.command` are given
+    -+for the same _<keyAlias>_, `trailer.<keyAlias>.cmd` is used and
+    -+`trailer.<keyAlias>.command` is ignored.
+    ++When both `trailer.<key-alias>.cmd` and `trailer.<key-alias>.command` are given
+    ++for the same _<key-alias>_, `trailer.<key-alias>.cmd` is used and
+    ++`trailer.<key-alias>.command` is ignored.
+      
+     -trailer.<keyAlias>.cmd::
+    -+`trailer.<keyAlias>.cmd`::
+    ++`trailer.<key-alias>.cmd`::
+      	This option can be used to specify a shell command that will be called
+     -	once to automatically add a trailer with the specified <keyAlias>, and then
+     -	called each time a '--trailer <keyAlias>=<value>' argument is specified to
+     -	modify the <value> of the trailer that this option would produce.
+    -+	once to automatically add a trailer with the specified _<keyAlias>_, and then
+    -+	called each time a `--trailer <keyAlias>=<value>` argument is specified to
+    ++	once to automatically add a trailer with the specified _<key-alias>_, and then
+    ++	called each time a `--trailer <key-alias>=<value>` argument is specified to
+     +	modify the _<value>_ of the trailer that this option would produce.
+      +
+      When the specified command is first called to add a trailer
+    @@ Documentation/config/trailer.adoc: With `add`, a new trailer will be added.
+     -of the "git interpret-trailers" command, where <value>
+     -is taken to be the standard output of the command with any
+     -leading and trailing whitespace trimmed off.
+    -+with the specified _<keyAlias>_, the behavior is as if a special
+    -+`--trailer <keyAlias>=<value>` argument was added at the beginning
+    ++with the specified _<key-alias>_, the behavior is as if a special
+    ++`--trailer <key-alias>=<value>` argument was added at the beginning
+     +of linkgit:git-interpret-trailers[1], where _<value>_ is taken to be the
+     +standard output of the command with any leading and trailing whitespace
+     +trimmed off.
+      +
+     -If some '--trailer <keyAlias>=<value>' arguments are also passed
+    -+If some `--trailer <keyAlias>=<value>` arguments are also passed
+    ++If some `--trailer <key-alias>=<value>` arguments are also passed
+      on the command line, the command is called again once for each
+     -of these arguments with the same <keyAlias>. And the <value> part
+    -+of these arguments with the same _<keyAlias>_. And the _<value>_ part
+    ++of these arguments with the same _<key-alias>_. And the _<value>_ part
+      of these arguments, if any, will be passed to the command as its
+     -first argument. This way the command can produce a <value> computed
+     -from the <value> passed in the '--trailer <keyAlias>=<value>' argument.
+     +first argument. This way the command can produce a _<value>_ computed
+    -+from the _<value>_ passed in the `--trailer <keyAlias>=<value>`
+    ++from the _<value>_ passed in the `--trailer <key-alias>=<value>`
+     +argument.
+-:  ----------- > 4:  1feb6933662 interpret-trailers: use placeholder instead of *
 
-It's been a while, so this is expected. I guess the first week[s] would
-mostly be getting this series up-to date.
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+-- 
+2.53.0.32.gf6228eaf9cc
 
->
-> I'm being active on the mailing list and learning the Git flow of work
-> and from the feedback I've received from the maintainers (Junio) from
-> my patches.
->
-> Following the project guidelines, I haven't done anything on the
-> project that could step on other candidates' work before being
-> accepted, and instead I'm focusing on understanding the project and
-> its needs, and independent patches that will make the Git project more
-> familiar and understandable to me.
-
-I know this is the silent expectation, but nice to see it listed out.
-
->
-> ## The Problem
->
-> Eric Ju's work remains unmerged after v11 because of these issues:
->
->  - The format validation uses `strstr()` which only checks for
-> `%(objectsize)`. This causes two different errors:
->    - Atoms that `expand_atom()` recognizes but the remote doesn't
-> (`objecttype`,`deltabase`, ...), `expand_atom()` returns 1, but when
-> accessing `data->type` it only contains garbage, causing segfault, as
-> Jeff King noted [3].
->    - Unknown atoms by `expand_atom()`, returns 0, calling
-> `strbuf_expand_bad_format` on `expand_format()`, which calls `die()`,
-> as Jeff King found [3].
->    Both cases block the command, including local `info` queries if the
-> same format string is shared. Unsupported remote placeholders should
-> return an empty string, matching how `for-each-ref` returns empty for
-> known, but inapplicable atoms like `%(tagger)` on non-tags [4] [5].
->
->  - When local and remote queries are mixed, `data->type` is not being
-> cleared between commands. `remote-object-info` returns the wrong type
-> data from a previous local query [6].
->
->  - Style and code issues marked by Junio Hamano [2] and Jeff King [3]
-> [5] are still undone.
->    - comment style.
->    - `#define` formatting.
->    - line length.
->    - misleading error messages.
->    - missing `count > MAX_ALLOWED_OBJ_LIMIT` check at `split_cmdline().`
->    - if/else invert at `get_remote_info()`.
->  - `%(objecttype)` is not yet supported on either client or server side.
->
-
-Again, well done on the research. It is always nice to see the
-requirements being listed out clearly which makes the objective clearer.
-
-> ## The Solution
->
-> There are two main goals:
->
-> ### Goal 1: Rebase and finish Eric's work
->
-> Starting from where Eric Ju left off, I will rebase it on top of the
-> current `master` branch and address the feedback left to do:
-> - Fix style in comments, `#define` formatting and line length.
-> - Fix misleading error message in the overflow check.
-> - Add missing `count > MAX_ALLOWED_OBJ_LIMIT` check after `split_cmdline(=
-)`.
-> - Invert if/else on `get_remote_info()` to keep the small block first
-> (the error one) as Junio suggested.
->
-> #### Replace `strstr()` format validation with allow_list in `expand_atom=
-()`
->
-> `strstr()` isn't enough to fully validate the placeholders, it only
-> searches for `%(objectsize)` and unsupported placeholders cause
-> segfaults. Jeff King noted [4] that the fix was to refactor the
-> validation with an allow_list in `expand_atom()` or `expand_format()`.
-> The best option is to place the validation at `expand_atom()`, but why
-> `expand_atom()` ?
-> - There are two cases, first, inside `expand_atom()` before returning
-> (segfault) and second, calls `die()` when `expand_atom()` returns 0.
->   Placing the `allow_list` at the top of `expand_atom()` prevents both
-> errors, on remote mode, append nothing to `sb` and return 1, accessing
-> `data->type` won't cause segfault and prevents `expand_format()` from
-> reaching `die()`.
->   As extra safety, initializing `data->type` to `OBJ_BAD` and check
-> for `NULL` from `type_name()` makes it that even without `allow_list`,
-> uninitialized data doesn't cause a segfault.
->   At Goal 1, only `%(objectname)` and `%(objectsize)` will be in the
-> allow_list. Goal 2 will bring `%(objecttype)` support.
->
-> ### Goal 2: Adding `%(objecttype)`
->
-> Following what Calvin Wan did in 2021 [8] for `%(objectsize)`, v2
-> protocol needs to be extended on the server side to support the new
-> `%(objecttype)` placeholder:
-> - extend `object_info_advertise()` at `serve.c`
-> - add .type to `requested_info` struct at `serve.c`
-> - support `type` in `cap_object_info()` at `protocol-caps.c`
-> - look for type at `send_info()` at `protocol-caps.c`
->
-> Following object-info protocol docs [7] it should look like:
-> ```
->   attrs =3D "size" SP "type"
->   obj-type =3D "blob" | "tree" | "commit" | "tag"
->   obj-info =3D obj-id SP obj-size SP obj-type
->   info =3D PKT-LINE(attrs LF)
->         *PKT-LINE(obj-info LF)
-> ```
->
-> `%(objecttype)` needs to be added to the `allow_list`. Client side
-> needs to learn to ask for `%(objecttype)` from remote, parse what has
-> been received and fill `expand_data` with the actual type. This makes
-> it return the object type instead of the empty string returned while
-> it was unsupported.
->
-> Default format evolves to `%(objectname) %(objecttype) %(objectsize)`.
-> Test and document new placeholder support and server side extension.
->
-> #### Backward Compatibility
->
-> There are four possible scenarios to happen between client and server:
->
-> 1. **The server doesn't know type (new client but old server)**:
->
->    After receiving the server capabilities, a client will only request
-> what the server advertises. The `allow_list` would handle this,
-> returning an empty string when the server doesn't support it.
->
-> 2. **The server knows type but the client doesn't (new server but old cli=
-ent)**:
->
->    Following `gitprotocol-v2.adoc`, "Clients must ignore all unknown
-> keys", it will ignore type, and request only the known capabilities.
->
-> 3. **Both know type (new client and new server)**:
->
->    Server advertises type, client requests it and gets the type data.
->
-> 4. **Both know type but protocol middleware doesn't (new client, new
-> server but old middleware)**:
->
->    If a server advertises type but client doesn't receive type, a
-> client won't ask for anything unadvertised, if a client asks for type
-> but the server doesn't receive it, it will only return the known
-> capabilities.
->
-> **performance considerations**
->
-> To get an object type, we have to look only at the header, to get the
-> size `oid_object_info()` at `object-file.c` is being called which
-> already returns the object type in the same call. Sending the string
-> with the type will only be, worst case scenario 6 bytes for the
-> "commit" string.
->
-> ## Timeline
->
-> I've designed this to work with enough time so final work can be
-> shorter than what's said here
->
-> May 1-24: Community Bonding
-> - Keep working on my ongoing patches and new ones.
-> - Talk and meet with mentor that I'm assigned with, to get feedback
-> about my proposal, how I will report my progress apart from the code
-> submitted and possible blogs, and tips and tricks to work better at
-> Git.
-> - Confirm with mentor that the `allow_list` approach is still the best op=
-tion.
-> - Draft commits structure.
-> - Setup a blog to keep track about how GSoC at Git is going.
->
-> Week 1-2: (May 26 - June 8)
-> - Start Goal 1 fixes.
-> - Fix style and code issues.
->
-> Week 3-4: (June 9 - June 22)
-> - Start with Goal 1 implementations (allow_list approach).
->
-> Week 5-6: (June 23 - July 6):
-> - Goal 1 should be polished or close to the final form.
-> - Send patch series for Goal 1.
-> - Start Goal 2.
-> - Prepare the midterm report.
->
-> **Midterm evaluation** (July 7 - 11) as specified on GSoC timeline docs
-> - Goal 1 submitted.
->
-> Week 7-8: (July 14 - July 27)
-> - Start with server side v2 protocol extension (`%(objecttype)`).
->
-> Week 9-10: (July 28 - August 10)
-> - Add `%(objecttype)` to the `allow_list` from Goal 1.
-> - Client side extension.
-> - End to end tests and documentation.
-> - Default format becomes `%(objectname) %(objecttype) %(objectsize)`.
-> - Send patch series.
->
-> Week 11-12: (August 11 - August 24)
-> - Goal 2 should be close to be done.
-> - Polish everything, all tests pass, good test coverage, no
-> style/comment issues.
-> - Final documentation review.
-> - Prepare for final evaluation.
->
-> **Final evaluation** (August 18-24) as specified on GSoC timeline docs
->
-> ### Additional objectives
->
-> If there is enough time, or for future work after the project. I've
-> some ideas on how this could evolve:
->
-> #### More placeholders support
->
-> I've checked that Eric's v11 patch only supports `%(objectsize)` on
-> server side, but on the client side there are other placeholders that
-> can be added too. With the `allow_list` and having Goal 2 implemented,
-> adding more placeholders becomes trivial.
->
-> - `%(objectsize:disk)`: Returns the size on the disk (compressed or as
-> a delta) instead of returning the uncompressed size that
-> `%(objectsize)` does. To do this, the server would need to send what's
-> the actual size on disk data.
->
-> - `%(deltabase)`: Returns the delta base object OID. non delta objects
-> return zero OID as it does on local.
->
-> #### Returning missing blobs from a tree ordered
->
-> In a partial clone, someone might want to know what blobs are missing
-> inside a concrete tree and their size before fetching them.
-> The idea is to build on top of `remote-object-info`:
-> Given a tree hash, return the missing blobs (inside that tree) ordered by=
- size.
->
-
-You might want to look 'git-backfill(1)', I recall there was some
-thoughts on extending that command to do something similar. But I don't
-remember on the top of my head.
-
-> Thanks for reading my proposal and considering my application. I'm
-> very excited about this opportunity,
-> Pablo
->
-> [1]: https://lore.kernel.org/git/20250221190451.12536-1-eric.peijian@gmai=
-l.com/
-> "Eric Ju's v11 patch"
->
-> [2]: https://lore.kernel.org/git/xmqqo6yr3wc4.fsf@gitster.g/ "Junio
-> Hamano feedback"
->
-> [3]: https://lore.kernel.org/git/20250224234720.GC729825@coredump.intra.p=
-eff.net/
-> "Jeff King feedback"
->
-> [4]: https://lore.kernel.org/git/20250313060250.GH94015@coredump.intra.pe=
-ff.net/
-> "options for strstr() by Jeff King"
->
-> [5]: https://lore.kernel.org/git/20250324033922.GB690093@coredump.intra.p=
-eff.net/
-> "Jeff King follow-up"
->
-> [6]: https://lore.kernel.org/git/20260312214154.89120-1-pabloosabaterr@gm=
-ail.com/
-> "data->type not being cleared bug"
->
-> [7]: https://github.com/git/git/blob/master/Documentation/gitprotocol-v2.=
-adoc#object-info
-> "object-info protocol docs"
->
-> [8]: https://lore.kernel.org/git/20220728230210.2952731-1-calvinwan@googl=
-e.com/#t
-> "Calvin Wan's patch series"
->
-> ---
->
-> Again, thanks a lot for the feedback.
-
-Regards,
-Karthik
-
---0000000000004b890f064d2b09bc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: c2adba721917f2a3_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tNGVFUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMm5BQy8wZkZXRE42Nis3STltcXhaa0p6SERLQUpBNwpsYlpXUzRTKytC
-czFvRG8rWWJwd29oVnV5MlQ5QWtWNnRUY21mbWRZMTdSWkduMTZVUHpObXYyOHF4ckVKa015CjZC
-RmlMdXZoanhpcXRDUDRVQVg0aUdqTjU1SVZkUGFwMklZTGJsQjZ1cU5XaWEveEZLRWF6Y21BRjhw
-WU5LZm0KTXI3M3J5ZjZXN2tGNzZlc3ovWjl2ZDBaS2pCTW81NURtenl4bks5ODZGTmo0QllwdUQx
-ektMVDNKdUEzRjFQRAp0MksvRjMzL1FHSElFR3d5WU5kYm5nUGRvaTY2NlRqdG50OVVxcHV0OGNP
-R3h1SStWTFoyYUhRNHJGaXBJc1poClFHTEx4dDF6eHhhNUc3VDNzVzcrS3dPdElRa3prRWVUM3p4
-OERTWUNDSjg5WUd5ZmhaQnBzNkxGdzNaM00rbG4KUld3RFpWU213NFRtTUllNGM4cUNvRjIyeVNW
-WU51TDErc0ZseDJ6NHVVTnBqczRVT0dKZW8vVnFiZ0VmVEVHbQpHazlFNUhUMjdXTzZTdUlVRE01
-R3JUNnkzenZPaTVFZlZ5SllWZTlCQldQN1dqVFVYdWFuZm5YbXRYQVpMTElhCnZ2djZXMFZJdUl3
-WjlSc3pwRGZVNlFsSk92WG9HNkl6eTRVak16OD0KPW4vRkoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004b890f064d2b09bc--
