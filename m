@@ -1,191 +1,127 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727223358D3
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:22:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1892932D45C
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 16:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773678138; cv=none; b=CXWLkElH96cR4QDEYob//qBNBcydxJstigEB4xb/k3P/afTkvwSf92sT4nBRw3CiRZl+XiJVwPhngFgboJedujktW0ZViFw3jZ7VsjKYe045Up2uXBIWI1eqjcFBIRJdDe2lFseq9YcI6nTlBH27iYCP9wmAUFl7jnIVLfnIyGQ=
+	t=1773678300; cv=none; b=uNK6Ict9QdecYWUqiGOxjjT82t3gqFVG/JDg3jVeBUPFC7zETymhWFnf/gVK5CtEzAFpj70xuZza7dEG3s0caQtKPy5qgqxxAaHMJxzbmn08u2ZNPQFEp9zNM4BEWPnsFAeNNeLMqL22PnZ8Ow50a6yE719e9SW9uIiiVEPZbLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773678138; c=relaxed/simple;
-	bh=78u/ytrJW/qzjTWPGDtIv8O8Yn31Y0e9bpdrzag0KRI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Se4meCy2wzFYVrLEsaM5O/ZhPhK10dsMvo/Azl1BpbUSb3eKn1BsqcIL2SOcmOy8wSjIuOdSwEJWYd57h0ZXmSp/JsofXODtTfO7q67lj12dBaGq27aZiZgOAKMyGMvjrXfZ7NwMJnWxzfcomuWMik1Ky2VaEWIAAsFPtkTiHUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dADEJTy4; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773678300; c=relaxed/simple;
+	bh=xl/igwf5FbBSDJkoOjpRXnFoIjsFGdGxvtiVFZYFKp8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=reOqor4QSFI9rS97j0POoL28EwXeAZ/AiNRGj+pbebeCWo3xS/UcBIaWOYhirmOxwLK706EU22SJw7r4Z37CqjpeOFax99opkUd11A7IPD7EgKtyrs9HiEFohUltCHsvGj4DmbLOz4+hnLNKt/cVX22v7aA3NYX1CRABGCizZKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QtRYqSDM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cr6IRzdU; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dADEJTy4"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6615c766e60so7634228a12.3
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 09:22:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773678135; x=1774282935; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kw5W651Da7adh5dDhrpvoKJIdEk27I9BGQa85zeqmAM=;
-        b=dADEJTy40E2VT4NvDYsmvbF4tBCz15GauzNms1dh9O0UnRpo3WKccgpmOrvk+u5tgP
-         UivJTAmhfIGW03KQDVoFYk6lkw8z+s9BprnRv3X0Ga7JFfaMrtFYBUvE1l+Aazjla9Y/
-         ecPa6w84fBn+UI3FuYuZfanestgKyiF1AkT6MWsdYSoiQmjgHoAH8Rx7PI2laognmHMi
-         UIDCynRVon1/x3ns+Z6JbSQASVcycmVYA2y7U3g5ZmDH1+dnEkqCTJWY1WI9iYJ1MJme
-         7Pw4rWfXdGtRIWD/ENnJCrjyiWS6VQsTgrkyLO5DssXHaRlKGuknRKv18BezdZjKwxQB
-         0s/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773678135; x=1774282935;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kw5W651Da7adh5dDhrpvoKJIdEk27I9BGQa85zeqmAM=;
-        b=C7RLB0FFjJuRLwvZW0wUXIOEawWyvlrg7NHQg8vnegcGYAIbnJN2RNNxpxnXvZWrh1
-         6h7Bk5u18AU2Oxzy0ZHqDd9sa5SNOpa/MPluTVLgSzF+Ry8GULRtuYMIStvrcrRjwxw7
-         mv8olCkXbrSaVpGX4uUniRTN/dLK6Izpj8INA0cI+IXrthvGoAEQGftow8hDVQy1kRFh
-         gYGx/EahG1JmDmr7QU3NllUHykAH22zORYlyXsrqeR7SC2qwhZq/sbS5A3ZPJc1mvREA
-         xmlXTBIm2R/W4S9laQOUlQcvYax9ik7f1laVipHQ2m3Cfo0vaR26rxyIQNvr3pnZlgxi
-         wiXQ==
-X-Gm-Message-State: AOJu0YyR+yvLjOxnyZB2xyl6w/1nLzkFD1ZDZO+0Z2C/wQO9TkNl0Qs3
-	A9jHu8JPkXMWlRdlMB3X85+z3uKLyd/kr3hOpfr30cez/Ybpr6k3Lr5fXiiPyA==
-X-Gm-Gg: ATEYQzwj/TtJzIlz4Etl2Wi3/Bc3TKb5OS65/P8LSYsoQXxVfKVw3oMYGBQeoZiFB0I
-	L/r28MZEJWuKEYzKRO1/BBnf2S1K+Lg2XMQbZOcH/7qCE0vsTIY+MVTWUKTxxak26SvPttp9IFv
-	pBbHBnCf9KZ1UkkNDPzXJQpX2wkluXCOqJM2itNLD/MXIG5UPShXL6bHErgccpqoD87+Stm0KQR
-	O59pPr8rb/+r99yAegosG9JTGvj6zLtWfz0EgQ478ieE4hO+fK9KNzcdXaAG9rG/uOrJeqMm3cK
-	uwFo53exuJdEoXav0CVlqVYr4KbF5xQOVFDUc7KbNay0P3vfqXJicgXbI9kMF5RfD/Rj6B4OlVW
-	1pMELMADWwbgVXxzZoTReAHd35UM20G7gifxDc3MCaImhiT5lz+kx0YaE3EfS+IJmCACK4LT73T
-	sL/oGDLK6tYrP44XP2S1usq25z95rBrQypZ12ID71AtE8+AeGvtD5wzMmkVfpLifQJkMoy6KJT0
-	/klYA==
-X-Received: by 2002:a17:907:7288:b0:b97:a0e3:3d92 with SMTP id a640c23a62f3a-b97a0e34485mr442028666b.51.1773678134339;
-        Mon, 16 Mar 2026 09:22:14 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b97d201082esm53600666b.63.2026.03.16.09.22.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Mar 2026 09:22:13 -0700 (PDT)
-Message-ID: <9e3b59d1-58f3-476c-9c7a-3ceffbb71810@gmail.com>
-Date: Mon, 16 Mar 2026 16:22:11 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QtRYqSDM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cr6IRzdU"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5E809EC0554;
+	Mon, 16 Mar 2026 12:24:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 16 Mar 2026 12:24:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773678298; x=1773764698; bh=+xbGACB57x
+	elYuU9TBHAJmNSBBm8oujeHV7g3F7M1EQ=; b=QtRYqSDMEx6T3yLCfnL6Y5mRLW
+	F1yi1wuEvovMtmntk21+Q9DmzTs3lMzd1dygvqLYKI3grFtN0Frupn/T4a0H8BAf
+	zmGQsdb6HwMFoJl4dYge0642TkfT+sUcAFPz7llWMFRKMU7MmykM+7WdStDrBRyf
+	2qHqw+zl8i5DuR9VQizEfiwqwziG9TOPE0EdOZ6FY8gQuILWuAgAa11ANkh60tXZ
+	24GQV2czo0/bKha88rx3maSHHQ90IWYsxZ7uOSrh5v+/PTPhs48UzGmI53KDsBFK
+	TzHMXg0F6oAyAlvuD6BGfrZlLtj4hW0onpwK6zaObAreoJrKPz1ZWg1297hQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773678298; x=1773764698; bh=+xbGACB57xelYuU9TBHAJmNSBBm8oujeHV7
+	g3F7M1EQ=; b=cr6IRzdU2soamqYA/IdeWi4TMFSjHuAWVLbJZtdPLDPhrFz3/Vn
+	QAHkuA+Wk5RYBdC8Cil6IDD+iDrRULFmo6Tk5ssXrh7EUsppT2c7C0iJ5Em3ULhg
+	dbuuiN5+pRNUaRcCH7c1yQtneLTRisjDfbsiOTU6IDN21xEtQc2VTXkLuyAsTuUf
+	NDyRj1hZQbklxSO6xp+o8pd4Og70hzOHjr9WqNEFb/oDtxiesCU0Fm7Kzdqnr74a
+	cunRkn1Kjf66yhOijkX7b2bfBbE8lYIKSeXgS0J3rUkQdkCbM3f6tOj90XIW0ZBU
+	iO8MrEmoItlOMoTgJpxIfgDHrN97AswgNwg==
+X-ME-Sender: <xms:2i64afUNwGwWjAgbUErbyfmRKpA7HyOdE4u9KNxZW2QOUDGtzMQiOw>
+    <xme:2i64aZ0T-ix5q5GsD6u8UoUuC_X0GmELPecziIg5AP7w2EFiMho9tV7Y68NPXA-TG
+    6XtTAAzQuGfwscDTe5SMhx3thDlUJ1TXXkOfOsEwMfobXA-jVTB>
+X-ME-Received: <xmr:2i64adpDGfp9pI8Ozs02gil-2lSTDshmjy1Am4MLxqmCFXS2EVPkE6azCzd4yYaV9nFgZfczBilYZhcLZVYbEXSLgEE65Zve7w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleekkeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepvghrihgtrdhpvghijhhirghnsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpshesphhkshdrihhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepvghrihgtjhhujeduudesghhmrghilhdrtghomhdprhgtphhtthho
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:2i64aQUuX1d8NJHfJSZmIZD-6EqV1Vloqn9JXJG90gKN24ckuUCOng>
+    <xmx:2i64aYbqL8HImM1LNpvpfO4lc4b1rlJz9yvvNYO08UQAdJ_H77Q9XA>
+    <xmx:2i64adee8Ac9hGlI0m8JmNn-I2kGhSlHBR01CidOtyRGyqSTBuXv1w>
+    <xmx:2i64aS0nN-RAA7gMTL9ktxHSsjCU-p4EHIgfnMMAopU0Ov8CfzwQhw>
+    <xmx:2i64adqlbghw8M7zgY94aC0cVuMEvAJcgcEQ-ngr1GSRPb6xDHhB3pBY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Mar 2026 12:24:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Ju <eric.peijian@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com,
+  ericju711@gmail.com,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 1/1] refs: add 'preparing' phase to the
+ reference-transaction hook
+In-Reply-To: <20260316045102.70551-2-eric.peijian@gmail.com> (Eric Ju's
+	message of "Mon, 16 Mar 2026 00:51:02 -0400")
+References: <20260313193537.62827-1-eric.peijian@gmail.com>
+	<20260316045102.70551-1-eric.peijian@gmail.com>
+	<20260316045102.70551-2-eric.peijian@gmail.com>
+Date: Mon, 16 Mar 2026 09:24:56 -0700
+Message-ID: <xmqqv7evpwrr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/3] worktree: remove "the_repository" from
- is_current_worktree()
-To: Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org
-References: <cover.1773411586.git.phillip.wood@dunelm.org.uk>
- <cover.1773591528.git.phillip.wood@dunelm.org.uk>
- <075700a22568913988c9fa8e1ff49db1a1a5b606.1773591528.git.phillip.wood@dunelm.org.uk>
- <abezeNELL9SU8v82@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <abezeNELL9SU8v82@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Patrick
+Eric Ju <eric.peijian@gmail.com> writes:
 
-On 16/03/2026 07:38, Patrick Steinhardt wrote:
-> On Sun, Mar 15, 2026 at 04:18:50PM +0000, Phillip Wood wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> is_current_worktree() compares the gitdir of the worktree to the gitdir
->> of "the_repository" and returns true when they match. To get the gitdir
->> of the worktree it calls get_workree_git_dir() which also depends on
->> "the_repository". This has the effect that even if "wt->path" matches
->> "wt->repo->worktree" is_current_worktree(wt) will return false when
->> "wt->repo" is not "the_repository" which is confusing.
->>
->> The use of "the_repository" in is_current_wortree() comes from
->> replacing get_git_dir() with repo_get_git_dir() in 246deeac951
->> (environment: make `get_git_dir()` accept a repository, 2024-09-12). In
->> get_worktree_git_dir() it comes from replacing git_common_path() with
->> repo_common_path() in 07242c2a5af (path: drop `git_common_path()`
->> in favor of `repo_common_path()`, 2025-02-07). In both cases we have
->> a repository instance available so use that instead. This means
->> that a worktree "wt" is always considered current when "wt->path"
->> matches "wt->repo->worktree" and so the worktree returned by
->> get_worktree_from_repository() is always considered current.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   worktree.c | 8 ++++----
->>   1 file changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/worktree.c b/worktree.c
->> index e9ff6e6ef2e..344ad0c031b 100644
->> --- a/worktree.c
->> +++ b/worktree.c
->> @@ -58,7 +58,7 @@ static void add_head_info(struct worktree *wt)
->>   
->>   static int is_current_worktree(struct worktree *wt)
->>   {
->> -	char *git_dir = absolute_pathdup(repo_get_git_dir(the_repository));
->> +	char *git_dir = absolute_pathdup(repo_get_git_dir(wt->repo));
->>   	char *wt_git_dir = get_worktree_git_dir(wt);
->>   	int is_current = !fspathcmp(git_dir, absolute_path(wt_git_dir));
->>   	free(wt_git_dir);
-> 
-> Hm, okay.
-> 
->> @@ -78,7 +78,7 @@ struct worktree *get_worktree_from_repository(struct repository *repo)
->>   	wt->is_bare = !repo->worktree;
->>   	if (fspathcmp(gitdir, commondir))
->>   		wt->id = xstrdup(find_last_dir_sep(gitdir) + 1);
->> -	wt->is_current = is_current_worktree(wt);
->> +	wt->is_current = true;
->>   	add_head_info(wt);
->>   
->>   	free(gitdir);
-> 
-> I have been staring at this code for longer than I want to admit, and I
-> still haven't convinced myself that this is not a change in behaviour.
-> I think what I'm wondering about is what `is_current_worktree()` is
-> actually intended to do. In other words, what _do_ we consider to be
-> "current"?
+> +	/* Preparing checks before locking references */
+> +	ret = run_transaction_hook(transaction, "preparing");
+> +	if (ret) {
+> +		ref_transaction_abort(transaction, err);
+> +		die(_("ref updates aborted by the reference-transaction hook at its %s state"), "preparing");
+> +	}
 
-There was some discussion about that in [1] where reviewers were 
-surprised that we needed to call is_current_worktree() here. This change 
-is consistent with the rest of the patch but you're right that it is a 
-change in behavior as at the moment the "current" worktree is set by the 
-worktree that the process was started in. In practice we only ever have 
-a single struct repository instance per process so there is no practical 
-change in behavior here. At the moment, if you visit a set of submodules 
-from the superproject by forking one process per submodule each 
-submodule worktree is considered "current", but if you visit them by 
-spinning up some threads in the current process they are not considered 
-"current". That seems to me to be inconsistent as the process started by 
-the user is in the superproject in both cases.
+On end-user's terminal, the above should look like
 
-The "is_current" field was added in [1] without any discussion in the 
-commit message. It seems to have been added to stop the same branch 
-being checked out in multiple worktrees [2].
+fatal: ref updates aborted by the reference-transaction hook at its parparing state
 
-Thanks
+consuming more than 80 columns and having the varying part of the
+message at the very end.  Can we shorten this and highlight the more
+important bits?  Here is my attempt
 
-Phillip
+		die(_("in '%s' phase, update aborted by the reference-transaction hook"),
+			"preparing");
 
-[1] 750e8a60d69 (worktree.c: mark current worktree, 2016-04-22)
-[2] 
-https://lore.kernel.org/git/CAJZYdzhG8h3s=Ep1fuGbam1cWhYkv0tW6tQ7pBGGj+fj6=Nrsw@mail.gmail.com/
+Enclosing the phase name in 'quotes' and moving it near the
+beginning are both my attempt to make it stand out more.
 
+Another thing you may want to consider is to extract the message to
+a separate constant, i.e.,
 
-> I would consider the worktree "current" that the Git process
-> has been invoked in. So if I pass a repo other than `the_repository`, or
-> if I pass a worktree that is not the one that Git has been started in,
-> then I would expect the function to return `false`. With that naive
-> assumption your change would be breaking the existing logic.
-> 
-> But I have no idea whether my assumption is correct or not, as
-> there is not really any documentation of what the function or of the
-> `struct worktree::is_current` field. And having a look at a couple of
-> callers doesn't really make me all the wiser.
-> 
-> It would be great if you could shine some light on this and then also
-> add a bit of documentation to either the function, the field, or both :)
-> 
-> Thanks!
-> 
-> Patrick
-> 
+	const char *abort_by_ref_transaction_hook[] =
+	N_("in '%s' phase, update aborted by the reference-transaction hook");
+
+and reuse at two places, perhaps?
+
+		die(_(abort_by_ref_transaction_hook), "preparing");
 
