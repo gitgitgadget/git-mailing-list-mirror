@@ -1,319 +1,171 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402A1339875
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 04:51:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773636680; cv=none; b=Jzz8yrgIeiPq5RJWyMPQToaqs3RfmixpifUkHFutjaYvl3VIjwb+ti4DAQ3kKqYfIpeFgqcspEn8ZpUPUIszjyvUrpAS++mo+6AiXe4rqFY1EOdUEoSIngvgGen/d5sg01KhkG4oKYAwYvakBWGQ97D6z19Nsd80am9YsUDbO4s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773636680; c=relaxed/simple;
-	bh=wTa9EBJj1TTN5nOOXINj0He2iLn3q5jmutu7PlfIbHQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4CqIe7mT9xZx/z8m6llVL+jmICybW/qaUmBuPqmFBikocU6LcKbRy/OG3jGVtqOwK7KbgxFqS1OFxbhnAfMQndUPqpec3TB8LXEy/8XVdzbnw6IYWBwOseFvFxub2QEbu+A3vcLi9QTxNM6j8hp+J4y/XOOATK1Be9hXELyw+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R8sn1q5H; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9B0346E7E
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 05:44:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773639897; cv=pass; b=uAX/cDCPcqGEDPU1BPVfrOoxdvybnKUa4pP6priENHkR58p0b0SFpNLQpkR955dF+AhRil/ZDosfz0XIHlumG7StKHVrnpfmo5L6UDDoaJ4UTzXtsx7Gr1+OflbCT4gJaO3WhZdK43mLqLyVRQo2QzgxKdOcgAWj16aozOu+nxg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773639897; c=relaxed/simple;
+	bh=9qe7EBgxYPUHfoc+lrSzce47Lt//DQD/hhj6xJfWVuk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uyU2gexAGKVqe80h/KrBEmC3ki2bbkQg0Tl6HasZbiliTn2pNlaHA+GFP1bbJOTBxx1PQnCabk9wcdPgi6Jet+UBGXzssrKjJhOeZ+0gZNnBklGI/pz5SflWoJ54r7iy5CYTsXWdlzmxqaodXuVrG6SOdQk8xyoWzbyzq/8YuYE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UIvW2p7g; arc=pass smtp.client-ip=74.125.82.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R8sn1q5H"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8cd8a189f44so431260185a.0
-        for <git@vger.kernel.org>; Sun, 15 Mar 2026 21:51:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UIvW2p7g"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-1274204434bso3219798c88.1
+        for <git@vger.kernel.org>; Sun, 15 Mar 2026 22:44:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773639895; cv=none;
+        d=google.com; s=arc-20240605;
+        b=V2/Y183L88PdyECMbP6DHbDOS2fgN22JjS3PCXQjeGlQNLHjMcCqY87yQQAh7tFZWA
+         Hv/hdpfSE2/B73uWxrCBJyW1CpISdoVkAOPGmnW0bm7klTd9dLEjSojlUldVevHQeXQo
+         9mx/d+cIHDkgeSxGkmzPGbttm5CWFilN/BXvsGKsV8eQ4/KiU1c4XfnDmrNcZnKqJ4yx
+         2RvFejCPWhJJ9G9fxrEdPcL8k3IJim4pFCUxyl/B169aLeDUxYwqHvS5Kqk7CrmW+nAC
+         9/nUOhx2j62pQL2e4QB18YBH5epNH/IA5Ar7WHqTyHYdBijLcroful/GcRFu+MmPN1PN
+         fvaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Fh1Cscn8t1FAfMntBMXFgqlAYEoNPPkpqlVz1HkTtek=;
+        fh=2egB7gLK4z5yUFRX5mOzLxNSJ/RUD+AFAnpovuj3LNk=;
+        b=coZh/x1VjuJtW9+MpO/4hzv8Qo8c3KiBc9VDNq2eodaH2jZ4a8UKQvT7FomyyHHD03
+         5WCE2PQj6OeoqKdwbMVLJwW5XcUHM6ljBKTSs20E64RV/mtrwBdLv2tSBG8XdC1qUv74
+         UH1KUyB6GQU0obUsu7XLTnNJ9iX9VbLPvWu7Wk3XC35SXwMg14CLKkO/qH5kP/oq4cwS
+         zhB2npZDQMH42gKXZOAy9cbupUVJz8lYoUyewq1Xg5prTfMB6tNBFlhilHc/HgdS9D8g
+         eTSn9BdIuql4q/hIuiFpfvY1/PG9KCrA/BJj2ciZRwmdvlGZID35z1+1QgO/baqUuK3W
+         pTbQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773636678; x=1774241478; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773639895; x=1774244695; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ar9rhJlcsQaxbnLE84a2ObhyMUQrS43nOXiDPFufpmU=;
-        b=R8sn1q5HRk1IEM3Ggbn/7cjF08l039O5hC/6Fi15U7i2rDgCad3ewdZHf8gbqYUnYQ
-         UrekGL2nLl/4OIWh38aA4smImvj5VwRk6z6lzZSiPfHfrq2q89aknqvqANshIYYF2pk3
-         3xHtlgXQDKSZikNP2/7XYi8sIZd8pakS3/2/wtBKuT6ptKmpFYL2xTtlRXffun0Tbx3n
-         WdxxaYIscevHn2/tE1cMWNtPiSf+C3lzmLtf0oZu4xe4qaecuJ/NP7k/VW0a+R8m0Gne
-         DSekD/Lgn79t+nh/Nbakjz2aecTFz0iRBIfXk7J7TIR0qssqxIRRmZxZAp1wWaCW1/f0
-         Awwg==
+        bh=Fh1Cscn8t1FAfMntBMXFgqlAYEoNPPkpqlVz1HkTtek=;
+        b=UIvW2p7gukfS4W3hKV5v3eQQgvyhpg8QFIvCgEkaB1ucuFlEHL/MCnVIq2EH7GPLCk
+         usYluo7jcpT8ygX4pWrW2pQDOsspyoKGywjLghgmO0DeVsQ2hnIK+B6aJBveiowOSjEw
+         JwSOBP5nhSdi3Lznxe4qZWoFY0dAlIJdWxLN1vV+p39yr63gyDvBnQacuZkOaGerS/eZ
+         ekE/0MNQYNj7tfdz0pDxUF6/T5R+8LJsYSGFfA4pSA/yUNo8e2oS8+AMQWkBEpt4N+F5
+         DVFPmLzRuy9fdLK6TEcWOXcc1GyVJGz7n0h/G0iPsOJ+Et0ciILSnHDYn0IYdTwBmMBl
+         6B/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773636678; x=1774241478;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1773639895; x=1774244695;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ar9rhJlcsQaxbnLE84a2ObhyMUQrS43nOXiDPFufpmU=;
-        b=dGhfQvyIcV+R7J0knatb8CVaNhM5aLl5ZTZ7tvIVaVz72G1WlmvGOLmzl5jJmS9ZOU
-         ru6KwF02EHzx6GiooqL7etah7SGYK0aRi+XeN7pmmrixyUwc/0CA+FzRK8C2S8iggqWV
-         BuVDIO59w8S9tPGZxXNF6kqOOHYCKH8CBQh7ymH3Tt3XoX6ozyMRnaNiNVO25sbBXXrI
-         5UU7s2YnZLV+KsxlKo5b7HP58T/BMD3QREXutaWZO4URBgr376q89QWSJdVygI30ZH4R
-         qDmYDJj6EFBjOgJfKvI7n640Cltlv2U/33SuynSL/AfdNejsZIWF+Cp5CC7p4jS7otq+
-         hsPg==
-X-Gm-Message-State: AOJu0Yw8iL/SX7FmoQpsGi3a9rZTRSI6/ot6cLl5cv3Z+I/HpXB1piOc
-	ZLoJmbieOmSfGBAhacMR/vx/EpuladS8Wtb6O9bzgW0WU/STu2PrN//Y5el5Yjl3
-X-Gm-Gg: ATEYQzzYPrK2xZnlUmLz/xqxKzJpGD7r2g05xFtSvbZmBSQZ4wezVVCCVl4FKmyM6aV
-	Z2Tk3+hGiZqdGyNFR41sNIUtRFH1bdBt/JZyUmboj64RIoHW5C052S44o45sYsilR4PJEKidMiq
-	hyld2XAvEQ1PBbm04goqFBtSYh6tPv0/ljw4wE0UcoI834pvbG7eMMQtpmHSBNf4FE/gAhcoNMD
-	RPJ9oHB+WkaY6nY8FajlUWI7m930do+AZXO7ba0tw/mBb9803KbfeWsF+/jSnLpZsZnL/90qQQJ
-	fDfz1S82TXVHmHAyVyo028z3gQgwAuczqq/TLjdhbowdnzlo8LLR90XuwRAWXbqSeA7+ojaoKbF
-	IR+N1EM/MxtmFjPb82TVEOI5IyD0O6MxiIlP+orUMv6Id2nLQ8aWvupb09maSPE5LMBunXpQKUm
-	Z7d4su98srTq/gY8yyE9pp2RMWJRjsEmPMJXiqZJ8/j5KG059tIg==
-X-Received: by 2002:a05:620a:40d0:b0:8cd:8f18:d1d3 with SMTP id af79cd13be357-8cdb5b65d4fmr1531322685a.58.1773636677842;
-        Sun, 15 Mar 2026 21:51:17 -0700 (PDT)
-Received: from eju--20230906-5R2TJ ([74.15.89.125])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cda210daa1sm1147606385a.26.2026.03.15.21.51.17
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 15 Mar 2026 21:51:17 -0700 (PDT)
-From: Eric Ju <eric.peijian@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	jltobler@gmail.com,
-	eric.peijian@gmail.com,
-	ericju711@gmail.com,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 1/1] refs: add 'preparing' phase to the reference-transaction hook
-Date: Mon, 16 Mar 2026 00:51:02 -0400
-Message-ID: <20260316045102.70551-2-eric.peijian@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260316045102.70551-1-eric.peijian@gmail.com>
-References: <20260313193537.62827-1-eric.peijian@gmail.com>
- <20260316045102.70551-1-eric.peijian@gmail.com>
+        bh=Fh1Cscn8t1FAfMntBMXFgqlAYEoNPPkpqlVz1HkTtek=;
+        b=iq6BHrmS/Nya6RQX7Wfuwg+pzfA5KLPzuilN9ZYcd0XtZZvUBQuMNeAHNmfJUBEaTR
+         D/knfNSNmUBV451Cy3OdstU0b3SHhUnFu48F0IGEgcbFvjU//gufJ0NG3Lmk3H/danCy
+         8l70Ohaq90ktI7GkDurO6TfpXgPXYJGdq7UbAh0NYHZQDPs6CnHdgrY+n3TNBi2FkHky
+         bd/Dd3q72cBaiRai1+RSb3YuCOZuBfc6Nvfah505zuug/yyhHxxB5LZAGYgCoO3QHWI/
+         AN4F29aYAzvXKOdttDjTJO+yxDTmrE3QzNJq55EWBxq02fcLeaDmK2pqQVBa6AMhM8FY
+         uW/A==
+X-Forwarded-Encrypted: i=1; AJvYcCW6tESQcZydp851XR+IeGX49FzfNC2d5U4nDwQc30NzM1dDPdLbL7El5ZkxPmKLcRvUP1E=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxesEqxzrUopBZ2dzFVoD6/17ZWaWgKQ3gauAL+YgdKAKGBW7o9
+	/n49J6TQjEJUWw95TI/+ItCOrzrArmC6BPcRjWR1JAXJ8PyAcOzetJ+eDC+TDuQT0Tl8UFze4zm
+	6xvsE7NV+Nnsb01yScMyJyN7gv5p9IRw=
+X-Gm-Gg: ATEYQzzA1WXaxmA8JI74R3vd2fYF2rbmV+oHSM8wO87PWGtaaDcX0nwrgfRFp+zYyH4
+	Zw2vq8B3Pj8pF00WfvkZnS/EUlVZOLVUQf35CkipDtTAsJLGHuKKUuaMJDPm2BeuAirD4DQd1Qs
+	eL+GVXJfzsUidOmDW7TcccnQr8G9Dy9och4atEbl1upsc8SZmekZgEitxR9XWj3h42kjuslvDch
+	RIsS1z9bf/a+bFTr9oO8HvAxZ2cPU87jav2S4cIBuhXnH5ssluseTNEauIt9ufITnIWtqji6oi3
+	nodYK9/BmzXgOCBpQyQ1fRWVAK3pLvOx9hPfVXN3+y2WDyJP5MYM2vNvvMM2ibI6bUGW2HFsBaW
+	RvNe61es=
+X-Received: by 2002:a05:7022:660c:b0:123:3c24:b15 with SMTP id
+ a92af1059eb24-128ecc241fdmr5250686c88.19.1773639895212; Sun, 15 Mar 2026
+ 22:44:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com>
+ <cover.1773497547.git.worldhello.net@gmail.com> <0c00f09918d94995b4f990679d598adcab0d6f2d.1773497547.git.worldhello.net@gmail.com>
+ <87220e93-8159-4a92-9c3f-b3f9fa34ba4e@kdbg.org> <xmqqzf49rs2g.fsf@gitster.g>
+In-Reply-To: <xmqqzf49rs2g.fsf@gitster.g>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Mon, 16 Mar 2026 13:44:43 +0800
+X-Gm-Features: AaiRm52vToByWXuzKjWWus_KRfEYDrv3uEmBeGNy99EjDQzDKXKs0su8X-UpBzs
+Message-ID: <CANYiYbH2o15x0=pZHuPk0Hf0qDNFWsvOpYE65O+yBMFspKBevw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] l10n: add .gitattributes to simplify location filtering
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Sixt <j6t@kdbg.org>, Alexander Shopov <ash@kambanaria.org>, 
+	Mikel Forcada <mikel.forcada@gmail.com>, Ralf Thielow <ralf.thielow@gmail.com>, 
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
+	Bagas Sanjaya <bagasdotme@gmail.com>, Dimitriy Ryazantcev <DJm00n@mail.ru>, 
+	Peter Krefting <peter@softwolves.pp.se>, Emir SARI <bitigchi@me.com>, Arkadii Yakovets <ark@cho.red>, 
+	=?UTF-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>, 
+	Teng Long <dyroneteng@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>, 
+	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The "reference-transaction" hook is invoked multiple times during a ref
-transaction. Each invocation corresponds to a different phase:
+On Mon, Mar 16, 2026 at 12:11=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+> >> +# Languages that strip both filenames and line numbers
+> >> +bg.po       filter=3Dgettext-no-file-no-location
+> >> +de.po       filter=3Dgettext-no-file-no-location
+> >> +#es.po      filter=3Dgettext-no-file-no-location
+> >> +fr.po       filter=3Dgettext-no-file-no-location
+> >> +#ga.po      filter=3Dgettext-no-file-no-location
+> >> +#ru.po      filter=3Dgettext-no-file-no-location
+> >> +sv.po       filter=3Dgettext-no-file-no-location
+> >> +tr.po       filter=3Dgettext-no-file-no-location
+> >> +uk.po       filter=3Dgettext-no-file-no-location
+> >> +vi.po       filter=3Dgettext-no-file-no-location
+> >> +
+> >> +# Languages that preserve filenames but strip line numbers
+> >> +#ca.po      filter=3Dgettext-no-location
+> >> +id.po       filter=3Dgettext-no-location
+> >> +zh_CN.po    filter=3Dgettext-no-location
+> >> +zh_TW.po    filter=3Dgettext-no-location
+> >
+> > How settled is the use of these two different filters (and names) in th=
+e
+> > community of translators? I am asking because I'm about to align the
+> > translation workflow in the Gitk repository with that in the Git
+> > repository. I need to know which of the two variants of filter names I
+> > should ask translators to use.
+>
+> I too am curious.
+>
+> I would imagine that the translation target langugae has nothing to
+> do with the choice, and it would be mere personal preference---in
+> which case it would be better if people can converge on a single
+> convention fast and stick to it.  After all, even if the current
+> French translators happen to prefer no-file no-location, for
+> example, existing translators would graduate the project and new
+> ones would come in, and their preference would change over time.
+>
+> At least comments like "Languages that strip" is misleading, if this
+> is just "personal preferences of l10n groups of various languages".
 
-- The "prepared" phase indicates that references have been locked.
-- The "committed" phase indicates that all updates have been written to disk.
-- The "aborted" phase indicates that the transaction has been aborted and that
-  all changes have been rolled back.
+Will fix as below:
 
-This hook can be used to learn about the updates that Git wants to perform.
-For example, forges use it to coordinate reference updates across multiple
-nodes.
+-------- >8 --------
+# Default: Strip the whole location comments for all .po files
+*.po filter=3Dgettext-no-location
 
-However, the phases are insufficient for some specific use cases. The earliest
-observable phase in the "reference-transaction" hook is "prepared", at which
-point Git has already taken exclusive locks on every affected reference. This
-makes it suitable for last-chance validation, but not for serialization. So by
-the time a hook sees the "prepared" phase, it has no way to defer locking, and
-thus it cannot rearrange multiple concurrent ref transactions relative to one
-another.
+# Legacy, unmaintained PO files: filter disabled to avoid index vs
+# working-tree mismatch (these files still have location comments).
+el.po -filter
+is.po -filter
+it.po -filter
+ko.po -filter
+pl.po -filter
+pt_PT.po -filter
 
-Introduce a new "preparing" phase that runs before the "prepared" phase, that
-is before Git acquires any reference lock on disk. This gives callers a
-well-defined window to perform validation, enable higher-level ordering of
-concurrent transactions, or reject the transaction entirely, all without
-interfering with the locking state.
-
-This change is strictly speaking not backwards compatible. Existing hook
-scripts that do not know how to handle unknown phases may treat
-'preparing' as an error and return non-zero.
-But the hook is considered to expose internal implementation details
-of how Git works, and as such we have been a bit more lenient with changing its
-exact semantics, like for example in a8ae923f85 (refs: support symrefs in
-'reference-transaction' hook, 2024-05-07).
-
-An alternative would be to introduce a "reference-transaction-v2" hook that
-knows about the new phase. This feels like a rather heavy-weight option though,
-and was thus discarded.
-
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: Justin Tobler <jltobler@gmail.com>
-Helped-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: Eric Ju <eric.peijian@gmail.com>
----
- Documentation/githooks.adoc      | 19 ++++++++++++-------
- refs.c                           |  9 ++++++++-
- t/t1416-ref-transaction-hooks.sh | 30 ++++++++++++++++++++++++++----
- t/t5510-fetch.sh                 |  7 ++++++-
- 4 files changed, 52 insertions(+), 13 deletions(-)
-
-diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
-index 056553788d..ed045940d1 100644
---- a/Documentation/githooks.adoc
-+++ b/Documentation/githooks.adoc
-@@ -484,13 +484,16 @@ reference-transaction
- ~~~~~~~~~~~~~~~~~~~~~
- 
- This hook is invoked by any Git command that performs reference
--updates. It executes whenever a reference transaction is prepared,
--committed or aborted and may thus get called multiple times. The hook
--also supports symbolic reference updates.
-+updates. It executes whenever a reference transaction is preparing,
-+prepared, committed or aborted and may thus get called multiple times.
-+The hook also supports symbolic reference updates.
- 
- The hook takes exactly one argument, which is the current state the
- given reference transaction is in:
- 
-+    - "preparing": All reference updates have been queued to the
-+      transaction but references are not yet locked on disk.
-+
-     - "prepared": All reference updates have been queued to the
-       transaction and references were locked on disk.
- 
-@@ -511,16 +514,18 @@ ref and `<ref-name>` is the full name of the ref. When force updating
- the reference regardless of its current value or when the reference is
- to be created anew, `<old-value>` is the all-zeroes object name. To
- distinguish these cases, you can inspect the current value of
--`<ref-name>` via `git rev-parse`.
-+`<ref-name>` via `git rev-parse`. During the "preparing" state, symbolic
-+references are not resolved: `<ref-name>` will reflect the symbolic reference
-+itself rather than the object it points to.
- 
- For symbolic reference updates the `<old_value>` and `<new-value>`
- fields could denote references instead of objects. A reference will be
- denoted with a 'ref:' prefix, like `ref:<ref-target>`.
- 
- The exit status of the hook is ignored for any state except for the
--"prepared" state. In the "prepared" state, a non-zero exit status will
--cause the transaction to be aborted. The hook will not be called with
--"aborted" state in that case.
-+"preparing" and "prepared" states. In these states, a non-zero exit
-+status will cause the transaction to be aborted. The hook will not be
-+called with "aborted" state in that case.
- 
- push-to-checkout
- ~~~~~~~~~~~~~~~~
-diff --git a/refs.c b/refs.c
-index 6fb8f9d10c..7da37bbb71 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2655,6 +2655,13 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
- 	if (ref_update_reject_duplicates(&transaction->refnames, err))
- 		return REF_TRANSACTION_ERROR_GENERIC;
- 
-+	/* Preparing checks before locking references */
-+	ret = run_transaction_hook(transaction, "preparing");
-+	if (ret) {
-+		ref_transaction_abort(transaction, err);
-+		die(_("ref updates aborted by the reference-transaction hook at its %s state"), "preparing");
-+	}
-+
- 	ret = refs->be->transaction_prepare(refs, transaction, err);
- 	if (ret)
- 		return ret;
-@@ -2662,7 +2669,7 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
- 	ret = run_transaction_hook(transaction, "prepared");
- 	if (ret) {
- 		ref_transaction_abort(transaction, err);
--		die(_("ref updates aborted by hook"));
-+		die(_("ref updates aborted by the reference-transaction hook at its %s state"), "prepared");
- 	}
- 
- 	return 0;
-diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-index d91dd3a3b5..c3b1a3c735 100755
---- a/t/t1416-ref-transaction-hooks.sh
-+++ b/t/t1416-ref-transaction-hooks.sh
-@@ -20,6 +20,7 @@ test_expect_success 'hook allows updating ref if successful' '
- 		echo "$*" >>actual
- 	EOF
- 	cat >expect <<-EOF &&
-+		preparing
- 		prepared
- 		committed
- 	EOF
-@@ -27,6 +28,18 @@ test_expect_success 'hook allows updating ref if successful' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'hook aborts updating ref in preparing state' '
-+	git reset --hard PRE &&
-+	test_hook reference-transaction <<-\EOF &&
-+		if test "$1" = preparing
-+		then
-+			exit 1
-+		fi
-+	EOF
-+	test_must_fail git update-ref HEAD POST 2>err &&
-+	test_grep "ref updates aborted by the reference-transaction hook at its preparing state" err
-+'
-+
- test_expect_success 'hook aborts updating ref in prepared state' '
- 	git reset --hard PRE &&
- 	test_hook reference-transaction <<-\EOF &&
-@@ -36,7 +49,7 @@ test_expect_success 'hook aborts updating ref in prepared state' '
- 		fi
- 	EOF
- 	test_must_fail git update-ref HEAD POST 2>err &&
--	test_grep "ref updates aborted by hook" err
-+	test_grep "ref updates aborted by the reference-transaction hook at its prepared state" err
- '
- 
- test_expect_success 'hook gets all queued updates in prepared state' '
-@@ -121,6 +134,7 @@ test_expect_success 'interleaving hook calls succeed' '
- 	cat >expect <<-EOF &&
- 		hooks/update refs/tags/PRE $ZERO_OID $PRE_OID
- 		hooks/update refs/tags/POST $ZERO_OID $POST_OID
-+		hooks/reference-transaction preparing
- 		hooks/reference-transaction prepared
- 		hooks/reference-transaction committed
- 	EOF
-@@ -143,6 +157,8 @@ test_expect_success 'hook captures git-symbolic-ref updates' '
- 	git symbolic-ref refs/heads/symref refs/heads/main &&
- 
- 	cat >expect <<-EOF &&
-+	preparing
-+	$ZERO_OID ref:refs/heads/main refs/heads/symref
- 	prepared
- 	$ZERO_OID ref:refs/heads/main refs/heads/symref
- 	committed
-@@ -171,14 +187,20 @@ test_expect_success 'hook gets all queued symref updates' '
- 	# In the files backend, "delete" also triggers an additional transaction
- 	# update on the packed-refs backend, which constitutes additional reflog
- 	# entries.
-+	cat >expect <<-EOF &&
-+	preparing
-+	ref:refs/heads/main $ZERO_OID refs/heads/symref
-+	ref:refs/heads/main $ZERO_OID refs/heads/symrefd
-+	$ZERO_OID ref:refs/heads/main refs/heads/symrefc
-+	ref:refs/heads/main ref:refs/heads/branch refs/heads/symrefu
-+	EOF
-+
- 	if test_have_prereq REFFILES
- 	then
--		cat >expect <<-EOF
-+		cat >>expect <<-EOF
- 		aborted
- 		$ZERO_OID $ZERO_OID refs/heads/symrefd
- 		EOF
--	else
--		>expect
- 	fi &&
- 
- 	cat >>expect <<-EOF &&
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 5dcb4b51a4..6fe21e2b3a 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -469,12 +469,17 @@ test_expect_success 'fetch --atomic executes a single reference transaction only
- 	head_oid=$(git rev-parse HEAD) &&
- 
- 	cat >expected <<-EOF &&
-+		preparing
-+		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-1
-+		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-2
- 		prepared
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-1
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-2
- 		committed
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-1
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-2
-+		preparing
-+		$ZERO_OID ref:refs/remotes/origin/main refs/remotes/origin/HEAD
- 	EOF
- 
- 	rm -f atomic/actual &&
-@@ -497,7 +502,7 @@ test_expect_success 'fetch --atomic aborts all reference updates if hook aborts'
- 	head_oid=$(git rev-parse HEAD) &&
- 
- 	cat >expected <<-EOF &&
--		prepared
-+		preparing
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-abort-1
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-abort-2
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-abort-3
--- 
-2.51.0
-
+# These files use gettext-no-line-number (keep filenames, strip line
+# numbers). The choice is per l10n team preference. Requires gettext 0.20+.
+# The only benefit is locating source files from location comments when
+# the .po file is not updated from the POT via make po-update.
+ca.po filter=3Dgettext-no-line-number
+id.po filter=3Dgettext-no-line-number
+zh_CN.po filter=3Dgettext-no-line-number
+zh_TW.po filter=3Dgettext-no-line-number
