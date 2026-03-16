@@ -1,46 +1,86 @@
-Received: from out-171.mta1.migadu.com (out-171.mta1.migadu.com [95.215.58.171])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56533A0E95
-	for <git@vger.kernel.org>; Mon, 16 Mar 2026 19:13:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA144231842
+	for <git@vger.kernel.org>; Mon, 16 Mar 2026 19:41:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773688384; cv=none; b=ODrtYO9Wo9+sj4Opp0w6C9GDbe80J0XA+yqyLQ3MoXmmS4fADZCKwZtNfWGsKvkwAlqdhk3CPml/S1Zv7yGV73v7CQfXHrB2GC2YX/j84Y6ZidJ/t7vmaUe/cveFhn6M5CkOfgZeTvwNChLF29cjabpOy78uEit0r5EspD8u6K8=
+	t=1773690095; cv=none; b=ZN793x02y26JG6noxtr1WKSYwFn8fp5ZRrZfGVEdDPWYP+NWuNliQwQq2KWHGhVAxZIV4K1TUW1DEPqMbaPoB6lO4Slwghv+jTxOPIF4+W65SFXyxoWF5CgKA0z0Suqm3yIwYUWFJUINXhObCAo1ibgYliXG1HK1CMVTbMp1fNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773688384; c=relaxed/simple;
-	bh=qpHIM6YnYllXJBhjTIesa6Zq2KS90k/uo07qBiUB/WE=;
+	s=arc-20240116; t=1773690095; c=relaxed/simple;
+	bh=VOx9gCWgriCvM9cScEquaTs+UADaSmzkC7iL1iq98OI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bmjQLMQZ1xBjNP2hcIqbbwO4XOpRR+y1Bnv0ZoiEn4QbFpi1cjvJmT/azYVtsX41tiXJ361Qqk1jIXvUkEU+7mVfJNReNBIVZ02YXNCUu0VbQIz6oHTR514yLFlA7z6dU5t/laYVUOOBCbQznR7zc0KLwX9PiOP+0xoHpyHrSEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=yOTnd+5d; arc=none smtp.client-ip=95.215.58.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=e0L/2ko3ttt1JISnLAQqmDSCyPyAxAz4du10Rhkx8vMKuy0tPnXLP1va7RMJjCpQMS9ErcDyfid6OAyitqTzTZiwC0ql0nkIi2SBHa2rrSLVkmQ9myuFU1mRKwRcxt3OGetZ6vl80cx+eK8/UPEiQWAZQI7+YirhKXkxJr9XSr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XTGPQ0cS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GRsroj5e; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="yOTnd+5d"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1773688378;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=LNwjG7vphj87A52917jo1EKcEXJ0csNxpuAemw6xfDg=;
-	b=yOTnd+5d2W9JIfF1WKm8uu/A+iwLOe6zl3vvz8Qu/YXexigOzko2a62Jfg3PQts3TkhJfZ
-	/h5Q3fsphDDlSy0fmFXy28GXO0wN2ex4n5JSgA2Vf905pzz7gOiSNfiCoodXlLGUF4SP1I
-	znDVbfMAbmWkRoZAqyTzSGzzAocc0+Q=
-From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>, Siddharth Asthana
- <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im,
- newren@gmail.com, phillip.wood123@gmail.com, karthik.188@gmail.com,
- johannes.schindelin@gmx.de
-Subject: Re: [PATCH v4 1/2] sequencer: extract revert message formatting
- into shared function
-In-Reply-To: <xmqqy0jv7ml9.fsf@gitster.g>
-References: <20260218234215.89326-1-siddharthasthana31@gmail.com>
- <20260313054035.26605-1-siddharthasthana31@gmail.com>
- <20260313054035.26605-2-siddharthasthana31@gmail.com>
- <xmqqy0jv7ml9.fsf@gitster.g>
-Date: Mon, 16 Mar 2026 20:12:37 +0100
-Message-ID: <87pl53si56.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XTGPQ0cS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GRsroj5e"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id D21D41D002B3;
+	Mon, 16 Mar 2026 15:41:32 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 16 Mar 2026 15:41:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773690092; x=1773776492; bh=vx2cdG8UkY
+	k+VtF4OgWZzY7vBnD0vFjgPK8HclfsrNg=; b=XTGPQ0cSrkvLHPVZvkpg2EHKe2
+	aK8MIDaqXfNmHf9CS7oSRBX5aAaM2CZ7L5z83t+NGO+m9VIDzkOorhXOqVOnuL1a
+	Urf3q1nBXWeoYbBFrvBnd5La8xr2ZisiQT9iSrXrB5p8K6o1fePg2ZXdJA9bmjrr
+	ofW1k3N7UpNR5VrLR9jMHTjwKEI4CtGeFoxFZhVDkQCqHKG9U0n32fUk1YOVoGRc
+	4tcHhAajR+YGVZqlTQNJTcxn/BBBRqE3NRKR52IHecLztKzGMUQCz/imya37+JFT
+	SK1tsBJsoa8zRA4v7DVUBOr1jANU2jEjclV2PCNOZH9CMYi5SabBenWTZVtQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773690092; x=1773776492; bh=vx2cdG8UkYk+VtF4OgWZzY7vBnD0vFjgPK8
+	HclfsrNg=; b=GRsroj5emeSFmzof5KsHdwgbMY5G1/rZ+n3y0iG4gjJZSrDJUzm
+	bcgkfQlqKP0vHJiHmJu/qsnM3ksQgU2LYQ1K/a35B7eQ8rorog4tWpEntibRqHRf
+	Maz2FsJT3vwkd2giT4c+W7pRMazpuQMC65DgMX72VrQIPx7kZWNypuexh0UCpW9F
+	Fl7vCnIeYnS8uT/pLq2pMnSk7VkvUUd4pDe+RTcLZPn1hecSwqav/9jEkqcMl8D0
+	YtJ4vJRUctm4h5xKP13l5NSsEnoy8c+nQHI+NrzD7EyE4uTTqBqMeOBgutEL5Vwd
+	m6hVwwRJBf4LhyyLeAInkUcpMegSio962xA==
+X-ME-Sender: <xms:7Fy4aUS8Z1GgMJjARCUeYdAyD0D-3SyPxcatQSZSHIxhc8a0uek6qw>
+    <xme:7Fy4aYonLX5kUZY504HYm_tMTyjzJGtKw9fOUQY0iqQXyWoCHi0Sy4bIqBTn4w9BE
+    dLfw5oT9evpboez6kAHk7_fCnk5YbDkVrrFkuOFTdEe3Wrgp_7Zfw>
+X-ME-Received: <xmr:7Fy4aaJkCg0ywKyVrT5z3Tbh2i168Nr62wbdL1ZOJLIbBm0sJhiSYa4Y6Gwwmu-N3ilu69N9EEIIxrF5TAjvTUX-qNQKoyEw-A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelvdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepfeelsegsrghrrhhoihhtrdhshhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghplhgrthhtnhgv
+    rhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:7Fy4aTqPz6pwBkEOWV0CzX0k2nl42XyZEe752hFhFdXZ95SzqX32GA>
+    <xmx:7Fy4aazUm7_yStUz6PEGfXPwOw0apv2nYwRZlqe5z6W8IjpY0m6IpA>
+    <xmx:7Fy4afNu-NB5bEtMZzAYezbMIywb0MrjzFnzGmUOpOiE-mO3Ve8B-Q>
+    <xmx:7Fy4aX7XsoXFCwekshlFLIykbfC65zEFavAhag8yV73JtSOmQtK94A>
+    <xmx:7Fy4adsztVMdF6a3IA33XwEt_tF-vp3wQcxxJQA-_8LS2oDzy-Dq_MiZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Mar 2026 15:41:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jiamu Sun <39@barroit.sh>
+Cc: git@vger.kernel.org,  Aaron Plattner <aplattner@nvidia.com>,  Karthik
+ Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 07/10] parseopt: autocorrect mistyped subcommands
+In-Reply-To: <SY0P300MB0801E3F75349DFDF98C221F6CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+	(Jiamu Sun's message of "Tue, 17 Mar 2026 00:36:20 +0900")
+References: <SY0P300MB0801C6F21C2D8F49892DF8E7CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+	<SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+	<SY0P300MB0801E3F75349DFDF98C221F6CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+Date: Mon, 16 Mar 2026 12:41:30 -0700
+Message-ID: <xmqqse9zo93p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,86 +88,38 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jiamu Sun <39@barroit.sh> writes:
 
-> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+> Try to autocorrect the mistyped mandatory subcommand before showing an
+> error and exiting. Subcommands parsed with PARSE_OPT_SUBCOMMAND_OPTIONAL
+> are skipped.
 >
->> The logic for formatting revert commit messages (handling "Revert" and
->> "Reapply" cases, appending "This reverts commit <ref>.", and handling
->> merge-parent references) currently lives inline in do_pick_commit().
->> The upcoming replay --revert mode needs to reuse this logic.
->>
->> Extract all of this into a new sequencer_format_revert_message()
->> function. The function takes a repository, the subject line, commit,
->> parent, a use_commit_reference flag, and the output strbuf. It handles
->> both regular reverts ("Revert "<subject>"") and revert-of-revert cases
->> ("Reapply "<subject>""), and uses refer_to_commit() internally to
->> format the commit reference.
->>
->> Update refer_to_commit() to take a struct repository parameter instead
->> of relying on the_repository, and a bool instead of reading from
->> replay_opts directly. This makes it usable from the new shared function
->> without pulling in sequencer-specific state.
-
-I wouldn't mind if you put removing the use of `the_repository` in a
-separate commit.
-
->>
->> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
->> ---
->>  sequencer.c | 78 +++++++++++++++++++++++++++++++----------------------
->>  sequencer.h | 14 ++++++++++
->>  2 files changed, 60 insertions(+), 32 deletions(-)
+> Use standard Damerau-Levenshtein distance (weights 1, 1, 1, 1) to
+> establish a predictable, mathematically sound baseline.
 >
-> Relative to the previous round, sequencer_format_revert_message()
-> that does a bit more than sequencer_format_revert_header() we had
-> makes the existing code easier to follow, even though the total
-> codeflow amounts to the same thing.  A new caller that will use the
-> function now has to do less.
->
-> Also, even though this is an internal implementation detail,
-> changing the list of parameters refer_to_commit() takes makes it
-> easier to understand which part of the replay_opts structure is used
-> (i.e., we only care about "do we use the commit reference, or not?"
-> bit, and we have no interest in any other members of the struct).
+> Scale the allowed edit distance based on input length to prevent
+> false positives on short commands, following common practice for
+> fuzziness thresholds (e.g., Elasticsearch's AUTO fuzziness):
+>   - Length 0-2: 0 edits allowed
+>   - Length 3-5: 1 edit allowed
+>   - Length 6+:  2 edits allowed
 
-Patrick suggested[1] to use flags, but it makes sense to keep it simple
-for now.
+Is there a reason why this needs to differ from the settings for the
+typo detection/fixes for main commands?  Would the same reasoning
+apply to both, and if not why not?
 
-[1]: https://lore.kernel.org/git/aTZ5RrjnwJ2ZnT7A@pks.im/
+I would have expected that we would just emulate what we already do
+to the main commands, and later with experience with the subcommand
+typo detection/fixes, would tweak the parameters either only to the
+subcommand part or to the both with justifications.
 
->
->> +/*
->> + * Formats a complete revert commit message following standard Git conventions.
->> + * Handles regular reverts ("Revert \"<subject>\""), revert of revert cases
->> + * ("Reapply \"<subject>\""), and the --reference style. Appends "This reverts
->> + * commit <ref>." using either the abbreviated or full commit reference
->> + * depending on use_commit_reference. Also handles merge-parent references.
->> + */
+> +	/*
+> +	 * Builtin subcommands are small enough that printing them all via
+> +	 * usage_with_options() is sufficient. Therefore, AUTOCORRECT_HINT
+> +	 * acts like AUTOCORRECT_NEVER.
+> +	 */
 
-I think you're trying to put too much in the comments here. I would
-suggest to be a bit more concise. Maybe something like:
+Sorry, but I am a bit confused with this reference to "Builtin
+subcommands".  Are there subcommands that are not built-in?
 
-/*
- * Format a revert commit message with appropriate "Revert" or "Reapply"
- * prefix and "This reverts commit <ref>." body. When use_commit_reference
- * is set, <ref> is an abbreviated hash with subject and date.
- */
-
->> +void sequencer_format_revert_message(struct repository *r,
->> +				     const char *subject,
->> +				     const struct commit *commit,
->> +				     const struct commit *parent,
->> +				     bool use_commit_reference,
->> +				     struct strbuf *message);
->> +
->>  #endif /* SEQUENCER_H */
->
-> OK.
->
-
--- 
-Cheers,
-Toon
