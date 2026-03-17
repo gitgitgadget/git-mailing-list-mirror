@@ -1,149 +1,188 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A0E3C7DE1
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 13:06:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773752816; cv=none; b=KZZG6OmTs+ORDaHAeyLfvZ02Awe8DdvDUycrrr+1B0zLrGRSS5Esu/Sd1DFpty/R79GYNjeQqVrwO6lYzaJus2jfobrt4LxbL3+SSDdwpXwlSiskrMMOY2T0FI+MLp8cc4ZNgr8Y+8gLzdf9AUQBVgj6SOYMxJcfxMXEsSQa9js=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773752816; c=relaxed/simple;
-	bh=AyHTUEFPYMUxRqY7+rXHjlBHL8cHIoboKzA4Yk1ldbI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TtTDw92fLuT/zwD8ePD1T8Sbn+wN7PNAOSKO4PM/Elzs4KbQSETNtDZfMJuwZPsRCQfIiGVt0GhEPAwPypE9U0rbgW7+kPnvYeiYlyawrDl5Y1FFZfJHq7bwKyb3/7ykJyn4aqRVr6DUYT6UOmWq1S5GCBH91hM8LMXnDG99HMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GwnIywmF; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209043CCA00
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 13:29:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773754154; cv=pass; b=LJXIATRpBx4NDp2E0rCUFtGGWVeWfpa9HIHtr6xrlUpQ/VcPTb4wUvIeNhFC4WPQ1FhTyFDermhddEAQG9Bs/u3Xw2GBGbU9/vAbvrCxQ7dW228uiS9Ig/6TiCGFwmdrIayvZ4VwVTWEKCDZTSXouFdjJBOEk99nIM/aL14nOis=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773754154; c=relaxed/simple;
+	bh=SH8nCpuz3U3kIX/X461JmoZoMQGIWrOr+wNEJgqv/ZU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jEzNaagnHATvoI2OSELOp9dba+fEuCFyJ6n2d+Lnk8pNR1p0VTD+MzPr4VuMVp+VmVjDNov23e/zBBba4SPIbpTVnrI+uEWFDuvZ0A5v2GfbUkArALt1rxRV+sJwEBbt5tjr5wTWgWjGX82kVIjPPnm1ZHfhh/YaljtBtFFKpc8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RC5+8X/O; arc=pass smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GwnIywmF"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-829b8b6c4d0so4572795b3a.0
-        for <git@vger.kernel.org>; Tue, 17 Mar 2026 06:06:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RC5+8X/O"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c648bc907ebso3985438a12.3
+        for <git@vger.kernel.org>; Tue, 17 Mar 2026 06:29:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773754152; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jnnvWWFtIOTSo9e4vpk1trnCMomVFAXgPSkCXsdx/rVuaxoC9Asg5EFbyW/UTMlr9M
+         9fLvHp6X9mRbm9nzHgJln1oUXojvg1l/hDMnC9QIr3owgpuQLu7rObF7T047K8K+xGHu
+         x06NckdYTPuOhyU2z4qfWnz19nlzKs/3ZoCdJivKU4pMlTCgI85nEHCvfdUDmPDOByX2
+         1B7kOSSii1bdyNC1jddzEArYwNMfTfRdGR9/qPMxV3A9C+G/bGMWtUeMEEmTPHiWN/Ht
+         9920vaxZz89Tl8A6pkLaV0YqLtTBWe2QERRVhmSMUUMU9OjyjXfHTKqho1O9s/A7T2yK
+         OpNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=8BmCXxWb+RrOEngC5Cg5BL6JUVI6JCB544Q66s1X0y0=;
+        fh=1257yDTh098c2BEtV0Oxwdc3EQkwSxfmEbAaN88ZqcM=;
+        b=Gu4cE2zn5rHIVvCAXlbuhqfdTX07WNPX76wbrzuYuzhHCdKcgZrKW6HesExYaZsITS
+         uYy5p9NnB+05sB/7+aHkB0x149ZiiiOxdJCN3X/hg70fKMWRtOLIy6t4oOfAqy2T0KEp
+         hqpsdt2bDQxG1VBN/CTJI5Wnj1R33C/dNT7wufMwIdk52h5wwMiWnYwZjJzphHF9nsKy
+         I0cpS92s3CCLfJQzDQj4waSUNg8gk/EU5yxEBL4j5G00ET8Yswk09M7Q1FWD9nMJlWev
+         gPt3wEgJYbJMcPapdYiCjlw6RemUuQ44C/cLwen19YtWVsbR7x7HIG1hxYw/WUwiLUGp
+         gkcA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773752814; x=1774357614; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yq0EamnLCSAPd6hPYc7H63DEtt142ASeeUnh2gvcLN0=;
-        b=GwnIywmFC4cY8xZ0G6cVOm+yseY8Vq27jeL6wplxfuK5NeFgbTSykvH5ISjUmxWTE8
-         MP46WFcV9pWNTKJsIXMqv6md2/8GbJWyjrIMUptsy2PFbA4TdEakgxoaHNHk1r9Pi+dF
-         IGCfG3MEi5QBy+JoihJr/mXvKODE+a9Vl8Bmns/9dREgCW0rD86nHGiCP2bBAFFsKORQ
-         DkXjcMcqpyMl1J66AKFURCnC4IM4Kw1P2vYSW5FlUY8bbXwsBIrpF24/6ohE/xFr+FxJ
-         ygkWn90afTKK8QAIneAsTn5cMeazuloTsjPCAg2zb0vN3oHGQ0KuD5n4aIR7rjaEli31
-         kYHA==
+        d=gmail.com; s=20230601; t=1773754152; x=1774358952; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=8BmCXxWb+RrOEngC5Cg5BL6JUVI6JCB544Q66s1X0y0=;
+        b=RC5+8X/OQorH0uLPX36zTB6D2JQKofXlaLOe8e8Nkbn7UVRgO0yqEKwjQ+fnk4HRZE
+         pE278iLrpwa+XcSjjT8Var7+7//00+rbRfcuw2CPmjAxuOLfjGWqJ35h6O1NTJUVnrW4
+         OK4vHERvYTbelUBi2Ff+qLy/PBUDIvwULtK0w3kpMCKEfbFImekbzpsNdmJorJ7Pbb9p
+         KziPXakrPS7mosf0Ar/CnGM3DX3/EO04/T5q5urazbG4+pIJCXTqP1pAmoMiqzP2JcUu
+         YiSx7X1vTjkEUubv6QVCXiSqUxGxQQL5L8hfSRoITaBT7Iy/+v7Q3dOj+x+RGwBZNbPz
+         kT4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773752814; x=1774357614;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=yq0EamnLCSAPd6hPYc7H63DEtt142ASeeUnh2gvcLN0=;
-        b=PZMBEndg1r/zwnvz1aFKiRu/1QdFRMm4uy9sshhKfvnw2F0ZOuzOl40SKL+haB5f0u
-         cov80+6Fy9U974G2F6az6j2k8X7EPlRsDcNkJW5jrW0Ga3jQvja5S+90VcANZ5nQotFb
-         NelER4sEqPxzXTVW8fxOyGlD0WMNMclnp0n+ftvvWVgxUoErfdAtEGrwo7yQhN6cOWtj
-         NZVLXm1HQ/07UsluIOgUUZUrYnBgJj88TzD7TlgVCOTE8lY4bGtAVUqx+f5Sfpavmtom
-         LQUB21vUazEQfGh1F3UDpv8EFCz6DEjc8vKbf/orStcW/PIFzP0Gya5D3C4JpFHMscXa
-         qrog==
-X-Forwarded-Encrypted: i=1; AJvYcCXPzi08TcJaWjClGTJh+YnPdZ7JjiTLeVG2vTpQSzqgJffXPjM8N5QOUh+bMct6OwY6fbo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwcRFcdLXNAHZHuSt4gTs5tJF0BNUTroBDUEmAfkdATD6wx1nST
-	nB7ItynjfJR2Ckij46pMIzBNKF8e84FX6c5nbm+3+vYLubrSUKPjdT6e
-X-Gm-Gg: ATEYQzxGS5sbw5vQQv2xZiATAx9Yxbncl1qNupqSPrn8Fd2XCmDxsiEBViUbaZkX4QB
-	fbC3LnP3iUAB2gfdKxq6uXtHUkExDWYmYjuUaxTwYQvuVFqFg7BQjC4/vUBj4KaUvjZFtKpeBTZ
-	ZTilbTYgLN5TJqAsrz2TXiQiZfTM7FW937Z1uNee8kUd4WFrZ8g5tVITjwjeLr/MN3qiRTyxmfQ
-	1ZQQ6IQhcjmuq55cUL+ZFYGAMYRPCVg6/zD/8wuS4XcDwu7ETnyQm1kEq7SZIwi1Um2sQtf9fbl
-	GtSxs+l9vSli5NF8M724vlGAWhjWSBXypWdCt9KRb7l7Dhs65kyLkqdixjNewMHYrEg1UZhDc36
-	cYoMGZC2VniUdzNbMbj9AmXit21IPR/jRN0kFTe8QadYNGNg2XAHK4tMAXBZYkG+s9gO1YTWQmb
-	bYcpC5OnTYv6OMnKhB0+RV/+xNQhoPWkwwXJ007ZMWgaizwaoMKiL6rLFLvLgMCQ6tfmkjlHfZq
-	NfrKbRuAzXMF2a0oPbBkWngxND0peCcg27gOXxkDIWBkFibqR06HQn+8Aa4b4L8WxNGL90Za4Uq
-	XHcjrDI=
-X-Received: by 2002:a05:6a21:6186:b0:398:6645:6ee7 with SMTP id adf61e73a8af0-398ecd5f1c2mr15562999637.52.1773752814041;
-        Tue, 17 Mar 2026 06:06:54 -0700 (PDT)
-Received: from localhost.localdomain ([2409:40e2:2a:942a:7c1d:65f1:ed49:7b1f])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c740e14dfbesm2871131a12.5.2026.03.17.06.06.49
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 17 Mar 2026 06:06:53 -0700 (PDT)
-From: SoutrikDas <valusoutrik@gmail.com>
-To: christian.couder@gmail.com
-Cc: ayu.chandekar@gmail.com,
-	chandrapratap3519@gmail.com,
-	git@vger.kernel.org,
-	jltobler@gmail.com,
-	karthik.188@gmail.com,
-	siddharthasthana31@gmail.com,
-	valusoutrik@gmail.com
-Subject: Re: [GSOC Proposal] Complete and extend the remote-object-info command for git cat-file
-Date: Tue, 17 Mar 2026 18:36:03 +0530
-Message-ID: <20260317130603.84482-1-valusoutrik@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <CAP8UFD3LJEU1YNBOi5VtpZANTY9PA3_v=eU9JF163F2efp-hGg@mail.gmail.com>
-References: <CAP8UFD3LJEU1YNBOi5VtpZANTY9PA3_v=eU9JF163F2efp-hGg@mail.gmail.com>
+        d=1e100.net; s=20251104; t=1773754152; x=1774358952;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8BmCXxWb+RrOEngC5Cg5BL6JUVI6JCB544Q66s1X0y0=;
+        b=WztTEnAKiaVVhmcrACMYZ0a9YUewPZIEwqP7dGcL0066rIB+wXJMBzqA/pF4p4NY5a
+         /ueXIblVc9kifPnTo1iqNtRtzoFR1RGSITPU5aREf4iKfts8zNrj5y5zUwMs4l8UJK6X
+         KDQ4zulhICxkpUy2yCBxme/dabXP7pFfraLA0ZLeU0WD9FHUGgMYZu6ST1AnuWE9H5uD
+         9j/kFA9WUfaXxRM1ddY4ntctrTCXJ5Sa80/3mPgzqWl99VRjnKmwF7gwUO0kcBsFJoDo
+         DaubDJ2zWTGItohYY/1aTTI5yQ4TCx3IIbo0gPY+lvRMBGt/Jnm0D+mL1Ciivn725LeX
+         iz7Q==
+X-Gm-Message-State: AOJu0Yze7hVZn5VHrI7Uk4tqsZUfO8nD5VMZUHmBR0EFyjz0A49s/pcW
+	oyY69kWSxm7MvhlVPlAyorqApIeE+MS05StbSphcn5XbXXXCW55jchsve2EJUx0SR8/u/s0ZGqb
+	v4W07fZjJeooEwAvNEERBxyLpeEyLxwk=
+X-Gm-Gg: ATEYQzwMjYgqW04r7RY0E29AouBgPOask+OBTSMfeC2D3Ex/r4yTQXCDDIS2spt78J1
+	Ur+ZRZtQi6i7vHl47QiszpEpLf5hq7dhCScqgPl5jjEAgb9GnUHke1hRbwJjoaXKBvlPOj1ysc/
+	hLDJlr61H1gRSAkKVFrJMkXbAS9+NeVvrf2AHuXSkmmaNRKN9Nu/Av7fLaM4h7uO9ZGOTn/F948
+	Ukb+9Jqr3lli8eqLJofs8PAPZCvonglrNPSxAt1Li0vcFBN7NQt3JZ/N0IiT5kfb2r2KnQf9Az/
+	sAcoVWMoc16LWrH43HQdCKNXbADIxz9u1ZiRFPEt4Wqp5urFfrh6q7tvFU0yX4bU7aya7sjq0y9
+	py90qshM9Uu474/i3N+S1GyByUQ==
+X-Received: by 2002:a05:6a21:48f:b0:398:7eb4:8aa4 with SMTP id
+ adf61e73a8af0-398ecb06ee9mr13799234637.31.1773754152231; Tue, 17 Mar 2026
+ 06:29:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAGWgyh-NASOa+6NPhQHCte2_A7OkNm1r2qAov3Kn1+r1d25hYw@mail.gmail.com>
+ <CAOLa=ZSqQ=w8EVFMUwn5EUfMmNBgzGzG458Ex1ixiBSTiWnWYg@mail.gmail.com>
+In-Reply-To: <CAOLa=ZSqQ=w8EVFMUwn5EUfMmNBgzGzG458Ex1ixiBSTiWnWYg@mail.gmail.com>
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Date: Tue, 17 Mar 2026 18:58:35 +0530
+X-Gm-Features: AaiRm52gqSmHJrv4AkYleW3gWe3RPsDDYEgpfhx7CujCwczmRecvqrFG4VMcpmw
+Message-ID: <CAGWgyh_VmcNuay3AjsZ9zj9mP4g-c3Y9uDfuO5=kP9ix7Kdi3g@mail.gmail.com>
+Subject: Re: [GSoC Proposal] Improve Disk Space Recovery for Partial Clones
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, jltobler@gmail.com, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi there,
+Hi Karthik, thank you for the review!
 
-> s/has/have/
-> s/its/it's/
-> s/sreies/series/
-> s/type/types/
+Karthik Nayak <karthik.188@gmail.com> wrote:
 
-I will correct all the spelling mistakes.
+Let me address each point.
 
-> > multiple network trips to get a single object's data.
-> 
-> The `git cat-file` command has a `--batch-command[=<format>]` option
-> to enter a command mode. In this command mode some special commands
-> and arguments can be passed via stdin to `git cat-file` to request
-> information.
+> > 5.1 Blob Enumeration
+> >
+> > Walk the object graph from all local refs using traverse_commit_list()
+> > in list-objects.c, with a size-based filter consistent with the existing
+> > blob:limit=N syntax from list-objects-filter.c. The goal is to collect
+> > blob OIDs that exceed the threshold and are currently locally present,
+> > meaning they resolve via find_pack_entry() or as a loose object, and are
+> > not already in a promised/missing state.
+>
+> How does this work when used on a partial clone with 'blob:none'?
+>
 
-Will correct that.
-
-> But anyway I think "information type" is not a good wording for these
-> things, because we already talk about "type" for Git object types.
-> Please try to find a better wording.
-
-How about object property or object attribute or object field?
-I feel like object fields may be a bit more technically correct.
-
-> You can try a rebase to see which issues would need to be resolved to
-> complete a rebase, and talk a bit about these issues in your proposal,
-> but otherwise applicants shouldn't start working on a project before
-> they have been accepted.
-
-I tried a rebase on the current master , and there were indeed conflicts
-I will include this part in my v2.
+Right, an object walk using traverse_commit_list() would
+hit missing trees and blobs and end up triggering a lazy-fetch storm,
+which is the opposite of what we want.
+The enumeration needs to stay strictly local. We can do this by
+passing OBJECT_INFO_SKIP_FETCH_OBJECT to oid_object_info_extended(),
+similar to how remove_fetched_oids() works. That way we only look at
+blobs that are physically on disk and never touch the promisor
+machinery.
 
 
-> Would you implement both the client and the server side in the same
-> patch series or do it separately?
+> > For remotes that do not advertise object-info, a conservative fallback
+> > applies: if a blob is reachable from a commit the remote has, and the
+> > remote's advertised filter covers that object, its presence on the
+> > remote is implied.
+>
+> How do we know a blob is reachable from a commit that the remote
+> advertises?
+>
 
-I am not sure actually... since Eric Ju did everything in one patch series.
-But personally I feel like doing one series for server side first and another
-for client side would be a bit more focused. But I am not sure if it would
-cost more time for everyone involved, like giving feedback and all that?
+Fair point,
+I think the cleaner approach is to just drop the local fallback
+entirely and make Protocol v2 object-info a hard requirement for v1.
+It is stricter but much safer and we only drop what we can explicitly
+confirm the remote has.
 
-> > My current semester is ending in the first week of April, so I will be
-> > able to contribute 7-8 hours per day, totalling around 35-40 hrs a week
-> > on the project.
-> 
-> Do you have another semester starting after the current one?
+> > 5.5 Safety Guards
+> >
+> >   - No in-progress operation: refuse if MERGE_HEAD, CHERRY_PICK_HEAD,
+> >     REVERT_HEAD, or rebase-merge/ is present under .git/. Removing
+> >     objects mid-operation could corrupt an otherwise-recoverable state.
+> >
+>
+> But couldn't one of these operations start after we start the process of
+> cleanup?
+>
 
-Actually I made a mistake, its ending in the first week of May. But no, 
-after this semester we have a summer break so ... I will update this part.
+Yes, you are right. A merge or rebase could still start halfway through
+the cleanup and lead to a race condition.
+So for that, write-before-delete already handles this case. If a merge
+starts mid-cleanup and needs a blob we just deleted, it will not hit a
+fatal "object missing" error, the OID is already in the .promisor file,
+so the lazy-fetch mechanism is called and fetches it back transparently.
+The repository stays in a consistent state regardless of when the
+concurrent operation starts.
+For packfile removal, we can rely on the existing .keep and lock mechanisms
+natively present in the repack machinery to prevent GC collisions.
 
-> Not sure if that would be very useful first. Also that might be better
-> in a different command than `cat-file`.
+> >   - A new option on git backfill (e.g., --drop-blobs): backfill fills
+> >     objects in; this flag drains them back out. The symmetry is clean
+> >     and the command is already familiar to users working with partial
+> >     clones.
+> >
+>
+> I'm not sure if 'git backfill --drop-blobs' makes sense, since the
+> command talks about filling in data and the flag talks about cleaning up
+> data. But this seems to be the closest relative.
+>
+> >   - An opt-in git maintenance task for scheduled periodic space
+> >     reclamation, wrapping the same core logic.
+> >
+>
+> This would be my top pick, seems like data cleanup is definitely a
+> maintenance task.
+>
 
-Alright. I will ask that as a question before my final gsoc proposal
-submission so that if its approved, I will add it to my tasks in gsoc.
+Agreed on both, a flag that does the opposite of what the command
+name says is confusing, and git maintenance is a much more natural
+home for something like this. I will focus the design discussion
+around making it a maintenance task.
 
-> There are other ways to do this, like using:
-> 
-> git rev-list --objects --all --missing=print
 
-Did not know that ... but thats great! I will remove this from the proposal.
+Thanks again for the thorough review.
 
-Thanks for the feedback.
+Siddharth Shrimali
+r.siddharth.shrimali@gmail.com
