@@ -1,123 +1,97 @@
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0923F7A9F
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 18:12:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773771146; cv=pass; b=QPe+6+WCXefqq3ZND5Ump94m2cocw+imeBGwoj1ZOt4u1avCymisPiJNUB3BLXI2gtMrp7WO4Be9Kn+czo5stYc3KB1YUFEVjtusuTWNmN6WDoTXy7YOzMb+tY9BvAgATWGk1KENP97EHTIpxtwg5rgZAfunnctfM7anx3XFJk4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773771146; c=relaxed/simple;
-	bh=9Pojj9ph89dqX2/drWaFYbTe5GZZK1Ul7SaHfPH9o5c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q8JorAE4oN21i7GtU0mR4QM/V6GLpjlj8qfj0CjiiC8/tDn7+AnqTcQeTK7vw2WLxSI5hVm574hAiP+OXsgwkC1pOwygN4NxQNDypKpGXXwuiyQRXRHDNGRhHpF1/0PqWDC5X+ywDS1mEAmCSjkcqBwSy61OuqJze8/kI5SocsU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-124a7216c9cso270259c88.0
-        for <git@vger.kernel.org>; Tue, 17 Mar 2026 11:12:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773771145; cv=none;
-        d=google.com; s=arc-20240605;
-        b=X2WMwtZHN66UGFAdeK4lMFl9tQkryvgUYB50lvaD3DpSKhbKc5CBlFSr10v76yDCyb
-         dLEaVs4ZC5cr9rZjhb76x9BcDT1W1c3EYNQR96j6G+scx09Gb4V0TLfrngHr4nDro1Ld
-         Gtoe3OHqptwDUe0DGQ9QUWjdxarb3hgxromaR/HnkcXChH7YxyMYXUonz+OMtsXVFblX
-         BfC29QDe3u6vxlDf6Dwu1Tia9Cj/+WjdWkfC5MVbPZwnsSmEQNXOI3Keny2tj4t+8lof
-         O4aczkeInkEjISY2slBHBGp+tOXRwInDxrJZH8OVQg4t6BwN02KeP3RDKotijQGje4/U
-         rfbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=VM7jyyQ62MtaJSq0mzE/OaNXSvcvrkcHSG864dpZeuw=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=gyj4WLsAyd/EwXsyJI/boTx9EWZlEaPI+4wb21e1PELA1D71py8CKH7dXBplWVt7tF
-         GtEVa6xt8iVC2hyXBeleHH96tqkd3xIdH0i3K4T1hPzbl5V1O+DSwFHq2cN6ouesTBSY
-         74mDB/oXPGODNLkqn4JBeGReatIST+mRq0Mm6yB3FC50AdpHUZXQlIloZSnHLurEZgQ4
-         sNIGI2VTTVBQyW4FPmuP5+SNRtd+aPydhO6hOCYzzCxNcSBF7NU3dbMEjT1YCl4onn+Z
-         qGyxX5tyk2U41kTlgB/WdAopiPGD6MWwOr9cTqygcbOgdk4I3/y5v/H2ugS6R+Y+7+Tk
-         RNgg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773771145; x=1774375945;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=VM7jyyQ62MtaJSq0mzE/OaNXSvcvrkcHSG864dpZeuw=;
-        b=BR5a+NlF8gF98dwAPlDpf3S4f6a22772CxOvyB2f3GHYohB8u8wjqpXGOfELDK0CPM
-         PlOsM0sji0FHzB3Z2Qcoqf3jOCeAbWrozOEhhI0L0zv8mnY9F0MhHySfLUb2a4Kmb5FO
-         P5N0Yfi++pXLO+EoORfREQsoe1IcUujgLjA3L3I+YCo/+nZeqU5iEA8K5AnFaW1/fOw0
-         AnBHGyyoF/T6rH5Y+ejRQ4sp7OYriju+WgCQL7AGU1VGiStKgc9pQH7U/fZ7FEB+CnQm
-         2hDBmtsA+OsdBDGWbzahBRDyVizlOBmY53i1fWaf8b1NTtBrbU0lvRRvPdRUnihPelRG
-         kMSg==
-X-Gm-Message-State: AOJu0Ywn858jNWxiJowsCpYiBgXjwbStA0HYnDBEde8GgNnqbPmx/9O5
-	sEViJZdZYE2RMYM5GOFELwYBcF9FpNy+u85fqlr9u7OVlZ0j+I1VqsseXza98D0qzxFJta4N7TA
-	96Hv4ZPF3DyMqh5pqM1Qnhq51FniEZ7M=
-X-Gm-Gg: ATEYQzxac1KEQ+Crc8zB0i9YVscvMfTr8aXcJJlpYlb6D+LT0tInkmqiVW5YpmShcRd
-	vDnf5C5XJCz+t/fTWTmOPoF1C1qOUQsikGsl1hDOmGU2uBTwc4NAE5uqit0nBZj+ZgwdiZp+pB7
-	5GDcUWSdNBDVy5yiUag4fcdeGU0+8lja+vjZJBsmvZ/zmkzInSNdsXPUtOwNy8ywiTVQAaXDQ3O
-	a7pBwTrzIWh2q/22wK1nVtsSpQrvj4SAUbRWZt0efnF2Y55WFgALvs1kn/k8UMJ2fXfF5PlzK0H
-	NdgHpZGhVcH5CDxxoj74Ntlnb57orkDjJfpxsh8XFq3U0p6pT97U
-X-Received: by 2002:a05:7300:3724:b0:2be:1f56:ed32 with SMTP id
- 5a478bee46e88-2c0e4f79e7amr109641eec.1.1773771144640; Tue, 17 Mar 2026
- 11:12:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717AF3F6600
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 18:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773773089; cv=none; b=jkRwBmMEzLCqNRWmOeAva3dwc6/5a8g63YTYon08RjitBO4l3xjGtz+gqYRyVGZQ1D3HUbcEMgfSqK9rqhOyiRXdLtoobzVSw3VJJLcscZ32UycTa/FB/fHtPpnsCeXfbYUqrTElYCA4HoBHaPtND3un/yaWFMCGBUWGm1Kc7hs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773773089; c=relaxed/simple;
+	bh=tYWwToL+WtaPKa8wpaG5RSf7uKc3lB46d/h9R1MXmEo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NrviwxN+hrdu2yvIqGcp537fY1gl9nLFNxRLr+4wP/fia0nw2x2YEXtUAm8m+jsA3BNFm1UufR1pP9Z4Di6uArIGLyUCghNQn2q5S31DVfDzjMmSI3aga+4T83yEmNJRcdtvH4YfMFG5KwoJV8VDk54gbxQEhwdaM3shIbjOZJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ctLUO8WK; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ctLUO8WK"
+Received: (qmail 32036 invoked by uid 106); 17 Mar 2026 18:44:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tYWwToL+WtaPKa8wpaG5RSf7uKc3lB46d/h9R1MXmEo=; b=ctLUO8WKihJqswI4tIyiq4rA0N/HeblLbpPBm8gztrD9l2lQkMYE3ygku+QYFSPUFxlSEDYDUYwBqZPrMj+GxPWyBjuvBgH2f904MYQ2whdDhKKH/XklSjaNqbclagMCliuTnoLN2ugdCFb0ILhBIPnE0KYIVGTfxFJWwpPNTJYKQ/ZyibU1FQ9HdcChThejFLKoFx4cCJbN+9smCNiV2rSZTdGjKUKp7GyFWogvOkFdYrMi3FCLyoYmKRQMvOYL3iWWgrjEaoxEx8AS1V3mACza14vtG1hcgRDLQfYPR+PXs2989e74X08yISllp9eSmQW2NUWVz8hkMx8KtLI9zw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Mar 2026 18:44:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 48968 invoked by uid 111); 17 Mar 2026 18:44:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2026 14:44:41 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 17 Mar 2026 14:44:41 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Subject: Re: [PATCH] rev-parse: have --parseopt callers exit 0 on --help
+Message-ID: <20260317184441.GA574291@coredump.intra.peff.net>
+References: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
+ <20260316220742.1286157-1-sandals@crustytoothpaste.net>
+ <xmqqcy13mgdk.fsf@gitster.g>
+ <ablCBkmOdoourCnO@fruit.crustytoothpaste.net>
+ <20260317145543.GA1828@coredump.intra.peff.net>
+ <xmqqv7eul71y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqldfql4hp.fsf@gitster.g>
-In-Reply-To: <xmqqldfql4hp.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 17 Mar 2026 14:12:12 -0400
-X-Gm-Features: AaiRm51zQejdyU-v3N1Uvrs9dmQSxuK7dZr-cJXcVHpewLmPuayZFebGD9PuJyM
-Message-ID: <CAPig+cTTgLVGPG99gsb19BeJVWS=VZCU4F-rjb25yHTAORWwzg@mail.gmail.com>
-Subject: Re: [PATCH] apply: fix new-style empty context line triggering
- incomplete-line check
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqv7eul71y.fsf@gitster.g>
 
-On Tue, Mar 17, 2026 at 2:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> A new-style unified context diff represents an empty context line
-> with an empty line (instead of a line with a single SP on it).  The
-> code to check whitespace errors in an incoming patch is designed to
-> omit the first byte of a line (typically SP, "-", or "+") and pass the
-> remainder of the line to the whitespace checker.
->
-> Usually we do not pass a context line to the whitespace error checker,
-> but when we are correcting errors, we do.  This "remove the first
-> byte and send the remainder" strategy of checking a line ended up
-> sending a zero-length string to the whitespace checker when seeing a
-> new-style empty context line, which caused the whitespace checker to
-> say "ah, you do not even have a newline at the end!", leading to an
-> "incomplete line" in the middle of the patch!
->
-> Fix this by pretending that we got a traditional empty context line
-> when we drive the whitespace checker.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-> index 29ea7d4268..8573e12f46 100755
-> --- a/t/t4124-apply-ws-rule.sh
-> +++ b/t/t4124-apply-ws-rule.sh
-> @@ -561,6 +561,22 @@ test_expect_success 'check incomplete lines (setup)'=
- '
-> +test_expect_success 'no incomplete context line (not an error)' '
-> +       test_when_finished "rm -f sample*-i patch patch-new target" &&
-> +       (test_write_lines 1 2 3 "" 4 5 ) >sample-i &&
-> +       (test_write_lines 1 2 3 "" 0 5 ) >sample2-i &&
+On Tue, Mar 17, 2026 at 10:06:17AM -0700, Junio C Hamano wrote:
 
-Curious. Why are the `test_write_line` invocations wrapped in parentheses?
+> > But this
+> > is not just a bug fix for --parseopt, but a change in overall intent. It
+> > might be worth digging in the commit history or list archive to see if
+> > there's any discussion on why we are using 129 in the first place.
+> 
+> And if it turns out that old discussion was convincing enough, I'd
+> prefer to see us moving to --help/-h exiting with 0 eventually.  I
+> do not mind doing so at the Git 3.0 boundary, if an excuse to make
+> a big change is needed ;-)
 
-Also, is the whitespace before the closing parenthesis intentional?
+I could not find anything convincing. :)
 
->  test_expect_success 'incomplete context line (not an error)' '
->         (test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
->         (test_write_lines 1 2 3 0 5 && printf 6) >sample2-i &&
+We should also apply our little grey cells and see if we can think of
+any reason somebody would be unhappy with a change of exit code now. The
+most I could come up with is a script like:
 
-Perhaps the parentheses in the new test were copied from some existing
-test, such as this, which already used them for a legitimate reason?
+  #!/bin/sh
+  git rev-list "$@" >tmp &&
+  do_something <tmp
+
+where you might imagine it is run as "foo.sh --objects HEAD" or
+something. Right now, running:
+
+  foo.sh -h
+
+will bail when rev-list returns 129, but in the proposed world it would
+keep going and run do_something. And you can further imagine a world
+where the script then quietly produces the wrong answer, because
+do_something thinks the rev-list output was empty (or actually it is
+worse; it gets the help output here).
+
+I think this is mostly a case of "if it hurts, don't do it". The "-h" is
+not doing anything useful (the user does not even see the help text!),
+and if the script wants to support a usage message, it should parse the
+"-h" out separately.
+
+Could somebody maliciously convince you to pass "-h" to such a script?
+Maybe, but not only are we getting into a series of increasingly
+unlikely events, but I think that means you probably have worse
+option-injection risks.
+
+So unless somebody can come up with a more compelling example, I don't
+really see much backwards-compatibility risk. But maybe I just lack
+imagination. ;)
+
+-Peff
