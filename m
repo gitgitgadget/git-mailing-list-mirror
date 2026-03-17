@@ -1,251 +1,489 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CC93093CB
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 22:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D473612EA
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 22:10:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773785304; cv=none; b=l9icF2GB+GRRFuQHyfVWJLvqgRR2L451twwRwX/5hsGb9vGAiUK86lD/rTw4rWp4MYobBTtHZ2KJ4LcvyF/wirXPgCHPUODxCQIcNfdymSWZ+ja8ug3k0d0lqIzGm62kyOo3CQ9arMtaQ/Rv0iH9NkMbWECprnXcCivKBzbyMmY=
+	t=1773785413; cv=none; b=u73ZRdCinl/wNEyO1LyuJ4+gJRW74VdRSjzJ+jT3hAKdVqCpAzPH+6arW+N1Xv3Xbg7rT+IugWSK8Ce/V4bB9aiaBppEvZz1hlBXcdLavz3KqidVq8cMqpMAoiofgyqeOPEcnjmBGFxFzENJ3wcAtutG7rscK4LNqP5S1j39N5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773785304; c=relaxed/simple;
-	bh=nYPCrqOw+BK3G465UQm6kgvPnkMSr6jy7XqPYkJledM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=YPS580Ah09wO6zWgqGPk6y2JtbKsiTJjBzLBrj0bk5R4JuHaXOMKvQlh3OrTY3xrSagce/r3xZzD9EdD/vJNSsPilfgsbypKtx9K9/iUf2FXh0jWJlt5DwisMW2FAneE2Le6ZhijK3iwZ9Pm3NP2kpd9NhdwmcjZxurNXJbIADM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Qn9diePj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K++kSHsG; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1773785413; c=relaxed/simple;
+	bh=6ckEe4T5TKOasNa10u/EI6c6BlVknOY3lYDMNHsobOI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=c2ilVzZLLQb4/fdbepKhWfsnF+/s8SO5+9U6wY1qS2WtSB+1ZYeTFAwG2MO8uTq0JxMoYqxZp/3Rz05JszSaowdFvqkkxghma73SLWIsL7NqtzlRHDCLkTcQV/6Y/RecE9VDBcp2RQTFS+4u7rP6e65FZxARTpwRo1QqaQ2wpWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UJLc8CQW; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Qn9diePj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K++kSHsG"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 998C31D00178;
-	Tue, 17 Mar 2026 18:08:21 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 17 Mar 2026 18:08:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773785301;
-	 x=1773871701; bh=kJsbMdWVnD7PFIz7J9b7dLjnuDLR2X58MzE5aiLmHWc=; b=
-	Qn9diePjPBw8ZECv/v7or8bOcX6TMfqrBZldkumon3Ig6eWzjgAsIb5MeLdqA/fw
-	aovCCozu/LvOoiB/6hMVUjn5Np3s+coyWWLGniP7BC4c+1cWfCHsOYCiJUguZb6S
-	HuWEpSlbW1JFWDALS5weKq0Q50URnb2Qs7lAAsWb6texzAKYtwQWWUmqGQDtesal
-	jpviQx0O5HiR8HJVkb2WwZvXlVvZ5vwGvByLJO23+qvSFJeVRUpzc7dtE7MJS7VC
-	2fRyU40cDvh66Rj0Pud4fRGST9aJisTzIwlNdogDSm5UAk5EHbJCDK/HYd0thj6T
-	91y33UI8Szl0tBBv5wf8ng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773785301; x=
-	1773871701; bh=kJsbMdWVnD7PFIz7J9b7dLjnuDLR2X58MzE5aiLmHWc=; b=K
-	++kSHsGW21rX6FwUHrSICSJewtaepG+Vc1WOlV0+HAp/HqK0w2yBh8P4Gu7623gx
-	iKXUqx+Yd+9qUS802RB9r3hmZEsdES6+tP+4bvfoYXT/wpwt8qf1kOa+ZMaoXlbF
-	mEFG98/mXQLFTOU+KSBAGlExtZRvEFsqvGgROQySkQYM9CaT5b5xihYFOL24xFEb
-	bQgr8SQKOeeudGyREyq93MvTcwO2vgY2zUfrPXAbmB8It2L4O1dF3kAC6cwu50VG
-	tvslRpJLmRL66ADSHt1rnX3AWnVf/zXaNaKXSc++D3oQJNuann6Gs47CE0NrlAEs
-	RcBJSdeS8Wvd53Gs/yPVQ==
-X-ME-Sender: <xms:1dC5aQLqRYYHuikXlPr_UJuuWp2A5unek1Okhu6FhnTMKb4gdmPjZSA>
-    <xme:1dC5aa9CaU3upmaK1qVE-XvfhuSqCOtqCd66x1ZUn1rZom5VcQGZ_WSS1R9VjV5ve
-    k3rmNKjdJq_XlJ5aIfZmb-07BG675BOxoSA2Y2p0TB9XabZnX7F3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvgeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
-    dtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenuc
-    ggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveej
-    gfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptg
-    houggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hg
-X-ME-Proxy: <xmx:1dC5acm3lCumQdrfnCNQS-hxLtU9O7wuuHprdHmvjOGDSuJYqfMXmg>
-    <xmx:1dC5aTlah89mrgpPfhfVt5BJZX4RIma1UGVl8omCUQNCpLrV7SUWPA>
-    <xmx:1dC5adsbnvyRW7qlclnfLu075vjvuA9Qf71bZ_NhmvZ7OU0Kx48RHw>
-    <xmx:1dC5aWkfzj4PeaG717pEfd5rkjkIVm05vqoafg61QSBjtrNC1KqO1w>
-    <xmx:1dC5acd_ApV0Kzqda8HbbAaIChqvmbjsDeuwHAbovxZBb4RmmTgtUYsN>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 068821EA006B; Tue, 17 Mar 2026 18:08:21 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UJLc8CQW"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-439b9b190easo4509165f8f.2
+        for <git@vger.kernel.org>; Tue, 17 Mar 2026 15:10:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773785410; x=1774390210; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=amJC3ikFvf2kwdFi/dQ6lzHLTxarSi0rUHvYur5BjXw=;
+        b=UJLc8CQWkcjV6YwaS+D6uEcbQU8HrE0dxPgzk2i3LV2Drfb3mPuiOEVU5Mu17upmlL
+         sTBDReSnphcrfXkkLqlGeImB/RGd/ieR6eyXStzyxJJJLxu2/9X9C27GPHLTitkyL+EU
+         1FOCnpDhT1Uyb9gkOFMPyJgpKXtwNErH24BJJJqf2o/imntqC3zaETBC0Ho/cHSA+WaK
+         TiLmxwRs0SrTUscqV6LESWZ7RPCTHjX5Xx6tVr6Bb1zzwT1QUtNgRO0W2wNx0S1FCsYC
+         WPPAMYf9ncX4Sjs2PUkIadttXsCsGNHZDlrjOXo1gU94YoOgXfbVrp01NSyW7MdbHaMl
+         CJ3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773785410; x=1774390210;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=amJC3ikFvf2kwdFi/dQ6lzHLTxarSi0rUHvYur5BjXw=;
+        b=mYmjFqkQPEmKPDR3bwqaiILQSxn+iVOuQY+LTbxU13QzTj5YzJmbJFFk0Yi73KOwky
+         br9tqbYZ99xxg3QpG1o66+cmY94IuboST/javeXhmpOOYZNZApi2jtGH8ZR4JBMX5z9Y
+         yAmyeRsk3MCqDWPsDOqG/So7sBzOp5cfSL2XdkSvVcoY1AYfK9GkQg/GkEnKxx8k2wWW
+         sCGQjLFsBzn+xuT7kXVtgNiuYFAwWvEv+PvIHpRZekRi2EJiv01mAWtyxfrNErDsyQDo
+         4eaHsdyLZyZE+cBv3BQFaTSTnFUrvRPZ30FBSJrsR4KK2tKFQ90Iwf2MRztYdONDVIO7
+         ar+A==
+X-Gm-Message-State: AOJu0YxYK8JptoRbJi8qzfpJhGZmEyEmKsL/85Gs606l2L+cS4E/EDY8
+	+bewBON0RnCLalHPOKV4Xdu55joVDKhUXoFuV1tY4xDLl7FVcvfAsDGv81zDqtmeuHN/sg==
+X-Gm-Gg: ATEYQzwtxI5t2RakqnBeYstsEtnTP/vX4v8jdynaal5fkWMNbnv6XPQOSq95HoMJMCm
+	+T0Ru3WGqXZyP1dv7JPMMKZyk3xHrlYORXwzjSvi/sMnz4aRi7Qb48b8WjC9yZmZMwF4O+fCCvW
+	qCTmcWbpkqKgw+0SGPHPqHmIn/fyODzL8gdQ4Gx8ZtLZ9t+mIryQa+svw777pSHdlI/f8F9AT9o
+	mCgk15Ok762fyo8PWjlww9hcg1DAPzMpsSfZdLERLoBoXDJ42gmPq/kpw9gbvp0nsdehIDTxwRw
+	e4pfMe37BgTVeXVIqw0F+d6JppIHTlV5QEbHbMMLNp71y2JbBiLCzhUlr2XZNzSs6z261/nH+jT
+	CT6xdw4Q5H+hD8bEdNRPChSRdN4/60JVTqYM40GXIZRV59V5aBhbtYJjHG+QjDyqRzaXcWoXWJ4
+	EpP+ahbVOk2V6Rb6B5ezHCYk5KkqFXtf/e4Lxkc0MlkdceD3s0vDrwuR4OWP6A8IkRhLsKrppyi
+	B3XEiL21o3GfZajAtJgnSG5xbXIZH5/5dujPog/ATJlx8iXSZfBsgAeduVmHfFMmOWfNQ==
+X-Received: by 2002:a05:6000:40de:b0:439:b539:787 with SMTP id ffacd0b85a97d-43b527cb618mr1385364f8f.53.1773785409556;
+        Tue, 17 Mar 2026 15:10:09 -0700 (PDT)
+Received: from farblopa.localdomain ([84.126.0.122])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b51852a64sm2197045f8f.14.2026.03.17.15.10.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Mar 2026 15:10:09 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	chandrapratap3519@gmail.com,
+	Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [GSoC RFC PATCH v2] graph: add --max-columns option to limit displayed columns
+Date: Tue, 17 Mar 2026 23:09:29 +0100
+Message-ID: <20260317220929.120746-1-pabloosabaterr@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260316133426.117684-1-pabloosabaterr@gmail.com>
+References: <20260316133426.117684-1-pabloosabaterr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ALlot-drpGVV
-Date: Tue, 17 Mar 2026 23:07:59 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Message-Id: <d3813f1d-174b-4d1b-b0c5-c6a8db260f6c@app.fastmail.com>
-In-Reply-To: <xmqq8qbvz2dm.fsf@gitster.g>
-References: <CV_name-rev_--format.4ad@msgid.xyz>
- <name-rev_--format.4af@msgid.xyz> <xmqq8qbvz2dm.fsf@gitster.g>
-Subject: Re: [PATCH 2/2] name-rev: learn --format=<pretty>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Mar 14, 2026, at 01:22, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->
->> diff --git a/Documentation/git-name-rev.adoc b/Documentation/git-name=
--rev.adoc
->> index d4f1c4d5945..8f050cd4763 100644
->> --- a/Documentation/git-name-rev.adoc
->> +++ b/Documentation/git-name-rev.adoc
->> @@ -9,7 +9,7 @@ git-name-rev - Find symbolic names for given revs
->>  SYNOPSIS
->>  --------
->>  [verse]
->> -'git name-rev' [--tags] [--refs=3D<pattern>]
->> +'git name-rev' [--tags] [--refs=3D<pattern>] [--format=3D<pretty>]
->>  	       ( --all | --annotate-stdin | <commit-ish>... )
->
-> We acquired a new option.  Do we need a matching change to
-> the contents of name_rev_usage[] array?
+Repositories that have many active branches produce very wide
+outputs with 'git log --graph --all', makes it difficult to read.
 
-I looked at it and it seemed that `[<options>]` were supposed to stay
-inside that placeholder. But since this is a new mode, maybe:
+Add '--max-columns=<n>' to limit the columns shown. Columns over
+the limit are replaced with a '.' truncation indicator. This only
+affects the visual rendering.
 
-    diff --git builtin/name-rev.c builtin/name-rev.c
-    index 6188cf98ce0..13e67a7723c 100644
-    --- builtin/name-rev.c
-    +++ builtin/name-rev.c
-    @@ -504,6 +504,7 @@ static char const * const name_rev_usage[] =3D {
-            N_("git name-rev [<options>] <commit>..."),
-            N_("git name-rev [<options>] --all"),
-            N_("git name-rev [<options>] --annotate-stdin"),
-    +       N_("git name-rev --format=3D<pretty> ..."),
-            NULL
-     };
+The commit mark '*' is only shown in two cases:
+- The commit is in a branch inside the limit.
+- The commit is in the first hidden branch, in this case '.'
+  is replaced by '*'.
 
->
->> +--format=3D<pretty>::
->> +--no-format::
->> +	Format revisions instead of outputting symbolic names. The
->> +	default is `--no-format`.
->> ++
->> +Implies `--name-only`.
->
-> If it is implication, would
->
->     git name-rev --format=3Dreference --no-name-only
->
-> do what is naturally expected?
+Commits on deeper hidden branches do not show '*' but the commit
+subject is still shown, so no information is lost.
 
-No it wouldn=E2=80=99t. You=E2=80=99re right, it really locks in that op=
-tion with no
-escape hatch.
+The original idea to limit columns was noted as a TODO in
+c12172d2ea (Add history graph API, 2008-05-04), which mentions
+gitk's behavior. This does not implement gitk-style column
+rearrangement; it only truncates the visual output.
 
-But in my next version I have switched to a parse-options callback so
-that `... --format=3D... --no-name-only` really does turn off `--name-on=
-ly`.
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+---
 
->
->> @@ -462,6 +472,25 @@ static const char *get_rev_name(const struct obj=
-ect *o, struct strbuf *buf)
->>  	if (o->type !=3D OBJ_COMMIT)
->>  		return get_exact_ref_match(o);
->>  	c =3D (const struct commit *) o;
->> +
->> +	if (format_ctx) {
->> +		strbuf_reset(buf);
->> +
->> +		if (format_ctx->want.notes) {
->> +			struct strbuf notebuf =3D STRBUF_INIT;
->> +
->> +			format_display_notes(&c->object.oid, &notebuf,
->> +					     get_log_output_encoding(),
->> +					     format_ctx->ctx.fmt =3D=3D CMIT_FMT_USERFORMAT);
->> +			format_ctx->ctx.notes_message =3D strbuf_detach(&notebuf, NULL);
->> +		}
->> +
->> +		pretty_print_commit(&format_ctx->ctx, c, buf);
->> +		free(format_ctx->ctx.notes_message);
->
-> Is free() the expected thing to do here, or FREE_AND_NULL()?  Unlike
-> callers like log-tree.c:show_log() where a context is prepared, used
-> once, and then discarded, format_pp is initialized in cmd_name_rev()
-> once and then repeatedly used by show_name() potentially multiple
-> times, so there may be a risk of getting confused by this leftover
-> non-NULL pointer that points at an already free'd piece of memory.
->
-> Or there may not be---I did not check, but you as the author must
-> have already checked, hence this question.
+> I'll wait for the decision about whether this TODO from 2008 is worth
+> doing before a v2.
 
-This is supposed to be tested by `--name-rev --format=3D<pretty> with a
-note`; it has a note on the first revision but not the second.
+I believe that it is better to send an improved version instead of waiting
+to show more clearly what I want to do, sorry for the confusion.
 
-Here we never use this pointer again and we get a fresh pointer from the
-strbuf before freeing again (whether it gets populated with a pointer or
-not).
+> It's been 16 years but I believe that is still a good thing to add, even if
+> a lot of graph viewing happens with third parties, adding this makes
+> Git a bit more self sufficient. This is even more useful in a case where the
+> third party is not an option.
 
-But it does sound better to just null it. There=E2=80=99s no need to hav=
-e it
-laying around.
+> That said, if this still doesn't seem useful I would remove the TODO
+> to avoid further confusion in the future.
 
->
->> +		return buf->buf;
->> +	}
->> +
->>[snip]
->> @@ -567,6 +599,10 @@ int cmd_name_rev(int argc,
->>  #endif
->>  	int all =3D 0, annotate_stdin =3D 0, allow_undefined =3D 1, always =
-=3D 0, peel_tag =3D 0;
->>  	struct name_ref_data data =3D { 0, 0, STRING_LIST_INIT_NODUP, STRIN=
-G_LIST_INIT_NODUP };
->> +	const char *format =3D NULL;
->> +	struct rev_info format_rev =3D REV_INFO_INIT;
->> +	struct pretty_format *format_ctx =3D NULL;
->> +	struct pretty_format format_pp =3D {0};
->
-> Hmph, would we want to use the full init_revisions() instead of
-> static REV_INFO_INIT that initialises a lot more members of the
-> struct properly, most importantly the "repo" member that points at
-> the repostiory to be used?
+I revert what I've said here. This doesn't actually reflects gitk behaviour, 
+it only truncates the visual output and prettifies it. To actually fullfill the
+TODO, it should rearrange the columns what would mean to change the whole
+rendering algorithm of --graph. This prob why it has been a TODO for so long.
 
-Here I looked at the doc for `pretty.h:get_commit_format` in order to
-learn what I needed to set up. Since it doesn=E2=80=99t say much I did t=
-he least
-work that I could get away with when it comes to struct
-initializing. Since it does seem like a struct for a lot of different
-situations while this is just a formatting situation.
+I don't think the TODO should be removed with what I bring here. Therefore, I
+wont't remove it.
 
-I might have done less research than I ought to.
+The actual TODO seems still a good project and a good improvement.
 
->
->> +	if (format) {
->> +		struct pretty_print_context ctx =3D {0};
->> +		struct userformat_want want =3D {0};
->> +
->> +		get_commit_format(format, &format_rev);
->> +		ctx.rev =3D &format_rev;
->> +		ctx.fmt =3D format_rev.commit_format;
->> +		ctx.abbrev =3D format_rev.abbrev;
->> +		ctx.date_mode_explicit =3D format_rev.date_mode_explicit;
->> +		ctx.date_mode =3D format_rev.date_mode;
->> +		ctx.color =3D GIT_COLOR_AUTO;
->> +		format_pp.ctx =3D ctx;
->
-> Why does this code initialize and assign to a on-stack ctx first and
-> then assign it to format_pp.ctx, instead of working on format_pp.ctx
-> directly?
+example:
 
-You=E2=80=99re right. I=E2=80=99ll just assign directly.
+git log --oneline --graph --all
 
->
->> +		userformat_find_requirements(format, &want);
->> +		if (want.notes)
->> +			load_display_notes(NULL);
->> +
->> +		format_pp.want =3D want;
->> +		format_ctx =3D &format_pp;
->> +
->> +		data.name_only =3D true;
->> +	}
->> +
+*   b81d099 (M_1) 7_M1
+|\
+| | *   2d96ba0 (M_3) 7_M2
+| | |\
+| | | * 993fbcd (7_4) 7_H
+| | | | *   d5b56db (M_5) 7_M3
+| | | | |\
+| | | | | * b45d68d (7_6) 7_J
+| | | | * | 3f9ab79 (7_5) 7_I
+| | | | | | *   f89bbdc (HEAD -> M_7) 7_M4
+| |_|_|_|_|/|\
+|/| | | | |/ /
+| | |_|_|/| /
+| |/| | | |/
+| | | |_|/|
+| | |/| | |
+| | * | | | f5cbb18 (7_3) 7_G
+| | | |_|/
+| | |/| |
+| | * | | 6ee728a 7_F
+| * | | | d0c5a67 (7_2) 7_E
+| | |/ /
+| |/| |
+| * | | c3bffce 7_D
+| | |/
+| |/|
+* | | df1a24f (7_1) 7_C
+| |/
+|/|
+* | 5d3f777 7_B
+|/
+* d309d64 7_A
+
+vs 
+
+git log --graph --all --oneline --max-columns=2
+
+*   b81d099 (M_1) 7_M1
+|\
+| | * 2d96ba0 (M_3) 7_M2
+| | .
+| | . 993fbcd (7_4) 7_H
+| | . d5b56db (M_5) 7_M3
+| | .
+| | . b45d68d (7_6) 7_J
+| | . 3f9ab79 (7_5) 7_I
+| | . f89bbdc (HEAD -> M_7) 7_M4
+| |_.
+|/| .
+| | .
+| |/.
+| |/.
+| |/.
+| | .
+| | * f5cbb18 (7_3) 7_G
+| | .
+| | .
+| | .
+| | * 6ee728a 7_F
+| * . d0c5a67 (7_2) 7_E
+| | .
+| |/.
+| * . c3bffce 7_D
+| | .
+| |/.
+* | . df1a24f (7_1) 7_C
+| |/
+|/|
+* | 5d3f777 7_B
+|/
+* d309d64 7_A
+
+Changes since v1:
+- Renamed option from --graph-max to --max-columns
+- Require --graph for --max-columns, die without it
+- Fixed padding so commit text aligns correctly after truncation
+- Added pre-commit truncation so lines before the commit column
+  are also truncated when they exceed the limit
+- Fixed post-merge line spacing inconsistency
+- Used parse_long_opt/parse_count for input validation, matching
+  existing revision.c patterns
+- Reject negative and zero values with clear error messages
+- Renamed graph_is_truncated to graph_needs_truncation
+
+RFC :
+- I think --max-columns is a good name, but it does not have --graph
+  prefix, bcs it can only be on --graph I think it's clear enough.
+  I added checks in setup_revisions().
+- Is '.' fine as delimiter ? other options could be "~" or "-".
+
+ graph.c                      | 57 +++++++++++++++++++++++++++++++++++-
+ graph.h                      |  2 ++
+ revision.c                   | 11 +++++++
+ revision.h                   |  1 +
+ t/t4215-log-skewed-merges.sh | 56 +++++++++++++++++++++++++++++++++++
+ 5 files changed, 126 insertions(+), 1 deletion(-)
+
+diff --git a/graph.c b/graph.c
+index 26f6fbf000..6227c4f22f 100644
+--- a/graph.c
++++ b/graph.c
+@@ -317,6 +317,12 @@ struct git_graph {
+ 	struct strbuf prefix_buf;
+ };
+ 
++static int graph_needs_truncation(struct git_graph *graph, int col)
++{
++	int max = graph->revs->graph_max_columns;
++	return max > 0 && col >= max;
++}
++
+ static const char *diff_output_prefix_callback(struct diff_options *opt, void *data)
+ {
+ 	struct git_graph *graph = data;
+@@ -696,6 +702,15 @@ static void graph_update_columns(struct git_graph *graph)
+ 		}
+ 	}
+ 
++	/*
++	 * If graph_max_columns is set, cap the padding from the branches
++	 */
++	if (graph->revs->graph_max_columns > 0) {
++		int truncation = graph->revs->graph_max_columns * 2 + 2;
++		if (graph->width > truncation)
++			graph->width = truncation;
++	}
++
+ 	/*
+ 	 * Shrink mapping_size to be the minimum necessary
+ 	 */
+@@ -846,6 +861,10 @@ static void graph_output_padding_line(struct git_graph *graph,
+ 	 * Output a padding row, that leaves all branch lines unchanged
+ 	 */
+ 	for (i = 0; i < graph->num_new_columns; i++) {
++		if (graph_needs_truncation(graph, i)) {
++			graph_line_addstr(line, ". ");
++			break;
++		}
+ 		graph_line_write_column(line, &graph->new_columns[i], '|');
+ 		graph_line_addch(line, ' ');
+ 	}
+@@ -903,6 +922,9 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 			seen_this = 1;
+ 			graph_line_write_column(line, col, '|');
+ 			graph_line_addchars(line, ' ', graph->expansion_row);
++		} else if (seen_this && graph_needs_truncation(graph, i)) {
++			graph_line_addstr(line, ". ");
++			break;
+ 		} else if (seen_this && (graph->expansion_row == 0)) {
+ 			/*
+ 			 * This is the first line of the pre-commit output.
+@@ -1013,6 +1035,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+ 	 * children that we have already processed.)
+ 	 */
+ 	seen_this = 0;
++
+ 	for (i = 0; i <= graph->num_columns; i++) {
+ 		struct column *col = &graph->columns[i];
+ 		struct commit *col_commit;
+@@ -1028,8 +1051,17 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+ 			seen_this = 1;
+ 			graph_output_commit_char(graph, line);
+ 
++			if (graph_needs_truncation(graph, i)) {
++				graph_line_addch(line, ' ');
++				break;
++			}
++
+ 			if (graph->num_parents > 2)
+ 				graph_draw_octopus_merge(graph, line);
++		} else if (graph_needs_truncation(graph, i)) {
++			graph_line_addstr(line, ". ");
++			seen_this = 1;
++			break;
+ 		} else if (seen_this && (graph->edges_added > 1)) {
+ 			graph_line_write_column(line, col, '\\');
+ 		} else if (seen_this && (graph->edges_added == 1)) {
+@@ -1109,9 +1141,17 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+ 			int par_column;
+ 			int idx = graph->merge_layout;
+ 			char c;
++			int truncated = 0;
+ 			seen_this = 1;
+ 
+ 			for (j = 0; j < graph->num_parents; j++) {
++				if (graph_needs_truncation(graph, i + j)) {
++					if (j > 0)
++						graph_line_addch(line, ' ');
++					graph_line_addstr(line, ". ");
++					truncated = 1;
++					break;
++				}
+ 				par_column = graph_find_new_column_by_commit(graph, parents->item);
+ 				assert(par_column >= 0);
+ 
+@@ -1125,9 +1165,13 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+ 				}
+ 				parents = next_interesting_parent(graph, parents);
+ 			}
++			if (truncated)
++				break;
+ 			if (graph->edges_added == 0)
+ 				graph_line_addch(line, ' ');
+-
++		} else if (graph_needs_truncation(graph, i)) {
++			graph_line_addstr(line, ". ");
++			break;
+ 		} else if (seen_this) {
+ 			if (graph->edges_added > 0)
+ 				graph_line_write_column(line, col, '\\');
+@@ -1279,6 +1323,12 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
+ 	 */
+ 	for (i = 0; i < graph->mapping_size; i++) {
+ 		int target = graph->mapping[i];
++
++		if (graph_needs_truncation(graph, i / 2)) {
++			graph_line_addstr(line, ". ");
++			break;
++		}
++
+ 		if (target < 0)
+ 			graph_line_addch(line, ' ');
+ 		else if (target * 2 == i)
+@@ -1372,6 +1422,11 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+ 	for (i = 0; i < graph->num_columns; i++) {
+ 		struct column *col = &graph->columns[i];
+ 
++		if (graph_needs_truncation(graph, i)) {
++			graph_line_addch(&line, '.');
++			break;
++		}
++
+ 		graph_line_write_column(&line, col, '|');
+ 
+ 		if (col->commit == graph->commit && graph->num_parents > 2) {
+diff --git a/graph.h b/graph.h
+index 3fd1dcb2e9..9a4551dd29 100644
+--- a/graph.h
++++ b/graph.h
+@@ -262,4 +262,6 @@ void graph_show_commit_msg(struct git_graph *graph,
+ 			   FILE *file,
+ 			   struct strbuf const *sb);
+ 
++#define MINIMUM_GRAPH_COLUMNS 1
++
+ #endif /* GRAPH_H */
+diff --git a/revision.c b/revision.c
+index 31808e3df0..e8d38cb2a1 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2605,6 +2605,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--no-graph")) {
+ 		graph_clear(revs->graph);
+ 		revs->graph = NULL;
++	} else if ((argcount = parse_long_opt("max-columns", argv, &optarg))) {
++		int val = parse_count(optarg);
++		if (val < MINIMUM_GRAPH_COLUMNS)
++			die(_("minimum columns is %d, cannot be set to %d"),
++			    MINIMUM_GRAPH_COLUMNS, val);
++		revs->graph_max_columns = val;
++		return argcount;
+ 	} else if (!strcmp(arg, "--encode-email-headers")) {
+ 		revs->encode_email_headers = 1;
+ 	} else if (!strcmp(arg, "--no-encode-email-headers")) {
+@@ -3172,6 +3179,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 
+ 	if (revs->no_walk && revs->graph)
+ 		die(_("options '%s' and '%s' cannot be used together"), "--no-walk", "--graph");
++
++	if (revs->graph_max_columns > 0 && !revs->graph)
++		die(_("option '%s' requires '%s'"), "--max-columns", "--graph");
++
+ 	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
+ 		die(_("the option '%s' requires '%s'"), "--grep-reflog", "--walk-reflogs");
+ 
+diff --git a/revision.h b/revision.h
+index 69242ecb18..f15b390289 100644
+--- a/revision.h
++++ b/revision.h
+@@ -304,6 +304,7 @@ struct rev_info {
+ 
+ 	/* Display history graph */
+ 	struct git_graph *graph;
++	unsigned int graph_max_columns;
+ 
+ 	/* special limits */
+ 	int skip_count;
+diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+index 28d0779a8c..ca2b224cc4 100755
+--- a/t/t4215-log-skewed-merges.sh
++++ b/t/t4215-log-skewed-merges.sh
+@@ -370,4 +370,60 @@ test_expect_success 'log --graph with multiple tips' '
+ 	EOF
+ '
+ 
++test_expect_success 'log --graph --max-columns=2 only two columns' '
++	check_graph --max-columns=2 M_7 <<-\EOF
++	*-.   7_M4
++	|\  .
++	| | * 7_G
++	| | * 7_F
++	| * . 7_E
++	| * . 7_D
++	* | . 7_C
++	| |/
++	|/|
++	* | 7_B
++	|/
++	* 7_A
++	EOF
++'
++
++test_expect_success 'log --graph --max-columns=3 only three columns' '
++	check_graph --max-columns=3 M_1 M_3 M_5 M_7 <<-\EOF
++	*   7_M1
++	|\
++	| | *   7_M2
++	| | | .
++	| | | * 7_H
++	| | | . 7_M3
++	| | | .
++	| | | . 7_J
++	| | | . 7_I
++	| | | . 7_M4
++	| |_|_.
++	|/| | .
++	| | |_.
++	| |/|_.
++	| |/|_.
++	| |/| .
++	| | |/.
++	| | * . 7_G
++	| | | .
++	| | |/.
++	| | |/.
++	| | * . 7_F
++	| * | . 7_E
++	| | |/.
++	| |/| .
++	| * | . 7_D
++	| | |/
++	| |/|
++	* | | 7_C
++	| |/
++	|/|
++	* | 7_B
++	|/
++	* 7_A
++	EOF
++'
++
+ test_done
+-- 
+2.43.0
+
