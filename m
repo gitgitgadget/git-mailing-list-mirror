@@ -1,64 +1,68 @@
-Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A962D182B7
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 00:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C252121018A
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 00:29:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773707365; cv=none; b=QJjn0vmoADX4UjJGKEwWqFnerqNgqh6UtjegglE4JU4noG9Dj+j5Gmb6ZlNHt2VY5DhSh5IFHl5+0DyPYGEbVcqiB7ry1qAYEUJ9nYWyoWJ1DwiiGhmC1juJlzCf4kzmKDh9IYB1OHno9lmSzNN5O+UrzwQ96iOvx2P08Ns+xKY=
+	t=1773707366; cv=none; b=Cku8mJUzNrmwgP7dM1PVd0+J8xuQMbdIDDGqfmMYMiDJ9O6JSX4EQ4+/VXjQY6Ona/DcBOPorwREOJrhCg34BKRuvBmc9ovpjHo2hwjlR6IzyeUI56QcBRPa4C0/l7auptFDKjZgH5RqaFpwqwuTyykZxbQ/98/f0DMK1hEP2i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773707365; c=relaxed/simple;
-	bh=6yBT0pWDHnKOddZK+bX+yCdUXn8Uff1tvpYac+qALzo=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fkIcQxIIW3Kt5qxaffWzUskdITuPPWfC0pJRBDlYln6TLGgBqJTRhjr0BFkAVft6fMemaFvXmg87tXNLNkSZl7GgGYnqWHg2M+zKMLoi5iGFVQEfvhqY/XBgyiamA0rxO6bdTNdBWV8oyTypLU3Se/p+Tat14pRj1Z3f8PlVsR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bWJddW55; arc=none smtp.client-ip=74.125.82.171
+	s=arc-20240116; t=1773707366; c=relaxed/simple;
+	bh=F1rQY6lS1liAjY+9q77IEcOzLQyGsY3Qt/rpIVhG7as=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=fqPFiSVFkbAti1oTowB6L7YRoTOJ4hiMQz87nFQc74BtMZYK3avbqX0TeQsW38UaXhXcOYqF2wnFM7VN20Dsc3KuDuQvNnHD/aLYK368wypsiv1B3pa56vmOFz5QySi3Qku3huLd9HoDUUu4eYWkD+g/Vzc1OnMOW4UzWopcUFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UKNZ5FFh; arc=none smtp.client-ip=74.125.82.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bWJddW55"
-Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-2c0d36f3888so872701eec.0
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 17:29:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UKNZ5FFh"
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-2ba9c484e5eso6179341eec.1
+        for <git@vger.kernel.org>; Mon, 16 Mar 2026 17:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773707363; x=1774312163; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773707364; x=1774312164; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Usm/Zo7w/v7nLR87BttoBXgb3MtBH/2RRELx4EhfYyc=;
-        b=bWJddW55VZckcwwbZTeAipQU63ZfhCgkSPa6BDe9l4jGvSkdsvguL3jxVO5B9IsjMQ
-         5sEmRmTqgG+Dmk5DhCWUEJnGmAvD+vT64Q0IMvaEaYtHosK56a/dMcJZXF+uUR/DbmCu
-         5vN1ZvWVRw8jdH99Ktxo2mLUmA7dqOZ3oHK9K3IzrWmO2IAzvEX43CHI27ngxIlpUn07
-         EThvmpkyNMk3pUSGi1lQnXagAM1gCCt1ud87XdTj5IsO3ZPCs9tfDjPPsKgN1w1dhJwU
-         D5qOdet1dGjDgcSt9WFn3ZvSs9bGDQax0b+AtGq3u/1JU7r5LPWGpqd7KJILRObm5b3G
-         FPPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773707363; x=1774312163;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Usm/Zo7w/v7nLR87BttoBXgb3MtBH/2RRELx4EhfYyc=;
-        b=TIlOA5yrCOruiZeb8jJwrUHvXEo205zfxbR4+iKfwbn2JJIiqSG5/tt8w5Pja+lqEj
-         XqX424L4AIICEBqcacDVfb8LtxFz6DjUB0CJ3sTmGc1OQYAcboDQ8GMRT9F250jAOZz/
-         evGWDgPAUqh9sDNZSGtEf93td+ucVgYcl+DIAF3bfS71Cj134bd8GwIjicEuLzHZlAem
-         euoVFH9T1dUHv2SDnYx6DLalo0IuCF3EBds6KdycN/rdGeQ62Uf9Ol9ob/oaf95wEBa9
-         KCHWVhT3ZHeNTmqmtcHFHECYmpODOd2oagPLlbVRfKEWK/+iE7pyiblnQJr5sDdxujtl
-         dHbw==
-X-Gm-Message-State: AOJu0YzZP9qFaV/1+AxTKfRl5TrbtaoxdZqnrUTAVyJ6meG7vpIZLDCE
-	y21b27mEO4WWeJOkGJhA1Dz3M6cDyra0zlSq3LZ7nnSae5uQH0TbQnuQgUSRWA==
-X-Gm-Gg: ATEYQzxHo1iscko5xj5zUh1ZVYeMw2u3dtMuo9OTnUB1d1/hYzT6sffIQrkx7sTneGz
-	Ylkc5WWimhSjSPqpFEd4fksIcJ+IGLN9F+UxbE2R3YcdQX1/C7DS/ClllYaT3E/OIPnkmimmOTD
-	0zeH0fhgwbRkIl+VFRSCXblS8gNqxWswQZ1FMzGauOB76r2YcrapYcImm/ibQiJfthwmRw63d39
-	zwa2Br84eRCW366U5vmPWe/agONiEpad4Mi3FBZWpkFA7xgQi+BkRwNjQvS/2mOiA5xUEhGzJ/E
-	nNO2FAl73ez3LeYhY0rer+gxX0ZxfFiFwRQGuwWfmEApS3+z83T4xNH/TBOzHFg7vAa/jfhzeSy
-	HOevrCNw1scp6dmN+3WzAdUZTHfUcHJbNaf9e4DAWNjG7HecrdP3S+3fSC8QAX4yv19L5NY+dqw
-	eMcjFmoQY/NMMdZk5zgdWB1H/1wxBQrIeWBrll
-X-Received: by 2002:a05:7300:e887:b0:2b7:35c8:32cf with SMTP id 5a478bee46e88-2bea55380c4mr7288272eec.28.1773707362731;
-        Mon, 16 Mar 2026 17:29:22 -0700 (PDT)
+        bh=V+e0vbdqUVgzn4DIHrRVN1NYuT+wGbffhrIkYn6JMRM=;
+        b=UKNZ5FFhSfhQGOBGJmJn5+e5DtOstU7PdDP04rUz59aASzx2n5qUt3+gQVf5w/Y1pj
+         98kOXAg3nq+d4Ycc30gr84vUhKwGLGqlgOFzAbg024d+yO0s+vjuNZpAZDpXQtP7eiV3
+         JOh4xSALCqrvNyMcfA9thiLyvngIAnKYHUVtjIOeUEMa8hz10fPv4JFB1xwqT3Js2CKu
+         oxo8A4NSTTFPoteyUMTpFxI18ec28tlqA0yMzn/irvTTARbRtlwdi4quALEzzEYoUcNX
+         NqflsHxIlthL+RlyY9GlE5eua02u3p92v9b81RtXbnNrgebg1fcR6odVPWh4CV/vzPpZ
+         hMKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773707364; x=1774312164;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=V+e0vbdqUVgzn4DIHrRVN1NYuT+wGbffhrIkYn6JMRM=;
+        b=AFEr9JDyAmGfwadzPB9wuvYKspWMj8Z6CId8I62gbYCRSzi4i/B49bEGQng+m23pmm
+         46q1BYt8jOrePNloRtYKPUQ+D9XBuCYymLoqFBjby0PIEiNcYp2FO1maSmC/e3LcAJ99
+         1i/OlbKTBv5pBrcR5/eVD0Fnls/w6OXONtf21xggQyMOlaGv2qNrt3OO0zdga+IhOEWP
+         u6MSjXbErKajSu+fP1+I4s2O0xGHkPRTGF1Cc4MCYj2gg42/E5mMfLYXbLl3zxIgrWYl
+         ukD3jn9PPw5wE7B4aL8vaXl2I7XOfaj/V8kwg16s3fmIMegZztGyzuvVSJqNPQUC64iY
+         H21g==
+X-Gm-Message-State: AOJu0YxR1sErxmvgmeNo4UWAEVc89RuJPdD9wRN1kGU3k+y97H77msBS
+	lbzbMrHwVLJ54XNs/sdLgFYcTVPpCaD2Y6vThyCMVen5vIyA2byJvofPl7B5Vw==
+X-Gm-Gg: ATEYQzwAhbk5m2sETo4pbEGSN/aks3YJaU18pM2IZwQlp3uAIayfSZh0jxbZc+s0CbK
+	3O1+gmt5BbnC/o2yPTW6/Oq9U11cpn8DbL0WW+b2fqo1Op/Jqwvg6jEavX7oURkGBMNfeTWh5Iv
+	5k9zkYw4xvid5Zh+9fRqbT8ANeFuwhsX91QFPxbQ9FbnTCKpM2DfGb7Bg/K3Lwoe+rAX/chtWsK
+	xjKyL+fq0y05RieqyuaFsBDNjzbXwA2QDGtjC/b2AkGArBztMlND2lihfQ0iLgHBlsSCtRqZjfV
+	vg0zM5VSmOcgKMICPmGu9dCkzxY5evhkw1boeL+2lrviB+V+aTyJZXfkp0uV19Idf1N1FsfIMXj
+	uP/mDhnK8bs+L064s0lNt1UeIGuhNRncJGUJUtWMUNa9iHXAlhVOOAYn5WShJppC2YIFisn2t89
+	xoEn6uTp6LdA2nX++PCOYYlq0A8g==
+X-Received: by 2002:a05:693c:60c1:b0:2c0:bd37:a75a with SMTP id 5a478bee46e88-2c0bd37ae65mr2164222eec.1.1773707364308;
+        Mon, 16 Mar 2026 17:29:24 -0700 (PDT)
 Received: from [127.0.0.1] ([57.151.136.171])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2beab3e4a54sm18933880eec.10.2026.03.16.17.29.21
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c0bbe04304sm10099463eec.23.2026.03.16.17.29.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2026 17:29:22 -0700 (PDT)
-Message-Id: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
+        Mon, 16 Mar 2026 17:29:23 -0700 (PDT)
+Message-Id: <fda0239103f6e2b9e76403144b9ed2e9205e1c2a.1773707361.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
+References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 17 Mar 2026 00:29:16 +0000
-Subject: [PATCH 0/5] backfill: accept revision arguments
+Date: Tue, 17 Mar 2026 00:29:17 +0000
+Subject: [PATCH 1/5] revision: include object-name.h
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,70 +74,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
+    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
-The git backfill command assists in downloading missing blobs for blobless
-partial clones. However, its current version lacks some valuable
-functionality. It currently:
+From: Derrick Stolee <stolee@gmail.com>
 
- 1. Only walks commits reachable from HEAD.
- 2. It walks all reachable commits to the full history.
- 3. It can focus on the current sparse-checkout definition, but otherwise it
-    doesn't focus on a given pathspec.
+The REV_INFO_INIT macro includes a use of the DEFAULT_ABBREV macro, which is
+defined in object-name.h. Include it in revision.h so consumers of
+REV_INFO_INIT do not need to include this hidden dependency.
 
-All of these are being updated by this patch series, which allows rev-list
-options to impact the path-walk. These include:
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ revision.h | 1 +
+ 1 file changed, 1 insertion(+)
 
- 1. Specifying a given refspec, including --all.
- 2. Modifying the commit walk, including --first-parent, commit ranges, or
-    recency using --since.
- 3. Modifying the set of paths to download using pathspecs.
-
-One particularly valuable situation here is that now a user can run git
-backfill -- <path> to download all versions of a specific file or a specific
-directory, accelerating history queries within that path without downloading
-more than necessary. This can accelerate git blame or git log -L for these
-paths, where normally those commands download missing blobs one-by-one
-during its diff algorithms.
-
-This patch series is organized in the following way:
-
- 1. A missing #include is added to prevent future compilation issues.
- 2. The test repo in t5620 is expanded to make later tests more interesting.
- 3. The backfill builtin parses the rev-list arguments. We test the top
-    arguments that work as expected, though the pathspec arguments need
-    extra work.
- 4. Update the path-walk logic to work efficiently with some pathspecs, such
-    as fixed prefix pathspecs, accelerating the computation.
- 5. For more complicated pathspecs, do a post-filter in builtin/backfill.c
-    instead of restricting the walk in the path-walk API.
-
-The main goal of this series is to make such customizations possible, and to
-improve performance where common use cases are expected. I'm open to
-feedback as to whether we should consider more detailed performance analysis
-or whether we should wait for how users interact with these new options
-before overoptimizing unlikely use cases.
-
-Thanks, -Stolee
-
-Derrick Stolee (5):
-  revision: include object-name.h
-  t5620: prepare branched repo for revision tests
-  backfill: accept revision arguments
-  backfill: work with prefix pathspecs
-  path-walk: support wildcard pathspecs for blob filtering
-
- Documentation/git-backfill.adoc |   3 +
- builtin/backfill.c              |  19 ++-
- path-walk.c                     |  61 ++++++++++
- revision.h                      |   1 +
- t/t5620-backfill.sh             | 203 +++++++++++++++++++++++++++++++-
- 5 files changed, 279 insertions(+), 8 deletions(-)
-
-
-base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2070%2Fderrickstolee%2Fbackfill-revs-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2070/derrickstolee/backfill-revs-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2070
+diff --git a/revision.h b/revision.h
+index b36acfc2d9..18c9bbd822 100644
+--- a/revision.h
++++ b/revision.h
+@@ -4,6 +4,7 @@
+ #include "commit.h"
+ #include "grep.h"
+ #include "notes.h"
++#include "object-name.h"
+ #include "oidset.h"
+ #include "pretty.h"
+ #include "diff.h"
 -- 
 gitgitgadget
+
