@@ -1,136 +1,297 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from mail.univention.de (mail.univention.de [78.138.66.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6208F330D24
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 22:19:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFAC1C8634
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 22:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.138.66.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773785944; cv=none; b=dPtdVOeAXcRcfIbQEOoDTFneCgSOonlIEhvHorV44BgKSx5SGIt+jCIooFEZWoZFUhZb8AZ22D32uQH5/C0ydPFSS1EKg7KdqdiciVpMR7nDmwW6zmDFgEKb9pp8dvQ3vAyTFnj5pUO9orL6WRWE7FRyZutPtDSXoxgdNMagxZk=
+	t=1773788149; cv=none; b=qoaZG8uC8w3IsnUAnH4n1krgA8H2zQR8smdCjZWXgMtJDmrWmrc3628AS6ppIa7/q1IyVI4pcYHEehEczs4ajuWB4RMTNztqN5nrBYTrOpYqmBNS6opCuzUscS2O1PBXv94ztg7GAvPROiCX8c7IKfBClqc21WLUqMK+npwm1NY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773785944; c=relaxed/simple;
-	bh=eoYkbQFsATKqxo/4atqE3DQXz2znZ+HXWAeTTdn/leE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GSHLSFCNyWRL2Y57lKWl2o53B9Y1t/UwDw0z7r0q/UZC2BYI5lYx7iV03vqUcQ6bUKCnFHTVzCSN7KFJtcQKTo1MZFmw+WS6qxsFNpAoOCmAd2GIcxfLWPOnbGSYNpZBBUzV6CcuPIeodQpddjnrSCdqd9SXV0OeyBvZy+m9694=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PuRNa651; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QcDULhUQ; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773788149; c=relaxed/simple;
+	bh=z39vZLCgzd987zKf7I0Lz2WpmRprCkxIVEcLdZQYtC4=;
+	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To; b=pDWW9GeWL4KeXzS3HVfWJEf6U7fBSL7e2XhEGnxn2eCJosHnBNpX/CjNZcDSq7XKaA7REKHP+mmGk/tabKxsZpPDwaeOxa2lrNU67Pf0b9Znf8r/zABz3bxYtFV7gamFfqyhpeRtkRcR109nUS9p3r9WnhhktqRVOQ64GbZ4Iw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=univention.de; spf=pass smtp.mailfrom=univention.de; dkim=pass (2048-bit key) header.d=univention.de header.i=@univention.de header.b=lT2K5S+V; dkim=pass (2048-bit key) header.d=univention.de header.i=@univention.de header.b=htwKbLXQ; arc=none smtp.client-ip=78.138.66.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=univention.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=univention.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PuRNa651";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QcDULhUQ"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6C2851D00030;
-	Tue, 17 Mar 2026 18:19:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 17 Mar 2026 18:19:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773785942; x=1773872342; bh=976eshJObh
-	WMf1xRPy3oPEaYdDdJQEaR/LA6Xt70SFc=; b=PuRNa651TisRh5kxoNLstpOVq/
-	QlAzVsv8voyVHvmyYBwzjxGKLGYBxfiX4WcSyDuf3Rr2ath3LkXHTrFUY/+PrMAC
-	SCI2TT6/NsvkQpNG1IvvewbG+CgX7Gh8ozyydwrn87o5YouX/Leju7H/Dfz9mUaO
-	hcj+tdKzEUQOVcKScTNCxDWf021Qtxb2p/XrHuHKJyYqrLr1KH+pyJPdtRUmDQXY
-	uKX78rpTjpvWJmKVAnCPvyQZuk8f7CzZsjpGmCUpo3qwNKwAh19DHG/cJqRvkNyp
-	k4im8gRSYjYRxsDLhCy1Y6oa0CHJINugOV8nmsyr0hUc3fHkaDfkkT0Zy63A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773785942; x=1773872342; bh=976eshJObhWMf1xRPy3oPEaYdDdJQEaR/LA
-	6Xt70SFc=; b=QcDULhUQbaJ+qxJkQoDSBP0bu8HC9cJEnZm1xwx6pV+Bkf8pBBf
-	u3FzQu1H7PJm2eTZDa0jOLNRALoZQRb1+7CRVFI0l27GCOGXCZt5KsOXAGQgbKNW
-	zvfbVUdN8H/4OzZjFugVVHA6aTkadQuYiaSSrO0VHEvPIFv7WRI41Cq8O90SUvhs
-	nvo2pTsS6McCFKhW+0K23rmwpxD4ZlF4i/rKFzcm4vGtB8eV0F4xRkBekOzbITtG
-	mfOMU7+xM65EFMPxoIpKB0qHE5ITxfHOCDIxwoOCQjQNw0k3e+sTwH7FLp1IaNzG
-	FAoETk5CXi0/+HaeN4MK/GOrwgG16z1c+Nw==
-X-ME-Sender: <xms:VtO5ae4klSZfHPiUOM5nOFosRAOhH1CViHnjj062VCikCNcJQPo3wQ>
-    <xme:VtO5ae5NRT-0zLtWG3rZRO7-m10beh2rKe6qD5Mb_09WrYUjIKLMmGp3Ri_3BoYLN
-    Th3Eo30A7oZt6Yg86cuzK_TubSmVmezTAuq10H2bnxDMjIBUKYtxVI>
-X-ME-Received: <xmr:VtO5aScQ2N16oCjyiaL767lLrHq6LHO_0WGlS-rPrZbVoZnk7wTH_xk09VZaPZzUb9ohL6-bFR85yGhIgR-F22P1JH9YDyVlUQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvgeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:VtO5aaD4lSL5NhZAKYl0kCvz8NkokwcU2eI9a0PXG4NUiGa4TIcg5A>
-    <xmx:VtO5ad_R-xemFAAQWoMKmAF7uBm4WMayYx6Sk2T_9H4Lk7uZK7KaTg>
-    <xmx:VtO5adID8Z7SvN8iQpWTWo_9AS_UAP4pkuCZn2KVrY9kCcM1INV1Vg>
-    <xmx:VtO5aehfkF_LYLw0YHAy8sr5I9COAAnonAFUuzzQDuHlv-bEJp6X4A>
-    <xmx:VtO5aR9Nm9pnSMgJ_T1RNW_P0PWuO3FOTKyLlAeHHqgI-ljUUGz6EFXu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 18:19:01 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 5/5] path-walk: support wildcard pathspecs for blob
- filtering
-In-Reply-To: <beb1c92554c76907315a4d1a7983226d2bf5a828.1773707361.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Tue, 17 Mar 2026
-	00:29:21 +0000")
-References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
-	<beb1c92554c76907315a4d1a7983226d2bf5a828.1773707361.git.gitgitgadget@gmail.com>
-Date: Tue, 17 Mar 2026 15:19:00 -0700
-Message-ID: <xmqqms06hzfv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=univention.de header.i=@univention.de header.b="lT2K5S+V";
+	dkim=pass (2048-bit key) header.d=univention.de header.i=@univention.de header.b="htwKbLXQ"
+Received: from localhost (localhost [127.0.0.1])
+	by lankmoj.knut.univention.de (Postfix) with ESMTP id A4CDB106C3C;
+	Tue, 17 Mar 2026 23:55:39 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univention.de;
+	s=202111; t=1773788139;
+	bh=z39vZLCgzd987zKf7I0Lz2WpmRprCkxIVEcLdZQYtC4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lT2K5S+Vey6sUfHO69nhN4S6xfuYQcy1FAr3nsJm/3jpOgxwxGZi2N+qUIgX1k7gx
+	 CmHW73iGw4qBlOqaKjyYtEZ8S8GI+YLQ5v1KazjvidFEzGDKoDR0C35YrDMgC33DaE
+	 h5QZCKA6bYwxRViGyfGZFeur5ytDbVDpEVefl0e52a9wyxUQwPlV7V7+tZqxCdIEAS
+	 tZcr6iBAal+X3rJlPd7MEQsGRdqU5ZQRf7DEJuoUHZyYkzgucsnneaHYy6jAg+bN4x
+	 7RHf1k/JlogB6IGdl2S1UIvfCGz1IH508cgjYPLgPIISSXrnlf+vJgdq3ESLVJRobG
+	 Dk1A23WA3U+Gw==
+X-Virus-Scanned: by amavisd-new-2.11.0 (20160426) (Debian) at
+	knut.univention.de
+Received: from mail.univention.de ([127.0.0.1])
+	by localhost (lankmoj.knut.univention.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id MjGJd4SOd4ZO; Tue, 17 Mar 2026 23:55:38 +0100 (CET)
+Received: from [192.168.178.154] (dyndsl-178-142-056-026.ewe-ip-backbone.de [178.142.56.26])
+	by lankmoj.knut.univention.de (Postfix) with ESMTPSA id 28102102294;
+	Tue, 17 Mar 2026 23:55:38 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univention.de;
+	s=202111; t=1773788138;
+	bh=z39vZLCgzd987zKf7I0Lz2WpmRprCkxIVEcLdZQYtC4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=htwKbLXQQyTz2MPn1aFQ2Q/UXlgwEjmUoDVe06K4DzLC4BktR0aqp++i2+sUmbwpW
+	 HE9/ZapFhOhtqjPnMWdb9L9+X3Zw2uFN70DskkRyuooJYnwkXtI8GFmcmM7sXf9Egx
+	 2rKdKs1RwTx54EH7+o3tnw7eL5j6IQGtxGpBomLduevkJjV5U5Da/jqCuZARaoPW+F
+	 bZT4qYMnq1/rsenKP+NqJ4Ac2QeLp4IY2QhCvWaa8K3wY1A9zmNeVypwIeWHMZ5kUl
+	 e6kz8L/oRlYkTvnH++WEZjS7FHHmIme2tAgA6wmAuy+KzKki7pYvCRarOKFF+9fJA7
+	 iqSaymJCiq9uw==
+Content-Type: multipart/mixed; boundary="------------00ab0cu0ZCRFaPoiqu95SFK2"
+Message-ID: <2420e380-d9c1-468d-8231-92e03250a120@univention.de>
+Date: Tue, 17 Mar 2026 23:55:37 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: cherry-pick: add --show-current-patch
+To: phillip.wood@dunelm.org.uk
+Cc: Git Mailing List <git@vger.kernel.org>
+References: <43529695-5987-486a-bdff-46f573868c4c@univention.de>
+ <2d818389-6456-4b75-8a29-3167fc3c885f@gmail.com>
+ <f2bf231a-2b18-4f1c-9cbc-2b94f669839f@univention.de>
+ <82a8a222-b18a-405f-9a9c-92c6e0c05591@gmail.com>
+Content-Language: de-DE
+From: Florian Best <best@univention.de>
+Autocrypt: addr=best@univention.de; keydata=
+ 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
+In-Reply-To: <82a8a222-b18a-405f-9a9c-92c6e0c05591@gmail.com>
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This is a multi-part message in MIME format.
+--------------00ab0cu0ZCRFaPoiqu95SFK2
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> From: Derrick Stolee <stolee@gmail.com>
+Dear Phillip,
+
+attached is a patch suggestion, also available as Github PR: 
+https://github.com/git/git/pull/2243
+
+Best regards
+Florian
+
+Am 16.03.26 um 12:03 schrieb Phillip Wood:
+> Hi Florian
 >
-> Previously, walk_objects_by_path() silently ignored pathspecs containing
-> wildcards or magic by clearing them. This caused all blobs to be
-> downloaded regardless of the given pathspec. Wildcard pathspecs like
-> "d/file.*.txt" are useful for narrowing which blobs to process (e.g.,
-> during 'git backfill').
+> On 11/03/2026 19:42, Florian Best wrote:
+>> Hi Phillip,
+>>
+>> thank you!
+>> Your reasoning makes sense, and therefore --show-current-patch is 
+>> probably a bad idea.
+>> I simply oversaw that complex sentence in the --help/manpage:
+>>
+>>  >          2. The CHERRY_PICK_HEAD ref is set to point at the commit 
+>> that introduced the change that is difficult to apply.
+>>
+>> Maybe adding "git show CHERRY_PICK_HEAD" to the Examples section of 
+>> the manpage improves finding it.
 >
-> Support wildcard pathspecs by making three changes:
+> That sounds reasonable, are you interested in contributing a patch?
 >
->  1. Add an 'exact_pathspecs' flag to path_walk_context. When the
->     pathspec has no wildcards or magic, set this flag and use the
->     existing fast-path prefix matching in add_tree_entries(). When
->     wildcards are present, skip that block since prefix matching
->     cannot handle glob patterns.
+> Thanks
 >
->  2. Disable revision-level commit pruning (revs->prune = 0) for
->     wildcard pathspecs. The revision walk uses the pathspec to filter
->     commits via TREESAME detection. For exact prefix pathspecs this
->     works well, but wildcard pathspecs may fail to match through
->     TREESAME because fnmatch with WM_PATHNAME does not cross directory
->     boundaries. Disabling pruning ensures all commits are visited and
->     their trees are available for the path-walk to filter.
-
-Hmph, I wonder how significant an impact does it have on the
-performance that we have to disable pruning here.  With the bog
-standard tree traversal, wouldn't tree_entry_interesting() already
-be capable of doing this, even with fnmatch / WM_PATHNAME ?
-
->  3. Add a match_pathspec() check in walk_path() to filter out blobs
->     whose full path does not match the pathspec. This provides the
->     actual blob-level filtering for wildcard pathspecs.
+> Phillip
 >
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+>> Best regards
+>> Florian
+>>
+>> Am 11.03.26 um 20:30 schrieb Phillip Wood:
+>>> Hi Florian
+>>>
+>>> On 11/03/2026 18:30, Florian Best wrote:
+>>>> Hello,
+>>>>
+>>>> When running `git cherry-pick` over a range of commits, the command 
+>>>> may stop due to conflicts. At that point Git reports the conflict 
+>>>> but does not provide an easy way to see which commit is currently 
+>>>> being cherry- picked or what patch is being applied.
+>>>>
+>>>> `git rebase` provides a helpful option for this situation:
+>>>>
+>>>> `git rebase --show-current-patch`
+>>>>
+>>>> This prints the patch of the commit that is currently being 
+>>>> applied. I believe a similar feature would be useful for `git 
+>>>> cherry-pick`.
+>>>
+>>> That option exists for rebase because it originally applied a series 
+>>> of patches rather than performing a 3-way merge like cherry-pick and 
+>>> so there was no other way of seeing which commit was being 
+>>> processed. With cherry-pick you can use
+>>>
+>>>     git show CHERRY_PICK_HEAD
+>>>
+>>> which allows you to add any of the options that you'd use when 
+>>> showing a commit. That is more flexible than a 
+>>> "--show-current-patch" option because you can restrict the diff to 
+>>> the path that you are interested in, or show a word-diff etc. When 
+>>> reverting you can use REVERT_HEAD and when rebasing you can use 
+>>> REBASE_HEAD to see the commit being picked. I did wonder if the 
+>>> documentation could be improved but for cherry-pick it mentions 
+>>> CHERRY_PICK_HEAD in the description section at the top of the page.
+>>>
+>>> Thanks
+>>>
+>>> Phillip
+>>>
+>>>> Currently, when a conflict occurs during a range cherry-pick (e.g. 
+>>>> `git cherry-pick A..B`), there is no straightforward command to 
+>>>> show the patch of the commit being applied. While it is possible to 
+>>>> inspect `.git/CHERRY_PICK_HEAD`and run something like:
+>>>>
+>>>> `git show $(cat .git/CHERRY_PICK_HEAD)`
+>>>>
+>>>> this is not very discoverable and requires manual steps.
+>>>>
+>>>>
+>>>> Proposed feature
+>>>>
+>>>> Add a command:
+>>>>
+>>>> `git cherry-pick --show-current-patch`
+>>>>
+>>>> which would display the patch of the commit currently being applied 
+>>>> during an in-progress cherry-pick operation (similar to `git rebase 
+>>>> -- show-current-patch`).
+>>>>
+>>>> Behavior could be:
+>>>>
+>>>>   * If a cherry-pick is in progress, show the patch corresponding 
+>>>> to `CHERRY_PICK_HEAD`.
+>>>>   * If no cherry-pick is in progress, report an appropriate error.
+>>>>
+>>>>
+>>>> Motivation
+>>>>
+>>>> This would help users:
+>>>>
+>>>>   * understand which commit caused the conflict
+>>>>   * review the exact changes being applied
+>>>>   * debug large range cherry-picks more easily
+>>>>
+>>>> It would also provide feature parity with `git rebase`.
+>>>>
+>>>> Best regards
+>>>> Florian
+>>>>
+>>>
+>>
+>
 
-The latter person cannot sign DCO or vouch for the origin of what
-they have written in this patch, can they?
+-- 
+Florian Best
+Open Source Software Engineer
 
-> ---
->  path-walk.c         | 22 ++++++++++++++--------
->  t/t5620-backfill.sh |  7 +++----
->  2 files changed, 17 insertions(+), 12 deletions(-)
+Geschäftsführer: Peter H. Ganten, Stefan Gohmann
+HRB 20755 Amtsgericht Bremen
+Steuer-Nr.: 71-597-02876
+
+Univention GmbH
+Mary-Somerville-Str. 1
+28359 Bremen
+Germany / Deutschland
+
+📞 Phone : +49 421 22232-0
+🖶 Fax   : +49 421 22232-99
+✉️ best@univention.de
+🌐 https://www.univention.de / https://www.univention.com
+
+Managing Directors: Peter H. Ganten, Stefan Gohmann
+Local court: Amtsgericht Bremen
+HRB 20755 / Steuer-Nr.: 71-597-02876
+
+The information contained in this message is confidential or protected by law.
+If you are not the intended recipient, please contact the sender and delete this message.
+Any unauthorized copying of this message or unauthorized distribution of the information contained herein is prohibited.
+Legally required information for business correspondence: Legal Information
+
+Diese E-Mail enthält vertrauliche oder rechtlich geschützte Informationen.
+Wenn Sie nicht der beabsichtigte Empfänger sind, informieren Sie bitte sofort den Absender und löschen Sie diese E-Mail. Das unbefugte Kopieren dieser E-Mail oder die unbefugte Weitergabe der enthaltenen Informationen ist nicht gestattet.
+Gesetzliche Pflichtangaben für Geschäftskorrespondenz: Datenschutzerklärung
+
+
+--------------00ab0cu0ZCRFaPoiqu95SFK2
+Content-Type: text/x-patch; charset=UTF-8;
+ name="0001-docs-cherry-pick-document-CHERRY_PICK_HEAD-ref.patch"
+Content-Disposition: attachment;
+ filename*0="0001-docs-cherry-pick-document-CHERRY_PICK_HEAD-ref.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA4YzljMmJkOTg2YzRlMjRjMGY4NzE1YzVjMGIyYTk3YTRkNmFkOTgyIE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBGbG9yaWFuIEJlc3QgPGJlc3RAdW5pdmVudGlvbi5k
+ZT4KRGF0ZTogVHVlLCAxNyBNYXIgMjAyNiAyMzo0OTo0NCArMDEwMApTdWJqZWN0OiBbUEFU
+Q0hdIGRvY3MoY2hlcnJ5LXBpY2spOiBkb2N1bWVudCBDSEVSUllfUElDS19IRUFEIHJlZgoK
+U2lnbmVkLW9mZi1ieTogRmxvcmlhbiBCZXN0IDxiZXN0QHVuaXZlbnRpb24uZGU+Ci0tLQog
+RG9jdW1lbnRhdGlvbi9naXQtY2hlcnJ5LXBpY2suYWRvYyB8IDYgKysrKysrCiAxIGZpbGUg
+Y2hhbmdlZCwgNiBpbnNlcnRpb25zKCspCgpkaWZmIC0tZ2l0IERvY3VtZW50YXRpb24vZ2l0
+LWNoZXJyeS1waWNrLmFkb2MgRG9jdW1lbnRhdGlvbi9naXQtY2hlcnJ5LXBpY2suYWRvYwpp
+bmRleCA0MmI0MTkyM2Q1Li4yMWRlOGJiYjBlIDEwMDY0NAotLS0gRG9jdW1lbnRhdGlvbi9n
+aXQtY2hlcnJ5LXBpY2suYWRvYworKysgRG9jdW1lbnRhdGlvbi9naXQtY2hlcnJ5LXBpY2su
+YWRvYwpAQCAtMjI4LDYgKzIyOCwxMiBAQCBFWEFNUExFUwogCXNvIHRoZSByZXN1bHQgY2Fu
+IGJlIGluc3BlY3RlZCBhbmQgbWFkZSBpbnRvIGEgc2luZ2xlIG5ldwogCWNvbW1pdCBpZiBz
+dWl0YWJsZS4KIAorYGdpdCBzaG93IENIRVJSWV9QSUNLX0hFQURgOjoKKworCVNob3cgdGhl
+IGNvbW1pdCBjdXJyZW50bHkgYmVpbmcgYXBwbGllZCB3aGVuIGEgY2hlcnJ5LXBpY2sKKwlz
+dG9wcyBkdWUgdG8gY29uZmxpY3RzLiBUaGUgYENIRVJSWV9QSUNLX0hFQURgIHJlZmVyZW5j
+ZQorCWlkZW50aWZpZXMgdGhpcyBjb21taXQuCisKIFRoZSBmb2xsb3dpbmcgc2VxdWVuY2Ug
+YXR0ZW1wdHMgdG8gYmFja3BvcnQgYSBwYXRjaCwgYmFpbHMgb3V0IGJlY2F1c2UKIHRoZSBj
+b2RlIHRoZSBwYXRjaCBhcHBsaWVzIHRvIGhhcyBjaGFuZ2VkIHRvbyBtdWNoLCBhbmQgdGhl
+biB0cmllcwogYWdhaW4sIHRoaXMgdGltZSBleGVyY2lzaW5nIG1vcmUgY2FyZSBhYm91dCBt
+YXRjaGluZyB1cCBjb250ZXh0IGxpbmVzLgotLSAKMi4zOS41Cgo=
+
+--------------00ab0cu0ZCRFaPoiqu95SFK2--
