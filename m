@@ -1,159 +1,133 @@
-Received: from sonic308-2.consmr.mail.bf2.yahoo.com (sonic308-2.consmr.mail.bf2.yahoo.com [74.6.130.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60CC3F6604
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 18:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.130.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3002D838C
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 18:57:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773773462; cv=none; b=NabOT3UaRCPTbhtYbLGXbunVUgxmvxeA6b0ILor0+u1t/vX947oy4pFcquBrAegZj+BXqFboKFRflmFj0LCfB2A0NXR/BeRfFt2iQK3CAQE6YLQ1rDKN74+8x87WRTgj3Y70zan5lZoS5yNsBrbP77NkQu0ouCHlbP21NGQQqy0=
+	t=1773773837; cv=none; b=AhN5QLlu504tdzvXYMBJcNBe+4WBaEJE7w+kzQCaW3H9WC5nmf5NBg4gzdB5Vnfctg36T8gN6w2/fT1n6JPMBjth3dlqrpCwp9GCs4sqBDtYPfcsJYh54+pzNA7LavewMzfZOpSvOBeUYqk7MryXU/rbh8PbeD4bsuQOVbGk0W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773773462; c=relaxed/simple;
-	bh=i1Q0hc/Pa0n/6zeE5jCgc94jJMsDt8c0UMemq3Pf9Fk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:References; b=OtE5V+qlVLhcebSZauxXaE1nr+NDVfu9wHerJL8hLwHlOumiixU+dDiWwZ6L6kGcwqFU0lPFTNsmFZ5//zpEXqRiBetPB2r/LKqV6Il3E4oJDiALd/gUmj0mY/lJuIGxy++Y/mQWo8ygWI9F86yp8NnMEDe6NxShczASfWNvX9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=RDlLkNDv; arc=none smtp.client-ip=74.6.130.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1773773837; c=relaxed/simple;
+	bh=TWsD2NJdUSNz80/avQ6sjhTjNbJXV2X0RLBktG9uAOE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=uGGAOBKzv6mcgVhAK3tM0KjwB+00C6dkicWCowD6yz/tHFajOGRI1JrGjmPmvsF7Gro+O3szmKLbwdPboXYUV7Fu4E+DOp1wfBaagf13AVDD4jaGN6Kn/8GM+A4vw7bBX9LXH7Xvq+I8n1upDCDM0pjFDPM9BNX+e/j56yiEVNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=eom9KPm7; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="RDlLkNDv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773773453; bh=bkYpbcY6mCmXDI+WfJrLzWoTvkanr13LJZg8VdiWh0A=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=RDlLkNDvBM3TOgrk9lVoyd+yUdX6TMQkl9IsokOzFyJmPg1OanKepJFXM1wXGADUCyTo+1qaBus19b+scgAJjmwHa0mf5DgTmKD4LhM27BIsIUmSwVEjRc0Z3sru9qrEJIz+ESvsYrY3ObHfapPFDCFE+psWfjwz7C2Qy0NLPUMz9Vu5bcKDXgdZilhguCWRt7qnLBT0e0HQJKIADamXUZ7/clHUnO3LHMVFNqStU5dVU1si7mzBGNwpaYpLXxi2DySnC36BVazWzMZcea5VlUBZBeFM55Ggf2GRw0GKDfrtbS9+AY72FL8HrKeW9w23Mzb8QBO61iyOiriMo9CGBg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773773453; bh=7y3rXz2/Guwlk+wNLPqblx6Am0YC150hjix28R1r4S0=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=Lh47ff8SpQp9iKKcdtqy58hrKVciDQkpL3oxynRYyDacGKHVDlpOVfOnD0NIhIB+E2YzCQBV7ZqfZ4ZNkV7v1hv/ksbDeRr2jZjaNEEGjWYoj2qPfqytrfT2ToXNr6i3WQYAG3BHpsJrtwlPt8+RPWOocv48poqLzD8WvDN2WPPuvtlGl/6YHIUSrC2Vwkxn18+N02Ufury4sTzfk8z8Wb1ymarOjOmluTckYRVxlN4DnXT9CSCOkZDVhscpejwC/rkS1CjO60Rgmi+O9r8ibYpicPTc+m4qmv9msmkG3jvv9BJdQ9wDyNXNzglryNejDsqm1beFCciFfesciE3qaA==
-X-YMail-OSG: lxPiGoUVM1mom_b8HWh9U35M37weXYuTpRiLgbYGgUBU_gr7hGHhSG5QXPzJn9f
- HhfwwyT.z75B4_MkE81vB2jDTUZnI.1K2dC30ypX056zjirenNF1aGDAVe27nCDY8MuE2JT576aq
- QiiFVgEnELvocStxW4S7t7fgb9SVCj_TjM_mCa22iGpEGS8irpuafnFR5ukxuJR9LUxhDsz40Y3x
- .ZvAS1NTAtJ8BLvBZ85LL4lsilbUI_Jw5DI4Y1E1D24mJn3SzkXnMx0zwRdJSENeqvrRPrSPujEV
- we7vl9JkBTIiUr.MeNx8Armd7xuMoS.dh32x4R4lYEPnBxdwJ76zuMbPNcR49J5RO_eFhCfOGDhX
- dmjEtFZa_YdoIJgIUWoj2UHH0XjGEO1QlGujGEzeEju4xdzxFmWvV6vkvKEkQ6BEUqcEqhoGVCnm
- GA2Z_M2QOFNxiON15sTmrqHcgc2Q25Bbr0IxaPZF2hVQoCCQgMYO1lnboisfxpTu.PnIPAnGb_np
- X2cHE2X97kinI758boEprlQMhbXnmlLmnQzNt4tdRSnoIpoFjCJ7abJ._d49csfK6epOYmcmOPvU
- 2VoQAD6xpE6k5Dk8hP8NOwVMbiy8aPyGQ_kF6dNsEck3knyhQR4t0cdv4yJ_l8XxWK447V5g216i
- a01TBWZhDP0qQnjXxpmBFOob0Jpwer3iX_bkBMSZ0QkrcCICtp97Vqb9KViQpySy.poQ59pnlivO
- ALMPoYfwGBFHNutMMvUdBCmnEclN0SU0BSEOH4DxHIrOPOwqyd9xSM.qgs.n0QJH1PKXTnnSLSNM
- CEUYmQMOBCDr3Zi.aGn9fRNubkk_B6n9d9YIiIs2gjsS0PSQZTAuw3LRjIEZJzO5W8fLa.AoMjrn
- o_eUGkZxj0qzMuoOqk8YVxzU4aw8kHobmllKbA.ZC7pGuXmq4Wqge53K_UbgSamdmkOMZO7BCqu5
- rFi1N2kFyOoq0E0p6Zz2DuTsQnv6jEQ6hdOVcuKofaM9nCtKEbPDg3l21gfk8h66FZ9._BtUuWN4
- d8MUTOgsMBdu2X1atjOZJmw8ajn4VSDKzzwiv_ynxKIyBadJ6.PjBXvpU8QDrBGz6niC3roVVMxp
- B0Mm3qiT1Iksjj_9OFKjhUcrIm8tsX3_sdLXUcPyT1Flxkver8sK9wu8zTxCA7GtHfPkK1Q28t73
- CLXGg_os9tjM1a8zHA_I1sPYtZ..Q.t0ufvUn8iTF5SysmBfqxdOvRHMz9X.teeXzpZqJgPloDiN
- QBMpuMqyibgsI6.Ph2ONKmHIuPNFymmmolNa7opz1Ej5lLL57N.r0zWjc2DpnSok8nO4HEc9AYHS
- TauMdVr_NEcw1LduqPo0Euby62x18t3BBw6y9T6hR23bKbJTn87J8mdaLHflYEDadR_xo11KJSNy
- cZk8yqk.SH4SOxrEMn72HG9Oehyr3FjnXFertdV_P6PAEC0_OPFVYfkFBHtI.svrlFlqhupfbA.L
- tLxRW3BZFjM0kyof1YQCSlPcIZKCa8PULztwU3eaq5JTMxRzK58xfb4WC6JbbhIta6pL_klOkt.r
- 6PlCPQVjGSEiXSZh6TqBPr4NEGWlH0.ybkaZoKnQiIRXaO.VbFNbkDYqOA7.bYZfEDBVQ0361XzJ
- 3yZnOypdMxd3dhv2bfJYaX8PfJHkEoOekqD3xCAhVuJk_iUtC0RElKYIvjHiNr5Wy6r0CrEXzBxK
- m.Kg3cDaqqnywMbgccO1RhaQsVFjOvktrS6Fj_.zHQMv6FrAomdEMhNNK4jvs6FDWqMaynBRsfh5
- ogKm3smz6ftCHG1RZffb7OBP.9HiJV6Ngyks0uv0SKEJvWimnUxIlcmzIdT6X3x9zyV77peFxLQ2
- dkx7eQid1SpO6DNkZ.m.il0K.nlxyuRynWEcGsQ5eFTWVvs5DrQahxQoC8dd25IqA_PxMYeySofJ
- kbaxJ8udrfOsIDp48Yh2QzPnZ4_GmZ4KxfHUm2uSqyuoDNftozZgGd6SqKMBY1V.76QU1etVG4BR
- EeuSVC8NsCcEpvzg4s6aTN9ml55jt.aI.BmgJdi7rdaPj9XHNWoXIGTuG5qeI_StzUh8EKheSN.6
- PsLPRBIClZhAYAJxffjeYMHBvfsrbOMQ.fZhiMM8Z2_9ijWH8lbaUWaIfnm.BJyXNEzKSmg2_NJI
- sxfW8NWRVBIgSLTFIJrjwuy9VARC1XSEMLu7JTlDG54kI7wZhiXOhMfqhh7MoUm1unpJKNPyf1LJ
- .dAUPnEslv7YkEKibhFMpO3Dxs3eAsgVC4zaBJG.drWOV0msm2mdvitbqkry804kB1Czco0s4vS8
- iFcbpTCQnAcNYhOx_qS.68EwF.Hvc.D9ZP60dSg--
-X-Sonic-MF: <jerrywang183@yahoo.com>
-X-Sonic-ID: 7ead7092-d131-42e1-9598-d7f996b85435
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic308.consmr.mail.bf2.yahoo.com with HTTP; Tue, 17 Mar 2026 18:50:53 +0000
-Received: by hermes--production-bf1-697f88457-629ff (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 9821146f2d53ab376adab0bf4af3f1b1;
-          Tue, 17 Mar 2026 18:50:52 +0000 (UTC)
-From: Jialong Wang <jerrywang183@yahoo.com>
-To: git@vger.kernel.org
-Cc: Jialong Wang <jerrywang183@yahoo.com>
-Subject: [GSoC PATCH] t2203: avoid suppressing git status exit code
-Date: Tue, 17 Mar 2026 14:50:36 -0400
-Message-ID: <20260317185048.74421-1-jerrywang183@yahoo.com>
-X-Mailer: git-send-email 2.51.0
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="eom9KPm7"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1773773827;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=DGi/p3XUBCXUBmuu0x+6D/SooAANZXGXMIM7hn4Nsg4=;
+	b=eom9KPm7+LH9C6TZjPiMylrbuX1xbOo7+wenoJWVTt/lf654vssJ5z2sWrQmXEaAMSqk1j
+	ztg44/P2TVkeJbyGMyH61O4zTG0nj4oXf8ZlzLtfmprlbzY93TtGVfBgJ9l2ufWL6Plt1N
+	IqlPV2vXI4Dd0m8ZOFY1o/img3K6oyQ=
+From: Toon Claes <toon@iotcl.com>
+Date: Tue, 17 Mar 2026 19:56:26 +0100
+Subject: [PATCH] replay: support replaying down from root commit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-References: <20260317185048.74421-1-jerrywang183.ref@yahoo.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXM3QrCMAyG4VsZOTbQdMWJtyIebGumEWlG2vnD2
+ L1b9fD54HtXyGzCGY7NCsYPyaKpgnYNjNc+XRglVoN3fu9a6rCoJjSe7/0boz5THdBUC8ZA3oX
+ DRF0gqPfZeJLXL306/52X4cZj+fZg2z4vQJ3gfAAAAA==
+X-Change-ID: 20260317-toon-replay-down-to-root-d412048f1741
+To: git@vger.kernel.org
+Cc: Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-When git status is piped into grep, the exit status of the Git
-command is hidden by the pipeline. Capture the status output in a
-temporary file first, and then filter it as needed, so that any
-failure from git status is still noticed by the test suite.
+git-replay(1) doesn't allow replaying commits all the way down to the
+root commit. Fix that.
 
-Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
+Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- t/t2203-add-intent.sh | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+These changes might conflict Siddharth's series[1] to add '--revert' to
+git-replay(1), although resolving that should be trivial.
 
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index 192ad14b5f..44c1936e4d 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -16,7 +16,8 @@ test_expect_success 'intent to add' '
+[1]: https://lore.kernel.org/git/20260313054035.26605-1-siddharthasthana31@gmail.com/
+---
+ replay.c                 | 18 ++++++++++--------
+ t/t3650-replay-basics.sh | 10 +++++++---
+ 2 files changed, 17 insertions(+), 11 deletions(-)
+
+diff --git a/replay.c b/replay.c
+index a63f6714c4..63ff56552e 100644
+--- a/replay.c
++++ b/replay.c
+@@ -225,12 +225,18 @@ static struct commit *pick_regular_commit(struct repository *repo,
+ 	struct commit *base, *replayed_base;
+ 	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
+ 
+-	base = pickme->parents->item;
+-	replayed_base = mapped_commit(replayed_commits, base, onto);
++	if (pickme->parents) {
++		base = pickme->parents->item;
++		replayed_base = mapped_commit(replayed_commits, base, onto);
++		base_tree = repo_get_commit_tree(repo, base);
++	} else {
++		base = NULL;
++		replayed_base = onto;
++		base_tree = lookup_tree(repo, repo->hash_algo->empty_tree);
++	}
+ 
+ 	replayed_base_tree = repo_get_commit_tree(repo, replayed_base);
+ 	pickme_tree = repo_get_commit_tree(repo, pickme);
+-	base_tree = repo_get_commit_tree(repo, base);
+ 
+ 	merge_opt->branch1 = short_commit_name(repo, replayed_base);
+ 	merge_opt->branch2 = short_commit_name(repo, pickme);
+@@ -293,8 +299,6 @@ int replay_revisions(struct rev_info *revs,
+ 	set_up_replay_mode(revs->repo, &revs->cmdline, opts->onto,
+ 			   &detached_head, &advance, &onto, &update_refs);
+ 
+-	/* FIXME: Should allow replaying commits with the first as a root commit */
+-
+ 	if (prepare_revision_walk(revs) < 0) {
+ 		ret = error(_("error preparing revisions"));
+ 		goto out;
+@@ -309,9 +313,7 @@ int replay_revisions(struct rev_info *revs,
+ 		khint_t pos;
+ 		int hr;
+ 
+-		if (!commit->parents)
+-			die(_("replaying down from root commit is not supported yet!"));
+-		if (commit->parents->next)
++		if (commit->parents && commit->parents->next)
+ 			die(_("replaying merge commits is not supported yet!"));
+ 
+ 		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+index a03f8f9293..9c55b62757 100755
+--- a/t/t3650-replay-basics.sh
++++ b/t/t3650-replay-basics.sh
+@@ -81,9 +81,13 @@ test_expect_success 'option --onto or --advance is mandatory' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'git status' '
--	git status --porcelain | grep -v actual >actual &&
-+	git status --porcelain >actual.raw &&
-+	grep -v actual actual.raw >actual &&
- 	cat >expect <<-\EOF &&
- 	DA 1.t
- 	A  elif
-@@ -26,7 +27,8 @@ test_expect_success 'git status' '
+-test_expect_success 'no base or negative ref gives no-replaying down to root error' '
+-	echo "fatal: replaying down from root commit is not supported yet!" >expect &&
+-	test_must_fail git replay --onto=topic1 topic2 2>actual &&
++test_expect_success 'replay down to root onto another branch' '
++	git replay --ref-action=print --onto main topic2 >result &&
++
++	test_line_count = 1 result &&
++
++	git log --format=%s $(cut -f 3 -d " " result) >actual &&
++	test_write_lines E D C M L B A >expect &&
+ 	test_cmp expect actual
  '
  
- test_expect_success 'git status with porcelain v2' '
--	git status --porcelain=v2 | grep -v "^?" >actual &&
-+	git status --porcelain=v2 >actual.raw &&
-+	grep -v "^?" actual.raw >actual &&
- 	nam1=$(echo 1 | git hash-object --stdin) &&
- 	nam2=$(git hash-object elif) &&
- 	cat >expect <<-EOF &&
-@@ -171,17 +173,20 @@ test_expect_success 'rename detection finds the right names' '
- 		mv first third &&
- 		git add -N third &&
- 
--		git status | grep -v "^?" >actual.1 &&
-+		git status >actual.raw.1 &&
-+		grep -v "^?" actual.raw.1 >actual.1 &&
- 		test_grep "renamed: *first -> third" actual.1 &&
- 
--		git status --porcelain | grep -v "^?" >actual.2 &&
-+		git status --porcelain >actual.raw.2 &&
-+		grep -v "^?" actual.raw.2 >actual.2 &&
- 		cat >expected.2 <<-\EOF &&
- 		 R first -> third
- 		EOF
- 		test_cmp expected.2 actual.2 &&
- 
- 		hash=$(git hash-object third) &&
--		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
-+		git status --porcelain=v2 >actual.raw.3 &&
-+		grep -v "^?" actual.raw.3 >actual.3 &&
- 		cat >expected.3 <<-EOF &&
- 		2 .R N... 100644 100644 100644 $hash $hash R100 third	first
- 		EOF
-@@ -211,11 +216,13 @@ test_expect_success 'double rename detection in status' '
- 		mv second third &&
- 		git add -N third &&
- 
--		git status | grep -v "^?" >actual.1 &&
-+		git status >actual.raw.1 &&
-+		grep -v "^?" actual.raw.1 >actual.1 &&
- 		test_grep "renamed: *first -> second" actual.1 &&
- 		test_grep "renamed: *second -> third" actual.1 &&
- 
--		git status --porcelain | grep -v "^?" >actual.2 &&
-+		git status --porcelain >actual.raw.2 &&
-+		grep -v "^?" actual.raw.2 >actual.2 &&
- 		cat >expected.2 <<-\EOF &&
- 		R  first -> second
- 		 R second -> third
-@@ -223,7 +230,8 @@ test_expect_success 'double rename detection in status' '
- 		test_cmp expected.2 actual.2 &&
- 
- 		hash=$(git hash-object third) &&
--		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
-+		git status --porcelain=v2 >actual.raw.3 &&
-+		grep -v "^?" actual.raw.3 >actual.3 &&
- 		cat >expected.3 <<-EOF &&
- 		2 R. N... 100644 100644 100644 $hash $hash R100 second	first
- 		2 .R N... 100644 100644 100644 $hash $hash R100 third	second
--- 
-2.51.0
+
+---
+base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
+change-id: 20260317-toon-replay-down-to-root-d412048f1741
 
