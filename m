@@ -1,68 +1,68 @@
-Received: from sonic303-2.consmr.mail.bf2.yahoo.com (sonic303-2.consmr.mail.bf2.yahoo.com [74.6.131.41])
+Received: from sonic305-2.consmr.mail.bf2.yahoo.com (sonic305-2.consmr.mail.bf2.yahoo.com [74.6.133.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A013E3C6E
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 16:33:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.131.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1373377034
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 16:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.133.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765232; cv=none; b=Yly9oDalVkYMWUoICn6V5a7KDxAi3013Lhb9BKZtyygN7ARlRL9uUIzXbryXLUqd6bTfgjz5nJD/FcXVsKYFoWLrBJI8kWT9eaJ1wvV4s69ik9wT4UF4lN8dyrW/bO1sO5vAywKt5xs6N+jq7PsCZUQHX2gYEjIWMt9xXQMKFNg=
+	t=1773765233; cv=none; b=DcvXAWiJd3iK/5FNc1NqRYCiPzbSVNfEnY3aLmxDig5HkhNxylMzpr42mmNJg4Yyt35J2hp3XMaP89o6qr7gp073cow+0wJYwsenRh0tsqGKXSlh3QP2i1Fp8ig1ALK7YN76PsXtHpdVwWF07P2NFitR1Z9tfHhHxVbhITo0SDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765232; c=relaxed/simple;
-	bh=CbpZINd/8Uv+V8a/Az+rEgQ4RtRexZzuzT6QQB7r+/A=;
+	s=arc-20240116; t=1773765233; c=relaxed/simple;
+	bh=ef8y+YATv2BetHYMYpc7tKq6UyYfVK8mZI7uV6ELD+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QN2xqrKAwSnemK1pOisIi85KZS58oGGeWXyL8lMhL503to/VRNgNMkxqi0mkn1LnP5WSw4AJY73L/rNXr3dFSEAnwQDHYZM+200Ek1xsaI3hvBCFB5+VR3BJ6/iWV81hG44lU9CcX4aByDKTjrcZDEGjdiYQAoHiFBLXQ2xKtyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=KW9gD7Xj; arc=none smtp.client-ip=74.6.131.41
+	 MIME-Version; b=kdAa6UZFLymKORRqSUzxS0/ftnSXSCBZpyz8f6r2fkQaBjkZpKaf2jqHAeKU/8cz64fnyat9V+u/D6KXWNajbN4IKfu7Sltlkm+V8YI1eDsYQl+huFGqQ4ulx9dqfC/CtnOREDDu+E69kdin56esytBT0jE2F+2+lgvq+FntUI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=oxxp6m8j; arc=none smtp.client-ip=74.6.133.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="KW9gD7Xj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773765222; bh=5WzUM3w9htQIoZdCr9aSuQnZYhegZtk/Lg+RNslxqDU=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=KW9gD7XjtdVi1ium1mXD0HLkPp74gg/yH3tXC/nqbgkQbIo5BSRXiOy/G5U/wRHER7540/d1+FERqgzRHhOmns+UxII6/dkbU6LtKWDGs3okyEqBD1pEJO1PceVSmH2pvo5t+HkObEV/29ljkBpJ180w8NBDkN7TPCZSdjBg0/kZyiVhEGt1NWPs9B9cPOU6gMJoYboMyM2jTJwjHi9cyUqz4TfcoXkdUxeLKz45yFqF+OAH0SikT5lWSRWspVg/bBq302GmdVPFRSK01iarege3EGGsjAfgOvTTlXSsOUvES4fGMPyIkc7YfAgk474xeXeVmJ1gZYz4jjSfuaoWEg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773765222; bh=N0rwN7BVVUReeXjj7HgM6AIzDvapeOHubacWrNAw/Zm=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=a6frqtISv6AStvmL3T+aKfKW5bSYhIEV84bZCEY7UsK6lPh+TCCsvThdrtSPcfzAS0uem5t0+C1ADdmjjissMrkzT2NU/9Vo4YRyn0HDOw9ZFrvuLm3bCwAEelsTqO86mK0psHRfZCgX/vsM5HN1U9c0PMq3YTM0St9Sn5ocDhd423fbgRbPhGpD6x/6Q3TXeYmJ1R23WbSR2xp3xs/dA1CKFyXQpSrQoGplUOCpd0lgAkrOeJXAVTnN5e7LX76WqYY4s+d7QSmbNfzmHy71RzwtsAy7dpLzeQBq7vFnXEefWx1tvyZ9Z9ZB6zuv8gzr/19x7Y40M1mVvkwQ8b1c5g==
-X-YMail-OSG: EcdnIOEVM1kAh9e.r9OpKURAOT_SqAAXKAZk9l9PIfKApOYqlQDJpXlWiLcf60a
- HP9CC2XwzOpAu9JVmsGZFjIIrRy3sGepgfBViyv5vFWrrbfc_WU_F3Seovjg7lXlMVNHZQ2YY37w
- xeHMJu.X5X7fbCPtL8FzBK..PxOtmsoRJcdPn.px96.vh183WrZqwWFGdzWd2XcMTvz.KLhgNAT3
- 1eeXRbDFty.90HqKTVdGqkB76iGLTyBqljgNncEh5WV7KtYkgpWqty.uw8upLZ9zn0rMbUCyh3GA
- z_T4.vdNKk1p2jR3GPloz5CY1ICehFaC2aqvlhFErP4Gox7vvsEG9A02VrdMMT6Va3L42p_vPCvC
- 3JZjNuwkC9jBQLKs51fkjd7jlocuKXMKb9Gwhwrd0a19vhDihIknkD4kVq5gjfUlr0bY3NZ5SPFn
- _6Eda8YngOkVw_io9c.ECLg7zZXEkiwdRQZSW0um8S7ZB9_VrVW0EMgyo.N611kdDalH6QkLHxN1
- gwryfobcmn_NFT3etmz8CkJwFgmY98m4jb.f6skWiOjhBx5RFmIL4VYZI_CJjqO6xSmWoV4ut3Zd
- YrZUVA4kW2wQkJlpNMZExqU2uJG6yEjzTyHAFlhtYIEZXdrgF1DcMDQJB9u4FUIii7CYF0CCPLDy
- SvrMlgv6YGYPi.TF6HqcebPcJhE0h7XM4ya1P.sj7vaECUmqQm2XWvyRPuZV5LNqkanXPRo2K.pK
- bQFFQhNzRNx3kjqL8RCI6SJSJJWXUhwHi4SBI9ZST.rPZzubmeaEquBRa0pZ9Q.Ozt7vjDND0aen
- wB1jImYsfsI1grFWlzc1aT54YpN5JvSXd4Ayofxh8GrtrA8u0ydNl.PH2ErBtfOb5YlqJs6vwmm.
- DSDABFokxCL8w8eZ4P1cJ_MaeYv66Ih0a0Zpehkta_GGYKPs8Hjhh5Jm7C6xWRMX4A3xz3boHThX
- nJNxveZ6FDZurmVVVqdHqVpxmOhM2qeFLppjMedTHRTsAmQlDAomlCcUNmwAqGpvfd7qZBy4uQt2
- V35DFbuMeeBQcca1ckQ68dPzH0o.SOa7oGo4gp3Av8YzUxG76R6rx3qQUd4SRB4KKxBWAjU44.tA
- dQF3o1PRl9Cg_PH9pPV6KXmBirgtRxu0LnR8wI.nmaHa2RhjDF3ta48bNmBEGOdxYstpl4.niv3h
- .mbKhc1XKiveTCVR_oaAqT8whr0pStjmUFdTTZ8WO8CiITzPk342pSPrZQFsHS0hCpjunIbdkGg5
- 6KHnmMG.uRP3YhZSxzgDtWM442F_VuLMeitE092H1CvX6lEw2FxY_UG0o7LuT4l2fGMr20n_BIF4
- Ekdn3JSIQqVKKyJyX0OlR.cTdkaD3OkWoB_YHq6c4_qmUrX3352gJmO7jP4BAF1qwR6BfE4jbWU9
- _TPuerEFJTCyUfPkP0vTg4Z5f7RqgZCFEB9Ze.MdN0zCrko215QmIHlNlDvyNprV1a7jobW9P.Sa
- fSMb0sn12awCxzW96mc49r1iFPdSViENVCiVnCWBOcxWS2_hxnNJ8ZJ3Uhdw7xhWF0oK93e_9PD8
- OXtsXfmc1.ZVQUmScjb1KPBj5TdRFOewjo_.PaY97g9h9XTlpjMMyAphSiEUnvKCZa7VBh_cWsCz
- b54SeCFPyR3aF9sxxCoQeLKygoqQpR5O9NbLuuR_mVlnC3Y92vEwPAQdphzS1Yh0U1kPEi4mpgol
- 7TVhOJpHoqacb4iV6PLWmM_fwLgCOehwgTI5_8Bzs1Ua21.l_tfHm4oo5dU.CfY7VOZ0Jxweg1zF
- .Ghs_67PwwkmWoatoPTIPGK0z1eTZ3vErIg0Htpe0Kk8uGt.cKt9o3VMu3DcnQ.ItiTFogo_tgmu
- hgOs5v_Lh6.GHZEuPMl7gJziDaJMl8ywExfGpoqnob79_XE01RNidcX4.wPOk_PYFkjaFBvyKNbg
- P0KVgxF.dJWHbWzNoXNPQs5ZoM8l8.3nBTAeV.5DyArGvVWmZedC.c4XsDN54rXMdYT7DWEgSXow
- Fnr_qFiS9Hq4HOIlgb1Wr_Q4GypJFlf6FEus9MPzRXF2b4QKiXbPD24ioJV7iUygMu1gUGvHZ.H_
- e7BGv3RDVTM5dU66t3Dp4Dd19O54yCfPNX4OyPdearYqGtkKTdGyVedegr9FBSjFf_qPX6MIIyHL
- bI0Bu4xXJmfEG9Ykm72Zn_3e1ftUR7otpFcIG1UQmb4mVt7NkoyahkWt1Kc2NjO6X59YNT16p6Q4
- SzdhnZZ2z0HlLXLhSArNVIZYXv87I92VhDLMqOFrx0KWugoHfh2fFaINQKsMpo.LX45JvdR_F3GY
- yAooIAqWuC0UYgLc.BaQtqiXX6XE6BqolKaL0._U-
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="oxxp6m8j"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773765225; bh=4dTwniQklVeXx40jYpQSYlPTndZRhNM/ZbcC+qX1Q6w=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=oxxp6m8jvoX3rmPktJHZuRocTLmmhaSQakrKFu6PS9YSqt079q/0gDzJrSm1v5v6GevbWkh3kZ8HCrjF6JlS7K6lNM2IZ4PoIB2Ht/TRVy6xLUluVR4QCDPSD2H26ru6ncnULD/j9vKZDL414AEjRTO+Zf2Cl/vOkIr4YumTxDJM6epp4F2qVpkHMincpH/c56tgVuFg0WwAf2QJNM3LtW+ZsW0RF09qSpWw5wGrQgGifd9blEKyKwLwgxnOHHr+XXG8PbsiRwOdn4jxwAJby0IL5HQwhPJ5PlIkwh2tg6eAxV4mVBHYQPGJSNrZbividlv4T4UuyGKnizmCK5NMvA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773765225; bh=DT7cVv4BtGfSkkJ3yN0Z9i9Q62tY2qFLC++j99NT19x=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=Vao+FZ9ya9QZl6BimGfOv5GqXNiJ6zWF50Lsmiw1VXbvCiyL6rnXOEu9r0HrpjQmuxxekHundhTQYXVbqHXvKmhUHUSL3BwbUyFa/UhKaDQyFPgJamFy4rQWpFI9n9fM+VHuBaBU+Bq/XknjclFCs46StcqbwQQPr/BTyTg2xWG2abXItt8XfGcrW0c4GXAYsbOeh3NuwjvL9fX5se41dIrIdrXLqM72ddmFcc/MvUeIfwhwR3GkqRLlFk8km+rfiKZsAY/gCibbtKHa+FEJWb2SpEptRIiqGBoQ28d9HlTuUe+aUj+VQcA0bALsKoLsvImxJkKy+sjPB3EaZypJTw==
+X-YMail-OSG: mBHHVkMVM1lP4_nZvEC_eFzZB3HStYy96QgxDuGeNICO7B7PG3Sa.h2CD1cWpwb
+ 8_M_lZ3uM75XzQqNuH3.sPSSmBk0ARWmE0AvTd3IkxJzDAKJK5JcF3KvDBLJnL20.GM1Dc53BPBt
+ RfUxvJmInF5ZljwVP7ddiTfi.2kCztEAc155gyOUwSnyhuvEHbnDJ8x9dlaxQGNWgxjlIPR6G8Hg
+ L_NV.Rl6Cn0fzsNMuLBxcXuE4mtJg6blKSv1wU4R5YBcE6sN3iB8.i_t15KwW4HZc1AwL3tDjV_t
+ MTux3d3v.wdBsFqUuWu4dlm2JmA5Et.lEo5Yudls81lOAfQUEVab_3Hm3YjmPvlsrpbH4Yx.Nzzc
+ reHW7d.JmKliIEG.Q9OOUUsfXJq9oKNihXz6QOo8a2q8aLLpbksSlZGLFCW7ios1pTVLg6LYqeuJ
+ XiwBEWoxC2qlG1Pbugd3qLGafxYWXiKu4wPJAtr0lCrk0lNnMYnljnUPu7cq5Flka1pz_J7jrj6E
+ OPWREKSKK6HfRVdmY1STh1JuhXylXPBopGr8BSCyr.s0B0Vh3aCroSANLSiDT4n.18xrW18zLLz.
+ gL6NHZRyFD8QOiRXKAfIfRTqzk_ukbXotYQoMI561OxjRKR.8NJ0VQX86mWCQ6P8ArKgI4TxcGRw
+ E1ZOmkT_B8BrsYplvUszXwLkdRFK812F.SFFnZJ9TONygDEyuTazmg92PXbkn2_wEE60CcPqgSq2
+ pxMCgYdkNVoldh2nAM00JfGReEHobQqt22N9lnGExOUYy2GSKGwqyG6XDRbvwXa.4tG6rrcByk3L
+ K1fRFyEFt3jqBiYUCpDvCA5bsPfo1zMGZduIZu2ruTJj4GAsGH6ZW2r9fFOwsMGQZfuq6aCjMzfN
+ BlHRIaUht347LggF11xUWW1nTvPnmWBaXOdkUHeOgqlpGbBmEBIJQzSBv0OjK.D6arV7A8ra9nUa
+ b5NCSg3r0K4bT7oi9Oh49lIdaRvkikjJFqNROIW893t5QeLjhady.jn617_RqYmt4.jpaV_V6QVV
+ sfg3jz5j4q73f2EkZsh4EzQd4cYq1M9HsyNgijDs_c9SvYtMFUEDodi6NXGXFE2xq1foIIDVJiuj
+ 5g1E5G2gcdlBP9iGLGDjNwVoKGXO17ln1eTDKmIMls1vj7hpT4wRBRi2BxJqiSIsGiXozwZhfxy.
+ sc8Nd8HL0o6EEwdBWiEI9qXOgrurrgbnd5rzpcfM2MWdKhwcY7FKqgndKX1x.8iYW9WLbrCK1bXM
+ rhqPoWmx29sEbukbt7bXyibPrBLs_bTPPMj6iRDC_E1IUxAaCkyHF859StM8x3XdFOxoTGmBqpyG
+ tvPm5pSei_k2A3N94ADABKxt4HcKpTEGfVCk9JxJdwCRGdnhz3DzQf9boiJMtRNh_MYtflRbV3AN
+ 0pJ95WGXXq5rSWzW9JJfYME.QU_z36z41BPV83PyX0iIXLFEFf.JdL79uh7vde5DMFWvrlKh.DYb
+ bx8_MYxG.xvFEcTDLLSmN1i9sN4lDjtUonRUaplWO28epu4qAjqO9lAQPAOb9pemXiTYz_0q3wrh
+ uwr7_esdevX4HqQFOoAaLhMDGa5SvaJuyRyuJAYUfWAoJxKATNFMwTldt.0gZw1JBKifKhAh.22B
+ ok66Ww8ksc35YOEr9f2yjdXNwtNP74fmKiJEdJ8l5mkwRIB1y7aCds44klfmldiCCFqMMyCvNbSI
+ DczXMakaWGjlL5oRKKSWR7BISijxVHbfUcfKuMMbspae5jlnahVszYd1Tp8QjA83Vapvz7MGSsja
+ GoGvLzcC1rzbBj3PGCVX.q.wUZc8z7NF_PfUwOTSCVqM4acRi_0mmNr9RiAJSDx0ezjehgsQhOF3
+ RHG1OcN3cPtsG1T7mbqu02o2rm7sUk_XcsNwJU59AILzclGISe5rXryPd6xd7bDcZU.Hri4RTGhb
+ zPR6nZr2ZNJUv2m0ZcoGrlw__c1Alp6cz61breMAOf.OjgnUYIog4Fzb4K.aMgrAlVD5hJ0HipDS
+ yHpkNR8zDYwq7csiGIaZk9lggzbu9PW1tyVr00W9I035dVZf_pinp.MEwTfdlABT10y.kt.8qpUa
+ XzVFYn5J7XcIK7_weMsFEOTgOMc_vc_c5ZqqckbxWEdYk5Zklm6h7xuzRNCa4coDIcVs1HMOo_9e
+ _sldIKYEWKlRwK.mxzmvRA.bdnooLZ2oqQyroRWUvepALfdLmhvd16B7UB2ZdMQFb55PVm6yOsHM
+ Q50eGohU6_eqpR_9pTVLF8CUb5vRndTxQDS1MNan303upMqIWP5U.N1XvmW2l3dgrZaMySjZ020t
+ ZLI0bKxAmKNmgaYaNdDDrfO4zOXFK8y64QecJD4PhWg--
 X-Sonic-MF: <jerrywang183@yahoo.com>
-X-Sonic-ID: 0344cdac-d01d-4a9c-8bcc-b7458eb06ed3
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic303.consmr.mail.bf2.yahoo.com with HTTP; Tue, 17 Mar 2026 16:33:42 +0000
+X-Sonic-ID: 13852b48-c9eb-4a1c-83a1-50b2c0ef816a
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic305.consmr.mail.bf2.yahoo.com with HTTP; Tue, 17 Mar 2026 16:33:45 +0000
 Received: by hermes--production-bf1-697f88457-f5brd (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 275727739a5229c22067aab3db4f1e1d;
-          Tue, 17 Mar 2026 16:23:32 +0000 (UTC)
+          Tue, 17 Mar 2026 16:23:33 +0000 (UTC)
 From: Jialong Wang <jerrywang183@yahoo.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	karthik.188@gmail.com,
 	Jialong Wang <jerrywang183@yahoo.com>
-Subject: [PATCH v4 1/3] apply: report the location of corrupt patches
-Date: Tue, 17 Mar 2026 12:23:19 -0400
-Message-ID: <20260317162321.71812-2-jerrywang183@yahoo.com>
+Subject: [PATCH v4 3/3] apply: report input location in binary and garbage patch errors
+Date: Tue, 17 Mar 2026 12:23:21 -0400
+Message-ID: <20260317162321.71812-4-jerrywang183@yahoo.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260317162321.71812-1-jerrywang183@yahoo.com>
 References: <20260316162123.84532-1-jerrywang183@yahoo.com>
@@ -75,116 +75,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When parsing a corrupt patch, git apply reports only the line number.
-That does not tell the user which input the line number refers to.
+Several binary parsing paths in apply.c still report only line
+numbers. When more than one patch input is fed to a single
+invocation, that does not tell the user which input the line belongs
+to.
 
-Include the patch input path in the error message so the reported
-location is easier to use.
-
-Reset the line number for each patch input so the reported location stays
-correct when multiple input files are provided.
-
-Add tests for file input, standard input, multiple patch inputs, and
-existing binary-diff corrupt patch cases.
+Report the patch input location for corrupt and unrecognized binary
+patches, as well as the "patch with only garbage" case, and update
+the related tests.
 
 Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
 ---
- apply.c                |  4 +++-
- t/t4012-diff-binary.sh |  4 ++--
- t/t4100-apply-stat.sh  | 38 +++++++++++++++++++++++++++++++++++++-
- 3 files changed, 42 insertions(+), 4 deletions(-)
+ apply.c                 | 10 ++++++----
+ t/t4100-apply-stat.sh   | 12 ++++++++++++
+ t/t4103-apply-binary.sh | 20 +++++++++++++++++++-
+ 3 files changed, 37 insertions(+), 5 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index b6dd1066a0..b7b0a201b3 100644
+index 700809f3e6..84b4a569c5 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -1875,7 +1875,8 @@ static int parse_single_patch(struct apply_state *state,
- 		len = parse_fragment(state, line, size, patch, fragment);
- 		if (len <= 0) {
- 			free(fragment);
--			return error(_("corrupt patch at line %d"), state->linenr);
-+			return error(_("corrupt patch at %s:%d"),
-+				     state->patch_input_file, state->linenr);
- 		}
- 		fragment->patch = line;
- 		fragment->size = len;
-@@ -4825,6 +4826,7 @@ static int apply_patch(struct apply_state *state,
- 	int flush_attributes = 0;
+@@ -2110,8 +2110,8 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
+  corrupt:
+ 	free(data);
+ 	*status_p = -1;
+-	error(_("corrupt binary patch at line %d: %.*s"),
+-	      state->linenr-1, llen-1, buffer);
++	error(_("corrupt binary patch at %s:%d: %.*s"),
++	      state->patch_input_file, state->linenr-1, llen-1, buffer);
+ 	return NULL;
+ }
  
- 	state->patch_input_file = filename;
-+	state->linenr = 1;
- 	if (read_patch_file(&buf, fd) < 0)
- 		return -128;
- 	offset = 0;
-diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-index d1d30ac2a9..97b5ac0407 100755
---- a/t/t4012-diff-binary.sh
-+++ b/t/t4012-diff-binary.sh
-@@ -68,7 +68,7 @@ test_expect_success 'apply detecting corrupt patch correctly' '
- 	sed -e "s/-CIT/xCIT/" <output >broken &&
- 	test_must_fail git apply --stat --summary broken 2>detected &&
- 	detected=$(cat detected) &&
--	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
-+	detected=$(expr "$detected" : "error.*broken:\\([0-9]*\\)\$") &&
- 	detected=$(sed -ne "${detected}p" broken) &&
- 	test "$detected" = xCIT
- '
-@@ -77,7 +77,7 @@ test_expect_success 'apply detecting corrupt patch correctly' '
- 	git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
- 	test_must_fail git apply --stat --summary broken 2>detected &&
- 	detected=$(cat detected) &&
--	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
-+	detected=$(expr "$detected" : "error.*broken:\\([0-9]*\\)\$") &&
- 	detected=$(sed -ne "${detected}p" broken) &&
- 	test "$detected" = xCIT
- '
+@@ -2147,7 +2147,8 @@ static int parse_binary(struct apply_state *state,
+ 	forward = parse_binary_hunk(state, &buffer, &size, &status, &used);
+ 	if (!forward && !status)
+ 		/* there has to be one hunk (forward hunk) */
+-		return error(_("unrecognized binary patch at line %d"), state->linenr-1);
++		return error(_("unrecognized binary patch at %s:%d"),
++			     state->patch_input_file, state->linenr-1);
+ 	if (status)
+ 		/* otherwise we already gave an error message */
+ 		return status;
+@@ -2309,7 +2310,8 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+ 		 */
+ 		if ((state->apply || state->check) &&
+ 		    (!patch->is_binary && !metadata_changes(patch))) {
+-			error(_("patch with only garbage at line %d"), state->linenr);
++			error(_("patch with only garbage at %s:%d"),
++			      state->patch_input_file, state->linenr);
+ 			return -128;
+ 		}
+ 	}
 diff --git a/t/t4100-apply-stat.sh b/t/t4100-apply-stat.sh
-index a5664f3eb3..b19fc9fe50 100755
+index b3d93d8ed6..8393076469 100755
 --- a/t/t4100-apply-stat.sh
 +++ b/t/t4100-apply-stat.sh
-@@ -48,7 +48,43 @@ test_expect_success 'applying a hunk header which overflows fails' '
- 	+b
+@@ -125,4 +125,16 @@ test_expect_success 'applying a patch with an invalid mode reports the input' '
  	EOF
- 	test_must_fail git apply patch 2>err &&
--	echo "error: corrupt patch at line 4" >expect &&
-+	echo "error: corrupt patch at patch:4" >expect &&
-+	test_cmp expect err
-+'
-+
-+test_expect_success 'applying a hunk header which overflows from stdin fails' '
-+	cat >patch <<-\EOF &&
-+	diff -u a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -98765432109876543210 +98765432109876543210 @@
-+	-a
-+	+b
-+	EOF
-+	test_must_fail git apply <patch 2>err &&
-+	echo "error: corrupt patch at <stdin>:4" >expect &&
-+	test_cmp expect err
-+'
-+
-+test_expect_success 'applying multiple patches reports the corrupted input' '
-+	cat >good.patch <<-\EOF &&
-+	diff -u a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -1 +1 @@
-+	-a
-+	+b
-+	EOF
-+	cat >bad.patch <<-\EOF &&
-+	diff -u a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -98765432109876543210 +98765432109876543210 @@
-+	-a
-+	+b
-+	EOF
-+	test_must_fail git apply --stat --summary good.patch bad.patch 2>err &&
-+	echo "error: corrupt patch at bad.patch:4" >expect &&
  	test_cmp expect err
+ '
++
++test_expect_success 'applying a patch with only garbage reports the input' '
++	cat >garbage.patch <<-\EOF &&
++	diff --git a/f b/f
++	--- a/f
++	+++ b/f
++	this is garbage
++	EOF
++	test_must_fail git apply garbage.patch 2>err &&
++	echo "error: patch with only garbage at garbage.patch:4" >expect &&
++	test_cmp expect err
++'
+ test_done
+diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
+index 8e302a5a57..f2d41e06bc 100755
+--- a/t/t4103-apply-binary.sh
++++ b/t/t4103-apply-binary.sh
+@@ -179,6 +179,24 @@ test_expect_success PERL_TEST_HELPERS 'reject truncated binary diff' '
+ 	" <patch >patch.trunc &&
+ 
+ 	do_reset &&
+-	test_must_fail git apply patch.trunc
++	test_must_fail git apply patch.trunc 2>err &&
++	line=$(awk "END { print NR + 1 }" patch.trunc) &&
++	grep "error: corrupt binary patch at patch.trunc:$line: " err
++'
++
++test_expect_success 'reject unrecognized binary diff' '
++	cat >patch.bad <<-\EOF &&
++	diff --git a/f b/f
++	new file mode 100644
++	index 0000000..7898192
++	GIT binary patch
++	bogus
++	EOF
++	test_must_fail git apply patch.bad 2>err &&
++	cat >expect <<-\EOF &&
++	error: unrecognized binary patch at patch.bad:4
++	error: No valid patches in input (allow with "--allow-empty")
++	EOF
++	test_cmp expect err
  '
  test_done
 -- 
