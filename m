@@ -1,122 +1,118 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E253093CB
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 22:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B050D27FD51
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 22:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773785426; cv=none; b=tCz6CUBdYZaORlrrbhqDYASZyrOyUwsgUf6ucs5vKnIjm7g0OGi+Kq8jHE1r8VeHyW2tBCSpssE5eB8YPKtR52xq1LEyJ2OsqvLLg5XXJEgSgLgG1bYDZS88gUjgdUrnPxq6eLzAWDgY46NqaGaUuHI8Rba03mtyD+hgfaZLpms=
+	t=1773785434; cv=none; b=c52NRU2DZFMaTj0Vc+oMPq+Qt6IwAGmPFSTAoGEqcrmRCLQVLDuXqtolxBKwwV4RDdFIqBK/ay0OcWfHylcDh87KMzQ07i+YdvStdc4xKQYCf9iMmltDweLy0WUEwuC7HlhnmnAgNd5im3Bx+b4R/uqCPRLsYWP8ho6XpzXAZAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773785426; c=relaxed/simple;
-	bh=xZUNBg73UlGOc621xUNdwr7Uw6fKTerUuhrKL/TthIs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Cno5gH8UjGg3j+fRcTBX1z+LEztam8oiZ+Jx3CF/LwvPZreKSctWT+nVtc/2pn4ZPUi2rAOWWcLOtCpTvTGXiW4/kpzNqgbBKTjErB0DGhGdNsJm5WXJO0EbkTMBSTpyiH35WVrykboDzRTBEiA8hrNjGThI6hUe1evDBrRjHc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dC8H4nOd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gE5ZZh8k; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773785434; c=relaxed/simple;
+	bh=bCmHOT6gdTXGYdtYaO0EAyp8v6uNISJmKF2fs3Brb7c=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=VagWGciKET/MYRYBPqy3DK1ZrrUWX3Yf2WzrnJEh+3Shbm/A1N28nBxME0YseqPG6S9tz6adC0xVv5GeUaQroxhIAElkj97SzssS//Lh8Yf/TwrttkSSbDjsQMgYHRJi4I8NcjQdewJ5VgWZxbJx/zE5zS5fVWBI1or6ip5YjCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=qgttny6Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K0KBWX6y; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dC8H4nOd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gE5ZZh8k"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 00D8D7A01B2;
-	Tue, 17 Mar 2026 18:10:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 17 Mar 2026 18:10:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773785424; x=1773871824; bh=nnRECnuw+k
-	m7ywpH2leB6V4QPPTnsmVG3OZ2g1DyRB8=; b=dC8H4nOdghK4BEYhZY6LGHGVTu
-	hJgnSxz1aQOUXquJYfSvEn5wSSqrurz1hBiTS4ycWQAC3Gf1LLV81HjaUvfP26sw
-	mqp8yHWBzbgwwZRSFr/a9hG0Hev0EvbbInKY4+HR/+bvRec1fjO2G2nwUJVXCiEt
-	eUw4g4SXBjx2N+++6gw2yxrxuoGQP2xhFXMcW1SSyhW7G1Kz4VlgtEIdlcaiPFXs
-	5ZP1KWAqhZtFul+m0Ger1K93I3iD+t3xeBP3B+5PfxciE7QyKsxOB4yFmgOI29wF
-	Tb7yF+ek8ZJHkRj5B1D6H8kUbAkSwIcviWwhl5F8226ey4p5ivNJzHwD7TBg==
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="qgttny6Q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K0KBWX6y"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0C9867A0182;
+	Tue, 17 Mar 2026 18:10:31 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 17 Mar 2026 18:10:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1773785431; x=1773871831; bh=g0vkYVSIC3B7DarXnvjha6u/CpAwTLEg
+	HejCCTpudK8=; b=qgttny6QchyW65keUM8comExEbiSja28LxLcqYw8JJT2iIQR
+	yqT/pRI0dT42w8gIWk6C5eWuWdmBw1y/5cJQIa6+31YfF9kWFRkbqlm6Cvi/8TdZ
+	5742P+Wrin5Q46wmVmBIRVdO0RvErr3l/5J/Slwuvxs4BY63nPSbpKeJOhx8gdlI
+	sOpIpF2boQxHDSGdHQDPjXzkyxOZ+ls8gJ3XIJ4tYsaUlAemZpgyuFlVyj7S3T8S
+	Lra/96vwY3Lqr0FjoP7E98jLBP//wlziZa+I6RqxVC6s7P41Rq8cd8QZI+8K0sLG
+	nqzUPUvM19l7ysKK8Nb/5DQt+aFysBPpS/SLzg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773785424; x=1773871824; bh=nnRECnuw+km7ywpH2leB6V4QPPTnsmVG3OZ
-	2g1DyRB8=; b=gE5ZZh8kx2FSOd9s+ijhFxKTVQSZ05vZiHbhKIA51Jh7BqzgDmW
-	mIKqZJqbzPawy9aFHZ9Hco3C8YvvabgoxMhb5NeuzLz5KN3HRg74Rzw4qVRgHEgT
-	Nb9gRAGAooJDX9fkZW+3MgpLPlTLnUGkpJA6pWpLyT7FAjM4ZtJf3RVGU+QOW65j
-	otNm/IfcB6tViu86NUnilXfBp+5RoMChoLdyvopK2L0I62OasYgYvwUb7NpcR2Rn
-	WLHtkw0mQSoNUGDy/hkxvXn02ApL0pXg3+SHswIFLIk3Wxb4sPPv2A3Xtfqqfz0O
-	Qf436om1B7XdzM5js1qIRE6Q3b9aM1gpdbw==
-X-ME-Sender: <xms:UNG5ab83NBstMEHzmPMFmNHxL2XH15VAxP3Zd8KWImB54bjamAyLIA>
-    <xme:UNG5aesWlOi1TC_fhWJaHYQc1fItNZXePDeMjt-LKvTqwRaUjnj5nFAx_YFy5H7Y-
-    C8JhdPf78J0-PXJvn4cRpsfqsv-SsjuPignKOkkMb0ExEafr6eQw0M>
-X-ME-Received: <xmr:UNG5aeDxMmzNNM4PYpMviLkXp6p9hhcTDkkXdulMJbmqHrl6MXPZmUiwauIsYMuEPu2BGoN_VVsi1WU_pK8jhxSsLHGIgaCxnw>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773785431; x=
+	1773871831; bh=g0vkYVSIC3B7DarXnvjha6u/CpAwTLEgHejCCTpudK8=; b=K
+	0KBWX6yEPyOnC/3sbRhF0DEfxGZrei64UdHsctFrMW3TpiNwctY9QAFFvf5/UTbH
+	/3qywGnwPt9KHa6we2PnhD3Ey3JqTaba91Q6COg/xMjFkzPYiZF9xVMrubgx6AUi
+	dRuS0b+ovZtjCR+9fmU51/j1klQGrgewIElGCcqJoP4toyQkqKoT6Tlzs0QIfLwv
+	SxSP9U5VJcZTvTRanaKKd2MJqyTXZ/wXGugZJMpnFr9XqBhcRBoZLbBn2SMpcvhK
+	rXWOZb71g012L+U+xX7LRVGZkTvCVo6FSz3DeWxp5bkBfpb3LS2h3SenUrAhxR+P
+	cWNXOKrdneVnlLwm/mgLQ==
+X-ME-Sender: <xms:V9G5aTctTPzXQtGc3oJMjkMeKwxbERr-0cQdruB0eriMUMHoK3omNpo>
+    <xme:V9G5aUB-URmtk0ADQXwnR8T1OzJT_EULlE8M_Jg-G8IKcEiv_c42yt6tZb24nWdex
+    y6Pal61QLn2AsV36uwOeHd2q4jSGa0K_wd4ebF9N4IWRBvCxiFVJ6g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvgeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:UNG5aWVKoOqhbmqpe5qYmdZ4GMC9gr6mgMwImMB1qi5cF8lkzBQ5RA>
-    <xmx:UNG5acCgc8EqJ5zXhJtCxURTFhfGfknYOP1BSX5eRwuyUnwq4gaQIg>
-    <xmx:UNG5aZ8_PkAgLfZPEgXItr7qb3hCoK6Fjy0rayBZRqpOkhll-CY7MA>
-    <xmx:UNG5aTEEKVgZ9HiSxsmqLFYOEi6oRJMHXtn7hqxMPK8r31rxu4BbHg>
-    <xmx:UNG5aRgwYwsFDw-ndEKiYZOO_P-bNXe053IJagxne-01h0RlzwiN9uVU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 18:10:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 4/5] backfill: work with prefix pathspecs
-In-Reply-To: <977f62faa550ecc4ef7774b4ecf53a9a520fc62a.1773707361.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Tue, 17 Mar 2026
-	00:29:20 +0000")
-References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
-	<977f62faa550ecc4ef7774b4ecf53a9a520fc62a.1773707361.git.gitgitgadget@gmail.com>
-Date: Tue, 17 Mar 2026 15:10:23 -0700
-Message-ID: <xmqqse9yhzu8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
+    dtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
+    tghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeefte
+    eghfegfeevleeguddvkeetheeiveffudejlefgudffffejleffffeludekjeenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrg
+    hughhssggrkhhkrdhnrghmvgdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphho
+    uhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:V9G5aZYmZMmEaCr9JnUN5LJfTZAzWYrxugsOV5V-O8F6ZKoQg20ciQ>
+    <xmx:V9G5aYK1YUk7GvVICItIf-7Y_oICS5VOsdSdx5qp76JsZobBV-kLKw>
+    <xmx:V9G5afCP5oE17DjSf8oO1cXJCDYTJJiylP_niQ_65osgR6u7WgTUfQ>
+    <xmx:V9G5aVpqTlCE7uht88ozgIruiI5kvnLrQ3CF7GFMPrMdAFuIK2wp6g>
+    <xmx:V9G5aQzTb3XHpfLU3VSB1p9Gcqu40_N-YTQNuD-i61GbOJCxwyEL3Dmc>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A43021EA006B; Tue, 17 Mar 2026 18:10:31 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AlHvjtmmkX_N
+Date: Tue, 17 Mar 2026 23:10:11 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <9ffa0e37-3bf4-47e1-bd3f-34962cc69633@app.fastmail.com>
+In-Reply-To: <xmqqeclnz2dv.fsf@gitster.g>
+References: <CV_name-rev_--format.4ad@msgid.xyz>
+ <name-rev_braces.4ae@msgid.xyz> <xmqqeclnz2dv.fsf@gitster.g>
+Subject: Re: [PATCH 1/2] name-rev: wrap both blocks in braces
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Derrick Stolee <stolee@gmail.com>
+On Sat, Mar 14, 2026, at 01:22, Junio C Hamano wrote:
+> kristofferhaugsbakk@fastmail.com writes:
 >
-> The previous change allowed specifying revision arguments over the 'git
-> backfill' command-line. This created the opportunity for pathspecs that
-> specify a smaller set of starting commits, but otherwise did not restrict
-> the blob paths that were downloaded.
+>> -		else if (++counter =3D=3D hexsz &&
+>> -			 !ishex(*(p+1))) {
+>> +		} else if (++counter =3D=3D hexsz &&
+>> +			   !ishex(*(p + 1))) {
+>>  			struct object_id oid;
+>>  			const char *name =3D NULL;
+>>  			char c =3D *(p+1);
+>
+> You are correcting "p+1" to "p + 1" to honor our coding style in a
+> few lines above "while at it", but there are three others in the
+> same block (we can see one of them in the post-context), which means
+> these are now inconsistent.  Fixing all of them would make it a far
+> larger change than qualifies as a "while at it" change.  Either make
+> it another step that is an unrelated clean up, or leave it as-is.
 
-"pathspecs that specify a smaller set of starting commits" is
-puzzling, as starting commits would be coming from the revision
-arguments.  "opportunity for pathspec to further filter commits
-to those that touch only the matching paths...", or something?
+Correct observation. clang-format got ahold of a few stray lines. But I
+thought it only corrected the indentation, not that it also caught this
+arithmetic formatting. I=E2=80=99ll remove it in the next version.
 
-> Update the path-walk API to accept certain kinds of pathspecs and to
-> silently ignore anything too complex.
+Thanks
 
-Hmph, "silently ignore", instead of "no, you cannot use that! and
-die", or at least "sorry, I cannot do that, so the result may not be
-what you wanted, you've been warned"?
-
-> The current behavior focuses on
-> pathspecs that match paths exactly. This includes exact filenames,
-> including directory names as prefixes. Pathspecs containing wildcards
-> or magic are cleared so the path walk downloads all blobs, as before.
-
-Ah, "we punt and lift the limitation to grab everything, so at least
-everything you wanted to have will become available to you, even
-though we may download more than what you asked"?  OK, users would
-survive that, and as we improve the pathspec support, the user
-experience would only improve.  OK.
-
+>
+> The primary thrust of this patch does make sense and is executed
+> well.
