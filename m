@@ -1,113 +1,123 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3DD37C902
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 18:05:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773770705; cv=none; b=A7TGewQIcunlNZpN/sN2EUFfjYlcAsXfPLeYgC5Mt0RAsXQkT9o++hpdOMn/5vqypAd3B84LxRwyEiAO0Uu2qOrgbNMu0gu6HnU17/YV48tKXSnGSk7aFixxrNe0PvAgpmk7sZONqTCs6uACidFEj5JlpZX/Qh6aXa4hxefQk7E=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773770705; c=relaxed/simple;
-	bh=9DXggtdyizi45RZkXJcr+7tWhg6sE2P9nBmbkyWpK0I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lSyTHhjQ2vZAFT51M5Ffxg4gU0MEs3kGZeM/tOKaYZahbVZAeOWvgqT8nDgcXkSnNSAxLmtTaboENWPL0B/PEV/L+/PEPBAgI0z76IzpN+AAKyDa4/qp7lItYTvoh1JrfhlDZGFXscnxYlrHu+FdXpvyK963/Cvg0KdY/fAVvKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LzjmcLBd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=phVdWZ0z; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LzjmcLBd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="phVdWZ0z"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 68D1E7A00CC;
-	Tue, 17 Mar 2026 14:05:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 17 Mar 2026 14:05:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773770700; x=1773857100; bh=hy4mfq1y4g
-	6I0dIrcjubCMyiW5zQ6W+ywF2cBO+wsB4=; b=LzjmcLBdv3ALC96stgrwbaMOIA
-	cfHybTsIUS7n0ioorVUfDASiiGqf7kdOXRZAdoYRKFQ9PQvI9xER1SX/dXGKIcDM
-	POZjqyrZIQD4lcMHYih2WIN3sAHEggPfA8Rek2dDkxpNXOFILcHbQOTbGFbLR5on
-	C87ZVaaQgAuhSwfsfXndKU/mbYD+3efUn0x35ek+RIBTDl29ykgWKQnnz0trVVWG
-	zx27+f+MEal9doMe5ZtpBG3NHbaDFqAH2odn8MXr1yT5FDCeiqTLHzSpY/TSmw/0
-	NfBdW+L5LRZN+lqG7rG/ZlYrbcz+nUnTzMJeii4kEE+11f8GOR7IASysKBAQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773770700; x=1773857100; bh=hy4mfq1y4g6I0dIrcjubCMyiW5zQ6W+ywF2
-	cBO+wsB4=; b=phVdWZ0z+oqVTgg14SS+T3D7pRLHsQjuBRl3Q2AwoU4mNmaSmeu
-	Zk7kc5+EWpZ+Qr9qVD9qirWoey70y7/B5uOLtrjy1gOzC1JPgfROfzGEviIHIakv
-	e3xiAXLMhQzQ6jL68zlIhBurl7CiPiqMibqCKrbg6vWuV5PRVQaeHlUaypE/tgUN
-	I9Bgl2QbdW1bBwc9ptjwxi3/pFxZXrSdT626DLyMixzFFpmiQ9wGBGmafPrOXtlB
-	M6XY7wLvT8IwQ8Owl156DMLql7ElQC1Dk/G5kAERhjk+U2k2upChIpKLqLOy2onf
-	fsXUMOW3hViLH4lJ60eGudq8kK+nBBHwyqg==
-X-ME-Sender: <xms:zJe5afeFHH7rFoNvQ7BrsbILIgg8JEx8g2sMug0JS3kicky6fPqVSg>
-    <xme:zJe5acrrBrY_QfKt1LCx0HeuqvV_cRYUO3aFyKVm_EFUYEbDoHaDrzmjUs9SRa3Sd
-    ni_YOsNPvWXdWNz_EmV11FgqiFxP8ljQG9TEiVD6Jc2eRvB2yaRBQ>
-X-ME-Received: <xmr:zJe5aV7pf3ecVU6fEKg2VhCLxJPTzigeNx78Cl6_XxdrWqUhMad-N1Ai_5SrsVAegblET7BuM1dOIFO39zJ-6-QvLHuhK3Ctfg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdduleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
-    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zJe5aapUk1xrXAyrh_AzlWa04SXhslaf2U0K5MGR-B1tCWzd__OGsQ>
-    <xmx:zJe5afhD5atTzYLaVwUNQZN9iMz4CcYeipQRYq5g5lee6wytlilWMA>
-    <xmx:zJe5acJB4O6UACflekKvF_z1pRtmzZKPFLmAuH2B4R2i0NgYwJDPFw>
-    <xmx:zJe5aXBVO3lDCbp9-EQmh8sCPacETX9TxMu-h-7ihkyigHjnXWhYoA>
-    <xmx:zJe5ackORQROUGbVJmhQM_J_f885apqFgVjZC_g4hajgzeTFqynkW2wg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 14:04:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] add-patch: use repository instance from add_i_state
- instead of the_repository
-In-Reply-To: <20260317165230.628705-1-shreyanshpaliwalcmsmn@gmail.com>
-	(Shreyansh Paliwal's message of "Tue, 17 Mar 2026 22:21:38 +0530")
-References: <xmqqzf46l7x1.fsf@gitster.g>
-	<20260317165230.628705-1-shreyanshpaliwalcmsmn@gmail.com>
-Date: Tue, 17 Mar 2026 11:04:58 -0700
-Message-ID: <xmqqh5qel4c5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0923F7A9F
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 18:12:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773771146; cv=pass; b=QPe+6+WCXefqq3ZND5Ump94m2cocw+imeBGwoj1ZOt4u1avCymisPiJNUB3BLXI2gtMrp7WO4Be9Kn+czo5stYc3KB1YUFEVjtusuTWNmN6WDoTXy7YOzMb+tY9BvAgATWGk1KENP97EHTIpxtwg5rgZAfunnctfM7anx3XFJk4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773771146; c=relaxed/simple;
+	bh=9Pojj9ph89dqX2/drWaFYbTe5GZZK1Ul7SaHfPH9o5c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q8JorAE4oN21i7GtU0mR4QM/V6GLpjlj8qfj0CjiiC8/tDn7+AnqTcQeTK7vw2WLxSI5hVm574hAiP+OXsgwkC1pOwygN4NxQNDypKpGXXwuiyQRXRHDNGRhHpF1/0PqWDC5X+ywDS1mEAmCSjkcqBwSy61OuqJze8/kI5SocsU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-124a7216c9cso270259c88.0
+        for <git@vger.kernel.org>; Tue, 17 Mar 2026 11:12:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773771145; cv=none;
+        d=google.com; s=arc-20240605;
+        b=X2WMwtZHN66UGFAdeK4lMFl9tQkryvgUYB50lvaD3DpSKhbKc5CBlFSr10v76yDCyb
+         dLEaVs4ZC5cr9rZjhb76x9BcDT1W1c3EYNQR96j6G+scx09Gb4V0TLfrngHr4nDro1Ld
+         Gtoe3OHqptwDUe0DGQ9QUWjdxarb3hgxromaR/HnkcXChH7YxyMYXUonz+OMtsXVFblX
+         BfC29QDe3u6vxlDf6Dwu1Tia9Cj/+WjdWkfC5MVbPZwnsSmEQNXOI3Keny2tj4t+8lof
+         O4aczkeInkEjISY2slBHBGp+tOXRwInDxrJZH8OVQg4t6BwN02KeP3RDKotijQGje4/U
+         rfbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=VM7jyyQ62MtaJSq0mzE/OaNXSvcvrkcHSG864dpZeuw=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=gyj4WLsAyd/EwXsyJI/boTx9EWZlEaPI+4wb21e1PELA1D71py8CKH7dXBplWVt7tF
+         GtEVa6xt8iVC2hyXBeleHH96tqkd3xIdH0i3K4T1hPzbl5V1O+DSwFHq2cN6ouesTBSY
+         74mDB/oXPGODNLkqn4JBeGReatIST+mRq0Mm6yB3FC50AdpHUZXQlIloZSnHLurEZgQ4
+         sNIGI2VTTVBQyW4FPmuP5+SNRtd+aPydhO6hOCYzzCxNcSBF7NU3dbMEjT1YCl4onn+Z
+         qGyxX5tyk2U41kTlgB/WdAopiPGD6MWwOr9cTqygcbOgdk4I3/y5v/H2ugS6R+Y+7+Tk
+         RNgg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773771145; x=1774375945;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VM7jyyQ62MtaJSq0mzE/OaNXSvcvrkcHSG864dpZeuw=;
+        b=BR5a+NlF8gF98dwAPlDpf3S4f6a22772CxOvyB2f3GHYohB8u8wjqpXGOfELDK0CPM
+         PlOsM0sji0FHzB3Z2Qcoqf3jOCeAbWrozOEhhI0L0zv8mnY9F0MhHySfLUb2a4Kmb5FO
+         P5N0Yfi++pXLO+EoORfREQsoe1IcUujgLjA3L3I+YCo/+nZeqU5iEA8K5AnFaW1/fOw0
+         AnBHGyyoF/T6rH5Y+ejRQ4sp7OYriju+WgCQL7AGU1VGiStKgc9pQH7U/fZ7FEB+CnQm
+         2hDBmtsA+OsdBDGWbzahBRDyVizlOBmY53i1fWaf8b1NTtBrbU0lvRRvPdRUnihPelRG
+         kMSg==
+X-Gm-Message-State: AOJu0Ywn858jNWxiJowsCpYiBgXjwbStA0HYnDBEde8GgNnqbPmx/9O5
+	sEViJZdZYE2RMYM5GOFELwYBcF9FpNy+u85fqlr9u7OVlZ0j+I1VqsseXza98D0qzxFJta4N7TA
+	96Hv4ZPF3DyMqh5pqM1Qnhq51FniEZ7M=
+X-Gm-Gg: ATEYQzxac1KEQ+Crc8zB0i9YVscvMfTr8aXcJJlpYlb6D+LT0tInkmqiVW5YpmShcRd
+	vDnf5C5XJCz+t/fTWTmOPoF1C1qOUQsikGsl1hDOmGU2uBTwc4NAE5uqit0nBZj+ZgwdiZp+pB7
+	5GDcUWSdNBDVy5yiUag4fcdeGU0+8lja+vjZJBsmvZ/zmkzInSNdsXPUtOwNy8ywiTVQAaXDQ3O
+	a7pBwTrzIWh2q/22wK1nVtsSpQrvj4SAUbRWZt0efnF2Y55WFgALvs1kn/k8UMJ2fXfF5PlzK0H
+	NdgHpZGhVcH5CDxxoj74Ntlnb57orkDjJfpxsh8XFq3U0p6pT97U
+X-Received: by 2002:a05:7300:3724:b0:2be:1f56:ed32 with SMTP id
+ 5a478bee46e88-2c0e4f79e7amr109641eec.1.1773771144640; Tue, 17 Mar 2026
+ 11:12:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqldfql4hp.fsf@gitster.g>
+In-Reply-To: <xmqqldfql4hp.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 17 Mar 2026 14:12:12 -0400
+X-Gm-Features: AaiRm51zQejdyU-v3N1Uvrs9dmQSxuK7dZr-cJXcVHpewLmPuayZFebGD9PuJyM
+Message-ID: <CAPig+cTTgLVGPG99gsb19BeJVWS=VZCU4F-rjb25yHTAORWwzg@mail.gmail.com>
+Subject: Re: [PATCH] apply: fix new-style empty context line triggering
+ incomplete-line check
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
-
->> > Functions parse_diff(), edit_hunk_manually() and patch_update_file() use
->> > the_repository even though a repository instance is already available via
->> > struct add_i_state s which is defined in struct add_p_state *s.
->> >
->> > Use 's->s.r' instead of the_repository to avoid relying on global state. All
->> > callers pass a valid add_p_state and this does not change any behavior.
->> >
->> > This aligns with the ongoing effort to reduce usage of the_repository global
->> > state.
->>
->> So we can call this "reduce" but cannot say "eliminate" yet, as the
->> files uses comment_line_str?
->>
->> The <environment.h> header lists some global variables inside
->> "#ifndef USE_THE_REPOSITORY_VARIABLE/#endif" block, and the
->> comment-line stuff is among them.
->>
+On Tue, Mar 17, 2026 at 2:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> A new-style unified context diff represents an empty context line
+> with an empty line (instead of a line with a single SP on it).  The
+> code to check whitespace errors in an incoming patch is designed to
+> omit the first byte of a line (typically SP, "-", or "+") and pass the
+> remainder of the line to the whitespace checker.
 >
-> Yes that's right, there is an instance of comment_line_str, should I add this
-> in the commit message and send a reroll ?
+> Usually we do not pass a context line to the whitespace error checker,
+> but when we are correcting errors, we do.  This "remove the first
+> byte and send the remainder" strategy of checking a line ended up
+> sending a zero-length string to the whitespace checker when seeing a
+> new-style empty context line, which caused the whitespace checker to
+> say "ah, you do not even have a newline at the end!", leading to an
+> "incomplete line" in the middle of the patch!
+>
+> Fix this by pretending that we got a traditional empty context line
+> when we drive the whitespace checker.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
+> index 29ea7d4268..8573e12f46 100755
+> --- a/t/t4124-apply-ws-rule.sh
+> +++ b/t/t4124-apply-ws-rule.sh
+> @@ -561,6 +561,22 @@ test_expect_success 'check incomplete lines (setup)'=
+ '
+> +test_expect_success 'no incomplete context line (not an error)' '
+> +       test_when_finished "rm -f sample*-i patch patch-new target" &&
+> +       (test_write_lines 1 2 3 "" 4 5 ) >sample-i &&
+> +       (test_write_lines 1 2 3 "" 0 5 ) >sample2-i &&
 
-No need to.  I was just wondering if there are something I missed.
+Curious. Why are the `test_write_line` invocations wrapped in parentheses?
+
+Also, is the whitespace before the closing parenthesis intentional?
+
+>  test_expect_success 'incomplete context line (not an error)' '
+>         (test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
+>         (test_write_lines 1 2 3 0 5 && printf 6) >sample2-i &&
+
+Perhaps the parentheses in the new test were copied from some existing
+test, such as this, which already used them for a legitimate reason?
