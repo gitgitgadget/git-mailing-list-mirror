@@ -1,84 +1,165 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81B83EC2D2
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 15:08:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3C53E6DD6
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 15:14:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773760082; cv=none; b=G24PVv7TCIAu6bOROLOdGwtxjRF57vlMUUW5d9wf9xLRaYVRQXYRvPuSxn5H74AEBGhLdDMDhWfqtMy/Tf9tart8xGgTGh15579FP1KIblZ3xyQg2Yve1Rz2ytCIE8EAD0EYOAjGJKdJ8SaGLg7znym1Zi0o120ykOSURtjCjOA=
+	t=1773760450; cv=none; b=IgQBSFYy82qyIz0fLMKAbLhn5WEECcIIsa5Vm0AeH1QOGSWuZeaglrGMdvIrxjXIj+1XVZNf4fnRNojEuWTBi5BN1Jslewl3WfqMuCaBCGmG5vugQ0gfhxLIKm8K8nWTyEm4AzlbrHo16qvZtIZLlnfqdQPT6c/JKRFAygaSsoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773760082; c=relaxed/simple;
-	bh=Kc1Jx+xQL9UgJLK7qB+VXeb1eJfx9rwsJICDNpna1iY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GtgPIK6NaM5H1F4MLi7zAww1DF1pWUupfhdaKcRBu3NR2rBgl03EZ9UD13T2vJjQ+YPw6fw64TRWOhnidHQR+L+msj7f7l5fx0448IJvHGKzcvhq1zkIB6HqB32Q5D9lPJTt/zheAxYvADtVJPbypkMIJ6YgH+K7BhgdOeoktv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gE1gA/1T; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773760450; c=relaxed/simple;
+	bh=5LoCbX9EVR8CuqQFKqC0g/0ukWX1lR9hgELUcm+mPSw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=l68LsnrtocI9crD4cT+tRVnAHsK9t75aACoMmamGb58TqVuNKUjLn14gQEQsNo4VOQJV0Q/JuDcXOwXezfyTUQ/aLZehY68JQEPbDzvBlIFnH7Av1+YnpppxuF99jR8G4BmzF+AfYz+YGf5Fd5cn4vOOMQW+quBNtXIbadiLsqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S1gOJSN8; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gE1gA/1T"
-Received: (qmail 30799 invoked by uid 106); 17 Mar 2026 15:08:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Kc1Jx+xQL9UgJLK7qB+VXeb1eJfx9rwsJICDNpna1iY=; b=gE1gA/1TikhEYEFljaqaWl5Mjwkdmvr0hdgGjCttjmsr4hfHBl3zxVXiqN9FcNvEDhcb2+KwONuael1IBDzn5JZnY39/ToDUCYnZ6liY5rSzUtHceTsUIrO96m+T/feMRz3SdYl1/B8J3/iLxWUNj9wZKT97lUY4gJuoO/DB1Jd3gq2m6zCdILniSHKvKbir3h/j12EBZu4IK4eaEKKsSJUT4ug1cZAQbf7edVgpSyxV+XfZRpcl/q5bNHAvuwvqOEFxRsc5x7vU15P8Obqg+wAoDXJhBD/jfsn0lCgR1sL5XltvLG2hvdWHu/OjtJdiJ+3Z7EUjUoMpyDj3e5S5SA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Mar 2026 15:08:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 46770 invoked by uid 111); 17 Mar 2026 15:07:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2026 11:07:59 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 17 Mar 2026 11:07:59 -0400
-From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] rev-parse: have --parseopt callers exit 0 on --help
-Message-ID: <20260317150759.GA9975@coredump.intra.peff.net>
-References: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
- <20260316220742.1286157-1-sandals@crustytoothpaste.net>
- <xmqqcy13mgdk.fsf@gitster.g>
- <ablCBkmOdoourCnO@fruit.crustytoothpaste.net>
- <20260317145543.GA1828@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S1gOJSN8"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-829a568f3ccso3317794b3a.0
+        for <git@vger.kernel.org>; Tue, 17 Mar 2026 08:14:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773760449; x=1774365249; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2pfbuVP5anej5inin+pvk0vlx5dW/tXgAZI2UZKcukg=;
+        b=S1gOJSN8XJ6pbigqnwq+KTLGXL1z68QF8c/OlPCaFE0KZNjnr5czlpdVXKIqJFwA1z
+         yX3pxJtvrnfVBNn/cLgept493Vm7bWdwodIoEIbmboNaT75VKHx8OHik8IedAenWLFlC
+         yYaYXT05XuGuo1F4Lb2NyRElVEyKiBrlueD6otqafg0DpNrFzMqqQs3ZHx9ErDc5i7Lp
+         cGuDa0nHYMnfk0931dxe60sBmMPzAyA6BZIjm1zDfOV1ea9uvsbcwC6oAsoimJ6/oM+r
+         dr0ncdephMOxIOexMn0iGtR17V9rL7epCcTFhcT6BmRwcfcmcUFRhqTkfooOLA+W9htF
+         LRRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773760449; x=1774365249;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2pfbuVP5anej5inin+pvk0vlx5dW/tXgAZI2UZKcukg=;
+        b=EAgxM+rSVKd9BbQRU2LvhC8kF56qZL0sxyzScB1W0kEveorUjG7SgYh7OtGMy3mjOm
+         Nt7sKXr3SV1mFvhGG25NknGifB0S4IaU/qJxK6zMbWinSxNw1Z9TGfCkGj1iwUAAi+cn
+         15EIIznpiIcqtQy+R1dDKIWInG5abLwmpokjWNRjxfnZS6Hd/I7s5sFIQrbQ/ZPTI+vC
+         dLJ3ybvuwmi4BpL2VdNKdkUfxsgF+rp6LuMhzZhn+7Ge+tlbqc4kO8s78Z7hLDFvk1GT
+         GrwhxAq2v+0ukEf+pLt/MTOSLcqAW5Z0JSytT+MoRD9za0Oz6MFxve0vZPiEKoHx8wEM
+         PzFg==
+X-Forwarded-Encrypted: i=1; AJvYcCVNLZP3v4hr8ROvXLny2BSf2kyZoiO6P3Kl3nfL5D/B4whMxA4YJvu2owYGoAB4MYjddos=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmQ8I+kTWxVcwXdK0ltUQrrsZ6i2r+G+KBfnX1gfFj7+poaSLg
+	lCMWYpnkWk61IlJaGa4yKl2bU3rwsc+d92QFHSMmWpSIOQW1ZyZ9xHAg+JzNRqzGfemu4Q==
+X-Gm-Gg: ATEYQzy8HMQ2bh7xFAh6O4lDoQa1QapqpXN9OHhMdehgRsqn2e/XhKdzghbSuVFL5Uw
+	saTiPv4UCpmYgY8fGdYLZpn4H8SzYN3iCvB37v+eGGXgPHNGDhy4Jml+7xA3e98IwhZJGarl5OZ
+	eDDikyQJ9DQuP50KPStaWlxKUI+CF0wcmzrO86CxfKeNvcxQOVXVqn4EZBewa3bxPXKAJaYJyWd
+	gXf+vXAAAkLeLfBN2nHFPhxpsZu12tsopD/92Xz7vtFU2akX5qtUibzYZ2QZ589/+tHKv5zKJIl
+	4OsNtYeqii1hUXzlYYePB91ccyscGnVuZ1OU4AmXwYVrcKLAmIDdXcdYLqHL/4E8kF4e3rQ4obk
+	5+34nRRburAwPPoIvsGvCyYFKlhw2y5/vHc7Bg+45LOr7h3nHp0oZA9D+kax3xFliH4+i50HNkS
+	YizFaosHDYPcN2UszwHjX/t/ApzWQX9TL8dNw7aV1BKkl9+BSLIfTghVmUazNCvjQiSc9hHp9KA
+	V6tvWBM+bHLiWASDUZ5J26vuOOEnSMXjYwUszNsNZrcUQvTVw9EKmFRQZ4pqp9U2LHdAQFjc+hW
+	pSQtbjPSFz+lnlY72Q==
+X-Received: by 2002:a05:6a00:2495:b0:821:78ae:9dcd with SMTP id d2e1a72fcca58-82a19703f47mr13596170b3a.13.1773760448907;
+        Tue, 17 Mar 2026 08:14:08 -0700 (PDT)
+Received: from localhost.localdomain ([2409:40e2:2a:942a:806c:cd9c:a577:892b])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a0736e64bsm16605055b3a.50.2026.03.17.08.13.50
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 17 Mar 2026 08:14:08 -0700 (PDT)
+From: SoutrikDas <valusoutrik@gmail.com>
+To: karthik.188@gmail.com
+Cc: ayu.chandekar@gmail.com,
+	chandrapratap3519@gmail.com,
+	christian.couder@gmail.com,
+	git@vger.kernel.org,
+	jltobler@gmail.com,
+	siddharthasthana31@gmail.com,
+	valusoutrik@gmail.com
+Subject: Re: [GSOC Proposal] Complete and extend the remote-object-info command for git cat-file
+Date: Tue, 17 Mar 2026 20:43:40 +0530
+Message-ID: <20260317151340.85141-1-valusoutrik@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <CAOLa=ZQhzvgA2bpmUgx2qMTrxFaR5_6GET8e1y+A=m2nboDAiw@mail.gmail.com>
+References: <CAOLa=ZQhzvgA2bpmUgx2qMTrxFaR5_6GET8e1y+A=m2nboDAiw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260317145543.GA1828@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 17, 2026 at 10:55:43AM -0400, Jeff King wrote:
+Hi there,
 
-> I agree with the general idea that "-h" usually should exit 0. But this
-> is not just a bug fix for --parseopt, but a change in overall intent. It
-> might be worth digging in the commit history or list archive to see if
-> there's any discussion on why we are using 129 in the first place.
+> As far as I can recall, the command allowed users to enter multiple OIDs
+> in a single line to reduce the to-fro with the server. But you could
+> still fetch single OID info.
 
-I dug around a little but couldn't find anything conclusive. The first
-"129" goes back to 2007:
+Yeah that was what I meant, but from Chistian Couder's feedback, I realized
+that cat-file is not a good home for such a subcommand. 
 
-  https://lore.kernel.org/git/20071013221450.GC2875@steel.home/
+> Nice, have you tried with a more recent 'master'? I assume there are
+> merge conflicts?
 
-But there (and most spots where it is added) it is being used to show
-options when we have an unknown option. So I _think_ what mostly
-happened is that we show options in two different scenarios: on an
-error, and when somebody asks for "-h". And we never differentiated the
-two, and the latter just inherited the exit code for the former.
+Yup, I will add these issues in my proposal v2.
 
-For example, when you look at ff43ec3e2d (parse-opt: create
-parse_options_step., 2008-06-23), it introduces:
+> Any idea how much work is left post v11?
 
-+       switch (parse_options_step(&ctx, options, usagestr)) {
-+       case PARSE_OPT_HELP:
-+               exit(129);
+From the v11 thread 
+- a lot of design decision fix , like comment alignment and blank lines
+- the max remote obj info logic is a bit wrong as Junio pointed out [1]
+- one test case for max obj limit
+- use of size_t for looping
+- the placeholder check ie the even with only objectsize the checking of
+formatting string is a bit incorrect [2]
+- Implementing an allow list for placeholders
+- print empty string for unsupported placeholders, ie those not on the
+allow list
+- remove usage of split_cmdline since neither url nor oid will have spaces
+in them, so a strchr would suffice, I think ?
 
-and only later did we add PARSE_OPT_ERROR to that switch statement. And
-back then, PARSE_OPT_HELP came only from running usage_with_options().
+Above is for just for part 1 ie to get eric jus patch accepted
 
-But I couldn't find any discussion or intentional use of 129 for "-h"
-output. I do suspect that there may still be some untangling to do. In
-the earlier (again, untested) patch I showed, I put an exit(0) for that
-PARSE_OPT_HELP case. But it may be that there's more surgery needed to
-differentiate "we showed help because of -h" versus "we showed help
-because you gave a bogus option".
+> As per the guidelines, it says
+> 
+>   Any work done on the Project prior to acceptance of the Project
+>   Proposal will not be considered for Evaluations.
 
--Peff
+I meant like in the May 1-24 duration, which is after the acceptance
+of the project ( april 30 ) but before coding officially begins (may 25)
+
+This is the timeline on gsocs page [3]:
+> April 30 - 18:00 UTC
+>   Accepted GSoC contributor projects announced
+> May 1 - 24
+>   Community Bonding Period | GSoC contributors get to know mentors, 
+>   read documentation, get up to speed to begin working on their projects
+> May 25
+>   Coding officially begins!
+
+I was planning to also ask design questions in this period.
+
+> How will you manage reviews, considering generally they take a long
+> time?
+
+I will adjust the timeline to give more time to rebase previously done work.
+I was wondering... I cannot start on part 2 ie adding support for more object
+fields without first integrating old work ... so about 50% of time will go to
+rebasing and 30% to adding new fields ? and 20% for emergency or any mishap.
+
+> I do agree that something like that would be useful indeed, I'm not sure
+> of what that design looks like though.
+> I do see benefits of this too. But I do wonder if 'git rev-list' is a
+> better command for something like this.
+
+I will clarify questions at the beginning of gsoc duration.
+
+
+> What I missed from the proposal:
+> 1. Where did the work from Eric and Calvin stop at, what review comments
+> need to be addressed.
+> 2. How do you plan to handle reviews and iterations taking time.
+
+Will update the timeline as well as mention the current outstanding tasks,
+as far as I have understood them.
+
+Thank you for your feedback.
+
+
+[1] : xmqqo6yr3wc4.fsf@gitster.g/
+[2] : 20250224234720.GC729825@coredump.intra.peff.net/
+[3] : https://developers.google.com/open-source/gsoc/timeline
