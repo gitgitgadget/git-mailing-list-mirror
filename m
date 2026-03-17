@@ -1,329 +1,176 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SY8PR01CU002.outbound.protection.outlook.com (mail-australiaeastazolkn19010021.outbound.protection.outlook.com [52.103.72.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81223243376
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 02:36:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773714992; cv=none; b=e23HAY7w4uQBs8vOwdfUSYFAYL00N9wjOIQKKVMykr0DRsbTdMTkmhVn0p3Fudac4jlPwTLZAUKkrtSz6jT4tx28Ix+QkpLXcrT0d9m4fNvS21uGuTC26QscdGNLvw3wTiFiuIZzTMQZfjjakpTc3NGDTq1+C0J32caN0FGRrWQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773714992; c=relaxed/simple;
-	bh=rCHYTBqS4Ydrw5UP6eZK6TysCL2Jszjb4rHSXWft9TA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijx+IGHCe1HQS2XRtRrsEoRDHo2im3zp8uZ0w8KF9xkEW6AdlZdjv3110RkSItRB4YvYXMJnhWGObnRVypUnRXHQ1wqmU3+AUeMEJ/KoEh/Tm6heSAyfhBK2kwPonlMwoLl+9vgOEkuFIfCAyw696hhC0X1VBXzqrfVUCS3jTvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=goF3stW1; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC0B2D2382
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 03:21:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.21
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773717721; cv=fail; b=n61YQakVeUMHIVxJskn2Ekl/p/3TUpZv2CyRxv2UXFD9qJS7/0JViWdqgOjCr/WIwdXuXvFZxi6YZ3P9j63pEtKT15N7IXi+mipzMJWa4YfkSCG8kALWgrabAjaBYLshZ9yjyq4MdPMcoMlaaC0A/RN5XApwdEEVzMpZEuaSTHA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773717721; c=relaxed/simple;
+	bh=6JuQIdpFRvbmqu4hf3AU0XMY+eoyxr3hFeFDa2N0ZSM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=PJPDvsthJK9oFJhZty3zQwZDaRgOl0dkOQS9RHVhftqh/pl57lzzYGhRFD7TqQIzN2ZmRt2pN3zWHeBsYtKHxwvv/JUyf9Vx2ocfl9kRqqP2aNazFoaZwIQJYjPFYmlP8/cRGEJwXblkW51d7yM+Pg8K1XWV9jX8poUvwirH5JU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=QyiePq4E; arc=fail smtp.client-ip=52.103.72.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="goF3stW1"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-89c55a0a470so16466756d6.0
-        for <git@vger.kernel.org>; Mon, 16 Mar 2026 19:36:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773714989; x=1774319789; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3wB1BZd9oL6dqR7aIZpfSNkemBws9cJ95UlwibtpB8s=;
-        b=goF3stW1FxHs03YhCMnyvFS5ih3mhvrdEa+GY4RhsIp5HXbD7+IBR7R9ssOiZoQy0j
-         MFeY/V56q6Tal1owbfN/Qu80dKuHUX9HKWUB76ObA65EMkqK9R9QzbS9qusiEPoxjWq1
-         OTgBEwj4nj+RwTPDlzbsxxYK90rz777LdGIZlnbjymmF3KQWvfNpMoLsFmOA+vuSo3aG
-         SZkbEJK4MweDT9QyKBJ2mAmBi5/PKPN9HE3bKMFc+PyXp9zmxmw5pfnpjemyZT7cl04T
-         8fEdoGGtch1R2yRR8fBlDwF+ngg963LS3xMvoxzhqfMXVPybk9jsRRxnroVd8k5F8Nqj
-         qyUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773714989; x=1774319789;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=3wB1BZd9oL6dqR7aIZpfSNkemBws9cJ95UlwibtpB8s=;
-        b=aM18FklDaP2EwNzfuZc+ZglkjMHBJNJVGsX9P1Wv8qA4RhW7bvYYgjjgEpgsnayxiN
-         l7x7LdM4GhPOGnj2fp9oCKgbzMUfIl914dStKID8R1DOU15+UEZy4x2o2Ys6nTGJmMQx
-         Su2A9sw3eojk+IZ6zKO3/SoUj1TddVnhyOly0x7cBZFQwO+KZy/ZnAj+Czit68hzkdC7
-         qR1wRhmvtTLBPBNmr7KixRJypgeoiX4tB3r/lKMS4/GGGAVc6sQfOh0/V9GZ8nsGh7dq
-         zVKgSWkSfivEHpEiEf3cRtiJkeXVvnReakHT4hAKWL8DowNw6CdWCqPuAxLf5wh1n2Dy
-         b5iA==
-X-Gm-Message-State: AOJu0YzaO5ulkUX43fS6e1LL2esJbC9Yy9t2mX2hXkQt9KVE6fGe/wYB
-	kWac7KEA1SiDuZ4lxWdyVbcxVQe93IObozPsgsyhgR1AETp2tjIspuQNOkPoKJL5
-X-Gm-Gg: ATEYQzylK0Jy+lyggCf1H8YbRTmTAJruN94MiyYdDQJHOtoBKxaQ+gJBdOaJvwhMq/2
-	9o0zqnuus5sce4FhytTi7A9ZY9q17wGGgx0/AueHkGz6SbOWSIY+/pS07ktOYBifBF4RjaUtsp8
-	HQaGJb+KGBITw3KT5DrQsv0trksBtDoDwN3zZb9ZiPfkZKkvUOyVWWtbMx2Z+nvxq7r+EffVbti
-	6MfG4Jbw6pcjBQq9oZVr7uqkUU0nv9suZAujHuwhw40Vxdf+6GbxCIx+SlqzUMyE/K9BMNei0+9
-	ZdYSkur6oBCrJ/BM4BhSmf5mG3u1tVaqJqT9pXK4Q8omFoZTd1QRKGRFIJhIPV2lGJ/AbVDMYpk
-	5fbYX6QkZzUsNFWnWFN71PtkLQ+QtynXtD3Q+Ul1/UwghPY0ZXtHV7CYyFQTk1ItqHFUhIHiUHq
-	sYnRsQ7TH6GLcaP4JRFIyGfopgckwQtNtBcc53fx/MHilTgrgB2adtyJyBCPWIKCr5GAc4720yc
-	fBYGYvJoibH/o425pLx082K+aK39ivy/eCZe3vN
-X-Received: by 2002:ad4:5ce8:0:b0:89c:4f7f:8479 with SMTP id 6a1803df08f44-89c4f7f86d6mr97753706d6.6.1773714989193;
-        Mon, 16 Mar 2026 19:36:29 -0700 (PDT)
-Received: from eju--20230906-5R2TJ (bras-base-qnvlon8302w-grc-18-74-15-89-125.dsl.bell.ca. [74.15.89.125])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89c463af405sm66918536d6.48.2026.03.16.19.36.28
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 16 Mar 2026 19:36:28 -0700 (PDT)
-From: Eric Ju <eric.peijian@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	jltobler@gmail.com,
-	eric.peijian@gmail.com,
-	ericju711@gmail.com,
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="QyiePq4E"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NBO7JVLR6ljnupSp9EiNmXyeIIWvzoymmtQGITkDJaz1UbuyLb6d5u/4YbQ2cRhgmJ6cpp5NI3JE4d2G9cf1L0ojR0JOVsUpPqyy+ZoclBNldD1XeQ6MEShuJ8hFowhdB+UdPj70neZJZUM8TznAAFQVmeQgbY25O+MwR5dOPQ6vTYz96gU3YrqPEdcx8dVmHN4875djowrOtuRL2CdU9VL0Xvjrq0r1hV2rmMyLc8AOp1Jeb8y96NTBBN+NEUUCyWcufPH8hIB9TMk214qZbnjE0s8PDOVf4ZRdLgWmRUJcJeSxi2/L9JGx7OFte0aC1liwR+OP/92TOEOpmgU1sg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=i7jfYlebV6T1z8KTAX4H2i0/0eRfFKWdQmwrjiNwMTM=;
+ b=iPKCw9uFc2YpikoNWP3Cq/ljzyH7+mOXgDM5OvUkfBhsmZOrSeFTk9VSjAr5KnV7lB7uNcnUHv5SA4gl9GVvFKBDRWmD0qlmA/0htic4v9E8BEOzX9RgaMOFX88wQBUvAfhh5V+eGZIwr5ME+Fs1DYz9LoncWfihWujaUqDvYcRRD9c7kllI3IXy7JzSmyAA4kT2Zi5B63R4uQ1dBlvNSP8tbc+PvtswAQsgTqvxWcJUQoqaMvAUVchN8axcH7VkobZCpD9WMXAd6LR42/uKLydnnMxKmrlTB2zW1eX7evjRdm993smzNtdOy8YT50Q7xrNaqBd9PGvYHrhq5/8KZQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=i7jfYlebV6T1z8KTAX4H2i0/0eRfFKWdQmwrjiNwMTM=;
+ b=QyiePq4ER12Tfj4NjVTZeNsYmmpsySiGOpktTC/5h4jxRKcnzxTub482RH/pqjvp4LiOvw4o+PgVWLBvpICvpueQq1BCJavkKCVnLSX0kdDS5/72zVH1aPsUy5UbZYv/NNGwEoijvSkepITL83x3cZ3rU9B4MNuuNgL8zY0ip5dLyrK1o/P+yQBarZ4B9MSDJM1xSAOGPmOCOab5FB5w+wOcunpCjQecu+tGLKtCJKg/9ZUdr6D0NsHFo2COqKTWnDocUxhc6A8XANFBV2p04s6Ru9h3S+4GlFQ/UNoi4DmoEo2nt2t8Krlwi7hGjNE3dS57I6ck8Sq2IXr3Y9zX1Q==
+Received: from ME0P300MB0811.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:22f::18)
+ by SY2PPF39C22CC0F.AUSP300.PROD.OUTLOOK.COM (2603:10c6:18::390) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.19; Tue, 17 Mar
+ 2026 03:21:56 +0000
+Received: from ME0P300MB0811.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::b874:b167:fc15:40ca]) by ME0P300MB0811.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::b874:b167:fc15:40ca%4]) with mapi id 15.20.9723.018; Tue, 17 Mar 2026
+ 03:21:56 +0000
+Date: Tue, 17 Mar 2026 12:21:42 +0900
+From: Jiamu Sun <39@barroit.sh>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Aaron Plattner <aplattner@nvidia.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 1/1] refs: add 'preparing' phase to the reference-transaction hook
-Date: Mon, 16 Mar 2026 22:36:24 -0400
-Message-ID: <20260317023624.43070-2-eric.peijian@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260317023624.43070-1-eric.peijian@gmail.com>
-References: <20260313193537.62827-1-eric.peijian@gmail.com>
- <20260317023624.43070-1-eric.peijian@gmail.com>
+Subject: Re: [PATCH v4 07/10] parseopt: autocorrect mistyped subcommands
+Message-ID:
+ <ME0P300MB08117F31CDFE8D038C3E0557CE41A@ME0P300MB0811.AUSP300.PROD.OUTLOOK.COM>
+Reply-To: Jiamu Sun <39@barroit.sh>
+References: <SY0P300MB0801C6F21C2D8F49892DF8E7CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB0801E3F75349DFDF98C221F6CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <xmqqse9zo93p.fsf@gitster.g>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqse9zo93p.fsf@gitster.g>
+X-ClientProxiedBy: SJ0PR03CA0270.namprd03.prod.outlook.com
+ (2603:10b6:a03:3a0::35) To ME0P300MB0811.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:220:22f::18)
+X-Microsoft-Original-Message-ID: <abjIxls1eQRSTrpB@lancer>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Sender: Jiamu Sun <sunjiamu@outlook.com>
+X-MS-Exchange-MessageSentRepresentingType: 2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: ME0P300MB0811:EE_|SY2PPF39C22CC0F:EE_
+X-MS-Office365-Filtering-Correlation-Id: 177cc754-4349-45da-e81b-08de83d4576e
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|25031999004|15080799012|6090799003|461199028|5072599009|19110799012|8060799015|51005399006|23021999003|3412199025|440099028|40105399003;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?hugYXvz4d0663OifqXgZT5REuSX1QDFw2SKIgFjBC534Vl7fn5we0kZTLkkr?=
+ =?us-ascii?Q?M0F8GdfLJi/PJy25nY3d+JUe2E3iuk/ABx0y6YoNN/N5F7EKxUKU/K4VfEjp?=
+ =?us-ascii?Q?WcZQoTplNUgVs3/QUITupgg84+293G7Ya+Cdu1j0qUPoPiqixqBdYyMBycl+?=
+ =?us-ascii?Q?eDGVeiu1J2199C63V/niycDZC3LNfmBWyboaNoqWUB4Yns+dAWqmSWPHrio9?=
+ =?us-ascii?Q?NlC7x47ov1NdpKtEMKQ19VCuRsd/HBBdiCU13RG9cyPYV1ucwiRFTdMSEst9?=
+ =?us-ascii?Q?LJtoyWlBKbzhkn0RjvEwY/JvE40veeYf/y/DI+PBOJY2lnIzfD1qB8dN/A/j?=
+ =?us-ascii?Q?UTf854Ewq6GxqpQCyCXEAjw0olc6K5QbySHNxoP45GGeZkIF7jRoQsaJW8RO?=
+ =?us-ascii?Q?nNb5ZpSTpEyoNFyRr9bdoq9ct6W029YQ48d8WpIuID1G6YSlEdtPNkT9FUCt?=
+ =?us-ascii?Q?xyPcKFkmCXvgrFswZendSElNFnqFhF7pSzrFpUBj3x8UMfKdI0VAWpZUf8RF?=
+ =?us-ascii?Q?xcj7TXBLjQCWjKOEy5sqlDhjLLN8sD/AqNUWmptkI712PBAgnXRMqar07g4p?=
+ =?us-ascii?Q?g4hgMautyenH9c9+5yrAHOcCAGHZKZMK4ibbsYEqY6007NcwO6Y22uBuSySY?=
+ =?us-ascii?Q?KCRDrB+4pS3jfpBilzLTZ4qEoG/kbwzXlRV2BqrsuvYvl2rsWFdXsR8xx1+J?=
+ =?us-ascii?Q?vIUPqHBkrVgiLlMZMiknUucJzopOT3/X6/88Ny85CUK94/m4nghMJXdm11j1?=
+ =?us-ascii?Q?kFEnOX9afSpM1l6wjSMdCLjZahw2P1lwrqXjL4Rn9lzXRmK8Gslo3kdrN6pC?=
+ =?us-ascii?Q?bKWfIdN3K0vJsUFhPQLpJK+b+raKp6np05+RaLm8cbm+eLfmast/Bokx9spH?=
+ =?us-ascii?Q?M/zFgCrGnEfZwggI6rPLaLKhP7o+fqsiGwsABFmXHKuwDTMi0wisYhysPvBJ?=
+ =?us-ascii?Q?KkTGB5Phy4MUxPnfWWv8BA=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?iFfsabwU9iRh22ClzsGXm/q7SHQ9HyiauBSml45x2PzGLJvjIqfzhvsBz/X/?=
+ =?us-ascii?Q?9Jr68hyNezO2u94s1BXxPbHDvSlKQ8iIGkkJGYg1dHUXAnfMUCm4j4y+Q/hr?=
+ =?us-ascii?Q?+Ka3AUK+ZE70vV3eHocPKGTNPfNYbjsU6evdrrY37yE3KJCV0QQR/LbEDrWT?=
+ =?us-ascii?Q?yqxzF4E/e0H6yFozP4laKdsANrXPcsPcSsFzLwOkVXbc1dvumx6hFIMD/G7w?=
+ =?us-ascii?Q?QIGBpi6GNXQryFmKpIbI62AB/I28+B3zmW+JHwA9gdd9OdyHiQF854+2KSFv?=
+ =?us-ascii?Q?5gle2xiVBtm7FCBhEisBfNCOdlp6hKazjnP0DuSKDR2gWcz/jGPROK/8lA/I?=
+ =?us-ascii?Q?NFdAS+mkadzO8YAbwDMRTfzYomfIxY/4ay4W72vW476GkhhTw0dTjHO/4BXH?=
+ =?us-ascii?Q?TWRpST1HKNyLC7GYvoInJ6nM8uZZl1ij0MreTgUAczXYRhcUxNtIgIA2Rvex?=
+ =?us-ascii?Q?KjI4BjHGZVRay4vGR/qS5xCriGBIA8BcOqT5N5NYq0UBQkA14Rd61b5TSl7I?=
+ =?us-ascii?Q?dLWFYndsPuWYre1xt7hrQKzraOlPR3AAjXD2cPSxU378fOvvn6YRZgE5tFgy?=
+ =?us-ascii?Q?4aJVz0sMROoS0FGVfEl94wdf4KBNJsfggzKqqHHs5IWtGNghtyPcvijNASqI?=
+ =?us-ascii?Q?PZWWDGJYvbpdLwAdg8DznTQzel08FPQ96HqHXrUhETbPE18Twps34V0DpiK5?=
+ =?us-ascii?Q?HYTNWWRcBlJzKFCaWwX3KlfD3oXFHRlizLKO9//gQQPV9thi6+bwlkwuIGgy?=
+ =?us-ascii?Q?/E97WltDctV9aTVrTb02cGhd3Zx5kT5w/A4dH4BKaNaZFhxzecalnnOxtIpD?=
+ =?us-ascii?Q?XPBWzl5uuRvqCfoIfuCbHCjfYTdiK+OXjjFBWBG1/ryT+FoMUuMge5MSlyy+?=
+ =?us-ascii?Q?2N8SQDWVDsNBdYZO5KerEujorXisSAXwu7bcTs9kgwR1ok2hkP2MdKNd8dmp?=
+ =?us-ascii?Q?oO4+5pHtZ70xOKRq2bzLWA1UsqlvTKr37Ov0ox5v/Vm0OgM6+R9EBaGoVgFq?=
+ =?us-ascii?Q?af078JCKoawlHpf3kqJn5v2MH4UK7Op5AbeT+p8yfirqdYkPIc1vN+GzYtfr?=
+ =?us-ascii?Q?hwHQVxKByeUyyDpHLbbZwcCH9aiFC2czq1qOfZxQ4/B7ZMNQCYtecSlSJ99g?=
+ =?us-ascii?Q?2NUYlwEKV45tT3AA0ORpBlxIAasSLLfd4QKBmfnJ74kNegkY2dUgKFAunVXm?=
+ =?us-ascii?Q?lRwn5GYhHoeC1bc6qkF0pqWRNgRpFrC5P9w5yW49NEcWdv3Uz3RuduoQgu8E?=
+ =?us-ascii?Q?zTuon7uLgNmnfrs13lmc87bm9s70HYXRXAa8mA7fEmgw8Onr88DlSyuuey6U?=
+ =?us-ascii?Q?FtjJwj4pgoe833ghFLRQUNb1GDsJPKsbsZrh6bzxE8M71bpy04SWoVOfN0pl?=
+ =?us-ascii?Q?jATuE/scLWNV0NSov0/Vt6570vvI?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 177cc754-4349-45da-e81b-08de83d4576e
+X-MS-Exchange-CrossTenant-AuthSource: ME0P300MB0811.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2026 03:21:55.9737
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY2PPF39C22CC0F
 
-The "reference-transaction" hook is invoked multiple times during a ref
-transaction. Each invocation corresponds to a different phase:
+On Mon, Mar 16, 2026 at 12:41:30PM -0700, Junio C Hamano wrote:
+> Is there a reason why this needs to differ from the settings for the
+> typo detection/fixes for main commands?  Would the same reasoning
+> apply to both, and if not why not?
+> 
+> I would have expected that we would just emulate what we already do
+> to the main commands, and later with experience with the subcommand
+> typo detection/fixes, would tweak the parameters either only to the
+> subcommand part or to the both with justifications.
 
-- The "prepared" phase indicates that references have been locked.
-- The "committed" phase indicates that all updates have been written to disk.
-- The "aborted" phase indicates that the transaction has been aborted and that
-  all changes have been rolled back.
+I initially wanted to emulate the existing behavior. However, I noticed
+a huge difference in how prefix-matched commands are handled, which
+affects the autocorrection behavior. And we can only use the same
+parameters if we do the exact same thing on prefix match handling in
+subcommand autocorrection.
 
-This hook can be used to learn about the updates that Git wants to perform.
-For example, forges use it to coordinate reference updates across multiple
-nodes.
+I looked through the old mailing list. If I didn't miss anything, the
+patch that introduced this behavior (e.g., not correcting "statu" to
+"status") was only trying to fix a UX issue, where the suggestion output
+didn't include prefix-matched commands. In that thread, they didn't
+mention that this would also change the typo detection behavior, and no
+one discussed this side effect. I treat it as an accident.
 
-However, the phases are insufficient for some specific use cases. The earliest
-observable phase in the "reference-transaction" hook is "prepared", at which
-point Git has already taken exclusive locks on every affected reference. This
-makes it suitable for last-chance validation, but not for serialization. So by
-the time a hook sees the "prepared" phase, it has no way to defer locking, and
-thus it cannot rearrange multiple concurrent ref transactions relative to one
-another.
+Because of this, I was confused about whether I should copy this
+behavior. I chose not to.
 
-Introduce a new "preparing" phase that runs before the "prepared" phase, that
-is before Git acquires any reference lock on disk. This gives callers a
-well-defined window to perform validation, enable higher-level ordering of
-concurrent transactions, or reject the transaction entirely, all without
-interfering with the locking state.
+However, if we want the main commands and subcommands to act the same, I
+can do that and try to move the logic to autocorrect.c so both places
+share the exact same typo detection.
 
-This change is strictly speaking not backwards compatible. Existing hook
-scripts that do not know how to handle unknown phases may treat 'preparing'
-as an error and return non-zero. But the hook is considered to expose
-internal implementation details of how Git works, and as such we have
-been a bit more lenient with changing its exact semantics, like for example
-in a8ae923f85 (refs: support symrefs in 'reference-transaction' hook, 2024-05-07).
+Do you want me to do this?
 
-An alternative would be to introduce a "reference-transaction-v2" hook that
-knows about the new phase. This feels like a rather heavy-weight option though,
-and was thus discarded.
+> > +	/*
+> > +	 * Builtin subcommands are small enough that printing them all via
+> > +	 * usage_with_options() is sufficient. Therefore, AUTOCORRECT_HINT
+> > +	 * acts like AUTOCORRECT_NEVER.
+> > +	 */
+> 
+> Sorry, but I am a bit confused with this reference to "Builtin
+> subcommands".  Are there subcommands that are not built-in?
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: Justin Tobler <jltobler@gmail.com>
-Helped-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: Eric Ju <eric.peijian@gmail.com>
----
- Documentation/githooks.adoc      | 19 ++++++++++++-------
- refs.c                           | 12 +++++++++++-
- t/t1416-ref-transaction-hooks.sh | 30 ++++++++++++++++++++++++++----
- t/t5510-fetch.sh                 |  7 ++++++-
- 4 files changed, 55 insertions(+), 13 deletions(-)
+No, that's just poor wording. Will fix it.
 
-diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
-index 056553788d..ed045940d1 100644
---- a/Documentation/githooks.adoc
-+++ b/Documentation/githooks.adoc
-@@ -484,13 +484,16 @@ reference-transaction
- ~~~~~~~~~~~~~~~~~~~~~
- 
- This hook is invoked by any Git command that performs reference
--updates. It executes whenever a reference transaction is prepared,
--committed or aborted and may thus get called multiple times. The hook
--also supports symbolic reference updates.
-+updates. It executes whenever a reference transaction is preparing,
-+prepared, committed or aborted and may thus get called multiple times.
-+The hook also supports symbolic reference updates.
- 
- The hook takes exactly one argument, which is the current state the
- given reference transaction is in:
- 
-+    - "preparing": All reference updates have been queued to the
-+      transaction but references are not yet locked on disk.
-+
-     - "prepared": All reference updates have been queued to the
-       transaction and references were locked on disk.
- 
-@@ -511,16 +514,18 @@ ref and `<ref-name>` is the full name of the ref. When force updating
- the reference regardless of its current value or when the reference is
- to be created anew, `<old-value>` is the all-zeroes object name. To
- distinguish these cases, you can inspect the current value of
--`<ref-name>` via `git rev-parse`.
-+`<ref-name>` via `git rev-parse`. During the "preparing" state, symbolic
-+references are not resolved: `<ref-name>` will reflect the symbolic reference
-+itself rather than the object it points to.
- 
- For symbolic reference updates the `<old_value>` and `<new-value>`
- fields could denote references instead of objects. A reference will be
- denoted with a 'ref:' prefix, like `ref:<ref-target>`.
- 
- The exit status of the hook is ignored for any state except for the
--"prepared" state. In the "prepared" state, a non-zero exit status will
--cause the transaction to be aborted. The hook will not be called with
--"aborted" state in that case.
-+"preparing" and "prepared" states. In these states, a non-zero exit
-+status will cause the transaction to be aborted. The hook will not be
-+called with "aborted" state in that case.
- 
- push-to-checkout
- ~~~~~~~~~~~~~~~~
-diff --git a/refs.c b/refs.c
-index 6fb8f9d10c..e66cf4861d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -64,6 +64,9 @@ const char *ref_storage_format_to_name(enum ref_storage_format ref_storage_forma
- 	return be->name;
- }
- 
-+static const char *abort_by_ref_transaction_hook =
-+	N_("in '%s' phase, update aborted by the reference-transaction hook");
-+
- /*
-  * How to handle various characters in refnames:
-  * 0: An acceptable character for refs
-@@ -2655,6 +2658,13 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
- 	if (ref_update_reject_duplicates(&transaction->refnames, err))
- 		return REF_TRANSACTION_ERROR_GENERIC;
- 
-+	/* Preparing checks before locking references */
-+	ret = run_transaction_hook(transaction, "preparing");
-+	if (ret) {
-+		ref_transaction_abort(transaction, err);
-+		die(_(abort_by_ref_transaction_hook), "preparing");
-+	}
-+
- 	ret = refs->be->transaction_prepare(refs, transaction, err);
- 	if (ret)
- 		return ret;
-@@ -2662,7 +2672,7 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
- 	ret = run_transaction_hook(transaction, "prepared");
- 	if (ret) {
- 		ref_transaction_abort(transaction, err);
--		die(_("ref updates aborted by hook"));
-+		die(_(abort_by_ref_transaction_hook), "prepared");
- 	}
- 
- 	return 0;
-diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-index d91dd3a3b5..4fe9d9b234 100755
---- a/t/t1416-ref-transaction-hooks.sh
-+++ b/t/t1416-ref-transaction-hooks.sh
-@@ -20,6 +20,7 @@ test_expect_success 'hook allows updating ref if successful' '
- 		echo "$*" >>actual
- 	EOF
- 	cat >expect <<-EOF &&
-+		preparing
- 		prepared
- 		committed
- 	EOF
-@@ -27,6 +28,18 @@ test_expect_success 'hook allows updating ref if successful' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'hook aborts updating ref in preparing state' '
-+	git reset --hard PRE &&
-+	test_hook reference-transaction <<-\EOF &&
-+		if test "$1" = preparing
-+		then
-+			exit 1
-+		fi
-+	EOF
-+	test_must_fail git update-ref HEAD POST 2>err &&
-+	test_grep "in '\''preparing'\'' phase, update aborted by the reference-transaction hook" err
-+'
-+
- test_expect_success 'hook aborts updating ref in prepared state' '
- 	git reset --hard PRE &&
- 	test_hook reference-transaction <<-\EOF &&
-@@ -36,7 +49,7 @@ test_expect_success 'hook aborts updating ref in prepared state' '
- 		fi
- 	EOF
- 	test_must_fail git update-ref HEAD POST 2>err &&
--	test_grep "ref updates aborted by hook" err
-+	test_grep "in '\''prepared'\'' phase, update aborted by the reference-transaction hook" err
- '
- 
- test_expect_success 'hook gets all queued updates in prepared state' '
-@@ -121,6 +134,7 @@ test_expect_success 'interleaving hook calls succeed' '
- 	cat >expect <<-EOF &&
- 		hooks/update refs/tags/PRE $ZERO_OID $PRE_OID
- 		hooks/update refs/tags/POST $ZERO_OID $POST_OID
-+		hooks/reference-transaction preparing
- 		hooks/reference-transaction prepared
- 		hooks/reference-transaction committed
- 	EOF
-@@ -143,6 +157,8 @@ test_expect_success 'hook captures git-symbolic-ref updates' '
- 	git symbolic-ref refs/heads/symref refs/heads/main &&
- 
- 	cat >expect <<-EOF &&
-+	preparing
-+	$ZERO_OID ref:refs/heads/main refs/heads/symref
- 	prepared
- 	$ZERO_OID ref:refs/heads/main refs/heads/symref
- 	committed
-@@ -171,14 +187,20 @@ test_expect_success 'hook gets all queued symref updates' '
- 	# In the files backend, "delete" also triggers an additional transaction
- 	# update on the packed-refs backend, which constitutes additional reflog
- 	# entries.
-+	cat >expect <<-EOF &&
-+	preparing
-+	ref:refs/heads/main $ZERO_OID refs/heads/symref
-+	ref:refs/heads/main $ZERO_OID refs/heads/symrefd
-+	$ZERO_OID ref:refs/heads/main refs/heads/symrefc
-+	ref:refs/heads/main ref:refs/heads/branch refs/heads/symrefu
-+	EOF
-+
- 	if test_have_prereq REFFILES
- 	then
--		cat >expect <<-EOF
-+		cat >>expect <<-EOF
- 		aborted
- 		$ZERO_OID $ZERO_OID refs/heads/symrefd
- 		EOF
--	else
--		>expect
- 	fi &&
- 
- 	cat >>expect <<-EOF &&
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 5dcb4b51a4..6fe21e2b3a 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -469,12 +469,17 @@ test_expect_success 'fetch --atomic executes a single reference transaction only
- 	head_oid=$(git rev-parse HEAD) &&
- 
- 	cat >expected <<-EOF &&
-+		preparing
-+		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-1
-+		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-2
- 		prepared
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-1
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-2
- 		committed
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-1
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-2
-+		preparing
-+		$ZERO_OID ref:refs/remotes/origin/main refs/remotes/origin/HEAD
- 	EOF
- 
- 	rm -f atomic/actual &&
-@@ -497,7 +502,7 @@ test_expect_success 'fetch --atomic aborts all reference updates if hook aborts'
- 	head_oid=$(git rev-parse HEAD) &&
- 
- 	cat >expected <<-EOF &&
--		prepared
-+		preparing
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-abort-1
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-abort-2
- 		$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-abort-3
 -- 
-2.51.0
-
+Jiamu Sun <39@barroit.sh>
+          <sunjiamu@outlook.com>
