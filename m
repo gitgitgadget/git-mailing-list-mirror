@@ -1,125 +1,146 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C7526F293
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 16:05:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB8726F293
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 16:08:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773763556; cv=none; b=igtFdljMGDx7oYsSqVEiegRS1ua5zT8FrKpBT7Yu/lcCAWd2qVZoEPxdTxPkojhSmnc13/HgS9D3RLTgxSLQc9wcw3hUZPBUw6tzBL9sxNa0D8sLmzr0zENWq59iIhGAoqZHDinjroQGlLHbolpTWEVOViUauS5HSlPWg6SvpdY=
+	t=1773763693; cv=none; b=uAdsj1Phj0fDIb0k/EN/YRrtGOV5KQZeOWf3aYgj2GxHP7U/Jxcamj6Vuyp8PSDFH/9t7LmhvGe6KyGr3sgwlTEjojeQpnjY/pycrrOGXe4EQNuPvAMjtcPIRjkgdUcYkzO+VzHMal05ch690z5VbNY5osoTozIpYKvmzVBgER0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773763556; c=relaxed/simple;
-	bh=zCH9tjZrczwEpIM4i51nh7L4lU7ibuO7FzuNWYWJZIU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJahsRPiNw9boXK27ZQhh2LQG1x7Y8Psq9GyhiKgNhXfVvMOFD5t9fEJ9KhaDODdejQdIyfeBePl83OlYRdUGY/xBTp+eyWBuB4t+ESKsR0lyitOEY7EgIUYMPWrw9NvPY5Wl3sTcnuzgCxDIvn+z1L4z+hZMPniufTvhtYKbw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YpcQMRfh; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773763693; c=relaxed/simple;
+	bh=aWDwaZKDzz8iGGBbbDxIhZn61zk1fUWut/78Xxee3oQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=txceEUZTvgHCKO7kUtPuyMSFXO8O9lB7FZtwLsmLrKQoCdZ2p8vPAr3JT4vdv4zfJ42SWMv6BcNfs2ahabopzgUqgpsC6Knhqb5dNre8MW5su3sGL60pY6yfqucJCHs2WyekhIlu3KEcbeLfCUmnZpSc4TPdTCUdAuQlJK3kBH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WZ2LeTAv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PeZkaPId; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YpcQMRfh"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-824c9da9928so3793877b3a.3
-        for <git@vger.kernel.org>; Tue, 17 Mar 2026 09:05:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773763554; x=1774368354; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8WlFZhoXbpaERo4bkzzIGWpL4FP71/kgcixyMiayYUc=;
-        b=YpcQMRfhItxrDJbYIyGDOLUiSWeal060jbRq9iB0dsfbewK4aUN+wn9fajauvC3C0W
-         DUD4ykpCxS+rDAx4k6v/fvM+zj/AS1Hx9iDL1sKu2o+b7Ka/i0VsvLvt6JyA6dm0Xu1c
-         hujl3fia6m8TAKXGW/vlw3uzBtBFmLZPjQievMzf/D4Q8yYXmwP9dDkWg7IhR6w5LJd+
-         oBfWTYkZGav4kD6rG1b9k4m+fYzMYxNo098gsPWhMv7N+e2fa0DdBIxAOF1ptTTmPCNm
-         7/Y7PT3EShPi3lm9b+6Pc+yv6TrR3GHIsTAFDYlca6av/FQ/KUeFtUEBAWyp3GNetGTj
-         uLHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773763554; x=1774368354;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8WlFZhoXbpaERo4bkzzIGWpL4FP71/kgcixyMiayYUc=;
-        b=ciPBeSYGvqvx8rtgu6MkBSU5zKGsCPfK/5T3vNwf3AokZO9HWgg2vZSk2tu92K1r3W
-         eN/b8VrJavTlq210FryobeBOr3g6XWyFqNYZdOgN/YnXyyZETabiiarWMqyMK0eHbuV6
-         +WtRBFU7rg54ri5XScRvm4LZqJQnwFYFlG9J2LC9NAYuq3WtMxr6AOd0BTe5oCprGncY
-         KQJxPzoP/INkEUX2HN1Rqvp73bIFqsF/YXRaRjuG21+tOe8C6B6YhMCxNHS4S2m14OwG
-         Lkz9Uors8WnSWiMvhcWZZnWiGzFnIEQ9WOuk/ziZhVGlzWN4CqdO6t/eY2ea87HFqmET
-         IMLQ==
-X-Gm-Message-State: AOJu0Yyw3MBVTvKWB7Hlqg8hm+ol25xZD8fl1DgTw4Ck08OW3sZ4bYRk
-	9j1dQo/KDoJkr3sxltZA5Lh+j5Otqhf+30qLU7lCJH6sAw85kWawwOz94/W8HQ==
-X-Gm-Gg: ATEYQzx+4S5YjojSuOkMzskW59yui8U30saxn5dT74Fyr69P8AvJS/aNx8Lj318S2/F
-	JCkoksMJz8bLUrxX5fmjVcbPCohxgxBYLAnk3ousiMKfd2T1XFyor1fGsb1UcyDDJhow1VRtvvN
-	ext9AWwF5PK+KZe6UZrerWX4s1Dd/iS/UnUUubvxiaO4sRBSK0S0gQDHlZqDQyQoLpPT06n+Ulz
-	NP/ENXf7wrZ7M4kvlbgBIbtGcsFcpVFJYal/k9to9c89OX+pubO7x7Uh2Umujv0cBOK4ha7rlIu
-	b/67AUOSd3+EY8Aekx0XtmsMz8CU8NoPiZNVlfmUReEzVUeaqXPpQQVaRWFGVpPUbQrP+6SFuED
-	hE2ADl0ICwvqJmemeRJlcsPzuiBxp2aUGEcE9EuZ6JOcNmdKyBGD5alQ/FQExgk0Wes17HGtZHv
-	GcpAGH/3di8FMDlkT8YJss/bb5WMmmXglVnEFCSx69Z9I=
-X-Received: by 2002:a05:6a00:139a:b0:827:4526:517 with SMTP id d2e1a72fcca58-82a19703a3bmr15299375b3a.7.1773763554488;
-        Tue, 17 Mar 2026 09:05:54 -0700 (PDT)
-Received: from Shreyansh-PC ([2401:4900:8811:4c9f:12cd:260b:8809:a4e3])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a0725be23sm16515683b3a.15.2026.03.17.09.05.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Mar 2026 09:05:53 -0700 (PDT)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	christian.couder@gmail.com,
-	karthik.188@gmail.com,
-	jltobler@gmail.com,
-	ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com,
-	lucasseikioshiro@gmail.com
-Subject: Re: [GSOC][PATCH v2 0/2] Remove global state from editor.c
-Date: Tue, 17 Mar 2026 21:33:57 +0530
-Message-ID: <20260317160539.621560-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260310174519.676851-1-shreyanshpaliwalcmsmn@gmail.com>
-References: <20260310174519.676851-1-shreyanshpaliwalcmsmn@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WZ2LeTAv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PeZkaPId"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id CAC681D00212;
+	Tue, 17 Mar 2026 12:08:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 17 Mar 2026 12:08:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773763690; x=1773850090; bh=JGuyv+neu4
+	Xau/Xd+LZHfPP/d4VeIVgPmLbsjRyc9m0=; b=WZ2LeTAvqjNQ85VVfM16qL/iEs
+	MSmk9PC+39lWa/4W38gdq4aOFuCnI0PpcvxuAZ3fkgPeVLc0oD7uheFGepNxfpvG
+	OchRCe3Uy22U7kKR8yjBqRtcnDbEdsZ4mKVeW1lkOndp2Sr24sAYTcE7u+9goaYH
+	h63d8vHq6SENaVhU2FQdJ42wS9ttYRDtmUE5Kx6xC1zJrKLJX/CHRBqeAxF8adgp
+	8gzWEpqgdLSFioXEA+C2qCVpjvc+FTy6oK2Jpu3xRSqlpNk6QeCD7juHIix696dA
+	O7Z9F8h7mUdph6OUI/Fhbjc8fhb/lMvHYBLYc5Mf7IgVEIEEMp5e94M1mBCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773763690; x=1773850090; bh=JGuyv+neu4Xau/Xd+LZHfPP/d4VeIVgPmLb
+	sjRyc9m0=; b=PeZkaPIdvVm2zxJa+We2uXBf+V4PIycu5IZtPVbgzv3RevP33ui
+	8iROG9v4sIVs4GjT3QtPYV7IfmRnO46GPQQMqrluY6LQ3AerHrlTDzX+BJ0kKN2c
+	T/rX3Oj6UJ7Xihh/yGCk4AmhrcRasArb7L0DbNgL76cQ2f9y0HwjhKPvSxktqDEB
+	BsE/pYcNZSS1ABLsY0Dpf/zdn/+4eNPqGmge0gFLzKSTMJZ37DK2BmS5ZO9e4frJ
+	xxXYOoRPxq76UGwW81NYNNytFOPZoBdqkgzB6JcL0elcr3pUfWGVkPD6kwzYDmB/
+	f9L02x7KLlc1XZ/iydJFge7307dz/W42Zdg==
+X-ME-Sender: <xms:any5aYOGcVbFh_g1sQ4u_FAKP2tPBpXv1UoibmfkbbNXR6u2fMvGZg>
+    <xme:any5aWbvxRkUBUT7ZW9lIu7q1hf3VYEaplNNfS1nG2AMpNeY4Al-SBhPm_lpO02Hn
+    A_9GRhc1gfYfJw_8Q7npCkYP-Ok6SMSCQgqnQjznf11GT7dVdz8hTg>
+X-ME-Received: <xmr:any5acqa4igJS7M3VaXNXxbU1rZJ3gIi3JAUZo-u4RI5Mj74ONDj1OEa6bn08GHk2D9C9iMjYXKFPYlAIMaK29Rm--vKSfLs1A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdduieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhgvrhhrhiifrghnghdukeefseihrghhohhordgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:any5aabnj8YylJIG6fKIfgsOVpPO2VVrZNOdTctye9B7W0tLR7kxCQ>
+    <xmx:any5aURBzsAKkeDo9dVgquDhk2BZEvEmlfbaoWjwmvQ92lqGBxS-fA>
+    <xmx:any5aR5jtpOhdNkFuDXdtTroN2q2-e50v4mY96qAyOITQ08rSejX0Q>
+    <xmx:any5aZwxMJPa7kMW_NcVGZ3fotY9ZSjU-xJbdgL9FPn6FXqRPUDwrg>
+    <xmx:any5aZUdBp7AnCczKICNcDCYr0fEdlb1UzZHibJAZnoQRyHTj1pgPZxB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Mar 2026 12:08:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jialong Wang <jerrywang183@yahoo.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH] apply: report input location in binary and garbage
+ patch errors
+In-Reply-To: <20260317002235.6121-1-jerrywang183@yahoo.com> (Jialong Wang's
+	message of "Mon, 16 Mar 2026 20:22:35 -0400")
+References: <20260317002235.6121-1-jerrywang183.ref@yahoo.com>
+	<20260317002235.6121-1-jerrywang183@yahoo.com>
+Date: Tue, 17 Mar 2026 09:08:08 -0700
+Message-ID: <xmqq5x6umobb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> This series reduces reliance on global states. Mainly there
-> are two such global states in editor.c,
->
-> * editor_program: defined in environment.c and populated during config
->   parsing, but only used by editor.c via git_editor().
->
-> * the_repository: used in git_sequence_editor() to read the sequence.editor
->   configuration.
->
-> In patch 1/2, localize editor_program to editor.c by introducing a helper
-> that allows git_default_core_config() to continue initializing the value
-> during initial config parsing.
->
-> In patch 2/2, remove the remaining use of the_repository in editor.c by
-> passing struct repository through git_sequence_editor() and its
-> callers. With this change, editor.c no longer requires
-> 'USE_THE_REPOSITORY_VARIABLE' and 'environment.h' include.
->
-> Shreyansh Paliwal (2):
->   editor: make editor_program local to editor.c
->   editor: remove the_repository usage
->
->  builtin/var.c        |  2 +-
->  editor.c             | 19 ++++++++++++-------
->  editor.h             |  6 ++++--
->  environment.c        |  5 ++---
->  environment.h        |  1 -
->  rebase-interactive.c |  2 +-
->  6 files changed, 20 insertions(+), 15 deletions(-)
->
-> ---
-> Changes in v2:
->  - removed 'environment.h' dependency from editor.c as well.
->
+Jialong Wang <jerrywang183@yahoo.com> writes:
 
-Hi,
+> diff --git a/t/t4100-apply-stat.sh b/t/t4100-apply-stat.sh
+> index b3d93d8ed6..8393076469 100755
+> --- a/t/t4100-apply-stat.sh
+> +++ b/t/t4100-apply-stat.sh
+> @@ -125,4 +125,16 @@ test_expect_success 'applying a patch with an invalid mode reports the input' '
+>  	EOF
+>  	test_cmp expect err
+>  '
+> +
+> +test_expect_success 'applying a patch with only garbage reports the input' '
+> +	cat >garbage.patch <<-\EOF &&
+> +	diff --git a/f b/f
+> +	--- a/f
+> +	+++ b/f
+> +	this is garbage
+> +	EOF
+> +	test_must_fail git apply garbage.patch 2>err &&
+> +	echo "error: patch with only garbage at garbage.patch:4" >expect &&
+> +	test_cmp expect err
+> +'
+>  test_done
 
-Sorry for the late follow-up, I was tied up with my college exams.
-I just wanted to check if there is any specific feedback or concern
-that is holding this series back. Do let me know :)
+What is this patch based on?  Can we have a consolidated either a
+single patch or a series of patches that form a single topic?
 
-Best,
-Shreyansh
+> diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
+> index 8e302a5a57..f2d41e06bc 100755
+> --- a/t/t4103-apply-binary.sh
+> +++ b/t/t4103-apply-binary.sh
+> @@ -179,6 +179,24 @@ test_expect_success PERL_TEST_HELPERS 'reject truncated binary diff' '
+>  	" <patch >patch.trunc &&
+>  
+>  	do_reset &&
+> -	test_must_fail git apply patch.trunc
+> +	test_must_fail git apply patch.trunc 2>err &&
+> +	line=$(awk "END { print NR + 1 }" patch.trunc) &&
+> +	grep "error: corrupt binary patch at patch.trunc:$line: " err
+> +'
+> +
+> +test_expect_success 'reject unrecognized binary diff' '
+> +	cat >patch.bad <<-\EOF &&
+> +	diff --git a/f b/f
+> +	new file mode 100644
+> +	index 0000000..7898192
+> +	GIT binary patch
+> +	bogus
+> +	EOF
+> +	test_must_fail git apply patch.bad 2>err &&
+> +	cat >expect <<-\EOF &&
+> +	error: unrecognized binary patch at patch.bad:4
+> +	error: No valid patches in input (allow with "--allow-empty")
+> +	EOF
+> +	test_cmp expect err
+>  '
+>  test_done
