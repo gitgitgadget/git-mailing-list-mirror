@@ -1,40 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75153E9F93
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 14:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81B83EC2D2
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 15:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773759349; cv=none; b=ZAgRwG102+REGs42k5AkdeVoxFgZRO3N9p8dFNtEDtCJwVLld2nSZVOm69tEKXCD+KYYrwtRkAWU0UMrVJCW7MiBXM0vUnWApRizR4FVDnvxUu4h4pkOpjxyOrjU//6a75TVPsCkHU2RG7PwxfER/cXIUCxTg6n3/lF9WeCFZCM=
+	t=1773760082; cv=none; b=G24PVv7TCIAu6bOROLOdGwtxjRF57vlMUUW5d9wf9xLRaYVRQXYRvPuSxn5H74AEBGhLdDMDhWfqtMy/Tf9tart8xGgTGh15579FP1KIblZ3xyQg2Yve1Rz2ytCIE8EAD0EYOAjGJKdJ8SaGLg7znym1Zi0o120ykOSURtjCjOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773759349; c=relaxed/simple;
-	bh=Kaj88K9cyVhqnpahNmPlRX/d7X1IktgQbXniM7+q3g8=;
+	s=arc-20240116; t=1773760082; c=relaxed/simple;
+	bh=Kc1Jx+xQL9UgJLK7qB+VXeb1eJfx9rwsJICDNpna1iY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lBdW4cWGiK2JXl+fUYTtcpXS3jztCyfHHRjqob9yNxdnsLGbLtW+GGNhcH/2pZojSVmE/ZcdwX39dbzBL4a54DbPcPdqIzXOcS5H8LBGVoGf+Ft1GuCVsPsjMDsXhJmEObF0MZwBdbew2xZrkPqbkotKLXx95Il1E6pIATrj/14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GCHiUdJW; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=GtgPIK6NaM5H1F4MLi7zAww1DF1pWUupfhdaKcRBu3NR2rBgl03EZ9UD13T2vJjQ+YPw6fw64TRWOhnidHQR+L+msj7f7l5fx0448IJvHGKzcvhq1zkIB6HqB32Q5D9lPJTt/zheAxYvADtVJPbypkMIJ6YgH+K7BhgdOeoktv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gE1gA/1T; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GCHiUdJW"
-Received: (qmail 30749 invoked by uid 106); 17 Mar 2026 14:55:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Kaj88K9cyVhqnpahNmPlRX/d7X1IktgQbXniM7+q3g8=; b=GCHiUdJWubKrRgXgooenGOYzeJ6naUogWs11aOMtcHCwoBcpvdLQORu1pFKs9ZZpB6JkOb7F/ls1bXiVo4rdBnvSRy/YBFcwY7FSHWx6QXdhn0N+J63KZen1RQR0pPy7TyjcYOArdnPDrtswBsbDGOlusZzJfNEaAeEEe6Da6Fv0eoSLk4sBvKkn8EaMWd7homfVsI0evOPaLm5uZYXHEBDBI5qJHtTDVVSFJwZ4BcjJe8u1FnO33DplG2tXHwwRCa51Rjoaz1o/qzYr6GBTT5YJeweTacMse1tEHQvG6tEoDQJKIiwRj4PwtDFX2j7OzjgczZOWIxH/wvRnoN+IhA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gE1gA/1T"
+Received: (qmail 30799 invoked by uid 106); 17 Mar 2026 15:08:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Kc1Jx+xQL9UgJLK7qB+VXeb1eJfx9rwsJICDNpna1iY=; b=gE1gA/1TikhEYEFljaqaWl5Mjwkdmvr0hdgGjCttjmsr4hfHBl3zxVXiqN9FcNvEDhcb2+KwONuael1IBDzn5JZnY39/ToDUCYnZ6liY5rSzUtHceTsUIrO96m+T/feMRz3SdYl1/B8J3/iLxWUNj9wZKT97lUY4gJuoO/DB1Jd3gq2m6zCdILniSHKvKbir3h/j12EBZu4IK4eaEKKsSJUT4ug1cZAQbf7edVgpSyxV+XfZRpcl/q5bNHAvuwvqOEFxRsc5x7vU15P8Obqg+wAoDXJhBD/jfsn0lCgR1sL5XltvLG2hvdWHu/OjtJdiJ+3Z7EUjUoMpyDj3e5S5SA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Mar 2026 14:55:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Mar 2026 15:08:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 46638 invoked by uid 111); 17 Mar 2026 14:55:43 -0000
+Received: (qmail 46770 invoked by uid 111); 17 Mar 2026 15:07:59 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2026 10:55:43 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2026 11:07:59 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 17 Mar 2026 10:55:43 -0400
+Date: Tue, 17 Mar 2026 11:07:59 -0400
 From: Jeff King <peff@peff.net>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: [PATCH] rev-parse: have --parseopt callers exit 0 on --help
-Message-ID: <20260317145543.GA1828@coredump.intra.peff.net>
+Message-ID: <20260317150759.GA9975@coredump.intra.peff.net>
 References: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
  <20260316220742.1286157-1-sandals@crustytoothpaste.net>
  <xmqqcy13mgdk.fsf@gitster.g>
  <ablCBkmOdoourCnO@fruit.crustytoothpaste.net>
+ <20260317145543.GA1828@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,78 +44,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ablCBkmOdoourCnO@fruit.crustytoothpaste.net>
+In-Reply-To: <20260317145543.GA1828@coredump.intra.peff.net>
 
-On Tue, Mar 17, 2026 at 11:59:02AM +0000, brian m. carlson wrote:
+On Tue, Mar 17, 2026 at 10:55:43AM -0400, Jeff King wrote:
 
-> On 2026-03-17 at 00:47:19, Junio C Hamano wrote:
-> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> > 
-> > > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > > ---
-> > >  parse-options.c               | 2 +-
-> > >  t/t1502-rev-parse-parseopt.sh | 9 +++++++--
-> > >  t/t1502/optionspec-neg.help   | 1 +
-> > >  t/t1502/optionspec.help       | 1 +
-> > >  4 files changed, 10 insertions(+), 3 deletions(-)
-> > 
-> > Has t1517 passed for you?
-> > 
-> > Queued directly on top of v2.53.0, I am seeing:
-> > 
-> > >>>>>
-> > expecting success of 1517.169 ''git instaweb -h' outside a repository':
-> >                 test_expect_code 129 nongit git $cmd -h >usage &&
-> >                 test_grep "[Uu]sage: git $cmd " usage
-> > 
-> > test_expect_code: command exited with 0, we wanted 129 nongit git instaweb -h
-> > not ok 169 - 'git instaweb -h' outside a repository
-> > <<<<<
-> 
-> I thought the tests passed, but I may have neglected to run them on the
-> latest revision.  Go ahead and drop this for now and I'll send out a v2
-> either tonight or later this week.  My apologies.
+> I agree with the general idea that "-h" usually should exit 0. But this
+> is not just a bug fix for --parseopt, but a change in overall intent. It
+> might be worth digging in the commit history or list archive to see if
+> there's any discussion on why we are using 129 in the first place.
 
-Hmm. Is this just a matter of tweaking the tests, or is there something
-bigger going on?
+I dug around a little but couldn't find anything conclusive. The first
+"129" goes back to 2007:
 
-These tests are _expecting_ the 129 exit code from most commands. And
-indeed, "git log -h" produces 129 for example. So it is not just shell
-scripts using "rev-parse --parseopt" that do this, and those scripts are
-(currently) consistent with the rest of Git.
+  https://lore.kernel.org/git/20071013221450.GC2875@steel.home/
 
-You'd need something like this (untested) to hit the non-shell commands:
+But there (and most spots where it is added) it is being used to show
+options when we have an unknown option. So I _think_ what mostly
+happened is that we show options in two different scenarios: on an
+error, and when somebody asks for "-h". And we never differentiated the
+two, and the latter just inherited the exit code for the former.
 
-diff --git a/parse-options.c b/parse-options.c
-index 85e2f0ea7c..0ad43ca278 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1197,6 +1197,7 @@ int parse_options(int argc, const char **argv,
- 	parse_options_start_1(&ctx, argc, argv, prefix, options, flags);
- 	switch (parse_options_step(&ctx, options, usagestr)) {
- 	case PARSE_OPT_HELP:
-+		exit(0);
- 	case PARSE_OPT_ERROR:
- 		exit(129);
- 	case PARSE_OPT_COMPLETE:
-@@ -1495,11 +1496,11 @@ void show_usage_with_options_if_asked(int ac, const char **av,
- 		if (!strcmp(av[1], "-h")) {
- 			usage_with_options_internal(NULL, usagestr, opts,
- 						    USAGE_NORMAL, USAGE_TO_STDOUT);
--			exit(129);
-+			exit(0);
- 		} else if (!strcmp(av[1], "--help-all")) {
- 			usage_with_options_internal(NULL, usagestr, opts,
- 						    USAGE_FULL, USAGE_TO_STDOUT);
--			exit(129);
-+			exit(0);
- 		}
- 	}
- }
+For example, when you look at ff43ec3e2d (parse-opt: create
+parse_options_step., 2008-06-23), it introduces:
 
-I agree with the general idea that "-h" usually should exit 0. But this
-is not just a bug fix for --parseopt, but a change in overall intent. It
-might be worth digging in the commit history or list archive to see if
-there's any discussion on why we are using 129 in the first place.
++       switch (parse_options_step(&ctx, options, usagestr)) {
++       case PARSE_OPT_HELP:
++               exit(129);
+
+and only later did we add PARSE_OPT_ERROR to that switch statement. And
+back then, PARSE_OPT_HELP came only from running usage_with_options().
+
+But I couldn't find any discussion or intentional use of 129 for "-h"
+output. I do suspect that there may still be some untangling to do. In
+the earlier (again, untested) patch I showed, I put an exit(0) for that
+PARSE_OPT_HELP case. But it may be that there's more surgery needed to
+differentiate "we showed help because of -h" versus "we showed help
+because you gave a bogus option".
 
 -Peff
