@@ -1,82 +1,81 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0507A23D28C
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 19:39:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A3B1D61B7
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 19:59:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773776384; cv=none; b=KamDhkE0MMqUzeKr2vcY7/nUYHg2H1krAVTPnAvsPOVdoP+/J8ZCHD8CWAIP5i22W0FrP8HUqCWBT7yBUvKT/J1Uq9cUnVIjiuTaUO2FaVm751Om8cNgsc1FSLtkGc0OAIoqvSzindfHRd3ozB1aPHZiPnXOrQ4qpdElz8TNseA=
+	t=1773777557; cv=none; b=S8cAzYA51dyFPYu6KgU4s/eDCF3aaEYD4usm0vy4gqtMnUVunsoIAc+20HjjuH170fr7/BB3ZbAZUd+91n1P5WEIVsj8tj7v+PXpzRvWjy3doq3z4yCne0b7b4ZTPmdq7Q1/MS6+Q8X9dwVYOaP0t+Yr4L3LqFTZSEVUYK3wCWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773776384; c=relaxed/simple;
-	bh=kPiG7ZNKyoOv04q4S3YsgeGqo7ZQZaQXYS1AZjihnsc=;
+	s=arc-20240116; t=1773777557; c=relaxed/simple;
+	bh=K0OABEiYs6ZfThqR+UfNR8VRU8L4uSGHfCCIwmZfHg8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qhDTWU7Cfd9238hsQD8sZUBaS04ULW/OJw44mK2JGt6H/vNxFmmRRAAIcHDDOF3fasu7fP2wRLHOJjGMvGw9WmNoHBNgwJfg6Hvrhk6ADDvpPcnFhLSUIyO9ZiQFXHa5MZTeRdBJl8VZ89e6oQsalC9dG+ezLNgL07s47s8vKrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V3Fg/u1u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rpoXTV/i; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=MHcVHUOEi+hQVAMBnMBixm60zyttCBh85z7PkddFuvKn9Zl4Y8kTdOQOieqNXLbOtONUaj6oFJ1QHV5miVBb4y7MFoiDhqQoXJlonYihskUTChP8sQc+HGuw0tYnCRmkktF9qJwQ8CAUTdg8lz6kQ53CRJt2+ourOi+54aqe86Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HVpO3jQ4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OFv4Z9bQ; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V3Fg/u1u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rpoXTV/i"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 004681D0017D;
-	Tue, 17 Mar 2026 15:39:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HVpO3jQ4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OFv4Z9bQ"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 466ED1D0003E;
+	Tue, 17 Mar 2026 15:59:15 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 17 Mar 2026 15:39:42 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 17 Mar 2026 15:59:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773776381; x=1773862781; bh=OwAo19VjlX
-	fpDz0tFKpNd2DTiqqZ3a+bqaOs+oo+Bo4=; b=V3Fg/u1u996BSizZghZB8MSgWH
-	9v0i2ak74/ChChGhwc0Z11DQBOjPlIsWPDFD5Yj0K0QOOklrq5mG/qpQfd2okFm/
-	c3+W6SA9E6RNzDQW56ndliGzltV7a0oQkZVbbjze8jAqXNUiKMkExAvl3dyC39D5
-	AfJHro29yP5Rkm8VGgYwcpPzMX5tlgPPUFMnLXfazCmmRUtBv2SRgviIo3hQxcyt
-	FISe+EDzz75m+Zhd9yo1Fx6LlyOgSy3lQTtmzXzDsjkQbaibo/yYs3cKAO6VKdoq
-	5eT9wQqm2zanEVR5kEOGDT8s/LjZINW2LNlwH6qK3cEDL+wubdnwqOUlP7AA==
+	:subject:to:to; s=fm3; t=1773777555; x=1773863955; bh=CKlMvheCp3
+	et98q0KzgewKeJSfp9Hu/kmmVoASQ8giI=; b=HVpO3jQ4r0LJUgnF921xEYLAvh
+	8eSlZo6V7yCSiAzW77BuUKaAQ8U3cdfy4ljaDcO+iAPl9q5VrgSgFQEcUflgZ5oD
+	Ck9YIIWx12QoRIusxdopqoKyLq7QxjhEPbgAXGrCrzouaTEFgZUl7q4pZYKO8yD5
+	YxiQduEH6wO0wzwbdE0Cav4TtX+5OuRfc808UrG9hf/NH0sWUw04Oj9RpiRwTrgI
+	+sdcq+37XfAnw909jfed0QFzwJL9yE9g4v/UNwQzaP4RZaIhw+nV1lqarNQauazS
+	uLd/HeihZhF7WHC+RtGAZcXcW2P35PgFipNG7OOSd5vsQmNR7/4HsqtC+qqQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773776381; x=1773862781; bh=OwAo19VjlXfpDz0tFKpNd2DTiqqZ3a+bqaO
-	s+oo+Bo4=; b=rpoXTV/iKh+Z7DxzvX7JzvTAwheWEkeg6Cs8OLbUsiG3ZhWP39J
-	FxGuBJxVlUcdFN+Be8vkutp2dbj5TFWP2jm1hkz4/lhdJTuT9i5OTWLIvlL5+jJh
-	PF84e2ya0mNvkZKhWlnmFe29NxHSg5luJeNzA+0rXz+E8gD99xIcZek9m4LPTJ0P
-	URo3l8MJ2lt3BHG005+CZoSk3uR4dJExEJf14WJ4N5DHHmZB8zSAIeuCYlUbnlNR
-	H5/cl+w1JccK0TdRobBH4JiqmTwDAyLKYH/DozaVUL8WKgJYz6qrB6kmJMQL6rhU
-	sFh6rXrfNeJVQx9E6OBP2OtfHGqZe7w1yCw==
-X-ME-Sender: <xms:_a25aeluovh4t80HTdGz2Elc0RyJTMB_6VZZ7lC-SciIpbVtpFcROA>
-    <xme:_a25adSGbMv6_CIBGJbrzNoWurHssngm_T400m1pPkVnGuT0jCxtH5ahm_6KKnhPy
-    jv_Ap-F-m_U6cmxxSrq2OsMTPZ09HdJEfFNc3WtgzGYBkVEVrRssw>
-X-ME-Received: <xmr:_a25aaDoRXYsEVtSlcdqIXZ2wymYLE-xceWhQ-YiwQmCKSmpwJwEX8rxaVKSFyTF-RDu2la-A30nWWJ0LODtMluEQ8KXMhRS6A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvudduucetufdoteggodetrf
+	1773777555; x=1773863955; bh=CKlMvheCp3et98q0KzgewKeJSfp9Hu/kmmV
+	oASQ8giI=; b=OFv4Z9bQryhflpgFhQ+coFEr7EQyohV97bWu9GuF57co8golxC/
+	n7paM40lHbtO0TOeWvxb2qk+gJlzZbUuNb+51MEUluMCo3JSqaKQ300xb2hPkLRo
+	h273Y+ZPitoPK3fZA2U/fJKXt7ElAUSNfO5ma2SBfhp4a0zvPhXnu9oUfpBXkIHw
+	zcZDnpdiHm11TCJJ+8AaYvkJxAQcyburLPgpylfnaiCELn/9TM/GHitUDpWnwvK9
+	M7yppvktZSlaN4k78Xgu0ZVUfAPCWOE+qXUNKKeyvw5nBY7on3mIa8/CcY0aTo76
+	4LmNlRaZfhDEAjRUGDWqrAMRI2fVrBFmoHA==
+X-ME-Sender: <xms:krK5aaYO1WqCx07tCTlp225sjpzAijmEWpdXIbC7Ts-lqJfxcBINSQ>
+    <xme:krK5aU1Yug5MRNIEifLJ0WF7PX0urc8GVzm-0pL3hso2pasIzw4lngvWXf2VuhXRz
+    wkqTye3VwK4JpExg8eGvmpgATcyho8fNfNut7uLM2f3R4Gmq5kV>
+X-ME-Received: <xmr:krK5aSXPJhLs-F8zClTyxUu6x40hVCyJjtgiQ-r1XIotj5VJ_GLTB0uInRgqV16BFM7nZ8fTG6cchIDyWT223QsFvskwoyLPQg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvudehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepteehffehffektddufeejtefhteeiudfhgeduveegleehgfeiieeffedugeej
-    ffegnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
-    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_a25acRPDkfxZoDG54F1tP4dRSJc-P5YeVV_sRXUe2x9nctEF273sA>
-    <xmx:_a25aQqK0wfivt2kAYF37pToMP5x5oBSqhc8rdCm-oTAK-PvWHgvUQ>
-    <xmx:_a25aWxD4FpYJsRr-FjeHDnm5tONzQQ0SVoYMOUyAspst6R_NQlzNA>
-    <xmx:_a25adLGcmubY7iIqFJkGi1igBR-oV1_P-8vY94R0-nEc6ANQs12LA>
-    <xmx:_a25adbut7oGpporho6FFeyUPczXCMC5uIcycZNOMwqqCJt_2-hI12HD>
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:krK5aWX0h43rq3uPUoUjiR2wc2YYKJQWlJiVZZJ0rieVqMZPwLhrVg>
+    <xmx:krK5aZdI87WAeNGYaQKMEBJextFvN-1z9dc09F2QIjZsMiUsFgiLPA>
+    <xmx:krK5aXUTk_NZJUNdSaZCBZNrG88PujHMXaFX2iOvQ0oJMzsJCga98w>
+    <xmx:krK5aadwyayfoZ4HxB8HkRtu9QSLPf7obQOrKy0S9Jz1w_d9stIbFw>
+    <xmx:k7K5aRf_SYwHieB9wY9Vul2TgkB-V5l8RW_d7x86h7WMAryLWc28O-tE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 15:39:41 -0400 (EDT)
+ 17 Mar 2026 15:59:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] commit-graph: fix writing generations with dates
- exceeding 34 bits
-In-Reply-To: <20260317-pks-commit-graph-overflow-v1-1-e6bee22cd826@pks.im>
-	(Patrick Steinhardt's message of "Tue, 17 Mar 2026 20:02:52 +0100")
-References: <20260317-pks-commit-graph-overflow-v1-1-e6bee22cd826@pks.im>
-Date: Tue, 17 Mar 2026 12:39:39 -0700
-Message-ID: <xmqq341ykzyc.fsf@gitster.g>
+Subject: Re: [PATCH] replay: support replaying down from root commit
+In-Reply-To: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
+	(Toon Claes's message of "Tue, 17 Mar 2026 19:56:26 +0100")
+References: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
+Date: Tue, 17 Mar 2026 12:59:13 -0700
+Message-ID: <xmqqwlzajkha.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,76 +85,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> this fixes a regression recently introduced by myself in 024b4c9697
-> (commit: make `repo_parse_commit_no_graph()` more robust, 2026-02-16).
-> The regression was found by GitLab's tests suite, see [1].
+> git-replay(1) doesn't allow replaying commits all the way down to the
+> root commit. Fix that.
 
-Curious.  GitLab's test suite runs pretending that it is way past
-year 2600 or something?  
+OK.
 
-> [1]: https://gitlab.com/gitlab-org/gitlab/-/jobs/13522328632
-> ---
->  commit-graph.c          | 31 ++++++++++++++++++++++++++++---
->  t/t5318-commit-graph.sh | 20 ++++++++++++++++++++
->  2 files changed, 48 insertions(+), 3 deletions(-)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index f8e24145a5..7e293a1775 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -1319,6 +1319,31 @@ static int write_graph_chunk_data(struct hashfile *f,
->  	return 0;
->  }
->  
-> +/*
-> + * Compute the generation offset between the commit date and its generation.
-> + * This is what's ultimately stored as generation number in the commit graph.
-> ...
-> + * actually end up storing on disk, and hence we have to mask all the other
-> + * bits.
-> + */
-> +static timestamp_t compute_generation_offset(struct commit *c)
-> +{
-> +	timestamp_t masked_date = c->date & (((timestamp_t) 1 << 34) - 1);
-> +	return commit_graph_data_at(c)->generation - masked_date;
-> +}
-> +
->  static int write_graph_chunk_generation_data(struct hashfile *f,
->  					     void *data)
->  {
+> -	base = pickme->parents->item;
+> -	replayed_base = mapped_commit(replayed_commits, base, onto);
+> +	if (pickme->parents) {
+> +		base = pickme->parents->item;
+> +		replayed_base = mapped_commit(replayed_commits, base, onto);
+> +		base_tree = repo_get_commit_tree(repo, base);
 
-The code and explanation are both in line with why we want to do
-this change in the proposed log message.
+So, if we are replaying a commit with parent(s), we do the same as
+before (base_tree used to be computed a bit later).  But ...
 
-> +test_expect_success TIME_IS_64BIT,TIME_T_IS_64BIT 'overflow chunk when replacing commit-graph' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		cat >commit <<-EOF &&
-> +		tree $(test_oid empty_tree)
-> +		author Example <committer@example.com> 9223372036854775 +0000
-> +		committer Example <committer@example.com> 9223372036854775 +0000
+> +	} else {
+> +		base = NULL;
+> +		replayed_base = onto;
+> +		base_tree = lookup_tree(repo, repo->hash_algo->empty_tree);
+> +	}
 
-This timestamp is way longer than 34-bit for sure.
+... if we are replaying the root commit, there is no base (in
+contrast to "the first parent of the original commit" used in the
+other branch of this if-else construct).  We use an empty tree for
+the base_tree, which is the natural thing to use to replay for a
+root commit, of course.
 
-100000110001001001101110100101111000110101001111110111 (base 2)
+I am not sure why replayed_base is computed differently, though?  Is
+it because mapped_commit() would not work when base==NULL?
 
-> +
-> +		Weird commit date
-> +		EOF
-> +		commit_id=$(git hash-object -t commit -w commit) &&
-> +		git reset --hard "$commit_id" &&
-> +		git commit-graph write --reachable &&
-> +		git commit-graph write --reachable --split=replace &&
-> +		git log
-> +	)
-> +'
-> +
->  # the verify tests below expect the commit-graph to contain
->  # exactly the commits reachable from the commits/8 branch.
->  # If the file changes the set of commits in the list, then the
+I have to wonder if the handling of that case should also be
+encapsulated inside mapped_commit() helper, just like the helper
+knows to "fallback" when the commit is not yet mapped, but that is
+minor.  After all, if we drive that line of thought to the extreme,
+we would end up making repo_get_commit_tree() to return an empty
+tree object for base==NULL, too, which may be logical but it is
+probably too much.
 
-Will queue.  Thanks.
