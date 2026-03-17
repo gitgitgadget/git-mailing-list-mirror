@@ -1,67 +1,66 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4EC39D6D5
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 10:11:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74593AA1B8
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 10:24:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773742314; cv=none; b=gopMWWLZfdh6i+w5OKmaALq/yAZrQzAUErqw4/Zmo8RnanSTHXjSB48b9IHo8upopjhs+6L//2dJVcFPrJqWMC0clHvZiKGxTvslLSHfF0LLIgI750S5BC7TZJkdbdP8rzN+QivIjv9bPJxPSSFuasXLvLcqVqkxNyZ2ddkZ1WE=
+	t=1773743081; cv=none; b=gtEDvp7W/fjFPIxfzRwJBqNLPHf1InnBA7nGEQAOTYP1xBTpGx8xtWlw11a4+BA+jmRX8NVnypxZq98bhYhbVL07at4z/POCgff2REHKEz9QtpvzLrYo06HjPTuJMCFeS30axmGRxEik+gYjT2XXGr8cxjsDcOe2xbIgBTswzr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773742314; c=relaxed/simple;
-	bh=9C13p8G3B8/0b6rk8MjZAZnAEwzyegTuMa8/dFLMkl4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=LbjJbotpcrKX3RhmvCI/rN8kY1q6SQqB19RmXoDbr1b9F4y/VFgwqzpWoa/fqTlHlfAnfVCraiWdEJOJWhxz3lNAh3lgnVckakSSQegH93dKo66K1LFtL2fLxzzFNL8SQAdAnYOMOffBI9BzUGUDr7Q5Pff/KiH4yJWO+ZiDZ9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bf2SbIcR; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1773743081; c=relaxed/simple;
+	bh=ehM8GpAcbskDY0cEY6s2wimBBmvfGCz+okuXKsQX6Rw=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=o8ab3+VZrUis8K8/wTtFQrYfQYsSJeLim/5QTHK9Qpvz1XLy39cNx8dmldGpOtclJT+pH4qLUnIfCUb1aCbgBNt3vjIbKgVyg+krsoJRGVn5rcCiFrdew6Vgtl4YKnxjzOlbN3MJLXas43HRRzYq/8StpVKZTgb1TL+LR96kdu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GctzyPFk; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bf2SbIcR"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-43b41b545d9so2739086f8f.2
-        for <git@vger.kernel.org>; Tue, 17 Mar 2026 03:11:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GctzyPFk"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-43b3f91a7abso1441843f8f.1
+        for <git@vger.kernel.org>; Tue, 17 Mar 2026 03:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773742307; x=1774347107; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773743078; x=1774347878; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SI3jy3EyXqi/YyA0svo3egVMxcNjJu3wqvB3m9Z51Z4=;
-        b=Bf2SbIcRWQ2yXk1h+Q5UNv34rTxug1kjyAuYKXOHlWFw2DLndIWmUvQlh4SgCamwFz
-         o9awXwHNhUtAzWrJxNX241AmvQXhIQLcd41xqodUYZ/XjlusuXjdnR8pvpEFwsMH/K5G
-         echnT8Ef5vJyD2ihgRr7BDVtwsZbTQxZYLv0y5Ab/fgh5KDagOiyVoT6l3DtS/Bc4osn
-         cFd+ENTicdvdxCk2Wc2M6klNbTUCqmH8HuKLB25EeUAh73gwL1hFHlNVBZ/49ggEalt4
-         JBQQTRhuiUO4PVb2LoSLOj8tONfmpP9gMWTL5VcPxEVGuPN2OzFrpNo8OW3fxJx9JhWp
-         B9Eg==
+        bh=1iAfh180UQdc2QJQTQkyPxz3oy9gYWjUaTkFYbCyOqg=;
+        b=GctzyPFkSAi1HDKriu3238AKVyNrKwtPAq72NDTMqcG6A2OlO049QFnEJYfxWC+lBt
+         mdoq6XCXTE2dnioZaWDZlvy5BgH5flx8vWcVCVkj/9zl0nd7RPMBVmTqohiVopC7Ef+J
+         LxX9E3Qk1W751ir+5ma4VHxdmVQPPKo+HiPwVrBvPG2L5QDLh8bRH61j00d3InPLQSko
+         6vHBLrq2iwDyvg+3bA652c4K0i6A3Eslc29hM8kKuF5bQVwcUKagzn+tzSBpkcKIi3hZ
+         AUIEC+VOw+y7tJ5JePJFZ0HE+UpZL/phJNfU+XxInS7roPxTHFpNCHKQewZ26gWBhRFB
+         iINQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773742307; x=1774347107;
+        d=1e100.net; s=20251104; t=1773743078; x=1774347878;
         h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SI3jy3EyXqi/YyA0svo3egVMxcNjJu3wqvB3m9Z51Z4=;
-        b=KXvy199jTurepaep8srgNk8ooMEAXi2L05QQDFXFmaE80WT5Qv1aO2GNrklV8uMjp5
-         jKnEQNpX7Q1Exa+2nLgEoCSCy89qFeVeCtaPGLwABStRZMroy8ROqA7iKivD6P7aJMCM
-         LOVtK25R+aFD+8s0PuA1s3PqCOuWJ6uOjh998TJ6isqIxo47B2WZ5N4m1HK5E688agMk
-         J5jU5+4JSjEzbTcwKqDzWw1AXOlDWIdc0qHF2jsM0AeduFNAmg3qNPmIl55tyyP0hrKf
-         7OHsRPPc92eVa4/f31jlonSgCqnhLRoWeOdi6ygWd0QNMb2zLJAgudUzTIcfXupRR3Ne
-         oAcw==
-X-Forwarded-Encrypted: i=1; AJvYcCU0BX6Hf6a+xKIBWalmSMuf79S/M/w7BE2ul1c7mZDxZZwGvGpON9B9JwejTGHhazHVLLs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6h6DdcNlYFB8VlVPJPz/wxQPF8NAiIE2uD8vNkm300A8mqLzp
-	W45/g919ytgcvR5YlJeR3kq13UaG1Tqf/uMqRGcJVyve68I4OyKfG2ti
-X-Gm-Gg: ATEYQzwpBgi6wDuQ/AdsTsIKPrccQ5YD0ZCnhQKfabjoLbVQIv3OY7C1XcdMCoXNXFv
-	co2m/hZbwcmigftOT7yTfxr9kVn3LT41zprc1UvG+doE33R8WdP6L8D/IQXgwySpVPOXP3ycmt+
-	1fKX/zUPQ6M5lyKyZLj2MNwsptGBAaB3DYn8vaTXblzpw4M2aDLF5TE/UHFFBVGEwVug7bvAMse
-	hWTjtT9hx/PUAtcoHIXdjc6RqcWZwLfCgVgJPWDIJxzWbFSpJgEELSNRgg0o12LUXQ/7FW3TM2i
-	DXucEE8NmMFKOqProE8AuXUeu9KL2geZlqoGfLcYBEgCULNAYgUVVnvlWa/pdvzjNCKo+iTXA19
-	wmHsbLnbzXf7h4G/YEstxgzbADVzc719PAaqJhO00slvcquOnE9VH1romECDHYy97r8n+8nzJvL
-	f7lm9YAAI34WPW6GhTO2rNu8QgUdDOCCVihY2fmoX3Wb9zKswEjYbFPs6bIkFQxNufMccYEtDj/
-	PvPvA==
-X-Received: by 2002:a05:6000:2501:b0:439:ba4d:bf40 with SMTP id ffacd0b85a97d-43a04dc831fmr30732213f8f.43.1773742306958;
-        Tue, 17 Mar 2026 03:11:46 -0700 (PDT)
+        bh=1iAfh180UQdc2QJQTQkyPxz3oy9gYWjUaTkFYbCyOqg=;
+        b=OE7oo+4pmvdchgZqDwoHpm6kWGKppICGhNH1fO2JJ8ajRyF+/fPXhJ+pHAuwRDcA1S
+         anipKzwN3Eqmi/C0XychtUZkfJCrwGnXD/r5D8qZhtecP4iSmw7Sa/0gpJpETHfaVDat
+         l1N2nikF2um2oaVW5A/tHYX61H1RGpDEOw/GwkMrOB6fOkr1M8Glo/AKa0Q5afLBaG+i
+         YflJZZAP43A0FNXaB7vSmoFpJEugZRyfDNdgkAiQc02D/FG0HmHvQ3Xzxw/xtl92in/l
+         bSuOsFO86EsISKgGxSgQJJ1qfOo8isfdbJCRuDn/LA3OTAWGxZLZPq6vaIt4R7XYuxYX
+         ll9w==
+X-Gm-Message-State: AOJu0YxaLYaAK4MoVrRGFjlPLpuUsuDd3TfBKLhfs+5mLmny7dG4kfcn
+	5JHqyiKTtWEue12xQU3agI6WVtk0EOLkjZcoD9UO3xY1zEIX/htQPGrw
+X-Gm-Gg: ATEYQzzwml+eo+Nlo+ltf5uE89Pckso/xuQC7JRsFqEv2PLCklLL0426hiRzeL2YUuc
+	Nn4M71cEUELeI1/a/7twiCedm5oI6ebLcMafjTrufgGSsnYSBS0nZM7lYKjpwAbK2NUdzrh0kBi
+	0/++FZmbVTyv3roPQgUq5LyFqfzIosmctCT+n+ZSxFxLR+hXOFOI0glip4J+dJFUko0ICn0Q/NZ
+	jsE/5mzR+4h3u3yr9jv7xi+zySE2YKuuZhXid5oW/VaTV7nI4+dNTAtS5A5d+G2dvl/TnZ+HkyI
+	V1F2+0Mvs74NJsF/OsUfo4/hPZxwOoHtg/Pya2MDflPvNrAoVAF9N3HMWwdVkPHvCgaU3sKHQAu
+	WC701bZSXcoCNNhQI6qfTd6OvcrFctV3/xZZwj/08BUHicuSFaR2sDwZ9Ffto2VjoGGbXlT60c9
+	J5W22eMIvcaiOuWiKk/ofa61zADCPqMyHuZTdLmBHlvJ+JWyGy5ztfnBMUDDFFoj9SibbYMEquF
+	hQdQdb/t9H6tqCA
+X-Received: by 2002:a05:6000:26d0:b0:439:b6f1:cd8d with SMTP id ffacd0b85a97d-43a04da7c89mr29944289f8f.28.1773743078186;
+        Tue, 17 Mar 2026 03:24:38 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe22529csm49759500f8f.31.2026.03.17.03.11.45
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43a03cfd18fsm39424217f8f.36.2026.03.17.03.24.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Mar 2026 03:11:46 -0700 (PDT)
-Message-ID: <dd4aeb75-c4db-4feb-8075-e65d15bd04d3@gmail.com>
-Date: Tue, 17 Mar 2026 10:11:45 +0000
+        Tue, 17 Mar 2026 03:24:37 -0700 (PDT)
+Message-ID: <9c915043-02da-4823-b4e7-d2a340c0373d@gmail.com>
+Date: Tue, 17 Mar 2026 10:24:36 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,552 +68,89 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 2/2] replay: add --revert mode to reverse commit
- changes
-To: Toon Claes <toon@iotcl.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, karthik.188@gmail.com, johannes.schindelin@gmx.de
-References: <20260218234215.89326-1-siddharthasthana31@gmail.com>
- <20260313054035.26605-1-siddharthasthana31@gmail.com>
- <20260313054035.26605-3-siddharthasthana31@gmail.com>
- <87ms07sgaq.fsf@iotcl.com>
+Subject: Re: [PATCH v2 1/3] worktree: remove "the_repository" from
+ is_current_worktree()
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org
+References: <cover.1773411586.git.phillip.wood@dunelm.org.uk>
+ <cover.1773591528.git.phillip.wood@dunelm.org.uk>
+ <075700a22568913988c9fa8e1ff49db1a1a5b606.1773591528.git.phillip.wood@dunelm.org.uk>
+ <abezeNELL9SU8v82@pks.im> <9e3b59d1-58f3-476c-9c7a-3ceffbb71810@gmail.com>
 Content-Language: en-US
-In-Reply-To: <87ms07sgaq.fsf@iotcl.com>
+In-Reply-To: <9e3b59d1-58f3-476c-9c7a-3ceffbb71810@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 16/03/2026 19:52, Toon Claes wrote:
-> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+On 16/03/2026 16:22, Phillip Wood wrote:
 > 
->> @@ -144,11 +155,14 @@ int cmd_replay(int argc,
->>   	 * Detect and warn if we override some user specified rev
->>   	 * walking options.
->>   	 */
->> -	if (revs.reverse != 1) {
->> -		warning(_("some rev walking options will be overridden as "
->> -			  "'%s' bit in 'struct rev_info' will be forced"),
->> -			"reverse");
->> -		revs.reverse = 1;
->> +	{
+>> I have been staring at this code for longer than I want to admit, and I
+>> still haven't convinced myself that this is not a change in behaviour.
+>> I think what I'm wondering about is what `is_current_worktree()` is
+>> actually intended to do. In other words, what _do_ we consider to be
+>> "current"?
 > 
-> Do we want to keep these braces?
+> There was some discussion about that in [1] where reviewers were 
+> surprised that we needed to call is_current_worktree() here. This change 
+> is consistent with the rest of the patch but you're right that it is a 
+> change in behavior as at the moment the "current" worktree is set by the 
+> worktree that the process was started in. In practice we only ever have 
+> a single struct repository instance per process so there is no practical 
+> change in behavior here. At the moment, if you visit a set of submodules 
+> from the superproject by forking one process per submodule each 
+> submodule worktree is considered "current", but if you visit them by 
+> spinning up some threads in the current process they are not considered 
+> "current". That seems to me to be inconsistent as the process started by 
+> the user is in the superproject in both cases.
 
-That's a good point which I think is worth a re-roll. It would be better 
-to move the declaration of "desired_reverse" up so that we have
+To add another example get_worktree_ref_store() checks `wt->is_current` 
+to see if it should use the ref store in `wt->repo` or create a new 
+store. That means that if we use `the_repository` to define the current 
+worktree we'll end up opening a copy of the ref store in `wt->repo` when 
+`repo != the_repository` and `wt->path` matches `wt->repo->worktree` 
+when we could be using the ref store that's already open. It is a bit 
+like the bug fixed by 1339cb3c47a (worktree: don't store main worktree 
+twice, 2024-06-06) but for multiple repositories.
 
-	int desired_reverse = !opts.revert;
-	...
-	revs.reverse = desired_reverse
-	...
-	if (revs.reverse != desired_reverse)
-		warning(...);
-
-That way we know we are using the same expected value for revs.reverse 
-when we set it and when we check it hasn't changed later.
+I'll re-roll with a bit more description in the commit message but I'm 
+going to be off the list for most of the rest of this week so it will 
+probably be next week before I post a new version.
 
 Thanks
 
 Phillip
 
->> +		int desired_reverse = opts.revert ? 0 : 1;
->> +		if (revs.reverse != desired_reverse) {
->> +			warning(_("some rev walking options will be overridden as "
->> +				  "'%s' bit in 'struct rev_info' will be forced"),
->> +				"reverse");
->> +			revs.reverse = desired_reverse;
->> +		}
->>   	}
->>   	if (revs.sort_order != REV_SORT_IN_GRAPH_ORDER) {
->>   		warning(_("some rev walking options will be overridden as "
->> @@ -174,7 +188,9 @@ int cmd_replay(int argc,
->>   		goto cleanup;
->>   
->>   	/* Build reflog message */
->> -	if (opts.advance) {
->> +	if (opts.revert) {
->> +		strbuf_addf(&reflog_msg, "replay --revert %s", opts.revert);
->> +	} else if (opts.advance) {
->>   		strbuf_addf(&reflog_msg, "replay --advance %s", opts.advance);
->>   	} else {
->>   		struct object_id oid;
->> diff --git a/replay.c b/replay.c
->> index a63f6714c4..199066f6b3 100644
->> --- a/replay.c
->> +++ b/replay.c
->> @@ -8,14 +8,14 @@
->>   #include "refs.h"
->>   #include "replay.h"
->>   #include "revision.h"
->> +#include "sequencer.h"
->>   #include "strmap.h"
->>   #include "tree.h"
->>   
->> -/*
->> - * We technically need USE_THE_REPOSITORY_VARIABLE for DEFAULT_ABBREV, but
->> - * do not want to use the_repository.
->> - */
->> -#define the_repository DO_NOT_USE_THE_REPOSITORY
+> The "is_current" field was added in [1] without any discussion in the 
+> commit message. It seems to have been added to stop the same branch 
+> being checked out in multiple worktrees [2].
 > 
-> Why are you removing this? We're still setting
-> USE_THE_REPOSITORY_VARIABLE, and not using 'the_repository' in this file?
+> Thanks
 > 
->> +enum replay_mode {
->> +	REPLAY_MODE_PICK,
->> +	REPLAY_MODE_REVERT,
->> +};
->>   
->>   static const char *short_commit_name(struct repository *repo,
->>   				     struct commit *commit)
->> @@ -50,15 +50,37 @@ static char *get_author(const char *message)
->>   	return NULL;
->>   }
->>   
->> +static void generate_revert_message(struct strbuf *msg,
->> +				    struct commit *commit,
->> +				    struct repository *repo)
->> +{
->> +	const char *out_enc = get_commit_output_encoding();
->> +	const char *message = repo_logmsg_reencode(repo, commit, NULL, out_enc);
->> +	const char *subject_start;
->> +	int subject_len;
->> +	char *subject;
->> +
->> +	subject_len = find_commit_subject(message, &subject_start);
->> +	subject = xmemdupz(subject_start, subject_len);
->> +
->> +	sequencer_format_revert_message(repo, subject, commit,
->> +					commit->parents ? commit->parents->item : NULL,
->> +					false, msg);
->> +
->> +	free(subject);
->> +	repo_unuse_commit_buffer(repo, commit, message);
->> +}
->> +
->>   static struct commit *create_commit(struct repository *repo,
->>   				    struct tree *tree,
->>   				    struct commit *based_on,
->> -				    struct commit *parent)
->> +				    struct commit *parent,
->> +				    enum replay_mode mode)
->>   {
->>   	struct object_id ret;
->>   	struct object *obj = NULL;
->>   	struct commit_list *parents = NULL;
->> -	char *author;
->> +	char *author = NULL;
->>   	char *sign_commit = NULL; /* FIXME: cli users might want to sign again */
->>   	struct commit_extra_header *extra = NULL;
->>   	struct strbuf msg = STRBUF_INIT;
->> @@ -70,9 +92,16 @@ static struct commit *create_commit(struct repository *repo,
->>   
->>   	commit_list_insert(parent, &parents);
->>   	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
->> -	find_commit_subject(message, &orig_message);
->> -	strbuf_addstr(&msg, orig_message);
->> -	author = get_author(message);
->> +	if (mode == REPLAY_MODE_REVERT) {
->> +		generate_revert_message(&msg, based_on, repo);
->> +		/* For revert, use current user as author (NULL = use default) */
->> +	} else if (mode == REPLAY_MODE_PICK) {
->> +		find_commit_subject(message, &orig_message);
->> +		strbuf_addstr(&msg, orig_message);
->> +		author = get_author(message);
->> +	} else {
->> +		BUG("unexpected replay mode %d", mode);
->> +	}
->>   	reset_ident_date();
->>   	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
->>   				 &ret, author, NULL, sign_commit, extra)) {
->> @@ -153,11 +182,35 @@ static void get_ref_information(struct repository *repo,
->>   	}
->>   }
->>   
->> +static void set_up_branch_mode(struct repository *repo,
->> +			       char **branch_name,
->> +			       const char *option_name,
->> +			       struct ref_info *rinfo,
->> +			       struct commit **onto)
->> +{
->> +	struct object_id oid;
->> +	char *fullname = NULL;
->> +
->> +	if (repo_dwim_ref(repo, *branch_name, strlen(*branch_name),
->> +			  &oid, &fullname, 0) == 1) {
->> +		free(*branch_name);
->> +		*branch_name = fullname;
->> +	} else {
->> +		die(_("argument to %s must be a reference"), option_name);
->> +	}
->> +	*onto = peel_committish(repo, *branch_name, option_name);
->> +	if (rinfo->positive_refexprs > 1)
->> +		die(_("'%s' cannot be used with multiple revision ranges "
->> +		      "because the ordering would be ill-defined"),
->> +		    option_name);
->> +}
->> +
->>   static void set_up_replay_mode(struct repository *repo,
->>   			       struct rev_cmdline_info *cmd_info,
->>   			       const char *onto_name,
->>   			       bool *detached_head,
->>   			       char **advance_name,
->> +			       char **revert_name,
->>   			       struct commit **onto,
->>   			       struct strset **update_refs)
->>   {
->> @@ -172,9 +225,6 @@ static void set_up_replay_mode(struct repository *repo,
->>   	if (!rinfo.positive_refexprs)
->>   		die(_("need some commits to replay"));
->>   
->> -	if (!onto_name == !*advance_name)
->> -		BUG("one and only one of onto_name and *advance_name must be given");
->> -
->>   	if (onto_name) {
->>   		*onto = peel_committish(repo, onto_name, "--onto");
->>   		if (rinfo.positive_refexprs <
->> @@ -183,23 +233,12 @@ static void set_up_replay_mode(struct repository *repo,
->>   		*update_refs = xcalloc(1, sizeof(**update_refs));
->>   		**update_refs = rinfo.positive_refs;
->>   		memset(&rinfo.positive_refs, 0, sizeof(**update_refs));
->> +	} else if (*advance_name) {
->> +		set_up_branch_mode(repo, advance_name, "--advance", &rinfo, onto);
->> +	} else if (*revert_name) {
->> +		set_up_branch_mode(repo, revert_name, "--revert", &rinfo, onto);
->>   	} else {
->> -		struct object_id oid;
->> -		char *fullname = NULL;
->> -
->> -		if (!*advance_name)
->> -			BUG("expected either onto_name or *advance_name in this function");
->> -
->> -		if (repo_dwim_ref(repo, *advance_name, strlen(*advance_name),
->> -			     &oid, &fullname, 0) == 1) {
->> -			free(*advance_name);
->> -			*advance_name = fullname;
->> -		} else {
->> -			die(_("argument to --advance must be a reference"));
->> -		}
->> -		*onto = peel_committish(repo, *advance_name, "--advance");
->> -		if (rinfo.positive_refexprs > 1)
->> -			die(_("cannot advance target with multiple sources because ordering would be ill-defined"));
->> +		BUG("expected one of onto_name, *advance_name, or *revert_name");
->>   	}
->>   	strset_clear(&rinfo.negative_refs);
->>   	strset_clear(&rinfo.positive_refs);
->> @@ -220,7 +259,8 @@ static struct commit *pick_regular_commit(struct repository *repo,
->>   					  kh_oid_map_t *replayed_commits,
->>   					  struct commit *onto,
->>   					  struct merge_options *merge_opt,
->> -					  struct merge_result *result)
->> +					  struct merge_result *result,
->> +					  enum replay_mode mode)
->>   {
->>   	struct commit *base, *replayed_base;
->>   	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
->> @@ -232,25 +272,45 @@ static struct commit *pick_regular_commit(struct repository *repo,
->>   	pickme_tree = repo_get_commit_tree(repo, pickme);
->>   	base_tree = repo_get_commit_tree(repo, base);
->>   
->> -	merge_opt->branch1 = short_commit_name(repo, replayed_base);
->> -	merge_opt->branch2 = short_commit_name(repo, pickme);
->> -	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
->> -
->> -	merge_incore_nonrecursive(merge_opt,
->> -				  base_tree,
->> -				  replayed_base_tree,
->> -				  pickme_tree,
->> -				  result);
->> -
->> -	free((char*)merge_opt->ancestor);
->> +	if (mode == REPLAY_MODE_PICK) {
->> +		/* Cherry-pick: normal order */
->> +		merge_opt->branch1 = short_commit_name(repo, replayed_base);
->> +		merge_opt->branch2 = short_commit_name(repo, pickme);
->> +		merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
->> +
->> +		merge_incore_nonrecursive(merge_opt,
->> +					  base_tree,
->> +					  replayed_base_tree,
->> +					  pickme_tree,
->> +					  result);
->> +
->> +		free((char *)merge_opt->ancestor);
->> +	} else if (mode == REPLAY_MODE_REVERT) {
->> +		/* Revert: swap base and pickme to reverse the diff */
->> +		const char *pickme_name = short_commit_name(repo, pickme);
->> +		merge_opt->branch1 = short_commit_name(repo, replayed_base);
->> +		merge_opt->branch2 = xstrfmt("parent of %s", pickme_name);
->> +		merge_opt->ancestor = pickme_name;
->> +
->> +		merge_incore_nonrecursive(merge_opt,
->> +					  pickme_tree,
->> +					  replayed_base_tree,
->> +					  base_tree,
->> +					  result);
->> +
->> +		free((char *)merge_opt->branch2);
->> +	} else {
->> +		BUG("unexpected replay mode %d", mode);
->> +	}
->>   	merge_opt->ancestor = NULL;
->> +	merge_opt->branch2 = NULL;
+> Phillip
 > 
-> It took me a while to understand the ownership of these buffers,
-> especially those returned by short_commit_name(). But it seems to call
-> repo_find_unique_abbrev() which has 4 buffers which it cycles through.
+> [1] 750e8a60d69 (worktree.c: mark current worktree, 2016-04-22)
+> [2] https://lore.kernel.org/git/ 
+> CAJZYdzhG8h3s=Ep1fuGbam1cWhYkv0tW6tQ7pBGGj+fj6=Nrsw@mail.gmail.com/
 > 
-> So this seems to be okay (this was also not changed in the MODE_PICK
-> path.
 > 
->>   	if (!result->clean)
->>   		return NULL;
->>   	/* Drop commits that become empty */
->>   	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
->>   	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid))
->>   		return replayed_base;
->> -	return create_commit(repo, result->tree, pickme, replayed_base);
->> +	return create_commit(repo, result->tree, pickme, replayed_base, mode);
->>   }
->>   
->>   void replay_result_release(struct replay_result *result)
->> @@ -287,11 +347,16 @@ int replay_revisions(struct rev_info *revs,
->>   	};
->>   	bool detached_head;
->>   	char *advance;
->> +	char *revert;
->> +	enum replay_mode mode = REPLAY_MODE_PICK;
->>   	int ret;
->>   
->>   	advance = xstrdup_or_null(opts->advance);
->> +	revert = xstrdup_or_null(opts->revert);
->> +	if (revert)
->> +		mode = REPLAY_MODE_REVERT;
->>   	set_up_replay_mode(revs->repo, &revs->cmdline, opts->onto,
->> -			   &detached_head, &advance, &onto, &update_refs);
->> +			   &detached_head, &advance, &revert, &onto, &update_refs);
->>   
->>   	/* FIXME: Should allow replaying commits with the first as a root commit */
->>   
->> @@ -315,7 +380,8 @@ int replay_revisions(struct rev_info *revs,
->>   			die(_("replaying merge commits is not supported yet!"));
->>   
->>   		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
->> -						  onto, &merge_opt, &result);
->> +						  mode == REPLAY_MODE_REVERT ? last_commit : onto,
->> +						  &merge_opt, &result, mode);
->>   		if (!last_commit)
->>   			break;
->>   
->> @@ -327,7 +393,7 @@ int replay_revisions(struct rev_info *revs,
->>   		kh_value(replayed_commits, pos) = last_commit;
->>   
->>   		/* Update any necessary branches */
->> -		if (advance)
->> +		if (advance || revert)
->>   			continue;
->>   
->>   		for (decoration = get_name_decoration(&commit->object);
->> @@ -361,11 +427,13 @@ int replay_revisions(struct rev_info *revs,
->>   		goto out;
->>   	}
->>   
->> -	/* In --advance mode, advance the target ref */
->> -	if (advance)
->> -		replay_result_queue_update(out, advance,
->> +	/* In --advance or --revert mode, update the target ref */
->> +	if (advance || revert) {
->> +		const char *ref = advance ? advance : revert;
->> +		replay_result_queue_update(out, ref,
->>   					   &onto->object.oid,
->>   					   &last_commit->object.oid);
->> +	}
->>   
->>   	ret = 0;
->>   
->> @@ -377,5 +445,6 @@ int replay_revisions(struct rev_info *revs,
->>   	kh_destroy_oid_map(replayed_commits);
->>   	merge_finalize(&merge_opt, &result);
->>   	free(advance);
->> +	free(revert);
->>   	return ret;
->>   }
->> diff --git a/replay.h b/replay.h
->> index d8407dc7f7..e916a5f975 100644
->> --- a/replay.h
->> +++ b/replay.h
->> @@ -13,7 +13,7 @@ struct replay_revisions_options {
->>   	/*
->>   	 * Starting point at which to create the new commits; must be a branch
->>   	 * name. The branch will be updated to point to the rewritten commits.
->> -	 * This option is mutually exclusive with `onto`.
->> +	 * This option is mutually exclusive with `onto` and `revert`.
->>   	 */
->>   	const char *advance;
->>   
->> @@ -22,7 +22,14 @@ struct replay_revisions_options {
->>   	 * committish. References pointing at decendants of `onto` will be
->>   	 * updated to point to the new commits.
->>   	 */
->> -	 const char *onto;
->> +	const char *onto;
->> +
->> +	/*
->> +	 * Starting point at which to create revert commits; must be a branch
->> +	 * name. The branch will be updated to point to the revert commits.
->> +	 * This option is mutually exclusive with `onto` and `advance`.
->> +	 */
->> +	const char *revert;
->>   
->>   	/*
->>   	 * Update branches that point at commits in the given revision range.
->> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
->> index a03f8f9293..0c1e03e0fb 100755
->> --- a/t/t3650-replay-basics.sh
->> +++ b/t/t3650-replay-basics.sh
->> @@ -74,8 +74,8 @@ test_expect_success '--onto with invalid commit-ish' '
->>   	test_cmp expect actual
->>   '
->>   
->> -test_expect_success 'option --onto or --advance is mandatory' '
->> -	echo "error: option --onto or --advance is mandatory" >expect &&
->> +test_expect_success 'exactly one of --onto, --advance, or --revert is required' '
->> +	echo "error: exactly one of --onto, --advance, or --revert is required" >expect &&
->>   	test_might_fail git replay -h >>expect &&
->>   	test_must_fail git replay topic1..topic2 2>actual &&
->>   	test_cmp expect actual
->> @@ -87,16 +87,17 @@ test_expect_success 'no base or negative ref gives no-replaying down to root err
->>   	test_cmp expect actual
->>   '
->>   
->> -test_expect_success 'options --advance and --contained cannot be used together' '
->> -	printf "fatal: options ${SQ}--advance${SQ} " >expect &&
->> -	printf "and ${SQ}--contained${SQ} cannot be used together\n" >>expect &&
->> +test_expect_success '--contained requires --onto' '
->> +	echo "fatal: --contained requires --onto" >expect &&
->>   	test_must_fail git replay --advance=main --contained \
->>   		topic1..topic2 2>actual &&
->>   	test_cmp expect actual
->>   '
->>   
->>   test_expect_success 'cannot advance target ... ordering would be ill-defined' '
->> -	echo "fatal: cannot advance target with multiple sources because ordering would be ill-defined" >expect &&
->> +	cat >expect <<-\EOF &&
->> +	fatal: '"'"'--advance'"'"' cannot be used with multiple revision ranges because the ordering would be ill-defined
->> +	EOF
->>   	test_must_fail git replay --advance=main main topic1 topic2 2>actual &&
->>   	test_cmp expect actual
->>   '
->> @@ -398,4 +399,105 @@ test_expect_success 'invalid replay.refAction value' '
->>   	test_grep "invalid.*replay.refAction.*value" error
->>   '
->>   
->> +test_expect_success 'argument to --revert must be a reference' '
->> +	echo "fatal: argument to --revert must be a reference" >expect &&
->> +	oid=$(git rev-parse main) &&
->> +	test_must_fail git replay --revert=$oid topic1..topic2 2>actual &&
->> +	test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'cannot revert with multiple sources' '
->> +	cat >expect <<-\EOF &&
->> +	fatal: '"'"'--revert'"'"' cannot be used with multiple revision ranges because the ordering would be ill-defined
->> +	EOF
->> +	test_must_fail git replay --revert main main topic1 topic2 2>actual &&
->> +	test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'using replay --revert to revert commits' '
->> +	# Reuse existing topic4 branch (has commits I and J on top of main)
->> +	START=$(git rev-parse topic4) &&
->> +	test_when_finished "git branch -f topic4 $START" &&
->> +
->> +	# Revert commits I and J
->> +	git replay --revert topic4 topic4~2..topic4 &&
->> +
->> +	# Verify the revert commits were created (newest-first ordering
->> +	# means J is reverted first, then I on top)
->> +	git log --format=%s -4 topic4 >actual &&
->> +	cat >expect <<-\EOF &&
->> +	Revert "I"
->> +	Revert "J"
->> +	J
->> +	I
->> +	EOF
->> +	test_cmp expect actual &&
->> +
->> +	# Verify commit message format includes hash (tip is Revert "I")
->> +	test_commit_message topic4 <<-EOF &&
->> +	Revert "I"
->> +
->> +	This reverts commit $(git rev-parse I).
->> +	EOF
->> +
->> +	# Verify reflog message
->> +	git reflog topic4 -1 --format=%gs >reflog-msg &&
->> +	echo "replay --revert topic4" >expect-reflog &&
->> +	test_cmp expect-reflog reflog-msg
->> +'
->> +
->> +test_expect_success 'using replay --revert in bare repo' '
->> +	# Reuse existing topic4 in bare repo
->> +	START=$(git -C bare rev-parse topic4) &&
->> +	test_when_finished "git -C bare update-ref refs/heads/topic4 $START" &&
->> +
->> +	# Revert commit J in bare repo
->> +	git -C bare replay --revert topic4 topic4~1..topic4 &&
->> +
->> +	# Verify revert was created
->> +	git -C bare log -1 --format=%s topic4 >actual &&
->> +	echo "Revert \"J\"" >expect &&
->> +	test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'revert of revert uses Reapply' '
->> +	# Use topic4 and first revert J, then revert the revert
->> +	START=$(git rev-parse topic4) &&
->> +	test_when_finished "git branch -f topic4 $START" &&
->> +
->> +	# First revert J
->> +	git replay --revert topic4 topic4~1..topic4 &&
->> +	REVERT_J=$(git rev-parse topic4) &&
->> +
->> +	# Now revert the revert - should become Reapply
->> +	git replay --revert topic4 topic4~1..topic4 &&
->> +
->> +	# Verify Reapply prefix and message format
->> +	test_commit_message topic4 <<-EOF
->> +	Reapply "J"
->> +
->> +	This reverts commit $REVERT_J.
->> +	EOF
->> +'
->> +
->> +test_expect_success 'git replay --revert with conflict' '
->> +	# conflict branch has C.conflict which conflicts with topic1s C
->> +	test_expect_code 1 git replay --revert conflict B..topic1
->> +'
->> +
->> +test_expect_success 'git replay --revert incompatible with --contained' '
->> +	test_must_fail git replay --revert topic4 --contained topic4~1..topic4 2>error &&
->> +	test_grep "requires --onto" error
->> +'
->> +
->> +test_expect_success 'git replay --revert incompatible with --onto' '
->> +	test_must_fail git replay --revert topic4 --onto main topic4~1..topic4 2>error &&
->> +	test_grep "cannot be used together" error
->> +'
->> +
->> +test_expect_success 'git replay --revert incompatible with --advance' '
->> +	test_must_fail git replay --revert topic4 --advance main topic4~1..topic4 2>error &&
->> +	test_grep "cannot be used together" error
->> +'
->> +
->>   test_done
->> -- 
->> 2.51.0
+>> I would consider the worktree "current" that the Git process
+>> has been invoked in. So if I pass a repo other than `the_repository`, or
+>> if I pass a worktree that is not the one that Git has been started in,
+>> then I would expect the function to return `false`. With that naive
+>> assumption your change would be breaking the existing logic.
 >>
+>> But I have no idea whether my assumption is correct or not, as
+>> there is not really any documentation of what the function or of the
+>> `struct worktree::is_current` field. And having a look at a couple of
+>> callers doesn't really make me all the wiser.
+>>
+>> It would be great if you could shine some light on this and then also
+>> add a bit of documentation to either the function, the field, or both :)
+>>
+>> Thanks!
+>>
+>> Patrick
 >>
 > 
 
