@@ -1,253 +1,87 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic314-14.consmr.mail.bf2.yahoo.com (sonic314-14.consmr.mail.bf2.yahoo.com [74.6.132.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4B820ED
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 19:03:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB58933B966
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 19:25:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.132.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773774193; cv=none; b=FCcOx0XLUMeinS/ljuU41vs6fnItQNjYZAO+RF2Jp7kwfBL5Pt6YSsH8U6pwZwCy5O8j8Pu3rPhjVz7A7WtxyV5v3kalJyzHQ9DKgkNqXGeBERV1pbmBBwl9qBmncY+yvOcxXHAGgIZpdaMPZv5EjmkFR3EZ2exPKHNMugmAhcI=
+	t=1773775537; cv=none; b=PUMv4Eyw5kRw9wOYi/0Z2yQwqRc1HS5mGHJnttkXXRE4rg1qEwLySpfTkPSQgdby9DWA7oHBi/q2b90TECPLD1PgIfg73Po7p7USUZOEIjuPNlw7l1jumSpokbOXt+CRjthlOzcuAi7EvgaNy3SoeaTPO4t7v0mBXDNiJSSnXvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773774193; c=relaxed/simple;
-	bh=VuPbkjh4WacqdO1CtXSLTW9H6UZ6int+WQuJ82aNSjI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DROAl0p6TfIhb3jFRCpUJg/QOhfwNpuh3TaVddQKsJgOVhKJOt7Wcr+M6sBgQzxnwK5KuLUygXPCt1kY53iJhhdoLu2GkzjjP05IdG0FqnQBbqQH4zlWXpBr7smacPcnGvSGB6ELdCBE8ZOLotW7khp5CFSdkIMjdI5ZZF/96Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cU2qDxhO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bKl5xtF9; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773775537; c=relaxed/simple;
+	bh=q2cSVPKt3XFDRIfoMqKIm3dEVDyRWpXyvrv3fcUMCjA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=MH801HQ6xayVSQWU6ibDEj2ngkJYxEsxZdVpMlUcBInJLX1ZaRSqqHYZQqCiwsX4IG6f/eh70xZf20cMYop8tF5Dmo1Ek2rwiju5PS2efSJI1+n536zMeVKyz2XpLba9b1TG0tGsvhBYchN46kkAryKfFo4RkUhx0tFDX615lDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=Fzpxi2Dn; arc=none smtp.client-ip=74.6.132.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cU2qDxhO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bKl5xtF9"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8573F1400224
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 15:03:11 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 17 Mar 2026 15:03:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1773774191; x=1773860591; bh=SuWfGOzr3O
-	tVfm6MFQ/OkCyNB5ShTpAyYxdoO8sIJao=; b=cU2qDxhOQtBK3JECKjTlBiQxqV
-	+Vt8+fEx0hriLcxJJ+rslnkphgtzqOihllYALdlTOrDhMVd7peMIJwZtml4i3N3u
-	PnXrsia+OOR/WjbcMRrAHH+Us2TVbyg9eI9d4zywbgEmJuZVS+DD9efTme8BxYMa
-	dBPek4qu6IgVgbyBlj/c+eMvcjGkK7zIDxWvuplt4U1Sv8OGOnpMrWOrrvcQK6lW
-	riTt+GDQj/nqSuRbgEeKN3XKdI2FeuPgCZxcTNag+A5UqugKiC4SqDmyEncd7s2p
-	ru6ri5jrHizNisGSXKCNctNQ0yRVwYJ5LE+QAWpTVHBnTJU1n5BrCgptTmjw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1773774191; x=1773860591; bh=SuWfGOzr3OtVfm6MFQ/OkCyNB5Sh
-	TpAyYxdoO8sIJao=; b=bKl5xtF96FrS1/+wlBj/A5zNvgcrfJHBNhNL0PEXIzrx
-	kF988oQwZt58J7IUYOCn0bdsK6uQPZSWJzuGSsNJUF+FJ+lxdFm+mvCcnycGwAgt
-	YsBjwzz6/yjl3n5yZHopGyh/cMb3BZhiUbjC/2qrTrbpcjUgxNfGlIWpXYqD1DeX
-	N/WO6ZAXYvsaFxtmm3lBl5qzNuRTp3TfrnyuXmMFWAf12lac1fN+qx0EAEWeb486
-	GDK1KE2cDCxMZPVfbnkqlE1qDzPIyI4TxLBlYSze6qgPN2Zh6gUo75DF4okd8WWO
-	18UleEgWQGNREFM0bjyEIptsL8bIV3powu+XuVDtEg==
-X-ME-Sender: <xms:b6W5aSp-lRhJxOnTkCsocV9M-FsdF8ifs00ar3-qacuqt9c6nxGuVA>
-    <xme:b6W5aXmIWCgC7ti5pdGvqHETb1DWICbCHsdiBLMr-kaxP8S-nZuhF9jNmh2ZnfkbP
-    7D_CFMD7fKcxpJbly_0o26Lmip4RGjNjRc5x01oby7TOQKs0cmZ1w>
-X-ME-Received: <xmr:b6W5ac08_fH-QX0Lc-qtcQNlYzi5mZCqUld2VV6AyDzmUlLVoEq3Pc9W1zR6uCxViX0LEJbQD0zvbbBvoBCjOkIg9RyXTvdmzlHcdqxbr9I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvtdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
-    dmnecujfgurhephfffufggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpedvgedvleejvdefkeetieejheelledtvefgteffffeuvddtvddtffeikefhvedv
-    gfenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthht
-    ohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:b6W5aXCS5Mj2jZAatJQ1DdpXr0vMhmTndZpsg6jD79xAJxzDht0e5A>
-    <xmx:b6W5aRzvR6VjdrwUUUipa-CGRaAeTIUu1zbDcDH_ZWIyXH5fjV7Ntg>
-    <xmx:b6W5adnj7ncithH7oc_QQShvRTylxaz9ak6kbT8hxJKxB-TaXPELLQ>
-    <xmx:b6W5aeECd_q8RnLfO4kHusVHRLa4gU8Ymip5gGvu1aXcT-bj_midPA>
-    <xmx:b6W5aeJd4odDPStN3XFB6seTu_GnbZbxIcJfI2g9Z8g5rEKcoxjB0ApJ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 17 Mar 2026 15:03:10 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0c77fc64 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Tue, 17 Mar 2026 19:03:08 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 17 Mar 2026 20:02:52 +0100
-Subject: [PATCH] commit-graph: fix writing generations with dates exceeding
- 34 bits
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="Fzpxi2Dn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773775534; bh=q2cSVPKt3XFDRIfoMqKIm3dEVDyRWpXyvrv3fcUMCjA=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=Fzpxi2DncjmtUne7RVx3fmQoBMhBGibLo/yQ9uWNugXG0Eq6IQjg4t/f/HibPHqrUPEI4Thk07X7yIXx5MDbcUInCwq5fOaS+VPe5nAvAi85fwgINjAUxJD5c+hHGkJU0ZiG+sXPv3iBVraLEAAyuT7L6H/YJ8AtvAGwY8+8m/PV01bpkH0QauO4/MGtV8RqWHaNJGR6puYxKGVWxcbRly8SF5N5VIecGkjoC7zEgf3srhXfAMl6B4dXI7Qs4dsIV3phYaFGvX9ruU5LJrR+ijTvoqSGSOaJxYst+7RrCDbJU+W7iA4vCGyf2LrI0FsPqv+JTElBU2KIdm/ISeNU0A==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773775534; bh=UYKiD+EkUG+qNBeqMAyT6KHsF/hH7bQdxQPE9dXi7xP=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=gbkKLyXpzaOCf9MJ4CeD8cIk4m/nk/L1J1jGxENDF00sekUf5o14oZ+mGocdAqS0qwrp5gnj2qarayySLh4DgIxpS86o5IFa8MFuRB4kxnc78dTd3g2dWDZIpPcIT/zusPYhIJyLsHthd74EyimuzUdALXxsUGNO5hcPGf4rjIztKA1t+9BuF4SjLt8FEifF1OVlaEUL1wEx6eIOoJRISqlCgS8+DBm8folwmnqgXWQyacifUyYIhasJzxi0wPFHa27+eDE1/98Q1TFKtWZVONRpBVFfo49GfAXPbH45JRz1CfNvDvOZ5B4XUQHTQNQy6YzNpukEVwN3a4e7d215WA==
+X-YMail-OSG: W5J9wjAVM1niHjwKc5Up6Ixd3_bExnlcPurpnpaxq40_X62y9n6Z5mduVcR6USq
+ WxIkJhsValxoAdg.eU9SF.HOeJYB7pbfTv63HZSvYhIOiCa6fSYzmgjYx1hQvj1I4l4o2f3PiSdf
+ H.cqshuRHBohPViZx8ee.a2vxruNWEwvqJHl4h8lXmEcHBwxE5ReiKahhCUhOtG4bLnNKneeE8MH
+ 3fvvCXLBbkehB3YasPMHwVJRgJb_oznLIIG.Xo_Il_RcfjVU3EAVJvpLPAvgYG3HG15_QpYRYNqP
+ 5aF1B0tNROBZZXq6t0pvnfBYFU8zRr6OvGtZ4WHstSQdIv0zdHsTS_26opAmAMlr.jfPU1OvCbXN
+ 8bQPrs_83WexB5X_LQUDFqiqDLhie1IVqfH8hD01QATj25VyQ5_wmcxVq59BzaTrdzpMunY3GdsW
+ xsTlVWNoM8awb_nV.2iNz4DZDLv4HWZSsaZYwO8WJ7oRe_nMameoh4c8kA9WvLD9YjoDM.ks3.Bd
+ S8ctOdQCBQ8aSPxFuHjKZlfM3Pr6pjQ85kWLUbCFG5wL20H79vDb2i_Qc_DY6PWrtk2hCffnSkzg
+ SiXmA4oM7SWcNsr3g2KtlYZBqOi5EmLmGfoKovSDMtv6Z9pqkZcflg2B1Rmtd3dUf47tySSxrfRs
+ BCTH8zAQv7yOnjds0kjOI4vPrPEWA0ZdU6KCmx1CaYe5Tp3P6v88N9rN4kYGRdE5uFR6UCiTlaQF
+ zYnJlogYb2DqC5DuHUB2EXpu7sM4DQT9wpjx0hN1gN9vjaA2vZbtg3NX8dmjeNDY7St2UCYdLSf9
+ tXRvfdzixjM6jf1LTznpimBsP.F1AkjiZ65Wnsfv_JWJFLpJDYXDGtmZLB_gbCddQ2mF2GW89k89
+ 3VZyrpPEqe.QVEzw3YaTENoo5wbHz2wC_1c1_6bQ2imqPZqROxG24GFAIjRkp8kfKEY7I8DTdeoW
+ V.Krz6jIkg1ChEK9a5V8NwGAPx2hDBG2v_xYXT37ygeE.Nl65sqZVR69lQUN4QZeqvsHYCMB97K2
+ 5BLFfCqNuOvZ1DBiqGogHi0MfkjImSSoX5vwDKBQku1ae2llVwOlAqAVoT3_hSX_UUDs4q1EYOOH
+ 2TgDeIIuQvOTsAGoc7BrLLL_E5lpQ3ZtPKtkuPmAChbYAyCnKQfJujjEKuA7VuLt7sqzIek7iCNi
+ wnqVoyCvSn_iRM1sCpmKp.qcWORX1ZMZm3yur2IJpf.e2ICJfOKwSs2YGD07Gj_p7lSiGv7WetE_
+ NilCIdBXwLyKCMTO.UZmQEoroVwCF62w_dVsEXebP82SjGiffRSRDhzh_yZQWrvAxhsCOKAl3ptI
+ wVtN_4aeCBZGgb48WggrrGCl4dQJ3WRLTLmdbXmvw3Xh_gGJBsu6E5CAj1W6kkY0mwrFiFoY2flv
+ R7LWvuLREpKA_oWXnPDLKafIRIy.bvmfsWhKUpMjGjG1mfUWOBkMgW.mQaYYDSTAXlIsBxe4FF0n
+ c2rstNRPiAOYppdMly8_bDg3XSk3c4HNeIPZMz0SpnmHfHKp9ELyvuVmvMd6tWncjP8pt32_m.mQ
+ cJhPiLU0VCGQEPEkTGtv.Mv5r3kOD8.knHiVAoFNygvrHfTUYsEdpnO3YTm_s7ZbieGt4I7u8LCw
+ Sfz02qMtnDuTlbK9yYBy.qP7MxUzEYGYTJ5UhE57g.cA2ChGaufTPB4VeNxOqlWjb2hCaDFhbfRX
+ nY6_lb_FBySeMEW_.BL4FKn73MR5K6IFh7lDu_cnVyxiSLEw1KiqMVADQJDiTJuX_wtkDdz8euU0
+ sBpUxPMZ6S9GWSIXQzmKcObvH_hvtwftRlOhCPxl1kRPWBQApnktp.fsZbuXFIW42pi0vUlud_B7
+ lh8gs75tlw0oHJQdxE0ZyCZUJPQOIhu9YyRCx5B2uvXLpJRX2aOOPHf_zBdW4U6w7yLYGx4qh2Tk
+ VgLnLiHQ0a.pO1CD0ktU_mYzNr19tR9Xv0Mh03eaFPUpdvvqDJFXDSRHVa95pddUcPxIdX5dsJfh
+ aemHgQMmQGaUkrbtJHLBkjgRfdlclD9tNJJS1cDCwEgnI.dHn8zXmAaKHOdjBeGMST5uq.v2equN
+ HPrn_j5M2MvwZsPowYdq7JxRJPWFwDJ.YluxC1DaCsgtxWw6W8WI7swvzpjVebB_YaR7V0AxUYno
+ y.iTaRatbQXhKpc6p6k_pRIw.ldUXCiLA36vONtgqhR5MxSVH4tz4XQxLyPQtmRbAwAtDXZ5vN7v
+ G_rfEOC3dj8D5.FUaHSygUKLlvvV9k1mgXB4MeLIOfeSwzanyR.qzbF4mpnezvhwGpmoDBjqUu8I
+ MxBB.XKk.QKNn.fbbC8WXEL4PZNcMoypMV590MbUFqak-
+X-Sonic-MF: <jerrywang183@yahoo.com>
+X-Sonic-ID: 0849311f-e0cb-4c10-a126-3035278fa204
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic314.consmr.mail.bf2.yahoo.com with HTTP; Tue, 17 Mar 2026 19:25:34 +0000
+Received: by hermes--production-bf1-697f88457-skc68 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID ee9fc0a3694e886fe10a053fb06430a0;
+          Tue, 17 Mar 2026 19:25:29 +0000 (UTC)
+From: Jialong Wang <jerrywang183@yahoo.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH] t2203: avoid suppressing git status exit code
+Date: Tue, 17 Mar 2026 15:25:25 -0400
+Message-ID: <177377552540.75212.11758229294443511273@yahoo.com>
+In-Reply-To: <xmqqmse3fsvw.fsf@gitster.g>
+References: <20260317185414.65952-1-jerrywang183@yahoo.com> <xmqqmse3fsvw.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260317-pks-commit-graph-overflow-v1-1-e6bee22cd826@pks.im>
-X-B4-Tracking: v=1; b=H4sIAFuluWkC/x3MTQqEMAxA4atI1hOoFRXnKsMsak01+NOSShXEu
- 1tcfov3LogkTBG+xQVCiSP7LaP8FGAns42EPGSDVrpRVdlimCNav6684ygmTOgTiVv8gaqzles
- b0nVnIPdByPH5vn//+34AR+kqimsAAAA=
-X-Change-ID: 20260317-pks-commit-graph-overflow-09c3fb6e259a
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.3
+X-Mailer: WebService/1.1.25297 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 
-The `timestamp_t` type is declared as `uintmax_t` and thus typically has
-64 bits of precision. Usually, the full precision of such dates is not
-required: it would be comforting to know that Git is still around in
-millions of years, but all in all the chance is rather low.
+Hi Junio,
 
-We abuse this fact in the commit-graph: instead of storing the full 64
-bits of precision, committer dates only store 34 bits. This is still
-plenty of headroom, as it means that we can represent dates until year
-2514. Commits which are dated beyond that year will simply get a date
-whose remaining bits are masked.
+Thanks, that was my mistake.
 
-The result of this is somewhat curious: the committer date will be
-different depending on whether a commit gets parsed via the commit-graph
-or via the object database. This isn't really too much of an issue in
-general though, as we don't typically use the date parsed from the
-commit-graph in user-facing output.
+I resent it with the GSoC subject prefix, but I should have treated it
+as a new version of the earlier patch, sent as [GSoC PATCH v2] in
+reply to the original thread, with a short note about what changed.
 
-But with 024b4c9697 (commit: make `repo_parse_commit_no_graph()` more
-robust, 2026-02-16) it started to become a problem when writing the
-commit-graph itself. This commit changed `repo_parse_commit_no_graph()`
-so that we re-parse the commit via the object database in case it was
-already parsed beforehand via the commit-graph.
+I'll do that for future rerolls.
 
-The consequence is that we may now act with two different commit dates
-at different stages:
-
-  - Initially, we use the 34-bit precision timestamp when writing the
-    chunk generation data. We thus correctly compute the offsets
-    relative to the on-disk timestamp here.
-
-  - Later, when writing the overflow data, we may end up with the
-    full-precision timestamp. When the date is larger than 34 bits the
-    result of this is an underflow when computing the offset.
-
-This causes a mismatch in the number of generation data overflow records
-we want to write, and that ultimately causes Git to die.
-
-Introduce a new helper function that computes the generation offset for
-a commit while correctly masking the date to 34 bits. This makes the
-previously-implicit assumptions about the commit date precision explicit
-and thus hopefully less fragile going forward.
-
-Adapt sites that compute the offset to use the function.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
-
-this fixes a regression recently introduced by myself in 024b4c9697
-(commit: make `repo_parse_commit_no_graph()` more robust, 2026-02-16).
-The regression was found by GitLab's tests suite, see [1].
-
-Thanks!
-
-Patrick
-
-[1]: https://gitlab.com/gitlab-org/gitlab/-/jobs/13522328632
----
- commit-graph.c          | 31 ++++++++++++++++++++++++++++---
- t/t5318-commit-graph.sh | 20 ++++++++++++++++++++
- 2 files changed, 48 insertions(+), 3 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index f8e24145a5..7e293a1775 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1319,6 +1319,31 @@ static int write_graph_chunk_data(struct hashfile *f,
- 	return 0;
- }
- 
-+/*
-+ * Compute the generation offset between the commit date and its generation.
-+ * This is what's ultimately stored as generation number in the commit graph.
-+ *
-+ * Note that the computation of the commit date is more involved than you might
-+ * think. Instead of using the full commit date, we're in fact masking bits so
-+ * that only the 34 lowest bits are considered. This results from the fact that
-+ * commit graphs themselves only ever store 34 bits of the commit date
-+ * themselves.
-+ *
-+ * This means that if we have a commit date that exceeds 34 bits we'll end up
-+ * in situations where depending on whether the commit has been parsed from the
-+ * object database or the commit graph we'll have different dates, where the
-+ * ones parsed from the object database would have full 64 bit precision.
-+ *
-+ * But ultimately, we only ever want the offset to be relative to what we
-+ * actually end up storing on disk, and hence we have to mask all the other
-+ * bits.
-+ */
-+static timestamp_t compute_generation_offset(struct commit *c)
-+{
-+	timestamp_t masked_date = c->date & (((timestamp_t) 1 << 34) - 1);
-+	return commit_graph_data_at(c)->generation - masked_date;
-+}
-+
- static int write_graph_chunk_generation_data(struct hashfile *f,
- 					     void *data)
- {
-@@ -1329,7 +1354,7 @@ static int write_graph_chunk_generation_data(struct hashfile *f,
- 		struct commit *c = ctx->commits.items[i];
- 		timestamp_t offset;
- 		repo_parse_commit(ctx->r, c);
--		offset = commit_graph_data_at(c)->generation - c->date;
-+		offset = compute_generation_offset(c);
- 		display_progress(ctx->progress, ++ctx->progress_cnt);
- 
- 		if (offset > GENERATION_NUMBER_V2_OFFSET_MAX) {
-@@ -1350,7 +1375,7 @@ static int write_graph_chunk_generation_data_overflow(struct hashfile *f,
- 	int i;
- 	for (i = 0; i < ctx->commits.nr; i++) {
- 		struct commit *c = ctx->commits.items[i];
--		timestamp_t offset = commit_graph_data_at(c)->generation - c->date;
-+		timestamp_t offset = compute_generation_offset(c);
- 		display_progress(ctx->progress, ++ctx->progress_cnt);
- 
- 		if (offset > GENERATION_NUMBER_V2_OFFSET_MAX) {
-@@ -1741,7 +1766,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 
- 	for (i = 0; i < ctx->commits.nr; i++) {
- 		struct commit *c = ctx->commits.items[i];
--		timestamp_t offset = commit_graph_data_at(c)->generation - c->date;
-+		timestamp_t offset = compute_generation_offset(c);
- 		if (offset > GENERATION_NUMBER_V2_OFFSET_MAX)
- 			ctx->num_generation_data_overflows++;
- 	}
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 98c6910963..1c40f904f8 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -417,6 +417,26 @@ test_expect_success TIME_IS_64BIT,TIME_T_IS_64BIT 'lower layers have overflow ch
- 	test_cmp full/.git/objects/info/commit-graph commit-graph-upgraded
- '
- 
-+test_expect_success TIME_IS_64BIT,TIME_T_IS_64BIT 'overflow chunk when replacing commit-graph' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		cat >commit <<-EOF &&
-+		tree $(test_oid empty_tree)
-+		author Example <committer@example.com> 9223372036854775 +0000
-+		committer Example <committer@example.com> 9223372036854775 +0000
-+
-+		Weird commit date
-+		EOF
-+		commit_id=$(git hash-object -t commit -w commit) &&
-+		git reset --hard "$commit_id" &&
-+		git commit-graph write --reachable &&
-+		git commit-graph write --reachable --split=replace &&
-+		git log
-+	)
-+'
-+
- # the verify tests below expect the commit-graph to contain
- # exactly the commits reachable from the commits/8 branch.
- # If the file changes the set of commits in the list, then the
-
----
-base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
-change-id: 20260317-pks-commit-graph-overflow-09c3fb6e259a
-
+Thanks,
+Jialong
