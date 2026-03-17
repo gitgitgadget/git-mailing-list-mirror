@@ -1,97 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717AF3F6600
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 18:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E76B36654E
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 18:46:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773773089; cv=none; b=jkRwBmMEzLCqNRWmOeAva3dwc6/5a8g63YTYon08RjitBO4l3xjGtz+gqYRyVGZQ1D3HUbcEMgfSqK9rqhOyiRXdLtoobzVSw3VJJLcscZ32UycTa/FB/fHtPpnsCeXfbYUqrTElYCA4HoBHaPtND3un/yaWFMCGBUWGm1Kc7hs=
+	t=1773773162; cv=none; b=kceKPdfxwRo4iDK99Pg9i1sxY0wC8WFy6BfXzYLONdPqVJ4nMhFD/SZwFvbb26NFwVfz9U1ytrhIJ+xCLWnCW/muhQB/V11RAocvLa1GSKyhysVWaFwM6KIGL7gEfyG/3VbS2l189ra51s9wlzVkMzN73dNS4V4LrHY3AFuxlYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773773089; c=relaxed/simple;
-	bh=tYWwToL+WtaPKa8wpaG5RSf7uKc3lB46d/h9R1MXmEo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NrviwxN+hrdu2yvIqGcp537fY1gl9nLFNxRLr+4wP/fia0nw2x2YEXtUAm8m+jsA3BNFm1UufR1pP9Z4Di6uArIGLyUCghNQn2q5S31DVfDzjMmSI3aga+4T83yEmNJRcdtvH4YfMFG5KwoJV8VDk54gbxQEhwdaM3shIbjOZJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ctLUO8WK; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773773162; c=relaxed/simple;
+	bh=oMEgEmCOyKHiMKNuAfYMJo7ciW0tKgnYTwsOHS3BgC0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=th2yfNgJsDrsA9tzr/QrE6feA+6TssGhnLETvOjjD095wGHTP6ogu9RvGRvwdz+jZgxTKjomrTQssoJEnq+xfwgC9WonwTdTwR8v2sHr59kAynNbkY57uxstcX1hJ7EJzq0IyJm1cRdem20qYnoAcvNR60Q3wYpHTaem6vDdQ9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eA8dzkwe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wcRYCLVG; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ctLUO8WK"
-Received: (qmail 32036 invoked by uid 106); 17 Mar 2026 18:44:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tYWwToL+WtaPKa8wpaG5RSf7uKc3lB46d/h9R1MXmEo=; b=ctLUO8WKihJqswI4tIyiq4rA0N/HeblLbpPBm8gztrD9l2lQkMYE3ygku+QYFSPUFxlSEDYDUYwBqZPrMj+GxPWyBjuvBgH2f904MYQ2whdDhKKH/XklSjaNqbclagMCliuTnoLN2ugdCFb0ILhBIPnE0KYIVGTfxFJWwpPNTJYKQ/ZyibU1FQ9HdcChThejFLKoFx4cCJbN+9smCNiV2rSZTdGjKUKp7GyFWogvOkFdYrMi3FCLyoYmKRQMvOYL3iWWgrjEaoxEx8AS1V3mACza14vtG1hcgRDLQfYPR+PXs2989e74X08yISllp9eSmQW2NUWVz8hkMx8KtLI9zw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Mar 2026 18:44:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 48968 invoked by uid 111); 17 Mar 2026 18:44:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2026 14:44:41 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 17 Mar 2026 14:44:41 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Subject: Re: [PATCH] rev-parse: have --parseopt callers exit 0 on --help
-Message-ID: <20260317184441.GA574291@coredump.intra.peff.net>
-References: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
- <20260316220742.1286157-1-sandals@crustytoothpaste.net>
- <xmqqcy13mgdk.fsf@gitster.g>
- <ablCBkmOdoourCnO@fruit.crustytoothpaste.net>
- <20260317145543.GA1828@coredump.intra.peff.net>
- <xmqqv7eul71y.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eA8dzkwe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wcRYCLVG"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 846BD1D00111;
+	Tue, 17 Mar 2026 14:46:00 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 17 Mar 2026 14:46:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773773160; x=1773859560; bh=aA3+kN5Yrz
+	M3wnAfMI9rHPm3zkb3LTQEx8FJbH11nHg=; b=eA8dzkwelDLGSBb3cFLlx5G+/z
+	vpeH3EfBkyVQv1LC6k5OPi20HS4NRxL67o9jO/zzD0FJs6wBj/LqbqznRR/Wc/aU
+	/rUkI+diZw/kAeXAnne5fS1ZVKQGhUW3Z+e679QcdGLHUr44D14cKAil/iQki2IK
+	svf16k+zCH+ywvANurbJ/dUJPOYIWFkkfNg6cf4SAVw28egz98++N13q1huvPEtk
+	gHzuzcUkD8nSUKzyDLmux+XaCbRZgBanscCu9NDW8YHFM0G7jlriWN3oWqtSUakh
+	tfHu0FiehWjF/HSIo25OjJ6kNS2bXS9PQ47snPa9VgAI4l9x6vPyhErwKgKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773773160; x=1773859560; bh=aA3+kN5YrzM3wnAfMI9rHPm3zkb3LTQEx8F
+	JbH11nHg=; b=wcRYCLVGqBVZ1M4HX0rYYY5GmgeL42q0h+LxjI8vOxAlDoUamdE
+	5aAgaD6cSR/Dx+puTMHk6Beki7Xunw27kzjo3W4DOEl/WkWzTXxn5f1Mt57RWeRM
+	Y991b85+HwJC22cL0K+RnbhGp1m3JAzvXl/Ci+ZuMqAOj/Bv2cFAZd6h1ruX9Yxe
+	sI/8ik0V4n5dYB1V2XIYVs7zLD5v7uLhKw9AWJY2re8W6lOwEXvalANIGaUaPX4e
+	wqn9jkRFnhM2f8H4j3X3rIm0nwsd8Z17uapp3JNQQFt+zEwIwTQ694r+D5F2WVJB
+	+0AEB5GRq2OKBepdgmnwt1BJq50TbjMGnZg==
+X-ME-Sender: <xms:aKG5ab6aSKtclB3U_fHG2jl6QzvAKL_CDAbG6WW25IHDMdxFDk6rhA>
+    <xme:aKG5aYWO6kVUVd5nW4ycr6pNc28_AFQQtUT0tbWVXkrChTmyxgGYt_Z2XOWVxkVx6
+    JdSRJ5giV2CqUJUPnRKJA_8CmVFzcMM3dZoxw-qK6Ou7XHFmxAqnw>
+X-ME-Received: <xmr:aKG5af00BG4jthh0v6TRSHYNUo-RBMKttBDUDbQiY5hDZYVBqhGn5DemE05buo-q0kDlJI33b12af4UKq539J2C9rgoyXX4Ixg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvtddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:aKG5aV1hbMeQRnf17acnlX5QlsFnus7pS3Kv1QhZFcDWFDwmY_rI4A>
+    <xmx:aKG5aS9-vBoq_Jc4SDENL1FQxZEMkq-c8XlpmtHq7mHLGYr971e3DA>
+    <xmx:aKG5aS11hduTJs4dytFV6wlqPN7BgTOUAmuzFo6lPMXrsrK7v3ff8g>
+    <xmx:aKG5af9baNhEVyeOJgvT-d5kbjlz5v46ZGuuJfMbMHvLrKhKG-n1QQ>
+    <xmx:aKG5aZgkuIHngw1ilXVbcHJYF_nOhDRqpgUZxh8zP_jDrGScw22M6FLf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Mar 2026 14:45:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] apply: fix new-style empty context line triggering
+ incomplete-line check
+In-Reply-To: <CAPig+cTTgLVGPG99gsb19BeJVWS=VZCU4F-rjb25yHTAORWwzg@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 17 Mar 2026 14:12:12 -0400")
+References: <xmqqldfql4hp.fsf@gitster.g>
+	<CAPig+cTTgLVGPG99gsb19BeJVWS=VZCU4F-rjb25yHTAORWwzg@mail.gmail.com>
+Date: Tue, 17 Mar 2026 11:45:58 -0700
+Message-ID: <xmqqcy12l2ft.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqv7eul71y.fsf@gitster.g>
+Content-Type: text/plain
 
-On Tue, Mar 17, 2026 at 10:06:17AM -0700, Junio C Hamano wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> > But this
-> > is not just a bug fix for --parseopt, but a change in overall intent. It
-> > might be worth digging in the commit history or list archive to see if
-> > there's any discussion on why we are using 129 in the first place.
-> 
-> And if it turns out that old discussion was convincing enough, I'd
-> prefer to see us moving to --help/-h exiting with 0 eventually.  I
-> do not mind doing so at the Git 3.0 boundary, if an excuse to make
-> a big change is needed ;-)
+>> +       test_when_finished "rm -f sample*-i patch patch-new target" &&
+>> +       (test_write_lines 1 2 3 "" 4 5 ) >sample-i &&
+>> +       (test_write_lines 1 2 3 "" 0 5 ) >sample2-i &&
+>
+> Curious. Why are the `test_write_line` invocations wrapped in parentheses?
+>
+> Also, is the whitespace before the closing parenthesis intentional?
+>
+>>  test_expect_success 'incomplete context line (not an error)' '
+>>         (test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
+>>         (test_write_lines 1 2 3 0 5 && printf 6) >sample2-i &&
+>
+> Perhaps the parentheses in the new test were copied from some existing
+> test, such as this, which already used them for a legitimate reason?
 
-I could not find anything convincing. :)
+Yes, the existing one was concatenating output from two commands run
+in a row into a single redirection, so (grouping of the commands) in
+parentheses were justifiable.
 
-We should also apply our little grey cells and see if we can think of
-any reason somebody would be unhappy with a change of exit code now. The
-most I could come up with is a script like:
-
-  #!/bin/sh
-  git rev-list "$@" >tmp &&
-  do_something <tmp
-
-where you might imagine it is run as "foo.sh --objects HEAD" or
-something. Right now, running:
-
-  foo.sh -h
-
-will bail when rev-list returns 129, but in the proposed world it would
-keep going and run do_something. And you can further imagine a world
-where the script then quietly produces the wrong answer, because
-do_something thinks the rev-list output was empty (or actually it is
-worse; it gets the help output here).
-
-I think this is mostly a case of "if it hurts, don't do it". The "-h" is
-not doing anything useful (the user does not even see the help text!),
-and if the script wants to support a usage message, it should parse the
-"-h" out separately.
-
-Could somebody maliciously convince you to pass "-h" to such a script?
-Maybe, but not only are we getting into a series of increasingly
-unlikely events, but I think that means you probably have worse
-option-injection risks.
-
-So unless somebody can come up with a more compelling example, I don't
-really see much backwards-compatibility risk. But maybe I just lack
-imagination. ;)
-
--Peff
+The new one does not have such a justification.  Thanks for
+noticing.
