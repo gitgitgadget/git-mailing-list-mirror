@@ -1,234 +1,103 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BB5371CE7
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 09:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773740460; cv=pass; b=X5yIsrywqNAlc9ku2dQ1eErZVnbKkGO9Yr+n+s1PFwoPx95CVyEynjKW6/F0xmbfdq6HS3wOc3KCq7Z3N1rxYU6l0FhpsBoZS4Dpe8hJORaflSJxX47ik858BY+t/YSx87HLIsiLRzVyVoel8mjZTb1oGF3fiN5/E3V/NGhXFZo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773740460; c=relaxed/simple;
-	bh=kjSavBGVEYuk+ImplmjHT7/NxGgSGFugZmVQUAeMRyw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XJeLaDRYTf1RM/CQC8WNK1cIMpuYn8FRAZYzAyE6/e1Dsfdj1jE0WIJm9XP+xWkwA4RIHkBR3Y5QVqqEmM2CzzMiKobgoo6bkhkWntPo3/EG67JOX65sT+U2wfkxhREaOmxIQNLxhXKgDZUYeAMKvWZeDrIq9uy7+jrZPFrrYy8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IxNuwHha; arc=pass smtp.client-ip=209.85.221.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6470A33A03A
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 09:47:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773740841; cv=none; b=knXePjUD3BtUfzwTzpGA3wkWjPDqzulqN3bRO5lZ3+7Yaocs/o/c+wuVRbclKnfrPh8EN2Gby7oY2xPszUY9+x9Fnc4A6dKq1TR4j3eklsN0cLPjxL1zaUMgekk/8vD0R+QBk07gEQBMEgpWckuF9XSg8RdkMJUeZzvXWqKRZQs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773740841; c=relaxed/simple;
+	bh=uNQXuwZZMu89IVOhOIjf8y5G0Fz4wfueQFIawudqqvI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MGDPgGXy4vWQj69fVTQRTNRlZt6nDp4SBpSMIfTKuocTJW/mdhCs/ejiGhtGZnT23Ny8zLvuKe657EtR6B2uXaIztVFZ2trUo5EnT9sEFlScqEBd11iwr8B+D3g1zkyp12tPdkmlDgJ+c4syuKSdbUTp4Oqcj0blxL3HoQiIgCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q0f+HBTU; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IxNuwHha"
-Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-5673804da95so2093428e0c.0
-        for <git@vger.kernel.org>; Tue, 17 Mar 2026 02:40:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773740458; cv=none;
-        d=google.com; s=arc-20240605;
-        b=IKQA0ySwyMZHwj5tGvqgSQ7eziuIL66b5ikmLBdHiqEyXr1N2yUdCJRIsG5NdGD9a8
-         ABUOKuq5emrnXHZJTlpK2UDa+na9QWpHVK4Q9wi9VRLQXXbTkUeyI7iy/eRLFThNFoTY
-         CGevnmf8p9989O3zU+KxrQWCGmgkTBWmhtJj75GNiEGCj9dqSO5xxg/fBC3nu6ZFSE1Y
-         RVRDpSRAp1zVpcg79xUbxDVlYDGKDvkFbg/+GKzkkYDV9lcIpQ4jYPXbm3xqjrrauQWT
-         NZtHkT04hrg5ipIYbrAfaosM3ltSTT/rPCJxLbyoFVMl3QNyACv5WP7dXPv4ZqEdmjtw
-         NaWg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=4Kej9RgCVdDxcZLwFbOOHl3c4WDW9UWP+udtcL5rsuw=;
-        fh=ZNFe3D6Y7rkpz5eiB6JJZ5AKH0QzP57BKsaWjc5jAjg=;
-        b=bVfR09tofqNw7exZ8lgA15OWZ9srC7zaMIQPYYU++hM8/5wIpr0XAf3K8RlPohF/dh
-         ygrmdw/e607OtQ+QHeCBN96Hs//wVX6F/BkxW1QPWyQDe5hqMvem1y1B3Z+KL8muHiem
-         hl5E5wTfzsjw8aQi527JhQ89xCuK9PeNJKPHDukkrDUCNiTyEXSyw/RTkAszMbfjEnK6
-         H8UW3YnQoENGgrYHYpRQrw2K2TF9ZX7jeeYMSGOYVLs0S1mI2GqvKlDAEhHR4H8PFxcv
-         5e0ZGl3i0qiREw1JcmayC+6+ak51hOnK9RonyK5q0xAG8jM+1wFW/EQrHje2xprM0xyf
-         1l1g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q0f+HBTU"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-38704f70ea3so45499391fa.2
+        for <git@vger.kernel.org>; Tue, 17 Mar 2026 02:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773740458; x=1774345258; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4Kej9RgCVdDxcZLwFbOOHl3c4WDW9UWP+udtcL5rsuw=;
-        b=IxNuwHhaQgXwNbrXm6dWm1dK0iI+vJYWsh9XM8My+xQCPrAVtDZ5H2NJ+WyrpaK74G
-         PDVQ7+8g1b8Nz0D2CX6BGupv7Uap0J63yA2oKHuzvy5kiMEzC3kB6b0eMht6FhEzbs5X
-         F5Q1+DsBd6kIlnMAKiwtXyYpy6ePHIHC8ERFfgVSgdFSnVU+h4u0Mc2ooWGrs1jC+6I7
-         +pRetfn3bfus0isvvQnjKfoQPw6P2l+JyVtL2w3OEI6EqIhWYocu5UYz4+ZwKqu2x+9H
-         AqUCeHV6+k97GLXLHI2d8ZXU+P0zHYXJhwTLPCr/Be6YmtEm+PAoUHcagxtsyXBqgjkh
-         7KUQ==
+        d=gmail.com; s=20230601; t=1773740838; x=1774345638; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p02vJhJ9DTQCFt7KY4bOAcpBIY2/oTgA+hUv5pF5Kng=;
+        b=Q0f+HBTUjqMuJ/qoxOfSpif/LhzYXeqdgIhfopBxJ7Ggbx+vbTyF/JyAOK8TpyZTrS
+         tb2OPPbLpbmftNnjsfzAb45VE5dxFF7DD+auBW/4NwDbHa14JRMK7zONBs7juB1nc4vK
+         YUNace3cX3ZatN9eNmGwwEi5TU+Lonzh3VYr1YPGrm1EgQe4GxzNbbqevb2Agedd0jjD
+         mottC5MdL3ppjH9CX9BKsfCnT9EF7RV6M0FCC3EEi/aKmibRsapmy/7mEFQNu75WGq5Z
+         UZsCSkSEqVfEQQjilE6ab5NQELDdU02zL2mKykC9FpfUIYNokUROFV4hRENIc/wW8QLE
+         1rRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773740458; x=1774345258;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4Kej9RgCVdDxcZLwFbOOHl3c4WDW9UWP+udtcL5rsuw=;
-        b=KaQHcqdmmlCwsfwFPT1RVs60rnj8256kFiUPhqBI+VLtaVXyRlInId7OfNPfZe9ZeH
-         P/oq9Pic8LpRA5LTGimThsSkVoAahqQebn+2u/xULjdIrXvJOfHcJLfE2/z5hnTJ3d86
-         OYKtQKJllYFkEoNkYLsqGKzHREnwR/seL0jT9+SJ/fIIZs+QXjlmUSm3k/m2WV3gVntO
-         CPgdF/EIfhHcgL43znxS+ly4d0CrwJDNq3Lq2EUvXn112+teUmw1ww2r5NjPAbNIMKPO
-         9jJKdvrskfe/kGrNnJ1BYXXLjgnr8qZ+4hfgZ9XH8loru3qZJkJeW3GoS+3FCQ7AOtsU
-         Iu2w==
-X-Forwarded-Encrypted: i=1; AJvYcCUdt1JAuTUXqbjyesrm+LwVOn1EKt7PmswQPig7Jg3TmALvzAPhDzVPfZMNFBj37icXA+U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzPbkei2V7LcxqVEVAquzKIgC4am4Vlv1zQ+089+iYbmYdswO7M
-	YosCYCY91eaxTmb44bzOhv1xLSpbTmK/YxeMXvJFPGMmhAyfT0C1eHReYYwfHQyYJPprYp7LZTD
-	GAVirjt83+b6pHKawcJmfo1Sx+11OgiE=
-X-Gm-Gg: ATEYQzz0uJpXUW+YyCsG5hPdnEvKJXjB68GcZThZmW+wE2tP+Wr0nQ9Vn8T/5x0Q+gD
-	hRNpqOaEOzScqEJ9xGvob7ZDJsZ4CZFefEskAlp9KpirwfTLN6DN6wkp46nkgI3v/PEXsp5klbO
-	yx0EI6pBWUL64eWeKFJbVU+rP6wjhSxXEzitaDzHgnv4mgK6ptxkxvqb7cPmX81Qm330GIApFKu
-	x5ynnDv5q8UHM0hb3uzcun7XeCfyBKk97Oz46QsW7Sfd/4/MKO5EFOnnMyyAUYMCDJGeUbXPoU0
-	EciA3Bif6Iv9tPJ7mei0CSRyrkiOS2fjeo2Bps7/Iw==
-X-Received: by 2002:a05:6102:508b:b0:5ff:ea33:2c7 with SMTP id
- ada2fe7eead31-6020e58554fmr5025702137.24.1773740458553; Tue, 17 Mar 2026
- 02:40:58 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 17 Mar 2026 02:40:57 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 17 Mar 2026 02:40:57 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260317002235.6121-1-jerrywang183@yahoo.com>
-References: <20260317002235.6121-1-jerrywang183.ref@yahoo.com> <20260317002235.6121-1-jerrywang183@yahoo.com>
+        d=1e100.net; s=20251104; t=1773740838; x=1774345638;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=p02vJhJ9DTQCFt7KY4bOAcpBIY2/oTgA+hUv5pF5Kng=;
+        b=OcQZ8xBylNHVctFj7eoJvJobc2ImE0IgUnjLVX1FRDMGYUp1c4oszIxD7olu3S0r2o
+         y6wZ2+PEB7XiluawBDsncMg0aVoSH0DO5AbHEFs9Fc/UdtWJVQon2jsfit6q1tbR2ohg
+         M8fRaLqFL0tK0kTvMSoJXakdA6WpEiKDYB44nDuZNS+km6A3Q3jcGRGSPOhdJ3ntF7qx
+         fHZYz1eUWFtr9jzkfBS3kEu0YTQyrQ8V9tICsRv1RCci9U8Y677l+HUOU6ycmJn3mdmO
+         C7P/oFKfltqWp6+A/nwnaDfG+dw/yzXdb0VsOdzSg8GuNuMMMF7XCo7V4BsBrVpwuDN2
+         +FeA==
+X-Gm-Message-State: AOJu0Yz0IkD/2vGKQlHtByt8UKSTSLXEWCVMVGuYiGkQ28m0wapUH00y
+	rHoxkST5tFiVr3/bIpLioYRXEWE+6W+OQ9QJSgDASxx2HEINXZz2FULn
+X-Gm-Gg: ATEYQzyU5fQ8BiM7v9QTAxeEfObHhZ5y0W+1oksEGm++e0F9Whrlawfmw77l/G+O3Dj
+	Qbx3KcWBMOxZK8qTJfbvGYyVnzediJq2reg8SET8mOGoyQ0325U3cV2oEf3VkLr1fS7JVVaJl2+
+	CUVRFfcy+hMGStPp7nMiJ+gvevnMdocE1JNrnsMxmnDzwDvN07be3lr3HKp8g/Kn+5IIlY6oVBK
+	rKoGr4yTulTjdZeNthdO47Dd1SfJgI9lzbzyUqLUD1CdS8zR0Ym9iGWSB/5f9XBQlks4UDM0JDB
+	Qp+g88HEVewlPFzA/oFZ3szhUNcBB9XZAf14b52064KQDNlAxuqFxflMhgcASuwrFVtBOU7Ava4
+	lzl0XgDAU+WxVmsAyH/mneY66VpKS8G7hAvgcc5mjSbvmyvkfnuEQ5djJsLnGXCM0PPXFl73ZiG
+	1TN4is7s32RPzSysGYTQzfBaZxqRqtG11ihk0l+zp9sBbDJiNwAFNMUsoEbnVmDCqErswLp/wLp
+	wcdFInlAY0fZA==
+X-Received: by 2002:a05:651c:411a:b0:38a:6acc:85f with SMTP id 38308e7fff4ca-38a8983b635mr30922631fa.36.1773740838147;
+        Tue, 17 Mar 2026 02:47:18 -0700 (PDT)
+Received: from Mac.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38ad29fc318sm2790911fa.19.2026.03.17.02.47.17
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 17 Mar 2026 02:47:17 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Tue, 17 Mar 2026 10:47:16 +0100
+Message-ID: <20260317094716.43654-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqqcy13o81b.fsf@gitster.g>
+References: <xmqqcy13o81b.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 17 Mar 2026 02:40:57 -0700
-X-Gm-Features: AaiRm50UxzRHmc0UiU64A1lor1spfVUQd8QReyPGKeAl0mighzvbz40xiF0a0LE
-Message-ID: <CAOLa=ZR8SZRN_xD29gshW3sujncuvhVSVh_9w=XpCHTcCf13Gg@mail.gmail.com>
-Subject: Re: [GSoC PATCH] apply: report input location in binary and garbage
- patch errors
-To: Jialong Wang <jerrywang183@yahoo.com>, git@vger.kernel.org
-Cc: gitster@pobox.com
-Content-Type: multipart/mixed; boundary="000000000000f4ccb6064d3521ba"
+Content-Transfer-Encoding: 8bit
 
---000000000000f4ccb6064d3521ba
-Content-Type: text/plain; charset="UTF-8"
-
-Jialong Wang <jerrywang183@yahoo.com> writes:
-
-> Several binary parsing paths in apply.c still report only line
-> numbers. When more than one patch input is fed to a single
-> invocation, that does not tell the user which input the line belongs
-> to.
+>> Why is the dry-run of unpack_trees() not an extra check? I was assuming 
+>> that it was because we do the dry-run and then do it for real after 
+>> possibly stashing any local changes. That's why I was wondering if we 
+>> could avoid the dry-run by creating the stash if the non-dry-run 
+>> unpack_trees() failed.
 >
-> Report the patch input location for corrupt and unrecognized binary
-> patches, as well as the "patch with only garbage" case, and update
-> the related tests.
+> Ah, I didn't even think about that possibility.
 >
-> Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
-> ---
->  apply.c                 | 10 ++++++----
->  t/t4100-apply-stat.sh   | 12 ++++++++++++
->  t/t4103-apply-binary.sh | 20 +++++++++++++++++++-
->  3 files changed, 37 insertions(+), 5 deletions(-)
+> Try to unpack anyway, and if unpack_trees() branch switching
+> succeeds, we are done.  Otherwise, we can trust that unpack_trees()
+> did not do _anything_ to the index or the working tree files, so we
+> can create the stash at that time.
 >
-> diff --git a/apply.c b/apply.c
-> index 700809f3e6..84b4a569c5 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -2110,8 +2110,8 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
->   corrupt:
->  	free(data);
->  	*status_p = -1;
-> -	error(_("corrupt binary patch at line %d: %.*s"),
-> -	      state->linenr-1, llen-1, buffer);
-> +	error(_("corrupt binary patch at %s:%d: %.*s"),
-> +	      state->patch_input_file, state->linenr-1, llen-1, buffer);
->  	return NULL;
->  }
->
-> @@ -2147,7 +2147,8 @@ static int parse_binary(struct apply_state *state,
->  	forward = parse_binary_hunk(state, &buffer, &size, &status, &used);
->  	if (!forward && !status)
->  		/* there has to be one hunk (forward hunk) */
-> -		return error(_("unrecognized binary patch at line %d"), state->linenr-1);
-> +		return error(_("unrecognized binary patch at %s:%d"),
-> +			     state->patch_input_file, state->linenr-1);
->  	if (status)
->  		/* otherwise we already gave an error message */
->  		return status;
-> @@ -2309,7 +2310,8 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
->  		 */
->  		if ((state->apply || state->check) &&
->  		    (!patch->is_binary && !metadata_changes(patch))) {
-> -			error(_("patch with only garbage at line %d"), state->linenr);
-> +			error(_("patch with only garbage at %s:%d"),
-> +			      state->patch_input_file, state->linenr);
->  			return -128;
->  		}
->  	}
-> diff --git a/t/t4100-apply-stat.sh b/t/t4100-apply-stat.sh
-> index b3d93d8ed6..8393076469 100755
-> --- a/t/t4100-apply-stat.sh
-> +++ b/t/t4100-apply-stat.sh
-> @@ -125,4 +125,16 @@ test_expect_success 'applying a patch with an invalid mode reports the input' '
->  	EOF
->  	test_cmp expect err
->  '
-> +
-> +test_expect_success 'applying a patch with only garbage reports the input' '
-> +	cat >garbage.patch <<-\EOF &&
-> +	diff --git a/f b/f
-> +	--- a/f
-> +	+++ b/f
-> +	this is garbage
-> +	EOF
-> +	test_must_fail git apply garbage.patch 2>err &&
-> +	echo "error: patch with only garbage at garbage.patch:4" >expect &&
-> +	test_cmp expect err
-> +'
->  test_done
-> diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
-> index 8e302a5a57..f2d41e06bc 100755
-> --- a/t/t4103-apply-binary.sh
-> +++ b/t/t4103-apply-binary.sh
-> @@ -179,6 +179,24 @@ test_expect_success PERL_TEST_HELPERS 'reject truncated binary diff' '
->  	" <patch >patch.trunc &&
->
->  	do_reset &&
-> -	test_must_fail git apply patch.trunc
-> +	test_must_fail git apply patch.trunc 2>err &&
-> +	line=$(awk "END { print NR + 1 }" patch.trunc) &&
-> +	grep "error: corrupt binary patch at patch.trunc:$line: " err
-> +'
-> +
-> +test_expect_success 'reject unrecognized binary diff' '
-> +	cat >patch.bad <<-\EOF &&
-> +	diff --git a/f b/f
-> +	new file mode 100644
-> +	index 0000000..7898192
-> +	GIT binary patch
-> +	bogus
-> +	EOF
-> +	test_must_fail git apply patch.bad 2>err &&
-> +	cat >expect <<-\EOF &&
-> +	error: unrecognized binary patch at patch.bad:4
-> +	error: No valid patches in input (allow with "--allow-empty")
-> +	EOF
-> +	test_cmp expect err
->  '
->  test_done
-> --
-> 2.51.0
+> Makes sense.
 
-This patch looks good to me!
+Interesting idea, and thanks for your help with this! I gave it a shot with
+this simplification.
 
-Thanks for picking this up.
+It passes the tests, which either means it works, or just that the test
+coverage is not good enough to detect new issues introduced by me here.
 
-- Karthik
 
---000000000000f4ccb6064d3521ba
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b91088d51d65663d_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tNUlhY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNlE1REFDQTdjNDE5YTh0UHFHMjFQbzZNUzZkK0lJcAowWDhwL29KSm5a
-YXJuR1lva1NGak43L29pZk5YTTRiTEkwbzJvWmMwc3F0RHJVRS9iQVlIZkQybnZOUFJNa05ICk9L
-azZxUDdIYXRQUjBjVGM5VHJETEVWV2tBa3VtYkxEeEtIYldlWFFWaGFJWjMxSmlZNnlqUzlYWVYz
-NE4vcysKVmNJUDRPeldKMTBrRmRkYkVZWmJYNHIzdGhZSEh5STY0clhNdHk1ekFQVHJ4Wm1GSkFK
-S1AyNWRUazFsTHg5NgozV0NvY3U5amZxTFhCR1VWcFd0YTN0T1dBS0dtaWdXZGZZblhEYnQ4NTNI
-cWJuVmZUc1BrU1VseUlyRkJRcjRvClY2WUp3bHlQc3RMay9IcVdsbTJINmhWNU5IbU12c01GUXZz
-MVhoUDRVaVQxSmJ1REZnWnZTQU9TejZ1V3RTUnkKekZvZktFcXJ2VzQyVUx5bVFEYWl4SjJoTGRZ
-NFdnRGMrczlpRHBuTFQxdjZocnZmSEVTM1hvUGdHY0YrcllOeApvZ0MzTzdyZDRWR2JqQTRmS0NN
-dkl0MFJYWC85TWtTLytsZGlmQjRKdmdRVVZFQmtyV0NXL1c2dTNjWDVLdCtVCjMxVmVPTkJQUDlw
-K0VWRmRaOHVEZDQzVVR4a3hMbmtrTEZYR0VBMD0KPVh5aWUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f4ccb6064d3521ba--
+Harald
