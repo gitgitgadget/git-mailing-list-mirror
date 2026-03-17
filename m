@@ -1,150 +1,96 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0BD3F54B4
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 16:47:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D2E3EDADB
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 16:52:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766062; cv=none; b=TW3ZhiEn5JFWvdl/i4pOYOfS3sXFOBMHchUzKsy8gNf11biX2o7B/kFTA1Q0M3SSV3ovy5eWqwutviDY8lOlDazstmOZAggv+zuv0rgbZxx1P6rQn88wMSRy7a1KPHT3fDOfjO9mL1TZNo5NQahBqH9vu2X56HzSKniy3Q2TyTM=
+	t=1773766362; cv=none; b=Mi2Rb5nj3kugcGeNu9LTeHtf8IvT2vb5vO2diWZI2a+GiS2fS1SV57e4zHdJ5twu/naQQfJO5qJCPFmo2kI02zkryusQ6ZJmaNKRliCZz7ANUzucYOAMYbOOYEE+FJoeNJAHIdoWCyk5pF9h9HsHXkrnFhmUZ6wb6XKRJGsW+Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766062; c=relaxed/simple;
-	bh=Dk/K9cvSl1mDl2QqmVn8O1IFRYDMIPJC5pZz4AwUP+g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tvHAa/2dFRqD9CG79wmze4HdSPyO202Neu8k2EFbcFt3En6NHY/2b6YQXYMQqH+xdAE3LVd+E+CCLVmqs0KzR60YL0DsTVDrzowmyG6IQvuGz4mczYC7pUBSgG03n1QNxxgQxGIF9I9hDqV+c772kqoAD4TrX9RG7C5vBJWZTw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PZWS97BT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aY8rgR25; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773766362; c=relaxed/simple;
+	bh=mD1wXS6ThHE3/0GNHtug7aKR0hm9DM2o11r4SoJMkM8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aKvWfUhKTHgmLMkfPcSHPUWhY0pUVJlapBbxEN25zeC9FBmradcUqQtstAIZbCQRx/c+LCUU0OLdexADmK/n4/XfUR/P8auqWpZDOoz18RbswCV2EQHgsOhmInk/ASPdsnz46xIlO7atOdLK3tSEOSAX+cz6k/QUX8Fl2Al1lMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J/5SeO8h; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PZWS97BT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aY8rgR25"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9CB6C7A019F;
-	Tue, 17 Mar 2026 12:47:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 17 Mar 2026 12:47:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773766060; x=1773852460; bh=elUJaMdC9o
-	MybZ8BM6LH0EetfJYzxucG9WEyU6GgQ0Y=; b=PZWS97BT2P1k+5snfFBd9DAnTG
-	llnTUYChQQmiL1M/mHPCfWPKHnht71SshaS+zhoLt2Q0p2kCa7c44LP8PS55szmu
-	G+fAiNjOv0Q89VnT5LRebhUilq/gSMJSSqAhIx+tLZN2dRKLthXqKmQrnzP1M/11
-	3Jp40Kdxxq7bva1g+1czGsbI4CQRn1W5XAzX6pD4R4Kn1NT+vgGSaO24bY9HtrO5
-	XYQvlKCJ+aFGZFIfNPvEiqWWteNM+fWcA9tZZx4KQrvCZTUEm2NloIH8ExKPcoNW
-	WVvovv4ww+qawgTN/Ig8Ier86BkNEHpUP6UXbta7kgAQ3onzVnAqRbSoIa+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773766060; x=1773852460; bh=elUJaMdC9oMybZ8BM6LH0EetfJYzxucG9WE
-	yU6GgQ0Y=; b=aY8rgR25zTx3ddzfiLMpVo+RajkhTfyBdPhIH9cK3HMwC2qN5H6
-	LeQW547uvXMkKydbNrWMwLYdZTjgYCn0zvXam7gZmmfCBhqybufoxNnhDUR9RI7i
-	ZKn5lfH19nkXiqWsaDAdPCJqwbznuaa07LueSPo5rPonSvb2yt0qWDIeNc+kQZlg
-	PV3+p2vmnN5Snk+Xz99gYKrNMmc8wgk367Ee6iWy4K8zP6KRwIwSmAbgfb8Yxxii
-	nUussiCcp5hUH2BkbunaTX5B7KJwkCFifx8xB3oD8orZqllypNoqakWKgQhrwDss
-	C5cVMYA3DIv1C/dkseEH/B4hcBTWH27Pvlw==
-X-ME-Sender: <xms:rIW5aXIiISmFomfFSrRxTuQPNfxwLUosCtYP-rePLHAssd3s1hz_3A>
-    <xme:rIW5aSkO-JbSQaveeQR4i7QW0CnEEbQ7PeMC7KNsfQmpSTBU11P6pAUn_0OAFTHhP
-    N3Cz8z1dCQ2sYDhIAXudcEKToKqA3MZew9k5RSOVJN_LS6v49nQOQ>
-X-ME-Received: <xmr:rIW5adHloPSO1BcVBVux6wV6Md5T0nh3v7gzFwUc68_PHL_6xExIFmGVlpvDKxmeM-PokND49vUOXaNHCRtNZpwuhNedRu20_Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddujeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
-    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:rIW5aaEjcrrUtz761KeGPs8qdXq17UN44zmIsZPeuxZnvcvi98tk4Q>
-    <xmx:rIW5aSNNac8FevxiwAPpAvB_VpYKXWWgBZIh7Xw7DbMocb0rClW4tw>
-    <xmx:rIW5aRHL-GvjdXbwxJ0k14qqxx71kMUllIdieo7W5aSZgpC1t9UfIQ>
-    <xmx:rIW5aRPG3t7D6HIxE4x4-81wSZlNKcsiDeyjMDugfLD7U5BnqYUwLA>
-    <xmx:rIW5aamlrDBk3b_9ECzpMV3ONeRzSTpTLEiuPlhSwtyAjwgSh7Ugb6o_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 12:47:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] add-patch: use repository instance from add_i_state
- instead of the_repository
-In-Reply-To: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
-	(Shreyansh Paliwal's message of "Tue, 17 Mar 2026 21:20:29 +0530")
-References: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
-Date: Tue, 17 Mar 2026 09:47:38 -0700
-Message-ID: <xmqqzf46l7x1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J/5SeO8h"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-829ac8d56c5so5895442b3a.3
+        for <git@vger.kernel.org>; Tue, 17 Mar 2026 09:52:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773766361; x=1774371161; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mD1wXS6ThHE3/0GNHtug7aKR0hm9DM2o11r4SoJMkM8=;
+        b=J/5SeO8hEI3LjaVeqCLh8MNT9IjCJXEqynyK++TeB02KtwWAOa55dtgG04M14qiv7u
+         rKzQbEFOqIibVqcaZ2d80n7YfsCeDavlsC5JEDkBcNtupPJgdkbG2oylgRFxcO8iLbEi
+         llDmIn7bDjuWYGv9rxtY/ecrmEzLrXCDo1/JqYrBwECehTaUxzEBBQcZXCKSKYJq80St
+         Nkjyjgwd4pitn4jI6Y5kZaz5folXJ8QMFPaWU0T9oJOGGPfb8yEoJJlC/lklPmRvOkFR
+         61iiDecGZED/Y1/8LwASj6FlwVqnuqiWif3pB5uCDpgciizd/+PG2yCFkNnwyfz68MJs
+         sI3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773766361; x=1774371161;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=mD1wXS6ThHE3/0GNHtug7aKR0hm9DM2o11r4SoJMkM8=;
+        b=djp21u6K+Ny9etc+0NCmU3vUYnu2EUPJXJana71XW3fnjgHL0I+kB61iSdBPngQI0/
+         oG54Cc0DNs55VBypGYx1yBuDX3m45M+zVo9jM87exLkpwmqNEuPvGb/GrOrbuKdnqlHh
+         lhud4/4VPxn+C6ToukpeLoaQuWcOFvkWDEfkHW7fKLkpP3s0PLmqB1dz0nB715Hc5gEp
+         4JeapL3S+6Yu3dvowAxtzBkiq2C4/YhLfiTHhPu6jlZ/sFwiyLoXIsTOza1VNOb5FccE
+         iWpUfbJdyFQ2FeRlakGFSggVJjpyGUpWnpRxrrhpBiJ6iXzOy9OcSTzdlApR1S6ekTEO
+         9o5A==
+X-Gm-Message-State: AOJu0Yxk6PdDFzFNXIEa5mZd3/BKwdNIb8RJR3AVKM2A9LETk77eBRoa
+	WK5oxIfxKEPV+f8+EkUZ6x5m5sV4z5bkXew0+Sxs1VlQOXvfnKmh3lpfnGDs3A==
+X-Gm-Gg: ATEYQzxenW3m4OkFeHxsTCSfQv7UxOz230sGwfUfEMoRBJ1MPkhenCKgfk5qBzPq5B/
+	S82HrygSxfuiH4TyyRL3coX8IawnPbXpxX1uiwbEO6RvTfSSNHJOi32ICLgpYQ1yKUQAa19QlFM
+	mXXLmzeDAdjuu2paB8wT51oMTU/JYv+NZN+Z4P+JS1mheM0+1+Rs6UMKUTg8JFQePBUPcstbEfl
+	6dgIFYd0jobzy187TkgM+DFY4Sf7VZY+cO5mRFtFrPaInlDCbdGL/yk/j73UlTTo6XgTAXjdRSX
+	IpqU6s7C4d23qNSmOLeT9NICah0iVNgTOMkcI8an9NXfIsqrVeQD92rc2IMdDhtsE7hdnVt1ACo
+	Ijin2MIj6f6aYhTAaPYPrZBiG6DmGVnGxkUpr8aITaX6oEbtX32wvEwGo/Bx8hTTMCwDJmvoW7a
+	V0gaVqldzD1bUZSXo8PhXHakxsFVDvq0/o27jkvP19/BE=
+X-Received: by 2002:a05:6a00:2e97:b0:829:bd4d:3817 with SMTP id d2e1a72fcca58-82a6ae4ffe6mr47970b3a.28.1773766361028;
+        Tue, 17 Mar 2026 09:52:41 -0700 (PDT)
+Received: from Shreyansh-PC ([2401:4900:8811:4c9f:12cd:260b:8809:a4e3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a07384b27sm17203070b3a.53.2026.03.17.09.52.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Mar 2026 09:52:40 -0700 (PDT)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com
+Subject: Re: [PATCH] add-patch: use repository instance from add_i_state instead of the_repository
+Date: Tue, 17 Mar 2026 22:21:38 +0530
+Message-ID: <20260317165230.628705-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <xmqqzf46l7x1.fsf@gitster.g>
+References: <xmqqzf46l7x1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
-
-> Functions parse_diff(), edit_hunk_manually() and patch_update_file() use
-> the_repository even though a repository instance is already available via
-> struct add_i_state s which is defined in struct add_p_state *s.
+> > Functions parse_diff(), edit_hunk_manually() and patch_update_file() use
+> > the_repository even though a repository instance is already available via
+> > struct add_i_state s which is defined in struct add_p_state *s.
+> >
+> > Use 's->s.r' instead of the_repository to avoid relying on global state. All
+> > callers pass a valid add_p_state and this does not change any behavior.
+> >
+> > This aligns with the ongoing effort to reduce usage of the_repository global
+> > state.
 >
-> Use 's->s.r' instead of the_repository to avoid relying on global state. All
-> callers pass a valid add_p_state and this does not change any behavior.
+> So we can call this "reduce" but cannot say "eliminate" yet, as the
+> files uses comment_line_str?
 >
-> This aligns with the ongoing effort to reduce usage of the_repository global
-> state.
-
-So we can call this "reduce" but cannot say "eliminate" yet, as the
-files uses comment_line_str?
-
-The <environment.h> header lists some global variables inside
-"#ifndef USE_THE_REPOSITORY_VARIABLE/#endif" block, and the
-comment-line stuff is among them.
-
-The patch looks correct.  Will queue.  Thanks.
-
-
-> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-> ---
->  add-patch.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+> The <environment.h> header lists some global variables inside
+> "#ifndef USE_THE_REPOSITORY_VARIABLE/#endif" block, and the
+> comment-line stuff is among them.
 >
-> diff --git a/add-patch.c b/add-patch.c
-> index 8c03f710d3..30df920723 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -434,8 +434,8 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
->  		strvec_push(&args,
->  			    /* could be on an unborn branch */
->  			    !strcmp("HEAD", s->revision) &&
-> -			    repo_get_oid(the_repository, "HEAD", &oid) ?
-> -			    empty_tree_oid_hex(the_repository->hash_algo) : s->revision);
-> +			    repo_get_oid(s->s.r, "HEAD", &oid) ?
-> +			    empty_tree_oid_hex(s->s.r->hash_algo) : s->revision);
->  	}
->  	color_arg_index = args.nr;
->  	/* Use `--no-color` explicitly, just in case `diff.color = always`. */
-> @@ -1147,7 +1147,7 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
->  				"removed, then the edit is\n"
->  				"aborted and the hunk is left unchanged.\n"));
->
-> -	if (strbuf_edit_interactively(the_repository, &s->buf,
-> +	if (strbuf_edit_interactively(s->s.r, &s->buf,
->  				      "addp-hunk-edit.diff", NULL) < 0)
->  		return -1;
->
-> @@ -1551,7 +1551,7 @@ static size_t patch_update_file(struct add_p_state *s, size_t idx)
->  		if (file_diff->hunk_nr) {
->  			if (rendered_hunk_index != hunk_index) {
->  				if (use_pager) {
-> -					setup_pager(the_repository);
-> +					setup_pager(s->s.r);
->  					sigchain_push(SIGPIPE, SIG_IGN);
->  				}
->  				render_hunk(s, hunk, 0, colored, &s->buf);
-> --
-> 2.53.0
+
+Yes that's right, there is an instance of comment_line_str, should I add this
+in the commit message and send a reroll ?
