@@ -1,87 +1,161 @@
-Received: from sonic314-14.consmr.mail.bf2.yahoo.com (sonic314-14.consmr.mail.bf2.yahoo.com [74.6.132.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB58933B966
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 19:25:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.132.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0507A23D28C
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 19:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773775537; cv=none; b=PUMv4Eyw5kRw9wOYi/0Z2yQwqRc1HS5mGHJnttkXXRE4rg1qEwLySpfTkPSQgdby9DWA7oHBi/q2b90TECPLD1PgIfg73Po7p7USUZOEIjuPNlw7l1jumSpokbOXt+CRjthlOzcuAi7EvgaNy3SoeaTPO4t7v0mBXDNiJSSnXvo=
+	t=1773776384; cv=none; b=KamDhkE0MMqUzeKr2vcY7/nUYHg2H1krAVTPnAvsPOVdoP+/J8ZCHD8CWAIP5i22W0FrP8HUqCWBT7yBUvKT/J1Uq9cUnVIjiuTaUO2FaVm751Om8cNgsc1FSLtkGc0OAIoqvSzindfHRd3ozB1aPHZiPnXOrQ4qpdElz8TNseA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773775537; c=relaxed/simple;
-	bh=q2cSVPKt3XFDRIfoMqKIm3dEVDyRWpXyvrv3fcUMCjA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=MH801HQ6xayVSQWU6ibDEj2ngkJYxEsxZdVpMlUcBInJLX1ZaRSqqHYZQqCiwsX4IG6f/eh70xZf20cMYop8tF5Dmo1Ek2rwiju5PS2efSJI1+n536zMeVKyz2XpLba9b1TG0tGsvhBYchN46kkAryKfFo4RkUhx0tFDX615lDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=Fzpxi2Dn; arc=none smtp.client-ip=74.6.132.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1773776384; c=relaxed/simple;
+	bh=kPiG7ZNKyoOv04q4S3YsgeGqo7ZQZaQXYS1AZjihnsc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qhDTWU7Cfd9238hsQD8sZUBaS04ULW/OJw44mK2JGt6H/vNxFmmRRAAIcHDDOF3fasu7fP2wRLHOJjGMvGw9WmNoHBNgwJfg6Hvrhk6ADDvpPcnFhLSUIyO9ZiQFXHa5MZTeRdBJl8VZ89e6oQsalC9dG+ezLNgL07s47s8vKrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V3Fg/u1u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rpoXTV/i; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="Fzpxi2Dn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773775534; bh=q2cSVPKt3XFDRIfoMqKIm3dEVDyRWpXyvrv3fcUMCjA=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=Fzpxi2DncjmtUne7RVx3fmQoBMhBGibLo/yQ9uWNugXG0Eq6IQjg4t/f/HibPHqrUPEI4Thk07X7yIXx5MDbcUInCwq5fOaS+VPe5nAvAi85fwgINjAUxJD5c+hHGkJU0ZiG+sXPv3iBVraLEAAyuT7L6H/YJ8AtvAGwY8+8m/PV01bpkH0QauO4/MGtV8RqWHaNJGR6puYxKGVWxcbRly8SF5N5VIecGkjoC7zEgf3srhXfAMl6B4dXI7Qs4dsIV3phYaFGvX9ruU5LJrR+ijTvoqSGSOaJxYst+7RrCDbJU+W7iA4vCGyf2LrI0FsPqv+JTElBU2KIdm/ISeNU0A==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773775534; bh=UYKiD+EkUG+qNBeqMAyT6KHsF/hH7bQdxQPE9dXi7xP=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=gbkKLyXpzaOCf9MJ4CeD8cIk4m/nk/L1J1jGxENDF00sekUf5o14oZ+mGocdAqS0qwrp5gnj2qarayySLh4DgIxpS86o5IFa8MFuRB4kxnc78dTd3g2dWDZIpPcIT/zusPYhIJyLsHthd74EyimuzUdALXxsUGNO5hcPGf4rjIztKA1t+9BuF4SjLt8FEifF1OVlaEUL1wEx6eIOoJRISqlCgS8+DBm8folwmnqgXWQyacifUyYIhasJzxi0wPFHa27+eDE1/98Q1TFKtWZVONRpBVFfo49GfAXPbH45JRz1CfNvDvOZ5B4XUQHTQNQy6YzNpukEVwN3a4e7d215WA==
-X-YMail-OSG: W5J9wjAVM1niHjwKc5Up6Ixd3_bExnlcPurpnpaxq40_X62y9n6Z5mduVcR6USq
- WxIkJhsValxoAdg.eU9SF.HOeJYB7pbfTv63HZSvYhIOiCa6fSYzmgjYx1hQvj1I4l4o2f3PiSdf
- H.cqshuRHBohPViZx8ee.a2vxruNWEwvqJHl4h8lXmEcHBwxE5ReiKahhCUhOtG4bLnNKneeE8MH
- 3fvvCXLBbkehB3YasPMHwVJRgJb_oznLIIG.Xo_Il_RcfjVU3EAVJvpLPAvgYG3HG15_QpYRYNqP
- 5aF1B0tNROBZZXq6t0pvnfBYFU8zRr6OvGtZ4WHstSQdIv0zdHsTS_26opAmAMlr.jfPU1OvCbXN
- 8bQPrs_83WexB5X_LQUDFqiqDLhie1IVqfH8hD01QATj25VyQ5_wmcxVq59BzaTrdzpMunY3GdsW
- xsTlVWNoM8awb_nV.2iNz4DZDLv4HWZSsaZYwO8WJ7oRe_nMameoh4c8kA9WvLD9YjoDM.ks3.Bd
- S8ctOdQCBQ8aSPxFuHjKZlfM3Pr6pjQ85kWLUbCFG5wL20H79vDb2i_Qc_DY6PWrtk2hCffnSkzg
- SiXmA4oM7SWcNsr3g2KtlYZBqOi5EmLmGfoKovSDMtv6Z9pqkZcflg2B1Rmtd3dUf47tySSxrfRs
- BCTH8zAQv7yOnjds0kjOI4vPrPEWA0ZdU6KCmx1CaYe5Tp3P6v88N9rN4kYGRdE5uFR6UCiTlaQF
- zYnJlogYb2DqC5DuHUB2EXpu7sM4DQT9wpjx0hN1gN9vjaA2vZbtg3NX8dmjeNDY7St2UCYdLSf9
- tXRvfdzixjM6jf1LTznpimBsP.F1AkjiZ65Wnsfv_JWJFLpJDYXDGtmZLB_gbCddQ2mF2GW89k89
- 3VZyrpPEqe.QVEzw3YaTENoo5wbHz2wC_1c1_6bQ2imqPZqROxG24GFAIjRkp8kfKEY7I8DTdeoW
- V.Krz6jIkg1ChEK9a5V8NwGAPx2hDBG2v_xYXT37ygeE.Nl65sqZVR69lQUN4QZeqvsHYCMB97K2
- 5BLFfCqNuOvZ1DBiqGogHi0MfkjImSSoX5vwDKBQku1ae2llVwOlAqAVoT3_hSX_UUDs4q1EYOOH
- 2TgDeIIuQvOTsAGoc7BrLLL_E5lpQ3ZtPKtkuPmAChbYAyCnKQfJujjEKuA7VuLt7sqzIek7iCNi
- wnqVoyCvSn_iRM1sCpmKp.qcWORX1ZMZm3yur2IJpf.e2ICJfOKwSs2YGD07Gj_p7lSiGv7WetE_
- NilCIdBXwLyKCMTO.UZmQEoroVwCF62w_dVsEXebP82SjGiffRSRDhzh_yZQWrvAxhsCOKAl3ptI
- wVtN_4aeCBZGgb48WggrrGCl4dQJ3WRLTLmdbXmvw3Xh_gGJBsu6E5CAj1W6kkY0mwrFiFoY2flv
- R7LWvuLREpKA_oWXnPDLKafIRIy.bvmfsWhKUpMjGjG1mfUWOBkMgW.mQaYYDSTAXlIsBxe4FF0n
- c2rstNRPiAOYppdMly8_bDg3XSk3c4HNeIPZMz0SpnmHfHKp9ELyvuVmvMd6tWncjP8pt32_m.mQ
- cJhPiLU0VCGQEPEkTGtv.Mv5r3kOD8.knHiVAoFNygvrHfTUYsEdpnO3YTm_s7ZbieGt4I7u8LCw
- Sfz02qMtnDuTlbK9yYBy.qP7MxUzEYGYTJ5UhE57g.cA2ChGaufTPB4VeNxOqlWjb2hCaDFhbfRX
- nY6_lb_FBySeMEW_.BL4FKn73MR5K6IFh7lDu_cnVyxiSLEw1KiqMVADQJDiTJuX_wtkDdz8euU0
- sBpUxPMZ6S9GWSIXQzmKcObvH_hvtwftRlOhCPxl1kRPWBQApnktp.fsZbuXFIW42pi0vUlud_B7
- lh8gs75tlw0oHJQdxE0ZyCZUJPQOIhu9YyRCx5B2uvXLpJRX2aOOPHf_zBdW4U6w7yLYGx4qh2Tk
- VgLnLiHQ0a.pO1CD0ktU_mYzNr19tR9Xv0Mh03eaFPUpdvvqDJFXDSRHVa95pddUcPxIdX5dsJfh
- aemHgQMmQGaUkrbtJHLBkjgRfdlclD9tNJJS1cDCwEgnI.dHn8zXmAaKHOdjBeGMST5uq.v2equN
- HPrn_j5M2MvwZsPowYdq7JxRJPWFwDJ.YluxC1DaCsgtxWw6W8WI7swvzpjVebB_YaR7V0AxUYno
- y.iTaRatbQXhKpc6p6k_pRIw.ldUXCiLA36vONtgqhR5MxSVH4tz4XQxLyPQtmRbAwAtDXZ5vN7v
- G_rfEOC3dj8D5.FUaHSygUKLlvvV9k1mgXB4MeLIOfeSwzanyR.qzbF4mpnezvhwGpmoDBjqUu8I
- MxBB.XKk.QKNn.fbbC8WXEL4PZNcMoypMV590MbUFqak-
-X-Sonic-MF: <jerrywang183@yahoo.com>
-X-Sonic-ID: 0849311f-e0cb-4c10-a126-3035278fa204
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic314.consmr.mail.bf2.yahoo.com with HTTP; Tue, 17 Mar 2026 19:25:34 +0000
-Received: by hermes--production-bf1-697f88457-skc68 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID ee9fc0a3694e886fe10a053fb06430a0;
-          Tue, 17 Mar 2026 19:25:29 +0000 (UTC)
-From: Jialong Wang <jerrywang183@yahoo.com>
-To: gitster@pobox.com
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V3Fg/u1u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rpoXTV/i"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 004681D0017D;
+	Tue, 17 Mar 2026 15:39:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 17 Mar 2026 15:39:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773776381; x=1773862781; bh=OwAo19VjlX
+	fpDz0tFKpNd2DTiqqZ3a+bqaOs+oo+Bo4=; b=V3Fg/u1u996BSizZghZB8MSgWH
+	9v0i2ak74/ChChGhwc0Z11DQBOjPlIsWPDFD5Yj0K0QOOklrq5mG/qpQfd2okFm/
+	c3+W6SA9E6RNzDQW56ndliGzltV7a0oQkZVbbjze8jAqXNUiKMkExAvl3dyC39D5
+	AfJHro29yP5Rkm8VGgYwcpPzMX5tlgPPUFMnLXfazCmmRUtBv2SRgviIo3hQxcyt
+	FISe+EDzz75m+Zhd9yo1Fx6LlyOgSy3lQTtmzXzDsjkQbaibo/yYs3cKAO6VKdoq
+	5eT9wQqm2zanEVR5kEOGDT8s/LjZINW2LNlwH6qK3cEDL+wubdnwqOUlP7AA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773776381; x=1773862781; bh=OwAo19VjlXfpDz0tFKpNd2DTiqqZ3a+bqaO
+	s+oo+Bo4=; b=rpoXTV/iKh+Z7DxzvX7JzvTAwheWEkeg6Cs8OLbUsiG3ZhWP39J
+	FxGuBJxVlUcdFN+Be8vkutp2dbj5TFWP2jm1hkz4/lhdJTuT9i5OTWLIvlL5+jJh
+	PF84e2ya0mNvkZKhWlnmFe29NxHSg5luJeNzA+0rXz+E8gD99xIcZek9m4LPTJ0P
+	URo3l8MJ2lt3BHG005+CZoSk3uR4dJExEJf14WJ4N5DHHmZB8zSAIeuCYlUbnlNR
+	H5/cl+w1JccK0TdRobBH4JiqmTwDAyLKYH/DozaVUL8WKgJYz6qrB6kmJMQL6rhU
+	sFh6rXrfNeJVQx9E6OBP2OtfHGqZe7w1yCw==
+X-ME-Sender: <xms:_a25aeluovh4t80HTdGz2Elc0RyJTMB_6VZZ7lC-SciIpbVtpFcROA>
+    <xme:_a25adSGbMv6_CIBGJbrzNoWurHssngm_T400m1pPkVnGuT0jCxtH5ahm_6KKnhPy
+    jv_Ap-F-m_U6cmxxSrq2OsMTPZ09HdJEfFNc3WtgzGYBkVEVrRssw>
+X-ME-Received: <xmr:_a25aaDoRXYsEVtSlcdqIXZ2wymYLE-xceWhQ-YiwQmCKSmpwJwEX8rxaVKSFyTF-RDu2la-A30nWWJ0LODtMluEQ8KXMhRS6A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvudduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepteehffehffektddufeejtefhteeiudfhgeduveegleehgfeiieeffedugeej
+    ffegnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:_a25acRPDkfxZoDG54F1tP4dRSJc-P5YeVV_sRXUe2x9nctEF273sA>
+    <xmx:_a25aQqK0wfivt2kAYF37pToMP5x5oBSqhc8rdCm-oTAK-PvWHgvUQ>
+    <xmx:_a25aWxD4FpYJsRr-FjeHDnm5tONzQQ0SVoYMOUyAspst6R_NQlzNA>
+    <xmx:_a25adLGcmubY7iIqFJkGi1igBR-oV1_P-8vY94R0-nEc6ANQs12LA>
+    <xmx:_a25adbut7oGpporho6FFeyUPczXCMC5uIcycZNOMwqqCJt_2-hI12HD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Mar 2026 15:39:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [GSoC PATCH] t2203: avoid suppressing git status exit code
-Date: Tue, 17 Mar 2026 15:25:25 -0400
-Message-ID: <177377552540.75212.11758229294443511273@yahoo.com>
-In-Reply-To: <xmqqmse3fsvw.fsf@gitster.g>
-References: <20260317185414.65952-1-jerrywang183@yahoo.com> <xmqqmse3fsvw.fsf@gitster.g>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] commit-graph: fix writing generations with dates
+ exceeding 34 bits
+In-Reply-To: <20260317-pks-commit-graph-overflow-v1-1-e6bee22cd826@pks.im>
+	(Patrick Steinhardt's message of "Tue, 17 Mar 2026 20:02:52 +0100")
+References: <20260317-pks-commit-graph-overflow-v1-1-e6bee22cd826@pks.im>
+Date: Tue, 17 Mar 2026 12:39:39 -0700
+Message-ID: <xmqq341ykzyc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Mailer: WebService/1.1.25297 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+Content-Type: text/plain
 
-Hi Junio,
+Patrick Steinhardt <ps@pks.im> writes:
 
-Thanks, that was my mistake.
+> this fixes a regression recently introduced by myself in 024b4c9697
+> (commit: make `repo_parse_commit_no_graph()` more robust, 2026-02-16).
+> The regression was found by GitLab's tests suite, see [1].
 
-I resent it with the GSoC subject prefix, but I should have treated it
-as a new version of the earlier patch, sent as [GSoC PATCH v2] in
-reply to the original thread, with a short note about what changed.
+Curious.  GitLab's test suite runs pretending that it is way past
+year 2600 or something?  
 
-I'll do that for future rerolls.
+> [1]: https://gitlab.com/gitlab-org/gitlab/-/jobs/13522328632
+> ---
+>  commit-graph.c          | 31 ++++++++++++++++++++++++++++---
+>  t/t5318-commit-graph.sh | 20 ++++++++++++++++++++
+>  2 files changed, 48 insertions(+), 3 deletions(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index f8e24145a5..7e293a1775 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1319,6 +1319,31 @@ static int write_graph_chunk_data(struct hashfile *f,
+>  	return 0;
+>  }
+>  
+> +/*
+> + * Compute the generation offset between the commit date and its generation.
+> + * This is what's ultimately stored as generation number in the commit graph.
+> ...
+> + * actually end up storing on disk, and hence we have to mask all the other
+> + * bits.
+> + */
+> +static timestamp_t compute_generation_offset(struct commit *c)
+> +{
+> +	timestamp_t masked_date = c->date & (((timestamp_t) 1 << 34) - 1);
+> +	return commit_graph_data_at(c)->generation - masked_date;
+> +}
+> +
+>  static int write_graph_chunk_generation_data(struct hashfile *f,
+>  					     void *data)
+>  {
 
-Thanks,
-Jialong
+The code and explanation are both in line with why we want to do
+this change in the proposed log message.
+
+> +test_expect_success TIME_IS_64BIT,TIME_T_IS_64BIT 'overflow chunk when replacing commit-graph' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		cat >commit <<-EOF &&
+> +		tree $(test_oid empty_tree)
+> +		author Example <committer@example.com> 9223372036854775 +0000
+> +		committer Example <committer@example.com> 9223372036854775 +0000
+
+This timestamp is way longer than 34-bit for sure.
+
+100000110001001001101110100101111000110101001111110111 (base 2)
+
+> +
+> +		Weird commit date
+> +		EOF
+> +		commit_id=$(git hash-object -t commit -w commit) &&
+> +		git reset --hard "$commit_id" &&
+> +		git commit-graph write --reachable &&
+> +		git commit-graph write --reachable --split=replace &&
+> +		git log
+> +	)
+> +'
+> +
+>  # the verify tests below expect the commit-graph to contain
+>  # exactly the commits reachable from the commits/8 branch.
+>  # If the file changes the set of commits in the list, then the
+
+Will queue.  Thanks.
