@@ -1,54 +1,54 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD66A288B8
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 21:46:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E13E13B7A3
+	for <git@vger.kernel.org>; Tue, 17 Mar 2026 21:52:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773783963; cv=none; b=K2O18u/+j1RybzJTV20iHMx699jdxGObiJrpcVz/gb7/HEQB64DVP+VSQsbmhNDFRfx0DoRgrFKuEZ5tqnLXobGGNJzLz7a7PICdn/RDGTuR8whdYpIVA1578jY3urU1a8/hV925ZOrGwyHDjtSb6TPVmT5yuN3pIFfycyY+di0=
+	t=1773784355; cv=none; b=bvpFTwkVsxvVHrtTMwiX0dFrrUI2skPpJd/S59FYYfbwJWY208b/46IkVR4eV/Dz2AZeitNfSFwHPPuuB7aG10Giz9nWcDZs4DohJxyxepqo8e+KgxF2DYwUMHfudQpiyqNmyobX40GavTQKx3bpNzZXEMXYwqnr5ZAjAXeULRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773783963; c=relaxed/simple;
-	bh=nNaNm8ZYQdCKcSekq8G5eijpR3UDNwN0bzbREnabJtQ=;
+	s=arc-20240116; t=1773784355; c=relaxed/simple;
+	bh=aOnTZssYFfLq5LJwoGUSZrPMlkV8/b5sPMTUIVH8VtM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pIfBDEyNhm74pHbAR8ljuVTuKc7hL/sRs03vllQHsjVfFHien3nBXKDLtQCnZW4BUMdtPsRivrBITd7wdEM56w7j1mA5MRhFUMTjsE1sJIaiGUNTUPGGV3i77P19K5p6GwITtxItXG6+uH2ot9hjipF/kREnatkurqNvSF8DZK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G4nNeTqv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R8Kw/MS1; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=ulNFiSG1PgN5KPuf0vpDwTfmsD1ISBSXYvL2ZaPniA1p0uIptgRXGFrOH+/ePCFuaM260pqB0E5/Qp/P/XzJI98VeCQKBj5s86v41LZEhbCd8BPWtaLB+Q7bMnWJi8g/JQU9eaWQIVtIjFxfdefSCgRNbHzY/Y4t3OMfOGyeZ1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fIzSGJt1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rPrvdgxy; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G4nNeTqv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R8Kw/MS1"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CA1B27A01C0;
-	Tue, 17 Mar 2026 17:46:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fIzSGJt1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rPrvdgxy"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 55C6C1D00179;
+	Tue, 17 Mar 2026 17:52:33 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 17 Mar 2026 17:46:01 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 17 Mar 2026 17:52:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773783960; x=1773870360; bh=aujYTUJ/DU
-	4vRoTAojCohX1XqxfQy9978XQmkHMwlNo=; b=G4nNeTqvg0uBsTeTgZ1+7TadPL
-	giNLNYqY1sm5ik9EtcKi5/bXpAEOvhJyjPVqTSuQQDqm3aq4mEU6GeUYqK7eeBDx
-	69BAObNeH+FoZ1oUydEjBIIlLMerGrJbh6akdzD02xnQVgZ6enf0xFSlv3qYtjEP
-	TEXi7Uvni/aHDhlIzaLGwwAbTjO06QzC6odOHpT1OwqkRDaV9XSaBayleABr9B1c
-	i3rLOrnIs950/0PaM1B35wK9J2OjVgFhAi1arQ4XgQzkVaVjgd1wAj4XX/qz3/z4
-	HdJoGZ21b8uH+8qrywBWhVNRNm2T+rcw1Fk+m8lfeQGfQe3O+JVvyEgaxx+g==
+	:subject:to:to; s=fm3; t=1773784353; x=1773870753; bh=K4SFJCC5Ar
+	9pkEGxfJ39z1DKcBMLb8jerwVXTUg9UpE=; b=fIzSGJt1mgysOw/wh+EYF0Lsoj
+	tWxZUb6lCUY9npamuq5dYFNwkuerGZ3Jf+IV2kHNwcXwr4zaJEx9YMDdkbJSAnaO
+	JIXmGf/MUaDHJ5frWCNl5Nil3idQ66go5CzFdeCBu972VxNfA5w8oOLQqnuiL3sr
+	S5A7REE8S7K50ABuLAWeJCtO4C/QRMAm3T0K+Uk90Yf546E/uYMsLRlqEMoHZOKB
+	mdGm45rAiaI/y/x2Jpe9H0FNPRN62YWf9UAoACVcEBff9PunHwO71E4KJqWJRW1F
+	5VMz59S1KuS8l36Cfz7ApDspp9MAUoIuMhDN7mqrgVuetd7FipDrC3Ofic1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773783960; x=1773870360; bh=aujYTUJ/DU4vRoTAojCohX1XqxfQy9978XQ
-	mkHMwlNo=; b=R8Kw/MS1nCd9nzGyE1asU0GvqonBj1lDg+fIVdeUuIwYD3GGkfr
-	Fb7vMyn6OJsSE+wVWye0yUlGL9la1Wut+8qqIOoH6JruUGJEAcP0itN4LZhiEpeP
-	LrQFrpjcg1zAuzjSK7N2JFF9/8j/FYf9D47JMOOm7xVtCsC2D95YZqG7bfcQNT4M
-	GLbSJbNmBoeFgcmzWqkSprALgCwUzcnsCKKYoy39AC1KmN+JWMbt9fP1Wvh5S3JI
-	G1rT1AA3+kH5qkCcY1OrBU6Xr/vJOKS8RGqx4lkNeEzeVbaPPgMy0R+yZfoPAsp9
-	6PqttNi/y2Sm14s52ms13RpXExmBG+kVqXw==
-X-ME-Sender: <xms:mMu5aXn0Qf7L1hYT8q6bbQOtJsrC8jz2QlqwtfWtg_Lellmu1w9ilQ>
-    <xme:mMu5aR2OdDQgq3nRLhGcCN90b0wr6G8L5ViyyXUrrthcUdbtctXayWBXy2tC2vMan
-    vLcGXpFjA1yKl0X-rpzu7DmvqwF1bFhJxEvqtMahHKVntgD3_e1pw>
-X-ME-Received: <xmr:mMu5aSqe9KNwU3wCcGGBRsAFzlXpzV2q5yXP3fGvSEoZBYD5gQr7h65YfYLv50gPtS2-c14A49yjfvYr1uDd8Y_N0fyv0_VU1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvfeeiucetufdoteggodetrf
+	1773784353; x=1773870753; bh=K4SFJCC5Ar9pkEGxfJ39z1DKcBMLb8jerwV
+	XTUg9UpE=; b=rPrvdgxyh2V3o8uU6Zl/AiYuvGuSkvwzf4JfCsJR5J003P6t9NI
+	3c/USXvDLJ/aavhjbkD8afLoOj/L2aYPDCBWkuQ5+7Og/Mn+KlHTggYnTOMWB78n
+	24ISjavU12k1pA12OePy1pi/DQnUkzdQejGvRX3VQY1uqOmNUg//3ntO1+rw9FW/
+	wvcxVwDCwViqmWBiNGsFvVUV9aicLaoKxi1i3KNxVfT+QI7KMUyjdCAe48eGbuHn
+	4CWZdyG3oyWmZRd9EGFlnAHWCqyk7oOQq6mdITH8zDH/h5m/wKrGmlfxqIQLZr5u
+	LBdPjMdKXnKOT7bxuTt0tL/6O6QOw3VXeKQ==
+X-ME-Sender: <xms:Ic25aRKqKAzqV8KMYeUPTzaEdxohhbBVnQzIL5NQ6LXHN-pB9udmsw>
+    <xme:Ic25aUJW430LmGMaQG6DqyJ61v6BnIsxIen0YXxpHPGkU02N_GXRzSnDJ1wgEln8I
+    _04M4tP3O4ObslEHHmt0wFeiqDBXBUL8xv_wS_E0GT6gyEtQHWeEw>
+X-ME-Received: <xmr:Ic25aesTDQifxxQLacfoxIvkwEVu8TQeCUY0E4M-QwF2AhWzQ2l1syCRtSE_-KviQU5mefczWNh5hPrnSZzhyP-C-5L9mvsWxA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvfeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -60,23 +60,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvfeeiucetufdote
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
     pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
     gsohigrdgtohhm
-X-ME-Proxy: <xmx:mMu5aechGakVPtPgbaBp4qsXIAxINstxyckrFy0oKZV4hub2fSLjvA>
-    <xmx:mMu5aRovXtSKd1o75vUa_OT5hFtpsKfzbM7S1W4P3KZZCq3rGNfazg>
-    <xmx:mMu5afG3-VAAbHnoChLmBUAWDM2O7Dz2vVCi8jt_P5C9ltVATnJQyQ>
-    <xmx:mMu5aRvrrO3Y8Gu-xv4Wa8l3uUttxaClSirMTzTw3IfePX7Y72HtqQ>
-    <xmx:mMu5aeJc0TYhtFjd73AfNHZ7X6mYNNEP2d5VQ315mOn-OFmuwESadiWm>
+X-ME-Proxy: <xmx:Ic25aRSrOi0WDwz7WJlqgUkB0Gipc72aoA4_a77ovspVCO2hSsyiLQ>
+    <xmx:Ic25aUMFYLPMLRaNCRbMbF7aWgums3yqClgNLubZalIHFii-V--2Ig>
+    <xmx:Ic25aWa99uYTGSgstwtpbdPrIE2PKVFrB9sk_DMwiHT7wRbmFqUbGQ>
+    <xmx:Ic25aexbK5tygiOGBIpuZQ4-bpvjeaRryXOTVJucxPxkPqv4Vs76dg>
+    <xmx:Ic25ad750jPVsWtNnXb4Regfog7dcy33dH94OGss81Ll-bdBVO3O9TQv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 17:46:00 -0400 (EDT)
+ 17 Mar 2026 17:52:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/5] backfill: accept revision arguments
-In-Reply-To: <pull.2070.git.1773707361.gitgitgadget@gmail.com> (Derrick Stolee
-	via GitGitGadget's message of "Tue, 17 Mar 2026 00:29:16 +0000")
+Subject: Re: [PATCH 1/5] revision: include object-name.h
+In-Reply-To: <fda0239103f6e2b9e76403144b9ed2e9205e1c2a.1773707361.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Tue, 17 Mar 2026
+	00:29:17 +0000")
 References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
-Date: Tue, 17 Mar 2026 14:45:58 -0700
-Message-ID: <xmqq7brajfjd.fsf@gitster.g>
+	<fda0239103f6e2b9e76403144b9ed2e9205e1c2a.1773707361.git.gitgitgadget@gmail.com>
+Date: Tue, 17 Mar 2026 14:52:31 -0700
+Message-ID: <xmqq341yjf8g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,46 +90,32 @@ Content-Type: text/plain
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> The git backfill command assists in downloading missing blobs for blobless
-> partial clones. However, its current version lacks some valuable
-> functionality. It currently:
+> From: Derrick Stolee <stolee@gmail.com>
 >
->  1. Only walks commits reachable from HEAD.
->  2. It walks all reachable commits to the full history.
->  3. It can focus on the current sparse-checkout definition, but otherwise it
->     doesn't focus on a given pathspec.
+> The REV_INFO_INIT macro includes a use of the DEFAULT_ABBREV macro, which is
+> defined in object-name.h. Include it in revision.h so consumers of
+> REV_INFO_INIT do not need to include this hidden dependency.
 >
-> All of these are being updated by this patch series, which allows rev-list
-> options to impact the path-walk. These include:
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>  revision.h | 1 +
+>  1 file changed, 1 insertion(+)
 >
->  1. Specifying a given refspec, including --all.
+> diff --git a/revision.h b/revision.h
+> index b36acfc2d9..18c9bbd822 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -4,6 +4,7 @@
+>  #include "commit.h"
+>  #include "grep.h"
+>  #include "notes.h"
+> +#include "object-name.h"
+>  #include "oidset.h"
+>  #include "pretty.h"
+>  #include "diff.h"
 
-Makes sense.  You can only be on a single branch at a time, but may
-want to work on multiple topics in reasonably quick succession in a
-single repository.  Being able to prepare enough material to go back
-to when working on whichever topic in a single backfill invocation
-would be a welcome addition.
+OK.  Other symbols REV_INFO_INIT needs are REV_SORT_IN_GRAPH_ORDER
+(in <commit.h>), CMIT_FMT_DEFAULT (in <pretty.h>), and STRVEC_INIT
+(in <strvec.h>), and all three are already included there.
 
->  2. Modifying the commit walk, including --first-parent, commit ranges, or
->     recency using --since.
->  3. Modifying the set of paths to download using pathspecs.
-
-Both are good mechanisms to express which subset of history you will
-be working on.
-
-> One particularly valuable situation here is that now a user can run git
-> backfill -- <path> to download all versions of a specific file or a specific
-> directory, accelerating history queries within that path without downloading
-> more than necessary. This can accelerate git blame or git log -L for these
-> paths, where normally those commands download missing blobs one-by-one
-> during its diff algorithms.
-
-Yup.  Even if your project is a huge monorepo that contains all, you
-do not necessarily have to look at everything the organization has
-all the time.  "git blame -C -C -C" would of course not work in such
-an environment (would it end up on-demand lazy fetch these blobs, or
-are there ways to say "I know the object store of my repository is
-only sparsely populated, and I do not want you to on-demand download
-the missing blobs---do your best to work with only what is already
-available?), but that's a tradeoff a monorepo makes.
-
+Makes sense.
