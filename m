@@ -1,152 +1,114 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB52253359
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 16:43:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773852187; cv=none; b=MlN+0RLiKdsKSeasn8IZfTqDuqYnEI2TfJ87RVzfhjvbU95We9tquYMVyBL90QlR1Dt4cF8xi8pEvroFJLtZtfK3G3lOdYFEaemtw2NCG7Z8l4Ztw8d733zjZQ4T2nYfTUAtny9JV+/Oem7goJI/uzGtH810Yff/AFyyWki0fEk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773852187; c=relaxed/simple;
-	bh=ThVj8GytubT972lRRNT08iYWcH6kbPnwb5GEB9gt3n4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rge80pgC7+j8PwZpls0B2yP4CfLVaorWYETK4S+bosNRQCExz9gQYGr6hNTsLyCOsrd5tZ16LiJDWWYLtGEzSZNO1dBAU/ZhwVqmJ4JqqSOdateSaKBwF3mA6U09JNhr2XGvG+xGfR/QBzrKATeBOYecPJKKlyEytZIYISkkPAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EjEB57E2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MhbeleR2; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EjEB57E2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MhbeleR2"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 39087EC01E5;
-	Wed, 18 Mar 2026 12:43:05 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 18 Mar 2026 12:43:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773852185; x=1773938585; bh=aM9+2pS55Z
-	mBDrzxJg1SEWM+Au5HGxNWOSXhi48UhIA=; b=EjEB57E2KmkvTwbvgFldALL8wp
-	D4S7A3ucNx5FOJhbrO+ulqko+5Ut2qefmF2a01tpRr/l+L+uCbl5VIx1ScQpVFgd
-	Dptxf8BYgZSfRmnbqLXutNFI+AJ+OmSVOEMoQo1txJPk+Pk8jxD7CvFKbCdv3jV3
-	bIol0/FV57ZMWLSZokKgkCzaYqyuaJHjv4NYd8yuZQrgGbmXVjAhwfeIyKdZiMQt
-	ubxgdqLpMBd/HcyPCpC34iP9b3soDOjCh/DL6KpcNWjEtaW6U/O9fF4z7zNKzTga
-	93O0NY7+iOE3Z4x/mkECmzaSHcRfTDCU+gELfM2bsxXLMlF0o13MqFv1+YhQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773852185; x=1773938585; bh=aM9+2pS55ZmBDrzxJg1SEWM+Au5HGxNWOSX
-	hi48UhIA=; b=MhbeleR21a+YYxkU7LvqyA+EcTnEipgmQI5nr0ZRzxe3yJSu4bm
-	AAU+Vx4L8SwTma2AB69jsHqqIO0tsMHvCNzz3fLKcxQaQtmgNFxe/VVcE1X2XoFy
-	tRA7u/Iide7HeceC7FQd1+sU81lYgDlpSQNEEPCexDkK4i7tUbFWitdPS/4RsMCE
-	5ZxgpJllbA5joYDnmyv0k/YZOtSquyWo5ILhql4+SxTicxiA+dT3b1LOhTaX43I+
-	PGVksfe/Hlj7OakhKHcCvRfSgMn4xsI6Mt2VUTZk79EZkhf0684wbD+6ASlKtxS+
-	T6dxTiZeLTaXBOWc99N8cKW+zKHqD/c9BeA==
-X-ME-Sender: <xms:Gda6aQ0qf3D2Cvy5suYglyi7uzlo7ZKWw5rrQEBul-Wn53T52noTTA>
-    <xme:Gda6aSiNuuEc_Mz7i2m6MHi0c4LhAmQAI3eODy7z3M5evavAEM_bHyICJA6-q62wq
-    -bjrvub_XOjPf8Q-HWxROq0sy4P3PrFDWc9wpFmgtdMz0Sl7m0LnQ>
-X-ME-Received: <xmr:Gda6aWQSnryQ9OvFJ3XsOnWVtjcW08z-OBehLjzUNj3zFCu5QqFy8P0pV2OPKrytW7654Za1lUkdbw2U95juwooSgdP0hcI_Qw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdegieegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefgteejgeduveeuteeiudfhhfegud
-    dtjefhjedvffelteelhfdtveejueehudffueenucffohhmrghinhepkhgvrhhnvghlrdho
-    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhhrhgvhigrnhhshhhprghlihifrghltghmshhmnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Gda6aTgwzuju1i6o-O7ap18aqZ-fxsev4sPom3Rb2lcUdtpqfj7Rfg>
-    <xmx:Gda6aW5THs01HlTFVf56A8mTSDIArjKnxAeGgGyF7_gOksCQeQNiHg>
-    <xmx:Gda6aQDb1-ztDu-hBETFX7cr0uTBL9mgPReBBiF5rVx7kirFTx7kJA>
-    <xmx:Gda6adZIfRgLZ879eRRFkSKIe6gqLqhaonz6hz_En73yQbBPFDH9Nw>
-    <xmx:Gda6aWg5hRuGVU8Lq5C8P2rZ5AKkvAeCZ-eca_RQ6iz5zJMOFBEFjQLS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 12:43:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 ] add-patch: use repository instance from add_p_state
- instead of the_repository
-In-Reply-To: <20260318090546.1213077-1-shreyanshpaliwalcmsmn@gmail.com>
-	(Shreyansh Paliwal's message of "Wed, 18 Mar 2026 14:30:03 +0530")
-References: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
-	<20260318090546.1213077-1-shreyanshpaliwalcmsmn@gmail.com>
-Date: Wed, 18 Mar 2026 09:43:03 -0700
-Message-ID: <xmqqbjglgkbs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5989F2566F7
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 16:43:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773852201; cv=pass; b=CsJRhO1k+vnAZc7mZairK5sQBKZ1rbXS1+6BjvrWr1LnF8zPGifA0/wxPw9yr5jzBc3xhgd5CS28xWsk+Zkl2jo2bMCCefOIhaGvC/fye4JIG4+R5OfibP2Gatq16IIsSMyCDaIPKKEy7+i333FOB5Qik9Fvm5+/wxA3JGV5rD8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773852201; c=relaxed/simple;
+	bh=W9uX8lUiKVcAEbeDNuv8KLjcTRT8oe8PWIB1vepc4Yk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Vg+5aZHgN4H1GGJHF2B0IwlKZsThBo7O/HHg5cgAx3P1NuCul/k0BH5gEgM2YX8FtcYvrVX6LeU4l7yk/nS+WqUZLfsejcIssKpo0gKA2qzWqFVQHB3id3GJ4e4Tgpp4txxrnkeoOmsi5i/TR1yR7oH9rl+QZDhh/ciXP6nNQNw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-12714f01940so9138c88.0
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 09:43:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773852199; cv=none;
+        d=google.com; s=arc-20240605;
+        b=fmkyHjFHVsW03XJe3RBlvte8mLUMIq04OFzPApu/xhvdJDRi6ZJMkbL8DK3Glo4Nqh
+         qWc8yf2EfC8X+dajTggiq1yWHA0CNFHLSxxCQ8IvPoKBZaybAWvMONh27dvNbm5yW+0g
+         UGnkiaNDWzzf8O2szB16vK/UcWcNpvzd814Ahk+rrTUOJB3FaI+ZPCYLBsKu9w8xgIaT
+         sqMX+fYgvSUF2Zhcwgn0CNf3eoyxBiiJWlAxUvcOL/92k6CQV02eebW/8tKadV6NHx4h
+         x6EOIwraWnxJcx2UMiu+g+hDy7Z1+lB38dotkMSOEWG+zExeK0gUYcnsER8ZHi6yOcSU
+         ro6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=HD9/t84UCpa8sgcQ8SYbjBCOKGoRwFw+VUdr8+jmD8M=;
+        fh=TkvboFALB8KQQ1VQErW9L5qKgHaSFGkT5kqd+vXT6hM=;
+        b=JnkvLqLrAfSdP7dDZttKMgRXxu8ib+17V8tmS8HvSciwfrnwxy7bigu0AXtKKXXwll
+         5jaPsC03/ztgHNY4u0xM3lBbWgN2w13EBF0zuXC2VgWdWk3Z2ATO4hwmv4PHSeqBfQVk
+         W91SJfX/Vj01LUtmMA8CTnf9zHT+f5dxpejfizXBIDYLLjV1MSb2XVwtbRARtC1wjkli
+         Zv2mbFY7MLP2+k4A+IPfAdi08LZoSUsTlpiEnrr1NzPLO4VCOkMuOCm1u+9M4Ex/CDIY
+         Zr/QRN/9BfXqkzpT7sVhjhkAT3YqzNQfp4gAFzpxGdwniDJUDUcwNvGmXQDRlK5C6TxW
+         teRQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773852199; x=1774456999;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HD9/t84UCpa8sgcQ8SYbjBCOKGoRwFw+VUdr8+jmD8M=;
+        b=cSlb8Hk+KskUgXKmXF7TLmxVGu47vf708grCG3JdfPlC1AJyKtXtXMPEsKNDegEqoh
+         ZQfxjpQOE3RHLbVUyqElQZ6cPpsmg8jxTfoitrcU+OOz1PE+16OXrDqV4zh5gxF45ev2
+         sDP+gcaXoBDiu28kN3wEewOMMTWsH2IgzXTWqee83a6qOjZScdrAfBHK7voKKAnMoQTL
+         i5gIFqfRyGw5/PJgM0vk/5HaCRISbUSkQYkfrnLhmhO9ldYxTw4qeR+28LYFY9aPF7Jf
+         CaDeFky9ArqK3Lmfw+/8ufEntu7q8L5/4XiAKeUDF3YIoTFGjvBSm4Y8PQVH5vwXl8n1
+         AqwA==
+X-Forwarded-Encrypted: i=1; AJvYcCUTSIUkaG++U9WD0M1CSIJTPtVZsPqQXrnR33QOeMaEfqEHR5h+bH0Jk8GkJT6pn52fspk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzl1jT50h2+AqIccFrv4Af0kH5dh9qSbdOl6OXGBvUYZJ5rjVsR
+	xd7v65D+YyYG2I1xSWKQR7vnx6NX/KauK4pe11YTlYPaKJdfirXYZ7nJjyLKmwCNIBfB+cQ53dt
+	AIXBzoQWArP8xihse3uc7lKQuE3GbY7MyPg==
+X-Gm-Gg: ATEYQzxPI2J3z75ohkOvlDD2TkO03dQYebnuLuJQ1+Mno47a41TqgU4xexzzJQzjJN0
+	0tC98F43bxW/O5s+VPs6KskgBTdPVMIzvKtygLGao5KWyaWg39oIo3mDUzfkNs13x0e5WsROvGF
+	XvfN4Bo9SNVfC0qgirY4PhOO0y7oqlaTHgoM/sCGKtt2klEKjZmuZ1YVjCR26ZAZCXi0GeYUThb
+	gKmEoixHXBRshoNZSP0p4+e7pbiuJp4YZRKSVexQNW2ZhSqOvuOytUp+ft5AxkP5zMUC+52mMXC
+	KhXKzEHYja0XZ/qJF15bDis+SJdC59yWP8vkls1JWg==
+X-Received: by 2002:a05:7301:6884:b0:2be:6e6:e47a with SMTP id
+ 5a478bee46e88-2c0e4f4b471mr977576eec.0.1773852199188; Wed, 18 Mar 2026
+ 09:43:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqldfql4hp.fsf@gitster.g> <CAPig+cTTgLVGPG99gsb19BeJVWS=VZCU4F-rjb25yHTAORWwzg@mail.gmail.com>
+ <xmqqcy12l2ft.fsf@gitster.g> <CALnO6CDNwa8Ez4Ug0f8zNyxF1n3C_j8mLRbH7wChVioNoC5QVw@mail.gmail.com>
+In-Reply-To: <CALnO6CDNwa8Ez4Ug0f8zNyxF1n3C_j8mLRbH7wChVioNoC5QVw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 18 Mar 2026 12:43:07 -0400
+X-Gm-Features: AaiRm53Mzj0FWuJw0CItcvNwTUXCfA-YueY6WqBWyBrbyccc7ohA7ufXgje-FC4
+Message-ID: <CAPig+cTx3Gho+uYd9+0SjE+x9GA6VMNu78riUZ=h5_QW2vUHNQ@mail.gmail.com>
+Subject: Re: [PATCH] apply: fix new-style empty context line triggering
+ incomplete-line check
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+On Wed, Mar 18, 2026 at 12:36=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.co=
+m> wrote:
+> On Tue, Mar 17, 2026 at 2:48=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> > Eric Sunshine <sunshine@sunshineco.com> writes:
+> > >>  test_expect_success 'incomplete context line (not an error)' '
+> > >>         (test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
+> > >>         (test_write_lines 1 2 3 0 5 && printf 6) >sample2-i &&
+> > >
+> > > Perhaps the parentheses in the new test were copied from some existin=
+g
+> > > test, such as this, which already used them for a legitimate reason?
+> >
+> > Yes, the existing one was concatenating output from two commands run
+> > in a row into a single redirection, so (grouping of the commands) in
+> > parentheses were justifiable.
+> >
+> > The new one does not have such a justification.  Thanks for
+> > noticing.
+>
+> I think braces { test_writes lines =E2=80=A6 && printf =E2=80=A6 ; } woul=
+d have
+> sufficed for the second example, and might be cheaper (avoiding the
+> extra process for the subshell, which we've been told is especially
+> expensive for Windows).
 
-> Functions parse_diff(), edit_hunk_manually() and patch_update_file() use
-> the_repository even though a repository instance is already available via
-> struct add_p_state *s.
-> Use 's->r' instead of the_repository to avoid relying on global state.
-> All callers pass a valid add_p_state and this does not change any behavior.
->
-> This follows recent refactoring that removed 'add_i_state' and moved
-> repository pointer and other add-patch config into struct add_p_state [1].
-> This aligns with the ongoing effort to reduce usage of the_repository
-> global state.
->
-> [1]- https://lore.kernel.org/git/20260302-pks-history-split-v1-3-444fc987a324@pks.im/
->
-> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-> ---
-> Changes in v2:
->  - made changes on top of ps/history-split and used s->r instead of s->s.r
-
-Good.  Brief and clear description on what this patch was based on.
-
-Thanks.
-
->
->  add-patch.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/add-patch.c b/add-patch.c
-> index 4e28e5c187..f27edcbe8d 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -558,8 +558,8 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
->  		strvec_push(&args,
->  			    /* could be on an unborn branch */
->  			    !strcmp("HEAD", s->revision) &&
-> -			    repo_get_oid(the_repository, "HEAD", &oid) ?
-> -			    empty_tree_oid_hex(the_repository->hash_algo) : s->revision);
-> +			    repo_get_oid(s->r, "HEAD", &oid) ?
-> +			    empty_tree_oid_hex(s->r->hash_algo) : s->revision);
->  	}
->  	color_arg_index = args.nr;
->  	/* Use `--no-color` explicitly, just in case `diff.color = always`. */
-> @@ -1271,7 +1271,7 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
->  				"removed, then the edit is\n"
->  				"aborted and the hunk is left unchanged.\n"));
->
-> -	if (strbuf_edit_interactively(the_repository, &s->buf,
-> +	if (strbuf_edit_interactively(s->r, &s->buf,
->  				      "addp-hunk-edit.diff", NULL) < 0)
->  		return -1;
->
-> @@ -1679,7 +1679,7 @@ static size_t patch_update_file(struct add_p_state *s,
->  		if (file_diff->hunk_nr) {
->  			if (rendered_hunk_index != hunk_index) {
->  				if (use_pager) {
-> -					setup_pager(the_repository);
-> +					setup_pager(s->r);
->  					sigchain_push(SIGPIPE, SIG_IGN);
->  				}
->  				render_hunk(s, hunk, 0, colored, &s->buf);
-> --
-> 2.53.0
+No doubt. I considered making the exact same comment, however, this is
+existing code which Junio's patch was not touching, so the comment
+would not have been directly applicable except possibly as a
+#leftoverbits for someone to tackle as a mini-project or some such, so
+I opted against saying anything about it.
