@@ -1,144 +1,124 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB831C8634
-	for <git@vger.kernel.org>; Tue, 17 Mar 2026 23:02:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C4118DB0D
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 00:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773788552; cv=none; b=JtSQRXs6Qs2mciPqQ5QDg9FJ/NztYwy8nX/2SuouHv1Ux4qxBOPLXkxCvQrqA51ollbLPWozHSi0/PzuHuyZuiYu1zSLvoIL7NgovHYMeOsx9O2+h3s8UcDSnn8Uog31JTJiCINvxfY7p5CoHx8rkd3WzVdArwCaKS0AnOpbUtM=
+	t=1773793489; cv=none; b=YjCtSc9o1OUK+WO69jovnpKuWURKW/pd35HbFRtNr1i2Tro/bMbjEuD1IKKeSHpZK89lwy6j743GxOupm2AIhu/PUoBu+Eir7k5kjdN3G/s9+25cth/wEP0YtBduIwQKpiPYWs/NP7p/tyspg7YJqzDXynHdm9cn2eUNv5b/Omw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773788552; c=relaxed/simple;
-	bh=Pko79modXKXf5rr9zleeqWZ8AFwnyzCUJVJLsTkaki0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=HNS2AI4XWBzRqeYR5SdNXebDsR6idqgYTewmEVrWHUwEg4a75NAUVnGKR+RAt8XY7W2TKccoY2lth/cktvpuN6HfQRXFhO34Jhzk7pT9L5F3Zu2NjHtW5ZuuVB826phaKJgnT8R4Sy+qo1cpl2P6+8uJtP5jyZl6wCP8HIrD+08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=c7E8kBXO; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773793489; c=relaxed/simple;
+	bh=2q6sCBogS/0U9vqg6Rv8ppTXHErAeSEKOCQxKjXNxwE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PpGs3N+kw/EAdkwDAwdQIu+fgW88ZIm7IvEcdtcfPtTOfJPnSXHWTroxYbODaRnZcR5wCG4Q/g1uXusSOwsmh5RV6DUMAdq31WGp/4Fk3SFte/cxvjPt3GEWhpw1SAa9BWfGepH3Xp//lnINfHdjmiqw9F7Ckt/EHyQ7BiaPdyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=FAb0GE+N; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="c7E8kBXO"
-Received: (qmail 34850 invoked by uid 106); 17 Mar 2026 23:02:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=Pko79modXKXf5rr9zleeqWZ8AFwnyzCUJVJLsTkaki0=; b=c7E8kBXOv7qXlaBUlRPWej+6d4gF9hS+wCAz66GZFoYU3fr61TkqhYRIWl5upYbQuHjYKj2Ecy2nbjCFshyEOxwI2vZxlopQbWNffuIwzgvfMblL6bz2eY8xLCLp4gtGFkkPYeVTyAaKIdu8AVC+kKSZ1Pm6qHtkyjdkW2cW7RUvY1TKILD82zc6Ni8ObonIUDJZqBFkmmD9JSVNEh6Efadw2tgsOmgtMu6lHZ1fmYotmqRDcgLtWa9+Vod7jLm6BVIyfcwb5x+Stn0ccLFTQustzG/rwV1x3RYvZ94yG145PU8H8P7d3AbbrIpn2jS7iqMmnJc1dYHQs4SrJ4ZkPg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Mar 2026 23:02:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 52330 invoked by uid 111); 17 Mar 2026 23:02:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2026 19:02:23 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 17 Mar 2026 19:02:23 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Scott Baker <scott@perturb.org>
-Subject: [PATCH] contrib/diff-highlight: do not highlight identical pairs
-Message-ID: <20260317230223.GA716496@coredump.intra.peff.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FAb0GE+N"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1773793480;
+	bh=2q6sCBogS/0U9vqg6Rv8ppTXHErAeSEKOCQxKjXNxwE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=FAb0GE+N2e6q18t44i8Y0n1uA7noJZXe0lL4Llg/3nr4L461DdaSb3ISJvlNpQQPb
+	 PykjSOk2B+1Qv/4/tEz45MPNYs2jx2+MDO27+qjeHJSribcAMEX9WzgPnWiTvlgesn
+	 XhdegshhxXXmVF7tKynrWlGBBP+b6I58J4g1QWJh/WWdPp4LRaSfaI+R/TOQPi0RaK
+	 MD1+k9WntVHsTtSCiPwH1zITkYST5+ueR2XlxozPJhBnf3ZQeGAyWhXGg4boxXz/f8
+	 HL2Ts3ftgK7iswMfMMKGWPbvZUQkT32Ksl5AZzB/CsykZB9Aux/gE4HLa3iKQiyEuD
+	 hjKWytXJpb+v54xxjMt/7ds//T/Kc3xzXQYreyCKfMF9JdZA+QHDc1qSLiyuv7p5rL
+	 2Rk53ujgDcsw3ep9ttP7VWGUgl1GC7olAbfNZubXDvjGbyLUWerqKcxA0VEVPteoPf
+	 GiDPDrdS4uTZ0GK5reFNPtySwiX6N37BsEetARSK1u91MXW7mN4
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:e78:738c:708d:b4da])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0266720113;
+	Wed, 18 Mar 2026 00:24:40 +0000 (UTC)
+Date: Wed, 18 Mar 2026 00:24:38 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] rev-parse: have --parseopt callers exit 0 on --help
+Message-ID: <abnwxmoOw-ZLT858@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+References: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
+ <20260316220742.1286157-1-sandals@crustytoothpaste.net>
+ <xmqqcy13mgdk.fsf@gitster.g>
+ <ablCBkmOdoourCnO@fruit.crustytoothpaste.net>
+ <20260317145543.GA1828@coredump.intra.peff.net>
+ <xmqqv7eul71y.fsf@gitster.g>
+ <20260317184441.GA574291@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="F+2BpZT0u2dQmXVa"
+Content-Disposition: inline
+In-Reply-To: <20260317184441.GA574291@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--F+2BpZT0u2dQmXVa
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We pair lines for highlighting based on their position in the hunk. So
-we should never see two identical lines paired, like:
+On 2026-03-17 at 18:44:41, Jeff King wrote:
+> So unless somebody can come up with a more compelling example, I don't
+> really see much backwards-compatibility risk. But maybe I just lack
+> imagination. ;)
 
-  -one
-  -two
-  +one
-  +something else
+The only reason I can imagine intentionally using `-h` in a script is to
+find out whether an option is supported.  For instance, I have this
+alias:
 
-which would pair -one/+one, because that implies that the diff could
-easily be shrunk by turning line "one" into context.
+    co =3D "!f() { if git checkout -h | grep -qs recurse-submodules; \
+        then git checkout --recurse-submodules \"$@\"; \
+        else git checkout \"$@\" && git sui; \
+        fi; };f"
 
-But there is (at least) one exception: removing a newline at the end of
-a file will produce a diff like:
+(`sui` is `submodule update --init`.)
 
-  -foo
-  +foo
-  \No newline at end of file
+In most cases, that's going to be upstream of a pipe, so unless you're
+using `-o pipefail` (which is only in POSIX in POSIX 1003.1-2024), it's
+going to succeed anyway.
 
-And we will pair those two lines. As a result, we end up marking the
-whole line, including the newline, as the shared prefix. And there's an
-empty suffix.
+I suppose one can also use it to generate a manual page, which manual
+page generators do, but that seems silly when Git provides much better
+ones unless you desperately need one in a different language for which
+Git has translations but no manual page.
 
-The most obvious bug here is that when we try to print the highlighted
-lines, we remove the trailing newline from the suffix, but do not bother
-with the prefix (under the assumption that there had to be a difference
-_somewhere_ in the line, and thus the prefix would not eat all the way
-up to the newline). And so you get an extra line like:
+None of these seem like they're likely to care about the exit status and
+I suspect that if they do, they are probably using `|| true` to ignore
+the unexpected 129 exit code.
 
-  -foo
+So I agree that there's unlikely to be any sort of backward
+compatibility issues.  If the consensus is that this is shipped only in
+3.0, then we can do that, but I think many people are not going to care
+and those that do will welcome the change, so I'd just rather treat it
+as a bug that we fix.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-  +foo
+--F+2BpZT0u2dQmXVa
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  \No newline at end of file
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.9 (GNU/Linux)
 
-This is obviously ugly, but also causes interactive.diffFilter to
-(rightly) complain that the input and output do not match their lines
-1-to-1.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCabnwxQAKCRB8DEliiIei
+ga+8AP0S2kYeuJkbE9Fv2V7A3IWzUqUQHNxjhh0LM1cFpXFWfAD7BVkv3QYSvD4e
+Jw+kNgrY+6OFreDlLcDztqZsMrXmhAU=
+=XQzY
+-----END PGP SIGNATURE-----
 
-This could easily be fixed by chomping the prefix, too, but I think the
-problem is deeper. For one, I suspect some of the other logic gets
-confused by forming an array with zero-indexed element "3" in a
-3-element array. But more importantly, we try not to highlight whole
-lines, as there's nothing interesting to show there. So let's catch this
-early in is_pair_interesting() and bail to our usual passthrough
-strategy.
-
-Reported-by: Scott Baker <scott@perturb.org>
-Signed-off-by: Jeff King <peff@peff.net>
----
-It would perhaps make more sense for diff-highlight to chomp all
-incoming lines, then do its comparisons, and then add a newline back on
-output. That's a bigger change, so I punted on it for now.
-
- contrib/diff-highlight/DiffHighlight.pm          | 12 ++++++++++++
- contrib/diff-highlight/t/t9400-diff-highlight.sh | 11 +++++++++++
- 2 files changed, 23 insertions(+)
-
-diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
-index 3d061bc0b7..f0607a4b68 100644
---- a/contrib/diff-highlight/DiffHighlight.pm
-+++ b/contrib/diff-highlight/DiffHighlight.pm
-@@ -273,6 +273,18 @@ sub highlight_line {
- # or suffix (disregarding boring bits like whitespace and colorization).
- sub is_pair_interesting {
- 	my ($a, $pa, $sa, $b, $pb, $sb) = @_;
-+
-+	# We hit this case if the prefix consumed the entire line, meaning
-+	# that two lines are identical. This generally shouldn't happen,
-+	# since it implies the diff isn't minimal (you could shrink the hunk by
-+	# making this a context line). But you can see it when the line
-+	# content is the same, but the trailing newline is dropped, like:
-+	#
-+	#   -foo
-+	#   +foo
-+	#   \No newline at end of file
-+	return 0 if $pa == @$a || $pb == @$b;
-+
- 	my $prefix_a = join('', @$a[0..($pa-1)]);
- 	my $prefix_b = join('', @$b[0..($pb-1)]);
- 	my $suffix_a = join('', @$a[($sa+1)..$#$a]);
-diff --git a/contrib/diff-highlight/t/t9400-diff-highlight.sh b/contrib/diff-highlight/t/t9400-diff-highlight.sh
-index dee296739c..2a9b68cf3b 100755
---- a/contrib/diff-highlight/t/t9400-diff-highlight.sh
-+++ b/contrib/diff-highlight/t/t9400-diff-highlight.sh
-@@ -340,4 +340,15 @@ test_expect_success 'diff-highlight handles --graph with leading dash' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'highlight diff that removes final newline' '
-+	printf "content\n" >a &&
-+	printf "content" >b &&
-+	dh_test a b <<-\EOF
-+	@@ -1 +1 @@
-+	-content
-+	+content
-+	\ No newline at end of file
-+	EOF
-+'
-+
- test_done
--- 
-2.53.0.930.g4fb07a7d1b
+--F+2BpZT0u2dQmXVa--
