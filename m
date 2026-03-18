@@ -1,156 +1,433 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A01401A28
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 16:27:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5B43D34AC
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 16:29:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773851237; cv=none; b=m51Avr/+c/UDlceJOXGY/RtR1MjTbH+Oy7wJmqx2OqKbgfdzVGfjA1Df3C/lRWsXCkFnxp9uEBub9POuzA8WVXx7Bfp9ndM2x6Za1C1mieKCVFg3JxkNhMMxSrR4xjkkBrs55OsU678GTmDjmxHVaiBn8d87F/R6rtofyarQTno=
+	t=1773851359; cv=none; b=QdTDk3u00ZOGYSxl4/KkLodwE/Wm3nzn+antX6JrNJ8twTbrVp0apLlhNKFFXz/Pm3ZqO7s3UgjMhIgN40lnuX/zb0s8cpIVBxYb/4CYX09d/QVwKcZV/LN0f8SH7Hjq7oumyMVeGxd6jiJpTZxYiSerR3JuI1Dq32/miCAsG0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773851237; c=relaxed/simple;
-	bh=4sqAqsUXPUOVJIUv1POIl6OEfLsBzHJslCygTjqHerc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hAmSgVuISnG2kGnpqxjbSNvbSd7y0Lkj3Ao+cMaM4kx0ckEwRkMBzg82EMxciZsmCV8LYbirnPzmasyQfz4veq1MOubjjaBS3a8pcUOm4kuhV/lWCXiEQnOGmDP+1jdhBqPBFI1pJmPvqXws4A7sxPSBEfLN6+O0yhSBXckb0gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZoxOsDEQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MOxhh47D; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773851359; c=relaxed/simple;
+	bh=IxDUIIJIikVLPWEFryUsKJ3aDhT1dGC0hNebKMGNcyQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FMbrFpAcdCVdn10Q/yMHQ3ZGg80Y7SdLX/bgz8N2hV4DzEajv70X/LciooqUcgG5NBePwkVTVdAt4Q68Dh0SowHthes6sLVfKZLWUpaTpTOatQlY3HsTkd/syEkMC4UUBWqpB7PahmJljNNxwp2BpPDFD5OZIjZ60fFSk53oJQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WZrLFhUo; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZoxOsDEQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MOxhh47D"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 988081400274;
-	Wed, 18 Mar 2026 12:27:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 18 Mar 2026 12:27:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773851230; x=1773937630; bh=HiELQ1lYyU
-	47AYPMsloSjnt8tt8CgzqqGmQ+rQNiUDw=; b=ZoxOsDEQ/kJmzTj4tHaGzZTqSF
-	o6gPWULt+jVPR0w3FS/tlyJ6vxzZrRJB0cQmWNvv58S1QFI0rL+v1cq1ptX0Q+dW
-	tJzQrwdKjRWFb8sPsgchsKaPqxCO3jsadD2sKF1HB/wJdEQTUbAU17Lbwy0onon6
-	frGA5wEAaGzp7dDjDv+SWQlRa7qfeqv1s0e+m8veNxM1SvQL/31++z797XB9pvbH
-	JMy7sm7k5TqhjwrFDguiep8Zd8m+2gXPJCJUA7re8jaADsVFQcuME9tbfhfv/JyD
-	9bbXFefWqx75PfFkrkDXOxJZS6ausF9QaGFqhvSrNTJZPyEn9ZM9oSow+CXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773851230; x=1773937630; bh=HiELQ1lYyU47AYPMsloSjnt8tt8CgzqqGmQ
-	+rQNiUDw=; b=MOxhh47Df63fv0TNe+Owyhon28htMrS8CDnhpZ+ca47PZ9xYQqR
-	OHS9TB9n4uQIKnqyxo6epo6Nbb3V+v/6/bnBo+PxhDAAfnp5YPybCjIMJrwIfek3
-	lt+7JfxMaATgKductlSqkTRuJXhBLav82aJ6HZmkVL7+YWT+zkTFQzSdSc2XjS8K
-	FocBEfJ5quPsjpHSq8euIEUqjDfoFus3FHIygX6Ek+jyYvVQC2YOhAuGo0y7RfRo
-	lnmFdr8jArEyvK64JsOPchDZbifqjRKXDkunamxHM8Ps7iFpUVoXPx2ulviuaMGV
-	oZuyRIspBEdFID58qTt4k7Ze5oDcnj3OB/Q==
-X-ME-Sender: <xms:XtK6aSqMrYL3ImsHXXYxoKgNxH6Unw80Q4M5AltLLLzm2geef0KuGA>
-    <xme:XtK6aXoquZU0WK83psTsFJv8QgzYR7hPIxiwt1oTZeSdO_xjWv-ezJJyLmo9hRMao
-    nm0x6G0rt1T-MjyLZZYnE-YTwRA1YSmXSL6S_62HHtyebtHHwn8ccc>
-X-ME-Received: <xmr:XtK6acO_Yn4rGHK1Po9DXGDZ3JdW9mGAtqJDgMD1S1PE9fv-DXpUPbEZIzULltp7EILyj-SS7hGbyOid1CX8J_2qhxKHXjwLWA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdegiedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhgvrhhrhiifrghnghdukeefseihrghhohhordgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:XtK6aQzmOEOZKfdIM8MmwHAdnPez31i3K3Npi2HqvO6i3dTkHj-bPQ>
-    <xmx:XtK6advwOeZ-8_g_q5EwqQcFZt_deZStQIc-Sgi1DhO7JNViQM9VJg>
-    <xmx:XtK6aR6dilfzisSJ7KSXGV5nbMgAVjY3rTP4ZrnK11cjGHGZV6jIAg>
-    <xmx:XtK6aUTtwDIj7POZHpexpSCzQGXhKNO7rKcK0A4-KjS0ctXIFTE9CQ>
-    <xmx:XtK6aSPGrVIcK_kFW8i8rdEFWa0HcRaL6nOiBt1otDrZ_OnjHdGzfldv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 12:27:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jialong Wang <jerrywang183@yahoo.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [GSoC PATCH] object-name: turn INTERPRET_BRANCH_* constants
- into enum values
-In-Reply-To: <20260318003917.84792-1-jerrywang183@yahoo.com> (Jialong Wang's
-	message of "Tue, 17 Mar 2026 20:39:17 -0400")
-References: <20260318003917.84792-1-jerrywang183.ref@yahoo.com>
-	<20260318003917.84792-1-jerrywang183@yahoo.com>
-Date: Wed, 18 Mar 2026 09:27:09 -0700
-Message-ID: <xmqqjyv9gl2a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WZrLFhUo"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4852e9ca034so207645e9.2
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 09:29:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773851350; x=1774456150; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=i/3edT/TKkr6xyoqNlQ1FMLUNoPDTJt9oncOXKp4/uE=;
+        b=WZrLFhUoyoH0m6CMa37ZqmkchZ7G+KugHA4NMUKO0w6f4JHfke5QrUE1xqueRFtinu
+         7FTepo7TJ+m6ZH5n56BYcQLL9myIjhz6JwLUeNIOdKRYG9wt4fyQhSy4COBTssIQF0Bb
+         MxOThjx31Fzn3hnF7IjRlsV9qXq9wkex1K3ge3+SVW/SxMIb2CA30NOzMEz+U4ELhaSa
+         iy6JB9lCPCW22gEFGCtt4nQrcFEpb3yw8kJvT1SNjqdyYDORc4tRfuwf1naXhAjI33Mo
+         4OeaBA+IxEaOMSPoZtJnkzbwzLtjFZ4qo6Q+BA2TLbieTSc1BICfDFIzgrypppnwUcMp
+         0tPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773851350; x=1774456150;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i/3edT/TKkr6xyoqNlQ1FMLUNoPDTJt9oncOXKp4/uE=;
+        b=IJSxYGQx/eQNXIH1RZ1YafHcsNDWQ29kaGlIShT6DGv6fSPGuZcRlyyobaiK3SX3PW
+         GyXRGhPOqeM0bkQhDnfi/GGXWhHt0H1/izUj7mSQHZmtDihW1WMNIq/osm1S6BPLO/t4
+         7nJAUvcQd4zdLs11q8CvZSfbbp1itBsuOiozcMVKQObNTTY6ofMW4tpSLE6xsNrYIin2
+         ZGdxjiRv4CIZo/e9WpsUxIClhaM4DWyNYaAFQOWR3730rLQ09q+eq8NQhof2G/u8nvLy
+         TudLIIRkYCoYBOaq7PyZtCO3/p1I1aLwiP9OjxChKy14onEdzSCBbwPQ5zTpKYmykQgy
+         ra6w==
+X-Gm-Message-State: AOJu0Yx/+0uHWTPXenNl1+RfClHp2GJ4ExkOZ8IKD7drmmowiV9jP+gi
+	qHhg7qmuYiOEbiisWf+b7NsVJm6xGmr10YuGmFS/Z0jao1uRiRbLtIy4sFKDGHCnSuulsw==
+X-Gm-Gg: ATEYQzzss92JqETTz6vIyP3x/Ojn/hnMLtuLA1bgE4PVOE/bq6+v5SVXsAY8hk/6W00
+	QCEP+8CkbeMnjxBGX4Z8kN2dvLrAlbSFk2HZvHg1RjmSA/5SGYd+xXW6ylvspRMi6p/ew1s48bh
+	yS2hj2yjo9foF+4sj1Up+aJy+CqnMpIjpq9yFsWRZb3X8Cq/r7krn7UzCMLi9r4l4aBIZJWaJaD
+	k73mUVOLGOphA5bOMuSWlP82BffhTRYFJ/j7CKCxoPkE4c1LbbwCR/wAdAyIbKGPVoZtmEKb/Lp
+	FaMrmSnYDHTTslikTkR94K0j7+Y/T5S7FwQ9ZCziq53V1+ycik/oq2yao+oynEj4a1JSDxuis0J
+	zjLzsVyMd2sSJ7eIz2iwyOR5R2lx8i1uQHDXW6HU8/iepqSg7A+C7SnOhWDzOkeB+cPeGnRtAtB
+	fEcfFtjqMVWY3M809FYEryzrNByKKTH3RDlFfCrNybGwd9HMJ9InK5yc+JPL9RheIaXjW5qbyEO
+	zzBaPdi
+X-Received: by 2002:a05:600c:871a:b0:480:1c85:88bf with SMTP id 5b1f17b1804b1-486f4451195mr68126985e9.27.1773851349095;
+        Wed, 18 Mar 2026 09:29:09 -0700 (PDT)
+Received: from lorenzo-VM (host-79-19-37-238.retail.telecomitalia.it. [79.19.37.238])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b51892244sm9772495f8f.22.2026.03.18.09.29.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Mar 2026 09:29:08 -0700 (PDT)
+Date: Wed, 18 Mar 2026 17:29:06 +0100
+From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Siddharth Asthana <siddharthasthana31@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC Proposal] Implement promisor remote fetch ordering
+Message-ID: <abrS0q_Oc3kn_T3Y@lorenzo-VM>
+References: <abBh__zmlWXY-yjI@lorenzo-VM>
+ <CAP8UFD1=Ow6NNFKK6y5csmneVaS0J+e5z9pGjFmaVoJ2g1OPFg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD1=Ow6NNFKK6y5csmneVaS0J+e5z9pGjFmaVoJ2g1OPFg@mail.gmail.com>
 
-Jialong Wang <jerrywang183@yahoo.com> writes:
+On Sat, Mar 14, 2026 at 06:30:57PM +0100, Christian Couder wrote:
+> On Tue, Mar 10, 2026 at 7:25 PM Lorenzo Pegorari
+> <lorenzo.pegorari2002@gmail.com> wrote:
+> >
+> > The following is my proposal for the GSoC'26 for the project "Implement
+> > promisor remote fetch ordering".
+> 
+> Thank you for your interest in Git and this project.
 
-> Replace the INTERPRET_BRANCH_* preprocessor constants with enum values and use the enum type where these flags are stored or passed around.
->
-> This keeps the existing bitmask semantics, but gives the branch-name interpretation flags a dedicated type instead of plain unsigned values.
-> ---
+Thank you for reading and giving me feedback on my proposal!
 
-Overlong lines without sign-off.
+> > As soon as the the contributor application period begins, I will submit
+> > the proposal in PDF format to the official GSoC website.
+> 
+> Good idea.
 
-> @@ -1660,7 +1660,8 @@ static int interpret_empty_at(const char *name, int namelen, int len, struct str
->  
->  static int reinterpret(struct repository *r,
->  		       const char *name, int namelen, int len,
-> -		       struct strbuf *buf, unsigned allowed)
-> +		       struct strbuf *buf,
-> +		       enum interpret_branch_name_allowed allowed)
->  {
->  	/* we have extra data, which might need further processing */
->  	struct strbuf tmp = STRBUF_INIT;
-> @@ -1692,7 +1693,9 @@ static void set_shortened_ref(struct repository *r, struct strbuf *buf, const ch
->  	free(s);
->  }
->  
-> -static int branch_interpret_allowed(const char *refname, unsigned allowed)
-> +static int branch_interpret_allowed(
-> +	const char *refname,
-> +	enum interpret_branch_name_allowed allowed)
+I will send v2 and upload it pretty soon.
 
-A funny way to wrap lines.  Use what you have in the previous hunk
-as a template, perhaps?
+> For the patches that are merged to master, it could help if you could
+> give the object ID of the merge commit that merged your commits into
+> master, or alternatively the object ID of all your commits.
 
-> +enum interpret_branch_name_allowed {
-> +	INTERPRET_BRANCH_LOCAL = (1 << 0),
-> +	INTERPRET_BRANCH_REMOTE = (1 << 1),
-> +	INTERPRET_BRANCH_HEAD = (1 << 2),
-> +};
+Ack.
 
-I do not think "allowed" matches what this set represents.
+> >  * [GSoC PATCH v3] doc: improve gitprotocol-pack
+> >    * Link: https://lore.kernel.org/git/cover.1772502209.git.lorenzo.pegorari2002@gmail.com
+> >    * Description: Improved the `gitprotocol-pack` documentation.
+> >    * Status: Will merge to `master`.
+> 
+> Yeah, this has been merged to master after your email.
 
-The way "reinterpret" uses a parameter of this type (or the bitmask)
-is to specify which _kind_ of branches are _allowed_ to be considered
-for its output.  The bitset is used to specify the KIND that are
-ALLOWED.  The type should identify itself as representing the kinds
-of branches, while the parameter name should reflect what these
-kinds are telling the function to do (i.e., allowed).
+Ack.
 
-I'd name it "enum interpret_branch_kind" or somehing, if I were
-doing this patch.  If the type can stay private to a single C file,
-we may want to even lose "interpret_" prefix, but I do not think
-that is the case.
+> > Partial clones avoid this issue during `clone` and `fetch` operations by
+> > passing all the objects to download through a `--filter=<filter-spec>`
+> > specified by the user, which will limit the number of blobs and trees
+> > that actually get downloaded. The `<filter-spec>`, can, for example, be:
+> >  * `blob:none`, which will filter out all blobs.
+> >  * `tree:0`, which will filter out all trees.
+> >  * `blob:limit=5k`, which will filter out all blobs whose size is greater
+> >    than $5$kB.
+> 
+> Why are there '$' signs above?
 
-By the way, in the longer term, the set may even want to be possibly
-unified with what "git branch --list [--remote | --all]" internally
-uses.  At that point it might even become shorter set that looks
-like
+Ops. I wrote the proposal on Markdown with LaTeX support. Text between
+"$" is considered LaTeX. Forgot to delete it when sending the email. My
+fault.
 
-	enum branch_kind {
-		BRANCH_LOCAL, BRANCH_REMOTE, BRANCH_HEAD,
-	};
+> > The filtered out objects will be lazily downloaded when the user runs a
+> > command that requires those missing data.
+> >
+> > This mechanism works with the following steps:
+> >  * When the client wants to fetch some objects from the server using a
+> >    filter, the client, after sending a list of capabilities it wants to
+> >    be in effect, sends the `filter: <filter-spec>` capability, followed
+> >    by a request for the objects that the client wants to retrieve. The
+> >    following is an example of a request (extracted using
+> >    `GIT_TRACE_PACKET=1`) made by a client to a server to fetch 1 object
+> >    using the `<filter-spec>=blob:none`:
+> >
+> >    ```
+> >    [...]
+> >    pkt-line.c:85           packet:        fetch< 0000  # "flush-pkt"
+> >    pkt-line.c:85           packet:        fetch> command=fetch  # Execute fetch
+> >    pkt-line.c:85           packet:        fetch> agent=git/2.43.0
+> >    pkt-line.c:85           packet:        fetch> object-format=sha1
+> >    pkt-line.c:85           packet:        fetch> 0001  # "delim-pkt"
+> >    pkt-line.c:85           packet:        fetch> thin-pack  # Capability
+> >    pkt-line.c:85           packet:        fetch> no-progress  # Capability
+> >    pkt-line.c:85           packet:        fetch> ofs-delta  # Capability
+> >    pkt-line.c:85           packet:        fetch> filter blob:none  # Filter capability
+> >    # OID of the object the client wants to retrieve
+> >    pkt-line.c:85           packet:        fetch> want 394ca7a7b5e75a57e736040480f685c8b71844eb
+> >    pkt-line.c:85           packet:        fetch> done  # End fetch
+> >    pkt-line.c:85           packet:        fetch> 0000  # "flush-pkt"
+> >    [...]
+> >    ```
+> 
+> I think when lazy fetching like this, the filter is always blob:none.
+> It's not really used anyway because the objects that the client wants
+> are specified explicitly.
 
-or "enum ref_kind" that also covers different ref hierarchies like
-"tags" and "notes".
+Oh, I didn't know that. Makes sense.
 
-Needless to say, I do *NOT* want you to be doing this as part of
-this patch; I do *NOT* want you to drop INTERPRET_ prefix from the
-names of enum elements in this patch, either.
+> The filter is important when initially cloning or fetching from the
+> server to specify which objects are initially excluded, even if some
+> of these  objects will be lazy fetched soon. For example the checkout
+> part of a clone might need objects that were initially excluded, so it
+> might lazy fetch some.
+
+Ooh ok, with this comment I actually fully understand now. Looking back
+at the `GIT_TRACE_PACKET` output, I actually understand almost all of
+it. So the partial clone fetches (usually) the `HEAD`, excluding the
+filtered out objects, while the lazy fetching directly asks for the
+missing objects when they are needed, so the filter is not used. Got it!
+
+> >  * The server will apply the requested `<filter-spec>` as it creates the
+> >    "promisor packfile" of the requested objects.
+> 
+> This is important during an initial clone or fetch, not when lazy fetching.
+
+Got it. I will revisit all the instances where I made some confusion
+between lazy fetching and initial cloning/fetching. Thank you so much
+for your explaination Christian!
+
+> > A packfile is a binary
+> >    file that is used to compress many "loose objects", and it does so by
+> >    containing the most recent versions of the stored objects and deltas
+> >    of the previous versions of those objects. A promisor packfile is a
+> >    filtered packfile, where the unwanted objects are not present. The
+> >    promisor packfile is sent to the client.
+> 
+> 
+> > I created a minimal example setup, mostly based on the test
+> > `t/t5710-promisor-remote-capability` added by `4602676` ("Add
+> > 'promisor-remote' capability to protocol v2", 2025-02-18), to experiment
+> > with multiple promisor remotes, in order to not simply rely on the
+> > documentation, but to actually get hands-on experience. The example setup
+> > creates a `server`, a 'lopm' ("Large Object Promisor medium") for blobs
+> > larger than 5kB, a `lopl` ("Large Object Promisor large") for blobs
+> > larger than 50kB, and a `client` that interfaces with all of these
+> > remotes. It is created in the following way:
+> 
+> [...]
+> 
+> > Now, with this setup, by slightly tweaking the configurations of each
+> > repository, it is possible to deeply test how multiple promisor remotes
+> > are handled in various situations, and actually see what is described in
+> > the documentation.
+> 
+> Yeah, it's quite complex to set up.
+
+Yep. The complexity of the tests are the reason behind my decision to
+deeply describe them in the proposal.
+
+> > ## Testing Promisor Remotes Advertisement
+> >
+> > An important thing to test is the promisor remotes advertisement feature.
+> > This feature is dependent on 2 main configuration options: the
+> > server-side option `promisor.advertise`, which enables the server to
+> > advertise the promisor remotes it is using to the client, and the
+> > client-side option `promisor.acceptFromServer`, which describes how the
+> > client should handle the promisor remotes advertised:
+> >
+> >  * If `promisor.advertise=false`, when the `client` wants to fetch an
+> >    object that the `server` does not have,
+> 
+> I don't think it depends on the client fetching an object the server
+> does not have. It depends on the client using a filter because the
+> promisor-remote capability only makes sense in the case of partial
+> clones (or fetches).
+
+Ok yeah, I should have explained this better. Of course this depends on
+the client using a filter. Thanks for the feedback.
+
+> > the `server` will not
+> >    advertise the `promisor-remote` capability, and so it has no other
+> >    choice than to first fetch the object from `lopl` and/or `lopm`, and
+> >    then give it to the `client`. This can be checked by doing `git -C
+> >    server rev-list --objects --all --missing=print`, and seeing that the
+> >    previously missing large blobs are now present inside the `server`, or
+> >    by directly looking into the `GIT_TRACE_PACKET` output, and seeing
+> >    that there is no reference to the `promisor-remote` capability.
+> >
+> >  * If `promisor.advertise=true`, when the `client` wants to fetch an
+> >    object that the `server` does not have,
+> 
+> Same as above, it doesn't depend on the client fetching an object the
+> server does not have. It depends on the client using a filter because
+> the promisor-remote capability only makes sense in the case of partial
+> clones (or fetches).
+
+Ack. Same as above.
+
+> > the `server` will advertise
+> >    its promisor remotes, as seen by the `GIT_TRACE_PACKET` output, which
+> >    will contain:
+> >
+> >    ```
+> >    [...]
+> >    packet: upload-pack> promisor-remote= \
+> >        name=lopl,url=file://$(pwd)/lopl; \  # Adv lopl
+> >        name=lopm,url=file://$(pwd)/lopm  # Adv lopm
+> >    [...]
+> >    ```
+> 
+> [...]
+> 
+> > Recently, with the patch series "Implement `promisor.storeFields` and
+> > `--filter=auto`" [5], the new client-side configuration variable
+> > `promisor.storeFields` was added. It contains a list of field names
+> > `partialCloneFilter` and/or `token`), and the values of these fields,
+> > when transmitted by the server, will be stored in the local configuration
+> > on the client.
+> >
+> > ## Testing Multiple Promisor Remotes Fetch Order
+> 
+> Yeah, I think this is the most relevant for the project.
+
+Agreed.
+
+> > Finally, the last mechanism that is fundamental to understand is the
+> > fetch order when multiple promisor remotes are defined:
+> >
+> >  * When multiple remotes are configured, they are tried one after the
+> >    other in the order in which they appear in the configuration, until
+> >    all objects are fetched.
+> 
+> Right, but there is the exception of a remote configured with
+> `extensions.partialClone` that will be tried last. You mention it
+> later though.
+
+Yep, will mention it also here.
+
+> > This can be easily seen from the output of
+> >    `GIT_TRACE`, which initially tries to fetch the objects from `lopl`,
+> >    and then from `lopm`:
+> >
+> >    ```
+> >    [...]
+> >    trace: built-in: git fetch lopl [...] --filter=blob:none [...]
+> >    [...]
+> >    trace: built-in: git fetch lopm [...] --filter=blob:none [...]
+> >    [...]
+> >    ```
+> >
+> >    While, if we make it so that we first define `lopm` in the `client`
+> >    configuration, then initially `lopm` will be used to fetch the
+> >    objects, and `lopl` will not be used at all (because `lopm` contains
+> >    all required objects:
+> >
+> >    ```
+> >    [...]
+> >    trace: built-in: git fetch lopm [...] --filter=blob:none [...]
+> >    [...]
+> >    ```
+> 
+> Yeah, when all the needed objects have been lazy fetched, there is no
+> point in further fetching from any remote.
+
+Yeah, and so `lopl` is not tried at all.
+
+> >  * If the configuration option `extensions.partialClone` is present, the
+> >    promisor remote that it specifies will always be the last one tried
+> >    when fetching objects.
+> >
+> > ------------------------------
+> >
+> > # "Implement promisor remote fetch ordering"
+> >
+> > ## Project Goal
+> >
+> > This project aims to improve Git by implementing a fetch ordering
+> > mechanism for multiple promisor remotes, that can be:
+> >
+> >  * Configured locally by the client.
+> >  * Advertised by servers through the `promisor-remote` protocol.
+> >
+> > ## Approach
+> >
+> > The bulk of the project will be the creation of a system that allows to
+> > define the order with which the promisor remotes will be tried when
+> > fetching an object.
+> >
+> > The first goal will be the creation of a `remote.<name>.promisorPriority`
+> 
+> Yeah, or just `remote.<name>.priority`. The name is to be discussed.
+
+Ack.
+
+> > configuration option, which will hold a number between 1 and 'UCHAR_MAX',
+> 
+> UCHAR_MAX could be system dependent. It might be better to have
+> configurations work in the same way on all machines though. So perhaps
+> a fixed range like 1 to 100 would be better. Or are there other ranges
+> of values used for similar things in Git or other well known software
+> that could be reused?
+
+Mmh true. A fixed range might be better, I agree.
+
+> > and which defines the priority of that promisor remote in the fetch
+> > order. This means that the order in which the promisor are tried will be
+> > the following:
+> >
+> >  * All promisor remotes that have a valid `remote.<name>.promisorPriority`,
+> >    starting from the one with higher priority (the lower `promisorPriority`
+> >    value). If 2 or more promisor remotes have the same priority, they will be
+> >    tried following the order in which they appear in the configuration file.
+> >
+> >  * All promisor remotes that don't have or have an invalid
+> >    `remote.<name>.promisorPriority` configuration option. If 2 or more
+> >    promisor remotes don't define any priority, or have an invalid priority,
+> >    they will be tried following the order in which they appear in the
+> >    configuration file.
+> >
+> >  * The promisor remote defined inside the `extensions.partialClone`, no
+> >    matter their priority (which will be ignored if present). This is
+> >    necessary for backward compatibility.
+> 
+> Yeah, I think something like what you describe makes sense.
+
+Nice! :-)
+
+> > Having already taken a look at the code, I have a general idea of th
+> 
+> s/of th/of the/
+
+Ack.
+
+> > major steps to take to actually introduce the
+> > `remote.<name>.promisorPriority` configuration option:
+> 
+> [...]
+> 
+> > # Possible Issues
+> >
+> > From my understanding, the project as it is proposed will handle all
+> > possible cases, except for one. Let's imagine the following situation:
+> >
+> >  * `server1` and `server2` both use the promisor remotes `lop1` and `lop2`.
+> >  * `client` has both `server1` and `server2` as remotes.
+> >
+> > In this situation, the `client` has no way to specifically say that when
+> > fetching from `server1`, it wants to first try `lop1` and then `lop2`, while
+> > when fetching from `server2`, it wants to first try `lop2` and then `lop1`.
+> 
+> Right, but lazy fetching does not only happen as part of a clone or
+> fetch from a server. It happens when for some reason (like a git show
+> or a git blame for example) the user needs some objects it doesn't
+> have locally, and when that happens, this is not related to a single
+> server.
+> 
+> So global priorities are likely the most useful ones to have.
+> 
+> > One way to solve this very specific (and maybe unusual) issue is to
+> > introduce a way to associate a `promisorPriority` to a specific remote.
+> 
+> Yeah, but I don't think it would be used a lot. We can perhaps think
+> of some cases where it could be useful, but in practice it is likely
+> that if there is an optimal order for one server, it will be optimal
+> for all other servers too.
+
+I agree. I should have pointed out clearly that, to me, this unusual
+situation doesn't seem worth the effort.
+
+> [...]
+> 
+> Thanks!
+
+Thank you Christian!
