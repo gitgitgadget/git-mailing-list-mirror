@@ -1,114 +1,137 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5989F2566F7
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 16:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773852201; cv=pass; b=CsJRhO1k+vnAZc7mZairK5sQBKZ1rbXS1+6BjvrWr1LnF8zPGifA0/wxPw9yr5jzBc3xhgd5CS28xWsk+Zkl2jo2bMCCefOIhaGvC/fye4JIG4+R5OfibP2Gatq16IIsSMyCDaIPKKEy7+i333FOB5Qik9Fvm5+/wxA3JGV5rD8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773852201; c=relaxed/simple;
-	bh=W9uX8lUiKVcAEbeDNuv8KLjcTRT8oe8PWIB1vepc4Yk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Vg+5aZHgN4H1GGJHF2B0IwlKZsThBo7O/HHg5cgAx3P1NuCul/k0BH5gEgM2YX8FtcYvrVX6LeU4l7yk/nS+WqUZLfsejcIssKpo0gKA2qzWqFVQHB3id3GJ4e4Tgpp4txxrnkeoOmsi5i/TR1yR7oH9rl+QZDhh/ciXP6nNQNw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-12714f01940so9138c88.0
-        for <git@vger.kernel.org>; Wed, 18 Mar 2026 09:43:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773852199; cv=none;
-        d=google.com; s=arc-20240605;
-        b=fmkyHjFHVsW03XJe3RBlvte8mLUMIq04OFzPApu/xhvdJDRi6ZJMkbL8DK3Glo4Nqh
-         qWc8yf2EfC8X+dajTggiq1yWHA0CNFHLSxxCQ8IvPoKBZaybAWvMONh27dvNbm5yW+0g
-         UGnkiaNDWzzf8O2szB16vK/UcWcNpvzd814Ahk+rrTUOJB3FaI+ZPCYLBsKu9w8xgIaT
-         sqMX+fYgvSUF2Zhcwgn0CNf3eoyxBiiJWlAxUvcOL/92k6CQV02eebW/8tKadV6NHx4h
-         x6EOIwraWnxJcx2UMiu+g+hDy7Z1+lB38dotkMSOEWG+zExeK0gUYcnsER8ZHi6yOcSU
-         ro6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=HD9/t84UCpa8sgcQ8SYbjBCOKGoRwFw+VUdr8+jmD8M=;
-        fh=TkvboFALB8KQQ1VQErW9L5qKgHaSFGkT5kqd+vXT6hM=;
-        b=JnkvLqLrAfSdP7dDZttKMgRXxu8ib+17V8tmS8HvSciwfrnwxy7bigu0AXtKKXXwll
-         5jaPsC03/ztgHNY4u0xM3lBbWgN2w13EBF0zuXC2VgWdWk3Z2ATO4hwmv4PHSeqBfQVk
-         W91SJfX/Vj01LUtmMA8CTnf9zHT+f5dxpejfizXBIDYLLjV1MSb2XVwtbRARtC1wjkli
-         Zv2mbFY7MLP2+k4A+IPfAdi08LZoSUsTlpiEnrr1NzPLO4VCOkMuOCm1u+9M4Ex/CDIY
-         Zr/QRN/9BfXqkzpT7sVhjhkAT3YqzNQfp4gAFzpxGdwniDJUDUcwNvGmXQDRlK5C6TxW
-         teRQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773852199; x=1774456999;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=HD9/t84UCpa8sgcQ8SYbjBCOKGoRwFw+VUdr8+jmD8M=;
-        b=cSlb8Hk+KskUgXKmXF7TLmxVGu47vf708grCG3JdfPlC1AJyKtXtXMPEsKNDegEqoh
-         ZQfxjpQOE3RHLbVUyqElQZ6cPpsmg8jxTfoitrcU+OOz1PE+16OXrDqV4zh5gxF45ev2
-         sDP+gcaXoBDiu28kN3wEewOMMTWsH2IgzXTWqee83a6qOjZScdrAfBHK7voKKAnMoQTL
-         i5gIFqfRyGw5/PJgM0vk/5HaCRISbUSkQYkfrnLhmhO9ldYxTw4qeR+28LYFY9aPF7Jf
-         CaDeFky9ArqK3Lmfw+/8ufEntu7q8L5/4XiAKeUDF3YIoTFGjvBSm4Y8PQVH5vwXl8n1
-         AqwA==
-X-Forwarded-Encrypted: i=1; AJvYcCUTSIUkaG++U9WD0M1CSIJTPtVZsPqQXrnR33QOeMaEfqEHR5h+bH0Jk8GkJT6pn52fspk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzl1jT50h2+AqIccFrv4Af0kH5dh9qSbdOl6OXGBvUYZJ5rjVsR
-	xd7v65D+YyYG2I1xSWKQR7vnx6NX/KauK4pe11YTlYPaKJdfirXYZ7nJjyLKmwCNIBfB+cQ53dt
-	AIXBzoQWArP8xihse3uc7lKQuE3GbY7MyPg==
-X-Gm-Gg: ATEYQzxPI2J3z75ohkOvlDD2TkO03dQYebnuLuJQ1+Mno47a41TqgU4xexzzJQzjJN0
-	0tC98F43bxW/O5s+VPs6KskgBTdPVMIzvKtygLGao5KWyaWg39oIo3mDUzfkNs13x0e5WsROvGF
-	XvfN4Bo9SNVfC0qgirY4PhOO0y7oqlaTHgoM/sCGKtt2klEKjZmuZ1YVjCR26ZAZCXi0GeYUThb
-	gKmEoixHXBRshoNZSP0p4+e7pbiuJp4YZRKSVexQNW2ZhSqOvuOytUp+ft5AxkP5zMUC+52mMXC
-	KhXKzEHYja0XZ/qJF15bDis+SJdC59yWP8vkls1JWg==
-X-Received: by 2002:a05:7301:6884:b0:2be:6e6:e47a with SMTP id
- 5a478bee46e88-2c0e4f4b471mr977576eec.0.1773852199188; Wed, 18 Mar 2026
- 09:43:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADA733C1B7
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 17:12:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773853948; cv=none; b=sxU4F8y47BRjwOABbfI+QGzECuwT8dEFJp55ZAhqicS6wBix6zhFbBHvX1Ackx5rQMWuyvzUlmpGXF5DyG2fUP4g75qk9UnqvqnUAVUmvAwN71ubILRauOMs9okRwdvR2vqDRr+Pu/jz3UZUSQGfdwF4890qiw09eXGH73gs04c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773853948; c=relaxed/simple;
+	bh=ev5y+MfniqVyFC/oKhrtEAnhkG3mMV/QpEa9RBM2sos=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G7P3NSR7mfKaWhWLkGjPpRazxTQzhM+drdL0PGV4B/5sgoM78ZWxb1PsIxUS44wGhikO2OSSF0qUrCoqBSM5wzPhEEneNPfagbsv6GDzDAuqaSxDEA/K1e0N5lv01cUcy+C7o0UqJ5OKurxcP/ds+e2KoX+lzxcP5iQDxe7teog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lf7hxKnW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YvqWwUFk; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lf7hxKnW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YvqWwUFk"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8F805EC011A;
+	Wed, 18 Mar 2026 13:12:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 18 Mar 2026 13:12:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773853945;
+	 x=1773940345; bh=+FDJDUbGOBtfb9VDHM1KsO3E9kzezM536pzxSP14e1U=; b=
+	Lf7hxKnW0WNzaJVwV47eMJmGWTtajrdtglfPibWQGc5CH6xVcPKSCb+vRuA4c7sG
+	Qw5KjFx49VssIoYH0uIvKN9f+6ltQR/P92g/etWN30mkhFbZG4sJxY4bzwtxBKu7
+	R6qOFI7+DEQgTOBQ3cyS5upCQGfPb23wcjADnGoT3nZMTUSKFnArDQW8I0iZNFxW
+	5JEJDIVSfrdYXims85w9p6KV3G2QcDAr106ekDPbRJ1/VJNBzebwsWBd11rUgVC4
+	h5+cH0wEP3+Yoyg+kWOUNcgnegBjlAXp9fyESjMUXZgojR1nQ/k36cEQ8BjxveLN
+	1mdit14Rb5Y/sK/8AvP6/A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773853945; x=
+	1773940345; bh=+FDJDUbGOBtfb9VDHM1KsO3E9kzezM536pzxSP14e1U=; b=Y
+	vqWwUFkH6LRggZ6bMtw64jPwooy38PV7eKCYg/l+cwZG98f2qsBd8/ANTzBebnn5
+	rzvdtO2sphMSG65SEcy/r2lRAU7cB6C3kQ6eNi7G6RRM20C85H+XJmNUdUjiSIrM
+	q2U6xKuB2QG3F+Gsg+kJSv5Xk6jXBVDGsYpQCtSeHJVbD4DACJ7GP9Fm6p7u44s7
+	tVbR8VAL5qpL/LMT0VV9XUai3QNKK+DnBBbP8pTb92g95MDIgXio6GI/pLh6ltTU
+	T5J5kBigzKaYc8bPMEeqJ4qLBv2BPvUjg6sl92K2VcLtHExeQIGdgdR0kVG/+sy2
+	y0zkplceryvmNV7cQKdvA==
+X-ME-Sender: <xms:-dy6abUgiwjt8UbiYuPJsTS7k2YvCBKjdsv4UTSWRsFOoLNNrb3ydw>
+    <xme:-dy6aalLqiKoq6VYFJgrhN1-t-wi9M5GqK86BAvUUvDvWFzu-eoW0921kB9B_Fe6P
+    dMUYrMi1ikiJXy7dgzDAoXJHeCzv98eO0OWzDzsbLrqkeJFh103Ug>
+X-ME-Received: <xmr:-dy6acYaMn6aS-sr7-pgeENZVus2P4UkJavtEPVFhCso42-kAvFAcjq_fYXrftWPXCFwkyn-O8Qsqkbvc6_jDRLT1EqFpndE3A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdegieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
+    dprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:-dy6aVNYC_t92BAQayYqjZaNiaA6uvuMpHNEVqtMENhgOScB7DDj-g>
+    <xmx:-dy6aRZj9CiPcxz8wja0mT9l1-YN1tZAYYQqFG1HezI8txdABGIQtQ>
+    <xmx:-dy6aT1C8rtBRdSNpcDUi7NfeynKDXb4fEFpj-v8rCuPowoteKQwQA>
+    <xmx:-dy6aXcV0CufwEnbphAkMy_06tVnPxtgk3gR3zeQz7YP8VlOn1bv1g>
+    <xmx:-dy6aVKsXw1OKxgHZVpQBrkST2jsTIhszbB3tk17651OKje-anmWFH4z>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Mar 2026 13:12:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] apply: fix new-style empty context line triggering
+ incomplete-line check
+In-Reply-To: <CALnO6CDNwa8Ez4Ug0f8zNyxF1n3C_j8mLRbH7wChVioNoC5QVw@mail.gmail.com>
+	(D. Ben Knoble's message of "Wed, 18 Mar 2026 12:36:04 -0400")
+References: <xmqqldfql4hp.fsf@gitster.g>
+	<CAPig+cTTgLVGPG99gsb19BeJVWS=VZCU4F-rjb25yHTAORWwzg@mail.gmail.com>
+	<xmqqcy12l2ft.fsf@gitster.g>
+	<CALnO6CDNwa8Ez4Ug0f8zNyxF1n3C_j8mLRbH7wChVioNoC5QVw@mail.gmail.com>
+Date: Wed, 18 Mar 2026 10:12:23 -0700
+Message-ID: <xmqq341xgiyw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqldfql4hp.fsf@gitster.g> <CAPig+cTTgLVGPG99gsb19BeJVWS=VZCU4F-rjb25yHTAORWwzg@mail.gmail.com>
- <xmqqcy12l2ft.fsf@gitster.g> <CALnO6CDNwa8Ez4Ug0f8zNyxF1n3C_j8mLRbH7wChVioNoC5QVw@mail.gmail.com>
-In-Reply-To: <CALnO6CDNwa8Ez4Ug0f8zNyxF1n3C_j8mLRbH7wChVioNoC5QVw@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 18 Mar 2026 12:43:07 -0400
-X-Gm-Features: AaiRm53Mzj0FWuJw0CItcvNwTUXCfA-YueY6WqBWyBrbyccc7ohA7ufXgje-FC4
-Message-ID: <CAPig+cTx3Gho+uYd9+0SjE+x9GA6VMNu78riUZ=h5_QW2vUHNQ@mail.gmail.com>
-Subject: Re: [PATCH] apply: fix new-style empty context line triggering
- incomplete-line check
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 18, 2026 at 12:36=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.co=
-m> wrote:
-> On Tue, Mar 17, 2026 at 2:48=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > Eric Sunshine <sunshine@sunshineco.com> writes:
-> > >>  test_expect_success 'incomplete context line (not an error)' '
-> > >>         (test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
-> > >>         (test_write_lines 1 2 3 0 5 && printf 6) >sample2-i &&
-> > >
-> > > Perhaps the parentheses in the new test were copied from some existin=
-g
-> > > test, such as this, which already used them for a legitimate reason?
-> >
-> > Yes, the existing one was concatenating output from two commands run
-> > in a row into a single redirection, so (grouping of the commands) in
-> > parentheses were justifiable.
-> >
-> > The new one does not have such a justification.  Thanks for
-> > noticing.
->
-> I think braces { test_writes lines =E2=80=A6 && printf =E2=80=A6 ; } woul=
-d have
-> sufficed for the second example, and might be cheaper (avoiding the
-> extra process for the subshell, which we've been told is especially
-> expensive for Windows).
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-No doubt. I considered making the exact same comment, however, this is
-existing code which Junio's patch was not touching, so the comment
-would not have been directly applicable except possibly as a
-#leftoverbits for someone to tackle as a mini-project or some such, so
-I opted against saying anything about it.
+> I think braces { test_writes lines … && printf … ; } would have
+> sufficed for the second example
+
+Nobody complained about them ever since they were written.  More
+importantly, we have plenty of them that nobody complained and
+bothered to uglify so far [*].
+
+;-)
+
+$ git grep -e '(.*) >' master -- t/t[0-9]\*.sh | grep -v -e '\$(' -e 'cd ' | wc -l
+60
+$ git grep -e '(.*) >' master -- t/t[0-9]\*.sh | grep -v -e '\$(' -e 'cd ' |
+  head -n 20
+master:t/t3050-subprojects-fetch.sh:	(git rev-parse HEAD && git ls-files -s) >expected &&
+master:t/t3050-subprojects-fetch.sh:		(git rev-parse HEAD && git ls-files -s) >../actual
+master:t/t3050-subprojects-fetch.sh:	(git rev-parse HEAD && git ls-files -s) >expected &&
+master:t/t3050-subprojects-fetch.sh:		(git rev-parse HEAD && git ls-files -s) >../actual
+master:t/t3402-rebase-merge.sh:	(echo "0 $T" && cat original) >renamed &&
+master:t/t3900-i18n-commit.sh:		(sed "1,/^$/d" raw | iconv -f $new -t utf-8) >actual &&
+master:t/t4001-diff-rename.sh:	(cat path1 && echo new) >new-path &&
+master:t/t4015-diff-whitespace.sh:	(echo foo && echo baz | tr -d "\012") >x &&
+master:t/t4015-diff-whitespace.sh:	(echo bar && echo baz | tr -d "\012") >x &&
+master:t/t4019-diff-wserror.sh:if (grep "$blue_grep" <check-grep | grep "$blue_grep") >/dev/null 2>&1
+master:t/t4019-diff-wserror.sh:elif (grep -a "$blue_grep" <check-grep | grep -a "$blue_grep") >/dev/null 2>&1
+master:t/t4024-diff-optimize-common.sh:		( zs $n && echo a ) >file-a$n &&
+master:t/t4024-diff-optimize-common.sh:		( echo b && zs $n && echo ) >file-b$n &&
+master:t/t4024-diff-optimize-common.sh:		( printf c && zs $n ) >file-c$n &&
+master:t/t4024-diff-optimize-common.sh:		( echo d && zs $n ) >file-d$n &&
+master:t/t4024-diff-optimize-common.sh:		( zs $n && echo A ) >file-a$n &&
+master:t/t4024-diff-optimize-common.sh:		( echo B && zs $n && echo ) >file-b$n &&
+master:t/t4024-diff-optimize-common.sh:		( printf C && zs $n ) >file-c$n &&
+master:t/t4024-diff-optimize-common.sh:		( echo D && zs $n ) >file-d$n &&
+master:t/t4101-apply-nonl.sh:(echo a; echo b) >frotz.0
+
+
+
+[Footnote]
+
+ * I personally find that we need ';' immediately before '}'
+   intolerably ugly.
