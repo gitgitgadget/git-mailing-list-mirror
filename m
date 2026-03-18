@@ -1,38 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C1435972
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 03:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D036733BBC0
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 04:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773802987; cv=none; b=Kpz5y7iuGl/MkW2nj2hvORgrLRvWjQ5zRAU2CVrMJXjFMJsztGtmSDJoii4j961LjEQ+LnTis1oUD/6AcHTRvVVQn0IXwM3K1hpQOOmUuejFt5FB17Cg1cvXp3UnFcdNtyqncRYiKysE8aUWNOHc6dAFM83U7re9gUEu1Zdams0=
+	t=1773806668; cv=none; b=CPcik1c1GK59eqv2fxUUuccclE0ToD9SsC1kqRm6JssEbgss4GEGXBjQDZeVnMhL9PG4wqmWfnV0hGZYjaSnWdOeGLnu6yblAfXtDZF8aocUUSeactu0P1N9ycU9mp7mguGZIcnMW0I+xkUSD/UaKJ7n1t6iIG17mQ6yLHXTntg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773802987; c=relaxed/simple;
-	bh=K9pJCPnmAPbi81MRVe9hCnujSNWIPEPVOMlxRz2kiv8=;
+	s=arc-20240116; t=1773806668; c=relaxed/simple;
+	bh=csEV0xBqTRU1lOFJVsyNeVjCd+4bUx6S8Aj700KHn9M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fsxyh3pQD5hmh07nw7DeHRd3w2hkLKu3e78W5nmS6UtrNx+4gi/0tGL5DZVwNpsL4TbgGqQ//9CvmZDdztnUGvYhC433ZXN3RtA/7TW5KJXKP3k9rqGqcxbxPCFXwi48VVFzMueURNk71ofTwPbsYdxhyxDp4y2q4BHsGDghqNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VHE+VphS; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=QfC38SyZIjcxjE5qDj1hlAnEWcGWcNWKJFEJ5j5hnpO6gzWuv7iyVYOc3LhUpBLeaMUoZ5SUUMndKbe+9j3Fv4SrjIZusXP2zuRrmrkeW5Fi0CPJQYUM3daU61WYmQZu7uJi77WHALKcDMxnkHFcWJi4hEKFIsFe1vCg+XyHzfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CITjs5l5; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VHE+VphS"
-Received: (qmail 36890 invoked by uid 106); 18 Mar 2026 03:03:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=K9pJCPnmAPbi81MRVe9hCnujSNWIPEPVOMlxRz2kiv8=; b=VHE+VphSbD8Uj03erkQqKK2kHmfyrSwtROeUqV1+qhFU3MKYfaHgG5XxYFEC97OSxdICDHi4HBZQVDInibmm4KC7VXthPuaLaQiLOF0YA6zRd7WnrrJ5pKy1pl8+uKSz2dwDYmc3tL4beEXOXNVYwKVgNu08Wu4LsrSlx6DULH7f1u/h5k45i+Vkz9pZk71uO3G7KlELc4mJvTMpJ1Ez0xgJbaPnGgN/37o7sm0XjVcCyRPLr8urEphnSJ7b7pr4S+hSp1PHLtDY82IfNTpT2CpKSqEA3TDecQ/1J+0UlCrmieABsWXQZhz7bi9SZV1YoHpHPiVfFIyZNiNmYAGULw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CITjs5l5"
+Received: (qmail 37635 invoked by uid 106); 18 Mar 2026 04:04:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=csEV0xBqTRU1lOFJVsyNeVjCd+4bUx6S8Aj700KHn9M=; b=CITjs5l5hhdR10S8fe+r9HfCKiMOUwI0NDenrZYAZrInbvyJr68h86hA3dFKUTxOl3Sb6OI0umMmBoSd0R0LfVH4xiegNr7O0q2OS3MfO1uemzUa4BI41yd1OGS3VHsf3JojX9vhd3bz9dAxAq8dbgTsqKnJY9l7TKzvuIko9PyYxoX5PKl+0us1c1hNxX0kFF2xQLCx/o5ZFHkMVqxVhesplH9ooGRYEpUlzqIP0o96xXAp+RZKQX4EVfAuCakNtuXG+GF+nz+iF5m2OykGKeLv4kKjLCTANU8diZ6704r7oGwtirVbxJIPjO5cqgt9KX0id/jW2uc6pdGy0jb0Dg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Mar 2026 03:03:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Mar 2026 04:04:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 55613 invoked by uid 111); 18 Mar 2026 03:03:05 -0000
+Received: (qmail 56310 invoked by uid 111); 18 Mar 2026 04:04:24 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2026 23:03:05 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Mar 2026 00:04:24 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 17 Mar 2026 23:03:04 -0400
+Date: Wed, 18 Mar 2026 00:04:23 -0400
 From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2026, #05)
-Message-ID: <20260318030304.GA1926419@coredump.intra.peff.net>
-References: <xmqqh5qka8so.fsf@gitster.g>
- <abh/LUGAWUDx/E2t@nand.local>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+	Andrew Au <cshung@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2026, #06)
+Message-ID: <20260318040423.GA2858991@coredump.intra.peff.net>
+References: <xmqqh5qfmhdd.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,49 +41,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <abh/LUGAWUDx/E2t@nand.local>
+In-Reply-To: <xmqqh5qfmhdd.fsf@gitster.g>
 
-On Mon, Mar 16, 2026 at 06:07:41PM -0400, Taylor Blau wrote:
+On Mon, Mar 16, 2026 at 05:25:50PM -0700, Junio C Hamano wrote:
 
-> On Thu, Mar 12, 2026 at 05:10:31PM -0700, Junio C Hamano wrote:
-> > * tb/incremental-midx-part-3.2 (2026-02-24) 17 commits
-> >  - midx: enable reachability bitmaps during MIDX compaction
-> >  - midx: implement MIDX compaction
-> >  - t/helper/test-read-midx.c: plug memory leak when selecting layer
-> >  - midx-write.c: factor fanout layering from `compute_sorted_entries()`
-> >  - midx-write.c: enumerate `pack_int_id` values directly
-> >  - midx-write.c: extract `fill_pack_from_midx()`
-> >  - midx-write.c: introduce `midx_pack_perm()` helper
-> >  - midx: do not require packs to be sorted in lexicographic order
-> >  - midx-write.c: introduce `struct write_midx_opts`
-> >  - midx-write.c: don't use `pack_perm` when assigning `bitmap_pos`
-> >  - t/t5319-multi-pack-index.sh: fix copy-and-paste error in t5319.39
-> >  - git-multi-pack-index(1): align SYNOPSIS with 'git multi-pack-index -h'
-> >  - git-multi-pack-index(1): remove non-existent incompatibility
-> >  - builtin/multi-pack-index.c: make '--progress' a common option
-> >  - midx: introduce `midx_get_checksum_hex()`
-> >  - midx: rename `get_midx_checksum()` to `midx_get_checksum_hash()`
-> >  - midx: mark `get_midx_checksum()` arguments as const
-> >
-> >  Further work on incremental repacking using MIDX/bitmap
-> >
-> >  Will merge to 'next'?
-> >  source: <cover.1771959555.git.me@ttaylorr.com>
+> * aa/reap-transport-child-processes (2026-03-12) 1 commit
+>  - transport-helper, connect: use clean_on_exit to reap children on abnormal exit
 > 
-> I think that this one is ready to go. There was a relatively small
-> range-diff between v2 and v3 based on Peff's review of the earlier
-> round.
+>  A few code paths that spawned child processes for network
+>  connection weren't wait(2)ing for their children and letting "init"
+>  reap them instead; they have been tightened.
 > 
-> That review[1] said that:
-> 
->     There were a couple minor issues brought up in review, like
->     out-dated comments and the u32_add interface. So I think we might
->     need a v3 with a few touch-ups, but that's it.
-> 
-> , so I think with the latest round we should be OK to start merging this
-> one down.
+>  Will merge to 'next'?
+>  source: <20260312214945.4050010-1-cshung@gmail.com>
 
-Yeah, I looked over the range-diff for v3 and didn't have anything
-further to add.
+I think this is responsible for CI failures on Windows in t0061.24. That
+test does this:
+
+  test_expect_success MINGW 'can spawn .bat with argv[0] containing spaces' '
+          bat="$TRASH_DIRECTORY/bat with spaces in name.bat" &&
+  
+          # Every .bat invocation will log its arguments to file "out"
+          rm -f out &&
+          echo "echo %* >>out" >"$bat" &&
+  
+          # Ask git to invoke .bat; clone will fail due to fake SSH helper
+          test_must_fail env GIT_SSH="$bat" git clone myhost:src ssh-clone &&
+  
+          # Spawning .bat can fail if there are two quoted cmd.exe arguments.
+          # .bat itself is first (due to spaces in name), so just one more is
+          # needed to verify. GIT_SSH will invoke .bat multiple times:
+          # 1) -G myhost
+          # 2) myhost "git-upload-pack src"
+          # First invocation will always succeed. Test the second one.
+          grep "git-upload-pack" out
+  '
+
+But after applying the patch from this topic, the second invocation of
+the bat file never writes its arguments to the "out" file. I can guess
+what is happening is:
+
+  1. .bat files seem to write the commands they are running to stdout
+     (it has been decade or three since I wrote a .bat file, but I think
+     that is just a DOS-ism, and it happens both before and after this
+     topic).
+
+  2. Git sees garbage from ssh (really the .bat file) and complains with
+     "bad line length character". This also happens before the patch.
+
+  3. Now here's where we diverge. With this topic, Git will then kill()
+     the child process and wait to reap it. Presumably this is racy with
+     the .bat file running the actual "echo" command, and as a result,
+     we never see anything hit the "out" file.
+
+So I think we could perhaps just call the test badly written. It _could_
+use a more realistic fake-ssh setup that would actually complete the
+clone. But I'm not sure how, since the .bat file insists on dumping crap
+to stdout. Commit 71f4960b91 (t0061: fix test for argv[0] with spaces
+(MINGW only), 2019-10-01) seems to imply this came from a real-world
+case, so maybe there is some way to make .bat files work better.
+
+It could perhaps use some other mechanism that runs a command, like
+ext-diff. Or even "test-tool run-command run-command $bat".
+
+But it does make me wonder if there might be real-world cases that would
+be unhappy to have the sub-process killed immediately (assuming it was
+going to exit on its own after doing some cleanup, flushing buffers,
+etc).
 
 -Peff
