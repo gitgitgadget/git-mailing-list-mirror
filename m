@@ -1,118 +1,89 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAF127B343
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 02:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C1435972
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 03:03:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773801949; cv=none; b=OJJUNmlADNPSlUHDAuf3GsdR4IMAii65S8Q751QyvjS8EzGWFNEXs+ieTHdquCio7MUdAMvMudQe3DnUMKzT2KA5twZQp1fyu+ehe4gsRaF3hLaiD6JliObpL1BFw0t+8i43pHCkYPV8R1JusVHF0yRXnuMxQjma31lZB2thiNk=
+	t=1773802987; cv=none; b=Kpz5y7iuGl/MkW2nj2hvORgrLRvWjQ5zRAU2CVrMJXjFMJsztGtmSDJoii4j961LjEQ+LnTis1oUD/6AcHTRvVVQn0IXwM3K1hpQOOmUuejFt5FB17Cg1cvXp3UnFcdNtyqncRYiKysE8aUWNOHc6dAFM83U7re9gUEu1Zdams0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773801949; c=relaxed/simple;
-	bh=W0cWspixRkmL3GryELLfw6LSloO0DkqYxT9xn0m1yIE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DS88mDRP9g5AetCXh5lY+zoGGwyqoXHdxZZyk4Y4lRWg2EWgvnxCRQDb5ekF0mjgb8OXr2Q6iKW8k00c4X3YG2lWKJBK34fUmcnwbbyt8grvlkboI4LeK4e51fQRYw7l/RqfbRexylWDjlMiNq2hniAbaS0AWQtGcnh8LPp+tP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RpnBuB0I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xP8IkKyn; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773802987; c=relaxed/simple;
+	bh=K9pJCPnmAPbi81MRVe9hCnujSNWIPEPVOMlxRz2kiv8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fsxyh3pQD5hmh07nw7DeHRd3w2hkLKu3e78W5nmS6UtrNx+4gi/0tGL5DZVwNpsL4TbgGqQ//9CvmZDdztnUGvYhC433ZXN3RtA/7TW5KJXKP3k9rqGqcxbxPCFXwi48VVFzMueURNk71ofTwPbsYdxhyxDp4y2q4BHsGDghqNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VHE+VphS; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RpnBuB0I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xP8IkKyn"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 69FB07A010D;
-	Tue, 17 Mar 2026 22:45:46 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 17 Mar 2026 22:45:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773801946; x=1773888346; bh=ARnqB1kab1
-	QVGogi9dPzXHZ9wqyv1BkTUZO7TJmHHt4=; b=RpnBuB0I6g59qoa7AtPl5HIsUk
-	CLfUgTAXvEr2kO1UkRAS/g2tdXD71RGsBKxDNm/9/kKoRU5QtOHCVflT4wcVw1BV
-	HpNQRK/4PvJRXY/mzqvhVhUMfZik6C8fKUCwU3XJonQE+o03s4uWbeFzkQnvHSVd
-	O7iPkPpJylii9bKBn3orlvp+0JiOcq0qgTr5KP3KVKn8DHENNI0XpzUJs7NVzBR2
-	bA+VKhoywk0cByJBoSSqOZhEmNMafww6PFfXWzEEczg7h+Zpm0qBal9zaMEUjrS3
-	PcibfNu2QduGjYqFMrfo7e30TAg/S1gGNVm6EAjhD052Wu/SXp35OvN9Wtbg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773801946; x=1773888346; bh=ARnqB1kab1QVGogi9dPzXHZ9wqyv1BkTUZO
-	7TJmHHt4=; b=xP8IkKyn1bmbxTXt3o/PvPyP5d5mISBJcXFIO/xYzrtjYBcrDR2
-	wEVx3DOtGg0LHBnYEhkkgXJc08idHrj6rfiK90FzEyvZo1eafhRSQio79B03YerH
-	tcDbeBdWvWeF2GU3ktliKnj4qRloQqxfMpZrqHHwCLS8rubLnRjYqeYkQrA2fqNc
-	9bmFKpMpvbCS62v3QeoaQiGkcR2Jo6qxv7aqFg7q34IOF4Fyg0hmF78H0uaXrmvH
-	cRgpYg6yHriwR0MqNwgAOD4gLVIBpJmE71PFEyjAjQxWtnto8bHZzXmt06MbxDWw
-	+RbZcxgGMA/2Pkn8pr0QQsjBSTtSY/1XlOA==
-X-ME-Sender: <xms:2hG6aUYIs9vebcbiDoWpcqdhkfFu4FGdy2UrYxtuMBukw3B2lxM-2A>
-    <xme:2hG6aWYqYBxC55Rm-7xmqi6hyZb7wLsEXyg_l5-9yXo8X_ScIy06xq-mxGHqgF4lG
-    GOQiRg70Hfebp3eniQzaIClxxfVerdJrnNHhPzg5VQglc-AhE_B_SU>
-X-ME-Received: <xmr:2hG6aT-_-3I8X5TfyORPWRmyt2Dz0e0aj-jFKIGmRoGBpM6pPHg6XOSfHpvRJzGpl35t5ILviIVPGeWQLlTI3ho0UTeugwEs0Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvleeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthh
-    hprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2hG6adgVN-xtlx01MC87-lVuFtwLlPY4NnnXN7Thcqz8nZFfQH48Bg>
-    <xmx:2hG6abeSdTH6yuBe_mwQmKt7JsGemdWQQ6rejKyJvuIYdXxvIJ8rOA>
-    <xmx:2hG6acovKvKtQ5olCZ8qIyHJapFSeUi4GgghF9iarPvniBFGrK1NEQ>
-    <xmx:2hG6aYDoCMV249Ptzmi2ZXaMZGdXs-ENtStgjZyFPozrsRsQa0I3SQ>
-    <xmx:2hG6aRd6FTAWWMr83aHys5H6wJLEunEBX7vEASBPx3yv20ZamCbN6gi9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 22:45:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org
-Subject: Re: [PATCH] rev-parse: have --parseopt callers exit 0 on --help
-In-Reply-To: <20260318012214.GC720335@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 17 Mar 2026 21:22:14 -0400")
-References: <abYCxrEEPaI21g3H@fruit.crustytoothpaste.net>
-	<20260316220742.1286157-1-sandals@crustytoothpaste.net>
-	<xmqqcy13mgdk.fsf@gitster.g>
-	<ablCBkmOdoourCnO@fruit.crustytoothpaste.net>
-	<20260317145543.GA1828@coredump.intra.peff.net>
-	<xmqqv7eul71y.fsf@gitster.g>
-	<20260317184441.GA574291@coredump.intra.peff.net>
-	<abnwxmoOw-ZLT858@fruit.crustytoothpaste.net>
-	<20260318012214.GC720335@coredump.intra.peff.net>
-Date: Tue, 17 Mar 2026 19:45:44 -0700
-Message-ID: <xmqqikatj1nr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VHE+VphS"
+Received: (qmail 36890 invoked by uid 106); 18 Mar 2026 03:03:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=K9pJCPnmAPbi81MRVe9hCnujSNWIPEPVOMlxRz2kiv8=; b=VHE+VphSbD8Uj03erkQqKK2kHmfyrSwtROeUqV1+qhFU3MKYfaHgG5XxYFEC97OSxdICDHi4HBZQVDInibmm4KC7VXthPuaLaQiLOF0YA6zRd7WnrrJ5pKy1pl8+uKSz2dwDYmc3tL4beEXOXNVYwKVgNu08Wu4LsrSlx6DULH7f1u/h5k45i+Vkz9pZk71uO3G7KlELc4mJvTMpJ1Ez0xgJbaPnGgN/37o7sm0XjVcCyRPLr8urEphnSJ7b7pr4S+hSp1PHLtDY82IfNTpT2CpKSqEA3TDecQ/1J+0UlCrmieABsWXQZhz7bi9SZV1YoHpHPiVfFIyZNiNmYAGULw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Mar 2026 03:03:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 55613 invoked by uid 111); 18 Mar 2026 03:03:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2026 23:03:05 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 17 Mar 2026 23:03:04 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2026, #05)
+Message-ID: <20260318030304.GA1926419@coredump.intra.peff.net>
+References: <xmqqh5qka8so.fsf@gitster.g>
+ <abh/LUGAWUDx/E2t@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <abh/LUGAWUDx/E2t@nand.local>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Mar 16, 2026 at 06:07:41PM -0400, Taylor Blau wrote:
 
-> On Wed, Mar 18, 2026 at 12:24:38AM +0000, brian m. carlson wrote:
->
->> None of these seem like they're likely to care about the exit status and
->> I suspect that if they do, they are probably using `|| true` to ignore
->> the unexpected 129 exit code.
->
-> Yeah, I'd venture to say that moving from 129 to 0 would be a strict
-> improvement for the cases you outlined.
->
->> So I agree that there's unlikely to be any sort of backward
->> compatibility issues.  If the consensus is that this is shipped only in
->> 3.0, then we can do that, but I think many people are not going to care
->> and those that do will welcome the change, so I'd just rather treat it
->> as a bug that we fix.
->
-> Nah, I think everything I have seen points to treating this as a simple
-> improvement / fix that we can do in the regular way.
+> On Thu, Mar 12, 2026 at 05:10:31PM -0700, Junio C Hamano wrote:
+> > * tb/incremental-midx-part-3.2 (2026-02-24) 17 commits
+> >  - midx: enable reachability bitmaps during MIDX compaction
+> >  - midx: implement MIDX compaction
+> >  - t/helper/test-read-midx.c: plug memory leak when selecting layer
+> >  - midx-write.c: factor fanout layering from `compute_sorted_entries()`
+> >  - midx-write.c: enumerate `pack_int_id` values directly
+> >  - midx-write.c: extract `fill_pack_from_midx()`
+> >  - midx-write.c: introduce `midx_pack_perm()` helper
+> >  - midx: do not require packs to be sorted in lexicographic order
+> >  - midx-write.c: introduce `struct write_midx_opts`
+> >  - midx-write.c: don't use `pack_perm` when assigning `bitmap_pos`
+> >  - t/t5319-multi-pack-index.sh: fix copy-and-paste error in t5319.39
+> >  - git-multi-pack-index(1): align SYNOPSIS with 'git multi-pack-index -h'
+> >  - git-multi-pack-index(1): remove non-existent incompatibility
+> >  - builtin/multi-pack-index.c: make '--progress' a common option
+> >  - midx: introduce `midx_get_checksum_hex()`
+> >  - midx: rename `get_midx_checksum()` to `midx_get_checksum_hash()`
+> >  - midx: mark `get_midx_checksum()` arguments as const
+> >
+> >  Further work on incremental repacking using MIDX/bitmap
+> >
+> >  Will merge to 'next'?
+> >  source: <cover.1771959555.git.me@ttaylorr.com>
+> 
+> I think that this one is ready to go. There was a relatively small
+> range-diff between v2 and v3 based on Peff's review of the earlier
+> round.
+> 
+> That review[1] said that:
+> 
+>     There were a couple minor issues brought up in review, like
+>     out-dated comments and the u32_add interface. So I think we might
+>     need a v3 with a few touch-ups, but that's it.
+> 
+> , so I think with the latest round we should be OK to start merging this
+> one down.
 
-I 100% agree.  The message I earlier wrote (which contained the
-mention of Git 3.0) lacked "even" before an "if".
+Yeah, I looked over the range-diff for v3 and didn't have anything
+further to add.
 
+-Peff
