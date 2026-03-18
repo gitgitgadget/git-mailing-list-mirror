@@ -1,165 +1,84 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from server54-1.web-hosting.com (server54-1.web-hosting.com [198.54.126.117])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3737336AB50
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 20:57:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FBF3016E2
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 21:43:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.54.126.117
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773867473; cv=none; b=WKq573zNRbtEw85LxIvTYNY6JVzp00NYDnNcntXLhGPcpCKrAomp5tEH0NFeLY7tbOSEYL+1rfCSfcoRwk5hX0A6NTdSk9EdwgJDZB2jPqyvS7giGOCyczt5nqh0JZC8sE9k70jtrvIDSr/7btrWe82RmaLAUgrpEk0t07m84J0=
+	t=1773870219; cv=none; b=QnaA5W6fnlehQ60uFuXBpiSFYTZae/0/bkiRA3hi9rrAdNfIzVt8i9I/oXsthejxLTxpv9MyQYdB6BKst+CD2UM4r6VxUXLwYoqnoEpY+4VBZHWj+jKa1QmAgI7/mrxqPgZuxlZo91NJuCRoONzdTrKc7R5bStLRvXS520Bay4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773867473; c=relaxed/simple;
-	bh=qEBtfp9wtA9ODJrXjKP1kgPLCst2m0m9EgG8SG0VWto=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ebc4rNdCmmayL0kgrCYyi90CWTG8ivNtOTIOeiVRX+QlcOlmLqPj22aaU1RfsDwLP2SkumKNQM/WK/PrtlCDctaW4TqJ3DuT5Lh3FV9m61Q76M0DDkOdzJ9waP6NRMHkcXYBgIu6akW6Vb7yKIPjI8CdotEZKuGk+lov8eip7E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SS8RceMY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b6YEuI4n; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773870219; c=relaxed/simple;
+	bh=iSH0fDwtvkGqMllhCKlhOX5fnwZ8bY10BO47/RDh2NA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YCfBNl8GTAgv3tyjmq8fl8GIYbqel31IGsfuEQQSL3axXN5vMgkv//ETTe9Zaz2pVDa3IFgyvFGfwCZS6XqZsOV2ggjPcYsbkCsknwsU8CXwH5IcEc0GaST/GVGhJczCy6K8R6OLRibnk3oSsi4R+7aGQv2bZYqfOLNlld2wXPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gabl.ink; spf=pass smtp.mailfrom=gabl.ink; dkim=pass (2048-bit key) header.d=gabl.ink header.i=@gabl.ink header.b=HCP3TM2S; arc=none smtp.client-ip=198.54.126.117
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gabl.ink
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gabl.ink
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SS8RceMY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b6YEuI4n"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DACD97A0023;
-	Wed, 18 Mar 2026 16:57:50 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 18 Mar 2026 16:57:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1773867470;
-	 x=1773953870; bh=RosuH2f/ShLy7WT2EcMoHaS2oVjv5qI5Kj9GKkBcs10=; b=
-	SS8RceMYXto3Wy0c+l6Vi6ujvPTADN4bEFuD8EjR32npNa9lbQ7W3XGs9hSG7hIc
-	fRiSQjL8B/rFv9f5IlD3dI9P4MXqAgDgcYE6T3nhKsM4bOXE3icK5L+/gpaLxgZT
-	164Nsfd3ORBIt/1eMinBt+bvDYzc2i2er3Pc9xxzspgZZnPsiuHvgD9IAts3/JUy
-	+IwSqvM0oitBKFK07Ye9FisF8MSthytSgvgfjpKy6Z4U11N1PR4qZQLw22eL4Q1J
-	jXW86aYb4AiXddh4cRxpVQ5cu5nofIZSyg1r661Lpk7a7UrxZEc+pEFWAmwPW2jk
-	dQ9QEI9qhJrx+r8LyGBgEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773867470; x=
-	1773953870; bh=RosuH2f/ShLy7WT2EcMoHaS2oVjv5qI5Kj9GKkBcs10=; b=b
-	6YEuI4nd0JshPQItqjtMMzds3BFKONrKlrSAvRtZRU3Lhx30CgKhHQaXsIf8ane8
-	Hve90J5K4GJ7ZSilYG1WHbaKmlN386lO6Zist13zvDsL4yBsA0uvqQSOgUUaCMFB
-	saZ2ebmTlOQyJYLzbcPHAgDM9xmX/rmopVV+kjF4Ci/BKfWFpLg2ynlEJTUw2JFU
-	qWPcNeVFH3RixzNNBL8h/Jc7NxwIN5IPXwDvSsw0eKMJZTi0urg99S9vgSsCDf9z
-	5B6Okkr6bdJNwL7UqdKG2R7JQE/wGvFd8aY0XiqW0zNypncA17rmsEzGSYxrmMQO
-	6FJdjcBcOajLZYMtWEZww==
-X-ME-Sender: <xms:zhG7aRDJ_epCS75iig5XO7AI4OFPI_Rn8UuOPC6LbZxgRPlq0FGtPA>
-    <xme:zhG7aRwAQUrYBjzD9Uu5hFG6yvLO9v5XlNRrme6EGk6rdG_pucHaso2fyunLO1voP
-    hS1z9wMpxWSeMGQoLzZZCUKFjSBgzv9PQtXMLjhz90elLgjugTKiA>
-X-ME-Received: <xmr:zhG7ae0P2lDn1Jc69M6sKtGbrNXYnREvxTOlXr4Fnifqnz56Tl1OJkbi3COgm_JvhF09Wg5vqz99LSGv4lV_ixzdi6Xus9W_sQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdehudehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhp
-    rdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zhG7aRwkUxoYX-TYd0_wcvT5q73nKxIcyx7DhVzHzBz7CcyzFKs1YA>
-    <xmx:zhG7aVFcXMGmJF9zqJY8_zLewoXSIM98hp-W9zvC53GZLJIinXCVPw>
-    <xmx:zhG7aUZ0Pfr1FQf5Wk3y7sgBXKL13CCmWHoWuugiCVwgt29rtYDWjw>
-    <xmx:zhG7aXDBAxsw9Gy7kO_XiUuCj0vP-9dy_dhC-UrTXHTiPgSINxIHfg>
-    <xmx:zhG7abPUy2_NF7FfC1E01wqnZjyXzgy4KhDCwGiX9d6o4gjRe6jKNIMH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 16:57:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  me@ttaylorr.com,
-  phillip.wood123@gmail.com,  ps@pks.im
-Subject: Re: [RFC PATCH v2 2/2] push: support pushing to a remote group
-In-Reply-To: <20260318204028.1010487-3-usmanakinyemi202@gmail.com> (Usman
-	Akinyemi's message of "Thu, 19 Mar 2026 02:10:28 +0530")
-References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
-	<20260318204028.1010487-1-usmanakinyemi202@gmail.com>
-	<20260318204028.1010487-3-usmanakinyemi202@gmail.com>
-Date: Wed, 18 Mar 2026 13:57:48 -0700
-Message-ID: <xmqqpl50q2ib.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gabl.ink header.i=@gabl.ink header.b="HCP3TM2S"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gabl.ink;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
+	Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=GLi6Z1B3ToRNRdMsQ+Y0qHxl2EyWMDtaWpeAVbos1ZQ=; b=HCP3TM2SZX1+zKO3RCL0c++0O2
+	RV+OWvXhI+ZuUgvGomfHW4j63DGAXd1FSwLm/MNhdE9B4NOpIwCJWDR0MNG7Kr5acmQnMflEOsAdg
+	yz/QBXdMpUALIq81LVSBcfLx3PJfcv8Em+0+MiJYTcV2PX9xX2B7QMGBdK6xz7YytkPESLwUhviBc
+	+Qtt3v4bgEtDPpVxCMht8rW8oap3SFFSi9KXSghW2BH33ciZs69sBisA0sAEta7Nd8jy64E5BiwJN
+	oneDxV+iY5uh8Qz9T+3zqYfOq2BnqmshVi9jVgy3pNCMUu4ZrNYChyk8xH95ZFV47p59fmuePygTW
+	WfjCr9Yw==;
+Received: from [69.145.228.41] (port=57228 helo=gabou.search.charter.net)
+	by server54.web-hosting.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.99.1)
+	(envelope-from <gabl@gabl.ink>)
+	id 1w2y0a-000000059UC-149R;
+	Wed, 18 Mar 2026 17:00:52 -0400
+From: =?UTF-8?q?Gabriel=20=E2=80=9Cgabldotink=E2=80=9D?= <gabl@gabl.ink>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?Gabriel=20=E2=80=9Cgabldotink=E2=80=9D?= <gabl@gabl.ink>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] doc: add missing space on git-config page
+Date: Wed, 18 Mar 2026 15:00:19 -0600
+Message-ID: <20260318210020.759128-1-gabl@gabl.ink>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server54.web-hosting.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - gabl.ink
+X-Get-Message-Sender-Via: server54.web-hosting.com: authenticated_id: gabl@gabl.ink
+X-Authenticated-Sender: server54.web-hosting.com: gabl@gabl.ink
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-From-Rewrite: unmodified, already matched
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+Signed-off-by: Gabriel “gabldotink” <gabl@gabl.ink>
+---
+ Documentation/git-config.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> A known interaction: push.default = simple will die when the current
-> branch has no upstream configured, because setup_default_push_refspecs()
-> requires an upstream for that mode. Users pushing to a group should set
-> push.default = current or supply explicit refspecs. This is consistent
-> with how fetch handles default refspec resolution per remote.
+diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
+index 5300dd4..00545b2 100644
+--- a/Documentation/git-config.adoc
++++ b/Documentation/git-config.adoc
+@@ -221,7 +221,7 @@ Use `--no-value` to unset _<pattern>_.
+ +
+ Valid `<type>`'s include:
+ +
+-- 'bool': canonicalize values `true`, `yes`,`on`, and positive
++- 'bool': canonicalize values `true`, `yes`, `on`, and positive
+   numbers as "true", and values `false`, `no`, `off` and `0` as
+   "false".
+ - 'int': canonicalize values as simple decimal numbers. An optional suffix of
+-- 
+2.53.0
 
-Even if you are not pushing to a group but to a single remote,
-default=simple would die when the current branch has no upstream
-configured, so I do not know what the point of singling
-"default=simple" out is in the above paragraph.  For that matter, is
-"default=current" so special and would it be the only way, other
-than giving an explicit refspec, to make the push succeed?  Wouldn't
-default=matching, for example, work equally well?
-
-> +When a group name is given as the `<repository>` argument, the push is
-> +performed to each member remote in turn.  The defining principle is:
-> +
-> +	git push <options> all-remotes <args>
-> +
-> +is exactly equivalent to:
-> +
-> +	git push <options> r1 <args>
-> +	git push <options> r2 <args>
-> +	...
-> +	git push <options> rN <args>
-> +
-> +where r1, r2, ..., rN are the members of `all-remotes`.  No special
-> +behaviour is added or removed — the group is purely a shorthand for
-> +running the same push command against each member remote individually.
-
-One thing this does not make it clear is if we abort upon the first
-failure, or even after some fail we still attempt to push to the
-rest of the remotes in the group.
-
-> +Similarly, if `--force-with-lease` is given without an explicit expected
-> +commit, Git will guess the expected commit for each remote independently
-> +from that remote's own remote-tracking branch, the same way it would if
-> +each push were run separately.
-
-Understandable (even though it would be obvious from the "exactly
-equivalent to" above).
-
-> If an explicit commit is given with
-> +`--force-with-lease=<refname>:<expect>`, that same value is forwarded
-> +to every member remote, as if each of
-> +`git push --force-with-lease=<refname>:<expect> r1`,
-> +`git push --force-with-lease=<refname>:<expect> r2`, ...,
-> +`git push --force-with-lease=<refname>:<expect> rN` had been invoked.
-
-Understandable (ditto).
-
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 5b6cebbb85..33de769a33 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -542,7 +542,6 @@ static int git_push_config(const char *k, const char *v,
->  
->  	return git_default_config(k, v, ctx, NULL);
->  }
-> -
->  int cmd_push(int argc,
->  	     const char **argv,
->  	     const char *prefix,
-
-You didn't want to include this hunk, I presume?
-
-Thanks.
