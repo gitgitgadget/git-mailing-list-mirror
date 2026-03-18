@@ -1,157 +1,203 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from sonic317-26.consmr.mail.bf2.yahoo.com (sonic317-26.consmr.mail.bf2.yahoo.com [74.6.129.81])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0A83EF677
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 19:03:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773860615; cv=pass; b=m37lvH2FS+5SMtgb0WF1fx/BSGr/trC29BB1q8SJ441FfyHeWuSApqqBg2RnYSOfvpmhu2VHyEJ/3R8vgM1pJq5TzrUJqXG+klQmXEgdbDtr3LhmtBTP+12nSh3550FDUcVPyp0YN/I2lTy2p4f6h/PIBbbrMrb7efOfrITwdMg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773860615; c=relaxed/simple;
-	bh=06JZQOoXLzsFfYeob3uwXMIErwzmjGym83HKejdzYNY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sENOdAwbgScYzIkmc1cZAa5mIkGp2vQJa0znJwwDYt8ZDlSvF7SiSQfNwlHEhW+pOwxJRXT1WS1r1HHI35N0tm+NybGB61ADn0Mn91E7PDWf8A+lL7Om9yfdHeNcjMR6WfoM3HuoQT6PNomTQ+msLbZ/EgrGPHBhm4fqLEYbbEM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K1/W4JPf; arc=pass smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDECB3EF678
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 19:09:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.129.81
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773860992; cv=none; b=EAQGvIj8DQVbi1s+ZTNWym1HgwLcnh575xPv/D7oKI7h9sIbzqdeyH4Y67W+4wACOiBJjuQSftX2bWarf74rlBgXoIVHj1EnFBTGSPrExyoLZYQTdiKSlO/Qs0JOZm4VtXxJjvRf/1+aHpjjWpQQf9MtSj09Gdk4LynCFW+hdPw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773860992; c=relaxed/simple;
+	bh=BGUvQtWBazFUUcC74l/RqVUCb77KHTznEEowRtIDv6Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=b0TjxAnr8sZzTo5hVgucT1woKEuv0CmYFJGy+dAKXhyJV7U/UjmXtefCKFCb6RC9D9bahd1ugQ7Se8G+lN+r+Lc7wA2poF41Z4hF/39cySb4tju2BEkXvwO8BSl1BmU7XMymwEo58xlWh5qaXAdUyhMOTUBXbHVfl27Kc+gxl9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=HZfJf+dA; arc=none smtp.client-ip=74.6.129.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K1/W4JPf"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-79801df3e42so2017557b3.0
-        for <git@vger.kernel.org>; Wed, 18 Mar 2026 12:03:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773860611; cv=none;
-        d=google.com; s=arc-20240605;
-        b=N1qyVHXmyvHKs49d12Vkdfxk7vHrLgPbhbQrLw7NsMc+WjrgQTAnWf+n0Lu3RG22Bk
-         ZNlhBiJja9oOX5t1OhnouCdBMjk6/dOEVPlyFrq4zxf2sH3ejZe0OXtGEyAf4Gz4eEJQ
-         wPjxex2DNRHSlSqxfnkGGh/3XOLeERxS4t9M2vj1pq12URuQoytJ9Z7C3BbLGBIctLcf
-         vPd2M48+AJXiDF7cF9d72A0vqaDxwGqVrpiUCqbKPDQxCHqLQvn7gkTihQpZVjTiTtIC
-         ZH5g2mesz+RhKkYOTdFyouWqHZyrOGw3miUdFL0wj2zPE3khaotdTiJTvDW1mN9C9g9h
-         AmGQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=eH8REMSslVrUAqjgEFEDirQgb4W46UHUGU7twaOwvDc=;
-        fh=hHqhiOrzf5xE5jmmOz6TpY2jYLs2fWP96Cdd+HOHyAo=;
-        b=Ub6PH0eU97nzl2Nm/fC5PWnG30ki2sNoDmh7ErIDAqkRGorJHPogvwoMa9lXyLj4eT
-         dvgmFFTDQ359DEWG5tcA9ZW9Nq8seeBzyBNMUZVD+9Gj5c1Z0sz/9t6TJ5IqUNg31OLG
-         2fwWXdtk/g/xnmv/eDZoWVz8PrHqcT4KzGKgiYs3gFgINpVEw3cxHoRl9OdWDAuLP0Eg
-         SWYejfvJEkDSZcrmQiygX6PGGBI7Np/7quMb2PkYZeRDj36xHvqdfUNZca8WaRfkYD+D
-         n047eUQAMA+NbCvFw+Pj4cMeTgPITFUfgsNcDzFE1T3KP1bCMBxn0q988bCrFLGFTSrT
-         iUgA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773860611; x=1774465411; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eH8REMSslVrUAqjgEFEDirQgb4W46UHUGU7twaOwvDc=;
-        b=K1/W4JPflqxmgKAZe7BN9cLlnPEioGmRhPX1i+YZ2/C85kV/qbyprkmbdHC8aAFdb9
-         YMgmUD0KZTQE6tJJ3NdCvoeEZFWO4v2IaM7Pny0L/ZFSsMz2636kM0WRBbEc1LCkeQOa
-         /WHQOrawzH+hGuGz3jYIdbDEWwEiRiPyhM9RH/h67TpJRS85WUhyjKbZTeY3btk5hRa5
-         S42MgN6AmaLglnFLbvvDDylTymIhRxEa9bbbMo6AcFiCAZyMmHUnVcvZ/bcjkpB8VrRG
-         Vcv3QZSGuPjwu6NNvGndyeVpWbv+6OZ/14apRYxVtrBSHJsB/A2ofGvROXSD1wHvkVXa
-         7Epw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773860611; x=1774465411;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eH8REMSslVrUAqjgEFEDirQgb4W46UHUGU7twaOwvDc=;
-        b=jmtOjq3q0VIguu7fAlxW78AIp9Q3El1vPxZ2j50bz99jdctJlf+TNdTzHpGvDz2QSS
-         3wQVg08XbrbHXG9TNQTlNpVTkxrzD2ZgN1UrYwqlFR3ydhvGxRf7o6ae7z6veowXQwfL
-         vUOdz2lU0+HovHWGEdVAsVMR9/6LcsHn1Lh1FYdWYuu7W8uMjuwkFrZzLow42wWmGbzi
-         HRnOQByzhE+KdaTfNhOzrVkahlC6wf46fPCU18AtDtYj0se3XvRMdVZT2dPGDVcmpGUb
-         H4KzIaV654CAUD2q53W/FnUC/4BpPzw9kqnuIW23AsPNv77tOkYD6LcNNf2noNKhyxsK
-         iTWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWZ67OcotGFW2GZuxN11v92iD0C6bKUYJqy2X1NFq6ianOE4t1mf+gbZwkNhZfv5XWj3dY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7EhZk9AMvY4hWWwF6VP+k7Gvy10Evtrxwypl4ycDFbNCb4K+l
-	8UfsK09UC8zRRFW6yfCVq1+KoSXf49fcn775pfvVHlhnTQyi/6WJzJDWNNIBHu1/XxAjvhauFTg
-	U1dqzj2cYGwfQ3HR011WWQc1gYaEGFoI=
-X-Gm-Gg: ATEYQzzRljL4zgo0brE7JKKWLVLweoMo0dRi+gdv/8+Sbmi17x7s8cnnW/ynVuQbL1+
-	xNbGxBbMgbJSt2VZ8UgI67+CDnqxnka7wVchu1APEmba7K1bf4m9SnbnnWUzbRooXwbkN/FqafH
-	aYs3uA++Ah8Fs+mGjKs3jP1im0EOhkWGGH0ofpo0onwPVMCz/RY66uDMphq3XktREiE39ptGjPt
-	sdR74XXa7gGYPWq8A9K/+IlvBRflQ1Ld1a6PUdkToEfHme7LKOBavEm8tb5amxP5oTfr4+H+7GB
-	nGsSMaE8stMvtl4lL08x4L8ujgecSDUO6oIRG384MRcMu+ZgfDuB9BazqXmf0NgMClt6ViS0JLj
-	AE0MXYtRZIBv9f2xiXRo21cc=
-X-Received: by 2002:a05:690c:c247:b0:797:e635:697a with SMTP id
- 00721157ae682-79a81a2f077mr8637567b3.1.1773860611327; Wed, 18 Mar 2026
- 12:03:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="HZfJf+dA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773860983; bh=mwZJpDbvICKzMqD+dOBIpJheMEahH0btHMLM4yVD6z0=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=HZfJf+dACPY4mXPih1EnEmPKMTfTBw+lqTcKdL4HdATxpchAx6IjtY7RZwj8BgFNO5QBkXBF1VYJbZpuUYN/uZHspZjvh6kj4CrpDffr1lk3JA4s7559dnNqY/QDQRwvjWC+ZWR+rbWpBYhj4TWclMNNeZjiIkDQQxnKVHQ2ANwid9ouauHf8Nx139oriYwg87yYz94lGIvvlm6rv9eeZStKEvRz7VhBZhG8CavH8xVGv6LL0c7jDi2ARpND36Ik6n3xC3x1a4zdnHNXWLyWETN6WdjZaYUsSEs0MLWJv4AmvpYbpoQjexUz2r0aPvWAuWb/75O+ju708Ms4XQl+MQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773860983; bh=ObixPGxV5Fwg0y+CE+pYx6oaeflKCeXMkz7iZR8Ga/S=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=BJ5MMvi+MMBoyVA9at3Dkya8EApqkbOohlgxYNvoau7BzDi7GKEj0QagxS02kNvtekW3Yz2ZaSOYy7XTbqQdxJdWSMs2zpqZZ0ARqXPK1j2hReii7zcjf8q/yS5qz+DSNw8af598kNRGWaQWiCU0hHzTd9+w/g2mqJ7w6IVgVXpIOzy2PspHENQnORgsPP6XWYzDE0kZpbiryN4h3O+duzAl+MttfTzhHiLKikRKfO4AVOn8MstolEF1cmrLkznLKZk6HaRmI6BTuXHEq8/X2jlybW0jdiynCIS7puCRj4tqKnLgi5KEtYoiFn7QpwjQPHLX0jAllvvn3HcNVUayIQ==
+X-YMail-OSG: Yw9DbuIVM1nkvbY8r0K1PXd8lzGO_ENjJ7PIqBU1mxItgOCM3huN2Xjr_tH6vdc
+ EC96rWY6972wW6yQovmejasg0qGj3i.8DyW3XxOcCiX8kLPMVP3ryBNqxCgTvEaGCPq5WoN7SE.K
+ A6JIcHNkTKa7y08Uv7z.QkpIO8GOy4RaU8eM2S_ec5_2FvqM0rSc7bDmv5f1hDTcid3sC9VopCAc
+ xEqzNASBDlDNTcJZRbHviX4IfFD2G9rXQQ9Xeoy3GzsRUieO3g691ejBWtJnpCiWE3Zq8TMdTW3S
+ xiShCvdnDOvkmOVf0ShJd3g3v1EsVCQAso_y2Ffh4mtD1cmeKZH2kcK4A3r.TPI2jxuBPSLOlH6n
+ lBnmywrEEyTEfOzCyVzSBKiwwuiE9LNxvmRL9SeCGyPDmARXkykaB0wtRtuAD.v7bQwZedqJhyX5
+ y2C0yd.N8JaXRhoRXYchYNyihw2uGDqRpDS4DNR8Vl..AGDL7mhGRNrdEYd8UroRqlAsKtxnyLDZ
+ DkapJParo1J5BcR_X.bneYq4Qs3uB706ptz6aPVZZwNJ1op8L77LNjY8PyWPMmoSAgCEILm_fZMc
+ uOTi.ERZm6Z6EUZ2M_fjpwXg.Q0XBYOrvwu9gn8_wMsWtCihzKjp7w3noQFlyk9QEtIaq8KU74X7
+ 2cUUSzP.awvaH2ktf3w509nD7brkJbUY.D3FGis0brLFJke5PnXwWCtChsbenyPRkUID7SUEd9Dl
+ hco0dhXPYzES45cc0.pB5Drnf8qeAp2aKRlOQDiSYWm8kCzkbbnS9bkPR2DeRp0.e.Ol4YlS.zGD
+ zUcMTqsAkSp3Ve1YK9FWfCKMi9kPFsU3Ms8chHSL.1xXz_BeUwfR_4LEBiVx1Ex__pImMY5p36d_
+ ZWAzjEkqapZMplhjm5cNw09PelRkrC48bQZYjLzZybQbDZ_j_l2VTNs3aJXXNfwkxSTq2rRdwdzI
+ 4WbjXDA5UG4l5lo1Pq3e1egz1ahIPaxUppYbd0r_HYn.mLtAN0yx2JzwZBKKXxAG.aJb0SxRtmtr
+ QtZGo9WRZgJxBU46d9enIwSRlLjdtuRbM9PXkePTM6ZOX.e6nioo.so5B_rZcmbY6TP8UVNn_xo9
+ RyVZqmquCu2ry9HBnB4pOw72anC5pn4VvsjUHctDi_b8n.4ai_CyK6C7Z5vIZLk1bj.heSzSQEk2
+ Dii6mmD62XNTDnj9ku4.OWfE_NYaTNNXaTkTrA6OSGguGhjxjQKp4mFBZvor0pNm8o7t7.EnUQry
+ sabImz5B5ajOPp7cPDLWHHY25X1iwSDKYSq7Bx2Uky.REfAYiWka3NjnB6hPAnIB6yG3bSSoomx4
+ 3s..XA1Gdap__2UbYeHCIO58jpHaz6dbMX9cGCeyUndDODcIUoPFYyIkxZ7l6JDy.MCBFYECM5J9
+ y9ibUhK68k4OznsYHbrzPn3XpgiF8rOJrC6QZEWiiY55wtSIwvH9Gw.HV9xafBQrjrnILmYBvpmo
+ m8sqGcq260f0i4l9FXvXEbWEgm080WS9Ko1AFdotLY_SFXoDBCIAHLKk1M.7Ait_3M1QZoJSO3dY
+ AQ9RzbjwLaj0.iM7oPWOCq.ICc3.pjESYBjk8RlT_mJNzpyCnirEtxlJJ_bURSQvN_cVy5kwX7Zx
+ XgjUKJqXIuqw5pPVvr42Cl1GmU5imWozARwpFQU0M7eXXCd7.G.LbEriOpyQCT_j4s5HwBGBPBth
+ jZ2zS0fiSBFOIhBq0zdHC4J0NbssvBkARj6nfXDialzHsWE0VRH_ZOZYD12fzLX.jpq4caal0zJI
+ 8_x0Iupi614CocQiB_AhVUGK9Qd19rFIVCJUj7uFm_WjWy2HqdcSpEyZi5UpeNlUxehWQyy0fpNn
+ oZ31vAHVDRVcsN4zSoFTb79ob2xJyYCrMqMFmaG_9QyE4KLsNyhhnSLLfVZjU5lo3vTm0Em1HsZs
+ HFJudz3l3.to4ShfoJE19gli3qdO675Os2dna2FlUeNzdmC2lgneVYM6gnrfY_qHgzkkXHCJzel0
+ B3CM3JLE6QsvZYfqJrxu97xM82elsa2Z_brOlq1Xqp0I8A86fOoZscFmoO0qD57R8_9J70ZcQvHX
+ KxI0ln60Ifw9cIvK9sCAOFO8uN0Ij__ZULuA9eOtxu9_dZyNQAU7VLxROw1.kU._pmK4VAMbSaKT
+ mdmuKX2M02JqsYYcwYXM_feYSF4qcuTp3c28vgfomieCg7eFlZo79rmLfSKgfmd.BKhCDJmzbDif
+ v_geGt3LffABDP9Xt5UQ2i09IznDHLX66G8oW0aWl0O0eK3A8ujwk7_O9s9jq4JqfkVToNtotPjG
+ boYYPcIL0FaGM42BYNVNC7Vq.2b_unMoo
+X-Sonic-MF: <jerrywang183@yahoo.com>
+X-Sonic-ID: b490df39-2b00-4acd-a896-8349db546fe4
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic317.consmr.mail.bf2.yahoo.com with HTTP; Wed, 18 Mar 2026 19:09:43 +0000
+Received: by hermes--production-bf1-697f88457-dbpm9 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 9193f12581b10bee7941321f9cd6255f;
+          Wed, 18 Mar 2026 19:09:42 +0000 (UTC)
+From: Jialong Wang <jerrywang183@yahoo.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	karthik.188@gmail.com,
+	Jialong Wang <jerrywang183@yahoo.com>
+Subject: [GSoC PATCH v2] object-name: turn INTERPRET_BRANCH_* constants into enum values
+Date: Wed, 18 Mar 2026 15:09:42 -0400
+Message-ID: <20260318190942.22595-1-jerrywang183@yahoo.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260318003917.84792-1-jerrywang183@yahoo.com>
+References: <20260318003917.84792-1-jerrywang183@yahoo.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2071.git.1773857555312.gitgitgadget@gmail.com> <xmqq7br9q8d6.fsf@gitster.g>
-In-Reply-To: <xmqq7br9q8d6.fsf@gitster.g>
-From: Pablo <pabloosabaterr@gmail.com>
-Date: Wed, 18 Mar 2026 20:03:13 +0100
-X-Gm-Features: AaiRm52VfVYmLKPvfA7P4J_bGFBRYla7oWnn9Hp1aiizFvaLYmx1kweJmFLzYV4
-Message-ID: <CAN5EUNQOrBC9o8go=Vehzyzt4R_1eN2Hn5Q8t+E7am9fRc8_sg@mail.gmail.com>
-Subject: Re: [PATCH] t2107: modernize path existence check
-To: Junio C Hamano <gitster@pobox.com>
-Cc: QUANTUM via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	QUANTUM <adityabnw07@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano (<gitster@pobox.com>) writes:
->
-> "QUANTUM via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Aditya <adityabnw07@gmail.com>
-> >
-> > Replace '! test -f' with 'test_path_is_missing' for better
-> > debugging information when the assertion fails.
->
-> OK.
->
-> > Found using: git grep "test -[efd]" t/t????-*.sh
->
-> People seem to add the above to their test-path helper patches, but
-> unless the coverage of the work is fairly thorough and you want to
-> say "all the similar issues should be found with this command and I
-> addressed all of them", I do not see much point saying how you found
-> one of them and addressed it.
+Replace the INTERPRET_BRANCH_* preprocessor constants with enum
+values and use that type where these flags are stored or passed
+around.
 
-I think it is because of how it is explained on Ideas for microprojects [1].
-It is written:
+These flags describe which kinds of branches may be considered during
+branch-name interpretation, so represent them as an enum describing
+branch kinds while keeping the existing bitmask semantics and
+INTERPRET_BRANCH_* element names.
 
-    Steps to Complete
+Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
+---
+v2:
+ - rename the enum type to reflect that it describes branch kinds,
+   not the allowed set itself
+ - keep the INTERPRET_BRANCH_* enum element names unchanged
+ - wrap updated declarations and commit message more conventionally
 
-    Find a test script using old-style path checks:
+ builtin/branch.c |  2 +-
+ object-name.c    |  6 ++++--
+ object-name.h    | 11 +++++++----
+ refs.c           |  3 ++-
+ refs.h           |  3 ++-
+ 5 files changed, 16 insertions(+), 9 deletions(-)
 
-    git grep "test -[efd]" t/
-
-and later says "Include which command you used to find the instances
-in your commit message"
-
-[1]: https://git.github.io/SoC-2026-Microprojects/ "Ideas for microprojects"
-
->
-> >
-> > Signed-off-by: Aditya <adityabnw07@gmail.com>
-> > ---
-> >     [GSoC] t2107: modernize path existence check
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2071%2FQuantumDev-CERN%2Fgsoc-microproject-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2071/QuantumDev-CERN/gsoc-microproject-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/2071
-> >
-> >  t/t2107-update-index-basic.sh | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
-> > index cc72ead79f..3bffe5da8a 100755
-> > --- a/t/t2107-update-index-basic.sh
-> > +++ b/t/t2107-update-index-basic.sh
-> > @@ -86,7 +86,7 @@ test_expect_success '.lock files cleaned up' '
-> >       # the_index.cache_changed is zero, rollback_lock_file fails
-> >       git update-index --refresh --verbose >out &&
-> >       test_must_be_empty out &&
-> > -     ! test -f .git/index.lock
-> > +     test_path_is_missing .git/index.lock
-> >       )
-> >  '
-> >
-> >
-> > base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
->
+diff --git a/builtin/branch.c b/builtin/branch.c
+index a1a43380d0..1572a4f9ef 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -228,7 +228,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	int ret = 0;
+ 	int remote_branch = 0;
+ 	struct strbuf bname = STRBUF_INIT;
+-	unsigned allowed_interpret;
++	enum interpret_branch_kind allowed_interpret;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *item;
+ 	int branch_name_pos;
+diff --git a/object-name.c b/object-name.c
+index 7b14c3bf9b..2b2a0435fd 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1660,7 +1660,8 @@ static int interpret_empty_at(const char *name, int namelen, int len, struct str
+ 
+ static int reinterpret(struct repository *r,
+ 		       const char *name, int namelen, int len,
+-		       struct strbuf *buf, unsigned allowed)
++		       struct strbuf *buf,
++		       enum interpret_branch_kind allowed)
+ {
+ 	/* we have extra data, which might need further processing */
+ 	struct strbuf tmp = STRBUF_INIT;
+@@ -1692,7 +1693,8 @@ static void set_shortened_ref(struct repository *r, struct strbuf *buf, const ch
+ 	free(s);
+ }
+ 
+-static int branch_interpret_allowed(const char *refname, unsigned allowed)
++static int branch_interpret_allowed(const char *refname,
++				    enum interpret_branch_kind allowed)
+ {
+ 	if (!allowed)
+ 		return 1;
+diff --git a/object-name.h b/object-name.h
+index cda4934cd5..167a9154ea 100644
+--- a/object-name.h
++++ b/object-name.h
+@@ -101,9 +101,12 @@ int set_disambiguate_hint_config(const char *var, const char *value);
+  * If the input was ok but there are not N branch switches in the
+  * reflog, it returns 0.
+  */
+-#define INTERPRET_BRANCH_LOCAL (1<<0)
+-#define INTERPRET_BRANCH_REMOTE (1<<1)
+-#define INTERPRET_BRANCH_HEAD (1<<2)
++enum interpret_branch_kind {
++	INTERPRET_BRANCH_LOCAL = (1 << 0),
++	INTERPRET_BRANCH_REMOTE = (1 << 1),
++	INTERPRET_BRANCH_HEAD = (1 << 2),
++};
++
+ struct interpret_branch_name_options {
+ 	/*
+ 	 * If "allowed" is non-zero, it is a treated as a bitfield of allowable
+@@ -111,7 +114,7 @@ struct interpret_branch_name_options {
+ 	 * ("refs/remotes/"), or "HEAD". If no "allowed" bits are set, any expansion is
+ 	 * allowed, even ones to refs outside of those namespaces.
+ 	 */
+-	unsigned allowed;
++	enum interpret_branch_kind allowed;
+ 
+ 	/*
+ 	 * If ^{upstream} or ^{push} (or equivalent) is requested, and the
+diff --git a/refs.c b/refs.c
+index 6fb8f9d10c..18b28db6d4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -740,7 +740,8 @@ static char *substitute_branch_name(struct repository *r,
+ 	return NULL;
+ }
+ 
+-void copy_branchname(struct strbuf *sb, const char *name, unsigned allowed)
++void copy_branchname(struct strbuf *sb, const char *name,
++		     enum interpret_branch_kind allowed)
+ {
+ 	int len = strlen(name);
+ 	struct interpret_branch_name_options options = {
+diff --git a/refs.h b/refs.h
+index d98c1fc591..d65de6ab5f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -1,6 +1,7 @@
+ #ifndef REFS_H
+ #define REFS_H
+ 
++#include "object-name.h"
+ #include "commit.h"
+ #include "repository.h"
+ #include "repo-settings.h"
+@@ -225,7 +226,7 @@ char *repo_default_branch_name(struct repository *r, int quiet);
+  * repo_interpret_branch_name() for details.
+  */
+ void copy_branchname(struct strbuf *sb, const char *name,
+-		       unsigned allowed);
++		     enum interpret_branch_kind allowed);
+ 
+ /*
+  * Like copy_branchname() above, but confirm that the result is
+-- 
+2.51.0
