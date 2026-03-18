@@ -1,118 +1,129 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE510364958
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 19:22:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773861736; cv=pass; b=XvbJb6mVD/tDJRPvkVjGRXB9hV8wlfOfIIe7zf8myyUraEjF6IU4lKl7AAPjakUVHvspKN4TzVCQyaN9bIDbzl+yTLHRWqdz+xVb3mBkkh/i7ns5+BmdvHGnDrIjoGdUVmdqaaKYzkuQMzgMLypjqbVcJNwMi9od3r7lTAAHWLk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773861736; c=relaxed/simple;
-	bh=85mDFKoRIJzLVeuWDInw0EnOuqvuxW4qyJuADo59aAE=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBF4331218
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 19:40:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773862829; cv=none; b=j/J9xtD1P3L2guMyL+YOaWGqR3cLEeH2Vu4EaGF3Hgbk4HWKmxFPdmpvwDQkFUQJKRmSUIYFES+R0ym3k7ekLZkASgzOWVSFbNngKRQA81wnIaTIhSNcUvLQ581lVbEMW5bWbXSeoqMjf+kX0LtgM9XbUtfu452Ig7zaJNnAPWI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773862829; c=relaxed/simple;
+	bh=2SDbiSik7dSln7d2pdr8TmbqiAY0602tBcdYIejSFr4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uXi/RDS8ZpXnC5+96i2GNB8inG0LOQJuusm1s5/MbpL1V7WKdj8Wgo1N1XuYuPr7bW61T5GqrUUM0kTtJmKEh1M3B8QStuVMtQboqxblyYuCNcJn3Qz3CpVL65jAl+/MQWTQG1xEc+yzYsx7jsVkV4qlScxs/SpOkIKzv6ouVr4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Si6QC87H; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=Faz368JCVMWF+ZtByeM7UsBLqqZ/9F7z11daJiZjEpbr3GJBtWJeY4ZtrDEP0ZUs5ad2vYLFrA4D+iFRWKOofGrqhva5dLvXOrI7ySMkNrcBv/x35tDl19OTA4a9NUrD9SZJ+fa49CQ+SY1Wwr0tw9S4qgYqadD8+lm2xaCGUCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B5Cxsk6l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rdX5x2LZ; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Si6QC87H"
-ARC-Seal: i=1; a=rsa-sha256; t=1773861716; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=mkm2ClqrzxroUB4W8bgALqRP6H9iHpBugaLFNzbNIuHhj9bUkLaFAcXUdNK74uYvnDlpQmYG4AcmvwR6wNHtWCI7w0olBtPSYPzlanpdzTtiJA8e1u9kr+9kdF87efAD3MjSRa4sL9pOTDvRletYOU/SK1mHqcnJKOHouGxmMZs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1773861716; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=l2uhrziDFxvCwOmtU1rQpCtKQ0A4AH0YfHYXP46H9Sk=; 
-	b=UVtc4JMkYp1Ni2iZeBGdT3dpuqp8+ZWaDhgiyqfC7CbmQYDbIPRSvkfhBEZiUm0abdAyc6kN2PqXLyGDsxiG6+nERXr3KOeSIebiPu34hOYIxZH3dLXoD5QXWEjgapVBsqihug49LVTOfevkUSQ7eszB3FGnBXytfq6E4U1aRWs=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773861716;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=l2uhrziDFxvCwOmtU1rQpCtKQ0A4AH0YfHYXP46H9Sk=;
-	b=Si6QC87HU5pBOZgkRNo36oubO3a5jN8stpTWhxmy0cxk73NKFMOytjhszwAqqo8y
-	4fATc0AVWvrmqD5i2tEVADAT7/qtJlEC8USwsUmWFFIdcLvK7PlUXM5xmJX6Cb0s0bw
-	DIRILnJb2HXaBUXdMXEclLJ//W3zx06nZVj+Q96U=
-Received: by mx.zohomail.com with SMTPS id 1773861714011441.04104981579223;
-	Wed, 18 Mar 2026 12:21:54 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
- <emilyshaffer@google.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
- <steadmon@google.com>, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, "brian m . carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 7/9] hook: add per-event jobs config
-In-Reply-To: <xmqq341zpqhv.fsf@gitster.g>
-References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
- <20260309133739.294555-1-adrian.ratiu@collabora.com>
- <20260309133739.294555-8-adrian.ratiu@collabora.com>
- <xmqq341zpqhv.fsf@gitster.g>
-Date: Wed, 18 Mar 2026 21:21:49 +0200
-Message-ID: <87se9x0wqa.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B5Cxsk6l";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rdX5x2LZ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 52EBD1D001A9;
+	Wed, 18 Mar 2026 15:40:26 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 18 Mar 2026 15:40:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773862825;
+	 x=1773949225; bh=SDJ9xoVFakd4JOrr4R4vmnH/9lMxRFxXcooq3dcdtNs=; b=
+	B5Cxsk6lFgKHGtKEHvSg3DJBvguUG3DJBkMwA2uhhpHdIpKZGwEwdqelUzb/XEz4
+	QTkeobiyvJ2zY396entI55j9vHzQ/KHnXdwcG85VXhP1vPstrNqFewRHhYDN4XOL
+	UQh2pSWuUcf6NeQpF8KPUF8uewYSwHbLAUi1ZwzYzD9Gwl6zvwGw6Kg1Amy1L4bs
+	1tP6cZWpvC/kG8ba8jrXdQkblk4N22BgdzsWAQ0y6TJTySWKsulYGSMkZyBl53Dt
+	IkmhhJoFKJM2PAQ8k/0B+6RxYetnThLN+yFTK8rYA6W8DKvus6P4CRGxSgvkxPiC
+	r3kSzHsD91Yzr8vK4jckYw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773862825; x=
+	1773949225; bh=SDJ9xoVFakd4JOrr4R4vmnH/9lMxRFxXcooq3dcdtNs=; b=r
+	dX5x2LZrLdE6btvAhtTg6jD6NmQicVb+9Tqky3/njoJhX5JybmY3FwZG4VlZOM/v
+	sIvLM7ak5M0AQ17fbq7rVPnElR1TEOw6Rqpl9njtAbT/LJEzVWYUAb4Tcsjsm2gi
+	bNFirRz+r4L7X1m78TverGADc4YNYIPaAhagVEccqdBvB0lwvfQqaV4MTUfKdYjD
+	HfYF3wWfOuUY64S+ZoDCtKAi+36fizW2J88zSp/k6bPIDZXpc6KMDFyRuDUDj5No
+	yIZAb0uwvGBLSbN5MEipx6aZzSb+pUKnOfPi7g9AbsOD2eFr7mF8W6PiuqR08Zk7
+	9a3SSDSYbxTL+WbvDcgQA==
+X-ME-Sender: <xms:qP-6aZca4pvVwVwhzzjU1ubbtXfAYJYfQQu1GrFsmPDNxtua5h8ZDg>
+    <xme:qP-6adNzX9Fzz9QEuGMyOhxfgx_USFY_j-9umYpiw2jOpbsUnCHYUiZ7Ku_uIPHUw
+    aHp0dERbFKBQ5eOfUeNTyhBotvWtRJbQUDtTBiyuIZpzrT1MDyemQ>
+X-ME-Received: <xmr:qP-6adVL-Du1MXaFl7whZxoQMalHewyWqozQ8Uy95rCHOA47yj6FRlGCY-hCg4gnHUrNs-JmeN7eT7Lu4gl4RRPeIm2Rag1qVA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdegleelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
+    esfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhesghhithdrshhtrhhovhgrrdgu
+    khdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
+    dprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    rghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruh
+    hsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkh
+    grrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:qP-6aVy4p_2yUDd5mLAl-7WZMCJWOg7QZTk3CmvNUBri0JZdSqC1rA>
+    <xmx:qP-6aU_pVvZKGQdrWuxxSIrkl2Co46ojGvlV55uZBUpU91zelAK7sA>
+    <xmx:qP-6aa_W6vHWn_NERMaKZgRANEc29FaogDYal7Iy5LBTbTQ3tS_56g>
+    <xmx:qP-6aTXmgKAUZHEgiRQDk4-AF5fsbaww4uAfhpSOfRRd1uCt6ms0bA>
+    <xmx:qf-6aTbSMT3mMr3ErMkU9Qydn4zu2Bgtm87YAo2J7JRbOQ50fXREES9R>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Mar 2026 15:40:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Mathias Rav" <m@git.strova.dk>,  "Phillip Wood"
+ <phillip.wood@dunelm.org.uk>,  "John Cai" <johncai86@gmail.com>,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,  "brian
+ m. carlson"
+ <sandals@crustytoothpaste.net>,  "Patrick Steinhardt" <ps@pks.im>,
+  git@vger.kernel.org,  "Karthik Nayak" <karthik.188@gmail.com>
+Subject: Re: [PATCH v2] merge-file: fix BUG when --object-id is used in a
+ worktree
+In-Reply-To: <4b2a192e-240a-45d2-92a5-7ab669f481a9@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 11 Mar 2026 21:16:13 +0100")
+References: <86e5c9f7-cd99-4c4f-a852-f3b1ada53722@app.fastmail.com>
+	<abATPiRUczb8fe4t@pks.im> <xmqqh5qntpvy.fsf@gitster.g>
+	<c076edd0-9057-443b-ba37-33aacde2eede@app.fastmail.com>
+	<bcbbdcb3-9c4b-4eb8-9e70-3eb0bd19b32c@app.fastmail.com>
+	<xmqq5x72qnu6.fsf@gitster.g>
+	<4b2a192e-240a-45d2-92a5-7ab669f481a9@app.fastmail.com>
+Date: Wed, 18 Mar 2026 12:40:22 -0700
+Message-ID: <xmqq341xq63d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, 16 Mar 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+
+>> diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
+>> index e270ccbe85..fad0b41af0 100644
+>> --- c/Documentation/SubmittingPatches
+>> +++ w/Documentation/SubmittingPatches
+>> @@ -335,7 +335,7 @@ date)", like this:
+>>  ....
+>>
+>>  The "Copy commit reference" command of gitk can be used to obtain this
+>> -format (with the subject enclosed in a pair of double-quotes), or this
 >
->> +hook.<event>.jobs::
->> +	Specifies how many hooks can be run simultaneously for the `<event>`
->> +	hook event (e.g. `hook.post-receive.jobs = 4`). Overrides `hook.jobs`
->> +	for this specific event. The same parallelism restrictions apply: this
->> +	setting has no effect unless all configured hooks for the event have
->> +	`hook.<friendly-name>.parallel` set to `true`. Must be a positive int,
->> +	zero is rejected with a warning. See linkgit:git-hook[1].
->> ++
->> +Note on naming: although this key resembles `hook.<friendly-name>.*`
->> +(a per-hook setting), `<event>` must be the event name, not a hook
->> +friendly name. The key component is stored literally and looked up by
->> +event name at runtime with no translation between the two namespaces.
->> +A key like `hook.my-hook.jobs` is stored under `"my-hook"` but the
->> +lookup at runtime uses the event name (e.g. `"post-receive"`), so
->> +`hook.my-hook.jobs` is silently ignored even when `my-hook` is
->> +registered for that event. Use `hook.post-receive.jobs` or any other
->> +valid event name when setting `hook.<event>.jobs`.
+> And now I see for the first time that the doc points out the difference
+> already... I’m really paying attention it turns out.
 >
-> This design is unfortunate but cannot be avoided, as we do not want
-> two hooks (i.e., two different names) that react to a single event
-> specify .jobs value differently.  Naturally, we need to worry about
-> what happens when somebody gives the name "foo" to their hook that
-> reacts to "foo" event, but that would probably be benign if there is
-> no other hook that reacts to "foo" event.  I also wonder if we want
-> to sanity check and complain upon seeing hook.foo.jobs set when
-> "foo" is not a known event type.
+>> +format (but with the subject enclosed in an extra pair of double-quotes), or this
 >
-> Perhaps anything that appears with one of the .command, .event, or
-> .parallel are likely to be <friendly-name>, so having .jobs under
-> such configuration key is safe to flag as a mistake, or something?
+> I think replacing “with” with “but” is good. But why “extra” pairs? It’s
+> just a pair of double quotes.
 
-I think this is reasonable, yes, and it helps avoid confusion between
-per-hook friendly-names and per-event "name" values.
+Because they can exist but they do not have to be there to be
+understandable?
 
-Will do in the re-roll.
-
->
-> A careful reader who is reading this message from the sideline may
-> notice that I specifically omitted .enabled from the above "clues
-> for friendly-name key".  I think hook.<event>.enabled that acts as a
-> master switch to prevents all hooks from firing for a particular
-> event (when set to 'false') may be something people eventually want,
-> in addition to per-hook command hook.<friendly-name>.enabled switch
-> that can override it (or do we want to forbid overriding it?  I
-> dunno)..
-
-I think this is reasonable as well.
-
-Having a higher-level switch for all hooks in an event should be useful,
-in addition to the already implemented lower-level per-hook
-"friendly-name" enabled key.
-
-I can add a new commit for this in the re-roll.
