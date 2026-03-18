@@ -1,113 +1,196 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5A42DCF52
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 15:37:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056D03E3D86
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 16:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773848258; cv=none; b=tiWrfaqEFUGMFiW+AWc6XVmoxFwQGTdf2RE3DmKpfy+/EZxRiotfRFZ6tkI+P9qqI1uUTGWxYvqnpKItq0y4mQwIpeoXpKoJihwlwufKJDRpN6y1xpt+q/t8ETxVZGkXWBcI5lXdy0cBEIdMyPNpXaWe/flI62dG8DNASAVK9Wo=
+	t=1773849931; cv=none; b=Yko2xxnxdr+1DpCQGMcH0rFiAdL3020AmJze7vkLkb/BCnNrrRvyuYEwp0O5F7hIlWUd/hi5O26CwJgcFqIDaONM/4iNsK27UxZb+tf7ce90zI9kdtOQBL1JklX1akjbOAhNQOAbwcUunu59An25UOXOJd/YwmVo2NqBtPi+luk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773848258; c=relaxed/simple;
-	bh=nl2sPUCdEg0qGMr8xtYwP0QbUk7B0Bs3HaDUvgZZ3HM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ZW1SfBCHap2V3ETNO7J3c6QKcPmEqtpZdG0kUYIi1fCXdiyzG2DxdG7dKdlDiCOF1YQzDwrXFMrgv3en43+6iumVcW2XvF0J/qFS+4vKY1o/CaRZFCP0z2VCmb5fIjZKN7glOjNwf4HcQBs223XHRLC96U/6GnPwMl9etKPDWR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=n7s0zyj4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l+KeQ5fW; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1773849931; c=relaxed/simple;
+	bh=iP43RjDnFG+uNd6sfYHclKhkrvHuUcTnAW+Ba9jxNx8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dSsMG7IJWgpcpSMxKK/1VEkOVvblWte9rgt4p3P+UmvWyqeMFahTvvVsdao1eujlkc+KtnEEFHmoY6LIIjRFnKrYnviqVOQybbc1R9vuAFiJ2rzFOZKYtDQi2PrVBKvwc631yl8TJ/Bq8akQk4tVEsglOAh25f1XgzeWdEyc8cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L9rAFhEX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hnWWf4rK; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="n7s0zyj4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l+KeQ5fW"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id A2D431D00072;
-	Wed, 18 Mar 2026 11:37:34 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Wed, 18 Mar 2026 11:37:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773848254;
-	 x=1773934654; bh=gylrrAILwn22X7ijJSsZ54cEw5XvFINESsodTfcltO8=; b=
-	n7s0zyj4zQ7Adv2jh323piFS6oaps3OlVI7fGadqBx8QLi8NODSuZJCEbjCs/PsV
-	ZO7cX5PaXyHaZfKiQw8LkiJi3SVdaMl79yiRoWX7RubFhjgMHkwXM9i09+ElKDMT
-	MJPTR9J9UcAWkCi2nBRqTDfXtsEyCEfoiUP33VmhA9swE5JjPbXp9q/DvR6RbBFA
-	brp7WWV3nYswxeoyLoAnRAE/gz7DroaRDW0F7q4YokauIWfRveQR5bR8GGyB2hUe
-	0Tkj4wieyYaJjokDiqlE1mu70G45qI9GWEhiS1kALy4ncmUIsvZqsXSG4o++yV5W
-	0X6wpwNaeM+YKJLXUVdcEg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L9rAFhEX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hnWWf4rK"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6B74E140007D;
+	Wed, 18 Mar 2026 12:05:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 18 Mar 2026 12:05:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773849920; x=1773936320; bh=dkOHnX16QS
+	sn153Hrfl/mksGzQFCzY0ghhhal/V4HrI=; b=L9rAFhEXcJc44t9u1yLl4gjEXO
+	ycBxuNTzFM27l2MkiDc7S5C6zbx7QfYgiFAw2tsFFQAtrMUJ6aHoct0GVHQtZJ5C
+	YbOwR+1RXTbP8ocAEYZZ1aX2nwH4OMUa5kS0CGzHR4VLEANXeMqNsLnHQlPX4tdD
+	KZxw/lANExvzNqRPYOqNa6O1HMLofWZZfgz9sDmRsGURkQcXuL7xC2Z1iPYGEWUN
+	nPVYfbKrGWeVVg/F7YEJ1YGZAubR+h6nbOq0t1TWDqeJ6AOMt0R8Jm3WJOqVYK2c
+	/AKBsvBdWQBygNdzwlzp8Lf5fdy1q9py/3pAZLO5HruhgAYy7nwS1bVYM7AA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773848254; x=
-	1773934654; bh=gylrrAILwn22X7ijJSsZ54cEw5XvFINESsodTfcltO8=; b=l
-	+KeQ5fWmZdALXCuvUz7MyWvbIbIKdgae3H5qE9nTZruOERmbRttXjz7eOztTZm7+
-	BqKrnTv9ezRyklQvi0xYXTqpf5l3mYVKJ8ugPpriLn6nLAIIpAY3frN3kPV6Kwyk
-	Ysn4OUlpw2QpEFyfAWeset+0X1/lJCDbNPV6GM0Q7iWsgwixtS97j2yW0MeTrZAE
-	RaRh+A44xA0Jsi5g992wPZngV5rmXULxYuUMa3E1g4MHjqmGrq7+i6119s7t5E0Q
-	cvBDofbnNfTs/jqb2xk/5hdU9+gVJI83VgVerEBKxsYvg3IG2AQY0mlQELqm0xP/
-	2LmE7DJXx4vKCppOdniww==
-X-ME-Sender: <xms:vsa6aVD_Z6DwFy2v991uT27Fcg3KvTydKD2aSr3iDjB60y7G96twJBs>
-    <xme:vsa6aeVo-FQbtzs-eiUiLRTHoPDGs2xg7NAq2kqW4Yb1FjzvbFq8-kpbp4I2Ci2Pb
-    UhXa-o_f1PNXw8a37zZulHHlFj_pup9xUai6SoUoGLgifwUK4bnGA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdegheduucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773849920; x=1773936320; bh=dkOHnX16QSsn153Hrfl/mksGzQFCzY0ghhh
+	al/V4HrI=; b=hnWWf4rKm5BKDupPD7MF1evIDw7eCdEb47PEjTnU6McPtmA5n8F
+	1+I1QgvnIaCrKX4tYjlzW+DRTHIht3mE+Z3M4PiFP70RyMsssADYWU233YHPiW90
+	BEaQGbbuo84xAqAWAtZlOXl7CTnerFxVahFeOnmfp01jpEV/C1Lwjc+aI4lX5kDT
+	jNcYDE215av+KendEpxIm+OZJZLDze7VAUa5nGbYAmqdriKUYJR3tGJ8GeVgPz+G
+	H9Y01lm5h/P7DhkqGCSreata9krVgYdS41oX9q+l005HOwNWG9THe4NVrSbbrFa4
+	aVkG4g7wC0y5mukHh3BcVmvHPsOIazw/RYw==
+X-ME-Sender: <xms:QM26ac5-aMMwfWfgBGH6i60DILqivBMKEgQH67fzfwXZeZ4suwZa6g>
+    <xme:QM26aQfyBtKjWaAWEAOEdbsLkq1oUbbauLbQBDUmI3IQiuVQYF0LNJcWiaK8wZcIn
+    od_AZVVmWUWw_VL34zoLR_Ep7Udlc-prPlrEkSuqhcOE2ph8N7hzm4>
+X-ME-Received: <xmr:QM26afEr-WHSyoOpKqC7zlhMmSF1d48rPSo3zZrrr9ihsSD-MXDw6fHJtlEOC8KDpuSeZjPNKDJaSoVa5HRTrz3iNntcl0J08g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdegheeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
-    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:vsa6afrnECYuBdB5Nm5Z5moZDW0dh9HjFjQlEM2BOESdKGNw8G-5kg>
-    <xmx:vsa6aXdvNeUJIQrMJ5dSK_hcd7EzVVNsDmPTU49Jq7MzNt3evc0opQ>
-    <xmx:vsa6aWqV2jqH4VOX1__UkdPab_1N2UrCEfvCpsWt3wW0wc_i56psSA>
-    <xmx:vsa6aQEonWmA33bVty8Ku-pnlwZ6N87Qkhmfatmv1VFQ-H8ehSdTjw>
-    <xmx:vsa6adPFp7SRLpyO59NAyu-Kguqsa9koyY2fHDzyTAth5-hJ4vcS9qAO>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 56E6D1EA006C; Wed, 18 Mar 2026 11:37:34 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprggslhho
+    ohhsrggsrghtvghrrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghr
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilh
+    drtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsh
+    hiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    tghhrghnughrrghprhgrthgrphefheduleesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:QM26aRTxSiIFN7aKt7n2sP8VOU954ku5diJ_D6vqM9J2NFbxcwI5Ig>
+    <xmx:QM26aVbNcAaMZIT1bgSUFHfV2u2BDQuIy8-WKoun0nxC73nFKmTtoA>
+    <xmx:QM26ac1nbAfrbr-acGVpoiir3mNoJItQV_qxCsqttqqTgRj7FhocTw>
+    <xmx:QM26aYpcbc6nXHzh-hyJ8qH6Rl9m5isaDLbix6knm1HkkgWTvJSdLg>
+    <xmx:QM26aSHmwamJ0RP_pmbF91RfG25JyPKiLhq672rmc9AQKn7BLEO0jEWl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Mar 2026 12:05:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
+  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com
+Subject: Re: [GSoC RFC PATCH v2] graph: add --max-columns option to limit
+ displayed columns
+In-Reply-To: <20260317220929.120746-1-pabloosabaterr@gmail.com> (Pablo
+	Sabater's message of "Tue, 17 Mar 2026 23:09:29 +0100")
+References: <20260316133426.117684-1-pabloosabaterr@gmail.com>
+	<20260317220929.120746-1-pabloosabaterr@gmail.com>
+Date: Wed, 18 Mar 2026 09:05:17 -0700
+Message-ID: <xmqqzf45gm2q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AkH-poUvedUk
-Date: Wed, 18 Mar 2026 16:37:13 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Koji Nakamaru" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Derrick Stolee" <stolee@gmail.com>
-Message-Id: <b0a73540-bf56-4c6d-bc67-b94a824ddbf3@app.fastmail.com>
-In-Reply-To: 
- <dc6652c84c8d37b124eb76c2a9cdfdc4db4a149d.1773707361.git.gitgitgadget@gmail.com>
-References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
- <dc6652c84c8d37b124eb76c2a9cdfdc4db4a149d.1773707361.git.gitgitgadget@gmail.com>
-Subject: Re: [PATCH 3/5] backfill: accept revision arguments
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 17, 2026, at 01:29, Derrick Stolee via GitGitGadget wrote:
->[snip]
-> diff --git a/Documentation/git-backfill.adoc b/Documentation/git-backfill.adoc
-> index b8394dcf22..fdfe22d623 100644
-> --- a/Documentation/git-backfill.adoc
-> +++ b/Documentation/git-backfill.adoc
-> @@ -63,9 +63,12 @@ OPTIONS
->  	current sparse-checkout. If the sparse-checkout feature is enabled,
->  	then `--sparse` is assumed and can be disabled with `--no-sparse`.
->
-> +You may also specify the commit limiting options from linkgit:git-rev-list[1].
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
+
+> Repositories that have many active branches produce very wide
+> outputs with 'git log --graph --all', makes it difficult to read.
+
+"making it difficult"?
+
+> Add '--max-columns=<n>' to limit the columns shown. Columns over
+> the limit are replaced with a '.' truncation indicator. This only
+> affects the visual rendering.
+
+Being an option to "git log", I expect that readers would naturally
+take "--max-columns=<n>" to refer to the total display width
+consumed by the entire output including the log messages and
+possibly patches when the command is run with the "-p" option,
+whether the ancestry graph is shown or not.
+
+But somehow I suspect that it is not what is going on here.
+
+If this <n> refers to the width of graph part only, the option name
+should hint that fact somehow.  Perhaps include the word "graph" in
+it, or something.  As you use the verb "limit" below, perhaps
+"--limit-graph-columns=<n>"?
+
+> The commit mark '*' is only shown in two cases:
+> - The commit is in a branch inside the limit.
+> - The commit is in the first hidden branch, in this case '.'
+>   is replaced by '*'.
+
+> Commits on deeper hidden branches do not show '*' but the commit
+> subject is still shown, so no information is lost.
+
+Isn't "no information is lost" a huge exaggeration?  We are losing
+the ancestry information by not drawing graph lines, aren't we?
+
+> The original idea to limit columns was noted as a TODO in
+> c12172d2ea (Add history graph API, 2008-05-04), which mentions
+> gitk's behavior. This does not implement gitk-style column
+> rearrangement; it only truncates the visual output.
+
+True.  
+
+IIRC, Gitk also allows you to click the chopped arrow-head to jump
+to the other end of the omitted ancestry line, which is very useful
+but is hard to do on a terminal output that is not interactive.
+
+> git log --graph --all --oneline --max-columns=2
+> *   b81d099 (M_1) 7_M1
+> |\
+> | | * 2d96ba0 (M_3) 7_M2
+> | | .
+
+I would call this output consuming 5 columns for graph part, not 2.
+For end users, being able to specify 2, i.e., being able to say "I
+tolerate wasting display columns to show up to two ancestry lines"
+(or "two lanes of ancestry information"), is indeed a lot more
+intuitive than having to say "You are allowed to use up to 5 display
+columns", so I do not object to an option that takes "2" as its
+value and produces the above output, but I am not sure if we want to
+have "columns" in the name of such an option; "--limit-graph-lanes=2"?
+
+> - I think --max-columns is a good name, but it does not have --graph
+>   prefix, bcs it can only be on --graph I think it's clear enough.
+
+If "git log --max-columns=77" ignores the option because "--graph"
+is not given, it would be confusing to the users.
+
+> +	/*
+> +	 * If graph_max_columns is set, cap the padding from the branches
+> +	 */
+> +	if (graph->revs->graph_max_columns > 0) {
+> +		int truncation = graph->revs->graph_max_columns * 2 + 2;
+
+This needs a bit more commenting to explain where these magic
+numbers come from; they are of the same value 2 but have different
+meanings, right?  Like this (only to illustrate the shape, not
+suggesting what the contents should read):
+
+		/*
+		 * Each ancestry "lane" occupies 2 columns, and
+		 * we leave two columns before drawing the commit
+		 * title and log message part.
+		 */
+		int max_column_width = 
+			graph->revs->graph_limit_lanes * 2 + 2;
+
 > +
->  SEE ALSO
->  --------
->  linkgit:git-clone[1].
-> +linkgit:git-rev-list[1].
+> +	if (revs->graph_max_columns > 0 && !revs->graph)
+> +		die(_("option '%s' requires '%s'"), "--max-columns", "--graph");
 
-Should there be a comma between these two?
+The naming is so selfish.  Among "git log" options that exists and
+that will be added in the future, this design decision declares that
+"--graph" is and will remain to be the only one that may want to
+specify the maximum number of columns to spend.
 
->[snip]
+If the option is named clearly to be related to the "--graph"
+feature, another way to go is to make it imply "--graph".  If the
+user says "I want to limit the graph output to consume no more than
+10 leftmost columns", it is clear that the user expects the graph to
+be shown.
